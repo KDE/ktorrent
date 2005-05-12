@@ -303,7 +303,7 @@ void KTorrent::save(bt::TorrentControl* tc)
 			if (tc->isMultiFileTorrent())
 			{
 				dlg = new KProgressDialog(this);
-				dlg->setLabel("Saving torrent ...");
+				dlg->setLabel(i18n("Saving torrent ..."));
 				dlg->setAllowCancel(false);
 				dlg->show();
 			}

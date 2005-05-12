@@ -42,8 +42,8 @@ void PeerView::addPeer(bt::Peer* peer)
 	KListViewItem* i = new KListViewItem(
 			this,
 			peer->getPeerID().toString(),
-			QString("%1 kB/sec").arg(peer->getDownloadRate() / 1024.0),
-			QString("%1 kB/sec").arg(peer->getUploadRate() / 1024.0),
+			i18n("%1 kB/sec").arg(peer->getDownloadRate() / 1024.0),
+			i18n("%1 kB/sec").arg(peer->getUploadRate() / 1024.0),
 			peer->isChoked() ? "yes" : "no",
 			peer->isSnubbed() ? "yes" : "no");
 	items.insert(peer,i);
@@ -64,10 +64,10 @@ void PeerView::update()
 		KListViewItem* it = i.data();
 		bt::Peer* peer = i.key();
 		it->setText(0,peer->getPeerID().toString());
-		it->setText(1,QString("%1 kB/sec").arg(peer->getDownloadRate() / 1024.0));
-		it->setText(2,QString("%1 kB/sec").arg(peer->getUploadRate() / 1024.0));
-		it->setText(3,peer->isChoked() ? "yes" : "no");
-		it->setText(4,peer->isSnubbed() ? "yes" : "no");
+		it->setText(1,i18n("%1 kB/sec").arg(peer->getDownloadRate() / 1024.0));
+		it->setText(2,i18n("%1 kB/sec").arg(peer->getUploadRate() / 1024.0));
+		it->setText(3,peer->isChoked() ? i18n("yes") : i18n("no"));
+		it->setText(4,peer->isSnubbed() ? i18n("yes") : i18n("no"));
 		i++;
 	}
 }

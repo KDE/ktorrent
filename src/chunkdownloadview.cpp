@@ -67,10 +67,10 @@ void ChunkDownloadView::removeAll()
 
 void ChunkDownloadView::update(const ChunkDownload* cd,KListViewItem* it)
 {
-	QString peer_id,speed = "0 kB/sec";
+	QString peer_id,speed;
 
 	peer_id = cd->getCurrentPeerID();
-	speed = QString("%1 kB/sec").arg(cd->getDownloadSpeed() / 1024.0);
+	speed = i18n("%1 kB/sec").arg(cd->getDownloadSpeed() / 1024.0);
 	
 		
 	it->setText(0,QString::number(cd->getChunkIndex()));
