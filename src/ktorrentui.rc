@@ -1,0 +1,16 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<kpartgui name="ktorrent" version="1">
+<MenuBar>
+  <Menu name="Downloads"><text>Downloads</text>
+	<Action name="Start" />
+	<Action name="Stop" />
+	<Action name="Remove" />
+  </Menu>
+</MenuBar>
+
+<ToolBar name="DownloadToolBar" noMerge="1"><text>Download Toolbar</text>
+	<Action name="Start"/>
+	<Action name="Stop"/>
+	<Action name="Remove"/>
+</ToolBar>
+</kpartgui>

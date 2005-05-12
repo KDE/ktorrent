@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name="ktorrentrc"/>
+  <group name="downloads">
+    <entry name="maxDownloads" type="Int">
+	    <label>Maximum number of downloads (0 = no limit)</label>
+	    <default>2</default>
+		<min>0</min>
+    </entry>
+	<entry name="maxConnections" type="Int">
+		<label>Maximum number of connections per download (0 = no limit)</label>
+		<default>100</default>
+		<min>0</min>
+    </entry>
+    <entry name="maxUploadRate" type="Int">
+	    <label>Maximum upload speed in KB/sec (0 = no limit)</label>
+	    <default>5</default>
+		<min>0</min>
+    </entry>
+	<entry name="port" type="Int">
+		<label>Port</label>
+		<default>6881</default>
+		<min>0</min>
+		<max>65535</max>
+    </entry>
+	<entry name="showSystemTrayIcon" type="Bool">
+		<label>Show a system tray icon</label>
+		<default>true</default>
+    </entry>
+	<entry name="keepSeeding" type="Bool">
+		<label>Keep seeding after download has finished</label>
+		<default>true</default>
+    </entry>
+  </group>
+</kcfg>

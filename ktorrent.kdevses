@@ -1,0 +1,30 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE KDevPrjSession>
+<KDevPrjSession>
+ <DocsAndViews NumberOfDocuments="2" >
+  <Doc0 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/libtorrent/torrentcontrol.cpp" >
+   <View0 Type="Source" />
+  </Doc0>
+  <Doc1 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/libtorrent/tracker.cpp" >
+   <View0 line="47" Type="Source" />
+  </Doc1>
+ </DocsAndViews>
+ <pluginList>
+  <kdevdebugger>
+   <breakpointList>
+    <breakpoint0 location="/home/joris/Projects/ktorrent/libtorrent/tracker.cpp:57" type="1" condition="" enabled="1" />
+    <breakpoint1 location="/home/joris/Projects/ktorrent/libtorrent/tracker.cpp:48" type="1" condition="" enabled="1" />
+    <breakpoint2 location="/home/joris/Projects/ktorrent/libtorrent/torrentcontrol.cpp:172" type="1" condition="" enabled="1" />
+   </breakpointList>
+  </kdevdebugger>
+  <kdevbookmarks>
+   <bookmarks/>
+  </kdevbookmarks>
+  <kdevvalgrind>
+   <executable path="" params="" />
+   <valgrind path="" params="" />
+   <calltree path="" params="" />
+   <kcachegrind path="" />
+  </kdevvalgrind>
+ </pluginList>
+</KDevPrjSession>

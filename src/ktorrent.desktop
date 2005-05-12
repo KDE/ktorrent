@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=KTorrent
+Exec=ktorrent %i %m -caption "%c"
+Icon=ktorrent
+Type=Application
+DocPath=ktorrent/index.html
+MimeType=application/x-bittorrent
+Comment=A BitTorrent program for KDE
+Comment[nl]=Een BitTorrent programma voor KDE
+Terminal=0
