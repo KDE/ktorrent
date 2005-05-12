@@ -1,5 +1,7 @@
 INCLUDES = $(all_includes)
+
 METASOURCES = AUTO
+
 noinst_LTLIBRARIES = libtorrent.la
 libtorrent_la_LDFLAGS = $(all_libraries)
 noinst_HEADERS = bencoder.h sha1hash.h value.h bdecoder.h bnode.h error.h \
@@ -17,5 +19,4 @@ libtorrent_la_SOURCES = bencoder.cpp sha1hash.cpp value.cpp bdecoder.cpp \
 				request.cpp piece.cpp torrentmonitor.cpp peerid.cpp announcelist.cpp \
 				peeruploader.cpp uploadcap.cpp packetreader.cpp ptrmap.cpp log.cpp packetwriter.cpp \
 		packet.cpp file.cpp
-AM_CFLAGS = -Wno-deprecated.
 
