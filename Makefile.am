@@ -1,22 +1,17 @@
-SUBDIRS = $(TOPSUBDIRS)
+SUBDIRS = libtorrent src 
+EXTRA_DIST = AUTHORS COPYING ChangeLog INSTALL README TODO
 
-$(top_srcdir)/configure.in: configure.in.in $(top_srcdir)/subdirs
-	cd $(top_srcdir) && $(MAKE) -f admin/Makefile.common configure.in ;
+messages: rc.cpp
+	$(EXTRACTRC) `find . -name "*.rc" -o -name "*.ui" -o -name "*.kcfg"` > rc.cpp
+# we haven't got a tips file atm, so there isn't a lot of point in making one...
+# maybe someone will document the process of writing tips files, or tell me that
+# it needs to be done
+#	$(PREPARETIPS) > tips.cpp
+	LIST=`find . -name \*.h -o -name \*.hh -o -name \*.H -o -name \*.hxx -o -name \*.hpp -o -name \*.cpp -o -name \*.cc -o -name *.cxx -o -name \*.ecpp -o -name \*.C`; \
+	if test -n "$$LIST"; then \
+		$(XGETTEXT) $$LIST -o $(podir)/ktorrent.pot; \
+	fi
+#	rm -f tips.cpp
+	rm -f rc.cpp
 
-$(top_srcdir)/subdirs:
-	cd $(top_srcdir) && $(MAKE) -f admin/Makefile.common subdirs
 
-$(top_srcdir)/acinclude.m4: $(top_srcdir)/admin/acinclude.m4.in $(top_srcdir)/admin/libtool.m4.in
-	@cd $(top_srcdir) && cat admin/acinclude.m4.in admin/libtool.m4.in > acinclude.m4
-
-MAINTAINERCLEANFILES = subdirs configure.in acinclude.m4 configure.files 
-
-package-messages:
-	cd $(top_srcdir) && $(MAKE) -f admin/Makefile.common package-messages
-	$(MAKE) -C po merge
-
-EXTRA_DIST = admin COPYING configure.in.in
-
-dist-hook:
-	cd $(top_distdir) && perl admin/am_edit -padmin
-	cd $(top_distdir) && $(MAKE) -f admin/Makefile.common subdirs
