@@ -7,4 +7,5 @@ Type=Application
 DocPath=ktorrent/index.html
 MimeType=application/x-bittorrent
 Comment=A BitTorrent program for KDE
+Comment[da]=Et BitTorrent program for KDE
 Terminal=0
