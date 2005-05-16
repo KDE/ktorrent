@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=KTorrent
 Name[sv]=Ktorrent
+GenericName=BitTorrent Client
 Exec=ktorrent %i %m -caption "%c"
 Icon=ktorrent
 Type=Application

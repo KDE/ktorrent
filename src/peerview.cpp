@@ -25,8 +25,8 @@ PeerView::PeerView(QWidget *parent, const char *name)
 		: KListView(parent, name)
 {
 	addColumn(i18n("ID"));
-	addColumn(i18n("Down speed"));
-	addColumn(i18n("Up speed"));
+	addColumn(i18n("Down Speed"));
+	addColumn(i18n("Up Speed"));
 	addColumn(i18n("Choked"));
 	addColumn(i18n("Snubbed"));
 	connect(&timer,SIGNAL(timeout()),this,SLOT(update()));

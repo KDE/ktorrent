@@ -32,7 +32,7 @@ ChunkDownloadView::ChunkDownloadView(QWidget *parent, const char *name)
 	addColumn(i18n("Progress"));
 	addColumn(i18n("Peer"));
 	addColumn(i18n("Down Speed"));
-	addColumn(i18n("Assigned peers"));
+	addColumn(i18n("Assigned Peers"));
 	connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
 	timer.start(250);
 }

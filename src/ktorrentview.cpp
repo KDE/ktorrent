@@ -39,12 +39,12 @@ KTorrentView::KTorrentView(QWidget *parent)
 	addColumn(i18n("Dowloaded"));
 	addColumn(i18n("Uploaded"));
 	addColumn(i18n("Left"));
-	addColumn(i18n("Down speed"));
-	addColumn(i18n("Up speed"));
-	addColumn(i18n("Time left"));
-	addColumn(i18n("Number of peers"));
+	addColumn(i18n("Down Speed"));
+	addColumn(i18n("Up Speed"));
+	addColumn(i18n("Time Left"));
+	addColumn(i18n("Number of Peers"));
 	//addColumn(i18n("Number of chunks downloading"));
-	addColumn(i18n("Chunks dowloaded"));
+	addColumn(i18n("Chunks Dowloaded"));
 	timer.start(1000);
 	connect(this,SIGNAL(clicked(QListViewItem* )),this,SLOT(onExecuted(QListViewItem* )));
 	show_debug_view = bt::Globals::instance().isDebugModeSet();

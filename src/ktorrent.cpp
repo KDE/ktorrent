@@ -290,12 +290,12 @@ void KTorrent::save(bt::TorrentControl* tc)
 		if (tc->isMultiFileTorrent())
 		{
 			file = KFileDialog::getExistingDirectory(QString::null, this,
-					i18n("Select directory to save"));
+					i18n("Select Directory to Save"));
 		}
 		else
 		{
 			file = KFileDialog::getSaveFileName(
-					QString::null, QString::null, this, i18n("Select file to save"));
+					QString::null, QString::null, this, i18n("Select File to Save"));
 		}
 
 		if (file != QString::null)
@@ -322,9 +322,9 @@ void KTorrent::askAndSave(bt::TorrentControl* tc)
 {
 	int ret = KMessageBox::questionYesNo(
 		this,
-		i18n("The download %1 has finished. Do you want to save it  now ?")
+		i18n("The download %1 has finished. Do you want to save it now ?")
 				.arg(tc->getTorrentName()),
-		i18n("Save torrent ?"));
+		i18n("Save Torrent?"));
 	
 	if (ret == KMessageBox::Yes)
 		save(tc);
