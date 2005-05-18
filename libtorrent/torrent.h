@@ -88,9 +88,12 @@ namespace bt
 		 * @return true if they match
 		 */
 		bool verifyHash(const SHA1Hash & h,Uint32 index);
+
+		/// Get the number of tracker URL's
+		unsigned int getNumTrackerURLs() const;
 		
 		const SHA1Hash & getHash(Uint32 idx) const;
-		
+
 		bool isMultiFile() const {return files.count() > 0;}
 		Uint32 getNumFiles() const {return files.count();}
 		void getFile(Uint32 idx,Torrent::File & file);

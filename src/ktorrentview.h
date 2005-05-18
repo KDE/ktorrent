@@ -77,6 +77,7 @@ private slots:
 	void startDownload();
 	void stopDownload();
 	void removeDownload();
+	void onTrackerDown(bt::TorrentControl* tc);
 
 signals:
 	void torrentClicked(bt::TorrentControl* tc);

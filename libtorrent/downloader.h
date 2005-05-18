@@ -78,7 +78,7 @@ namespace bt
 
 		/**
 		 * Load the current downloads.
-		 * @param file The file to save to
+		 * @param file The file to load from
 		 */
 		void loadDownloads(const QString & file);
 	public slots:

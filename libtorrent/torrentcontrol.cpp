@@ -38,6 +38,8 @@
 #include "log.h"
 #include "globals.h"
 #include "packetwriter.h"
+#include "httptracker.h"
+#include "udptracker.h"
 
 
 namespace bt
@@ -51,6 +53,7 @@ namespace bt
 		running = false;
 		started = false;
 		saved = false;
+		num_tracker_attempts = 0;
 	}
 	
 	
@@ -107,8 +110,12 @@ namespace bt
 			initial_port++;
 			pman = new PeerManager(*tor,port);
 		}while (!pman->ok());
+
+		if (tor->getTrackerURL(true).protocol() == "udp")
+			tracker = new UDPTracker(this);
+		else
+			tracker = new HTTPTracker(this);
 		
-		tracker = new Tracker();
 		cman = new ChunkManager(*tor,datadir);
 		if (KIO::NetAccess::exists(datadir + "index",true,0))
 			cman->loadIndexFile();
@@ -122,10 +129,6 @@ namespace bt
 		up = new Uploader(*cman);
 		choke = new Choker(*pman);
 	
-		connect(tracker,SIGNAL(requestError()),
-				this,SLOT(trackerResponseError()));
-		connect(tracker,SIGNAL(response(const QByteArray& )),
-				this,SLOT(trackerResponse(const QByteArray& )));
 		
 		connect(&tracker_update_timer,SIGNAL(timeout()),this,SLOT(updateTracker()));
 		connect(&choker_update_timer,SIGNAL(timeout()),this,SLOT(doChoking()));
@@ -134,11 +137,17 @@ namespace bt
 		connect(pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerRemoved(Peer* )));
 	}
 
+	void TorrentControl::setTrackerTimerInterval(Uint32 interval)
+	{
+		tracker_update_timer.changeInterval(interval);
+	}
+
 	void TorrentControl::trackerResponse(const QByteArray & data)
 	{
 		BNode* n = 0;
 		try
 		{
+			
 			Out() << "Tracker updated" << endl;
 			BDecoder dec(data);
 			n = dec.decode();
@@ -162,10 +171,12 @@ namespace bt
 			Uint32 update_time = vn->data().toInt() > 300 ? 300 : vn->data().toInt();
 			
 			Out() << "Next update in " << update_time << " seconds" << endl;
-			tracker_update_timer.changeInterval(update_time * 1000);
-			
+
+			setTrackerTimerInterval(update_time * 1000);
+
 			pman->trackerUpdate(dict);
 			delete n;
+			num_tracker_attempts = 0;
 		}
 		catch (Error & e)
 		{
@@ -173,16 +184,32 @@ namespace bt
 			if (n)
 				n->printDebugInfo();
 			
-		/*	Out() << "Data : " << endl;
-			Out() << QString(data) << endl;*/
+			Out() << "Data : " << endl;
+			Out() << QString(data) << endl;
 			delete n;
 		}
 	}
+
+	void TorrentControl::trackerResponse(Uint32 interval,Uint32 leechers,
+										 Uint32 seeders,Uint8* ppeers)
+	{
+		setTrackerTimerInterval(interval * 1000);
+		pman->trackerUpdate(seeders,leechers,ppeers);
+	}
+
 	
 	void TorrentControl::trackerResponseError()
 	{
 		Out() << "Tracker Response Error" << endl;
-		updateTracker(trackerevent,false);
+		if (num_tracker_attempts >= tor->getNumTrackerURLs() &&
+		    trackerevent != "stopped")
+		{
+			trackerDown(this);
+		}
+		else if (trackerevent != "stopped")
+		{
+			updateTracker(trackerevent,false);
+		}
 	}
 	
 	void TorrentControl::updateTracker(const QString & ev,bool last_succes)
@@ -193,25 +220,12 @@ namespace bt
 		
 		KURL url = tor->getTrackerURL(last_succes);
 
-		const SHA1Hash & info_hash = tor->getInfoHash();
-		QString query = QString("&info_hash=") + info_hash.toURLString();
-		url.addQueryItem("peer_id",tor->getPeerID().toString());
-		url.addQueryItem("port",QString::number(port));
-		url.addQueryItem("uploaded",QString::number(up->bytesUploaded()));
-		url.addQueryItem("downloaded",QString::number(down->bytesDownloaded()));
-		url.addQueryItem("left",QString::number(cman->bytesLeft()));
-		//url.addQueryItem("compact","1");
-		//url.addQueryItem("numwant","100");
-		if (ev != QString::null)
-			url.addQueryItem("event",ev);
-		
-	//	Out() << "Tracker Update " << url << query << endl;
-	//	Out() << info_hash.toURLString() << endl;
-	//	Out() << query << endl;
-		Uint16 http_port = url.port();
-		if (http_port == 0)
-			http_port = 80;
-		tracker->doRequest(url.host(),url.encodedPathAndQuery() + query,http_port);
+		tracker->setData(tor->getInfoHash(),tor->getPeerID(),port,
+						 up->bytesUploaded(),down->bytesDownloaded(),
+						 cman->bytesLeft(),ev);
+
+		tracker->doRequest(url);
+		num_tracker_attempts++;
 	}
 	
 	void TorrentControl::update()
@@ -259,6 +273,7 @@ namespace bt
 	
 	void TorrentControl::start()
 	{
+		num_tracker_attempts = 0;
 		updateTracker("started");
 		tracker_update_timer.start(120000);
 		choker_update_timer.start(10000);

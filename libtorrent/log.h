@@ -78,6 +78,19 @@ namespace bt
 		{
 			return func(*this);
 		}
+
+		/**
+		 * Output a QString to the log.
+		 * @param s The QString
+		 * @return This Log
+		 */
+		Log & operator << (const QString & s)
+		{
+			out << s.latin1();
+			if (to_cout)
+				std::cout << s.latin1();
+			return *this;
+		}
 		
 		/**
 		* Prints and endline character to the Log and flushes it.

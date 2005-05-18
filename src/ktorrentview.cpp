@@ -23,9 +23,11 @@
 #include <kpopupmenu.h>
 #include <libtorrent/torrentcontrol.h>
 #include <libtorrent/globals.h>
+#include <kmessagebox.h>
 #include "ktorrentview.h"
 #include "ktorrentviewitem.h"
 #include "debugview.h"
+
 
 
 using namespace bt;
@@ -38,12 +40,10 @@ KTorrentView::KTorrentView(QWidget *parent)
 	addColumn(i18n("File"));
 	addColumn(i18n("Dowloaded"));
 	addColumn(i18n("Uploaded"));
-	addColumn(i18n("Left"));
 	addColumn(i18n("Down Speed"));
 	addColumn(i18n("Up Speed"));
 	addColumn(i18n("Time Left"));
 	addColumn(i18n("Number of Peers"));
-	//addColumn(i18n("Number of chunks downloading"));
 	addColumn(i18n("Chunks Dowloaded"));
 	timer.start(1000);
 	connect(this,SIGNAL(clicked(QListViewItem* )),this,SLOT(onExecuted(QListViewItem* )));
@@ -143,6 +143,8 @@ void KTorrentView::addTorrent(bt::TorrentControl* tc)
 	items.insert(tc,tvi);
 	tvi->update();
 	currentChanged(tc);
+	connect(tc,SIGNAL(trackerDown(bt::TorrentControl* )),
+			this,SLOT(onTrackerDown(bt::TorrentControl* )));
 	if (show_debug_view)
 	{
 		DebugView* dbg = new DebugView(tc);
@@ -176,6 +178,14 @@ void KTorrentView::update()
 		tvi->update();
 		i++;
 	}
+}
+
+void KTorrentView::onTrackerDown(bt::TorrentControl* tc)
+{
+	KMessageBox::error(
+			this,i18n("The tracker appears to be down. Stopping download."),
+			i18n("Error"));
+	tc->stop();
 }
 
 #include "ktorrentview.moc"

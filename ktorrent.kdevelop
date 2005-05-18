@@ -31,6 +31,9 @@
       <programargs>--debug</programargs>
       <autocompile>true</autocompile>
       <envvars/>
+      <runarguments>
+        <ktorrent></ktorrent>
+      </runarguments>
     </run>
     <make>
       <envvars>
@@ -208,5 +211,8 @@
       <inlineGet>true</inlineGet>
       <inlineSet>true</inlineSet>
     </creategettersetter>
+    <designerintegration>
+      <qtdesigner/>
+    </designerintegration>
   </kdevcppsupport>
 </kdevelop>

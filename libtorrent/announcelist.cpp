@@ -20,6 +20,8 @@
 #include "announcelist.h"
 #include "bnode.h"
 #include "error.h"
+#include "globals.h"
+#include "log.h"
 
 namespace bt
 {
@@ -51,8 +53,10 @@ namespace bt
 				BValueNode* vn = dynamic_cast<BValueNode*>(url->getChild(j));
 				if (!vn)
 					throw Error("Parse Error");
-				
-				trackers.append(KURL(vn->data().toString()));
+
+				KURL url(vn->data().toString());
+				trackers.append(url);
+				Out() << "Added tracker " << url << endl;
 			}
 		}
 	}

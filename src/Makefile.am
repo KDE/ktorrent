@@ -13,13 +13,13 @@ INCLUDES = -I$(top_srcdir)/. $(all_includes)
 ktorrent_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 
 # the libraries to link against.
-ktorrent_LDADD = ../libtorrent/libtorrent.la $(LIB_KFILE) \
+ktorrent_LDADD = $(top_builddir)/libtorrent/libtorrent.la $(LIB_KFILE) \
 	$(LIB_KDEPRINT)
 
 # which sources should be compiled for ktorrent
 ktorrent_SOURCES = settings.kcfgc main.cpp ktorrent.cpp ktorrentview.cpp \
-		pref.cpp 		chunkdownloadview.cpp ktorrentviewitem.cpp ktorrentcore.cpp \
-		peerview.cpp ktorrentmonitor.cpp 		downloadpref.ui debugview.cpp trayicon.cpp
+	pref.cpp chunkdownloadview.cpp ktorrentviewitem.cpp ktorrentcore.cpp \
+	peerview.cpp ktorrentmonitor.cpp downloadpref.ui debugview.cpp trayicon.cpp
 
 xdg_apps_DATA = ktorrent.desktop
 kde_kcfg_DATA = ktorrent.kcfg

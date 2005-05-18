@@ -53,6 +53,9 @@ namespace bt
 		 * @return An URL
 		 */
 		KURL getTrackerURL(bool last_was_succesfull) const;
+
+		/// Get the number of tracker URLs
+		unsigned int getNumTrackerURLs() const {return trackers.count();}
 	};
 
 }

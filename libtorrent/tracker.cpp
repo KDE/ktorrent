@@ -17,46 +17,30 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "log.h"
+
 #include "tracker.h"
 
 namespace bt
 {
 
-	Tracker::Tracker() : http(0),cid(0)
-	{
-		http = new QHttp(this);
-		connect(http,SIGNAL(requestFinished(int, bool )),this,SLOT(requestFinished(int, bool )));
-	}
+	Tracker::Tracker(TorrentControl* tc) : tc(tc)
+	{}
 
 
 	Tracker::~Tracker()
 	{}
 
-
-	void Tracker::doRequest(const QString & host,const QString & path,Uint16 port)
+	void Tracker::setData(const SHA1Hash & ih,const PeerID & pid,Uint16 port,
+				 Uint32 uploaded,Uint32 downloaded,Uint32 left,
+				 const QString & event)
 	{
-		QHttpRequestHeader header( "GET",path);
-		header.setValue( "Host",host );
-		
-		http->setHost(host,port);
-		cid = http->request(header);
-	}
-	
-	void Tracker::requestFinished(int id,bool err)
-	{
-		if (cid != id)
-			return;
-		
-		if (!err)
-		{
-			response(http->readAll());
-		}
-		else
-		{
-			Out() << "Tracker Error : " << http->errorString() << endl;
-			requestError();
-		}
+		this->info_hash = ih;
+		this->peer_id = pid;
+		this->port = port;
+		this->uploaded = uploaded;
+		this->downloaded = downloaded;
+		this->left = left;
+		this->event = event;
 	}
 }
 ;

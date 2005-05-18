@@ -78,6 +78,20 @@ namespace bt
 		readPotentialPeers((BListNode*)tmp);
 	}
 
+	void PeerManager::trackerUpdate(Uint32 seeders,Uint32 leechers,Uint8* ppeers)
+	{
+		num_seeders = seeders;
+		num_leechers = leechers;
+		Uint32 n = num_seeders + num_leechers;
+
+		for (Uint32 i = 0;i < n;i++)
+		{
+			PotentialPeer pp;
+			pp.port = ReadUint16(ppeers,6*i + 4);
+			pp.ip = ReadUint32(ppeers,6*i);
+		}
+	}
+
 	void PeerManager::newConnection(int socket)
 	{
 		if (!started)

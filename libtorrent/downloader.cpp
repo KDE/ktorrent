@@ -237,6 +237,14 @@ namespace bt
 	void Downloader::setMonitor(TorrentMonitor* tmo)
 	{
 		tmon = tmo;
+		if (!tmon)
+			return;
+
+		for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();i++)
+		{
+			ChunkDownload* cd = i->second;
+			tmon->downloadStarted(cd);
+		}
 	}
 
 	void Downloader::saveDownloads(const QString & file)

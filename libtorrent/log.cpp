@@ -36,9 +36,9 @@ namespace bt
 
 	Log & Log::operator << (const KURL & url)
 	{
-		out << url.prettyURL();
+		out << url.prettyURL().latin1();
 		if (to_cout)
-			std::cout << url.prettyURL();
+			std::cout << url.prettyURL().latin1();
 		return *this;
 	}
 }	

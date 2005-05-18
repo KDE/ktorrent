@@ -260,4 +260,12 @@ namespace bt
 		else
 			return tracker_url;
 	}
+
+	unsigned int Torrent::getNumTrackerURLs() const
+	{
+		if (anon_list)
+			return anon_list->getNumTrackerURLs();
+		else
+			return 1;
+	}
 }

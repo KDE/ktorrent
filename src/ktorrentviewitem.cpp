@@ -36,28 +36,31 @@ void KTorrentViewItem::update()
 {
 	float to_meg = (1024.0 * 1024.0);
 	setText(0,tc->getTorrentName());
-	setText(1,i18n("%1 MB").arg((float)tc->getBytesDownloaded() / to_meg));
+	setText(1,i18n("%1 MB / %2 MB")
+			.arg((float)tc->getBytesDownloaded() / to_meg)
+					.arg((float)tc->getBytesLeft()/ to_meg));
+	
 	setText(2,i18n("%1 MB").arg((float)tc->getBytesUploaded()/ to_meg));
-	setText(3,i18n("%1 MB").arg((float)tc->getBytesLeft()/ to_meg));
-	setText(4,i18n("%1 kB/sec").arg(tc->getDownloadRate() / 1024.0));
-	setText(5,i18n("%1 kB/sec").arg(tc->getUploadRate() / 1024.0));
+	//setText(3,i18n("%1 MB").arg((float)tc->getBytesLeft()/ to_meg));
+	setText(3,i18n("%1 kB/sec").arg(tc->getDownloadRate() / 1024.0));
+	setText(4,i18n("%1 kB/sec").arg(tc->getUploadRate() / 1024.0));
 	
 	if (tc->getDownloadRate() != 0)
 	{
 		Uint32 secs = floor((float)tc->getBytesLeft() / (float)tc->getDownloadRate());
 		QTime t;
 		t = t.addSecs(secs);
-		setText(6,t.toString("hh:mm:ss"));
+		setText(5,t.toString("hh:mm:ss"));
 	}
 	else
 	{
-		setText(6,i18n("never"));
+		setText(5,i18n("never"));
 	}
-	setText(7,QString::number(tc->getNumPeers()));
+	setText(6,QString::number(tc->getNumPeers()));
 //	setText(8,QString::number());
-	setText(8,QString("%1 (%2) / %3")
+/*	setText(8,QString("%1 (%2) / %3")
 			.arg(tc->getNumChunksDownloaded())
 			.arg(tc->getNumChunksDownloading())
-			.arg(tc->getTotalChunks()));
+	.arg(tc->getTotalChunks()));*/
 }
 

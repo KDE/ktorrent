@@ -82,6 +82,14 @@ namespace bt
 		 * @param dict The dictionary
 		 */
 		void trackerUpdate(BDictNode* dict);
+
+		/**
+		 * The tracker has been updated
+		 * @param seeders The number of seeders
+		 * @param leechers The number of leechers
+		 * @param ppeers List of (IP,port) combinations
+		 */
+		void trackerUpdate(Uint32 seeders,Uint32 leechers,Uint8* ppeers);
 		
 		/**
 		 * Try to connect to some peers

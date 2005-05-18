@@ -1,18 +1,32 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="2" >
-  <Doc0 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/libtorrent/announcelist.cpp" >
-   <View0 line="0" Type="Source" />
+ <DocsAndViews NumberOfDocuments="6" >
+  <Doc0 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/libtorrent/udptracker.cpp" >
+   <View0 line="196" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/libtorrent/torrentcontrol.cpp" >
-   <View0 line="0" Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/libtorrent/udptracker.h" >
+   <View0 line="57" Type="Source" />
   </Doc1>
+  <Doc2 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/src/ktorrent.cpp" >
+   <View0 line="314" Type="Source" />
+  </Doc2>
+  <Doc3 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/libtorrent/sha1hash.cpp" >
+   <View0 line="103" Type="Source" />
+  </Doc3>
+  <Doc4 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/libtorrent/log.h" >
+   <View0 line="92" Type="Source" />
+  </Doc4>
+  <Doc5 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/libtorrent/log.cpp" >
+   <View0 line="38" Type="Source" />
+  </Doc5>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
    <breakpointList>
-    <breakpoint0 location="/home/joris/Projects/ktorrent/libtorrent/torrentcontrol.cpp:172" type="1" condition="" enabled="1" />
+    <breakpoint0 location="/home/joris/Projects/ktorrent/libtorrent/torrentcontrol.cpp:207" type="1" condition="" enabled="1" />
+    <breakpoint1 location="/home/joris/Projects/ktorrent/libtorrent/udptracker.cpp:231" type="1" condition="" enabled="1" />
+    <breakpoint2 location="/home/joris/Projects/ktorrent/libtorrent/udptracker.cpp:204" type="1" condition="" enabled="1" />
    </breakpointList>
   </kdevdebugger>
   <kdevbookmarks>

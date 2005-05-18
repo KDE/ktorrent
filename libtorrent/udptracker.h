@@ -17,76 +17,61 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef BTTRACKER_H
-#define BTTRACKER_H
+#ifndef BTUDPTRACKER_H
+#define BTUDPTRACKER_H
 
-#include <qobject.h>
+#include <kurl.h>
+#include <qhostaddress.h>
+#include "tracker.h"
 #include "globals.h"
-#include "peerid.h"
-#include "sha1hash.h"
 
-class KURL;
+class QSocketDevice;
+class QSocketNotifier;
 
 namespace bt
 {
-	class TorrentControl;
 
 	/**
 	 * @author Joris Guisson
-	 * @brief Communicates with the tracker
-	 * 
-	 * Class to communicate with the tracker. This is an abstract class
-	 * because some moron taught it was a good idea to have trackers over
-	 * UDP. Hence we have two kinds of trackers : HTTP and UDP.
+	 * @brief Communicates with an UDP tracker
 	 *
-	 * Once the data comes in, the Tracker should update the TorrentControl object.
+	 * This class is able to communicate with an UDP tracker.
+	 * This is an implementation of the protocol described in
+	 * http://xbtt.sourceforge.net/udp_tracker_protocol.html
 	 */
-	class Tracker : public QObject
+	class UDPTracker : public Tracker
 	{
 		Q_OBJECT
 	public:
-		/**
-		 * Constructor, sets the TorrentControl object
-		 * @param tc The TorrentControl
-		 */
-		Tracker(TorrentControl* tc);
-		virtual ~Tracker();
+		UDPTracker(TorrentControl* tc);
+		virtual ~UDPTracker();
 
-		/**
-		 * Do a request to the tracker.
-		 * @param url The path and query
-		 */
-		virtual void doRequest(const KURL & url) = 0;
+		virtual void doRequest(const KURL & url);
 
-		/**
-		 * Set all the data needed to do a tracker update 
-		 * @param ih 
-		 * @param pid 
-		 * @param port 
-		 * @param uploaded 
-		 * @param downloaded 
-		 * @param left 
-		 * @param event 
-		 */
-		void setData(const SHA1Hash & ih,const PeerID & pid,Uint16 port,
-					 Uint32 uploaded,Uint32 downloaded,Uint32 left,
-					 const QString & event);
+	private slots:
+		void dataRecieved(int s);
 
-		/**
-		 * Get the TorrentControl object.
-		 * @return The TorrentControl
-		 */
-		TorrentControl* getTC() {return tc;}
-	protected:
-		TorrentControl* tc;
-	
-		SHA1Hash info_hash;
-		PeerID peer_id;
-		Uint16 port;
-		Uint32 uploaded,downloaded,left;
-		QString event;
+	private:
+		void sendConnect();
+		void sendAnnounce();
+		void announceRecieved();
+		void connectRecieved();
+		void handleError();
+		void continueAnnounce();
+
+	private:
+		QHostAddress addr;
+		Uint16 udp_port;
+		QSocketDevice* sock;
+		Uint32 transaction_id;
+		Uint64 connection_id;
+		QSocketNotifier* sn;
+		KURL old_url;
+
+		Uint32 leechers,seeders,interval,data_read;
+		Uint8* peer_buf;
 	};
 
-};
+}
 
 #endif

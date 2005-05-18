@@ -112,6 +112,33 @@ namespace bt
 
 		/// Set the initial port to try out
 		static void setInitialPort(Uint16 port);
+
+		/**
+		 * Set the interval between two tracker updates.
+		 * @param interval The interval in milliseconds
+		 */
+		void setTrackerTimerInterval(Uint32 interval);
+
+		/**
+		 * Called by the Tracker when an error occurs.
+		 */
+		void trackerResponseError();
+
+		/**
+		 * The HTTPTracker updated.
+		 * @param data The data sent by the Tracker
+		 */
+		void trackerResponse(const QByteArray & data);
+
+		/**
+		 * The UDPTracker updated
+		 * @param interval The interval in seconds between timer updates
+		 * @param leechers The number of leechers
+		 * @param seeders The number of seeders
+		 * @param ppeers A Buffer containing @a leechers + @a seeders
+		 * 	pairs (IP-address,port)
+		 */
+		void trackerResponse(Uint32 interval,Uint32 leechers,Uint32 seeders,Uint8* ppeers);
 	public slots:
 		/**
 		 * Update the object, this will be called every 100
@@ -139,8 +166,6 @@ namespace bt
 		void reconstruct(const QString & file,KProgressDialog* dlg);
 		
 	private slots:
-		void trackerResponse(const QByteArray & data);
-		void trackerResponseError();
 		void updateTracker() {updateTracker(QString::null);}
 		void onNewPeer(Peer* p);
 		void onPeerRemoved(Peer* p);
@@ -148,6 +173,7 @@ namespace bt
 		
 	signals:
 		void finished(bt::TorrentControl* me);
+		void trackerDown(bt::TorrentControl* me);
 		
 	private:	
 		void updateTracker(const QString & ev,bool last_succes = true);
@@ -165,6 +191,7 @@ namespace bt
 		Uint16 port;
 		bool completed,running,started,saved;
 		TorrentMonitor* tmon;
+		int num_tracker_attempts;
 		
 		static Uint16 initial_port;
 	};

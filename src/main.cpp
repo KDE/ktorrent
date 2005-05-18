@@ -46,7 +46,7 @@ static KCmdLineOptions options[] =
 };
 
 int main(int argc, char **argv)
-{
+{	
 	KAboutData about("ktorrent", I18N_NOOP("KTorrent"), version, description,
 	                 KAboutData::License_GPL, "(C) 2005 Joris Guisson", 0, 0, "joris.guisson@gmail.com");
 	about.addAuthor( "Joris Guisson", 0, "joris.guisson@gmail.com" );
