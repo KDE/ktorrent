@@ -84,13 +84,7 @@ namespace bt
 		 * @param s The QString
 		 * @return This Log
 		 */
-		Log & operator << (const QString & s)
-		{
-			out << s.latin1();
-			if (to_cout)
-				std::cout << s.latin1();
-			return *this;
-		}
+		Log & operator << (const QString & s);
 		
 		/**
 		* Prints and endline character to the Log and flushes it.

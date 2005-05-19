@@ -19,10 +19,12 @@
  ***************************************************************************/
 #include <klocale.h>
 #include <libtorrent/torrentcontrol.h>
-#include <qdatetime.h> 
+#include <qdatetime.h>
+#include <math.h>
 #include "ktorrentviewitem.h"
 
 using namespace bt;
+
 
 KTorrentViewItem::KTorrentViewItem(QListView* parent,bt::TorrentControl* tc)
 	: KListViewItem(parent),tc(tc)
@@ -47,14 +49,14 @@ void KTorrentViewItem::update()
 	
 	if (tc->getDownloadRate() != 0)
 	{
-		Uint32 secs = floor((float)tc->getBytesLeft() / (float)tc->getDownloadRate());
+		Uint32 secs = (int)floor((float)tc->getBytesLeft() / (float)tc->getDownloadRate());
 		QTime t;
 		t = t.addSecs(secs);
 		setText(5,t.toString("hh:mm:ss"));
 	}
 	else
 	{
-		setText(5,i18n("never"));
+		setText(5,i18n("infinity"));
 	}
 	setText(6,QString::number(tc->getNumPeers()));
 //	setText(8,QString::number());

@@ -32,7 +32,7 @@
       <autocompile>true</autocompile>
       <envvars/>
       <runarguments>
-        <ktorrent></ktorrent>
+        <ktorrent/>
       </runarguments>
     </run>
     <make>

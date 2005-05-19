@@ -36,7 +36,7 @@
 static const char description[] =
     I18N_NOOP("A BitTorrent program for KDE");
 
-static const char version[] = "1.0rc1";
+static const char version[] = "0.9.0";
 
 static KCmdLineOptions options[] =
 {

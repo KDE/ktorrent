@@ -41,4 +41,12 @@ namespace bt
 			std::cout << url.prettyURL().latin1();
 		return *this;
 	}
+
+	Log & Log::operator << (const QString & s)
+	{
+		out << s.latin1();
+		if (to_cout)
+			std::cout << s.latin1();
+		return *this;
+	}
 }	
