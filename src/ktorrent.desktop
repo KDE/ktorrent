@@ -8,6 +8,7 @@ GenericName[cs]=BitTorrent klient
 GenericName[da]=BitTorrent klient
 GenericName[et]=BitTorrenti klient
 GenericName[ga]=Cliant BitTorrent
+GenericName[it]=Client BitTorrent
 GenericName[nl]=BitTorrent-cliënt
 GenericName[sv]=BitTorrent-klient
 Exec=ktorrent %i %m -caption "%c"
