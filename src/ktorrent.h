@@ -38,6 +38,8 @@ class KURL;
 class KTorrentCore;
 class KTorrentView;
 class TrayIcon;
+class KTabWidget;
+class SearchWidget;
 
 
 namespace bt
@@ -67,15 +69,18 @@ public:
 	 */
 	virtual ~KTorrent();
 
-	/**
-	 * Use this method to load whatever file/URL you have
-	 */
-	void load(const KURL& url);
+	
 	
 	/**
 	 * Apply the settings.
 	 */
 	void applySettings();
+
+public slots:
+	/**
+	 * Use this method to load whatever file/URL you have
+	 */
+	void load(const KURL& url);
 
 protected:
 	/**
@@ -130,6 +135,8 @@ private:
 	KAction *m_start,*m_stop,*m_remove,*m_save;
 	KTorrentCore* m_core;
 	TrayIcon* m_systray_icon;
+	KTabWidget* m_tabs;
+	SearchWidget* m_search;
 };
 
 #endif // _KTORRENT_H_

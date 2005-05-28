@@ -125,13 +125,17 @@ namespace bt
 	
 	void Downloader::downloadFrom(PeerDownloader* pd)
 	{
+		// first see if there are ChunkDownload's which need a PeerDownloader
 		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();j++)
 		{
 			ChunkDownload* cd = j->second;
 			bool ok_to_down = pd->hasChunk(cd->getChunk()->getIndex());
 			if (!ok_to_down)
 				continue;
-			
+
+			// if cd hasn't got a downloader or when the current
+			// downloader has snubbed him
+			// assign him pd
 			const Peer* p = cd->getCurrentPeer();
 			if (cd->getNumDownloaders() == 0 || (p && p->isSnubbed()))
 			{
@@ -143,14 +147,24 @@ namespace bt
 		
 		if (current_chunks.count() > 2*pdowners.count())
 			return;
-	
-		Uint32 s = rand() % tor.getNumChunks();
-		Uint32 i = s;
+
+		// cap the maximum chunk to download
+		// to not get monster writes to the cache file
+		Uint32 max_c = cman.getMaxAllowedChunk();
+		if (max_c > tor.getNumChunks())
+			max_c = tor.getNumChunks();
+
+		// pick a random chunk to download, by picking
+		// a random starting value in the range 0 .. max_c
+		Uint32 s = rand() % max_c;
+		Uint32 i = s; 
 		BitSet bs;
 		cman.toBitSet(bs);
+
 		do
 		{
-			
+			// pd has to have the selected chunk
+			// and we don't have it
 			if (pd->hasChunk(i) && !current_chunks.find(i) && !bs.get(i))
 			{
 				ChunkDownload* cd = new ChunkDownload(cman.getChunk(i));
@@ -161,12 +175,15 @@ namespace bt
 					tmon->downloadStarted(cd);
 				return;
 			}
-			i = (i + 1) % tor.getNumChunks();
+			i = (i + 1) % max_c;
+			// we stop this loop if i becomse equal to it's starting value
+			// no infinite loops, thank you
 		}while (s != i);
 	}
 	
 	void Downloader::onNewPeer(Peer* peer)
 	{
+		// add a PeerDownloader for every Peer
 		PeerDownloader* pd = new PeerDownloader(peer);
 		connect(pd,SIGNAL(downloaded(const Piece& )),
 				this,SLOT(pieceRecieved(const Piece& )));
@@ -175,6 +192,7 @@ namespace bt
 
 	void Downloader::onPeerKilled(Peer* peer)
 	{
+		// Peer killed so remove it's PeerDownloader
 		PeerDownloader* pd = pdowners.find(peer);
 		if (pd)
 		{
@@ -199,6 +217,7 @@ namespace bt
 			{
 				cman.saveChunk(c->getIndex());
 				Out() << "Chunk " << c->getIndex() << " downloaded " << endl;
+				// tell everybody we have the Chunk
 				for (Uint32 i = 0;i < pman.getNumConnectedPeers();i++)
 				{
 					pman.getPeer(i)->getPacketWriter().sendHave(c->getIndex());
@@ -225,6 +244,7 @@ namespace bt
 	
 	Uint32 Downloader::downloadRate() const
 	{
+		// sum of the download rate of each peer
 		Uint32 rate = 0;
 		for (Uint32 i = 0;i < pman.getNumConnectedPeers();i++)
 		{
@@ -253,7 +273,7 @@ namespace bt
 		if (!fptr.open(file,"wb"))
 			return;
 
-
+		// Save all the current downloads to a file
 		Uint32 num = current_chunks.count();
 		fptr.write(&num,sizeof(Uint32));
 
@@ -269,6 +289,7 @@ namespace bt
 
 	void Downloader::loadDownloads(const QString & file)
 	{
+		// Load all partial downloads
 		File fptr;
 		if (!fptr.open(file,"rb"))
 			return;

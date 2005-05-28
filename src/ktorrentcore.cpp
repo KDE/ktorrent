@@ -97,7 +97,7 @@ QString KTorrentCore::findNewTorrentDir() const
 		QString dir = data_dir + QString("tor%1/").arg(i);
 		if (!d.exists(dir))
 		{
-			KIO::NetAccess::mkdir(dir,0,0755);
+			
 			return dir;
 		}
 		i++;

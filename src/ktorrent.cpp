@@ -39,7 +39,7 @@
 #include <kurldrag.h>
 #include <kprogress.h>
 #include <kpopupmenu.h>
-
+#include <ktabwidget.h>
 
 #include <kstdaccel.h>
 #include <kaction.h>
@@ -59,7 +59,7 @@
 #include "pref.h"
 #include "settings.h"
 #include "trayicon.h"
-
+#include "searchwidget.h"
 
 
 
@@ -70,7 +70,9 @@ KTorrent::KTorrent()
 		: KMainWindow( 0, "KTorrent" ),
 		m_view(0),m_systray_icon(0)
 {
-	m_view = new KTorrentView(this);
+	m_tabs = new KTabWidget(this);
+	m_view = new KTorrentView(m_tabs);
+	m_search = new SearchWidget(m_tabs);
 	m_core = new KTorrentCore();
 	m_systray_icon = new TrayIcon(this);
 	
@@ -92,8 +94,11 @@ KTorrent::KTorrent()
 	// accept dnd
 	setAcceptDrops(true);
 
+	m_tabs->addTab(m_view,i18n("Downloads"));
+	m_tabs->addTab(m_search,i18n("Search"));
+	
 	// tell the KMainWindow that this is indeed the main widget
-	setCentralWidget(m_view);
+	setCentralWidget(m_tabs);
 
 	// then, setup our actions
 	setupActions();
@@ -109,6 +114,9 @@ KTorrent::KTorrent()
 	currentChanged(0);
 	applySettings();
 	m_core->loadTorrents();
+
+	connect(m_search,SIGNAL(statusBarMsg(const QString& )),this,SLOT(changeStatusbar(const QString& )));
+	connect(m_search,SIGNAL(openTorrent(const KURL& )),this,SLOT(load(const KURL& )));
 }
 
 KTorrent::~KTorrent()
@@ -155,7 +163,11 @@ void KTorrent::load(const KURL& url)
 		
 		// and remove the temp file
 		KIO::NetAccess::removeTempFile(target);
-	}	
+	}
+	else
+	{
+		KMessageBox::error(this,KIO::NetAccess::lastErrorString(),i18n("Error"));
+	}
 }
 
 void KTorrent::currentChanged(bt::TorrentControl* tc)
@@ -203,7 +215,7 @@ void KTorrent::setupActions()
 			actionCollection(), "Stop");
 	
 	m_remove = new KAction(
-			i18n("Remove"), "button_cancel",0,this, SLOT(removeDownload()),
+			i18n("Remove"), "remove",0,this, SLOT(removeDownload()),
 			actionCollection(), "Remove");
 	
 	createGUI();
@@ -274,7 +286,9 @@ void KTorrent::fileOpen()
 	*/
 	// standard filedialog
 	KURL url = KFileDialog::getOpenURL(QString::null, QString::null, this, i18n("Open Location"));
-	load(url);
+
+	if (url.isValid())
+		load(url);
 }
 
 void KTorrent::save(bt::TorrentControl* tc)

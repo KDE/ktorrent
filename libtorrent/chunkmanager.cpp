@@ -50,6 +50,7 @@ namespace bt
 		}
 		chunks.setAutoDelete(true);
 		num_chunks_in_cache_file = 0;
+		max_allowed = 50;
 	}
 
 
@@ -75,6 +76,7 @@ namespace bt
 			Chunk* c = getChunk(hdr.index);
 			if (c)
 			{
+				max_allowed = hdr.index + 50;
 				c->setStatus(Chunk::ON_DISK);
 				c->setCacheFileOffset(hdr.cache_off);
 			}
@@ -224,6 +226,8 @@ namespace bt
 		hdr.cache_off = c->getCacheFileOffset();
 		hdr.index = c->getIndex();
 		fptr.write(&hdr,sizeof(NewChunkHeader));
+		if (c->getIndex() + 50 > max_allowed)
+			max_allowed = c->getIndex() + 50;
 	}
 	
 	Uint32 ChunkManager::bytesLeft() const

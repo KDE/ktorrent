@@ -17,50 +17,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <klocale.h>
-#include <libtorrent/torrentcontrol.h>
-#include <qdatetime.h>
-#include <math.h>
-#include "ktorrentviewitem.h"
+#ifndef HTMLPART_H
+#define HTMLPART_H
 
-using namespace bt;
+#include <khtml_part.h>
 
-
-KTorrentViewItem::KTorrentViewItem(QListView* parent,bt::TorrentControl* tc)
-	: KListViewItem(parent),tc(tc)
-{}
-
-
-KTorrentViewItem::~KTorrentViewItem()
-{}
-
-void KTorrentViewItem::update()
+/**
+@author Joris Guisson
+*/
+class HTMLPart : public KHTMLPart
 {
-	float to_meg = (1024.0 * 1024.0);
-	setText(0,tc->getTorrentName());
-	setText(1,i18n("%1 MB / %2 MB")
-			.arg((float)tc->getBytesDownloaded() / to_meg)
-					.arg((float)tc->getTotalBytes()/ to_meg));
-	
-	setText(2,i18n("%1 MB").arg((float)tc->getBytesUploaded()/ to_meg));
-	setText(3,i18n("%1 kB/sec").arg(tc->getDownloadRate() / 1024.0));
-	setText(4,i18n("%1 kB/sec").arg(tc->getUploadRate() / 1024.0));
-	
-	if (tc->getDownloadRate() != 0)
-	{
-		Uint32 secs = (int)floor((float)tc->getBytesLeft() / (float)tc->getDownloadRate());
-		QTime t;
-		t = t.addSecs(secs);
-		setText(5,t.toString("hh:mm:ss"));
-	}
-	else
-	{
-		setText(5,i18n("infinity"));
-	}
-	setText(6,QString::number(tc->getNumPeers()));
-	setText(7,QString("%1 (%2) / %3")
-			.arg(tc->getNumChunksDownloaded())
-			.arg(tc->getNumChunksDownloading())
-			.arg(tc->getTotalChunks()));
-}
+	Q_OBJECT
+public:
+	HTMLPart(QWidget *parent = 0);
+	virtual ~HTMLPart();
 
+public slots:
+	void back();
+	void reload();
+
+private slots:
+	void openURLRequest(const KURL &url, const KParts::URLArgs &args);
+	void addToHistory(const KURL & url);
+	void download(const KURL & u);
+
+signals:
+	void backAvailable(bool yes);
+	void openTorrent(const KURL & url);
+
+private:
+	KURL::List history;
+};
+
+#endif

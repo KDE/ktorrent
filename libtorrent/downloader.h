@@ -62,9 +62,18 @@ namespace bt
 		Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman);
 		virtual ~Downloader();
 
+		/// Get the number of bytes we have downloaded
 		Uint32 bytesDownloaded() const {return downloaded;}
+
+		/// Get the current dowload rate
 		Uint32 downloadRate() const;
+
+		/// Get the number of chunks we are dowloading
 		Uint32 numActiveDownloads() const {return current_chunks.count();}
+		
+		/**
+		 * Clear all downloads. Deletes all active downloads.
+		 */
 		void clearDownloads();
 		
 		CurChunkCItr beginDownloads() const {return current_chunks.begin();}
@@ -82,9 +91,27 @@ namespace bt
 		 */
 		void loadDownloads(const QString & file);
 	public slots:
+		/**
+		 * Update the downloader.
+		 */
 		void update();
+		
+		/**
+		 * We got a new connection.
+		 * @param peer The Peer
+		 */
 		void onNewPeer(Peer* peer);
+		
+		/**
+		 * A Peer has disconnected.
+		 * @param peer The Peer
+		 */
 		void onPeerKilled(Peer* peer);
+		
+		/**
+		 * Set the TorrentMonitor.
+		 * @param tmo 
+		 */
 		void setMonitor(TorrentMonitor* tmo);
 		
 	private slots:

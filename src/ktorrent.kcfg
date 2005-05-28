@@ -34,5 +34,9 @@
 		<label>Keep seeding after download has finished</label>
 		<default>true</default>
     </entry>
+    <entry name="searchURL" type="String">
+    	<label>Torrent search engine</label>
+    	<default>http://search.bittorrent.com/search.jsp</default>
+    </entry>
   </group>
 </kcfg>

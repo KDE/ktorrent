@@ -46,6 +46,7 @@ namespace bt
 		QString cache_file,index_file;
 		QPtrVector<Chunk> chunks;
 		unsigned int num_chunks_in_cache_file;
+		Uint32 max_allowed;
 	public:
 		ChunkManager(Torrent & tor,const QString & data_dir);
 		virtual ~ChunkManager();
@@ -118,6 +119,18 @@ namespace bt
 
 		/// Get the cache file
 		QString getCacheFile() const {return cache_file;}
+
+		/**
+		 * Get the highest chunk num, we are allowed to download.
+		 * In order to avoid huge writes to the cache file in the beginning
+		 * of the download. We artificially limit which pieces can be downloaded.
+		 * 
+		 * In the beggining we can only dowload the first 50 pieces. Once a piece
+		 * comes in, we up the limit to that piece number + 50. Thus ensuring that
+		 * the cache file will be expanded slowly.
+		 * @return The maximum allowed chunk
+		 */
+		Uint32 getMaxAllowedChunk() const {return max_allowed;}
 	private:
 		void loadChunk(unsigned int i);		
 		void saveIndexFile();

@@ -92,6 +92,7 @@ namespace bt
 		
 		tor = new Torrent();
 		tor->load(torrent);
+		KIO::NetAccess::mkdir(ddir,0,0755);
 	
 		QString cache_file = datadir + "cache";
 		QString tor_copy = datadir + "torrent";
@@ -397,6 +398,11 @@ namespace bt
 	Uint32 TorrentControl::getNumChunksDownloaded() const
 	{
 		return cman->getNumChunks() - cman->chunksLeft();
+	}
+
+	Uint32 TorrentControl::getTotalBytes() const
+	{
+		return tor->getFileLength();
 	}
 }
 #include "torrentcontrol.moc"

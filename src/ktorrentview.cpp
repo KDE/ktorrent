@@ -43,8 +43,8 @@ KTorrentView::KTorrentView(QWidget *parent)
 	addColumn(i18n("Down Speed"));
 	addColumn(i18n("Up Speed"));
 	addColumn(i18n("Time Left"));
-	addColumn(i18n("Number of Peers"));
-	addColumn(i18n("Chunks Dowloaded"));
+	addColumn(i18n("Peers"));
+	addColumn(i18n("Chunks"));
 	timer.start(1000);
 	connect(this,SIGNAL(clicked(QListViewItem* )),this,SLOT(onExecuted(QListViewItem* )));
 	show_debug_view = bt::Globals::instance().isDebugModeSet();
@@ -63,7 +63,7 @@ KTorrentView::KTorrentView(QWidget *parent)
 			this,SLOT(startDownload()));
 
 	remove_id = menu->insertItem(
-			iload->loadIconSet("button_cancel",KIcon::Small),i18n("Remove"),
+			iload->loadIconSet("remove",KIcon::Small),i18n("Remove"),
 			this,SLOT(removeDownload()));
 }
 

@@ -74,6 +74,9 @@ namespace bt
 		/// Get the number of bytes left to download
 		Uint32 getBytesLeft() const;
 
+		/// Get the total number of bytes
+		Uint32 getTotalBytes() const;
+
 		/// Get the download rate in bytes per sec
 		Uint32 getDownloadRate() const;
 

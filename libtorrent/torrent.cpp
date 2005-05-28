@@ -52,7 +52,8 @@ namespace bt
 		QByteArray data(fptr.size());
 	//	Out() << "File size = " << fptr.size() << endl;
 		fptr.readBlock(data.data(),fptr.size());
-	//	Out() << "Data size = " << data.size() << endl;
+		if (QString(data).startsWith("<"))
+			Out() << "Data = \n" << QString(data) << endl;
 		
 		BDecoder decoder(data);
 		BNode* node = decoder.decode();
