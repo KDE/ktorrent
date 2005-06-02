@@ -48,7 +48,7 @@ void HTMLPart::openURLRequest(const KURL &u,const KParts::URLArgs &)
 	if (KIO::NetAccess::mimetype(u,0) == "application/x-bittorrent")
 	{
 		int ret = QMessageBox::information(0,"ktorrent",
-					i18n("Do you wan to download or save the torrent ?"),
+					i18n("Do you want to download or save the torrent ?"),
 					i18n("Download"),i18n("Save"),i18n("Cancel"));
 		switch (ret)
 		{
