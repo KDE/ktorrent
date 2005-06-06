@@ -65,6 +65,8 @@ KTorrentView::KTorrentView(QWidget *parent)
 	remove_id = menu->insertItem(
 			iload->loadIconSet("remove",KIcon::Small),i18n("Remove"),
 			this,SLOT(removeDownload()));
+
+	this->setAllColumnsShowFocus(true);
 }
 
 KTorrentView::~KTorrentView()
@@ -143,8 +145,8 @@ void KTorrentView::addTorrent(bt::TorrentControl* tc)
 	items.insert(tc,tvi);
 	tvi->update();
 	currentChanged(tc);
-	connect(tc,SIGNAL(trackerDown(bt::TorrentControl* )),
-			this,SLOT(onTrackerDown(bt::TorrentControl* )));
+	connect(tc,SIGNAL(trackerError(bt::TorrentControl*,const QString & )),
+			this,SLOT(onTrackerError(bt::TorrentControl*,const QString & )));
 	if (show_debug_view)
 	{
 		DebugView* dbg = new DebugView(tc);
@@ -180,11 +182,9 @@ void KTorrentView::update()
 	}
 }
 
-void KTorrentView::onTrackerDown(bt::TorrentControl* tc)
+void KTorrentView::onTrackerError(bt::TorrentControl* tc,const QString & err)
 {
-	KMessageBox::error(
-			this,i18n("The tracker appears to be down. Stopping download."),
-			i18n("Error"));
+	KMessageBox::error(this,err,i18n("Error"));
 	tc->stop();
 }
 

@@ -23,6 +23,7 @@
 #include <qobject.h>
 #include <qcstring.h> 
 #include <qtimer.h>
+#include <kurl.h>
 #include "globals.h"
 
 class KProgressDialog;
@@ -176,7 +177,7 @@ namespace bt
 		
 	signals:
 		void finished(bt::TorrentControl* me);
-		void trackerDown(bt::TorrentControl* me);
+		void trackerError(bt::TorrentControl* me,const QString & error);
 		
 	private:	
 		void updateTracker(const QString & ev,bool last_succes = true);
@@ -195,6 +196,7 @@ namespace bt
 		bool completed,running,started,saved;
 		TorrentMonitor* tmon;
 		int num_tracker_attempts;
+		KURL last_tracker_url;
 		
 		static Uint16 initial_port;
 	};

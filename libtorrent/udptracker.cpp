@@ -194,7 +194,7 @@ namespace bt
 		WriteUint32(buf,80,ev);
 		WriteUint32(buf,84,0);
 		WriteUint32(buf,88,0);// Wtf is the bloody key ?
-		WriteUint32(buf,92,-1);
+		WriteUint32(buf,92,1000);
 		WriteUint16(buf,96,port);
 
 		sock->writeBlock((const char*)buf,98,addr,udp_port);

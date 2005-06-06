@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <qfile.h>
 #include <kio/netaccess.h>
+#include <klocale.h>
 #include <kprogress.h>
 #include "downloader.h"
 #include "uploader.h"
@@ -188,6 +189,17 @@ namespace bt
 			Out() << "Data : " << endl;
 			Out() << QString(data) << endl;
 			delete n;
+
+			if (num_tracker_attempts >= tor->getNumTrackerURLs() &&
+						 trackerevent != "stopped")
+			{
+				trackerError(this,i18n("The tracker %1 didn't send a proper response"
+						", stopping download").arg(last_tracker_url.prettyURL()));
+			}
+			else
+			{
+				updateTracker(trackerevent,false);
+			}
 		}
 	}
 
@@ -205,7 +217,8 @@ namespace bt
 		if (num_tracker_attempts >= tor->getNumTrackerURLs() &&
 		    trackerevent != "stopped")
 		{
-			trackerDown(this);
+			trackerError(this,i18n("The tracker %1 is down, stopping download.")
+					.arg(last_tracker_url.prettyURL()));
 		}
 		else if (trackerevent != "stopped")
 		{
@@ -220,7 +233,7 @@ namespace bt
 			return;
 		
 		KURL url = tor->getTrackerURL(last_succes);
-
+		last_tracker_url = url;
 		tracker->setData(tor->getInfoHash(),tor->getPeerID(),port,
 						 up->bytesUploaded(),down->bytesDownloaded(),
 						 cman->bytesLeft(),ev);

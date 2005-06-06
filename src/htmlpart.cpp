@@ -44,32 +44,15 @@ HTMLPart::~HTMLPart()
 
 void HTMLPart::openURLRequest(const KURL &u,const KParts::URLArgs &)
 {
-	//if (u.prettyURL().endsWith(".torrent"))
-	if (KIO::NetAccess::mimetype(u,0) == "application/x-bittorrent")
+	if (KIO::NetAccess::mimetype(u,0) == "application/x-bittorrent" ||
+		   u.prettyURL().endsWith(".torrent"))
 	{
 		int ret = QMessageBox::information(0,"ktorrent",
-					i18n("Do you want to download or save the torrent ?"),
-					i18n("Download"),i18n("Save"),i18n("Cancel"));
-		switch (ret)
-		{
-			case 0:
-				openTorrent(u);
-				break;
-			case 1:
-			{
-				KURL su = KFileDialog::getSaveURL(
-						QString::null,
-						i18n("*.torrent | Torrent files (*.torrent)"),
-						0,i18n("Choose a filename"));
-				if (su.isValid())
-				{
-					KIO::NetAccess::copy(u,su,0);
-				}
-			}
-				break;
-			case 2:
-				break;
-		}
+					i18n("Do you want to download the torrent ?"),
+					i18n("Yes"),i18n("No"));
+		
+		if (ret == 0)
+			openTorrent(u);
 	}
 	else
 	{
@@ -78,7 +61,7 @@ void HTMLPart::openURLRequest(const KURL &u,const KParts::URLArgs &)
 		openURL(u);
 	}
 }
-
+/*
 void HTMLPart::download(const KURL & u)
 {
 	QString target;
@@ -109,7 +92,7 @@ void HTMLPart::download(const KURL & u)
 		KIO::NetAccess::removeTempFile(target);
 	}
 }
-
+*/
 void HTMLPart::back()
 {
 	if (history.count() == 0)

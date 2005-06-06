@@ -39,7 +39,7 @@ public slots:
 private slots:
 	void openURLRequest(const KURL &url, const KParts::URLArgs &args);
 	void addToHistory(const KURL & url);
-	void download(const KURL & u);
+//	void download(const KURL & u);
 
 signals:
 	void backAvailable(bool yes);
