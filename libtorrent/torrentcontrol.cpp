@@ -193,7 +193,7 @@ namespace bt
 			if (num_tracker_attempts >= tor->getNumTrackerURLs() &&
 						 trackerevent != "stopped")
 			{
-				trackerError(this,i18n("The tracker %1 didn't send a proper response"
+				trackerError(this,i18n("The tracker %1 did not send a proper response"
 						", stopping download").arg(last_tracker_url.prettyURL()));
 			}
 			else
