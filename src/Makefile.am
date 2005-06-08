@@ -18,17 +18,17 @@ ktorrent_LDADD = ../libtorrent/libtorrent.la $(LIB_KFILE) \
 
 # which sources should be compiled for ktorrent
 ktorrent_SOURCES = settings.kcfgc main.cpp ktorrent.cpp ktorrentview.cpp \
-				pref.cpp chunkdownloadview.cpp ktorrentviewitem.cpp ktorrentcore.cpp \
-				peerview.cpp ktorrentmonitor.cpp downloadpref.ui debugview.cpp trayicon.cpp \
-			searchwidget.cpp searchbar.ui htmlpart.cpp
+					pref.cpp chunkdownloadview.cpp ktorrentviewitem.cpp ktorrentcore.cpp \
+					peerview.cpp ktorrentmonitor.cpp downloadpref.ui debugview.cpp trayicon.cpp \
+				searchwidget.cpp searchbar.ui htmlpart.cpp logviewer.cpp
 
 xdg_apps_DATA = ktorrent.desktop
 kde_kcfg_DATA = ktorrent.kcfg
 
 # these are the headers for your project
 noinst_HEADERS = ktorrent.h ktorrentview.h pref.h chunkdownloadview.h \
-						ktorrentviewitem.h ktorrentcore.h peerview.h ktorrentmonitor.h debugview.h trayicon.h \
-	htmlpart.h
+							ktorrentviewitem.h ktorrentcore.h peerview.h ktorrentmonitor.h debugview.h trayicon.h \
+		htmlpart.h logviewer.h
 
 # client stuff
 

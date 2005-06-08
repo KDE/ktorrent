@@ -48,22 +48,22 @@ namespace bt
 			throw Error(QString("Can't open file %1 : %2")
 					.arg(file).arg(fptr.errorString()));
 		
-		
 		QByteArray data(fptr.size());
 	//	Out() << "File size = " << fptr.size() << endl;
 		fptr.readBlock(data.data(),fptr.size());
 		
-		BDecoder decoder(data);
-		BNode* node = decoder.decode();
-		BDictNode* dict = dynamic_cast<BDictNode*>(node);
-		if (!node)
-			throw Error("Corrupted torrent !");
-		
+		BDictNode* dict = 0;		
 	//	dict->printDebugInfo();
 		try
 		{
-			loadTrackerURL(dict->getData("announce"));
-			loadInfo(dict->getData("info"));
+			BDecoder decoder(data);
+			BNode* node = decoder.decode();
+			dict = dynamic_cast<BDictNode*>(node);
+			if (!dict)
+				throw Error("Corrupted torrent !");
+
+			loadTrackerURL(dict->getValue("announce"));
+			loadInfo(dict->getDict("info"));
 			loadAnnounceList(dict->getData("announce-list"));
 			BNode* n = dict->getData("info");
 			SHA1HashGen hg;
@@ -77,60 +77,53 @@ namespace bt
 		}
 	}
 	
-	void Torrent::loadInfo(BNode* info)
+	void Torrent::loadInfo(BDictNode* dict)
 	{
-		BDictNode* dict = dynamic_cast<BDictNode*>(info);
 		if (!dict)
 			throw Error("Corrupted torrent !");
 		
-		loadPieceLength(dict->getData("piece length"));
-		BNode* n = dict->getData("length");
+		loadPieceLength(dict->getValue("piece length"));
+		BValueNode* n = dict->getValue("length");
 		if (n)
 			loadFileLength(n);
 		else
-			loadFiles(dict->getData("files"));
+			loadFiles(dict->getList("files"));
 		
-		loadHash(dict->getData("pieces"));
-		loadName(dict->getData("name"));
+		loadHash(dict->getValue("pieces"));
+		loadName(dict->getValue("name"));
 	}
 	
-	void Torrent::loadFiles(BNode* node)
+	void Torrent::loadFiles(BListNode* node)
 	{
 		Out() << "Multi file torrent" << endl;
-		if (!node || node->getType() != BNode::LIST)
+		if (!node)
 			throw Error("Corrupted torrent !");
 		
-		BListNode* fl = (BListNode*)node;
+		BListNode* fl = node;
 		for (Uint32 i = 0;i < fl->getNumChildren();i++)
 		{
-			BNode* n = fl->getChild(i);
-			if (!n || n->getType() != BNode::DICT)
+			BDictNode* d = fl->getDict(i);
+			if (!d)
 				throw Error("Corrupted torrent !");
 			
-			BDictNode* d = (BDictNode*)n;
-			
-			n = d->getData("length");
-			if (!n || n->getType() != BNode::VALUE)
+			BValueNode* v = d->getValue("length");
+			if (!v || v->data().getType() != Value::INT)
 				throw Error("Corrupted torrent !");
 			
 			File file;
-		
-			BValueNode* v = (BValueNode*)n;
 			file.size = v->data().toInt();
 			file_length += file.size;
 			
-			n = d->getData("path");
-			if (!n || n->getType() != BNode::LIST)
+			BListNode* ln = d->getList("path");
+			if (!ln)
 				throw Error("Corrupted torrent !");
 			
-			BListNode* ln = (BListNode*)n;
 			for (Uint32 j = 0;j < ln->getNumChildren();j++)
 			{
-				n = ln->getChild(j);
-				if (!n || n->getType() != BNode::VALUE)
+				v = ln->getValue(j);
+				if (!v || v->data().getType() != Value::STRING)
 					throw Error("Corrupted torrent !");
-				
-				v = (BValueNode*)n;
+	
 				file.path += v->data().toString();
 				if (j + 1 < ln->getNumChildren())
 					file.path += "/";
@@ -139,52 +132,37 @@ namespace bt
 		}
 	}
 
-	void Torrent::loadTrackerURL(BNode* node)
+	void Torrent::loadTrackerURL(BValueNode* node)
 	{
-		if (!node || node->getType() != BNode::VALUE)
+		if (!node || node->data().getType() != Value::STRING)
 			throw Error("Corrupted torrent !");
 		
-		BValueNode* v = (BValueNode*)node;
-		if (v->data().getType() != Value::STRING)
-			throw Error("Corrupted torrent !");
-		
-		tracker_url = v->data().toString();
+		tracker_url = node->data().toString();
 	}
 	
-	void Torrent::loadPieceLength(BNode* node)
+	void Torrent::loadPieceLength(BValueNode* node)
 	{
-		if (!node || node->getType() != BNode::VALUE)
+		if (!node || node->data().getType() != Value::INT)
 			throw Error("Corrupted torrent !");
 		
-		BValueNode* v = (BValueNode*)node;
-		if (v->data().getType() != Value::INT)
-			throw Error("Corrupted torrent !");
-		
-		piece_length = v->data().toInt();
+		piece_length = node->data().toInt();
 	}
 	
-	void Torrent::loadFileLength(BNode* node)
+	void Torrent::loadFileLength(BValueNode* node)
 	{
-		if (!node || node->getType() != BNode::VALUE)
+		if (!node || node->data().getType() != Value::INT)
 			throw Error("Corrupted torrent !");
-		
-		BValueNode* v = (BValueNode*)node;
-		if (v->data().getType() != Value::INT)
-			throw Error("Corrupted torrent !");
-		
-		file_length = v->data().toInt();
+				
+		file_length = node->data().toInt();
 	}
 	
-	void Torrent::loadHash(BNode* node)
+	void Torrent::loadHash(BValueNode* node)
 	{
-		if (!node || node->getType() != BNode::VALUE)
+		if (!node || node->data().getType() != Value::STRING)
 			throw Error("Corrupted torrent !");
 		
-		BValueNode* v = (BValueNode*)node;
-		if (v->data().getType() != Value::STRING)
-			throw Error("Corrupted torrent !");
-		
-		QByteArray hash_string = v->data().toByteArray();
+
+		QByteArray hash_string = node->data().toByteArray();
 		for (unsigned int i = 0;i < hash_string.size();i+=20)
 		{
 			Uint8 h[20];
@@ -194,16 +172,12 @@ namespace bt
 		}
 	}
 	
-	void Torrent::loadName(BNode* node)
+	void Torrent::loadName(BValueNode* node)
 	{
-		if (!node || node->getType() != BNode::VALUE)
+		if (!node || node->data().getType() != Value::STRING)
 			throw Error("Corrupted torrent !");
 		
-		BValueNode* v = (BValueNode*)node;
-		if (v->data().getType() != Value::STRING)
-			throw Error("Corrupted torrent !");
-		
-		name_suggestion = v->data().toString();
+		name_suggestion = node->data().toString();
 	}
 	
 	void Torrent::loadAnnounceList(BNode* node)

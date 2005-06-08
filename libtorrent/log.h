@@ -6,14 +6,18 @@
 #ifndef JORISLOG_H
 #define JORISLOG_H
 
-#include <qstring.h>
+#include <qtextstream.h>
+#include <qfile.h>
 #include <iostream>
-#include <fstream>
+
 
 class KURL;
+class QTextBrowser;
 
 namespace bt
 {
+	
+	
 	/**
 	* @author Joris Guisson
 	* @brief Class which writes messages to a logfile
@@ -23,11 +27,18 @@ namespace bt
 	*
 	* By default all messages will also be printed on the standard output. This
 	* can be turned down using the @a setOutputToConsole function.
+	*
+	* There is also the possibility to print all the messages to a QTextBrowser
+	* widget.
 	*/
-	class Log
+	class Log 
 	{
-		std::ofstream out;
+		QTextStream out;
+		QFile fptr;
 		bool to_cout;
+		QTextBrowser* widget;
+		QString tmp;
+		QTextOStream* wo;
 	public:
 		/**
 		* Constructor.
@@ -45,6 +56,13 @@ namespace bt
 		* @param on Enable or disable
 		*/
 		void setOutputToConsole(bool on) {to_cout = on;}
+
+		/**
+		 * Set the output widget. This widget
+		 * will print out everything which gets printed to the log.
+		 * @param widget The QTextBrowser
+		 */
+		void setOutputWidget(QTextBrowser* widget);
 		
 		/**
 		* Set the output logfile.
@@ -55,7 +73,7 @@ namespace bt
 		
 		/**
 		* Write something to the log file.
-		* Anything which can be passed to std::ostream using
+		* Anything which can be passed to QTextStream using
 		* the << operator is allowed.
 		* @param val The value
 		* @return This Log
@@ -65,7 +83,14 @@ namespace bt
 		{
 			out << val;
 			if (to_cout)
+			{
 				std::cout << val;
+			}
+			
+			if (widget)
+			{
+				*wo << val;
+			}
 			return *this;
 		}
 		

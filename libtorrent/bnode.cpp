@@ -67,6 +67,24 @@ namespace bt
 	{
 		return children.find(key);
 	}
+
+	BListNode* BDictNode::getList(const QString & key)
+	{
+		BNode* n = getData(key);
+		return dynamic_cast<BListNode*>(n);
+	}
+	
+	BDictNode* BDictNode::getDict(const QString & key)
+	{
+		BNode* n = getData(key);
+		return dynamic_cast<BDictNode*>(n);
+	}
+	
+	BValueNode* BDictNode::getValue(const QString & key)
+	{
+		BNode* n = getData(key);
+		return dynamic_cast<BValueNode*>(n);
+	}
 	
 	void BDictNode::printDebugInfo()
 	{
@@ -95,6 +113,21 @@ namespace bt
 	void BListNode::append(BNode* node)
 	{
 		children.append(node);
+	}
+
+	BListNode* BListNode::getList(Uint32 idx)
+	{
+		return dynamic_cast<BListNode*>(getChild(idx));
+	}
+
+	BDictNode* BListNode::getDict(Uint32 idx)
+	{
+		return dynamic_cast<BDictNode*>(getChild(idx));
+	}
+
+	BValueNode* BListNode::getValue(Uint32 idx)
+	{
+		return dynamic_cast<BValueNode*>(getChild(idx));
 	}
 	
 	void BListNode::printDebugInfo()

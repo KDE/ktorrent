@@ -18,7 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include <qdir.h>
-
+#include <klocale.h>
 #include <kglobal.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
@@ -68,7 +68,10 @@ void KTorrentCore::load(const QString & target)
 	}
 	catch (bt::Error & err)
 	{
-		KMessageBox::error(0,err.toString(),"Error");
+		KMessageBox::error(0,
+			i18n("An error occured while loading the torrent file. "
+				"The most likely cause is that the torrent file is corrupted, "
+				"or it isn't a torrent file at all"),"Error");
 		delete tc;
 		tc = 0;
 	}

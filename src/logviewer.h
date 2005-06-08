@@ -17,58 +17,24 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <klocale.h>
-#include <kglobal.h>
-#include <libtorrent/torrentcontrol.h>
-#include <qdatetime.h>
-#include <math.h>
-#include "ktorrentviewitem.h"
+#ifndef LOGVIEWER_H
+#define LOGVIEWER_H
 
-using namespace bt;
+#include <ktextbrowser.h>
+#include <libtorrent/log.h>
 
-const double TO_MEG = (1024.0 * 1024.0);
-const double TO_GIG = (1024.0 * 1024.0 * 1024.0);
-
-static QString BytesToString(Uint32 bytes)
+/**
+ * @author Joris Guisson
+ */
+class LogViewer : public KTextBrowser
 {
-	KLocale* loc = KGlobal::locale();
-	if (bytes > 1024 * 1024 * 1024)
-		return i18n("%1 GB").arg(loc->formatNumber(bytes / TO_GIG,3));
-	else
-		return i18n("%1 MB").arg(loc->formatNumber(bytes / TO_MEG,3));
-}
+	Q_OBJECT
+public:
+	LogViewer(bt::Log & log,QWidget *parent = 0, const char *name = 0);
+	virtual ~LogViewer();
 
-KTorrentViewItem::KTorrentViewItem(QListView* parent,bt::TorrentControl* tc)
-	: KListViewItem(parent),tc(tc)
-{}
+private:
+	bt::Log & log;
+};
 
-
-KTorrentViewItem::~KTorrentViewItem()
-{}
-
-void KTorrentViewItem::update()
-{
-	setText(0,tc->getTorrentName());
-	setText(1,BytesToString(tc->getBytesDownloaded()) + " / " + BytesToString(tc->getTotalBytes()));
-	setText(2,BytesToString(tc->getBytesUploaded()));
-	setText(3,i18n("%1 kB/sec").arg(tc->getDownloadRate() / 1024.0));
-	setText(4,i18n("%1 kB/sec").arg(tc->getUploadRate() / 1024.0));
-	
-	if (tc->getDownloadRate() != 0)
-	{
-		Uint32 secs = (int)floor((float)tc->getBytesLeft() / (float)tc->getDownloadRate());
-		QTime t;
-		t = t.addSecs(secs);
-		setText(5,t.toString("hh:mm:ss"));
-	}
-	else
-	{
-		setText(5,i18n("infinity"));
-	}
-	setText(6,QString::number(tc->getNumPeers()));
-	setText(7,QString("%1 (%2) / %3")
-			.arg(tc->getNumChunksDownloaded())
-			.arg(tc->getNumChunksDownloading())
-			.arg(tc->getTotalChunks()));
-}
-
+#endif

@@ -27,6 +27,7 @@
 
 namespace bt
 {
+	class BListNode;
 
 	/**
 	 * @author Joris Guisson
@@ -51,19 +52,32 @@ namespace bt
 		 */
 		BNode(Type type,Uint32 off);
 		virtual ~BNode();
-		
+
+		/// Get the type of node
 		Type getType() const {return type;}
-		
+
+		/// Get the offset in the bytearray where this node starts.
 		Uint32 getOffset() const {return off;}
+
+		/// Get the length this node takes up in the bytearray.
 		Uint32 getLength() const {return len;}
+
+		/// Set the length
 		void setLength(Uint32 l) {len = l;}
-		
+
+		/// Print some debugging info
 		virtual void printDebugInfo() = 0;
 	private:
 		Type type;
 		Uint32 off,len;
 	};
-	
+
+	/**
+	 * @author Joris Guisson
+	 * @brief Represents a value (string,bytearray or int) in bencoded data
+	 *
+	 * @todo Use QVariant
+	 */
 	class BValueNode : public BNode
 	{
 		Value v;
@@ -75,6 +89,11 @@ namespace bt
 		void printDebugInfo();
 	};
 
+	/**
+	 * @author Joris Guisson
+	 * @brief Represents a dictionary in bencoded data
+	 *
+	 */
 	class BDictNode : public BNode
 	{
 		QDict<BNode> children;
@@ -82,11 +101,49 @@ namespace bt
 		BDictNode(Uint32 off);
 		virtual ~BDictNode();
 		
+		/**
+		 * Insert a BNode in the dictionary.
+		 * @param key The key
+		 * @param node The node
+		 */
 		void insert(const QString & key,BNode* node);
+		
+		/**
+		 * Get a BNode.
+		 * @param key The key
+		 * @return The node or 0 if there is no node with has key @a key 
+		 */
 		BNode* getData(const QString & key);
+
+		/**
+		 * Get a BListNode.
+		 * @param key The key
+		 * @return The node or 0 if there is no list node with has key @a key
+		 */
+		BListNode* getList(const QString & key);
+
+		/**
+		 * Get a BDictNode.
+		 * @param key The key
+		 * @return The node or 0 if there is no dict node with has key @a key
+		 */
+		BDictNode* getDict(const QString & key);
+
+		/**
+		 * Get a BValueNode.
+		 * @param key The key
+		 * @return The node or 0 if there is no value node with has key @a key
+		 */
+		BValueNode* getValue(const QString & key);
+		
 		void printDebugInfo();
 	};
-	
+
+	/**
+	 * @author Joris Guisson
+	 * @brief Represents a list in bencoded data
+	 *
+	 */
 	class BListNode : public BNode
 	{
 		QPtrList<BNode> children;
@@ -94,10 +151,46 @@ namespace bt
 		BListNode(Uint32 off);
 		virtual ~BListNode();
 
+		/**
+		 * Append a node to the list.
+		 * @param node The node
+		 */
 		void append(BNode* node);
 		void printDebugInfo();
+
+		/// Get the number of nodes in the list.
 		Uint32 getNumChildren() const {return children.count();}
+		
+		/**
+		 * Get a node from the list
+		 * @param idx The index
+		 * @return The node or 0 if idx is out of bounds
+		 */
 		BNode* getChild(Uint32 idx) {return children.at(idx);}
+
+		/**
+		 * Get a BListNode.
+		 * @param idx The index
+		 * @return The node or 0 if the index is out of bounds or the element
+		 * 	at postion @a idx isn't a BListNode.
+		 */
+		BListNode* getList(Uint32 idx);
+
+		/**
+		 * Get a BDictNode.
+		 * @param idx The index
+		 * @return The node or 0 if the index is out of bounds or the element
+		 * 	at postion @a idx isn't a BDictNode.
+		 */
+		BDictNode* getDict(Uint32 idx);
+
+		/**
+		 * Get a BValueNode.
+		 * @param idx The index
+		 * @return The node or 0 if the index is out of bounds or the element
+		 * 	at postion @a idx isn't a BValueNode.
+		 */
+		BValueNode* getValue(Uint32 idx);
 	};
 };
 

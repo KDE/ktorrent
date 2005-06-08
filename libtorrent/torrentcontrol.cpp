@@ -193,7 +193,8 @@ namespace bt
 			if (num_tracker_attempts >= tor->getNumTrackerURLs() &&
 						 trackerevent != "stopped")
 			{
-				trackerError(this,i18n("The tracker %1 did not send a proper response"
+				if (pman->getNumConnectedPeers() == 0)
+					trackerError(this,i18n("The tracker %1 didn't send a proper response"
 						", stopping download").arg(last_tracker_url.prettyURL()));
 			}
 			else
@@ -203,8 +204,7 @@ namespace bt
 		}
 	}
 
-	void TorrentControl::trackerResponse(Uint32 interval,Uint32 leechers,
-										 Uint32 seeders,Uint8* ppeers)
+	void TorrentControl::trackerResponse(Uint32 interval,Uint32 leechers,Uint32 seeders,Uint8* ppeers)
 	{
 		setTrackerTimerInterval(interval * 1000);
 		pman->trackerUpdate(seeders,leechers,ppeers);
@@ -217,7 +217,8 @@ namespace bt
 		if (num_tracker_attempts >= tor->getNumTrackerURLs() &&
 		    trackerevent != "stopped")
 		{
-			trackerError(this,i18n("The tracker %1 is down, stopping download.")
+			if (pman->getNumConnectedPeers() == 0)
+				trackerError(this,i18n("The tracker %1 is down, stopping download.")
 					.arg(last_tracker_url.prettyURL()));
 		}
 		else if (trackerevent != "stopped")

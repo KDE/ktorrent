@@ -29,6 +29,9 @@
 namespace bt
 {
 	class BNode;
+	class BValueNode;
+	class BDictNode;
+	class BListNode;
 	class AnnounceList;
 	
 	/**
@@ -98,13 +101,13 @@ namespace bt
 		Uint32 getNumFiles() const {return files.count();}
 		void getFile(Uint32 idx,Torrent::File & file);
 	private:
-		void loadInfo(BNode* node);
-		void loadTrackerURL(BNode* node);
-		void loadPieceLength(BNode* node);
-		void loadFileLength(BNode* node);
-		void loadHash(BNode* node);
-		void loadName(BNode* node);
-		void loadFiles(BNode* node);
+		void loadInfo(BDictNode* node);
+		void loadTrackerURL(BValueNode* node);
+		void loadPieceLength(BValueNode* node);
+		void loadFileLength(BValueNode* node);
+		void loadHash(BValueNode* node);
+		void loadName(BValueNode* node);
+		void loadFiles(BListNode* node);
 		void loadAnnounceList(BNode* node);
 		
 	private:

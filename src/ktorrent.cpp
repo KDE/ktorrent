@@ -21,7 +21,7 @@
 
 
 #include <qdragobject.h>
-
+#include <qsplitter.h>
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -60,6 +60,7 @@
 #include "settings.h"
 #include "trayicon.h"
 #include "searchwidget.h"
+#include "logviewer.h"
 
 
 
@@ -70,11 +71,19 @@ KTorrent::KTorrent()
 		: KMainWindow( 0, "KTorrent" ),
 		m_view(0),m_systray_icon(0)
 {
-	m_tabs = new KTabWidget(this);
+	bool debug = bt::Globals::instance().isDebugModeSet();
+	QSplitter* s;
+	if (debug)
+		s = new QSplitter(QSplitter::Vertical,this);
+	
+	m_tabs = new KTabWidget(debug ? (QWidget*)s : (QWidget*)this);
 	m_view = new KTorrentView(m_tabs);
 	m_search = new SearchWidget(m_tabs);
 	m_core = new KTorrentCore();
 	m_systray_icon = new TrayIcon(this);
+
+	m_tabs->addTab(m_view,i18n("Downloads"));
+	m_tabs->addTab(m_search,i18n("Search"));	
 	
 	connect(m_core,SIGNAL(torrentAdded(bt::TorrentControl* )),
 			m_view,SLOT(addTorrent(bt::TorrentControl* )));
@@ -94,11 +103,7 @@ KTorrent::KTorrent()
 	// accept dnd
 	setAcceptDrops(true);
 
-	m_tabs->addTab(m_view,i18n("Downloads"));
-	m_tabs->addTab(m_search,i18n("Search"));
-	
-	// tell the KMainWindow that this is indeed the main widget
-	setCentralWidget(m_tabs);
+
 
 	// then, setup our actions
 	setupActions();
@@ -113,6 +118,18 @@ KTorrent::KTorrent()
 	
 	currentChanged(0);
 	applySettings();
+
+	if (!debug)
+	{
+		setCentralWidget(m_tabs);
+	}
+	else
+	{
+		s->moveToFirst(m_tabs);
+		s->moveToLast(new LogViewer(bt::Globals::instance().getLog(),s));
+		setCentralWidget(s);
+	}
+	
 	m_core->loadTorrents();
 
 	connect(m_search,SIGNAL(statusBarMsg(const QString& )),this,SLOT(changeStatusbar(const QString& )));
