@@ -69,9 +69,9 @@ void KTorrentCore::load(const QString & target)
 	catch (bt::Error & err)
 	{
 		KMessageBox::error(0,
-			i18n("An error occured while loading the torrent file. "
+			i18n("An error occurred whilst loading the torrent file. "
 				"The most likely cause is that the torrent file is corrupted, "
-				"or it isn't a torrent file at all"),"Error");
+				"or it is not a torrent file at all."),"Error");
 		delete tc;
 		tc = 0;
 	}
