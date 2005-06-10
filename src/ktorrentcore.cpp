@@ -26,17 +26,22 @@
 
 #include <libtorrent/log.h>
 #include <libtorrent/torrentcontrol.h>
+#include <libtorrent/globals.h>
 #include <libtorrent/error.h>
 
 #include "ktorrentcore.h"
+#include "settings.h"
 
 using namespace bt;
 
 KTorrentCore::KTorrentCore() : max_downloads(0),keep_seeding(true)
 {
-	data_dir = KGlobal::dirs()->saveLocation("data","ktorrent");
-	if (!data_dir.endsWith("/"))
-		data_dir += "/";
+	data_dir = Settings::tempDir();
+	if (data_dir == QString::null)
+		data_dir = KGlobal::dirs()->saveLocation("data","ktorrent");
+	
+	if (!data_dir.endsWith(bt::DirSeparator()))
+		data_dir += bt::DirSeparator();
 	downloads.setAutoDelete(true);
 }
 
@@ -116,8 +121,8 @@ void KTorrentCore::loadTorrents()
 	{
 		Out() << "Loading " << data_dir << *sl.at(i) << endl;
 		QString idir = data_dir + *sl.at(i);
-		if (!idir.endsWith("/"))
-			idir.append("/");
+		if (!idir.endsWith(DirSeparator()))
+			idir.append(DirSeparator());
 		
 		TorrentControl* tc = 0;
 		try
@@ -201,6 +206,63 @@ void KTorrentCore::setKeepSeeding(bool ks)
 void KTorrentCore::onExit()
 {
 	downloads.clear();
+}
+
+bool KTorrentCore::changeDataDir(const QString & new_dir)
+{
+	// safety check
+	if (!KIO::NetAccess::exists(new_dir,false,0))
+	{
+		if (!KIO::NetAccess::mkdir(new_dir,0,0755))
+			return false;
+	}
+
+	// do nothing if new and old dir are the same
+	if (KURL(data_dir) == KURL(new_dir))
+		return true;
+
+	// make sure new_dir ends with a /
+	QString nd = new_dir;
+	if (!nd.endsWith(DirSeparator()))
+		nd += DirSeparator();
+
+	Out() << "Switching to datadir " << nd << endl;
+	// keep track of all TorrentControl's which have succesfully
+	// moved to the new data dir
+	QPtrList<bt::TorrentControl> succes;
+	
+	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
+	while (i != downloads.end())
+	{
+		bt::TorrentControl* tc = *i;
+		if (!tc->changeDataDir(nd))
+		{
+			// failure time to roll back all the succesfull tc's
+			rollback(succes);
+			// set back the old data_dir in Settings
+			Settings::setTempDir(data_dir);
+			Settings::self()->writeConfig();
+			return false;
+		}
+		else
+		{
+			succes.append(tc);
+		}
+		i++;
+	}
+	data_dir = nd;
+	return true;
+}
+
+void KTorrentCore::rollback(const QPtrList<bt::TorrentControl> & succes)
+{
+	Out() << "Error, rolling back" << endl;
+	QPtrList<bt::TorrentControl> ::const_iterator i = succes.begin();
+	while (i != succes.end())
+	{
+		(*i)->rollback();
+		i++;
+	}
 }
 
 #include "ktorrentcore.moc"

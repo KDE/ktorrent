@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#include <qdir.h>
 #include <qhostaddress.h>
 #include <sys/time.h>
 #include <sys/types.h>
@@ -44,6 +45,13 @@ namespace bt
 			addr.setAddress(inet_ntoa(*((struct in_addr *)he->h_addr)));
 		}
 		return addr;
+	}
+
+	QString DirSeparator()
+	{
+		QString tmp;
+		tmp.append(QDir::separator());
+		return tmp;
 	}
 
 	void WriteUint64(Uint8* buf,Uint32 off,Uint64 val)

@@ -57,8 +57,8 @@ namespace bt
 			throw Error("Can't make directory " + dir + " : " + KIO::NetAccess::lastErrorString());
 		
 		QString rdir = dir;
-		if (!rdir.endsWith("/"))
-			rdir.append("/");
+		if (!rdir.endsWith(DirSeparator()))
+			rdir.append(DirSeparator());
 		
 		Uint32 cur_off = 0;
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)

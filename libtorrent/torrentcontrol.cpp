@@ -55,6 +55,7 @@ namespace bt
 		started = false;
 		saved = false;
 		num_tracker_attempts = 0;
+		old_datadir = QString::null;
 	}
 	
 	
@@ -87,8 +88,8 @@ namespace bt
 		datadir = ddir;
 		completed = false;
 		running = false;
-		if (!datadir.endsWith("/"))
-			datadir += "/";
+		if (!datadir.endsWith(DirSeparator()))
+			datadir += DirSeparator();
 		
 		
 		tor = new Torrent();
@@ -149,8 +150,9 @@ namespace bt
 		BNode* n = 0;
 		try
 		{
-			
 			Out() << "Tracker updated" << endl;
+			Out() << "Reply size = " << data.size() << endl;
+			Out() << "Data = " << QString(data) << endl;
 			BDecoder dec(data);
 			n = dec.decode();
 			
@@ -160,16 +162,19 @@ namespace bt
 			BDictNode* dict = (BDictNode*)n;
 			if (dict->getData("failure reason"))
 			{
-				trackerResponseError();
+				BValueNode* vn = dict->getValue("failure reason");
+				if (pman->getNumConnectedPeers() == 0)
+					trackerError(this,i18n("The tracker sent back the following error : %1").arg(vn->data().toString()));
+				else
+					trackerResponseError();
 				return;
 			}
 			
-			BNode* tmp = dict->getData("interval");
+			BValueNode* vn = dict->getValue("interval");
 			
-			if (!tmp || tmp->getType() != BNode::VALUE)
+			if (!vn)
 				throw Error("Parse Error");
 			
-			BValueNode* vn = (BValueNode*)tmp;
 			Uint32 update_time = vn->data().toInt() > 300 ? 300 : vn->data().toInt();
 			
 			Out() << "Next update in " << update_time << " seconds" << endl;
@@ -197,7 +202,7 @@ namespace bt
 					trackerError(this,i18n("The tracker %1 did not send a proper response"
 						", stopping download").arg(last_tracker_url.prettyURL()));
 			}
-			else
+			else if (trackerevent != "stopped")
 			{
 				updateTracker(trackerevent,false);
 			}
@@ -301,12 +306,17 @@ namespace bt
 	
 	void TorrentControl::stop()
 	{
-		updateTracker("stopped");
+		if (num_tracker_attempts < tor->getNumTrackerURLs())
+			updateTracker("stopped");
+		
 		if (tmon)
 			tmon->stopped();
 
-		down->saveDownloads(datadir + "current_chunks");
-		down->clearDownloads();
+		if (running)
+		{
+			down->saveDownloads(datadir + "current_chunks");
+			down->clearDownloads();
+		}
 		up->removeAllPeers();
 		tracker_update_timer.stop();
 		choker_update_timer.stop();
@@ -417,6 +427,92 @@ namespace bt
 	Uint32 TorrentControl::getTotalBytes() const
 	{
 		return tor->getFileLength();
+	}
+
+	bool TorrentControl::changeDataDir(const QString & new_dir)
+	{
+		// new_dir doesn't contain the torX/ part
+		// so first get that and append it to new_dir
+		int dd = datadir.findRev(DirSeparator(),datadir.length() - 2,false);
+		QString tor = datadir.mid(dd + 1,datadir.length() - 2 - dd);
+		
+
+		// make sure nd ends with a /
+		QString nd = new_dir + tor;
+		if (!nd.endsWith(DirSeparator()))
+			nd += DirSeparator();
+
+		Out() << datadir << " -> " << nd << endl;
+
+		if (!KIO::NetAccess::exists(nd,false,0))
+		{
+			if (!KIO::NetAccess::mkdir(nd,0,0755))
+			{
+				Out() << "Error : " << KIO::NetAccess::lastErrorString() << endl;
+				return false;
+			}
+		}
+
+		// now try to move all the files :
+		// first the torrent
+		if (!KIO::NetAccess::move(datadir + "torrent",nd,0))
+		{
+			Out() << "Error : " << KIO::NetAccess::lastErrorString() << endl;
+			return false;
+		}
+
+		// then the cache
+		if (!KIO::NetAccess::move(datadir + "cache",nd,0))
+		{
+			Out() << "Error : " << KIO::NetAccess::lastErrorString() << endl;
+			// move the torrent back
+			KIO::NetAccess::move(nd + "torrent",datadir,0);
+			return false;
+		}
+
+		// then the index
+		if (!KIO::NetAccess::move(datadir + "index",nd,0))
+		{
+			Out() << "Error : " << KIO::NetAccess::lastErrorString() << endl;
+			// move the torrent and cache back
+			KIO::NetAccess::move(nd + "torrent",datadir,0);
+			KIO::NetAccess::move(nd + "cache",datadir,0);
+			return false;
+		}
+
+		// tell the chunkmanager that the datadir has changed
+		cman->changeDataDir(nd);
+		
+		// we don't move the current_chunks file
+		// it will be recreated anyway
+		// now delete the old directory
+		KIO::NetAccess::del(datadir,0);
+		
+		old_datadir = datadir;
+		datadir = nd;
+		return true;
+	}
+
+	void TorrentControl::rollback()
+	{
+		if (old_datadir.isNull())
+			return;
+
+		// recreate it
+		if (!KIO::NetAccess::exists(old_datadir,false,0))
+			KIO::NetAccess::mkdir(old_datadir,0,0755);
+
+		// move back files
+		KIO::NetAccess::move(datadir + "torrent",old_datadir,0);
+		KIO::NetAccess::move(datadir + "cache",old_datadir,0);
+		KIO::NetAccess::move(datadir + "index",old_datadir,0);
+		cman->changeDataDir(old_datadir);
+
+		// delete new
+		KIO::NetAccess::del(datadir,0);
+		
+		datadir = old_datadir;
+		old_datadir = QString::null;
 	}
 }
 #include "torrentcontrol.moc"

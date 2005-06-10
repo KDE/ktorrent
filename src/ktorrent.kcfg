@@ -38,5 +38,9 @@
     	<label>Torrent search engine</label>
     	<default>http://search.bittorrent.com/search.jsp</default>
     </entry>
+    <entry name="tempDir" type="String">
+    	<label>Directory to store temporary files</label>
+	<default code="true">QString::null</default>
+    </entry>
   </group>
 </kcfg>

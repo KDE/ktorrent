@@ -69,8 +69,8 @@ int main(int argc, char **argv)
 		bt::Globals::instance().setDebugMode(args->isSet("debug"));
 
 		QString data_dir = KGlobal::dirs()->saveLocation("data","ktorrent");
-		if (!data_dir.endsWith("/"))
-			data_dir += "/";
+		if (!data_dir.endsWith(bt::DirSeparator()))
+			data_dir += bt::DirSeparator();
 		bt::Globals::instance().initLog(data_dir + "log");
 		
 		KTorrent *widget = new KTorrent();

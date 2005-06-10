@@ -159,6 +159,8 @@ void KTorrent::applySettings()
 	{
 		m_systray_icon->hide();
 	}
+
+	m_core->changeDataDir(Settings::tempDir());	
 }
 
 void KTorrent::load(const KURL& url)

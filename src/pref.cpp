@@ -18,15 +18,20 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include <klocale.h>
+#include <kstandarddirs.h>
+#include <kglobal.h>
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qcheckbox.h>
 #include <knuminput.h>
+#include <kurlrequester.h>
+#include <libtorrent/globals.h>
 
 #include "pref.h"
 #include "downloadpref.h"
 #include "settings.h"
 #include "ktorrent.h"
+
 
 class KTorrentPrefPageOne : public DownloadPref
 {
@@ -43,7 +48,7 @@ KTorrentPreferences::KTorrentPreferences(KTorrent & ktor)
 	// a Treelist dialog.. but there are a number of other
 	// possibilities (including Tab, Swallow, and just Plain)
 	enableButtonSeparator(true);
-	setInitialSize(QSize(600,300),true);
+	setInitialSize(QSize(800,300),true);
 	QFrame *frame = addPage(i18n("Downloads"), i18n("Download Options"));
 	m_page_one = new KTorrentPrefPageOne(frame);
 	connect(this,SIGNAL(applyClicked()),this,SLOT(applyPressed()));
@@ -74,6 +79,18 @@ KTorrentPrefPageOne::KTorrentPrefPageOne(QWidget *parent) : DownloadPref(parent)
 	keep_seeding->setChecked(Settings::keepSeeding());
 	show_systray_icon->setChecked(Settings::showSystemTrayIcon());
 	port->setValue(Settings::port());
+	KURLRequester* u = temp_dir;
+	if (Settings::tempDir() == QString::null)
+	{
+		QString data_dir = KGlobal::dirs()->saveLocation("data","ktorrent");
+		if (!data_dir.endsWith(bt::DirSeparator()))
+			data_dir += bt::DirSeparator();
+		u->setURL(data_dir);
+	}
+	else
+	{
+		u->setURL(Settings::tempDir());
+	}
 }
 
 void KTorrentPrefPageOne::apply()
@@ -84,6 +101,14 @@ void KTorrentPrefPageOne::apply()
 	Settings::setKeepSeeding(keep_seeding->isChecked());
 	Settings::setShowSystemTrayIcon(show_systray_icon->isChecked());
 	Settings::setPort(port->value());
+	QString ourl = Settings::tempDir();
+	
+	KURLRequester* u = temp_dir;
+	if (ourl != u->url())
+	{
+		Settings::setTempDir(u->url());
+	}
+	
 	Settings::writeConfig();
 }
 

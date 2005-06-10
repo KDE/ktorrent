@@ -60,6 +60,7 @@ namespace bt
 			http_port = 80;
 
 		doRequest(url.host(),url.encodedPathAndQuery() + query,http_port);
+		Out() << "Request " << url << endl;
 	}
 
 	void HTTPTracker::doRequest(const QString & host,const QString & path,Uint16 p)

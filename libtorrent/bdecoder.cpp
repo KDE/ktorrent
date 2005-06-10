@@ -72,6 +72,7 @@ namespace bt
 		{
 			while (data[pos] != 'e' && pos < data.size())
 			{
+	//			Out() << "Key : " << endl;
 				BValueNode* k = dynamic_cast<BValueNode*>(decode());
 				if (!k || k->data().getType() != Value::STRING)
 					throw Error("Decode error");
@@ -79,6 +80,7 @@ namespace bt
 				QString key = k->data().toString();
 				delete k;
 
+	//			Out() << "Data : " << endl;
 				BNode* data = decode();
 				curr->insert(key,data);
 			}
@@ -189,6 +191,10 @@ namespace bt
 		// pos should be positioned right after the string
 		BValueNode* vn = new BValueNode(Value(arr),off);
 		vn->setLength(pos - off);
+	/*	if (arr.size() < 50)
+			Out() << "STRING " << QString(arr) << endl;
+		else
+			Out() << "STRING " << "really long string" << endl;*/
 		return vn;
 	}
 }

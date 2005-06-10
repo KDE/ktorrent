@@ -48,6 +48,9 @@ namespace bt
 	Log & endl(Log & lg)
 	{
 		lg.out << ::endl;
+		if (lg.to_cout)
+			std::cout << std::endl;
+
 		if (lg.widget)
 		{
 			lg.widget->append(lg.tmp);

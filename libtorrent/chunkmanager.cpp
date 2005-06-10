@@ -56,6 +56,13 @@ namespace bt
 
 	ChunkManager::~ChunkManager()
 	{
+
+	}
+
+	void ChunkManager::changeDataDir(const QString & data_dir)
+	{
+		cache_file = data_dir + "cache";
+		index_file = data_dir + "index";
 	}
 	
 	void ChunkManager::loadIndexFile()

@@ -63,6 +63,20 @@ namespace bt
 		 */
 		void init(const QString & torrent,const QString & datadir);
 
+		/**
+		 * Change to a new data dir. If this fails
+		 * we will fall back on the old directory.
+		 * @param new_dir The new directory
+		 * @return true upon succes
+		 */
+		bool changeDataDir(const QString & new_dir);
+
+		/**
+		 * Roll back the previous changeDataDir call.
+		 * Does nothing if there was no previous changeDataDir call.
+		 */
+		void rollback();
+
 		/// Get the suggested name of the torrent
 		QString getTorrentName() const;
 
@@ -191,7 +205,7 @@ namespace bt
 		Uploader* up;
 		Choker* choke;
 		QTimer tracker_update_timer,choker_update_timer,update_timer;
-		QString datadir,trackerevent;
+		QString datadir,old_datadir,trackerevent;
 		Uint16 port;
 		bool completed,running,started,saved;
 		TorrentMonitor* tmon;

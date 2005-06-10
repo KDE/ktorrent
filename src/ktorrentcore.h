@@ -28,8 +28,11 @@ namespace bt
 };
 
 /**
-@author Joris Guisson
-*/
+ * @author Joris Guisson
+ * @brief Keeps track of all TorrentControl objects
+ *
+ * This class keeps track of all TorrentControl objects.
+ */
 class KTorrentCore : public QObject
 {
 	Q_OBJECT
@@ -38,23 +41,80 @@ public:
 	virtual ~KTorrentCore();
 	
 	
+	/**
+	 * Load all torrents from the data dir.
+	 */
 	void loadTorrents();
+	
+	/**
+	 * Set the maximum number of simultanious downloads.
+	 * @param max The max num (0 == no limit)
+	 */
 	void setMaxDownloads(int max);
+	
+	/**
+	 * Set wether or not we should keep seeding after
+	 * a download has finished.
+	 * @param ks Keep seeding yes or no
+	 */
 	void setKeepSeeding(bool ks);
+	
+	/**
+	 * Change the data dir. This involves copying
+	 * all data from the old dir to the new.
+	 * This can offcourse go horribly wrong, therefore
+	 * if it doesn't succeed it returns false
+	 * and leaves everything where it supposed to be.
+	 * @param new_dir The new directory
+	 */
+	bool changeDataDir(const QString & new_dir);
+	
+	/**
+	 * Save active torrents on exit.
+	 */
 	void onExit();
 
 public slots:
+	/**
+	 * Load a torrent file. Pops up an error dialog
+	 * if something goes wrong.
+	 * @param file The torrent file
+	 */
 	void load(const QString & file);
+	
+	/**
+	 * Remove a download.This will delete all temp
+	 * data from this TorrentControl And delete the
+	 * TorrentControl itself. It can also potentially
+	 * start a new download (when one is waiting to be downloaded).
+	 * @param tc 
+	 */
 	void remove(bt::TorrentControl* tc);
 	
 signals:
+	/**
+	 * A TorrentControl was added
+	 * @param tc 
+	 */
 	void torrentAdded(bt::TorrentControl* tc);
+
+	
+	/**
+	 * A TorrentControl was removed
+	 * @param tc
+	 */
 	void torrentRemoved(bt::TorrentControl* tc);
+	
+	/**
+	 * A TorrentControl has finished downloading.
+	 * @param tc
+	 */
 	void finished(bt::TorrentControl* tc);
 	
 private:
 	QString findNewTorrentDir() const;
 	int getNumRunning() const;
+	void rollback(const QPtrList<bt::TorrentControl> & success);
 	
 private slots:
 	void torrentFinished(bt::TorrentControl* tc);

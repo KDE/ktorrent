@@ -50,7 +50,13 @@ namespace bt
 	public:
 		ChunkManager(Torrent & tor,const QString & data_dir);
 		virtual ~ChunkManager();
-	
+
+		/**
+		 * Change the data dir.
+		 * @param data_dir 
+		 */
+		void changeDataDir(const QString & data_dir);
+		
 		/**
 		 * Loads the index file.
 		 * @throw Error When it can be loaded

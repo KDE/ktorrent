@@ -76,6 +76,7 @@ namespace bt
 	Uint32 GetCurrentTime();
 
 	QHostAddress LookUpHost(const QString & host);
+	QString DirSeparator();
 
 	class Globals
 	{
