@@ -71,11 +71,31 @@ namespace bt
 			num_leechers = vn->data().toInt();
 		}
 		
-		tmp = dict->getData("peers");
-		if (!tmp || tmp->getType() != BNode::LIST)
-			throw Error("Parse Error");
-		
-		readPotentialPeers((BListNode*)tmp);
+		BListNode* ln = dict->getList("peers");
+		if (!ln)
+		{
+			// no list, it might however be a compact response
+			BValueNode* vn = dict->getValue("peers");
+			if (!vn)
+				throw Error("Parse error");
+
+			QByteArray arr = vn->data().toByteArray();
+			for (int i = 0;i < arr.size();i+=6)
+			{
+				Uint8 buf[6];
+				for (int j = 0;j < 6;j++)
+					buf[j] = arr[i + j];
+
+				PotentialPeer pp;
+				pp.ip = ReadUint32(buf,0);
+				pp.port = ReadUint16(buf,4);
+				potential_peers.append(pp);
+			}
+		}
+		else
+		{
+			readPotentialPeers(ln);
+		}
 	}
 
 	void PeerManager::trackerUpdate(Uint32 seeders,Uint32 leechers,Uint8* ppeers)
@@ -89,6 +109,7 @@ namespace bt
 			PotentialPeer pp;
 			pp.port = ReadUint16(ppeers,6*i + 4);
 			pp.ip = ReadUint32(ppeers,6*i);
+			potential_peers.append(pp);
 		}
 	}
 

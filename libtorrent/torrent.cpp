@@ -62,6 +62,14 @@ namespace bt
 			if (!dict)
 				throw Error("Corrupted torrent !");
 
+			// see if we can find an encoding node
+			BValueNode* enc = dict->getValue("encoding");
+			if (enc)
+			{
+				encoding = enc->data().toString();
+				Out() << "Encoding : " << encoding << endl;
+			}
+
 			loadTrackerURL(dict->getValue("announce"));
 			loadInfo(dict->getDict("info"));
 			loadAnnounceList(dict->getData("announce-list"));
@@ -124,7 +132,7 @@ namespace bt
 				if (!v || v->data().getType() != Value::STRING)
 					throw Error("Corrupted torrent !");
 	
-				file.path += v->data().toString();
+				file.path += v->data().toString(encoding);
 				if (j + 1 < ln->getNumChildren())
 					file.path += "/";
 			}
@@ -137,7 +145,7 @@ namespace bt
 		if (!node || node->data().getType() != Value::STRING)
 			throw Error("Corrupted torrent !");
 		
-		tracker_url = node->data().toString();
+		tracker_url = node->data().toString(encoding);
 	}
 	
 	void Torrent::loadPieceLength(BValueNode* node)
@@ -177,7 +185,7 @@ namespace bt
 		if (!node || node->data().getType() != Value::STRING)
 			throw Error("Corrupted torrent !");
 		
-		name_suggestion = node->data().toString();
+		name_suggestion = node->data().toString(encoding);
 	}
 	
 	void Torrent::loadAnnounceList(BNode* node)

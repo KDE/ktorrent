@@ -61,6 +61,8 @@ namespace bt
 		if (packet_length > MAX_PIECE_LEN + 13)
 		{
 			Out() << serial << " packet_length to large " << packet_length << endl;
+			Out() << " " << len[0] << " " << len[1] << " "
+					<< len[2] << " " << len[3] << endl;
 			error = true;
 			return false;
 		}

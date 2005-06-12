@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#include <qtextcodec.h>
 #include "value.h"
 
 namespace bt
@@ -37,7 +38,18 @@ namespace bt
 	Value::~Value()
 	{}
 
-	
+
+	QString Value::toString(const QString & encoding) const
+	{
+		if (encoding.isNull() || encoding.isEmpty())
+			return toString();
+
+		QTextCodec* tc = QTextCodec::codecForName(encoding.ascii());
+		if (!tc)
+			return toString();
+
+		return tc->toUnicode(strval);
+	}
 	
 
 	Value & Value::operator = (const Value & val)

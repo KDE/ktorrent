@@ -151,8 +151,8 @@ namespace bt
 		try
 		{
 			Out() << "Tracker updated" << endl;
-			Out() << "Reply size = " << data.size() << endl;
-			Out() << "Data = " << QString(data) << endl;
+		//	Out() << "Reply size = " << data.size() << endl;
+		//	Out() << "Data = " << QString(data) << endl;
 			BDecoder dec(data);
 			n = dec.decode();
 			
@@ -191,8 +191,8 @@ namespace bt
 			if (n)
 				n->printDebugInfo();
 			
-			Out() << "Data : " << endl;
-			Out() << QString(data) << endl;
+		/*	Out() << "Data : " << endl;
+			Out() << QString(data) << endl;*/
 			delete n;
 
 			if (num_tracker_attempts >= tor->getNumTrackerURLs() &&
@@ -211,6 +211,7 @@ namespace bt
 
 	void TorrentControl::trackerResponse(Uint32 interval,Uint32 leechers,Uint32 seeders,Uint8* ppeers)
 	{
+		Out() << "Tracker updated" << endl;
 		setTrackerTimerInterval(interval * 1000);
 		pman->trackerUpdate(seeders,leechers,ppeers);
 	}

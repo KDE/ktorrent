@@ -63,7 +63,7 @@ namespace bt
 	void WriteUint16(Uint8* buf,Uint32 off,Uint16 val);
 	Uint16 ReadUint16(const Uint8* buf,Uint32 off);
 
-	/*
+	
 	void WriteInt64(Uint8* buf,Uint32 off,Int64 val);
 	Int64 ReadInt64(const Uint8* buf,Uint32 off);
 	
@@ -71,7 +71,7 @@ namespace bt
 	Int32 ReadInt32(const Uint8* buf,Uint32 off);
 	
 	void WriteInt16(Uint8* buf,Uint32 off,Int16 val);
-	Int16 ReadInt16(const Uint8* buf,Uint32 off);*/
+	Int16 ReadInt16(const Uint8* buf,Uint32 off);
 	
 	Uint32 GetCurrentTime();
 

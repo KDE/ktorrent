@@ -105,20 +105,57 @@ namespace bt
 		return (buf[off] << 8) | buf[off + 1];
 	}
 	
-	/*
+	
 	void WriteInt64(Uint8* buf,Uint32 off,Int64 val)
 	{
+		buf[off + 0] = (Uint8) ((val & 0xFF00000000000000ULL) >> 56);
+		buf[off + 1] = (Uint8) ((val & 0x00FF000000000000ULL) >> 48);
+		buf[off + 2] = (Uint8) ((val & 0x0000FF0000000000ULL) >> 40);
+		buf[off + 3] = (Uint8) ((val & 0x000000FF00000000ULL) >> 32);
+		buf[off + 4] = (Uint8) ((val & 0x00000000FF000000ULL) >> 24);
+		buf[off + 5] = (Uint8) ((val & 0x0000000000FF0000ULL) >> 16);
+		buf[off + 6] = (Uint8) ((val & 0x000000000000FF00ULL) >> 8);
+		buf[off + 7] = (Uint8) ((val & 0x00000000000000FFULL) >> 0);
 	}
 	
 	Int64 ReadInt64(const Uint8* buf,Uint32 off)
 	{
+		Int64 tmp =
+				((Int64)buf[off] << 56) |
+				((Int64)buf[off+1] << 48) |
+				((Int64)buf[off+2] << 40) |
+				((Int64)buf[off+3] << 32) |
+				((Int64)buf[off+4] << 24) |
+				((Int64)buf[off+5] << 16) |
+				((Int64)buf[off+6] << 8) |
+				((Int64)buf[off+7] << 0);
+
+		return tmp;
 	}
 	
-	void WriteInt32(Uint8* buf,Uint32 off,Int32 val);
-	Int32 ReadInt32(const Uint8* buf,Uint32 off);
+	void WriteInt32(Uint8* buf,Uint32 off,Int32 val)
+	{
+		buf[off + 0] = (Uint8) ((val & 0xFF000000) >> 24);
+		buf[off + 1] = (Uint8) ((val & 0x00FF0000) >> 16);
+		buf[off + 2] = (Uint8) ((val & 0x0000FF00) >> 8);
+		buf[off + 3] = (Uint8) (val & 0x000000FF);
+	}
 	
-	void WriteInt16(Uint8* buf,Uint32 off,Int16 val);
-	Int16 ReadInt16(const Uint8* buf,Uint32 off);*/
+	Int32 ReadInt32(const Uint8* buf,Uint32 off)
+	{
+		return (Int32)(buf[off] << 24) | (buf[off+1] << 16) | (buf[off+2] << 8) | buf[off + 3];
+	}
+	
+	void WriteInt16(Uint8* buf,Uint32 off,Int16 val)
+	{
+		buf[off + 0] = (Uint8) ((val & 0xFF00) >> 8);
+		buf[off + 1] = (Uint8) (val & 0x000FF);
+	}
+	
+	Int16 ReadInt16(const Uint8* buf,Uint32 off)
+	{
+		return (Int16)(buf[off] << 8) | buf[off + 1];
+	}
 
 	Uint32 GetCurrentTime()
 	{

@@ -22,6 +22,7 @@
 
 #include <kurl.h>
 #include <qhostaddress.h>
+#include <qtimer.h>
 #include "tracker.h"
 #include "globals.h"
 
@@ -50,6 +51,7 @@ namespace bt
 
 	private slots:
 		void dataRecieved(int s);
+		void onConnTimeout();
 
 	private:
 		void sendConnect();
@@ -57,19 +59,20 @@ namespace bt
 		void announceRecieved();
 		void connectRecieved();
 		void handleError();
-		void continueAnnounce();
 
 	private:
 		QHostAddress addr;
 		Uint16 udp_port;
 		QSocketDevice* sock;
-		Uint32 transaction_id;
-		Uint64 connection_id;
+		Int32 transaction_id;
+		Int64 connection_id;
 		QSocketNotifier* sn;
 		KURL old_url;
 
 		Uint32 leechers,seeders,interval,data_read;
 		Uint8* peer_buf;
+		int n;
+		QTimer conn_timer;
 	};
 
 }

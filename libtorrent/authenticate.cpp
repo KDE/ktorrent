@@ -153,6 +153,7 @@ namespace bt
 	
 	void Authenticate::onTimeout()
 	{
+		Out() << "Timeout occured" << endl;
 		onFinish(false);
 	}
 }

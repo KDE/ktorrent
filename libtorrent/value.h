@@ -50,6 +50,7 @@ namespace bt
 		Type getType() const {return type;}
 		int toInt() const {return ival;}
 		QString toString() const {return QString(strval);}
+		QString toString(const QString & encoding) const;
 		QByteArray toByteArray() const {return strval;}
 	private:
 		Type type;

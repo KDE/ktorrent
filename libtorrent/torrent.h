@@ -120,6 +120,7 @@ namespace bt
 		QValueVector<SHA1Hash> hash_pieces;
 		QValueVector<File> files;
 		AnnounceList* anon_list;
+		QString encoding;
 	};
 
 };

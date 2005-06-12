@@ -42,7 +42,7 @@ namespace bt
 		//	url.setProtocol("http");
 
 		KURL url = u;
-		Out() << "Tracker url : " << url << endl;
+		Out() << "Doing tracker request to url : " << url << endl;
 
 		QString query = QString("&info_hash=") + info_hash.toURLString();
 		url.addQueryItem("peer_id",peer_id.toString());
@@ -50,6 +50,7 @@ namespace bt
 		url.addQueryItem("uploaded",QString::number(uploaded));
 		url.addQueryItem("downloaded",QString::number(downloaded));
 		url.addQueryItem("left",QString::number(left));
+		url.addQueryItem("compact","1");
 
 		if (event != QString::null)
 			url.addQueryItem("event",event);
@@ -60,7 +61,7 @@ namespace bt
 			http_port = 80;
 
 		doRequest(url.host(),url.encodedPathAndQuery() + query,http_port);
-		Out() << "Request " << url << endl;
+		//Out() << "Request " << url << endl;
 	}
 
 	void HTTPTracker::doRequest(const QString & host,const QString & path,Uint16 p)
