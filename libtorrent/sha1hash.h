@@ -52,6 +52,6 @@ namespace bt
 		friend Log & operator << (Log & out,const SHA1Hash & h);
 	};
 
-};
+}
 
 #endif

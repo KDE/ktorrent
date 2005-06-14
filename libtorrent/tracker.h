@@ -87,6 +87,6 @@ namespace bt
 		QString event;
 	};
 
-};
+}
 
 #endif

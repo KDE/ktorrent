@@ -79,6 +79,6 @@ namespace bt
 		QString encode(const QMap<QString,Value> & vm);
 	};
 
-};
+}
 
 #endif

@@ -192,6 +192,6 @@ namespace bt
 		 */
 		BValueNode* getValue(Uint32 idx);
 	};
-};
+}
 
 #endif

@@ -168,6 +168,6 @@ namespace bt
 		friend class PacketWriter;
 	};
 
-};
+}
 
 #endif

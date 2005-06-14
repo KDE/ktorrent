@@ -29,7 +29,7 @@ class PeerView;
 namespace bt
 {
 	class TorrentControl;
-};
+}
 
 /**
 @author Joris Guisson

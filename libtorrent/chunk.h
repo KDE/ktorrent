@@ -74,6 +74,6 @@ namespace bt
 		unsigned int cache_file_offset;
 	};
 
-};
+}
 
 #endif

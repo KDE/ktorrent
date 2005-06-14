@@ -83,6 +83,6 @@ namespace bt
 		BitSet & operator = (const BitSet & bs);
 	};
 
-};
+}
 
 #endif

@@ -246,5 +246,5 @@ namespace bt
 		return snub_timer.getElapsedSinceUpdate() >= 60000;
 	}
 }
-;
+
 #include "peer.moc"

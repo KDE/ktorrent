@@ -318,5 +318,4 @@ namespace bt
 		}
 	}
 }
-;
 #include "downloader.moc"

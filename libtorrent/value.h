@@ -57,6 +57,6 @@ namespace bt
 		int ival;
 		QByteArray strval;
 	};
-};
+}
 
 #endif

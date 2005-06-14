@@ -43,5 +43,5 @@ namespace bt
 		this->event = event;
 	}
 }
-;
+
 #include "tracker.moc"

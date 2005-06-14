@@ -160,4 +160,3 @@ namespace bt
 		h4 = (h4 + e) & 0xffffffff;
 	}
 }
-;

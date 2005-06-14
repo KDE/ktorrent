@@ -61,6 +61,6 @@ namespace bt
 		BValueNode* parseString();
 	};
 
-};
+}
 
 #endif

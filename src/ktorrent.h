@@ -45,7 +45,7 @@ class SearchWidget;
 namespace bt
 {
 	class TorrentControl;
-};
+}
 
 /**
  * This class serves as the main window for KTorrent.  It handles the

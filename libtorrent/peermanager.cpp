@@ -301,5 +301,4 @@ namespace bt
 		started = false;
 	}
 }
-;
 #include "peermanager.moc"

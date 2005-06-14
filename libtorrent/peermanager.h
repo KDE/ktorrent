@@ -139,6 +139,6 @@ namespace bt
 		static Uint32 max_connections;
 	};
 
-};
+}
 
 #endif

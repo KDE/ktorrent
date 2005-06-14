@@ -47,6 +47,6 @@ namespace bt
 		void processChunk(Uint8* c);
 	};
 
-};
+}
 
 #endif

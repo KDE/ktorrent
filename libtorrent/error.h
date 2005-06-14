@@ -39,6 +39,6 @@ namespace bt
 
 	};
 
-};
+}
 
 #endif

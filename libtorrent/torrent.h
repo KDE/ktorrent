@@ -123,6 +123,6 @@ namespace bt
 		QString encoding;
 	};
 
-};
+}
 
 #endif

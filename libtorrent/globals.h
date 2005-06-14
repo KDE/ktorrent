@@ -100,6 +100,6 @@ namespace bt
 		friend Log& Out();
 	};
 
-};
+}
 
 #endif

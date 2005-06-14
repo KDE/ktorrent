@@ -143,6 +143,6 @@ namespace bt
 		void writeIndexFileEntry(Chunk* c);
 	};
 
-};
+}
 
 #endif
