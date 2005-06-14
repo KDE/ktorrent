@@ -1,35 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="9" >
-  <Doc0 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/libtorrent/peermanager.cpp" >
-   <View0 Type="Source" />
-  </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/libtorrent/udptracker.cpp" >
-   <View0 line="94" Type="Source" />
-  </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/libtorrent/udptracker.h" >
-   <View0 line="60" Type="Source" />
-  </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/src/ktorrentviewitem.cpp" >
-   <View0 line="69" Type="Source" />
-  </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/src/ktorrentcore.cpp" >
-   <View0 line="212" Type="Source" />
-  </Doc4>
-  <Doc5 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/libtorrent/globals.cpp" >
-   <View0 line="117" Type="Source" />
-  </Doc5>
-  <Doc6 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/libtorrent/globals.h" >
-   <View0 line="73" Type="Source" />
-  </Doc6>
-  <Doc7 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/libtorrent/packetreader.cpp" >
-   <View0 line="63" Type="Source" />
-  </Doc7>
-  <Doc8 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/TmpChangeLog.txt" >
-   <View0 line="3" Type="Source" />
-  </Doc8>
- </DocsAndViews>
+ <DocsAndViews NumberOfDocuments="0" />
  <pluginList>
   <kdevdebugger>
    <breakpointList>
