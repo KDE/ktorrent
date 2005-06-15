@@ -38,13 +38,14 @@ KTorrentView::KTorrentView(QWidget *parent)
 {
 	connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
 	addColumn(i18n("File"));
+	addColumn(i18n("Status"));
 	addColumn(i18n("Dowloaded"));
 	addColumn(i18n("Uploaded"));
 	addColumn(i18n("Down Speed"));
 	addColumn(i18n("Up Speed"));
 	addColumn(i18n("Time Left"));
 	addColumn(i18n("Peers"));
-	addColumn(i18n("Chunks"));
+	addColumn(i18n("% Complete"));
 	timer.start(1000);
 	connect(this,SIGNAL(clicked(QListViewItem* )),this,SLOT(onExecuted(QListViewItem* )));
 	show_debug_view = bt::Globals::instance().isDebugModeSet();

@@ -109,6 +109,9 @@ namespace bt
 
 		/// Get the number of chunks which have been downloaded
 		Uint32 getNumChunksDownloaded() const;
+
+		/// Get the current status of the download.
+		QString getStatus() const;
 		
 		/// See if we are running
 		bool isRunning() const {return running;}
@@ -188,13 +191,17 @@ namespace bt
 		void onNewPeer(Peer* p);
 		void onPeerRemoved(Peer* p);
 		void doChoking();
-		
+		void setStatus(const QString & s);	
 	signals:
+		/**
+		 * Emited when a TorrentControl object is finished downloading.
+		 * @parm me The TorrentControl
+		 */
 		void finished(bt::TorrentControl* me);
-		void trackerError(bt::TorrentControl* me,const QString & error);
-		
+		void trackerError(bt::TorrentControl* me,const QString & error);		
 	private:	
 		void updateTracker(const QString & ev,bool last_succes = true);
+		void updateStatusMsg(const QString & def = QString::null);
 		
 	private:
 		Torrent* tor;
@@ -211,6 +218,7 @@ namespace bt
 		TorrentMonitor* tmon;
 		int num_tracker_attempts;
 		KURL last_tracker_url;
+		QString status_msg;
 		
 		static Uint16 initial_port;
 	};

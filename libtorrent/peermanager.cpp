@@ -87,7 +87,7 @@ namespace bt
 					buf[j] = arr[i + j];
 
 				PotentialPeer pp;
-				pp.ip = ReadUint32(buf,0);
+				pp.ip = QHostAddress(ReadUint32(buf,0)).toString();
 				pp.port = ReadUint16(buf,4);
 				potential_peers.append(pp);
 			}
@@ -108,7 +108,7 @@ namespace bt
 		{
 			PotentialPeer pp;
 			pp.port = ReadUint16(ppeers,6*i + 4);
-			pp.ip = ReadUint32(ppeers,6*i);
+			pp.ip = QHostAddress(ReadUint32(ppeers,6*i)).toString();
 			potential_peers.append(pp);
 		}
 	}

@@ -24,9 +24,7 @@
 namespace bt
 {
 
-	Authenticate::Authenticate(QSocket* sock,
-							   const SHA1Hash & info_hash,
-							   const PeerID & peer_id) 
+	Authenticate::Authenticate(QSocket* sock,const SHA1Hash & info_hash,const PeerID & peer_id) 
 	: sock(sock),info_hash(info_hash),our_peer_id(peer_id),done(false)
 	{
 		connect(sock,SIGNAL(connected()),this,SLOT(connected()));
@@ -35,11 +33,11 @@ namespace bt
 		sendHandshake();
 		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 		timer.start(10000,true);
+		host = sock->peerAddress().toString();
 	}
 
 	Authenticate::Authenticate(const QString & ip,Uint16 port,
-							   const SHA1Hash & info_hash,
-							   const PeerID & peer_id) 
+				const SHA1Hash & info_hash,const PeerID & peer_id) 
 	: sock(0),info_hash(info_hash),our_peer_id(peer_id),done(false)
 	{
 		
@@ -48,9 +46,9 @@ namespace bt
 		connect(sock,SIGNAL(readyRead()),this,SLOT(readyRead()));
 		connect(sock,SIGNAL(error(int)),this,SLOT(error(int )));
 		
-		QString host = ip;
+		host = ip;
 		
-	//	Out() << "Initiating connection to " << host << endl;
+		Out() << "Initiating connection to " << host << endl;
 		sock->connectToHost(host,port);
 		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 		timer.start(10000,true);
@@ -74,6 +72,7 @@ namespace bt
 
 	void Authenticate::onFinish(bool succes)
 	{
+		Out() << "Authentication to " << host << " : " << (succes ? "ok" : "failure") << endl;
 		disconnect(sock,SIGNAL(connected()),this,SLOT(connected()));
 		disconnect(sock,SIGNAL(readyRead()),this,SLOT(readyRead()));
 		disconnect(sock,SIGNAL(error(int)),this,SLOT(error(int )));

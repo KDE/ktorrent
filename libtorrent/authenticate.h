@@ -99,6 +99,7 @@ namespace bt
 		PeerID our_peer_id,peer_id;
 		QTimer timer;
 		bool done;
+		QString host;
 	};
 
 }

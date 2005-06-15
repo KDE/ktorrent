@@ -26,10 +26,11 @@
 namespace bt
 {
 
-	HTTPTracker::HTTPTracker(TorrentControl* tc) : Tracker(tc),http(0),cid(0)
+	HTTPTracker::HTTPTracker(TorrentControl* tc) : Tracker(tc),http(0),cid(0),num_attempts(-1)
 	{
 		http = new QHttp(this);
 		connect(http,SIGNAL(requestFinished(int, bool )),this,SLOT(requestFinished(int, bool )));
+		connect(&conn_timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 	}
 
 
@@ -40,7 +41,7 @@ namespace bt
 	{
 		//if (url.protocol() != "http")
 		//	url.setProtocol("http");
-
+		last_url = u;
 		KURL url = u;
 		Out() << "Doing tracker request to url : " << url << endl;
 
@@ -51,6 +52,7 @@ namespace bt
 		url.addQueryItem("downloaded",QString::number(downloaded));
 		url.addQueryItem("left",QString::number(left));
 		url.addQueryItem("compact","1");
+		url.addQueryItem("numwant","1000");
 
 		if (event != QString::null)
 			url.addQueryItem("event",event);
@@ -71,6 +73,11 @@ namespace bt
 
 		http->setHost(host,p);
 		cid = http->request(header);
+		if (num_attempts < 0)
+		{
+			num_attempts = 0;
+			conn_timer.start(30 * 1000);
+		}
 	}
 
 	void HTTPTracker::dataRecieved(const QByteArray & ba)
@@ -82,6 +89,9 @@ namespace bt
 	{
 		if (cid != id)
 			return;
+		
+		conn_timer.stop();
+		num_attempts = -1;
 
 		if (!err)
 		{
@@ -91,6 +101,22 @@ namespace bt
 		{
 			Out() << "Tracker Error : " << http->errorString() << endl;
 			getTC()->trackerResponseError();
+		}
+	}
+
+	void HTTPTracker::onTimeout()
+	{
+		num_attempts++;
+		Out() << "Tracker timeout " << num_attempts << endl; 
+		if (num_attempts >= 5)
+		{
+			conn_timer.stop();
+			num_attempts = -1;
+			getTC()->trackerResponseError();
+		}
+		else
+		{
+			doRequest(last_url);
 		}
 	}
 

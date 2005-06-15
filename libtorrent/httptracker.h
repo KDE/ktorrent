@@ -21,6 +21,7 @@
 #define BTHTTPTRACKER_H
 
 #include <qhttp.h>
+#include <qtimer.h>
 #include "tracker.h"
 
 namespace bt
@@ -47,6 +48,7 @@ namespace bt
 		
 	private slots:
 		void requestFinished(int id,bool err);
+		void onTimeout();
 
 	private:
 		void dataRecieved(const QByteArray & ba);
@@ -55,6 +57,9 @@ namespace bt
 	private:
 		QHttp* http;
 		int cid;
+		QTimer conn_timer;
+		int num_attempts;
+		KURL last_url;
 	};
 
 }

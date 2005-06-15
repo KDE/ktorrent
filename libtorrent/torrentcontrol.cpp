@@ -138,6 +138,8 @@ namespace bt
 		connect(&update_timer,SIGNAL(timeout()),this,SLOT(update()));
 		connect(pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
 		connect(pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerRemoved(Peer* )));
+
+		updateStatusMsg();
 	}
 
 	void TorrentControl::setTrackerTimerInterval(Uint32 interval)
@@ -184,6 +186,7 @@ namespace bt
 			pman->trackerUpdate(dict);
 			delete n;
 			num_tracker_attempts = 0;
+			updateStatusMsg();
 		}
 		catch (Error & e)
 		{
@@ -199,8 +202,14 @@ namespace bt
 						 trackerevent != "stopped")
 			{
 				if (pman->getNumConnectedPeers() == 0)
+				{
 					trackerError(this,i18n("The tracker %1 did not send a proper response"
 						", stopping download").arg(last_tracker_url.prettyURL()));
+				}
+				else
+				{
+					updateStatusMsg();
+				}
 			}
 			else if (trackerevent != "stopped")
 			{
@@ -214,6 +223,7 @@ namespace bt
 		Out() << "Tracker updated" << endl;
 		setTrackerTimerInterval(interval * 1000);
 		pman->trackerUpdate(seeders,leechers,ppeers);
+		updateStatusMsg();
 	}
 
 	
@@ -224,9 +234,16 @@ namespace bt
 		    trackerevent != "stopped")
 		{
 			if (pman->getNumConnectedPeers() == 0)
+			{
 				trackerError(this,i18n("The tracker %1 is down, stopping download.")
 					.arg(last_tracker_url.prettyURL()));
-		}
+			}
+			else
+			{
+				updateStatusMsg();
+			}
+
+						}
 		else if (trackerevent != "stopped")
 		{
 			updateTracker(trackerevent,false);
@@ -235,6 +252,7 @@ namespace bt
 	
 	void TorrentControl::updateTracker(const QString & ev,bool last_succes)
 	{
+		updateStatusMsg(i18n("Doing tracker request"));
 		trackerevent = ev;
 		if (!tor || !tracker || !down || !up)
 			return;
@@ -257,7 +275,9 @@ namespace bt
 		pman->clearDeadPeers();
 		up->update();
 		if (!completed)
+		{
 			down->update();
+		}
 		
 		pman->updateSpeed();
 		completed = cman->chunksLeft() == 0;
@@ -266,6 +286,7 @@ namespace bt
 			updateTracker("completed");
 			finished(this);
 		}
+		updateStatusMsg();
 	}
 	
 	void TorrentControl::onNewPeer(Peer* p)
@@ -326,6 +347,7 @@ namespace bt
 		pman->closeAllConnections();
 		pman->clearDeadPeers();
 		running = false;
+		updateStatusMsg();
 	}
 	
 	QString TorrentControl::getTorrentName() const
@@ -430,6 +452,16 @@ namespace bt
 		return tor->getFileLength();
 	}
 
+	QString TorrentControl::getStatus() const
+	{
+		return status_msg;
+	}
+	
+	void TorrentControl::setStatus(const QString & s)
+	{
+		status_msg = s;
+	}
+
 	bool TorrentControl::changeDataDir(const QString & new_dir)
 	{
 		// new_dir doesn't contain the torX/ part
@@ -515,5 +547,31 @@ namespace bt
 		datadir = old_datadir;
 		old_datadir = QString::null;
 	}
+
+	void TorrentControl::updateStatusMsg(const QString & def)
+	{
+		if (!started)
+			setStatus(i18n("Not started"));
+		else if (!running && completed)
+			setStatus(i18n("Download complete"));
+		else if (!running)
+			setStatus(i18n("Download stopped"));
+		else if (running && completed)
+		{
+			if (def.length() > 0)
+				setStatus(i18n("Download complete, seeding + %1").arg(def));
+			else
+				setStatus(i18n("Download complete, seeding"));
+		}
+		else if (running)
+		{
+			QString m = down->downloadRate() > 0 ? i18n("Downloading") : i18n("Stalled");
+			if (def.length() > 0)
+				setStatus(i18n("%1 + %2").arg(m).arg(def));
+			else
+				setStatus(m);
+		}
+	}
+
 }
 #include "torrentcontrol.moc"
