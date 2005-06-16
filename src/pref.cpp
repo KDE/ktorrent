@@ -25,6 +25,7 @@
 #include <qcheckbox.h>
 #include <knuminput.h>
 #include <kurlrequester.h>
+#include <kfiledialog.h>
 #include <libtorrent/globals.h>
 
 #include "pref.h"
@@ -83,6 +84,7 @@ KTorrentPrefPageOne::KTorrentPrefPageOne(QWidget *parent) : DownloadPref(parent)
 	show_systray_icon->setChecked(Settings::showSystemTrayIcon());
 	port->setValue(Settings::port());
 	KURLRequester* u = temp_dir;
+	u->fileDialog()->setMode(KFile::Directory);
 	if (Settings::tempDir() == QString::null)
 	{
 		QString data_dir = KGlobal::dirs()->saveLocation("data","ktorrent");
