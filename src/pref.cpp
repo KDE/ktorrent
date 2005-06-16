@@ -48,11 +48,14 @@ KTorrentPreferences::KTorrentPreferences(KTorrent & ktor)
 	// a Treelist dialog.. but there are a number of other
 	// possibilities (including Tab, Swallow, and just Plain)
 	enableButtonSeparator(true);
-	setInitialSize(QSize(800,300),true);
+		
 	QFrame *frame = addPage(i18n("Downloads"), i18n("Download Options"));
+	QVBoxLayout* vbox = new QVBoxLayout(frame);
+	vbox->setAutoAdd(true);
 	m_page_one = new KTorrentPrefPageOne(frame);
 	connect(this,SIGNAL(applyClicked()),this,SLOT(applyPressed()));
 	connect(this,SIGNAL(okClicked()),this,SLOT(okPressed()));
+//	setInitialSize(QSize(800,500),false);
 }
 
 void KTorrentPreferences::okPressed()
@@ -71,7 +74,7 @@ void KTorrentPreferences::applyPressed()
 
 KTorrentPrefPageOne::KTorrentPrefPageOne(QWidget *parent) : DownloadPref(parent)
 {
-	setMinimumSize(400,400);
+		//setMinimumSize(400,400);
 	
 	max_downloads->setValue(Settings::maxDownloads());
 	max_conns->setValue(Settings::maxConnections());
