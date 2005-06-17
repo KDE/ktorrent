@@ -34,15 +34,15 @@ static QString BytesToString(Uint32 bytes,int precision = -1)
 	KLocale* loc = KGlobal::locale();
 	if (bytes > 1024 * 1024 * 1024)
 		return i18n("%1 GB").arg(loc->formatNumber(bytes / TO_GIG,
-								precision < 0 ? 3 : precision));
+								precision < 0 ? 2 : precision));
 	else
 		return i18n("%1 MB").arg(loc->formatNumber(bytes / TO_MEG,precision < 0 ? 1 : precision));
 }
 
-static QString KBytesPerSecToString(double speed,int precision = 3)
+static QString KBytesPerSecToString(double speed,int precision = 1)
 {
 	KLocale* loc = KGlobal::locale();
-	return i18n("%1 kB/sec").arg(loc->formatNumber(speed,precision));
+	return i18n("%1 KB/sec").arg(loc->formatNumber(speed,precision));
 }
 
 KTorrentViewItem::KTorrentViewItem(QListView* parent,bt::TorrentControl* tc)
