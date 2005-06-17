@@ -82,6 +82,10 @@ void KTorrentViewItem::update()
 		t = t.addSecs(secs);
 		setText(6,loc->formatTime(t,true,true));
 	}
+	else if (tc->getBytesLeft() == 0)
+	{
+		setText(6,i18n("finished"));
+	}
 	else
 	{
 		setText(6,i18n("infinity"));

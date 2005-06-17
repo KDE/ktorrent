@@ -61,9 +61,10 @@ void KTorrentCore::load(const QString & target)
 				this,SLOT(torrentFinished(bt::TorrentControl* )));
 		downloads.append(tc);
 		
-
-		if (tc->getBytesLeft() != 0 &&
-				  (max_downloads == 0 || getNumRunning() < max_downloads))
+		bool s = (tc->getBytesLeft() == 0 && keep_seeding) ||
+				(tc->getBytesLeft() != 0 &&
+				(max_downloads == 0 || getNumRunning() < max_downloads));
+		if (s)
 		{
 			Out() << "Starting download" << endl;
 			tc->start();
@@ -136,8 +137,10 @@ void KTorrentCore::loadTorrents()
 			
 			
 			Out() << "Starting download" << endl;
-			if (tc->getBytesLeft() != 0 && 
-				(max_downloads == 0 || getNumRunning() < max_downloads))
+			bool s = (tc->getBytesLeft() == 0 && keep_seeding) || 
+					(tc->getBytesLeft() != 0 &&
+						(max_downloads == 0 || getNumRunning() < max_downloads));
+			if (s)
 			{
 				tc->start();
 			}

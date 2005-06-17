@@ -101,6 +101,9 @@ namespace bt
 
 		/// Get the current position in the file.
 		Uint32 tell() const;
+
+		/// Get the error string.
+		QString errorString() const;
 	};
 
 }

@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#include <string.h>
+#include <errno.h>
 #include "file.h"
 
 namespace bt
@@ -103,5 +105,10 @@ namespace bt
 			return 0;
 		
 		return ftell(fptr);
+	}
+
+	QString File::errorString() const
+	{
+		return QString(strerror(errno));
 	}
 }

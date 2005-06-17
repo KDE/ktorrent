@@ -23,10 +23,12 @@
 #include <qdatastream.h>
 #include <kio/netaccess.h>
 #include <qapplication.h>
+#include <klocale.h>
 #include "chunkmanager.h"
 #include "error.h"
 #include "filereconstructor.h"
 #include "torrent.h"
+#include "file.h"
 
 extern QApplication* qApp;
 
@@ -53,13 +55,18 @@ namespace bt
 	
 	void FileReconstructor::multiReconstruct(const QString & dir)
 	{
-		if (!KIO::NetAccess::exists(dir,true,0) && !KIO::NetAccess::mkdir(dir,0,0755))
-			throw Error("Can't make directory " + dir + " : " + KIO::NetAccess::lastErrorString());
-		
 		QString rdir = dir;
 		if (!rdir.endsWith(DirSeparator()))
 			rdir.append(DirSeparator());
 		
+		rdir += tor.getNameSuggestion();
+		if (!KIO::NetAccess::exists(rdir,true,0) && !KIO::NetAccess::mkdir(rdir,0,0755))
+			throw Error(i18n("Can't create directory %1 : %2")
+					.arg(rdir).arg(KIO::NetAccess::lastErrorString()));
+
+		if (!rdir.endsWith(DirSeparator()))
+			rdir.append(DirSeparator());
+
 		Uint32 cur_off = 0;
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
@@ -85,29 +92,32 @@ namespace bt
 	{
 		createFileDir(path);
 
-		QFile output(path);
-		if (!output.open(IO_WriteOnly))
-			throw Error("Can't open file " + path + " : " + output.errorString());
+		File output,cache;
+		if (!output.open(path,"wb"))
+			throw Error(i18n("Can't open file %1 : %2")
+					.arg(path).arg(output.errorString()));
 
-		QFile cache(cman.getCacheFile());
-		if (!cache.open(IO_ReadOnly))
-			throw Error("Can't open file " + cman.getCacheFile() +
-					" : " + cache.errorString());
+		
+		if (!cache.open(cman.getCacheFile(),"rb"))
+			throw Error(i18n("Can't open file %1 : %2")
+					.arg(cman.getCacheFile()).arg(output.errorString()));
 
 
 
-		cache.at(cur_off);
+		cache.seek(File::BEGIN,cur_off);
+		char buf[1024];
 		// written is the number of bytes allready written
 		Uint32 written = 0;
 		while (written < file_size)
 		{
 			//Out() << "Writing chunk " << cur_chunk << endl;
-			char buf[1024];
+			
 			Uint32 left = file_size - written;
 			Uint32 to_write = left < 1024 ? left : 1024;
-			cache.readBlock(buf,to_write);
-			output.writeBlock(buf,to_write);
+			cache.read(buf,to_write);
+			output.write(buf,to_write);
 			cur_off += to_write;
+			written += to_write;
 			
 			completed(cur_off / tor.getChunkSize());
 			qApp->processEvents();

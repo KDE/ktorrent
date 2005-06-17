@@ -1,29 +1,23 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="4" >
-  <Doc0 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/Makefile.am" >
-   <View0 line="8" Type="Source" />
+ <DocsAndViews NumberOfDocuments="1" >
+  <Doc0 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/TmpChangeLog.txt" >
+   <View0 line="14" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/src/Makefile.am" >
-   <View0 line="36" Type="Source" />
-  </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/libtorrent/Makefile.am" >
-   <View0 line="22" Type="Source" />
-  </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/joris/Projects/ktorrent/src/main.cpp" >
-   <View0 line="0" Type="Source" />
-  </Doc3>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
    <breakpointList>
     <breakpoint0 location="/home/joris/Projects/ktorrent/libtorrent/bdecoder.cpp:60" type="1" condition="" enabled="1" />
     <breakpoint1 location="/home/joris/Projects/ktorrent/libtorrent/torrentcontrol.cpp:190" type="1" condition="" enabled="1" />
-    <breakpoint2 location="/home/joris/Projects/ktorrent/libtorrent/torrentcontrol.cpp:150" type="1" condition="" enabled="1" />
-    <breakpoint3 location="/home/joris/Projects/ktorrent/libtorrent/udptracker.cpp:222" type="1" condition="" enabled="1" />
-    <breakpoint4 location="/home/joris/Projects/ktorrent/libtorrent/udptracker.cpp:256" type="1" condition="" enabled="1" />
-    <breakpoint5 location="/home/joris/Projects/ktorrent/libtorrent/udptracker.cpp:212" type="1" condition="" enabled="1" />
+    <breakpoint2 location="/home/joris/Projects/ktorrent/libtorrent/udptracker.cpp:222" type="1" condition="" enabled="1" />
+    <breakpoint3 location="/home/joris/Projects/ktorrent/libtorrent/udptracker.cpp:256" type="1" condition="" enabled="1" />
+    <breakpoint4 location="/home/joris/Projects/ktorrent/libtorrent/udptracker.cpp:212" type="1" condition="" enabled="1" />
+    <breakpoint5 location="/home/joris/Projects/ktorrent/libtorrent/filereconstructor.cpp:71" type="1" condition="" enabled="1" />
+    <breakpoint6 location="/home/joris/Projects/ktorrent/libtorrent/filereconstructor.cpp:63" type="1" condition="" enabled="1" />
+    <breakpoint7 location="/home/joris/Projects/ktorrent/libtorrent/filereconstructor.cpp:93" type="1" condition="" enabled="1" />
+    <breakpoint8 location="/home/joris/Projects/ktorrent/libtorrent/filereconstructor.cpp:113" type="1" condition="" enabled="1" />
    </breakpointList>
   </kdevdebugger>
   <kdevbookmarks>
