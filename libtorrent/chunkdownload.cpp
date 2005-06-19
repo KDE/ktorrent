@@ -289,5 +289,18 @@ namespace bt
 				num_downloaded++;
 		}
 	}
+
+	Uint32 ChunkDownload::bytesDownloaded() const
+	{
+		Uint32 num_bytes = 0;
+		for (Uint32 i = 0;i < num;i++)
+		{
+			if (pieces[i])
+			{
+				num_bytes += i == num-1 ? last_size : MAX_PIECE_LEN;
+			}
+		}
+		return num_bytes;
+	}
 }
 #include "chunkdownload.moc"

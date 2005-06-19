@@ -213,16 +213,16 @@ void KTorrentCore::onExit()
 
 bool KTorrentCore::changeDataDir(const QString & new_dir)
 {
+	// do nothing if new and old dir are the same
+	if (KURL(data_dir) == KURL(new_dir))
+		return true;
+	
 	// safety check
 	if (!KIO::NetAccess::exists(new_dir,false,0))
 	{
 		if (!KIO::NetAccess::mkdir(new_dir,0,0755))
 			return false;
 	}
-
-	// do nothing if new and old dir are the same
-	if (KURL(data_dir) == KURL(new_dir))
-		return true;
 
 	// make sure new_dir ends with a /
 	QString nd = new_dir;
@@ -264,6 +264,30 @@ void KTorrentCore::rollback(const QPtrList<bt::TorrentControl> & succes)
 	while (i != succes.end())
 	{
 		(*i)->rollback();
+		i++;
+	}
+}
+
+void KTorrentCore::startAll()
+{
+	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
+	while (i != downloads.end())
+	{
+		bt::TorrentControl* tc = *i;
+		if (!tc->isRunning() && (max_downloads == 0 || getNumRunning() < max_downloads))
+			tc->start();
+		i++;
+	}
+}
+
+void KTorrentCore::stopAll()
+{
+	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
+	while (i != downloads.end())
+	{
+		bt::TorrentControl* tc = *i;
+		if (tc->isRunning())
+			tc->stop();
 		i++;
 	}
 }

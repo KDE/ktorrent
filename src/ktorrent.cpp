@@ -61,6 +61,7 @@
 #include "trayicon.h"
 #include "searchwidget.h"
 #include "logviewer.h"
+#include "ktorrentdcop.h"
 
 
 
@@ -134,10 +135,12 @@ KTorrent::KTorrent()
 
 	connect(m_search,SIGNAL(statusBarMsg(const QString& )),this,SLOT(changeStatusbar(const QString& )));
 	connect(m_search,SIGNAL(openTorrent(const KURL& )),this,SLOT(load(const KURL& )));
+	m_dcop = new KTorrentDCOP(this);
 }
 
 KTorrent::~KTorrent()
 {
+	delete m_dcop;
 	bt::Out() << "I'm dead" << bt::endl;
 	delete m_core;
 //	delete m_mon;

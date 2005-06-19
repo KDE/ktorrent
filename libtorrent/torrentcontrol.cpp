@@ -464,6 +464,11 @@ namespace bt
 
 	bool TorrentControl::changeDataDir(const QString & new_dir)
 	{
+		// make sure no update ops happen
+		// during this changeDataDir call (KIO::NetAccess::* will continue Qt MessageLoop)
+		if (running)
+			update_timer.stop();
+		
 		// new_dir doesn't contain the torX/ part
 		// so first get that and append it to new_dir
 		int dd = datadir.findRev(DirSeparator(),datadir.length() - 2,false);
@@ -482,6 +487,9 @@ namespace bt
 			if (!KIO::NetAccess::mkdir(nd,0,0755))
 			{
 				Out() << "Error : " << KIO::NetAccess::lastErrorString() << endl;
+				if (running)
+					update_timer.start(100);
+
 				return false;
 			}
 		}
@@ -491,6 +499,9 @@ namespace bt
 		if (!KIO::NetAccess::move(datadir + "torrent",nd,0))
 		{
 			Out() << "Error : " << KIO::NetAccess::lastErrorString() << endl;
+			if (running)
+				update_timer.start(100);
+
 			return false;
 		}
 
@@ -500,6 +511,9 @@ namespace bt
 			Out() << "Error : " << KIO::NetAccess::lastErrorString() << endl;
 			// move the torrent back
 			KIO::NetAccess::move(nd + "torrent",datadir,0);
+			if (running)
+				update_timer.start(100);
+
 			return false;
 		}
 
@@ -510,6 +524,8 @@ namespace bt
 			// move the torrent and cache back
 			KIO::NetAccess::move(nd + "torrent",datadir,0);
 			KIO::NetAccess::move(nd + "cache",datadir,0);
+			if (running)
+				update_timer.start(100);
 			return false;
 		}
 
@@ -523,13 +539,20 @@ namespace bt
 		
 		old_datadir = datadir;
 		datadir = nd;
+		// restart update_timer
+		if (running)
+			update_timer.start(100);
 		return true;
 	}
+
 
 	void TorrentControl::rollback()
 	{
 		if (old_datadir.isNull())
 			return;
+
+		if (running)
+			update_timer.stop();
 
 		// recreate it
 		if (!KIO::NetAccess::exists(old_datadir,false,0))
@@ -546,6 +569,10 @@ namespace bt
 		
 		datadir = old_datadir;
 		old_datadir = QString::null;
+		// restart update_timer
+		if (running)
+			update_timer.start(100);
+
 	}
 
 	void TorrentControl::updateStatusMsg(const QString & def)

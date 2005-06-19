@@ -61,6 +61,10 @@ namespace bt
 	
 		Uint32 totalPieces() const {return num;}
 		Uint32 piecesDownloaded() const {return num_downloaded;}
+
+		/// Get the number of bytes downloaded.
+		Uint32 bytesDownloaded() const;
+		
 		Uint32 getChunkIndex() const;
 		const Peer* getCurrentPeer() const;
 		QString getCurrentPeerID() const;

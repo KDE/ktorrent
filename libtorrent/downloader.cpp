@@ -41,7 +41,7 @@ namespace bt
 	: tor(tor),pman(pman),cman(cman),downloaded(0),tmon(0)
 	{
 		Uint32 total = tor.getFileLength();
-		downloaded = total - cman.bytesLeft();
+		downloaded = (total - cman.bytesLeft());
 		endgame_mode = false;
 		pdowners.setAutoDelete(true);
 		current_chunks.setAutoDelete(true);
@@ -294,6 +294,8 @@ namespace bt
 		if (!fptr.open(file,"rb"))
 			return;
 
+		// recalculate downloaded bytes
+		downloaded = (tor.getFileLength() - cman.bytesLeft());
 
 		Uint32 num = 0;
 		fptr.read(&num,sizeof(Uint32));
@@ -313,6 +315,7 @@ namespace bt
 			ChunkDownload* cd = new ChunkDownload(cman.getChunk(ch));
 			current_chunks.insert(ch,cd);
 			cd->load(fptr);
+			downloaded += cd->bytesDownloaded();
 			if (tmon)
 				tmon->downloadStarted(cd);
 		}

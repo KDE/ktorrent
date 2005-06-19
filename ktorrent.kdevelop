@@ -184,7 +184,7 @@
     <LICENSEFILE>COPYING</LICENSEFILE>
     <VERSION>0.1</VERSION>
     <YEAR>2005</YEAR>
-    <dest>/home/joris/Projects/ktorrent</dest>
+    <dest>/home/joris/ktorrent/code</dest>
   </substmap>
   <kdevcppsupport>
     <references>

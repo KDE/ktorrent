@@ -74,6 +74,16 @@ public:
 	 */
 	void onExit();
 
+	/**
+	 * Start all, takes into account the maximum number of downloads.
+	 */
+	void startAll();
+
+	/**
+	 * Stop all torrents.
+	 */
+	void stopAll();
+
 public slots:
 	/**
 	 * Load a torrent file. Pops up an error dialog

@@ -40,6 +40,7 @@ class KTorrentView;
 class TrayIcon;
 class KTabWidget;
 class SearchWidget;
+class KTorrentDCOP;
 
 
 namespace bt
@@ -69,7 +70,8 @@ public:
 	 */
 	virtual ~KTorrent();
 
-	
+
+	KTorrentCore & getCore() {return *m_core;}
 	
 	/**
 	 * Apply the settings.
@@ -137,6 +139,7 @@ private:
 	TrayIcon* m_systray_icon;
 	KTabWidget* m_tabs;
 	SearchWidget* m_search;
+	KTorrentDCOP* m_dcop;
 };
 
 #endif // _KTORRENT_H_
