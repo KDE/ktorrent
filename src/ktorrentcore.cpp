@@ -120,10 +120,12 @@ void KTorrentCore::loadTorrents()
 	QStringList sl = dir.entryList("tor*",QDir::Dirs);
 	for (Uint32 i = 0;i < sl.count();i++)
 	{
-		Out() << "Loading " << data_dir << *sl.at(i) << endl;
+		
 		QString idir = data_dir + *sl.at(i);
 		if (!idir.endsWith(DirSeparator()))
 			idir.append(DirSeparator());
+
+		Out() << "Loading " << idir << endl;
 		
 		TorrentControl* tc = 0;
 		try

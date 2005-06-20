@@ -47,7 +47,9 @@ static QString KBytesPerSecToString(double speed,int precision = 1)
 
 KTorrentViewItem::KTorrentViewItem(QListView* parent,bt::TorrentControl* tc)
 	: KListViewItem(parent),tc(tc)
-{}
+{
+	update();
+}
 
 
 KTorrentViewItem::~KTorrentViewItem()

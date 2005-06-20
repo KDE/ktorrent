@@ -56,6 +56,9 @@ namespace bt
 	
 	void Downloader::pieceRecieved(const Piece & p)
 	{
+		if (cman.bytesLeft() == 0)
+			return;
+		
 		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();j++)
 		{
 			if (p.getIndex() != j->first)
@@ -183,6 +186,9 @@ namespace bt
 	
 	void Downloader::onNewPeer(Peer* peer)
 	{
+		if (cman.chunksLeft() == 0)
+			return;
+		
 		// add a PeerDownloader for every Peer
 		PeerDownloader* pd = new PeerDownloader(peer);
 		connect(pd,SIGNAL(downloaded(const Piece& )),
@@ -203,6 +209,12 @@ namespace bt
 			}
 			pdowners.erase(peer);
 		}
+	}
+
+	void Downloader::clearDownloaders()
+	{
+		if (current_chunks.count() == 0)
+			pdowners.clear();
 	}
 	
 	void Downloader::finished(ChunkDownload* cd)

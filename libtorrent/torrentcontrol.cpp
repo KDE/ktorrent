@@ -94,7 +94,10 @@ namespace bt
 		
 		tor = new Torrent();
 		tor->load(torrent);
-		KIO::NetAccess::mkdir(ddir,0,0755);
+		if (!KIO::NetAccess::exists(datadir,false,0))
+			if (!KIO::NetAccess::mkdir(datadir,0,0755))
+				throw Error(i18n("Can't create data directory %1 : %2")
+						.arg(datadir).arg(KIO::NetAccess::lastErrorString()));
 	
 		QString cache_file = datadir + "cache";
 		QString tor_copy = datadir + "torrent";
@@ -272,12 +275,11 @@ namespace bt
 		pman->connectToPeers();
 		
 		bool comp = completed;
-		pman->clearDeadPeers();
+		
 		up->update();
 		if (!completed)
-		{
 			down->update();
-		}
+		
 		
 		pman->updateSpeed();
 		completed = cman->chunksLeft() == 0;
@@ -285,8 +287,10 @@ namespace bt
 		{
 			updateTracker("completed");
 			finished(this);
+			down->clearDownloaders();
 		}
 		updateStatusMsg();
+		pman->clearDeadPeers();
 	}
 	
 	void TorrentControl::onNewPeer(Peer* p)

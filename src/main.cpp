@@ -76,8 +76,6 @@ int main(int argc, char **argv)
 		KTorrent *widget = new KTorrent();
 		widget->show();
 
-		
-		
 		for (int i = 0; i < args->count(); i++)
 		{
 			widget->load(args->url(i));

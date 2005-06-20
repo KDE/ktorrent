@@ -75,6 +75,12 @@ namespace bt
 		 * Clear all downloads. Deletes all active downloads.
 		 */
 		void clearDownloads();
+
+		/**
+		 * Clear all downloaders. Deletes all active downloaders.
+		 * Only call this when the download is finished.
+		 */
+		void clearDownloaders();
 		
 		CurChunkCItr beginDownloads() const {return current_chunks.begin();}
 		CurChunkCItr endDownloads() const {return current_chunks.end();}

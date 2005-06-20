@@ -104,8 +104,6 @@ KTorrent::KTorrent()
 	// accept dnd
 	setAcceptDrops(true);
 
-
-
 	// then, setup our actions
 	setupActions();
 
@@ -131,11 +129,13 @@ KTorrent::KTorrent()
 		setCentralWidget(s);
 	}
 	
-	m_core->loadTorrents();
+	
 
 	connect(m_search,SIGNAL(statusBarMsg(const QString& )),this,SLOT(changeStatusbar(const QString& )));
 	connect(m_search,SIGNAL(openTorrent(const KURL& )),this,SLOT(load(const KURL& )));
 	m_dcop = new KTorrentDCOP(this);
+
+	m_core->loadTorrents();
 }
 
 KTorrent::~KTorrent()
