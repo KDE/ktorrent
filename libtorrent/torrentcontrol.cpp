@@ -96,7 +96,7 @@ namespace bt
 		tor->load(torrent);
 		if (!KIO::NetAccess::exists(datadir,false,0))
 			if (!KIO::NetAccess::mkdir(datadir,0,0755))
-				throw Error(i18n("Can't create data directory %1 : %2")
+				throw Error(i18n("Cannot create data directory %1: %2")
 						.arg(datadir).arg(KIO::NetAccess::lastErrorString()));
 	
 		QString cache_file = datadir + "cache";

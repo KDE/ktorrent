@@ -61,7 +61,7 @@ namespace bt
 		
 		rdir += tor.getNameSuggestion();
 		if (!KIO::NetAccess::exists(rdir,true,0) && !KIO::NetAccess::mkdir(rdir,0,0755))
-			throw Error(i18n("Can't create directory %1 : %2")
+			throw Error(i18n("Cannot create directory %1: %2")
 					.arg(rdir).arg(KIO::NetAccess::lastErrorString()));
 
 		if (!rdir.endsWith(DirSeparator()))
@@ -94,12 +94,12 @@ namespace bt
 
 		File output,cache;
 		if (!output.open(path,"wb"))
-			throw Error(i18n("Can't open file %1 : %2")
+			throw Error(i18n("Cannot open file %1: %2")
 					.arg(path).arg(output.errorString()));
 
 		
 		if (!cache.open(cman.getCacheFile(),"rb"))
-			throw Error(i18n("Can't open file %1 : %2")
+			throw Error(i18n("Cannot open file %1: %2")
 					.arg(cman.getCacheFile()).arg(output.errorString()));
 
 
