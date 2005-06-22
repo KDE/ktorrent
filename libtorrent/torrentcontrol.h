@@ -179,12 +179,10 @@ namespace bt
 		
 		/**
 		 * When the torrent is finished, the final file(s) can be
-		 * reconstructed. In case of a multi file torrent, the file parameter
-		 * will be interpreted as the directory to store the files.
-		 * @param file The path of the file (or directory to store files)
-		 * @param dlg User supplied progress dialog, 0 if you don't want one
+		 * reconstructed.
+		 * @param dir The or directory to store files
 		 */
-		void reconstruct(const QString & file,KProgressDialog* dlg);
+		void reconstruct(const QString & dir);
 		
 	private slots:
 		void updateTracker() {updateTracker(QString::null);}

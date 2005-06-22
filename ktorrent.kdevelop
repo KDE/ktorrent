@@ -16,6 +16,7 @@
     <absoluteprojectpath>false</absoluteprojectpath>
     <description/>
     <ignoreparts/>
+    <versioncontrol>kdevsubversion</versioncontrol>
   </general>
   <kdevautoproject>
     <general>
@@ -77,6 +78,7 @@
     <tree>
       <hidenonprojectfiles>false</hidenonprojectfiles>
       <hidepatterns>*.o,*.lo,CVS</hidepatterns>
+      <showvcsfields>true</showvcsfields>
     </tree>
   </kdevfileview>
   <kdevdoctreeview>

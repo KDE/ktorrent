@@ -21,6 +21,7 @@
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kprogress.h>
+#include "fileops.h"
 #include "downloader.h"
 #include "uploader.h"
 #include "tracker.h"
@@ -95,11 +96,9 @@ namespace bt
 		tor = new Torrent();
 		tor->load(torrent);
 		if (!KIO::NetAccess::exists(datadir,false,0))
-			if (!KIO::NetAccess::mkdir(datadir,0,0755))
-				throw Error(i18n("Cannot create data directory %1: %2")
-						.arg(datadir).arg(KIO::NetAccess::lastErrorString()));
+			MakeDir(datadir);
 	
-		QString cache_file = datadir + "cache";
+		//QString cache_file = datadir + "cache";
 		QString tor_copy = datadir + "torrent";
 		
 		if (tor_copy != torrent)
@@ -141,7 +140,7 @@ namespace bt
 		connect(&update_timer,SIGNAL(timeout()),this,SLOT(update()));
 		connect(pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
 		connect(pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerRemoved(Peer* )));
-
+		saved = cman->hasBeenSaved();
 		updateStatusMsg();
 	}
 
@@ -418,16 +417,12 @@ namespace bt
 			return 0;
 	}
 	
-	void TorrentControl::reconstruct(const QString & file,KProgressDialog* dlg)
+	void TorrentControl::reconstruct(const QString & dir)
 	{
-		FileReconstructor fr(*tor,*cman);
-		if (dlg)
-		{
-			KProgress* pb = dlg->progressBar();
-			pb->setTotalSteps(cman->getNumChunks()-1);
-			connect(&fr,SIGNAL(completed(int )),pb,SLOT(setProgress(int )));
-		}
-		fr.reconstruct(file);
+		if (saved)
+			return;
+	
+		cman->save(dir);
 		saved = true;
 	}
 	
@@ -509,8 +504,8 @@ namespace bt
 			return false;
 		}
 
-		// then the cache
-		if (!KIO::NetAccess::move(datadir + "cache",nd,0))
+		// then the index
+		if (!KIO::NetAccess::move(datadir + "index",nd,0))
 		{
 			Out() << "Error : " << KIO::NetAccess::lastErrorString() << endl;
 			// move the torrent back
@@ -521,13 +516,13 @@ namespace bt
 			return false;
 		}
 
-		// then the index
-		if (!KIO::NetAccess::move(datadir + "index",nd,0))
+		// then the cache
+		if (!KIO::NetAccess::move(datadir + "cache",nd,0))
 		{
 			Out() << "Error : " << KIO::NetAccess::lastErrorString() << endl;
 			// move the torrent and cache back
 			KIO::NetAccess::move(nd + "torrent",datadir,0);
-			KIO::NetAccess::move(nd + "cache",datadir,0);
+			KIO::NetAccess::move(nd + "index",datadir,0);
 			if (running)
 				update_timer.start(100);
 			return false;
@@ -603,6 +598,5 @@ namespace bt
 				setStatus(m);
 		}
 	}
-
 }
 #include "torrentcontrol.moc"

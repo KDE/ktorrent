@@ -197,7 +197,7 @@ void KTorrent::currentChanged(bt::TorrentControl* tc)
 	if (tc)
 	{
 		bool completed = tc->getBytesLeft() == 0;
-		m_save->setEnabled(completed);
+		m_save->setEnabled(completed && !tc->isSaved());
 		m_start->setEnabled(!tc->isRunning());
 		m_stop->setEnabled(tc->isRunning());
 		m_remove->setEnabled(true);
@@ -318,40 +318,22 @@ void KTorrent::save(bt::TorrentControl* tc)
 	if (!tc || tc->getBytesLeft() != 0)
 		return;
 	
-	KProgressDialog* dlg = 0;
-	
+
 	try
 	{
-		QString file = QString::null;
-		if (tc->isMultiFileTorrent())
-		{
-			file = KFileDialog::getExistingDirectory(QString::null, this,
-					i18n("Select Directory to Save"));
-		}
-		else
-		{
-			file = KFileDialog::getSaveFileName(
-					QString::null, QString::null, this, i18n("Select File to Save"));
-		}
+		QString dir = KFileDialog::getExistingDirectory(QString::null, this,
+				i18n("Select Directory to Save To"));
 
-		if (file != QString::null)
+
+		if (dir != QString::null)
 		{
-			if (tc->isMultiFileTorrent())
-			{
-				dlg = new KProgressDialog(this);
-				dlg->setLabel(i18n("Saving torrent ..."));
-				dlg->setAllowCancel(false);
-				dlg->show();
-			}
-			tc->reconstruct(file,dlg);
+			tc->reconstruct(dir);
 		}
 	}
 	catch (bt::Error & err)
 	{
 		KMessageBox::error(0,err.toString(),"Error");
 	}
-	
-	delete dlg;
 }
 
 void KTorrent::askAndSave(bt::TorrentControl* tc)
@@ -364,12 +346,15 @@ void KTorrent::askAndSave(bt::TorrentControl* tc)
 	
 	if (ret == KMessageBox::Yes)
 		save(tc);
+
+	currentChanged(m_view->getCurrentTC());
 }
 
 void KTorrent::fileSave()
 {
 	TorrentControl* tc = m_view->getCurrentTC();
 	save(tc);
+	currentChanged(m_view->getCurrentTC());
 }
 
 void KTorrent::startDownload()
@@ -399,6 +384,7 @@ void KTorrent::removeDownload()
 	{
 		m_core->remove(tc);
 	}
+	currentChanged(m_view->getCurrentTC());
 }
 
 void KTorrent::optionsShowToolbar()

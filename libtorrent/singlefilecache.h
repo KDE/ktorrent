@@ -17,66 +17,33 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef BTCACHE_H
-#define BTCACHE_H
+#ifndef BTSINGLEFILECACHE_H
+#define BTSINGLEFILECACHE_H
+
+#include "cache.h"
 
 namespace bt
 {
-	class Torrent;
-	class Chunk;
 
 	/**
 	 * @author Joris Guisson
-	 * @brief Manages the temporary data
+	 * @brief Cache for single file torrents
 	 *
-	 * Interface for a class which manages downloaded data.
-	 * Subclasses should implement the load and save methods.
+	 * This class implements Cache for a single file torrent
 	 */
-	class Cache
+	class SingleFileCache : public Cache
 	{
-	protected:
-		Torrent & tor;
-		QString data_dir;
+		QString cache_file;
 	public:
-		Cache(Torrent & tor,const QString & data_dir);
-		virtual ~Cache();
+		SingleFileCache(Torrent& tor, const QString& data_dir);
+		virtual ~SingleFileCache();
 
-		/**
-		 * Saves the entire data to it's final location.
-		 * @param dir Directory to store data
-		 */
-		virtual void saveData(const QString & dir) = 0;
-
-		/**
-		 * Changes the data dir. All data files should allready been moved.
-		 * This just modifies the data_dir variable.
-		 * @param ndir The new data_dir
-		 */
+		virtual void saveData(const QString & dir);
+		virtual void load(Chunk* c);
+		virtual void save(Chunk* c);
+		virtual void create();
 		virtual void changeDataDir(const QString & ndir);
-		
-		/**
-		 * Load a chunk into memory. If something goes wrong,
-		 * an Error should be thrown.
-		 * @param c The Chunk
-		 */
-		virtual void load(Chunk* c) = 0;
-
-		/**
-		 * Save a chunk to disk. If something goes wrong,
-		 * an Error should be thrown.
-		 * @param c The Chunk
-		 */
-		virtual void save(Chunk* c) = 0;
-
-		/**
-		 * Create all the data files to store the data.
-		 */
-		virtual void create() = 0;
-
-		/**
-		 * Check if cache has been saved.
-		 */
-		virtual bool hasBeenSaved() const = 0;
+		virtual bool hasBeenSaved() const;
 	};
 
 }

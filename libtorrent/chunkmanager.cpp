@@ -22,6 +22,8 @@
 #include "torrent.h"
 #include "error.h"
 #include "bitset.h"
+#include "singlefilecache.h"
+#include "multifilecache.h"
 
 namespace bt
 {
@@ -35,7 +37,11 @@ namespace bt
 	ChunkManager::ChunkManager(Torrent & tor,const QString & data_dir)
 	: tor(tor),chunks(tor.getNumChunks())
 	{
-		cache_file = data_dir + "cache";
+		if (tor.isMultiFile())
+			cache = new MultiFileCache(tor,data_dir);
+		else
+			cache = new SingleFileCache(tor,data_dir);
+		
 		index_file = data_dir + "index";
 		Uint32 tsize = tor.getFileLength();	// total size	
 		Uint32 csize = tor.getChunkSize();	// chunk size
@@ -56,12 +62,12 @@ namespace bt
 
 	ChunkManager::~ChunkManager()
 	{
-
+		delete cache;
 	}
 
 	void ChunkManager::changeDataDir(const QString & data_dir)
 	{
-		cache_file = data_dir + "cache";
+		cache->changeDataDir(data_dir);
 		index_file = data_dir + "index";
 	}
 	
@@ -112,8 +118,8 @@ namespace bt
 	void ChunkManager::createFiles()
 	{
 		File fptr;
-		fptr.open(cache_file,"wb");
 		fptr.open(index_file,"wb");
+		cache->create();
 	}
 
 	Chunk* ChunkManager::getChunk(unsigned int i)
@@ -134,30 +140,14 @@ namespace bt
 			return 0;
 
 		if (c->getStatus() != Chunk::IN_MEMORY)
-			loadChunk(i);
+		{
+			cache->load(c);
+		}
 		
 		c->ref();
 		return c;
 	}
-	
-	void ChunkManager::loadChunk(unsigned int i)
-	{
-		if (i >= chunks.size())
-			return;
 		
-		Chunk* c = chunks[i];
-		if (c->getStatus() == Chunk::NOT_DOWNLOADED)
-			return;
-		
-		File fptr;
-		if (!fptr.open(cache_file,"rb"))
-			throw Error("Can't open cache file");
-		fptr.seek(File::BEGIN,c->getCacheFileOffset());
-		unsigned char* data = new unsigned char[c->getSize()];
-		fptr.read(data,c->getSize());
-		c->setData(data);
-	}
-	
 	void ChunkManager::releaseChunk(unsigned int i)
 	{
 		if (i >= chunks.size())
@@ -175,47 +165,7 @@ namespace bt
 			return;
 
 		Chunk* c = chunks[i];
-		// calculate the chunks position in the final file
-		Uint32 chunk_pos = i * tor.getChunkSize();
-		
-		File fptr;
-		if (!fptr.open(cache_file,"r+b"))
-			throw Error("Can't open cache file");
-		
-		// jump to end of file
-		fptr.seek(File::END,0);
-		unsigned int cache_size = fptr.tell();
-
-		// see if the cache is big enough for the chunk
-		if (chunk_pos <= cache_size)
-		{
-			// big enough so just jump to the right posiition and write
-			// the chunk
-			fptr.seek(File::BEGIN,chunk_pos);
-			fptr.write(c->getData(),c->getSize());
-		}
-		else
-		{
-			// write random shit to enlarge the file
-			Uint32 num_empty_bytes = chunk_pos - cache_size;
-			Uint8 b[1024];
-			Uint32 nw = 0;
-			while (nw < num_empty_bytes)
-			{
-				Uint32 left = num_empty_bytes - nw;
-				fptr.write(b,left < 1024 ? left : 1024);
-				nw += 1024;
-			}
-
-			// now write the chunks at the good position
-			fptr.seek(File::BEGIN,chunk_pos);
-			fptr.write(c->getData(),c->getSize());
-		}
-		
-		// set the offset and clear the chunk
-		c->setCacheFileOffset(chunk_pos);
-		c->clear();
-		
+		cache->save(c);
 		num_chunks_in_cache_file++;
 
 		// update the index file
@@ -273,6 +223,19 @@ namespace bt
 				num++;
 		}
 		return num;
+	}
+
+	void ChunkManager::save(const QString & dir)
+	{
+		if (chunksLeft() != 0)
+			return;
+
+		cache->saveData(dir);
+	}
+
+	bool ChunkManager::hasBeenSaved() const
+	{
+		return cache->hasBeenSaved();
 	}
 }
 

@@ -29,6 +29,7 @@ namespace bt
 {
 	class Torrent;
 	class BitSet;
+	class Cache;
 	
 	/**
 	 * @author Joris Guisson
@@ -43,10 +44,11 @@ namespace bt
 	class ChunkManager
 	{
 		Torrent & tor;
-		QString cache_file,index_file;
+		QString index_file;
 		QPtrVector<Chunk> chunks;
 		unsigned int num_chunks_in_cache_file;
 		Uint32 max_allowed;
+		Cache* cache;
 	public:
 		ChunkManager(Torrent & tor,const QString & data_dir);
 		virtual ~ChunkManager();
@@ -123,8 +125,8 @@ namespace bt
 		/// Get the number of chunks into the file.
 		Uint32 getNumChunks() const {return chunks.count();}
 
-		/// Get the cache file
-		QString getCacheFile() const {return cache_file;}
+		// Get the cache file
+		//QString getCacheFile() const {return cache_file;}
 
 		/**
 		 * Get the highest chunk num, we are allowed to download.
@@ -137,8 +139,17 @@ namespace bt
 		 * @return The maximum allowed chunk
 		 */
 		Uint32 getMaxAllowedChunk() const {return max_allowed;}
+
+		/**
+		 * Save the completed download to a directory.
+		 * This will not work, if the download is not complete.
+		 * @param dir The directory to save to
+		 */
+		void save(const QString & dir);
+
+		/// Check wether the cache has been saved.
+		bool hasBeenSaved() const;
 	private:
-		void loadChunk(unsigned int i);		
 		void saveIndexFile();
 		void writeIndexFileEntry(Chunk* c);
 	};

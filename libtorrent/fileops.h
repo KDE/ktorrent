@@ -17,68 +17,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef BTCACHE_H
-#define BTCACHE_H
+#ifndef BTFILEOPS_H
+#define BTFILEOPS_H
+
+class QString;
+class KURL;
 
 namespace bt
 {
-	class Torrent;
-	class Chunk;
 
 	/**
-	 * @author Joris Guisson
-	 * @brief Manages the temporary data
-	 *
-	 * Interface for a class which manages downloaded data.
-	 * Subclasses should implement the load and save methods.
+	 * Creates a directory. Convenience function around
+	 * KIO::NetAccess::mkdir .
+	 * @param dir The url of the dir
+	 * @throw Error upon error
 	 */
-	class Cache
-	{
-	protected:
-		Torrent & tor;
-		QString data_dir;
-	public:
-		Cache(Torrent & tor,const QString & data_dir);
-		virtual ~Cache();
+	void MakeDir(const KURL & dir);
 
-		/**
-		 * Saves the entire data to it's final location.
-		 * @param dir Directory to store data
-		 */
-		virtual void saveData(const QString & dir) = 0;
+	/**
+	 * Create a symbolic link @a link_url which links to @a link_to 
+	 * @param link_to The file to link to
+	 * @param link_url The link url
+	 */
+	void SymLink(const QString & link_to,const QString & link_url);
 
-		/**
-		 * Changes the data dir. All data files should allready been moved.
-		 * This just modifies the data_dir variable.
-		 * @param ndir The new data_dir
-		 */
-		virtual void changeDataDir(const QString & ndir);
-		
-		/**
-		 * Load a chunk into memory. If something goes wrong,
-		 * an Error should be thrown.
-		 * @param c The Chunk
-		 */
-		virtual void load(Chunk* c) = 0;
-
-		/**
-		 * Save a chunk to disk. If something goes wrong,
-		 * an Error should be thrown.
-		 * @param c The Chunk
-		 */
-		virtual void save(Chunk* c) = 0;
-
-		/**
-		 * Create all the data files to store the data.
-		 */
-		virtual void create() = 0;
-
-		/**
-		 * Check if cache has been saved.
-		 */
-		virtual bool hasBeenSaved() const = 0;
-	};
-
+	/**
+	 * Move a file from one location to another
+	 * @param src The source file
+	 * @param dst The destination file / directory
+	 */
+	void MoveFile(const KURL & src,const KURL & dst);
 }
 
 #endif

@@ -25,9 +25,11 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <kio/netaccess.h>
+#include <klocale.h>
 #include "globals.h"
 #include "log.h"
-
+#include "error.h"
 
 namespace bt
 {
@@ -163,6 +165,8 @@ namespace bt
 		gettimeofday(&tv,0);
 		return (Uint32)(tv.tv_sec * 1000 + tv.tv_usec * 0.001);
 	}
+
+
 
 	Globals::Globals()
 	{

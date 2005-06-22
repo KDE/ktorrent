@@ -24,19 +24,19 @@
 namespace bt
 {
 
-	Cache::Cache(Torrent & tor,const QString & data_dir) : tor(tor)
-	{}
+	Cache::Cache(Torrent & tor,const QString & data_dir) : tor(tor),data_dir(data_dir)
+	{
+		if (!data_dir.endsWith(bt::DirSeparator()))
+			this->data_dir += bt::DirSeparator();
+	}
 
 
 	Cache::~Cache()
 	{}
 
 
-	void Cache::load(Chunk* c)
+	void Cache::changeDataDir(const QString & ndir)
 	{
-	}
-	
-	void Cache::save(Chunk* c)
-	{
+		data_dir = ndir;
 	}
 }

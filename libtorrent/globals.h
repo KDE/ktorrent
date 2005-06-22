@@ -24,6 +24,7 @@
 
 class QString;
 class QHostAddress;
+class KURL;
 
 namespace bt
 {

@@ -17,10 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#include <algorithm>
 #include "peerdownloader.h"
 #include "peer.h"
 #include "piece.h"
 #include "packetwriter.h"
+
 
 namespace bt
 {
@@ -90,8 +92,11 @@ namespace bt
 	void PeerDownloader::piece(const Piece & p)
 	{
 		Request r(p);
-		reqs.remove(r);
-		downloaded(p);
+		if (std::find(reqs.begin(),reqs.end(),r) != reqs.end())
+		{
+			reqs.remove(r);
+			downloaded(p);
+		}
 	}
 	
 	void PeerDownloader::peerDestroyed()

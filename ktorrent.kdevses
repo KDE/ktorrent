@@ -1,29 +1,29 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="3" >
-  <Doc0 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/ktorrentcore.cpp" >
-   <View0 line="127" Type="Source" />
+ <DocsAndViews NumberOfDocuments="2" >
+  <Doc0 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/TmpChangeLog.txt" >
+   <View0 line="28" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/libtorrent/torrentcontrol.cpp" >
-   <View0 line="93" Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/libtorrent/multifilecache.cpp" >
+   <View0 line="279" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/ktorrentview.cpp" >
-   <View0 line="93" Type="Source" />
-  </Doc2>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
    <breakpointList>
     <breakpoint0 location="/home/joris/ktorrent/code/src/ktorrent.cpp:75" type="1" condition="" enabled="1" />
-    <breakpoint1 location="/home/joris/ktorrent/code/src/main.cpp:76" type="1" condition="" enabled="1" />
-    <breakpoint2 location="/home/joris/ktorrent/code/src/ktorrentview.cpp:145" type="1" condition="" enabled="1" />
-    <breakpoint3 location="/home/joris/ktorrent/code/src/ktorrentview.cpp:177" type="1" condition="" enabled="1" />
+    <breakpoint1 location="/home/joris/ktorrent/code/libtorrent/multifilecache.cpp:129" type="1" condition="" enabled="1" />
+    <breakpoint2 location="/home/joris/ktorrent/code/libtorrent/multifilecache.cpp:265" type="1" condition="" enabled="1" />
+    <breakpoint3 location="/home/joris/ktorrent/code/libtorrent/multifilecache.cpp:274" type="1" condition="" enabled="1" />
    </breakpointList>
   </kdevdebugger>
   <kdevbookmarks>
    <bookmarks/>
   </kdevbookmarks>
+  <kdevsubversion>
+   <subversion recurseresolve="1" recurserelocate="1" recursemerge="1" recursecommit="1" base="" recursepropget="1" recurseswitch="1" recurseupdate="1" recursepropset="1" recursediff="1" recurserevert="1" forcemove="1" recursecheckout="1" forceremove="1" recurseadd="1" recurseproplist="1" forcemerge="1" />
+  </kdevsubversion>
   <kdevvalgrind>
    <executable path="" params="" />
    <valgrind path="" params="" />

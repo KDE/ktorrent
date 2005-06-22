@@ -71,22 +71,28 @@ void KTorrentViewItem::update()
 
 	setText(0,tc->getTorrentName());
 	setText(1,tc->getStatus());
-	setText(2,BytesToString(tc->getBytesDownloaded()) + " / " + BytesToString(tc->getTotalBytes()));
+	Uint32 nb = tc->getBytesDownloaded() > tc->getTotalBytes() ?
+			tc->getTotalBytes() : tc->getBytesDownloaded();
+	
+	setText(2,BytesToString(nb) + " / " + BytesToString(tc->getTotalBytes()));
 	setText(3,BytesToString(tc->getBytesUploaded()));
-	setText(4,KBytesPerSecToString(tc->getDownloadRate() / 1024.0));
+	if (tc->getBytesLeft() == 0)
+		setText(4,KBytesPerSecToString(0));
+	else
+		setText(4,KBytesPerSecToString(tc->getDownloadRate() / 1024.0));
 	setText(5,KBytesPerSecToString(tc->getUploadRate() / 1024.0));
 
 	KLocale* loc = KGlobal::locale();
-	if (tc->getDownloadRate() != 0)
+	if (tc->getBytesLeft() == 0)
+	{
+		setText(6,i18n("finished"));
+	}
+	else if (tc->getDownloadRate() != 0)
 	{
 		Uint32 secs = (int)floor((float)tc->getBytesLeft() / (float)tc->getDownloadRate());
 		QTime t;
 		t = t.addSecs(secs);
 		setText(6,loc->formatTime(t,true,true));
-	}
-	else if (tc->getBytesLeft() == 0)
-	{
-		setText(6,i18n("finished"));
 	}
 	else
 	{
@@ -94,6 +100,8 @@ void KTorrentViewItem::update()
 	}
 	setText(7,QString::number(tc->getNumPeers()));
 	double perc = ((double)tc->getBytesDownloaded() / tc->getTotalBytes()) * 100.0;
+	if (perc > 100.0)
+		perc = 100.0;
 	setText(8,i18n("%1 %").arg(loc->formatNumber(perc,2)));
 
 	/*

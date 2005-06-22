@@ -17,39 +17,58 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef BTFILERECONSTRUCTOR_H
-#define BTFILERECONSTRUCTOR_H
+#ifndef BTMULTIFILECACHE_H
+#define BTMULTIFILECACHE_H
 
-#include <qobject.h>
-#include "globals.h"
+#include "cache.h"
 
 namespace bt
 {
+	struct ChunkPos;
 
-	class ChunkManager;
-	
 	/**
-	@author Joris Guisson
-	*/
-	class FileReconstructor : public QObject
+	 * @author Joris Guisson
+	 * @brief Cache for multi file torrents
+	 *
+	 * This class manages a multi file torrent cache. Everything gets stored in the
+	 * correct files immediatly. 
+	 */
+	class MultiFileCache : public Cache
 	{
-		Q_OBJECT
+		QString cache_dir;
 	public:
-		FileReconstructor(Torrent & tor,ChunkManager & cman);
-		virtual ~FileReconstructor();
+		MultiFileCache(Torrent& tor, const QString& data_dir);
+		virtual ~MultiFileCache();
 
-		void reconstruct(const QString & output);
-		
-	signals:
-		void completed(int chunks);
+		virtual void saveData(const QString & dir);
+		virtual void changeDataDir(const QString& ndir);
+		virtual void create();
+		virtual void load(Chunk* c);
+		virtual void save(Chunk* c);
+		virtual bool hasBeenSaved() const;
 	private:
-		void multiReconstruct(const QString & dir);
-		void singleReconstruct(const QString & file);
-		void reconstructFile(const QString & path,Uint32 file_size,Uint32 & cur_off);
-		void createFileDir(const QString & file);
+		void touch(const QString fpath);
 		
-		Torrent & tor;
-		ChunkManager & cman;
+		/**
+		 * Calculate in which file(s) a chunk lies.
+		 * @param c 
+		 * @param pos 
+		 */
+		void calcChunkPos(Chunk* c,ChunkPos & pos);
+
+		/**
+		 * Save Chunk to single file.
+		 * @param c 
+		 * @param pos 
+		 */
+		void saveChunkOneFile(Chunk* c,ChunkPos & pos);
+
+		/**
+		 * Save Chunk to 2 files.
+		 * @param c
+		 * @param pos
+		 */
+		void saveChunkTwoFiles(Chunk* c,ChunkPos & pos);
 	};
 
 }
