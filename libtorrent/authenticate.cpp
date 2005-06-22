@@ -27,6 +27,7 @@ namespace bt
 	Authenticate::Authenticate(QSocket* sock,const SHA1Hash & info_hash,const PeerID & peer_id) 
 	: sock(sock),info_hash(info_hash),our_peer_id(peer_id),done(false)
 	{
+		finished = succes = false;
 		connect(sock,SIGNAL(connected()),this,SLOT(connected()));
 		connect(sock,SIGNAL(readyRead()),this,SLOT(readyRead()));
 		connect(sock,SIGNAL(error(int)),this,SLOT(error(int )));
@@ -40,7 +41,7 @@ namespace bt
 				const SHA1Hash & info_hash,const PeerID & peer_id) 
 	: sock(0),info_hash(info_hash),our_peer_id(peer_id),done(false)
 	{
-		
+		finished = succes = false;
 		sock = new QSocket();
 		connect(sock,SIGNAL(connected()),this,SLOT(connected()));
 		connect(sock,SIGNAL(readyRead()),this,SLOT(readyRead()));
@@ -77,7 +78,8 @@ namespace bt
 		disconnect(sock,SIGNAL(readyRead()),this,SLOT(readyRead()));
 		disconnect(sock,SIGNAL(error(int)),this,SLOT(error(int )));
 		done = true;
-		finished(this,succes);
+		finished = true;
+		this->succes = succes;
 		if (!succes)
 		{
 			delete sock;

@@ -64,10 +64,12 @@ namespace bt
 		PeerManager(Torrent & tor,Uint16 port);
 		virtual ~PeerManager();
 		
+
 		/**
-		 * Update the down and upload speed of each Peer.
+		 * Check for new connections, update down and upload speed of each Peer.
+		 * Initiate new connections. 
 		 */
-		void updateSpeed();
+		void update();
 		
 		/**
 		 * Remove dead peers.

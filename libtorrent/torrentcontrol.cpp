@@ -35,7 +35,6 @@
 #include "bitset.h"
 #include "peer.h"
 #include "choker.h"
-#include "filereconstructor.h"
 #include "torrentmonitor.h"
 #include "log.h"
 #include "globals.h"
@@ -271,7 +270,8 @@ namespace bt
 	
 	void TorrentControl::update()
 	{
-		pman->connectToPeers();
+		pman->update();
+		pman->clearDeadPeers();
 		
 		bool comp = completed;
 		
@@ -279,8 +279,6 @@ namespace bt
 		if (!completed)
 			down->update();
 		
-		
-		pman->updateSpeed();
 		completed = cman->chunksLeft() == 0;
 		if (completed && !comp)
 		{
@@ -289,7 +287,7 @@ namespace bt
 			down->clearDownloaders();
 		}
 		updateStatusMsg();
-		pman->clearDeadPeers();
+		
 	}
 	
 	void TorrentControl::onNewPeer(Peer* p)

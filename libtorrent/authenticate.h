@@ -75,6 +75,12 @@ namespace bt
 		QSocket* takeSocket();
 		
 		const PeerID & getPeerID() const {return peer_id;}
+
+		/// See if the authentication is finished
+		bool isFinished() const {return finished;}
+
+		/// See if the authentication is succesfull
+		bool isSuccesfull() const {return succes;}
 		
 	private slots:
 		void connected();
@@ -88,7 +94,7 @@ namespace bt
 		 * @param obj The Authenicate object 
 		 * @param ok Wether or not the authentication procedure was ok
 		 */
-		void finished(Authenticate* obj,bool ok);
+		//void finished(Authenticate* obj,bool ok);
 		
 	private:
 		void sendHandshake();
@@ -100,6 +106,7 @@ namespace bt
 		QTimer timer;
 		bool done;
 		QString host;
+		bool finished,succes;
 	};
 
 }

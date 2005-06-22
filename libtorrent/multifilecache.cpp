@@ -163,7 +163,7 @@ namespace bt
 		if (cp.file2.isNull())
 		{
 			File fptr;
-			if (!fptr.open(cp.file1,"rb"))
+			if (!fptr.open(cache_dir + cp.file1,"rb"))
 				throw Error(i18n("Can't open file %1 : %2")
 						.arg(cp.file1).arg(fptr.errorString()));
 
@@ -175,12 +175,12 @@ namespace bt
 		else
 		{
 			File fptr1;
-			if (!fptr1.open(cp.file1,"rb"))
+			if (!fptr1.open(cache_dir + cp.file1,"rb"))
 				throw Error(i18n("Can't open file %1 : %2")
 						.arg(cp.file1).arg(fptr1.errorString()));
 
 			File fptr2;
-			if (!fptr2.open(cp.file2,"rb"))
+			if (!fptr2.open(cache_dir + cp.file2,"rb"))
 				throw Error(i18n("Can't open file %1 : %2")
 						.arg(cp.file2).arg(fptr2.errorString()));
 

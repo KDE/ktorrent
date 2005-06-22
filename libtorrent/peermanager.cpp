@@ -125,8 +125,6 @@ namespace bt
 		QSocket* sock = new QSocket();
 		sock->setSocket(socket);
 		Authenticate* auth = new Authenticate(sock,tor.getInfoHash(),tor.getPeerID());
-		connect(auth,SIGNAL(finished(Authenticate*, bool )),
-				this,SLOT(peerAuthenticated(Authenticate*, bool )));
 		pending.append(auth);
 		num_pending++;
 	}
@@ -136,26 +134,22 @@ namespace bt
 		pending.erase(auth);
 		num_pending--;
 		pending_done.append(auth);
-		if (ok)
-		{
-			if (connectedTo(auth->getPeerID()))
-				return;
+		if (!ok)
+			return;
+		
+		if (connectedTo(auth->getPeerID()))
+			return;
 			
-			Peer* peer = new Peer(
-					auth->takeSocket(),auth->getPeerID(),tor.getNumChunks());
+		Peer* peer = new Peer(
+				auth->takeSocket(),auth->getPeerID(),tor.getNumChunks());
 			
-			connect(peer,SIGNAL(fatalError(Peer* )),
-					this,SLOT(fatalError(Peer* )));
+		connect(peer,SIGNAL(fatalError(Peer* )),
+				this,SLOT(fatalError(Peer* )));
 			
-			peers.append(peer);
+		peers.append(peer);
 			
 		//	Out() << "New peer connected !" << endl;
-			newPeer(peer);
-		}
-		else
-		{
-		//	Out() << "Authentication failed !" << endl;
-		}
+		newPeer(peer);
 	}
 	
 	void PeerManager::readPotentialPeers(BListNode* n)
@@ -250,15 +244,14 @@ namespace bt
 			if (connectedTo(pp.id))
 				continue;
 			
-			Authenticate* auth = new Authenticate(pp.ip,pp.port,tor.getInfoHash(),tor.getPeerID());
-			connect(auth,SIGNAL(finished(Authenticate*, bool )),
-					this,SLOT(peerAuthenticated(Authenticate*, bool )));
+			Authenticate* auth = new Authenticate(pp.ip,pp.port,
+					tor.getInfoHash(),tor.getPeerID());
 			pending.append(auth);
 			num_pending++;
 		}
 	}
 	
-	void PeerManager::updateSpeed()
+	void PeerManager::update()
 	{
 		if (!started)
 			return;
@@ -267,6 +260,19 @@ namespace bt
 		{
 			Peer* p = peers.at(i);
 			p->updateSpeed();
+		}
+
+		connectToPeers();
+
+		PtrList<Authenticate>::iterator i = pending.begin();
+		while (i != pending.end())
+		{
+			Authenticate* a = *i;
+			i++;
+			if (a->isFinished())
+			{
+				peerAuthenticated(a,a->isSuccesfull());
+			}
 		}
 	}
 	
