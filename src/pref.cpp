@@ -27,6 +27,7 @@
 #include <kurlrequester.h>
 #include <kfiledialog.h>
 #include <libtorrent/globals.h>
+#include <qdir.h>
 
 #include "pref.h"
 #include "downloadpref.h"
@@ -34,13 +35,7 @@
 #include "ktorrent.h"
 
 
-class KTorrentPrefPageOne : public DownloadPref
-{
-public:
-	KTorrentPrefPageOne(QWidget *parent = 0);
-	
-	void apply();
-};
+
 
 KTorrentPreferences::KTorrentPreferences(KTorrent & ktor)
 	: KDialogBase(IconList, i18n("Preferences"),Ok|Apply|Cancel, Ok),ktor(ktor)
@@ -96,6 +91,42 @@ KTorrentPrefPageOne::KTorrentPrefPageOne(QWidget *parent) : DownloadPref(parent)
 	{
 		u->setURL(Settings::tempDir());
 	}
+
+	u = autosave_location;
+	u->fileDialog()->setMode(KFile::Directory);
+	if (Settings::saveDir() == QString::null)
+	{
+		autosave_downloads_check->setChecked(false);
+		u->setEnabled(false);
+		u->clear();
+	}
+	else
+	{
+		autosave_downloads_check->setChecked(true);
+		u->setURL(QDir::homeDirPath());
+		u->setURL(Settings::saveDir());
+		u->setEnabled(true);
+	}
+	connect(autosave_downloads_check,SIGNAL(toggled(bool)),
+			this,SLOT(autosaveChecked(bool )));
+}
+
+void KTorrentPrefPageOne::autosaveChecked(bool on)
+{
+	KURLRequester* u = autosave_location;
+	if (on)
+	{
+		u->setEnabled(true);
+		if (Settings::saveDir() == QString::null)
+			u->setURL(QDir::homeDirPath());
+		else
+			u->setURL(Settings::saveDir());
+	}
+	else
+	{
+		u->setEnabled(false);
+		u->clear();
+	}
 }
 
 void KTorrentPrefPageOne::apply()
@@ -112,6 +143,16 @@ void KTorrentPrefPageOne::apply()
 	if (ourl != u->url())
 	{
 		Settings::setTempDir(u->url());
+	}
+
+	if (autosave_downloads_check->isChecked())
+	{
+		u = autosave_location;
+		Settings::setSaveDir(u->url());
+	}
+	else
+	{
+		Settings::setSaveDir(QString::null);
 	}
 	
 	Settings::writeConfig();

@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>511</width>
-            <height>270</height>
+            <height>311</height>
         </rect>
     </property>
     <property name="caption">
@@ -224,6 +224,32 @@
                 </widget>
             </hbox>
         </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout6</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>autosave_downloads_check</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Automatically save downloads to</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+A</string>
+                    </property>
+                </widget>
+                <widget class="KURLRequester">
+                    <property name="name">
+                        <cstring>autosave_location</cstring>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
         <spacer>
             <property name="name">
                 <cstring>spacer6</cstring>
@@ -255,6 +281,9 @@
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>

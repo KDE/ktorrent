@@ -43,6 +43,9 @@ KTorrentCore::KTorrentCore() : max_downloads(0),keep_seeding(true)
 	if (!data_dir.endsWith(bt::DirSeparator()))
 		data_dir += bt::DirSeparator();
 	downloads.setAutoDelete(true);
+
+	connect(&update_timer,SIGNAL(timeout()),this,SLOT(update()));
+	update_timer.start(100);
 }
 
 
@@ -215,6 +218,7 @@ void KTorrentCore::onExit()
 
 bool KTorrentCore::changeDataDir(const QString & new_dir)
 {
+	update_timer.stop();
 	// do nothing if new and old dir are the same
 	if (KURL(data_dir) == KURL(new_dir))
 		return true;
@@ -247,6 +251,7 @@ bool KTorrentCore::changeDataDir(const QString & new_dir)
 			// set back the old data_dir in Settings
 			Settings::setTempDir(data_dir);
 			Settings::self()->writeConfig();
+			update_timer.start(100);
 			return false;
 		}
 		else
@@ -256,18 +261,21 @@ bool KTorrentCore::changeDataDir(const QString & new_dir)
 		i++;
 	}
 	data_dir = nd;
+	update_timer.start(100);
 	return true;
 }
 
 void KTorrentCore::rollback(const QPtrList<bt::TorrentControl> & succes)
 {
 	Out() << "Error, rolling back" << endl;
+	update_timer.stop();
 	QPtrList<bt::TorrentControl> ::const_iterator i = succes.begin();
 	while (i != succes.end())
 	{
 		(*i)->rollback();
 		i++;
 	}
+	update_timer.start(100);
 }
 
 void KTorrentCore::startAll()
@@ -290,6 +298,18 @@ void KTorrentCore::stopAll()
 		bt::TorrentControl* tc = *i;
 		if (tc->isRunning())
 			tc->stop();
+		i++;
+	}
+}
+
+void KTorrentCore::update()
+{
+	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
+	while (i != downloads.end())
+	{
+		bt::TorrentControl* tc = *i;
+		if (tc->isRunning())
+			tc->update();
 		i++;
 	}
 }

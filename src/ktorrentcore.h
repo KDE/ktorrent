@@ -21,6 +21,7 @@
 #define KTORRENTCORE_H
 
 #include <qobject.h>
+#include <qtimer.h>
 
 namespace bt
 {
@@ -100,6 +101,11 @@ public slots:
 	 * @param tc 
 	 */
 	void remove(bt::TorrentControl* tc);
+
+	/**
+	 * Update all torrents.
+	 */
+	void update();
 	
 signals:
 	/**
@@ -134,6 +140,7 @@ private:
 	QString data_dir;
 	int max_downloads;
 	bool keep_seeding;
+	QTimer update_timer;
 };
 
 #endif

@@ -338,14 +338,29 @@ void KTorrent::save(bt::TorrentControl* tc)
 
 void KTorrent::askAndSave(bt::TorrentControl* tc)
 {
-	int ret = KMessageBox::questionYesNo(
-		this,
-		i18n("The download %1 has finished. Do you want to save it now ?")
+	if (Settings::saveDir() == QString::null)
+	{
+		int ret = KMessageBox::questionYesNo(
+			this,
+			i18n("The download %1 has finished. Do you want to save it now ?")
 				.arg(tc->getTorrentName()),
-		i18n("Save Torrent?"));
+			i18n("Save Torrent?"));
 	
-	if (ret == KMessageBox::Yes)
-		save(tc);
+		if (ret == KMessageBox::Yes)
+			save(tc);
+	}
+	else
+	{
+		try
+		{
+			QString dir = Settings::saveDir();
+			tc->reconstruct(dir);
+		}
+		catch (bt::Error & err)
+		{
+			KMessageBox::error(0,err.toString(),"Error");
+		}
+	}
 
 	currentChanged(m_view->getCurrentTC());
 }

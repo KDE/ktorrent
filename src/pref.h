@@ -24,10 +24,21 @@
 
 #include <kdialogbase.h>
 #include <qframe.h>
+#include "downloadpref.h"
 
-class KTorrentPrefPageOne;
-class DownloadPref;
+
 class KTorrent;
+
+class KTorrentPrefPageOne : public DownloadPref
+{
+	Q_OBJECT
+public:
+	KTorrentPrefPageOne(QWidget *parent = 0);
+	
+	void apply();
+private slots:
+	void autosaveChecked(bool on);
+};
 
 class KTorrentPreferences : public KDialogBase
 {

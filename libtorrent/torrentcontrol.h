@@ -162,8 +162,7 @@ namespace bt
 		void trackerResponse(Uint32 interval,Uint32 leechers,Uint32 seeders,Uint8* ppeers);
 	public slots:
 		/**
-		 * Update the object, this will be called every 100
-		 * millisecond, if start was called.
+		 * Update the object, should be called periodically.
 		 */
 		void update();
 		
@@ -209,7 +208,7 @@ namespace bt
 		Downloader* down;
 		Uploader* up;
 		Choker* choke;
-		QTimer tracker_update_timer,choker_update_timer,update_timer;
+		QTimer tracker_update_timer,choker_update_timer;
 		QString datadir,old_datadir,trackerevent;
 		Uint16 port;
 		bool completed,running,started,saved;
