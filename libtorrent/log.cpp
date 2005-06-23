@@ -27,7 +27,7 @@ namespace bt
 
 		fptr.setName(file);
 		if (!fptr.open(IO_WriteOnly))
-			throw Error("Cannot open file " + file);
+			throw Error("Cannot open log file " + file);
 
 		out.setDevice(&fptr);
 	}

@@ -322,8 +322,11 @@ void KTorrentCore::update()
 			}
 			catch (Error & e)
 			{
+				tc->stop();
 				Out() << "Error " << e.toString() << endl;
-				//tc->stop();
+				QString errmsg = i18n("The following error occured : %1\nStopping download ...")
+						.arg(e.toString());
+				KMessageBox::error(0,errmsg,i18n("Error"));
 			}
 		}
 		i++;

@@ -45,7 +45,7 @@ namespace bt
 	{
 		QFile fptr(file);
 		if (!fptr.open(IO_ReadOnly))
-			throw Error(QString("Can't open file %1 : %2")
+			throw Error(QString("Can't open torrent file %1 : %2")
 					.arg(file).arg(fptr.errorString()));
 		
 		QByteArray data(fptr.size());

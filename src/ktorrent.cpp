@@ -375,7 +375,7 @@ void KTorrent::fileSave()
 void KTorrent::startDownload()
 {
 	TorrentControl* tc = m_view->getCurrentTC();
-	if (tc && tc->getBytesLeft() != 0 && !tc->isRunning())
+	if (tc && !tc->isRunning())
 	{
 		tc->start();
 		currentChanged(tc);
