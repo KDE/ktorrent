@@ -64,7 +64,11 @@ namespace bt
 
 			if (c)
 			{
-				grabbed.insert(r.getIndex());
+				if (grabbed.count(r.getIndex()) == 0)
+				{
+					grabbed.insert(r.getIndex());
+					c->ref();
+				}
 				pw.sendChunk(r.getIndex(),r.getOffset(),r.getLength(),*c);			
 				requests.remove(r);
 				uploaded += pw.update();

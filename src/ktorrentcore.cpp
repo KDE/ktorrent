@@ -220,14 +220,20 @@ bool KTorrentCore::changeDataDir(const QString & new_dir)
 {
 	update_timer.stop();
 	// do nothing if new and old dir are the same
-	if (KURL(data_dir) == KURL(new_dir))
+	if (KURL(data_dir) == KURL(new_dir) || data_dir == (new_dir + bt::DirSeparator()))
+	{
+		update_timer.start(100);
 		return true;
+	}
 	
 	// safety check
 	if (!KIO::NetAccess::exists(new_dir,false,0))
 	{
 		if (!KIO::NetAccess::mkdir(new_dir,0,0755))
+		{
+			update_timer.start(100);
 			return false;
+		}
 	}
 
 	// make sure new_dir ends with a /
@@ -309,7 +315,17 @@ void KTorrentCore::update()
 	{
 		bt::TorrentControl* tc = *i;
 		if (tc->isRunning())
-			tc->update();
+		{
+			try
+			{
+				tc->update();
+			}
+			catch (Error & e)
+			{
+				Out() << "Error " << e.toString() << endl;
+				//tc->stop();
+			}
+		}
 		i++;
 	}
 }

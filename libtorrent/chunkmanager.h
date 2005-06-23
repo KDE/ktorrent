@@ -49,6 +49,7 @@ namespace bt
 		unsigned int num_chunks_in_cache_file;
 		Uint32 max_allowed;
 		Cache* cache;
+		Uint32 num_in_mem;
 	public:
 		ChunkManager(Torrent & tor,const QString & data_dir);
 		virtual ~ChunkManager();
@@ -149,6 +150,15 @@ namespace bt
 
 		/// Check wether the cache has been saved.
 		bool hasBeenSaved() const;
+
+		/// Print memory usage to log file
+		void debugPrintMemUsage();
+
+		/**
+		 * Check wether we're not using to much memory. And if necessary
+		 * get rid of some chunks which aren't needed anymore.
+		 */
+		void checkMemoryUsage();
 	private:
 		void saveIndexFile();
 		void writeIndexFileEntry(Chunk* c);

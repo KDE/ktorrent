@@ -85,6 +85,7 @@ namespace bt
 			delete sock;
 			sock = 0;
 		}
+		timer.stop();
 	}
 	
 	void Authenticate::readyRead()
@@ -154,6 +155,9 @@ namespace bt
 	
 	void Authenticate::onTimeout()
 	{
+		if (finished)
+			return;
+		
 		Out() << "Timeout occured" << endl;
 		onFinish(false);
 	}

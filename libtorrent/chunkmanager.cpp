@@ -24,6 +24,8 @@
 #include "bitset.h"
 #include "singlefilecache.h"
 #include "multifilecache.h"
+#include "log.h"
+#include "globals.h"
 
 namespace bt
 {
@@ -37,6 +39,7 @@ namespace bt
 	ChunkManager::ChunkManager(Torrent & tor,const QString & data_dir)
 	: tor(tor),chunks(tor.getNumChunks())
 	{
+		num_in_mem = 0;
 		if (tor.isMultiFile())
 			cache = new MultiFileCache(tor,data_dir);
 		else
@@ -142,9 +145,9 @@ namespace bt
 		if (c->getStatus() != Chunk::IN_MEMORY)
 		{
 			cache->load(c);
+			num_in_mem++;
 		}
 		
-		c->ref();
 		return c;
 	}
 		
@@ -155,8 +158,11 @@ namespace bt
 		
 		Chunk* c = chunks[i];
 		c->unref();
-		if (!c->taken())
+	/*	if (!c->taken())
+		{
+			num_in_mem--;
 			c->clear();
+		}*/
 	}
 	
 	void ChunkManager::saveChunk(unsigned int i)
@@ -236,6 +242,32 @@ namespace bt
 	bool ChunkManager::hasBeenSaved() const
 	{
 		return cache->hasBeenSaved();
+	}
+	
+	void ChunkManager::debugPrintMemUsage()
+	{
+		Out() << "Active Chunks : " << num_in_mem << endl;
+	}
+
+	const Uint32 MAX_CHUNK_IN_MEM = 10;
+
+	void ChunkManager::checkMemoryUsage()
+	{
+		if (num_in_mem <= MAX_CHUNK_IN_MEM)
+			return;
+		
+		Out() << "Getting rid of unnecessary Chunks" << endl;
+		// try to keep at most 10 Chunk's in memory
+		for (Uint32 i = 0;i < chunks.count() && num_in_mem > MAX_CHUNK_IN_MEM;i++)
+		{
+			Chunk* c = chunks[i];
+			if (c->getStatus() == Chunk::IN_MEMORY && !c->taken())
+			{
+				num_in_mem--;
+				c->clear();
+			}
+		}
+		
 	}
 }
 

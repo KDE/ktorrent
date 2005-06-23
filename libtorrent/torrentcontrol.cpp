@@ -287,6 +287,16 @@ namespace bt
 			down->clearDownloaders();
 		}
 		updateStatusMsg();
+		cman->checkMemoryUsage();
+		
+	/*	static int foo = 0;
+		if (foo == 30)
+		{
+			cman->debugPrintMemUsage();
+			foo = 0;
+		}
+		else
+		foo++;*/
 	}
 	
 	void TorrentControl::onNewPeer(Peer* p)
