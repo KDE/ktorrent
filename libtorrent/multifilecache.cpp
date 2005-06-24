@@ -130,7 +130,7 @@ namespace bt
 
 					// check if the next files exists
 					if (i + 1 >= tor.getNumFiles())
-						throw Error(i18n("Can't find chunk"));
+						throw Error(i18n("Cannot find chunk"));
 
 					// get the second file
 					Torrent::File f2;
@@ -152,7 +152,7 @@ namespace bt
 		}
 
 		// if we get here, we're in serious trouble
-		throw Error(i18n("Can't find chunk"));
+		throw Error(i18n("Cannot find chunk"));
 	}
 
 	void MultiFileCache::load(Chunk* c)
@@ -164,7 +164,7 @@ namespace bt
 		{
 			File fptr;
 			if (!fptr.open(cache_dir + cp.file1,"rb"))
-				throw Error(i18n("Can't open file %1 : %2")
+				throw Error(i18n("Cannot open file %1: %2")
 						.arg(cp.file1).arg(fptr.errorString()));
 
 			fptr.seek(File::BEGIN,cp.off1);
@@ -176,12 +176,12 @@ namespace bt
 		{
 			File fptr1;
 			if (!fptr1.open(cache_dir + cp.file1,"rb"))
-				throw Error(i18n("Can't open file %1 : %2")
+				throw Error(i18n("Cannot open file %1: %2")
 						.arg(cp.file1).arg(fptr1.errorString()));
 
 			File fptr2;
 			if (!fptr2.open(cache_dir + cp.file2,"rb"))
-				throw Error(i18n("Can't open file %1 : %2")
+				throw Error(i18n("Cannot open file %1: %2")
 						.arg(cp.file2).arg(fptr2.errorString()));
 
 			Uint8* data = new Uint8[c->getSize()];

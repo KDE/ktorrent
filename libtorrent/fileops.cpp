@@ -32,7 +32,7 @@ namespace bt
 	void MakeDir(const KURL & dir)
 	{
 		if (!KIO::NetAccess::mkdir(dir,0,0755))
-			throw Error(i18n("Cannot create directory %1 : %2")
+			throw Error(i18n("Cannot create directory %1: %2")
 					.arg(dir.prettyURL()).arg(KIO::NetAccess::lastErrorString()));
 	}
 
@@ -87,7 +87,7 @@ namespace bt
 					break;
 	
 			}
-			throw Error(i18n("Cannot symlink %1 to %2 : %3")
+			throw Error(i18n("Cannot symlink %1 to %2: %3")
 					.arg(link_url.utf8()).arg(link_to.utf8())
 					.arg(strerror(errno)));
 		}
@@ -96,7 +96,7 @@ namespace bt
 	void MoveFile(const KURL & src,const KURL & dst)
 	{
 		if (!KIO::NetAccess::move(src,dst,0))
-			throw Error(i18n("Cannot move %1 to %2 : %3")
+			throw Error(i18n("Cannot move %1 to %2: %3")
 					.arg(src.prettyURL()).arg(dst.prettyURL())
 					.arg(KIO::NetAccess::lastErrorString()));
 	}
