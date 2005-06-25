@@ -29,75 +29,130 @@
 namespace bt
 {
 
-	void MakeDir(const KURL & dir)
+	void MakeDir(const KURL & dir,bool nothrow)
 	{
 		if (!KIO::NetAccess::mkdir(dir,0,0755))
-			throw Error(i18n("Cannot create directory %1: %2")
+		{
+			if (!nothrow)
+				throw Error(i18n("Cannot create directory %1: %2")
 					.arg(dir.prettyURL()).arg(KIO::NetAccess::lastErrorString()));
+			else
+			{
+				Out() << "Error : Cannot create directory " << dir << " : "
+						<< KIO::NetAccess::lastErrorString() << endl;
+			}
+		}
 	}
-
-	void SymLink(const QString & link_to,const QString & link_url)
+	
+	void SymLink(const QString & link_to,const QString & link_url,bool nothrow)
 	{
 		if (symlink(link_to.utf8(),link_url.utf8()) != 0)
 		{
-			switch (errno)
-			{
-				case EPERM:
-					Out() << "EPERM" << endl;
-					break;
-				case EFAULT:
-					Out() << "EFAULT" << endl;
-					break;
-				case EACCES:
-					Out() << "EACCESS" << endl;
-					break;
-	
-				case ENAMETOOLONG:
-					Out() << "ENAMETOOLONG" << endl;
-					break;
-	
-				case ENOENT:
-					Out() << "ENOENT" << endl;
-					break;
-	
-				case ENOTDIR:
-					Out() << "ENOTDIR" << endl;
-					break;
-	
-				case ENOMEM:
-					Out() << "ENOMEM" << endl;
-					break;
-				case EROFS:
-					Out() << "EROFS" << endl;
-					break;
-	
-				case EEXIST:
-					Out() << "EEXIST" << endl;
-					break;
-	
-				case ELOOP:
-					Out() << "ELOOP" << endl;
-					break;
-				case ENOSPC:
-					Out() << "ENOSPC" << endl;
-					break;
-	
-				case EIO:
-					Out() << "EIO" << endl;
-					break;
-	
-			}
-			throw Error(i18n("Cannot symlink %1 to %2: %3")
+			if (!nothrow)
+				throw Error(i18n("Cannot symlink %1 to %2: %3")
 					.arg(link_url.utf8()).arg(link_to.utf8())
 					.arg(strerror(errno)));
+			else
+				Out() << QString("Error : Cannot symlink %1 to %2: %3")
+						.arg(link_url.utf8()).arg(link_to.utf8())
+						.arg(strerror(errno)) << endl;
 		}
 	}
 
-	void MoveFile(const KURL & src,const KURL & dst)
+	void Move(const KURL & src,const KURL & dst,bool nothrow)
 	{
 		if (!KIO::NetAccess::move(src,dst,0))
-			throw Error(i18n("Cannot move %1 to %2: %3")
+		{
+			if (!nothrow)
+				throw Error(i18n("Cannot move %1 to %2: %3")
 					.arg(src.prettyURL()).arg(dst.prettyURL())
 					.arg(KIO::NetAccess::lastErrorString()));
+			else
+				Out() << QString("Error : Cannot move %1 to %2: %3")
+						.arg(src.prettyURL()).arg(dst.prettyURL())
+						.arg(KIO::NetAccess::lastErrorString()) << endl;
+		}
 	}
+
+	void CopyFile(const KURL & src,const KURL & dst,bool nothrow)
+	{
+		if (!KIO::NetAccess::file_copy(src,dst))
+		{
+			if (!nothrow)
+				throw Error(i18n("Cannot copy %1 to %2: %3")
+						.arg(src.prettyURL()).arg(dst.prettyURL())
+						.arg(KIO::NetAccess::lastErrorString()));
+			else
+				Out() << QString("Error : Cannot copy %1 to %2: %3")
+						.arg(src.prettyURL()).arg(dst.prettyURL())
+						.arg(KIO::NetAccess::lastErrorString()) << endl;
+		}
+	}
+
+	bool Exists(const KURL & url)
+	{
+		return KIO::NetAccess::exists(url,false,0);
+	}
+
+	void Delete(const KURL & url,bool nothrow)
+	{
+		if (!KIO::NetAccess::del(url,0))
+		{
+			if (!nothrow)
+				throw Error(i18n("Cannot delete %1 : %2")
+						.arg(url.prettyURL())
+						.arg(KIO::NetAccess::lastErrorString()));
+			else
+				Out() << "Error : Cannot delete " << url << " : " << KIO::NetAccess::lastErrorString() << endl;
+		}
+	}
+
+	/*
+	switch (errno)
+	{
+	case EPERM:
+	Out() << "EPERM" << endl;
+	break;
+	case EFAULT:
+	Out() << "EFAULT" << endl;
+	break;
+	case EACCES:
+	Out() << "EACCESS" << endl;
+	break;
+	
+	case ENAMETOOLONG:
+	Out() << "ENAMETOOLONG" << endl;
+	break;
+	
+	case ENOENT:
+	Out() << "ENOENT" << endl;
+	break;
+	
+	case ENOTDIR:
+	Out() << "ENOTDIR" << endl;
+	break;
+	
+	case ENOMEM:
+	Out() << "ENOMEM" << endl;
+	break;
+	case EROFS:
+	Out() << "EROFS" << endl;
+	break;
+	
+	case EEXIST:
+	Out() << "EEXIST" << endl;
+	break;
+	
+	case ELOOP:
+	Out() << "ELOOP" << endl;
+	break;
+	case ENOSPC:
+	Out() << "ENOSPC" << endl;
+	break;
+	
+	case EIO:
+	Out() << "EIO" << endl;
+	break;
+	
+}*/
 }

@@ -19,7 +19,6 @@
  ***************************************************************************/
 #include <qstringlist.h>
 #include <qfileinfo.h>
-#include <kio/netaccess.h>
 #include <klocale.h>
 #include "file.h"
 #include "torrent.h"
@@ -65,7 +64,7 @@ namespace bt
 
 	void MultiFileCache::create()
 	{
-		if (!KIO::NetAccess::exists(cache_dir,false,0))
+		if (!bt::Exists(cache_dir))
 			MakeDir(cache_dir);
 
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
@@ -89,7 +88,7 @@ namespace bt
 			tmp += sl[i];
 			QFileInfo finfo(tmp);
 			
-			if (!KIO::NetAccess::exists(tmp,true,0))
+			if (!bt::Exists(tmp))
 				MakeDir(tmp);
 			tmp += bt::DirSeparator();
 		}
@@ -268,7 +267,7 @@ namespace bt
 
 		// first move file
 		QString ndir = d + tor.getNameSuggestion();
-		MoveFile(cache_dir,ndir);
+		Move(cache_dir,ndir);
 
 		// create symlink in data dir
 		SymLink(ndir,cache_dir.mid(0,cache_dir.length() - 1));

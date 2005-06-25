@@ -18,9 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include <qfile.h>
-#include <kio/netaccess.h>
 #include <klocale.h>
-#include <kprogress.h>
 #include "fileops.h"
 #include "downloader.h"
 #include "uploader.h"
@@ -41,6 +39,7 @@
 #include "packetwriter.h"
 #include "httptracker.h"
 #include "udptracker.h"
+
 
 
 namespace bt
@@ -94,14 +93,14 @@ namespace bt
 		
 		tor = new Torrent();
 		tor->load(torrent);
-		if (!KIO::NetAccess::exists(datadir,false,0))
-			MakeDir(datadir);
+		if (!bt::Exists(datadir))
+			bt::MakeDir(datadir);
 	
 		//QString cache_file = datadir + "cache";
 		QString tor_copy = datadir + "torrent";
 		
 		if (tor_copy != torrent)
-			KIO::NetAccess::file_copy(torrent,tor_copy);
+			bt::CopyFile(torrent,tor_copy);
 		
 		do
 		{
@@ -121,7 +120,7 @@ namespace bt
 			tracker = new HTTPTracker(this);
 		
 		cman = new ChunkManager(*tor,datadir);
-		if (KIO::NetAccess::exists(datadir + "index",true,0))
+		if (bt::Exists(datadir + "index"))
 			cman->loadIndexFile();
 		else
 			cman->createFiles();
@@ -470,10 +469,6 @@ namespace bt
 
 	bool TorrentControl::changeDataDir(const QString & new_dir)
 	{
-		// make sure no update ops happen
-		// during this changeDataDir call (KIO::NetAccess::* will continue Qt MessageLoop)
-
-		
 		// new_dir doesn't contain the torX/ part
 		// so first get that and append it to new_dir
 		int dd = datadir.findRev(DirSeparator(),datadir.length() - 2,false);
@@ -487,39 +482,30 @@ namespace bt
 
 		Out() << datadir << " -> " << nd << endl;
 
-		if (!KIO::NetAccess::exists(nd,false,0))
+		int ok_calls = 0;
+		try
 		{
-			if (!KIO::NetAccess::mkdir(nd,0,0755))
-			{
-				Out() << "Error : " << KIO::NetAccess::lastErrorString() << endl;
-				return false;
-			}
+			if (!bt::Exists(nd))
+				bt::MakeDir(nd);
+			
+			// now try to move all the files :
+			// first the torrent
+			bt::Move(datadir + "torrent",nd);
+			ok_calls++;
+			// then the index
+			bt::Move(datadir + "index",nd);
+			ok_calls++;
+			// then the cache
+			bt::Move(datadir + "cache",nd);
+			ok_calls++;
 		}
-
-		// now try to move all the files :
-		// first the torrent
-		if (!KIO::NetAccess::move(datadir + "torrent",nd,0))
+		catch (...)
 		{
-			Out() << "Error : " << KIO::NetAccess::lastErrorString() << endl;
-			return false;
-		}
-
-		// then the index
-		if (!KIO::NetAccess::move(datadir + "index",nd,0))
-		{
-			Out() << "Error : " << KIO::NetAccess::lastErrorString() << endl;
 			// move the torrent back
-			KIO::NetAccess::move(nd + "torrent",datadir,0);
-			return false;
-		}
-
-		// then the cache
-		if (!KIO::NetAccess::move(datadir + "cache",nd,0))
-		{
-			Out() << "Error : " << KIO::NetAccess::lastErrorString() << endl;
-			// move the torrent and cache back
-			KIO::NetAccess::move(nd + "torrent",datadir,0);
-			KIO::NetAccess::move(nd + "index",datadir,0);
+			if (ok_calls >= 1)
+				bt::Move(nd + "torrent",datadir,true);
+			if (ok_calls >= 2)
+				bt::Move(nd + "index",datadir,true);
 			return false;
 		}
 
@@ -529,7 +515,7 @@ namespace bt
 		// we don't move the current_chunks file
 		// it will be recreated anyway
 		// now delete the old directory
-		KIO::NetAccess::del(datadir,0);
+		bt::Delete(datadir,true);
 		
 		old_datadir = datadir;
 		datadir = nd;
@@ -543,17 +529,17 @@ namespace bt
 			return;
 
 		// recreate it
-		if (!KIO::NetAccess::exists(old_datadir,false,0))
-			KIO::NetAccess::mkdir(old_datadir,0,0755);
+		if (!bt::Exists(old_datadir))
+			bt::MakeDir(old_datadir,true);
 
 		// move back files
-		KIO::NetAccess::move(datadir + "torrent",old_datadir,0);
-		KIO::NetAccess::move(datadir + "cache",old_datadir,0);
-		KIO::NetAccess::move(datadir + "index",old_datadir,0);
+		bt::Move(datadir + "torrent",old_datadir,true);
+		bt::Move(datadir + "cache",old_datadir,true);
+		bt::Move(datadir + "index",old_datadir,true);
 		cman->changeDataDir(old_datadir);
 
 		// delete new
-		KIO::NetAccess::del(datadir,0);
+		bt::Delete(datadir,true);
 		
 		datadir = old_datadir;
 		old_datadir = QString::null;

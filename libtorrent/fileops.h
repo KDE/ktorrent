@@ -30,23 +30,48 @@ namespace bt
 	 * Creates a directory. Convenience function around
 	 * KIO::NetAccess::mkdir .
 	 * @param dir The url of the dir
+	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 * @throw Error upon error
 	 */
-	void MakeDir(const KURL & dir);
+	void MakeDir(const KURL & dir,bool nothrow = false);
 
 	/**
 	 * Create a symbolic link @a link_url which links to @a link_to 
 	 * @param link_to The file to link to
 	 * @param link_url The link url
+	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 */
-	void SymLink(const QString & link_to,const QString & link_url);
+	void SymLink(const QString & link_to,const QString & link_url,bool nothrow = false);
 
 	/**
-	 * Move a file from one location to another
+	 * Move a file/dir from one location to another
 	 * @param src The source file
 	 * @param dst The destination file / directory
+	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 */
-	void MoveFile(const KURL & src,const KURL & dst);
+	void Move(const KURL & src,const KURL & dst,bool nothrow = false);
+
+	/**
+	 * Copy a file.
+	 * @param src The source file
+	 * @param dst The destination dir/file
+	 * @param nothrow wether or not we shouldn't throw an Error upon failure
+	 */
+	void CopyFile(const KURL & src,const KURL & dst,bool nothrow = false);
+	
+	/**
+	 * Check wether a file/dir exists
+	 * @param url The file/dir
+	 * @return true if it exits
+	 */
+	bool Exists(const KURL & url);
+
+	/**
+	 * Delete a file or directory.
+	 * @param url The url of the file/dir
+	 * @param nothrow wether or not we shouldn't throw an Error upon failure
+	 */
+	void Delete(const KURL & url,bool nothrow = false);
 }
 
 #endif

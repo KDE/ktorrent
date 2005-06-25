@@ -1,49 +1,37 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="11" >
+ <DocsAndViews NumberOfDocuments="7" >
   <Doc0 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/TmpChangeLog.txt" >
-   <View0 line="53" Type="Source" />
+   <View0 Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/pref.cpp" >
-   <View0 line="52" Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/ktorrentcore.cpp" >
+   <View0 line="29" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/pref.h" >
-   <View0 line="28" Type="Source" />
+  <Doc2 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/libtorrent/fileops.cpp" >
+   <View0 line="148" Type="Source" />
   </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/ktorrentcore.cpp" >
-   <View0 line="191" Type="Source" />
+  <Doc3 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/libtorrent/fileops.h" >
+   <View0 line="77" Type="Source" />
   </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/ktorrent.cpp" >
-   <View0 line="401" Type="Source" />
+  <Doc4 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/libtorrent/multifilecache.cpp" >
+   <View0 line="281" Type="Source" />
   </Doc4>
   <Doc5 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/libtorrent/torrentcontrol.cpp" >
-   <View0 line="298" Type="Source" />
+   <View0 line="20" Type="Source" />
   </Doc5>
-  <Doc6 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/libtorrent/authenticate.cpp" >
-   <View0 line="159" Type="Source" />
+  <Doc6 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/libtorrent/singlefilecache.cpp" >
+   <View0 line="127" Type="Source" />
   </Doc6>
-  <Doc7 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/libtorrent/peeruploader.cpp" >
-   <View0 line="51" Type="Source" />
-  </Doc7>
-  <Doc8 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/libtorrent/chunkmanager.cpp" >
-   <View0 line="251" Type="Source" />
-  </Doc8>
-  <Doc9 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/libtorrent/chunkmanager.h" >
-   <View0 line="160" Type="Source" />
-  </Doc9>
-  <Doc10 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/ktorrentview.cpp" >
-   <View0 line="54" Type="Source" />
-  </Doc10>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
    <breakpointList>
     <breakpoint0 location="/home/joris/ktorrent/code/src/ktorrent.cpp:75" type="1" condition="" enabled="1" />
-    <breakpoint1 location="/home/joris/ktorrent/code/libtorrent/multifilecache.cpp:129" type="1" condition="" enabled="1" />
-    <breakpoint2 location="/home/joris/ktorrent/code/libtorrent/multifilecache.cpp:265" type="1" condition="" enabled="1" />
-    <breakpoint3 location="/home/joris/ktorrent/code/libtorrent/multifilecache.cpp:274" type="1" condition="" enabled="1" />
-    <breakpoint4 location="/home/joris/ktorrent/code/src/ktorrentcore.cpp:312" type="1" condition="" enabled="1" />
+    <breakpoint1 location="/home/joris/ktorrent/code/src/ktorrentcore.cpp:316" type="1" condition="" enabled="1" />
+    <breakpoint2 location="/home/joris/ktorrent/code/libtorrent/multifilecache.cpp:273" type="1" condition="" enabled="1" />
+    <breakpoint3 location="/home/joris/ktorrent/code/libtorrent/multifilecache.cpp:264" type="1" condition="" enabled="1" />
+    <breakpoint4 location="/home/joris/ktorrent/code/libtorrent/multifilecache.cpp:128" type="1" condition="" enabled="1" />
    </breakpointList>
   </kdevdebugger>
   <kdevbookmarks>

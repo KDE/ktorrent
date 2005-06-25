@@ -22,12 +22,12 @@
 #include <kglobal.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
-#include <kio/netaccess.h>
 
 #include <libtorrent/log.h>
 #include <libtorrent/torrentcontrol.h>
 #include <libtorrent/globals.h>
 #include <libtorrent/error.h>
+#include <libtorrent/fileops.h>
 
 #include "ktorrentcore.h"
 #include "settings.h"
@@ -153,7 +153,7 @@ void KTorrentCore::loadTorrents()
 		}
 		catch (bt::Error & err)
 		{
-			KIO::NetAccess::del(idir,0);
+			bt::Delete(idir,true);
 			KMessageBox::error(0,err.toString(),"Error");
 			delete tc;
 		}
@@ -165,7 +165,7 @@ void KTorrentCore::remove(bt::TorrentControl* tc)
 	tc->stop();
 	QString dir = tc->getDataDir();
 	torrentRemoved(tc);
-	KIO::NetAccess::del(dir,0);
+	bt::Delete(dir,true);
 	downloads.remove(tc);
 	
 	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
@@ -218,57 +218,61 @@ void KTorrentCore::onExit()
 
 bool KTorrentCore::changeDataDir(const QString & new_dir)
 {
-	update_timer.stop();
-	// do nothing if new and old dir are the same
-	if (KURL(data_dir) == KURL(new_dir) || data_dir == (new_dir + bt::DirSeparator()))
+	try
 	{
+		update_timer.stop();
+		// do nothing if new and old dir are the same
+		if (KURL(data_dir) == KURL(new_dir) || data_dir == (new_dir + bt::DirSeparator()))
+		{
+			update_timer.start(100);
+			return true;
+		}
+		
+		// safety check
+		if (!bt::Exists(new_dir))
+			bt::MakeDir(new_dir);
+	
+	
+		// make sure new_dir ends with a /
+		QString nd = new_dir;
+		if (!nd.endsWith(DirSeparator()))
+			nd += DirSeparator();
+	
+		Out() << "Switching to datadir " << nd << endl;
+		// keep track of all TorrentControl's which have succesfully
+		// moved to the new data dir
+		QPtrList<bt::TorrentControl> succes;
+		
+		QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
+		while (i != downloads.end())
+		{
+			bt::TorrentControl* tc = *i;
+			if (!tc->changeDataDir(nd))
+			{
+				// failure time to roll back all the succesfull tc's
+				rollback(succes);
+				// set back the old data_dir in Settings
+				Settings::setTempDir(data_dir);
+				Settings::self()->writeConfig();
+				update_timer.start(100);
+				return false;
+			}
+			else
+			{
+				succes.append(tc);
+			}
+			i++;
+		}
+		data_dir = nd;
 		update_timer.start(100);
 		return true;
 	}
-	
-	// safety check
-	if (!KIO::NetAccess::exists(new_dir,false,0))
+	catch (bt::Error & e)
 	{
-		if (!KIO::NetAccess::mkdir(new_dir,0,0755))
-		{
-			update_timer.start(100);
-			return false;
-		}
+		Out() << "Error : " << e.toString() << endl;
+		update_timer.start(100);
+		return false;
 	}
-
-	// make sure new_dir ends with a /
-	QString nd = new_dir;
-	if (!nd.endsWith(DirSeparator()))
-		nd += DirSeparator();
-
-	Out() << "Switching to datadir " << nd << endl;
-	// keep track of all TorrentControl's which have succesfully
-	// moved to the new data dir
-	QPtrList<bt::TorrentControl> succes;
-	
-	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
-	while (i != downloads.end())
-	{
-		bt::TorrentControl* tc = *i;
-		if (!tc->changeDataDir(nd))
-		{
-			// failure time to roll back all the succesfull tc's
-			rollback(succes);
-			// set back the old data_dir in Settings
-			Settings::setTempDir(data_dir);
-			Settings::self()->writeConfig();
-			update_timer.start(100);
-			return false;
-		}
-		else
-		{
-			succes.append(tc);
-		}
-		i++;
-	}
-	data_dir = nd;
-	update_timer.start(100);
-	return true;
 }
 
 void KTorrentCore::rollback(const QPtrList<bt::TorrentControl> & succes)

@@ -112,7 +112,7 @@ namespace bt
 
 		// first move file
 		QString file = d + tor.getNameSuggestion();
-		MoveFile(cache_file,file);
+		Move(cache_file,file);
 
 		// create symlink in data dir
 		SymLink(file,cache_file);
