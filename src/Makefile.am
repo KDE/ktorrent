@@ -13,7 +13,7 @@ INCLUDES = -I$(srcdir)/.. $(all_includes)
 ktorrent_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 
 # the libraries to link against.
-ktorrent_LDADD = ../libtorrent/libtorrent.la $(LIB_KFILE) \
+ktorrent_LDADD = ../libtorrent/libktorrent.la $(LIB_KFILE) \
 	$(LIB_KDEPRINT) $(LIB_KHTML)
 
 # which sources should be compiled for ktorrent
@@ -49,4 +49,5 @@ rcdir = $(kde_datadir)/ktorrent
 rc_DATA = ktorrentui.rc
 
 
-
+appicondir = $(kde_datadir)/ktorrent/icons
+appicon_ICON = AUTO

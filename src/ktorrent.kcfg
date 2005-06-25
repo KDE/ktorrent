@@ -8,17 +8,17 @@
 	<group name="downloads">
 		<entry name="maxDownloads" type="Int">
 			<label>Maximum number of downloads (0 = no limit)</label>
-			<default>2</default>
+			<default>0</default>
 			<min>0</min>
 		</entry>
 		<entry name="maxConnections" type="Int">
 			<label>Maximum number of connections per download (0 = no limit)</label>
-			<default>100</default>
+			<default>0</default>
 			<min>0</min>
 		</entry>
 		<entry name="maxUploadRate" type="Int">
 			<label>Maximum upload speed in KB/sec (0 = no limit)</label>
-			<default>5</default>
+			<default>0</default>
 			<min>0</min>
 		</entry>
 		<entry name="port" type="Int">

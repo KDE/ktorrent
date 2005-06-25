@@ -27,6 +27,8 @@
 #include <kurlrequester.h>
 #include <kfiledialog.h>
 #include <libtorrent/globals.h>
+#include <kglobal.h>
+#include <kiconloader.h>
 #include <qdir.h>
 
 #include "pref.h"
@@ -45,7 +47,12 @@ KTorrentPreferences::KTorrentPreferences(KTorrent & ktor)
 	// possibilities (including Tab, Swallow, and just Plain)
 	enableButtonSeparator(true);
 		
-	QFrame *frame = addPage(i18n("Downloads"), i18n("Download Options"));
+	KIconLoader* iload = KGlobal::iconLoader();
+	
+	QFrame *frame = addPage(i18n("Downloads"), i18n("Download Options"),
+							iload->loadIcon("ktprefdownloads",KIcon::NoGroup));
+	
+	
 	QVBoxLayout* vbox = new QVBoxLayout(frame);
 	vbox->setAutoAdd(true);
 	m_page_one = new KTorrentPrefPageOne(frame);

@@ -1,12 +1,12 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="10" >
+ <DocsAndViews NumberOfDocuments="11" >
   <Doc0 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/TmpChangeLog.txt" >
-   <View0 line="49" Type="Source" />
+   <View0 line="53" Type="Source" />
   </Doc0>
   <Doc1 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/pref.cpp" >
-   <View0 line="154" Type="Source" />
+   <View0 line="52" Type="Source" />
   </Doc1>
   <Doc2 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/pref.h" >
    <View0 line="28" Type="Source" />
@@ -32,6 +32,9 @@
   <Doc9 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/libtorrent/chunkmanager.h" >
    <View0 line="160" Type="Source" />
   </Doc9>
+  <Doc10 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/ktorrentview.cpp" >
+   <View0 line="54" Type="Source" />
+  </Doc10>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
