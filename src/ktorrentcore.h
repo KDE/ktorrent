@@ -85,6 +85,18 @@ public:
 	 */
 	void stopAll();
 
+	/**
+	 * Start a torrent, takes into account the maximum number of downloads.
+	 * @param tc The TorrentControl
+	 */
+	void start(bt::TorrentControl* tc);
+
+	/**
+	 * Stop a torrent, may start another download if it hasn't been started.
+	 * @param tc The TorrentControl
+	 */
+	void stop(bt::TorrentControl* tc);
+
 public slots:
 	/**
 	 * Load a torrent file. Pops up an error dialog

@@ -380,7 +380,16 @@ void KTorrent::startDownload()
 	TorrentControl* tc = m_view->getCurrentTC();
 	if (tc && !tc->isRunning())
 	{
-		tc->start();
+		m_core->start(tc);
+		if (!tc->isRunning())
+		{
+			KMessageBox::error(this,
+				i18n("Cannot start more then %1 download(s)."
+					" Go to Settings -> Configure KTorrent,"
+					" if you want to change the limit.")
+						.arg(Settings::maxDownloads()),
+				i18n("Error"));
+		}
 		currentChanged(tc);
 	}
 }

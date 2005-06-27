@@ -63,16 +63,7 @@ void KTorrentCore::load(const QString & target)
 		connect(tc,SIGNAL(finished(bt::TorrentControl*)),
 				this,SLOT(torrentFinished(bt::TorrentControl* )));
 		downloads.append(tc);
-		
-		bool s = (tc->getBytesLeft() == 0 && keep_seeding) ||
-				(tc->getBytesLeft() != 0 &&
-				(max_downloads == 0 || getNumRunning() < max_downloads));
-		if (s)
-		{
-			Out() << "Starting download" << endl;
-			tc->start();
-		}
-
+		start(tc);
 		torrentAdded(tc);
 	}
 	catch (bt::Error & err)
@@ -83,6 +74,31 @@ void KTorrentCore::load(const QString & target)
 				"or it is not a torrent file at all."),"Error");
 		delete tc;
 		tc = 0;
+	}
+}
+
+void KTorrentCore::start(bt::TorrentControl* tc)
+{
+	bool s = (tc->getBytesLeft() == 0 && keep_seeding) ||
+			(tc->getBytesLeft() != 0 &&
+			(max_downloads == 0 || getNumRunning() < max_downloads));
+	if (s)
+	{
+		Out() << "Starting download" << endl;
+		tc->start();
+	}
+
+}
+
+void KTorrentCore::stop(bt::TorrentControl* tc)
+{
+	tc->stop();
+	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
+	while (i != downloads.end())
+	{
+		TorrentControl* tc = *i;
+		start(tc);
+		i++;
 	}
 }
 
@@ -139,16 +155,7 @@ void KTorrentCore::loadTorrents()
 			connect(tc,SIGNAL(finished(bt::TorrentControl*)),
 					this,SLOT(torrentFinished(bt::TorrentControl* )));
 			
-			
-			
-			Out() << "Starting download" << endl;
-			bool s = (tc->getBytesLeft() == 0 && keep_seeding) || 
-					(tc->getBytesLeft() != 0 &&
-						(max_downloads == 0 || getNumRunning() < max_downloads));
-			if (s)
-			{
-				tc->start();
-			}
+			start(tc);
 			torrentAdded(tc);
 		}
 		catch (bt::Error & err)
@@ -162,23 +169,11 @@ void KTorrentCore::loadTorrents()
 
 void KTorrentCore::remove(bt::TorrentControl* tc)
 {
-	tc->stop();
+	stop(tc);
 	QString dir = tc->getDataDir();
 	torrentRemoved(tc);
 	bt::Delete(dir,true);
 	downloads.remove(tc);
-	
-	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
-	while (i != downloads.end())
-	{
-		TorrentControl* tc = *i;
-		if (tc->getBytesLeft() != 0 && 
-			(max_downloads == 0 || getNumRunning() < max_downloads))
-		{
-			tc->start();
-		}
-		i++;
-	}
 }
 
 void KTorrentCore::setMaxDownloads(int max)
@@ -195,12 +190,7 @@ void KTorrentCore::torrentFinished(bt::TorrentControl* tc)
 	while (i != downloads.end())
 	{
 		TorrentControl* tc = *i;
-		bool can_start = !tc->isRunning() && !tc->isStarted() && tc->getBytesLeft() != 0;
-
-		if (can_start && (max_downloads == 0 || getNumRunning() < max_downloads))
-		{
-			tc->start();
-		}
+		start(tc);
 		i++;
 	}
 	finished(tc);
