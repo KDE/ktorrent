@@ -22,9 +22,9 @@
 
 #include <set>
 #include <qobject.h>
+#include <qptrlist.h>
 #include "globals.h"
 #include "timer.h"
-#include "ptrlist.h"
 #include "ptrmap.h"
 
 namespace bt
@@ -118,7 +118,7 @@ namespace bt
 		Uint32 num_downloaded;
 		Uint32 last_size;
 		Timer timer;
-		PtrList<PeerDownloader> pdown;
+		QPtrList<PeerDownloader> pdown;
 		PtrMap<const Peer*,DownloadStatus> dstatus;
 
 		friend File & operator << (File & out,const ChunkDownload & cd);

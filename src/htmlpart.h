@@ -35,6 +35,7 @@ public:
 public slots:
 	void back();
 	void reload();
+	void copy();
 
 private slots:
 	void openURLRequest(const KURL &url, const KParts::URLArgs &args);

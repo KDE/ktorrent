@@ -63,6 +63,11 @@ SearchWidget::SearchWidget(QWidget* parent,const char* name)
 SearchWidget::~SearchWidget()
 {}
 
+void SearchWidget::copy()
+{
+	html_part->copy();
+}
+
 void SearchWidget::search(const QString & text)
 {
 	KURL url = "http://search.bittorrent.com/search.jsp";

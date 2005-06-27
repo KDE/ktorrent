@@ -36,7 +36,6 @@ namespace bt
 	{
 		num_seeders = num_leechers = num_pending = 0;
 		killed.setAutoDelete(true);
-		pending_done.setAutoDelete(true);
 		started = false;
 	}
 
@@ -80,7 +79,7 @@ namespace bt
 				throw Error("Parse error");
 
 			QByteArray arr = vn->data().toByteArray();
-			for (int i = 0;i < arr.size();i+=6)
+			for (Uint32 i = 0;i < arr.size();i+=6)
 			{
 				Uint8 buf[6];
 				for (int j = 0;j < 6;j++)
@@ -131,9 +130,8 @@ namespace bt
 	
 	void PeerManager::peerAuthenticated(Authenticate* auth,bool ok)
 	{
-		pending.erase(auth);
+		pending.remove(auth);
 		num_pending--;
-		pending_done.append(auth);
 		if (!ok)
 			return;
 		
@@ -191,7 +189,7 @@ namespace bt
 	void PeerManager::fatalError(Peer* p)
 	{
 	//	Out() << "Peer connection shutdown " << endl;
-		peers.erase(p);
+		peers.remove(p);
 		killed.append(p);
 		p->closeConnection();
 		peerKilled(p);
@@ -262,30 +260,33 @@ namespace bt
 			p->updateSpeed();
 		}
 
-		connectToPeers();
-
-		PtrList<Authenticate>::iterator i = pending.begin();
+		QPtrList<Authenticate>::iterator i = pending.begin();
 		while (i != pending.end())
 		{
 			Authenticate* a = *i;
-			i++;
 			if (a->isFinished())
 			{
+				i = pending.erase(i);
 				peerAuthenticated(a,a->isSuccesfull());
+				delete a;
+			}
+			else
+			{
+				i++;
 			}
 		}
+
+		connectToPeers();
 	}
 	
 	void PeerManager::clearDeadPeers()
 	{
 		killed.clear();
-		pending_done.clear();
 	}
 	
 	void PeerManager::closeAllConnections()
 	{
 		killed.clear();
-		pending_done.clear();
 		
 		peers.setAutoDelete(true);
 		peers.clear();

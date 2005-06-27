@@ -20,7 +20,7 @@
 #ifndef BTPACKETWRITER_H
 #define BTPACKETWRITER_H
 
-#include "ptrlist.h"
+#include <qptrlist.h>
 #include "globals.h"
 
 namespace bt
@@ -37,7 +37,7 @@ namespace bt
 	class PacketWriter
 	{
 		Peer* peer;
-		PtrList<Packet> packets;
+		QPtrList<Packet> packets;
 	public:
 		PacketWriter(Peer* peer);
 		virtual ~PacketWriter();

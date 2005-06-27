@@ -73,7 +73,7 @@ KTorrent::KTorrent()
 		m_view(0),m_systray_icon(0)
 {
 	bool debug = bt::Globals::instance().isDebugModeSet();
-	QSplitter* s;
+	QSplitter* s = 0;
 	if (debug)
 		s = new QSplitter(QSplitter::Vertical,this);
 	
@@ -215,6 +215,9 @@ void KTorrent::setupActions()
 {
 	KStdAction::open(this, SLOT(fileOpen()), actionCollection());
 	KStdAction::quit(kapp, SLOT(quit()), actionCollection());
+	KStdAction::copy(m_search,SLOT(copy()),actionCollection());
+	KStdAction::paste(kapp,SLOT(paste()),actionCollection());
+	
 	m_save = KStdAction::save(this, SLOT(fileSave()), actionCollection());
 
 	m_toolbarAction = KStdAction::showToolbar(this, SLOT(optionsShowToolbar()), actionCollection());
@@ -243,7 +246,7 @@ void KTorrent::setupActions()
 	createGUI();
 }
 
-void KTorrent::saveProperties(KConfig *config)
+void KTorrent::saveProperties(KConfig *)
 {
 	// the 'config' object points to the session managed
 	// config file.  anything you write here will be available
@@ -260,7 +263,7 @@ void KTorrent::saveProperties(KConfig *config)
 }*/
 }
 
-void KTorrent::readProperties(KConfig *config)
+void KTorrent::readProperties(KConfig *)
 {
 	// the 'config' object points to the session managed
 	// config file.  this function is automatically called whenever

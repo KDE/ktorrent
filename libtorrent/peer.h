@@ -20,8 +20,9 @@
 #ifndef BTPEER_H
 #define BTPEER_H
 
-#include <list>
+
 #include <qsocket.h>
+#include <ksharedptr.h>
 #include "bitset.h"
 #include "globals.h"
 #include "timer.h"
@@ -46,7 +47,7 @@ namespace bt
 	 * It provides functions for sending packets. Packets it recieves
 	 * get relayed to the outside world using a bunch of signals.
 	*/
-	class Peer : public QObject
+	class Peer : public QObject,public KShared
 	{
 		Q_OBJECT
 	public:
@@ -168,6 +169,7 @@ namespace bt
 		friend class PacketWriter;
 	};
 
+	typedef KSharedPtr<Peer> PeerPtr;
 }
 
 #endif

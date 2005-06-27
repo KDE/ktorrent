@@ -88,14 +88,6 @@ namespace bt
 		void readyRead();
 		void onTimeout();
 		
-	signals:
-		/**
-		 * Authenication procedure was finished.
-		 * @param obj The Authenicate object 
-		 * @param ok Wether or not the authentication procedure was ok
-		 */
-		//void finished(Authenticate* obj,bool ok);
-		
 	private:
 		void sendHandshake();
 		void onFinish(bool succes);
@@ -108,7 +100,6 @@ namespace bt
 		QString host;
 		bool finished,succes;
 	};
-
 }
 
 #endif

@@ -18,7 +18,9 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include <qmessagebox.h>
-#include <qfile.h>
+//#include <qfile.h>
+#include <qclipboard.h>
+#include <qapplication.h>
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kfiledialog.h>
@@ -35,17 +37,28 @@ HTMLPart::HTMLPart(QWidget *parent)
 	KParts::BrowserExtension* ext = this->browserExtension();
 	connect(ext,SIGNAL(openURLRequest(const KURL&,const KParts::URLArgs&)),
 			this,SLOT(openURLRequest(const KURL&, const KParts::URLArgs& )));
-	
+
+	ext->enableAction("copy",true);
+	ext->enableAction("paste",true);
 }
 
 
 HTMLPart::~HTMLPart()
 {}
 
+void HTMLPart::copy()
+{
+	QString txt = selectedText();
+	QClipboard *cb = QApplication::clipboard();
+    // Copy text into the clipboard
+	cb->setText(txt,QClipboard::Clipboard);
+}
+
 void HTMLPart::openURLRequest(const KURL &u,const KParts::URLArgs &)
 {
-	if (KIO::NetAccess::mimetype(u,0) == "application/x-bittorrent" ||
-		   u.prettyURL().endsWith(".torrent"))
+	
+	if (/*KIO::NetAccess::mimetype(u,0) == "application/x-bittorrent" ||*/
+		   u.prettyURL().endsWith(".torrent")  )
 	{
 		int ret = QMessageBox::information(0,"ktorrent",
 					i18n("Do you want to download the torrent ?"),

@@ -193,12 +193,12 @@ namespace bt
 		Uint32 data_sent = 0;
 		while (packets.count() > 0)
 		{
-			Packet* p = packets.front();
+			Packet* p = packets.first();
 			// send packets with no payload immediatly
 			if (p->getType() != PIECE)
 			{
 				sendPacket(*p);
-				packets.eraseFirst();
+				packets.removeFirst();
 			}
 			else 
 			{
@@ -206,7 +206,7 @@ namespace bt
 				{
 					// packet was fully sent
 					// get rid of it
-					packets.eraseFirst();
+					packets.removeFirst();
 				}
 				else
 				{

@@ -22,7 +22,7 @@
 
 #include <qserversocket.h> 
 #include <qvaluelist.h>
-#include "ptrlist.h"
+#include <qptrlist.h>
 #include "globals.h"
 #include "peerid.h"
 
@@ -131,8 +131,8 @@ namespace bt
 		void peerKilled(Peer* p);
 		
 	private:
-		PtrList<Peer> peers,killed;
-		PtrList<Authenticate> pending,pending_done;
+		QPtrList<Peer> peers,killed;
+		QPtrList<Authenticate> pending;
 		Uint32 num_seeders,num_leechers,num_pending;
 		QValueList<PotentialPeer> potential_peers;
 		Torrent & tor;

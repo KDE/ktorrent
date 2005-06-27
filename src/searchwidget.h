@@ -37,6 +37,7 @@ public:
 
 public slots:
 	void search(const QString & text);
+	void copy();
 
 private slots:
 	void searchPressed();

@@ -137,7 +137,7 @@ namespace bt
 			return true;
 		}
 		
-		for (PtrList<PeerDownloader>::iterator i = pdown.begin();i != pdown.end();i++)
+		for (QPtrList<PeerDownloader>::iterator i = pdown.begin();i != pdown.end();i++)
 			sendRequests(*i);
 
 		return false;
@@ -154,7 +154,7 @@ namespace bt
 			pdown.clear();
 		}
 		
-		if (pdown.find(pd) != pdown.end())
+		if (pdown.contains(pd))
 			return;
 		
 
@@ -205,7 +205,7 @@ namespace bt
 	
 	void ChunkDownload::endgameCancel(const Piece & p)
 	{
-		PtrList<PeerDownloader>::iterator i = pdown.begin();
+		QPtrList<PeerDownloader>::iterator i = pdown.begin();
 		while (i != pdown.end())
 		{
 			PeerDownloader* pd = *i;
@@ -221,11 +221,11 @@ namespace bt
 
 	void ChunkDownload::peerKilled(PeerDownloader* pd)
 	{
-		if (pdown.find(pd) == pdown.end())
+		if (!pdown.contains(pd))
 			return;
 
 		dstatus.erase(pd->getPeer());
-		pdown.erase(pd);
+		pdown.remove(pd);
 	}
 	
 	
@@ -234,7 +234,7 @@ namespace bt
 		if (pdown.count() == 0)
 			return 0;
 		else
-			return pdown.at(0)->getPeer();
+			return pdown.getFirst()->getPeer();
 	}
 	
 	Uint32 ChunkDownload::getChunkIndex() const
@@ -250,7 +250,7 @@ namespace bt
 		}
 		else if (pdown.count() == 1)
 		{
-			const Peer* p = pdown.at(0)->getPeer();
+			const Peer* p = pdown.getFirst()->getPeer();
 			return p->getPeerID().toString();
 		}
 		else
@@ -262,7 +262,7 @@ namespace bt
 	Uint32 ChunkDownload::getDownloadSpeed() const
 	{
 		Uint32 r = 0;
-		PtrList<PeerDownloader>::const_iterator i = pdown.begin();
+		QPtrList<PeerDownloader>::const_iterator i = pdown.begin();
 		while (i != pdown.end())
 		{
 			const PeerDownloader* pd = *i;
