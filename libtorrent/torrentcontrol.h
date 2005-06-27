@@ -25,6 +25,7 @@
 #include <qtimer.h>
 #include <kurl.h>
 #include "globals.h"
+#include "timer.h"
 
 class KProgressDialog;
 
@@ -208,7 +209,10 @@ namespace bt
 		Downloader* down;
 		Uploader* up;
 		Choker* choke;
-		QTimer tracker_update_timer,choker_update_timer;
+		
+		Timer tracker_update_timer,choker_update_timer;
+		Uint32 tracker_update_interval;
+		
 		QString datadir,old_datadir,trackerevent;
 		Uint16 port;
 		bool completed,running,started,saved;

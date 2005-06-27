@@ -45,6 +45,47 @@ namespace bt
 		pending.setAutoDelete(true);
 		peers.setAutoDelete(true);
 	}
+
+	void PeerManager::update()
+	{
+		if (!started)
+			return;
+
+		QPtrList<Peer>::iterator i = peers.begin();
+		while (i != peers.end())
+		{
+			Peer* p = *i;
+			if (p->isKilled())
+			{
+				i = peers.erase(i);
+				killed.append(p);
+				peerKilled(p);
+			}
+			else
+			{
+				p->updateSpeed();
+				i++;
+			}
+		}
+
+		QPtrList<Authenticate>::iterator j = pending.begin();
+		while (j != pending.end())
+		{
+			Authenticate* a = *j;
+			if (a->isFinished())
+			{
+				j = pending.erase(j);
+				peerAuthenticated(a,a->isSuccesfull());
+				delete a;
+			}
+			else
+			{
+				j++;
+			}
+		}
+
+		connectToPeers();
+	}
 	
 	void PeerManager::setMaxConnections(Uint32 max)
 	{
@@ -141,9 +182,6 @@ namespace bt
 		Peer* peer = new Peer(
 				auth->takeSocket(),auth->getPeerID(),tor.getNumChunks());
 			
-		connect(peer,SIGNAL(fatalError(Peer* )),
-				this,SLOT(fatalError(Peer* )));
-			
 		peers.append(peer);
 			
 		//	Out() << "New peer connected !" << endl;
@@ -184,15 +222,6 @@ namespace bt
 			pp.id = PeerID(vn->data().toByteArray().data());
 			potential_peers.append(pp);
 		}
-	}
-	
-	void PeerManager::fatalError(Peer* p)
-	{
-	//	Out() << "Peer connection shutdown " << endl;
-		peers.remove(p);
-		killed.append(p);
-		p->closeConnection();
-		peerKilled(p);
 	}
 	
 	bool PeerManager::connectedTo(const PeerID & peer_id)
@@ -249,35 +278,7 @@ namespace bt
 		}
 	}
 	
-	void PeerManager::update()
-	{
-		if (!started)
-			return;
-		
-		for (Uint32 i = 0;i < peers.count();i++)
-		{
-			Peer* p = peers.at(i);
-			p->updateSpeed();
-		}
 
-		QPtrList<Authenticate>::iterator i = pending.begin();
-		while (i != pending.end())
-		{
-			Authenticate* a = *i;
-			if (a->isFinished())
-			{
-				i = pending.erase(i);
-				peerAuthenticated(a,a->isSuccesfull());
-				delete a;
-			}
-			else
-			{
-				i++;
-			}
-		}
-
-		connectToPeers();
-	}
 	
 	void PeerManager::clearDeadPeers()
 	{

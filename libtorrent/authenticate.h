@@ -96,7 +96,6 @@ namespace bt
 		SHA1Hash info_hash;
 		PeerID our_peer_id,peer_id;
 		QTimer timer;
-		bool done;
 		QString host;
 		bool finished,succes;
 	};

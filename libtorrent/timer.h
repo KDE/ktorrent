@@ -20,6 +20,9 @@
 #ifndef BTTIMER_H
 #define BTTIMER_H
 
+#include <qdatetime.h>
+
+
 namespace bt
 {
 
@@ -28,16 +31,16 @@ namespace bt
 	*/
 	class Timer
 	{
-		double last;
-		double elapsed;
+		QTime last;
+		int elapsed;
 	public:
 		Timer();
 		Timer(const Timer & t);
 		virtual ~Timer();
 
 		void update();
-		double getElapsed() const {return elapsed;}
-		double getElapsedSinceUpdate() const;
+		int getElapsed() const {return elapsed;}
+		int getElapsedSinceUpdate() const;
 		Timer & operator = (const Timer & t);
 	};
 

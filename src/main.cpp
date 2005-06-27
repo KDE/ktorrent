@@ -19,18 +19,14 @@
  ***************************************************************************/
 
 
-#include <kapplication.h>
-#include <dcopclient.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
 #include <klocale.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
-#include <libtorrent/log.h>
-#include <libtorrent/globals.h>
+#include <kaboutdata.h>
+#include <kapplication.h>
+#include <kcmdlineargs.h>
 
+#include <stdlib.h>
 
-#include "ktorrent.h"
+#include "ktorrentapp.h"
 
 
 static const char description[] =
@@ -50,39 +46,18 @@ int main(int argc, char **argv)
 	KAboutData about("ktorrent", I18N_NOOP("KTorrent"), version, description,
 	                 KAboutData::License_GPL, "(C) 2005 Joris Guisson", 0, 0, "joris.guisson@gmail.com");
 	about.addAuthor( "Joris Guisson", 0, "joris.guisson@gmail.com" );
+	about.addCredit("The-Error","The downloads icon","zotrix@eunet.yu");
+	about.addCredit( "Adam Treat", 0, "treat@kde.org" );
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);
-	KApplication app;
-
-	// register ourselves as a dcop client
-	app.dcopClient()->registerAs(app.name(), false);
-
-	// see if we are starting with session management
-	if (app.isRestored())
+	
+	KTorrentApp::addCmdLineOptions();
+	if (!KTorrentApp::start())
 	{
-		RESTORE(KTorrent);
+		fprintf(stderr, "ktorrent is already running!\n");
+		return 0;
 	}
-	else
-	{
-		// no session.. just start up normally
-		KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-		bt::Globals::instance().setDebugMode(args->isSet("debug"));
-
-		QString data_dir = KGlobal::dirs()->saveLocation("data","ktorrent");
-		if (!data_dir.endsWith(bt::DirSeparator()))
-			data_dir += bt::DirSeparator();
-		bt::Globals::instance().initLog(data_dir + "log");
-		
-		KTorrent *widget = new KTorrent();
-		widget->show();
-
-		for (int i = 0; i < args->count(); i++)
-		{
-			widget->load(args->url(i));
-		}
-		
-		args->clear();
-	}
-
+	
+	KTorrentApp app;
 	return app.exec();
 }

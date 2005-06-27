@@ -55,6 +55,7 @@ namespace bt
 		saved = false;
 		num_tracker_attempts = 0;
 		old_datadir = QString::null;
+		tracker_update_interval = 120000;
 	}
 	
 	
@@ -75,6 +76,41 @@ namespace bt
 		delete tracker;
 		delete tor;
 	}
+
+	void TorrentControl::update()
+	{
+		pman->update();
+		bool comp = completed;
+		
+		up->update();
+		if (!completed)
+			down->update();
+		
+		completed = cman->chunksLeft() == 0;
+		if (completed && !comp)
+		{
+			updateTracker("completed");
+			finished(this);
+			down->clearDownloaders();
+		}
+		updateStatusMsg();
+		
+		cman->checkMemoryUsage();
+		pman->clearDeadPeers();
+		
+		if (tracker_update_timer.getElapsedSinceUpdate() >= tracker_update_interval)
+		{
+			updateTracker();
+			tracker_update_timer.update();
+		}
+		
+		if (choker_update_timer.getElapsedSinceUpdate() >= 10000)
+		{
+			doChoking();
+			choker_update_timer.update();
+		}
+	}
+	
 	
 	void TorrentControl::setMonitor(TorrentMonitor* tmo)
 	{
@@ -133,9 +169,6 @@ namespace bt
 		choke = new Choker(*pman);
 	
 		
-		connect(&tracker_update_timer,SIGNAL(timeout()),this,SLOT(updateTracker()));
-		connect(&choker_update_timer,SIGNAL(timeout()),this,SLOT(doChoking()));
-		//connect(&update_timer,SIGNAL(timeout()),this,SLOT(update()));
 		connect(pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
 		connect(pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerRemoved(Peer* )));
 		saved = cman->hasBeenSaved();
@@ -144,7 +177,7 @@ namespace bt
 
 	void TorrentControl::setTrackerTimerInterval(Uint32 interval)
 	{
-		tracker_update_timer.changeInterval(interval);
+		tracker_update_interval = interval;
 	}
 
 	void TorrentControl::trackerResponse(const QByteArray & data)
@@ -267,37 +300,7 @@ namespace bt
 		num_tracker_attempts++;
 	}
 	
-	void TorrentControl::update()
-	{
-		pman->update();
-		pman->clearDeadPeers();
-		
-		bool comp = completed;
-		
-		up->update();
-		if (!completed)
-			down->update();
-		
-		completed = cman->chunksLeft() == 0;
-		if (completed && !comp)
-		{
-			updateTracker("completed");
-			finished(this);
-			down->clearDownloaders();
-		}
-		updateStatusMsg();
-		cman->checkMemoryUsage();
-		
-	/*	static int foo = 0;
-		if (foo == 30)
-		{
-			cman->debugPrintMemUsage();
-			foo = 0;
-		}
-		else
-		foo++;*/
-	}
-	
+
 	void TorrentControl::onNewPeer(Peer* p)
 	{
 		connect(p,SIGNAL(request(const Request& )),up,SLOT(addRequest(const Request& )));
@@ -326,13 +329,12 @@ namespace bt
 	{
 		num_tracker_attempts = 0;
 		updateTracker("started");
-		tracker_update_timer.start(120000);
-		choker_update_timer.start(10000);
-		//update_timer.start(100);
 		pman->start();
 		down->loadDownloads(datadir + "current_chunks");
 		running = true;
 		started = true;
+		tracker_update_timer.update();
+		choker_update_timer.update();
 	}
 	
 	void TorrentControl::stop()
@@ -349,9 +351,7 @@ namespace bt
 			down->clearDownloads();
 		}
 		up->removeAllPeers();
-		tracker_update_timer.stop();
-		choker_update_timer.stop();
-	//	update_timer.stop();
+
 		pman->stop();
 		pman->closeAllConnections();
 		pman->clearDeadPeers();

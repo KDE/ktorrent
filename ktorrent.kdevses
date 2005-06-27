@@ -1,7 +1,17 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="0" />
+ <DocsAndViews NumberOfDocuments="3" >
+  <Doc0 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/main.cpp" >
+   <View0 line="60" Type="Source" />
+  </Doc0>
+  <Doc1 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/ktorrentapp.cpp" >
+   <View0 line="0" Type="Source" />
+  </Doc1>
+  <Doc2 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/ktorrentapp.h" >
+   <View0 line="0" Type="Source" />
+  </Doc2>
+ </DocsAndViews>
  <pluginList>
   <kdevdebugger>
    <breakpointList>
@@ -9,9 +19,8 @@
     <breakpoint1 location="/home/joris/ktorrent/code/libtorrent/multifilecache.cpp:273" type="1" condition="" enabled="1" />
     <breakpoint2 location="/home/joris/ktorrent/code/libtorrent/multifilecache.cpp:264" type="1" condition="" enabled="1" />
     <breakpoint3 location="/home/joris/ktorrent/code/libtorrent/multifilecache.cpp:128" type="1" condition="" enabled="1" />
-    <breakpoint4 location="/home/joris/ktorrent/code/libtorrent/torrentcontrol.cpp:272" type="1" condition="" enabled="1" />
-    <breakpoint5 location="/home/joris/ktorrent/code/libtorrent/downloader.cpp:100" type="1" condition="" enabled="1" />
-    <breakpoint6 location="/home/joris/ktorrent/code/libtorrent/downloader.cpp:104" type="1" condition="" enabled="1" />
+    <breakpoint4 location="/home/joris/ktorrent/code/libtorrent/downloader.cpp:100" type="1" condition="" enabled="1" />
+    <breakpoint5 location="/home/joris/ktorrent/code/libtorrent/downloader.cpp:104" type="1" condition="" enabled="1" />
    </breakpointList>
   </kdevdebugger>
   <kdevbookmarks>

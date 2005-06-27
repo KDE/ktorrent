@@ -60,6 +60,9 @@ namespace bt
 		Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks);		
 		virtual ~Peer();
 
+		/// See if the peer has been killed.
+		bool isKilled() const {return killed;}
+
 		/// Get the PacketWriter
 		PacketWriter & getPacketWriter() {return *pwriter;}
 		
@@ -116,14 +119,8 @@ namespace bt
 		void connectionClosed(); 
 		void readyRead();
 		void error(int err);
-		
+
 	signals:
-		/**
-		 * Fatal error happened, this Peer needs to be closed.
-		 * @param p The Peer
-		 */
-		void fatalError(Peer* p);
-		
 		/**
 		 * The Peer has a Chunk.
 		 * @param p The Peer
@@ -157,7 +154,7 @@ namespace bt
 	private:
 		QSocket* sock;
 		
-		bool choked,interested,am_choked,am_interested;
+		bool choked,interested,am_choked,am_interested,killed;
 		BitSet pieces;
 		PeerID peer_id;
 		Timer snub_timer;

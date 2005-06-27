@@ -39,6 +39,7 @@ namespace bt
 		preader = new PacketReader(sock,speed);
 		choked = am_choked = true;
 		interested = am_interested = false;
+		killed = false;
 		
 		connect(sock,SIGNAL(connectionClosed()),this,SLOT(connectionClosed()));
 		connect(sock,SIGNAL(readyRead()),this,SLOT(readyRead()));
@@ -51,48 +52,63 @@ namespace bt
 	{
 		delete pwriter;
 		delete preader;
-		sock->close();
-		delete sock;
+		if (sock)
+		{
+			sock->close();
+			delete sock;
+		}
 		delete speed;
 	}
 
 	void Peer::connectionClosed() 
 	{
 		Out() << "Connection Closed" << endl;
-		fatalError(this);
+		closeConnection();
+		killed = true;
 	} 
 	
 	void Peer::closeConnection()
 	{
-		sock->close();
+		if (sock)
+		{
+			sock->close();
+			delete sock;
+			sock = 0;
+		}
 	}
 	
 	void Peer::readyRead() 
 	{
+		if (killed) return;
 		readPacket();
 	}
 	
-	void Peer::error(int err)
+	void Peer::error(int)
 	{
-		Out() << "Error : " << err << endl;
-		fatalError(this);
+		//Out() << "Error : " << err << endl;
+		closeConnection();
+		killed = true;
 	}
 	
 
 	
 	void Peer::readPacket()
 	{
+		if (killed) return;
+		
 		while (preader->readPacket() && preader->ok())
 		{
 			handlePacket(preader->getPacketLength());
 		}
 		
 		if (!preader->ok())
-			fatalError(this);
+			error(0);
 	}
 	
 	void Peer::handlePacket(Uint32 len)
 	{
+		if (killed) return;
+		
 		if (len == 0)
 			return;
 		const Uint8* tmp_buf = preader->getData();
@@ -104,7 +120,7 @@ namespace bt
 				if (len != 1)
 				{
 					Out() << "len err CHOKE" << endl;
-				//	fatalError(this);
+					error(0);
 					return;
 				}
 				
@@ -114,7 +130,7 @@ namespace bt
 				if (len != 1)
 				{
 					Out() << "len err UNCHOKE" << endl;
-				//	fatalError(this);
+					error(0);
 					return;
 				}
 				
@@ -124,7 +140,7 @@ namespace bt
 				if (len != 1)
 				{
 					Out() << "len err INTERESTED" << endl;
-				//	fatalError(this);
+					error(0);
 					return;
 				}
 				
@@ -134,7 +150,7 @@ namespace bt
 				if (len != 1)
 				{
 					Out() << "len err NOT_INTERESTED" << endl;
-				//	fatalError(this);
+					error(0);
 					return;
 				}
 				
@@ -144,7 +160,7 @@ namespace bt
 				if (len != 5)
 				{
 					Out() << "len err HAVE" << endl;
-				//	fatalError(this);
+					error(0);
 					return;
 				}
 				
@@ -155,7 +171,7 @@ namespace bt
 				if (len != 1 + pieces.getNumBytes())
 				{
 					Out() << "len err BITFIELD" << endl;
-				//	fatalError(this);
+					error(0);
 					return;
 				}
 				
@@ -165,7 +181,7 @@ namespace bt
 				if (len != 13)
 				{
 					Out() << "len err REQUEST" << endl;
-				//	fatalError(this);
+					error(0);
 					return;
 				}
 				
@@ -182,7 +198,7 @@ namespace bt
 				if (len < 9)
 				{
 					Out() << "len err PIECE" << endl;
-				//	fatalError(this);
+					error(0);
 					return;
 				}
 				
@@ -199,7 +215,7 @@ namespace bt
 				if (len != 13)
 				{
 					Out() << "len err CANCEL" << endl;
-				//	fatalError(this);
+					error(0);
 					return;
 				}
 				
@@ -216,6 +232,8 @@ namespace bt
 	
 	void Peer::sendData(const Uint8* data,Uint32 len,bool record)
 	{
+		if (killed) return;
+		
 		sock->writeBlock((const char*)data,len);
 		if (record)
 			speed->onWrite(len);

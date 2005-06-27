@@ -24,7 +24,7 @@
 #include "settings.h"
 
 KTorrentDCOP::KTorrentDCOP(KTorrent* app)
-	: DCOPObject("ktorrent"),app(app)
+	: DCOPObject("KTorrent"),app(app)
 {}
 
 

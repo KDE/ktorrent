@@ -17,10 +17,11 @@ ktorrent_LDADD = ../libtorrent/libktorrent.la $(LIB_KFILE) \
 	$(LIB_KDEPRINT) $(LIB_KHTML)
 
 # which sources should be compiled for ktorrent
-ktorrent_SOURCES = dcopinterface.skel settings.kcfgc main.cpp ktorrent.cpp ktorrentview.cpp \
-	pref.cpp chunkdownloadview.cpp ktorrentviewitem.cpp ktorrentcore.cpp \
+ktorrent_SOURCES = dcopinterface.skel settings.kcfgc main.cpp ktorrent.cpp \
+	ktorrentview.cpp pref.cpp chunkdownloadview.cpp ktorrentviewitem.cpp ktorrentcore.cpp \
 	peerview.cpp ktorrentmonitor.cpp downloadpref.ui debugview.cpp trayicon.cpp \
-	searchwidget.cpp searchbar.ui htmlpart.cpp logviewer.cpp  ktorrentdcop.cpp
+	searchwidget.cpp searchbar.ui htmlpart.cpp logviewer.cpp ktorrentdcop.cpp \
+	ktorrentapp.cpp
 
 xdg_apps_DATA = ktorrent.desktop
 kde_kcfg_DATA = ktorrent.kcfg

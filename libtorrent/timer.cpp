@@ -17,18 +17,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <sys/time.h> 
+
 #include "timer.h"
 
 namespace bt
 {
 
-	Timer::Timer()
+	Timer::Timer() : elapsed(0)
 	{
-		struct timeval tv;
-		gettimeofday(&tv,0);
-		elapsed = 0;
-		last = tv.tv_sec * 1000 + tv.tv_usec * 0.001;
+		last = QTime::currentTime();
 	}
 
 	Timer::Timer(const Timer & t) : last(t.last),elapsed(t.elapsed)
@@ -40,19 +37,16 @@ namespace bt
 
 	void Timer::update()
 	{
-		struct timeval tv;
-		gettimeofday(&tv,0);
-		double n = tv.tv_sec * 1000 + tv.tv_usec * 0.001;
-		elapsed = n - last;
-		last = n;
+		QTime now = QTime::currentTime();
+
+		elapsed = last.msecsTo(now);
+		last = now;
 	}
 	
-	double Timer::getElapsedSinceUpdate() const
+	int Timer::getElapsedSinceUpdate() const
 	{
-		struct timeval tv;
-		gettimeofday(&tv,0);
-		double n = tv.tv_sec * 1000 + tv.tv_usec * 0.001;
-		return n - last;
+		QTime now = QTime::currentTime();
+		return last.msecsTo(now);
 	}
 	
 	Timer & Timer::operator = (const Timer & t)

@@ -120,10 +120,7 @@ namespace bt
 	private:
 		virtual void newConnection(int socket);
 		void readPotentialPeers(BListNode* n);
-		bool connectedTo(const PeerID & peer_id);
-		
-	private slots:
-		void fatalError(Peer* p);
+		bool connectedTo(const PeerID & peer_id);	
 		void peerAuthenticated(Authenticate* auth,bool ok);
 		
 	signals:
