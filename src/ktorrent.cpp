@@ -384,10 +384,13 @@ void KTorrent::startDownload()
 		if (!tc->isRunning())
 		{
 			KMessageBox::error(this,
-				i18n("Cannot start more then %1 download(s)."
+				i18n("Cannot start more than 1 download."
 					" Go to Settings -> Configure KTorrent,"
-					" if you want to change the limit.")
-						.arg(Settings::maxDownloads()),
+					" if you want to change the limit.",
+				     "Cannot start more than %n downloads."
+					" Go to Settings -> Configure KTorrent,"
+					" if you want to change the limit.",
+				    Settings::maxDownloads()),
 				i18n("Error"));
 		}
 		currentChanged(tc);
