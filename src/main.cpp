@@ -48,6 +48,7 @@ int main(int argc, char **argv)
 	about.addAuthor( "Joris Guisson", 0, "joris.guisson@gmail.com" );
 	about.addCredit("The-Error","The downloads icon","zotrix@eunet.yu");
 	about.addCredit( "Adam Treat", 0, "treat@kde.org" );
+	about.addCredit("Danny Allen","Application icons","dannya40uk@yahoo.co.uk");
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);
 	

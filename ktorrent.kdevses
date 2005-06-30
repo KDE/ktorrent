@@ -1,31 +1,10 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="8" >
+ <DocsAndViews NumberOfDocuments="1" >
   <Doc0 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/TmpChangeLog.txt" >
-   <View0 line="65" Type="Source" />
+   <View0 line="66" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/main.cpp" >
-   <View0 line="34" Type="Source" />
-  </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/ktorrentapp.cpp" >
-   <View0 line="0" Type="Source" />
-  </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/ktorrentapp.h" >
-   <View0 line="0" Type="Source" />
-  </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/ktorrent.cpp" >
-   <View0 line="375" Type="Source" />
-  </Doc4>
-  <Doc5 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/ktorrentcore.cpp" >
-   <View0 line="171" Type="Source" />
-  </Doc5>
-  <Doc6 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/src/ktorrentcore.h" >
-   <View0 line="91" Type="Source" />
-  </Doc6>
-  <Doc7 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/configure.in.in" >
-   <View0 line="3" Type="Source" />
-  </Doc7>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
