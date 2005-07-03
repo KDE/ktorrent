@@ -20,63 +20,70 @@
 #ifndef BTBENCODER_H
 #define BTBENCODER_H
 
-#include <qmap.h>
-#include <qvaluelist.h>
-#include "value.h"
+
+#include "file.h"
 
 
 namespace bt
 {
+	class File;
 
 	/**
 	 * @author Joris Guisson
 	 * @brief Helper class to b-encode stuff.
 	 * 
-	 * This file b-encodes data. For more details about b-encoding, see
-	 * the BitTorrent protocol docs.
+	 * This class b-encodes data. For more details about b-encoding, see
+	 * the BitTorrent protocol docs. The data gets written to a File
 	 */
-	class BEncoder
+	class BEncoder 
 	{
+		File* fptr;
 	public:
-		BEncoder();
+		/**
+		 * Constructor
+		 */
+		BEncoder(File* fptr);
 		virtual ~BEncoder();
 
 		/**
-		 * Encode an integer. The integer 14 is encoded as i14e
-		 * @param val The integer
-		 * @return The integer encoded
+		 * Begin a dictionary.Should have a corresponding end call.
 		 */
-		QString encode(int val);
+		void beginDict();
 		
 		/**
-		 * Encode a string. The string spam is encoded as 4:spam
-		 * @param str The string
-		 * @return The string encoded
+		 * Begin a list. Should have a corresponding end call.
 		 */
-		QString encode(const QString & str);
+		void beginList();
 		
 		/**
-		 * Encode a Value. 
-		 * @param val The Value
-		 * @return The Value encoded
+		 * Write an int
+		 * @param val 
 		 */
-		QString encode(const Value & val);
+		void write(int val);
 		
 		/**
-		 * Encode a list of values. Lists are encoded this way :
-		 * l element1 element2 ...elementN e (ignore spaces)
-		 * @param vl The list
-		 * @return The list encoded
+		 * Write a string
+		 * @param str 
 		 */
-		QString encode(const QValueList<Value> & vl);
+		void write(const QString & str);
 		
 		/**
-		 * Encode a dictionary of values. Dicts are encoded this way :
-		 * d key1 value1 ... keyN valueN e (ignore spaces)
-		 * @param vm The dictionary
-		 * @return The dictionary encoded
+		 * Write a QByteArray
+		 * @param data 
 		 */
-		QString encode(const QMap<QString,Value> & vm);
+		void write(const QByteArray & data);
+
+		/**
+		 * Write a data array
+		 * @param data
+		 * @param size of data
+		 */
+		void write(const Uint8* data,Uint32 size);
+		
+		/**
+		 * End a beginDict or beginList call.
+		 */
+		void end();
 	};
 
 }

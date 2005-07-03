@@ -339,14 +339,14 @@ namespace bt
 	
 	void TorrentControl::stop()
 	{
-		if (num_tracker_attempts < tor->getNumTrackerURLs())
-			updateTracker("stopped");
-		
-		if (tmon)
-			tmon->stopped();
-
 		if (running)
 		{
+			if (num_tracker_attempts < tor->getNumTrackerURLs())
+				updateTracker("stopped");
+		
+			if (tmon)
+				tmon->stopped();
+			
 			down->saveDownloads(datadir + "current_chunks");
 			down->clearDownloads();
 		}

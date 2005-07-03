@@ -30,11 +30,7 @@
 namespace bt
 {
 	
-	struct NewChunkHeader
-	{
-		unsigned int index; // the Chunks index
-		unsigned int cache_off; // offset in cache file
-	};
+	
 
 	ChunkManager::ChunkManager(Torrent & tor,const QString & data_dir)
 	: tor(tor),chunks(tor.getNumChunks())

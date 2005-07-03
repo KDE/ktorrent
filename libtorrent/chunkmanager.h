@@ -30,6 +30,12 @@ namespace bt
 	class Torrent;
 	class BitSet;
 	class Cache;
+
+	struct NewChunkHeader
+	{
+		unsigned int index; // the Chunks index
+		unsigned int cache_off; // offset in cache file
+	};
 	
 	/**
 	 * @author Joris Guisson

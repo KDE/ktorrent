@@ -20,19 +20,24 @@
 #include <qdir.h>
 #include <klocale.h>
 #include <kglobal.h>
+#include <kprogress.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
+#include <kapplication.h>
 
 #include <libtorrent/log.h>
 #include <libtorrent/torrentcontrol.h>
 #include <libtorrent/globals.h>
 #include <libtorrent/error.h>
 #include <libtorrent/fileops.h>
+#include <libtorrent/torrentcreator.h>
 
 #include "ktorrentcore.h"
 #include "settings.h"
 
 using namespace bt;
+
+
 
 KTorrentCore::KTorrentCore() : max_downloads(0),keep_seeding(true)
 {
@@ -324,6 +329,54 @@ void KTorrentCore::update()
 			}
 		}
 		i++;
+	}
+}
+
+void KTorrentCore::makeTorrent(const QString & file,const QStringList & trackers,
+							   int chunk_size,const QString & name,
+							   const QString & comments,bool seed,
+							   const QString & output_file,KProgress* prog)
+{
+	QString tdir;
+	try
+	{
+		if (chunk_size < 0)
+			chunk_size = 256;
+
+		bt::TorrentCreator mktor(file,trackers,chunk_size,name,comments);
+		prog->setTotalSteps(mktor.getNumChunks());
+		Uint32 ns = 0;
+		while (!mktor.calculateHash())
+		{
+			prog->setProgress(ns);
+			ns++;
+			if (ns % 10 == 0)
+				KApplication::kApplication()->processEvents();
+		}
+
+		mktor.saveTorrent(output_file);
+		tdir = findNewTorrentDir();
+		bt::TorrentControl* tc = mktor.makeTC(tdir);
+		if (tc)
+		{
+			connect(tc,SIGNAL(finished(bt::TorrentControl*)),
+					this,SLOT(torrentFinished(bt::TorrentControl* )));
+			downloads.append(tc);
+			if (seed)
+				start(tc);
+			torrentAdded(tc);
+		}
+	}
+	catch (bt::Error & e)
+	{
+		// cleanup if necessary
+		if (bt::Exists(tdir))
+			bt::Delete(tdir,true);
+
+		// Show error message
+		KMessageBox::error(0,
+			i18n("Cannot create torrent : %1").arg(e.toString()),
+			i18n("Error"));
 	}
 }
 

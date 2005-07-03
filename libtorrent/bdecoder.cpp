@@ -67,12 +67,12 @@ namespace bt
 		// we're now entering a dictionary
 		BDictNode* curr = new BDictNode(off);
 		pos++;
-	//	Out() << "DICT" << endl;
+// 		Out() << "DICT" << endl;
 		try
 		{
 			while (data[pos] != 'e' && pos < data.size())
 			{
-			//	Out() << "Key : " << endl;
+// 				Out() << "Key : " << endl;
 				BValueNode* k = dynamic_cast<BValueNode*>(decode());
 				if (!k || k->data().getType() != Value::STRING)
 					throw Error("Decode error");
@@ -80,7 +80,7 @@ namespace bt
 				QString key = k->data().toString();
 				delete k;
 
-			//	Out() << "Data : " << endl;
+// 				Out() << "Data : " << endl;
 				BNode* data = decode();
 				curr->insert(key,data);
 			}
@@ -91,7 +91,7 @@ namespace bt
 			delete curr;
 			throw;
 		}
-	//	Out() << "END" << endl;
+// 		Out() << "END" << endl;
 		curr->setLength(pos - off);
 		return curr;
 	}
@@ -99,7 +99,7 @@ namespace bt
 	BListNode* BDecoder::parseList()
 	{
 		Uint32 off = pos;
-	//	Out() << "LIST" << endl;
+// 		Out() << "LIST" << endl;
 		BListNode* curr = new BListNode(off);
 		pos++;
 		try
@@ -116,7 +116,7 @@ namespace bt
 			delete curr;
 			throw;
 		}
-	//	Out() << "END" << endl;
+// 		Out() << "END" << endl;
 		curr->setLength(pos - off);
 		return curr;
 	}
@@ -148,7 +148,7 @@ namespace bt
 			throw Error(QString("Cannot convert %1 to an int").arg(n));
 		}
 		pos++;
-	//	Out() << "INT = " << val << endl;
+// 		Out() << "INT = " << val << endl;
 		BValueNode* vn = new BValueNode(Value(val),off);
 		vn->setLength(pos - off);
 		return vn;
@@ -191,10 +191,10 @@ namespace bt
 		// pos should be positioned right after the string
 		BValueNode* vn = new BValueNode(Value(arr),off);
 		vn->setLength(pos - off);
-	/*	if (arr.size() < 50)
-			Out() << "STRING " << QString(arr) << endl;
-		else
-		Out() << "STRING " << "really long string" << endl;*/
+// 		if (arr.size() < 50)
+// 			Out() << "STRING " << QString(arr) << endl;
+// 		else
+// 			Out() << "STRING " << "really long string" << endl;
 		return vn;
 	}
 }

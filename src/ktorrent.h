@@ -108,6 +108,7 @@ protected:
 private slots:
 	void fileOpen();
 	void fileSave();
+	void fileNew();
 	void startDownload();
 	void stopDownload();
 	void removeDownload();

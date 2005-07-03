@@ -3,7 +3,7 @@
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="1" >
   <Doc0 NumberOfViews="1" URL="file:///home/joris/ktorrent/code/TmpChangeLog.txt" >
-   <View0 line="66" Type="Source" />
+   <View0 line="67" Type="Source" />
   </Doc0>
  </DocsAndViews>
  <pluginList>
@@ -15,6 +15,10 @@
     <breakpoint3 location="/home/joris/ktorrent/code/libtorrent/multifilecache.cpp:128" type="1" condition="" enabled="1" />
     <breakpoint4 location="/home/joris/ktorrent/code/libtorrent/downloader.cpp:100" type="1" condition="" enabled="1" />
     <breakpoint5 location="/home/joris/ktorrent/code/libtorrent/downloader.cpp:104" type="1" condition="" enabled="1" />
+    <breakpoint6 location="/home/joris/ktorrent/code/libtorrent/torrentcreator.cpp:47" type="1" condition="" enabled="1" />
+    <breakpoint7 location="/home/joris/ktorrent/code/libtorrent/torrentcreator.cpp:64" type="1" condition="" enabled="1" />
+    <breakpoint8 location="/home/joris/ktorrent/code/src/torrentcreatordlg.cpp:48" type="1" condition="" enabled="1" />
+    <breakpoint9 location="/home/joris/ktorrent/code/src/ktorrentcore.cpp:340" type="1" condition="" enabled="1" />
    </breakpointList>
   </kdevdebugger>
   <kdevbookmarks>

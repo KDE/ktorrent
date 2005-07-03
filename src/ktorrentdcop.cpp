@@ -90,4 +90,3 @@ void KTorrentDCOP::stopAll()
 }
 
 #include "ktorrentdcop.moc"
-		

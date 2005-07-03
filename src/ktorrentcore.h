@@ -28,6 +28,8 @@ namespace bt
 	class TorrentControl;
 }
 
+class KProgress;
+
 /**
  * @author Joris Guisson
  * @brief Keeps track of all TorrentControl objects
@@ -97,6 +99,20 @@ public:
 	 */
 	void stop(bt::TorrentControl* tc);
 
+	/**
+	 * Make a torrent file
+	 * @param file The file or dir to make a torrent of
+	 * @param trackers A list of trackers
+	 * @param chunk_size The size of each chunk (in KB)
+	 * @param name The torrents name (usually filename)
+	 * @param comments The comments
+	 * @param seed Wether or not to start seeding or not
+	 * @param output_file File to store the torrent file
+	 * @param prog Progress bar to update
+	 */
+	void makeTorrent(const QString & file,const QStringList & trackers,
+					 int chunk_size,const QString & name,const QString & comments,
+					 bool seed,const QString & output_file,KProgress* prog);
 public slots:
 	/**
 	 * Load a torrent file. Pops up an error dialog

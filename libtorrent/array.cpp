@@ -17,58 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "bencoder.h"
-#include "file.h"
+#include "array.h"
 
 namespace bt
 {
 
-	BEncoder::BEncoder(File* fptr) : fptr(fptr)
-	{}
 
 
-	BEncoder::~BEncoder()
-	{}
-
-	void BEncoder::beginDict()
-	{
-		fptr->write("d",1);
-	}
-	
-	void BEncoder::beginList()
-	{
-		fptr->write("l",1);
-	}
-	
-	void BEncoder::write(int val)
-	{
-		QString s = QString("i%1e").arg(val);
-		fptr->write(s.utf8(),s.length());
-	}
-	
-	void BEncoder::write(const QString & str)
-	{
-		QString s = QString("%1:%2").arg(str.length()).arg(str);
-		fptr->write(s.utf8(),s.length());
-	}
-	
-	void BEncoder::write(const QByteArray & data)
-	{
-		QString s = QString::number(data.size());
-		fptr->write(s.utf8(),s.length());
-		fptr->write(":",1);
-		fptr->write(data.data(),data.size());
-	}
-
-	void BEncoder::write(const Uint8* data,Uint32 size)
-	{
-		QString s = QString::number(size) + ":";
-		fptr->write(s.utf8(),s.length());
-		fptr->write(data,size);
-	}
-	
-	void BEncoder::end()
-	{
-		fptr->write("e",1);
-	}
 }

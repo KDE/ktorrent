@@ -62,6 +62,7 @@
 #include "searchwidget.h"
 #include "logviewer.h"
 #include "ktorrentdcop.h"
+#include "torrentcreatordlg.h"
 
 
 
@@ -213,6 +214,7 @@ void KTorrent::currentChanged(bt::TorrentControl* tc)
 
 void KTorrent::setupActions()
 {
+	KStdAction::openNew(this,SLOT(fileNew()),actionCollection());
 	KStdAction::open(this, SLOT(fileOpen()), actionCollection());
 	KStdAction::quit(kapp, SLOT(quit()), actionCollection());
 	KStdAction::copy(m_search,SLOT(copy()),actionCollection());
@@ -246,58 +248,34 @@ void KTorrent::setupActions()
 	createGUI();
 }
 
-void KTorrent::saveProperties(KConfig *)
-{
-	// the 'config' object points to the session managed
-	// config file.  anything you write here will be available
-	// later when this app is restored
 
-/*	if (!m_view->currentURL().isEmpty())
+
+bool KTorrent::queryClose()
+{
+	if (Settings::showSystemTrayIcon())
 	{
-#if KDE_IS_VERSION(3,1,3)
-		config->writePathEntry("lastURL", m_view->currentURL());
-#else
-		config->writeEntry("lastURL", m_view->currentURL());
-#endif
-
-}*/
-}
-
-void KTorrent::readProperties(KConfig *)
-{
-	// the 'config' object points to the session managed
-	// config file.  this function is automatically called whenever
-	// the app is being restored.  read in here whatever you wrote
-	// in 'saveProperties'
-
-	/*QString url = config->readPathEntry("lastURL");
-
-	if (!url.isEmpty())
-	m_view->openURL(KURL(url));*/
-}
-
-void KTorrent::dragEnterEvent(QDragEnterEvent *event)
-{
-	// accept uri drops only
-	event->accept(KURLDrag::canDecode(event));
-}
-
-void KTorrent::dropEvent(QDropEvent *event)
-{
-	// this is a very simplistic implementation of a drop event.  we
-	// will only accept a dropped URL.  the Qt dnd code can do *much*
-	// much more, so please read the docs there
-	KURL::List urls;
-
-	// see if we can decode a URI.. if not, just ignore it
-	if (KURLDrag::decode(event, urls) && !urls.isEmpty())
-	{
-		// okay, we have a URI.. process it
-		const KURL &url = urls.first();
-
-		// load in the file
-		load(url);
+		hide();
+		return false;
 	}
+	else
+	{
+		return true;
+	}
+}
+
+bool KTorrent::queryExit()
+{
+	m_core->onExit();
+	return true;
+}
+
+
+void KTorrent::fileNew()
+{
+	TorrentCreatorDlg dlg(m_core,this);
+
+	dlg.show();
+	dlg.exec();
 }
 
 void KTorrent::fileOpen()
@@ -492,23 +470,59 @@ void KTorrent::changeCaption(const QString& text)
 	setCaption(text);
 }
 
-bool KTorrent::queryClose()
+void KTorrent::saveProperties(KConfig *)
 {
-	if (Settings::showSystemTrayIcon())
+	// the 'config' object points to the session managed
+	// config file.  anything you write here will be available
+	// later when this app is restored
+
+/*	if (!m_view->currentURL().isEmpty())
 	{
-		hide();
-		return false;
-	}
-	else
+#if KDE_IS_VERSION(3,1,3)
+	config->writePathEntry("lastURL", m_view->currentURL());
+#else
+	config->writeEntry("lastURL", m_view->currentURL());
+#endif
+
+}*/
+}
+
+void KTorrent::readProperties(KConfig *)
+{
+	// the 'config' object points to the session managed
+	// config file.  this function is automatically called whenever
+	// the app is being restored.  read in here whatever you wrote
+	// in 'saveProperties'
+
+	/*QString url = config->readPathEntry("lastURL");
+
+	if (!url.isEmpty())
+	m_view->openURL(KURL(url));*/
+}
+
+void KTorrent::dragEnterEvent(QDragEnterEvent *event)
+{
+	// accept uri drops only
+	event->accept(KURLDrag::canDecode(event));
+}
+
+void KTorrent::dropEvent(QDropEvent *event)
+{
+	// this is a very simplistic implementation of a drop event.  we
+	// will only accept a dropped URL.  the Qt dnd code can do *much*
+	// much more, so please read the docs there
+	KURL::List urls;
+
+	// see if we can decode a URI.. if not, just ignore it
+	if (KURLDrag::decode(event, urls) && !urls.isEmpty())
 	{
-		return true;
+		// okay, we have a URI.. process it
+		const KURL &url = urls.first();
+
+		// load in the file
+		load(url);
 	}
 }
 
-bool KTorrent::queryExit()
-{
-	m_core->onExit();
-	return true;
-}
 
 #include "ktorrent.moc"
