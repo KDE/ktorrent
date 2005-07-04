@@ -113,7 +113,7 @@ namespace bt
 	{
 		File fptr;
 		if (!fptr.open(url,"wb"))
-			throw Error(i18n("Cannot open file %1 : %2").arg(url).arg(fptr.errorString()));
+			throw Error(i18n("Cannot open file %1: %2").arg(url).arg(fptr.errorString()));
 
 		BEncoder enc(&fptr);
 		enc.beginDict(); // top dict
@@ -260,7 +260,7 @@ namespace bt
 		{
 			File fptr;
 			if (!fptr.open(target,"rb"))
-				throw Error(i18n("Cannot open file %1 : %2")
+				throw Error(i18n("Cannot open file %1: %2")
 						.arg(target).arg(fptr.errorString()));
 
 			Uint32 s = cur_chunk != num_chunks - 1 ? chunk_size : last_size;
@@ -281,7 +281,7 @@ namespace bt
 			// read from first file
 			File fptr;
 			if (!fptr.open(target + files[f1].path,"rb"))
-				throw Error(i18n("Cannot open file %1 : %2")
+				throw Error(i18n("Cannot open file %1: %2")
 						.arg(target + files[f1].path)
 						.arg(fptr.errorString()));
 
@@ -292,7 +292,7 @@ namespace bt
 			if (f2 > 0)
 			{
 				if (!fptr.open(target + files[f2].path,"rb"))
-					throw Error(i18n("Cannot open file %1 : %2")
+					throw Error(i18n("Cannot open file %1: %2")
 							.arg(target + files[f2].path)
 							.arg(fptr.errorString()));
 
@@ -324,7 +324,7 @@ namespace bt
 		// write full index file
 		File fptr;
 		if (!fptr.open(dd + "index","wb"))
-			throw Error(i18n("Can't create index file : %1").arg(fptr.errorString()));
+			throw Error(i18n("Cannot create index file: %1").arg(fptr.errorString()));
 
 		for (Uint32 i = 0;i < num_chunks;i++)
 		{

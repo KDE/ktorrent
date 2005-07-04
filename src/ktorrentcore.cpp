@@ -375,7 +375,7 @@ void KTorrentCore::makeTorrent(const QString & file,const QStringList & trackers
 
 		// Show error message
 		KMessageBox::error(0,
-			i18n("Cannot create torrent : %1").arg(e.toString()),
+			i18n("Cannot create torrent: %1").arg(e.toString()),
 			i18n("Error"));
 	}
 }

@@ -199,7 +199,7 @@ namespace bt
 			{
 				BValueNode* vn = dict->getValue("failure reason");
 				if (pman->getNumConnectedPeers() == 0)
-					trackerError(this,i18n("The tracker sent back the following error : %1").arg(vn->data().toString()));
+					trackerError(this,i18n("The tracker sent back the following error: %1").arg(vn->data().toString()));
 				else
 					trackerResponseError();
 				return;

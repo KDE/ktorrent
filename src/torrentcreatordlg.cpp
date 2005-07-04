@@ -51,19 +51,19 @@ void TorrentCreatorDlg::onCreate()
 	
 	if (r->url().length() == 0)
 	{
-		errorMsg(i18n("You must select a file or a directory !"));
+		errorMsg(i18n("You must select a file or a directory."));
 		return;
 	}
 
 	if (m_name->text().length() == 0)
 	{
-		errorMsg(i18n("You must fill in the name field !"));
+		errorMsg(i18n("You must fill in the name field."));
 		return;
 	}
 
 	if (eb->items().count() == 0)
 	{
-		errorMsg(i18n("You must at least add one tracker !"));
+		errorMsg(i18n("You must add at least one tracker."));
 		return;
 	}
 

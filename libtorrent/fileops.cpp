@@ -99,7 +99,7 @@ namespace bt
 		if (!KIO::NetAccess::del(url,0))
 		{
 			if (!nothrow)
-				throw Error(i18n("Cannot delete %1 : %2")
+				throw Error(i18n("Cannot delete %1: %2")
 						.arg(url.prettyURL())
 						.arg(KIO::NetAccess::lastErrorString()));
 			else

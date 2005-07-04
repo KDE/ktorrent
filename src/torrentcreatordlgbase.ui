@@ -35,7 +35,7 @@
                         <cstring>textLabel1</cstring>
                     </property>
                     <property name="text">
-                        <string>The file or directory you want to create a torrent of :</string>
+                        <string>The file or directory of which you want to create a torrent:</string>
                     </property>
                 </widget>
                 <widget class="KURLRequester">
