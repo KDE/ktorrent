@@ -30,7 +30,7 @@ namespace bt
 	 * @author Joris Guisson
 	 * @brief Keeps the upload rate under control
 	 * 
-	 * Before a PeerUploader can't send a piece, it must first ask
+	 * Before a PeerUploader can send a piece, it must first ask
 	 * permission to a UploadCap object. This object will make sure
 	 * that the upload rate remains under a specified threshold. When the
 	 * threshold is set to 0, no upload capping will be done.

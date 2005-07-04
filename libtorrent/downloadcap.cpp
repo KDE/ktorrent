@@ -17,60 +17,50 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <time.h>
-#include <stdlib.h>
-#include "peerid.h"
+#include "downloadcap.h"
 
 namespace bt
 {
-
-	PeerID::PeerID()
-	{
-		srand(time(0));
-		int r[12];
-		for (int i = 0;i < 12;i++)
-			r[i] = rand() % 10;
-		QString peer_id = "-KT11DV-";
-		for (int i = 0;i < 12;i++)
-			peer_id += QString("%1").arg(r[i]);
-		memcpy(id,peer_id.ascii(),20);
-	}
-
-	PeerID::PeerID(char* pid)
-	{
-		memcpy(id,pid,20);
-	}
 	
-	PeerID::PeerID(const PeerID & pid)
+	Uint32 DownloadCap::max_bytes_per_sec = 5*1024;
+	Uint32 DownloadCap::current_speed = 0;
+	Uint32 DownloadCap::outstanding_bytes = 0;
+	Timer DownloadCap::timer;
+
+	void DownloadCap::setMaxSpeed(Uint32 max)
 	{
-		memcpy(id,pid.id,20);
+		max_bytes_per_sec = max;
 	}
 
-	PeerID::~PeerID()
-	{}
-	
-
-
-	PeerID & PeerID::operator = (const PeerID & pid)
+	void DownloadCap::setCurrentSpeed(Uint32 s)
 	{
-		memcpy(id,pid.id,20);
-		return *this;
+		current_speed = s;
 	}
-		
-	bool operator == (const PeerID & a,const PeerID & b)
+
+	bool DownloadCap::allow(Uint32 bytes)
 	{
-		for (int i = 0;i < 20;i++)
-			if (a.id[i] != b.id[i])
-				return false;
-		
 		return true;
+		/*
+		if (max_bytes_per_sec == 0)
+			return true;
+
+		if ()
+		{
+			outstanding_bytes += bytes;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		*/
 	}
 
-	QString PeerID::toString() const
+	void DownloadCap::recieved(Uint32 bytes)
 	{
-		QString r;
-		for (int i = 0;i < 20;i++)
-			r += id[i] == 0 ? ' ' : id[i];
-		return r;
+		if (bytes > outstanding_bytes)
+			outstanding_bytes = 0;
+		else
+			outstanding_bytes -= bytes;
 	}
 }

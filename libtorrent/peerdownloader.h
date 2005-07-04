@@ -20,7 +20,7 @@
 #ifndef BTPEERDOWNLOADER_H
 #define BTPEERDOWNLOADER_H
 
-#include <list>
+#include <qvaluelist.h>
 #include <qobject.h>
 #include "globals.h"
 
@@ -32,27 +32,79 @@ namespace bt
 	
 
 	/**
-	@author Joris Guisson
+	 * @author Joris Guisson
+	 * @brief Class which downloads pieces from a Peer
+	 *
+	 * This class downloads Piece's from a Peer.
 	*/
 	class PeerDownloader : public QObject
 	{
 		Q_OBJECT
 	public:
+		/**
+		 * Constructor, set the Peer
+		 * @param peer The Peer
+		 */
 		PeerDownloader(Peer* peer);
 		virtual ~PeerDownloader();
 
+		/// Get the number of active requests
 		Uint32 getNumRequests() const;
+
+		/// Is the Peer choked.
 		bool isChoked() const;
+
+		/// Is NULL (is the Peer set)
 		bool isNull() const {return peer == 0;}
+
+		/**
+		 * See if the Peer has a Chunk
+		 * @param idx The Chunk's index
+		 */
 		bool hasChunk(Uint32 idx) const;
+		
+		/**
+		 * Grab the Peer, indicates how many ChunkDownload's
+		 * are using this PeerDownloader.
+		 * @return The number of times this PeerDownloader was grabbed
+		 */
 		int grab();
+		
+		/**
+		 * When a ChunkDownload is ready with this PeerDownloader,
+		 * it will release it, so that others can use it.
+		 */
 		void release();
+
+		/// Get the number of times this PeerDownloader was grabbed.
 		int getNumGrabbed() const {return grabbed;}
+
+		/// Get the Peer
 		const Peer* getPeer() const {return peer;}
+
+		/**
+		 * Try to download unsent requests.
+		 */
+		void downloadUnsent();
 		
 	public slots:
+		/**
+		 * Send a Request. Note that the DownloadCap
+		 * may not allow this. (In which case it will
+		 * be stored temporarely in the unsent_reqs list)
+		 * @param req The Request
+		 */
 		void download(const Request & req);
+
+		/**
+		 * Cancel a Request.
+		 * @param req The Request
+		 */
 		void cancel(const Request & req);
+
+		/**
+		 * Cancel all Requests
+		 */
 		void cancelAll();
 		
 	private slots:
@@ -60,11 +112,16 @@ namespace bt
 		void peerDestroyed();
 		
 	signals:
+		/**
+		 * Emited when a Piece has been downloaded.
+		 * @param p The Piece
+		 */
 		void downloaded(const Piece & p);
 		
 	private:
 		Peer* peer;
-		std::list<Request> reqs;
+		QValueList<Request> reqs;
+		QValueList<Request> unsent_reqs;
 		int grabbed;
 	};
 

@@ -98,6 +98,7 @@ namespace bt
 		for (i = pdowners.begin(); i != pdowners.end();i++)
 		{
 			PeerDownloader* pd = i->second;
+			pd->downloadUnsent();
 			if (!pd->isNull() && !pd->isChoked())
 			{
 				if (pd->getNumGrabbed() == 0 || (pd->getNumGrabbed() == 1 && pd->getNumRequests() < 4))

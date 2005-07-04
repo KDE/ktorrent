@@ -17,60 +17,56 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <time.h>
-#include <stdlib.h>
-#include "peerid.h"
+#ifndef BTDOWNLOADCAP_H
+#define BTDOWNLOADCAP_H
+
+#include "timer.h"
+#include "globals.h"
 
 namespace bt
 {
 
-	PeerID::PeerID()
+	/**
+	 * @author Joris Guisson
+	*/
+	class DownloadCap
 	{
-		srand(time(0));
-		int r[12];
-		for (int i = 0;i < 12;i++)
-			r[i] = rand() % 10;
-		QString peer_id = "-KT11DV-";
-		for (int i = 0;i < 12;i++)
-			peer_id += QString("%1").arg(r[i]);
-		memcpy(id,peer_id.ascii(),20);
-	}
+		static Uint32 max_bytes_per_sec;
+		static Uint32 current_speed;
+		static Uint32 outstanding_bytes;
+		static Timer timer;
+	public:
 
-	PeerID::PeerID(char* pid)
-	{
-		memcpy(id,pid,20);
-	}
-	
-	PeerID::PeerID(const PeerID & pid)
-	{
-		memcpy(id,pid.id,20);
-	}
+		/**
+		 * Set the speed cap in bytes per second. 0 indicates
+		 * no limit.
+		 * @param max Maximum number of bytes per second.
+		*/
+		static void setMaxSpeed(Uint32 max);
 
-	PeerID::~PeerID()
-	{}
-	
+		/**
+		 * Set the current download speed. 
+		 * @param s The speed (in bytes per sec)
+		 */
+		static void setCurrentSpeed(Uint32 s);
 
-
-	PeerID & PeerID::operator = (const PeerID & pid)
-	{
-		memcpy(id,pid.id,20);
-		return *this;
-	}
+		/// Get the maximum speed (0 == no limit)
+		static Uint32 getMaxSpeed() {return max_bytes_per_sec;}
 		
-	bool operator == (const PeerID & a,const PeerID & b)
-	{
-		for (int i = 0;i < 20;i++)
-			if (a.id[i] != b.id[i])
-				return false;
-		
-		return true;
-	}
+		/**
+		 * Request permission to request a piece.
+		 * @param The number of bytes we want to download
+		 * @return true if we can, false if not
+		 */
+		static bool allow(Uint32 bytes);
 
-	QString PeerID::toString() const
-	{
-		QString r;
-		for (int i = 0;i < 20;i++)
-			r += id[i] == 0 ? ' ' : id[i];
-		return r;
-	}
+		/**
+		 * We recieved a number of bytes. 
+		 * @param bytes 
+		 */
+		static void recieved(Uint32 bytes);
+	};
+
 }
+
+#endif

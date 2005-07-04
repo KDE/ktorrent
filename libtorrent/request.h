@@ -27,24 +27,68 @@ namespace bt
 	class Peer;
 
 	/**
-	@author Joris Guisson
-	*/
+	 * @author Joris Guisson
+	 * @brief Request of a piece sent to other peers
+	 *
+	 * This class keeps track of a request of a piece.
+	 * The Request consists of an index (the index of the chunk),
+	 * offset into the chunk and the length of a piece.
+	 *
+	 * It also holds a pointer to a Peer, if we recieve a request,
+	 * this will indicat which peer sent it.
+	 */
 	class Request
 	{
 	public:
+		/**
+		 * Constructor, set everything to 0.
+		 */
 		Request();
+		
+		/**
+		 * Constructor, set the index, offset,length and peer
+		 * @param index The index of the chunk 
+		 * @param off The offset into the chunk
+		 * @param len The length of the piece
+		 * @param peer The Peer who sent the request
+		 */
 		Request(Uint32 index,Uint32 off,Uint32 len,Peer* peer);
+		
+		/**
+		 * Copy constructor.
+		 * @param r Request to copy
+		 */
 		Request(const Request & r);
 		virtual ~Request();
-		
+
+		/// Get the index of the chunk
 		Uint32 getIndex() const {return index;}
+
+		/// Get the offset into the chunk
 		Uint32 getOffset() const {return off;}
+
+		/// Get the length of a the piece
 		Uint32 getLength() const {return len;}
+
+		/// Get the sending Peer
 		const Peer* getPeer() const {return peer;}
+
+		/// Get the sending Peer
 		Peer* getPeer() {return peer;}
 		
+		/**
+		 * Assignmenth operator.
+		 * @param r The Request to copy
+		 */
 		Request & operator = (const Request & r);
 		
+		/**
+		 * Compare two requests. Return true if they are the same.
+		 * This only compares the index,offset and length.
+		 * @param a The first request
+		 * @param b The second request
+		 * @return true if they are equal
+		 */
 		friend bool operator == (const Request & a,const Request & b);
 	private:
 		Uint32 index,off,len;

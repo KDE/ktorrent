@@ -36,6 +36,8 @@ namespace bt
 		
 		Uint32 el = timer.getElapsedSinceUpdate();
 		float secs = el / 1000.0f;
+		if (secs > 3.0f)
+			secs = 3.0f;
 		Uint32 allowed_bytes = (Uint32)floor(max_bytes_per_sec * secs);
 
 		timer.update();

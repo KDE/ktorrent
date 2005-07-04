@@ -17,11 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <algorithm>
+
 #include "peerdownloader.h"
 #include "peer.h"
 #include "piece.h"
 #include "packetwriter.h"
+#include "downloadcap.h"
 
 
 namespace bt
@@ -39,7 +40,7 @@ namespace bt
 
 	Uint32 PeerDownloader::getNumRequests() const 
 	{
-		return reqs.size();
+		return reqs.count();
 	}
 	
 	int PeerDownloader::grab()
@@ -62,23 +63,39 @@ namespace bt
 	{
 		if (!peer)
 			return;
-		reqs.push_back(req);
-		peer->getPacketWriter().sendRequest(req);
+
+		if (DownloadCap::allow(req.getLength()))
+		{
+			reqs.append(req);
+			peer->getPacketWriter().sendRequest(req);
+		}
+		else
+		{
+			unsent_reqs.append(req);
+		}
 	}
 	
 	void PeerDownloader::cancel(const Request & req)
 	{
 		if (!peer)
 			return;
-		reqs.remove(req);
-		peer->getPacketWriter().sendCancel(req);
+
+		if (reqs.contains(req))
+		{
+			reqs.remove(req);
+			peer->getPacketWriter().sendCancel(req);
+		}
+		else
+		{
+			unsent_reqs.remove(req);
+		}
 	}
 	
 	void PeerDownloader::cancelAll()
 	{
 		if (peer)
 		{
-			std::list<Request>::iterator i = reqs.begin();
+			QValueList<Request>::iterator i = reqs.begin();
 			while (i != reqs.end())
 			{
 				peer->getPacketWriter().sendCancel(*i);
@@ -87,12 +104,13 @@ namespace bt
 		}
 	
 		reqs.clear();
+		unsent_reqs.clear();
 	}
 		
 	void PeerDownloader::piece(const Piece & p)
 	{
 		Request r(p);
-		if (std::find(reqs.begin(),reqs.end(),r) != reqs.end())
+		if (reqs.contains(r))
 		{
 			reqs.remove(r);
 			downloaded(p);
@@ -118,6 +136,27 @@ namespace bt
 			return peer->getBitSet().get(idx);
 		else
 			return false;
+	}
+
+	void PeerDownloader::downloadUnsent()
+	{
+		if (!peer)
+			return;
+
+		QValueList<Request>::iterator i = unsent_reqs.begin();
+		while (i != unsent_reqs.end())
+		{
+			if (DownloadCap::allow((*i).getLength()))
+			{
+				reqs.append(*i);
+				peer->getPacketWriter().sendRequest(*i);
+				i = unsent_reqs.erase(i);
+			}
+			else
+			{
+				i++;
+			}
+		}
 	}
 	
 }
