@@ -17,15 +17,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "file.h"
-#include "log.h"
+#include <libutil/file.h>
+#include <libutil/log.h>
 #include "downloader.h"
 #include "chunkmanager.h"
 #include "torrent.h"
 #include "peermanager.h"
-#include "error.h"
+#include <libutil/error.h>
 #include "chunkdownload.h"
-#include "sha1hash.h"
+#include <libutil/sha1hash.h>
 #include "peer.h"
 #include "piece.h"
 #include "peerdownloader.h"

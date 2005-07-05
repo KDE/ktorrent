@@ -17,7 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "log.h"
+#include <libutil/log.h>
 #include "uploader.h"
 #include "peer.h"
 #include "chunkmanager.h"

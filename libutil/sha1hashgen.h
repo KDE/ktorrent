@@ -17,44 +17,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#ifndef BTSHA1HASHGEN_H
+#define BTSHA1HASHGEN_H
 
-#include "globals.h"
-#include <libutil/log.h>
-#include <libutil/error.h>
+#include "constants.h"
+#include "sha1hash.h"
 
 namespace bt
 {
 	
-	
-
-	Globals Globals::inst;
-
-
-
-
-
-	Globals::Globals()
+	/**
+	 * @author Joris Guisson
+	 * 
+	 * Generates a SHA1 hash, code based on wikipedia's pseudocode
+	*/
+	class SHA1HashGen
 	{
-		debug_mode = false;
-		log = new Log();
-	}
+		Uint32 h0;
+		Uint32 h1;
+		Uint32 h2;
+		Uint32 h3;
+		Uint32 h4;
+	public:
+		SHA1HashGen();
+		~SHA1HashGen();
 
-	Globals::~ Globals()
-	{
-		delete log;
-	}
+		SHA1Hash generate(Uint8* data,Uint32 len);
+	private:
+		void processChunk(Uint8* c);
+	};
 
-	void Globals::initLog(const QString & file)
-	{
-		log->setOutputFile(file);
-		log->setOutputToConsole(debug_mode);
-	}
-
-	Log & Out()
-	{
-		Log & lg = Globals::instance().getLog();
-		lg.setOutputToConsole(Globals::instance().isDebugModeSet());
-		return lg;
-	}
 }
 
+#endif

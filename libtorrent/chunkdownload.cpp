@@ -19,8 +19,8 @@
  ***************************************************************************/
 
 #include <algorithm>
-#include "file.h"
-#include "log.h"
+#include <libutil/file.h>
+#include <libutil/log.h>
 #include "chunkdownload.h"
 #include "downloader.h"
 #include "chunk.h"

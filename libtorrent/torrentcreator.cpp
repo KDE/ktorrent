@@ -21,17 +21,18 @@
 #include <qfileinfo.h>
 #include <klocale.h>
 #include <time.h>
-#include "error.h"
+#include <libutil/error.h>
 #include "torrentcontrol.h"
 #include "torrentcreator.h"
 #include "bencoder.h"
-#include "file.h"
-#include "sha1hash.h"
-#include "chunkmanager.h"
-#include "fileops.h"
-#include "log.h"
+#include <libutil/file.h>
+#include <libutil/sha1hash.h>
+#include <libutil/fileops.h>
+#include <libutil/log.h>
+#include <libutil/array.h>
+#include <libutil/functions.h>
 #include "globals.h"
-#include "array.h"
+#include "chunkmanager.h"
 
 namespace bt
 {

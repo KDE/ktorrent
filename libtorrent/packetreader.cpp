@@ -18,9 +18,10 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include <qsocket.h>
-#include "log.h"
+#include <libutil/log.h>
 #include "packetreader.h"
 #include "speedestimater.h"
+#include <libutil/functions.h>
 
 namespace bt
 {

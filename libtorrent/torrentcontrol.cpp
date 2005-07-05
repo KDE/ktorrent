@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include <qfile.h>
 #include <klocale.h>
-#include "fileops.h"
+#include <libutil/fileops.h>
 #include "downloader.h"
 #include "uploader.h"
 #include "tracker.h"
@@ -28,17 +28,18 @@
 #include "bdecoder.h"
 #include "bnode.h"
 #include "peermanager.h"
-#include "error.h"
+#include <libutil/error.h>
 #include "torrentcontrol.h"
 #include "bitset.h"
 #include "peer.h"
 #include "choker.h"
 #include "torrentmonitor.h"
-#include "log.h"
+#include <libutil/log.h>
 #include "globals.h"
 #include "packetwriter.h"
 #include "httptracker.h"
 #include "udptracker.h"
+#include <libutil/functions.h>
 
 
 

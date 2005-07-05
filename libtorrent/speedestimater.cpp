@@ -19,9 +19,10 @@
  ***************************************************************************/
 #include <qpair.h>
 #include <qvaluelist.h>
-#include "log.h"
-#include "timer.h"
+#include <libutil/log.h>
+#include <libutil/timer.h>
 #include "speedestimater.h"
+#include <libutil/functions.h>
 
 namespace bt
 {

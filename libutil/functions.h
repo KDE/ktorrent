@@ -17,94 +17,41 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef BTFILE_H
-#define BTFILE_H
+#ifndef BTFUNCTIONS_H
+#define BTFUNCTIONS_H
 
-#include <stdio.h>
-#include <qstring.h>
-#include "globals.h"
+#include "constants.h"
+
+class QString;
+class QHostAddress;
+class KURL;
 
 namespace bt
 {
 
-	/**
-	 * @author Joris Guisson
-	 * @brief Wrapper class for stdio's FILE
-	 *
-	 * Wrapper class for stdio's FILE.
-	 */
-	class File
-	{
-		FILE* fptr;
-	public:
-		/**
-		 * Constructor.
-		 */
-		File();
-		
-		/**
-		 * Destructor, closes the file.
-		 */
-		virtual ~File();
+	void WriteUint64(Uint8* buf,Uint32 off,Uint64 val);
+	Uint64 ReadUint64(const Uint8* buf,Uint64 off);
+	
+	void WriteUint32(Uint8* buf,Uint32 off,Uint32 val);
+	Uint32 ReadUint32(const Uint8* buf,Uint32 off);
+	
+	void WriteUint16(Uint8* buf,Uint32 off,Uint16 val);
+	Uint16 ReadUint16(const Uint8* buf,Uint32 off);
 
-		/**
-		 * Open the file similar to fopen
-		 * @param file Filename
-		 * @param mode Mode
-		 * @return true upon succes
-		 */
-		bool open(const QString & file,const QString & mode);
-		
-		/**
-		 * Close the file.
-		 */
-		void close();
-		
-		/**
-		 * Flush the file.
-		 */
-		void flush();
-		
-		/**
-		 * Write a bunch of data.
-		 * @param buf The data
-		 * @param size Size of the data
-		 * @return The number of bytes written
-		 */
-		Uint32 write(const void* buf,Uint32 size);
-		
-		/**
-		 * Read a bunch of data
-		 * @param buf The buffer to store the data
-		 * @param size Size of the buffer
-		 * @return The number of bytes read
-		 */
-		Uint32 read(void* buf,Uint32 size);
+	
+	void WriteInt64(Uint8* buf,Uint32 off,Int64 val);
+	Int64 ReadInt64(const Uint8* buf,Uint32 off);
+	
+	void WriteInt32(Uint8* buf,Uint32 off,Int32 val);
+	Int32 ReadInt32(const Uint8* buf,Uint32 off);
+	
+	void WriteInt16(Uint8* buf,Uint32 off,Int16 val);
+	Int16 ReadInt16(const Uint8* buf,Uint32 off);
+	
+	Uint32 GetCurrentTime();
 
-		enum SeekPos
-		{
-			BEGIN,
-			END,
-			CURRENT
-		};
-		
-		/**
-		 * Seek in the file.
-		 * @param from Position to seek from
-		 * @param num Number of bytes to move
-		 * @return New position
-		 */
-		Uint32 seek(SeekPos from,int num);
-
-		/// Check to see if we are at the end of the file.
-		bool eof() const;
-
-		/// Get the current position in the file.
-		Uint32 tell() const;
-
-		/// Get the error string.
-		QString errorString() const;
-	};
+	QHostAddress LookUpHost(const QString & host);
+	QString DirSeparator();
 
 }
 

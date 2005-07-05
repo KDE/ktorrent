@@ -22,7 +22,8 @@
 
 #include <kurl.h>
 #include <qvaluevector.h>
-#include "sha1hash.h"
+#include <libutil/sha1hash.h>
+#include <libutil/constants.h>
 #include "globals.h"
 #include "peerid.h"
 

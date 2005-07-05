@@ -18,7 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "bencoder.h"
-#include "file.h"
+#include <libutil/file.h>
 
 namespace bt
 {

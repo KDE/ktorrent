@@ -22,9 +22,10 @@
 #include <qsocketdevice.h>
 
 #include "udptracker.h"
-#include "log.h"
+#include <libutil/log.h>
 #include "torrentcontrol.h"
 #include "globals.h"
+#include <libutil/functions.h>
 
 namespace bt
 {

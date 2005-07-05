@@ -18,7 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include <kurl.h>
-#include "log.h"
+#include <libutil/log.h>
 #include "httptracker.h"
 #include "torrentcontrol.h"
 #include "bdecoder.h"

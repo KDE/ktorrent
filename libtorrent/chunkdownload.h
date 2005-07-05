@@ -24,8 +24,8 @@
 #include <qobject.h>
 #include <qptrlist.h>
 #include "globals.h"
-#include "timer.h"
-#include "ptrmap.h"
+#include <libutil/timer.h>
+#include <libutil/ptrmap.h>
 
 namespace bt
 {

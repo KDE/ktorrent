@@ -22,6 +22,7 @@
 #include "request.h"
 #include "chunk.h"
 #include "bitset.h"
+#include <libutil/functions.h>
 
 namespace bt
 {

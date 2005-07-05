@@ -17,34 +17,39 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef BTSHA1HASHGEN_H
-#define BTSHA1HASHGEN_H
+#ifndef BTSHA1HASH_H
+#define BTSHA1HASH_H
 
-#include "globals.h"
-#include "sha1hash.h"
+class QString;
 
 namespace bt
 {
-	
-	/**
-	 * @author Joris Guisson
-	 * 
-	 * Generates a SHA1 hash, code based on wikipedia's pseudocode
-	*/
-	class SHA1HashGen
-	{
-		Uint32 h0;
-		Uint32 h1;
-		Uint32 h2;
-		Uint32 h3;
-		Uint32 h4;
-	public:
-		SHA1HashGen();
-		~SHA1HashGen();
+	class Log;
 
-		SHA1Hash generate(Uint8* data,Uint32 len);
-	private:
-		void processChunk(Uint8* c);
+	/**
+	@author Joris Guisson
+	*/
+	class SHA1Hash
+	{
+		unsigned char hash[20];
+	public:
+		SHA1Hash();
+		SHA1Hash(const SHA1Hash & other);
+		SHA1Hash(const unsigned char* h);
+		~SHA1Hash();
+
+		SHA1Hash & operator = (const SHA1Hash & other);
+
+		bool operator == (const SHA1Hash & other) const;
+		bool operator != (const SHA1Hash & other) const {return !operator ==(other);}
+
+		static SHA1Hash generate(unsigned char* data,unsigned int len);
+
+		QString toString() const;
+		QString toURLString() const;
+		const unsigned char* getData() const {return hash;}
+
+		friend Log & operator << (Log & out,const SHA1Hash & h);
 	};
 
 }

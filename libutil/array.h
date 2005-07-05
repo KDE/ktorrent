@@ -17,11 +17,43 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "ptrlist.h"
+#ifndef BTARRAY_H
+#define BTARRAY_H
+
+#include "constants.h"
 
 namespace bt
 {
 
-	
+	/**
+	@author Joris Guisson
+	*/
+	template<class T>
+	class Array
+	{
+		Uint32 num;
+		T* data;
+	public:
+		Array(Uint32 num) : num(num),data(0)
+		{
+			if (num > 0)
+				data = new T[num];
+		}
+
+		~Array()
+		{
+			delete [] data;
+		}
+
+		T & operator [] (Uint32 i) {return data[i];}
+		const T & operator [] (Uint32 i) const {return data[i];}
+
+		operator const T* () const {return data;}
+		operator T* () {return data;}
+
+		Uint32 size() const {return num;}
+	};
 
 }
+
+#endif

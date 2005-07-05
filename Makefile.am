@@ -1,4 +1,4 @@
-SUBDIRS = libtorrent src
+SUBDIRS = libutil libtorrent src
 EXTRA_DIST = AUTHORS COPYING ChangeLog INSTALL README TODO
 
 messages: rc.cpp

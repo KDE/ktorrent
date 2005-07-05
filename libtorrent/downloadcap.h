@@ -20,7 +20,7 @@
 #ifndef BTDOWNLOADCAP_H
 #define BTDOWNLOADCAP_H
 
-#include "timer.h"
+#include <libutil/timer.h>
 #include "globals.h"
 
 namespace bt

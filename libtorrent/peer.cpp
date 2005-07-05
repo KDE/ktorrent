@@ -17,7 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "log.h"
+#include <libutil/log.h>
 #include "peer.h"
 #include "chunk.h"
 #include "speedestimater.h"
@@ -25,6 +25,7 @@
 #include "request.h"
 #include "packetreader.h"
 #include "packetwriter.h"
+#include <libutil/functions.h>
 
 namespace bt
 {

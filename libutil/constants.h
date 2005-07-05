@@ -17,41 +17,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef BTSHA1HASH_H
-#define BTSHA1HASH_H
-
-
+#ifndef BTCONSTANTS_H
+#define BTCONSTANTS_H
 
 namespace bt
 {
-	class Log;
+	typedef unsigned long long Uint64;
+	typedef unsigned long Uint32;
+	typedef unsigned short Uint16;
+	typedef unsigned char Uint8;
 
-	/**
-	@author Joris Guisson
-	*/
-	class SHA1Hash
-	{
-		unsigned char hash[20];
-	public:
-		SHA1Hash();
-		SHA1Hash(const SHA1Hash & other);
-		SHA1Hash(const unsigned char* h);
-		~SHA1Hash();
-
-		SHA1Hash & operator = (const SHA1Hash & other);
-
-		bool operator == (const SHA1Hash & other) const;
-		bool operator != (const SHA1Hash & other) const {return !operator ==(other);}
-
-		static SHA1Hash generate(unsigned char* data,unsigned int len);
-
-		QString toString() const;
-		QString toURLString() const;
-		const unsigned char* getData() const {return hash;}
-
-		friend Log & operator << (Log & out,const SHA1Hash & h);
-	};
-
+	typedef long long Int64;
+	typedef long Int32;
+	typedef short Int16;
+	typedef char Int8;
+	
+	const Uint32 MAX_MSGLEN = 9 + 131072;
+	const Uint16 MIN_PORT = 6881;
+	const Uint16 MAX_PORT = 6889;
+	const Uint32 MAX_PIECE_LEN = 16384;
+	
+	const Uint8 CHOKE = 0;
+	const Uint8 UNCHOKE = 1;
+	const Uint8 INTERESTED = 2;
+	const Uint8 NOT_INTERESTED = 3;
+	const Uint8 HAVE = 4;
+	const Uint8 BITFIELD = 5;
+	const Uint8 REQUEST = 6;
+	const Uint8 PIECE = 7;
+	const Uint8 CANCEL = 8;
 }
+
 
 #endif

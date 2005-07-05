@@ -19,9 +19,9 @@
  ***************************************************************************/
 #include "announcelist.h"
 #include "bnode.h"
-#include "error.h"
+#include <libutil/error.h>
 #include "globals.h"
-#include "log.h"
+#include <libutil/log.h>
 
 namespace bt
 {

@@ -20,13 +20,14 @@
 #include <qstringlist.h>
 #include <qfileinfo.h>
 #include <klocale.h>
-#include "file.h"
+#include <libutil/file.h>
 #include "torrent.h"
 #include "cache.h"
 #include "multifilecache.h"
-#include "error.h"
+#include <libutil/error.h>
 #include "chunk.h"
-#include "fileops.h"
+#include <libutil/fileops.h>
+#include <libutil/functions.h>
 
 
 namespace bt

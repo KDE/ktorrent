@@ -49,9 +49,9 @@
 #include <libtorrent/torrentcontrol.h>
 #include <libtorrent/peermanager.h>
 #include <libtorrent/uploadcap.h>
-#include <libtorrent/error.h>
+#include <libutil/error.h>
 #include <libtorrent/globals.h>
-#include <libtorrent/log.h>
+#include <libutil/log.h>
 
 #include "ktorrentcore.h"
 #include "ktorrentview.h"

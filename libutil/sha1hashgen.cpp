@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <string.h>
 #include "sha1hashgen.h"
+#include "functions.h"
 
 
 

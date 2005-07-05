@@ -23,7 +23,7 @@
 #include <qptrlist.h>
 #include <qdict.h>
 #include "value.h"
-#include "globals.h"
+#include <libutil/constants.h>
 
 namespace bt
 {

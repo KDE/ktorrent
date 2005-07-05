@@ -20,6 +20,7 @@
 #include "torrent.h"
 #include "chunk.h"
 #include "cache.h"
+#include <libutil/functions.h>
 
 namespace bt
 {

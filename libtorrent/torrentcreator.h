@@ -22,7 +22,7 @@
 
 #include <qstringlist.h>
 #include "torrent.h"
-#include "sha1hash.h"
+#include <libutil/sha1hash.h>
 
 namespace bt
 {

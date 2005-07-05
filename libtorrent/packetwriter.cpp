@@ -24,6 +24,8 @@
 #include "bitset.h"
 #include "packet.h"
 #include "uploadcap.h"
+#include <libutil/log.h>
+#include "globals.h"
 
 namespace bt
 {
@@ -124,7 +126,16 @@ namespace bt
 			
 	void PacketWriter::sendChunk(Uint32 index,Uint32 begin,Uint32 len,const Chunk & ch)
 	{
-		packets.append(new Packet(index,begin,len,ch));
+		if (begin >= ch.getSize() || begin + len > ch.getSize())
+		{
+			Out() << "Warning : Illegal piece request" << endl;
+			Out() << "\tChunk : index " << index << " size = " << ch.getSize() << endl;
+			Out() << "\tPiece : begin = " << begin << " len = " << len << endl;
+		}
+		else
+		{
+			packets.append(new Packet(index,begin,len,ch));
+		}
 	}
 
 	bool PacketWriter::sendBigPacket(Packet & p,Uint32 & bytes_written)

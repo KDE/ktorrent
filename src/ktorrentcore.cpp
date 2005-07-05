@@ -25,13 +25,14 @@
 #include <kstandarddirs.h>
 #include <kapplication.h>
 
-#include <libtorrent/log.h>
+#include <libutil/log.h>
 #include <libtorrent/torrentcontrol.h>
 #include <libtorrent/globals.h>
-#include <libtorrent/error.h>
-#include <libtorrent/fileops.h>
+#include <libutil/error.h>
+#include <libutil/fileops.h>
 #include <libtorrent/torrentcreator.h>
 #include <libtorrent/downloadcap.h>
+#include <libutil/functions.h>
 
 #include "ktorrentcore.h"
 #include "settings.h"

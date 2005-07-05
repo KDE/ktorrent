@@ -25,7 +25,7 @@
 #include <qtimer.h>
 #include <kurl.h>
 #include "globals.h"
-#include "timer.h"
+#include <libutil/timer.h>
 
 class KProgressDialog;
 

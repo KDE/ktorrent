@@ -25,7 +25,7 @@
 #include <ksharedptr.h>
 #include "bitset.h"
 #include "globals.h"
-#include "timer.h"
+#include <libutil/timer.h>
 #include "peerid.h"
 
 namespace bt

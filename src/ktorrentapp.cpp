@@ -26,8 +26,9 @@
 #include <kstandarddirs.h>
 #include <dcopclient.h>
 
-#include <libtorrent/log.h>
+#include <libutil/log.h>
 #include <libtorrent/globals.h>
+#include <libutil/functions.h>
 
 #include "ktorrent.h"
 

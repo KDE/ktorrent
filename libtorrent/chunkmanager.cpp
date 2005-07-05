@@ -17,14 +17,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "file.h"
+#include <libutil/file.h>
 #include "chunkmanager.h"
 #include "torrent.h"
-#include "error.h"
+#include <libutil/error.h>
 #include "bitset.h"
 #include "singlefilecache.h"
 #include "multifilecache.h"
-#include "log.h"
+#include <libutil/log.h>
 #include "globals.h"
 
 namespace bt

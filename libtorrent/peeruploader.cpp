@@ -18,7 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include <set>
-#include "log.h"
+#include <libutil/log.h>
 #include "peeruploader.h"
 #include "peer.h"
 #include "chunkmanager.h"

@@ -21,8 +21,9 @@
 #define BTDOWNLOADER_H
 
 #include <qobject.h>
+#include <libutil/ptrmap.h>
 #include "globals.h"
-#include "ptrmap.h"
+
 
 
 namespace bt

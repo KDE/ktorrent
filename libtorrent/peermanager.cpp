@@ -17,15 +17,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "log.h"
+#include <libutil/log.h>
 #include "peermanager.h"
 #include "peer.h"
 #include "bnode.h"
-#include "error.h"
+#include <libutil/error.h>
 #include "authenticate.h"
 #include "torrent.h"
 #include "uploader.h"
 #include "downloader.h"
+#include <libutil/functions.h>
 
 namespace bt
 {

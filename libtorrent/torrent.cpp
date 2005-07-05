@@ -19,14 +19,14 @@
  ***************************************************************************/
 #include <qfile.h>
 #include <qdatastream.h>
-#include "log.h"
+#include <libutil/log.h>
 #include <time.h>
 #include <stdlib.h>
 #include "torrent.h"
 #include "bdecoder.h"
 #include "bnode.h"
-#include "error.h"
-#include "sha1hashgen.h"
+#include <libutil/error.h>
+#include <libutil/sha1hashgen.h>
 #include "announcelist.h"
 
 namespace bt

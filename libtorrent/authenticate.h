@@ -24,7 +24,7 @@
 #include <qsocket.h>
 #include <qtimer.h>
 #include "globals.h"
-#include "sha1hash.h"
+#include <libutil/sha1hash.h>
 #include "peerid.h"
 
 

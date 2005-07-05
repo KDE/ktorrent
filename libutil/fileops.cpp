@@ -23,11 +23,11 @@
 #include <kio/netaccess.h>
 #include "fileops.h"
 #include "error.h"
-#include "globals.h"
 #include "log.h"
 
 namespace bt
 {
+	extern Log& Out();
 
 	void MakeDir(const KURL & dir,bool nothrow)
 	{

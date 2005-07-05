@@ -27,6 +27,7 @@
 #include <kurlrequester.h>
 #include <kfiledialog.h>
 #include <libtorrent/globals.h>
+#include <libutil/functions.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <qdir.h>

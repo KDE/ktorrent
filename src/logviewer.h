@@ -21,7 +21,7 @@
 #define LOGVIEWER_H
 
 #include <ktextbrowser.h>
-#include <libtorrent/log.h>
+#include <libutil/log.h>
 
 /**
  * @author Joris Guisson

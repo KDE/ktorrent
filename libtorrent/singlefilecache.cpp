@@ -18,12 +18,13 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include <qfileinfo.h>
-#include "fileops.h"
+#include <libutil/fileops.h>
 #include "torrent.h"
 #include "chunk.h"
-#include "file.h"
+#include <libutil/file.h>
 #include "singlefilecache.h"
-#include "error.h"
+#include <libutil/error.h>
+#include <libutil/functions.h>
 
 namespace bt
 {

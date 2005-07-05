@@ -20,64 +20,14 @@
 #ifndef BTGLOBALS_H
 #define BTGLOBALS_H
 
-
+#include <libutil/constants.h>
 
 class QString;
-class QHostAddress;
-class KURL;
 
 namespace bt
 {
 	class Log;
 
-	typedef unsigned long long Uint64;
-	typedef unsigned long Uint32;
-	typedef unsigned short Uint16;
-	typedef unsigned char Uint8;
-
-	typedef long long Int64;
-	typedef long Int32;
-	typedef short Int16;
-	typedef char Int8;
-	
-	const Uint32 MAX_MSGLEN = 9 + 131072;
-	const Uint16 MIN_PORT = 6881;
-	const Uint16 MAX_PORT = 6889;
-	const Uint32 MAX_PIECE_LEN = 16384;
-	
-	const Uint8 CHOKE = 0;
-	const Uint8 UNCHOKE = 1;
-	const Uint8 INTERESTED = 2;
-	const Uint8 NOT_INTERESTED = 3;
-	const Uint8 HAVE = 4;
-	const Uint8 BITFIELD = 5;
-	const Uint8 REQUEST = 6;
-	const Uint8 PIECE = 7;
-	const Uint8 CANCEL = 8;
-
-	void WriteUint64(Uint8* buf,Uint32 off,Uint64 val);
-	Uint64 ReadUint64(const Uint8* buf,Uint64 off);
-	
-	void WriteUint32(Uint8* buf,Uint32 off,Uint32 val);
-	Uint32 ReadUint32(const Uint8* buf,Uint32 off);
-	
-	void WriteUint16(Uint8* buf,Uint32 off,Uint16 val);
-	Uint16 ReadUint16(const Uint8* buf,Uint32 off);
-
-	
-	void WriteInt64(Uint8* buf,Uint32 off,Int64 val);
-	Int64 ReadInt64(const Uint8* buf,Uint32 off);
-	
-	void WriteInt32(Uint8* buf,Uint32 off,Int32 val);
-	Int32 ReadInt32(const Uint8* buf,Uint32 off);
-	
-	void WriteInt16(Uint8* buf,Uint32 off,Int16 val);
-	Int16 ReadInt16(const Uint8* buf,Uint32 off);
-	
-	Uint32 GetCurrentTime();
-
-	QHostAddress LookUpHost(const QString & host);
-	QString DirSeparator();
 
 	class Globals
 	{
