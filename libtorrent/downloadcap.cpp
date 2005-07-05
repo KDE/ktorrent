@@ -17,12 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#include <math.h>
 #include "downloadcap.h"
 
 namespace bt
 {
 	
-	Uint32 DownloadCap::max_bytes_per_sec = 5*1024;
+	Uint32 DownloadCap::max_bytes_per_sec = 40*1024;
 	Uint32 DownloadCap::current_speed = 0;
 	Uint32 DownloadCap::outstanding_bytes = 0;
 	Timer DownloadCap::timer;
@@ -40,20 +41,24 @@ namespace bt
 	bool DownloadCap::allow(Uint32 bytes)
 	{
 		return true;
-		/*
+		
 		if (max_bytes_per_sec == 0)
+		{
+			timer.update();
 			return true;
+		}
+		
+		Uint32 el = timer.getElapsedSinceUpdate();
+		float secs = el / 1000.0f;
+		if (secs > 3.0f)
+			secs = 3.0f;
+		Uint32 allowed_bytes = (Uint32)floor(max_bytes_per_sec * secs);
 
-		if ()
-		{
-			outstanding_bytes += bytes;
+		timer.update();
+		if (bytes < allowed_bytes)
 			return true;
-		}
 		else
-		{
 			return false;
-		}
-		*/
 	}
 
 	void DownloadCap::recieved(Uint32 bytes)

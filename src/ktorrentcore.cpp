@@ -31,7 +31,7 @@
 #include <libutil/error.h>
 #include <libutil/fileops.h>
 #include <libtorrent/torrentcreator.h>
-#include <libtorrent/downloadcap.h>
+//#include <libtorrent/downloadcap.h>
 #include <libutil/functions.h>
 
 #include "ktorrentcore.h"
@@ -312,7 +312,7 @@ void KTorrentCore::stopAll()
 void KTorrentCore::update()
 {
 	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
-	Uint32 down_speed = 0;
+	//Uint32 down_speed = 0;
 	while (i != downloads.end())
 	{
 		bt::TorrentControl* tc = *i;
@@ -321,7 +321,7 @@ void KTorrentCore::update()
 			try
 			{
 				tc->update();
-				down_speed += tc->getDownloadRate();
+			//	down_speed += tc->getDownloadRate();
 			}
 			catch (Error & e)
 			{
@@ -335,7 +335,7 @@ void KTorrentCore::update()
 		i++;
 	}
 
-	bt::DownloadCap::setCurrentSpeed(down_speed);
+	//bt::DownloadCap::setCurrentSpeed(down_speed);
 }
 
 void KTorrentCore::makeTorrent(const QString & file,const QStringList & trackers,

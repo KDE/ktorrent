@@ -112,6 +112,7 @@ namespace bt
 		Request r(p);
 		if (reqs.contains(r))
 		{
+			DownloadCap::recieved(p.getLength());
 			reqs.remove(r);
 			downloaded(p);
 		}

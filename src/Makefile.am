@@ -7,14 +7,14 @@ bin_PROGRAMS = ktorrent
 
 
 # set the include path for X, qt and KDE
-INCLUDES = -I$(srcdir)/.. $(all_includes)
+INCLUDES = -I$(top_srcdir)/. $(all_includes)
 
 # the library search path. 
 ktorrent_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 
 # the libraries to link against.
-ktorrent_LDADD = ../libtorrent/libtorrent.la ../libutil/libutil.la $(LIB_KFILE) \
-	$(LIB_KDEPRINT) $(LIB_KHTML)
+ktorrent_LDADD = $(top_builddir)/libtorrent/libtorrent.la \
+	$(top_builddir)/libutil/libutil.la $(LIB_KFILE) $(LIB_KIO) $(LIB_KHTML)
 
 # which sources should be compiled for ktorrent
 ktorrent_SOURCES = dcopinterface.skel settings.kcfgc main.cpp ktorrent.cpp \
