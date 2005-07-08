@@ -17,7 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-
+#include <libutil/functions.h>
 #include "peerdownloader.h"
 #include "peer.h"
 #include "piece.h"
@@ -32,11 +32,23 @@ namespace bt
 	{
 		connect(peer,SIGNAL(piece(const Piece& )),this,SLOT(piece(const Piece& )));
 		connect(peer,SIGNAL(destroyed()),this,SLOT(peerDestroyed()));
+
+		last_req_time = 0;
+		req_time_interval = 0;
+
+		DownloadCap::instance().addPeerDonwloader(this);
 	}
 
 
 	PeerDownloader::~PeerDownloader()
-	{}
+	{
+		DownloadCap::instance().removePeerDownloader(this);
+	}
+
+	void PeerDownloader::setRequestInterval(Uint32 rti)
+	{
+		this->req_time_interval = rti;
+	}
 
 	Uint32 PeerDownloader::getNumRequests() const 
 	{
@@ -64,10 +76,12 @@ namespace bt
 		if (!peer)
 			return;
 
-		if (DownloadCap::allow(req.getLength()))
+		Uint32 now = bt::GetCurrentTime();
+		if (now - last_req_time >= req_time_interval)
 		{
 			reqs.append(req);
 			peer->getPacketWriter().sendRequest(req);
+			last_req_time = now;
 		}
 		else
 		{
@@ -112,7 +126,6 @@ namespace bt
 		Request r(p);
 		if (reqs.contains(r))
 		{
-			DownloadCap::recieved(p.getLength());
 			reqs.remove(r);
 			downloaded(p);
 		}
@@ -147,17 +160,28 @@ namespace bt
 		QValueList<Request>::iterator i = unsent_reqs.begin();
 		while (i != unsent_reqs.end())
 		{
-			if (DownloadCap::allow((*i).getLength()))
+			Uint32 now = bt::GetCurrentTime();
+			if (now - last_req_time >= req_time_interval)
 			{
 				reqs.append(*i);
 				peer->getPacketWriter().sendRequest(*i);
 				i = unsent_reqs.erase(i);
+				last_req_time = now;
 			}
 			else
 			{
 				i++;
+				return;
 			}
 		}
+	}
+
+	Uint32 PeerDownloader::getDownloadRate() const
+	{
+		if (peer)
+			return peer->getDownloadRate();
+		else
+			return 0;
 	}
 	
 }

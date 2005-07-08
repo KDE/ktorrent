@@ -82,10 +82,21 @@ namespace bt
 		/// Get the Peer
 		const Peer* getPeer() const {return peer;}
 
+		/// Get the current download rate
+		Uint32 getDownloadRate() const;
+		
 		/**
 		 * Try to download unsent requests.
 		 */
 		void downloadUnsent();
+
+		/**
+		 * Set the interval between two requests.
+		 * Used by the DownloadCap to tweak the download
+		 * speed.
+		 * @param rti Interval in milliseconds
+		 */
+		void setRequestInterval(Uint32 rti);
 		
 	public slots:
 		/**
@@ -120,6 +131,7 @@ namespace bt
 		
 	private:
 		Peer* peer;
+		Uint32 last_req_time,req_time_interval;
 		QValueList<Request> reqs;
 		QValueList<Request> unsent_reqs;
 		int grabbed;

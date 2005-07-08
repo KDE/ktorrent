@@ -20,51 +20,46 @@
 #ifndef BTDOWNLOADCAP_H
 #define BTDOWNLOADCAP_H
 
+#include <qptrlist.h>
 #include <libutil/timer.h>
 #include "globals.h"
 
 namespace bt
 {
+	class PeerDownloader;
 
 	/**
 	 * @author Joris Guisson
 	*/
 	class DownloadCap
 	{
-		static Uint32 max_bytes_per_sec;
-		static Uint32 current_speed;
-		static Uint32 outstanding_bytes;
-		static Timer timer;
-	public:
+		static DownloadCap self;
 
+		Uint32 max_bytes_per_sec;
+		QPtrList<PeerDownloader> pdowners;
+	
+		DownloadCap();
+	public:
+		~DownloadCap();
+		
 		/**
 		 * Set the speed cap in bytes per second. 0 indicates
 		 * no limit.
 		 * @param max Maximum number of bytes per second.
 		*/
-		static void setMaxSpeed(Uint32 max);
-
-		/**
-		 * Set the current download speed. 
-		 * @param s The speed (in bytes per sec)
-		 */
-		static void setCurrentSpeed(Uint32 s);
-
-		/// Get the maximum speed (0 == no limit)
-		static Uint32 getMaxSpeed() {return max_bytes_per_sec;}
+		void setMaxSpeed(Uint32 max);
 		
-		/**
-		 * Request permission to request a piece.
-		 * @param The number of bytes we want to download
-		 * @return true if we can, false if not
-		 */
-		static bool allow(Uint32 bytes);
-
-		/**
-		 * We recieved a number of bytes. 
-		 * @param bytes 
-		 */
-		static void recieved(Uint32 bytes);
+		void update();
+		
+		void addPeerDonwloader(PeerDownloader* pd);
+		void removePeerDownloader(PeerDownloader* pd);
+		
+		static DownloadCap & instance() {return self;}
+	private:
+		void capPD(PeerDownloader* pd,Uint32 cap);
+		int numActiveDownloaders();
+		void capAll(float max_speed_per_pd);
+		void calcExcess(float max_speed_per_pd,float & exc_bw,int & num_maxed_out);
 	};
 
 }

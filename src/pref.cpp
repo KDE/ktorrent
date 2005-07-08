@@ -83,6 +83,7 @@ KTorrentPrefPageOne::KTorrentPrefPageOne(QWidget *parent) : DownloadPref(parent)
 	max_downloads->setValue(Settings::maxDownloads());
 	max_conns->setValue(Settings::maxConnections());
 	max_upload_rate->setValue(Settings::maxUploadRate());
+	max_download_rate->setValue(Settings::maxDownloadRate());
 	keep_seeding->setChecked(Settings::keepSeeding());
 	show_systray_icon->setChecked(Settings::showSystemTrayIcon());
 	port->setValue(Settings::port());
@@ -142,6 +143,7 @@ void KTorrentPrefPageOne::apply()
 	Settings::setMaxDownloads(max_downloads->value());
 	Settings::setMaxConnections(max_conns->value());
 	Settings::setMaxUploadRate(max_upload_rate->value());
+	Settings::setMaxDownloadRate(max_download_rate->value());
 	Settings::setKeepSeeding(keep_seeding->isChecked());
 	Settings::setShowSystemTrayIcon(show_systray_icon->isChecked());
 	Settings::setPort(port->value());

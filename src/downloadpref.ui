@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>511</width>
-            <height>311</height>
+            <height>328</height>
         </rect>
     </property>
     <property name="caption">
@@ -21,7 +21,7 @@
         </property>
         <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>layout13</cstring>
+                <cstring>layout10</cstring>
             </property>
             <hbox>
                 <property name="name">
@@ -29,7 +29,7 @@
                 </property>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>layout11</cstring>
+                        <cstring>layout9</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -61,6 +61,14 @@
                         </widget>
                         <widget class="QLabel">
                             <property name="name">
+                                <cstring>textLabel1_4</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Maximum download rate</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
                                 <cstring>textLabel5</cstring>
                             </property>
                             <property name="text">
@@ -71,7 +79,7 @@
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>layout10</cstring>
+                        <cstring>layout7</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -112,6 +120,14 @@
                         </widget>
                         <widget class="KIntNumInput">
                             <property name="name">
+                                <cstring>max_download_rate</cstring>
+                            </property>
+                            <property name="minValue">
+                                <number>0</number>
+                            </property>
+                        </widget>
+                        <widget class="KIntNumInput">
+                            <property name="name">
                                 <cstring>port</cstring>
                             </property>
                             <property name="value">
@@ -128,7 +144,7 @@
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>layout12</cstring>
+                        <cstring>layout8</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -158,6 +174,14 @@
                                 <string>KB/sec (0 is no limit)</string>
                             </property>
                         </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel4_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>KB/sec (0 is no limit)</string>
+                            </property>
+                        </widget>
                         <spacer>
                             <property name="name">
                                 <cstring>spacer4</cstring>
@@ -170,7 +194,7 @@
                             </property>
                             <property name="sizeHint">
                                 <size>
-                                    <width>61</width>
+                                    <width>135</width>
                                     <height>20</height>
                                 </size>
                             </property>
@@ -186,6 +210,9 @@
             <property name="text">
                 <string>&amp;Keep seeding after download is finished</string>
             </property>
+            <property name="accel">
+                <string>Alt+K</string>
+            </property>
             <property name="checked">
                 <bool>true</bool>
             </property>
@@ -196,6 +223,9 @@
             </property>
             <property name="text">
                 <string>Show s&amp;ystem tray icon</string>
+            </property>
+            <property name="accel">
+                <string>Alt+Y</string>
             </property>
             <property name="checked">
                 <bool>true</bool>
@@ -273,6 +303,8 @@
 </customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>

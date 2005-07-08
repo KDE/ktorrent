@@ -29,17 +29,20 @@
 #include "bnode.h"
 #include "peermanager.h"
 #include <libutil/error.h>
+#include <libutil/log.h>
+#include <libutil/functions.h>
 #include "torrentcontrol.h"
 #include "bitset.h"
 #include "peer.h"
 #include "choker.h"
 #include "torrentmonitor.h"
-#include <libutil/log.h>
+
 #include "globals.h"
 #include "packetwriter.h"
 #include "httptracker.h"
 #include "udptracker.h"
-#include <libutil/functions.h>
+#include "downloadcap.h"
+
 
 
 
@@ -110,6 +113,8 @@ namespace bt
 			doChoking();
 			choker_update_timer.update();
 		}
+
+		DownloadCap::instance().update();
 	}
 	
 	

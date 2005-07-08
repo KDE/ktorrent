@@ -49,6 +49,7 @@
 #include <libtorrent/torrentcontrol.h>
 #include <libtorrent/peermanager.h>
 #include <libtorrent/uploadcap.h>
+#include <libtorrent/downloadcap.h>
 #include <libutil/error.h>
 #include <libtorrent/globals.h>
 #include <libutil/log.h>
@@ -152,6 +153,7 @@ void KTorrent::applySettings()
 	m_core->setMaxDownloads(Settings::maxDownloads());
 	PeerManager::setMaxConnections(Settings::maxConnections());
 	UploadCap::setSpeed(Settings::maxUploadRate() * 1024);
+	DownloadCap::instance().setMaxSpeed(Settings::maxDownloadRate()*1024);
 	TorrentControl::setInitialPort(Settings::port());
 	m_core->setKeepSeeding(Settings::keepSeeding());
 	
