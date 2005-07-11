@@ -39,7 +39,7 @@ KTorrentView::KTorrentView(QWidget *parent)
 	connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
 	addColumn(i18n("File"));
 	addColumn(i18n("Status"));
-	addColumn(i18n("Dowloaded"));
+	addColumn(i18n("Downloaded"));
 	addColumn(i18n("Uploaded"));
 	addColumn(i18n("Down Speed"));
 	addColumn(i18n("Up Speed"));

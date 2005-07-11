@@ -1,4 +1,4 @@
-SUBDIRS = libutil libtorrent src
+SUBDIRS = libutil libkademlia libtorrent src
 EXTRA_DIST = AUTHORS COPYING ChangeLog INSTALL README TODO
 
 messages: rc.cpp

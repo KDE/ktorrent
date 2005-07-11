@@ -39,7 +39,7 @@ namespace bt
 			hash[i] = other.hash[i];
 	}
 
-	SHA1Hash::SHA1Hash(const unsigned char* h)
+	SHA1Hash::SHA1Hash(const Uint8* h)
 	{
 		memcpy(hash,h,20);
 	}
@@ -64,7 +64,7 @@ namespace bt
 		return true;
 	}
 
-	SHA1Hash SHA1Hash::generate(unsigned char* data,unsigned int len)
+	SHA1Hash SHA1Hash::generate(Uint8* data,Uint32 len)
 	{
 		SHA1HashGen hg;
 
@@ -88,14 +88,6 @@ namespace bt
 
 	QString SHA1Hash::toURLString() const
 	{
-	/*	QChar dodo[20];
-		for (int i = 0;i < 20;i++)
-		dodo[i] = hash[i];
-		QByteArray dodo(20);
-		dodo.assign((const char*)hash,20);
-		Out() << toString() << endl;
-		QString res(dodo);
-		return res;*/
 		return URLEncoder::encode((const char*)hash,20);
 	}
 

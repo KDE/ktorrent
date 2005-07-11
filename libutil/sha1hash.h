@@ -20,6 +20,8 @@
 #ifndef BTSHA1HASH_H
 #define BTSHA1HASH_H
 
+#include "constants.h"
+
 class QString;
 
 namespace bt
@@ -27,28 +29,90 @@ namespace bt
 	class Log;
 
 	/**
-	@author Joris Guisson
+	 * @author Joris Guisson
+	 * @brief Stores a SHA1 hash
+	 *
+	 * This class keeps track of a SHA1 hash. A SHA1 hash is a 20 byte
+	 * array of bytes.
 	*/
 	class SHA1Hash
 	{
-		unsigned char hash[20];
+		Uint8 hash[20];
 	public:
+		/**
+		 * Constructor, sets every byte in the hash to 0.
+		 */
 		SHA1Hash();
+		
+		/**
+		 * Copy constructor.
+		 * @param other Hash to copy
+		 */
 		SHA1Hash(const SHA1Hash & other);
-		SHA1Hash(const unsigned char* h);
-		~SHA1Hash();
+		
+		/**
+		 * Directly set the hash data.
+		 * @param h The hash data must be 20 bytes large
+		 */
+		SHA1Hash(const Uint8* h);
+		
+		/**
+		 * Destructor.
+		 */
+		virtual ~SHA1Hash();
 
+		/**
+		 * Assignment operator.
+		 * @param other Hash to copy
+		 */
 		SHA1Hash & operator = (const SHA1Hash & other);
 
+		/**
+		 * Test wether another hash is equal to this one.
+		 * @param other The other hash
+		 * @return true if equal, false otherwise
+		 */
 		bool operator == (const SHA1Hash & other) const;
+
+		/**
+		 * Test wether another hash is not equal to this one.
+		 * @param other The other hash
+		 * @return true if not equal, false otherwise
+		 */
 		bool operator != (const SHA1Hash & other) const {return !operator ==(other);}
 
-		static SHA1Hash generate(unsigned char* data,unsigned int len);
+		/**
+		 * Generate an SHA1 hash from a bunch of data.
+		 * @param data The data
+		 * @param len Size in bytes of data
+		 * @return The generated SHA1 hash
+		 */
+		static SHA1Hash generate(Uint8* data,Uint32 len);
 
+		/**
+		 * Convert the hash to a printable string.
+		 * @return The string
+		 */
 		QString toString() const;
-		QString toURLString() const;
-		const unsigned char* getData() const {return hash;}
 
+		/**
+		 * Convert the hash to a string, usable in http get requests.
+		 * @return The string
+		 */
+		QString toURLString() const;
+		
+		/**
+		 * Directly get pointer to the data.
+		 * @return The data
+		 */
+		const Uint8* getData() const {return hash;}
+
+		/**
+		 * Function to print a SHA1Hash to the Log.
+		 * @param out The Log
+		 * @param h The hash
+		 * @return out
+		 */
 		friend Log & operator << (Log & out,const SHA1Hash & h);
 	};
 
