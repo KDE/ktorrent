@@ -1,0 +1,114 @@
+/***************************************************************************
+ *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+#include <string.h>
+#include <errno.h>
+#include "file.h"
+
+namespace bt
+{
+
+	File::File() : fptr(0)
+	{}
+
+
+	File::~File() 
+	{
+		close();
+	}
+	
+	bool File::open(const QString & file,const QString & mode)
+	{
+		if (fptr)
+			close();
+
+		fptr = fopen(file.ascii(),mode.ascii());
+		return fptr != 0;
+	}
+		
+	void File::close()
+	{
+		if (fptr)
+		{
+			fclose(fptr);
+			fptr = 0;
+		}
+	}
+	
+	void File::flush()
+	{
+		if (fptr)
+			fflush(fptr);
+	}
+
+	Uint32 File::write(const void* buf,Uint32 size)
+	{
+		if (!fptr)
+			return 0;
+
+		return fwrite(buf,1,size,fptr);
+	}
+	
+	Uint32 File::read(void* buf,Uint32 size)
+	{
+		if (!fptr)
+			return 0;
+
+		return fread(buf,1,size,fptr);
+	}
+
+	Uint32 File::seek(SeekPos from,int num)
+	{
+		if (!fptr)
+			return 0;
+		
+		int p;
+		switch (from)
+		{
+			case BEGIN : p = SEEK_SET; break;
+			case END : p = SEEK_END; break;
+			case CURRENT : p = SEEK_CUR; break;
+			default:
+				break;
+		}
+		fseek(fptr,num,p);
+		return ftell(fptr);
+	}
+
+	bool File::eof() const
+	{
+		if (!fptr)
+			return true;
+		
+		return feof(fptr) != 0;
+	}
+
+	Uint32 File::tell() const
+	{
+		if (!fptr)
+			return 0;
+		
+		return ftell(fptr);
+	}
+
+	QString File::errorString() const
+	{
+		return QString(strerror(errno));
+	}
+}
