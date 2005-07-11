@@ -181,7 +181,7 @@ void KTorrent::load(const KURL& url)
 	if (KIO::NetAccess::download(url,target,this))
 	{
 		// set our caption
-		setCaption(url.prettyURL());
+		//setCaption(url.prettyURL());
 
 		// load in the file (target is always local)
 		m_core->load(target);
