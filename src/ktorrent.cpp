@@ -40,6 +40,7 @@
 #include <kprogress.h>
 #include <kpopupmenu.h>
 #include <ktabwidget.h>
+#include <kedittoolbar.h>
 
 #include <kstdaccel.h>
 #include <kaction.h>
@@ -436,6 +437,9 @@ void KTorrent::optionsConfigureToolbars()
 #else
 	saveMainWindowSettings(KGlobal::config());
 #endif
+        KEditToolbar dlg(factory());
+        connect(&dlg,SIGNAL(newToolbarConfig()),this,SLOT(newToolbarConfig()));
+        dlg.exec();
 }
 
 void KTorrent::newToolbarConfig()
