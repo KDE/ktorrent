@@ -32,27 +32,27 @@
                 <string></string>
             </property>
         </widget>
-        <widget class="KPushButton">
-            <property name="name">
-                <cstring>m_search_button</cstring>
-            </property>
-            <property name="text">
-                <string>Search</string>
-            </property>
-        </widget>
+	<widget class="KPushButton">
+		<property name="name">
+			<cstring>m_clear_button</cstring>
+		</property>
+		<property name="text">
+			<string></string>
+		</property>
+	</widget>
         <widget class="KLineEdit">
             <property name="name">
                 <cstring>m_search_text</cstring>
             </property>
         </widget>
-        <widget class="KPushButton">
-            <property name="name">
-                <cstring>m_clear_button</cstring>
-            </property>
-            <property name="text">
-                <string></string>
-            </property>
-        </widget>
+	<widget class="KPushButton">
+		<property name="name">
+			<cstring>m_search_button</cstring>
+		</property>
+		<property name="text">
+			<string>Search</string>
+		</property>
+	</widget>
         <spacer>
             <property name="name">
                 <cstring>spacer1</cstring>
