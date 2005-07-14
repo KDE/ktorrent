@@ -61,7 +61,7 @@ void HTMLPart::openURLRequest(const KURL &u,const KParts::URLArgs &)
 		   u.prettyURL().endsWith(".torrent")  )
 	{
 		int ret = QMessageBox::information(0,"ktorrent",
-					i18n("Do you want to download the torrent ?"),
+					i18n("Do you want to download the torrent?"),
 					i18n("Yes"),i18n("No"));
 		
 		if (ret == 0)

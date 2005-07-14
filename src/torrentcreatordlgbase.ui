@@ -13,7 +13,7 @@
         </rect>
     </property>
     <property name="caption">
-        <string>Create a torrent</string>
+        <string>Create Torrent</string>
     </property>
     <property name="sizeGripEnabled">
         <bool>true</bool>
@@ -50,7 +50,7 @@
                 <cstring>groupBox1</cstring>
             </property>
             <property name="title">
-                <string>File options</string>
+                <string>File Options</string>
             </property>
             <vbox>
                 <property name="name">
@@ -69,7 +69,7 @@
                                 <cstring>textLabel4</cstring>
                             </property>
                             <property name="text">
-                                <string>Name</string>
+                                <string>Name:</string>
                             </property>
                         </widget>
                         <widget class="KLineEdit">
@@ -109,7 +109,7 @@
                                 <cstring>textLabel2</cstring>
                             </property>
                             <property name="text">
-                                <string>Size of each chunk</string>
+                                <string>Size of each chunk:</string>
                             </property>
                         </widget>
                         <widget class="KComboBox">
@@ -181,7 +181,7 @@
                 <cstring>textLabel1_2</cstring>
             </property>
             <property name="text">
-                <string>You must add a least one tracker</string>
+                <string>You must add a least one tracker.</string>
             </property>
         </widget>
         <widget class="KEditListBox">
@@ -189,7 +189,7 @@
                 <cstring>m_trackers</cstring>
             </property>
             <property name="title">
-                <string>Tracker(s)</string>
+                <string>Trackers</string>
             </property>
         </widget>
         <widget class="QLayoutWidget">
@@ -205,7 +205,7 @@
                         <cstring>textLabel2_2</cstring>
                     </property>
                     <property name="text">
-                        <string>Comments</string>
+                        <string>Comments:</string>
                     </property>
                 </widget>
                 <widget class="KLineEdit">

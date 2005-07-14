@@ -73,14 +73,14 @@ void TorrentCreatorDlg::onCreate()
 	QStringList trackers = eb->items();
 
 	QString s = KFileDialog::getSaveFileName(
-			QString::null,"*.torrent|" + i18n("Torrent files (*.torrent)"),
-			0,i18n("Choose a file to save the torrent"));
+			QString::null,"*.torrent|" + i18n("Torrent Files (*.torrent)"),
+			0,i18n("Choose File to Save Torrent"));
 
 	if (s.isNull())
 		return;
 
 	KProgressDialog* dlg = new KProgressDialog(this,0);
-	dlg->setLabel(i18n("Creating %1 ...").arg(s));
+	dlg->setLabel(i18n("Creating %1...").arg(s));
 	dlg->setModal(true);
 	dlg->show();
 	core->makeTorrent(

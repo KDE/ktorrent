@@ -327,7 +327,7 @@ void KTorrent::askAndSave(bt::TorrentControl* tc)
 	{
 		int ret = KMessageBox::questionYesNo(
 			this,
-			i18n("The download %1 has finished. Do you want to save it now ?")
+			i18n("The download %1 has finished. Do you want to save it now?")
 				.arg(tc->getTorrentName()),
 			i18n("Save Torrent?"));
 	

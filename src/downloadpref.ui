@@ -61,7 +61,7 @@
                                 <cstring>textLabel1_4</cstring>
                             </property>
                             <property name="text">
-                                <string>Maximum download rate</string>
+                                <string>Maximum download rate:</string>
                             </property>
                         </widget>
                         <widget class="QLabel">
@@ -235,7 +235,7 @@
                         <cstring>textLabel1_3</cstring>
                     </property>
                     <property name="text">
-                        <string>Directory to store temporary files</string>
+                        <string>Directory to store temporary files:</string>
                     </property>
                 </widget>
                 <widget class="KURLRequester">
@@ -258,7 +258,7 @@
                         <cstring>autosave_downloads_check</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Automatically save downloads to</string>
+                        <string>&amp;Automatically save downloads to:</string>
                     </property>
                 </widget>
                 <widget class="KURLRequester">

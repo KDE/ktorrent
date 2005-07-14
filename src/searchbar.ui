@@ -75,7 +75,7 @@
                 <cstring>textLabel1</cstring>
             </property>
             <property name="text">
-                <string>Search Engine</string>
+                <string>Search engine:</string>
             </property>
         </widget>
         <widget class="KComboBox">
