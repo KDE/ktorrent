@@ -63,7 +63,7 @@ void HTMLPart::openURLRequest(const KURL &u,const KParts::URLArgs &)
 		int ret = KMessageBox::questionYesNo(0,
 					i18n("Do you want to download the torrent?"),
 					i18n("Download Torrent"),
-					i18n("Download"),KStdGuiItem::cancel());
+					KGuiItem(i18n("Download"),"down"),KStdGuiItem::cancel());
 		
 		if (ret == KMessageBox::Yes)
 			openTorrent(u);
