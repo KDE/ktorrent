@@ -26,15 +26,85 @@ namespace dht
 {
 
 	/**
-	@author Joris Guisson
-	*/
+	 * @author Joris Guisson
+	 * @brief Key in the distributed hash table
+	 *
+	 * Key's in the distributed hash table are just SHA-1 hashes.
+	 * Key provides all necesarry operators to be used as a value.
+	 */
 	class Key : public bt::SHA1Hash
 	{
 	public:
+		/**
+		 * Constructor, sets key to 0.
+		 */
 		Key();
+		
+		/**
+		 * Copy constructor.
+		 * @param k Key to copy
+		 */
 		Key(const Key & k);
+
+		/// Destructor.
 		virtual ~Key();
 
+		/**
+		 * Assignment operator.
+		 * @param k Key to copy
+		 */
+		Key & operator = (const Key & k);
+
+		/**
+		 * Equality operator.
+		 * @param other The key to compare
+		 * @return true if this key is equal to other
+		 */
+		bool operator == (const Key & other);
+
+		/**
+		 * Inequality operator.
+		 * @param other The key to compare
+		 * @return true if this key is not equal to other
+		 */
+		bool operator != (const Key & other);
+		
+		/**
+		 * Smaller then operator.
+		 * @param other The key to compare
+		 * @return rue if this key is smaller then other
+		 */
+		bool operator < (const Key & other);
+
+		
+		/**
+		 * Smaller then or equal operator.
+		 * @param other The key to compare
+		 * @return rue if this key is smaller then or equal to other
+		 */
+		bool operator <= (const Key & other);
+
+		
+		/**
+		 * Greater then operator.
+		 * @param other The key to compare
+		 * @return rue if this key is greater then other
+		 */
+		bool operator > (const Key & other);
+
+		/**
+		 * Greater then or equal operator.
+		 * @param other The key to compare
+		 * @return rue if this key is greater then or equal to other
+		 */
+		bool operator >= (const Key & other);
+		
+		/**
+		 * The distance of two keys is the keys xor together.
+		 * @param a The first key
+		 * @param b The second key
+		 * @return a xor b
+		 */
 		static Key distance(const Key & a,const Key & b);
 	};
 

@@ -25,9 +25,70 @@ namespace dht
 	Key::Key()
 	{}
 
+	Key::Key(const Key & k) : bt::SHA1Hash(k)
+	{
+	}
 
 	Key::~Key()
 	{}
 
+	Key & Key::operator = (const Key & k)
+	{
+		bt::SHA1Hash::operator = (k);
+		return *this;
+	}
 
+	bool Key::operator == (const Key & other)
+	{
+		return bt::SHA1Hash::operator ==(other);
+	}
+	
+	bool Key::operator != (const Key & other)
+	{
+		return !operator == (other);
+	}
+	
+	bool Key::operator < (const Key & other)
+	{
+		for (int i = 0;i < 20;i++)
+		{
+			if (hash[i] < other.hash[i])
+				return true;
+			else if (hash[i] > other.hash[i])
+				return false;
+		}
+		return false;
+	}
+	
+	bool Key::operator <= (const Key & other)
+	{
+		return operator < (other) || operator == (other);
+	}
+	
+	bool Key::operator > (const Key & other)
+	{
+		for (int i = 0;i < 20;i++)
+		{
+			if (hash[i] < other.hash[i])
+				return false;
+			else if (hash[i] > other.hash[i])
+				return true;
+		}
+		return false;
+	}
+	
+	bool Key::operator >= (const Key & other)
+	{
+		return operator > (other) || operator == (other);
+	}
+
+	Key Key::distance(const Key & a,const Key & b)
+	{
+		Key k;
+		for (int i = 0;i < 20;i++)
+		{
+			k.hash[i] = a.hash[i] ^ b.hash[i];
+		}
+		return k;
+	}
 }

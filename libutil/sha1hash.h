@@ -37,6 +37,7 @@ namespace bt
 	*/
 	class SHA1Hash
 	{
+	protected:
 		Uint8 hash[20];
 	public:
 		/**
