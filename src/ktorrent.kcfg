@@ -40,9 +40,9 @@
 			<label>Keep seeding after download has finished</label>
 			<default>true</default>
 		</entry>
-		<entry name="searchURL" type="String">
-			<label>Torrent search engine</label>
-			<default>http://search.bittorrent.com/search.jsp</default>
+		<entry name="searchEngine" type="Int">
+			<label>Current search engine</label>
+			<default>0</default>
 		</entry>
 		<entry name="tempDir" type="String">
 			<label>Directory to store temporary files</label>

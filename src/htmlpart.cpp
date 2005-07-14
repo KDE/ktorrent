@@ -30,9 +30,9 @@
 HTMLPart::HTMLPart(QWidget *parent)
 		: KHTMLPart(parent)
 {
-	setJScriptEnabled(false);
-	setJavaEnabled(false);
-	setMetaRefreshEnabled(false);
+	setJScriptEnabled(true);
+	setJavaEnabled(true);
+	setMetaRefreshEnabled(true);
 	setPluginsEnabled(false);
 	KParts::BrowserExtension* ext = this->browserExtension();
 	connect(ext,SIGNAL(openURLRequest(const KURL&,const KParts::URLArgs&)),

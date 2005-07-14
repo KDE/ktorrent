@@ -36,7 +36,7 @@ public:
 	virtual ~SearchWidget();
 
 public slots:
-	void search(const QString & text);
+	void search(const QString & text, const int engine = 0);
 	void copy();
 
 private slots:
@@ -53,6 +53,8 @@ signals:
 private:
 	HTMLPart* html_part;
 	SearchBar* sbar;
+
+	void searchUrl(KURL* url, const QString& text, const int engine);
 };
 
 

@@ -85,8 +85,10 @@ KTorrent::KTorrent()
 	m_core = new KTorrentCore();
 	m_systray_icon = new TrayIcon(this);
 
-	m_tabs->addTab(m_view,i18n("Downloads"));
-	m_tabs->addTab(m_search,i18n("Search"));	
+
+	KIconLoader* iload = KGlobal::iconLoader();
+	m_tabs->addTab(m_view,iload->loadIconSet("down", KIcon::Small),i18n("Downloads"));
+	m_tabs->addTab(m_search,iload->loadIconSet("viewmag", KIcon::Small),i18n("Search"));
 	
 	connect(m_core,SIGNAL(torrentAdded(bt::TorrentControl* )),
 			m_view,SLOT(addTorrent(bt::TorrentControl* )));

@@ -25,9 +25,30 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <kiconloader.h>
+#include <kcombobox.h>
 #include "searchwidget.h"
 #include "searchbar.h"
 #include "htmlpart.h"
+#include "settings.h"
+
+struct SearchEngine
+{
+	QString name,url;
+	int id;
+};
+
+const int NUM_SEARCH_ENGINES = 7;
+
+static SearchEngine g_search_engines[] =
+{
+	{"bittorrent.com","http://search.bittorrent.com/search.jsp",0},
+	{"isohunt.com" ,"http://isohunt.com/torrents.php",1},
+	{"thepiratebay.org","http://thepiratebay.org/search.php",2},
+	{"bitoogle.com","http://search.bitoogle.com/search.php",3},
+	{"bytenova.org","http://www.bytenova.org/search.php",4},
+	{"torrentspy.com","http://torrentspy.com/search.asp",5},
+	{"mininova.org","http://www.mininova.org/search.php",6}
+};
 
 
 SearchWidget::SearchWidget(QWidget* parent,const char* name)
@@ -57,30 +78,77 @@ SearchWidget::SearchWidget(QWidget* parent,const char* name)
 	connect(html_part,SIGNAL(onURL(const QString& )),this,SLOT(onURLHover(const QString& )));
 	connect(html_part->view(),SIGNAL(finishedLayout()),this,SLOT(onFinishedLayout()));
 	connect(html_part,SIGNAL(openTorrent(const KURL& )),this,SLOT(onOpenTorrent(const KURL& )));
+
+	KComboBox* cb = sbar->m_search_engine;
+
+	for (int i = 0;i < NUM_SEARCH_ENGINES;i++)
+		cb->insertItem(g_search_engines[i].name);
+
+	cb->setCurrentItem(Settings::searchEngine());
 }
 
 
 SearchWidget::~SearchWidget()
-{}
+{
+	Settings::setSearchEngine(sbar->m_search_engine->currentItem());
+	Settings::writeConfig();
+}
 
 void SearchWidget::copy()
 {
 	html_part->copy();
 }
 
-void SearchWidget::search(const QString & text)
+void SearchWidget::search(const QString & text, const int engine)
 {
-	KURL url = "http://search.bittorrent.com/search.jsp";
-	url.addQueryItem("query",text);
-	url.addQueryItem("Submit2","Search");
+	KURL url;
+	searchUrl(&url, text, engine);
 
 	statusBarMsg(i18n("Searching for %1 ...").arg(text));
 	html_part->openURL(url);
 }
 
+
+
+void SearchWidget::searchUrl(KURL* url, const QString& text, const int engine)
+{
+	if (engine < NUM_SEARCH_ENGINES)
+		*url = g_search_engines[engine].url;
+	else
+		*url = g_search_engines[0].url;
+	
+	switch(engine)
+	{
+		case 1: // ISOHUNT
+			url->addQueryItem("ihq",text);
+			url->addQueryItem("op","and");
+			break;
+		case 2: //PirateBay.org
+			url->addQueryItem("q", text);
+			break;
+		case 3: //BITOOGLE
+			url->addQueryItem("q", text);
+			url->addQueryItem("st","t");
+			break;
+		case 4: //ByteNova
+			url->addQueryItem("search", text);
+			break;
+		case 5: //TorrentSpy
+			url->addQueryItem("query",text);
+			break;
+		case 6: //Mininova
+			url->addQueryItem("search", text);
+			break;
+		case 0:
+		default:
+			url->addQueryItem("query",text);
+			url->addQueryItem("Submit2","Search");
+	}
+}
+
 void SearchWidget::searchPressed()
 {
-	search(sbar->m_search_text->text());
+	search(sbar->m_search_text->text(),sbar->m_search_engine->currentItem());
 }
 
 void SearchWidget::clearPressed()

@@ -65,11 +65,24 @@
             </property>
             <property name="sizeHint">
                 <size>
-                    <width>140</width>
+                    <width>60</width>
                     <height>20</height>
                 </size>
             </property>
         </spacer>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>textLabel1</cstring>
+            </property>
+            <property name="text">
+                <string>Search Engine</string>
+            </property>
+        </widget>
+        <widget class="KComboBox">
+            <property name="name">
+                <cstring>m_search_engine</cstring>
+            </property>
+        </widget>
     </hbox>
 </widget>
 <customwidgets>
@@ -81,5 +94,6 @@
     <includehint>kpushbutton.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
+    <includehint>kcombobox.h</includehint>
 </includehints>
 </UI>
