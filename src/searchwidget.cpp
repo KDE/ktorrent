@@ -18,6 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#include <qapplication.h>
 #include <khtmlview.h>
 #include <qlayout.h>
 #include <klineedit.h>
@@ -67,7 +68,7 @@ SearchWidget::SearchWidget(QWidget* parent,const char* name)
 	connect(sbar->m_reload,SIGNAL(clicked()),html_part,SLOT(reload()));
 
 	sbar->m_clear_button->setIconSet(
-			KGlobal::iconLoader()->loadIconSet("clear_left",KIcon::Small));
+			KGlobal::iconLoader()->loadIconSet(QApplication::reverseLayout() ? "clear_left" : "locationbar_erase",KIcon::Small));
 	sbar->m_back->setIconSet(
 			KGlobal::iconLoader()->loadIconSet("back",KIcon::Small));
 	sbar->m_reload->setIconSet(
