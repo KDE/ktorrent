@@ -17,7 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <qmessagebox.h>
+#include <kmessagebox.h>
 //#include <qfile.h>
 #include <qclipboard.h>
 #include <qapplication.h>
@@ -60,11 +60,12 @@ void HTMLPart::openURLRequest(const KURL &u,const KParts::URLArgs &)
 	if (/*KIO::NetAccess::mimetype(u,0) == "application/x-bittorrent" ||*/
 		   u.prettyURL().endsWith(".torrent")  )
 	{
-		int ret = QMessageBox::information(0,"ktorrent",
+		int ret = KMessageBox::questionYesNo(0,
 					i18n("Do you want to download the torrent?"),
-					i18n("Yes"),i18n("No"));
+					i18n("Download Torrent"),
+					i18n("Download"),KStdGuiItem::cancel());
 		
-		if (ret == 0)
+		if (ret == KMessageBox::Yes)
 			openTorrent(u);
 	}
 	else
