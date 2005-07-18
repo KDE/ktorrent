@@ -43,7 +43,7 @@ namespace bt
 		last = now;
 	}
 	
-	int Timer::getElapsedSinceUpdate() const
+	Uint32 Timer::getElapsedSinceUpdate() const
 	{
 		QTime now = QTime::currentTime();
 		return last.msecsTo(now);

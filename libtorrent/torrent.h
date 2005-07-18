@@ -95,11 +95,27 @@ namespace bt
 
 		/// Get the number of tracker URL's
 		unsigned int getNumTrackerURLs() const;
-		
+
+		/**
+		 * Get the hash of a Chunk. Throws an Error
+		 * if idx is out of bounds.
+		 * @param idx Index of Chunk
+		 * @return The SHA1 hash of the chunk
+		 */
 		const SHA1Hash & getHash(Uint32 idx) const;
 
+		/// See if we have a multi file torrent.
 		bool isMultiFile() const {return files.count() > 0;}
+
+		/// Get the number of files in a multi file torrent.
+		/// If we have a single file torrent, this will return 0.
 		Uint32 getNumFiles() const {return files.count();}
+		
+		/**
+		 * Get a Torrent::File, does nothing if we have a single file torrent.
+		 * @param idx Index of the file
+		 * @param file The file
+		 */
 		void getFile(Uint32 idx,Torrent::File & file);
 	private:
 		void loadInfo(BDictNode* node);

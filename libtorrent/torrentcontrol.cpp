@@ -562,9 +562,9 @@ namespace bt
 		else if (running && completed)
 		{
 			if (def.length() > 0)
-				setStatus(i18n("Download complete, seeding + %1").arg(def));
+				setStatus(i18n("Seeding + %1").arg(def));
 			else
-				setStatus(i18n("Download complete, seeding"));
+				setStatus(i18n("Seeding"));
 		}
 		else if (running)
 		{

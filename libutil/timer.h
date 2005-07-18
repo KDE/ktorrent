@@ -21,7 +21,7 @@
 #define BTTIMER_H
 
 #include <qdatetime.h>
-
+#include "constants.h"
 
 namespace bt
 {
@@ -32,15 +32,15 @@ namespace bt
 	class Timer
 	{
 		QTime last;
-		int elapsed;
+		Uint32 elapsed;
 	public:
 		Timer();
 		Timer(const Timer & t);
 		virtual ~Timer();
 
 		void update();
-		int getElapsed() const {return elapsed;}
-		int getElapsedSinceUpdate() const;
+		Uint32 getElapsed() const {return elapsed;}
+		Uint32 getElapsedSinceUpdate() const;
 		Timer & operator = (const Timer & t);
 	};
 

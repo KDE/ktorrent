@@ -66,8 +66,14 @@ KTorrentView::KTorrentView(QWidget *parent)
 	remove_id = menu->insertItem(
 			iload->loadIconSet("remove",KIcon::Small),i18n("Remove"),
 			this,SLOT(removeDownload()));
+	menu->insertSeparator();
+
+	menu->insertItem(i18n("Manual announce"),this,SLOT(manualAnnounce()));
 
 	this->setAllColumnsShowFocus(true);
+
+	setColumnWidth(0,200);
+	setColumnWidthMode(0,QListView::Manual);
 }
 
 KTorrentView::~KTorrentView()
@@ -103,6 +109,15 @@ void KTorrentView::removeDownload()
 
 	bt::TorrentControl* tc = curr->getTC();
 	wantToRemove(tc);
+}
+
+void KTorrentView::manualAnnounce()
+{
+	if (!curr)
+		return;
+
+	bt::TorrentControl* tc = curr->getTC();
+	tc->updateTracker();
 }
 		
 bt::TorrentControl* KTorrentView::getCurrentTC()

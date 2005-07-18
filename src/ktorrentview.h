@@ -77,6 +77,7 @@ private slots:
 	void startDownload();
 	void stopDownload();
 	void removeDownload();
+	void manualAnnounce();
 	void onTrackerError(bt::TorrentControl* tc,const QString & err);
 
 signals:

@@ -223,6 +223,9 @@ namespace bt
 	
 	const SHA1Hash & Torrent::getHash(Uint32 idx) const
 	{
+		if (idx >= hash_pieces.count())
+			throw Error(QString("Torrent::getHash %1 is out of bounds").arg(idx));
+		
 		return hash_pieces[idx];
 	}
 	

@@ -247,7 +247,7 @@ namespace bt
 			peer_buf = new Uint8[ba];
 		}
 		
-		if (sock->readBlock((char*)peer_buf,ba) != ba)
+		if ((Uint32)sock->readBlock((char*)peer_buf,ba) != ba)
 		{
 			handleError();
 			return;

@@ -184,8 +184,14 @@ namespace bt
 		 */
 		void reconstruct(const QString & dir);
 		
-	private slots:
+		/**
+		 * Update the tracker, this should normally handled internally.
+		 * We leave it public so that the user can do a manual announce.
+		 */
 		void updateTracker() {updateTracker(QString::null);}
+		
+	private slots:
+		
 		void onNewPeer(Peer* p);
 		void onPeerRemoved(Peer* p);
 		void doChoking();
@@ -217,7 +223,7 @@ namespace bt
 		Uint16 port;
 		bool completed,running,started,saved;
 		TorrentMonitor* tmon;
-		int num_tracker_attempts;
+		Uint32 num_tracker_attempts;
 		KURL last_tracker_url;
 		QString status_msg;
 		
