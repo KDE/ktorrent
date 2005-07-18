@@ -17,96 +17,51 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "bencoder.h"
-#include <libutil/file.h>
+#include "rpcserver.h"
+#include "rpccall.h"
+#include "kbucket.h"
 
-namespace bt
+namespace dht
 {
-	
 
-	BEncoderFileOutput::BEncoderFileOutput(File* fptr) : fptr(fptr)
+	RPCServer::RPCServer(Uint16 port,QObject *parent) : QObject(parent)
 	{
-	}
-
-	void BEncoderFileOutput::write(const char* str,Uint8 len)
-	{
-		if (!fptr)
-			return;
-
-		fptr->write(str,len);
-	}
-
-	////////////////////////////////////
-
-	BEncoder::BEncoder(File* fptr) : out(0),del(true)
-	{
-		out = new BEncoderFileOutput(fptr);
-	}
-
-	BEncoder::BEncoder(BEncoderOutput* out) : out(out),del(false)
-	{
+		sock = new KDatagramSocket(this);
+		sock->setBlocking(false);
+		connect(sock,SIGNAL(readyRead()),this,SLOT(readPacket()));
+		sock->bind(QString::null,QString::number(port));
 	}
 
 
-	BEncoder::~BEncoder()
+	RPCServer::~RPCServer()
 	{
-		if (del)
-			delete out;
+		sock->close();
 	}
 
-	void BEncoder::beginDict()
+	void RPCServer::readPacket()
 	{
-		if (!out) return;
-		
-		out->write("d",1);
+	}
+
+	RPCCall* RPCServer::ping(const KBucketEntry & to)
+	{
+		return 0;
 	}
 	
-	void BEncoder::beginList()
+	RPCCall* RPCServer::findNode(const KBucketEntry & to,const Key & k)
 	{
-		if (!out) return;
-		
-		out->write("l",1);
+		return 0;
 	}
 	
-	void BEncoder::write(int val)
+	RPCCall* RPCServer::findValue(const KBucketEntry & to,const Key & k)
 	{
-		if (!out) return;
-		
-		QString s = QString("i%1e").arg(val);
-		out->write(s.utf8(),s.length());
+		return 0;
 	}
 	
-	void BEncoder::write(const QString & str)
+	RPCCall* RPCServer::store(const KBucketEntry & to,const Key & k,const bt::Array<Uint8> & data)
 	{
-		if (!out) return;
-		
-		QString s = QString("%1:%2").arg(str.length()).arg(str);
-		out->write(s.utf8(),s.length());
-	}
-	
-	void BEncoder::write(const QByteArray & data)
-	{
-		if (!out) return;
-		
-		QString s = QString::number(data.size());
-		out->write(s.utf8(),s.length());
-		out->write(":",1);
-		out->write(data.data(),data.size());
+		return 0;
 	}
 
-	void BEncoder::write(const Uint8* data,Uint32 size)
-	{
-		if (!out) return;
-		
-		QString s = QString::number(size) + ":";
-		out->write(s.utf8(),s.length());
-		out->write((const char*)data,size);
-	}
-	
-	void BEncoder::end()
-	{
-		if (!out) return;
-		
-		out->write("e",1);
-	}
+
 }
+#include "rpcserver.moc"

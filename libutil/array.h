@@ -26,15 +26,18 @@ namespace bt
 {
 
 	/**
-	@author Joris Guisson
-	*/
+	 * @author Joris Guisson
+	 *
+	 * Template array classes, makes creating dynamic buffers easier
+	 * and safer.
+	 */
 	template<class T>
 	class Array
 	{
 		Uint32 num;
 		T* data;
 	public:
-		Array(Uint32 num) : num(num),data(0)
+		Array(Uint32 num = 0) : num(num),data(0)
 		{
 			if (num > 0)
 				data = new T[num];

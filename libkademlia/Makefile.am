@@ -1,6 +1,7 @@
-INCLUDES = -I$(top_srcdir)/. -I$(top_srcdir)/ktorrent
+INCLUDES = -I$(top_srcdir)/. $(all_includes) -I$(top_srcdir)/ktorrent
 METASOURCES = AUTO
 libkademlia_la_LDFLAGS = $(all_libraries)
 noinst_LTLIBRARIES = libkademlia.la
-noinst_HEADERS = key.h
-libkademlia_la_SOURCES = key.cpp
+noinst_HEADERS = key.h node.h kbucket.h rpccall.h rpcserver.h database.h
+libkademlia_la_SOURCES = key.cpp node.cpp kbucket.cpp rpccall.cpp rpcserver.cpp \
+	database.cpp

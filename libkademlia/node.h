@@ -17,96 +17,37 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "bencoder.h"
-#include <libutil/file.h>
+#ifndef DHTNODE_H
+#define DHTNODE_H
 
-namespace bt
+#include <qobject.h>
+#include "key.h"
+#include "kbucket.h"
+
+
+namespace dht
 {
-	
 
-	BEncoderFileOutput::BEncoderFileOutput(File* fptr) : fptr(fptr)
+	/**
+	 * @author Joris Guisson
+	 *
+	 * A Node represents us in the kademlia network. It contains
+	 * our id and 160 KBucket's.
+	 * A KBucketEntry is in node i, when the difference between our id and
+	 * the KBucketEntry's id is between 2 to the power i and 2 to the power i+1.
+	*/
+	class Node : public QObject
 	{
-	}
+		Q_OBJECT
+	public:
+		Node();
+		virtual ~Node();
 
-	void BEncoderFileOutput::write(const char* str,Uint8 len)
-	{
-		if (!fptr)
-			return;
+	private:
+		Key id;
+		KBucket* bucket[160];
+	};
 
-		fptr->write(str,len);
-	}
-
-	////////////////////////////////////
-
-	BEncoder::BEncoder(File* fptr) : out(0),del(true)
-	{
-		out = new BEncoderFileOutput(fptr);
-	}
-
-	BEncoder::BEncoder(BEncoderOutput* out) : out(out),del(false)
-	{
-	}
-
-
-	BEncoder::~BEncoder()
-	{
-		if (del)
-			delete out;
-	}
-
-	void BEncoder::beginDict()
-	{
-		if (!out) return;
-		
-		out->write("d",1);
-	}
-	
-	void BEncoder::beginList()
-	{
-		if (!out) return;
-		
-		out->write("l",1);
-	}
-	
-	void BEncoder::write(int val)
-	{
-		if (!out) return;
-		
-		QString s = QString("i%1e").arg(val);
-		out->write(s.utf8(),s.length());
-	}
-	
-	void BEncoder::write(const QString & str)
-	{
-		if (!out) return;
-		
-		QString s = QString("%1:%2").arg(str.length()).arg(str);
-		out->write(s.utf8(),s.length());
-	}
-	
-	void BEncoder::write(const QByteArray & data)
-	{
-		if (!out) return;
-		
-		QString s = QString::number(data.size());
-		out->write(s.utf8(),s.length());
-		out->write(":",1);
-		out->write(data.data(),data.size());
-	}
-
-	void BEncoder::write(const Uint8* data,Uint32 size)
-	{
-		if (!out) return;
-		
-		QString s = QString::number(size) + ":";
-		out->write(s.utf8(),s.length());
-		out->write((const char*)data,size);
-	}
-	
-	void BEncoder::end()
-	{
-		if (!out) return;
-		
-		out->write("e",1);
-	}
 }
+
+#endif

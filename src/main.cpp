@@ -46,6 +46,7 @@ int main(int argc, char **argv)
 	KAboutData about("ktorrent", I18N_NOOP("KTorrent"), version, description,
 	                 KAboutData::License_GPL, "(C) 2005 Joris Guisson", 0, "http://lumumba.uhasselt.be/~joris/ktorrent/");
 	about.addAuthor( "Joris Guisson", 0, "joris.guisson@gmail.com" );
+	about.addAuthor("Ivan Vasic",0,"ivasic@gmail.com");
 	about.addCredit("The-Error","The downloads icon","zotrix@eunet.yu");
 	about.addCredit( "Adam Treat", 0, "treat@kde.org" );
 	about.addCredit("Danny Allen","Application icon","danny@dannyallen.co.uk");

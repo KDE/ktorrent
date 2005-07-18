@@ -17,96 +17,78 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "bencoder.h"
-#include <libutil/file.h>
+#ifndef DHTKBUCKET_H
+#define DHTKBUCKET_H
 
-namespace bt
+#include <qvaluelist.h>
+#include <libutil/constants.h>
+#include "key.h"
+
+using bt::Uint32;
+using bt::Uint16;
+
+namespace dht
 {
+	/**
+	 * @author Joris Guisson
+	 *
+	 * Entry in a KBucket, it basicly contains an ip_address of a node,
+	 * the udp port of the node and a node_id.
+	 */
+	class KBucketEntry
+	{
+		Uint32 ip_address;
+		Uint16 udp_port;
+		Key node_id;
+	public:
+		/**
+		 * Constructor, sets everything to 0.
+		 * @return 
+		 */
+		KBucketEntry();
+		
+		/**
+		 * Constructor, set the ip, port and key
+		 * @param ip IP address
+		 * @param port UDP port
+		 * @param id ID of node
+		 */
+		KBucketEntry(Uint32 ip,Uint16 port,const Key & id);
+		
+		/**
+		 * Copy constructor.
+		 * @param other KBucketEntry to copy
+		 * @return 
+		 */
+		KBucketEntry(const KBucketEntry & other);
+
+		/// Destructor
+		virtual ~KBucketEntry();
+
+		/**
+		 * Assignment operator.
+		 * @param other Node to copy
+		 * @return this KBucketEntry
+		 */
+		KBucketEntry & operator = (const KBucketEntry & other);
+	};
 	
-
-	BEncoderFileOutput::BEncoderFileOutput(File* fptr) : fptr(fptr)
+	/**
+	 * @author Joris Guisson
+	 *
+	 * A KBucket is just a list of KBucketEntry objects.
+	 * The list is sorted by time last seen :
+	 * The first element is the least recently seen, the last
+	 * the most recently seen.
+	 */
+	class KBucket
 	{
-	}
-
-	void BEncoderFileOutput::write(const char* str,Uint8 len)
-	{
-		if (!fptr)
-			return;
-
-		fptr->write(str,len);
-	}
-
-	////////////////////////////////////
-
-	BEncoder::BEncoder(File* fptr) : out(0),del(true)
-	{
-		out = new BEncoderFileOutput(fptr);
-	}
-
-	BEncoder::BEncoder(BEncoderOutput* out) : out(out),del(false)
-	{
-	}
-
-
-	BEncoder::~BEncoder()
-	{
-		if (del)
-			delete out;
-	}
-
-	void BEncoder::beginDict()
-	{
-		if (!out) return;
-		
-		out->write("d",1);
-	}
+		QValueList<KBucketEntry> entries;
+	public:
+		KBucket();
+		virtual ~KBucket();
 	
-	void BEncoder::beginList()
-	{
-		if (!out) return;
-		
-		out->write("l",1);
-	}
-	
-	void BEncoder::write(int val)
-	{
-		if (!out) return;
-		
-		QString s = QString("i%1e").arg(val);
-		out->write(s.utf8(),s.length());
-	}
-	
-	void BEncoder::write(const QString & str)
-	{
-		if (!out) return;
-		
-		QString s = QString("%1:%2").arg(str.length()).arg(str);
-		out->write(s.utf8(),s.length());
-	}
-	
-	void BEncoder::write(const QByteArray & data)
-	{
-		if (!out) return;
-		
-		QString s = QString::number(data.size());
-		out->write(s.utf8(),s.length());
-		out->write(":",1);
-		out->write(data.data(),data.size());
-	}
-
-	void BEncoder::write(const Uint8* data,Uint32 size)
-	{
-		if (!out) return;
-		
-		QString s = QString::number(size) + ":";
-		out->write(s.utf8(),s.length());
-		out->write((const char*)data,size);
-	}
-	
-	void BEncoder::end()
-	{
-		if (!out) return;
-		
-		out->write("e",1);
-	}
+	};
 }
+
+#endif

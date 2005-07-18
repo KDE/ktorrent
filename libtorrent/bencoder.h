@@ -30,19 +30,58 @@ namespace bt
 
 	/**
 	 * @author Joris Guisson
-	 * @brief Helper class to b-encode stuff.
-	 * 
-	 * This class b-encodes data. For more details about b-encoding, see
-	 * the BitTorrent protocol docs. The data gets written to a File
+	 *
+	 * Interface for classes which wish to recieve the output from a BEncoder.
 	 */
-	class BEncoder 
+	class BEncoderOutput
+	{
+	public:
+		/**
+		 * Write a string of characters.
+		 * @param str The string
+		 * @param len The length of the string
+		 */
+		virtual void write(const char* str,Uint8 len) = 0;
+	};
+
+	/**
+	 * Writes the output of a bencoder to a file
+	 */
+	class BEncoderFileOutput : public BEncoderOutput
 	{
 		File* fptr;
 	public:
+		BEncoderFileOutput(File* fptr);
+
+		void write(const char* str,Uint8 len);
+	};
+
+
+	/**
+	 * @author Joris Guisson
+	 * @brief Helper class to b-encode stuff.
+	 * 
+	 * This class b-encodes data. For more details about b-encoding, see
+	 * the BitTorrent protocol docs. The data gets written to a BEncoderOutput
+	 * thing.
+	 */
+	class BEncoder 
+	{
+		BEncoderOutput* out;
+		bool del;
+	public:
 		/**
-		 * Constructor
+		 * Constructor, output gets written to a file.
+		 * @param fptr The File to write to
 		 */
 		BEncoder(File* fptr);
+
+		
+		/**
+		 * Constructor, output gets written to a BEncoderOutput object.
+		 * @param out The BEncoderOutput
+		 */
+		BEncoder(BEncoderOutput* out);
 		virtual ~BEncoder();
 
 		/**
