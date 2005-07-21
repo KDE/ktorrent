@@ -23,27 +23,13 @@
 #include <qdatetime.h>
 #include <math.h>
 #include "ktorrentviewitem.h"
+#include "functions.h"
 
 using namespace bt;
 
-const double TO_MEG = (1024.0 * 1024.0);
-const double TO_GIG = (1024.0 * 1024.0 * 1024.0);
 
-static QString BytesToString(Uint32 bytes,int precision = -1)
-{
-	KLocale* loc = KGlobal::locale();
-	if (bytes > 1024 * 1024 * 1024)
-		return i18n("%1 GB").arg(loc->formatNumber(bytes / TO_GIG,
-								precision < 0 ? 2 : precision));
-	else
-		return i18n("%1 MB").arg(loc->formatNumber(bytes / TO_MEG,precision < 0 ? 1 : precision));
-}
 
-static QString KBytesPerSecToString(double speed,int precision = 1)
-{
-	KLocale* loc = KGlobal::locale();
-	return i18n("%1 KB/sec").arg(loc->formatNumber(speed,precision));
-}
+
 
 KTorrentViewItem::KTorrentViewItem(QListView* parent,bt::TorrentControl* tc)
 	: KListViewItem(parent),tc(tc)

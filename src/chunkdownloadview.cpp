@@ -21,6 +21,7 @@
 #include <libtorrent/peer.h>
 #include <libtorrent/chunkdownload.h>
 #include "chunkdownloadview.h"
+#include "functions.h"
 
 using namespace bt;
 
@@ -70,7 +71,7 @@ void ChunkDownloadView::update(const ChunkDownload* cd,KListViewItem* it)
 	QString peer_id,speed;
 
 	peer_id = cd->getCurrentPeerID();
-	speed = i18n("%1 kB/sec").arg(cd->getDownloadSpeed() / 1024.0);
+	speed = KBytesPerSecToString(cd->getDownloadSpeed() / 1024.0);
 	
 		
 	it->setText(0,QString::number(cd->getChunkIndex()));

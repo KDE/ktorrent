@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>libtorrent/libtorrent.la</activetarget>
+      <activetarget>src/ktorrent</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>
@@ -64,6 +64,10 @@
         <cxxflags>-O0 -g3</cxxflags>
       </debug>
     </configurations>
+    <subclassing>
+      <subclass uifile="/src/infowidgetbase.ui" sourcefile="/src/infowidget.cpp" />
+      <subclass uifile="/src/infowidgetbase.ui" sourcefile="/src/infowidget.h" />
+    </subclassing>
   </kdevautoproject>
   <kdevfileview>
     <groups>

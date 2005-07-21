@@ -41,6 +41,7 @@ class TrayIcon;
 class KTabWidget;
 class SearchWidget;
 class KTorrentDCOP;
+class InfoWidget;
 
 
 namespace bt
@@ -141,6 +142,7 @@ private:
 	KTabWidget* m_tabs;
 	SearchWidget* m_search;
 	KTorrentDCOP* m_dcop;
+	InfoWidget* m_info;
 };
 
 #endif // _KTORRENT_H_

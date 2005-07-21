@@ -75,7 +75,7 @@ namespace bt
 		/// Get the info_hash.
 		const SHA1Hash & getInfoHash() const {return info_hash;}
 		
-		/// Get out peer_id.
+		/// Get our peer_id.
 		const PeerID & getPeerID() const {return peer_id;}
 		
 		/// Get the file size in number of bytes.
@@ -116,7 +116,7 @@ namespace bt
 		 * @param idx Index of the file
 		 * @param file The file
 		 */
-		void getFile(Uint32 idx,Torrent::File & file);
+		void getFile(Uint32 idx,Torrent::File & file) const;
 	private:
 		void loadInfo(BDictNode* node);
 		void loadTrackerURL(BValueNode* node);

@@ -22,6 +22,7 @@
 
 #include <qdragobject.h>
 #include <qsplitter.h>
+#include <qvbox.h>
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -65,6 +66,7 @@
 #include "logviewer.h"
 #include "ktorrentdcop.h"
 #include "torrentcreatordlg.h"
+#include "infowidget.h"
 
 
 
@@ -81,14 +83,21 @@ KTorrent::KTorrent()
 		s = new QSplitter(QSplitter::Vertical,this);
 	
 	m_tabs = new KTabWidget(debug ? (QWidget*)s : (QWidget*)this);
-	m_view = new KTorrentView(m_tabs);
+
+	//m_tabs = new KTabWidget(this);
+	QSplitter* vbox = new QSplitter(QSplitter::Vertical,m_tabs);
+	m_view = new KTorrentView(vbox);
+	m_info = new InfoWidget(vbox);
+	vbox->moveToFirst(m_view);
+	vbox->moveToLast(m_info);
+	
 	m_search = new SearchWidget(m_tabs);
 	m_core = new KTorrentCore();
 	m_systray_icon = new TrayIcon(this);
 
 
 	KIconLoader* iload = KGlobal::iconLoader();
-	m_tabs->addTab(m_view,iload->loadIconSet("down", KIcon::Small),i18n("Downloads"));
+	m_tabs->addTab(vbox,iload->loadIconSet("down", KIcon::Small),i18n("Downloads"));
 	m_tabs->addTab(m_search,iload->loadIconSet("viewmag", KIcon::Small),i18n("Search"));
 	
 	connect(m_core,SIGNAL(torrentAdded(bt::TorrentControl* )),
@@ -215,6 +224,7 @@ void KTorrent::currentChanged(bt::TorrentControl* tc)
 		m_stop->setEnabled(false);
 		m_remove->setEnabled(false);
 	}
+	m_info->changeTC(tc);
 }
 
 void KTorrent::setupActions()
@@ -395,9 +405,10 @@ void KTorrent::removeDownload()
 	TorrentControl* tc = m_view->getCurrentTC();
 	if (tc)
 	{
+		m_info->changeTC(0);
 		m_core->remove(tc);
+		currentChanged(m_view->getCurrentTC());
 	}
-	currentChanged(m_view->getCurrentTC());
 }
 
 void KTorrent::optionsShowToolbar()

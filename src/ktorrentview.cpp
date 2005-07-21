@@ -165,8 +165,8 @@ void KTorrentView::addTorrent(bt::TorrentControl* tc)
 			this,SLOT(onTrackerError(bt::TorrentControl*,const QString & )));
 	if (show_debug_view)
 	{
-		DebugView* dbg = new DebugView(tc);
-		dbg->show();
+	//	DebugView* dbg = new DebugView(tc);
+	//	dbg->show();
 	}
 }
 

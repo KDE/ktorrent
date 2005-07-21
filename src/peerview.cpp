@@ -20,6 +20,7 @@
 #include <klocale.h>
 #include <libtorrent/peer.h>
 #include "peerview.h"
+#include "functions.h"
 
 PeerView::PeerView(QWidget *parent, const char *name)
 		: KListView(parent, name)
@@ -42,8 +43,8 @@ void PeerView::addPeer(bt::Peer* peer)
 	KListViewItem* i = new KListViewItem(
 			this,
 			peer->getPeerID().toString(),
-			i18n("%1 kB/sec").arg(peer->getDownloadRate() / 1024.0),
-			i18n("%1 kB/sec").arg(peer->getUploadRate() / 1024.0),
+			KBytesPerSecToString(peer->getDownloadRate()),
+			KBytesPerSecToString(peer->getUploadRate()),
 			peer->isChoked() ? "yes" : "no",
 			peer->isSnubbed() ? "yes" : "no");
 	items.insert(peer,i);
@@ -64,8 +65,8 @@ void PeerView::update()
 		KListViewItem* it = i.data();
 		bt::Peer* peer = i.key();
 		it->setText(0,peer->getPeerID().toString());
-		it->setText(1,i18n("%1 kB/sec").arg(peer->getDownloadRate() / 1024.0));
-		it->setText(2,i18n("%1 kB/sec").arg(peer->getUploadRate() / 1024.0));
+		it->setText(1,KBytesPerSecToString(peer->getDownloadRate() / 1024.0));
+		it->setText(2,KBytesPerSecToString(peer->getUploadRate() / 1024.0));
 		it->setText(3,peer->isChoked() ? i18n("yes") : i18n("no"));
 		it->setText(4,peer->isSnubbed() ? i18n("yes") : i18n("no"));
 		i++;

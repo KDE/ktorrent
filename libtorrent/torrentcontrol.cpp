@@ -122,6 +122,11 @@ namespace bt
 	{
 		tmon = tmo;
 		down->setMonitor(tmon);
+		if (tmon)
+		{
+			for (Uint32 i = 0;i < pman->getNumConnectedPeers();i++)
+				tmon->peerAdded(pman->getPeer(i));
+		}
 	}
 	
 	void TorrentControl::init(const QString & torrent,const QString & ddir)
@@ -574,6 +579,12 @@ namespace bt
 			else
 				setStatus(m);
 		}
+	}
+
+	void TorrentControl::toBitSet(BitSet & bs)
+	{
+		if (cman)
+			cman->toBitSet(bs);
 	}
 }
 #include "torrentcontrol.moc"

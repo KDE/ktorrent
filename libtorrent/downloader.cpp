@@ -68,9 +68,10 @@ namespace bt
 			downloaded += p.getLength();
 			if (cd->piece(p))
 			{
-				finished(cd);
 				if (tmon)
 					tmon->downloadRemoved(cd);
+				
+				finished(cd);
 				current_chunks.erase(p.getIndex());
 				return;
 			}
@@ -302,6 +303,10 @@ namespace bt
 
 	void Downloader::loadDownloads(const QString & file)
 	{
+		// don't load stuff if download is finished
+		if (cman.chunksLeft() == 0)
+			return;
+		
 		// Load all partial downloads
 		File fptr;
 		if (!fptr.open(file,"rb"))

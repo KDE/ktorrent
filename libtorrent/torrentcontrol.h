@@ -40,6 +40,7 @@ namespace bt
 	class Uploader;
 	class Peer;
 	class TorrentMonitor;
+	class BitSet;
 	
 	/**
 	 * @author Joris Guisson
@@ -55,6 +56,12 @@ namespace bt
 	public:
 		TorrentControl();
 		virtual ~TorrentControl();
+
+		/**
+		 * Make a BitSet of the status of all Chunks
+		 * @param bs The BitSet
+		 */
+		void toBitSet(BitSet & bs);
 		
 		/**
 		 * Initialize the TorrentControl. 
@@ -131,6 +138,9 @@ namespace bt
 
 		/// See if we have a multi file torrent
 		bool isMultiFileTorrent() const;
+
+		/// Get the Torrent.
+		const Torrent & getTorrent() const {return *tor;}
 
 		/// Set the initial port to try out
 		static void setInitialPort(Uint16 port);

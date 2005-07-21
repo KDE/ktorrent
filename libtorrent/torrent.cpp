@@ -229,7 +229,7 @@ namespace bt
 		return hash_pieces[idx];
 	}
 	
-	void Torrent::getFile(Uint32 idx,Torrent::File & file)
+	void Torrent::getFile(Uint32 idx,Torrent::File & file) const
 	{
 		if (idx >= files.size())
 			return;
