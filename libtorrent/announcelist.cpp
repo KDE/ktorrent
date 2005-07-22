@@ -23,6 +23,8 @@
 #include "globals.h"
 #include <libutil/log.h>
 
+#include <klocale.h>
+
 namespace bt
 {
 
@@ -46,13 +48,13 @@ namespace bt
 		{
 			BListNode* url = dynamic_cast<BListNode*>(ml->getChild(i));
 			if (!url)
-				throw Error("Parse Error");
+				throw Error(i18n("Parse Error"));
 			
 			for (Uint32 j = 0;j < url->getNumChildren();j++)
 			{
 				BValueNode* vn = dynamic_cast<BValueNode*>(url->getChild(j));
 				if (!vn)
-					throw Error("Parse Error");
+					throw Error(i18n("Parse Error"));
 
 				KURL url(vn->data().toString());
 				trackers.append(url);

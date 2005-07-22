@@ -26,6 +26,8 @@
 #include <libutil/error.h>
 #include <libutil/functions.h>
 
+#include <klocale.h>
+
 namespace bt
 {
 
@@ -48,7 +50,7 @@ namespace bt
 	{
 		File fptr;
 		if (!fptr.open(cache_file,"rb"))
-			throw Error("Can't open cache file");
+			throw Error(i18n("Can't open cache file"));
 		fptr.seek(File::BEGIN,c->getCacheFileOffset());
 		unsigned char* data = new unsigned char[c->getSize()];
 		fptr.read(data,c->getSize());
@@ -62,7 +64,7 @@ namespace bt
 		
 		File fptr;
 		if (!fptr.open(cache_file,"r+b"))
-			throw Error("Can't open cache file");
+			throw Error(i18n("Can't open cache file"));
 		
 		// jump to end of file
 		fptr.seek(File::END,0);

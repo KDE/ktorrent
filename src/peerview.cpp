@@ -45,8 +45,8 @@ void PeerView::addPeer(bt::Peer* peer)
 			peer->getPeerID().toString(),
 			KBytesPerSecToString(peer->getDownloadRate()),
 			KBytesPerSecToString(peer->getUploadRate()),
-			peer->isChoked() ? "yes" : "no",
-			peer->isSnubbed() ? "yes" : "no");
+			peer->isChoked() ? i18n("yes") : i18n("no"),
+			peer->isSnubbed() ? i18n("yes") : i18n("no"));
 	items.insert(peer,i);
 }
 

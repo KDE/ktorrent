@@ -27,6 +27,8 @@
 #include <libutil/log.h>
 #include "globals.h"
 
+#include <klocale.h>
+
 namespace bt
 {
 	
@@ -74,7 +76,7 @@ namespace bt
 	{
 		File fptr;
 		if (!fptr.open(index_file,"rb"))
-			throw Error("Can't open index file");
+			throw Error(i18n("Can't open index file"));
 
 		if (fptr.seek(File::END,0) == 0)
 			return;
@@ -99,7 +101,7 @@ namespace bt
 	{
 		File fptr;
 		if (!fptr.open(index_file,"wb"))
-			throw Error("Can't open index file");
+			throw Error(i18n("Can't open index file"));
 		
 		for (unsigned int i = 0;i < tor.getNumChunks();i++)
 		{
@@ -178,7 +180,7 @@ namespace bt
 	{
 		File fptr; 
 		if (!fptr.open(index_file,"r+b"))
-			throw Error("Can't open index file");
+			throw Error(i18n("Can't open index file"));
 		
 		fptr.seek(File::END,0);
 		NewChunkHeader hdr;

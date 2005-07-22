@@ -29,6 +29,8 @@
 #include <libutil/sha1hashgen.h>
 #include "announcelist.h"
 
+#include <klocale.h>
+
 namespace bt
 {
 
@@ -45,7 +47,7 @@ namespace bt
 	{
 		QFile fptr(file);
 		if (!fptr.open(IO_ReadOnly))
-			throw Error(QString("Can't open torrent file %1 : %2")
+			throw Error(i18n("Can't open torrent file %1 : %2")
 					.arg(file).arg(fptr.errorString()));
 		
 		QByteArray data(fptr.size());
@@ -60,7 +62,7 @@ namespace bt
 			BNode* node = decoder.decode();
 			dict = dynamic_cast<BDictNode*>(node);
 			if (!dict)
-				throw Error("Corrupted torrent !");
+				throw Error(i18n("Corrupted torrent!"));
 
 			// see if we can find an encoding node
 			BValueNode* enc = dict->getValue("encoding");
@@ -88,7 +90,7 @@ namespace bt
 	void Torrent::loadInfo(BDictNode* dict)
 	{
 		if (!dict)
-			throw Error("Corrupted torrent !");
+			throw Error(i18n("Corrupted torrent!"));
 		
 		loadPieceLength(dict->getValue("piece length"));
 		BValueNode* n = dict->getValue("length");
@@ -105,18 +107,18 @@ namespace bt
 	{
 		Out() << "Multi file torrent" << endl;
 		if (!node)
-			throw Error("Corrupted torrent !");
+			throw Error(i18n("Corrupted torrent!"));
 		
 		BListNode* fl = node;
 		for (Uint32 i = 0;i < fl->getNumChildren();i++)
 		{
 			BDictNode* d = fl->getDict(i);
 			if (!d)
-				throw Error("Corrupted torrent !");
+				throw Error(i18n("Corrupted torrent!"));
 			
 			BValueNode* v = d->getValue("length");
 			if (!v || v->data().getType() != Value::INT)
-				throw Error("Corrupted torrent !");
+				throw Error(i18n("Corrupted torrent!"));
 			
 			File file;
 			file.size = v->data().toInt();
@@ -124,13 +126,13 @@ namespace bt
 			
 			BListNode* ln = d->getList("path");
 			if (!ln)
-				throw Error("Corrupted torrent !");
+				throw Error(i18n("Corrupted torrent!"));
 			
 			for (Uint32 j = 0;j < ln->getNumChildren();j++)
 			{
 				v = ln->getValue(j);
 				if (!v || v->data().getType() != Value::STRING)
-					throw Error("Corrupted torrent !");
+					throw Error(i18n("Corrupted torrent!"));
 	
 				file.path += v->data().toString(encoding);
 				if (j + 1 < ln->getNumChildren())
@@ -143,7 +145,7 @@ namespace bt
 	void Torrent::loadTrackerURL(BValueNode* node)
 	{
 		if (!node || node->data().getType() != Value::STRING)
-			throw Error("Corrupted torrent !");
+			throw Error(i18n("Corrupted torrent!"));
 		
 		tracker_url = node->data().toString(encoding);
 	}
@@ -151,7 +153,7 @@ namespace bt
 	void Torrent::loadPieceLength(BValueNode* node)
 	{
 		if (!node || node->data().getType() != Value::INT)
-			throw Error("Corrupted torrent !");
+			throw Error(i18n("Corrupted torrent!"));
 		
 		piece_length = node->data().toInt();
 	}
@@ -159,7 +161,7 @@ namespace bt
 	void Torrent::loadFileLength(BValueNode* node)
 	{
 		if (!node || node->data().getType() != Value::INT)
-			throw Error("Corrupted torrent !");
+			throw Error(i18n("Corrupted torrent!"));
 				
 		file_length = node->data().toInt();
 	}
@@ -167,7 +169,7 @@ namespace bt
 	void Torrent::loadHash(BValueNode* node)
 	{
 		if (!node || node->data().getType() != Value::STRING)
-			throw Error("Corrupted torrent !");
+			throw Error(i18n("Corrupted torrent!"));
 		
 
 		QByteArray hash_string = node->data().toByteArray();
@@ -183,7 +185,7 @@ namespace bt
 	void Torrent::loadName(BValueNode* node)
 	{
 		if (!node || node->data().getType() != Value::STRING)
-			throw Error("Corrupted torrent !");
+			throw Error(i18n("Corrupted torrent!"));
 		
 		name_suggestion = node->data().toString(encoding);
 	}

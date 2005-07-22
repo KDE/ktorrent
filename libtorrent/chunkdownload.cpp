@@ -29,6 +29,8 @@
 #include "piece.h"
 #include "peerdownloader.h"
 
+#include <klocale.h>
+
 namespace bt
 {
 	const int PIECE_NOT_DOWNLOADED = 0;
@@ -255,7 +257,7 @@ namespace bt
 		}
 		else
 		{
-			return QString("%1 peers").arg(pdown.count());
+			return i18n("1 peer","%n peers",pdown.count());
 		}
 	}
 

@@ -203,7 +203,7 @@ namespace bt
 			n = dec.decode();
 			
 			if (!n || n->getType() != BNode::DICT)
-				throw Error("Parse Error");
+				throw Error(i18n("Parse Error"));
 			
 			BDictNode* dict = (BDictNode*)n;
 			if (dict->getData("failure reason"))
@@ -219,7 +219,7 @@ namespace bt
 			BValueNode* vn = dict->getValue("interval");
 			
 			if (!vn)
-				throw Error("Parse Error");
+				throw Error(i18n("Parse Error"));
 			
 			Uint32 update_time = vn->data().toInt() > 300 ? 300 : vn->data().toInt();
 			

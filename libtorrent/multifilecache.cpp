@@ -215,7 +215,7 @@ namespace bt
 	{
 		File fptr;
 		if (!fptr.open(cache_dir + pos.file1,"r+b"))
-			throw Error("Can't open cache file");
+			throw Error(i18n("Can't open cache file"));
 			
 		// jump to end of file
 		fptr.seek(File::END,0);
@@ -255,7 +255,7 @@ namespace bt
 		// open second and save second piece of chunk
 		File fptr;
 		if (!fptr.open(cache_dir + pos.file2,"r+b"))
-			throw Error("Can't open cache file");
+			throw Error(i18n("Can't open cache file"));
 
 		fptr.write(c->getData() + pos.size1,c->getSize() - pos.size1);
 	}

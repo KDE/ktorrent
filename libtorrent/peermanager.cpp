@@ -28,6 +28,8 @@
 #include "downloader.h"
 #include <libutil/functions.h>
 
+#include <klocale.h>
+
 namespace bt
 {
 	Uint32 PeerManager::max_connections = 0;
@@ -118,7 +120,7 @@ namespace bt
 			// no list, it might however be a compact response
 			BValueNode* vn = dict->getValue("peers");
 			if (!vn)
-				throw Error("Parse error");
+				throw Error(i18n("Parse error"));
 
 			QByteArray arr = vn->data().toByteArray();
 			for (Uint32 i = 0;i < arr.size();i+=6)

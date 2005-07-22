@@ -13,5 +13,3 @@ messages: rc.cpp
 	fi
 #	rm -f tips.cpp
 	rm -f rc.cpp
-
-

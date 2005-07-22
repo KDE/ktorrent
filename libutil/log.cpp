@@ -4,6 +4,7 @@
  *                                                                         *
  ***************************************************************************/
 #include <kurl.h>
+#include <klocale.h>
 #include <qtextbrowser.h>
 #include "log.h"
 #include "error.h"
@@ -27,7 +28,7 @@ namespace bt
 
 		fptr.setName(file);
 		if (!fptr.open(IO_WriteOnly))
-			throw Error("Cannot open log file " + file);
+			throw Error(i18n("Cannot open log file %1").arg(file));
 
 		out.setDevice(&fptr);
 	}
@@ -65,7 +66,7 @@ namespace bt
 	{
 		out << url.prettyURL();
 		if (to_cout)
-			std::cout << url.prettyURL().latin1();
+			std::cout << url.prettyURL().local8Bit();
 		
 		if (widget)
 		{
@@ -78,7 +79,7 @@ namespace bt
 	{
 		out << s;
 		if (to_cout)
-			std::cout << s.latin1();
+			std::cout << s.local8Bit();
 
 		if (widget)
 		{

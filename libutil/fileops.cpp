@@ -21,6 +21,7 @@
 #include <errno.h>
 #include <klocale.h>
 #include <kio/netaccess.h>
+#include <qfile.h>
 #include "fileops.h"
 #include "error.h"
 #include "log.h"
@@ -46,7 +47,7 @@ namespace bt
 	
 	void SymLink(const QString & link_to,const QString & link_url,bool nothrow)
 	{
-		if (symlink(link_to.utf8(),link_url.utf8()) != 0)
+		if (symlink(QFile::encodeName(link_to),QFile::encodeName(link_url)) != 0)
 		{
 			if (!nothrow)
 				throw Error(i18n("Cannot symlink %1 to %2: %3")

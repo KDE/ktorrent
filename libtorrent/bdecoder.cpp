@@ -22,6 +22,7 @@
 #include "bnode.h"
 #include <libutil/error.h>
 
+#include <klocale.h>
 
 namespace bt
 {
@@ -57,7 +58,7 @@ namespace bt
 		}
 		else
 		{
-			throw Error(QString("Illegal token : %1").arg(data[pos]));
+			throw Error(i18n("Illegal token: %1").arg(data[pos]));
 		}
 	}
 
@@ -75,7 +76,7 @@ namespace bt
 // 				Out() << "Key : " << endl;
 				BValueNode* k = dynamic_cast<BValueNode*>(decode());
 				if (!k || k->data().getType() != Value::STRING)
-					throw Error("Decode error");
+					throw Error(i18n("Decode error"));
 
 				QString key = k->data().toString();
 				delete k;
@@ -136,7 +137,7 @@ namespace bt
 		// check if we aren't at the end of the data
 		if (pos >= data.size())
 		{
-			throw Error("Unexpected end of input");
+			throw Error(i18n("Unexpected end of input"));
 		}
 
 		// try to decode the int
@@ -145,7 +146,7 @@ namespace bt
 		val = n.toInt(&ok);
 		if (!ok)
 		{
-			throw Error(QString("Cannot convert %1 to an int").arg(n));
+			throw Error(i18n("Cannot convert %1 to an int").arg(n));
 		}
 		pos++;
 // 		Out() << "INT = " << val << endl;
@@ -169,7 +170,7 @@ namespace bt
 		// check if we aren't at the end of the data
 		if (pos >= data.size())
 		{
-			throw Error("Unexpected end of input");
+			throw Error(i18n("Unexpected end of input"));
 		}
 
 		// try to decode length
@@ -178,7 +179,7 @@ namespace bt
 		len = n.toInt(&ok);
 		if (!ok)
 		{
-			throw Error(QString("Cannot convert %1 to an int").arg(n));
+			throw Error(i18n("Cannot convert %1 to an int").arg(n));
 		}
 		// move pos to the first part of the string
 		pos++;
