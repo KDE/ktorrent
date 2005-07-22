@@ -274,7 +274,7 @@
 <customwidgets>
     <customwidget>
         <class>PeerView</class>
-        <header location="local">/home/joris/ktorrent/trunk/src/peerview.h</header>
+        <header location="local">peerview.h</header>
         <sizehint>
             <width>-1</width>
             <height>-1</height>
@@ -290,7 +290,7 @@
     </customwidget>
     <customwidget>
         <class>ChunkDownloadView</class>
-        <header location="local">/home/joris/ktorrent/trunk/src/chunkdownloadview.h</header>
+        <header location="local">chunkdownloadview.h</header>
         <sizehint>
             <width>-1</width>
             <height>-1</height>
@@ -306,7 +306,7 @@
     </customwidget>
     <customwidget>
         <class>ChunkBar</class>
-        <header location="global">/home/joris/ktorrent/trunk/src/chunkbar.h</header>
+        <header location="global">chunkbar.h</header>
         <sizehint>
             <width>-1</width>
             <height>20</height>
