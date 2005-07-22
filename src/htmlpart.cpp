@@ -18,6 +18,8 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <kmessagebox.h>
+#include <kio/job.h>
+#include <kio/jobclasses.h>
 //#include <qfile.h>
 #include <qclipboard.h>
 #include <qapplication.h>
@@ -25,7 +27,10 @@
 #include <klocale.h>
 #include <kfiledialog.h>
 #include <kparts/browserextension.h>
+#include <libutil/constants.h>
 #include "htmlpart.h"
+
+using namespace bt;
 
 HTMLPart::HTMLPart(QWidget *parent)
 		: KHTMLPart(parent)
@@ -40,6 +45,7 @@ HTMLPart::HTMLPart(QWidget *parent)
 
 	ext->enableAction("copy",true);
 	ext->enableAction("paste",true);
+	active_job = 0;
 }
 
 
@@ -56,57 +62,25 @@ void HTMLPart::copy()
 
 void HTMLPart::openURLRequest(const KURL &u,const KParts::URLArgs &)
 {
+	if (active_job)
+	{
+		active_job->kill(true);
+		active_job = 0;
+	}
 	
-	if (/*KIO::NetAccess::mimetype(u,0) == "application/x-bittorrent" ||*/
-		   u.prettyURL().endsWith(".torrent")  )
-	{
-		int ret = KMessageBox::questionYesNo(0,
-					i18n("Do you want to download the torrent?"),
-					i18n("Download Torrent"),
-					KGuiItem(i18n("Download"),"down"),KStdGuiItem::cancel());
-		
-		if (ret == KMessageBox::Yes)
-			openTorrent(u);
-	}
-	else
-	{
-		if (url().isValid())
-			addToHistory(url());
-		openURL(u);
-	}
-}
-/*
-void HTMLPart::download(const KURL & u)
-{
-	QString target;
-	if (KIO::NetAccess::download(u,target,0))
-	{
-		// see if we didn't get back HTML code
-		QFile fptr(target);
-		if (fptr.open(IO_ReadOnly))
-		{
-			QString line;
-			fptr.readLine(line,5);
-			if (!line.startsWith("<"))
-			{
-				// this appears to be a torrent file so pose the big question
+	KIO::TransferJob* j = KIO::get(u,false,false);
+	connect(j,SIGNAL(data(KIO::Job*,const QByteArray &)),
+			this,SLOT(dataRecieved(KIO::Job*, const QByteArray& )));
+	connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(jobDone(KIO::Job* )));
+	connect(j,SIGNAL(mimetype(KIO::Job*, const QString &)),
+			this,SLOT(mimetype(KIO::Job*, const QString& )));
 
-			}
-			else
-			{
-				addToHistory(url());
-				openURL(u);
-			}
-		}
-		else
-		{
-			addToHistory(url());
-			openURL(u);
-		}
-		KIO::NetAccess::removeTempFile(target);
-	}
+	active_job = j;
+	curr_data.resize(0);
+	mime_type = QString::null;
+	curr_url = u;
 }
-*/
+
 void HTMLPart::back()
 {
 	if (history.count() == 0)
@@ -129,6 +103,81 @@ void HTMLPart::addToHistory(const KURL & url)
 void HTMLPart::reload()
 {
 	openURL(url());
+}
+
+void HTMLPart::dataRecieved(KIO::Job* job,const QByteArray & data)
+{
+	if (job != active_job)
+	{
+		job->kill(true);
+		return;
+	}
+	
+	if (data.size() == 0)
+		return;
+	
+	Uint32 off = curr_data.size();
+	curr_data.resize(curr_data.size() + data.size());
+	for (Uint32 i = 0;i < data.size();i++)
+	{
+		curr_data[i + off] = data[i];
+	}
+}
+
+void HTMLPart::mimetype(KIO::Job* job,const QString & mt)
+{
+	if (job != active_job)
+	{
+		job->kill(true);
+		return;
+	}
+
+	mime_type = mt;
+}
+
+void HTMLPart::jobDone(KIO::Job* job)
+{
+	if (job != active_job)
+	{
+		job->kill(true);
+		return;
+	}
+	
+	if (job->error() == 0)
+	{
+		bool is_bencoded_data = curr_data.size() > 0 &&
+				curr_data[0] == 'd' &&
+				curr_data[curr_data.size()-1] == 'e';
+		
+		if (is_bencoded_data || mime_type == "application/x-bittorrent" ||
+				curr_url.prettyURL().endsWith(".torrent"))
+		{
+			int ret = KMessageBox::questionYesNo(0,
+					i18n("Do you want to download the torrent?"),
+					i18n("Download Torrent"),
+					KGuiItem(i18n("Download"),"down"),KStdGuiItem::cancel());
+		
+			if (ret == KMessageBox::Yes)
+				openTorrent(curr_url);
+		}
+		else
+		{
+			addToHistory(curr_url);
+			begin(curr_url);
+			write(curr_data.data(),curr_data.size());
+			end();
+		}
+	}
+	else
+	{
+		begin(curr_url);
+		write(KIO::buildErrorString(job->error(),job->errorText()));/*,&curr_url));**/
+		end();
+	}
+	active_job = 0;
+	curr_data.resize(0);
+	curr_url = KURL();
+	mime_type = QString::null;
 }
 
 #include "htmlpart.moc"

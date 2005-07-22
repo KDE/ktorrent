@@ -22,6 +22,11 @@
 
 #include <khtml_part.h>
 
+namespace KIO
+{
+	class Job;
+}
+
 /**
 @author Joris Guisson
 */
@@ -40,7 +45,9 @@ public slots:
 private slots:
 	void openURLRequest(const KURL &url, const KParts::URLArgs &args);
 	void addToHistory(const KURL & url);
-//	void download(const KURL & u);
+	void dataRecieved(KIO::Job* job,const QByteArray & data);
+	void mimetype(KIO::Job* job,const QString & mt);
+	void jobDone(KIO::Job* job);
 
 signals:
 	void backAvailable(bool yes);
@@ -48,6 +55,10 @@ signals:
 
 private:
 	KURL::List history;
+	KIO::Job* active_job;
+	QByteArray curr_data;
+	QString mime_type;
+	KURL curr_url;
 };
 
 #endif

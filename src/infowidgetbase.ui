@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>600</width>
-            <height>204</height>
+            <height>267</height>
         </rect>
     </property>
     <property name="caption">
@@ -34,6 +34,14 @@
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
+                    <widget class="QLabel">
+                        <property name="name">
+                            <cstring>textLabel1_2</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Parts of the file which have been download :</string>
+                        </property>
+                    </widget>
                     <widget class="ChunkBar">
                         <property name="name">
                             <cstring>m_chunk_bar</cstring>
@@ -101,7 +109,7 @@
                                         </property>
                                         <property name="minimumSize">
                                             <size>
-                                                <width>30</width>
+                                                <width>50</width>
                                                 <height>0</height>
                                             </size>
                                         </property>
@@ -110,6 +118,9 @@
                                         </property>
                                         <property name="text">
                                             <string></string>
+                                        </property>
+                                        <property name="alignment">
+                                            <set>AlignVCenter|AlignRight</set>
                                         </property>
                                     </widget>
                                     <widget class="QLabel">
@@ -118,7 +129,7 @@
                                         </property>
                                         <property name="minimumSize">
                                             <size>
-                                                <width>30</width>
+                                                <width>50</width>
                                                 <height>0</height>
                                             </size>
                                         </property>
@@ -127,6 +138,9 @@
                                         </property>
                                         <property name="text">
                                             <string></string>
+                                        </property>
+                                        <property name="alignment">
+                                            <set>AlignVCenter|AlignRight</set>
                                         </property>
                                     </widget>
                                     <widget class="QLabel">
@@ -135,7 +149,7 @@
                                         </property>
                                         <property name="minimumSize">
                                             <size>
-                                                <width>30</width>
+                                                <width>50</width>
                                                 <height>0</height>
                                             </size>
                                         </property>
@@ -144,6 +158,9 @@
                                         </property>
                                         <property name="text">
                                             <string></string>
+                                        </property>
+                                        <property name="alignment">
+                                            <set>AlignVCenter|AlignRight</set>
                                         </property>
                                     </widget>
                                 </vbox>

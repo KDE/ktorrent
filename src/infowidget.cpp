@@ -99,6 +99,7 @@ void InfoWidget::changeTC(bt::TorrentControl* tc)
 	fillFileTree();
 	m_chunk_bar->setTC(tc);
 	setEnabled(tc != 0);
+	updateInfo();
 }
 
 void InfoWidget::updateInfo()

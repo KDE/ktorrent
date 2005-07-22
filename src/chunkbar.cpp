@@ -21,6 +21,7 @@
 #include <qpen.h>
 #include <qbrush.h>
 #include <qvaluelist.h>
+#include <math.h>
 #include <libtorrent/torrentcontrol.h>
 #include <libtorrent/bitset.h>
 #include "chunkbar.h"
@@ -88,7 +89,6 @@ void ChunkBar::paintEvent(QPaintEvent* )
 	p.end();
 }
 
-
 void ChunkBar::drawEqual(QPainter & p)
 {
 	BitSet bs;
@@ -137,10 +137,34 @@ void ChunkBar::drawEqual(QPainter & p)
 
 void ChunkBar::drawMoreChunksThenPixels(QPainter & p)
 {
-	Uint32 w = rect().width();
-	//p.scale((double)(curr_tc->getTotalChunks() - 1) / w,1);
+/*	
 	p.scale((double)w /(curr_tc->getTotalChunks() - 1),1);
-	drawEqual(p);
+	drawEqual(p);*/
+	Uint32 w = rect().width();
+	BitSet bs;
+	curr_tc->toBitSet(bs);
+
+	Uint32 chunks_per_pixel = (int)ceil((double)bs.getNumBits() / w);
+
+	QRect r = rect();
+	
+	for (Uint32 i = 0;i < w;i++)
+	{
+		Uint32 num_dl = 0;
+		for (Uint32 j = i*chunks_per_pixel;j < (i+1)*chunks_per_pixel;j++)
+			if (bs.get(j))
+				num_dl++;
+
+		if (num_dl == 0)
+			continue;
+		
+		QColor c = Qt::blue;
+		double fac = (double)num_dl / chunks_per_pixel;
+		c.setRgb(255 * (1.0 - fac),255 * (1.0 - fac),c.blue());
+		p.setPen(QPen(c,1,Qt::SolidLine));
+		p.setBrush(c);
+		p.drawRect(r.x() + i,r.y()+1,1,r.height() - 1);
+	}
 }
 
 void ChunkBar::drawMorePixelsThenChunks(QPainter & p)
