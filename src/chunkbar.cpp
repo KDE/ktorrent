@@ -127,7 +127,7 @@ void ChunkBar::drawEqual(QPainter & p)
 
 	QRect r = rect();
 
-	for (QValueList<Range>::iterator i = rs.begin();i != rs.end();i++)
+	for (QValueList<Range>::iterator i = rs.begin();i != rs.end();++i)
 	{
 		Range & ra = *i;
 		int w = ra.last - ra.first + 1;

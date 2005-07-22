@@ -209,7 +209,7 @@ namespace bt
 		// The byte offset the chunk begins
 		Uint32 coff = chunk * chunk_size;
 		Uint32 chunk_s = chunk != num_chunks - 1 ? chunk_size : last_size;
-		for (Uint32 i = 0;i < files.count();i++)
+		for (Uint32 i = 0;i < files.count();++i)
 		{
 			Torrent::File f = files[i];
 
