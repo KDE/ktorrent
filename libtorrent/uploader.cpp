@@ -36,7 +36,7 @@ namespace bt
 
 	Uploader::~Uploader()
 	{
-		for (UpItr i = uploaders.begin();i != uploaders.end();i++)
+		for (UpItr i = uploaders.begin();i != uploaders.end();++i)
 		{
 			PeerUploader* p = i->second;
 			delete p;
@@ -81,7 +81,7 @@ namespace bt
 	
 	void Uploader::removeAllPeers()
 	{
-		for (UpItr i = uploaders.begin();i != uploaders.end();i++)
+		for (UpItr i = uploaders.begin();i != uploaders.end();++i)
 		{
 			PeerUploader* p = i->second;
 			delete p;
@@ -91,7 +91,7 @@ namespace bt
 	
 	void Uploader::update()
 	{
-		for (UpItr i = uploaders.begin();i != uploaders.end();i++)
+		for (UpItr i = uploaders.begin();i != uploaders.end();++i)
 		{
 			PeerUploader* p = i->second;
 			uploaded += p->update();

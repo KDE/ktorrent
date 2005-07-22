@@ -59,7 +59,7 @@ namespace bt
 		if (cman.bytesLeft() == 0)
 			return;
 		
-		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();j++)
+		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
 		{
 			if (p.getIndex() != j->first)
 				continue;
@@ -96,7 +96,7 @@ namespace bt
 	void Downloader::normalUpdate()
 	{
 		PtrMap<Peer*,PeerDownloader>::iterator i;
-		for (i = pdowners.begin(); i != pdowners.end();i++)
+		for (i = pdowners.begin(); i != pdowners.end();++i)
 		{
 			PeerDownloader* pd = i->second;
 			pd->downloadUnsent();
@@ -110,11 +110,11 @@ namespace bt
 	
 	void Downloader::endgameUpdate()
 	{
-		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();j++)
+		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
 		{			
 			ChunkDownload* cd = j->second;
 			PtrMap<Peer*,PeerDownloader>::iterator i;
-			for (i = pdowners.begin(); i != pdowners.end();i++)
+			for (i = pdowners.begin(); i != pdowners.end();++i)
 			{
 				PeerDownloader* pd = i->second;
 					
@@ -131,7 +131,7 @@ namespace bt
 	void Downloader::downloadFrom(PeerDownloader* pd)
 	{
 		// first see if there are ChunkDownload's which need a PeerDownloader
-		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();j++)
+		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
 		{
 			ChunkDownload* cd = j->second;
 			bool ok_to_down = pd->hasChunk(cd->getChunk()->getIndex());
@@ -204,7 +204,7 @@ namespace bt
 		PeerDownloader* pd = pdowners.find(peer);
 		if (pd)
 		{
-			for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();i++)
+			for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();++i)
 			{
 				ChunkDownload* cd = i->second;
 				cd->peerKilled(pd);
@@ -274,7 +274,7 @@ namespace bt
 		if (!tmon)
 			return;
 
-		for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();i++)
+		for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();++i)
 		{
 			ChunkDownload* cd = i->second;
 			tmon->downloadStarted(cd);
@@ -292,7 +292,7 @@ namespace bt
 		fptr.write(&num,sizeof(Uint32));
 
 		Out() << "Saving " << current_chunks.count() << " chunk downloads" << endl;
-		for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();i++)
+		for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();++i)
 		{
 			Uint32 ch = i->first;
 			fptr.write(&ch,sizeof(Uint32));

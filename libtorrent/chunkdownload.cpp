@@ -139,7 +139,7 @@ namespace bt
 			return true;
 		}
 		
-		for (QPtrList<PeerDownloader>::iterator i = pdown.begin();i != pdown.end();i++)
+		for (QPtrList<PeerDownloader>::iterator i = pdown.begin();i != pdown.end();++i)
 			sendRequests(*i);
 
 		return false;

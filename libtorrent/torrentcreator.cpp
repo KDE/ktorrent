@@ -86,7 +86,7 @@ namespace bt
 		QDir d(target + dir);
 		// first get all files (we ignore symlinks)
 		QStringList dfiles = d.entryList(QDir::Files|QDir::NoSymLinks);
-		for (QStringList::iterator i = dfiles.begin();i != dfiles.end();i++)
+		for (QStringList::iterator i = dfiles.begin();i != dfiles.end();++i)
 		{
 			// add a Torrent::File to the list
 			QFileInfo fi(target + dir + *i);
@@ -100,7 +100,7 @@ namespace bt
 
 		// now for each subdir do a buildFileList 
 		QStringList subdirs = d.entryList(QDir::Dirs|QDir::NoSymLinks);
-		for (QStringList::iterator i = subdirs.begin();i != subdirs.end();i++)
+		for (QStringList::iterator i = subdirs.begin();i != subdirs.end();++i)
 		{
 			QString sd = dir + *i;
 			if (!sd.endsWith(bt::DirSeparator()))
@@ -191,7 +191,7 @@ namespace bt
 		
 		
 		Array<Uint8> big_hash(num_chunks*20);
-		for (Uint32 i = 0;i < num_chunks;i++)
+		for (Uint32 i = 0;i < num_chunks;++i)
 		{
 			memcpy(big_hash+(20*i),hashes[i].getData(),20);
 		}
