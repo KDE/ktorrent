@@ -18,9 +18,13 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include <klistview.h>
+#include <kglobal.h>
+#include <kiconloader.h>
+#include <kmimetype.h>
 #include <qlabel.h>
 #include <qtimer.h>
 #include <libutil/functions.h>
+#include <libutil/ptrmap.h>
 #include <libtorrent/torrent.h>
 #include <libtorrent/torrentcontrol.h>
 #include "ktorrentmonitor.h"
@@ -31,6 +35,61 @@
 #include "chunkbar.h"
 
 using namespace bt;
+
+class IWFileTreeItem : public KListViewItem
+{
+	QString name;
+	Uint32 size;
+	bool is_dir;
+	PtrMap<QString,IWFileTreeItem> children;
+public:
+	IWFileTreeItem(KListView* lv,const QString & name,bool dir,Uint32 size = 0)
+	: KListViewItem(lv),name(name),size(size),is_dir(dir)
+	{
+		setText(0,name);
+		if (!is_dir)
+			setText(1,BytesToString(size));
+
+		if (is_dir)
+			setPixmap(0,KGlobal::iconLoader()->loadIcon("folder",KIcon::Small));
+		else
+			setPixmap(0,KMimeType::findByPath(name)->pixmap(KIcon::Small));
+	}
+			
+	IWFileTreeItem(IWFileTreeItem* item,const QString & name,bool dir,Uint32 size = 0)
+	: KListViewItem(item),name(name),size(size),is_dir(dir)
+	{
+		setText(0,name);
+		if (!is_dir)
+			setText(1,BytesToString(size));
+
+		if (is_dir)
+			setPixmap(0,KGlobal::iconLoader()->loadIcon("folder",KIcon::Small));
+		else
+			setPixmap(0,KMimeType::findByPath(name)->pixmap(KIcon::Small));
+	}
+
+	void insert(const QString & path,Uint32 size)
+	{
+		int p = path.find(bt::DirSeparator());
+		if (p == -1)
+		{
+			children.insert(path,new IWFileTreeItem(this,path,false,size));
+		}
+		else
+		{
+			QString subdir = path.left(p);
+			IWFileTreeItem* sd = children.find(subdir);
+			if (!sd)
+			{
+				sd = new IWFileTreeItem(this,subdir,true);
+				children.insert(subdir,sd);
+			}
+			
+			sd->insert(path.mid(p+1),size);
+		}
+	}
+};
 
 InfoWidget::InfoWidget(QWidget* parent, const char* name, WFlags fl)
 		: InfoWidgetBase(parent,name,fl)
@@ -57,20 +116,20 @@ void InfoWidget::fillFileTree()
 	const bt::Torrent & tor = curr_tc->getTorrent();
 	if (tor.isMultiFile())
 	{
+		IWFileTreeItem* root = new IWFileTreeItem(m_file_view,tor.getNameSuggestion(),true);
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
 			bt::Torrent::File file;
 			tor.getFile(i,file);
-			new KListViewItem(m_file_view,
-				tor.getNameSuggestion() + bt::DirSeparator() + file.path,
-				BytesToString(file.size));
+			root->insert(file.path,file.size);
 		}
+		root->setOpen(true);
+		m_file_view->setRootIsDecorated(true);
 	}
 	else
 	{
-		new KListViewItem(m_file_view,
-						  tor.getNameSuggestion(),
-						  BytesToString(tor.getFileLength()));
+		m_file_view->setRootIsDecorated(false);
+		new IWFileTreeItem(m_file_view,tor.getNameSuggestion(),false,tor.getFileLength());
 	}
 }
 

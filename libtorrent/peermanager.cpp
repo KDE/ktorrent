@@ -54,6 +54,8 @@ namespace bt
 		if (!started)
 			return;
 
+		// update the speed of each peer,
+		// and get ridd of some killed peers
 		QPtrList<Peer>::iterator i = peers.begin();
 		while (i != peers.end())
 		{
@@ -71,6 +73,8 @@ namespace bt
 			}
 		}
 
+		// check all pending connections, wether they authenticated
+		// properly
 		QPtrList<Authenticate>::iterator j = pending.begin();
 		while (j != pending.end())
 		{
@@ -87,7 +91,23 @@ namespace bt
 			}
 		}
 
+		// connect to some new peers
 		connectToPeers();
+	}
+
+	void PeerManager::killChokedPeers(Uint32 older_then)
+	{
+		Out() << "Getting rid of peers which have been choked for a long time" << endl;
+		Uint32 now = bt::GetCurrentTime();
+		QPtrList<Peer>::iterator i = peers.begin();
+		while (i != peers.end())
+		{
+			Peer* p = *i;
+			if (p->isChoked() && (now - p->getChokeTime()) > older_then)
+				p->kill();
+
+			i++;
+		}
 	}
 	
 	void PeerManager::setMaxConnections(Uint32 max)

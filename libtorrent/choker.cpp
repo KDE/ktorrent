@@ -76,7 +76,7 @@ namespace bt
 		for (;itr != interested.end();itr++)
 		{
 			Peer* p = *itr;
-			if (num < 4)
+			if (num < 10)
 			{
 				p->getPacketWriter().sendUnchoke();
 				downloaders.push_back(p);

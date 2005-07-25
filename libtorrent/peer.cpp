@@ -46,6 +46,7 @@ namespace bt
 		connect(sock,SIGNAL(readyRead()),this,SLOT(readyRead()));
 		connect(sock,SIGNAL(error(int)),this,SLOT(error(int)));
 		pwriter = new PacketWriter(this);
+		time_choked = GetCurrentTime();
 	}
 
 
@@ -90,7 +91,12 @@ namespace bt
 		closeConnection();
 		killed = true;
 	}
-	
+
+	void Peer::kill()
+	{
+		closeConnection();
+		killed = true;
+	}
 
 	
 	void Peer::readPacket()
@@ -125,6 +131,10 @@ namespace bt
 					return;
 				}
 				
+				if (!choked)
+				{
+					time_choked = GetCurrentTime();
+				}
 				choked = true;
 				break;
 			case UNCHOKE:

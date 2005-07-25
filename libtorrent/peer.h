@@ -114,7 +114,16 @@ namespace bt
 		 * Close the peers connection.
 		 */
 		void closeConnection();
-	
+
+		/**
+		 * Kill the Peer.
+		 */
+		void kill();
+
+		/**
+		 * Get the time when this Peer was choked.
+		 */
+		Uint32 getChokeTime() const {return time_choked;}
 	private slots:
 		void connectionClosed(); 
 		void readyRead();
@@ -155,6 +164,7 @@ namespace bt
 		QSocket* sock;
 		
 		bool choked,interested,am_choked,am_interested,killed;
+		Uint32 time_choked;
 		BitSet pieces;
 		PeerID peer_id;
 		Timer snub_timer;

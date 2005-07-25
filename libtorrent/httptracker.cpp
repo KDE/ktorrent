@@ -52,7 +52,7 @@ namespace bt
 		url.addQueryItem("downloaded",QString::number(downloaded));
 		url.addQueryItem("left",QString::number(left));
 		url.addQueryItem("compact","1");
-		url.addQueryItem("numwant","1000");
+		url.addQueryItem("numwant","100");
 
 		if (event != QString::null)
 			url.addQueryItem("event",event);

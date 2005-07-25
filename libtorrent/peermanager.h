@@ -112,11 +112,18 @@ namespace bt
 		 * Stop listening to incoming requests.
 		 */
 		void stop();
+
+		/**
+		 * Kill all peers who have been choked longer then @a older_then time.
+		 * @param older_then Time in milliseconds
+		 */
+		void killChokedPeers(Uint32 older_then);
 		
 		Uint32 getNumConnectedPeers() const {return peers.count();}
 		Uint32 getNumPending() const {return num_pending;}
 		
 		static void setMaxConnections(Uint32 max);
+		static Uint32 getMaxConnections() {return max_connections;}
 	private:
 		virtual void newConnection(int socket);
 		void readPotentialPeers(BListNode* n);

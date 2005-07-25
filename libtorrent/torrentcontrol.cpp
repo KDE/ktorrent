@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <qfile.h>
 #include <klocale.h>
+#include <qtextstream.h>
 #include <libutil/fileops.h>
 #include "downloader.h"
 #include "uploader.h"
@@ -104,6 +105,12 @@ namespace bt
 		
 		if (tracker_update_timer.getElapsedSinceUpdate() >= tracker_update_interval)
 		{
+			Uint32 max_connections = PeerManager::getMaxConnections();
+			// if a peer has nothing but choked since the last tracker update
+			// we will get rid of them (if there is a connection cap)
+			if (max_connections > 0 && pman->getNumConnectedPeers() == max_connections)
+				pman->killChokedPeers(tracker_update_interval);
+			
 			updateTracker();
 			tracker_update_timer.update();
 		}
@@ -342,6 +349,7 @@ namespace bt
 		updateTracker("started");
 		pman->start();
 		down->loadDownloads(datadir + "current_chunks");
+		loadStats();
 		running = true;
 		started = true;
 		tracker_update_timer.update();
@@ -366,6 +374,8 @@ namespace bt
 		pman->stop();
 		pman->closeAllConnections();
 		pman->clearDeadPeers();
+		saveStats();
+		
 		running = false;
 		updateStatusMsg();
 	}
@@ -585,6 +595,42 @@ namespace bt
 	{
 		if (cman)
 			cman->toBitSet(bs);
+	}
+
+	void TorrentControl::saveStats()
+	{
+		QFile fptr(datadir + "stats");
+		if (!fptr.open(IO_WriteOnly))
+		{
+			Out() << "Warning : can't create stats file" << endl;
+			return;
+		}
+
+		QTextStream out(&fptr);
+		out << "UPLOADED=" << up->bytesUploaded() << ::endl;
+	}
+
+	void TorrentControl::loadStats()
+	{
+		QFile fptr(datadir + "stats");
+		if (!fptr.open(IO_ReadOnly))
+			return;
+
+		QTextStream in(&fptr);
+		while (!in.atEnd())
+		{
+			QString line = in.readLine();
+			if (line.startsWith("UPLOADED="))
+			{
+				bool ok = true;
+				Uint32 val = line.mid(9).toInt(&ok);
+				if (ok)
+					up->setBytesUploaded(val);
+				else
+					Out() << "Warning : can't get bytes uploaded out of line : "
+							<< line << endl;
+			}
+		}
 	}
 }
 #include "torrentcontrol.moc"

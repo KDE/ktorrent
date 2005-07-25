@@ -44,11 +44,11 @@ static KCmdLineOptions options[] =
 int main(int argc, char **argv)
 {	
 	KAboutData about("ktorrent", I18N_NOOP("KTorrent"), version, description,
-	                 KAboutData::License_GPL, "(C) 2005 Joris Guisson", 0, "http://lumumba.uhasselt.be/~joris/ktorrent/");
-	about.addAuthor( "Joris Guisson", 0, "joris.guisson@gmail.com" );
+					 KAboutData::License_GPL, "(C) 2005 Joris Guisson", 0, "http://ktorrent.pwsp.net/");
+	about.addAuthor("Joris Guisson", 0, "joris.guisson@gmail.com" );
 	about.addAuthor("Ivan Vasic",0,"ivasic@gmail.com");
 	about.addCredit("The-Error",I18N_NOOP("The downloads icon"),"zotrix@eunet.yu");
-	about.addCredit( "Adam Treat", 0, "treat@kde.org" );
+	about.addCredit("Adam Treat", 0, "treat@kde.org" );
 	about.addCredit("Danny Allen",I18N_NOOP("Application icon"),"danny@dannyallen.co.uk");
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);

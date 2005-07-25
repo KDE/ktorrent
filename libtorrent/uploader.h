@@ -33,24 +33,63 @@ namespace bt
 	
 
 	/**
-	@author Joris Guisson
-	*/
+	 * @author Joris Guisson
+	 *
+	 * Class which manages the uploading of data. It has a PeerUploader for
+	 * each Peer.
+	 */
 	class Uploader : public QObject
 	{
 		Q_OBJECT
 	public:
+		/**
+		 * Constructor, sets the ChunkManager. 
+		 * @param cman The ChunkManager
+		 */
 		Uploader(ChunkManager & cman);
 		virtual ~Uploader();
 
+		/// Get the number of bytes uploaded.
 		Uint32 bytesUploaded() const {return uploaded;}
+
+		/// Get the upload rate of all Peers combined.
 		Uint32 uploadRate() const;
 
+		/// Set the number of bytes which have been uploaded.
+		void setBytesUploaded(Uint32 b) {uploaded = b;}
 	public slots:
+		/**
+		 * Add a Request for a piece of a Chunk.
+		 * @param req The request
+		 */
 		void addRequest(const Request & req);
+		
+		/**
+		 * Cancel a Request.
+		 * @param req The request
+		 */
 		void cancel(const Request & req);
+		
+		/**
+		 * Update every PeerUploader.
+		 */
 		void update();
+		
+		/**
+		 * Add a Peer, this will create a PeerUploader for the Peer.
+		 * @param peer The Peer
+		 */
 		void addPeer(Peer* peer);
+
+		/**
+		 * Remove a Peer, this will get rid of the Peer's PeerUploader.
+		 * @param peer The Peer
+		 */
 		void removePeer(Peer* peer);
+
+		/**
+		 * Remove all Peer's and PeerUploader's.
+		 */
 		void removeAllPeers();
 		
 	private:

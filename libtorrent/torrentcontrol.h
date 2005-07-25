@@ -201,21 +201,24 @@ namespace bt
 		void updateTracker() {updateTracker(QString::null);}
 		
 	private slots:
-		
 		void onNewPeer(Peer* p);
 		void onPeerRemoved(Peer* p);
 		void doChoking();
-		void setStatus(const QString & s);	
+		void setStatus(const QString & s);
+
 	signals:
 		/**
 		 * Emited when a TorrentControl object is finished downloading.
-		 * @parm me The TorrentControl
+		 * @param me The TorrentControl
 		 */
 		void finished(bt::TorrentControl* me);
-		void trackerError(bt::TorrentControl* me,const QString & error);		
+		void trackerError(bt::TorrentControl* me,const QString & error);
+		
 	private:	
 		void updateTracker(const QString & ev,bool last_succes = true);
 		void updateStatusMsg(const QString & def = QString::null);
+		void saveStats();
+		void loadStats();
 		
 	private:
 		Torrent* tor;
