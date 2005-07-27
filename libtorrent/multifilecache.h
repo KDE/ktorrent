@@ -24,7 +24,6 @@
 
 namespace bt
 {
-	struct ChunkPos;
 
 	/**
 	 * @author Joris Guisson
@@ -48,27 +47,6 @@ namespace bt
 		virtual bool hasBeenSaved() const;
 	private:
 		void touch(const QString fpath);
-		
-		/**
-		 * Calculate in which file(s) a chunk lies.
-		 * @param c 
-		 * @param pos 
-		 */
-		void calcChunkPos(Chunk* c,ChunkPos & pos);
-
-		/**
-		 * Save Chunk to single file.
-		 * @param c 
-		 * @param pos 
-		 */
-		void saveChunkOneFile(Chunk* c,ChunkPos & pos);
-
-		/**
-		 * Save Chunk to 2 files.
-		 * @param c
-		 * @param pos
-		 */
-		void saveChunkTwoFiles(Chunk* c,ChunkPos & pos);
 	};
 
 }

@@ -20,13 +20,14 @@
 #include <qfile.h>
 #include <qdatastream.h>
 #include <libutil/log.h>
+#include <libutil/functions.h>
+#include <libutil/error.h>
+#include <libutil/sha1hashgen.h>
 #include <time.h>
 #include <stdlib.h>
 #include "torrent.h"
 #include "bdecoder.h"
 #include "bnode.h"
-#include <libutil/error.h>
-#include <libutil/sha1hashgen.h>
 #include "announcelist.h"
 
 #include <klocale.h>
@@ -116,28 +117,31 @@ namespace bt
 			if (!d)
 				throw Error(i18n("Corrupted torrent!"));
 			
-			BValueNode* v = d->getValue("length");
-			if (!v || v->data().getType() != Value::INT)
-				throw Error(i18n("Corrupted torrent!"));
-			
-			File file;
-			file.size = v->data().toInt();
-			file_length += file.size;
-			
 			BListNode* ln = d->getList("path");
 			if (!ln)
 				throw Error(i18n("Corrupted torrent!"));
-			
+
+			QString path;
 			for (Uint32 j = 0;j < ln->getNumChildren();j++)
 			{
-				v = ln->getValue(j);
+				BValueNode* v = ln->getValue(j);
 				if (!v || v->data().getType() != Value::STRING)
 					throw Error(i18n("Corrupted torrent!"));
 	
-				file.path += v->data().toString(encoding);
+				path += v->data().toString(encoding);
 				if (j + 1 < ln->getNumChildren())
-					file.path += "/";
+					path += bt::DirSeparator();
 			}
+
+			BValueNode* v = d->getValue("length");
+			if (!v || v->data().getType() != Value::INT)
+				throw Error(i18n("Corrupted torrent!"));
+
+			TorrentFile file(path,file_length,v->data().toInt(),piece_length);
+
+			// update file_length
+			file_length += file.getSize();
+			
 			files.append(file);
 		}
 	}
@@ -231,7 +235,7 @@ namespace bt
 		return hash_pieces[idx];
 	}
 	
-	void Torrent::getFile(Uint32 idx,Torrent::File & file) const
+	void Torrent::getFile(Uint32 idx,TorrentFile & file) const
 	{
 		if (idx >= files.size())
 			return;
@@ -253,5 +257,20 @@ namespace bt
 			return anon_list->getNumTrackerURLs();
 		else
 			return 1;
+	}
+
+	void Torrent::calcChunkPos(Uint32 chunk,
+							   QValueList<TorrentFile> & file_list) const
+	{
+		file_list.clear();
+		if (chunk >= hash_pieces.size() || files.empty())
+			return;
+
+		for (Uint32 i = 0;i < files.count();i++)
+		{
+			const TorrentFile & f = files[i];
+			if (chunk >= f.getFirstChunk() && chunk <= f.getLastChunk())
+				file_list.append(f);
+		}
 	}
 }

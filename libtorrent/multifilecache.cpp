@@ -21,30 +21,21 @@
 #include <qfileinfo.h>
 #include <klocale.h>
 #include <libutil/file.h>
+#include <libutil/fileops.h>
+#include <libutil/functions.h>
+#include <libutil/error.h>
+#include <libutil/log.h>
 #include "torrent.h"
 #include "cache.h"
 #include "multifilecache.h"
-#include <libutil/error.h>
+#include "globals.h"
 #include "chunk.h"
-#include <libutil/fileops.h>
-#include <libutil/functions.h>
 
 
 namespace bt
 {
-	/*
-		It's possible for a Chunk to lie in two files.
-		file2 should be set to QString::null if it isn't.
-	*/
-	struct ChunkPos
-	{
-		QString file1;
-		Uint32 off1;
-		Uint32 size1;
+	static Uint32 FileOffset(Chunk* c,const TorrentFile & f,Uint32 chunk_size);
 
-		QString file2;
-		Uint32 off2;
-	};
 
 	MultiFileCache::MultiFileCache(Torrent& tor, const QString& data_dir)
 		: Cache(tor, data_dir)
@@ -70,11 +61,13 @@ namespace bt
 
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
-			Torrent::File f;
+			TorrentFile f;
 			tor.getFile(i,f);
-			touch(f.path);
+			touch(f.getPath());
 		}
 	}
+
+	
 
 	void MultiFileCache::touch(const QString fpath)
 	{
@@ -99,165 +92,121 @@ namespace bt
 		fptr.open(cache_dir + fpath,"wb");
 	}
 
-	void MultiFileCache::calcChunkPos(Chunk* c,ChunkPos & pos)
-	{
-		// calculate in which file c lies and at what position
-
-		// the number of bytes we have allready passed
-		Uint32 bytes_passed = 0;
-		// The byte offset the chunk begins
-		Uint32 coff = c->getIndex() * tor.getChunkSize();
-		for (Uint32 i = 0;i < tor.getNumFiles();i++)
-		{
-			Torrent::File f;
-			tor.getFile(i,f);
-
-			if (coff < bytes_passed + f.size)
-			{
-				// bingo we found it
-				if (coff + c->getSize() <= bytes_passed + f.size)
-				{
-					// The chunk is in 1 file
-					pos.file1 = f.path;
-					pos.off1 = coff - bytes_passed;
-					pos.size1 = c->getSize();
-					pos.file2 = QString::null;
-					return;
-				}
-				else
-				{
-					// The chunk is in 2 files
-
-					// check if the next files exists
-					if (i + 1 >= tor.getNumFiles())
-						throw Error(i18n("Cannot find chunk"));
-
-					// get the second file
-					Torrent::File f2;
-					tor.getFile(i+1,f2);
-					
-					pos.file1 = f.path;
-					pos.off1 = coff - bytes_passed;
-					pos.size1 = c->getSize() - ((coff + c->getSize()) - (bytes_passed + f.size));
-					pos.file2 = f2.path;
-					pos.off2 = 0;
-					return;
-				}
-			}
-			else
-			{
-				// not found move to next file
-				bytes_passed += f.size;
-			}
-		}
-
-		// if we get here, we're in serious trouble
-		throw Error(i18n("Cannot find chunk"));
-	}
-
 	void MultiFileCache::load(Chunk* c)
 	{
-		ChunkPos cp;
-		calcChunkPos(c,cp);
-
-		if (cp.file2.isNull())
+		QValueList<TorrentFile> files;
+		tor.calcChunkPos(c->getIndex(),files);
+		
+		Uint8* data = new Uint8[c->getSize()];
+		Uint32 read = 0; // number of bytes read
+		for (Uint32 i = 0;i < files.count();i++)
 		{
+			const TorrentFile & f = files[i];
 			File fptr;
-			if (!fptr.open(cache_dir + cp.file1,"rb"))
+			if (!fptr.open(cache_dir + f.getPath(),"rb"))
+			{
+				delete [] data;
 				throw Error(i18n("Cannot open file %1: %2")
-						.arg(cp.file1).arg(fptr.errorString()));
+						.arg(f.getPath()).arg(fptr.errorString()));
+			}
 
-			fptr.seek(File::BEGIN,cp.off1);
-			Uint8* data = new Uint8[c->getSize()];
-			fptr.read(data,c->getSize());
-			c->setData(data);
-		}
-		else
-		{
-			File fptr1;
-			if (!fptr1.open(cache_dir + cp.file1,"rb"))
-				throw Error(i18n("Cannot open file %1: %2")
-						.arg(cp.file1).arg(fptr1.errorString()));
-
-			File fptr2;
-			if (!fptr2.open(cache_dir + cp.file2,"rb"))
-				throw Error(i18n("Cannot open file %1: %2")
-						.arg(cp.file2).arg(fptr2.errorString()));
-
-			Uint8* data = new Uint8[c->getSize()];
+			// first calculate offset into file
+			// only the first file can have an offset
+			// the following files will start at the beginning
+			Uint32 off = 0;
+			if (i == 0)
+				off = FileOffset(c,f,tor.getChunkSize());
 			
-			// read first part of chunk from fptr1
-			fptr1.seek(File::BEGIN,cp.off1);
-			fptr1.read(data,cp.size1);
-			// read second part from fptr2
-			fptr2.read(data + cp.size1,c->getSize() - cp.size1);
-			c->setData(data);
+			Uint32 to_read = 0;
+			// then the amount of data we can read from this file
+			if (files.count() == 1)
+				to_read = c->getSize();
+			else if (i == 0)
+				to_read = f.getLastChunkSize();
+			else if (i == files.count() - 1)
+				to_read = c->getSize() - read;
+			else
+				to_read = f.getSize();
+						
+			// read part of data
+			fptr.seek(File::BEGIN,off);
+			fptr.read(data + read,to_read);
+			read += to_read;
 		}
+		c->setData(data);
 	}
+
+	
 
 	void MultiFileCache::save(Chunk* c)
 	{
-		ChunkPos cp;
-		calcChunkPos(c,cp);
+		QValueList<TorrentFile> files;
+		tor.calcChunkPos(c->getIndex(),files);
 
-		if (cp.file2.isNull())
-			saveChunkOneFile(c,cp);
-		else
-			saveChunkTwoFiles(c,cp);
+		Out() << "Saving " << c->getIndex() << " to " << files.count() << " files" << endl;
+		Uint32 written = 0; // number of bytes written
+		for (Uint32 i = 0;i < files.count();i++)
+		{
+			const TorrentFile & f = files[i];
+			File fptr;
+			if (!fptr.open(cache_dir + f.getPath(),"r+b"))
+			{
+				throw Error(i18n("Cannot open file %1: %2")
+						.arg(f.getPath()).arg(fptr.errorString()));
+			}
+
+			// first calculate offset into file
+			// only the first file can have an offset
+			// the following files will start at the beginning
+			Uint32 off = 0;
+			Uint32 to_write = 0;
+			if (i == 0)
+			{
+				off = FileOffset(c,f,tor.getChunkSize());
+
+				Out() << "off = " << off << endl;
+				// we may need to expand the first file
+				fptr.seek(File::END,0);
+				Uint32 cache_size = fptr.tell();
+				if (cache_size < off)
+				{
+					// write random shit to enlarge the file
+					Uint32 num_empty_bytes = off - cache_size + 1;
+					Uint8 b[1024];
+					Uint32 nw = 0;
+					while (nw < num_empty_bytes)
+					{
+						Uint32 left = num_empty_bytes - nw;
+						fptr.write(b,left < 1024 ? left : 1024);
+						nw += 1024;
+					}
+				}
+			}
+
+			// the amount of data we can write to this file
+			if (files.count() == 1)
+				to_write = c->getSize();
+			else if (i == 0)
+				to_write = f.getLastChunkSize();
+			else if (i == files.count() - 1)
+				to_write = c->getSize() - written;
+			else
+				to_write = f.getSize();
+			
+			Out() << "to_write " << to_write << endl;
+			// read part of data
+			fptr.seek(File::BEGIN,off);
+			fptr.write(c->getData() + written,to_write);
+			written += to_write;
+
+			fptr.close();
+		}
+		
 
 		Uint32 chunk_pos = c->getIndex() * tor.getChunkSize();
 		// set the offset and clear the chunk
 		c->setCacheFileOffset(chunk_pos);
 		c->clear();
-	}
-
-	void MultiFileCache::saveChunkOneFile(Chunk* c,ChunkPos & pos)
-	{
-		File fptr;
-		if (!fptr.open(cache_dir + pos.file1,"r+b"))
-			throw Error(i18n("Can't open cache file"));
-			
-		// jump to end of file
-		fptr.seek(File::END,0);
-		unsigned int cache_size = fptr.tell();
-	
-		// see if the cache is big enough for the chunk
-		if (pos.off1 <= cache_size)
-		{
-			// big enough so just jump to the right posiition and write
-			// the chunk
-			fptr.seek(File::BEGIN,pos.off1);
-			fptr.write(c->getData(),pos.size1);
-		}
-		else
-		{
-			// write random shit to enlarge the file
-			Uint32 num_empty_bytes = pos.off1 - cache_size;
-			Uint8 b[1024];
-			Uint32 nw = 0;
-			while (nw < num_empty_bytes)
-			{
-				Uint32 left = num_empty_bytes - nw;
-				fptr.write(b,left < 1024 ? left : 1024);
-				nw += 1024;
-			}
-	
-			// now write the chunks at the good position
-			fptr.seek(File::BEGIN,pos.off1);
-			fptr.write(c->getData(),pos.size1);
-		}
-	}
-
-	void MultiFileCache::saveChunkTwoFiles(Chunk* c,ChunkPos & pos)
-	{
-		// first save to first file
-		saveChunkOneFile(c,pos);
-		// open second and save second piece of chunk
-		File fptr;
-		if (!fptr.open(cache_dir + pos.file2,"r+b"))
-			throw Error(i18n("Can't open cache file"));
-
-		fptr.write(c->getData() + pos.size1,c->getSize() - pos.size1);
 	}
 
 	void MultiFileCache::saveData(const QString & dir)
@@ -278,5 +227,17 @@ namespace bt
 	{
 		QFileInfo fi(cache_dir.mid(0,cache_dir.length() - 1));
 		return fi.isSymLink();
+	}
+
+	///////////////////////////////
+
+	Uint32 FileOffset(Chunk* c,const TorrentFile & f,Uint32 chunk_size)
+	{
+		Uint32 off = 0;
+		if (c->getIndex() - f.getFirstChunk() > 0)
+			off = (c->getIndex() - f.getFirstChunk() - 1) * chunk_size;
+		if (c->getIndex() > 0)
+			off += (c->getSize() - f.getFirstChunkOffset());
+		return off;
 	}
 }

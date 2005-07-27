@@ -47,7 +47,7 @@ namespace bt
 		// calculated values
 		Uint32 num_chunks;
 		Uint32 last_size;
-		QValueList<Torrent::File> files;
+		QValueList<TorrentFile> files;
 		QValueList<SHA1Hash> hashes;
 		//
 		Uint32 cur_chunk;
@@ -97,21 +97,12 @@ namespace bt
 		TorrentControl* makeTC(const QString & data_dir);
 
 	private:
-		
 		void saveInfo(BEncoder & enc);
-		void saveFile(BEncoder & enc,const Torrent::File & file);
+		void saveFile(BEncoder & enc,const TorrentFile & file);
 		void savePieces(BEncoder & enc);
-
-		/**
-		 * Calculate in which files a chunk lies
-		 * @param chunk The index of the chunk
-		 * @param f1 The first file (index into files list)
-		 * @param off The offset in the first file
-		 * @param size The size of the chunk in the first file
-		 * @param f2 The second file (set to -1 if the chunk lies fully in one file)
-		 */
-		void calcChunkPos(Uint32 chunk,int & f1,Uint32 & off,Uint32 & size,int & f2);
 		void buildFileList(const QString & dir,Uint32 & tot_size);
+		bool calcHashSingle();
+		bool calcHashMulti();
 	};
 
 }

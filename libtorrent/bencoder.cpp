@@ -68,7 +68,7 @@ namespace bt
 		out->write("l",1);
 	}
 	
-	void BEncoder::write(int val)
+	void BEncoder::write(Uint32 val)
 	{
 		if (!out) return;
 		

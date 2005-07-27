@@ -98,7 +98,7 @@ namespace bt
 		 * Write an int
 		 * @param val 
 		 */
-		void write(int val);
+		void write(Uint32 val);
 		
 		/**
 		 * Write a string

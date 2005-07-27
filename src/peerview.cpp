@@ -25,7 +25,7 @@
 PeerView::PeerView(QWidget *parent, const char *name)
 		: KListView(parent, name)
 {
-	addColumn(i18n("ID"));
+	addColumn(i18n("Client"));
 	addColumn(i18n("Down Speed"));
 	addColumn(i18n("Up Speed"));
 	addColumn(i18n("Choked"));
@@ -42,7 +42,7 @@ void PeerView::addPeer(bt::Peer* peer)
 {
 	KListViewItem* i = new KListViewItem(
 			this,
-			peer->getPeerID().toString(),
+			peer->getPeerID().identifyClient(),
 			KBytesPerSecToString(peer->getDownloadRate()),
 			KBytesPerSecToString(peer->getUploadRate()),
 			peer->isChoked() ? i18n("yes") : i18n("no"),
@@ -64,7 +64,7 @@ void PeerView::update()
 	{
 		KListViewItem* it = i.data();
 		bt::Peer* peer = i.key();
-		it->setText(0,peer->getPeerID().toString());
+		it->setText(0,peer->getPeerID().identifyClient());
 		it->setText(1,KBytesPerSecToString(peer->getDownloadRate() / 1024.0));
 		it->setText(2,KBytesPerSecToString(peer->getUploadRate() / 1024.0));
 		it->setText(3,peer->isChoked() ? i18n("yes") : i18n("no"));

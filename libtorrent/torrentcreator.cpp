@@ -88,11 +88,9 @@ namespace bt
 		QStringList dfiles = d.entryList(QDir::Files|QDir::NoSymLinks);
 		for (QStringList::iterator i = dfiles.begin();i != dfiles.end();++i)
 		{
-			// add a Torrent::File to the list
+			// add a TorrentFile to the list
 			QFileInfo fi(target + dir + *i);
-			Torrent::File f;
-			f.path = dir + *i;
-			f.size = fi.size();
+			TorrentFile f(dir + *i,tot_size,fi.size(),chunk_size);
 			files.append(f);
 			// update total size
 			tot_size += fi.size();
@@ -102,6 +100,9 @@ namespace bt
 		QStringList subdirs = d.entryList(QDir::Dirs|QDir::NoSymLinks);
 		for (QStringList::iterator i = subdirs.begin();i != subdirs.end();++i)
 		{
+			if (*i == "." || *i == "..")
+				continue;
+			
 			QString sd = dir + *i;
 			if (!sd.endsWith(bt::DirSeparator()))
 				sd += bt::DirSeparator();
@@ -151,7 +152,7 @@ namespace bt
 		{
 			enc.write("files");
 			enc.beginList();
-			QValueList<Torrent::File>::iterator i = files.begin();
+			QValueList<TorrentFile>::iterator i = files.begin();
 			while (i != files.end())
 			{
 				saveFile(enc,*i);
@@ -170,13 +171,13 @@ namespace bt
 		enc.end();
 	}
 
-	void TorrentCreator::saveFile(BEncoder & enc,const Torrent::File & file)
+	void TorrentCreator::saveFile(BEncoder & enc,const TorrentFile & file)
 	{
 		enc.beginDict();
-		enc.write("length");enc.write(file.size);
+		enc.write("length");enc.write(file.getSize());
 		enc.write("path");
 		enc.beginList();
-		QStringList sl = QStringList::split(bt::DirSeparator(),file.path);
+		QStringList sl = QStringList::split(bt::DirSeparator(),file.getPath());
 		for (QStringList::iterator i = sl.begin();i != sl.end();i++)
 			enc.write(*i);
 		enc.end();
@@ -188,8 +189,7 @@ namespace bt
 		if (hashes.empty())
 			while (!calculateHash())
 				;
-		
-		
+
 		Array<Uint8> big_hash(num_chunks*20);
 		for (Uint32 i = 0;i < num_chunks;++i)
 		{
@@ -198,114 +198,96 @@ namespace bt
 		enc.write(big_hash,num_chunks*20);
 	}
 
-	void TorrentCreator::calcChunkPos(Uint32 chunk,
-									  int & f1,Uint32 & off,
-									  Uint32 & size,int & f2)
+	bool TorrentCreator::calcHashSingle()
 	{
-		// calculate in which file chunk lies and at what position
+		Array<Uint8> buf(chunk_size);
+		File fptr;
+		if (!fptr.open(target,"rb"))
+			throw Error(i18n("Cannot open file %1: %2")
+					.arg(target).arg(fptr.errorString()));
 
-		// the number of bytes we have allready passed
-		Uint32 bytes_passed = 0;
-		// The byte offset the chunk begins
-		Uint32 coff = chunk * chunk_size;
-		Uint32 chunk_s = chunk != num_chunks - 1 ? chunk_size : last_size;
-		for (Uint32 i = 0;i < files.count();++i)
+		Uint32 s = cur_chunk != num_chunks - 1 ? chunk_size : last_size;
+		fptr.seek(File::BEGIN,cur_chunk*chunk_size);
+			
+		fptr.read(buf,s);
+		SHA1Hash h = SHA1Hash::generate(buf,s);
+		hashes.append(h);
+		cur_chunk++;
+		return cur_chunk >= num_chunks;
+	}
+	
+	bool TorrentCreator::calcHashMulti()
+	{
+		Array<Uint8> buf(chunk_size);
+		Uint32 s = cur_chunk != num_chunks - 1 ? chunk_size : last_size;
+			// first find the file(s) the chunk lies in
+		QValueList<TorrentFile> file_list;
+		Uint32 i = 0;
+		while (i < files.size())
 		{
-			Torrent::File f = files[i];
-
-			if (coff < bytes_passed + f.size)
-			{
-				// bingo we found it
-				if (coff + chunk_s <= bytes_passed + f.size)
-				{
-					// The chunk is in 1 file
-					f1 = i;
-					off = coff - bytes_passed;
-					size = chunk_s;
-					f2 = -1;
-					return;
-				}
-				else
-				{
-					// The chunk is in 2 files
-
-					// check if the next files exists
-					if (i + 1 >= files.count())
-						throw Error(i18n("Cannot find chunk"));
-					
-					f1 = i;
-					off = coff - bytes_passed;
-					size = chunk_s - ((coff + chunk_s) - (bytes_passed + f.size));
-					f2 = i+1;
-					return;
-				}
-			}
-			else
-			{
-				// not found move to next file
-				bytes_passed += f.size;
-			}
+			const TorrentFile & tf = files[i];
+			if (cur_chunk >= tf.getFirstChunk() && cur_chunk <= tf.getLastChunk())
+				file_list.append(tf);
+				
+			i++;
 		}
 
-		// if we get here, we're in serious trouble
-		throw Error(i18n("Cannot find chunk"));
-	}
+		Uint32 read = 0;
+		for (i = 0;i < file_list.count();i++)
+		{
+			const TorrentFile & f = file_list[i];
+			File fptr;
+			if (!fptr.open(target + f.getPath(),"rb"))
+			{
+				throw Error(i18n("Cannot open file %1: %2")
+						.arg(f.getPath()).arg(fptr.errorString()));
+			}
 
+				// first calculate offset into file
+				// only the first file can have an offset
+				// the following files will start at the beginning
+			Uint32 off = 0;
+			if (i == 0)
+			{
+				if (cur_chunk - f.getFirstChunk() > 0)
+					off = (cur_chunk - f.getFirstChunk() - 1) * chunk_size;
+				if (cur_chunk > 0)
+					off += (s - f.getFirstChunkOffset());
+			}
+			
+			Uint32 to_read = 0;
+				// then the amount of data we can read from this file
+			if (file_list.count() == 1)
+				to_read = s;
+			else if (i == 0)
+				to_read = f.getLastChunkSize();
+			else if (i == file_list.count() - 1)
+				to_read = s - read;
+			else
+				to_read = f.getSize();
+						
+			// read part of data
+			fptr.seek(File::BEGIN,off);
+			fptr.read(buf + read,to_read);
+			read += to_read;
+		}
+
+			// generate hash
+		SHA1Hash h = SHA1Hash::generate(buf,s);
+		hashes.append(h);
+
+		cur_chunk++;
+		return cur_chunk >= num_chunks;
+	}
+	
 	bool TorrentCreator::calculateHash()
 	{
 		if (cur_chunk >= num_chunks)
 			return true;
-
-		Array<Uint8> buf(chunk_size);
 		if (files.empty())
-		{
-			File fptr;
-			if (!fptr.open(target,"rb"))
-				throw Error(i18n("Cannot open file %1: %2")
-						.arg(target).arg(fptr.errorString()));
-
-			Uint32 s = cur_chunk != num_chunks - 1 ? chunk_size : last_size;
-			fptr.seek(File::BEGIN,cur_chunk*chunk_size);
-			
-			fptr.read(buf,s);
-			SHA1Hash h = SHA1Hash::generate(buf,s);
-			hashes.append(h);
-		}
+			return calcHashSingle();
 		else
-		{
-			Uint32 s = cur_chunk != num_chunks - 1 ? chunk_size : last_size;
-			// first find out where the chunk lies
-			int f1,f2;
-			Uint32 size,off;
-			calcChunkPos(cur_chunk,f1,off,size,f2);
-
-			// read from first file
-			File fptr;
-			if (!fptr.open(target + files[f1].path,"rb"))
-				throw Error(i18n("Cannot open file %1: %2")
-						.arg(target + files[f1].path)
-						.arg(fptr.errorString()));
-
-			fptr.seek(File::BEGIN,off);
-			fptr.read(buf,size);
-
-			// read from second file if necessary
-			if (f2 > 0)
-			{
-				if (!fptr.open(target + files[f2].path,"rb"))
-					throw Error(i18n("Cannot open file %1: %2")
-							.arg(target + files[f2].path)
-							.arg(fptr.errorString()));
-
-				fptr.read(buf+size,s - size);
-			}
-
-			// generate hash
-			SHA1Hash h = SHA1Hash::generate(buf,s);
-			hashes.append(h);
-		}
-		cur_chunk++;
-		return cur_chunk >= num_chunks;
+			return calcHashMulti();
 	}
 	
 	TorrentControl* TorrentCreator::makeTC(const QString & data_dir)

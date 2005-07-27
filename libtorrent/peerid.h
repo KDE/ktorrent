@@ -42,6 +42,13 @@ namespace bt
 		const char* data() const {return id;}
 		
 		QString toString() const;
+
+		/**
+		 * Interprets the PeerID to figure out which client it is.
+		 * @author Ivan + Joris
+		 * @return The name of the client
+		 */
+		QString identifyClient() const;
 		
 		friend bool operator == (const PeerID & a,const PeerID & b);
 	};

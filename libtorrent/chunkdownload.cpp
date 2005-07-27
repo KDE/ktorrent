@@ -253,7 +253,7 @@ namespace bt
 		else if (pdown.count() == 1)
 		{
 			const Peer* p = pdown.getFirst()->getPeer();
-			return p->getPeerID().toString();
+			return p->getPeerID().identifyClient();
 		}
 		else
 		{

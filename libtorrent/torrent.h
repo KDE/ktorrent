@@ -26,6 +26,7 @@
 #include <libutil/constants.h>
 #include "globals.h"
 #include "peerid.h"
+#include "torrentfile.h"
 
 namespace bt
 {
@@ -44,12 +45,6 @@ namespace bt
 	 */
 	class Torrent
 	{
-	public:
-		struct File
-		{
-			QString path;
-			Uint32 size;
-		};
 	public:
 		Torrent();
 		virtual ~Torrent();
@@ -112,11 +107,21 @@ namespace bt
 		Uint32 getNumFiles() const {return files.count();}
 		
 		/**
-		 * Get a Torrent::File, does nothing if we have a single file torrent.
+		 * Get a TorrentFile, does nothing if we have a single file torrent.
 		 * @param idx Index of the file
 		 * @param file The file
 		 */
-		void getFile(Uint32 idx,Torrent::File & file) const;
+		void getFile(Uint32 idx,TorrentFile & file) const;
+
+		/**
+		 * Calculate in which file(s) a Chunk lies. A list will
+		 * get filled with all the files. The list gets cleared at
+		 * the beginning. If something is wrong only the list will
+		 * get cleared.
+		 * @param chunk The index of the chunk
+		 * @param file_list This list will be filled with all the files
+		 */
+		void calcChunkPos(Uint32 chunk,QValueList<TorrentFile> & file_list) const;
 	private:
 		void loadInfo(BDictNode* node);
 		void loadTrackerURL(BValueNode* node);
@@ -135,7 +140,7 @@ namespace bt
 		SHA1Hash info_hash;
 		PeerID peer_id;
 		QValueVector<SHA1Hash> hash_pieces;
-		QValueVector<File> files;
+		QValueVector<TorrentFile> files;
 		AnnounceList* anon_list;
 		QString encoding;
 	};

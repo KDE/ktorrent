@@ -119,9 +119,9 @@ void InfoWidget::fillFileTree()
 		IWFileTreeItem* root = new IWFileTreeItem(m_file_view,tor.getNameSuggestion(),true);
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
-			bt::Torrent::File file;
+			bt::TorrentFile file;
 			tor.getFile(i,file);
-			root->insert(file.path,file.size);
+			root->insert(file.getPath(),file.getSize());
 		}
 		root->setOpen(true);
 		m_file_view->setRootIsDecorated(true);
