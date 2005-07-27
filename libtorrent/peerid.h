@@ -31,6 +31,7 @@ namespace bt
 	class PeerID
 	{
 		char id[20];
+		QString client_name;
 	public:
 		PeerID();
 		PeerID(char* pid);

@@ -36,16 +36,20 @@ namespace bt
 		for (int i = 0;i < 12;i++)
 			peer_id += QString("%1").arg(r[i]);
 		memcpy(id,peer_id.ascii(),20);
+
+		client_name = identifyClient();
 	}
 
 	PeerID::PeerID(char* pid)
 	{
 		memcpy(id,pid,20);
+		client_name = identifyClient();
 	}
 
 	PeerID::PeerID(const PeerID & pid)
 	{
 		memcpy(id,pid.id,20);
+		client_name = pid.client_name;
 	}
 
 	PeerID::~PeerID()
@@ -56,6 +60,7 @@ namespace bt
 	PeerID & PeerID::operator = (const PeerID & pid)
 	{
 		memcpy(id,pid.id,20);
+		client_name = pid.client_name;
 		return *this;
 	}
 
@@ -78,6 +83,9 @@ namespace bt
 
 	QString PeerID::identifyClient() const
 	{
+		if (!client_name.isNull())
+			return client_name;
+		
 		QString peer_id = toString();
 		// we only need to create this map once
 		// so make it static
