@@ -113,7 +113,6 @@ private slots:
 	void startDownload();
 	void stopDownload();
 	void removeDownload();
-	void optionsShowToolbar();
 	void optionsShowStatusbar();
 	void optionsConfigureKeys();
 	void optionsConfigureToolbars();
@@ -134,7 +133,6 @@ private:
 	
 private:
 	KTorrentView *m_view;
-	KToggleAction *m_toolbarAction;
 	KToggleAction *m_statusbarAction;
 	KAction *m_start,*m_stop,*m_remove,*m_save;
 	KTorrentCore* m_core;

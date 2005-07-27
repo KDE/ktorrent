@@ -150,6 +150,7 @@ KTorrent::KTorrent()
 	m_dcop = new KTorrentDCOP(this);
 
 	m_core->loadTorrents();
+	setStandardToolBarMenuEnabled(true);
 }
 
 KTorrent::~KTorrent()
@@ -237,7 +238,6 @@ void KTorrent::setupActions()
 	
 	m_save = KStdAction::save(this, SLOT(fileSave()), actionCollection());
 
-	m_toolbarAction = KStdAction::showToolbar(this, SLOT(optionsShowToolbar()), actionCollection());
 	m_statusbarAction = KStdAction::showStatusbar(this, SLOT(optionsShowStatusbar()), actionCollection());
 
 	KStdAction::keyBindings(this, SLOT(optionsConfigureKeys()), actionCollection());
@@ -409,16 +409,6 @@ void KTorrent::removeDownload()
 		m_core->remove(tc);
 		currentChanged(m_view->getCurrentTC());
 	}
-}
-
-void KTorrent::optionsShowToolbar()
-{
-	// this is all very cut and paste code for showing/hiding the
-	// toolbar
-	if (m_toolbarAction->isChecked())
-		toolBar()->show();
-	else
-		toolBar()->hide();
 }
 
 void KTorrent::optionsShowStatusbar()

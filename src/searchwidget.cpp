@@ -164,7 +164,7 @@ void SearchWidget::onURLHover(const QString & url)
 
 void SearchWidget::onFinishedLayout()
 {
-	statusBarMsg(i18n("Finished"));
+	statusBarMsg(i18n("Search finished"));
 }
 
 void SearchWidget::onOpenTorrent(const KURL & url)

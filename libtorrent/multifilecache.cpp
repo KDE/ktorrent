@@ -143,7 +143,7 @@ namespace bt
 		QValueList<TorrentFile> files;
 		tor.calcChunkPos(c->getIndex(),files);
 
-		Out() << "Saving " << c->getIndex() << " to " << files.count() << " files" << endl;
+	//	Out() << "Saving " << c->getIndex() << " to " << files.count() << " files" << endl;
 		Uint32 written = 0; // number of bytes written
 		for (Uint32 i = 0;i < files.count();i++)
 		{
@@ -164,7 +164,7 @@ namespace bt
 			{
 				off = FileOffset(c,f,tor.getChunkSize());
 
-				Out() << "off = " << off << endl;
+		//		Out() << "off = " << off << endl;
 				// we may need to expand the first file
 				fptr.seek(File::END,0);
 				Uint32 cache_size = fptr.tell();
@@ -193,7 +193,7 @@ namespace bt
 			else
 				to_write = f.getSize();
 			
-			Out() << "to_write " << to_write << endl;
+		//	Out() << "to_write " << to_write << endl;
 			// read part of data
 			fptr.seek(File::BEGIN,off);
 			fptr.write(c->getData() + written,to_write);
