@@ -54,7 +54,18 @@ namespace bt
 		operator const T* () const {return data;}
 		operator T* () {return data;}
 
+		/// Get the number of elements in the array
 		Uint32 size() const {return num;}
+
+		/**
+		 * Fill the array with a value
+		 * @param val The value
+		 */
+		void fill(T val)
+		{
+			for (Uint32 i = 0;i < num;i++)
+				data[i] = val;
+		}
 	};
 
 }

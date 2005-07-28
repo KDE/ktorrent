@@ -26,4 +26,14 @@
 QString BytesToString(bt::Uint32 bytes,int precision = -1);
 QString KBytesPerSecToString(double speed,int precision = 1);
 
+template<class T> int CompareVal(T a,T b)
+{
+	if (a < b)
+		return -1;
+	else if (a > b)
+		return 1;
+	else
+		return 0;
+}
+
 #endif

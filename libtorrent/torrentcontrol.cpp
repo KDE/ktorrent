@@ -96,7 +96,13 @@ namespace bt
 		{
 			updateTracker("completed");
 			finished(this);
-			down->clearDownloaders();
+		}
+		else if (!completed && comp)
+		{
+			// restart download if necesarry
+			// when user selects that files which were previously excluded,
+			// should now be downloaded
+			updateTracker("started");
 		}
 		updateStatusMsg();
 		
@@ -294,7 +300,7 @@ namespace bt
 				updateStatusMsg();
 			}
 
-						}
+		}
 		else if (trackerevent != "stopped")
 		{
 			updateTracker(trackerevent,false);

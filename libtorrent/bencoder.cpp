@@ -28,7 +28,7 @@ namespace bt
 	{
 	}
 
-	void BEncoderFileOutput::write(const char* str,Uint8 len)
+	void BEncoderFileOutput::write(const char* str,Uint32 len)
 	{
 		if (!fptr)
 			return;

@@ -41,7 +41,7 @@ namespace bt
 		 * @param str The string
 		 * @param len The length of the string
 		 */
-		virtual void write(const char* str,Uint8 len) = 0;
+		virtual void write(const char* str,Uint32 len) = 0;
 	};
 
 	/**
@@ -53,7 +53,7 @@ namespace bt
 	public:
 		BEncoderFileOutput(File* fptr);
 
-		void write(const char* str,Uint8 len);
+		void write(const char* str,Uint32 len);
 	};
 
 

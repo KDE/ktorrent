@@ -132,9 +132,6 @@ namespace bt
 		/// Get the number of chunks into the file.
 		Uint32 getNumChunks() const {return chunks.count();}
 
-		// Get the cache file
-		//QString getCacheFile() const {return cache_file;}
-
 		/**
 		 * Get the highest chunk num, we are allowed to download.
 		 * In order to avoid huge writes to the cache file in the beginning
@@ -165,6 +162,28 @@ namespace bt
 		 * get rid of some chunks which aren't needed anymore.
 		 */
 		void checkMemoryUsage();
+
+		/**
+		 * Make sure that a range will get priority over other chunks.
+		 * @param from First chunk in range
+		 * @param to Last chunk in range
+		 */
+		void prioritise(Uint32 from,Uint32 to);
+
+		/**
+		 * Make sure that a range will not be downloaded.
+		 * @param from First chunk in range
+		 * @param to Last chunk in range
+		 */
+		void exclude(Uint32 from,Uint32 to);
+
+		/**
+		 * Make sure that a range will be downloaded.
+		 * Does the opposite of exclude.
+		 * @param from First chunk in range
+		 * @param to Last chunk in range
+		 */
+		void include(Uint32 from,Uint32 to);
 	private:
 		void saveIndexFile();
 		void writeIndexFileEntry(Chunk* c);

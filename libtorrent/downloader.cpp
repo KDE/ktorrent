@@ -31,6 +31,7 @@
 #include "peerdownloader.h"
 #include "torrentmonitor.h"
 #include "packetwriter.h"
+#include "chunkselector.h"
 
 namespace bt
 {
@@ -40,6 +41,7 @@ namespace bt
 	Downloader::Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman) 
 	: tor(tor),pman(pman),cman(cman),downloaded(0),tmon(0)
 	{
+		chunk_selector = new ChunkSelector(cman,*this);
 		Uint32 total = tor.getFileLength();
 		downloaded = (total - cman.bytesLeft());
 		endgame_mode = false;
@@ -47,16 +49,18 @@ namespace bt
 		current_chunks.setAutoDelete(true);
 		connect(&pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
 		connect(&pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerKilled(Peer*)));
+		
 	}
 
 
 	Downloader::~Downloader()
 	{
+		delete chunk_selector;
 	}
 	
 	void Downloader::pieceRecieved(const Piece & p)
 	{
-		if (cman.bytesLeft() == 0)
+		if (cman.chunksLeft() == 0)
 			return;
 		
 		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
@@ -80,8 +84,10 @@ namespace bt
 	
 	void Downloader::update()
 	{
-		if (cman.bytesLeft() == 0)
+		if (cman.chunksLeft() == 0)
+		{
 			return;
+		}
 		
 		endgame_mode = 
 				cman.chunksLeft() <= current_chunks.count() &&
@@ -150,47 +156,28 @@ namespace bt
 			}
 		}
 		
-		if (current_chunks.count() > 2*pdowners.count())
-			return;
+	//	if (current_chunks.count() > 2*pdowners.count())
+	//		return;
 
-		// cap the maximum chunk to download
-		// to not get monster writes to the cache file
-		Uint32 max_c = cman.getMaxAllowedChunk();
-		if (max_c > tor.getNumChunks())
-			max_c = tor.getNumChunks();
-
-		// pick a random chunk to download, by picking
-		// a random starting value in the range 0 .. max_c
-		Uint32 s = rand() % max_c;
-		Uint32 i = s; 
-		BitSet bs;
-		cman.toBitSet(bs);
-
-		do
+		Uint32 chunk = 0;
+		if (chunk_selector->select(pd,chunk))
 		{
-			// pd has to have the selected chunk
-			// and we don't have it
-			if (pd->hasChunk(i) && !current_chunks.find(i) && !bs.get(i))
-			{
-				ChunkDownload* cd = new ChunkDownload(cman.getChunk(i));
-				current_chunks.insert(i,cd);
-				pd->grab();
-				cd->assignPeer(pd,false);
-				if (tmon)
-					tmon->downloadStarted(cd);
-				return;
-			}
-			i = (i + 1) % max_c;
-			// we stop this loop if i becomse equal to it's starting value
-			// no infinite loops, thank you
-		}while (s != i);
+			ChunkDownload* cd = new ChunkDownload(cman.getChunk(chunk));
+			current_chunks.insert(chunk,cd);
+			pd->grab();
+			cd->assignPeer(pd,false);
+			if (tmon)
+				tmon->downloadStarted(cd);
+		}
+	}
+
+	bool Downloader::areWeDownloading(Uint32 chunk) const
+	{
+		return current_chunks.find(chunk) != 0;
 	}
 	
 	void Downloader::onNewPeer(Peer* peer)
-	{
-		if (cman.chunksLeft() == 0)
-			return;
-		
+	{		
 		// add a PeerDownloader for every Peer
 		PeerDownloader* pd = new PeerDownloader(peer);
 		connect(pd,SIGNAL(downloaded(const Piece& )),
@@ -211,12 +198,6 @@ namespace bt
 			}
 			pdowners.erase(peer);
 		}
-	}
-
-	void Downloader::clearDownloaders()
-	{
-		if (current_chunks.count() == 0)
-			pdowners.clear();
 	}
 	
 	void Downloader::finished(ChunkDownload* cd)
@@ -337,6 +318,11 @@ namespace bt
 			if (tmon)
 				tmon->downloadStarted(cd);
 		}
+	}
+
+	bool Downloader::isFinished() const
+	{
+		return cman.chunksLeft() == 0;
 	}
 }
 #include "downloader.moc"

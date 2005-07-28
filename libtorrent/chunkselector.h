@@ -17,29 +17,42 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTORRENTVIEWITEM_H
-#define KTORRENTVIEWITEM_H
+#ifndef BTCHUNKSELECTOR_H
+#define BTCHUNKSELECTOR_H
 
-#include <klistview.h>
+
 
 namespace bt
 {
-	class TorrentControl;
+	class PeerDownloader;
+	class ChunkManager;
+	class Downloader;
+
+	/**
+	 * @author Joris Guisson
+	 *
+	 * Selects which Chunks to download.
+	*/
+	class ChunkSelector
+	{
+		ChunkManager & cman;
+		Downloader & downer;
+	public:
+		ChunkSelector(ChunkManager & cman,Downloader & downer);
+		virtual ~ChunkSelector();
+
+		/**
+		 * Select which chunk to download for a PeerDownloader.
+		 * @param pd The PeerDownloader
+		 * @param chunk Index of chunk gets stored here
+		 * @return true upon succes, false otherwise
+		 */
+		bool select(PeerDownloader* pd,Uint32 & chunk);
+
+	private:
+		bool findPriorityChunk(PeerDownloader* pd,Uint32 & chunk);
+	};
+
 }
-
-/**
-@author Joris Guisson
-*/
-class KTorrentViewItem : public KListViewItem
-{
-	bt::TorrentControl* tc;
-public:
-	KTorrentViewItem(QListView* parent,bt::TorrentControl* tc);
-	virtual ~KTorrentViewItem();
-
-	bt::TorrentControl* getTC() {return tc;}
-	void update();
-	int compare(QListViewItem * i,int col,bool ascending) const;
-};
 
 #endif

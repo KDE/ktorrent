@@ -197,7 +197,7 @@ namespace bt
 		for (Uint32 i = 0;i < chunks.size();i++)
 		{
 			const Chunk* c = chunks[i];
-			if (c->getStatus() == Chunk::NOT_DOWNLOADED)
+			if (c->getStatus() == Chunk::NOT_DOWNLOADED && !c->isExcluded())
 				total += c->getSize();
 		}
 		return total;
@@ -223,12 +223,12 @@ namespace bt
 		for (Uint32 i = 0;i < chunks.size();i++)
 		{
 			const Chunk* c = chunks[i];
-			if (c->getStatus() == Chunk::NOT_DOWNLOADED)
+			if (c->getStatus() == Chunk::NOT_DOWNLOADED && !c->isExcluded())
 				num++;
 		}
 		return num;
 	}
-
+	
 	void ChunkManager::save(const QString & dir)
 	{
 		if (chunksLeft() != 0)
@@ -266,6 +266,48 @@ namespace bt
 			}
 		}
 		
+	}
+
+	void ChunkManager::prioritise(Uint32 from,Uint32 to)
+	{
+		if (from > to)
+			std::swap(from,to);
+
+		Uint32 i = from;
+		while (i <= to && i < chunks.count())
+		{
+			Chunk* c = chunks[i];
+			c->setPriority(true);
+			i++;
+		}
+	}
+
+	void ChunkManager::exclude(Uint32 from,Uint32 to)
+	{
+		if (from > to)
+			std::swap(from,to);
+
+		Uint32 i = from;
+		while (i <= to && i < chunks.count())
+		{
+			Chunk* c = chunks[i];
+			c->setExclude(true);
+			i++;
+		}
+	}
+
+	void ChunkManager::include(Uint32 from,Uint32 to)
+	{
+		if (from > to)
+			std::swap(from,to);
+
+		Uint32 i = from;
+		while (i <= to && i < chunks.count())
+		{
+			Chunk* c = chunks[i];
+			c->setExclude(false);
+			i++;
+		}
 	}
 }
 

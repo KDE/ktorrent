@@ -70,10 +70,11 @@ KTorrentView::KTorrentView(QWidget *parent)
 
 	menu->insertItem(i18n("Manual announce"),this,SLOT(manualAnnounce()));
 
-	this->setAllColumnsShowFocus(true);
+	setAllColumnsShowFocus(true);
 
 	setColumnWidth(0,200);
 	setColumnWidthMode(0,QListView::Manual);
+	setShowSortIndicator(true);
 }
 
 KTorrentView::~KTorrentView()

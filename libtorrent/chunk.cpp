@@ -25,8 +25,9 @@ namespace bt
 
 	Chunk::Chunk(unsigned int index,unsigned int size)
 	: status(Chunk::NOT_DOWNLOADED),index(index),
-	data(0),size(size),ref_count(0),cache_file_offset(0)
-	{}
+	data(0),size(size),ref_count(0),cache_file_offset(0),priority(false),exclude(false)
+	{
+	}
 
 
 	Chunk::~Chunk()

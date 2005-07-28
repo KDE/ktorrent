@@ -99,13 +99,16 @@ void KTorrentCore::start(bt::TorrentControl* tc)
 
 void KTorrentCore::stop(bt::TorrentControl* tc)
 {
-	tc->stop();
-	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
-	while (i != downloads.end())
+	if (tc->isStarted() && tc->isRunning())
 	{
-		TorrentControl* tc = *i;
-		start(tc);
-		i++;
+		tc->stop();
+		QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
+		while (i != downloads.end())
+		{
+			TorrentControl* tc = *i;
+			start(tc);
+			i++;
+		}
 	}
 }
 

@@ -89,11 +89,36 @@ void KTorrentViewItem::update()
 	if (perc > 100.0)
 		perc = 100.0;
 	setText(8,i18n("%1 %").arg(loc->formatNumber(perc,2)));
+}
 
-	/*
-	setText(8,QString("%1 (%2) / %3")
-			.arg(tc->getNumChunksDownloaded())
-			.arg(tc->getNumChunksDownloading())
-			.arg(tc->getTotalChunks()));*/
+
+
+int KTorrentViewItem::compare(QListViewItem * i,int col,bool) const
+{
+	KTorrentViewItem* other = (KTorrentViewItem*)i;
+	TorrentControl* otc = other->tc;
+	switch (col)
+	{
+		case 0: return QString::compare(tc->getTorrentName(),otc->getTorrentName());
+		case 1: return QString::compare(tc->getStatus(),otc->getStatus());
+		case 2: return CompareVal(tc->getTotalBytes(),otc->getTotalBytes());
+		case 3: return CompareVal(tc->getBytesUploaded(),otc->getBytesUploaded());
+		case 4: return CompareVal(tc->getDownloadRate(),otc->getDownloadRate());
+		case 5: return CompareVal(tc->getUploadRate(),otc->getUploadRate());
+		case 6: return QString::compare(text(6),other->text(6));
+		case 7: return CompareVal(tc->getNumPeers(),otc->getNumPeers());
+		case 8:
+		{
+			double perc = ((double)tc->getBytesDownloaded() / tc->getTotalBytes()) * 100.0;
+			if (perc > 100.0)
+				perc = 100.0;
+			double operc = ((double)otc->getBytesDownloaded() / otc->getTotalBytes()) * 100.0;
+			if (operc > 100.0)
+				operc = 100.0;
+			return CompareVal(perc,operc);
+		}
+	}
+
+	return 0;
 }
 

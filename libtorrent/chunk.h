@@ -65,6 +65,11 @@ namespace bt
 		void setCacheFileOffset(unsigned int off) {cache_file_offset = off;}
 		
 		void allocate();
+
+		bool isPriority() const {return priority;}
+		void setPriority(bool yes) {priority = yes;}
+		bool isExcluded() const {return exclude;}
+		void setExclude(bool yes) {exclude = yes;}
 	private:
 		Status status;
 		unsigned int index;
@@ -72,6 +77,8 @@ namespace bt
 		unsigned int size;
 		int ref_count;
 		unsigned int cache_file_offset;
+		bool priority;
+		bool exclude;
 	};
 
 }

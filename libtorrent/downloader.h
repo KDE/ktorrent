@@ -38,6 +38,7 @@ namespace bt
 	class Piece;
 	class Request;
 	class TorrentMonitor;
+	class ChunkSelector;
 
 	typedef PtrMap<Uint32,ChunkDownload>::iterator CurChunkItr;
 	typedef PtrMap<Uint32,ChunkDownload>::const_iterator CurChunkCItr;
@@ -71,20 +72,24 @@ namespace bt
 
 		/// Get the number of chunks we are dowloading
 		Uint32 numActiveDownloads() const {return current_chunks.count();}
+
+		/// See if the download is finished.
+		bool isFinished() const;
 		
 		/**
 		 * Clear all downloads. Deletes all active downloads.
 		 */
 		void clearDownloads();
-
-		/**
-		 * Clear all downloaders. Deletes all active downloaders.
-		 * Only call this when the download is finished.
-		 */
-		void clearDownloaders();
 		
 		CurChunkCItr beginDownloads() const {return current_chunks.begin();}
 		CurChunkCItr endDownloads() const {return current_chunks.end();}
+
+		/**
+		 * See if we are downloading a Chunk
+		 * @param chunk ID of Chunk
+		 * @return true if we are, false if not
+		 */
+		bool areWeDownloading(Uint32 chunk) const;
 
 		/**
 		 * Save the current downloads.
@@ -97,6 +102,7 @@ namespace bt
 		 * @param file The file to load from
 		 */
 		void loadDownloads(const QString & file);
+
 	public slots:
 		/**
 		 * Update the downloader.
@@ -138,6 +144,7 @@ namespace bt
 		PtrMap<Uint32,ChunkDownload> current_chunks;
 		PtrMap<Peer*,PeerDownloader> pdowners;
 		bool endgame_mode;
+		ChunkSelector* chunk_selector;
 		
 		TorrentMonitor* tmon;
 	};
