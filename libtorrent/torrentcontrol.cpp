@@ -364,6 +364,7 @@ namespace bt
 	
 	void TorrentControl::stop()
 	{
+		saveStats();
 		if (running)
 		{
 			if (num_tracker_attempts < tor->getNumTrackerURLs())
@@ -380,7 +381,6 @@ namespace bt
 		pman->stop();
 		pman->closeAllConnections();
 		pman->clearDeadPeers();
-		saveStats();
 		
 		running = false;
 		updateStatusMsg();
@@ -525,6 +525,9 @@ namespace bt
 			// then the cache
 			bt::Move(datadir + "cache",nd);
 			ok_calls++;
+
+			// tell the chunkmanager that the datadir has changed
+			cman->changeDataDir(nd);
 		}
 		catch (...)
 		{
@@ -536,9 +539,6 @@ namespace bt
 			return false;
 		}
 
-		// tell the chunkmanager that the datadir has changed
-		cman->changeDataDir(nd);
-		
 		// we don't move the current_chunks file
 		// it will be recreated anyway
 		// now delete the old directory

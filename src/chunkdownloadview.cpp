@@ -25,6 +25,42 @@
 
 using namespace bt;
 
+ChunkDownloadViewItem::ChunkDownloadViewItem(ChunkDownloadView* cdv,bt::ChunkDownload* cd)
+	: KListViewItem(cdv),cd(cd)
+{
+	update();
+}
+
+void ChunkDownloadViewItem::update()
+{
+	QString peer_id,speed;
+
+	peer_id = cd->getCurrentPeerID();
+	speed = KBytesPerSecToString(cd->getDownloadSpeed() / 1024.0);
+	
+		
+	setText(0,QString::number(cd->getChunkIndex()));
+	setText(1,QString("%1 / %2").arg(cd->piecesDownloaded()).arg(cd->totalPieces()));
+	setText(2,peer_id);
+	setText(3,speed);
+	setText(4,QString::number(cd->getNumDownloaders()));
+}
+
+int ChunkDownloadViewItem::compare(QListViewItem * i,int col,bool) const
+{
+	ChunkDownloadViewItem* it = (ChunkDownloadViewItem*)i;
+	ChunkDownload* ocd = it->cd;
+	switch (col)
+	{
+		case 0: return CompareVal(cd->getChunkIndex(),ocd->getChunkIndex());
+		case 1: return CompareVal(cd->piecesDownloaded(),ocd->piecesDownloaded());
+		case 2: return QString::compare(cd->getCurrentPeerID(),ocd->getCurrentPeerID());
+		case 3: return CompareVal(cd->getDownloadSpeed(),ocd->getDownloadSpeed());
+		case 4: return CompareVal(cd->getNumDownloaders(),ocd->getNumDownloaders());
+	}
+	return 0;
+}
+
 
 ChunkDownloadView::ChunkDownloadView(QWidget *parent, const char *name)
 : KListView(parent, name)
@@ -35,7 +71,8 @@ ChunkDownloadView::ChunkDownloadView(QWidget *parent, const char *name)
 	addColumn(i18n("Down Speed"));
 	addColumn(i18n("Assigned Peers"));
 	connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
-	timer.start(250);
+	timer.start(500);
+	setShowSortIndicator(true);
 }
 
 
@@ -45,9 +82,8 @@ ChunkDownloadView::~ChunkDownloadView()
 
 void ChunkDownloadView::addDownload(ChunkDownload* cd)
 {
-	KListViewItem* it = new KListViewItem(this);
+	ChunkDownloadViewItem* it = new ChunkDownloadViewItem(this,cd);
 	items.insert(cd,it);
-	update(cd,it);
 }
 	
 void ChunkDownloadView::removeDownload(ChunkDownload* cd)
@@ -55,7 +91,7 @@ void ChunkDownloadView::removeDownload(ChunkDownload* cd)
 	if (!items.contains(cd))
 		return;
 	
-	KListViewItem* it = items[cd];
+	ChunkDownloadViewItem* it = items[cd];
 	delete it;
 	items.remove(cd);
 }
@@ -66,27 +102,13 @@ void ChunkDownloadView::removeAll()
 	items.clear();
 }
 
-void ChunkDownloadView::update(const ChunkDownload* cd,KListViewItem* it)
-{
-	QString peer_id,speed;
-
-	peer_id = cd->getCurrentPeerID();
-	speed = KBytesPerSecToString(cd->getDownloadSpeed() / 1024.0);
-	
-		
-	it->setText(0,QString::number(cd->getChunkIndex()));
-	it->setText(1,QString("%1 / %2").arg(cd->piecesDownloaded()).arg(cd->totalPieces()));
-	it->setText(2,peer_id);
-	it->setText(3,speed);
-	it->setText(4,QString::number(cd->getNumDownloaders()));
-}
-
 void ChunkDownloadView::update()
 {
-	QMap<ChunkDownload*,KListViewItem*>::iterator i = items.begin();
+	QMap<ChunkDownload*,ChunkDownloadViewItem*>::iterator i = items.begin();
 	while (i != items.end())
 	{
-		update(i.key(),i.data());
+		ChunkDownloadViewItem* it = i.data();
+		it->update();
 		i++;
 	}
 }

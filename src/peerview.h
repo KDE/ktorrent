@@ -29,6 +29,18 @@ namespace bt
 	class Peer;
 }
 
+class PeerView;
+
+class PeerViewItem : public KListViewItem
+{
+	bt::Peer* peer;
+public:
+	PeerViewItem(PeerView* pv,bt::Peer* peer);
+
+	void update();
+	int compare(QListViewItem * i,int col,bool) const;
+};
+
 /**
 @author Joris Guisson
 */
@@ -36,7 +48,7 @@ class PeerView : public KListView
 {
 	Q_OBJECT
 	
-	QMap<bt::Peer*,KListViewItem*> items;
+	QMap<bt::Peer*,PeerViewItem*> items;
 	QTimer timer;
 public:
 	PeerView(QWidget *parent = 0, const char *name = 0);

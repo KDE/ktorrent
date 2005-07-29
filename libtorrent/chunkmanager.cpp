@@ -44,6 +44,7 @@ namespace bt
 			cache = new SingleFileCache(tor,data_dir);
 		
 		index_file = data_dir + "index";
+		chunk_info_file = data_dir + "chunk_info";
 		Uint32 tsize = tor.getFileLength();	// total size	
 		Uint32 csize = tor.getChunkSize();	// chunk size
 		Uint32 lsize = tsize - (csize * (tor.getNumChunks() - 1)); // size of last chunk
@@ -70,6 +71,8 @@ namespace bt
 	{
 		cache->changeDataDir(data_dir);
 		index_file = data_dir + "index";
+		chunk_info_file = data_dir + "chunk_info";
+		saveChunkInfo();
 	}
 	
 	void ChunkManager::loadIndexFile()
@@ -95,6 +98,8 @@ namespace bt
 				c->setCacheFileOffset(hdr.cache_off);
 			}
 		}
+
+		loadChunkInfo();
 	}
 	
 	void ChunkManager::saveIndexFile()
@@ -280,6 +285,7 @@ namespace bt
 			c->setPriority(true);
 			i++;
 		}
+		saveChunkInfo();
 	}
 
 	void ChunkManager::exclude(Uint32 from,Uint32 to)
@@ -294,6 +300,7 @@ namespace bt
 			c->setExclude(true);
 			i++;
 		}
+		saveChunkInfo();
 	}
 
 	void ChunkManager::include(Uint32 from,Uint32 to)
@@ -307,6 +314,95 @@ namespace bt
 			Chunk* c = chunks[i];
 			c->setExclude(false);
 			i++;
+		}
+		saveChunkInfo();
+	}
+
+	void ChunkManager::saveChunkInfo()
+	{
+		File fptr;
+		if (!fptr.open(chunk_info_file,"wb"))
+			throw Error(i18n("Can't save chunk_info file : %1").arg(fptr.errorString()));
+
+		QValueList<Uint32> excluded;
+		QValueList<Uint32> prioritised;
+		Uint32 i = 0;
+		while (i < chunks.count())
+		{
+			Chunk* c = chunks[i];
+			if (c->isExcluded())
+				excluded.append(i);
+			if (c->isPriority())
+				prioritised.append(i);
+			i++;
+		}
+
+		// first write the number of excluded ones
+		Uint32 tmp = excluded.count();
+		fptr.write(&tmp,sizeof(Uint32));
+		// then all the excluded ones
+		for (i = 0;i < excluded.count();i++)
+		{
+			tmp = excluded[i];
+			fptr.write(&tmp,sizeof(Uint32));
+		}
+
+		// then write the number of prioritised ones
+		tmp = prioritised.count();
+		fptr.write(&tmp,sizeof(Uint32));
+		// then all the excluded ones
+		for (i = 0;i < prioritised.count();i++)
+		{
+			tmp = excluded[i];
+			fptr.write(&tmp,sizeof(Uint32));
+		}
+	}
+	
+	void ChunkManager::loadChunkInfo()
+	{
+		File fptr;
+		if (!fptr.open(chunk_info_file,"rb"))
+			return;
+
+		Uint32 num = 0,tmp = 0;
+		// first read the number of excluded chunks
+		if (fptr.read(&num,sizeof(Uint32)) != sizeof(Uint32))
+		{
+			Out() << "Warning : error reading chunk_info file" << endl;
+			return;
+		}
+
+		for (Uint32 i = 0;i < tmp;i++)
+		{
+			if (fptr.read(&tmp,sizeof(Uint32)) != sizeof(Uint32))
+			{
+				Out() << "Warning : error reading chunk_info file" << endl;
+				return;
+			}
+
+			Chunk* c = getChunk(tmp);
+			if (c)
+				c->setExclude(true);
+		}
+
+		// then read the number of prioritised chunks
+		if (fptr.read(&num,sizeof(Uint32)) != sizeof(Uint32))
+		{
+			Out() << "Warning : error reading chunk_info file" << endl;
+			return;
+		}
+
+		for (Uint32 i = 0;i < tmp;i++)
+		{
+			if (fptr.read(&tmp,sizeof(Uint32)) != sizeof(Uint32))
+			{
+				Out() << "Warning : error reading chunk_info file" << endl;
+				return;
+			}
+
+			Chunk* c = getChunk(tmp);
+			if (c)
+				c->setPriority(true);
 		}
 	}
 }

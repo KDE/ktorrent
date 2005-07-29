@@ -29,6 +29,18 @@ namespace bt
 	class ChunkDownload;
 }
 
+class ChunkDownloadView;
+
+class ChunkDownloadViewItem : public KListViewItem
+{
+	bt::ChunkDownload* cd;
+public:
+	ChunkDownloadViewItem(ChunkDownloadView* cdv,bt::ChunkDownload* cd);
+
+	void update();
+	int compare(QListViewItem * i,int col,bool) const;
+};
+
 
 /**
 @author Joris Guisson
@@ -37,7 +49,7 @@ class ChunkDownloadView : public KListView
 {
 	Q_OBJECT
 	QTimer timer;
-	QMap<bt::ChunkDownload*,KListViewItem*> items;
+	QMap<bt::ChunkDownload*,ChunkDownloadViewItem*> items;
 public:
 	ChunkDownloadView(QWidget *parent = 0, const char *name = 0);
 	virtual ~ChunkDownloadView();
@@ -47,9 +59,6 @@ public slots:
 	void removeDownload(bt::ChunkDownload* cd);
 	void removeAll();
 	void update();
-	
-private:
-	void update(const bt::ChunkDownload* cd,KListViewItem* it);
 };
 
 

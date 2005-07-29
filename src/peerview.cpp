@@ -22,6 +22,39 @@
 #include "peerview.h"
 #include "functions.h"
 
+using namespace bt;
+
+PeerViewItem::PeerViewItem(PeerView* pv,bt::Peer* peer) : KListViewItem(pv),peer(peer)
+{
+	update();
+}
+
+
+void PeerViewItem::update()
+{
+	setText(0,peer->getPeerID().identifyClient());
+	setText(1,KBytesPerSecToString(peer->getDownloadRate() / 1024.0));
+	setText(2,KBytesPerSecToString(peer->getUploadRate() / 1024.0));
+	setText(3,peer->isChoked() ? i18n("yes") : i18n("no"));
+	setText(4,peer->isSnubbed() ? i18n("yes") : i18n("no"));
+}
+
+int PeerViewItem::compare(QListViewItem * i,int col,bool) const
+{
+	Peer* op = ((PeerViewItem*)i)->peer;
+	switch (col)
+	{
+		case 0:
+			return QString::compare(peer->getPeerID().identifyClient(),
+									op->getPeerID().identifyClient());
+		case 1: return CompareVal(peer->getDownloadRate(),op->getDownloadRate());
+		case 2: return CompareVal(peer->getUploadRate(),op->getUploadRate());
+		case 3: QString::compare(text(3),i->text(3));
+		case 4: QString::compare(text(4),i->text(4));
+	}
+	return 0;
+}
+
 PeerView::PeerView(QWidget *parent, const char *name)
 		: KListView(parent, name)
 {
@@ -31,7 +64,8 @@ PeerView::PeerView(QWidget *parent, const char *name)
 	addColumn(i18n("Choked"));
 	addColumn(i18n("Snubbed"));
 	connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
-	timer.start(250);
+	timer.start(500);
+	setShowSortIndicator(true);
 }
 
 
@@ -40,35 +74,24 @@ PeerView::~PeerView()
 
 void PeerView::addPeer(bt::Peer* peer)
 {
-	KListViewItem* i = new KListViewItem(
-			this,
-			peer->getPeerID().identifyClient(),
-			KBytesPerSecToString(peer->getDownloadRate()),
-			KBytesPerSecToString(peer->getUploadRate()),
-			peer->isChoked() ? i18n("yes") : i18n("no"),
-			peer->isSnubbed() ? i18n("yes") : i18n("no"));
+	PeerViewItem* i = new PeerViewItem(this,peer);
 	items.insert(peer,i);
 }
 
 void PeerView::removePeer(bt::Peer* peer)
 {
-	KListViewItem* it = items[peer];
+	PeerViewItem* it = items[peer];
 	delete it;
 	items.erase(peer);
 }
 
 void PeerView::update()
 {
-	QMap<bt::Peer*,KListViewItem*>::iterator i = items.begin();
+	QMap<bt::Peer*,PeerViewItem*>::iterator i = items.begin();
 	while (i != items.end())
 	{
-		KListViewItem* it = i.data();
-		bt::Peer* peer = i.key();
-		it->setText(0,peer->getPeerID().identifyClient());
-		it->setText(1,KBytesPerSecToString(peer->getDownloadRate() / 1024.0));
-		it->setText(2,KBytesPerSecToString(peer->getUploadRate() / 1024.0));
-		it->setText(3,peer->isChoked() ? i18n("yes") : i18n("no"));
-		it->setText(4,peer->isSnubbed() ? i18n("yes") : i18n("no"));
+		PeerViewItem* it = i.data();
+		it->update();
 		i++;
 	}
 }
