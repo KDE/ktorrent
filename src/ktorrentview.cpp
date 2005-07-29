@@ -36,7 +36,6 @@ KTorrentView::KTorrentView(QWidget *parent)
 	: KListView(parent),show_debug_view(false),menu(0),curr(0)
 
 {
-	connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
 	addColumn(i18n("File"));
 	addColumn(i18n("Status"));
 	addColumn(i18n("Downloaded"));
@@ -46,7 +45,7 @@ KTorrentView::KTorrentView(QWidget *parent)
 	addColumn(i18n("Time Left"));
 	addColumn(i18n("Peers"));
 	addColumn(i18n("% Complete"));
-	timer.start(1000);
+
 	connect(this,SIGNAL(clicked(QListViewItem* )),this,SLOT(onExecuted(QListViewItem* )));
 	show_debug_view = bt::Globals::instance().isDebugModeSet();
 	connect(this,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )),

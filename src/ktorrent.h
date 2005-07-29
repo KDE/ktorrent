@@ -28,6 +28,7 @@
 
 #include <kapplication.h>
 #include <kmainwindow.h>
+#include <qtimer.h>
 
 
 
@@ -42,6 +43,7 @@ class KTabWidget;
 class SearchWidget;
 class KTorrentDCOP;
 class InfoWidget;
+class QLabel;
 
 
 namespace bt
@@ -122,6 +124,7 @@ private slots:
 	void changeCaption(const QString& text);
 	void currentChanged(bt::TorrentControl* tc);
 	void askAndSave(bt::TorrentControl* tc);
+	void updatedStats();
 
 private:
 	void setupAccel();
@@ -141,6 +144,11 @@ private:
 	SearchWidget* m_search;
 	KTorrentDCOP* m_dcop;
 	InfoWidget* m_info;
+	QTimer m_gui_update_timer;
+
+	QLabel* m_statusInfo;
+	QLabel* m_statusTransfer;
+	QLabel* m_statusSpeed;
 };
 
 #endif // _KTORRENT_H_

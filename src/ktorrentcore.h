@@ -22,11 +22,21 @@
 
 #include <qobject.h>
 #include <qtimer.h>
+#include <libutil/constants.h>
 
 namespace bt
 {
 	class TorrentControl;
 }
+
+///Stats struct
+struct CurrentStats
+{
+	int download_speed;
+	int upload_speed;
+	int bytes_downloaded;
+	int bytes_uploaded;
+};
 
 class KProgress;
 
@@ -113,6 +123,9 @@ public:
 	void makeTorrent(const QString & file,const QStringList & trackers,
 					 int chunk_size,const QString & name,const QString & comments,
 					 bool seed,const QString & output_file,KProgress* prog);
+
+	CurrentStats getStats();
+
 public slots:
 	/**
 	 * Load a torrent file. Pops up an error dialog
@@ -155,6 +168,11 @@ signals:
 	 */
 	void finished(bt::TorrentControl* tc);
 	
+	/**
+	* TorrentCore torrents have beed updated. Stats are changed.
+	**/
+	void statsUpdated();
+
 private:
 	QString findNewTorrentDir() const;
 	int getNumRunning() const;

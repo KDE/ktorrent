@@ -24,7 +24,6 @@
 
 #include "infowidgetbase.h"
 
-class QTimer;
 class KTorrentMonitor;
 
 namespace bt
@@ -43,9 +42,7 @@ public:
 
 public slots:
 	void changeTC(bt::TorrentControl* tc);
-
-private slots:
-	void updateInfo();
+	void update();
 
 private:
 	void fillFileTree();
@@ -53,7 +50,6 @@ private:
 private:
 	KTorrentMonitor* monitor;
 	bt::TorrentControl* curr_tc;
-	QTimer* t;
 };
 
 #endif

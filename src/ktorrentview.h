@@ -23,7 +23,6 @@
 #define _KTORRENTVIEW_H_
 
 #include <klistview.h>
-#include <qtimer.h>
 
 class KURL;
 class KTorrentViewItem;
@@ -69,9 +68,9 @@ public:
 public slots:
 	void addTorrent(bt::TorrentControl* tc);
 	void removeTorrent(bt::TorrentControl* tc);
+	void update();
 	
 private slots:
-	void update();
 	void onExecuted(QListViewItem* item);
 	void showContextMenu(KListView* ,QListViewItem* item,const QPoint & p);
 	void startDownload();
@@ -87,7 +86,6 @@ signals:
 		
 private:
 	QMap<bt::TorrentControl*,KTorrentViewItem*> items;
-	QTimer timer;
 	bool show_debug_view;
 	KPopupMenu* menu;
 	int stop_id,start_id,remove_id;

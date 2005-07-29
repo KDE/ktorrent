@@ -63,8 +63,6 @@ PeerView::PeerView(QWidget *parent, const char *name)
 	addColumn(i18n("Up Speed"));
 	addColumn(i18n("Choked"));
 	addColumn(i18n("Snubbed"));
-	connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
-	timer.start(500);
 	setShowSortIndicator(true);
 }
 

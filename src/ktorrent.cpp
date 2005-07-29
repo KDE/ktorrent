@@ -23,6 +23,8 @@
 #include <qdragobject.h>
 #include <qsplitter.h>
 #include <qvbox.h>
+#include <qlabel.h>
+#include <qtooltip.h>
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -67,8 +69,7 @@
 #include "ktorrentdcop.h"
 #include "torrentcreatordlg.h"
 #include "infowidget.h"
-
-
+#include "functions.h"
 
 
 using namespace bt;
@@ -151,6 +152,22 @@ KTorrent::KTorrent()
 
 	m_core->loadTorrents();
 	setStandardToolBarMenuEnabled(true);
+
+	m_statusInfo = new QLabel(this);
+	m_statusSpeed = new QLabel(this);
+	m_statusTransfer = new QLabel(this);
+
+	
+	statusBar()->addWidget(m_statusInfo,1);
+	statusBar()->addWidget(m_statusSpeed);
+	statusBar()->addWidget(m_statusTransfer);
+
+	QToolTip::add(m_statusInfo, i18n("Info"));
+	QToolTip::add(m_statusTransfer, i18n("Transfer upload/download"));
+	QToolTip::add(m_statusSpeed, i18n("Speed upload/download"));
+
+	connect(&m_gui_update_timer, SIGNAL(timeout()), this, SLOT(updatedStats()));
+	m_gui_update_timer.start(500);
 }
 
 KTorrent::~KTorrent()
@@ -159,6 +176,9 @@ KTorrent::~KTorrent()
 	bt::Out() << "I'm dead" << bt::endl;
 	delete m_core;
 //	delete m_mon;
+	delete m_statusInfo;
+	delete m_statusTransfer;
+	delete m_statusSpeed;
 }
 
 void KTorrent::applySettings()
@@ -470,7 +490,8 @@ void KTorrent::optionsPreferences()
 void KTorrent::changeStatusbar(const QString& text)
 {
 	// display the text on the statusbar
-	statusBar()->message(text);
+	//statusBar()->message(text);
+	m_statusInfo->setText(text);
 }
 
 void KTorrent::changeCaption(const QString& text)
@@ -532,6 +553,28 @@ void KTorrent::dropEvent(QDropEvent *event)
 		load(url);
 	}
 }
+
+void KTorrent::updatedStats()
+{
+	CurrentStats stats = this->m_core->getStats();
+	
+
+	//m_statusInfo->setText(i18n("Some info here e.g. connected/disconnected"));
+	QString tmp = i18n("Speed (up / down) : %1 /  %2")
+			.arg(KBytesPerSecToString((double)stats.upload_speed/1024.0))
+			.arg(KBytesPerSecToString((double)stats.download_speed/1024.0));
+	
+	m_statusSpeed->setText(tmp);
+	
+	tmp = i18n("Transfered (up / down) : %1 / %2")
+			.arg(BytesToString(stats.bytes_uploaded))
+			.arg(BytesToString(stats.bytes_downloaded));
+	m_statusTransfer->setText(tmp);
+
+	m_view->update();
+	m_info->update();
+}
+
 
 
 #include "ktorrent.moc"

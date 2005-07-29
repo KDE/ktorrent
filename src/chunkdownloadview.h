@@ -21,7 +21,6 @@
 #define BTCHUNKDOWNLOADVIEW_H
 
 #include <klistview.h>
-#include <qtimer.h>
 #include <qmap.h>
 
 namespace bt
@@ -48,7 +47,7 @@ public:
 class ChunkDownloadView : public KListView
 {
 	Q_OBJECT
-	QTimer timer;
+
 	QMap<bt::ChunkDownload*,ChunkDownloadViewItem*> items;
 public:
 	ChunkDownloadView(QWidget *parent = 0, const char *name = 0);

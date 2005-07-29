@@ -22,7 +22,6 @@
 
 #include <qmap.h>
 #include <klistview.h>
-#include <qtimer.h>
 
 namespace bt
 {
@@ -49,7 +48,6 @@ class PeerView : public KListView
 	Q_OBJECT
 	
 	QMap<bt::Peer*,PeerViewItem*> items;
-	QTimer timer;
 public:
 	PeerView(QWidget *parent = 0, const char *name = 0);
 	virtual ~PeerView();

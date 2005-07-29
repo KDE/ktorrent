@@ -22,7 +22,6 @@
 #include <kiconloader.h>
 #include <kmimetype.h>
 #include <qlabel.h>
-#include <qtimer.h>
 #include <libutil/functions.h>
 #include <libutil/ptrmap.h>
 #include <libtorrent/torrent.h>
@@ -97,8 +96,6 @@ InfoWidget::InfoWidget(QWidget* parent, const char* name, WFlags fl)
 	monitor = 0;
 	curr_tc = 0;
 	setEnabled(false);
-	t = new QTimer(this);
-	connect(t,SIGNAL(timeout()),this,SLOT(updateInfo()));
 }
 
 InfoWidget::~InfoWidget()
@@ -137,11 +134,6 @@ void InfoWidget::changeTC(bt::TorrentControl* tc)
 {
 	if (tc == curr_tc)
 		return;
-
-	if (tc)
-		t->start(1000);
-	else
-		t->stop();
 	
 	curr_tc = tc;
 	if (monitor)
@@ -158,10 +150,10 @@ void InfoWidget::changeTC(bt::TorrentControl* tc)
 	fillFileTree();
 	m_chunk_bar->setTC(tc);
 	setEnabled(tc != 0);
-	updateInfo();
+	update();
 }
 
-void InfoWidget::updateInfo()
+void InfoWidget::update()
 {
 	if (!curr_tc)
 		return;
@@ -170,6 +162,8 @@ void InfoWidget::updateInfo()
 	m_chunks_downloaded->setText(QString::number(curr_tc->getNumChunksDownloaded()));
 	m_total_chunks->setText(QString::number(curr_tc->getTotalChunks()));
 	m_chunk_bar->update();
+	m_peer_view->update();
+	m_chunk_view->update();
 }
 
 

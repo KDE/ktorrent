@@ -36,6 +36,7 @@
 
 #include "ktorrentcore.h"
 #include "settings.h"
+#include "functions.h"
 
 using namespace bt;
 
@@ -338,6 +339,7 @@ void KTorrentCore::update()
 		i++;
 	}
 
+	
 	//bt::DownloadCap::setCurrentSpeed(down_speed);
 }
 
@@ -387,6 +389,45 @@ void KTorrentCore::makeTorrent(const QString & file,const QStringList & trackers
 			i18n("Cannot create torrent: %1").arg(e.toString()),
 			i18n("Error"));
 	}
+}
+
+CurrentStats KTorrentCore::getStats()
+{
+	CurrentStats stats;
+	int bytes_dl, bytes_ul, speed_dl, speed_ul;
+	static int prev_dl, prev_ul;
+	static bool first_run = true;
+
+	if(first_run)
+	{
+		prev_dl = prev_ul = 0;
+		for ( QPtrList<bt::TorrentControl>::iterator i = downloads.begin(); i != downloads.end(); ++i )
+		{
+			bt::TorrentControl* tc = *i;
+			prev_dl += tc->getBytesDownloaded() > tc->getTotalBytes() ? tc->getTotalBytes() : tc->getBytesDownloaded();
+			prev_ul += tc->getBytesUploaded();
+		}
+		first_run = false;
+	}
+	bytes_dl = 0;
+	bytes_ul = 0;
+	speed_dl = 0;
+	speed_ul = 0;
+	for ( QPtrList<bt::TorrentControl>::iterator i = downloads.begin(); i != downloads.end(); ++i )
+	{
+		bt::TorrentControl* tc = *i;
+	
+		speed_dl += tc->getDownloadRate();
+		speed_ul += tc->getUploadRate();
+		bytes_dl += (int) tc->getBytesDownloaded() > tc->getTotalBytes() ? tc->getTotalBytes() : tc->getBytesDownloaded();
+		bytes_ul += tc->getBytesUploaded();
+	}
+	stats.download_speed = speed_dl;
+	stats.upload_speed = speed_ul;
+	stats.bytes_downloaded = bytes_dl - prev_dl;
+	stats.bytes_uploaded = bytes_ul - prev_ul;
+
+	return stats;
 }
 
 #include "ktorrentcore.moc"
