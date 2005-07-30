@@ -74,7 +74,7 @@
                                             <cstring>textLabel1</cstring>
                                         </property>
                                         <property name="text">
-                                            <string>Total number of chunks</string>
+                                            <string>Total number of chunks:</string>
                                         </property>
                                     </widget>
                                     <widget class="QLabel">
@@ -82,7 +82,7 @@
                                             <cstring>textLabel3</cstring>
                                         </property>
                                         <property name="text">
-                                            <string>Chunks downloaded</string>
+                                            <string>Chunks downloaded:</string>
                                         </property>
                                     </widget>
                                     <widget class="QLabel">
@@ -90,7 +90,7 @@
                                             <cstring>textLabel5</cstring>
                                         </property>
                                         <property name="text">
-                                            <string>Chunks currently downloading</string>
+                                            <string>Chunks currently downloading:</string>
                                         </property>
                                     </widget>
                                 </vbox>

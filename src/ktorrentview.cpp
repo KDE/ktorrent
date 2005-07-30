@@ -67,7 +67,7 @@ KTorrentView::KTorrentView(QWidget *parent)
 			this,SLOT(removeDownload()));
 	menu->insertSeparator();
 
-	menu->insertItem(i18n("Manual announce"),this,SLOT(manualAnnounce()));
+	menu->insertItem(i18n("Manual Announce"),this,SLOT(manualAnnounce()));
 
 	setAllColumnsShowFocus(true);
 
