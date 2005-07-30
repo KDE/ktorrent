@@ -163,8 +163,8 @@ KTorrent::KTorrent()
 	statusBar()->addWidget(m_statusTransfer);
 
 	QToolTip::add(m_statusInfo, i18n("Info"));
-	QToolTip::add(m_statusTransfer, i18n("Transfer upload/download"));
-	QToolTip::add(m_statusSpeed, i18n("Speed upload/download"));
+	QToolTip::add(m_statusTransfer, i18n("Data transfered during the current session"));
+	QToolTip::add(m_statusSpeed, i18n("Current speed of all torrents combined"));
 
 	connect(&m_gui_update_timer, SIGNAL(timeout()), this, SLOT(updatedStats()));
 	m_gui_update_timer.start(500);
@@ -566,13 +566,16 @@ void KTorrent::updatedStats()
 	
 	m_statusSpeed->setText(tmp);
 	
-	tmp = i18n("Transfered (up / down) : %1 / %2")
+	QString tmp1 = i18n("Transfered (up / down) : %1 / %2")
 			.arg(BytesToString(stats.bytes_uploaded))
 			.arg(BytesToString(stats.bytes_downloaded));
-	m_statusTransfer->setText(tmp);
+	m_statusTransfer->setText(tmp1);
 
 	m_view->update();
 	m_info->update();
+	m_systray_icon->updateStats(
+			i18n("Speed (up / down) :<br>") + tmp.section(':',1) +
+			i18n("<br>Transfered (up / down) :<br>") + tmp1.section(':',1));
 }
 
 

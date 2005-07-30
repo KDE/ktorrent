@@ -19,9 +19,12 @@
  ***************************************************************************/
 #include <klistview.h>
 #include <kglobal.h>
+#include <klocale.h>
 #include <kiconloader.h>
 #include <kmimetype.h>
 #include <qlabel.h>
+#include <qcheckbox.h>
+#include <qpainter.h>
 #include <libutil/functions.h>
 #include <libutil/ptrmap.h>
 #include <libtorrent/torrent.h>
@@ -66,6 +69,10 @@ public:
 			setPixmap(0,KGlobal::iconLoader()->loadIcon("folder",KIcon::Small));
 		else
 			setPixmap(0,KMimeType::findByPath(name)->pixmap(KIcon::Small));
+	}
+
+	virtual ~IWFileTreeItem()
+	{
 	}
 
 	void insert(const QString & path,Uint32 size)

@@ -32,10 +32,10 @@ namespace bt
 ///Stats struct
 struct CurrentStats
 {
-	int download_speed;
-	int upload_speed;
-	int bytes_downloaded;
-	int bytes_uploaded;
+	bt::Uint32 download_speed;
+	bt::Uint32 upload_speed;
+	bt::Uint32 bytes_downloaded;
+	bt::Uint32 bytes_uploaded;
 };
 
 class KProgress;

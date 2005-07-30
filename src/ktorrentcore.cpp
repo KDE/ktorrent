@@ -394,8 +394,8 @@ void KTorrentCore::makeTorrent(const QString & file,const QStringList & trackers
 CurrentStats KTorrentCore::getStats()
 {
 	CurrentStats stats;
-	int bytes_dl, bytes_ul, speed_dl, speed_ul;
-	static int prev_dl, prev_ul;
+	Uint32 bytes_dl = 0, bytes_ul = 0, speed_dl = 0, speed_ul = 0;
+	static Uint32 prev_dl = 0, prev_ul = 0;
 	static bool first_run = true;
 
 	if(first_run)
@@ -409,17 +409,14 @@ CurrentStats KTorrentCore::getStats()
 		}
 		first_run = false;
 	}
-	bytes_dl = 0;
-	bytes_ul = 0;
-	speed_dl = 0;
-	speed_ul = 0;
+
 	for ( QPtrList<bt::TorrentControl>::iterator i = downloads.begin(); i != downloads.end(); ++i )
 	{
 		bt::TorrentControl* tc = *i;
 	
 		speed_dl += tc->getDownloadRate();
 		speed_ul += tc->getUploadRate();
-		bytes_dl += (int) tc->getBytesDownloaded() > tc->getTotalBytes() ? tc->getTotalBytes() : tc->getBytesDownloaded();
+		bytes_dl += (tc->getBytesDownloaded() > tc->getTotalBytes()) ? tc->getTotalBytes() : tc->getBytesDownloaded();
 		bytes_ul += tc->getBytesUploaded();
 	}
 	stats.download_speed = speed_dl;

@@ -19,7 +19,9 @@
  ***************************************************************************/
 #include <kpopupmenu.h>
 #include <kapplication.h>
+#include "ktorrent.h"
 #include "trayicon.h"
+#include <qtooltip.h>
 
 TrayIcon::TrayIcon(QWidget *parent, const char *name)
  : KSystemTray(parent, name)
@@ -28,6 +30,10 @@ TrayIcon::TrayIcon(QWidget *parent, const char *name)
 	connect(this,SIGNAL(quitSelected()),kapp,SLOT(quit()));
 }
 
+void TrayIcon::updateStats(const QString stats)
+{
+	QToolTip::add(this, "<b>KTorrent</b><br>"+stats);
+}
 
 TrayIcon::~TrayIcon()
 {

@@ -22,6 +22,8 @@
 
 #include <ksystemtray.h>
 
+class QString;
+
 /**
 @author Joris Guisson
 */
@@ -30,8 +32,9 @@ class TrayIcon : public KSystemTray
 	Q_OBJECT
 public:
 	TrayIcon(QWidget *parent = 0, const char *name = 0);
-
 	~TrayIcon();
+
+	void updateStats(const QString stats);
 
 };
 
