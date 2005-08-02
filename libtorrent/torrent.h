@@ -107,11 +107,20 @@ namespace bt
 		Uint32 getNumFiles() const {return files.count();}
 		
 		/**
-		 * Get a TorrentFile, does nothing if we have a single file torrent.
+		 * Get a TorrentFile. If the index is out of range, or
+		 * we have a single file torrent we return a null TorrentFile.
 		 * @param idx Index of the file
-		 * @param file The file
+		 * @param A reference to the file
 		 */
-		void getFile(Uint32 idx,TorrentFile & file) const;
+		TorrentFile & getFile(Uint32 idx);
+
+		/**
+		 * Get a TorrentFile. If the index is out of range, or
+		 * we have a single file torrent we return a null TorrentFile.
+		 * @param idx Index of the file
+		 * @param A reference to the file
+		 */
+		const TorrentFile & getFile(Uint32 idx) const;
 
 		/**
 		 * Calculate in which file(s) a Chunk lies. A list will

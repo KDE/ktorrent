@@ -74,6 +74,17 @@ namespace bt
 		Uint32 getNumBytes() const {return num_bytes;}
 		Uint32 getNumBits() const {return num_bits;}
 		const Uint8* getData() const {return data;}
+
+		/**
+		 * Set all bits to 0
+		 */
+		void clear();
+
+		/**
+		 * or this BitSet with another.
+		 * @param other The other BitSet
+		 */
+		void orBitSet(const BitSet & other);
 		
 		/**
 		 * Assignment operator.

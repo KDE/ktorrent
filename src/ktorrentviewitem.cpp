@@ -60,7 +60,7 @@ void KTorrentViewItem::update()
 	Uint32 nb = tc->getBytesDownloaded() > tc->getTotalBytes() ?
 			tc->getTotalBytes() : tc->getBytesDownloaded();
 	
-	setText(2,BytesToString(nb) + " / " + BytesToString(tc->getTotalBytes()));
+	setText(2,BytesToString(nb) + " / " + BytesToString(tc->getTotalBytesToDownload()));
 	setText(3,BytesToString(tc->getBytesUploaded()));
 	if (tc->getBytesLeft() == 0)
 		setText(4,KBytesPerSecToString(0));
@@ -85,7 +85,7 @@ void KTorrentViewItem::update()
 		setText(6,i18n("infinity"));
 	}
 	setText(7,QString::number(tc->getNumPeers()));
-	double perc = ((double)tc->getBytesDownloaded() / tc->getTotalBytes()) * 100.0;
+	double perc = ((double)tc->getBytesDownloaded() / tc->getTotalBytesToDownload()) * 100.0;
 	if (perc > 100.0)
 		perc = 100.0;
 	setText(8,i18n("%1 %").arg(loc->formatNumber(perc,2)));
@@ -101,7 +101,7 @@ int KTorrentViewItem::compare(QListViewItem * i,int col,bool) const
 	{
 		case 0: return QString::compare(tc->getTorrentName(),otc->getTorrentName());
 		case 1: return QString::compare(tc->getStatus(),otc->getStatus());
-		case 2: return CompareVal(tc->getTotalBytes(),otc->getTotalBytes());
+		case 2: return CompareVal(tc->getTotalBytesToDownload(),otc->getTotalBytesToDownload());
 		case 3: return CompareVal(tc->getBytesUploaded(),otc->getBytesUploaded());
 		case 4: return CompareVal(tc->getDownloadRate(),otc->getDownloadRate());
 		case 5: return CompareVal(tc->getUploadRate(),otc->getUploadRate());
@@ -109,10 +109,10 @@ int KTorrentViewItem::compare(QListViewItem * i,int col,bool) const
 		case 7: return CompareVal(tc->getNumPeers(),otc->getNumPeers());
 		case 8:
 		{
-			double perc = ((double)tc->getBytesDownloaded() / tc->getTotalBytes()) * 100.0;
+			double perc = ((double)tc->getBytesDownloaded() / tc->getTotalBytesToDownload()) * 100.0;
 			if (perc > 100.0)
 				perc = 100.0;
-			double operc = ((double)otc->getBytesDownloaded() / otc->getTotalBytes()) * 100.0;
+			double operc = ((double)otc->getBytesDownloaded() / otc->getTotalBytesToDownload()) * 100.0;
 			if (operc > 100.0)
 				operc = 100.0;
 			return CompareVal(perc,operc);

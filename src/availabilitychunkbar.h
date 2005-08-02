@@ -15,49 +15,25 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef CHUNKBAR_H
-#define CHUNKBAR_H
+#ifndef AVAILABILITYCHUNKBAR_H
+#define AVAILABILITYCHUNKBAR_H
 
-#include <qwidget.h>
-
-
-class QPainter;
-
-
-namespace bt
-{
-	class TorrentControl;
-	class BitSet;
-}
-
+#include "chunkbar.h"
 
 /**
 @author Joris Guisson
 */
-class ChunkBar : public QWidget
+class AvailabilityChunkBar : public ChunkBar
 {
 	Q_OBJECT
 public:
-	ChunkBar(QWidget *parent = 0, const char *name = 0);
-	virtual ~ChunkBar();
+	AvailabilityChunkBar(QWidget* parent, const char* name);
+	virtual ~AvailabilityChunkBar();
 
-	void setTC(bt::TorrentControl* tc);
-	
-	virtual void paintEvent(QPaintEvent* arg1);
+	virtual void fillBitSet(bt::BitSet& bs);
 
-	virtual void fillBitSet(bt::BitSet & bs) = 0;
-
-private:
-	void drawEqual(QPainter & p,const bt::BitSet & bs);
-	void drawMoreChunksThenPixels(QPainter & p,const bt::BitSet & bs);
-	void drawMorePixelsThenChunks(QPainter & p,const bt::BitSet & bs);
-	
-protected:
-	bt::TorrentControl* curr_tc;
-
-	
 };
 
 #endif

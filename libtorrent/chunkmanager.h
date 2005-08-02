@@ -21,6 +21,7 @@
 #define BTCHUNKMANAGER_H
 
 #include <qstring.h>
+#include <qobject.h>
 #include <qptrvector.h> 
 #include "chunk.h"
 #include "globals.h"
@@ -30,6 +31,7 @@ namespace bt
 	class Torrent;
 	class BitSet;
 	class Cache;
+	class TorrentFile;
 
 	struct NewChunkHeader
 	{
@@ -47,8 +49,10 @@ namespace bt
 	 * The chunks are stored in the cache file in the correct order. Eliminating
 	 * the need for a file reconstruction algorithm for single files.
 	 */
-	class ChunkManager
+	class ChunkManager : public QObject
 	{
+		Q_OBJECT
+				
 		Torrent & tor;
 		QString index_file,chunk_info_file;
 		QPtrVector<Chunk> chunks;
@@ -116,12 +120,25 @@ namespace bt
 		 * @return The number of bytes to download
 		 */
 		Uint32 bytesLeft() const;
+
+		
+		/**
+		 * Calculates the number of bytes which have been excluded.
+		 * @return The number of bytes excluded
+		 */
+		Uint32 bytesExcluded() const;
 		
 		/**
 		 * Calculates the number of chunks left to download.
 		 * @return The number of chunks to download
 		 */
 		Uint32 chunksLeft() const;
+
+		/**
+		 * Get the number of chunks which have been excluded.
+		 * @return The number of excluded chunks
+		 */
+		Uint32 chunksExcluded() const;
 		
 		/**
 		 * Make a BitSet of the status of all Chunks
@@ -189,6 +206,9 @@ namespace bt
 		void writeIndexFileEntry(Chunk* c);
 		void saveChunkInfo();
 		void loadChunkInfo();
+
+	private slots:
+		void downloadStatusChanged(TorrentFile* tf,bool download);
 	};
 
 }

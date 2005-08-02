@@ -15,49 +15,53 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef CHUNKBAR_H
-#define CHUNKBAR_H
+#ifndef IWFILETREEITEM_H
+#define IWFILETREEITEM_H
 
-#include <qwidget.h>
+#include <klistview.h>
+#include <libutil/constants.h>
+#include <libutil/ptrmap.h>
 
+class IWFileTreeDirItem;
 
-class QPainter;
-
+using bt::Uint32;
 
 namespace bt
 {
-	class TorrentControl;
-	class BitSet;
+	class TorrentFile;
 }
-
 
 /**
 @author Joris Guisson
 */
-class ChunkBar : public QWidget
+class IWFileTreeItem : public QCheckListItem
 {
-	Q_OBJECT
+	QString name;
+	Uint32 size;
+	bt::TorrentFile & file;
 public:
-	ChunkBar(QWidget *parent = 0, const char *name = 0);
-	virtual ~ChunkBar();
-
-	void setTC(bt::TorrentControl* tc);
-	
-	virtual void paintEvent(QPaintEvent* arg1);
-
-	virtual void fillBitSet(bt::BitSet & bs) = 0;
+	IWFileTreeItem(KListView* lv,const QString & name,bt::TorrentFile & file);
+	IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,bt::TorrentFile & file);
+	virtual ~IWFileTreeItem();
 
 private:
-	void drawEqual(QPainter & p,const bt::BitSet & bs);
-	void drawMoreChunksThenPixels(QPainter & p,const bt::BitSet & bs);
-	void drawMorePixelsThenChunks(QPainter & p,const bt::BitSet & bs);
-	
-protected:
-	bt::TorrentControl* curr_tc;
+	void init();
+	virtual void stateChange(bool on);
+};
 
-	
+class IWFileTreeDirItem : public KListViewItem
+{
+	QString name;
+	bt::PtrMap<QString,IWFileTreeItem> children;
+	bt::PtrMap<QString,IWFileTreeDirItem> subdirs;
+public:
+	IWFileTreeDirItem(KListView* klv,const QString & name);
+	IWFileTreeDirItem(IWFileTreeDirItem* parent,const QString & name);
+	virtual ~IWFileTreeDirItem();
+
+	void insert(const QString & path,bt::TorrentFile & file);
 };
 
 #endif

@@ -309,7 +309,6 @@ namespace bt
 	
 	void TorrentControl::updateTracker(const QString & ev,bool last_succes)
 	{
-		updateStatusMsg(i18n("Doing tracker request"));
 		trackerevent = ev;
 		if (!tor || !tracker || !down || !up)
 			return;
@@ -476,12 +475,22 @@ namespace bt
 	
 	Uint32 TorrentControl::getNumChunksDownloaded() const
 	{
-		return cman->getNumChunks() - cman->chunksLeft();
+		return cman->getNumChunks() - cman->chunksExcluded() - cman->chunksLeft();
+	}
+
+	Uint32 TorrentControl::getNumChunksExcluded() const
+	{
+		return cman->chunksExcluded();
 	}
 
 	Uint32 TorrentControl::getTotalBytes() const
 	{
 		return tor->getFileLength();
+	}
+
+	Uint32 TorrentControl::getTotalBytesToDownload() const
+	{
+		return tor->getFileLength() - cman->bytesExcluded();
 	}
 
 	QString TorrentControl::getStatus() const
@@ -572,7 +581,7 @@ namespace bt
 		old_datadir = QString::null;
 	}
 
-	void TorrentControl::updateStatusMsg(const QString & def)
+	void TorrentControl::updateStatusMsg()
 	{
 		if (!started)
 			setStatus(i18n("Not started"));
@@ -581,26 +590,34 @@ namespace bt
 		else if (!running)
 			setStatus(i18n("Download stopped"));
 		else if (running && completed)
-		{
-			if (def.length() > 0)
-				setStatus(i18n("Seeding + %1").arg(def));
-			else
-				setStatus(i18n("Seeding"));
-		}
+			setStatus(i18n("Seeding"));
 		else if (running)
 		{
 			QString m = down->downloadRate() > 0 ? i18n("Downloading") : i18n("Stalled");
-			if (def.length() > 0)
-				setStatus(i18n("%1 + %2").arg(m).arg(def));
-			else
-				setStatus(m);
+			setStatus(m);
 		}
 	}
 
-	void TorrentControl::toBitSet(BitSet & bs)
+	void TorrentControl::downloadedChunksToBitSet(BitSet & bs)
 	{
 		if (cman)
 			cman->toBitSet(bs);
+	}
+
+	void TorrentControl::availableChunksToBitSet(BitSet & bs)
+	{
+		if (!pman)
+			return;
+
+		bs = BitSet(cman->getNumChunks());
+		for (Uint32 i = 0;i < pman->getNumConnectedPeers();i++)
+		{
+			Peer* p = pman->getPeer(i);
+			const BitSet & pbs = p->getBitSet();
+			for (Uint32 j = 0;j < cman->getNumChunks();j++)
+				if (pbs.get(j))
+					bs.set(j,true);
+		}
 	}
 
 	void TorrentControl::saveStats()

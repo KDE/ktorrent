@@ -49,7 +49,7 @@ namespace bt
 		Uint32 csize = tor.getChunkSize();	// chunk size
 		Uint32 lsize = tsize - (csize * (tor.getNumChunks() - 1)); // size of last chunk
 		
-		for (unsigned int i = 0;i < tor.getNumChunks();i++)
+		for (Uint32 i = 0;i < tor.getNumChunks();i++)
 		{
 			if (i + 1 < tor.getNumChunks())
 				chunks.insert(i,new Chunk(i,csize));
@@ -59,6 +59,17 @@ namespace bt
 		chunks.setAutoDelete(true);
 		num_chunks_in_cache_file = 0;
 		max_allowed = 50;
+
+		for (Uint32 i = 0;i < tor.getNumFiles();i++)
+		{
+			TorrentFile & tf = tor.getFile(i);
+			connect(&tf,SIGNAL(downloadStatusChanged(TorrentFile*, bool )),
+					 this,SLOT(downloadStatusChanged(TorrentFile*, bool )));
+			if (tf.doNotDownload())
+			{
+				downloadStatusChanged(&tf,false);
+			}
+		}
 	}
 
 
@@ -233,6 +244,30 @@ namespace bt
 		}
 		return num;
 	}
+
+	Uint32 ChunkManager::bytesExcluded() const
+	{
+		Uint32 num = 0;
+		for (Uint32 i = 0;i < chunks.size();i++)
+		{
+			const Chunk* c = chunks[i];
+			if (c->isExcluded())
+				num += c->getSize();
+		}
+		return num;
+	}
+
+	Uint32 ChunkManager::chunksExcluded() const
+	{
+		Uint32 num = 0;
+		for (Uint32 i = 0;i < chunks.size();i++)
+		{
+			const Chunk* c = chunks[i];
+			if (c->isExcluded())
+				num++;
+		}
+		return num;
+	}
 	
 	void ChunkManager::save(const QString & dir)
 	{
@@ -320,40 +355,28 @@ namespace bt
 
 	void ChunkManager::saveChunkInfo()
 	{
+		// saves which TorrentFile's do not need to be downloaded
 		File fptr;
 		if (!fptr.open(chunk_info_file,"wb"))
 			throw Error(i18n("Can't save chunk_info file : %1").arg(fptr.errorString()));
 
-		QValueList<Uint32> excluded;
-		QValueList<Uint32> prioritised;
+		QValueList<Uint32> dnd;
+		
 		Uint32 i = 0;
-		while (i < chunks.count())
+		while (i < tor.getNumFiles())
 		{
-			Chunk* c = chunks[i];
-			if (c->isExcluded())
-				excluded.append(i);
-			if (c->isPriority())
-				prioritised.append(i);
+			if (tor.getFile(i).doNotDownload())
+				dnd.append(i);
 			i++;
 		}
 
 		// first write the number of excluded ones
-		Uint32 tmp = excluded.count();
+		Uint32 tmp = dnd.count();
 		fptr.write(&tmp,sizeof(Uint32));
 		// then all the excluded ones
-		for (i = 0;i < excluded.count();i++)
+		for (i = 0;i < dnd.count();i++)
 		{
-			tmp = excluded[i];
-			fptr.write(&tmp,sizeof(Uint32));
-		}
-
-		// then write the number of prioritised ones
-		tmp = prioritised.count();
-		fptr.write(&tmp,sizeof(Uint32));
-		// then all the excluded ones
-		for (i = 0;i < prioritised.count();i++)
-		{
-			tmp = excluded[i];
+			tmp = dnd[i];
 			fptr.write(&tmp,sizeof(Uint32));
 		}
 	}
@@ -365,7 +388,7 @@ namespace bt
 			return;
 
 		Uint32 num = 0,tmp = 0;
-		// first read the number of excluded chunks
+		// first read the number of dnd files
 		if (fptr.read(&num,sizeof(Uint32)) != sizeof(Uint32))
 		{
 			Out() << "Warning : error reading chunk_info file" << endl;
@@ -380,30 +403,31 @@ namespace bt
 				return;
 			}
 
-			Chunk* c = getChunk(tmp);
-			if (c)
-				c->setExclude(true);
+			tor.getFile(i).setDoNotDownload(true);
 		}
+	}
 
-		// then read the number of prioritised chunks
-		if (fptr.read(&num,sizeof(Uint32)) != sizeof(Uint32))
+	void ChunkManager::downloadStatusChanged(TorrentFile* tf,bool download)
+	{
+		if (download)
 		{
-			Out() << "Warning : error reading chunk_info file" << endl;
-			return;
+			include(tf->getFirstChunk(),tf->getLastChunk());
 		}
-
-		for (Uint32 i = 0;i < tmp;i++)
+		else
 		{
-			if (fptr.read(&tmp,sizeof(Uint32)) != sizeof(Uint32))
-			{
-				Out() << "Warning : error reading chunk_info file" << endl;
+			Uint32 first = tf->getFirstChunk();
+			Uint32 last = tf->getLastChunk();
+			if (first != 0)
+				first++;
+			if (last != chunks.count() - 1 && last > 0)
+				last--;
+
+			if (last <= first)
 				return;
-			}
 
-			Chunk* c = getChunk(tmp);
-			if (c)
-				c->setPriority(true);
+			exclude(first,last);
 		}
 	}
 }
 
+#include "chunkmanager.moc"

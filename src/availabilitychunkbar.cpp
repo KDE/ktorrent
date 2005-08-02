@@ -15,49 +15,24 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef CHUNKBAR_H
-#define CHUNKBAR_H
+#include <libtorrent/bitset.h>
+#include <libtorrent/torrentcontrol.h>
+#include "availabilitychunkbar.h"
 
-#include <qwidget.h>
+AvailabilityChunkBar::AvailabilityChunkBar(QWidget* parent, const char* name): ChunkBar(parent, name)
+{}
 
 
-class QPainter;
+AvailabilityChunkBar::~AvailabilityChunkBar()
+{}
 
 
-namespace bt
+void AvailabilityChunkBar::fillBitSet(bt::BitSet& bs)
 {
-	class TorrentControl;
-	class BitSet;
+	if (curr_tc)
+		curr_tc->availableChunksToBitSet(bs);
 }
 
-
-/**
-@author Joris Guisson
-*/
-class ChunkBar : public QWidget
-{
-	Q_OBJECT
-public:
-	ChunkBar(QWidget *parent = 0, const char *name = 0);
-	virtual ~ChunkBar();
-
-	void setTC(bt::TorrentControl* tc);
-	
-	virtual void paintEvent(QPaintEvent* arg1);
-
-	virtual void fillBitSet(bt::BitSet & bs) = 0;
-
-private:
-	void drawEqual(QPainter & p,const bt::BitSet & bs);
-	void drawMoreChunksThenPixels(QPainter & p,const bt::BitSet & bs);
-	void drawMorePixelsThenChunks(QPainter & p,const bt::BitSet & bs);
-	
-protected:
-	bt::TorrentControl* curr_tc;
-
-	
-};
-
-#endif
+#include "availabilitychunkbar.moc"

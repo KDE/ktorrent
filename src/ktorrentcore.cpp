@@ -54,6 +54,9 @@ KTorrentCore::KTorrentCore() : max_downloads(0),keep_seeding(true)
 
 	connect(&update_timer,SIGNAL(timeout()),this,SLOT(update()));
 	update_timer.start(100);
+
+	this->removed_torrents_down = 0;
+	this->removed_torrents_up = 0;
 }
 
 
@@ -180,6 +183,8 @@ void KTorrentCore::loadTorrents()
 
 void KTorrentCore::remove(bt::TorrentControl* tc)
 {
+	this->removed_torrents_down += tc->getBytesDownloaded();
+	this->removed_torrents_up += tc->getBytesUploaded();
 	stop(tc);
 	QString dir = tc->getDataDir();
 	torrentRemoved(tc);
@@ -421,8 +426,8 @@ CurrentStats KTorrentCore::getStats()
 	}
 	stats.download_speed = speed_dl;
 	stats.upload_speed = speed_ul;
-	stats.bytes_downloaded = bytes_dl - prev_dl;
-	stats.bytes_uploaded = bytes_ul - prev_ul;
+	stats.bytes_downloaded = bytes_dl + removed_torrents_down - prev_dl;
+	stats.bytes_uploaded = bytes_ul + removed_torrents_up - prev_ul;
 
 	return stats;
 }

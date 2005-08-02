@@ -32,9 +32,10 @@ namespace bt
 		first_chunk_off = off % chunk_size;
 		last_chunk = (off + size - 1) / chunk_size;
 		last_chunk_size = (off + size) - last_chunk * chunk_size;
+		do_not_download = false;
 	}
 	
-	TorrentFile::TorrentFile(const TorrentFile & tf)
+	TorrentFile::TorrentFile(const TorrentFile & tf) : QObject(0,0)
 	{
 		path = tf.getPath();
 		size = tf.getSize();
@@ -43,10 +44,20 @@ namespace bt
 		first_chunk_off = tf.getFirstChunkOffset();
 		last_chunk = tf.getLastChunk();
 		last_chunk_size = tf.getLastChunkSize();
+		do_not_download = tf.doNotDownload();
 	}
 
 	TorrentFile::~TorrentFile()
 	{}
+
+	void TorrentFile::setDoNotDownload(bool dnd)
+	{
+		if (do_not_download != dnd)
+		{
+			do_not_download = dnd;
+			emit downloadStatusChanged(this,!dnd);
+		}
+	}
 
 	TorrentFile & TorrentFile::operator = (const TorrentFile & tf)
 	{
@@ -57,7 +68,11 @@ namespace bt
 		first_chunk_off = tf.getFirstChunkOffset();
 		last_chunk = tf.getLastChunk();
 		last_chunk_size = tf.getLastChunkSize();
+		do_not_download = tf.doNotDownload();
 		return *this;
 	}
 
+	TorrentFile TorrentFile::null;
 }
+
+#include "torrentfile.moc"

@@ -21,6 +21,7 @@
 #define BTTORRENTFILE_H
 
 #include <qstring.h>
+#include <qobject.h>
 #include <libutil/constants.h>
 
 namespace bt
@@ -32,8 +33,10 @@ namespace bt
 	 * File in a multi file torrent. Keeps track of the path of the file,
 	 * it's size, offset into the cache and between which chunks it lies.
 	 */
-	class TorrentFile
+	class TorrentFile : public QObject
 	{
+		Q_OBJECT
+				
 		QString path;
 		Uint32 size;
 		Uint32 cache_offset;
@@ -41,10 +44,10 @@ namespace bt
 		Uint32 first_chunk_off;
 		Uint32 last_chunk;
 		Uint32 last_chunk_size;
-		
+		bool do_not_download;
 	public:
 		/**
-		 * Default constructor.
+		 * Default constructor. Creates a null TorrentFile.
 		 */
 		TorrentFile();
 		
@@ -65,6 +68,9 @@ namespace bt
 		TorrentFile(const TorrentFile & tf);
 		virtual ~TorrentFile();
 
+		/// See if the TorrentFile is null.
+		bool isNull() const {return path.isNull();}
+		
 		/// Get the path of the file
 		QString getPath() const {return path;}
 
@@ -86,12 +92,28 @@ namespace bt
 		/// Get how many bytes the files takes up of the last chunk
 		Uint32 getLastChunkSize() const {return last_chunk_size;}
 
+		/// Check if this file doesn't have to be downloaded
+		bool doNotDownload() const {return do_not_download;}
+
+		/// Set wether we have to not download this file
+		void setDoNotDownload(bool dnd);
+		
 		/**
 		 * Assignment operator
 		 * @param tf The file to copy
 		 * @return *this
 		 */
 		TorrentFile & operator = (const TorrentFile & tf);
+
+		static TorrentFile null;
+
+	signals:
+		/**
+		 * Signal emitted when the do_not_download variable changes.
+		 * @param tf The TorrentFile which emitted the signal
+		 * @param download Download the file or not
+		 */
+		void downloadStatusChanged(TorrentFile* tf,bool download);
 	};
 
 }

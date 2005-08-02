@@ -235,12 +235,20 @@ namespace bt
 		return hash_pieces[idx];
 	}
 	
-	void Torrent::getFile(Uint32 idx,TorrentFile & file) const
+	TorrentFile & Torrent::getFile(Uint32 idx)
 	{
 		if (idx >= files.size())
-			return;
+			return TorrentFile::null;
 		
-		file = files.at(idx);
+		return files.at(idx);
+	}
+
+	const TorrentFile & Torrent::getFile(Uint32 idx) const
+	{
+		if (idx >= files.size())
+			return TorrentFile::null;
+		
+		return files.at(idx);
 	}
 	
 	KURL Torrent::getTrackerURL(bool last_was_succesfull) const

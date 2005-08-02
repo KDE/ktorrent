@@ -61,7 +61,13 @@ namespace bt
 		 * Make a BitSet of the status of all Chunks
 		 * @param bs The BitSet
 		 */
-		void toBitSet(BitSet & bs);
+		void downloadedChunksToBitSet(BitSet & bs);
+
+		/**
+		 * Make a BitSet of the availability of all Chunks
+		 * @param bs The BitSet
+		 */
+		void availableChunksToBitSet(BitSet & bs);
 		
 		/**
 		 * Initialize the TorrentControl. 
@@ -100,6 +106,9 @@ namespace bt
 		/// Get the total number of bytes
 		Uint32 getTotalBytes() const;
 
+		/// Get the total number of bytes which need to be downloaded
+		Uint32 getTotalBytesToDownload() const;
+
 		/// Get the download rate in bytes per sec
 		Uint32 getDownloadRate() const;
 
@@ -117,6 +126,9 @@ namespace bt
 
 		/// Get the number of chunks which have been downloaded
 		Uint32 getNumChunksDownloaded() const;
+
+		/// Get the number of chunks which have been excluded
+		Uint32 getNumChunksExcluded() const;
 
 		/// Get the current status of the download.
 		QString getStatus() const;
@@ -216,7 +228,7 @@ namespace bt
 		
 	private:	
 		void updateTracker(const QString & ev,bool last_succes = true);
-		void updateStatusMsg(const QString & def = QString::null);
+		void updateStatusMsg();
 		void saveStats();
 		void loadStats();
 		

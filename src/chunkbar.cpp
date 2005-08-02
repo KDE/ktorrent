@@ -67,19 +67,22 @@ void ChunkBar::paintEvent(QPaintEvent* )
 	p.drawRect(rect());
 
 	p.saveWorldMatrix();
+
 	if (curr_tc)
 	{	
 		Uint32 w = rect().width();
+		BitSet bs;
+		fillBitSet(bs);
 		// there are 3 possibilities :
 		// - for each chunk a pixel
 		// - more pixels then chunks
 		// - more chunks then pixels
 		if (curr_tc->getTotalChunks() < w)
-			drawMorePixelsThenChunks(p);
+			drawMorePixelsThenChunks(p,bs);
 		else if (curr_tc->getTotalChunks() > w)
-			drawMoreChunksThenPixels(p);
+			drawMoreChunksThenPixels(p,bs);
 		else
-			drawEqual(p);
+			drawEqual(p,bs);
 	}
 	p.restoreWorldMatrix();
 	// draw edge last
@@ -89,11 +92,8 @@ void ChunkBar::paintEvent(QPaintEvent* )
 	p.end();
 }
 
-void ChunkBar::drawEqual(QPainter & p)
+void ChunkBar::drawEqual(QPainter & p,const BitSet & bs)
 {
-	BitSet bs;
-	curr_tc->toBitSet(bs);
-
 	p.setPen(QPen(Qt::blue,1,Qt::SolidLine));
 	p.setBrush(Qt::blue);
 	
@@ -135,14 +135,9 @@ void ChunkBar::drawEqual(QPainter & p)
 	}
 }
 
-void ChunkBar::drawMoreChunksThenPixels(QPainter & p)
+void ChunkBar::drawMoreChunksThenPixels(QPainter & p,const BitSet & bs)
 {
-/*	
-	p.scale((double)w /(curr_tc->getTotalChunks() - 1),1);
-	drawEqual(p);*/
 	Uint32 w = rect().width();
-	BitSet bs;
-	curr_tc->toBitSet(bs);
 
 	Uint32 chunks_per_pixel = (int)ceil((double)bs.getNumBits() / w);
 
@@ -167,11 +162,11 @@ void ChunkBar::drawMoreChunksThenPixels(QPainter & p)
 	}
 }
 
-void ChunkBar::drawMorePixelsThenChunks(QPainter & p)
+void ChunkBar::drawMorePixelsThenChunks(QPainter & p,const BitSet & bs)
 {
 	Uint32 w = rect().width();
 	p.scale((double)w /(curr_tc->getTotalChunks() - 1),1);
-	drawEqual(p);
+	drawEqual(p,bs);
 }
 
 #include "chunkbar.moc"

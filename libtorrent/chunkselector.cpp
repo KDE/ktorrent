@@ -76,11 +76,11 @@ namespace bt
 
 		// if need be we can increase max_c
 		// when we don't find a suitable chunk 
-		while (max_c < cman.getNumChunks())
+		do 
 		{
 			// pick a random chunk to download, by picking
 			// a random starting value in the range 0 .. max_c
-			Uint32 s = ((double)rand() / (RAND_MAX - 1)) * max_c;
+			Uint32 s = int(((double)rand() / (RAND_MAX - 1)) * max_c);
 			Uint32 i = s;
 			
 			do
@@ -89,7 +89,7 @@ namespace bt
 				// pd has to have the selected chunk
 				// and we don't have it
 				if (pd->hasChunk(i) && !downer.areWeDownloading(i) &&
-					!bs.get(i) && !c->isExcluded())
+								!bs.get(i) && !c->isExcluded())
 				{
 					chunk = i;
 				//	Out() << "Selecting " << i << endl;
@@ -102,7 +102,8 @@ namespace bt
 			max_c += 50;
 			if (max_c > cman.getNumChunks())
 				max_c = cman.getNumChunks();
-		}
+			
+		}while (max_c < cman.getNumChunks());
 
 		//Out() << "Can't find chunk" << endl;
 

@@ -26,7 +26,6 @@
 #include <qcheckbox.h>
 #include <qpainter.h>
 #include <libutil/functions.h>
-#include <libutil/ptrmap.h>
 #include <libtorrent/torrent.h>
 #include <libtorrent/torrentcontrol.h>
 #include "ktorrentmonitor.h"
@@ -34,68 +33,13 @@
 #include "peerview.h"
 #include "chunkdownloadview.h"
 #include "functions.h"
-#include "chunkbar.h"
+#include "downloadedchunkbar.h"
+#include "availabilitychunkbar.h"
+#include "iwfiletreeitem.h"
 
 using namespace bt;
 
-class IWFileTreeItem : public KListViewItem
-{
-	QString name;
-	Uint32 size;
-	bool is_dir;
-	PtrMap<QString,IWFileTreeItem> children;
-public:
-	IWFileTreeItem(KListView* lv,const QString & name,bool dir,Uint32 size = 0)
-	: KListViewItem(lv),name(name),size(size),is_dir(dir)
-	{
-		setText(0,name);
-		if (!is_dir)
-			setText(1,BytesToString(size));
 
-		if (is_dir)
-			setPixmap(0,KGlobal::iconLoader()->loadIcon("folder",KIcon::Small));
-		else
-			setPixmap(0,KMimeType::findByPath(name)->pixmap(KIcon::Small));
-	}
-			
-	IWFileTreeItem(IWFileTreeItem* item,const QString & name,bool dir,Uint32 size = 0)
-	: KListViewItem(item),name(name),size(size),is_dir(dir)
-	{
-		setText(0,name);
-		if (!is_dir)
-			setText(1,BytesToString(size));
-
-		if (is_dir)
-			setPixmap(0,KGlobal::iconLoader()->loadIcon("folder",KIcon::Small));
-		else
-			setPixmap(0,KMimeType::findByPath(name)->pixmap(KIcon::Small));
-	}
-
-	virtual ~IWFileTreeItem()
-	{
-	}
-
-	void insert(const QString & path,Uint32 size)
-	{
-		int p = path.find(bt::DirSeparator());
-		if (p == -1)
-		{
-			children.insert(path,new IWFileTreeItem(this,path,false,size));
-		}
-		else
-		{
-			QString subdir = path.left(p);
-			IWFileTreeItem* sd = children.find(subdir);
-			if (!sd)
-			{
-				sd = new IWFileTreeItem(this,subdir,true);
-				children.insert(subdir,sd);
-			}
-			
-			sd->insert(path.mid(p+1),size);
-		}
-	}
-};
 
 InfoWidget::InfoWidget(QWidget* parent, const char* name, WFlags fl)
 		: InfoWidgetBase(parent,name,fl)
@@ -117,15 +61,14 @@ void InfoWidget::fillFileTree()
 	if (!curr_tc)
 		return;
 
-	const bt::Torrent & tor = curr_tc->getTorrent();
+	bt::Torrent & tor = const_cast<bt::Torrent &>(curr_tc->getTorrent());
 	if (tor.isMultiFile())
 	{
-		IWFileTreeItem* root = new IWFileTreeItem(m_file_view,tor.getNameSuggestion(),true);
+		IWFileTreeDirItem* root = new IWFileTreeDirItem(m_file_view,tor.getNameSuggestion());
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
-			bt::TorrentFile file;
-			tor.getFile(i,file);
-			root->insert(file.getPath(),file.getSize());
+			bt::TorrentFile & file = tor.getFile(i);
+			root->insert(file.getPath(),file);
 		}
 		root->setOpen(true);
 		m_file_view->setRootIsDecorated(true);
@@ -133,7 +76,12 @@ void InfoWidget::fillFileTree()
 	else
 	{
 		m_file_view->setRootIsDecorated(false);
-		new IWFileTreeItem(m_file_view,tor.getNameSuggestion(),false,tor.getFileLength());
+		KListViewItem* item = new KListViewItem(m_file_view,
+						  tor.getNameSuggestion(),
+						  BytesToString(tor.getFileLength()));
+
+		QString name = tor.getNameSuggestion();
+		item->setPixmap(0,KMimeType::findByPath(name)->pixmap(KIcon::Small));
 	}
 }
 
@@ -156,6 +104,7 @@ void InfoWidget::changeTC(bt::TorrentControl* tc)
 
 	fillFileTree();
 	m_chunk_bar->setTC(tc);
+	m_av_chunk_bar->setTC(tc);
 	setEnabled(tc != 0);
 	update();
 }
@@ -168,7 +117,9 @@ void InfoWidget::update()
 	m_chunks_downloading->setText(QString::number(curr_tc->getNumChunksDownloading()));
 	m_chunks_downloaded->setText(QString::number(curr_tc->getNumChunksDownloaded()));
 	m_total_chunks->setText(QString::number(curr_tc->getTotalChunks()));
+	m_excluded_chunks->setText(QString::number(curr_tc->getNumChunksExcluded()));
 	m_chunk_bar->update();
+	m_av_chunk_bar->update();
 	m_peer_view->update();
 	m_chunk_view->update();
 }

@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>600</width>
-            <height>267</height>
+            <height>307</height>
         </rect>
     </property>
     <property name="caption">
@@ -39,12 +39,31 @@
                             <cstring>textLabel1_2</cstring>
                         </property>
                         <property name="text">
-                            <string>Parts of the file which have been download :</string>
+                            <string>Parts of the file which have been downloaded :</string>
                         </property>
                     </widget>
-                    <widget class="ChunkBar">
+                    <widget class="DownloadedChunkBar">
                         <property name="name">
                             <cstring>m_chunk_bar</cstring>
+                        </property>
+                        <property name="minimumSize">
+                            <size>
+                                <width>0</width>
+                                <height>30</height>
+                            </size>
+                        </property>
+                    </widget>
+                    <widget class="QLabel">
+                        <property name="name">
+                            <cstring>textLabel1_3</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Parts of the file which are available :</string>
+                        </property>
+                    </widget>
+                    <widget class="AvailabilityChunkBar">
+                        <property name="name">
+                            <cstring>m_av_chunk_bar</cstring>
                         </property>
                         <property name="minimumSize">
                             <size>
@@ -63,7 +82,7 @@
                             </property>
                             <widget class="QLayoutWidget">
                                 <property name="name">
-                                    <cstring>layout5</cstring>
+                                    <cstring>layout4</cstring>
                                 </property>
                                 <vbox>
                                     <property name="name">
@@ -75,6 +94,14 @@
                                         </property>
                                         <property name="text">
                                             <string>Total number of chunks:</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>textLabel1_4</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>Chunks excluded</string>
                                         </property>
                                     </widget>
                                     <widget class="QLabel">
@@ -97,7 +124,7 @@
                             </widget>
                             <widget class="QLayoutWidget">
                                 <property name="name">
-                                    <cstring>layout4</cstring>
+                                    <cstring>layout5</cstring>
                                 </property>
                                 <vbox>
                                     <property name="name">
@@ -106,6 +133,26 @@
                                     <widget class="QLabel">
                                         <property name="name">
                                             <cstring>m_total_chunks</cstring>
+                                        </property>
+                                        <property name="minimumSize">
+                                            <size>
+                                                <width>50</width>
+                                                <height>0</height>
+                                            </size>
+                                        </property>
+                                        <property name="frameShape">
+                                            <enum>Panel</enum>
+                                        </property>
+                                        <property name="text">
+                                            <string></string>
+                                        </property>
+                                        <property name="alignment">
+                                            <set>AlignVCenter|AlignRight</set>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>m_excluded_chunks</cstring>
                                         </property>
                                         <property name="minimumSize">
                                             <size>
@@ -177,7 +224,7 @@
                                 </property>
                                 <property name="sizeHint">
                                     <size>
-                                        <width>71</width>
+                                        <width>300</width>
                                         <height>20</height>
                                     </size>
                                 </property>
@@ -197,7 +244,7 @@
                         <property name="sizeHint">
                             <size>
                                 <width>20</width>
-                                <height>20</height>
+                                <height>30</height>
                             </size>
                         </property>
                     </spacer>
@@ -333,8 +380,24 @@
         <pixmap>image0</pixmap>
     </customwidget>
     <customwidget>
-        <class>ChunkBar</class>
-        <header location="global">chunkbar.h</header>
+        <class>DownloadedChunkBar</class>
+        <header location="local">src/downloadedchunkbar.h</header>
+        <sizehint>
+            <width>-1</width>
+            <height>20</height>
+        </sizehint>
+        <container>0</container>
+        <sizepolicy>
+            <hordata>5</hordata>
+            <verdata>5</verdata>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+        <pixmap>image0</pixmap>
+    </customwidget>
+    <customwidget>
+        <class>AvailabilityChunkBar</class>
+        <header location="local">src/availabilitychunkbar.h</header>
         <sizehint>
             <width>-1</width>
             <height>20</height>
@@ -356,7 +419,8 @@
 </images>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>chunkbar.h</includehint>
+    <includehint>downloadedchunkbar.h</includehint>
+    <includehint>availabilitychunkbar.h</includehint>
     <includehint>peerview.h</includehint>
     <includehint>chunkdownloadview.h</includehint>
 </includehints>

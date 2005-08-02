@@ -55,7 +55,8 @@ namespace bt
 		
 		Uint32 byte = i / 8;
 		Uint32 bit = i % 8;
-		return data[byte] & (0x01 << (7 - bit));
+		Uint8 b = data[byte] & (0x01 << (7 - bit));
+		return b != 0x00;
 	}
 	
 	void BitSet::set(Uint32 i,bool on)
@@ -85,6 +86,22 @@ namespace bt
 		data = new Uint8[num_bytes];
 		std::copy(bs.data,bs.data+num_bytes,data);
 		return *this;
+	}
+
+	void BitSet::clear()
+	{
+		std::fill(data,data+num_bytes,0x00);
+	}
+
+	void BitSet::orBitSet(const BitSet & other)
+	{
+		Uint32 i = 0;
+		while (i < num_bits)
+		{
+			bool val = get(i) || other.get(i);
+			set(i,val);
+			i++;
+		}
 	}
 }
 

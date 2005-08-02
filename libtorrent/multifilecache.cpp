@@ -61,9 +61,7 @@ namespace bt
 
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
-			TorrentFile f;
-			tor.getFile(i,f);
-			touch(f.getPath());
+			touch(tor.getFile(i).getPath());
 		}
 	}
 
