@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2005 by                                                 *
+ *   Joris Guisson <joris.guisson@gmail.com>                               *
+ *   Ivan Vasic <ivasic@gmail.com>                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -279,5 +280,26 @@ namespace bt
 			if (chunk >= f.getFirstChunk() && chunk <= f.getLastChunk())
 				file_list.append(f.getIndex());
 		}
+	}
+
+	static int num_mimetypes = 6;
+	static QString file_types[] =
+	{
+		"avi",
+		"mpg",
+		"mpeg",
+		"mp3",
+		"wav",
+		"ogg", 
+	};
+
+	bool Torrent::isMultimedia() const
+	{
+		bool ret = false;
+		for(int i=0; i<num_mimetypes && !ret; ++i)
+		{
+			ret = this->getNameSuggestion().endsWith(file_types[i]);
+		}
+		return ret;
 	}
 }

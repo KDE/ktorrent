@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2005 by                                                 *
+ *   Joris Guisson <joris.guisson@gmail.com>                               *
+ *   Ivan Vasic <ivasic@gmail.com>                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -58,6 +59,27 @@ namespace bt
 			do_not_download = dnd;
 			emit downloadStatusChanged(this,!dnd);
 		}
+	}
+	
+	static int num_mimetypes_2 = 6;
+	static QString file_types_2[] =
+	{
+		"avi",
+		"mpg",
+		"mpeg",
+		"mp3",
+		"wav",
+		"ogg", 
+	};
+
+	bool TorrentFile::isMultimedia() const
+	{
+		bool ret = false;
+		for(int i=0; i<num_mimetypes_2 && !ret; ++i)
+		{
+			ret = this->getPath().endsWith(file_types_2[i]);
+		}
+		return ret;
 	}
 
 	TorrentFile & TorrentFile::operator = (const TorrentFile & tf)

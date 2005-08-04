@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2005 by                                                 *
+ *   Joris Guisson <joris.guisson@gmail.com>                               *
+ *   Ivan Vasic <ivasic@gmail.com>                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -26,6 +27,8 @@
 
 class KTorrentMonitor;
 class IWFileTreeDirItem;
+class KPopupMenu; 
+class QString; 
 
 namespace bt
 {
@@ -44,6 +47,11 @@ public:
 public slots:
 	void changeTC(bt::TorrentControl* tc);
 	void update();
+    void showContextMenu(KListView* ,QListViewItem* item,const QPoint & p); 
+
+    ///preview slot 
+    void contextItem(int id); 
+
 
 private:
 	void fillFileTree();
@@ -52,6 +60,9 @@ private:
 	KTorrentMonitor* monitor;
 	bt::TorrentControl* curr_tc;
 	IWFileTreeDirItem* multi_root;
+    KPopupMenu* context_menu; 
+    QString preview_path; 
+    int preview_id; 
 };
 
 #endif

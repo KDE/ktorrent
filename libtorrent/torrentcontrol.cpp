@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2005 by                                                 *
+ *   Joris Guisson <joris.guisson@gmail.com>                               *
+ *   Ivan Vasic <ivasic@gmail.com>                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -654,6 +655,19 @@ namespace bt
 							<< line << endl;
 			}
 		}
+	}
+
+	bool TorrentControl::readyForPreview(int start_chunk, int end_chunk)
+	{
+		if ( !tor->isMultimedia() && !tor->isMultiFile()) return false;
+
+		BitSet bs;
+		downloadedChunksToBitSet(bs);
+		for(int i = start_chunk; i<end_chunk; ++i)
+		{
+			if ( !bs.get(i) ) return false;
+		} 
+		return true;
 	}
 }
 #include "torrentcontrol.moc"

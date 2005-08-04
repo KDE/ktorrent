@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2005 by                                                 *
+ *   Joris Guisson <joris.guisson@gmail.com>                               *
+ *   Ivan Vasic <ivasic@gmail.com>                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,6 +23,8 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kmimetype.h>
+#include <kpopupmenu.h> 
+#include <krun.h> 
 #include <qlabel.h>
 #include <qcheckbox.h>
 #include <qpainter.h>
@@ -48,6 +51,15 @@ InfoWidget::InfoWidget(QWidget* parent, const char* name, WFlags fl)
 	monitor = 0;
 	curr_tc = 0;
 	setEnabled(false);
+
+    KIconLoader* iload = KGlobal::iconLoader(); 
+	context_menu = new KPopupMenu(this); 
+	preview_id = context_menu->insertItem(iload->loadIconSet("frame_image",KIcon::Small), i18n("Preview")); 
+	context_menu->setItemEnabled(1, false); 
+ 
+    connect(m_file_view,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )), 
+            this,SLOT(showContextMenu(KListView*, QListViewItem*, const QPoint& ))); 
+    connect(context_menu, SIGNAL ( activated ( int ) ), this, SLOT ( contextItem ( int ) ) );
 }
 
 InfoWidget::~InfoWidget()
@@ -126,6 +138,42 @@ void InfoWidget::update()
 	m_peer_view->update();
 	m_chunk_view->update();
 }
+
+void InfoWidget::showContextMenu(KListView* ,QListViewItem* item,const QPoint & p) 
+{ 
+
+    bt::Torrent & tor = const_cast<bt::Torrent &>(curr_tc->getTorrent()); 
+
+    if(tor.isMultiFile()) 
+    {
+        bt::TorrentFile & file = multi_root->findTorrentFile(item); 
+        if ( !file.isNull() ) 
+        { 
+            if ( curr_tc->readyForPreview(file.getFirstChunk(), file.getFirstChunk()+1) ) 
+            { 
+                context_menu->setItemEnabled(preview_id, true); 
+                this->preview_path = "cache" + bt::DirSeparator() + file.getPath(); 
+            } 
+            else context_menu->setItemEnabled(preview_id, false); 
+        } 
+    } 
+    else 
+    { 
+        if ( curr_tc->readyForPreview() ) 
+        { 
+            context_menu->setItemEnabled(preview_id, true); 
+            preview_path = "cache"; 
+        } 
+        else context_menu->setItemEnabled(preview_id, false); 
+    } 
+    context_menu->popup(p); 
+} 
+ 
+void InfoWidget::contextItem(int id) 
+{ 
+    KRun* exe = new KRun(this->curr_tc->getDataDir()+preview_path, 0, true, true); 
+} 
+
 
 
 #include "infowidget.moc"

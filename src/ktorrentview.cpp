@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2005 by                                                 *
+ *   Joris Guisson <joris.guisson@gmail.com>                               *
+ *   Ivan Vasic <ivasic@gmail.com>                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,6 +22,7 @@
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
+#include <krun.h> 
 #include <libtorrent/torrentcontrol.h>
 #include <libtorrent/globals.h>
 #include <kmessagebox.h>
@@ -67,7 +69,8 @@ KTorrentView::KTorrentView(QWidget *parent)
 			this,SLOT(removeDownload()));
 	menu->insertSeparator();
 
-	menu->insertItem(i18n("Manual Announce"),this,SLOT(manualAnnounce()));
+    menu->insertItem(iload->loadIconSet("apply",KIcon::Small),i18n("Manual Announce"),this,SLOT(manualAnnounce())); 
+    preview_id = menu->insertItem(iload->loadIconSet("frame_image",KIcon::Small),i18n("Preview"), this, SLOT(previewFile())); 
 
 	setAllColumnsShowFocus(true);
 
@@ -119,7 +122,16 @@ void KTorrentView::manualAnnounce()
 	bt::TorrentControl* tc = curr->getTC();
 	tc->updateTracker();
 }
-		
+
+void KTorrentView::previewFile() 
+{
+    if (!curr) 
+        return; 
+
+    bt::TorrentControl* tc = curr->getTC(); 
+    KRun* exe = new KRun(tc->getDataDir()+"cache", true, true); 
+}
+
 bt::TorrentControl* KTorrentView::getCurrentTC()
 {
 	KTorrentViewItem* tvi = dynamic_cast<KTorrentViewItem*>(currentItem());
@@ -151,6 +163,7 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem* item,const QPoint 
 		menu->setItemEnabled(start_id,!tc->isRunning());
 		menu->setItemEnabled(stop_id,tc->isRunning());
 		menu->setItemEnabled(remove_id,true);
+		menu->setItemEnabled(preview_id, tc->readyForPreview() && !tc->isMultiFileTorrent()); 
 		menu->popup(p);
 	}
 }

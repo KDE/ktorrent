@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2005 by                                                 *
+ *   Joris Guisson <joris.guisson@gmail.com>                               *
+ *   Ivan Vasic <ivasic@gmail.com>                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -68,6 +69,24 @@ namespace bt
 			if (tf.doNotDownload())
 			{
 				downloadStatusChanged(&tf,false);
+			}
+		}
+	
+		if(tor.isMultiFile())
+		{
+			for(int i=0; i<tor.getNumFiles(); ++i)
+			{
+				bt::TorrentFile & file = tor.getFile(i);
+				if(file.isMultimedia()) 
+					prioritise(file.getFirstChunk(), file.getFirstChunk()+1);
+			}
+		}
+		else
+		{
+			if(tor.isMultimedia() )
+			{
+				this->prioritise(0,1);
+				//this->prioritise(getNumChunks()-2, getNumChunks()-1);
 			}
 		}
 	}

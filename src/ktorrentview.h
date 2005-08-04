@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2005 by                                                 *
+ *   Joris Guisson <joris.guisson@gmail.com>                               *
+ *   Ivan Vasic <ivasic@gmail.com>                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -77,6 +78,7 @@ private slots:
 	void stopDownload();
 	void removeDownload();
 	void manualAnnounce();
+    void previewFile(); 
 	void onTrackerError(bt::TorrentControl* tc,const QString & err);
 
 signals:
@@ -88,7 +90,7 @@ private:
 	QMap<bt::TorrentControl*,KTorrentViewItem*> items;
 	bool show_debug_view;
 	KPopupMenu* menu;
-	int stop_id,start_id,remove_id;
+    int stop_id,start_id,remove_id, preview_id; 
 	KTorrentViewItem* curr;
 };
 

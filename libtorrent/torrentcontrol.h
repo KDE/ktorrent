@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2005 by                                                 *
+ *   Joris Guisson <joris.guisson@gmail.com>                               *
+ *   Ivan Vasic <ivasic@gmail.com>                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -183,6 +184,14 @@ namespace bt
 		 * 	pairs (IP-address,port)
 		 */
 		void trackerResponse(Uint32 interval,Uint32 leechers,Uint32 seeders,Uint8* ppeers);
+
+		/**
+		* Checks if torrent is multimedial and chunks needed for preview are downloaded
+		* @param start_chunk The index of starting chunk to check
+		* @param end_chunk The index of the last chunk to check
+		* In case of single torrent file defaults can be used (0,1)
+		**/
+		bool readyForPreview(int start_chunk = 0, int end_chunk = 1);
 	public slots:
 		/**
 		 * Update the object, should be called periodically.
