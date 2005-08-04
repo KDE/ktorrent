@@ -17,64 +17,37 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include "torrentfile.h"
+
+#ifndef FILESELECTDLG_H
+#define FILESELECTDLG_H
+
+#include "fileselectdlgbase.h"
 
 namespace bt
 {
-
-	TorrentFile::TorrentFile()
-	{}
-
-	TorrentFile::TorrentFile(Uint32 index,const QString & path,Uint32 off,Uint32 size,Uint32 chunk_size)
-	: index(index),path(path),size(size),cache_offset(off)
-	{
-		first_chunk = off / chunk_size;
-		first_chunk_off = off % chunk_size;
-		last_chunk = (off + size - 1) / chunk_size;
-		last_chunk_size = (off + size) - last_chunk * chunk_size;
-		do_not_download = false;
-	}
-	
-	TorrentFile::TorrentFile(const TorrentFile & tf) : QObject(0,0)
-	{
-		index = tf.getIndex();
-		path = tf.getPath();
-		size = tf.getSize();
-		cache_offset = tf.getCacheOffset();
-		first_chunk = tf.getFirstChunk();
-		first_chunk_off = tf.getFirstChunkOffset();
-		last_chunk = tf.getLastChunk();
-		last_chunk_size = tf.getLastChunkSize();
-		do_not_download = tf.doNotDownload();
-	}
-
-	TorrentFile::~TorrentFile()
-	{}
-
-	void TorrentFile::setDoNotDownload(bool dnd)
-	{
-		if (do_not_download != dnd)
-		{
-			do_not_download = dnd;
-			emit downloadStatusChanged(this,!dnd);
-		}
-	}
-
-	TorrentFile & TorrentFile::operator = (const TorrentFile & tf)
-	{
-		index = tf.getIndex();
-		path = tf.getPath();
-		size = tf.getSize();
-		cache_offset = tf.getCacheOffset();
-		first_chunk = tf.getFirstChunk();
-		first_chunk_off = tf.getFirstChunkOffset();
-		last_chunk = tf.getLastChunk();
-		last_chunk_size = tf.getLastChunkSize();
-		do_not_download = tf.doNotDownload();
-		return *this;
-	}
-
-	TorrentFile TorrentFile::null;
+	class TorrentControl;
 }
 
-#include "torrentfile.moc"
+class FileSelectDlg : public FileSelectDlgBase
+{
+	Q_OBJECT
+
+	bt::TorrentControl* tc;
+public:
+	FileSelectDlg(QWidget* parent = 0, const char* name = 0,
+				  bool modal = true, WFlags fl = 0 );
+	virtual ~FileSelectDlg();
+	
+	void execute(bt::TorrentControl* tc);
+	
+protected slots:
+	virtual void reject();
+	virtual void accept();
+	void selectAll();
+	void selectNone();
+	void invertSelection();
+
+};
+
+#endif
+

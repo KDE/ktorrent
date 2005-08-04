@@ -36,7 +36,8 @@ namespace bt
 	class TorrentFile : public QObject
 	{
 		Q_OBJECT
-				
+
+		Uint32 index;
 		QString path;
 		Uint32 size;
 		Uint32 cache_offset;
@@ -53,13 +54,14 @@ namespace bt
 		
 		/**
 		 * Constructor.
+		 * @param index Index number of the file
 		 * @param path Path of the file
 		 * @param off Offset into the torrent
 		 * (i.e. how many bytes were all the previous files in the torrent combined)
 		 * @param size Size of the file
 		 * @param chunk_size Size of each chunk 
 		 */
-		TorrentFile(const QString & path,Uint32 off,Uint32 size,Uint32 chunk_size);
+		TorrentFile(Uint32 index,const QString & path,Uint32 off,Uint32 size,Uint32 chunk_size);
 		
 		/**
 		 * Copy constructor.
@@ -70,6 +72,9 @@ namespace bt
 
 		/// See if the TorrentFile is null.
 		bool isNull() const {return path.isNull();}
+
+		/// Get the index of the file
+		Uint32 getIndex() const {return index;}
 		
 		/// Get the path of the file
 		QString getPath() const {return path;}

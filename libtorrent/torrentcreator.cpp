@@ -86,14 +86,16 @@ namespace bt
 		QDir d(target + dir);
 		// first get all files (we ignore symlinks)
 		QStringList dfiles = d.entryList(QDir::Files|QDir::NoSymLinks);
+		Uint32 cnt = 0; // counter to keep track of file index
 		for (QStringList::iterator i = dfiles.begin();i != dfiles.end();++i)
 		{
 			// add a TorrentFile to the list
 			QFileInfo fi(target + dir + *i);
-			TorrentFile f(dir + *i,tot_size,fi.size(),chunk_size);
+			TorrentFile f(cnt,dir + *i,tot_size,fi.size(),chunk_size);
 			files.append(f);
 			// update total size
 			tot_size += fi.size();
+			cnt++;
 		}
 
 		// now for each subdir do a buildFileList 

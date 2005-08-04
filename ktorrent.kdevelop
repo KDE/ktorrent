@@ -67,6 +67,8 @@
     <subclassing>
       <subclass uifile="/src/infowidgetbase.ui" sourcefile="/src/infowidget.cpp" />
       <subclass uifile="/src/infowidgetbase.ui" sourcefile="/src/infowidget.h" />
+      <subclass uifile="/src/fileselectdlgbase.ui" sourcefile="/src/fileselectdlg.cpp" />
+      <subclass uifile="/src/fileselectdlgbase.ui" sourcefile="/src/fileselectdlg.h" />
     </subclassing>
   </kdevautoproject>
   <kdevfileview>

@@ -411,20 +411,47 @@ namespace bt
 	{
 		if (download)
 		{
+			// include the range of the file
 			include(tf->getFirstChunk(),tf->getLastChunk());
 		}
 		else
 		{
 			Uint32 first = tf->getFirstChunk();
 			Uint32 last = tf->getLastChunk();
-			if (first != 0)
-				first++;
-			if (last != chunks.count() - 1 && last > 0)
-				last--;
 
-			if (last <= first)
+			// first and last chunk may be part of multiple files
+			// so we can't just exclude them
+			
+			QValueList<Uint32> files;
+			// get list of files where first chunk lies in
+			tor.calcChunkPos(first,files);
+			// if one file in the list needs to be downloaded,increment first
+			for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
+			{
+				if (!tor.getFile(*i).doNotDownload())
+				{
+					first++;
+					break;
+				}
+			}
+			
+			files.clear();
+			// get list of files where last chunk lies in
+			tor.calcChunkPos(last,files);
+			// if one file in the list needs to be downloaded,decrement last
+			for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
+			{
+				if (!tor.getFile(*i).doNotDownload())
+				{
+					last--;
+					break;
+				}
+			}
+
+			// last smaller then first is not normal, so just return
+			if (last < first)
 				return;
-
+			
 			exclude(first,last);
 		}
 	}

@@ -37,6 +37,7 @@
 #include "ktorrentcore.h"
 #include "settings.h"
 #include "functions.h"
+#include "fileselectdlg.h"
 
 using namespace bt;
 
@@ -74,6 +75,12 @@ void KTorrentCore::load(const QString & target)
 		connect(tc,SIGNAL(finished(bt::TorrentControl*)),
 				this,SLOT(torrentFinished(bt::TorrentControl* )));
 		downloads.append(tc);
+	/*	if (tc->isMultiFileTorrent())
+		{
+			FileSelectDlg dlg;
+
+			dlg.execute(tc);
+	}*/
 		start(tc);
 		torrentAdded(tc);
 	}

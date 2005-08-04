@@ -92,14 +92,14 @@ namespace bt
 
 	void MultiFileCache::load(Chunk* c)
 	{
-		QValueList<TorrentFile> files;
+		QValueList<Uint32> files;
 		tor.calcChunkPos(c->getIndex(),files);
 		
 		Uint8* data = new Uint8[c->getSize()];
 		Uint32 read = 0; // number of bytes read
 		for (Uint32 i = 0;i < files.count();i++)
 		{
-			const TorrentFile & f = files[i];
+			const TorrentFile & f = tor.getFile(files[i]);
 			File fptr;
 			if (!fptr.open(cache_dir + f.getPath(),"rb"))
 			{
@@ -138,14 +138,14 @@ namespace bt
 
 	void MultiFileCache::save(Chunk* c)
 	{
-		QValueList<TorrentFile> files;
+		QValueList<Uint32> files;
 		tor.calcChunkPos(c->getIndex(),files);
 
 	//	Out() << "Saving " << c->getIndex() << " to " << files.count() << " files" << endl;
 		Uint32 written = 0; // number of bytes written
 		for (Uint32 i = 0;i < files.count();i++)
 		{
-			const TorrentFile & f = files[i];
+			const TorrentFile & f = tor.getFile(files[i]);
 			File fptr;
 			if (!fptr.open(cache_dir + f.getPath(),"r+b"))
 			{

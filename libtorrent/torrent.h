@@ -124,13 +124,13 @@ namespace bt
 
 		/**
 		 * Calculate in which file(s) a Chunk lies. A list will
-		 * get filled with all the files. The list gets cleared at
+		 * get filled with the indices of all the files. The list gets cleared at
 		 * the beginning. If something is wrong only the list will
 		 * get cleared.
 		 * @param chunk The index of the chunk
-		 * @param file_list This list will be filled with all the files
+		 * @param file_list This list will be filled with all the indices
 		 */
-		void calcChunkPos(Uint32 chunk,QValueList<TorrentFile> & file_list) const;
+		void calcChunkPos(Uint32 chunk,QValueList<Uint32> & file_list) const;
 	private:
 		void loadInfo(BDictNode* node);
 		void loadTrackerURL(BValueNode* node);

@@ -25,6 +25,7 @@
 #include "infowidgetbase.h"
 
 class KTorrentMonitor;
+class IWFileTreeDirItem;
 
 namespace bt
 {
@@ -50,6 +51,7 @@ private:
 private:
 	KTorrentMonitor* monitor;
 	bt::TorrentControl* curr_tc;
+	IWFileTreeDirItem* multi_root;
 };
 
 #endif

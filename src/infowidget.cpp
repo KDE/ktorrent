@@ -44,6 +44,7 @@ using namespace bt;
 InfoWidget::InfoWidget(QWidget* parent, const char* name, WFlags fl)
 		: InfoWidgetBase(parent,name,fl)
 {
+	multi_root = 0;
 	monitor = 0;
 	curr_tc = 0;
 	setEnabled(false);
@@ -56,6 +57,7 @@ InfoWidget::~InfoWidget()
 
 void InfoWidget::fillFileTree()
 {
+	multi_root = 0;
 	m_file_view->clear();
 
 	if (!curr_tc)
@@ -72,6 +74,7 @@ void InfoWidget::fillFileTree()
 		}
 		root->setOpen(true);
 		m_file_view->setRootIsDecorated(true);
+		multi_root = root;
 	}
 	else
 	{

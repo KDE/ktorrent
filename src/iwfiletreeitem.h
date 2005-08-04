@@ -34,7 +34,9 @@ namespace bt
 }
 
 /**
-@author Joris Guisson
+ * @author Joris Guisson
+ *
+ * File item in the InfoWidget's file view.
 */
 class IWFileTreeItem : public QCheckListItem
 {
@@ -46,11 +48,18 @@ public:
 	IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,bt::TorrentFile & file);
 	virtual ~IWFileTreeItem();
 
+	bt::TorrentFile & getTorrentFile() {return file;}
 private:
 	void init();
 	virtual void stateChange(bool on);
 };
 
+
+/**
+ * @author Joris Guisson
+ *
+ * Directory item in the InfoWidget's file view.
+ */
 class IWFileTreeDirItem : public KListViewItem
 {
 	QString name;
@@ -62,6 +71,17 @@ public:
 	virtual ~IWFileTreeDirItem();
 
 	void insert(const QString & path,bt::TorrentFile & file);
+
+	/**
+	 * Recursivly walk the tree to find the TorrentFile which
+	 * is shown by a QListViewItem (which should be an IWFileTreeItem).
+	 * If item can't be found or item is an IWFileTreeDirItem, a reference to
+	 * TorrentFile::null will be returned. In which case the isNull() function
+	 * of TorrentFile will return true
+	 * @param item Pointer to the QListViewItem
+	 * @return A reference to the TorrentFile
+	 */
+	bt::TorrentFile & findTorrentFile(QListViewItem* item);
 };
 
 #endif

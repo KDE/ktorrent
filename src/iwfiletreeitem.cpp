@@ -97,3 +97,29 @@ void IWFileTreeDirItem::insert(const QString & path,bt::TorrentFile & file)
 		sd->insert(path.mid(p+1),file);
 	}
 }
+
+bt::TorrentFile & IWFileTreeDirItem::findTorrentFile(QListViewItem* item)
+{
+	// first see if item matches a child
+	bt::PtrMap<QString,IWFileTreeItem>::iterator i = children.begin();
+	while (i != children.end())
+	{
+		if (i->second == item)
+			return i->second->getTorrentFile();
+		i++;
+	}
+
+	// not found so go to subdirs and see if they can find it
+	bt::PtrMap<QString,IWFileTreeDirItem>::iterator j = subdirs.begin();
+	while (j != subdirs.end())
+	{
+		bt::TorrentFile & tf = j->second->findTorrentFile(item);
+		if (!tf.isNull())
+			return tf;
+		j++;
+	}
+
+	// we haven't found anything
+	// so return null
+	return bt::TorrentFile::null;
+}

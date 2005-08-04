@@ -137,7 +137,7 @@ namespace bt
 			if (!v || v->data().getType() != Value::INT)
 				throw Error(i18n("Corrupted torrent!"));
 
-			TorrentFile file(path,file_length,v->data().toInt(),piece_length);
+			TorrentFile file(i,path,file_length,v->data().toInt(),piece_length);
 
 			// update file_length
 			file_length += file.getSize();
@@ -267,8 +267,7 @@ namespace bt
 			return 1;
 	}
 
-	void Torrent::calcChunkPos(Uint32 chunk,
-							   QValueList<TorrentFile> & file_list) const
+	void Torrent::calcChunkPos(Uint32 chunk,QValueList<Uint32> & file_list) const
 	{
 		file_list.clear();
 		if (chunk >= hash_pieces.size() || files.empty())
@@ -278,7 +277,7 @@ namespace bt
 		{
 			const TorrentFile & f = files[i];
 			if (chunk >= f.getFirstChunk() && chunk <= f.getLastChunk())
-				file_list.append(f);
+				file_list.append(f.getIndex());
 		}
 	}
 }
