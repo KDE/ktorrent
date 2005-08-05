@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2005 by                                                 *
+ *   Joris Guisson <joris.guisson@gmail.com>                               *
+ *   Vincent Wagelaar <vincent@ricardis.tudelft.nl>                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,7 +21,7 @@
 #ifndef CHUNKBAR_H
 #define CHUNKBAR_H
 
-#include <qwidget.h>
+#include <qframe.h>
 
 
 class QPainter;
@@ -39,7 +40,7 @@ namespace bt
  * Bar which displays which chunks are downloaded or not.
  * This is the base class for 
  */
-class ChunkBar : public QWidget
+class ChunkBar : public QFrame
 {
 	Q_OBJECT
 public:
@@ -48,14 +49,12 @@ public:
 
 	void setTC(bt::TorrentControl* tc);
 	
-	virtual void paintEvent(QPaintEvent* arg1);
-
 	virtual void fillBitSet(bt::BitSet & bs) = 0;
-
+	virtual void drawContents(QPainter *p);
+  
 private:
-	void drawEqual(QPainter & p,const bt::BitSet & bs);
-	void drawMoreChunksThenPixels(QPainter & p,const bt::BitSet & bs);
-	void drawMorePixelsThenChunks(QPainter & p,const bt::BitSet & bs);
+	void drawEqual(QPainter *p,const bt::BitSet & bs);
+	void drawMoreChunksThenPixels(QPainter *p,const bt::BitSet & bs);
 	
 protected:
 	bt::TorrentControl* curr_tc;

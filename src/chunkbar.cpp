@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2005 by                                                 *
+ *   Joris Guisson <joris.guisson@gmail.com>                               *
+ *   Vincent Wagelaar <vincent@ricardis.tudelft.nl>                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,6 +22,7 @@
 #include <qpen.h>
 #include <qbrush.h>
 #include <qvaluelist.h>
+#include <qpixmap.h>
 #include <math.h>
 #include <libtorrent/torrentcontrol.h>
 #include <libtorrent/bitset.h>
@@ -35,9 +37,13 @@ struct Range
 
 
 ChunkBar::ChunkBar(QWidget *parent, const char *name)
-	: QWidget(parent, name),curr_tc(0)
+	: QFrame(parent, name),curr_tc(0)
 {
-	setFixedHeight(30);
+	setFrameShape(StyledPanel);
+	setFrameShadow(Sunken);
+	setLineWidth(3);
+	setMidLineWidth(3);
+	setFixedHeight(fontMetrics().height()*1.5);
 	show_excluded = false;
 }
 
@@ -51,50 +57,47 @@ void ChunkBar::setTC(bt::TorrentControl* tc)
 	update();
 }
 
-void ChunkBar::paintEvent(QPaintEvent* )
+void ChunkBar::drawContents(QPainter *p)
 {
-	QPainter p;
-
-	p.begin(this);
 	// first draw background
 	if (isEnabled())
-		p.setBrush(Qt::white);
+		p->setBrush(Qt::white);
 	else
-		p.setBrush(Qt::gray);
+		p->setBrush(colorGroup().background());
 
-	p.setPen(Qt::NoPen);
-	p.drawRect(rect());
+	p->setPen(Qt::NoPen);
+	p->drawRect(contentsRect());
 
-	p.saveWorldMatrix();
+	p->saveWorldMatrix();
 
 	if (curr_tc)
-	{	
-		Uint32 w = rect().width();
+	{
+		Uint32 w = contentsRect().width();
 		BitSet bs;
 		fillBitSet(bs);
 		// there are 3 possibilities :
 		// - for each chunk a pixel
 		// - more pixels then chunks
 		// - more chunks then pixels
-		if (curr_tc->getTotalChunks() < w)
-			drawMorePixelsThenChunks(p,bs);
-		else if (curr_tc->getTotalChunks() > w)
+		if (curr_tc->getTotalChunks() > w)
 			drawMoreChunksThenPixels(p,bs);
 		else
 			drawEqual(p,bs);
 	}
-	p.restoreWorldMatrix();
-	// draw edge last
-	p.setBrush(Qt::NoBrush);
-	p.setPen(QPen(Qt::black,1,Qt::SolidLine));
-	p.drawRect(rect());
-	p.end();
+	p->restoreWorldMatrix();
 }
 
-void ChunkBar::drawEqual(QPainter & p,const BitSet & bs)
+void ChunkBar::drawEqual(QPainter *p,const BitSet & bs)
 {
-	p.setPen(QPen(Qt::blue,1,Qt::SolidLine));
-	p.setBrush(Qt::blue);
+	//p->setPen(QPen(colorGroup().highlight(),1,Qt::SolidLine));
+
+	Uint32 w = contentsRect().width();
+	double scale = 1.0;
+	if (curr_tc->getTotalChunks() != w)
+		scale = (double)w / curr_tc->getTotalChunks();
+	
+	p->setPen(QPen(Qt::blue,1,Qt::SolidLine));
+	p->setBrush(Qt::blue);
 	
 	QValueList<Range> rs;
 	
@@ -123,24 +126,24 @@ void ChunkBar::drawEqual(QPainter & p,const BitSet & bs)
 		}
 	}
 
-	QRect r = rect();
+	QRect r = contentsRect();
 
 	for (QValueList<Range>::iterator i = rs.begin();i != rs.end();++i)
 	{
 		Range & ra = *i;
-		int w = ra.last - ra.first + 1;
-		p.drawRect(r.x() + ra.first,r.y()+1,w,r.height() - 1);
+		int rw = ra.last - ra.first + 1;
+		p->drawRect(r.x() + scale * ra.first,r.y() + 1,rw * scale,r.height() - 1);
 	}
 }
 
-void ChunkBar::drawMoreChunksThenPixels(QPainter & p,const BitSet & bs)
+void ChunkBar::drawMoreChunksThenPixels(QPainter *p,const BitSet & bs)
 {
-	Uint32 w = rect().width();
+	Uint32 w = contentsRect().width();
 
-	Uint32 chunks_per_pixel = (int)ceil((double)bs.getNumBits() / w);
+	Uint32 chunks_per_pixel = (int)floor((double)bs.getNumBits() / w);
 
-	QRect r = rect();
-	
+	QRect r = contentsRect();
+
 	for (Uint32 i = 0;i < w;i++)
 	{
 		Uint32 num_dl = 0;
@@ -150,21 +153,16 @@ void ChunkBar::drawMoreChunksThenPixels(QPainter & p,const BitSet & bs)
 
 		if (num_dl == 0)
 			continue;
-		
+
 		QColor c = Qt::blue;
 		double fac = (double)num_dl / chunks_per_pixel;
-		c.setRgb(255 * (1.0 - fac),255 * (1.0 - fac),c.blue());
-		p.setPen(QPen(c,1,Qt::SolidLine));
-		p.setBrush(c);
-		p.drawRect(r.x() + i,r.y()+1,1,r.height() - 1);
+		int cr = int(255 * (1.0 - fac));
+		int cg = int(255 * (1.0 - fac));
+		c.setRgb(cr,cg,c.blue());
+		p->setPen(QPen(c,1,Qt::SolidLine));
+		p->setBrush(c);
+		p->drawRect(r.x() + i,r.y()+1,1,r.height() - 1);
 	}
-}
-
-void ChunkBar::drawMorePixelsThenChunks(QPainter & p,const BitSet & bs)
-{
-	Uint32 w = rect().width();
-	p.scale((double)w /(curr_tc->getTotalChunks() - 1),1);
-	drawEqual(p,bs);
 }
 
 #include "chunkbar.moc"

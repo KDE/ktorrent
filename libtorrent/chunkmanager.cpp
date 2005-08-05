@@ -74,7 +74,7 @@ namespace bt
 	
 		if(tor.isMultiFile())
 		{
-			for(int i=0; i<tor.getNumFiles(); ++i)
+			for(Uint32 i=0; i<tor.getNumFiles(); ++i)
 			{
 				bt::TorrentFile & file = tor.getFile(i);
 				if(file.isMultimedia()) 
@@ -414,7 +414,7 @@ namespace bt
 			return;
 		}
 
-		for (Uint32 i = 0;i < tmp;i++)
+		for (Uint32 i = 0;i < num;i++)
 		{
 			if (fptr.read(&tmp,sizeof(Uint32)) != sizeof(Uint32))
 			{
@@ -422,7 +422,11 @@ namespace bt
 				return;
 			}
 
-			tor.getFile(i).setDoNotDownload(true);
+			bt::TorrentFile & tf = tor.getFile(tmp);
+			if (!tf.isNull())
+			{
+				tf.setDoNotDownload(true);
+			}
 		}
 	}
 
