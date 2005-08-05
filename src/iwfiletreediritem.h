@@ -17,26 +17,61 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <libtorrent/bitset.h>
-#include <libtorrent/torrentcontrol.h>
-#include "downloadedchunkbar.h"
+#ifndef IWFILETREEDIRITEM_H
+#define IWFILETREEDIRITEM_H
 
+#include <klistview.h>
+#include <libutil/constants.h>
+#include <libutil/ptrmap.h>
 
-DownloadedChunkBar::DownloadedChunkBar(QWidget* parent, const char* name)
-	: ChunkBar(parent,name)
+class IWFileTreeItem;
+
+using bt::Uint32;
+
+namespace bt
 {
-	show_excluded = true;
+	class TorrentFile;
 }
 
 
-DownloadedChunkBar::~DownloadedChunkBar()
-{}
-
-
-void DownloadedChunkBar::fillBitSet(bt::BitSet& bs)
+/**
+ * @author Joris Guisson
+ *
+ * Directory item in the InfoWidget's file view.
+ */
+class IWFileTreeDirItem : public KListViewItem
 {
-	if (curr_tc)
-		curr_tc->downloadedChunksToBitSet(bs);
-}
+	QString name;
+	bt::PtrMap<QString,IWFileTreeItem> children;
+	bt::PtrMap<QString,IWFileTreeDirItem> subdirs;
+public:
+	IWFileTreeDirItem(KListView* klv,const QString & name);
+	IWFileTreeDirItem(IWFileTreeDirItem* parent,const QString & name);
+	virtual ~IWFileTreeDirItem();
 
-#include "downloadedchunkbar.moc"
+	void insert(const QString & path,bt::TorrentFile & file);
+
+	/**
+	 * Recursivly walk the tree to find the TorrentFile which
+	 * is shown by a QListViewItem (which should be an IWFileTreeItem).
+	 * If item can't be found or item is an IWFileTreeDirItem, a reference to
+	 * TorrentFile::null will be returned. In which case the isNull() function
+	 * of TorrentFile will return true
+	 * @param item Pointer to the QListViewItem
+	 * @return A reference to the TorrentFile
+	 */
+	bt::TorrentFile & findTorrentFile(QListViewItem* item);
+
+	/**
+	 * Set all items checked or not.
+	 * @param on true everything checked, false everything not checked
+	 */
+	void setAllChecked(bool on);
+
+	/**
+	 * Invert all items, checked items become unchecked and unchecked become checked.
+	 */
+	void invertChecked();
+};
+
+#endif

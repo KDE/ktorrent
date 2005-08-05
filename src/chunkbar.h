@@ -34,8 +34,11 @@ namespace bt
 
 
 /**
-@author Joris Guisson
-*/
+ * @author Joris Guisson
+ *
+ * Bar which displays which chunks are downloaded or not.
+ * This is the base class for 
+ */
 class ChunkBar : public QWidget
 {
 	Q_OBJECT
@@ -56,7 +59,7 @@ private:
 	
 protected:
 	bt::TorrentControl* curr_tc;
-
+	bool show_excluded;
 	
 };
 

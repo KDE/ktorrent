@@ -38,8 +38,7 @@ ChunkBar::ChunkBar(QWidget *parent, const char *name)
 	: QWidget(parent, name),curr_tc(0)
 {
 	setFixedHeight(30);
-
-	
+	show_excluded = false;
 }
 
 
@@ -97,7 +96,6 @@ void ChunkBar::drawEqual(QPainter & p,const BitSet & bs)
 	p.setPen(QPen(Qt::blue,1,Qt::SolidLine));
 	p.setBrush(Qt::blue);
 	
-
 	QValueList<Range> rs;
 	
 	for (Uint32 i = 0;i < bs.getNumBits();i++)

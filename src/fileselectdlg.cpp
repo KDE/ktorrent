@@ -23,11 +23,13 @@
 #include <libtorrent/torrentfile.h>
 #include <libtorrent/torrentcontrol.h>
 #include "fileselectdlg.h"
+#include "iwfiletreediritem.h"
 #include "iwfiletreeitem.h"
 
 FileSelectDlg::FileSelectDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
 		: FileSelectDlgBase(parent,name, modal,fl)
 {
+	root = 0;
 	connect(m_select_all,SIGNAL(clicked()),this,SLOT(selectAll()));
 	connect(m_select_none,SIGNAL(clicked()),this,SLOT(selectNone()));
 	connect(m_invert_selection,SIGNAL(clicked()),this,SLOT(invertSelection()));
@@ -43,9 +45,10 @@ void FileSelectDlg::execute(bt::TorrentControl* tc)
 	if (tc)
 	{
 		m_file_view->clear();
+		root = 0;
 		
 		bt::Torrent & tor = const_cast<bt::Torrent &>(tc->getTorrent());
-		IWFileTreeDirItem* root = new IWFileTreeDirItem(m_file_view,tor.getNameSuggestion());
+		root = new IWFileTreeDirItem(m_file_view,tor.getNameSuggestion());
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
 			bt::TorrentFile & file = tor.getFile(i);
@@ -69,14 +72,20 @@ void FileSelectDlg::accept()
 
 void FileSelectDlg::selectAll()
 {
+	if (root)
+		root->setAllChecked(true);
 }
 
 void FileSelectDlg::selectNone()
 {
+	if (root)
+		root->setAllChecked(false);
 }
 
 void FileSelectDlg::invertSelection()
 {
+	if (root)
+		root->invertChecked();
 }
 
 

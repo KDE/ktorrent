@@ -23,16 +23,23 @@
 
 #include "fileselectdlgbase.h"
 
+class IWFileTreeDirItem;
+
 namespace bt
 {
 	class TorrentControl;
 }
-
+/**
+ * @author Joris Guisson
+ *
+ * Dialog to select which files to download from a multifile torrent.
+ */
 class FileSelectDlg : public FileSelectDlgBase
 {
 	Q_OBJECT
 
 	bt::TorrentControl* tc;
+	IWFileTreeDirItem* root;
 public:
 	FileSelectDlg(QWidget* parent = 0, const char* name = 0,
 				  bool modal = true, WFlags fl = 0 );

@@ -22,7 +22,6 @@
 
 #include <klistview.h>
 #include <libutil/constants.h>
-#include <libutil/ptrmap.h>
 
 class IWFileTreeDirItem;
 
@@ -55,33 +54,6 @@ private:
 };
 
 
-/**
- * @author Joris Guisson
- *
- * Directory item in the InfoWidget's file view.
- */
-class IWFileTreeDirItem : public KListViewItem
-{
-	QString name;
-	bt::PtrMap<QString,IWFileTreeItem> children;
-	bt::PtrMap<QString,IWFileTreeDirItem> subdirs;
-public:
-	IWFileTreeDirItem(KListView* klv,const QString & name);
-	IWFileTreeDirItem(IWFileTreeDirItem* parent,const QString & name);
-	virtual ~IWFileTreeDirItem();
 
-	void insert(const QString & path,bt::TorrentFile & file);
-
-	/**
-	 * Recursivly walk the tree to find the TorrentFile which
-	 * is shown by a QListViewItem (which should be an IWFileTreeItem).
-	 * If item can't be found or item is an IWFileTreeDirItem, a reference to
-	 * TorrentFile::null will be returned. In which case the isNull() function
-	 * of TorrentFile will return true
-	 * @param item Pointer to the QListViewItem
-	 * @return A reference to the TorrentFile
-	 */
-	bt::TorrentFile & findTorrentFile(QListViewItem* item);
-};
 
 #endif

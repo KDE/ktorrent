@@ -39,6 +39,7 @@
 #include "downloadedchunkbar.h"
 #include "availabilitychunkbar.h"
 #include "iwfiletreeitem.h"
+#include "iwfiletreediritem.h"
 
 using namespace bt;
 

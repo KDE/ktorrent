@@ -17,26 +17,30 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <libtorrent/bitset.h>
-#include <libtorrent/torrentcontrol.h>
-#include "downloadedchunkbar.h"
+#include "server.h"
 
-
-DownloadedChunkBar::DownloadedChunkBar(QWidget* parent, const char* name)
-	: ChunkBar(parent,name)
+namespace bt
 {
-	show_excluded = true;
+	/*
+	Server::Server(Uint16 port) : QServerSocket(port,5)
+	{}
+
+
+	Server::~Server()
+	{}
+
+	void Server::addPeerManager(PeerManager* pman)
+	{
+		peer_managers.append(pman);
+	}
+	
+	void Server::removePeerManager(PeerManager* pman)
+	{
+		peer_managers.remove(pman);
+	}
+
+	void Server::newConnection(int socket)
+	{
+	}
+	*/
 }
-
-
-DownloadedChunkBar::~DownloadedChunkBar()
-{}
-
-
-void DownloadedChunkBar::fillBitSet(bt::BitSet& bs)
-{
-	if (curr_tc)
-		curr_tc->downloadedChunksToBitSet(bs);
-}
-
-#include "downloadedchunkbar.moc"
