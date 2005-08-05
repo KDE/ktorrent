@@ -171,7 +171,8 @@ void InfoWidget::showContextMenu(KListView* ,QListViewItem* item,const QPoint & 
  
 void InfoWidget::contextItem(int id) 
 { 
-    KRun* exe = new KRun(this->curr_tc->getDataDir()+preview_path, 0, true, true); 
+	if(id == this->preview_id) 
+		KRun* exe = new KRun(this->curr_tc->getDataDir()+preview_path, 0, true, true);
 } 
 
 
