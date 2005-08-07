@@ -49,8 +49,8 @@ int PeerViewItem::compare(QListViewItem * i,int col,bool) const
 									op->getPeerID().identifyClient());
 		case 1: return CompareVal(peer->getDownloadRate(),op->getDownloadRate());
 		case 2: return CompareVal(peer->getUploadRate(),op->getUploadRate());
-		case 3: QString::compare(text(3),i->text(3));
-		case 4: QString::compare(text(4),i->text(4));
+		case 3: return CompareVal(peer->isChoked(),op->isChoked());
+		case 4: return CompareVal(peer->isSnubbed(),op->isSnubbed());
 	}
 	return 0;
 }

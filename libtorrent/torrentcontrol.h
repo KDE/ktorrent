@@ -155,9 +155,6 @@ namespace bt
 		/// Get the Torrent.
 		const Torrent & getTorrent() const {return *tor;}
 
-		/// Set the initial port to try out
-		static void setInitialPort(Uint16 port);
-
 		/**
 		 * Set the interval between two tracker updates.
 		 * @param interval The interval in milliseconds
@@ -260,8 +257,6 @@ namespace bt
 		Uint32 num_tracker_attempts;
 		KURL last_tracker_url;
 		QString status_msg;
-		
-		static Uint16 initial_port;
 	};
 
 }

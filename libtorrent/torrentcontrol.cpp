@@ -51,7 +51,6 @@
 namespace bt
 {
 	
-	Uint16 TorrentControl::initial_port = MIN_PORT;
 	
 	TorrentControl::TorrentControl() 
 	: tor(0),tracker(0),cman(0),pman(0),down(0),up(0),choke(0),tmon(0)
@@ -162,18 +161,9 @@ namespace bt
 		
 		if (tor_copy != torrent)
 			bt::CopyFile(torrent,tor_copy);
-		
-		do
-		{
-			if (pman)
-			{
-				delete pman;
-				pman = 0;
-			}
-			port = initial_port;
-			initial_port++;
-			pman = new PeerManager(*tor,port);
-		}while (!pman->ok());
+
+
+		pman = new PeerManager(*tor);
 
 		if (tor->getTrackerURL(true).protocol() == "udp")
 			tracker = new UDPTracker(this);
@@ -462,11 +452,6 @@ namespace bt
 	bool TorrentControl::isMultiFileTorrent() const
 	{
 		return tor->isMultiFile();
-	}
-	
-	void TorrentControl::setInitialPort(Uint16 port)
-	{
-		initial_port = port;
 	}
 	
 	Uint32 TorrentControl::getTotalChunks() const

@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <libutil/functions.h>
 #include "torrentfile.h"
 
 namespace bt
@@ -61,25 +62,10 @@ namespace bt
 		}
 	}
 	
-	static int num_mimetypes_2 = 6;
-	static QString file_types_2[] =
-	{
-		"avi",
-		"mpg",
-		"mpeg",
-		"mp3",
-		"wav",
-		"ogg", 
-	};
 
 	bool TorrentFile::isMultimedia() const
 	{
-		bool ret = false;
-		for(int i=0; i<num_mimetypes_2 && !ret; ++i)
-		{
-			ret = this->getPath().endsWith(file_types_2[i]);
-		}
-		return ret;
+		return IsMultimediaFile(getPath());
 	}
 
 	TorrentFile & TorrentFile::operator = (const TorrentFile & tf)

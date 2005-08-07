@@ -17,45 +17,79 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTGLOBALS_H
-#define BTGLOBALS_H
-
-#include <libutil/constants.h>
-
-class QString;
+#include <libutil/sha1hash.h>
+#include <libutil/log.h>
+#include "globals.h"
+#include "peerid.h"
+#include "authenticatebase.h"
 
 namespace bt
 {
-	class Log;
-	class Server;
 
-
-	class Globals
+	AuthenticateBase::AuthenticateBase(QSocket* s) : sock(s),finished(false)
 	{
-	public:
-		virtual ~Globals();
-		
-		void initLog(const QString & file);
-		void initServer(Uint16 port);
-		void setDebugMode(bool on) {debug_mode = on;}
-		bool isDebugModeSet() const {return debug_mode;}
+		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
+		timer.start(20000,true);
+	}
 
-		Log & getLog() {return *log;}
-		Server & getServer() {return *server;}
-		
-		static Globals & instance() {return inst;}
-	private:
-		Globals();
-		
-		bool debug_mode;
-		Log* log;
-		Server* server;
 
-		static Globals inst;
-		
-		friend Log& Out();
-	};
+	AuthenticateBase::~AuthenticateBase()
+	{
+		delete sock;
+	}
 
+	void AuthenticateBase::sendHandshake(const SHA1Hash & info_hash,const PeerID & our_peer_id)
+	{
+		if (!sock) return;
+		
+		Uint8 hs[68];
+		const char* pstr = "BitTorrent protocol";
+		hs[0] = 19;
+		memcpy(hs+1,pstr,19);
+		memset(hs+20,0x00,8);
+		memcpy(hs+28,info_hash.getData(),20);
+		memcpy(hs+48,our_peer_id.data(),20);
+		
+		sock->writeBlock((const char*)hs,68);
+	}
+
+	void AuthenticateBase::onReadyRead()
+	{
+		if (!sock || finished || sock->bytesAvailable() < 68)
+			return;
+
+		Uint8 hs[68];
+		sock->readBlock((char*)hs,68);
+
+		if (hs[0] != 19)
+		{
+			onFinish(false);
+			return;
+		}
+		
+		const char* pstr = "BitTorrent protocol";
+		if (memcmp(pstr,hs+1,19) != 0)
+		{
+			onFinish(false);
+			return;
+		}
+		handshakeRecieved(hs);
+	}
+
+	void AuthenticateBase::onError(int)
+	{
+		if (finished)
+			return;
+		onFinish(false);
+	}
+
+	void AuthenticateBase::onTimeout()
+	{
+		if (finished)
+			return;
+		
+		Out() << "Timeout occured" << endl;
+		onFinish(false);
+	}
 }
-
-#endif
+#include "authenticatebase.moc"

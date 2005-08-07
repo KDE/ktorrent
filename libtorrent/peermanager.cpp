@@ -18,33 +18,36 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <libutil/log.h>
+#include <libutil/error.h>
 #include "peermanager.h"
 #include "peer.h"
 #include "bnode.h"
-#include <libutil/error.h>
+#include "globals.h"
+#include "server.h"
 #include "authenticate.h"
 #include "torrent.h"
 #include "uploader.h"
 #include "downloader.h"
 #include <libutil/functions.h>
-
+#include <qhostaddress.h> 
 #include <klocale.h>
 
 namespace bt
 {
 	Uint32 PeerManager::max_connections = 0;
 
-	PeerManager::PeerManager(Torrent & tor,Uint16 port)
-	: QServerSocket(port,5),tor(tor)
+	PeerManager::PeerManager(Torrent & tor) : tor(tor)
 	{
 		num_seeders = num_leechers = num_pending = 0;
 		killed.setAutoDelete(true);
 		started = false;
+		Globals::instance().getServer().addPeerManager(this);
 	}
 
 
 	PeerManager::~PeerManager()
 	{
+		Globals::instance().getServer().removePeerManager(this);
 		pending.setAutoDelete(true);
 		peers.setAutoDelete(true);
 	}
@@ -176,20 +179,21 @@ namespace bt
 		}
 	}
 
-	void PeerManager::newConnection(int socket)
+
+
+	void PeerManager::newConnection(QSocket* sock,
+									const PeerID & peer_id)
 	{
-		if (!started)
-			return;
-		
 		Uint32 total = peers.count() + pending.count();
-		if (max_connections > 0 && total >= max_connections)
+		if (!started || (max_connections > 0 && total >= max_connections))
+		{
+			delete sock;
 			return;
-	
-		QSocket* sock = new QSocket();
-		sock->setSocket(socket);
-		Authenticate* auth = new Authenticate(sock,tor.getInfoHash(),tor.getPeerID());
-		pending.append(auth);
-		num_pending++;
+		}
+
+		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks());
+		peers.append(peer);
+		newPeer(peer);
 	}
 	
 	void PeerManager::peerAuthenticated(Authenticate* auth,bool ok)

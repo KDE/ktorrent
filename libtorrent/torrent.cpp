@@ -282,24 +282,9 @@ namespace bt
 		}
 	}
 
-	static int num_mimetypes = 6;
-	static QString file_types[] =
-	{
-		"avi",
-		"mpg",
-		"mpeg",
-		"mp3",
-		"wav",
-		"ogg", 
-	};
 
 	bool Torrent::isMultimedia() const
 	{
-		bool ret = false;
-		for(int i=0; i<num_mimetypes && !ret; ++i)
-		{
-			ret = this->getNameSuggestion().endsWith(file_types[i]);
-		}
-		return ret;
+		return IsMultimediaFile(this->getNameSuggestion());
 	}
 }

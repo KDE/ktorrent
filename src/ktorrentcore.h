@@ -27,6 +27,7 @@
 namespace bt
 {
 	class TorrentControl;
+	class Server;
 }
 
 ///Stats struct

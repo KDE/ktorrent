@@ -23,6 +23,7 @@
 #include <kmimetype.h>
 #include <libutil/functions.h>
 #include <libtorrent/torrentfile.h>
+#include <libtorrent/torrentcontrol.h>
 #include "iwfiletreeitem.h"
 #include "iwfiletreediritem.h"
 #include "functions.h"
@@ -59,4 +60,19 @@ void IWFileTreeItem::stateChange(bool on)
 	setText(2,on ? i18n("Yes") : i18n("No"));
 }
 
-
+void IWFileTreeItem::updatePreviewInformation(bt::TorrentControl* tc)
+{
+	if (file.isMultimedia())
+	{
+		if (tc->readyForPreview(file.getFirstChunk(), file.getFirstChunk()+1) )
+		{
+			setText(3, i18n("Available"));
+		}
+		else
+		{
+			setText(3, i18n("Pending"));
+		}
+	}
+	else
+		setText(3, i18n("No"));
+}

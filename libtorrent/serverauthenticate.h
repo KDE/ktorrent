@@ -17,43 +17,38 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTGLOBALS_H
-#define BTGLOBALS_H
+#ifndef BTSERVERAUTHENTICATE_H
+#define BTSERVERAUTHENTICATE_H
 
-#include <libutil/constants.h>
+#include "authenticatebase.h"
 
-class QString;
 
 namespace bt
 {
-	class Log;
 	class Server;
+	class SHA1Hash;
+	class PeerID;
 
-
-	class Globals
+	/**
+	 * @author Joris Guisson
+	 *
+	 * Handles the authentication of incoming connections on the Server.
+	 * Once the authentication is finished, the socket gets handed over
+	 * to the right PeerManager.
+	*/
+	class ServerAuthenticate : public AuthenticateBase
 	{
+		Q_OBJECT
 	public:
-		virtual ~Globals();
-		
-		void initLog(const QString & file);
-		void initServer(Uint16 port);
-		void setDebugMode(bool on) {debug_mode = on;}
-		bool isDebugModeSet() const {return debug_mode;}
+		ServerAuthenticate(QSocket* sock,Server* server);
+		virtual ~ServerAuthenticate();
 
-		Log & getLog() {return *log;}
-		Server & getServer() {return *server;}
-		
-		static Globals & instance() {return inst;}
 	private:
-		Globals();
-		
-		bool debug_mode;
-		Log* log;
-		Server* server;
+		void onFinish(bool succes);
+		void handshakeRecieved(const Uint8* hs);
 
-		static Globals inst;
-		
-		friend Log& Out();
+	private:
+		Server* server;
 	};
 
 }

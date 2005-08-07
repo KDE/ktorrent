@@ -187,7 +187,6 @@ void KTorrent::applySettings()
 	PeerManager::setMaxConnections(Settings::maxConnections());
 	UploadCap::setSpeed(Settings::maxUploadRate() * 1024);
 	DownloadCap::instance().setMaxSpeed(Settings::maxDownloadRate()*1024);
-	TorrentControl::setInitialPort(Settings::port());
 	m_core->setKeepSeeding(Settings::keepSeeding());
 	
 	if (Settings::showSystemTrayIcon())

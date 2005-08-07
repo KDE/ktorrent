@@ -17,43 +17,66 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTGLOBALS_H
-#define BTGLOBALS_H
+#ifndef BTAUTHENTICATEBASE_H
+#define BTAUTHENTICATEBASE_H
 
-#include <libutil/constants.h>
-
-class QString;
+#include <qobject.h>
+#include <qsocket.h>
+#include <qtimer.h>
 
 namespace bt
 {
-	class Log;
-	class Server;
+	class SHA1Hash;
+	class PeerID;
 
-
-	class Globals
+	/**
+	 * @author Joris Guisson
+	 *
+	 * Base class for authentication classes. This class just groups
+	 * some common stuff between Authenticate and ServerAuthentciate.
+	 * It has a socket, handles the timing out, provides a function to send
+	 * the handshake.
+	 */
+	class AuthenticateBase : public QObject
 	{
+		Q_OBJECT
 	public:
-		virtual ~Globals();
-		
-		void initLog(const QString & file);
-		void initServer(Uint16 port);
-		void setDebugMode(bool on) {debug_mode = on;}
-		bool isDebugModeSet() const {return debug_mode;}
+		AuthenticateBase(QSocket* s = 0);
+		virtual ~AuthenticateBase();
 
-		Log & getLog() {return *log;}
-		Server & getServer() {return *server;}
+		/// See if the authentication is finished
+		bool isFinished() const {return finished;}
 		
-		static Globals & instance() {return inst;}
-	private:
-		Globals();
+	protected:
+		/**
+		 * Send a handshake
+		 * @param info_hash The info_hash to include 
+		 * @param our_peer_id Our PeerID
+		 */
+		void sendHandshake(const SHA1Hash & info_hash,const PeerID & our_peer_id);
 		
-		bool debug_mode;
-		Log* log;
-		Server* server;
+		/**
+		 * Authentication finished.
+		 * @param succes Succes or not
+		 */
+		virtual void onFinish(bool succes) = 0;
+		
+		/**
+		 * The other side send a handshake. The first 20 bytes
+		 * of the handshake will allready have been checked.
+		 * @param hs 68 byte handshake
+		 */
+		virtual void handshakeRecieved(const Uint8* hs) = 0;
+		
+	private slots:
+		void onTimeout();
+		void onError(int err);
+		void onReadyRead();
 
-		static Globals inst;
-		
-		friend Log& Out();
+	protected:
+		QSocket* sock;
+		QTimer timer;
+		bool finished;
 	};
 
 }

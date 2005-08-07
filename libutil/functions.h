@@ -52,7 +52,7 @@ namespace bt
 
 	QHostAddress LookUpHost(const QString & host);
 	QString DirSeparator();
-
+	bool IsMultimediaFile(const QString & filename);
 }
 
 #endif

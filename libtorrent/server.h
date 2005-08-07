@@ -21,11 +21,14 @@
 #define BTSERVER_H
 
 #include <qptrlist.h>
+#include <qserversocket.h>
 #include "globals.h"
 
 namespace bt
 {
 	class PeerManager;
+	class ServerAuthenticate;
+	class SHA1Hash;
 
 	/**
 	 * @author Joris Guisson
@@ -37,20 +40,44 @@ namespace bt
 	 * All PeerManager's should register with this class when they
 	 * are created and should unregister when they are destroyed.
 	 */
-/*	class Server : public QServerSocket
+	class Server : public QServerSocket
 	{
+		Q_OBJECT
+
 		QPtrList<PeerManager> peer_managers;
+		QPtrList<ServerAuthenticate> pending;
 	public:
 		Server(Uint16 port);
 		virtual ~Server();
 
+		/**
+		 * Add a PeerManager.
+		 * @param pman The PeerManager
+		 */
 		void addPeerManager(PeerManager* pman);
+
+		/**
+		 * Remove a PeerManager.
+		 * @param pman The PeerManager
+		 */
 		void removePeerManager(PeerManager* pman);
+		
+		/**
+		 * Find the PeerManager given the info_hash of it's torrent.
+		 * @param hash The info_hash
+		 * @return The PeerManager or 0 if one can't be found
+		 */
+		PeerManager* findPeerManager(const SHA1Hash & hash);
+		
+		/**
+		 * Update the Server.
+		 */
+		void update();
 
 	protected:
-		virtual void newConnection(int socket);
+		void newConnection(int socket);
 	};
-*/
+
 }
 
 #endif

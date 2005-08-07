@@ -22,6 +22,7 @@
 #include <kiconloader.h>
 #include <libutil/functions.h>
 #include <libtorrent/torrentfile.h>
+#include <libtorrent/torrentcontrol.h>
 #include "iwfiletreediritem.h"
 #include "iwfiletreeitem.h"
 
@@ -130,3 +131,22 @@ void IWFileTreeDirItem::invertChecked()
 	}
 }
 
+void IWFileTreeDirItem::updatePreviewInformation(bt::TorrentControl* tc)
+{
+	// first set all the child items
+	bt::PtrMap<QString,IWFileTreeItem>::iterator i = children.begin();
+	while (i != children.end())
+	{
+		IWFileTreeItem* item = i->second;
+		item->updatePreviewInformation(tc);
+		i++;
+	}
+
+	// then recursivly move on to subdirs
+	bt::PtrMap<QString,IWFileTreeDirItem>::iterator j = subdirs.begin();
+	while (j != subdirs.end())
+	{
+		j->second->updatePreviewInformation(tc);
+		j++;
+	}
+}

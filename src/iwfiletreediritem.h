@@ -31,6 +31,7 @@ using bt::Uint32;
 namespace bt
 {
 	class TorrentFile;
+	class TorrentControl;
 }
 
 
@@ -72,6 +73,12 @@ public:
 	 * Invert all items, checked items become unchecked and unchecked become checked.
 	 */
 	void invertChecked();
+
+	/**
+	 * Update the preview information.
+	 * @param tc The TorrentControl object
+	 */
+	void updatePreviewInformation(bt::TorrentControl* tc);
 };
 
 #endif

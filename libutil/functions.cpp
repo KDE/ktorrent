@@ -27,12 +27,20 @@
 #include <netdb.h>
 #include <kio/netaccess.h>
 #include <klocale.h>
+#include <kmimetype.h>
 #include "functions.h"
 #include "error.h"
 
 namespace bt
 {
 
+	bool IsMultimediaFile(const QString & filename)
+	{
+		KMimeType::Ptr ptr = KMimeType::findByPath(filename);
+		QString name = ptr->name();
+		return name.startsWith("audio") || name.startsWith("video");
+	}
+	
 	QHostAddress LookUpHost(const QString & host)
 	{
 		struct hostent * he = gethostbyname(host.ascii());

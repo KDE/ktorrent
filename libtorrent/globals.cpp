@@ -18,9 +18,11 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 
-#include "globals.h"
 #include <libutil/log.h>
 #include <libutil/error.h>
+#include "globals.h"
+#include "server.h"
+
 
 namespace bt
 {
@@ -37,10 +39,12 @@ namespace bt
 	{
 		debug_mode = false;
 		log = new Log();
+		server = 0;
 	}
 
 	Globals::~ Globals()
 	{
+		delete server;
 		delete log;
 	}
 
@@ -48,6 +52,14 @@ namespace bt
 	{
 		log->setOutputFile(file);
 		log->setOutputToConsole(debug_mode);
+	}
+
+	void Globals::initServer(Uint16 port)
+	{
+		if (server)
+			return;
+		
+		server = new Server(port);
 	}
 
 	Log & Out()

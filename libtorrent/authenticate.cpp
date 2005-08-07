@@ -20,63 +20,40 @@
 #include <libutil/log.h>
 #include "authenticate.h"
 
-
 namespace bt
 {
 
-	Authenticate::Authenticate(QSocket* sock,const SHA1Hash & info_hash,const PeerID & peer_id) 
-	: sock(sock),info_hash(info_hash),our_peer_id(peer_id)
-	{
-		finished = succes = false;
-		connect(sock,SIGNAL(connected()),this,SLOT(connected()));
-		connect(sock,SIGNAL(readyRead()),this,SLOT(readyRead()));
-		connect(sock,SIGNAL(error(int)),this,SLOT(error(int )));
-		sendHandshake();
-		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
-		timer.start(10000,true);
-		host = sock->peerAddress().toString();
-	}
-
 	Authenticate::Authenticate(const QString & ip,Uint16 port,
 				const SHA1Hash & info_hash,const PeerID & peer_id) 
-	: sock(0),info_hash(info_hash),our_peer_id(peer_id)
+	: info_hash(info_hash),our_peer_id(peer_id)
 	{
 		finished = succes = false;
 		sock = new QSocket();
 		connect(sock,SIGNAL(connected()),this,SLOT(connected()));
-		connect(sock,SIGNAL(readyRead()),this,SLOT(readyRead()));
-		connect(sock,SIGNAL(error(int)),this,SLOT(error(int )));
+		connect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
+		connect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
 		
 		host = ip;
 		
 		Out() << "Initiating connection to " << host << endl;
 		sock->connectToHost(host,port);
-		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
-		timer.start(10000,true);
 	}
 
 	Authenticate::~Authenticate()
 	{
-		if (sock)
-			delete sock;
 	}
 	
 	void Authenticate::connected()
 	{
-		sendHandshake();
-	}
-	
-	void Authenticate::error(int)
-	{
-		onFinish(false);
+		sendHandshake(info_hash,our_peer_id);
 	}
 
 	void Authenticate::onFinish(bool succes)
 	{
 		Out() << "Authentication to " << host << " : " << (succes ? "ok" : "failure") << endl;
 		disconnect(sock,SIGNAL(connected()),this,SLOT(connected()));
-		disconnect(sock,SIGNAL(readyRead()),this,SLOT(readyRead()));
-		disconnect(sock,SIGNAL(error(int)),this,SLOT(error(int )));
+		disconnect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
+		disconnect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
 		finished = true;
 		this->succes = succes;
 		if (!succes)
@@ -87,30 +64,8 @@ namespace bt
 		timer.stop();
 	}
 	
-	void Authenticate::readyRead()
+	void Authenticate::handshakeRecieved(const Uint8* hs)
 	{
-		if (finished)
-			return;
-		
-		if (sock->bytesAvailable() < 68)
-			return;
-		
-		Uint8 hs[68];
-		sock->readBlock((char*)hs,68);
-		
-		if (hs[0] != 19)
-		{
-			onFinish(false);
-			return;
-		}
-		
-		const char* pstr = "BitTorrent protocol";
-		if (memcmp(pstr,hs+1,19) != 0)
-		{
-			onFinish(false);
-			return;
-		}
-		
 		SHA1Hash rh(hs+28);
 		if (rh != info_hash)
 		{
@@ -137,28 +92,6 @@ namespace bt
 		QSocket* s = sock;
 		sock = 0;
 		return s;
-	}
-	
-	void Authenticate::sendHandshake()
-	{
-		Uint8 hs[68];
-		const char* pstr = "BitTorrent protocol";
-		hs[0] = 19;
-		memcpy(hs+1,pstr,19);
-		memset(hs+20,0x00,8);
-		memcpy(hs+28,info_hash.getData(),20);
-		memcpy(hs+48,our_peer_id.data(),20);
-		
-		sock->writeBlock((const char*)hs,68);
-	}
-	
-	void Authenticate::onTimeout()
-	{
-		if (finished)
-			return;
-		
-		Out() << "Timeout occured" << endl;
-		onFinish(false);
 	}
 }
 #include "authenticate.moc"

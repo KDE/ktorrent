@@ -17,13 +17,25 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+ 
+#include <qsocket.h>
+#include <libutil/sha1hash.h>
+#include <libutil/log.h>
+#include "globals.h"
+#include "torrent.h"
 #include "server.h"
+#include "peermanager.h"
+#include "serverauthenticate.h"
+
+
 
 namespace bt
 {
-	/*
-	Server::Server(Uint16 port) : QServerSocket(port,5)
-	{}
+
+	Server::Server(Uint16 port) : QServerSocket(port)
+	{
+		pending.setAutoDelete(true);
+	}
 
 
 	Server::~Server()
@@ -39,8 +51,52 @@ namespace bt
 		peer_managers.remove(pman);
 	}
 
-	void Server::newConnection(int socket)
+	void Server::newConnection(int s)
 	{
+		QSocket* conn = new QSocket();
+		conn->setSocket(s);
+		if (!conn)
+			return;
+		
+		if (peer_managers.count() == 0)
+		{
+			conn->close();
+			delete conn;
+		}
+
+		ServerAuthenticate* auth = new ServerAuthenticate(conn,this);
+		pending.append(auth);
 	}
-	*/
+
+	PeerManager* Server::findPeerManager(const SHA1Hash & hash)
+	{
+		QPtrList<PeerManager>::iterator i = peer_managers.begin();
+		while (i != peer_managers.end())
+		{
+			PeerManager* pm = *i;
+			if (pm->getTorrent().getInfoHash() == hash)
+				return pm;
+			i++;
+		}
+		return 0;
+	}
+	
+	void Server::update()
+	{
+		QPtrList<ServerAuthenticate>::iterator i = pending.begin();
+		while (i != pending.end())
+		{
+			ServerAuthenticate* auth = *i;
+			if (auth->isFinished())
+			{
+				i = pending.erase(i);
+			}
+			else
+			{
+				i++;
+			}
+		}
+	}
 }
+
+#include "server.moc"

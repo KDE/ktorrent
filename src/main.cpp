@@ -50,6 +50,7 @@ int main(int argc, char **argv)
 	about.addCredit("The-Error",I18N_NOOP("The downloads icon"),"zotrix@eunet.yu");
 	about.addCredit("Adam Treat", 0, "treat@kde.org" );
 	about.addCredit("Danny Allen",I18N_NOOP("Application icon"),"danny@dannyallen.co.uk");
+	about.addCredit("Vincent Wagelaar",0,"vincent@ricardis.tudelft.nl");
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);
 	

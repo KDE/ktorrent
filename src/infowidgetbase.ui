@@ -253,6 +253,17 @@
                                 <bool>true</bool>
                             </property>
                         </column>
+                        <column> 
+                            <property name="text"> 
+                                <string>Preview</string> 
+                            </property> 
+                            <property name="clickable"> 
+                                <bool>true</bool> 
+                            </property> 
+                            <property name="resizable"> 
+                                <bool>true</bool> 
+                            </property> 
+                        </column> 
                         <property name="name">
                             <cstring>m_file_view</cstring>
                         </property>
@@ -379,6 +390,7 @@
 <includehints>
     <includehint>downloadedchunkbar.h</includehint>
     <includehint>availabilitychunkbar.h</includehint>
+    <includehint>klistview.h</includehint> 
     <includehint>peerview.h</includehint>
     <includehint>chunkdownloadview.h</includehint>
 </includehints>

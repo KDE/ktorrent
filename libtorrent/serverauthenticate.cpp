@@ -17,70 +17,76 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTAUTHENTICATE_H
-#define BTAUTHENTICATE_H
-
-
+#include <qsocket.h>
 #include <libutil/sha1hash.h>
-#include "authenticatebase.h"
+#include <libutil/log.h>
+#include <libutil/log.h>
 #include "globals.h"
+#include "server.h"
+#include "peermanager.h"
+#include "serverauthenticate.h"
 #include "peerid.h"
-
+#include "torrent.h"
 
 namespace bt
 {
 
-
-	/**
-	 * @author Joris Guisson
-	 * @brief Authenicate a peer
-	 * 
-	 * After we connect to a peer,
-	 * we need to authenticate the peer. This class handles this.
-	 */
-	class Authenticate : public AuthenticateBase
+	ServerAuthenticate::ServerAuthenticate(QSocket* sock,Server* server)
+	: AuthenticateBase(sock),server(server)
 	{
-		Q_OBJECT
-	public:
+		connect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
+		connect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
+	}
 
-		/**
-		 * Connect to a remote host first and authenicate it.
-		 * @param ip IP-address of host
-		 * @param port Port of host
-		 * @param info_hash Info hash
-		 * @param peer_id Peer ID
-		 */
-		Authenticate(const QString & ip,Uint16 port,
-					 const SHA1Hash & info_hash,const PeerID & peer_id);
-		
-		virtual ~Authenticate();
 
-		/**
-		 * Get a pointer to the socket, and set it internally
-		 * to NULL. After a succesfull authentication, this is used
-		 * to transfer ownership to a Peer object.
-		 * @return The socket
-		 */
-		QSocket* takeSocket();
+	ServerAuthenticate::~ServerAuthenticate()
+	{}
+	
+	void ServerAuthenticate::onFinish(bool succes)
+	{
+		if (!sock) return;
 		
-		const PeerID & getPeerID() const {return peer_id;}
+		Out() << "Authentication to " << sock->peerAddress().toString()
+			<< " : " << (succes ? "ok" : "failure") << endl;
+		disconnect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
+		disconnect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
+		finished = true;
+		if (!succes)
+		{
+			delete sock;
+			sock = 0;
+		}
+		timer.stop();
+	}
 
-		/// See if the authentication is succesfull
-		bool isSuccesfull() const {return succes;}
-		
-	private slots:
-		void connected();
-		
-	private:
-		void onFinish(bool succes);
-		void handshakeRecieved(const Uint8* hs);
-		
-	private:
-		SHA1Hash info_hash;
-		PeerID our_peer_id,peer_id;
-		QString host;
-		bool succes;
-	};
+	void ServerAuthenticate::handshakeRecieved(const Uint8* hs)
+	{
+		// try to find a PeerManager which has te right info hash
+		SHA1Hash rh(hs+28);
+		PeerManager* pman = server->findPeerManager(rh);
+		if (!pman)
+		{
+			onFinish(false);
+			return;
+		}
+
+		// check if we aren't connecting to ourself
+		char tmp[21];
+		tmp[20] = '\0';
+		memcpy(tmp,hs+48,20);
+		PeerID peer_id = PeerID(tmp);
+		if (pman->getTorrent().getPeerID() == peer_id)
+		{
+			onFinish(false);
+			return;
+		}
+		// send handshake and finish off
+		sendHandshake(rh,pman->getTorrent().getPeerID());
+		onFinish(true);
+		// hand over connection
+		pman->newConnection(sock,peer_id);
+		sock = 0;
+	}
 }
 
-#endif
+#include "serverauthenticate.moc"

@@ -31,7 +31,7 @@
 #include <libutil/error.h>
 #include <libutil/fileops.h>
 #include <libtorrent/torrentcreator.h>
-//#include <libtorrent/downloadcap.h>
+#include <libtorrent/server.h>
 #include <libutil/functions.h>
 
 #include "ktorrentcore.h"
@@ -58,11 +58,13 @@ KTorrentCore::KTorrentCore() : max_downloads(0),keep_seeding(true)
 
 	this->removed_torrents_down = 0;
 	this->removed_torrents_up = 0;
+	Globals::instance().initServer(Settings::port());
 }
 
 
 KTorrentCore::~KTorrentCore()
-{}
+{
+}
 
 void KTorrentCore::load(const QString & target)
 {
@@ -327,6 +329,8 @@ void KTorrentCore::stopAll()
 
 void KTorrentCore::update()
 {
+	Globals::instance().getServer().update();
+	
 	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
 	//Uint32 down_speed = 0;
 	while (i != downloads.end())

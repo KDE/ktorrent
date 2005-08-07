@@ -52,9 +52,9 @@ public slots:
     ///preview slot 
     void contextItem(int id); 
 
-
 private:
 	void fillFileTree();
+	void readyPreview(); 
 	
 private:
 	KTorrentMonitor* monitor;

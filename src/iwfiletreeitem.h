@@ -30,6 +30,7 @@ using bt::Uint32;
 namespace bt
 {
 	class TorrentFile;
+	class TorrentControl;
 }
 
 /**
@@ -48,6 +49,8 @@ public:
 	virtual ~IWFileTreeItem();
 
 	bt::TorrentFile & getTorrentFile() {return file;}
+	void updatePreviewInformation(bt::TorrentControl* tc);
+	
 private:
 	void init();
 	virtual void stateChange(bool on);

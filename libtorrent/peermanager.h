@@ -20,7 +20,7 @@
 #ifndef BTPEERMANAGER_H
 #define BTPEERMANAGER_H
 
-#include <qserversocket.h> 
+#include <qsocket.h> 
 #include <qvaluelist.h>
 #include <qptrlist.h>
 #include "globals.h"
@@ -41,10 +41,10 @@ namespace bt
 	 * @author Joris Guisson
 	 * @brief Manages all the Peers
 	 * 
-	 * This class manages all Peer objects, and listens for incoming
-	 * connections. It can also open connections to other peers.
+	 * This class manages all Peer objects.
+	 * It can also open connections to other peers.
 	 */
-	class PeerManager : public QServerSocket
+	class PeerManager : public QObject
 	{
 		Q_OBJECT
 		
@@ -58,10 +58,8 @@ namespace bt
 		/**
 		 * Constructor.
 		 * @param tor The Torrent
-		 * @param port The port to listen on
-		 * @throw Error if we can listen on the port
 		 */
-		PeerManager(Torrent & tor,Uint16 port);
+		PeerManager(Torrent & tor);
 		virtual ~PeerManager();
 		
 
@@ -124,8 +122,17 @@ namespace bt
 		
 		static void setMaxConnections(Uint32 max);
 		static Uint32 getMaxConnections() {return max_connections;}
+
+		/// Get the Torrent
+		Torrent & getTorrent() {return tor;}
+
+		/**
+		 * A new connection is ready for this PeerManager.
+		 * @param sock The socket
+		 * @param peer_id The Peer's ID
+		 */
+		void newConnection(QSocket* sock,const PeerID & peer_id);
 	private:
-		virtual void newConnection(int socket);
 		void readPotentialPeers(BListNode* n);
 		bool connectedTo(const PeerID & peer_id);	
 		void peerAuthenticated(Authenticate* auth,bool ok);
