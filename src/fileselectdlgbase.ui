@@ -13,7 +13,7 @@
         </rect>
     </property>
     <property name="caption">
-        <string>Select which files you want to download</string>
+        <string>Select Which Files You Want to Download</string>
     </property>
     <hbox>
         <property name="name">
