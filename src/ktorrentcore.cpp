@@ -46,8 +46,17 @@ using namespace bt;
 KTorrentCore::KTorrentCore() : max_downloads(0),keep_seeding(true)
 {
 	data_dir = Settings::tempDir();
-	if (data_dir == QString::null)
+	bool dd_not_exist = !bt::Exists(data_dir);
+	if (data_dir == QString::null || dd_not_exist)
+	{
 		data_dir = KGlobal::dirs()->saveLocation("data","ktorrent");
+		if (dd_not_exist)
+		{
+			Settings::setTempDir(data_dir);
+			Settings::writeConfig();
+		}
+	}
+
 	
 	if (!data_dir.endsWith(bt::DirSeparator()))
 		data_dir += bt::DirSeparator();

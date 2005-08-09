@@ -57,13 +57,27 @@ namespace bt
 		// each piece is MAX_PIECE_LEN large
 		// so the interval is (MAX_PIECE_LEN / max_speed_per_pd)
 		// The * 1000 is to convert it to milliseconds
-		Uint32 rti = (int)floor((MAX_PIECE_LEN / cap) * 1000.0f);
-		if (pd->getDownloadRate() > cap + 3*1024)
-			pd->setRequestInterval(4*rti);
-		else if (pd->getDownloadRate() > cap)
-			pd->setRequestInterval(2*rti);
-		else
-			pd->setRequestInterval(rti);
+		int rti = (int)floor((MAX_PIECE_LEN / cap) * 1000.0f);
+		int rinterval = (int)pd->getRequestInterval();
+		int diff = pd->getDownloadRate() - cap;
+
+		if (diff > 3*1024)
+			rinterval += 500;
+		else if (diff > 1024)
+			rinterval += 100;
+		else if (diff > 0)
+			rinterval += 10;
+		else if (diff < -3*1024)
+			rinterval -= 500;
+		else if (diff < -1024)
+			rinterval -= 100;
+		else if (diff < 0)
+			rinterval -= 10;
+		
+		if (rinterval < 0)
+			rinterval = 0;
+		pd->setRequestInterval(rinterval);
+	//	pd->setRequestInterval(rti);
 	}
 
 	int DownloadCap::numActiveDownloaders()
@@ -92,75 +106,18 @@ namespace bt
 		}
 	}
 
-	void DownloadCap::calcExcess(float max_speed_per_pd,float & exc_bw,int & num_maxed_out)
-	{
-		exc_bw = 0.0f;
-		num_maxed_out = 0;
-		// first see who is to slow
-		QPtrList<PeerDownloader>::iterator i = pdowners.begin();
-		while (i != pdowners.end())
-		{
-			PeerDownloader* pd = *i;
-			if (pd->getNumGrabbed() != 0)
-			{
-				float dl = (float)pd->getDownloadRate();
-				if (dl < max_speed_per_pd)
-					exc_bw += max_speed_per_pd - dl;
-				else
-					num_maxed_out++;
-			}
-			i++;
-		}
-	}
+
 
 	void DownloadCap::update()
 	{
 		if (max_bytes_per_sec == 0)
 			return;
-		/*	
-		QPtrList<PeerDownloader>::iterator i = pdowners.begin();
-		while (i != pdowners.end())
-		{
-			PeerDownloader* pd = *i;
-			capPD(pd,max_bytes_per_sec);
-			i++;
-		}
-		*/
 
 		int num_active = numActiveDownloaders();
 		// the normal speed a PeerDownloader is allowed to do
 		float max_speed_per_pd = max_bytes_per_sec / (float)num_active;
 		// cap everybody to max_speed_per_pd
 		capAll(max_speed_per_pd);
-
-		// we can give some bandwith of the slow downloaders to the fast
-		// the bandwith which isn't used by slow downloaders
-		float excess_bandwith = 0;
-		int num_maxed_out = 0;
-		// first calculate the amount of excess bandwith
-		// and the number of maxed out downloaders
-		calcExcess(max_speed_per_pd,excess_bandwith,num_maxed_out);
-		
-		if (num_maxed_out == 0)
-			return;
-
-		// increase the bandwith of fast downloaders
-		QPtrList<PeerDownloader>::iterator i = pdowners.begin();
-		while (i != pdowners.end())
-		{
-			PeerDownloader* pd = *i;
-			if (pd->getNumGrabbed() != 0)
-			{
-				float dl = (float)pd->getDownloadRate();
-				if (!(dl < max_speed_per_pd))
-				{
-					float s = max_speed_per_pd + excess_bandwith / num_maxed_out;
-					capPD(pd,(int)floor(s));
-				}
-			}
-			i++;
-		}
-		
 	}
 	
 	void DownloadCap::addPeerDonwloader(PeerDownloader* pd)

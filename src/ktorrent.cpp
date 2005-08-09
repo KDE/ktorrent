@@ -57,6 +57,7 @@
 #include <libutil/error.h>
 #include <libtorrent/globals.h>
 #include <libutil/log.h>
+#include <libutil/fileops.h>
 
 #include "ktorrentcore.h"
 #include "ktorrentview.h"
@@ -353,7 +354,7 @@ void KTorrent::save(bt::TorrentControl* tc)
 
 void KTorrent::askAndSave(bt::TorrentControl* tc)
 {
-	if (Settings::saveDir() == QString::null)
+	if (Settings::saveDir() == QString::null || !bt::Exists(Settings::saveDir()))
 	{
 		int ret = KMessageBox::questionYesNo(
 			this,

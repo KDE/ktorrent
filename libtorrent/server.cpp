@@ -31,15 +31,49 @@
 
 namespace bt
 {
+	class ServerSocket : public QServerSocket
+	{
+		Server* srv;
+	public:
+		ServerSocket(Server* srv,Uint16 port)
+			: QServerSocket(port),srv(srv)
+		{
+		}
+		 
+		virtual ~ServerSocket() {}
+		
+	
+		void newConnection(int socket)
+		{
+			srv->newConnection(socket);
+		}
+	};
 
-	Server::Server(Uint16 port) : QServerSocket(port)
+	Server::Server(Uint16 port)
 	{
 		pending.setAutoDelete(true);
+		sock = new ServerSocket(this,port);
 	}
 
 
 	Server::~Server()
-	{}
+	{
+		delete sock;
+	}
+
+	bool Server::isOK() const
+	{
+		return sock->ok();
+	}
+
+	void Server::changePort(Uint16 port)
+	{
+		if (port == sock->port())
+			return;
+
+		delete sock;
+		sock = new ServerSocket(this,port);
+	}
 
 	void Server::addPeerManager(PeerManager* pman)
 	{

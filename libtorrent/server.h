@@ -29,6 +29,8 @@ namespace bt
 	class PeerManager;
 	class ServerAuthenticate;
 	class SHA1Hash;
+	class ServerSocket;
+
 
 	/**
 	 * @author Joris Guisson
@@ -40,16 +42,26 @@ namespace bt
 	 * All PeerManager's should register with this class when they
 	 * are created and should unregister when they are destroyed.
 	 */
-	class Server : public QServerSocket
+	class Server : public QObject
 	{
 		Q_OBJECT
 
 		QPtrList<PeerManager> peer_managers;
 		QPtrList<ServerAuthenticate> pending;
+		ServerSocket* sock;
 	public:
 		Server(Uint16 port);
 		virtual ~Server();
 
+		/// Check if everything is ok (are we succesfully listening on the port)
+		bool isOK() const;
+		
+		/**
+		 * Change the port.
+		 * @param port The new port
+		 */
+		void changePort(Uint16 port);
+		
 		/**
 		 * Add a PeerManager.
 		 * @param pman The PeerManager
@@ -74,8 +86,10 @@ namespace bt
 		 */
 		void update();
 
-	protected:
+	private:
 		void newConnection(int socket);
+
+		friend class ServerSocket;
 	};
 
 }

@@ -40,9 +40,10 @@ namespace bt
  *
  * Directory item in the InfoWidget's file view.
  */
-class IWFileTreeDirItem : public KListViewItem
+class IWFileTreeDirItem : public QCheckListItem
 {
 	QString name;
+	Uint32 size;
 	bt::PtrMap<QString,IWFileTreeItem> children;
 	bt::PtrMap<QString,IWFileTreeDirItem> subdirs;
 public:
@@ -79,6 +80,9 @@ public:
 	 * @param tc The TorrentControl object
 	 */
 	void updatePreviewInformation(bt::TorrentControl* tc);
+
+private:
+	virtual void stateChange(bool on);
 };
 
 #endif

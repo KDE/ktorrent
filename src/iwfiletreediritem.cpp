@@ -25,20 +25,29 @@
 #include <libtorrent/torrentcontrol.h>
 #include "iwfiletreediritem.h"
 #include "iwfiletreeitem.h"
+#include "functions.h"
 
 
 IWFileTreeDirItem::IWFileTreeDirItem(KListView* klv,const QString & name)
-	: KListViewItem(klv),name(name)
+	: QCheckListItem(klv,QString::null,QCheckListItem::CheckBox),name(name)
 {
+	size = 0;
 	setPixmap(0,KGlobal::iconLoader()->loadIcon("folder",KIcon::Small));
 	setText(0,name);
+	setText(1,BytesToString(size));
+	setText(2,i18n("Yes"));
+	setOn(true);
 }
 
 IWFileTreeDirItem::IWFileTreeDirItem(IWFileTreeDirItem* parent,const QString & name)
-	: KListViewItem(parent),name(name)
+	: QCheckListItem(parent,QString::null,QCheckListItem::CheckBox),name(name)
 {
+	size = 0;
 	setPixmap(0,KGlobal::iconLoader()->loadIcon("folder",KIcon::Small));
 	setText(0,name);
+	setText(1,BytesToString(size));
+	setText(2,i18n("Yes"));
+	setOn(true);
 }
 
 IWFileTreeDirItem::~IWFileTreeDirItem()
@@ -47,6 +56,8 @@ IWFileTreeDirItem::~IWFileTreeDirItem()
 
 void IWFileTreeDirItem::insert(const QString & path,bt::TorrentFile & file)
 {
+	size += file.getSize();
+	setText(1,BytesToString(size));
 	int p = path.find(bt::DirSeparator());
 	if (p == -1)
 	{
@@ -149,4 +160,10 @@ void IWFileTreeDirItem::updatePreviewInformation(bt::TorrentControl* tc)
 		j->second->updatePreviewInformation(tc);
 		j++;
 	}
+}
+
+void IWFileTreeDirItem::stateChange(bool on)
+{
+	setAllChecked(on);
+	setText(2,on ? i18n("Yes") : i18n("No"));
 }

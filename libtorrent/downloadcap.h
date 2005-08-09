@@ -59,7 +59,6 @@ namespace bt
 		void capPD(PeerDownloader* pd,Uint32 cap);
 		int numActiveDownloaders();
 		void capAll(float max_speed_per_pd);
-		void calcExcess(float max_speed_per_pd,float & exc_bw,int & num_maxed_out);
 	};
 
 }

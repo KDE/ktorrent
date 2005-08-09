@@ -39,6 +39,7 @@ HTMLPart::HTMLPart(QWidget *parent)
 	setJavaEnabled(true);
 	setMetaRefreshEnabled(true);
 	setPluginsEnabled(false);
+	setStatusMessagesEnabled(false);
 	KParts::BrowserExtension* ext = this->browserExtension();
 	connect(ext,SIGNAL(openURLRequest(const KURL&,const KParts::URLArgs&)),
 			this,SLOT(openURLRequest(const KURL&, const KParts::URLArgs& )));

@@ -97,7 +97,9 @@ namespace bt
 		 * @param rti Interval in milliseconds
 		 */
 		void setRequestInterval(Uint32 rti);
-		
+
+		/// Get the request interval.
+		Uint32 getRequestInterval() const {return req_time_interval;}
 	public slots:
 		/**
 		 * Send a Request. Note that the DownloadCap

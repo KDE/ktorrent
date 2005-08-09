@@ -43,7 +43,7 @@ ChunkBar::ChunkBar(QWidget *parent, const char *name)
 	setFrameShadow(Sunken);
 	setLineWidth(3);
 	setMidLineWidth(3);
-	setFixedHeight(fontMetrics().height()*1.5);
+	setFixedHeight((int)ceil(fontMetrics().height()*1.5));
 	show_excluded = false;
 }
 
@@ -61,7 +61,7 @@ void ChunkBar::drawContents(QPainter *p)
 {
 	// first draw background
 	if (isEnabled())
-		p->setBrush(Qt::white);
+		p->setBrush(colorGroup().base());
 	else
 		p->setBrush(colorGroup().background());
 
@@ -90,14 +90,15 @@ void ChunkBar::drawContents(QPainter *p)
 void ChunkBar::drawEqual(QPainter *p,const BitSet & bs)
 {
 	//p->setPen(QPen(colorGroup().highlight(),1,Qt::SolidLine));
+	QColor c = colorGroup().highlight();
 
 	Uint32 w = contentsRect().width();
 	double scale = 1.0;
 	if (curr_tc->getTotalChunks() != w)
 		scale = (double)w / curr_tc->getTotalChunks();
 	
-	p->setPen(QPen(Qt::blue,1,Qt::SolidLine));
-	p->setBrush(Qt::blue);
+	p->setPen(QPen(c,1,Qt::SolidLine));
+	p->setBrush(c);
 	
 	QValueList<Range> rs;
 	
@@ -154,11 +155,8 @@ void ChunkBar::drawMoreChunksThenPixels(QPainter *p,const BitSet & bs)
 		if (num_dl == 0)
 			continue;
 
-		QColor c = Qt::blue;
 		double fac = (double)num_dl / chunks_per_pixel;
-		int cr = int(255 * (1.0 - fac));
-		int cg = int(255 * (1.0 - fac));
-		c.setRgb(cr,cg,c.blue());
+		QColor c = colorGroup().highlight().light(255*(1.0-fac));
 		p->setPen(QPen(c,1,Qt::SolidLine));
 		p->setBrush(c);
 		p->drawRect(r.x() + i,r.y()+1,1,r.height() - 1);
