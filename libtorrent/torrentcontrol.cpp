@@ -442,7 +442,7 @@ namespace bt
 	
 	void TorrentControl::reconstruct(const QString & dir)
 	{
-		if (saved)
+		if (saved && !tor->isMultiFile())
 			return;
 	
 		cman->save(dir);
@@ -604,6 +604,16 @@ namespace bt
 				if (pbs.get(j))
 					bs.set(j,true);
 		}
+	}
+
+	void TorrentControl::excludedChunksToBitSet(BitSet & bs)
+	{
+		if (!cman)
+			return;
+		
+		bs = BitSet(cman->getNumChunks());
+		for (Uint32 i = 0;i < cman->getNumChunks();i++)
+			bs.set(i,cman->getChunk(i)->isExcluded());
 	}
 
 	void TorrentControl::saveStats()

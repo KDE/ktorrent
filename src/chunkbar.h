@@ -35,10 +35,11 @@ namespace bt
 
 
 /**
- * @author Joris Guisson
+ * @author Joris Guisson, Vincent Wagelaar
  *
- * Bar which displays which chunks are downloaded or not.
- * This is the base class for 
+ * Bar which displays BitSets, subclasses need to fill the BitSet.
+ * BitSets can represent which chunks are downloaded, which chunks are available
+ * and which chunks are excluded.
  */
 class ChunkBar : public QFrame
 {
@@ -53,8 +54,8 @@ public:
 	virtual void drawContents(QPainter *p);
   
 private:
-	void drawEqual(QPainter *p,const bt::BitSet & bs);
-	void drawMoreChunksThenPixels(QPainter *p,const bt::BitSet & bs);
+	void drawEqual(QPainter *p,const bt::BitSet & bs,const QColor & color);
+	void drawMoreChunksThenPixels(QPainter *p,const bt::BitSet & bs,const QColor & color);
 	
 protected:
 	bt::TorrentControl* curr_tc;

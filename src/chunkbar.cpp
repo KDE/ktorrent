@@ -75,22 +75,28 @@ void ChunkBar::drawContents(QPainter *p)
 		Uint32 w = contentsRect().width();
 		BitSet bs;
 		fillBitSet(bs);
-		// there are 3 possibilities :
-		// - for each chunk a pixel
-		// - more pixels then chunks
-		// - more chunks then pixels
 		if (curr_tc->getTotalChunks() > w)
-			drawMoreChunksThenPixels(p,bs);
+			drawMoreChunksThenPixels(p,bs,colorGroup().highlight());
 		else
-			drawEqual(p,bs);
+			drawEqual(p,bs,colorGroup().highlight());
+
+		if (show_excluded && curr_tc->getNumChunksExcluded() > 0)
+		{
+			BitSet ebs;
+			curr_tc->excludedChunksToBitSet(ebs);
+			if (curr_tc->getTotalChunks() > w)
+				drawMoreChunksThenPixels(p,ebs,Qt::red);
+			else
+				drawEqual(p,ebs,Qt::red);
+		}
 	}
 	p->restoreWorldMatrix();
 }
 
-void ChunkBar::drawEqual(QPainter *p,const BitSet & bs)
+void ChunkBar::drawEqual(QPainter *p,const BitSet & bs,const QColor & color)
 {
 	//p->setPen(QPen(colorGroup().highlight(),1,Qt::SolidLine));
-	QColor c = colorGroup().highlight();
+	QColor c = color;
 
 	Uint32 w = contentsRect().width();
 	double scale = 1.0;
@@ -137,7 +143,7 @@ void ChunkBar::drawEqual(QPainter *p,const BitSet & bs)
 	}
 }
 
-void ChunkBar::drawMoreChunksThenPixels(QPainter *p,const BitSet & bs)
+void ChunkBar::drawMoreChunksThenPixels(QPainter *p,const BitSet & bs,const QColor & color)
 {
 	Uint32 w = contentsRect().width();
 
@@ -156,7 +162,7 @@ void ChunkBar::drawMoreChunksThenPixels(QPainter *p,const BitSet & bs)
 			continue;
 
 		double fac = (double)num_dl / chunks_per_pixel;
-		QColor c = colorGroup().highlight().light(255*(1.0-fac));
+		QColor c = color.light(255*(1.0-fac));
 		p->setPen(QPen(c,1,Qt::SolidLine));
 		p->setBrush(c);
 		p->drawRect(r.x() + i,r.y()+1,1,r.height() - 1);

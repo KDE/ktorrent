@@ -68,6 +68,9 @@ KTorrentCore::KTorrentCore() : max_downloads(0),keep_seeding(true)
 	this->removed_torrents_down = 0;
 	this->removed_torrents_up = 0;
 	Globals::instance().initServer(Settings::port());
+	if (!Globals::instance().getServer().isOK())
+	{
+	}
 }
 
 

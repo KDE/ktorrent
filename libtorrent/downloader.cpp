@@ -294,7 +294,7 @@ namespace bt
 			return;
 
 		// recalculate downloaded bytes
-		downloaded = (tor.getFileLength() - cman.bytesLeft());
+		downloaded = (tor.getFileLength() - cman.bytesLeft() - cman.bytesExcluded());
 
 		Uint32 num = 0;
 		fptr.read(&num,sizeof(Uint32));

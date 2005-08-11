@@ -213,18 +213,45 @@ namespace bt
 		if (!d.endsWith(bt::DirSeparator()))
 			d += bt::DirSeparator();
 
-		// first move file
-		QString ndir = d + tor.getNameSuggestion();
-		Move(cache_dir,ndir);
+		// first check if final dir exists and create it if necessary
+		QString ndir = d + tor.getNameSuggestion() + bt::DirSeparator();
+		if (!bt::Exists(ndir))
+			bt::MakeDir(ndir);
 
-		// create symlink in data dir
-		SymLink(ndir,cache_dir.mid(0,cache_dir.length() - 1));
+		// copy over all files which need to be saved
+		for (Uint32 i = 0;i < tor.getNumFiles();i++)
+		{
+			TorrentFile & tf = tor.getFile(i);
+			QFileInfo fi(cache_dir + tf.getPath());
+			if (tf.doNotDownload() || fi.isSymLink())
+				continue;
+
+			// first make the necesarry directories
+			QString tmp = ndir;
+			QStringList sl = QStringList::split(bt::DirSeparator(),tf.getPath());
+			for (Uint32 j = 0;j < sl.count() - 1;j++)
+			{
+				tmp += sl[j];
+				if (!bt::Exists(tmp))
+					MakeDir(tmp);
+				tmp += bt::DirSeparator();
+			}
+			// then move the file and symlink it in the cache to the old
+			bt::Move(cache_dir + tf.getPath(),ndir + tf.getPath());
+			bt::SymLink(ndir + tf.getPath(),cache_dir + tf.getPath());
+		}
 	}
 
 	bool MultiFileCache::hasBeenSaved() const
 	{
-		QFileInfo fi(cache_dir.mid(0,cache_dir.length() - 1));
-		return fi.isSymLink();
+		for (Uint32 i = 0;i < tor.getNumFiles();i++)
+		{
+			QFileInfo fi(cache_dir + tor.getFile(i).getPath());
+			if (fi.isSymLink())
+				return true;
+		}
+		
+		return false;
 	}
 
 	///////////////////////////////

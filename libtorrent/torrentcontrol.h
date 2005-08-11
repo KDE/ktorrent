@@ -69,6 +69,12 @@ namespace bt
 		 * @param bs The BitSet
 		 */
 		void availableChunksToBitSet(BitSet & bs);
+
+		/**
+		 * Make a BitSet of the excluded Chunks
+		 * @param bs The BitSet
+		 */
+		void excludedChunksToBitSet(BitSet & bs);
 		
 		/**
 		 * Initialize the TorrentControl. 

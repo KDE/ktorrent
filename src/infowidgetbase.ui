@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>600</width>
-            <height>307</height>
+            <height>244</height>
         </rect>
     </property>
     <property name="caption">
@@ -30,11 +30,11 @@
                 <attribute name="title">
                     <string>St&amp;atus</string>
                 </attribute>
-                <grid>
+                <vbox>
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QLabel" row="0" column="0" rowspan="1" colspan="4">
+                    <widget class="QLabel">
                         <property name="name">
                             <cstring>textLabel1_2</cstring>
                         </property>
@@ -42,12 +42,12 @@
                             <string>Parts of the file which have been downloaded :</string>
                         </property>
                     </widget>
-                    <widget class="DownloadedChunkBar" row="1" column="0" rowspan="1" colspan="4">
+                    <widget class="DownloadedChunkBar">
                         <property name="name">
                             <cstring>m_chunk_bar</cstring>
                         </property>
                     </widget>
-                    <widget class="QLabel" row="2" column="0" rowspan="1" colspan="4">
+                    <widget class="QLabel">
                         <property name="name">
                             <cstring>textLabel1_3</cstring>
                         </property>
@@ -55,12 +55,161 @@
                             <string>Parts of the file which are available :</string>
                         </property>
                     </widget>
-                    <widget class="AvailabilityChunkBar" row="3" column="0" rowspan="1" colspan="4">
+                    <widget class="AvailabilityChunkBar">
                         <property name="name">
                             <cstring>m_av_chunk_bar</cstring>
                         </property>
                     </widget>
-                    <spacer row="8" column="2">
+                    <widget class="QLayoutWidget">
+                        <property name="name">
+                            <cstring>layout2</cstring>
+                        </property>
+                        <hbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QLayoutWidget">
+                                <property name="name">
+                                    <cstring>layout1</cstring>
+                                </property>
+                                <grid>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <widget class="QLabel" row="0" column="0">
+                                        <property name="name">
+                                            <cstring>textLabel1</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>Total number of chunks:</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel" row="1" column="1">
+                                        <property name="name">
+                                            <cstring>m_excluded_chunks</cstring>
+                                        </property>
+                                        <property name="minimumSize">
+                                            <size>
+                                                <width>50</width>
+                                                <height>0</height>
+                                            </size>
+                                        </property>
+                                        <property name="frameShape">
+                                            <enum>Panel</enum>
+                                        </property>
+                                        <property name="text">
+                                            <string></string>
+                                        </property>
+                                        <property name="alignment">
+                                            <set>AlignVCenter|AlignRight</set>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel" row="0" column="1">
+                                        <property name="name">
+                                            <cstring>m_total_chunks</cstring>
+                                        </property>
+                                        <property name="minimumSize">
+                                            <size>
+                                                <width>50</width>
+                                                <height>0</height>
+                                            </size>
+                                        </property>
+                                        <property name="frameShape">
+                                            <enum>Box</enum>
+                                        </property>
+                                        <property name="text">
+                                            <string></string>
+                                        </property>
+                                        <property name="alignment">
+                                            <set>AlignVCenter|AlignRight</set>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel" row="3" column="0">
+                                        <property name="name">
+                                            <cstring>textLabel5</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>Chunks currently downloading:</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel" row="2" column="0">
+                                        <property name="name">
+                                            <cstring>textLabel3</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>Chunks downloaded:</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel" row="1" column="0">
+                                        <property name="name">
+                                            <cstring>textLabel1_4</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>Chunks excluded</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel" row="2" column="1">
+                                        <property name="name">
+                                            <cstring>m_chunks_downloaded</cstring>
+                                        </property>
+                                        <property name="minimumSize">
+                                            <size>
+                                                <width>50</width>
+                                                <height>0</height>
+                                            </size>
+                                        </property>
+                                        <property name="frameShape">
+                                            <enum>Panel</enum>
+                                        </property>
+                                        <property name="text">
+                                            <string></string>
+                                        </property>
+                                        <property name="alignment">
+                                            <set>AlignVCenter|AlignRight</set>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel" row="3" column="1">
+                                        <property name="name">
+                                            <cstring>m_chunks_downloading</cstring>
+                                        </property>
+                                        <property name="minimumSize">
+                                            <size>
+                                                <width>50</width>
+                                                <height>0</height>
+                                            </size>
+                                        </property>
+                                        <property name="frameShape">
+                                            <enum>Panel</enum>
+                                        </property>
+                                        <property name="text">
+                                            <string></string>
+                                        </property>
+                                        <property name="alignment">
+                                            <set>AlignVCenter|AlignRight</set>
+                                        </property>
+                                    </widget>
+                                </grid>
+                            </widget>
+                            <spacer>
+                                <property name="name">
+                                    <cstring>spacer2</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>90</width>
+                                        <height>20</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                        </hbox>
+                    </widget>
+                    <spacer>
                         <property name="name">
                             <cstring>spacer1</cstring>
                         </property>
@@ -73,140 +222,11 @@
                         <property name="sizeHint">
                             <size>
                                 <width>20</width>
-                                <height>30</height>
+                                <height>40</height>
                             </size>
                         </property>
                     </spacer>
-                    <widget class="QLabel" row="4" column="0">
-                        <property name="name">
-                            <cstring>textLabel1</cstring>
-                        </property>
-                        <property name="text">
-                            <string>Total number of chunks:</string>
-                        </property>
-                    </widget>
-                    <widget class="QLabel" row="5" column="0">
-                        <property name="name">
-                            <cstring>textLabel1_4</cstring>
-                        </property>
-                        <property name="text">
-                            <string>Chunks excluded</string>
-                        </property>
-                    </widget>
-                    <widget class="QLabel" row="6" column="0">
-                        <property name="name">
-                            <cstring>textLabel3</cstring>
-                        </property>
-                        <property name="text">
-                            <string>Chunks downloaded:</string>
-                        </property>
-                    </widget>
-                    <widget class="QLabel" row="7" column="0">
-                        <property name="name">
-                            <cstring>textLabel5</cstring>
-                        </property>
-                        <property name="text">
-                            <string>Chunks currently downloading:</string>
-                        </property>
-                    </widget>
-                    <widget class="QLabel" row="4" column="1">
-                        <property name="name">
-                            <cstring>m_total_chunks</cstring>
-                        </property>
-                        <property name="minimumSize">
-                            <size>
-                                <width>50</width>
-                                <height>0</height>
-                            </size>
-                        </property>
-                        <property name="frameShape">
-                            <enum>Box</enum>
-                        </property>
-                        <property name="text">
-                            <string></string>
-                        </property>
-                        <property name="alignment">
-                            <set>AlignVCenter|AlignRight</set>
-                        </property>
-                    </widget>
-                    <widget class="QLabel" row="5" column="1">
-                        <property name="name">
-                            <cstring>m_excluded_chunks</cstring>
-                        </property>
-                        <property name="minimumSize">
-                            <size>
-                                <width>50</width>
-                                <height>0</height>
-                            </size>
-                        </property>
-                        <property name="frameShape">
-                            <enum>Panel</enum>
-                        </property>
-                        <property name="text">
-                            <string></string>
-                        </property>
-                        <property name="alignment">
-                            <set>AlignVCenter|AlignRight</set>
-                        </property>
-                    </widget>
-                    <widget class="QLabel" row="6" column="1">
-                        <property name="name">
-                            <cstring>m_chunks_downloaded</cstring>
-                        </property>
-                        <property name="minimumSize">
-                            <size>
-                                <width>50</width>
-                                <height>0</height>
-                            </size>
-                        </property>
-                        <property name="frameShape">
-                            <enum>Panel</enum>
-                        </property>
-                        <property name="text">
-                            <string></string>
-                        </property>
-                        <property name="alignment">
-                            <set>AlignVCenter|AlignRight</set>
-                        </property>
-                    </widget>
-                    <widget class="QLabel" row="7" column="1">
-                        <property name="name">
-                            <cstring>m_chunks_downloading</cstring>
-                        </property>
-                        <property name="minimumSize">
-                            <size>
-                                <width>50</width>
-                                <height>0</height>
-                            </size>
-                        </property>
-                        <property name="frameShape">
-                            <enum>Panel</enum>
-                        </property>
-                        <property name="text">
-                            <string></string>
-                        </property>
-                        <property name="alignment">
-                            <set>AlignVCenter|AlignRight</set>
-                        </property>
-                    </widget>
-                    <spacer row="5" column="3" rowspan="2" colspan="1">
-                        <property name="name">
-                            <cstring>spacer2</cstring>
-                        </property>
-                        <property name="orientation">
-                            <enum>Horizontal</enum>
-                        </property>
-                        <property name="sizeType">
-                            <enum>Expanding</enum>
-                        </property>
-                        <property name="sizeHint">
-                            <size>
-                                <width>90</width>
-                                <height>20</height>
-                            </size>
-                        </property>
-                    </spacer>
-                </grid>
+                </vbox>
             </widget>
             <widget class="QWidget">
                 <property name="name">
@@ -253,17 +273,17 @@
                                 <bool>true</bool>
                             </property>
                         </column>
-                        <column> 
-                            <property name="text"> 
-                                <string>Preview</string> 
-                            </property> 
-                            <property name="clickable"> 
-                                <bool>true</bool> 
-                            </property> 
-                            <property name="resizable"> 
-                                <bool>true</bool> 
-                            </property> 
-                        </column> 
+                        <column>
+                            <property name="text">
+                                <string>Preview</string>
+                            </property>
+                            <property name="clickable">
+                                <bool>true</bool>
+                            </property>
+                            <property name="resizable">
+                                <bool>true</bool>
+                            </property>
+                        </column>
                         <property name="name">
                             <cstring>m_file_view</cstring>
                         </property>
@@ -390,7 +410,6 @@
 <includehints>
     <includehint>downloadedchunkbar.h</includehint>
     <includehint>availabilitychunkbar.h</includehint>
-    <includehint>klistview.h</includehint> 
     <includehint>peerview.h</includehint>
     <includehint>chunkdownloadview.h</includehint>
 </includehints>
