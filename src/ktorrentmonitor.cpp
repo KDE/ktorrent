@@ -44,34 +44,42 @@ KTorrentMonitor::~KTorrentMonitor()
 
 void KTorrentMonitor::downloadRemoved(ChunkDownload* cd)
 {
-	cdv->removeDownload(cd);
+	if (cdv)
+		cdv->removeDownload(cd);
 }
 
 void KTorrentMonitor::downloadStarted(ChunkDownload* cd)
 {
-	cdv->addDownload(cd);
+	if (cdv)
+		cdv->addDownload(cd);
 }
 
 void KTorrentMonitor::peerAdded(Peer* peer)
 {
-	pv->addPeer(peer);
+	if (pv)
+		pv->addPeer(peer);
 }
 
 void KTorrentMonitor::peerRemoved(Peer* peer)
 {
-	pv->removePeer(peer);
+	if (pv)
+		pv->removePeer(peer);
 }
 
 void KTorrentMonitor::stopped()
 {
-	pv->removeAll();
-	cdv->removeAll();
+	if (pv)
+		pv->removeAll();
+	if (cdv)
+		cdv->removeAll();
 }
 
 void KTorrentMonitor::destroyed()
 {
-	pv->removeAll();
-	cdv->removeAll();
+	if (pv)
+		pv->removeAll();
+	if (cdv)
+		cdv->removeAll();
 	tc = 0;
 }
 

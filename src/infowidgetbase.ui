@@ -12,11 +12,11 @@
             <height>244</height>
         </rect>
     </property>
-    <grid>
+    <hbox>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QTabWidget" row="0" column="0">
+        <widget class="QTabWidget">
             <property name="name">
                 <cstring>m_tabs</cstring>
             </property>
@@ -59,7 +59,7 @@
                     </widget>
                     <widget class="QLayoutWidget">
                         <property name="name">
-                            <cstring>layout2</cstring>
+                            <cstring>layout15</cstring>
                         </property>
                         <hbox>
                             <property name="name">
@@ -78,7 +78,7 @@
                                             <cstring>textLabel1</cstring>
                                         </property>
                                         <property name="text">
-                                            <string>Total number of chunks:</string>
+                                            <string>Total number of chunks</string>
                                         </property>
                                     </widget>
                                     <widget class="QLabel" row="1" column="1">
@@ -126,7 +126,7 @@
                                             <cstring>textLabel5</cstring>
                                         </property>
                                         <property name="text">
-                                            <string>Chunks currently downloading:</string>
+                                            <string>Chunks currently downloading</string>
                                         </property>
                                     </widget>
                                     <widget class="QLabel" row="2" column="0">
@@ -134,7 +134,7 @@
                                             <cstring>textLabel3</cstring>
                                         </property>
                                         <property name="text">
-                                            <string>Chunks downloaded:</string>
+                                            <string>Chunks downloaded</string>
                                         </property>
                                     </widget>
                                     <widget class="QLabel" row="1" column="0">
@@ -189,7 +189,7 @@
                             </widget>
                             <spacer>
                                 <property name="name">
-                                    <cstring>spacer2</cstring>
+                                    <cstring>spacer7</cstring>
                                 </property>
                                 <property name="orientation">
                                     <enum>Horizontal</enum>
@@ -199,11 +199,110 @@
                                 </property>
                                 <property name="sizeHint">
                                     <size>
-                                        <width>90</width>
+                                        <width>20</width>
                                         <height>20</height>
                                     </size>
                                 </property>
                             </spacer>
+                            <widget class="QGroupBox">
+                                <property name="name">
+                                    <cstring>groupBox1</cstring>
+                                </property>
+                                <property name="title">
+                                    <string>Tracker</string>
+                                </property>
+                                <hbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <widget class="QLayoutWidget">
+                                        <property name="name">
+                                            <cstring>layout14</cstring>
+                                        </property>
+                                        <hbox>
+                                            <property name="name">
+                                                <cstring>unnamed</cstring>
+                                            </property>
+                                            <widget class="QLayoutWidget">
+                                                <property name="name">
+                                                    <cstring>layout13</cstring>
+                                                </property>
+                                                <vbox>
+                                                    <property name="name">
+                                                        <cstring>unnamed</cstring>
+                                                    </property>
+                                                    <widget class="QLabel">
+                                                        <property name="name">
+                                                            <cstring>textLabel1_5</cstring>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string>Status</string>
+                                                        </property>
+                                                    </widget>
+                                                    <widget class="QLabel">
+                                                        <property name="name">
+                                                            <cstring>textLabel3_2</cstring>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string>Next update in</string>
+                                                        </property>
+                                                    </widget>
+                                                </vbox>
+                                            </widget>
+                                            <widget class="QLayoutWidget">
+                                                <property name="name">
+                                                    <cstring>layout12</cstring>
+                                                </property>
+                                                <vbox>
+                                                    <property name="name">
+                                                        <cstring>unnamed</cstring>
+                                                    </property>
+                                                    <widget class="QLabel">
+                                                        <property name="name">
+                                                            <cstring>m_tracker_status</cstring>
+                                                        </property>
+                                                        <property name="minimumSize">
+                                                            <size>
+                                                                <width>100</width>
+                                                                <height>0</height>
+                                                            </size>
+                                                        </property>
+                                                        <property name="frameShape">
+                                                            <enum>Panel</enum>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string></string>
+                                                        </property>
+                                                        <property name="alignment">
+                                                            <set>AlignVCenter|AlignRight</set>
+                                                        </property>
+                                                    </widget>
+                                                    <widget class="QLabel">
+                                                        <property name="name">
+                                                            <cstring>m_tracker_update_time</cstring>
+                                                        </property>
+                                                        <property name="minimumSize">
+                                                            <size>
+                                                                <width>100</width>
+                                                                <height>0</height>
+                                                            </size>
+                                                        </property>
+                                                        <property name="frameShape">
+                                                            <enum>Panel</enum>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string></string>
+                                                        </property>
+                                                        <property name="alignment">
+                                                            <set>AlignVCenter|AlignRight</set>
+                                                        </property>
+                                                    </widget>
+                                                </vbox>
+                                            </widget>
+                                        </hbox>
+                                    </widget>
+                                </hbox>
+                            </widget>
                         </hbox>
                     </widget>
                     <spacer>
@@ -293,78 +392,10 @@
                     </widget>
                 </hbox>
             </widget>
-            <widget class="QWidget">
-                <property name="name">
-                    <cstring>tab</cstring>
-                </property>
-                <attribute name="title">
-                    <string>Peers</string>
-                </attribute>
-                <hbox>
-                    <property name="name">
-                        <cstring>unnamed</cstring>
-                    </property>
-                    <widget class="PeerView">
-                        <property name="name">
-                            <cstring>m_peer_view</cstring>
-                        </property>
-                    </widget>
-                </hbox>
-            </widget>
-            <widget class="QWidget">
-                <property name="name">
-                    <cstring>TabPage</cstring>
-                </property>
-                <attribute name="title">
-                    <string>Chun&amp;ks</string>
-                </attribute>
-                <hbox>
-                    <property name="name">
-                        <cstring>unnamed</cstring>
-                    </property>
-                    <widget class="ChunkDownloadView">
-                        <property name="name">
-                            <cstring>m_chunk_view</cstring>
-                        </property>
-                    </widget>
-                </hbox>
-            </widget>
         </widget>
-    </grid>
+    </hbox>
 </widget>
 <customwidgets>
-    <customwidget>
-        <class>PeerView</class>
-        <header location="local">peerview.h</header>
-        <sizehint>
-            <width>-1</width>
-            <height>-1</height>
-        </sizehint>
-        <container>0</container>
-        <sizepolicy>
-            <hordata>5</hordata>
-            <verdata>5</verdata>
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-        </sizepolicy>
-        <pixmap>image0</pixmap>
-    </customwidget>
-    <customwidget>
-        <class>ChunkDownloadView</class>
-        <header location="local">chunkdownloadview.h</header>
-        <sizehint>
-            <width>-1</width>
-            <height>-1</height>
-        </sizehint>
-        <container>0</container>
-        <sizepolicy>
-            <hordata>5</hordata>
-            <verdata>5</verdata>
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-        </sizepolicy>
-        <pixmap>image0</pixmap>
-    </customwidget>
     <customwidget>
         <class>DownloadedChunkBar</class>
         <header location="local">src/downloadedchunkbar.h</header>
@@ -407,7 +438,5 @@
 <includehints>
     <includehint>downloadedchunkbar.h</includehint>
     <includehint>availabilitychunkbar.h</includehint>
-    <includehint>peerview.h</includehint>
-    <includehint>chunkdownloadview.h</includehint>
 </includehints>
 </UI>

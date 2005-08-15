@@ -28,9 +28,12 @@
 #include <qlabel.h>
 #include <qcheckbox.h>
 #include <qpainter.h>
+#include <qtabwidget.h>
+#include <qlayout.h>
 #include <libutil/functions.h>
 #include <libtorrent/torrent.h>
 #include <libtorrent/torrentcontrol.h>
+#include <libtorrent/globals.h>
 #include "ktorrentmonitor.h"
 #include "infowidget.h"
 #include "peerview.h"
@@ -46,12 +49,12 @@ using namespace bt;
 
 
 InfoWidget::InfoWidget(QWidget* parent, const char* name, WFlags fl)
-		: InfoWidgetBase(parent,name,fl)
+	: InfoWidgetBase(parent,name,fl),peer_view(0),cd_view(0)
 {
 	multi_root = 0;
 	monitor = 0;
 	curr_tc = 0;
-	setEnabled(false);
+	
 
 	KIconLoader* iload = KGlobal::iconLoader();
 	context_menu = new KPopupMenu(this);
@@ -61,6 +64,25 @@ InfoWidget::InfoWidget(QWidget* parent, const char* name, WFlags fl)
 	connect(m_file_view,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )),
 	        this,SLOT(showContextMenu(KListView*, QListViewItem*, const QPoint& )));
 	connect(context_menu, SIGNAL ( activated ( int ) ), this, SLOT ( contextItem ( int ) ) );
+	if (Globals::instance().isDebugModeSet())
+	{
+		QWidget* page = new QWidget(m_tabs);
+		QHBoxLayout* page_layout = new QHBoxLayout(page, 11, 6);
+		
+		peer_view = new PeerView(page);
+		page_layout->add(peer_view);
+		
+		m_tabs->addTab(page,i18n("Peers"));;
+
+		page = new QWidget( m_tabs);
+		page_layout = new QHBoxLayout( page, 11, 6);
+		
+		cd_view = new ChunkDownloadView(page);
+		page_layout->add(cd_view);
+		
+		m_tabs->addTab(page,i18n("Chunks"));
+	}
+	setEnabled(false);
 }
 
 InfoWidget::~InfoWidget()
@@ -111,17 +133,23 @@ void InfoWidget::changeTC(bt::TorrentControl* tc)
 	{
 		delete monitor;
 		monitor = 0;
-		m_peer_view->removeAll();
-		m_chunk_view->removeAll();
+		if (peer_view)
+			peer_view->removeAll();
+		if (cd_view)
+			cd_view->removeAll();
 	}
 
 	if (tc)
-		monitor = new KTorrentMonitor(curr_tc,m_peer_view,m_chunk_view);
+		monitor = new KTorrentMonitor(curr_tc,peer_view,cd_view);
 
 	fillFileTree();
 	m_chunk_bar->setTC(tc);
 	m_av_chunk_bar->setTC(tc);
 	setEnabled(tc != 0);
+	if (peer_view)
+		peer_view->setEnabled(tc != 0);
+	if (cd_view)
+		cd_view->setEnabled(tc != 0);
 	update();
 }
 
@@ -162,8 +190,14 @@ void InfoWidget::update()
 	m_excluded_chunks->setText(QString::number(curr_tc->getNumChunksExcluded()));
 	m_chunk_bar->repaint(false);
 	m_av_chunk_bar->repaint(false);
-	m_peer_view->update();
-	m_chunk_view->update();
+	if (peer_view)
+		peer_view->update();
+	if (cd_view)
+		cd_view->update();
+	QTime t;
+	t = t.addMSecs(curr_tc->getTimeToNextTrackerUpdate());
+	m_tracker_update_time->setText(t.toString("mm:ss"));
+	m_tracker_status->setText(curr_tc->getTrackerStatus());
 	readyPreview();
 }
 

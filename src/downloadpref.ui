@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>DownloadPref</class>
 <widget class="QWidget">
     <property name="name">
@@ -11,6 +11,9 @@
             <width>511</width>
             <height>328</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>DownloadPref</string>
     </property>
     <vbox>
         <property name="name">
@@ -211,63 +214,6 @@
                 <bool>true</bool>
             </property>
         </widget>
-        <widget class="QCheckBox">
-            <property name="name">
-                <cstring>show_systray_icon</cstring>
-            </property>
-            <property name="text">
-                <string>Show s&amp;ystem tray icon</string>
-            </property>
-            <property name="checked">
-                <bool>true</bool>
-            </property>
-        </widget>
-        <widget class="QLayoutWidget">
-            <property name="name">
-                <cstring>layout6</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>textLabel1_3</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Directory to store temporary files:</string>
-                    </property>
-                </widget>
-                <widget class="KURLRequester">
-                    <property name="name">
-                        <cstring>temp_dir</cstring>
-                    </property>
-                </widget>
-            </hbox>
-        </widget>
-        <widget class="QLayoutWidget">
-            <property name="name">
-                <cstring>layout6</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>autosave_downloads_check</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Automatically save downloads to:</string>
-                    </property>
-                </widget>
-                <widget class="KURLRequester">
-                    <property name="name">
-                        <cstring>autosave_location</cstring>
-                    </property>
-                </widget>
-            </hbox>
-        </widget>
         <spacer>
             <property name="name">
                 <cstring>spacer6</cstring>
@@ -301,11 +247,5 @@
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
-    <includehint>kurlrequester.h</includehint>
-    <includehint>klineedit.h</includehint>
-    <includehint>kpushbutton.h</includehint>
-    <includehint>kurlrequester.h</includehint>
-    <includehint>klineedit.h</includehint>
-    <includehint>kpushbutton.h</includehint>
 </includehints>
 </UI>

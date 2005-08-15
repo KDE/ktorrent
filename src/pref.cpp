@@ -43,23 +43,25 @@
 KTorrentPreferences::KTorrentPreferences(KTorrent & ktor)
 	: KDialogBase(IconList, i18n("Preferences"),Ok|Apply|Cancel, Ok),ktor(ktor)
 {
-	// this is the base class for your preferences dialog.  it is now
-	// a Treelist dialog.. but there are a number of other
-	// possibilities (including Tab, Swallow, and just Plain)
 	enableButtonSeparator(true);
 		
 	KIconLoader* iload = KGlobal::iconLoader();
 	
-	QFrame *frame = addPage(i18n("Downloads"), i18n("Download Options"),
-							iload->loadIcon("ktprefdownloads",KIcon::NoGroup));
-	
-	
+	QFrame* frame = addPage(i18n("Downloads"), i18n("Download Options"),
+							iload->loadIcon("down",KIcon::NoGroup));
+		
 	QVBoxLayout* vbox = new QVBoxLayout(frame);
 	vbox->setAutoAdd(true);
-	m_page_one = new KTorrentPrefPageOne(frame);
+	page_one = new PrefPageOne(frame);
+
+	frame = addPage(i18n("General"), i18n("General Options"),
+					iload->loadIcon("package_settings",KIcon::NoGroup));
+	vbox = new QVBoxLayout(frame);
+	vbox->setAutoAdd(true);
+	page_two = new PrefPageTwo(frame);
+	
 	connect(this,SIGNAL(applyClicked()),this,SLOT(applyPressed()));
 	connect(this,SIGNAL(okClicked()),this,SLOT(okPressed()));
-//	setInitialSize(QSize(800,500),false);
 }
 
 void KTorrentPreferences::okPressed()
@@ -70,23 +72,41 @@ void KTorrentPreferences::okPressed()
 
 void KTorrentPreferences::applyPressed()
 {
-	m_page_one->apply();
+	page_one->apply();
+	page_two->apply();
+	Settings::writeConfig();
 	ktor.applySettings();
 }
 
+///////////////////////////////////////////////////////
 
-
-KTorrentPrefPageOne::KTorrentPrefPageOne(QWidget *parent) : DownloadPref(parent)
+PrefPageOne::PrefPageOne(QWidget *parent) : DownloadPref(parent)
 {
-		//setMinimumSize(400,400);
-	
+	//setMinimumSize(400,400);
 	max_downloads->setValue(Settings::maxDownloads());
 	max_conns->setValue(Settings::maxConnections());
 	max_upload_rate->setValue(Settings::maxUploadRate());
 	max_download_rate->setValue(Settings::maxDownloadRate());
 	keep_seeding->setChecked(Settings::keepSeeding());
-	show_systray_icon->setChecked(Settings::showSystemTrayIcon());
 	port->setValue(Settings::port());
+}
+
+
+
+void PrefPageOne::apply()
+{
+	Settings::setMaxDownloads(max_downloads->value());
+	Settings::setMaxConnections(max_conns->value());
+	Settings::setMaxUploadRate(max_upload_rate->value());
+	Settings::setMaxDownloadRate(max_download_rate->value());
+	Settings::setKeepSeeding(keep_seeding->isChecked());	
+	Settings::setPort(port->value());
+}
+
+//////////////////////////////////////
+PrefPageTwo::PrefPageTwo(QWidget *parent) : GeneralPref(parent)
+{
+	show_systray_icon->setChecked(Settings::showSystemTrayIcon());
 	KURLRequester* u = temp_dir;
 	u->fileDialog()->setMode(KFile::Directory);
 	if (Settings::tempDir() == QString::null)
@@ -120,33 +140,9 @@ KTorrentPrefPageOne::KTorrentPrefPageOne(QWidget *parent) : DownloadPref(parent)
 			this,SLOT(autosaveChecked(bool )));
 }
 
-void KTorrentPrefPageOne::autosaveChecked(bool on)
+void PrefPageTwo::apply()
 {
-	KURLRequester* u = autosave_location;
-	if (on)
-	{
-		u->setEnabled(true);
-		if (Settings::saveDir() == QString::null)
-			u->setURL(QDir::homeDirPath());
-		else
-			u->setURL(Settings::saveDir());
-	}
-	else
-	{
-		u->setEnabled(false);
-		u->clear();
-	}
-}
-
-void KTorrentPrefPageOne::apply()
-{
-	Settings::setMaxDownloads(max_downloads->value());
-	Settings::setMaxConnections(max_conns->value());
-	Settings::setMaxUploadRate(max_upload_rate->value());
-	Settings::setMaxDownloadRate(max_download_rate->value());
-	Settings::setKeepSeeding(keep_seeding->isChecked());
 	Settings::setShowSystemTrayIcon(show_systray_icon->isChecked());
-	Settings::setPort(port->value());
 	QString ourl = Settings::tempDir();
 	
 	KURLRequester* u = temp_dir;
@@ -164,9 +160,24 @@ void KTorrentPrefPageOne::apply()
 	{
 		Settings::setSaveDir(QString::null);
 	}
-	
-	Settings::writeConfig();
 }
 
+void PrefPageTwo::autosaveChecked(bool on)
+{
+	KURLRequester* u = autosave_location;
+	if (on)
+	{
+		u->setEnabled(true);
+		if (Settings::saveDir() == QString::null)
+			u->setURL(QDir::homeDirPath());
+		else
+			u->setURL(Settings::saveDir());
+	}
+	else
+	{
+		u->setEnabled(false);
+		u->clear();
+	}
+}
 
 #include "pref.moc"

@@ -92,6 +92,9 @@ namespace bt
 		 * @return *this
 		 */
 		BitSet & operator = (const BitSet & bs);
+
+		/// Check if all bit are set to 1
+		bool allOn() const;
 	};
 
 }

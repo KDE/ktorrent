@@ -75,7 +75,9 @@ void ChunkBar::drawContents(QPainter *p)
 		Uint32 w = contentsRect().width();
 		BitSet bs;
 		fillBitSet(bs);
-		if (curr_tc->getTotalChunks() > w)
+		if (bs.allOn())
+			drawAllOn(p,colorGroup().highlight());
+		else if (curr_tc->getTotalChunks() > w)
 			drawMoreChunksThenPixels(p,bs,colorGroup().highlight());
 		else
 			drawEqual(p,bs,colorGroup().highlight());
@@ -84,7 +86,9 @@ void ChunkBar::drawContents(QPainter *p)
 		{
 			BitSet ebs;
 			curr_tc->excludedChunksToBitSet(ebs);
-			if (curr_tc->getTotalChunks() > w)
+			if (ebs.allOn())
+				drawAllOn(p,Qt::red);
+			else if (curr_tc->getTotalChunks() > w)
 				drawMoreChunksThenPixels(p,ebs,Qt::red);
 			else
 				drawEqual(p,ebs,Qt::red);
@@ -144,7 +148,7 @@ void ChunkBar::drawEqual(QPainter *p,const BitSet & bs,const QColor & color)
 }
 
 void ChunkBar::drawMoreChunksThenPixels(QPainter *p,const BitSet & bs,const QColor & color)
-{
+{	
 	Uint32 w = contentsRect().width();
 
 	Uint32 chunks_per_pixel = (int)floor((double)bs.getNumBits() / w);
@@ -161,12 +165,19 @@ void ChunkBar::drawMoreChunksThenPixels(QPainter *p,const BitSet & bs,const QCol
 		if (num_dl == 0)
 			continue;
 
-		double fac = (double)num_dl / chunks_per_pixel;
-		QColor c = color.light(255*(1.0-fac));
+		int fac = int(100*((double)num_dl / chunks_per_pixel));
+		QColor c = color.light(200-fac);
 		p->setPen(QPen(c,1,Qt::SolidLine));
 		p->setBrush(c);
 		p->drawRect(r.x() + i,r.y()+1,1,r.height() - 1);
 	}
+}
+
+void ChunkBar::drawAllOn(QPainter *p,const QColor & color)
+{
+	p->setPen(QPen(color,1,Qt::SolidLine));
+	p->setBrush(color);
+	p->drawRect(contentsRect());
 }
 
 #include "chunkbar.moc"

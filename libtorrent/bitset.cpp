@@ -103,5 +103,14 @@ namespace bt
 			i++;
 		}
 	}
+
+	bool BitSet::allOn() const
+	{
+		for (Uint32 i = 0;i < num_bits;i++)
+			if (!get(i))
+				return false;
+
+		return true;
+	}
 }
 

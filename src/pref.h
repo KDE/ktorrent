@@ -25,16 +25,26 @@
 #include <kdialogbase.h>
 #include <qframe.h>
 #include "downloadpref.h"
+#include "generalpref.h"
 
 
 class KTorrent;
 
-class KTorrentPrefPageOne : public DownloadPref
+class PrefPageOne : public DownloadPref
 {
 	Q_OBJECT
 public:
-	KTorrentPrefPageOne(QWidget *parent = 0);
+	PrefPageOne(QWidget *parent = 0);
 	
+	void apply();
+};
+
+class PrefPageTwo : public GeneralPref
+{
+	Q_OBJECT
+public:
+	PrefPageTwo(QWidget *parent = 0);
+
 	void apply();
 private slots:
 	void autosaveChecked(bool on);
@@ -52,7 +62,8 @@ private slots:
 	
 private:
 	KTorrent & ktor;
-	KTorrentPrefPageOne *m_page_one;
+	PrefPageOne* page_one;
+	PrefPageTwo* page_two;
 };
 
 

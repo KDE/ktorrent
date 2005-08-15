@@ -214,9 +214,14 @@ namespace bt
 			{
 				BValueNode* vn = dict->getValue("failure reason");
 				if (pman->getNumConnectedPeers() == 0)
+				{
 					trackerError(this,i18n("The tracker sent back the following error: %1").arg(vn->data().toString()));
+				}
 				else
+				{
 					trackerResponseError();
+				}
+				trackerstatus = i18n("OK");
 				return;
 			}
 			
@@ -235,6 +240,7 @@ namespace bt
 			delete n;
 			num_tracker_attempts = 0;
 			updateStatusMsg();
+			trackerstatus = i18n("OK");
 		}
 		catch (Error & e)
 		{
@@ -242,25 +248,31 @@ namespace bt
 			if (n)
 				n->printDebugInfo();
 			
-		/*	Out() << "Data : " << endl;
-			Out() << QString(data) << endl;*/
 			delete n;
 
 			if (num_tracker_attempts >= tor->getNumTrackerURLs() &&
 						 trackerevent != "stopped")
 			{
+				trackerstatus = i18n("Invalid repsonse");
 				if (pman->getNumConnectedPeers() == 0)
 				{
 					trackerError(this,i18n("The tracker %1 did not send a proper response"
 						", stopping download").arg(last_tracker_url.prettyURL()));
+					
 				}
 				else
 				{
+					if (tor->getNumTrackerURLs() > 1)
+					{
+						trackerstatus = i18n("Invalid repsonse, trying backup");
+						updateTracker(trackerevent,false);
+					}
 					updateStatusMsg();
 				}
 			}
 			else if (trackerevent != "stopped")
 			{
+				trackerstatus = i18n("Invalid repsonse, trying backup");
 				updateTracker(trackerevent,false);
 			}
 		}
@@ -269,6 +281,7 @@ namespace bt
 	void TorrentControl::trackerResponse(Uint32 interval,Uint32 leechers,Uint32 seeders,Uint8* ppeers)
 	{
 		Out() << "Tracker updated" << endl;
+		trackerstatus = i18n("OK");
 		setTrackerTimerInterval(interval * 1000);
 		pman->trackerUpdate(seeders,leechers,ppeers);
 		updateStatusMsg();
@@ -277,10 +290,12 @@ namespace bt
 	
 	void TorrentControl::trackerResponseError()
 	{
+		
 		Out() << "Tracker Response Error" << endl;
 		if (num_tracker_attempts >= tor->getNumTrackerURLs() &&
 		    trackerevent != "stopped")
 		{
+			trackerstatus = i18n("Unreachable");
 			if (pman->getNumConnectedPeers() == 0)
 			{
 				trackerError(this,i18n("The tracker %1 is down, stopping download.")
@@ -288,12 +303,18 @@ namespace bt
 			}
 			else
 			{
+				if (tor->getNumTrackerURLs() > 1)
+				{
+					trackerstatus = i18n("Unreachable, trying backup");
+					updateTracker(trackerevent,false);
+				}
 				updateStatusMsg();
 			}
 
 		}
 		else if (trackerevent != "stopped")
 		{
+			trackerstatus = i18n("Unreachable, trying backup");
 			updateTracker(trackerevent,false);
 		}
 	}
@@ -664,5 +685,16 @@ namespace bt
 		} 
 		return true;
 	}
+
+	Uint32 TorrentControl::getTimeToNextTrackerUpdate() const
+	{
+		Uint32 elapsed = tracker_update_timer.getElapsedSinceUpdate();
+		if (elapsed <= tracker_update_interval)
+			return tracker_update_interval - elapsed;
+		else
+			return 0;
+	}
+		
+	
 }
 #include "torrentcontrol.moc"

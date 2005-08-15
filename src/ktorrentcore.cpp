@@ -63,14 +63,23 @@ KTorrentCore::KTorrentCore() : max_downloads(0),keep_seeding(true)
 	downloads.setAutoDelete(true);
 
 	connect(&update_timer,SIGNAL(timeout()),this,SLOT(update()));
-	update_timer.start(100);
+	update_timer.start(250);
 
 	this->removed_torrents_down = 0;
 	this->removed_torrents_up = 0;
-	Globals::instance().initServer(Settings::port());
-	if (!Globals::instance().getServer().isOK())
+	Uint16 port = Settings::port();
+	Uint16 i = 0;
+	do
 	{
+		Globals::instance().initServer(port + i);
+		i++;
 	}
+	while (!Globals::instance().getServer().isOK() && i < 10);
+
+	if (Globals::instance().getServer().isOK())
+		Out() << "Bound to port " << (port + i - 1) << endl;
+	else
+		Out() << "Cannot find free port" << endl;
 }
 
 

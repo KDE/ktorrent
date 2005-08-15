@@ -56,6 +56,7 @@ public:
 private:
 	void drawEqual(QPainter *p,const bt::BitSet & bs,const QColor & color);
 	void drawMoreChunksThenPixels(QPainter *p,const bt::BitSet & bs,const QColor & color);
+	void drawAllOn(QPainter *p,const QColor & color);
 	
 protected:
 	bt::TorrentControl* curr_tc;

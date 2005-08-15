@@ -223,7 +223,12 @@ namespace bt
 		 * We leave it public so that the user can do a manual announce.
 		 */
 		void updateTracker() {updateTracker(QString::null);}
+
+		/// Get the time to the next tracker update in milliseconds.
+		Uint32 getTimeToNextTrackerUpdate() const;
 		
+		/// Get the status of the tracker
+		QString getTrackerStatus() const {return trackerstatus;}
 	private slots:
 		void onNewPeer(Peer* p);
 		void onPeerRemoved(Peer* p);
@@ -256,7 +261,7 @@ namespace bt
 		Timer tracker_update_timer,choker_update_timer;
 		Uint32 tracker_update_interval;
 		
-		QString datadir,old_datadir,trackerevent;
+		QString datadir,old_datadir,trackerevent,trackerstatus;
 		Uint16 port;
 		bool completed,running,started,saved;
 		TorrentMonitor* tmon;

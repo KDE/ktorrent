@@ -12,13 +12,13 @@ noinst_HEADERS = bencoder.h value.h bdecoder.h bnode.h 			torrent.h \
 								httptracker.h udptracker.h cache.h singlefilecache.h multifilecache.h \
 								torrentcreator.h downloadcap.h torrentfile.h chunkselector.h server.h \
 		serverauthenticate.h authenticatebase.h
-libtorrent_la_SOURCES = bencoder.cpp value.cpp bdecoder.cpp 			bnode.cpp \
-					torrent.cpp chunkmanager.cpp chunk.cpp 			peer.cpp globals.cpp bitset.cpp \
-					peermanager.cpp tracker.cpp downloader.cpp 			authenticate.cpp uploader.cpp \
-					torrentcontrol.cpp choker.cpp chunkdownload.cpp 			speedestimater.cpp peerdownloader.cpp \
-					request.cpp piece.cpp 			torrentmonitor.cpp peerid.cpp announcelist.cpp \
-					peeruploader.cpp uploadcap.cpp 			packetreader.cpp packetwriter.cpp packet.cpp \
-					httptracker.cpp 			udptracker.cpp cache.cpp singlefilecache.cpp multifilecache.cpp \
-								torrentcreator.cpp downloadcap.cpp torrentfile.cpp chunkselector.cpp server.cpp \
-		serverauthenticate.cpp authenticatebase.cpp
+libtorrent_la_SOURCES = bencoder.cpp value.cpp bdecoder.cpp bnode.cpp \
+	torrent.cpp chunkmanager.cpp chunk.cpp peer.cpp globals.cpp bitset.cpp \
+	peermanager.cpp tracker.cpp downloader.cpp authenticate.cpp uploader.cpp \
+	torrentcontrol.cpp choker.cpp chunkdownload.cpp speedestimater.cpp peerdownloader.cpp \
+	request.cpp piece.cpp torrentmonitor.cpp peerid.cpp announcelist.cpp \
+	peeruploader.cpp uploadcap.cpp packetreader.cpp packetwriter.cpp packet.cpp \
+	httptracker.cpp udptracker.cpp cache.cpp singlefilecache.cpp multifilecache.cpp \
+	torrentcreator.cpp downloadcap.cpp torrentfile.cpp chunkselector.cpp server.cpp \
+	serverauthenticate.cpp authenticatebase.cpp
 

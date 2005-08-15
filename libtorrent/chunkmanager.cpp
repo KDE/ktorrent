@@ -312,8 +312,7 @@ namespace bt
 	{
 		if (num_in_mem <= MAX_CHUNK_IN_MEM)
 			return;
-		
-		Out() << "Getting rid of unnecessary Chunks" << endl;
+	
 		// try to keep at most 10 Chunk's in memory
 		for (Uint32 i = 0;i < chunks.count() && num_in_mem > MAX_CHUNK_IN_MEM;i++)
 		{

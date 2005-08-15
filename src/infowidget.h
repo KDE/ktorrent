@@ -28,7 +28,9 @@
 class KTorrentMonitor;
 class IWFileTreeDirItem;
 class KPopupMenu; 
-class QString; 
+class QString;
+class PeerView;
+class ChunkDownloadView;
 
 namespace bt
 {
@@ -62,7 +64,9 @@ private:
 	IWFileTreeDirItem* multi_root;
     KPopupMenu* context_menu; 
     QString preview_path; 
-    int preview_id; 
+    int preview_id;
+	PeerView* peer_view;
+	ChunkDownloadView* cd_view;
 };
 
 #endif

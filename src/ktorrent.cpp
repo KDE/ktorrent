@@ -502,32 +502,10 @@ void KTorrent::changeCaption(const QString& text)
 
 void KTorrent::saveProperties(KConfig *)
 {
-	// the 'config' object points to the session managed
-	// config file.  anything you write here will be available
-	// later when this app is restored
-
-/*	if (!m_view->currentURL().isEmpty())
-	{
-#if KDE_IS_VERSION(3,1,3)
-	config->writePathEntry("lastURL", m_view->currentURL());
-#else
-	config->writeEntry("lastURL", m_view->currentURL());
-#endif
-
-}*/
 }
 
 void KTorrent::readProperties(KConfig *)
 {
-	// the 'config' object points to the session managed
-	// config file.  this function is automatically called whenever
-	// the app is being restored.  read in here whatever you wrote
-	// in 'saveProperties'
-
-	/*QString url = config->readPathEntry("lastURL");
-
-	if (!url.isEmpty())
-	m_view->openURL(KURL(url));*/
 }
 
 void KTorrent::dragEnterEvent(QDragEnterEvent *event)
