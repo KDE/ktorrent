@@ -22,7 +22,8 @@
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
-#include <krun.h> 
+#include <krun.h>
+#include <kurldrag.h>
 #include <libtorrent/torrentcontrol.h>
 #include <libtorrent/globals.h>
 #include <kmessagebox.h>
@@ -77,6 +78,7 @@ KTorrentView::KTorrentView(QWidget *parent)
 	setColumnWidth(0,200);
 	setColumnWidthMode(0,QListView::Manual);
 	setShowSortIndicator(true);
+	setAcceptDrops(true);
 }
 
 KTorrentView::~KTorrentView()
@@ -129,7 +131,7 @@ void KTorrentView::previewFile()
         return; 
 
     bt::TorrentControl* tc = curr->getTC(); 
-    KRun* exe = new KRun(tc->getDataDir()+"cache", true, true); 
+    new KRun(tc->getDataDir()+"cache", true, true);
 }
 
 bt::TorrentControl* KTorrentView::getCurrentTC()
@@ -216,5 +218,12 @@ void KTorrentView::onTrackerError(bt::TorrentControl* tc,const QString & err)
 	KMessageBox::error(this,err,i18n("Error"));
 	tc->stop();
 }
+
+bool KTorrentView::acceptDrag(QDropEvent* event) const
+{
+	// accept uri drops only
+	return KURLDrag::canDecode(event);
+}
+
 
 #include "ktorrentview.moc"

@@ -44,6 +44,7 @@
 #include <kpopupmenu.h>
 #include <ktabwidget.h>
 #include <kedittoolbar.h>
+#include <ksqueezedtextlabel.h>
 
 #include <kstdaccel.h>
 #include <kaction.h>
@@ -56,6 +57,7 @@
 #include <libtorrent/downloadcap.h>
 #include <libutil/error.h>
 #include <libtorrent/globals.h>
+#include <libtorrent/udptracker.h>
 #include <libutil/log.h>
 #include <libutil/fileops.h>
 
@@ -117,8 +119,9 @@ KTorrent::KTorrent()
 	connect(m_view,SIGNAL(wantToRemove(bt::TorrentControl* )),
 			m_core,SLOT(remove(bt::TorrentControl* )));
 
-	// accept dnd
-	setAcceptDrops(true);
+
+	connect(m_view,SIGNAL(dropped(QDropEvent*,QListViewItem*)),
+			this,SLOT(urlDropped(QDropEvent*,QListViewItem*)));
 
 	// then, setup our actions
 	setupActions();
@@ -154,9 +157,10 @@ KTorrent::KTorrent()
 	m_core->loadTorrents();
 	setStandardToolBarMenuEnabled(true);
 
-	m_statusInfo = new QLabel(this);
+	m_statusInfo = new KSqueezedTextLabel(this);
 	m_statusSpeed = new QLabel(this);
 	m_statusTransfer = new QLabel(this);
+	
 
 
 	statusBar()->addWidget(m_statusInfo,1);
@@ -199,7 +203,9 @@ void KTorrent::applySettings()
 		m_systray_icon->hide();
 	}
 
+
 	m_core->changeDataDir(Settings::tempDir());
+	UDPTracker::setPort(Settings::udpTrackerPort());
 }
 
 void KTorrent::load(const KURL& url)
@@ -323,7 +329,8 @@ void KTorrent::fileOpen()
 	    KURL url = KURLRequesterDlg::getURL(QString::null, this, i18n("Open Location") );
 	*/
 	// standard filedialog
-	KURL url = KFileDialog::getOpenURL(QString::null, QString::null, this, i18n("Open Location"));
+	QString filter = "*.torrent|" + i18n("Torrent Files") + "\n*|" + i18n("All files");
+	KURL url = KFileDialog::getOpenURL(QString::null, filter, this, i18n("Open Location"));
 
 	if (url.isValid())
 		load(url);
@@ -492,6 +499,7 @@ void KTorrent::changeStatusbar(const QString& text)
 	// display the text on the statusbar
 	//statusBar()->message(text);
 	m_statusInfo->setText(text);
+	
 }
 
 void KTorrent::changeCaption(const QString& text)
@@ -508,27 +516,14 @@ void KTorrent::readProperties(KConfig *)
 {
 }
 
-void KTorrent::dragEnterEvent(QDragEnterEvent *event)
+void KTorrent::urlDropped(QDropEvent* event,QListViewItem*)
 {
-	// accept uri drops only
-	event->accept(KURLDrag::canDecode(event));
-}
-
-void KTorrent::dropEvent(QDropEvent *event)
-{
-	// this is a very simplistic implementation of a drop event.  we
-	// will only accept a dropped URL.  the Qt dnd code can do *much*
-	// much more, so please read the docs there
 	KURL::List urls;
 
-	// see if we can decode a URI.. if not, just ignore it
 	if (KURLDrag::decode(event, urls) && !urls.isEmpty())
 	{
-		// okay, we have a URI.. process it
-		const KURL &url = urls.first();
-
-		// load in the file
-		load(url);
+		for (KURL::List::iterator i = urls.begin();i != urls.end();i++)
+			load(*i);
 	}
 }
 

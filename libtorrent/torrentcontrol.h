@@ -58,6 +58,17 @@ namespace bt
 		TorrentControl();
 		virtual ~TorrentControl();
 
+		enum Status
+		{
+			NOT_STARTED,
+			COMPLETE,
+			SEEDING,
+			DOWNLOADING,
+			STALLED,
+			STOPPED,
+			ERROR
+		};
+
 		/**
 		 * Make a BitSet of the status of all Chunks
 		 * @param bs The BitSet
@@ -138,7 +149,7 @@ namespace bt
 		Uint32 getNumChunksExcluded() const;
 
 		/// Get the current status of the download.
-		QString getStatus() const;
+		Status getStatus() const {return status;}
 		
 		/// See if we are running
 		bool isRunning() const {return running;}
@@ -167,26 +178,7 @@ namespace bt
 		 */
 		void setTrackerTimerInterval(Uint32 interval);
 
-		/**
-		 * Called by the Tracker when an error occurs.
-		 */
-		void trackerResponseError();
 
-		/**
-		 * The HTTPTracker updated.
-		 * @param data The data sent by the Tracker
-		 */
-		void trackerResponse(const QByteArray & data);
-
-		/**
-		 * The UDPTracker updated
-		 * @param interval The interval in seconds between timer updates
-		 * @param leechers The number of leechers
-		 * @param seeders The number of seeders
-		 * @param ppeers A Buffer containing @a leechers + @a seeders
-		 * 	pairs (IP-address,port)
-		 */
-		void trackerResponse(Uint32 interval,Uint32 leechers,Uint32 seeders,Uint8* ppeers);
 
 		/**
 		* Checks if torrent is multimedial and chunks needed for preview are downloaded
@@ -233,7 +225,16 @@ namespace bt
 		void onNewPeer(Peer* p);
 		void onPeerRemoved(Peer* p);
 		void doChoking();
-		void setStatus(const QString & s);
+
+		/**
+		 * An error occured during the update of the tracker.
+		 */
+		void trackerResponseError();
+
+		/**
+		 * The Tracker updated.
+		 */
+		void trackerResponse();
 
 	signals:
 		/**
@@ -267,9 +268,8 @@ namespace bt
 		TorrentMonitor* tmon;
 		Uint32 num_tracker_attempts;
 		KURL last_tracker_url;
-		QString status_msg;
+		Status status;
 	};
-
 }
 
 #endif

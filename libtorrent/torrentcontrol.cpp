@@ -27,8 +27,6 @@
 #include "tracker.h"
 #include "chunkmanager.h"
 #include "torrent.h"
-#include "bdecoder.h"
-#include "bnode.h"
 #include "peermanager.h"
 #include <libutil/error.h>
 #include <libutil/log.h>
@@ -61,6 +59,7 @@ namespace bt
 		num_tracker_attempts = 0;
 		old_datadir = QString::null;
 		tracker_update_interval = 120000;
+		status = NOT_STARTED;
 	}
 	
 	
@@ -166,9 +165,12 @@ namespace bt
 		pman = new PeerManager(*tor);
 
 		if (tor->getTrackerURL(true).protocol() == "udp")
-			tracker = new UDPTracker(this);
+			tracker = new UDPTracker();
 		else
-			tracker = new HTTPTracker(this);
+			tracker = new HTTPTracker();
+
+		connect(tracker,SIGNAL(error()),this,SLOT(trackerResponseError()));
+		connect(tracker,SIGNAL(dataReady()),this,SLOT(trackerResponse()));
 		
 		cman = new ChunkManager(*tor,datadir);
 		if (bt::Exists(datadir + "index"))
@@ -195,49 +197,11 @@ namespace bt
 		tracker_update_interval = interval;
 	}
 
-	void TorrentControl::trackerResponse(const QByteArray & data)
+	void TorrentControl::trackerResponse()
 	{
-		BNode* n = 0;
 		try
 		{
-			Out() << "Tracker updated" << endl;
-		//	Out() << "Reply size = " << data.size() << endl;
-		//	Out() << "Data = " << QString(data) << endl;
-			BDecoder dec(data);
-			n = dec.decode();
-			
-			if (!n || n->getType() != BNode::DICT)
-				throw Error(i18n("Parse Error"));
-			
-			BDictNode* dict = (BDictNode*)n;
-			if (dict->getData("failure reason"))
-			{
-				BValueNode* vn = dict->getValue("failure reason");
-				if (pman->getNumConnectedPeers() == 0)
-				{
-					trackerError(this,i18n("The tracker sent back the following error: %1").arg(vn->data().toString()));
-				}
-				else
-				{
-					trackerResponseError();
-				}
-				trackerstatus = i18n("OK");
-				return;
-			}
-			
-			BValueNode* vn = dict->getValue("interval");
-			
-			if (!vn)
-				throw Error(i18n("Parse Error"));
-			
-			Uint32 update_time = vn->data().toInt() > 300 ? 300 : vn->data().toInt();
-			
-			Out() << "Next update in " << update_time << " seconds" << endl;
-
-			setTrackerTimerInterval(update_time * 1000);
-
-			pman->trackerUpdate(dict);
-			delete n;
+			tracker->updateData(this,pman);
 			num_tracker_attempts = 0;
 			updateStatusMsg();
 			trackerstatus = i18n("OK");
@@ -245,11 +209,6 @@ namespace bt
 		catch (Error & e)
 		{
 			Out() << "Error : " << e.toString() << endl;
-			if (n)
-				n->printDebugInfo();
-			
-			delete n;
-
 			if (num_tracker_attempts >= tor->getNumTrackerURLs() &&
 						 trackerevent != "stopped")
 			{
@@ -277,20 +236,9 @@ namespace bt
 			}
 		}
 	}
-
-	void TorrentControl::trackerResponse(Uint32 interval,Uint32 leechers,Uint32 seeders,Uint8* ppeers)
-	{
-		Out() << "Tracker updated" << endl;
-		trackerstatus = i18n("OK");
-		setTrackerTimerInterval(interval * 1000);
-		pman->trackerUpdate(seeders,leechers,ppeers);
-		updateStatusMsg();
-	}
-
 	
 	void TorrentControl::trackerResponseError()
 	{
-		
 		Out() << "Tracker Response Error" << endl;
 		if (num_tracker_attempts >= tor->getNumTrackerURLs() &&
 		    trackerevent != "stopped")
@@ -500,16 +448,6 @@ namespace bt
 		return tor->getFileLength() - cman->bytesExcluded();
 	}
 
-	QString TorrentControl::getStatus() const
-	{
-		return status_msg;
-	}
-	
-	void TorrentControl::setStatus(const QString & s)
-	{
-		status_msg = s;
-	}
-
 	bool TorrentControl::changeDataDir(const QString & new_dir)
 	{
 		// new_dir doesn't contain the torX/ part
@@ -591,18 +529,16 @@ namespace bt
 	void TorrentControl::updateStatusMsg()
 	{
 		if (!started)
-			setStatus(i18n("Not started"));
+			status = TorrentControl::NOT_STARTED;
 		else if (!running && completed)
-			setStatus(i18n("Download complete"));
+			status = TorrentControl::COMPLETE;
 		else if (!running)
-			setStatus(i18n("Download stopped"));
+			status = TorrentControl::STOPPED;
 		else if (running && completed)
-			setStatus(i18n("Seeding"));
+			status = TorrentControl::SEEDING;
 		else if (running)
-		{
-			QString m = down->downloadRate() > 0 ? i18n("Downloading") : i18n("Stalled");
-			setStatus(m);
-		}
+			status = down->downloadRate() > 0 ?
+					TorrentControl::DOWNLOADING : TorrentControl::STALLED;
 	}
 
 	void TorrentControl::downloadedChunksToBitSet(BitSet & bs)
@@ -694,7 +630,9 @@ namespace bt
 		else
 			return 0;
 	}
-		
+
+
+
 	
 }
 #include "torrentcontrol.moc"

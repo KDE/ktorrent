@@ -32,6 +32,12 @@
 			<min>0</min>
 			<max>65535</max>
 		</entry>
+		<entry name="udpTrackerPort" type="Int">
+			<label>Port</label>
+			<default>4444</default>
+			<min>0</min>
+			<max>65535</max>
+		</entry>
 		<entry name="showSystemTrayIcon" type="Bool">
 			<label>Show a system tray icon</label>
 			<default>true</default>

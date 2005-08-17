@@ -139,8 +139,9 @@ void KTorrentCore::stop(bt::TorrentControl* tc)
 		QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
 		while (i != downloads.end())
 		{
-			TorrentControl* tc = *i;
-			start(tc);
+			TorrentControl* otc = *i;
+			if (otc != tc)
+				start(otc);
 			i++;
 		}
 	}
@@ -216,10 +217,11 @@ void KTorrentCore::remove(bt::TorrentControl* tc)
 	this->removed_torrents_down += tc->getBytesDownloaded();
 	this->removed_torrents_up += tc->getBytesUploaded();
 	stop(tc);
+	
 	QString dir = tc->getDataDir();
 	torrentRemoved(tc);
-	bt::Delete(dir,true);
 	downloads.remove(tc);
+	bt::Delete(dir,true);
 }
 
 void KTorrentCore::setMaxDownloads(int max)

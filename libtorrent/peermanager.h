@@ -30,12 +30,15 @@ namespace bt
 {
 	class Peer;
 	class ChunkManager;
-	class BDictNode;
-	class BListNode;
 	class Torrent;
 	class Authenticate;
 
-	
+	struct PotentialPeer
+	{
+		PeerID id;
+		QString ip;
+		Uint16 port;
+	};
 
 	/**
 	 * @author Joris Guisson
@@ -47,13 +50,6 @@ namespace bt
 	class PeerManager : public QObject
 	{
 		Q_OBJECT
-		
-		struct PotentialPeer
-		{
-			PeerID id;
-			QString ip;
-			Uint16 port;
-		};
 	public:
 		/**
 		 * Constructor.
@@ -75,21 +71,6 @@ namespace bt
 		void clearDeadPeers();
 
 		Peer* getPeer(Uint32 index) {return peers.at(index);}
-		
-		/**
-		 * The tracker has been updated, get the list
-		 * of peers from the update.
-		 * @param dict The dictionary
-		 */
-		void trackerUpdate(BDictNode* dict);
-
-		/**
-		 * The tracker has been updated
-		 * @param seeders The number of seeders
-		 * @param leechers The number of leechers
-		 * @param ppeers List of (IP,port) combinations
-		 */
-		void trackerUpdate(Uint32 seeders,Uint32 leechers,Uint8* ppeers);
 		
 		/**
 		 * Try to connect to some peers
@@ -132,8 +113,13 @@ namespace bt
 		 * @param peer_id The Peer's ID
 		 */
 		void newConnection(QSocket* sock,const PeerID & peer_id);
+
+		/**
+		 * Add a potential peer
+		 * @param pp The PotentialPeer
+		 */
+		void addPotentialPeer(const PotentialPeer & pp);
 	private:
-		void readPotentialPeers(BListNode* n);
 		bool connectedTo(const PeerID & peer_id);	
 		void peerAuthenticated(Authenticate* auth,bool ok);
 		

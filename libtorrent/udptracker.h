@@ -44,10 +44,13 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-		UDPTracker(TorrentControl* tc);
+		UDPTracker();
 		virtual ~UDPTracker();
 
 		virtual void doRequest(const KURL & url);
+		virtual void updateData(TorrentControl* tc,PeerManager* pman);
+
+		static void setPort(Uint16 p);
 
 	private slots:
 		void dataRecieved(int s);
@@ -58,7 +61,6 @@ namespace bt
 		void sendAnnounce();
 		void announceRecieved();
 		void connectRecieved();
-		void handleError();
 
 	private:
 		QHostAddress addr;
@@ -73,6 +75,8 @@ namespace bt
 		Uint8* peer_buf;
 		int n;
 		QTimer conn_timer;
+
+		static Uint16 port;
 	};
 
 }

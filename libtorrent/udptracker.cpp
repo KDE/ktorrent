@@ -20,12 +20,13 @@
 #include <stdlib.h>
 #include <qsocketnotifier.h>
 #include <qsocketdevice.h>
-
-#include "udptracker.h"
+#include <libutil/functions.h>
 #include <libutil/log.h>
+#include "peermanager.h"
+#include "udptracker.h"
 #include "torrentcontrol.h"
 #include "globals.h"
-#include <libutil/functions.h>
+
 
 namespace bt
 {
@@ -45,18 +46,18 @@ namespace bt
 		ERROR = 3
 	};
 
+	Uint16 UDPTracker::port = 4444;
 
-
-	UDPTracker::UDPTracker(TorrentControl* tc) : Tracker(tc),n(0)
+	UDPTracker::UDPTracker() : n(0)
 	{
 		sock = new QSocketDevice(QSocketDevice::Datagram);
 		
 		connection_id = 0;
 		transaction_id = 0;
 		int i = 0;
-		while (!sock->bind(QHostAddress("localhost"),4444 + i) && i < 10)
+		while (!sock->bind(QHostAddress("localhost"),port + i) && i < 10)
 		{
-			Out() << "Failed to bind socket to port " << (4444+i) << endl;
+			Out() << "Failed to bind socket to port " << (port+i) << endl;
 			i++;
 		}
 
@@ -152,19 +153,19 @@ namespace bt
 
 		if (!sock->bytesAvailable() == 16)
 		{
-			handleError();
+			error();
 			return;
 		}
 
 		if (sock->readBlock((char*)buf,16) != 16)
 		{
-			handleError();
+			error();
 			return;
 		}
 
 		if (ReadInt32(buf,4) != transaction_id || ReadInt32(buf,0) != CONNECT)
 		{
-			handleError();
+			error();
 			return;
 		}
 
@@ -237,7 +238,7 @@ namespace bt
 		Uint32 ba = sock->bytesAvailable();
 		if (ba < 20)
 		{
-			handleError();
+			error();
 			return;
 		}
 		else
@@ -249,14 +250,14 @@ namespace bt
 		
 		if ((Uint32)sock->readBlock((char*)peer_buf,ba) != ba)
 		{
-			handleError();
+			error();
 			return;
 		}
 
 		Int32 action = ReadInt32(peer_buf,0);
 		if (ReadInt32(peer_buf,4) != transaction_id || action != ANNOUNCE)
 		{
-			handleError();
+			error();
 			return;
 		}
 
@@ -272,26 +273,44 @@ namespace bt
 		// to leechers + seeders. This is to potentially avoid
 		// buffer overflows.
 		if (ba - 20 == nip * 6)
-			tc->trackerResponse(interval,leechers,seeders,peer_buf+20);
+		{
+			dataReady();
+		}
 		else
+		{
 			Out() << "Nog enough data !" << endl;
-
-		delete [] peer_buf;
-		peer_buf = 0;
-	}
-
-
-	void UDPTracker::handleError()
-	{
-		tc->trackerResponseError();
-		Out() << "Error" << endl;
+		}
 	}
 
 	void UDPTracker::onConnTimeout()
 	{
-		Out() << "UDPTracker::onConnTimeout()" << endl;
 		n++;
 		sendConnect();
+	}
+
+	void UDPTracker::updateData(TorrentControl* tc,PeerManager* pman)
+	{
+		if (!peer_buf)
+			return;
+		
+		Uint32 nip = leechers + seeders;
+		tc->setTrackerTimerInterval(interval*1000);
+
+		for (Uint32 i = 20;i < 20 + nip*6;i++)
+		{
+			PotentialPeer pp;
+			pp.ip = ReadUint32(peer_buf,i);
+			pp.port = ReadUint16(peer_buf,i+4);
+			pman->addPotentialPeer(pp);
+		}
+		
+		delete [] peer_buf;
+		peer_buf = 0;
+	}
+
+	void UDPTracker::setPort(Uint16 p)
+	{
+		port = p;
 	}
 }
 #include "udptracker.moc"

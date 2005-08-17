@@ -21,13 +21,56 @@
 #include <kglobal.h>
 #include <libtorrent/torrentcontrol.h>
 #include <qdatetime.h>
+#include <qpainter.h>
 #include <math.h>
 #include "ktorrentviewitem.h"
 #include "functions.h"
 
 using namespace bt;
 
+static QString StatusToString(TorrentControl::Status s)
+{
+	switch (s)
+	{
+		case TorrentControl::NOT_STARTED :
+			return i18n("Not started");
+		case TorrentControl::COMPLETE :
+			return i18n("Completed");
+		case TorrentControl::SEEDING :
+			return i18n("Seeding");
+		case TorrentControl::DOWNLOADING:
+			return i18n("Downloading");
+		case TorrentControl::STALLED:
+			return i18n("Stalled");
+		case TorrentControl::STOPPED:
+			return i18n("Stopped");
+		case TorrentControl::ERROR :
+			return i18n("Error");
+	}
+	return QString::null;
+}
 
+static QColor StatusToColor(TorrentControl::Status s,const QColorGroup & cg)
+{
+	QColor green(40,205,40);
+	QColor yellow(255,174,0);
+	switch (s)
+	{
+		case TorrentControl::NOT_STARTED :
+		case TorrentControl::STOPPED:
+			return cg.text();
+			
+		case TorrentControl::SEEDING :
+		case TorrentControl::DOWNLOADING:
+		case TorrentControl::COMPLETE :
+			return green;
+		case TorrentControl::STALLED:
+			return yellow;
+		case TorrentControl::ERROR :
+			return Qt::red;
+	}
+	return QString::null;
+}
 
 
 
@@ -56,7 +99,8 @@ void KTorrentViewItem::update()
 	*/
 
 	setText(0,tc->getTorrentName());
-	setText(1,tc->getStatus());
+	TorrentControl::Status status = tc->getStatus();
+	setText(1,StatusToString(status));
 	Uint32 nb = tc->getBytesDownloaded() > tc->getTotalBytes() ?
 			tc->getTotalBytes() : tc->getBytesDownloaded();
 	
@@ -100,7 +144,8 @@ int KTorrentViewItem::compare(QListViewItem * i,int col,bool) const
 	switch (col)
 	{
 		case 0: return QString::compare(tc->getTorrentName(),otc->getTorrentName());
-		case 1: return QString::compare(tc->getStatus(),otc->getStatus());
+		case 1: return QString::compare(StatusToString(tc->getStatus()),
+										StatusToString(otc->getStatus()));
 		case 2: return CompareVal(tc->getTotalBytesToDownload(),otc->getTotalBytesToDownload());
 		case 3: return CompareVal(tc->getBytesUploaded(),otc->getBytesUploaded());
 		case 4: return CompareVal(tc->getDownloadRate(),otc->getDownloadRate());
@@ -120,5 +165,18 @@ int KTorrentViewItem::compare(QListViewItem * i,int col,bool) const
 	}
 
 	return 0;
+}
+
+void KTorrentViewItem::paintCell(QPainter* p,const QColorGroup & cg,
+								 int column,int width,int align)
+{
+	QColorGroup _cg( cg );
+	QColor c = _cg.text();
+
+	if (column == 1)
+		_cg.setColor(QColorGroup::Text, StatusToColor(tc->getStatus(),cg));
+
+
+	KListViewItem::paintCell(p,_cg,column,width,align);
 }
 

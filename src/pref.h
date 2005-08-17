@@ -37,6 +37,7 @@ public:
 	PrefPageOne(QWidget *parent = 0);
 	
 	void apply();
+	bool checkPorts();
 };
 
 class PrefPageTwo : public GeneralPref
@@ -56,9 +57,9 @@ class KTorrentPreferences : public KDialogBase
 public:
 	KTorrentPreferences(KTorrent & ktor);
 
-private slots:
-	void okPressed();
-	void applyPressed();
+private:
+	virtual void slotOk();
+	virtual void slotApply();
 	
 private:
 	KTorrent & ktor;

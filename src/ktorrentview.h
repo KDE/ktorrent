@@ -85,6 +85,9 @@ signals:
 	void torrentClicked(bt::TorrentControl* tc);
 	void currentChanged(bt::TorrentControl* tc);
 	void wantToRemove(bt::TorrentControl* tc);
+
+private:
+	bool acceptDrag(QDropEvent* event) const;
 		
 private:
 	QMap<bt::TorrentControl*,KTorrentViewItem*> items;

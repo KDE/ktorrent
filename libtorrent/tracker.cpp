@@ -23,7 +23,7 @@
 namespace bt
 {
 
-	Tracker::Tracker(TorrentControl* tc) : tc(tc)
+	Tracker::Tracker()
 	{}
 
 

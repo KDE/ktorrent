@@ -39,7 +39,11 @@ public:
 
 	bt::TorrentControl* getTC() {return tc;}
 	void update();
+
+private:
 	int compare(QListViewItem * i,int col,bool ascending) const;
+	void paintCell(QPainter* p,const QColorGroup & cg,int column,int width,int align);
+
 };
 
 #endif

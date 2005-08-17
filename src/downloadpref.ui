@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>511</width>
-            <height>328</height>
+            <height>347</height>
         </rect>
     </property>
     <vbox>
@@ -18,7 +18,7 @@
         </property>
         <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>layout10</cstring>
+                <cstring>layout8</cstring>
             </property>
             <hbox>
                 <property name="name">
@@ -26,7 +26,7 @@
                 </property>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>layout9</cstring>
+                        <cstring>layout6</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -72,11 +72,19 @@
                                 <string>Port:</string>
                             </property>
                         </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_3</cstring>
+                            </property>
+                            <property name="text">
+                                <string>UDP Tracker Port:</string>
+                            </property>
+                        </widget>
                     </vbox>
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>layout7</cstring>
+                        <cstring>layout5</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -131,7 +139,21 @@
                                 <number>6881</number>
                             </property>
                             <property name="minValue">
-                                <number>1024</number>
+                                <number>0</number>
+                            </property>
+                            <property name="maxValue">
+                                <number>65535</number>
+                            </property>
+                        </widget>
+                        <widget class="KIntNumInput">
+                            <property name="name">
+                                <cstring>udp_tracker_port</cstring>
+                            </property>
+                            <property name="value">
+                                <number>4444</number>
+                            </property>
+                            <property name="minValue">
+                                <number>0</number>
                             </property>
                             <property name="maxValue">
                                 <number>65535</number>
@@ -141,7 +163,7 @@
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>layout8</cstring>
+                        <cstring>layout7</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -196,6 +218,23 @@
                                 </size>
                             </property>
                         </spacer>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer3</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>81</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
                     </vbox>
                 </widget>
             </hbox>
@@ -207,9 +246,35 @@
             <property name="text">
                 <string>&amp;Keep seeding after download is finished</string>
             </property>
+            <property name="accel">
+                <string>Alt+K</string>
+            </property>
             <property name="checked">
                 <bool>true</bool>
             </property>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox1</cstring>
+            </property>
+            <property name="title">
+                <string>Attention</string>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KActiveLabel">
+                    <property name="name">
+                        <cstring>kActiveLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>If you are behind a NAT-enabled rooter, it is important that you forward 
+the above ports. You should consult your router's manual if you 
+do not know how to do this.</string>
+                    </property>
+                </widget>
+            </hbox>
         </widget>
         <spacer>
             <property name="name">
@@ -224,7 +289,7 @@
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>20</height>
+                    <height>16</height>
                 </size>
             </property>
         </spacer>
@@ -244,5 +309,8 @@
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>kactivelabel.h</includehint>
 </includehints>
 </UI>

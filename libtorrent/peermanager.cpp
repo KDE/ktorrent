@@ -118,68 +118,10 @@ namespace bt
 		max_connections = max;
 	}
 	
-	void PeerManager::trackerUpdate(BDictNode* dict)
+	void PeerManager::addPotentialPeer(const PotentialPeer & pp)
 	{
-		if (!started)
-			return;
-		
-		BNode* tmp = dict->getData("complete");
-		if (tmp && tmp->getType() == BNode::VALUE)
-		{
-			BValueNode* vn = (BValueNode*)tmp;
-			num_seeders = vn->data().toInt();
-		}
-			
-		tmp = dict->getData("incomplete");
-		if (tmp && tmp->getType() == BNode::VALUE)
-		{
-			BValueNode* vn = (BValueNode*)tmp;
-			num_leechers = vn->data().toInt();
-		}
-		
-		BListNode* ln = dict->getList("peers");
-		if (!ln)
-		{
-			// no list, it might however be a compact response
-			BValueNode* vn = dict->getValue("peers");
-			if (!vn)
-				throw Error(i18n("Parse error"));
-
-			QByteArray arr = vn->data().toByteArray();
-			for (Uint32 i = 0;i < arr.size();i+=6)
-			{
-				Uint8 buf[6];
-				for (int j = 0;j < 6;j++)
-					buf[j] = arr[i + j];
-
-				PotentialPeer pp;
-				pp.ip = QHostAddress(ReadUint32(buf,0)).toString();
-				pp.port = ReadUint16(buf,4);
-				potential_peers.append(pp);
-			}
-		}
-		else
-		{
-			readPotentialPeers(ln);
-		}
+		potential_peers.append(pp);
 	}
-
-	void PeerManager::trackerUpdate(Uint32 seeders,Uint32 leechers,Uint8* ppeers)
-	{
-		num_seeders = seeders;
-		num_leechers = leechers;
-		Uint32 n = num_seeders + num_leechers;
-
-		for (Uint32 i = 0;i < n;i++)
-		{
-			PotentialPeer pp;
-			pp.port = ReadUint16(ppeers,6*i + 4);
-			pp.ip = QHostAddress(ReadUint32(ppeers,6*i)).toString();
-			potential_peers.append(pp);
-		}
-	}
-
-
 
 	void PeerManager::newConnection(QSocket* sock,
 									const PeerID & peer_id)
@@ -214,43 +156,7 @@ namespace bt
 		//	Out() << "New peer connected !" << endl;
 		newPeer(peer);
 	}
-	
-	void PeerManager::readPotentialPeers(BListNode* n)
-	{
-		if (!started)
-			return;
 		
-		potential_peers.clear();
-		Out() << "Reading " << n->getNumChildren() << " potential peers"  << endl;
-		for (Uint32 i = 0;i < n->getNumChildren();i++)
-		{
-			BDictNode* dict = dynamic_cast<BDictNode*>(n->getChild(i));
-			if (!dict)
-				continue;
-			
-			PotentialPeer pp;
-			
-			BValueNode* vn = dynamic_cast<BValueNode*>(dict->getData("ip"));
-			if (!vn)
-				continue;
-			
-			pp.ip = vn->data().toString();
-			
-			vn = dynamic_cast<BValueNode*>(dict->getData("port"));
-			if (!vn)
-				continue;
-			
-			pp.port = vn->data().toInt();
-			
-			vn = dynamic_cast<BValueNode*>(dict->getData("peer id"));
-			if (!vn)
-				continue;
-			
-			pp.id = PeerID(vn->data().toByteArray().data());
-			potential_peers.append(pp);
-		}
-	}
-	
 	bool PeerManager::connectedTo(const PeerID & peer_id)
 	{
 		if (!started)

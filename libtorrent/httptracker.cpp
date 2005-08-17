@@ -18,15 +18,21 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <kurl.h>
+#include <klocale.h>
 #include <libutil/log.h>
+#include <libutil/functions.h>
+#include <libutil/error.h>
+#include "bnode.h"
 #include "httptracker.h"
 #include "torrentcontrol.h"
 #include "bdecoder.h"
+#include "peermanager.h"
+
 
 namespace bt
 {
 
-	HTTPTracker::HTTPTracker(TorrentControl* tc) : Tracker(tc),http(0),cid(0),num_attempts(-1)
+	HTTPTracker::HTTPTracker() : http(0),cid(0),num_attempts(-1)
 	{
 		http = new QHttp(this);
 		connect(http,SIGNAL(requestFinished(int, bool )),this,SLOT(requestFinished(int, bool )));
@@ -36,6 +42,84 @@ namespace bt
 
 	HTTPTracker::~HTTPTracker()
 	{}
+
+	void HTTPTracker::updateData(TorrentControl* tc,PeerManager* pman)
+	{
+		BDecoder dec(data);
+		BNode* n = dec.decode();
+			
+		if (!n || n->getType() != BNode::DICT)
+			throw Error(i18n("Parse Error"));
+			
+		BDictNode* dict = (BDictNode*)n;
+		if (dict->getData("failure reason"))
+		{
+			BValueNode* vn = dict->getValue("failure reason");
+			delete n;
+			throw Error(i18n("The tracker sent back the following error: %1")
+					.arg(vn->data().toString()));
+		}
+			
+		BValueNode* vn = dict->getValue("interval");
+			
+		if (!vn)
+		{
+			delete n;
+			throw Error(i18n("Parse Error"));
+		}
+			
+		Uint32 update_time = vn->data().toInt() > 300 ? 300 : vn->data().toInt();
+		tc->setTrackerTimerInterval(update_time * 1000);
+	
+		BListNode* ln = dict->getList("peers");
+		if (!ln)
+		{
+			// no list, it might however be a compact response
+			BValueNode* vn = dict->getValue("peers");
+			if (!vn)
+			{
+				delete n;
+				throw Error(i18n("Parse error"));
+			}
+
+			QByteArray arr = vn->data().toByteArray();
+			for (Uint32 i = 0;i < arr.size();i+=6)
+			{
+				Uint8 buf[6];
+				for (int j = 0;j < 6;j++)
+					buf[j] = arr[i + j];
+
+				PotentialPeer pp;
+				pp.ip = QHostAddress(ReadUint32(buf,0)).toString();
+				pp.port = ReadUint16(buf,4);
+				pman->addPotentialPeer(pp);
+			}
+		}
+		else
+		{
+			for (Uint32 i = 0;i < ln->getNumChildren();i++)
+			{
+				BDictNode* dict = dynamic_cast<BDictNode*>(ln->getChild(i));
+
+				if (!dict)
+					continue;
+				
+				BValueNode* ip_node = dict->getValue("ip");
+				BValueNode* port_node = dict->getValue("port");
+				BValueNode* id_node = dict->getValue("peer id");
+
+				if (!ip_node || !port_node || !id_node)
+					continue;
+				
+				PotentialPeer pp;
+				pp.ip = ip_node->data().toString();
+				pp.port = port_node->data().toInt();
+				pp.id = PeerID(id_node->data().toByteArray().data());
+				pman->addPotentialPeer(pp);
+			}
+		}
+		delete n;
+	}
 
 	void HTTPTracker::doRequest(const KURL & u)
 	{
@@ -80,10 +164,6 @@ namespace bt
 		}
 	}
 
-	void HTTPTracker::dataRecieved(const QByteArray & ba)
-	{
-		getTC()->trackerResponse(ba);
-	}
 
 	void HTTPTracker::requestFinished(int id,bool err)
 	{
@@ -95,12 +175,13 @@ namespace bt
 
 		if (!err)
 		{
-			dataRecieved(http->readAll());
+			data = http->readAll();
+			dataReady();
 		}
 		else
 		{
 			Out() << "Tracker Error : " << http->errorString() << endl;
-			getTC()->trackerResponseError();
+			error();
 		}
 	}
 
@@ -112,7 +193,7 @@ namespace bt
 		{
 			conn_timer.stop();
 			num_attempts = -1;
-			getTC()->trackerResponseError();
+			error();
 		}
 		else
 		{

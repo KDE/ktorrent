@@ -37,14 +37,12 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-		HTTPTracker(TorrentControl* tc);	
+		HTTPTracker();
 		virtual ~HTTPTracker();
 
-		/**
-		 * Do a request to the tracker.
-		 * @param url The tracker's url
-		 */
+		
 		virtual void doRequest(const KURL & url);
+		virtual void updateData(TorrentControl* tc,PeerManager* pman);
 		
 	private slots:
 		void requestFinished(int id,bool err);
@@ -60,6 +58,7 @@ namespace bt
 		QTimer conn_timer;
 		int num_attempts;
 		KURL last_url;
+		QByteArray data;
 	};
 
 }

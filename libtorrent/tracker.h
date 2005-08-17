@@ -30,26 +30,25 @@ class KURL;
 namespace bt
 {
 	class TorrentControl;
+	class PeerManager;
 
 	/**
 	 * @author Joris Guisson
 	 * @brief Communicates with the tracker
 	 * 
 	 * Class to communicate with the tracker. This is an abstract class
-	 * because some moron taught it was a good idea to have trackers over
-	 * UDP. Hence we have two kinds of trackers : HTTP and UDP.
+	 * because there are trackers over UDP and HTTP.
 	 *
-	 * Once the data comes in, the Tracker should update the TorrentControl object.
+	 * Once the data comes in, the Tracker should emit a signal.
 	 */
 	class Tracker : public QObject
 	{
 		Q_OBJECT
 	public:
 		/**
-		 * Constructor, sets the TorrentControl object
-		 * @param tc The TorrentControl
+		 * Constructor.
 		 */
-		Tracker(TorrentControl* tc);
+		Tracker();
 		virtual ~Tracker();
 
 		/**
@@ -58,6 +57,14 @@ namespace bt
 		 */
 		virtual void doRequest(const KURL & url) = 0;
 
+		/**
+		 * Update all the data. If something is wrong in this function,
+		 * an Error should be thrown.
+		 * @param tc The TorrentControl
+		 * @param pman The PeerManager
+		 */
+		virtual void updateData(TorrentControl* tc,PeerManager* pman) = 0;
+		
 		/**
 		 * Set all the data needed to do a tracker update 
 		 * @param ih 
@@ -72,14 +79,18 @@ namespace bt
 					 Uint32 uploaded,Uint32 downloaded,Uint32 left,
 					 const QString & event);
 
+	signals:
 		/**
-		 * Get the TorrentControl object.
-		 * @return The TorrentControl
+		 * An error occured during the update.
 		 */
-		TorrentControl* getTC() {return tc;}
+		void error();
+
+		/**
+		 * Update succeeded data has been recieved.
+		 */
+		void dataReady();
+
 	protected:
-		TorrentControl* tc;
-	
 		SHA1Hash info_hash;
 		PeerID peer_id;
 		Uint16 port;

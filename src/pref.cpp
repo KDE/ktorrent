@@ -26,6 +26,7 @@
 #include <knuminput.h>
 #include <kurlrequester.h>
 #include <kfiledialog.h>
+#include <kmessagebox.h>
 #include <libtorrent/globals.h>
 #include <libutil/functions.h>
 #include <kglobal.h>
@@ -59,23 +60,29 @@ KTorrentPreferences::KTorrentPreferences(KTorrent & ktor)
 	vbox = new QVBoxLayout(frame);
 	vbox->setAutoAdd(true);
 	page_two = new PrefPageTwo(frame);
-	
-	connect(this,SIGNAL(applyClicked()),this,SLOT(applyPressed()));
-	connect(this,SIGNAL(okClicked()),this,SLOT(okPressed()));
 }
 
-void KTorrentPreferences::okPressed()
+void KTorrentPreferences::slotOk()
 {
-	applyPressed();
-	accept();
+	slotApply();
+	if (page_one->checkPorts())
+		accept();
 }
 
-void KTorrentPreferences::applyPressed()
+void KTorrentPreferences::slotApply()
 {
-	page_one->apply();
-	page_two->apply();
-	Settings::writeConfig();
-	ktor.applySettings();
+	if (!page_one->checkPorts())
+	{
+		KMessageBox::error(this,i18n("The UDP Tracker Port and Port cannot have the same value !"),
+						   i18n("Error"));
+	}
+	else
+	{
+		page_one->apply();
+		page_two->apply();
+		Settings::writeConfig();
+		ktor.applySettings();
+	}
 }
 
 ///////////////////////////////////////////////////////
@@ -88,10 +95,17 @@ PrefPageOne::PrefPageOne(QWidget *parent) : DownloadPref(parent)
 	max_upload_rate->setValue(Settings::maxUploadRate());
 	max_download_rate->setValue(Settings::maxDownloadRate());
 	keep_seeding->setChecked(Settings::keepSeeding());
+	udp_tracker_port->setValue(Settings::udpTrackerPort());
 	port->setValue(Settings::port());
 }
 
-
+bool PrefPageOne::checkPorts()
+{
+	if (udp_tracker_port->value() == port->value())
+		return false;
+	else
+		return true;
+}
 
 void PrefPageOne::apply()
 {
@@ -101,6 +115,7 @@ void PrefPageOne::apply()
 	Settings::setMaxDownloadRate(max_download_rate->value());
 	Settings::setKeepSeeding(keep_seeding->isChecked());	
 	Settings::setPort(port->value());
+	Settings::setUdpTrackerPort(udp_tracker_port->value());
 }
 
 //////////////////////////////////////

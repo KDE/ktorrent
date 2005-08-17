@@ -27,10 +27,15 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kcombobox.h>
+#include <libutil/log.h>
+#include <libtorrent/globals.h>
 #include "searchwidget.h"
 #include "searchbar.h"
 #include "htmlpart.h"
 #include "settings.h"
+
+
+using namespace bt;
 
 struct SearchEngine
 {
@@ -171,5 +176,7 @@ void SearchWidget::onOpenTorrent(const KURL & url)
 {
 	openTorrent(url);
 }
+
+
 
 #include "searchwidget.moc"

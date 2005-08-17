@@ -44,6 +44,8 @@ class SearchWidget;
 class KTorrentDCOP;
 class InfoWidget;
 class QLabel;
+class QListViewItem;
+
 
 
 namespace bt
@@ -89,12 +91,6 @@ public slots:
 
 protected:
 	/**
-	 * Overridden virtuals for Qt drag 'n drop (XDND)
-	 */
-	virtual void dragEnterEvent(QDragEnterEvent *event);
-	virtual void dropEvent(QDropEvent *event);
-
-	/**
 	 * This function is called when it is time for the app to save its
 	 * properties for session management purposes.
 	 */
@@ -125,6 +121,7 @@ private slots:
 	void currentChanged(bt::TorrentControl* tc);
 	void askAndSave(bt::TorrentControl* tc);
 	void updatedStats();
+	void urlDropped(QDropEvent*,QListViewItem*);
 
 private:
 	void setupAccel();

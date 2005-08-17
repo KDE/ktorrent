@@ -49,6 +49,7 @@ private slots:
 signals:
 	void statusBarMsg(const QString & url);
 	void openTorrent(const KURL & url);
+
 	
 private:
 	HTMLPart* html_part;
