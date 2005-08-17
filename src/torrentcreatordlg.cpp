@@ -74,7 +74,7 @@ void TorrentCreatorDlg::onCreate()
 
 	QString s = KFileDialog::getSaveFileName(
 			QString::null,"*.torrent|" + i18n("Torrent Files (*.torrent)"),
-			0,i18n("Choose a file to save the torrent"));
+			0,i18n("Choose File to Save Torrent"));
 
 	if (s.isNull())
 		return;

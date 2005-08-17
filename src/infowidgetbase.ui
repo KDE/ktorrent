@@ -36,7 +36,7 @@
                             <cstring>textLabel1_2</cstring>
                         </property>
                         <property name="text">
-                            <string>Parts of the file which have been downloaded :</string>
+                            <string>Parts of the file which have been downloaded:</string>
                         </property>
                     </widget>
                     <widget class="DownloadedChunkBar">
@@ -49,7 +49,7 @@
                             <cstring>textLabel1_3</cstring>
                         </property>
                         <property name="text">
-                            <string>Parts of the file which are available :</string>
+                            <string>Parts of the file which are available:</string>
                         </property>
                     </widget>
                     <widget class="AvailabilityChunkBar">
@@ -78,7 +78,7 @@
                                             <cstring>textLabel1</cstring>
                                         </property>
                                         <property name="text">
-                                            <string>Total number of chunks</string>
+                                            <string>Total number of chunks:</string>
                                         </property>
                                     </widget>
                                     <widget class="QLabel" row="1" column="1">
@@ -126,7 +126,7 @@
                                             <cstring>textLabel5</cstring>
                                         </property>
                                         <property name="text">
-                                            <string>Chunks currently downloading</string>
+                                            <string>Chunks currently downloading:</string>
                                         </property>
                                     </widget>
                                     <widget class="QLabel" row="2" column="0">
@@ -134,7 +134,7 @@
                                             <cstring>textLabel3</cstring>
                                         </property>
                                         <property name="text">
-                                            <string>Chunks downloaded</string>
+                                            <string>Chunks downloaded:</string>
                                         </property>
                                     </widget>
                                     <widget class="QLabel" row="1" column="0">
@@ -142,7 +142,7 @@
                                             <cstring>textLabel1_4</cstring>
                                         </property>
                                         <property name="text">
-                                            <string>Chunks excluded</string>
+                                            <string>Chunks excluded:</string>
                                         </property>
                                     </widget>
                                     <widget class="QLabel" row="2" column="1">
@@ -236,7 +236,7 @@
                                                             <cstring>textLabel1_5</cstring>
                                                         </property>
                                                         <property name="text">
-                                                            <string>Status</string>
+                                                            <string>Status:</string>
                                                         </property>
                                                     </widget>
                                                     <widget class="QLabel">
@@ -244,7 +244,7 @@
                                                             <cstring>textLabel3_2</cstring>
                                                         </property>
                                                         <property name="text">
-                                                            <string>Next update in</string>
+                                                            <string>Next update in:</string>
                                                         </property>
                                                     </widget>
                                                 </vbox>

@@ -83,7 +83,7 @@ KTorrent::KTorrent()
 	QSplitter* s = 0;
 	if (debug)
 		s = new QSplitter(QSplitter::Vertical,this);
-	
+
 	m_tabs = new KTabWidget(debug ? (QWidget*)s : (QWidget*)this);
 
 	//m_tabs = new KTabWidget(this);
@@ -92,7 +92,7 @@ KTorrent::KTorrent()
 	m_info = new InfoWidget(vbox);
 	vbox->moveToFirst(m_view);
 	vbox->moveToLast(m_info);
-	
+
 	m_search = new SearchWidget(m_tabs);
 	m_core = new KTorrentCore();
 	m_systray_icon = new TrayIcon(this);
@@ -101,22 +101,22 @@ KTorrent::KTorrent()
 	KIconLoader* iload = KGlobal::iconLoader();
 	m_tabs->addTab(vbox,iload->loadIconSet("down", KIcon::Small),i18n("Downloads"));
 	m_tabs->addTab(m_search,iload->loadIconSet("viewmag", KIcon::Small),i18n("Search"));
-	
+
 	connect(m_core,SIGNAL(torrentAdded(bt::TorrentControl* )),
 			m_view,SLOT(addTorrent(bt::TorrentControl* )));
-	
+
 	connect(m_core,SIGNAL(torrentRemoved(bt::TorrentControl* )),
 			m_view,SLOT(removeTorrent(bt::TorrentControl* )));
-	
+
 	connect(m_view,SIGNAL(currentChanged(bt::TorrentControl* )),
 			this,SLOT(currentChanged(bt::TorrentControl* )));
-	
+
 	connect(m_core,SIGNAL(finished(bt::TorrentControl* )),
 			this,SLOT(askAndSave(bt::TorrentControl* )));
 
 	connect(m_view,SIGNAL(wantToRemove(bt::TorrentControl* )),
 			m_core,SLOT(remove(bt::TorrentControl* )));
-		
+
 	// accept dnd
 	setAcceptDrops(true);
 
@@ -130,7 +130,7 @@ KTorrent::KTorrent()
 	// to automatically save settings if changed: window size, toolbar
 	// position, icon size, etc.
 	setAutoSaveSettings();
-	
+
 	currentChanged(0);
 	applySettings();
 
@@ -144,8 +144,8 @@ KTorrent::KTorrent()
 		s->moveToLast(new LogViewer(bt::Globals::instance().getLog(),s));
 		setCentralWidget(s);
 	}
-	
-	
+
+
 
 	connect(m_search,SIGNAL(statusBarMsg(const QString& )),this,SLOT(changeStatusbar(const QString& )));
 	connect(m_search,SIGNAL(openTorrent(const KURL& )),this,SLOT(load(const KURL& )));
@@ -158,7 +158,7 @@ KTorrent::KTorrent()
 	m_statusSpeed = new QLabel(this);
 	m_statusTransfer = new QLabel(this);
 
-	
+
 	statusBar()->addWidget(m_statusInfo,1);
 	statusBar()->addWidget(m_statusSpeed);
 	statusBar()->addWidget(m_statusTransfer);
@@ -189,7 +189,7 @@ void KTorrent::applySettings()
 	UploadCap::setSpeed(Settings::maxUploadRate() * 1024);
 	DownloadCap::instance().setMaxSpeed(Settings::maxDownloadRate()*1024);
 	m_core->setKeepSeeding(Settings::keepSeeding());
-	
+
 	if (Settings::showSystemTrayIcon())
 	{
 		m_systray_icon->show();
@@ -199,7 +199,7 @@ void KTorrent::applySettings()
 		m_systray_icon->hide();
 	}
 
-	m_core->changeDataDir(Settings::tempDir());	
+	m_core->changeDataDir(Settings::tempDir());
 }
 
 void KTorrent::load(const KURL& url)
@@ -218,7 +218,7 @@ void KTorrent::load(const KURL& url)
 
 		// load in the file (target is always local)
 		m_core->load(target);
-		
+
 		// and remove the temp file
 		KIO::NetAccess::removeTempFile(target);
 	}
@@ -255,31 +255,31 @@ void KTorrent::setupActions()
 	KStdAction::quit(kapp, SLOT(quit()), actionCollection());
 	KStdAction::copy(m_search,SLOT(copy()),actionCollection());
 	KStdAction::paste(kapp,SLOT(paste()),actionCollection());
-	
+
 	m_save = KStdAction::save(this, SLOT(fileSave()), actionCollection());
 
 	m_statusbarAction = KStdAction::showStatusbar(this, SLOT(optionsShowStatusbar()), actionCollection());
 
 	KStdAction::keyBindings(this, SLOT(optionsConfigureKeys()), actionCollection());
 	KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
-	
+
 	KAction* pref = KStdAction::preferences(this, SLOT(optionsPreferences()), actionCollection());
 
 	pref->plug(m_systray_icon->contextMenu(),1);
 
-	
+
 	m_start = new KAction(
 			i18n("Start"), "player_play",0,this, SLOT(startDownload()),
 			actionCollection(), "Start");
-	
+
 	m_stop = new KAction(
 			i18n("Stop"), "player_stop",0,this, SLOT(stopDownload()),
 			actionCollection(), "Stop");
-	
+
 	m_remove = new KAction(
 			i18n("Remove"), "remove",0,this, SLOT(removeDownload()),
 			actionCollection(), "Remove");
-	
+
 	createGUI();
 }
 
@@ -333,7 +333,7 @@ void KTorrent::save(bt::TorrentControl* tc)
 {
 	if (!tc || tc->getBytesLeft() != 0)
 		return;
-	
+
 
 	try
 	{
@@ -361,7 +361,7 @@ void KTorrent::askAndSave(bt::TorrentControl* tc)
 			i18n("The download %1 has finished. Do you want to save it now?")
 				.arg(tc->getTorrentName()),
 			i18n("Save Torrent?"),KStdGuiItem::save(),i18n("Do Not Save"));
-	
+
 		if (ret == KMessageBox::Yes)
 			save(tc);
 	}
@@ -535,16 +535,16 @@ void KTorrent::dropEvent(QDropEvent *event)
 void KTorrent::updatedStats()
 {
 	CurrentStats stats = this->m_core->getStats();
-	
+
 
 	//m_statusInfo->setText(i18n("Some info here e.g. connected/disconnected"));
-	QString tmp = i18n("Speed (up / down) : %1 /  %2")
+	QString tmp = i18n("Speed (up/down): %1 / %2")
 			.arg(KBytesPerSecToString((double)stats.upload_speed/1024.0))
 			.arg(KBytesPerSecToString((double)stats.download_speed/1024.0));
-	
+
 	m_statusSpeed->setText(tmp);
-	
-	QString tmp1 = i18n("Transfered (up / down) : %1 / %2")
+
+	QString tmp1 = i18n("Transfered (up/down): %1 / %2")
 			.arg(BytesToString(stats.bytes_uploaded))
 			.arg(BytesToString(stats.bytes_downloaded));
 	m_statusTransfer->setText(tmp1);
@@ -552,8 +552,8 @@ void KTorrent::updatedStats()
 	m_view->update();
 	m_info->update();
 	m_systray_icon->updateStats(
-			i18n("Speed (up / down) :<br>") + tmp.section(':',1) +
-			i18n("<br>Transfered (up / down) :<br>") + tmp1.section(':',1));
+			i18n("Speed (up/down):<br>") + tmp.section(':',1) +
+			i18n("<br>Transfered (up/down):<br>") + tmp1.section(':',1));
 }
 
 
