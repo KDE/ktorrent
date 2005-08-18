@@ -18,7 +18,7 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 
-#include <qapplication.h>
+#include <kapplication.h>
 #include <khtmlview.h>
 #include <qlayout.h>
 #include <klineedit.h>
@@ -27,12 +27,15 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kcombobox.h>
+#include <kpopupmenu.h>
+#include <kparts/partmanager.h>
 #include <libutil/log.h>
 #include <libtorrent/globals.h>
 #include "searchwidget.h"
 #include "searchbar.h"
 #include "htmlpart.h"
 #include "settings.h"
+
 
 
 using namespace bt;
@@ -65,6 +68,16 @@ SearchWidget::SearchWidget(QWidget* parent,const char* name)
 	sbar = new SearchBar(this);
 	html_part = new HTMLPart(this);
 
+	right_click_menu = new KPopupMenu(this);
+	right_click_menu->insertSeparator();
+	back_id = right_click_menu->insertItem(
+			KGlobal::iconLoader()->loadIconSet("back",KIcon::Small),
+			i18n("Back"),html_part,SLOT(back()));
+	right_click_menu->insertItem(
+			KGlobal::iconLoader()->loadIconSet("reload",KIcon::Small),
+			i18n("Reload"),html_part,SLOT(reload()));
+
+	right_click_menu->setItemEnabled(back_id,false);
 	sbar->m_back->setEnabled(false);
 	connect(sbar->m_search_button,SIGNAL(clicked()),this,SLOT(searchPressed()));
 	connect(sbar->m_clear_button,SIGNAL(clicked()),this,SLOT(clearPressed()));
@@ -80,10 +93,18 @@ SearchWidget::SearchWidget(QWidget* parent,const char* name)
 			KGlobal::iconLoader()->loadIconSet("reload",KIcon::Small));
 	
 	
-	connect(html_part,SIGNAL(backAvailable(bool )),sbar->m_back,SLOT(setEnabled(bool )));
-	connect(html_part,SIGNAL(onURL(const QString& )),this,SLOT(onURLHover(const QString& )));
-	connect(html_part->view(),SIGNAL(finishedLayout()),this,SLOT(onFinishedLayout()));
-	connect(html_part,SIGNAL(openTorrent(const KURL& )),this,SLOT(onOpenTorrent(const KURL& )));
+	connect(html_part,SIGNAL(backAvailable(bool )),
+			this,SLOT(onBackAvailable(bool )));
+	connect(html_part,SIGNAL(onURL(const QString& )),
+			this,SLOT(onURLHover(const QString& )));
+	connect(html_part,SIGNAL(openTorrent(const KURL& )),
+			this,SLOT(onOpenTorrent(const KURL& )));
+	connect(html_part,SIGNAL(popupMenu(const QString&, const QPoint& )),
+			this,SLOT(showPopupMenu(const QString&, const QPoint& )));
+	connect(html_part,SIGNAL(searchFinished()),this,SLOT(onFinished()));
+
+	KParts::PartManager* pman = html_part->partManager();
+	connect(pman,SIGNAL(partAdded(KParts::Part*)),this,SLOT(onFrameAdded(KParts::Part* )));
 
 	KComboBox* cb = sbar->m_search_engine;
 
@@ -91,6 +112,8 @@ SearchWidget::SearchWidget(QWidget* parent,const char* name)
 		cb->insertItem(g_search_engines[i].name);
 
 	cb->setCurrentItem(Settings::searchEngine());
+
+	connect(KApplication::kApplication(),SIGNAL(shutDown()),this,SLOT(onShutDown()));
 }
 
 
@@ -100,18 +123,37 @@ SearchWidget::~SearchWidget()
 	Settings::writeConfig();
 }
 
+void SearchWidget::onBackAvailable(bool available)
+{
+	sbar->m_back->setEnabled(available);
+	right_click_menu->setItemEnabled(back_id,available);
+}
+
+void SearchWidget::onFrameAdded(KParts::Part* p)
+{
+	KHTMLPart* frame = dynamic_cast<KHTMLPart*>(p);
+	if (frame)
+		connect(frame,SIGNAL(popupMenu(const QString&, const QPoint& )),
+				this,SLOT(showPopupMenu(const QString&, const QPoint& )));
+}
+
 void SearchWidget::copy()
 {
+	if (!html_part)
+		return;
 	html_part->copy();
 }
 
 void SearchWidget::search(const QString & text, const int engine)
 {
+	if (!html_part)
+		return;
 	KURL url;
 	searchUrl(&url, text, engine);
 
 	statusBarMsg(i18n("Searching for %1 ...").arg(text));
-	html_part->openURL(url);
+	//html_part->openURL(url);
+	html_part->openURLRequest(url,KParts::URLArgs());
 }
 
 
@@ -167,7 +209,7 @@ void SearchWidget::onURLHover(const QString & url)
 	statusBarMsg(url);
 }
 
-void SearchWidget::onFinishedLayout()
+void SearchWidget::onFinished()
 {
 	statusBarMsg(i18n("Search finished"));
 }
@@ -177,6 +219,20 @@ void SearchWidget::onOpenTorrent(const KURL & url)
 	openTorrent(url);
 }
 
+void SearchWidget::showPopupMenu(const QString & url,const QPoint & p)
+{
+	right_click_menu->popup(p);
+}
 
+KPopupMenu* SearchWidget::rightClickMenu()
+{
+	return right_click_menu;
+}
+
+void SearchWidget::onShutDown()
+{
+	delete html_part;
+	html_part = 0;
+}
 
 #include "searchwidget.moc"

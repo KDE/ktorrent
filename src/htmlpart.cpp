@@ -84,20 +84,24 @@ void HTMLPart::openURLRequest(const KURL &u,const KParts::URLArgs &)
 
 void HTMLPart::back()
 {
-	if (history.count() == 0)
-		return;
-
-	KURL u = history.back();
-	history.pop_back();
-	openURL(u);
-	if (history.count() == 0)
+	if (history.count() <= 1)
+	{
 		backAvailable(false);
+	}
+	else
+	{
+		history.pop_back();
+		KURL u = history.back();
+		openURL(u);
+		backAvailable(history.count() > 1 ? true : false);
+		
+	}
 }
 
 void HTMLPart::addToHistory(const KURL & url)
 {
 	history.append(url);
-	if (history.count() == 1)
+	if (history.count() > 1)
 		backAvailable(true);
 }
 
@@ -167,6 +171,7 @@ void HTMLPart::jobDone(KIO::Job* job)
 			begin(curr_url);
 			write(curr_data.data(),curr_data.size());
 			end();
+			searchFinished();
 		}
 	}
 	else

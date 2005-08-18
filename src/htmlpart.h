@@ -27,6 +27,8 @@ namespace KIO
 	class Job;
 }
 
+
+
 /**
 @author Joris Guisson
 */
@@ -41,17 +43,19 @@ public slots:
 	void back();
 	void reload();
 	void copy();
+	void openURLRequest(const KURL &url, const KParts::URLArgs &args);
 
 private slots:
-	void openURLRequest(const KURL &url, const KParts::URLArgs &args);
 	void addToHistory(const KURL & url);
 	void dataRecieved(KIO::Job* job,const QByteArray & data);
 	void mimetype(KIO::Job* job,const QString & mt);
 	void jobDone(KIO::Job* job);
+	
 
 signals:
 	void backAvailable(bool yes);
 	void openTorrent(const KURL & url);
+	void searchFinished();
 
 private:
 	KURL::List history;

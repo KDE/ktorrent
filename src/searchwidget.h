@@ -24,6 +24,12 @@
 
 class SearchBar;
 class HTMLPart;
+class KPopupMenu;
+
+namespace KParts
+{
+	class Part;
+}
 
 /**
 @author Joris Guisson
@@ -35,6 +41,8 @@ public:
 	SearchWidget(QWidget* parent = 0,const char* name = 0);
 	virtual ~SearchWidget();
 
+	KPopupMenu* rightClickMenu();
+
 public slots:
 	void search(const QString & text, const int engine = 0);
 	void copy();
@@ -43,8 +51,13 @@ private slots:
 	void searchPressed();
 	void clearPressed();
 	void onURLHover(const QString & url);
-	void onFinishedLayout();
+	void onFinished();
 	void onOpenTorrent(const KURL & url);
+	void showPopupMenu(const QString & s,const QPoint & p);
+	void onBackAvailable(bool available);
+	void onShutDown();
+	void onFrameAdded(KParts::Part* p);
+	
 	
 signals:
 	void statusBarMsg(const QString & url);
@@ -54,6 +67,8 @@ signals:
 private:
 	HTMLPart* html_part;
 	SearchBar* sbar;
+	KPopupMenu* right_click_menu;
+	int back_id;
 
 	void searchUrl(KURL* url, const QString& text, const int engine);
 };

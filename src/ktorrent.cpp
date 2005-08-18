@@ -211,20 +211,11 @@ void KTorrent::applySettings()
 void KTorrent::load(const KURL& url)
 {
 	QString target;
-	// the below code is what you should normally do.  in this
-	// example case, we want the url to our own.  you probably
-	// want to use this code instead for your app
-
-
 	// download the contents
 	if (KIO::NetAccess::download(url,target,this))
 	{
-		// set our caption
-		//setCaption(url.prettyURL());
-
 		// load in the file (target is always local)
 		m_core->load(target);
-
 		// and remove the temp file
 		KIO::NetAccess::removeTempFile(target);
 	}
@@ -259,9 +250,11 @@ void KTorrent::setupActions()
 	KStdAction::openNew(this,SLOT(fileNew()),actionCollection());
 	KStdAction::open(this, SLOT(fileOpen()), actionCollection());
 	KStdAction::quit(kapp, SLOT(quit()), actionCollection());
-	KStdAction::copy(m_search,SLOT(copy()),actionCollection());
+	KAction* copy_act = KStdAction::copy(m_search,SLOT(copy()),actionCollection());
 	KStdAction::paste(kapp,SLOT(paste()),actionCollection());
 
+	copy_act->plug(m_search->rightClickMenu(),0);
+	
 	m_save = KStdAction::save(this, SLOT(fileSave()), actionCollection());
 
 	m_statusbarAction = KStdAction::showStatusbar(this, SLOT(optionsShowStatusbar()), actionCollection());
