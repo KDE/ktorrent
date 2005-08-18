@@ -1,12 +1,14 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KTorrent
+Name[el]=KMFIPTEditorPart
 Name[sv]=Ktorrent
 GenericName=BitTorrent Client
 GenericName[br]=Kliant BitTorrent
 GenericName[ca]=Client de BitTorrent
 GenericName[cs]=BitTorrent klient
 GenericName[da]=BitTorrent klient
+GenericName[el]=Πελάτης BitTorrent
 GenericName[et]=BitTorrenti klient
 GenericName[fr]=Client BitTorrent
 GenericName[ga]=Cliant BitTorrent
@@ -31,6 +33,7 @@ Comment[br]=Ur programm BitTorrent evit KDE
 Comment[ca]=Un programa de BitTorrent per KDE
 Comment[cs]=BitTorrent pro KDE
 Comment[da]=Et BitTorrent program for KDE
+Comment[el]=Μία εφαρμογή BitTorrent για το KDE
 Comment[et]=KDE BitTorrenti rakendus
 Comment[fr]=Un programme BitTorrent pour KDE
 Comment[ga]=Clár BitTorrent KDE
