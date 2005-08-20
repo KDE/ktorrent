@@ -50,7 +50,6 @@
 #include <kaction.h>
 #include <kstdaction.h>
 
-
 #include <libtorrent/torrentcontrol.h>
 #include <libtorrent/peermanager.h>
 #include <libtorrent/uploadcap.h>
@@ -415,7 +414,7 @@ void KTorrent::stopDownload()
 	TorrentControl* tc = m_view->getCurrentTC();
 	if (tc && tc->isRunning())
 	{
-		tc->stop();
+		tc->stop(true);
 		currentChanged(tc);
 	}
 }
@@ -425,6 +424,14 @@ void KTorrent::removeDownload()
 	TorrentControl* tc = m_view->getCurrentTC();
 	if (tc)
 	{
+		if (tc->getBytesLeft() > 0 || !tc->isSaved())
+		{
+			QString msg = i18n("You will loose all data you downloaded if you do this."
+					" Are you sure you want to do this ?");
+			int ret = KMessageBox::questionYesNo(this,msg,i18n("Are you sure ?"));
+			if (ret == KMessageBox::No)
+				return;
+		}
 		m_info->changeTC(0);
 		m_core->remove(tc);
 		currentChanged(m_view->getCurrentTC());
@@ -526,22 +533,20 @@ void KTorrent::updatedStats()
 
 
 	//m_statusInfo->setText(i18n("Some info here e.g. connected/disconnected"));
-	QString tmp = i18n("Speed (up/down): %1 / %2")
+	QString tmp = i18n("Speed up: %1 / down: %2")
 			.arg(KBytesPerSecToString((double)stats.upload_speed/1024.0))
 			.arg(KBytesPerSecToString((double)stats.download_speed/1024.0));
 
 	m_statusSpeed->setText(tmp);
 
-	QString tmp1 = i18n("Transfered (up/down): %1 / %2")
+	QString tmp1 = i18n("Transfered up: %1 / down: %2")
 			.arg(BytesToString(stats.bytes_uploaded))
 			.arg(BytesToString(stats.bytes_downloaded));
 	m_statusTransfer->setText(tmp1);
 
 	m_view->update();
 	m_info->update();
-	m_systray_icon->updateStats(
-			i18n("Speed (up/down):<br>") + tmp.section(':',1) +
-			i18n("<br>Transfered (up/down):<br>") + tmp1.section(':',1));
+	m_systray_icon->updateStats(tmp + "<br>" + tmp1 + "<br>");
 }
 
 

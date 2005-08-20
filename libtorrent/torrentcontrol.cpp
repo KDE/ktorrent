@@ -68,7 +68,7 @@ namespace bt
 	TorrentControl::~TorrentControl()
 	{
 		if (isRunning())
-			stop();
+			stop(false);
 		
 		if (tmon)
 			tmon->destroyed();
@@ -321,7 +321,7 @@ namespace bt
 		choker_update_timer.update();
 	}
 	
-	void TorrentControl::stop()
+	void TorrentControl::stop(bool user)
 	{
 		saveStats();
 		if (running)

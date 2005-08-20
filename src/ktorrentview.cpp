@@ -104,7 +104,7 @@ void KTorrentView::stopDownload()
 		return;
 
 	bt::TorrentControl* tc = curr->getTC();
-	tc->stop();
+	tc->stop(true);
 }
 	
 void KTorrentView::removeDownload()
@@ -113,6 +113,14 @@ void KTorrentView::removeDownload()
 		return;
 
 	bt::TorrentControl* tc = curr->getTC();
+	if (tc->getBytesLeft() > 0 || !tc->isSaved())
+	{
+		QString msg = i18n("You will loose all data you downloaded if you do this."
+				" Are you sure you want to do this ?");
+		int ret = KMessageBox::questionYesNo(this,msg,i18n("Are you sure ?"));
+		if (ret == KMessageBox::No)
+			return;
+	}
 	wantToRemove(tc);
 }
 
@@ -216,7 +224,7 @@ void KTorrentView::update()
 void KTorrentView::onTrackerError(bt::TorrentControl* tc,const QString & err)
 {
 	KMessageBox::error(this,err,i18n("Error"));
-	tc->stop();
+	tc->stop(false);
 }
 
 bool KTorrentView::acceptDrag(QDropEvent* event) const

@@ -299,7 +299,7 @@ namespace bt
 		for (Uint32 i = 20;i < 20 + nip*6;i++)
 		{
 			PotentialPeer pp;
-			pp.ip = ReadUint32(peer_buf,i);
+			pp.ip = QHostAddress(ReadUint32(peer_buf,i)).toString();
 			pp.port = ReadUint16(peer_buf,i+4);
 			pman->addPotentialPeer(pp);
 		}
@@ -310,6 +310,7 @@ namespace bt
 
 	void UDPTracker::setPort(Uint16 p)
 	{
+		Out() << "Switching to UDP tracker port" << p << endl;
 		port = p;
 	}
 }

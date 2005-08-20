@@ -118,7 +118,8 @@ namespace bt
 		const Peer* peer = p.getPeer();
 		DownloadStatus* ds = dstatus.find(peer);
 		memcpy(buf + p.getOffset(),p.getData(),p.getLength());
-		ds->set(pp,PIECE_DOWNLOADED);
+		if (ds)
+			ds->set(pp,PIECE_DOWNLOADED);
 		pieces[pp] = true;
 		num_downloaded++;
 		
@@ -170,6 +171,9 @@ namespace bt
 	{
 		timer.update();
 		DownloadStatus* ds = dstatus.find(pd->getPeer());
+		if (!ds)
+			return;
+		
 		for (Uint32 i = 0;i < num && pd->getNumRequests() < 8;i++)
 		{
 			if (ds->get(i) == PIECE_NOT_DOWNLOADED ||

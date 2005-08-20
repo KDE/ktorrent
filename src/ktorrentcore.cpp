@@ -135,7 +135,7 @@ void KTorrentCore::stop(bt::TorrentControl* tc)
 {
 	if (tc->isStarted() && tc->isRunning())
 	{
-		tc->stop();
+		tc->stop(false);
 		QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
 		while (i != downloads.end())
 		{
@@ -232,7 +232,7 @@ void KTorrentCore::setMaxDownloads(int max)
 void KTorrentCore::torrentFinished(bt::TorrentControl* tc)
 {
 	if (!keep_seeding)
-		tc->stop();
+		tc->stop(false);
 	
 	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
 	while (i != downloads.end())
@@ -345,7 +345,7 @@ void KTorrentCore::stopAll()
 	{
 		bt::TorrentControl* tc = *i;
 		if (tc->isRunning())
-			tc->stop();
+			tc->stop(false);
 		i++;
 	}
 }
@@ -368,7 +368,7 @@ void KTorrentCore::update()
 			}
 			catch (Error & e)
 			{
-				tc->stop();
+				tc->stop(false);
 				Out() << "Error " << e.toString() << endl;
 				QString errmsg = i18n("The following error occurred: %1\nStopping download ...")
 						.arg(e.toString());

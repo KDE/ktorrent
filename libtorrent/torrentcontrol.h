@@ -200,8 +200,9 @@ namespace bt
 		
 		/**
 		 * Stop the download, closes all connections.
+		 * @param user wether or not the user did this explicitly
 		 */
-		void stop();
+		void stop(bool user);
 		
 		/**
 		 * When the torrent is finished, the final file(s) can be
