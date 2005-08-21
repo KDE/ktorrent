@@ -310,7 +310,6 @@ namespace bt
 
 	void UDPTracker::setPort(Uint16 p)
 	{
-		Out() << "Switching to UDP tracker port" << p << endl;
 		port = p;
 	}
 }

@@ -60,6 +60,7 @@ namespace bt
 		old_datadir = QString::null;
 		tracker_update_interval = 120000;
 		status = NOT_STARTED;
+		autostart = true;
 	}
 	
 	
@@ -83,16 +84,19 @@ namespace bt
 
 	void TorrentControl::update()
 	{
+		// first update peermanager
 		pman->update();
 		bool comp = completed;
-		
+
+		// then the downloader and uploader
 		up->update();
 		if (!completed)
 			down->update();
-		
+
 		completed = cman->chunksLeft() == 0;
 		if (completed && !comp)
 		{
+			// download has just been completed
 			updateTracker("completed");
 			finished(this);
 		}
@@ -104,10 +108,15 @@ namespace bt
 			updateTracker("started");
 		}
 		updateStatusMsg();
-		
+
+		// make sure we don't use up to much memory with all the chunks
+		// we're uploading
 		cman->checkMemoryUsage();
+
+		// get rid of dead Peers
 		pman->clearDeadPeers();
-		
+
+		// we may need to update the tracker
 		if (tracker_update_timer.getElapsedSinceUpdate() >= tracker_update_interval)
 		{
 			Uint32 max_connections = PeerManager::getMaxConnections();
@@ -119,13 +128,15 @@ namespace bt
 			updateTracker();
 			tracker_update_timer.update();
 		}
-		
+
+		// we may need to update the choker
 		if (choker_update_timer.getElapsedSinceUpdate() >= 10000)
 		{
 			doChoking();
 			choker_update_timer.update();
 		}
 
+		// make sure the downloadcap gets obeyed
 		DownloadCap::instance().update();
 	}
 	
@@ -149,21 +160,22 @@ namespace bt
 		if (!datadir.endsWith(DirSeparator()))
 			datadir += DirSeparator();
 		
-		
+
+		// first load the torrent file
 		tor = new Torrent();
 		tor->load(torrent);
 		if (!bt::Exists(datadir))
 			bt::MakeDir(datadir);
 	
-		//QString cache_file = datadir + "cache";
+		// copy torrent in temp dir
 		QString tor_copy = datadir + "torrent";
 		
 		if (tor_copy != torrent)
 			bt::CopyFile(torrent,tor_copy);
 
 
+		// create PeerManager and Tracker
 		pman = new PeerManager(*tor);
-
 		if (tor->getTrackerURL(true).protocol() == "udp")
 			tracker = new UDPTracker();
 		else
@@ -171,7 +183,9 @@ namespace bt
 
 		connect(tracker,SIGNAL(error()),this,SLOT(trackerResponseError()));
 		connect(tracker,SIGNAL(dataReady()),this,SLOT(trackerResponse()));
-		
+
+		// Create chunkmanager, load the index file if it exists
+		// else create all the necesarry files
 		cman = new ChunkManager(*tor,datadir);
 		if (bt::Exists(datadir + "index"))
 			cman->loadIndexFile();
@@ -179,8 +193,8 @@ namespace bt
 			cman->createFiles();
 		
 		completed = cman->chunksLeft() == 0;
-		
-		
+
+		// create downloader,uploader and choker
 		down = new Downloader(*tor,*pman,*cman);
 		up = new Uploader(*cman);
 		choke = new Choker(*pman);
@@ -189,6 +203,8 @@ namespace bt
 		connect(pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
 		connect(pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerRemoved(Peer* )));
 		saved = cman->hasBeenSaved();
+		if (bt::Exists(datadir + "stopped"))
+			autostart = false;
 		updateStatusMsg();
 	}
 
@@ -310,6 +326,9 @@ namespace bt
 	
 	void TorrentControl::start()
 	{
+		if (bt::Exists(datadir + "stopped"))
+			bt::Delete(datadir + "stopped",true);
+		
 		num_tracker_attempts = 0;
 		updateTracker("started");
 		pman->start();
@@ -334,6 +353,8 @@ namespace bt
 			
 			down->saveDownloads(datadir + "current_chunks");
 			down->clearDownloads();
+			if (user)
+				bt::Touch(datadir + "stopped",true);
 		}
 		up->removeAllPeers();
 

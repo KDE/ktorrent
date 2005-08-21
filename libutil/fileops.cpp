@@ -25,6 +25,7 @@
 #include "fileops.h"
 #include "error.h"
 #include "log.h"
+#include "file.h"
 
 namespace bt
 {
@@ -105,6 +106,24 @@ namespace bt
 						.arg(KIO::NetAccess::lastErrorString()));
 			else
 				Out() << "Error : Cannot delete " << url << " : " << KIO::NetAccess::lastErrorString() << endl;
+		}
+	}
+
+	void Touch(const QString & url,bool nothrow)
+	{
+		if (Exists(url))
+			return;
+		
+		File fptr;
+		if (!fptr.open(url,"wt"))
+		{
+			if (!nothrow)
+				throw Error(i18n("Cannot create %1: %2")
+						.arg(url)
+						.arg(fptr.errorString()));
+			else
+				Out() << "Error : Cannot create " << url << " : "
+						<< fptr.errorString() << endl;
 		}
 	}
 

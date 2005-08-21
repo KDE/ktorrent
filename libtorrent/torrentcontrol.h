@@ -160,6 +160,9 @@ namespace bt
 		/// See if the torrent was saved
 		bool isSaved() const {return saved;}
 
+		/// See if we are allowed to startup this torrent automatically.
+		bool isAutostartAllowed() const {return autostart;}
+
 		/// Get the data directory of this torrent
 		QString getDataDir() const {return datadir;}
 
@@ -265,7 +268,7 @@ namespace bt
 		
 		QString datadir,old_datadir,trackerevent,trackerstatus;
 		Uint16 port;
-		bool completed,running,started,saved;
+		bool completed,running,started,saved,autostart;
 		TorrentMonitor* tmon;
 		Uint32 num_tracker_attempts;
 		KURL last_tracker_url;

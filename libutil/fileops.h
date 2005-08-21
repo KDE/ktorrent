@@ -72,6 +72,14 @@ namespace bt
 	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 */
 	void Delete(const KURL & url,bool nothrow = false);
+
+	/**
+	 * Try to create a file. Doesn't do anything if the file
+	 * allready exists.
+	 * @param url The url of the file
+	 * @param nothrow wether or not we shouldn't throw an Error upon failure
+	 */
+	void Touch(const QString & url,bool nothrow = false);
 }
 
 #endif

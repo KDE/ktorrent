@@ -127,6 +127,13 @@ public:
 
 	CurrentStats getStats();
 
+	/**
+	 * Switch the port when no torrents are running.
+	 * @param port The new port
+	 * @return true if we can, false if there are torrents running
+	 */
+	bool changePort(bt::Uint16 port);
+	
 public slots:
 	/**
 	 * Load a torrent file. Pops up an error dialog

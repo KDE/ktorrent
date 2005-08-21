@@ -199,8 +199,9 @@ void KTorrentCore::loadTorrents()
 			downloads.append(tc);
 			connect(tc,SIGNAL(finished(bt::TorrentControl*)),
 					this,SLOT(torrentFinished(bt::TorrentControl* )));
-			
-			start(tc);
+
+			if (tc->isAutostartAllowed())
+				start(tc);
 			torrentAdded(tc);
 		}
 		catch (bt::Error & err)
@@ -464,6 +465,19 @@ CurrentStats KTorrentCore::getStats()
 	stats.bytes_uploaded = bytes_ul + removed_torrents_up - prev_ul;
 
 	return stats;
+}
+
+bool KTorrentCore::changePort(Uint16 port)
+{
+	if (downloads.count() == 0)
+	{
+		Globals::instance().getServer().changePort(port);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 #include "ktorrentcore.moc"

@@ -205,6 +205,7 @@ void KTorrent::applySettings()
 
 	m_core->changeDataDir(Settings::tempDir());
 	UDPTracker::setPort(Settings::udpTrackerPort());
+	m_core->changePort(Settings::port());
 }
 
 void KTorrent::load(const KURL& url)
