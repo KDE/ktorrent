@@ -115,9 +115,9 @@ void KTorrentView::removeDownload()
 	bt::TorrentControl* tc = curr->getTC();
 	if (tc->getBytesLeft() > 0 || !tc->isSaved())
 	{
-		QString msg = i18n("You will loose all data you downloaded if you do this."
-				" Are you sure you want to do this ?");
-		int ret = KMessageBox::questionYesNo(this,msg,i18n("Are you sure ?"));
+		QString msg = i18n("You will lose all data you downloaded if you do this."
+				" Are you sure you want to do this?");
+		int ret = KMessageBox::questionYesNo(this,msg,i18n("Are you sure?"));
 		if (ret == KMessageBox::No)
 			return;
 	}
