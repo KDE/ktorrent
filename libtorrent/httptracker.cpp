@@ -55,9 +55,10 @@ namespace bt
 		if (dict->getData("failure reason"))
 		{
 			BValueNode* vn = dict->getValue("failure reason");
+			QString msg = i18n("The tracker sent back the following error: %1")
+					.arg(vn->data().toString());
 			delete n;
-			throw Error(i18n("The tracker sent back the following error: %1")
-					.arg(vn->data().toString()));
+			throw Error(msg);
 		}
 			
 		BValueNode* vn = dict->getValue("interval");
