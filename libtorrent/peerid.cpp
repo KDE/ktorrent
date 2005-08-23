@@ -42,7 +42,10 @@ namespace bt
 
 	PeerID::PeerID(char* pid)
 	{
-		memcpy(id,pid,20);
+		if (pid)
+			memcpy(id,pid,20);
+		else
+			memset(id,0,20);
 		client_name = identifyClient();
 	}
 
@@ -71,6 +74,15 @@ namespace bt
 				return false;
 
 		return true;
+	}
+
+	bool operator < (const PeerID & a,const PeerID & b)
+	{
+		for (int i = 0;i < 20;i++)
+			if (a.id[i] < b.id[i])
+				return true;
+
+		return false;
 	}
 
 	QString PeerID::toString() const

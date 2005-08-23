@@ -42,15 +42,13 @@ namespace bt
 	class PeerUploader
 	{
 		Peer* peer;
-		ChunkManager & cman;
 		QValueList<Request> requests;
 	public:
 		/**
-		 * Constructor. Set the Peer, and the ChunkManager.
+		 * Constructor. Set the Peer.
 		 * @param peer The Peer
-		 * @param cman The ChunkManager
 		 */
-		PeerUploader(Peer* peer,ChunkManager & cman);
+		PeerUploader(Peer* peer);
 		virtual ~PeerUploader();
 
 		/**
@@ -68,9 +66,10 @@ namespace bt
 		/**
 		 * Update the PeerUploader. This will check if there are Request, and
 		 * will try to handle them.
+		 * @param cman The ChunkManager
 		 * @return The number of bytes uploaded
 		 */
-		Uint32 update();
+		Uint32 update(ChunkManager & cman);
 	};
 
 }

@@ -21,10 +21,10 @@
 #define BTREQUEST_H
 
 #include "globals.h"
+#include "peerid.h"
 
 namespace bt
 {
-	class Peer;
 
 	/**
 	 * @author Joris Guisson
@@ -34,8 +34,7 @@ namespace bt
 	 * The Request consists of an index (the index of the chunk),
 	 * offset into the chunk and the length of a piece.
 	 *
-	 * It also holds a pointer to a Peer, if we recieve a request,
-	 * this will indicat which peer sent it.
+	 * The PeerID of the Peer who sent the request is also kept.
 	 */
 	class Request
 	{
@@ -50,9 +49,9 @@ namespace bt
 		 * @param index The index of the chunk 
 		 * @param off The offset into the chunk
 		 * @param len The length of the piece
-		 * @param peer The Peer who sent the request
+		 * @param peer The PeerID of the Peer who sent the request
 		 */
-		Request(Uint32 index,Uint32 off,Uint32 len,Peer* peer);
+		Request(Uint32 index,Uint32 off,Uint32 len,const PeerID & peer);
 		
 		/**
 		 * Copy constructor.
@@ -71,10 +70,7 @@ namespace bt
 		Uint32 getLength() const {return len;}
 
 		/// Get the sending Peer
-		const Peer* getPeer() const {return peer;}
-
-		/// Get the sending Peer
-		Peer* getPeer() {return peer;}
+		const PeerID & getPeer() const {return peer;}
 		
 		/**
 		 * Assignmenth operator.
@@ -92,7 +88,7 @@ namespace bt
 		friend bool operator == (const Request & a,const Request & b);
 	private:
 		Uint32 index,off,len;
-		Peer* peer;
+		PeerID peer;
 	};
 
 }

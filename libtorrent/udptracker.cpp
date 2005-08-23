@@ -18,75 +18,104 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <stdlib.h>
-#include <qsocketnotifier.h>
-#include <qsocketdevice.h>
 #include <libutil/functions.h>
 #include <libutil/log.h>
 #include "peermanager.h"
 #include "udptracker.h"
 #include "torrentcontrol.h"
 #include "globals.h"
+#include "udptrackersocket.h"
 
 
 namespace bt
 {
-	enum Event
-	{
-		NONE = 0,
-		COMPLETED = 1,
-		STARTED = 2,
-		STOPPED = 3
-	};
-
-	enum Action
-	{
-		CONNECT = 0,
-		ANNOUNCE = 1,
-		SCRAPE = 2,
-		ERROR = 3
-	};
-
-	Uint16 UDPTracker::port = 4444;
+	
+	UDPTrackerSocket* UDPTracker::socket = 0;
+	Uint32 UDPTracker::num_instances = 0;
+	
 
 	UDPTracker::UDPTracker() : n(0)
 	{
-		sock = new QSocketDevice(QSocketDevice::Datagram);
+		num_instances++;
+		if (!socket)
+			socket = new UDPTrackerSocket();
 		
 		connection_id = 0;
 		transaction_id = 0;
-		int i = 0;
-		while (!sock->bind(QHostAddress("localhost"),port + i) && i < 10)
-		{
-			Out() << "Failed to bind socket to port " << (port+i) << endl;
-			i++;
-		}
-
-		sn = new QSocketNotifier(sock->socket(),QSocketNotifier::Read);
-		connect(sn,SIGNAL(activated(int)),this,SLOT(dataRecieved(int )));
-
 		leechers = seeders = interval = 0;
-		peer_buf = 0;
-
 		connect(&conn_timer,SIGNAL(timeout()),this,SLOT(onConnTimeout()));
+		connect(socket,SIGNAL(announceRecieved(Int32, const Array< Uint8 >& )),
+				this,SLOT(announceRecieved(Int32, const Array< Uint8 >& )));
+		connect(socket,SIGNAL(connectRecieved(Int32, Int64 )),
+				this,SLOT(connectRecieved(Int32, Int64 )));
+		connect(socket,SIGNAL(error(Int32, const QString& )),
+				this,SLOT(onError(Int32, const QString& )));
 	}
 
 
 	UDPTracker::~UDPTracker()
 	{
-		delete sock;
-		delete sn;
-		delete [] peer_buf;
+		num_instances--;
+		if (num_instances == 0)
+		{
+			delete socket;
+			socket = 0;
+		}
+	}
+
+	void UDPTracker::connectRecieved(Int32 tid,Int64 cid)
+	{
+		if (tid != transaction_id)
+			return;
+		
+		connection_id = cid;
+		n = 0;
+		sendAnnounce();
+	}
+	
+	void UDPTracker::announceRecieved(Int32 tid,const Array<Uint8> & buf)
+	{
+		if (tid != transaction_id)
+			return;
+
+		/*
+		0  32-bit integer  action  1
+		4  32-bit integer  transaction_id
+		8  32-bit integer  interval
+		12  32-bit integer  leechers
+		16  32-bit integer  seeders
+		20 + 6 * n  32-bit integer  IP address
+		24 + 6 * n  16-bit integer  TCP port
+		20 + 6 * N
+		*/
+		interval = ReadInt32(buf,8);
+		leechers = ReadInt32(buf,12);
+		seeders = ReadInt32(buf,16);
+
+		Uint32 nip = leechers + seeders;
+		Uint32 j = 0;
+		for (Uint32 i = 20;i < buf.size(),j < nip;i+=6,j++)
+		{
+			PotentialPeer pp;
+			pp.ip = QHostAddress(ReadUint32(buf,i)).toString();
+			pp.port = ReadUint16(buf,i+4);
+			ppeers.append(pp);
+		}
+		dataReady();
+	}
+	
+	void UDPTracker::onError(Int32 tid,const QString & error_string)
+	{
+		if (tid != transaction_id)
+			return;
+
+		Out() << "UDPTracker::error : " << error_string << endl;
+		error();
 	}
 
 
 	void UDPTracker::doRequest(const KURL & url)
 	{
-		if (peer_buf)
-		{
-			delete peer_buf;
-			peer_buf = 0;
-		}
-		
 		if (old_url != url)
 		{
 			connection_id = 0;
@@ -94,7 +123,6 @@ namespace bt
 
 		Out() << "Doing tracker request to url : " << url << endl;
 		addr = LookUpHost(url.host());
-	//	Out() << addr.toString() << endl;
 		udp_port = url.port();
 		if (connection_id == 0)
 		{
@@ -107,76 +135,20 @@ namespace bt
 		old_url = url;
 	}
 
-	void UDPTracker::dataRecieved(int )
-	{
-		if (connection_id == 0)
-		{
-			connectRecieved();
-		}
-		else
-		{
-			announceRecieved();
-		}
-	}
-
 	void UDPTracker::sendConnect()
 	{
-	//	Out() << "UDPTracker::sendConnect()" << endl;
-		Int64 cid = 0x41727101980LL;
-		transaction_id = rand() * time(0);
-		Uint8 buf[16];
-
-		WriteInt64(buf,0,cid);
-		WriteInt32(buf,8,CONNECT);
-		WriteInt32(buf,12,transaction_id);
-		sock->writeBlock((const char*)buf,16,addr,udp_port);
-
+		transaction_id = socket->newTransactionID();
+		socket->sendConnect(transaction_id,addr,udp_port);
 		int tn = 1;
 		for (int i = 0;i < n;i++)
 			tn *= 2;
 		conn_timer.start(60000 * tn,true);
 	}
 
-	
-	void UDPTracker::connectRecieved()
-	{
-		n = 0;
-		conn_timer.stop();
-	//	Out() << "UDPTracker::connectRecieved()" << endl;
-		/*
-		0  32-bit integer  action  0
-		4  32-bit integer  transaction_id
-		8  64-bit integer  connection_id
-		16 
-		*/
-		Uint8 buf[16];
-
-		if (!sock->bytesAvailable() == 16)
-		{
-			error();
-			return;
-		}
-
-		if (sock->readBlock((char*)buf,16) != 16)
-		{
-			error();
-			return;
-		}
-
-		if (ReadInt32(buf,4) != transaction_id || ReadInt32(buf,0) != CONNECT)
-		{
-			error();
-			return;
-		}
-
-		connection_id = ReadInt64(buf,8);
-		sendAnnounce();
-	}
-
 	void UDPTracker::sendAnnounce()
 	{
 	//	Out() << "UDPTracker::sendAnnounce()" << endl;
-		transaction_id = rand() * time(0);
+		transaction_id = socket->newTransactionID();
 		/*
 		0  64-bit integer  connection_id
 		8  32-bit integer  action  1
@@ -217,69 +189,7 @@ namespace bt
 		WriteInt32(buf,92,100);
 		WriteUint16(buf,96,port);
 
-		sock->writeBlock((const char*)buf,98,addr,udp_port);
-	}
-
-	void UDPTracker::announceRecieved()
-	{
-	//	Out() << "UDPTracker::announceRecieved()" << endl;
-		/*
-		0  32-bit integer  action  1
-		4  32-bit integer  transaction_id
-		8  32-bit integer  interval
-		12  32-bit integer  leechers
-		16  32-bit integer  seeders
-		20 + 6 * n  32-bit integer  IP address
-		24 + 6 * n  16-bit integer  TCP port
-		20 + 6 * N
-		*/
-	//	Out() << "BytesAvailable = " << sock->bytesAvailable() << endl;
-
-		Uint32 ba = sock->bytesAvailable();
-		if (ba < 20)
-		{
-			error();
-			return;
-		}
-		else
-		{
-			if (peer_buf)
-				delete [] peer_buf;
-			peer_buf = new Uint8[ba];
-		}
-		
-		if ((Uint32)sock->readBlock((char*)peer_buf,ba) != ba)
-		{
-			error();
-			return;
-		}
-
-		Int32 action = ReadInt32(peer_buf,0);
-		if (ReadInt32(peer_buf,4) != transaction_id || action != ANNOUNCE)
-		{
-			error();
-			return;
-		}
-
-		interval = ReadInt32(peer_buf,8);
-		leechers = ReadInt32(peer_buf,12);
-		seeders = ReadInt32(peer_buf,16);
-
-	//	Out() << "seeders = " << seeders << endl;
-	//	Out() << "leechers = " << leechers << endl;
-
-		Uint32 nip = leechers + seeders;
-		// check wether the number of (ip,port) combos is equal
-		// to leechers + seeders. This is to potentially avoid
-		// buffer overflows.
-		if (ba - 20 == nip * 6)
-		{
-			dataReady();
-		}
-		else
-		{
-			Out() << "Nog enough data !" << endl;
-		}
+		socket->sendAnnounce(transaction_id,buf,addr,udp_port);
 	}
 
 	void UDPTracker::onConnTimeout()
@@ -290,27 +200,17 @@ namespace bt
 
 	void UDPTracker::updateData(TorrentControl* tc,PeerManager* pman)
 	{
-		if (!peer_buf)
-			return;
-		
-		Uint32 nip = leechers + seeders;
 		tc->setTrackerTimerInterval(interval*1000);
 
-		for (Uint32 i = 20;i < 20 + nip*6;i++)
+		QValueList<PotentialPeer>::iterator i = ppeers.begin();
+		while (i != ppeers.end())
 		{
-			PotentialPeer pp;
-			pp.ip = QHostAddress(ReadUint32(peer_buf,i)).toString();
-			pp.port = ReadUint16(peer_buf,i+4);
-			pman->addPotentialPeer(pp);
+			pman->addPotentialPeer(*i);
+			i++;
 		}
-		
-		delete [] peer_buf;
-		peer_buf = 0;
+		ppeers.clear();
 	}
 
-	void UDPTracker::setPort(Uint16 p)
-	{
-		port = p;
-	}
+	
 }
 #include "udptracker.moc"

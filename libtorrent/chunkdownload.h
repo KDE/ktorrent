@@ -23,9 +23,10 @@
 #include <set>
 #include <qobject.h>
 #include <qptrlist.h>
-#include "globals.h"
 #include <libutil/timer.h>
 #include <libutil/ptrmap.h>
+#include "globals.h"
+#include "peerid.h"
 
 namespace bt
 {
@@ -119,7 +120,7 @@ namespace bt
 		Uint32 last_size;
 		Timer timer;
 		QPtrList<PeerDownloader> pdown;
-		PtrMap<const Peer*,DownloadStatus> dstatus;
+		PtrMap<PeerID,DownloadStatus> dstatus;
 
 		friend File & operator << (File & out,const ChunkDownload & cd);
 		friend File & operator >> (File & in,ChunkDownload & cd);

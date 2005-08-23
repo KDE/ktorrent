@@ -21,10 +21,10 @@
 
 namespace bt
 {
-	Request::Request() : index(0),off(0),len(0),peer(0)
+	Request::Request() : index(0),off(0),len(0)
 	{}
 
-	Request::Request(Uint32 index,Uint32 off,Uint32 len,Peer* peer)
+	Request::Request(Uint32 index,Uint32 off,Uint32 len,const PeerID & peer)
 	: index(index),off(off),len(len),peer(peer)
 	{}
 

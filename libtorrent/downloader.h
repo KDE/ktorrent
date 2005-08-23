@@ -142,7 +142,6 @@ namespace bt
 		ChunkManager & cman;
 		Uint32 downloaded;
 		PtrMap<Uint32,ChunkDownload> current_chunks;
-		PtrMap<Peer*,PeerDownloader> pdowners;
 		bool endgame_mode;
 		ChunkSelector* chunk_selector;
 		

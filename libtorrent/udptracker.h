@@ -22,15 +22,16 @@
 
 #include <kurl.h>
 #include <qhostaddress.h>
+#include <qvaluelist.h>
 #include <qtimer.h>
+#include <libutil/array.h>
 #include "tracker.h"
 #include "globals.h"
 
-class QSocketDevice;
-class QSocketNotifier;
 
 namespace bt
 {
+	class UDPTrackerSocket;
 
 	/**
 	 * @author Joris Guisson
@@ -50,33 +51,30 @@ namespace bt
 		virtual void doRequest(const KURL & url);
 		virtual void updateData(TorrentControl* tc,PeerManager* pman);
 
-		static void setPort(Uint16 p);
-
 	private slots:
-		void dataRecieved(int s);
 		void onConnTimeout();
+		void connectRecieved(Int32 tid,Int64 connection_id);
+		void announceRecieved(Int32 tid,const Array<Uint8> & buf);
+		void onError(Int32 tid,const QString & error_string);
 
 	private:
 		void sendConnect();
 		void sendAnnounce();
-		void announceRecieved();
-		void connectRecieved();
 
 	private:
 		QHostAddress addr;
 		Uint16 udp_port;
-		QSocketDevice* sock;
 		Int32 transaction_id;
 		Int64 connection_id;
-		QSocketNotifier* sn;
 		KURL old_url;
 
-		Uint32 leechers,seeders,interval,data_read;
-		Uint8* peer_buf;
+		Uint32 interval,data_read;
+		QValueList<PotentialPeer> ppeers;
 		int n;
 		QTimer conn_timer;
 
-		static Uint16 port;
+		static UDPTrackerSocket* socket;
+		static Uint32 num_instances;
 	};
 
 }

@@ -25,6 +25,8 @@
 #include "request.h"
 #include "packetreader.h"
 #include "packetwriter.h"
+#include "peerdownloader.h"
+#include "peeruploader.h"
 #include <libutil/functions.h>
 
 namespace bt
@@ -41,6 +43,8 @@ namespace bt
 		choked = am_choked = true;
 		interested = am_interested = false;
 		killed = false;
+		downloader = new PeerDownloader(this);
+		uploader = new PeerUploader(this);
 		
 		connect(sock,SIGNAL(connectionClosed()),this,SLOT(connectionClosed()));
 		connect(sock,SIGNAL(readyRead()),this,SLOT(readyRead()));
@@ -52,6 +56,8 @@ namespace bt
 
 	Peer::~Peer()
 	{
+		delete uploader;
+		delete downloader;
 		delete pwriter;
 		delete preader;
 		if (sock)
@@ -201,7 +207,7 @@ namespace bt
 							ReadUint32(tmp_buf,1),
 							ReadUint32(tmp_buf,5),
 							ReadUint32(tmp_buf,9),
-							this);
+							peer_id);
 					request(r);
 				}
 				break;
@@ -218,7 +224,7 @@ namespace bt
 				{
 					Piece p(ReadUint32(tmp_buf,1),
 							ReadUint32(tmp_buf,5),
-							len - 9,this,tmp_buf+9);
+							len - 9,peer_id,tmp_buf+9);
 					piece(p);
 				}
 				break;
@@ -234,7 +240,7 @@ namespace bt
 					Request r(ReadUint32(tmp_buf,1),
 							  ReadUint32(tmp_buf,5),
 							  ReadUint32(tmp_buf,9),
-							  this);
+							  peer_id);
 					canceled(r);
 				}
 				break;
@@ -273,6 +279,11 @@ namespace bt
 	bool Peer::isSnubbed() const
 	{
 		return snub_timer.getElapsedSinceUpdate() >= 60000;
+	}
+
+	bool Peer::isSeeder() const
+	{
+		return pieces.allOn();
 	}
 }
 

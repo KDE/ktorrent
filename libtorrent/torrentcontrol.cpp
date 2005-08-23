@@ -196,7 +196,7 @@ namespace bt
 
 		// create downloader,uploader and choker
 		down = new Downloader(*tor,*pman,*cman);
-		up = new Uploader(*cman);
+		up = new Uploader(*cman,*pman);
 		choke = new Choker(*pman);
 	
 		
@@ -307,14 +307,12 @@ namespace bt
 		BitSet bs;
 		cman->toBitSet(bs);
 		p->getPacketWriter().sendBitSet(bs);
-		up->addPeer(p);
 		if (tmon)
 			tmon->peerAdded(p);
 	}
 	
 	void TorrentControl::onPeerRemoved(Peer* p)
 	{
-		up->removePeer(p);
 		if (tmon)
 			tmon->peerRemoved(p);
 	}
@@ -356,8 +354,6 @@ namespace bt
 			if (user)
 				bt::Touch(datadir + "stopped",true);
 		}
-		up->removeAllPeers();
-
 		pman->stop();
 		pman->closeAllConnections();
 		pman->clearDeadPeers();
@@ -652,7 +648,39 @@ namespace bt
 			return 0;
 	}
 
+	void TorrentControl::getSeederInfo(Uint32 & total,Uint32 & connected_to) const
+	{
+		total = 0;
+		connected_to = 0;
+		if (!pman || !tracker)
+			return;
+		
+		for (Uint32 i = 0;i < pman->getNumConnectedPeers();i++)
+		{
+			if (pman->getPeer(i)->isSeeder())
+				connected_to++;
+		}
+		total = tracker->getNumSeeders();
+		if (total == 0)
+			total = connected_to;
+	}
 
+	void TorrentControl::getLeecherInfo(Uint32 & total,Uint32 & connected_to) const
+	{
+		total = 0;
+		connected_to = 0;
+		if (!pman || !tracker)
+			return;
+		
+		for (Uint32 i = 0;i < pman->getNumConnectedPeers();i++)
+		{
+			if (!pman->getPeer(i)->isSeeder())
+				connected_to++;
+		}
+		total = tracker->getNumLeechers();
+		if (total == 0)
+			total = connected_to;
+	}
 
 	
 }

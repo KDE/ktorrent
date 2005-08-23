@@ -51,6 +51,12 @@ namespace bt
 		Tracker();
 		virtual ~Tracker();
 
+		/// Get number of seeders.
+		Uint32 getNumSeeders() const {return seeders;}
+
+		/// Get number of leechers.
+		Uint32 getNumLeechers() const {return leechers;}
+		
 		/**
 		 * Do a request to the tracker.
 		 * @param url The path and query
@@ -94,7 +100,7 @@ namespace bt
 		SHA1Hash info_hash;
 		PeerID peer_id;
 		Uint16 port;
-		Uint32 uploaded,downloaded,left;
+		Uint32 uploaded,downloaded,left,seeders,leechers;
 		QString event;
 	};
 

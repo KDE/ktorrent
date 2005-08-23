@@ -148,6 +148,20 @@ namespace bt
 		/// Get the number of chunks which have been excluded
 		Uint32 getNumChunksExcluded() const;
 
+		/**
+		 * Get the number of seeders (total and the number connected to).
+		 * @param total Total seederes 
+		 * @param connected_to Number connected to
+		 */
+		void getSeederInfo(Uint32 & total,Uint32 & connected_to) const;
+
+		/**
+		 * Get the number of leechers (total and the number connected to).
+		 * @param total Total seederes
+		 * @param connected_to Number connected to
+		 */
+		void getLeecherInfo(Uint32 & total,Uint32 & connected_to) const;
+
 		/// Get the current status of the download.
 		Status getStatus() const {return status;}
 		

@@ -198,6 +198,18 @@ void InfoWidget::update()
 	t = t.addMSecs(curr_tc->getTimeToNextTrackerUpdate());
 	m_tracker_update_time->setText(t.toString("mm:ss"));
 	m_tracker_status->setText(curr_tc->getTrackerStatus());
+	
+	Uint32 tot,num;
+	curr_tc->getSeederInfo(tot,num);
+	m_seeders->setText(QString("%1 (%2)").arg(num).arg(tot));
+
+	curr_tc->getLeecherInfo(tot,num);
+	m_leechers->setText(QString("%1 (%2)").arg(num).arg(tot));
+
+	float ratio = 0.0f;
+	if (curr_tc->getBytesDownloaded() > 0)
+		ratio = (float) curr_tc->getBytesUploaded() / (float)curr_tc->getBytesDownloaded();
+	m_share_ratio->setText(QString::number(ratio,0,2));
 	readyPreview();
 }
 

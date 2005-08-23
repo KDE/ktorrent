@@ -70,12 +70,20 @@ namespace bt
 			
 		Uint32 update_time = vn->data().toInt() > 300 ? 300 : vn->data().toInt();
 		tc->setTrackerTimerInterval(update_time * 1000);
+
+		vn = dict->getValue("incomplete");
+		if (vn)
+			leechers = vn->data().toInt();
+
+		vn = dict->getValue("complete");
+		if (vn)
+			seeders = vn->data().toInt();
 	
 		BListNode* ln = dict->getList("peers");
 		if (!ln)
 		{
 			// no list, it might however be a compact response
-			BValueNode* vn = dict->getValue("peers");
+			vn = dict->getValue("peers");
 			if (!vn)
 			{
 				delete n;
@@ -176,6 +184,7 @@ namespace bt
 		if (!err)
 		{
 			data = http->readAll();
+			Out() << "Data : " << QString(data) << endl;
 			dataReady();
 		}
 		else

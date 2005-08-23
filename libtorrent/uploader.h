@@ -21,7 +21,6 @@
 #define BTUPLOADER_H
 
 #include <qobject.h>
-#include <map>
 #include "globals.h"
 
 namespace bt
@@ -29,7 +28,7 @@ namespace bt
 	class Peer;
 	class ChunkManager;
 	class Request;
-	class PeerUploader;
+	class PeerManager;
 	
 
 	/**
@@ -46,7 +45,7 @@ namespace bt
 		 * Constructor, sets the ChunkManager. 
 		 * @param cman The ChunkManager
 		 */
-		Uploader(ChunkManager & cman);
+		Uploader(ChunkManager & cman,PeerManager & pman);
 		virtual ~Uploader();
 
 		/// Get the number of bytes uploaded.
@@ -75,29 +74,10 @@ namespace bt
 		 */
 		void update();
 		
-		/**
-		 * Add a Peer, this will create a PeerUploader for the Peer.
-		 * @param peer The Peer
-		 */
-		void addPeer(Peer* peer);
-
-		/**
-		 * Remove a Peer, this will get rid of the Peer's PeerUploader.
-		 * @param peer The Peer
-		 */
-		void removePeer(Peer* peer);
-
-		/**
-		 * Remove all Peer's and PeerUploader's.
-		 */
-		void removeAllPeers();
-		
 	private:
 		ChunkManager & cman;
+		PeerManager & pman;
 		Uint32 uploaded;
-		std::map<const Peer*,PeerUploader*> uploaders;
-		typedef std::map<const Peer*,PeerUploader*>::iterator UpItr;
-		typedef std::map<const Peer*,PeerUploader*>::const_iterator UpCItr;
 	};
 
 }

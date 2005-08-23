@@ -22,7 +22,6 @@
 
 
 #include <qsocket.h>
-#include <ksharedptr.h>
 #include "bitset.h"
 #include "globals.h"
 #include <libutil/timer.h>
@@ -37,6 +36,8 @@ namespace bt
 	class Piece;
 	class PacketReader;
 	class PacketWriter;
+	class PeerDownloader;
+	class PeerUploader;
 	
 
 	/**
@@ -47,7 +48,7 @@ namespace bt
 	 * It provides functions for sending packets. Packets it recieves
 	 * get relayed to the outside world using a bunch of signals.
 	*/
-	class Peer : public QObject,public KShared
+	class Peer : public QObject
 	{
 		Q_OBJECT
 	public:
@@ -55,6 +56,7 @@ namespace bt
 		 * Constructor, set the socket.
 		 * The socket is allready opened.
 		 * @param sock The socket
+		 * @param peer_id The Peer's BitTorrent ID
 		 * @param num_chunks The number of chunks in the file
 		 */
 		Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks);		
@@ -96,6 +98,12 @@ namespace bt
 		/// Update the up- and down- speed
 		void updateSpeed();
 
+		/// Get the PeerDownloader.
+		PeerDownloader* getPeerDownloader() {return downloader;}
+
+		/// Get the PeerUploader.
+		PeerUploader* getPeerUploader() {return uploader;}
+		
 		/**
 		 * Send a chunk of data.
 		 * @param data The data
@@ -124,6 +132,11 @@ namespace bt
 		 * Get the time when this Peer was choked.
 		 */
 		Uint32 getChokeTime() const {return time_choked;}
+
+		/**
+		 * See if the peer is a seeder.
+		 */
+		bool isSeeder() const;
 	private slots:
 		void connectionClosed(); 
 		void readyRead();
@@ -154,7 +167,7 @@ namespace bt
 		 * @param p The Piece
 		 */
 		void piece(const Piece & p);
-		
+
 	private:
 		void readPacket();
 		void handlePacket(Uint32 len);
@@ -172,11 +185,11 @@ namespace bt
 		SpeedEstimater* speed;
 		PacketReader* preader;
 		PacketWriter* pwriter;
+		PeerDownloader* downloader;
+		PeerUploader* uploader;
 
 		friend class PacketWriter;
 	};
-
-	typedef KSharedPtr<Peer> PeerPtr;
 }
 
 #endif

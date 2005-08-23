@@ -27,8 +27,7 @@
 namespace bt
 {
 
-	PeerUploader::PeerUploader(Peer* peer,ChunkManager & cman) 
-	: peer(peer),cman(cman)
+	PeerUploader::PeerUploader(Peer* peer) : peer(peer)
 	{
 	}
 
@@ -46,7 +45,7 @@ namespace bt
 		requests.remove(r);
 	}
 	
-	Uint32 PeerUploader::update()
+	Uint32 PeerUploader::update(ChunkManager & cman)
 	{
 		Uint32 uploaded = 0;
 		std::set<Uint32> grabbed;

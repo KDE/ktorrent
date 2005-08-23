@@ -102,8 +102,6 @@ namespace bt
 	
 	void SpeedEstimater::onRead(Uint32 bytes)
 	{
-		if (bytes > 4000000)
-			Out() << "DODO" << endl;
 		down->data(bytes);
 	}
 	

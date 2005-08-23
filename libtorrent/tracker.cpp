@@ -24,7 +24,9 @@ namespace bt
 {
 
 	Tracker::Tracker()
-	{}
+	{
+		seeders = leechers = 0;
+	}
 
 
 	Tracker::~Tracker()

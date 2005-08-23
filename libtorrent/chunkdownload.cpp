@@ -115,8 +115,7 @@ namespace bt
 		}
 
 	//	Out() << "Piece " << p.getIndex() << " " << p.getOffset() << " " << pp << endl;
-		const Peer* peer = p.getPeer();
-		DownloadStatus* ds = dstatus.find(peer);
+		DownloadStatus* ds = dstatus.find(p.getPeer());
 		memcpy(buf + p.getOffset(),p.getData(),p.getLength());
 		if (ds)
 			ds->set(pp,PIECE_DOWNLOADED);
@@ -162,15 +161,14 @@ namespace bt
 		
 
 		pdown.append(pd);
-		const Peer* peer = pd->getPeer();
-		dstatus.insert(peer,new DownloadStatus(pieces,num));
+		dstatus.insert(pd->getPeer()->getPeerID(),new DownloadStatus(pieces,num));
 		sendRequests(pd);
 	}
 	
 	void ChunkDownload::sendRequests(PeerDownloader* pd)
 	{
 		timer.update();
-		DownloadStatus* ds = dstatus.find(pd->getPeer());
+		DownloadStatus* ds = dstatus.find(pd->getPeer()->getPeerID());
 		if (!ds)
 			return;
 		
@@ -192,7 +190,7 @@ namespace bt
 	
 	void ChunkDownload::sendCancels(PeerDownloader* pd)
 	{
-		DownloadStatus* ds = dstatus.find(pd->getPeer());
+		DownloadStatus* ds = dstatus.find(pd->getPeer()->getPeerID());
 		for (Uint32 i = 0;i < num;i++)
 		{
 			if (ds->get(i) == PIECE_REQUESTED)
@@ -215,7 +213,7 @@ namespace bt
 		while (i != pdown.end())
 		{
 			PeerDownloader* pd = *i;
-			DownloadStatus* ds = dstatus.find(pd->getPeer());
+			DownloadStatus* ds = dstatus.find(pd->getPeer()->getPeerID());
 			if (ds->get(p.getIndex()) == PIECE_REQUESTED)
 			{
 				pd->cancel(Request(p));
@@ -230,7 +228,7 @@ namespace bt
 		if (!pdown.contains(pd))
 			return;
 
-		dstatus.erase(pd->getPeer());
+		dstatus.erase(pd->getPeer()->getPeerID());
 		pdown.remove(pd);
 	}
 	

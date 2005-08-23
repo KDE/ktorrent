@@ -115,8 +115,8 @@ void KTorrentView::removeDownload()
 	bt::TorrentControl* tc = curr->getTC();
 	if (tc->getBytesLeft() > 0 || !tc->isSaved())
 	{
-		QString msg = i18n("You will lose all data you downloaded if you do this."
-				" Are you sure you want to do this?");
+		QString msg = i18n("You will lose all data downloaded for this torrent, "
+				"if you do this. Are you sure you want to do this?");
 		int ret = KMessageBox::questionYesNo(this,msg,i18n("Are you sure?"));
 		if (ret == KMessageBox::No)
 			return;
@@ -183,7 +183,8 @@ void KTorrentView::addTorrent(bt::TorrentControl* tc)
 	KTorrentViewItem* tvi = new KTorrentViewItem(this,tc);
 	items.insert(tc,tvi);
 	tvi->update();
-	currentChanged(tc);
+	if (items.count() == 1)
+		currentChanged(tc);
 	connect(tc,SIGNAL(trackerError(bt::TorrentControl*,const QString & )),
 			this,SLOT(onTrackerError(bt::TorrentControl*,const QString & )));
 	if (show_debug_view)

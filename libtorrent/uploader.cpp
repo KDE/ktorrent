@@ -24,77 +24,47 @@
 #include "request.h"
 #include "uploader.h"
 #include "peeruploader.h"
+#include "peermanager.h"
 
 
 namespace bt
 {
 
-	Uploader::Uploader(ChunkManager & cman) 
-	: cman(cman),uploaded(0)
+	Uploader::Uploader(ChunkManager & cman,PeerManager & pman) 
+	: cman(cman),pman(pman),uploaded(0)
 	{}
 
 
 	Uploader::~Uploader()
 	{
-		for (UpItr i = uploaders.begin();i != uploaders.end();++i)
-		{
-			PeerUploader* p = i->second;
-			delete p;
-		}
 	}
 
 	void Uploader::addRequest(const Request & req)
 	{
-		UpItr i = uploaders.find(req.getPeer());
-		if (i != uploaders.end())
+		Peer* p = pman.findPeer(req.getPeer());
+		if (p)
 		{
-			PeerUploader* p = i->second;
-			p->addRequest(req);
+			PeerUploader* pu = p->getPeerUploader();
+			pu->addRequest(req);
 		}
 	}
 	
 	void Uploader::cancel(const Request & req)
 	{
-		UpItr i = uploaders.find(req.getPeer());
-		if (i != uploaders.end())
+		Peer* p = pman.findPeer(req.getPeer());
+		if (p)
 		{
-			PeerUploader* p = i->second;
-			p->removeRequest(req);
+			PeerUploader* pu = p->getPeerUploader();
+			pu->removeRequest(req);
 		}
 	}
-	
-	void Uploader::addPeer(Peer* peer)
-	{
-		PeerUploader* pup = new PeerUploader(peer,cman);
-		uploaders[peer] = pup;
-	}
-	
-	void Uploader::removePeer(Peer* peer)
-	{
-		UpItr i = uploaders.find(peer);
-		if (i != uploaders.end())
-		{
-			delete i->second;
-			uploaders.erase(i);
-		}
-	}
-	
-	void Uploader::removeAllPeers()
-	{
-		for (UpItr i = uploaders.begin();i != uploaders.end();++i)
-		{
-			PeerUploader* p = i->second;
-			delete p;
-		}
-		uploaders.clear();
-	}
-	
+		
 	void Uploader::update()
 	{
-		for (UpItr i = uploaders.begin();i != uploaders.end();++i)
+		for (Uint32 i = 0;i < pman.getNumConnectedPeers();++i)
 		{
-			PeerUploader* p = i->second;
-			uploaded += p->update();
+			PeerUploader* p = pman.getPeer(i)->getPeerUploader();
+			uploaded += p->update(cman);
 		}
 	}
 	
@@ -102,12 +72,10 @@ namespace bt
 	Uint32 Uploader::uploadRate() const
 	{
 		Uint32 rate = 0;
-		UpCItr j = uploaders.begin();
-		while (j != uploaders.end())
+		for (Uint32 i = 0;i < pman.getNumConnectedPeers();++i)
 		{
-			const Peer* p = j->first;
+			const Peer* p = pman.getPeer(i);
 			rate += p->getUploadRate();
-			j++;
 		}
 		return rate;
 	}

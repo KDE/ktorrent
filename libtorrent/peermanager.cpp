@@ -49,7 +49,8 @@ namespace bt
 	{
 		Globals::instance().getServer().removePeerManager(this);
 		pending.setAutoDelete(true);
-		peers.setAutoDelete(true);
+		peer_map.setAutoDelete(true);
+		peer_list.setAutoDelete(true);
 	}
 
 	void PeerManager::update()
@@ -59,14 +60,15 @@ namespace bt
 
 		// update the speed of each peer,
 		// and get ridd of some killed peers
-		QPtrList<Peer>::iterator i = peers.begin();
-		while (i != peers.end())
+		QPtrList<Peer>::iterator i = peer_list.begin();
+		while (i != peer_list.end())
 		{
 			Peer* p = *i;
 			if (p->isKilled())
 			{
-				i = peers.erase(i);
+				i = peer_list.erase(i);
 				killed.append(p);
+				peer_map.erase(p->getPeerID());
 				peerKilled(p);
 			}
 			else
@@ -102,8 +104,8 @@ namespace bt
 	{
 		Out() << "Getting rid of peers which have been choked for a long time" << endl;
 		Uint32 now = bt::GetCurrentTime();
-		QPtrList<Peer>::iterator i = peers.begin();
-		while (i != peers.end())
+		QPtrList<Peer>::iterator i = peer_list.begin();
+		while (i != peer_list.end())
 		{
 			Peer* p = *i;
 			if (p->isChoked() && (now - p->getChokeTime()) > older_then)
@@ -126,7 +128,7 @@ namespace bt
 	void PeerManager::newConnection(QSocket* sock,
 									const PeerID & peer_id)
 	{
-		Uint32 total = peers.count() + pending.count();
+		Uint32 total = peer_list.count() + pending.count();
 		if (!started || (max_connections > 0 && total >= max_connections))
 		{
 			delete sock;
@@ -134,7 +136,8 @@ namespace bt
 		}
 
 		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks());
-		peers.append(peer);
+		peer_list.append(peer);
+		peer_map.insert(peer_id,peer);
 		newPeer(peer);
 	}
 	
@@ -151,7 +154,8 @@ namespace bt
 		Peer* peer = new Peer(
 				auth->takeSocket(),auth->getPeerID(),tor.getNumChunks());
 			
-		peers.append(peer);
+		peer_list.append(peer);
+		peer_map.insert(auth->getPeerID(),peer);
 			
 		//	Out() << "New peer connected !" << endl;
 		newPeer(peer);
@@ -162,9 +166,9 @@ namespace bt
 		if (!started)
 			return false;
 		
-		for (Uint32 j = 0;j < peers.count();j++)
+		for (Uint32 j = 0;j < peer_list.count();j++)
 		{
-			Peer* p = peers.at(j);
+			Peer* p = peer_list.at(j);
 			if (p->getPeerID() == peer_id)
 			{
 				return true;
@@ -175,13 +179,13 @@ namespace bt
 	
 	void PeerManager::connectToPeers()
 	{
-		if (peers.count() + pending.count() >= max_connections && max_connections > 0)
+		if (peer_list.count() + pending.count() >= max_connections && max_connections > 0)
 			return;
 		
 		Uint32 num = 0;
 		if (max_connections > 0)
 		{
-			Uint32 available = max_connections - (peers.count() + pending.count());
+			Uint32 available = max_connections - (peer_list.count() + pending.count());
 			num = available >= potential_peers.count() ? 
 					potential_peers.count() : available;
 		}
@@ -221,10 +225,11 @@ namespace bt
 	void PeerManager::closeAllConnections()
 	{
 		killed.clear();
-		
-		peers.setAutoDelete(true);
-		peers.clear();
-		peers.setAutoDelete(false);
+
+		peer_map.clear();
+		peer_list.setAutoDelete(true);
+		peer_list.clear();
+		peer_list.setAutoDelete(false);
 		
 		pending.setAutoDelete(true);
 		pending.clear();
@@ -240,6 +245,11 @@ namespace bt
 	void PeerManager::stop()
 	{
 		started = false;
+	}
+
+	Peer* PeerManager::findPeer(const PeerID & peer_id)
+	{
+		return peer_map.find(peer_id);
 	}
 }
 #include "peermanager.moc"

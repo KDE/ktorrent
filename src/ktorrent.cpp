@@ -56,7 +56,7 @@
 #include <libtorrent/downloadcap.h>
 #include <libutil/error.h>
 #include <libtorrent/globals.h>
-#include <libtorrent/udptracker.h>
+#include <libtorrent/udptrackersocket.h>
 #include <libutil/log.h>
 #include <libutil/fileops.h>
 
@@ -204,7 +204,7 @@ void KTorrent::applySettings()
 
 
 	m_core->changeDataDir(Settings::tempDir());
-	UDPTracker::setPort(Settings::udpTrackerPort());
+	UDPTrackerSocket::setPort(Settings::udpTrackerPort());
 	m_core->changePort(Settings::port());
 }
 
@@ -314,14 +314,6 @@ void KTorrent::fileNew()
 
 void KTorrent::fileOpen()
 {
-	// this slot is called whenever the File->Open menu is selected,
-	// the Open shortcut is pressed (usually CTRL+O) or the Open toolbar
-	// button is clicked
-	/*
-	    // this brings up the generic open dialog
-	    KURL url = KURLRequesterDlg::getURL(QString::null, this, i18n("Open Location") );
-	*/
-	// standard filedialog
 	QString filter = "*.torrent|" + i18n("Torrent Files") + "\n*|" + i18n("All files");
 	KURL url = KFileDialog::getOpenURL(QString::null, filter, this, i18n("Open Location"));
 
@@ -427,8 +419,8 @@ void KTorrent::removeDownload()
 	{
 		if (tc->getBytesLeft() > 0 || !tc->isSaved())
 		{
-			QString msg = i18n("You will lose all data you downloaded if you do this."
-					" Are you sure you want to do this?");
+			QString msg = i18n("You will lose all data downloaded for this torrent, "
+					"if you do this. Are you sure you want to do this?");
 			int ret = KMessageBox::questionYesNo(this,msg,i18n("Are you sure?"));
 			if (ret == KMessageBox::No)
 				return;

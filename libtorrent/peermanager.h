@@ -23,6 +23,7 @@
 #include <qsocket.h> 
 #include <qvaluelist.h>
 #include <qptrlist.h>
+#include <libutil/ptrmap.h>
 #include "globals.h"
 #include "peerid.h"
 
@@ -70,7 +71,19 @@ namespace bt
 		 */
 		void clearDeadPeers();
 
-		Peer* getPeer(Uint32 index) {return peers.at(index);}
+		/**
+		 * Get the i'th Peer.
+		 * @param index 
+		 * @return Peer or 0 if out of range
+		 */
+		Peer* getPeer(Uint32 index) {return peer_list.at(index);}
+
+		/**
+		 * Find a Peer based on it's PeerID
+		 * @param peer_id The PeerID
+		 * @return A Peer or 0, if nothing could be found
+		 */
+		Peer* findPeer(const PeerID & peer_id);
 		
 		/**
 		 * Try to connect to some peers
@@ -98,7 +111,7 @@ namespace bt
 		 */
 		void killChokedPeers(Uint32 older_then);
 		
-		Uint32 getNumConnectedPeers() const {return peers.count();}
+		Uint32 getNumConnectedPeers() const {return peer_list.count();}
 		Uint32 getNumPending() const {return num_pending;}
 		
 		static void setMaxConnections(Uint32 max);
@@ -128,7 +141,8 @@ namespace bt
 		void peerKilled(Peer* p);
 		
 	private:
-		QPtrList<Peer> peers,killed;
+		PtrMap<PeerID,Peer> peer_map;
+		QPtrList<Peer> peer_list,killed;
 		QPtrList<Authenticate> pending;
 		Uint32 num_seeders,num_leechers,num_pending;
 		QValueList<PotentialPeer> potential_peers;

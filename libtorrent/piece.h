@@ -31,7 +31,7 @@ namespace bt
 	class Piece : public Request
 	{
 	public:
-		Piece(Uint32 index, Uint32 off, Uint32 len, Peer* peer,const Uint8* data);
+		Piece(Uint32 index, Uint32 off, Uint32 len, const PeerID & peer,const Uint8* data);
 		virtual ~Piece();
 
 		const Uint8* getData() const {return data;}

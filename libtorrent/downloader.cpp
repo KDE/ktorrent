@@ -45,11 +45,10 @@ namespace bt
 		Uint32 total = tor.getFileLength();
 		downloaded = (total - cman.bytesLeft());
 		endgame_mode = false;
-		pdowners.setAutoDelete(true);
+	
 		current_chunks.setAutoDelete(true);
 		connect(&pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
 		connect(&pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerKilled(Peer*)));
-		
 	}
 
 
@@ -101,10 +100,9 @@ namespace bt
 	
 	void Downloader::normalUpdate()
 	{
-		PtrMap<Peer*,PeerDownloader>::iterator i;
-		for (i = pdowners.begin(); i != pdowners.end();++i)
+		for (Uint32 i = 0; i < pman.getNumConnectedPeers();++i)
 		{
-			PeerDownloader* pd = i->second;
+			PeerDownloader* pd = pman.getPeer(i)->getPeerDownloader();
 			pd->downloadUnsent();
 			if (!pd->isNull() && !pd->isChoked())
 			{
@@ -120,9 +118,9 @@ namespace bt
 		{			
 			ChunkDownload* cd = j->second;
 			PtrMap<Peer*,PeerDownloader>::iterator i;
-			for (i = pdowners.begin(); i != pdowners.end();++i)
+			for (Uint32 i = 0; i < pman.getNumConnectedPeers();++i)
 			{
-				PeerDownloader* pd = i->second;
+				PeerDownloader* pd = pman.getPeer(i)->getPeerDownloader();
 					
 				if (!pd->isNull() && !pd->isChoked() &&
 					pd->hasChunk(cd->getChunk()->getIndex()) &&
@@ -178,17 +176,14 @@ namespace bt
 	
 	void Downloader::onNewPeer(Peer* peer)
 	{		
-		// add a PeerDownloader for every Peer
-		PeerDownloader* pd = new PeerDownloader(peer);
+		PeerDownloader* pd = peer->getPeerDownloader();
 		connect(pd,SIGNAL(downloaded(const Piece& )),
 				this,SLOT(pieceRecieved(const Piece& )));
-		pdowners.insert(peer,pd);
 	}
 
 	void Downloader::onPeerKilled(Peer* peer)
 	{
-		// Peer killed so remove it's PeerDownloader
-		PeerDownloader* pd = pdowners.find(peer);
+		PeerDownloader* pd = peer->getPeerDownloader();
 		if (pd)
 		{
 			for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();++i)
@@ -196,7 +191,6 @@ namespace bt
 				ChunkDownload* cd = i->second;
 				cd->peerKilled(pd);
 			}
-			pdowners.erase(peer);
 		}
 	}
 	
