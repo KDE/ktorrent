@@ -56,6 +56,7 @@ namespace bt
 		running = false;
 		started = false;
 		saved = false;
+		stopped_by_error = false;
 		num_tracker_attempts = 0;
 		old_datadir = QString::null;
 		tracker_update_interval = 120000;
@@ -85,59 +86,69 @@ namespace bt
 	void TorrentControl::update()
 	{
 		// first update peermanager
-		pman->update();
-		bool comp = completed;
-
-		// then the downloader and uploader
-		up->update();
-		if (!completed)
-			down->update();
-
-		completed = cman->chunksLeft() == 0;
-		if (completed && !comp)
+		try
 		{
-			// download has just been completed
-			updateTracker("completed");
-			finished(this);
+			pman->update();
+			bool comp = completed;
+	
+			// then the downloader and uploader
+			up->update();
+			if (!completed)
+				down->update();
+	
+			completed = cman->chunksLeft() == 0;
+			if (completed && !comp)
+			{
+				// download has just been completed
+				updateTracker("completed");
+				finished(this);
+			}
+			else if (!completed && comp)
+			{
+				// restart download if necesarry
+				// when user selects that files which were previously excluded,
+				// should now be downloaded
+				updateTracker("started");
+			}
+			updateStatusMsg();
+	
+			// make sure we don't use up to much memory with all the chunks
+			// we're uploading
+			cman->checkMemoryUsage();
+	
+			// get rid of dead Peers
+			pman->clearDeadPeers();
+	
+			// we may need to update the tracker
+			if (tracker_update_timer.getElapsedSinceUpdate() >= tracker_update_interval)
+			{
+				Uint32 max_connections = PeerManager::getMaxConnections();
+				// if a peer has nothing but choked since the last tracker update
+				// we will get rid of them (if there is a connection cap)
+				if (max_connections > 0 && pman->getNumConnectedPeers() == max_connections)
+					pman->killChokedPeers(tracker_update_interval);
+				
+				updateTracker();
+				tracker_update_timer.update();
+			}
+	
+			// we may need to update the choker
+			if (choker_update_timer.getElapsedSinceUpdate() >= 10000)
+			{
+				doChoking();
+				choker_update_timer.update();
+			}
+	
+			// make sure the downloadcap gets obeyed
+			DownloadCap::instance().update();
 		}
-		else if (!completed && comp)
+		catch (Error & e)
 		{
-			// restart download if necesarry
-			// when user selects that files which were previously excluded,
-			// should now be downloaded
-			updateTracker("started");
+			Out() << "Error : " << e.toString() << endl;
+			stopped_by_error = true;
+			error_msg = e.toString();
+			stop(false);
 		}
-		updateStatusMsg();
-
-		// make sure we don't use up to much memory with all the chunks
-		// we're uploading
-		cman->checkMemoryUsage();
-
-		// get rid of dead Peers
-		pman->clearDeadPeers();
-
-		// we may need to update the tracker
-		if (tracker_update_timer.getElapsedSinceUpdate() >= tracker_update_interval)
-		{
-			Uint32 max_connections = PeerManager::getMaxConnections();
-			// if a peer has nothing but choked since the last tracker update
-			// we will get rid of them (if there is a connection cap)
-			if (max_connections > 0 && pman->getNumConnectedPeers() == max_connections)
-				pman->killChokedPeers(tracker_update_interval);
-			
-			updateTracker();
-			tracker_update_timer.update();
-		}
-
-		// we may need to update the choker
-		if (choker_update_timer.getElapsedSinceUpdate() >= 10000)
-		{
-			doChoking();
-			choker_update_timer.update();
-		}
-
-		// make sure the downloadcap gets obeyed
-		DownloadCap::instance().update();
 	}
 	
 	
@@ -231,9 +242,10 @@ namespace bt
 				trackerstatus = i18n("Invalid repsonse");
 				if (pman->getNumConnectedPeers() == 0)
 				{
-					trackerError(this,i18n("The tracker %1 did not send a proper response"
-						", stopping download").arg(last_tracker_url.prettyURL()));
-					
+					error_msg = i18n("The tracker %1 did not send a proper response")
+							.arg(last_tracker_url.prettyURL());
+					stopped_by_error = true;
+					stop(false);
 				}
 				else
 				{
@@ -262,8 +274,10 @@ namespace bt
 			trackerstatus = i18n("Unreachable");
 			if (pman->getNumConnectedPeers() == 0)
 			{
-				trackerError(this,i18n("The tracker %1 is down, stopping download.")
-					.arg(last_tracker_url.prettyURL()));
+				error_msg = i18n("The tracker %1 is down.")
+					.arg(last_tracker_url.prettyURL());
+				stopped_by_error = true;
+				stop(false);
 			}
 			else
 			{
@@ -326,7 +340,8 @@ namespace bt
 	{
 		if (bt::Exists(datadir + "stopped"))
 			bt::Delete(datadir + "stopped",true);
-		
+
+		stopped_by_error = false;
 		num_tracker_attempts = 0;
 		updateTracker("started");
 		pman->start();
@@ -545,7 +560,9 @@ namespace bt
 
 	void TorrentControl::updateStatusMsg()
 	{
-		if (!started)
+		if (stopped_by_error)
+			status = TorrentControl::ERROR;
+		else if (!started)
 			status = TorrentControl::NOT_STARTED;
 		else if (!running && completed)
 			status = TorrentControl::COMPLETE;

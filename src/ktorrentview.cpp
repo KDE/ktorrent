@@ -185,13 +185,6 @@ void KTorrentView::addTorrent(bt::TorrentControl* tc)
 	tvi->update();
 	if (items.count() == 1)
 		currentChanged(tc);
-	connect(tc,SIGNAL(trackerError(bt::TorrentControl*,const QString & )),
-			this,SLOT(onTrackerError(bt::TorrentControl*,const QString & )));
-	if (show_debug_view)
-	{
-	//	DebugView* dbg = new DebugView(tc);
-	//	dbg->show();
-	}
 }
 
 void KTorrentView::removeTorrent(bt::TorrentControl* tc)
@@ -220,12 +213,6 @@ void KTorrentView::update()
 		tvi->update();
 		i++;
 	}
-}
-
-void KTorrentView::onTrackerError(bt::TorrentControl* tc,const QString & err)
-{
-	KMessageBox::error(this,err,i18n("Error"));
-	tc->stop(false);
 }
 
 bool KTorrentView::acceptDrag(QDropEvent* event) const

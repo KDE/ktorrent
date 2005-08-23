@@ -362,19 +362,7 @@ void KTorrentCore::update()
 		bt::TorrentControl* tc = *i;
 		if (tc->isRunning())
 		{
-			try
-			{
-				tc->update();
-			//	down_speed += tc->getDownloadRate();
-			}
-			catch (Error & e)
-			{
-				tc->stop(false);
-				Out() << "Error " << e.toString() << endl;
-				QString errmsg = i18n("The following error occurred: %1\nStopping download ...")
-						.arg(e.toString());
-				KMessageBox::error(0,errmsg,i18n("Error"));
-			}
+			tc->update();
 		}
 		i++;
 	}

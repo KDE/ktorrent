@@ -189,6 +189,9 @@ namespace bt
 		/// Get the Torrent.
 		const Torrent & getTorrent() const {return *tor;}
 
+		/// Return an error message (only valid when status == ERROR).
+		QString getErrorMessage() const {return error_msg;}
+		
 		/**
 		 * Set the interval between two tracker updates.
 		 * @param interval The interval in milliseconds
@@ -260,7 +263,6 @@ namespace bt
 		 * @param me The TorrentControl
 		 */
 		void finished(bt::TorrentControl* me);
-		void trackerError(bt::TorrentControl* me,const QString & error);
 		
 	private:	
 		void updateTracker(const QString & ev,bool last_succes = true);
@@ -280,9 +282,9 @@ namespace bt
 		Timer tracker_update_timer,choker_update_timer;
 		Uint32 tracker_update_interval;
 		
-		QString datadir,old_datadir,trackerevent,trackerstatus;
+		QString datadir,old_datadir,trackerevent,trackerstatus,error_msg;
 		Uint16 port;
-		bool completed,running,started,saved,autostart;
+		bool completed,running,started,saved,autostart,stopped_by_error;
 		TorrentMonitor* tmon;
 		Uint32 num_tracker_attempts;
 		KURL last_tracker_url;

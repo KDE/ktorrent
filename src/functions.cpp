@@ -23,17 +23,21 @@
 
 using namespace bt;
 
+const double TO_KB = 1024.0;
 const double TO_MEG = (1024.0 * 1024.0);
 const double TO_GIG = (1024.0 * 1024.0 * 1024.0);
 
 QString BytesToString(Uint32 bytes,int precision)
 {
 	KLocale* loc = KGlobal::locale();
-	if (bytes > 1024 * 1024 * 1024)
-		return i18n("%1 GB").arg(loc->formatNumber(bytes / TO_GIG,
-	precision < 0 ? 2 : precision));
-	else
+	if (bytes >= 1024 * 1024 * 1024)
+		return i18n("%1 GB").arg(loc->formatNumber(bytes / TO_GIG,precision < 0 ? 2 : precision));
+	else if (bytes >= 1024*1024)
 		return i18n("%1 MB").arg(loc->formatNumber(bytes / TO_MEG,precision < 0 ? 1 : precision));
+	else if (bytes >= 1024)
+		return i18n("%1 KB").arg(loc->formatNumber(bytes / TO_KB,precision < 0 ? 1 : precision));
+	else
+		return i18n("%1 B").arg(bytes);
 }
 
 QString KBytesPerSecToString(double speed,int precision)

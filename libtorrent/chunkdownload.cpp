@@ -191,6 +191,9 @@ namespace bt
 	void ChunkDownload::sendCancels(PeerDownloader* pd)
 	{
 		DownloadStatus* ds = dstatus.find(pd->getPeer()->getPeerID());
+		if (!ds)
+			return;
+		
 		for (Uint32 i = 0;i < num;i++)
 		{
 			if (ds->get(i) == PIECE_REQUESTED)
@@ -214,7 +217,7 @@ namespace bt
 		{
 			PeerDownloader* pd = *i;
 			DownloadStatus* ds = dstatus.find(pd->getPeer()->getPeerID());
-			if (ds->get(p.getIndex()) == PIECE_REQUESTED)
+			if (ds && ds->get(p.getIndex()) == PIECE_REQUESTED)
 			{
 				pd->cancel(Request(p));
 				ds->set(p.getIndex(),PIECE_DOWNLOADED);

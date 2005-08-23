@@ -28,7 +28,7 @@
 
 using namespace bt;
 
-static QString StatusToString(TorrentControl::Status s)
+static QString StatusToString(TorrentControl* tc,TorrentControl::Status s)
 {
 	switch (s)
 	{
@@ -45,7 +45,7 @@ static QString StatusToString(TorrentControl::Status s)
 		case TorrentControl::STOPPED:
 			return i18n("Stopped");
 		case TorrentControl::ERROR :
-			return i18n("Error");
+			return i18n("Error : ") + tc->getErrorMessage();
 	}
 	return QString::null;
 }
@@ -100,7 +100,7 @@ void KTorrentViewItem::update()
 
 	setText(0,tc->getTorrentName());
 	TorrentControl::Status status = tc->getStatus();
-	setText(1,StatusToString(status));
+	setText(1,StatusToString(tc,status));
 	Uint32 nb = tc->getBytesDownloaded() > tc->getTotalBytes() ?
 			tc->getTotalBytes() : tc->getBytesDownloaded();
 	
@@ -144,8 +144,8 @@ int KTorrentViewItem::compare(QListViewItem * i,int col,bool) const
 	switch (col)
 	{
 		case 0: return QString::compare(tc->getTorrentName(),otc->getTorrentName());
-		case 1: return QString::compare(StatusToString(tc->getStatus()),
-										StatusToString(otc->getStatus()));
+		case 1: return QString::compare(StatusToString(tc,tc->getStatus()),
+										StatusToString(otc,otc->getStatus()));
 		case 2: return CompareVal(tc->getTotalBytesToDownload(),otc->getTotalBytesToDownload());
 		case 3: return CompareVal(tc->getBytesUploaded(),otc->getBytesUploaded());
 		case 4: return CompareVal(tc->getDownloadRate(),otc->getDownloadRate());
