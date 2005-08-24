@@ -76,7 +76,7 @@ namespace bt
 		for (;itr != interested.end();itr++)
 		{
 			Peer* p = *itr;
-			if (num < 10)
+			if (num < 4)
 			{
 				p->getPacketWriter().sendUnchoke();
 				downloaders.push_back(p);
@@ -130,20 +130,23 @@ namespace bt
 
 	void Choker::optimisticUnchoke()
 	{
+		if (pman.getNumConnectedPeers() == 0)
+			return;
+		
 		if (opt_unchoke == 3)
 		{
 			Peer* p = pman.getPeer(opt_unchoke_index);
-			if (p)
-			{
-				PacketWriter & pout = p->getPacketWriter();
-				pout.sendUnchoke();
-				opt_unchoke_index = (opt_unchoke_index + 1) % pman.getNumConnectedPeers();
-				opt_unchoke = 1;
-			}
-			else
+			if (!p)
 			{
 				opt_unchoke_index = 0;
+				p = pman.getPeer(opt_unchoke_index);
 			}
+
+			PacketWriter & pout = p->getPacketWriter();
+			pout.sendUnchoke();
+			opt_unchoke_index = (opt_unchoke_index + 1) % pman.getNumConnectedPeers();
+			opt_unchoke = 1;
+			opt_unchoked_peer_id = p->getPeerID();
 		}
 		else
 		{

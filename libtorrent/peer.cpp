@@ -288,7 +288,10 @@ namespace bt
 
 	QString Peer::getIPAddresss() const
 	{
-		return sock->peerAddress().toString();
+		if (sock)
+			return sock->peerAddress().toString();
+		else
+			return QString::null;
 	}
 }
 

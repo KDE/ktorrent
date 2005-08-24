@@ -26,6 +26,7 @@
 namespace bt
 {
 	class Peer;
+	class PeerID;
 	class ChunkManager;
 	class Request;
 	class PeerManager;
@@ -71,8 +72,9 @@ namespace bt
 		
 		/**
 		 * Update every PeerUploader.
+		 * @param opt_unchoked PeerID of optimisticly unchoked peer
 		 */
-		void update();
+		void update(const PeerID & opt_unchoked);
 		
 	private:
 		ChunkManager & cman;

@@ -76,6 +76,11 @@ namespace bt
 		return true;
 	}
 
+	bool operator != (const PeerID & a,const PeerID & b)
+	{
+		return ! operator == (a,b);
+	}
+
 	bool operator < (const PeerID & a,const PeerID & b)
 	{
 		for (int i = 0;i < 20;i++)

@@ -185,7 +185,6 @@ namespace bt
 		if (!err)
 		{
 			data = http->readAll();
-			Out() << "Data : " << QString(data) << endl;
 			dataReady();
 		}
 		else

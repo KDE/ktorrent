@@ -52,6 +52,7 @@ namespace bt
 		QString identifyClient() const;
 		
 		friend bool operator == (const PeerID & a,const PeerID & b);
+		friend bool operator != (const PeerID & a,const PeerID & b);
 		friend bool operator < (const PeerID & a,const PeerID & b);
 	};
 

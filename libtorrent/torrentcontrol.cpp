@@ -62,6 +62,7 @@ namespace bt
 		tracker_update_interval = 120000;
 		status = NOT_STARTED;
 		autostart = true;
+		running_time = 0; 
 	}
 	
 	
@@ -92,7 +93,7 @@ namespace bt
 			bool comp = completed;
 	
 			// then the downloader and uploader
-			up->update();
+			up->update(choke->getOptimisticlyUnchokedPeerID());
 			if (!completed)
 				down->update();
 	
@@ -351,10 +352,12 @@ namespace bt
 		started = true;
 		tracker_update_timer.update();
 		choker_update_timer.update();
+		time_started = QTime::currentTime(); 
 	}
 	
 	void TorrentControl::stop(bool user)
 	{
+		running_time += time_started.secsTo(QTime::currentTime()); 
 		saveStats();
 		if (running)
 		{
@@ -618,6 +621,7 @@ namespace bt
 
 		QTextStream out(&fptr);
 		out << "UPLOADED=" << up->bytesUploaded() << ::endl;
+		out << "RUNNING_TIME=" << running_time << ::endl; 
 	}
 
 	void TorrentControl::loadStats()
@@ -638,6 +642,16 @@ namespace bt
 					up->setBytesUploaded(val);
 				else
 					Out() << "Warning : can't get bytes uploaded out of line : "
+							<< line << endl;
+			}
+			else if (line.startsWith("RUNNING_TIME="))
+			{
+				bool ok = true;
+				int val = line.mid(13).toInt(&ok);
+				if(ok)
+					this->running_time = val;
+				else
+					Out() << "Warning : can't get running time out of line : "
 							<< line << endl;
 			}
 		}

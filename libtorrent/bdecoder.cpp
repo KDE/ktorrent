@@ -81,7 +81,6 @@ namespace bt
 				QString key = k->data().toString();
 				delete k;
 
-// 				Out() << "Data : " << endl;
 				BNode* data = decode();
 				curr->insert(key,data);
 			}

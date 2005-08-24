@@ -59,12 +59,12 @@ namespace bt
 		}
 	}
 		
-	void Uploader::update()
+	void Uploader::update(const PeerID & opt_unchoked)
 	{
 		for (Uint32 i = 0;i < pman.getNumConnectedPeers();++i)
 		{
 			PeerUploader* p = pman.getPeer(i)->getPeerUploader();
-			uploaded += p->update(cman);
+			uploaded += p->update(cman,opt_unchoked);
 		}
 	}
 	

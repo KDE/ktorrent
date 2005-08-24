@@ -96,10 +96,13 @@ namespace bt
 		{
 			conn->close();
 			delete conn;
+			
 		}
-
-		ServerAuthenticate* auth = new ServerAuthenticate(conn,this);
-		pending.append(auth);
+		else
+		{
+			ServerAuthenticate* auth = new ServerAuthenticate(conn,this);
+			pending.append(auth);
+		}
 	}
 
 	PeerManager* Server::findPeerManager(const SHA1Hash & hash)

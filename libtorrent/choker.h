@@ -21,6 +21,7 @@
 #define BTCHOKER_H
 
 #include <list>
+#include "peerid.h"
 
 namespace bt
 {
@@ -39,6 +40,7 @@ namespace bt
 		PeerManager & pman;
 		int opt_unchoke_index;
 		int opt_unchoke;
+		PeerID opt_unchoked_peer_id;
 		std::list<Peer*> downloaders,interested,not_interested;
 	public:
 		Choker(PeerManager & pman);
@@ -49,6 +51,9 @@ namespace bt
 		 * @param have_all Indicates wether we have the entire file
 		 */
 		void update(bool have_all);
+
+		/// Get the PeerID of the optimisticly unchoked peer.
+		const PeerID & getOptimisticlyUnchokedPeerID() const {return opt_unchoked_peer_id;}
 
 	private:
 		void updateInterested();
