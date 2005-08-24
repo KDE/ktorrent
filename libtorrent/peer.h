@@ -62,6 +62,9 @@ namespace bt
 		Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks);		
 		virtual ~Peer();
 
+		/// Get the IP address of the Peer.
+		QString getIPAddresss() const;
+		
 		/// See if the peer has been killed.
 		bool isKilled() const {return killed;}
 

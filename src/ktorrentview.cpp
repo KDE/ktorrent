@@ -49,7 +49,8 @@ KTorrentView::KTorrentView(QWidget *parent)
 	addColumn(i18n("Peers"));
 	addColumn(i18n("% Complete"));
 
-	connect(this,SIGNAL(clicked(QListViewItem* )),this,SLOT(onExecuted(QListViewItem* )));
+	connect(this,SIGNAL(currentChanged(QListViewItem* )),
+			this,SLOT(onExecuted(QListViewItem* )));
 	show_debug_view = bt::Globals::instance().isDebugModeSet();
 	connect(this,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )),
 			this,SLOT(showContextMenu(KListView*, QListViewItem*, const QPoint& )));

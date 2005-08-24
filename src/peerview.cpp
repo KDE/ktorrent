@@ -32,11 +32,12 @@ PeerViewItem::PeerViewItem(PeerView* pv,bt::Peer* peer) : KListViewItem(pv),peer
 
 void PeerViewItem::update()
 {
-	setText(0,peer->getPeerID().identifyClient());
-	setText(1,KBytesPerSecToString(peer->getDownloadRate() / 1024.0));
-	setText(2,KBytesPerSecToString(peer->getUploadRate() / 1024.0));
-	setText(3,peer->isChoked() ? i18n("yes") : i18n("no"));
-	setText(4,peer->isSnubbed() ? i18n("yes") : i18n("no"));
+	setText(0,peer->getIPAddresss());
+	setText(1,peer->getPeerID().identifyClient());
+	setText(2,KBytesPerSecToString(peer->getDownloadRate() / 1024.0));
+	setText(3,KBytesPerSecToString(peer->getUploadRate() / 1024.0));
+	setText(4,peer->isChoked() ? i18n("yes") : i18n("no"));
+	setText(5,peer->isSnubbed() ? i18n("yes") : i18n("no"));
 }
 
 int PeerViewItem::compare(QListViewItem * i,int col,bool) const
@@ -45,12 +46,14 @@ int PeerViewItem::compare(QListViewItem * i,int col,bool) const
 	switch (col)
 	{
 		case 0:
+			return QString::compare(peer->getIPAddresss(),op->getIPAddresss());
+		case 1:
 			return QString::compare(peer->getPeerID().identifyClient(),
 									op->getPeerID().identifyClient());
-		case 1: return CompareVal(peer->getDownloadRate(),op->getDownloadRate());
-		case 2: return CompareVal(peer->getUploadRate(),op->getUploadRate());
-		case 3: return CompareVal(peer->isChoked(),op->isChoked());
-		case 4: return CompareVal(peer->isSnubbed(),op->isSnubbed());
+		case 2: return CompareVal(peer->getDownloadRate(),op->getDownloadRate());
+		case 3: return CompareVal(peer->getUploadRate(),op->getUploadRate());
+		case 4: return CompareVal(peer->isChoked(),op->isChoked());
+		case 5: return CompareVal(peer->isSnubbed(),op->isSnubbed());
 	}
 	return 0;
 }
@@ -58,6 +61,7 @@ int PeerViewItem::compare(QListViewItem * i,int col,bool) const
 PeerView::PeerView(QWidget *parent, const char *name)
 		: KListView(parent, name)
 {
+	addColumn(i18n("IP"));
 	addColumn(i18n("Client"));
 	addColumn(i18n("Down Speed"));
 	addColumn(i18n("Up Speed"));

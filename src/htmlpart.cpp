@@ -58,7 +58,8 @@ void HTMLPart::copy()
 	QString txt = selectedText();
 	QClipboard *cb = QApplication::clipboard();
     // Copy text into the clipboard
-	cb->setText(txt,QClipboard::Clipboard);
+	if (cb)
+		cb->setText(txt,QClipboard::Clipboard);
 }
 
 void HTMLPart::openURLRequest(const KURL &u,const KParts::URLArgs &)

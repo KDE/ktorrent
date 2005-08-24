@@ -285,6 +285,11 @@ namespace bt
 	{
 		return pieces.allOn();
 	}
+
+	QString Peer::getIPAddresss() const
+	{
+		return sock->peerAddress().toString();
+	}
 }
 
 #include "peer.moc"
