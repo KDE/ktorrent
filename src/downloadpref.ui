@@ -266,7 +266,7 @@
                         <cstring>kActiveLabel1</cstring>
                     </property>
                     <property name="text">
-                        <string>If you are behind a NAT-enabled rooter, it is important that you forward 
+                        <string>If you are behind a NAT-enabled router, it is important that you forward 
 the above ports. You should consult your router's manual if you 
 do not know how to do this.</string>
                     </property>
