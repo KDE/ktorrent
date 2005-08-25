@@ -175,6 +175,13 @@ signals:
 	 * @param tc
 	 */
 	void finished(bt::TorrentControl* tc);
+
+    /**
+	 * Torrent download is stopped by error
+	 * @param tc TorrentControl
+	 * @param msg Error message
+	 */
+	void torrentStoppedByError(bt::TorrentControl* tc, QString msg);
 	
 	/**
 	* TorrentCore torrents have beed updated. Stats are changed.
@@ -188,6 +195,7 @@ private:
 	
 private slots:
 	void torrentFinished(bt::TorrentControl* tc);
+	void slotStoppedByError(bt::TorrentControl* tc, QString msg);
 	
 private:
 	QPtrList<bt::TorrentControl> downloads;

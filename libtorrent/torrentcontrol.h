@@ -274,6 +274,14 @@ namespace bt
 		 * @param me The TorrentControl
 		 */
 		void finished(bt::TorrentControl* me);
+
+		/**
+		 * Emited when a Torrent download is stopped by error
+		 * @param me The TorrentControl
+		 * @param msg Error message
+		 */
+		void stoppedByError(bt::TorrentControl* me, QString msg);
+
 		
 	private:	
 		void updateTracker(const QString & ev,bool last_succes = true);

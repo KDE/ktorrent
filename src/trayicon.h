@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2005 by                                                 *
+ *   Joris Guisson <joris.guisson@gmail.com>                               *
+ *   Ivan Vasic <ivasic@gmail.com>                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,7 +22,10 @@
 #define TRAYICON_H
 
 #include <ksystemtray.h>
+#include "ktorrentcore.h" 
+#include "libtorrent/torrentcontrol.h" 
 
+using namespace bt; 
 class QString;
 
 /**
@@ -31,11 +35,17 @@ class TrayIcon : public KSystemTray
 {
 	Q_OBJECT
 public:
-	TrayIcon(QWidget *parent = 0, const char *name = 0);
+	TrayIcon(KTorrentCore* tc, QWidget *parent = 0, const char *name = 0);
 	~TrayIcon();
 
 	void updateStats(const QString stats);
+	
+private slots:
+	void finished(bt::TorrentControl* tc);
+	void torrentStoppedByError(bt::TorrentControl* tc, QString msg); 
 
+private:
+	KTorrentCore* m_core;
 };
 
 #endif

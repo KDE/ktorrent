@@ -158,6 +158,7 @@ namespace bt
 			stopped_by_error = true;
 			error_msg = e.toString();
 			stop(false);
+			emit stoppedByError(this, error_msg);
 		}
 	}
 	
@@ -259,6 +260,7 @@ namespace bt
 							.arg(last_tracker_url.prettyURL());
 					stopped_by_error = true;
 					stop(false);
+					emit stoppedByError(this, error_msg);
 				}
 				else
 				{
@@ -291,6 +293,7 @@ namespace bt
 					.arg(last_tracker_url.prettyURL());
 				stopped_by_error = true;
 				stop(false);
+				emit stoppedByError(this, error_msg);
 			}
 			else
 			{

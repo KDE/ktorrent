@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2005 by                                                 *
+ *   Joris Guisson <joris.guisson@gmail.com>                               *
+ *   Ivan Vasic <ivasic@gmail.com>                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -96,7 +97,7 @@ KTorrent::KTorrent()
 
 	m_search = new SearchWidget(m_tabs);
 	m_core = new KTorrentCore();
-	m_systray_icon = new TrayIcon(this);
+	m_systray_icon = new TrayIcon(m_core, this); 
 
 
 	KIconLoader* iload = KGlobal::iconLoader();
