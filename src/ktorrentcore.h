@@ -195,10 +195,6 @@ private:
 	int max_downloads;
 	bool keep_seeding;
 	QTimer update_timer;
-	
-	///Removed torrents transfered bytes
-	bt::Uint32 removed_torrents_down;
-	bt::Uint32 removed_torrents_up;
 };
 
 #endif

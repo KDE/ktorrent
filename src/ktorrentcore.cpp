@@ -65,8 +65,6 @@ KTorrentCore::KTorrentCore() : max_downloads(0),keep_seeding(true)
 	connect(&update_timer,SIGNAL(timeout()),this,SLOT(update()));
 	update_timer.start(250);
 
-	this->removed_torrents_down = 0;
-	this->removed_torrents_up = 0;
 	Uint16 port = Settings::port();
 	Uint16 i = 0;
 	do
@@ -215,8 +213,6 @@ void KTorrentCore::loadTorrents()
 
 void KTorrentCore::remove(bt::TorrentControl* tc)
 {
-	this->removed_torrents_down += tc->getBytesDownloaded();
-	this->removed_torrents_up += tc->getBytesUploaded();
 	stop(tc);
 	
 	QString dir = tc->getDataDir();
@@ -423,20 +419,7 @@ CurrentStats KTorrentCore::getStats()
 {
 	CurrentStats stats;
 	Uint32 bytes_dl = 0, bytes_ul = 0, speed_dl = 0, speed_ul = 0;
-	static Uint32 prev_dl = 0, prev_ul = 0;
-	static bool first_run = true;
 
-	if(first_run)
-	{
-		prev_dl = prev_ul = 0;
-		for ( QPtrList<bt::TorrentControl>::iterator i = downloads.begin(); i != downloads.end(); ++i )
-		{
-			bt::TorrentControl* tc = *i;
-			prev_dl += tc->getBytesDownloaded() > tc->getTotalBytes() ? tc->getTotalBytes() : tc->getBytesDownloaded();
-			prev_ul += tc->getBytesUploaded();
-		}
-		first_run = false;
-	}
 
 	for ( QPtrList<bt::TorrentControl>::iterator i = downloads.begin(); i != downloads.end(); ++i )
 	{
@@ -444,13 +427,13 @@ CurrentStats KTorrentCore::getStats()
 	
 		speed_dl += tc->getDownloadRate();
 		speed_ul += tc->getUploadRate();
-		bytes_dl += (tc->getBytesDownloaded() > tc->getTotalBytes()) ? tc->getTotalBytes() : tc->getBytesDownloaded();
-		bytes_ul += tc->getBytesUploaded();
+		bytes_dl += tc->getSessionBytesDownloaded();
+		bytes_ul += tc->getSessionBytesUploaded();
 	}
 	stats.download_speed = speed_dl;
 	stats.upload_speed = speed_ul;
-	stats.bytes_downloaded = bytes_dl + removed_torrents_down - prev_dl;
-	stats.bytes_uploaded = bytes_ul + removed_torrents_up - prev_ul;
+	stats.bytes_downloaded = bytes_dl;
+	stats.bytes_uploaded = bytes_ul;
 
 	return stats;
 }

@@ -8,7 +8,7 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>780</width>
+            <width>973</width>
             <height>274</height>
         </rect>
     </property>
@@ -62,7 +62,7 @@
                     </widget>
                     <widget class="QLayoutWidget">
                         <property name="name">
-                            <cstring>layout29</cstring>
+                            <cstring>layout14</cstring>
                         </property>
                         <hbox>
                             <property name="name">
@@ -195,7 +195,7 @@
                             </widget>
                             <widget class="QLayoutWidget">
                                 <property name="name">
-                                    <cstring>layout28</cstring>
+                                    <cstring>layout13</cstring>
                                 </property>
                                 <vbox>
                                     <property name="name">
@@ -203,7 +203,7 @@
                                     </property>
                                     <widget class="QLayoutWidget">
                                         <property name="name">
-                                            <cstring>layout15</cstring>
+                                            <cstring>layout12</cstring>
                                         </property>
                                         <hbox>
                                             <property name="name">
@@ -221,25 +221,104 @@
                                                 </property>
                                                 <property name="sizeHint">
                                                     <size>
-                                                        <width>65</width>
+                                                        <width>67</width>
                                                         <height>20</height>
                                                     </size>
                                                 </property>
                                             </spacer>
-                                            <widget class="QLayoutWidget">
+                                            <widget class="QGroupBox">
                                                 <property name="name">
-                                                    <cstring>layout13</cstring>
+                                                    <cstring>groupBox3</cstring>
+                                                </property>
+                                                <property name="title">
+                                                    <string>Peers</string>
                                                 </property>
                                                 <hbox>
                                                     <property name="name">
                                                         <cstring>unnamed</cstring>
                                                     </property>
-                                                    <widget class="QGroupBox">
+                                                    <widget class="QLayoutWidget">
                                                         <property name="name">
-                                                            <cstring>groupBox3</cstring>
+                                                            <cstring>layout11</cstring>
                                                         </property>
-                                                        <property name="title">
-                                                            <string>Peers</string>
+                                                        <grid>
+                                                            <property name="name">
+                                                                <cstring>unnamed</cstring>
+                                                            </property>
+                                                            <widget class="QLabel" row="0" column="0">
+                                                                <property name="name">
+                                                                    <cstring>textLabel1_6</cstring>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string>Leechers:</string>
+                                                                </property>
+                                                            </widget>
+                                                            <widget class="QLabel" row="0" column="1">
+                                                                <property name="name">
+                                                                    <cstring>m_leechers</cstring>
+                                                                </property>
+                                                                <property name="minimumSize">
+                                                                    <size>
+                                                                        <width>100</width>
+                                                                        <height>0</height>
+                                                                    </size>
+                                                                </property>
+                                                                <property name="frameShape">
+                                                                    <enum>Panel</enum>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string></string>
+                                                                </property>
+                                                                <property name="alignment">
+                                                                    <set>AlignVCenter|AlignRight</set>
+                                                                </property>
+                                                            </widget>
+                                                            <widget class="QLabel" row="1" column="1">
+                                                                <property name="name">
+                                                                    <cstring>m_seeders</cstring>
+                                                                </property>
+                                                                <property name="minimumSize">
+                                                                    <size>
+                                                                        <width>100</width>
+                                                                        <height>0</height>
+                                                                    </size>
+                                                                </property>
+                                                                <property name="frameShape">
+                                                                    <enum>Panel</enum>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string></string>
+                                                                </property>
+                                                                <property name="alignment">
+                                                                    <set>AlignVCenter|AlignRight</set>
+                                                                </property>
+                                                            </widget>
+                                                            <widget class="QLabel" row="1" column="0">
+                                                                <property name="name">
+                                                                    <cstring>textLabel2</cstring>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string>Seeders:</string>
+                                                                </property>
+                                                            </widget>
+                                                        </grid>
+                                                    </widget>
+                                                </hbox>
+                                            </widget>
+                                            <widget class="QGroupBox">
+                                                <property name="name">
+                                                    <cstring>groupBox1</cstring>
+                                                </property>
+                                                <property name="title">
+                                                    <string>Tracker</string>
+                                                </property>
+                                                <hbox>
+                                                    <property name="name">
+                                                        <cstring>unnamed</cstring>
+                                                    </property>
+                                                    <widget class="QLayoutWidget">
+                                                        <property name="name">
+                                                            <cstring>layout14</cstring>
                                                         </property>
                                                         <hbox>
                                                             <property name="name">
@@ -247,23 +326,41 @@
                                                             </property>
                                                             <widget class="QLayoutWidget">
                                                                 <property name="name">
-                                                                    <cstring>layout11</cstring>
+                                                                    <cstring>layout13</cstring>
                                                                 </property>
-                                                                <grid>
+                                                                <vbox>
                                                                     <property name="name">
                                                                         <cstring>unnamed</cstring>
                                                                     </property>
-                                                                    <widget class="QLabel" row="0" column="0">
+                                                                    <widget class="QLabel">
                                                                         <property name="name">
-                                                                            <cstring>textLabel1_6</cstring>
+                                                                            <cstring>textLabel1_5</cstring>
                                                                         </property>
                                                                         <property name="text">
-                                                                            <string>Leechers:</string>
+                                                                            <string>Status:</string>
                                                                         </property>
                                                                     </widget>
-                                                                    <widget class="QLabel" row="0" column="1">
+                                                                    <widget class="QLabel">
                                                                         <property name="name">
-                                                                            <cstring>m_leechers</cstring>
+                                                                            <cstring>textLabel3_2</cstring>
+                                                                        </property>
+                                                                        <property name="text">
+                                                                            <string>Next update in:</string>
+                                                                        </property>
+                                                                    </widget>
+                                                                </vbox>
+                                                            </widget>
+                                                            <widget class="QLayoutWidget">
+                                                                <property name="name">
+                                                                    <cstring>layout12</cstring>
+                                                                </property>
+                                                                <vbox>
+                                                                    <property name="name">
+                                                                        <cstring>unnamed</cstring>
+                                                                    </property>
+                                                                    <widget class="QLabel">
+                                                                        <property name="name">
+                                                                            <cstring>m_tracker_status</cstring>
                                                                         </property>
                                                                         <property name="minimumSize">
                                                                             <size>
@@ -281,9 +378,9 @@
                                                                             <set>AlignVCenter|AlignRight</set>
                                                                         </property>
                                                                     </widget>
-                                                                    <widget class="QLabel" row="1" column="1">
+                                                                    <widget class="QLabel">
                                                                         <property name="name">
-                                                                            <cstring>m_seeders</cstring>
+                                                                            <cstring>m_tracker_update_time</cstring>
                                                                         </property>
                                                                         <property name="minimumSize">
                                                                             <size>
@@ -301,116 +398,88 @@
                                                                             <set>AlignVCenter|AlignRight</set>
                                                                         </property>
                                                                     </widget>
-                                                                    <widget class="QLabel" row="1" column="0">
-                                                                        <property name="name">
-                                                                            <cstring>textLabel2</cstring>
-                                                                        </property>
-                                                                        <property name="text">
-                                                                            <string>Seeders:</string>
-                                                                        </property>
-                                                                    </widget>
-                                                                </grid>
+                                                                </vbox>
                                                             </widget>
                                                         </hbox>
                                                     </widget>
-                                                    <widget class="QGroupBox">
+                                                </hbox>
+                                            </widget>
+                                            <widget class="QGroupBox">
+                                                <property name="name">
+                                                    <cstring>groupBox4_2</cstring>
+                                                </property>
+                                                <property name="title">
+                                                    <string>Average speed</string>
+                                                </property>
+                                                <hbox>
+                                                    <property name="name">
+                                                        <cstring>unnamed</cstring>
+                                                    </property>
+                                                    <widget class="QLayoutWidget">
                                                         <property name="name">
-                                                            <cstring>groupBox1</cstring>
+                                                            <cstring>layout11</cstring>
                                                         </property>
-                                                        <property name="title">
-                                                            <string>Tracker</string>
-                                                        </property>
-                                                        <hbox>
+                                                        <grid>
                                                             <property name="name">
                                                                 <cstring>unnamed</cstring>
                                                             </property>
-                                                            <widget class="QLayoutWidget">
+                                                            <widget class="QLabel" row="1" column="0">
                                                                 <property name="name">
-                                                                    <cstring>layout14</cstring>
+                                                                    <cstring>textLabel2_2</cstring>
                                                                 </property>
-                                                                <hbox>
-                                                                    <property name="name">
-                                                                        <cstring>unnamed</cstring>
-                                                                    </property>
-                                                                    <widget class="QLayoutWidget">
-                                                                        <property name="name">
-                                                                            <cstring>layout13</cstring>
-                                                                        </property>
-                                                                        <vbox>
-                                                                            <property name="name">
-                                                                                <cstring>unnamed</cstring>
-                                                                            </property>
-                                                                            <widget class="QLabel">
-                                                                                <property name="name">
-                                                                                    <cstring>textLabel1_5</cstring>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>Status:</string>
-                                                                                </property>
-                                                                            </widget>
-                                                                            <widget class="QLabel">
-                                                                                <property name="name">
-                                                                                    <cstring>textLabel3_2</cstring>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string>Next update in:</string>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </vbox>
-                                                                    </widget>
-                                                                    <widget class="QLayoutWidget">
-                                                                        <property name="name">
-                                                                            <cstring>layout12</cstring>
-                                                                        </property>
-                                                                        <vbox>
-                                                                            <property name="name">
-                                                                                <cstring>unnamed</cstring>
-                                                                            </property>
-                                                                            <widget class="QLabel">
-                                                                                <property name="name">
-                                                                                    <cstring>m_tracker_status</cstring>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>100</width>
-                                                                                        <height>0</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="frameShape">
-                                                                                    <enum>Panel</enum>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string></string>
-                                                                                </property>
-                                                                                <property name="alignment">
-                                                                                    <set>AlignVCenter|AlignRight</set>
-                                                                                </property>
-                                                                            </widget>
-                                                                            <widget class="QLabel">
-                                                                                <property name="name">
-                                                                                    <cstring>m_tracker_update_time</cstring>
-                                                                                </property>
-                                                                                <property name="minimumSize">
-                                                                                    <size>
-                                                                                        <width>100</width>
-                                                                                        <height>0</height>
-                                                                                    </size>
-                                                                                </property>
-                                                                                <property name="frameShape">
-                                                                                    <enum>Panel</enum>
-                                                                                </property>
-                                                                                <property name="text">
-                                                                                    <string></string>
-                                                                                </property>
-                                                                                <property name="alignment">
-                                                                                    <set>AlignVCenter|AlignRight</set>
-                                                                                </property>
-                                                                            </widget>
-                                                                        </vbox>
-                                                                    </widget>
-                                                                </hbox>
+                                                                <property name="text">
+                                                                    <string>Down:</string>
+                                                                </property>
                                                             </widget>
-                                                        </hbox>
+                                                            <widget class="QLabel" row="0" column="0">
+                                                                <property name="name">
+                                                                    <cstring>textLabel1_7</cstring>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string>Up:</string>
+                                                                </property>
+                                                            </widget>
+                                                            <widget class="QLabel" row="0" column="1">
+                                                                <property name="name">
+                                                                    <cstring>m_avg_up</cstring>
+                                                                </property>
+                                                                <property name="minimumSize">
+                                                                    <size>
+                                                                        <width>100</width>
+                                                                        <height>0</height>
+                                                                    </size>
+                                                                </property>
+                                                                <property name="frameShape">
+                                                                    <enum>Panel</enum>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string></string>
+                                                                </property>
+                                                                <property name="alignment">
+                                                                    <set>AlignVCenter|AlignRight</set>
+                                                                </property>
+                                                            </widget>
+                                                            <widget class="QLabel" row="1" column="1">
+                                                                <property name="name">
+                                                                    <cstring>m_avg_down</cstring>
+                                                                </property>
+                                                                <property name="minimumSize">
+                                                                    <size>
+                                                                        <width>100</width>
+                                                                        <height>0</height>
+                                                                    </size>
+                                                                </property>
+                                                                <property name="frameShape">
+                                                                    <enum>Panel</enum>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string></string>
+                                                                </property>
+                                                                <property name="alignment">
+                                                                    <set>AlignVCenter|AlignRight</set>
+                                                                </property>
+                                                            </widget>
+                                                        </grid>
                                                     </widget>
                                                 </hbox>
                                             </widget>
@@ -494,7 +563,7 @@
                                         <property name="sizeHint">
                                             <size>
                                                 <width>20</width>
-                                                <height>40</height>
+                                                <height>25</height>
                                             </size>
                                         </property>
                                     </spacer>

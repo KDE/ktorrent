@@ -62,7 +62,9 @@ namespace bt
 		tracker_update_interval = 120000;
 		status = NOT_STARTED;
 		autostart = true;
-		running_time = 0; 
+		running_time = 0;
+		prev_bytes_dl = 0;
+		prev_bytes_ul = 0;
 	}
 	
 	
@@ -138,6 +140,13 @@ namespace bt
 			{
 				doChoking();
 				choker_update_timer.update();
+			}
+
+			// to satisfy people obsessed with their share ratio
+			if (stats_save_timer.getElapsedSinceUpdate() >= 5*60*1000)
+			{
+				saveStats();
+				stats_save_timer.update();
 			}
 	
 			// make sure the downloadcap gets obeyed
@@ -218,6 +227,9 @@ namespace bt
 		if (bt::Exists(datadir + "stopped"))
 			autostart = false;
 		updateStatusMsg();
+
+		loadStats();
+		prev_bytes_dl = getBytesDownloaded();
 	}
 
 	void TorrentControl::setTrackerTimerInterval(Uint32 interval)
@@ -352,6 +364,7 @@ namespace bt
 		started = true;
 		tracker_update_timer.update();
 		choker_update_timer.update();
+		stats_save_timer.update();
 		time_started = QTime::currentTime(); 
 	}
 	
@@ -643,6 +656,7 @@ namespace bt
 				else
 					Out() << "Warning : can't get bytes uploaded out of line : "
 							<< line << endl;
+				prev_bytes_ul = val; 
 			}
 			else if (line.startsWith("RUNNING_TIME="))
 			{
@@ -711,6 +725,14 @@ namespace bt
 		total = tracker->getNumLeechers();
 		if (total == 0)
 			total = connected_to;
+	}
+
+	Uint32 TorrentControl::getRunningTime() const
+	{
+		if (!running)
+			return running_time;
+		else
+			return running_time + time_started.secsTo(QTime::currentTime());
 	}
 
 	

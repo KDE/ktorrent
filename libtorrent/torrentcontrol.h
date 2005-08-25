@@ -202,7 +202,7 @@ namespace bt
 		 * Get the running time of this torrent in seconds
 		 * @return Uint32 - time in seconds
 		 */
-		Uint32 getRunningTime() const { return running_time; }
+		Uint32 getRunningTime() const; 
 
 		/**
 		* Checks if torrent is multimedial and chunks needed for preview are downloaded
@@ -246,6 +246,13 @@ namespace bt
 		
 		/// Get the status of the tracker
 		QString getTrackerStatus() const {return trackerstatus;}
+
+		/// Get the number of bytes downloaded in this session 
+		Uint32 getSessionBytesDownloaded() const { return getBytesDownloaded() - prev_bytes_dl; }
+
+		/// Get the number of bytes uploaded in this session 
+		Uint32 getSessionBytesUploaded() const {return (up) ? getBytesUploaded() - prev_bytes_ul : 0; }
+		
 	private slots:
 		void onNewPeer(Peer* p);
 		void onPeerRemoved(Peer* p);
@@ -283,7 +290,7 @@ namespace bt
 		Uploader* up;
 		Choker* choke;
 		
-		Timer tracker_update_timer,choker_update_timer;
+		Timer tracker_update_timer,choker_update_timer,stats_save_timer;
 		Uint32 tracker_update_interval;
 		
 		QString datadir,old_datadir,trackerevent,trackerstatus,error_msg;
@@ -295,6 +302,7 @@ namespace bt
 		Status status;
 		QTime time_started;
 		int running_time;
+		Uint32 prev_bytes_dl, prev_bytes_ul; 
 	};
 }
 

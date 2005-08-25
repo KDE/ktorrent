@@ -210,6 +210,20 @@ void InfoWidget::update()
 	if (curr_tc->getBytesDownloaded() > 0)
 		ratio = (float) curr_tc->getBytesUploaded() / (float)curr_tc->getBytesDownloaded();
 	m_share_ratio->setText(QString::number(ratio,0,2));
+
+	Uint32 secs = curr_tc->getRunningTime();
+	if (secs == 0)
+	{
+		m_avg_up->setText(KBytesPerSecToString(0));
+		m_avg_down->setText(KBytesPerSecToString(0));
+	}
+	else
+	{
+		double r = 0.001 * ((double)curr_tc->getBytesUploaded()/ (double)secs);
+		m_avg_up->setText(KBytesPerSecToString(r));
+		r = 0.001 * ((double)curr_tc->getBytesDownloaded()/ (double)secs);
+		m_avg_down->setText(KBytesPerSecToString(r));
+	}
 	readyPreview();
 }
 

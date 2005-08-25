@@ -57,6 +57,10 @@ namespace bt
 		for (Uint32 i = 0;i < pman.getNumConnectedPeers();i++)
 		{
 			Peer* p = pman.getPeer(i);
+			
+			if (p->getPeerID() == opt_unchoked_peer_id)
+				continue;
+			
 			if (p->isInterested())
 			{
 				interested.push_back(p);
@@ -76,6 +80,10 @@ namespace bt
 		for (;itr != interested.end();itr++)
 		{
 			Peer* p = *itr;
+			
+			if (p->getPeerID() == opt_unchoked_peer_id)
+				continue;
+			
 			if (num < 4)
 			{
 				p->getPacketWriter().sendUnchoke();
@@ -116,6 +124,9 @@ namespace bt
 		for (;itr != not_interested.end();itr++)
 		{
 			Peer* p = *itr;
+			if (p->getPeerID() == opt_unchoked_peer_id)
+				continue;
+			
 			if ((have_all && p->getDownloadRate() > fd->getDownloadRate()) ||
 				(!have_all && p->getUploadRate() > fd->getUploadRate()))
 			{
