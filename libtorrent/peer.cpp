@@ -33,11 +33,14 @@ namespace bt
 {
 	
 	
-	
+	static Uint32 peer_id_counter = 1;
 	
 	Peer::Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks) 
 	: sock(sock),pieces(num_chunks),peer_id(peer_id)
 	{
+		id = peer_id_counter;
+		peer_id_counter++;
+		
 		speed = new SpeedEstimater();
 		preader = new PacketReader(sock,speed);
 		choked = am_choked = true;
@@ -207,10 +210,10 @@ namespace bt
 							ReadUint32(tmp_buf,1),
 							ReadUint32(tmp_buf,5),
 							ReadUint32(tmp_buf,9),
-							peer_id);
+							id);
 					
 					uploader->addRequest(r);
-					//Out() << "REQUEST " << peer_id << endl;
+					Out() << "REQUEST " << peer_id.toString() << endl;
 				}
 				break;
 			case PIECE:
@@ -226,7 +229,7 @@ namespace bt
 				{
 					Piece p(ReadUint32(tmp_buf,1),
 							ReadUint32(tmp_buf,5),
-							len - 9,peer_id,tmp_buf+9);
+							len - 9,id,tmp_buf+9);
 					piece(p);
 				}
 				break;
@@ -242,7 +245,7 @@ namespace bt
 					Request r(ReadUint32(tmp_buf,1),
 							  ReadUint32(tmp_buf,5),
 							  ReadUint32(tmp_buf,9),
-							  peer_id);
+							  id);
 					uploader->removeRequest(r);
 				}
 				break;

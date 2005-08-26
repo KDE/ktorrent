@@ -45,7 +45,7 @@ namespace bt
 		requests.remove(r);
 	}
 	
-	Uint32 PeerUploader::update(ChunkManager & cman,const PeerID & opt_unchoked)
+	Uint32 PeerUploader::update(ChunkManager & cman,Uint32 opt_unchoked)
 	{
 		Uint32 uploaded = 0;
 		std::set<Uint32> grabbed;
@@ -54,7 +54,7 @@ namespace bt
 		uploaded += pw.update();
 		
 		if (peer->isSnubbed() && !peer->isChoked() &&
-			cman.chunksLeft() != 0 && peer->getPeerID() != opt_unchoked)
+			cman.chunksLeft() != 0 && peer->getID() != opt_unchoked)
 			return 0;
 
 		while (!requests.empty() && pw.getNumPacketsToWrite() == 0)

@@ -58,7 +58,7 @@ namespace bt
 		{
 			Peer* p = pman.getPeer(i);
 			
-			if (p->getPeerID() == opt_unchoked_peer_id)
+			if (p->getID() == opt_unchoked_peer_id)
 				continue;
 			
 			if (p->isInterested())
@@ -81,7 +81,7 @@ namespace bt
 		{
 			Peer* p = *itr;
 			
-			if (p->getPeerID() == opt_unchoked_peer_id)
+			if (p->getID() == opt_unchoked_peer_id)
 				continue;
 			
 			if (num < 4)
@@ -124,7 +124,7 @@ namespace bt
 		for (;itr != not_interested.end();itr++)
 		{
 			Peer* p = *itr;
-			if (p->getPeerID() == opt_unchoked_peer_id)
+			if (p->getID() == opt_unchoked_peer_id)
 				continue;
 			
 			if ((have_all && p->getDownloadRate() > fd->getDownloadRate()) ||
@@ -157,7 +157,7 @@ namespace bt
 			pout.sendUnchoke();
 			opt_unchoke_index = (opt_unchoke_index + 1) % pman.getNumConnectedPeers();
 			opt_unchoke = 1;
-			opt_unchoked_peer_id = p->getPeerID();
+			opt_unchoked_peer_id = p->getID();
 		}
 		else
 		{

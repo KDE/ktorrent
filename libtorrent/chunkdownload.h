@@ -120,7 +120,7 @@ namespace bt
 		Uint32 last_size;
 		Timer timer;
 		QPtrList<PeerDownloader> pdown;
-		PtrMap<PeerID,DownloadStatus> dstatus;
+		PtrMap<Uint32,DownloadStatus> dstatus;
 
 		friend File & operator << (File & out,const ChunkDownload & cd);
 		friend File & operator >> (File & in,ChunkDownload & cd);

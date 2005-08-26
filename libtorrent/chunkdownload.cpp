@@ -161,14 +161,14 @@ namespace bt
 		
 
 		pdown.append(pd);
-		dstatus.insert(pd->getPeer()->getPeerID(),new DownloadStatus(pieces,num));
+		dstatus.insert(pd->getPeer()->getID(),new DownloadStatus(pieces,num));
 		sendRequests(pd);
 	}
 	
 	void ChunkDownload::sendRequests(PeerDownloader* pd)
 	{
 		timer.update();
-		DownloadStatus* ds = dstatus.find(pd->getPeer()->getPeerID());
+		DownloadStatus* ds = dstatus.find(pd->getPeer()->getID());
 		if (!ds)
 			return;
 		
@@ -190,7 +190,7 @@ namespace bt
 	
 	void ChunkDownload::sendCancels(PeerDownloader* pd)
 	{
-		DownloadStatus* ds = dstatus.find(pd->getPeer()->getPeerID());
+		DownloadStatus* ds = dstatus.find(pd->getPeer()->getID());
 		if (!ds)
 			return;
 		
@@ -216,7 +216,7 @@ namespace bt
 		while (i != pdown.end())
 		{
 			PeerDownloader* pd = *i;
-			DownloadStatus* ds = dstatus.find(pd->getPeer()->getPeerID());
+			DownloadStatus* ds = dstatus.find(pd->getPeer()->getID());
 			if (ds && ds->get(p.getIndex()) == PIECE_REQUESTED)
 			{
 				pd->cancel(Request(p));
@@ -231,7 +231,7 @@ namespace bt
 		if (!pdown.contains(pd))
 			return;
 
-		dstatus.erase(pd->getPeer()->getPeerID());
+		dstatus.erase(pd->getPeer()->getID());
 		pdown.remove(pd);
 	}
 	

@@ -68,7 +68,7 @@ namespace bt
 			{
 				i = peer_list.erase(i);
 				killed.append(p);
-				peer_map.erase(p->getPeerID());
+				peer_map.erase(p->getID());
 				peerKilled(p);
 			}
 			else
@@ -137,7 +137,7 @@ namespace bt
 
 		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks());
 		peer_list.append(peer);
-		peer_map.insert(peer_id,peer);
+		peer_map.insert(peer->getID(),peer);
 		newPeer(peer);
 	}
 	
@@ -155,7 +155,7 @@ namespace bt
 				auth->takeSocket(),auth->getPeerID(),tor.getNumChunks());
 			
 		peer_list.append(peer);
-		peer_map.insert(auth->getPeerID(),peer);
+		peer_map.insert(peer->getID(),peer);
 			
 		//	Out() << "New peer connected !" << endl;
 		newPeer(peer);
@@ -247,17 +247,9 @@ namespace bt
 		started = false;
 	}
 
-	Peer* PeerManager::findPeer(const PeerID & peer_id)
+	Peer* PeerManager::findPeer(Uint32 peer_id)
 	{
-		PtrMap<PeerID,Peer>::iterator i = peer_map.begin();
-		while (i != peer_map.end())
-		{
-			if (i->first == peer_id)
-				return i->second;
-			else
-				i++;
-		}
-		return 0;
+		return peer_map.find(peer_id);
 	}
 }
 #include "peermanager.moc"

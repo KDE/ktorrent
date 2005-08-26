@@ -79,11 +79,11 @@ namespace bt
 		Peer* getPeer(Uint32 index) {return peer_list.at(index);}
 
 		/**
-		 * Find a Peer based on it's PeerID
-		 * @param peer_id The PeerID
+		 * Find a Peer based on it's ID
+		 * @param peer_id The ID
 		 * @return A Peer or 0, if nothing could be found
 		 */
-		Peer* findPeer(const PeerID & peer_id);
+		Peer* findPeer(Uint32 peer_id);
 		
 		/**
 		 * Try to connect to some peers
@@ -141,7 +141,7 @@ namespace bt
 		void peerKilled(Peer* p);
 		
 	private:
-		PtrMap<PeerID,Peer> peer_map;
+		PtrMap<Uint32,Peer> peer_map;
 		QPtrList<Peer> peer_list,killed;
 		QPtrList<Authenticate> pending;
 		Uint32 num_seeders,num_leechers,num_pending;

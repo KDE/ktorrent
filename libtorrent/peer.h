@@ -62,6 +62,9 @@ namespace bt
 		Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks);		
 		virtual ~Peer();
 
+		/// Get the peer's unique ID.
+		Uint32 getID() const {return id;}
+		
 		/// Get the IP address of the Peer.
 		QString getIPAddresss() const;
 		
@@ -180,7 +183,7 @@ namespace bt
 		QSocket* sock;
 		
 		bool choked,interested,am_choked,am_interested,killed;
-		Uint32 time_choked;
+		Uint32 time_choked,id;
 		BitSet pieces;
 		PeerID peer_id;
 		Timer snub_timer;

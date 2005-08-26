@@ -60,9 +60,9 @@ namespace bt
 	public slots:		
 		/**
 		 * Update every PeerUploader.
-		 * @param opt_unchoked PeerID of optimisticly unchoked peer
+		 * @param opt_unchoked ID of optimisticly unchoked peer
 		 */
-		void update(const PeerID & opt_unchoked);
+		void update(Uint32 opt_unchoked);
 		
 	private:
 		ChunkManager & cman;

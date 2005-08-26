@@ -96,8 +96,8 @@ namespace bt
 	
 			// then the downloader and uploader
 			up->update(choke->getOptimisticlyUnchokedPeerID());
-			if (!completed)
-				down->update();
+			//if (!completed)
+			down->update();
 	
 			completed = cman->chunksLeft() == 0;
 			if (completed && !comp)

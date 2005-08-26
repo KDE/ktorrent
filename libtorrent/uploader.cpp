@@ -41,7 +41,7 @@ namespace bt
 
 	
 		
-	void Uploader::update(const PeerID & opt_unchoked)
+	void Uploader::update(Uint32 opt_unchoked)
 	{
 		for (Uint32 i = 0;i < pman.getNumConnectedPeers();++i)
 		{
