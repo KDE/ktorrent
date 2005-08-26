@@ -57,19 +57,7 @@ namespace bt
 
 		/// Set the number of bytes which have been uploaded.
 		void setBytesUploaded(Uint32 b) {uploaded = b;}
-	public slots:
-		/**
-		 * Add a Request for a piece of a Chunk.
-		 * @param req The request
-		 */
-		void addRequest(const Request & req);
-		
-		/**
-		 * Cancel a Request.
-		 * @param req The request
-		 */
-		void cancel(const Request & req);
-		
+	public slots:		
 		/**
 		 * Update every PeerUploader.
 		 * @param opt_unchoked PeerID of optimisticly unchoked peer

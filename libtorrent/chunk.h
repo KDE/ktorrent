@@ -20,6 +20,8 @@
 #ifndef BTCHUNK_H
 #define BTCHUNK_H
 
+#include <libutil/constants.h>
+
 namespace bt
 {
 
@@ -35,7 +37,7 @@ namespace bt
 	class Chunk
 	{
 	public:
-		Chunk(unsigned int index,unsigned int size);
+		Chunk(unsigned int index,Uint32 size);
 		~Chunk();
 		
 		enum Status 
@@ -48,21 +50,18 @@ namespace bt
 		Status getStatus() const {return status;}
 		void setStatus(Status s) {status = s;}
 		
-		const unsigned char* getData() const {return data;}
-		unsigned char* getData() {return data;}
+		const Uint8* getData() const {return data;}
+		Uint8* getData() {return data;}
 		
-		void setData(unsigned char* d);
+		void setData(Uint8* d);
 		void clear();
 		
-		unsigned int getIndex() const {return index;}
-		unsigned int getSize() const {return size;}
+		Uint32 getIndex() const {return index;}
+		Uint32 getSize() const {return size;}
 		
 		void ref() {ref_count++;}
 		void unref() {ref_count--;}
 		bool taken() const {return ref_count > 0;}
-		
-		unsigned int getCacheFileOffset() const {return cache_file_offset;}
-		void setCacheFileOffset(unsigned int off) {cache_file_offset = off;}
 		
 		void allocate();
 
@@ -72,11 +71,10 @@ namespace bt
 		void setExclude(bool yes) {exclude = yes;}
 	private:
 		Status status;
-		unsigned int index;
-		unsigned char* data;
-		unsigned int size;
+		Uint32 index;
+		Uint8* data;
+		Uint32 size;
 		int ref_count;
-		unsigned int cache_file_offset;
 		bool priority;
 		bool exclude;
 	};

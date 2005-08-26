@@ -73,7 +73,7 @@ namespace bt
 		return fread(buf,1,size,fptr);
 	}
 
-	Uint32 File::seek(SeekPos from,int num)
+	Uint64 File::seek(SeekPos from,Int64 num)
 	{
 		if (!fptr)
 			return 0;
@@ -87,8 +87,8 @@ namespace bt
 			default:
 				break;
 		}
-		fseek(fptr,num,p);
-		return ftell(fptr);
+		fseeko(fptr,num,p);
+		return ftello(fptr);
 	}
 
 	bool File::eof() const
@@ -99,12 +99,12 @@ namespace bt
 		return feof(fptr) != 0;
 	}
 
-	Uint32 File::tell() const
+	Uint64 File::tell() const
 	{
 		if (!fptr)
 			return 0;
 		
-		return ftell(fptr);
+		return ftello(fptr);
 	}
 
 	QString File::errorString() const

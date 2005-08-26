@@ -157,6 +157,7 @@ namespace bt
 			Out() << "Error : " << e.toString() << endl;
 			stopped_by_error = true;
 			error_msg = e.toString();
+			short_error_msg = i18n("Internal error");
 			stop(false);
 			emit stoppedByError(this, error_msg);
 		}
@@ -253,12 +254,13 @@ namespace bt
 			if (num_tracker_attempts >= tor->getNumTrackerURLs() &&
 						 trackerevent != "stopped")
 			{
-				trackerstatus = i18n("Invalid repsonse");
+				trackerstatus = i18n("Invalid response");
 				if (pman->getNumConnectedPeers() == 0)
 				{
 					error_msg = i18n("The tracker %1 did not send a proper response")
 							.arg(last_tracker_url.prettyURL());
 					stopped_by_error = true;
+					short_error_msg = i18n("Tracker error"); 
 					stop(false);
 					emit stoppedByError(this, error_msg);
 				}
@@ -266,7 +268,7 @@ namespace bt
 				{
 					if (tor->getNumTrackerURLs() > 1)
 					{
-						trackerstatus = i18n("Invalid repsonse, trying backup");
+						trackerstatus = i18n("Invalid response, trying backup");
 						updateTracker(trackerevent,false);
 					}
 					updateStatusMsg();
@@ -274,7 +276,7 @@ namespace bt
 			}
 			else if (trackerevent != "stopped")
 			{
-				trackerstatus = i18n("Invalid repsonse, trying backup");
+				trackerstatus = i18n("Invalid response, trying backup");
 				updateTracker(trackerevent,false);
 			}
 		}
@@ -291,6 +293,7 @@ namespace bt
 			{
 				error_msg = i18n("The tracker %1 is down.")
 					.arg(last_tracker_url.prettyURL());
+				short_error_msg = i18n("The tracker is down.");
 				stopped_by_error = true;
 				stop(false);
 				emit stoppedByError(this, error_msg);
@@ -332,8 +335,6 @@ namespace bt
 
 	void TorrentControl::onNewPeer(Peer* p)
 	{
-		connect(p,SIGNAL(request(const Request& )),up,SLOT(addRequest(const Request& )));
-		connect(p,SIGNAL(canceled(const Request& )),up,SLOT(cancel(const Request& )));
 		BitSet bs;
 		cman->toBitSet(bs);
 		p->getPacketWriter().sendBitSet(bs);

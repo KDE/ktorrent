@@ -208,7 +208,9 @@ namespace bt
 							ReadUint32(tmp_buf,5),
 							ReadUint32(tmp_buf,9),
 							peer_id);
-					request(r);
+					
+					uploader->addRequest(r);
+					//Out() << "REQUEST " << peer_id << endl;
 				}
 				break;
 			case PIECE:
@@ -241,7 +243,7 @@ namespace bt
 							  ReadUint32(tmp_buf,5),
 							  ReadUint32(tmp_buf,9),
 							  peer_id);
-					canceled(r);
+					uploader->removeRequest(r);
 				}
 				break;
 		}

@@ -191,7 +191,9 @@ namespace bt
 
 		/// Return an error message (only valid when status == ERROR).
 		QString getErrorMessage() const {return error_msg;}
-		
+
+		/// Return a short error message (only valid when status == ERROR). 
+		QString getShortErrorMessage() const {return short_error_msg; }
 		/**
 		 * Set the interval between two tracker updates.
 		 * @param interval The interval in milliseconds
@@ -301,7 +303,8 @@ namespace bt
 		Timer tracker_update_timer,choker_update_timer,stats_save_timer;
 		Uint32 tracker_update_interval;
 		
-		QString datadir,old_datadir,trackerevent,trackerstatus,error_msg;
+		QString datadir,old_datadir,trackerevent;
+		QString trackerstatus,error_msg,short_error_msg;
 		Uint16 port;
 		bool completed,running,started,saved,autostart,stopped_by_error;
 		TorrentMonitor* tmon;

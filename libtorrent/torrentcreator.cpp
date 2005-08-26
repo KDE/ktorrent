@@ -52,7 +52,7 @@ namespace bt
 			if (!this->target.endsWith(bt::DirSeparator()))
 				this->target += bt::DirSeparator();
 			
-			Uint32 tot_size = 0;
+			Uint64 tot_size = 0;
 			buildFileList("",tot_size);
 			num_chunks = tot_size / chunk_size;
 			if (tot_size % chunk_size > 0)
@@ -64,7 +64,7 @@ namespace bt
 		{
 			num_chunks = fi.size() / chunk_size;
 			if (fi.size() % chunk_size > 0)
-					num_chunks++;
+				num_chunks++;
 			last_size = fi.size() % chunk_size;
 			Out() << "Tot Size : " << fi.size() << endl;
 		}
@@ -81,7 +81,7 @@ namespace bt
 	TorrentCreator::~TorrentCreator()
 	{}
 
-	void TorrentCreator::buildFileList(const QString & dir,Uint32 & tot_size)
+	void TorrentCreator::buildFileList(const QString & dir,Uint64 & tot_size)
 	{
 		QDir d(target + dir);
 		// first get all files (we ignore symlinks)
@@ -136,7 +136,7 @@ namespace bt
 			
 		}
 		enc.write("created by");enc.write("KTorrent 1.0");
-		enc.write("creation date");enc.write(time(0));
+		enc.write("creation date");enc.write((Uint64)time(0));
 		if (comments.length() > 0)
 		{
 			enc.write("comments");
@@ -164,11 +164,11 @@ namespace bt
 		}
 		else
 		{
-			enc.write("length"); enc.write(fi.size());
+			enc.write("length"); enc.write((Uint64)fi.size());
 			
 		}
 		enc.write("name"); enc.write(name);
-		enc.write("piece length"); enc.write(chunk_size);
+		enc.write("piece length"); enc.write((Uint64)chunk_size);
 		enc.write("pieces"); savePieces(enc);
 		enc.end();
 	}
@@ -248,7 +248,7 @@ namespace bt
 				// first calculate offset into file
 				// only the first file can have an offset
 				// the following files will start at the beginning
-			Uint32 off = 0;
+			Uint64 off = 0;
 			if (i == 0)
 			{
 				if (cur_chunk - f.getFirstChunk() > 0)
@@ -315,7 +315,6 @@ namespace bt
 		{
 			NewChunkHeader hdr;
 			hdr.index = i;
-			hdr.cache_off = i*chunk_size;
 			fptr.write(&hdr,sizeof(NewChunkHeader));
 		}
 		fptr.close();

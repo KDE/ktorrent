@@ -63,17 +63,19 @@ void TrayIcon::finished(TorrentControl* tc)
 		speed_down = double(tc->getBytesDownloaded()/1024.0) / (double)tc->getRunningTime();
 	}
 			
-	QString msg = i18n(" has completed downloading.<br>Average speed: %1 DL / %2 UL.")
+	QString msg = i18n("<b>%1</b> has completed downloading."
+			"<br>Average speed: %2 DL / %3 UL.")
+			.arg(tc->getTorrentName())
 			.arg(KBytesPerSecToString(speed_down))
 			.arg(KBytesPerSecToString(speed_up));
 	
 	KPassivePopup::message(i18n("Download completed"),
-						    tc->getTorrentName()+msg,loadIcon("ktorrent"), this);
+						   msg,loadIcon("ktorrent"), this);
 }
 
 void TrayIcon::torrentStoppedByError(bt::TorrentControl* tc, QString msg) 
 {
-	QString err_msg = i18n("%1 has been stopped by following error: <br>%2")
+	QString err_msg = i18n("<b>%1</b> has been stopped by the following error: <br>%2")
 			.arg(tc->getTorrentName()).arg(msg);
 	KPassivePopup::message(i18n("Error"),err_msg,loadIcon("ktorrent"),this);
 } 

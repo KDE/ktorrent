@@ -75,6 +75,14 @@ namespace bt
 		QString s = QString("i%1e").arg(val);
 		out->write(s.utf8(),s.length());
 	}
+
+	void BEncoder::write(Uint64 val)
+	{
+		if (!out) return;
+		
+		QString s = QString("i%1e").arg(val);
+		out->write(s.utf8(),s.length());
+	}
 	
 	void BEncoder::write(const QString & str)
 	{

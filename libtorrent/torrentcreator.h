@@ -46,7 +46,7 @@ namespace bt
 		QString name,comments;
 		// calculated values
 		Uint32 num_chunks;
-		Uint32 last_size;
+		Uint64 last_size;
 		QValueList<TorrentFile> files;
 		QValueList<SHA1Hash> hashes;
 		//
@@ -100,7 +100,7 @@ namespace bt
 		void saveInfo(BEncoder & enc);
 		void saveFile(BEncoder & enc,const TorrentFile & file);
 		void savePieces(BEncoder & enc);
-		void buildFileList(const QString & dir,Uint32 & tot_size);
+		void buildFileList(const QString & dir,Uint64 & tot_size);
 		bool calcHashSingle();
 		bool calcHashMulti();
 	};

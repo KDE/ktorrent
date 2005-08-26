@@ -25,7 +25,7 @@
 
 namespace bt
 {
-
+	
 	PeerID::PeerID()
 	{
 		srand(time(0));

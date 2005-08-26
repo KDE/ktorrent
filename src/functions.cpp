@@ -27,7 +27,7 @@ const double TO_KB = 1024.0;
 const double TO_MEG = (1024.0 * 1024.0);
 const double TO_GIG = (1024.0 * 1024.0 * 1024.0);
 
-QString BytesToString(Uint32 bytes,int precision)
+QString BytesToString(Uint64 bytes,int precision)
 {
 	KLocale* loc = KGlobal::locale();
 	if (bytes >= 1024 * 1024 * 1024)

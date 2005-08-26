@@ -39,25 +39,7 @@ namespace bt
 	{
 	}
 
-	void Uploader::addRequest(const Request & req)
-	{
-		Peer* p = pman.findPeer(req.getPeer());
-		if (p)
-		{
-			PeerUploader* pu = p->getPeerUploader();
-			pu->addRequest(req);
-		}
-	}
 	
-	void Uploader::cancel(const Request & req)
-	{
-		Peer* p = pman.findPeer(req.getPeer());
-		if (p)
-		{
-			PeerUploader* pu = p->getPeerUploader();
-			pu->removeRequest(req);
-		}
-	}
 		
 	void Uploader::update(const PeerID & opt_unchoked)
 	{

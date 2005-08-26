@@ -36,7 +36,7 @@ namespace bt
 	struct NewChunkHeader
 	{
 		unsigned int index; // the Chunks index
-		unsigned int cache_off; // offset in cache file
+		unsigned int deprecated; // offset in cache file
 	};
 	
 	/**
@@ -56,7 +56,7 @@ namespace bt
 		Torrent & tor;
 		QString index_file,chunk_info_file;
 		QPtrVector<Chunk> chunks;
-		unsigned int num_chunks_in_cache_file;
+		Uint32 num_chunks_in_cache_file;
 		Uint32 max_allowed;
 		Cache* cache;
 		Uint32 num_in_mem;

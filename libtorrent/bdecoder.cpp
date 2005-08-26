@@ -18,11 +18,11 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <libutil/log.h>
+#include <libutil/error.h>
+#include <klocale.h>
 #include "bdecoder.h"
 #include "bnode.h"
-#include <libutil/error.h>
-
-#include <klocale.h>
+#include "globals.h"
 
 namespace bt
 {
@@ -68,12 +68,12 @@ namespace bt
 		// we're now entering a dictionary
 		BDictNode* curr = new BDictNode(off);
 		pos++;
-// 		Out() << "DICT" << endl;
+//  		Out() << "DICT" << endl;
 		try
 		{
 			while (data[pos] != 'e' && pos < data.size())
 			{
-// 				Out() << "Key : " << endl;
+//  				Out() << "Key : " << endl;
 				BValueNode* k = dynamic_cast<BValueNode*>(decode());
 				if (!k || k->data().getType() != Value::STRING)
 					throw Error(i18n("Decode error"));
@@ -91,7 +91,7 @@ namespace bt
 			delete curr;
 			throw;
 		}
-// 		Out() << "END" << endl;
+//  		Out() << "END" << endl;
 		curr->setLength(pos - off);
 		return curr;
 	}
@@ -99,7 +99,7 @@ namespace bt
 	BListNode* BDecoder::parseList()
 	{
 		Uint32 off = pos;
-// 		Out() << "LIST" << endl;
+//  		Out() << "LIST" << endl;
 		BListNode* curr = new BListNode(off);
 		pos++;
 		try
@@ -143,15 +143,27 @@ namespace bt
 		bool ok = true;
 		int val = 0;
 		val = n.toInt(&ok);
-		if (!ok)
+		if (ok)
 		{
-			throw Error(i18n("Cannot convert %1 to an int").arg(n));
+			pos++;
+// 			Out() << "INT = " << val << endl;
+			BValueNode* vn = new BValueNode(Value(val),off);
+			vn->setLength(pos - off);
+			return vn;
 		}
-		pos++;
-// 		Out() << "INT = " << val << endl;
-		BValueNode* vn = new BValueNode(Value(val),off);
-		vn->setLength(pos - off);
-		return vn;
+		else
+		{
+			Int64 bi = 0LL;
+			bi = n.toLongLong(&ok);
+			if (!ok)
+				throw Error(i18n("Cannot convert %1 to an int").arg(n));
+
+			pos++;
+// 			Out() << "INT64 = " << n << endl;
+			BValueNode* vn = new BValueNode(Value(bi),off);
+			vn->setLength(pos - off);
+			return vn;
+		}
 	}
 
 	BValueNode* BDecoder::parseString()

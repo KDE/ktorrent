@@ -99,6 +99,12 @@ namespace bt
 		 * @param val 
 		 */
 		void write(Uint32 val);
+
+		/**
+		 * Write an int64
+		 * @param val
+		 */
+		void write(Uint64 val);
 		
 		/**
 		 * Write a string

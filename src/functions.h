@@ -23,7 +23,7 @@
 #include <qstring.h>
 #include <libutil/constants.h>
 
-QString BytesToString(bt::Uint32 bytes,int precision = -1);
+QString BytesToString(bt::Uint64 bytes,int precision = -1);
 QString KBytesPerSecToString(double speed,int precision = 1);
 
 template<class T> int CompareVal(T a,T b)

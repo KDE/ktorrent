@@ -40,8 +40,8 @@ namespace bt
 
 		Uint32 index;
 		QString path;
-		Uint32 size;
-		Uint32 cache_offset;
+		Uint64 size;
+		Uint64 cache_offset;
 		Uint32 first_chunk;
 		Uint32 first_chunk_off;
 		Uint32 last_chunk;
@@ -62,7 +62,7 @@ namespace bt
 		 * @param size Size of the file
 		 * @param chunk_size Size of each chunk 
 		 */
-		TorrentFile(Uint32 index,const QString & path,Uint32 off,Uint32 size,Uint32 chunk_size);
+		TorrentFile(Uint32 index,const QString & path,Uint64 off,Uint64 size,Uint64 chunk_size);
 		
 		/**
 		 * Copy constructor.
@@ -81,10 +81,10 @@ namespace bt
 		QString getPath() const {return path;}
 
 		/// Get the size of the file
-		Uint32 getSize() const {return size;}
+		Uint64 getSize() const {return size;}
 
 		/// Get the offset into the torrent
-		Uint32 getCacheOffset() const {return cache_offset;}
+		Uint64 getCacheOffset() const {return cache_offset;}
 
 		/// Get the index of the first chunk in which this file lies
 		Uint32 getFirstChunk() const {return first_chunk;}

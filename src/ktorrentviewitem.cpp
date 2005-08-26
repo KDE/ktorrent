@@ -45,7 +45,7 @@ static QString StatusToString(TorrentControl* tc,TorrentControl::Status s)
 		case TorrentControl::STOPPED:
 			return i18n("Stopped");
 		case TorrentControl::ERROR :
-			return i18n("Error : ") + tc->getErrorMessage();
+			return i18n("Error : ") + tc->getShortErrorMessage(); 
 	}
 	return QString::null;
 }

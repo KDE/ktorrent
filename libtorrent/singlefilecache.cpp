@@ -51,7 +51,8 @@ namespace bt
 		File fptr;
 		if (!fptr.open(cache_file,"rb"))
 			throw Error(i18n("Can't open cache file"));
-		fptr.seek(File::BEGIN,c->getCacheFileOffset());
+		Uint64 off = c->getIndex() * tor.getChunkSize();
+		fptr.seek(File::BEGIN,off);
 		unsigned char* data = new unsigned char[c->getSize()];
 		fptr.read(data,c->getSize());
 		c->setData(data);
@@ -60,7 +61,7 @@ namespace bt
 	void SingleFileCache::save(Chunk* c)
 	{
 		// calculate the chunks position in the final file
-		Uint32 chunk_pos = c->getIndex() * tor.getChunkSize();
+		Uint64 chunk_pos = c->getIndex() * tor.getChunkSize();
 		
 		File fptr;
 		if (!fptr.open(cache_file,"r+b"))
@@ -68,7 +69,7 @@ namespace bt
 		
 		// jump to end of file
 		fptr.seek(File::END,0);
-		unsigned int cache_size = fptr.tell();
+		Uint64 cache_size = fptr.tell();
 
 		// see if the cache is big enough for the chunk
 		if (chunk_pos <= cache_size)
@@ -81,9 +82,9 @@ namespace bt
 		else
 		{
 			// write random shit to enlarge the file
-			Uint32 num_empty_bytes = chunk_pos - cache_size;
+			Uint64 num_empty_bytes = chunk_pos - cache_size;
 			Uint8 b[1024];
-			Uint32 nw = 0;
+			Uint64 nw = 0;
 			while (nw < num_empty_bytes)
 			{
 				Uint32 left = num_empty_bytes - nw;
@@ -96,8 +97,7 @@ namespace bt
 			fptr.write(c->getData(),c->getSize());
 		}
 		
-		// set the offset and clear the chunk
-		c->setCacheFileOffset(chunk_pos);
+		// clear the chunk
 		c->clear();
 	}
 

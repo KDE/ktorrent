@@ -23,9 +23,9 @@
 namespace bt
 {
 
-	Chunk::Chunk(unsigned int index,unsigned int size)
+	Chunk::Chunk(unsigned int index,Uint32 size)
 	: status(Chunk::NOT_DOWNLOADED),index(index),
-	data(0),size(size),ref_count(0),cache_file_offset(0),priority(false),exclude(false)
+	data(0),size(size),ref_count(0),priority(false),exclude(false)
 	{
 	}
 
@@ -35,7 +35,7 @@ namespace bt
 		delete [] data;
 	}
 
-	void Chunk::setData(unsigned char* d)
+	void Chunk::setData(Uint8* d)
 	{
 		status = Chunk::IN_MEMORY;
 		if (data)

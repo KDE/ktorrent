@@ -85,7 +85,10 @@ namespace bt
 			if (autodel)
 			{
 				for (iterator i = pmap.begin();i != pmap.end();i++)
+				{
 					delete i->second;
+					i->second = 0;
+				}
 			}
 			pmap.clear();
 		}

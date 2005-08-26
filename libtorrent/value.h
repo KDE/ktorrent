@@ -21,6 +21,7 @@
 #define BTVALUE_H
 
 #include <qstring.h>
+#include <libutil/constants.h>
 
 namespace bt
 {
@@ -33,29 +34,33 @@ namespace bt
 	public:
 		enum Type
 		{
-			STRING,INT
+			STRING,INT,INT64
 		};
 		
 	
 		Value();
 		Value(int val);
+		Value(Int64 val);
 		Value(const QByteArray & val);
 		Value(const Value & val);
 		~Value();
 
 		Value & operator = (const Value & val);
-		Value & operator = (int val);
+		Value & operator = (Int32 val);
+		Value & operator = (Int64 val);
 		Value & operator = (const QByteArray & val);
 		
 		Type getType() const {return type;}
-		int toInt() const {return ival;}
+		Int32 toInt() const {return ival;}
+		Int64 toInt64() const {return ival;}
 		QString toString() const {return QString(strval);}
 		QString toString(const QString & encoding) const;
 		QByteArray toByteArray() const {return strval;}
 	private:
 		Type type;
-		int ival;
+		Int32 ival;
 		QByteArray strval;
+		Int64 big_ival;
 	};
 }
 

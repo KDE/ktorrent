@@ -26,13 +26,17 @@ namespace bt
 	Value::Value() : type(INT),ival(0)
 	{}
 
-	Value::Value(int val) : type(INT),ival(val)
+	Value::Value(int val) : type(INT),ival(val),big_ival(val)
+	{}
+
+	Value::Value(Int64 val) : type(INT64),big_ival(val)
 	{}
 	
 	Value::Value(const QByteArray & val) : type(STRING),ival(0),strval(val)
 	{}
 	
-	Value::Value(const Value & val) : type(val.type),ival(val.ival),strval(val.strval)
+	Value::Value(const Value & val)
+		: type(val.type),ival(val.ival),strval(val.strval),big_ival(val.big_ival)
 	{}
 
 	Value::~Value()
@@ -57,13 +61,22 @@ namespace bt
 		type = val.type;
 		ival = val.ival;
 		strval = val.strval;
+		big_ival = val.big_ival;
 		return *this;
 	}
 	
-	Value & Value::operator = (int val)
+	Value & Value::operator = (Int32 val)
 	{
 		type = INT;
 		ival = val;
+		big_ival = val;
+		return *this;
+	}
+
+	Value & Value::operator = (Int64 val)
+	{
+		type = INT64;
+		big_ival = val;
 		return *this;
 	}
 	

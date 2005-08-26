@@ -94,13 +94,13 @@ namespace bt
 		 * @param num Number of bytes to move
 		 * @return New position
 		 */
-		Uint32 seek(SeekPos from,int num);
+		Uint64 seek(SeekPos from,Int64 num);
 
 		/// Check to see if we are at the end of the file.
 		bool eof() const;
 
 		/// Get the current position in the file.
-		Uint32 tell() const;
+		Uint64 tell() const;
 
 		/// Get the error string.
 		QString errorString() const;

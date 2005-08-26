@@ -27,7 +27,7 @@ namespace bt
 	TorrentFile::TorrentFile()
 	{}
 
-	TorrentFile::TorrentFile(Uint32 index,const QString & path,Uint32 off,Uint32 size,Uint32 chunk_size)
+	TorrentFile::TorrentFile(Uint32 index,const QString & path,Uint64 off,Uint64 size,Uint64 chunk_size)
 	: index(index),path(path),size(size),cache_offset(off)
 	{
 		first_chunk = off / chunk_size;

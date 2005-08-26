@@ -34,7 +34,7 @@
 
 namespace bt
 {
-	static Uint32 FileOffset(Chunk* c,const TorrentFile & f,Uint32 chunk_size);
+	static Uint64 FileOffset(Chunk* c,const TorrentFile & f,Uint64 chunk_size);
 
 
 	MultiFileCache::MultiFileCache(Torrent& tor, const QString& data_dir)
@@ -96,7 +96,7 @@ namespace bt
 		tor.calcChunkPos(c->getIndex(),files);
 		
 		Uint8* data = new Uint8[c->getSize()];
-		Uint32 read = 0; // number of bytes read
+		Uint64 read = 0; // number of bytes read
 		for (Uint32 i = 0;i < files.count();i++)
 		{
 			const TorrentFile & f = tor.getFile(files[i]);
@@ -111,7 +111,7 @@ namespace bt
 			// first calculate offset into file
 			// only the first file can have an offset
 			// the following files will start at the beginning
-			Uint32 off = 0;
+			Uint64 off = 0;
 			if (i == 0)
 				off = FileOffset(c,f,tor.getChunkSize());
 			
@@ -142,7 +142,7 @@ namespace bt
 		tor.calcChunkPos(c->getIndex(),files);
 
 	//	Out() << "Saving " << c->getIndex() << " to " << files.count() << " files" << endl;
-		Uint32 written = 0; // number of bytes written
+		Uint64 written = 0; // number of bytes written
 		for (Uint32 i = 0;i < files.count();i++)
 		{
 			const TorrentFile & f = tor.getFile(files[i]);
@@ -156,7 +156,7 @@ namespace bt
 			// first calculate offset into file
 			// only the first file can have an offset
 			// the following files will start at the beginning
-			Uint32 off = 0;
+			Uint64 off = 0;
 			Uint32 to_write = 0;
 			if (i == 0)
 			{
@@ -165,13 +165,13 @@ namespace bt
 		//		Out() << "off = " << off << endl;
 				// we may need to expand the first file
 				fptr.seek(File::END,0);
-				Uint32 cache_size = fptr.tell();
+				Uint64 cache_size = fptr.tell();
 				if (cache_size < off)
 				{
 					// write random shit to enlarge the file
-					Uint32 num_empty_bytes = off - cache_size + 1;
+					Uint64 num_empty_bytes = off - cache_size + 1;
 					Uint8 b[1024];
-					Uint32 nw = 0;
+					Uint64 nw = 0;
 					while (nw < num_empty_bytes)
 					{
 						Uint32 left = num_empty_bytes - nw;
@@ -200,10 +200,7 @@ namespace bt
 			fptr.close();
 		}
 		
-
-		Uint32 chunk_pos = c->getIndex() * tor.getChunkSize();
-		// set the offset and clear the chunk
-		c->setCacheFileOffset(chunk_pos);
+		// clear the chunk
 		c->clear();
 	}
 
@@ -256,9 +253,9 @@ namespace bt
 
 	///////////////////////////////
 
-	Uint32 FileOffset(Chunk* c,const TorrentFile & f,Uint32 chunk_size)
+	Uint64 FileOffset(Chunk* c,const TorrentFile & f,Uint64 chunk_size)
 	{
-		Uint32 off = 0;
+		Uint64 off = 0;
 		if (c->getIndex() - f.getFirstChunk() > 0)
 			off = (c->getIndex() - f.getFirstChunk() - 1) * chunk_size;
 		if (c->getIndex() > 0)

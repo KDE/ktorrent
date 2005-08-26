@@ -46,9 +46,9 @@ namespace bt
 		
 		index_file = data_dir + "index";
 		chunk_info_file = data_dir + "chunk_info";
-		Uint32 tsize = tor.getFileLength();	// total size	
-		Uint32 csize = tor.getChunkSize();	// chunk size
-		Uint32 lsize = tsize - (csize * (tor.getNumChunks() - 1)); // size of last chunk
+		Uint64 tsize = tor.getFileLength();	// total size
+		Uint64 csize = tor.getChunkSize();	// chunk size
+		Uint64 lsize = tsize - (csize * (tor.getNumChunks() - 1)); // size of last chunk
 		
 		for (Uint32 i = 0;i < tor.getNumChunks();i++)
 		{
@@ -125,7 +125,6 @@ namespace bt
 			{
 				max_allowed = hdr.index + 50;
 				c->setStatus(Chunk::ON_DISK);
-				c->setCacheFileOffset(hdr.cache_off);
 			}
 		}
 
@@ -144,7 +143,6 @@ namespace bt
 			if (c->getStatus() != Chunk::NOT_DOWNLOADED)
 			{
 				NewChunkHeader hdr;
-				hdr.cache_off = c->getCacheFileOffset();
 				hdr.index = i;
 				fptr.write(&hdr,sizeof(NewChunkHeader));
 			}
@@ -219,7 +217,6 @@ namespace bt
 		
 		fptr.seek(File::END,0);
 		NewChunkHeader hdr;
-		hdr.cache_off = c->getCacheFileOffset();
 		hdr.index = c->getIndex();
 		fptr.write(&hdr,sizeof(NewChunkHeader));
 		if (c->getIndex() + 50 > max_allowed)

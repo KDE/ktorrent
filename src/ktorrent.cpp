@@ -523,8 +523,24 @@ void KTorrent::urlDropped(QDropEvent* event,QListViewItem*)
 
 void KTorrent::updatedStats()
 {
+	TorrentControl* tc = m_view->getCurrentTC();
+	if (tc)
+	{
+		bool completed = tc->getBytesLeft() == 0;
+		m_save->setEnabled(completed && !tc->isSaved());
+		m_start->setEnabled(!tc->isRunning());
+		m_stop->setEnabled(tc->isRunning());
+		m_remove->setEnabled(true);
+	}
+	else
+	{
+		m_save->setEnabled(false);
+		m_start->setEnabled(false);
+		m_stop->setEnabled(false);
+		m_remove->setEnabled(false);
+	}
+	
 	CurrentStats stats = this->m_core->getStats();
-
 
 	//m_statusInfo->setText(i18n("Some info here e.g. connected/disconnected"));
 	QString tmp = i18n("Speed up: %1 / down: %2")

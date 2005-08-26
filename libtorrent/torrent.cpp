@@ -157,18 +157,28 @@ namespace bt
 	
 	void Torrent::loadPieceLength(BValueNode* node)
 	{
-		if (!node || node->data().getType() != Value::INT)
+		if (!node)
 			throw Error(i18n("Corrupted torrent!"));
-		
-		piece_length = node->data().toInt();
+
+		if (node->data().getType() == Value::INT)
+			piece_length = node->data().toInt();
+		else if (node->data().getType() == Value::INT64)
+			piece_length = node->data().toInt64();
+		else
+			throw Error(i18n("Corrupted torrent!"));
 	}
 	
 	void Torrent::loadFileLength(BValueNode* node)
 	{
-		if (!node || node->data().getType() != Value::INT)
+		if (!node)
 			throw Error(i18n("Corrupted torrent!"));
 				
-		file_length = node->data().toInt();
+		if (node->data().getType() == Value::INT)
+			file_length = node->data().toInt();
+		else if (node->data().getType() == Value::INT64)
+			file_length = node->data().toInt64();
+		else
+			throw Error(i18n("Corrupted torrent!"));
 	}
 	
 	void Torrent::loadHash(BValueNode* node)

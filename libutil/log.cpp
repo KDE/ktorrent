@@ -88,4 +88,14 @@ namespace bt
 		
 		return *this;
 	}
+
+	Log & Log::operator << (Uint64 v)
+	{
+		return operator << (QString::number(v));
+	}
+
+	Log & Log::operator << (Int64 v)
+	{
+		return operator << (QString::number(v));
+	}
 }	

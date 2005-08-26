@@ -49,7 +49,7 @@ namespace bt
 	{
 		Globals::instance().getServer().removePeerManager(this);
 		pending.setAutoDelete(true);
-		peer_map.setAutoDelete(true);
+		//peer_map.setAutoDelete(true);
 		peer_list.setAutoDelete(true);
 	}
 
@@ -249,7 +249,15 @@ namespace bt
 
 	Peer* PeerManager::findPeer(const PeerID & peer_id)
 	{
-		return peer_map.find(peer_id);
+		PtrMap<PeerID,Peer>::iterator i = peer_map.begin();
+		while (i != peer_map.end())
+		{
+			if (i->first == peer_id)
+				return i->second;
+			else
+				i++;
+		}
+		return 0;
 	}
 }
 #include "peermanager.moc"

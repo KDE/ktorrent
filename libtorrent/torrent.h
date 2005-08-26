@@ -60,10 +60,10 @@ namespace bt
 		void debugPrintInfo();
 		
 		/// Get the number of chunks.
-		unsigned int getNumChunks() const {return hash_pieces.size();}
+		Uint32 getNumChunks() const {return hash_pieces.size();}
 		
 		/// Get the size of a chunk.
-		unsigned int getChunkSize() const {return piece_length;}
+		Uint64 getChunkSize() const {return piece_length;}
 		
 		/// Get the tracker URL.
 		KURL getTrackerURL(bool last_was_succesfull = true) const;
@@ -75,7 +75,7 @@ namespace bt
 		const PeerID & getPeerID() const {return peer_id;}
 		
 		/// Get the file size in number of bytes.
-		unsigned int getFileLength() const {return file_length;}
+		Uint64 getFileLength() const {return file_length;}
 		
 		/// Get the suggested name.
 		QString getNameSuggestion() const {return name_suggestion;}
@@ -151,8 +151,8 @@ namespace bt
 	private:
 		KURL tracker_url;
 		QString name_suggestion;
-		unsigned int piece_length;
-		unsigned int file_length;
+		Uint64 piece_length;
+		Uint64 file_length;
 		SHA1Hash info_hash;
 		PeerID peer_id;
 		QValueVector<SHA1Hash> hash_pieces;

@@ -9,6 +9,7 @@
 #include <qtextstream.h>
 #include <qfile.h>
 #include <iostream>
+#include "constants.h"
 
 
 class KURL;
@@ -110,6 +111,20 @@ namespace bt
 		 * @return This Log
 		 */
 		Log & operator << (const QString & s);
+
+		/**
+		 * Output a 64 bit integer to the log.
+		 * @param v The integer
+		 * @return This Log
+		 */
+		Log & operator << (Uint64 v);
+
+		/**
+		 * Output a 64 bit integer to the log.
+		 * @param v The integer
+		 * @return This Log
+		 */
+		Log & operator << (Int64 v);
 		
 		/**
 		* Prints and endline character to the Log and flushes it.
