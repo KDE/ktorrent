@@ -172,7 +172,7 @@ namespace bt
 		if (!ds)
 			return;
 		
-		for (Uint32 i = 0;i < num && pd->getNumRequests() < 8;i++)
+		for (Uint32 i = 0;i < num && pd->getNumRequests() < 10;i++)
 		{
 			if (ds->get(i) == PIECE_NOT_DOWNLOADED ||
 				(num - num_downloaded == 1 && ds->get(i) == PIECE_REQUESTED))

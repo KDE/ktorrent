@@ -58,6 +58,7 @@ KTorrentCore::KTorrentCore() : max_downloads(0),keep_seeding(true)
 		}
 	}
 
+	removed_bytes_up = removed_bytes_down = 0;
 	
 	if (!data_dir.endsWith(bt::DirSeparator()))
 		data_dir += bt::DirSeparator();
@@ -217,6 +218,8 @@ void KTorrentCore::loadTorrents()
 
 void KTorrentCore::remove(bt::TorrentControl* tc)
 {
+	removed_bytes_up += tc->getSessionBytesUploaded();
+	removed_bytes_down += tc->getSessionBytesDownloaded();
 	stop(tc);
 	
 	QString dir = tc->getDataDir();
@@ -436,8 +439,8 @@ CurrentStats KTorrentCore::getStats()
 	}
 	stats.download_speed = speed_dl;
 	stats.upload_speed = speed_ul;
-	stats.bytes_downloaded = bytes_dl;
-	stats.bytes_uploaded = bytes_ul;
+	stats.bytes_downloaded = bytes_dl + removed_bytes_down;
+	stats.bytes_uploaded = bytes_ul + removed_bytes_up;
 
 	return stats;
 }

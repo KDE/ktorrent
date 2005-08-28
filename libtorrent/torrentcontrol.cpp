@@ -157,12 +157,57 @@ namespace bt
 			Out() << "Error : " << e.toString() << endl;
 			stopped_by_error = true;
 			error_msg = e.toString();
-			short_error_msg = i18n("Internal error");
+			short_error_msg = e.toString();
 			stop(false);
 			emit stoppedByError(this, error_msg);
 		}
 	}
+
+	void TorrentControl::start()
+	{
+		if (bt::Exists(datadir + "stopped"))
+			bt::Delete(datadir + "stopped",true);
+
+		stopped_by_error = false;
+		num_tracker_attempts = 0;
+		updateTracker("started");
+		pman->start();
+		down->loadDownloads(datadir + "current_chunks");
+		loadStats();
+		running = true;
+		started = true;
+		tracker_update_timer.update();
+		choker_update_timer.update();
+		stats_save_timer.update();
+		time_started = QTime::currentTime();
+		prev_bytes_dl = getBytesDownloaded();
+	}
 	
+	void TorrentControl::stop(bool user)
+	{
+		running_time += time_started.secsTo(QTime::currentTime());
+		saveStats();
+		
+		if (running)
+		{
+			if (num_tracker_attempts < tor->getNumTrackerURLs())
+				updateTracker("stopped");
+		
+			if (tmon)
+				tmon->stopped();
+			
+			down->saveDownloads(datadir + "current_chunks");
+			down->clearDownloads();
+			if (user)
+				bt::Touch(datadir + "stopped",true);
+		}
+		pman->stop();
+		pman->closeAllConnections();
+		pman->clearDeadPeers();
+		
+		running = false;
+		updateStatusMsg();
+	}
 	
 	void TorrentControl::setMonitor(TorrentMonitor* tmo)
 	{
@@ -231,7 +276,6 @@ namespace bt
 		updateStatusMsg();
 
 		loadStats();
-		prev_bytes_dl = getBytesDownloaded();
 	}
 
 	void TorrentControl::setTrackerTimerInterval(Uint32 interval)
@@ -353,49 +397,7 @@ namespace bt
 		choke->update(cman->bytesLeft() == 0);
 	}
 	
-	void TorrentControl::start()
-	{
-		if (bt::Exists(datadir + "stopped"))
-			bt::Delete(datadir + "stopped",true);
 
-		stopped_by_error = false;
-		num_tracker_attempts = 0;
-		updateTracker("started");
-		pman->start();
-		down->loadDownloads(datadir + "current_chunks");
-		loadStats();
-		running = true;
-		started = true;
-		tracker_update_timer.update();
-		choker_update_timer.update();
-		stats_save_timer.update();
-		time_started = QTime::currentTime(); 
-	}
-	
-	void TorrentControl::stop(bool user)
-	{
-		running_time += time_started.secsTo(QTime::currentTime()); 
-		saveStats();
-		if (running)
-		{
-			if (num_tracker_attempts < tor->getNumTrackerURLs())
-				updateTracker("stopped");
-		
-			if (tmon)
-				tmon->stopped();
-			
-			down->saveDownloads(datadir + "current_chunks");
-			down->clearDownloads();
-			if (user)
-				bt::Touch(datadir + "stopped",true);
-		}
-		pman->stop();
-		pman->closeAllConnections();
-		pman->clearDeadPeers();
-		
-		running = false;
-		updateStatusMsg();
-	}
 	
 	QString TorrentControl::getTorrentName() const
 	{

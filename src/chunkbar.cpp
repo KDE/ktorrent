@@ -87,11 +87,11 @@ void ChunkBar::drawContents(QPainter *p)
 			BitSet ebs;
 			curr_tc->excludedChunksToBitSet(ebs);
 			if (ebs.allOn())
-				drawAllOn(p,Qt::red);
+				drawAllOn(p,Qt::lightGray);
 			else if (curr_tc->getTotalChunks() > w)
-				drawMoreChunksThenPixels(p,ebs,Qt::red);
+				drawMoreChunksThenPixels(p,ebs,Qt::lightGray);
 			else
-				drawEqual(p,ebs,Qt::red);
+				drawEqual(p,ebs,Qt::lightGray);
 		}
 	}
 	p->restoreWorldMatrix();

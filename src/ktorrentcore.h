@@ -203,6 +203,7 @@ private:
 	int max_downloads;
 	bool keep_seeding;
 	QTimer update_timer;
+	bt::Uint32 removed_bytes_up,removed_bytes_down;
 };
 
 #endif

@@ -45,7 +45,7 @@ namespace bt
 			cache = new SingleFileCache(tor,data_dir);
 		
 		index_file = data_dir + "index";
-		chunk_info_file = data_dir + "chunk_info";
+		file_info_file = data_dir + "file_info";
 		Uint64 tsize = tor.getFileLength();	// total size
 		Uint64 csize = tor.getChunkSize();	// chunk size
 		Uint64 lsize = tsize - (csize * (tor.getNumChunks() - 1)); // size of last chunk
@@ -101,8 +101,8 @@ namespace bt
 	{
 		cache->changeDataDir(data_dir);
 		index_file = data_dir + "index";
-		chunk_info_file = data_dir + "chunk_info";
-		saveChunkInfo();
+		file_info_file = data_dir + "file_info";
+		saveFileInfo();
 	}
 	
 	void ChunkManager::loadIndexFile()
@@ -111,24 +111,23 @@ namespace bt
 		if (!fptr.open(index_file,"rb"))
 			throw Error(i18n("Can't open index file"));
 
-		if (fptr.seek(File::END,0) == 0)
-			return;
-
-		fptr.seek(File::BEGIN,0);
-		
-		while (!fptr.eof())
+		if (fptr.seek(File::END,0) != 0)
 		{
-			NewChunkHeader hdr;
-			fptr.read(&hdr,sizeof(NewChunkHeader));
-			Chunk* c = getChunk(hdr.index);
-			if (c)
+			fptr.seek(File::BEGIN,0);
+			
+			while (!fptr.eof())
 			{
-				max_allowed = hdr.index + 50;
-				c->setStatus(Chunk::ON_DISK);
+				NewChunkHeader hdr;
+				fptr.read(&hdr,sizeof(NewChunkHeader));
+				Chunk* c = getChunk(hdr.index);
+				if (c)
+				{
+					max_allowed = hdr.index + 50;
+					c->setStatus(Chunk::ON_DISK);
+				}
 			}
 		}
-
-		loadChunkInfo();
+		loadFileInfo();
 	}
 	
 	void ChunkManager::saveIndexFile()
@@ -147,6 +146,7 @@ namespace bt
 				fptr.write(&hdr,sizeof(NewChunkHeader));
 			}
 		}
+		saveFileInfo();
 	}
 
 	void ChunkManager::createFiles()
@@ -335,7 +335,7 @@ namespace bt
 			c->setPriority(true);
 			i++;
 		}
-		saveChunkInfo();
+		saveFileInfo();
 	}
 
 	void ChunkManager::exclude(Uint32 from,Uint32 to)
@@ -350,7 +350,7 @@ namespace bt
 			c->setExclude(true);
 			i++;
 		}
-		saveChunkInfo();
+		saveFileInfo();
 	}
 
 	void ChunkManager::include(Uint32 from,Uint32 to)
@@ -365,14 +365,14 @@ namespace bt
 			c->setExclude(false);
 			i++;
 		}
-		saveChunkInfo();
+		saveFileInfo();
 	}
 
-	void ChunkManager::saveChunkInfo()
+	void ChunkManager::saveFileInfo()
 	{
 		// saves which TorrentFile's do not need to be downloaded
 		File fptr;
-		if (!fptr.open(chunk_info_file,"wb"))
+		if (!fptr.open(file_info_file,"wb"))
 			throw Error(i18n("Can't save chunk_info file : %1").arg(fptr.errorString()));
 
 		QValueList<Uint32> dnd;
@@ -394,12 +394,13 @@ namespace bt
 			tmp = dnd[i];
 			fptr.write(&tmp,sizeof(Uint32));
 		}
+		fptr.flush();
 	}
 	
-	void ChunkManager::loadChunkInfo()
+	void ChunkManager::loadFileInfo()
 	{
 		File fptr;
-		if (!fptr.open(chunk_info_file,"rb"))
+		if (!fptr.open(file_info_file,"rb"))
 			return;
 
 		Uint32 num = 0,tmp = 0;
@@ -421,6 +422,7 @@ namespace bt
 			bt::TorrentFile & tf = tor.getFile(tmp);
 			if (!tf.isNull())
 			{
+				Out() << "Excluding : " << tf.getPath() << endl;
 				tf.setDoNotDownload(true);
 			}
 		}

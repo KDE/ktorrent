@@ -133,8 +133,10 @@ void SearchWidget::onFrameAdded(KParts::Part* p)
 {
 	KHTMLPart* frame = dynamic_cast<KHTMLPart*>(p);
 	if (frame)
+	{
 		connect(frame,SIGNAL(popupMenu(const QString&, const QPoint& )),
 				this,SLOT(showPopupMenu(const QString&, const QPoint& )));
+	}
 }
 
 void SearchWidget::copy()

@@ -100,6 +100,9 @@ namespace bt
 
 		/// Get the request interval.
 		Uint32 getRequestInterval() const {return req_time_interval;}
+
+		/// Retrannsmit all requests.
+		void retransmitRequests();
 	public slots:
 		/**
 		 * Send a Request. Note that the DownloadCap

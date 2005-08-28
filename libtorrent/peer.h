@@ -143,6 +143,9 @@ namespace bt
 		 * See if the peer is a seeder.
 		 */
 		bool isSeeder() const;
+
+		/// Get the time in milliseconds since the last time a piece was recieved.
+		Uint32 getTimeSinceLastPiece() const;
 	private slots:
 		void connectionClosed(); 
 		void readyRead();

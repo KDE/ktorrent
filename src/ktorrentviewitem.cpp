@@ -104,35 +104,36 @@ void KTorrentViewItem::update()
 	Uint32 nb = tc->getBytesDownloaded() > tc->getTotalBytes() ?
 			tc->getTotalBytes() : tc->getBytesDownloaded();
 	
-	setText(2,BytesToString(nb) + " / " + BytesToString(tc->getTotalBytesToDownload()));
-	setText(3,BytesToString(tc->getBytesUploaded()));
+	setText(2,BytesToString(nb));
+	setText(3,BytesToString(tc->getTotalBytesToDownload()));
+	setText(4,BytesToString(tc->getBytesUploaded()));
 	if (tc->getBytesLeft() == 0)
-		setText(4,KBytesPerSecToString(0));
+		setText(5,KBytesPerSecToString(0));
 	else
-		setText(4,KBytesPerSecToString(tc->getDownloadRate() / 1024.0));
-	setText(5,KBytesPerSecToString(tc->getUploadRate() / 1024.0));
-
+		setText(5,KBytesPerSecToString(tc->getDownloadRate() / 1024.0));
+	setText(6,KBytesPerSecToString(tc->getUploadRate() / 1024.0));
+  
 	KLocale* loc = KGlobal::locale();
 	if (tc->getBytesLeft() == 0)
 	{
-		setText(6,i18n("finished"));
+		setText(7,i18n("finished"));
 	}
 	else if (tc->getDownloadRate() != 0)
 	{
 		Uint32 secs = (int)floor((float)tc->getBytesLeft() / (float)tc->getDownloadRate());
 		QTime t;
 		t = t.addSecs(secs);
-		setText(6,loc->formatTime(t,true,true));
+		setText(7,loc->formatTime(t,true,true));
 	}
 	else
 	{
-		setText(6,i18n("infinity"));
+		setText(7,i18n("infinity"));
 	}
-	setText(7,QString::number(tc->getNumPeers()));
+	setText(8,QString::number(tc->getNumPeers()));
 	double perc = ((double)tc->getBytesDownloaded() / tc->getTotalBytesToDownload()) * 100.0;
 	if (perc > 100.0)
 		perc = 100.0;
-	setText(8,i18n("%1 %").arg(loc->formatNumber(perc,2)));
+	setText(9,i18n("%1 %").arg(loc->formatNumber(perc,2)));
 }
 
 
@@ -146,13 +147,14 @@ int KTorrentViewItem::compare(QListViewItem * i,int col,bool) const
 		case 0: return QString::compare(tc->getTorrentName(),otc->getTorrentName());
 		case 1: return QString::compare(StatusToString(tc,tc->getStatus()),
 										StatusToString(otc,otc->getStatus()));
-		case 2: return CompareVal(tc->getTotalBytesToDownload(),otc->getTotalBytesToDownload());
-		case 3: return CompareVal(tc->getBytesUploaded(),otc->getBytesUploaded());
-		case 4: return CompareVal(tc->getDownloadRate(),otc->getDownloadRate());
-		case 5: return CompareVal(tc->getUploadRate(),otc->getUploadRate());
-		case 6: return QString::compare(text(6),other->text(6));
-		case 7: return CompareVal(tc->getNumPeers(),otc->getNumPeers());
-		case 8:
+		case 2: return CompareVal(tc->getBytesDownloaded(),otc->getBytesDownloaded());
+		case 3: return CompareVal(tc->getTotalBytesToDownload(),otc->getTotalBytesToDownload());
+		case 4: return CompareVal(tc->getBytesUploaded(),otc->getBytesUploaded());
+		case 5: return CompareVal(tc->getDownloadRate(),otc->getDownloadRate());
+		case 6: return CompareVal(tc->getUploadRate(),otc->getUploadRate());
+		case 7: return QString::compare(text(6),other->text(6));
+		case 8: return CompareVal(tc->getNumPeers(),otc->getNumPeers());
+		case 9:
 		{
 			double perc = ((double)tc->getBytesDownloaded() / tc->getTotalBytesToDownload()) * 100.0;
 			if (perc > 100.0)

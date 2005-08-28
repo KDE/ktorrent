@@ -54,7 +54,7 @@ namespace bt
 		Q_OBJECT
 				
 		Torrent & tor;
-		QString index_file,chunk_info_file;
+		QString index_file,file_info_file;
 		QPtrVector<Chunk> chunks;
 		Uint32 num_chunks_in_cache_file;
 		Uint32 max_allowed;
@@ -204,8 +204,8 @@ namespace bt
 	private:
 		void saveIndexFile();
 		void writeIndexFileEntry(Chunk* c);
-		void saveChunkInfo();
-		void loadChunkInfo();
+		void saveFileInfo();
+		void loadFileInfo();
 
 	private slots:
 		void downloadStatusChanged(TorrentFile* tf,bool download);

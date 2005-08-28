@@ -50,6 +50,13 @@ namespace bt
 		this->req_time_interval = rti;
 	}
 
+	void PeerDownloader::retransmitRequests()
+	{
+		for (QValueList<Request>::iterator i = reqs.begin();i != reqs.end();i++)
+			peer->getPacketWriter().sendRequest(*i);
+			
+	}
+
 	Uint32 PeerDownloader::getNumRequests() const 
 	{
 		return reqs.count();

@@ -42,6 +42,7 @@ KTorrentView::KTorrentView(QWidget *parent)
 	addColumn(i18n("File"));
 	addColumn(i18n("Status"));
 	addColumn(i18n("Downloaded"));
+	addColumn(i18n("Size")); 
 	addColumn(i18n("Uploaded"));
 	addColumn(i18n("Down Speed"));
 	addColumn(i18n("Up Speed"));

@@ -213,7 +213,7 @@ namespace bt
 							id);
 					
 					uploader->addRequest(r);
-					Out() << "REQUEST " << peer_id.toString() << endl;
+					//Out() << "REQUEST " << peer_id.toString() << endl;
 				}
 				break;
 			case PIECE:
@@ -297,6 +297,11 @@ namespace bt
 			return sock->peerAddress().toString();
 		else
 			return QString::null;
+	}
+
+	Uint32 Peer::getTimeSinceLastPiece() const
+	{
+		return snub_timer.getElapsedSinceUpdate();
 	}
 }
 
