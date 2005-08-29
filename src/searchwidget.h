@@ -21,6 +21,8 @@
 #define BTSEARCHWIDGET_H
 
 #include <qwidget.h>
+#include <qvaluevector.h>
+#include <kurl.h>
 
 class SearchBar;
 class HTMLPart;
@@ -30,6 +32,14 @@ namespace KParts
 {
 	class Part;
 }
+
+struct SearchEngine
+{
+	QString name;
+	KURL url;
+	int id;
+};
+
 
 /**
 @author Joris Guisson
@@ -43,8 +53,13 @@ public:
 
 	KPopupMenu* rightClickMenu();
 
+	/**
+	 * Load the list of search engines.
+	 */
+	void loadSearchEngines();
+
 public slots:
-	void search(const QString & text, const int engine = 0);
+	void search(const QString & text,int engine = 0);
 	void copy();
 
 private slots:
@@ -69,8 +84,9 @@ private:
 	SearchBar* sbar;
 	KPopupMenu* right_click_menu;
 	int back_id;
-
-	void searchUrl(KURL* url, const QString& text, const int engine);
+	QValueVector<SearchEngine> m_search_engines;
+  
+	void makeDefaultSearchEngines();
 };
 
 

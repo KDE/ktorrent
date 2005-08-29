@@ -24,11 +24,14 @@
 
 #include <kdialogbase.h>
 #include <qframe.h>
+#include <qptrlist.h> 
 #include "downloadpref.h"
 #include "generalpref.h"
+#include "searchpref.h" 
 
 
 class KTorrent;
+class QListViewItem; 
 
 class PrefPageOne : public DownloadPref
 {
@@ -51,6 +54,26 @@ private slots:
 	void autosaveChecked(bool on);
 };
 
+class PrefPageThree : public SEPreferences 
+{ 
+    Q_OBJECT 
+public: 
+    PrefPageThree(QWidget *parent = 0); 
+     
+    void apply(); 
+     
+private slots: 
+    void addClicked(); 
+    void removeClicked(); 
+    void addDefaultClicked(); 
+    void removeAllClicked(); 
+private: 
+    void loadSearchEngines(); 
+    void saveSearchEngines(); 
+     
+    QPtrList<QListViewItem> m_items; 
+}; 
+ 
 class KTorrentPreferences : public KDialogBase
 {
 	Q_OBJECT
@@ -65,6 +88,7 @@ private:
 	KTorrent & ktor;
 	PrefPageOne* page_one;
 	PrefPageTwo* page_two;
+	PrefPageThree* page_three; 
 };
 
 

@@ -21,10 +21,15 @@
 #include <kapplication.h>
 #include <khtmlview.h>
 #include <qlayout.h>
+#include <qfile.h> 
+#include <qtextstream.h> 
+#include <qstring.h> 
+#include <qstringlist.h> 
 #include <klineedit.h>
 #include <kpushbutton.h>
 #include <kglobal.h>
 #include <klocale.h>
+#include <kstandarddirs.h> 
 #include <kiconloader.h>
 #include <kcombobox.h>
 #include <kpopupmenu.h>
@@ -40,24 +45,7 @@
 
 using namespace bt;
 
-struct SearchEngine
-{
-	QString name,url;
-	int id;
-};
 
-const int NUM_SEARCH_ENGINES = 7;
-
-static SearchEngine g_search_engines[] =
-{
-	{"bittorrent.com","http://search.bittorrent.com/search.jsp",0},
-	{"isohunt.com" ,"http://isohunt.com/torrents.php",1},
-	{"thepiratebay.org","http://thepiratebay.org/search.php",2},
-	{"bitoogle.com","http://search.bitoogle.com/search.php",3},
-	{"bytenova.org","http://www.bytenova.org/search.php",4},
-	{"torrentspy.com","http://torrentspy.com/search.asp",5},
-	{"mininova.org","http://www.mininova.org/search.php",6}
-};
 
 
 SearchWidget::SearchWidget(QWidget* parent,const char* name)
@@ -106,12 +94,10 @@ SearchWidget::SearchWidget(QWidget* parent,const char* name)
 	KParts::PartManager* pman = html_part->partManager();
 	connect(pman,SIGNAL(partAdded(KParts::Part*)),this,SLOT(onFrameAdded(KParts::Part* )));
 
-	KComboBox* cb = sbar->m_search_engine;
+	
 
-	for (int i = 0;i < NUM_SEARCH_ENGINES;i++)
-		cb->insertItem(g_search_engines[i].name);
-
-	cb->setCurrentItem(Settings::searchEngine());
+	loadSearchEngines();
+	
 
 	connect(KApplication::kApplication(),SIGNAL(shutDown()),this,SLOT(onShutDown()));
 }
@@ -146,55 +132,83 @@ void SearchWidget::copy()
 	html_part->copy();
 }
 
-void SearchWidget::search(const QString & text, const int engine)
+void SearchWidget::search(const QString & text,int engine)
 {
 	if (!html_part)
 		return;
-	KURL url;
-	searchUrl(&url, text, engine);
+
+	if (engine < 0 || (Uint32)engine >= m_search_engines.count())
+		engine = sbar->m_search_engine->currentItem();
+	
+	QString s_url = m_search_engines[engine].url.url();
+	s_url.replace("$QUERY", text);
+	KURL url = KURL::fromPathOrURL(s_url);
 
 	statusBarMsg(i18n("Searching for %1 ...").arg(text));
 	//html_part->openURL(url);
 	html_part->openURLRequest(url,KParts::URLArgs());
 }
 
-
-
-void SearchWidget::searchUrl(KURL* url, const QString& text, const int engine)
+void SearchWidget::loadSearchEngines() 
 {
-	if (engine < NUM_SEARCH_ENGINES)
-		*url = g_search_engines[engine].url;
-	else
-		*url = g_search_engines[0].url;
+	m_search_engines.clear();
+	QFile fptr(KGlobal::dirs()->saveLocation("data","ktorrent") + "search_engines");
+      
+	if(!fptr.exists())
+		makeDefaultSearchEngines();
 	
-	switch(engine)
+	if (!fptr.open(IO_ReadOnly))
+		return;
+	
+	QTextStream in(&fptr);
+	
+	int id = 0;
+	
+	while (!in.atEnd())
 	{
-		case 1: // ISOHUNT
-			url->addQueryItem("ihq",text);
-			url->addQueryItem("op","and");
-			break;
-		case 2: //PirateBay.org
-			url->addQueryItem("q", text);
-			break;
-		case 3: //BITOOGLE
-			url->addQueryItem("q", text);
-			url->addQueryItem("st","t");
-			break;
-		case 4: //ByteNova
-			url->addQueryItem("search", text);
-			break;
-		case 5: //TorrentSpy
-			url->addQueryItem("query",text);
-			break;
-		case 6: //Mininova
-			url->addQueryItem("search", text);
-			break;
-		case 0:
-		default:
-			url->addQueryItem("query",text);
-			url->addQueryItem("Submit2","Search");
+		QString line = in.readLine();
+	
+		if(line.startsWith("#") || line.startsWith(" ") || line.isEmpty() ) continue;
+	
+		QStringList tokens = QStringList::split(" ", line);
+	
+		SearchEngine se;
+		se.name = tokens[0];
+		se.url = KURL::fromPathOrURL(tokens[1]);
+		se.id = id;
+	
+		for(Uint32 i=2; i<tokens.count(); ++i)
+			se.url.addQueryItem(tokens[i].section("=",0,0), tokens[i].section("=", 1, 1));
+	
+		m_search_engines.append(se);
+	
+		++id;
 	}
+
+	sbar->m_search_engine->clear();
+	for(Uint32 i=0; i<m_search_engines.count(); ++i)
+		sbar->m_search_engine->insertItem(m_search_engines[i].name);
+	sbar->m_search_engine->setCurrentItem(Settings::searchEngine());
 }
+  
+void SearchWidget::makeDefaultSearchEngines()
+{
+	QFile fptr(KGlobal::dirs()->saveLocation("data","ktorrent") + "search_engines");
+	if (!fptr.open(IO_WriteOnly))
+		return;
+	QTextStream out(&fptr);
+	out << "# PLEASE DO NOT MODIFY THIS FILE. Use KTorrent configuration dialog for adding new search engines." << ::endl;
+	out << "# SEARCH ENGINES list" << ::endl;
+	out << "# [SE_NAME] [SE_URL] [QUERY_ARG1]=[QUERY_TEXT1] [QUERY_ARG2]=[QUERY_TEXT2] .... " << ::endl;
+	out << "bittorrent.com http://search.bittorrent.com/search.jsp query=$QUERY" << ::endl;
+	out << "isohunt.com http://isohunt.com/torrents.php ihq=$QUERY op=and" << ::endl;
+	out << "mininova.org http://www.mininova.org/search.php search=$QUERY" << ::endl;
+	out << "thepiratebay.org http://thepiratebay.org/search.php q=$QUERY" << ::endl;
+	out << "bitoogle.com http://search.bitoogle.com/search.php q=$QUERY st=t" << ::endl;
+	out << "bytenova.org http://www.bytenova.org/search.php search=$QUERY" << ::endl;
+	out << "torrentspy.com http://torrentspy.com/search.asp query=$QUERY" << ::endl;
+}
+
 
 void SearchWidget::searchPressed()
 {
