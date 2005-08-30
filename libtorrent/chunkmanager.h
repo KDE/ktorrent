@@ -201,6 +201,14 @@ namespace bt
 		 * @param to Last chunk in range
 		 */
 		void include(Uint32 from,Uint32 to);
+	signals:
+		/**
+		 * Emitted when a range of chunks has been excluded
+		 * @param from First chunk in range
+		 * @param to Last chunk in range
+		 */
+		void excluded(Uint32 from,Uint32 to);
+		
 	private:
 		void saveIndexFile();
 		void writeIndexFileEntry(Chunk* c);

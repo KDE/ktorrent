@@ -18,6 +18,7 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <algorithm>
+#include <qptrlist.h>
 #include "choker.h"
 #include "peermanager.h"
 #include "peer.h"
@@ -143,28 +144,48 @@ namespace bt
 	{
 		if (pman.getNumConnectedPeers() == 0)
 			return;
-		
-		if (opt_unchoke == 3)
-		{
-			Peer* p = pman.getPeer(opt_unchoke_index);
-			if (!p)
-			{
-				opt_unchoke_index = 0;
-				p = pman.getPeer(opt_unchoke_index);
-			}
 
-			PacketWriter & pout = p->getPacketWriter();
-			pout.sendUnchoke();
-			opt_unchoke_index = (opt_unchoke_index + 1) % pman.getNumConnectedPeers();
-			opt_unchoke = 1;
-			opt_unchoked_peer_id = p->getID();
-		}
-		else
+		// only switch optimistic unchoked peer every 30 seconds
+		// (update interval of choker is 10 seconds)
+		if (opt_unchoke != 3)
 		{
 			opt_unchoke++;
+			return;
 		}
+		
+		// Get current time
+		QTime now = QTime::currentTime();
+		QPtrList<Peer> peers;	// list to store peers to select from
+
+		// recently connected peers == peers connected in the last 5 minutes
+		const int RECENTLY_CONNECT_THRESH = 5*60;
+		
+		for (Uint32 i = 0;i < pman.getNumConnectedPeers();i++)
+		{
+			Peer* p = pman.getPeer(i);
+			if (p->getConnectTime().secsTo(now) < RECENTLY_CONNECT_THRESH)
+			{
+				// we favor recently connected peers 3 times over other peers
+				// so we add them 3 times to the list
+				peers.append(p);
+				peers.append(p);
+				peers.append(p);
+			}
+			else
+			{
+				// not recent, so just add one time
+				peers.append(p);
+			}
+		}
+
+		// draw a random one from the list and send it an unchoke
+		opt_unchoke_index = rand() % peers.count();
+		Peer* lucky_one = peers.at(opt_unchoke_index);
+		lucky_one->getPacketWriter().sendUnchoke();
+		opt_unchoked_peer_id = lucky_one->getID();
+		opt_unchoke = 1;
 	}
-			
+
 	void Choker::update(bool have_all)
 	{
 		if (pman.getNumConnectedPeers() == 0)

@@ -20,11 +20,11 @@
 #ifndef BTPEER_H
 #define BTPEER_H
 
-
+#include <qdatetime.h>
 #include <qsocket.h>
+#include <libutil/timer.h>
 #include "bitset.h"
 #include "globals.h"
-#include <libutil/timer.h>
 #include "peerid.h"
 
 namespace bt
@@ -146,6 +146,9 @@ namespace bt
 
 		/// Get the time in milliseconds since the last time a piece was recieved.
 		Uint32 getTimeSinceLastPiece() const;
+
+		/// Get the time the peer connection was established.
+		const QTime & getConnectTime() const {return connect_time;}
 	private slots:
 		void connectionClosed(); 
 		void readyRead();
@@ -196,6 +199,8 @@ namespace bt
 		PacketWriter* pwriter;
 		PeerDownloader* downloader;
 		PeerUploader* uploader;
+
+		QTime connect_time;
 
 		friend class PacketWriter;
 	};

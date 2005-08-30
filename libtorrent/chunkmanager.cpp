@@ -107,6 +107,8 @@ namespace bt
 	
 	void ChunkManager::loadIndexFile()
 	{
+		loadFileInfo();
+		
 		File fptr;
 		if (!fptr.open(index_file,"rb"))
 			throw Error(i18n("Can't open index file"));
@@ -127,7 +129,6 @@ namespace bt
 				}
 			}
 		}
-		loadFileInfo();
 	}
 	
 	void ChunkManager::saveIndexFile()
@@ -351,6 +352,7 @@ namespace bt
 			i++;
 		}
 		saveFileInfo();
+		excluded(from,to);
 	}
 
 	void ChunkManager::include(Uint32 from,Uint32 to)

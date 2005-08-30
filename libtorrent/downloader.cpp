@@ -320,5 +320,19 @@ namespace bt
 	{
 		return cman.chunksLeft() == 0;
 	}
+
+	void Downloader::onExcluded(Uint32 from,Uint32 to)
+	{
+		for (Uint32 i = from;i <= to;i++)
+		{
+			ChunkDownload* cd = current_chunks.find(i);
+			if (!cd)
+				continue;
+			cd->cancelAll();
+			if (tmon)
+				tmon->downloadRemoved(cd);
+			current_chunks.erase(i);
+		}
+	}
 }
 #include "downloader.moc"

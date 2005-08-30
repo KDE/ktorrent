@@ -309,5 +309,15 @@ namespace bt
 		}
 		return num_bytes;
 	}
+
+	void ChunkDownload::cancelAll()
+	{
+		QPtrList<PeerDownloader>::iterator i = pdown.begin();
+		while (i != pdown.end())
+		{
+			sendCancels(*i);
+			i++;
+		}
+	}
 }
 #include "chunkdownload.moc"

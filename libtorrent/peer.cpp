@@ -54,6 +54,8 @@ namespace bt
 		connect(sock,SIGNAL(error(int)),this,SLOT(error(int)));
 		pwriter = new PacketWriter(this);
 		time_choked = GetCurrentTime();
+
+		connect_time = QTime::currentTime();
 	}
 
 

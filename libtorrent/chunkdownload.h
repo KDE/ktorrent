@@ -105,6 +105,11 @@ namespace bt
 		 * @param file The File
 		 */
 		void load(File & file);
+
+		/**
+		 * Cancel all requests.
+		 */
+		void cancelAll();
 	private slots:
 		void sendRequests(PeerDownloader* pd);
 		void sendCancels(PeerDownloader* pd);

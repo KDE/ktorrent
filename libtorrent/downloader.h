@@ -131,6 +131,13 @@ namespace bt
 		void pieceRecieved(const Piece & p);
 		void finished(ChunkDownload* c);
 		
+		/**
+		 * Kill all ChunkDownload's which have been excluded.
+		 * @param from First chunk of range
+		 * @param to Last chunk of range
+		 */
+		void onExcluded(Uint32 from,Uint32 to);
+		
 	private:
 		void downloadFrom(PeerDownloader* pd);
 		void normalUpdate();

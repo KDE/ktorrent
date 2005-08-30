@@ -180,7 +180,6 @@ namespace bt
 		choker_update_timer.update();
 		stats_save_timer.update();
 		time_started = QTime::currentTime();
-		prev_bytes_dl = getBytesDownloaded();
 	}
 	
 	void TorrentControl::stop(bool user)
@@ -270,11 +269,20 @@ namespace bt
 		
 		connect(pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
 		connect(pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerRemoved(Peer* )));
+		connect(cman,SIGNAL(excluded(Uint32, Uint32 )),
+				down,SLOT(onExcluded(Uint32, Uint32 )));
+		
 		saved = cman->hasBeenSaved();
 		if (bt::Exists(datadir + "stopped"))
 			autostart = false;
 		updateStatusMsg();
-
+		
+		// to get rid of phantom bytes we need to take into account
+		// the data from downloads allready in progress
+		down->loadDownloads(datadir + "current_chunks");
+		prev_bytes_dl = getBytesDownloaded();
+		down->clearDownloads();
+		
 		loadStats();
 	}
 
