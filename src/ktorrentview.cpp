@@ -79,6 +79,8 @@ KTorrentView::KTorrentView(QWidget *parent)
 
 	setColumnWidth(0,200);
 	setColumnWidthMode(0,QListView::Manual);
+	setColumnWidth(1,100);
+	setColumnWidthMode(1,QListView::Manual);
 	setShowSortIndicator(true);
 	setAcceptDrops(true);
 }
