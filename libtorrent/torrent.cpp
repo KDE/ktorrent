@@ -135,15 +135,23 @@ namespace bt
 			}
 
 			BValueNode* v = d->getValue("length");
-			if (!v || v->data().getType() != Value::INT)
+			if (!v)
 				throw Error(i18n("Corrupted torrent!"));
 
-			TorrentFile file(i,path,file_length,v->data().toInt(),piece_length);
+			if (v->data().getType() == Value::INT || v->data().getType() == Value::INT64)
+			{
+				Uint64 s = v->data().toInt64();
+				TorrentFile file(i,path,file_length,s,piece_length);
 
-			// update file_length
-			file_length += file.getSize();
+				// update file_length
+				file_length += s;
 			
-			files.append(file);
+				files.append(file);
+			}
+			else
+			{
+				throw Error(i18n("Corrupted torrent!"));
+			}
 		}
 	}
 

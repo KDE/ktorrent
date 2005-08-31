@@ -415,7 +415,7 @@ namespace bt
 			return QString::null;
 	}
 	
-	Uint32 TorrentControl::getBytesDownloaded() const
+	Uint64 TorrentControl::getBytesDownloaded() const
 	{
 		if (down)
 			return down->bytesDownloaded();
@@ -423,7 +423,7 @@ namespace bt
 			return 0;
 	}
 	
-	Uint32 TorrentControl::getBytesUploaded() const
+	Uint64 TorrentControl::getBytesUploaded() const
 	{
 		if (up)
 			return up->bytesUploaded();
@@ -431,7 +431,7 @@ namespace bt
 			return 0;
 	}
 	
-	Uint32 TorrentControl::getBytesLeft() const
+	Uint64 TorrentControl::getBytesLeft() const
 	{
 		if (cman)
 			return cman->bytesLeft();
@@ -500,12 +500,12 @@ namespace bt
 		return cman->chunksExcluded();
 	}
 
-	Uint32 TorrentControl::getTotalBytes() const
+	Uint64 TorrentControl::getTotalBytes() const
 	{
 		return tor->getFileLength();
 	}
 
-	Uint32 TorrentControl::getTotalBytesToDownload() const
+	Uint64 TorrentControl::getTotalBytesToDownload() const
 	{
 		return tor->getFileLength() - cman->bytesExcluded();
 	}
@@ -647,7 +647,7 @@ namespace bt
 		}
 
 		QTextStream out(&fptr);
-		out << "UPLOADED=" << up->bytesUploaded() << ::endl;
+		out << "UPLOADED=" << QString::number(up->bytesUploaded()) << ::endl;
 		out << "RUNNING_TIME=" << running_time << ::endl; 
 	}
 
@@ -664,7 +664,7 @@ namespace bt
 			if (line.startsWith("UPLOADED="))
 			{
 				bool ok = true;
-				Uint32 val = line.mid(9).toInt(&ok);
+				Uint64 val = line.mid(9).toULongLong(&ok);
 				if (ok)
 					up->setBytesUploaded(val);
 				else

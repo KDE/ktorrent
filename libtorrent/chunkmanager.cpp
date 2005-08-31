@@ -224,9 +224,9 @@ namespace bt
 			max_allowed = c->getIndex() + 50;
 	}
 	
-	Uint32 ChunkManager::bytesLeft() const
+	Uint64 ChunkManager::bytesLeft() const
 	{
-		Uint32 total = 0;
+		Uint64 total = 0;
 		for (Uint32 i = 0;i < chunks.size();i++)
 		{
 			const Chunk* c = chunks[i];
@@ -262,9 +262,9 @@ namespace bt
 		return num;
 	}
 
-	Uint32 ChunkManager::bytesExcluded() const
+	Uint64 ChunkManager::bytesExcluded() const
 	{
-		Uint32 num = 0;
+		Uint64 num = 0;
 		for (Uint32 i = 0;i < chunks.size();i++)
 		{
 			const Chunk* c = chunks[i];

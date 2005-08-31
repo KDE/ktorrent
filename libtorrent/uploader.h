@@ -50,13 +50,13 @@ namespace bt
 		virtual ~Uploader();
 
 		/// Get the number of bytes uploaded.
-		Uint32 bytesUploaded() const {return uploaded;}
+		Uint64 bytesUploaded() const {return uploaded;}
 
 		/// Get the upload rate of all Peers combined.
 		Uint32 uploadRate() const;
 
 		/// Set the number of bytes which have been uploaded.
-		void setBytesUploaded(Uint32 b) {uploaded = b;}
+		void setBytesUploaded(Uint64 b) {uploaded = b;}
 	public slots:		
 		/**
 		 * Update every PeerUploader.
@@ -67,7 +67,7 @@ namespace bt
 	private:
 		ChunkManager & cman;
 		PeerManager & pman;
-		Uint32 uploaded;
+		Uint64 uploaded;
 	};
 
 }

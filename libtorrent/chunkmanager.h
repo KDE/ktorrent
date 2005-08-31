@@ -119,14 +119,14 @@ namespace bt
 		 * Calculates the number of bytes left to download.
 		 * @return The number of bytes to download
 		 */
-		Uint32 bytesLeft() const;
+		Uint64 bytesLeft() const;
 
 		
 		/**
 		 * Calculates the number of bytes which have been excluded.
 		 * @return The number of bytes excluded
 		 */
-		Uint32 bytesExcluded() const;
+		Uint64 bytesExcluded() const;
 		
 		/**
 		 * Calculates the number of chunks left to download.

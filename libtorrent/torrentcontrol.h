@@ -113,19 +113,19 @@ namespace bt
 		QString getTorrentName() const;
 
 		/// Get the number of bytes downloaded
-		Uint32 getBytesDownloaded() const;
+		Uint64 getBytesDownloaded() const;
 
 		/// Get the number of bytes uploaded
-		Uint32 getBytesUploaded() const;
+		Uint64 getBytesUploaded() const;
 
 		/// Get the number of bytes left to download
-		Uint32 getBytesLeft() const;
+		Uint64 getBytesLeft() const;
 
 		/// Get the total number of bytes
-		Uint32 getTotalBytes() const;
+		Uint64 getTotalBytes() const;
 
 		/// Get the total number of bytes which need to be downloaded
-		Uint32 getTotalBytesToDownload() const;
+		Uint64 getTotalBytesToDownload() const;
 
 		/// Get the download rate in bytes per sec
 		Uint32 getDownloadRate() const;
@@ -313,7 +313,7 @@ namespace bt
 		Status status;
 		QTime time_started;
 		int running_time;
-		Uint32 prev_bytes_dl, prev_bytes_ul; 
+		Uint64 prev_bytes_dl, prev_bytes_ul;
 	};
 }
 

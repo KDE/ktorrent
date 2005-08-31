@@ -65,7 +65,7 @@ namespace bt
 		virtual ~Downloader();
 
 		/// Get the number of bytes we have downloaded
-		Uint32 bytesDownloaded() const {return downloaded;}
+		Uint64 bytesDownloaded() const {return downloaded;}
 
 		/// Get the current dowload rate
 		Uint32 downloadRate() const;
@@ -147,7 +147,7 @@ namespace bt
 		Torrent & tor;
 		PeerManager & pman;
 		ChunkManager & cman;
-		Uint32 downloaded;
+		Uint64 downloaded;
 		PtrMap<Uint32,ChunkDownload> current_chunks;
 		bool endgame_mode;
 		ChunkSelector* chunk_selector;
