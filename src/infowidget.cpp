@@ -31,6 +31,7 @@
 #include <qtabwidget.h>
 #include <qlayout.h>
 #include <libutil/functions.h>
+#include <libutil/log.h>
 #include <libtorrent/torrent.h>
 #include <libtorrent/torrentcontrol.h>
 #include <libtorrent/globals.h>
@@ -211,7 +212,7 @@ void InfoWidget::update()
 		ratio = (float) curr_tc->getBytesUploaded() / (float)curr_tc->getBytesDownloaded();
 	m_share_ratio->setText(QString::number(ratio,0,2));
 
-	Uint32 secs = curr_tc->getRunningTime();
+	Uint32 secs = curr_tc->getRunningTimeUL(); 
 	if (secs == 0)
 	{
 		m_avg_up->setText(KBytesPerSecToString(0));
@@ -219,10 +220,11 @@ void InfoWidget::update()
 	}
 	else
 	{
-		double r = 0.001 * ((double)curr_tc->getBytesUploaded()/ (double)secs);
-		m_avg_up->setText(KBytesPerSecToString(r));
-		r = 0.001 * ((double)curr_tc->getBytesDownloaded()/ (double)secs);
-		m_avg_down->setText(KBytesPerSecToString(r));
+		double r = (double)curr_tc->getBytesUploaded() / 1024.0;
+		m_avg_up->setText(KBytesPerSecToString(r / secs));
+		r = (double)curr_tc->getBytesDownloaded()/ 1024.0;
+		secs = curr_tc->getRunningTimeDL();
+		m_avg_down->setText(KBytesPerSecToString(r / secs));
 	}
 	readyPreview();
 }

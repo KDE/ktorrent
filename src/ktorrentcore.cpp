@@ -241,8 +241,9 @@ void KTorrentCore::torrentFinished(bt::TorrentControl* tc)
 	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
 	while (i != downloads.end())
 	{
-		TorrentControl* tc = *i;
-		start(tc);
+		TorrentControl* otc = *i;
+		if (otc != tc)
+			start(otc);
 		i++;
 	}
 	finished(tc);

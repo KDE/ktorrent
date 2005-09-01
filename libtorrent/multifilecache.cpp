@@ -141,7 +141,6 @@ namespace bt
 		QValueList<Uint32> files;
 		tor.calcChunkPos(c->getIndex(),files);
 
-	//	Out() << "Saving " << c->getIndex() << " to " << files.count() << " files" << endl;
 		Uint64 written = 0; // number of bytes written
 		for (Uint32 i = 0;i < files.count();i++)
 		{
@@ -162,12 +161,12 @@ namespace bt
 			{
 				off = FileOffset(c,f,tor.getChunkSize());
 
-		//		Out() << "off = " << off << endl;
 				// we may need to expand the first file
 				fptr.seek(File::END,0);
 				Uint64 cache_size = fptr.tell();
+	
 				if (cache_size < off)
-				{
+				{	
 					// write random shit to enlarge the file
 					Uint64 num_empty_bytes = off - cache_size + 1;
 					Uint8 b[1024];
@@ -259,7 +258,7 @@ namespace bt
 		if (c->getIndex() - f.getFirstChunk() > 0)
 			off = (c->getIndex() - f.getFirstChunk() - 1) * chunk_size;
 		if (c->getIndex() > 0)
-			off += (c->getSize() - f.getFirstChunkOffset());
+			off += (chunk_size - f.getFirstChunkOffset());
 		return off;
 	}
 }

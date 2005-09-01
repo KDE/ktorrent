@@ -199,12 +199,18 @@ namespace bt
 		 * @param interval The interval in milliseconds
 		 */
 		void setTrackerTimerInterval(Uint32 interval);
-
+		
 		/**
-		 * Get the running time of this torrent in seconds
+		 * Get the download running time of this torrent in seconds
 		 * @return Uint32 - time in seconds
 		 */
-		Uint32 getRunningTime() const; 
+		Uint32 getRunningTimeDL() const;
+		
+		/**
+		 * Get the upload running time of this torrent in seconds
+		 * @return Uint32 - time in seconds
+		 */
+		Uint32 getRunningTimeUL() const;
 
 		/**
 		* Checks if torrent is multimedial and chunks needed for preview are downloaded
@@ -311,8 +317,8 @@ namespace bt
 		Uint32 num_tracker_attempts;
 		KURL last_tracker_url;
 		Status status;
-		QTime time_started;
-		int running_time;
+		QTime time_started_dl, time_started_ul;
+		int running_time_dl, running_time_ul;
 		Uint64 prev_bytes_dl, prev_bytes_ul;
 	};
 }

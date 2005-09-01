@@ -48,10 +48,10 @@
 
 namespace bt
 {
-	
-	
-	TorrentControl::TorrentControl() 
-	: tor(0),tracker(0),cman(0),pman(0),down(0),up(0),choke(0),tmon(0)
+
+
+	TorrentControl::TorrentControl()
+			: tor(0),tracker(0),cman(0),pman(0),down(0),up(0),choke(0),tmon(0)
 	{
 		running = false;
 		started = false;
@@ -62,22 +62,22 @@ namespace bt
 		tracker_update_interval = 120000;
 		status = NOT_STARTED;
 		autostart = true;
-		running_time = 0;
+		running_time_dl = running_time_ul = 0;
 		prev_bytes_dl = 0;
 		prev_bytes_ul = 0;
 	}
-	
-	
+
+
 
 
 	TorrentControl::~TorrentControl()
 	{
 		if (isRunning())
 			stop(false);
-		
+
 		if (tmon)
 			tmon->destroyed();
-		
+
 		delete down;
 		delete up;
 		delete cman;
@@ -93,18 +93,23 @@ namespace bt
 		{
 			pman->update();
 			bool comp = completed;
-	
+
 			// then the downloader and uploader
 			up->update(choke->getOptimisticlyUnchokedPeerID());
 			//if (!completed)
 			down->update();
-	
+
 			completed = cman->chunksLeft() == 0;
 			if (completed && !comp)
 			{
 				// download has just been completed
 				updateTracker("completed");
 				finished(this);
+				QTime now = QTime::currentTime();
+			//	Out() << running_time_dl << endl;
+				running_time_dl += time_started_dl.secsTo(now);
+			//	Out() << "Finished (total time : " << running_time_dl << " secs)" << endl;
+			//	Out() << time_started_dl.toString("mm:ss") << " " << now.toString("mm:ss") << endl;
 			}
 			else if (!completed && comp)
 			{
@@ -112,16 +117,17 @@ namespace bt
 				// when user selects that files which were previously excluded,
 				// should now be downloaded
 				updateTracker("started");
+				time_started_dl = QTime::currentTime();
 			}
 			updateStatusMsg();
-	
+
 			// make sure we don't use up to much memory with all the chunks
 			// we're uploading
 			cman->checkMemoryUsage();
-	
+
 			// get rid of dead Peers
 			pman->clearDeadPeers();
-	
+
 			// we may need to update the tracker
 			if (tracker_update_timer.getElapsedSinceUpdate() >= tracker_update_interval)
 			{
@@ -130,11 +136,11 @@ namespace bt
 				// we will get rid of them (if there is a connection cap)
 				if (max_connections > 0 && pman->getNumConnectedPeers() == max_connections)
 					pman->killChokedPeers(tracker_update_interval);
-				
+
 				updateTracker();
 				tracker_update_timer.update();
 			}
-	
+
 			// we may need to update the choker
 			if (choker_update_timer.getElapsedSinceUpdate() >= 10000)
 			{
@@ -148,7 +154,7 @@ namespace bt
 				saveStats();
 				stats_save_timer.update();
 			}
-	
+
 			// make sure the downloadcap gets obeyed
 			DownloadCap::instance().update();
 		}
@@ -179,22 +185,25 @@ namespace bt
 		tracker_update_timer.update();
 		choker_update_timer.update();
 		stats_save_timer.update();
-		time_started = QTime::currentTime();
+		time_started_ul = time_started_dl = QTime::currentTime();
 	}
-	
+
 	void TorrentControl::stop(bool user)
 	{
-		running_time += time_started.secsTo(QTime::currentTime());
-		saveStats();
-		
+		QTime now = QTime::currentTime();
+		if(!completed)
+			running_time_dl += time_started_dl.secsTo(now);
+		running_time_ul += time_started_ul.secsTo(now);
+		time_started_ul = time_started_dl = now;
+	
 		if (running)
 		{
 			if (num_tracker_attempts < tor->getNumTrackerURLs())
 				updateTracker("stopped");
-		
+
 			if (tmon)
 				tmon->stopped();
-			
+
 			down->saveDownloads(datadir + "current_chunks");
 			down->clearDownloads();
 			if (user)
@@ -203,11 +212,12 @@ namespace bt
 		pman->stop();
 		pman->closeAllConnections();
 		pman->clearDeadPeers();
-		
+
 		running = false;
+		saveStats();
 		updateStatusMsg();
 	}
-	
+
 	void TorrentControl::setMonitor(TorrentMonitor* tmo)
 	{
 		tmon = tmo;
@@ -218,7 +228,7 @@ namespace bt
 				tmon->peerAdded(pman->getPeer(i));
 		}
 	}
-	
+
 	void TorrentControl::init(const QString & torrent,const QString & ddir)
 	{
 		datadir = ddir;
@@ -226,17 +236,17 @@ namespace bt
 		running = false;
 		if (!datadir.endsWith(DirSeparator()))
 			datadir += DirSeparator();
-		
+
 
 		// first load the torrent file
 		tor = new Torrent();
 		tor->load(torrent);
 		if (!bt::Exists(datadir))
 			bt::MakeDir(datadir);
-	
+
 		// copy torrent in temp dir
 		QString tor_copy = datadir + "torrent";
-		
+
 		if (tor_copy != torrent)
 			bt::CopyFile(torrent,tor_copy);
 
@@ -258,31 +268,31 @@ namespace bt
 			cman->loadIndexFile();
 		else
 			cman->createFiles();
-		
+
 		completed = cman->chunksLeft() == 0;
 
 		// create downloader,uploader and choker
 		down = new Downloader(*tor,*pman,*cman);
 		up = new Uploader(*cman,*pman);
 		choke = new Choker(*pman);
-	
-		
+
+
 		connect(pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
 		connect(pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerRemoved(Peer* )));
 		connect(cman,SIGNAL(excluded(Uint32, Uint32 )),
-				down,SLOT(onExcluded(Uint32, Uint32 )));
-		
+		        down,SLOT(onExcluded(Uint32, Uint32 )));
+
 		saved = cman->hasBeenSaved();
 		if (bt::Exists(datadir + "stopped"))
 			autostart = false;
 		updateStatusMsg();
-		
+
 		// to get rid of phantom bytes we need to take into account
 		// the data from downloads allready in progress
 		down->loadDownloads(datadir + "current_chunks");
 		prev_bytes_dl = getBytesDownloaded();
 		down->clearDownloads();
-		
+
 		loadStats();
 	}
 
@@ -304,15 +314,15 @@ namespace bt
 		{
 			Out() << "Error : " << e.toString() << endl;
 			if (num_tracker_attempts >= tor->getNumTrackerURLs() &&
-						 trackerevent != "stopped")
+			        trackerevent != "stopped")
 			{
 				trackerstatus = i18n("Invalid response");
 				if (pman->getNumConnectedPeers() == 0)
 				{
 					error_msg = i18n("The tracker %1 did not send a proper response")
-							.arg(last_tracker_url.prettyURL());
+					            .arg(last_tracker_url.prettyURL());
 					stopped_by_error = true;
-					short_error_msg = i18n("Tracker error"); 
+					short_error_msg = i18n("Tracker error");
 					stop(false);
 					emit stoppedByError(this, error_msg);
 				}
@@ -333,18 +343,18 @@ namespace bt
 			}
 		}
 	}
-	
+
 	void TorrentControl::trackerResponseError()
 	{
 		Out() << "Tracker Response Error" << endl;
 		if (num_tracker_attempts >= tor->getNumTrackerURLs() &&
-		    trackerevent != "stopped")
+		        trackerevent != "stopped")
 		{
 			trackerstatus = i18n("Unreachable");
 			if (pman->getNumConnectedPeers() == 0)
 			{
 				error_msg = i18n("The tracker %1 is down.")
-					.arg(last_tracker_url.prettyURL());
+				            .arg(last_tracker_url.prettyURL());
 				short_error_msg = i18n("The tracker is down.");
 				stopped_by_error = true;
 				stop(false);
@@ -367,23 +377,23 @@ namespace bt
 			updateTracker(trackerevent,false);
 		}
 	}
-	
+
 	void TorrentControl::updateTracker(const QString & ev,bool last_succes)
 	{
 		trackerevent = ev;
 		if (!tor || !tracker || !down || !up)
 			return;
-		
+
 		KURL url = tor->getTrackerURL(last_succes);
 		last_tracker_url = url;
 		tracker->setData(tor->getInfoHash(),tor->getPeerID(),port,
-						 up->bytesUploaded(),down->bytesDownloaded(),
-						 cman->bytesLeft(),ev);
+		                 up->bytesUploaded(),down->bytesDownloaded(),
+		                 cman->bytesLeft(),ev);
 
 		tracker->doRequest(url);
 		num_tracker_attempts++;
 	}
-	
+
 
 	void TorrentControl::onNewPeer(Peer* p)
 	{
@@ -393,7 +403,7 @@ namespace bt
 		if (tmon)
 			tmon->peerAdded(p);
 	}
-	
+
 	void TorrentControl::onPeerRemoved(Peer* p)
 	{
 		if (tmon)
@@ -404,9 +414,9 @@ namespace bt
 	{
 		choke->update(cman->bytesLeft() == 0);
 	}
-	
 
-	
+
+
 	QString TorrentControl::getTorrentName() const
 	{
 		if (tor)
@@ -414,7 +424,7 @@ namespace bt
 		else
 			return QString::null;
 	}
-	
+
 	Uint64 TorrentControl::getBytesDownloaded() const
 	{
 		if (down)
@@ -422,7 +432,7 @@ namespace bt
 		else
 			return 0;
 	}
-	
+
 	Uint64 TorrentControl::getBytesUploaded() const
 	{
 		if (up)
@@ -430,7 +440,7 @@ namespace bt
 		else
 			return 0;
 	}
-	
+
 	Uint64 TorrentControl::getBytesLeft() const
 	{
 		if (cman)
@@ -438,7 +448,7 @@ namespace bt
 		else
 			return 0;
 	}
-	
+
 	Uint32 TorrentControl::getDownloadRate() const
 	{
 		if (down && running)
@@ -446,7 +456,7 @@ namespace bt
 		else
 			return 0;
 	}
-	
+
 	Uint32 TorrentControl::getUploadRate() const
 	{
 		if (up && running)
@@ -454,7 +464,7 @@ namespace bt
 		else
 			return 0;
 	}
-	
+
 	Uint32 TorrentControl::getNumPeers() const
 	{
 		if (pman)
@@ -462,7 +472,7 @@ namespace bt
 		else
 			return 0;
 	}
-	
+
 	Uint32 TorrentControl::getNumChunksDownloading() const
 	{
 		if (down)
@@ -470,26 +480,26 @@ namespace bt
 		else
 			return 0;
 	}
-	
+
 	void TorrentControl::reconstruct(const QString & dir)
 	{
 		if (saved && !tor->isMultiFile())
 			return;
-	
+
 		cman->save(dir);
 		saved = true;
 	}
-	
+
 	bool TorrentControl::isMultiFileTorrent() const
 	{
 		return tor->isMultiFile();
 	}
-	
+
 	Uint32 TorrentControl::getTotalChunks() const
 	{
 		return cman->getNumChunks();
 	}
-	
+
 	Uint32 TorrentControl::getNumChunksDownloaded() const
 	{
 		return cman->getNumChunks() - cman->chunksExcluded() - cman->chunksLeft();
@@ -516,7 +526,7 @@ namespace bt
 		// so first get that and append it to new_dir
 		int dd = datadir.findRev(DirSeparator(),datadir.length() - 2,false);
 		QString tor = datadir.mid(dd + 1,datadir.length() - 2 - dd);
-		
+
 
 		// make sure nd ends with a /
 		QString nd = new_dir + tor;
@@ -530,7 +540,7 @@ namespace bt
 		{
 			if (!bt::Exists(nd))
 				bt::MakeDir(nd);
-			
+
 			// now try to move all the files :
 			// first the torrent
 			bt::Move(datadir + "torrent",nd);
@@ -559,7 +569,7 @@ namespace bt
 		// it will be recreated anyway
 		// now delete the old directory
 		bt::Delete(datadir,true);
-		
+
 		old_datadir = datadir;
 		datadir = nd;
 		return true;
@@ -583,7 +593,7 @@ namespace bt
 
 		// delete new
 		bt::Delete(datadir,true);
-		
+
 		datadir = old_datadir;
 		old_datadir = QString::null;
 	}
@@ -602,7 +612,7 @@ namespace bt
 			status = TorrentControl::SEEDING;
 		else if (running)
 			status = down->downloadRate() > 0 ?
-					TorrentControl::DOWNLOADING : TorrentControl::STALLED;
+			         TorrentControl::DOWNLOADING : TorrentControl::STALLED;
 	}
 
 	void TorrentControl::downloadedChunksToBitSet(BitSet & bs)
@@ -631,7 +641,7 @@ namespace bt
 	{
 		if (!cman)
 			return;
-		
+
 		bs = BitSet(cman->getNumChunks());
 		for (Uint32 i = 0;i < cman->getNumChunks();i++)
 			bs.set(i,cman->getChunk(i)->isExcluded());
@@ -648,7 +658,17 @@ namespace bt
 
 		QTextStream out(&fptr);
 		out << "UPLOADED=" << QString::number(up->bytesUploaded()) << ::endl;
-		out << "RUNNING_TIME=" << running_time << ::endl; 
+		if (running)
+		{
+			QTime now = QTime::currentTime();
+			out << "RUNNING_TIME_DL=" << (running_time_dl + time_started_dl.secsTo(now)) << ::endl;
+			out << "RUNNING_TIME_UL=" << (running_time_ul + time_started_ul.secsTo(now)) << ::endl;
+		}
+		else
+		{
+			out << "RUNNING_TIME_DL=" << running_time_dl << ::endl;
+			out << "RUNNING_TIME_UL=" << running_time_ul << ::endl;
+		}
 	}
 
 	void TorrentControl::loadStats()
@@ -669,18 +689,28 @@ namespace bt
 					up->setBytesUploaded(val);
 				else
 					Out() << "Warning : can't get bytes uploaded out of line : "
-							<< line << endl;
-				prev_bytes_ul = val; 
+					<< line << endl;
+				prev_bytes_ul = val;
 			}
-			else if (line.startsWith("RUNNING_TIME="))
+			else if (line.startsWith("RUNNING_TIME_DL="))
 			{
 				bool ok = true;
-				int val = line.mid(13).toInt(&ok);
+				int val = line.mid(16).toInt(&ok);
 				if(ok)
-					this->running_time = val;
+					this->running_time_dl = val;
 				else
 					Out() << "Warning : can't get running time out of line : "
-							<< line << endl;
+					<< line << endl;
+			}
+			else if (line.startsWith("RUNNING_TIME_UL="))
+			{
+				bool ok = true;
+				int val = line.mid(16).toInt(&ok);
+				if(ok)
+					this->running_time_ul = val;
+				else
+					Out() << "Warning : can't get running time out of line : "
+					<< line << endl;
 			}
 		}
 	}
@@ -694,7 +724,7 @@ namespace bt
 		for(int i = start_chunk; i<end_chunk; ++i)
 		{
 			if ( !bs.get(i) ) return false;
-		} 
+		}
 		return true;
 	}
 
@@ -713,7 +743,7 @@ namespace bt
 		connected_to = 0;
 		if (!pman || !tracker)
 			return;
-		
+
 		for (Uint32 i = 0;i < pman->getNumConnectedPeers();i++)
 		{
 			if (pman->getPeer(i)->isSeeder())
@@ -730,7 +760,7 @@ namespace bt
 		connected_to = 0;
 		if (!pman || !tracker)
 			return;
-		
+
 		for (Uint32 i = 0;i < pman->getNumConnectedPeers();i++)
 		{
 			if (!pman->getPeer(i)->isSeeder())
@@ -741,14 +771,23 @@ namespace bt
 			total = connected_to;
 	}
 
-	Uint32 TorrentControl::getRunningTime() const
+	Uint32 TorrentControl::getRunningTimeDL() const
 	{
-		if (!running)
-			return running_time;
+		if (!running || completed)
+			return running_time_dl;
 		else
-			return running_time + time_started.secsTo(QTime::currentTime());
+			return running_time_dl + time_started_dl.secsTo(QTime::currentTime());
 	}
 
-	
+	Uint32 TorrentControl::getRunningTimeUL() const
+	{
+		if (!running)
+			return running_time_ul;
+		else
+			return running_time_ul + time_started_ul.secsTo(QTime::currentTime());
+	}
+
+
+
 }
 #include "torrentcontrol.moc"

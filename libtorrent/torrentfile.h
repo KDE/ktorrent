@@ -43,9 +43,9 @@ namespace bt
 		Uint64 size;
 		Uint64 cache_offset;
 		Uint32 first_chunk;
-		Uint32 first_chunk_off;
+		Uint64 first_chunk_off;
 		Uint32 last_chunk;
-		Uint32 last_chunk_size;
+		Uint64 last_chunk_size;
 		bool do_not_download;
 	public:
 		/**
@@ -90,13 +90,13 @@ namespace bt
 		Uint32 getFirstChunk() const {return first_chunk;}
 
 		/// Get the offset at which the file starts in the first chunk
-		Uint32 getFirstChunkOffset() const {return first_chunk_off;}
+		Uint64 getFirstChunkOffset() const {return first_chunk_off;}
 
 		/// Get the last chunk of the file
 		Uint32 getLastChunk() const {return last_chunk;}
 
 		/// Get how many bytes the files takes up of the last chunk
-		Uint32 getLastChunkSize() const {return last_chunk_size;}
+		Uint64 getLastChunkSize() const {return last_chunk_size;}
 
 		/// Check if this file doesn't have to be downloaded
 		bool doNotDownload() const {return do_not_download;}

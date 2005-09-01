@@ -43,7 +43,7 @@ namespace bt
 	{
 		chunk_selector = new ChunkSelector(cman,*this);
 		Uint32 total = tor.getFileLength();
-		downloaded = (total - cman.bytesLeft());
+		downloaded = (total - cman.bytesLeft() - cman.bytesExcluded());
 		endgame_mode = false;
 	
 		current_chunks.setAutoDelete(true);

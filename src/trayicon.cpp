@@ -57,10 +57,10 @@ void TrayIcon::finished(TorrentControl* tc)
 {
 	double speed_up = 0;
 	double speed_down = 0;
-	if (tc->getRunningTime() != 0)
+	if (tc->getRunningTimeUL() != 0) //getRunningTimeUL is actually total running time
 	{
-		speed_up = double(tc->getBytesUploaded()/1024.0) / (double)tc->getRunningTime();
-		speed_down = double(tc->getBytesDownloaded()/1024.0) / (double)tc->getRunningTime();
+		speed_up = ((double)tc->getBytesUploaded()/1024.0) / (double)tc->getRunningTimeUL();
+		speed_down = ((double)tc->getBytesDownloaded()/1024.0) / (double)tc->getRunningTimeDL();
 	}
 			
 	QString msg = i18n("<b>%1</b> has completed downloading."
