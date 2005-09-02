@@ -43,12 +43,10 @@
                 </property>
                 <widget class="KActiveLabel">
                     <property name="name">
-                        <cstring>kActiveLabel1</cstring>
+                        <cstring>m_infoLabel</cstring>
                     </property>
                     <property name="text">
-                        <string>Use your web browser to search for the string $QUERY on the search engine you want to add. Then copy the URL in the addressbar after the search is finished, and paste it here. 
-&lt;br&gt;
-Searching for $QUERY on google for example, will result in http://www.google.com/search?q=$QUERY&amp;ie=UTF-8&amp;oe=UTF-8 . If you add this URL here, ktorrent can search using google.</string>
+                        <string></string>
                     </property>
                 </widget>
                 <widget class="QLayoutWidget">
@@ -256,8 +254,6 @@ Searching for $QUERY on google for example, will result in http://www.google.com
         </widget>
     </hbox>
 </widget>
-<customwidgets>
-</customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kactivelabel.h</includehint>

@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <klocale.h>
 #include <kstandarddirs.h>
+#include <kactivelabel.h>
 #include <kglobal.h>
 #include <qlayout.h>
 #include <qlabel.h>
@@ -210,6 +211,12 @@ void PrefPageTwo::autosaveChecked(bool on)
 
 PrefPageThree::PrefPageThree(QWidget *parent) : SEPreferences(parent) 
 { 
+	QString info = i18n("Use your web browser to search for the string ");
+	info += "FOOBAR";
+	info += i18n(" (capital letters) on the search engine you want to add. Then copy the URL in the addressbar after the search is finished, and paste it here.<br>Searching for ");
+	info += "FOOBAR";
+	info += i18n(" on google for example, will result in http://www.google.com/search?q=FOOBAR&ie=UTF-8&oe=UTF-8 . If you add this URL here, ktorrent can search using google.");
+	m_infoLabel->setText(info);
     loadSearchEngines(); 
     connect(btnAdd, SIGNAL(clicked()), this, SLOT(addClicked())); 
     connect(btnRemove, SIGNAL(clicked()), this, SLOT(removeClicked())); 
@@ -280,7 +287,7 @@ void PrefPageThree::addClicked()
 { 
     if ( m_engine_url->text().isEmpty() || m_engine_name->text().isEmpty() ) 
         KMessageBox::error(this, i18n("You must enter SE name and URL"), i18n("Error")); 
-    else if ( m_engine_url->text().contains("$QUERY")  ) 
+    else if ( m_engine_url->text().contains("FOOBAR")  ) 
     { 
         KURL url = KURL::fromPathOrURL(m_engine_url->text()); 
         if ( !url.isValid() ) { KMessageBox::error(this, i18n("Malformed URL."), i18n("Error")); return; } 
@@ -289,7 +296,7 @@ void PrefPageThree::addClicked()
         m_items.append(se); 
     } 
     else 
-        KMessageBox::error(this, i18n("Bad URL. You should search for $QUERY with your internet browser and copy/paste exact URL here.")); 
+        KMessageBox::error(this, i18n("Bad URL. You should search for FOOBAR with your internet browser and copy/paste exact URL here.")); 
 } 
  
 void PrefPageThree::removeClicked() 
@@ -304,35 +311,35 @@ void PrefPageThree::removeClicked()
  
 void PrefPageThree::addDefaultClicked() 
 { 
-    QListViewItem* se = new QListViewItem(m_engines, "bittorrent.com", "http://search.bittorrent.com/search.jsp?query=$QUERY"); 
+    QListViewItem* se = new QListViewItem(m_engines, "bittorrent.com", "http://search.bittorrent.com/search.jsp?query=FOOBAR"); 
     m_items.append(se); 
     m_engines->insertItem(se); 
      
-    se = new QListViewItem(m_engines, "isohunt.com", "http://isohunt.com/torrents.php?ihq=$QUERY&op=and"); 
+    se = new QListViewItem(m_engines, "isohunt.com", "http://isohunt.com/torrents.php?ihq=FOOBAR&op=and"); 
     m_items.append(se); 
     m_engines->insertItem(se); 
      
-    se = new QListViewItem(m_engines, "mininova.org", "http://www.mininova.org/search.php?search=$QUERY"); 
+    se = new QListViewItem(m_engines, "mininova.org", "http://www.mininova.org/search.php?search=FOOBAR"); 
     m_items.append(se); 
     m_engines->insertItem(se); 
      
-    se = new QListViewItem(m_engines, "thepiratebay.org", "http://thepiratebay.org/search.php?q=$QUERY"); 
+    se = new QListViewItem(m_engines, "thepiratebay.org", "http://thepiratebay.org/search.php?q=FOOBAR"); 
     m_items.append(se); 
     m_engines->insertItem(se); 
      
-    se = new QListViewItem(m_engines, "bitoogle.com", "http://search.bitoogle.com/search.php?q=$QUERY&st=t"); 
+    se = new QListViewItem(m_engines, "bitoogle.com", "http://search.bitoogle.com/search.php?q=FOOBAR&st=t"); 
     m_items.append(se); 
     m_engines->insertItem(se); 
      
-	se = new QListViewItem(m_engines, "bytenova.org", "http://www.bitenova.org/search.php?search=$QUERY&start=0&start=0&ie=utf-8&oe=utf-8");
+	se = new QListViewItem(m_engines, "bytenova.org", "http://www.bitenova.org/search.php?search=FOOBAR&start=0&start=0&ie=utf-8&oe=utf-8");
 	m_items.append(se); 
 	m_engines->insertItem(se); 
      
-    se = new QListViewItem(m_engines, "torrentspy.com", "http://torrentspy.com/search.asp?query=$QUERY"); 
+    se = new QListViewItem(m_engines, "torrentspy.com", "http://torrentspy.com/search.asp?query=FOOBAR"); 
     m_items.append(se); 
     m_engines->insertItem(se);
 
-	se = new QListViewItem(m_engines, "torrentz.com", "http://www.torrentz.com/s.php?q=$QUERY");  
+	se = new QListViewItem(m_engines, "torrentz.com", "http://www.torrentz.com/s.php?q=FOOBAR");  
 	m_items.append(se);  
 	m_engines->insertItem(se); 
 } 
