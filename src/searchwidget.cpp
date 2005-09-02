@@ -199,14 +199,14 @@ void SearchWidget::makeDefaultSearchEngines()
 	QTextStream out(&fptr);
 	out << "# PLEASE DO NOT MODIFY THIS FILE. Use KTorrent configuration dialog for adding new search engines." << ::endl;
 	out << "# SEARCH ENGINES list" << ::endl;
-	out << "# [SE_NAME] [SE_URL] [QUERY_ARG1]=[QUERY_TEXT1] [QUERY_ARG2]=[QUERY_TEXT2] .... " << ::endl;
-	out << "bittorrent.com http://search.bittorrent.com/search.jsp query=$QUERY" << ::endl;
-	out << "isohunt.com http://isohunt.com/torrents.php ihq=$QUERY op=and" << ::endl;
-	out << "mininova.org http://www.mininova.org/search.php search=$QUERY" << ::endl;
-	out << "thepiratebay.org http://thepiratebay.org/search.php q=$QUERY" << ::endl;
-	out << "bitoogle.com http://search.bitoogle.com/search.php q=$QUERY st=t" << ::endl;
-	out << "bytenova.org http://www.bytenova.org/search.php search=$QUERY" << ::endl;
-	out << "torrentspy.com http://torrentspy.com/search.asp query=$QUERY" << ::endl;
+	out << "bittorrent.com http://search.bittorrent.com/search.jsp?query=$QUERY" << ::endl; 
+	out << "isohunt.com http://isohunt.com/torrents.php?ihq=$QUERY&op=and" << ::endl; 
+	out << "mininova.org http://www.mininova.org/search.php?search=$QUERY" << ::endl; 
+	out << "thepiratebay.org http://thepiratebay.org/search.php?q=$QUERY" << ::endl; 
+	out << "bitoogle.com http://search.bitoogle.com/search.php?q=$QUERY&st=t" << ::endl; 
+	out << "bytenova.org http://www.bitenova.org/search.php?search=$QUERY&start=0&start=0&ie=utf-8&oe=utf-8" << ::endl; 
+	out << "torrentspy.com http://torrentspy.com/search.asp?query=$QUERY" << ::endl; 
+	out << "torrentz.com http://www.torrentz.com/s.php?q=$QUERY" << ::endl; 
 }
 
 

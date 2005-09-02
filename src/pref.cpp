@@ -324,13 +324,17 @@ void PrefPageThree::addDefaultClicked()
     m_items.append(se); 
     m_engines->insertItem(se); 
      
-    se = new QListViewItem(m_engines, "bytenova.org", "http://www.bytenova.org/search.php?search=$QUERY"); 
-    m_items.append(se); 
-    m_engines->insertItem(se); 
+	se = new QListViewItem(m_engines, "bytenova.org", "http://www.bitenova.org/search.php?search=$QUERY&start=0&start=0&ie=utf-8&oe=utf-8");
+	m_items.append(se); 
+	m_engines->insertItem(se); 
      
     se = new QListViewItem(m_engines, "torrentspy.com", "http://torrentspy.com/search.asp?query=$QUERY"); 
     m_items.append(se); 
-    m_engines->insertItem(se); 
+    m_engines->insertItem(se);
+
+	se = new QListViewItem(m_engines, "torrentz.com", "http://www.torrentz.com/s.php?q=$QUERY");  
+	m_items.append(se);  
+	m_engines->insertItem(se); 
 } 
  
 void PrefPageThree::removeAllClicked() 
