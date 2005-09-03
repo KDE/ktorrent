@@ -193,6 +193,9 @@ namespace bt
 		{
 			num = potential_peers.count();
 		}
+
+		if (pending.count() > 50)
+			return;
 		
 		if (num > 0)
 		{
@@ -202,6 +205,9 @@ namespace bt
 		
 		for (Uint32 i = 0;i < num;i++)
 		{
+			if (pending.count() > 50)
+				return;
+			
 			PotentialPeer pp = potential_peers.front();
 			potential_peers.pop_front();
 			

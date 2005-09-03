@@ -28,6 +28,26 @@
 
 #include "ktorrentapp.h"
 
+#include <qapplication.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+/*
+void StupidWarningMessagesFromQt( QtMsgType type, const char *msg )
+{
+	switch ( type ) {
+		case QtDebugMsg:
+			fprintf( stderr, "Debug: %s\n", msg );
+			break;
+		case QtWarningMsg:
+			fprintf( stderr, "Warning: %s\n", msg );
+			break;
+		case QtFatalMsg:
+			fprintf( stderr, "Fatal: %s\n", msg );
+			abort();                    // deliberately core dump
+	}
+}
+*/
 
 static const char description[] =
     I18N_NOOP("A BitTorrent program for KDE");
@@ -42,7 +62,8 @@ static KCmdLineOptions options[] =
 };
 
 int main(int argc, char **argv)
-{	
+{
+//	qInstallMsgHandler( StupidWarningMessagesFromQt );
 	KAboutData about("ktorrent", I18N_NOOP("KTorrent"), version, description,
 					 KAboutData::License_GPL, "(C) 2005 Joris Guisson", 0, "http://ktorrent.pwsp.net/");
 	about.addAuthor("Joris Guisson", 0, "joris.guisson@gmail.com" );

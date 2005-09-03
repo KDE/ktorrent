@@ -159,7 +159,7 @@ namespace bt
 				throw Error(i18n("Cannot convert %1 to an int").arg(n));
 
 			pos++;
-			Out() << "INT64 = " << n << endl;
+// 			Out() << "INT64 = " << n << endl;
 			BValueNode* vn = new BValueNode(Value(bi),off);
 			vn->setLength(pos - off);
 			return vn;

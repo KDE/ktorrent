@@ -23,7 +23,7 @@
 namespace bt
 {
 
-	Value::Value() : type(INT),ival(0)
+	Value::Value() : type(INT),ival(0),big_ival(0)
 	{}
 
 	Value::Value(int val) : type(INT),ival(val),big_ival(val)
@@ -32,7 +32,7 @@ namespace bt
 	Value::Value(Int64 val) : type(INT64),big_ival(val)
 	{}
 	
-	Value::Value(const QByteArray & val) : type(STRING),ival(0),strval(val)
+	Value::Value(const QByteArray & val) : type(STRING),ival(0),strval(val),big_ival(0)
 	{}
 	
 	Value::Value(const Value & val)
@@ -84,6 +84,7 @@ namespace bt
 	{
 		type = STRING;
 		strval = val;
+		big_ival = 0;
 		return *this;
 	}
 

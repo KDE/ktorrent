@@ -210,7 +210,9 @@ void InfoWidget::update()
 	float ratio = 0.0f;
 	if (curr_tc->getBytesDownloaded() > 0)
 		ratio = (float) curr_tc->getBytesUploaded() / (float)curr_tc->getBytesDownloaded();
-	m_share_ratio->setText(QString::number(ratio,0,2));
+
+	
+	m_share_ratio->setText(KGlobal::locale()->formatNumber(ratio,2));
 
 	Uint32 secs = curr_tc->getRunningTimeUL(); 
 	if (secs == 0)

@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>500</width>
-            <height>448</height>
+            <height>357</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -167,6 +167,12 @@
                                     <verstretch>0</verstretch>
                                 </sizepolicy>
                             </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>0</width>
+                                    <height>50</height>
+                                </size>
+                            </property>
                             <property name="resizeMode">
                                 <enum>AllColumns</enum>
                             </property>
@@ -254,6 +260,8 @@
         </widget>
     </hbox>
 </widget>
+<customwidgets>
+</customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kactivelabel.h</includehint>
