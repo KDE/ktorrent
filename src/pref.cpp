@@ -55,7 +55,7 @@ KTorrentPreferences::KTorrentPreferences(KTorrent & ktor)
 	KIconLoader* iload = KGlobal::iconLoader();
 	
 	QFrame* frame = addPage(i18n("Downloads"), i18n("Download Options"),
-							iload->loadIcon("down",KIcon::NoGroup));
+							iload->loadIcon("ktorrent",KIcon::NoGroup));
 		
 	QVBoxLayout* vbox = new QVBoxLayout(frame);
 	vbox->setAutoAdd(true);
@@ -67,7 +67,7 @@ KTorrentPreferences::KTorrentPreferences(KTorrent & ktor)
 	vbox->setAutoAdd(true);
 	page_two = new PrefPageTwo(frame);
 
-	frame = addPage(i18n("Search"), i18n("Search engine options"),
+	frame = addPage(i18n("Search"), i18n("Search Engine Options"),
 					iload->loadIcon("viewmag",KIcon::NoGroup));
 	vbox = new QVBoxLayout(frame);
 	vbox->setAutoAdd(true);
