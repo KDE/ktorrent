@@ -161,7 +161,7 @@ void HTMLPart::jobDone(KIO::Job* job)
 			int ret = KMessageBox::questionYesNo(0,
 					i18n("Do you want to download the torrent?"),
 					i18n("Download Torrent"),
-					KGuiItem(i18n("Download"),"down"),KStdGuiItem::cancel());
+					KGuiItem(i18n("to download", "Download"),"down"),KStdGuiItem::cancel());
 		
 			if (ret == KMessageBox::Yes)
 				openTorrent(curr_url);

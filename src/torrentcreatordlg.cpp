@@ -51,7 +51,7 @@ void TorrentCreatorDlg::onCreate()
 	
 	if (r->url().length() == 0)
 	{
-		errorMsg(i18n("You must select a file or a directory."));
+		errorMsg(i18n("You must select a file or a folder."));
 		return;
 	}
 

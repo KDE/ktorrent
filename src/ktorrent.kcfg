@@ -51,11 +51,11 @@
 			<default>0</default>
 		</entry>
 		<entry name="tempDir" type="String">
-			<label>Directory to store temporary files</label>
+			<label>Folder to store temporary files</label>
 			<default code="true">QString::null</default>
 		</entry>
 		<entry name="saveDir" type="String">
-			<label>Directory to store downloaded files</label>
+			<label>Folder to store downloaded files</label>
 			<default code="true">QString::null</default>
 		</entry>
 	</group>

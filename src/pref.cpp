@@ -67,7 +67,7 @@ KTorrentPreferences::KTorrentPreferences(KTorrent & ktor)
 	vbox->setAutoAdd(true);
 	page_two = new PrefPageTwo(frame);
 
-	frame = addPage(i18n("Search"), i18n("Search Engine Options"),
+	frame = addPage(i18n("a noun", "Search"), i18n("Search Engine Options"),
 					iload->loadIcon("viewmag",KIcon::NoGroup));
 	vbox = new QVBoxLayout(frame);
 	vbox->setAutoAdd(true);
@@ -211,12 +211,10 @@ void PrefPageTwo::autosaveChecked(bool on)
 
 PrefPageThree::PrefPageThree(QWidget *parent) : SEPreferences(parent) 
 { 
-	QString info = i18n("Use your web browser to search for the string ");
-	info += "FOOBAR";
-	info += i18n(" (capital letters) on the search engine you want to add. Then copy the URL in the addressbar after the search is finished, and paste it here.<br>Searching for ");
-	info += "FOOBAR";
-	info += i18n(" on google for example, will result in http://www.google.com/search?q=FOOBAR&ie=UTF-8&oe=UTF-8 . If you add this URL here, ktorrent can search using google.");
-	m_infoLabel->setText(info);
+    QString info = i18n("Use your web browser to search for the string %1"
+    " (capital letters) on the search engine you want to add. Then copy the URL in the addressbar after the search is finished, and paste it here.<br>Searching for %2"
+    " on Google for example, will result in http://www.google.com/search?q=FOOBAR&ie=UTF-8&oe=UTF-8. If you add this URL here, ktorrent can search using Google.").arg("FOOBAR").arg("FOOBAR");
+    m_infoLabel->setText(info);
     loadSearchEngines(); 
     connect(btnAdd, SIGNAL(clicked()), this, SLOT(addClicked())); 
     connect(btnRemove, SIGNAL(clicked()), this, SLOT(removeClicked())); 

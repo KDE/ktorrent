@@ -60,11 +60,11 @@ KTorrentView::KTorrentView(QWidget *parent)
 	menu = new KPopupMenu(this);
 	
 	stop_id = menu->insertItem(
-			iload->loadIconSet("player_stop",KIcon::Small),i18n("Stop"),
+			iload->loadIconSet("player_stop",KIcon::Small),i18n("to stop", "Stop"),
 			this,SLOT(stopDownload()));
 
 	start_id = menu->insertItem(
-			iload->loadIconSet("player_play",KIcon::Small),i18n("Start"),
+			iload->loadIconSet("player_play",KIcon::Small),i18n("to start", "Start"),
 			this,SLOT(startDownload()));
 
 	remove_id = menu->insertItem(

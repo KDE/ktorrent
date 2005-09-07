@@ -270,11 +270,11 @@ void KTorrent::setupActions()
 
 
 	m_start = new KAction(
-			i18n("Start"), "player_play",0,this, SLOT(startDownload()),
+			i18n("to start", "Start"), "player_play",0,this, SLOT(startDownload()),
 			actionCollection(), "Start");
 
 	m_stop = new KAction(
-			i18n("Stop"), "player_stop",0,this, SLOT(stopDownload()),
+			i18n("to stop", "Stop"), "player_stop",0,this, SLOT(stopDownload()),
 			actionCollection(), "Stop");
 
 	m_remove = new KAction(
@@ -332,7 +332,7 @@ void KTorrent::save(bt::TorrentControl* tc)
 	try
 	{
 		QString dir = KFileDialog::getExistingDirectory(QString::null, this,
-				i18n("Select Directory to Save To"));
+				i18n("Select Folder to Save To"));
 
 
 		if (dir != QString::null)
@@ -342,7 +342,7 @@ void KTorrent::save(bt::TorrentControl* tc)
 	}
 	catch (bt::Error & err)
 	{
-		KMessageBox::error(0,err.toString(),"Error");
+		KMessageBox::error(this,err.toString(),i18n("Error"));
 	}
 }
 
