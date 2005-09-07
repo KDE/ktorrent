@@ -316,7 +316,7 @@ void KTorrent::fileNew()
 
 void KTorrent::fileOpen()
 {
-	QString filter = "*.torrent|" + i18n("Torrent Files") + "\n*|" + i18n("All files");
+	QString filter = "*.torrent|" + i18n("Torrent Files") + "\n*|" + i18n("All Files");
 	KURL url = KFileDialog::getOpenURL(QString::null, filter, this, i18n("Open Location"));
 
 	if (url.isValid())
@@ -423,8 +423,8 @@ void KTorrent::removeDownload()
 		{
 			QString msg = i18n("You will lose all data downloaded for this torrent, "
 					"if you do this. Are you sure you want to do this?");
-			int ret = KMessageBox::questionYesNo(this,msg,i18n("Are you sure?"));
-			if (ret == KMessageBox::No)
+			int ret = KMessageBox::warningContinueCancel(this,msg,i18n("Remove Download"),KStdGuiItem::del());
+			if (ret == KMessageBox::Cancel)
 				return;
 		}
 		m_info->changeTC(0);

@@ -121,8 +121,8 @@ void KTorrentView::removeDownload()
 	{
 		QString msg = i18n("You will lose all data downloaded for this torrent, "
 				"if you do this. Are you sure you want to do this?");
-		int ret = KMessageBox::questionYesNo(this,msg,i18n("Are you sure?"));
-		if (ret == KMessageBox::No)
+		int ret = KMessageBox::warningContinueCancel(this,msg,i18n("Remove Download"),KStdGuiItem::del());
+		if (ret == KMessageBox::Cancel)
 			return;
 	}
 	wantToRemove(tc);
