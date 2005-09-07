@@ -124,7 +124,7 @@
                         </sizepolicy>
                     </property>
                     <property name="title">
-                        <string>Search engines</string>
+                        <string>Search Engines</string>
                     </property>
                     <vbox>
                         <property name="name">
@@ -195,7 +195,7 @@
                                         <cstring>btnRemoveAll</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>R&amp;emove all</string>
+                                        <string>R&amp;emove All</string>
                                     </property>
                                 </widget>
                                 <spacer>
@@ -220,7 +220,7 @@
                                         <cstring>btn_add_default</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>Add defau&amp;lt</string>
+                                        <string>Add Defau&amp;lt</string>
                                     </property>
                                 </widget>
                             </hbox>

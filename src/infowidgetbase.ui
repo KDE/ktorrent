@@ -406,7 +406,7 @@
                                                     <cstring>groupBox4_2</cstring>
                                                 </property>
                                                 <property name="title">
-                                                    <string>Average speed</string>
+                                                    <string>Average Speed</string>
                                                 </property>
                                                 <hbox>
                                                     <property name="name">
