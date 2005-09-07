@@ -368,7 +368,7 @@ void KTorrent::askAndSave(bt::TorrentControl* tc)
 		}
 		catch (bt::Error & err)
 		{
-			KMessageBox::error(0,err.toString(),"Error");
+			KMessageBox::error(0,err.toString(), i18n("Error"));
 		}
 	}
 
