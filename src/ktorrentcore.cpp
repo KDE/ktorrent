@@ -77,9 +77,21 @@ KTorrentCore::KTorrentCore() : max_downloads(0),keep_seeding(true)
 	while (!Globals::instance().getServer().isOK() && i < 10);
 
 	if (Globals::instance().getServer().isOK())
+	{
+		if (port != port + i - 1)
+			KMessageBox::information(0,
+				i18n("Specified port (%1) is unavailable or in"
+				" use by another application. KTorrent is bound to port %2.")
+				.arg(port).arg(port + i - 1));
+
 		Out() << "Bound to port " << (port + i - 1) << endl;
+	}
 	else
+	{
+		KMessageBox::error(0,
+			i18n("Cannot bind to port %1 or the 10 following ports.").arg(port));
 		Out() << "Cannot find free port" << endl;
+	}
 }
 
 
@@ -142,7 +154,7 @@ void KTorrentCore::stop(bt::TorrentControl* tc)
 		while (i != downloads.end())
 		{
 			TorrentControl* otc = *i;
-			if (otc != tc)
+			if (otc != tc && otc->getStatus() == TorrentControl::NOT_STARTED && otc->isAutostartAllowed())
 				start(otc);
 			i++;
 		}

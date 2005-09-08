@@ -173,6 +173,12 @@ KTorrent::KTorrent()
 
 	connect(&m_gui_update_timer, SIGNAL(timeout()), this, SLOT(updatedStats()));
 	m_gui_update_timer.start(500);
+
+	bool hidden_on_exit = KGlobal::config()->readBoolEntry("hidden_on_exit",false);
+	if (!(Settings::showSystemTrayIcon() && hidden_on_exit))
+	{
+		show();
+	}
 }
 
 KTorrent::~KTorrent()
@@ -302,6 +308,7 @@ bool KTorrent::queryClose()
 bool KTorrent::queryExit()
 {
 	m_core->onExit();
+	KGlobal::config()->writeEntry( "hidden_on_exit",this->isHidden());
 	return true;
 }
 

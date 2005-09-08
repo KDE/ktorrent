@@ -24,6 +24,10 @@
 #include <qvaluelist.h>
 #include <qpixmap.h>
 #include <math.h>
+#include <qtooltip.h>
+#include <klocale.h>
+#include <qmime.h>
+#include <qimage.h>
 #include <libtorrent/torrentcontrol.h>
 #include <libtorrent/bitset.h>
 #include "chunkbar.h"
@@ -36,6 +40,42 @@ struct Range
 };
 
 
+static void FillAndFrameBlack(QImage* image, uint color, int size)
+{
+	image->fill(color);
+	for (int i = 0; i < size; i++)
+	{
+		image->setPixel(0, i, 0);
+		image->setPixel(size - 1, i, 0);
+		image->setPixel(i, 0, 0);
+		image->setPixel(i, size - 1, 0);
+	}
+}
+
+
+
+static void InitializeToolTipImages(ChunkBar* bar)
+{
+	static bool images_initialized = false;
+	if (images_initialized)
+		return;
+	images_initialized = true;
+	
+	QMimeSourceFactory* factory = QMimeSourceFactory::defaultFactory();
+	
+	QImage excluded(16, 16, 32);
+	FillAndFrameBlack(&excluded, Qt::lightGray.pixel(), 16);
+	factory->setImage("excluded_color", excluded);
+	
+	QImage available(16, 16, 32);
+	FillAndFrameBlack(&available, bar->colorGroup().highlight().pixel(), 16);
+	factory->setImage("available_color", available);
+	
+	QImage unavailable(16, 16, 32);
+	FillAndFrameBlack(&unavailable, bar->colorGroup().base().pixel(), 16);
+	factory->setImage("unavailable_color", unavailable);
+}
+
 ChunkBar::ChunkBar(QWidget *parent, const char *name)
 	: QFrame(parent, name),curr_tc(0)
 {
@@ -45,6 +85,10 @@ ChunkBar::ChunkBar(QWidget *parent, const char *name)
 	setMidLineWidth(3);
 	setFixedHeight((int)ceil(fontMetrics().height()*1.5));
 	show_excluded = false;
+	
+	InitializeToolTipImages(this);
+	
+	QToolTip::add(this, i18n("<img src=\"available_color\">&nbsp; - Downloaded Chunks<br><img src=\"unavailable_color\">&nbsp; - Chunks to Download<br><img src=\"excluded_color\">&nbsp; - Excluded Chunks"));
 }
 
 

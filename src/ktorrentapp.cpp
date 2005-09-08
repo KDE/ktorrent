@@ -65,7 +65,6 @@ int KTorrentApp::newInstance()
 		{
 			KTorrent *widget = new KTorrent();
 			setMainWidget(widget);
-			widget->show();
 		}
 		else
 			KStartupInfo::setNewStartupId( mainWidget(), kapp->startupId());

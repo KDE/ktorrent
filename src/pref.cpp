@@ -55,7 +55,7 @@ KTorrentPreferences::KTorrentPreferences(KTorrent & ktor)
 	KIconLoader* iload = KGlobal::iconLoader();
 	
 	QFrame* frame = addPage(i18n("Downloads"), i18n("Download Options"),
-							iload->loadIcon("ktorrent",KIcon::NoGroup));
+							iload->loadIcon("down",KIcon::NoGroup));
 		
 	QVBoxLayout* vbox = new QVBoxLayout(frame);
 	vbox->setAutoAdd(true);
@@ -83,19 +83,11 @@ void KTorrentPreferences::slotOk()
 
 void KTorrentPreferences::slotApply()
 {
-	if (!page_one->checkPorts())
-	{
-		KMessageBox::error(this,i18n("The UDP Tracker Port and Port cannot have the same value !"),
-						   i18n("Error"));
-	}
-	else
-	{
-		page_one->apply();
-		page_two->apply();
-		page_three->apply(); 
-		Settings::writeConfig();
-		ktor.applySettings();
-	}
+	page_one->apply();
+	page_two->apply();
+	page_three->apply();
+	Settings::writeConfig();
+	ktor.applySettings();
 }
 
 ///////////////////////////////////////////////////////
