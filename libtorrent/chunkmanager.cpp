@@ -71,6 +71,8 @@ namespace bt
 				downloadStatusChanged(&tf,false);
 			}
 		}
+
+		loadFileInfo();
 	
 		if(tor.isMultiFile())
 		{
@@ -107,8 +109,6 @@ namespace bt
 	
 	void ChunkManager::loadIndexFile()
 	{
-		loadFileInfo();
-		
 		File fptr;
 		if (!fptr.open(index_file,"rb"))
 			throw Error(i18n("Can't open index file"));
@@ -336,7 +336,6 @@ namespace bt
 			c->setPriority(true);
 			i++;
 		}
-		saveFileInfo();
 	}
 
 	void ChunkManager::exclude(Uint32 from,Uint32 to)
