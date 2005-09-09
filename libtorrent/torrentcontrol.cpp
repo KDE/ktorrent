@@ -38,6 +38,7 @@
 #include "torrentmonitor.h"
 
 #include "globals.h"
+#include "server.h"
 #include "packetwriter.h"
 #include "httptracker.h"
 #include "udptracker.h"
@@ -319,10 +320,10 @@ namespace bt
 				trackerstatus = i18n("Invalid response");
 				if (pman->getNumConnectedPeers() == 0)
 				{
-					error_msg = i18n("The tracker %1 did not send a proper response")
-					            .arg(last_tracker_url.prettyURL());
+					error_msg = i18n("The tracker %1 sent the following error : %2")
+							.arg(last_tracker_url.prettyURL()).arg(e.toString());
 					stopped_by_error = true;
-					short_error_msg = i18n("Tracker error");
+					short_error_msg = i18n("Tracker error : %1").arg(e.toString());
 					stop(false);
 					emit stoppedByError(this, error_msg);
 				}
@@ -386,6 +387,7 @@ namespace bt
 
 		KURL url = tor->getTrackerURL(last_succes);
 		last_tracker_url = url;
+		port = Globals::instance().getServer().getPortInUse();
 		tracker->setData(tor->getInfoHash(),tor->getPeerID(),port,
 		                 up->bytesUploaded(),down->bytesDownloaded(),
 		                 cman->bytesLeft(),ev);

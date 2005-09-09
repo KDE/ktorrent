@@ -105,6 +105,11 @@ namespace bt
 		}
 	}
 
+	Uint16 Server::getPortInUse() const
+	{
+		return sock->port();
+	}
+
 	PeerManager* Server::findPeerManager(const SHA1Hash & hash)
 	{
 		QPtrList<PeerManager>::iterator i = peer_managers.begin();

@@ -55,8 +55,7 @@ namespace bt
 		if (dict->getData("failure reason"))
 		{
 			BValueNode* vn = dict->getValue("failure reason");
-			QString msg = i18n("The tracker sent back the following error: %1")
-					.arg(vn->data().toString());
+			QString msg = vn->data().toString();
 			delete n;
 			throw Error(msg);
 		}
@@ -136,7 +135,7 @@ namespace bt
 		//	url.setProtocol("http");
 		last_url = u;
 		KURL url = u;
-		Out() << "Doing tracker request to url : " << url << endl;
+		
 
 		QString query = QString("&info_hash=") + info_hash.toURLString();
 		url.addQueryItem("peer_id",peer_id.toString());
@@ -155,6 +154,7 @@ namespace bt
 		if (http_port == 0)
 			http_port = 80;
 
+		Out() << "Doing tracker request to url : " << url << endl;
 		doRequest(url.host(),url.encodedPathAndQuery() + query,http_port);
 		//Out() << "Request " << url << endl;
 	}

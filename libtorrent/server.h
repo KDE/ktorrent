@@ -61,6 +61,9 @@ namespace bt
 		 * @param port The new port
 		 */
 		void changePort(Uint16 port);
+
+		/// Get the port in use
+		Uint16 getPortInUse() const;
 		
 		/**
 		 * Add a PeerManager.
