@@ -37,6 +37,7 @@ using namespace bt;
 struct Range
 {
 	int first,last;
+	int fac;
 };
 
 
@@ -163,7 +164,7 @@ void ChunkBar::drawEqual(QPainter *p,const BitSet & bs,const QColor & color)
 		
 		if (rs.empty())
 		{
-			Range r = {i,i};
+			Range r = {i,i,0};
 			rs.append(r);
 		}
 		else
@@ -175,7 +176,7 @@ void ChunkBar::drawEqual(QPainter *p,const BitSet & bs,const QColor & color)
 			}
 			else
 			{
-				Range r = {i,i};
+				Range r = {i,i,0};
 				rs.append(r);
 			}
 		}
@@ -194,11 +195,10 @@ void ChunkBar::drawEqual(QPainter *p,const BitSet & bs,const QColor & color)
 void ChunkBar::drawMoreChunksThenPixels(QPainter *p,const BitSet & bs,const QColor & color)
 {	
 	Uint32 w = contentsRect().width();
-
 	Uint32 chunks_per_pixel = (int)floor((double)bs.getNumBits() / w);
 
-	QRect r = contentsRect();
-
+	QValueList<Range> rs;
+	
 	for (Uint32 i = 0;i < w;i++)
 	{
 		Uint32 num_dl = 0;
@@ -210,10 +210,37 @@ void ChunkBar::drawMoreChunksThenPixels(QPainter *p,const BitSet & bs,const QCol
 			continue;
 
 		int fac = int(100*((double)num_dl / chunks_per_pixel));
+		if (rs.empty())
+		{
+			Range r = {i,i,fac};
+			rs.append(r);
+		}
+		else
+		{
+			Range & l = rs.last();
+			if (l.last == int(i - 1) && l.fac == fac)
+			{
+				l.last = i;
+			}
+			else
+			{
+				Range r = {i,i,fac};
+				rs.append(r);
+			}
+		}
+	}
+
+	QRect r = contentsRect();
+
+	for (QValueList<Range>::iterator i = rs.begin();i != rs.end();++i)
+	{
+		Range & ra = *i;
+		int rw = ra.last - ra.first + 1;
+		int fac = ra.fac;
 		QColor c = color.light(200-fac);
 		p->setPen(QPen(c,1,Qt::SolidLine));
 		p->setBrush(c);
-		p->drawRect(r.x() + i,r.y()+1,1,r.height() - 1);
+		p->drawRect(r.x() + ra.first,r.y() + 1,rw,r.height() - 1);
 	}
 }
 

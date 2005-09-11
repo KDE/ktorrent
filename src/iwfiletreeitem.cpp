@@ -29,15 +29,12 @@
 #include "functions.h"
 
 
-IWFileTreeItem::IWFileTreeItem(KListView* lv,const QString & name,bt::TorrentFile & file)
-	: QCheckListItem(lv,QString::null,QCheckListItem::CheckBox),name(name),file(file)
-{
-	init();
-}
 			
 IWFileTreeItem::IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,bt::TorrentFile & file)
 	: QCheckListItem(item,QString::null,QCheckListItem::CheckBox),name(name),file(file)
 {
+	parent = item;
+	manual_change = false;
 	init();
 }
 
@@ -45,9 +42,16 @@ IWFileTreeItem::~IWFileTreeItem()
 {
 }
 
+void IWFileTreeItem::setChecked(bool on)
+{
+	manual_change = true;
+	setOn(on);
+	manual_change = false;
+}
+
 void IWFileTreeItem::init()
 {
-	setOn(!file.doNotDownload());
+	setChecked(!file.doNotDownload());
 	setText(0,name);
 	setText(1,BytesToString(file.getSize()));
 	setText(2,file.doNotDownload() ? i18n("No") : i18n("Yes"));
@@ -58,6 +62,8 @@ void IWFileTreeItem::stateChange(bool on)
 {
 	file.setDoNotDownload(!on);
 	setText(2,on ? i18n("Yes") : i18n("No"));
+	if (!manual_change)
+		parent->childStateChange();
 }
 
 void IWFileTreeItem::updatePreviewInformation(bt::TorrentControl* tc)

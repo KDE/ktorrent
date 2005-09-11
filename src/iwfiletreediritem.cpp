@@ -31,23 +31,29 @@
 IWFileTreeDirItem::IWFileTreeDirItem(KListView* klv,const QString & name)
 	: QCheckListItem(klv,QString::null,QCheckListItem::CheckBox),name(name)
 {
+	parent = 0;
 	size = 0;
 	setPixmap(0,KGlobal::iconLoader()->loadIcon("folder",KIcon::Small));
 	setText(0,name);
 	setText(1,BytesToString(size));
 	setText(2,i18n("Yes"));
+	manual_change = true;
 	setOn(true);
+	manual_change = false;
 }
 
 IWFileTreeDirItem::IWFileTreeDirItem(IWFileTreeDirItem* parent,const QString & name)
-	: QCheckListItem(parent,QString::null,QCheckListItem::CheckBox),name(name)
+	: QCheckListItem(parent,QString::null,QCheckListItem::CheckBox),
+	name(name),parent(parent)
 {
 	size = 0;
 	setPixmap(0,KGlobal::iconLoader()->loadIcon("folder",KIcon::Small));
 	setText(0,name);
 	setText(1,BytesToString(size));
 	setText(2,i18n("Yes"));
+	manual_change = true;
 	setOn(true);
+	manual_change = false;
 }
 
 IWFileTreeDirItem::~IWFileTreeDirItem()
@@ -109,7 +115,7 @@ void IWFileTreeDirItem::setAllChecked(bool on)
 	bt::PtrMap<QString,IWFileTreeItem>::iterator i = children.begin();
 	while (i != children.end())
 	{
-		i->second->setOn(on);
+		i->second->setChecked(on);
 		i++;
 	}
 
@@ -129,7 +135,7 @@ void IWFileTreeDirItem::invertChecked()
 	while (i != children.end())
 	{
 		IWFileTreeItem* item = i->second;
-		item->setOn(!item->isOn());
+		item->setChecked(!item->isOn());
 		i++;
 	}
 
@@ -164,6 +170,42 @@ void IWFileTreeDirItem::updatePreviewInformation(bt::TorrentControl* tc)
 
 void IWFileTreeDirItem::stateChange(bool on)
 {
-	setAllChecked(on);
+	if (!manual_change)
+		setAllChecked(on);
 	setText(2,on ? i18n("Yes") : i18n("No"));
 }
+
+bool IWFileTreeDirItem::allChildrenOn()
+{
+	// first check all the child items
+	bt::PtrMap<QString,IWFileTreeItem>::iterator i = children.begin();
+	while (i != children.end())
+	{
+		IWFileTreeItem* item = i->second;
+		if (!item->isOn())
+			return false;
+		i++;
+	}
+
+	// then recursivly move on to subdirs
+	bt::PtrMap<QString,IWFileTreeDirItem>::iterator j = subdirs.begin();
+	while (j != subdirs.end())
+	{
+		if (!j->second->allChildrenOn())
+			return false;
+		j++;
+	}
+	return true;
+}
+
+void IWFileTreeDirItem::childStateChange()
+{
+	// only set this dir on if all children are on
+	manual_change = true;
+	setOn(allChildrenOn());
+	manual_change = false;
+	
+	if (parent)
+		parent->childStateChange();
+}
+

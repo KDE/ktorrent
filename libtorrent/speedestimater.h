@@ -27,7 +27,10 @@ namespace bt
 {
 
 	/**
-	@author Joris Guisson
+	 * @author Joris Guisson
+	 * @brief Estimates download speed
+	 *
+	 * This class estimates the download speed.
 	*/
 	class SpeedEstimater
 	{
@@ -36,15 +39,14 @@ namespace bt
 		SpeedEstimater();
 		virtual ~SpeedEstimater();
 
-		void onWrite(Uint32 bytes);
+
 		void onRead(Uint32 bytes);
 		void update();
 		
-		Uint32 downloadRate() const {return download_rate;}
-		Uint32 uploadRate() const {return upload_rate;}
+		double downloadRate() const {return download_rate;}
+		
 	private:
-		Uint32 upload_rate,download_rate;
-		SpeedEstimaterPriv* up;
+		double download_rate;
 		SpeedEstimaterPriv* down;
 	};
 

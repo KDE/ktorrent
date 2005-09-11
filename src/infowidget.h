@@ -31,6 +31,9 @@ class KPopupMenu;
 class QString;
 class PeerView;
 class ChunkDownloadView;
+class QWidget;
+class QHBoxLayout;
+
 
 namespace bt
 {
@@ -45,6 +48,10 @@ public:
 	InfoWidget(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
 	virtual ~InfoWidget();
 	
+	///Show PeerView in main window
+	void showPeerView(bool show);
+	///Show ChunkDownloadView in main window
+	void showChunkView(bool show);
 
 public slots:
 	void changeTC(bt::TorrentControl* tc);
@@ -65,7 +72,9 @@ private:
     KPopupMenu* context_menu; 
     QString preview_path; 
     int preview_id;
+	QWidget* peer_page;
 	PeerView* peer_view;
+	QWidget* cd_page;
 	ChunkDownloadView* cd_view;
 };
 

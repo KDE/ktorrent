@@ -21,6 +21,7 @@
 #include "peer.h"
 #include "chunk.h"
 #include "speedestimater.h"
+#include "upspeedestimater.h"
 #include "piece.h"
 #include "request.h"
 #include "packetreader.h"
@@ -42,6 +43,7 @@ namespace bt
 		peer_id_counter++;
 		
 		speed = new SpeedEstimater();
+		up_speed = new UpSpeedEstimater();
 		preader = new PacketReader(sock,speed);
 		choked = am_choked = true;
 		interested = am_interested = false;
@@ -56,6 +58,7 @@ namespace bt
 		time_choked = GetCurrentTime();
 
 		connect_time = QTime::currentTime();
+		connect(sock,SIGNAL(bytesWritten(int)),this,SLOT(dataWritten(int )));
 	}
 
 
@@ -71,6 +74,7 @@ namespace bt
 			delete sock;
 		}
 		delete speed;
+		delete up_speed;
 	}
 
 	void Peer::connectionClosed() 
@@ -259,18 +263,22 @@ namespace bt
 		if (killed) return;
 		
 		sock->writeBlock((const char*)data,len);
-		if (record)
-			speed->onWrite(len);
+		up_speed->writeBytes(len,record);
+	}
+
+	void Peer::dataWritten(int bytes)
+	{
+		up_speed->bytesWritten(bytes);
 	}
 	
 	Uint32 Peer::getUploadRate() const 
 	{
-		return speed->uploadRate();
+		return (Uint32)ceil(up_speed->uploadRate());
 	}
 	
 	Uint32 Peer::getDownloadRate() const 
 	{
-		return speed->downloadRate();
+		return (Uint32)ceil(speed->downloadRate());
 	}
 	
 	bool Peer::readyToSend() const 
@@ -281,6 +289,7 @@ namespace bt
 	void Peer::updateSpeed()
 	{
 		speed->update();
+		up_speed->update();
 	}
 	
 	bool Peer::isSnubbed() const
@@ -305,6 +314,8 @@ namespace bt
 	{
 		return snub_timer.getElapsedSinceUpdate();
 	}
+
+	
 }
 
 #include "peer.moc"

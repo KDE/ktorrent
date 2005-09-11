@@ -17,48 +17,78 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef IWFILETREEITEM_H
-#define IWFILETREEITEM_H
-
-#include <klistview.h>
-#include <libutil/constants.h>
-
-class IWFileTreeDirItem;
-
-using bt::Uint32;
+#include <libutil/functions.h>
+#include "upspeedestimater.h"
 
 namespace bt
 {
-	class TorrentFile;
-	class TorrentControl;
+
+	UpSpeedEstimater::UpSpeedEstimater()
+	{
+		accumulated_bytes = 0;
+		upload_rate = 0.0;
+	}
+
+
+	UpSpeedEstimater::~UpSpeedEstimater()
+	{}
+
+
+	void UpSpeedEstimater::writeBytes(Uint32 bytes,bool rec)
+	{
+		// add entry to outstanding_bytes
+		Entry e;
+		e.bytes = bytes;
+		e.data = rec;
+		e.t = GetCurrentTime();
+		outstanding_bytes.append(e);
+	}
+		
+	void UpSpeedEstimater::bytesWritten(Uint32 bytes)
+	{
+		QValueList<Entry>::iterator i = outstanding_bytes.begin();
+		while (bytes > 0 && i != outstanding_bytes.end())
+		{
+			Entry e = *i;
+			if (e.bytes <= bytes + accumulated_bytes)
+			{
+				// first remove outstanding bytes
+				i = outstanding_bytes.erase(i);
+				bytes -= e.bytes;
+				accumulated_bytes = 0;
+				if (e.data)
+				{
+					// if it's data move it to the written_bytes list
+					// but first store time it takes to send in e.t
+					e.t = GetCurrentTime() - e.t;
+					written_bytes.append(e);
+				}
+			}
+			else
+			{
+				accumulated_bytes += bytes;
+				bytes = 0;
+			}
+		}
+	}
+
+	void UpSpeedEstimater::update()
+	{
+		upload_rate = 0;
+		if (written_bytes.empty())
+			return;
+		
+		Uint32 tot_bytes = 0;
+		Uint32 tot_time = 0;
+		QValueList<Entry>::iterator i = written_bytes.begin();
+		while (i != written_bytes.end())
+		{
+			tot_bytes += (*i).bytes;
+			tot_time += (*i).t;
+			i++;
+		}
+		written_bytes.clear();
+		upload_rate = (double)tot_bytes / (tot_time * 0.001);
+	}
+
 }
-
-/**
- * @author Joris Guisson
- *
- * File item in the InfoWidget's file view.
-*/
-class IWFileTreeItem : public QCheckListItem
-{
-	QString name;
-	Uint32 size;
-	bt::TorrentFile & file;
-	IWFileTreeDirItem* parent;
-	bool manual_change;
-public:
-	IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,bt::TorrentFile & file);
-	virtual ~IWFileTreeItem();
-
-	bt::TorrentFile & getTorrentFile() {return file;}
-	void updatePreviewInformation(bt::TorrentControl* tc);
-	void setChecked(bool on);
-	
-private:
-	void init();
-	virtual void stateChange(bool on);
-};
-
-
-
-
-#endif

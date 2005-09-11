@@ -44,6 +44,7 @@
 #include "availabilitychunkbar.h"
 #include "iwfiletreeitem.h"
 #include "iwfiletreediritem.h"
+#include "settings.h"
 
 using namespace bt;
 
@@ -65,30 +66,83 @@ InfoWidget::InfoWidget(QWidget* parent, const char* name, WFlags fl)
 	connect(m_file_view,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )),
 	        this,SLOT(showContextMenu(KListView*, QListViewItem*, const QPoint& )));
 	connect(context_menu, SIGNAL ( activated ( int ) ), this, SLOT ( contextItem ( int ) ) );
-	if (Globals::instance().isDebugModeSet())
-	{
-		QWidget* page = new QWidget(m_tabs);
-		QHBoxLayout* page_layout = new QHBoxLayout(page, 11, 6);
-		
-		peer_view = new PeerView(page);
-		page_layout->add(peer_view);
-		
-		m_tabs->addTab(page,i18n("Peers"));;
-
-		page = new QWidget( m_tabs);
-		page_layout = new QHBoxLayout( page, 11, 6);
-		
-		cd_view = new ChunkDownloadView(page);
-		page_layout->add(cd_view);
-		
-		m_tabs->addTab(page,i18n("Chunks"));
-	}
+	
 	setEnabled(false);
 }
 
 InfoWidget::~InfoWidget()
 {
 	delete monitor;
+}
+
+void InfoWidget::showPeerView( bool show )
+{
+	if( peer_view == 0 && show)
+	{
+		peer_page = new QWidget(m_tabs);
+		QHBoxLayout* peer_page_layout = new QHBoxLayout(peer_page, 11, 6);
+
+		peer_view = new PeerView(peer_page);
+		peer_page_layout->add(peer_view);
+
+		m_tabs->addTab(peer_page,i18n("Peers"));;
+		peer_view->setEnabled(curr_tc != 0);
+		setEnabled(curr_tc != 0);
+	}
+	else if (!show && peer_view != 0)
+	{
+		m_tabs->removePage( peer_page );
+		peer_page->reparent(0,QPoint(),false);
+		delete peer_page;
+		peer_view = 0;
+	}
+
+	if (monitor && curr_tc)
+	{
+		delete monitor;
+		monitor = 0;
+		if (peer_view)
+			peer_view->removeAll();
+		if (cd_view)
+			cd_view->removeAll();
+		if (curr_tc)
+			monitor = new KTorrentMonitor(curr_tc,peer_view,cd_view);
+	}
+}
+
+void InfoWidget::showChunkView( bool show )
+{
+	if( cd_view == 0 && show)
+	{
+		cd_page = new QWidget(m_tabs);
+		QHBoxLayout* cd_page_layout = new QHBoxLayout(cd_page, 11, 6);
+
+		cd_view = new ChunkDownloadView(cd_page);
+		cd_page_layout->add(cd_view);
+
+		m_tabs->addTab(cd_page,i18n("Chunks"));
+		cd_view->setEnabled(curr_tc != 0);
+		setEnabled(curr_tc != 0);
+	}
+	else if (!show && cd_view != 0)
+	{
+		m_tabs->removePage( cd_page );
+		cd_page->reparent(0,QPoint(),false);
+		delete cd_page;
+		cd_view = 0;
+	}
+
+	if (monitor && curr_tc)
+	{
+		delete monitor;
+		monitor = 0;
+		if (peer_view)
+			peer_view->removeAll();
+		if (cd_view)
+			cd_view->removeAll();
+		if (curr_tc)
+			monitor = new KTorrentMonitor(curr_tc,peer_view,cd_view);
+	}
 }
 
 void InfoWidget::fillFileTree()
@@ -148,9 +202,16 @@ void InfoWidget::changeTC(bt::TorrentControl* tc)
 	m_av_chunk_bar->setTC(tc);
 	setEnabled(tc != 0);
 	if (peer_view)
+	{
+		peer_page->setEnabled(tc != 0);
 		peer_view->setEnabled(tc != 0);
+	}
 	if (cd_view)
+	{
+		cd_page->setEnabled(tc != 0);
 		cd_view->setEnabled(tc != 0);
+	}
+	
 	update();
 }
 
@@ -189,8 +250,8 @@ void InfoWidget::update()
 	m_chunks_downloaded->setText(QString::number(curr_tc->getNumChunksDownloaded()));
 	m_total_chunks->setText(QString::number(curr_tc->getTotalChunks()));
 	m_excluded_chunks->setText(QString::number(curr_tc->getNumChunksExcluded()));
-	m_chunk_bar->repaint(false);
-	m_av_chunk_bar->repaint(false);
+	m_chunk_bar->repaint(true);
+	m_av_chunk_bar->repaint(true);
 	if (peer_view)
 		peer_view->update();
 	if (cd_view)

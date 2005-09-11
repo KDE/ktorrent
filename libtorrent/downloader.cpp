@@ -108,8 +108,8 @@ namespace bt
 			{
 				if (pd->getNumGrabbed() == 0 || (pd->getNumGrabbed() == 1 && pd->getNumRequests() < 8))
 					downloadFrom(pd);
-				else if (pd->getPeer()->getTimeSinceLastPiece() >= 10000)
-					pd->retransmitRequests();
+				/*else if (pd->getPeer()->getTimeSinceLastPiece() >= 10000)
+				pd->retransmitRequests();*/
 			}
 		}
 	}

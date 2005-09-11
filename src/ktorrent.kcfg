@@ -59,4 +59,14 @@
 			<default code="true">QString::null</default>
 		</entry>
 	</group>
+	<group name="general">
+		<entry name="showPeerView" type="Bool">
+			<label>Show peer view tab in main window</label>
+			<default>false</default>
+		</entry>
+		<entry name="showChunkView" type="Bool">
+			<label>Show chunk download view tab in main window</label>
+			<default>false</default>
+		</entry>
+	</group>
 </kcfg>

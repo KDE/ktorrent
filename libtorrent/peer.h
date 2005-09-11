@@ -31,6 +31,7 @@ namespace bt
 {
 	class Chunk;
 	class SpeedEstimater;
+	class UpSpeedEstimater;
 	class Peer;
 	class Request;
 	class Piece;
@@ -153,6 +154,7 @@ namespace bt
 		void connectionClosed(); 
 		void readyRead();
 		void error(int err);
+		void dataWritten(int bytes);
 
 	signals:
 		/**
@@ -195,6 +197,7 @@ namespace bt
 		Timer snub_timer;
 	
 		SpeedEstimater* speed;
+		UpSpeedEstimater* up_speed;
 		PacketReader* preader;
 		PacketWriter* pwriter;
 		PeerDownloader* downloader;

@@ -80,25 +80,17 @@ namespace bt
 
 	SpeedEstimater::SpeedEstimater()
 	{
-		upload_rate = download_rate = 0;
-		up = new SpeedEstimaterPriv();
+		download_rate = 0;
 		down = new SpeedEstimaterPriv();
-		
 	}
 
 
 	SpeedEstimater::~SpeedEstimater()
 	{
-		delete up;
 		delete down;
 	}
 
 	
-	
-	void SpeedEstimater::onWrite(Uint32 nbytes)
-	{
-		up->data(nbytes);
-	}
 	
 	void SpeedEstimater::onRead(Uint32 bytes)
 	{
@@ -107,9 +99,7 @@ namespace bt
 	
 	void SpeedEstimater::update()
 	{
-		up->update();
 		down->update();
-		upload_rate = up->getRate();
 		download_rate = down->getRate();
 	}
 }

@@ -17,83 +17,57 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTSERVER_H
-#define BTSERVER_H
+#ifndef BTUPSPEEDESTIMATER_H
+#define BTUPSPEEDESTIMATER_H
 
-#include <qptrlist.h>
-#include <qserversocket.h>
-#include "globals.h"
+#include <qvaluelist.h>
+#include <libutil/constants.h>
 
 namespace bt
 {
-	class PeerManager;
-	class ServerAuthenticate;
-	class SHA1Hash;
-	class ServerSocket;
-
 
 	/**
 	 * @author Joris Guisson
 	 *
-	 * Class which listens for incoming connections.
-	 * Handles authentication and then hands of the new
-	 * connections to a PeerManager.
-	 *
-	 * All PeerManager's should register with this class when they
-	 * are created and should unregister when they are destroyed.
-	 */
-	class Server : public QObject
+	 * Measures upload speed.
+	*/
+	class UpSpeedEstimater
 	{
-		Q_OBJECT
-
-		QPtrList<PeerManager> peer_managers;
-		QPtrList<ServerAuthenticate> pending;
-		ServerSocket* sock;
-		Uint16 port;
+		struct Entry
+		{
+			Uint32 bytes;
+			Uint32 t;
+			bool data;
+		};
 	public:
-		Server(Uint16 port);
-		virtual ~Server();
-
-		/// Check if everything is ok (are we succesfully listening on the port)
-		bool isOK() const;
-		
-		/**
-		 * Change the port.
-		 * @param port The new port
-		 */
-		void changePort(Uint16 port);
-
-		/// Get the port in use
-		Uint16 getPortInUse() const;
-		
-		/**
-		 * Add a PeerManager.
-		 * @param pman The PeerManager
-		 */
-		void addPeerManager(PeerManager* pman);
+		UpSpeedEstimater();
+		virtual ~UpSpeedEstimater();
 
 		/**
-		 * Remove a PeerManager.
-		 * @param pman The PeerManager
+		 * Start sending bytes.
+		 * @param bytes The number of bytes
+		 * @param rec Wether to record or not (i.e. is this data)
 		 */
-		void removePeerManager(PeerManager* pman);
+		void writeBytes(Uint32 bytes,bool rec);
 		
 		/**
-		 * Find the PeerManager given the info_hash of it's torrent.
-		 * @param hash The info_hash
-		 * @return The PeerManager or 0 if one can't be found
+		 * The socket has finished sending bytes.
+		 * @param bytes The number of bytes.
 		 */
-		PeerManager* findPeerManager(const SHA1Hash & hash);
-		
+		void bytesWritten(Uint32 bytes);
+
 		/**
-		 * Update the Server.
+		 * Update the upload speed estimater.
 		 */
 		void update();
 
+		/// Get the upload rate 
+		double uploadRate() const {return upload_rate;}
 	private:
-		void newConnection(int socket);
-
-		friend class ServerSocket;
+		double upload_rate;
+		Uint32 accumulated_bytes;
+		QValueList<Entry> outstanding_bytes;
+		QValueList<Entry> written_bytes;
 	};
 
 }

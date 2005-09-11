@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>GeneralPref</class>
 <widget class="QWidget">
     <property name="name">
@@ -15,19 +15,22 @@
     <property name="caption">
         <string>General Options</string>
     </property>
-    <vbox>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QCheckBox">
+        <widget class="QCheckBox" row="0" column="0">
             <property name="name">
                 <cstring>show_systray_icon</cstring>
             </property>
             <property name="text">
                 <string>Show s&amp;ystem tray icon</string>
             </property>
+            <property name="accel">
+                <string>Alt+Y</string>
+            </property>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="QLayoutWidget" row="1" column="0">
             <property name="name">
                 <cstring>layout1</cstring>
             </property>
@@ -50,7 +53,7 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="QLayoutWidget" row="2" column="0">
             <property name="name">
                 <cstring>layout2</cstring>
             </property>
@@ -65,6 +68,9 @@
                     <property name="text">
                         <string>&amp;Automatically save downloads to:</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+A</string>
+                    </property>
                 </widget>
                 <widget class="KURLRequester">
                     <property name="name">
@@ -73,7 +79,7 @@
                 </widget>
             </hbox>
         </widget>
-        <spacer>
+        <spacer row="4" column="0">
             <property name="name">
                 <cstring>spacer2</cstring>
             </property>
@@ -86,11 +92,43 @@
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>81</height>
+                    <height>30</height>
                 </size>
             </property>
         </spacer>
-    </vbox>
+        <widget class="QLayoutWidget" row="3" column="0">
+            <property name="name">
+                <cstring>layout3</cstring>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>m_showPeerView</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show list of peers</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>m_showChunkView</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show list of chunks currently downloading</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+    </grid>
 </widget>
 <customwidgets>
 </customwidgets>

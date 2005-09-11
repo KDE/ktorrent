@@ -49,7 +49,7 @@ namespace bt
 		}
 	};
 
-	Server::Server(Uint16 port)
+	Server::Server(Uint16 port) : port(port)
 	{
 		pending.setAutoDelete(true);
 		sock = new ServerSocket(this,port);
@@ -66,13 +66,14 @@ namespace bt
 		return sock->ok();
 	}
 
-	void Server::changePort(Uint16 port)
+	void Server::changePort(Uint16 p)
 	{
-		if (port == sock->port())
+		if (p == sock->port())
 			return;
 
 		delete sock;
-		sock = new ServerSocket(this,port);
+		sock = new ServerSocket(this,p);
+		this->port = p;
 	}
 
 	void Server::addPeerManager(PeerManager* pman)
@@ -107,7 +108,7 @@ namespace bt
 
 	Uint16 Server::getPortInUse() const
 	{
-		return sock->port();
+		return port;
 	}
 
 	PeerManager* Server::findPeerManager(const SHA1Hash & hash)

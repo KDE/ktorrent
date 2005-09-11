@@ -209,7 +209,8 @@ void KTorrent::applySettings()
 		m_systray_icon->hide();
 	}
 
-
+	m_info->showPeerView( Settings::showPeerView() );
+	m_info->showChunkView( Settings::showChunkView() );
 	m_core->changeDataDir(Settings::tempDir());
 	UDPTrackerSocket::setPort(Settings::udpTrackerPort());
 	m_core->changePort(Settings::port());

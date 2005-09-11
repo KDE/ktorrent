@@ -71,8 +71,6 @@ namespace bt
 				downloadStatusChanged(&tf,false);
 			}
 		}
-
-		loadFileInfo();
 	
 		if(tor.isMultiFile())
 		{
@@ -109,6 +107,8 @@ namespace bt
 	
 	void ChunkManager::loadIndexFile()
 	{
+		loadFileInfo();
+		
 		File fptr;
 		if (!fptr.open(index_file,"rb"))
 			throw Error(i18n("Can't open index file"));
@@ -445,8 +445,13 @@ namespace bt
 			// so we can't just exclude them
 			
 			QValueList<Uint32> files;
+
 			// get list of files where first chunk lies in
 			tor.calcChunkPos(first,files);
+			// check for exceptional case which causes very long loops
+			if (first == last && files.count() > 1)
+				return;
+			
 			// if one file in the list needs to be downloaded,increment first
 			for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
 			{

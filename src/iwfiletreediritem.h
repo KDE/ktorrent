@@ -46,6 +46,8 @@ class IWFileTreeDirItem : public QCheckListItem
 	Uint32 size;
 	bt::PtrMap<QString,IWFileTreeItem> children;
 	bt::PtrMap<QString,IWFileTreeDirItem> subdirs;
+	IWFileTreeDirItem* parent;
+	bool manual_change;
 public:
 	IWFileTreeDirItem(KListView* klv,const QString & name);
 	IWFileTreeDirItem(IWFileTreeDirItem* parent,const QString & name);
@@ -81,8 +83,15 @@ public:
 	 */
 	void updatePreviewInformation(bt::TorrentControl* tc);
 
+	/**
+	 * Called by the child to notify the parent it's state has changed.
+	 */
+	void childStateChange();
+
+	
 private:
 	virtual void stateChange(bool on);
+	bool allChildrenOn();
 };
 
 #endif

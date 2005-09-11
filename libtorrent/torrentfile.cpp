@@ -18,7 +18,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <libutil/log.h>
 #include <libutil/functions.h>
+#include "globals.h"
 #include "torrentfile.h"
 
 namespace bt
@@ -58,6 +60,7 @@ namespace bt
 		if (do_not_download != dnd)
 		{
 			do_not_download = dnd;
+		//	Out() << "file : " << index << " " << dnd << endl;
 			emit downloadStatusChanged(this,!dnd);
 		}
 	}
