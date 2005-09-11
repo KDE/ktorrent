@@ -18,6 +18,7 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <libutil/log.h>
+#include <math.h>
 #include "peer.h"
 #include "chunk.h"
 #include "speedestimater.h"

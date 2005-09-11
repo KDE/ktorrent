@@ -150,14 +150,14 @@ void KTorrentCore::stop(bt::TorrentControl* tc)
 	if (tc->isStarted() && tc->isRunning())
 	{
 		tc->stop(false);
-		QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
+	/*	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
 		while (i != downloads.end())
 		{
 			TorrentControl* otc = *i;
 			if (otc != tc && otc->getStatus() == TorrentControl::NOT_STARTED && otc->isAutostartAllowed())
 				start(otc);
 			i++;
-		}
+	}*/
 	}
 }
 
@@ -249,15 +249,15 @@ void KTorrentCore::torrentFinished(bt::TorrentControl* tc)
 {
 	if (!keep_seeding)
 		tc->stop(false);
-	
+	/*
 	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
 	while (i != downloads.end())
 	{
 		TorrentControl* otc = *i;
-		if (otc != tc)
+		if (otc != tc && otc->getStatus() == TorrentControl::NOT_STARTED && otc->isAutostartAllowed())
 			start(otc);
 		i++;
-	}
+}*/
 	finished(tc);
 }
 

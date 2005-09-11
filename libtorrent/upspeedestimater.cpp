@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <math.h>
 #include <libutil/functions.h>
 #include "upspeedestimater.h"
 
@@ -40,7 +41,7 @@ namespace bt
 		Entry e;
 		e.bytes = bytes;
 		e.data = rec;
-		e.t = GetCurrentTime();
+		e.start_time = GetCurrentTime();
 		outstanding_bytes.append(e);
 	}
 		
@@ -60,7 +61,7 @@ namespace bt
 				{
 					// if it's data move it to the written_bytes list
 					// but first store time it takes to send in e.t
-					e.t = GetCurrentTime() - e.t;
+					e.duration = GetCurrentTime() - e.start_time;
 					written_bytes.append(e);
 				}
 			}
@@ -77,18 +78,50 @@ namespace bt
 		upload_rate = 0;
 		if (written_bytes.empty())
 			return;
+
+		Uint32 now = GetCurrentTime();
+		const Uint32 INTERVAL = 3000;
 		
 		Uint32 tot_bytes = 0;
-		Uint32 tot_time = 0;
+		
+		Uint32 oldest_time = now;
 		QValueList<Entry>::iterator i = written_bytes.begin();
 		while (i != written_bytes.end())
 		{
-			tot_bytes += (*i).bytes;
-			tot_time += (*i).t;
-			i++;
+			Entry & e = *i;
+			Uint32 end_time = e.start_time + e.duration;
+			
+			if (now - end_time > INTERVAL)
+			{
+				// get rid of old entries
+				i = written_bytes.erase(i);
+			}
+			else if (now - e.start_time <= INTERVAL)
+			{
+				// entry was fully sent in the last 3 seconds
+				// so fully add it
+				tot_bytes += e.bytes;
+				if (e.start_time < oldest_time)
+					oldest_time = e.start_time;
+				i++;
+			}
+			else
+			{
+				// entry was partially sent in the last 3 seconds
+				// so we need to take into account a part of the bytes;
+				Uint32 part_dur = end_time - (now - INTERVAL);
+				double dur_perc = (double)part_dur / e.duration;
+				tot_bytes += (Uint32)ceil(dur_perc * e.bytes);
+				oldest_time = (now - INTERVAL);
+				i++;
+			}
 		}
-		written_bytes.clear();
-		upload_rate = (double)tot_bytes / (tot_time * 0.001);
+
+		Uint32 tot_time = now - oldest_time;
+		if (tot_time == 0)
+			upload_rate = 0;
+		else
+			upload_rate = (double)tot_bytes / (tot_time * 0.001);
 	}
 
 }

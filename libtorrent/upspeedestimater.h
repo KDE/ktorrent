@@ -36,7 +36,8 @@ namespace bt
 		struct Entry
 		{
 			Uint32 bytes;
-			Uint32 t;
+			Uint32 start_time;
+			Uint32 duration;
 			bool data;
 		};
 	public:
