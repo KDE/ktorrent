@@ -285,9 +285,12 @@ void PrefPageThree::addClicked()
     { 
         KURL url = KURL::fromPathOrURL(m_engine_url->text()); 
         if ( !url.isValid() ) { KMessageBox::error(this, i18n("Malformed URL."), i18n("Error")); return; } 
-        QListViewItem* se = new QListViewItem(m_engines, m_engine_name->text(), m_engine_url->text()); 
-        m_engines->insertItem(se); 
-        m_items.append(se); 
+		if (m_engines->findItem(m_engine_name->text(), 0)) { KMessageBox::error(this, i18n("A search engine with the same name already exists. Please use a different name.")); return; }
+		QListViewItem* se = new QListViewItem(m_engines, m_engine_name->text(), m_engine_url->text());
+		m_engines->insertItem(se); 
+		m_items.append(se);
+		m_engine_url->setText("");
+		m_engine_name->setText("");
     } 
     else 
         KMessageBox::error(this, i18n("Bad URL. You should search for FOOBAR with your internet browser and copy/paste exact URL here.")); 
