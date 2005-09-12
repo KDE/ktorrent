@@ -280,7 +280,7 @@ void PrefPageThree::saveSearchEngines()
 void PrefPageThree::addClicked() 
 { 
     if ( m_engine_url->text().isEmpty() || m_engine_name->text().isEmpty() ) 
-        KMessageBox::error(this, i18n("You must enter SE name and URL"), i18n("Error")); 
+        KMessageBox::error(this, i18n("You must enter the search engine's name and URL"), i18n("Error"));
     else if ( m_engine_url->text().contains("FOOBAR")  ) 
     { 
         KURL url = KURL::fromPathOrURL(m_engine_url->text()); 
@@ -293,7 +293,7 @@ void PrefPageThree::addClicked()
 		m_engine_name->setText("");
     } 
     else 
-        KMessageBox::error(this, i18n("Bad URL. You should search for FOOBAR with your internet browser and copy/paste exact URL here.")); 
+        KMessageBox::error(this, i18n("Bad URL. You should search for FOOBAR with your internet browser and copy/paste the exact URL here.")); 
 } 
  
 void PrefPageThree::removeClicked() 

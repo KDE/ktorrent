@@ -56,6 +56,8 @@ namespace bt
 
 		/// Get the number of tracker URLs
 		unsigned int getNumTrackerURLs() const {return trackers.count();}
+
+		void debugPrintURLList();
 	};
 
 }

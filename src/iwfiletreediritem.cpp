@@ -111,6 +111,12 @@ bt::TorrentFile & IWFileTreeDirItem::findTorrentFile(QListViewItem* item)
 
 void IWFileTreeDirItem::setAllChecked(bool on)
 {
+	if (!manual_change)
+	{
+		manual_change = true;
+		setOn(on);
+		manual_change = false;
+	}
 	// first set all the child items
 	bt::PtrMap<QString,IWFileTreeItem>::iterator i = children.begin();
 	while (i != children.end())
@@ -171,7 +177,9 @@ void IWFileTreeDirItem::updatePreviewInformation(bt::TorrentControl* tc)
 void IWFileTreeDirItem::stateChange(bool on)
 {
 	if (!manual_change)
+	{
 		setAllChecked(on);
+	}
 	setText(2,on ? i18n("Yes") : i18n("No"));
 }
 

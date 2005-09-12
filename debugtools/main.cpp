@@ -17,52 +17,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTBDECODER_H
-#define BTBDECODER_H
-
 #include <qstring.h>
+#include <libutil/log.h>
+#include <libutil/error.h>
+#include <libtorrent/globals.h>
+#include <libtorrent/torrent.h>
 
-namespace bt
+using namespace bt;
+
+void help()
 {
-
-	class BNode;
-	class BListNode;
-	class BDictNode;
-	class BValueNode;
-	
-	/**
-	 * @author Joris Guisson
-	 * @brief Decodes b-encoded data
-	 *
-	 * Class to decode b-encoded data.
-	 */
-	class BDecoder
-	{
-		const QByteArray & data;
-		unsigned int pos;
-		bool verbose;
-	public:
-		/**
-		 * Constructor, passes in the data to decode.
-		 * @param data The data
-		 * @param verbose Verbose output to the log
-		 */
-		BDecoder(const QByteArray & data,bool verbose);
-		virtual ~BDecoder();
-
-		/**
-		 * Decode the data, the root node gets
-		 * returned. (Note that the caller must delete this node)
-		 * @return The root node
-		 */
-		BNode* decode();
-	private:
-		BDictNode* parseDict();
-		BListNode* parseList();
-		BValueNode* parseInt();
-		BValueNode* parseString();
-	};
-
+	Out() << "Usage : kttorinfo <torrent>" << endl;
+	exit(0);
 }
 
-#endif
+int main(int argc,char** argv)
+{
+	Globals::instance().setDebugMode(true);
+	Globals::instance().initLog("kttorinfo.log");
+	if (argc < 2)
+		help();
+	
+	try
+	{
+		Torrent tor;
+		tor.load(argv[1],true);
+		tor.debugPrintInfo();
+	}
+	catch (Error & e)
+	{
+		Out() << "Error : " << e.toString() << endl;
+	}
+	return 0;
+}

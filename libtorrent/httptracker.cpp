@@ -45,7 +45,7 @@ namespace bt
 
 	void HTTPTracker::updateData(TorrentControl* tc,PeerManager* pman)
 	{
-		BDecoder dec(data);
+		BDecoder dec(data,false);
 		BNode* n = dec.decode();
 			
 		if (!n || n->getType() != BNode::DICT)
@@ -196,6 +196,7 @@ namespace bt
 
 	void HTTPTracker::onTimeout()
 	{
+		/*
 		num_attempts++;
 		Out() << "Tracker timeout " << num_attempts << endl; 
 		if (num_attempts >= 5)
@@ -207,7 +208,8 @@ namespace bt
 		else
 		{
 			doRequest(last_url);
-		}
+		}*/
+		error();
 	}
 
 }

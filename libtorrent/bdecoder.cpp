@@ -27,7 +27,8 @@
 namespace bt
 {
 
-	BDecoder::BDecoder(const QByteArray & data) : data(data),pos(0)
+	BDecoder::BDecoder(const QByteArray & data,bool verbose)
+	: data(data),pos(0),verbose(verbose)
 	{
 	}
 
@@ -39,7 +40,7 @@ namespace bt
 	{
 		if (pos >= data.size())
 			return 0;
-	//	Out() << data[pos] << endl;
+
 		if (data[pos] == 'd')
 		{
 			return parseDict();
@@ -68,12 +69,12 @@ namespace bt
 		// we're now entering a dictionary
 		BDictNode* curr = new BDictNode(off);
 		pos++;
-//  		Out() << "DICT" << endl;
+		if (verbose) Out() << "DICT" << endl;
 		try
 		{
 			while (data[pos] != 'e' && pos < data.size())
 			{
-//  				Out() << "Key : " << endl;
+				if (verbose) Out() << "Key : " << endl;
 				BValueNode* k = dynamic_cast<BValueNode*>(decode());
 				if (!k || k->data().getType() != Value::STRING)
 					throw Error(i18n("Decode error"));
@@ -91,7 +92,7 @@ namespace bt
 			delete curr;
 			throw;
 		}
-//  		Out() << "END" << endl;
+		if (verbose) Out() << "END" << endl;
 		curr->setLength(pos - off);
 		return curr;
 	}
@@ -99,7 +100,7 @@ namespace bt
 	BListNode* BDecoder::parseList()
 	{
 		Uint32 off = pos;
-//  		Out() << "LIST" << endl;
+		if (verbose) Out() << "LIST" << endl;
 		BListNode* curr = new BListNode(off);
 		pos++;
 		try
@@ -116,7 +117,7 @@ namespace bt
 			delete curr;
 			throw;
 		}
-// 		Out() << "END" << endl;
+		if (verbose) Out() << "END" << endl;
 		curr->setLength(pos - off);
 		return curr;
 	}
@@ -146,7 +147,7 @@ namespace bt
 		if (ok)
 		{
 			pos++;
-// 			Out() << "INT = " << val << endl;
+			if (verbose) Out() << "INT = " << val << endl;
 			BValueNode* vn = new BValueNode(Value(val),off);
 			vn->setLength(pos - off);
 			return vn;
@@ -159,7 +160,7 @@ namespace bt
 				throw Error(i18n("Cannot convert %1 to an int").arg(n));
 
 			pos++;
-// 			Out() << "INT64 = " << n << endl;
+			if (verbose) Out() << "INT64 = " << n << endl;
 			BValueNode* vn = new BValueNode(Value(bi),off);
 			vn->setLength(pos - off);
 			return vn;
@@ -194,6 +195,9 @@ namespace bt
 		}
 		// move pos to the first part of the string
 		pos++;
+		if (pos + len > data.size())
+			throw Error(i18n("Torrent is incomplete !"));
+			
 		QByteArray arr(len);
 		for (unsigned int i = pos;i < pos + len;i++)
 			arr.at(i-pos) = data[i];
@@ -203,10 +207,13 @@ namespace bt
 		// pos should be positioned right after the string
 		BValueNode* vn = new BValueNode(Value(arr),off);
 		vn->setLength(pos - off);
-// 		if (arr.size() < 50)
-// 			Out() << "STRING " << QString(arr) << endl;
-// 		else
-// 			Out() << "STRING " << "really long string" << endl;
+		if (verbose)
+		{
+			if (arr.size() < 50)
+				Out() << "STRING " << QString(arr) << endl;
+			else
+				Out() << "STRING " << "really long string" << endl;
+		}
 		return vn;
 	}
 }

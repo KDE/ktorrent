@@ -53,9 +53,10 @@ namespace bt
 		/**
 		 * Load a .torrent file.
 		 * @param file The file
+		 * @param verbose Wether to print information to the log
 		 * @throw Error if something goes wrong
 		 */
-		void load(const QString & file);
+		void load(const QString & file,bool verbose);
 		
 		void debugPrintInfo();
 		

@@ -58,7 +58,7 @@ namespace bt
 
 				KURL url(vn->data().toString());
 				trackers.append(url);
-				Out() << "Added tracker " << url << endl;
+				//Out() << "Added tracker " << url << endl;
 			}
 		}
 	}
@@ -70,6 +70,13 @@ namespace bt
 		
 		curr = (curr + 1) % trackers.count();
 		return *trackers.at(curr);
+	}
+
+	void AnnounceList::debugPrintURLList()
+	{
+		Out() << "Announce List : " << endl;
+		for (KURL::List::iterator i = trackers.begin();i != trackers.end();i++)
+			Out() << "URL : " << *i << endl;
 	}
 
 }

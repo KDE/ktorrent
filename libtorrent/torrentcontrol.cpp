@@ -241,7 +241,7 @@ namespace bt
 
 		// first load the torrent file
 		tor = new Torrent();
-		tor->load(torrent);
+		tor->load(torrent,false);
 		if (!bt::Exists(datadir))
 			bt::MakeDir(datadir);
 

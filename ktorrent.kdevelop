@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>libtorrent/libtorrent.la</activetarget>
+      <activetarget>debugtools/kttorinfo</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>
@@ -34,6 +34,7 @@
       <envvars/>
       <runarguments>
         <ktorrent/>
+        <kttorinfo></kttorinfo>
       </runarguments>
     </run>
     <make>

@@ -45,7 +45,7 @@ namespace bt
 		delete anon_list;
 	}
 
-	void Torrent::load(const QString & file)
+	void Torrent::load(const QString & file,bool verbose)
 	{
 		QFile fptr(file);
 		if (!fptr.open(IO_ReadOnly))
@@ -60,7 +60,7 @@ namespace bt
 	//	dict->printDebugInfo();
 		try
 		{
-			BDecoder decoder(data);
+			BDecoder decoder(data,verbose);
 			BNode* node = decoder.decode();
 			dict = dynamic_cast<BDictNode*>(node);
 			if (!dict)
@@ -230,10 +230,33 @@ namespace bt
 
 	void Torrent::debugPrintInfo()
 	{
-		Out() << "Tracker URL : " << tracker_url << endl;
 		Out() << "Name : " << name_suggestion << endl;
+		if (!anon_list)
+			Out() << "Tracker URL : " << tracker_url << endl;
+		else
+			anon_list->debugPrintURLList();
+		
 		Out() << "Piece Length : " << piece_length << endl;
-		Out() << "File Length : " << file_length << endl;
+		if (this->isMultiFile())
+		{
+			Out() << "Files : " << endl;
+			Out() << "===================================" << endl;
+			for (Uint32 i = 0;i < getNumFiles();i++)
+			{
+				TorrentFile & tf = getFile(i);
+				Out() << "Path : " << tf.getPath() << endl;
+				Out() << "Size : " << tf.getSize() << endl;
+				Out() << "First Chunk : " << tf.getFirstChunk() << endl;
+				Out() << "Last Chunk : " << tf.getLastChunk() << endl;
+				Out() << "First Chunk Off : " << tf.getFirstChunkOffset() << endl;
+				Out() << "Last Chunk Size : " << tf.getLastChunkSize() << endl;
+				Out() << "===================================" << endl;
+			}
+		}
+		else
+		{
+			Out() << "File Length : " << file_length << endl;
+		}
 		Out() << "Pieces : " << hash_pieces.size() << endl;
 	}
 	
