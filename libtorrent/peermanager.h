@@ -132,6 +132,13 @@ namespace bt
 		 * @param pp The PotentialPeer
 		 */
 		void addPotentialPeer(const PotentialPeer & pp);
+		
+		/**
+		 * Kills all connections to seeders. 
+		 * This is used when torrent download gets finished 
+		 * and we should drop all connections to seeders
+		 */
+		void killSeeders();
 	private:
 		bool connectedTo(const PeerID & peer_id);	
 		void peerAuthenticated(Authenticate* auth,bool ok);

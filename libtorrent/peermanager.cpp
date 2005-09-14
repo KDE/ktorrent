@@ -125,6 +125,18 @@ namespace bt
 		potential_peers.append(pp);
 	}
 
+	void PeerManager::killSeeders()
+	{
+		QPtrList<Peer>::iterator i = peer_list.begin();
+		while (i != peer_list.end())
+		{
+			Peer* p = *i;
+ 			if ( p->isSeeder() )
+ 				p->kill();
+			i++;
+		}
+	}
+	
 	void PeerManager::newConnection(QSocket* sock,
 									const PeerID & peer_id)
 	{

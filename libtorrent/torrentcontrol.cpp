@@ -106,6 +106,7 @@ namespace bt
 				// download has just been completed
 				updateTracker("completed");
 				finished(this);
+				pman->killSeeders();
 				QTime now = QTime::currentTime();
 			//	Out() << running_time_dl << endl;
 				running_time_dl += time_started_dl.secsTo(now);
@@ -145,6 +146,12 @@ namespace bt
 			// we may need to update the choker
 			if (choker_update_timer.getElapsedSinceUpdate() >= 10000)
 			{
+				// also get rid of seeders when download is finished
+				// no need to keep them around, but also no need to do this
+				// every update, so once every 10 seconds is fine
+				if (completed)
+					pman->killSeeders();
+				
 				doChoking();
 				choker_update_timer.update();
 			}
