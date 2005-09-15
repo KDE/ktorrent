@@ -53,6 +53,8 @@ has higher value... (We will see about this)
 12) Split "Download" view into Download and Upload views. This way we separate
 torrents we are leeching from the ones we are seeding.
 
+13) Add option to allow the user to rename the top directory of multifile torrents
+
 
 2.0 :
 -----
