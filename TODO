@@ -1,6 +1,60 @@
-- TWEAK DOWNLOAD SPEED LIMITING
-- DO ERROR CHECKING ON SERVER AND UDP TRACKER PORT
-- Flickering of ChunkBar with lots of chunks
-- Switch port when no torrents running
+TODO LIST :
+-----------
 
+If something is done put # in front of it.
+
+1.1 :
+-----
+1) Tweak download speed capping, it currently is to jumpy
+
+2) http://bugs.kde.org/show_bug.cgi?id=111260 (Initial tests show ktorrent handles this situation well)
+
+3) Sometimes torrents aren't finished at 100%. Make sure it only goes to 100 % when it's completely finished (keep it on 99.9 for example)
+
+4) Fix chunkbars (with every second refresh and redraw I get some flickering) -
+maybe check if the state has changed on every update and if so, then redraw.
+
+5) Add "Stop all" and "Start all" buttons in toolbar. (GUI change, needs to be done for string freeze)
+
+1.2 :
+-----
+1) Switch to KNetwork classes (This could be frustrating)
+
+2) Implement trackerless torrent like official client. (This will be big)
+
+3) Immediatly store at final location
+
+4) Implement this one : http://bugs.kde.org/show_bug.cgi?id=112080 and even go further (i.e. allow to resume partially downloaded stuff from other clients) (To avoid major code changes symlink cache directly to final file or dir) (3 and 4 are related and should be done together)
+
+5) Make something similar like konquerer's change browser identification but then for KT's PeerID
+
+6) Add option to paste URL to .torrent files
+
+7) Implement IP blocking framework. Build our own (detect fake data and block
+peers) or use existing lists (e.g. openmedia.info). I had several peers (IP's
+were listed in blocking list from openmedia) and I was constantly having high
+dl rates from these clients but no actuall data was downloaded.
+
+8) Make and show more statistics. (e.g. uptime, average transfer rates,
+connected peers, etc...) (UI clutter needs to be avoided)
+
+9) Implement temporary dir import (continue downloads)
+
+10) When specific torrent has big chunks (512K or more) and KT starts
+downloading some of them, for example >5, it lasts *forever* to finish either
+one of them before you can start uploading those chunks and get higher
+download speeds (this can take a veeeery long time on slow connections).
+(This is against the BT protocol, i.e. you should not say you have stuff you do not have. It also requires big changes code wise, uploading happens directly from the file. But we should do something about these situations)
+
+11) (maybe) Make customization of timer updates possible. This way the user can
+specify update interval and transfer rates won't be so jumpy if the interval
+has higher value... (We will see about this)
+
+12) Split "Download" view into Download and Upload views. This way we separate
+torrents we are leeching from the ones we are seeding.
+
+
+2.0 :
+-----
+1) Switch to KDE 4 and Qt 4
 
