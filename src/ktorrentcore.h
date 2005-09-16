@@ -133,6 +133,12 @@ public:
 	 * @return true if we can, false if there are torrents running
 	 */
 	bool changePort(bt::Uint16 port);
+
+	///  Get the number of torrents running (including seeding torrents).
+	bt::Uint32 getNumTorrentsRunning() const;
+
+	///  Get the number of torrents not running.
+	bt::Uint32 getNumTorrentsNotRunning() const;
 	
 public slots:
 	/**
@@ -187,6 +193,9 @@ signals:
 	* TorrentCore torrents have beed updated. Stats are changed.
 	**/
 	void statsUpdated();
+
+	
+
 
 private:
 	QString findNewTorrentDir() const;

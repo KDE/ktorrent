@@ -14,7 +14,7 @@ If something is done put # in front of it.
 4) Fix chunkbars (with every second refresh and redraw I get some flickering) -
 maybe check if the state has changed on every update and if so, then redraw.
 
-5) Add "Stop all" and "Start all" buttons in toolbar. (GUI change, needs to be done for string freeze)
+# 5) Add "Stop all" and "Start all" buttons in toolbar. (GUI change, needs to be done for string freeze)
 
 1.2 :
 -----

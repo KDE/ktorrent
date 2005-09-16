@@ -150,14 +150,6 @@ void KTorrentCore::stop(bt::TorrentControl* tc)
 	if (tc->isStarted() && tc->isRunning())
 	{
 		tc->stop(false);
-	/*	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
-		while (i != downloads.end())
-		{
-			TorrentControl* otc = *i;
-			if (otc != tc && otc->getStatus() == TorrentControl::NOT_STARTED && otc->isAutostartAllowed())
-				start(otc);
-			i++;
-	}*/
 	}
 }
 
@@ -249,15 +241,7 @@ void KTorrentCore::torrentFinished(bt::TorrentControl* tc)
 {
 	if (!keep_seeding)
 		tc->stop(false);
-	/*
-	QPtrList<bt::TorrentControl>::iterator i = downloads.begin();
-	while (i != downloads.end())
-	{
-		TorrentControl* otc = *i;
-		if (otc != tc && otc->getStatus() == TorrentControl::NOT_STARTED && otc->isAutostartAllowed())
-			start(otc);
-		i++;
-}*/
+
 	finished(tc);
 }
 
@@ -349,8 +333,7 @@ void KTorrentCore::startAll()
 	while (i != downloads.end())
 	{
 		bt::TorrentControl* tc = *i;
-		if (!tc->isRunning() && (max_downloads == 0 || getNumRunning() < max_downloads))
-			tc->start();
+		start(tc);
 		i++;
 	}
 }
@@ -362,7 +345,7 @@ void KTorrentCore::stopAll()
 	{
 		bt::TorrentControl* tc = *i;
 		if (tc->isRunning())
-			tc->stop(false);
+			tc->stop(true);
 		i++;
 	}
 }
@@ -382,9 +365,6 @@ void KTorrentCore::update()
 		}
 		i++;
 	}
-
-	
-	//bt::DownloadCap::setCurrentSpeed(down_speed);
 }
 
 void KTorrentCore::makeTorrent(const QString & file,const QStringList & trackers,
@@ -474,6 +454,34 @@ bool KTorrentCore::changePort(Uint16 port)
 void KTorrentCore::slotStoppedByError(bt::TorrentControl* tc, QString msg)
 {
 	emit torrentStoppedByError(tc, msg);
+}
+
+Uint32 KTorrentCore::getNumTorrentsRunning() const
+{
+	Uint32 num = 0;
+	QPtrList<bt::TorrentControl>::const_iterator i = downloads.begin();
+	while (i != downloads.end())
+	{
+		bt::TorrentControl* tc = *i;
+		if (tc->isRunning())
+			num++;
+		i++;
+	}
+	return num;
+}
+
+Uint32 KTorrentCore::getNumTorrentsNotRunning() const
+{
+	Uint32 num = 0;
+	QPtrList<bt::TorrentControl>::const_iterator i = downloads.begin();
+	while (i != downloads.end())
+	{
+		bt::TorrentControl* tc = *i;
+		if (!tc->isRunning())
+			num++;
+		i++;
+	}
+	return num;
 }
 
 #include "ktorrentcore.moc"

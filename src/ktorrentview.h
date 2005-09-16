@@ -28,6 +28,7 @@
 class KURL;
 class KTorrentViewItem;
 class KPopupMenu;
+class KTorrentCore;
 
 namespace bt
 {
@@ -87,6 +88,7 @@ signals:
 
 private:
 	bool acceptDrag(QDropEvent* event) const;
+	int getNumRunning();
 		
 private:
 	QMap<bt::TorrentControl*,KTorrentViewItem*> items;

@@ -287,7 +287,15 @@ void KTorrent::setupActions()
 	m_remove = new KAction(
 			i18n("Remove"), "remove",0,this, SLOT(removeDownload()),
 			actionCollection(), "Remove");
-
+	
+	m_startall = new KAction(
+			i18n("to start all", "Start all"), "player_fwd",0,this, SLOT(startAllDownloads()),
+			actionCollection(), "Start all");
+	
+	m_stopall = new KAction(
+			i18n("to stop all", "Stop all"), "stop",0,this, SLOT(stopAllDownloads()),
+			actionCollection(), "Stop all");
+	
 	createGUI();
 }
 
@@ -412,6 +420,11 @@ void KTorrent::startDownload()
 	}
 }
 
+void KTorrent::startAllDownloads()
+{
+	m_core->startAll();
+}
+
 void KTorrent::stopDownload()
 {
 	TorrentControl* tc = m_view->getCurrentTC();
@@ -420,6 +433,11 @@ void KTorrent::stopDownload()
 		tc->stop(true);
 		currentChanged(tc);
 	}
+}
+
+void KTorrent::stopAllDownloads()
+{
+	m_core->stopAll();
 }
 
 void KTorrent::removeDownload()
@@ -548,6 +566,9 @@ void KTorrent::updatedStats()
 		m_stop->setEnabled(false);
 		m_remove->setEnabled(false);
 	}
+
+	m_startall->setEnabled(m_core->getNumTorrentsNotRunning() > 0);
+	m_stopall->setEnabled(m_core->getNumTorrentsRunning() > 0);
 	
 	CurrentStats stats = this->m_core->getStats();
 

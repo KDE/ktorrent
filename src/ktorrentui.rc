@@ -5,6 +5,9 @@
 	<Action name="Start" />
 	<Action name="Stop" />
 	<Action name="Remove" />
+	<Separator/>
+	<Action name="Start all"/>
+	<Action name="Stop all"/>
   </Menu>
 </MenuBar>
 
@@ -20,5 +23,7 @@
 	<Action name="Start"/>
 	<Action name="Stop"/>
 	<Action name="Remove"/>
+	<Action name="Start all"/>
+	<Action name="Stop all"/>
 </ToolBar>
 </kpartgui>

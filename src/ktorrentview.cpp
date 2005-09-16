@@ -24,11 +24,13 @@
 #include <kpopupmenu.h>
 #include <krun.h>
 #include <kurldrag.h>
+#include <kmessagebox.h>
 #include <libtorrent/torrentcontrol.h>
 #include <libtorrent/globals.h>
 #include <kmessagebox.h>
 #include "ktorrentview.h"
 #include "ktorrentviewitem.h"
+#include "settings.h"
 #include "debugview.h"
 
 
@@ -93,13 +95,46 @@ void KTorrentView::setShowDebugView(bool yes)
 	show_debug_view = yes;
 }
 
+int KTorrentView::getNumRunning()
+{
+	int num = 0;
+	QMap<bt::TorrentControl*,KTorrentViewItem*>::iterator i = items.begin();
+	while (i != items.end())
+	{
+		KTorrentViewItem* tvi = i.data();
+		TorrentControl* tc = tvi->getTC();
+		num += tc->isRunning() ? 1 : 0;
+		i++;
+	}
+	return num;
+}
+
 void KTorrentView::startDownload()
 {
 	if (!curr)
 		return;
 
 	bt::TorrentControl* tc = curr->getTC();
-	tc->start();
+	
+	bool keep_seeding = Settings::keepSeeding();
+	int max_downloads = Settings::maxDownloads();
+	bool s = (tc->getBytesLeft() == 0 && keep_seeding) ||
+			(tc->getBytesLeft() != 0 &&
+			(max_downloads == 0 || getNumRunning() < max_downloads));
+	
+	if(s)
+	{
+		tc->start();
+	}
+	else KMessageBox::error(this,
+							i18n("Cannot start more than 1 download."
+									" Go to Settings -> Configure KTorrent,"
+									" if you want to change the limit.",
+							"Cannot start more than %n downloads."
+									" Go to Settings -> Configure KTorrent,"
+									" if you want to change the limit.",
+							Settings::maxDownloads()),
+							i18n("Error"));
 }
 	
 void KTorrentView::stopDownload()
