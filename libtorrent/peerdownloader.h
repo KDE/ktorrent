@@ -103,6 +103,10 @@ namespace bt
 
 		/// Retrannsmit all requests.
 		void retransmitRequests();
+
+		/// Block the PeerDownloader, blocked downloaders
+		/// do not download anything
+		void setBlocked(bool b) {blocked = b;}
 	public slots:
 		/**
 		 * Send a Request. Note that the DownloadCap
@@ -137,6 +141,7 @@ namespace bt
 	private:
 		Peer* peer;
 		Uint32 last_req_time,req_time_interval;
+		bool blocked;
 		QValueList<Request> reqs;
 		QValueList<Request> unsent_reqs;
 		int grabbed;

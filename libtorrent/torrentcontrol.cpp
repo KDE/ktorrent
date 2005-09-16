@@ -108,10 +108,7 @@ namespace bt
 				finished(this);
 				pman->killSeeders();
 				QTime now = QTime::currentTime();
-			//	Out() << running_time_dl << endl;
 				running_time_dl += time_started_dl.secsTo(now);
-			//	Out() << "Finished (total time : " << running_time_dl << " secs)" << endl;
-			//	Out() << time_started_dl.toString("mm:ss") << " " << now.toString("mm:ss") << endl;
 			}
 			else if (!completed && comp)
 			{
@@ -165,6 +162,7 @@ namespace bt
 
 			// make sure the downloadcap gets obeyed
 			DownloadCap::instance().update();
+
 		}
 		catch (Error & e)
 		{
@@ -372,7 +370,7 @@ namespace bt
 			{
 				if (tor->getNumTrackerURLs() > 1)
 				{
-					trackerstatus = i18n("Unreachable, trying backup");
+					trackerstatus = i18n("Unreachable");
 					updateTracker(trackerevent,false);
 				}
 				updateStatusMsg();
@@ -381,7 +379,7 @@ namespace bt
 		}
 		else if (trackerevent != "stopped")
 		{
-			trackerstatus = i18n("Unreachable, trying backup");
+			trackerstatus = i18n("Unreachable");
 			updateTracker(trackerevent,false);
 		}
 	}

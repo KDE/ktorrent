@@ -132,8 +132,15 @@ namespace bt
 		{
 			Peer* p = *i;
  			if ( p->isSeeder() )
+			{
  				p->kill();
-			i++;
+				i = peer_list.erase(i);
+				killed.append(p);
+				peer_map.erase(p->getID());
+				peerKilled(p);
+			}
+			else
+				i++;
 		}
 	}
 	

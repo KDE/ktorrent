@@ -35,6 +35,7 @@ namespace bt
 
 		last_req_time = 0;
 		req_time_interval = 0;
+		blocked = false;
 
 		DownloadCap::instance().addPeerDonwloader(this);
 	}
@@ -84,7 +85,7 @@ namespace bt
 			return;
 
 		Uint32 now = bt::GetCurrentTime();
-		if (now - last_req_time >= req_time_interval)
+		if (now - last_req_time >= req_time_interval && !blocked)
 		{
 			reqs.append(req);
 			peer->getPacketWriter().sendRequest(req);
@@ -161,7 +162,7 @@ namespace bt
 
 	void PeerDownloader::downloadUnsent()
 	{
-		if (!peer)
+		if (!peer || blocked)
 			return;
 
 		QValueList<Request>::iterator i = unsent_reqs.begin();

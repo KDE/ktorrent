@@ -20,7 +20,7 @@
 #ifndef BTDOWNLOADCAP_H
 #define BTDOWNLOADCAP_H
 
-#include <qptrlist.h>
+#include <list>
 #include <libutil/timer.h>
 #include "globals.h"
 
@@ -36,7 +36,7 @@ namespace bt
 		static DownloadCap self;
 
 		Uint32 max_bytes_per_sec;
-		QPtrList<PeerDownloader> pdowners;
+		std::list<PeerDownloader*> pdowners;
 	
 		DownloadCap();
 	public:
@@ -57,8 +57,6 @@ namespace bt
 		static DownloadCap & instance() {return self;}
 	private:
 		void capPD(PeerDownloader* pd,Uint32 cap);
-		int numActiveDownloaders();
-		void capAll(float max_speed_per_pd);
 	};
 
 }

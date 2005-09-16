@@ -42,10 +42,11 @@ namespace bt
 		max_bytes_per_sec = max;
 		if (max_bytes_per_sec == 0)
 		{
-			QPtrList<PeerDownloader>::iterator i = pdowners.begin();
+			std::list<PeerDownloader*>::iterator i = pdowners.begin();
 			while (i != pdowners.end())
 			{
 				PeerDownloader* pd = *i;
+				pd->setBlocked(false);
 				pd->setRequestInterval(0);
 				i++;
 			}
@@ -54,10 +55,6 @@ namespace bt
 	
 	void DownloadCap::capPD(PeerDownloader* pd,Uint32 cap)
 	{
-		// each piece is MAX_PIECE_LEN large
-		// so the interval is (MAX_PIECE_LEN / max_speed_per_pd)
-		// The * 1000 is to convert it to milliseconds
-		int rti = (int)floor((MAX_PIECE_LEN / cap) * 1000.0f);
 		int rinterval = (int)pd->getRequestInterval();
 		int diff = pd->getDownloadRate() - cap;
 
@@ -77,35 +74,16 @@ namespace bt
 		if (rinterval < 0)
 			rinterval = 0;
 		pd->setRequestInterval(rinterval);
-	//	pd->setRequestInterval(rti);
+		pd->setBlocked(false);
 	}
 
-	int DownloadCap::numActiveDownloaders()
+	struct PeerDownloadRateCmp
 	{
-		int num_active=0;
-		QPtrList<PeerDownloader>::iterator i = pdowners.begin();
-		while (i != pdowners.end())
+		bool operator () (PeerDownloader* a,PeerDownloader* b)
 		{
-			PeerDownloader* pd = *i;
-			if (pd->getNumGrabbed() != 0)
-				num_active++;
-			i++;
+			return a->getPeer()->getDownloadRate() > b->getPeer()->getDownloadRate();
 		}
-		return num_active;
-	}
-
-	void DownloadCap::capAll(float max_speed_per_pd)
-	{
-		// set everybody to max_speed_per_pd speed
-		QPtrList<PeerDownloader>::iterator i = pdowners.begin();
-		while (i != pdowners.end())
-		{
-			PeerDownloader* pd = *i;
-			capPD(pd,(int)floor(max_speed_per_pd));
-			i++;
-		}
-	}
-
+	};
 
 
 	void DownloadCap::update()
@@ -113,23 +91,35 @@ namespace bt
 		if (max_bytes_per_sec == 0)
 			return;
 
-		int num_active = numActiveDownloaders();
+		int num = pdowners.size() < 4 ? pdowners.size() : 4;
 		// the normal speed a PeerDownloader is allowed to do
-		float max_speed_per_pd = max_bytes_per_sec / (float)num_active;
-		// cap everybody to max_speed_per_pd
-		capAll(max_speed_per_pd);
+		float max_speed_per_pd = max_bytes_per_sec / (float)num;
+
+		// sort by download speed
+		pdowners.sort(PeerDownloadRateCmp());
+		
+		std::list<PeerDownloader*>::iterator i = pdowners.begin();
+		int j = 0;
+		while (i != pdowners.end() && j < 4)
+		{
+			// cap the 4 first at max_speed_per_pd
+			// and the other at 30 seconds
+			PeerDownloader* pd = *i;
+			if (j < 4)
+				capPD(pd,(Uint32)floor(max_speed_per_pd));
+			else
+				pd->setBlocked(true);
+			i++; j++;
+		}
 	}
 	
 	void DownloadCap::addPeerDonwloader(PeerDownloader* pd)
 	{
-		pdowners.append(pd);
+		pdowners.push_back(pd);
 		if (max_bytes_per_sec == 0)
 			pd->setRequestInterval(0);
 		else
-			// initially set to 1000 to not get high download peaks
-			// after a tracker request was recieved
-			// and we start connecting to a lot of peers
-			pd->setRequestInterval(1000);
+			pd->setBlocked(true);
 	}
 	
 	void DownloadCap::removePeerDownloader(PeerDownloader* pd)
