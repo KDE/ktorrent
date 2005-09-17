@@ -56,6 +56,7 @@ public:
 private:
 	void init();
 	virtual void stateChange(bool on);
+	virtual int compare(QListViewItem* i, int col, bool ascending) const;
 };
 
 

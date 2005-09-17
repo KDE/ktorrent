@@ -217,3 +217,16 @@ void IWFileTreeDirItem::childStateChange()
 		parent->childStateChange();
 }
 
+int IWFileTreeDirItem::compare(QListViewItem* i, int col, bool ascending) const
+{
+	if (col == 1)
+	{
+		IWFileTreeDirItem* other = static_cast<IWFileTreeDirItem*>(i);
+		return (int)(size - other->size);
+	}
+	else
+	{
+		return QCheckListItem::compare(i, col, ascending);
+	}
+}
+

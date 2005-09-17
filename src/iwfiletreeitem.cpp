@@ -82,3 +82,16 @@ void IWFileTreeItem::updatePreviewInformation(bt::TorrentControl* tc)
 	else
 		setText(3, i18n("No"));
 }
+
+int IWFileTreeItem::compare(QListViewItem* i, int col, bool ascending) const
+{
+	if (col == 1)
+	{
+		IWFileTreeItem* other = static_cast<IWFileTreeItem*>(i);
+		return (int)(file.getSize() - other->file.getSize());
+	}
+	else
+	{
+		return QCheckListItem::compare(i, col, ascending);
+	}
+}
