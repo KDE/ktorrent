@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>debugtools/kttorinfo</activetarget>
+      <activetarget>debugtools/cachecheck</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>
@@ -35,6 +35,7 @@
       <runarguments>
         <ktorrent/>
         <kttorinfo/>
+        <cachecheck/>
       </runarguments>
     </run>
     <make>

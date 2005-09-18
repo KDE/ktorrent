@@ -17,49 +17,39 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTDOWNLOADCAP_H
-#define BTDOWNLOADCAP_H
+#ifndef DEBUGCACHECHECKER_H
+#define DEBUGCACHECHECKER_H
 
-#include <list>
-#include <libutil/timer.h>
-#include "globals.h"
+#include <set>
+#include <qstring.h>
+#include <libutil/functions.h>
 
 namespace bt
 {
-	class PeerDownloader;
+	class Torrent;
+}
+
+namespace debug
+{
 
 	/**
 	 * @author Joris Guisson
 	*/
-	class DownloadCap
+	class CacheChecker
 	{
-		static DownloadCap self;
-
-		Uint32 max_bytes_per_sec;
-		std::list<PeerDownloader*> pdowners;
-	
-		DownloadCap();
 	public:
-		~DownloadCap();
+		CacheChecker(bt::Torrent & tor);
+		virtual ~CacheChecker();
+
+		void loadIndex(const QString & index_file);
 		
-		/**
-		 * Set the speed cap in bytes per second. 0 indicates
-		 * no limit.
-		 * @param max Maximum number of bytes per second.
-		*/
-		void setMaxSpeed(Uint32 max);
-		
-		void update();
-		
-		void addPeerDonwloader(PeerDownloader* pd);
-		void removePeerDownloader(PeerDownloader* pd);
-		
-		static DownloadCap & instance() {return self;}
-	private:
-		void capPD(PeerDownloader* pd,Uint32 cap);
-		Uint32 currentSpeed();
+		virtual void check(const QString & cache,const QString & index) = 0;
+	protected:
+		bt::Torrent & tor;
+		std::set<bt::Uint32>  downloaded_chunks;
 	};
 
+	
 }
 
 #endif

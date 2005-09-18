@@ -17,49 +17,43 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTDOWNLOADCAP_H
-#define BTDOWNLOADCAP_H
+#include <libutil/log.h>
+#include <libutil/file.h>
+#include <libutil/error.h>
+#include <libutil/array.h>
+#include <libtorrent/globals.h>
+#include <libtorrent/torrent.h>
+#include <libtorrent/chunkmanager.h>
+#include "cachechecker.h"
 
-#include <list>
-#include <libutil/timer.h>
-#include "globals.h"
+using namespace bt;
 
-namespace bt
+namespace debug
 {
-	class PeerDownloader;
 
-	/**
-	 * @author Joris Guisson
-	*/
-	class DownloadCap
+	CacheChecker::CacheChecker(bt::Torrent & tor) : tor(tor)
+	{}
+
+
+	CacheChecker::~CacheChecker()
+	{}
+
+	void CacheChecker::loadIndex(const QString & index_file)
 	{
-		static DownloadCap self;
+		File fptr;
+		if (!fptr.open(index_file,"rb"))
+			throw Error("Can't open index file : " + fptr.errorString());
 
-		Uint32 max_bytes_per_sec;
-		std::list<PeerDownloader*> pdowners;
-	
-		DownloadCap();
-	public:
-		~DownloadCap();
-		
-		/**
-		 * Set the speed cap in bytes per second. 0 indicates
-		 * no limit.
-		 * @param max Maximum number of bytes per second.
-		*/
-		void setMaxSpeed(Uint32 max);
-		
-		void update();
-		
-		void addPeerDonwloader(PeerDownloader* pd);
-		void removePeerDownloader(PeerDownloader* pd);
-		
-		static DownloadCap & instance() {return self;}
-	private:
-		void capPD(PeerDownloader* pd,Uint32 cap);
-		Uint32 currentSpeed();
-	};
-
+		if (fptr.seek(File::END,0) != 0)
+		{
+			fptr.seek(File::BEGIN,0);
+			
+			while (!fptr.eof())
+			{
+				NewChunkHeader hdr;
+				fptr.read(&hdr,sizeof(NewChunkHeader));
+				downloaded_chunks.insert(hdr.index);
+			}
+		}
+	}
 }
-
-#endif

@@ -17,49 +17,71 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTDOWNLOADCAP_H
-#define BTDOWNLOADCAP_H
+#include <libutil/log.h>
+#include <libutil/error.h>
+#include <libutil/functions.h>
+#include <libtorrent/globals.h>
+#include <libtorrent/torrent.h>
+#include "singlecachechecker.h"
+#include "multicachechecker.h"
 
-#include <list>
-#include <libutil/timer.h>
-#include "globals.h"
 
-namespace bt
+using namespace bt;
+using namespace debug;
+
+void Help()
 {
-	class PeerDownloader;
-
-	/**
-	 * @author Joris Guisson
-	*/
-	class DownloadCap
-	{
-		static DownloadCap self;
-
-		Uint32 max_bytes_per_sec;
-		std::list<PeerDownloader*> pdowners;
-	
-		DownloadCap();
-	public:
-		~DownloadCap();
-		
-		/**
-		 * Set the speed cap in bytes per second. 0 indicates
-		 * no limit.
-		 * @param max Maximum number of bytes per second.
-		*/
-		void setMaxSpeed(Uint32 max);
-		
-		void update();
-		
-		void addPeerDonwloader(PeerDownloader* pd);
-		void removePeerDownloader(PeerDownloader* pd);
-		
-		static DownloadCap & instance() {return self;}
-	private:
-		void capPD(PeerDownloader* pd,Uint32 cap);
-		Uint32 currentSpeed();
-	};
-
+	Out() << "Usage : cachecheck <directory_containing_cache>" << endl;
+	Out() << "OR cachecheck <torrent> <cache_file_or_dir> <index_file>" << endl;
+	exit(0);
 }
 
-#endif
+int main(int argc,char** argv)
+{
+	Globals::instance().setDebugMode(true);
+	Globals::instance().initLog("cachecheck.log");
+	CacheChecker* cc = 0;
+	try
+	{
+		Torrent tor;
+		QString tor_file,cache,index;
+
+		if (argc == 2)
+		{
+			QString cache_dir = argv[1];
+			if (!cache_dir.endsWith(bt::DirSeparator()))
+				cache_dir += bt::DirSeparator();
+
+			tor_file = cache_dir + "torrent";
+			cache = cache_dir + "cache";
+			index = cache_dir + "index";
+		}
+		else if (argc == 4)
+		{
+			tor_file = argv[1];
+			cache = argv[2];
+			index = argv[3];
+		}
+		else
+		{
+			Help();
+		}
+
+		
+		Out() << "Loading torrent : " << tor_file << " ... " << endl;
+		tor.load(tor_file,false);
+		if (tor.isMultiFile())
+			cc = new MultiCacheChecker(tor);
+		else
+			cc = new SingleCacheChecker(tor);
+
+		cc->check(cache,index);
+		
+	}
+	catch (Error & e)
+	{
+		Out() << "Error : " << e.toString() << endl;
+	}
+	delete cc;
+	return 0;
+}
