@@ -55,6 +55,8 @@ torrents we are leeching from the ones we are seeding.
 
 13) Add option to allow the user to rename the top directory of multifile torrents
 
+14) Implement queue manager
+
 
 2.0 :
 -----
