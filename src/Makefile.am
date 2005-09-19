@@ -7,7 +7,7 @@ bin_PROGRAMS = ktorrent
 
 
 # set the include path for X, qt and KDE
-INCLUDES = -I$(top_srcdir)/. -I$(srcdir)/.. $(all_includes)
+INCLUDES = -I$(srcdir)/.. $(all_includes)
 
 # the library search path. 
 ktorrent_LDFLAGS = $(KDE_RPATH) $(all_libraries)

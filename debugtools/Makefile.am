@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_srcdir)/. $(all_includes)
+INCLUDES = -I$(srcdir)/.. $(all_includes)
 METASOURCES = AUTO
 
 noinst_PROGRAMS = kttorinfo cachecheck

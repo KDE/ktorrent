@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_srcdir)/. $(all_includes) -I$(top_srcdir)/ktorrent
+INCLUDES = -I$(srcdir)/.. $(all_includes)
 METASOURCES = AUTO
 libkademlia_la_LDFLAGS = $(all_libraries)
 noinst_LTLIBRARIES = libkademlia.la
