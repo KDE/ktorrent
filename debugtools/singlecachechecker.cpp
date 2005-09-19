@@ -68,6 +68,7 @@ namespace debug
 			{
 				Uint32 size = i == num_chunks - 1 ?
 						tor.getFileLength() % tor.getChunkSize() : (Uint32)tor.getChunkSize();
+				fptr.seek(File::BEGIN,i*tor.getChunkSize());
 				fptr.read(buf,size);
 				SHA1Hash h = SHA1Hash::generate(buf,size);
 				bool ok = (h == tor.getHash(i));

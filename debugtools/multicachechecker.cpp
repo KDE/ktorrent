@@ -60,11 +60,7 @@ namespace debug
 			if (i % 100 == 0)
 				Out() << "Checked " << i << " chunks" << endl;
 
-			if (downloaded_chunks.count(i) == 0)
-			{
-				num_not_downloaded++;
-				continue;
-			}
+
 			
 			Uint64 size = i == tor.getNumChunks() - 1 ?
 					tor.getFileLength() % chunk_size : chunk_size;
@@ -108,18 +104,26 @@ namespace debug
 				}
 			} // end file reading while
 
-			// calculate hash and check it
-			SHA1Hash h = SHA1Hash::generate(buf,size);
-			if (h != tor.getHash(i))
+			if (downloaded_chunks.count(i) == 0)
 			{
-				Out() << "Chunk " << i << " Failed :" << endl;
-				Out() << "\tShould be : " << tor.getHash(i).toString() << endl;
-				Out() << "\tIs        : " << h.toString() << endl;
-				num_not_ok++;
+				num_not_downloaded++;
+				continue;
 			}
 			else
 			{
-				num_ok++;
+				// calculate hash and check it
+				SHA1Hash h = SHA1Hash::generate(buf,size);
+				if (h != tor.getHash(i))
+				{
+					Out() << "Chunk " << i << " Failed :" << endl;
+					Out() << "\tShould be : " << tor.getHash(i).toString() << endl;
+					Out() << "\tIs        : " << h.toString() << endl;
+					num_not_ok++;
+				}
+				else
+				{
+					num_ok++;
+				}
 			}
 		}
 
