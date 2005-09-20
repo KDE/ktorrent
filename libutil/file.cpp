@@ -17,8 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #include <string.h>
 #include <errno.h>
+#include <stdio.h>
 #include "file.h"
 
 namespace bt
@@ -75,6 +77,7 @@ namespace bt
 
 	Uint64 File::seek(SeekPos from,Int64 num)
 	{
+	//	printf("sizeof(off_t) = %i\n",sizeof(__off64_t));
 		if (!fptr)
 			return 0;
 		
@@ -87,8 +90,8 @@ namespace bt
 			default:
 				break;
 		}
-		fseeko(fptr,num,p);
-		return ftello(fptr);
+		fseeko64(fptr,num,p);
+		return ftello64(fptr);
 	}
 
 	bool File::eof() const
