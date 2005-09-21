@@ -18,6 +18,8 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 
+#include "config.h"
+
 #include <string.h>
 #include <errno.h>
 #include <stdio.h>
@@ -90,8 +92,13 @@ namespace bt
 			default:
 				break;
 		}
+#ifdef HAVE_FSEEKO64
 		fseeko64(fptr,num,p);
 		return ftello64(fptr);
+#else
+		fseeko(fptr,num,p);
+		return ftello(fptr);
+#endif
 	}
 
 	bool File::eof() const

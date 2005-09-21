@@ -9,5 +9,16 @@ if test "$build_arts" = "yes"; then
     AC_SUBST(LIB_ARTS)
 fi
 
+dnl #### Check for FSEEK variants
+AC_SYS_LARGEFILE
+AC_FUNC_FSEEKO
+AC_CHECK_FUNCS(fseek64, ktorrent_cv_func_fseek64=yes, ktorrent_cv_func_fseek64=no)
+AC_CHECK_FUNCS(ftell64, ktorrent_cv_func_ftell64=yes, ktorrent_cv_func_ftell64=no)
+if test "$ktorrent_cv_func_fseek64" = yes -a "$ktorrent_cv_func_ftell64" = yes; then
+    AC_DEFINE(HAVE_FSEEK64, 1)
+else
+    AC_DEFINE(HAVE_FSEEK64, 0)
+fi
+
 KDE_INIT_DOXYGEN([The API Reference], [Version $VERSION])
 
