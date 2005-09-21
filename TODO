@@ -9,7 +9,7 @@ If something is done put # in front of it.
 
 2) http://bugs.kde.org/show_bug.cgi?id=111260 (Initial tests show ktorrent handles this situation well)
 
-3) Sometimes torrents aren't finished at 100%. Make sure it only goes to 100 % when it's completely finished (keep it on 99.9 for example)
+# 3) Sometimes torrents aren't finished at 100%. Make sure it only goes to 100 % when it's completely finished (keep it on 99.9 for example)
 
 4) Fix chunkbars (with every second refresh and redraw I get some flickering) -
 maybe check if the state has changed on every update and if so, then redraw.

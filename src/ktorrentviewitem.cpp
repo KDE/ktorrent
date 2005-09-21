@@ -130,9 +130,20 @@ void KTorrentViewItem::update()
 		setText(7,i18n("infinity"));
 	}
 	setText(8,QString::number(tc->getNumPeers()));
-	double perc = ((double)tc->getBytesDownloaded() / tc->getTotalBytesToDownload()) * 100.0;
-	if (perc > 100.0)
+
+	double perc = 0;
+	if (tc->getBytesDownloaded() == tc->getTotalBytesToDownload())
+	{
 		perc = 100.0;
+	}
+	else
+	{
+		perc = ((double)tc->getBytesDownloaded() / tc->getTotalBytesToDownload()) * 100.0;
+		if (perc > 100.0)
+			perc = 100.0;
+		else if (perc > 99.9)
+			perc = 99.9;
+	}
 	setText(9,i18n("%1 %").arg(loc->formatNumber(perc,2)));
 }
 

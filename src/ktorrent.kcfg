@@ -40,7 +40,7 @@
 		</entry>
 		<entry name="showSystemTrayIcon" type="Bool">
 			<label>Show a system tray icon</label>
-			<default>true</default>
+			<default>false</default>
 		</entry>
 		<entry name="keepSeeding" type="Bool">
 			<label>Keep seeding after download has finished</label>

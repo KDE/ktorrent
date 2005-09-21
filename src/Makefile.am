@@ -44,7 +44,7 @@ METASOURCES = AUTO
 messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/ktorrent.pot
 
-KDE_ICON = ktorrent
+#KDE_ICON = ktorrent
 
 # this is where the kdelnk file will go 
 kdelnkdir = $(kde_appsdir)/Internet

@@ -55,3 +55,4 @@ Comment[uk]=Програма BitTorrent для KDE
 Comment[xx]=xxA BitTorrent program for KDExx
 Comment[zh_CN]=一个 KDE 的 BitTorrent 程序
 Terminal=false
+Categories=Qt;KDE;Network;FileTransfer
