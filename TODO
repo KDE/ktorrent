@@ -57,6 +57,8 @@ torrents we are leeching from the ones we are seeding.
 
 14) Implement queue manager
 
+15) Add "Max d/u ratio" option (for seeding)
+
 
 2.0 :
 -----
