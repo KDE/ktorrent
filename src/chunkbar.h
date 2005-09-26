@@ -21,8 +21,9 @@
 #ifndef CHUNKBAR_H
 #define CHUNKBAR_H
 
-#include <qframe.h>
-
+#include <qlabel.h>
+#include <libtorrent/bitset.h>
+#include <qpixmap.h>
 
 class QPainter;
 
@@ -52,16 +53,19 @@ public:
 	
 	virtual void fillBitSet(bt::BitSet & bs) = 0;
 	virtual void drawContents(QPainter *p);
+	virtual void updateBar();
   
 private:
 	void drawEqual(QPainter *p,const bt::BitSet & bs,const QColor & color);
 	void drawMoreChunksThenPixels(QPainter *p,const bt::BitSet & bs,const QColor & color);
 	void drawAllOn(QPainter *p,const QColor & color);
+	void drawBarContents(QPainter *p);
 	
 protected:
 	bt::TorrentControl* curr_tc;
 	bool show_excluded;
-	
+	bt::BitSet curr,curr_ebs;
+	QPixmap pixmap;
 };
 
 #endif

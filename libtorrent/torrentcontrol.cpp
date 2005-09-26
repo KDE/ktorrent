@@ -131,10 +131,10 @@ namespace bt
 			if (tracker_update_timer.getElapsedSinceUpdate() >= tracker_update_interval)
 			{
 				Uint32 max_connections = PeerManager::getMaxConnections();
-				// if a peer has nothing but choked since the last tracker update
+				// if a peer has nothing but choked since the 5 last tracker updates
 				// we will get rid of them (if there is a connection cap)
 				if (max_connections > 0 && pman->getNumConnectedPeers() == max_connections)
-					pman->killChokedPeers(tracker_update_interval);
+					pman->killChokedPeers(5*tracker_update_interval);
 
 				updateTracker();
 				tracker_update_timer.update();

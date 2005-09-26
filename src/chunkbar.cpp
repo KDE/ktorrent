@@ -28,8 +28,11 @@
 #include <klocale.h>
 #include <qmime.h>
 #include <qimage.h>
+#include <libutil/log.h>
+#include <libutil/profile.h>
 #include <libtorrent/torrentcontrol.h>
 #include <libtorrent/bitset.h>
+#include <libtorrent/globals.h>
 #include "chunkbar.h"
 
 using namespace bt;
@@ -90,16 +93,36 @@ ChunkBar::ChunkBar(QWidget *parent, const char *name)
 	InitializeToolTipImages(this);
 	
 	QToolTip::add(this, i18n("<img src=\"available_color\">&nbsp; - Downloaded Chunks<br><img src=\"unavailable_color\">&nbsp; - Chunks to Download<br><img src=\"excluded_color\">&nbsp; - Excluded Chunks"));
+	
 }
 
 
 ChunkBar::~ChunkBar()
 {}
 
-void ChunkBar::setTC(bt::TorrentControl* tc)
+void ChunkBar::updateBar()
 {
-	curr_tc = tc;
-	update();
+	BitSet bs;
+	fillBitSet(bs);
+	QSize s = contentsRect().size();
+	bool changed = !(curr == bs);
+	if (show_excluded && curr_tc)
+	{
+		BitSet ebs;
+		curr_tc->excludedChunksToBitSet(ebs);
+		changed = changed || !(curr_ebs == ebs);
+	}
+	
+	if (changed || pixmap.isNull() || pixmap.width() != s.width())
+	{
+	//	PROFILE("ChunkBar::updateBar");
+	//	Out() << "Pixmap : " << s.width() << " " << s.height() << endl;
+		pixmap.resize(s);
+		pixmap.fill(Qt::white);
+		QPainter painter(&pixmap);
+		drawBarContents(&painter);
+		update();
+	}
 }
 
 void ChunkBar::drawContents(QPainter *p)
@@ -112,14 +135,31 @@ void ChunkBar::drawContents(QPainter *p)
 
 	p->setPen(Qt::NoPen);
 	p->drawRect(contentsRect());
+	if (isEnabled())
+		p->drawPixmap(contentsRect(),pixmap);
+}
 
+void ChunkBar::setTC(bt::TorrentControl* tc)
+{
+	curr_tc = tc;
+	QSize s = contentsRect().size();
+	//Out() << "Pixmap : " << s.width() << " " << s.height() << endl;
+	pixmap.resize(s);
+	pixmap.fill(Qt::white);
+	QPainter painter(&pixmap);
+	drawBarContents(&painter);
+	update();
+}
+
+void ChunkBar::drawBarContents(QPainter *p)
+{
 	p->saveWorldMatrix();
-
 	if (curr_tc)
 	{
 		Uint32 w = contentsRect().width();
 		BitSet bs;
 		fillBitSet(bs);
+		curr = bs;
 		if (bs.allOn())
 			drawAllOn(p,colorGroup().highlight());
 		else if (curr_tc->getTotalChunks() > w)
@@ -131,6 +171,7 @@ void ChunkBar::drawContents(QPainter *p)
 		{
 			BitSet ebs;
 			curr_tc->excludedChunksToBitSet(ebs);
+			curr_ebs = ebs;
 			if (ebs.allOn())
 				drawAllOn(p,Qt::lightGray);
 			else if (curr_tc->getTotalChunks() > w)
@@ -188,12 +229,12 @@ void ChunkBar::drawEqual(QPainter *p,const BitSet & bs,const QColor & color)
 	{
 		Range & ra = *i;
 		int rw = ra.last - ra.first + 1;
-		p->drawRect(r.x() + scale * ra.first,r.y() + 1,rw * scale,r.height() - 1);
+		p->drawRect(scale * ra.first,0,rw * scale,r.height());
 	}
 }
 
 void ChunkBar::drawMoreChunksThenPixels(QPainter *p,const BitSet & bs,const QColor & color)
-{	
+{
 	Uint32 w = contentsRect().width();
 	Uint32 chunks_per_pixel = (int)floor((double)bs.getNumBits() / w);
 
@@ -240,15 +281,17 @@ void ChunkBar::drawMoreChunksThenPixels(QPainter *p,const BitSet & bs,const QCol
 		QColor c = color.light(200-fac);
 		p->setPen(QPen(c,1,Qt::SolidLine));
 		p->setBrush(c);
-		p->drawRect(r.x() + ra.first,r.y() + 1,rw,r.height() - 1);
+		p->drawRect(ra.first,0,rw,r.height());
 	}
+	
 }
 
 void ChunkBar::drawAllOn(QPainter *p,const QColor & color)
 {
 	p->setPen(QPen(color,1,Qt::SolidLine));
 	p->setBrush(color);
-	p->drawRect(contentsRect());
+	QSize s = contentsRect().size();
+	p->drawRect(0,0,s.width(),s.height());
 }
 
 #include "chunkbar.moc"

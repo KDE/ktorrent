@@ -250,8 +250,8 @@ void InfoWidget::update()
 	m_chunks_downloaded->setText(QString::number(curr_tc->getNumChunksDownloaded()));
 	m_total_chunks->setText(QString::number(curr_tc->getTotalChunks()));
 	m_excluded_chunks->setText(QString::number(curr_tc->getNumChunksExcluded()));
-	m_chunk_bar->repaint(true);
-	m_av_chunk_bar->repaint(true);
+	m_chunk_bar->updateBar();
+	m_av_chunk_bar->updateBar();
 	if (peer_view)
 		peer_view->update();
 	if (cd_view)

@@ -95,6 +95,13 @@ namespace bt
 
 		/// Check if all bit are set to 1
 		bool allOn() const;
+
+		/**
+		 * Check for equality of bitsets
+		 * @param bs BitSet to compare
+		 * @return true if equal 
+		 */
+		bool operator == (const BitSet & bs);
 	};
 
 }

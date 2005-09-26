@@ -105,11 +105,15 @@ namespace bt
 		Out() << "Getting rid of peers which have been choked for a long time" << endl;
 		Uint32 now = bt::GetCurrentTime();
 		QPtrList<Peer>::iterator i = peer_list.begin();
-		while (i != peer_list.end())
+		Uint32 num_killed = 0;
+		while (i != peer_list.end() && num_killed < 20)
 		{
 			Peer* p = *i;
 			if (p->isChoked() && (now - p->getChokeTime()) > older_then)
+			{
 				p->kill();
+				num_killed++;
+			}
 
 			i++;
 		}
