@@ -32,7 +32,7 @@ public:
 	AvailabilityChunkBar(QWidget* parent, const char* name);
 	virtual ~AvailabilityChunkBar();
 
-	virtual void fillBitSet(bt::BitSet& bs);
+	virtual const bt::BitSet & getBitSet() const;
 
 };
 

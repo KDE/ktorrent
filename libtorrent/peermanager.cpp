@@ -36,7 +36,8 @@ namespace bt
 {
 	Uint32 PeerManager::max_connections = 0;
 
-	PeerManager::PeerManager(Torrent & tor) : tor(tor)
+	PeerManager::PeerManager(Torrent & tor)
+		: tor(tor),available_chunks(tor.getNumChunks())
 	{
 		num_seeders = num_leechers = num_pending = 0;
 		killed.setAutoDelete(true);
@@ -147,6 +148,18 @@ namespace bt
 				i++;
 		}
 	}
+
+	void PeerManager::onHave(Peer*,Uint32 index)
+	{
+		available_chunks.set(index,true);
+	}
+
+	void PeerManager::onBitSetRecieved(const BitSet & bs)
+	{
+		for (Uint32 i = 0;i < bs.getNumBits();i++)
+			if (bs.get(i))
+				available_chunks.set(i,true);
+	}
 	
 	void PeerManager::newConnection(QSocket* sock,
 									const PeerID & peer_id)
@@ -159,6 +172,9 @@ namespace bt
 		}
 
 		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks());
+		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
+		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
+				this,SLOT(onBitSetRecieved(const BitSet& )));
 		peer_list.append(peer);
 		peer_map.insert(peer->getID(),peer);
 		newPeer(peer);
@@ -176,7 +192,9 @@ namespace bt
 			
 		Peer* peer = new Peer(
 				auth->takeSocket(),auth->getPeerID(),tor.getNumChunks());
-			
+		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
+		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
+				this,SLOT(onBitSetRecieved(const BitSet& )));
 		peer_list.append(peer);
 		peer_map.insert(peer->getID(),peer);
 			

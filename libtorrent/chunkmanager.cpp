@@ -36,7 +36,8 @@ namespace bt
 	
 
 	ChunkManager::ChunkManager(Torrent & tor,const QString & data_dir)
-	: tor(tor),chunks(tor.getNumChunks())
+	: tor(tor),chunks(tor.getNumChunks()),
+	bitset(tor.getNumChunks()),excluded_chunks(tor.getNumChunks())
 	{
 		num_in_mem = 0;
 		if (tor.isMultiFile())
@@ -60,6 +61,8 @@ namespace bt
 		chunks.setAutoDelete(true);
 		num_chunks_in_cache_file = 0;
 		max_allowed = 50;
+		chunks_left = 0;
+		recalc_chunks_left = true;
 
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
@@ -126,6 +129,8 @@ namespace bt
 				{
 					max_allowed = hdr.index + 50;
 					c->setStatus(Chunk::ON_DISK);
+					bitset.set(hdr.index,true);
+					recalc_chunks_left = true;
 				}
 			}
 		}
@@ -159,9 +164,6 @@ namespace bt
 
 	Chunk* ChunkManager::getChunk(unsigned int i)
 	{
-		if (i >= chunks.size())
-			return 0;
-		
 		return chunks[i];
 	}
 	
@@ -190,11 +192,6 @@ namespace bt
 		
 		Chunk* c = chunks[i];
 		c->unref();
-	/*	if (!c->taken())
-		{
-			num_in_mem--;
-			c->clear();
-		}*/
 	}
 	
 	void ChunkManager::saveChunk(unsigned int i)
@@ -205,6 +202,8 @@ namespace bt
 		Chunk* c = chunks[i];
 		cache->save(c);
 		num_chunks_in_cache_file++;
+		bitset.set(i,true);
+		recalc_chunks_left = true;
 
 		// update the index file
 		writeIndexFileEntry(c);
@@ -226,64 +225,54 @@ namespace bt
 	
 	Uint64 ChunkManager::bytesLeft() const
 	{
-		Uint64 total = 0;
-		for (Uint32 i = 0;i < chunks.size();i++)
+		Uint32 num_left = chunksLeft();
+		Uint32 last = chunks.size() - 1;
+		if (bitset.get(last) && !excluded_chunks.get(last))
 		{
-			const Chunk* c = chunks[i];
-			if (c->getStatus() == Chunk::NOT_DOWNLOADED && !c->isExcluded())
-				total += c->getSize();
+			Chunk* c = chunks[last];
+			return (num_left - 1)*tor.getChunkSize() + c->getSize();
 		}
-		return total;
-	}
-	
-	void ChunkManager::toBitSet(BitSet & bs)
-	{
-		BitSet bits(chunks.size());
-		for (Uint32 i = 0;i < chunks.size();i++)
+		else
 		{
-			const Chunk* c = chunks[i];
-			if (c->getStatus() == Chunk::NOT_DOWNLOADED)
-				bits.set(i,false);
-			else
-				bits.set(i,true);
+			return num_left*tor.getChunkSize();
 		}
-		bs = bits;
 	}
 	
 	Uint32 ChunkManager::chunksLeft() const
 	{
+		if (!recalc_chunks_left)
+			return chunks_left;
+		
 		Uint32 num = 0;
-		for (Uint32 i = 0;i < chunks.size();i++)
+		Uint32 tot = chunks.size();
+		for (Uint32 i = 0;i < tot;i++)
 		{
 			const Chunk* c = chunks[i];
 			if (c->getStatus() == Chunk::NOT_DOWNLOADED && !c->isExcluded())
 				num++;
 		}
+		chunks_left = num;
+		recalc_chunks_left = false;
 		return num;
 	}
 
 	Uint64 ChunkManager::bytesExcluded() const
 	{
-		Uint64 num = 0;
-		for (Uint32 i = 0;i < chunks.size();i++)
+		if (excluded_chunks.get(tor.getNumChunks() - 1))
 		{
-			const Chunk* c = chunks[i];
-			if (c->isExcluded())
-				num += c->getSize();
+			Chunk* c = chunks[tor.getNumChunks() - 1];
+			Uint32 num = excluded_chunks.numOnBits() - 1;
+			return tor.getChunkSize() * num + c->getSize();
 		}
-		return num;
+		else
+		{
+			return tor.getChunkSize() * excluded_chunks.numOnBits();
+		}
 	}
 
 	Uint32 ChunkManager::chunksExcluded() const
 	{
-		Uint32 num = 0;
-		for (Uint32 i = 0;i < chunks.size();i++)
-		{
-			const Chunk* c = chunks[i];
-			if (c->isExcluded())
-				num++;
-		}
-		return num;
+		return excluded_chunks.numOnBits();
 	}
 	
 	void ChunkManager::save(const QString & dir)
@@ -348,8 +337,10 @@ namespace bt
 		{
 			Chunk* c = chunks[i];
 			c->setExclude(true);
+			excluded_chunks.set(i,true);
 			i++;
 		}
+		recalc_chunks_left = true;
 		saveFileInfo();
 		excluded(from,to);
 	}
@@ -364,8 +355,10 @@ namespace bt
 		{
 			Chunk* c = chunks[i];
 			c->setExclude(false);
+			excluded_chunks.set(i,false);
 			i++;
 		}
+		recalc_chunks_left = true;
 		saveFileInfo();
 	}
 

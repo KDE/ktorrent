@@ -40,8 +40,7 @@ namespace bt
 
 	bool ChunkSelector::findPriorityChunk(PeerDownloader* pd,Uint32 & chunk)
 	{
-		BitSet bs;
-		cman.toBitSet(bs);
+		const BitSet & bs = cman.getBitSet();
 		
 		Uint32 i = 0;
 		while (i < cman.getNumChunks())
@@ -70,42 +69,41 @@ namespace bt
 		if (max_c > cman.getNumChunks())
 			max_c = cman.getNumChunks();
 
-		BitSet bs;
-		cman.toBitSet(bs);
+		const BitSet & bs = cman.getBitSet();
 		
-
-		// if need be we can increase max_c
-		// when we don't find a suitable chunk 
-		do 
+		// pick a random chunk to download, by picking
+		// a random starting value in the range 0 .. max_c
+		Uint32 s = int(((double)rand() / (RAND_MAX - 1)) * max_c);
+		Uint32 i = s;
+		i = (i + 1) % max_c;
+		// first try the range 0 .. max_c
+		while (i != s)
 		{
-			// pick a random chunk to download, by picking
-			// a random starting value in the range 0 .. max_c
-			Uint32 s = int(((double)rand() / (RAND_MAX - 1)) * max_c);
-			Uint32 i = s;
-			
-			do
+			Chunk* c = cman.getChunk(i);
+			// pd has to have the selected chunk
+			// and we don't have it
+			if (pd->hasChunk(i) && !downer.areWeDownloading(i) &&
+				!bs.get(i) && !c->isExcluded())
 			{
-				Chunk* c = cman.getChunk(i);
-				// pd has to have the selected chunk
-				// and we don't have it
-				if (pd->hasChunk(i) && !downer.areWeDownloading(i) &&
-								!bs.get(i) && !c->isExcluded())
-				{
-					chunk = i;
-				//	Out() << "Selecting " << i << endl;
-					return true;
-				}
-				i = (i + 1) % max_c;
-				// we stop this loop if i becomse equal to it's starting value
-				// no infinite loops, thank you
-			}while (s != i);
-			max_c += 50;
-			if (max_c > cman.getNumChunks())
-				max_c = cman.getNumChunks();
-			
-		}while (max_c < cman.getNumChunks());
+				chunk = i;
+				return true;
+			}
+			i = (i + 1) % max_c;
+		}
 
-		//Out() << "Can't find chunk" << endl;
+		// then try everything else
+		for (i = max_c;i < cman.getNumChunks();i++)
+		{
+			Chunk* c = cman.getChunk(i);
+			// pd has to have the selected chunk
+			// and we don't have it
+			if (pd->hasChunk(i) && !downer.areWeDownloading(i) &&
+						 !bs.get(i) && !c->isExcluded())
+			{
+				chunk = i;
+				return true;
+			}
+		}
 
 		return false;
 	}

@@ -35,10 +35,12 @@ AvailabilityChunkBar::~AvailabilityChunkBar()
 }
 
 
-void AvailabilityChunkBar::fillBitSet(bt::BitSet& bs)
+const bt::BitSet & AvailabilityChunkBar::getBitSet() const
 {
 	if (curr_tc)
-		curr_tc->availableChunksToBitSet(bs);
+		return curr_tc->availableChunksBitSet();
+	else
+		return bt::BitSet::null;
 }
 
 #include "availabilitychunkbar.moc"

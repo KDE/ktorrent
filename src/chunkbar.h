@@ -51,7 +51,7 @@ public:
 
 	void setTC(bt::TorrentControl* tc);
 	
-	virtual void fillBitSet(bt::BitSet & bs) = 0;
+	virtual const bt::BitSet & getBitSet() const = 0;
 	virtual void drawContents(QPainter *p);
 	virtual void updateBar();
   

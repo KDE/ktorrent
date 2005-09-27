@@ -32,7 +32,7 @@ public:
 	DownloadedChunkBar(QWidget* parent, const char* name);
 	virtual ~DownloadedChunkBar();
 
-	virtual void fillBitSet(bt::BitSet& bs);
+	virtual const bt::BitSet & getBitSet() const;
 
 };
 

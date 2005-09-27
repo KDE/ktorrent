@@ -203,6 +203,7 @@ namespace bt
 				}
 				
 				pieces = BitSet(tmp_buf+1,pieces.getNumBits());
+				bitSetRecieved(pieces);
 				break;
 			case REQUEST:
 				if (len != 13)

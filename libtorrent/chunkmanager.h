@@ -24,12 +24,12 @@
 #include <qobject.h>
 #include <qptrvector.h> 
 #include "chunk.h"
+#include "bitset.h"
 #include "globals.h"
 
 namespace bt
 {
 	class Torrent;
-	class BitSet;
 	class Cache;
 	class TorrentFile;
 
@@ -60,6 +60,9 @@ namespace bt
 		Uint32 max_allowed;
 		Cache* cache;
 		Uint32 num_in_mem;
+		BitSet bitset,excluded_chunks;
+		mutable Uint32 chunks_left;
+		mutable bool recalc_chunks_left;
 	public:
 		ChunkManager(Torrent & tor,const QString & data_dir);
 		virtual ~ChunkManager();
@@ -121,7 +124,6 @@ namespace bt
 		 */
 		Uint64 bytesLeft() const;
 
-		
 		/**
 		 * Calculates the number of bytes which have been excluded.
 		 * @return The number of bytes excluded
@@ -141,10 +143,14 @@ namespace bt
 		Uint32 chunksExcluded() const;
 		
 		/**
-		 * Make a BitSet of the status of all Chunks
-		 * @param bs The BitSet
+		 * Get a BitSet of the status of all Chunks
 		 */
-		void toBitSet(BitSet & bs);
+		const BitSet & getBitSet() const {return bitset;}
+
+		/**
+		 * Get a BitSet of the status of all Chunks
+		 */
+		const BitSet & getExcludedBitSet() const {return excluded_chunks;}
 
 		/// Get the number of chunks into the file.
 		Uint32 getNumChunks() const {return chunks.count();}

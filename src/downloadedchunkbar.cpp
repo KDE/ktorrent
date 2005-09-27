@@ -33,10 +33,12 @@ DownloadedChunkBar::~DownloadedChunkBar()
 {}
 
 
-void DownloadedChunkBar::fillBitSet(bt::BitSet& bs)
+const bt::BitSet & DownloadedChunkBar::getBitSet() const
 {
 	if (curr_tc)
-		curr_tc->downloadedChunksToBitSet(bs);
+		return curr_tc->downloadedChunksBitSet();
+	else
+		return bt::BitSet::null;
 }
 
 #include "downloadedchunkbar.moc"

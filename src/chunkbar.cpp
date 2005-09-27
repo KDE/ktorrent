@@ -102,14 +102,12 @@ ChunkBar::~ChunkBar()
 
 void ChunkBar::updateBar()
 {
-	BitSet bs;
-	fillBitSet(bs);
+	const BitSet & bs = getBitSet();
 	QSize s = contentsRect().size();
 	bool changed = !(curr == bs);
 	if (show_excluded && curr_tc)
 	{
-		BitSet ebs;
-		curr_tc->excludedChunksToBitSet(ebs);
+		const BitSet & ebs = curr_tc->excludedChunksBitSet();
 		changed = changed || !(curr_ebs == ebs);
 	}
 	
@@ -157,8 +155,7 @@ void ChunkBar::drawBarContents(QPainter *p)
 	if (curr_tc)
 	{
 		Uint32 w = contentsRect().width();
-		BitSet bs;
-		fillBitSet(bs);
+		const BitSet & bs = getBitSet();
 		curr = bs;
 		if (bs.allOn())
 			drawAllOn(p,colorGroup().highlight());
@@ -169,8 +166,7 @@ void ChunkBar::drawBarContents(QPainter *p)
 
 		if (show_excluded && curr_tc->getNumChunksExcluded() > 0)
 		{
-			BitSet ebs;
-			curr_tc->excludedChunksToBitSet(ebs);
+			const BitSet & ebs = curr_tc->excludedChunksBitSet();
 			curr_ebs = ebs;
 			if (ebs.allOn())
 				drawAllOn(p,Qt::lightGray);

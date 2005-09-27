@@ -26,6 +26,7 @@
 #include <libutil/ptrmap.h>
 #include "globals.h"
 #include "peerid.h"
+#include "bitset.h"
 
 namespace bt
 {
@@ -139,9 +140,16 @@ namespace bt
 		 * and we should drop all connections to seeders
 		 */
 		void killSeeders();
+
+		/// Get a BitSet of all available chunks
+		const BitSet & getAvailableChunksBitSet() const {return available_chunks;}
 	private:
 		bool connectedTo(const PeerID & peer_id);	
 		void peerAuthenticated(Authenticate* auth,bool ok);
+
+	private slots:
+		void onHave(Peer* p,Uint32 index);
+		void onBitSetRecieved(const BitSet & bs);
 		
 	signals:
 		void newPeer(Peer* p);
@@ -155,6 +163,7 @@ namespace bt
 		QValueList<PotentialPeer> potential_peers;
 		Torrent & tor;
 		bool started;
+		BitSet available_chunks;
 		
 		static Uint32 max_connections;
 	};

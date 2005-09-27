@@ -36,6 +36,7 @@ namespace bt
 	{
 		Uint32 num_bits,num_bytes;
 		Uint8* data;
+		Uint32 num_on;
 	public:
 		/**
 		 * Constructor.
@@ -58,6 +59,9 @@ namespace bt
 		BitSet(const BitSet & bs);
 		virtual ~BitSet();
 
+		/// See if the BitSet is null
+		bool isNull() const {return num_bits == 0;}
+		
 		/**
 		 * Get the value of a bit, false means 0, true 1.
 		 * @param i Index of Bit
@@ -75,6 +79,9 @@ namespace bt
 		Uint32 getNumBits() const {return num_bits;}
 		const Uint8* getData() const {return data;}
 
+		/// Get the number of on bits
+		Uint32 numOnBits() const {return num_on;}
+		
 		/**
 		 * Set all bits to 0
 		 */
@@ -102,8 +109,40 @@ namespace bt
 		 * @return true if equal 
 		 */
 		bool operator == (const BitSet & bs);
+
+		static BitSet null;
 	};
 
+	inline bool BitSet::get(Uint32 i) const
+	{
+		if (i >= num_bits)
+			return false;
+		
+		Uint32 byte = i / 8;
+		Uint32 bit = i % 8;
+		Uint8 b = data[byte] & (0x01 << (7 - bit));
+		return b != 0x00;
+	}
+	
+	inline void BitSet::set(Uint32 i,bool on)
+	{
+		if (i >= num_bits)
+			return;
+		
+		Uint32 byte = i / 8;
+		Uint32 bit = i % 8;
+		if (on && !get(i))
+		{
+			num_on++;
+			data[byte] |= (0x01 << (7 - bit));
+		}
+		else if (!on && get(i))
+		{
+			num_on--;
+			Uint8 b = (0x01 << (7 - bit));
+			data[byte] &= (~b);
+		}
+	}
 }
 
 #endif

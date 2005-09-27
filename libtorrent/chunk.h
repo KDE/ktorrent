@@ -39,36 +39,64 @@ namespace bt
 	public:
 		Chunk(unsigned int index,Uint32 size);
 		~Chunk();
-		
-		enum Status 
+
+		enum Status
 		{
-			IN_MEMORY,
-			ON_DISK,
-			NOT_DOWNLOADED
+		    IN_MEMORY,
+		    ON_DISK,
+		    NOT_DOWNLOADED
 		};
 
-		Status getStatus() const {return status;}
-		void setStatus(Status s) {status = s;}
-		
-		const Uint8* getData() const {return data;}
-		Uint8* getData() {return data;}
-		
+		/// Get the chunks status.
+		Status getStatus() const;
+
+		/**
+		 * Set the chunks status
+		 * @param s 
+		 */
+		void setStatus(Status s);
+
+		/// Get the data
+		const Uint8* getData() const;
+
+		/// Get the data
+		Uint8* getData();
+
+		/// Set the data
 		void setData(Uint8* d);
+
+		/// Clear the chunk (delete data)
 		void clear();
-		
-		Uint32 getIndex() const {return index;}
-		Uint32 getSize() const {return size;}
-		
-		void ref() {ref_count++;}
-		void unref() {ref_count--;}
-		bool taken() const {return ref_count > 0;}
-		
+
+		/// Get the chunk's index
+		Uint32 getIndex() const;
+
+		/// Get the chunk's size
+		Uint32 getSize() const;
+
+		/// Add one to the reference counter
+		void ref();
+
+		/// --reference counter
+		void unref();
+
+		/// reference coun > 0
+		bool taken() const;
+
+		/// allocate data if not allready done
 		void allocate();
 
-		bool isPriority() const {return priority;}
-		void setPriority(bool yes) {priority = yes;}
-		bool isExcluded() const {return exclude;}
-		void setExclude(bool yes) {exclude = yes;}
+		/// Is chunk prioritised
+		bool isPriority() const;
+
+		/// (De)prioritise chunk
+		void setPriority(bool yes);
+
+		/// Is chunk excluded
+		bool isExcluded() const;
+
+		/// In/Exclude chunk
+		void setExclude(bool yes);
 	private:
 		Status status;
 		Uint32 index;
@@ -79,6 +107,30 @@ namespace bt
 		bool exclude;
 	};
 
+	inline Chunk::Status Chunk::getStatus() const
+	{
+		return status;
+	}
+
+	inline void Chunk::setStatus(Chunk::Status s)
+	{
+		status = s;
+	}
+
+	inline const Uint8* Chunk::getData() const {return data;}
+	inline Uint8* Chunk::getData() {return data;}
+
+	inline Uint32 Chunk::getIndex() const {return index;}
+	inline Uint32 Chunk::getSize() const {return size;}
+
+	inline void Chunk::ref() {ref_count++;}
+	inline void Chunk::unref() {ref_count--;}
+	inline bool Chunk::taken() const {return ref_count > 0;}
+
+	inline bool Chunk::isPriority() const {return priority;}
+	inline void Chunk::setPriority(bool yes) {priority = yes;}
+	inline bool Chunk::isExcluded() const {return exclude;}
+	inline void Chunk::setExclude(bool yes) {exclude = yes;}
 }
 
 #endif

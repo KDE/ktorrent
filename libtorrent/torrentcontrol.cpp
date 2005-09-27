@@ -404,9 +404,7 @@ namespace bt
 
 	void TorrentControl::onNewPeer(Peer* p)
 	{
-		BitSet bs;
-		cman->toBitSet(bs);
-		p->getPacketWriter().sendBitSet(bs);
+		p->getPacketWriter().sendBitSet(cman->getBitSet());
 		if (tmon)
 			tmon->peerAdded(p);
 	}
@@ -622,36 +620,28 @@ namespace bt
 			         TorrentControl::DOWNLOADING : TorrentControl::STALLED;
 	}
 
-	void TorrentControl::downloadedChunksToBitSet(BitSet & bs)
+	const BitSet & TorrentControl::downloadedChunksBitSet() const
 	{
 		if (cman)
-			cman->toBitSet(bs);
+			return cman->getBitSet();
+		else
+			return BitSet::null;
 	}
 
-	void TorrentControl::availableChunksToBitSet(BitSet & bs)
+	const BitSet & TorrentControl::availableChunksBitSet() const
 	{
 		if (!pman)
-			return;
-
-		bs = BitSet(cman->getNumChunks());
-		for (Uint32 i = 0;i < pman->getNumConnectedPeers();i++)
-		{
-			Peer* p = pman->getPeer(i);
-			const BitSet & pbs = p->getBitSet();
-			for (Uint32 j = 0;j < cman->getNumChunks();j++)
-				if (pbs.get(j))
-					bs.set(j,true);
-		}
+			return BitSet::null;
+		else
+			return pman->getAvailableChunksBitSet();
 	}
 
-	void TorrentControl::excludedChunksToBitSet(BitSet & bs)
+	const BitSet & TorrentControl::excludedChunksBitSet() const
 	{
 		if (!cman)
-			return;
-
-		bs = BitSet(cman->getNumChunks());
-		for (Uint32 i = 0;i < cman->getNumChunks();i++)
-			bs.set(i,cman->getChunk(i)->isExcluded());
+			return BitSet::null;
+		else
+			return cman->getExcludedBitSet();
 	}
 
 	void TorrentControl::saveStats()
@@ -726,8 +716,7 @@ namespace bt
 	{
 		if ( !tor->isMultimedia() && !tor->isMultiFile()) return false;
 
-		BitSet bs;
-		downloadedChunksToBitSet(bs);
+		const BitSet & bs = downloadedChunksBitSet();
 		for(int i = start_chunk; i<end_chunk; ++i)
 		{
 			if ( !bs.get(i) ) return false;

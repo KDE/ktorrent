@@ -132,13 +132,13 @@ void KTorrentViewItem::update()
 	setText(8,QString::number(tc->getNumPeers()));
 
 	double perc = 0;
-	if (tc->getBytesDownloaded() == tc->getTotalBytesToDownload())
+	if (tc->getBytesLeft() == 0)
 	{
 		perc = 100.0;
 	}
 	else
 	{
-		perc = ((double)tc->getBytesDownloaded() / tc->getTotalBytesToDownload()) * 100.0;
+		perc = 100.0 - ((double)tc->getBytesLeft() / tc->getTotalBytesToDownload()) * 100.0;
 		if (perc > 100.0)
 			perc = 100.0;
 		else if (perc > 99.9)

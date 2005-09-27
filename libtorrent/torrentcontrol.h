@@ -70,22 +70,19 @@ namespace bt
 		};
 
 		/**
-		 * Make a BitSet of the status of all Chunks
-		 * @param bs The BitSet
+		 * Get a BitSet of the status of all Chunks
 		 */
-		void downloadedChunksToBitSet(BitSet & bs);
+		const BitSet & downloadedChunksBitSet() const;
 
 		/**
-		 * Make a BitSet of the availability of all Chunks
-		 * @param bs The BitSet
+		 * Get a BitSet of the availability of all Chunks
 		 */
-		void availableChunksToBitSet(BitSet & bs);
+		const BitSet & availableChunksBitSet() const;
 
 		/**
-		 * Make a BitSet of the excluded Chunks
-		 * @param bs The BitSet
+		 * Get a BitSet of the excluded Chunks
 		 */
-		void excludedChunksToBitSet(BitSet & bs);
+		const BitSet & excludedChunksBitSet() const;
 		
 		/**
 		 * Initialize the TorrentControl. 

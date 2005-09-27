@@ -182,6 +182,12 @@ namespace bt
 		 */
 		void piece(const Piece & p);
 
+		/**
+		 * Recieved a BitSet
+		 * @param bs The BitSet
+		 */
+		void bitSetRecieved(const BitSet & bs);
+
 	private:
 		void readPacket();
 		void handlePacket(Uint32 len);

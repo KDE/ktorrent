@@ -22,12 +22,14 @@
 
 namespace bt
 {
+	BitSet BitSet::null;
 
 	BitSet::BitSet(Uint32 num_bits) : num_bits(num_bits),data(0)
 	{
 		num_bytes = (num_bits / 8) + ((num_bits % 8 > 0) ? 1 : 0);
 		data = new Uint8[num_bytes];
 		std::fill(data,data+num_bytes,0x00);
+		num_on = 0;
 	}
 
 	BitSet::BitSet(const Uint8* d,Uint32 num_bits)  : num_bits(num_bits),data(0)
@@ -35,9 +37,17 @@ namespace bt
 		num_bytes = (num_bits / 8) + ((num_bits % 8 > 0) ? 1 : 0);
 		data = new Uint8[num_bytes];
 		std::copy(d,d+num_bytes,data);
+		num_on = 0;
+		Uint32 i = 0;
+		while (i < num_bits)
+		{
+			if (get(i))
+				num_on++;
+			i++;
+		}
 	}
 	
-	BitSet::BitSet(const BitSet & bs) : num_bits(bs.num_bits),num_bytes(bs.num_bytes),data(0)
+	BitSet::BitSet(const BitSet & bs) : num_bits(bs.num_bits),num_bytes(bs.num_bytes),data(0),num_on(bs.num_on)
 	{
 		data = new Uint8[num_bytes];
 		std::copy(bs.data,bs.data+num_bytes,data);
@@ -48,34 +58,7 @@ namespace bt
 		delete [] data;
 	}
 
-	bool BitSet::get(Uint32 i) const
-	{
-		if (i >= num_bits)
-			return false;
-		
-		Uint32 byte = i / 8;
-		Uint32 bit = i % 8;
-		Uint8 b = data[byte] & (0x01 << (7 - bit));
-		return b != 0x00;
-	}
 	
-	void BitSet::set(Uint32 i,bool on)
-	{
-		if (i >= num_bits)
-			return;
-		
-		Uint32 byte = i / 8;
-		Uint32 bit = i % 8;
-		if (on)
-		{
-			data[byte] |= (0x01 << (7 - bit));
-		}
-		else
-		{
-			Uint8 b = (0x01 << (7 - bit));
-			data[byte] &= (~b);
-		}
-	}
 
 	BitSet & BitSet::operator = (const BitSet & bs)
 	{
@@ -85,12 +68,14 @@ namespace bt
 		num_bits = bs.num_bits;
 		data = new Uint8[num_bytes];
 		std::copy(bs.data,bs.data+num_bytes,data);
+		num_on = bs.num_on;
 		return *this;
 	}
 
 	void BitSet::clear()
 	{
 		std::fill(data,data+num_bytes,0x00);
+		num_on = 0;
 	}
 
 	void BitSet::orBitSet(const BitSet & other)
@@ -106,11 +91,7 @@ namespace bt
 
 	bool BitSet::allOn() const
 	{
-		for (Uint32 i = 0;i < num_bits;i++)
-			if (!get(i))
-				return false;
-
-		return true;
+		return num_on == num_bits;
 	}
 
 	bool BitSet::operator == (const BitSet & bs)
