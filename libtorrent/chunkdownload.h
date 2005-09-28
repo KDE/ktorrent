@@ -110,6 +110,15 @@ namespace bt
 		 * Cancel all requests.
 		 */
 		void cancelAll();
+
+		/**
+		 * When a Chunk is downloaded, this function checks if all
+		 * pieces are delivered by the same peer and if so sets
+		 * that peers' ID.
+		 * @param pid The peers' ID (!= PeerID)
+		 * @return true if there is only one downloader
+		 */
+		bool getOnlyDownloader(Uint32 & pid);
 	private slots:
 		void sendRequests(PeerDownloader* pd);
 		void sendCancels(PeerDownloader* pd);
@@ -126,6 +135,7 @@ namespace bt
 		Timer timer;
 		QPtrList<PeerDownloader> pdown;
 		PtrMap<Uint32,DownloadStatus> dstatus;
+		std::set<Uint32> piece_providers;
 
 		friend File & operator << (File & out,const ChunkDownload & cd);
 		friend File & operator >> (File & in,ChunkDownload & cd);

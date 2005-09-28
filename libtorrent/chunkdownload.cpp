@@ -120,6 +120,7 @@ namespace bt
 		if (ds)
 			ds->set(pp,PIECE_DOWNLOADED);
 		pieces[pp] = true;
+		piece_providers.insert(p.getPeer());
 		num_downloaded++;
 		
 		if (pdown.count() > 1)
@@ -317,6 +318,19 @@ namespace bt
 		{
 			sendCancels(*i);
 			i++;
+		}
+	}
+
+	bool ChunkDownload::getOnlyDownloader(Uint32 & pid)
+	{
+		if (piece_providers.size() == 1)
+		{
+			pid = *piece_providers.begin();
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 }
