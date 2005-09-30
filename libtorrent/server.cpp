@@ -26,6 +26,7 @@
 #include "server.h"
 #include "peermanager.h"
 #include "serverauthenticate.h"
+#include "ipblocklist.h"
 
 
 
@@ -97,10 +98,18 @@ namespace bt
 		{
 			conn->close();
 			delete conn;
-			
 		}
 		else
 		{
+			IPBlocklist& ipfilter = IPBlocklist::instance();
+			QString IP(conn->peerAddress().toString());
+			if (ipfilter.isBlocked( IP ))
+			{
+				Out() << "Peer " << IP << " is blacklisted. Aborting connection." << endl;
+				delete conn;
+				return;
+			}
+			
 			ServerAuthenticate* auth = new ServerAuthenticate(conn,this);
 			pending.append(auth);
 		}

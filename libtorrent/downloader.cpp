@@ -32,6 +32,7 @@
 #include "torrentmonitor.h"
 #include "packetwriter.h"
 #include "chunkselector.h"
+#include "ipblocklist.h"
 
 namespace bt
 {
@@ -42,7 +43,7 @@ namespace bt
 	: tor(tor),pman(pman),cman(cman),downloaded(0),tmon(0)
 	{
 		chunk_selector = new ChunkSelector(cman,*this);
-		Uint32 total = tor.getFileLength();
+		Uint64 total = tor.getFileLength();
 		downloaded = (total - cman.bytesLeft() - cman.bytesExcluded());
 		endgame_mode = false;
 	
@@ -224,6 +225,22 @@ namespace bt
 			Out() << "Hash verification error on chunk "  << c->getIndex() << endl;
 			Out() << "Is        : " << h << endl;
 			Out() << "Should be : " << tor.getHash(c->getIndex()) << endl;
+			Uint32 pid;
+			if (cd->getOnlyDownloader(pid))
+			{
+				Peer* p = pman.findPeer(pid);
+				if (!p)
+					return;
+				QString IP(p->getIPAddresss());
+				Out() << "Peer " << IP << " sent bad data" << endl;
+				IPBlocklist ipfilter = IPBlocklist::instance();
+				ipfilter.insert( IP );
+				if (ipfilter.isBlocked( IP ))
+				{
+					Out() << "Peer " << IP << " has been blacklisted" << endl;
+					p->kill(); 
+				}
+			}
 		}
 		
 	}

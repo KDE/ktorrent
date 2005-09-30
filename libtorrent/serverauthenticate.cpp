@@ -27,6 +27,7 @@
 #include "serverauthenticate.h"
 #include "peerid.h"
 #include "torrent.h"
+#include "ipblocklist.h"
 
 namespace bt
 {
@@ -46,7 +47,7 @@ namespace bt
 	{
 		if (!sock) return;
 		
-		Out() << "Authentication to " << sock->peerAddress().toString()
+		Out() << "Authentication(S) to " << sock->peerAddress().toString()
 			<< " : " << (succes ? "ok" : "failure") << endl;
 		disconnect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
 		disconnect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
@@ -61,6 +62,15 @@ namespace bt
 
 	void ServerAuthenticate::handshakeRecieved(const Uint8* hs)
 	{
+		IPBlocklist& ipfilter = IPBlocklist::instance();
+		QString IP(sock->peerAddress().toString());
+		if (ipfilter.isBlocked( IP ))
+		{
+			Out() << "Peer " << IP << " is blacklisted. Aborting connection." << endl;
+			onFinish(false);
+			return;
+		}
+		
 		// try to find a PeerManager which has te right info hash
 		SHA1Hash rh(hs+28);
 		PeerManager* pman = server->findPeerManager(rh);
@@ -80,6 +90,8 @@ namespace bt
 			onFinish(false);
 			return;
 		}
+		
+				
 		// send handshake and finish off
 		sendHandshake(rh,pman->getTorrent().getPeerID());
 		onFinish(true);

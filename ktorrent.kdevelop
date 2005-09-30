@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>libutil/libutil.la</activetarget>
+      <activetarget>libtorrent/libtorrent.la</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>
@@ -36,6 +36,7 @@
         <ktorrent/>
         <kttorinfo/>
         <cachecheck/>
+        <ktcachecheck></ktcachecheck>
       </runarguments>
     </run>
     <make>

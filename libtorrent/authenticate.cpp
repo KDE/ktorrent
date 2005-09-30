@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <libutil/log.h>
 #include "authenticate.h"
+#include "ipblocklist.h"
 
 namespace bt
 {
@@ -34,7 +35,6 @@ namespace bt
 		connect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
 		
 		host = ip;
-		
 		Out() << "Initiating connection to " << host << endl;
 		sock->connectToHost(host,port);
 	}
@@ -66,6 +66,15 @@ namespace bt
 	
 	void Authenticate::handshakeRecieved(const Uint8* hs)
 	{
+		IPBlocklist& ipfilter = IPBlocklist::instance();
+			//Out() << "Dodo " << pp.ip << endl;
+		if (ipfilter.isBlocked(host))
+		{
+			Out() << "IP-address " << host << " is blacklisted." << endl;
+			onFinish(false);
+			return;
+		}
+		
 		SHA1Hash rh(hs+28);
 		if (rh != info_hash)
 		{
