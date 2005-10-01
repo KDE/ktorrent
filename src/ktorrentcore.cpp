@@ -222,14 +222,21 @@ void KTorrentCore::loadTorrents()
 
 void KTorrentCore::remove(bt::TorrentControl* tc)
 {
-	removed_bytes_up += tc->getSessionBytesUploaded();
-	removed_bytes_down += tc->getSessionBytesDownloaded();
-	stop(tc);
+	try
+	{
+		removed_bytes_up += tc->getSessionBytesUploaded();
+		removed_bytes_down += tc->getSessionBytesDownloaded();
+		stop(tc);
 	
-	QString dir = tc->getDataDir();
-	torrentRemoved(tc);
-	downloads.remove(tc);
-	bt::Delete(dir,true);
+		QString dir = tc->getDataDir();
+		torrentRemoved(tc);
+		downloads.remove(tc);
+		bt::Delete(dir,false);
+	}
+	catch (Error & e)
+	{
+		KMessageBox::error(0,e.toString());
+	}
 }
 
 void KTorrentCore::setMaxDownloads(int max)

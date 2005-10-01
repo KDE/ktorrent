@@ -36,7 +36,7 @@
         <ktorrent/>
         <kttorinfo/>
         <cachecheck/>
-        <ktcachecheck></ktcachecheck>
+        <ktcachecheck/>
       </runarguments>
     </run>
     <make>
