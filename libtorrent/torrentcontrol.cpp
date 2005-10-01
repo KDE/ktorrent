@@ -323,7 +323,7 @@ namespace bt
 			        trackerevent != "stopped")
 			{
 				trackerstatus = i18n("Invalid response");
-				if (pman->getNumConnectedPeers() == 0)
+				if (pman->getNumConnectedPeers() == 0 && !stopped_by_error)
 				{
 					error_msg = i18n("The tracker %1 sent the following error : %2")
 							.arg(last_tracker_url.prettyURL()).arg(e.toString());
@@ -357,7 +357,7 @@ namespace bt
 		        trackerevent != "stopped")
 		{
 			trackerstatus = i18n("Unreachable");
-			if (pman->getNumConnectedPeers() == 0)
+			if (pman->getNumConnectedPeers() == 0 && !stopped_by_error)
 			{
 				error_msg = i18n("The tracker %1 is down.")
 				            .arg(last_tracker_url.prettyURL());
