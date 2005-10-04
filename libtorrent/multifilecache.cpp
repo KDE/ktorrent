@@ -232,6 +232,7 @@ namespace bt
 					MakeDir(tmp);
 				tmp += bt::DirSeparator();
 			}
+			Out() << "Moving " << cache_dir + tf.getPath() << " to " << ndir + tf.getPath() << endl;
 			// then move the file and symlink it in the cache to the old
 			bt::Move(cache_dir + tf.getPath(),ndir + tf.getPath());
 			bt::SymLink(ndir + tf.getPath(),cache_dir + tf.getPath());

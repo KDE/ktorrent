@@ -277,23 +277,23 @@ void KTorrent::setupActions()
 
 
 	m_start = new KAction(
-			i18n("to start", "Start"), "player_play",0,this, SLOT(startDownload()),
+			i18n("to start", "Start"), "ktstart",0,this, SLOT(startDownload()),
 			actionCollection(), "Start");
 
 	m_stop = new KAction(
-			i18n("to stop", "Stop"), "player_stop",0,this, SLOT(stopDownload()),
+			i18n("to stop", "Stop"), "ktstop",0,this, SLOT(stopDownload()),
 			actionCollection(), "Stop");
 
 	m_remove = new KAction(
-			i18n("Remove"), "remove",0,this, SLOT(removeDownload()),
+			i18n("Remove"), "ktremove",0,this, SLOT(removeDownload()),
 			actionCollection(), "Remove");
 	
 	m_startall = new KAction(
-			i18n("to start all", "Start all"), "player_fwd",0,this, SLOT(startAllDownloads()),
+			i18n("to start all", "Start all"), "ktstart_all",0,this, SLOT(startAllDownloads()),
 			actionCollection(), "Start all");
 	
 	m_stopall = new KAction(
-			i18n("to stop all", "Stop all"), "stop",0,this, SLOT(stopAllDownloads()),
+			i18n("to stop all", "Stop all"), "ktstop_all",0,this, SLOT(stopAllDownloads()),
 			actionCollection(), "Stop all");
 	
 	createGUI();
