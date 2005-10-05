@@ -29,6 +29,7 @@ namespace bt
 	class Log;
 	class Server;
 
+        Log& Out();
 
 	class Globals
 	{
@@ -50,11 +51,12 @@ namespace bt
 		bool debug_mode;
 		Log* log;
 		Server* server;
+		friend Log& Out();
 
 		static Globals inst;
 		
-		friend Log& Out();
 	};
+
 
 }
 
