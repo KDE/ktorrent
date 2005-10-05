@@ -92,7 +92,7 @@ namespace bt
 			default:
 				break;
 		}
-#ifdef HAVE_FSEEKO64
+#if HAVE_FSEEKO64
 		fseeko64(fptr,num,p);
 		return ftello64(fptr);
 #else
