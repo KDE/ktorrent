@@ -44,8 +44,6 @@ METASOURCES = AUTO
 messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/ktorrent.pot
 
-#KDE_ICON = ktorrent
-
 # this is where the kdelnk file will go 
 kdelnkdir = $(kde_appsdir)/Internet
 kdelnk_DATA = ktorrent.desktop
@@ -55,5 +53,7 @@ rcdir = $(kde_datadir)/ktorrent
 rc_DATA = ktorrentui.rc
 
 
-appicondir = $(kde_datadir)/ktorrent/icons
-appicon_ICON = AUTO
+KDE_ICON = ktorrent
+
+# appicondir = $(kde_datadir)/ktorrent/icons
+# appicon_ICON = AUTO
