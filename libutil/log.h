@@ -140,6 +140,9 @@ namespace bt
 		 */
 		Log & operator << (const KURL & url);
 	};
+
+	Log & endl(Log & lg);
+
 }
 
 #endif
