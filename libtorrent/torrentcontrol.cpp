@@ -46,7 +46,6 @@
 
 
 
-
 namespace bt
 {
 
@@ -160,9 +159,8 @@ namespace bt
 				stats_save_timer.update();
 			}
 
-			// make sure the downloadcap gets obeyed
+			// Update DownloadCap
 			DownloadCap::instance().update();
-
 		}
 		catch (Error & e)
 		{

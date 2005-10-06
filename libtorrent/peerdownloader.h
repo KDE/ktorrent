@@ -86,27 +86,15 @@ namespace bt
 		Uint32 getDownloadRate() const;
 		
 		/**
-		 * Try to download unsent requests.
+		 * Download all unsent requests.
 		 */
 		void downloadUnsent();
 
 		/**
-		 * Set the interval between two requests.
-		 * Used by the DownloadCap to tweak the download
-		 * speed.
-		 * @param rti Interval in milliseconds
+		 * Download one unsent request, this is called by
+		 * the DownloadCap, when the PeerDownloader's turn is up.
 		 */
-		void setRequestInterval(Uint32 rti);
-
-		/// Get the request interval.
-		Uint32 getRequestInterval() const {return req_time_interval;}
-
-		/// Retrannsmit all requests.
-		void retransmitRequests();
-
-		/// Block the PeerDownloader, blocked downloaders
-		/// do not download anything
-		void setBlocked(bool b) {blocked = b;}
+		void downloadOneUnsent();
 	public slots:
 		/**
 		 * Send a Request. Note that the DownloadCap
@@ -140,8 +128,6 @@ namespace bt
 		
 	private:
 		Peer* peer;
-		Uint32 last_req_time,req_time_interval;
-		bool blocked;
 		QValueList<Request> reqs;
 		QValueList<Request> unsent_reqs;
 		int grabbed;

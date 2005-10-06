@@ -32,31 +32,21 @@ namespace bt
 	{
 		connect(peer,SIGNAL(piece(const Piece& )),this,SLOT(piece(const Piece& )));
 		connect(peer,SIGNAL(destroyed()),this,SLOT(peerDestroyed()));
-
-		last_req_time = 0;
-		req_time_interval = 0;
-		blocked = false;
-
-		DownloadCap::instance().addPeerDonwloader(this);
 	}
 
 
 	PeerDownloader::~PeerDownloader()
 	{
-		DownloadCap::instance().removePeerDownloader(this);
+		DownloadCap::instance().killed(this);
 	}
-
-	void PeerDownloader::setRequestInterval(Uint32 rti)
-	{
-		this->req_time_interval = rti;
-	}
-
+#if 0
 	void PeerDownloader::retransmitRequests()
 	{
 		for (QValueList<Request>::iterator i = reqs.begin();i != reqs.end();i++)
 			peer->getPacketWriter().sendRequest(*i);
 			
 	}
+#endif
 
 	Uint32 PeerDownloader::getNumRequests() const 
 	{
@@ -84,12 +74,10 @@ namespace bt
 		if (!peer)
 			return;
 
-		Uint32 now = bt::GetCurrentTime();
-		if (now - last_req_time >= req_time_interval && !blocked)
+		if (DownloadCap::instance().allow(this))
 		{
 			reqs.append(req);
 			peer->getPacketWriter().sendRequest(req);
-			last_req_time = now;
 		}
 		else
 		{
@@ -160,29 +148,31 @@ namespace bt
 			return false;
 	}
 
+	
 	void PeerDownloader::downloadUnsent()
 	{
-		if (!peer || blocked)
+		if (!peer)
 			return;
 
 		QValueList<Request>::iterator i = unsent_reqs.begin();
 		while (i != unsent_reqs.end())
 		{
-			Uint32 now = bt::GetCurrentTime();
-			if (now - last_req_time >= req_time_interval)
-			{
-				reqs.append(*i);
-				peer->getPacketWriter().sendRequest(*i);
-				i = unsent_reqs.erase(i);
-				last_req_time = now;
-			}
-			else
-			{
-				i++;
-				return;
-			}
+			reqs.append(*i);
+			peer->getPacketWriter().sendRequest(*i);
+			i = unsent_reqs.erase(i);
 		}
 	}
+
+	void PeerDownloader::downloadOneUnsent()
+	{
+		if (unsent_reqs.empty())
+			return;
+
+		reqs.append(unsent_reqs.first());
+		peer->getPacketWriter().sendRequest(unsent_reqs.first());
+		unsent_reqs.pop_front();
+	}
+	
 
 	Uint32 PeerDownloader::getDownloadRate() const
 	{

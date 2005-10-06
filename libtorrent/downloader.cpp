@@ -104,13 +104,11 @@ namespace bt
 		for (Uint32 i = 0; i < pman.getNumConnectedPeers();++i)
 		{
 			PeerDownloader* pd = pman.getPeer(i)->getPeerDownloader();
-			pd->downloadUnsent();
+			//pd->downloadUnsent();
 			if (!pd->isNull() && !pd->isChoked())
 			{
 				if (pd->getNumGrabbed() == 0 || (pd->getNumGrabbed() == 1 && pd->getNumRequests() < 8))
 					downloadFrom(pd);
-				/*else if (pd->getPeer()->getTimeSinceLastPiece() >= 10000)
-				pd->retransmitRequests();*/
 			}
 		}
 	}

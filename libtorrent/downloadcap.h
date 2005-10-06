@@ -20,7 +20,7 @@
 #ifndef BTDOWNLOADCAP_H
 #define BTDOWNLOADCAP_H
 
-#include <list>
+#include <qvaluelist.h>
 #include <libutil/timer.h>
 #include "globals.h"
 
@@ -36,7 +36,9 @@ namespace bt
 		static DownloadCap self;
 
 		Uint32 max_bytes_per_sec;
-		std::list<PeerDownloader*> pdowners;
+		double req_interval;
+		Timer timer;
+		QValueList<PeerDownloader*> dl_queue;
 	
 		DownloadCap();
 	public:
@@ -48,16 +50,29 @@ namespace bt
 		 * @param max Maximum number of bytes per second.
 		*/
 		void setMaxSpeed(Uint32 max);
-		
+
+		/**
+		 * Allow or disallow somebody from requesting a piece. If somebody
+		 * is disallowed they will be stored in a queue, and will be notified
+		 * when there turn is up.
+		 * @param pd PeerDownloader doing the request
+		 * @return true if the piece is allowed or not
+		*/
+		bool allow(PeerDownloader* pd);
+
+		/**
+		 * PeerDownloader should call this when they get destroyed. To
+		 * remove them from the queue.
+		 * @param pd The PeerDownloader
+		 */
+		void killed(PeerDownloader* pd);
+
+		/**
+		 * Update the downloadcap.
+		 */
 		void update();
 		
-		void addPeerDonwloader(PeerDownloader* pd);
-		void removePeerDownloader(PeerDownloader* pd);
-		
 		static DownloadCap & instance() {return self;}
-	private:
-		void capPD(PeerDownloader* pd,Uint32 cap);
-		Uint32 currentSpeed();
 	};
 
 }
