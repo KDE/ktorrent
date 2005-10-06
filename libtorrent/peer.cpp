@@ -317,7 +317,10 @@ namespace bt
 		return snub_timer.getElapsedSinceUpdate();
 	}
 
-	
+	float Peer::percentAvailable() const
+	{
+		return (float)pieces.numOnBits() / (float)pieces.getNumBits() * 100.0;
+	}
 }
 
 #include "peer.moc"

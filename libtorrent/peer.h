@@ -150,6 +150,12 @@ namespace bt
 
 		/// Get the time the peer connection was established.
 		const QTime & getConnectTime() const {return connect_time;}
+
+		/**
+		 * Get the percentual amount of data available from peer.
+		 */
+		float percentAvailable() const;
+
 	private slots:
 		void connectionClosed(); 
 		void readyRead();

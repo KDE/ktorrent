@@ -77,10 +77,12 @@ int main(int argc, char **argv)
 					"danny@dannyallen.co.uk");
 	about.addCredit("Vincent Wagelaar",0,"vincent@ricardis.tudelft.nl");
 	about.addCredit("Knut Morten Johansson",0,"knut@johansson.com");
-	about.addCredit("Mladen Babic",I18N_NOOP("1.1 application icon"),"bmladen@EUnet.yu");
+	about.addCredit("Mladen Babic",
+					I18N_NOOP("1.1 application icon and a couple of others"),"bmladen@EUnet.yu");
 	about.addCredit("Felix Berger",
 					I18N_NOOP("ChunkBar's tooltip and IWFileTreeItem sorting"),
 					"bflat1@gmx.net");
+	about.addCredit("Andreas Kling",0,"kling@impul.se");
 	
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);

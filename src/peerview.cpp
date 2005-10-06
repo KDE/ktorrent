@@ -18,6 +18,7 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <klocale.h>
+#include <kglobal.h>
 #include <libtorrent/peer.h>
 #include "peerview.h"
 #include "functions.h"
@@ -32,12 +33,15 @@ PeerViewItem::PeerViewItem(PeerView* pv,bt::Peer* peer) : KListViewItem(pv),peer
 
 void PeerViewItem::update()
 {
+	KLocale* loc = KGlobal::locale();
+	
 	setText(0,peer->getIPAddresss());
 	setText(1,peer->getPeerID().identifyClient());
 	setText(2,KBytesPerSecToString(peer->getDownloadRate() / 1024.0));
 	setText(3,KBytesPerSecToString(peer->getUploadRate() / 1024.0));
 	setText(4,peer->isChoked() ? i18n("yes") : i18n("no"));
 	setText(5,peer->isSnubbed() ? i18n("yes") : i18n("no"));
+	setText(6,QString("%1 %").arg(loc->formatNumber(peer->percentAvailable(),2)));
 }
 
 int PeerViewItem::compare(QListViewItem * i,int col,bool) const
@@ -54,6 +58,7 @@ int PeerViewItem::compare(QListViewItem * i,int col,bool) const
 		case 3: return CompareVal(peer->getUploadRate(),op->getUploadRate());
 		case 4: return CompareVal(peer->isChoked(),op->isChoked());
 		case 5: return CompareVal(peer->isSnubbed(),op->isSnubbed());
+		case 6: return CompareVal(peer->percentAvailable(),op->percentAvailable());
 	}
 	return 0;
 }
@@ -67,6 +72,7 @@ PeerView::PeerView(QWidget *parent, const char *name)
 	addColumn(i18n("Up Speed"));
 	addColumn(i18n("Choked"));
 	addColumn(i18n("Snubbed"));
+	addColumn(i18n("Availability"));
 	setShowSortIndicator(true);
 }
 
