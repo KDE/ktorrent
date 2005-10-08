@@ -5,7 +5,7 @@ If something is done put # in front of it.
 
 1.1 :
 -----
-1) Tweak download speed capping, it currently is to jumpy
+# 1) Tweak download speed capping, it currently is to jumpy
 
 2) http://bugs.kde.org/show_bug.cgi?id=111260 (Initial tests show ktorrent handles this situation well)
 
@@ -18,6 +18,8 @@ If something is done put # in front of it.
 
 1.2 :
 -----
+0) Rearrange stuff and do plugins
+
 1) Switch to KNetwork classes (This could be frustrating)
 
 2) Implement trackerless torrent like official client. (This will be big)
@@ -59,6 +61,7 @@ torrents we are leeching from the ones we are seeding.
 
 15) Add "Max d/u ratio" option (for seeding)
 
+16) Add RSS plugin
 
 2.0 :
 -----
