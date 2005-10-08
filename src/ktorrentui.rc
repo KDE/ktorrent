@@ -1,0 +1,29 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<kpartgui name="ktorrent" version="1">
+<MenuBar>
+  <Menu name="Downloads"><text>Downloads</text>
+	<Action name="Start" />
+	<Action name="Stop" />
+	<Action name="Remove" />
+	<Separator/>
+	<Action name="Start all"/>
+	<Action name="Stop all"/>
+  </Menu>
+</MenuBar>
+
+<ToolBar name="mainToolBar" noMerge="1"><text>Main Toolbar</text>
+    <Action name="file_new"/>
+    <Action name="file_open"/>
+    <Action name="file_save"/>
+    <Separator/>
+    <Action name="edit_copy"/>
+    <Action name="edit_paste"/>
+</ToolBar>
+<ToolBar name="DownloadToolBar" noMerge="1"><text>Download Toolbar</text>
+	<Action name="Start"/>
+	<Action name="Stop"/>
+	<Action name="Remove"/>
+	<Action name="Start all"/>
+	<Action name="Stop all"/>
+</ToolBar>
+</kpartgui>

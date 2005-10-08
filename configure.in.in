@@ -1,0 +1,24 @@
+#MIN_CONFIG(3.3)
+CXXFLAGS="$CXXFLAGS $KDE_DEFAULT_CXXFLAGS $USE_EXCEPTIONS"
+
+AM_INIT_AUTOMAKE(ktorrent,1.1)
+
+if test "$build_arts" = "yes"; then
+    AC_DEFINE(USE_ARTS, 1, [If we use arts volume])
+    LIB_ARTS="-lartskde"
+    AC_SUBST(LIB_ARTS)
+fi
+
+dnl #### Check for FSEEK variants
+AC_SYS_LARGEFILE
+AC_FUNC_FSEEKO
+AC_CHECK_FUNCS(fseeko64, ktorrent_cv_func_fseek64=yes, ktorrent_cv_func_fseek64=no)
+AC_CHECK_FUNCS(ftello64, ktorrent_cv_func_ftell64=yes, ktorrent_cv_func_ftell64=no)
+if test "$ktorrent_cv_func_fseek64" = yes -a "$ktorrent_cv_func_ftell64" = yes; then
+    AC_DEFINE(HAVE_FSEEKO64, 1)
+else
+    AC_DEFINE(HAVE_FSEEKO64, 0)
+fi
+
+KDE_INIT_DOXYGEN([The API Reference], [Version $VERSION])
+
