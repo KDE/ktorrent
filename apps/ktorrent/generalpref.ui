@@ -26,9 +26,6 @@
             <property name="text">
                 <string>Show s&amp;ystem tray icon</string>
             </property>
-            <property name="accel">
-                <string>Alt+Y</string>
-            </property>
         </widget>
         <widget class="QLayoutWidget" row="1" column="0">
             <property name="name">
@@ -67,9 +64,6 @@
                     </property>
                     <property name="text">
                         <string>&amp;Automatically save downloads to:</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+A</string>
                     </property>
                 </widget>
                 <widget class="KURLRequester">
