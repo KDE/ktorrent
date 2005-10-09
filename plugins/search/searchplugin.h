@@ -17,22 +17,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include "plugin.h"
+#ifndef KTSEARCHPLUGIN_H
+#define KTSEARCHPLUGIN_H
+
+#include <interfaces/plugin.h>
 
 namespace kt
 {
 
-	Plugin::Plugin(QObject *parent, const char* qt_name,const QStringList & /*args*/,
-				   const QString & name,const QString & author,
-				   const QString & email,const QString & description)
-	: KParts::Plugin(parent,qt_name),
-	name(name),author(author),email(email),description(description)
-	{}
+	/**
+	@author Joris Guisson
+	*/
+	class SearchPlugin : public Plugin
+	{
+		Q_OBJECT
+	public:
+		SearchPlugin(QObject* parent, const char* name, const QStringList& args);
+		virtual ~SearchPlugin();
 
+		virtual void load();
+		virtual void unload();
 
-	Plugin::~Plugin()
-	{}
-
+	};
 
 }
-#include "plugin.moc"
+
+#endif

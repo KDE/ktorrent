@@ -20,8 +20,7 @@
 #ifndef KTPLUGIN_H
 #define KTPLUGIN_H
 
-#include <qobject.h>
-#include <kxmlguiclient.h>
+#include <kparts/plugin.h>
 
 namespace kt
 {
@@ -30,17 +29,53 @@ namespace kt
 	 * @author Joris Guisson
 	 * @brief Base class for all plugins
 	 *
-	 * This is the base class for all plugins. 
+	 * This is the base class for all plugins. Plugins should implement
+	 * the load and unload methods, any changes made in load must be undone in
+	 * unload.
+	 *
+	 * It's also absolutely forbidden to do any complex initialization in the constructor
+	 * (setting an int to 0 is ok, creating widgets isn't).
+	 * Only the name, author and description may be set in the constructor.
 	 */
-	class Plugin : public QObject, public KXMLGUIClient
+	class Plugin : public KParts::Plugin
 	{
 		Q_OBJECT
 	public:
-		Plugin(QObject *parent = 0, const char *name = 0);
+		/**
+		 * Constructor, set the name of the plugin, the name and e-mail of the author and
+		 * a short description of the plugin.
+		 * @param name Name of plugin
+		 * @param author Author of plugin
+		 * @param mail E-mail address of author
+		 * @param description What does the plugin do
+		 */
+		Plugin(QObject *parent,const char* qt_name,const QStringList & args,
+			   const QString & name,const QString & author,
+			   const QString & email,const QString & description);
 		virtual ~Plugin();
 
+		/**
+		 * This gets called, when the plugin gets loaded by KTorrent.
+		 * Any changes made here must be later made undone, when unload is
+		 * called.
+		 */
 		virtual void load() = 0;
+		
+		/**
+		 * Gets called when the plugin gets unloaded.
+		 * Should undo anything load did.
+		 */
 		virtual void unload() = 0;
+
+		const QString & getName() const {return name;}
+		const QString & getAuthor() const {return author;}
+		const QString & getEMailAddress() const {return email;}
+		const QString & getDescription() const {return description;}
+	private:
+		QString name;
+		QString author;
+		QString email;
+		QString description;
 	};
 
 }

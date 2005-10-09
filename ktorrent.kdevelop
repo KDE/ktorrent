@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>apps/interfaces/libinterfaces.la</activetarget>
+      <activetarget>plugins/search/libktsearchplugin.la</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>
@@ -33,10 +33,10 @@
       <autocompile>true</autocompile>
       <envvars/>
       <runarguments>
-        <ktorrent/>
-        <kttorinfo/>
+        <ktorrent></ktorrent>
+        <kttorinfo></kttorinfo>
         <cachecheck/>
-        <ktcachecheck/>
+        <ktcachecheck></ktcachecheck>
       </runarguments>
     </run>
     <make>

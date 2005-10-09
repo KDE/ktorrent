@@ -11,12 +11,15 @@
 
 namespace bt
 {
-	Log::Log() : to_cout(false),widget(0),wo(0)
-	{}
+	Log::Log() : out(0),to_cout(false),widget(0),wo(0)
+	{
+		out = new QTextStream();
+	}
 	
 	
 	Log::~Log()
 	{
+		delete out;
 		delete wo;
 	}
 	
@@ -30,7 +33,7 @@ namespace bt
 		if (!fptr.open(IO_WriteOnly))
 			throw Error(i18n("Cannot open log file %1").arg(file));
 
-		out.setDevice(&fptr);
+		out->setDevice(&fptr);
 	}
 
 	void Log::setOutputWidget(QTextBrowser* widget)
@@ -48,7 +51,7 @@ namespace bt
 	
 	Log & endl(Log & lg)
 	{
-		lg.out << ::endl;
+		*lg.out << ::endl;
 		if (lg.to_cout)
 			std::cout << std::endl;
 
@@ -64,7 +67,7 @@ namespace bt
 
 	Log & Log::operator << (const KURL & url)
 	{
-		out << url.prettyURL();
+		*out << url.prettyURL();
 		if (to_cout)
 			std::cout << url.prettyURL().local8Bit();
 		
@@ -77,7 +80,7 @@ namespace bt
 
 	Log & Log::operator << (const QString & s)
 	{
-		out << s;
+		*out << s;
 		if (to_cout)
 			std::cout << s.local8Bit();
 

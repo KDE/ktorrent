@@ -13,8 +13,8 @@ INCLUDES = -I$(srcdir)/../../libktorrent $(all_includes)
 ktorrent_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 
 # the libraries to link against.
-ktorrent_LDADD = ../../libktorrent/libktorrent.la $(LIB_KHTML) $(LIB_KFILE) \
-	$(LIB_KIO)
+ktorrent_LDADD = $(LIB_KPARTS) ../../libktorrent/libktorrent.la $(LIB_KHTML) \
+	$(LIB_KFILE) $(LIB_KIO)
 
 # which sources should be compiled for ktorrent
 ktorrent_SOURCES = dcopinterface.skel settings.kcfgc main.cpp ktorrent.cpp \

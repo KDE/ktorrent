@@ -17,22 +17,38 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include "plugin.h"
+#ifndef KTPLUGINMANAGER_H
+#define KTPLUGINMANAGER_H
+
+#include <qptrlist.h>
+#include <interfaces/plugin.h>
+
 
 namespace kt
 {
 
-	Plugin::Plugin(QObject *parent, const char* qt_name,const QStringList & /*args*/,
-				   const QString & name,const QString & author,
-				   const QString & email,const QString & description)
-	: KParts::Plugin(parent,qt_name),
-	name(name),author(author),email(email),description(description)
-	{}
+	/**
+	 * @author Joris Guisson
+	 * @brief Class to manage plugins
+	 *
+	 * This class manages all plugins. Plugins are stored in a list.
+	 */
+	class PluginManager
+	{
+		QPtrList<Plugin> plugins;
+	public:
+		PluginManager();
+		virtual ~PluginManager();
 
-
-	Plugin::~Plugin()
-	{}
-
+		/**
+		 * Load the list of plugins.
+		 * This basicly uses KTrader to get a list of available plugins, and
+		 * loads those, but does not initialize them. We will consider a plugin loaded
+		 * when it's load method is called.
+		 */
+		void loadPluginList();
+	};
 
 }
-#include "plugin.moc"
+
+#endif

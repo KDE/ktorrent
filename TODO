@@ -63,6 +63,8 @@ torrents we are leeching from the ones we are seeding.
 
 16) Add RSS plugin
 
+17) Add num retries option when tracker(s) can't be reached (piratebay tracker)
+
 2.0 :
 -----
 1) Switch to KDE 4 and Qt 4

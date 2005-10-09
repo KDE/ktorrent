@@ -134,6 +134,10 @@ namespace bt
 					path += bt::DirSeparator();
 			}
 
+			// we do not want empty dirs
+			if (path.endsWith(bt::DirSeparator()))
+				continue;
+
 			BValueNode* v = d->getValue("length");
 			if (!v)
 				throw Error(i18n("Corrupted torrent!"));

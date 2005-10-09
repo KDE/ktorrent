@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=SearchPlugin
+Comment=Searching plugin for KTorrentt
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktsearchplugin

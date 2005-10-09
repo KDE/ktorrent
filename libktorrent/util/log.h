@@ -34,7 +34,7 @@ namespace bt
 	*/
 	class Log 
 	{
-		QTextStream out;
+		QTextStream* out;
 		QFile fptr;
 		bool to_cout;
 		QTextBrowser* widget;
@@ -82,7 +82,7 @@ namespace bt
 		template <class T>
 		Log & operator << (T val)
 		{
-			out << val;
+			*out << val;
 			if (to_cout)
 			{
 				std::cout << val;

@@ -1,4 +1,4 @@
-SUBDIRS = libktorrent apps
+SUBDIRS = libktorrent apps plugins
 EXTRA_DIST = AUTHORS COPYING ChangeLog INSTALL README TODO
 
 messages: rc.cpp

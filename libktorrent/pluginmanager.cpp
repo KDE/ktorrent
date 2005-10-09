@@ -17,22 +17,47 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include "plugin.h"
+#include <kparts/componentfactory.h>
+#include "pluginmanager.h"
 
 namespace kt
 {
 
-	Plugin::Plugin(QObject *parent, const char* qt_name,const QStringList & /*args*/,
-				   const QString & name,const QString & author,
-				   const QString & email,const QString & description)
-	: KParts::Plugin(parent,qt_name),
-	name(name),author(author),email(email),description(description)
+	PluginManager::PluginManager()
+	{
+		plugins.setAutoDelete(true);
+	}
+
+
+	PluginManager::~PluginManager()
 	{}
 
 
-	Plugin::~Plugin()
-	{}
+	void PluginManager::loadPluginList()
+	{
+		KTrader::OfferList offers = KTrader::self()->query("KTorrent/Plugin");
 
+		KTrader::OfferList::ConstIterator iter;
+		for(iter = offers.begin(); iter != offers.end(); ++iter)
+		{
+			/*
+			KService::Ptr service = *iter;
+			int errCode = 0;
+			Plugin* plugin =
+					KParts::ComponentFactory::createInstanceFromService<kt::Plugin>
+					(service, 0, 0, QStringList(),&errCode);
+        // here we ought to check the error code.
+			
+			if (plugin)
+			{
+				guiFactory()->addClient(plugin);
 
+				kdDebug() << "PluginDemo: Loaded plugin "
+						<< plugin->name() << endl;
+			}
+			
+
+			plugins.append(plugin);*/
+		}
+	}
 }
-#include "plugin.moc"

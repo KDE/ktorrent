@@ -17,22 +17,35 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include "plugin.h"
+#include <kgenericfactory.h>
+#include "searchplugin.h"
+
+
+K_EXPORT_COMPONENT_FACTORY(ktsearchplugin,KGenericFactory<kt::SearchPlugin>("ktsearchplugin"))
 
 namespace kt
 {
+	const QString NAME = "searchplugin";
+	const QString AUTHOR = "Joris Guisson";
+	const QString EMAIL = "joris.guisson@gmail.com";
+	const QString DESCRIPTION = "KTorrent's search plugin";
 
-	Plugin::Plugin(QObject *parent, const char* qt_name,const QStringList & /*args*/,
-				   const QString & name,const QString & author,
-				   const QString & email,const QString & description)
-	: KParts::Plugin(parent,qt_name),
-	name(name),author(author),email(email),description(description)
+	SearchPlugin::SearchPlugin(QObject* parent, const char* name, const QStringList& args)
+	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,DESCRIPTION)
+	{
+		// setXMLFile("ktsearchpluginui.rc");
+	}
+
+
+	SearchPlugin::~SearchPlugin()
 	{}
 
 
-	Plugin::~Plugin()
+	void SearchPlugin::load()
 	{}
 
+	void SearchPlugin::unload()
+	{}
 
 }
-#include "plugin.moc"
+#include "searchplugin.moc"

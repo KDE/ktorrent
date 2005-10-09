@@ -8,4 +8,9 @@ libktorrent_la_LDADD = torrent/libtorrent.la util/libutil.la kademlia/libkademli
 
 libktorrent_la_LIBADD = $(top_builddir)/libktorrent/interfaces/libinterfaces.la \
 	$(top_builddir)/libktorrent/util/libutil.la $(top_builddir)/libktorrent/torrent/libtorrent.la \
-	$(top_builddir)/libktorrent/kademlia/libkademlia.la
+	$(top_builddir)/libktorrent/kademlia/libkademlia.la $(LIB_KPARTS)
+
+
+
+noinst_HEADERS = pluginmanager.h
+libktorrent_la_SOURCES = pluginmanager.cpp
