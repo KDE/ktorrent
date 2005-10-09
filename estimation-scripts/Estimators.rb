@@ -1,13 +1,8 @@
 require 'Sample'
 
 # abstract base class of all estimators
-# relError and avgError don't belong here actually, but it is a convenient way to 
-# store calculated errors for each estimator (useful when using a lot of estimators, e.g.
-# comparing WINX estimators for n = 1...totalTime.
 
 class Estimator
-    attr_reader :relError, :avgError
-    attr_writer :relError, :avgError
 
     # processes a sample
     def process(sample)
@@ -16,11 +11,6 @@ class Estimator
     # returns an estimate (ETA as float)
     # note that you must process at least one sample before this will return meaningful output
     def estimate
-    end
-
-    def initialize
-        @relError = Hash.new
-        @avgError =  0.0
     end
 end
 
