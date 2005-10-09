@@ -1,1 +1,1 @@
-SUBDIRS=ktorrent ktcachecheck kttorinfo
+SUBDIRS = ktorrent ktcachecheck kttorinfo
