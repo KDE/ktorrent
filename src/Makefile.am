@@ -54,6 +54,5 @@ rc_DATA = ktorrentui.rc
 
 
 KDE_ICON = ktorrent
-
-# appicondir = $(kde_datadir)/ktorrent/icons
-# appicon_ICON = AUTO
+appicondir = $(kde_datadir)/ktorrent/icons
+appicon_ICON = AUTO
