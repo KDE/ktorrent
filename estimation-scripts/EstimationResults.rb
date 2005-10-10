@@ -9,6 +9,8 @@ class EstimationResults
         @samples = samples
         @totalTime = samples.keys.max
         @estimator = estimator
+        
+        @maxError = nil
         @estimations = nil
         @absoluteErrors = nil
         @relativeErrors = nil
@@ -24,7 +26,7 @@ class EstimationResults
            end
            @rootMeanSquareErrorRelative = Math.sqrt( @rootMeanSquareErrorRelative / relativeErrors.size )
        end
-       return @rootMeanSquareError
+       return @rootMeanSquareErrorRelative
 
     end
 
@@ -35,9 +37,18 @@ class EstimationResults
             absoluteErrors.keys.sort.each do |time|
                 timeLeft = @totalTime - time;
                 @relativeErrors[time] = absoluteErrors[time].abs.to_f / timeLeft
+                @relativeErrors[time] = @maxError if @maxError != nil and @relativeErrors[time] > @maxError
             end
          end
          return @relativeErrors
+    end
+
+    def setMaxError(maxError)
+        if maxError != @maxError
+            @maxError = maxError
+            @relativeErrors = nil
+            @rootMeanSquareErrorRelative = nil
+        end
     end
 
     def getAbsoluteErrors
