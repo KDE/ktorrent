@@ -19,7 +19,7 @@ class EstimationResults
        if @rootMeanSquareErrorRelative == nil 
            relativeErrors = getRelativeErrors
            @rootMeanSquareErrorRelative = 0.0;
-           relativeErrors.each_value |x| do
+           relativeErrors.each_value do |x|
                @rootMeanSquareErrorRelative += x**2
            end
            @rootMeanSquareErrorRelative = Math.sqrt( @rootMeanSquareErrorRelative / relativeErrors.size )

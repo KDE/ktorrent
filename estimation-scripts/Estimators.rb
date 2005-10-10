@@ -44,7 +44,7 @@ end
 class WINXEstimator < Estimator
     def process(sample)
         # remove all samples that are older than the window size. Note: samples are sorted.
-        @list.pop until @list.length <= 1 or (sample.time - @list.last.time) <= @windowSize)
+        @list.pop until @list.length <= 1 or (sample.time - @list.last.time) <= @windowSize
 
         # prepend array with newest sample
         @list.unshift(sample.clone)
@@ -56,18 +56,15 @@ class WINXEstimator < Estimator
             first = @list.first
             last = @list.last
             return first.bytesLeft.to_f / Sample.averageSpeed(last, first) 
-
         elsif @list.length == 1
             sample = @list.first
             return  sample.bytesLeft.to_f / sample.speed
-
         elsif @list.length == 0
             return 0
         end
     end
     
     def initialize(windowSizeInSeconds)
-        super()
         @list = Array.new
         @windowSize = windowSizeInSeconds
     end
