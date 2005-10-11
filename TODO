@@ -57,6 +57,9 @@ torrents we are leeching from the ones we are seeding.
 19) http://bugs.kde.org/show_bug.cgi?id=111260 (Initial tests show ktorrent handles this situation well)
 Close this bug !!!!!!!!!!!
 
+20) letting the user configure columns in listview (maybe add share ratio column)
+	
+
 2.0 :
 -----
 1) Switch to KDE 4 and Qt 4
