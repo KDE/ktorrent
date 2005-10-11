@@ -110,7 +110,7 @@ namespace bt
 		Out() << "Multi file torrent" << endl;
 		if (!node)
 			throw Error(i18n("Corrupted torrent!"));
-		
+		Uint32 idx = 0;	
 		BListNode* fl = node;
 		for (Uint32 i = 0;i < fl->getNumChildren();i++)
 		{
@@ -145,7 +145,7 @@ namespace bt
 			if (v->data().getType() == Value::INT || v->data().getType() == Value::INT64)
 			{
 				Uint64 s = v->data().toInt64();
-				TorrentFile file(i,path,file_length,s,piece_length);
+				TorrentFile file(idx,path,file_length,s,piece_length);
 
 				// update file_length
 				file_length += s;
@@ -156,6 +156,7 @@ namespace bt
 			{
 				throw Error(i18n("Corrupted torrent!"));
 			}
+			idx++;
 		}
 	}
 
