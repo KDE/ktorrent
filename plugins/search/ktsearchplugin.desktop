@@ -1,6 +1,11 @@
 [Desktop Entry]
 Name=SearchPlugin
+Name[ga]=BreiseánCuardaigh
+Name[pt]='Plugin' de Procura
+Name[pt_BR]='Plugin' de Procura
 Comment=Searching plugin for KTorrentt
+Comment[pt]='Plugin' de procura para o KTorrent
+Comment[pt_BR]='Plugin' de procura para o KTorrent
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktsearchplugin
