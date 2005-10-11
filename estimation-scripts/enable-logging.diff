@@ -1,12 +1,12 @@
-Index: src/ktorrentviewitem.cpp
+Index: apps/ktorrent/ktorrentviewitem.cpp
 ===================================================================
---- src/ktorrentviewitem.cpp	(revision 468859)
-+++ src/ktorrentviewitem.cpp	(working copy)
+--- apps/ktorrent/ktorrentviewitem.cpp	(revision 469614)
++++ apps/ktorrent/ktorrentviewitem.cpp	(working copy)
 @@ -25,6 +25,7 @@
  #include <math.h>
  #include "ktorrentviewitem.h"
  #include "functions.h"
-+#include <libutil/log.h>
++#include <util/log.h>
  
  using namespace bt;
  
@@ -89,10 +89,10 @@ Index: src/ktorrentviewitem.cpp
  				Uint32 secs = (int)floor( (float)tc->getBytesLeft() / (float)tc->getDownloadRate() );
  				QTime t;
  				t = t.addSecs(secs);
-Index: src/ktorrentviewitem.h
+Index: apps/ktorrent/ktorrentviewitem.h
 ===================================================================
---- src/ktorrentviewitem.h	(revision 468859)
-+++ src/ktorrentviewitem.h	(working copy)
+--- apps/ktorrent/ktorrentviewitem.h	(revision 469614)
++++ apps/ktorrent/ktorrentviewitem.h	(working copy)
 @@ -41,6 +41,10 @@
  	void update();
  
