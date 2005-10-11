@@ -154,7 +154,7 @@ namespace bt
 		if (http_port == 0)
 			http_port = 80;
 
-		Out() << "Doing tracker request to url : " << url << endl;
+		Out() << "Doing tracker request to url : " << url.prettyURL() + query << endl;
 		doRequest(url.host(),url.encodedPathAndQuery() + query,http_port);
 		//Out() << "Request " << url << endl;
 	}

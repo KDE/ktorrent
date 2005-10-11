@@ -3,19 +3,6 @@ TODO LIST :
 
 If something is done put # in front of it.
 
-1.1 :
------
-# 1) Tweak download speed capping, it currently is to jumpy
-
-2) http://bugs.kde.org/show_bug.cgi?id=111260 (Initial tests show ktorrent handles this situation well)
-
-# 3) Sometimes torrents aren't finished at 100%. Make sure it only goes to 100 % when it's completely finished (keep it on 99.9 for example)
-
-# 4) Fix chunkbars (with every second refresh and redraw I get some flickering) -
-# maybe check if the state has changed on every update and if so, then redraw.
-
-# 5) Add "Stop all" and "Start all" buttons in toolbar. (GUI change, needs to be done for string freeze)
-
 1.2 :
 -----
 0) Rearrange stuff and do plugins
@@ -64,6 +51,11 @@ torrents we are leeching from the ones we are seeding.
 16) Add RSS plugin
 
 17) Add num retries option when tracker(s) can't be reached (piratebay tracker)
+
+18) Add properties dialog to show announce url
+
+19) http://bugs.kde.org/show_bug.cgi?id=111260 (Initial tests show ktorrent handles this situation well)
+Close this bug !!!!!!!!!!!
 
 2.0 :
 -----

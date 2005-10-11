@@ -33,10 +33,10 @@
       <autocompile>true</autocompile>
       <envvars/>
       <runarguments>
-        <ktorrent></ktorrent>
-        <kttorinfo></kttorinfo>
+        <ktorrent/>
+        <kttorinfo/>
         <cachecheck/>
-        <ktcachecheck></ktcachecheck>
+        <ktcachecheck/>
       </runarguments>
     </run>
     <make>
