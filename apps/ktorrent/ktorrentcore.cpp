@@ -35,6 +35,8 @@
 #include <torrent/server.h>
 #include <util/functions.h>
 
+#include "pluginmanager.h"
+
 #include "ktorrentcore.h"
 #include "settings.h"
 #include "functions.h"
@@ -44,7 +46,7 @@ using namespace bt;
 
 
 
-KTorrentCore::KTorrentCore() : max_downloads(0),keep_seeding(true)
+KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seeding(true),pman(0)
 {
 	data_dir = Settings::tempDir();
 	bool dd_not_exist = !bt::Exists(data_dir);
@@ -92,11 +94,15 @@ KTorrentCore::KTorrentCore() : max_downloads(0),keep_seeding(true)
 			i18n("Cannot bind to port %1 or the 10 following ports.").arg(port));
 		Out() << "Cannot find free port" << endl;
 	}
+
+	pman = new kt::PluginManager(this,gui);
+	pman->loadPluginList();
 }
 
 
 KTorrentCore::~KTorrentCore()
 {
+	delete pman;
 }
 
 void KTorrentCore::load(const QString & target)

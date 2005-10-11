@@ -18,20 +18,22 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <kparts/componentfactory.h>
+#include <util/log.h>
+#include <torrent/globals.h>
 #include "pluginmanager.h"
+
+using namespace bt;
 
 namespace kt
 {
 
-	PluginManager::PluginManager()
+	PluginManager::PluginManager(CoreInterface* core,GUIInterface* gui) : core(core),gui(gui)
 	{
 		plugins.setAutoDelete(true);
 	}
 
-
 	PluginManager::~PluginManager()
 	{}
-
 
 	void PluginManager::loadPluginList()
 	{
@@ -40,7 +42,6 @@ namespace kt
 		KTrader::OfferList::ConstIterator iter;
 		for(iter = offers.begin(); iter != offers.end(); ++iter)
 		{
-			/*
 			KService::Ptr service = *iter;
 			int errCode = 0;
 			Plugin* plugin =
@@ -50,14 +51,13 @@ namespace kt
 			
 			if (plugin)
 			{
-				guiFactory()->addClient(plugin);
+				plugin->setCore(core);
+				plugin->setGUI(gui);
+				plugin->load();
 
-				kdDebug() << "PluginDemo: Loaded plugin "
-						<< plugin->name() << endl;
+				Out() << "Loaded plugin "<< plugin->getName() << endl;
+				plugins.append(plugin);
 			}
-			
-
-			plugins.append(plugin);*/
 		}
 	}
 }

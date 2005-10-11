@@ -31,6 +31,7 @@
 
 
 using namespace bt;
+using namespace kt;
 
 TrayIcon::TrayIcon( KTorrentCore* tc, QWidget *parent, const char *name)
  : KSystemTray(parent, name)

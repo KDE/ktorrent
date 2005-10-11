@@ -29,6 +29,7 @@
 #include <kapplication.h>
 #include <kmainwindow.h>
 #include <qtimer.h>
+#include <interfaces/guiinterface.h>
 
 
 
@@ -61,7 +62,7 @@ namespace bt
  * @author Joris Guisson <joris.guisson@gmail.com>
  * @version 0.1
  */
-class KTorrent : public KMainWindow
+class KTorrent : public KMainWindow, public kt::GUIInterface
 {
 	Q_OBJECT
 public:
@@ -82,6 +83,9 @@ public:
 	 * Apply the settings.
 	 */
 	void applySettings();
+
+	virtual void addTabPage(QWidget* page,const QIconSet & icon,const QString & caption);
+	virtual void removeTabPage(QWidget* page);
 
 public slots:
 	/**

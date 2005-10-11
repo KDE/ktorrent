@@ -24,6 +24,7 @@
 #include "functions.h"
 
 using namespace bt;
+using namespace kt;
 
 PeerViewItem::PeerViewItem(PeerView* pv,bt::Peer* peer) : KListViewItem(pv),peer(peer)
 {

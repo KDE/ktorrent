@@ -31,7 +31,6 @@
 #include "ktorrentview.h"
 #include "ktorrentviewitem.h"
 #include "settings.h"
-#include "debugview.h"
 
 
 

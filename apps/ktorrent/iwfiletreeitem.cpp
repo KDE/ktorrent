@@ -28,6 +28,7 @@
 #include "iwfiletreediritem.h"
 #include "functions.h"
 
+using namespace kt;
 
 			
 IWFileTreeItem::IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,bt::TorrentFile & file)

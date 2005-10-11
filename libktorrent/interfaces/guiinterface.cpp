@@ -17,36 +17,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <qsplitter.h> 
-#include <torrent/torrentcontrol.h>
-#include <qlayout.h>
-#include "debugview.h"
-#include "chunkdownloadview.h"
-#include "peerview.h"
-#include "ktorrentmonitor.h"
+#include "guiinterface.h"
 
-DebugView::DebugView(bt::TorrentControl* tor,QWidget *parent, const char *name)
-	: QWidget(parent, name),m_tor(tor)
+namespace kt
 {
-	QHBoxLayout* layout = new QHBoxLayout(this);
-	layout->setAutoAdd(true);
-	
-	QSplitter* s = new QSplitter(this);
-	m_cd_view = new ChunkDownloadView(s);
-	m_peer_view = new PeerView(s);
-	m_mon = new KTorrentMonitor(tor,m_peer_view,m_cd_view);
-	s->moveToFirst(m_cd_view);
-	s->moveToLast(m_peer_view);
-	s->setOrientation(Qt::Horizontal);
-	connect(tor,SIGNAL(destroyed()),this,SLOT(deleteLater()));
-	setCaption(tor->getTorrentName());
+
+	GUIInterface::GUIInterface()
+	{}
+
+
+	GUIInterface::~GUIInterface()
+	{}
+
+
 }
-
-
-DebugView::~DebugView()
-{
-	delete m_mon;
-}
-
-
-#include "debugview.moc"

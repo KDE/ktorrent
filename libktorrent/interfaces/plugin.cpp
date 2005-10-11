@@ -27,7 +27,10 @@ namespace kt
 				   const QString & email,const QString & description)
 	: KParts::Plugin(parent,qt_name),
 	name(name),author(author),email(email),description(description)
-	{}
+	{
+		core = 0;
+		gui = 0;
+	}
 
 
 	Plugin::~Plugin()

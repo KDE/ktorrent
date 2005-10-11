@@ -17,31 +17,26 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include <klocale.h>
-#include <kglobal.h>
-#include "functions.h"
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
 
-using namespace bt;
+#include <qstring.h>
+#include <util/constants.h>
 
-const double TO_KB = 1024.0;
-const double TO_MEG = (1024.0 * 1024.0);
-const double TO_GIG = (1024.0 * 1024.0 * 1024.0);
-
-QString BytesToString(Uint64 bytes,int precision)
+namespace kt
 {
-	KLocale* loc = KGlobal::locale();
-	if (bytes >= 1024 * 1024 * 1024)
-		return i18n("%1 GB").arg(loc->formatNumber(bytes / TO_GIG,precision < 0 ? 2 : precision));
-	else if (bytes >= 1024*1024)
-		return i18n("%1 MB").arg(loc->formatNumber(bytes / TO_MEG,precision < 0 ? 1 : precision));
-	else if (bytes >= 1024)
-		return i18n("%1 KB").arg(loc->formatNumber(bytes / TO_KB,precision < 0 ? 1 : precision));
-	else
-		return i18n("%1 B").arg(bytes);
+	QString BytesToString(bt::Uint64 bytes,int precision = -1);
+	QString KBytesPerSecToString(double speed,int precision = 1);
+
+	template<class T> int CompareVal(T a,T b)
+	{
+		if (a < b)
+			return -1;
+		else if (a > b)
+			return 1;
+		else
+			return 0;
+	}
 }
 
-QString KBytesPerSecToString(double speed,int precision)
-{
-	KLocale* loc = KGlobal::locale();
-	return i18n("%1 KB/sec").arg(loc->formatNumber(speed,precision));
-}
+#endif

@@ -4,7 +4,7 @@ METASOURCES = AUTO
 bin_PROGRAMS = kttorinfo
 kttorinfo_SOURCES = main.cpp
 kttorinfo_LDFLAGS = $(KDE_RPATH) $(all_libraries)
-kttorinfo_LDADD = $(top_builddir)/ktorrent/libktorrent/torrent/libtorrent.la \
-	$(top_builddir)/ktorrent/libktorrent/util/libutil.la \
+kttorinfo_LDADD = ../../libktorrent/torrent/libtorrent.la \
+	../../libktorrent/util/libutil.la \
 	$(LIB_KPARTS) $(LIB_KFILE) $(LIB_KIO)
 

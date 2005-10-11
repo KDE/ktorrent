@@ -24,6 +24,7 @@
 #include "functions.h"
 
 using namespace bt;
+using namespace kt;
 
 ChunkDownloadViewItem::ChunkDownloadViewItem(ChunkDownloadView* cdv,bt::ChunkDownload* cd)
 	: KListViewItem(cdv),cd(cd)

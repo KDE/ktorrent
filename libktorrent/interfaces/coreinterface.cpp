@@ -15,25 +15,19 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef FUNCTIONS_H
-#define FUNCTIONS_H
+#include "coreinterface.h"
 
-#include <qstring.h>
-#include <util/constants.h>
-
-QString BytesToString(bt::Uint64 bytes,int precision = -1);
-QString KBytesPerSecToString(double speed,int precision = 1);
-
-template<class T> int CompareVal(T a,T b)
+namespace kt
 {
-	if (a < b)
-		return -1;
-	else if (a > b)
-		return 1;
-	else
-		return 0;
-}
 
-#endif
+	CoreInterface::CoreInterface()
+	{}
+
+
+	CoreInterface::~CoreInterface()
+	{}
+
+
+}

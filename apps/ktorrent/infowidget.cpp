@@ -47,7 +47,7 @@
 #include "settings.h"
 
 using namespace bt;
-
+using namespace kt;
 
 
 InfoWidget::InfoWidget(QWidget* parent, const char* name, WFlags fl)

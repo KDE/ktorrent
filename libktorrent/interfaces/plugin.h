@@ -24,6 +24,8 @@
 
 namespace kt
 {
+	class CoreInterface;
+	class GUIInterface;
 
 	/**
 	 * @author Joris Guisson
@@ -71,11 +73,39 @@ namespace kt
 		const QString & getAuthor() const {return author;}
 		const QString & getEMailAddress() const {return email;}
 		const QString & getDescription() const {return description;}
+
+		/// Get a pointer to the CoreInterface
+		CoreInterface* getCore() {return core;}
+
+		/// Get a const pointer to the CoreInterface
+		const CoreInterface* getCore() const {return core;}
+
+		/**
+		 * Set the core, used by PluginManager to set the pointer
+		 * to the core.
+		 * @param c Pointer to the core
+		 */
+		void setCore(CoreInterface* c) {core = c;}
+
+		/// Get a pointer to the CoreInterface
+		GUIInterface* getGUI() {return gui;}
+
+		/// Get a const pointer to the CoreInterface
+		const GUIInterface* getGUI() const {return gui;}
+
+		/**
+		 * Set the core, used by PluginManager to set the pointer
+		 * to the core.
+		 * @param c Pointer to the core
+		 */
+		void setGUI(GUIInterface* c) {gui = c;}
 	private:
 		QString name;
 		QString author;
 		QString email;
 		QString description;
+		CoreInterface* core;
+		GUIInterface* gui;
 	};
 
 }

@@ -27,6 +27,7 @@
 #include "functions.h"
 
 using namespace bt;
+using namespace kt;
 
 static QString StatusToString(TorrentControl* tc,TorrentControl::Status s)
 {

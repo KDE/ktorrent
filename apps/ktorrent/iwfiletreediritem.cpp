@@ -27,6 +27,8 @@
 #include "iwfiletreeitem.h"
 #include "functions.h"
 
+using namespace kt;
+
 
 IWFileTreeDirItem::IWFileTreeDirItem(KListView* klv,const QString & name)
 	: QCheckListItem(klv,QString::null,QCheckListItem::CheckBox),name(name)

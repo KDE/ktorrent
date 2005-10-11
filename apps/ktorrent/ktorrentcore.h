@@ -23,12 +23,21 @@
 #include <qobject.h>
 #include <qtimer.h>
 #include <util/constants.h>
+#include <interfaces/coreinterface.h>
 
 namespace bt
 {
 	class TorrentControl;
 	class Server;
 }
+
+namespace kt
+{
+	class Plugin;
+	class PluginManager;
+	class GUIInterface;
+}
+
 
 ///Stats struct
 struct CurrentStats
@@ -47,11 +56,11 @@ class KProgress;
  *
  * This class keeps track of all TorrentControl objects.
  */
-class KTorrentCore : public QObject
+class KTorrentCore : public QObject,public kt::CoreInterface
 {
 	Q_OBJECT
 public:
-	KTorrentCore();
+	KTorrentCore(kt::GUIInterface* gui);
 	virtual ~KTorrentCore();
 	
 	
@@ -213,6 +222,7 @@ private:
 	bool keep_seeding;
 	QTimer update_timer;
 	bt::Uint32 removed_bytes_up,removed_bytes_down;
+	kt::PluginManager* pman;
 };
 
 #endif

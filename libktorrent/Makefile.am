@@ -4,13 +4,11 @@ METASOURCES = AUTO
 
 lib_LTLIBRARIES = libktorrent.la
 libktorrent_la_LDFLAGS = ${KDE_RPATH} $(all_libraries)
-# libktorrent_la_LDADD = torrent/libtorrent.la util/libutil.la kademlia/libkademlia.la
-
-libktorrent_la_LIBADD = $(top_builddir)/ktorrent/libktorrent/interfaces/libinterfaces.la \
-	$(top_builddir)/ktorrent/libktorrent/util/libutil.la $(top_builddir)/ktorrent/libktorrent/torrent/libtorrent.la \
-	$(top_builddir)/ktorrent/libktorrent/kademlia/libkademlia.la $(LIB_KPARTS)
 
 
 
-noinst_HEADERS = pluginmanager.h
-libktorrent_la_SOURCES = pluginmanager.cpp
+noinst_HEADERS = pluginmanager.h functions.h
+libktorrent_la_SOURCES = pluginmanager.cpp functions.cpp
+libktorrent_la_LIBADD = ../libktorrent/util/libutil.la \
+	../libktorrent/torrent/libtorrent.la ../libktorrent/kademlia/libkademlia.la \
+	../libktorrent/interfaces/libinterfaces.la $(LIB_KPARTS)

@@ -5,7 +5,7 @@ noinst_HEADERS = searchplugin.h
 ktsearchplugin_la_SOURCES = searchplugin.cpp
 
 # Libs needed by the plugin
-ktsearchplugin_la_LIBADD = $(LIB_KPARTS) $(top_builddir)/ktorrent/libktorrent/interfaces/libinterfaces.la
+ktsearchplugin_la_LIBADD = $(LIB_KPARTS) ../../libktorrent/interfaces/libinterfaces.la
 
 # LD flags for the plugin
 # -module says: this is a module, i.e. something you're going to dlopen

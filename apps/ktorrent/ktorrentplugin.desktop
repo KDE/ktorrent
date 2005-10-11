@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=ServiceType
+X-KDE-ServiceType=KTorrent/Plugin
+Name=KTorrent Plugin

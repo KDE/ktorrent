@@ -76,6 +76,7 @@
 
 
 using namespace bt;
+using namespace kt;
 
 KTorrent::KTorrent()
 		: KMainWindow( 0, "KTorrent" ),
@@ -96,7 +97,7 @@ KTorrent::KTorrent()
 	vbox->moveToLast(m_info);
 
 	m_search = new SearchWidget(m_tabs);
-	m_core = new KTorrentCore();
+	m_core = new KTorrentCore(this);
 	m_systray_icon = new TrayIcon(m_core, this); 
 
 
@@ -190,6 +191,16 @@ KTorrent::~KTorrent()
 	delete m_statusInfo;
 	delete m_statusTransfer;
 	delete m_statusSpeed;
+}
+
+void KTorrent::addTabPage(QWidget* page,const QIconSet & icon,const QString & caption)
+{
+	m_tabs->addTab(page,icon,caption);
+}
+
+void KTorrent::removeTabPage(QWidget* page)
+{
+	m_tabs->removePage(page);
 }
 
 void KTorrent::applySettings()

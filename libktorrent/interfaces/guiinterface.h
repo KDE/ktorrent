@@ -17,36 +17,44 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef DEBUGVIEW_H
-#define DEBUGVIEW_H
+#ifndef KTGUIINTERFACE_H
+#define KTGUIINTERFACE_H
 
-#include <qwidget.h>
+class QWidget;
+class QIconSet;
+class QString;
 
-class ChunkDownloadView;
-class KTorrentMonitor;
-class PeerView;
-
-namespace bt
+namespace kt
 {
-	class TorrentControl;
+
+	/**
+	 * @author Joris Guisson
+	 * @brief Interface to modify the GUI
+	 *
+	 * This interface allows plugins and others to modify the GUI.
+	*/
+	class GUIInterface
+	{
+	public:
+		GUIInterface();
+		virtual ~GUIInterface();
+
+		/**
+		 * Add a new tab page to the GUI
+		 * @param page The widget
+		 * @param icon Icon for the tab
+		 * @param caption Text on the tab
+		 */
+		virtual void addTabPage(QWidget* page,const QIconSet & icon,const QString & caption) = 0;
+
+		/**
+		 * Remove a tab page, does nothing if the page
+		 * isn't added. Does not delete the widget.
+		 * @param page The page
+		 */
+		virtual void removeTabPage(QWidget* page) = 0;
+	};
+
 }
-
-/**
-@author Joris Guisson
-*/
-class DebugView : public QWidget
-{
-	Q_OBJECT
-public:
-	DebugView(bt::TorrentControl* tor,QWidget *parent = 0, const char *name = 0);
-	virtual ~DebugView();
-	
-	
-private:
-	ChunkDownloadView* m_cd_view;
-	PeerView* m_peer_view;
-	KTorrentMonitor* m_mon;
-	bt::TorrentControl* m_tor;
-};
 
 #endif
