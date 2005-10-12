@@ -12,6 +12,10 @@ class Estimator
     # note that you must process at least one sample before this will return meaningful output
     def estimate
     end
+
+    # returns the name of the estimator
+    def name
+    end
 end
 
 # estimator that uses the current speed
@@ -22,6 +26,10 @@ class CSAEstimator < Estimator
     
     def estimate
         return @sample.bytesLeft.to_f / @sample.speed
+    end
+
+    def name
+        'Current Speed Estimator'
     end
 end
 
@@ -36,6 +44,10 @@ class GASAEstimator < Estimator
 
     def estimate
         return @last.bytesLeft.to_f / @avgSpeed
+    end
+
+    def name
+        'Average Speed Estimator'
     end
 end
 
@@ -64,6 +76,10 @@ class WINXEstimator < Estimator
         end
     end
     
+    def name
+        "Moving Average Estimator #{@windowSize}s"
+    end
+
     def initialize(windowSizeInSeconds)
         @list = Array.new
         @windowSize = windowSizeInSeconds

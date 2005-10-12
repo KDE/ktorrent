@@ -14,7 +14,7 @@ input.close
 est = WINXEstimator.new(100)
 
 results = EstimationResults.new(est, samples)
-results.setMaxError(20)
+results.setMaxError(5)
 
 relErrors = results.getRelativeErrors
 
