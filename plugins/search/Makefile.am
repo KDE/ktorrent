@@ -1,11 +1,13 @@
 INCLUDES = $(all_includes) -I$(srcdir)/../../libktorrent
 METASOURCES = AUTO
 kde_module_LTLIBRARIES = ktsearchplugin.la
-noinst_HEADERS = searchplugin.h
-ktsearchplugin_la_SOURCES = searchplugin.cpp
+noinst_HEADERS = searchplugin.h searchprefpage.h
+ktsearchplugin_la_SOURCES = searchplugin.cpp htmlpart.cpp searchbar.ui \
+	searchpref.ui searchwidget.cpp searchprefpage.cpp searchpluginsettings.kcfgc
 
 # Libs needed by the plugin
-ktsearchplugin_la_LIBADD = $(LIB_KPARTS) ../../libktorrent/interfaces/libinterfaces.la
+ktsearchplugin_la_LIBADD = $(LIB_KHTML) $(LIB_KPARTS) \
+	../../libktorrent/interfaces/libinterfaces.la
 
 # LD flags for the plugin
 # -module says: this is a module, i.e. something you're going to dlopen
@@ -18,3 +20,6 @@ ktsearchplugin_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 
 # Install the desktop file needed to detect the plugin
 kde_services_DATA = ktsearchplugin.desktop
+
+kde_kcfg_DATA = ktsearchplugin.kcfg
+

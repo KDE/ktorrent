@@ -17,78 +17,55 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTSEARCHWIDGET_H
-#define BTSEARCHWIDGET_H
+#ifndef HTMLPART_H
+#define HTMLPART_H
 
-#include <qwidget.h>
-#include <qvaluevector.h>
-#include <kurl.h>
+#include <khtml_part.h>
 
-class SearchBar;
-class HTMLPart;
-class KPopupMenu;
-
-namespace KParts
+namespace KIO
 {
-	class Part;
+	class Job;
 }
 
-struct SearchEngine
+
+namespace kt
 {
-	QString name;
-	KURL url;
-	int id;
-};
-
-
-/**
-@author Joris Guisson
-*/
-class SearchWidget : public QWidget
-{
-	Q_OBJECT
-public:
-	SearchWidget(QWidget* parent = 0,const char* name = 0);
-	virtual ~SearchWidget();
-
-	KPopupMenu* rightClickMenu();
 
 	/**
-	 * Load the list of search engines.
-	 */
-	void loadSearchEngines();
-
-public slots:
-	void search(const QString & text,int engine = 0);
-	void copy();
-
-private slots:
-	void searchPressed();
-	void clearPressed();
-	void onURLHover(const QString & url);
-	void onFinished();
-	void onOpenTorrent(const KURL & url);
-	void showPopupMenu(const QString & s,const QPoint & p);
-	void onBackAvailable(bool available);
-	void onShutDown();
-	void onFrameAdded(KParts::Part* p);
+	@author Joris Guisson
+	*/
+	class HTMLPart : public KHTMLPart
+	{
+		Q_OBJECT
+	public:
+		HTMLPart(QWidget *parent = 0);
+		virtual ~HTMLPart();
 	
+	public slots:
+		void back();
+		void reload();
+		void copy();
+		void openURLRequest(const KURL &url, const KParts::URLArgs &args);
 	
-signals:
-	void statusBarMsg(const QString & url);
-	void openTorrent(const KURL & url);
-
+	private slots:
+		void addToHistory(const KURL & url);
+		void dataRecieved(KIO::Job* job,const QByteArray & data);
+		void mimetype(KIO::Job* job,const QString & mt);
+		void jobDone(KIO::Job* job);
+		
 	
-private:
-	HTMLPart* html_part;
-	SearchBar* sbar;
-	KPopupMenu* right_click_menu;
-	int back_id;
-	QValueVector<SearchEngine> m_search_engines;
-  
-	void makeDefaultSearchEngines();
-};
-
-
+	signals:
+		void backAvailable(bool yes);
+		void openTorrent(const KURL & url);
+		void searchFinished();
+	
+	private:
+		KURL::List history;
+		KIO::Job* active_job;
+		QByteArray curr_data;
+		QString mime_type;
+		KURL curr_url;
+	};
+}
 
 #endif

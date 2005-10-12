@@ -41,11 +41,11 @@ class KTorrentCore;
 class KTorrentView;
 class TrayIcon;
 class KTabWidget;
-class SearchWidget;
 class KTorrentDCOP;
 class InfoWidget;
 class QLabel;
 class QListViewItem;
+class KTorrentPreferences;
 
 
 
@@ -86,6 +86,9 @@ public:
 
 	virtual void addTabPage(QWidget* page,const QIconSet & icon,const QString & caption);
 	virtual void removeTabPage(QWidget* page);
+	virtual void addPrefPage(kt::PrefPageInterface* page);
+	virtual void removePrefPage(kt::PrefPageInterface* page);
+	virtual void mergePluginGui(kt::Plugin* p);
 
 public slots:
 	/**
@@ -144,10 +147,10 @@ private:
 	KTorrentCore* m_core;
 	TrayIcon* m_systray_icon;
 	KTabWidget* m_tabs;
-	SearchWidget* m_search;
 	KTorrentDCOP* m_dcop;
 	InfoWidget* m_info;
 	QTimer m_gui_update_timer;
+	KTorrentPreferences* m_pref;
 
 	QLabel* m_statusInfo;
 	QLabel* m_statusTransfer;

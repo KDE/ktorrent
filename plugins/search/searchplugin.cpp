@@ -18,7 +18,16 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <kgenericfactory.h>
+#include <kglobal.h>
+#include <klocale.h>
+#include <kiconloader.h>
+#include <kstdaction.h>
+#include <kpopupmenu.h>
+#include <interfaces/guiinterface.h>
 #include "searchplugin.h"
+#include "searchwidget.h"
+#include "searchprefpage.h"
+
 
 
 K_EXPORT_COMPONENT_FACTORY(ktsearchplugin,KGenericFactory<kt::SearchPlugin>("ktsearchplugin"))
@@ -34,6 +43,8 @@ namespace kt
 	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,DESCRIPTION)
 	{
 		// setXMLFile("ktsearchpluginui.rc");
+		search = 0;
+		pref = 0;
 	}
 
 
@@ -42,10 +53,31 @@ namespace kt
 
 
 	void SearchPlugin::load()
-	{}
+	{
+		KIconLoader* iload = KGlobal::iconLoader();
+		search = new SearchWidget(this);
+		getGUI()->addTabPage(
+				search,iload->loadIconSet("viewmag", KIcon::Small),
+				i18n("Search"));
+		search->loadSearchEngines();
+		
+		pref = new SearchPrefPage();
+		getGUI()->addPrefPage(pref);
+
+		KAction* copy_act = KStdAction::copy(search,SLOT(copy()),actionCollection());
+		copy_act->plug(search->rightClickMenu(),0);
+	}
 
 	void SearchPlugin::unload()
-	{}
+	{
+		search->onShutDown();
+		getGUI()->removeTabPage(search);
+		getGUI()->removePrefPage(pref);
+		delete search;
+		search = 0;
+		delete pref;
+		pref = 0;
+	}
 
 }
 #include "searchplugin.moc"

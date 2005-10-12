@@ -67,12 +67,14 @@
 #include "pref.h"
 #include "settings.h"
 #include "trayicon.h"
-#include "searchwidget.h"
 #include "logviewer.h"
 #include "ktorrentdcop.h"
 #include "torrentcreatordlg.h"
 #include "infowidget.h"
 #include "functions.h"
+
+#include <interfaces/plugin.h>
+#include <interfaces/prefpageinterface.h>
 
 
 using namespace bt;
@@ -96,14 +98,12 @@ KTorrent::KTorrent()
 	vbox->moveToFirst(m_view);
 	vbox->moveToLast(m_info);
 
-	m_search = new SearchWidget(m_tabs);
-	m_core = new KTorrentCore(this);
-	m_systray_icon = new TrayIcon(m_core, this); 
-
-
 	KIconLoader* iload = KGlobal::iconLoader();
 	m_tabs->addTab(vbox,iload->loadIconSet("down", KIcon::Small),i18n("Downloads"));
-	m_tabs->addTab(m_search,iload->loadIconSet("viewmag", KIcon::Small),i18n("Search"));
+
+	m_pref = new KTorrentPreferences(*this);
+	m_core = new KTorrentCore(this);
+	m_systray_icon = new TrayIcon(m_core, this); 
 
 	connect(m_core,SIGNAL(torrentAdded(bt::TorrentControl* )),
 			m_view,SLOT(addTorrent(bt::TorrentControl* )));
@@ -149,10 +149,6 @@ KTorrent::KTorrent()
 		setCentralWidget(s);
 	}
 
-
-
-	connect(m_search,SIGNAL(statusBarMsg(const QString& )),this,SLOT(changeStatusbar(const QString& )));
-	connect(m_search,SIGNAL(openTorrent(const KURL& )),this,SLOT(load(const KURL& )));
 	m_dcop = new KTorrentDCOP(this);
 
 	m_core->loadTorrents();
@@ -187,7 +183,7 @@ KTorrent::~KTorrent()
 	delete m_dcop;
 	bt::Out() << "I'm dead" << bt::endl;
 	delete m_core;
-//	delete m_mon;
+	delete m_pref;
 	delete m_statusInfo;
 	delete m_statusTransfer;
 	delete m_statusSpeed;
@@ -201,6 +197,15 @@ void KTorrent::addTabPage(QWidget* page,const QIconSet & icon,const QString & ca
 void KTorrent::removeTabPage(QWidget* page)
 {
 	m_tabs->removePage(page);
+}
+
+void KTorrent::addPrefPage(PrefPageInterface* page)
+{
+	m_pref->addPrefPage(page);
+}
+
+void KTorrent::removePrefPage(PrefPageInterface* page)
+{
 }
 
 void KTorrent::applySettings()
@@ -225,7 +230,6 @@ void KTorrent::applySettings()
 	m_core->changeDataDir(Settings::tempDir());
 	UDPTrackerSocket::setPort(Settings::udpTrackerPort());
 	m_core->changePort(Settings::port());
-	m_search->loadSearchEngines();
 }
 
 void KTorrent::load(const KURL& url)
@@ -270,10 +274,8 @@ void KTorrent::setupActions()
 	KStdAction::openNew(this,SLOT(fileNew()),actionCollection());
 	KStdAction::open(this, SLOT(fileOpen()), actionCollection());
 	KStdAction::quit(kapp, SLOT(quit()), actionCollection());
-	KAction* copy_act = KStdAction::copy(m_search,SLOT(copy()),actionCollection());
+	
 	KStdAction::paste(kapp,SLOT(paste()),actionCollection());
-
-	copy_act->plug(m_search->rightClickMenu(),0);
 	
 	m_save = KStdAction::save(this, SLOT(fileSave()), actionCollection());
 
@@ -522,8 +524,8 @@ void KTorrent::newToolbarConfig()
 void KTorrent::optionsPreferences()
 {
 	// popup some sort of preference dialog, here
-	KTorrentPreferences dlg(*this);
-	dlg.exec();
+	m_pref->updateData();
+	m_pref->exec();
 }
 
 void KTorrent::changeStatusbar(const QString& text)
@@ -600,6 +602,9 @@ void KTorrent::updatedStats()
 	m_systray_icon->updateStats(tmp + "<br>" + tmp1 + "<br>");
 }
 
-
+void KTorrent::mergePluginGui(Plugin* p)
+{
+	guiFactory()->addClient(p);
+}
 
 #include "ktorrent.moc"

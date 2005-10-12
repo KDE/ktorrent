@@ -266,6 +266,7 @@ void KTorrentCore::setKeepSeeding(bool ks)
 void KTorrentCore::onExit()
 {
 	downloads.clear();
+	pman->unloadAll();
 }
 
 bool KTorrentCore::changeDataDir(const QString & new_dir)

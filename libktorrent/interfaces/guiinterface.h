@@ -26,6 +26,8 @@ class QString;
 
 namespace kt
 {
+	class PrefPageInterface;
+	class Plugin;
 
 	/**
 	 * @author Joris Guisson
@@ -53,6 +55,31 @@ namespace kt
 		 * @param page The page
 		 */
 		virtual void removeTabPage(QWidget* page) = 0;
+
+		/**
+		 * Add a page to the preference dialog.
+		 * @param page The page
+		 */
+		virtual void addPrefPage(PrefPageInterface* page) = 0;
+
+		
+		/**
+		 * Remove a page from the preference dialog.
+		 * @param page The page
+		 */
+		virtual void removePrefPage(PrefPageInterface* page) = 0;
+
+		/**
+		 * Change the statusbar message.
+		 * @param msg The new message
+		 */
+		virtual void changeStatusbar(const QString& msg) = 0;
+
+		/**
+		 * Merge the GUI of a plugin.
+		 * @param p The Plugin
+		 */
+		virtual void mergePluginGui(Plugin* p) = 0;
 	};
 
 }

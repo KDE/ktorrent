@@ -17,61 +17,51 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <kparts/componentfactory.h>
-#include <util/log.h>
-#include <torrent/globals.h>
-#include <interfaces/guiinterface.h>
-#include "pluginmanager.h"
+#ifndef KTSEARCHPREFPAGE_H
+#define KTSEARCHPREFPAGE_H
 
-using namespace bt;
+
+#include <interfaces/prefpageinterface.h>
+#include "searchpref.h"
 
 namespace kt
 {
-
-	PluginManager::PluginManager(CoreInterface* core,GUIInterface* gui) : core(core),gui(gui)
+	class SearchPrefPageWidget : public SEPreferences
 	{
-		plugins.setAutoDelete(true);
-	}
+		Q_OBJECT
+	public:
+		SearchPrefPageWidget(QWidget *parent = 0);
+	
+		void apply();
+		void loadSearchEngines();
+		void saveSearchEngines();
+	
+	private slots:
+		void addClicked();
+		void removeClicked();
+		void addDefaultClicked();
+		void removeAllClicked();
+	private:
+		QPtrList<QListViewItem> m_items;
+	}; 
 
-	PluginManager::~PluginManager()
-	{}
-
-	void PluginManager::loadPluginList()
+	/**
+	@author Joris Guisson
+	*/
+	class SearchPrefPage : public PrefPageInterface
 	{
-		KTrader::OfferList offers = KTrader::self()->query("KTorrent/Plugin");
+	public:
+		SearchPrefPage();
+		virtual ~SearchPrefPage();
 
-		KTrader::OfferList::ConstIterator iter;
-		for(iter = offers.begin(); iter != offers.end(); ++iter)
-		{
-			KService::Ptr service = *iter;
-			int errCode = 0;
-			Plugin* plugin =
-					KParts::ComponentFactory::createInstanceFromService<kt::Plugin>
-					(service, 0, 0, QStringList(),&errCode);
-	        // here we ought to check the error code.
-			
-			if (plugin)
-			{
-				plugin->setCore(core);
-				plugin->setGUI(gui);
-				plugin->load();
+		virtual void apply();
+		virtual void createWidget(QWidget* parent);
+		virtual void updateData();
 
-				Out() << "Loaded plugin "<< plugin->getName() << endl;
-				plugins.append(plugin);
-				gui->mergePluginGui(plugin);
-			}
-		}
-	}
+	private:
+		SearchPrefPageWidget* widget;
+	};
 
-	void PluginManager::unloadAll()
-	{
-		QPtrList<Plugin>::iterator i = plugins.begin();
-		while (i != plugins.end())
-		{
-			Plugin* p = *i;
-			p->unload();
-			i++;
-		}
-		plugins.clear();
-	}
 }
+
+#endif

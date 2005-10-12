@@ -48,8 +48,14 @@ namespace kt
 		 * This basicly uses KTrader to get a list of available plugins, and
 		 * loads those, but does not initialize them. We will consider a plugin loaded
 		 * when it's load method is called.
+		 * NOTE: for now it loads all plugins
 		 */
 		void loadPluginList();
+
+		/**
+		 * Unload all plugins.
+		 */
+		void unloadAll();
 	};
 
 }

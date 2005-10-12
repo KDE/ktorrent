@@ -163,6 +163,7 @@ namespace bt
 	{
 		QHttpRequestHeader header( "GET",path);
 		header.setValue( "Host",host );
+		header.setValue("User-Agent","ktorrent");
 
 		http->setHost(host,p);
 		cid = http->request(header);
