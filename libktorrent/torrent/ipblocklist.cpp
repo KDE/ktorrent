@@ -29,6 +29,8 @@ namespace bt
 	{
 		insert("0.0.0.0",3);
 	}
+	
+	IPBlocklist::IPBlocklist(const IPBlocklist & ) {}
 
 	void IPBlocklist::insert( QString ip, int state )
 	{
@@ -40,6 +42,9 @@ namespace bt
 	
 	bool IPBlocklist::isBlocked( QString& ip )
 	{
+		if (!m_peers.contains(ip))
+			return false;
+		
 		return m_peers[ip] >= 3;
 	}
 }

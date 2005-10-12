@@ -231,7 +231,7 @@ namespace bt
 					return;
 				QString IP(p->getIPAddresss());
 				Out() << "Peer " << IP << " sent bad data" << endl;
-				IPBlocklist ipfilter = IPBlocklist::instance();
+				IPBlocklist & ipfilter = IPBlocklist::instance();
 				ipfilter.insert( IP );
 				if (ipfilter.isBlocked( IP ))
 				{

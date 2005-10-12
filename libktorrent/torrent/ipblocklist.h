@@ -41,11 +41,12 @@ namespace bt
 	class IPBlocklist
 	{
 		IPBlocklist();
+		IPBlocklist(const IPBlocklist & );
 		const IPBlocklist& operator=(const IPBlocklist&);
 
 	public:
 		
-		inline static IPBlocklist& instance() 
+		inline static IPBlocklist & instance() 
 		{
 			static IPBlocklist singleton;
 			return singleton; 
