@@ -1,11 +1,16 @@
 [Desktop Entry]
 Name=SearchPlugin
+Name[br]=Lugent klask
 Name[ga]=BreiseánCuardaigh
 Name[pt]='Plugin' de Procura
 Name[pt_BR]='Plugin' de Procura
+Name[sv]=Sökinsticksprogram
 Comment=Searching plugin for KTorrentt
+Comment[br]=Lugent klask evit KTorrentt
+Comment[da]=Søge-plugin for KTorrentt
 Comment[pt]='Plugin' de procura para o KTorrent
 Comment[pt_BR]='Plugin' de procura para o KTorrent
+Comment[sv]=Sökinsticksprogram för Ktorrent
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktsearchplugin

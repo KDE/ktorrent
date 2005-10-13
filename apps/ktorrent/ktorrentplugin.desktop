@@ -2,3 +2,7 @@
 Type=ServiceType
 X-KDE-ServiceType=KTorrent/Plugin
 Name=KTorrent Plugin
+Name[br]=Lugent KTorrent
+Name[pt]='Plugin' do KTorrent
+Name[pt_BR]='Plugin' do KTorrent
+Name[sv]=Ktorrent-insticksprogram
