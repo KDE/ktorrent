@@ -39,7 +39,6 @@
 
 #include "pref.h"
 #include "downloadpref.h"
-#include "searchpref.h" 
 #include "settings.h"
 #include "ktorrent.h"
 #include "interfaces/prefpageinterface.h"
