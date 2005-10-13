@@ -87,12 +87,7 @@ namespace bt
 	
 	void Peer::closeConnection()
 	{
-		if (sock)
-		{
-			sock->close();
-			delete sock;
-			sock = 0;
-		}
+		sock->close();
 	}
 	
 	void Peer::readyRead() 
@@ -104,13 +99,13 @@ namespace bt
 	void Peer::error(int)
 	{
 		//Out() << "Error : " << err << endl;
-		closeConnection();
+		sock->close();
 		killed = true;
 	}
 
 	void Peer::kill()
 	{
-		closeConnection();
+		sock->close();
 		killed = true;
 	}
 

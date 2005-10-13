@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#include <qdatetime.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include "functions.h"
@@ -46,5 +47,18 @@ namespace kt
 	{
 		KLocale* loc = KGlobal::locale();
 		return i18n("%1 KB/sec").arg(loc->formatNumber(speed,precision));
+	}
+
+	QString DurationToString(Uint32 nsecs)
+	{
+		KLocale* loc = KGlobal::locale();
+		QTime t;
+		int ndays = nsecs / 86400;
+		t = t.addSecs(nsecs % 86400);
+		QString s = loc->formatTime(t,true,true);
+		if (ndays > 0)
+			s = i18n("1 day ","%n days ",ndays) + s;
+
+		return s;
 	}
 }

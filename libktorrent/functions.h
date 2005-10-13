@@ -27,6 +27,7 @@ namespace kt
 {
 	QString BytesToString(bt::Uint64 bytes,int precision = -1);
 	QString KBytesPerSecToString(double speed,int precision = 1);
+	QString DurationToString(bt::Uint32 nsecs);
 
 	template<class T> int CompareVal(T a,T b)
 	{

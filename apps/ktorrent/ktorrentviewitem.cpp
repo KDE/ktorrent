@@ -129,18 +129,14 @@ void KTorrentViewItem::update()
 			else
 			{
 				Uint32 secs = (int)floor( (float)tc->getBytesLeft() / (float)tc->getDownloadRate() );
-				QTime t;
-				t = t.addSecs(secs);
-				setText(7,loc->formatTime(t,true,true));
+				setText(7,DurationToString(secs));
 			}
 		}
 		else 
 		{
 			double avg_speed = (double)bytes_downloaded / (double)tc->getRunningTimeDL();
 			double eta = tc->getBytesLeft() / avg_speed;
-			QTime t;
-			t = t.addSecs((int)floor(eta));
-			setText(7,loc->formatTime(t,true,true));
+			setText(7,DurationToString((int)floor(eta)));
 		}
 	}
 	
