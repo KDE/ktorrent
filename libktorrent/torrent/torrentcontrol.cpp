@@ -690,7 +690,7 @@ namespace bt
 			else if (line.startsWith("RUNNING_TIME_DL="))
 			{
 				bool ok = true;
-				int val = line.mid(16).toInt(&ok);
+				unsigned long val  = line.mid(16).toULong(&ok);
 				if(ok)
 					this->running_time_dl = val;
 				else
@@ -700,7 +700,7 @@ namespace bt
 			else if (line.startsWith("RUNNING_TIME_UL="))
 			{
 				bool ok = true;
-				int val = line.mid(16).toInt(&ok);
+				unsigned long val = line.mid(16).toULong(&ok);
 				if(ok)
 					this->running_time_ul = val;
 				else
