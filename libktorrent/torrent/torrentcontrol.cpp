@@ -106,7 +106,7 @@ namespace bt
 				updateTracker("completed");
 				finished(this);
 				pman->killSeeders();
-				QTime now = QTime::currentTime();
+				QDateTime now = QDateTime::currentDateTime();
 				running_time_dl += time_started_dl.secsTo(now);
 			}
 			else if (!completed && comp)
@@ -115,7 +115,7 @@ namespace bt
 				// when user selects that files which were previously excluded,
 				// should now be downloaded
 				updateTracker("started");
-				time_started_dl = QTime::currentTime();
+				time_started_dl = QDateTime::currentDateTime();
 			}
 			updateStatusMsg();
 
@@ -189,12 +189,12 @@ namespace bt
 		tracker_update_timer.update();
 		choker_update_timer.update();
 		stats_save_timer.update();
-		time_started_ul = time_started_dl = QTime::currentTime();
+		time_started_ul = time_started_dl = QDateTime::currentDateTime();
 	}
 
 	void TorrentControl::stop(bool user)
 	{
-		QTime now = QTime::currentTime();
+		QDateTime now = QDateTime::currentDateTime();
 		if(!completed)
 			running_time_dl += time_started_dl.secsTo(now);
 		running_time_ul += time_started_ul.secsTo(now);
@@ -655,7 +655,7 @@ namespace bt
 		out << "UPLOADED=" << QString::number(up->bytesUploaded()) << ::endl;
 		if (running)
 		{
-			QTime now = QTime::currentTime();
+			QDateTime now = QDateTime::currentDateTime();
 			out << "RUNNING_TIME_DL=" << (running_time_dl + time_started_dl.secsTo(now)) << ::endl;
 			out << "RUNNING_TIME_UL=" << (running_time_ul + time_started_ul.secsTo(now)) << ::endl;
 		}
@@ -770,7 +770,7 @@ namespace bt
 		if (!running || completed)
 			return running_time_dl;
 		else
-			return running_time_dl + time_started_dl.secsTo(QTime::currentTime());
+			return running_time_dl + time_started_dl.secsTo(QDateTime::currentDateTime());
 	}
 
 	Uint32 TorrentControl::getRunningTimeUL() const
@@ -778,7 +778,7 @@ namespace bt
 		if (!running)
 			return running_time_ul;
 		else
-			return running_time_ul + time_started_ul.secsTo(QTime::currentTime());
+			return running_time_ul + time_started_ul.secsTo(QDateTime::currentDateTime());
 	}
 
 

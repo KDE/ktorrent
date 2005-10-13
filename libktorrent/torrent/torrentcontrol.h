@@ -314,8 +314,8 @@ namespace bt
 		Uint32 num_tracker_attempts;
 		KURL last_tracker_url;
 		Status status;
-		QTime time_started_dl, time_started_ul;
-		int running_time_dl, running_time_ul;
+		QDateTime time_started_dl, time_started_ul;
+		unsigned long running_time_dl, running_time_ul;
 		Uint64 prev_bytes_dl, prev_bytes_ul;
 	};
 }
