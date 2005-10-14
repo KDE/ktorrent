@@ -302,11 +302,11 @@ void KTorrent::setupActions()
 			actionCollection(), "Remove");
 	
 	m_startall = new KAction(
-			i18n("to start all", "Start all"), "ktstart_all",0,this, SLOT(startAllDownloads()),
+			i18n("to start all", "Start All"), "ktstart_all",0,this, SLOT(startAllDownloads()),
 			actionCollection(), "Start all");
 	
 	m_stopall = new KAction(
-			i18n("to stop all", "Stop all"), "ktstop_all",0,this, SLOT(stopAllDownloads()),
+			i18n("to stop all", "Stop All"), "ktstop_all",0,this, SLOT(stopAllDownloads()),
 			actionCollection(), "Stop all");
 	
 	createGUI();
