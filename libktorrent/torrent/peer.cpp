@@ -316,6 +316,17 @@ namespace bt
 	{
 		return (float)pieces.numOnBits() / (float)pieces.getNumBits() * 100.0;
 	}
+
+	void Peer::getStats(kt::PeerInterface::Stats & s)
+	{
+		s.choked = this->isChoked();
+		s.client = peer_id.identifyClient();
+		s.download_rate = this->getDownloadRate();
+		s.upload_rate = this->getUploadRate();
+		s.ip_addresss = this->getIPAddresss();
+		s.perc_of_file = this->percentAvailable();
+		s.snubbed = this->isSnubbed();
+	}
 }
 
 #include "peer.moc"

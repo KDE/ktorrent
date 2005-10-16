@@ -24,6 +24,10 @@
 #include <util/ptrmap.h>
 #include "globals.h"
 
+namespace kt
+{
+	class MonitorInterface;
+}
 
 
 namespace bt
@@ -37,7 +41,6 @@ namespace bt
 	class PeerDownloader;
 	class Piece;
 	class Request;
-	class TorrentMonitor;
 	class ChunkSelector;
 
 	typedef PtrMap<Uint32,ChunkDownload>::iterator CurChunkItr;
@@ -125,7 +128,7 @@ namespace bt
 		 * Set the TorrentMonitor.
 		 * @param tmo 
 		 */
-		void setMonitor(TorrentMonitor* tmo);
+		void setMonitor(kt::MonitorInterface* tmo);
 		
 	private slots:
 		void pieceRecieved(const Piece & p);
@@ -152,7 +155,7 @@ namespace bt
 		bool endgame_mode;
 		ChunkSelector* chunk_selector;
 		
-		TorrentMonitor* tmon;
+		kt::MonitorInterface* tmon;
 	};
 	
 

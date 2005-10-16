@@ -23,18 +23,18 @@
 #include <qmap.h>
 #include <klistview.h>
 
-namespace bt
+namespace kt
 {
-	class Peer;
+	class PeerInterface;
 }
 
 class PeerView;
 
 class PeerViewItem : public KListViewItem
 {
-	bt::Peer* peer;
+	kt::PeerInterface* peer;
 public:
-	PeerViewItem(PeerView* pv,bt::Peer* peer);
+	PeerViewItem(PeerView* pv,kt::PeerInterface* peer);
 
 	void update();
 	int compare(QListViewItem * i,int col,bool) const;
@@ -47,14 +47,14 @@ class PeerView : public KListView
 {
 	Q_OBJECT
 	
-	QMap<bt::Peer*,PeerViewItem*> items;
+	QMap<kt::PeerInterface*,PeerViewItem*> items;
 public:
 	PeerView(QWidget *parent = 0, const char *name = 0);
 	virtual ~PeerView();
 	
 public slots:
-	void addPeer(bt::Peer* peer);
-	void removePeer(bt::Peer* peer);
+	void addPeer(kt::PeerInterface* peer);
+	void removePeer(kt::PeerInterface* peer);
 	void update();
 	void removeAll();
 };

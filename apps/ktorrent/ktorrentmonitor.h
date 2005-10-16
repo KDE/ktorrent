@@ -20,35 +20,35 @@
 #ifndef KTORRENTMONITOR_H
 #define KTORRENTMONITOR_H
 
-#include <torrent/torrentmonitor.h>
+#include <interfaces/monitorinterface.h>
 
 class PeerView;
 class ChunkDownloadView;
 
-namespace bt
+namespace kt
 {
-	class TorrentControl;
+	class TorrentInterface;
 }
 
 /**
 @author Joris Guisson
 */
-class KTorrentMonitor : public bt::TorrentMonitor
+class KTorrentMonitor : public kt::MonitorInterface
 {
-	bt::TorrentControl* tc;
+	kt::TorrentInterface* tc;
 	PeerView* pv;
 	ChunkDownloadView* cdv;
 public:
 	KTorrentMonitor(
-			bt::TorrentControl* tc,
+			kt::TorrentInterface* tc,
 			PeerView* pv,
 			ChunkDownloadView* cdv);
 	virtual ~KTorrentMonitor();
 
-	virtual void downloadRemoved(bt::ChunkDownload* cd);
-	virtual void downloadStarted(bt::ChunkDownload* cd);
-	virtual void peerAdded(bt::Peer* peer);
-	virtual void peerRemoved(bt::Peer* peer);
+	virtual void downloadRemoved(kt::ChunkDownloadInterface* cd);
+	virtual void downloadStarted(kt::ChunkDownloadInterface* cd);
+	virtual void peerAdded(kt::PeerInterface* peer);
+	virtual void peerRemoved(kt::PeerInterface* peer);
 	virtual void stopped();
 	virtual void destroyed();
 

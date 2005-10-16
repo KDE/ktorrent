@@ -30,7 +30,7 @@ using bt::Uint32;
 namespace bt
 {
 	class TorrentFile;
-	class TorrentControl;
+	class TorrentInterface;
 }
 
 /**
@@ -42,15 +42,15 @@ class IWFileTreeItem : public QCheckListItem
 {
 	QString name;
 	Uint32 size;
-	bt::TorrentFile & file;
+	kt::TorrentFileInterface & file;
 	IWFileTreeDirItem* parent;
 	bool manual_change;
 public:
-	IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,bt::TorrentFile & file);
+	IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file);
 	virtual ~IWFileTreeItem();
 
-	bt::TorrentFile & getTorrentFile() {return file;}
-	void updatePreviewInformation(bt::TorrentControl* tc);
+	kt::TorrentFileInterface & getTorrentFile() {return file;}
+	void updatePreviewInformation(kt::TorrentInterface* tc);
 	void setChecked(bool on);
 	
 private:

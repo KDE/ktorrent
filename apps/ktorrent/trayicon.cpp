@@ -25,7 +25,7 @@
 #include "trayicon.h"
 #include <qtooltip.h>
 #include <kpassivepopup.h>
-#include "torrent/torrentcontrol.h"
+#include "interfaces/torrentinterface.h"
 #include "ktorrentcore.h"
 #include "functions.h"
 
@@ -39,10 +39,10 @@ TrayIcon::TrayIcon( KTorrentCore* tc, QWidget *parent, const char *name)
 	m_core = tc; 
 	setPixmap(loadIcon("ktorrent"));
 	connect(this,SIGNAL(quitSelected()),kapp,SLOT(quit()));
-	connect(m_core, SIGNAL(finished(bt::TorrentControl* )),
-			this, SLOT(finished(bt::TorrentControl* )));
-	connect(m_core,SIGNAL(torrentStoppedByError(bt::TorrentControl*, QString )),
-			this,SLOT(torrentStoppedByError(bt::TorrentControl*, QString )));
+	connect(m_core, SIGNAL(finished(kt::TorrentInterface* )),
+			this, SLOT(finished(kt::TorrentInterface* )));
+	connect(m_core,SIGNAL(torrentStoppedByError(kt::TorrentInterface*, QString )),
+			this,SLOT(torrentStoppedByError(kt::TorrentInterface*, QString )));
 }
 
 TrayIcon::~TrayIcon()
@@ -54,19 +54,20 @@ void TrayIcon::updateStats(const QString stats)
 	QToolTip::add(this, "<b>KTorrent</b><br>"+stats);
 }
 
-void TrayIcon::finished(TorrentControl* tc) 
+void TrayIcon::finished(TorrentInterface* tc) 
 {
 	double speed_up = 0;
 	double speed_down = 0;
+	const TorrentStats & s = tc->getStats();
 	if (tc->getRunningTimeUL() != 0) //getRunningTimeUL is actually total running time
 	{
-		speed_up = ((double)tc->getBytesUploaded()/1024.0) / (double)tc->getRunningTimeUL();
-		speed_down = ((double)tc->getBytesDownloaded()/1024.0) / (double)tc->getRunningTimeDL();
+		speed_up = ((double)s.bytes_uploaded/1024.0) / (double)tc->getRunningTimeUL();
+		speed_down = ((double)s.bytes_downloaded/1024.0) / (double)tc->getRunningTimeDL();
 	}
 			
 	QString msg = i18n("<b>%1</b> has completed downloading."
 			"<br>Average speed: %2 DL / %3 UL.")
-			.arg(tc->getTorrentName())
+			.arg(s.torrent_name)
 			.arg(KBytesPerSecToString(speed_down))
 			.arg(KBytesPerSecToString(speed_up));
 	
@@ -74,10 +75,11 @@ void TrayIcon::finished(TorrentControl* tc)
 						   msg,loadIcon("ktorrent"), this);
 }
 
-void TrayIcon::torrentStoppedByError(bt::TorrentControl* tc, QString msg) 
+void TrayIcon::torrentStoppedByError(kt::TorrentInterface* tc, QString msg) 
 {
+	const TorrentStats & s = tc->getStats();
 	QString err_msg = i18n("<b>%1</b> has been stopped by the following error: <br>%2")
-			.arg(tc->getTorrentName()).arg(msg);
+			.arg(s.torrent_name).arg(msg);
 	KPassivePopup::message(i18n("Error"),err_msg,loadIcon("ktorrent"),this);
 } 
  

@@ -24,6 +24,7 @@
 #include <qstring.h>
 #include <qobject.h>
 #include <util/constants.h>
+#include <interfaces/torrentfileinterface.h>
 
 namespace bt
 {
@@ -34,17 +35,13 @@ namespace bt
 	 * File in a multi file torrent. Keeps track of the path of the file,
 	 * it's size, offset into the cache and between which chunks it lies.
 	 */
-	class TorrentFile : public QObject
+	class TorrentFile : public QObject,public kt::TorrentFileInterface
 	{
 		Q_OBJECT
 
 		Uint32 index;
-		QString path;
-		Uint64 size;
 		Uint64 cache_offset;
-		Uint32 first_chunk;
 		Uint64 first_chunk_off;
-		Uint32 last_chunk;
 		Uint64 last_chunk_size;
 		bool do_not_download;
 	public:
@@ -71,29 +68,14 @@ namespace bt
 		TorrentFile(const TorrentFile & tf);
 		virtual ~TorrentFile();
 
-		/// See if the TorrentFile is null.
-		bool isNull() const {return path.isNull();}
-
 		/// Get the index of the file
 		Uint32 getIndex() const {return index;}
 		
-		/// Get the path of the file
-		QString getPath() const {return path;}
-
-		/// Get the size of the file
-		Uint64 getSize() const {return size;}
-
 		/// Get the offset into the torrent
 		Uint64 getCacheOffset() const {return cache_offset;}
 
-		/// Get the index of the first chunk in which this file lies
-		Uint32 getFirstChunk() const {return first_chunk;}
-
 		/// Get the offset at which the file starts in the first chunk
 		Uint64 getFirstChunkOffset() const {return first_chunk_off;}
-
-		/// Get the last chunk of the file
-		Uint32 getLastChunk() const {return last_chunk;}
 
 		/// Get how many bytes the files takes up of the last chunk
 		Uint64 getLastChunkSize() const {return last_chunk_size;}
@@ -115,7 +97,6 @@ namespace bt
 		TorrentFile & operator = (const TorrentFile & tf);
 
 		static TorrentFile null;
-
 	signals:
 		/**
 		 * Signal emitted when the do_not_download variable changes.

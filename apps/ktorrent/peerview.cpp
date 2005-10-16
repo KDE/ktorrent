@@ -19,14 +19,14 @@
  ***************************************************************************/
 #include <klocale.h>
 #include <kglobal.h>
-#include <torrent/peer.h>
+#include <interfaces/peerinterface.h>
 #include "peerview.h"
 #include "functions.h"
 
 using namespace bt;
 using namespace kt;
 
-PeerViewItem::PeerViewItem(PeerView* pv,bt::Peer* peer) : KListViewItem(pv),peer(peer)
+PeerViewItem::PeerViewItem(PeerView* pv,kt::PeerInterface* peer) : KListViewItem(pv),peer(peer)
 {
 	update();
 }
@@ -35,31 +35,34 @@ PeerViewItem::PeerViewItem(PeerView* pv,bt::Peer* peer) : KListViewItem(pv),peer
 void PeerViewItem::update()
 {
 	KLocale* loc = KGlobal::locale();
+	PeerInterface::Stats s;
+	peer->getStats(s);
 	
-	setText(0,peer->getIPAddresss());
-	setText(1,peer->getPeerID().identifyClient());
-	setText(2,KBytesPerSecToString(peer->getDownloadRate() / 1024.0));
-	setText(3,KBytesPerSecToString(peer->getUploadRate() / 1024.0));
-	setText(4,peer->isChoked() ? i18n("yes") : i18n("no"));
-	setText(5,peer->isSnubbed() ? i18n("yes") : i18n("no"));
-	setText(6,QString("%1 %").arg(loc->formatNumber(peer->percentAvailable(),2)));
+	setText(0,s.ip_addresss);
+	setText(1,s.client);
+	setText(2,KBytesPerSecToString(s.download_rate / 1024.0));
+	setText(3,KBytesPerSecToString(s.upload_rate / 1024.0));
+	setText(4,s.choked ? i18n("yes") : i18n("no"));
+	setText(5,s.snubbed ? i18n("yes") : i18n("no"));
+	setText(6,QString("%1 %").arg(loc->formatNumber(s.perc_of_file,2)));
 }
 
 int PeerViewItem::compare(QListViewItem * i,int col,bool) const
 {
-	Peer* op = ((PeerViewItem*)i)->peer;
+	PeerInterface* op = ((PeerViewItem*)i)->peer;
+	PeerInterface::Stats s;
+	peer->getStats(s);
+	PeerInterface::Stats os;
+	op->getStats(os);
 	switch (col)
 	{
-		case 0:
-			return QString::compare(peer->getIPAddresss(),op->getIPAddresss());
-		case 1:
-			return QString::compare(peer->getPeerID().identifyClient(),
-									op->getPeerID().identifyClient());
-		case 2: return CompareVal(peer->getDownloadRate(),op->getDownloadRate());
-		case 3: return CompareVal(peer->getUploadRate(),op->getUploadRate());
-		case 4: return CompareVal(peer->isChoked(),op->isChoked());
-		case 5: return CompareVal(peer->isSnubbed(),op->isSnubbed());
-		case 6: return CompareVal(peer->percentAvailable(),op->percentAvailable());
+		case 0: return QString::compare(s.ip_addresss,os.ip_addresss);
+		case 1: return QString::compare(s.client,os.client);
+		case 2: return CompareVal(s.download_rate,os.download_rate);
+		case 3: return CompareVal(s.upload_rate,os.upload_rate);
+		case 4: return CompareVal(s.choked,os.choked);
+		case 5: return CompareVal(s.snubbed,os.snubbed);
+		case 6: return CompareVal(s.perc_of_file,os.perc_of_file);
 	}
 	return 0;
 }
@@ -81,13 +84,13 @@ PeerView::PeerView(QWidget *parent, const char *name)
 PeerView::~PeerView()
 {}
 
-void PeerView::addPeer(bt::Peer* peer)
+void PeerView::addPeer(kt::PeerInterface* peer)
 {
 	PeerViewItem* i = new PeerViewItem(this,peer);
 	items.insert(peer,i);
 }
 
-void PeerView::removePeer(bt::Peer* peer)
+void PeerView::removePeer(kt::PeerInterface* peer)
 {
 	PeerViewItem* it = items[peer];
 	delete it;
@@ -96,7 +99,7 @@ void PeerView::removePeer(bt::Peer* peer)
 
 void PeerView::update()
 {
-	QMap<bt::Peer*,PeerViewItem*>::iterator i = items.begin();
+	QMap<kt::PeerInterface*,PeerViewItem*>::iterator i = items.begin();
 	while (i != items.end())
 	{
 		PeerViewItem* it = i.data();

@@ -1,7 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by                                                 *
- *   Joris Guisson <joris.guisson@gmail.com>                               *
- *   Ivan Vasic <ivasic@gmail.com>                                         *
+ *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,34 +17,48 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef TRAYICON_H
-#define TRAYICON_H
+#ifndef KTPEERINTERFACE_H
+#define KTPEERINTERFACE_H
 
-#include <ksystemtray.h>
-#include "ktorrentcore.h" 
-#include "interfaces/torrentinterface.h" 
-
-using namespace bt; 
-class QString;
-
-/**
-@author Joris Guisson
-*/
-class TrayIcon : public KSystemTray
+#include <qstring.h>
+#include <util/constants.h>
+namespace kt
 {
-	Q_OBJECT
-public:
-	TrayIcon(KTorrentCore* tc, QWidget *parent = 0, const char *name = 0);
-	~TrayIcon();
 
-	void updateStats(const QString stats);
-	
-private slots:
-	void finished(kt::TorrentInterface* tc);
-	void torrentStoppedByError(kt::TorrentInterface* tc, QString msg); 
+	/**
+	 * @author Joris Guisson
+	 * @brief Interface for a Peer
+	 *
+	 * This is the interface for a Peer, it allows other classes to
+	 * get statistics about a Peer.
+	*/
+	class PeerInterface
+	{
+	public:
+		PeerInterface();
+		virtual ~PeerInterface();
 
-private:
-	KTorrentCore* m_core;
-};
+		struct Stats
+		{
+			/// IP address of peer (dotted notation)
+			QString ip_addresss;
+			/// The client (Azureus, BitComet, ...)
+			QString client;
+			/// Download rate (bytes/s)
+			bt::Uint32 download_rate;
+			/// Upload rate (bytes/s)
+			bt::Uint32 upload_rate;
+			/// Choked or not
+			bool choked;
+			/// Snubbed or not (i.e. we haven't recieved a piece for a minute)
+			bool snubbed;
+			/// Percentage of file which the peer has
+			float perc_of_file;
+		};
+
+		virtual void getStats(Stats & s) = 0;
+	};
+
+}
 
 #endif

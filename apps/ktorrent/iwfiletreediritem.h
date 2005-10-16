@@ -31,7 +31,7 @@ using bt::Uint32;
 namespace bt
 {
 	class TorrentFile;
-	class TorrentControl;
+	class TorrentInterface;
 }
 
 
@@ -53,7 +53,7 @@ public:
 	IWFileTreeDirItem(IWFileTreeDirItem* parent,const QString & name);
 	virtual ~IWFileTreeDirItem();
 
-	void insert(const QString & path,bt::TorrentFile & file);
+	void insert(const QString & path,kt::TorrentFileInterface & file);
 
 	/**
 	 * Recursivly walk the tree to find the TorrentFile which
@@ -64,7 +64,7 @@ public:
 	 * @param item Pointer to the QListViewItem
 	 * @return A reference to the TorrentFile
 	 */
-	bt::TorrentFile & findTorrentFile(QListViewItem* item);
+	kt::TorrentFileInterface & findTorrentFile(QListViewItem* item);
 
 	/**
 	 * Set all items checked or not.
@@ -79,9 +79,9 @@ public:
 
 	/**
 	 * Update the preview information.
-	 * @param tc The TorrentControl object
+	 * @param tc The TorrentInterface object
 	 */
-	void updatePreviewInformation(bt::TorrentControl* tc);
+	void updatePreviewInformation(kt::TorrentInterface* tc);
 
 	/**
 	 * Called by the child to notify the parent it's state has changed.

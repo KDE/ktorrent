@@ -25,7 +25,7 @@
 #include <krun.h>
 #include <kurldrag.h>
 #include <kmessagebox.h>
-#include <torrent/torrentcontrol.h>
+#include <interfaces/torrentinterface.h>
 #include <torrent/globals.h>
 #include <kmessagebox.h>
 #include "ktorrentview.h"
@@ -35,6 +35,7 @@
 
 
 using namespace bt;
+using namespace kt;
 
 KTorrentView::KTorrentView(QWidget *parent)
 	: KListView(parent),show_debug_view(false),menu(0),curr(0)
@@ -97,12 +98,12 @@ void KTorrentView::setShowDebugView(bool yes)
 int KTorrentView::getNumRunning()
 {
 	int num = 0;
-	QMap<bt::TorrentControl*,KTorrentViewItem*>::iterator i = items.begin();
+	QMap<TorrentInterface*,KTorrentViewItem*>::iterator i = items.begin();
 	while (i != items.end())
 	{
 		KTorrentViewItem* tvi = i.data();
-		TorrentControl* tc = tvi->getTC();
-		num += tc->isRunning() ? 1 : 0;
+		TorrentInterface* tc = tvi->getTC();
+		num += tc->getStats().running ? 1 : 0;
 		i++;
 	}
 	return num;
@@ -113,15 +114,16 @@ void KTorrentView::startDownload()
 	if (!curr)
 		return;
 
-	bt::TorrentControl* tc = curr->getTC();
+	TorrentInterface* tc = curr->getTC();
+	const TorrentStats & s = tc->getStats();
 	
 	bool keep_seeding = Settings::keepSeeding();
 	int max_downloads = Settings::maxDownloads();
-	bool s = (tc->getBytesLeft() == 0 && keep_seeding) ||
-			(tc->getBytesLeft() != 0 &&
+	bool start_tc = (s.bytes_left == 0 && keep_seeding) ||
+			(s.bytes_left != 0 &&
 			(max_downloads == 0 || getNumRunning() < max_downloads));
 	
-	if(s)
+	if(start_tc)
 	{
 		tc->start();
 	}
@@ -141,7 +143,7 @@ void KTorrentView::stopDownload()
 	if (!curr)
 		return;
 
-	bt::TorrentControl* tc = curr->getTC();
+	TorrentInterface* tc = curr->getTC();
 	tc->stop(true);
 }
 	
@@ -150,8 +152,9 @@ void KTorrentView::removeDownload()
 	if (!curr)
 		return;
 
-	bt::TorrentControl* tc = curr->getTC();
-	if (tc->getBytesLeft() > 0 || !tc->isSaved())
+	TorrentInterface* tc = curr->getTC();
+	const TorrentStats & s = tc->getStats();
+	if (s.bytes_left > 0 || !s.saved)
 	{
 		QString msg = i18n("You will lose all data downloaded for this torrent, "
 				"if you do this. Are you sure you want to do this?");
@@ -167,8 +170,7 @@ void KTorrentView::manualAnnounce()
 	if (!curr)
 		return;
 
-	bt::TorrentControl* tc = curr->getTC();
-	tc->updateTracker();
+	curr->getTC()->updateTracker();
 }
 
 void KTorrentView::previewFile() 
@@ -176,11 +178,10 @@ void KTorrentView::previewFile()
     if (!curr) 
         return; 
 
-    bt::TorrentControl* tc = curr->getTC(); 
-    new KRun(tc->getDataDir()+"cache", true, true);
+	new KRun(curr->getTC()->getDataDir()+"cache", true, true);
 }
 
-bt::TorrentControl* KTorrentView::getCurrentTC()
+TorrentInterface* KTorrentView::getCurrentTC()
 {
 	KTorrentViewItem* tvi = dynamic_cast<KTorrentViewItem*>(currentItem());
 	if (tvi)
@@ -207,16 +208,17 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem* item,const QPoint 
 	curr = dynamic_cast<KTorrentViewItem*>(item);
 	if (curr)
 	{
-		bt::TorrentControl* tc = curr->getTC();
-		menu->setItemEnabled(start_id,!tc->isRunning());
-		menu->setItemEnabled(stop_id,tc->isRunning());
+		TorrentInterface* tc = curr->getTC();
+		const TorrentStats & s = tc->getStats();
+		menu->setItemEnabled(start_id,!s.running);
+		menu->setItemEnabled(stop_id,s.running);
 		menu->setItemEnabled(remove_id,true);
-		menu->setItemEnabled(preview_id, tc->readyForPreview() && !tc->isMultiFileTorrent()); 
+		menu->setItemEnabled(preview_id, tc->readyForPreview() && !s.multi_file_torrent);
 		menu->popup(p);
 	}
 }
 
-void KTorrentView::addTorrent(bt::TorrentControl* tc)
+void KTorrentView::addTorrent(TorrentInterface* tc)
 {
 	KTorrentViewItem* tvi = new KTorrentViewItem(this,tc);
 	items.insert(tc,tvi);
@@ -225,9 +227,9 @@ void KTorrentView::addTorrent(bt::TorrentControl* tc)
 		currentChanged(tc);
 }
 
-void KTorrentView::removeTorrent(bt::TorrentControl* tc)
+void KTorrentView::removeTorrent(TorrentInterface* tc)
 {
-	QMap<bt::TorrentControl*,KTorrentViewItem*>::iterator i = items.find(tc);
+	QMap<kt::TorrentInterface*,KTorrentViewItem*>::iterator i = items.find(tc);
 	if (i != items.end())
 	{
 		KTorrentViewItem* tvi = i.data();
@@ -244,7 +246,7 @@ void KTorrentView::removeTorrent(bt::TorrentControl* tc)
 
 void KTorrentView::update()
 {
-	QMap<bt::TorrentControl*,KTorrentViewItem*>::iterator i = items.begin();
+	QMap<kt::TorrentInterface*,KTorrentViewItem*>::iterator i = items.begin();
 	while (i != items.end())
 	{
 		KTorrentViewItem* tvi = i.data();

@@ -22,7 +22,8 @@
 #include <kiconloader.h>
 #include <util/functions.h>
 #include <torrent/torrentfile.h>
-#include <torrent/torrentcontrol.h>
+#include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
 #include "iwfiletreediritem.h"
 #include "iwfiletreeitem.h"
 #include "functions.h"
@@ -62,7 +63,7 @@ IWFileTreeDirItem::~IWFileTreeDirItem()
 {
 }
 
-void IWFileTreeDirItem::insert(const QString & path,bt::TorrentFile & file)
+void IWFileTreeDirItem::insert(const QString & path,kt::TorrentFileInterface & file)
 {
 	size += file.getSize();
 	setText(1,BytesToString(size));
@@ -85,7 +86,7 @@ void IWFileTreeDirItem::insert(const QString & path,bt::TorrentFile & file)
 	}
 }
 
-bt::TorrentFile & IWFileTreeDirItem::findTorrentFile(QListViewItem* item)
+kt::TorrentFileInterface & IWFileTreeDirItem::findTorrentFile(QListViewItem* item)
 {
 	// first see if item matches a child
 	bt::PtrMap<QString,IWFileTreeItem>::iterator i = children.begin();
@@ -100,10 +101,11 @@ bt::TorrentFile & IWFileTreeDirItem::findTorrentFile(QListViewItem* item)
 	bt::PtrMap<QString,IWFileTreeDirItem>::iterator j = subdirs.begin();
 	while (j != subdirs.end())
 	{
-		bt::TorrentFile & tf = j->second->findTorrentFile(item);
+		kt::TorrentFileInterface & tf = j->second->findTorrentFile(item);
 		if (!tf.isNull())
 			return tf;
 		j++;
+		
 	}
 
 	// we haven't found anything
@@ -156,7 +158,7 @@ void IWFileTreeDirItem::invertChecked()
 	}
 }
 
-void IWFileTreeDirItem::updatePreviewInformation(bt::TorrentControl* tc)
+void IWFileTreeDirItem::updatePreviewInformation(kt::TorrentInterface* tc)
 {
 	// first set all the child items
 	bt::PtrMap<QString,IWFileTreeItem>::iterator i = children.begin();

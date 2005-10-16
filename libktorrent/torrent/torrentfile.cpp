@@ -26,11 +26,12 @@
 namespace bt
 {
 
-	TorrentFile::TorrentFile()
+	TorrentFile::TorrentFile() : TorrentFileInterface(QString::null,0)
 	{}
 
-	TorrentFile::TorrentFile(Uint32 index,const QString & path,Uint64 off,Uint64 size,Uint64 chunk_size)
-	: index(index),path(path),size(size),cache_offset(off)
+	TorrentFile::TorrentFile(Uint32 index,const QString & path,
+							 Uint64 off,Uint64 size,Uint64 chunk_size)
+	: TorrentFileInterface(path,size),index(index),cache_offset(off)
 	{
 		first_chunk = off / chunk_size;
 		first_chunk_off = off % chunk_size;
@@ -39,7 +40,8 @@ namespace bt
 		do_not_download = false;
 	}
 	
-	TorrentFile::TorrentFile(const TorrentFile & tf) : QObject(0,0)
+	TorrentFile::TorrentFile(const TorrentFile & tf)
+		: QObject(0,0),TorrentFileInterface(QString::null,0)
 	{
 		index = tf.getIndex();
 		path = tf.getPath();

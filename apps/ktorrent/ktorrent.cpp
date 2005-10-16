@@ -51,7 +51,7 @@
 #include <kaction.h>
 #include <kstdaction.h>
 
-#include <torrent/torrentcontrol.h>
+#include <interfaces/torrentinterface.h>
 #include <torrent/peermanager.h>
 #include <torrent/uploadcap.h>
 #include <torrent/downloadcap.h>
@@ -105,20 +105,20 @@ KTorrent::KTorrent()
 	m_core = new KTorrentCore(this);
 	m_systray_icon = new TrayIcon(m_core, this); 
 
-	connect(m_core,SIGNAL(torrentAdded(bt::TorrentControl* )),
-			m_view,SLOT(addTorrent(bt::TorrentControl* )));
+	connect(m_core,SIGNAL(torrentAdded(kt::TorrentInterface* )),
+			m_view,SLOT(addTorrent(kt::TorrentInterface* )));
 
-	connect(m_core,SIGNAL(torrentRemoved(bt::TorrentControl* )),
-			m_view,SLOT(removeTorrent(bt::TorrentControl* )));
+	connect(m_core,SIGNAL(torrentRemoved(kt::TorrentInterface* )),
+			m_view,SLOT(removeTorrent(kt::TorrentInterface* )));
 
-	connect(m_view,SIGNAL(currentChanged(bt::TorrentControl* )),
-			this,SLOT(currentChanged(bt::TorrentControl* )));
+	connect(m_view,SIGNAL(currentChanged(kt::TorrentInterface* )),
+			this,SLOT(currentChanged(kt::TorrentInterface* )));
 
-	connect(m_core,SIGNAL(finished(bt::TorrentControl* )),
-			this,SLOT(askAndSave(bt::TorrentControl* )));
+	connect(m_core,SIGNAL(finished(kt::TorrentInterface* )),
+			this,SLOT(askAndSave(kt::TorrentInterface* )));
 
-	connect(m_view,SIGNAL(wantToRemove(bt::TorrentControl* )),
-			m_core,SLOT(remove(bt::TorrentControl* )));
+	connect(m_view,SIGNAL(wantToRemove(kt::TorrentInterface* )),
+			m_core,SLOT(remove(kt::TorrentInterface* )));
 
 
 	connect(m_view,SIGNAL(dropped(QDropEvent*,QListViewItem*)),
@@ -249,14 +249,14 @@ void KTorrent::load(const KURL& url)
 	}
 }
 
-void KTorrent::currentChanged(bt::TorrentControl* tc)
+void KTorrent::currentChanged(kt::TorrentInterface* tc)
 {
 	if (tc)
 	{
-		bool completed = tc->getBytesLeft() == 0;
-		m_save->setEnabled(completed && !tc->isSaved());
-		m_start->setEnabled(!tc->isRunning());
-		m_stop->setEnabled(tc->isRunning());
+		const TorrentStats & s = tc->getStats();
+		m_save->setEnabled(s.completed && !s.saved);
+		m_start->setEnabled(!s.running);
+		m_stop->setEnabled(s.running);
 		m_remove->setEnabled(true);
 	}
 	else
@@ -352,9 +352,9 @@ void KTorrent::fileOpen()
 		load(url);
 }
 
-void KTorrent::save(bt::TorrentControl* tc)
+void KTorrent::save(kt::TorrentInterface* tc)
 {
-	if (!tc || tc->getBytesLeft() != 0)
+	if (!tc || tc->getStats().completed)
 		return;
 
 
@@ -375,14 +375,14 @@ void KTorrent::save(bt::TorrentControl* tc)
 	}
 }
 
-void KTorrent::askAndSave(bt::TorrentControl* tc)
+void KTorrent::askAndSave(kt::TorrentInterface* tc)
 {
 	if (Settings::saveDir() == QString::null || !bt::Exists(Settings::saveDir()))
 	{
 		int ret = KMessageBox::questionYesNo(
 			this,
 			i18n("The download %1 has finished. Do you want to save it now?")
-				.arg(tc->getTorrentName()),
+				.arg(tc->getStats().torrent_name),
 			i18n("Save Torrent?"),KStdGuiItem::save(),i18n("Do Not Save"));
 
 		if (ret == KMessageBox::Yes)
@@ -406,18 +406,18 @@ void KTorrent::askAndSave(bt::TorrentControl* tc)
 
 void KTorrent::fileSave()
 {
-	TorrentControl* tc = m_view->getCurrentTC();
+	TorrentInterface* tc = m_view->getCurrentTC();
 	save(tc);
 	currentChanged(m_view->getCurrentTC());
 }
 
 void KTorrent::startDownload()
 {
-	TorrentControl* tc = m_view->getCurrentTC();
-	if (tc && !tc->isRunning())
+	TorrentInterface* tc = m_view->getCurrentTC();
+	if (tc && !tc->getStats().running)
 	{
 		m_core->start(tc);
-		if (!tc->isRunning())
+		if (!tc->getStats().running)
 		{
 			KMessageBox::error(this,
 				i18n("Cannot start more than 1 download."
@@ -440,8 +440,8 @@ void KTorrent::startAllDownloads()
 
 void KTorrent::stopDownload()
 {
-	TorrentControl* tc = m_view->getCurrentTC();
-	if (tc && tc->isRunning())
+	TorrentInterface* tc = m_view->getCurrentTC();
+	if (tc && tc->getStats().running)
 	{
 		tc->stop(true);
 		currentChanged(tc);
@@ -455,10 +455,11 @@ void KTorrent::stopAllDownloads()
 
 void KTorrent::removeDownload()
 {
-	TorrentControl* tc = m_view->getCurrentTC();
+	TorrentInterface* tc = m_view->getCurrentTC();
 	if (tc)
 	{
-		if (tc->getBytesLeft() > 0 || !tc->isSaved())
+		const TorrentStats & s = tc->getStats();
+		if (s.bytes_left > 0 || !s.saved)
 		{
 			QString msg = i18n("You will lose all data downloaded for this torrent, "
 					"if you do this. Are you sure you want to do this?");
@@ -563,13 +564,13 @@ void KTorrent::urlDropped(QDropEvent* event,QListViewItem*)
 
 void KTorrent::updatedStats()
 {
-	TorrentControl* tc = m_view->getCurrentTC();
+	TorrentInterface* tc = m_view->getCurrentTC();
 	if (tc)
 	{
-		bool completed = tc->getBytesLeft() == 0;
-		m_save->setEnabled(completed && !tc->isSaved());
-		m_start->setEnabled(!tc->isRunning());
-		m_stop->setEnabled(tc->isRunning());
+		const TorrentStats & s = tc->getStats();
+		m_save->setEnabled(s.completed && !s.saved);
+		m_start->setEnabled(!s.running);
+		m_stop->setEnabled(s.running);
 		m_remove->setEnabled(true);
 	}
 	else

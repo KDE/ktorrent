@@ -27,6 +27,8 @@
 #include <kurl.h>
 #include "globals.h"
 #include <util/timer.h>
+#include <interfaces/torrentinterface.h>
+#include <interfaces/monitorinterface.h>
 
 class KProgressDialog;
 
@@ -40,7 +42,6 @@ namespace bt
 	class Downloader;
 	class Uploader;
 	class Peer;
-	class TorrentMonitor;
 	class BitSet;
 	
 	/**
@@ -51,23 +52,12 @@ namespace bt
 	 * This class controls the uploading, downloading, choking,
 	 * updating the tracker and chunk management.
 	 */
-	class TorrentControl : public QObject
+	class TorrentControl : public kt::TorrentInterface
 	{
 		Q_OBJECT
 	public:
 		TorrentControl();
 		virtual ~TorrentControl();
-
-		enum Status
-		{
-			NOT_STARTED,
-			COMPLETE,
-			SEEDING,
-			DOWNLOADING,
-			STALLED,
-			STOPPED,
-			ERROR
-		};
 
 		/**
 		 * Get a BitSet of the status of all Chunks
@@ -106,91 +96,20 @@ namespace bt
 		 */
 		void rollback();
 
-		/// Get the suggested name of the torrent
-		QString getTorrentName() const;
-
-		/// Get the number of bytes downloaded
-		Uint64 getBytesDownloaded() const;
-
-		/// Get the number of bytes uploaded
-		Uint64 getBytesUploaded() const;
-
-		/// Get the number of bytes left to download
-		Uint64 getBytesLeft() const;
-
-		/// Get the total number of bytes
-		Uint64 getTotalBytes() const;
-
-		/// Get the total number of bytes which need to be downloaded
-		Uint64 getTotalBytesToDownload() const;
-
-		/// Get the download rate in bytes per sec
-		Uint32 getDownloadRate() const;
-
-		/// Get the upload rate in bytes per sec
-		Uint32 getUploadRate() const;
-
-		/// Get the number of peers we are connected to
-		Uint32 getNumPeers() const;
-
-		/// Get the number of chunks we are currently downloading
-		Uint32 getNumChunksDownloading() const;
-
-		/// Get the total number of chunks
-		Uint32 getTotalChunks() const;
-
-		/// Get the number of chunks which have been downloaded
-		Uint32 getNumChunksDownloaded() const;
-
-		/// Get the number of chunks which have been excluded
-		Uint32 getNumChunksExcluded() const;
-
-		/**
-		 * Get the number of seeders (total and the number connected to).
-		 * @param total Total seederes 
-		 * @param connected_to Number connected to
-		 */
-		void getSeederInfo(Uint32 & total,Uint32 & connected_to) const;
-
-		/**
-		 * Get the number of leechers (total and the number connected to).
-		 * @param total Total seederes
-		 * @param connected_to Number connected to
-		 */
-		void getLeecherInfo(Uint32 & total,Uint32 & connected_to) const;
-
-		/// Get the current status of the download.
-		Status getStatus() const {return status;}
-		
-		/// See if we are running
-		bool isRunning() const {return running;}
-
-		/// See if the torrent has been started
-		bool isStarted() const {return started;}
-
-		/// See if the torrent was saved
-		bool isSaved() const {return saved;}
-
-		/// See if we are allowed to startup this torrent automatically.
-		bool isAutostartAllowed() const {return autostart;}
-
 		/// Get the data directory of this torrent
 		QString getDataDir() const {return datadir;}
 
 		/// Set the monitor
-		void setMonitor(TorrentMonitor* tmo);
+		void setMonitor(kt::MonitorInterface* tmo);
 
-		/// See if we have a multi file torrent
-		bool isMultiFileTorrent() const;
+		
 
 		/// Get the Torrent.
 		const Torrent & getTorrent() const {return *tor;}
 
 		/// Return an error message (only valid when status == ERROR).
 		QString getErrorMessage() const {return error_msg;}
-
-		/// Return a short error message (only valid when status == ERROR). 
-		QString getShortErrorMessage() const {return short_error_msg; }
+		
 		/**
 		 * Set the interval between two tracker updates.
 		 * @param interval The interval in milliseconds
@@ -216,6 +135,10 @@ namespace bt
 		* In case of single torrent file defaults can be used (0,1)
 		**/
 		bool readyForPreview(int start_chunk = 0, int end_chunk = 1);
+
+		
+		virtual Uint32 getNumFiles() const;
+		virtual kt::TorrentFileInterface & getTorrentFile(Uint32 index);
 	public slots:
 		/**
 		 * Update the object, should be called periodically.
@@ -248,15 +171,9 @@ namespace bt
 
 		/// Get the time to the next tracker update in milliseconds.
 		Uint32 getTimeToNextTrackerUpdate() const;
-		
-		/// Get the status of the tracker
-		QString getTrackerStatus() const {return trackerstatus;}
 
-		/// Get the number of bytes downloaded in this session 
-		Uint32 getSessionBytesDownloaded() const { return getBytesDownloaded() - prev_bytes_dl; }
-
-		/// Get the number of bytes uploaded in this session 
-		Uint32 getSessionBytesUploaded() const {return (up) ? getBytesUploaded() - prev_bytes_ul : 0; }
+		/// Get a short error message
+		QString getShortErrorMessage() const {return short_error_msg;}
 		
 	private slots:
 		void onNewPeer(Peer* p);
@@ -272,27 +189,16 @@ namespace bt
 		 * The Tracker updated.
 		 */
 		void trackerResponse();
-
-	signals:
-		/**
-		 * Emited when a TorrentControl object is finished downloading.
-		 * @param me The TorrentControl
-		 */
-		void finished(bt::TorrentControl* me);
-
-		/**
-		 * Emited when a Torrent download is stopped by error
-		 * @param me The TorrentControl
-		 * @param msg Error message
-		 */
-		void stoppedByError(bt::TorrentControl* me, QString msg);
-
 		
 	private:	
 		void updateTracker(const QString & ev,bool last_succes = true);
 		void updateStatusMsg();
 		void saveStats();
 		void loadStats();
+		void updateStats();
+		void getSeederInfo(Uint32 & total,Uint32 & connected_to) const;
+		void getLeecherInfo(Uint32 & total,Uint32 & connected_to) const;
+
 		
 	private:
 		Torrent* tor;
@@ -307,13 +213,11 @@ namespace bt
 		Uint32 tracker_update_interval;
 		
 		QString datadir,old_datadir,trackerevent;
-		QString trackerstatus,error_msg,short_error_msg;
+		QString error_msg,short_error_msg;
 		Uint16 port;
-		bool completed,running,started,saved,autostart,stopped_by_error;
-		TorrentMonitor* tmon;
+		kt::MonitorInterface* tmon;
 		Uint32 num_tracker_attempts;
 		KURL last_tracker_url;
-		Status status;
 		QDateTime time_started_dl, time_started_ul;
 		unsigned long running_time_dl, running_time_ul;
 		Uint64 prev_bytes_dl, prev_bytes_ul;

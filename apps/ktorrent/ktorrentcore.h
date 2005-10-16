@@ -27,7 +27,6 @@
 
 namespace bt
 {
-	class TorrentControl;
 	class Server;
 }
 
@@ -36,6 +35,7 @@ namespace kt
 	class Plugin;
 	class PluginManager;
 	class GUIInterface;
+	class TorrentInterface;
 }
 
 
@@ -52,9 +52,9 @@ class KProgress;
 
 /**
  * @author Joris Guisson
- * @brief Keeps track of all TorrentControl objects
+ * @brief Keeps track of all TorrentInterface objects
  *
- * This class keeps track of all TorrentControl objects.
+ * This class keeps track of all TorrentInterface objects.
  */
 class KTorrentCore : public QObject,public kt::CoreInterface
 {
@@ -109,15 +109,15 @@ public:
 
 	/**
 	 * Start a torrent, takes into account the maximum number of downloads.
-	 * @param tc The TorrentControl
+	 * @param tc The TorrentInterface
 	 */
-	void start(bt::TorrentControl* tc);
+	void start(kt::TorrentInterface* tc);
 
 	/**
 	 * Stop a torrent, may start another download if it hasn't been started.
-	 * @param tc The TorrentControl
+	 * @param tc The TorrentInterface
 	 */
-	void stop(bt::TorrentControl* tc);
+	void stop(kt::TorrentInterface* tc);
 
 	/**
 	 * Make a torrent file
@@ -159,12 +159,12 @@ public slots:
 	
 	/**
 	 * Remove a download.This will delete all temp
-	 * data from this TorrentControl And delete the
-	 * TorrentControl itself. It can also potentially
+	 * data from this TorrentInterface And delete the
+	 * TorrentInterface itself. It can also potentially
 	 * start a new download (when one is waiting to be downloaded).
 	 * @param tc 
 	 */
-	void remove(bt::TorrentControl* tc);
+	void remove(kt::TorrentInterface* tc);
 
 	/**
 	 * Update all torrents.
@@ -173,30 +173,30 @@ public slots:
 	
 signals:
 	/**
-	 * A TorrentControl was added
+	 * A TorrentInterface was added
 	 * @param tc 
 	 */
-	void torrentAdded(bt::TorrentControl* tc);
+	void torrentAdded(kt::TorrentInterface* tc);
 
 	
 	/**
-	 * A TorrentControl was removed
+	 * A TorrentInterface was removed
 	 * @param tc
 	 */
-	void torrentRemoved(bt::TorrentControl* tc);
+	void torrentRemoved(kt::TorrentInterface* tc);
 	
 	/**
-	 * A TorrentControl has finished downloading.
+	 * A TorrentInterface has finished downloading.
 	 * @param tc
 	 */
-	void finished(bt::TorrentControl* tc);
+	void finished(kt::TorrentInterface* tc);
 
     /**
 	 * Torrent download is stopped by error
-	 * @param tc TorrentControl
+	 * @param tc TorrentInterface
 	 * @param msg Error message
 	 */
-	void torrentStoppedByError(bt::TorrentControl* tc, QString msg);
+	void torrentStoppedByError(kt::TorrentInterface* tc, QString msg);
 	
 	/**
 	* TorrentCore torrents have beed updated. Stats are changed.
@@ -209,14 +209,14 @@ signals:
 private:
 	QString findNewTorrentDir() const;
 	int getNumRunning() const;
-	void rollback(const QPtrList<bt::TorrentControl> & success);
+	void rollback(const QPtrList<kt::TorrentInterface> & success);
 	
 private slots:
-	void torrentFinished(bt::TorrentControl* tc);
-	void slotStoppedByError(bt::TorrentControl* tc, QString msg);
+	void torrentFinished(kt::TorrentInterface* tc);
+	void slotStoppedByError(kt::TorrentInterface* tc, QString msg);
 	
 private:
-	QPtrList<bt::TorrentControl> downloads;
+	QPtrList<kt::TorrentInterface> downloads;
 	QString data_dir;
 	int max_downloads;
 	bool keep_seeding;

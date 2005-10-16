@@ -21,7 +21,7 @@
 #include <klocale.h>
 
 #include <torrent/bitset.h>
-#include <torrent/torrentcontrol.h>
+#include <interfaces/torrentinterface.h>
 #include "availabilitychunkbar.h"
 
 AvailabilityChunkBar::AvailabilityChunkBar(QWidget* parent, const char* name): ChunkBar(parent, name)

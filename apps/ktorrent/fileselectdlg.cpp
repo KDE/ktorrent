@@ -19,9 +19,8 @@
  ***************************************************************************/
 #include <klistview.h>
 #include <kpushbutton.h>
-#include <torrent/torrent.h>
-#include <torrent/torrentfile.h>
-#include <torrent/torrentcontrol.h>
+#include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
 #include "fileselectdlg.h"
 #include "iwfiletreediritem.h"
 #include "iwfiletreeitem.h"
@@ -39,19 +38,16 @@ FileSelectDlg::FileSelectDlg(QWidget* parent, const char* name, bool modal, WFla
 FileSelectDlg::~FileSelectDlg()
 {}
 
-void FileSelectDlg::execute(bt::TorrentControl* tc)
+void FileSelectDlg::execute(kt::TorrentInterface* tc)
 {
 	this->tc = tc;
 	if (tc)
 	{
 		m_file_view->clear();
-		root = 0;
-		
-		bt::Torrent & tor = const_cast<bt::Torrent &>(tc->getTorrent());
-		root = new IWFileTreeDirItem(m_file_view,tor.getNameSuggestion());
-		for (Uint32 i = 0;i < tor.getNumFiles();i++)
+		root = new IWFileTreeDirItem(m_file_view,tc->getStats().torrent_name);
+		for (Uint32 i = 0;i < tc->getNumFiles();i++)
 		{
-			bt::TorrentFile & file = tor.getFile(i);
+			kt::TorrentFileInterface & file = tc->getTorrentFile(i);
 			root->insert(file.getPath(),file);
 		}
 		root->setOpen(true);

@@ -30,12 +30,13 @@
 #include <qimage.h>
 #include <util/log.h>
 #include <util/profile.h>
-#include <torrent/torrentcontrol.h>
+#include <interfaces/torrentinterface.h>
 #include <torrent/bitset.h>
 #include <torrent/globals.h>
 #include "chunkbar.h"
 
 using namespace bt;
+using namespace kt;
 
 struct Range
 {
@@ -137,7 +138,7 @@ void ChunkBar::drawContents(QPainter *p)
 		p->drawPixmap(contentsRect(),pixmap);
 }
 
-void ChunkBar::setTC(bt::TorrentControl* tc)
+void ChunkBar::setTC(kt::TorrentInterface* tc)
 {
 	curr_tc = tc;
 	QSize s = contentsRect().size();
@@ -154,23 +155,24 @@ void ChunkBar::drawBarContents(QPainter *p)
 	p->saveWorldMatrix();
 	if (curr_tc)
 	{
+		const TorrentStats & s = curr_tc->getStats();
 		Uint32 w = contentsRect().width();
 		const BitSet & bs = getBitSet();
 		curr = bs;
 		if (bs.allOn())
 			drawAllOn(p,colorGroup().highlight());
-		else if (curr_tc->getTotalChunks() > w)
+		else if (s.total_chunks > w)
 			drawMoreChunksThenPixels(p,bs,colorGroup().highlight());
 		else
 			drawEqual(p,bs,colorGroup().highlight());
 
-		if (show_excluded && curr_tc->getNumChunksExcluded() > 0)
+		if (show_excluded && s.num_chunks_excluded > 0)
 		{
 			const BitSet & ebs = curr_tc->excludedChunksBitSet();
 			curr_ebs = ebs;
 			if (ebs.allOn())
 				drawAllOn(p,Qt::lightGray);
-			else if (curr_tc->getTotalChunks() > w)
+			else if (s.total_chunks > w)
 				drawMoreChunksThenPixels(p,ebs,Qt::lightGray);
 			else
 				drawEqual(p,ebs,Qt::lightGray);
@@ -186,8 +188,9 @@ void ChunkBar::drawEqual(QPainter *p,const BitSet & bs,const QColor & color)
 
 	Uint32 w = contentsRect().width();
 	double scale = 1.0;
-	if (curr_tc->getTotalChunks() != w)
-		scale = (double)w / curr_tc->getTotalChunks();
+	Uint32 total_chunks = curr_tc->getStats().total_chunks;
+	if (curr_tc->getStats().total_chunks != w)
+		scale = (double)w / total_chunks;
 	
 	p->setPen(QPen(c,1,Qt::SolidLine));
 	p->setBrush(c);

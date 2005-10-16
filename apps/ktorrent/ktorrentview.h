@@ -30,9 +30,9 @@ class KTorrentViewItem;
 class KPopupMenu;
 class KTorrentCore;
 
-namespace bt
+namespace kt
 {
-	class TorrentControl;
+	class TorrentInterface;
 }
 
 using namespace bt;
@@ -62,14 +62,14 @@ public:
 	 */
 	virtual ~KTorrentView();
 
-	/// Get the current TorrentControl object
-	bt::TorrentControl* getCurrentTC();
+	/// Get the current TorrentInterface object
+	kt::TorrentInterface* getCurrentTC();
 
 	/// Enable or disable the debug view
 	void setShowDebugView(bool yes);
 public slots:
-	void addTorrent(bt::TorrentControl* tc);
-	void removeTorrent(bt::TorrentControl* tc);
+	void addTorrent(kt::TorrentInterface* tc);
+	void removeTorrent(kt::TorrentInterface* tc);
 	void update();
 	
 private slots:
@@ -82,16 +82,16 @@ private slots:
     void previewFile(); 
 
 signals:
-	void torrentClicked(bt::TorrentControl* tc);
-	void currentChanged(bt::TorrentControl* tc);
-	void wantToRemove(bt::TorrentControl* tc);
+	void torrentClicked(kt::TorrentInterface* tc);
+	void currentChanged(kt::TorrentInterface* tc);
+	void wantToRemove(kt::TorrentInterface* tc);
 
 private:
 	bool acceptDrag(QDropEvent* event) const;
 	int getNumRunning();
 		
 private:
-	QMap<bt::TorrentControl*,KTorrentViewItem*> items;
+	QMap<kt::TorrentInterface*,KTorrentViewItem*> items;
 	bool show_debug_view;
 	KPopupMenu* menu;
     int stop_id,start_id,remove_id, preview_id; 

@@ -18,7 +18,7 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <torrent/bitset.h>
-#include <torrent/torrentcontrol.h>
+#include <interfaces/torrentinterface.h>
 #include "downloadedchunkbar.h"
 
 

@@ -17,44 +17,63 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#ifndef KTMONITORINTERFACE_H
+#define KTMONITORINTERFACE_H
 
-#ifndef FILESELECTDLG_H
-#define FILESELECTDLG_H
-
-#include "fileselectdlgbase.h"
-
-class IWFileTreeDirItem;
 
 namespace kt
 {
-	class TorrentInterface;
+	class ChunkDownloadInterface;
+	class PeerInterface;
+
+	/**
+	 * @author Joris Guisson
+	 * @brief Interface for classes who want to monitor a TorrentInterface
+	 *
+	 * Classes who want to keep track of all peers currently connected for a given
+	 * torrent and all chunks who are currently downloading can implement this interface.
+	 */
+	class MonitorInterface
+	{
+	public:
+		MonitorInterface();
+		virtual ~MonitorInterface();
+
+		/**
+		 * A peer has been added.
+		 * @param peer The peer
+		 */
+		virtual void peerAdded(kt::PeerInterface* peer) = 0;
+
+		/**
+		 * A peer has been removed.
+		 * @param peer The peer
+		 */
+		virtual void peerRemoved(kt::PeerInterface* peer) = 0;
+		
+		/**
+		 * The download of a chunk has been started.
+		 * @param cd The ChunkDownload
+		 */
+		virtual void downloadStarted(kt::ChunkDownloadInterface* cd) = 0;
+
+		/**
+		 * The download of a chunk has been stopped.
+		 * @param cd The ChunkDownload
+		 */
+		virtual void downloadRemoved(kt::ChunkDownloadInterface* cd) = 0;
+		
+		/**
+		 * The download has been stopped.
+		 */
+		virtual void stopped() = 0;
+
+		/**
+		 * The download has been deleted.
+		 */
+		virtual void destroyed() = 0;
+	};
+
 }
-/**
- * @author Joris Guisson
- *
- * Dialog to select which files to download from a multifile torrent.
- */
-class FileSelectDlg : public FileSelectDlgBase
-{
-	Q_OBJECT
-
-	kt::TorrentInterface* tc;
-	IWFileTreeDirItem* root;
-public:
-	FileSelectDlg(QWidget* parent = 0, const char* name = 0,
-				  bool modal = true, WFlags fl = 0 );
-	virtual ~FileSelectDlg();
-	
-	void execute(kt::TorrentInterface* tc);
-	
-protected slots:
-	virtual void reject();
-	virtual void accept();
-	void selectAll();
-	void selectNone();
-	void invertSelection();
-
-};
 
 #endif
-

@@ -1,7 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by                                                 *
- *   Joris Guisson <joris.guisson@gmail.com>                               *
- *   Ivan Vasic <ivasic@gmail.com>                                         *
+ *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,34 +17,46 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef TRAYICON_H
-#define TRAYICON_H
+#ifndef KTCHUNKDOWNLOADINTERFACE_H
+#define KTCHUNKDOWNLOADINTERFACE_H
 
-#include <ksystemtray.h>
-#include "ktorrentcore.h" 
-#include "interfaces/torrentinterface.h" 
+#include <qstring.h>
+#include <util/constants.h>
 
-using namespace bt; 
-class QString;
-
-/**
-@author Joris Guisson
-*/
-class TrayIcon : public KSystemTray
+namespace kt
 {
-	Q_OBJECT
-public:
-	TrayIcon(KTorrentCore* tc, QWidget *parent = 0, const char *name = 0);
-	~TrayIcon();
 
-	void updateStats(const QString stats);
-	
-private slots:
-	void finished(kt::TorrentInterface* tc);
-	void torrentStoppedByError(kt::TorrentInterface* tc, QString msg); 
+	/**
+	 * @author Joris Guisson
+	 * @brief Interface for a ChunkDownload
+	 *
+	 * This class provides the interface for a ChunkDownload object.
+	*/
+	class ChunkDownloadInterface
+	{
+	public:
+		ChunkDownloadInterface();
+		virtual ~ChunkDownloadInterface();
 
-private:
-	KTorrentCore* m_core;
-};
+		struct Stats
+		{
+			/// The PeerID of the current downloader
+			QString current_peer_id;
+			/// The current download speed
+			bt::Uint32 download_speed;
+			/// The index of the chunk
+			bt::Uint32 chunk_index;
+			/// The number of pieces of the chunk which have been downloaded
+			bt::Uint32 pieces_downloaded;
+			/// The total number of pieces of the chunk
+			bt::Uint32 total_pieces;
+			/// The number of assigned downloaders
+			bt::Uint32 num_downloaders;
+		};
+
+		virtual void getStats(Stats & s) = 0;
+	};
+
+}
 
 #endif

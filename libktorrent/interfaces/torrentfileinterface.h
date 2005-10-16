@@ -17,44 +17,64 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#ifndef KTTORRENTFILEINTERFACE_H
+#define KTTORRENTFILEINTERFACE_H
 
-#ifndef FILESELECTDLG_H
-#define FILESELECTDLG_H
-
-#include "fileselectdlgbase.h"
-
-class IWFileTreeDirItem;
+#include <qstring.h>
+#include <util/constants.h>
 
 namespace kt
 {
-	class TorrentInterface;
+	using bt::Uint32;
+	using bt::Uint64;
+
+	/**
+	 * @author Joris Guisson
+	 * @brief Interface for a file in a multifile torrent
+	 *
+	 * This class is the interface for a file in a multifile torrent.
+	*/
+	class TorrentFileInterface
+	{
+	public:
+		/**
+		 * Constructor, set the path and size.
+		 * @param path The path 
+		 * @param size The size
+		 */
+		TorrentFileInterface(const QString & path,Uint64 size);
+		virtual ~TorrentFileInterface();
+
+		/// Get the path of the file
+		QString getPath() const {return path;}
+
+		/// Get the size of the file
+		Uint64 getSize() const {return size;}
+
+		/// Get the index of the first chunk in which this file lies
+		Uint32 getFirstChunk() const {return first_chunk;}
+				
+		/// Get the last chunk of the file
+		Uint32 getLastChunk() const {return last_chunk;}
+
+		/// See if the TorrentFile is null.
+		bool isNull() const {return path.isNull();}
+
+		/// Set wether we have to not download this file
+		virtual void setDoNotDownload(bool dnd) = 0;
+
+		/// Wether or not we have to not download this file
+		virtual bool doNotDownload() const = 0;
+
+		/// Checks if this file is multimedial
+		virtual bool isMultimedia() const = 0;
+	protected:
+		QString path;
+		Uint64 size;
+		Uint32 first_chunk;
+		Uint32 last_chunk;
+	};
+
 }
-/**
- * @author Joris Guisson
- *
- * Dialog to select which files to download from a multifile torrent.
- */
-class FileSelectDlg : public FileSelectDlgBase
-{
-	Q_OBJECT
-
-	kt::TorrentInterface* tc;
-	IWFileTreeDirItem* root;
-public:
-	FileSelectDlg(QWidget* parent = 0, const char* name = 0,
-				  bool modal = true, WFlags fl = 0 );
-	virtual ~FileSelectDlg();
-	
-	void execute(kt::TorrentInterface* tc);
-	
-protected slots:
-	virtual void reject();
-	virtual void accept();
-	void selectAll();
-	void selectNone();
-	void invertSelection();
-
-};
 
 #endif
-

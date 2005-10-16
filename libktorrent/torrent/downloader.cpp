@@ -29,7 +29,7 @@
 #include "peer.h"
 #include "piece.h"
 #include "peerdownloader.h"
-#include "torrentmonitor.h"
+#include <interfaces/monitorinterface.h>
 #include "packetwriter.h"
 #include "chunkselector.h"
 #include "ipblocklist.h"
@@ -260,7 +260,7 @@ namespace bt
 		return rate;
 	}
 	
-	void Downloader::setMonitor(TorrentMonitor* tmo)
+	void Downloader::setMonitor(kt::MonitorInterface* tmo)
 	{
 		tmon = tmo;
 		if (!tmon)

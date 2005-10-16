@@ -23,6 +23,7 @@
 #include <qdatetime.h>
 #include <qsocket.h>
 #include <util/timer.h>
+#include <interfaces/peerinterface.h>
 #include "bitset.h"
 #include "globals.h"
 #include "peerid.h"
@@ -49,7 +50,7 @@ namespace bt
 	 * It provides functions for sending packets. Packets it recieves
 	 * get relayed to the outside world using a bunch of signals.
 	*/
-	class Peer : public QObject
+	class Peer : public QObject, public kt::PeerInterface
 	{
 		Q_OBJECT
 	public:
@@ -197,7 +198,7 @@ namespace bt
 	private:
 		void readPacket();
 		void handlePacket(Uint32 len);
-		
+		virtual void getStats(Stats & s);
 
 	private:
 		QSocket* sock;

@@ -35,9 +35,9 @@ class QWidget;
 class QHBoxLayout;
 
 
-namespace bt
+namespace kt
 {
-	class TorrentControl;
+	class TorrentInterface;
 }
 
 class InfoWidget : public InfoWidgetBase
@@ -54,7 +54,7 @@ public:
 	void showChunkView(bool show);
 
 public slots:
-	void changeTC(bt::TorrentControl* tc);
+	void changeTC(kt::TorrentInterface* tc);
 	void update();
     void showContextMenu(KListView* ,QListViewItem* item,const QPoint & p); 
 
@@ -67,7 +67,7 @@ private:
 	
 private:
 	KTorrentMonitor* monitor;
-	bt::TorrentControl* curr_tc;
+	kt::TorrentInterface* curr_tc;
 	IWFileTreeDirItem* multi_root;
     KPopupMenu* context_menu; 
     QString preview_path; 

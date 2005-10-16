@@ -49,9 +49,9 @@ class KTorrentPreferences;
 
 
 
-namespace bt
+namespace kt
 {
-	class TorrentControl;
+	class TorrentInterface;
 }
 
 /**
@@ -127,15 +127,15 @@ private slots:
 	void newToolbarConfig();
 	void changeStatusbar(const QString& text);
 	void changeCaption(const QString& text);
-	void currentChanged(bt::TorrentControl* tc);
-	void askAndSave(bt::TorrentControl* tc);
+	void currentChanged(kt::TorrentInterface* tc);
+	void askAndSave(kt::TorrentInterface* tc);
 	void updatedStats();
 	void urlDropped(QDropEvent*,QListViewItem*);
 
 private:
 	void setupAccel();
 	void setupActions();
-	void save(bt::TorrentControl* tc);
+	void save(kt::TorrentInterface* tc);
 	bool queryClose();
 	bool queryExit();
 	

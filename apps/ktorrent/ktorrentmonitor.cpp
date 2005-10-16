@@ -17,16 +17,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <torrent/peer.h>
-#include <torrent/torrentcontrol.h>
-#include <torrent/chunkdownload.h>
+#include <interfaces/peerinterface.h>
+#include <interfaces/torrentinterface.h>
+#include <interfaces/chunkdownloadinterface.h>
 #include "ktorrentmonitor.h"
 #include "peerview.h"
 #include "chunkdownloadview.h"
 
 using namespace bt;
 
-KTorrentMonitor::KTorrentMonitor(bt::TorrentControl* tc,
+KTorrentMonitor::KTorrentMonitor(kt::TorrentInterface* tc,
 			PeerView* pv,
 			ChunkDownloadView* cdv) : tc(tc),pv(pv),cdv(cdv)
 {
@@ -42,25 +42,25 @@ KTorrentMonitor::~KTorrentMonitor()
 }
 
 
-void KTorrentMonitor::downloadRemoved(ChunkDownload* cd)
+void KTorrentMonitor::downloadRemoved(kt::ChunkDownloadInterface* cd)
 {
 	if (cdv)
 		cdv->removeDownload(cd);
 }
 
-void KTorrentMonitor::downloadStarted(ChunkDownload* cd)
+void KTorrentMonitor::downloadStarted(kt::ChunkDownloadInterface* cd)
 {
 	if (cdv)
 		cdv->addDownload(cd);
 }
 
-void KTorrentMonitor::peerAdded(Peer* peer)
+void KTorrentMonitor::peerAdded(kt::PeerInterface* peer)
 {
 	if (pv)
 		pv->addPeer(peer);
 }
 
-void KTorrentMonitor::peerRemoved(Peer* peer)
+void KTorrentMonitor::peerRemoved(kt::PeerInterface* peer)
 {
 	if (pv)
 		pv->removePeer(peer);

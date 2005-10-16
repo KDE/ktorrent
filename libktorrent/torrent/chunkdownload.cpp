@@ -333,5 +333,15 @@ namespace bt
 			return false;
 		}
 	}
+
+	void ChunkDownload::getStats(Stats & s)
+	{
+		s.chunk_index = chunk->getIndex();
+		s.current_peer_id = getCurrentPeerID();
+		s.download_speed = getDownloadSpeed();
+		s.num_downloaders = getNumDownloaders();
+		s.pieces_downloaded = num_downloaded;
+		s.total_pieces = num;
+	}
 }
 #include "chunkdownload.moc"

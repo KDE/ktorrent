@@ -68,7 +68,7 @@ namespace bt
 			throw Error(i18n("Parse Error"));
 		}
 			
-		Uint32 update_time = vn->data().toInt() > 300 ? 300 : vn->data().toInt();
+		Uint32 update_time = vn->data().toInt();
 		tc->setTrackerTimerInterval(update_time * 1000);
 
 		vn = dict->getValue("incomplete");

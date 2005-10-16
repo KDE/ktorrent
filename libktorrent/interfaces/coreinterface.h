@@ -23,13 +23,9 @@
 #include <qstring.h>
 #include <util/constants.h>
 
-namespace bt
-{
-	class TorrentControl;
-}
-
 namespace kt
 {
+	class TorrentInterface;
 
 	/**
 	 * @author Joris Guisson
@@ -82,13 +78,13 @@ namespace kt
 		 * Start a torrent, takes into account the maximum number of downloads.
 		 * @param tc The TorrentControl
 	 	 */
-		virtual void start(bt::TorrentControl* tc) = 0;
+		virtual void start(TorrentInterface* tc) = 0;
 
 		/**
 		 * Stop a torrent, may start another download if it hasn't been started.
 		 * @param tc The TorrentControl
 		 */
-		virtual void stop(bt::TorrentControl* tc) = 0;
+		virtual void stop(TorrentInterface* tc) = 0;
 
 		/**
 		 * Switch the port when no torrents are running.
@@ -117,7 +113,7 @@ namespace kt
 		 * start a new download (when one is waiting to be downloaded).
 		 * @param tc
 		 */
-		virtual void remove(bt::TorrentControl* tc) = 0;
+		virtual void remove(TorrentInterface* tc) = 0;
 	};
 
 }

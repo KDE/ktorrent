@@ -22,8 +22,8 @@
 #include <kiconloader.h>
 #include <kmimetype.h>
 #include <util/functions.h>
-#include <torrent/torrentfile.h>
-#include <torrent/torrentcontrol.h>
+#include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
 #include "iwfiletreeitem.h"
 #include "iwfiletreediritem.h"
 #include "functions.h"
@@ -31,7 +31,7 @@
 using namespace kt;
 
 			
-IWFileTreeItem::IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,bt::TorrentFile & file)
+IWFileTreeItem::IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file)
 	: QCheckListItem(item,QString::null,QCheckListItem::CheckBox),name(name),file(file)
 {
 	parent = item;
@@ -67,7 +67,7 @@ void IWFileTreeItem::stateChange(bool on)
 		parent->childStateChange();
 }
 
-void IWFileTreeItem::updatePreviewInformation(bt::TorrentControl* tc)
+void IWFileTreeItem::updatePreviewInformation(kt::TorrentInterface* tc)
 {
 	if (file.isMultimedia())
 	{

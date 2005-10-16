@@ -27,10 +27,13 @@
 
 class QPainter;
 
+namespace kt
+{
+	class TorrentInterface;
+}
 
 namespace bt
 {
-	class TorrentControl;
 	class BitSet;
 }
 
@@ -49,7 +52,7 @@ public:
 	ChunkBar(QWidget *parent = 0, const char *name = 0);
 	virtual ~ChunkBar();
 
-	void setTC(bt::TorrentControl* tc);
+	void setTC(kt::TorrentInterface* tc);
 	
 	virtual const bt::BitSet & getBitSet() const = 0;
 	virtual void drawContents(QPainter *p);
@@ -62,7 +65,7 @@ private:
 	void drawBarContents(QPainter *p);
 	
 protected:
-	bt::TorrentControl* curr_tc;
+	kt::TorrentInterface* curr_tc;
 	bool show_excluded;
 	bt::BitSet curr,curr_ebs;
 	QPixmap pixmap;

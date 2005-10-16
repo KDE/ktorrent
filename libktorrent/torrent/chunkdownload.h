@@ -25,6 +25,7 @@
 #include <qptrlist.h>
 #include <util/timer.h>
 #include <util/ptrmap.h>
+#include <interfaces/chunkdownloadinterface.h>
 #include "globals.h"
 #include "peerid.h"
 
@@ -46,7 +47,7 @@ namespace bt
 	 * 
 	 * This class handles the download of one Chunk.
 	*/
-	class ChunkDownload : public QObject
+	class ChunkDownload : public QObject,public kt::ChunkDownloadInterface
 	{
 		Q_OBJECT
 	public:
@@ -60,8 +61,8 @@ namespace bt
 
 		Chunk* getChunk() {return chunk;}
 	
-		Uint32 totalPieces() const {return num;}
-		Uint32 piecesDownloaded() const {return num_downloaded;}
+		Uint32 getTotalPieces() const {return num;}
+		Uint32 getPiecesDownloaded() const {return num_downloaded;}
 
 		/// Get the number of bytes downloaded.
 		Uint32 bytesDownloaded() const;
@@ -70,6 +71,8 @@ namespace bt
 		const Peer* getCurrentPeer() const;
 		QString getCurrentPeerID() const;
 		Uint32 getDownloadSpeed() const;
+
+		void getStats(Stats & s);
 		
 		/**
 		 * A Piece has arived.

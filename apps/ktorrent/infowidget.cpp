@@ -32,8 +32,8 @@
 #include <qlayout.h>
 #include <util/functions.h>
 #include <util/log.h>
-#include <torrent/torrent.h>
-#include <torrent/torrentcontrol.h>
+#include <interfaces/torrentfileinterface.h>
+#include <interfaces/torrentinterface.h>
 #include <torrent/globals.h>
 #include "ktorrentmonitor.h"
 #include "infowidget.h"
@@ -153,13 +153,14 @@ void InfoWidget::fillFileTree()
 	if (!curr_tc)
 		return;
 
-	bt::Torrent & tor = const_cast<bt::Torrent &>(curr_tc->getTorrent());
-	if (tor.isMultiFile())
+	if (curr_tc->getStats().multi_file_torrent)
 	{
-		IWFileTreeDirItem* root = new IWFileTreeDirItem(m_file_view,tor.getNameSuggestion());
-		for (Uint32 i = 0;i < tor.getNumFiles();i++)
+		IWFileTreeDirItem* root = new IWFileTreeDirItem(
+				m_file_view,curr_tc->getStats().torrent_name);
+		
+		for (Uint32 i = 0;i < curr_tc->getNumFiles();i++)
 		{
-			bt::TorrentFile & file = tor.getFile(i);
+			TorrentFileInterface & file = curr_tc->getTorrentFile(i);
 			root->insert(file.getPath(),file);
 		}
 		root->setOpen(true);
@@ -168,17 +169,18 @@ void InfoWidget::fillFileTree()
 	}
 	else
 	{
+		const TorrentStats & s = curr_tc->getStats();
 		m_file_view->setRootIsDecorated(false);
-		KListViewItem* item = new KListViewItem(m_file_view,
-		                                        tor.getNameSuggestion(),
-		                                        BytesToString(tor.getFileLength()));
+		KListViewItem* item = new KListViewItem(
+				m_file_view,
+				s.torrent_name,
+				BytesToString(s.total_bytes));
 
-		QString name = tor.getNameSuggestion();
-		item->setPixmap(0,KMimeType::findByPath(name)->pixmap(KIcon::Small));
+		item->setPixmap(0,KMimeType::findByPath(s.torrent_name)->pixmap(KIcon::Small));
 	}
 }
 
-void InfoWidget::changeTC(bt::TorrentControl* tc)
+void InfoWidget::changeTC(kt::TorrentInterface* tc)
 {
 	if (tc == curr_tc)
 		return;
@@ -217,8 +219,7 @@ void InfoWidget::changeTC(bt::TorrentControl* tc)
 
 void InfoWidget::readyPreview()
 {
-	bt::Torrent & tor = const_cast<bt::Torrent &>(curr_tc->getTorrent());
-	if(tor.isMultiFile())
+	if(curr_tc->getStats().multi_file_torrent)
 	{
 		multi_root->updatePreviewInformation(curr_tc);
 	}
@@ -228,7 +229,7 @@ void InfoWidget::readyPreview()
 		if (!it.current())
 			return;
 		
-		if (tor.isMultimedia())
+		if (IsMultimediaFile(curr_tc->getStats().torrent_name))
 		{
 			if ( curr_tc->readyForPreview() )
 				it.current()->setText(3, i18n("Available"));
@@ -246,10 +247,11 @@ void InfoWidget::update()
 	if (!curr_tc)
 		return;
 
-	m_chunks_downloading->setText(QString::number(curr_tc->getNumChunksDownloading()));
-	m_chunks_downloaded->setText(QString::number(curr_tc->getNumChunksDownloaded()));
-	m_total_chunks->setText(QString::number(curr_tc->getTotalChunks()));
-	m_excluded_chunks->setText(QString::number(curr_tc->getNumChunksExcluded()));
+	const TorrentStats & s = curr_tc->getStats();
+	m_chunks_downloading->setText(QString::number(s.num_chunks_downloading));
+	m_chunks_downloaded->setText(QString::number(s.num_chunks_downloaded));
+	m_total_chunks->setText(QString::number(s.total_chunks));
+	m_excluded_chunks->setText(QString::number(s.num_chunks_excluded));
 	m_chunk_bar->updateBar();
 	m_av_chunk_bar->updateBar();
 	if (peer_view)
@@ -259,18 +261,18 @@ void InfoWidget::update()
 	QTime t;
 	t = t.addMSecs(curr_tc->getTimeToNextTrackerUpdate());
 	m_tracker_update_time->setText(t.toString("mm:ss"));
-	m_tracker_status->setText(curr_tc->getTrackerStatus());
+	m_tracker_status->setText(s.trackerstatus);
 	
-	Uint32 tot,num;
-	curr_tc->getSeederInfo(tot,num);
-	m_seeders->setText(QString("%1 (%2)").arg(num).arg(tot));
+	
+	m_seeders->setText(QString("%1 (%2)")
+			.arg(s.seeders_connected_to).arg(s.seeders_total));
 
-	curr_tc->getLeecherInfo(tot,num);
-	m_leechers->setText(QString("%1 (%2)").arg(num).arg(tot));
+	m_leechers->setText(QString("%1 (%2)")
+			.arg(s.leechers_connected_to).arg(s.leechers_total));
 
 	float ratio = 0.0f;
-	if (curr_tc->getBytesDownloaded() > 0)
-		ratio = (float) curr_tc->getBytesUploaded() / (float)curr_tc->getBytesDownloaded();
+	if (s.bytes_downloaded > 0)
+		ratio = (float) s.bytes_uploaded / (float)s.bytes_downloaded;
 
 	
 	m_share_ratio->setText(KGlobal::locale()->formatNumber(ratio,2));
@@ -283,9 +285,9 @@ void InfoWidget::update()
 	}
 	else
 	{
-		double r = (double)curr_tc->getBytesUploaded() / 1024.0;
+		double r = (double)s.bytes_uploaded / 1024.0;
 		m_avg_up->setText(KBytesPerSecToString(r / secs));
-		r = (double)curr_tc->getBytesDownloaded()/ 1024.0;
+		r = (double)s.bytes_downloaded/ 1024.0;
 		secs = curr_tc->getRunningTimeDL();
 		m_avg_down->setText(KBytesPerSecToString(r / secs));
 	}
@@ -294,12 +296,10 @@ void InfoWidget::update()
 
 void InfoWidget::showContextMenu(KListView* ,QListViewItem* item,const QPoint & p)
 {
-
-	bt::Torrent & tor = const_cast<bt::Torrent &>(curr_tc->getTorrent());
-
-	if(tor.isMultiFile())
+	const TorrentStats & s = curr_tc->getStats();
+	if(s.multi_file_torrent)
 	{
-		bt::TorrentFile & file = multi_root->findTorrentFile(item);
+		kt::TorrentFileInterface & file = multi_root->findTorrentFile(item);
 		if (!file.isNull() && file.isMultimedia())
 		{
 			if ( curr_tc->readyForPreview(file.getFirstChunk(), file.getFirstChunk()+1) )
@@ -317,7 +317,7 @@ void InfoWidget::showContextMenu(KListView* ,QListViewItem* item,const QPoint & 
 	}
 	else
 	{
-		if ( curr_tc->readyForPreview() && tor.isMultimedia())
+		if ( curr_tc->readyForPreview() && IsMultimediaFile(s.torrent_name))
 		{
 			context_menu->setItemEnabled(preview_id, true);
 			preview_path = "cache";

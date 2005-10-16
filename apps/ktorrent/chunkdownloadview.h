@@ -23,18 +23,18 @@
 #include <klistview.h>
 #include <qmap.h>
 
-namespace bt
+namespace kt
 {
-	class ChunkDownload;
+	class ChunkDownloadInterface;
 }
 
 class ChunkDownloadView;
 
 class ChunkDownloadViewItem : public KListViewItem
 {
-	bt::ChunkDownload* cd;
+	kt::ChunkDownloadInterface* cd;
 public:
-	ChunkDownloadViewItem(ChunkDownloadView* cdv,bt::ChunkDownload* cd);
+	ChunkDownloadViewItem(ChunkDownloadView* cdv,kt::ChunkDownloadInterface* cd);
 
 	void update();
 	int compare(QListViewItem * i,int col,bool) const;
@@ -48,14 +48,14 @@ class ChunkDownloadView : public KListView
 {
 	Q_OBJECT
 
-	QMap<bt::ChunkDownload*,ChunkDownloadViewItem*> items;
+	QMap<kt::ChunkDownloadInterface*,ChunkDownloadViewItem*> items;
 public:
 	ChunkDownloadView(QWidget *parent = 0, const char *name = 0);
 	virtual ~ChunkDownloadView();
 
 public slots:
-	void addDownload(bt::ChunkDownload* cd);
-	void removeDownload(bt::ChunkDownload* cd);
+	void addDownload(kt::ChunkDownloadInterface* cd);
+	void removeDownload(kt::ChunkDownloadInterface* cd);
 	void removeAll();
 	void update();
 };

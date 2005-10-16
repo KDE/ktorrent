@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include <klocale.h>
 #include <kglobal.h>
-#include <torrent/torrentcontrol.h>
+#include <interfaces/torrentinterface.h>
 #include <qdatetime.h>
 #include <qpainter.h>
 #include <math.h>
@@ -29,45 +29,45 @@
 using namespace bt;
 using namespace kt;
 
-static QString StatusToString(TorrentControl* tc,TorrentControl::Status s)
+static QString StatusToString(TorrentInterface* tc,TorrentStatus s)
 {
 	switch (s)
 	{
-		case TorrentControl::NOT_STARTED :
+		case kt::NOT_STARTED :
 			return i18n("Not started");
-		case TorrentControl::COMPLETE :
+		case kt::COMPLETE :
 			return i18n("Completed");
-		case TorrentControl::SEEDING :
+		case kt::SEEDING :
 			return i18n("Seeding");
-		case TorrentControl::DOWNLOADING:
+		case kt::DOWNLOADING:
 			return i18n("Downloading");
-		case TorrentControl::STALLED:
+		case kt::STALLED:
 			return i18n("Stalled");
-		case TorrentControl::STOPPED:
+		case kt::STOPPED:
 			return i18n("Stopped");
-		case TorrentControl::ERROR :
+		case kt::ERROR :
 			return i18n("Error: ") + tc->getShortErrorMessage(); 
 	}
 	return QString::null;
 }
 
-static QColor StatusToColor(TorrentControl::Status s,const QColorGroup & cg)
+static QColor StatusToColor(TorrentStatus s,const QColorGroup & cg)
 {
 	QColor green(40,205,40);
 	QColor yellow(255,174,0);
 	switch (s)
 	{
-		case TorrentControl::NOT_STARTED :
-		case TorrentControl::STOPPED:
+		case kt::NOT_STARTED :
+		case kt::STOPPED:
 			return cg.text();
 			
-		case TorrentControl::SEEDING :
-		case TorrentControl::DOWNLOADING:
-		case TorrentControl::COMPLETE :
+		case kt::SEEDING :
+		case kt::DOWNLOADING:
+		case kt::COMPLETE :
 			return green;
-		case TorrentControl::STALLED:
+		case kt::STALLED:
 			return yellow;
-		case TorrentControl::ERROR :
+		case kt::ERROR :
 			return Qt::red;
 	}
 	return QString::null;
@@ -75,7 +75,7 @@ static QColor StatusToColor(TorrentControl::Status s,const QColorGroup & cg)
 
 
 
-KTorrentViewItem::KTorrentViewItem(QListView* parent,bt::TorrentControl* tc)
+KTorrentViewItem::KTorrentViewItem(QListView* parent,TorrentInterface* tc)
 	: KListViewItem(parent),tc(tc)
 {
 	update();
@@ -99,57 +99,56 @@ void KTorrentViewItem::update()
 	addColumn(i18n("% Complete"));
 	*/
 
-	setText(0,tc->getTorrentName());
-	TorrentControl::Status status = tc->getStatus();
-	setText(1,StatusToString(tc,status));
-	Uint32 nb = tc->getBytesDownloaded() > tc->getTotalBytes() ?
-			tc->getTotalBytes() : tc->getBytesDownloaded();
-	
+	const TorrentStats & s = tc->getStats();
+
+	setText(0,s.torrent_name);
+	setText(1,StatusToString(tc,s.status));
+	Uint32 nb = s.bytes_downloaded > s.total_bytes ? s.total_bytes : s.bytes_downloaded;
 	setText(2,BytesToString(nb));
-	setText(3,BytesToString(tc->getTotalBytesToDownload()));
-	setText(4,BytesToString(tc->getBytesUploaded()));
-	if (tc->getBytesLeft() == 0)
+	setText(3,BytesToString(s.total_bytes_to_download));
+	setText(4,BytesToString(s.bytes_uploaded));
+	if (s.bytes_left == 0)
 		setText(5,KBytesPerSecToString(0));
 	else
-		setText(5,KBytesPerSecToString(tc->getDownloadRate() / 1024.0));
-	setText(6,KBytesPerSecToString(tc->getUploadRate() / 1024.0));
+		setText(5,KBytesPerSecToString(s.download_rate / 1024.0));
+	setText(6,KBytesPerSecToString(s.upload_rate / 1024.0));
   
 	KLocale* loc = KGlobal::locale();
-	if (tc->getBytesLeft() == 0)
+	if (s.bytes_left == 0)
 	{
 		setText(7,i18n("finished"));
 	}
 	else 
 	{
-		float bytes_downloaded = (float)tc->getBytesDownloaded();
+		float bytes_downloaded = (float)s.bytes_downloaded;
 		if( bytes_downloaded < 1 ) //if we just started download use old algorithm
 		{
-			if (tc->getDownloadRate() == 0)
+			if (s.download_rate == 0)
 				setText(7,i18n("infinity"));
 			else
 			{
-				Uint32 secs = (int)floor( (float)tc->getBytesLeft() / (float)tc->getDownloadRate() );
+				Uint32 secs = (int)floor( (float)s.bytes_left / (float)s.download_rate);
 				setText(7,DurationToString(secs));
 			}
 		}
 		else 
 		{
 			double avg_speed = (double)bytes_downloaded / (double)tc->getRunningTimeDL();
-			double eta = tc->getBytesLeft() / avg_speed;
+			double eta = s.bytes_left / avg_speed;
 			setText(7,DurationToString((int)floor(eta)));
 		}
 	}
 	
-	setText(8,QString::number(tc->getNumPeers()));
+	setText(8,QString::number(s.num_peers));
 
 	double perc = 0;
-	if (tc->getBytesLeft() == 0)
+	if (s.bytes_left == 0)
 	{
 		perc = 100.0;
 	}
 	else
 	{
-		perc = 100.0 - ((double)tc->getBytesLeft() / tc->getTotalBytesToDownload()) * 100.0;
+		perc = 100.0 - ((double)s.bytes_left / s.total_bytes_to_download) * 100.0;
 		if (perc > 100.0)
 			perc = 100.0;
 		else if (perc > 99.9)
@@ -163,25 +162,27 @@ void KTorrentViewItem::update()
 int KTorrentViewItem::compare(QListViewItem * i,int col,bool) const
 {
 	KTorrentViewItem* other = (KTorrentViewItem*)i;
-	TorrentControl* otc = other->tc;
+	TorrentInterface* otc = other->tc;
+	const TorrentStats & s = tc->getStats();
+	const TorrentStats & os = otc->getStats();
 	switch (col)
 	{
-		case 0: return QString::compare(tc->getTorrentName(),otc->getTorrentName());
-		case 1: return QString::compare(StatusToString(tc,tc->getStatus()),
-										StatusToString(otc,otc->getStatus()));
-		case 2: return CompareVal(tc->getBytesDownloaded(),otc->getBytesDownloaded());
-		case 3: return CompareVal(tc->getTotalBytesToDownload(),otc->getTotalBytesToDownload());
-		case 4: return CompareVal(tc->getBytesUploaded(),otc->getBytesUploaded());
-		case 5: return CompareVal(tc->getDownloadRate(),otc->getDownloadRate());
-		case 6: return CompareVal(tc->getUploadRate(),otc->getUploadRate());
+		case 0: return QString::compare(s.torrent_name,os.torrent_name);
+		case 1: return QString::compare(StatusToString(tc,s.status),
+										StatusToString(otc,os.status));
+		case 2: return CompareVal(s.bytes_downloaded,os.bytes_downloaded);
+		case 3: return CompareVal(s.total_bytes_to_download,os.total_bytes_to_download);
+		case 4: return CompareVal(s.bytes_uploaded,os.bytes_uploaded);
+		case 5: return CompareVal(s.download_rate,os.download_rate);
+		case 6: return CompareVal(s.upload_rate,os.upload_rate);
 		case 7: return QString::compare(text(6),other->text(6));
-		case 8: return CompareVal(tc->getNumPeers(),otc->getNumPeers());
+		case 8: return CompareVal(s.num_peers,os.num_peers);
 		case 9:
 		{
-			double perc = ((double)tc->getBytesDownloaded() / tc->getTotalBytesToDownload()) * 100.0;
+			double perc = ((double)s.bytes_downloaded / s.total_bytes_to_download) * 100.0;
 			if (perc > 100.0)
 				perc = 100.0;
-			double operc = ((double)otc->getBytesDownloaded() / otc->getTotalBytesToDownload()) * 100.0;
+			double operc = ((double)os.bytes_downloaded / os.total_bytes_to_download) * 100.0;
 			if (operc > 100.0)
 				operc = 100.0;
 			return CompareVal(perc,operc);
@@ -198,7 +199,7 @@ void KTorrentViewItem::paintCell(QPainter* p,const QColorGroup & cg,
 	QColor c = _cg.text();
 
 	if (column == 1)
-		_cg.setColor(QColorGroup::Text, StatusToColor(tc->getStatus(),cg));
+		_cg.setColor(QColorGroup::Text, StatusToColor(tc->getStats().status,cg));
 
 
 	KListViewItem::paintCell(p,_cg,column,width,align);

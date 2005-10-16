@@ -22,9 +22,9 @@
 
 #include <klistview.h>
 
-namespace bt
+namespace kt
 {
-	class TorrentControl;
+	class TorrentInterface;
 }
 
 /**
@@ -32,12 +32,12 @@ namespace bt
 */
 class KTorrentViewItem : public KListViewItem
 {
-	bt::TorrentControl* tc;
+	kt::TorrentInterface* tc;
 public:
-	KTorrentViewItem(QListView* parent,bt::TorrentControl* tc);
+	KTorrentViewItem(QListView* parent,kt::TorrentInterface* tc);
 	virtual ~KTorrentViewItem();
 
-	bt::TorrentControl* getTC() {return tc;}
+	kt::TorrentInterface* getTC() {return tc;}
 	void update();
 
 private:

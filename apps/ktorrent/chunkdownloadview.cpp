@@ -19,14 +19,14 @@
  ***************************************************************************/
 #include <klocale.h>
 #include <torrent/peer.h>
-#include <torrent/chunkdownload.h>
+#include <interfaces/chunkdownloadinterface.h>
 #include "chunkdownloadview.h"
 #include "functions.h"
 
 using namespace bt;
 using namespace kt;
 
-ChunkDownloadViewItem::ChunkDownloadViewItem(ChunkDownloadView* cdv,bt::ChunkDownload* cd)
+ChunkDownloadViewItem::ChunkDownloadViewItem(ChunkDownloadView* cdv,kt::ChunkDownloadInterface* cd)
 	: KListViewItem(cdv),cd(cd)
 {
 	update();
@@ -34,30 +34,31 @@ ChunkDownloadViewItem::ChunkDownloadViewItem(ChunkDownloadView* cdv,bt::ChunkDow
 
 void ChunkDownloadViewItem::update()
 {
-	QString peer_id,speed;
-
-	peer_id = cd->getCurrentPeerID();
-	speed = KBytesPerSecToString(cd->getDownloadSpeed() / 1024.0);
-	
+	ChunkDownloadInterface::Stats s;
+	cd->getStats(s);
 		
-	setText(0,QString::number(cd->getChunkIndex()));
-	setText(1,QString("%1 / %2").arg(cd->piecesDownloaded()).arg(cd->totalPieces()));
-	setText(2,peer_id);
-	setText(3,speed);
-	setText(4,QString::number(cd->getNumDownloaders()));
+	setText(0,QString::number(s.chunk_index));
+	setText(1,QString("%1 / %2").arg(s.pieces_downloaded).arg(s.total_pieces));
+	setText(2,s.current_peer_id);
+	setText(3,KBytesPerSecToString(s.download_speed / 1024.0));
+	setText(4,QString::number(s.num_downloaders));
 }
 
 int ChunkDownloadViewItem::compare(QListViewItem * i,int col,bool) const
 {
 	ChunkDownloadViewItem* it = (ChunkDownloadViewItem*)i;
-	ChunkDownload* ocd = it->cd;
+	kt::ChunkDownloadInterface* ocd = it->cd;
+	ChunkDownloadInterface::Stats s;
+	cd->getStats(s);
+	ChunkDownloadInterface::Stats os;
+	ocd->getStats(os);
 	switch (col)
 	{
-		case 0: return CompareVal(cd->getChunkIndex(),ocd->getChunkIndex());
-		case 1: return CompareVal(cd->piecesDownloaded(),ocd->piecesDownloaded());
-		case 2: return QString::compare(cd->getCurrentPeerID(),ocd->getCurrentPeerID());
-		case 3: return CompareVal(cd->getDownloadSpeed(),ocd->getDownloadSpeed());
-		case 4: return CompareVal(cd->getNumDownloaders(),ocd->getNumDownloaders());
+		case 0: return CompareVal(s.chunk_index,os.chunk_index);
+		case 1: return CompareVal(s.pieces_downloaded,os.pieces_downloaded);
+		case 2: return QString::compare(s.current_peer_id,os.current_peer_id);
+		case 3: return CompareVal(s.download_speed,os.download_speed);
+		case 4: return CompareVal(s.num_downloaders,os.num_downloaders);
 	}
 	return 0;
 }
@@ -79,13 +80,13 @@ ChunkDownloadView::~ChunkDownloadView()
 {}
 
 
-void ChunkDownloadView::addDownload(ChunkDownload* cd)
+void ChunkDownloadView::addDownload(kt::ChunkDownloadInterface* cd)
 {
 	ChunkDownloadViewItem* it = new ChunkDownloadViewItem(this,cd);
 	items.insert(cd,it);
 }
 	
-void ChunkDownloadView::removeDownload(ChunkDownload* cd)
+void ChunkDownloadView::removeDownload(kt::ChunkDownloadInterface* cd)
 {
 	if (!items.contains(cd))
 		return;
@@ -103,7 +104,7 @@ void ChunkDownloadView::removeAll()
 
 void ChunkDownloadView::update()
 {
-	QMap<ChunkDownload*,ChunkDownloadViewItem*>::iterator i = items.begin();
+	QMap<ChunkDownloadInterface*,ChunkDownloadViewItem*>::iterator i = items.begin();
 	while (i != items.end())
 	{
 		ChunkDownloadViewItem* it = i.data();

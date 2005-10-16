@@ -1,7 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by                                                 *
- *   Joris Guisson <joris.guisson@gmail.com>                               *
- *   Ivan Vasic <ivasic@gmail.com>                                         *
+ *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,34 +17,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef TRAYICON_H
-#define TRAYICON_H
+#include "peerinterface.h"
 
-#include <ksystemtray.h>
-#include "ktorrentcore.h" 
-#include "interfaces/torrentinterface.h" 
-
-using namespace bt; 
-class QString;
-
-/**
-@author Joris Guisson
-*/
-class TrayIcon : public KSystemTray
+namespace kt
 {
-	Q_OBJECT
-public:
-	TrayIcon(KTorrentCore* tc, QWidget *parent = 0, const char *name = 0);
-	~TrayIcon();
 
-	void updateStats(const QString stats);
-	
-private slots:
-	void finished(kt::TorrentInterface* tc);
-	void torrentStoppedByError(kt::TorrentInterface* tc, QString msg); 
+	PeerInterface::PeerInterface()
+	{}
 
-private:
-	KTorrentCore* m_core;
-};
 
-#endif
+	PeerInterface::~PeerInterface()
+	{}
+
+
+}
