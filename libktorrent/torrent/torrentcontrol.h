@@ -216,7 +216,6 @@ namespace bt
 		QString error_msg,short_error_msg;
 		Uint16 port;
 		kt::MonitorInterface* tmon;
-		Uint32 num_tracker_attempts;
 		KURL last_tracker_url;
 		QDateTime time_started_dl, time_started_ul;
 		unsigned long running_time_dl, running_time_ul;

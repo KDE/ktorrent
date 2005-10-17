@@ -34,7 +34,7 @@
       <envvars/>
       <runarguments>
         <ktorrent/>
-        <kttorinfo/>
+        <kttorinfo></kttorinfo>
         <cachecheck/>
         <ktcachecheck/>
       </runarguments>

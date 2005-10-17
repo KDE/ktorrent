@@ -57,7 +57,10 @@ namespace bt
 		stats.started = false;
 		stats.saved = false;
 		stats.stopped_by_error = false;
-		num_tracker_attempts = 0;
+		stats.session_bytes_downloaded = 0;
+		stats.session_bytes_uploaded = 0;
+		
+		
 		old_datadir = QString::null;
 		tracker_update_interval = 120000;
 		stats.status = NOT_STARTED;
@@ -65,8 +68,8 @@ namespace bt
 		running_time_dl = running_time_ul = 0;
 		prev_bytes_dl = 0;
 		prev_bytes_ul = 0;
-		stats.session_bytes_downloaded = 0;
-		stats.session_bytes_uploaded = 0;
+
+		updateStats();
 	}
 
 
@@ -183,7 +186,6 @@ namespace bt
 			bt::Delete(datadir + "stopped",true);
 
 		stats.stopped_by_error = false;
-		num_tracker_attempts = 0;
 		updateTracker("started");
 		pman->start();
 		down->loadDownloads(datadir + "current_chunks");
@@ -206,8 +208,7 @@ namespace bt
 	
 		if (stats.running)
 		{
-			if (num_tracker_attempts < tor->getNumTrackerURLs())
-				updateTracker("stopped");
+			updateTracker("stopped");
 
 			if (tmon)
 				tmon->stopped();
@@ -318,39 +319,15 @@ namespace bt
 		try
 		{
 			tracker->updateData(this,pman);
-			num_tracker_attempts = 0;
 			updateStatusMsg();
 			stats.trackerstatus = i18n("OK");
 		}
 		catch (Error & e)
 		{
 			Out() << "Error : " << e.toString() << endl;
-			if (num_tracker_attempts >= tor->getNumTrackerURLs() &&
-			        trackerevent != "stopped")
+			if (trackerevent != "stopped")
 			{
 				stats.trackerstatus = i18n("Invalid response");
-				if (pman->getNumConnectedPeers() == 0 && !stats.stopped_by_error)
-				{
-					error_msg = i18n("The tracker %1 sent the following error : %2")
-							.arg(last_tracker_url.prettyURL()).arg(e.toString());
-					stats.stopped_by_error = true;
-					short_error_msg = i18n("Tracker error : %1").arg(e.toString());
-					stop(false);
-					emit stoppedByError(this, error_msg);
-				}
-				else
-				{
-					if (tor->getNumTrackerURLs() > 1)
-					{
-						stats.trackerstatus = i18n("Invalid response, trying backup");
-						updateTracker(trackerevent,false);
-					}
-					updateStatusMsg();
-				}
-			}
-			else if (trackerevent != "stopped")
-			{
-				stats.trackerstatus = i18n("Invalid response, trying backup");
 				updateTracker(trackerevent,false);
 			}
 		}
@@ -359,31 +336,7 @@ namespace bt
 	void TorrentControl::trackerResponseError()
 	{
 		Out() << "Tracker Response Error" << endl;
-		if (num_tracker_attempts >= tor->getNumTrackerURLs() &&
-		        trackerevent != "stopped")
-		{
-			stats.trackerstatus = i18n("Unreachable");
-			if (pman->getNumConnectedPeers() == 0 && !stats.stopped_by_error)
-			{
-				error_msg = i18n("The tracker %1 is down.")
-				            .arg(last_tracker_url.prettyURL());
-				short_error_msg = i18n("The tracker is down.");
-				stats.stopped_by_error = true;
-				stop(false);
-				emit stoppedByError(this, error_msg);
-			}
-			else
-			{
-				if (tor->getNumTrackerURLs() > 1)
-				{
-					stats.trackerstatus = i18n("Unreachable");
-					updateTracker(trackerevent,false);
-				}
-				updateStatusMsg();
-			}
-
-		}
-		else if (trackerevent != "stopped")
+		if (trackerevent != "stopped")
 		{
 			stats.trackerstatus = i18n("Unreachable");
 			updateTracker(trackerevent,false);
@@ -404,7 +357,6 @@ namespace bt
 		                 cman->bytesLeft(),ev);
 
 		tracker->doRequest(url);
-		num_tracker_attempts++;
 	}
 
 
