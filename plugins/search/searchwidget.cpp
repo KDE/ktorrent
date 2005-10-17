@@ -175,6 +175,7 @@ namespace kt
 		
 			SearchEngine se;
 			se.name = tokens[0];
+			se.name = se.name.replace("%20"," ");
 			se.url = KURL::fromPathOrURL(tokens[1]);
 			se.id = id;
 		

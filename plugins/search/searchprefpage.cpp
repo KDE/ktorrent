@@ -65,24 +65,25 @@ namespace kt
  
 		QTextStream in(&fptr);
 		int id = 0;
-     
+
 		while (!in.atEnd())
 		{
 			QString line = in.readLine();
-         
-			if(line.startsWith("#") || line.startsWith(" ") || line.isEmpty() ) continue;
-         
+
+			if(line.startsWith("#") || line.startsWith(" ") || line.isEmpty() )
+				continue;
+
 			QStringList tokens = QStringList::split(" ", line);
-         
-         
+			QString name = tokens[0];
+			name = name.replace("%20"," ");
 			KURL url = KURL::fromPathOrURL(tokens[1]);
 			for(Uint32 i=2; i<tokens.count(); ++i)
 				url.addQueryItem(tokens[i].section("=",0,0), tokens[i].section("=", 1, 1));
 		
-			QListViewItem* se = new QListViewItem(m_engines, tokens[0], url.url());
+			QListViewItem* se = new QListViewItem(m_engines, name, url.url());
 			m_items.append(se);
 			m_engines->insertItem(se);
-         
+
 			++id;
 		}
 	}
@@ -101,8 +102,13 @@ namespace kt
 			QListViewItem* item = m_items.at(i);
 			QString u = item->text(1);
 			QMap<QString,QString> args = KURL(u).queryItems();
-		
-			out << item->text(0) << " " << u.section("?",0,0) << " ";
+
+			// replace spaces by %20
+			QString name = item->text(0);
+			name = name.replace(" ","%20");
+	
+			out << name << " " << u.section("?",0,0) << " ";
+			
 			for (QMap<QString,QString>::iterator j = args.begin();j != args.end();j++)
 				out << j.key() << "=" << j.data() << " ";
 			out << endl;
