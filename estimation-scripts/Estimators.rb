@@ -29,7 +29,7 @@ class CSAEstimator < Estimator
     end
 
     def name
-        'Current Speed Estimator'
+        'CurrentSpeedEstimator'
     end
 end
 
@@ -47,13 +47,16 @@ class GASAEstimator < Estimator
     end
 
     def name
-        'Average Speed Estimator'
+        'AverageSpeedEstimator'
     end
 end
 
 # estimator that uses the average over the last n seconds
 
 class WINXEstimator < Estimator
+
+    attr_reader :windowSize
+
     def process(sample)
         # remove all samples that are older than the window size. Note: samples are sorted.
         @list.pop until @list.length <= 1 or (sample.time - @list.last.time) <= @windowSize
@@ -77,7 +80,7 @@ class WINXEstimator < Estimator
     end
     
     def name
-        "Moving Average Estimator #{@windowSize}s"
+        "MovingAverageEstimator_#{@windowSize}s"
     end
 
     def initialize(windowSizeInSeconds)

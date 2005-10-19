@@ -41,6 +41,19 @@ class Sample
         return Sample.new(time, speed, bytesDownloaded, bytesLeft, peersTotal)
     end
 
+    # parses samples from a text file, with one sample per line
+    def Sample.parseFromFile(filename)
+        samples = Hash.new
+        
+        input = File.open(filename)
+        input.each_line do |line|
+            s = Sample.parse(line)
+            samples[s.time] = s unless s == nil
+        end
+        input.close
+        return samples
+    end
+
     def initialize(time, speed, bytesDownloaded, bytesLeft, peersTotal)
         @time = time
         @speed = speed

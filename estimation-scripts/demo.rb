@@ -2,19 +2,12 @@ require 'Sample'
 require 'Estimators'
 require 'EstimationResults'
 
-samples = Hash.new
+samples = Sample.parseFromFile(ARGV[0])
 
-input = File.open(ARGV[0])
-input.each_line do |line|
-    s = Sample.parse(line)
-    samples[s.time] = s
-end
-input.close
-
-est = WINXEstimator.new(100)
+est = WINXEstimator.new(ARGV[1].to_i)
 
 results = EstimationResults.new(est, samples)
-results.setMaxError(5)
+results.setMaxError(10.0)
 
 relErrors = results.getRelativeErrors
 
