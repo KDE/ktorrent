@@ -11,8 +11,6 @@ enable-logging.diff - Patch to apply to enable logging download stats once per s
 
 processlog.rb - extracts logs for single torrents from $KDEHOME/share/apps/ktorrent/log and stores them in $FILENAME-torrent.log
 
-adjustTimestamps.rb - adjusts timestamps. The output of this script is the input for the actual analysis
-
 Sample.rb - class representing a sample, does the parsing (given a line from adjustTimestmaps output)
 
 Estimators.rb - Some basic estimators, for estimation based on current speed, average speed and moving average speed.
@@ -31,10 +29,6 @@ What to do
   ruby processlog.rb $KDEHOME/share/apps/ktorrent/log
 
 Extracted logs end up in $TORRENTFILENAME-torrent.log. ATTENTION: existing files are overwritten!
-
-3) run the adjustTimestamps.rb script (could be merged with processlog actually)
-
-  ruby ajustTimestamps.rb $TORRENTFILENAME-torrent.log > $TORRENTFILENAME-torrent.log-adjusted
 
 4) Now, analyze the -adjusted file with a ruby script, using Sample.rb, Estimators.rb, and EstimationResults.rb...  ;-)
 I will upload something useful as soon as finished.
