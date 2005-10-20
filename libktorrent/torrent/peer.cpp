@@ -216,7 +216,7 @@ namespace bt
 							id);
 					
 					uploader->addRequest(r);
-					//Out() << "REQUEST " << peer_id.toString() << endl;
+				//	Out() << "REQUEST " << peer_id.toString() << endl;
 				}
 				break;
 			case PIECE:

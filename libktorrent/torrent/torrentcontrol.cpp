@@ -43,6 +43,7 @@
 #include "httptracker.h"
 #include "udptracker.h"
 #include "downloadcap.h"
+#include "uploadcap.h"
 
 using namespace kt;
 
@@ -166,7 +167,7 @@ namespace bt
 
 			// Update DownloadCap
 			DownloadCap::instance().update();
-
+			UploadCap::instance().update();
 			updateStats();
 		}
 		catch (Error & e)

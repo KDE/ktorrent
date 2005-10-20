@@ -20,11 +20,15 @@
 #ifndef BTUPLOADCAP_H
 #define BTUPLOADCAP_H
 
+#include <qmap.h>
+#include <qvaluelist.h>
+#include <qptrlist.h>
 #include <util/timer.h>
 #include "globals.h"
 
 namespace bt
 {
+	class PacketWriter;
 
 	/**
 	 * @author Joris Guisson
@@ -37,25 +41,47 @@ namespace bt
 	*/
 	class UploadCap
 	{
-		static Uint32 max_bytes_per_sec;
-		static Timer timer;
-	public:
+		static UploadCap self;
 
+		QPtrList<PacketWriter> up_queue;
+		QMap<PacketWriter*,QValueList<Uint32> > up_bytes;
+		Uint32 max_bytes_per_sec;
+		Timer timer;
+
+		UploadCap();
+	public:
+		~UploadCap();
 		/**
 		 * Set the speed cap in bytes per second. 0 indicates
 		 * no limit.
 		 * @param max Maximum number of bytes per second.
 		 */
-		static void setSpeed(Uint32 max);
-		
-		static Uint32 getSpeed() {return max_bytes_per_sec;}
-		
+		void setMaxSpeed(Uint32 max);
+
 		/**
-		 * Request permission to send a piece @a bytes large.
-		 * @param bytes The size of the piece
-		 * @return The number of bytes we can upload
+		 * Allow or disallow somebody from sending a piece. If somebody
+		 * is disallowed they will be stored in a queue, and will be notified
+		 * when there turn is up.
+		 * @param pd PacketWriter doing the request
+		 * @param bytes Bytes it wants to upload
+		 * @return true if the piece is allowed or not
 		 */
-		static Uint32 allow(Uint32 bytes);
+		bool allow(PacketWriter* pd,Uint32 bytes);
+
+		/**
+		 * PacketWriter should call this when they get destroyed. To
+		 * remove them from the queue.
+		 * @param pd The PeerUploader
+		 */
+		void killed(PacketWriter* pd);
+
+		/**
+		 * Update the downloadcap.
+		 */
+		void update();
+	
+
+		static UploadCap & instance() {return self;}
 	};
 
 }

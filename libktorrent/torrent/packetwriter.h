@@ -38,6 +38,7 @@ namespace bt
 	{
 		Peer* peer;
 		QPtrList<Packet> packets;
+		Uint32 uploaded;
 	public:
 		PacketWriter(Peer* peer);
 		virtual ~PacketWriter();
@@ -102,15 +103,22 @@ namespace bt
 
 		/**
 		 * Try to send the remaining packets in the queue.
-		 * @return The number of bytes written
+		 * @return bytes written
 		 */
 		Uint32 update();
 
 		/// Get the number of packets which need to be written
 		Uint32 getNumPacketsToWrite() const {return packets.count();}
+
+		/**
+		 * Called by the upload cap, to tell the PacketWriter it
+		 * can send some bytes
+		 * @param num_bytes Num bytes allowed
+		 * @return The number of bytes uploaded
+		 */
+		Uint32 uploadUnsentBytes(Uint32 num_bytes);
 	private:
 		void sendPacket(const Packet & p);
-		bool sendBigPacket(Packet & p,Uint32 & written);
 	};
 
 }
