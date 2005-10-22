@@ -5,7 +5,7 @@ If something is done put # in front of it.
 
 1.2 :
 -----
-0) Rearrange stuff and do plugins
+# 0) Rearrange stuff and do plugins
 
 1) Switch to KNetwork classes (This could be frustrating)
 
@@ -29,11 +29,11 @@ connected peers, etc...) (UI clutter needs to be avoided)
 
 9) Implement temporary dir import (continue downloads)
 
-10) When specific torrent has big chunks (512K or more) and KT starts
-downloading some of them, for example >5, it lasts *forever* to finish either
-one of them before you can start uploading those chunks and get higher
-download speeds (this can take a veeeery long time on slow connections).
-(This is against the BT protocol, i.e. you should not say you have stuff you do not have. It also requires big changes code wise, uploading happens directly from the file. But we should do something about these situations)
+# 10) When specific torrent has big chunks (512K or more) and KT starts
+# downloading some of them, for example >5, it lasts *forever* to finish either
+# one of them before you can start uploading those chunks and get higher
+# download speeds (this can take a veeeery long time on slow connections).
+# (This is against the BT protocol, i.e. you should not say you have stuff you do not have. It also requires big changes code wise, uploading happens directly from the file. But we should do something about these situations)
 
 11) (maybe) Make customization of timer updates possible. This way the user can
 specify update interval and transfer rates won't be so jumpy if the interval

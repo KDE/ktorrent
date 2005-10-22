@@ -45,7 +45,6 @@ namespace bt
 		chunk_selector = new ChunkSelector(cman,*this);
 		Uint64 total = tor.getFileLength();
 		downloaded = (total - cman.bytesLeft() - cman.bytesExcluded());
-		endgame_mode = false;
 	
 		current_chunks.setAutoDelete(true);
 		connect(&pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
@@ -85,18 +84,33 @@ namespace bt
 	void Downloader::update()
 	{
 		if (cman.chunksLeft() == 0)
-		{
 			return;
-		}
 		
-		endgame_mode = 
+		/*
+			There are 3 modes :
+			- warmup : <= 4 chunks downloaded
+			- endgame : at the end of download
+			- normal : everything else
+		*/
+		bool warmup = cman.getNumChunks() - cman.chunksLeft() <= 4;
+		bool endgame_mode = 
 				cman.chunksLeft() <= current_chunks.count() &&
 				cman.chunksLeft() < 20;
 
+		if (warmup)
+			warmupUpdate();
 		if (endgame_mode)
 			endgameUpdate();
 		else
 			normalUpdate();
+	}
+
+	void Downloader::warmupUpdate()
+	{
+		// first try to assign as many peers to the current crop of chunks
+		endgameUpdate();
+		// then do a normal update to start some more
+		normalUpdate();
 	}
 	
 	void Downloader::normalUpdate()
@@ -104,7 +118,7 @@ namespace bt
 		for (Uint32 i = 0; i < pman.getNumConnectedPeers();++i)
 		{
 			PeerDownloader* pd = pman.getPeer(i)->getPeerDownloader();
-			//pd->downloadUnsent();
+	
 			if (!pd->isNull() && !pd->isChoked())
 			{
 				if (pd->getNumGrabbed() == 0 || (pd->getNumGrabbed() == 1 && pd->getNumRequests() < 8))
@@ -116,7 +130,7 @@ namespace bt
 	void Downloader::endgameUpdate()
 	{
 		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
-		{			
+		{
 			ChunkDownload* cd = j->second;
 			PtrMap<Peer*,PeerDownloader>::iterator i;
 			for (Uint32 i = 0; i < pman.getNumConnectedPeers();++i)

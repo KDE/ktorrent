@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>libktorrent/interfaces/libinterfaces.la</activetarget>
+      <activetarget>libktorrent/torrent/libtorrent.la</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>
