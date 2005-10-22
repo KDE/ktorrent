@@ -72,6 +72,10 @@ InfoWidget::InfoWidget(QWidget* parent, const char* name, WFlags fl)
 
 InfoWidget::~InfoWidget()
 {
+	if (cd_view)
+		cd_view->saveLayout(KGlobal::config(),"ChunkDownloadView");
+	if (peer_view)
+		peer_view->saveLayout(KGlobal::config(),"PeerView");
 	delete monitor;
 }
 
@@ -88,9 +92,11 @@ void InfoWidget::showPeerView( bool show )
 		m_tabs->addTab(peer_page,i18n("Peers"));;
 		peer_view->setEnabled(curr_tc != 0);
 		setEnabled(curr_tc != 0);
+		peer_view->restoreLayout(KGlobal::config(),"PeerView");
 	}
 	else if (!show && peer_view != 0)
 	{
+		peer_view->saveLayout(KGlobal::config(),"PeerView");
 		m_tabs->removePage( peer_page );
 		peer_page->reparent(0,QPoint(),false);
 		delete peer_page;
@@ -123,9 +129,11 @@ void InfoWidget::showChunkView( bool show )
 		m_tabs->addTab(cd_page,i18n("Chunks"));
 		cd_view->setEnabled(curr_tc != 0);
 		setEnabled(curr_tc != 0);
+		cd_view->restoreLayout(KGlobal::config(),"ChunkDownloadView");
 	}
 	else if (!show && cd_view != 0)
 	{
+		cd_view->saveLayout(KGlobal::config(),"ChunkDownloadView");
 		m_tabs->removePage( cd_page );
 		cd_page->reparent(0,QPoint(),false);
 		delete cd_page;

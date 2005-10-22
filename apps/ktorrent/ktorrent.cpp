@@ -127,6 +127,8 @@ KTorrent::KTorrent()
 	// then, setup our actions
 	setupActions();
 
+	
+
 	// and a status bar
 	statusBar()->show();
 
@@ -543,11 +545,11 @@ void KTorrent::changeCaption(const QString& text)
 	setCaption(text);
 }
 
-void KTorrent::saveProperties(KConfig *)
+void KTorrent::saveProperties(KConfig*)
 {
 }
 
-void KTorrent::readProperties(KConfig *)
+void KTorrent::readProperties(KConfig*)
 {
 }
 
