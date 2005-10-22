@@ -1,3 +1,3 @@
 INCLUDES = 
 METASOURCES = AUTO
-SUBDIRS = search
+SUBDIRS = search infowidget

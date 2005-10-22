@@ -75,6 +75,7 @@
 
 #include <interfaces/plugin.h>
 #include <interfaces/prefpageinterface.h>
+#include <expandablewidget.h>
 
 
 using namespace bt;
@@ -85,21 +86,15 @@ KTorrent::KTorrent()
 		m_view(0),m_systray_icon(0)
 {
 	bool debug = bt::Globals::instance().isDebugModeSet();
-	QSplitter* s = 0;
-	if (debug)
-		s = new QSplitter(QSplitter::Vertical,this);
-
-	m_tabs = new KTabWidget(debug ? (QWidget*)s : (QWidget*)this);
-
-	//m_tabs = new KTabWidget(this);
-	QSplitter* vbox = new QSplitter(QSplitter::Vertical,m_tabs);
-	m_view = new KTorrentView(vbox);
-	m_info = new InfoWidget(vbox);
-	vbox->moveToFirst(m_view);
-	vbox->moveToLast(m_info);
-
 	KIconLoader* iload = KGlobal::iconLoader();
-	m_tabs->addTab(vbox,iload->loadIconSet("down", KIcon::Small),i18n("Downloads"));
+
+	m_tabs = new KTabWidget(0);
+	m_view = new KTorrentView(0);
+	m_info = new InfoWidget(0);
+	m_exp = new ExpandableWidget(m_tabs,this);
+	m_view_exp = new ExpandableWidget(m_view,m_tabs);
+	m_tabs->addTab(m_view_exp,iload->loadIconSet("down", KIcon::Small),i18n("Downloads"));
+	m_view_exp->expand(m_info,kt::BELOW);
 
 	m_pref = new KTorrentPreferences(*this);
 	m_core = new KTorrentCore(this);
@@ -127,8 +122,6 @@ KTorrent::KTorrent()
 	// then, setup our actions
 	setupActions();
 
-	
-
 	// and a status bar
 	statusBar()->show();
 
@@ -140,15 +133,10 @@ KTorrent::KTorrent()
 	currentChanged(0);
 	applySettings();
 
-	if (!debug)
+	setCentralWidget(m_exp);
+	if (debug)
 	{
-		setCentralWidget(m_tabs);
-	}
-	else
-	{
-		s->moveToFirst(m_tabs);
-		s->moveToLast(new LogViewer(bt::Globals::instance().getLog(),s));
-		setCentralWidget(s);
+		m_exp->expand(new LogViewer(bt::Globals::instance().getLog(),0),kt::BELOW);
 	}
 
 	m_dcop = new KTorrentDCOP(this);
@@ -608,6 +596,16 @@ void KTorrent::updatedStats()
 void KTorrent::mergePluginGui(Plugin* p)
 {
 	guiFactory()->addClient(p);
+}
+
+void KTorrent::addWidgetInView(QWidget* w,Position pos)
+{
+	m_view_exp->expand(w,pos);
+}
+
+void KTorrent::removeWidgetFromView(QWidget* w)
+{
+	m_view_exp->remove(w);
 }
 
 #include "ktorrent.moc"

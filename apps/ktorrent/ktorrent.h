@@ -52,6 +52,7 @@ class KTorrentPreferences;
 namespace kt
 {
 	class TorrentInterface;
+	class ExpandableWidget;
 }
 
 /**
@@ -138,6 +139,8 @@ private:
 	void save(kt::TorrentInterface* tc);
 	bool queryClose();
 	bool queryExit();
+	virtual void addWidgetInView(QWidget* w,kt::Position pos);
+	virtual void removeWidgetFromView(QWidget* w);
 	
 	
 private:
@@ -151,6 +154,8 @@ private:
 	InfoWidget* m_info;
 	QTimer m_gui_update_timer;
 	KTorrentPreferences* m_pref;
+	kt::ExpandableWidget* m_exp;
+	kt::ExpandableWidget* m_view_exp;
 
 	QLabel* m_statusInfo;
 	QLabel* m_statusTransfer;

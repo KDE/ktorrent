@@ -20,65 +20,32 @@
 #include <kgenericfactory.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <kiconloader.h>
-#include <kstdaction.h>
-#include <kpopupmenu.h>
-#include <interfaces/guiinterface.h>
-#include "searchplugin.h"
-#include "searchwidget.h"
-#include "searchprefpage.h"
+#include "infowidgetplugin.h"
 
 
-#define NAME "searchplugin"
+#define NAME "infowidgetplugin"
 #define AUTHOR "Joris Guisson"
 #define EMAIL "joris.guisson@gmail.com"
-#define DESCRIPTION "KTorrent's search plugin"
+#define DESCRIPTION "KTorrent's information widget plugin, it shows additional information about a download."
 
-
-K_EXPORT_COMPONENT_FACTORY(ktsearchplugin,KGenericFactory<kt::SearchPlugin>("ktsearchplugin"))
+K_EXPORT_COMPONENT_FACTORY(ktinfowidgetplugin,KGenericFactory<kt::InfoWidgetPlugin>("ktinfowidgetplugin"))
 
 namespace kt
 {
 
-	SearchPlugin::SearchPlugin(QObject* parent, const char* name, const QStringList& args)
+	InfoWidgetPlugin::InfoWidgetPlugin(QObject* parent, const char* name, const QStringList& args)
 	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,DESCRIPTION)
-	{
-		// setXMLFile("ktsearchpluginui.rc");
-		search = 0;
-		pref = 0;
-	}
-
-
-	SearchPlugin::~SearchPlugin()
 	{}
 
 
-	void SearchPlugin::load()
-	{
-		KIconLoader* iload = KGlobal::iconLoader();
-		search = new SearchWidget(this);
-		getGUI()->addTabPage(
-				search,iload->loadIconSet("viewmag", KIcon::Small),
-				i18n("Search"));
-		search->loadSearchEngines();
-		
-		pref = new SearchPrefPage();
-		getGUI()->addPrefPage(pref);
+	InfoWidgetPlugin::~InfoWidgetPlugin()
+	{}
 
-		KAction* copy_act = KStdAction::copy(search,SLOT(copy()),actionCollection());
-		copy_act->plug(search->rightClickMenu(),0);
-	}
 
-	void SearchPlugin::unload()
-	{
-		search->onShutDown();
-		getGUI()->removeTabPage(search);
-		getGUI()->removePrefPage(pref);
-		delete search;
-		search = 0;
-		delete pref;
-		pref = 0;
-	}
+	void InfoWidgetPlugin::load()
+	{}
+
+	void InfoWidgetPlugin::unload()
+	{}
 
 }
-#include "searchplugin.moc"

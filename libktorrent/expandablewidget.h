@@ -17,68 +17,73 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <kgenericfactory.h>
-#include <kglobal.h>
-#include <klocale.h>
-#include <kiconloader.h>
-#include <kstdaction.h>
-#include <kpopupmenu.h>
+#ifndef KTEXPANDABLEWIDGET_H
+#define KTEXPANDABLEWIDGET_H
+
+#include <qwidget.h>
+#include <qptrlist.h>
 #include <interfaces/guiinterface.h>
-#include "searchplugin.h"
-#include "searchwidget.h"
-#include "searchprefpage.h"
 
-
-#define NAME "searchplugin"
-#define AUTHOR "Joris Guisson"
-#define EMAIL "joris.guisson@gmail.com"
-#define DESCRIPTION "KTorrent's search plugin"
-
-
-K_EXPORT_COMPONENT_FACTORY(ktsearchplugin,KGenericFactory<kt::SearchPlugin>("ktsearchplugin"))
+class QSplitter;
+class QHBoxLayout;
 
 namespace kt
 {
 
-	SearchPlugin::SearchPlugin(QObject* parent, const char* name, const QStringList& args)
-	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,DESCRIPTION)
+	
+
+	/**
+	 * @author Joris Guisson
+	 * @brief Widget which can be expanded with more widgets
+	 *
+	 * This is a sort of container widget, which at the minimum has
+	 * one child widget. It allows to add more widgets separating the new widget
+	 * and everything which was previously in the container by a separator.
+	*/
+	class ExpandableWidget : public QWidget
 	{
-		// setXMLFile("ktsearchpluginui.rc");
-		search = 0;
-		pref = 0;
-	}
+		Q_OBJECT
+	public:
+		/**
+		 * Constructor, the first child must be provided.
+		 * @param child The first child
+		 * @param parent The parent
+		 * @param name The name
+		 */
+		ExpandableWidget(QWidget* child,QWidget *parent = 0, const char *name = 0);
+		virtual ~ExpandableWidget();
 
 
-	SearchPlugin::~SearchPlugin()
-	{}
 
+		/**
+		 * Expand the widget. This will ensure the proper parent child relations.
+		 * @param w The widget
+		 * @param pos It's position relative to the current widget
+		 */
+		void expand(QWidget* w,Position pos);
 
-	void SearchPlugin::load()
-	{
-		KIconLoader* iload = KGlobal::iconLoader();
-		search = new SearchWidget(this);
-		getGUI()->addTabPage(
-				search,iload->loadIconSet("viewmag", KIcon::Small),
-				i18n("Search"));
-		search->loadSearchEngines();
-		
-		pref = new SearchPrefPage();
-		getGUI()->addPrefPage(pref);
+		/**
+		 * Remove a widget. This will ensure the proper parent child relations.
+		 * The widget w will become parentless. Note the first child will never be removed.
+		 * @param w The widget
+		 */
+		void remove(QWidget* w);
+	private:
+		struct StackElement
+		{
+			QWidget* w;
+			QSplitter* s;
+			Position pos;
+			StackElement* next;
 
-		KAction* copy_act = KStdAction::copy(search,SLOT(copy()),actionCollection());
-		copy_act->plug(search->rightClickMenu(),0);
-	}
+			StackElement() : w(0),s(0),pos(LEFT),next(0) {}
+			~StackElement() {delete next;}
+		};
 
-	void SearchPlugin::unload()
-	{
-		search->onShutDown();
-		getGUI()->removeTabPage(search);
-		getGUI()->removePrefPage(pref);
-		delete search;
-		search = 0;
-		delete pref;
-		pref = 0;
-	}
+		StackElement* begin;
+		QHBoxLayout* top_layout;
+	};
 
 }
-#include "searchplugin.moc"
+
+#endif

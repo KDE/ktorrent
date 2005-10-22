@@ -29,6 +29,14 @@ namespace kt
 	class PrefPageInterface;
 	class Plugin;
 
+	enum Position
+	{
+		LEFT, ///< New widgets will be added to the left of the old
+		RIGHT, ///< New widgets will be added to the right of the old
+		ABOVE, ///< New widgets will be added above the old
+		BELOW, ///< New widgets will be added below the old
+	};
+	
 	/**
 	 * @author Joris Guisson
 	 * @brief Interface to modify the GUI
@@ -80,6 +88,21 @@ namespace kt
 		 * @param p The Plugin
 		 */
 		virtual void mergePluginGui(Plugin* p) = 0;
+
+		/**
+		 * Embed a widget in the view in the mainview.
+		 * The view and the new widget will be separated by a separator.
+		 * @param w The widget
+		 * @param pos How the widget will be positioned against the allready present widgets
+		 */
+		virtual void addWidgetInView(QWidget* w,Position pos) = 0;
+
+		/**
+		 * Remove a widget added with addWidgetInView.
+		 * The widget will be reparented to 0.
+		 * @param w The widget 
+		 */
+		virtual void removeWidgetFromView(QWidget* w) = 0;
 	};
 
 }
