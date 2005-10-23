@@ -1,5 +1,11 @@
 [Desktop Entry]
 Name=SearchPlugin
+Name[br]=Lugent klask
+Name[da]=SøgePlugin
+Name[ga]=BreiseánCuardaigh
+Name[pt]='Plugin' de Procura
+Name[pt_BR]='Plugin' de Procura
+Name[sv]=Sökinsticksprogram
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktinfowidgetplugin
