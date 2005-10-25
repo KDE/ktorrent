@@ -26,7 +26,7 @@
 #include <util/ptrmap.h>
 #include "globals.h"
 #include "peerid.h"
-#include "bitset.h"
+#include <util/bitset.h>
 
 namespace bt
 {

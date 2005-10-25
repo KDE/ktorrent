@@ -33,7 +33,7 @@
 #include <util/functions.h>
 #include "torrentfile.h"
 #include "torrentcontrol.h"
-#include "bitset.h"
+#include <util/bitset.h>
 #include "peer.h"
 #include "choker.h"
 

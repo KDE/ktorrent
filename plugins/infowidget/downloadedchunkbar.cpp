@@ -17,52 +17,31 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTPLUGINMANAGER_H
-#define KTPLUGINMANAGER_H
-
-#include <qptrlist.h>
-#include <interfaces/plugin.h>
-
+#include <util/bitset.h>
+#include <interfaces/torrentinterface.h>
+#include "downloadedchunkbar.h"
 
 namespace kt
 {
-	class CoreInterface;
-	class GUIInterface;
-	/**
-	 * @author Joris Guisson
-	 * @brief Class to manage plugins
-	 *
-	 * This class manages all plugins. Plugins are stored in a list.
-	 */
-	class PluginManager
+		
+	DownloadedChunkBar::DownloadedChunkBar(QWidget* parent, const char* name)
+		: ChunkBar(parent,name)
 	{
-		QPtrList<Plugin> plugins;
-		CoreInterface* core;
-		GUIInterface* gui;
-	public:
-		PluginManager(CoreInterface* core,GUIInterface* gui);
-		virtual ~PluginManager();
-
-		/**
-		 * Load the list of plugins.
-		 * This basicly uses KTrader to get a list of available plugins, and
-		 * loads those, but does not initialize them. We will consider a plugin loaded
-		 * when it's load method is called.
-		 * NOTE: for now it loads all plugins
-		 */
-		void loadPluginList();
-
-		/**
-		 * Unload all plugins.
-		 */
-		void unloadAll();
-
-		/**
-		 * Update all plugins who need a periodical GUI update.
-		 */
-		void updateGuiPlugins();
-	};
-
+		show_excluded = true;
+	}
+	
+	
+	DownloadedChunkBar::~DownloadedChunkBar()
+	{}
+	
+	
+	const bt::BitSet & DownloadedChunkBar::getBitSet() const
+	{
+		if (curr_tc)
+			return curr_tc->downloadedChunksBitSet();
+		else
+			return bt::BitSet::null;
+	}
 }
 
-#endif
+#include "downloadedchunkbar.moc"

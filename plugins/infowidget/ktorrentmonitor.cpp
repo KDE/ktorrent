@@ -17,52 +17,72 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTPLUGINMANAGER_H
-#define KTPLUGINMANAGER_H
+#include <interfaces/peerinterface.h>
+#include <interfaces/torrentinterface.h>
+#include <interfaces/chunkdownloadinterface.h>
+#include "ktorrentmonitor.h"
+#include "peerview.h"
+#include "chunkdownloadview.h"
 
-#include <qptrlist.h>
-#include <interfaces/plugin.h>
-
+using namespace bt;
 
 namespace kt
 {
-	class CoreInterface;
-	class GUIInterface;
-	/**
-	 * @author Joris Guisson
-	 * @brief Class to manage plugins
-	 *
-	 * This class manages all plugins. Plugins are stored in a list.
-	 */
-	class PluginManager
+	
+	KTorrentMonitor::KTorrentMonitor(kt::TorrentInterface* tc,
+				PeerView* pv,
+				ChunkDownloadView* cdv) : tc(tc),pv(pv),cdv(cdv)
 	{
-		QPtrList<Plugin> plugins;
-		CoreInterface* core;
-		GUIInterface* gui;
-	public:
-		PluginManager(CoreInterface* core,GUIInterface* gui);
-		virtual ~PluginManager();
-
-		/**
-		 * Load the list of plugins.
-		 * This basicly uses KTrader to get a list of available plugins, and
-		 * loads those, but does not initialize them. We will consider a plugin loaded
-		 * when it's load method is called.
-		 * NOTE: for now it loads all plugins
-		 */
-		void loadPluginList();
-
-		/**
-		 * Unload all plugins.
-		 */
-		void unloadAll();
-
-		/**
-		 * Update all plugins who need a periodical GUI update.
-		 */
-		void updateGuiPlugins();
-	};
-
-}
-
-#endif
+		if (tc)
+			tc->setMonitor(this);
+	}
+	
+	
+	KTorrentMonitor::~KTorrentMonitor()
+	{
+		if (tc)
+			tc->setMonitor(0);
+	}
+	
+	
+	void KTorrentMonitor::downloadRemoved(kt::ChunkDownloadInterface* cd)
+	{
+		if (cdv)
+			cdv->removeDownload(cd);
+	}
+	
+	void KTorrentMonitor::downloadStarted(kt::ChunkDownloadInterface* cd)
+	{
+		if (cdv)
+			cdv->addDownload(cd);
+	}
+	
+	void KTorrentMonitor::peerAdded(kt::PeerInterface* peer)
+	{
+		if (pv)
+			pv->addPeer(peer);
+	}
+	
+	void KTorrentMonitor::peerRemoved(kt::PeerInterface* peer)
+	{
+		if (pv)
+			pv->removePeer(peer);
+	}
+	
+	void KTorrentMonitor::stopped()
+	{
+		if (pv)
+			pv->removeAll();
+		if (cdv)
+			cdv->removeAll();
+	}
+	
+	void KTorrentMonitor::destroyed()
+	{
+		if (pv)
+			pv->removeAll();
+		if (cdv)
+			cdv->removeAll();
+		tc = 0;
+	}
+}	

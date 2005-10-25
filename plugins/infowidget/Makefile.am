@@ -1,12 +1,15 @@
 INCLUDES = $(all_includes) -I$(srcdir)/../../libktorrent
 METASOURCES = AUTO
 kde_module_LTLIBRARIES = ktinfowidgetplugin.la
-noinst_HEADERS = infowidgetplugin.h
-ktinfowidgetplugin_la_SOURCES = infowidgetplugin.cpp
+noinst_HEADERS = infowidgetplugin.h infowidgetprefpage.h
+ktinfowidgetplugin_la_SOURCES = infowidgetplugin.cpp availabilitychunkbar.cpp \
+					chunkbar.cpp chunkdownloadview.cpp downloadedchunkbar.cpp infowidget.cpp \
+					infowidgetbase.ui peerview.cpp ktorrentmonitor.cpp iwfiletreediritem.cpp \
+			iwfiletreeitem.cpp infowidgetprefpage.cpp infowidgetpluginsettings.kcfgc iwpref.ui
 
 # Libs needed by the plugin
 ktinfowidgetplugin_la_LIBADD = $(LIB_KHTML) $(LIB_KPARTS) \
-	../../libktorrent/interfaces/libinterfaces.la
+	../../libktorrent/libktorrent.la
 
 # LD flags for the plugin
 # -module says: this is a module, i.e. something you're going to dlopen
@@ -20,5 +23,5 @@ ktinfowidgetplugin_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 # Install the desktop file needed to detect the plugin
 kde_services_DATA = ktinfowidgetplugin.desktop
 
-# kde_kcfg_DATA = ktsearchplugin.kcfg
+kde_kcfg_DATA = ktinfowidgetplugin.kcfg
 

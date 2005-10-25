@@ -24,7 +24,7 @@
 #include <qobject.h>
 #include <qptrvector.h> 
 #include "chunk.h"
-#include "bitset.h"
+#include <util/bitset.h>
 #include "globals.h"
 
 namespace bt

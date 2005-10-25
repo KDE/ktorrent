@@ -12,6 +12,9 @@
             <height>290</height>
         </rect>
     </property>
+    <property name="caption">
+        <string>InfoWidgetBase</string>
+    </property>
     <hbox>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -39,7 +42,7 @@
                             <string>Parts of the file which have been downloaded:</string>
                         </property>
                     </widget>
-                    <widget class="DownloadedChunkBar">
+                    <widget class="kt::DownloadedChunkBar">
                         <property name="name">
                             <cstring>m_chunk_bar</cstring>
                         </property>
@@ -52,7 +55,7 @@
                             <string>Parts of the file which are available:</string>
                         </property>
                     </widget>
-                    <widget class="AvailabilityChunkBar">
+                    <widget class="kt::AvailabilityChunkBar">
                         <property name="name">
                             <cstring>m_av_chunk_bar</cstring>
                         </property>
@@ -686,7 +689,7 @@
 </widget>
 <customwidgets>
     <customwidget>
-        <class>DownloadedChunkBar</class>
+        <class>kt::DownloadedChunkBar</class>
         <header location="local">downloadedchunkbar.h</header>
         <sizehint>
             <width>-1</width>
@@ -702,7 +705,7 @@
         <pixmap>image0</pixmap>
     </customwidget>
     <customwidget>
-        <class>AvailabilityChunkBar</class>
+        <class>kt::AvailabilityChunkBar</class>
         <header location="local">availabilitychunkbar.h</header>
         <sizehint>
             <width>-1</width>

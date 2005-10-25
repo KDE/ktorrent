@@ -40,8 +40,8 @@ namespace bt
 					.arg(dir.prettyURL()).arg(KIO::NetAccess::lastErrorString()));
 			else
 			{
-				Out() << "Error : Cannot create directory " << dir << " : "
-						<< KIO::NetAccess::lastErrorString() << endl;
+			/*	Out() << "Error : Cannot create directory " << dir << " : "
+				<< KIO::NetAccess::lastErrorString() << endl;*/
 			}
 		}
 	}
@@ -54,10 +54,10 @@ namespace bt
 				throw Error(i18n("Cannot symlink %1 to %2: %3")
 					.arg(link_url.utf8()).arg(link_to.utf8())
 					.arg(strerror(errno)));
-			else
+		/*	else
 				Out() << QString("Error : Cannot symlink %1 to %2: %3")
 						.arg(link_url.utf8()).arg(link_to.utf8())
-						.arg(strerror(errno)) << endl;
+				.arg(strerror(errno)) << endl;*/
 		}
 	}
 
@@ -69,10 +69,11 @@ namespace bt
 				throw Error(i18n("Cannot move %1 to %2: %3")
 					.arg(src.prettyURL()).arg(dst.prettyURL())
 					.arg(KIO::NetAccess::lastErrorString()));
-			else
+		/*	else
 				Out() << QString("Error : Cannot move %1 to %2: %3")
 						.arg(src.prettyURL()).arg(dst.prettyURL())
 						.arg(KIO::NetAccess::lastErrorString()) << endl;
+			*/
 		}
 	}
 
@@ -84,10 +85,11 @@ namespace bt
 				throw Error(i18n("Cannot copy %1 to %2: %3")
 						.arg(src.prettyURL()).arg(dst.prettyURL())
 						.arg(KIO::NetAccess::lastErrorString()));
-			else
+		/*	else
 				Out() << QString("Error : Cannot copy %1 to %2: %3")
 						.arg(src.prettyURL()).arg(dst.prettyURL())
 						.arg(KIO::NetAccess::lastErrorString()) << endl;
+		*/
 		}
 	}
 
@@ -104,8 +106,9 @@ namespace bt
 				throw Error(i18n("Cannot delete %1: %2")
 						.arg(url.prettyURL())
 						.arg(KIO::NetAccess::lastErrorString()));
-			else
+		/*	else
 				Out() << "Error : Cannot delete " << url << " : " << KIO::NetAccess::lastErrorString() << endl;
+		*/
 		}
 	}
 
@@ -121,9 +124,10 @@ namespace bt
 				throw Error(i18n("Cannot create %1: %2")
 						.arg(url)
 						.arg(fptr.errorString()));
-			else
+		/*	else
 				Out() << "Error : Cannot create " << url << " : "
 						<< fptr.errorString() << endl;
+		*/
 		}
 	}
 

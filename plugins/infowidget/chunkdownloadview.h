@@ -17,46 +17,47 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef PEERVIEW_H
-#define PEERVIEW_H
+#ifndef BTCHUNKDOWNLOADVIEW_H
+#define BTCHUNKDOWNLOADVIEW_H
 
-#include <qmap.h>
 #include <klistview.h>
+#include <qmap.h>
 
 namespace kt
 {
-	class PeerInterface;
-}
-
-class PeerView;
-
-class PeerViewItem : public KListViewItem
-{
-	kt::PeerInterface* peer;
-public:
-	PeerViewItem(PeerView* pv,kt::PeerInterface* peer);
-
-	void update();
-	int compare(QListViewItem * i,int col,bool) const;
-};
-
-/**
-@author Joris Guisson
-*/
-class PeerView : public KListView
-{
-	Q_OBJECT
+	class ChunkDownloadInterface;
+	class ChunkDownloadView;
 	
-	QMap<kt::PeerInterface*,PeerViewItem*> items;
-public:
-	PeerView(QWidget *parent = 0, const char *name = 0);
-	virtual ~PeerView();
+	class ChunkDownloadViewItem : public KListViewItem
+	{
+		kt::ChunkDownloadInterface* cd;
+	public:
+		ChunkDownloadViewItem(ChunkDownloadView* cdv,kt::ChunkDownloadInterface* cd);
 	
-public slots:
-	void addPeer(kt::PeerInterface* peer);
-	void removePeer(kt::PeerInterface* peer);
-	void update();
-	void removeAll();
-};
+		void update();
+		int compare(QListViewItem * i,int col,bool) const;
+	};
+	
+	
+	/**
+	@author Joris Guisson
+	*/
+	class ChunkDownloadView : public KListView
+	{
+		Q_OBJECT
+	
+		QMap<kt::ChunkDownloadInterface*,ChunkDownloadViewItem*> items;
+	public:
+		ChunkDownloadView(QWidget *parent = 0, const char *name = 0);
+		virtual ~ChunkDownloadView();
+	
+	public slots:
+		void addDownload(kt::ChunkDownloadInterface* cd);
+		void removeDownload(kt::ChunkDownloadInterface* cd);
+		void removeAll();
+		void update();
+	};
+}	
+
 
 #endif

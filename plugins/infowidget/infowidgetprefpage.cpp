@@ -17,41 +17,45 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTORRENTMONITOR_H
-#define KTORRENTMONITOR_H
+#include <klocale.h>
+#include <qcheckbox.h>
+#include "infowidget.h"
+#include "infowidgetprefpage.h"
+#include "infowidgetpluginsettings.h"
+#include "iwpref.h"
 
-#include <interfaces/monitorinterface.h>
-
-class PeerView;
-class ChunkDownloadView;
 
 namespace kt
 {
-	class TorrentInterface;
+
+	InfoWidgetPrefPage::InfoWidgetPrefPage(InfoWidget* iw)
+	: PrefPageInterface(i18n("Info Widget"),i18n("Information Widget Options"),QPixmap()),iw(iw)
+	{
+		pref = 0;
+	}
+
+
+	InfoWidgetPrefPage::~InfoWidgetPrefPage()
+	{}
+
+
+	void InfoWidgetPrefPage::apply()
+	{
+		InfoWidgetPluginSettings::setShowPeerView(pref->m_show_pv->isChecked());
+		InfoWidgetPluginSettings::setShowChunkView(pref->m_show_cdv->isChecked());
+		InfoWidgetPluginSettings::writeConfig();
+		iw->showPeerView( InfoWidgetPluginSettings::showPeerView() );
+		iw->showChunkView( InfoWidgetPluginSettings::showChunkView() );
+	}
+
+	void InfoWidgetPrefPage::createWidget(QWidget* parent)
+	{
+		pref = new IWPref(parent);
+		pref->m_show_pv->setChecked(InfoWidgetPluginSettings::showPeerView());
+		pref->m_show_cdv->setChecked(InfoWidgetPluginSettings::showChunkView());
+	}
+
+	void InfoWidgetPrefPage::updateData()
+	{}
+
 }
-
-/**
-@author Joris Guisson
-*/
-class KTorrentMonitor : public kt::MonitorInterface
-{
-	kt::TorrentInterface* tc;
-	PeerView* pv;
-	ChunkDownloadView* cdv;
-public:
-	KTorrentMonitor(
-			kt::TorrentInterface* tc,
-			PeerView* pv,
-			ChunkDownloadView* cdv);
-	virtual ~KTorrentMonitor();
-
-	virtual void downloadRemoved(kt::ChunkDownloadInterface* cd);
-	virtual void downloadStarted(kt::ChunkDownloadInterface* cd);
-	virtual void peerAdded(kt::PeerInterface* peer);
-	virtual void peerRemoved(kt::PeerInterface* peer);
-	virtual void stopped();
-	virtual void destroyed();
-
-};
-
-#endif

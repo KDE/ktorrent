@@ -26,39 +26,5 @@ using namespace bt;
 
 namespace kt
 {
-	const double TO_KB = 1024.0;
-	const double TO_MEG = (1024.0 * 1024.0);
-	const double TO_GIG = (1024.0 * 1024.0 * 1024.0);
 
-	QString BytesToString(Uint64 bytes,int precision)
-	{
-		KLocale* loc = KGlobal::locale();
-		if (bytes >= 1024 * 1024 * 1024)
-			return i18n("%1 GB").arg(loc->formatNumber(bytes / TO_GIG,precision < 0 ? 2 : precision));
-		else if (bytes >= 1024*1024)
-			return i18n("%1 MB").arg(loc->formatNumber(bytes / TO_MEG,precision < 0 ? 1 : precision));
-		else if (bytes >= 1024)
-			return i18n("%1 KB").arg(loc->formatNumber(bytes / TO_KB,precision < 0 ? 1 : precision));
-		else
-			return i18n("%1 B").arg(bytes);
-	}
-
-	QString KBytesPerSecToString(double speed,int precision)
-	{
-		KLocale* loc = KGlobal::locale();
-		return i18n("%1 KB/sec").arg(loc->formatNumber(speed,precision));
-	}
-
-	QString DurationToString(Uint32 nsecs)
-	{
-		KLocale* loc = KGlobal::locale();
-		QTime t;
-		int ndays = nsecs / 86400;
-		t = t.addSecs(nsecs % 86400);
-		QString s = loc->formatTime(t,true,true);
-		if (ndays > 0)
-			s = i18n("1 day ","%n days ",ndays) + s;
-
-		return s;
-	}
 }

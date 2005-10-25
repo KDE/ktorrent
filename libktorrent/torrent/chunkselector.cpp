@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include <stdlib.h>
 #include <util/log.h>
-#include "bitset.h"
+#include <util/bitset.h>
 #include "chunkselector.h"
 #include "chunkmanager.h"
 #include "downloader.h"

@@ -36,6 +36,8 @@ namespace kt
 	Plugin::~Plugin()
 	{}
 
-
+	void Plugin::guiUpdate()
+	{
+	}
 }
 #include "plugin.moc"

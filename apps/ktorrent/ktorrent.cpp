@@ -70,12 +70,12 @@
 #include "logviewer.h"
 #include "ktorrentdcop.h"
 #include "torrentcreatordlg.h"
-#include "infowidget.h"
-#include "functions.h"
-
+#include <util/functions.h>
+#include <interfaces/functions.h>
 #include <interfaces/plugin.h>
 #include <interfaces/prefpageinterface.h>
 #include <expandablewidget.h>
+#include <pluginmanager.h>
 
 
 using namespace bt;
@@ -90,11 +90,9 @@ KTorrent::KTorrent()
 
 	m_tabs = new KTabWidget(0);
 	m_view = new KTorrentView(0);
-	m_info = new InfoWidget(0);
 	m_exp = new ExpandableWidget(m_tabs,this);
 	m_view_exp = new ExpandableWidget(m_view,m_tabs);
 	m_tabs->addTab(m_view_exp,iload->loadIconSet("down", KIcon::Small),i18n("Downloads"));
-	m_view_exp->expand(m_info,kt::BELOW);
 
 	m_pref = new KTorrentPreferences(*this);
 	m_core = new KTorrentCore(this);
@@ -215,8 +213,6 @@ void KTorrent::applySettings()
 		m_systray_icon->hide();
 	}
 
-	m_info->showPeerView( Settings::showPeerView() );
-	m_info->showChunkView( Settings::showChunkView() );
 	m_core->changeDataDir(Settings::tempDir());
 	UDPTrackerSocket::setPort(Settings::udpTrackerPort());
 	m_core->changePort(Settings::port());
@@ -256,7 +252,8 @@ void KTorrent::currentChanged(kt::TorrentInterface* tc)
 		m_stop->setEnabled(false);
 		m_remove->setEnabled(false);
 	}
-	m_info->changeTC(tc);
+
+	notifyViewListeners(tc);
 }
 
 void KTorrent::setupActions()
@@ -457,7 +454,7 @@ void KTorrent::removeDownload()
 			if (ret == KMessageBox::Cancel)
 				return;
 		}
-		m_info->changeTC(0);
+		notifyViewListeners(tc);
 		m_core->remove(tc);
 		currentChanged(m_view->getCurrentTC());
 	}
@@ -589,8 +586,8 @@ void KTorrent::updatedStats()
 	m_statusTransfer->setText(tmp1);
 
 	m_view->update();
-	m_info->update();
 	m_systray_icon->updateStats(tmp + "<br>" + tmp1 + "<br>");
+	m_core->getPluginManager().updateGuiPlugins();
 }
 
 void KTorrent::mergePluginGui(Plugin* p)

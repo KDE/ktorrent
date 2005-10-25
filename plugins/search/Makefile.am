@@ -7,7 +7,7 @@ ktsearchplugin_la_SOURCES = searchplugin.cpp htmlpart.cpp searchbar.ui \
 
 # Libs needed by the plugin
 ktsearchplugin_la_LIBADD = $(LIB_KHTML) $(LIB_KPARTS) \
-	../../libktorrent/interfaces/libinterfaces.la
+	../../libktorrent/libktorrent.la
 
 # LD flags for the plugin
 # -module says: this is a module, i.e. something you're going to dlopen

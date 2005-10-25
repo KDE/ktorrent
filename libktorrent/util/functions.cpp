@@ -28,6 +28,7 @@
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmimetype.h>
+#include <kglobal.h>
 #include "functions.h"
 #include "error.h"
 
@@ -168,5 +169,9 @@ namespace bt
 		gettimeofday(&tv,0);
 		return (Uint32)(tv.tv_sec * 1000 + tv.tv_usec * 0.001);
 	}
+
+
+
+	
 
 }

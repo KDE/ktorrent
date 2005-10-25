@@ -21,7 +21,7 @@
 #include "packet.h"
 #include "request.h"
 #include "chunk.h"
-#include "bitset.h"
+#include <util/bitset.h>
 #include <util/functions.h>
 
 namespace bt

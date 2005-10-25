@@ -1,7 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2005 by                                                 *
  *   Joris Guisson <joris.guisson@gmail.com>                               *
- *   Vincent Wagelaar <vincent@ricardis.tudelft.nl>                        *
+ *   Ivan Vasic <ivasic@gmail.com>                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,57 +18,67 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef CHUNKBAR_H
-#define CHUNKBAR_H
 
-#include <qlabel.h>
-#include <torrent/bitset.h>
-#include <qpixmap.h>
+#ifndef INFOWIDGET_H
+#define INFOWIDGET_H
 
-class QPainter;
+
+#include "infowidgetbase.h"
+
+
+class KPopupMenu; 
+class QString;
+class QWidget;
+class QHBoxLayout;
+
 
 namespace kt
 {
 	class TorrentInterface;
-}
-
-namespace bt
-{
-	class BitSet;
-}
+	class PeerView;
+	class ChunkDownloadView;
+	class KTorrentMonitor;
+	class IWFileTreeDirItem;
 
 
-/**
- * @author Joris Guisson, Vincent Wagelaar
- *
- * Bar which displays BitSets, subclasses need to fill the BitSet.
- * BitSets can represent which chunks are downloaded, which chunks are available
- * and which chunks are excluded.
- */
-class ChunkBar : public QFrame
-{
-	Q_OBJECT
-public:
-	ChunkBar(QWidget *parent = 0, const char *name = 0);
-	virtual ~ChunkBar();
-
-	void setTC(kt::TorrentInterface* tc);
+	class InfoWidget : public InfoWidgetBase
+	{
+		Q_OBJECT
 	
-	virtual const bt::BitSet & getBitSet() const = 0;
-	virtual void drawContents(QPainter *p);
-	virtual void updateBar();
-  
-private:
-	void drawEqual(QPainter *p,const bt::BitSet & bs,const QColor & color);
-	void drawMoreChunksThenPixels(QPainter *p,const bt::BitSet & bs,const QColor & color);
-	void drawAllOn(QPainter *p,const QColor & color);
-	void drawBarContents(QPainter *p);
+	public:
+		InfoWidget(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+		virtual ~InfoWidget();
+		
+		///Show PeerView in main window
+		void showPeerView(bool show);
+		///Show ChunkDownloadView in main window
+		void showChunkView(bool show);
 	
-protected:
-	kt::TorrentInterface* curr_tc;
-	bool show_excluded;
-	bt::BitSet curr,curr_ebs;
-	QPixmap pixmap;
-};
+	public slots:
+		void changeTC(kt::TorrentInterface* tc);
+		void update();
+		void showContextMenu(KListView* ,QListViewItem* item,const QPoint & p);
+	
+		///preview slot
+		void contextItem(int id);
+	
+	private:
+		void fillFileTree();
+		void readyPreview(); 
+		
+	private:
+		KTorrentMonitor* monitor;
+		kt::TorrentInterface* curr_tc;
+		IWFileTreeDirItem* multi_root;
+		KPopupMenu* context_menu;
+		QString preview_path;
+		int preview_id;
+		QWidget* peer_page;
+		PeerView* peer_view;
+		QWidget* cd_page;
+		ChunkDownloadView* cd_view;
+	};
+}
 
 #endif
+

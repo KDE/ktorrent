@@ -17,52 +17,34 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTPLUGINMANAGER_H
-#define KTPLUGINMANAGER_H
+#include <qtooltip.h>
+#include <klocale.h>
 
-#include <qptrlist.h>
-#include <interfaces/plugin.h>
-
+#include <util/bitset.h>
+#include <interfaces/torrentinterface.h>
+#include "availabilitychunkbar.h"
 
 namespace kt
 {
-	class CoreInterface;
-	class GUIInterface;
-	/**
-	 * @author Joris Guisson
-	 * @brief Class to manage plugins
-	 *
-	 * This class manages all plugins. Plugins are stored in a list.
-	 */
-	class PluginManager
-	{
-		QPtrList<Plugin> plugins;
-		CoreInterface* core;
-		GUIInterface* gui;
-	public:
-		PluginManager(CoreInterface* core,GUIInterface* gui);
-		virtual ~PluginManager();
-
-		/**
-		 * Load the list of plugins.
-		 * This basicly uses KTrader to get a list of available plugins, and
-		 * loads those, but does not initialize them. We will consider a plugin loaded
-		 * when it's load method is called.
-		 * NOTE: for now it loads all plugins
-		 */
-		void loadPluginList();
-
-		/**
-		 * Unload all plugins.
-		 */
-		void unloadAll();
-
-		/**
-		 * Update all plugins who need a periodical GUI update.
-		 */
-		void updateGuiPlugins();
-	};
-
+	
+AvailabilityChunkBar::AvailabilityChunkBar(QWidget* parent, const char* name): ChunkBar(parent, name)
+{
+	QToolTip::add(this, i18n("<img src=\"available_color\">&nbsp; - Available Chunks<br><img src=\"unavailable_color\">&nbsp; - Unavailable Chunks<br><img src=\"excluded_color\">&nbsp; - Excluded Chunks"));
 }
 
-#endif
+
+AvailabilityChunkBar::~AvailabilityChunkBar()
+{
+}
+
+
+const bt::BitSet & AvailabilityChunkBar::getBitSet() const
+{
+	if (curr_tc)
+		return curr_tc->availableChunksBitSet();
+	else
+		return bt::BitSet::null;
+}
+}
+
+#include "availabilitychunkbar.moc"

@@ -25,9 +25,9 @@
 #include "trayicon.h"
 #include <qtooltip.h>
 #include <kpassivepopup.h>
-#include "interfaces/torrentinterface.h"
+#include <interfaces/torrentinterface.h>
 #include "ktorrentcore.h"
-#include "functions.h"
+#include <interfaces/functions.h>
 
 
 using namespace bt;

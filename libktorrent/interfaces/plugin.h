@@ -69,6 +69,12 @@ namespace kt
 		 */
 		virtual void unload() = 0;
 
+		/**
+		 * For plugins who need to update something, the same time as the
+		 * GUI updates.
+		 */
+		virtual void guiUpdate();
+
 		const QString & getName() const {return name;}
 		const QString & getAuthor() const {return author;}
 		const QString & getEMailAddress() const {return email;}

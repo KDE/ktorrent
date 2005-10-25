@@ -24,7 +24,7 @@
 #include <qsocket.h>
 #include <util/timer.h>
 #include <interfaces/peerinterface.h>
-#include "bitset.h"
+#include <util/bitset.h>
 #include "globals.h"
 #include "peerid.h"
 

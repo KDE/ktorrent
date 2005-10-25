@@ -74,4 +74,15 @@ namespace kt
 		}
 		plugins.clear();
 	}
+
+	void PluginManager::updateGuiPlugins()
+	{
+		QPtrList<Plugin>::iterator i = plugins.begin();
+		while (i != plugins.end())
+		{
+			Plugin* p = *i;
+			p->guiUpdate();
+			i++;
+		}
+	}
 }

@@ -159,8 +159,6 @@ PrefPageTwo::PrefPageTwo(QWidget *parent) : GeneralPref(parent)
 void PrefPageTwo::apply()
 {
 	Settings::setShowSystemTrayIcon(show_systray_icon->isChecked());
-	Settings::setShowPeerView(m_showPeerView->isChecked());
-	Settings::setShowChunkView(m_showChunkView->isChecked());
 	QString ourl = Settings::tempDir();
 	
 	KURLRequester* u = temp_dir;
@@ -201,8 +199,6 @@ void PrefPageTwo::autosaveChecked(bool on)
 void PrefPageTwo::updateData()
 {
 	show_systray_icon->setChecked(Settings::showSystemTrayIcon());
-	m_showPeerView->setChecked(Settings::showPeerView());
-	m_showChunkView->setChecked(Settings::showChunkView());
 	KURLRequester* u = temp_dir;
 	u->fileDialog()->setMode(KFile::Directory);
 	if (Settings::tempDir() == QString::null)

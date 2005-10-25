@@ -20,79 +20,60 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <kiconloader.h>
-#include <kmimetype.h>
 #include <util/functions.h>
 #include <interfaces/torrentfileinterface.h>
 #include <interfaces/torrentinterface.h>
-#include "iwfiletreeitem.h"
 #include "iwfiletreediritem.h"
+#include "iwfiletreeitem.h"
 #include "functions.h"
 
 using namespace kt;
 
-			
-IWFileTreeItem::IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file)
-	: QCheckListItem(item,QString::null,QCheckListItem::CheckBox),name(name),file(file)
+namespace kt
 {
-	parent = item;
-	manual_change = false;
-	init();
-}
-
-IWFileTreeItem::~IWFileTreeItem()
-{
-}
-
-void IWFileTreeItem::setChecked(bool on)
-{
-	manual_change = true;
-	setOn(on);
-	manual_change = false;
-}
-
-void IWFileTreeItem::init()
-{
-	setChecked(!file.doNotDownload());
-	setText(0,name);
-	setText(1,BytesToString(file.getSize()));
-	setText(2,file.doNotDownload() ? i18n("No") : i18n("Yes"));
-	setPixmap(0,KMimeType::findByPath(name)->pixmap(KIcon::Small));
-}
-
-void IWFileTreeItem::stateChange(bool on)
-{
-	file.setDoNotDownload(!on);
-	setText(2,on ? i18n("Yes") : i18n("No"));
-	if (!manual_change)
-		parent->childStateChange();
-}
-
-void IWFileTreeItem::updatePreviewInformation(kt::TorrentInterface* tc)
-{
-	if (file.isMultimedia())
+	
+	IWFileTreeDirItem::IWFileTreeDirItem(KListView* klv,const QString & name)
+		: kt::FileTreeDirItem(klv,name)
 	{
-		if (tc->readyForPreview(file.getFirstChunk(), file.getFirstChunk()+1) )
+	}
+	
+	IWFileTreeDirItem::IWFileTreeDirItem(IWFileTreeDirItem* parent,const QString & name)
+		: kt::FileTreeDirItem(parent,name)
+	{
+	}
+	
+	IWFileTreeDirItem::~IWFileTreeDirItem()
+	{
+	}
+		
+	
+	void IWFileTreeDirItem::updatePreviewInformation(kt::TorrentInterface* tc)
+	{
+		// first set all the child items
+		bt::PtrMap<QString,FileTreeItem>::iterator i = children.begin();
+		while (i != children.end())
 		{
-			setText(3, i18n("Available"));
+			IWFileTreeItem* item = (IWFileTreeItem*)i->second;
+			item->updatePreviewInformation(tc);
+			i++;
 		}
-		else
+	
+		// then recursivly move on to subdirs
+		bt::PtrMap<QString,FileTreeDirItem>::iterator j = subdirs.begin();
+		while (j != subdirs.end())
 		{
-			setText(3, i18n("Pending"));
+			((IWFileTreeDirItem*)j->second)->updatePreviewInformation(tc);
+			j++;
 		}
 	}
-	else
-		setText(3, i18n("No"));
-}
-
-int IWFileTreeItem::compare(QListViewItem* i, int col, bool ascending) const
-{
-	if (col == 1)
+	
+	FileTreeItem* IWFileTreeDirItem::newFileTreeItem(const QString & name,TorrentFileInterface & file)
 	{
-		IWFileTreeItem* other = static_cast<IWFileTreeItem*>(i);
-		return (int)(file.getSize() - other->file.getSize());
+		return new IWFileTreeItem(this,name,file);
 	}
-	else
+	
+	FileTreeDirItem* IWFileTreeDirItem::newFileTreeDirItem(const QString & subdir)
 	{
-		return QCheckListItem::compare(i, col, ascending);
+		return new IWFileTreeDirItem(this,subdir);
 	}
 }

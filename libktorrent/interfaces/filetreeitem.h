@@ -17,49 +17,59 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef IWFILETREEITEM_H
-#define IWFILETREEITEM_H
+#ifndef KTFILETREEITEM_H
+#define KTFILETREEITEM_H
 
 #include <klistview.h>
 #include <util/constants.h>
 
-class IWFileTreeDirItem;
-
 using bt::Uint32;
 
-namespace bt
+namespace kt
 {
-	class TorrentFile;
-	class TorrentInterface;
-}
+	class TorrentFileInterface;
+	class FileTreeDirItem;
 
-/**
- * @author Joris Guisson
- *
- * File item in the InfoWidget's file view.
-*/
-class IWFileTreeItem : public QCheckListItem
-{
-	QString name;
-	Uint32 size;
-	kt::TorrentFileInterface & file;
-	IWFileTreeDirItem* parent;
-	bool manual_change;
-public:
-	IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file);
-	virtual ~IWFileTreeItem();
+	/**
+	 * @author Joris Guisson
+	 *
+	 * File item part of a tree which shows the files in a multifile torrent.
+	 * This is derived from QCheckListItem, if the user checks or unchecks the box,
+	 * wether or not to download a file will be changed.
+	 */
+	class FileTreeItem : public QCheckListItem
+	{
+	protected:
+		QString name;
+		Uint32 size;
+		TorrentFileInterface & file;
+		FileTreeDirItem* parent;
+		bool manual_change;
+	public:
+		/**
+		 * Constructor, set the parent, name and file
+		 * @param item Parent item
+		 * @param name Name of file
+		 * @param file THe TorrentFileInterface
+		 * @return 
+		 */
+		FileTreeItem(FileTreeDirItem* item,const QString & name,TorrentFileInterface & file);
+		virtual ~FileTreeItem();
 
-	kt::TorrentFileInterface & getTorrentFile() {return file;}
-	void updatePreviewInformation(kt::TorrentInterface* tc);
-	void setChecked(bool on);
+		/// Get a reference to the TorrentFileInterface
+		TorrentFileInterface & getTorrentFile() {return file;}
+			
+		/**
+		 * Set the box checked or not.
+		 * @param on Checked or not
+		 */
+		void setChecked(bool on);
 	
-private:
-	void init();
-	virtual void stateChange(bool on);
-	virtual int compare(QListViewItem* i, int col, bool ascending) const;
-};
-
-
-
+	private:
+		void init();
+		virtual void stateChange(bool on);
+		virtual int compare(QListViewItem* i, int col, bool ascending) const;
+	};
+}
 
 #endif

@@ -17,28 +17,35 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <torrent/bitset.h>
-#include <interfaces/torrentinterface.h>
-#include "downloadedchunkbar.h"
+#ifndef IWFILETREEITEM_H
+#define IWFILETREEITEM_H
+
+#include <interfaces/filetreeitem.h>
 
 
-DownloadedChunkBar::DownloadedChunkBar(QWidget* parent, const char* name)
-	: ChunkBar(parent,name)
+
+using bt::Uint32;
+
+namespace kt
 {
-	show_excluded = true;
+	class TorrentInterface;
+	class IWFileTreeDirItem;
+
+	/**
+	* @author Joris Guisson
+	*
+	* File item in the InfoWidget's file view.
+	*/
+	class IWFileTreeItem : public kt::FileTreeItem
+	{
+	public:
+		IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file);
+		virtual ~IWFileTreeItem();
+	
+		void updatePreviewInformation(kt::TorrentInterface* tc);
+	};
 }
 
 
-DownloadedChunkBar::~DownloadedChunkBar()
-{}
 
-
-const bt::BitSet & DownloadedChunkBar::getBitSet() const
-{
-	if (curr_tc)
-		return curr_tc->downloadedChunksBitSet();
-	else
-		return bt::BitSet::null;
-}
-
-#include "downloadedchunkbar.moc"
+#endif

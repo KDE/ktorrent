@@ -21,7 +21,7 @@
 #include "peer.h"
 #include "request.h"
 #include "chunk.h"
-#include "bitset.h"
+#include <util/bitset.h>
 #include "packet.h"
 #include "uploadcap.h"
 #include <util/log.h>

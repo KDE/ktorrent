@@ -21,22 +21,31 @@
 #define KTINFOWIDGETPLUGIN_H
 
 #include <interfaces/plugin.h>
+#include <interfaces/guiinterface.h>
 
 namespace kt
 {
+	class InfoWidget;
+	class InfoWidgetPrefPage;
 
 	/**
 	@author Joris Guisson
 	*/
-	class InfoWidgetPlugin : public Plugin
+	class InfoWidgetPlugin : public Plugin,public ViewListener
 	{
+		Q_OBJECT
 	public:
 		InfoWidgetPlugin(QObject* parent, const char* name, const QStringList& args);
 		virtual ~InfoWidgetPlugin();
 
 		virtual void load();
 		virtual void unload();
-
+		virtual void guiUpdate();
+		virtual void currentChanged(TorrentInterface* tc);
+		
+	private:
+		InfoWidget* iw;
+		InfoWidgetPrefPage* pref;
 	};
 
 }

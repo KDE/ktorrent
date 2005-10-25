@@ -17,52 +17,42 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTPLUGINMANAGER_H
-#define KTPLUGINMANAGER_H
+#ifndef KTORRENTMONITOR_H
+#define KTORRENTMONITOR_H
 
-#include <qptrlist.h>
-#include <interfaces/plugin.h>
+#include <interfaces/monitorinterface.h>
+
 
 
 namespace kt
 {
-	class CoreInterface;
-	class GUIInterface;
+	class TorrentInterface;
+	class PeerView;
+	class ChunkDownloadView;
+	
 	/**
-	 * @author Joris Guisson
-	 * @brief Class to manage plugins
-	 *
-	 * This class manages all plugins. Plugins are stored in a list.
-	 */
-	class PluginManager
+	@author Joris Guisson
+	*/
+	class KTorrentMonitor : public kt::MonitorInterface
 	{
-		QPtrList<Plugin> plugins;
-		CoreInterface* core;
-		GUIInterface* gui;
+		kt::TorrentInterface* tc;
+		PeerView* pv;
+		ChunkDownloadView* cdv;
 	public:
-		PluginManager(CoreInterface* core,GUIInterface* gui);
-		virtual ~PluginManager();
-
-		/**
-		 * Load the list of plugins.
-		 * This basicly uses KTrader to get a list of available plugins, and
-		 * loads those, but does not initialize them. We will consider a plugin loaded
-		 * when it's load method is called.
-		 * NOTE: for now it loads all plugins
-		 */
-		void loadPluginList();
-
-		/**
-		 * Unload all plugins.
-		 */
-		void unloadAll();
-
-		/**
-		 * Update all plugins who need a periodical GUI update.
-		 */
-		void updateGuiPlugins();
+		KTorrentMonitor(
+				kt::TorrentInterface* tc,
+				PeerView* pv,
+				ChunkDownloadView* cdv);
+		virtual ~KTorrentMonitor();
+	
+		virtual void downloadRemoved(kt::ChunkDownloadInterface* cd);
+		virtual void downloadStarted(kt::ChunkDownloadInterface* cd);
+		virtual void peerAdded(kt::PeerInterface* peer);
+		virtual void peerRemoved(kt::PeerInterface* peer);
+		virtual void stopped();
+		virtual void destroyed();
+	
 	};
-
 }
 
 #endif

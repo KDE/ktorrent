@@ -20,7 +20,7 @@
 #ifndef BTBITSET_H
 #define BTBITSET_H
 
-#include "globals.h"
+#include "constants.h"
 
 namespace bt
 {

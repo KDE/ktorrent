@@ -17,23 +17,45 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef DOWNLOADEDCHUNKBAR_H
-#define DOWNLOADEDCHUNKBAR_H
+#ifndef PEERVIEW_H
+#define PEERVIEW_H
 
-#include "chunkbar.h"
+#include <qmap.h>
+#include <klistview.h>
 
-/**
-@author Joris Guisson
-*/
-class DownloadedChunkBar : public ChunkBar
+namespace kt
 {
-	Q_OBJECT
-public:
-	DownloadedChunkBar(QWidget* parent, const char* name);
-	virtual ~DownloadedChunkBar();
-
-	virtual const bt::BitSet & getBitSet() const;
-
-};
+	class PeerInterface;
+	class PeerView;
+	
+	class PeerViewItem : public KListViewItem
+	{
+		kt::PeerInterface* peer;
+	public:
+		PeerViewItem(PeerView* pv,kt::PeerInterface* peer);
+	
+		void update();
+		int compare(QListViewItem * i,int col,bool) const;
+	};
+	
+	/**
+	@author Joris Guisson
+	*/
+	class PeerView : public KListView
+	{
+		Q_OBJECT
+		
+		QMap<kt::PeerInterface*,PeerViewItem*> items;
+	public:
+		PeerView(QWidget *parent = 0, const char *name = 0);
+		virtual ~PeerView();
+		
+	public slots:
+		void addPeer(kt::PeerInterface* peer);
+		void removePeer(kt::PeerInterface* peer);
+		void update();
+		void removeAll();
+	};
+}
 
 #endif

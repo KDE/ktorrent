@@ -63,6 +63,9 @@ public:
 	KTorrentCore(kt::GUIInterface* gui);
 	virtual ~KTorrentCore();
 	
+
+	kt::PluginManager & getPluginManager() {return *pman;}
+	const kt::PluginManager & getPluginManager() const {return *pman;}
 	
 	/**
 	 * Load all torrents from the data dir.

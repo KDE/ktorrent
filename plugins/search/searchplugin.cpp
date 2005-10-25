@@ -32,7 +32,7 @@
 #define NAME "searchplugin"
 #define AUTHOR "Joris Guisson"
 #define EMAIL "joris.guisson@gmail.com"
-#define DESCRIPTION "KTorrent's search plugin"
+
 
 
 K_EXPORT_COMPONENT_FACTORY(ktsearchplugin,KGenericFactory<kt::SearchPlugin>("ktsearchplugin"))
@@ -41,7 +41,7 @@ namespace kt
 {
 
 	SearchPlugin::SearchPlugin(QObject* parent, const char* name, const QStringList& args)
-	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,DESCRIPTION)
+	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,i18n("KTorrent's search plugin"))
 	{
 		// setXMLFile("ktsearchpluginui.rc");
 		search = 0;

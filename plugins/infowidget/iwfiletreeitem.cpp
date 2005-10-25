@@ -17,23 +17,42 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef AVAILABILITYCHUNKBAR_H
-#define AVAILABILITYCHUNKBAR_H
+#include <klocale.h>
+#include <interfaces/torrentinterface.h>
+#include <interfaces/torrentfileinterface.h>
+#include "iwfiletreeitem.h"
+#include "iwfiletreediritem.h"
+#include "functions.h"
 
-#include "chunkbar.h"
+using namespace kt;
 
-/**
-@author Joris Guisson
-*/
-class AvailabilityChunkBar : public ChunkBar
+namespace kt
 {
-	Q_OBJECT
-public:
-	AvailabilityChunkBar(QWidget* parent, const char* name);
-	virtual ~AvailabilityChunkBar();
+				
+	IWFileTreeItem::IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file)
+		: FileTreeItem(item,name,file)
+	{
+	}
+	
+	IWFileTreeItem::~IWFileTreeItem()
+	{
+	}
+	
+	void IWFileTreeItem::updatePreviewInformation(kt::TorrentInterface* tc)
+	{
+		if (file.isMultimedia())
+		{
+			if (tc->readyForPreview(file.getFirstChunk(), file.getFirstChunk()+1) )
+			{
+				setText(3, i18n("Available"));
+			}
+			else
+			{
+				setText(3, i18n("Pending"));
+			}
+		}
+		else
+			setText(3, i18n("No"));
+	}
 
-	virtual const bt::BitSet & getBitSet() const;
-
-};
-
-#endif
+}

@@ -20,22 +20,28 @@
 #include <kgenericfactory.h>
 #include <kglobal.h>
 #include <klocale.h>
+#include <interfaces/guiinterface.h>
+#include "infowidget.h"
 #include "infowidgetplugin.h"
+#include "infowidgetprefpage.h"
 
 
 #define NAME "infowidgetplugin"
 #define AUTHOR "Joris Guisson"
 #define EMAIL "joris.guisson@gmail.com"
-#define DESCRIPTION "KTorrent's information widget plugin, it shows additional information about a download."
+
 
 K_EXPORT_COMPONENT_FACTORY(ktinfowidgetplugin,KGenericFactory<kt::InfoWidgetPlugin>("ktinfowidgetplugin"))
 
 namespace kt
 {
+	
 
 	InfoWidgetPlugin::InfoWidgetPlugin(QObject* parent, const char* name, const QStringList& args)
-	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,DESCRIPTION)
-	{}
+	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,i18n("KTorrent's information widget plugin, it shows additional information about a download."))
+	{
+		iw = 0; pref = 0;
+	}
 
 
 	InfoWidgetPlugin::~InfoWidgetPlugin()
@@ -43,9 +49,34 @@ namespace kt
 
 
 	void InfoWidgetPlugin::load()
-	{}
+	{
+		iw = new InfoWidget(0);
+		pref = new InfoWidgetPrefPage(iw);
+		getGUI()->addViewListener(this);
+		getGUI()->addWidgetInView(iw,kt::BELOW);
+		getGUI()->addPrefPage(pref);
+	}
 
 	void InfoWidgetPlugin::unload()
-	{}
+	{
+		getGUI()->removeViewListener(this);
+		getGUI()->removePrefPage(pref);
+		getGUI()->removeWidgetFromView(iw);
+		delete pref;
+		pref = 0;
+		delete iw;
+		iw = 0;
+	}
 
+	void InfoWidgetPlugin::guiUpdate()
+	{
+		iw->update();
+	}
+
+	void InfoWidgetPlugin::currentChanged(TorrentInterface* tc)
+	{
+		iw->changeTC(tc);
+	}
 }
+
+#include "infowidgetplugin.moc"

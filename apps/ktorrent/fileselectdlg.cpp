@@ -22,8 +22,8 @@
 #include <interfaces/torrentfileinterface.h>
 #include <interfaces/torrentinterface.h>
 #include "fileselectdlg.h"
-#include "iwfiletreediritem.h"
-#include "iwfiletreeitem.h"
+#include <interfaces/filetreediritem.h>
+#include <interfaces/filetreeitem.h>
 
 FileSelectDlg::FileSelectDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
 		: FileSelectDlgBase(parent,name, modal,fl)
@@ -44,7 +44,7 @@ void FileSelectDlg::execute(kt::TorrentInterface* tc)
 	if (tc)
 	{
 		m_file_view->clear();
-		root = new IWFileTreeDirItem(m_file_view,tc->getStats().torrent_name);
+		root = new kt::FileTreeDirItem(m_file_view,tc->getStats().torrent_name);
 		for (Uint32 i = 0;i < tc->getNumFiles();i++)
 		{
 			kt::TorrentFileInterface & file = tc->getTorrentFile(i);

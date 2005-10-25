@@ -17,30 +17,26 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <qtooltip.h>
-#include <klocale.h>
+#ifndef DOWNLOADEDCHUNKBAR_H
+#define DOWNLOADEDCHUNKBAR_H
 
-#include <torrent/bitset.h>
-#include <interfaces/torrentinterface.h>
-#include "availabilitychunkbar.h"
+#include "chunkbar.h"
 
-AvailabilityChunkBar::AvailabilityChunkBar(QWidget* parent, const char* name): ChunkBar(parent, name)
+namespace kt
 {
-	QToolTip::add(this, i18n("<img src=\"available_color\">&nbsp; - Available Chunks<br><img src=\"unavailable_color\">&nbsp; - Unavailable Chunks<br><img src=\"excluded_color\">&nbsp; - Excluded Chunks"));
+	/**
+	@author Joris Guisson
+	*/
+	class DownloadedChunkBar : public ChunkBar
+	{
+		Q_OBJECT
+	public:
+		DownloadedChunkBar(QWidget* parent, const char* name);
+		virtual ~DownloadedChunkBar();
+	
+		virtual const bt::BitSet & getBitSet() const;
+	
+	};
 }
 
-
-AvailabilityChunkBar::~AvailabilityChunkBar()
-{
-}
-
-
-const bt::BitSet & AvailabilityChunkBar::getBitSet() const
-{
-	if (curr_tc)
-		return curr_tc->availableChunksBitSet();
-	else
-		return bt::BitSet::null;
-}
-
-#include "availabilitychunkbar.moc"
+#endif

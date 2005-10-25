@@ -42,7 +42,6 @@ class KTorrentView;
 class TrayIcon;
 class KTabWidget;
 class KTorrentDCOP;
-class InfoWidget;
 class QLabel;
 class QListViewItem;
 class KTorrentPreferences;
@@ -151,7 +150,6 @@ private:
 	TrayIcon* m_systray_icon;
 	KTabWidget* m_tabs;
 	KTorrentDCOP* m_dcop;
-	InfoWidget* m_info;
 	QTimer m_gui_update_timer;
 	KTorrentPreferences* m_pref;
 	kt::ExpandableWidget* m_exp;

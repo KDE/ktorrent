@@ -17,69 +17,35 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <interfaces/peerinterface.h>
-#include <interfaces/torrentinterface.h>
-#include <interfaces/chunkdownloadinterface.h>
-#include "ktorrentmonitor.h"
-#include "peerview.h"
-#include "chunkdownloadview.h"
+#ifndef KTINFOWIDGETPREFPAGE_H
+#define KTINFOWIDGETPREFPAGE_H
 
-using namespace bt;
+#include <interfaces/prefpageinterface.h>
 
-KTorrentMonitor::KTorrentMonitor(kt::TorrentInterface* tc,
-			PeerView* pv,
-			ChunkDownloadView* cdv) : tc(tc),pv(pv),cdv(cdv)
+class IWPref;
+
+namespace kt
 {
-	if (tc)
-		tc->setMonitor(this);
+	class InfoWidget;
+	
+
+	/**
+	@author Joris Guisson
+	*/
+	class InfoWidgetPrefPage : public PrefPageInterface
+	{
+		InfoWidget* iw;
+		IWPref* pref;
+	public:
+		InfoWidgetPrefPage(InfoWidget* iw);
+		virtual ~InfoWidgetPrefPage();
+
+		virtual void apply();
+		virtual void createWidget(QWidget* parent);
+		virtual void updateData();
+
+	};
+
 }
 
-
-KTorrentMonitor::~KTorrentMonitor()
-{
-	if (tc)
-		tc->setMonitor(0);
-}
-
-
-void KTorrentMonitor::downloadRemoved(kt::ChunkDownloadInterface* cd)
-{
-	if (cdv)
-		cdv->removeDownload(cd);
-}
-
-void KTorrentMonitor::downloadStarted(kt::ChunkDownloadInterface* cd)
-{
-	if (cdv)
-		cdv->addDownload(cd);
-}
-
-void KTorrentMonitor::peerAdded(kt::PeerInterface* peer)
-{
-	if (pv)
-		pv->addPeer(peer);
-}
-
-void KTorrentMonitor::peerRemoved(kt::PeerInterface* peer)
-{
-	if (pv)
-		pv->removePeer(peer);
-}
-
-void KTorrentMonitor::stopped()
-{
-	if (pv)
-		pv->removeAll();
-	if (cdv)
-		cdv->removeAll();
-}
-
-void KTorrentMonitor::destroyed()
-{
-	if (pv)
-		pv->removeAll();
-	if (cdv)
-		cdv->removeAll();
-	tc = 0;
-}
-
+#endif

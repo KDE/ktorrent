@@ -22,7 +22,7 @@
 #include "chunkmanager.h"
 #include "torrent.h"
 #include <util/error.h>
-#include "bitset.h"
+#include <util/bitset.h>
 #include "singlefilecache.h"
 #include "multifilecache.h"
 #include <util/log.h>

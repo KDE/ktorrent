@@ -23,11 +23,12 @@
 
 #include "fileselectdlgbase.h"
 
-class IWFileTreeDirItem;
+
 
 namespace kt
 {
 	class TorrentInterface;
+	class FileTreeDirItem;
 }
 /**
  * @author Joris Guisson
@@ -39,7 +40,7 @@ class FileSelectDlg : public FileSelectDlgBase
 	Q_OBJECT
 
 	kt::TorrentInterface* tc;
-	IWFileTreeDirItem* root;
+	kt::FileTreeDirItem* root;
 public:
 	FileSelectDlg(QWidget* parent = 0, const char* name = 0,
 				  bool modal = true, WFlags fl = 0 );

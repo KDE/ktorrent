@@ -17,49 +17,27 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTCHUNKDOWNLOADVIEW_H
-#define BTCHUNKDOWNLOADVIEW_H
+#ifndef AVAILABILITYCHUNKBAR_H
+#define AVAILABILITYCHUNKBAR_H
 
-#include <klistview.h>
-#include <qmap.h>
+#include "chunkbar.h"
 
 namespace kt
 {
-	class ChunkDownloadInterface;
+		
+	/**
+	@author Joris Guisson
+	*/
+	class AvailabilityChunkBar : public ChunkBar
+	{
+		Q_OBJECT
+	public:
+		AvailabilityChunkBar(QWidget* parent, const char* name);
+		virtual ~AvailabilityChunkBar();
+	
+		virtual const bt::BitSet & getBitSet() const;
+	
+	};
 }
-
-class ChunkDownloadView;
-
-class ChunkDownloadViewItem : public KListViewItem
-{
-	kt::ChunkDownloadInterface* cd;
-public:
-	ChunkDownloadViewItem(ChunkDownloadView* cdv,kt::ChunkDownloadInterface* cd);
-
-	void update();
-	int compare(QListViewItem * i,int col,bool) const;
-};
-
-
-/**
-@author Joris Guisson
-*/
-class ChunkDownloadView : public KListView
-{
-	Q_OBJECT
-
-	QMap<kt::ChunkDownloadInterface*,ChunkDownloadViewItem*> items;
-public:
-	ChunkDownloadView(QWidget *parent = 0, const char *name = 0);
-	virtual ~ChunkDownloadView();
-
-public slots:
-	void addDownload(kt::ChunkDownloadInterface* cd);
-	void removeDownload(kt::ChunkDownloadInterface* cd);
-	void removeAll();
-	void update();
-};
-
-
 
 #endif

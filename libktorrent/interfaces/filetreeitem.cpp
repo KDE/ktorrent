@@ -17,52 +17,70 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTPLUGINMANAGER_H
-#define KTPLUGINMANAGER_H
+#include <kglobal.h>
+#include <klocale.h>
+#include <kiconloader.h>
+#include <kmimetype.h>
+#include <interfaces/functions.h>
+#include "filetreeitem.h"
+#include "filetreediritem.h"
+#include "torrentfileinterface.h"
 
-#include <qptrlist.h>
-#include <interfaces/plugin.h>
-
+using namespace bt;
 
 namespace kt
 {
-	class CoreInterface;
-	class GUIInterface;
-	/**
-	 * @author Joris Guisson
-	 * @brief Class to manage plugins
-	 *
-	 * This class manages all plugins. Plugins are stored in a list.
-	 */
-	class PluginManager
+
+	FileTreeItem::FileTreeItem(FileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file)
+	: QCheckListItem(item,QString::null,QCheckListItem::CheckBox),name(name),file(file)
 	{
-		QPtrList<Plugin> plugins;
-		CoreInterface* core;
-		GUIInterface* gui;
-	public:
-		PluginManager(CoreInterface* core,GUIInterface* gui);
-		virtual ~PluginManager();
+		parent = item;
+		manual_change = false;
+		init();
+	}
 
-		/**
-		 * Load the list of plugins.
-		 * This basicly uses KTrader to get a list of available plugins, and
-		 * loads those, but does not initialize them. We will consider a plugin loaded
-		 * when it's load method is called.
-		 * NOTE: for now it loads all plugins
-		 */
-		void loadPluginList();
+	FileTreeItem::~FileTreeItem()
+	{
+	}
 
-		/**
-		 * Unload all plugins.
-		 */
-		void unloadAll();
+	void FileTreeItem::setChecked(bool on)
+	{
+		manual_change = true;
+		setOn(on);
+		manual_change = false;
+	}
 
-		/**
-		 * Update all plugins who need a periodical GUI update.
-		 */
-		void updateGuiPlugins();
-	};
+	void FileTreeItem::init()
+	{
+		setChecked(!file.doNotDownload());
+		setText(0,name);
+		setText(1,BytesToString(file.getSize()));
+		setText(2,file.doNotDownload() ? i18n("No") : i18n("Yes"));
+		setPixmap(0,KMimeType::findByPath(name)->pixmap(KIcon::Small));
+	}
+
+	void FileTreeItem::stateChange(bool on)
+	{
+		file.setDoNotDownload(!on);
+		setText(2,on ? i18n("Yes") : i18n("No"));
+		if (!manual_change)
+			parent->childStateChange();
+	}
+
+	
+	int FileTreeItem::compare(QListViewItem* i, int col, bool ascending) const
+	{
+		if (col == 1)
+		{
+			FileTreeItem* other = static_cast<FileTreeItem*>(i);
+			return (int)(file.getSize() - other->file.getSize());
+		}
+		else
+		{
+			return QCheckListItem::compare(i, col, ascending);
+		}
+	}
+
+
 
 }
-
-#endif

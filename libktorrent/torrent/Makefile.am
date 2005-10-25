@@ -5,7 +5,7 @@ METASOURCES = AUTO
 noinst_LTLIBRARIES = libtorrent.la
 libtorrent_la_LDFLAGS = $(all_libraries)
 noinst_HEADERS = bencoder.h value.h bdecoder.h bnode.h torrent.h chunkmanager.h \
-	chunk.h peer.h globals.h bitset.h peermanager.h tracker.h downloader.h \
+	chunk.h peer.h globals.h peermanager.h tracker.h downloader.h \
 	authenticate.h uploader.h torrentcontrol.h choker.h chunkdownload.h speedestimater.h \
 	peerdownloader.h request.h piece.h peerid.h announcelist.h peeruploader.h uploadcap.h \
 	packetreader.h packetwriter.h packet.h httptracker.h udptracker.h cache.h \
@@ -13,7 +13,7 @@ noinst_HEADERS = bencoder.h value.h bdecoder.h bnode.h torrent.h chunkmanager.h 
 	chunkselector.h server.h serverauthenticate.h authenticatebase.h udptrackersocket.h \
 	upspeedestimater.h ipblocklist.h
 libtorrent_la_SOURCES = bencoder.cpp value.cpp bdecoder.cpp bnode.cpp \
-	torrent.cpp chunkmanager.cpp chunk.cpp peer.cpp globals.cpp bitset.cpp \
+	torrent.cpp chunkmanager.cpp chunk.cpp peer.cpp globals.cpp \
 	peermanager.cpp tracker.cpp downloader.cpp authenticate.cpp uploader.cpp \
 	torrentcontrol.cpp choker.cpp chunkdownload.cpp speedestimater.cpp peerdownloader.cpp \
 	request.cpp piece.cpp peerid.cpp announcelist.cpp peeruploader.cpp uploadcap.cpp \

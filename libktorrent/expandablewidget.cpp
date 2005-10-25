@@ -101,7 +101,7 @@ namespace kt
 		if (!pse)
 		{
 			// we need to remove the first
-			top_layout->remove(se->w);
+			top_layout->remove(se->s);
 			// reparent next widget or splitter after se to this
 			if (se->next->s)
 				se->next->s->reparent(this,QPoint(),false);
@@ -109,11 +109,10 @@ namespace kt
 				se->next->w->reparent(this,QPoint(),false);
 			// reparent current top to 0
 			se->w->reparent(0,QPoint(),false);
+			se->s->reparent(0,QPoint(),false);
 			// set new top
 			begin = se->next;
-			// delete splitter and se
-			delete se->s;
-			delete se;
+			
 
 			if (begin->s)
 			{
@@ -127,6 +126,10 @@ namespace kt
 				top_layout->add(begin->w);
 				begin->w->show();
 			}
+
+			// delete splitter and se
+			delete se->s;
+			delete se;
 		}
 		else
 		{

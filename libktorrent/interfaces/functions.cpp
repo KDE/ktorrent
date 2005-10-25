@@ -15,54 +15,50 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KTPLUGINMANAGER_H
-#define KTPLUGINMANAGER_H
+#include <qdatetime.h>
+#include <klocale.h>
+#include <kglobal.h>
+#include "functions.h"
 
-#include <qptrlist.h>
-#include <interfaces/plugin.h>
-
+using namespace bt;
 
 namespace kt
 {
-	class CoreInterface;
-	class GUIInterface;
-	/**
-	 * @author Joris Guisson
-	 * @brief Class to manage plugins
-	 *
-	 * This class manages all plugins. Plugins are stored in a list.
-	 */
-	class PluginManager
+	const double TO_KB = 1024.0;
+	const double TO_MEG = (1024.0 * 1024.0);
+	const double TO_GIG = (1024.0 * 1024.0 * 1024.0);
+	
+	QString BytesToString(Uint64 bytes,int precision)
 	{
-		QPtrList<Plugin> plugins;
-		CoreInterface* core;
-		GUIInterface* gui;
-	public:
-		PluginManager(CoreInterface* core,GUIInterface* gui);
-		virtual ~PluginManager();
+		KLocale* loc = KGlobal::locale();
+		if (bytes >= 1024 * 1024 * 1024)
+			return i18n("%1 GB").arg(loc->formatNumber(bytes / TO_GIG,precision < 0 ? 2 : precision));
+		else if (bytes >= 1024*1024)
+			return i18n("%1 MB").arg(loc->formatNumber(bytes / TO_MEG,precision < 0 ? 1 : precision));
+		else if (bytes >= 1024)
+			return i18n("%1 KB").arg(loc->formatNumber(bytes / TO_KB,precision < 0 ? 1 : precision));
+		else
+			return i18n("%1 B").arg(bytes);
+	}
 
-		/**
-		 * Load the list of plugins.
-		 * This basicly uses KTrader to get a list of available plugins, and
-		 * loads those, but does not initialize them. We will consider a plugin loaded
-		 * when it's load method is called.
-		 * NOTE: for now it loads all plugins
-		 */
-		void loadPluginList();
+	QString KBytesPerSecToString(double speed,int precision)
+	{
+		KLocale* loc = KGlobal::locale();
+		return i18n("%1 KB/sec").arg(loc->formatNumber(speed,precision));
+	}
 
-		/**
-		 * Unload all plugins.
-		 */
-		void unloadAll();
+	QString DurationToString(Uint32 nsecs)
+	{
+		KLocale* loc = KGlobal::locale();
+		QTime t;
+		int ndays = nsecs / 86400;
+		t = t.addSecs(nsecs % 86400);
+		QString s = loc->formatTime(t,true,true);
+		if (ndays > 0)
+			s = i18n("1 day ","%n days ",ndays) + s;
 
-		/**
-		 * Update all plugins who need a periodical GUI update.
-		 */
-		void updateGuiPlugins();
-	};
-
+		return s;
+	}
 }
-
-#endif

@@ -23,8 +23,9 @@
 #include <qdatetime.h>
 #include <qpainter.h>
 #include <math.h>
+#include <interfaces/functions.h>
 #include "ktorrentviewitem.h"
-#include "functions.h"
+
 
 using namespace bt;
 using namespace kt;
@@ -103,7 +104,7 @@ void KTorrentViewItem::update()
 
 	setText(0,s.torrent_name);
 	setText(1,StatusToString(tc,s.status));
-	Uint32 nb = s.bytes_downloaded > s.total_bytes ? s.total_bytes : s.bytes_downloaded;
+	Uint64 nb = s.bytes_downloaded > s.total_bytes ? s.total_bytes : s.bytes_downloaded;
 	setText(2,BytesToString(nb));
 	setText(3,BytesToString(s.total_bytes_to_download));
 	setText(4,BytesToString(s.bytes_uploaded));

@@ -18,23 +18,17 @@ ktorrent_LDADD = $(LIB_KPARTS) ../../libktorrent/libktorrent.la $(LIB_KFILE) \
 
 # which sources should be compiled for ktorrent
 ktorrent_SOURCES = dcopinterface.skel settings.kcfgc main.cpp ktorrent.cpp \
-	ktorrentview.cpp pref.cpp chunkdownloadview.cpp ktorrentviewitem.cpp ktorrentcore.cpp \
-	peerview.cpp ktorrentmonitor.cpp downloadpref.ui trayicon.cpp \
-	logviewer.cpp ktorrentdcop.cpp ktorrentapp.cpp \
-	torrentcreatordlg.cpp torrentcreatordlg.h torrentcreatordlgbase.ui infowidgetbase.ui \
-	infowidget.cpp chunkbar.cpp availabilitychunkbar.cpp downloadedchunkbar.cpp \
-	iwfiletreeitem.cpp fileselectdlgbase.ui fileselectdlg.cpp iwfiletreediritem.cpp \
-	generalpref.ui
+	ktorrentview.cpp pref.cpp ktorrentviewitem.cpp ktorrentcore.cpp downloadpref.ui \
+	trayicon.cpp logviewer.cpp ktorrentdcop.cpp ktorrentapp.cpp torrentcreatordlg.cpp \
+	torrentcreatordlg.h torrentcreatordlgbase.ui fileselectdlgbase.ui \
+	fileselectdlg.cpp generalpref.ui
 
 xdg_apps_DATA = ktorrent.desktop
 kde_kcfg_DATA = ktorrent.kcfg
 
 # these are the headers for your project
-noinst_HEADERS = ktorrent.h ktorrentview.h pref.h chunkdownloadview.h \
-	ktorrentviewitem.h ktorrentcore.h peerview.h ktorrentmonitor.h trayicon.h \
-	logviewer.h dcopinterface.h ktorrentdcop.h infowidget.h chunkbar.h \
-	availabilitychunkbar.h downloadedchunkbar.h iwfiletreeitem.h fileselectdlg.h \
-	iwfiletreediritem.h
+noinst_HEADERS = ktorrent.h ktorrentview.h pref.h ktorrentviewitem.h \
+	ktorrentcore.h trayicon.h logviewer.h dcopinterface.h ktorrentdcop.h fileselectdlg.h
 
 # client stuff
 

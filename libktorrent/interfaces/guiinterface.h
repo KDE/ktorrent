@@ -20,6 +20,8 @@
 #ifndef KTGUIINTERFACE_H
 #define KTGUIINTERFACE_H
 
+#include <qptrlist.h>
+
 class QWidget;
 class QIconSet;
 class QString;
@@ -28,6 +30,7 @@ namespace kt
 {
 	class PrefPageInterface;
 	class Plugin;
+	class TorrentInterface;
 
 	enum Position
 	{
@@ -35,6 +38,16 @@ namespace kt
 		RIGHT, ///< New widgets will be added to the right of the old
 		ABOVE, ///< New widgets will be added above the old
 		BELOW, ///< New widgets will be added below the old
+	};
+
+	/**
+	 * Small interface for classes who want to know when
+	 * current torrent in the gui changes.
+	 */
+	class ViewListener
+	{
+	public:
+		virtual void currentChanged(TorrentInterface* tc) = 0;
 	};
 	
 	/**
@@ -45,10 +58,18 @@ namespace kt
 	*/
 	class GUIInterface
 	{
+		QPtrList<ViewListener> listeners;
 	public:
 		GUIInterface();
 		virtual ~GUIInterface();
 
+
+		/// Add a view listener.
+		void addViewListener(ViewListener* vl);
+
+		/// Remove a view listener
+		void removeViewListener(ViewListener* vl);
+		
 		/**
 		 * Add a new tab page to the GUI
 		 * @param page The widget
@@ -103,6 +124,12 @@ namespace kt
 		 * @param w The widget 
 		 */
 		virtual void removeWidgetFromView(QWidget* w) = 0;
+	protected:
+		/**
+		 * Notifies all view listeners of the change in the current TorrentInterface
+		 * @param tc Pointer to current TorrentInterface
+		 */
+		void notifyViewListeners(TorrentInterface* tc);
 	};
 
 }

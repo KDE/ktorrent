@@ -15,19 +15,22 @@
     <property name="caption">
         <string>General Options</string>
     </property>
-    <grid>
+    <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QCheckBox" row="0" column="0">
+        <widget class="QCheckBox">
             <property name="name">
                 <cstring>show_systray_icon</cstring>
             </property>
             <property name="text">
                 <string>Show s&amp;ystem tray icon</string>
             </property>
+            <property name="accel">
+                <string>Alt+Y</string>
+            </property>
         </widget>
-        <widget class="QLayoutWidget" row="1" column="0">
+        <widget class="QLayoutWidget">
             <property name="name">
                 <cstring>layout1</cstring>
             </property>
@@ -50,7 +53,7 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QLayoutWidget" row="2" column="0">
+        <widget class="QLayoutWidget">
             <property name="name">
                 <cstring>layout2</cstring>
             </property>
@@ -73,7 +76,7 @@
                 </widget>
             </hbox>
         </widget>
-        <spacer row="4" column="0">
+        <spacer>
             <property name="name">
                 <cstring>spacer2</cstring>
             </property>
@@ -90,39 +93,7 @@
                 </size>
             </property>
         </spacer>
-        <widget class="QLayoutWidget" row="3" column="0">
-            <property name="name">
-                <cstring>layout3</cstring>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>m_showPeerView</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Show list of peers</string>
-                    </property>
-                    <property name="accel">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>m_showChunkView</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Show list of chunks currently downloading</string>
-                    </property>
-                    <property name="accel">
-                        <string></string>
-                    </property>
-                </widget>
-            </vbox>
-        </widget>
-    </grid>
+    </vbox>
 </widget>
 <customwidgets>
 </customwidgets>

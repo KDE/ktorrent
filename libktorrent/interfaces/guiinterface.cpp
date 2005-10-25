@@ -18,6 +18,7 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include "guiinterface.h"
+#include "torrentinterface.h"
 
 namespace kt
 {
@@ -30,4 +31,24 @@ namespace kt
 	{}
 
 
+	void GUIInterface::notifyViewListeners(TorrentInterface* tc)
+	{
+		QPtrList<ViewListener>::iterator i = listeners.begin();
+		while (i != listeners.end())
+		{
+			ViewListener* vl = *i;
+			vl->currentChanged(tc);
+			i++;
+		}
+	}
+
+	void GUIInterface::addViewListener(ViewListener* vl)
+	{
+		listeners.append(vl);
+	}
+
+	void GUIInterface::removeViewListener(ViewListener* vl)
+	{
+		listeners.remove(vl);
+	}
 }
