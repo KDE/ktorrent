@@ -114,6 +114,14 @@ namespace kt
 		 * @param tc
 		 */
 		virtual void remove(TorrentInterface* tc) = 0;
+		
+		/**
+		 * Inserts IP range to be blocked into IPBlocklist
+		 * @param ip QString reference to single IP or IP range. For example:
+		 * single - 127.0.0.5
+		 * range - 127.0.*.*
+		 **/
+		virtual void addBlockedIP(QString& ip) = 0;
 	};
 
 }

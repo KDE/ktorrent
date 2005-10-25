@@ -24,11 +24,30 @@
 
 
 #include <qmap.h>
+#include <util/constants.h>
 
 class QString;
 
 namespace bt
 {
+	class IPKey
+	{
+		public:
+			IPKey();
+			IPKey(QString& ip, Uint32 mask = 0xFFFFFFFF);
+			IPKey(Uint32 ip, Uint32 mask = 0xFFFFFFFF);
+			IPKey(const IPKey& ip);
+			~IPKey();
+
+			bool operator== (const IPKey& ip) const;
+			bool operator!= (const IPKey& ip) const;
+			bool operator < (const IPKey & ip) const;
+			IPKey&  operator= (const IPKey& ip);
+
+			Uint32 m_ip;
+			Uint32 m_mask;
+	};
+
 	/**
 	 * @author Ivan Vasic <ivasic@gmail.com>
 	 * @brief Keeps track of blocked peers
@@ -40,40 +59,55 @@ namespace bt
 	 */
 	class IPBlocklist
 	{
-		IPBlocklist();
-		IPBlocklist(const IPBlocklist & );
-		const IPBlocklist& operator=(const IPBlocklist&);
+			IPBlocklist();
+			IPBlocklist(const IPBlocklist & );
+			const IPBlocklist& operator=(const IPBlocklist&);
 
-	public:
-		
-		inline static IPBlocklist & instance() 
-		{
-			static IPBlocklist singleton;
-			return singleton; 
-		}
-		
-		/**
-		 * @brief Adds ip address to the list. 
-		 * It also increases the number of times this IP appeared in the list.
-		 * @param ip QString containing the peer IP address
-		 * @param state int number of bad chunks client from ip sent. Basically this parameter
-		 * is used only to permanently block some IP (by setting this param to 3)
-		 */
-		void insert(QString ip, int state=1);
-		
-		/**
-		 * Checks if IP is in the blocking list
-		 * @param ip - IP address to check
-		 * @returns true if IP is blocked
-		 */
-		bool isBlocked(QString& ip);
+		public:
 
-	private:
-		/**
-		 * @param QString - Key: Peer IP address.
-		 * @param int - Number of bad chunks sent.
-		 */
-		QMap<QString, int> m_peers;
+			inline static IPBlocklist & instance()
+			{
+				static IPBlocklist singleton;
+				return singleton;
+			}
+
+			/**
+			 * @brief Adds ip address to the list. 
+			 * It also increases the number of times this IP appeared in the list.
+			 * @param ip QString containing the peer IP address
+			 * @param state int number of bad chunks client from ip sent. Basically this parameter
+			 * is used only to permanently block some IP (by setting this param to 3)
+			 */
+			void insert(QString ip, int state=1);
+
+			/**
+			* @brief Adds IP range to the list
+			* It is used  for blocking plugin. For single IP use insert() instead.
+			* @param ip QString peer IP address. Uses ''*" for ranges.
+			 **/
+			void addRange(QString ip);
+
+			/**
+			 * Checks if IP is in the blocking list
+			 * @param ip - IP address to check
+			 * @returns true if IP is blocked
+			 */
+			bool isBlocked(QString& ip);
+
+		private:
+			/**
+					* @brief Adds IP range to the list.
+					* @param key IPKey that represents this IP range
+					* @param state int Number of 'warnings' for the range. 
+					* Default is 3 - that means range is blocked permanenlty.
+					**/
+			void insertRangeIP(IPKey& key, int state=3);
+
+			/**
+			* @param IPKey - Key: Peer IP address and bit mask if it is a range
+			* @param int - Number of bad chunks sent.
+			**/
+			QMap<IPKey, int> m_peers;
 	};
 }
 

@@ -149,6 +149,9 @@ public:
 	///  Get the number of torrents not running.
 	bt::Uint32 getNumTorrentsNotRunning() const;
 	
+	///Inserts blocked IP range into IPBlocklist
+	void addBlockedIP(QString& ip);
+	
 public slots:
 	/**
 	 * Load a torrent file. Pops up an error dialog

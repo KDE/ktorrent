@@ -34,6 +34,7 @@
 #include <torrent/torrentcreator.h>
 #include <torrent/server.h>
 #include <util/functions.h>
+#include <torrent/ipblocklist.h>
 
 #include "pluginmanager.h"
 
@@ -499,6 +500,12 @@ Uint32 KTorrentCore::getNumTorrentsNotRunning() const
 		i++;
 	}
 	return num;
+}
+
+void KTorrentCore::addBlockedIP(QString& ip)
+{
+	IPBlocklist& filter = IPBlocklist::instance();
+	filter.addRange(ip);
 }
 
 #include "ktorrentcore.moc"
