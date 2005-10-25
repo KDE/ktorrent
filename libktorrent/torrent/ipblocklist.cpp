@@ -61,6 +61,7 @@ namespace bt
 	IPBlocklist::IPBlocklist()
 	{
 		insert("0.0.0.0",3);
+		addRange("3.*.*.*");
 	}
 
 	IPBlocklist::IPBlocklist(const IPBlocklist & ) {}
@@ -166,17 +167,11 @@ namespace bt
 			return false;
 		IPKey key(ipi);
 
-		return m_peers[ip] >= 3;
-		// 		Out() << "Testing : " << ip << " with key: " << key.m_ip << endl;
-
 		QMap<IPKey, int>::iterator it;
 		it = m_peers.find(key);
 		if (it==m_peers.end())
 			return false;
 
-
-
-		Out() << "G IP: " << ip << ", Key - ip: " << key.m_ip << " FILTER: " << it.key().m_ip << " mask: " << key.m_mask  << " FILTER: " << it.key().m_mask << endl;
 		return m_peers[key] >= 3;
 	}
 
