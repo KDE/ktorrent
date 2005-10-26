@@ -11,7 +11,7 @@ If something is done put # in front of it.
 
 2) Implement trackerless torrent like official client. (This will be big)
 
-3) Immediatly store at final location
+# 3) Immediatly store at final location
 
 4) Implement this one : http://bugs.kde.org/show_bug.cgi?id=112080 and even go further (i.e. allow to resume partially downloaded stuff from other clients) (To avoid major code changes symlink cache directly to final file or dir) (3 and 4 are related and should be done together)
 
