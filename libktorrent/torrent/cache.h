@@ -36,23 +36,18 @@ namespace bt
 	{
 	protected:
 		Torrent & tor;
-		QString data_dir;
+		QString tmpdir;
+		QString datadir;
 	public:
-		Cache(Torrent & tor,const QString & data_dir);
+		Cache(Torrent & tor,const QString & tmpdir,const QString & datadir);
 		virtual ~Cache();
 
 		/**
-		 * Saves the entire data to it's final location.
-		 * @param dir Directory to store data
+		 * Changes the tmp dir. All data files should allready been moved.
+		 * This just modifies the tmpdir variable.
+		 * @param ndir The new tmpdir
 		 */
-		virtual void saveData(const QString & dir) = 0;
-
-		/**
-		 * Changes the data dir. All data files should allready been moved.
-		 * This just modifies the data_dir variable.
-		 * @param ndir The new data_dir
-		 */
-		virtual void changeDataDir(const QString & ndir);
+		virtual void changeTmpDir(const QString & ndir);
 		
 		/**
 		 * Load a chunk into memory. If something goes wrong,
@@ -72,11 +67,6 @@ namespace bt
 		 * Create all the data files to store the data.
 		 */
 		virtual void create() = 0;
-
-		/**
-		 * Check if cache has been saved.
-		 */
-		virtual bool hasBeenSaved() const = 0;
 	};
 
 }

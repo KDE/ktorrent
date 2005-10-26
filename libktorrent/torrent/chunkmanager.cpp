@@ -23,6 +23,7 @@
 #include "torrent.h"
 #include <util/error.h>
 #include <util/bitset.h>
+#include <util/fileops.h>
 #include "singlefilecache.h"
 #include "multifilecache.h"
 #include <util/log.h>
@@ -35,18 +36,18 @@ namespace bt
 	
 	
 
-	ChunkManager::ChunkManager(Torrent & tor,const QString & data_dir)
+	ChunkManager::ChunkManager(Torrent & tor,const QString & tmpdir,const QString & datadir)
 	: tor(tor),chunks(tor.getNumChunks()),
 	bitset(tor.getNumChunks()),excluded_chunks(tor.getNumChunks())
 	{
 		num_in_mem = 0;
 		if (tor.isMultiFile())
-			cache = new MultiFileCache(tor,data_dir);
+			cache = new MultiFileCache(tor,tmpdir,datadir);
 		else
-			cache = new SingleFileCache(tor,data_dir);
+			cache = new SingleFileCache(tor,tmpdir,datadir);
 		
-		index_file = data_dir + "index";
-		file_info_file = data_dir + "file_info";
+		index_file = tmpdir + "index";
+		file_info_file = tmpdir + "file_info";
 		Uint64 tsize = tor.getFileLength();	// total size
 		Uint64 csize = tor.getChunkSize();	// chunk size
 		Uint64 lsize = tsize - (csize * (tor.getNumChunks() - 1)); // size of last chunk
@@ -102,7 +103,7 @@ namespace bt
 
 	void ChunkManager::changeDataDir(const QString & data_dir)
 	{
-		cache->changeDataDir(data_dir);
+		cache->changeTmpDir(data_dir);
 		index_file = data_dir + "index";
 		file_info_file = data_dir + "file_info";
 		saveFileInfo();
@@ -157,8 +158,11 @@ namespace bt
 
 	void ChunkManager::createFiles()
 	{
-		File fptr;
-		fptr.open(index_file,"wb");
+		if (!bt::Exists(index_file))
+		{
+			File fptr;
+			fptr.open(index_file,"wb");
+		}
 		cache->create();
 	}
 
@@ -273,19 +277,6 @@ namespace bt
 	Uint32 ChunkManager::chunksExcluded() const
 	{
 		return excluded_chunks.numOnBits();
-	}
-	
-	void ChunkManager::save(const QString & dir)
-	{
-		if (chunksLeft() != 0)
-			return;
-
-		cache->saveData(dir);
-	}
-
-	bool ChunkManager::hasBeenSaved() const
-	{
-		return cache->hasBeenSaved();
 	}
 	
 	void ChunkManager::debugPrintMemUsage()

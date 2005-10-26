@@ -34,17 +34,15 @@ namespace bt
 	 */
 	class MultiFileCache : public Cache
 	{
-		QString cache_dir;
+		QString cache_dir,output_dir;
 	public:
-		MultiFileCache(Torrent& tor, const QString& data_dir);
+		MultiFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir);
 		virtual ~MultiFileCache();
 
-		virtual void saveData(const QString & dir);
 		virtual void changeDataDir(const QString& ndir);
 		virtual void create();
 		virtual void load(Chunk* c);
 		virtual void save(Chunk* c);
-		virtual bool hasBeenSaved() const;
 	private:
 		void touch(const QString fpath);
 	};

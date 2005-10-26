@@ -37,10 +37,10 @@ namespace bt
 	static Uint64 FileOffset(Chunk* c,const TorrentFile & f,Uint64 chunk_size);
 
 
-	MultiFileCache::MultiFileCache(Torrent& tor, const QString& data_dir)
-		: Cache(tor, data_dir)
+	MultiFileCache::MultiFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir) : Cache(tor, tmpdir,datadir)
 	{
-		cache_dir = data_dir + "cache/";
+		cache_dir = tmpdir + "cache/";
+		output_dir = datadir + tor.getNameSuggestion() + bt::DirSeparator();
 	}
 
 
@@ -50,14 +50,16 @@ namespace bt
 
 	void MultiFileCache::changeDataDir(const QString& ndir)
 	{
-		Cache::changeDataDir(ndir);
-		cache_dir = data_dir + "cache/";
+		Cache::changeTmpDir(ndir);
+		cache_dir = tmpdir + "cache/";
 	}
 
 	void MultiFileCache::create()
 	{
 		if (!bt::Exists(cache_dir))
 			MakeDir(cache_dir);
+		if (!bt::Exists(output_dir))
+			MakeDir(output_dir);
 
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
@@ -74,20 +76,26 @@ namespace bt
 		QStringList sl = QStringList::split(bt::DirSeparator(),fpath);
 
 		// create all necessary subdirs
-		QString tmp = cache_dir;
+		QString ctmp = cache_dir;
+		QString otmp = output_dir;
 		for (Uint32 i = 0;i < sl.count() - 1;i++)
 		{
-			tmp += sl[i];
-			QFileInfo finfo(tmp);
-			
-			if (!bt::Exists(tmp))
-				MakeDir(tmp);
-			tmp += bt::DirSeparator();
+			otmp += sl[i];
+			ctmp += sl[i];
+			// we need to make the same directory structure in the cache
+			// as the output dir
+			if (!bt::Exists(ctmp))
+				MakeDir(ctmp);
+			if (!bt::Exists(otmp))
+				MakeDir(otmp);
+			otmp += bt::DirSeparator();
+			ctmp += bt::DirSeparator();
 		}
 
 		// then make the file
-		File fptr;
-		fptr.open(cache_dir + fpath,"wb");
+		bt::Touch(output_dir + fpath);
+		// and make a symlink in the cache to it
+		bt::SymLink(output_dir + fpath,cache_dir + fpath);
 	}
 
 	void MultiFileCache::load(Chunk* c)
@@ -202,55 +210,7 @@ namespace bt
 		// clear the chunk
 		c->clear();
 	}
-
-	void MultiFileCache::saveData(const QString & dir)
-	{
-		QString d = dir;
-		if (!d.endsWith(bt::DirSeparator()))
-			d += bt::DirSeparator();
-
-		// first check if final dir exists and create it if necessary
-		QString ndir = d + tor.getNameSuggestion() + bt::DirSeparator();
-		if (!bt::Exists(ndir))
-			bt::MakeDir(ndir);
-
-		// copy over all files which need to be saved
-		for (Uint32 i = 0;i < tor.getNumFiles();i++)
-		{
-			TorrentFile & tf = tor.getFile(i);
-			QFileInfo fi(cache_dir + tf.getPath());
-			if (tf.doNotDownload() || fi.isSymLink())
-				continue;
-
-			// first make the necesarry directories
-			QString tmp = ndir;
-			QStringList sl = QStringList::split(bt::DirSeparator(),tf.getPath());
-			for (Uint32 j = 0;j < sl.count() - 1;j++)
-			{
-				tmp += sl[j];
-				if (!bt::Exists(tmp))
-					MakeDir(tmp);
-				tmp += bt::DirSeparator();
-			}
-			Out() << "Moving " << cache_dir + tf.getPath() << " to " << ndir + tf.getPath() << endl;
-			// then move the file and symlink it in the cache to the old
-			bt::Move(cache_dir + tf.getPath(),ndir + tf.getPath());
-			bt::SymLink(ndir + tf.getPath(),cache_dir + tf.getPath());
-		}
-	}
-
-	bool MultiFileCache::hasBeenSaved() const
-	{
-		for (Uint32 i = 0;i < tor.getNumFiles();i++)
-		{
-			QFileInfo fi(cache_dir + tor.getFile(i).getPath());
-			if (fi.isSymLink())
-				return true;
-		}
-		
-		return false;
-	}
-
+	
 	///////////////////////////////
 
 	Uint64 FileOffset(Chunk* c,const TorrentFile & f,Uint64 chunk_size)

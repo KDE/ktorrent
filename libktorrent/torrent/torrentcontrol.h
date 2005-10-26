@@ -77,10 +77,12 @@ namespace bt
 		/**
 		 * Initialize the TorrentControl. 
 		 * @param torrent The filename of the torrent file
-		 * @param datadir The directory to store the data
+		 * @param tmpdir The directory to store temporary data
+		 * @param datadir The directory to store the actual file(s)
+		 * 		(only used the first time we load a torrent)
 		 * @throw Error when something goes wrong
 		 */
-		void init(const QString & torrent,const QString & datadir);
+		void init(const QString & torrent,const QString & tmpdir,const QString & datadir);
 
 		/**
 		 * Change to a new data dir. If this fails
@@ -155,14 +157,7 @@ namespace bt
 		 * @param user wether or not the user did this explicitly
 		 */
 		void stop(bool user);
-		
-		/**
-		 * When the torrent is finished, the final file(s) can be
-		 * reconstructed.
-		 * @param dir The or directory to store files
-		 */
-		void reconstruct(const QString & dir);
-		
+			
 		/**
 		 * Update the tracker, this should normally handled internally.
 		 * We leave it public so that the user can do a manual announce.
@@ -195,6 +190,7 @@ namespace bt
 		void updateStatusMsg();
 		void saveStats();
 		void loadStats();
+		void loadOutputDir();
 		void updateStats();
 		void getSeederInfo(Uint32 & total,Uint32 & connected_to) const;
 		void getLeecherInfo(Uint32 & total,Uint32 & connected_to) const;
@@ -212,7 +208,7 @@ namespace bt
 		Timer tracker_update_timer,choker_update_timer,stats_save_timer;
 		Uint32 tracker_update_interval;
 		
-		QString datadir,old_datadir,trackerevent;
+		QString datadir,old_datadir,outputdir,trackerevent;
 		QString error_msg,short_error_msg;
 		Uint16 port;
 		kt::MonitorInterface* tmon;

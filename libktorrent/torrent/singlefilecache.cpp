@@ -31,9 +31,10 @@
 namespace bt
 {
 
-	SingleFileCache::SingleFileCache(Torrent& tor, const QString& data_dir): Cache(tor, data_dir)
+	SingleFileCache::SingleFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir)
+	: Cache(tor,tmpdir,datadir)
 	{
-		cache_file = data_dir + "cache";
+		cache_file = tmpdir + "cache";
 	}
 
 
@@ -42,8 +43,8 @@ namespace bt
 
 	void SingleFileCache::changeDataDir(const QString & ndir)
 	{
-		Cache::changeDataDir(ndir);
-		cache_file = data_dir + "cache";
+		Cache::changeTmpDir(ndir);
+		cache_file = tmpdir + "cache";
 	}
 
 	void SingleFileCache::load(Chunk* c)
@@ -103,28 +104,12 @@ namespace bt
 
 	void SingleFileCache::create()
 	{
-		File fptr;
-		fptr.open(cache_file,"wb");
-	}
-
-	void SingleFileCache::saveData(const QString & dir)
-	{
-		QString d = dir;
-		if (!d.endsWith(bt::DirSeparator()))
-			d += bt::DirSeparator();
-
-		// first move file
-		QString file = d + tor.getNameSuggestion();
-		Move(cache_file,file);
-
-		// create symlink in data dir
-		SymLink(file,cache_file);
-	}
-
-	bool  SingleFileCache::hasBeenSaved() const
-	{
-		QFileInfo fi(cache_file);
-		return fi.isSymLink();
+		if (!bt::Exists(datadir + tor.getNameSuggestion()))
+		{
+			QString out_file = datadir + tor.getNameSuggestion();
+			bt::Touch(out_file);
+			bt::SymLink(out_file,cache_file);
+		}
 	}
 
 }

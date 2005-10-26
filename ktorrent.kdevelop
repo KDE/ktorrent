@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>plugins/infowidget/ktinfowidgetplugin.la</activetarget>
+      <activetarget>apps/ktorrent/ktorrent</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>

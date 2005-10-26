@@ -260,19 +260,7 @@ namespace kt
 	
 	void SearchWidget::openTorrent(const KURL & url)
 	{
-		QString target;
-		// download the contents
-		if (KIO::NetAccess::download(url,target,this))
-		{
-			// load in the file (target is always local)
-			sp->getCore()->load(target);
-			// and remove the temp file
-			KIO::NetAccess::removeTempFile(target);
-		}
-		else
-		{
-			KMessageBox::error(0,KIO::NetAccess::lastErrorString(),i18n("Error"));
-		}
+		sp->getCore()->load(url);
 	}
 }
 

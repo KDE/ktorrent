@@ -303,9 +303,7 @@ namespace bt
 			bt::MakeDir(dd);
 
 		// save the torrent
-		saveTorrent(dd + "torrent");
-		// link cache to real file/dir
-		bt::SymLink(target,dd + "cache");
+		saveTorrent(dd + "torrent");		
 		// write full index file
 		File fptr;
 		if (!fptr.open(dd + "index","wb"))
@@ -323,7 +321,10 @@ namespace bt
 		TorrentControl* tc = new TorrentControl();
 		try
 		{
-			tc->init(dd + "torrent",dd);
+			// get the parent dir of target
+			QFileInfo fi = QFileInfo(target);
+			// init will create symlinks and stuff
+			tc->init(dd + "torrent",dd,fi.dirPath(true));
 		}
 		catch (...)
 		{

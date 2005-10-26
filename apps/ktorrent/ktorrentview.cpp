@@ -158,10 +158,10 @@ void KTorrentView::removeDownload()
 
 	TorrentInterface* tc = curr->getTC();
 	const TorrentStats & s = tc->getStats();
-	if (s.bytes_left > 0 || !s.saved)
+	if (s.bytes_left > 0)
 	{
-		QString msg = i18n("You will lose all data downloaded for this torrent, "
-				"if you do this. Are you sure you want to do this?");
+		QString msg = i18n("The torrent %s has not finished downloading. "
+				"Are you sure you want to do this?").arg(s.torrent_name);
 		int ret = KMessageBox::warningContinueCancel(this,msg,i18n("Remove Download"),KStdGuiItem::del());
 		if (ret == KMessageBox::Cancel)
 			return;

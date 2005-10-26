@@ -20,7 +20,7 @@
 #ifndef KTCOREINTERFACE_H
 #define KTCOREINTERFACE_H
 
-#include <qstring.h>
+#include <kurl.h>
 #include <util/constants.h>
 
 namespace kt
@@ -103,9 +103,18 @@ namespace kt
 		 * Load a torrent file. Pops up an error dialog
 		 * if something goes wrong.
 		 * @param file The torrent file
+		 * @param savedir Dir to save the data
 		 */
-		virtual void load(const QString & file) = 0;
-	
+		virtual void load(const QString & file,const QString & savedir) = 0;
+
+		/**
+		 * Load a torrent file. Pops up an error dialog
+		 * if something goes wrong. Will ask the user for a save location, or use
+		 * the default.
+		 * @param url The torrent file
+		 */
+		virtual void load(const KURL& url) = 0;
+		
 		/**
 		 * Remove a download.This will delete all temp
 		 * data from this TorrentControl And delete the

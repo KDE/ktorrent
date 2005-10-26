@@ -64,7 +64,7 @@ namespace bt
 		mutable Uint32 chunks_left;
 		mutable bool recalc_chunks_left;
 	public:
-		ChunkManager(Torrent & tor,const QString & data_dir);
+		ChunkManager(Torrent & tor,const QString & tmpdir,const QString & datadir);
 		virtual ~ChunkManager();
 
 		/**
@@ -166,16 +166,6 @@ namespace bt
 		 * @return The maximum allowed chunk
 		 */
 		Uint32 getMaxAllowedChunk() const {return max_allowed;}
-
-		/**
-		 * Save the completed download to a directory.
-		 * This will not work, if the download is not complete.
-		 * @param dir The directory to save to
-		 */
-		void save(const QString & dir);
-
-		/// Check wether the cache has been saved.
-		bool hasBeenSaved() const;
 
 		/// Print memory usage to log file
 		void debugPrintMemUsage();

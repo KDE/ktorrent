@@ -25,10 +25,14 @@
 namespace bt
 {
 
-	Cache::Cache(Torrent & tor,const QString & data_dir) : tor(tor),data_dir(data_dir)
+	Cache::Cache(Torrent & tor,const QString & tmpdir,const QString & datadir)
+	: tor(tor),tmpdir(tmpdir),datadir(datadir)
 	{
-		if (!data_dir.endsWith(bt::DirSeparator()))
-			this->data_dir += bt::DirSeparator();
+		if (!datadir.endsWith(bt::DirSeparator()))
+			this->datadir += bt::DirSeparator();
+
+		if (!tmpdir.endsWith(bt::DirSeparator()))
+			this->tmpdir += bt::DirSeparator();
 	}
 
 
@@ -36,8 +40,8 @@ namespace bt
 	{}
 
 
-	void Cache::changeDataDir(const QString & ndir)
+	void Cache::changeTmpDir(const QString & ndir)
 	{
-		data_dir = ndir;
+		tmpdir = ndir;
 	}
 }

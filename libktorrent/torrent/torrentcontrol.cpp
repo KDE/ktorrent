@@ -56,7 +56,6 @@ namespace bt
 	{
 		stats.running = false;
 		stats.started = false;
-		stats.saved = false;
 		stats.stopped_by_error = false;
 		stats.session_bytes_downloaded = 0;
 		stats.session_bytes_uploaded = 0;
@@ -239,14 +238,17 @@ namespace bt
 		}
 	}
 
-	void TorrentControl::init(const QString & torrent,const QString & ddir)
+	void TorrentControl::init(const QString & torrent,const QString & tmpdir,const QString & ddir)
 	{
-		datadir = ddir;
+		datadir = tmpdir;
 		stats.completed = false;
 		stats.running = false;
 		if (!datadir.endsWith(DirSeparator()))
 			datadir += DirSeparator();
 
+		outputdir = ddir;
+		if (!outputdir.isNull() && !outputdir.endsWith(DirSeparator()))
+			outputdir += DirSeparator();
 
 		// first load the torrent file
 		tor = new Torrent();
@@ -275,12 +277,16 @@ namespace bt
 		connect(tracker,SIGNAL(error()),this,SLOT(trackerResponseError()));
 		connect(tracker,SIGNAL(dataReady()),this,SLOT(trackerResponse()));
 
+		// load stats if outputdir is null
+		if (outputdir.isNull())
+			loadOutputDir();
 		// Create chunkmanager, load the index file if it exists
 		// else create all the necesarry files
-		cman = new ChunkManager(*tor,datadir);
+		cman = new ChunkManager(*tor,datadir,outputdir);
 		if (bt::Exists(datadir + "index"))
 			cman->loadIndexFile();
-		else
+
+		if (!bt::Exists(datadir + "cache"))
 			cman->createFiles();
 
 		stats.completed = cman->chunksLeft() == 0;
@@ -296,7 +302,6 @@ namespace bt
 		connect(cman,SIGNAL(excluded(Uint32, Uint32 )),
 		        down,SLOT(onExcluded(Uint32, Uint32 )));
 
-		stats.saved = cman->hasBeenSaved();
 		if (bt::Exists(datadir + "stopped"))
 			stats.autostart = false;
 		updateStatusMsg();
@@ -378,17 +383,6 @@ namespace bt
 	{
 		choke->update(cman->bytesLeft() == 0);
 	}
-	
-	void TorrentControl::reconstruct(const QString & dir)
-	{
-		if (stats.saved && !tor->isMultiFile())
-			return;
-
-		cman->save(dir);
-		stats.saved = true;
-	}
-
-	
 
 	bool TorrentControl::changeDataDir(const QString & new_dir)
 	{
@@ -519,6 +513,7 @@ namespace bt
 		}
 
 		QTextStream out(&fptr);
+		out << "OUTPUTDIR=" << outputdir << ::endl;
 		out << "UPLOADED=" << QString::number(up->bytesUploaded()) << ::endl;
 		if (stats.running)
 		{
@@ -573,6 +568,28 @@ namespace bt
 				else
 					Out() << "Warning : can't get running time out of line : "
 					<< line << endl;
+			}
+			else if (line.startsWith("OUTPUTDIR="))
+			{
+				outputdir = line.mid(10);
+			}
+		}
+	}
+
+	void TorrentControl::loadOutputDir()
+	{
+		QFile fptr(datadir + "stats");
+		if (!fptr.open(IO_ReadOnly))
+			return;
+
+		QTextStream in(&fptr);
+		while (!in.atEnd())
+		{
+			QString line = in.readLine();
+			if (line.startsWith("OUTPUTDIR="))
+			{
+				outputdir = line.mid(10);
+				return;
 			}
 		}
 	}

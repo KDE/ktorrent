@@ -107,9 +107,6 @@ KTorrent::KTorrent()
 	connect(m_view,SIGNAL(currentChanged(kt::TorrentInterface* )),
 			this,SLOT(currentChanged(kt::TorrentInterface* )));
 
-	connect(m_core,SIGNAL(finished(kt::TorrentInterface* )),
-			this,SLOT(askAndSave(kt::TorrentInterface* )));
-
 	connect(m_view,SIGNAL(wantToRemove(kt::TorrentInterface* )),
 			m_core,SLOT(remove(kt::TorrentInterface* )));
 
@@ -220,19 +217,7 @@ void KTorrent::applySettings()
 
 void KTorrent::load(const KURL& url)
 {
-	QString target;
-	// download the contents
-	if (KIO::NetAccess::download(url,target,this))
-	{
-		// load in the file (target is always local)
-		m_core->load(target);
-		// and remove the temp file
-		KIO::NetAccess::removeTempFile(target);
-	}
-	else
-	{
-		KMessageBox::error(this,KIO::NetAccess::lastErrorString(),i18n("Error"));
-	}
+	m_core->load(url);
 }
 
 void KTorrent::currentChanged(kt::TorrentInterface* tc)
@@ -240,14 +225,12 @@ void KTorrent::currentChanged(kt::TorrentInterface* tc)
 	if (tc)
 	{
 		const TorrentStats & s = tc->getStats();
-		m_save->setEnabled(s.completed && !s.saved);
 		m_start->setEnabled(!s.running);
 		m_stop->setEnabled(s.running);
 		m_remove->setEnabled(true);
 	}
 	else
 	{
-		m_save->setEnabled(false);
 		m_start->setEnabled(false);
 		m_stop->setEnabled(false);
 		m_remove->setEnabled(false);
@@ -263,8 +246,6 @@ void KTorrent::setupActions()
 	KStdAction::quit(kapp, SLOT(quit()), actionCollection());
 	
 	KStdAction::paste(kapp,SLOT(paste()),actionCollection());
-	
-	m_save = KStdAction::save(this, SLOT(fileSave()), actionCollection());
 
 	m_statusbarAction = KStdAction::showStatusbar(this, SLOT(optionsShowStatusbar()), actionCollection());
 
@@ -339,65 +320,6 @@ void KTorrent::fileOpen()
 		load(url);
 }
 
-void KTorrent::save(kt::TorrentInterface* tc)
-{
-	if (!tc || tc->getStats().completed)
-		return;
-
-
-	try
-	{
-		QString dir = KFileDialog::getExistingDirectory(QString::null, this,
-				i18n("Select Folder to Save To"));
-
-
-		if (dir != QString::null)
-		{
-			tc->reconstruct(dir);
-		}
-	}
-	catch (bt::Error & err)
-	{
-		KMessageBox::error(this,err.toString(),i18n("Error"));
-	}
-}
-
-void KTorrent::askAndSave(kt::TorrentInterface* tc)
-{
-	if (Settings::saveDir() == QString::null || !bt::Exists(Settings::saveDir()))
-	{
-		int ret = KMessageBox::questionYesNo(
-			this,
-			i18n("The download %1 has finished. Do you want to save it now?")
-				.arg(tc->getStats().torrent_name),
-			i18n("Save Torrent?"),KStdGuiItem::save(),i18n("Do Not Save"));
-
-		if (ret == KMessageBox::Yes)
-			save(tc);
-	}
-	else
-	{
-		try
-		{
-			QString dir = Settings::saveDir();
-			tc->reconstruct(dir);
-		}
-		catch (bt::Error & err)
-		{
-			KMessageBox::error(0,err.toString(), i18n("Error"));
-		}
-	}
-
-	currentChanged(m_view->getCurrentTC());
-}
-
-void KTorrent::fileSave()
-{
-	TorrentInterface* tc = m_view->getCurrentTC();
-	save(tc);
-	currentChanged(m_view->getCurrentTC());
-}
-
 void KTorrent::startDownload()
 {
 	TorrentInterface* tc = m_view->getCurrentTC();
@@ -446,10 +368,10 @@ void KTorrent::removeDownload()
 	if (tc)
 	{
 		const TorrentStats & s = tc->getStats();
-		if (s.bytes_left > 0 || !s.saved)
+		if (s.bytes_left > 0)
 		{
-			QString msg = i18n("You will lose all data downloaded for this torrent, "
-					"if you do this. Are you sure you want to do this?");
+			QString msg = i18n("The torrent %s has not finished downloading. "
+					"Are you sure you want to do this?").arg(s.torrent_name);
 			int ret = KMessageBox::warningContinueCancel(this,msg,i18n("Remove Download"),KStdGuiItem::del());
 			if (ret == KMessageBox::Cancel)
 				return;
@@ -555,14 +477,12 @@ void KTorrent::updatedStats()
 	if (tc)
 	{
 		const TorrentStats & s = tc->getStats();
-		m_save->setEnabled(s.completed && !s.saved);
 		m_start->setEnabled(!s.running);
 		m_stop->setEnabled(s.running);
 		m_remove->setEnabled(true);
 	}
 	else
 	{
-		m_save->setEnabled(false);
 		m_start->setEnabled(false);
 		m_stop->setEnabled(false);
 		m_remove->setEnabled(false);

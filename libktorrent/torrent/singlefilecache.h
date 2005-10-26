@@ -35,15 +35,13 @@ namespace bt
 	{
 		QString cache_file;
 	public:
-		SingleFileCache(Torrent& tor, const QString& data_dir);
+		SingleFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir);
 		virtual ~SingleFileCache();
 
-		virtual void saveData(const QString & dir);
 		virtual void load(Chunk* c);
 		virtual void save(Chunk* c);
 		virtual void create();
 		virtual void changeDataDir(const QString & ndir);
-		virtual bool hasBeenSaved() const;
 	};
 
 }

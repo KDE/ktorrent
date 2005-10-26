@@ -113,7 +113,6 @@ protected:
 
 private slots:
 	void fileOpen();
-	void fileSave();
 	void fileNew();
 	void startDownload();
 	void startAllDownloads();
@@ -128,14 +127,12 @@ private slots:
 	void changeStatusbar(const QString& text);
 	void changeCaption(const QString& text);
 	void currentChanged(kt::TorrentInterface* tc);
-	void askAndSave(kt::TorrentInterface* tc);
 	void updatedStats();
 	void urlDropped(QDropEvent*,QListViewItem*);
 
 private:
 	void setupAccel();
 	void setupActions();
-	void save(kt::TorrentInterface* tc);
 	bool queryClose();
 	bool queryExit();
 	virtual void addWidgetInView(QWidget* w,kt::Position pos);
@@ -145,7 +142,7 @@ private:
 private:
 	KTorrentView *m_view;
 	KToggleAction *m_statusbarAction;
-	KAction *m_start,*m_stop,*m_remove,*m_save, *m_startall, *m_stopall;
+	KAction *m_start,*m_stop,*m_remove,*m_startall, *m_stopall;
 	KTorrentCore* m_core;
 	TrayIcon* m_systray_icon;
 	KTabWidget* m_tabs;

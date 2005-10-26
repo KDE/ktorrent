@@ -95,8 +95,6 @@ namespace kt
 		bool running;
 		/// See if the torrent has been started
 		bool started;
-		/// See if the torrent was saved
-		bool saved;
 		/// See if we are allowed to startup this torrent automatically.
 		bool autostart;
 		/// See if we have a multi file torrent
@@ -208,14 +206,6 @@ namespace kt
 
 		/// Get the time to the next tracker update in milliseconds.
 		virtual Uint32 getTimeToNextTrackerUpdate() const = 0;
-
-		/**
-		 * When the torrent is finished, the final file(s) can be
-		 * reconstructed.
-		 * @param dir The or directory to store files
-		 * TODO: get rid of this when we save immediatly at final location
-		 */
-		virtual void reconstruct(const QString & dir) = 0;
 
 		/// Get the number of files in a multifile torrent (0 if we do not have a multifile torrent)
 		virtual Uint32 getNumFiles() const = 0;

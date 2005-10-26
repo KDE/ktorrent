@@ -21,10 +21,12 @@
 #include <qdir.h>
 #include <klocale.h>
 #include <kglobal.h>
+#include <kfiledialog.h>
 #include <kprogress.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
+#include <kio/netaccess.h>
 
 #include <util/log.h>
 #include <torrent/torrentcontrol.h>
@@ -106,14 +108,14 @@ KTorrentCore::~KTorrentCore()
 	delete pman;
 }
 
-void KTorrentCore::load(const QString & target)
+void KTorrentCore::load(const QString & target,const QString & dir)
 {
 	TorrentControl* tc = 0;
 	try
 	{
 		Out() << "Loading file " << target << endl;
 		tc = new TorrentControl();
-		tc->init(target,findNewTorrentDir());
+		tc->init(target,findNewTorrentDir(),dir);
 		connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
 				this,SLOT(torrentFinished(kt::TorrentInterface* )));
 		connect(tc, SIGNAL(stoppedByError(kt::TorrentInterface*, QString )),
@@ -136,6 +138,32 @@ void KTorrentCore::load(const QString & target)
 				"or it is not a torrent file at all."),i18n("Error"));
 		delete tc;
 		tc = 0;
+	}
+}
+
+void KTorrentCore::load(const KURL& url)
+{
+	QString target;
+	// download the contents
+	if (KIO::NetAccess::download(url,target,0))
+	{
+		// load in the file (target is always local)
+		QString dir = Settings::saveDir();
+		if (dir == QString::null)
+			dir = KFileDialog::getExistingDirectory(QString::null, 0,
+				i18n("Select Folder to Save To"));
+
+
+		if (dir != QString::null)
+		{
+			load(target,dir);
+		}
+		// and remove the temp file
+		KIO::NetAccess::removeTempFile(target);
+	}
+	else
+	{
+		KMessageBox::error(0,KIO::NetAccess::lastErrorString(),i18n("Error"));
 	}
 }
 
@@ -210,7 +238,7 @@ void KTorrentCore::loadTorrents()
 		try
 		{
 			tc = new TorrentControl();
-			tc->init(idir + "torrent",idir);
+			tc->init(idir + "torrent",idir,QString::null);
 			downloads.append(tc);
 			connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
 					this,SLOT(torrentFinished(kt::TorrentInterface* )));

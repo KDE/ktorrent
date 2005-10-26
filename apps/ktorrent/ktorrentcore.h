@@ -155,13 +155,15 @@ public:
 	///Inserts blocked IP range into IPBlocklist
 	void addBlockedIP(QString& ip);
 	
+	virtual void load(const KURL& url);
 public slots:
 	/**
 	 * Load a torrent file. Pops up an error dialog
 	 * if something goes wrong.
 	 * @param file The torrent file
+	 * @param dir Directory to save the data
 	 */
-	void load(const QString & file);
+	void load(const QString & file,const QString & dir);
 	
 	/**
 	 * Remove a download.This will delete all temp
