@@ -22,6 +22,7 @@
 #include <util/log.h>
 #include <util/functions.h>
 #include <util/error.h>
+#include <kio/job.h>
 #include "bnode.h"
 #include "httptracker.h"
 #include "torrentcontrol.h"
@@ -32,11 +33,9 @@
 namespace bt
 {
 
-	HTTPTracker::HTTPTracker() : http(0),cid(0),num_attempts(-1)
+	HTTPTracker::HTTPTracker() : num_attempts(-1)
 	{
-		http = new QHttp(this);
-		connect(http,SIGNAL(requestFinished(int, bool )),this,SLOT(requestFinished(int, bool )));
-		connect(&conn_timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
+		active_job = 0;
 	}
 
 
@@ -130,14 +129,10 @@ namespace bt
 	}
 
 	void HTTPTracker::doRequest(const KURL & u)
-	{
-		//if (url.protocol() != "http")
-		//	url.setProtocol("http");
+	{	
 		last_url = u;
 		KURL url = u;
 		
-
-		QString query = QString("&info_hash=") + info_hash.toURLString();
 		url.addQueryItem("peer_id",peer_id.toString());
 		url.addQueryItem("port",QString::number(port));
 		url.addQueryItem("uploaded",QString::number(uploaded));
@@ -148,68 +143,54 @@ namespace bt
 
 		if (event != QString::null)
 			url.addQueryItem("event",event);
+		QString epq = url.encodedPathAndQuery();
+		epq += "&info_hash=" + info_hash.toURLString();
+		url.setEncodedPathAndQuery(epq);
+
+		Out() << "Doing tracker request to url : " << url.prettyURL() << endl;
+		KIO::TransferJob* j = KIO::get(url,true,false);
+		j->addMetaData("User-Agent","ktorrent");
 		
-
-		Uint16 http_port = url.port();
-		if (http_port == 0)
-			http_port = 80;
-
-		Out() << "Doing tracker request to url : " << url.prettyURL() + query << endl;
-		doRequest(url.host(),url.encodedPathAndQuery() + query,http_port);
-		//Out() << "Request " << url << endl;
+		connect(j,SIGNAL(result(KIO::Job* )),this,SLOT(onResult(KIO::Job* )));
+		connect(j,SIGNAL(data(KIO::Job*,const QByteArray &)),
+				this,SLOT(onDataRecieved(KIO::Job*, const QByteArray& )));
+		active_job = j;
 	}
 
-	void HTTPTracker::doRequest(const QString & host,const QString & path,Uint16 p)
+	void HTTPTracker::onResult(KIO::Job* j)
 	{
-		QHttpRequestHeader header( "GET",path);
-		header.setValue( "Host",host );
-		header.setValue("User-Agent","ktorrent");
-
-		http->setHost(host,p);
-		cid = http->request(header);
-		if (num_attempts < 0)
-		{
-			num_attempts = 0;
-			conn_timer.start(30 * 1000);
-		}
-	}
-
-
-	void HTTPTracker::requestFinished(int id,bool err)
-	{
-		if (cid != id)
+		if (j != active_job)
 			return;
 		
-		conn_timer.stop();
-		num_attempts = -1;
-
-		if (!err)
+		if (j->error())
 		{
-			data = http->readAll();
-			dataReady();
+			Out() << "Error : " << j->errorString() << endl;
+			active_job = 0;
+			error();
 		}
 		else
 		{
-			Out() << "Tracker Error : " << http->errorString() << endl;
-			error();
+			active_job = 0;
+			dataReady();
+		}
+	}
+	
+	void HTTPTracker::onDataRecieved(KIO::Job* j,const QByteArray & ba)
+	{
+		if (j != active_job)
+			return;
+
+		if (ba.size() > 0)
+		{
+			Uint32 old_size = data.size();
+			data.resize(data.size() + ba.size());
+			for (Uint32 i = old_size;i < data.size();i++)
+				data[i] = ba[i - old_size];
 		}
 	}
 
 	void HTTPTracker::onTimeout()
 	{
-		/*
-		num_attempts++;
-		Out() << "Tracker timeout " << num_attempts << endl; 
-		if (num_attempts >= 5)
-		{
-			conn_timer.stop();
-			num_attempts = -1;
-			error();
-		}
-		else
-		{
-			doRequest(last_url);
-		}*/
 		error();
 	}
 

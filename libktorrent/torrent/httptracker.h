@@ -20,9 +20,13 @@
 #ifndef BTHTTPTRACKER_H
 #define BTHTTPTRACKER_H
 
-#include <qhttp.h>
 #include <qtimer.h>
 #include "tracker.h"
+
+namespace KIO
+{
+	class Job;
+}
 
 namespace bt
 {
@@ -45,20 +49,19 @@ namespace bt
 		virtual void updateData(TorrentControl* tc,PeerManager* pman);
 		
 	private slots:
-		void requestFinished(int id,bool err);
+		void onResult(KIO::Job* j);
+		void onDataRecieved(KIO::Job* j,const QByteArray & ba);
 		void onTimeout();
 
 	private:
-		void dataRecieved(const QByteArray & ba);
 		void doRequest(const QString & host,const QString & path,Uint16 p);
 		
 	private:
-		QHttp* http;
-		int cid;
 		QTimer conn_timer;
 		int num_attempts;
 		KURL last_url;
 		QByteArray data;
+		KIO::Job* active_job;
 	};
 
 }
