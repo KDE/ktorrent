@@ -141,7 +141,7 @@ namespace bt
 
 	void IPBlocklist::insertRangeIP(IPKey& key, int state)
 	{
-		Out() << "Blocked range: " << key.m_ip << " - " << key.m_mask << endl;
+// 		Out() << "Blocked range: " << key.m_ip << " - " << key.m_mask << endl;
 		QMap<IPKey, int>::iterator it;
 		if ((it = m_peers.find(key)) != m_peers.end())
 		{
