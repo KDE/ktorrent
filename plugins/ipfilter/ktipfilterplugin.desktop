@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=IPFilterPlugin
+Comment=IP filter plugin for KTorrent
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktipfilterplugin
