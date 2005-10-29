@@ -69,7 +69,7 @@ namespace kt
 	const QString NAME = "ipfilterplugin";
 	const QString AUTHOR = "Ivan Vasic";
 	const QString EMAIL = "ivasic@gmail.com";
-	const QString DESCRIPTION = "KTorrent's IP filter plugin";
+	const QString DESCRIPTION = i18n("KTorrent's IP filter plugin");
 
 	IPFilterPlugin::IPFilterPlugin(QObject* parent, const char* name, const QStringList& args)
 	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,DESCRIPTION)

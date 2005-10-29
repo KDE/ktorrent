@@ -35,6 +35,8 @@ namespace kt
 
 	PluginManager::PluginManager(CoreInterface* core,GUIInterface* gui) : core(core),gui(gui)
 	{
+		unloaded.setAutoDelete(false);
+		plugins.setAutoDelete(false);
 		prefpage = 0;
 		pltoload.append("infowidgetplugin");
 		pltoload.append("searchplugin");
@@ -115,7 +117,6 @@ namespace kt
 			p->setGUI(gui);
 			p->load();
 			gui->mergePluginGui(p);
-			unloaded.erase(p->getName());
 			plugins.insert(p->getName(),p);
 			p->loaded = true;
 			i++;
