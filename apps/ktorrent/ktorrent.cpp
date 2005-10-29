@@ -107,8 +107,8 @@ KTorrent::KTorrent()
 	connect(m_view,SIGNAL(currentChanged(kt::TorrentInterface* )),
 			this,SLOT(currentChanged(kt::TorrentInterface* )));
 
-	connect(m_view,SIGNAL(wantToRemove(kt::TorrentInterface* )),
-			m_core,SLOT(remove(kt::TorrentInterface* )));
+	connect(m_view,SIGNAL(wantToRemove(kt::TorrentInterface*,bool )),
+			m_core,SLOT(remove(kt::TorrentInterface*,bool )));
 
 
 	connect(m_view,SIGNAL(dropped(QDropEvent*,QListViewItem*)),
@@ -369,17 +369,21 @@ void KTorrent::removeDownload()
 	if (tc)
 	{
 		const TorrentStats & s = tc->getStats();
+		bool data_to = false;
 		if (s.bytes_left > 0)
 		{
-			QString msg = i18n("The torrent %1 has not finished downloading. "
-					"Are you sure you want to remove it?").arg(s.torrent_name);
-			int ret = KMessageBox::warningContinueCancel(this,msg,i18n("Remove Download"),KStdGuiItem::del());
+			QString msg = i18n("The torrent %1 has not finished downloading, "
+					"do you want to delete the incomplete data too ?").arg(s.torrent_name);
+			int ret = KMessageBox::questionYesNoCancel(this,msg,i18n("Remove Download"));
 			if (ret == KMessageBox::Cancel)
 				return;
+			else if (ret == KMessageBox::Yes)
+				data_to = true;
 		}
-		notifyViewListeners(tc);
-		m_core->remove(tc);
+		m_view->removeTorrent(tc);
+		m_core->remove(tc,data_to);
 		currentChanged(m_view->getCurrentTC());
+		notifyViewListeners(m_view->getCurrentTC());
 	}
 }
 

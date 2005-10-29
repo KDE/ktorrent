@@ -258,7 +258,7 @@ void KTorrentCore::loadTorrents()
 	}
 }
 
-void KTorrentCore::remove(TorrentInterface* tc)
+void KTorrentCore::remove(TorrentInterface* tc,bool data_to)
 {
 	try
 	{
@@ -266,8 +266,13 @@ void KTorrentCore::remove(TorrentInterface* tc)
 		removed_bytes_up += s.session_bytes_uploaded;
 		removed_bytes_down += s.session_bytes_downloaded;
 		stop(tc);
+
+		if (data_to)
+		{
+			bt::Delete(tc->getDataDir() + s.torrent_name,false);
+		}
 	
-		QString dir = tc->getDataDir();
+		QString dir = tc->getTorDir();
 		torrentRemoved(tc);
 		downloads.remove(tc);
 		bt::Delete(dir,false);
@@ -466,7 +471,8 @@ void KTorrentCore::makeTorrent(const QString & file,const QStringList & trackers
 CurrentStats KTorrentCore::getStats()
 {
 	CurrentStats stats;
-	Uint32 bytes_dl = 0, bytes_ul = 0, speed_dl = 0, speed_ul = 0;
+	Uint64 bytes_dl = 0, bytes_ul = 0;
+	Uint32 speed_dl = 0, speed_ul = 0;
 
 
 	for ( QPtrList<kt::TorrentInterface>::iterator i = downloads.begin(); i != downloads.end(); ++i )

@@ -73,8 +73,15 @@ namespace bt
 			{
 				if (tmon)
 					tmon->downloadRemoved(cd);
-				
-				finished(cd);
+
+				if (!finished(cd))
+				{
+					// if the chunk fails don't count the bytes downloaded
+					if (cd->getChunk()->getSize() > downloaded)
+						downloaded = 0;
+					else
+						downloaded -= cd->getChunk()->getSize();
+				}
 				current_chunks.erase(p.getIndex());
 				return;
 			}
@@ -209,7 +216,7 @@ namespace bt
 		}
 	}
 	
-	void Downloader::finished(ChunkDownload* cd)
+	bool Downloader::finished(ChunkDownload* cd)
 	{
 		Chunk* c = cd->getChunk();
 		// verify the data
@@ -242,7 +249,7 @@ namespace bt
 			{
 				Peer* p = pman.findPeer(pid);
 				if (!p)
-					return;
+					return false;
 				QString IP(p->getIPAddresss());
 				Out() << "Peer " << IP << " sent bad data" << endl;
 				IPBlocklist & ipfilter = IPBlocklist::instance();
@@ -253,8 +260,9 @@ namespace bt
 					p->kill(); 
 				}
 			}
+			return false;
 		}
-		
+		return true;
 	}
 	
 	void Downloader::clearDownloads()

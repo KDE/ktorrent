@@ -42,7 +42,7 @@ namespace bt
 		if (fptr)
 			close();
 
-		fptr = fopen(file.ascii(),mode.ascii());
+		fptr = fopen(file.local8Bit(),mode.ascii());
 		return fptr != 0;
 	}
 		

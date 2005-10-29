@@ -313,6 +313,7 @@ namespace bt
 		down->clearDownloads();
 
 		loadStats();
+		updateStats();
 	}
 
 	void TorrentControl::setTrackerTimerInterval(Uint32 interval)

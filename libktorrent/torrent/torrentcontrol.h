@@ -99,7 +99,10 @@ namespace bt
 		void rollback();
 
 		/// Get the data directory of this torrent
-		QString getDataDir() const {return datadir;}
+		QString getDataDir() const {return outputdir;}
+
+		/// Get the torX dir.
+		QString getTorDir() const {return datadir;}
 
 		/// Set the monitor
 		void setMonitor(kt::MonitorInterface* tmo);

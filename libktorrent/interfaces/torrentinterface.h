@@ -86,9 +86,9 @@ namespace kt
 		/// The status of the tracker
 		QString trackerstatus;
 		/// The number of bytes downloaded in this session
-		Uint32 session_bytes_downloaded;
+		Uint64 session_bytes_downloaded;
 		/// The number of bytes uploaded in this session
-		Uint32 session_bytes_uploaded;
+		Uint64 session_bytes_uploaded;
 		/// Name of the torrent
 		QString torrent_name;
 		/// See if we are running
@@ -153,6 +153,12 @@ namespace kt
 		 * In case of single torrent file defaults can be used (0,1)
 		 **/
 		virtual bool readyForPreview(int start_chunk = 0, int end_chunk = 1) = 0;
+
+		/**
+		 * Get the torX directory of this torrent. Temporary stuff like the index
+		 * file get stored there.
+		 */
+		virtual QString getTorDir() const = 0;
 
 		/// Get the data directory of this torrent
 		virtual QString getDataDir() const = 0;

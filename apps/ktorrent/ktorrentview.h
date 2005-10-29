@@ -71,20 +71,20 @@ public slots:
 	void addTorrent(kt::TorrentInterface* tc);
 	void removeTorrent(kt::TorrentInterface* tc);
 	void update();
-	
+
 private slots:
 	void onExecuted(QListViewItem* item);
 	void showContextMenu(KListView* ,QListViewItem* item,const QPoint & p);
 	void startDownload();
 	void stopDownload();
-	void removeDownload();
 	void manualAnnounce();
-    void previewFile(); 
+    void previewFile();
+	void removeDownload();
 
 signals:
 	void torrentClicked(kt::TorrentInterface* tc);
 	void currentChanged(kt::TorrentInterface* tc);
-	void wantToRemove(kt::TorrentInterface* tc);
+	void wantToRemove(kt::TorrentInterface* tc,bool data_to);
 
 private:
 	bool acceptDrag(QDropEvent* event) const;

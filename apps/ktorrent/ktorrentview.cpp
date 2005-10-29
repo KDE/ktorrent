@@ -158,15 +158,18 @@ void KTorrentView::removeDownload()
 
 	TorrentInterface* tc = curr->getTC();
 	const TorrentStats & s = tc->getStats();
+	bool data_to = false;
 	if (s.bytes_left > 0)
 	{
-		QString msg = i18n("The torrent %s has not finished downloading. "
-				"Are you sure you want to do this?").arg(s.torrent_name);
-		int ret = KMessageBox::warningContinueCancel(this,msg,i18n("Remove Download"),KStdGuiItem::del());
+		QString msg = i18n("The torrent %1 has not finished downloading, "
+				"do you want to delete the incomplete data too ?").arg(s.torrent_name);
+		int ret = KMessageBox::questionYesNoCancel(this,msg,i18n("Remove Download"));
 		if (ret == KMessageBox::Cancel)
 			return;
+		else if (ret == KMessageBox::Yes)
+			data_to = true;
 	}
-	wantToRemove(tc);
+	wantToRemove(tc,data_to);
 }
 
 void KTorrentView::manualAnnounce()
@@ -182,7 +185,7 @@ void KTorrentView::previewFile()
     if (!curr) 
         return; 
 
-	new KRun(curr->getTC()->getDataDir()+"cache", true, true);
+	new KRun(curr->getTC()->getTorDir()+"cache", true, true);
 }
 
 TorrentInterface* KTorrentView::getCurrentTC()

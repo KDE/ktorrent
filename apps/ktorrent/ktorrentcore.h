@@ -44,8 +44,8 @@ struct CurrentStats
 {
 	bt::Uint32 download_speed;
 	bt::Uint32 upload_speed;
-	bt::Uint32 bytes_downloaded;
-	bt::Uint32 bytes_uploaded;
+	bt::Uint64 bytes_downloaded;
+	bt::Uint64 bytes_uploaded;
 };
 
 class KProgress;
@@ -170,9 +170,10 @@ public slots:
 	 * data from this TorrentInterface And delete the
 	 * TorrentInterface itself. It can also potentially
 	 * start a new download (when one is waiting to be downloaded).
-	 * @param tc 
+	 * @param tc
+	 * @param data_to 
 	 */
-	void remove(kt::TorrentInterface* tc);
+	void remove(kt::TorrentInterface* tc,bool data_to);
 
 	/**
 	 * Update all torrents.
@@ -229,7 +230,7 @@ private:
 	int max_downloads;
 	bool keep_seeding;
 	QTimer update_timer;
-	bt::Uint32 removed_bytes_up,removed_bytes_down;
+	bt::Uint64 removed_bytes_up,removed_bytes_down;
 	kt::PluginManager* pman;
 };
 

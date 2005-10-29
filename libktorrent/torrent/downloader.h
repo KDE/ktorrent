@@ -132,7 +132,7 @@ namespace bt
 		
 	private slots:
 		void pieceRecieved(const Piece & p);
-		void finished(ChunkDownload* c);
+		bool finished(ChunkDownload* c);
 		
 		/**
 		 * Kill all ChunkDownload's which have been excluded.

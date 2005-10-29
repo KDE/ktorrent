@@ -120,9 +120,10 @@ namespace kt
 		 * data from this TorrentControl And delete the
 		 * TorrentControl itself. It can also potentially
 		 * start a new download (when one is waiting to be downloaded).
-		 * @param tc
+		 * @param tc The torrent
+		 * @param data_to Wether or not to delete the file data to
 		 */
-		virtual void remove(TorrentInterface* tc) = 0;
+		virtual void remove(TorrentInterface* tc,bool data_to) = 0;
 		
 		/**
 		 * Inserts IP range to be blocked into IPBlocklist

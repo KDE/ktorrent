@@ -345,7 +345,7 @@ namespace kt
 	void InfoWidget::contextItem(int id)
 	{
 		if(id == this->preview_id)
-			new KRun(this->curr_tc->getDataDir()+preview_path, 0, true, true);
+			new KRun(this->curr_tc->getTorDir()+preview_path, 0, true, true);
 	}
 	
 }
