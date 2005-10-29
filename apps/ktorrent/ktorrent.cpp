@@ -370,8 +370,8 @@ void KTorrent::removeDownload()
 		const TorrentStats & s = tc->getStats();
 		if (s.bytes_left > 0)
 		{
-			QString msg = i18n("The torrent %s has not finished downloading. "
-					"Are you sure you want to do this?").arg(s.torrent_name);
+			QString msg = i18n("The torrent %1 has not finished downloading. "
+					"Are you sure you want to remove it?").arg(s.torrent_name);
 			int ret = KMessageBox::warningContinueCancel(this,msg,i18n("Remove Download"),KStdGuiItem::del());
 			if (ret == KMessageBox::Cancel)
 				return;
