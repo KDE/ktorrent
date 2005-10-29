@@ -191,6 +191,7 @@ void KTorrent::addPrefPage(PrefPageInterface* page)
 
 void KTorrent::removePrefPage(PrefPageInterface* page)
 {
+	m_pref->removePrefPage(page);
 }
 
 void KTorrent::applySettings()
@@ -515,6 +516,11 @@ void KTorrent::mergePluginGui(Plugin* p)
 	guiFactory()->addClient(p);
 }
 
+void KTorrent::removePluginGui(Plugin* p)
+{
+	guiFactory()->removeClient(p);
+}
+
 void KTorrent::addWidgetInView(QWidget* w,Position pos)
 {
 	m_view_exp->expand(w,pos);
@@ -523,6 +529,11 @@ void KTorrent::addWidgetInView(QWidget* w,Position pos)
 void KTorrent::removeWidgetFromView(QWidget* w)
 {
 	m_view_exp->remove(w);
+}
+
+const TorrentInterface* KTorrent::getCurrentTorrent() const
+{
+	return m_view->getCurrentTC();
 }
 
 #include "ktorrent.moc"

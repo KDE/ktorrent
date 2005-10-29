@@ -37,11 +37,13 @@
 #include <kiconloader.h>
 #include <qdir.h>
 
+#include "downloadpref.h"
+#include "generalpref.h"
 #include "pref.h"
 #include "downloadpref.h"
 #include "settings.h"
 #include "ktorrent.h"
-#include "interfaces/prefpageinterface.h"
+
 
 using namespace bt;
 
@@ -52,20 +54,14 @@ KTorrentPreferences::KTorrentPreferences(KTorrent & ktor)
 {
 	enableButtonSeparator(true);
 		
-	KIconLoader* iload = KGlobal::iconLoader();
-	
-	QFrame* frame = addPage(i18n("Downloads"), i18n("Download Options"),
-							iload->loadIcon("down",KIcon::NoGroup));
-		
-	QVBoxLayout* vbox = new QVBoxLayout(frame);
-	vbox->setAutoAdd(true);
-	page_one = new PrefPageOne(frame);
+	page_one = new PrefPageOne();
+	page_two = new PrefPageTwo();
+	addPrefPage(page_one);
+	addPrefPage(page_two);
+}
 
-	frame = addPage(i18n("General"), i18n("General Options"),
-					iload->loadIcon("package_settings",KIcon::NoGroup));
-	vbox = new QVBoxLayout(frame);
-	vbox->setAutoAdd(true);
-	page_two = new PrefPageTwo(frame);
+KTorrentPreferences::~KTorrentPreferences()
+{
 }
 
 void KTorrentPreferences::slotOk()
@@ -76,12 +72,10 @@ void KTorrentPreferences::slotOk()
 
 void KTorrentPreferences::slotApply()
 {
-	page_one->apply();
-	page_two->apply();
-	QPtrList<kt::PrefPageInterface>::iterator i = pages.begin();
+	QMap<kt::PrefPageInterface*,QFrame*>::iterator i = pages.begin();
 	while (i != pages.end())
 	{
-		kt::PrefPageInterface* p = *i;
+		kt::PrefPageInterface* p = i.key();
 		p->apply();
 		i++;
 	}
@@ -91,12 +85,10 @@ void KTorrentPreferences::slotApply()
 
 void KTorrentPreferences::updateData()
 {
-	page_one->updateData();
-	page_two->updateData();
-	QPtrList<kt::PrefPageInterface>::iterator i = pages.begin();
+	QMap<kt::PrefPageInterface*,QFrame*>::iterator i = pages.begin();
 	while (i != pages.end())
 	{
-		kt::PrefPageInterface* p = *i;
+		kt::PrefPageInterface* p = i.key();
 		p->updateData();
 		i++;
 	}
@@ -109,67 +101,99 @@ void KTorrentPreferences::addPrefPage(kt::PrefPageInterface* prefInterface)
 	vbox->setAutoAdd(true);
 	prefInterface->createWidget(frame);
 
-	pages.append(prefInterface);
+	pages.insert(prefInterface,frame);
+}
+
+void KTorrentPreferences::removePrefPage(kt::PrefPageInterface* pp)
+{
+	if (!pages.contains(pp))
+		return;
+	
+	QFrame* fr = pages[pp];
+	pages.remove(pp);
+	pp->deleteWidget();
+	delete fr;
 }
 
 ///////////////////////////////////////////////////////
 
-PrefPageOne::PrefPageOne(QWidget *parent) : DownloadPref(parent)
+PrefPageOne::PrefPageOne() : kt::PrefPageInterface(i18n("Downloads"), i18n("Download Options"),KGlobal::iconLoader()->loadIcon("down",KIcon::NoGroup)),dp(0)
 {
-	updateData();
 }
 
-bool PrefPageOne::checkPorts()
+PrefPageOne::~ PrefPageOne()
 {
-	if (udp_tracker_port->value() == port->value())
-		return false;
-	else
-		return true;
+	delete dp;
+}
+
+void PrefPageOne::createWidget(QWidget* parent)
+{
+	dp = new DownloadPref(parent);
+	updateData();
 }
 
 void PrefPageOne::apply()
 {
-	Settings::setMaxDownloads(max_downloads->value());
-	Settings::setMaxConnections(max_conns->value());
-	Settings::setMaxUploadRate(max_upload_rate->value());
-	Settings::setMaxDownloadRate(max_download_rate->value());
-	Settings::setKeepSeeding(keep_seeding->isChecked());	
-	Settings::setPort(port->value());
-	Settings::setUdpTrackerPort(udp_tracker_port->value());
+	Settings::setMaxDownloads(dp->max_downloads->value());
+	Settings::setMaxConnections(dp->max_conns->value());
+	Settings::setMaxUploadRate(dp->max_upload_rate->value());
+	Settings::setMaxDownloadRate(dp->max_download_rate->value());
+	Settings::setKeepSeeding(dp->keep_seeding->isChecked());
+	Settings::setPort(dp->port->value());
+	Settings::setUdpTrackerPort(dp->udp_tracker_port->value());
 }
 
 void PrefPageOne::updateData()
 {
 	//setMinimumSize(400,400);
-	max_downloads->setValue(Settings::maxDownloads());
-	max_conns->setValue(Settings::maxConnections());
-	max_upload_rate->setValue(Settings::maxUploadRate());
-	max_download_rate->setValue(Settings::maxDownloadRate());
-	keep_seeding->setChecked(Settings::keepSeeding());
-	udp_tracker_port->setValue(Settings::udpTrackerPort());
-	port->setValue(Settings::port());
+	dp->max_downloads->setValue(Settings::maxDownloads());
+	dp->max_conns->setValue(Settings::maxConnections());
+	dp->max_upload_rate->setValue(Settings::maxUploadRate());
+	dp->max_download_rate->setValue(Settings::maxDownloadRate());
+	dp->keep_seeding->setChecked(Settings::keepSeeding());
+	dp->udp_tracker_port->setValue(Settings::udpTrackerPort());
+	dp->port->setValue(Settings::port());
+}
+
+void PrefPageOne::deleteWidget()
+{
+	delete dp;
 }
 
 //////////////////////////////////////
-PrefPageTwo::PrefPageTwo(QWidget *parent) : GeneralPref(parent)
+PrefPageTwo::PrefPageTwo() :
+		kt::PrefPageInterface(i18n("General"), i18n("General Options"),
+							  KGlobal::iconLoader()->loadIcon("package_settings",KIcon::NoGroup)),gp(0)
 {
+}
+
+PrefPageTwo::~PrefPageTwo()
+{
+	delete gp;
+}
+
+void PrefPageTwo::createWidget(QWidget* parent)
+{
+	gp = new GeneralPref(parent);
 	updateData();
+	connect(gp->autosave_downloads_check,SIGNAL(toggled(bool)),
+			this,SLOT(autosaveChecked(bool )));
 }
 
 void PrefPageTwo::apply()
 {
-	Settings::setShowSystemTrayIcon(show_systray_icon->isChecked());
+	Settings::setShowSystemTrayIcon(gp->show_systray_icon->isChecked());
 	QString ourl = Settings::tempDir();
 	
-	KURLRequester* u = temp_dir;
+	KURLRequester* u = gp->temp_dir;
 	if (ourl != u->url())
 	{
 		Settings::setTempDir(u->url());
 	}
 
-	if (autosave_downloads_check->isChecked())
+	if (gp->autosave_downloads_check->isChecked())
 	{
-		u = autosave_location;
+		u = gp->autosave_location;
 		Settings::setSaveDir(u->url());
 	}
 	else
@@ -180,7 +204,7 @@ void PrefPageTwo::apply()
 
 void PrefPageTwo::autosaveChecked(bool on)
 {
-	KURLRequester* u = autosave_location;
+	KURLRequester* u = gp->autosave_location;
 	if (on)
 	{
 		u->setEnabled(true);
@@ -198,8 +222,8 @@ void PrefPageTwo::autosaveChecked(bool on)
 
 void PrefPageTwo::updateData()
 {
-	show_systray_icon->setChecked(Settings::showSystemTrayIcon());
-	KURLRequester* u = temp_dir;
+	gp->show_systray_icon->setChecked(Settings::showSystemTrayIcon());
+	KURLRequester* u = gp->temp_dir;
 	u->fileDialog()->setMode(KFile::Directory);
 	if (Settings::tempDir() == QString::null)
 	{
@@ -213,25 +237,26 @@ void PrefPageTwo::updateData()
 		u->setURL(Settings::tempDir());
 	}
 
-	u = autosave_location;
+	u = gp->autosave_location;
 	u->fileDialog()->setMode(KFile::Directory);
 	if (Settings::saveDir() == QString::null)
 	{
-		autosave_downloads_check->setChecked(false);
+		gp->autosave_downloads_check->setChecked(false);
 		u->setEnabled(false);
 		u->clear();
 	}
 	else
 	{
-		autosave_downloads_check->setChecked(true);
+		gp->autosave_downloads_check->setChecked(true);
 		u->setURL(QDir::homeDirPath());
 		u->setURL(Settings::saveDir());
 		u->setEnabled(true);
 	}
-	connect(autosave_downloads_check,SIGNAL(toggled(bool)),
-			this,SLOT(autosaveChecked(bool )));
 }
-//////////////////////////////////////////////////////////////////////////////////////// 
 
+void PrefPageTwo::deleteWidget()
+{
+	delete gp;
+}
 
 #include "pref.moc"

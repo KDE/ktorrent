@@ -208,6 +208,11 @@ namespace kt
 		widget = new SearchPrefPageWidget(parent);
 	}
 
+	void SearchPrefPage::deleteWidget()
+	{
+		delete widget;
+	}
+
 	void SearchPrefPage::updateData()
 	{
 		widget->loadSearchEngines();

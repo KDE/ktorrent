@@ -17,34 +17,43 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTINFOWIDGETPREFPAGE_H
-#define KTINFOWIDGETPREFPAGE_H
+#ifndef KTPLUGINMANAGERPREFPAGE_H
+#define KTPLUGINMANAGERPREFPAGE_H
 
+#include <qobject.h>
 #include <interfaces/prefpageinterface.h>
 
-class IWPref;
+class PluginManagerWidget;
 
 namespace kt
 {
-	class InfoWidget;
-	
+	class PluginManager;
 
 	/**
-	@author Joris Guisson
+	 * @author Joris Guisson
+	 *
+	 * Pref page which allows to load and unload plugins.
 	*/
-	class InfoWidgetPrefPage : public PrefPageInterface
+	class PluginManagerPrefPage : public QObject,public PrefPageInterface
 	{
-		InfoWidget* iw;
-		IWPref* pref;
+		Q_OBJECT
 	public:
-		InfoWidgetPrefPage(InfoWidget* iw);
-		virtual ~InfoWidgetPrefPage();
+		PluginManagerPrefPage(PluginManager* pman);
+		virtual ~PluginManagerPrefPage();
 
 		virtual void apply();
 		virtual void createWidget(QWidget* parent);
-		virtual void deleteWidget();
 		virtual void updateData();
-
+		virtual void deleteWidget();
+	private slots:
+		void onLoad();
+		void onUnload();
+		void onLoadAll();
+		void onUnloadAll();
+		
+	private:
+		PluginManager* pman;
+		PluginManagerWidget* pmw;
 	};
 
 }

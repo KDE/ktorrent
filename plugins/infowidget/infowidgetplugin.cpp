@@ -55,6 +55,7 @@ namespace kt
 		getGUI()->addViewListener(this);
 		getGUI()->addWidgetInView(iw,kt::BELOW);
 		getGUI()->addPrefPage(pref);
+		iw->changeTC(const_cast<kt::TorrentInterface*>(getGUI()->getCurrentTorrent()));
 	}
 
 	void InfoWidgetPlugin::unload()

@@ -66,7 +66,9 @@ namespace kt
 		 */
 		virtual void updateData() = 0;
 
-
+		/// Delete the widget, gets called when the page gets removed.
+		virtual void deleteWidget() = 0;
+		
 	private:
 		///Used in IconList mode. You should prefer a pixmap with size 32x32 pixels
 		QPixmap pixmap;

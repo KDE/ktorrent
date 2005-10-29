@@ -50,7 +50,7 @@ METASOURCES = ipfilterplugin=./ipfilterplugin.h ipblockingpref=ipblockingpref.h=
 QT3_UIFILES = ipblockingpref
 __um_includes_ipblockingpref.h = ipblockingprefpage.cpp ipfilterplugin.cpp
 __um_includes_ipblockingprefpage.h = ipblockingprefpage.cpp ipfilterplugin.cpp
-__um_includes_ipfilterplugin.h = ipfilterplugin.cpp
+__um_includes_ipfilterplugin.h = ipblockingprefpage.cpp ipfilterplugin.cpp
 __um_includes_ipfilterpluginsettings.h = ipblockingprefpage.cpp ipfilterplugin.cpp
 __um_includes_kgenericfactory.h = ipfilterplugin.cpp
 __um_includes_kglobal.h = ipblockingprefpage.cpp
@@ -59,5 +59,6 @@ __um_includes_klocale.h = ipblockingprefpage.cpp
 __um_includes_kurlrequester.h = ipblockingprefpage.cpp
 __um_includes_qfile.h = ipfilterplugin.cpp
 __um_includes_qstring.h = ipfilterplugin.cpp
+__um_includes_qthread.h = ipblockingprefpage.cpp ipfilterplugin.cpp
 ktipfilterplugin_la_SOURCES = ipfilterplugin.cpp ipblockingpref.ui ipblockingprefpage.cpp ipfilterpluginsettings.kcfgc ipfilterplugin.moc.cpp
 .PHONY: all final

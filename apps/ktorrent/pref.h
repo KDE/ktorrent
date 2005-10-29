@@ -24,39 +24,42 @@
 
 #include <kdialogbase.h>
 #include <qframe.h>
-#include <qptrlist.h> 
-#include "downloadpref.h"
-#include "generalpref.h"
+#include <qmap.h> 
+#include <interfaces/prefpageinterface.h>
  
 
-
+class DownloadPref;
+class GeneralPref;
 class KTorrent;
 class QListViewItem; 
 
-namespace kt
-{
-	class PrefPageInterface;
-}
 
-class PrefPageOne : public DownloadPref
+class PrefPageOne : public kt::PrefPageInterface
 {
-	Q_OBJECT
+	DownloadPref* dp;
 public:
-	PrefPageOne(QWidget *parent = 0);
+	PrefPageOne();
+	virtual ~PrefPageOne();
 	
-	void apply();
-	bool checkPorts();
-	void updateData();
+	virtual void apply();
+	virtual void updateData();	
+	virtual void createWidget(QWidget* parent);
+	virtual void deleteWidget();
 };
 
-class PrefPageTwo : public GeneralPref
+class PrefPageTwo : public QObject,public kt::PrefPageInterface
 {
-	Q_OBJECT
+	Q_OBJECT 
+	GeneralPref* gp;
 public:
-	PrefPageTwo(QWidget *parent = 0);
-
-	void apply();
-	void updateData();
+	PrefPageTwo();
+	virtual ~PrefPageTwo();
+	
+	virtual void apply();
+	virtual void updateData();
+	virtual void createWidget(QWidget* parent);
+	virtual void deleteWidget();
+	
 private slots:
 	void autosaveChecked(bool on);
 };
@@ -68,10 +71,11 @@ class KTorrentPreferences : public KDialogBase
 	Q_OBJECT
 public:
 	KTorrentPreferences(KTorrent & ktor);
-
+	virtual ~KTorrentPreferences();
+	
 	void updateData();
 	void addPrefPage(kt::PrefPageInterface* prefInterface);
-
+	void removePrefPage(kt::PrefPageInterface* prefInterface);
 private:
 	virtual void slotOk();
 	virtual void slotApply();
@@ -82,7 +86,7 @@ private:
 	KTorrent & ktor;
 	PrefPageOne* page_one;
 	PrefPageTwo* page_two;
-	QPtrList<kt::PrefPageInterface> pages;
+	QMap<kt::PrefPageInterface*,QFrame*> pages;
 };
 
 

@@ -51,11 +51,18 @@ namespace kt
 	void InfoWidgetPrefPage::createWidget(QWidget* parent)
 	{
 		pref = new IWPref(parent);
-		pref->m_show_pv->setChecked(InfoWidgetPluginSettings::showPeerView());
-		pref->m_show_cdv->setChecked(InfoWidgetPluginSettings::showChunkView());
+		updateData();
+	}
+
+	void InfoWidgetPrefPage::deleteWidget()
+	{
+		delete pref;
 	}
 
 	void InfoWidgetPrefPage::updateData()
-	{}
+	{
+		pref->m_show_pv->setChecked(InfoWidgetPluginSettings::showPeerView());
+		pref->m_show_cdv->setChecked(InfoWidgetPluginSettings::showChunkView());
+	}
 
 }

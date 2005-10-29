@@ -66,6 +66,7 @@ namespace kt
 			virtual void apply();
 			virtual void createWidget(QWidget* parent);
 			virtual void updateData();
+			virtual void deleteWidget();
 			
 			void loadFilters();
 

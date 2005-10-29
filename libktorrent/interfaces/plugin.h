@@ -60,6 +60,9 @@ namespace kt
 		 * This gets called, when the plugin gets loaded by KTorrent.
 		 * Any changes made here must be later made undone, when unload is
 		 * called.
+		 * Upon error a bt::Error should be thrown. And the plugin should remain
+		 * in an unitialized state. The Error contains an error message, which will
+		 * get show to the user.
 		 */
 		virtual void load() = 0;
 		
@@ -105,6 +108,9 @@ namespace kt
 		 * @param c Pointer to the core
 		 */
 		void setGUI(GUIInterface* c) {gui = c;}
+
+		/// See if the plugin is loaded
+		bool isLoaded() const {return loaded;}
 	private:
 		QString name;
 		QString author;
@@ -112,6 +118,9 @@ namespace kt
 		QString description;
 		CoreInterface* core;
 		GUIInterface* gui;
+		bool loaded;
+
+		friend class PluginManager;
 	};
 
 }

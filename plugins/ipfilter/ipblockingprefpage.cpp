@@ -108,6 +108,12 @@ namespace kt
 		widget = new IPBlockingPrefPageWidget(parent);
 	}
 
+	void IPBlockingPrefPage::deleteWidget()
+	{
+		delete widget;
+		widget = 0;
+	}
+
 	void IPBlockingPrefPage::updateData()
 	{}
 }

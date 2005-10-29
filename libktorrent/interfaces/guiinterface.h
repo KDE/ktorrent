@@ -111,6 +111,12 @@ namespace kt
 		virtual void mergePluginGui(Plugin* p) = 0;
 
 		/**
+		 * Remove the GUI of a plugin.
+		 * @param p The Plugin
+		 */
+		virtual void removePluginGui(Plugin* p) = 0;
+		
+		/**
 		 * Embed a widget in the view in the mainview.
 		 * The view and the new widget will be separated by a separator.
 		 * @param w The widget
@@ -124,6 +130,9 @@ namespace kt
 		 * @param w The widget 
 		 */
 		virtual void removeWidgetFromView(QWidget* w) = 0;
+
+		/// Get the current torrent.
+		virtual const TorrentInterface* getCurrentTorrent() const = 0;
 	protected:
 		/**
 		 * Notifies all view listeners of the change in the current TorrentInterface

@@ -30,6 +30,7 @@ namespace kt
 	{
 		core = 0;
 		gui = 0;
+		loaded = false;
 	}
 
 
