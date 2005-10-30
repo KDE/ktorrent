@@ -145,7 +145,7 @@ private:
 private:
 	KTorrentView *m_view;
 	KToggleAction *m_statusbarAction;
-	KAction *m_start,*m_stop,*m_remove,*m_startall, *m_stopall;
+	KAction *m_start,*m_stop,*m_remove,*m_startall, *m_stopall, *m_pasteurl;
 	KTorrentCore* m_core;
 	TrayIcon* m_systray_icon;
 	KTabWidget* m_tabs;

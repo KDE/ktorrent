@@ -25,7 +25,8 @@
 #include <qapplication.h>
 #include <kurl.h>
 #include <klineedit.h>
-
+#include <kmessagebox.h>
+#include <klocale.h>
 
 PasteDialog::PasteDialog(KTorrentCore* core, QWidget *parent, const char *name)
 		:PasteDlgBase(parent, name)
@@ -43,8 +44,14 @@ void PasteDialog::btnOK_clicked()
 {
 	KURL url = KURL::fromPathOrURL(m_url->text());
 	if ( url.isValid() )
+	{
 		m_core->load(url);
-	QDialog::accept();
+		QDialog::accept();
+	}
+	else
+	{
+		KMessageBox::error(this,i18n("Malformed URL."));
+	}
 }
 
 
