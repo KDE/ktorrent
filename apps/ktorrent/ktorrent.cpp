@@ -70,6 +70,7 @@
 #include "logviewer.h"
 #include "ktorrentdcop.h"
 #include "torrentcreatordlg.h"
+#include "pastedialog.h"
 #include <util/functions.h>
 #include <interfaces/functions.h>
 #include <interfaces/plugin.h>
@@ -246,7 +247,7 @@ void KTorrent::setupActions()
 	KStdAction::open(this, SLOT(fileOpen()), actionCollection());
 	KStdAction::quit(kapp, SLOT(quit()), actionCollection());
 	
-	KStdAction::paste(kapp,SLOT(paste()),actionCollection());
+	KStdAction::paste(this,SLOT(torrentPaste()),actionCollection());
 
 	m_statusbarAction = KStdAction::showStatusbar(this, SLOT(optionsShowStatusbar()), actionCollection());
 
@@ -314,11 +315,19 @@ void KTorrent::fileNew()
 
 void KTorrent::fileOpen()
 {
+
 	QString filter = "*.torrent|" + i18n("Torrent Files") + "\n*|" + i18n("All Files");
 	KURL url = KFileDialog::getOpenURL(QString::null, filter, this, i18n("Open Location"));
 
 	if (url.isValid())
 		load(url);
+}
+
+void KTorrent::torrentPaste()
+{
+	PasteDialog dlg(m_core,this);
+	dlg.show();
+	dlg.exec();
 }
 
 void KTorrent::startDownload()
