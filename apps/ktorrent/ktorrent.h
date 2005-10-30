@@ -116,6 +116,7 @@ protected:
 private slots:
 	void fileOpen();
 	void fileNew();
+	void torrentPaste();
 	void startDownload();
 	void startAllDownloads();
 	void stopDownload();
