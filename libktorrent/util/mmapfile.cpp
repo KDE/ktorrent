@@ -17,86 +17,18 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <qurl.h>
-#include <string.h>
-#include <algorithm>
-#include "log.h"
-#include "sha1hash.h"
-#include "sha1hashgen.h"
-#include "urlencoder.h"
-
-
+#include "mmapfile.h"
+#if 0
 namespace bt
 {
-	SHA1Hash::SHA1Hash()
-	{
-		std::fill(hash,hash+20,'\0');
-	}
 
-	SHA1Hash::SHA1Hash(const SHA1Hash & other)
-	{
-		for (int i = 0;i < 20;i++)
-			hash[i] = other.hash[i];
-	}
-
-	SHA1Hash::SHA1Hash(const Uint8* h)
-	{
-		memcpy(hash,h,20);
-	}
-
-
-	SHA1Hash::~SHA1Hash()
+	MMapFile::MMapFile()
 	{}
 
-	SHA1Hash & SHA1Hash::operator = (const SHA1Hash & other)
-	{
-		for (int i = 0;i < 20;i++)
-			hash[i] = other.hash[i];
-		return *this;
-	}
 
-	bool SHA1Hash::operator == (const SHA1Hash & other) const
-	{
-		for (int i = 0;i < 20;i++)
-			if (hash[i] != other.hash[i])
-				return false;
-
-		return true;
-	}
-
-	SHA1Hash SHA1Hash::generate(Uint8* data,Uint32 len)
-	{
-		SHA1HashGen hg;
-
-		return hg.generate(data,len);
-	}
-
-	QString SHA1Hash::toString() const
-	{
-		char tmp[41];
-		QString fmt;
-		for (int i = 0;i < 20;i++)
-			fmt += "%02x";
-		tmp[40] = '\0';
-		snprintf(tmp,41,fmt.ascii(),
-				hash[0],hash[1],hash[2],hash[3],hash[4],
-				hash[5],hash[6],hash[7],hash[8],hash[9],
-				hash[10],hash[11],hash[12],hash[13],hash[14],
-				hash[15],hash[16],hash[17],hash[18],hash[19]);
-		return QString(tmp);
-	}
-
-	QString SHA1Hash::toURLString() const
-	{
-		return URLEncoder::encode((const char*)hash,20);
-	}
-
-	Log & operator << (Log & out,const SHA1Hash & h)
-	{
-		out << h.toString();
-		return out;
-	}
+	MMapFile::~MMapFile()
+	{}
 
 
 }
-
+#endif

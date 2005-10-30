@@ -131,6 +131,8 @@ namespace bt
 
 	void HTTPTracker::doRequest(const KURL & u)
 	{	
+		// clear data array
+		data = QByteArray();
 		last_url = u;
 		KURL url = u;
 		
@@ -147,7 +149,7 @@ namespace bt
 		QString epq = url.encodedPathAndQuery();
 		epq += "&info_hash=" + info_hash.toURLString();
 		url.setEncodedPathAndQuery(epq);
-
+	//	Out() << "query : " << url.query() << endl;
 		Out() << "Doing tracker request to url : " << url.prettyURL() << endl;
 		KIO::TransferJob* j = KIO::get(url,true,false);
 		j->addMetaData("User-Agent","ktorrent");

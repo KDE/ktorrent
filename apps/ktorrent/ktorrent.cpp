@@ -127,7 +127,7 @@ KTorrent::KTorrent()
 	setAutoSaveSettings();
 
 	currentChanged(0);
-	applySettings();
+	applySettings(false);
 
 	setCentralWidget(m_exp);
 	if (debug)
@@ -195,7 +195,7 @@ void KTorrent::removePrefPage(PrefPageInterface* page)
 	m_pref->removePrefPage(page);
 }
 
-void KTorrent::applySettings()
+void KTorrent::applySettings(bool change_port)
 {
 	m_core->setMaxDownloads(Settings::maxDownloads());
 	PeerManager::setMaxConnections(Settings::maxConnections());
@@ -214,7 +214,8 @@ void KTorrent::applySettings()
 
 	m_core->changeDataDir(Settings::tempDir());
 	UDPTrackerSocket::setPort(Settings::udpTrackerPort());
-	m_core->changePort(Settings::port());
+	if (change_port)
+		m_core->changePort(Settings::port());
 }
 
 void KTorrent::load(const KURL& url)

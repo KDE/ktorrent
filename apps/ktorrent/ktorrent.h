@@ -81,8 +81,9 @@ public:
 	
 	/**
 	 * Apply the settings.
+	 * @param change_port Wether or not to change the server port
 	 */
-	void applySettings();
+	void applySettings(bool change_port = true);
 
 	virtual void addTabPage(QWidget* page,const QIconSet & icon,const QString & caption);
 	virtual void removeTabPage(QWidget* page);

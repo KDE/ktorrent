@@ -7,7 +7,7 @@ If something is done put # in front of it.
 -----
 # 0) Rearrange stuff and do plugins
 
-1) Switch to KNetwork classes (This could be frustrating)
+# 1) Switch to KNetwork classes (This could be frustrating)
 
 2) Implement trackerless torrent like official client. (This will be big)
 
@@ -17,7 +17,7 @@ If something is done put # in front of it.
 
 5) Make something similar like konquerer's change browser identification but then for KT's PeerID
 
-6) Add option to paste URL to .torrent files
+# 6) Add option to paste URL to .torrent files
 
 7) Implement IP blocking framework. Build our own (detect fake data and block
 peers) or use existing lists (e.g. openmedia.info). I had several peers (IP's

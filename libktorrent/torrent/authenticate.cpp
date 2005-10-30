@@ -18,7 +18,6 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <util/log.h>
-#include <util/streamsocket.h>
 #include <kbufferedsocket.h>
 #include "authenticate.h"
 #include "ipblocklist.h"

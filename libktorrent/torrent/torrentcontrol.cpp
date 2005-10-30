@@ -225,6 +225,7 @@ namespace bt
 		stats.running = false;
 		saveStats();
 		updateStatusMsg();
+		updateStats();
 	}
 
 	void TorrentControl::setMonitor(kt::MonitorInterface* tmo)

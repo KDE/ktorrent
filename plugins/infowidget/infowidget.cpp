@@ -272,11 +272,19 @@ namespace kt
 			peer_view->update();
 		if (cd_view)
 			cd_view->update();
-		QTime t;
-		t = t.addMSecs(curr_tc->getTimeToNextTrackerUpdate());
-		m_tracker_update_time->setText(t.toString("mm:ss"));
-		m_tracker_status->setText(s.trackerstatus);
 		
+		if (s.running)
+		{
+			QTime t;
+			t = t.addMSecs(curr_tc->getTimeToNextTrackerUpdate());
+			m_tracker_update_time->setText(t.toString("mm:ss"));
+		}
+		else
+		{
+			m_tracker_update_time->setText("");
+		}
+		
+		m_tracker_status->setText(s.trackerstatus);
 		
 		m_seeders->setText(QString("%1 (%2)")
 				.arg(s.seeders_connected_to).arg(s.seeders_total));

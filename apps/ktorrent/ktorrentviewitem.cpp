@@ -119,7 +119,7 @@ void KTorrentViewItem::update()
 	{
 		setText(7,i18n("finished"));
 	}
-	else 
+	else if (s.running) 
 	{
 		float bytes_downloaded = (float)s.bytes_downloaded;
 		if( bytes_downloaded < 1 ) //if we just started download use old algorithm
@@ -138,6 +138,10 @@ void KTorrentViewItem::update()
 			double eta = s.bytes_left / avg_speed;
 			setText(7,DurationToString((int)floor(eta)));
 		}
+	}
+	else
+	{
+		setText(7,i18n("infinity"));
 	}
 	
 	setText(8,QString::number(s.num_peers));
