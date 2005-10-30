@@ -22,7 +22,6 @@
 
 #include "authenticatebase.h"
 
-
 namespace bt
 {
 	class Server;
@@ -40,7 +39,7 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-		ServerAuthenticate(QSocket* sock,Server* server);
+		ServerAuthenticate(KNetwork::KBufferedSocket* sock,Server* server);
 		virtual ~ServerAuthenticate();
 
 	private:

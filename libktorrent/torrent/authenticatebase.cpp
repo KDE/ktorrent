@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <kbufferedsocket.h>
 #include <util/sha1hash.h>
 #include <util/log.h>
 #include "globals.h"
@@ -26,7 +27,8 @@
 namespace bt
 {
 
-	AuthenticateBase::AuthenticateBase(QSocket* s) : sock(s),finished(false)
+	AuthenticateBase::AuthenticateBase(KNetwork::KBufferedSocket* s)
+		: sock(s),finished(false)
 	{
 		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 		timer.start(20000,true);
@@ -40,6 +42,7 @@ namespace bt
 
 	void AuthenticateBase::sendHandshake(const SHA1Hash & info_hash,const PeerID & our_peer_id)
 	{
+	//	Out() << "AuthenticateBase::sendHandshake" << endl;
 		if (!sock) return;
 		
 		Uint8 hs[68];
@@ -55,6 +58,7 @@ namespace bt
 
 	void AuthenticateBase::onReadyRead()
 	{
+	//	Out() << "AuthenticateBase::onReadyRead" << endl;
 		if (!sock || finished || sock->bytesAvailable() < 68)
 			return;
 

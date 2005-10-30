@@ -20,13 +20,18 @@
 #ifndef BTPEER_H
 #define BTPEER_H
 
+#include <qobject.h>
 #include <qdatetime.h>
-#include <qsocket.h>
 #include <util/timer.h>
 #include <interfaces/peerinterface.h>
 #include <util/bitset.h>
 #include "globals.h"
 #include "peerid.h"
+
+namespace KNetwork
+{
+	class KBufferedSocket;
+}
 
 namespace bt
 {
@@ -61,7 +66,7 @@ namespace bt
 		 * @param peer_id The Peer's BitTorrent ID
 		 * @param num_chunks The number of chunks in the file
 		 */
-		Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks);		
+		Peer(KNetwork::KBufferedSocket* sock,const PeerID & peer_id,Uint32 num_chunks);
 		virtual ~Peer();
 
 		/// Get the peer's unique ID.
@@ -201,7 +206,7 @@ namespace bt
 		virtual void getStats(Stats & s);
 
 	private:
-		QSocket* sock;
+		KNetwork::KBufferedSocket* sock;
 		
 		bool choked,interested,am_choked,am_interested,killed;
 		Uint32 time_choked,id;

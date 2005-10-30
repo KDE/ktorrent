@@ -18,6 +18,8 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <util/log.h>
+#include <util/streamsocket.h>
+#include <kbufferedsocket.h>
 #include "authenticate.h"
 #include "ipblocklist.h"
 
@@ -29,10 +31,15 @@ namespace bt
 	: info_hash(info_hash),our_peer_id(peer_id)
 	{
 		finished = succes = false;
-		sock = new QSocket();
-		connect(sock,SIGNAL(connected()),this,SLOT(connected()));
+		sock = new KNetwork::KBufferedSocket();
+		//sock = new StreamSocket();
+		sock->enableRead(true);
+		sock->enableWrite(true);
+		
+		connect(sock,SIGNAL(connected(const KResolverEntry&)),
+				this,SLOT(connected(const KResolverEntry&)));
 		connect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-		connect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
+		connect(sock,SIGNAL(gotError(int)),this,SLOT(onError(int )));
 		
 		host = ip;
 		Out() << "Initiating connection to " << host << endl;
@@ -43,22 +50,24 @@ namespace bt
 	{
 	}
 	
-	void Authenticate::connected()
+	void Authenticate::connected(const KNetwork::KResolverEntry &)
 	{
+	//	Out() << "Authenticate::connected" << endl;
 		sendHandshake(info_hash,our_peer_id);
 	}
 
 	void Authenticate::onFinish(bool succes)
 	{
 		Out() << "Authentication to " << host << " : " << (succes ? "ok" : "failure") << endl;
-		disconnect(sock,SIGNAL(connected()),this,SLOT(connected()));
+		disconnect(sock,SIGNAL(connected(const KResolverEntry&)),
+				   this,SLOT(connected(const KResolverEntry&)));
 		disconnect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-		disconnect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
+		disconnect(sock,SIGNAL(gotError(int)),this,SLOT(onError(int )));
 		finished = true;
 		this->succes = succes;
 		if (!succes)
 		{
-			delete sock;
+			sock->deleteLater();
 			sock = 0;
 		}
 		timer.stop();
@@ -66,6 +75,7 @@ namespace bt
 	
 	void Authenticate::handshakeRecieved(const Uint8* hs)
 	{
+	//	Out() << "Authenticate::handshakeRecieved" << endl;
 		IPBlocklist& ipfilter = IPBlocklist::instance();
 			//Out() << "Dodo " << pp.ip << endl;
 		if (ipfilter.isBlocked(host))
@@ -96,9 +106,9 @@ namespace bt
 		onFinish(true);
 	}
 
-	QSocket* Authenticate::takeSocket()
+	KNetwork::KBufferedSocket* Authenticate::takeSocket()
 	{
-		QSocket* s = sock;
+		KNetwork::KBufferedSocket* s = sock;
 		sock = 0;
 		return s;
 	}

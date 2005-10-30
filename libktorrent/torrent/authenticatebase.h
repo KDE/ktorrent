@@ -24,6 +24,11 @@
 #include <qsocket.h>
 #include <qtimer.h>
 
+namespace KNetwork
+{
+	class KBufferedSocket;
+}
+
 namespace bt
 {
 	class SHA1Hash;
@@ -41,7 +46,7 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-		AuthenticateBase(QSocket* s = 0);
+		AuthenticateBase(KNetwork::KBufferedSocket* s = 0);
 		virtual ~AuthenticateBase();
 
 		/// See if the authentication is finished
@@ -74,7 +79,7 @@ namespace bt
 		void onReadyRead();
 
 	protected:
-		QSocket* sock;
+		KNetwork::KBufferedSocket* sock;
 		QTimer timer;
 		bool finished;
 	};

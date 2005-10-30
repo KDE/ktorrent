@@ -21,7 +21,11 @@
 #define BTPACKETREADER_H
 
 #include "globals.h"
-class QSocket;
+
+namespace KNetwork
+{
+	class KBufferedSocket;
+}
 
 namespace bt
 {
@@ -32,13 +36,13 @@ namespace bt
 	*/
 	class PacketReader
 	{
-		QSocket* sock;
+		KNetwork::KBufferedSocket* sock;
 		SpeedEstimater* speed;
 		Uint8* read_buf;
 		Uint32 packet_length,read_buf_ptr,serial;
 		bool error;
 	public:
-		PacketReader(QSocket* sock,SpeedEstimater* speed);
+		PacketReader(KNetwork::KBufferedSocket* sock,SpeedEstimater* speed);
 		virtual ~PacketReader();
 
 		bool readPacket();

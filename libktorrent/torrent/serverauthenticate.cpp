@@ -17,7 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <qsocket.h>
+#include <kbufferedsocket.h>
 #include <util/sha1hash.h>
 #include <util/log.h>
 #include <util/log.h>
@@ -32,11 +32,11 @@
 namespace bt
 {
 
-	ServerAuthenticate::ServerAuthenticate(QSocket* sock,Server* server)
+	ServerAuthenticate::ServerAuthenticate(KNetwork::KBufferedSocket* sock,Server* server)
 	: AuthenticateBase(sock),server(server)
 	{
 		connect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-		connect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
+		connect(sock,SIGNAL(gotError(int)),this,SLOT(onError(int )));
 	}
 
 
@@ -50,7 +50,7 @@ namespace bt
 		Out() << "Authentication(S) to " << sock->peerAddress().toString()
 			<< " : " << (succes ? "ok" : "failure") << endl;
 		disconnect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-		disconnect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
+		disconnect(sock,SIGNAL(gotError(int)),this,SLOT(onError(int )));
 		finished = true;
 		if (!succes)
 		{

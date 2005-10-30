@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
+#include <kbufferedsocket.h>
 #include <util/log.h>
 #include <math.h>
 #include "peer.h"
@@ -37,7 +39,7 @@ namespace bt
 	
 	static Uint32 peer_id_counter = 1;
 	
-	Peer::Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks) 
+	Peer::Peer(KNetwork::KBufferedSocket* sock,const PeerID & peer_id,Uint32 num_chunks)
 	: sock(sock),pieces(num_chunks),peer_id(peer_id)
 	{
 		id = peer_id_counter;
@@ -52,9 +54,9 @@ namespace bt
 		downloader = new PeerDownloader(this);
 		uploader = new PeerUploader(this);
 		
-		connect(sock,SIGNAL(connectionClosed()),this,SLOT(connectionClosed()));
+		connect(sock,SIGNAL(closed()),this,SLOT(connectionClosed()));
 		connect(sock,SIGNAL(readyRead()),this,SLOT(readyRead()));
-		connect(sock,SIGNAL(error(int)),this,SLOT(error(int)));
+		connect(sock,SIGNAL(gotError(int)),this,SLOT(error(int)));
 		pwriter = new PacketWriter(this);
 		time_choked = GetCurrentTime();
 

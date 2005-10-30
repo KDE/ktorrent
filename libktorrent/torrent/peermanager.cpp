@@ -162,7 +162,7 @@ namespace bt
 				available_chunks.set(i,true);
 	}
 	
-	void PeerManager::newConnection(QSocket* sock,
+	void PeerManager::newConnection(KNetwork::KBufferedSocket* sock,
 									const PeerID & peer_id)
 	{
 		Uint32 total = peer_list.count() + pending.count();

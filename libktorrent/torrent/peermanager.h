@@ -20,7 +20,7 @@
 #ifndef BTPEERMANAGER_H
 #define BTPEERMANAGER_H
 
-#include <qsocket.h> 
+#include <kbufferedsocket.h>
 #include <qvaluelist.h>
 #include <qptrlist.h>
 #include <util/ptrmap.h>
@@ -126,7 +126,7 @@ namespace bt
 		 * @param sock The socket
 		 * @param peer_id The Peer's ID
 		 */
-		void newConnection(QSocket* sock,const PeerID & peer_id);
+		void newConnection(KNetwork::KBufferedSocket* sock,const PeerID & peer_id);
 
 		/**
 		 * Add a potential peer

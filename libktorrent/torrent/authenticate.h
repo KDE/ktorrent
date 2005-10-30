@@ -26,9 +26,14 @@
 #include "globals.h"
 #include "peerid.h"
 
+namespace KNetwork
+{
+	class KResolverEntry;
+}
 
 namespace bt
 {
+	using KNetwork::KResolverEntry;
 
 
 	/**
@@ -61,7 +66,7 @@ namespace bt
 		 * to transfer ownership to a Peer object.
 		 * @return The socket
 		 */
-		QSocket* takeSocket();
+		KNetwork::KBufferedSocket* takeSocket();
 		
 		const PeerID & getPeerID() const {return peer_id;}
 
@@ -69,7 +74,7 @@ namespace bt
 		bool isSuccesfull() const {return succes;}
 		
 	private slots:
-		void connected();
+		void connected(const KResolverEntry &);
 		
 	private:
 		void onFinish(bool succes);

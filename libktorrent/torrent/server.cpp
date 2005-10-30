@@ -18,7 +18,7 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
  
-#include <qsocket.h>
+#include <kbufferedsocket.h>
 #include <util/sha1hash.h>
 #include <util/log.h>
 #include "globals.h"
@@ -28,32 +28,23 @@
 #include "serverauthenticate.h"
 #include "ipblocklist.h"
 
-
+using namespace KNetwork;
 
 namespace bt
 {
-	class ServerSocket : public QServerSocket
-	{
-		Server* srv;
-	public:
-		ServerSocket(Server* srv,Uint16 port)
-			: QServerSocket(port),srv(srv)
-		{
-		}
-		 
-		virtual ~ServerSocket() {}
-		
 	
-		void newConnection(int socket)
-		{
-			srv->newConnection(socket);
-		}
-	};
 
 	Server::Server(Uint16 port) : port(port)
 	{
 		pending.setAutoDelete(true);
-		sock = new ServerSocket(this,port);
+		sock = new KServerSocket();
+		connect(sock, SIGNAL(readyAccept()), this, SLOT(newConnection()));
+		connect(sock, SIGNAL(gotError(int)), this, SLOT(onError(int )));
+		sock->setFamily(KResolver::InetFamily);
+		sock->setAddress(QString::number(port));
+		sock->setAcceptBuffered(true);
+		sock->setAddressReuseable(true);
+		sock->listen();
 	}
 
 
@@ -64,17 +55,24 @@ namespace bt
 
 	bool Server::isOK() const
 	{
-		return sock->ok();
+		return sock->error() == KSocketBase::NoError;
 	}
 
 	void Server::changePort(Uint16 p)
 	{
-		if (p == sock->port())
+		if (p == port)
 			return;
 
+		port = p;
 		delete sock;
-		sock = new ServerSocket(this,p);
-		this->port = p;
+		sock = new KServerSocket();
+		connect(sock, SIGNAL(readyAccept()), this, SLOT(newConnection()));
+		connect(sock, SIGNAL(gotError(int)), this, SLOT(onError(int)));
+		sock->setFamily(KResolver::InetFamily);
+		sock->setAddress(QString::number(port));
+		sock->setAcceptBuffered(true);
+		sock->setAddressReuseable(true);
+		sock->listen();
 	}
 
 	void Server::addPeerManager(PeerManager* pman)
@@ -87,12 +85,18 @@ namespace bt
 		peer_managers.remove(pman);
 	}
 
-	void Server::newConnection(int s)
+	void Server::newConnection()
 	{
-		QSocket* conn = new QSocket();
-		conn->setSocket(s);
+		KActiveSocketBase* b = sock->accept();
+		KBufferedSocket* conn = dynamic_cast<KBufferedSocket*>(b);
+
 		if (!conn)
+		{
+			Out() << "Conn = 0 !" << endl;
+			if (dynamic_cast<KStreamSocket*>(b))
+				Out() << "Stream socket !!" << endl;
 			return;
+		}
 		
 		if (peer_managers.count() == 0)
 		{
@@ -131,6 +135,11 @@ namespace bt
 			i++;
 		}
 		return 0;
+	}
+
+	void Server::onError(int)
+	{
+		Out() << "Server error : " << sock->errorString() << endl;
 	}
 	
 	void Server::update()
