@@ -1,0 +1,93 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>PasteDlgBase</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>PasteDlgBase</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>477</width>
+            <height>49</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>0</hsizetype>
+            <vsizetype>0</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="caption">
+        <string>Paste URL</string>
+    </property>
+    <property name="modal">
+        <bool>true</bool>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="resizeMode">
+            <enum>Fixed</enum>
+        </property>
+        <widget class="QLayoutWidget" row="0" column="0">
+            <property name="name">
+                <cstring>layout1</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KLineEdit">
+                    <property name="name">
+                        <cstring>m_url</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>400</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>btnOK</cstring>
+                    </property>
+                    <property name="text">
+                        <string>O&amp;k</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+K</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>btnOK</sender>
+        <signal>clicked()</signal>
+        <receiver>PasteDlgBase</receiver>
+        <slot>btnOK_clicked()</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>btnOK_clicked()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>klineedit.h</includehint>
+</includehints>
+</UI>
