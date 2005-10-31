@@ -17,32 +17,81 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-
+#include <kurl.h>
+#include <util/functions.h>
+#include <interfaces/torrentinterface.h>
 #include "tracker.h"
 
 namespace bt
 {
 
-	Tracker::Tracker()
+	Tracker::Tracker(kt::TorrentInterface* tor,
+					 const SHA1Hash & ih,const PeerID & id) : tor(tor)
 	{
+		info_hash = ih;
+		peer_id = id;
+		interval = 120;
 		seeders = leechers = 0;
+		connect(&update_timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 	}
 
 
 	Tracker::~Tracker()
 	{}
 
-	void Tracker::setData(const SHA1Hash & ih,const PeerID & pid,Uint16 port,
-				 Uint32 uploaded,Uint32 downloaded,Uint32 left,
-				 const QString & event)
+	void Tracker::start()
 	{
-		this->info_hash = ih;
-		this->peer_id = pid;
-		this->port = port;
-		this->uploaded = uploaded;
-		this->downloaded = downloaded;
-		this->left = left;
-		this->event = event;
+		event = "started";
+		doRequest(tor->getTrackerURL(true));
+		update_timer.start(interval*1000);
+		time_of_last_update = GetCurrentTime();
+	}
+		
+	void Tracker::setInterval(Uint32 secs)
+	{
+		interval = secs;
+		update_timer.changeInterval(1000*secs);
+	}
+		
+	void Tracker::stop()
+	{
+		event = "stopped";
+		doRequest(tor->getTrackerURL(true));
+		update_timer.stop();
+	}
+
+	void Tracker::onTimeout()
+	{
+		event = QString::null;
+		doRequest(tor->getTrackerURL(true));
+		time_of_last_update = GetCurrentTime();
+	}
+
+	void Tracker::handleError()
+	{
+		if (event != "stopped")
+			doRequest(tor->getTrackerURL(true));
+	}
+
+	void Tracker::manualUpdate()
+	{
+		event = QString::null;
+		doRequest(tor->getTrackerURL(true));
+	}
+
+	void Tracker::completed()
+	{
+		event = "completed";
+		doRequest(tor->getTrackerURL(true));
+	}
+
+	Uint32 Tracker::getTimeToNextUpdate() const
+	{
+		Uint32 s = (GetCurrentTime() - time_of_last_update) / 1000;
+		if (s > interval)
+			return 0;
+		else
+			return interval - s;
 	}
 }
 

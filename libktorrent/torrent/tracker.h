@@ -20,12 +20,17 @@
 #ifndef BTTRACKER_H
 #define BTTRACKER_H
 
-#include <qobject.h>
+#include <qtimer.h>
 #include "globals.h"
 #include "peerid.h"
 #include <util/sha1hash.h>
 
 class KURL;
+
+namespace kt
+{
+	class TorrentInterface;
+}
 
 namespace bt
 {
@@ -48,13 +53,13 @@ namespace bt
 		/**
 		 * Constructor.
 		 */
-		Tracker();
+		Tracker(kt::TorrentInterface* tor,const SHA1Hash & ih,const PeerID & pid);
 		virtual ~Tracker();
 
-		/// Get number of seeders.
+		/// Get the number of seeders
 		Uint32 getNumSeeders() const {return seeders;}
 
-		/// Get number of leechers.
+		/// Get the number of leechers
 		Uint32 getNumLeechers() const {return leechers;}
 		
 		/**
@@ -66,42 +71,73 @@ namespace bt
 		/**
 		 * Update all the data. If something is wrong in this function,
 		 * an Error should be thrown.
-		 * @param tc The TorrentControl
 		 * @param pman The PeerManager
 		 */
-		virtual void updateData(TorrentControl* tc,PeerManager* pman) = 0;
+		virtual void updateData(PeerManager* pman) = 0;
 		
 		/**
-		 * Set all the data needed to do a tracker update 
-		 * @param ih 
-		 * @param pid 
-		 * @param port 
-		 * @param uploaded 
-		 * @param downloaded 
-		 * @param left 
-		 * @param event 
+		 * Start the tracker.
 		 */
-		void setData(const SHA1Hash & ih,const PeerID & pid,Uint16 port,
-					 Uint32 uploaded,Uint32 downloaded,Uint32 left,
-					 const QString & event);
+		void start();
+		
+		/**
+		 * Set the interval between attempts.
+		 * @param secs Number of secs
+		 */
+		void setInterval(Uint32 secs);
 
+		/**
+		 * Get the interval between attempts in seconds.
+		 * @param secs Number of secs
+		 */
+		Uint32 getInterval() const {return interval;}
+		
+		/**
+		 * Stop the tracker.
+		 */
+		void stop();
+
+		/**
+		 * Manually update the tracker.
+		 */
+		void manualUpdate();
+
+		/**
+		 * Alert the tracker that an error occured. 
+		 */
+		void handleError();
+
+		/**
+		 * The download was completed, alert the tracker of this
+		 * fact.
+		 */
+		void completed();
+
+		/// Get the time to the next update in seconds.
+		Uint32 getTimeToNextUpdate() const;
 	signals:
 		/**
-		 * An error occured during the update.
+		 * Signal to notify of errors.
 		 */
 		void error();
-
+		
 		/**
 		 * Update succeeded data has been recieved.
 		 */
 		void dataReady();
 
+	private slots:
+		void onTimeout();
+
 	protected:
 		SHA1Hash info_hash;
 		PeerID peer_id;
-		Uint16 port;
-		Uint32 uploaded,downloaded,left,seeders,leechers;
+		Uint32 seeders,leechers;
 		QString event;
+		Uint32 interval;
+		kt::TorrentInterface* tor;
+		QTimer update_timer;
+		Uint32 time_of_last_update;
 	};
 
 }

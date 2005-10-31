@@ -59,10 +59,7 @@ namespace bt
 		stats.stopped_by_error = false;
 		stats.session_bytes_downloaded = 0;
 		stats.session_bytes_uploaded = 0;
-		
-		
 		old_datadir = QString::null;
-		tracker_update_interval = 120000;
 		stats.status = NOT_STARTED;
 		stats.autostart = true;
 		running_time_dl = running_time_ul = 0;
@@ -108,7 +105,7 @@ namespace bt
 			if (stats.completed && !comp)
 			{
 				// download has just been completed
-				updateTracker("completed");
+				tracker->completed();
 				finished(this);
 				pman->killSeeders();
 				QDateTime now = QDateTime::currentDateTime();
@@ -119,7 +116,7 @@ namespace bt
 				// restart download if necesarry
 				// when user selects that files which were previously excluded,
 				// should now be downloaded
-				updateTracker("started");
+				tracker->start();
 				time_started_dl = QDateTime::currentDateTime();
 			}
 			updateStatusMsg();
@@ -131,7 +128,7 @@ namespace bt
 			// get rid of dead Peers
 			pman->clearDeadPeers();
 
-			// we may need to update the tracker
+		/*	// we may need to update the tracker
 			if (tracker_update_timer.getElapsedSinceUpdate() >= tracker_update_interval)
 			{
 				Uint32 max_connections = PeerManager::getMaxConnections();
@@ -143,7 +140,7 @@ namespace bt
 				updateTracker();
 				tracker_update_timer.update();
 			}
-
+		*/
 			// we may need to update the choker
 			if (choker_update_timer.getElapsedSinceUpdate() >= 10000)
 			{
@@ -186,15 +183,14 @@ namespace bt
 			bt::Delete(datadir + "stopped",true);
 
 		stats.stopped_by_error = false;
-		updateTracker("started");
 		pman->start();
 		down->loadDownloads(datadir + "current_chunks");
 		loadStats();
 		stats.running = true;
 		stats.started = true;
-		tracker_update_timer.update();
 		choker_update_timer.update();
 		stats_save_timer.update();
+		tracker->start();
 		time_started_ul = time_started_dl = QDateTime::currentDateTime();
 	}
 
@@ -208,7 +204,7 @@ namespace bt
 	
 		if (stats.running)
 		{
-			updateTracker("stopped");
+			tracker->stop();
 
 			if (tmon)
 				tmon->stopped();
@@ -271,9 +267,9 @@ namespace bt
 		// create PeerManager and Tracker
 		pman = new PeerManager(*tor);
 		if (tor->getTrackerURL(true).protocol() == "udp")
-			tracker = new UDPTracker();
+			tracker = new UDPTracker(this,tor->getInfoHash(),tor->getPeerID());
 		else
-			tracker = new HTTPTracker();
+			tracker = new HTTPTracker(this,tor->getInfoHash(),tor->getPeerID());
 
 		connect(tracker,SIGNAL(error()),this,SLOT(trackerResponseError()));
 		connect(tracker,SIGNAL(dataReady()),this,SLOT(trackerResponse()));
@@ -317,54 +313,38 @@ namespace bt
 		updateStats();
 	}
 
-	void TorrentControl::setTrackerTimerInterval(Uint32 interval)
-	{
-		tracker_update_interval = interval;
-	}
-
 	void TorrentControl::trackerResponse()
 	{
 		try
 		{
-			tracker->updateData(this,pman);
+			tracker->updateData(pman);
 			updateStatusMsg();
 			stats.trackerstatus = i18n("OK");
 		}
 		catch (Error & e)
 		{
 			Out() << "Error : " << e.toString() << endl;
-			if (trackerevent != "stopped")
-			{
-				stats.trackerstatus = i18n("Invalid response");
-				updateTracker(trackerevent,false);
-			}
+			stats.trackerstatus = i18n("Invalid response");
+			tracker->handleError();
 		}
 	}
 
 	void TorrentControl::trackerResponseError()
 	{
 		Out() << "Tracker Response Error" << endl;
-		if (trackerevent != "stopped")
-		{
-			stats.trackerstatus = i18n("Unreachable");
-			updateTracker(trackerevent,false);
-		}
+		stats.trackerstatus = i18n("Unreachable");
+		tracker->handleError();
 	}
 
-	void TorrentControl::updateTracker(const QString & ev,bool last_succes)
+	void TorrentControl::updateTracker()
 	{
-		trackerevent = ev;
-		if (!tor || !tracker || !down || !up)
-			return;
+		if (stats.running)
+			tracker->manualUpdate();
+	}
 
-		KURL url = tor->getTrackerURL(last_succes);
-		last_tracker_url = url;
-		port = Globals::instance().getServer().getPortInUse();
-		tracker->setData(tor->getInfoHash(),tor->getPeerID(),port,
-		                 up->bytesUploaded(),down->bytesDownloaded(),
-		                 cman->bytesLeft(),ev);
-
-		tracker->doRequest(url);
+	KURL TorrentControl::getTrackerURL(bool prev_success) const
+	{
+		return tor->getTrackerURL(prev_success);
 	}
 
 
@@ -610,9 +590,8 @@ namespace bt
 
 	Uint32 TorrentControl::getTimeToNextTrackerUpdate() const
 	{
-		Uint32 elapsed = tracker_update_timer.getElapsedSinceUpdate();
-		if (elapsed <= tracker_update_interval)
-			return tracker_update_interval - elapsed;
+		if (tracker)
+			return tracker->getTimeToNextUpdate();
 		else
 			return 0;
 	}

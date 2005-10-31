@@ -23,6 +23,8 @@
 #include <qobject.h>
 #include <util/constants.h>
 
+class KURL;
+
 namespace bt
 {
 	class BitSet;
@@ -210,7 +212,7 @@ namespace kt
 		/// Set the monitor
 		virtual void setMonitor(MonitorInterface* tmo) = 0;
 
-		/// Get the time to the next tracker update in milliseconds.
+		/// Get the time to the next tracker update in seconds.
 		virtual Uint32 getTimeToNextTrackerUpdate() const = 0;
 
 		/// Get the number of files in a multifile torrent (0 if we do not have a multifile torrent)
@@ -222,6 +224,13 @@ namespace kt
 		 * @return The TorrentFileInterface (isNull() will be true in case of error)
 		 */
 		virtual TorrentFileInterface & getTorrentFile(Uint32 index) = 0;
+
+		/**
+		 * Get a tracker url. Used by the tracker to obtain an URL.
+		 * @param prev_success Wether or not previous tracker update was succesfull
+		 * @return An URL
+		 */
+		virtual KURL getTrackerURL(bool prev_success) const = 0;
 	signals:
 		/**
 		 * Emited when we have finished downloading.

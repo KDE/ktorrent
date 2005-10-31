@@ -29,12 +29,15 @@
 #include "torrentcontrol.h"
 #include "bdecoder.h"
 #include "peermanager.h"
+#include "server.h"
+#include "globals.h"
 
+using namespace kt;
 
 namespace bt
 {
 
-	HTTPTracker::HTTPTracker() : num_attempts(-1)
+	HTTPTracker::HTTPTracker(kt::TorrentInterface* tor,const SHA1Hash & ih,const PeerID & pid) : Tracker(tor,ih,pid)
 	{
 		active_job = 0;
 	}
@@ -43,7 +46,7 @@ namespace bt
 	HTTPTracker::~HTTPTracker()
 	{}
 
-	void HTTPTracker::updateData(TorrentControl* tc,PeerManager* pman)
+	void HTTPTracker::updateData(PeerManager* pman)
 	{
 		BDecoder dec(data,false);
 		BNode* n = dec.decode();
@@ -68,8 +71,7 @@ namespace bt
 			throw Error(i18n("Parse Error"));
 		}
 			
-		Uint32 update_time = vn->data().toInt();
-		tc->setTrackerTimerInterval(update_time * 1000);
+		setInterval(vn->data().toInt());
 
 		vn = dict->getValue("incomplete");
 		if (vn)
@@ -133,14 +135,18 @@ namespace bt
 	{	
 		// clear data array
 		data = QByteArray();
+		
+		const TorrentStats & s = tor->getStats();
 		last_url = u;
 		KURL url = u;
+
+		Uint16 port = Globals::instance().getServer().getPortInUse();;
 		
-		url.addQueryItem("peer_id",peer_id.toString());
+		url.addQueryItem("peer_id", peer_id.toString());
 		url.addQueryItem("port",QString::number(port));
-		url.addQueryItem("uploaded",QString::number(uploaded));
-		url.addQueryItem("downloaded",QString::number(downloaded));
-		url.addQueryItem("left",QString::number(left));
+		url.addQueryItem("uploaded",QString::number(s.bytes_uploaded));
+		url.addQueryItem("downloaded",QString::number(s.bytes_downloaded));
+		url.addQueryItem("left",QString::number(s.bytes_left));
 		url.addQueryItem("compact","1");
 		url.addQueryItem("numwant","100");
 
@@ -151,8 +157,14 @@ namespace bt
 		url.setEncodedPathAndQuery(epq);
 	//	Out() << "query : " << url.query() << endl;
 		Out() << "Doing tracker request to url : " << url.prettyURL() << endl;
+
+		// set the meta data
+		KIO::MetaData md;
+		md["User-Agent"] = "ktorrent";
+		md["Host"] = url.host();
+		
 		KIO::TransferJob* j = KIO::get(url,true,false);
-		j->addMetaData("User-Agent","ktorrent");
+		j->setMetaData(md);
 		
 		connect(j,SIGNAL(result(KIO::Job* )),this,SLOT(onResult(KIO::Job* )));
 		connect(j,SIGNAL(data(KIO::Job*,const QByteArray &)),

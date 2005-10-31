@@ -168,7 +168,7 @@ namespace bt
 		Uint32 total = peer_list.count() + pending.count();
 		if (!started || (max_connections > 0 && total >= max_connections))
 		{
-			delete sock;
+			sock->deleteLater();
 			return;
 		}
 

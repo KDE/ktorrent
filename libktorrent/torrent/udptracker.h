@@ -45,11 +45,11 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-		UDPTracker();
+		UDPTracker(kt::TorrentInterface* tor,const SHA1Hash & ih,const PeerID & pid);
 		virtual ~UDPTracker();
 
 		virtual void doRequest(const KURL & url);
-		virtual void updateData(TorrentControl* tc,PeerManager* pman);
+		virtual void updateData(PeerManager* pman);
 
 	private slots:
 		void onConnTimeout();

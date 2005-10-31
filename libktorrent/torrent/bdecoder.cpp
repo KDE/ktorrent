@@ -209,7 +209,7 @@ namespace bt
 		vn->setLength(pos - off);
 		if (verbose)
 		{
-			if (arr.size() < 50)
+			if (arr.size() < 200)
 				Out() << "STRING " << QString(arr) << endl;
 			else
 				Out() << "STRING " << "really long string" << endl;

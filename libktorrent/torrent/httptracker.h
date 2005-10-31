@@ -41,12 +41,12 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-		HTTPTracker();
+		HTTPTracker(kt::TorrentInterface* tor,const SHA1Hash & ih,const PeerID & pid);
 		virtual ~HTTPTracker();
 
 		
 		virtual void doRequest(const KURL & url);
-		virtual void updateData(TorrentControl* tc,PeerManager* pman);
+		virtual void updateData(PeerManager* pman);
 		
 	private slots:
 		void onResult(KIO::Job* j);

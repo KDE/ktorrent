@@ -24,8 +24,10 @@
 #include "udptracker.h"
 #include "torrentcontrol.h"
 #include "globals.h"
+#include "server.h"
 #include "udptrackersocket.h"
 
+using namespace kt;
 
 namespace bt
 {
@@ -34,7 +36,7 @@ namespace bt
 	Uint32 UDPTracker::num_instances = 0;
 	
 
-	UDPTracker::UDPTracker() : n(0)
+	UDPTracker::UDPTracker(kt::TorrentInterface* tor,const SHA1Hash & ih,const PeerID & pid) : Tracker(tor,ih,pid),n(0)
 	{
 		num_instances++;
 		if (!socket)
@@ -173,16 +175,18 @@ namespace bt
 			ev = COMPLETED;
 		else if (event == "stopped")
 			ev = STOPPED;
-		
+
+		const TorrentStats & s = tor->getStats();
+		Uint16 port = Globals::instance().getServer().getPortInUse();
 		Uint8 buf[98];
 		WriteInt64(buf,0,connection_id);
 		WriteInt32(buf,8,ANNOUNCE);
 		WriteInt32(buf,12,transaction_id);
 		memcpy(buf+16,info_hash.getData(),20);
 		memcpy(buf+36,peer_id.data(),20);
-		WriteInt64(buf,56,downloaded);
-		WriteInt64(buf,64,left);
-		WriteInt64(buf,72,uploaded);
+		WriteInt64(buf,56,s.bytes_downloaded);
+		WriteInt64(buf,64,s.bytes_left);
+		WriteInt64(buf,72,s.bytes_uploaded);
 		WriteInt32(buf,80,ev);
 		WriteUint32(buf,84,0);
 		WriteInt32(buf,88,0);// Wtf is the bloody key ?
@@ -198,9 +202,9 @@ namespace bt
 		sendConnect();
 	}
 
-	void UDPTracker::updateData(TorrentControl* tc,PeerManager* pman)
+	void UDPTracker::updateData(PeerManager* pman)
 	{
-		tc->setTrackerTimerInterval(interval*1000);
+		setInterval(interval);
 
 		QValueList<PotentialPeer>::iterator i = ppeers.begin();
 		while (i != ppeers.end())

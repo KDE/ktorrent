@@ -98,6 +98,8 @@ namespace bt
 		 */
 		void rollback();
 
+		KURL getTrackerURL(bool prev_success) const;
+
 		/// Get the data directory of this torrent
 		QString getDataDir() const {return outputdir;}
 
@@ -114,12 +116,6 @@ namespace bt
 
 		/// Return an error message (only valid when status == ERROR).
 		QString getErrorMessage() const {return error_msg;}
-		
-		/**
-		 * Set the interval between two tracker updates.
-		 * @param interval The interval in milliseconds
-		 */
-		void setTrackerTimerInterval(Uint32 interval);
 		
 		/**
 		 * Get the download running time of this torrent in seconds
@@ -141,6 +137,11 @@ namespace bt
 		**/
 		bool readyForPreview(int start_chunk = 0, int end_chunk = 1);
 
+		/// Get the time to the next tracker update in seconds.
+		Uint32 getTimeToNextTrackerUpdate() const;
+
+		/// Get a short error message
+		QString getShortErrorMessage() const {return short_error_msg;}
 		
 		virtual Uint32 getNumFiles() const;
 		virtual kt::TorrentFileInterface & getTorrentFile(Uint32 index);
@@ -165,13 +166,9 @@ namespace bt
 		 * Update the tracker, this should normally handled internally.
 		 * We leave it public so that the user can do a manual announce.
 		 */
-		void updateTracker() {updateTracker(QString::null);}
+		void updateTracker();
 
-		/// Get the time to the next tracker update in milliseconds.
-		Uint32 getTimeToNextTrackerUpdate() const;
-
-		/// Get a short error message
-		QString getShortErrorMessage() const {return short_error_msg;}
+	
 		
 	private slots:
 		void onNewPeer(Peer* p);
@@ -208,14 +205,12 @@ namespace bt
 		Uploader* up;
 		Choker* choke;
 		
-		Timer tracker_update_timer,choker_update_timer,stats_save_timer;
-		Uint32 tracker_update_interval;
+		Timer choker_update_timer,stats_save_timer;
 		
-		QString datadir,old_datadir,outputdir,trackerevent;
+		QString datadir,old_datadir,outputdir;
 		QString error_msg,short_error_msg;
 		Uint16 port;
 		kt::MonitorInterface* tmon;
-		KURL last_tracker_url;
 		QDateTime time_started_dl, time_started_ul;
 		unsigned long running_time_dl, running_time_ul;
 		Uint64 prev_bytes_dl, prev_bytes_ul;

@@ -276,7 +276,7 @@ namespace kt
 		if (s.running)
 		{
 			QTime t;
-			t = t.addMSecs(curr_tc->getTimeToNextTrackerUpdate());
+			t = t.addSecs(curr_tc->getTimeToNextTrackerUpdate());
 			m_tracker_update_time->setText(t.toString("mm:ss"));
 		}
 		else
