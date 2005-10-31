@@ -155,16 +155,26 @@ namespace bt
 			url.addQueryItem("event",event);
 		QString epq = url.encodedPathAndQuery();
 		epq += "&info_hash=" + info_hash.toURLString();
+
+
+//   warning, this debug contains the password
+//              kdDebug(14140) << k_funcinfo << "Auth request: " << authRequest << endl;
+
 		url.setEncodedPathAndQuery(epq);
 	//	Out() << "query : " << url.query() << endl;
 		Out() << "Doing tracker request to url : " << url.prettyURL() << endl;
 
-		// set the meta data
+		
+		
 		KIO::MetaData md;
-		md["User-Agent"] = "ktorrent";
-		md["Host"] = url.host();
+		md["UserAgent"] = "ktorrent";
+		md["SendLanguageSettings"] = "false";
 		
 		KIO::TransferJob* j = KIO::get(url,true,false);
+		// set the meta data
+	//	j->addMetaData("customHTTPHeader",  "User-Agent=ktorrent\r\n");
+	//	j->addMetaData("SendLanguageSettings", "false");
+	//	j->addMetaData("PropagateHttpHeader", "true");
 		j->setMetaData(md);
 		
 		connect(j,SIGNAL(result(KIO::Job* )),this,SLOT(onResult(KIO::Job* )));
