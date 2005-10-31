@@ -7,7 +7,7 @@ Changelog since v1.1 (October 10th, 2005)
 - Added User-Agent string to HTTP header in HTTPTracker
 - Fixed bug with QDateTime in runningDL() when KT runs over 24h
 - Fixed issue with initialization of stats in TorrentControl
-- If tracker is down at the moment KT keeps trying to get connected
+- If tracker is down at the moment KT keeps trying to get connected (after 5 failed attempts, we use a 30 second delay)
 - Uploading is now a lot fairer (114390)
 - Added warmup mode, which gives KT's downloads a flying start.
 - KTorrentView,PeerView and ChunkDownloadView now remeber their layout (fixes 114781)
@@ -28,3 +28,4 @@ Changelog since v1.1 (October 10th, 2005)
 	-114390
 	-114781
 	-114904
+	-115442
