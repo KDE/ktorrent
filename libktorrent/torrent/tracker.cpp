@@ -32,7 +32,10 @@ namespace bt
 		peer_id = id;
 		interval = 120;
 		seeders = leechers = 0;
+		num_failed_attempts = 0;
 		connect(&update_timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
+		connect(&error_update_timer,SIGNAL(timeout()),this,SLOT(onErrorTimeout()));
+		error_mode = false;
 	}
 
 
@@ -62,15 +65,43 @@ namespace bt
 
 	void Tracker::onTimeout()
 	{
-		event = QString::null;
-		doRequest(tor->getTrackerURL(true));
+		if (!error_mode)
+		{
+			event = QString::null;
+			doRequest(tor->getTrackerURL(true));
+			time_of_last_update = GetCurrentTime();
+		}
+	}
+
+	void Tracker::onErrorTimeout()
+	{
+		doRequest(tor->getTrackerURL(false));
 		time_of_last_update = GetCurrentTime();
+	}
+
+	void Tracker::updateOK()
+	{
+		error_mode = false;
+		num_failed_attempts = 0;
+		error_update_timer.stop();
 	}
 
 	void Tracker::handleError()
 	{
 		if (event != "stopped")
-			doRequest(tor->getTrackerURL(true));
+		{
+			error_mode = true;
+			num_failed_attempts++;
+			// first try 5 times in a row
+			// after 5 attempts switch to a 30 second delay
+			if (num_failed_attempts < 5)
+			{
+				doRequest(tor->getTrackerURL(false));
+				time_of_last_update = GetCurrentTime();
+			}
+			else
+				error_update_timer.start(30*1000,true);
+		}
 	}
 
 	void Tracker::manualUpdate()
@@ -88,10 +119,20 @@ namespace bt
 	Uint32 Tracker::getTimeToNextUpdate() const
 	{
 		Uint32 s = (GetCurrentTime() - time_of_last_update) / 1000;
-		if (s > interval)
-			return 0;
+		if (error_mode)
+		{
+			if (s > 30)
+				return 0;
+			else
+				return 30 - s;
+		}
 		else
-			return interval - s;
+		{
+			if (s > interval)
+				return 0;
+			else
+				return interval - s;
+		}
 	}
 }
 

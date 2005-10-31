@@ -128,6 +128,9 @@ namespace bt
 
 	private slots:
 		void onTimeout();
+		void onErrorTimeout();
+	protected:
+		void updateOK();
 
 	protected:
 		SHA1Hash info_hash;
@@ -136,8 +139,10 @@ namespace bt
 		QString event;
 		Uint32 interval;
 		kt::TorrentInterface* tor;
-		QTimer update_timer;
+		QTimer update_timer,error_update_timer;
 		Uint32 time_of_last_update;
+		Uint32 num_failed_attempts;
+		bool error_mode;
 	};
 
 }

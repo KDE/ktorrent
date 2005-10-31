@@ -213,6 +213,7 @@ namespace bt
 			i++;
 		}
 		ppeers.clear();
+		updateOK();
 	}
 
 	

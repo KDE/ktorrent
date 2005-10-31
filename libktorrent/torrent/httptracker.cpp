@@ -129,6 +129,7 @@ namespace bt
 			}
 		}
 		delete n;
+		updateOK();
 	}
 
 	void HTTPTracker::doRequest(const KURL & u)
