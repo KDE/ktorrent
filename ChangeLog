@@ -1,0 +1,30 @@
+Changelog since v1.1 (October 10th, 2005)
+****************************************************************************************
+- KT now has a new directory structure.
+- Created plugin system for KT
+- Search feature is modified to be plugin
+- InfoWidget is also plugin now
+- Added User-Agent string to HTTP header in HTTPTracker
+- Fixed bug with QDateTime in runningDL() when KT runs over 24h
+- Fixed issue with initialization of stats in TorrentControl
+- If tracker is down at the moment KT keeps trying to get connected
+- Uploading is now a lot fairer (114390)
+- Added warmup mode, which gives KT's downloads a flying start.
+- KTorrentView,PeerView and ChunkDownloadView now remeber their layout (fixes 114781)
+- Fixed fileops.cpp
+- Files now get saved immediatly to their final location.
+- Fixed 114904 : by switching to KIO::get
+- Added IP filter plugin
+- Added the graphical plugin manager.
+- KTorrent now deletes data from incomplete torrents
+- Switched to KNetwork classes
+- Added option to paste URL to .torrent files
+
+- Fixed BUG: 
+	-114103
+	-113155
+	-114156
+	-114373
+	-114390
+	-114781
+	-114904
