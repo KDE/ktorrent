@@ -20,90 +20,131 @@
 
 #include <kurl.h>
 #include <klocale.h>
-#include <qtextbrowser.h>
+#include <qtextstream.h>
+#include <qfile.h>
+#include <qptrlist.h>
+#include <iostream>
+#include <interfaces/logmonitorinterface.h>
 #include "log.h"
 #include "error.h"
 
+using namespace kt;
+
 namespace bt
 {
-	Log::Log() : out(0),to_cout(false),widget(0),wo(0)
+	class Log::Private
 	{
-		out = new QTextStream();
+	public:
+		QTextStream* out;
+		QFile fptr;
+		bool to_cout;
+		QPtrList<LogMonitorInterface> monitors;
+		QString tmp;
+	public:
+		Private() : out(0),to_cout(false)
+		{
+			out = new QTextStream();
+		}
+
+		~Private()
+		{
+			delete out;
+		}
+
+		void setOutputFile(const QString & file)
+		{
+			if (fptr.isOpen())
+				fptr.close();
+
+			fptr.setName(file);
+			if (!fptr.open(IO_WriteOnly))
+				throw Error(i18n("Cannot open log file %1").arg(file));
+
+			out->setDevice(&fptr);
+		}
+
+		void write(const QString & line)
+		{
+			*out << line;
+			if (to_cout)
+				std::cout << line.local8Bit();
+
+			tmp += line;
+		}
+
+		void endline()
+		{
+			*out << ::endl;
+			if (to_cout)
+				std::cout << std::endl;;
+			
+			if (monitors.count() > 0)
+			{
+				QPtrList<LogMonitorInterface>::iterator i = monitors.begin();
+				while (i != monitors.end())
+				{
+					kt::LogMonitorInterface* lmi = *i;
+					lmi->message(tmp);
+					i++;
+				}
+			}
+			tmp = "";
+		}
+	};
+	
+	Log::Log() 
+	{
+		priv = new Private();
 	}
 	
 	
 	Log::~Log()
 	{
-		delete out;
-		delete wo;
+		delete priv;
 	}
 	
 	
 	void Log::setOutputFile(const QString & file)
 	{
-		if (fptr.isOpen())
-			fptr.close();
-
-		fptr.setName(file);
-		if (!fptr.open(IO_WriteOnly))
-			throw Error(i18n("Cannot open log file %1").arg(file));
-
-		out->setDevice(&fptr);
+		priv->setOutputFile(file);
 	}
 
-	void Log::setOutputWidget(QTextBrowser* widget)
+	void Log::addMonitor(kt::LogMonitorInterface* m)
 	{
-		this->widget = widget;
-		if (wo)
-		{
-			delete wo;
-			wo = 0;
-		}
-
-		if (widget)
-			wo = new QTextOStream(&tmp);
+		priv->monitors.append(m);
 	}
-	
+
+	void Log::removeMonitor(kt::LogMonitorInterface* m)
+	{
+		priv->monitors.remove(m);
+	}
+
+	void Log::setOutputToConsole(bool on)
+	{
+		priv->to_cout = on;
+	}
+
 	Log & endl(Log & lg)
 	{
-		*lg.out << ::endl;
-		if (lg.to_cout)
-			std::cout << std::endl;
-
-		if (lg.widget)
-		{
-			lg.widget->append(lg.tmp);
-			lg.tmp = "";
-			delete lg.wo;
-			lg.wo = new QTextOStream(&lg.tmp);
-		}
+		lg.priv->endline();
 		return lg;
 	}
 
 	Log & Log::operator << (const KURL & url)
 	{
-		*out << url.prettyURL();
-		if (to_cout)
-			std::cout << url.prettyURL().local8Bit();
-		
-		if (widget)
-		{
-			*wo << url.prettyURL();
-		}
+		priv->write(url.prettyURL());
 		return *this;
 	}
 
 	Log & Log::operator << (const QString & s)
 	{
-		*out << s;
-		if (to_cout)
-			std::cout << s.local8Bit();
+		priv->write(s);
+		return *this;
+	}
 
-		if (widget)
-		{
-			*wo << s;
-		}
-		
+	Log & Log::operator << (const char* s)
+	{
+		priv->write(s);
 		return *this;
 	}
 

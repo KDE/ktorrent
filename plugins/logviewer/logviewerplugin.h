@@ -17,37 +17,31 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <stdlib.h>
-#include <qstring.h>
-#include <util/log.h>
-#include <util/error.h>
-#include <torrent/globals.h>
-#include <torrent/torrent.h>
+#ifndef KTLOGVIEWERPLUGIN_H
+#define KTLOGVIEWERPLUGIN_H
 
-using namespace bt;
+#include <interfaces/plugin.h>
 
-void help()
+namespace kt
 {
-	Out() << "Usage : kttorinfo <torrent>" << endl;
-	exit(0);
+	class LogViewer;
+
+	/**
+	@author Joris Guisson
+	*/
+	class LogViewerPlugin : public Plugin
+	{
+		Q_OBJECT
+	public:
+		LogViewerPlugin(QObject* parent, const char* qt_name, const QStringList& args);
+		virtual ~LogViewerPlugin();
+
+		virtual void load();
+		virtual void unload();
+	private:
+		LogViewer* lv;
+	};
+
 }
 
-int main(int argc,char** argv)
-{
-	Globals::instance().setDebugMode(true);
-	Globals::instance().initLog("kttorinfo.log");
-	if (argc < 2)
-		help();
-	
-	try
-	{
-		Torrent tor;
-		tor.load(argv[1],true);
-		tor.debugPrintInfo();
-	}
-	catch (Error & e)
-	{
-		Out() << "Error : " << e.toString() << endl;
-	}
-	return 0;
-}
+#endif

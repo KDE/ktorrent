@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <time.h>
 #include <stdlib.h>
 #include <util/array.h>
 #include <qsocketdevice.h>

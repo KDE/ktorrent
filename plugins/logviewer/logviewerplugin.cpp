@@ -17,24 +17,54 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef LOGVIEWER_H
-#define LOGVIEWER_H
-
-#include <ktextbrowser.h>
+#include <kgenericfactory.h>
+#include <kglobal.h>
+#include <klocale.h>
+#include <kiconloader.h>
 #include <util/log.h>
+#include <torrent/globals.h>
+#include <interfaces/guiinterface.h>
+#include "logviewerplugin.h"
+#include "logviewer.h"
 
-/**
- * @author Joris Guisson
- */
-class LogViewer : public KTextBrowser
+#define NAME "logviewerplugin"
+#define AUTHOR "Joris Guisson"
+#define EMAIL "joris.guisson@gmail.com"
+
+using namespace bt;
+
+K_EXPORT_COMPONENT_FACTORY(ktlogviewerplugin,KGenericFactory<kt::LogViewerPlugin>("ktlogviewerplugin"))
+
+namespace kt
 {
-	Q_OBJECT
-public:
-	LogViewer(bt::Log & log,QWidget *parent = 0, const char *name = 0);
-	virtual ~LogViewer();
 
-private:
-	bt::Log & log;
-};
+	LogViewerPlugin::LogViewerPlugin(QObject* parent, const char* qt_name, const QStringList& args)
+	: Plugin(parent, qt_name, args, NAME, AUTHOR, EMAIL,i18n("KTorrent's log viewer plugin"))
+	{
+		lv = 0;
+	}
 
-#endif
+
+	LogViewerPlugin::~LogViewerPlugin()
+	{}
+
+
+	void LogViewerPlugin::load()
+	{
+		lv = new LogViewer();
+		this->getGUI()->addWidgetInView(lv,BELOW);
+		bt::Log & lg = Out();
+		lg.addMonitor(lv);
+	}
+
+	void LogViewerPlugin::unload()
+	{
+		this->getGUI()->removeWidgetFromView(lv);
+		bt::Log & lg = Out();
+		lg.removeMonitor(lv);
+		delete lv;
+		lv = 0;
+	}
+
+}
+#include "logviewerplugin.moc"

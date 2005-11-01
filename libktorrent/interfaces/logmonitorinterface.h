@@ -17,20 +17,34 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include "logviewer.h"
+#ifndef KTLOGMONITORINTERFACE_H
+#define KTLOGMONITORINTERFACE_H
 
+class QString;
 
-LogViewer::LogViewer(bt::Log & log,QWidget *parent, const char *name)
-	: KTextBrowser(parent, name),log(log)
+namespace kt
 {
-	log.setOutputWidget(this);
+
+	/**
+	 * @author Joris Guisson
+	 * @brief Interface for classes who which to recieve which log messages are printed
+	 *
+	 * This class is an interface for all classes which want to know,
+	 * what is written to the log.
+	*/
+	class LogMonitorInterface
+	{
+	public:
+		LogMonitorInterface();
+		virtual ~LogMonitorInterface();
+
+		/**
+		 * A line was written to the log file.
+		 * @param line The line
+		 */
+		virtual void message(const QString & line) = 0;
+	};
+
 }
 
-
-LogViewer::~LogViewer()
-{
-	log.setOutputWidget(0);
-}
-
-
-#include "logviewer.moc"
+#endif

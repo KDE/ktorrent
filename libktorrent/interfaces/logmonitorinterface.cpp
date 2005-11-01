@@ -17,37 +17,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <stdlib.h>
-#include <qstring.h>
-#include <util/log.h>
-#include <util/error.h>
-#include <torrent/globals.h>
-#include <torrent/torrent.h>
+#include "logmonitorinterface.h"
 
-using namespace bt;
-
-void help()
+namespace kt
 {
-	Out() << "Usage : kttorinfo <torrent>" << endl;
-	exit(0);
-}
 
-int main(int argc,char** argv)
-{
-	Globals::instance().setDebugMode(true);
-	Globals::instance().initLog("kttorinfo.log");
-	if (argc < 2)
-		help();
-	
-	try
-	{
-		Torrent tor;
-		tor.load(argv[1],true);
-		tor.debugPrintInfo();
-	}
-	catch (Error & e)
-	{
-		Out() << "Error : " << e.toString() << endl;
-	}
-	return 0;
+	LogMonitorInterface::LogMonitorInterface()
+	{}
+
+
+	LogMonitorInterface::~LogMonitorInterface()
+	{}
+
+
 }

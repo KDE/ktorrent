@@ -19,11 +19,12 @@
  ***************************************************************************/
 
 #include "config.h"
-
+#include <klocale.h>
 #include <string.h>
 #include <errno.h>
 #include <stdio.h>
 #include "file.h"
+#include "error.h"
 
 namespace bt
 {
@@ -39,6 +40,7 @@ namespace bt
 	
 	bool File::open(const QString & file,const QString & mode)
 	{
+		this->file = file;
 		if (fptr)
 			close();
 
@@ -66,7 +68,13 @@ namespace bt
 		if (!fptr)
 			return 0;
 
-		return fwrite(buf,1,size,fptr);
+		Uint32 ret = fwrite(buf,1,size,fptr);
+		if (ferror(fptr))
+		{
+			clearerr(fptr);
+			throw Error(i18n("Error writing to %1").arg(file));
+		}
+		return ret;
 	}
 	
 	Uint32 File::read(void* buf,Uint32 size)
@@ -74,7 +82,13 @@ namespace bt
 		if (!fptr)
 			return 0;
 
-		return fread(buf,1,size,fptr);
+		Uint32 ret = fread(buf,1,size,fptr);
+		if (ferror(fptr))
+		{
+			clearerr(fptr);
+			throw Error(i18n("Error reading from %1").arg(file));
+		}
+		return ret;
 	}
 
 	Uint64 File::seek(SeekPos from,Int64 num)

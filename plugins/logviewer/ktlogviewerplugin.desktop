@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=LogViewerPlugin
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktlogviewerplugin

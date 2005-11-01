@@ -3,9 +3,9 @@ METASOURCES = AUTO
 libinterfaces_la_LDFLAGS = $(all_libraries)
 noinst_LTLIBRARIES = libinterfaces.la
 noinst_HEADERS = plugin.h coreinterface.h guiinterface.h torrentinterface.h \
-				monitorinterface.h chunkdownloadinterface.h peerinterface.h torrentfileinterface.h \
-		filetreeitem.h filetreediritem.h
+					monitorinterface.h chunkdownloadinterface.h peerinterface.h torrentfileinterface.h \
+			filetreeitem.h filetreediritem.h logmonitorinterface.h
 libinterfaces_la_SOURCES = plugin.cpp coreinterface.cpp guiinterface.cpp \
-							prefpageinterface.cpp torrentinterface.cpp monitorinterface.cpp chunkdownloadinterface.cpp \
-				peerinterface.cpp torrentfileinterface.cpp filetreeitem.cpp filetreediritem.cpp \
-	functions.cpp
+								prefpageinterface.cpp torrentinterface.cpp monitorinterface.cpp chunkdownloadinterface.cpp \
+					peerinterface.cpp torrentfileinterface.cpp filetreeitem.cpp filetreediritem.cpp \
+		functions.cpp logmonitorinterface.cpp

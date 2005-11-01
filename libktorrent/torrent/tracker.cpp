@@ -52,8 +52,9 @@ namespace bt
 		
 	void Tracker::setInterval(Uint32 secs)
 	{
+		if (interval != secs)
+			update_timer.changeInterval(1000*secs);
 		interval = secs;
-		update_timer.changeInterval(1000*secs);
 	}
 		
 	void Tracker::stop()

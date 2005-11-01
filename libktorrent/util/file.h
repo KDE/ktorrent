@@ -36,6 +36,7 @@ namespace bt
 	class File
 	{
 		FILE* fptr;
+		QString file;
 	public:
 		/**
 		 * Constructor.
@@ -66,7 +67,8 @@ namespace bt
 		void flush();
 		
 		/**
-		 * Write a bunch of data.
+		 * Write a bunch of data. If anything goes wrong
+		 * an Error will be thrown.
 		 * @param buf The data
 		 * @param size Size of the data
 		 * @return The number of bytes written
@@ -74,7 +76,8 @@ namespace bt
 		Uint32 write(const void* buf,Uint32 size);
 		
 		/**
-		 * Read a bunch of data
+		 * Read a bunch of data. If anything goes wrong
+		 * an Error will be thrown.
 		 * @param buf The buffer to store the data
 		 * @param size Size of the buffer
 		 * @return The number of bytes read

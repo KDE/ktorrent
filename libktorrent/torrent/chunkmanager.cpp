@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <algorithm>
 #include <util/file.h>
 #include "chunkmanager.h"
 #include "torrent.h"

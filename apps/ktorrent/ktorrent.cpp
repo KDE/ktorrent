@@ -67,7 +67,6 @@
 #include "pref.h"
 #include "settings.h"
 #include "trayicon.h"
-#include "logviewer.h"
 #include "ktorrentdcop.h"
 #include "torrentcreatordlg.h"
 #include "pastedialog.h"
@@ -132,7 +131,7 @@ KTorrent::KTorrent()
 	setCentralWidget(m_exp);
 	if (debug)
 	{
-		m_exp->expand(new LogViewer(bt::Globals::instance().getLog(),0),kt::BELOW);
+		//m_exp->expand(new LogViewer(bt::Globals::instance().getLog(),0),kt::BELOW);
 	}
 
 	m_dcop = new KTorrentDCOP(this);

@@ -99,7 +99,7 @@ KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seedin
 	}
 
 	pman = new kt::PluginManager(this,gui);
-	pman->loadConfigFile(data_dir + "plugins");
+	pman->loadConfigFile(KGlobal::dirs()->saveLocation("data","ktorrent") + "plugins");
 	pman->loadPluginList();
 }
 
@@ -303,7 +303,7 @@ void KTorrentCore::setKeepSeeding(bool ks)
 
 void KTorrentCore::onExit()
 {
-	pman->saveConfigFile(data_dir + "plugins");
+	pman->saveConfigFile(KGlobal::dirs()->saveLocation("data","ktorrent") + "plugins");
 	downloads.clear();
 	pman->unloadAll();
 }

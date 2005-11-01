@@ -19,7 +19,7 @@ ktorrent_LDADD = $(LIB_KPARTS) ../../libktorrent/libktorrent.la $(LIB_KFILE) \
 # which sources should be compiled for ktorrent
 ktorrent_SOURCES = dcopinterface.skel settings.kcfgc main.cpp ktorrent.cpp \
 	ktorrentview.cpp pref.cpp ktorrentviewitem.cpp ktorrentcore.cpp downloadpref.ui \
-	trayicon.cpp logviewer.cpp ktorrentdcop.cpp ktorrentapp.cpp torrentcreatordlg.cpp \
+	trayicon.cpp ktorrentdcop.cpp ktorrentapp.cpp torrentcreatordlg.cpp \
 	torrentcreatordlg.h torrentcreatordlgbase.ui fileselectdlgbase.ui fileselectdlg.cpp \
 	generalpref.ui pastedlgbase.ui pastedialog.cpp
 
@@ -28,8 +28,7 @@ kde_kcfg_DATA = ktorrent.kcfg
 
 # these are the headers for your project
 noinst_HEADERS = ktorrent.h ktorrentview.h pref.h ktorrentviewitem.h \
-	ktorrentcore.h trayicon.h logviewer.h dcopinterface.h ktorrentdcop.h fileselectdlg.h \
-	pastedialog.h
+	ktorrentcore.h trayicon.h dcopinterface.h ktorrentdcop.h fileselectdlg.h pastedialog.h
 
 # client stuff
 

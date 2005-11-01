@@ -21,14 +21,17 @@
 #ifndef JORISLOG_H
 #define JORISLOG_H
 
-#include <qtextstream.h>
-#include <qfile.h>
-#include <iostream>
+
 #include "constants.h"
 
-
+class QString;
 class KURL;
-class QTextBrowser;
+
+
+namespace kt
+{
+	class LogMonitorInterface;
+}
 
 namespace bt
 {
@@ -44,17 +47,14 @@ namespace bt
 	* By default all messages will also be printed on the standard output. This
 	* can be turned down using the @a setOutputToConsole function.
 	*
-	* There is also the possibility to print all the messages to a QTextBrowser
-	* widget.
+	* There is also the possibility to monitor what is written to the log using
+	* the LogMonitorInterface class.
 	*/
 	class Log 
 	{
-		QTextStream* out;
-		QFile fptr;
-		bool to_cout;
-		QTextBrowser* widget;
-		QString tmp;
-		QTextOStream* wo;
+		class Private;
+		
+		Private* priv;
 	public:
 		/**
 		* Constructor.
@@ -71,14 +71,19 @@ namespace bt
 		* output.
 		* @param on Enable or disable
 		*/
-		void setOutputToConsole(bool on) {to_cout = on;}
+		void setOutputToConsole(bool on);
 
 		/**
-		 * Set the output widget. This widget
-		 * will print out everything which gets printed to the log.
-		 * @param widget The QTextBrowser
+		 * Add a log monitor.
+		 * @param m The log monitor
 		 */
-		void setOutputWidget(QTextBrowser* widget);
+		void addMonitor(kt::LogMonitorInterface* m);
+
+		/**
+		 * Remove a log monitor.
+		 * @param m The log monitor
+		 */
+		void removeMonitor(kt::LogMonitorInterface* m);
 		
 		/**
 		* Set the output logfile.
@@ -88,26 +93,15 @@ namespace bt
 		void setOutputFile(const QString & file);
 		
 		/**
-		* Write something to the log file.
-		* Anything which can be passed to QTextStream using
-		* the << operator is allowed.
+		* Write a number to the log file.
+		* Anything which can be passed to QString::number will do.
 		* @param val The value
 		* @return This Log
 		*/
 		template <class T>
 		Log & operator << (T val)
 		{
-			*out << val;
-			if (to_cout)
-			{
-				std::cout << val;
-			}
-			
-			if (widget)
-			{
-				*wo << val;
-			}
-			return *this;
+			return operator << (QString::number(val));
 		}
 		
 		/**
@@ -119,6 +113,14 @@ namespace bt
 		{
 			return func(*this);
 		}
+
+		
+		/**
+		 * Output a QString to the log.
+		 * @param s The QString
+		 * @return This Log
+		 */
+		Log & operator << (const char* s);
 
 		/**
 		 * Output a QString to the log.
