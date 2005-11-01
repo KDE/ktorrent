@@ -75,7 +75,7 @@ namespace bt
 		Uint32 allowed_bytes = (Uint32)floor(max_bytes_per_sec * secs);
 		timer.update();
 
-		while (allowed_bytes > 0 && up_queue.count() != 0)
+		while ((allowed_bytes > 0 || max_bytes_per_sec == 0) && up_queue.count() != 0)
 		{
 			// get the first
 			PacketWriter* pw = up_queue.first();
@@ -86,7 +86,9 @@ namespace bt
 			if (num_want > MAX_PIECE_LEN)
 				num_want = MAX_PIECE_LEN;
 			// make sure we don't send more then we're allowwed
-			if (num_want > allowed_bytes)
+			// we however disregard this if we are allowed to download
+			// at full speed
+			if (num_want > allowed_bytes && max_bytes_per_sec > 0)
 				num_want = allowed_bytes;
 
 			num_want = pw->uploadUnsentBytes(num_want);
@@ -97,7 +99,8 @@ namespace bt
 				up_queue.removeFirst();
 				vl.pop_front();
 			}
-			allowed_bytes -= num_want;
+			if (max_bytes_per_sec > 0)
+				allowed_bytes -= num_want;
 		}
 	}
 }
