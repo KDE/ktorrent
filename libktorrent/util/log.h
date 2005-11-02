@@ -23,8 +23,8 @@
 
 
 #include "constants.h"
+#include <qstring.h>
 
-class QString;
 class KURL;
 
 
