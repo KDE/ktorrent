@@ -37,7 +37,7 @@ namespace kt
 		LEFT, ///< New widgets will be added to the left of the old
 		RIGHT, ///< New widgets will be added to the right of the old
 		ABOVE, ///< New widgets will be added above the old
-		BELOW, ///< New widgets will be added below the old
+		BELOW  ///< New widgets will be added below the old
 	};
 
 	/**
