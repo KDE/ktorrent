@@ -1,9 +1,11 @@
 [Desktop Entry]
 Name=IPFilterPlugin
+Name[br]=Lugent Sil IP
 Name[pt]=Filtro de IPs
 Name[pt_BR]=Filtro de IPs
 Name[sv]=IP-filterinsticksprogram
 Comment=IP filter plugin for KTorrent
+Comment[br]=Lugent sil IP evit KTorrentt
 Comment[pt]='Plugin' de filtragem de IPs do KTorrent
 Comment[pt_BR]='Plugin' de filtragem de IPs do KTorrent
 Comment[sv]=IP-filterinsticksprogram för Ktorrent
