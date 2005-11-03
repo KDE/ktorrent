@@ -42,11 +42,15 @@ namespace debug
 		virtual ~CacheChecker();
 
 		void loadIndex(const QString & index_file);
+		void fixIndex();
+		bool foundFailedChunks() const {return failed_chunks.size() > 0;}
 		
 		virtual void check(const QString & cache,const QString & index) = 0;
 	protected:
 		bt::Torrent & tor;
+		QString index_file;
 		std::set<bt::Uint32>  downloaded_chunks;
+		std::set<bt::Uint32> failed_chunks;
 	};
 
 	

@@ -141,6 +141,13 @@ namespace bt
 		 */
 		void onExcluded(Uint32 from,Uint32 to);
 		
+	signals:
+		/**
+		 * An error occured while we we're writing or reading from disk.
+		 * @param msg Message
+		 */
+		void ioError(const QString & msg);
+		
 	private:
 		void downloadFrom(PeerDownloader* pd);
 		void normalUpdate();

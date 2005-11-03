@@ -174,6 +174,7 @@ namespace bt
 		void onNewPeer(Peer* p);
 		void onPeerRemoved(Peer* p);
 		void doChoking();
+		void onIOError(const QString & msg);
 
 		/**
 		 * An error occured during the update of the tracker.

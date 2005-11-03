@@ -177,7 +177,17 @@ void KTorrentCore::start(kt::TorrentInterface* tc)
 	if (start_tc)
 	{
 		Out() << "Starting download" << endl;
-		tc->start();
+		try
+		{
+			tc->start();
+		}
+		catch (bt::Error & err)
+		{
+			QString msg =
+				i18n("Error starting torrent %1 : %2")
+					.arg(s.torrent_name).arg(err.toString());
+			KMessageBox::error(0,msg,i18n("Error"));
+		}
 	}
 
 }
@@ -187,7 +197,17 @@ void KTorrentCore::stop(TorrentInterface* tc)
 	const TorrentStats & s = tc->getStats();
 	if (s.started && s.running)
 	{
-		tc->stop(false);
+		try
+		{
+			tc->stop(false);
+		}
+		catch (bt::Error & err)
+		{
+			QString msg =
+					i18n("Error stopping torrent %1 : %2")
+					.arg(s.torrent_name).arg(err.toString());
+			KMessageBox::error(0,msg,i18n("Error"));
+		}
 	}
 }
 

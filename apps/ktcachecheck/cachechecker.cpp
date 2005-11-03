@@ -40,6 +40,7 @@ namespace debug
 
 	void CacheChecker::loadIndex(const QString & index_file)
 	{
+		this->index_file = index_file;
 		File fptr;
 		if (!fptr.open(index_file,"rb"))
 			throw Error("Can't open index file : " + fptr.errorString());
@@ -54,6 +55,40 @@ namespace debug
 				fptr.read(&hdr,sizeof(NewChunkHeader));
 				downloaded_chunks.insert(hdr.index);
 			}
+		}
+	}
+
+	struct ChunkHeader
+	{
+		unsigned int index; // the Chunks index
+		unsigned int deprecated; // offset in cache file
+	};
+	
+
+	void CacheChecker::fixIndex()
+	{
+		if (failed_chunks.size() == 0)
+			return;
+
+		File fptr;
+		if (!fptr.open(index_file,"wb"))
+			throw Error("Can't open index file : " + fptr.errorString());
+
+		// first remove failed chunks from downloaded
+		std::set<bt::Uint32>::iterator i = failed_chunks.begin();
+		while (i != failed_chunks.end())
+		{
+			downloaded_chunks.erase(*i);
+			i++;
+		}
+
+		// write remaining chunks
+		i = downloaded_chunks.begin();
+		while (i != downloaded_chunks.end())
+		{
+			ChunkHeader ch = {*i,0};
+			fptr.write(&ch,sizeof(ChunkHeader));
+			i++;
 		}
 	}
 }

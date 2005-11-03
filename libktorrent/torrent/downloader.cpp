@@ -237,6 +237,8 @@ namespace bt
 			catch (Error & e)
 			{
 				Out() << "Error " << e.toString() << endl;
+				emit ioError(e.toString());
+				return false;
 			}
 		}
 		else

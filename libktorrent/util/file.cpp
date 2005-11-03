@@ -72,7 +72,7 @@ namespace bt
 		if (ferror(fptr))
 		{
 			clearerr(fptr);
-			throw Error(i18n("Error writing to %1").arg(file));
+			throw Error(i18n("Cannot write to %1").arg(file));
 		}
 		return ret;
 	}
@@ -86,7 +86,7 @@ namespace bt
 		if (ferror(fptr))
 		{
 			clearerr(fptr);
-			throw Error(i18n("Error reading from %1").arg(file));
+			throw Error(i18n("Cannot read from %1").arg(file));
 		}
 		return ret;
 	}

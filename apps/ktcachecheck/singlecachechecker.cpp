@@ -83,6 +83,7 @@ namespace debug
 					Out() << "\tShould be : " << tor.getHash(i).toString() << endl;
 					Out() << "\tIs        : " << h.toString() << endl;
 					num_not_ok++;
+					failed_chunks.insert(i);
 				}
 			
 			}

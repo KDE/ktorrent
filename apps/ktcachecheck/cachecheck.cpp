@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <iostream>
 #include <util/log.h>
 #include <util/error.h>
 #include <util/functions.h>
@@ -76,7 +77,18 @@ int main(int argc,char** argv)
 			cc = new SingleCacheChecker(tor);
 
 		cc->check(cache,index);
-		
+		if (cc->foundFailedChunks())
+		{
+			std::string str;
+			std::cout << "Found failed chunks, fix index file ? [y] ";
+			std::cin >> str;
+			if (str == "y" || str == "Y")
+			{
+				Out() << "Fixing index file ..." << endl;
+				cc->fixIndex();
+				Out() << "Finished !" << endl;
+			}
+		}
 	}
 	catch (Error & e)
 	{

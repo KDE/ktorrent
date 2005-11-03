@@ -31,6 +31,7 @@
 #include <qapplication.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <util/error.h>
 
 /*
 void StupidWarningMessagesFromQt( QtMsgType type, const char *msg )
@@ -93,7 +94,15 @@ int main(int argc, char **argv)
 		fprintf(stderr, "ktorrent is already running!\n");
 		return 0;
 	}
-	
-	KTorrentApp app;
-	return app.exec();
+
+	try
+	{
+		KTorrentApp app;
+		return app.exec();
+	}
+	catch (bt::Error & e)
+	{
+		fprintf(stderr, "Aborted by error : %s\n",e.toString().ascii());
+	}
+	return 0;
 }

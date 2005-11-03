@@ -168,13 +168,18 @@ namespace bt
 		}
 		catch (Error & e)
 		{
-			Out() << "Error : " << e.toString() << endl;
-			stats.stopped_by_error = true;
-			error_msg = e.toString();
-			short_error_msg = e.toString();
-			stop(false);
-			emit stoppedByError(this, error_msg);
+			onIOError(e.toString());
 		}
+	}
+
+	void TorrentControl::onIOError(const QString & msg)
+	{
+		Out() << "Error : " << msg << endl;
+		stats.stopped_by_error = true;
+		error_msg = msg;
+		short_error_msg = msg;
+		stop(false);
+		emit stoppedByError(this, error_msg);
 	}
 
 	void TorrentControl::start()
@@ -290,6 +295,8 @@ namespace bt
 
 		// create downloader,uploader and choker
 		down = new Downloader(*tor,*pman,*cman);
+		connect(down,SIGNAL(ioError(const QString& )),
+				this,SLOT(onIOError(const QString& )));
 		up = new Uploader(*cman,*pman);
 		choke = new Choker(*pman);
 
