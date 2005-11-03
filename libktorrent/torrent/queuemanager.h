@@ -43,6 +43,7 @@ namespace bt
 			void clear();
 			
 			void start(kt::TorrentInterface* tc);
+			void stop(kt::TorrentInterface* tc);
 			
 			void stopall();
 			void startall();

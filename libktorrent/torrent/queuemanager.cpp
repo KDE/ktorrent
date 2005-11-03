@@ -19,10 +19,15 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include "queuemanager.h"
-#include <interfaces/torrentinterface.h>
 
-#include <util/log.h>
+#include <qstring.h>
+#include <kmessagebox.h>
+#include <klocale.h>
+
 #include <torrent/globals.h>
+#include <interfaces/torrentinterface.h>
+#include <util/log.h>
+#include <util/error.h>
 
 using namespace kt;
 
@@ -34,7 +39,7 @@ namespace bt
 	{
 		downloads.setAutoDelete(true);
 		max_downloads = 0;
-		max_seeds = 2; //for testing. Needs to be added to Settings::
+		max_seeds = 0; //for testing. Needs to be added to Settings::
 		
 		keep_seeding = true; //test. Will be passed from Core
 	}
@@ -61,16 +66,45 @@ namespace bt
 	void QueueManager::start(kt::TorrentInterface* tc)
 	{
 		const TorrentStats & s = tc->getStats();
-		bool start_tc = (s.bytes_left == 0 && (keep_seeding && getNumRunning(false, true) < max_seeds) ||
+		bool start_tc = (s.bytes_left == 0 && (keep_seeding && ( max_seeds == 0 || getNumRunning(false, true) < max_seeds) ) ||
 		                (s.bytes_left != 0 &&
 				(max_downloads == 0 || getNumRunning(true) < max_downloads)));
 		if (start_tc)
 		{
 			Out() << "Starting download" << endl;
-			tc->start();
+			try
+			{
+				tc->start();
+			}
+			catch (bt::Error & err)
+			{
+				QString msg =
+						i18n("Error starting torrent %1 : %2")
+						.arg(s.torrent_name).arg(err.toString());
+				KMessageBox::error(0,msg,i18n("Error"));
+			}
 		}
 	}
 
+	void QueueManager::stop(kt::TorrentInterface* tc)
+	{
+		const TorrentStats & s = tc->getStats();
+		if (s.started && s.running)
+		{
+			try
+			{
+				tc->stop(false);
+			}
+			catch (bt::Error & err)
+			{
+				QString msg =
+						i18n("Error stopping torrent %1 : %2")
+						.arg(s.torrent_name).arg(err.toString());
+				KMessageBox::error(0,msg,i18n("Error"));
+			}
+		}
+	}
+	
 	void QueueManager::startall()
 	{
 		QPtrList<kt::TorrentInterface>::iterator i = downloads.begin();
