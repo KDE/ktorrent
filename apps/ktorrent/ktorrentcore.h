@@ -28,6 +28,7 @@
 namespace bt
 {
 	class Server;
+	class QueueManager;
 }
 
 namespace kt
@@ -225,13 +226,14 @@ private slots:
 	void slotStoppedByError(kt::TorrentInterface* tc, QString msg);
 	
 private:
-	QPtrList<kt::TorrentInterface> downloads;
+// 	QPtrList<kt::TorrentInterface> downloads;
 	QString data_dir;
 	int max_downloads;
 	bool keep_seeding;
 	QTimer update_timer;
 	bt::Uint64 removed_bytes_up,removed_bytes_down;
 	kt::PluginManager* pman;
+	bt::QueueManager* qman;
 };
 
 #endif

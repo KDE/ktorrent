@@ -39,6 +39,7 @@
 #include <torrent/ipblocklist.h>
 
 #include "pluginmanager.h"
+#include <torrent/queuemanager.h>
 
 #include "ktorrentcore.h"
 #include "settings.h"
@@ -64,10 +65,10 @@ KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seedin
 	}
 
 	removed_bytes_up = removed_bytes_down = 0;
-	
+
 	if (!data_dir.endsWith(bt::DirSeparator()))
 		data_dir += bt::DirSeparator();
-	downloads.setAutoDelete(true);
+	// 	downloads.setAutoDelete(true);
 
 	connect(&update_timer,SIGNAL(timeout()),this,SLOT(update()));
 	update_timer.start(250);
@@ -85,19 +86,20 @@ KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seedin
 	{
 		if (port != port + i - 1)
 			KMessageBox::information(0,
-				i18n("Specified port (%1) is unavailable or in"
-				" use by another application. KTorrent is bound to port %2.")
-				.arg(port).arg(port + i - 1));
+			                         i18n("Specified port (%1) is unavailable or in"
+			                              " use by another application. KTorrent is bound to port %2.")
+			                         .arg(port).arg(port + i - 1));
 
 		Out() << "Bound to port " << (port + i - 1) << endl;
 	}
 	else
 	{
 		KMessageBox::error(0,
-			i18n("Cannot bind to port %1 or the 10 following ports.").arg(port));
+		                   i18n("Cannot bind to port %1 or the 10 following ports.").arg(port));
 		Out() << "Cannot find free port" << endl;
 	}
 
+	qman = new QueueManager();
 	pman = new kt::PluginManager(this,gui);
 	pman->loadConfigFile(KGlobal::dirs()->saveLocation("data","ktorrent") + "plugins");
 	pman->loadPluginList();
@@ -106,6 +108,7 @@ KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seedin
 
 KTorrentCore::~KTorrentCore()
 {
+	delete qman;
 	delete pman;
 }
 
@@ -118,25 +121,27 @@ void KTorrentCore::load(const QString & target,const QString & dir)
 		tc = new TorrentControl();
 		tc->init(target,findNewTorrentDir(),dir);
 		connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
-				this,SLOT(torrentFinished(kt::TorrentInterface* )));
+		        this,SLOT(torrentFinished(kt::TorrentInterface* )));
 		connect(tc, SIGNAL(stoppedByError(kt::TorrentInterface*, QString )),
-				this, SLOT(slotStoppedByError(kt::TorrentInterface*, QString )));
-		downloads.append(tc);
+		        this, SLOT(slotStoppedByError(kt::TorrentInterface*, QString )));
+		// 		downloads.append(tc);
+		qman->append(tc);
 		if (tc->getStats().multi_file_torrent)
 		{
 			FileSelectDlg dlg;
 
 			dlg.execute(tc);
 		}
-		start(tc);
+		// 		start(tc);
+		qman->start(tc);
 		torrentAdded(tc);
 	}
 	catch (bt::Error & err)
 	{
 		KMessageBox::error(0,
-			i18n("An error occurred whilst loading the torrent file. "
-				"The most likely cause is that the torrent file is corrupted, "
-				"or it is not a torrent file at all."),i18n("Error"));
+		                   i18n("An error occurred whilst loading the torrent file. "
+		                        "The most likely cause is that the torrent file is corrupted, "
+		                        "or it is not a torrent file at all."),i18n("Error"));
 		delete tc;
 		tc = 0;
 	}
@@ -152,7 +157,7 @@ void KTorrentCore::load(const KURL& url)
 		QString dir = Settings::saveDir();
 		if (dir == QString::null)
 			dir = KFileDialog::getExistingDirectory(QString::null, 0,
-				i18n("Select Folder to Save To"));
+			                                        i18n("Select Folder to Save To"));
 
 
 		if (dir != QString::null)
@@ -170,60 +175,17 @@ void KTorrentCore::load(const KURL& url)
 
 void KTorrentCore::start(kt::TorrentInterface* tc)
 {
-	const TorrentStats & s = tc->getStats();
-	bool start_tc = (s.bytes_left == 0 && keep_seeding) ||
-			(s.bytes_left != 0 &&
-			(max_downloads == 0 || getNumRunning() < max_downloads));
-	if (start_tc)
-	{
-		Out() << "Starting download" << endl;
-		try
-		{
-			tc->start();
-		}
-		catch (bt::Error & err)
-		{
-			QString msg =
-				i18n("Error starting torrent %1 : %2")
-					.arg(s.torrent_name).arg(err.toString());
-			KMessageBox::error(0,msg,i18n("Error"));
-		}
-	}
-
+	qman->start(tc);
 }
 
 void KTorrentCore::stop(TorrentInterface* tc)
 {
-	const TorrentStats & s = tc->getStats();
-	if (s.started && s.running)
-	{
-		try
-		{
-			tc->stop(false);
-		}
-		catch (bt::Error & err)
-		{
-			QString msg =
-					i18n("Error stopping torrent %1 : %2")
-					.arg(s.torrent_name).arg(err.toString());
-			KMessageBox::error(0,msg,i18n("Error"));
-		}
-	}
+	qman->stop(tc);
 }
 
 int KTorrentCore::getNumRunning() const
 {
-	int nr = 0;
-	QPtrList<TorrentInterface>::const_iterator i = downloads.begin();
-	while (i != downloads.end())
-	{
-		const TorrentInterface* tc = *i;
-		const TorrentStats & s = tc->getStats();
-		if (s.running && s.bytes_left != 0)
-			nr++;
-		i++;
-	}
-	return nr;
+	return qman->getNumRunning(true);
 }
 
 QString KTorrentCore::findNewTorrentDir() const
@@ -248,23 +210,24 @@ void KTorrentCore::loadTorrents()
 	QStringList sl = dir.entryList("tor*",QDir::Dirs);
 	for (Uint32 i = 0;i < sl.count();i++)
 	{
-		
+
 		QString idir = data_dir + *sl.at(i);
 		if (!idir.endsWith(DirSeparator()))
 			idir.append(DirSeparator());
 
 		Out() << "Loading " << idir << endl;
-		
+
 		TorrentControl* tc = 0;
 		try
 		{
 			tc = new TorrentControl();
 			tc->init(idir + "torrent",idir,QString::null);
-			downloads.append(tc);
+			// 			downloads.append(tc);
+			qman->append(tc);
 			connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
-					this,SLOT(torrentFinished(kt::TorrentInterface* )));
+			        this,SLOT(torrentFinished(kt::TorrentInterface* )));
 			connect(tc, SIGNAL(stoppedByError(kt::TorrentInterface*, QString )),
-					this, SLOT(slotStoppedByError(kt::TorrentInterface*, QString )));
+			        this, SLOT(slotStoppedByError(kt::TorrentInterface*, QString )));
 			if (tc->getStats().autostart)
 				start(tc);
 			torrentAdded(tc);
@@ -291,10 +254,11 @@ void KTorrentCore::remove(TorrentInterface* tc,bool data_to)
 		{
 			bt::Delete(tc->getDataDir() + s.torrent_name,false);
 		}
-	
+
 		QString dir = tc->getTorDir();
 		torrentRemoved(tc);
-		downloads.remove(tc);
+		// 		downloads.remove(tc);
+		qman->remove(tc);
 		bt::Delete(dir,false);
 	}
 	catch (Error & e)
@@ -305,7 +269,7 @@ void KTorrentCore::remove(TorrentInterface* tc,bool data_to)
 
 void KTorrentCore::setMaxDownloads(int max)
 {
-	max_downloads = max;
+	qman->setMaxDownloads(max);
 }
 
 void KTorrentCore::torrentFinished(kt::TorrentInterface* tc)
@@ -318,13 +282,14 @@ void KTorrentCore::torrentFinished(kt::TorrentInterface* tc)
 
 void KTorrentCore::setKeepSeeding(bool ks)
 {
-	keep_seeding = ks;
+	qman->setKeepSeeding(ks);
 }
 
 void KTorrentCore::onExit()
 {
 	pman->saveConfigFile(KGlobal::dirs()->saveLocation("data","ktorrent") + "plugins");
-	downloads.clear();
+	// 	downloads.clear();
+	qman->clear();
 	pman->unloadAll();
 }
 
@@ -339,24 +304,24 @@ bool KTorrentCore::changeDataDir(const QString & new_dir)
 			update_timer.start(100);
 			return true;
 		}
-		
+
 		// safety check
 		if (!bt::Exists(new_dir))
 			bt::MakeDir(new_dir);
-	
-	
+
+
 		// make sure new_dir ends with a /
 		QString nd = new_dir;
 		if (!nd.endsWith(DirSeparator()))
 			nd += DirSeparator();
-	
+
 		Out() << "Switching to datadir " << nd << endl;
 		// keep track of all TorrentInterface's which have succesfully
 		// moved to the new data dir
 		QPtrList<kt::TorrentInterface> succes;
-		
-		QPtrList<kt::TorrentInterface>::iterator i = downloads.begin();
-		while (i != downloads.end())
+
+		QPtrList<kt::TorrentInterface>::iterator i = qman->begin();
+		while (i != qman->end())
 		{
 			kt::TorrentInterface* tc = *i;
 			if (!tc->changeDataDir(nd))
@@ -402,34 +367,21 @@ void KTorrentCore::rollback(const QPtrList<kt::TorrentInterface> & succes)
 
 void KTorrentCore::startAll()
 {
-	QPtrList<kt::TorrentInterface>::iterator i = downloads.begin();
-	while (i != downloads.end())
-	{
-		kt::TorrentInterface* tc = *i;
-		start(tc);
-		i++;
-	}
+	qman->startall();
 }
 
 void KTorrentCore::stopAll()
 {
-	QPtrList<kt::TorrentInterface>::iterator i = downloads.begin();
-	while (i != downloads.end())
-	{
-		kt::TorrentInterface* tc = *i;
-		if (tc->getStats().running)
-			tc->stop(true);
-		i++;
-	}
+	qman->stopall();
 }
 
 void KTorrentCore::update()
 {
 	Globals::instance().getServer().update();
-	
-	QPtrList<kt::TorrentInterface>::iterator i = downloads.begin();
+
+	QPtrList<kt::TorrentInterface>::iterator i = qman->begin();
 	//Uint32 down_speed = 0;
-	while (i != downloads.end())
+	while (i != qman->end())
 	{
 		kt::TorrentInterface* tc = *i;
 		if (tc->getStats().running)
@@ -441,9 +393,9 @@ void KTorrentCore::update()
 }
 
 void KTorrentCore::makeTorrent(const QString & file,const QStringList & trackers,
-							   int chunk_size,const QString & name,
-							   const QString & comments,bool seed,
-							   const QString & output_file,KProgress* prog)
+                               int chunk_size,const QString & name,
+                               const QString & comments,bool seed,
+                               const QString & output_file,KProgress* prog)
 {
 	QString tdir;
 	try
@@ -468,8 +420,8 @@ void KTorrentCore::makeTorrent(const QString & file,const QStringList & trackers
 		if (tc)
 		{
 			connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
-					this,SLOT(torrentFinished(kt::TorrentInterface* )));
-			downloads.append(tc);
+			        this,SLOT(torrentFinished(kt::TorrentInterface* )));
+			qman->append(tc);
 			if (seed)
 				start(tc);
 			torrentAdded(tc);
@@ -483,8 +435,8 @@ void KTorrentCore::makeTorrent(const QString & file,const QStringList & trackers
 
 		// Show error message
 		KMessageBox::error(0,
-			i18n("Cannot create torrent: %1").arg(e.toString()),
-			i18n("Error"));
+		                   i18n("Cannot create torrent: %1").arg(e.toString()),
+		                   i18n("Error"));
 	}
 }
 
@@ -495,7 +447,7 @@ CurrentStats KTorrentCore::getStats()
 	Uint32 speed_dl = 0, speed_ul = 0;
 
 
-	for ( QPtrList<kt::TorrentInterface>::iterator i = downloads.begin(); i != downloads.end(); ++i )
+	for ( QPtrList<kt::TorrentInterface>::iterator i = qman->begin(); i != qman->end(); ++i )
 	{
 		kt::TorrentInterface* tc = *i;
 		const TorrentStats & s = tc->getStats();
@@ -514,7 +466,7 @@ CurrentStats KTorrentCore::getStats()
 
 bool KTorrentCore::changePort(Uint16 port)
 {
-	if (downloads.count() == 0)
+	if (qman->count() == 0)
 	{
 		Globals::instance().getServer().changePort(port);
 		return true;
@@ -532,30 +484,12 @@ void KTorrentCore::slotStoppedByError(kt::TorrentInterface* tc, QString msg)
 
 Uint32 KTorrentCore::getNumTorrentsRunning() const
 {
-	Uint32 num = 0;
-	QPtrList<kt::TorrentInterface>::const_iterator i = downloads.begin();
-	while (i != downloads.end())
-	{
-		kt::TorrentInterface* tc = *i;
-		if (tc->getStats().running)
-			num++;
-		i++;
-	}
-	return num;
+	return qman->getNumRunning();
 }
 
 Uint32 KTorrentCore::getNumTorrentsNotRunning() const
 {
-	Uint32 num = 0;
-	QPtrList<kt::TorrentInterface>::const_iterator i = downloads.begin();
-	while (i != downloads.end())
-	{
-		kt::TorrentInterface* tc = *i;
-		if (!tc->getStats().running)
-			num++;
-		i++;
-	}
-	return num;
+	return qman->count() - qman->getNumRunning();
 }
 
 void KTorrentCore::addBlockedIP(QString& ip)
