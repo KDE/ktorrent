@@ -53,7 +53,10 @@ namespace bt
 	void Tracker::setInterval(Uint32 secs)
 	{
 		if (interval != secs)
+		{
 			update_timer.changeInterval(1000*secs);
+			time_of_last_update = GetCurrentTime();
+		}
 		interval = secs;
 	}
 		
@@ -109,6 +112,7 @@ namespace bt
 	{
 		event = QString::null;
 		doRequest(tor->getTrackerURL(true));
+		
 	}
 
 	void Tracker::completed()
