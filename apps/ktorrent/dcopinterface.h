@@ -32,6 +32,7 @@ k_dcop:
 	virtual void startAll() = 0;
 	virtual void stopAll() = 0;
 	virtual void setMaxDownloads(int max) = 0;
+	virtual void setMaxSeeds(int max) = 0;
 	virtual void setKeepSeeding(bool ks) = 0;
 	virtual void setMaxUploadSpeed(int kbytes_per_sec) = 0;
 	virtual void setMaxConnectionsPerDownload(int max) = 0;

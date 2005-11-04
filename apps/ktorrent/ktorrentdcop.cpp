@@ -65,6 +65,13 @@ void KTorrentDCOP::setMaxDownloads(int max)
 	app->applySettings();
 }
 
+void KTorrentDCOP::setMaxSeeds(int max)
+{
+	Settings::setMaxSeeds(max);
+	Settings::writeConfig();
+	app->applySettings();
+}
+
 void KTorrentDCOP::setMaxUploadSpeed(int kbytes_per_sec)
 {
 	Settings::setMaxUploadRate(kbytes_per_sec);

@@ -135,6 +135,7 @@ void PrefPageOne::createWidget(QWidget* parent)
 void PrefPageOne::apply()
 {
 	Settings::setMaxDownloads(dp->max_downloads->value());
+	Settings::setMaxSeeds(dp->max_seeds->value());
 	Settings::setMaxConnections(dp->max_conns->value());
 	Settings::setMaxUploadRate(dp->max_upload_rate->value());
 	Settings::setMaxDownloadRate(dp->max_download_rate->value());
@@ -147,6 +148,7 @@ void PrefPageOne::updateData()
 {
 	//setMinimumSize(400,400);
 	dp->max_downloads->setValue(Settings::maxDownloads());
+	dp->max_seeds->setValue(Settings::maxSeeds());
 	dp->max_conns->setValue(Settings::maxConnections());
 	dp->max_upload_rate->setValue(Settings::maxUploadRate());
 	dp->max_download_rate->setValue(Settings::maxDownloadRate());

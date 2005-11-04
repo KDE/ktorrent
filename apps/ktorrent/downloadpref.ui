@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>DownloadPref</class>
 <widget class="QWidget">
     <property name="name">
@@ -9,14 +9,71 @@
             <x>0</x>
             <y>0</y>
             <width>511</width>
-            <height>347</height>
+            <height>382</height>
         </rect>
     </property>
-    <vbox>
+    <property name="caption">
+        <string>DownloadPref</string>
+    </property>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLayoutWidget">
+        <widget class="QCheckBox" row="1" column="0">
+            <property name="name">
+                <cstring>keep_seeding</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Keep seeding after download is finished</string>
+            </property>
+            <property name="accel">
+                <string>Alt+K</string>
+            </property>
+            <property name="checked">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <spacer row="3" column="0">
+            <property name="name">
+                <cstring>spacer6</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>16</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QGroupBox" row="2" column="0">
+            <property name="name">
+                <cstring>groupBox1</cstring>
+            </property>
+            <property name="title">
+                <string>Attention</string>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KActiveLabel">
+                    <property name="name">
+                        <cstring>kActiveLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>If you are behind a NAT-enabled router, it is important that you forward 
+the above ports. You should consult your router's manual if you 
+do not know how to do this.</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QLayoutWidget" row="0" column="0">
             <property name="name">
                 <cstring>layout8</cstring>
             </property>
@@ -26,7 +83,7 @@
                 </property>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>layout6</cstring>
+                        <cstring>layout5</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -38,6 +95,14 @@
                             </property>
                             <property name="text">
                                 <string>Maximum downloads:</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_5</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Maximum seeds:</string>
                             </property>
                         </widget>
                         <widget class="QLabel">
@@ -84,7 +149,7 @@
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>layout5</cstring>
+                        <cstring>layout6</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -93,6 +158,17 @@
                         <widget class="KIntNumInput">
                             <property name="name">
                                 <cstring>max_downloads</cstring>
+                            </property>
+                            <property name="value">
+                                <number>2</number>
+                            </property>
+                            <property name="minValue">
+                                <number>0</number>
+                            </property>
+                        </widget>
+                        <widget class="KIntNumInput">
+                            <property name="name">
+                                <cstring>max_seeds</cstring>
                             </property>
                             <property name="value">
                                 <number>2</number>
@@ -179,6 +255,14 @@
                         </widget>
                         <widget class="QLabel">
                             <property name="name">
+                                <cstring>textLabel1_2_3</cstring>
+                            </property>
+                            <property name="text">
+                                <string>(0 is no limit)</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
                                 <cstring>textLabel1_2_2</cstring>
                             </property>
                             <property name="text">
@@ -213,7 +297,7 @@
                             </property>
                             <property name="sizeHint">
                                 <size>
-                                    <width>135</width>
+                                    <width>153</width>
                                     <height>20</height>
                                 </size>
                             </property>
@@ -230,7 +314,7 @@
                             </property>
                             <property name="sizeHint">
                                 <size>
-                                    <width>81</width>
+                                    <width>153</width>
                                     <height>20</height>
                                 </size>
                             </property>
@@ -239,75 +323,24 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QCheckBox">
-            <property name="name">
-                <cstring>keep_seeding</cstring>
-            </property>
-            <property name="text">
-                <string>&amp;Keep seeding after download is finished</string>
-            </property>
-            <property name="checked">
-                <bool>true</bool>
-            </property>
-        </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>groupBox1</cstring>
-            </property>
-            <property name="title">
-                <string>Attention</string>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="KActiveLabel">
-                    <property name="name">
-                        <cstring>kActiveLabel1</cstring>
-                    </property>
-                    <property name="text">
-                        <string>If you are behind a NAT-enabled router, it is important that you forward 
-the above ports. You should consult your router's manual if you 
-do not know how to do this.</string>
-                    </property>
-                </widget>
-            </hbox>
-        </widget>
-        <spacer>
-            <property name="name">
-                <cstring>spacer6</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>16</height>
-                </size>
-            </property>
-        </spacer>
-    </vbox>
+    </grid>
 </widget>
-<customwidgets>
-</customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>knuminput.h</includehint>
-    <includehint>knuminput.h</includehint>
-    <includehint>knuminput.h</includehint>
-    <includehint>knuminput.h</includehint>
-    <includehint>knuminput.h</includehint>
-    <includehint>knuminput.h</includehint>
-    <includehint>knuminput.h</includehint>
-    <includehint>knuminput.h</includehint>
-    <includehint>knuminput.h</includehint>
-    <includehint>knuminput.h</includehint>
-    <includehint>knuminput.h</includehint>
-    <includehint>knuminput.h</includehint>
     <includehint>kactivelabel.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
 </includehints>
 </UI>

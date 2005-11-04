@@ -272,6 +272,11 @@ void KTorrentCore::setMaxDownloads(int max)
 	qman->setMaxDownloads(max);
 }
 
+void KTorrentCore::setMaxSeeds(int max)
+{
+	qman->setMaxSeeds(max);
+}
+
 void KTorrentCore::torrentFinished(kt::TorrentInterface* tc)
 {
 	if (!keep_seeding)

@@ -197,6 +197,7 @@ void KTorrent::removePrefPage(PrefPageInterface* page)
 void KTorrent::applySettings(bool change_port)
 {
 	m_core->setMaxDownloads(Settings::maxDownloads());
+	m_core->setMaxSeeds(Settings::maxSeeds());
 	PeerManager::setMaxConnections(Settings::maxConnections());
 	UploadCap::instance().setMaxSpeed(Settings::maxUploadRate() * 1024);
 	DownloadCap::instance().setMaxSpeed(Settings::maxDownloadRate()*1024);
@@ -342,15 +343,29 @@ void KTorrent::startDownload()
 		m_core->start(tc);
 		if (!tc->getStats().running)
 		{
-			KMessageBox::error(this,
-				i18n("Cannot start more than 1 download."
-					" Go to Settings -> Configure KTorrent,"
-					" if you want to change the limit.",
-				     "Cannot start more than %n downloads."
-					" Go to Settings -> Configure KTorrent,"
-					" if you want to change the limit.",
-				    Settings::maxDownloads()),
-				i18n("Error"));
+			bool seed = tc->getStats().bytes_left == 0;
+			int nr = seed ? Settings::maxSeeds() : Settings::maxDownloads();
+			
+			if(!seed)
+				KMessageBox::error(this,
+								   i18n("Cannot start more than 1 download."
+										   " Go to Settings -> Configure KTorrent,"
+										   " if you want to change the limit.",
+								   			"Cannot start more than %n downloads."
+										   " Go to Settings -> Configure KTorrent,"
+										   " if you want to change the limit.",
+											nr),
+								   	i18n("Error"));
+			else
+				KMessageBox::error(this,
+								   i18n("Cannot start more than 1 seed."
+										   " Go to Settings -> Configure KTorrent,"
+										   " if you want to change the limit.",
+								   "Cannot start more than %n seeds."
+										   " Go to Settings -> Configure KTorrent,"
+										   " if you want to change the limit.",
+								   nr),
+								   i18n("Error"));
 		}
 		currentChanged(tc);
 	}

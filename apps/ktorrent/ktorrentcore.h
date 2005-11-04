@@ -80,6 +80,12 @@ public:
 	void setMaxDownloads(int max);
 	
 	/**
+	 * Set the maximum number of simultaneous seeds.
+	 * @param max The max num (0 == no limit)
+	 */
+	void setMaxSeeds(int max);
+	
+	/**
 	 * Set wether or not we should keep seeding after
 	 * a download has finished.
 	 * @param ks Keep seeding yes or no
