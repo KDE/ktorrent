@@ -51,7 +51,7 @@ namespace debug
 					.arg(cache).arg( fptr.errorString()));
 		}
 
-		Uint32 num_ok = 0,num_not_ok = 0,num_not_downloaded = 0;
+		Uint32 num_ok = 0,num_not_ok = 0,num_not_downloaded = 0,extra_ok = 0;
 
 		Array<Uint8> buf((Uint32)tor.getChunkSize());
 		for (Uint32 i = 0;i < num_chunks;i++)
@@ -59,12 +59,7 @@ namespace debug
 			if (i % 100 == 0)
 				Out() << "Checked " << i << " chunks" << endl;
 	//	Out() << "Chunk " << i << " : ";
-			if (downloaded_chunks.count(i) == 0)
-			{
-				num_not_downloaded++;
-	//		Out() << "Not Downloaded" << endl;
-			}
-			else if (!fptr.eof())
+			if (!fptr.eof())
 			{
 				Uint32 size = i == num_chunks - 1 ?
 						tor.getFileLength() % tor.getChunkSize() : (Uint32)tor.getChunkSize();
@@ -74,11 +69,22 @@ namespace debug
 				bool ok = (h == tor.getHash(i));
 				if (ok)
 				{
+					if (downloaded_chunks.count(i) == 0)
+					{
+						extra_ok++;
+						extra_chunks.insert(i);
+						continue;
+					}
 					num_ok++;
 		//		Out() << "OK" << endl;
 				}
 				else
 				{
+					if (downloaded_chunks.count(i) == 0)
+					{
+						num_not_downloaded++;
+						continue;
+					}
 					Out() << "Chunk " << i << " Failed :" << endl;
 					Out() << "\tShould be : " << tor.getHash(i).toString() << endl;
 					Out() << "\tIs        : " << h.toString() << endl;
@@ -95,6 +101,7 @@ namespace debug
 		}
 		Out() << "Cache Check Summary" << endl;
 		Out() << "===================" << endl;
+		Out() << "Extra Chunks : " << extra_ok << endl;
 		Out() << "Chunks OK : " << num_ok << endl;
 		Out() << "Chunks Not Downloaded : " << num_not_downloaded << endl;
 		Out() << "Chunks Failed : " << num_not_ok << endl;

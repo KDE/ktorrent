@@ -75,6 +75,7 @@ namespace bt
 		void endline()
 		{
 			*out << ::endl;
+			fptr.flush();
 			if (to_cout)
 				std::cout << std::endl;;
 			

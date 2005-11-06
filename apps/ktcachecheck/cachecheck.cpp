@@ -77,10 +77,10 @@ int main(int argc,char** argv)
 			cc = new SingleCacheChecker(tor);
 
 		cc->check(cache,index);
-		if (cc->foundFailedChunks())
+		if (cc->foundFailedChunks() || cc->foundExtraChunks())
 		{
 			std::string str;
-			std::cout << "Found failed chunks, fix index file ? [y] ";
+			std::cout << "Found failed/extra chunks, fix index file ? [y] ";
 			std::cin >> str;
 			if (str == "y" || str == "Y")
 			{

@@ -53,7 +53,7 @@ namespace debug
 		Uint64 chunk_size = tor.getChunkSize();
 
 		Array<Uint8> buf((Uint32)tor.getChunkSize());
-		Uint32 num_ok = 0,num_not_ok = 0,num_not_downloaded = 0;
+		Uint32 num_ok = 0,num_not_ok = 0,num_not_downloaded = 0,extra_ok = 0;
 	
 		for (Uint32 i = 0;i < num_chunks;i++)
 		{
@@ -104,32 +104,36 @@ namespace debug
 				}
 			} // end file reading while
 
-			if (downloaded_chunks.count(i) == 0)
+			// calculate hash and check it
+			SHA1Hash h = SHA1Hash::generate(buf,size);
+			if (h != tor.getHash(i))
 			{
-				num_not_downloaded++;
-				continue;
+				if (downloaded_chunks.count(i) == 0)
+				{
+					num_not_downloaded++;
+					continue;
+				}
+				Out() << "Chunk " << i << " Failed :" << endl;
+				Out() << "\tShould be : " << tor.getHash(i).toString() << endl;
+				Out() << "\tIs        : " << h.toString() << endl;
+				num_not_ok++;
+				failed_chunks.insert(i);
 			}
 			else
 			{
-				// calculate hash and check it
-				SHA1Hash h = SHA1Hash::generate(buf,size);
-				if (h != tor.getHash(i))
+				if (downloaded_chunks.count(i) == 0)
 				{
-					Out() << "Chunk " << i << " Failed :" << endl;
-					Out() << "\tShould be : " << tor.getHash(i).toString() << endl;
-					Out() << "\tIs        : " << h.toString() << endl;
-					num_not_ok++;
-					failed_chunks.insert(i);
+					extra_ok++;
+					extra_chunks.insert(i);
+					continue;
 				}
-				else
-				{
-					num_ok++;
-				}
+				num_ok++;
 			}
 		}
 
 		Out() << "Cache Check Summary" << endl;
 		Out() << "===================" << endl;
+		Out() << "Extra Chunks : " << extra_ok << endl;
 		Out() << "Chunks OK : " << num_ok << endl;
 		Out() << "Chunks Not Downloaded : " << num_not_downloaded << endl;
 		Out() << "Chunks Failed : " << num_not_ok << endl;

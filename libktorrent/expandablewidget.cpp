@@ -87,10 +87,10 @@ namespace kt
 	{
 		// find the correct stackelement
 		StackElement* se = begin;
-		StackElement* pse = 0; // element before se
+		StackElement* prev = 0; // element before se
 		while (se->w != w && se->next)
 		{
-			pse = se;
+			prev = se;
 			se = se->next;
 		}
 
@@ -98,7 +98,7 @@ namespace kt
 		if (!se->next)
 			return;
 
-		if (!pse)
+		if (!prev)
 		{
 			// we need to remove the first
 			top_layout->remove(se->s);
@@ -129,28 +129,38 @@ namespace kt
 		}
 		else
 		{
-			// reparent se->next to pse
-			if (se->next->s)
-				se->next->s->reparent(pse->s,QPoint(),false);
-			else
-				se->next->w->reparent(pse->s,QPoint(),false);
-
+			StackElement* next = se->next;
+			// isolate the node
+			se->next = 0;
+			prev->next = next;
+			
 			// reparent se to 0
 			se->s->reparent(0,QPoint(),false);
 			se->w->reparent(0,QPoint(),false);
-
-			// update pse's splitter
-			if (pse->pos == RIGHT || pse->pos == ABOVE)
-				pse->s->moveToLast(se->next->s ? se->next->s : se->next->w);
+			
+			// reparent se->next to prev
+			if (next->s)
+				next->s->reparent(prev->s,QPoint(),false);
 			else
-				pse->s->moveToFirst(se->next->s ? se->next->s : se->next->w);
+				next->w->reparent(prev->s,QPoint(),false);
+			
+			// update prev's splitter
+			if (prev->pos == RIGHT || prev->pos == ABOVE)
+			{
+				prev->s->moveToFirst(prev->w);
+				prev->s->moveToLast(next->s ? next->s : next->w);
+			}
+			else
+			{
+				prev->s->moveToFirst(next->s ? next->s : next->w);
+				prev->s->moveToLast(prev->w);
+			}
 
-			// set pse's next
-			pse->next = se->next;
-			se->next = 0;
 			// delete se and splitter
 			delete se->s;
 			delete se;
+			prev->next->w->show();
+			prev->s->show();
 		}
 	}
 }

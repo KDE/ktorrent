@@ -67,19 +67,34 @@ namespace debug
 
 	void CacheChecker::fixIndex()
 	{
-		if (failed_chunks.size() == 0)
+		if (failed_chunks.size() == 0 && extra_chunks.size() == 0)
 			return;
 
 		File fptr;
 		if (!fptr.open(index_file,"wb"))
 			throw Error("Can't open index file : " + fptr.errorString());
 
+		std::set<bt::Uint32>::iterator i;
 		// first remove failed chunks from downloaded
-		std::set<bt::Uint32>::iterator i = failed_chunks.begin();
-		while (i != failed_chunks.end())
+		if (failed_chunks.size() > 0)
 		{
-			downloaded_chunks.erase(*i);
-			i++;
+			i = failed_chunks.begin();
+			while (i != failed_chunks.end())
+			{
+				downloaded_chunks.erase(*i);
+				i++;
+			}
+		}
+
+		// add extra chunks to download
+		if (extra_chunks.size() > 0)
+		{
+			i = extra_chunks.begin();
+			while (i != extra_chunks.end())
+			{
+				downloaded_chunks.insert(*i);
+				i++;
+			}
 		}
 
 		// write remaining chunks
