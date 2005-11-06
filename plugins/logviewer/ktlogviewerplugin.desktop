@@ -3,6 +3,7 @@ Name=LogViewerPlugin
 Name[pt]=Visualizador do Registo
 Name[pt_BR]=Visualizador do Registo
 Name[sv]=Loggvisningsinsticksprogram
+Name[xx]=xxLogViewerPluginxx
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktlogviewerplugin
