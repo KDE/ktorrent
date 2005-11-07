@@ -91,6 +91,8 @@ public:
 	virtual void removePrefPage(kt::PrefPageInterface* page);
 	virtual void mergePluginGui(kt::Plugin* p);
 	virtual void removePluginGui(kt::Plugin* p);
+	virtual void addWidgetBelowView(QWidget* w);
+	virtual void removeWidgetBelowView(QWidget* w);
 	virtual const kt::TorrentInterface* getCurrentTorrent() const;
 
 public slots:

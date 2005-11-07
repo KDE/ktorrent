@@ -52,14 +52,14 @@ namespace kt
 	void LogViewerPlugin::load()
 	{
 		lv = new LogViewer();
-		this->getGUI()->addWidgetInView(lv,BELOW);
+		this->getGUI()->addWidgetBelowView(lv);
 		bt::Log & lg = Out();
 		lg.addMonitor(lv);
 	}
 
 	void LogViewerPlugin::unload()
 	{
-		this->getGUI()->removeWidgetFromView(lv);
+		this->getGUI()->removeWidgetBelowView(lv);
 		bt::Log & lg = Out();
 		lg.removeMonitor(lv);
 		delete lv;

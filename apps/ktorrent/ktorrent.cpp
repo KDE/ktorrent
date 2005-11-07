@@ -545,22 +545,42 @@ void KTorrent::updatedStats()
 
 void KTorrent::mergePluginGui(Plugin* p)
 {
+	if (!p) return;
 	guiFactory()->addClient(p);
 }
 
 void KTorrent::removePluginGui(Plugin* p)
 {
+	if (!p) return;
 	guiFactory()->removeClient(p);
 }
 
 void KTorrent::addWidgetInView(QWidget* w,Position pos)
 {
+	if (!w) return;
+	
 	m_view_exp->expand(w,pos);
 }
 
 void KTorrent::removeWidgetFromView(QWidget* w)
 {
+	if (!w) return;
+	
 	m_view_exp->remove(w);
+}
+
+void KTorrent::addWidgetBelowView(QWidget* w)
+{
+	if (!w) return;
+	
+	m_exp->expand(w,kt::BELOW);
+}
+	
+void KTorrent::removeWidgetBelowView(QWidget* w)
+{
+	if (!w) return;
+	
+	m_exp->remove(w);
 }
 
 const TorrentInterface* KTorrent::getCurrentTorrent() const

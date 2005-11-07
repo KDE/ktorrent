@@ -130,6 +130,18 @@ namespace kt
 		 * @param w The widget 
 		 */
 		virtual void removeWidgetFromView(QWidget* w) = 0;
+		
+		/**
+		 * Add a widget below the view.
+		 * @param w The widget
+		 */
+		virtual void addWidgetBelowView(QWidget* w) = 0;
+		
+		/**
+		 * Remove a widget, which was added below the view.
+		 * @param w The widget
+		 */
+		virtual void removeWidgetBelowView(QWidget* w) = 0;
 
 		/// Get the current torrent.
 		virtual const TorrentInterface* getCurrentTorrent() const = 0;
