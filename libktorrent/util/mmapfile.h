@@ -20,8 +20,8 @@
 #ifndef BTMMAPFILE_H
 #define BTMMAPFILE_H
 
-#if 0
-#include <qstirng.h>
+
+#include <qstring.h>
 #include <util/constants.h>
 
 namespace bt
@@ -33,6 +33,7 @@ namespace bt
 	 *
 	 * This class allows to access memory mapped files. It's pretty similar to
 	 * File.
+	 * TODO: make sure large files work (not really needed for the blocklist)
 	*/
 	class MMapFile
 	{
@@ -40,13 +41,18 @@ namespace bt
 		MMapFile();
 		virtual ~MMapFile();
 
+		enum Mode
+		{
+			READ,WRITE, RW
+		};
 		/**
-		 * Open the file, uses 
+		 * Open the file. If mode is write and the file doesn't exist, it will
+		 * be created.
 		 * @param file Filename
-		 * @param mode Mode
+		 * @param mode Mode (READ, WRITE or RW)
 		 * @return true upon succes
 		 */
-		bool open(const QString & file,const QString & mode);
+		bool open(const QString & file,Mode mode);
 		
 		/**
 		 * Close the file. Undoes the memory mapping.
@@ -102,9 +108,12 @@ namespace bt
 		int fd;
 		Uint8* data;
 		Uint64 size;
+		Uint64 ptr; 
+		QString filename;
+		Mode mode;
 	};
 
 }
-#endif
+
 
 #endif

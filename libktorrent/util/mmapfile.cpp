@@ -17,18 +17,166 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <errno.h>
 #include "mmapfile.h"
-#if 0
+
 namespace bt
 {
 
-	MMapFile::MMapFile()
+	MMapFile::MMapFile() : fd(-1),data(0),size(0),ptr(0),mode(READ)
 	{}
 
 
 	MMapFile::~MMapFile()
-	{}
+	{
+		if (fd > 0)
+			close();
+	}
 
+	bool MMapFile::open(const QString & file,Mode mode)
+	{
+		// close allready open file
+		if (fd > 0)
+			close();
+		
+		filename = file;
+		
+		// setup flags
+		int flag = 0,mmap_flag = 0;
+		switch (mode)
+		{
+			case READ:
+				flag = O_RDONLY;
+				mmap_flag = PROT_READ;
+				break;
+			case WRITE:
+				flag = O_WRONLY | O_CREAT;
+				mmap_flag = PROT_WRITE;
+				break;
+			case RW:
+				flag = O_RDWR;
+				mmap_flag = PROT_READ|PROT_WRITE;
+				break;
+		}
+		
+		// open the file
+		fd = ::open(file.local8Bit(), (int)flag);
+		if (fd == -1)
+			return false;
+		
+		// read the file size
+		struct stat sbuf;	
+		if (stat(file.local8Bit(), &sbuf) == -1) 
+			return false;
+		size = sbuf.st_size;
+		
+		// mmap the file
+		data = (Uint8*)mmap((caddr_t)0, sbuf.st_size, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
+		if ((caddr_t)data == (caddr_t)(-1)) 
+			return false;
+		ptr = 0;
+		return true;
+	}
+		
+	void MMapFile::close()
+	{
+		if (fd > 0)
+		{
+			::close(fd);
+			ptr = size = 0;
+			data = 0;
+			fd = -1;
+			filename = QString::null;
+		}
+	}
+		
+	void MMapFile::flush()
+	{
+		// TODO: find flush function
+		if (fd > 0) ;
+			//::flush(fd);
+	}
+		
+	Uint32 MMapFile::write(const void* buf,Uint32 buf_size)
+	{
+		if (fd == -1 || mode == READ)
+			return 0;
+		// memcpy data
+		memcpy(&data[ptr],buf,buf_size);
+		// update ptr
+		ptr += buf_size;
+		// update file size if necessary
+		if (ptr >= size)
+			size = ptr;
+		
+		return buf_size;
+	}	
+		
+	Uint32 MMapFile::read(void* buf,Uint32 buf_size)
+	{
+		if (fd == -1 || mode == WRITE)
+			return 0;
+		
+		// check if we aren't going to read past the end of the file
+		Uint32 to_read = ptr + buf_size >= size ? size - ptr : buf_size;
+		// read data
+		memcpy(buf,data+ptr,to_read);
+		ptr += to_read;
+		return to_read;
+	}
 
+	Uint64 MMapFile::seek(SeekPos from,Int64 num)
+	{
+		switch (from)
+		{
+			case BEGIN:
+				if (num > 0)
+					ptr = num; 
+				if (ptr >= size)
+					ptr = size - 1;
+				break;
+			case END:
+				{
+					Int64 np = (size - 1) + num;
+					if (np < 0)
+						ptr = 0;
+					if (np >= size)
+						ptr = size - 1;
+				}
+				break;
+			case CURRENT:
+				{
+					Int64 np = ptr + num;
+					if (np < 0)
+						ptr = 0;
+					if (np >= size)
+						ptr = size - 1;
+				}	
+				break;
+		}
+		return ptr;
+	}
+
+	bool MMapFile::eof() const
+	{
+		return ptr >= size;
+	}
+
+	Uint64 MMapFile::tell() const
+	{
+		return ptr;
+	}
+	
+	QString MMapFile::errorString() const
+	{
+		return strerror(errno);
+	}
 }
-#endif
+
