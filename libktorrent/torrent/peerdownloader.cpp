@@ -50,7 +50,7 @@ namespace bt
 
 	Uint32 PeerDownloader::getNumRequests() const 
 	{
-		return reqs.count();
+		return reqs.count() + unsent_reqs.count();
 	}
 	
 	int PeerDownloader::grab()
