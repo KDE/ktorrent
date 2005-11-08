@@ -4,6 +4,7 @@ X-KDE-ServiceType=KTorrent/Plugin
 Name=KTorrent Plugin
 Name[br]=Lugent KTorrent
 Name[da]=KTorrent-plugin
+Name[el]=Πρόσθετο KTorrent
 Name[ga]=Breiseán KTorrent
 Name[pt]='Plugin' do KTorrent
 Name[pt_BR]='Plugin' do KTorrent

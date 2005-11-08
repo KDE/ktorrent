@@ -2,6 +2,7 @@
 Name=SearchPlugin
 Name[br]=Lugent klask
 Name[da]=SøgePlugin
+Name[el]=Πρόσθετο αναζήτησης
 Name[ga]=BreiseánCuardaigh
 Name[pt]='Plugin' de Procura
 Name[pt_BR]='Plugin' de Procura
@@ -12,6 +13,7 @@ Name[xx]=xxSearchPluginxx
 Comment=Searching plugin for KTorrentt
 Comment[br]=Lugent klask evit KTorrentt
 Comment[da]=Søge-plugin for KTorrentt
+Comment[el]=Πρόσθετο αναζήτησης για το KTorrent
 Comment[pt]='Plugin' de procura para o KTorrent
 Comment[pt_BR]='Plugin' de procura para o KTorrent
 Comment[sr]=Прикључак претраге за KTorrent
