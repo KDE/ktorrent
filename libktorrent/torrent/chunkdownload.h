@@ -126,8 +126,10 @@ namespace bt
 		void sendRequests(PeerDownloader* pd);
 		void sendCancels(PeerDownloader* pd);
 		void endgameCancel(const Piece & p);
+		void onTimeout(const Request & r);
 		
 	private:
+		void releaseAllPDs();
 		
 		bool* pieces;
 		Chunk* chunk;

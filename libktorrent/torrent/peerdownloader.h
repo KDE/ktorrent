@@ -23,12 +23,63 @@
 #include <qvaluelist.h>
 #include <qobject.h>
 #include "globals.h"
+#include "request.h"
 
 namespace bt
 {
 	class Peer;
 	class Request;
 	class Piece;
+	/**
+	 * Request with a timestamp. 
+	 */
+	struct TimeStampedRequest
+	{
+		Request req;
+		Uint32 time_stamp;
+		
+		TimeStampedRequest();
+		
+		/**
+		 * Constructor, set the request and calculate the timestamp.
+		 * @param r The Request
+		 */
+		TimeStampedRequest(const Request & r);
+		
+		/**
+		 * Copy constructor, copy the request and the timestamp
+		 * @param r The Request
+		 */
+		TimeStampedRequest(const TimeStampedRequest & t);
+		
+		/**
+		 * Equality operator, compares requests only.
+		 * @param r The Request
+		 * @return true if equal
+		 */
+		bool operator == (const Request & r);
+		
+		/**
+		 * Equality operator, compares requests only.
+		 * @param r The Request
+		 * @return true if equal
+		 */
+		bool operator == (const TimeStampedRequest & r);
+		
+		/**
+		 * Assignment operator.
+		 * @param r The Request to copy
+		 * @return *this
+		 */
+		TimeStampedRequest & operator = (const Request & r);
+		
+		/**
+		 * Assignment operator.
+		 * @param r The TimeStampedRequest to copy
+		 * @return *this
+		 */
+		TimeStampedRequest & operator = (const TimeStampedRequest & r);
+	};
 	
 
 	/**
@@ -39,7 +90,7 @@ namespace bt
 	*/
 	class PeerDownloader : public QObject
 	{
-		Q_OBJECT
+		Q_OBJECT	
 	public:
 		/**
 		 * Constructor, set the Peer
@@ -95,6 +146,11 @@ namespace bt
 		 * the DownloadCap, when the PeerDownloader's turn is up.
 		 */
 		void downloadOneUnsent();
+		
+		/**
+		 * Check for timed out requests.
+		 */
+		void checkTimeouts();
 	public slots:
 		/**
 		 * Send a Request. Note that the DownloadCap
@@ -126,10 +182,17 @@ namespace bt
 		 */
 		void downloaded(const Piece & p);
 		
+		/**
+		 * Emitted when a request takes longer then 60 seconds to download.
+		 * The sender of the request will have to request it again. This does not apply for
+		 * unsent requests. Their timestamps will be updated when they get transmitted.
+		 * @param r The request
+		 */
+		void timedout(const Request & r);
+		
 	private:
 		Peer* peer;
-		QValueList<Request> reqs;
-		QValueList<Request> unsent_reqs;
+		QValueList<TimeStampedRequest> reqs,unsent_reqs;
 		int grabbed;
 	};
 

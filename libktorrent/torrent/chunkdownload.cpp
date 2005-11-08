@@ -132,9 +132,11 @@ namespace bt
 		{
 			chunk->setData(buf);
 			buf = 0;
+			releaseAllPDs();
 			if (pdown.count() == 1)
 			{
-				pdown.at(0)->release();
+				PeerDownloader* pd = pdown.at(0);
+				pd->release();
 				pdown.clear();
 			}
 			return true;
@@ -144,6 +146,15 @@ namespace bt
 			sendRequests(*i);
 
 		return false;
+	}
+	
+	void ChunkDownload::releaseAllPDs()
+	{
+		for (Uint32 i = 0;i < pdown.count();i++)
+		{
+			PeerDownloader* pd = pdown.at(i);
+			disconnect(pd,SIGNAL(timedout(const Request& )),this,SLOT(onTimeout(const Request& )));
+		}
 	}
 	
 	void ChunkDownload::assignPeer(PeerDownloader* pd,bool endgame)
@@ -164,6 +175,7 @@ namespace bt
 		pdown.append(pd);
 		dstatus.insert(pd->getPeer()->getID(),new DownloadStatus(pieces,num));
 		sendRequests(pd);
+		connect(pd,SIGNAL(timedout(const Request& )),this,SLOT(onTimeout(const Request& )));
 	}
 	
 	void ChunkDownload::sendRequests(PeerDownloader* pd)
@@ -185,6 +197,22 @@ namespace bt
 							i+1<num ? MAX_PIECE_LEN : last_size,0));
 				ds->set(i,PIECE_REQUESTED);
 			}
+		}
+	}
+	
+	void ChunkDownload::onTimeout(const Request & r)
+	{
+		// see if we are dealing with a piece of ours
+		if (chunk->getIndex() == r.getIndex())
+		{
+			// find the peer 
+			DownloadStatus* ds = dstatus.find(r.getPeer());
+			if (!ds)
+				return;
+			// set it's status to PIECE_NOT_DOWNLOADED if it isn't downloaded
+			int p  = r.getOffset() / MAX_PIECE_LEN;
+			if (ds->get(p) != PIECE_DOWNLOADED)
+				ds->set(p,PIECE_NOT_DOWNLOADED);
 		}
 	}
 	
@@ -234,6 +262,7 @@ namespace bt
 
 		dstatus.erase(pd->getPeer()->getID());
 		pdown.remove(pd);
+		disconnect(pd,SIGNAL(timedout(const Request& )),this,SLOT(onTimeout(const Request& )));
 	}
 	
 	

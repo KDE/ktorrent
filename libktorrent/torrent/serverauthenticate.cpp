@@ -76,6 +76,7 @@ namespace bt
 		PeerManager* pman = server->findPeerManager(rh);
 		if (!pman)
 		{
+			Out() << "Cannot find PeerManager for hash : " << rh.toString() << endl;
 			onFinish(false);
 			return;
 		}
@@ -87,6 +88,7 @@ namespace bt
 		PeerID peer_id = PeerID(tmp);
 		if (pman->getTorrent().getPeerID() == peer_id)
 		{
+			Out() << "Lets not connect to our self" << endl;
 			onFinish(false);
 			return;
 		}

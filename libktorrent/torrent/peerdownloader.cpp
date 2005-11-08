@@ -18,6 +18,8 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <util/functions.h>
+#include <util/log.h>
+#include "globals.h"
 #include "peerdownloader.h"
 #include "peer.h"
 #include "piece.h"
@@ -27,6 +29,44 @@
 
 namespace bt
 {
+	TimeStampedRequest::TimeStampedRequest()
+	{
+		time_stamp = bt::GetCurrentTime();
+	}
+			
+	TimeStampedRequest::TimeStampedRequest(const Request & r) : req(r)
+	{
+		time_stamp = bt::GetCurrentTime();
+	}
+	
+	TimeStampedRequest::TimeStampedRequest(const TimeStampedRequest & t) 
+		: req(t.req),time_stamp(t.time_stamp)
+	{
+	}
+		
+	bool TimeStampedRequest::operator == (const Request & r)
+	{
+		return r == req;
+	}
+	
+	bool TimeStampedRequest::operator == (const TimeStampedRequest & r)
+	{
+		return r.req == req;
+	}
+	
+	TimeStampedRequest & TimeStampedRequest::operator = (const Request & r)
+	{
+		time_stamp = bt::GetCurrentTime();
+		req = r;
+		return *this;
+	}
+	
+	TimeStampedRequest & TimeStampedRequest::operator = (const TimeStampedRequest & r)
+	{
+		time_stamp = r.time_stamp;
+		req = r.req;
+		return *this;
+	}
 
 	PeerDownloader::PeerDownloader(Peer* peer) : peer(peer),grabbed(0)
 	{
@@ -73,15 +113,17 @@ namespace bt
 	{
 		if (!peer)
 			return;
+		
+		TimeStampedRequest r = TimeStampedRequest(req);
 
 		if (DownloadCap::instance().allow(this))
-		{
-			reqs.append(req);
+		{	
+			reqs.append(r);
 			peer->getPacketWriter().sendRequest(req);
 		}
 		else
 		{
-			unsent_reqs.append(req);
+			unsent_reqs.append(r);
 		}
 	}
 	
@@ -105,10 +147,11 @@ namespace bt
 	{
 		if (peer)
 		{
-			QValueList<Request>::iterator i = reqs.begin();
+			QValueList<TimeStampedRequest>::iterator i = reqs.begin();
 			while (i != reqs.end())
 			{
-				peer->getPacketWriter().sendCancel(*i);
+				TimeStampedRequest & tr = *i;
+				peer->getPacketWriter().sendCancel(tr.req);
 				i++;
 			}
 		}
@@ -123,6 +166,12 @@ namespace bt
 		if (reqs.contains(r))
 		{
 			reqs.remove(r);
+			downloaded(p);
+		}
+		else 
+		{
+			// this is probably a timed out request
+			// emit the signal and let the chunkdownload handle it
 			downloaded(p);
 		}
 	}
@@ -154,11 +203,14 @@ namespace bt
 		if (!peer)
 			return;
 
-		QValueList<Request>::iterator i = unsent_reqs.begin();
+		QValueList<TimeStampedRequest>::iterator i = unsent_reqs.begin();
 		while (i != unsent_reqs.end())
 		{
-			reqs.append(*i);
-			peer->getPacketWriter().sendRequest(*i);
+			TimeStampedRequest & tr = *i;
+			// update time stamp
+			tr.time_stamp = bt::GetCurrentTime();
+			reqs.append(tr);
+			peer->getPacketWriter().sendRequest(tr.req);
 			i = unsent_reqs.erase(i);
 		}
 	}
@@ -168,8 +220,10 @@ namespace bt
 		if (unsent_reqs.empty())
 			return;
 
-		reqs.append(unsent_reqs.first());
-		peer->getPacketWriter().sendRequest(unsent_reqs.first());
+		TimeStampedRequest & tr = unsent_reqs.first();
+		tr.time_stamp = bt::GetCurrentTime();
+		reqs.append(tr);
+		peer->getPacketWriter().sendRequest(tr.req);
 		unsent_reqs.pop_front();
 	}
 	
@@ -180,6 +234,29 @@ namespace bt
 			return peer->getDownloadRate();
 		else
 			return 0;
+	}
+	
+	void PeerDownloader::checkTimeouts()
+	{
+		// we use a 60 second interval
+		const Uint32 MAX_INTERVAL = 60 * 1000;
+		QValueList<TimeStampedRequest>::iterator i = reqs.begin();
+		while (i != reqs.end())
+		{
+			TimeStampedRequest & tr = *i;
+			if (bt::GetCurrentTime() - tr.time_stamp > MAX_INTERVAL)
+			{
+			//	Out() << "Request " << tr.req.getIndex() << " " << tr.req.getOffset() << " timed out !" << endl;
+				timedout(tr.req);
+				// cancel it
+				peer->getPacketWriter().sendCancel(tr.req);
+				i = reqs.erase(i);
+			}
+			else
+			{ 
+				i++;
+			}
+		}
 	}
 	
 }

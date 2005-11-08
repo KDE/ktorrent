@@ -110,6 +110,13 @@ namespace bt
 			endgameUpdate();
 		else
 			normalUpdate();
+		
+		// now see if there aren't any timed out pieces
+		for (Uint32 i = 0;i < pman.getNumConnectedPeers();i++)
+		{
+			Peer* p = pman.getPeer(i);
+			p->getPeerDownloader()->checkTimeouts();
+		}
 	}
 
 	void Downloader::warmupUpdate()
