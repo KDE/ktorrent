@@ -58,13 +58,29 @@ namespace bt
 
 	void AuthenticateBase::onReadyRead()
 	{
-	//	Out() << "AuthenticateBase::onReadyRead" << endl;
-		if (!sock || finished || sock->bytesAvailable() < 68)
+		//Out() << "AuthenticateBase::onReadyRead" << endl;
+		if (!sock || finished || sock->bytesAvailable() < 48)
 			return;
-
+		
+		// apparently some peers only send a 48 byte handshake
+		// we will just authenticate them without a peer id
+		
+		Uint32 ba = sock->bytesAvailable();
+		
 		Uint8 hs[68];
-		sock->readBlock((char*)hs,68);
-
+		memset(hs,0x00,68);
+		Uint32 ret = sock->readBlock((char*)hs,68);
+#if 0
+		if (ba == 48)
+		{
+			Out() << "Bytes available : " << ba << endl;
+			Out() << "Read " << ret << " bytes" << endl;
+			Out() << "Data : ";
+			for (Uint32 i = 0;i < 68;i++)
+				Out() << QString::number(hs[i],16) << " ";
+			Out() << endl;
+		}
+#endif
 		if (hs[0] != 19)
 		{
 			onFinish(false);
