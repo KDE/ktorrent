@@ -20,13 +20,30 @@
 #ifndef BTCHOKER_H
 #define BTCHOKER_H
 
-#include <list>
+#include <qptrlist.h>
 #include <util/constants.h>
+#include "peer.h"
 
 namespace bt
 {
-	class Peer;
 	class PeerManager;
+	
+	class PeerPtrList : public QPtrList<Peer>
+	{
+		bool dl_cmp;
+	public:
+		PeerPtrList(bool dl_cmp = true);
+		virtual ~PeerPtrList();
+		
+		void setDLCmp(bool dl)
+		{
+			dl_cmp = dl;
+		}
+	
+		virtual int compareItems(QPtrCollection::Item a, QPtrCollection::Item b);
+	};
+
+	
 
 	/**
 	 * @author Joris Guisson
@@ -41,7 +58,7 @@ namespace bt
 		int opt_unchoke_index;
 		int opt_unchoke;
 		Uint32 opt_unchoked_peer_id;
-		std::list<Peer*> downloaders,interested,not_interested;
+		PeerPtrList downloaders,interested,not_interested;
 	public:
 		Choker(PeerManager & pman);
 		virtual ~Choker();

@@ -19,13 +19,32 @@
  ***************************************************************************/
 #include <algorithm>
 #include <qptrlist.h>
+#include <interfaces/functions.h>
 #include "choker.h"
 #include "peermanager.h"
 #include "peer.h"
 #include "packetwriter.h"
 
+using namespace kt;
+
 namespace bt
 {
+	
+	PeerPtrList::PeerPtrList(bool dl_cmp) : dl_cmp(dl_cmp)
+	{}
+		
+	PeerPtrList::~PeerPtrList()
+	{}
+		
+	int PeerPtrList::compareItems(QPtrCollection::Item a, QPtrCollection::Item b)
+	{
+		Peer* pa = (Peer*)a;
+		Peer* pb = (Peer*)b;
+		if (dl_cmp)
+			return CompareVal(pa->getDownloadRate(),pb->getDownloadRate());
+		else
+			return CompareVal(pa->getUploadRate(),pb->getUploadRate());
+	}
 
 	Choker::Choker(PeerManager & pman) : pman(pman)
 	{
@@ -36,7 +55,7 @@ namespace bt
 
 	Choker::~Choker()
 	{}
-
+#if 0
 	struct UploadRateCmp
 	{
 		bool operator () (Peer* a,Peer* b)
@@ -52,7 +71,7 @@ namespace bt
 			return a->getDownloadRate() > b->getDownloadRate();
 		}
 	};
-
+#endif
 	void Choker::updateInterested()
 	{
 		for (Uint32 i = 0;i < pman.getNumConnectedPeers();i++)
@@ -64,18 +83,18 @@ namespace bt
 			
 			if (p->isInterested())
 			{
-				interested.push_back(p);
+				interested.append(p);
 			}
 			else
 			{
-				not_interested.push_back(p);
+				not_interested.append(p);
 			}
 		}
 	}
 
 	void Choker::updateDownloaders()
 	{
-		std::list<Peer*>::iterator itr = interested.begin();
+		QPtrList<Peer>::iterator itr = interested.begin();
 		int num = 0;
 		// send all downloaders an unchoke
 		for (;itr != interested.end();itr++)
@@ -88,7 +107,7 @@ namespace bt
 			if (num < 4)
 			{
 				p->getPacketWriter().sendUnchoke();
-				downloaders.push_back(p);
+				downloaders.append(p);
 				num++;
 			}
 			else
@@ -115,12 +134,12 @@ namespace bt
 
 	void Choker::sendUnchokes(bool have_all)
 	{
-		if (downloaders.size() == 0)
+		if (downloaders.count() == 0)
 			return;
 		
-		std::list<Peer*>::iterator itr = not_interested.begin();
+		QPtrList<Peer>::iterator itr = not_interested.begin();
 		// fd = fastest_downloader
-		Peer* fd = downloaders.front();
+		Peer* fd = downloaders.first();
 		// send all downloaders an unchoke
 		for (;itr != not_interested.end();itr++)
 		{
@@ -202,13 +221,17 @@ namespace bt
 		// them sort them;
 		if (have_all)
 		{
-			interested.sort(DownloadRateCmp());
-			not_interested.sort(DownloadRateCmp());
+			interested.setDLCmp(true);
+			interested.sort();
+			not_interested.setDLCmp(true);
+			not_interested.sort();
 		}
 		else
 		{
-			interested.sort(UploadRateCmp());
-			not_interested.sort(UploadRateCmp());
+			interested.setDLCmp(false);
+			interested.sort();
+			not_interested.setDLCmp(false);
+			not_interested.sort();
 		}
 		// determine the downloaders
 		updateDownloaders();

@@ -79,7 +79,7 @@ namespace bt
 
 		if (tmon)
 			tmon->destroyed();
-
+		delete choke;
 		delete down;
 		delete up;
 		delete cman;

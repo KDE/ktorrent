@@ -37,7 +37,10 @@ namespace kt
 
 
 	ExpandableWidget::~ExpandableWidget()
-	{}
+	{
+		if (begin)
+			delete begin;
+	}
 
 	void ExpandableWidget::expand(QWidget* w,Position pos)
 	{

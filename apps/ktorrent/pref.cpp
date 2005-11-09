@@ -62,6 +62,8 @@ KTorrentPreferences::KTorrentPreferences(KTorrent & ktor)
 
 KTorrentPreferences::~KTorrentPreferences()
 {
+	delete page_one;
+	delete page_two;
 }
 
 void KTorrentPreferences::slotOk()

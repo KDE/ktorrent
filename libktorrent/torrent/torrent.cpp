@@ -56,13 +56,13 @@ namespace bt
 	//	Out() << "File size = " << fptr.size() << endl;
 		fptr.readBlock(data.data(),fptr.size());
 		
-		BDictNode* dict = 0;		
-	//	dict->printDebugInfo();
+		BNode* node = 0;
+		 
 		try
 		{
 			BDecoder decoder(data,verbose);
-			BNode* node = decoder.decode();
-			dict = dynamic_cast<BDictNode*>(node);
+			node = decoder.decode();
+			BDictNode* dict = dynamic_cast<BDictNode*>(node);
 			if (!dict)
 				throw Error(i18n("Corrupted torrent!"));
 
@@ -81,10 +81,11 @@ namespace bt
 			SHA1HashGen hg;
 			Uint8* info = (Uint8*)data.data();
 			info_hash = hg.generate(info + n->getOffset(),n->getLength());
+			delete node;
 		}
 		catch (...)
 		{
-			delete dict;
+			delete node;
 			throw;
 		}
 	}

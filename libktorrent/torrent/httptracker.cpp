@@ -186,16 +186,21 @@ namespace bt
 	void HTTPTracker::onResult(KIO::Job* j)
 	{
 		if (j != active_job)
+		{
+			j->kill();
 			return;
+		}
 		
 		if (j->error())
 		{
 			Out() << "Error : " << j->errorString() << endl;
+			active_job->deleteLater();
 			active_job = 0;
 			error();
 		}
 		else
 		{
+			active_job->deleteLater();
 			active_job = 0;
 			dataReady();
 		}
@@ -204,7 +209,10 @@ namespace bt
 	void HTTPTracker::onDataRecieved(KIO::Job* j,const QByteArray & ba)
 	{
 		if (j != active_job)
+		{
+			j->kill(true);
 			return;
+		}
 
 		if (ba.size() > 0)
 		{
