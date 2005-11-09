@@ -72,8 +72,9 @@ namespace bt
 		timer.stop();
 	}
 	
-	void Authenticate::handshakeRecieved(const Uint8* hs)
+	void Authenticate::handshakeRecieved(bool full)
 	{
+		const Uint8* hs = handshake;
 	//	Out() << "Authenticate::handshakeRecieved" << endl;
 		IPBlocklist& ipfilter = IPBlocklist::instance();
 			//Out() << "Dodo " << pp.ip << endl;
@@ -102,7 +103,9 @@ namespace bt
 			return;
 		}
 		
-		onFinish(true);
+		// only finish when the handshake was fully recieved
+		if (full)
+			onFinish(true);
 	}
 
 	KNetwork::KBufferedSocket* Authenticate::takeSocket()

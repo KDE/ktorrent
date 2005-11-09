@@ -60,8 +60,9 @@ namespace bt
 		timer.stop();
 	}
 
-	void ServerAuthenticate::handshakeRecieved(const Uint8* hs)
+	void ServerAuthenticate::handshakeRecieved(bool full)
 	{
+		Uint8* hs = handshake;
 		IPBlocklist& ipfilter = IPBlocklist::instance();
 		QString IP(sock->peerAddress().toString());
 		if (ipfilter.isBlocked( IP ))
@@ -81,25 +82,33 @@ namespace bt
 			return;
 		}
 
-		// check if we aren't connecting to ourself
-		char tmp[21];
-		tmp[20] = '\0';
-		memcpy(tmp,hs+48,20);
-		PeerID peer_id = PeerID(tmp);
-		if (pman->getTorrent().getPeerID() == peer_id)
+		if (full)
 		{
-			Out() << "Lets not connect to our self" << endl;
-			onFinish(false);
-			return;
+			// check if we aren't connecting to ourself
+			char tmp[21];
+			tmp[20] = '\0';
+			memcpy(tmp,hs+48,20);
+			PeerID peer_id = PeerID(tmp);
+			if (pman->getTorrent().getPeerID() == peer_id)
+			{
+				Out() << "Lets not connect to our self" << endl;
+				onFinish(false);
+				return;
+			}
+			
+					
+			// send handshake and finish off
+			sendHandshake(rh,pman->getTorrent().getPeerID());
+			onFinish(true);
+			// hand over connection
+			pman->newConnection(sock,peer_id);
+			sock = 0;
 		}
-		
-				
-		// send handshake and finish off
-		sendHandshake(rh,pman->getTorrent().getPeerID());
-		onFinish(true);
-		// hand over connection
-		pman->newConnection(sock,peer_id);
-		sock = 0;
+		else
+		{
+			// if the handshake wasn't fully recieved just send our handshake
+			sendHandshake(rh,pman->getTorrent().getPeerID());
+		}
 	}
 }
 

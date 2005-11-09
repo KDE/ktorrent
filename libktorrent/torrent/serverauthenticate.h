@@ -44,7 +44,7 @@ namespace bt
 
 	private:
 		void onFinish(bool succes);
-		void handshakeRecieved(const Uint8* hs);
+		void handshakeRecieved(bool full);
 
 	private:
 		Server* server;

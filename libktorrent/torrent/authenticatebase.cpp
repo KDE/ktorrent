@@ -32,6 +32,8 @@ namespace bt
 	{
 		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 		timer.start(20000,true);
+		memset(handshake,0x00,68);
+		bytes_of_handshake_recieved = 0;
 	}
 
 
@@ -62,38 +64,46 @@ namespace bt
 		if (!sock || finished || sock->bytesAvailable() < 48)
 			return;
 		
-		// apparently some peers only send a 48 byte handshake
-		// we will just authenticate them without a peer id
-		
 		Uint32 ba = sock->bytesAvailable();
 		
-		Uint8 hs[68];
-		memset(hs,0x00,68);
-		Uint32 ret = sock->readBlock((char*)hs,68);
-#if 0
-		if (ba == 48)
+		// first see if we allready have some bytes from the handshake
+		if (bytes_of_handshake_recieved == 0)
 		{
-			Out() << "Bytes available : " << ba << endl;
-			Out() << "Read " << ret << " bytes" << endl;
-			Out() << "Data : ";
-			for (Uint32 i = 0;i < 68;i++)
-				Out() << QString::number(hs[i],16) << " ";
-			Out() << endl;
+			if (ba < 68)
+			{
+				// read partial
+				sock->readBlock((char*)handshake,ba);
+				bytes_of_handshake_recieved += ba;
+				// tell subclasses of a partial handshake
+				handshakeRecieved(false);
+				return;
+			}
+			else
+			{
+				// read full handshake
+				sock->readBlock((char*)handshake,68);
+			}
 		}
-#endif
-		if (hs[0] != 19)
+		else
+		{
+			// read remaining part
+			Uint32 to_read = 68 - bytes_of_handshake_recieved;
+			sock->readBlock((char*)handshake + bytes_of_handshake_recieved,to_read);
+		}
+	
+		if (handshake[0] != 19)
 		{
 			onFinish(false);
 			return;
 		}
 		
 		const char* pstr = "BitTorrent protocol";
-		if (memcmp(pstr,hs+1,19) != 0)
+		if (memcmp(pstr,handshake+1,19) != 0)
 		{
 			onFinish(false);
 			return;
 		}
-		handshakeRecieved(hs);
+		handshakeRecieved(true);
 	}
 
 	void AuthenticateBase::onError(int)

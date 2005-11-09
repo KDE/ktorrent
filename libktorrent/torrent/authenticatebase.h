@@ -69,9 +69,10 @@ namespace bt
 		/**
 		 * The other side send a handshake. The first 20 bytes
 		 * of the handshake will allready have been checked.
-		 * @param hs 68 byte handshake
+		 * @param full Indicates wether we have a full handshake
+		 *  if this is not full, we should just send our own
 		 */
-		virtual void handshakeRecieved(const Uint8* hs) = 0;
+		virtual void handshakeRecieved(bool full) = 0;
 		
 	private slots:
 		void onTimeout();
@@ -82,6 +83,8 @@ namespace bt
 		KNetwork::KBufferedSocket* sock;
 		QTimer timer;
 		bool finished;
+		Uint8 handshake[68];
+		Uint32 bytes_of_handshake_recieved;
 	};
 
 }
