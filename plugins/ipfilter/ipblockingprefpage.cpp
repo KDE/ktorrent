@@ -22,13 +22,20 @@
 #include "ipblockingpref.h"
 #include "ipfilterpluginsettings.h"
 #include "ipfilterplugin.h"
+
 #include <kglobal.h>
+#include <kstandarddirs.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kurlrequester.h>
+#include <kurl.h>
+#include <kmessagebox.h>
+#include <kio/netaccess.h>
+
 #include <util/log.h>
 #include <torrent/globals.h>
 #include <interfaces/coreinterface.h>
+
 #include <qthread.h>
 
 using namespace bt;
@@ -74,13 +81,54 @@ namespace kt
 	IPBlockingPrefPageWidget::IPBlockingPrefPageWidget(QWidget* parent) : IPBlockingPref(parent)
 	{
 		m_filter->setURL(IPBlockingPluginSettings::filterFile());
+		m_url->setURL(IPBlockingPluginSettings::filterURL());
+		if (m_url->url() == "")
+			m_url->setURL(QString("http://www.bluetack.co.uk/config/antip2p.txt"));
 	}
 
 	void IPBlockingPrefPageWidget::apply()
 	{
 		KURLRequester* filter = m_filter;
 		IPBlockingPluginSettings::setFilterFile(filter->url());
+		IPBlockingPluginSettings::setFilterURL(m_url->url());
 		IPBlockingPluginSettings::writeConfig();
+	}
+
+	void IPBlockingPrefPageWidget::btnDownload_clicked()
+	{
+		QString target(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.txt");
+		QFile target_file(target);
+		KURL url(m_url->url());
+		
+		KMessageBox::information(this,i18n("trt"),i18n("trt"));
+		
+		bool download = true;
+		
+		if(target_file.exists())
+			if((KMessageBox::questionYesNo(this, i18n("Selected file already exists, do you want to download it again?"),i18n("File exists")) == 4))
+				download = false;
+		
+		if(download)
+		{
+			if (KIO::NetAccess::download(url,target,NULL))
+			{
+				//Level1 list successfully downloaded, remove temporary file
+				KIO::NetAccess::removeTempFile(target);
+			}
+			else
+			{
+				KMessageBox::error(0,KIO::NetAccess::lastErrorString(),i18n("Error"));
+			}
+		}
+		convert();
+	}
+
+	void IPBlockingPrefPageWidget::convert()
+	{
+		QFile source(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.txt");
+		QFile target(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat");
+		
+		
 	}
 
 	IPBlockingPrefPage::IPBlockingPrefPage(CoreInterface* core)
@@ -117,3 +165,6 @@ namespace kt
 	void IPBlockingPrefPage::updateData()
 	{}
 }
+
+
+

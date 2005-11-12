@@ -8,7 +8,7 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>571</width>
+            <width>564</width>
             <height>444</height>
         </rect>
     </property>
@@ -19,9 +19,169 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <spacer row="3" column="2">
+        <widget class="QGroupBox" row="0" column="0">
             <property name="name">
-                <cstring>spacer1</cstring>
+                <cstring>groupBox1</cstring>
+            </property>
+            <property name="title">
+                <string>Select a level1 filter file (from Bluetack.co.uk or Openmedia.info)</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget" row="0" column="0">
+                    <property name="name">
+                        <cstring>layout9</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout5</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLabel">
+                                    <property name="name">
+                                        <cstring>textLabel1_3</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>IP filter file:</string>
+                                    </property>
+                                </widget>
+                                <widget class="KURLRequester">
+                                    <property name="name">
+                                        <cstring>m_url</cstring>
+                                    </property>
+                                    <property name="url" stdset="0">
+                                        <string>http://www.bluetack.co.uk/modules.php?name=Downloads&amp;d_op=getit&amp;lid=8</string>
+                                    </property>
+                                    <property name="showLocalProtocol">
+                                        <bool>false</bool>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout3</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <spacer>
+                                    <property name="name">
+                                        <cstring>spacer3</cstring>
+                                    </property>
+                                    <property name="orientation">
+                                        <enum>Horizontal</enum>
+                                    </property>
+                                    <property name="sizeType">
+                                        <enum>Expanding</enum>
+                                    </property>
+                                    <property name="sizeHint">
+                                        <size>
+                                            <width>361</width>
+                                            <height>20</height>
+                                        </size>
+                                    </property>
+                                </spacer>
+                                <widget class="QPushButton">
+                                    <property name="name">
+                                        <cstring>btnDownload</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Dow&amp;nload/Convert</string>
+                                    </property>
+                                    <property name="accel">
+                                        <string>Alt+N</string>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                    </vbox>
+                </widget>
+                <spacer row="1" column="0">
+                    <property name="name">
+                        <cstring>spacer6</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>40</height>
+                        </size>
+                    </property>
+                </spacer>
+            </grid>
+        </widget>
+        <widget class="QGroupBox" row="1" column="0">
+            <property name="name">
+                <cstring>groupBox2</cstring>
+            </property>
+            <property name="title">
+                <string>Select a filter file with IP ranges in KTorrent format</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget" row="0" column="0">
+                    <property name="name">
+                        <cstring>layout8</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1</cstring>
+                            </property>
+                            <property name="text">
+                                <string>IP filter file:</string>
+                            </property>
+                        </widget>
+                        <widget class="KURLRequester">
+                            <property name="name">
+                                <cstring>m_filter</cstring>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <spacer row="1" column="0">
+                    <property name="name">
+                        <cstring>spacer5</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>40</height>
+                        </size>
+                    </property>
+                </spacer>
+            </grid>
+        </widget>
+        <spacer row="2" column="0">
+            <property name="name">
+                <cstring>spacer7</cstring>
             </property>
             <property name="orientation">
                 <enum>Vertical</enum>
@@ -32,52 +192,28 @@
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>160</height>
-                </size>
-            </property>
-        </spacer>
-        <widget class="QLabel" row="0" column="0" rowspan="1" colspan="3">
-            <property name="name">
-                <cstring>textLabel1_2</cstring>
-            </property>
-            <property name="text">
-                <string>Select a filter file with IP ranges in KTorrent format.</string>
-            </property>
-        </widget>
-        <spacer row="1" column="1">
-            <property name="name">
-                <cstring>spacer2</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Fixed</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
                     <height>40</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLabel" row="2" column="0">
-            <property name="name">
-                <cstring>textLabel1</cstring>
-            </property>
-            <property name="text">
-                <string>IP filter file:</string>
-            </property>
-        </widget>
-        <widget class="KURLRequester" row="2" column="1">
-            <property name="name">
-                <cstring>m_filter</cstring>
-            </property>
-        </widget>
     </grid>
 </widget>
+<connections>
+    <connection>
+        <sender>btnDownload</sender>
+        <signal>clicked()</signal>
+        <receiver>IPBlockingPref</receiver>
+        <slot>btnDownload_clicked()</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>btnDownload_clicked()</slot>
+</slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>

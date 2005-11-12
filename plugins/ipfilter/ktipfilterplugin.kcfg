@@ -10,5 +10,9 @@
 			<label>IP filter file</label>
 			<default></default>
 		</entry>
+		<entry name="filterURL" type="String">
+			<label>Level1 filter url</label>
+			<default></default>
+		</entry>
 	</group>
 </kcfg>

@@ -51,6 +51,9 @@ namespace kt
 		public:
 			IPBlockingPrefPageWidget(QWidget *parent = 0);
 			void apply();
+			void convert();
+		public slots:
+    		virtual void btnDownload_clicked();
 	};
 	
 	/**
