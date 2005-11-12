@@ -17,71 +17,62 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTUPLOADCAP_H
-#define BTUPLOADCAP_H
+#ifndef KTUPNPMCASTSOCKET_H
+#define KTUPNPMCASTSOCKET_H
 
-#include <qmap.h>
-#include <qvaluelist.h>
-#include <qptrlist.h>
-#include <util/timer.h>
-#include "globals.h"
+#include <util/ptrmap.h>
+#include <kdatagramsocket.h>
+#include <util/constants.h>
+#include "upnprouter.h"
 
-namespace bt
+using bt::Uint32;
+
+namespace kt
 {
-	class PacketWriter;
-
+	class UPnPRouter;
+	
 	/**
 	 * @author Joris Guisson
-	 * @brief Keeps the upload rate under control
 	 * 
-	 * Before a PeerUploader can send a piece, it must first ask
-	 * permission to a UploadCap object. This object will make sure
-	 * that the upload rate remains under a specified threshold. When the
-	 * threshold is set to 0, no upload capping will be done.
+	 * Socket used to discover UPnP devices. This class will keep track
+	 * of all discovered devices. 
 	*/
-	class UploadCap
+	class UPnPMCastSocket : public KNetwork::KDatagramSocket
 	{
-		static UploadCap self;
-
-		QPtrList<PacketWriter> up_queue;
-		Uint32 max_bytes_per_sec;
-		Timer timer;
-
-		UploadCap();
+	Q_OBJECT
 	public:
-		~UploadCap();
+		UPnPMCastSocket();
+		virtual ~UPnPMCastSocket();
+		
+		/// Get the number of routers discovered
+		Uint32 getNumDevicesDiscovered() const {return routers.count();}
+		
+		/// Find a router using it's server name
+		UPnPRouter* findDevice(const QString & name) {return routers.find(name);}
+		
+	public slots:
 		/**
-		 * Set the speed cap in bytes per second. 0 indicates
-		 * no limit.
-		 * @param max Maximum number of bytes per second.
+		 * Try to discover a UPnP device on the network.
+		 * A signal will be emitted when a device is found.
 		 */
-		void setMaxSpeed(Uint32 max);
-
-		/**
-		 * Allow or disallow somebody from sending a piece. If somebody
-		 * is disallowed they will be stored in a queue, and will be notified
-		 * when there turn is up.
-		 * @param pd PacketWriter doing the request
-		 * @return true if the piece is allowed or not
-		 */
-		bool allow(PacketWriter* pd);
-
-		/**
-		 * PacketWriter should call this when they get destroyed. To
-		 * remove them from the queue.
-		 * @param pd The PeerUploader
-		 */
-		void killed(PacketWriter* pd);
-
-		/**
-		 * Update the downloadcap.
-		 */
-		void update();
+		void discover();
 	
-
-		static UploadCap & instance() {return self;}
+	private slots:
+		void onReadyRead();
+		
+	signals:
+		/**
+		 * Emitted when a router or internet gateway device is detected.
+		 * @param router The router
+		 */
+		void discovered(UPnPRouter* router);
+		
+	private:
+		UPnPRouter* parseResponse(const QByteArray & arr);
+	
+	private:	
+		bt::PtrMap<QString,UPnPRouter> routers;
 	};
-
 }
 
 #endif

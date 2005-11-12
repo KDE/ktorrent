@@ -52,6 +52,7 @@ using namespace kt;
 
 KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seeding(true),pman(0)
 {
+	qman = new QueueManager();
 	data_dir = Settings::tempDir();
 	bool dd_not_exist = !bt::Exists(data_dir);
 	if (data_dir == QString::null || dd_not_exist)
@@ -99,7 +100,7 @@ KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seedin
 		Out() << "Cannot find free port" << endl;
 	}
 
-	qman = new QueueManager();
+	
 	pman = new kt::PluginManager(this,gui);
 	pman->loadConfigFile(KGlobal::dirs()->saveLocation("data","ktorrent") + "plugins");
 	pman->loadPluginList();

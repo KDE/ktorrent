@@ -17,71 +17,45 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTUPLOADCAP_H
-#define BTUPLOADCAP_H
+#include <klocale.h>
+#include <kglobal.h>
+#include <kiconloader.h>
+#include "upnpprefpage.h"
+#include "upnpprefwidget.h"
+#include "upnprouter.h"
+#include "upnpmcastsocket.h"
 
-#include <qmap.h>
-#include <qvaluelist.h>
-#include <qptrlist.h>
-#include <util/timer.h>
-#include "globals.h"
-
-namespace bt
+namespace kt
 {
-	class PacketWriter;
 
-	/**
-	 * @author Joris Guisson
-	 * @brief Keeps the upload rate under control
-	 * 
-	 * Before a PeerUploader can send a piece, it must first ask
-	 * permission to a UploadCap object. This object will make sure
-	 * that the upload rate remains under a specified threshold. When the
-	 * threshold is set to 0, no upload capping will be done.
-	*/
-	class UploadCap
+	UPnPPrefPage::UPnPPrefPage(UPnPMCastSocket* sock): PrefPageInterface(i18n("UPnP"), i18n("UPnP Devices"),
+	/*KGlobal::iconLoader()->loadIcon("viewmag",KIcon::NoGroup)*/QPixmap()),sock(sock)
 	{
-		static UploadCap self;
+		widget = 0;
+	}
 
-		QPtrList<PacketWriter> up_queue;
-		Uint32 max_bytes_per_sec;
-		Timer timer;
 
-		UploadCap();
-	public:
-		~UploadCap();
-		/**
-		 * Set the speed cap in bytes per second. 0 indicates
-		 * no limit.
-		 * @param max Maximum number of bytes per second.
-		 */
-		void setMaxSpeed(Uint32 max);
+	UPnPPrefPage::~UPnPPrefPage()
+	{}
 
-		/**
-		 * Allow or disallow somebody from sending a piece. If somebody
-		 * is disallowed they will be stored in a queue, and will be notified
-		 * when there turn is up.
-		 * @param pd PacketWriter doing the request
-		 * @return true if the piece is allowed or not
-		 */
-		bool allow(PacketWriter* pd);
 
-		/**
-		 * PacketWriter should call this when they get destroyed. To
-		 * remove them from the queue.
-		 * @param pd The PeerUploader
-		 */
-		void killed(PacketWriter* pd);
+	void UPnPPrefPage::apply()
+	{}
 
-		/**
-		 * Update the downloadcap.
-		 */
-		void update();
-	
+	void UPnPPrefPage::createWidget(QWidget* parent)
+	{
+		widget = new UPnPPrefWidget(parent);
+		QObject::connect(sock,SIGNAL(discovered(UPnPRouter* )),widget,SLOT(addDevice(UPnPRouter* )));
+		QObject::connect(widget,SIGNAL(rescan()),sock,SLOT(discover()));
+	}
 
-		static UploadCap & instance() {return self;}
-	};
+	void UPnPPrefPage::deleteWidget()
+	{
+		delete widget;
+		widget = 0;
+	}
 
+	void UPnPPrefPage::updateData()
+	{
+	}
 }
-
-#endif

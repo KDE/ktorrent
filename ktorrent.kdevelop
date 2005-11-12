@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>plugins/logviewer/ktlogviewerplugin.la</activetarget>
+      <activetarget>plugins/upnp/ktupnpplugin.la</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>
@@ -81,6 +81,8 @@
       <subclass uifile="/src/infowidgetbase.ui" sourcefile="/src/infowidget.h" />
       <subclass uifile="/src/fileselectdlgbase.ui" sourcefile="/src/fileselectdlg.cpp" />
       <subclass uifile="/src/fileselectdlgbase.ui" sourcefile="/src/fileselectdlg.h" />
+      <subclass uifile="/plugins/upnp/upnpwidget.ui" sourcefile="/plugins/upnp/upnpprefwidget.cpp" />
+      <subclass uifile="/plugins/upnp/upnpwidget.ui" sourcefile="/plugins/upnp/upnpprefwidget.h" />
     </subclassing>
   </kdevautoproject>
   <kdevfileview>

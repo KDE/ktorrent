@@ -17,69 +17,44 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTUPLOADCAP_H
-#define BTUPLOADCAP_H
+#ifndef KTSOAP_H
+#define KTSOAP_H
 
-#include <qmap.h>
 #include <qvaluelist.h>
-#include <qptrlist.h>
-#include <util/timer.h>
-#include "globals.h"
+#include <qstring.h>
 
-namespace bt
+namespace kt
 {
-	class PacketWriter;
 
 	/**
-	 * @author Joris Guisson
-	 * @brief Keeps the upload rate under control
-	 * 
-	 * Before a PeerUploader can send a piece, it must first ask
-	 * permission to a UploadCap object. This object will make sure
-	 * that the upload rate remains under a specified threshold. When the
-	 * threshold is set to 0, no upload capping will be done.
+	@author Joris Guisson
 	*/
-	class UploadCap
+	class SOAP
 	{
-		static UploadCap self;
-
-		QPtrList<PacketWriter> up_queue;
-		Uint32 max_bytes_per_sec;
-		Timer timer;
-
-		UploadCap();
 	public:
-		~UploadCap();
+		
 		/**
-		 * Set the speed cap in bytes per second. 0 indicates
-		 * no limit.
-		 * @param max Maximum number of bytes per second.
+		 * Create a simple UPnP SOAP command without parameters.
+		 * @param action The name of the action
+		 * @param service The name of the service
+		 * @return The command
 		 */
-		void setMaxSpeed(Uint32 max);
+		static QString createCommand(const QString & action,const QString & service);
+		
+		struct Arg
+		{
+			QString element;
+			QString value;
+		};
 
 		/**
-		 * Allow or disallow somebody from sending a piece. If somebody
-		 * is disallowed they will be stored in a queue, and will be notified
-		 * when there turn is up.
-		 * @param pd PacketWriter doing the request
-		 * @return true if the piece is allowed or not
+		 * Create a UPnP SOAP command with parameters.
+		 * @param action The name of the action
+		 * @param service The name of the service
+		 * @param args Arguments for command
+		 * @return The command
 		 */
-		bool allow(PacketWriter* pd);
-
-		/**
-		 * PacketWriter should call this when they get destroyed. To
-		 * remove them from the queue.
-		 * @param pd The PeerUploader
-		 */
-		void killed(PacketWriter* pd);
-
-		/**
-		 * Update the downloadcap.
-		 */
-		void update();
-	
-
-		static UploadCap & instance() {return self;}
+		static QString createCommand(const QString & action,const QString & service,const QValueList<Arg> & args);
 	};
 
 }

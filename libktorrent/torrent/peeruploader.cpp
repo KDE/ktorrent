@@ -74,6 +74,11 @@ namespace bt
 				requests.remove(r);
 				uploaded += pw.update();
 			}
+			else
+			{
+				// remove requests we can't satisfy
+				requests.remove(r);
+			}
 		}
 		
 		std::set<Uint32>::iterator g = grabbed.begin();

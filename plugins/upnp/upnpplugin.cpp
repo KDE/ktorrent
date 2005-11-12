@@ -17,71 +17,66 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTUPLOADCAP_H
-#define BTUPLOADCAP_H
+#include <kgenericfactory.h>
+#include <kglobal.h>
+#include <klocale.h>
+#include <kiconloader.h>
+#include <kstdaction.h>
+#include <kpopupmenu.h>
+#include <interfaces/guiinterface.h>
+#include "upnpplugin.h"
+#include "upnpmcastsocket.h"
+#include "upnpprefpage.h"
 
-#include <qmap.h>
-#include <qvaluelist.h>
-#include <qptrlist.h>
-#include <util/timer.h>
-#include "globals.h"
 
-namespace bt
+#define NAME "upnpplugin"
+#define AUTHOR "Joris Guisson"
+#define EMAIL "joris.guisson@gmail.com"
+
+
+
+K_EXPORT_COMPONENT_FACTORY(ktupnpplugin,KGenericFactory<kt::UPnPPlugin>("ktupnpplugin"))
+
+namespace kt
 {
-	class PacketWriter;
 
-	/**
-	 * @author Joris Guisson
-	 * @brief Keeps the upload rate under control
-	 * 
-	 * Before a PeerUploader can send a piece, it must first ask
-	 * permission to a UploadCap object. This object will make sure
-	 * that the upload rate remains under a specified threshold. When the
-	 * threshold is set to 0, no upload capping will be done.
-	*/
-	class UploadCap
+	UPnPPlugin::UPnPPlugin(QObject* parent, const char* name, const QStringList& args)
+	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,i18n("KTorrent's UPnP plugin"))
 	{
-		static UploadCap self;
+		sock = 0;
+		pref = 0;
+	}
 
-		QPtrList<PacketWriter> up_queue;
-		Uint32 max_bytes_per_sec;
-		Timer timer;
 
-		UploadCap();
-	public:
-		~UploadCap();
-		/**
-		 * Set the speed cap in bytes per second. 0 indicates
-		 * no limit.
-		 * @param max Maximum number of bytes per second.
-		 */
-		void setMaxSpeed(Uint32 max);
+	UPnPPlugin::~UPnPPlugin()
+	{
+		delete sock;
+		delete pref;
+	}
 
-		/**
-		 * Allow or disallow somebody from sending a piece. If somebody
-		 * is disallowed they will be stored in a queue, and will be notified
-		 * when there turn is up.
-		 * @param pd PacketWriter doing the request
-		 * @return true if the piece is allowed or not
-		 */
-		bool allow(PacketWriter* pd);
 
-		/**
-		 * PacketWriter should call this when they get destroyed. To
-		 * remove them from the queue.
-		 * @param pd The PeerUploader
-		 */
-		void killed(PacketWriter* pd);
+	void UPnPPlugin::load()
+	{
+#if 0
+		//KIconLoader* iload = KGlobal::iconLoader();
+		sock = new UPnPMCastSocket();
+		pref = new UPnPPrefPage(sock);
+		this->getGUI()->addPrefPage(pref);
+		sock->discover();
+#endif
+	}
 
-		/**
-		 * Update the downloadcap.
-		 */
-		void update();
-	
-
-		static UploadCap & instance() {return self;}
-	};
+	void UPnPPlugin::unload()
+	{
+#if 0
+		this->getGUI()->removePrefPage(pref);
+		sock->close();
+		delete pref;
+		pref = 0;
+		delete sock;
+		sock = 0;
+#endif
+	}
 
 }
-
-#endif
+#include "upnpplugin.moc"

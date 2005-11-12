@@ -17,69 +17,31 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTUPLOADCAP_H
-#define BTUPLOADCAP_H
+#ifndef KTSEARCHPLUGIN_H
+#define KTSEARCHPLUGIN_H
 
-#include <qmap.h>
-#include <qvaluelist.h>
-#include <qptrlist.h>
-#include <util/timer.h>
-#include "globals.h"
+#include <interfaces/plugin.h>
 
-namespace bt
+namespace kt
 {
-	class PacketWriter;
+	class UPnPMCastSocket;
+	class UPnPPrefPage;
 
 	/**
-	 * @author Joris Guisson
-	 * @brief Keeps the upload rate under control
-	 * 
-	 * Before a PeerUploader can send a piece, it must first ask
-	 * permission to a UploadCap object. This object will make sure
-	 * that the upload rate remains under a specified threshold. When the
-	 * threshold is set to 0, no upload capping will be done.
+	@author Joris Guisson
 	*/
-	class UploadCap
+	class UPnPPlugin : public Plugin
 	{
-		static UploadCap self;
-
-		QPtrList<PacketWriter> up_queue;
-		Uint32 max_bytes_per_sec;
-		Timer timer;
-
-		UploadCap();
+		Q_OBJECT
 	public:
-		~UploadCap();
-		/**
-		 * Set the speed cap in bytes per second. 0 indicates
-		 * no limit.
-		 * @param max Maximum number of bytes per second.
-		 */
-		void setMaxSpeed(Uint32 max);
+		UPnPPlugin(QObject* parent, const char* name, const QStringList& args);
+		virtual ~UPnPPlugin();
 
-		/**
-		 * Allow or disallow somebody from sending a piece. If somebody
-		 * is disallowed they will be stored in a queue, and will be notified
-		 * when there turn is up.
-		 * @param pd PacketWriter doing the request
-		 * @return true if the piece is allowed or not
-		 */
-		bool allow(PacketWriter* pd);
-
-		/**
-		 * PacketWriter should call this when they get destroyed. To
-		 * remove them from the queue.
-		 * @param pd The PeerUploader
-		 */
-		void killed(PacketWriter* pd);
-
-		/**
-		 * Update the downloadcap.
-		 */
-		void update();
-	
-
-		static UploadCap & instance() {return self;}
+		virtual void load();
+		virtual void unload();
+	private:
+		UPnPMCastSocket* sock;
+		UPnPPrefPage* pref;
 	};
 
 }

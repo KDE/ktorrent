@@ -50,6 +50,7 @@ namespace bt
 
 	Server::~Server()
 	{
+		sock->close();
 		delete sock;
 	}
 

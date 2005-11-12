@@ -47,7 +47,9 @@ namespace bt
 	{
 		peer->sendData(p.getHeader(),p.getHeaderLength());
 		if (p.getDataLength() > 0)
-			peer->sendData(p.getData(),p.getDataLength());
+			peer->sendData(p.getData(),p.getDataLength(),p.getType() == PIECE);
+		if (p.getType() == PIECE)
+			uploaded += p.getDataLength();
 	}
 
 	void PacketWriter::sendChoke()
@@ -150,8 +152,11 @@ namespace bt
 		else
 		{
 			// try to send it, if we can add it to the queue
-			if (UploadCap::instance().allow(this,len))
+			if (UploadCap::instance().allow(this))
+			{
 				sendPacket(Packet(index,begin,len,ch));
+			//	Out() << "Sending " << index << " " << begin << endl;
+			}
 			else
 				packets.append(new Packet(index,begin,len,ch));
 		}
@@ -161,7 +166,6 @@ namespace bt
 	{
 		Uint32 data_sent = uploaded;
 		uploaded = 0;
-
 		if (packets.count() == 0)
 			return data_sent;
 		
@@ -183,64 +187,46 @@ namespace bt
 		return data_sent;
 	}
 
-	Uint32 PacketWriter::uploadUnsentBytes(Uint32 num_bytes)
+	void PacketWriter::uploadUnsentPacket(bool all)
 	{
 		if (packets.count() == 0)
-			return 0;
+			return;
 		
-		Packet* p = packets.first();	
-		Uint32 bytes_written = 0;
-		Uint32 written = p->getDataWritten();
-		if (written == 0)
+		// get rid of small packets first
+		while (packets.count() > 0)
 		{
-			// we haven't written anything yet
-			// so send header
-			peer->sendData(p->getHeader(),p->getHeaderLength());
-			p->dataWritten(p->getHeaderLength());
-			// now try to send data
-			if (num_bytes == p->getDataLength())
-			{
-				// we can send the packet fully
-				peer->sendData(p->getData(),p->getDataLength(),true);
-				p->dataWritten(p->getDataLength());
-				bytes_written += p->getDataLength();
-				// remove the packet
-				packets.removeFirst();
-			}
-			else if (num_bytes > 0)
-			{
-				// we can send some data
-				peer->sendData(p->getData(),num_bytes,true);
-				p->dataWritten(num_bytes);
-				bytes_written += num_bytes;
-			}
+			Packet* p = packets.first();
+			// break if we have found a piece
+			if (p->getType() == PIECE)
+				break;
+			sendPacket(*p);
+			packets.removeFirst();
+		}
+		
+		if (packets.count() == 0)
+			return;
+		
+		if (!all)
+		{
+			// send a big one
+			Packet* p = packets.first();	
+		//	Out() << "Sending big one" << endl;
+			sendPacket(*p);
+			packets.removeFirst();
 		}
 		else
 		{
-			// calculate how many bytes are left
-			Uint32 dl = p->getDataLength();
-			Uint32 written = p->getDataWritten() - p->getHeaderLength();
-			Uint32 left = dl - written;
-			// try to send the remaining bytes
-			if (num_bytes == left)
+			// send all packets left
+			while (packets.count() > 0)
 			{
-				// we can send the remaining bytes
-				peer->sendData(p->getData() + written,left,true);
-				p->dataWritten(left);
-				bytes_written += left;
-				// remove the packet
+				Packet* p = packets.first();
+				if (p->getType() == PIECE)
+				{
+			//		Out() << "Sending big one" << endl;
+				}
+				sendPacket(*p);
 				packets.removeFirst();
-			}
-			else if (num_bytes > 0)
-			{
-				// send another part of the data
-				peer->sendData(p->getData() + written,num_bytes,true);
-				p->dataWritten(num_bytes);
-				bytes_written += num_bytes;
-			}
+			}	
 		}
-
-		uploaded += bytes_written;
-		return bytes_written;
 	}
 }

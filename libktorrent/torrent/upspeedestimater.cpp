@@ -48,6 +48,7 @@ namespace bt
 	void UpSpeedEstimater::bytesWritten(Uint32 bytes)
 	{
 		QValueList<Entry>::iterator i = outstanding_bytes.begin();
+		Uint32 now = GetCurrentTime();
 		while (bytes > 0 && i != outstanding_bytes.end())
 		{
 			Entry e = *i;
@@ -61,7 +62,7 @@ namespace bt
 				{
 					// if it's data move it to the written_bytes list
 					// but first store time it takes to send in e.t
-					e.duration = GetCurrentTime() - e.start_time;
+					e.duration = now - e.start_time;
 					written_bytes.append(e);
 				}
 			}
@@ -117,11 +118,11 @@ namespace bt
 			}
 		}
 
-		Uint32 tot_time = now - oldest_time;
+		/*Uint32 tot_time = now - oldest_time;
 		if (tot_time == 0)
 			upload_rate = 0;
-		else
-			upload_rate = (double)tot_bytes / (tot_time * 0.001);
+		else*/
+			upload_rate = (double)tot_bytes / (INTERVAL * 0.001);
 	}
 
 }

@@ -100,6 +100,9 @@ namespace bt
 		 * @param p The port
 		 */
 		static void setPort(Uint16 p);
+		
+		/// Get the port in use.
+		static Uint16 getPort();
 	private slots:
 		void dataRecieved(int s);
 

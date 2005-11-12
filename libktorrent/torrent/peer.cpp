@@ -218,7 +218,7 @@ namespace bt
 							id);
 					
 					uploader->addRequest(r);
-				//	Out() << "REQUEST " << peer_id.toString() << endl;
+				//	Out() << "REQUEST " << r.getIndex() << " " << r.getOffset() << endl;
 				}
 				break;
 			case PIECE:

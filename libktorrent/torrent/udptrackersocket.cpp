@@ -183,6 +183,10 @@ namespace bt
 		port = p;
 	}
 	
+	Uint16 UDPTrackerSocket::getPort()
+	{
+		return port;
+	}
 }
 
 #include "udptrackersocket.moc"

@@ -40,18 +40,27 @@ namespace bt
 	void UploadCap::setMaxSpeed(Uint32 max)
 	{
 		max_bytes_per_sec = max;
+		// tell everybody to go wild
+		if (max_bytes_per_sec == 0)
+		{
+			QPtrList<PacketWriter>::iterator i = up_queue.begin();
+			while (i != up_queue.end())
+			{
+				PacketWriter* pw = *i;
+				pw->uploadUnsentPacket(true);
+				i++;
+			}
+			up_queue.clear();
+		}
 	}
 
-	bool UploadCap::allow(PacketWriter* pd,Uint32 bytes)
+	bool UploadCap::allow(PacketWriter* pd)
 	{
 		if (max_bytes_per_sec == 0)
 		{
 			timer.update();
 			return true;
 		}
-
-		// first update map or add new entry
-		up_bytes[pd].append(bytes);
 
 		// append pd to queue
 		up_queue.append(pd);
@@ -61,46 +70,41 @@ namespace bt
 	void UploadCap::killed(PacketWriter* pd)
 	{
 		up_queue.remove(pd);
-		up_bytes.erase(pd);
 	}
 
 	void UploadCap::update()
 	{
-		// first calculate the allowwed bytes
-		Uint32 el = timer.getElapsedSinceUpdate();
-		float secs = el / 1000.0f;
-		if (secs > 3.0f)
-			secs = 3.0f;
+		if (up_queue.count() == 0)
+			return;
 		
-		Uint32 allowed_bytes = (Uint32)floor(max_bytes_per_sec * secs);
-		timer.update();
+		// first calculate the time since the last update
+		double el = timer.getElapsedSinceUpdate();
+		// the interval between two uploads
+		double up_interval = 1000.0 / ((double)max_bytes_per_sec / MAX_PIECE_LEN);
+		// the number of packets we can send is the elapsed time divided by the interval
+		Uint32 npackets = (Uint32)floor(el / up_interval);
+		//if (npackets > 1)
+		//	npackets == 0;
+		
+		bool sent_one = false;
 
-		while ((allowed_bytes > 0 || max_bytes_per_sec == 0) && up_queue.count() != 0)
+		while (up_queue.count() > 0 && npackets > 0)
 		{
 			// get the first
 			PacketWriter* pw = up_queue.first();
-			// Find out how much it wants to write
-			QValueList<Uint32> & vl = up_bytes[pw];
-			Uint32 num_want = vl.first();
-			// only allow one chunk at a time
-			if (num_want > MAX_PIECE_LEN)
-				num_want = MAX_PIECE_LEN;
-			// make sure we don't send more then we're allowwed
-			// we however disregard this if we are allowed to download
-			// at full speed
-			if (num_want > allowed_bytes && max_bytes_per_sec > 0)
-				num_want = allowed_bytes;
-
-			num_want = pw->uploadUnsentBytes(num_want);
-			vl.first() -= num_want;
-			// if we sent a full packet remove the pw from the queue
-			if (vl.first() == 0)
+			
+			if (pw->getNumPacketsToWrite() > 0)
 			{
-				up_queue.removeFirst();
-				vl.pop_front();
+				// upload one
+				pw->uploadUnsentPacket(false);
+				npackets--;
+				sent_one = true;
 			}
-			if (max_bytes_per_sec > 0)
-				allowed_bytes -= num_want;
+			// remove the first entry
+			up_queue.removeFirst();
 		}
+		
+		if (sent_one)
+			timer.update();
 	}
 }

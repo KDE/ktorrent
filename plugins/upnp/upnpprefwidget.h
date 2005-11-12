@@ -17,71 +17,59 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTUPLOADCAP_H
-#define BTUPLOADCAP_H
+
+#ifndef UPNPPREFWIDGET_H
+#define UPNPPREFWIDGET_H
 
 #include <qmap.h>
-#include <qvaluelist.h>
-#include <qptrlist.h>
-#include <util/timer.h>
-#include "globals.h"
+#include "upnprouter.h"
+#include "upnpwidget.h"
 
-namespace bt
+class KListViewItem;
+
+namespace kt
 {
-	class PacketWriter;
-
-	/**
-	 * @author Joris Guisson
-	 * @brief Keeps the upload rate under control
-	 * 
-	 * Before a PeerUploader can send a piece, it must first ask
-	 * permission to a UploadCap object. This object will make sure
-	 * that the upload rate remains under a specified threshold. When the
-	 * threshold is set to 0, no upload capping will be done.
-	*/
-	class UploadCap
-	{
-		static UploadCap self;
-
-		QPtrList<PacketWriter> up_queue;
-		Uint32 max_bytes_per_sec;
-		Timer timer;
-
-		UploadCap();
-	public:
-		~UploadCap();
-		/**
-		 * Set the speed cap in bytes per second. 0 indicates
-		 * no limit.
-		 * @param max Maximum number of bytes per second.
-		 */
-		void setMaxSpeed(Uint32 max);
-
-		/**
-		 * Allow or disallow somebody from sending a piece. If somebody
-		 * is disallowed they will be stored in a queue, and will be notified
-		 * when there turn is up.
-		 * @param pd PacketWriter doing the request
-		 * @return true if the piece is allowed or not
-		 */
-		bool allow(PacketWriter* pd);
-
-		/**
-		 * PacketWriter should call this when they get destroyed. To
-		 * remove them from the queue.
-		 * @param pd The PeerUploader
-		 */
-		void killed(PacketWriter* pd);
-
-		/**
-		 * Update the downloadcap.
-		 */
-		void update();
 	
-
-		static UploadCap & instance() {return self;}
+	/**
+	 * Widget for the UPnP pref dialog page.
+	 */
+	class UPnPPrefWidget : public UPnPWidget
+	{
+		Q_OBJECT
+	
+	public:
+		UPnPPrefWidget(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+		virtual ~UPnPPrefWidget();
+		
+	
+	public slots:
+		/**
+		 * Add a device to the list. 
+		 * @param r The device
+		 */
+		void addDevice(UPnPRouter* r);
+	
+	signals:
+		/**
+		 * Emitted when the user presses the rescan button.
+		 */
+		void rescan();
+		
+	
+	protected slots:
+		void onForwardBtnClicked();
+		void onUndoForwardBtnClicked();
+		void onRescanClicked();
+		void onReplyOK(const QString & msg);
+		void onReplyError(const QString & msg);
+		
+	private:
+		void updatePortMappings();
+		
+	private:
+		QMap<KListViewItem*,UPnPRouter*> itemmap;
 	};
-
 }
 
 #endif
+
