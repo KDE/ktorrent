@@ -280,7 +280,18 @@ namespace kt
 			Range & ra = *i;
 			int rw = ra.last - ra.first + 1;
 			int fac = ra.fac;
-			QColor c = color.light(200-fac);
+			QColor c = color;
+			if (fac != 100)
+			{
+				// do some rounding off
+				if (fac <= 25)
+					fac = 25;
+				else if (fac <= 50)
+					fac = 50;
+				else 
+					fac = 75;
+				c = color.light(200-fac);
+			} 
 			p->setPen(QPen(c,1,Qt::SolidLine));
 			p->setBrush(c);
 			p->drawRect(ra.first,0,rw,r.height());

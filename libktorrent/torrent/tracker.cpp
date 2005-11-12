@@ -112,7 +112,7 @@ namespace bt
 	{
 		event = QString::null;
 		doRequest(tor->getTrackerURL(true));
-		
+		time_of_last_update = GetCurrentTime();
 	}
 
 	void Tracker::completed()
