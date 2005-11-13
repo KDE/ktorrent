@@ -253,7 +253,7 @@ namespace kt
 			if (num_dl == 0)
 				continue;
 	
-			int fac = int(100*((double)num_dl / chunks_per_pixel));
+			int fac = int(100*((double)num_dl / (jEnd - jStart) + 0.5));
 			if (rs.empty())
 			{
 				Range r = {i,i,fac};
