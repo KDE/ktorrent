@@ -36,6 +36,8 @@ namespace kt
 	{
 		routers.setAutoDelete(true);
 		QObject::connect(this,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
+		QObject::connect(this,SIGNAL(gotError(int)),this,SLOT(onError(int)));
+		setAddressReuseable(true);
 		if (!bind(QString::null,"1900"))
 			Out() << "Cannot bind to UDP port 1900" << endl;
 	}
@@ -48,6 +50,7 @@ namespace kt
 	
 	void UPnPMCastSocket::discover()
 	{
+		Out() << "Trying to find UPnP devices on the local network" << endl;
 		// clear the old list, if there is one
 		routers.clear();
 		
@@ -132,6 +135,11 @@ namespace kt
 		
 		// everything OK, make a new UPnPRouter
 		return new UPnPRouter(server,location);
+	}
+	
+	void UPnPMCastSocket::onError(int)
+	{
+		Out() << "UPnPMCastSocket Error : " << errorString() << endl;
 	}
 }
 

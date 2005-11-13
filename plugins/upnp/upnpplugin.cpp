@@ -57,25 +57,21 @@ namespace kt
 
 	void UPnPPlugin::load()
 	{
-#if 0
 		//KIconLoader* iload = KGlobal::iconLoader();
 		sock = new UPnPMCastSocket();
 		pref = new UPnPPrefPage(sock);
 		this->getGUI()->addPrefPage(pref);
 		sock->discover();
-#endif
 	}
 
 	void UPnPPlugin::unload()
 	{
-#if 0
 		this->getGUI()->removePrefPage(pref);
 		sock->close();
 		delete pref;
 		pref = 0;
 		delete sock;
 		sock = 0;
-#endif
 	}
 
 }

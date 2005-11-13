@@ -60,14 +60,11 @@ namespace kt
 		void onForwardBtnClicked();
 		void onUndoForwardBtnClicked();
 		void onRescanClicked();
-		void onReplyOK(const QString & msg);
-		void onReplyError(const QString & msg);
-		
-	private:
 		void updatePortMappings();
 		
 	private:
 		QMap<KListViewItem*,UPnPRouter*> itemmap;
+		UPnPRouter* def_router;
 	};
 }
 

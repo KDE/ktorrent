@@ -37,7 +37,7 @@ namespace kt
 	QString SOAP::createCommand(const QString & action,const QString & service,const QValueList<Arg> & args)
 	{
 		QString comm = QString("<?xml version=\"1.0\"?>\r\n"
-				"<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+				"<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
 				"<SOAP-ENV:Body>"
 				"<m:%1 xmlns:m=\"%2\">").arg(action).arg(service);
 		

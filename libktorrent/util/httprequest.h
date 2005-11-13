@@ -17,63 +17,75 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTUPNPMCASTSOCKET_H
-#define KTUPNPMCASTSOCKET_H
+#ifndef BTHTTPREQUEST_H
+#define BTHTTPREQUEST_H
 
-#include <util/ptrmap.h>
-#include <kdatagramsocket.h>
-#include <util/constants.h>
-#include "upnprouter.h"
+#include <qobject.h>
+#include <kurl.h>
+#include <kstreamsocket.h>
+#include "constants.h"
 
-using bt::Uint32;
-
-namespace kt
+namespace bt 
 {
-	class UPnPRouter;
 	
 	/**
 	 * @author Joris Guisson
 	 * 
-	 * Socket used to discover UPnP devices. This class will keep track
-	 * of all discovered devices. 
+	 * Just create one, fill in the fields,
+	 * connect to the right signals and forget about it. After the reply has been recieved or
+	 * an error occured, the appropriate signal will be emitted.
 	*/
-	class UPnPMCastSocket : public KNetwork::KDatagramSocket
+	class HTTPRequest : public QObject
 	{
-	Q_OBJECT
+		Q_OBJECT
 	public:
-		UPnPMCastSocket();
-		virtual ~UPnPMCastSocket();
-		
-		/// Get the number of routers discovered
-		Uint32 getNumDevicesDiscovered() const {return routers.count();}
-		
-		/// Find a router using it's server name
-		UPnPRouter* findDevice(const QString & name) {return routers.find(name);}
-		
-	public slots:
 		/**
-		 * Try to discover a UPnP device on the network.
-		 * A signal will be emitted when a device is found.
+		 * Constructor, set the url and the request header.
+		 * @param hdr The http request header
+		 * @param payload The payload
+		 * @param host The host
+		 * @param port THe port
 		 */
-		void discover();
-	
-	private slots:
-		void onReadyRead();
-		void onError(int);
+		HTTPRequest(const QString & hdr,const QString & payload,const QString & host,Uint16 port);
+		virtual ~HTTPRequest();
+		
+		/**
+		 * Open a connetion and send the request.
+		 */
+		void start();
 		
 	signals:
 		/**
-		 * Emitted when a router or internet gateway device is detected.
-		 * @param router The router
+		 * An OK reply was sent.
+	     * @param r The sender of the request
+		 * @param data The data of the reply
 		 */
-		void discovered(UPnPRouter* router);
+		void replyOK(bt::HTTPRequest* r,const QString & data);
+		
+		/**
+		 * Anything else but an 200 OK was sent.
+		 * @param r The sender of the request
+		 * @param data The data of the reply
+		 */
+		void replyError(bt::HTTPRequest* r,const QString & data);
+		
+		/**
+		 * No reply was sent and an error or timeout occured.
+		 * @param r The sender of the request
+		 * @param timeout Wether or not a timeout occured
+		 */
+		void error(bt::HTTPRequest* r,bool timeout);
+		
+	private slots:
+		void onReadyRead();
+		void onError(int);
+		void onTimeout();
 		
 	private:
-		UPnPRouter* parseResponse(const QByteArray & arr);
-	
-	private:	
-		bt::PtrMap<QString,UPnPRouter> routers;
+		KNetwork::KStreamSocket* sock;
+		QString hdr,payload;
 	};
+
 }
 
 #endif

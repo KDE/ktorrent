@@ -27,6 +27,11 @@
 
 using bt::Uint16;
 
+namespace bt
+{
+	class HTTPRequest;
+}
+
 namespace kt 
 {
 	/**
@@ -112,11 +117,8 @@ namespace kt
 		KURL location;
 		UPnPDeviceDescription desc;
 		QValueList<UPnPService> services;
-		KNetwork::KStreamSocket* sock;
-		QStringList query_buf;
-		bool waiting_for_reply;
 		QValueList<Forwarding> fwds;
-			
+		QMap<bt::HTTPRequest*,QValueList<Forwarding>::iterator > reqs;
 	public:
 		/**
 		 * Construct a router.
@@ -148,9 +150,7 @@ namespace kt
 		 * @param s The service
 		 */
 		void addService(const UPnPService & s);
-		
-		
-	
+			
 		/**
 		 * See if a port is forwarded
 		 * @param port The Port
@@ -183,28 +183,21 @@ namespace kt
 		QValueList<Forwarding>::iterator endPortMappings() {return fwds.end();}
 		
 	private slots:
-		void onReadyRead();
-		void onSocketError(int);
-		void onSocketTimeout();
+		void onReplyOK(bt::HTTPRequest* r,const QString &);
+		void onReplyError(bt::HTTPRequest* r,const QString &);
+		void onError(bt::HTTPRequest* r,bool);
+		
 		
 	signals:
 		/**
-		 * A 200 OK reply was sent.
-		 * @param The content of the reply
+		 * Tell the GUI that it needs to be updated.
 		 */
-		void replyOK(const QString & content);
-		
-		/**
-		 * An error reply was sent.
-		 * @param The content of the reply
-		 */
-		void replyError(const QString & content);
+		void updateGUI();
 		
 	private:
-		QValueList<UPnPService>::iterator findPortForwardingService();
+		QValueList<UPnPService>::iterator findPortForwardingService();		
 		void debugPrintData();
-		void createSocket();
-		void sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl);
+		bt::HTTPRequest* sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl);
 	};
 
 }

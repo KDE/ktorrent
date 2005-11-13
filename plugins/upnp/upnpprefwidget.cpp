@@ -24,6 +24,8 @@
 #include <torrent/globals.h>
 #include <torrent/server.h>
 #include "upnpprefwidget.h"
+#include <util/log.h>
+#include <torrent/globals.h>
 #include "upnppluginsettings.h"
 
 using namespace bt;
@@ -33,32 +35,40 @@ namespace kt
 	UPnPPrefWidget::UPnPPrefWidget(QWidget* parent, const char* name, WFlags fl)
 			: UPnPWidget(parent,name,fl)
 	{
+		def_router = 0;
 		connect(m_forward_btn,SIGNAL(clicked()),this,SLOT(onForwardBtnClicked()));
 		connect(m_undo_forward_btn,SIGNAL(clicked()),this,SLOT(onUndoForwardBtnClicked()));
 		connect(m_rescan,SIGNAL(clicked()),this,SLOT(onRescanClicked()));
 	}
 	
 	UPnPPrefWidget::~UPnPPrefWidget()
-	{}
+	{
+		if (def_router)
+		{
+			def_router->undoForward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
+			def_router->undoForward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
+		}
+	}
 	
 	
 	void UPnPPrefWidget::addDevice(UPnPRouter* r)
 	{
-		connect(r,SIGNAL(replyError(const QString& )),this,SLOT(onReplyError(const QString& )));
-		connect(r,SIGNAL(replyOK(const QString& )),this,SLOT(onReplyOK(const QString& )));
+		connect(r,SIGNAL(updateGUI()),this,SLOT(updatePortMappings()));
 		KListViewItem* item = new KListViewItem(m_device_list,r->getDescription().friendlyName);
 		itemmap[item] = r;
 		// if we have discovered the default device or there is none
 		// forward it's ports
 		QString def_dev = UPnPPluginSettings::defaultDevice();
-		if (def_dev == r->getServer() || def_dev == QString::null)
+		if (def_dev == r->getServer() || def_dev.length() == 0)
 		{
+			Out() << "Doing default port mappings ..." << endl;
 			UPnPPluginSettings::setDefaultDevice(r->getServer());
 			UPnPPluginSettings::writeConfig();
 			
 			// forward both ports
 			r->forward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
 			r->forward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
+			def_router = r;
 		}
 	}
 		
@@ -79,6 +89,7 @@ namespace kt
 		{
 			UPnPPluginSettings::setDefaultDevice(r->getServer());
 			UPnPPluginSettings::writeConfig();
+			def_router = r;
 		}
 			
 	}
@@ -108,13 +119,10 @@ namespace kt
 		{
 			UPnPPluginSettings::setDefaultDevice(QString::null);
 			UPnPPluginSettings::writeConfig();
+			def_router = 0;
 		}
 	}
-	
-	void UPnPPrefWidget::onReplyOK(const QString &)
-	{
-		updatePortMappings();
-	}
+
 	
 	void UPnPPrefWidget::updatePortMappings()
 	{
@@ -142,10 +150,7 @@ namespace kt
 		}
 	}
 	
-	void UPnPPrefWidget::onReplyError(const QString & )
-	{
-		updatePortMappings();
-	}
+
 }
 
 

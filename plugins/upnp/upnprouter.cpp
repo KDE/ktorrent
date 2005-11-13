@@ -25,6 +25,7 @@
 #include <util/array.h>
 #include <util/error.h>
 #include <util/fileops.h>
+#include <util/httprequest.h>
 #include "upnprouter.h"
 #include "upnpdescriptionparser.h"
 #include "soap.h"
@@ -104,9 +105,6 @@ namespace kt
 	
 	UPnPRouter::UPnPRouter(const QString & server,const KURL & location) : server(server),location(location)
 	{
-		sock = 0;
-		waiting_for_reply = false;
-		createSocket();
 	}
 	
 	
@@ -217,7 +215,7 @@ namespace kt
 		
 		// the local IP address
 		a.element = "NewInternalClient";
-		a.value = sock->localAddress().nodeName();
+		a.value = "$LOCAL_IP";// will be replaced by our local ip in bt::HTTPRequest
 		args.append(a);
 		
 		a.element = "NewEnabled";
@@ -225,7 +223,8 @@ namespace kt
 		args.append(a);
 		
 		a.element = "NewPortMappingDescription";
-		a.value = "KTorrent UPNP";	// TODO: change this
+		static Uint32 cnt = 0;
+		a.value = QString("KTorrent UPNP %1").arg(cnt++);	// TODO: change this
 		args.append(a);
 		
 		a.element = "NewLeaseDuration";
@@ -235,9 +234,10 @@ namespace kt
 		UPnPService & s = *i;
 		QString action = "AddPortMapping";
 		QString comm = SOAP::createCommand(action,s.servicetype,args);
+		
 		Forwarding fw = {port,prot,true};
-		fwds.append(fw);
-		sendSoapQuery(comm,s.servicetype + "#" + action,s.controlurl);
+		bt::HTTPRequest* r = sendSoapQuery(comm,s.servicetype + "#" + action,s.controlurl);
+		reqs[r] = fwds.append(fw);
 	}
 	
 	void UPnPRouter::undoForward(Uint16 port,Protocol prot)
@@ -298,134 +298,60 @@ namespace kt
 		sendSoapQuery(comm,s.servicetype + "#" + action,s.controlurl);
 	}
 	
-	void UPnPRouter::createSocket()
+	bt::HTTPRequest* UPnPRouter::sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl)
 	{
-		if (sock)
-			return;
-		
-		sock = new KNetwork::KStreamSocket(location.host(),QString::number(location.port()),this,0);
-		sock->enableRead(true);
-		sock->enableWrite(true);
-		sock->setTimeout(30000);
-		sock->setBlocking(false);
-		connect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-		connect(sock,SIGNAL(gotError(int)),this,SLOT(onSocketError(int )));
-		connect(sock,SIGNAL(timedOut()),this,SLOT(onSocketTimeout()));
-	
-		if (!sock->connect())
-		{
-			QString err = i18n("Cannot create network connection to %1 : %2")
-					.arg(location.host()).arg(sock->errorString());
-			delete sock;
-			sock = 0;
-			throw Error(err);
-		}
-	}
-	
-	void UPnPRouter::sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl)
-	{
-		if (!sock)
-			createSocket();
-		
 		QString http_hdr = QString(
 				"POST %1 HTTP/1.1\r\n"
 				"HOST: %2:%3\r\n"
-				"Content-length: %4\r\n"
+				"Content-length: $CONTENT_LENGTH\r\n"
 				"Content-Type: text/xml\r\n"
-				"SOAPAction: \"%5\"\r\n"
-				"\r\n").arg(controlurl).arg(location.host()).arg(location.port()).arg(query.length()).arg(soapact);
+				"SOAPAction: \"%4\"\r\n"
+				"\r\n").arg(controlurl).arg(location.host()).arg(location.port()).arg(soapact);
 
 		
-		QString msg = http_hdr + query;
-		if (query_buf.empty())
-		{
-			// send the query
-			sock->writeBlock(msg.ascii(),msg.length());
-			Out() << "Sending SOAP query : " << endl;
-			Out() << http_hdr << endl << query << endl << "Done" << endl;
-			waiting_for_reply = true;
-		}
-		else
-		{
-			Out() << "Appending msg" << endl;
-			query_buf.append(msg);
-		}
+		HTTPRequest* r = new HTTPRequest(http_hdr,query,location.host(),location.port());
+		connect(r,SIGNAL(replyError(bt::HTTPRequest* ,const QString& )),
+				this,SLOT(onReplyError(bt::HTTPRequest* ,const QString& )));
+		connect(r,SIGNAL(replyOK(bt::HTTPRequest* ,const QString& )),
+				this,SLOT(onReplyOK(bt::HTTPRequest* ,const QString& )));
+		connect(r,SIGNAL(error(bt::HTTPRequest*, bool )),
+				this,SLOT(onError(bt::HTTPRequest*, bool )));
+		r->start();
+		return r;
 	}
 	
-	void UPnPRouter::onReadyRead()
+
+	void UPnPRouter::onReplyOK(bt::HTTPRequest* r,const QString &)
 	{
-		Uint32 ba = sock->bytesAvailable();
-		if (ba == 0)
-			return;
-		Array<char> data(ba);
-		ba = sock->readBlock(data,ba);
-		QString strdata((const char*)data);
-		QStringList sl = QStringList::split("\r\n",strdata,false);	
-		
-		
-		if (sl.first().contains("HTTP") && sl.first().contains("200"))
+		if (reqs.contains(r))
 		{
-			// if data contains AddPortMapping
-			// we now that a pending portforwarding is ok
-			if (strdata.contains("AddPortMapping"))
-			{
-				QValueList<Forwarding>::iterator i = fwds.begin();
-				while (i != fwds.end())
-				{
-					Forwarding & fw = *i;
-					if (fw.pending)
-					{
-						fw.pending = false;
-						break;
-					}
-					i++;
-				}
-			}
-			replyOK(sl.last());
+			(*reqs[r]).pending = false;
+			reqs.erase(r);
 		}
-		else
-		{
-			// remove the first pending port mapping
-			if (strdata.contains("AddPortMapping"))
-			{
-				QValueList<Forwarding>::iterator i = fwds.begin();
-				while (i != fwds.end())
-				{
-					Forwarding & fw = *i;
-					if (fw.pending)
-					{
-						fwds.erase(i);
-						break;
-					}
-					i++;
-				}
-			}
-			replyError(sl.last());
-		}
-		waiting_for_reply = false;
-		
-		
-		
-		if (!query_buf.empty())
-		{
-			QString msg = query_buf.front();
-			query_buf.erase(query_buf.begin());
-			sock->writeBlock(msg.ascii(),msg.length());
-			waiting_for_reply = true;
-		}
+		updateGUI();
+		r->deleteLater();
 	}
 	
-	void UPnPRouter::onSocketError(int)
+	void UPnPRouter::onReplyError(bt::HTTPRequest* r,const QString &)
 	{
-		Out() << "Error : " << sock->errorString() << endl;
-		sock->deleteLater();
-		sock = 0;
+		if (reqs.contains(r))
+		{
+			fwds.erase(reqs[r]);
+			reqs.erase(r);
+		}
+		updateGUI();
+		r->deleteLater();
 	}
 	
-	void UPnPRouter::onSocketTimeout()
+	void UPnPRouter::onError(bt::HTTPRequest* r,bool)
 	{
-		Out() << "UPnP Timeout !" << endl;
-		waiting_for_reply = false;
+		if (reqs.contains(r))
+		{
+			fwds.erase(reqs[r]);
+			reqs.erase(r);
+		}
+		updateGUI();
+		r->deleteLater();
 	}
 	
 }
