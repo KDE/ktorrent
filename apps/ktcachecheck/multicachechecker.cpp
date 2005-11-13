@@ -62,8 +62,9 @@ namespace debug
 
 
 			
-			Uint64 size = i == tor.getNumChunks() - 1 ?
-					tor.getFileLength() % chunk_size : chunk_size;
+			Uint64 size = chunk_size;
+			if (i == tor.getNumChunks() - 1 && tor.getFileLength() % chunk_size != 0)
+				size = tor.getFileLength() % chunk_size;
 
 			//Out() << "Loading chunk (size = " << size << ")" << endl;
 			Uint64 bytes_offset = 0;
