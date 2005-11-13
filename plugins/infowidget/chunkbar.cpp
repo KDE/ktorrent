@@ -237,17 +237,18 @@ namespace kt
 	
 	void ChunkBar::drawMoreChunksThenPixels(QPainter *p,const BitSet & bs,const QColor & color)
 	{
-		Uint32 w = contentsRect().width();
-		Uint32 chunks_per_pixel = (int)floor((double)bs.getNumBits() / w);
-	
-		QValueList<Range> rs;
-		
-		for (Uint32 i = 0;i < w;i++)
-		{
-			Uint32 num_dl = 0;
-			for (Uint32 j = i*chunks_per_pixel;j < (i+1)*chunks_per_pixel;j++)
-				if (bs.get(j))
-					num_dl++;
+		Uint32 w = contentsRect().width(); 
+		double chunks_per_pixel = (double)bs.getNumBits() / w;
+		QValueList<Range> rs; 
+
+		for (Uint32 i = 0;i < w;i++) 
+		{ 
+			Uint32 num_dl = 0; 
+			Uint32 jStart = (Uint32) (i*chunks_per_pixel); 
+			Uint32 jEnd = (Uint32) ((i+1)*chunks_per_pixel+0.5); 
+			for (Uint32 j = jStart;j < jEnd;j++) 
+				if (bs.get(j)) 
+					num_dl++; 
 	
 			if (num_dl == 0)
 				continue;
