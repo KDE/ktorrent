@@ -96,7 +96,7 @@ namespace bt
 
 		Uint32 nip = leechers + seeders;
 		Uint32 j = 0;
-		for (Uint32 i = 20;i < buf.size(),j < nip;i+=6,j++)
+		for (Uint32 i = 20;i < buf.size() && j < nip;i+=6,j++)
 		{
 			PotentialPeer pp;
 			pp.ip = QHostAddress(ReadUint32(buf,i)).toString();

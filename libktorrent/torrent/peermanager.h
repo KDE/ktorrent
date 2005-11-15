@@ -34,6 +34,7 @@ namespace bt
 	class ChunkManager;
 	class Torrent;
 	class Authenticate;
+	class ChunkCounter;
 
 	struct PotentialPeer
 	{
@@ -143,6 +144,9 @@ namespace bt
 
 		/// Get a BitSet of all available chunks
 		const BitSet & getAvailableChunksBitSet() const {return available_chunks;}
+		
+		/// Get the chunk counter.
+		ChunkCounter & getChunkCounter() {return *cnt;};
 	private:
 		bool connectedTo(const PeerID & peer_id);	
 		void peerAuthenticated(Authenticate* auth,bool ok);
@@ -164,6 +168,7 @@ namespace bt
 		Torrent & tor;
 		bool started;
 		BitSet available_chunks;
+		ChunkCounter* cnt;
 		
 		static Uint32 max_connections;
 	};

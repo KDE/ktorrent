@@ -19,6 +19,10 @@ Changelog since v1.1 (October 10th, 2005)
 - KTorrent now deletes data from incomplete torrents
 - Switched to KNetwork classes
 - Added option to paste URL to .torrent files
+- Made a log viewer plugin
+- Requests time out after 60 seconds
+- Added UPnP plugin (108930)
+- Rarest piece first downloading
 
 - Fixed BUG: 
 	-114103
@@ -30,3 +34,5 @@ Changelog since v1.1 (October 10th, 2005)
 	-114904
 	-115442
 	-115393
+	-115484
+	-108930

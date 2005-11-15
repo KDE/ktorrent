@@ -42,7 +42,7 @@ namespace bt
 	Downloader::Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman) 
 	: tor(tor),pman(pman),cman(cman),downloaded(0),tmon(0)
 	{
-		chunk_selector = new ChunkSelector(cman,*this);
+		chunk_selector = new ChunkSelector(cman,*this,pman);
 		Uint64 total = tor.getFileLength();
 		downloaded = (total - cman.bytesLeft() - cman.bytesExcluded());
 	

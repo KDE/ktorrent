@@ -20,17 +20,20 @@
 #include <stdlib.h>
 #include <util/log.h>
 #include <util/bitset.h>
+#include "chunkcounter.h"
 #include "chunkselector.h"
 #include "chunkmanager.h"
 #include "downloader.h"
 #include "peerdownloader.h"
 #include "globals.h"
+#include "peer.h"
+#include "peermanager.h"
 
 namespace bt
 {
 
-	ChunkSelector::ChunkSelector(ChunkManager & cman,Downloader & downer)
-	: cman(cman),downer(downer)
+	ChunkSelector::ChunkSelector(ChunkManager & cman,Downloader & downer,PeerManager & pman)
+	: cman(cman),downer(downer),pman(pman)
 	{
 	}
 
@@ -70,6 +73,9 @@ namespace bt
 			max_c = cman.getNumChunks();
 
 		const BitSet & bs = cman.getBitSet();
+		Uint32 rarest_chunk=0xFFFFFFFF;
+		Uint32 rarest_peer_cnt=0x7FFFFFFF;
+		bool warmup = cman.getNumChunks() - cman.chunksLeft() <= 4;
 		
 		// pick a random chunk to download, by picking
 		// a random starting value in the range 0 .. max_c
@@ -85,11 +91,37 @@ namespace bt
 			if (pd->hasChunk(i) && !downer.areWeDownloading(i) &&
 				!bs.get(i) && !c->isExcluded())
 			{
-				chunk = i;
-				return true;
+				// find out how many peers already have the chunk			
+				Uint32 peer_cnt = pman.getChunkCounter().get(i);
+				Uint32 peers = pman.getNumConnectedPeers();
+				if (warmup) 
+				{
+					// if in warmup mode, select the chunk 
+					// 1/2 of the peers (approx) has .
+					if (abs(int(peer_cnt)-int(peers/2))<
+						abs(int(rarest_peer_cnt)-int(peers/2)))
+					{
+						rarest_chunk=i;
+						rarest_peer_cnt=peer_cnt;
+						if (abs(int(rarest_peer_cnt)-int(peers/2))<=1)
+							break;
+					}
+				} 
+				else if (peer_cnt<rarest_peer_cnt) 
+				{
+					// normal mode - select rarest chunk
+					rarest_chunk=i;
+					rarest_peer_cnt=peer_cnt;
+					if (rarest_peer_cnt==1) break;
+				}
 			}
 			i = (i + 1) % max_c;
 		}
+
+		if (rarest_chunk!=0xFFFFFFFF) {
+			chunk=rarest_chunk;
+			return true;
+		} 
 
 		// then try everything else
 		for (i = max_c;i < cman.getNumChunks();i++)
@@ -114,3 +146,4 @@ namespace bt
 
 
 }
+

@@ -32,6 +32,7 @@
 #include <qhostaddress.h> 
 #include <klocale.h>
 #include "ipblocklist.h"
+#include "chunkcounter.h"
 
 namespace bt
 {
@@ -44,11 +45,13 @@ namespace bt
 		killed.setAutoDelete(true);
 		started = false;
 		Globals::instance().getServer().addPeerManager(this);
+		cnt = new ChunkCounter(tor.getNumChunks());
 	}
 
 
 	PeerManager::~PeerManager()
 	{
+		delete cnt;
 		Globals::instance().getServer().removePeerManager(this);
 		pending.setAutoDelete(true);
 		//peer_map.setAutoDelete(true);
@@ -68,6 +71,7 @@ namespace bt
 			Peer* p = *i;
 			if (p->isKilled())
 			{
+				cnt->decBitSet(p->getBitSet());
 				i = peer_list.erase(i);
 				killed.append(p);
 				peer_map.erase(p->getID());
@@ -139,6 +143,7 @@ namespace bt
 			Peer* p = *i;
  			if ( p->isSeeder() )
 			{
+				cnt->decBitSet(p->getBitSet());
  				p->kill();
 				i = peer_list.erase(i);
 				killed.append(p);
@@ -153,13 +158,19 @@ namespace bt
 	void PeerManager::onHave(Peer*,Uint32 index)
 	{
 		available_chunks.set(index,true);
+		cnt->inc(index);
 	}
 
 	void PeerManager::onBitSetRecieved(const BitSet & bs)
 	{
 		for (Uint32 i = 0;i < bs.getNumBits();i++)
+		{
 			if (bs.get(i))
+			{
 				available_chunks.set(i,true);
+				cnt->inc(i);
+			}
+		}
 	}
 	
 	void PeerManager::newConnection(KNetwork::KBufferedSocket* sock,

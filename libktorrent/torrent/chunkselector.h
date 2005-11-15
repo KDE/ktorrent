@@ -27,7 +27,7 @@ namespace bt
 	class PeerDownloader;
 	class ChunkManager;
 	class Downloader;
-
+	class PeerManager;
 	/**
 	 * @author Joris Guisson
 	 *
@@ -37,8 +37,10 @@ namespace bt
 	{
 		ChunkManager & cman;
 		Downloader & downer;
+		
+		PeerManager & pman;
 	public:
-		ChunkSelector(ChunkManager & cman,Downloader & downer);
+		ChunkSelector(ChunkManager & cman,Downloader & downer,PeerManager &pman);
 		virtual ~ChunkSelector();
 
 		/**
@@ -56,3 +58,4 @@ namespace bt
 }
 
 #endif
+
