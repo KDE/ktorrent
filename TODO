@@ -50,7 +50,7 @@ torrents we are leeching from the ones we are seeding.
 
 16) Add RSS plugin
 
-17) Add num retries option when tracker(s) can't be reached (piratebay tracker)
+# 17) Keep hammering tracker, it it can't be reached
 
 18) Add properties dialog to show announce url
 
@@ -59,7 +59,7 @@ Close this bug !!!!!!!!!!!
 
 20) letting the user configure columns in listview (maybe add share ratio column)
 
-21) UPnP Plugin
+# 21) UPnP Plugin
 
 2.0 :
 -----
