@@ -164,6 +164,7 @@ namespace bt
 		
 		if (!endgame && pdown.count() == 1)
 		{
+			pdown.at(0)->release();
 			sendCancels(pdown.at(0));
 			pdown.clear();
 		}

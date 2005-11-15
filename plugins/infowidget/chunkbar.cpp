@@ -286,11 +286,11 @@ namespace kt
 			{
 				// do some rounding off
 				if (fac <= 25)
-					fac = 25;
+					fac = 10;
 				else if (fac <= 50)
-					fac = 50;
+					fac = 20;
 				else 
-					fac = 75;
+					fac = 30;
 				c = color.light(200-fac);
 			} 
 			p->setPen(QPen(c,1,Qt::SolidLine));

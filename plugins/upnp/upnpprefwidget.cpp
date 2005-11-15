@@ -97,8 +97,6 @@ namespace kt
 	void UPnPPrefWidget::onRescanClicked()
 	{
 		// clear the list and emit the signal
-		itemmap.clear();
-		m_device_list->clear();
 		rescan();
 	}
 	

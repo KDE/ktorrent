@@ -22,6 +22,8 @@
 #include <ksocketaddress.h>
 #include <util/log.h>
 #include <torrent/globals.h>
+#include <qfile.h>
+#include <qtextstream.h>
 #include "upnpmcastsocket.h"
 
 
@@ -51,8 +53,6 @@ namespace kt
 	void UPnPMCastSocket::discover()
 	{
 		Out() << "Trying to find UPnP devices on the local network" << endl;
-		// clear the old list, if there is one
-		routers.clear();
 		
 		// send a HTTP M-SEARCH message to 239.255.255.250:1900
 		const char* data = "M-SEARCH * HTTP/1.1\r\n" 
@@ -140,6 +140,65 @@ namespace kt
 	void UPnPMCastSocket::onError(int)
 	{
 		Out() << "UPnPMCastSocket Error : " << errorString() << endl;
+	}
+	
+	void UPnPMCastSocket::saveRouters(const QString & file)
+	{
+		QFile fptr(file);
+		if (!fptr.open(IO_WriteOnly))
+		{
+			Out() << "Cannot open file " << file << " : " << fptr.errorString() << endl;
+			return;
+		}
+		
+		// file format is simple : 2 lines per router, 
+		// one containing the server, the other the location
+		QTextStream fout(&fptr);
+		bt::PtrMap<QString,UPnPRouter>::iterator i = routers.begin();
+		while (i != routers.end())
+		{
+			UPnPRouter* r = i->second;
+			fout << r->getServer() << endl;
+			fout << r->getLocation().prettyURL() << endl;
+			i++;
+		}
+	}
+	
+	void UPnPMCastSocket::loadRouters(const QString & file)
+	{
+		QFile fptr(file);
+		if (!fptr.open(IO_ReadOnly))
+		{
+			Out() << "Cannot open file " << file << " : " << fptr.errorString() << endl;
+			return;
+		}
+		
+		// file format is simple : 2 lines per router, 
+		// one containing the server, the other the location
+		QTextStream fin(&fptr);
+		
+		while (!fin.atEnd())
+		{
+			QString server, location;
+			server = fin.readLine();
+			location = fin.readLine();
+			if (!routers.contains(server))
+			{
+				UPnPRouter* r = new UPnPRouter(server,location);
+				// download it's xml file
+				if (!r->downloadXMLFile())
+				{
+				// we couldn't download and parse the XML file so 
+				// get rid of it
+					delete r;
+				}
+				else
+				{
+					routers.insert(server,r);
+					discovered(r);
+				}
+			}
+		}
 	}
 }
 

@@ -50,6 +50,12 @@ namespace kt
 		/// Find a router using it's server name
 		UPnPRouter* findDevice(const QString & name) {return routers.find(name);}
 		
+		/// Save all routers to a file (for convenience at startup)
+		void saveRouters(const QString & file);
+		
+		/// Load all routers from a file
+		void loadRouters(const QString & file);
+		
 	public slots:
 		/**
 		 * Try to discover a UPnP device on the network.

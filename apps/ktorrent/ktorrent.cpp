@@ -485,8 +485,10 @@ void KTorrent::changeCaption(const QString& text)
 	setCaption(text);
 }
 
-void KTorrent::saveProperties(KConfig*)
+void KTorrent::saveProperties(KConfig* )
 {
+	KGlobal::config()->writeEntry( "hidden_on_exit",this->isHidden());
+	KGlobal::config()->sync();
 }
 
 void KTorrent::readProperties(KConfig*)

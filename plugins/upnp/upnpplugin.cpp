@@ -21,9 +21,11 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <kiconloader.h>
+#include <kstandarddirs.h>
 #include <kstdaction.h>
 #include <kpopupmenu.h>
 #include <interfaces/guiinterface.h>
+#include <util/fileops.h>
 #include "upnpplugin.h"
 #include "upnpmcastsocket.h"
 #include "upnpprefpage.h"
@@ -61,11 +63,17 @@ namespace kt
 		sock = new UPnPMCastSocket();
 		pref = new UPnPPrefPage(sock);
 		this->getGUI()->addPrefPage(pref);
+		// load the routers list
+		QString routers_file = KGlobal::dirs()->saveLocation("data","ktorrent") + "routers";
+		if (bt::Exists(routers_file))
+			sock->loadRouters(routers_file);
 		sock->discover();
 	}
 
 	void UPnPPlugin::unload()
 	{
+		QString routers_file = KGlobal::dirs()->saveLocation("data","ktorrent") + "routers";
+		sock->saveRouters(routers_file);
 		this->getGUI()->removePrefPage(pref);
 		sock->close();
 		delete pref;
