@@ -167,6 +167,7 @@ namespace kt
 				continue;
 		}
 		Out() << "Finished converting." << endl;
+		lblProgress->setText("File converted.");
 	
 		target.close();
 		progress->hide();
