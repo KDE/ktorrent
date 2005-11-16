@@ -26,6 +26,7 @@
 #include <interfaces/coreinterface.h>
 #include <qthread.h>
 
+
 namespace kt
 {
 	
@@ -40,6 +41,18 @@ namespace kt
 			
 		private:
 			CoreInterface* m_core;
+	};
+	
+	class ConvertThread : public QThread
+	{
+		public:
+			
+			ConvertThread(KProgress* kp, QLabel* lbl );
+			virtual void run();
+			
+		private:
+			KProgress* progress;
+			QLabel* lblProgress;
 	};
 	
 	

@@ -37,11 +37,42 @@
 #include <interfaces/coreinterface.h>
 
 #include <qthread.h>
+#include <qlabel.h>
 
 using namespace bt;
 
 namespace kt
 {
+
+	typedef struct
+	{
+		Uint32 ip1;
+		Uint32 ip2;
+	} ipblock;
+
+
+	Uint32 toUint32(QString& ip)
+	{
+		bool test;
+		Uint32 ret = ip.section('.',0,0).toULongLong(&test);
+		ret <<= 8;
+		ret |= ip.section('.',1,1).toULong(&test);
+		ret <<= 8;
+		ret |= ip.section('.',2,2).toULong(&test);
+		ret <<= 8;
+		ret |= ip.section('.',3,3).toULong(&test);
+
+		return ret;
+	}
+
+	ipblock toBlock(QString& range)
+	{
+		ipblock block;
+		QStringList ls = QStringList::split('-', range);
+		block.ip1 = toUint32(ls[0]);
+		block.ip2 = toUint32(ls[1]);
+		return block;
+	}
 
 	LoadingThread::LoadingThread(CoreInterface* core) : QThread()
 	{
@@ -78,12 +109,77 @@ namespace kt
 		delete this;
 	}
 	
+	ConvertThread::ConvertThread(KProgress* kp, QLabel* lbl) : QThread()
+	{
+		progress = kp;
+		lblProgress = lbl;
+	}
+	
+	void ConvertThread::run()
+	{
+		QFile source(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.txt");
+		QFile target(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat");
+		
+		/**    READ INPUT FILE  **/
+		QStringList list;
+		lblProgress->setText("Loading txt file...");
+		progress->show();
+		if ( source.open( IO_ReadOnly ) ) 
+		{	
+			QTextStream stream( &source );
+		
+			int i = 0;
+			while ( !stream.atEnd() ) {
+				list += stream.readLine().section( ':' , -1 );
+				if(i%908==0)//hardcoded value for level1.txt since I cannot know how many lines are there...
+					progress->setProgress(i/908);
+				++i;
+			}
+			source.close();
+		} 
+		else
+			Out() << "Cannot find level1.txt" << endl;
+		
+		lblProgress->setText("Converting...");
+		
+		ulong blocks = list.count();
+	
+		/** WRITE TO OUTPUT **/
+		if (!target.open( IO_WriteOnly ))
+		{
+			Out() << "Unable to open file for writing" << endl;
+			return ;
+		}
+		
+		Out() << "Loading finished. Starting conversion..." << endl;
+		
+		for(ulong i=0; i<blocks; ++i)
+		{
+			ipblock block = toBlock(list[i]);
+			target.writeBlock( (char*) &block, sizeof(ipblock) );
+			if(i%1000 == 0)
+			{
+				progress->setProgress((int)100*i/blocks);
+				if(i%10000==0)
+					Out() << "Block " << i << " written." << endl;
+			}
+			if(i==30000)
+				continue;
+		}
+		Out() << "Finished converting." << endl;
+	
+		target.close();
+		progress->hide();
+		delete this;
+	}
+	
 	IPBlockingPrefPageWidget::IPBlockingPrefPageWidget(QWidget* parent) : IPBlockingPref(parent)
 	{
 		m_filter->setURL(IPBlockingPluginSettings::filterFile());
 		m_url->setURL(IPBlockingPluginSettings::filterURL());
 		if (m_url->url() == "")
 			m_url->setURL(QString("http://www.bluetack.co.uk/config/antip2p.txt"));
+		kProgress1->hide();
 	}
 
 	void IPBlockingPrefPageWidget::apply()
@@ -99,8 +195,6 @@ namespace kt
 		QString target(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.txt");
 		QFile target_file(target);
 		KURL url(m_url->url());
-		
-		KMessageBox::information(this,i18n("trt"),i18n("trt"));
 		
 		bool download = true;
 		
@@ -124,11 +218,15 @@ namespace kt
 	}
 
 	void IPBlockingPrefPageWidget::convert()
-	{
-		QFile source(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.txt");
+	{	
 		QFile target(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat");
-		
-		
+		if(target.exists())
+		{
+			if((KMessageBox::questionYesNo(this,i18n("Filter file (level1.dat) already exists, do you want to convert it again?"),i18n("File exists")) == 4))
+				return;
+		}
+		ConvertThread* ct = new ConvertThread(kProgress1, lbl_progress);
+		ct->start(QThread::LowPriority);
 	}
 
 	IPBlockingPrefPage::IPBlockingPrefPage(CoreInterface* core)
