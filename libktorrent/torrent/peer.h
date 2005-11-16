@@ -145,6 +145,11 @@ namespace bt
 		 * Get the time when this Peer was choked.
 		 */
 		Uint32 getChokeTime() const {return time_choked;}
+		
+		/**
+		 * Get the time when this Peer was unchoked.
+		 */
+		Uint32 getUnhokeTime() const {return time_unchoked;}
 
 		/**
 		 * See if the peer is a seeder.
@@ -209,7 +214,7 @@ namespace bt
 		KNetwork::KBufferedSocket* sock;
 		
 		bool choked,interested,am_choked,am_interested,killed;
-		Uint32 time_choked,id;
+		Uint32 time_choked,time_unchoked,id;
 		BitSet pieces;
 		PeerID peer_id;
 		Timer snub_timer;

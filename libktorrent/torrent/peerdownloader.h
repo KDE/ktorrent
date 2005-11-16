@@ -151,6 +151,9 @@ namespace bt
 		 * Check for timed out requests.
 		 */
 		void checkTimeouts();
+		
+		/// Get the maximum outstanding requests allowed.
+		Uint32 getMaximumOutstandingReqs() const;
 	public slots:
 		/**
 		 * Send a Request. Note that the DownloadCap

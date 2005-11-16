@@ -28,19 +28,40 @@ namespace bt
 {
 	class PeerManager;
 	
+	typedef int (*PeerCompareFunc)(Peer* a,Peer* b);
+	
 	class PeerPtrList : public QPtrList<Peer>
 	{
-		bool dl_cmp;
+		PeerCompareFunc pcmp;
 	public:
-		PeerPtrList(bool dl_cmp = true);
+		PeerPtrList(PeerCompareFunc pcmp = NULL);
 		virtual ~PeerPtrList();
 		
-		void setDLCmp(bool dl)
-		{
-			dl_cmp = dl;
-		}
-	
+		void setCompareFunc(PeerCompareFunc p) {pcmp = p;}
+		
 		virtual int compareItems(QPtrCollection::Item a, QPtrCollection::Item b);
+	};
+	
+	/**
+	 * Base class for all choke algorithms.
+	 */
+	class ChokeAlgorithm
+	{
+	protected:
+		Uint32 opt_unchoked_peer_id;
+	public:
+		ChokeAlgorithm();
+		virtual ~ChokeAlgorithm();
+		
+		/**
+		 * Do the actual choking
+		 * @param pman 
+		 * @param have_all 
+		 */
+		virtual void doChoking(PeerManager & pman,bool have_all) = 0;
+		
+		/// Get the optimisticly unchoked peer ID
+		Uint32 getOptimisticlyUnchokedPeerID() const {return opt_unchoked_peer_id;}
 	};
 
 	
@@ -54,11 +75,9 @@ namespace bt
 	*/
 	class Choker
 	{
+		ChokeAlgorithm* choke;
 		PeerManager & pman;
-		int opt_unchoke_index;
-		int opt_unchoke;
-		Uint32 opt_unchoked_peer_id;
-		PeerPtrList downloaders,interested,not_interested;
+		
 	public:
 		Choker(PeerManager & pman);
 		virtual ~Choker();
@@ -70,14 +89,7 @@ namespace bt
 		void update(bool have_all);
 
 		/// Get the PeerID of the optimisticly unchoked peer.
-		Uint32 getOptimisticlyUnchokedPeerID() const {return opt_unchoked_peer_id;}
-
-	private:
-		void updateInterested();
-		void updateDownloaders();
-		void sendInterested(bool have_all);
-		void sendUnchokes(bool have_all);
-		void optimisticUnchoke();
+		Uint32 getOptimisticlyUnchokedPeerID() const {return choke->getOptimisticlyUnchokedPeerID();}
 	};
 
 }

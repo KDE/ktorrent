@@ -259,5 +259,11 @@ namespace bt
 		}
 	}
 	
+	Uint32 PeerDownloader::getMaximumOutstandingReqs() const
+	{
+		// for each 10 KB/sec allow one with a minimum of 5
+		return 5 + peer->getDownloadRate() / (10 * 1024);
+	}
+	
 }
 #include "peerdownloader.moc"

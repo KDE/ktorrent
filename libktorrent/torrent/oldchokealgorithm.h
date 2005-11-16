@@ -1,7 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
- *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,78 +17,38 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef IPBLOCKINGPREFPAGE_H
-#define IPBLOCKINGPREFPAGE_H
+#ifndef BTOLDCHOKEALGORITHM_H
+#define BTOLDCHOKEALGORITHM_H
 
-#include <interfaces/prefpageinterface.h>
-#include "ipblockingpref.h"
-#include <interfaces/coreinterface.h>
-#include <qthread.h>
+#include <choker.h>
 
-class KProgress;
-
-namespace kt
+namespace bt
 {
-	
-	class LoadingThread : public QThread
-	{
-		public:
-			
-			LoadingThread(CoreInterface* core);
-			~LoadingThread();
-			
-			virtual void run();
-			
-		private:
-			CoreInterface* m_core;
-	};
-	
-	class ConvertThread : public QThread
-	{
-		public:
-			
-			ConvertThread(KProgress* kp, QLabel* lbl );
-			virtual void run();
-			
-		private:
-			KProgress* progress;
-			QLabel* lblProgress;
-	};
-	
-	
-	/**
-	@author Ivan Vasic
-	*/
-	class IPBlockingPrefPageWidget : public IPBlockingPref
-	{
-		public:
-			IPBlockingPrefPageWidget(QWidget *parent = 0);
-			void apply();
-			void convert();
-		public slots:
-    		virtual void btnDownload_clicked();
-	};
-	
-	/**
-	 * @author Ivan Vasic
-	 * @brief IPBlocking plugin interface page
-	 **/
-	class IPBlockingPrefPage : public PrefPageInterface
-	{
-		public:
-			IPBlockingPrefPage(CoreInterface* core);
-			virtual ~IPBlockingPrefPage();
-			
-			virtual void apply();
-			virtual void createWidget(QWidget* parent);
-			virtual void updateData();
-			virtual void deleteWidget();
-			
-			void loadFilters();
 
-		private:
-			CoreInterface* m_core;
-			IPBlockingPrefPageWidget* widget;
+	/**
+	 * @author Joris Guisson
+	 * 
+	 * The old choking algorithm as it is described on wiki.theory.org.
+	*/
+	class OldChokeAlgorithm : public ChokeAlgorithm
+	{
+		int opt_unchoke_index;
+		int opt_unchoke;
+		
+		PeerPtrList downloaders,interested,not_interested;
+	public:
+		OldChokeAlgorithm();
+		virtual ~OldChokeAlgorithm();
+
+		virtual void doChoking(PeerManager& pman, bool have_all);
+	private:
+		void updateInterested(PeerManager& pman);
+		void updateDownloaders();
+		void sendInterested(PeerManager& pman,bool have_all);
+		void sendUnchokes(bool have_all);
+		void optimisticUnchoke(PeerManager& pman);
 	};
+
 }
+
 #endif

@@ -153,7 +153,7 @@ namespace bt
 					
 				if (!pd->isNull() && !pd->isChoked() &&
 					pd->hasChunk(cd->getChunk()->getIndex()) &&
-					pd->getNumRequests() < 8)
+					pd->getNumRequests() < pd->getMaximumOutstandingReqs() - 2)
 				{
 					cd->assignPeer(pd,true);
 				}

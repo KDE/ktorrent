@@ -282,7 +282,7 @@ namespace kt
 			int rw = ra.last - ra.first + 1;
 			int fac = ra.fac;
 			QColor c = color;
-			if (fac != 100)
+			if (fac < 100)
 			{
 				// do some rounding off
 				if (fac <= 25)

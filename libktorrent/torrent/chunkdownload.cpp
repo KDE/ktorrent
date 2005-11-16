@@ -186,7 +186,8 @@ namespace bt
 		if (!ds)
 			return;
 		
-		for (Uint32 i = 0;i < num && pd->getNumRequests() < 10;i++)
+		Uint32 max_outstanding = pd->getMaximumOutstandingReqs();
+		for (Uint32 i = 0;i < num && pd->getNumRequests() < max_outstanding;i++)
 		{
 			if (ds->get(i) == PIECE_NOT_DOWNLOADED ||
 				(num - num_downloaded == 1 && ds->get(i) == PIECE_REQUESTED))

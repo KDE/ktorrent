@@ -31,6 +31,7 @@
 #include <kurl.h>
 #include <kmessagebox.h>
 #include <kio/netaccess.h>
+#include <kprogress.h>
 
 #include <util/log.h>
 #include <torrent/globals.h>
