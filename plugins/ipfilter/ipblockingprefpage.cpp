@@ -125,15 +125,17 @@ namespace kt
 		QStringList list;
 		lblProgress->setText("Loading txt file...");
 		progress->show();
+		ulong source_size = source.size();
 		if ( source.open( IO_ReadOnly ) ) 
 		{	
 			QTextStream stream( &source );
 		
 			int i = 0;
 			while ( !stream.atEnd() ) {
-				list += stream.readLine().section( ':' , -1 );
-				if(i%908==0)//hardcoded value for level1.txt since I cannot know how many lines are there...
-					progress->setProgress(i/908);
+				QString line = stream.readLine();
+				list += line.section( ':' , -1 );
+				i += line.length() * sizeof(char); //rough estimation of string size
+				progress->setProgress(i*100/source_size);
 				++i;
 			}
 			source.close();
