@@ -191,13 +191,11 @@ namespace bt
 		if (j->error())
 		{
 			Out() << "Error : " << j->errorString() << endl;
-			active_job->kill();
 			active_job = 0;
 			error();
 		}
 		else
 		{
-			active_job->kill();
 			active_job = 0;
 			dataReady();
 		}
@@ -207,7 +205,7 @@ namespace bt
 	{
 		if (j != active_job)
 		{
-			j->kill(true);
+			j->kill();
 			return;
 		}
 

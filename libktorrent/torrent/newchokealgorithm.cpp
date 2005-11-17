@@ -29,6 +29,7 @@ using namespace kt;
 
 namespace bt
 {
+	const Uint32 UNDEFINED_ID = 0xFFFFFFFF;
 	
 
 	NewChokeAlgorithm::NewChokeAlgorithm(): ChokeAlgorithm()
@@ -156,6 +157,9 @@ namespace bt
 	Uint32 NewChokeAlgorithm::findPlannedOptimisticUnchokedPeer(PeerManager& pman)
 	{
 		Uint32 num_peers = pman.getNumConnectedPeers();
+		if (num_peers == 0)
+			return UNDEFINED_ID;
+			
 		// find a random peer that is choked and interested
 		Uint32 start = rand() % num_peers;
 		Uint32 i = (start + 1) % num_peers;
@@ -168,7 +172,7 @@ namespace bt
 		}
 		
 		// we do not expect to have 4 billion peers
-		return 0xFFFFFFF;
+		return 0xFFFFFFFF;
 	}
 	
 	//////////////////////////////////////////////
