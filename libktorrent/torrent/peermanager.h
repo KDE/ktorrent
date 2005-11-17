@@ -70,8 +70,9 @@ namespace bt
 		
 		/**
 		 * Remove dead peers.
+		 * @return The number of dead ones removed
 		 */
-		void clearDeadPeers();
+		Uint32 clearDeadPeers();
 
 		/**
 		 * Get the i'th Peer.
@@ -154,6 +155,7 @@ namespace bt
 	private slots:
 		void onHave(Peer* p,Uint32 index);
 		void onBitSetRecieved(const BitSet & bs);
+		void onRerunChoker();
 		
 	signals:
 		void newPeer(Peer* p);

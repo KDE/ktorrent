@@ -187,6 +187,7 @@ namespace bt
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));
+		connect(peer,SIGNAL(rerunChoker()),this,SLOT(onRerunChoker()));
 		peer_list.append(peer);
 		peer_map.insert(peer->getID(),peer);
 		newPeer(peer);
@@ -207,6 +208,7 @@ namespace bt
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));
+		connect(peer,SIGNAL(rerunChoker()),this,SLOT(onRerunChoker()));
 		peer_list.append(peer);
 		peer_map.insert(peer->getID(),peer);
 			
@@ -284,9 +286,11 @@ namespace bt
 	
 
 	
-	void PeerManager::clearDeadPeers()
+	Uint32 PeerManager::clearDeadPeers()
 	{
+		Uint32 num = killed.count();
 		killed.clear();
+		return num;
 	}
 	
 	void PeerManager::closeAllConnections()
@@ -317,6 +321,14 @@ namespace bt
 	Peer* PeerManager::findPeer(Uint32 peer_id)
 	{
 		return peer_map.find(peer_id);
+	}
+	
+	void PeerManager::onRerunChoker()
+	{
+		// append a 0 ptr to killed
+		// so that the next update in TorrentControl
+		// will be forced to do the choking
+		killed.append(0);
 	}
 }
 #include "peermanager.moc"

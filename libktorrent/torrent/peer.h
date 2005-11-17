@@ -95,7 +95,7 @@ namespace bt
 
 		/// Are we being snubbed by the Peer
 		bool isSnubbed() const;
-
+		
 		/// Get the upload rate in bytes per sec
 		Uint32 getUploadRate() const;
 
@@ -149,7 +149,7 @@ namespace bt
 		/**
 		 * Get the time when this Peer was unchoked.
 		 */
-		Uint32 getUnhokeTime() const {return time_unchoked;}
+		Uint32 getUnchokeTime() const {return time_unchoked;}
 
 		/**
 		 * See if the peer is a seeder.
@@ -205,6 +205,10 @@ namespace bt
 		 */
 		void bitSetRecieved(const BitSet & bs);
 
+		/**
+		 * Emitted when the peer is unchoked and interested changes value.
+		 */
+		void rerunChoker();
 	private:
 		void readPacket();
 		void handlePacket(Uint32 len);

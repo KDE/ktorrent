@@ -116,7 +116,12 @@ namespace bt
 		
 		File fptr;
 		if (!fptr.open(index_file,"rb"))
-			throw Error(i18n("Can't open index file"));
+		{
+			// no index file, so assume it's empty
+			bt::Touch(index_file,true);
+			Out() << "Can't open index file : " << fptr.errorString() << endl;
+			return;
+		}
 
 		if (fptr.seek(File::END,0) != 0)
 		{
@@ -218,7 +223,16 @@ namespace bt
 	{
 		File fptr; 
 		if (!fptr.open(index_file,"r+b"))
-			throw Error(i18n("Can't open index file"));
+		{
+			// no index file, so assume it's empty
+			bt::Touch(index_file,true);
+			Out() << "Can't open index file : " << fptr.errorString() << endl;
+			// try again
+			if (!fptr.open(index_file,"r+b"))
+				// panick if it failes
+				throw Error(i18n("Cannot open index file : %1").arg(fptr.errorString()));
+		}
+
 		
 		fptr.seek(File::END,0);
 		NewChunkHeader hdr;
@@ -359,7 +373,10 @@ namespace bt
 		// saves which TorrentFile's do not need to be downloaded
 		File fptr;
 		if (!fptr.open(file_info_file,"wb"))
-			throw Error(i18n("Can't save chunk_info file : %1").arg(fptr.errorString()));
+		{
+			Out() << "Warning : Can't save chunk_info file : " << fptr.errorString() << endl;
+			return;
+		}
 
 		QValueList<Uint32> dnd;
 		

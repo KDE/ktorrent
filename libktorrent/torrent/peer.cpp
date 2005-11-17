@@ -63,6 +63,7 @@ namespace bt
 		
 		connect_time = QTime::currentTime();
 		connect(sock,SIGNAL(bytesWritten(int)),this,SLOT(dataWritten(int )));
+		pwriter->sendInterested();
 	}
 
 
@@ -170,8 +171,11 @@ namespace bt
 					error(0);
 					return;
 				}
-				
-				interested = true;
+				if (!interested)
+				{
+					interested = true;
+					rerunChoker();
+				}
 				break;
 			case NOT_INTERESTED:
 				if (len != 1)
@@ -180,8 +184,11 @@ namespace bt
 					error(0);
 					return;
 				}
-				
-				interested = false;
+				if (interested)
+				{
+					interested = false;
+					rerunChoker();
+				}
 				break;
 			case HAVE:
 				if (len != 5)

@@ -126,23 +126,10 @@ namespace bt
 			cman->checkMemoryUsage();
 
 			// get rid of dead Peers
-			pman->clearDeadPeers();
+			Uint32 num_cleared = pman->clearDeadPeers();
 
-		/*	// we may need to update the tracker
-			if (tracker_update_timer.getElapsedSinceUpdate() >= tracker_update_interval)
-			{
-				Uint32 max_connections = PeerManager::getMaxConnections();
-				// if a peer has nothing but choked since the 5 last tracker updates
-				// we will get rid of them (if there is a connection cap)
-				if (max_connections > 0 && pman->getNumConnectedPeers() == max_connections)
-					pman->killChokedPeers(5*tracker_update_interval);
-
-				updateTracker();
-				tracker_update_timer.update();
-			}
-		*/
 			// we may need to update the choker
-			if (choker_update_timer.getElapsedSinceUpdate() >= 10000)
+			if (choker_update_timer.getElapsedSinceUpdate() >= 10000 || num_cleared > 0)
 			{
 				// also get rid of seeders when download is finished
 				// no need to keep them around, but also no need to do this

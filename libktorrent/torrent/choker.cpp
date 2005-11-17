@@ -22,6 +22,7 @@
 #include "choker.h"
 #include "peermanager.h"
 #include "oldchokealgorithm.h"
+#include "newchokealgorithm.h"
 
 using namespace kt;
 
@@ -56,7 +57,7 @@ namespace bt
 
 	Choker::Choker(PeerManager & pman) : pman(pman)
 	{
-		choke = new OldChokeAlgorithm();
+		choke = new NewChokeAlgorithm();
 	}
 
 

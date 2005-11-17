@@ -32,6 +32,7 @@ namespace bt
 	*/
 	class NewChokeAlgorithm : public ChokeAlgorithm
 	{
+		Uint32 round_state;
 	public:
 		NewChokeAlgorithm();
 		virtual ~NewChokeAlgorithm();
@@ -40,7 +41,8 @@ namespace bt
 	private:
 		void doChokingLeecherState(PeerManager& pman);
 		void doChokingSeederState(PeerManager& pman);
-	//	void fillMaster(PeerManager& pman);
+	
+		Uint32 findPlannedOptimisticUnchokedPeer(PeerManager& pman);
 	};
 
 }

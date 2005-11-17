@@ -50,6 +50,8 @@ namespace bt
 		 */
 		PeerUploader(Peer* peer);
 		virtual ~PeerUploader();
+		
+		
 
 		/**
 		 * Add a Request to the list of Requests.
@@ -71,6 +73,9 @@ namespace bt
 		 * @return The number of bytes uploaded
 		 */
 		Uint32 update(ChunkManager & cman,Uint32 opt_unchoked);
+		
+		/// Get the number of requests
+		Uint32 getNumRequests() const {return requests.count();}
 	};
 
 }
