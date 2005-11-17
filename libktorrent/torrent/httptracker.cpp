@@ -172,9 +172,6 @@ namespace bt
 		
 		KIO::TransferJob* j = KIO::get(url,true,false);
 		// set the meta data
-	//	j->addMetaData("customHTTPHeader",  "User-Agent=ktorrent\r\n");
-	//	j->addMetaData("SendLanguageSettings", "false");
-	//	j->addMetaData("PropagateHttpHeader", "true");
 		j->setMetaData(md);
 		
 		connect(j,SIGNAL(result(KIO::Job* )),this,SLOT(onResult(KIO::Job* )));
@@ -194,13 +191,13 @@ namespace bt
 		if (j->error())
 		{
 			Out() << "Error : " << j->errorString() << endl;
-			active_job->deleteLater();
+			active_job->kill();
 			active_job = 0;
 			error();
 		}
 		else
 		{
-			active_job->deleteLater();
+			active_job->kill();
 			active_job = 0;
 			dataReady();
 		}
