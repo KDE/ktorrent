@@ -18,64 +18,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <kgenericfactory.h>
+#ifndef ANTIP2P_H
+#define ANTIP2P_H
 
-#include <interfaces/coreinterface.h>
-#include <interfaces/guiinterface.h>
-#include <util/constants.h>
-
-#include <qstring.h>
-
-#include "ipfilterplugin.h"
-#include "ipfilterpluginsettings.h"
-#include "antip2p.h"
-
-using namespace bt;
-
-K_EXPORT_COMPONENT_FACTORY(ktipfilterplugin,KGenericFactory<kt::IPFilterPlugin>("ipfilterplugin"))
+#include <util/mmapfile.h>
 
 namespace kt
-{	
-	const QString NAME = "ipfilterplugin";
-	const QString AUTHOR = "Ivan Vasic";
-	const QString EMAIL = "ivasic@gmail.com";
-	const QString DESCRIPTION = i18n("KTorrent's IP filter plugin");
-
-	IPFilterPlugin::IPFilterPlugin(QObject* parent, const char* name, const QStringList& args)
-	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,DESCRIPTION)
+{
+	/**
+	 * @author Ivan Vasic <ivasic@gmail.com>
+	 * @brief This class is used to manage anti-p2p filter list, so called level1.
+	 */
+	class AntiP2P
 	{
-		// setXMLFile("ktpluginui.rc");
-		level1 = 0;
-	}
-
-
-	IPFilterPlugin::~IPFilterPlugin()
-	{}
-
-	void IPFilterPlugin::load()
-	{
-		pref = new IPBlockingPrefPage(getCore());
-		getGUI()->addPrefPage(pref);
-		pref->loadFilters();
-	}
-
-	void IPFilterPlugin::unload()
-	{
-		getGUI()->removePrefPage(pref);
-		delete pref;
-		pref = 0;
-		if(level1)
-			delete level1;
-	}
-	
-	bool IPFilterPlugin::loadAntiP2P()
-	{
-		level1 = new AntiP2P();
-		if(!level1->exists())
-		{
-			delete level1;
-			level1 = 0;
-		}
-	}
-
+		public:
+    		AntiP2P();
+    		~AntiP2P();
+			
+			/**
+			 * Checks if anti-p2p file is present. Used to check if we should use level1 list
+			 **/
+			bool exists();
+			
+			
+			/**
+			 * Creates and loads the header from antip2p filter file.
+			 **/
+			void loadHeader();
+			
+		private:
+			bt::MMapFile* file;
+  	};
 }
+#endif

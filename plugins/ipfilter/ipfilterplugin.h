@@ -22,7 +22,9 @@
 #define KTIPFILTERPLUGIN_H
 
 #include <interfaces/plugin.h>
+
 #include "ipblockingprefpage.h"
+#include "antip2p.h"
 
 namespace kt
 {
@@ -42,10 +44,15 @@ namespace kt
 		virtual void load();
 		virtual void unload();
 		
+		///Loads the KT format list filter
 		void loadFilters();
 		
+		///Loads the anti-p2p filter list
+		bool loadAntiP2P();
+						
 	private:
 		IPBlockingPrefPage* pref;
+		AntiP2P* level1;
 	};
 
 }

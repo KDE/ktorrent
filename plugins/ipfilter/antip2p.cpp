@@ -18,64 +18,47 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <kgenericfactory.h>
+#include "antip2p.h"
 
-#include <interfaces/coreinterface.h>
-#include <interfaces/guiinterface.h>
+#include <torrent/globals.h>
+#include <util/log.h>
 #include <util/constants.h>
+#include <util/mmapfile.h>
+
+#include <kglobal.h>
+#include <kstandarddirs.h>
 
 #include <qstring.h>
 
-#include "ipfilterplugin.h"
-#include "ipfilterpluginsettings.h"
-#include "antip2p.h"
-
 using namespace bt;
 
-K_EXPORT_COMPONENT_FACTORY(ktipfilterplugin,KGenericFactory<kt::IPFilterPlugin>("ipfilterplugin"))
-
 namespace kt
-{	
-	const QString NAME = "ipfilterplugin";
-	const QString AUTHOR = "Ivan Vasic";
-	const QString EMAIL = "ivasic@gmail.com";
-	const QString DESCRIPTION = i18n("KTorrent's IP filter plugin");
-
-	IPFilterPlugin::IPFilterPlugin(QObject* parent, const char* name, const QStringList& args)
-	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,DESCRIPTION)
+{
+	AntiP2P::AntiP2P()
 	{
-		// setXMLFile("ktpluginui.rc");
-		level1 = 0;
-	}
+		file = new MMapFile();
+		if(! file->open(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat", MMapFile::READ) )
+		{
+			Out() << "Anti-p2p file not loaded." << endl;
+			file = 0;
+			return;
+		}
+  	}
 
-
-	IPFilterPlugin::~IPFilterPlugin()
-	{}
-
-	void IPFilterPlugin::load()
-	{
-		pref = new IPBlockingPrefPage(getCore());
-		getGUI()->addPrefPage(pref);
-		pref->loadFilters();
-	}
-
-	void IPFilterPlugin::unload()
-	{
-		getGUI()->removePrefPage(pref);
-		delete pref;
-		pref = 0;
-		if(level1)
-			delete level1;
+  	AntiP2P::~AntiP2P()
+  	{
+		if(file)
+			delete file;
 	}
 	
-	bool IPFilterPlugin::loadAntiP2P()
+	void AntiP2P::loadHeader()
 	{
-		level1 = new AntiP2P();
-		if(!level1->exists())
-		{
-			delete level1;
-			level1 = 0;
-		}
+		if(!file)
+			return;
 	}
-
+	
+	bool AntiP2P::exists()
+	{
+		return file == 0;
+	}
 }
