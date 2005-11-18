@@ -82,6 +82,9 @@ namespace bt
 		for (Uint32 i = 0;i < num_peers;i++)
 		{
 			Peer* p = pman.getPeer(i);
+			if (!p)
+				continue;
+			
 			if (p->isInterested() && now - p->getTimeSinceLastPiece() <= 30000)
 				peers.append(p);
 			else
@@ -146,7 +149,8 @@ namespace bt
 			Peer* p = pman.getPeer(i);
 			if (p == unchokers[0] || p == unchokers[1] || p == unchokers[2] || p == unchokers[3])
 				continue;
-			p->getPacketWriter().sendChoke();
+			if (p)
+				p->getPacketWriter().sendChoke();
 		}
 		
 		round_state++;
@@ -166,7 +170,7 @@ namespace bt
 		while (i != start)
 		{
 			Peer* p = pman.getPeer(i);
-			if (p->isChoked() && p->isInterested())
+			if (p && p->isChoked() && p->isInterested())
 				return p->getID();
 			i = (i + 1) % num_peers;
 		}
@@ -219,7 +223,7 @@ namespace bt
 		for (Uint32 i = 0;i < num_peers;i++)
 		{
 			Peer* p = pman.getPeer(i);
-			if (!p->isChoked() && p->isInterested())
+			if (p && !p->isChoked() && p->isInterested())
 				peers.append(p);
 		}
 		
@@ -233,6 +237,9 @@ namespace bt
 			for (Uint32 i = 0;i < peers.count();i++)
 			{
 				Peer* p = peers.at(i);
+				if (!p)
+					continue;
+				
 				if (i < 4)
 					p->getPacketWriter().sendUnchoke();
 				else
@@ -249,6 +256,9 @@ namespace bt
 			for (Uint32 i = 0;i < peers.count();i++)
 			{
 				Peer* p = peers.at(i);
+				if (!p)
+					continue;
+				
 				if (i < 3 || i == rnd)
 					p->getPacketWriter().sendUnchoke();
 				else 
