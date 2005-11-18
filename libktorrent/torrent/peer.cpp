@@ -314,7 +314,7 @@ namespace bt
 	QString Peer::getIPAddresss() const
 	{
 		if (sock)
-			return sock->peerAddress().toString();
+			return sock->peerAddress().nodeName();
 		else
 			return QString::null;
 	}

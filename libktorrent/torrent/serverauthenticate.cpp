@@ -47,7 +47,7 @@ namespace bt
 	{
 		if (!sock) return;
 		
-		Out() << "Authentication(S) to " << sock->peerAddress().toString()
+		Out() << "Authentication(S) to " << sock->peerAddress().nodeName()
 			<< " : " << (succes ? "ok" : "failure") << endl;
 		disconnect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
 		disconnect(sock,SIGNAL(gotError(int)),this,SLOT(onError(int )));

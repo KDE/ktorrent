@@ -23,6 +23,7 @@ Changelog since v1.1 (October 10th, 2005)
 - Requests time out after 60 seconds
 - Added UPnP plugin (108930)
 - Rarest piece first downloading
+- Added new choking algorithm
 
 - Fixed BUG: 
 	-114103
