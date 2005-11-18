@@ -36,6 +36,7 @@
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <qdir.h>
+#include <kresolver.h>
 
 #include "downloadpref.h"
 #include "generalpref.h"
@@ -46,12 +47,13 @@
 
 
 using namespace bt;
-
+using namespace KNetwork;
 
 
 KTorrentPreferences::KTorrentPreferences(KTorrent & ktor)
 	: KDialogBase(IconList, i18n("Preferences"),Ok|Apply|Cancel, Ok),ktor(ktor)
 {
+	validation_err = false;
 	enableButtonSeparator(true);
 		
 	page_one = new PrefPageOne();
@@ -69,16 +71,22 @@ KTorrentPreferences::~KTorrentPreferences()
 void KTorrentPreferences::slotOk()
 {
 	slotApply();
-	accept();
+	if (!validation_err)
+		accept();
 }
 
 void KTorrentPreferences::slotApply()
 {
+	validation_err = false;
 	QMap<kt::PrefPageInterface*,QFrame*>::iterator i = pages.begin();
 	while (i != pages.end())
 	{
 		kt::PrefPageInterface* p = i.key();
-		p->apply();
+		if (!p->apply())
+		{
+			validation_err = true;
+			return;
+		}
 		i++;
 	}
 	Settings::writeConfig();
@@ -134,7 +142,7 @@ void PrefPageOne::createWidget(QWidget* parent)
 	updateData();
 }
 
-void PrefPageOne::apply()
+bool PrefPageOne::apply()
 {
 	Settings::setMaxDownloads(dp->max_downloads->value());
 	Settings::setMaxSeeds(dp->max_seeds->value());
@@ -144,6 +152,7 @@ void PrefPageOne::apply()
 	Settings::setKeepSeeding(dp->keep_seeding->isChecked());
 	Settings::setPort(dp->port->value());
 	Settings::setUdpTrackerPort(dp->udp_tracker_port->value());
+	return true;
 }
 
 void PrefPageOne::updateData()
@@ -182,9 +191,11 @@ void PrefPageTwo::createWidget(QWidget* parent)
 	updateData();
 	connect(gp->autosave_downloads_check,SIGNAL(toggled(bool)),
 			this,SLOT(autosaveChecked(bool )));
+	connect(gp->custom_ip_check,SIGNAL(toggled(bool)),
+			this,SLOT(customIPChecked(bool )));
 }
 
-void PrefPageTwo::apply()
+bool PrefPageTwo::apply()
 {
 	Settings::setShowSystemTrayIcon(gp->show_systray_icon->isChecked());
 	QString ourl = Settings::tempDir();
@@ -204,6 +215,27 @@ void PrefPageTwo::apply()
 	{
 		Settings::setSaveDir(QString::null);
 	}
+	
+	if (gp->custom_ip_check->isChecked())
+	{
+		QString eip = gp->custom_ip->text();
+		KResolverResults res = KResolver::resolve(eip,QString::null);
+		if (res.error())
+		{
+			QString err = KResolver::errorString(res.error());
+			QString msg = i18n("Cannot lookup %1 : %2\n"
+					"Please provide a valid IP address or hostname.").arg(eip).arg(err);
+			KMessageBox::error(0,msg,i18n("Error"));
+			return false;
+		}
+		Settings::setExternalIP(eip);
+	}
+	else
+	{
+		Settings::setExternalIP(QString::null);
+	}
+	
+	return true;
 }
 
 void PrefPageTwo::autosaveChecked(bool on)
@@ -221,6 +253,20 @@ void PrefPageTwo::autosaveChecked(bool on)
 	{
 		u->setEnabled(false);
 		u->clear();
+	}
+}
+
+void PrefPageTwo::customIPChecked(bool on)
+{
+	if (on)
+	{
+		gp->custom_ip->setText("");
+		gp->custom_ip->setEnabled(true);
+	}
+	else
+	{
+		gp->custom_ip->clear();
+		gp->custom_ip->setEnabled(false);
 	}
 }
 
@@ -255,6 +301,20 @@ void PrefPageTwo::updateData()
 		u->setURL(QDir::homeDirPath());
 		u->setURL(Settings::saveDir());
 		u->setEnabled(true);
+	}
+	
+	QString external_ip = Settings::externalIP();
+	if (external_ip.isNull())
+	{
+		gp->custom_ip_check->setChecked(false);
+		gp->custom_ip->clear();
+		gp->custom_ip->setEnabled(false);
+	}
+	else
+	{
+		gp->custom_ip_check->setChecked(true);
+		gp->custom_ip->setText(external_ip);
+		gp->custom_ip->setEnabled(true);
 	}
 }
 

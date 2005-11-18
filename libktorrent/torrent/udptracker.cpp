@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <util/functions.h>
 #include <util/log.h>
+#include <ksocketaddress.h>
 #include "peermanager.h"
 #include "udptracker.h"
 #include "torrentcontrol.h"
@@ -188,7 +189,15 @@ namespace bt
 		WriteInt64(buf,64,s.bytes_left);
 		WriteInt64(buf,72,s.bytes_uploaded);
 		WriteInt32(buf,80,ev);
-		WriteUint32(buf,84,0);
+		if (custom_ip_resolved.isNull())
+		{
+			WriteUint32(buf,84,0);
+		}
+		else
+		{
+			KNetwork::KIpAddress addr(custom_ip_resolved);
+			WriteUint32(buf,84,addr.IPv4Addr(true));
+		}
 		WriteInt32(buf,88,0);// Wtf is the bloody key ?
 		WriteInt32(buf,92,100);
 		WriteUint16(buf,96,port);

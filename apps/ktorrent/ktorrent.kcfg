@@ -59,15 +59,9 @@
 			<label>Folder to store downloaded files</label>
 			<default code="true">QString::null</default>
 		</entry>
-	</group>
-	<group name="general">
-		<entry name="showPeerView" type="Bool">
-			<label>Show peer view tab in main window</label>
-			<default>false</default>
-		</entry>
-		<entry name="showChunkView" type="Bool">
-			<label>Show chunk download view tab in main window</label>
-			<default>false</default>
+		<entry name="externalIP" type="String">
+			<label>IP to pass to the tracker</label>
+			<default code="true">QString::null</default>
 		</entry>
 	</group>
 </kcfg>

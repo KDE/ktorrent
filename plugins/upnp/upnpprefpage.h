@@ -40,7 +40,7 @@ namespace kt
 		UPnPPrefPage(UPnPMCastSocket* sock);
 		virtual ~UPnPPrefPage();
 
-		virtual void apply();
+		virtual bool apply();
 		virtual void createWidget(QWidget* parent);
 		virtual void deleteWidget();
 		virtual void updateData();

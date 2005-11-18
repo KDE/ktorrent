@@ -76,6 +76,12 @@ namespace bt
 		virtual void updateData(PeerManager* pman) = 0;
 		
 		/**
+		 * Set the custom IP
+		 * @param str 
+		 */
+		static void setCustomIP(const QString & str);
+		
+		/**
 		 * Start the tracker.
 		 */
 		void start();
@@ -131,6 +137,7 @@ namespace bt
 		void onErrorTimeout();
 	protected:
 		void updateOK();
+		
 
 	protected:
 		SHA1Hash info_hash;
@@ -143,6 +150,7 @@ namespace bt
 		Uint32 time_of_last_update;
 		Uint32 num_failed_attempts;
 		bool error_mode;
+		static QString custom_ip,custom_ip_resolved;
 	};
 
 }

@@ -39,13 +39,14 @@ namespace kt
 	{}
 
 
-	void InfoWidgetPrefPage::apply()
+	bool InfoWidgetPrefPage::apply()
 	{
 		InfoWidgetPluginSettings::setShowPeerView(pref->m_show_pv->isChecked());
 		InfoWidgetPluginSettings::setShowChunkView(pref->m_show_cdv->isChecked());
 		InfoWidgetPluginSettings::writeConfig();
 		iw->showPeerView( InfoWidgetPluginSettings::showPeerView() );
 		iw->showChunkView( InfoWidgetPluginSettings::showChunkView() );
+		return true;
 	}
 
 	void InfoWidgetPrefPage::createWidget(QWidget* parent)

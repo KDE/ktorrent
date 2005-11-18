@@ -57,6 +57,7 @@
 #include <torrent/downloadcap.h>
 #include <util/error.h>
 #include <torrent/globals.h>
+#include <torrent/tracker.h>
 #include <torrent/udptrackersocket.h>
 #include <util/log.h>
 #include <util/fileops.h>
@@ -216,6 +217,8 @@ void KTorrent::applySettings(bool change_port)
 	UDPTrackerSocket::setPort(Settings::udpTrackerPort());
 	if (change_port)
 		m_core->changePort(Settings::port());
+	
+	Tracker::setCustomIP(Settings::externalIP());
 }
 
 void KTorrent::load(const KURL& url)

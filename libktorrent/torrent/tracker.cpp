@@ -18,12 +18,19 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <kurl.h>
+#include <kresolver.h>
 #include <util/functions.h>
+#include <util/log.h>
+#include <torrent/globals.h>
 #include <interfaces/torrentinterface.h>
 #include "tracker.h"
 
+using namespace KNetwork;
+
 namespace bt
 {
+	QString Tracker::custom_ip;
+	QString Tracker::custom_ip_resolved;
 
 	Tracker::Tracker(kt::TorrentInterface* tor,
 					 const SHA1Hash & ih,const PeerID & id) : tor(tor)
@@ -137,6 +144,29 @@ namespace bt
 				return 0;
 			else
 				return interval - s;
+		}
+	}
+	
+	void Tracker::setCustomIP(const QString & ip)
+	{
+		if (custom_ip == ip)
+			return;
+		
+		Out() << "Setting custom ip to " << ip << endl;
+		custom_ip = ip;
+		custom_ip_resolved = QString::null;
+		if (ip.isNull())
+			return;
+		
+		KResolverResults res = KResolver::resolve(ip,QString::null);
+		if (res.error() || res.empty())
+		{
+			custom_ip = custom_ip_resolved = QString::null;
+		}
+		else
+		{
+			custom_ip_resolved = res.first().address().nodeName();
+			Out() << "custom_ip_resolved = " << custom_ip_resolved << endl;
 		}
 	}
 }

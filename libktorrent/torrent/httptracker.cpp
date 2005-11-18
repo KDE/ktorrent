@@ -150,6 +150,8 @@ namespace bt
 		url.addQueryItem("left",QString::number(s.bytes_left));
 		url.addQueryItem("compact","1");
 		url.addQueryItem("numwant","100");
+		if (!custom_ip_resolved.isNull())
+			url.addQueryItem("ip",custom_ip_resolved);
 
 		if (event != QString::null)
 			url.addQueryItem("event",event);

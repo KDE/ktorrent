@@ -41,7 +41,7 @@ public:
 	PrefPageOne();
 	virtual ~PrefPageOne();
 	
-	virtual void apply();
+	virtual bool apply();
 	virtual void updateData();	
 	virtual void createWidget(QWidget* parent);
 	virtual void deleteWidget();
@@ -55,13 +55,14 @@ public:
 	PrefPageTwo();
 	virtual ~PrefPageTwo();
 	
-	virtual void apply();
+	virtual bool apply();
 	virtual void updateData();
 	virtual void createWidget(QWidget* parent);
 	virtual void deleteWidget();
 	
 private slots:
 	void autosaveChecked(bool on);
+	void customIPChecked(bool on);
 };
 
 
@@ -87,6 +88,7 @@ private:
 	PrefPageOne* page_one;
 	PrefPageTwo* page_two;
 	QMap<kt::PrefPageInterface*,QFrame*> pages;
+	bool validation_err;
 };
 
 

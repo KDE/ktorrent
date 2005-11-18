@@ -40,7 +40,7 @@ namespace kt
 		InfoWidgetPrefPage(InfoWidget* iw);
 		virtual ~InfoWidgetPrefPage();
 
-		virtual void apply();
+		virtual bool apply();
 		virtual void createWidget(QWidget* parent);
 		virtual void deleteWidget();
 		virtual void updateData();

@@ -48,9 +48,10 @@ namespace kt
 		connect(btnRemoveAll, SIGNAL(clicked()), this, SLOT(removeAllClicked()));
 	}
  
-	void SearchPrefPageWidget::apply()
+	bool SearchPrefPageWidget::apply()
 	{
 		saveSearchEngines();
+		return true;
 	}
  
 	void SearchPrefPageWidget::loadSearchEngines()
@@ -198,9 +199,9 @@ namespace kt
 	{}
 
 
-	void SearchPrefPage::apply()
+	bool SearchPrefPage::apply()
 	{
-		widget->apply();
+		return widget->apply();
 	}
 
 	void SearchPrefPage::createWidget(QWidget* parent)

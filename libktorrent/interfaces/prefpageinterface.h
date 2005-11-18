@@ -50,9 +50,11 @@ namespace kt
 
 		/**
 		 * Apply the changes that have been made in the
-		 * pref page
+		 * pref page. If the settings the user gave isn't valid false should be returned.
+		 * This will prevent the dialog from closing.
+		 * @return true if the data validates, false otherwise
 		 */
-		virtual void apply() = 0;
+		virtual bool apply() = 0;
 		
 		/**
 		 * Create the actual widget.

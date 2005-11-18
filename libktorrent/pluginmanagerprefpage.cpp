@@ -38,8 +38,9 @@ namespace kt
 	PluginManagerPrefPage::~PluginManagerPrefPage()
 	{}
 
-	void PluginManagerPrefPage::apply()
+	bool PluginManagerPrefPage::apply()
 	{
+		return true;
 	}
 	
 	void PluginManagerPrefPage::createWidget(QWidget* parent)

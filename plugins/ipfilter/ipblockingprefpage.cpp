@@ -242,10 +242,11 @@ namespace kt
 	IPBlockingPrefPage::~IPBlockingPrefPage()
 	{}
 
-	void IPBlockingPrefPage::apply()
+	bool IPBlockingPrefPage::apply()
 	{
 		widget->apply();
 		LoadingThread* filters = new LoadingThread(this->m_core);
+		return true;
 	}
 	
 	void IPBlockingPrefPage::loadFilters()

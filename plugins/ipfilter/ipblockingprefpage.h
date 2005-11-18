@@ -80,7 +80,7 @@ namespace kt
 			IPBlockingPrefPage(CoreInterface* core);
 			virtual ~IPBlockingPrefPage();
 			
-			virtual void apply();
+			virtual bool apply();
 			virtual void createWidget(QWidget* parent);
 			virtual void updateData();
 			virtual void deleteWidget();

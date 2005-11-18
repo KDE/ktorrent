@@ -24,6 +24,7 @@ Changelog since v1.1 (October 10th, 2005)
 - Added UPnP plugin (108930)
 - Rarest piece first downloading
 - Added new choking algorithm
+- Allow to send a custom IP to the tracker (116115)
 
 - Fixed BUG: 
 	-114103
@@ -37,3 +38,4 @@ Changelog since v1.1 (October 10th, 2005)
 	-115393
 	-115484
 	-108930
+	-116115

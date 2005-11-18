@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>600</width>
-            <height>210</height>
+            <height>299</height>
         </rect>
     </property>
     <property name="caption">
@@ -19,6 +19,115 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox1</cstring>
+            </property>
+            <property name="title">
+                <string>Directories</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout1</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Folder to store temporary files:</string>
+                            </property>
+                        </widget>
+                        <widget class="KURLRequester">
+                            <property name="name">
+                                <cstring>temp_dir</cstring>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout2</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>autosave_downloads_check</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Automatically save downloads to:</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+A</string>
+                            </property>
+                        </widget>
+                        <widget class="KURLRequester">
+                            <property name="name">
+                                <cstring>autosave_location</cstring>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox3</cstring>
+            </property>
+            <property name="title">
+                <string>Custom IP</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>custom_ip_check</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Send the tracker a c&amp;ustom IP or hostname</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+U</string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout3</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Custom IP or hostname</string>
+                            </property>
+                        </widget>
+                        <widget class="KLineEdit">
+                            <property name="name">
+                                <cstring>custom_ip</cstring>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
         <widget class="QCheckBox">
             <property name="name">
                 <cstring>show_systray_icon</cstring>
@@ -29,52 +138,6 @@
             <property name="accel">
                 <string>Alt+Y</string>
             </property>
-        </widget>
-        <widget class="QLayoutWidget">
-            <property name="name">
-                <cstring>layout1</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>textLabel1</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Folder to store temporary files:</string>
-                    </property>
-                </widget>
-                <widget class="KURLRequester">
-                    <property name="name">
-                        <cstring>temp_dir</cstring>
-                    </property>
-                </widget>
-            </hbox>
-        </widget>
-        <widget class="QLayoutWidget">
-            <property name="name">
-                <cstring>layout2</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>autosave_downloads_check</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Automatically save downloads to:</string>
-                    </property>
-                </widget>
-                <widget class="KURLRequester">
-                    <property name="name">
-                        <cstring>autosave_location</cstring>
-                    </property>
-                </widget>
-            </hbox>
         </widget>
         <spacer>
             <property name="name">
@@ -89,14 +152,12 @@
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>30</height>
+                    <height>20</height>
                 </size>
             </property>
         </spacer>
     </vbox>
 </widget>
-<customwidgets>
-</customwidgets>
 <tabstops>
     <tabstop>autosave_downloads_check</tabstop>
     <tabstop>show_systray_icon</tabstop>
@@ -110,5 +171,6 @@
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
+    <includehint>klineedit.h</includehint>
 </includehints>
 </UI>

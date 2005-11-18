@@ -39,8 +39,10 @@ namespace kt
 	{}
 
 
-	void UPnPPrefPage::apply()
-	{}
+	bool UPnPPrefPage::apply()
+	{
+		return true;
+	}
 
 	void UPnPPrefPage::createWidget(QWidget* parent)
 	{
