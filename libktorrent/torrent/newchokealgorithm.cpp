@@ -65,6 +65,9 @@ namespace bt
 	void NewChokeAlgorithm::doChokingLeecherState(PeerManager& pman)
 	{
 		Uint32 num_peers = pman.getNumConnectedPeers();
+		if (num_peers == 0)
+			return;
+		
 		Uint32 now = GetCurrentTime();
 		Peer* poup = pman.findPeer(opt_unchoked_peer_id);
 		Peer* unchokers[] = {0,0,0,0};
@@ -216,7 +219,8 @@ namespace bt
 	void NewChokeAlgorithm::doChokingSeederState(PeerManager& pman)
 	{
 		Uint32 num_peers = pman.getNumConnectedPeers();
-		
+		if (num_peers == 0)
+			return;
 		
 		// first get all unchoked and interested peers
 		PeerPtrList peers;
