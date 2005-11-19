@@ -57,6 +57,8 @@ namespace kt
 		};
 
 		virtual void getStats(Stats & s) = 0;
+		
+		virtual void kill() = 0;
 	};
 
 }

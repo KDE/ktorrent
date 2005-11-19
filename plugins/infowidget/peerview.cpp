@@ -19,8 +19,15 @@
  ***************************************************************************/
 #include <klocale.h>
 #include <kglobal.h>
+#include <kiconloader.h>
+#include <kmessagebox.h>
+#include <ksocketaddress.h>
+#include <qpoint.h>
+#include <qlistview.h>
+#include <kpopupmenu.h>
 #include <interfaces/peerinterface.h>
 #include <interfaces/functions.h>
+#include <torrent/ipblocklist.h>
 #include "peerview.h"
 
 
@@ -82,6 +89,13 @@ namespace kt
 		addColumn(i18n("Snubbed"));
 		addColumn(i18n("Availability"));
 		setShowSortIndicator(true);
+		
+		menu = new KPopupMenu(this);
+		ban_id = menu->insertItem(KGlobal::iconLoader()->loadIcon("filter",KIcon::NoGroup), i18n("to ban", "Ban peer"));
+		
+		connect(this,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )),
+				this,SLOT(showContextMenu(KListView*, QListViewItem*, const QPoint& )));
+		connect(menu, SIGNAL ( activated ( int ) ), this, SLOT ( contextItem ( int ) ) );
 	}
 	
 	
@@ -101,6 +115,23 @@ namespace kt
 		items.erase(peer);
 	}
 	
+	void PeerView::banPeer(kt::PeerInterface* peer)
+	{
+		if(!peer)
+			return;
+		
+		IPBlocklist& filter = IPBlocklist::instance();
+		PeerInterface::Stats s;
+		peer->getStats(s);
+		KNetwork::KIpAddress ip(s.ip_addresss);
+		QString ips = ip.toString();
+		if(ips.startsWith(":"))
+			filter.insert(ips.section(":",-1));
+		else
+			filter.insert(ips);
+		peer->kill();
+	}
+	
 	void PeerView::update()
 	{
 		QMap<kt::PeerInterface*,PeerViewItem*>::iterator i = items.begin();
@@ -116,6 +147,25 @@ namespace kt
 	{
 		items.clear();
 		clear();
+	}
+	
+	void PeerView::showContextMenu( KListView*, QListViewItem* item, const QPoint& p)
+	{
+		if(!item)
+			return;
+		
+		curr = dynamic_cast<PeerViewItem*>(item);
+		if (curr)
+		{
+			menu->setItemEnabled(ban_id, true);
+			menu->popup(p);
+		}
+	}
+	
+	void PeerView::contextItem( int id )
+	{
+		if (id == ban_id && curr)
+			banPeer(curr->getPeer());
 	}
 }
 	

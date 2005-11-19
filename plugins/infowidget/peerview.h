@@ -22,6 +22,9 @@
 
 #include <qmap.h>
 #include <klistview.h>
+#include <qlistview.h>
+#include <kpopupmenu.h>
+#include <qpoint.h>
 
 namespace kt
 {
@@ -36,6 +39,7 @@ namespace kt
 	
 		void update();
 		int compare(QListViewItem * i,int col,bool) const;
+		kt::PeerInterface* getPeer() { return peer; }
 	};
 	
 	/**
@@ -53,8 +57,15 @@ namespace kt
 	public slots:
 		void addPeer(kt::PeerInterface* peer);
 		void removePeer(kt::PeerInterface* peer);
+		void banPeer(kt::PeerInterface* peer);
 		void update();
 		void removeAll();
+		void showContextMenu(KListView* ,QListViewItem* item,const QPoint & p);
+		void contextItem(int id);
+	private:
+		KPopupMenu* menu;
+		int ban_id;
+		PeerViewItem* curr;
 	};
 }
 
