@@ -186,7 +186,6 @@ namespace bt
 	{
 		if (j != active_job)
 		{
-			j->kill();
 			return;
 		}
 		
@@ -207,7 +206,6 @@ namespace bt
 	{
 		if (j != active_job)
 		{
-			j->kill();
 			return;
 		}
 

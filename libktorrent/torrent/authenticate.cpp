@@ -88,6 +88,7 @@ namespace bt
 		SHA1Hash rh(hs+28);
 		if (rh != info_hash)
 		{
+			Out() << "Wrong info_hash : " << rh.toString() << endl;
 			onFinish(false);
 			return;
 		}
@@ -99,6 +100,7 @@ namespace bt
 		
 		if (our_peer_id == peer_id /*|| peer_id.startsWith("Yoda")*/)
 		{
+			Out() << "Lets not connect to our selves " << endl;
 			onFinish(false);
 			return;
 		}

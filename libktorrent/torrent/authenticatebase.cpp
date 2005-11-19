@@ -110,6 +110,7 @@ namespace bt
 	{
 		if (finished)
 			return;
+		Out() << "Socket error : " << sock->errorString() << endl;
 		onFinish(false);
 	}
 
