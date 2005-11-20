@@ -24,7 +24,7 @@
                 <cstring>groupBox2</cstring>
             </property>
             <property name="title">
-                <string>Select a filter file with IP ranges in KTorrent format</string>
+                <string>Select Filter File with IP Ranges in KTorrent Format</string>
             </property>
             <grid>
                 <property name="name">
@@ -94,7 +94,7 @@
                 <cstring>groupBox1</cstring>
             </property>
             <property name="title">
-                <string>Select a level1 filter file (from Bluetack.co.uk or Openmedia.info)</string>
+                <string>Select Level1 Filter File (from Bluetack.co.uk or Openmedia.info)</string>
             </property>
             <grid>
                 <property name="name">
@@ -168,9 +168,6 @@
                                     </property>
                                     <property name="text">
                                         <string>Dow&amp;nload/Convert</string>
-                                    </property>
-                                    <property name="accel">
-                                        <string>Alt+N</string>
                                     </property>
                                 </widget>
                             </hbox>

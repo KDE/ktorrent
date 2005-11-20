@@ -284,7 +284,7 @@ void KTorrent::setupActions()
 			actionCollection(), "Stop all");
 	
 	m_pasteurl = new KAction(
-			i18n("to paste torrent URL", "Paste torrent URL..."), "ktstart",0,this, SLOT(torrentPaste()),
+			i18n("to paste torrent URL", "Paste Torrent URL..."), "ktstart",0,this, SLOT(torrentPaste()),
 	actionCollection(), "paste_url");
 	
 	createGUI();

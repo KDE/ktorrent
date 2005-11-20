@@ -65,10 +65,7 @@
                         <cstring>btnOK</cstring>
                     </property>
                     <property name="text">
-                        <string>O&amp;k</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+K</string>
+                        <string>O&amp;K</string>
                     </property>
                 </widget>
             </hbox>
