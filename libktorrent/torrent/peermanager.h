@@ -148,8 +148,11 @@ namespace bt
 		
 		/// Get the chunk counter.
 		ChunkCounter & getChunkCounter() {return *cnt;};
-	private:
+	
+		/// Are we connected to a Peer given it's PeerID ?
 		bool connectedTo(const PeerID & peer_id);	
+		
+	private:
 		void peerAuthenticated(Authenticate* auth,bool ok);
 
 	private slots:

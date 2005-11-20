@@ -21,13 +21,14 @@
 #include <kbufferedsocket.h>
 #include "authenticate.h"
 #include "ipblocklist.h"
+#include "peermanager.h"
 
 namespace bt
 {
 
 	Authenticate::Authenticate(const QString & ip,Uint16 port,
-				const SHA1Hash & info_hash,const PeerID & peer_id) 
-	: info_hash(info_hash),our_peer_id(peer_id)
+							   const SHA1Hash & info_hash,const PeerID & peer_id,PeerManager & pman) 
+	: info_hash(info_hash),our_peer_id(peer_id),pman(pman)
 	{
 		finished = succes = false;
 		sock = new KNetwork::KBufferedSocket();
@@ -101,6 +102,14 @@ namespace bt
 		if (our_peer_id == peer_id /*|| peer_id.startsWith("Yoda")*/)
 		{
 			Out() << "Lets not connect to our selves " << endl;
+			onFinish(false);
+			return;
+		}
+		
+		// check if we aren't allready connected to the client
+		if (pman.connectedTo(peer_id))
+		{
+			Out() << "Allready connected to " << peer_id.toString() << endl;
 			onFinish(false);
 			return;
 		}

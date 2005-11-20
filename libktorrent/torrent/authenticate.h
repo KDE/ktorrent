@@ -34,6 +34,8 @@ namespace KNetwork
 namespace bt
 {
 	using KNetwork::KResolverEntry;
+	
+	class PeerManager;
 
 
 	/**
@@ -54,9 +56,11 @@ namespace bt
 		 * @param port Port of host
 		 * @param info_hash Info hash
 		 * @param peer_id Peer ID
+		 * @param pman PeerManager
 		 */
 		Authenticate(const QString & ip,Uint16 port,
-					 const SHA1Hash & info_hash,const PeerID & peer_id);
+					 const SHA1Hash & info_hash,const PeerID & peer_id,
+					 PeerManager & pman);
 		
 		virtual ~Authenticate();
 
@@ -85,6 +89,7 @@ namespace bt
 		PeerID our_peer_id,peer_id;
 		QString host;
 		bool succes;
+		PeerManager & pman;
 	};
 }
 

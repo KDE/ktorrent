@@ -278,7 +278,7 @@ namespace bt
 			}
 			
 			Authenticate* auth = new Authenticate(pp.ip,pp.port,
-					tor.getInfoHash(),tor.getPeerID());
+					tor.getInfoHash(),tor.getPeerID(),*this);
 			pending.append(auth);
 			num_pending++;
 		}
