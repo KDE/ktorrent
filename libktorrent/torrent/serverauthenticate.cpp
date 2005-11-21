@@ -64,7 +64,7 @@ namespace bt
 	{
 		Uint8* hs = handshake;
 		IPBlocklist& ipfilter = IPBlocklist::instance();
-		QString IP(sock->peerAddress().toString());
+		QString IP(sock->peerAddress().toString().section(':',3).section(']',0,0));
 		if (ipfilter.isBlocked( IP ))
 		{
 			Out() << "Peer " << IP << " is blacklisted. Aborting connection." << endl;
