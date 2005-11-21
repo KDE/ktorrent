@@ -141,6 +141,7 @@ namespace kt
 			it->update();
 			i++;
 		}
+		sort();
 	}
 	
 	void PeerView::removeAll()

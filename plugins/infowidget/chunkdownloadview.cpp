@@ -114,6 +114,7 @@ namespace kt
 			it->update();
 			i++;
 		}
+		sort();
 	}
 }
 

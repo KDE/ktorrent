@@ -260,6 +260,7 @@ void KTorrentView::update()
 		tvi->update();
 		i++;
 	}
+	sort();
 }
 
 bool KTorrentView::acceptDrag(QDropEvent* event) const
