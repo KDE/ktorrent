@@ -133,12 +133,7 @@ namespace bt
 			chunk->setData(buf);
 			buf = 0;
 			releaseAllPDs();
-			if (pdown.count() == 1)
-			{
-				PeerDownloader* pd = pdown.at(0);
-				pd->release();
-				pdown.clear();
-			}
+			pdown.clear();
 			return true;
 		}
 		
@@ -153,26 +148,26 @@ namespace bt
 		for (Uint32 i = 0;i < pdown.count();i++)
 		{
 			PeerDownloader* pd = pdown.at(i);
-			disconnect(pd,SIGNAL(timedout(const Request& )),this,SLOT(onTimeout(const Request& )));
+			pd->release();
+			
 		}
 	}
 	
 	void ChunkDownload::assignPeer(PeerDownloader* pd,bool endgame)
 	{
-		if (!pd)
+		if (!pd || pdown.contains(pd))
 			return;
 		
 		if (!endgame && pdown.count() == 1)
 		{
-			pdown.at(0)->release();
-			sendCancels(pdown.at(0));
+			PeerDownloader* pdo = pdown.at(0);
+			disconnect(pdo,SIGNAL(timedout(const Request& )),this,SLOT(onTimeout(const Request& )));
+			pdo->release();
+			sendCancels(pdo);
 			pdown.clear();
 		}
 		
-		if (pdown.contains(pd))
-			return;
-		
-
+		pd->grab();
 		pdown.append(pd);
 		dstatus.insert(pd->getPeer()->getID(),new DownloadStatus(pieces,num));
 		sendRequests(pd);

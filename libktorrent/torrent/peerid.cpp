@@ -126,6 +126,13 @@ namespace bt
 			Map["XT"] = "Xan Torrent";
 			Map["ZT"] = "Zip Torrent";
 			Map["KT"] = "KTorrent"; // lets not forget our own client
+			Map["BS"] = "BTSlave"; 
+			Map["AR"] = "Arctic";
+			Map["SB"] = "Swiftbit";
+			Map["MP"] = "MooPolice";
+			Map["QT"] = "Qt 4 Torrent example";
+			Map["UT"] = "µTorrent";
+			Map["SZ"] = "Shareaza";
 			//SHADOWS STYLE
 			Map["A"] = "ABC";
 			Map["S"] = "Shadow's";

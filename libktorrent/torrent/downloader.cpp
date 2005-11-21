@@ -106,7 +106,7 @@ namespace bt
 
 		if (warmup)
 			warmupUpdate();
-		if (endgame_mode)
+		else if (endgame_mode)
 			endgameUpdate();
 		else
 			normalUpdate();
@@ -133,9 +133,9 @@ namespace bt
 		{
 			PeerDownloader* pd = pman.getPeer(i)->getPeerDownloader();
 	
-			if (!pd->isNull() && !pd->isChoked())
+			if (!pd->isNull() && !pd->isChoked() && pd->getNumRequests() < pd->getMaximumOutstandingReqs() - 2)
 			{
-				if (pd->getNumGrabbed() == 0 || (pd->getNumGrabbed() == 1 && pd->getNumRequests() < 8))
+				//if (pd->getNumGrabbed() == 0 || (pd->getNumGrabbed() == 1 && pd->getNumRequests() < 8))
 					downloadFrom(pd);
 			}
 		}
@@ -177,7 +177,6 @@ namespace bt
 			const Peer* p = cd->getCurrentPeer();
 			if (cd->getNumDownloaders() == 0 || (p && p->isSnubbed()))
 			{
-				pd->grab();
 				cd->assignPeer(pd,false);
 				return;
 			}
@@ -191,7 +190,6 @@ namespace bt
 		{
 			ChunkDownload* cd = new ChunkDownload(cman.getChunk(chunk));
 			current_chunks.insert(chunk,cd);
-			pd->grab();
 			cd->assignPeer(pd,false);
 			if (tmon)
 				tmon->downloadStarted(cd);
