@@ -1,8 +1,10 @@
 [Desktop Entry]
 Name=UPnPPlugin
+Name[br]=Lugent UPnP
 Name[el]=Πρόσθετο UPnP
 Name[pt]='Plugin' UPnP
 Name[pt_BR]='Plugin' UPnP
+Name[sv]=UPnP-insticksprogram
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktupnpplugin
