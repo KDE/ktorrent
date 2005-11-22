@@ -36,7 +36,7 @@ namespace bt
 
 	Server::Server(Uint16 port) : port(port)
 	{
-		pending.setAutoDelete(true);
+		pending.setAutoDelete(false);
 		sock = new KServerSocket();
 		connect(sock, SIGNAL(readyAccept()), this, SLOT(newConnection()));
 		connect(sock, SIGNAL(gotError(int)), this, SLOT(onError(int )));
@@ -50,6 +50,7 @@ namespace bt
 
 	Server::~Server()
 	{
+		pending.setAutoDelete(true);
 		sock->close();
 		delete sock;
 	}
@@ -151,6 +152,7 @@ namespace bt
 			ServerAuthenticate* auth = *i;
 			if (auth->isFinished())
 			{
+				delete auth;
 				i = pending.erase(i);
 			}
 			else

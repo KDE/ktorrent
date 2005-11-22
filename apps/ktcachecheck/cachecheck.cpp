@@ -94,6 +94,8 @@ int main(int argc,char** argv)
 	{
 		Out() << "Error : " << e.toString() << endl;
 	}
+	
 	delete cc;
+	Globals::cleanup();
 	return 0;
 }

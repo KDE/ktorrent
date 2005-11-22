@@ -23,6 +23,7 @@
 #include <util/log.h>
 #include <util/functions.h>
 #include <util/error.h>
+#include <util/garbagecollector.h>
 #include <kio/job.h>
 #include "bnode.h"
 #include "httptracker.h"
@@ -31,6 +32,7 @@
 #include "peermanager.h"
 #include "server.h"
 #include "globals.h"
+
 
 using namespace kt;
 

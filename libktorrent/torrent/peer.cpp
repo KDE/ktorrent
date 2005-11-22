@@ -63,7 +63,7 @@ namespace bt
 		
 		connect_time = QTime::currentTime();
 		connect(sock,SIGNAL(bytesWritten(int)),this,SLOT(dataWritten(int )));
-		pwriter->sendInterested();
+		
 	}
 
 

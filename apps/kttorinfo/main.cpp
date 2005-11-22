@@ -49,5 +49,6 @@ int main(int argc,char** argv)
 	{
 		Out() << "Error : " << e.toString() << endl;
 	}
+	Globals::cleanup();
 	return 0;
 }

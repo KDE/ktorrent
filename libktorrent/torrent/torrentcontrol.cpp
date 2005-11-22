@@ -345,6 +345,8 @@ namespace bt
 	void TorrentControl::onNewPeer(Peer* p)
 	{
 		p->getPacketWriter().sendBitSet(cman->getBitSet());
+		if (!stats.completed)
+			p->getPacketWriter().sendInterested();
 		if (tmon)
 			tmon->peerAdded(p);
 	}

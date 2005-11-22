@@ -42,6 +42,8 @@ namespace bt
 	
 	HTTPRequest::~HTTPRequest()
 	{
+		sock->close();
+		delete sock;
 	}
 	
 	void HTTPRequest::start()

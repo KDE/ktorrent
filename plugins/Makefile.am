@@ -1,3 +1,3 @@
 INCLUDES = 
 METASOURCES = AUTO
-SUBDIRS = search infowidget ipfilter logviewer upnp
+SUBDIRS = search infowidget ipfilter logviewer upnp partfileimport

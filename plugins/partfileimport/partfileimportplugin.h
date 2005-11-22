@@ -17,77 +17,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#ifndef KTPARTFILEIMPORTPLUGIN_H
+#define KTPARTFILEIMPORTPLUGIN_H
 
-#include <util/log.h>
-#include <util/error.h>
-#include <util/garbagecollector.h>
-#include "globals.h"
-#include "server.h"
+#include <interfaces/plugin.h>
 
-
-
-namespace bt
+namespace kt
 {
-	
-	
 
-	Globals* Globals::inst = 0;
-
-
-
-
-
-	Globals::Globals()
+	/**
+	@author Joris Guisson
+	*/
+	class PartFileImportPlugin : public Plugin
 	{
-		debug_mode = false;
-		log = new Log();
-		gc = new GarbageCollector();
-		server = 0;
-	}
+		Q_OBJECT
+	public:
+		PartFileImportPlugin(QObject* parent, const char* name, const QStringList& args);
+		virtual ~PartFileImportPlugin();
 
-	Globals::~ Globals()
-	{
-		gc->clear();
-		delete server;
-		delete log;
-		delete gc;
-	}
-	
-	Globals & Globals::instance() 
-	{
-		if (!inst) 
-			inst = new Globals();
-		return *inst;
-	}
-	
-	void Globals::cleanup()
-	{
-		delete inst;
-		inst = 0;
-	}
+		virtual void load();
+		virtual void unload();
+	private:
+	};
 
-	void Globals::initLog(const QString & file)
-	{
-		log->setOutputFile(file);
-		log->setOutputToConsole(debug_mode);
-	}
-
-	void Globals::initServer(Uint16 port)
-	{
-		if (server)
-		{
-			delete server;
-			server = 0;
-		}
-		
-		server = new Server(port);
-	}
-
-	Log & Out()
-	{
-		Log & lg = Globals::instance().getLog();
-		lg.setOutputToConsole(Globals::instance().isDebugModeSet());
-		return lg;
-	}
 }
 
+#endif

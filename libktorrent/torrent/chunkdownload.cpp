@@ -149,7 +149,7 @@ namespace bt
 		{
 			PeerDownloader* pd = pdown.at(i);
 			pd->release();
-			
+			disconnect(pd,SIGNAL(timedout(const Request& )),this,SLOT(onTimeout(const Request& )));
 		}
 	}
 	

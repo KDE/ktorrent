@@ -17,77 +17,49 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#ifndef BTGARBAGECOLLECTOR_H
+#define BTGARBAGECOLLECTOR_H
 
-#include <util/log.h>
-#include <util/error.h>
-#include <util/garbagecollector.h>
-#include "globals.h"
-#include "server.h"
+#include <qobject.h>
+#include <qptrlist.h>
 
-
-
-namespace bt
+namespace bt 
 {
+
+	/**
+	 * @author Joris Guisson
+	 * 
+	 * Class to ditch objects nowbody gives a damm about.
+	*/
+	class GarbageCollector : public QObject
+	{
+		Q_OBJECT
+				
+		QPtrList<QObject> garbage;
+		bool clearing;
+	public:
+		GarbageCollector();	
+		virtual ~GarbageCollector();
 	
-	
-
-	Globals* Globals::inst = 0;
-
-
-
-
-
-	Globals::Globals()
-	{
-		debug_mode = false;
-		log = new Log();
-		gc = new GarbageCollector();
-		server = 0;
-	}
-
-	Globals::~ Globals()
-	{
-		gc->clear();
-		delete server;
-		delete log;
-		delete gc;
-	}
-	
-	Globals & Globals::instance() 
-	{
-		if (!inst) 
-			inst = new Globals();
-		return *inst;
-	}
-	
-	void Globals::cleanup()
-	{
-		delete inst;
-		inst = 0;
-	}
-
-	void Globals::initLog(const QString & file)
-	{
-		log->setOutputFile(file);
-		log->setOutputToConsole(debug_mode);
-	}
-
-	void Globals::initServer(Uint16 port)
-	{
-		if (server)
-		{
-			delete server;
-			server = 0;
-		}
+		/**
+		 * Add an object to the list.
+		 * @param obj The object
+		 */
+		void add(QObject* obj);
 		
-		server = new Server(port);
-	}
+		/**
+		 * Clear all objects.
+		 */
+		void clear();
+		
+		/**
+		 * Print statistics.
+		 */
+		void printStats();
+	private slots:
+		void onDestroyed(QObject* obj);
+	};
 
-	Log & Out()
-	{
-		Log & lg = Globals::instance().getLog();
-		lg.setOutputToConsole(Globals::instance().isDebugModeSet());
-		return lg;
-	}
 }
 
+#endif

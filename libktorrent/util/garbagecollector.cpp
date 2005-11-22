@@ -17,77 +17,52 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <torrent/globals.h>
+#include "log.h"
+#include "garbagecollector.h"
 
-#include <util/log.h>
-#include <util/error.h>
-#include <util/garbagecollector.h>
-#include "globals.h"
-#include "server.h"
-
-
-
-namespace bt
+namespace bt 
 {
-	
-	
 
-	Globals* Globals::inst = 0;
-
-
-
-
-
-	Globals::Globals()
+	GarbageCollector::GarbageCollector()
 	{
-		debug_mode = false;
-		log = new Log();
-		gc = new GarbageCollector();
-		server = 0;
-	}
-
-	Globals::~ Globals()
-	{
-		gc->clear();
-		delete server;
-		delete log;
-		delete gc;
+		clearing = false;
 	}
 	
-	Globals & Globals::instance() 
-	{
-		if (!inst) 
-			inst = new Globals();
-		return *inst;
-	}
 	
-	void Globals::cleanup()
+	GarbageCollector::~GarbageCollector()
 	{
-		delete inst;
-		inst = 0;
+		clear();
 	}
 
-	void Globals::initLog(const QString & file)
+	void GarbageCollector::add(QObject* obj)
 	{
-		log->setOutputFile(file);
-		log->setOutputToConsole(debug_mode);
+		connect(obj,SIGNAL(destroyed(QObject* )),this,SLOT(onDestroyed(QObject* )));
+		garbage.append(obj);
 	}
-
-	void Globals::initServer(Uint16 port)
-	{
-		if (server)
-		{
-			delete server;
-			server = 0;
-		}
 		
-		server = new Server(port);
+	void GarbageCollector::clear()
+	{
+		Out() << "Objects alive = " << garbage.count() << endl;
+		clearing = true;
+		garbage.setAutoDelete(true);
+		garbage.clear();
+		garbage.setAutoDelete(false);
+		clearing = false;
+	}
+		
+	void GarbageCollector::printStats()
+	{
+		Out() << "Objects alive = " << garbage.count() << endl;
+	}
+	
+	void GarbageCollector::onDestroyed(QObject* obj)
+	{
+		Out() << "Object destroyed !" << endl;
+		if (!clearing)
+			garbage.remove(obj);
 	}
 
-	Log & Out()
-	{
-		Log & lg = Globals::instance().getLog();
-		lg.setOutputToConsole(Globals::instance().isDebugModeSet());
-		return lg;
-	}
 }
 
+#include "garbagecollector.moc"

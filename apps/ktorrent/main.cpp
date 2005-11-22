@@ -32,6 +32,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <util/error.h>
+#include <torrent/globals.h>
+
+using namespace bt;
 
 /*
 void StupidWarningMessagesFromQt( QtMsgType type, const char *msg )
@@ -94,7 +97,7 @@ int main(int argc, char **argv)
 		fprintf(stderr, "ktorrent is already running!\n");
 		return 0;
 	}
-
+	
 	try
 	{
 		KTorrentApp app;
@@ -104,5 +107,6 @@ int main(int argc, char **argv)
 	{
 		fprintf(stderr, "Aborted by error : %s\n",e.toString().ascii());
 	}
+	Globals::cleanup();
 	return 0;
 }

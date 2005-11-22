@@ -28,8 +28,9 @@ namespace bt
 {
 	class Log;
 	class Server;
+	class GarbageCollector;
 
-        Log& Out();
+	Log& Out();
 
 	class Globals
 	{
@@ -43,17 +44,20 @@ namespace bt
 
 		Log & getLog() {return *log;}
 		Server & getServer() {return *server;}
+		GarbageCollector & getGC() {return *gc;}
 		
-		static Globals & instance() {return inst;}
+		static Globals & instance();
+		static void cleanup();
 	private:
 		Globals();
 		
 		bool debug_mode;
 		Log* log;
 		Server* server;
+		GarbageCollector* gc;
 		friend Log& Out();
 
-		static Globals inst;
+		static Globals* inst;
 		
 	};
 

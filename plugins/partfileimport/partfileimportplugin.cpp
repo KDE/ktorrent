@@ -17,77 +17,45 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <kgenericfactory.h>
+#include <kglobal.h>
+#include <klocale.h>
+#include <kiconloader.h>
+#include <kstdaction.h>
+#include <kpopupmenu.h>
+#include <interfaces/guiinterface.h>
+#include "partfileimportplugin.h"
 
-#include <util/log.h>
-#include <util/error.h>
-#include <util/garbagecollector.h>
-#include "globals.h"
-#include "server.h"
+#define NAME "searchplugin"
+#define AUTHOR "Joris Guisson"
+#define EMAIL "joris.guisson@gmail.com"
 
 
 
-namespace bt
+K_EXPORT_COMPONENT_FACTORY(ktpartfileimportplugin,KGenericFactory<kt::PartFileImportPlugin>("ktpartfileimportplugin"))
+
+namespace kt
 {
-	
-	
 
-	Globals* Globals::inst = 0;
-
-
-
-
-
-	Globals::Globals()
+	PartFileImportPlugin::PartFileImportPlugin(QObject* parent, const char* name, const QStringList& args)
+	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,i18n("KTorrent's partial file importing plugin, allows to import partially or fully downloaded torrents from other clients"))
 	{
-		debug_mode = false;
-		log = new Log();
-		gc = new GarbageCollector();
-		server = 0;
+		// setXMLFile("ktsearchpluginui.rc");
 	}
 
-	Globals::~ Globals()
-	{
-		gc->clear();
-		delete server;
-		delete log;
-		delete gc;
-	}
-	
-	Globals & Globals::instance() 
-	{
-		if (!inst) 
-			inst = new Globals();
-		return *inst;
-	}
-	
-	void Globals::cleanup()
-	{
-		delete inst;
-		inst = 0;
-	}
 
-	void Globals::initLog(const QString & file)
-	{
-		log->setOutputFile(file);
-		log->setOutputToConsole(debug_mode);
-	}
+	PartFileImportPlugin::~PartFileImportPlugin()
+	{}
 
-	void Globals::initServer(Uint16 port)
+
+	void PartFileImportPlugin::load()
 	{
-		if (server)
-		{
-			delete server;
-			server = 0;
-		}
 		
-		server = new Server(port);
 	}
 
-	Log & Out()
+	void PartFileImportPlugin::unload()
 	{
-		Log & lg = Globals::instance().getLog();
-		lg.setOutputToConsole(Globals::instance().isDebugModeSet());
-		return lg;
 	}
-}
 
+}
+#include "partfileimportplugin.moc"

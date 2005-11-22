@@ -1,0 +1,24 @@
+INCLUDES = $(all_includes) -I$(srcdir)/../../libktorrent
+METASOURCES = AUTO
+kde_module_LTLIBRARIES = ktpartfileimportplugin.la
+noinst_HEADERS = partfileimportplugin.h
+ktpartfileimportplugin_la_SOURCES = partfileimportplugin.cpp
+
+# Libs needed by the plugin
+ktpartfileimportplugin_la_LIBADD = $(LIB_KHTML) $(LIB_KPARTS) \
+	../../libktorrent/libktorrent.la
+
+# LD flags for the plugin
+# -module says: this is a module, i.e. something you're going to dlopen
+# so e.g. it has no version number like a normal shared lib would have.
+ktpartfileimportplugin_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+
+# rc file containing the GUI for the plugin
+# pluginsdir = $(kde_datadir)/ktpartfileimportplgin
+# plugins_DATA =  ktpartfileimportpluginui.rc
+
+# Install the desktop file needed to detect the plugin
+kde_services_DATA = ktpartfileimportplugin.desktop
+
+# kde_kcfg_DATA =  ktpartfileimportplugin.kcfg
+
