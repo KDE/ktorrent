@@ -54,8 +54,9 @@ namespace bt
 		delete cnt;
 		Globals::instance().getServer().removePeerManager(this);
 		pending.setAutoDelete(true);
-		//peer_map.setAutoDelete(true);
+		pending.clear();
 		peer_list.setAutoDelete(true);
+		peer_list.clear();
 	}
 
 	void PeerManager::update()

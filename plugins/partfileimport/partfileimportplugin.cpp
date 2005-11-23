@@ -26,7 +26,7 @@
 #include <interfaces/guiinterface.h>
 #include "partfileimportplugin.h"
 
-#define NAME "searchplugin"
+#define NAME "partfileimportplugin"
 #define AUTHOR "Joris Guisson"
 #define EMAIL "joris.guisson@gmail.com"
 

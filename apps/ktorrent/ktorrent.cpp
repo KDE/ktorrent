@@ -178,6 +178,7 @@ KTorrent::~KTorrent()
 void KTorrent::addTabPage(QWidget* page,const QIconSet & icon,const QString & caption)
 {
 	m_tabs->addTab(page,icon,caption);
+	page->show();
 }
 
 void KTorrent::removeTabPage(QWidget* page)

@@ -119,7 +119,8 @@ namespace bt
 			Map["CT"] = "CTorrent";
 			Map["G3"] = "G3 Torrent";
 			Map["MT"] = "MoonLight";
-			Map["LT"] = "LibTorrent";
+			Map["LT"] = "libtorrent";
+			Map["lt"] = "libTorrent";
 			Map["SS"] = "SwarmScope";
 			Map["TN"] = "Torrent .NET";
 			Map["TS"] = "Torrent Storm";
