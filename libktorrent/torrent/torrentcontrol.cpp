@@ -243,7 +243,9 @@ namespace bt
 		tor = new Torrent();
 		tor->load(torrent,false);
 		if (!bt::Exists(datadir))
+		{
 			bt::MakeDir(datadir);
+		}
 
 		stats.torrent_name = tor->getNameSuggestion();
 		stats.multi_file_torrent = tor->isMultiFile();

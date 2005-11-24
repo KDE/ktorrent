@@ -47,7 +47,6 @@
 #include "iwfiletreediritem.h"
 #include "infowidgetpluginsettings.h"
 
-
 using namespace bt;
 using namespace kt;
 
@@ -231,6 +230,31 @@ namespace kt
 		update();
 	}
 	
+	void InfoWidget::readyPercentage()
+	{
+		if(curr_tc->getStats().multi_file_torrent)
+		{
+			multi_root->updatePercentageInformation(curr_tc);
+		}
+		else
+		{
+			QListViewItemIterator it(m_file_view);
+			if (!it.current())
+				return;
+
+			Uint32 index, end, total;
+			end = curr_tc->downloadedChunksBitSet().getNumBits();
+			total = 0;
+			for(index = 0; index < end; index++)
+			{
+				total += curr_tc->downloadedChunksBitSet().get(index);
+			}
+			double percent = (double)total/(double)end*100.0;
+			it.current()->setText(4, QString::number(percent, 'f', 2) + "%");
+			
+		}
+	}
+
 	void InfoWidget::readyPreview()
 	{
 		if(curr_tc->getStats().multi_file_torrent)
@@ -314,6 +338,7 @@ namespace kt
 			m_avg_down->setText(KBytesPerSecToString(r / secs));
 		}
 		readyPreview();
+		readyPercentage();
 	}
 	
 	void InfoWidget::showContextMenu(KListView* ,QListViewItem* item,const QPoint & p)

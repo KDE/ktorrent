@@ -64,7 +64,8 @@ namespace kt
 	
 	private:
 		void fillFileTree();
-		void readyPreview(); 
+		void readyPreview();
+		void readyPercentage();
 		
 	private:
 		KTorrentMonitor* monitor;

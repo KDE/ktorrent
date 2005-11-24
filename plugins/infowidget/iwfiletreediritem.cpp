@@ -47,6 +47,26 @@ namespace kt
 	}
 		
 	
+	void IWFileTreeDirItem::updatePercentageInformation(kt::TorrentInterface* tc)
+	{
+		// first set all the child items
+		bt::PtrMap<QString,FileTreeItem>::iterator i = children.begin();
+		while (i != children.end())
+		{
+			IWFileTreeItem* item = (IWFileTreeItem*)i->second;
+			item->updatePercentageInformation(tc);
+			i++;
+		}
+	
+		// then recursivly move on to subdirs
+		bt::PtrMap<QString,FileTreeDirItem>::iterator j = subdirs.begin();
+		while (j != subdirs.end())
+		{
+			((IWFileTreeDirItem*)j->second)->updatePercentageInformation(tc);
+			j++;
+		}
+	}
+	
 	void IWFileTreeDirItem::updatePreviewInformation(kt::TorrentInterface* tc)
 	{
 		// first set all the child items

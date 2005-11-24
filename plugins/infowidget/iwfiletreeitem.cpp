@@ -18,8 +18,10 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <klocale.h>
+#include <kglobal.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
+#include <util/bitset.h>
 #include "iwfiletreeitem.h"
 #include "iwfiletreediritem.h"
 #include "functions.h"
@@ -55,4 +57,24 @@ namespace kt
 			setText(3, i18n("No"));
 	}
 
+	void IWFileTreeItem::updatePercentageInformation(kt::TorrentInterface* tc)
+	{
+		Uint32 start, index, end, total;
+		start = file.getFirstChunk();
+		end = file.getLastChunk();
+		total = 0;
+		const bt::BitSet & bs = tc->downloadedChunksBitSet();
+		for(index = start; index <= end; index++)
+		{
+			if (bs.get(index))
+				total++;
+		}
+		double percent = (double)total/(double)((end-start) + 1)*100.0;
+		if (percent < 0.0)
+			percent = 0.0;
+		else if (percent > 100.0)
+			percent = 100.0;
+		KLocale* loc = KGlobal::locale();
+		setText(4,i18n("%1 %").arg(loc->formatNumber(percent,2)));
+	}
 }

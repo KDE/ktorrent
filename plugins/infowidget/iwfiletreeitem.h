@@ -43,6 +43,7 @@ namespace kt
 		virtual ~IWFileTreeItem();
 	
 		void updatePreviewInformation(kt::TorrentInterface* tc);
+		void updatePercentageInformation(kt::TorrentInterface* tc);
 	};
 }
 

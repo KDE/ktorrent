@@ -87,6 +87,7 @@ int main(int argc, char **argv)
 					I18N_NOOP("ChunkBar's tooltip and IWFileTreeItem sorting"),
 					"bflat1@gmx.net");
 	about.addCredit("Andreas Kling",0,"kling@impul.se");
+	about.addCredit("Felipe Sateler",0,"fsateler@gmail.com");
 	
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);
