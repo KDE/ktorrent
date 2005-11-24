@@ -247,10 +247,16 @@ namespace kt
 			total = 0;
 			for(index = 0; index < end; index++)
 			{
-				total += curr_tc->downloadedChunksBitSet().get(index);
+				if (curr_tc->downloadedChunksBitSet().get(index))
+					total++;
 			}
-			double percent = (double)total/(double)end*100.0;
-			it.current()->setText(4, QString::number(percent, 'f', 2) + "%");
+			double percent = (double)total/(double)(end)*100.0;
+			if (percent < 0.0)
+				percent = 0.0;
+			else if (percent > 100.0)
+				percent = 100.0;
+			KLocale* loc = KGlobal::locale();
+			it.current()->setText(4,i18n("%1 %").arg(loc->formatNumber(percent,2)));
 			
 		}
 	}
