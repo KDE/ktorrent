@@ -350,6 +350,10 @@ namespace kt
 	void InfoWidget::showContextMenu(KListView* ,QListViewItem* item,const QPoint & p)
 	{
 		const TorrentStats & s = curr_tc->getStats();
+		// don't show a menu if item is 0 or if it is a directory
+		if (!item || item->childCount() > 0)
+			return;
+		
 		if(s.multi_file_torrent)
 		{
 			kt::TorrentFileInterface & file = ((FileTreeItem*)item)->getTorrentFile();
