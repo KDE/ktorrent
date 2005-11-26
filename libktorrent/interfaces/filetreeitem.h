@@ -68,6 +68,8 @@ namespace kt
 	private:
 		void init();
 		virtual void stateChange(bool on);
+		
+	protected:
 		virtual int compare(QListViewItem* i, int col, bool ascending) const;
 	};
 }

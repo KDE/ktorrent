@@ -38,12 +38,15 @@ namespace kt
 	*/
 	class IWFileTreeItem : public kt::FileTreeItem
 	{
+		double perc_complete;
 	public:
 		IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file);
 		virtual ~IWFileTreeItem();
 	
 		void updatePreviewInformation(kt::TorrentInterface* tc);
 		void updatePercentageInformation(kt::TorrentInterface* tc);
+	protected:
+		virtual int compare(QListViewItem* i, int col, bool ascending) const;
 	};
 }
 

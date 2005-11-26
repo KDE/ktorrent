@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <klocale.h>
 #include <kglobal.h>
+#include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include <util/bitset.h>
@@ -34,11 +35,26 @@ namespace kt
 	IWFileTreeItem::IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file)
 		: FileTreeItem(item,name,file)
 	{
+		perc_complete = 0.0;
 	}
 	
 	IWFileTreeItem::~IWFileTreeItem()
 	{
 	}
+	
+	int IWFileTreeItem::compare(QListViewItem* i, int col, bool ascending) const
+	{
+		if (col == 4)
+		{
+			IWFileTreeItem* other = static_cast<IWFileTreeItem*>(i);
+			return CompareVal(perc_complete,other->perc_complete);
+		}
+		else
+		{
+			return FileTreeItem::compare(i, col, ascending);
+		}
+	}
+
 	
 	void IWFileTreeItem::updatePreviewInformation(kt::TorrentInterface* tc)
 	{
@@ -76,5 +92,6 @@ namespace kt
 			percent = 100.0;
 		KLocale* loc = KGlobal::locale();
 		setText(4,i18n("%1 %").arg(loc->formatNumber(percent,2)));
+		perc_complete = percent;
 	}
 }
