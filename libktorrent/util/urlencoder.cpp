@@ -71,31 +71,20 @@ namespace bt
 			} 
 			else if (ch == ' ') 
 			{			// space
-				res.append('+');
+				res.append("%20");
 			}
 			else if (ch == '-' || ch == '_'		// unreserved
-					|| ch == '.' || ch == '!'
+				    || ch == '.' || ch == '!'
 					|| ch == '~' || ch == '*'
 					|| ch == '\'' || ch == '('
 					|| ch == ')') 
 			{
 				res.append((char)ch);
 			} 
-			else //if (ch <= 0x007f) 
+			else 
 			{		// other ASCII
 				res.append(hex[ch]);
 			} 
-		/*	else if (ch <= 0x07FF) 
-			{		// non-ASCII <= 0x7FF
-				res.append(hex[0xc0 | (ch >> 6)]);
-				res.append(hex[0x80 | (ch & 0x3F)]);
-			} 
-			else 
-			{					// 0x7FF < ch <= 0xFFFF
-				res.append(hex[0xe0 | (ch >> 12)]);
-				res.append(hex[0x80 | ((ch >> 6) & 0x3F)]);
-				res.append(hex[0x80 | (ch & 0x3F)]);
-		}*/
 		}
 		return res;
 	}
