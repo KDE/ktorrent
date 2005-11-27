@@ -5,6 +5,7 @@ Name[el]=Πρόσθετο UPnP
 Name[pt]='Plugin' UPnP
 Name[pt_BR]='Plugin' UPnP
 Name[sv]=UPnP-insticksprogram
+Name[xx]=xxUPnPPluginxx
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktupnpplugin

@@ -4,6 +4,7 @@ Name[el]=Πρόσθετο εισαγωγής μερικής λήψης
 Name[pt]=Importação de Ficheiros Parciais
 Name[pt_BR]=Importação de Ficheiros Parciais
 Name[sv]=Insticksprogram för partiell filimport
+Name[xx]=xxPartialFileImportPluginxx
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktpartfileimportplugin
