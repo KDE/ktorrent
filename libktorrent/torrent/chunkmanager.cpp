@@ -147,7 +147,7 @@ namespace bt
 	{
 		File fptr;
 		if (!fptr.open(index_file,"wb"))
-			throw Error(i18n("Can't open index file"));
+			throw Error(i18n("Cannot open index file %1 : %2").arg(index_file).arg(fptr.errorString()));
 		
 		for (unsigned int i = 0;i < tor.getNumChunks();i++)
 		{
@@ -230,7 +230,7 @@ namespace bt
 			// try again
 			if (!fptr.open(index_file,"r+b"))
 				// panick if it failes
-				throw Error(i18n("Cannot open index file : %1").arg(fptr.errorString()));
+				throw Error(i18n("Cannot open index file %1 : %2").arg(index_file).arg(fptr.errorString()));
 		}
 
 		

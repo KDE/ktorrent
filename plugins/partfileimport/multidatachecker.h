@@ -17,54 +17,27 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTGLOBALS_H
-#define BTGLOBALS_H
+#ifndef BTMULTIDATACHECKER_H
+#define BTMULTIDATACHECKER_H
 
-#include <util/constants.h>
-
-class QString;
+#include <datachecker.h>
 
 namespace bt
 {
-	class Log;
-	class Server;
-	class GarbageCollector;
 
-	Log& Out();
-
-	class Globals
+	/**
+	@author Joris Guisson
+	*/
+	class MultiDataChecker : public DataChecker
 	{
 	public:
-		virtual ~Globals();
-		
-		void initLog(const QString & file);
-		void initServer(Uint16 port);
-		void setDebugMode(bool on) {debug_mode = on;}
-		bool isDebugModeSet() const {return debug_mode;}
+		MultiDataChecker();
 
-		Log & getLog() {return *log;}
-		Server & getServer() {return *server;}
-#ifdef KT_DEBUG_GC
-		GarbageCollector & getGC() {return *gc;}
-#endif
-		
-		static Globals & instance();
-		static void cleanup();
-	private:
-		Globals();
-		
-		bool debug_mode;
-		Log* log;
-		Server* server;
-#ifdef KT_DEBUG_GC
-		GarbageCollector* gc;
-#endif
-		friend Log& Out();
+		~MultiDataChecker();
 
-		static Globals* inst;
-		
+		virtual void check(const QString& path, const Torrent& tor,KProgress* prog);
+
 	};
-
 
 }
 

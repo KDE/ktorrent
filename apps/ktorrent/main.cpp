@@ -32,6 +32,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <util/error.h>
+#include <util/object.h>
 #include <torrent/globals.h>
 
 using namespace bt;
@@ -102,12 +103,14 @@ int main(int argc, char **argv)
 	try
 	{
 		KTorrentApp app;
-		return app.exec();
+		app.exec();
 	}
 	catch (bt::Error & e)
 	{
 		fprintf(stderr, "Aborted by error : %s\n",e.toString().ascii());
 	}
 	Globals::cleanup();
+	
+	printf("\n\nObjects alive = %i\n\n",(unsigned int)Object::numAlive());
 	return 0;
 }

@@ -17,94 +17,76 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <klocale.h>
+#include <kprogress.h>
+#include <kapplication.h>
 #include <util/log.h>
 #include <util/file.h>
 #include <util/error.h>
 #include <util/array.h>
-#include <util/functions.h>
 #include <torrent/globals.h>
 #include <torrent/torrent.h>
-#include <torrent/chunkmanager.h>
-#include "singlecachechecker.h"
+#include "singledatachecker.h"
 
-using namespace bt;
-
-namespace debug
+namespace bt
 {
 
-	SingleCacheChecker::SingleCacheChecker(bt::Torrent& tor): CacheChecker(tor)
+	SingleDataChecker::SingleDataChecker(): DataChecker()
 	{}
 
 
-	SingleCacheChecker::~SingleCacheChecker()
+	SingleDataChecker::~SingleDataChecker()
 	{}
 
 
-	void SingleCacheChecker::check(const QString& cache, const QString& index)
+	void SingleDataChecker::check(const QString& path, const Torrent& tor,KProgress* prog)
 	{
-		loadIndex(index);
+		// open the file
 		Uint32 num_chunks = tor.getNumChunks();
 		File fptr;
-		if (!fptr.open(cache,"rb"))
+		if (!fptr.open(path,"rb"))
 		{
-			throw Error(QString("Cannot open file : %1 : %2")
-					.arg(cache).arg( fptr.errorString()));
+			throw Error(i18n("Cannot open file : %1 : %2")
+					.arg(path).arg( fptr.errorString()));
 		}
 
-		Uint32 num_ok = 0,num_not_ok = 0,num_not_downloaded = 0,extra_ok = 0;
-
+		// initialize the bitsets
+		downloaded = BitSet(num_chunks);
+		failed = BitSet(num_chunks);
+	
+		prog->setTotalSteps(num_chunks);
+		
+		// loop over all chunks
 		Array<Uint8> buf((Uint32)tor.getChunkSize());
 		for (Uint32 i = 0;i < num_chunks;i++)
 		{
-			if (i % 100 == 0)
+			prog->setProgress(i);
+			if (i % 50 == 0 && i > 0)
+			{
 				Out() << "Checked " << i << " chunks" << endl;
-	//	Out() << "Chunk " << i << " : ";
+				KApplication::kApplication()->processEvents();
+			}
+	
 			if (!fptr.eof())
 			{
+				// read the chunk
 				Uint32 size = i == num_chunks - 1 && tor.getFileLength() % tor.getChunkSize() > 0 ?
 						tor.getFileLength() % tor.getChunkSize() : (Uint32)tor.getChunkSize();
 				fptr.seek(File::BEGIN,i*tor.getChunkSize());
 				fptr.read(buf,size);
+				// generate and test hash
 				SHA1Hash h = SHA1Hash::generate(buf,size);
 				bool ok = (h == tor.getHash(i));
-				if (ok)
-				{
-					if (downloaded_chunks.count(i) == 0)
-					{
-						extra_ok++;
-						extra_chunks.insert(i);
-						continue;
-					}
-					num_ok++;
-		//		Out() << "OK" << endl;
-				}
-				else
-				{
-					if (downloaded_chunks.count(i) == 0)
-					{
-						num_not_downloaded++;
-						continue;
-					}
-					Out() << "Chunk " << i << " Failed :" << endl;
-					Out() << "\tShould be : " << tor.getHash(i).toString() << endl;
-					Out() << "\tIs        : " << h.toString() << endl;
-					num_not_ok++;
-					failed_chunks.insert(i);
-				}
-			
+				downloaded.set(i,ok);
+				failed.set(i,!ok);
 			}
 			else
 			{
-				num_not_downloaded++;
-			//Out() << "Not Downloaded" << endl;
+				// at end of file so set to default values for a failed chunk
+				downloaded.set(i,false);
+				failed.set(i,true);
 			}
 		}
-		Out() << "Cache Check Summary" << endl;
-		Out() << "===================" << endl;
-		Out() << "Extra Chunks : " << extra_ok << endl;
-		Out() << "Chunks OK : " << num_ok << endl;
-		Out() << "Chunks Not Downloaded : " << num_not_downloaded << endl;
-		Out() << "Chunks Failed : " << num_not_ok << endl;
 	}
 
 }

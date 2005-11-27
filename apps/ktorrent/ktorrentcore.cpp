@@ -102,8 +102,6 @@ KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seedin
 
 	
 	pman = new kt::PluginManager(this,gui);
-	pman->loadConfigFile(KGlobal::dirs()->saveLocation("data","ktorrent") + "plugins");
-	pman->loadPluginList();
 }
 
 
@@ -111,6 +109,12 @@ KTorrentCore::~KTorrentCore()
 {
 	delete qman;
 	delete pman;
+}
+
+void KTorrentCore::loadPlugins()
+{
+	pman->loadConfigFile(KGlobal::dirs()->saveLocation("data","ktorrent") + "plugins");
+	pman->loadPluginList();
 }
 
 void KTorrentCore::load(const QString & target,const QString & dir)
@@ -139,10 +143,7 @@ void KTorrentCore::load(const QString & target,const QString & dir)
 	}
 	catch (bt::Error & err)
 	{
-		KMessageBox::error(0,
-		                   i18n("An error occurred whilst loading the torrent file. "
-		                        "The most likely cause is that the torrent file is corrupted, "
-		                        "or it is not a torrent file at all."),i18n("Error"));
+		KMessageBox::error(0,err.toString());
 		delete tc;
 		tc = 0;
 	}
@@ -205,6 +206,36 @@ QString KTorrentCore::findNewTorrentDir() const
 	return QString::null;
 }
 
+void KTorrentCore::loadExistingTorrent(const QString & tor_dir)
+{
+	TorrentControl* tc = 0;
+	
+	QString idir = tor_dir;
+	if (!idir.endsWith(bt::DirSeparator()))
+		idir += bt::DirSeparator();
+	
+	try
+	{
+		tc = new TorrentControl();
+		tc->init(idir + "torrent",idir,QString::null);
+			// 			downloads.append(tc);
+		qman->append(tc);
+		connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
+				this,SLOT(torrentFinished(kt::TorrentInterface* )));
+		connect(tc, SIGNAL(stoppedByError(kt::TorrentInterface*, QString )),
+				this, SLOT(slotStoppedByError(kt::TorrentInterface*, QString )));
+		if (tc->getStats().autostart)
+			start(tc);
+		torrentAdded(tc);
+	}
+	catch (bt::Error & err)
+	{
+		bt::Delete(idir,true);
+		KMessageBox::error(0,err.toString());
+		delete tc;
+	}
+}
+
 void KTorrentCore::loadTorrents()
 {
 	QDir dir(data_dir);
@@ -217,28 +248,7 @@ void KTorrentCore::loadTorrents()
 			idir.append(DirSeparator());
 
 		Out() << "Loading " << idir << endl;
-
-		TorrentControl* tc = 0;
-		try
-		{
-			tc = new TorrentControl();
-			tc->init(idir + "torrent",idir,QString::null);
-			// 			downloads.append(tc);
-			qman->append(tc);
-			connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
-			        this,SLOT(torrentFinished(kt::TorrentInterface* )));
-			connect(tc, SIGNAL(stoppedByError(kt::TorrentInterface*, QString )),
-			        this, SLOT(slotStoppedByError(kt::TorrentInterface*, QString )));
-			if (tc->getStats().autostart)
-				start(tc);
-			torrentAdded(tc);
-		}
-		catch (bt::Error & err)
-		{
-			bt::Delete(idir,true);
-			KMessageBox::error(0,err.toString(),i18n("Error"));
-			delete tc;
-		}
+		loadExistingTorrent(idir);
 	}
 }
 

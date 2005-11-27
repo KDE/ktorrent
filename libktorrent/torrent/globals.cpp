@@ -20,10 +20,13 @@
 
 #include <util/log.h>
 #include <util/error.h>
-#include <util/garbagecollector.h>
+
 #include "globals.h"
 #include "server.h"
 
+#ifdef KT_DEBUG_GC
+#include <util/garbagecollector.h>
+#endif
 
 
 namespace bt
@@ -41,16 +44,21 @@ namespace bt
 	{
 		debug_mode = false;
 		log = new Log();
+#ifdef KT_DEBUG_GC
 		gc = new GarbageCollector();
+#endif
+
 		server = 0;
 	}
 
 	Globals::~ Globals()
 	{
-		gc->clear();
 		delete server;
 		delete log;
+#ifdef KT_DEBUG_GC
+		gc->clear();
 		delete gc;
+#endif
 	}
 	
 	Globals & Globals::instance() 

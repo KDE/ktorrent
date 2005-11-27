@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>libktorrent/util/libutil.la</activetarget>
+      <activetarget>plugins/partfileimport/ktpartfileimportplugin.la</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>
@@ -83,6 +83,8 @@
       <subclass uifile="/src/fileselectdlgbase.ui" sourcefile="/src/fileselectdlg.h" />
       <subclass uifile="/plugins/upnp/upnpwidget.ui" sourcefile="/plugins/upnp/upnpprefwidget.cpp" />
       <subclass uifile="/plugins/upnp/upnpwidget.ui" sourcefile="/plugins/upnp/upnpprefwidget.h" />
+      <subclass uifile="/plugins/partfileimport/importdlgbase.ui" sourcefile="/plugins/partfileimport/importdialog.cpp" />
+      <subclass uifile="/plugins/partfileimport/importdlgbase.ui" sourcefile="/plugins/partfileimport/importdialog.h" />
     </subclassing>
   </kdevautoproject>
   <kdevfileview>

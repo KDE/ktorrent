@@ -241,7 +241,17 @@ namespace bt
 
 		// first load the torrent file
 		tor = new Torrent();
-		tor->load(torrent,false);
+		try
+		{
+			tor->load(torrent,false);
+		}
+		catch (...)
+		{
+			delete tor;
+			throw Error(i18n("An error occured whilst loading the torrent,"
+					" the torrent is probably corrupt or it isn't a torrent file"));
+		}
+		
 		if (!bt::Exists(datadir))
 		{
 			bt::MakeDir(datadir);

@@ -153,6 +153,8 @@ KTorrent::KTorrent()
 	QToolTip::add(m_statusInfo, i18n("Info"));
 	QToolTip::add(m_statusTransfer, i18n("Data transfered during the current session"));
 	QToolTip::add(m_statusSpeed, i18n("Current speed of all torrents combined"));
+	
+	m_core->loadPlugins();
 
 	connect(&m_gui_update_timer, SIGNAL(timeout()), this, SLOT(updatedStats()));
 	m_gui_update_timer.start(500);

@@ -58,7 +58,7 @@ namespace bt
 
 			fptr.setName(file);
 			if (!fptr.open(IO_WriteOnly))
-				throw Error(i18n("Cannot open log file %1").arg(file));
+				throw Error(i18n("Cannot open log file %1 : %2").arg(file).arg(fptr.errorString()));
 
 			out->setDevice(&fptr);
 		}

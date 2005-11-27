@@ -24,7 +24,9 @@
 #include <kstdaction.h>
 #include <kpopupmenu.h>
 #include <interfaces/guiinterface.h>
+#include <interfaces/coreinterface.h>
 #include "partfileimportplugin.h"
+#include "importdialog.h"
 
 #define NAME "partfileimportplugin"
 #define AUTHOR "Joris Guisson"
@@ -40,7 +42,8 @@ namespace kt
 	PartFileImportPlugin::PartFileImportPlugin(QObject* parent, const char* name, const QStringList& args)
 	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,i18n("KTorrent's partial file importing plugin, allows to import partially or fully downloaded torrents from other clients"))
 	{
-		// setXMLFile("ktsearchpluginui.rc");
+		setXMLFile("ktpartfileimportpluginui.rc");
+		import_action = 0;
 	}
 
 
@@ -50,11 +53,20 @@ namespace kt
 
 	void PartFileImportPlugin::load()
 	{
-		
+		import_action = new KAction(i18n("Import existing download" ), 0, this,
+									 SLOT(onImport()), actionCollection(), "partfileimport" );
 	}
 
 	void PartFileImportPlugin::unload()
 	{
+		delete import_action;
+		import_action = 0;
+	}
+	
+	void PartFileImportPlugin::onImport()
+	{
+		ImportDialog dlg(getCore(),0,0,true);
+		dlg.exec();
 	}
 
 }

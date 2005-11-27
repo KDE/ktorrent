@@ -17,55 +17,42 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTGLOBALS_H
-#define BTGLOBALS_H
 
-#include <util/constants.h>
+#ifndef IMPORTDIALOG_H
+#define IMPORTDIALOG_H
 
-class QString;
+#include "importdlgbase.h"
+
+class KURL;
 
 namespace bt
 {
-	class Log;
-	class Server;
-	class GarbageCollector;
+	class BitSet;
+}
 
-	Log& Out();
 
-	class Globals
+namespace kt
+{
+	class CoreInterface;
+	
+	class ImportDialog : public ImportDlgBase
 	{
+		Q_OBJECT
+	
 	public:
-		virtual ~Globals();
+		ImportDialog(CoreInterface* core,QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
+		virtual ~ImportDialog();
 		
-		void initLog(const QString & file);
-		void initServer(Uint16 port);
-		void setDebugMode(bool on) {debug_mode = on;}
-		bool isDebugModeSet() const {return debug_mode;}
-
-		Log & getLog() {return *log;}
-		Server & getServer() {return *server;}
-#ifdef KT_DEBUG_GC
-		GarbageCollector & getGC() {return *gc;}
-#endif
-		
-		static Globals & instance();
-		static void cleanup();
+	public slots:
+		void onImport();
+	
 	private:
-		Globals();
-		
-		bool debug_mode;
-		Log* log;
-		Server* server;
-#ifdef KT_DEBUG_GC
-		GarbageCollector* gc;
-#endif
-		friend Log& Out();
-
-		static Globals* inst;
-		
+		void writeIndex(const QString & file,const bt::BitSet & chunks);
+		void linkTorFile(const QString & cache_dir,const KURL & data_url,const QString & fpath);
+	private:
+		CoreInterface* core;
 	};
-
-
 }
 
 #endif
+

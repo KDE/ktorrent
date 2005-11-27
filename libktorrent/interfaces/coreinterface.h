@@ -132,6 +132,18 @@ namespace kt
 		 * range - 127.0.*.*
 		 **/
 		virtual void addBlockedIP(QString& ip) = 0;
+		
+		/**
+		 * Find the next free torX dir.
+		 * @return Path to the dir (including the torX part)
+		 */
+		virtual QString findNewTorrentDir() const = 0;
+		
+		/**
+		 * Load an existing torrent, which has allready a properly set up torX dir.
+		 * @param tor_dir The torX dir
+		 */
+		virtual void loadExistingTorrent(const QString & tor_dir) = 0;
 	};
 
 }

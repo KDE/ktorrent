@@ -100,9 +100,7 @@ namespace bt
 			- normal : everything else
 		*/
 		bool warmup = cman.getNumChunks() - cman.chunksLeft() <= 4;
-		bool endgame_mode = 
-				cman.chunksLeft() <= current_chunks.count() &&
-				cman.chunksLeft() < 20;
+		bool endgame_mode = cman.chunksLeft() <= current_chunks.count();
 
 		if (warmup)
 			warmupUpdate();

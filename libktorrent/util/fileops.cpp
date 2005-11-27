@@ -102,13 +102,13 @@ namespace bt
 	{
 		if (!KIO::NetAccess::del(url,0))
 		{
+			QString err = i18n("Cannot delete %1: %2")
+					.arg(url.prettyURL())
+					.arg(KIO::NetAccess::lastErrorString());
 			if (!nothrow)
-				throw Error(i18n("Cannot delete %1: %2")
-						.arg(url.prettyURL())
-						.arg(KIO::NetAccess::lastErrorString()));
+				throw Error(err);
 			else
-				Out() << "Error : Cannot delete " << url << " : " << KIO::NetAccess::lastErrorString() << endl;
-	
+				Out() << "Error : " << err << endl;
 		}
 	}
 

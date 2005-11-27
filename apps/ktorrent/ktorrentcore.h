@@ -74,6 +74,12 @@ public:
 	void loadTorrents();
 	
 	/**
+	 * Load an existing torrent, which has allready a properly set up torX dir.
+	 * @param tor_dir The torX dir
+	 */
+	void loadExistingTorrent(const QString & tor_dir);
+	
+	/**
 	 * Set the maximum number of simultanious downloads.
 	 * @param max The max num (0 == no limit)
 	 */
@@ -162,6 +168,17 @@ public:
 	///Inserts blocked IP range into IPBlocklist
 	void addBlockedIP(QString& ip);
 	
+	/**
+	 * Find the next free torX dir.
+	 * @return Path to the dir (including the torX part)
+	 */
+	QString findNewTorrentDir() const;
+	
+	/**
+	 * Load plugins. 
+	 */
+	void loadPlugins();
+	
 	virtual void load(const KURL& url);
 public slots:
 	/**
@@ -219,11 +236,9 @@ signals:
 	**/
 	void statsUpdated();
 
-	
 
 
 private:
-	QString findNewTorrentDir() const;
 	int getNumRunning() const;
 	void rollback(const QPtrList<kt::TorrentInterface> & success);
 	

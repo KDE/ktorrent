@@ -3,6 +3,7 @@
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
 	  <Action name="paste_url"/>
+	  <Merge/>
   </Menu>
   <Menu name="Downloads"><text>Downloads</text>
 	<Action name="Start" />

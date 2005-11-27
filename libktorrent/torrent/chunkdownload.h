@@ -26,8 +26,10 @@
 #include <util/timer.h>
 #include <util/ptrmap.h>
 #include <interfaces/chunkdownloadinterface.h>
+#include <util/object.h>
 #include "globals.h"
 #include "peerid.h"
+
 
 namespace bt
 {
@@ -47,7 +49,9 @@ namespace bt
 	 * 
 	 * This class handles the download of one Chunk.
 	*/
-	class ChunkDownload : public QObject,public kt::ChunkDownloadInterface
+					  
+	class ChunkDownload : public QObject,public kt::ChunkDownloadInterface 
+					  //,public Object
 	{
 		Q_OBJECT
 	public:
