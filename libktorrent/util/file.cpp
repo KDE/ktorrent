@@ -97,7 +97,7 @@ namespace bt
 		if (!fptr)
 			return 0;
 		
-		int p;
+		int p = SEEK_CUR; // use a default to prevent compiler warning
 		switch (from)
 		{
 			case BEGIN : p = SEEK_SET; break;

@@ -231,7 +231,7 @@ namespace kt
 		{
 			Range & ra = *i;
 			int rw = ra.last - ra.first + 1;
-			p->drawRect(scale * ra.first,0,rw * scale,r.height());
+			p->drawRect((int)(scale * ra.first),0,(int)(rw * scale),r.height());
 		}
 	}
 	

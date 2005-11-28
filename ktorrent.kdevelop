@@ -33,7 +33,7 @@
       <autocompile>true</autocompile>
       <envvars/>
       <runarguments>
-        <ktorrent></ktorrent>
+        <ktorrent/>
         <kttorinfo/>
         <cachecheck/>
         <ktcachecheck/>

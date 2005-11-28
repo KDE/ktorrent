@@ -75,7 +75,9 @@ namespace kt
 		{
 			delete level1;
 			level1 = 0;
+			return false;
 		}
+		return true;
 	}
 
 }

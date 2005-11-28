@@ -147,7 +147,7 @@ namespace bt
 					Int64 np = (size - 1) + num;
 					if (np < 0)
 						ptr = 0;
-					if (np >= size)
+					if (np >= (Int64) size)
 						ptr = size - 1;
 				}
 				break;
@@ -156,7 +156,7 @@ namespace bt
 					Int64 np = ptr + num;
 					if (np < 0)
 						ptr = 0;
-					if (np >= size)
+					if (np >= (Int64) size)
 						ptr = size - 1;
 				}	
 				break;

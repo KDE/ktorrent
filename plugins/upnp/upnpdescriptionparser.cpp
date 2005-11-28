@@ -150,6 +150,9 @@ namespace kt
 				status_stack.push(DEVICE);
 			else
 				status_stack.push(OTHER);
+			break;
+		case FIELD:
+			break;
 		}
 		return true;
 	}
