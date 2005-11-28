@@ -198,7 +198,7 @@ namespace bt
 			KNetwork::KIpAddress addr(custom_ip_resolved);
 			WriteUint32(buf,84,addr.IPv4Addr(true));
 		}
-		WriteInt32(buf,88,0);// Wtf is the bloody key ?
+		WriteUint32(buf,88,key);
 		WriteInt32(buf,92,100);
 		WriteUint16(buf,96,port);
 

@@ -42,6 +42,7 @@ namespace bt
 	HTTPTracker::HTTPTracker(kt::TorrentInterface* tor,const SHA1Hash & ih,const PeerID & pid) : Tracker(tor,ih,pid)
 	{
 		active_job = 0;
+		
 	}
 
 
@@ -152,6 +153,7 @@ namespace bt
 		url.addQueryItem("left",QString::number(s.bytes_left));
 		url.addQueryItem("compact","1");
 		url.addQueryItem("numwant","100");
+		url.addQueryItem("key",QString::number(key));
 		if (!custom_ip_resolved.isNull())
 			url.addQueryItem("ip",custom_ip_resolved);
 

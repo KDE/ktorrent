@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <stdlib.h>
+#include <time.h>
 #include <kurl.h>
 #include <kresolver.h>
 #include <util/functions.h>
@@ -43,6 +45,9 @@ namespace bt
 		connect(&update_timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 		connect(&error_update_timer,SIGNAL(timeout()),this,SLOT(onErrorTimeout()));
 		error_mode = false;
+		
+		srand(time(0));
+		key = rand();
 	}
 
 

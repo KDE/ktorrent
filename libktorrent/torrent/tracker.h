@@ -150,6 +150,7 @@ namespace bt
 		Uint32 time_of_last_update;
 		Uint32 num_failed_attempts;
 		bool error_mode;
+		Uint32 key;
 		static QString custom_ip,custom_ip_resolved;
 	};
 
