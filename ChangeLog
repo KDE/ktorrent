@@ -26,6 +26,8 @@ Changelog since v1.1 (October 10th, 2005)
 - Added new choking algorithm
 - Allow to send a custom IP to the tracker (116115)
 - No more duplicate torrents (117324)
+- Torrents can now be save from searchwidget (115077)
+
 
 - Fixed BUG: 
 	-114103
@@ -41,3 +43,4 @@ Changelog since v1.1 (October 10th, 2005)
 	-108930
 	-116115
 	-117324
+	-115077

@@ -161,13 +161,16 @@ namespace kt
 			if (is_bencoded_data || mime_type == "application/x-bittorrent" ||
 					curr_url.prettyURL().endsWith(".torrent"))
 			{
-				int ret = KMessageBox::questionYesNo(0,
-						i18n("Do you want to download the torrent?"),
+				int ret = KMessageBox::questionYesNoCancel(0,
+						i18n("Do you want to download or save the torrent?"),
 						i18n("Download Torrent"),
-						KGuiItem(i18n("to download", "Download"),"down"),KStdGuiItem::cancel());
+						KGuiItem(i18n("to download", "Download"),"down"),
+						KStdGuiItem::save());
 			
 				if (ret == KMessageBox::Yes)
 					openTorrent(curr_url);
+				else if (ret == KMessageBox::No)
+					saveTorrent(curr_url);
 			}
 			else
 			{

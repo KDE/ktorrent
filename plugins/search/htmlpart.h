@@ -57,6 +57,7 @@ namespace kt
 	signals:
 		void backAvailable(bool yes);
 		void openTorrent(const KURL & url);
+		void saveTorrent(const KURL & url);
 		void searchFinished();
 	
 	private:

@@ -74,6 +74,7 @@ namespace kt
 		void onURLHover(const QString & url);
 		void onFinished();
 		void onOpenTorrent(const KURL & url);
+		void onSaveTorrent(const KURL & url);
 		void showPopupMenu(const QString & s,const QPoint & p);
 		void onBackAvailable(bool available);
 		void onFrameAdded(KParts::Part* p);

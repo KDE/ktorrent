@@ -14,13 +14,13 @@
     </keywords>
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
-    <description/>
+    <description></description>
     <ignoreparts/>
     <versioncontrol>kdevsubversion</versioncontrol>
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>plugins/partfileimport/ktpartfileimportplugin.la</activetarget>
+      <activetarget>apps/ktorrent/ktorrent</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>
@@ -143,14 +143,14 @@
     <general>
       <dbgshell>libtool</dbgshell>
       <programargs>--nofork --debug</programargs>
-      <gdbpath/>
+      <gdbpath></gdbpath>
       <breakonloadinglibs>true</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>
       <runappinappdirectory>true</runappinappdirectory>
-      <configGdbScript/>
-      <runShellScript/>
-      <runGdbScript/>
+      <configGdbScript></configGdbScript>
+      <runShellScript></runShellScript>
+      <runGdbScript></runGdbScript>
     </general>
     <display>
       <staticmembers>false</staticmembers>
@@ -212,14 +212,14 @@
   </substmap>
   <kdevcppsupport>
     <references>
-      <pcs>Qt</pcs>
       <pcs>KDElibs</pcs>
+      <pcs>Qt</pcs>
     </references>
     <codecompletion>
       <includeGlobalFunctions>true</includeGlobalFunctions>
       <includeTypes>true</includeTypes>
       <includeEnums>true</includeEnums>
-      <includeTypedefs>false</includeTypedefs>
+      <includeTypedefs>true</includeTypedefs>
       <automaticCodeCompletion>true</automaticCodeCompletion>
       <automaticArgumentsHint>true</automaticArgumentsHint>
       <automaticHeaderCompletion>true</automaticHeaderCompletion>
@@ -228,7 +228,7 @@
       <headerCompletionDelay>250</headerCompletionDelay>
     </codecompletion>
     <creategettersetter>
-      <prefixGet/>
+      <prefixGet></prefixGet>
       <prefixSet>set</prefixSet>
       <prefixVariable>m_,_</prefixVariable>
       <parameterName>theValue</parameterName>
@@ -238,11 +238,16 @@
     <designerintegration>
       <qtdesigner/>
     </designerintegration>
+    <qt>
+      <used>true</used>
+      <version>3</version>
+      <root></root>
+    </qt>
   </kdevcppsupport>
   <kdevvisualadvance>
     <emulator>VisualBoyAdvance</emulator>
-    <binary/>
-    <addOptions/>
+    <binary></binary>
+    <addOptions></addOptions>
     <terminal>false</terminal>
     <fullscreen>false</fullscreen>
     <graphicFilter>-f0</graphicFilter>

@@ -36,6 +36,7 @@
 #include <kparts/partmanager.h>
 #include <kio/netaccess.h>
 #include <kmessagebox.h>
+#include <kfiledialog.h>
 #include <util/log.h>
 #include <torrent/globals.h>
 #include <interfaces/guiinterface.h>
@@ -96,6 +97,8 @@ namespace kt
 		connect(html_part,SIGNAL(popupMenu(const QString&, const QPoint& )),
 				this,SLOT(showPopupMenu(const QString&, const QPoint& )));
 		connect(html_part,SIGNAL(searchFinished()),this,SLOT(onFinished()));
+		connect(html_part,SIGNAL(saveTorrent(const KURL& )),
+				this,SLOT(onSaveTorrent(const KURL& )));
 	
 		KParts::PartManager* pman = html_part->partManager();
 		connect(pman,SIGNAL(partAdded(KParts::Part*)),this,SLOT(onFrameAdded(KParts::Part* )));
@@ -235,6 +238,19 @@ namespace kt
 	void SearchWidget::onOpenTorrent(const KURL & url)
 	{
 		openTorrent(url);
+	}
+	
+	void SearchWidget::onSaveTorrent(const KURL & url)
+	{
+		KFileDialog fdlg(QString::null,"*.torrent | " + i18n("torrent files"),this,0,true);
+		fdlg.setSelection(url.fileName());
+		fdlg.setOperationMode(KFileDialog::Saving);
+		if (fdlg.exec() == QDialog::Accepted)
+		{
+			KURL save_url = fdlg.selectedURL();
+			if (!KIO::NetAccess::copy(url,save_url,this))
+				KMessageBox::error(this,KIO::NetAccess::lastErrorString());
+		}
 	}
 	
 	void SearchWidget::showPopupMenu(const QString & url,const QPoint & p)
