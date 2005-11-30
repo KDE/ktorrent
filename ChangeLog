@@ -25,6 +25,7 @@ Changelog since v1.1 (October 10th, 2005)
 - Rarest piece first downloading
 - Added new choking algorithm
 - Allow to send a custom IP to the tracker (116115)
+- No more duplicate torrents (117324)
 
 - Fixed BUG: 
 	-114103
@@ -39,3 +40,4 @@ Changelog since v1.1 (October 10th, 2005)
 	-115484
 	-108930
 	-116115
+	-117324

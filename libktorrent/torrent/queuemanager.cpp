@@ -23,11 +23,13 @@
 #include <qstring.h>
 #include <kmessagebox.h>
 #include <klocale.h>
-
-#include <torrent/globals.h>
-#include <interfaces/torrentinterface.h>
 #include <util/log.h>
 #include <util/error.h>
+#include <util/sha1hash.h>
+#include <torrent/globals.h>
+#include <torrent/torrent.h>
+#include <torrent/torrentcontrol.h>
+#include <interfaces/torrentinterface.h>
 
 using namespace kt;
 
@@ -180,6 +182,19 @@ namespace bt
 	void QueueManager::setKeepSeeding(bool ks)
 	{
 		keep_seeding = ks;
+	}
+	
+	bool QueueManager::allreadyLoaded(const SHA1Hash & ih) const
+	{
+		QPtrList<kt::TorrentInterface>::const_iterator itr = downloads.begin();
+		while (itr != downloads.end())
+		{
+			const TorrentControl* tor = (const TorrentControl*)(*itr);
+			if (tor->getTorrent().getInfoHash() == ih)
+				return true;
+			itr++;
+		}
+		return false;
 	}
 
 }

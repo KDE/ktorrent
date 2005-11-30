@@ -44,6 +44,7 @@
 #include "udptracker.h"
 #include "downloadcap.h"
 #include "uploadcap.h"
+#include "queuemanager.h"
 
 using namespace kt;
 
@@ -227,7 +228,7 @@ namespace bt
 		}
 	}
 
-	void TorrentControl::init(const QString & torrent,const QString & tmpdir,const QString & ddir)
+	void TorrentControl::init(const QueueManager* qman,const QString & torrent,const QString & tmpdir,const QString & ddir)
 	{
 		datadir = tmpdir;
 		stats.completed = false;
@@ -251,6 +252,11 @@ namespace bt
 			throw Error(i18n("An error occured whilst loading the torrent,"
 					" the torrent is probably corrupt or it isn't a torrent file"));
 		}
+		
+		// check if we haven't allready loaded the torrent
+		// only do this when qman isn't 0
+		if (qman && qman->allreadyLoaded(tor->getInfoHash()))
+			throw Error(i18n("You are allready downloading this torrent !"));
 		
 		if (!bt::Exists(datadir))
 		{

@@ -43,6 +43,7 @@ namespace bt
 	class Uploader;
 	class Peer;
 	class BitSet;
+	class QueueManager;
 	
 	/**
 	 * @author Joris Guisson
@@ -76,13 +77,14 @@ namespace bt
 		
 		/**
 		 * Initialize the TorrentControl. 
+		 * @param qman The QueueManager
 		 * @param torrent The filename of the torrent file
 		 * @param tmpdir The directory to store temporary data
 		 * @param datadir The directory to store the actual file(s)
 		 * 		(only used the first time we load a torrent)
 		 * @throw Error when something goes wrong
 		 */
-		void init(const QString & torrent,const QString & tmpdir,const QString & datadir);
+		void init(const QueueManager* qman,const QString & torrent,const QString & tmpdir,const QString & datadir);
 
 		/**
 		 * Change to a new data dir. If this fails
@@ -145,6 +147,7 @@ namespace bt
 		
 		virtual Uint32 getNumFiles() const;
 		virtual kt::TorrentFileInterface & getTorrentFile(Uint32 index);
+		
 	public slots:
 		/**
 		 * Update the object, should be called periodically.

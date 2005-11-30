@@ -28,6 +28,7 @@
 
 namespace bt
 {
+	class SHA1Hash;
 	/**
 	 * @author Ivan Vasic
 	 * @brief This class contains list of all TorrentControls and is responsible for starting/stopping them
@@ -54,6 +55,13 @@ namespace bt
 			
 			QPtrList<kt::TorrentInterface>::iterator begin();
 			QPtrList<kt::TorrentInterface>::iterator end();
+			
+			/**
+			 * See if we allready loaded a torrent.
+			 * @param ih The info hash of a torrent
+			 * @return true if we do, false if we don't
+			 */
+			bool allreadyLoaded(const SHA1Hash & ih) const;
 			
 			void setMaxDownloads(int m);
 			void setMaxSeeds(int m);

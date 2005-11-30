@@ -13,7 +13,7 @@ If something is done put # in front of it.
 
 # 3) Immediatly store at final location
 
-4) Implement this one : http://bugs.kde.org/show_bug.cgi?id=112080 and even go further (i.e. allow to resume partially downloaded stuff from other clients) (To avoid major code changes symlink cache directly to final file or dir) (3 and 4 are related and should be done together)
+# 4) Implement this one : http://bugs.kde.org/show_bug.cgi?id=112080 and even go further (i.e. allow to resume partially downloaded stuff from other clients) (To avoid major code changes symlink cache directly to final file or dir) (3 and 4 are related and should be done together)
 
 5) Make something similar like konquerer's change browser identification but then for KT's PeerID
 
@@ -27,7 +27,7 @@ dl rates from these clients but no actuall data was downloaded.
 8) Make and show more statistics. (e.g. uptime, average transfer rates,
 connected peers, etc...) (UI clutter needs to be avoided)
 
-9) Implement temporary dir import (continue downloads)
+# 9) Implement temporary dir import (continue downloads)
 
 # 10) When specific torrent has big chunks (512K or more) and KT starts
 # downloading some of them, for example >5, it lasts *forever* to finish either

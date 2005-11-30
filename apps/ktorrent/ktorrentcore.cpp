@@ -120,11 +120,12 @@ void KTorrentCore::loadPlugins()
 void KTorrentCore::load(const QString & target,const QString & dir)
 {
 	TorrentControl* tc = 0;
+	QString tdir = findNewTorrentDir();
 	try
 	{
 		Out() << "Loading file " << target << endl;
 		tc = new TorrentControl();
-		tc->init(target,findNewTorrentDir(),dir);
+		tc->init(qman,target,tdir,dir);
 		connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
 		        this,SLOT(torrentFinished(kt::TorrentInterface* )));
 		connect(tc, SIGNAL(stoppedByError(kt::TorrentInterface*, QString )),
@@ -146,6 +147,9 @@ void KTorrentCore::load(const QString & target,const QString & dir)
 		KMessageBox::error(0,err.toString());
 		delete tc;
 		tc = 0;
+		// delete tdir if necesarry
+		if (bt::Exists(tdir))
+			bt::Delete(tdir,true);
 	}
 }
 
@@ -217,7 +221,7 @@ void KTorrentCore::loadExistingTorrent(const QString & tor_dir)
 	try
 	{
 		tc = new TorrentControl();
-		tc->init(idir + "torrent",idir,QString::null);
+		tc->init(qman,idir + "torrent",idir,QString::null);
 			// 			downloads.append(tc);
 		qman->append(tc);
 		connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
