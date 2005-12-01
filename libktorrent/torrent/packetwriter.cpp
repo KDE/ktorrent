@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <util/log.h>
 #include "packetwriter.h"
 #include "peer.h"
 #include "request.h"
@@ -29,12 +30,24 @@
 
 namespace bt
 {
-	
+
+#ifdef DEBUG_LOG_UPLOAD
+	static Log ulog;
+	static bool upload_log_initialized = false;
+#endif
+
 
 	PacketWriter::PacketWriter(Peer* peer) : peer(peer)
 	{
 		uploaded = 0;
 		packets.setAutoDelete(true);
+#ifdef DEBUG_LOG_UPLOAD
+		if (!upload_log_initialized)
+		{
+			ulog.setOutputFile("upload.log");
+			upload_log_initialized = true;
+		}
+#endif
 	}
 
 
@@ -45,6 +58,9 @@ namespace bt
 
 	void PacketWriter::sendPacket(const Packet & p)
 	{
+#ifdef DEBUG_LOG_UPLOAD
+		ulog << p.debugString() << endl;
+#endif
 		peer->sendData(p.getHeader(),p.getHeaderLength());
 		if (p.getDataLength() > 0)
 			peer->sendData(p.getData(),p.getDataLength(),p.getType() == PIECE);

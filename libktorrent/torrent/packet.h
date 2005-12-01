@@ -22,6 +22,8 @@
 
 #include "globals.h"
 
+class QString;
+
 namespace bt
 {
 	class BitSet;
@@ -56,6 +58,9 @@ namespace bt
 
 		void dataWritten(Uint32 bytes) {written += bytes;}
 		Uint32 getDataWritten() const {return written;}
+		
+		/// Make a description of the packet for debug purposes
+		QString debugString() const;
 	};
 
 }

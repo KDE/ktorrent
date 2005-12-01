@@ -35,6 +35,7 @@
 
 namespace bt
 {
+
 	
 	
 	static Uint32 peer_id_counter = 1;

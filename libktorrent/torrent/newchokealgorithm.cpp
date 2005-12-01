@@ -106,7 +106,9 @@ namespace bt
 		for (Uint32 i = 0;i < 3;i++)
 		{
 			if (i < peers.count())
+			{
 				unchokers[i] = peers.at(i);
+			}
 		}
 		
 		// see if poup if part of the first 3
@@ -133,13 +135,20 @@ namespace bt
 		unchokers[4] = poup;
 		
 		Uint32 other_idx = 0;
+		Uint32 peers_idx = 3;
 		// unchoke the 4 unchokers 
 		for (Uint32 i = 0;i < 4;i++)
 		{
 			if (!unchokers[i])
 			{
 				// pick some other peer to unchoke
-				unchokers[i] = other.at(other_idx);
+				unchokers[i] = peers.at(peers_idx++);
+				if (unchokers[i] == poup) // it must not be equal to the poup
+					unchokers[i] = peers.at(peers_idx++);
+				
+				// nobody in the peers list, try the others list
+				if (!unchokers[i])
+					unchokers[i] = other.at(other_idx++);
 			}
 			
 			if (unchokers[i])

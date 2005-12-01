@@ -212,14 +212,14 @@
   </substmap>
   <kdevcppsupport>
     <references>
-      <pcs>KDElibs</pcs>
       <pcs>Qt</pcs>
+      <pcs>KDElibs</pcs>
     </references>
     <codecompletion>
       <includeGlobalFunctions>true</includeGlobalFunctions>
       <includeTypes>true</includeTypes>
       <includeEnums>true</includeEnums>
-      <includeTypedefs>true</includeTypedefs>
+      <includeTypedefs>false</includeTypedefs>
       <automaticCodeCompletion>true</automaticCodeCompletion>
       <automaticArgumentsHint>true</automaticArgumentsHint>
       <automaticHeaderCompletion>true</automaticHeaderCompletion>
@@ -239,7 +239,7 @@
       <qtdesigner/>
     </designerintegration>
     <qt>
-      <used>true</used>
+      <used>false</used>
       <version>3</version>
       <root></root>
     </qt>
