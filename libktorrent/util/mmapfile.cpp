@@ -25,6 +25,8 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include <kfileitem.h>
+#include <kio/netaccess.h>
 #include "mmapfile.h"
 
 namespace bt
@@ -71,14 +73,15 @@ namespace bt
 		if (fd == -1)
 			return false;
 		
-		// read the file size
-		struct stat sbuf;	
-		if (stat(file.local8Bit(), &sbuf) == -1) 
+		KIO::UDSEntry entry;
+		if (!KIO::NetAccess::stat(file,entry,0))
 			return false;
-		size = sbuf.st_size;
+		
+		// read the file size
+		size = KFileItem(entry,file).size();
 		
 		// mmap the file
-		data = (Uint8*)mmap((caddr_t)0, sbuf.st_size, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
+		data = (Uint8*)mmap((caddr_t)0, size, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
 		if ((caddr_t)data == (caddr_t)(-1)) 
 			return false;
 		ptr = 0;

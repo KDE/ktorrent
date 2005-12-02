@@ -8,9 +8,12 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>511</width>
-            <height>382</height>
+            <width>604</width>
+            <height>460</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>DownloadPref</string>
     </property>
     <grid>
         <property name="name">
@@ -60,9 +63,7 @@
                         <cstring>kActiveLabel1</cstring>
                     </property>
                     <property name="text">
-                        <string>If you are behind a NAT-enabled router, it is important that you forward 
-the above ports. You should consult your router's manual if you 
-do not know how to do this.</string>
+                        <string>The above ports must be forwarded if you are behind a router. The UPnP plugin can do this for you.</string>
                     </property>
                 </widget>
             </hbox>

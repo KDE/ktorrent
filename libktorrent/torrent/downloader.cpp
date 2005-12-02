@@ -234,7 +234,8 @@ namespace bt
 				// tell everybody we have the Chunk
 				for (Uint32 i = 0;i < pman.getNumConnectedPeers();i++)
 				{
-					pman.getPeer(i)->getPacketWriter().sendHave(c->getIndex());
+					if (!pman.getPeer(i)->isSeeder())
+						pman.getPeer(i)->getPacketWriter().sendHave(c->getIndex());
 				}
 			}
 			catch (Error & e)

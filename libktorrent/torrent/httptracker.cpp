@@ -51,6 +51,11 @@ namespace bt
 
 	void HTTPTracker::updateData(PeerManager* pman)
 	{
+		//#define DEBUG_PRINT_RESPONSE
+#ifdef DEBUG_PRINT_RESPONSE
+		Out() << "Data : " << endl;
+		Out() << QString(data) << endl;
+#endif
 		BDecoder dec(data,false);
 		BNode* n = dec.decode();
 			
