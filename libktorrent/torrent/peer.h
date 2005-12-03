@@ -29,10 +29,14 @@
 #include "globals.h"
 #include "peerid.h"
 
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 namespace KNetwork
 {
 	class KBufferedSocket;
 }
+#else
+class QSocket;
+#endif
 
 namespace bt
 {
@@ -68,7 +72,11 @@ namespace bt
 		 * @param peer_id The Peer's BitTorrent ID
 		 * @param num_chunks The number of chunks in the file
 		 */
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		Peer(KNetwork::KBufferedSocket* sock,const PeerID & peer_id,Uint32 num_chunks);
+#else
+		Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks);
+#endif
 		virtual ~Peer();
 
 		/// Get the peer's unique ID.
@@ -217,7 +225,11 @@ namespace bt
 		virtual void getStats(Stats & s);
 
 	private:
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		KNetwork::KBufferedSocket* sock;
+#else
+		QSocket* sock;
+#endif
 		
 		bool choked,interested,am_choked,am_interested,killed;
 		Uint32 time_choked,time_unchoked,id;

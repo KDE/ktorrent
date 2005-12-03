@@ -29,7 +29,8 @@
 #include "uploader.h"
 #include "downloader.h"
 #include <util/functions.h>
-#include <qhostaddress.h> 
+#include <qhostaddress.h>
+#include <qsocket.h> 
 #include <klocale.h>
 #include "ipblocklist.h"
 #include "chunkcounter.h"
@@ -174,8 +175,13 @@ namespace bt
 		}
 	}
 	
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 	void PeerManager::newConnection(KNetwork::KBufferedSocket* sock,
 									const PeerID & peer_id)
+#else
+	void PeerManager::newConnection(QSocket* sock,
+									const PeerID & peer_id)
+#endif
 	{
 		Uint32 total = peer_list.count() + pending.count();
 		if (!started || (max_connections > 0 && total >= max_connections))

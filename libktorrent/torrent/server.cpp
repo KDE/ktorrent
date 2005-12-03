@@ -17,8 +17,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
- 
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 #include <kbufferedsocket.h>
+using namespace KNetwork;
+#else
+#include <qserversocket.h>
+#endif
+
+
 #include <util/sha1hash.h>
 #include <util/log.h>
 #include "globals.h"
@@ -28,15 +34,34 @@
 #include "serverauthenticate.h"
 #include "ipblocklist.h"
 
-using namespace KNetwork;
 
 namespace bt
 {
+#ifndef USE_KNETWORK_SOCKET_CLASSES
+	class ServerSocket : public QServerSocket
+	{
+		Server* srv;
+	public:	
+		ServerSocket(Server* srv,Uint16 port) : QServerSocket(port),srv(srv)
+		{
+		}
+		
+		virtual ~ServerSocket()
+		{}
+		
+		virtual void newConnection(int socket) 
+		{
+			srv->newConnection(socket);
+		}
+	};
+
+#endif
 	
 
 	Server::Server(Uint16 port) : port(port)
 	{
 		pending.setAutoDelete(false);
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		sock = new KServerSocket();
 		connect(sock, SIGNAL(readyAccept()), this, SLOT(newConnection()));
 		connect(sock, SIGNAL(gotError(int)), this, SLOT(onError(int )));
@@ -45,19 +70,28 @@ namespace bt
 		sock->setAcceptBuffered(true);
 		sock->setAddressReuseable(true);
 		sock->listen();
+#else
+		sock = new ServerSocket(this,port);
+#endif
 	}
 
 
 	Server::~Server()
 	{
 		pending.setAutoDelete(true);
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		sock->close();
+#endif
 		delete sock;
 	}
 
 	bool Server::isOK() const
 	{
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		return sock->error() == KSocketBase::NoError;
+#else
+		return sock->ok();
+#endif
 	}
 
 	void Server::changePort(Uint16 p)
@@ -67,6 +101,7 @@ namespace bt
 
 		port = p;
 		delete sock;
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		sock = new KServerSocket();
 		connect(sock, SIGNAL(readyAccept()), this, SLOT(newConnection()));
 		connect(sock, SIGNAL(gotError(int)), this, SLOT(onError(int)));
@@ -75,6 +110,9 @@ namespace bt
 		sock->setAcceptBuffered(true);
 		sock->setAddressReuseable(true);
 		sock->listen();
+#else
+		sock = new ServerSocket(this,port);
+#endif
 	}
 
 	void Server::addPeerManager(PeerManager* pman)
@@ -89,6 +127,7 @@ namespace bt
 
 	void Server::newConnection()
 	{
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		KActiveSocketBase* b = sock->accept();
 		KBufferedSocket* conn = dynamic_cast<KBufferedSocket*>(b);
 
@@ -119,6 +158,34 @@ namespace bt
 			ServerAuthenticate* auth = new ServerAuthenticate(conn,this);
 			pending.append(auth);
 		}
+#endif
+	}
+
+	void Server::newConnection(int socket)
+	{
+#ifndef USE_KNETWORK_SOCKET_CLASSES
+		QSocket* s = new QSocket();
+		s->setSocket(socket);
+		if (peer_managers.count() == 0)
+		{
+			s->close();
+			delete s;
+		}
+		else
+		{
+			IPBlocklist& ipfilter = IPBlocklist::instance();
+			QString IP(s->peerAddress().toString());
+			if (ipfilter.isBlocked( IP ))
+			{
+				Out() << "Peer " << IP << " is blacklisted. Aborting connection." << endl;
+				delete s;
+				return;
+			}
+			
+			ServerAuthenticate* auth = new ServerAuthenticate(s,this);
+			pending.append(auth);
+		}
+#endif
 	}
 
 	Uint16 Server::getPortInUse() const
@@ -141,7 +208,9 @@ namespace bt
 
 	void Server::onError(int)
 	{
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		Out() << "Server error : " << sock->errorString() << endl;
+#endif
 	}
 	
 	void Server::update()

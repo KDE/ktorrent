@@ -24,3 +24,4 @@ libtorrent_la_SOURCES = bencoder.cpp value.cpp bdecoder.cpp bnode.cpp \
 				udptrackersocket.cpp upspeedestimater.cpp ipblocklist.cpp queuemanager.cpp chunkcounter.cpp \
 	oldchokealgorithm.cpp newchokealgorithm.cpp
 
+

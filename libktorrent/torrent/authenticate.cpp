@@ -18,7 +18,11 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <util/log.h>
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 #include <kbufferedsocket.h>
+#else
+#include <qsocket.h>
+#endif
 #include "authenticate.h"
 #include "ipblocklist.h"
 #include "peermanager.h"
@@ -31,16 +35,20 @@ namespace bt
 	: info_hash(info_hash),our_peer_id(peer_id),pman(pman)
 	{
 		finished = succes = false;
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		sock = new KNetwork::KBufferedSocket();
-		//sock = new StreamSocket();
 		sock->enableRead(true);
 		sock->enableWrite(true);
-		
 		connect(sock,SIGNAL(connected(const KResolverEntry&)),
 				this,SLOT(connected(const KResolverEntry&)));
 		connect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
 		connect(sock,SIGNAL(gotError(int)),this,SLOT(onError(int )));
-		
+#else
+		sock  = new QSocket();
+		connect(sock,SIGNAL(connected()),this,SLOT(connected()));
+		connect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
+		connect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
+#endif
 		host = ip;
 		Out() << "Initiating connection to " << host << endl;
 		sock->connectToHost(host,port);
@@ -50,7 +58,13 @@ namespace bt
 	{
 	}
 	
+
 	void Authenticate::connected(const KNetwork::KResolverEntry &)
+	{
+		sendHandshake(info_hash,our_peer_id);
+	}
+	
+	void Authenticate::connected()
 	{
 	//	Out() << "Authenticate::connected" << endl;
 		sendHandshake(info_hash,our_peer_id);
@@ -118,12 +132,21 @@ namespace bt
 		if (full)
 			onFinish(true);
 	}
-
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 	KNetwork::KBufferedSocket* Authenticate::takeSocket()
 	{
 		KNetwork::KBufferedSocket* s = sock;
 		sock = 0;
 		return s;
 	}
+#else
+	QSocket* Authenticate::takeSocket()
+	{
+		QSocket* s = sock;
+		sock = 0;
+		return s;
+	}
+#endif
+	
 }
 #include "authenticate.moc"

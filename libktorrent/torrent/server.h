@@ -21,7 +21,10 @@
 #define BTSERVER_H
 
 #include <qptrlist.h>
+#include <qobject.h>
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 #include <kserversocket.h>
+#endif
 #include "globals.h"
 
 namespace bt
@@ -30,6 +33,9 @@ namespace bt
 	class ServerAuthenticate;
 	class SHA1Hash;
 
+#ifndef USE_KNETWORK_SOCKET_CLASSES
+	class ServerSocket;
+#endif
 
 	/**
 	 * @author Joris Guisson
@@ -47,7 +53,11 @@ namespace bt
 
 		QPtrList<PeerManager> peer_managers;
 		QPtrList<ServerAuthenticate> pending;
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		KNetwork::KServerSocket* sock;
+#else
+		ServerSocket* sock;
+#endif
 		Uint16 port;
 	public:
 		Server(Uint16 port);
@@ -91,7 +101,13 @@ namespace bt
 
 	private slots:
 		void newConnection();
+		void newConnection(int socket);
 		void onError(int);
+		
+	private:
+#ifndef USE_KNETWORK_SOCKET_CLASSES
+		friend class ServerSocket;
+#endif
 	};
 
 }

@@ -17,7 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 #include <kbufferedsocket.h>
+#endif
+
 #include <util/sha1hash.h>
 #include <util/log.h>
 #include "globals.h"
@@ -26,8 +29,11 @@
 
 namespace bt
 {
-
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 	AuthenticateBase::AuthenticateBase(KNetwork::KBufferedSocket* s)
+#else
+	AuthenticateBase::AuthenticateBase(QSocket* s)
+#endif
 		: sock(s),finished(false)
 	{
 		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
@@ -110,7 +116,9 @@ namespace bt
 	{
 		if (finished)
 			return;
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		Out() << "Socket error : " << sock->errorString() << endl;
+#endif
 		onFinish(false);
 	}
 

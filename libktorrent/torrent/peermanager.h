@@ -28,6 +28,8 @@
 #include "peerid.h"
 #include <util/bitset.h>
 
+class QSocket;
+
 namespace bt
 {
 	class Peer;
@@ -128,7 +130,11 @@ namespace bt
 		 * @param sock The socket
 		 * @param peer_id The Peer's ID
 		 */
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		void newConnection(KNetwork::KBufferedSocket* sock,const PeerID & peer_id);
+#else
+		void newConnection(QSocket* sock,const PeerID & peer_id);
+#endif
 
 		/**
 		 * Add a potential peer

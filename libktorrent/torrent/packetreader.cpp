@@ -17,7 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 #include <kbufferedsocket.h>
+#else
+#include <qsocket.h>
+#endif
+
 #include <util/log.h>
 #include "packetreader.h"
 #include "speedestimater.h"
@@ -27,7 +32,11 @@ namespace bt
 {
 	static Uint32 dodo = 0;
 
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 	PacketReader::PacketReader(KNetwork::KBufferedSocket* sock,SpeedEstimater* speed)
+#else
+	PacketReader::PacketReader(QSocket* sock,SpeedEstimater* speed)
+#endif
 	: sock(sock),speed(speed),error(false)
 	{
 		read_buf_ptr = packet_length = 0;

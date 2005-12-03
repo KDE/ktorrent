@@ -70,7 +70,11 @@ namespace bt
 		 * to transfer ownership to a Peer object.
 		 * @return The socket
 		 */
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		KNetwork::KBufferedSocket* takeSocket();
+#else
+		QSocket* takeSocket();
+#endif
 		
 		const PeerID & getPeerID() const {return peer_id;}
 
@@ -79,6 +83,7 @@ namespace bt
 		
 	private slots:
 		void connected(const KResolverEntry &);
+		void connected();
 		
 	private:
 		void onFinish(bool succes);

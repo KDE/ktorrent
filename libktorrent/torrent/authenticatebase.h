@@ -24,10 +24,12 @@
 #include <qsocket.h>
 #include <qtimer.h>
 
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 namespace KNetwork
 {
 	class KBufferedSocket;
 }
+#endif
 
 namespace bt
 {
@@ -46,7 +48,11 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		AuthenticateBase(KNetwork::KBufferedSocket* s = 0);
+#else
+		AuthenticateBase(QSocket* s = 0);
+#endif
 		virtual ~AuthenticateBase();
 
 		/// See if the authentication is finished
@@ -80,7 +86,11 @@ namespace bt
 		void onReadyRead();
 
 	protected:
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		KNetwork::KBufferedSocket* sock;
+#else
+		QSocket* sock;
+#endif
 		QTimer timer;
 		bool finished;
 		Uint8 handshake[68];
