@@ -46,6 +46,7 @@ namespace kt
 	{
 		// setXMLFile("ktpluginui.rc");
 		level1 = 0;
+		loadAntiP2P();
 	}
 
 
@@ -77,6 +78,7 @@ namespace kt
 			level1 = 0;
 			return false;
 		}
+		level1->loadHeader();
 		return true;
 	}
 

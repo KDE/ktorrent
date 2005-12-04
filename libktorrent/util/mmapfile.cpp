@@ -69,7 +69,7 @@ namespace bt
 		}
 		
 		// open the file
-		fd = ::open(file.local8Bit(), (int)flag);
+		fd = ::open(file.local8Bit() , O_RDONLY);//(int)flag);
 		if (fd == -1)
 			return false;
 		
@@ -81,7 +81,7 @@ namespace bt
 		size = KFileItem(entry,file).size();
 		
 		// mmap the file
-		data = (Uint8*)mmap((caddr_t)0, size, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
+		data = (Uint8*)mmap((caddr_t)0, size, PROT_READ, MAP_SHARED, fd, 0);
 		if ((caddr_t)data == (caddr_t)(-1)) 
 			return false;
 		ptr = 0;
@@ -149,18 +149,32 @@ namespace bt
 				{
 					Int64 np = (size - 1) + num;
 					if (np < 0)
+					{
 						ptr = 0;
+						break;
+					}
 					if (np >= (Int64) size)
+					{
 						ptr = size - 1;
+						break;
+					}
+					ptr = np;
 				}
 				break;
 			case CURRENT:
 				{
 					Int64 np = ptr + num;
 					if (np < 0)
+					{
 						ptr = 0;
+						break;
+					}
 					if (np >= (Int64) size)
+					{
 						ptr = size - 1;
+						break;
+					}
+					ptr = np;
 				}	
 				break;
 		}
@@ -180,6 +194,11 @@ namespace bt
 	QString MMapFile::errorString() const
 	{
 		return strerror(errno);
+	}
+	
+	Uint64 MMapFile::getSize() const
+	{
+		return size;
 	}
 }
 

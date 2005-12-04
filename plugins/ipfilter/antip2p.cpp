@@ -29,13 +29,22 @@
 #include <kstandarddirs.h>
 
 #include <qstring.h>
+#include <qvaluelist.h>
 
 using namespace bt;
 
 namespace kt
 {
+	typedef struct
+	{
+		Uint32 ip1;
+		Uint32 ip2;
+	} IPBlock;
+	
 	AntiP2P::AntiP2P()
 	{
+		header_loaded = false;
+		
 		file = new MMapFile();
 		if(! file->open(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat", MMapFile::READ) )
 		{
@@ -55,6 +64,30 @@ namespace kt
 	{
 		if(!file)
 			return;
+		
+		Uint32 nrElements = file->getSize() / sizeof(IPBlock);
+		uint blocksize = 10000; //nrElements < 100 ? 10 : 100; // number of entries that each HeaderBlock holds. If total number is < 100, than this value is 10.
+		HeaderBlock hb;
+
+		for(Uint64 i = 0; i < file->getSize() ; i+= sizeof(IPBlock)*(blocksize) )
+		{
+			IPBlock ipb;
+			hb.offset = i;
+			file->seek(MMapFile::BEGIN, i);
+			file->read(&ipb, sizeof(IPBlock));
+			hb.ip1 = ipb.ip1;
+			file->seek(MMapFile::BEGIN, i  + (blocksize-1)*sizeof(IPBlock));
+			file->read(&ipb, sizeof(IPBlock));
+			hb.ip2 = ipb.ip2;
+			hb.nrEntries = blocksize;
+			if ( i  + (blocksize-1)*sizeof(IPBlock) > file->getSize() ) //last entry
+			{
+				hb.nrEntries = file->getSize() % blocksize;
+			}
+			blocks.push_back(hb);
+		}
+		
+		Out() << "AntiP2P header loaded." << endl;
 	}
 	
 	bool AntiP2P::exists()

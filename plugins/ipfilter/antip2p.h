@@ -22,9 +22,20 @@
 #define ANTIP2P_H
 
 #include <util/mmapfile.h>
+#include <util/constants.h>
+
+#include <qvaluelist.h>
 
 namespace kt
 {
+	typedef struct
+	{
+		bt::Uint32 ip1;
+		bt::Uint32 ip2;
+		bt::Uint64 offset;
+		bt::Uint32 nrEntries;
+	} HeaderBlock;
+	
 	/**
 	 * @author Ivan Vasic <ivasic@gmail.com>
 	 * @brief This class is used to manage anti-p2p filter list, so called level1.
@@ -48,6 +59,10 @@ namespace kt
 			
 		private:
 			bt::MMapFile* file;
-  	};
+			QValueList<HeaderBlock> blocks;
+			
+			bool header_loaded;
+			
+	};
 }
 #endif

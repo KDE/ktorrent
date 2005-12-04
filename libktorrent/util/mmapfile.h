@@ -103,6 +103,9 @@ namespace bt
 
 		/// Get the error string.
 		QString errorString() const;
+		
+		/// Get the file size
+		Uint64 getSize() const;
 
 	private:
 		int fd;
