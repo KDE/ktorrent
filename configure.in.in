@@ -3,12 +3,6 @@ CXXFLAGS="$CXXFLAGS $KDE_DEFAULT_CXXFLAGS $USE_EXCEPTIONS $USE_RTTI"
 
 AM_INIT_AUTOMAKE(ktorrent,1.2dev)
 
-if test "$build_arts" = "yes"; then
-    AC_DEFINE(USE_ARTS, 1, [If we use arts volume])
-    LIB_ARTS="-lartskde"
-    AC_SUBST(LIB_ARTS)
-fi
-
 dnl #### Check for FSEEK variants
 AC_SYS_LARGEFILE
 AC_FUNC_FSEEKO

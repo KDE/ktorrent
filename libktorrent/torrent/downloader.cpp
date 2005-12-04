@@ -26,6 +26,7 @@
 #include <util/error.h>
 #include "chunkdownload.h"
 #include <util/sha1hash.h>
+#include <util/array.h>
 #include "peer.h"
 #include "piece.h"
 #include "peerdownloader.h"
@@ -45,6 +46,7 @@ namespace bt
 		chunk_selector = new ChunkSelector(cman,*this,pman);
 		Uint64 total = tor.getFileLength();
 		downloaded = (total - cman.bytesLeft() - cman.bytesExcluded());
+		curr_chunks_dowloaded = 0;
 	
 		current_chunks.setAutoDelete(true);
 		connect(&pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
@@ -357,6 +359,55 @@ namespace bt
 			if (tmon)
 				tmon->downloadStarted(cd);
 		}
+		
+		// reset curr_chunks_downloaded to 0
+		curr_chunks_dowloaded = 0;
+	}
+	
+	Uint32 Downloader::getDownloadedBytesOfCurrentChunksFile(const QString & file)
+	{
+		// Load all partial downloads
+		File fptr;
+		if (!fptr.open(file,"rb"))
+			return 0;
+
+		// read the number of chunks
+		Uint32 num = 0;
+		fptr.read(&num,sizeof(Uint32));
+		Uint32 num_bytes = 0;
+	
+		// load all chunks and calculate how much is downloaded
+		for (Uint32 i = 0;i < num;i++)
+		{
+			Uint32 ch = 0;
+			fptr.read(&ch,sizeof(Uint32));
+			Chunk* c = cman.getChunk( ch);
+			if (!c)
+				return num_bytes;
+			
+			// number of pieces for this chunk
+			Uint32 ch_num = 0;
+			Uint32 last_size = MAX_PIECE_LEN; // size of last piece
+			ch_num = c->getSize() / MAX_PIECE_LEN;
+			if (c->getSize() % MAX_PIECE_LEN != 0)
+			{
+				last_size = c->getSize() % MAX_PIECE_LEN;
+				ch_num++;
+			}
+			
+			Array<bool> pieces(ch_num);
+			fptr.read(pieces,sizeof(bool)*ch_num);
+			// jump to next chunk
+			fptr.seek(File::CURRENT,c->getSize());
+			
+			for (Uint32 i = 0;i < ch_num;i++)
+			{
+				if (pieces[i])
+					num_bytes += i == ch_num - 1 ? last_size : MAX_PIECE_LEN;
+			}
+		}
+		curr_chunks_dowloaded = num_bytes;
+		return num_bytes;
 	}
 
 	bool Downloader::isFinished() const

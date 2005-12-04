@@ -68,7 +68,7 @@ namespace bt
 		virtual ~Downloader();
 
 		/// Get the number of bytes we have downloaded
-		Uint64 bytesDownloaded() const {return downloaded;}
+		Uint64 bytesDownloaded() const {return downloaded + curr_chunks_dowloaded;}
 
 		/// Get the current dowload rate
 		Uint32 downloadRate() const;
@@ -106,6 +106,12 @@ namespace bt
 		 */
 		void loadDownloads(const QString & file);
 
+		/**
+		 * Get the number of bytes allready downloaded in the current_chunks file.
+		 * @param file The path of the current_chunks file
+		 * @return The bytes allready downloading
+		 */
+		Uint32 getDownloadedBytesOfCurrentChunksFile(const QString & file);
 	public slots:
 		/**
 		 * Update the downloader.
@@ -158,7 +164,7 @@ namespace bt
 		Torrent & tor;
 		PeerManager & pman;
 		ChunkManager & cman;
-		Uint64 downloaded;
+		Uint64 downloaded,curr_chunks_dowloaded;
 		PtrMap<Uint32,ChunkDownload> current_chunks;
 		ChunkSelector* chunk_selector;
 		

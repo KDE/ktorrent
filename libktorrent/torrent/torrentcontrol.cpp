@@ -31,6 +31,7 @@
 #include <util/error.h>
 #include <util/log.h>
 #include <util/functions.h>
+#include <interfaces/functions.h>
 #include "torrentfile.h"
 #include "torrentcontrol.h"
 #include <util/bitset.h>
@@ -177,7 +178,16 @@ namespace bt
 
 		stats.stopped_by_error = false;
 		pman->start();
-		down->loadDownloads(datadir + "current_chunks");
+		try
+		{
+			down->loadDownloads(datadir + "current_chunks");
+		}
+		catch (Error & e)
+		{
+			// print out warning in case of failure
+			// we can still continue the download
+			Out() << "Warning : " << e.toString() << endl;
+		}
 		loadStats();
 		stats.running = true;
 		stats.started = true;
@@ -202,7 +212,17 @@ namespace bt
 			if (tmon)
 				tmon->stopped();
 
-			down->saveDownloads(datadir + "current_chunks");
+			try
+			{
+				down->saveDownloads(datadir + "current_chunks");
+			}
+			catch (Error & e)
+			{
+				// print out warning in case of failure
+				// it doesn't corrupt the data, so just a couple of lost chunks
+				Out() << "Warning : " << e.toString() << endl;
+			}
+			
 			down->clearDownloads();
 			if (user)
 				bt::Touch(datadir + "stopped",true);
@@ -317,10 +337,22 @@ namespace bt
 
 		// to get rid of phantom bytes we need to take into account
 		// the data from downloads allready in progress
-		down->loadDownloads(datadir + "current_chunks");
-		prev_bytes_dl = down->bytesDownloaded();
-		down->clearDownloads();
-
+		try
+		{
+			Uint64 db = down->bytesDownloaded();
+			Uint64 cb = down->getDownloadedBytesOfCurrentChunksFile(datadir + "current_chunks");
+			prev_bytes_dl = db + cb;
+				
+		//	Out() << "Downloaded : " << kt::BytesToString(db) << endl;
+		//	Out() << "current_chunks : " << kt::BytesToString(cb) << endl;
+		}
+		catch (Error & e)
+		{
+			// print out warning in case of failure
+			Out() << "Warning : " << e.toString() << endl;
+			prev_bytes_dl = down->bytesDownloaded();
+		}
+		
 		loadStats();
 		updateStats();
 	}
