@@ -151,7 +151,7 @@ KTorrent::KTorrent()
 	statusBar()->addWidget(m_statusTransfer);
 
 	QToolTip::add(m_statusInfo, i18n("Info"));
-	QToolTip::add(m_statusTransfer, i18n("Data transfered during the current session"));
+	QToolTip::add(m_statusTransfer, i18n("Data transferred during the current session"));
 	QToolTip::add(m_statusSpeed, i18n("Current speed of all torrents combined"));
 	
 	m_core->loadPlugins();
@@ -541,7 +541,7 @@ void KTorrent::updatedStats()
 
 	m_statusSpeed->setText(tmp);
 
-	QString tmp1 = i18n("Transfered up: %1 / down: %2")
+	QString tmp1 = i18n("Transferred up: %1 / down: %2")
 			.arg(BytesToString(stats.bytes_uploaded))
 			.arg(BytesToString(stats.bytes_downloaded));
 	m_statusTransfer->setText(tmp1);

@@ -27,7 +27,7 @@
 			<min>0</min>
 		</entry>
 		<entry name="maxDownloadRate" type="Int">
-			<label>Maximum downloadload speed in KB/sec (0 = no limit)</label>
+			<label>Maximum download speed in KB/sec (0 = no limit)</label>
 			<default>0</default>
 			<min>0</min>
 		</entry>

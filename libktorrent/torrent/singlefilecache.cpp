@@ -51,7 +51,7 @@ namespace bt
 	{
 		File fptr;
 		if (!fptr.open(cache_file,"rb"))
-			throw Error(i18n("Cannot open cache file : %1").arg(fptr.errorString()));
+			throw Error(i18n("Unable to open cache file: %1").arg(fptr.errorString()));
 		Uint64 off = c->getIndex() * tor.getChunkSize();
 		fptr.seek(File::BEGIN,off);
 		unsigned char* data = new unsigned char[c->getSize()];
@@ -66,7 +66,7 @@ namespace bt
 		
 		File fptr;
 		if (!fptr.open(cache_file,"r+b"))
-			throw Error(i18n("Cannot open cache file : %1").arg(fptr.errorString()));
+			throw Error(i18n("Unable to open cache file: %1").arg(fptr.errorString()));
 		
 		// jump to end of file
 		fptr.seek(File::END,0);

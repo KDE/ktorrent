@@ -181,7 +181,7 @@
                 <cstring>textLabel1_2</cstring>
             </property>
             <property name="text">
-                <string>You must add a least one tracker.</string>
+                <string>You must add at least one tracker.</string>
             </property>
         </widget>
         <widget class="KEditListBox">

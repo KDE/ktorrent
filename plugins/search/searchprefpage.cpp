@@ -132,7 +132,7 @@ namespace kt
 			m_engine_name->setText("");
 		}
 		else
-			KMessageBox::error(this, i18n("Bad URL. You should search for FOOBAR with your internet browser and copy/paste the exact URL here."));
+			KMessageBox::error(this, i18n("Bad URL. You should search for FOOBAR with your Internet browser and copy/paste the exact URL here."));
 	}
  
 	void SearchPrefPageWidget::removeClicked()

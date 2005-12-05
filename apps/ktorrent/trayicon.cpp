@@ -78,7 +78,7 @@ void TrayIcon::finished(TorrentInterface* tc)
 void TrayIcon::torrentStoppedByError(kt::TorrentInterface* tc, QString msg) 
 {
 	const TorrentStats & s = tc->getStats();
-	QString err_msg = i18n("<b>%1</b> has been stopped by the following error: <br>%2")
+	QString err_msg = i18n("<b>%1</b> has been stopped with the following error: <br>%2")
 			.arg(s.torrent_name).arg(msg);
 	KPassivePopup::message(i18n("Error"),err_msg,loadIcon("ktorrent"),this);
 } 

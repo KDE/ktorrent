@@ -49,7 +49,7 @@ namespace bt
 	{
 		QFile fptr(file);
 		if (!fptr.open(IO_ReadOnly))
-			throw Error(i18n("Can't open torrent file %1 : %2")
+			throw Error(i18n(" Unable to open torrent file %1 : %2")
 					.arg(file).arg(fptr.errorString()));
 		
 		QByteArray data(fptr.size());

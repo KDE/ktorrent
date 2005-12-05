@@ -196,7 +196,7 @@ namespace bt
 		// move pos to the first part of the string
 		pos++;
 		if (pos + len > data.size())
-			throw Error(i18n("Torrent is incomplete !"));
+			throw Error(i18n("Torrent is incomplete!"));
 			
 		QByteArray arr(len);
 		for (unsigned int i = pos;i < pos + len;i++)
