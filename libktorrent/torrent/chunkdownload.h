@@ -26,7 +26,7 @@
 #include <util/timer.h>
 #include <util/ptrmap.h>
 #include <interfaces/chunkdownloadinterface.h>
-#include <util/object.h>
+#include <util/bitset.h>
 #include "globals.h"
 #include "peerid.h"
 
@@ -135,7 +135,7 @@ namespace bt
 	private:
 		void releaseAllPDs();
 		
-		bool* pieces;
+		BitSet pieces;
 		Chunk* chunk;
 		Uint8* buf;
 		Uint32 num;

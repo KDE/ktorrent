@@ -310,6 +310,7 @@ namespace bt
 		// Create chunkmanager, load the index file if it exists
 		// else create all the necesarry files
 		cman = new ChunkManager(*tor,datadir,outputdir);
+		connect(cman,SIGNAL(updateStats()),this,SLOT(updateStats()));
 		if (bt::Exists(datadir + "index"))
 			cman->loadIndexFile();
 

@@ -111,8 +111,6 @@ namespace bt
 		/// Set the monitor
 		void setMonitor(kt::MonitorInterface* tmo);
 
-		
-
 		/// Get the Torrent.
 		const Torrent & getTorrent() const {return *tor;}
 
@@ -189,13 +187,15 @@ namespace bt
 		 */
 		void trackerResponse();
 		
+		/// Update the stats of the torrent.
+		void updateStats();
+		
 	private:	
 		void updateTracker(const QString & ev,bool last_succes = true);
 		void updateStatusMsg();
 		void saveStats();
 		void loadStats();
 		void loadOutputDir();
-		void updateStats();
 		void getSeederInfo(Uint32 & total,Uint32 & connected_to) const;
 		void getLeecherInfo(Uint32 & total,Uint32 & connected_to) const;
 

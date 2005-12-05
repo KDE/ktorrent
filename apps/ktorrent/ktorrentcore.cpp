@@ -265,16 +265,28 @@ void KTorrentCore::remove(TorrentInterface* tc,bool data_to)
 		removed_bytes_down += s.session_bytes_downloaded;
 		stop(tc);
 
-		if (data_to)
-		{
-			bt::Delete(tc->getDataDir() + s.torrent_name,false);
-		}
-
 		QString dir = tc->getTorDir();
+		QString data_dir = tc->getDataDir() + s.torrent_name;
+		
 		torrentRemoved(tc);
 		// 		downloads.remove(tc);
 		qman->remove(tc);
-		bt::Delete(dir,false);
+		
+	
+		try
+		{
+			bt::Delete(dir,false);
+		}
+		catch (...)
+		{
+			// if the first delete fails, still try to do the second
+			if (data_to)
+				bt::Delete(data_dir,false);
+			throw; // pass the error along
+		}
+		
+		if (data_to)
+			bt::Delete(data_dir,false);
 	}
 	catch (Error & e)
 	{

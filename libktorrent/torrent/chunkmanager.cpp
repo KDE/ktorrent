@@ -349,6 +349,7 @@ namespace bt
 		recalc_chunks_left = true;
 		saveFileInfo();
 		excluded(from,to);
+		updateStats();
 	}
 
 	void ChunkManager::include(Uint32 from,Uint32 to)
@@ -366,6 +367,7 @@ namespace bt
 		}
 		recalc_chunks_left = true;
 		saveFileInfo();
+		updateStats();
 	}
 
 	void ChunkManager::saveFileInfo()

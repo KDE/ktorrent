@@ -205,6 +205,12 @@ namespace bt
 		 */
 		void excluded(Uint32 from,Uint32 to);
 		
+		/**
+		 * Emitted when chunks get excluded or included, so
+		 * that the statistics can be updated.
+		 */
+		void updateStats();
+		
 	private:
 		void saveIndexFile();
 		void writeIndexFileEntry(Chunk* c);

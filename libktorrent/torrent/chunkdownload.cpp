@@ -21,6 +21,7 @@
 #include <algorithm>
 #include <util/file.h>
 #include <util/log.h>
+#include <util/array.h>
 #include "chunkdownload.h"
 #include "downloader.h"
 #include "chunk.h"
@@ -39,19 +40,16 @@ namespace bt
 
 	class DownloadStatus
 	{
-		int* status;
-		Uint32 num;
+		Array<int> status;
 	public:
-		DownloadStatus(bool* s,Uint32 num) : num(num)
+		DownloadStatus(const BitSet & s,Uint32 num) : status(num)
 		{
-			status = new int[num];
 			for (Uint32 i = 0;i < num;i++)
-				status[i] = s[i] ? PIECE_DOWNLOADED : PIECE_NOT_DOWNLOADED;
+				status[i] = s.get(i) ? PIECE_DOWNLOADED : PIECE_NOT_DOWNLOADED;
 		}
 
 		~DownloadStatus()
 		{
-			delete [] status;
 		}
 
 		int get(Uint32 p) const
@@ -66,7 +64,7 @@ namespace bt
 		
 		void fill(int s)
 		{
-			std::fill(status,status+num,s);
+			status.fill(s);
 		}
 	};
 	
@@ -86,8 +84,8 @@ namespace bt
 		}
 		
 		buf = new Uint8[chunk->getSize()];
-		pieces = new bool[num];
-		std::fill(pieces,pieces+num,false),
+		pieces = BitSet(num);
+		pieces.clear();
 		
 		dstatus.setAutoDelete(true);
 	}
@@ -95,7 +93,6 @@ namespace bt
 	ChunkDownload::~ChunkDownload()
 	{
 		delete [] buf;
-		delete [] pieces;
 	}
 
 	bool ChunkDownload::piece(const Piece & p)
@@ -108,7 +105,7 @@ namespace bt
 		}
 			
 		Uint32 pp = p.getOffset() / MAX_PIECE_LEN;
-		if (pieces[pp])
+		if (pieces.get(pp))
 		{
 		//	Out() << "pieces[pp] == PIECE_DOWNLOADED" << endl;
 			return false;
@@ -119,7 +116,7 @@ namespace bt
 		memcpy(buf + p.getOffset(),p.getData(),p.getLength());
 		if (ds)
 			ds->set(pp,PIECE_DOWNLOADED);
-		pieces[pp] = true;
+		pieces.set(pp,true);
 		piece_providers.insert(p.getPeer());
 		num_downloaded++;
 		
@@ -308,19 +305,30 @@ namespace bt
 
 	void ChunkDownload::save(File & file)
 	{
-		file.write(pieces,sizeof(bool)*num);
+		Array<bool> pcs(num);
+		for (Uint32 i = 0;i < pieces.getNumBits();i++)
+			pcs[i] = pieces.get(i);
+		file.write(pcs,sizeof(bool)*num);
 		file.write(buf,chunk->getSize());
 	}
 		
 	void ChunkDownload::load(File & file)
 	{
-		file.read(pieces,sizeof(bool)*num);
+		Array<bool> pcs(num);
+		file.read(pcs,sizeof(bool)*num);
 		file.read(buf,chunk->getSize());
 		num_downloaded = 0;
 		for (Uint32 i = 0;i < num;i++)
 		{
-			if (pieces[i])
+			if (pcs[i])
+			{
+				pieces.set(i,true);
 				num_downloaded++;
+			}
+			else
+			{
+				pieces.set(i,false);
+			}
 		}
 	}
 
@@ -329,7 +337,7 @@ namespace bt
 		Uint32 num_bytes = 0;
 		for (Uint32 i = 0;i < num;i++)
 		{
-			if (pieces[i])
+			if (pieces.get(i))
 			{
 				num_bytes += i == num-1 ? last_size : MAX_PIECE_LEN;
 			}

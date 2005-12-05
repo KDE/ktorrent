@@ -26,7 +26,7 @@
 
 namespace kt
 {
-	using bt::Uint32;
+	using bt::Uint64;
 	
 	class FileTreeItem;
 	class TorrentFileInterface;
@@ -40,7 +40,7 @@ namespace kt
 	{
 	protected:
 		QString name;
-		Uint32 size;
+		Uint64 size;
 		bt::PtrMap<QString,FileTreeItem> children;
 		bt::PtrMap<QString,FileTreeDirItem> subdirs;
 		FileTreeDirItem* parent;
