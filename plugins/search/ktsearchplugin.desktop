@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=SearchPlugin
+Name[bg]=Приставка за търсене
 Name[br]=Lugent klask
 Name[da]=SøgePlugin
 Name[el]=Πρόσθετο αναζήτησης
@@ -12,6 +13,7 @@ Name[sr@Latn]=Priključak pretrage
 Name[sv]=Sökinsticksprogram
 Name[xx]=xxSearchPluginxx
 Comment=Searching plugin for KTorrentt
+Comment[bg]=Приставка за търсене за KTorrentt
 Comment[br]=Lugent klask evit KTorrentt
 Comment[da]=Søge-plugin for KTorrentt
 Comment[el]=Πρόσθετο αναζήτησης για το KTorrent
