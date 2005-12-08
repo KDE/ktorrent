@@ -31,19 +31,6 @@ class KProgress;
 namespace kt
 {
 	
-	class LoadingThread : public QThread
-	{
-		public:
-			
-			LoadingThread(CoreInterface* core);
-			~LoadingThread();
-			
-			virtual void run();
-			
-		private:
-			CoreInterface* m_core;
-	};
-	
 	class ConvertThread : public QThread
 	{
 		public:

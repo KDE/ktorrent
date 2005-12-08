@@ -46,7 +46,6 @@ namespace kt
 	{
 		// setXMLFile("ktpluginui.rc");
 		level1 = 0;
-		loadAntiP2P();
 	}
 
 
@@ -58,6 +57,7 @@ namespace kt
 		pref = new IPBlockingPrefPage(getCore());
 		getGUI()->addPrefPage(pref);
 		pref->loadFilters();
+		loadAntiP2P();
 	}
 
 	void IPFilterPlugin::unload()

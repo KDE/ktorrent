@@ -42,6 +42,8 @@
 
 using namespace bt;
 
+#define MAX_RANGES 500
+
 namespace kt
 {
 
@@ -73,41 +75,6 @@ namespace kt
 		block.ip1 = toUint32(ls[0]);
 		block.ip2 = toUint32(ls[1]);
 		return block;
-	}
-
-	LoadingThread::LoadingThread(CoreInterface* core) : QThread()
-	{
-		m_core = core;
-		this->start(QThread::LowPriority);
-	}
-
-	LoadingThread::~ LoadingThread()
-	{}
-
-	void LoadingThread::run()
-	{
-		QString filter = IPBlockingPluginSettings::filterFile();
-		if(!filter.isEmpty())
-		{
-			//load list
-			QString listURL = IPBlockingPluginSettings::filterFile();
-			QFile dat(listURL);
-			dat.open(IO_ReadOnly);
-
-			QString trt;
-			QTextStream stream( &dat );
-			QString line;
-			int i=0;
-			while ( !stream.atEnd() )
-			{
-				line = stream.readLine();
-				m_core->addBlockedIP(line);
-				++i;
-			}
-			Out() << "Loaded " << i << " blocked IP ranges." << endl;
-			dat.close();
-		}
-		delete this;
 	}
 
 	ConvertThread::ConvertThread(KProgress* kp, QLabel* lbl) : QThread()
@@ -245,13 +212,35 @@ namespace kt
 	bool IPBlockingPrefPage::apply()
 	{
 		widget->apply();
-		LoadingThread* filters = new LoadingThread(this->m_core);
+		loadFilters();
 		return true;
 	}
 
 	void IPBlockingPrefPage::loadFilters()
 	{
-		LoadingThread* filters = new LoadingThread(this->m_core);
+		/** LOAD KT FILTER LIST **/
+		QString filter = IPBlockingPluginSettings::filterFile();
+		if(!filter.isEmpty())
+		{
+			//load list
+			QString listURL = IPBlockingPluginSettings::filterFile();
+			QFile dat(listURL);
+			dat.open(IO_ReadOnly);
+
+			QString trt;
+			QTextStream stream( &dat );
+			QString line;
+			int i=0;
+			while ( !stream.atEnd() && i < MAX_RANGES )
+			{
+				line = stream.readLine();
+				m_core->addBlockedIP(line);
+				++i;
+			}
+			Out() << "Loaded " << i << " blocked IP ranges." << endl;
+			dat.close();
+		}
+		
 	}
 
 	void IPBlockingPrefPage::createWidget(QWidget* parent)
