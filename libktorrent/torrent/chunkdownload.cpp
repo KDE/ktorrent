@@ -150,10 +150,10 @@ namespace bt
 		}
 	}
 	
-	void ChunkDownload::assignPeer(PeerDownloader* pd,bool endgame)
+	bool ChunkDownload::assignPeer(PeerDownloader* pd,bool endgame)
 	{
 		if (!pd || pdown.contains(pd))
-			return;
+			return false;
 		
 		if (!endgame && pdown.count() == 1)
 		{
@@ -169,6 +169,7 @@ namespace bt
 		dstatus.insert(pd->getPeer()->getID(),new DownloadStatus(pieces,num));
 		sendRequests(pd);
 		connect(pd,SIGNAL(timedout(const Request& )),this,SLOT(onTimeout(const Request& )));
+		return true;
 	}
 	
 	void ChunkDownload::sendRequests(PeerDownloader* pd)

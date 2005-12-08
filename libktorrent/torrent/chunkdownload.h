@@ -89,8 +89,9 @@ namespace bt
 		 * Assign the downloader to download from.
 		 * @param pd The downloader
 		 * @param endgame Wether or not we are in endgame mode
+		 * @return true if the peer was asigned, false if not
 		 */
-		void assignPeer(PeerDownloader* pd,bool endgame);
+		bool assignPeer(PeerDownloader* pd,bool endgame);
 		
 		Uint32 getNumDownloaders() const {return pdown.count();}
 

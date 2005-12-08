@@ -56,20 +56,15 @@ void TrayIcon::updateStats(const QString stats)
 
 void TrayIcon::finished(TorrentInterface* tc) 
 {
-	double speed_up = 0;
-	double speed_down = 0;
 	const TorrentStats & s = tc->getStats();
-	if (tc->getRunningTimeUL() != 0) //getRunningTimeUL is actually total running time
-	{
-		speed_up = ((double)s.bytes_uploaded/1024.0) / (double)tc->getRunningTimeUL();
-		speed_down = ((double)s.bytes_downloaded/1024.0) / (double)tc->getRunningTimeDL();
-	}
-			
+	double speed_up = (double)s.bytes_uploaded / 1024.0;
+	double speed_down = (double)s.bytes_downloaded/ 1024.0;
+	
 	QString msg = i18n("<b>%1</b> has completed downloading."
 			"<br>Average speed: %2 DL / %3 UL.")
 			.arg(s.torrent_name)
-			.arg(KBytesPerSecToString(speed_down))
-			.arg(KBytesPerSecToString(speed_up));
+			.arg(KBytesPerSecToString(speed_down / tc->getRunningTimeDL()))
+			.arg(KBytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 	
 	KPassivePopup::message(i18n("Download completed"),
 						   msg,loadIcon("ktorrent"), this);

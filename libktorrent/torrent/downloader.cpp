@@ -194,6 +194,20 @@ namespace bt
 			if (tmon)
 				tmon->downloadStarted(cd);
 		}
+		else 
+		{ 
+			// If the peer hasn't got a chunk we want,
+			// try to assign it to a chunk we are currently downloading
+			for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j) 
+			{ 
+				ChunkDownload* cd = j->second;
+				if (pd->hasChunk(cd->getChunk()->getIndex()))
+				{
+					if (cd->assignPeer(pd,true)) 
+						return; // lets not swamp a peer with requests
+				}
+			} 
+		} 
 	}
 
 	bool Downloader::areWeDownloading(Uint32 chunk) const
