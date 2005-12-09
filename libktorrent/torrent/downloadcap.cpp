@@ -22,6 +22,9 @@
 #include "peer.h"
 #include "peerdownloader.h"
 
+#include <util/log.h>
+#include "globals.h"
+
 namespace bt
 {
 	DownloadCap DownloadCap::self;
@@ -57,6 +60,7 @@ namespace bt
 		else
 		{
 			req_interval = 1000.0 / ((double)max / MAX_PIECE_LEN);
+			Out() << "DCap req_interval = " << req_interval << endl;
 		}
 	}
 
@@ -67,8 +71,6 @@ namespace bt
 
 		// add pd to the queue
 		dl_queue.append(pd);
-		// do an update
-		update();
 		return false;
 	}
 
@@ -78,17 +80,30 @@ namespace bt
 		dl_queue.remove(pd);
 	}
 
-	void DownloadCap::update()
+	void DownloadCap::update(Uint32 download_speed)
 	{
-		if (timer.getElapsedSinceUpdate() >= req_interval && dl_queue.size() > 0)
+		if (timer.getElapsedSinceUpdate() < req_interval || dl_queue.size() == 0)
+			return;
+		
+		Uint32 num = timer.getElapsedSinceUpdate() / req_interval;
+		double diff = (double)max_bytes_per_sec - (double)download_speed;
+		if (diff > 1024.0)
+		{
+			num += (Uint32)floor(diff / 786.0);
+		}
+			
+//		Out() << "REQ " << num << endl;
+		
+		while (num > 0 && dl_queue.size() > 0)
 		{
 			// get pd from the queue
 			PeerDownloader* pd = dl_queue.first();
 			dl_queue.pop_front();
 			// tell it to download one
 			pd->downloadOneUnsent();
-			timer.update();
+			num--;
 		}
+		timer.update();
 	}
 	
 

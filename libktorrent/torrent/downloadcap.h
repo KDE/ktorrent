@@ -70,7 +70,7 @@ namespace bt
 		/**
 		 * Update the downloadcap.
 		 */
-		void update();
+		void update(Uint32 download_speed);
 		
 		static DownloadCap & instance() {return self;}
 	};
