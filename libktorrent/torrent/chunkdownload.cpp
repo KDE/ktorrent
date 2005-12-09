@@ -306,6 +306,9 @@ namespace bt
 
 	void ChunkDownload::save(File & file)
 	{
+		if (!buf)
+			return;
+		
 		Array<bool> pcs(num);
 		for (Uint32 i = 0;i < pieces.getNumBits();i++)
 			pcs[i] = pieces.get(i);

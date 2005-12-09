@@ -23,8 +23,10 @@
 #include <string.h>
 #include <errno.h>
 #include <stdio.h>
+#include <torrent/globals.h>
 #include "file.h"
 #include "error.h"
+#include "log.h"
 
 namespace bt
 {
@@ -69,10 +71,12 @@ namespace bt
 			return 0;
 
 		Uint32 ret = fwrite(buf,1,size,fptr);
-		if (ferror(fptr))
+		if (ret != size)
 		{
-			clearerr(fptr);
-			throw Error(i18n("Cannot write to %1").arg(file));
+			if (errno == ENOSPC)
+				Out() << "Disk full !" << endl;
+			
+			throw Error(i18n("Cannot write to %1 : %2").arg(file).arg(strerror(errno)));
 		}
 		return ret;
 	}

@@ -67,6 +67,7 @@ namespace bt
 		running_time_dl = running_time_ul = 0;
 		prev_bytes_dl = 0;
 		prev_bytes_ul = 0;
+		io_error = false;
 
 		updateStats();
 	}
@@ -92,9 +93,16 @@ namespace bt
 
 	void TorrentControl::update()
 	{
-		// first update peermanager
+		if (io_error)
+		{
+			stop(false);
+			emit stoppedByError(this, error_msg);
+			return;
+		}
+		
 		try
 		{
+			// first update peermanager
 			pman->update();
 			bool comp = stats.completed;
 
@@ -151,7 +159,7 @@ namespace bt
 			}
 
 			// Update DownloadCap
-			DownloadCap::instance().update();
+			DownloadCap::instance().update(stats.download_rate);
 			UploadCap::instance().update();
 			updateStats();
 		}
@@ -167,8 +175,7 @@ namespace bt
 		stats.stopped_by_error = true;
 		error_msg = msg;
 		short_error_msg = msg;
-		stop(false);
-		emit stoppedByError(this, error_msg);
+		io_error = true;
 	}
 
 	void TorrentControl::start()
@@ -177,6 +184,7 @@ namespace bt
 			bt::Delete(datadir + "stopped",true);
 
 		stats.stopped_by_error = false;
+		io_error = false;
 		pman->start();
 		try
 		{
