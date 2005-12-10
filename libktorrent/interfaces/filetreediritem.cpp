@@ -137,6 +137,8 @@ namespace kt
 		if (!manual_change)
 		{
 			setAllChecked(on);
+			if (parent)
+				parent->childStateChange();
 		}
 		setText(2,on ? i18n("Yes") : i18n("No"));
 	}
