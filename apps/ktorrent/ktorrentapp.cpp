@@ -46,11 +46,11 @@ int KTorrentApp::newInstance()
 		dcopClient()->registerAs(name(), false);
 
 	// see if we are starting with session management
-	if (restoringSession())
+/*	if (restoringSession())
 	{
 		RESTORE(KTorrent);
 	}
-	else
+	else*/
 	{
 		// no session.. just start up normally
 		KCmdLineArgs *args = KCmdLineArgs::parsedArgs();

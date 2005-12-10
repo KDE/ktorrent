@@ -162,6 +162,7 @@ KTorrent::KTorrent()
 	bool hidden_on_exit = KGlobal::config()->readBoolEntry("hidden_on_exit",false);
 	if (!(Settings::showSystemTrayIcon() && hidden_on_exit))
 	{
+		Out() << "Showing KT" << endl;
 		show();
 	}
 }
@@ -169,7 +170,6 @@ KTorrent::KTorrent()
 KTorrent::~KTorrent()
 {
 	delete m_dcop;
-	bt::Out() << "I'm dead" << bt::endl;
 	delete m_core;
 	delete m_pref;
 	delete m_statusInfo;
@@ -499,6 +499,16 @@ void KTorrent::saveProperties(KConfig* )
 
 void KTorrent::readProperties(KConfig*)
 {
+	bool hidden_on_exit = KGlobal::config()->readBoolEntry("hidden_on_exit",false);
+	if (!(Settings::showSystemTrayIcon() && hidden_on_exit))
+	{
+		Out() << "Showing KT" << endl;
+		show();
+	}
+	else
+	{
+		hide();
+	}
 }
 
 void KTorrent::urlDropped(QDropEvent* event,QListViewItem*)
