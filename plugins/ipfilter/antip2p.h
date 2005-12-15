@@ -37,6 +37,12 @@ namespace kt
 		bt::Uint32 nrEntries;
 	} HeaderBlock;
 	
+	typedef struct
+	{
+		bt::Uint32 ip1;
+		bt::Uint32 ip2;
+	} IPBlock;
+	
 	/**
 	 * @author Ivan Vasic <ivasic@gmail.com>
 	 * @brief This class is used to manage anti-p2p filter list, so called level1.
@@ -91,6 +97,13 @@ namespace kt
 			 * 		or index of HeaderBlock in AntiP2P::blocks which will be used for direct file search.
 			 **/
 			int searchHeader(bt::Uint32& ip, int start, int end);
+			
+			
+			/**
+			 * Binary searches AntiP2P::file to find IP.
+			 * @returns TRUE if IP should be blocked FALSE otherwise
+			 **/
+			bool searchFile(IPBlock* file_blocks, bt::Uint32& ip, int start, int end);
 			
 	};
 }

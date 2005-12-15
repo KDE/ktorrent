@@ -106,6 +106,9 @@ namespace bt
 		
 		/// Get the file size
 		Uint64 getSize() const;
+		
+		/// Gets the data pointer
+		void* getDataPointer() { return data; }
 
 	private:
 		int fd;

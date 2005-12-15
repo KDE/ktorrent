@@ -34,13 +34,7 @@
 using namespace bt;
 
 namespace kt
-{
-	typedef struct
-	{
-		Uint32 ip1;
-		Uint32 ip2;
-	} IPBlock;
-	
+{	
 	Uint32 AntiP2P::toUint32(QString& ip)
 	{
 		bool test;
@@ -150,11 +144,41 @@ namespace kt
 			case -1:
 				return false; //ip is not blocked
 			case -2:
-				return true;  //ip is blocked (we're lucky to find it in header already)
+				return true;  //ip is blocked (we're really lucky to find it in header already)
 			default:
 				//search mmapped file
+				HeaderBlock to_be_searched = blocks[in_header];
+				//file->seek(MMapFile::BEGIN, to_be_searched.offset);
+				Uint8* fptr = (Uint8*) file->getDataPointer();
+				fptr += to_be_searched.offset;
+				IPBlock* file_blocks =  (IPBlock*) fptr;
+				return searchFile(file_blocks, ip, 0, to_be_searched.nrEntries);
 				break;
 		}
 		return false;
+	}
+	
+	bool AntiP2P::searchFile(IPBlock* file_blocks, Uint32& ip, int start, int end)
+	{
+		if (end == 0)
+			return -1; //empty list
+		
+		if (end == 1)
+		{
+			if (file_blocks[start].ip1 <= ip && file_blocks[start].ip2 >= ip) //we have a match!
+				//if (b.ip1 <= ip && b.ip2 >= ip) //we have a match!
+				return true;
+			else
+				return false; //IP is not found.
+		}
+		
+		else
+		{
+			int i = start + end/2;
+			if (file_blocks[i].ip1 <= ip)
+				return searchFile(file_blocks, ip, i, end - end/2);
+			else
+				return searchFile(file_blocks, ip, start, end/2);
+		}
 	}
 }
