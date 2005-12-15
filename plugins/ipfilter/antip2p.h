@@ -25,6 +25,7 @@
 #include <util/constants.h>
 
 #include <qvaluelist.h>
+#include <qstring.h>
 
 namespace kt
 {
@@ -57,11 +58,39 @@ namespace kt
 			 **/
 			void loadHeader();
 			
+			
+			/**
+			 * Checks if specified IP is listed in filter file.
+			 * @return TRUE if IP should be blocked, FALSE otherwise
+			 * @param ip QString representation of IP to be checked
+			 **/
+			bool isBlockedIP(QString& ip);
+			
+			/**
+			 * Overloaded function. Uses Uint32 IP to be checked
+			 **/
+			bool isBlockedIP(bt::Uint32& ip);
+			
+			/**
+			 * This function converts QString IP to Uint32 format.
+			 **/
+			static bt::Uint32 toUint32(QString& ip);
+			
 		private:
 			bt::MMapFile* file;
 			QValueList<HeaderBlock> blocks;
 			
 			bool header_loaded;
+			
+			
+			/**
+			 * Binary searches AntiP2P::blocks to find range where IP could be.
+			 * @returns 
+			 * 		-1 if IP cannot be in the list
+			 * 		-2 if IP is already found in blocks
+			 * 		or index of HeaderBlock in AntiP2P::blocks which will be used for direct file search.
+			 **/
+			int searchHeader(bt::Uint32& ip, int start, int end);
 			
 	};
 }

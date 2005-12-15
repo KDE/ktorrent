@@ -41,6 +41,20 @@ namespace kt
 		Uint32 ip2;
 	} IPBlock;
 	
+	Uint32 AntiP2P::toUint32(QString& ip)
+	{
+		bool test;
+		Uint32 ret = ip.section('.',0,0).toULongLong(&test);
+		ret <<= 8;
+		ret |= ip.section('.',1,1).toULong(&test);
+		ret <<= 8;
+		ret |= ip.section('.',2,2).toULong(&test);
+		ret <<= 8;
+		ret |= ip.section('.',3,3).toULong(&test);
+
+		return ret;
+	}
+	
 	AntiP2P::AntiP2P()
 	{
 		header_loaded = false;
@@ -66,7 +80,7 @@ namespace kt
 			return;
 		
 		Uint32 nrElements = file->getSize() / sizeof(IPBlock);
-		uint blocksize = 10000; //nrElements < 100 ? 10 : 100; // number of entries that each HeaderBlock holds. If total number is < 100, than this value is 10.
+		uint blocksize = nrElements < 100 ? 10 : 100; // number of entries that each HeaderBlock holds. If total number is < 100, than this value is 10.
 		HeaderBlock hb;
 
 		for(Uint64 i = 0; i < file->getSize() ; i+= sizeof(IPBlock)*(blocksize) )
@@ -92,6 +106,55 @@ namespace kt
 	
 	bool AntiP2P::exists()
 	{
-		return file == 0;
+		return file != 0;
+	}
+	
+	bool AntiP2P::isBlockedIP( QString& ip )
+	{
+		Uint32 test = toUint32(ip);
+		return isBlockedIP(test);
+	}
+	
+	int AntiP2P::searchHeader(Uint32& ip, int start, int end)
+	{
+		if (end == 0)
+			return -1; //empty list
+		
+		if (end == 1)
+		{
+			if (blocks[start].ip1 <= ip && blocks[start].ip2 >= ip) //then our IP is somewhere in between
+			{
+				if (blocks[start].ip1 == ip || blocks[start].ip2 == ip)
+					return -2; //Return -2 to signal that this IP matches either IP from header. No need to search mmaped file in that case.
+				else
+					return start; //else return block index
+			}
+			else
+				return -1; //not found
+		}
+		else
+		{
+			int i = start + end/2;
+			if (blocks[i].ip1 <= ip)
+				return searchHeader(ip, i, end - end/2);
+			else
+				return searchHeader(ip, start, end/2);
+		}
+	}
+	
+	bool AntiP2P::isBlockedIP( Uint32& ip )
+	{
+		int in_header = searchHeader(ip, 0, blocks.count());
+		switch (in_header)
+		{
+			case -1:
+				return false; //ip is not blocked
+			case -2:
+				return true;  //ip is blocked (we're lucky to find it in header already)
+			default:
+				//search mmapped file
+				break;
+		}
+		return false;
 	}
 }
