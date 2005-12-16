@@ -23,6 +23,7 @@
 #include <interfaces/coreinterface.h>
 #include <interfaces/guiinterface.h>
 #include <util/constants.h>
+#include <torrent/ipblocklist.h>
 
 #include <qstring.h>
 
@@ -50,7 +51,11 @@ namespace kt
 
 
 	IPFilterPlugin::~IPFilterPlugin()
-	{}
+	{
+		//...just in case something goes wrong...
+		IPBlocklist& ipblist = IPBlocklist::instance();
+		ipblist.unsetPluginInterfacePtr();
+	}
 
 	void IPFilterPlugin::load()
 	{
@@ -58,10 +63,18 @@ namespace kt
 		getGUI()->addPrefPage(pref);
 		pref->loadFilters();
 		loadAntiP2P();
+		
+		//now we need to set a pointer to the IPBlocklist
+		IPBlocklist& ipblist = IPBlocklist::instance();
+		ipblist.setPluginInterfacePtr(this);
 	}
 
 	void IPFilterPlugin::unload()
 	{
+		//First unset pointer in IPBlocklist
+		IPBlocklist& ipblist = IPBlocklist::instance();
+		ipblist.unsetPluginInterfacePtr();
+		
 		getGUI()->removePrefPage(pref);
 		delete pref;
 		pref = 0;
@@ -80,6 +93,14 @@ namespace kt
 		}
 		level1->loadHeader();
 		return true;
+	}
+	
+	bool IPFilterPlugin::isBlockedIP(QString& ip)
+	{
+		if (level1 == 0)
+			return false;
+		
+		return level1->isBlockedIP(ip);
 	}
 
 }

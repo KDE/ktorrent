@@ -95,7 +95,6 @@ namespace bt
 			//Out() << "Dodo " << pp.ip << endl;
 		if (ipfilter.isBlocked(host))
 		{
-			Out() << "IP-address " << host << " is blacklisted." << endl;
 			onFinish(false);
 			return;
 		}

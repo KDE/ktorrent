@@ -125,10 +125,16 @@ namespace kt
 		peer->getStats(s);
 		KNetwork::KIpAddress ip(s.ip_addresss);
 		QString ips = ip.toString();
-		if(ips.startsWith(":"))
-			filter.insert(ips.section(":",-1));
+		/**
+		 * @TODO Clean this up.
+		 * this whole mess was because of KNetwork classes
+		 * since we no longer use them, may I clean it up?
+		 * I'll wait some time just in case...
+		 **/
+		if(ips.startsWith(":"))  
+			filter.insert(ips.section(":",-1),3);
 		else
-			filter.insert(ips);
+			filter.insert(ips,3);
 		peer->kill();
 	}
 	

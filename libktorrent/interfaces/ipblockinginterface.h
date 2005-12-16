@@ -16,52 +16,33 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.           *
  ***************************************************************************/
-#ifndef KTIPFILTERPLUGIN_H
-#define KTIPFILTERPLUGIN_H
-
-#include <interfaces/plugin.h>
-#include <interfaces/ipblockinginterface.h>
-
-#include "ipblockingprefpage.h"
-#include "antip2p.h"
+ 
+#ifndef IPBLOCKINGINTERFACE_H
+#define IPBLOCKINGINTERFACE_H
 
 class QString;
 
 namespace kt
 {
 	/**
-	 * @author Ivan Vasic <ivasic@gmail.com>
-	 * @brief IP filter plugin
-	 * 
-	 * This plugin will load IP ranges from specific files into KT IPBlocklist.
-	 */
-	class IPFilterPlugin : public Plugin, public kt::IPBlockingInterface
-	{
-		Q_OBJECT
-	public:
-		IPFilterPlugin(QObject* parent, const char* name, const QStringList& args);
-		virtual ~IPFilterPlugin();
-
-		virtual void load();
-		virtual void unload();
-		
-		///Loads the KT format list filter
-		void loadFilters();
-		
-		///Loads the anti-p2p filter list
-		bool loadAntiP2P();
-		
-		
-		///Checks if IP is listed in AntiP2P filter list.
-		bool isBlockedIP(QString& ip);
-						
-	private:
-		IPBlockingPrefPage* pref;
-		AntiP2P* level1;
+	 * @author Ivan Vasic
+	 * @brief Interface for IPBlocklist to communicate with IPBlockingPlugin
+	*/
+	class IPBlockingInterface
+	{	
+		public:
+    		IPBlockingInterface();
+    		virtual ~IPBlockingInterface();
+			
+			/**
+			 * This function checks if IP is listed in antip2p filter list.
+			 * @return TRUE if IP should be blocked. FALSE otherwise
+			 * @arg ip String representation of IP address.
+			 */
+			virtual bool isBlockedIP(QString& ip) = 0;
+			
 	};
-
 }
-
 #endif

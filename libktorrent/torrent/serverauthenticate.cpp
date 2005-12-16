@@ -81,10 +81,13 @@ namespace bt
 	{
 		Uint8* hs = handshake;
 		IPBlocklist& ipfilter = IPBlocklist::instance();
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		QString IP(sock->peerAddress().toString().section(':',3).section(']',0,0));
+#else
+		QString IP(sock->peerAddress().toString());
+#endif
 		if (ipfilter.isBlocked( IP ))
 		{
-			Out() << "Peer " << IP << " is blacklisted. Aborting connection." << endl;
 			onFinish(false);
 			return;
 		}

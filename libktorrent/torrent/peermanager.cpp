@@ -279,10 +279,7 @@ namespace bt
 			IPBlocklist& ipfilter = IPBlocklist::instance();
 			//Out() << "Dodo " << pp.ip << endl;
 			if (ipfilter.isBlocked(pp.ip))
-			{
-				Out() << "IP-address " << pp.ip << " is blacklisted." << endl;
 				continue;
-			}
 			
 			Authenticate* auth = new Authenticate(pp.ip,pp.port,
 					tor.getInfoHash(),tor.getPeerID(),*this);

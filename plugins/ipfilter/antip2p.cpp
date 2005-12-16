@@ -96,6 +96,7 @@ namespace kt
 		}
 		
 		Out() << "AntiP2P header loaded." << endl;
+		header_loaded = true;
 	}
 	
 	bool AntiP2P::exists()
@@ -138,6 +139,12 @@ namespace kt
 	
 	bool AntiP2P::isBlockedIP( Uint32& ip )
 	{
+		if (!header_loaded)
+		{
+			Out() << "Tried to check if IP was blocked, but no AntiP2P header was loaded." << endl;
+			return false;
+		}
+
 		int in_header = searchHeader(ip, 0, blocks.count());
 		switch (in_header)
 		{
@@ -148,7 +155,6 @@ namespace kt
 			default:
 				//search mmapped file
 				HeaderBlock to_be_searched = blocks[in_header];
-				//file->seek(MMapFile::BEGIN, to_be_searched.offset);
 				Uint8* fptr = (Uint8*) file->getDataPointer();
 				fptr += to_be_searched.offset;
 				IPBlock* file_blocks =  (IPBlock*) fptr;
@@ -166,7 +172,6 @@ namespace kt
 		if (end == 1)
 		{
 			if (file_blocks[start].ip1 <= ip && file_blocks[start].ip2 >= ip) //we have a match!
-				//if (b.ip1 <= ip && b.ip2 >= ip) //we have a match!
 				return true;
 			else
 				return false; //IP is not found.

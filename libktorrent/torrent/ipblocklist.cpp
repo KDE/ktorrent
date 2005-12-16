@@ -23,8 +23,9 @@
 #include <qmap.h>
 #include <qstring.h>
 #include <util/constants.h>
- #include <util/log.h>
- #include "globals.h"
+#include <util/log.h>
+#include "globals.h"
+#include <interfaces/ipblockinginterface.h>
 
 
 namespace bt
@@ -60,6 +61,7 @@ namespace bt
 
 	IPBlocklist::IPBlocklist()
 	{
+		this->pluginInterface = 0;
 		insert("0.0.0.0",3);
 		addRange("3.*.*.*");
 	}
@@ -159,8 +161,32 @@ namespace bt
 		else
 			m_peers.insert(key,state);
 	}
+	
+	void IPBlocklist::setPluginInterfacePtr( kt::IPBlockingInterface* ptr )
+	{
+		this->pluginInterface = ptr;
+	}
 
 	bool IPBlocklist::isBlocked( QString& ip )
+	{
+		//First check local filter list
+		if(isBlockedLocal(ip))
+		{
+			Out() << "IP " << ip << " is blacklisted. Connection denied." << endl;
+			return true;
+		}
+		
+		//Then we ask plugin
+		if(isBlockedPlugin(ip))
+		{
+			Out() << "IP " << ip << " is blacklisted. Connection denied." << endl;
+			return true;
+		}
+		
+		return false;
+	}
+	
+	bool IPBlocklist::isBlockedLocal( QString& ip )
 	{
 		bool ok;
 		Uint32 ipi = toUint32(ip,&ok);
@@ -174,6 +200,14 @@ namespace bt
 			return false;
 
 		return m_peers[key] >= 3;
+	}
+	
+	bool IPBlocklist::isBlockedPlugin( QString& ip )
+	{
+		if (pluginInterface == 0) //the plugin is not loaded
+			return false;
+		else
+			return pluginInterface->isBlockedIP(ip);
 	}
 
 	/***  IPKey   *****************************************************************************************************************/

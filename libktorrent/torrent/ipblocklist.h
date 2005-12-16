@@ -21,7 +21,7 @@
 #ifndef IPBLOCKLIST_H
 #define IPBLOCKLIST_H
 
-
+#include <interfaces/ipblockinginterface.h>
 
 #include <qmap.h>
 #include <util/constants.h>
@@ -93,21 +93,54 @@ namespace bt
 			 * @returns true if IP is blocked
 			 */
 			bool isBlocked(QString& ip);
+			
+			/**
+			 * @brief Sets the pointer to the IPBlockingInterface (IPBlocking plugin)
+			 * Call this function from IPBlocking plugin when it gets loaded.
+			 * @arg ptr - pointer to be set
+			 */
+			void setPluginInterfacePtr(kt::IPBlockingInterface* ptr);
+			
+			/**
+			 * @brief Unsets the interface pointer
+			 * Call this when IPBlockingPlugin gets unloaded or deleted
+			 */
+			void unsetPluginInterfacePtr() { pluginInterface = 0; }
 
 		private:
+			
 			/**
-					* @brief Adds IP range to the list.
-					* @param key IPKey that represents this IP range
-					* @param state int Number of 'warnings' for the range. 
-					* Default is 3 - that means range is blocked permanenlty.
-					**/
-			void insertRangeIP(IPKey& key, int state=3);
-
+			 * Pointer to the IPBlocking plugin which implements IPBlockingInterface
+			 * Used to provide a way to use this plugin functions from within this class
+			 */
+			kt::IPBlockingInterface* pluginInterface;
+			
 			/**
-			* @param IPKey - Key: Peer IP address and bit mask if it is a range
-			* @param int - Number of bad chunks sent.
+			 * @param IPKey - Key: Peer IP address and bit mask if it is a range
+			 * @param int - Number of bad chunks sent.
 			**/
 			QMap<IPKey, int> m_peers;
+			
+			/**
+			 * @brief Adds IP range to the list.
+			 * @param key IPKey that represents this IP range
+			 * @param state int Number of 'warnings' for the range. 
+			 * Default is 3 - that means range is blocked permanently.
+			*/
+			void insertRangeIP(IPKey& key, int state=3);
+			
+			
+			/**
+			 * Checks if IP is listed in local database (IPBlocklist::m_peers)
+			 * @return TRUE if IP is to be blocked
+			 */
+			bool isBlockedLocal(QString& ip);
+			
+			/**
+			 * Checks if IP is listed in plugins antip2p file
+			 * @return TRUE if IP is to be blocked
+			 */
+			bool isBlockedPlugin(QString& ip);
 	};
 }
 
