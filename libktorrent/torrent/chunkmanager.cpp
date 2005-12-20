@@ -204,12 +204,6 @@ namespace bt
 	void ChunkManager::start()
 	{
 		cache->open();
-		// mmap all chunks which can
-		for (Uint32 i = 0;i < bitset.getNumBits();i++)
-		{
-			if (bitset.get(i))
-				cache->load(chunks[i]);
-		}
 	}
 		
 	void ChunkManager::stop()

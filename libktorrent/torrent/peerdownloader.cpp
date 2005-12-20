@@ -261,8 +261,14 @@ namespace bt
 	
 	Uint32 PeerDownloader::getMaximumOutstandingReqs() const
 	{
-		// for each 10 KB/sec allow one with a minimum of 5
-		return 5 + peer->getDownloadRate() / (10 * 1024);
+		// for each 10 KB/sec allow one with a minimum of 5 
+		Uint32 fixed = 5;
+		Uint32 var_part = peer->getDownloadRate() / (10 * 1024);
+		// lets have not to much oustanding bytes 
+		const Uint32 MAX_OUTSTANDING_BYTES = 1048576; // 1 MB
+		if (var_part * MAX_PIECE_LEN >  MAX_OUTSTANDING_BYTES)
+			var_part = MAX_OUTSTANDING_BYTES / MAX_PIECE_LEN;
+		return fixed + var_part;
 	}
 	
 }
