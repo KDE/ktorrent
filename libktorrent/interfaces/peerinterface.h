@@ -56,7 +56,7 @@ namespace kt
 			float perc_of_file;
 		};
 
-		virtual void getStats(Stats & s) = 0;
+		virtual const Stats & getStats() const = 0;
 		
 		virtual void kill() = 0;
 	};

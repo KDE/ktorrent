@@ -30,9 +30,12 @@ namespace bt
 	 * @brief Keep track of a piece of the file
 	 * 
 	 * Keeps track of a piece of the file. The Chunk has 3 possible states :
-	 * - IN_MEMORY : It's loaded into memory
-	 * - ON_DISK : It's in the cache file
-	 * - NOT_DOWNLOADED : It hasn't been dowloaded yet
+	 * - MMAPPED : It is memory mapped
+	 * - BUFFERED : It is in a buffer in dynamicly allocated memory 
+	 *  (because the chunk is located in 2 or more separate files, so we cannot just set a pointer
+	 *   to a region of mmapped memory)
+	 * - ON_DISK : On disk
+	 * - NOT_DOWNLOADED : It hasn't been dowloaded yet, and there is no buffer allocated
 	 */
 	class Chunk
 	{
@@ -42,9 +45,10 @@ namespace bt
 
 		enum Status
 		{
-		    IN_MEMORY,
-		    ON_DISK,
-		    NOT_DOWNLOADED
+			MMAPPED,
+			BUFFERED,
+			ON_DISK,
+			NOT_DOWNLOADED,
 		};
 
 		/// Get the chunks status.
@@ -62,10 +66,10 @@ namespace bt
 		/// Get the data
 		Uint8* getData();
 
-		/// Set the data
-		void setData(Uint8* d);
+		/// Set the data and the new status
+		void setData(Uint8* d,Status nstatus);
 
-		/// Clear the chunk (delete data)
+		/// Clear the chunk (delete data depending on the mode)
 		void clear();
 
 		/// Get the chunk's index
@@ -83,7 +87,7 @@ namespace bt
 		/// reference coun > 0
 		bool taken() const;
 
-		/// allocate data if not allready done
+		/// allocate data if not allready done, sets the status to buffered
 		void allocate();
 
 		/// Is chunk prioritised

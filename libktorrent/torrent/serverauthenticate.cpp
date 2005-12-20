@@ -62,12 +62,14 @@ namespace bt
 #ifdef USE_KNETWORK_SOCKET_CLASSES
 		Out() << "Authentication(S) to " << sock->peerAddress().nodeName()
 			<< " : " << (succes ? "ok" : "failure") << endl;
+		disconnect(sock,SIGNAL(gotError(int)),this,SLOT(onError(int )));
 #else
 		Out() << "Authentication(S) to " << sock->peerAddress().toString()
 			<< " : " << (succes ? "ok" : "failure") << endl;
+		disconnect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
 #endif
 		disconnect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-		disconnect(sock,SIGNAL(gotError(int)),this,SLOT(onError(int )));
+		
 		finished = true;
 		if (!succes)
 		{

@@ -20,10 +20,12 @@
 #ifndef BTMULTIFILECACHE_H
 #define BTMULTIFILECACHE_H
 
+#include <util/ptrmap.h>
 #include "cache.h"
 
 namespace bt
 {
+	class CacheFile;
 
 	/**
 	 * @author Joris Guisson
@@ -35,6 +37,7 @@ namespace bt
 	class MultiFileCache : public Cache
 	{
 		QString cache_dir,output_dir;
+		PtrMap<Uint32,CacheFile> files;
 	public:
 		MultiFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir);
 		virtual ~MultiFileCache();
@@ -43,6 +46,9 @@ namespace bt
 		virtual void create();
 		virtual void load(Chunk* c);
 		virtual void save(Chunk* c);
+		virtual void prep(Chunk* c);
+		virtual void close();
+		virtual void open();
 	private:
 		void touch(const QString fpath);
 	};

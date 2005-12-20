@@ -55,6 +55,16 @@ namespace bt
 		bool open(const QString & file,Mode mode);
 		
 		/**
+		 * Open the file. If mode is write and the file doesn't exist, it will
+		 * be created.
+		 * @param file Filename
+		 * @param mode Mode (READ, WRITE or RW)
+		 * @param size Size of the memory mapping (the file will be enlarged to this value)
+		 * @return true upon succes
+		 */
+		bool open(const QString & file,Mode mode,Uint64 size);
+		
+		/**
 		 * Close the file. Undoes the memory mapping.
 		 */
 		void close();
@@ -106,14 +116,25 @@ namespace bt
 		
 		/// Get the file size
 		Uint64 getSize() const;
+
+		
+		/**
+		 * Get a pointer to the mmapped region of data.
+		 * @param off Offset into buffer, if invalid 0 will be returned
+		 * @return Pointer to a location in the mmapped region
+		 */
+		Uint8* getData(Uint64 off);
 		
 		/// Gets the data pointer
 		void* getDataPointer() { return data; }
+	private:
+		void growFile(Uint64 new_size);
 
 	private:
 		int fd;
 		Uint8* data;
-		Uint64 size;
+		Uint64 size;	// size of mmapping
+		Uint64 file_size; // size of file
 		Uint64 ptr; 
 		QString filename;
 		Mode mode;

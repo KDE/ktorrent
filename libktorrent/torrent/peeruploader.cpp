@@ -37,6 +37,7 @@ namespace bt
 
 	void PeerUploader::addRequest(const Request & r)
 	{
+		return;
 		requests.append(r);
 	}
 	
@@ -62,7 +63,7 @@ namespace bt
 		{	
 			Request r = requests.front();
 			Chunk* c = cman.grabChunk(r.getIndex());
-
+			
 			if (c)
 			{
 				if (grabbed.count(r.getIndex()) == 0)

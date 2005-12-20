@@ -86,6 +86,16 @@ namespace bt
 		void createFiles();
 		
 		/**
+		 * Open the necessary files when the download gets started.
+		 */
+		void start();
+		
+		/**
+		 * Closes files when the download gets stopped.
+		 */
+		void stop();
+		
+		/**
 		 * Get's the i'th Chunk.
 		 * @param i The Chunk's index
 		 * @return The Chunk, or 0 when i is out of bounds
@@ -96,11 +106,17 @@ namespace bt
 		 * Get's the i'th Chunk. Makes sure that the Chunk's data
 		 * is in memory. If the Chunk hasn't been downloaded yet 0
 		 * is returned. Whenever the Chunk needs to be uploaded, call
-		 * this function. This changes the status to IN_MEMORY.
+		 * this function. This changes the status to MMAPPED or BUFFERED.
 		 * @param i The Chunk's index
 		 * @return The Chunk, or 0 when i is out of bounds
 		 */
 		Chunk* grabChunk(unsigned int i);
+		
+		/**
+		 * Prepare a chunk for downloading
+		 * @param c The Chunk
+		 */
+		void prepareChunk(Chunk* c);
 		
 		/**
 		 * The upload is done, and the Chunk is no longer needed.
@@ -115,8 +131,9 @@ namespace bt
 		 * Also changes the Chunk's status to ON_DISK.
 		 * The Chunk's data is immediatly cleared.
 		 * @param i The Chunk's index
+		 * @param update_index Update the index or not
 		 */
-		void saveChunk(unsigned int i);
+		void saveChunk(unsigned int i,bool update_index = true);
 		
 		/**
 		 * Calculates the number of bytes left to download.
@@ -169,12 +186,6 @@ namespace bt
 
 		/// Print memory usage to log file
 		void debugPrintMemUsage();
-
-		/**
-		 * Check wether we're not using to much memory. And if necessary
-		 * get rid of some chunks which aren't needed anymore.
-		 */
-		void checkMemoryUsage();
 
 		/**
 		 * Make sure that a range will get priority over other chunks.

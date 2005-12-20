@@ -1,0 +1,228 @@
+/***************************************************************************
+ *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ ***************************************************************************/
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
+#include <unistd.h>
+#include <errno.h>
+#include <qfile.h>
+#include <kio/netaccess.h>
+#include <klocale.h>
+#include <kfileitem.h>
+#include <torrent/globals.h>
+#include <interfaces/functions.h>
+#include "log.h"
+#include "error.h"
+#include "cachefile.h"
+
+namespace bt
+{
+
+	CacheFile::CacheFile() : fd(-1),max_size(0),file_size(0)
+	{}
+
+
+	CacheFile::~CacheFile()
+	{
+		if (fd != -1)
+			close();
+	}
+	
+	void CacheFile::open(const QString & path,Uint64 size)
+	{
+		this->path = path;
+		max_size = size;
+		fd = ::open(QFile::encodeName(path),O_RDWR | O_LARGEFILE);
+		
+		if (fd < 0)
+		{
+			throw Error(i18n("Cannot open %1 : %2").arg(path).arg(strerror(errno)));
+		}
+		struct stat sb;
+		fstat(fd,&sb);
+		file_size = sb.st_size;
+	//	Out() << QString("CacheFile %1 = %2").arg(path).arg(file_size) << endl;
+	}
+		
+	void* CacheFile::map(Uint64 off,Uint32 size,Mode mode)
+	{
+		if (off + size > max_size)
+		{
+			Out() << "Warning : writing past the end of " << path << endl;
+			return 0;
+		}
+		
+		int mmap_flag = 0;
+		switch (mode)
+		{
+			case READ:
+				mmap_flag = PROT_READ;
+				break;
+			case WRITE:
+				mmap_flag = PROT_WRITE;
+				break;
+			case RW:
+				mmap_flag = PROT_READ|PROT_WRITE;
+				break;
+		}
+		
+		if (off + size > file_size)
+		{
+			Uint64 to_write = (off + size) - file_size;
+		//	Out() << "Growing file with " << to_write << " bytes" << endl;
+			growFile(to_write);
+		}
+		
+		Uint32 page_size = sysconf(_SC_PAGESIZE);
+		if (off % page_size > 0)
+		{
+			// off is not a multiple of the page_size
+			// so we play around a bit
+			Uint32 diff = (off % page_size);
+			Uint32 noff = off - diff;
+		//	Out() << "Offsetted mmap : " << diff << endl;
+			char* ptr = (char*)mmap(0, size + diff, mmap_flag, MAP_SHARED, fd, noff);
+			if (ptr == MAP_FAILED) 
+			{
+				Out() << "mmap failed : " << QString(strerror(errno)) << endl;
+				return 0;
+			}
+			else
+			{
+				offsetted_mappings.insert((void*)(ptr + diff),diff);
+				return ptr + diff;
+			}
+		}
+		else
+		{
+			void* ptr = mmap(0, size, mmap_flag, MAP_SHARED, fd, off);
+			if (ptr == MAP_FAILED) 
+			{
+				Out() << "mmap failed : " << QString(strerror(errno)) << endl;
+				return 0;
+			}
+			else
+			{
+				return ptr;
+			}
+		}
+	}
+	
+	void CacheFile::growFile(Uint64 to_write)
+	{
+		// jump to the end of the file
+		lseek(fd,0,SEEK_END);
+		
+		if (file_size + to_write > max_size)
+			Out() << "Warning : writing past the end of " << path << endl;
+		
+		Uint8 buf[1024];
+		memset(buf,0,1024);
+		Uint64 num = to_write;
+		// write data until to_write is 0
+		while (to_write > 0)
+		{
+			if (to_write < 1024)
+			{
+					::write(fd,buf,to_write);
+					to_write = 0;
+			}
+			else
+			{
+					::write(fd,buf,1024);
+					to_write -= 1024;
+			}
+		}
+		file_size += num;
+		fsync(fd);
+	//	Out() << QString("growing %1 = %2").arg(path).arg(kt::BytesToString(file_size)) << endl;
+		struct stat sb;
+		fstat(fd,&sb);
+		if (file_size != (Uint64)sb.st_size)
+			Out() << QString("Homer Simpson %1 %2").arg(file_size).arg(sb.st_size) << endl;
+	}
+		
+	void CacheFile::unmap(void* ptr,Uint32 size)
+	{
+		// see if it wasn't an offsetted mapping
+		if (offsetted_mappings.contains(ptr))
+		{
+			Uint32 diff = offsetted_mappings[ptr];
+			// undo the offset
+			ptr = (char*)ptr - diff;
+			munmap(ptr,size + diff);
+			offsetted_mappings.erase(ptr);
+		}
+		else
+		{
+			munmap(ptr,size);
+		}
+	}
+		
+	void CacheFile::close()
+	{
+		if (fd != -1)
+		{
+			::close(fd);
+			fd = -1;
+		}
+	}
+	
+	void CacheFile::read(Uint8* buf,Uint32 size,Uint64 off)
+	{
+		if (off >= file_size || off >= max_size)
+		{
+			throw Error(i18n("Error : Reading past the end of the file %1").arg(path));
+		}
+		
+		// jump to right position
+		lseek(fd,off,SEEK_SET);
+		if ((Uint32)::read(fd,buf,size) != size)
+			throw Error(i18n("Error reading from %1").arg(path));
+	}
+	
+	void CacheFile::write(const Uint8* buf,Uint32 size,Uint64 off)
+	{
+		if (off + size > max_size)
+			Out() << "Warning : writing past the end of " << path << endl;
+		
+		if (file_size < off)
+		{
+			Out() << QString("Writing %1 bytes at %2").arg(size).arg(off) << endl;
+			growFile(off - file_size);
+		}
+		
+		// jump to right position
+		lseek(fd,off,SEEK_SET);
+		int ret = ::write(fd,buf,size);
+		if (ret == -1)
+			throw Error(i18n("Error writing to %1 : %2").arg(path).arg(strerror(errno)));
+		else if ((Uint32)ret != size)
+		{
+			Out() << QString("Incomplete write of %1 bytes, should be %2").arg(ret).arg(size) << endl;
+			throw Error(i18n("Error writing to %1").arg(path));
+		}
+		
+		if (off + size > file_size)
+			file_size = off + size;
+	}
+
+}

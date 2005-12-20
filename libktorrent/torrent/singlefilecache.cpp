@@ -17,22 +17,24 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <klocale.h>
 #include <qfileinfo.h>
 #include <util/fileops.h>
-#include "torrent.h"
-#include "chunk.h"
-#include <util/file.h>
+#include <util/cachefile.h>
 #include "singlefilecache.h"
 #include <util/error.h>
 #include <util/functions.h>
+#include <util/log.h>
+#include "torrent.h"
+#include "chunk.h"
+#include "globals.h"
 
-#include <klocale.h>
 
 namespace bt
 {
 
 	SingleFileCache::SingleFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir)
-	: Cache(tor,tmpdir,datadir)
+	: Cache(tor,tmpdir,datadir),fd(0)
 	{
 		cache_file = tmpdir + "cache";
 	}
@@ -46,60 +48,39 @@ namespace bt
 		Cache::changeTmpDir(ndir);
 		cache_file = tmpdir + "cache";
 	}
+	
+	void SingleFileCache::prep(Chunk* c)
+	{
+		if (c->getStatus() != Chunk::NOT_DOWNLOADED)
+		{
+			Out() << "Warning : can only prep NOT_DOWNLOADED chunks !" << endl;
+			return;
+		}
+		Uint64 off = c->getIndex() * tor.getChunkSize();
+		Uint8* buf = (Uint8*)fd->map(off,c->getSize(),CacheFile::RW);
+		if (!buf)
+			throw Error(i18n("Cannot prepare chunk %1 for downloadiing").arg(c->getIndex()));
+		c->setData(buf,Chunk::MMAPPED);
+	}
 
 	void SingleFileCache::load(Chunk* c)
 	{
-		File fptr;
-		if (!fptr.open(cache_file,"rb"))
-			throw Error(i18n("Unable to open cache file: %1").arg(fptr.errorString()));
 		Uint64 off = c->getIndex() * tor.getChunkSize();
-		fptr.seek(File::BEGIN,off);
-		unsigned char* data = new unsigned char[c->getSize()];
-		fptr.read(data,c->getSize());
-		c->setData(data);
+		Uint8* buf = (Uint8*)fd->map(off,c->getSize(),CacheFile::READ);
+		if (!buf)
+			throw Error(i18n("Cannot load chunk %1").arg(c->getIndex()));
+		c->setData(buf,Chunk::MMAPPED);
 	}
 
 	void SingleFileCache::save(Chunk* c)
 	{
-		// calculate the chunks position in the final file
-		Uint64 chunk_pos = c->getIndex() * tor.getChunkSize();
-		
-		File fptr;
-		if (!fptr.open(cache_file,"r+b"))
-			throw Error(i18n("Unable to open cache file: %1").arg(fptr.errorString()));
-		
-		// jump to end of file
-		fptr.seek(File::END,0);
-		Uint64 cache_size = fptr.tell();
-
-		// see if the cache is big enough for the chunk
-		if (chunk_pos <= cache_size)
+		// unmap the chunk if it is mapped
+		if (c->getStatus() == Chunk::MMAPPED)
 		{
-			// big enough so just jump to the right posiition and write
-			// the chunk
-			fptr.seek(File::BEGIN,chunk_pos);
-			fptr.write(c->getData(),c->getSize());
+			fd->unmap(c->getData(),c->getSize());
+			c->clear();
+			c->setStatus(Chunk::ON_DISK);
 		}
-		else
-		{
-			// write random shit to enlarge the file
-			Uint64 num_empty_bytes = chunk_pos - cache_size;
-			Uint8 b[1024];
-			Uint64 nw = 0;
-			while (nw < num_empty_bytes)
-			{
-				Uint32 left = num_empty_bytes - nw;
-				fptr.write(b,left < 1024 ? left : 1024);
-				nw += 1024;
-			}
-
-			// now write the chunks at the good position
-			fptr.seek(File::BEGIN,chunk_pos);
-			fptr.write(c->getData(),c->getSize());
-		}
-		
-		// clear the chunk
-		c->clear();
 	}
 
 	void SingleFileCache::create()
@@ -109,6 +90,32 @@ namespace bt
 			QString out_file = datadir + tor.getNameSuggestion();
 			bt::Touch(out_file);
 			bt::SymLink(out_file,cache_file);
+		}
+	}
+	
+	void SingleFileCache::close()
+	{
+		if (fd)
+		{
+			fd->close();
+			delete fd;
+			fd = 0;
+		}
+	}
+	
+	void SingleFileCache::open()
+	{	
+		try
+		{
+			fd = new CacheFile();
+			fd->open(cache_file,tor.getFileLength());
+		}
+		catch (...)
+		{
+			fd->close();
+			delete fd;
+			fd = 0;
+			throw;
 		}
 	}
 

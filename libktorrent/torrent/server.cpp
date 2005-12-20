@@ -58,21 +58,10 @@ namespace bt
 #endif
 	
 
-	Server::Server(Uint16 port) : port(port)
+	Server::Server(Uint16 port) : sock(0),port(0)
 	{
 		pending.setAutoDelete(false);
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		sock = new KServerSocket();
-		connect(sock, SIGNAL(readyAccept()), this, SLOT(newConnection()));
-		connect(sock, SIGNAL(gotError(int)), this, SLOT(onError(int )));
-		sock->setFamily(KResolver::InetFamily);
-		sock->setAddress(QString::number(port));
-		sock->setAcceptBuffered(true);
-		sock->setAddressReuseable(true);
-		sock->listen();
-#else
-		sock = new ServerSocket(this,port);
-#endif
+		changePort(port);
 	}
 
 
@@ -103,9 +92,10 @@ namespace bt
 		delete sock;
 #ifdef USE_KNETWORK_SOCKET_CLASSES
 		sock = new KServerSocket();
+		sock->setIPv6Only(true);
 		connect(sock, SIGNAL(readyAccept()), this, SLOT(newConnection()));
-		connect(sock, SIGNAL(gotError(int)), this, SLOT(onError(int)));
-		sock->setFamily(KResolver::InetFamily);
+		connect(sock, SIGNAL(gotError(int)), this, SLOT(onError(int )));
+		sock->setFamily(KResolver::IPv4Family);
 		sock->setAddress(QString::number(port));
 		sock->setAcceptBuffered(true);
 		sock->setAddressReuseable(true);

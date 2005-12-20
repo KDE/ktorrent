@@ -73,10 +73,16 @@ namespace bt
 	void Authenticate::onFinish(bool succes)
 	{
 		Out() << "Authentication to " << host << " : " << (succes ? "ok" : "failure") << endl;
+#ifdef USE_KNETWORK_SOCKET_CLASSES
 		disconnect(sock,SIGNAL(connected(const KResolverEntry&)),
 				   this,SLOT(connected(const KResolverEntry&)));
 		disconnect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
 		disconnect(sock,SIGNAL(gotError(int)),this,SLOT(onError(int )));
+#else
+		disconnect(sock,SIGNAL(connected()),this,SLOT(connected()));
+		disconnect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
+		disconnect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
+#endif
 		finished = true;
 		this->succes = succes;
 		if (!succes)

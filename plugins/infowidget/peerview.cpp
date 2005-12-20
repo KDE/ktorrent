@@ -46,9 +46,7 @@ namespace kt
 	void PeerViewItem::update()
 	{
 		KLocale* loc = KGlobal::locale();
-		PeerInterface::Stats s;
-		peer->getStats(s);
-		
+		const PeerInterface::Stats & s = peer->getStats();
 		setText(0,s.ip_addresss);
 		setText(1,s.client);
 		setText(2,KBytesPerSecToString(s.download_rate / 1024.0));
@@ -61,10 +59,8 @@ namespace kt
 	int PeerViewItem::compare(QListViewItem * i,int col,bool) const
 	{
 		PeerInterface* op = ((PeerViewItem*)i)->peer;
-		PeerInterface::Stats s;
-		peer->getStats(s);
-		PeerInterface::Stats os;
-		op->getStats(os);
+		const PeerInterface::Stats & s = peer->getStats();
+		const PeerInterface::Stats & os = op->getStats();
 		switch (col)
 		{
 			case 0: return QString::compare(s.ip_addresss,os.ip_addresss);
@@ -121,8 +117,7 @@ namespace kt
 			return;
 		
 		IPBlocklist& filter = IPBlocklist::instance();
-		PeerInterface::Stats s;
-		peer->getStats(s);
+		const PeerInterface::Stats & s = peer->getStats();
 		KNetwork::KIpAddress ip(s.ip_addresss);
 		QString ips = ip.toString();
 		/**

@@ -347,7 +347,7 @@ void KTorrent::startDownload()
 	if (tc && !tc->getStats().running)
 	{
 		m_core->start(tc);
-		if (!tc->getStats().running)
+		if (!tc->getStats().running && !tc->getStats().stopped_by_error)
 		{
 			bool seed = tc->getStats().bytes_left == 0;
 			int nr = seed ? Settings::maxSeeds() : Settings::maxDownloads();

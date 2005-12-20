@@ -78,6 +78,7 @@ namespace bt
 		Uint32 getNumBytes() const {return num_bytes;}
 		Uint32 getNumBits() const {return num_bits;}
 		const Uint8* getData() const {return data;}
+		Uint8* getData() {return data;}
 
 		/// Get the number of on bits
 		Uint32 numOnBits() const {return num_on;}

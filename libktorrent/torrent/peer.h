@@ -30,11 +30,13 @@
 #include "peerid.h"
 
 #ifdef USE_KNETWORK_SOCKET_CLASSES
+#include <ksocketaddress.h>
 namespace KNetwork
 {
 	class KBufferedSocket;
 }
 #else
+#include <qhostaddress.h>
 class QSocket;
 #endif
 
@@ -222,7 +224,7 @@ namespace bt
 	private:
 		void readPacket();
 		void handlePacket(Uint32 len);
-		virtual void getStats(Stats & s);
+		virtual const Stats & getStats() const;
 
 	private:
 #ifdef USE_KNETWORK_SOCKET_CLASSES
@@ -243,6 +245,7 @@ namespace bt
 		PacketWriter* pwriter;
 		PeerDownloader* downloader;
 		PeerUploader* uploader;
+		mutable kt::PeerInterface::Stats stats;
 
 		QTime connect_time;
 

@@ -116,10 +116,10 @@ namespace bt
 			{
 				// download has just been completed
 				tracker->completed();
-				finished(this);
 				pman->killSeeders();
 				QDateTime now = QDateTime::currentDateTime();
 				running_time_dl += time_started_dl.secsTo(now);
+				finished(this);
 			}
 			else if (!stats.completed && comp)
 			{
@@ -131,13 +131,9 @@ namespace bt
 			}
 			updateStatusMsg();
 
-			// make sure we don't use up to much memory with all the chunks
-			// we're uploading
-			cman->checkMemoryUsage();
-
 			// get rid of dead Peers
 			Uint32 num_cleared = pman->clearDeadPeers();
-
+			
 			// we may need to update the choker
 			if (choker_update_timer.getElapsedSinceUpdate() >= 10000 || num_cleared > 0)
 			{
@@ -173,6 +169,7 @@ namespace bt
 	{
 		Out() << "Error : " << msg << endl;
 		stats.stopped_by_error = true;
+		stats.status = ERROR;
 		error_msg = msg;
 		short_error_msg = msg;
 		io_error = true;
@@ -188,6 +185,16 @@ namespace bt
 		pman->start();
 		try
 		{
+			cman->start();
+		}
+		catch (Error & e)
+		{
+			onIOError(e.toString());
+			throw;
+		}
+		
+		try
+		{
 			down->loadDownloads(datadir + "current_chunks");
 		}
 		catch (Error & e)
@@ -196,6 +203,9 @@ namespace bt
 			// we can still continue the download
 			Out() << "Warning : " << e.toString() << endl;
 		}
+		
+		
+		
 		loadStats();
 		stats.running = true;
 		stats.started = true;
@@ -238,7 +248,8 @@ namespace bt
 		pman->stop();
 		pman->closeAllConnections();
 		pman->clearDeadPeers();
-
+		cman->stop();
+		
 		stats.running = false;
 		saveStats();
 		updateStatusMsg();
