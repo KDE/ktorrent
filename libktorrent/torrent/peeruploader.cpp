@@ -37,7 +37,6 @@ namespace bt
 
 	void PeerUploader::addRequest(const Request & r)
 	{
-		return;
 		requests.append(r);
 	}
 	
