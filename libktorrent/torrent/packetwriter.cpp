@@ -157,12 +157,12 @@ namespace bt
 			packets.append(new Packet(bs));
 	}
 			
-	void PacketWriter::sendChunk(Uint32 index,Uint32 begin,Uint32 len,const Chunk & ch)
+	void PacketWriter::sendChunk(Uint32 index,Uint32 begin,Uint32 len,Chunk * ch)
 	{
-		if (begin >= ch.getSize() || begin + len > ch.getSize())
+		if (begin >= ch->getSize() || begin + len > ch->getSize())
 		{
 			Out() << "Warning : Illegal piece request" << endl;
-			Out() << "\tChunk : index " << index << " size = " << ch.getSize() << endl;
+			Out() << "\tChunk : index " << index << " size = " << ch->getSize() << endl;
 			Out() << "\tPiece : begin = " << begin << " len = " << len << endl;
 		}
 		else

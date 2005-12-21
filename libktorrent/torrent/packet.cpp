@@ -30,14 +30,14 @@ namespace bt
 
 
 
-	Packet::Packet(Uint8 type) : hdr_length(0),data(0),data_length(0),written(0)
+	Packet::Packet(Uint8 type) : hdr_length(0),data(0),data_length(0),written(0),chunk(0)
 	{
 		WriteUint32(hdr,0,1);
 		hdr[4] = type;
 		hdr_length = 5;
 	}
 	
-	Packet::Packet(Uint32 chunk) : hdr_length(0),data(0),data_length(0),written(0)
+	Packet::Packet(Uint32 chunk) : hdr_length(0),data(0),data_length(0),written(0),chunk(0)
 	{
 		WriteUint32(hdr,0,5);
 		hdr[4] = HAVE;
@@ -45,7 +45,7 @@ namespace bt
 		hdr_length = 9;
 	}
 	
-	Packet::Packet(const BitSet & bs) : hdr_length(0),data(0),data_length(0),written(0)
+	Packet::Packet(const BitSet & bs) : hdr_length(0),data(0),data_length(0),written(0),chunk(0)
 	{
 		WriteUint32(hdr,0,1 + bs.getNumBytes());
 		hdr[4] = BITFIELD;
@@ -56,7 +56,7 @@ namespace bt
 	}
 	
 	Packet::Packet(const Request & r,bool cancel)
-	: hdr_length(0),data(0),data_length(0),written(0)
+	: hdr_length(0),data(0),data_length(0),written(0),chunk(0)
 	{
 		WriteUint32(hdr,0,13);
 		hdr[4] = cancel ? CANCEL : REQUEST;
@@ -66,8 +66,8 @@ namespace bt
 		hdr_length = 17;
 	}
 	
-	Packet::Packet(Uint32 index,Uint32 begin,Uint32 len,const Chunk & ch)
-	: hdr_length(0),data(0),data_length(0),written(0)
+	Packet::Packet(Uint32 index,Uint32 begin,Uint32 len,Chunk* ch)
+	: hdr_length(0),data(0),data_length(0),written(0),chunk(ch)
 	{
 		WriteUint32(hdr,0,9 + len);
 		hdr_length = 13;
@@ -76,16 +76,17 @@ namespace bt
 		hdr[4] = PIECE;
 		WriteUint32(hdr,5,index);
 		WriteUint32(hdr,9,begin);
-
-		data = new Uint8[data_length];
-		const Uint8* ptr = ch.getData();
-		memcpy(data,ptr+begin,len);
+		data = ch->getData() + begin;
+		ch->ref();
 	}
 
 
 	Packet::~Packet()
 	{
-		delete [] data;
+		if (chunk)
+			chunk->unref();
+		else
+			delete [] data;
 	}
 	
 

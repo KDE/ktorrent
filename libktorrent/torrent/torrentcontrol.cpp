@@ -145,6 +145,8 @@ namespace bt
 				
 				doChoking();
 				choker_update_timer.update();
+				// a good opportunity to make sure we are not keeping to much in memory
+				cman->checkMemoryUsage();
 			}
 
 			// to satisfy people obsessed with their share ratio

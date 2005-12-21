@@ -20,11 +20,12 @@
 #ifndef BTCHUNKMANAGER_H
 #define BTCHUNKMANAGER_H
 
+#include <qvaluelist.h>
 #include <qstring.h>
 #include <qobject.h>
 #include <qptrvector.h> 
-#include "chunk.h"
 #include <util/bitset.h>
+#include "chunk.h"
 #include "globals.h"
 
 namespace bt
@@ -59,7 +60,7 @@ namespace bt
 		Uint32 num_chunks_in_cache_file;
 		Uint32 max_allowed;
 		Cache* cache;
-		Uint32 num_in_mem;
+		QValueList<Uint32> loaded;
 		BitSet bitset,excluded_chunks;
 		mutable Uint32 chunks_left;
 		mutable bool recalc_chunks_left;
@@ -67,6 +68,9 @@ namespace bt
 		ChunkManager(Torrent & tor,const QString & tmpdir,const QString & datadir);
 		virtual ~ChunkManager();
 
+		/// Remove obsolete chunks
+		void checkMemoryUsage();
+		
 		/**
 		 * Change the data dir.
 		 * @param data_dir 

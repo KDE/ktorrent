@@ -93,7 +93,7 @@ namespace bt
 		 * @param len Length of data
 		 * @param ch The Chunk
 		 */
-		void sendChunk(Uint32 index,Uint32 begin,Uint32 len,const Chunk & ch);
+		void sendChunk(Uint32 index,Uint32 begin,Uint32 len,Chunk * ch);
 		
 		/**
 		 * Send a BitSet. The BitSet indicates which chunks we have.

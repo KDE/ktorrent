@@ -41,7 +41,6 @@ namespace bt
 	: tor(tor),chunks(tor.getNumChunks()),
 	bitset(tor.getNumChunks()),excluded_chunks(tor.getNumChunks())
 	{
-		num_in_mem = 0;
 		if (tor.isMultiFile())
 			cache = new MultiFileCache(tor,tmpdir,datadir);
 		else
@@ -239,8 +238,7 @@ namespace bt
 		{
 			// load the chunk if it is on disk
 			cache->load(c);
-			if (c->getStatus() == Chunk::BUFFERED)
-				num_in_mem++;
+			loaded.append(i);
 		}
 		
 		return c;
@@ -252,13 +250,35 @@ namespace bt
 			return;
 		
 		Chunk* c = chunks[i];
-		c->unref();
 		if (!c->taken())
 		{
-			num_in_mem--;
+			loaded.remove(i);
 			c->clear();
 			c->setStatus(Chunk::ON_DISK);
 		}
+	}
+	
+	void ChunkManager::checkMemoryUsage()
+	{
+		Uint32 num_removed = 0;
+		QValueList<Uint32>::iterator i = loaded.begin();
+		while (i != loaded.end())
+		{
+			Chunk* c = chunks[*i];
+			if (!c->taken())
+			{
+				c->clear();
+				c->setStatus(Chunk::ON_DISK);
+				i = loaded.erase(i);
+				num_removed++;
+			}
+			else
+			{
+				i++;
+			}
+		}
+		Uint32 num_in_mem = loaded.count();
+		Out() << QString("Cleaned %1 chunks, %2 still in memory").arg(num_removed).arg(num_in_mem) << endl;
 	}
 	
 	void ChunkManager::saveChunk(unsigned int i,bool update_index)
@@ -357,7 +377,7 @@ namespace bt
 	
 	void ChunkManager::debugPrintMemUsage()
 	{
-		Out() << "Active Chunks : " << num_in_mem << endl;
+		Out() << "Active Chunks : " << loaded.count()<< endl;
 	}
 
 	void ChunkManager::prioritise(Uint32 from,Uint32 to)

@@ -206,7 +206,7 @@ namespace bt
 		
 		if (file_size < off)
 		{
-			Out() << QString("Writing %1 bytes at %2").arg(size).arg(off) << endl;
+			//Out() << QString("Writing %1 bytes at %2").arg(size).arg(off) << endl;
 			growFile(off - file_size);
 		}
 		
