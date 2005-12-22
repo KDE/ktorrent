@@ -213,7 +213,9 @@ namespace bt
 			Chunk* c = chunks[i];
 			if (c->getStatus() == Chunk::MMAPPED)
 			{
-				c->setData(0,Chunk::ON_DISK);
+				cache->save(c);
+				c->clear();
+				c->setStatus(Chunk::ON_DISK);
 			}
 			else if (c->getStatus() == Chunk::BUFFERED)
 			{
@@ -252,9 +254,11 @@ namespace bt
 		Chunk* c = chunks[i];
 		if (!c->taken())
 		{
-			loaded.remove(i);
+			if (c->getStatus() == Chunk::MMAPPED)
+				cache->save(c);
 			c->clear();
 			c->setStatus(Chunk::ON_DISK);
+			loaded.remove(i);
 		}
 	}
 	
@@ -267,6 +271,8 @@ namespace bt
 			Chunk* c = chunks[*i];
 			if (!c->taken())
 			{
+				if (c->getStatus() == Chunk::MMAPPED)
+					cache->save(c);
 				c->clear();
 				c->setStatus(Chunk::ON_DISK);
 				i = loaded.erase(i);
@@ -289,7 +295,6 @@ namespace bt
 		Chunk* c = chunks[i];
 		cache->save(c);
 		
-
 		// update the index file
 		if (update_index)
 		{

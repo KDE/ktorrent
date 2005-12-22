@@ -152,7 +152,7 @@ namespace bt
 			}
 		}
 		file_size += num;
-		fsync(fd);
+//		fsync(fd);
 	//	Out() << QString("growing %1 = %2").arg(path).arg(kt::BytesToString(file_size)) << endl;
 		struct stat sb;
 		fstat(fd,&sb);
