@@ -17,15 +17,51 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTVERSION_HH
-#define KTVERSION_HH
+#include <qfileinfo.h>
+#include <util/fileops.h>
+#include <util/functions.h>
+#include <torrent/torrent.h>
+#include "cachemigrate.h"
 
-#include "util/constants.h"
 
-namespace kt
+namespace bt
 {
-	const bt::Uint32 MAJOR = 1;
-	const bt::Uint32 MINOR = 2;
-}
 
-#endif
+	bool IsCacheMigrateNeeded(const Torrent & tor,const QString & cache)
+	{
+		// mutli files allways need to be migrated
+		if (tor.isMultiFile())
+			return true;
+		
+		// a single file and a symlink do not need to be migrated
+		QFileInfo finfo(cache);
+		if (finfo.isSymLink())
+			return false;
+		
+		return true;
+	}
+	
+	static void MigrateSingleCache(const Torrent & tor,const QString & cache,const QString & output_dir)
+	{
+		bt::Move(cache,output_dir + tor.getNameSuggestion());
+		bt::SymLink(output_dir + tor.getNameSuggestion(),cache);
+	}
+	
+	static void MigrateMultiCache(const Torrent & tor,const QString & cache,const QString & output_dir)
+	{
+		// make the output dir if it does not exists
+		if (!bt::Exists(output_dir + tor.getNameSuggestion()))
+			bt::MakeDir(output_dir + tor.getNameSuggestion());
+		
+		QString odir = output_dir + tor.getNameSuggestion() + bt::DirSeparator();
+		QString cdir = cache;
+	}
+
+	void MigrateCache(const Torrent & tor,const QString & cache,const QString & output_dir)
+	{
+		if (!tor.isMultiFile())
+			MigrateSingleCache(tor,cache,output_dir);
+		else
+			MigrateMultiCache(tor,cache,output_dir);
+	}
+}

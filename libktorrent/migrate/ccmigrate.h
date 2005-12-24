@@ -17,15 +17,20 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTVERSION_HH
-#define KTVERSION_HH
+#ifndef BTCCMIGRATE_H
+#define BTCCMIGRATE_H
 
-#include "util/constants.h"
-
-namespace kt
+namespace bt
 {
-	const bt::Uint32 MAJOR = 1;
-	const bt::Uint32 MINOR = 2;
+	class Torrent;
+
+	/// Migrates the current_chunks file to the post-mmap era.
+	void MigrateCurrentChunks(const Torrent & tor,const QString & current_chunks);
+	
+	
+	/// Test if a current_chunks file is from the pre-mmap period
+	bool IsPreMMap(const QString & current_chunks);
+
 }
 
 #endif

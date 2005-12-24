@@ -201,8 +201,15 @@ namespace bt
 			CacheFile* fd = files.find(tflist.first());
 			Uint8* buf = (Uint8*)fd->map(off,c->getSize(),CacheFile::RW);
 			if (!buf)
-				throw Error(i18n("Cannot prepare chunk %1 for downloading").arg(c->getIndex()));
-			c->setData(buf,Chunk::MMAPPED);
+			{
+				// if mmap fails use buffered mode
+				Out() << "Warning : mmap failed, falling back to buffered mode" << endl;
+				c->allocate();
+			}
+			else
+			{
+				c->setData(buf,Chunk::MMAPPED);
+			}
 		}
 		else
 		{
@@ -219,8 +226,18 @@ namespace bt
 		if (c->getStatus() == Chunk::MMAPPED)
 		{
 			// mapped chunks are easy
-			CacheFile* fd = files.find(tflist[0]);;
+			CacheFile* fd = files.find(tflist[0]);
 			fd->unmap(c->getData(),c->getSize());
+			c->clear();
+			c->setStatus(Chunk::ON_DISK);
+			return;
+		}
+		else if (tflist.count() == 0 && c->getStatus() == Chunk::BUFFERED)
+		{
+			// buffered chunks are slightly more difficult
+			CacheFile* fd = files.find(tflist[0]);
+			Uint64 off = c->getIndex() * tor.getChunkSize();
+			fd->write(c->getData(),c->getSize(),off);
 			c->clear();
 			c->setStatus(Chunk::ON_DISK);
 			return;

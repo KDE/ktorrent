@@ -17,15 +17,18 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTVERSION_HH
-#define KTVERSION_HH
+#ifndef BTCACHEMIGRATE_H
+#define BTCACHEMIGRATE_H
 
-#include "util/constants.h"
-
-namespace kt
+namespace bt
 {
-	const bt::Uint32 MAJOR = 1;
-	const bt::Uint32 MINOR = 2;
+	class Torrent;
+	
+	/// See if a cache migrate is needed
+	bool IsCacheMigrateNeeded(const Torrent & tor,const QString & cache);
+
+	/// Migrate the cache
+	void MigrateCache(const Torrent & tor,const QString & cache,const QString & output_dir);
 }
 
 #endif

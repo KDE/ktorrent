@@ -16,3 +16,14 @@ fi
 
 KDE_INIT_DOXYGEN([The API Reference], [Version $VERSION])
 
+AC_ARG_ENABLE(
+	knetwork,
+	[AS_HELP_STRING(--enable-knetwork,[Enable the usage of KNetwork socket classes])],
+	[CXXFLAGS="$CXXFLAGS -DUSE_KNETWORK_SOCKET_CLASSES"])
+	
+AC_ARG_ENABLE(
+	memleak-check,
+	[AS_HELP_STRING(--enable-memleak-check,[Enable memory leak checking])],
+	[CXXFLAGS="$CXXFLAGS -DKT_LEAKTRACE"])
+
+

@@ -59,8 +59,15 @@ namespace bt
 		Uint64 off = c->getIndex() * tor.getChunkSize();
 		Uint8* buf = (Uint8*)fd->map(off,c->getSize(),CacheFile::RW);
 		if (!buf)
-			throw Error(i18n("Cannot prepare chunk %1 for downloadiing").arg(c->getIndex()));
-		c->setData(buf,Chunk::MMAPPED);
+		{
+			// buffer it if mmapping fails
+			Out() << "Warning : mmap failure, falling back to buffered mode" << endl;
+			c->allocate();
+		}
+		else
+		{
+			c->setData(buf,Chunk::MMAPPED);
+		}
 	}
 
 	void SingleFileCache::load(Chunk* c)
@@ -78,6 +85,13 @@ namespace bt
 		if (c->getStatus() == Chunk::MMAPPED)
 		{
 			fd->unmap(c->getData(),c->getSize());
+			c->clear();
+			c->setStatus(Chunk::ON_DISK);
+		}
+		else if (c->getStatus() == Chunk::BUFFERED)
+		{
+			Uint64 off = c->getIndex() * tor.getChunkSize();
+			fd->write(c->getData(),c->getSize(),off);
 			c->clear();
 			c->setStatus(Chunk::ON_DISK);
 		}

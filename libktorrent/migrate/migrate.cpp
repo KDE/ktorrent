@@ -17,15 +17,49 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTVERSION_HH
-#define KTVERSION_HH
+#include <kurl.h>
+#include <klocale.h>
+#include <util/error.h>
+#include <util/fileops.h>
+#include <util/functions.h>
+#include "migrate.h"
+#include "ccmigrate.h"
 
-#include "util/constants.h"
-
-namespace kt
+namespace bt
 {
-	const bt::Uint32 MAJOR = 1;
-	const bt::Uint32 MINOR = 2;
-}
 
-#endif
+	Migrate::Migrate()
+	{}
+
+
+	Migrate::~Migrate()
+	{}
+
+	void Migrate::migrate(const Torrent & tor,const QString & tor_dir)
+	{
+		// check if directory exists
+		if (!bt::Exists(tor_dir))
+			throw Error(i18n("The directory %1 does not exist").arg(tor_dir));
+		
+		// make sure it ends with a /
+		QString tdir = tor_dir;
+		if (!tdir.endsWith(bt::DirSeparator()))
+			tdir += bt::DirSeparator();
+		
+		// see if the current_chunks file exists
+		if (bt::Exists(tdir + "current_chunks"))
+		{
+			// first see if it isn't a download started by a post-mmap version
+			if (!IsPreMMap(tdir + "current_chunks"))
+				// it's not pre, so it must be post, so just return
+				return;
+			
+			MigrateCurrentChunks(tor,tdir + "current_chunks"); 
+		}
+		
+		// now we need to migrate the cache 
+	}
+	
+	
+	
+}

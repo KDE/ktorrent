@@ -337,15 +337,7 @@ namespace bt
 		}
 	}
 	
-#define CURRENT_CHUNK_MAGIC 0xABCDEF00
-	
-	struct CurrentChunksHeader
-	{
-		Uint32 magic; // CURRENT_CHUNK_MAGIC
-		Uint32 major;
-		Uint32 minor;
-		Uint32 num_chunks;
-	};
+
 
 	void Downloader::saveDownloads(const QString & file)
 	{

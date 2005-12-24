@@ -17,15 +17,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTVERSION_HH
-#define KTVERSION_HH
+#ifndef BTMIGRATE_H
+#define BTMIGRATE_H
 
-#include "util/constants.h"
-
-namespace kt
+namespace bt
 {
-	const bt::Uint32 MAJOR = 1;
-	const bt::Uint32 MINOR = 2;
+	class Torrent;
+
+	/**
+		@author Joris Guisson <joris.guisson@gmail.com>
+	
+		Class to migrate old pre-mmap downloads to new ones
+	*/
+	class Migrate
+	{
+	public:
+		Migrate();
+		virtual ~Migrate();
+
+		/**
+		 * Migrate a download to the new format.
+		 * @param tor The torrent
+		 * @param tor_dir TorX directory
+		 * @throw Error if something goes wrong
+		 */
+		void migrate(const Torrent & tor,const QString & tor_dir);
+	private:
+		bool preMMap(const QString & current_chunks);
+		void migrateCurrentChunks(const QString & current_chunks);
+	};
+
 }
 
 #endif
