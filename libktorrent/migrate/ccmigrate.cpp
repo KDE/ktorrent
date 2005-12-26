@@ -18,6 +18,7 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <klocale.h>
+#include <util/log.h>
 #include <util/file.h>
 #include <util/error.h>
 #include <util/array.h>
@@ -25,6 +26,7 @@
 #include <util/fileops.h>
 #include <torrent/downloader.h>
 #include <torrent/torrent.h>
+#include <torrent/globals.h>
 #include <torrent/chunkdownload.h>
 #include <ktversion.h>
 #include "ccmigrate.h"
@@ -58,52 +60,56 @@ namespace bt
 	{
 		Uint32 ch = 0;
 		old_cc.read(&ch,sizeof(Uint32));
+		
+		Out() << "Migrating chunk " << ch << endl;
 			
 			// calculate the size
 		Uint32 csize = 0;
 		if (ch == tor.getNumChunks() - 1)
 		{
 				// ch is the last chunk, so it might have a different size
-			ch = tor.getFileLength() % tor.getChunkSize();
+			csize = tor.getFileLength() % tor.getChunkSize();
 			if (ch == 0)
-				ch = tor.getChunkSize();
+				csize = tor.getChunkSize();
 		}
 		else
 		{
-			ch = tor.getChunkSize();
+			csize = tor.getChunkSize();
 		}
 			
-			// calculate the number of pieces
+		// calculate the number of pieces
 		Uint32 num_pieces = csize / MAX_PIECE_LEN;
-		if (csize % MAX_PIECE_LEN == 0)
+		if (csize % MAX_PIECE_LEN > 0)
 			num_pieces++;
 			
-			// load the pieces array
+		// load the pieces array
 		Array<bool> pieces(num_pieces);
 		old_cc.read(pieces,sizeof(bool)*num_pieces);
-			// convert bool array to bitset
+		
+		// convert bool array to bitset
 		BitSet pieces_bs(num_pieces);
 		for (Uint32 i = 0;i < num_pieces;i++)
 			pieces_bs.set(i,pieces[i]);
 			
-			// load the actual data
+		// load the actual data
 		Array<Uint8> data(csize);
 		old_cc.read(data,csize);
 			
-			// write to the new file
+		// write to the new file
 		ChunkDownloadHeader hdr;
 		hdr.index = ch;
 		hdr.num_bits = num_pieces;
 		hdr.buffered = 1; // by default we will use buffered chunks
-			// save the chunk header
+		// save the chunk header
 		new_cc.write(&hdr,sizeof(ChunkDownloadHeader));
-			// save the bitset
+		// save the bitset
 		new_cc.write(pieces_bs.getData(),pieces_bs.getNumBytes());
 		new_cc.write(data,csize);
 	}
 
 	static void MigrateCC(const Torrent & tor,const QString & current_chunks)
 	{
+		Out() << "Migrating current_chunks file " << current_chunks << endl;
 		// open the old current_chunks file
 		File old_cc;
 		if (!old_cc.open(current_chunks,"rb"))
@@ -118,6 +124,7 @@ namespace bt
 		// read the number of chunks
 		Uint32 num = 0;
 		old_cc.read(&num,sizeof(Uint32));
+		Out() << "Found " << num << " chunks" << endl;
 		
 		// write the new current_chunks header
 		CurrentChunksHeader hdr;
@@ -135,6 +142,7 @@ namespace bt
 		// migrate done, close both files and move new_cc to  old_cc
 		new_cc.close();
 		old_cc.close();
+		bt::Delete(current_chunks);
 		bt::Move(tmp,current_chunks);
 	}
 	

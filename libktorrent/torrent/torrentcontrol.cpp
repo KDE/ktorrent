@@ -18,23 +18,30 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <qdir.h>
 #include <qfile.h>
 #include <klocale.h>
+#include <kmessagebox.h>
+#include <kfiledialog.h>
 #include <qtextstream.h>
+#include <util/log.h>
+#include <util/error.h>
+#include <util/bitset.h>
+#include <util/functions.h>
 #include <util/fileops.h>
+#include <interfaces/functions.h>
+#include <migrate/ccmigrate.h>
+#include <migrate/cachemigrate.h>
 #include "downloader.h"
 #include "uploader.h"
 #include "tracker.h"
 #include "chunkmanager.h"
 #include "torrent.h"
 #include "peermanager.h"
-#include <util/error.h>
-#include <util/log.h>
-#include <util/functions.h>
-#include <interfaces/functions.h>
+
 #include "torrentfile.h"
 #include "torrentcontrol.h"
-#include <util/bitset.h>
+
 #include "peer.h"
 #include "choker.h"
 
@@ -269,7 +276,7 @@ namespace bt
 		}
 	}
 
-	void TorrentControl::init(const QueueManager* qman,const QString & torrent,const QString & tmpdir,const QString & ddir)
+	void TorrentControl::init(const QueueManager* qman,const QString & torrent,const QString & tmpdir,const QString & ddir,const QString & default_save_dir)
 	{
 		datadir = tmpdir;
 		stats.completed = false;
@@ -308,11 +315,35 @@ namespace bt
 		stats.multi_file_torrent = tor->isMultiFile();
 		stats.total_bytes = tor->getFileLength();
 		
+		// load stats if outputdir is null
+		if (outputdir.isNull())
+			loadOutputDir();
+		
 		// copy torrent in temp dir
 		QString tor_copy = datadir + "torrent";
 
 		if (tor_copy != torrent)
+		{
 			bt::CopyFile(torrent,tor_copy);
+		}
+		else
+		{
+			// if we do not need to copy the torrent, it is an existing download and we need to see
+			// if it is not an old download
+			try
+			{
+				migrateTorrent(default_save_dir);
+			}
+			catch (Error & err)
+			{
+				// in case of error rename torX dir to migrate-failed-tor
+				QString dd = datadir.replace("tor","migrate-failed-tor");
+				bt::Move(datadir,dd,true);
+				throw Error(
+						i18n("Cannot migrate %1 : %2")
+						.arg(tor->getNameSuggestion()).arg(err.toString()));
+			}
+		}
 
 
 		// create PeerManager and Tracker
@@ -325,9 +356,7 @@ namespace bt
 		connect(tracker,SIGNAL(error()),this,SLOT(trackerResponseError()));
 		connect(tracker,SIGNAL(dataReady()),this,SLOT(trackerResponse()));
 
-		// load stats if outputdir is null
-		if (outputdir.isNull())
-			loadOutputDir();
+		
 		// Create chunkmanager, load the index file if it exists
 		// else create all the necesarry files
 		cman = new ChunkManager(*tor,datadir,outputdir);
@@ -749,5 +778,40 @@ namespace bt
 			return TorrentFile::null;
 	}
 
+	void TorrentControl::migrateTorrent(const QString & default_save_dir)
+	{
+		if (bt::Exists(datadir + "current_chunks") && bt::IsPreMMap(datadir + "current_chunks"))
+		{
+			bt::MigrateCurrentChunks(*tor,datadir + "current_chunks");
+			if (outputdir.isNull() && bt::IsCacheMigrateNeeded(*tor,datadir + "cache"))
+			{
+				// if the output dir is NULL
+				if (default_save_dir.isNull())
+				{
+					KMessageBox::information(0,
+						i18n("The torrent %1 was started with a previous version of KTorrent."
+							" To make sure this torrent still works with this version of KTorrent, "
+							"we will migrate this torrent. You will be asked for a location to save "
+							"the torrent to. If you press cancel, we will select your home directory.")
+								.arg(tor->getNameSuggestion()));
+					outputdir = KFileDialog::getExistingDirectory(QString::null, 0,i18n("Select Folder to Save To"));
+					if (outputdir.isNull())
+						outputdir = QDir::homeDirPath();
+				}
+				else
+				{
+					outputdir = default_save_dir;
+				}
+				
+				if (!outputdir.endsWith(bt::DirSeparator()))
+					outputdir += bt::DirSeparator();
+				
+				bt::MigrateCache(*tor,datadir + "cache",outputdir);
+			}
+		}
+	}
 }
+
+
+		
 #include "torrentcontrol.moc"

@@ -19,11 +19,14 @@
  ***************************************************************************/
 #include <kurl.h>
 #include <klocale.h>
+#include <util/log.h>
 #include <util/error.h>
 #include <util/fileops.h>
 #include <util/functions.h>
+#include <torrent/globals.h>
 #include "migrate.h"
 #include "ccmigrate.h"
+#include "cachemigrate.h"
 
 namespace bt
 {
@@ -35,7 +38,7 @@ namespace bt
 	Migrate::~Migrate()
 	{}
 
-	void Migrate::migrate(const Torrent & tor,const QString & tor_dir)
+	void Migrate::migrate(const Torrent & tor,const QString & tor_dir,const QString & sdir)
 	{
 		// check if directory exists
 		if (!bt::Exists(tor_dir))
@@ -51,13 +54,20 @@ namespace bt
 		{
 			// first see if it isn't a download started by a post-mmap version
 			if (!IsPreMMap(tdir + "current_chunks"))
+			{
 				// it's not pre, so it must be post, so just return
+				Out() << "No migrate needed" << endl;
 				return;
+			}
 			
 			MigrateCurrentChunks(tor,tdir + "current_chunks"); 
 		}
 		
-		// now we need to migrate the cache 
+		// now we need to migrate t
+		if (IsCacheMigrateNeeded(tor,tdir + "cache" + bt::DirSeparator()))
+		{
+			MigrateCache(tor,tdir + "cache" + bt::DirSeparator(),sdir);
+		}
 	}
 	
 	

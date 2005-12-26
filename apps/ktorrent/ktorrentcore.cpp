@@ -125,7 +125,7 @@ void KTorrentCore::load(const QString & target,const QString & dir)
 	{
 		Out() << "Loading file " << target << endl;
 		tc = new TorrentControl();
-		tc->init(qman,target,tdir,dir);
+		tc->init(qman,target,tdir,dir,Settings::saveDir());
 		connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
 		        this,SLOT(torrentFinished(kt::TorrentInterface* )));
 		connect(tc, SIGNAL(stoppedByError(kt::TorrentInterface*, QString )),
@@ -221,8 +221,7 @@ void KTorrentCore::loadExistingTorrent(const QString & tor_dir)
 	try
 	{
 		tc = new TorrentControl();
-		tc->init(qman,idir + "torrent",idir,QString::null);
-			// 			downloads.append(tc);
+		tc->init(qman,idir + "torrent",idir,QString::null,Settings::saveDir());
 		qman->append(tc);
 		connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
 				this,SLOT(torrentFinished(kt::TorrentInterface* )));

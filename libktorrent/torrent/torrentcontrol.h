@@ -82,9 +82,14 @@ namespace bt
 		 * @param tmpdir The directory to store temporary data
 		 * @param datadir The directory to store the actual file(s)
 		 * 		(only used the first time we load a torrent)
+		 * @param default_save_dir Default save directory (null if not set)
 		 * @throw Error when something goes wrong
 		 */
-		void init(const QueueManager* qman,const QString & torrent,const QString & tmpdir,const QString & datadir);
+		void init(const QueueManager* qman,const 
+				QString & torrent,
+				const QString & tmpdir,
+				const QString & datadir,
+				const QString & default_save_dir);
 
 		/**
 		 * Change to a new data dir. If this fails
@@ -198,6 +203,7 @@ namespace bt
 		void loadOutputDir();
 		void getSeederInfo(Uint32 & total,Uint32 & connected_to) const;
 		void getLeecherInfo(Uint32 & total,Uint32 & connected_to) const;
+		void migrateTorrent(const QString & default_save_dir);
 
 		
 	private:
