@@ -32,20 +32,20 @@ namespace bt
 
 	Chunk::~Chunk()
 	{
-		delete [] data;
+		clear();
 	}
 
-	void Chunk::setData(Uint8* d)
+	void Chunk::setData(Uint8* d,Status nstatus)
 	{
-		status = Chunk::IN_MEMORY;
-		if (data)
-			delete [] data;
+		clear();
+		status = nstatus;
 		data = d;
 	}
 	
 	void Chunk::allocate()
 	{
-		if (data) return;
+		clear();
+		status = BUFFERED;
 		data = new Uint8[size];
 	}
 
@@ -53,8 +53,8 @@ namespace bt
 	{
 		if (data)
 		{
-			status = Chunk::ON_DISK;
-			delete [] data;
+			if (status == BUFFERED)
+				delete [] data;
 			data = 0;
 		}
 	}

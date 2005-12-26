@@ -40,12 +40,13 @@ namespace bt
 		Uint8* data;
 		Uint32 data_length;
 		Uint32 written;
+		Chunk* chunk;
 	public:
 		Packet(Uint8 type);
 		Packet(Uint32 chunk);
 		Packet(const BitSet & bs);
 		Packet(const Request & req,bool cancel);
-		Packet(Uint32 index,Uint32 begin,Uint32 len,const Chunk & ch);
+		Packet(Uint32 index,Uint32 begin,Uint32 len,Chunk* ch);
 		virtual ~Packet();
 
 		Uint8 getType() const {return hdr[4];}

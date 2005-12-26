@@ -17,72 +17,35 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTCACHE_H
-#define BTCACHE_H
+#ifndef BTMIGRATE_H
+#define BTMIGRATE_H
 
 namespace bt
 {
 	class Torrent;
-	class Chunk;
 
 	/**
-	 * @author Joris Guisson
-	 * @brief Manages the temporary data
-	 *
-	 * Interface for a class which manages downloaded data.
-	 * Subclasses should implement the load and save methods.
-	 */
-	class Cache
+		@author Joris Guisson <joris.guisson@gmail.com>
+	
+		Class to migrate old pre-mmap downloads to new ones
+	*/
+	class Migrate
 	{
-	protected:
-		Torrent & tor;
-		QString tmpdir;
-		QString datadir;
 	public:
-		Cache(Torrent & tor,const QString & tmpdir,const QString & datadir);
-		virtual ~Cache();
+		Migrate();
+		virtual ~Migrate();
 
 		/**
-		 * Changes the tmp dir. All data files should allready been moved.
-		 * This just modifies the tmpdir variable.
-		 * @param ndir The new tmpdir
+		 * Migrate a download to the new format.
+		 * @param tor The torrent
+		 * @param tor_dir TorX directory
+		 * @param sdir The save directory
+		 * @throw Error if something goes wrong
 		 */
-		virtual void changeTmpDir(const QString & ndir);
-		
-		/**
-		 * Load a chunk into memory. If something goes wrong,
-		 * an Error should be thrown.
-		 * @param c The Chunk
-		 */
-		virtual void load(Chunk* c) = 0;
-
-		/**
-		 * Save a chunk to disk. If something goes wrong,
-		 * an Error should be thrown.
-		 * @param c The Chunk
-		 */
-		virtual void save(Chunk* c) = 0;
-		
-		/**
-		 * Prepare a chunk for downloading.
-		 * @param c The Chunk
-		 */
-		virtual void prep(Chunk* c) = 0;
-
-		/**
-		 * Create all the data files to store the data.
-		 */
-		virtual void create() = 0;
-		
-		/**
-		 * Close the cache file(s).
-		 */
-		virtual void close() = 0;
-		
-		/**
-		 * Open the cache file(s)
-		 */
-		virtual void open() = 0;
+		void migrate(const Torrent & tor,const QString & tor_dir,const QString & sdir);
+	private:
+		bool preMMap(const QString & current_chunks);
+		void migrateCurrentChunks(const QString & current_chunks);
 	};
 
 }

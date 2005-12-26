@@ -25,14 +25,19 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include <qfile.h>
 #include <kfileitem.h>
 #include <kio/netaccess.h>
+#include <klocale.h>
+#include <util/error.h>
+#include <util/log.h>
+#include <torrent/globals.h>
 #include "mmapfile.h"
 
 namespace bt
 {
 
-	MMapFile::MMapFile() : fd(-1),data(0),size(0),ptr(0),mode(READ)
+	MMapFile::MMapFile() : fd(-1),data(0),size(0),file_size(0),ptr(0),mode(READ)
 	{}
 
 
@@ -44,11 +49,18 @@ namespace bt
 
 	bool MMapFile::open(const QString & file,Mode mode)
 	{
+		KIO::UDSEntry entry;
+		if (!KIO::NetAccess::stat(file,entry,0))
+			return false;
+		
+		return open(file,mode,KFileItem(entry,file).size());
+	}
+	
+	bool MMapFile::open(const QString & file,Mode mode,Uint64 size)
+	{
 		// close allready open file
 		if (fd > 0)
 			close();
-		
-		filename = file;
 		
 		// setup flags
 		int flag = 0,mmap_flag = 0;
@@ -56,34 +68,42 @@ namespace bt
 		{
 			case READ:
 				flag = O_RDONLY;
-				mmap_flag = PROT_READ;
+				mmap_flag = PROT_READ | O_LARGEFILE;
 				break;
 			case WRITE:
-				flag = O_WRONLY | O_CREAT;
+				flag = O_WRONLY | O_CREAT | O_LARGEFILE;
 				mmap_flag = PROT_WRITE;
 				break;
 			case RW:
-				flag = O_RDWR;
+				flag = O_RDWR | O_CREAT | O_LARGEFILE;
 				mmap_flag = PROT_READ|PROT_WRITE;
 				break;
 		}
 		
 		// open the file
-		fd = ::open(file.local8Bit() , O_RDONLY);//(int)flag);
+		fd = ::open(QFile::encodeName(file) , flag);//(int)flag);
 		if (fd == -1)
 			return false;
 		
+		// read the file size
+		this->size = size;
+		this->mode = mode;
 		KIO::UDSEntry entry;
 		if (!KIO::NetAccess::stat(file,entry,0))
 			return false;
-		
-		// read the file size
-		size = KFileItem(entry,file).size();
+		file_size = KFileItem(entry,file).size();
+		filename = file;
 		
 		// mmap the file
-		data = (Uint8*)mmap((caddr_t)0, size, PROT_READ, MAP_SHARED, fd, 0);
-		if ((caddr_t)data == (caddr_t)(-1)) 
+		data = (Uint8*)mmap(0, size, mmap_flag, MAP_SHARED, fd, 0);
+		if (data == MAP_FAILED) 
+		{
+			::close(fd);
+			data = 0;
+			fd = -1;
+			ptr = 0;
 			return false;
+		}
 		ptr = 0;
 		return true;
 	}
@@ -92,6 +112,7 @@ namespace bt
 	{
 		if (fd > 0)
 		{
+			munmap(data,size);
 			::close(fd);
 			ptr = size = 0;
 			data = 0;
@@ -102,15 +123,26 @@ namespace bt
 		
 	void MMapFile::flush()
 	{
-		// TODO: find flush function
-		if (fd > 0) ;
-			//::flush(fd);
+		if (fd > 0)
+			msync(data,size,MS_SYNC);
 	}
 		
 	Uint32 MMapFile::write(const void* buf,Uint32 buf_size)
 	{
 		if (fd == -1 || mode == READ)
 			return 0;
+		
+		// check if data fits in memory mapping
+		if (ptr + buf_size > size)
+			throw Error(i18n("Cannot write beyond end of the mmap buffer !"));
+		
+		Out() << "MMapFile::write : " << (ptr + buf_size) << " " << file_size << endl;
+		// enlarge the file if necessary
+		if (ptr + buf_size > file_size)
+		{
+			growFile(ptr + buf_size);
+		}
+		
 		// memcpy data
 		memcpy(&data[ptr],buf,buf_size);
 		// update ptr
@@ -120,7 +152,33 @@ namespace bt
 			size = ptr;
 		
 		return buf_size;
-	}	
+	}
+	
+	void MMapFile::growFile(Uint64 new_size)
+	{
+		Out() << "Growing file to " << new_size << " bytes " << endl;
+		Uint64 to_write = new_size - file_size;
+		// jump to the end of the file
+		lseek(fd,0,SEEK_END);
+		
+		Uint8 buf[1024];
+		memset(buf,0,1024);
+		// write data until to_write is 0
+		while (to_write > 0)
+		{
+			if (to_write < 1024)
+			{
+				::write(fd,buf,to_write);
+				to_write = 0;
+			}
+			else
+			{
+				::write(fd,buf,1024);
+				to_write -= 1024;
+			}
+		}
+		file_size = new_size;
+	}
 		
 	Uint32 MMapFile::read(void* buf,Uint32 buf_size)
 	{
@@ -199,6 +257,13 @@ namespace bt
 	Uint64 MMapFile::getSize() const
 	{
 		return size;
+	}
+	
+	Uint8* MMapFile::getData(Uint64 off)
+	{
+		if (off >= size)
+			return 0;
+		return &data[off];
 	}
 }
 

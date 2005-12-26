@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <math.h>
 #include <util/functions.h>
 #include <util/log.h>
 #include "globals.h"
@@ -261,8 +262,14 @@ namespace bt
 	
 	Uint32 PeerDownloader::getMaximumOutstandingReqs() const
 	{
-		// for each 10 KB/sec allow one with a minimum of 5
-		return 5 + peer->getDownloadRate() / (10 * 1024);
+		// get the download rate in KB/sec
+		double rate_kbs = (double)peer->getDownloadRate() / 1024.0;
+		Uint32 num_extra = (Uint32)floor(rate_kbs / 16.0);
+		// we have a maximum of 50 outstanding chunk requests
+		if (num_extra > 45)
+			num_extra = 45;
+		
+		return 5 + num_extra;
 	}
 	
 }

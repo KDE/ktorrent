@@ -17,7 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-
+#include <qfile.h>
 #include "config.h"
 #include <klocale.h>
 #include <string.h>
@@ -46,7 +46,7 @@ namespace bt
 		if (fptr)
 			close();
 
-		fptr = fopen(file.local8Bit(),mode.ascii());
+		fptr = fopen(QFile::encodeName(file),mode.ascii());
 		return fptr != 0;
 	}
 		

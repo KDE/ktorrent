@@ -36,7 +36,7 @@ namespace bt
 	{
 		num_bytes = (num_bits / 8) + ((num_bits % 8 > 0) ? 1 : 0);
 		data = new Uint8[num_bytes];
-		std::copy(d,d+num_bytes,data);
+		memcpy(data,d,num_bytes);
 		num_on = 0;
 		Uint32 i = 0;
 		while (i < num_bits)

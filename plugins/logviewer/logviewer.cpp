@@ -24,7 +24,10 @@ namespace kt
 
 	LogViewer::LogViewer(QWidget *parent, const char *name)
 			: KTextBrowser(parent, name), LogMonitorInterface()
-	{}
+	{
+		setTextFormat(Qt::LogText);
+		setMaxLogLines(100);
+	}
 
 
 	LogViewer::~LogViewer()

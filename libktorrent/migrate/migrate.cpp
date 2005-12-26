@@ -17,74 +17,59 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTCACHE_H
-#define BTCACHE_H
+#include <kurl.h>
+#include <klocale.h>
+#include <util/log.h>
+#include <util/error.h>
+#include <util/fileops.h>
+#include <util/functions.h>
+#include <torrent/globals.h>
+#include "migrate.h"
+#include "ccmigrate.h"
+#include "cachemigrate.h"
 
 namespace bt
 {
-	class Torrent;
-	class Chunk;
 
-	/**
-	 * @author Joris Guisson
-	 * @brief Manages the temporary data
-	 *
-	 * Interface for a class which manages downloaded data.
-	 * Subclasses should implement the load and save methods.
-	 */
-	class Cache
+	Migrate::Migrate()
+	{}
+
+
+	Migrate::~Migrate()
+	{}
+
+	void Migrate::migrate(const Torrent & tor,const QString & tor_dir,const QString & sdir)
 	{
-	protected:
-		Torrent & tor;
-		QString tmpdir;
-		QString datadir;
-	public:
-		Cache(Torrent & tor,const QString & tmpdir,const QString & datadir);
-		virtual ~Cache();
-
-		/**
-		 * Changes the tmp dir. All data files should allready been moved.
-		 * This just modifies the tmpdir variable.
-		 * @param ndir The new tmpdir
-		 */
-		virtual void changeTmpDir(const QString & ndir);
+		// check if directory exists
+		if (!bt::Exists(tor_dir))
+			throw Error(i18n("The directory %1 does not exist").arg(tor_dir));
 		
-		/**
-		 * Load a chunk into memory. If something goes wrong,
-		 * an Error should be thrown.
-		 * @param c The Chunk
-		 */
-		virtual void load(Chunk* c) = 0;
-
-		/**
-		 * Save a chunk to disk. If something goes wrong,
-		 * an Error should be thrown.
-		 * @param c The Chunk
-		 */
-		virtual void save(Chunk* c) = 0;
+		// make sure it ends with a /
+		QString tdir = tor_dir;
+		if (!tdir.endsWith(bt::DirSeparator()))
+			tdir += bt::DirSeparator();
 		
-		/**
-		 * Prepare a chunk for downloading.
-		 * @param c The Chunk
-		 */
-		virtual void prep(Chunk* c) = 0;
-
-		/**
-		 * Create all the data files to store the data.
-		 */
-		virtual void create() = 0;
+		// see if the current_chunks file exists
+		if (bt::Exists(tdir + "current_chunks"))
+		{
+			// first see if it isn't a download started by a post-mmap version
+			if (!IsPreMMap(tdir + "current_chunks"))
+			{
+				// it's not pre, so it must be post, so just return
+				Out() << "No migrate needed" << endl;
+				return;
+			}
+			
+			MigrateCurrentChunks(tor,tdir + "current_chunks"); 
+		}
 		
-		/**
-		 * Close the cache file(s).
-		 */
-		virtual void close() = 0;
-		
-		/**
-		 * Open the cache file(s)
-		 */
-		virtual void open() = 0;
-	};
-
+		// now we need to migrate t
+		if (IsCacheMigrateNeeded(tor,tdir + "cache" + bt::DirSeparator()))
+		{
+			MigrateCache(tor,tdir + "cache" + bt::DirSeparator(),sdir);
+		}
+	}
+	
+	
+	
 }
-
-#endif

@@ -343,7 +343,7 @@ namespace bt
 			// get the parent dir of target
 			QFileInfo fi = QFileInfo(target);
 			// init will create symlinks and stuff
-			tc->init(0,dd + "torrent",dd,fi.dirPath(true));
+			tc->init(0,dd + "torrent",dd,fi.dirPath(true),QString::null);
 		}
 		catch (...)
 		{

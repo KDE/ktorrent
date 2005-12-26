@@ -42,6 +42,13 @@ namespace bt
 	class PeerDownloader;
 	class DownloadStatus;
 	
+	struct ChunkDownloadHeader
+	{
+		Uint32 index;
+		Uint32 num_bits;
+		Uint32 buffered;
+	};
+	
 	
 	/**
 	 * @author Joris Guisson
@@ -112,7 +119,7 @@ namespace bt
 		 * Load from a File
 		 * @param file The File
 		 */
-		void load(File & file);
+		void load(File & file,ChunkDownloadHeader & hdr);
 
 		/**
 		 * Cancel all requests.
@@ -127,6 +134,9 @@ namespace bt
 		 * @return true if there is only one downloader
 		 */
 		bool getOnlyDownloader(Uint32 & pid);
+		
+		/// See if a PeerDownloader is assigned to this chunk
+		bool containsPeer(PeerDownloader *pd) {return pdown.contains(pd);} 
 	private slots:
 		void sendRequests(PeerDownloader* pd);
 		void sendCancels(PeerDownloader* pd);
@@ -138,7 +148,6 @@ namespace bt
 		
 		BitSet pieces;
 		Chunk* chunk;
-		Uint8* buf;
 		Uint32 num;
 		Uint32 num_downloaded;
 		Uint32 last_size;

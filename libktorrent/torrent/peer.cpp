@@ -79,7 +79,13 @@ namespace bt
 		connect(sock,SIGNAL(error(int)),this,SLOT(error(int)));
 		connect(sock,SIGNAL(bytesWritten(int)),this,SLOT(dataWritten(int )));
 #endif
-		
+		stats.client = peer_id.identifyClient();
+		stats.ip_addresss = getIPAddresss();
+		stats.choked = true;
+		stats.download_rate = 0;
+		stats.upload_rate = 0;
+		stats.perc_of_file = 0;
+		stats.snubbed = false;
 	}
 
 
@@ -349,15 +355,14 @@ namespace bt
 		return (float)pieces.numOnBits() / (float)pieces.getNumBits() * 100.0;
 	}
 
-	void Peer::getStats(kt::PeerInterface::Stats & s)
+	const kt::PeerInterface::Stats & Peer::getStats() const
 	{
-		s.choked = this->isChoked();
-		s.client = peer_id.identifyClient();
-		s.download_rate = this->getDownloadRate();
-		s.upload_rate = this->getUploadRate();
-		s.ip_addresss = this->getIPAddresss();
-		s.perc_of_file = this->percentAvailable();
-		s.snubbed = this->isSnubbed();
+		stats.choked = this->isChoked();
+		stats.download_rate = this->getDownloadRate();
+		stats.upload_rate = this->getUploadRate();
+		stats.perc_of_file = this->percentAvailable();
+		stats.snubbed = this->isSnubbed();
+		return stats;
 	}
 }
 

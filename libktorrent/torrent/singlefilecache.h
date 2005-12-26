@@ -24,6 +24,7 @@
 
 namespace bt
 {
+	class CacheFile;
 
 	/**
 	 * @author Joris Guisson
@@ -34,13 +35,17 @@ namespace bt
 	class SingleFileCache : public Cache
 	{
 		QString cache_file;
+		CacheFile* fd;
 	public:
 		SingleFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir);
 		virtual ~SingleFileCache();
 
+		virtual void prep(Chunk* c);
 		virtual void load(Chunk* c);
 		virtual void save(Chunk* c);
 		virtual void create();
+		virtual void close();
+		virtual void open();
 		virtual void changeDataDir(const QString & ndir);
 	};
 

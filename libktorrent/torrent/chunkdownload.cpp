@@ -83,7 +83,6 @@ namespace bt
 			last_size = MAX_PIECE_LEN;
 		}
 		
-		buf = new Uint8[chunk->getSize()];
 		pieces = BitSet(num);
 		pieces.clear();
 		
@@ -92,7 +91,6 @@ namespace bt
 
 	ChunkDownload::~ChunkDownload()
 	{
-		delete [] buf;
 	}
 
 	bool ChunkDownload::piece(const Piece & p)
@@ -111,8 +109,10 @@ namespace bt
 			return false;
 		}
 
+	//	Out() << "ChunkDownload::piece " << chunk->getIndex() << endl;
 	//	Out() << "Piece " << p.getIndex() << " " << p.getOffset() << " " << pp << endl;
 		DownloadStatus* ds = dstatus.find(p.getPeer());
+		Uint8* buf = chunk->getData();
 		memcpy(buf + p.getOffset(),p.getData(),p.getLength());
 		if (ds)
 			ds->set(pp,PIECE_DOWNLOADED);
@@ -127,8 +127,6 @@ namespace bt
 
 		if (num_downloaded == num)
 		{
-			chunk->setData(buf);
-			buf = 0;
 			releaseAllPDs();
 			pdown.clear();
 			return true;
@@ -303,36 +301,40 @@ namespace bt
 		}
 		return r;
 	}
+	
+
 
 	void ChunkDownload::save(File & file)
-	{
-		if (!buf)
-			return;
-		
-		Array<bool> pcs(num);
-		for (Uint32 i = 0;i < pieces.getNumBits();i++)
-			pcs[i] = pieces.get(i);
-		file.write(pcs,sizeof(bool)*num);
-		file.write(buf,chunk->getSize());
+	{	
+		ChunkDownloadHeader hdr;
+		hdr.index = chunk->getIndex();
+		hdr.num_bits = pieces.getNumBits();
+		hdr.buffered = chunk->getStatus() == Chunk::BUFFERED ? 1 : 0;
+		// save the chunk header
+		file.write(&hdr,sizeof(ChunkDownloadHeader));
+		// save the bitset
+		file.write(pieces.getData(),pieces.getNumBytes());
+		if (hdr.buffered)
+		{
+			// if it's a buffered chunk, save the contents to
+			file.write(chunk->getData(),chunk->getSize());
+			chunk->clear();
+			chunk->setStatus(Chunk::ON_DISK);
+		}
 	}
 		
-	void ChunkDownload::load(File & file)
+	void ChunkDownload::load(File & file,ChunkDownloadHeader & hdr)
 	{
-		Array<bool> pcs(num);
-		file.read(pcs,sizeof(bool)*num);
-		file.read(buf,chunk->getSize());
-		num_downloaded = 0;
-		for (Uint32 i = 0;i < num;i++)
+		// read pieces
+		pieces = BitSet(hdr.num_bits);
+		Array<Uint8> data(pieces.getNumBytes());
+		file.read(data,pieces.getNumBytes());
+		pieces = BitSet(data,hdr.num_bits);
+		num_downloaded = pieces.numOnBits();
+		if (hdr.buffered)
 		{
-			if (pcs[i])
-			{
-				pieces.set(i,true);
-				num_downloaded++;
-			}
-			else
-			{
-				pieces.set(i,false);
-			}
+			// if it's a buffered chunk, load the data to
+			file.read(chunk->getData(),chunk->getSize());
 		}
 	}
 

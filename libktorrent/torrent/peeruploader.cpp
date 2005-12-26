@@ -62,15 +62,14 @@ namespace bt
 		{	
 			Request r = requests.front();
 			Chunk* c = cman.grabChunk(r.getIndex());
-
+			
 			if (c)
 			{
 				if (grabbed.count(r.getIndex()) == 0)
 				{
 					grabbed.insert(r.getIndex());
-					c->ref();
 				}
-				pw.sendChunk(r.getIndex(),r.getOffset(),r.getLength(),*c);			
+				pw.sendChunk(r.getIndex(),r.getOffset(),r.getLength(),c);
 				requests.remove(r);
 				uploaded += pw.update();
 			}
@@ -81,12 +80,6 @@ namespace bt
 			}
 		}
 		
-		std::set<Uint32>::iterator g = grabbed.begin();
-		while (g != grabbed.end())
-		{
-			cman.releaseChunk(*g);
-			g++;
-		}
 		return uploaded;
 	}
 }

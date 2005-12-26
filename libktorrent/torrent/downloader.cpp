@@ -34,6 +34,7 @@
 #include "packetwriter.h"
 #include "chunkselector.h"
 #include "ipblocklist.h"
+#include "ktversion.h"
 
 namespace bt
 {
@@ -188,7 +189,9 @@ namespace bt
 		Uint32 chunk = 0;
 		if (chunk_selector->select(pd,chunk))
 		{
-			ChunkDownload* cd = new ChunkDownload(cman.getChunk(chunk));
+			Chunk* c = cman.getChunk(chunk);
+			cman.prepareChunk(c);
+			ChunkDownload* cd = new ChunkDownload(c);
 			current_chunks.insert(chunk,cd);
 			cd->assignPeer(pd,false);
 			if (tmon)
@@ -196,17 +199,25 @@ namespace bt
 		}
 		else 
 		{ 
-			// If the peer hasn't got a chunk we want,
-			// try to assign it to a chunk we are currently downloading
+          // If the peer hasn't got a chunk we want, 
+          // try to assign it to a chunk we are currently downloading 
+			ChunkDownload *cdmin=NULL; 
 			for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j) 
 			{ 
-				ChunkDownload* cd = j->second;
-				if (pd->hasChunk(cd->getChunk()->getIndex()))
-				{
-					if (cd->assignPeer(pd,true)) 
-						return; // lets not swamp a peer with requests
-				}
+				ChunkDownload* cd = j->second; 
+				if (pd->hasChunk(cd->getChunk()->getIndex())) 
+				{ 
+					if (cd->containsPeer(pd)) 
+						continue; 
+					if (cdmin==NULL) 
+						cdmin=cd; 
+					else if (cd->getNumDownloaders()<cdmin->getNumDownloaders()) 
+						cdmin=cd; 
+ 
+				} 
 			} 
+			if (cdmin) 
+				cdmin->assignPeer(pd,true); 
 		} 
 	}
 
@@ -289,6 +300,15 @@ namespace bt
 	
 	void Downloader::clearDownloads()
 	{
+		for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();++i)
+		{
+			Uint32 ch = i->first;
+			Chunk* c = i->second->getChunk();
+			if (c->getStatus() == Chunk::MMAPPED)
+				cman.saveChunk(ch,false);
+			
+			c->setStatus(Chunk::NOT_DOWNLOADED);
+		}
 		current_chunks.clear();
 	}
 	
@@ -316,6 +336,8 @@ namespace bt
 			tmon->downloadStarted(cd);
 		}
 	}
+	
+
 
 	void Downloader::saveDownloads(const QString & file)
 	{
@@ -324,14 +346,17 @@ namespace bt
 			return;
 
 		// Save all the current downloads to a file
-		Uint32 num = current_chunks.count();
-		fptr.write(&num,sizeof(Uint32));
+		CurrentChunksHeader hdr;
+		hdr.magic = CURRENT_CHUNK_MAGIC;
+		hdr.major = kt::MAJOR;
+		hdr.minor = kt::MINOR;
+		hdr.num_chunks = current_chunks.count();
+		fptr.write(&hdr,sizeof(CurrentChunksHeader));
 
+		Out() << "sizeof(CurrentChunksHeader)" << sizeof(CurrentChunksHeader) << endl;
 		Out() << "Saving " << current_chunks.count() << " chunk downloads" << endl;
 		for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();++i)
 		{
-			Uint32 ch = i->first;
-			fptr.write(&ch,sizeof(Uint32));
 			ChunkDownload* cd = i->second;
 			cd->save(fptr);
 		}
@@ -351,25 +376,34 @@ namespace bt
 		// recalculate downloaded bytes
 		downloaded = (tor.getFileLength() - cman.bytesLeft() - cman.bytesExcluded());
 
-		Uint32 num = 0;
-		fptr.read(&num,sizeof(Uint32));
-
-		Out() << "Loading " << num  << " active chunk downloads" << endl;
-		for (Uint32 i = 0;i < num;i++)
+		CurrentChunksHeader chdr;
+		fptr.read(&chdr,sizeof(CurrentChunksHeader));
+		if (chdr.magic != CURRENT_CHUNK_MAGIC)
 		{
-			Uint32 ch = 0;
-			fptr.read(&ch,sizeof(Uint32));
-			Out() << "Loading chunk " << ch << endl;
-	
-			if (!cman.getChunk(ch) || current_chunks.contains(ch))
+			Out() << "Warning : current_chunks file corrupted" << endl;
+			return;
+		}
+
+		Out() << "Loading " << chdr.num_chunks  << " active chunk downloads" << endl;
+		for (Uint32 i = 0;i < chdr.num_chunks;i++)
+		{
+			ChunkDownloadHeader hdr;
+			// first read header
+			fptr.read(&hdr,sizeof(ChunkDownloadHeader));
+			Out() << "Loading chunk " << hdr.index << endl;
+			
+			if (!cman.getChunk(hdr.index) || current_chunks.contains(hdr.index))
 			{
-				Out() << "Illegal chunk " << ch << endl;
+				Out() << "Illegal chunk " << hdr.index << endl;
 				return;
 			}
-			ChunkDownload* cd = new ChunkDownload(cman.getChunk(ch));
-			current_chunks.insert(ch,cd);
-			cd->load(fptr);
+			Chunk* c = cman.getChunk(hdr.index);
+			cman.prepareChunk(c);
+			ChunkDownload* cd = new ChunkDownload(c);
+			current_chunks.insert(hdr.index,cd);
+			cd->load(fptr,hdr);
 			downloaded += cd->bytesDownloaded();
+			
 			if (tmon)
 				tmon->downloadStarted(cd);
 		}
@@ -386,39 +420,43 @@ namespace bt
 			return 0;
 
 		// read the number of chunks
-		Uint32 num = 0;
-		fptr.read(&num,sizeof(Uint32));
+		CurrentChunksHeader chdr;
+		fptr.read(&chdr,sizeof(CurrentChunksHeader));
+		if (chdr.magic != CURRENT_CHUNK_MAGIC)
+		{
+			Out() << "Warning : current_chunks file corrupted" << endl;
+			return 0;
+		}
 		Uint32 num_bytes = 0;
 	
 		// load all chunks and calculate how much is downloaded
-		for (Uint32 i = 0;i < num;i++)
+		for (Uint32 i = 0;i < chdr.num_chunks;i++)
 		{
-			Uint32 ch = 0;
-			fptr.read(&ch,sizeof(Uint32));
-			Chunk* c = cman.getChunk( ch);
+			// read the chunkdownload header
+			ChunkDownloadHeader hdr;
+			fptr.read(&hdr,sizeof(ChunkDownloadHeader));
+			
+			Chunk* c = cman.getChunk(hdr.index);
 			if (!c)
 				return num_bytes;
 			
-			// number of pieces for this chunk
-			Uint32 ch_num = 0;
-			Uint32 last_size = MAX_PIECE_LEN; // size of last piece
-			ch_num = c->getSize() / MAX_PIECE_LEN;
-			if (c->getSize() % MAX_PIECE_LEN != 0)
+			Uint32 last_size = c->getSize() % MAX_PIECE_LEN;
+			if (last_size == 0)
+				last_size = MAX_PIECE_LEN;
+			
+			// create the bitset and read it 
+			BitSet bs(hdr.num_bits);
+			fptr.read(bs.getData(),bs.getNumBytes());
+			
+			for (Uint32 j = 0;j < hdr.num_bits;j++)
 			{
-				last_size = c->getSize() % MAX_PIECE_LEN;
-				ch_num++;
+				if (bs.get(j))
+					num_bytes += j == hdr.num_bits - 1 ? 
+							last_size : MAX_PIECE_LEN;
 			}
 			
-			Array<bool> pieces(ch_num);
-			fptr.read(pieces,sizeof(bool)*ch_num);
-			// jump to next chunk
-			fptr.seek(File::CURRENT,c->getSize());
-			
-			for (Uint32 i = 0;i < ch_num;i++)
-			{
-				if (pieces[i])
-					num_bytes += i == ch_num - 1 ? last_size : MAX_PIECE_LEN;
-			}
+			if (hdr.buffered)
+				fptr.seek(File::CURRENT,c->getSize());
 		}
 		curr_chunks_dowloaded = num_bytes;
 		return num_bytes;

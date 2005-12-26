@@ -111,6 +111,8 @@ int main(int argc, char **argv)
 	}
 	Globals::cleanup();
 	
-	printf("\n\nObjects alive = %i\n\n",(unsigned int)Object::numAlive());
+//	printf("\n\nObjects alive = %i\n\n",(unsigned int)Object::numAlive());
 	return 0;
 }
+
+

@@ -41,7 +41,6 @@ namespace bt
 	: tor(tor),chunks(tor.getNumChunks()),
 	bitset(tor.getNumChunks()),excluded_chunks(tor.getNumChunks())
 	{
-		num_in_mem = 0;
 		if (tor.isMultiFile())
 			cache = new MultiFileCache(tor,tmpdir,datadir);
 		else
@@ -104,7 +103,28 @@ namespace bt
 
 	void ChunkManager::changeDataDir(const QString & data_dir)
 	{
+		QValueList<Uint32> mapped;
+		// save all buffered and mapped chunks
+		for (Uint32 i = 0;i < tor.getNumChunks();i++)
+		{
+			Chunk* c = getChunk(i);
+			if (c->getStatus() == Chunk::MMAPPED ||
+				c->getStatus() == Chunk::BUFFERED)
+			{
+				cache->save(c);
+				mapped.append(i);
+			}
+		}
+		cache->close();
 		cache->changeTmpDir(data_dir);
+		cache->open();
+		// reload the previously mapped and buffered chunks
+		for (Uint32 i = 0;i < mapped.count();i++)
+		{
+			Chunk* c = getChunk(mapped[i]);
+			cache->load(c);
+		}
+		
 		index_file = data_dir + "index";
 		file_info_file = data_dir + "file_info";
 		saveFileInfo();
@@ -174,7 +194,36 @@ namespace bt
 
 	Chunk* ChunkManager::getChunk(unsigned int i)
 	{
-		return chunks[i];
+		if (i >= chunks.count())
+			return 0;
+		else
+			return chunks[i];
+	}
+	
+	void ChunkManager::start()
+	{
+		cache->open();
+	}
+		
+	void ChunkManager::stop()
+	{
+		// unmmap all chunks which can
+		for (Uint32 i = 0;i < bitset.getNumBits();i++)
+		{
+			Chunk* c = chunks[i];
+			if (c->getStatus() == Chunk::MMAPPED)
+			{
+				cache->save(c);
+				c->clear();
+				c->setStatus(Chunk::ON_DISK);
+			}
+			else if (c->getStatus() == Chunk::BUFFERED)
+			{
+				c->clear();
+				c->setStatus(Chunk::ON_DISK);
+			}
+		}
+		cache->close();
 	}
 	
 	Chunk* ChunkManager::grabChunk(unsigned int i)
@@ -184,12 +233,14 @@ namespace bt
 		
 		Chunk* c = chunks[i];
 		if (c->getStatus() == Chunk::NOT_DOWNLOADED)
-			return 0;
-
-		if (c->getStatus() != Chunk::IN_MEMORY)
 		{
+			return 0;
+		}
+		else if (c->getStatus() == Chunk::ON_DISK)
+		{
+			// load the chunk if it is on disk
 			cache->load(c);
-			num_in_mem++;
+			loaded.append(i);
 		}
 		
 		return c;
@@ -201,22 +252,57 @@ namespace bt
 			return;
 		
 		Chunk* c = chunks[i];
-		c->unref();
+		if (!c->taken())
+		{
+			if (c->getStatus() == Chunk::MMAPPED)
+				cache->save(c);
+			c->clear();
+			c->setStatus(Chunk::ON_DISK);
+			loaded.remove(i);
+		}
 	}
 	
-	void ChunkManager::saveChunk(unsigned int i)
+	void ChunkManager::checkMemoryUsage()
+	{
+		Uint32 num_removed = 0;
+		QValueList<Uint32>::iterator i = loaded.begin();
+		while (i != loaded.end())
+		{
+			Chunk* c = chunks[*i];
+			if (!c->taken())
+			{
+				if (c->getStatus() == Chunk::MMAPPED)
+					cache->save(c);
+				c->clear();
+				c->setStatus(Chunk::ON_DISK);
+				i = loaded.erase(i);
+				num_removed++;
+			}
+			else
+			{
+				i++;
+			}
+		}
+		Uint32 num_in_mem = loaded.count();
+		Out() << QString("Cleaned %1 chunks, %2 still in memory").arg(num_removed).arg(num_in_mem) << endl;
+	}
+	
+	void ChunkManager::saveChunk(unsigned int i,bool update_index)
 	{
 		if (i >= chunks.size())
 			return;
 
 		Chunk* c = chunks[i];
 		cache->save(c);
-		num_chunks_in_cache_file++;
-		bitset.set(i,true);
-		recalc_chunks_left = true;
-
+		
 		// update the index file
-		writeIndexFileEntry(c);
+		if (update_index)
+		{
+			num_chunks_in_cache_file++;
+			bitset.set(i,true);
+			recalc_chunks_left = true;
+			writeIndexFileEntry(c);
+		}
 	}
 
 	void ChunkManager::writeIndexFileEntry(Chunk* c)
@@ -267,7 +353,7 @@ namespace bt
 		for (Uint32 i = 0;i < tot;i++)
 		{
 			const Chunk* c = chunks[i];
-			if (c->getStatus() == Chunk::NOT_DOWNLOADED && !c->isExcluded())
+			if (!bitset.get(i) && !c->isExcluded())
 				num++;
 		}
 		chunks_left = num;
@@ -296,27 +382,7 @@ namespace bt
 	
 	void ChunkManager::debugPrintMemUsage()
 	{
-		Out() << "Active Chunks : " << num_in_mem << endl;
-	}
-
-	const Uint32 MAX_CHUNK_IN_MEM = 10;
-
-	void ChunkManager::checkMemoryUsage()
-	{
-		if (num_in_mem <= MAX_CHUNK_IN_MEM)
-			return;
-	
-		// try to keep at most 10 Chunk's in memory
-		for (Uint32 i = 0;i < chunks.count() && num_in_mem > MAX_CHUNK_IN_MEM;i++)
-		{
-			Chunk* c = chunks[i];
-			if (c->getStatus() == Chunk::IN_MEMORY && !c->taken())
-			{
-				num_in_mem--;
-				c->clear();
-			}
-		}
-		
+		Out() << "Active Chunks : " << loaded.count()<< endl;
 	}
 
 	void ChunkManager::prioritise(Uint32 from,Uint32 to)
@@ -485,6 +551,11 @@ namespace bt
 			
 			exclude(first,last);
 		}
+	}
+	
+	void ChunkManager::prepareChunk(Chunk* c)
+	{
+		cache->prep(c);
 	}
 }
 

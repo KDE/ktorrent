@@ -30,6 +30,7 @@
 #include "multifilecache.h"
 #include "globals.h"
 #include "chunk.h"
+#include <util/cachefile.h>
 
 
 namespace bt
@@ -41,12 +42,41 @@ namespace bt
 	{
 		cache_dir = tmpdir + "cache/";
 		output_dir = datadir + tor.getNameSuggestion() + bt::DirSeparator();
+		files.setAutoDelete(true);
 	}
 
 
 	MultiFileCache::~MultiFileCache()
 	{}
 
+	void MultiFileCache::close()
+	{
+		files.clear();
+	}
+	
+	void MultiFileCache::open()
+	{
+		// open all files
+		for (Uint32 i = 0;i < tor.getNumFiles();i++)
+		{
+			TorrentFile & tf = tor.getFile(i);
+			if (files.contains(i))
+				files.erase(i);
+			
+			CacheFile* fd = new CacheFile();
+			try
+			{
+				fd->open(cache_dir + tf.getPath(),tf.getSize());
+				files.insert(i,fd);
+			}
+			catch (...)
+			{
+				delete fd;
+				fd = 0;
+				throw;
+			}
+		}
+	}
 
 	void MultiFileCache::changeDataDir(const QString& ndir)
 	{
@@ -100,22 +130,31 @@ namespace bt
 
 	void MultiFileCache::load(Chunk* c)
 	{
-		QValueList<Uint32> files;
-		tor.calcChunkPos(c->getIndex(),files);
+		QValueList<Uint32> tflist;
+		tor.calcChunkPos(c->getIndex(),tflist);
+		
+		// one file is simple, just mmap it
+		if (tflist.count() == 1)
+		{
+			const TorrentFile & f = tor.getFile(tflist.first());
+			CacheFile* fd = files.find(tflist.first());
+			Uint64 off = FileOffset(c,f,tor.getChunkSize());
+			Uint8* buf = (Uint8*)fd->map(off,c->getSize(),CacheFile::READ);
+			if (buf)
+				c->setData(buf,Chunk::MMAPPED);
+			return;
+		}
+		
+		// multiple files, so allocate the chunk
+		c->allocate();
 		
 		Uint8* data = new Uint8[c->getSize()];
 		Uint64 read = 0; // number of bytes read
-		for (Uint32 i = 0;i < files.count();i++)
+		for (Uint32 i = 0;i < tflist.count();i++)
 		{
-			const TorrentFile & f = tor.getFile(files[i]);
-			File fptr;
-			if (!fptr.open(cache_dir + f.getPath(),"rb"))
-			{
-				delete [] data;
-				throw Error(i18n("Cannot open file %1: %2")
-						.arg(f.getPath()).arg(fptr.errorString()));
-			}
-
+			const TorrentFile & f = tor.getFile(tflist[i]);
+			CacheFile* fd = files.find(tflist[i]);
+			
 			// first calculate offset into file
 			// only the first file can have an offset
 			// the following files will start at the beginning
@@ -125,40 +164,92 @@ namespace bt
 			
 			Uint32 to_read = 0;
 			// then the amount of data we can read from this file
-			if (files.count() == 1)
+			if (tflist.count() == 1)
 				to_read = c->getSize();
 			else if (i == 0)
 				to_read = f.getLastChunkSize();
-			else if (i == files.count() - 1)
+			else if (i == tflist.count() - 1)
 				to_read = c->getSize() - read;
 			else
 				to_read = f.getSize();
-						
+			
+		
 			// read part of data
-			fptr.seek(File::BEGIN,off);
-			fptr.read(data + read,to_read);
+			fd->read(c->getData() + read,to_read,off);
 			read += to_read;
 		}
-		c->setData(data);
+		c->setData(data,Chunk::BUFFERED);
 	}
 
 	
+	void MultiFileCache::prep(Chunk* c)
+	{
+		if (c->getStatus() != Chunk::NOT_DOWNLOADED)
+		{
+			Out() << "Warning : can only prep NOT_DOWNLOADED chunks  !" << endl;
+			return;
+		}
+		// find out in which files a chunk lies
+		QValueList<Uint32> tflist;
+		tor.calcChunkPos(c->getIndex(),tflist);
+		
+//		Out() << "Prep " << c->getIndex() << endl;
+		if (tflist.count() == 1)
+		{
+			// in one so just mmap it
+			Uint64 off = FileOffset(c,tor.getFile(tflist.first()),tor.getChunkSize());
+			CacheFile* fd = files.find(tflist.first());
+			Uint8* buf = (Uint8*)fd->map(off,c->getSize(),CacheFile::RW);
+			if (!buf)
+			{
+				// if mmap fails use buffered mode
+				Out() << "Warning : mmap failed, falling back to buffered mode" << endl;
+				c->allocate();
+			}
+			else
+			{
+				c->setData(buf,Chunk::MMAPPED);
+			}
+		}
+		else
+		{
+			// just allocate it
+			c->allocate();
+		}
+	}
 
 	void MultiFileCache::save(Chunk* c)
 	{
-		QValueList<Uint32> files;
-		tor.calcChunkPos(c->getIndex(),files);
-
-		Uint64 written = 0; // number of bytes written
-		for (Uint32 i = 0;i < files.count();i++)
+		QValueList<Uint32> tflist;
+		tor.calcChunkPos(c->getIndex(),tflist);
+		
+		if (c->getStatus() == Chunk::MMAPPED)
 		{
-			const TorrentFile & f = tor.getFile(files[i]);
-			File fptr;
-			if (!fptr.open(cache_dir + f.getPath(),"r+b"))
-			{
-				throw Error(i18n("Cannot open file %1: %2")
-						.arg(f.getPath()).arg(fptr.errorString()));
-			}
+			// mapped chunks are easy
+			CacheFile* fd = files.find(tflist[0]);
+			fd->unmap(c->getData(),c->getSize());
+			c->clear();
+			c->setStatus(Chunk::ON_DISK);
+			return;
+		}
+		else if (tflist.count() == 0 && c->getStatus() == Chunk::BUFFERED)
+		{
+			// buffered chunks are slightly more difficult
+			CacheFile* fd = files.find(tflist[0]);
+			Uint64 off = c->getIndex() * tor.getChunkSize();
+			fd->write(c->getData(),c->getSize(),off);
+			c->clear();
+			c->setStatus(Chunk::ON_DISK);
+			return;
+		}
+		
+	//	Out() << "Writing to " << tflist.count() << " files " << endl;
+		Uint64 written = 0; // number of bytes written
+		for (Uint32 i = 0;i < tflist.count();i++)
+		{
+			const TorrentFile & f = tor.getFile(tflist[i]);
+			CacheFile* fd = files.find(tflist[i]);
+			
 
 			// first calculate offset into file
 			// only the first file can have an offset
@@ -168,47 +259,27 @@ namespace bt
 			if (i == 0)
 			{
 				off = FileOffset(c,f,tor.getChunkSize());
-
-				// we may need to expand the first file
-				fptr.seek(File::END,0);
-				Uint64 cache_size = fptr.tell();
-	
-				if (cache_size < off)
-				{	
-					// write random shit to enlarge the file
-					Uint64 num_empty_bytes = off - cache_size + 1;
-					Uint8 b[1024];
-					Uint64 nw = 0;
-					while (nw < num_empty_bytes)
-					{
-						Uint32 left = num_empty_bytes - nw;
-						fptr.write(b,left < 1024 ? left : 1024);
-						nw += 1024;
-					}
-				}
 			}
 
 			// the amount of data we can write to this file
-			if (files.count() == 1)
+			if (tflist.count() == 1)
 				to_write = c->getSize();
 			else if (i == 0)
 				to_write = f.getLastChunkSize();
-			else if (i == files.count() - 1)
+			else if (i == tflist.count() - 1)
 				to_write = c->getSize() - written;
 			else
 				to_write = f.getSize();
 			
 		//	Out() << "to_write " << to_write << endl;
-			// read part of data
-			fptr.seek(File::BEGIN,off);
-			fptr.write(c->getData() + written,to_write);
+			// write the data
+			fd->write(c->getData() + written,to_write,off);
 			written += to_write;
-
-			fptr.close();
 		}
 		
-		// clear the chunk
+		// set the chunk to on disk and clear it
 		c->clear();
+		c->setStatus(Chunk::ON_DISK);
 	}
 	
 	///////////////////////////////
