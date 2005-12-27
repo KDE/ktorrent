@@ -17,13 +17,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <util/log.h>
+#include <util/timer.h>
 #include <util/functions.h>
+#include <torrent/globals.h>
 #include <interfaces/functions.h>
 #include "newchokealgorithm.h"
 #include "peermanager.h"
 #include "peer.h"
 #include "packetwriter.h"
 #include "peeruploader.h"
+
 
 using namespace kt;
 
@@ -101,7 +105,6 @@ namespace bt
 		other.setCompareFunc(RevDownloadRateCmp);
 		other.sort();
 		
-		
 		// get the first tree and punt them in the unchokers
 		for (Uint32 i = 0;i < 3;i++)
 		{
@@ -132,7 +135,7 @@ namespace bt
 			attempts++;
 		}while (poup_in_unchokers && attempts < 5);
 		
-		unchokers[4] = poup;
+		unchokers[3] = poup;
 		
 		Uint32 other_idx = 0;
 		Uint32 peers_idx = 3;
