@@ -555,7 +555,7 @@ namespace bt
 	
 	bool ChunkManager::prepareChunk(Chunk* c)
 	{
-		if (c->getStatus() == Chunk::NOT_DOWNLOADED)
+		if (c->getStatus() != Chunk::NOT_DOWNLOADED)
 			return false;
 		
 		return cache->prep(c);
