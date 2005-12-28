@@ -46,7 +46,7 @@ namespace bt
 		virtual void create();
 		virtual void load(Chunk* c);
 		virtual void save(Chunk* c);
-		virtual void prep(Chunk* c);
+		virtual bool prep(Chunk* c);
 		virtual void close();
 		virtual void open();
 	private:

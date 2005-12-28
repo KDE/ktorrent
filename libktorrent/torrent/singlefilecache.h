@@ -40,7 +40,7 @@ namespace bt
 		SingleFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir);
 		virtual ~SingleFileCache();
 
-		virtual void prep(Chunk* c);
+		virtual bool prep(Chunk* c);
 		virtual void load(Chunk* c);
 		virtual void save(Chunk* c);
 		virtual void create();

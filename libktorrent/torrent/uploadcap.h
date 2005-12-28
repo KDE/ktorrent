@@ -22,7 +22,6 @@
 
 #include <qmap.h>
 #include <qvaluelist.h>
-#include <qptrlist.h>
 #include <util/timer.h>
 #include "globals.h"
 
@@ -42,10 +41,16 @@ namespace bt
 	class UploadCap
 	{
 		static UploadCap self;
-
-		QPtrList<PacketWriter> up_queue;
+		
+		struct Entry
+		{
+			PacketWriter* pw;
+			Uint32 bytes;
+		};
+		QValueList<Entry> up_queue;
 		Uint32 max_bytes_per_sec;
 		Timer timer;
+		Uint32 leftover;
 
 		UploadCap();
 	public:
@@ -56,15 +61,19 @@ namespace bt
 		 * @param max Maximum number of bytes per second.
 		 */
 		void setMaxSpeed(Uint32 max);
+		
+		/// Get max bytes/sec
+		Uint32 getMaxSpeed() const {return max_bytes_per_sec;}
 
 		/**
 		 * Allow or disallow somebody from sending a piece. If somebody
 		 * is disallowed they will be stored in a queue, and will be notified
 		 * when there turn is up.
 		 * @param pd PacketWriter doing the request
+		 * @param bytes Bytes it wants to send
 		 * @return true if the piece is allowed or not
 		 */
-		bool allow(PacketWriter* pd);
+		bool allow(PacketWriter* pd,Uint32 bytes);
 
 		/**
 		 * PacketWriter should call this when they get destroyed. To

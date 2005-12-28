@@ -49,12 +49,12 @@ namespace bt
 		cache_file = tmpdir + "cache";
 	}
 	
-	void SingleFileCache::prep(Chunk* c)
+	bool SingleFileCache::prep(Chunk* c)
 	{
 		if (c->getStatus() != Chunk::NOT_DOWNLOADED)
 		{
 			Out() << "Warning : can only prep NOT_DOWNLOADED chunks !" << endl;
-			return;
+			return false;
 		}
 		Uint64 off = c->getIndex() * tor.getChunkSize();
 		Uint8* buf = (Uint8*)fd->map(off,c->getSize(),CacheFile::RW);
@@ -68,6 +68,7 @@ namespace bt
 		{
 			c->setData(buf,Chunk::MMAPPED);
 		}
+		return true;
 	}
 
 	void SingleFileCache::load(Chunk* c)

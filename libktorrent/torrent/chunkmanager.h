@@ -119,8 +119,9 @@ namespace bt
 		/**
 		 * Prepare a chunk for downloading
 		 * @param c The Chunk
+		 * @return true if ok, false if the chunk is not NOT_DOWNLOADED
 		 */
-		void prepareChunk(Chunk* c);
+		bool prepareChunk(Chunk* c);
 		
 		/**
 		 * The upload is done, and the Chunk is no longer needed.

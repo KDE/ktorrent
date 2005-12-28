@@ -92,24 +92,17 @@ namespace bt
 
 	QString Packet::debugString() const
 	{
-		Uint32 idx = 0,off = 0;
 		switch (hdr[4])
 		{
 			case CHOKE : return QString("CHOKE %1 %2").arg(hdr_length).arg(data_length);
 			case UNCHOKE : return QString("UNCHOKE %1 %2").arg(hdr_length).arg(data_length);
 			case INTERESTED : return QString("INTERESTED %1 %2").arg(hdr_length).arg(data_length);
-			case NOT_INTERESTED : return QString("INTERESTED %1 %2").arg(hdr_length).arg(data_length);
+			case NOT_INTERESTED : return QString("NOT_INTERESTED %1 %2").arg(hdr_length).arg(data_length);
 			case HAVE : return QString("HAVE %1 %2").arg(hdr_length).arg(data_length);
 			case BITFIELD : return QString("BITFIELD %1 %2").arg(hdr_length).arg(data_length);
 			case PIECE : return QString("PIECE %1 %2").arg(hdr_length).arg(data_length);
-			case REQUEST : 
-				idx = ReadUint32(hdr,5);
-				off = ReadUint32(hdr,9);
-				return QString("REQUEST(%1 %2) %3 %4").arg(idx).arg(off).arg(hdr_length).arg(data_length);
-			case CANCEL : 
-				idx = ReadUint32(hdr,5);
-				off = ReadUint32(hdr,9);
-				return QString("CANCEL(%1 %2) %3 %4").arg(idx).arg(off).arg(hdr_length).arg(data_length);
+			case REQUEST : return QString("REQUEST %1 %2").arg(hdr_length).arg(data_length);
+			case CANCEL : return QString("CANCEL %1 %2").arg(hdr_length).arg(data_length);
 			default: return QString("UNKNOWN %1 %2").arg(hdr_length).arg(data_length);
 		}
 	}

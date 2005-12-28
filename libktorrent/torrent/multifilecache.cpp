@@ -182,12 +182,12 @@ namespace bt
 	}
 
 	
-	void MultiFileCache::prep(Chunk* c)
+	bool MultiFileCache::prep(Chunk* c)
 	{
 		if (c->getStatus() != Chunk::NOT_DOWNLOADED)
 		{
 			Out() << "Warning : can only prep NOT_DOWNLOADED chunks  !" << endl;
-			return;
+			return false;
 		}
 		// find out in which files a chunk lies
 		QValueList<Uint32> tflist;
@@ -216,6 +216,7 @@ namespace bt
 			// just allocate it
 			c->allocate();
 		}
+		return true;
 	}
 
 	void MultiFileCache::save(Chunk* c)

@@ -66,8 +66,9 @@ namespace bt
 		/**
 		 * Prepare a chunk for downloading.
 		 * @param c The Chunk
+		 * @return true if ok, false otherwise
 		 */
-		virtual void prep(Chunk* c) = 0;
+		virtual bool prep(Chunk* c) = 0;
 
 		/**
 		 * Create all the data files to store the data.

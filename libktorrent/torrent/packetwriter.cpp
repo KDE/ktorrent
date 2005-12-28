@@ -30,7 +30,7 @@
 
 namespace bt
 {
-
+//#define DEBUG_LOG_UPLOAD
 #ifdef DEBUG_LOG_UPLOAD
 	static Log ulog;
 	static bool upload_log_initialized = false;
@@ -61,23 +61,41 @@ namespace bt
 #ifdef DEBUG_LOG_UPLOAD
 		ulog << p.debugString() << endl;
 #endif
+	//	Out() << "Sending " << p.getHeaderLength() << " " << p.getDataLength() << endl;
 		peer->sendData(p.getHeader(),p.getHeaderLength());
 		if (p.getDataLength() > 0)
 			peer->sendData(p.getData(),p.getDataLength(),p.getType() == PIECE);
 		if (p.getType() == PIECE)
 			uploaded += p.getDataLength();
 	}
+	
+	void PacketWriter::queuePacket(Packet* p,bool ask)
+	{
+		bool ok = true;
+		if (ask)
+			ok = UploadCap::instance().allow(this,p->getHeaderLength() + p->getDataLength());
+		
+		if (ok && packets.count() == 0)
+		{
+			if (p->getType() == PIECE)
+				uploaded += p->getDataLength();
+			sendPacket(*p);
+			delete p;
+		}
+		else 
+		{
+			packets.append(p);
+		}
+	}
+	
+	
 
 	void PacketWriter::sendChoke()
 	{
 		if (peer->am_choked == true)
 			return;
 		
-		if (packets.count() == 0)
-			sendPacket(Packet(CHOKE));
-		else
-			packets.append(new Packet(CHOKE));
-
+		queuePacket(new Packet(CHOKE),false);
 		peer->am_choked = true;
 	}
 	
@@ -86,10 +104,7 @@ namespace bt
 		if (peer->am_choked == false)
 			return;
 		
-		if (packets.count() == 0)
-			sendPacket(Packet(UNCHOKE));
-		else
-			packets.append(new Packet(UNCHOKE));
+		queuePacket(new Packet(UNCHOKE),false);
 		peer->am_choked = false;
 	}
 	
@@ -98,10 +113,7 @@ namespace bt
 		if (peer->am_interested == true)
 			return;
 		
-		if (packets.count() == 0)
-			sendPacket(Packet(INTERESTED));
-		else
-			packets.append(new Packet(INTERESTED));
+		queuePacket(new Packet(INTERESTED),false);
 		peer->am_interested = true;
 	}
 	
@@ -110,10 +122,7 @@ namespace bt
 		if (peer->am_interested == false)
 			return;
 		
-		if (packets.count() == 0)
-			sendPacket(Packet(NOT_INTERESTED));
-		else
-			packets.append(new Packet(NOT_INTERESTED));
+		queuePacket(new Packet(NOT_INTERESTED),false);
 		peer->am_interested = false;
 	}
 
@@ -127,34 +136,22 @@ namespace bt
 	
 	void PacketWriter::sendRequest(const Request & r)
 	{
-		if (packets.count() == 0)
-			sendPacket(Packet(r,false));
-		else
-			packets.append(new Packet(r,false));
+		queuePacket(new Packet(r,false),false);
 	}
 	
 	void PacketWriter::sendCancel(const Request & r)
 	{
-		if (packets.count() == 0)
-			sendPacket(Packet(r,true));
-		else
-			packets.append(new Packet(r,true));
+		queuePacket(new Packet(r,true),false);
 	}
 	
 	void PacketWriter::sendHave(Uint32 index)
 	{
-		if (packets.count() == 0)
-			sendPacket(Packet(index));
-		else
-			packets.append(new Packet(index));
+		queuePacket(new Packet(index),false);
 	}
 	
 	void PacketWriter::sendBitSet(const BitSet & bs)
 	{
-		if (packets.count() == 0)
-			sendPacket(Packet(bs));
-		else
-			packets.append(new Packet(bs));
+		queuePacket(new Packet(bs),false);
 	}
 			
 	void PacketWriter::sendChunk(Uint32 index,Uint32 begin,Uint32 len,Chunk * ch)
@@ -167,14 +164,7 @@ namespace bt
 		}
 		else
 		{
-			// try to send it, if we can add it to the queue
-			if (UploadCap::instance().allow(this))
-			{
-				sendPacket(Packet(index,begin,len,ch));
-			//	Out() << "Sending " << index << " " << begin << endl;
-			}
-			else
-				packets.append(new Packet(index,begin,len,ch));
+			queuePacket(new Packet(index,begin,len,ch),true);
 		}
 	}
 
@@ -185,19 +175,18 @@ namespace bt
 		if (packets.count() == 0)
 			return data_sent;
 		
+		// if there is a limit return data_sent
+		if (UploadCap::instance().getMaxSpeed() > 0)
+			return data_sent;
+		
+		// no limit, go wild
 		while (packets.count() > 0)
 		{
 			Packet* p = packets.first();
-			// send packets with no payload immediatly
-			if (p->getType() != PIECE)
-			{
-				sendPacket(*p);
-				packets.removeFirst();
-			}
-			else
-			{
-				break;
-			}
+			if (p->getType() == PIECE)
+				uploaded += p->getDataLength();
+			sendPacket(*p);
+			packets.removeFirst();
 		}
 
 		return data_sent;
@@ -208,25 +197,13 @@ namespace bt
 		if (packets.count() == 0)
 			return;
 		
-		// get rid of small packets first
-		while (packets.count() > 0)
-		{
-			Packet* p = packets.first();
-			// break if we have found a piece
-			if (p->getType() == PIECE)
-				break;
-			sendPacket(*p);
-			packets.removeFirst();
-		}
-		
-		if (packets.count() == 0)
-			return;
-		
+
 		if (!all)
 		{
 			// send a big one
 			Packet* p = packets.first();	
-		//	Out() << "Sending big one" << endl;
+			if (p->getType() == PIECE)
+				uploaded += p->getDataLength();
 			sendPacket(*p);
 			packets.removeFirst();
 		}
@@ -237,9 +214,7 @@ namespace bt
 			{
 				Packet* p = packets.first();
 				if (p->getType() == PIECE)
-				{
-			//		Out() << "Sending big one" << endl;
-				}
+					uploaded += p->getDataLength();
 				sendPacket(*p);
 				packets.removeFirst();
 			}	

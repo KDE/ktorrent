@@ -18,6 +18,8 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <math.h>
+#include <util/log.h>
+#include <torrent/globals.h>
 #include "uploadcap.h"
 #include "peer.h"
 #include "packetwriter.h"
@@ -31,6 +33,7 @@ namespace bt
 	UploadCap::UploadCap()
 	{
 		max_bytes_per_sec = 0;
+		leftover = 0;
 	}
 
 	UploadCap::~UploadCap()
@@ -43,18 +46,18 @@ namespace bt
 		// tell everybody to go wild
 		if (max_bytes_per_sec == 0)
 		{
-			QPtrList<PacketWriter>::iterator i = up_queue.begin();
+			QValueList<Entry>::iterator i = up_queue.begin();
 			while (i != up_queue.end())
 			{
-				PacketWriter* pw = *i;
-				pw->uploadUnsentPacket(true);
+				Entry & e = *i;
+				e.pw->uploadUnsentPacket(true);
 				i++;
 			}
 			up_queue.clear();
 		}
 	}
 
-	bool UploadCap::allow(PacketWriter* pd)
+	bool UploadCap::allow(PacketWriter* pd,Uint32 bytes)
 	{
 		if (max_bytes_per_sec == 0)
 		{
@@ -63,13 +66,24 @@ namespace bt
 		}
 
 		// append pd to queue
-		up_queue.append(pd);
+		Entry e;
+		e.bytes = bytes;
+		e.pw = pd;
+		up_queue.append(e);
 		return false;
 	}
 
 	void UploadCap::killed(PacketWriter* pd)
 	{
-		up_queue.remove(pd);
+		QValueList<Entry>::iterator i = up_queue.begin();
+		while (i != up_queue.end())
+		{
+			Entry & e = *i;
+			if (e.pw == pd)
+				i = up_queue.erase(i);
+			else
+				i++;
+		}
 	}
 
 	void UploadCap::update()
@@ -79,29 +93,41 @@ namespace bt
 		
 		// first calculate the time since the last update
 		double el = timer.getElapsedSinceUpdate();
-		// the interval between two uploads
-		double up_interval = 1000.0 / ((double)max_bytes_per_sec / MAX_PIECE_LEN);
-		// the number of packets we can send is the elapsed time divided by the interval
-		Uint32 npackets = (Uint32)floor(el / up_interval);
-		//if (npackets > 1)
-		//	npackets == 0;
+		
+		// calculate the number of bytes we can send, including those leftover from the last time
+		Uint32 nb = (Uint32)floor((el / 1000.0) * max_bytes_per_sec) + leftover;
+		leftover = 0;
+		Out() << "nb = " << nb << endl;
 		
 		bool sent_one = false;
 
-		while (up_queue.count() > 0 && npackets > 0)
+		while (up_queue.count() > 0 && nb > 0)
 		{
 			// get the first
-			PacketWriter* pw = up_queue.first();
+			Entry & e = up_queue.first();
+			PacketWriter* pw = e.pw;
 			
-			if (pw->getNumPacketsToWrite() > 0)
+			if (pw->getNumPacketsToWrite() > 0 )
 			{
-				// upload one
-				pw->uploadUnsentPacket(false);
-				npackets--;
-				sent_one = true;
+				if (e.bytes <= nb)
+				{
+					// upload one
+					pw->uploadUnsentPacket(false);
+					nb -= e.bytes;
+					sent_one = true;
+					up_queue.pop_front();
+				}
+				else
+				{
+					// make sure we exit the loop
+					leftover = nb;
+					nb = 0;
+				}
 			}
-			// remove the first entry
-			up_queue.removeFirst();
+			else
+			{
+				up_queue.pop_front();
+			}
 		}
 		
 		if (sent_one)

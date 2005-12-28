@@ -190,12 +190,14 @@ namespace bt
 		if (chunk_selector->select(pd,chunk))
 		{
 			Chunk* c = cman.getChunk(chunk);
-			cman.prepareChunk(c);
-			ChunkDownload* cd = new ChunkDownload(c);
-			current_chunks.insert(chunk,cd);
-			cd->assignPeer(pd,false);
-			if (tmon)
-				tmon->downloadStarted(cd);
+			if (cman.prepareChunk(c))
+			{
+				ChunkDownload* cd = new ChunkDownload(c);
+				current_chunks.insert(chunk,cd);
+				cd->assignPeer(pd,false);
+				if (tmon)
+					tmon->downloadStarted(cd);
+			}
 		}
 		else 
 		{ 
@@ -261,7 +263,7 @@ namespace bt
 				// tell everybody we have the Chunk
 				for (Uint32 i = 0;i < pman.getNumConnectedPeers();i++)
 				{
-					if (!pman.getPeer(i)->isSeeder())
+				//	if (!pman.getPeer(i)->isSeeder())
 						pman.getPeer(i)->getPacketWriter().sendHave(c->getIndex());
 				}
 			}
@@ -398,14 +400,16 @@ namespace bt
 				return;
 			}
 			Chunk* c = cman.getChunk(hdr.index);
-			cman.prepareChunk(c);
-			ChunkDownload* cd = new ChunkDownload(c);
-			current_chunks.insert(hdr.index,cd);
-			cd->load(fptr,hdr);
-			downloaded += cd->bytesDownloaded();
+			if (cman.prepareChunk(c))
+			{
+				ChunkDownload* cd = new ChunkDownload(c);
+				current_chunks.insert(hdr.index,cd);
+				cd->load(fptr,hdr);
+				downloaded += cd->bytesDownloaded();
 			
-			if (tmon)
-				tmon->downloadStarted(cd);
+				if (tmon)
+					tmon->downloadStarted(cd);
+			}
 		}
 		
 		// reset curr_chunks_downloaded to 0

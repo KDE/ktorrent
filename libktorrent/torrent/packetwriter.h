@@ -118,6 +118,7 @@ namespace bt
 		void uploadUnsentPacket(bool all = false);
 	private:
 		void sendPacket(const Packet & p);
+		void queuePacket(Packet* p,bool ask);
 	};
 
 }

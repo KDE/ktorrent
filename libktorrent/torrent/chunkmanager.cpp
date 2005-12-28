@@ -283,8 +283,8 @@ namespace bt
 				i++;
 			}
 		}
-		Uint32 num_in_mem = loaded.count();
-		Out() << QString("Cleaned %1 chunks, %2 still in memory").arg(num_removed).arg(num_in_mem) << endl;
+//		Uint32 num_in_mem = loaded.count();
+		//Out() << QString("Cleaned %1 chunks, %2 still in memory").arg(num_removed).arg(num_in_mem) << endl;
 	}
 	
 	void ChunkManager::saveChunk(unsigned int i,bool update_index)
@@ -553,9 +553,12 @@ namespace bt
 		}
 	}
 	
-	void ChunkManager::prepareChunk(Chunk* c)
+	bool ChunkManager::prepareChunk(Chunk* c)
 	{
-		cache->prep(c);
+		if (c->getStatus() == Chunk::NOT_DOWNLOADED)
+			return false;
+		
+		return cache->prep(c);
 	}
 }
 
