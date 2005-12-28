@@ -139,7 +139,7 @@ void KTorrentCore::load(const QString & target,const QString & dir)
 			dlg.execute(tc);
 		}
 		// 		start(tc);
-		qman->start(tc);
+		//qman->start(tc);
 		torrentAdded(tc);
 	}
 	catch (bt::Error & err)
@@ -309,6 +309,7 @@ void KTorrentCore::torrentFinished(kt::TorrentInterface* tc)
 		tc->stop(false);
 
 	finished(tc);
+	qman->startNext();
 }
 
 void KTorrentCore::setKeepSeeding(bool ks)
@@ -527,6 +528,11 @@ void KTorrentCore::addBlockedIP(QString& ip)
 {
 	IPBlocklist& filter = IPBlocklist::instance();
 	filter.addRange(ip);
+}
+
+bt::QueueManager* KTorrentCore::getQueueManager()
+{
+	return this->qman;
 }
 
 #include "ktorrentcore.moc"

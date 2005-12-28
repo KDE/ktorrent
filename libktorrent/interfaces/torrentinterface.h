@@ -231,6 +231,14 @@ namespace kt
 		 * @return An URL
 		 */
 		virtual KURL getTrackerURL(bool prev_success) const = 0;
+		
+		
+		///Get the torrent queue number. Zero if not in queue
+		virtual int getPriority() const = 0;
+		
+		///Set the torrent queue number.
+		virtual void setPriority(int p) = 0;
+		
 	signals:
 		/**
 		 * Emited when we have finished downloading.

@@ -71,6 +71,7 @@
 #include "ktorrentdcop.h"
 #include "torrentcreatordlg.h"
 #include "pastedialog.h"
+#include "queuedialog.h"
 #include <util/functions.h>
 #include <interfaces/functions.h>
 #include <interfaces/plugin.h>
@@ -290,6 +291,10 @@ void KTorrent::setupActions()
 			i18n("to paste torrent URL", "Paste Torrent URL..."), "ktstart",0,this, SLOT(torrentPaste()),
 	actionCollection(), "paste_url");
 	
+	m_queuemgr = new KAction(
+			i18n("to open Queue Manager", "Open QueueManager..."), "ktstart",0,this, SLOT(queueManagerShow()),
+	actionCollection(), "Queue manager");
+	
 	createGUI();
 }
 
@@ -337,6 +342,13 @@ void KTorrent::fileOpen()
 void KTorrent::torrentPaste()
 {
 	PasteDialog dlg(m_core,this);
+	dlg.show();
+	dlg.exec();
+}
+
+void KTorrent::queueManagerShow()
+{
+	QueueDialog dlg(m_core->getQueueManager(), this);
 	dlg.show();
 	dlg.exec();
 }

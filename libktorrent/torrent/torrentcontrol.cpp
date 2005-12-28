@@ -75,6 +75,7 @@ namespace bt
 		prev_bytes_dl = 0;
 		prev_bytes_ul = 0;
 		io_error = false;
+		priority = 0;
 
 		updateStats();
 	}
@@ -606,6 +607,8 @@ namespace bt
 			out << "RUNNING_TIME_DL=" << running_time_dl << ::endl;
 			out << "RUNNING_TIME_UL=" << running_time_ul << ::endl;
 		}
+		
+		out << "PRIORITY=" << priority << ::endl;
 	}
 
 	void TorrentControl::loadStats()
@@ -652,6 +655,16 @@ namespace bt
 			else if (line.startsWith("OUTPUTDIR="))
 			{
 				outputdir = line.mid(10);
+			}
+			else if (line.startsWith("PRIORITY="))
+			{
+				bool ok = true;
+				int p = line.mid(9).toInt(&ok);
+				if(ok)
+					priority = p;
+				else
+					Out() << "Warning : Can't get priority out of line : "
+							<< line << endl;
 			}
 		}
 	}
@@ -810,6 +823,12 @@ namespace bt
 				bt::MigrateCache(*tor,datadir + "cache",outputdir);
 			}
 		}
+	}
+	
+	void TorrentControl::setPriority(int p)
+	{
+		priority = p;
+		saveStats();
 	}
 }
 

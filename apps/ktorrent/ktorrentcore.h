@@ -180,6 +180,10 @@ public:
 	void loadPlugins();
 	
 	virtual void load(const KURL& url);
+	
+	
+	bt::QueueManager* getQueueManager();
+	
 public slots:
 	/**
 	 * Load a torrent file. Pops up an error dialog

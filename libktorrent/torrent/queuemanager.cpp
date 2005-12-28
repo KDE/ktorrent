@@ -53,6 +53,9 @@ namespace bt
 	void QueueManager::append(kt::TorrentInterface* tc)
 	{
 		downloads.append(tc);
+		downloads.sort();
+//		if(tc->getPriority() != 0)
+//			queue.append(tc);
 	}
 
 	void QueueManager::remove(kt::TorrentInterface* tc)
@@ -129,15 +132,37 @@ namespace bt
 			i++;
 		}
 	}
+	
+	void QueueManager::startNext()
+	{
+/*		int num_running = getNumRunning(true);
+		if(num_running > max_downloads)
+			return;
+		
+		QPtrList<kt::TorrentInterface>::iterator it = downloads.begin();
+		for(int i = 0 ; it!=downloads.end() && i < num_running ; ++i)
+		{
+			++it;
+		}
+		if(it!=downloads.end())
+		{
+			kt::TorrentInterface* tc = *it;
+			if(tc->getPriority() != 0)
+				start(tc);
+	}*/
+		orderQueue();
+	}
 
 	int QueueManager::getNumRunning(bool onlyDownload, bool onlySeed)
 	{
 		int nr = 0;
+	//	int test = 1;
 		QPtrList<TorrentInterface>::const_iterator i = downloads.begin();
 		while (i != downloads.end())
 		{
 			const TorrentInterface* tc = *i;
 			const TorrentStats & s = tc->getStats();
+			//Out() << "Torrent " << test++ << s.torrent_name << " priority: " << tc->getPriority() << endl;
 			if (s.running)
 			{
 				if(onlyDownload)
@@ -156,6 +181,7 @@ namespace bt
 			}
 			i++;
 		}
+	//	Out() << endl;
 		return nr;
 	}
 
@@ -196,6 +222,66 @@ namespace bt
 		}
 		return false;
 	}
+	
+	void QueueManager::orderQueue()
+	{
+		downloads.sort();
+		
+		QPtrList<TorrentInterface>::const_iterator it = downloads.begin();
+		for(int i = 0 ; it!=downloads.end() && i != max_downloads; ++i, ++it)
+		
+		if(it == downloads.end())
+			return;
+		
+		QPtrList<TorrentInterface>::const_iterator end_queue = it;
+		
+		while (it != downloads.end()) //first stop all torrents that aren't supposed to be running
+		{
+			TorrentInterface* tc = *it;
+			const TorrentStats & s = tc->getStats();
+			
+			if(s.running && !s.completed)
+				stop(tc);
+			
+			++it;
+		}
+		
+		it = downloads.begin();
+		
+		while (it != end_queue) //then check if some torrent needs to be started
+		{
+			TorrentInterface* tc = *it;
+			const TorrentStats & s = tc->getStats();
+			
+			if(!s.running && !s.completed)
+				start(tc);
+			
+			++it;
+		}
+	}
+	
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////
 
+	
+	QueuePtrList::QueuePtrList() : QPtrList<kt::TorrentInterface>()
+	{}
+	
+	int QueuePtrList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2)
+	{
+		kt::TorrentInterface* tc1 = (kt::TorrentInterface*) item1;
+		kt::TorrentInterface* tc2 = (kt::TorrentInterface*) item2;
+		
+		if(tc1->getPriority() == tc2->getPriority())
+			return 0;
+		
+		if(tc1->getPriority() == 0 && tc2->getPriority() != 0)
+			return 1;
+		else if(tc1->getPriority() != 0 && tc2->getPriority() == 0)
+			return -1;
+		
+		return tc1->getPriority() > tc2->getPriority() ? -1 : 1;
+		return 0;
+	}
 }
 

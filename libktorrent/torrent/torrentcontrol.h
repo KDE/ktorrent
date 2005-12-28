@@ -151,6 +151,10 @@ namespace bt
 		virtual Uint32 getNumFiles() const;
 		virtual kt::TorrentFileInterface & getTorrentFile(Uint32 index);
 		
+		int getPriority() const { return priority; }
+		
+		void setPriority(int p);
+		
 	public slots:
 		/**
 		 * Update the object, should be called periodically.
@@ -225,6 +229,7 @@ namespace bt
 		unsigned long running_time_dl, running_time_ul;
 		Uint64 prev_bytes_dl, prev_bytes_ul;
 		bool io_error;
+		int priority;
 	};
 }
 
