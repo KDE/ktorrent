@@ -67,8 +67,8 @@ namespace bt
 		switch (mode)
 		{
 			case READ:
-				flag = O_RDONLY;
-				mmap_flag = PROT_READ | O_LARGEFILE;
+				flag = O_RDONLY | O_LARGEFILE;
+				mmap_flag = PROT_READ;
 				break;
 			case WRITE:
 				flag = O_WRONLY | O_CREAT | O_LARGEFILE;
