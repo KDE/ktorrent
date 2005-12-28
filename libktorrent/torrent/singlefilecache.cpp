@@ -103,8 +103,10 @@ namespace bt
 		if (!bt::Exists(datadir + tor.getNameSuggestion()))
 		{
 			QString out_file = datadir + tor.getNameSuggestion();
-			bt::Touch(out_file);
-			bt::SymLink(out_file,cache_file);
+			if (!bt::Exists(out_file))
+				bt::Touch(out_file);
+			if (!bt::Exists(cache_file))
+				bt::SymLink(out_file,cache_file);
 		}
 	}
 	

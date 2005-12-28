@@ -97,8 +97,6 @@ namespace bt
 			MakeDir(cache_dir);
 		if (!bt::Exists(output_dir))
 			MakeDir(output_dir);
-		
-		// make sure dnd dir exists
 		if (!bt::Exists(tmpdir + "dnd"))
 			bt::MakeDir(tmpdir + "dnd");
 
@@ -118,7 +116,6 @@ namespace bt
 
 	void MultiFileCache::touch(const QString fpath,bool dnd)
 	{
-		Out() << "Touching : " << fpath << " ( " << dnd << ")" << endl;
 		// first split fpath by / seperator
 		QStringList sl = QStringList::split(bt::DirSeparator(),fpath);
 		// create all necessary subdirs
@@ -145,9 +142,12 @@ namespace bt
 
 		// then make the file
 		QString tmp = dnd ? tmpdir + "dnd" + bt::DirSeparator() : output_dir;
-		bt::Touch(otmp + fpath);
+		if (!bt::Exists(tmp + fpath))
+			bt::Touch(tmp + fpath);
+		
 		// and make a symlink in the cache to it
-		bt::SymLink(otmp + fpath,cache_dir + fpath);
+		if (!bt::Exists(cache_dir + fpath))
+			bt::SymLink(tmp + fpath,cache_dir + fpath);
 	}
 
 	void MultiFileCache::load(Chunk* c)
@@ -308,7 +308,6 @@ namespace bt
 	void MultiFileCache::downloadStatusChanged(TorrentFile* tf, bool download)
 	{
 		bool dnd = !download;
-		Out() << "MultiFileCache::downloadStatusChanged" << endl;
 		CacheFile* fd = files.find(tf->getIndex());
 		
 		QString dnd_dir = tmpdir + "dnd" + bt::DirSeparator();
