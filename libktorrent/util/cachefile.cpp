@@ -43,7 +43,7 @@ namespace bt
 	CacheFile::~CacheFile()
 	{
 		if (fd != -1)
-			close();
+			close(false);
 	}
 	
 	void CacheFile::open(const QString & path,Uint64 size)
@@ -60,9 +60,21 @@ namespace bt
 		fstat(fd,&sb);
 		file_size = sb.st_size;
 	//	Out() << QString("CacheFile %1 = %2").arg(path).arg(file_size) << endl;
+		
+		// re do all mappings if there are any
+		QMap<void*,Entry>::iterator i = mappings.begin();
+		while (i != mappings.end())
+		{
+			CacheFile::Entry e = i.data();
+			i++;
+			mappings.erase(e.ptr);
+			e.ptr = map(e.thing,e.offset,e.size,e.mode);
+			if (e.ptr)
+				e.thing->remapped(e.ptr);
+		}
 	}
 		
-	void* CacheFile::map(Uint64 off,Uint32 size,Mode mode)
+	void* CacheFile::map(MMappeable* thing,Uint64 off,Uint32 size,Mode mode)
 	{
 		if (off + size > max_size)
 		{
@@ -107,7 +119,14 @@ namespace bt
 			}
 			else
 			{
-				offsetted_mappings.insert((void*)(ptr + diff),diff);
+				CacheFile::Entry e;
+				e.thing = thing;
+				e.offset = off;
+				e.diff = diff;
+				e.ptr = ptr;
+				e.size = size + diff;
+				e.mode = mode;
+				mappings.insert((void*)(ptr + diff),e);
 				return ptr + diff;
 			}
 		}
@@ -121,6 +140,14 @@ namespace bt
 			}
 			else
 			{
+				CacheFile::Entry e;
+				e.thing = thing;
+				e.offset = off;
+				e.ptr = ptr;
+				e.diff = 0;
+				e.size = size;
+				e.mode = mode;
+				mappings.insert(ptr,e);
 				return ptr;
 			}
 		}
@@ -163,13 +190,15 @@ namespace bt
 	void CacheFile::unmap(void* ptr,Uint32 size)
 	{
 		// see if it wasn't an offsetted mapping
-		if (offsetted_mappings.contains(ptr))
+		if (mappings.contains(ptr))
 		{
-			Uint32 diff = offsetted_mappings[ptr];
-			// undo the offset
-			ptr = (char*)ptr - diff;
-			munmap(ptr,size + diff);
-			offsetted_mappings.erase(ptr);
+			CacheFile::Entry & e = mappings[ptr];
+			if (e.diff > 0)
+				munmap((char*)ptr - e.diff,e.size);
+			else
+				munmap(ptr,e.size);
+			
+			mappings.erase(ptr);
 		}
 		else
 		{
@@ -177,13 +206,34 @@ namespace bt
 		}
 	}
 		
-	void CacheFile::close()
+	void CacheFile::close(bool to_be_reopened)
 	{
-		if (fd != -1)
+		if (fd == -1)
+			return;
+		
+		QMap<void*,Entry>::iterator i = mappings.begin();
+		while (i != mappings.end())
 		{
-			::close(fd);
-			fd = -1;
+			CacheFile::Entry & e = i.data();
+			if (e.offset > 0)
+				munmap((char*)e.ptr - e.offset,e.size);
+			else
+				munmap(e.ptr,e.size);
+			e.thing->unmapped(to_be_reopened);
+			// if it will be reopenend, we will not remove all mappings
+			// so that they will be redone on reopening
+			if (to_be_reopened)
+			{
+				i++;
+			}
+			else
+			{
+				i++;
+				mappings.erase(e.ptr);
+			}
 		}
+		::close(fd);
+		fd = -1;
 	}
 	
 	void CacheFile::read(Uint8* buf,Uint32 size,Uint64 off)

@@ -57,7 +57,7 @@ namespace bt
 			return false;
 		}
 		Uint64 off = c->getIndex() * tor.getChunkSize();
-		Uint8* buf = (Uint8*)fd->map(off,c->getSize(),CacheFile::RW);
+		Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::RW);
 		if (!buf)
 		{
 			// buffer it if mmapping fails
@@ -74,7 +74,7 @@ namespace bt
 	void SingleFileCache::load(Chunk* c)
 	{
 		Uint64 off = c->getIndex() * tor.getChunkSize();
-		Uint8* buf = (Uint8*)fd->map(off,c->getSize(),CacheFile::READ);
+		Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::READ);
 		if (!buf)
 			throw Error(i18n("Cannot load chunk %1").arg(c->getIndex()));
 		c->setData(buf,Chunk::MMAPPED);
@@ -112,7 +112,7 @@ namespace bt
 	{
 		if (fd)
 		{
-			fd->close();
+			fd->close(false);
 			delete fd;
 			fd = 0;
 		}
@@ -127,7 +127,7 @@ namespace bt
 		}
 		catch (...)
 		{
-			fd->close();
+			fd->close(false);
 			delete fd;
 			fd = 0;
 			throw;

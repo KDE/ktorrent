@@ -43,6 +43,13 @@ namespace bt
 		cache_dir = tmpdir + "cache/";
 		output_dir = datadir + tor.getNameSuggestion() + bt::DirSeparator();
 		files.setAutoDelete(true);
+		for (Uint32 i = 0;i < tor.getNumFiles();i++)
+		{
+			TorrentFile & tf = tor.getFile(i);
+			connect(&tf,SIGNAL(downloadStatusChanged( TorrentFile*, bool )),
+					 this,SLOT(downloadStatusChanged( TorrentFile*, bool )));
+		}
+		
 	}
 
 
@@ -90,42 +97,57 @@ namespace bt
 			MakeDir(cache_dir);
 		if (!bt::Exists(output_dir))
 			MakeDir(output_dir);
+		
+		// make sure dnd dir exists
+		if (!bt::Exists(tmpdir + "dnd"))
+			bt::MakeDir(tmpdir + "dnd");
 
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
-			touch(tor.getFile(i).getPath());
+			TorrentFile & tf = tor.getFile(i);
+			if (tf.doNotDownload())
+			{
+				touch(tf.getPath(),true);
+			}
+			else
+			{
+				touch(tf.getPath(),false);
+			}
 		}
 	}
 
-	
-
-	void MultiFileCache::touch(const QString fpath)
+	void MultiFileCache::touch(const QString fpath,bool dnd)
 	{
+		Out() << "Touching : " << fpath << " ( " << dnd << ")" << endl;
 		// first split fpath by / seperator
-		
 		QStringList sl = QStringList::split(bt::DirSeparator(),fpath);
-
 		// create all necessary subdirs
 		QString ctmp = cache_dir;
 		QString otmp = output_dir;
+		QString dtmp = tmpdir + "dnd" + bt::DirSeparator();
 		for (Uint32 i = 0;i < sl.count() - 1;i++)
 		{
 			otmp += sl[i];
 			ctmp += sl[i];
-			// we need to make the same directory structure in the cache
-			// as the output dir
+			dtmp += sl[i];
+			// we need to make the same directory structure in the cache,
+			// the output_dir and the dnd directory
 			if (!bt::Exists(ctmp))
 				MakeDir(ctmp);
 			if (!bt::Exists(otmp))
 				MakeDir(otmp);
+			if (!bt::Exists(dtmp))
+				MakeDir(dtmp);
 			otmp += bt::DirSeparator();
 			ctmp += bt::DirSeparator();
+			dtmp += bt::DirSeparator();
 		}
 
 		// then make the file
-		bt::Touch(output_dir + fpath);
+		QString tmp = dnd ? tmpdir + "dnd" + bt::DirSeparator() : output_dir;
+		bt::Touch(otmp + fpath);
 		// and make a symlink in the cache to it
-		bt::SymLink(output_dir + fpath,cache_dir + fpath);
+		bt::SymLink(otmp + fpath,cache_dir + fpath);
 	}
 
 	void MultiFileCache::load(Chunk* c)
@@ -139,7 +161,7 @@ namespace bt
 			const TorrentFile & f = tor.getFile(tflist.first());
 			CacheFile* fd = files.find(tflist.first());
 			Uint64 off = FileOffset(c,f,tor.getChunkSize());
-			Uint8* buf = (Uint8*)fd->map(off,c->getSize(),CacheFile::READ);
+			Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::READ);
 			if (buf)
 				c->setData(buf,Chunk::MMAPPED);
 			return;
@@ -199,7 +221,7 @@ namespace bt
 			// in one so just mmap it
 			Uint64 off = FileOffset(c,tor.getFile(tflist.first()),tor.getChunkSize());
 			CacheFile* fd = files.find(tflist.first());
-			Uint8* buf = (Uint8*)fd->map(off,c->getSize(),CacheFile::RW);
+			Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::RW);
 			if (!buf)
 			{
 				// if mmap fails use buffered mode
@@ -283,6 +305,53 @@ namespace bt
 		c->setStatus(Chunk::ON_DISK);
 	}
 	
+	void MultiFileCache::downloadStatusChanged(TorrentFile* tf, bool download)
+	{
+		bool dnd = !download;
+		Out() << "MultiFileCache::downloadStatusChanged" << endl;
+		CacheFile* fd = files.find(tf->getIndex());
+		
+		QString dnd_dir = tmpdir + "dnd" + bt::DirSeparator();
+		// if it is dnd and it is allready in the dnd tree do nothing
+		if (dnd && bt::Exists(dnd_dir + tf->getPath()))
+			return;
+		
+		// if it is !dnd and it is allready in the output_dir tree do nothing
+		if (!dnd && bt::Exists(output_dir + tf->getPath()))
+			return;
+		
+		try
+		{
+			// now move it from output_dir tree to dnd tree or vica versa
+			if (fd)
+				fd->close(true);
+			// delete the symlink
+			bt::Delete(cache_dir + tf->getPath());
+			if (dnd)
+			{
+				bt::Move(output_dir + tf->getPath(),dnd_dir + tf->getPath());
+				bt::SymLink(dnd_dir + tf->getPath(),cache_dir + tf->getPath());
+			}
+			else
+			{
+				bt::Move(dnd_dir + tf->getPath(),output_dir + tf->getPath());
+				bt::SymLink(output_dir + tf->getPath(),cache_dir + tf->getPath());
+			}
+			if (fd)
+				fd->open(cache_dir + tf->getPath(),tf->getSize());
+		}
+		catch (...)
+		{
+			if (fd)
+			{
+				delete fd;
+				fd = 0;
+				files.erase(tf->getIndex());
+			}
+			throw;
+		}
+	}
+	
 	///////////////////////////////
 
 	Uint64 FileOffset(Chunk* c,const TorrentFile & f,Uint64 chunk_size)
@@ -295,3 +364,5 @@ namespace bt
 		return off;
 	}
 }
+
+#include "multifilecache.moc"

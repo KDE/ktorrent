@@ -58,4 +58,14 @@ namespace bt
 			data = 0;
 		}
 	}
+	
+	void Chunk::unmapped(bool remap_intended)
+	{
+		setData(0,remap_intended ? Chunk::MMAPPED : Chunk::ON_DISK);
+	}
+			
+	void Chunk::remapped(void* ptr)
+	{
+		setData((Uint8*)ptr,Chunk::MMAPPED);
+	}
 }

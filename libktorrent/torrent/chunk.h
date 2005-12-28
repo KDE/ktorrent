@@ -21,6 +21,7 @@
 #define BTCHUNK_H
 
 #include <util/constants.h>
+#include <util/cachefile.h>
 
 namespace bt
 {
@@ -37,7 +38,7 @@ namespace bt
 	 * - ON_DISK : On disk
 	 * - NOT_DOWNLOADED : It hasn't been dowloaded yet, and there is no buffer allocated
 	 */
-	class Chunk
+	class Chunk : public MMappeable
 	{
 	public:
 		Chunk(unsigned int index,Uint32 size);
@@ -101,6 +102,9 @@ namespace bt
 
 		/// In/Exclude chunk
 		void setExclude(bool yes);
+		
+		virtual void unmapped(bool remap_intended);
+		virtual void remapped(void* ptr);
 	private:
 		Status status;
 		Uint32 index;

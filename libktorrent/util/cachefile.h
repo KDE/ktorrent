@@ -26,6 +26,28 @@
 
 namespace bt
 {
+	/**
+	 * Interface which classes must implement to be able to map something from a CacheFile
+	 * It will also be used to notify when things get unmapped or remapped
+	*/
+	class MMappeable
+	{
+	public:
+		/**
+		 * When a CacheFile is closed, this will be called on all existing mappings.
+		 * @param fd The CacheFile
+	 	 * @param remap_intended A remap will happen
+		 */
+		virtual void unmapped(bool remap_intended) = 0;
+		
+		/**
+		 * When a previously unmapped thing is remapped again. This happens
+		 * if the CacheFile is moved on disk.
+		 * @param fd The CacheFile
+		 * @param ptr The new pointer to the mapping
+		 */
+		virtual void remapped(void* ptr) = 0;
+	};
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
@@ -34,10 +56,6 @@ namespace bt
 	*/
 	class CacheFile
 	{
-		int fd;
-		Uint64 max_size,file_size;
-		QString path;
-		QMap<void*,Uint32> offsetted_mappings; // mappings where offset wasn't a multiple of 4K
 	public:
 		CacheFile();
 		virtual ~CacheFile();
@@ -58,12 +76,13 @@ namespace bt
 		/**
 		 * Map a part of the file into memory, will expand the file
 		 * if it is to small, but will not go past the limit set in open.
+		 * @param thing The thing that wishes to map the mmapping
 		 * @param off Offset into the file
 		 * @param size Size of the region to map
 		 * @param mode How the region will be mapped
 		 * @return A ptr to the mmaped region, or 0 if something goes wrong
 		 */
-		void* map(Uint64 off,Uint32 size,Mode mode);
+		void* map(MMappeable* thing,Uint64 off,Uint32 size,Mode mode);
 		
 		/**
 		 * Unmap a previously mapped region.
@@ -73,9 +92,10 @@ namespace bt
 		void unmap(void* ptr,Uint32 size);
 		
 		/**
-		 * Close the file, everything must be unmapped.
+		 * Close the file, everything will be unmapped.
+		 * @param to_be_reopened Indicates if the close is temporarely (i.e. it will be reopened)
 		 */
-		void close();
+		void close(bool to_be_reopened);
 		
 		/**
 		 * Read from the file.
@@ -95,6 +115,21 @@ namespace bt
 		
 	private:
 		void growFile(Uint64 to_write);
+		
+	private:
+		int fd;
+		Uint64 max_size,file_size;
+		QString path;
+		struct Entry
+		{
+			MMappeable* thing;
+			void* ptr;
+			Uint32 size;
+			Uint64 offset;
+			Uint32 diff;
+			Mode mode;
+		};
+		QMap<void*,Entry> mappings; // mappings where offset wasn't a multiple of 4K
 	};
 
 }
