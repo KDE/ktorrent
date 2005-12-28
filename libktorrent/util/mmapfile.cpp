@@ -67,19 +67,27 @@ namespace bt
 		switch (mode)
 		{
 			case READ:
-				flag = O_RDONLY | O_LARGEFILE;
+				flag = O_RDONLY;
 				mmap_flag = PROT_READ;
 				break;
 			case WRITE:
-				flag = O_WRONLY | O_CREAT | O_LARGEFILE;
+				flag = O_WRONLY | O_CREAT;
 				mmap_flag = PROT_WRITE;
 				break;
 			case RW:
-				flag = O_RDWR | O_CREAT | O_LARGEFILE;
+				flag = O_RDWR | O_CREAT;
 				mmap_flag = PROT_READ|PROT_WRITE;
 				break;
 		}
-		
+
+		// Not all systems have O_LARGEFILE as an explicit flag
+		// (for instance, FreeBSD. Solaris does, but only if
+		// _LARGEFILE_SOURCE is defined in the compile).
+		// So OR it in if it is defined.
+#ifdef O_LARGEFILE
+		flag |= O_LARGEFILE;
+#endif
+
 		// open the file
 		fd = ::open(QFile::encodeName(file) , flag);//(int)flag);
 		if (fd == -1)
