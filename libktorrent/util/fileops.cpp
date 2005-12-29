@@ -31,13 +31,13 @@ namespace bt
 {
 	extern Log& Out();
 
-	void MakeDir(const KURL & dir,bool nothrow)
+	void MakeDir(const QString & dir,bool nothrow)
 	{
-		if (!KIO::NetAccess::mkdir(dir,0,0755))
+		if (!KIO::NetAccess::mkdir(KURL::fromPathOrURL(dir),0,0755))
 		{
 			if (!nothrow)
 				throw Error(i18n("Cannot create directory %1: %2")
-					.arg(dir.prettyURL()).arg(KIO::NetAccess::lastErrorString()));
+					.arg(dir).arg(KIO::NetAccess::lastErrorString()));
 			else
 			{
 				Out() << "Error : Cannot create directory " << dir << " : "
@@ -61,49 +61,49 @@ namespace bt
 		}
 	}
 
-	void Move(const KURL & src,const KURL & dst,bool nothrow)
+	void Move(const QString & src,const QString & dst,bool nothrow)
 	{
-		if (!KIO::NetAccess::move(src,dst,0))
+		if (!KIO::NetAccess::move(KURL::fromPathOrURL(src),KURL::fromPathOrURL(dst),0))
 		{
 			if (!nothrow)
 				throw Error(i18n("Cannot move %1 to %2: %3")
-					.arg(src.prettyURL()).arg(dst.prettyURL())
+					.arg(src).arg(dst)
 					.arg(KIO::NetAccess::lastErrorString()));
 			else
 				Out() << QString("Error : Cannot move %1 to %2: %3")
-						.arg(src.prettyURL()).arg(dst.prettyURL())
+						.arg(src).arg(dst)
 						.arg(KIO::NetAccess::lastErrorString()) << endl;
 		
 		}
 	}
 
-	void CopyFile(const KURL & src,const KURL & dst,bool nothrow)
+	void CopyFile(const QString & src,const QString & dst,bool nothrow)
 	{
-		if (!KIO::NetAccess::file_copy(src,dst))
+		if (!KIO::NetAccess::file_copy(KURL::fromPathOrURL(src),KURL::fromPathOrURL(dst)))
 		{
 			if (!nothrow)
 				throw Error(i18n("Cannot copy %1 to %2: %3")
-						.arg(src.prettyURL()).arg(dst.prettyURL())
+						.arg(src).arg(dst)
 						.arg(KIO::NetAccess::lastErrorString()));
 			else
 				Out() << QString("Error : Cannot copy %1 to %2: %3")
-						.arg(src.prettyURL()).arg(dst.prettyURL())
+						.arg(src).arg(dst)
 						.arg(KIO::NetAccess::lastErrorString()) << endl;
 	
 		}
 	}
 
-	bool Exists(const KURL & url)
+	bool Exists(const QString & url)
 	{
-		return KIO::NetAccess::exists(url,false,0);
+		return KIO::NetAccess::exists(KURL::fromPathOrURL(url),false,0);
 	}
 
-	void Delete(const KURL & url,bool nothrow)
+	void Delete(const QString & url,bool nothrow)
 	{
-		if (!KIO::NetAccess::del(url,0))
+		if (!KIO::NetAccess::del(KURL::fromPathOrURL(url),0))
 		{
 			QString err = i18n("Cannot delete %1: %2")
-					.arg(url.prettyURL())
+					.arg(url)
 					.arg(KIO::NetAccess::lastErrorString());
 			if (!nothrow)
 				throw Error(err);

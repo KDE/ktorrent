@@ -117,7 +117,7 @@ namespace kt
 			writeIndex(tor_dir + "index",dc->getDownloaded());
 			
 			// copy the torrent file
-			bt::CopyFile(tor_url,tor_dir + "torrent");
+			bt::CopyFile(tor_url.prettyURL(),tor_dir + "torrent");
 			
 			// make the cache
 			if (tor.isMultiFile())
