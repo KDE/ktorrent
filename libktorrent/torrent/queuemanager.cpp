@@ -240,7 +240,7 @@ namespace bt
 			TorrentInterface* tc = *it;
 			const TorrentStats & s = tc->getStats();
 			
-			if(s.running && !s.completed)
+			if(s.running && !s.completed && s.autostart)
 				stop(tc);
 			
 			++it;
@@ -253,7 +253,7 @@ namespace bt
 			TorrentInterface* tc = *it;
 			const TorrentStats & s = tc->getStats();
 			
-			if(!s.running && !s.completed)
+			if(!s.running && !s.completed && s.autostart)
 				start(tc);
 			
 			++it;
