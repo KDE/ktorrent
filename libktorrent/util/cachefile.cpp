@@ -33,6 +33,16 @@
 #include "error.h"
 #include "cachefile.h"
 
+// Not all systems have an O_LARGEFILE - Solaris depending
+// on command-line defines, FreeBSD never - so in those cases,
+// make it a zero bitmask. As long as it's only OR'ed into
+// open(2) flags, that's fine.
+//
+#ifndef O_LARGEFILE
+#define O_LARGEFILE (0)
+#endif
+
+
 namespace bt
 {
 
