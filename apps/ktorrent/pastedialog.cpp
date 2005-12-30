@@ -20,7 +20,8 @@
  ***************************************************************************/
 #include "pastedialog.h"
 #include "ktorrentcore.h"
-
+#include <kpushbutton.h>
+#include <kstdguiitem.h>
 #include <qclipboard.h>
 #include <qapplication.h>
 #include <kurl.h>
@@ -38,6 +39,8 @@ PasteDialog::PasteDialog(KTorrentCore* core, QWidget *parent, const char *name)
 	if ( url.isValid() )
 		m_url->setText(url.url());
 	
+	btnOK->setGuiItem(KStdGuiItem::ok());
+	btnCancel->setGuiItem(KStdGuiItem::cancel());
 }
 
 void PasteDialog::btnOK_clicked()

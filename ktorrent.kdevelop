@@ -212,7 +212,6 @@
   </substmap>
   <kdevcppsupport>
     <references>
-      <pcs>Qt</pcs>
       <pcs>KDElibs</pcs>
     </references>
     <codecompletion>
