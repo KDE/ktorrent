@@ -32,7 +32,7 @@ namespace bt
 		int r[12];
 		for (int i = 0;i < 12;i++)
 			r[i] = rand() % 10;
-		QString peer_id = "-KT12DV-";
+		QString peer_id = "-KT12R1-";
 		for (int i = 0;i < 12;i++)
 			peer_id += QString("%1").arg(r[i]);
 		memcpy(id,peer_id.ascii(),20);
