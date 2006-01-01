@@ -19,10 +19,10 @@ If something is done put # in front of it.
 
 # 6) Add option to paste URL to .torrent files
 
-7) Implement IP blocking framework. Build our own (detect fake data and block
-peers) or use existing lists (e.g. openmedia.info). I had several peers (IP's
-were listed in blocking list from openmedia) and I was constantly having high
-dl rates from these clients but no actuall data was downloaded.
+# 7) Implement IP blocking framework. Build our own (detect fake data and block
+# peers) or use existing lists (e.g. openmedia.info). I had several peers (IP's
+# were listed in blocking list from openmedia) and I was constantly having high
+#dl rates from these clients but no actuall data was downloaded.
 
 8) Make and show more statistics. (e.g. uptime, average transfer rates,
 connected peers, etc...) (UI clutter needs to be avoided)
@@ -54,12 +54,14 @@ torrents we are leeching from the ones we are seeding.
 
 18) Add properties dialog to show announce url
 
-19) http://bugs.kde.org/show_bug.cgi?id=111260 (Initial tests show ktorrent handles this situation well)
-Close this bug !!!!!!!!!!!
+# 19) http://bugs.kde.org/show_bug.cgi?id=111260 (Initial tests show ktorrent handles this situation well)
+# Close this bug !!!!!!!!!!!
 
 20) letting the user configure columns in listview (maybe add share ratio column)
 
 # 21) UPnP Plugin
+
+22) Add scheduled download feature
 
 2.0 :
 -----
