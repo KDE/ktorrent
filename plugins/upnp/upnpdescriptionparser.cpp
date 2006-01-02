@@ -19,6 +19,9 @@
  ***************************************************************************/
 #include <qxml.h>
 #include <qvaluestack.h>
+#include <kglobal.h>
+#include <kstandarddirs.h>
+#include <util/fileops.h>
 #include "upnprouter.h"
 #include "upnpdescriptionparser.h"
 
@@ -71,7 +74,12 @@ namespace kt
 		QXmlSimpleReader reader;
 
 		reader.setContentHandler(&chandler);
-		return reader.parse(&input,false);
+		if (!reader.parse(&input,false))
+		{
+			bt::CopyFile(file,KGlobal::dirs()->saveLocation("data","ktorrent") + "upnp_failure",true);
+			return false;
+		}
+		return true;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////

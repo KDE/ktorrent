@@ -88,9 +88,12 @@ namespace kt
 				// get rid of it
 				delete r;
 			}
-			// add it to the list and emit the signal
-			routers.insert(r->getServer(),r);
-			discovered(r);
+			else
+			{
+				// add it to the list and emit the signal
+				routers.insert(r->getServer(),r);
+				discovered(r);
+			}
 		}
 	}
 	
