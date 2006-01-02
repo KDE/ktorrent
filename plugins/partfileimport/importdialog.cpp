@@ -132,13 +132,14 @@ namespace kt
 				{
 					linkTorFile(cache_dir,data_url,tor.getFile(i).getPath());
 				}
+				
 			}
 			else
 			{
 				// single file, just symlink the data_url to tor_dir/cache
 				bt::SymLink(data_url.path(),tor_dir + "cache");
 			}
-			
+			saveStats(tor_dir + "stats",data_url);
 			// everything went OK, so load the whole shabang and start downloading
 			core->loadExistingTorrent(tor_dir);
 		}
@@ -204,6 +205,22 @@ namespace kt
 			bt::Touch(dfile);
 		// and make a symlink in the cache to it
 		bt::SymLink(dfile,cache_dir + fpath);
+	}
+	
+	void ImportDialog::saveStats(const QString & stats_file,const KURL & data_url)
+	{
+		QFile fptr(stats_file);
+		if (!fptr.open(IO_WriteOnly))
+		{
+			Out() << "Warning : can't create stats file" << endl;
+			return;
+		}
+
+		QTextStream out(&fptr);
+		out << "OUTPUTDIR=" << data_url.path() << ::endl;
+		out << "UPLOADED=0" << ::endl;
+		out << "RUNNING_TIME_DL=0" << ::endl;
+		out << "RUNNING_TIME_UL=0" << ::endl;
 	}
 }
 
