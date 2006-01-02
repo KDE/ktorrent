@@ -65,16 +65,21 @@ namespace kt
 
 	bool UPnPDescriptionParser::parse(const QString & file,UPnPRouter* router)
 	{
-		QFile fptr(file);
-		if (!fptr.open(IO_ReadOnly))
-			return false;
+		bool ret = true;
+		{
+			QFile fptr(file);
+			if (!fptr.open(IO_ReadOnly))
+				return false;
 
-		QXmlInputSource input(&fptr);
-		XMLContentHandler chandler(router);
-		QXmlSimpleReader reader;
+			QXmlInputSource input(&fptr);
+			XMLContentHandler chandler(router);
+			QXmlSimpleReader reader;
 
-		reader.setContentHandler(&chandler);
-		if (!reader.parse(&input,false))
+			reader.setContentHandler(&chandler);
+			ret = reader.parse(&input,false);
+		}
+		
+		if (!ret)
 		{
 			bt::CopyFile(file,KGlobal::dirs()->saveLocation("data","ktorrent") + "upnp_failure",true);
 			return false;
