@@ -297,6 +297,7 @@ namespace bt
 		catch (...)
 		{
 			delete tor;
+			tor = 0;
 			throw Error(i18n("An error occured whilst loading the torrent,"
 					" the torrent is probably corrupt or it isn't a torrent file"));
 		}
