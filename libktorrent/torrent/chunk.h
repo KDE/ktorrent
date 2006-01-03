@@ -49,7 +49,7 @@ namespace bt
 			MMAPPED,
 			BUFFERED,
 			ON_DISK,
-			NOT_DOWNLOADED,
+			NOT_DOWNLOADED
 		};
 
 		/// Get the chunks status.
