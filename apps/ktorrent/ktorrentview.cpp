@@ -92,6 +92,7 @@ KTorrentView::KTorrentView(QWidget *parent)
 KTorrentView::~KTorrentView()
 {
 	saveLayout(KGlobal::config(),"KTorrentView");
+	KGlobal::config()->sync();
 }
 
 void KTorrentView::setShowDebugView(bool yes)

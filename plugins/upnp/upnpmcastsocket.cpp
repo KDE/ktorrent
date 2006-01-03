@@ -82,7 +82,8 @@ namespace kt
 		if (r)
 		{
 			// download it's xml file
-			if (!r->downloadXMLFile())
+			bool ret = r->downloadXMLFile();
+			if (!ret)
 			{
 				// we couldn't download and parse the XML file so 
 				// get rid of it

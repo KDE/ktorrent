@@ -81,6 +81,7 @@ namespace kt
 			cd_view->saveLayout(KGlobal::config(),"ChunkDownloadView");
 		if (peer_view)
 			peer_view->saveLayout(KGlobal::config(),"PeerView");
+		KGlobal::config()->sync();
 		delete monitor;
 	}
 	
