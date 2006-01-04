@@ -513,7 +513,6 @@ namespace bt
 
 			// first and last chunk may be part of multiple files
 			// so we can't just exclude them
-			
 			QValueList<Uint32> files;
 
 			// get list of files where first chunk lies in
@@ -550,7 +549,11 @@ namespace bt
 				return;
 			
 			exclude(first,last);
+			
+			
 		}
+		// alert the cache 
+		cache->downloadStatusChanged(tf,download);
 	}
 	
 	bool ChunkManager::prepareChunk(Chunk* c)

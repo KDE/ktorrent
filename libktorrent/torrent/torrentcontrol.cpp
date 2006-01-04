@@ -408,6 +408,7 @@ namespace bt
 		
 		loadStats();
 		updateStats();
+		saveStats();
 	}
 
 	void TorrentControl::trackerResponse()

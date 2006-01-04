@@ -43,13 +43,6 @@ namespace bt
 		cache_dir = tmpdir + "cache/";
 		output_dir = datadir + tor.getNameSuggestion() + bt::DirSeparator();
 		files.setAutoDelete(true);
-		for (Uint32 i = 0;i < tor.getNumFiles();i++)
-		{
-			TorrentFile & tf = tor.getFile(i);
-			connect(&tf,SIGNAL(downloadStatusChanged( TorrentFile*, bool )),
-					 this,SLOT(downloadStatusChanged( TorrentFile*, bool )));
-		}
-		
 	}
 
 
@@ -364,4 +357,3 @@ namespace bt
 	}
 }
 
-#include "multifilecache.moc"

@@ -225,8 +225,8 @@ namespace bt
 		while (i != mappings.end())
 		{
 			CacheFile::Entry & e = i.data();
-			if (e.offset > 0)
-				munmap((char*)e.ptr - e.offset,e.size);
+			if (e.diff > 0)
+				munmap((char*)e.ptr - e.diff,e.size);
 			else
 				munmap(e.ptr,e.size);
 			e.thing->unmapped(to_be_reopened);

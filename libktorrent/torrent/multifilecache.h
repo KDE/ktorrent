@@ -20,7 +20,7 @@
 #ifndef BTMULTIFILECACHE_H
 #define BTMULTIFILECACHE_H
 
-#include <qobject.h>
+
 #include <util/ptrmap.h>
 #include "cache.h"
 
@@ -35,9 +35,8 @@ namespace bt
 	 * This class manages a multi file torrent cache. Everything gets stored in the
 	 * correct files immediatly. 
 	 */
-	class MultiFileCache : public QObject, public Cache
+	class MultiFileCache : public Cache
 	{
-		Q_OBJECT
 		QString cache_dir,output_dir;
 		PtrMap<Uint32,CacheFile> files;
 	public:
@@ -53,9 +52,7 @@ namespace bt
 		virtual void open();
 	private:
 		void touch(const QString fpath,bool dnd);
-		
-	private slots:
-		void downloadStatusChanged(TorrentFile*, bool);
+		virtual void downloadStatusChanged(TorrentFile*, bool);
 	};
 
 }

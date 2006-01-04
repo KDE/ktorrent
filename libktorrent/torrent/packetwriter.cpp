@@ -61,6 +61,10 @@ namespace bt
 #ifdef DEBUG_LOG_UPLOAD
 		ulog << p.debugString() << endl;
 #endif
+		// safety check
+		if (p.getDataLength() > 0 && !p.getData())
+			return;
+			
 	//	Out() << "Sending " << p.getHeaderLength() << " " << p.getDataLength() << endl;
 		peer->sendData(p.getHeader(),p.getHeaderLength());
 		if (p.getDataLength() > 0)

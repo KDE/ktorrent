@@ -23,6 +23,7 @@
 namespace bt
 {
 	class Torrent;
+	class TorrentFile;
 	class Chunk;
 
 	/**
@@ -84,6 +85,9 @@ namespace bt
 		 * Open the cache file(s)
 		 */
 		virtual void open() = 0;
+		
+		/// Does nothing, can be overridden to be alerted of download status changes of a TorrentFile
+		virtual void downloadStatusChanged(TorrentFile*, bool) {};
 	};
 
 }
