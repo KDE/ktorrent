@@ -27,6 +27,7 @@
 #include <kmessagebox.h>
 #include <interfaces/torrentinterface.h>
 #include <torrent/globals.h>
+#include <util/log.h>
 #include <kmessagebox.h>
 #include "ktorrentview.h"
 #include "ktorrentviewitem.h"
@@ -91,6 +92,7 @@ KTorrentView::KTorrentView(QWidget *parent)
 
 KTorrentView::~KTorrentView()
 {
+	Out() << "USE THE FORCE KTORRENTVIEW !!!!" << endl;
 	saveLayout(KGlobal::config(),"KTorrentView");
 	KGlobal::config()->sync();
 }
