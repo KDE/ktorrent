@@ -158,8 +158,7 @@ namespace kt
 					curr_data[0] == 'd' &&
 					curr_data[curr_data.size()-1] == 'e';
 			
-			if (is_bencoded_data || mime_type == "application/x-bittorrent" ||
-					curr_url.prettyURL().endsWith(".torrent"))
+			if (is_bencoded_data || mime_type == "application/x-bittorrent")
 			{
 				int ret = KMessageBox::questionYesNoCancel(0,
 						i18n("Do you want to download or save the torrent?"),
