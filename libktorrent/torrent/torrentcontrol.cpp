@@ -284,8 +284,8 @@ namespace bt
 		if (!datadir.endsWith(DirSeparator()))
 			datadir += DirSeparator();
 
-		outputdir = ddir;
-		if (!outputdir.isNull() && !outputdir.endsWith(DirSeparator()))
+		outputdir = ddir.stripWhiteSpace();
+		if (outputdir.length() > 0 && !outputdir.endsWith(DirSeparator()))
 			outputdir += DirSeparator();
 
 		// first load the torrent file
@@ -317,7 +317,7 @@ namespace bt
 		stats.total_bytes = tor->getFileLength();
 		
 		// load stats if outputdir is null
-		if (outputdir.isNull())
+		if (outputdir.isNull() || outputdir.length() == 0)
 			loadOutputDir();
 		
 		// copy torrent in temp dir
@@ -357,10 +357,14 @@ namespace bt
 		connect(tracker,SIGNAL(error()),this,SLOT(trackerResponseError()));
 		connect(tracker,SIGNAL(dataReady()),this,SLOT(trackerResponse()));
 
-		
+
 		// Create chunkmanager, load the index file if it exists
 		// else create all the necesarry files
 		cman = new ChunkManager(*tor,datadir,outputdir);
+		// outputdir is null, see if the cache has figured out what it is
+		if (outputdir.length() == 0)
+			outputdir = cman->getDataDir();
+		
 		connect(cman,SIGNAL(updateStats()),this,SLOT(updateStats()));
 		if (bt::Exists(datadir + "index"))
 			cman->loadIndexFile();
@@ -595,7 +599,9 @@ namespace bt
 		}
 
 		QTextStream out(&fptr);
-		out << "OUTPUTDIR=" << outputdir << ::endl;
+		out << "OUTPUTDIR=" << cman->getDataDir() << ::endl;
+		if (cman->getDataDir() != outputdir)
+			outputdir = cman->getDataDir();
 		out << "UPLOADED=" << QString::number(up->bytesUploaded()) << ::endl;
 		if (stats.running)
 		{
@@ -653,7 +659,7 @@ namespace bt
 			}
 			else if (line.startsWith("OUTPUTDIR="))
 			{
-				outputdir = line.mid(10);
+				outputdir = line.mid(10).stripWhiteSpace();
 			}
 		}
 	}
@@ -670,7 +676,9 @@ namespace bt
 			QString line = in.readLine();
 			if (line.startsWith("OUTPUTDIR="))
 			{
-				outputdir = line.mid(10);
+				outputdir = line.mid(10).stripWhiteSpace();
+				if (outputdir.length() > 0 && !outputdir.endsWith(bt::DirSeparator()))
+					outputdir += bt::DirSeparator();
 				return;
 			}
 		}

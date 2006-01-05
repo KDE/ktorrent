@@ -100,6 +100,11 @@ namespace bt
 	{
 		delete cache;
 	}
+	
+	QString ChunkManager::getDataDir() const
+	{
+		return cache->getDataDir();
+	}
 
 	void ChunkManager::changeDataDir(const QString & data_dir)
 	{

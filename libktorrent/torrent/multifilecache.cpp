@@ -40,14 +40,44 @@ namespace bt
 
 	MultiFileCache::MultiFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir) : Cache(tor, tmpdir,datadir)
 	{
-		cache_dir = tmpdir + "cache/";
-		output_dir = datadir + tor.getNameSuggestion() + bt::DirSeparator();
+		cache_dir = tmpdir + "cache" + bt::DirSeparator();
+		if (datadir.length() == 0)
+			this->datadir = guessDataDir();
+		output_dir = this->datadir + tor.getNameSuggestion() + bt::DirSeparator();
 		files.setAutoDelete(true);
 	}
 
 
 	MultiFileCache::~MultiFileCache()
 	{}
+	
+	QString MultiFileCache::guessDataDir()
+	{
+		for (Uint32 i = 0;i < tor.getNumFiles();i++)
+		{
+			TorrentFile & tf = tor.getFile(i);
+			if (tf.doNotDownload())
+				continue;
+			
+			QString p = cache_dir + tf.getPath();
+			QFileInfo fi(p);
+			if (!fi.isSymLink())
+				continue;
+			
+			QString dst = fi.readLink();
+			QString tmp = tor.getNameSuggestion() + bt::DirSeparator() + tf.getPath();
+			dst = dst.left(dst.length() - tmp.length());
+			if (dst.length() == 0)
+				continue;
+			
+			if (!dst.endsWith(bt::DirSeparator()))
+				dst += bt::DirSeparator();
+			Out() << "Guessed outputdir to be " << dst << endl;
+			return dst;
+		}
+		
+		return QString::null;
+	}
 
 	void MultiFileCache::close()
 	{

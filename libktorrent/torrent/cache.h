@@ -43,6 +43,9 @@ namespace bt
 		Cache(Torrent & tor,const QString & tmpdir,const QString & datadir);
 		virtual ~Cache();
 
+		/// Get the datadir
+		QString getDataDir() const {return datadir;}
+		
 		/**
 		 * Changes the tmp dir. All data files should allready been moved.
 		 * This just modifies the tmpdir variable.

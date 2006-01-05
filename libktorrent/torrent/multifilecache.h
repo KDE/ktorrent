@@ -53,6 +53,7 @@ namespace bt
 	private:
 		void touch(const QString fpath,bool dnd);
 		virtual void downloadStatusChanged(TorrentFile*, bool);
+		QString guessDataDir();
 	};
 
 }
