@@ -292,7 +292,7 @@ void KTorrent::setupActions()
 	actionCollection(), "paste_url");
 	
 	m_queuemgr = new KAction(
-			i18n("to open Queue Manager", "Open QueueManager..."), "upnp",0,this, SLOT(queueManagerShow()),
+			i18n("to open Queue Manager", "Open QueueManager..."), "ktqueuemanager",0,this, SLOT(queueManagerShow()),
 	actionCollection(), "Queue manager");
 	
 	createGUI();
@@ -399,7 +399,8 @@ void KTorrent::stopDownload()
 	TorrentInterface* tc = m_view->getCurrentTC();
 	if (tc && tc->getStats().running)
 	{
-		tc->stop(true);
+		//tc->stop(true);
+		m_core->stop(tc, true);
 		currentChanged(tc);
 	}
 }

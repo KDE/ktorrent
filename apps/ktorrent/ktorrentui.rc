@@ -12,6 +12,8 @@
 	<Separator/>
 	<Action name="Start all"/>
 	<Action name="Stop all"/>
+	<Separator/>
+	<Action name="Queue manager"/>
   </Menu>
 </MenuBar>
 

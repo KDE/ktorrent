@@ -139,8 +139,8 @@ void KTorrentCore::load(const QString & target,const QString & dir)
 			dlg.execute(tc);
 		}
 		// 		start(tc);
-		qman->start(tc);
 		torrentAdded(tc);
+		qman->torrentAdded(tc);
 	}
 	catch (bt::Error & err)
 	{
@@ -184,9 +184,9 @@ void KTorrentCore::start(kt::TorrentInterface* tc)
 	qman->start(tc);
 }
 
-void KTorrentCore::stop(TorrentInterface* tc)
+void KTorrentCore::stop(TorrentInterface* tc, bool user)
 {
-	qman->stop(tc);
+	qman->stop(tc, user);
 }
 
 int KTorrentCore::getNumRunning() const
@@ -268,9 +268,7 @@ void KTorrentCore::remove(TorrentInterface* tc,bool data_to)
 		QString data_dir = tc->getDataDir() + s.torrent_name;
 		
 		torrentRemoved(tc);
-		// 		downloads.remove(tc);
-		qman->remove(tc);
-		
+		qman->torrentRemoved(tc);
 	
 		try
 		{

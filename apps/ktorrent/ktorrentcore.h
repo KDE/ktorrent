@@ -133,7 +133,7 @@ public:
 	 * Stop a torrent, may start another download if it hasn't been started.
 	 * @param tc The TorrentInterface
 	 */
-	void stop(kt::TorrentInterface* tc);
+	void stop(kt::TorrentInterface* tc, bool user = false);
 
 	/**
 	 * Make a torrent file

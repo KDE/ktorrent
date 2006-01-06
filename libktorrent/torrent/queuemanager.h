@@ -54,7 +54,7 @@ namespace bt
 			void clear();
 			
 			void start(kt::TorrentInterface* tc);
-			void stop(kt::TorrentInterface* tc);
+			void stop(kt::TorrentInterface* tc, bool user = false);
 			
 			void stopall();
 			void startall();
@@ -88,6 +88,8 @@ namespace bt
 		
 		public slots:
 			void torrentFinished(kt::TorrentInterface* tc);
+			void torrentAdded(kt::TorrentInterface* tc);
+			void torrentRemoved(kt::TorrentInterface* tc);
 			
 		private:
 			bt::QueuePtrList downloads;

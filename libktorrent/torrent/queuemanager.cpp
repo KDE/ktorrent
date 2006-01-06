@@ -90,14 +90,14 @@ namespace bt
 		}
 	}
 
-	void QueueManager::stop(kt::TorrentInterface* tc)
+	void QueueManager::stop(kt::TorrentInterface* tc, bool user)
 	{
 		const TorrentStats & s = tc->getStats();
 		if (s.started && s.running)
 		{
 			try
 			{
-				tc->stop(false);
+				tc->stop(user);
 			}
 			catch (bt::Error & err)
 			{
@@ -107,6 +107,8 @@ namespace bt
 				KMessageBox::error(0,msg,i18n("Error"));
 			}
 		}
+		
+		orderQueue();
 	}
 	
 	void QueueManager::startall()
@@ -128,6 +130,8 @@ namespace bt
 			kt::TorrentInterface* tc = *i;
 			if (tc->getStats().running)
 				tc->stop(true);
+			else //if torrent is not running but it is queued we need to make it user controlled
+				tc->setPriority(0); 
 			i++;
 		}
 	}
@@ -247,8 +251,30 @@ namespace bt
 	
 	void QueueManager::torrentFinished(kt::TorrentInterface* tc)
 	{
-		const TorrentStats & s = tc->getStats();
-		int st = s.status;//status is still KT::DOWNLOADING!
+		orderQueue();
+	}
+	
+	void QueueManager::torrentAdded(kt::TorrentInterface* tc)
+	{
+		QPtrList<TorrentInterface>::const_iterator it = downloads.begin();
+		while (it != downloads.end())
+		{
+			TorrentInterface* _tc = *it;
+			int p = _tc->getPriority();
+			if(p==0)
+				break;
+			else
+				_tc->setPriority(++p);
+			
+			++it;
+		}
+		tc->setPriority(1);
+		orderQueue();
+	}
+	
+	void QueueManager::torrentRemoved(kt::TorrentInterface* tc)
+	{
+		remove(tc);
 		orderQueue();
 	}
 	

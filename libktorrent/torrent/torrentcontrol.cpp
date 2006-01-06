@@ -254,7 +254,7 @@ namespace bt
 			down->clearDownloads();
 			if (user)
 			{
-				//bt::Touch(datadir + "stopped",true);
+				//make this torrent user controlled
 				setPriority(0);
 			}
 		}
