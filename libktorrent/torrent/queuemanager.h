@@ -85,6 +85,9 @@ namespace bt
 			 * Use this when torrent priorities get changed
 			 */
 			void orderQueue();
+		
+		public slots:
+			void torrentFinished(kt::TorrentInterface* tc);
 			
 		private:
 			bt::QueuePtrList downloads;

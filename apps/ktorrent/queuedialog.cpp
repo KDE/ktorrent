@@ -26,6 +26,8 @@
 #include <qmessagebox.h>
 #include <qptrlist.h>
 
+#include <klocale.h>
+
 using namespace bt;
 using namespace kt;
 
@@ -50,14 +52,29 @@ void QueueItem::setPriority(int p)
 	torrentPriority = p;
 
 	if(p==0)
-		setText(1, QString("No"));
+		setText(1, i18n("User"));
 	else
-		setText(1, QString("Yes"));
+		setText(1, i18n("Queue Manager"));
 }
 
 void QueueItem::setTorrentPriority(int p)
 {
 	tc->setPriority(p);
+}
+
+void QueueItem::paintCell(QPainter* p,const QColorGroup & cg,int column,int width,int align)
+{
+	QColorGroup colorGrp( cg );
+	QColor txt = colorGrp.text();
+
+	//if (column == 1)
+	if(torrentPriority == 0)
+		colorGrp.setColor(QColorGroup::Text, Qt::gray);
+	else
+		colorGrp.setColor(QColorGroup::Text, txt);
+
+
+	QListViewItem::paintCell(p,colorGrp,column,width,align);
 }
 
 QueueDialog::QueueDialog(bt::QueueManager* qm, QWidget *parent, const char *name)
@@ -192,4 +209,5 @@ void QueueDialog::btnApply_clicked()
 {
 	writeQueue();
 }
+
 

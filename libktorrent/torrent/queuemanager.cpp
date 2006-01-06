@@ -36,8 +36,7 @@ using namespace kt;
 namespace bt
 {
 
-	QueueManager::QueueManager()
-			: QObject()
+	QueueManager::QueueManager() : QObject()
 	{
 		downloads.setAutoDelete(true);
 		max_downloads = 0;
@@ -72,7 +71,7 @@ namespace bt
 	{
 		const TorrentStats & s = tc->getStats();
 		bool start_tc = (s.bytes_left == 0 && (keep_seeding && ( max_seeds == 0 || getNumRunning(false, true) < max_seeds) ) ||
-		                (s.bytes_left != 0 &&
+	    	            (s.bytes_left != 0 &&
 				(max_downloads == 0 || getNumRunning(true) < max_downloads)));
 		if (start_tc)
 		{
@@ -135,21 +134,6 @@ namespace bt
 	
 	void QueueManager::startNext()
 	{
-/*		int num_running = getNumRunning(true);
-		if(num_running > max_downloads)
-			return;
-		
-		QPtrList<kt::TorrentInterface>::iterator it = downloads.begin();
-		for(int i = 0 ; it!=downloads.end() && i < num_running ; ++i)
-		{
-			++it;
-		}
-		if(it!=downloads.end())
-		{
-			kt::TorrentInterface* tc = *it;
-			if(tc->getPriority() != 0)
-				start(tc);
-	}*/
 		orderQueue();
 	}
 
@@ -260,6 +244,13 @@ namespace bt
 		}
 	}
 	
+	
+	void QueueManager::torrentFinished(kt::TorrentInterface* tc)
+	{
+		const TorrentStats & s = tc->getStats();
+		int st = s.status;//status is still KT::DOWNLOADING!
+		orderQueue();
+	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
 

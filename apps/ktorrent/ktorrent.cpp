@@ -292,7 +292,7 @@ void KTorrent::setupActions()
 	actionCollection(), "paste_url");
 	
 	m_queuemgr = new KAction(
-			i18n("to open Queue Manager", "Open QueueManager..."), "ktstart",0,this, SLOT(queueManagerShow()),
+			i18n("to open Queue Manager", "Open QueueManager..."), "upnp",0,this, SLOT(queueManagerShow()),
 	actionCollection(), "Queue manager");
 	
 	createGUI();

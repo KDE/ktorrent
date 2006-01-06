@@ -40,6 +40,7 @@ class QueueItem: public QListViewItem
 		
 	private:
 		//void updatePriorities(QueueItem* to, bool from_end, int val);
+		void paintCell(QPainter* p,const QColorGroup & cg,int column,int width,int align);
 		
 		kt::TorrentInterface* tc;
 		int torrentPriority;
@@ -57,6 +58,7 @@ class QueueDialog: public QueueDlg
    		virtual void btnDequeue_clicked();
     	virtual void btnEnqueue_clicked();
     	virtual void btnApply_clicked();
+    	
 		
 	private:
 		///Enqueue item curr

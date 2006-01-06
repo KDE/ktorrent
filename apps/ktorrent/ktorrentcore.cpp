@@ -139,7 +139,7 @@ void KTorrentCore::load(const QString & target,const QString & dir)
 			dlg.execute(tc);
 		}
 		// 		start(tc);
-		//qman->start(tc);
+		qman->start(tc);
 		torrentAdded(tc);
 	}
 	catch (bt::Error & err)
@@ -309,7 +309,7 @@ void KTorrentCore::torrentFinished(kt::TorrentInterface* tc)
 		tc->stop(false);
 
 	finished(tc);
-	qman->startNext();
+	qman->torrentFinished(tc);
 }
 
 void KTorrentCore::setKeepSeeding(bool ks)

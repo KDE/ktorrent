@@ -33,7 +33,7 @@
             </column>
             <column>
                 <property name="text">
-                    <string>Enqueued</string>
+                    <string>Controlled by</string>
                 </property>
                 <property name="clickable">
                     <bool>true</bool>
@@ -49,7 +49,7 @@
                 <bool>true</bool>
             </property>
             <property name="resizeMode">
-                <enum>LastColumn</enum>
+                <enum>AllColumns</enum>
             </property>
         </widget>
         <widget class="QLayoutWidget" row="0" column="1">
@@ -84,38 +84,6 @@
                 </widget>
             </vbox>
         </widget>
-        <widget class="QLayoutWidget" row="2" column="1">
-            <property name="name">
-                <cstring>layout3</cstring>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>btnEnqueue</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Enqueue</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+E</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>btnDequeue</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Dequeue</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+D</string>
-                    </property>
-                </widget>
-            </vbox>
-        </widget>
         <spacer row="1" column="1">
             <property name="name">
                 <cstring>spacer2</cstring>
@@ -130,23 +98,6 @@
                 <size>
                     <width>20</width>
                     <height>40</height>
-                </size>
-            </property>
-        </spacer>
-        <spacer row="3" column="1">
-            <property name="name">
-                <cstring>spacer1</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>100</height>
                 </size>
             </property>
         </spacer>
@@ -172,6 +123,55 @@
                 <string>Alt+A</string>
             </property>
         </widget>
+        <widget class="QLayoutWidget" row="2" column="1">
+            <property name="name">
+                <cstring>layout3</cstring>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>btnEnqueue</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;QM controlled</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+Q</string>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>btnDequeue</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;User controlled</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+U</string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+        <spacer row="3" column="1">
+            <property name="name">
+                <cstring>spacer1</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>150</height>
+                </size>
+            </property>
+        </spacer>
     </grid>
 </widget>
 <connections>
@@ -200,16 +200,16 @@
         <slot>btnEnqueue_clicked()</slot>
     </connection>
     <connection>
-        <sender>btnDequeue</sender>
-        <signal>clicked()</signal>
-        <receiver>QueueDlg</receiver>
-        <slot>btnDequeue_clicked()</slot>
-    </connection>
-    <connection>
         <sender>btnApply</sender>
         <signal>clicked()</signal>
         <receiver>QueueDlg</receiver>
         <slot>btnApply_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnDequeue</sender>
+        <signal>clicked()</signal>
+        <receiver>QueueDlg</receiver>
+        <slot>btnDequeue_clicked()</slot>
     </connection>
 </connections>
 <slots>
@@ -219,8 +219,8 @@
     <slot>btnMoveBottom_clicked()</slot>
     <slot>btnClose_clicked()</slot>
     <slot>btnEnqueue_clicked()</slot>
-    <slot>btnDequeue_clicked()</slot>
     <slot>btnApply_clicked()</slot>
+    <slot>btnDequeue_clicked()</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

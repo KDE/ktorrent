@@ -214,11 +214,10 @@ namespace bt
 			Out() << "Warning : " << e.toString() << endl;
 		}
 		
-		
-		
 		loadStats();
 		stats.running = true;
 		stats.started = true;
+		stats.autostart = true;
 		choker_update_timer.update();
 		stats_save_timer.update();
 		tracker->start();
@@ -253,7 +252,10 @@ namespace bt
 			
 			down->clearDownloads();
 			if (user)
-				bt::Touch(datadir + "stopped",true);
+			{
+				//bt::Touch(datadir + "stopped",true);
+				setPriority(0);
+			}
 		}
 		pman->stop();
 		pman->closeAllConnections();
@@ -384,8 +386,6 @@ namespace bt
 		connect(cman,SIGNAL(excluded(Uint32, Uint32 )),
 		        down,SLOT(onExcluded(Uint32, Uint32 )));
 
-		if (bt::Exists(datadir + "stopped"))
-			stats.autostart = false;
 		updateStatusMsg();
 
 		// to get rid of phantom bytes we need to take into account
@@ -609,6 +609,7 @@ namespace bt
 		}
 		
 		out << "PRIORITY=" << priority << ::endl;
+		out << "AUTOSTART=" << stats.autostart << ::endl;
 	}
 
 	void TorrentControl::loadStats()
@@ -665,6 +666,19 @@ namespace bt
 				else
 					Out() << "Warning : Can't get priority out of line : "
 							<< line << endl;
+			}
+			else if (line.startsWith("AUTOSTART="))
+			{
+				bool ok = true;
+				int p = line.mid(10).toInt(&ok);
+				if(ok)
+					stats.autostart = (bool) p;
+				else
+				{
+					Out() << "Warning : Can't get autostart bit out of line : "
+							<< line << endl;
+					stats.autostart = true;
+				}
 			}
 		}
 	}
@@ -828,6 +842,7 @@ namespace bt
 	void TorrentControl::setPriority(int p)
 	{
 		priority = p;
+		stats.autostart = p != 0 ? true : false;
 		saveStats();
 	}
 }
