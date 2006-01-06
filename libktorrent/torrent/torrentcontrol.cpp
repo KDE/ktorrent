@@ -127,6 +127,7 @@ namespace bt
 				pman->killSeeders();
 				QDateTime now = QDateTime::currentDateTime();
 				running_time_dl += time_started_dl.secsTo(now);
+				updateStatusMsg();
 				finished(this);
 			}
 			else if (!stats.completed && comp)
