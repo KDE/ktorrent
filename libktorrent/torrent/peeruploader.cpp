@@ -53,6 +53,7 @@ namespace bt
 		PacketWriter & pw = peer->getPacketWriter();
 		uploaded += pw.update();
 		
+		
 	/*	if (peer->isSnubbed() && !peer->isChoked() &&
 			cman.chunksLeft() != 0 && peer->getID() != opt_unchoked)
 			return 0;

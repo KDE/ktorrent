@@ -299,6 +299,7 @@ namespace bt
 
 	void Peer::dataWritten(int bytes)
 	{
+	//	Out() << "dataWritten " << bytes << endl;
 		up_speed->bytesWritten(bytes);
 	}
 	

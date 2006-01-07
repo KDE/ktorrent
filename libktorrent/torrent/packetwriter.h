@@ -112,13 +112,14 @@ namespace bt
 
 		/**
 		 * Called by the upload cap, to tell the PacketWriter it
-		 * can send a packet
-		 * @param all Wether to send all packets
+		 * can send some bytes
+		 * @param bytes Num bytes to send (0 == all)
 		 */
-		void uploadUnsentPacket(bool all = false);
+		Uint32 uploadUnsentBytes(Uint32 bytes);
 	private:
-		void sendPacket(const Packet & p);
+		Uint32 sendPacket(const Packet & p,Uint32 max);
 		void queuePacket(Packet* p,bool ask);
+		void sendSmallPackets();
 	};
 
 }
