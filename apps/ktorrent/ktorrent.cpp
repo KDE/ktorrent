@@ -223,6 +223,9 @@ void KTorrent::applySettings(bool change_port)
 		m_core->changePort(Settings::port());
 	
 	Tracker::setCustomIP(Settings::externalIP());
+	
+	//update QM
+	m_core->getQueueManager()->orderQueue();
 }
 
 void KTorrent::load(const KURL& url)
