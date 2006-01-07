@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>600</width>
-            <height>299</height>
+            <height>443</height>
         </rect>
     </property>
     <property name="caption">
@@ -80,6 +80,85 @@
         </widget>
         <widget class="QGroupBox">
             <property name="name">
+                <cstring>groupBox3_2</cstring>
+            </property>
+            <property name="title">
+                <string>Miscelanious</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>show_systray_icon</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show s&amp;ystem tray icon</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+Y</string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout5</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_3</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Memory usage:</string>
+                            </property>
+                        </widget>
+                        <widget class="KComboBox">
+                            <item>
+                                <property name="text">
+                                    <string>Low</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Medium</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>High</string>
+                                </property>
+                            </item>
+                            <property name="name">
+                                <cstring>mem_usage</cstring>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer2_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>111</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
                 <cstring>groupBox3</cstring>
             </property>
             <property name="title">
@@ -95,6 +174,9 @@
                     </property>
                     <property name="text">
                         <string>Send the tracker a c&amp;ustom IP or hostname</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+U</string>
                     </property>
                 </widget>
                 <widget class="QLayoutWidget">
@@ -121,14 +203,6 @@
                     </hbox>
                 </widget>
             </vbox>
-        </widget>
-        <widget class="QCheckBox">
-            <property name="name">
-                <cstring>show_systray_icon</cstring>
-            </property>
-            <property name="text">
-                <string>Show s&amp;ystem tray icon</string>
-            </property>
         </widget>
         <spacer>
             <property name="name">
@@ -162,6 +236,7 @@
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
+    <includehint>kcombobox.h</includehint>
     <includehint>klineedit.h</includehint>
 </includehints>
 </UI>

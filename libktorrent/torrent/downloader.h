@@ -146,6 +146,8 @@ namespace bt
 		 */
 		void setMonitor(kt::MonitorInterface* tmo);
 		
+		static void setMemoryUsage(Uint32 m);
+		
 	private slots:
 		void pieceRecieved(const Piece & p);
 		bool finished(ChunkDownload* c);
@@ -179,6 +181,7 @@ namespace bt
 		ChunkSelector* chunk_selector;
 		
 		kt::MonitorInterface* tmon;
+		static Uint32 mem_usage;
 	};
 	
 

@@ -186,8 +186,22 @@ namespace bt
 	//	if (current_chunks.count() > 2*pdowners.count())
 	//		return;
 
+		Uint32 max = 1024 * 1024;
+		switch (mem_usage)
+		{	
+			case 1: // Medium
+				max *= 20; // 20 MB
+			case 2: // High
+				max *= 40; // 40 MB
+			case 0: // LOW
+			default:
+				max *= 10; // 10 MB
+				break;
+		}
+		
+		bool limit_exceeded = current_chunks.count() * tor.getChunkSize() >= max;
 		Uint32 chunk = 0;
-		if (chunk_selector->select(pd,chunk))
+		if (!limit_exceeded && chunk_selector->select(pd,chunk))
 		{
 			Chunk* c = cman.getChunk(chunk);
 			if (cman.prepareChunk(c))
@@ -483,6 +497,13 @@ namespace bt
 				tmon->downloadRemoved(cd);
 			current_chunks.erase(i);
 		}
+	}
+	
+	Uint32 Downloader::mem_usage = 0;
+	
+	void Downloader::setMemoryUsage(Uint32 m)
+	{
+		mem_usage = m;
 	}
 }
 #include "downloader.moc"

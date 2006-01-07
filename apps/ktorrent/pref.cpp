@@ -21,6 +21,7 @@
 #include <kstandarddirs.h>
 #include <kactivelabel.h>
 #include <kglobal.h>
+#include <kcombobox.h>
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qcheckbox.h>
@@ -235,6 +236,8 @@ bool PrefPageTwo::apply()
 		Settings::setExternalIP(QString::null);
 	}
 	
+	Settings::setMemoryUsage(gp->mem_usage->currentItem());
+	
 	return true;
 }
 
@@ -316,6 +319,8 @@ void PrefPageTwo::updateData()
 		gp->custom_ip->setText(external_ip);
 		gp->custom_ip->setEnabled(true);
 	}
+	
+	gp->mem_usage->setCurrentItem(Settings::memoryUsage());
 }
 
 void PrefPageTwo::deleteWidget()
