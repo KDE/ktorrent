@@ -155,13 +155,13 @@ namespace bt
 			{
 				if(onlyDownload)
 				{
-					if(s.bytes_left != 0) nr++;
+					if(!s.completed) nr++;
 				}
 				else
 				{
 					if(onlySeed)
 					{
-						if(s.bytes_left == 0) nr++;
+						if(s.completed) nr++;
 					}
 					else
 						nr++;
