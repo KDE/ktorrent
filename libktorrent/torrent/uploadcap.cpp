@@ -97,7 +97,7 @@ namespace bt
 		// calculate the number of bytes we can send, including those leftover from the last time
 		Uint32 nb = (Uint32)floor((el / 1000.0) * max_bytes_per_sec) + leftover;
 		leftover = 0;
-		Out() << "nb = " << nb << endl;
+	//	Out() << "nb = " << nb << endl;
 		
 		bool sent_one = false;
 

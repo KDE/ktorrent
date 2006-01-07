@@ -92,6 +92,10 @@ KTorrentView::KTorrentView(QWidget *parent)
 
 KTorrentView::~KTorrentView()
 {
+}
+
+void KTorrentView::saveSettings()
+{
 	Out() << "USE THE FORCE KTORRENTVIEW !!!!" << endl;
 	saveLayout(KGlobal::config(),"KTorrentView");
 	KGlobal::config()->sync();

@@ -312,6 +312,7 @@ bool KTorrent::queryExit()
 {
 	m_core->onExit();
 	KGlobal::config()->writeEntry( "hidden_on_exit",this->isHidden());
+	m_view->saveSettings();
 	return true;
 }
 
