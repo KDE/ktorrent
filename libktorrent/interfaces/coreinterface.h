@@ -83,8 +83,9 @@ namespace kt
 		/**
 		 * Stop a torrent, may start another download if it hasn't been started.
 		 * @param tc The TorrentControl
+		 * @param user true if user stopped the torrent, false otherwise
 		 */
-		virtual void stop(TorrentInterface* tc) = 0;
+		virtual void stop(TorrentInterface* tc, bool user = false) = 0;
 
 		/**
 		 * Switch the port when no torrents are running.

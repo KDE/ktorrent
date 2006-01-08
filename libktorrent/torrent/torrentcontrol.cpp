@@ -75,6 +75,7 @@ namespace bt
 		prev_bytes_dl = 0;
 		prev_bytes_ul = 0;
 		io_error = false;
+		priority = 0;
 
 		updateStats();
 	}
@@ -126,6 +127,7 @@ namespace bt
 				pman->killSeeders();
 				QDateTime now = QDateTime::currentDateTime();
 				running_time_dl += time_started_dl.secsTo(now);
+				updateStatusMsg();
 				finished(this);
 			}
 			else if (!stats.completed && comp)
@@ -213,11 +215,10 @@ namespace bt
 			Out() << "Warning : " << e.toString() << endl;
 		}
 		
-		
-		
 		loadStats();
 		stats.running = true;
 		stats.started = true;
+		stats.autostart = true;
 		choker_update_timer.update();
 		stats_save_timer.update();
 		tracker->start();
@@ -252,7 +253,10 @@ namespace bt
 			
 			down->clearDownloads();
 			if (user)
-				bt::Touch(datadir + "stopped",true);
+			{
+				//make this torrent user controlled
+				setPriority(0);
+			}
 		}
 		pman->stop();
 		pman->closeAllConnections();
@@ -388,8 +392,6 @@ namespace bt
 		connect(cman,SIGNAL(excluded(Uint32, Uint32 )),
 		        down,SLOT(onExcluded(Uint32, Uint32 )));
 
-		if (bt::Exists(datadir + "stopped"))
-			stats.autostart = false;
 		updateStatusMsg();
 
 		// to get rid of phantom bytes we need to take into account
@@ -614,6 +616,9 @@ namespace bt
 			out << "RUNNING_TIME_DL=" << running_time_dl << ::endl;
 			out << "RUNNING_TIME_UL=" << running_time_ul << ::endl;
 		}
+		
+		out << "PRIORITY=" << priority << ::endl;
+		out << "AUTOSTART=" << stats.autostart << ::endl;
 	}
 
 	void TorrentControl::loadStats()
@@ -660,6 +665,29 @@ namespace bt
 			else if (line.startsWith("OUTPUTDIR="))
 			{
 				outputdir = line.mid(10).stripWhiteSpace();
+			}
+			else if (line.startsWith("PRIORITY="))
+			{
+				bool ok = true;
+				int p = line.mid(9).toInt(&ok);
+				if(ok)
+					priority = p;
+				else
+					Out() << "Warning : Can't get priority out of line : "
+							<< line << endl;
+			}
+			else if (line.startsWith("AUTOSTART="))
+			{
+				bool ok = true;
+				int p = line.mid(10).toInt(&ok);
+				if(ok)
+					stats.autostart = (bool) p;
+				else
+				{
+					Out() << "Warning : Can't get autostart bit out of line : "
+							<< line << endl;
+					stats.autostart = true;
+				}
 			}
 		}
 	}
@@ -820,6 +848,13 @@ namespace bt
 				bt::MigrateCache(*tor,datadir + "cache",outputdir);
 			}
 		}
+	}
+	
+	void TorrentControl::setPriority(int p)
+	{
+		priority = p;
+		stats.autostart = p != 0 ? true : false;
+		saveStats();
 	}
 }
 

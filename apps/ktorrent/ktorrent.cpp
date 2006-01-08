@@ -72,6 +72,7 @@
 #include "ktorrentdcop.h"
 #include "torrentcreatordlg.h"
 #include "pastedialog.h"
+#include "queuedialog.h"
 #include <util/functions.h>
 #include <interfaces/functions.h>
 #include <interfaces/plugin.h>
@@ -224,6 +225,9 @@ void KTorrent::applySettings(bool change_port)
 	
 	Tracker::setCustomIP(Settings::externalIP());
 	Downloader::setMemoryUsage(Settings::memoryUsage());
+	
+	//update QM
+	m_core->getQueueManager()->orderQueue();
 }
 
 void KTorrent::load(const KURL& url)
@@ -292,6 +296,10 @@ void KTorrent::setupActions()
 			i18n("to paste torrent URL", "Paste Torrent URL..."), "ktstart",0,this, SLOT(torrentPaste()),
 	actionCollection(), "paste_url");
 	
+	m_queuemgr = new KAction(
+			i18n("to open Queue Manager", "Open QueueManager..."), "ktqueuemanager",0,this, SLOT(queueManagerShow()),
+	actionCollection(), "Queue manager");
+	
 	createGUI();
 }
 
@@ -344,6 +352,13 @@ void KTorrent::torrentPaste()
 	dlg.exec();
 }
 
+void KTorrent::queueManagerShow()
+{
+	QueueDialog dlg(m_core->getQueueManager(), this);
+	dlg.show();
+	dlg.exec();
+}
+
 void KTorrent::startDownload()
 {
 	TorrentInterface* tc = m_view->getCurrentTC();
@@ -390,7 +405,8 @@ void KTorrent::stopDownload()
 	TorrentInterface* tc = m_view->getCurrentTC();
 	if (tc && tc->getStats().running)
 	{
-		tc->stop(true);
+		//tc->stop(true);
+		m_core->stop(tc, true);
 		currentChanged(tc);
 	}
 }
