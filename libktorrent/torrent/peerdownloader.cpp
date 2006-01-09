@@ -265,11 +265,30 @@ namespace bt
 		// get the download rate in KB/sec
 		double rate_kbs = (double)peer->getDownloadRate() / 1024.0;
 		Uint32 num_extra = (Uint32)floor(rate_kbs / 16.0);
-		// we have a maximum of 50 outstanding chunk requests
-		if (num_extra > 45)
-			num_extra = 45;
+		// we have a maximum of 25 outstanding chunk requests
+		if (num_extra > max_outstanding_reqs)
+			num_extra = max_outstanding_reqs;
 		
 		return 5 + num_extra;
+	}
+	
+	Uint32 PeerDownloader::max_outstanding_reqs = 20;
+	
+	void PeerDownloader::setMemoryUsage(Uint32 m)
+	{
+		switch (m)
+		{
+			case 2:
+				max_outstanding_reqs = 40;
+				break;
+			case 1:
+				max_outstanding_reqs = 30;
+				break;
+			case 0:
+			default:
+				max_outstanding_reqs = 20;
+				break;
+		}
 	}
 	
 }

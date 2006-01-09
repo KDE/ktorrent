@@ -191,8 +191,10 @@ namespace bt
 		{	
 			case 1: // Medium
 				max *= 20; // 20 MB
+				break;
 			case 2: // High
 				max *= 40; // 40 MB
+				break;
 			case 0: // LOW
 			default:
 				max *= 10; // 10 MB
@@ -504,6 +506,7 @@ namespace bt
 	void Downloader::setMemoryUsage(Uint32 m)
 	{
 		mem_usage = m;
+		PeerDownloader::setMemoryUsage(m);
 	}
 }
 #include "downloader.moc"

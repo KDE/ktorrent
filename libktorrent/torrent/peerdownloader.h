@@ -174,6 +174,8 @@ namespace bt
 		 */
 		void cancelAll();
 		
+		static void setMemoryUsage(Uint32 m);
+		
 	private slots:
 		void piece(const Piece & p);
 		void peerDestroyed();
@@ -197,6 +199,7 @@ namespace bt
 		Peer* peer;
 		QValueList<TimeStampedRequest> reqs,unsent_reqs;
 		int grabbed;
+		static Uint32 max_outstanding_reqs;
 	};
 
 }
