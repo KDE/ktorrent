@@ -251,7 +251,13 @@ namespace bt
 	
 	void QueueManager::torrentFinished(kt::TorrentInterface* tc)
 	{
-		tc->setPriority(0); //dequeue this tc
+		//dequeue this tc
+		tc->setPriority(0);
+		//make sure the max_seeds is not reached
+		Out() << "GNR Seed" << getNumRunning(false,true) << endl;
+		if(max_seeds !=0 && max_seeds < getNumRunning(false,true))
+			tc->stop(true);
+		
 		orderQueue();
 	}
 	
