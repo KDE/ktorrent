@@ -73,10 +73,19 @@ namespace kt
 		setEnabled(false);
 		showPeerView( InfoWidgetPluginSettings::showPeerView() );
 		showChunkView( InfoWidgetPluginSettings::showChunkView() );
+		
+		KGlobal::config()->setGroup("InfoWidget");
+		if (KGlobal::config()->hasKey("InfoWidgetSize"))
+		{
+			QSize s = KGlobal::config()->readSizeEntry("InfoWidgetSize",0);
+			resize(s);
+		}
 	}
 	
 	InfoWidget::~InfoWidget()
 	{
+		KGlobal::config()->setGroup("InfoWidget");
+		KGlobal::config()->writeEntry("InfoWidgetSize",size());
 		if (cd_view)
 			cd_view->saveLayout(KGlobal::config(),"ChunkDownloadView");
 		if (peer_view)

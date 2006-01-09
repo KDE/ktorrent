@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <kglobal.h>
+#include <kconfig.h>
 #include "logviewer.h"
 
 namespace kt
@@ -27,11 +29,21 @@ namespace kt
 	{
 		setTextFormat(Qt::LogText);
 		setMaxLogLines(100);
+		setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Minimum);
+		KGlobal::config()->setGroup("LogViewer");
+		if (KGlobal::config()->hasKey("LogViewerWidgetSize"))
+		{
+			QSize s = KGlobal::config()->readSizeEntry("LogViewerWidgetSize",0);
+			resize(s);
+		}
 	}
 
 
 	LogViewer::~LogViewer()
-	{}
+	{
+		KGlobal::config()->setGroup("LogViewer");
+		KGlobal::config()->writeEntry("LogViewerWidgetSize",size());
+	}
 
 
 	void LogViewer::message(const QString& line)
