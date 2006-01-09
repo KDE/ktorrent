@@ -433,7 +433,6 @@ void KTorrent::removeDownload()
 			else if (ret == KMessageBox::Yes)
 				data_to = true;
 		}
-		m_view->removeTorrent(tc);
 		m_core->remove(tc,data_to);
 		currentChanged(m_view->getCurrentTC());
 		notifyViewListeners(m_view->getCurrentTC());

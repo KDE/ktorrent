@@ -371,7 +371,7 @@ namespace bt
 		hdr.num_chunks = current_chunks.count();
 		fptr.write(&hdr,sizeof(CurrentChunksHeader));
 
-		Out() << "sizeof(CurrentChunksHeader)" << sizeof(CurrentChunksHeader) << endl;
+//		Out() << "sizeof(CurrentChunksHeader)" << sizeof(CurrentChunksHeader) << endl;
 		Out() << "Saving " << current_chunks.count() << " chunk downloads" << endl;
 		for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();++i)
 		{
