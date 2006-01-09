@@ -103,12 +103,12 @@ namespace bt
 			- normal : everything else
 		*/
 		bool warmup = cman.getNumChunks() - cman.chunksLeft() <= 4;
-		bool endgame_mode = cman.chunksLeft() <= current_chunks.count();
+		//bool endgame_mode = cman.chunksLeft() <= current_chunks.count();
 
 		if (warmup)
 			warmupUpdate();
-		else if (endgame_mode)
-			endgameUpdate();
+		//else if (endgame_mode)
+		//	endgameUpdate();
 		else
 			normalUpdate();
 		
@@ -156,7 +156,7 @@ namespace bt
 					pd->hasChunk(cd->getChunk()->getIndex()) &&
 					pd->getNumRequests() < pd->getMaximumOutstandingReqs() - 2)
 				{
-					cd->assignPeer(pd,true);
+					cd->assignPeer(pd);
 				}
 			}
 		}
@@ -178,7 +178,7 @@ namespace bt
 			const Peer* p = cd->getCurrentPeer();
 			if (cd->getNumDownloaders() == 0 || (p && p->isSnubbed()))
 			{
-				cd->assignPeer(pd,false);
+				cd->assignPeer(pd);
 				return;
 			}
 		}
@@ -208,7 +208,7 @@ namespace bt
 			{
 				ChunkDownload* cd = new ChunkDownload(c);
 				current_chunks.insert(chunk,cd);
-				cd->assignPeer(pd,false);
+				cd->assignPeer(pd);
 				if (tmon)
 					tmon->downloadStarted(cd);
 			}
@@ -233,7 +233,7 @@ namespace bt
 				} 
 			} 
 			if (cdmin) 
-				cdmin->assignPeer(pd,true); 
+				cdmin->assignPeer(pd); 
 		} 
 	}
 
