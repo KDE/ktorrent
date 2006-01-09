@@ -251,6 +251,7 @@ namespace bt
 	
 	void QueueManager::torrentFinished(kt::TorrentInterface* tc)
 	{
+		tc->setPriority(0); //dequeue this tc
 		orderQueue();
 	}
 	
