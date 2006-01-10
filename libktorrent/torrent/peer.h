@@ -69,7 +69,7 @@ namespace bt
 	public:
 		/**
 		 * Constructor, set the socket.
-		 * The socket is allready opened.
+		 * The socket is already opened.
 		 * @param sock The socket
 		 * @param peer_id The Peer's BitTorrent ID
 		 * @param num_chunks The number of chunks in the file

@@ -74,7 +74,7 @@ namespace bt
 		
 		/**
 		 * The other side send a handshake. The first 20 bytes
-		 * of the handshake will allready have been checked.
+		 * of the handshake will already have been checked.
 		 * @param full Indicates wether we have a full handshake
 		 *  if this is not full, we should just send our own
 		 */

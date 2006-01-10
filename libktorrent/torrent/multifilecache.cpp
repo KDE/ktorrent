@@ -334,11 +334,11 @@ namespace bt
 		CacheFile* fd = files.find(tf->getIndex());
 		
 		QString dnd_dir = tmpdir + "dnd" + bt::DirSeparator();
-		// if it is dnd and it is allready in the dnd tree do nothing
+		// if it is dnd and it is already in the dnd tree do nothing
 		if (dnd && bt::Exists(dnd_dir + tf->getPath()))
 			return;
 		
-		// if it is !dnd and it is allready in the output_dir tree do nothing
+		// if it is !dnd and it is already in the output_dir tree do nothing
 		if (!dnd && bt::Exists(output_dir + tf->getPath()))
 			return;
 		

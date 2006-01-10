@@ -306,10 +306,10 @@ namespace bt
 					" the torrent is probably corrupt or it isn't a torrent file"));
 		}
 		
-		// check if we haven't allready loaded the torrent
+		// check if we haven't already loaded the torrent
 		// only do this when qman isn't 0
 		if (qman && qman->allreadyLoaded(tor->getInfoHash()))
-			throw Error(i18n("You are allready downloading this torrent !"));
+			throw Error(i18n("You are already downloading this torrent !"));
 		
 		if (!bt::Exists(datadir))
 		{
@@ -395,7 +395,7 @@ namespace bt
 		updateStatusMsg();
 
 		// to get rid of phantom bytes we need to take into account
-		// the data from downloads allready in progress
+		// the data from downloads already in progress
 		try
 		{
 			Uint64 db = down->bytesDownloaded();

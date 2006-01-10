@@ -74,7 +74,7 @@ public:
 	void loadTorrents();
 	
 	/**
-	 * Load an existing torrent, which has allready a properly set up torX dir.
+	 * Load an existing torrent, which has already a properly set up torX dir.
 	 * @param tor_dir The torX dir
 	 */
 	void loadExistingTorrent(const QString & tor_dir);

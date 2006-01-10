@@ -147,7 +147,7 @@ static void RegisterAlloc(void* ptr,Uint32 size)
 static void DeregisterAlloc(void* ptr)
 {
 	if (print_status_done)
-		printf("PrintStatus allready happened !!!!!!!!!!\n");
+		printf("PrintStatus already happened !!!!!!!!!!\n");
 	Uint32 b = ADDR_HASH(ptr);
 	
 	MemAlloc* p = mtree.buckets[b];

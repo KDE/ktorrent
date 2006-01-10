@@ -69,7 +69,7 @@ namespace bt
 			QPtrList<kt::TorrentInterface>::iterator end();
 			
 			/**
-			 * See if we allready loaded a torrent.
+			 * See if we already loaded a torrent.
 			 * @param ih The info hash of a torrent
 			 * @return true if we do, false if we don't
 			 */

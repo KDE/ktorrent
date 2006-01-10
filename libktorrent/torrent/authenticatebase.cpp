@@ -72,7 +72,7 @@ namespace bt
 		
 		Uint32 ba = sock->bytesAvailable();
 		
-		// first see if we allready have some bytes from the handshake
+		// first see if we already have some bytes from the handshake
 		if (bytes_of_handshake_recieved == 0)
 		{
 			if (ba < 68)

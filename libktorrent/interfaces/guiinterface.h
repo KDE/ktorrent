@@ -120,7 +120,7 @@ namespace kt
 		 * Embed a widget in the view in the mainview.
 		 * The view and the new widget will be separated by a separator.
 		 * @param w The widget
-		 * @param pos How the widget will be positioned against the allready present widgets
+		 * @param pos How the widget will be positioned against the already present widgets
 		 */
 		virtual void addWidgetInView(QWidget* w,Position pos) = 0;
 

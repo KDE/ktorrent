@@ -141,7 +141,7 @@ namespace kt
 		virtual QString findNewTorrentDir() const = 0;
 		
 		/**
-		 * Load an existing torrent, which has allready a properly set up torX dir.
+		 * Load an existing torrent, which has already a properly set up torX dir.
 		 * @param tor_dir The torX dir
 		 */
 		virtual void loadExistingTorrent(const QString & tor_dir) = 0;

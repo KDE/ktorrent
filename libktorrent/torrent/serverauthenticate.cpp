@@ -118,10 +118,10 @@ namespace bt
 				return;
 			}
 			
-			// check if we aren't allready connected to the client
+			// check if we aren't already connected to the client
 			if (pman->connectedTo(peer_id))
 			{
-				Out() << "Allready connected to " << peer_id.toString() << endl;
+				Out() << "Already connected to " << peer_id.toString() << endl;
 				onFinish(false);
 				return;
 			}
