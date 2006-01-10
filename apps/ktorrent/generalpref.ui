@@ -15,11 +15,75 @@
     <property name="caption">
         <string>General Options</string>
     </property>
-    <vbox>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QGroupBox">
+        <spacer row="3" column="0">
+            <property name="name">
+                <cstring>spacer2</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>70</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QGroupBox" row="2" column="0">
+            <property name="name">
+                <cstring>groupBox3</cstring>
+            </property>
+            <property name="title">
+                <string>Custom IP</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>custom_ip_check</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Send the tracker a c&amp;ustom IP or hostname</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+U</string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout3</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Custom IP or hostname:</string>
+                            </property>
+                        </widget>
+                        <widget class="KLineEdit">
+                            <property name="name">
+                                <cstring>custom_ip</cstring>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QGroupBox" row="0" column="0">
             <property name="name">
                 <cstring>groupBox1</cstring>
             </property>
@@ -68,6 +132,9 @@
                             <property name="text">
                                 <string>&amp;Automatically save downloads to:</string>
                             </property>
+                            <property name="accel">
+                                <string>Alt+A</string>
+                            </property>
                         </widget>
                         <widget class="KURLRequester">
                             <property name="name">
@@ -78,29 +145,18 @@
                 </widget>
             </vbox>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="QGroupBox" row="1" column="0">
             <property name="name">
                 <cstring>groupBox3_2</cstring>
             </property>
             <property name="title">
                 <string>Miscelanious</string>
             </property>
-            <vbox>
+            <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>show_systray_icon</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Show s&amp;ystem tray icon</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+Y</string>
-                    </property>
-                </widget>
-                <widget class="QLayoutWidget">
+                <widget class="QLayoutWidget" row="1" column="0">
                     <property name="name">
                         <cstring>layout5</cstring>
                     </property>
@@ -155,33 +211,9 @@
                         </spacer>
                     </hbox>
                 </widget>
-            </vbox>
-        </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>groupBox3</cstring>
-            </property>
-            <property name="title">
-                <string>Custom IP</string>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox">
+                <widget class="QLayoutWidget" row="2" column="0">
                     <property name="name">
-                        <cstring>custom_ip_check</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Send the tracker a c&amp;ustom IP or hostname</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+U</string>
-                    </property>
-                </widget>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>layout3</cstring>
+                        <cstring>layout5_2</cstring>
                     </property>
                     <hbox>
                         <property name="name">
@@ -189,39 +221,70 @@
                         </property>
                         <widget class="QLabel">
                             <property name="name">
-                                <cstring>textLabel1_2</cstring>
+                                <cstring>textLabel1_3_2</cstring>
                             </property>
                             <property name="text">
-                                <string>Custom IP or hostname:</string>
+                                <string>GUI update interval:</string>
                             </property>
                         </widget>
-                        <widget class="KLineEdit">
+                        <widget class="KComboBox">
+                            <item>
+                                <property name="text">
+                                    <string>500ms</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>1s</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>2sec</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>5sec</string>
+                                </property>
+                            </item>
                             <property name="name">
-                                <cstring>custom_ip</cstring>
+                                <cstring>gui_interval</cstring>
                             </property>
                         </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer2_2_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>111</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
                     </hbox>
                 </widget>
-            </vbox>
+                <widget class="QCheckBox" row="0" column="0">
+                    <property name="name">
+                        <cstring>show_systray_icon</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show s&amp;ystem tray icon</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+Y</string>
+                    </property>
+                </widget>
+            </grid>
         </widget>
-        <spacer>
-            <property name="name">
-                <cstring>spacer2</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>20</height>
-                </size>
-            </property>
-        </spacer>
-    </vbox>
+    </grid>
 </widget>
 <tabstops>
     <tabstop>autosave_downloads_check</tabstop>
@@ -230,6 +293,7 @@
 <pixmapinproject/>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>klineedit.h</includehint>
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
@@ -237,6 +301,6 @@
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kcombobox.h</includehint>
-    <includehint>klineedit.h</includehint>
+    <includehint>kcombobox.h</includehint>
 </includehints>
 </UI>

@@ -337,7 +337,7 @@ namespace kt
 			ratio = (float) s.bytes_uploaded / (float)s.bytes_downloaded;
 	
 		
-		m_share_ratio->setText(KGlobal::locale()->formatNumber(ratio,2));
+		m_share_ratio->setText(QString("<font color=\"%1\">%2</font>").arg(ratio <= 0.8 ? "#ff0000" : "#00ff00").arg(KGlobal::locale()->formatNumber(ratio,2)));
 	
 		Uint32 secs = curr_tc->getRunningTimeUL(); 
 		if (secs == 0)

@@ -226,6 +226,24 @@ void KTorrent::applySettings(bool change_port)
 	Tracker::setCustomIP(Settings::externalIP());
 	Downloader::setMemoryUsage(Settings::memoryUsage());
 	
+	//Apply GUI update interval
+	int val = 500;
+	switch(Settings::guiUpdateInterval())
+	{
+		case 1:
+			val = 1000;
+			break;
+		case 2:
+			val = 2000;
+			break;
+		case 3:
+			val = 5000;
+			break;
+		default:
+			val = 500;
+	}
+	m_gui_update_timer.changeInterval(val);
+	
 	//update QM
 	m_core->getQueueManager()->orderQueue();
 }

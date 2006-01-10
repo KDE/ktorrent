@@ -237,7 +237,7 @@ bool PrefPageTwo::apply()
 	}
 	
 	Settings::setMemoryUsage(gp->mem_usage->currentItem());
-	
+	Settings::setGuiUpdateInterval(gp->gui_interval->currentItem());
 	return true;
 }
 
@@ -321,6 +321,7 @@ void PrefPageTwo::updateData()
 	}
 	
 	gp->mem_usage->setCurrentItem(Settings::memoryUsage());
+	gp->gui_interval->setCurrentItem(Settings::guiUpdateInterval());
 }
 
 void PrefPageTwo::deleteWidget()
