@@ -100,11 +100,12 @@ namespace bt
 			piece_queue.append(i);
 		
 		dstatus.setAutoDelete(true);
+		chunk->ref();
 	}
 
 	ChunkDownload::~ChunkDownload()
 	{
-
+		chunk->unref();
 	}
 
 	bool ChunkDownload::piece(const Piece & p)

@@ -62,7 +62,7 @@ namespace bt
 		ulog << p.debugString() << endl;
 #endif
 		// safety check
-		if (p.getDataLength() > 0 && !p.getData())
+		if (!p.isOK())
 			return p.getDataLength();
 			
 	//	Out() << "Sending " << p.getHeaderLength() << " " << p.getDataLength() << endl;

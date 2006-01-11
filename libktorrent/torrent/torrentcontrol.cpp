@@ -101,6 +101,10 @@ namespace bt
 
 	void TorrentControl::update()
 	{
+		// do not update during critical operation mode
+		if (Globals::instance().inCriticalOperationMode())
+			return;
+		
 		if (io_error)
 		{
 			stop(false);

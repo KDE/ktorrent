@@ -51,6 +51,8 @@ namespace bt
 
 		Uint8 getType() const {return hdr[4];}
 		
+		bool isOK() const;
+		
 		const Uint8* getHeader() const {return hdr;}
 		Uint32 getHeaderLength() const {return hdr_length;}
 		

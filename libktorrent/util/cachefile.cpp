@@ -78,7 +78,7 @@ namespace bt
 			CacheFile::Entry e = i.data();
 			i++;
 			mappings.erase(e.ptr);
-			e.ptr = map(e.thing,e.offset,e.size,e.mode);
+			e.ptr = map(e.thing,e.offset,e.size - e.diff,e.mode);
 			if (e.ptr)
 				e.thing->remapped(e.ptr);
 		}
@@ -89,6 +89,7 @@ namespace bt
 		if (off + size > max_size)
 		{
 			Out() << "Warning : writing past the end of " << path << endl;
+			Out() << (off + size) << " " << max_size << endl;
 			return 0;
 		}
 		
@@ -169,7 +170,10 @@ namespace bt
 		lseek(fd,0,SEEK_END);
 		
 		if (file_size + to_write > max_size)
+		{
 			Out() << "Warning : writing past the end of " << path << endl;
+			Out() << (file_size + to_write) << " " << max_size << endl;
+		}
 		
 		Uint8 buf[1024];
 		memset(buf,0,1024);
@@ -262,7 +266,10 @@ namespace bt
 	void CacheFile::write(const Uint8* buf,Uint32 size,Uint64 off)
 	{
 		if (off + size > max_size)
+		{
 			Out() << "Warning : writing past the end of " << path << endl;
+			Out() << (off + size) << " " << max_size << endl;
+		}
 		
 		if (file_size < off)
 		{

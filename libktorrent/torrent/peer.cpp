@@ -59,6 +59,7 @@ namespace bt
 		choked = am_choked = true;
 		interested = am_interested = false;
 		killed = false;
+		recieved_packet = false;
 		downloader = new PeerDownloader(this);
 		uploader = new PeerUploader(this);
 		
@@ -119,7 +120,8 @@ namespace bt
 	void Peer::readyRead() 
 	{
 		if (killed) return;
-		readPacket();
+		// set a flag indicating that packets are ready
+		recieved_packet = true;
 	}
 	
 	void Peer::error(int)
@@ -147,6 +149,8 @@ namespace bt
 		
 		if (!preader->ok())
 			error(0);
+		
+		recieved_packet = false;
 	}
 	
 	void Peer::handlePacket(Uint32 len)
@@ -318,8 +322,10 @@ namespace bt
 		return true;
 	}
 	
-	void Peer::updateSpeed()
+	void Peer::update()
 	{
+		if (recieved_packet)
+			readPacket();
 		speed->update();
 		up_speed->update();
 	}

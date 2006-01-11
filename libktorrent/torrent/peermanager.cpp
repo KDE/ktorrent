@@ -62,7 +62,7 @@ namespace bt
 
 	void PeerManager::update()
 	{
-		if (!started)
+		if (!started || Globals::instance().inCriticalOperationMode())
 			return;
 
 		// update the speed of each peer,
@@ -81,7 +81,7 @@ namespace bt
 			}
 			else
 			{
-				p->updateSpeed();
+				p->update();
 				i++;
 			}
 		}

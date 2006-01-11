@@ -106,5 +106,19 @@ namespace bt
 			default: return QString("UNKNOWN %1 %2").arg(hdr_length).arg(data_length);
 		}
 	}
+	
+	bool Packet::isOK() const
+	{
+		if (getDataLength() > 0 && !getData())
+			return false;
+		
+		if (hdr[4] == PIECE && !chunk)
+			return false;
+		
+		if (hdr[4] == PIECE && !chunk->getData())
+			return false;
+		
+		return true;
+	}
 
 }

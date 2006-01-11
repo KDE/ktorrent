@@ -23,6 +23,7 @@
 #include <kmimetype.h>
 #include <util/functions.h>
 #include <interfaces/functions.h>
+#include <torrent/globals.h>
 #include "filetreediritem.h"
 #include "filetreeitem.h"
 #include "torrentfileinterface.h"

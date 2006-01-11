@@ -120,8 +120,8 @@ namespace bt
 		/// Get the Peer's ID
 		const PeerID & getPeerID() const {return peer_id;}
 
-		/// Update the up- and down- speed
-		void updateSpeed();
+		/// Update the up- and down- speed and handle incoming packets
+		void update();
 
 		/// Get the PeerDownloader.
 		PeerDownloader* getPeerDownloader() {return downloader;}
@@ -233,7 +233,7 @@ namespace bt
 		QSocket* sock;
 #endif
 		
-		bool choked,interested,am_choked,am_interested,killed;
+		bool choked,interested,am_choked,am_interested,killed,recieved_packet;
 		Uint32 time_choked,time_unchoked,id;
 		BitSet pieces;
 		PeerID peer_id;

@@ -557,7 +557,7 @@ namespace bt
 			
 			
 		}
-		// alert the cache 
+		// alert the cache but first put things in critical operation mode
 		cache->downloadStatusChanged(tf,download);
 	}
 	

@@ -495,9 +495,13 @@ namespace bt
 			if (!cd)
 				continue;
 			cd->cancelAll();
+			Chunk* c = cd->getChunk();
 			if (tmon)
 				tmon->downloadRemoved(cd);
 			current_chunks.erase(i);
+			
+			if (c->getStatus() == Chunk::MMAPPED)
+				cman.saveChunk(i,false);
 		}
 	}
 	

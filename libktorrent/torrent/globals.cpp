@@ -43,6 +43,7 @@ namespace bt
 	Globals::Globals()
 	{
 		debug_mode = false;
+		critical_operation = false;
 		log = new Log();
 #ifdef KT_DEBUG_GC
 		gc = new GarbageCollector();

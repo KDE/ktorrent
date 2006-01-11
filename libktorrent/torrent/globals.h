@@ -40,6 +40,8 @@ namespace bt
 		void initLog(const QString & file);
 		void initServer(Uint16 port);
 		void setDebugMode(bool on) {debug_mode = on;}
+		void setCriticalOperationMode(bool on) {critical_operation = on;}
+		bool inCriticalOperationMode() const {return critical_operation;}
 		bool isDebugModeSet() const {return debug_mode;}
 
 		Log & getLog() {return *log;}
@@ -54,6 +56,7 @@ namespace bt
 		Globals();
 		
 		bool debug_mode;
+		bool critical_operation;
 		Log* log;
 		Server* server;
 #ifdef KT_DEBUG_GC
