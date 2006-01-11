@@ -70,13 +70,13 @@ namespace kt
 		KNetwork::KDatagramPacket p = KDatagramSocket::receive();
 		if (p.isNull())
 			return;
-		/*	
-		Out() << "Got packet : " << endl;
+		
+		Out() << "UPnPMCastSocket : got packet" << endl;
 		Out() << "Sender : " << p.address().toString() << endl;
 		Out() << "Data (" << p.length() << ") : " << endl;
 		Out() << QString(p.data()) << endl;
 		Out() << endl;
-		*/
+		
 		// try to make a router of it
 		UPnPRouter* r = parseResponse(p.data());
 		if (r)
