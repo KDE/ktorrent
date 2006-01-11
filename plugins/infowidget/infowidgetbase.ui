@@ -747,8 +747,5 @@
 </images>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>kt::downloadedchunkbar.h</includehint>
-    <includehint>kt::availabilitychunkbar.h</includehint>
-    <includehint>klistview.h</includehint>
 </includehints>
 </UI>
