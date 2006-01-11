@@ -105,6 +105,8 @@ namespace kt
 		bool stopped_by_error;
 		/// See if the download is completed
 		bool completed;
+		/// See if this torrent is controlled by user
+		bool user_controlled;
 	};
 
 	/**

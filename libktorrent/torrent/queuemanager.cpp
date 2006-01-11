@@ -53,8 +53,6 @@ namespace bt
 	{
 		downloads.append(tc);
 		downloads.sort();
-//		if(tc->getPriority() != 0)
-//			queue.append(tc);
 	}
 
 	void QueueManager::remove(kt::TorrentInterface* tc)
@@ -70,8 +68,8 @@ namespace bt
 	void QueueManager::start(kt::TorrentInterface* tc)
 	{
 		const TorrentStats & s = tc->getStats();
-		bool start_tc = (s.bytes_left == 0 && (keep_seeding && ( max_seeds == 0 || getNumRunning(false, true) < max_seeds) ) ||
-	    	            (s.bytes_left != 0 &&
+		bool start_tc = (s.completed && (keep_seeding && ( max_seeds == 0 || getNumRunning(false, true) < max_seeds) ) ||
+	    	            (!s.completed &&
 				(max_downloads == 0 || getNumRunning(true) < max_downloads)));
 		if (start_tc)
 		{
@@ -98,6 +96,8 @@ namespace bt
 			try
 			{
 				tc->stop(user);
+				if(user)
+					tc->setPriority(0);
 			}
 			catch (bt::Error & err)
 			{
@@ -215,37 +215,81 @@ namespace bt
 	{
 		downloads.sort();
 		
+		int num_running = 0;
+		
 		QPtrList<TorrentInterface>::const_iterator it = downloads.begin();
-		for(int i = 0 ; it!=downloads.end() && i != max_downloads; ++i, ++it)
+		QPtrList<TorrentInterface>::const_iterator end_queue = downloads.end();
 		
-		if(it == downloads.end())
-			return;
-		
-		QPtrList<TorrentInterface>::const_iterator end_queue = it;
-		
-		while (it != downloads.end()) //first stop all torrents that aren't supposed to be running
+		if(max_downloads != 0)
 		{
-			TorrentInterface* tc = *it;
-			const TorrentStats & s = tc->getStats();
+			int user_running = 0;
+			for( ; it!=downloads.end(); ++it)
+			{
+				TorrentInterface* tc = *it;
+				const TorrentStats & s = tc->getStats();
 			
-			if(s.running && !s.completed && s.autostart)
-				stop(tc);
+				if(s.running)
+				{
+					if(s.user_controlled && !s.completed)
+						++user_running;
+				}
+			}
 			
-			++it;
+			int max_qm_downloads = max_downloads - user_running;
+			//update QM boundary
+			end_queue = downloads.begin();
+			for(int i=0; end_queue!=downloads.end() && i<max_qm_downloads; ++i, ++end_queue);
+			//stop all QM started torrents
+			for(it = end_queue; it != downloads.end(); ++it)
+			{
+				TorrentInterface* tc = *it;
+				const TorrentStats & s = tc->getStats();
+				
+				if(s.running && !s.user_controlled && !s.completed)
+					stop(tc);
+			}
 		}
 		
 		it = downloads.begin();
-		
-		while (it != end_queue) //then check if some torrent needs to be started
-		{
-			TorrentInterface* tc = *it;
-			const TorrentStats & s = tc->getStats();
+		while (it != end_queue) //then check if some torrent needs to be started 
+		{ 
+			TorrentInterface* tc = *it; 
+			const TorrentStats & s = tc->getStats(); 
 			
-			if(!s.running && !s.completed && s.autostart)
-				start(tc);
-			
+			if(!s.running && !s.completed && !s.user_controlled)
+				start(tc); 
+             
 			++it;
 		}
+		
+// 		if(it == downloads.end())
+// 			return;
+// 		
+// 		QPtrList<TorrentInterface>::const_iterator end_queue = it;
+// 		
+// 		while (it != downloads.end()) //first stop all torrents that aren't supposed to be running
+// 		{
+// 			TorrentInterface* tc = *it;
+// 			const TorrentStats & s = tc->getStats();
+// 			
+// 			if(s.running && !s.completed && s.autostart)
+// 				stop(tc);
+// 			
+// 			++it;
+// 		}
+// 		
+// 		it = downloads.begin();
+// 		
+// 		while (it != end_queue) //then check if some torrent needs to be started
+// 		{
+// 			TorrentInterface* tc = *it;
+// 			const TorrentStats & s = tc->getStats();
+// 			
+// 			if(!s.running && !s.completed && s.autostart)
+// 				start(tc);
+// 			
+// 			++it;
+// 		}
 	}
 	
 	

@@ -71,6 +71,7 @@ namespace bt
 		old_datadir = QString::null;
 		stats.status = NOT_STARTED;
 		stats.autostart = true;
+		stats.user_controlled = false;
 		running_time_dl = running_time_ul = 0;
 		prev_bytes_dl = 0;
 		prev_bytes_ul = 0;
@@ -260,6 +261,7 @@ namespace bt
 			{
 				//make this torrent user controlled
 				setPriority(0);
+				stats.autostart = false;
 			}
 		}
 		pman->stop();
@@ -675,7 +677,10 @@ namespace bt
 				bool ok = true;
 				int p = line.mid(9).toInt(&ok);
 				if(ok)
+				{
 					priority = p;
+					stats.user_controlled = p == 0 ? true : false;
+				}
 				else
 					Out() << "Warning : Can't get priority out of line : "
 							<< line << endl;
@@ -857,7 +862,7 @@ namespace bt
 	void TorrentControl::setPriority(int p)
 	{
 		priority = p;
-		stats.autostart = p != 0 ? true : false;
+		stats.user_controlled = p == 0 ? true : false;
 		saveStats();
 	}
 }
