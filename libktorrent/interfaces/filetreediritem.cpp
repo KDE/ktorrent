@@ -182,8 +182,11 @@ namespace kt
 	{
 		if (col == 1)
 		{
-			FileTreeDirItem* other = static_cast<FileTreeDirItem*>(i);
-			return (int)(size - other->size);
+			FileTreeDirItem* other = dynamic_cast<FileTreeDirItem*>(i);
+			if (!other)
+				return 0;
+			else
+				return (int)(size - other->size);
 		}
 		else
 		{
