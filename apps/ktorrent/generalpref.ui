@@ -240,12 +240,12 @@
                             </item>
                             <item>
                                 <property name="text">
-                                    <string>2sec</string>
+                                    <string>2s</string>
                                 </property>
                             </item>
                             <item>
                                 <property name="text">
-                                    <string>5sec</string>
+                                    <string>5s</string>
                                 </property>
                             </item>
                             <property name="name">

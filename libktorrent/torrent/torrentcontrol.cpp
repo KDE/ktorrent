@@ -308,14 +308,14 @@ namespace bt
 		{
 			delete tor;
 			tor = 0;
-			throw Error(i18n("An error occured whilst loading the torrent,"
-					" the torrent is probably corrupt or it isn't a torrent file"));
+			throw Error(i18n("An error occurred while loading the torrent."
+					" The torrent is probably corrupt or is not a torrent file."));
 		}
 		
 		// check if we haven't already loaded the torrent
 		// only do this when qman isn't 0
 		if (qman && qman->allreadyLoaded(tor->getInfoHash()))
-			throw Error(i18n("You are already downloading this torrent !"));
+			throw Error(i18n("You are already downloading this torrent."));
 		
 		if (!bt::Exists(datadir))
 		{

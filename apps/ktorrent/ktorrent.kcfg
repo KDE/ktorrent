@@ -68,7 +68,7 @@
 			<default>0</default>
 		</entry>
 		<entry name="guiUpdateInterval" type="Int">
-			<label>Gui update interval</label>
+			<label>GUI update interval</label>
 			<default>0</default>
 		</entry>
 	</group>
