@@ -58,6 +58,7 @@ class QueueDialog: public QueueDlg
    		virtual void btnDequeue_clicked();
     	virtual void btnEnqueue_clicked();
     	virtual void btnApply_clicked();
+    	virtual void btnOk_clicked();
     	
 		
 	private:

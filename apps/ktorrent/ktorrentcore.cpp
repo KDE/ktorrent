@@ -253,6 +253,7 @@ void KTorrentCore::loadTorrents()
 		Out() << "Loading " << idir << endl;
 		loadExistingTorrent(idir);
 	}
+	qman->orderQueue();
 }
 
 void KTorrentCore::remove(TorrentInterface* tc,bool data_to)

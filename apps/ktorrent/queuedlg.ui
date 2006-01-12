@@ -19,7 +19,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QListView" row="0" column="0" rowspan="6" colspan="1">
+        <widget class="QListView" row="0" column="0" rowspan="7" colspan="1">
             <column>
                 <property name="text">
                     <string>Torrent</string>
@@ -101,28 +101,6 @@
                 </size>
             </property>
         </spacer>
-        <widget class="QPushButton" row="5" column="1">
-            <property name="name">
-                <cstring>btnClose</cstring>
-            </property>
-            <property name="text">
-                <string>&amp;Close</string>
-            </property>
-            <property name="accel">
-                <string>Alt+C</string>
-            </property>
-        </widget>
-        <widget class="QPushButton" row="4" column="1">
-            <property name="name">
-                <cstring>btnApply</cstring>
-            </property>
-            <property name="text">
-                <string>&amp;Apply</string>
-            </property>
-            <property name="accel">
-                <string>Alt+A</string>
-            </property>
-        </widget>
         <widget class="QLayoutWidget" row="2" column="1">
             <property name="name">
                 <cstring>layout3</cstring>
@@ -168,10 +146,43 @@
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>150</height>
+                    <height>90</height>
                 </size>
             </property>
         </spacer>
+        <widget class="QPushButton" row="6" column="1">
+            <property name="name">
+                <cstring>btnCancel</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Cancel</string>
+            </property>
+            <property name="accel">
+                <string>Alt+C</string>
+            </property>
+        </widget>
+        <widget class="QPushButton" row="5" column="1">
+            <property name="name">
+                <cstring>btnApply</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Apply</string>
+            </property>
+            <property name="accel">
+                <string>Alt+A</string>
+            </property>
+        </widget>
+        <widget class="QPushButton" row="4" column="1">
+            <property name="name">
+                <cstring>btnOk</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Ok</string>
+            </property>
+            <property name="accel">
+                <string>Alt+O</string>
+            </property>
+        </widget>
     </grid>
 </widget>
 <connections>
@@ -188,7 +199,7 @@
         <slot>btnMoveDown_clicked()</slot>
     </connection>
     <connection>
-        <sender>btnClose</sender>
+        <sender>btnCancel</sender>
         <signal>clicked()</signal>
         <receiver>QueueDlg</receiver>
         <slot>btnClose_clicked()</slot>
@@ -211,7 +222,23 @@
         <receiver>QueueDlg</receiver>
         <slot>btnDequeue_clicked()</slot>
     </connection>
+    <connection>
+        <sender>btnOk</sender>
+        <signal>clicked()</signal>
+        <receiver>QueueDlg</receiver>
+        <slot>btnOk_clicked()</slot>
+    </connection>
 </connections>
+<tabstops>
+    <tabstop>btnOk</tabstop>
+    <tabstop>btnApply</tabstop>
+    <tabstop>btnCancel</tabstop>
+    <tabstop>btnMoveUp</tabstop>
+    <tabstop>btnMoveDown</tabstop>
+    <tabstop>btnEnqueue</tabstop>
+    <tabstop>btnDequeue</tabstop>
+    <tabstop>torrentList</tabstop>
+</tabstops>
 <slots>
     <slot>btnMoveUp_clicked()</slot>
     <slot>btnMoveDown_clicked()</slot>
@@ -221,6 +248,7 @@
     <slot>btnEnqueue_clicked()</slot>
     <slot>btnApply_clicked()</slot>
     <slot>btnDequeue_clicked()</slot>
+    <slot>btnOk_clicked()</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

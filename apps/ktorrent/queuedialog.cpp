@@ -142,7 +142,6 @@ void QueueDialog::btnMoveDown_clicked()
 
 void QueueDialog::btnClose_clicked()
 {
-	writeQueue();	
 	this->close();
 }
 
@@ -209,5 +208,12 @@ void QueueDialog::btnApply_clicked()
 {
 	writeQueue();
 }
+
+void QueueDialog::btnOk_clicked()
+{
+	writeQueue();
+	this->close();
+}
+
 
 
