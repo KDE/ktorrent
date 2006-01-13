@@ -160,6 +160,7 @@ namespace bt
 		
 	private:
 		void peerAuthenticated(Authenticate* auth,bool ok);
+		void updateAvailableChunks();
 
 	private slots:
 		void onHave(Peer* p,Uint32 index);

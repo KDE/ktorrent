@@ -74,6 +74,7 @@ namespace bt
 			if (p->isKilled())
 			{
 				cnt->decBitSet(p->getBitSet());
+				updateAvailableChunks();
 				i = peer_list.erase(i);
 				killed.append(p);
 				peer_map.erase(p->getID());
@@ -146,6 +147,7 @@ namespace bt
  			if ( p->isSeeder() )
 			{
 				cnt->decBitSet(p->getBitSet());
+				updateAvailableChunks();
  				p->kill();
 				i = peer_list.erase(i);
 				killed.append(p);
@@ -333,6 +335,14 @@ namespace bt
 		// so that the next update in TorrentControl
 		// will be forced to do the choking
 		killed.append(0);
+	}
+	
+	void PeerManager::updateAvailableChunks()
+	{
+		for (Uint32 i = 0;i < available_chunks.getNumBits();i++)
+		{
+			available_chunks.set(i,cnt->get(i) > 0);
+		}
 	}
 }
 #include "peermanager.moc"
