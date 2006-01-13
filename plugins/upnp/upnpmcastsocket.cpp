@@ -71,12 +71,6 @@ namespace kt
 		if (p.isNull())
 			return;
 		
-		Out() << "UPnPMCastSocket : got packet" << endl;
-		Out() << "Sender : " << p.address().toString() << endl;
-		Out() << "Data (" << p.length() << ") : " << endl;
-		Out() << QString(p.data()) << endl;
-		Out() << endl;
-		
 		// try to make a router of it
 		UPnPRouter* r = parseResponse(p.data());
 		if (r)
@@ -95,6 +89,15 @@ namespace kt
 				routers.insert(r->getServer(),r);
 				discovered(r);
 			}
+		}
+		else
+		{
+			Out() << "UPnPMCastSocket : got packet" << endl;
+			Out() << "Sender : " << p.address().toString() << endl;
+			Out() << "Data (" << p.length() << ") : " << endl;
+			Out() << QString(p.data()) << endl;
+			Out() << endl;
+			Out() << "Please send the log file to the KTorrent development if you see this message" << endl;
 		}
 	}
 	
@@ -115,7 +118,7 @@ namespace kt
 		for (Uint32 i = 1;i < lines.count();i++)
 		{
 			line = lines[i];
-			if (line.startsWith("Location"))
+			if (line.startsWith("Location") || line.startsWith("LOCATION") || line.startsWith("location"))
 			{
 				location = line.mid(line.find(':') + 1);
 				if (!location.isValid())
@@ -125,7 +128,7 @@ namespace kt
 				}
 				Out() << "Location : " << location << endl;
 			}
-			else if (line.startsWith("Server"))
+			else if (line.startsWith("Server") || line.startsWith("server") || line.startsWith("SERVER"))
 			{
 				server = line.mid(line.find(':') + 1).stripWhiteSpace();
 				if (server.length() == 0)
