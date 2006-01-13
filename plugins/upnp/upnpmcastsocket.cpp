@@ -90,7 +90,7 @@ namespace kt
 				discovered(r);
 			}
 		}
-		else
+		/*else
 		{
 			Out() << "UPnPMCastSocket : got packet" << endl;
 			Out() << "Sender : " << p.address().toString() << endl;
@@ -98,7 +98,7 @@ namespace kt
 			Out() << QString(p.data()) << endl;
 			Out() << endl;
 			Out() << "Please send the log file to the KTorrent development if you see this message" << endl;
-		}
+	}*/
 	}
 	
 	UPnPRouter* UPnPMCastSocket::parseResponse(const QByteArray & arr)
