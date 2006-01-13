@@ -135,6 +135,14 @@ namespace kt
 		virtual void addBlockedIP(QString& ip) = 0;
 		
 		/**
+		 * Removes IP range from IPBlocklist
+		 * @param ip QString reference to single IP or IP range. For example:
+		 * single - 127.0.0.5
+		 * range - 127.0.*.*
+		 **/
+		virtual void removeBlockedIP(QString& ip) = 0;
+		
+		/**
 		 * Find the next free torX dir.
 		 * @return Path to the dir (including the torX part)
 		 */

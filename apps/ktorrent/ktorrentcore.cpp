@@ -529,6 +529,12 @@ void KTorrentCore::addBlockedIP(QString& ip)
 	filter.addRange(ip);
 }
 
+void KTorrentCore::removeBlockedIP(QString& ip)
+{
+	IPBlocklist& filter = IPBlocklist::instance();
+	filter.removeRange(ip);
+}
+
 bt::QueueManager* KTorrentCore::getQueueManager()
 {
 	return this->qman;

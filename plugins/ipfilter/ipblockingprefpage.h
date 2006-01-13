@@ -23,6 +23,7 @@
 
 #include <interfaces/prefpageinterface.h>
 #include "ipblockingpref.h"
+#include "ipfilterplugin.h"
 #include <interfaces/coreinterface.h>
 #include <qthread.h>
 
@@ -30,17 +31,19 @@ class KProgress;
 
 namespace kt
 {
+	class IPFilterPlugin;
 	
 	class ConvertThread : public QThread
 	{
 		public:
 			
-			ConvertThread(KProgress* kp, QLabel* lbl );
+			ConvertThread(KProgress* kp, QLabel* lbl, IPFilterPlugin* p);
 			virtual void run();
 			
 		private:
 			KProgress* progress;
 			QLabel* lblProgress;
+			IPFilterPlugin* m_plugin;
 	};
 	
 	
@@ -53,8 +56,15 @@ namespace kt
 			IPBlockingPrefPageWidget(QWidget *parent = 0);
 			void apply();
 			void convert();
+			void setPlugin(IPFilterPlugin* p);
+			
 		public slots:
     		virtual void btnDownload_clicked();
+    		virtual void checkUseKTfilter_toggled(bool);
+    		virtual void checkUseLevel1_toggled(bool);
+			
+		private:
+			IPFilterPlugin* m_plugin;
 	};
 	
 	/**
@@ -64,7 +74,7 @@ namespace kt
 	class IPBlockingPrefPage : public PrefPageInterface
 	{
 		public:
-			IPBlockingPrefPage(CoreInterface* core);
+			IPBlockingPrefPage(CoreInterface* core, IPFilterPlugin* p);
 			virtual ~IPBlockingPrefPage();
 			
 			virtual bool apply();
@@ -73,10 +83,12 @@ namespace kt
 			virtual void deleteWidget();
 			
 			void loadFilters();
+			void unloadFilters();
 
 		private:
 			CoreInterface* m_core;
 			IPBlockingPrefPageWidget* widget;
+			IPFilterPlugin* m_plugin;
 	};
 }
 #endif

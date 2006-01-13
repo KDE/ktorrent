@@ -59,10 +59,13 @@ namespace kt
 
 	void IPFilterPlugin::load()
 	{
-		pref = new IPBlockingPrefPage(getCore());
+		pref = new IPBlockingPrefPage(getCore(), this);
 		getGUI()->addPrefPage(pref);
-		pref->loadFilters();
-		loadAntiP2P();
+		
+		if(IPBlockingPluginSettings::useFilter())
+			pref->loadFilters();
+		if(IPBlockingPluginSettings::useLevel1())
+			loadAntiP2P();
 		
 		//now we need to set a pointer to the IPBlocklist
 		IPBlocklist& ipblist = IPBlocklist::instance();
@@ -79,11 +82,16 @@ namespace kt
 		delete pref;
 		pref = 0;
 		if(level1)
+		{
 			delete level1;
+			level1 = 0;
+		}
 	}
 	
 	bool IPFilterPlugin::loadAntiP2P()
 	{
+		if(level1 != 0)
+			return true;
 		level1 = new AntiP2P();
 		if(!level1->exists())
 		{
@@ -93,6 +101,19 @@ namespace kt
 		}
 		level1->loadHeader();
 		return true;
+	}
+	
+	bool IPFilterPlugin::unloadAntiP2P()
+	{
+		if(level1 != 0)
+		{
+			delete level1;
+			level1 = 0;
+			return true;
+		}
+		else
+			//anything else to check?
+			return true;
 	}
 	
 	bool IPFilterPlugin::isBlockedIP(QString& ip)

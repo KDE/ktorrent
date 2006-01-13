@@ -14,5 +14,13 @@
 			<label>Level1 filter url</label>
 			<default></default>
 		</entry>
+		<entry name="useLevel1" type="Bool">
+			<label>Use level1 filter?</label>
+			<default>FALSE</default>
+		</entry>
+		<entry name="useFilter" type="Bool">
+			<label>Use KTorrent filter?</label>
+			<default>FALSE</default>
+		</entry>
 	</group>
 </kcfg>

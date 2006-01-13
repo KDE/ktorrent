@@ -168,6 +168,9 @@ public:
 	///Inserts blocked IP range into IPBlocklist
 	void addBlockedIP(QString& ip);
 	
+	///Removes blocked IP range from IPBlocklist
+	void removeBlockedIP(QString& ip);
+	
 	/**
 	 * Find the next free torX dir.
 	 * @return Path to the dir (including the torX part)

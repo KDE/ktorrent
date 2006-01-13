@@ -39,6 +39,7 @@
 
 #include <qthread.h>
 #include <qlabel.h>
+#include <qcheckbox.h>
 
 using namespace bt;
 
@@ -77,10 +78,15 @@ namespace kt
 		return block;
 	}
 
-	ConvertThread::ConvertThread(KProgress* kp, QLabel* lbl) : QThread()
+	ConvertThread::ConvertThread(KProgress* kp, QLabel* lbl, IPFilterPlugin* p) : QThread()
 	{
 		progress = kp;
 		lblProgress = lbl;
+		m_plugin = p;
+		
+		//Unload level1 filter to prevent eventual crashes
+		if(m_plugin)
+			m_plugin->unloadAntiP2P();
 	}
 
 	void ConvertThread::run()
@@ -108,7 +114,10 @@ namespace kt
 			source.close();
 		}
 		else
+		{
 			Out() << "Cannot find level1.txt" << endl;
+			return;
+		}
 
 		lblProgress->setText("Converting...");
 
@@ -141,6 +150,9 @@ namespace kt
 
 		target.close();
 		progress->hide();
+		//reload level1 filter
+		if(m_plugin)
+			m_plugin->loadAntiP2P();
 		delete this;
 	}
 
@@ -150,7 +162,38 @@ namespace kt
 		m_url->setURL(IPBlockingPluginSettings::filterURL());
 		if (m_url->url() == "")
 			m_url->setURL(QString("http://www.bluetack.co.uk/config/antip2p.txt"));
+		
+		bool use_level1 = IPBlockingPluginSettings::useLevel1();
+		bool use_filter = IPBlockingPluginSettings::useFilter();
+		checkUseLevel1->setChecked(use_level1);
+		checkUseKTfilter->setChecked(use_filter);
+		
+		if(use_filter)
+		{
+			lbl_status1->setText(i18n("Status: Loaded and running."));
+			m_url->setEnabled(true);
+			btnDownload->setEnabled(true);
+		}
+		else
+		{
+			lbl_status1->setText(i18n("Status: Not loaded."));
+			m_url->setEnabled(false);
+			btnDownload->setEnabled(false);
+		}
+		
+		if(use_level1)
+		{
+			lbl_status2->setText(i18n("Status: Loaded and running."));
+			m_filter->setEnabled(true);
+		}
+		else
+		{
+			lbl_status2->setText(i18n("Status: Not loaded."));
+			m_filter->setEnabled(false);
+		}
+		
 		kProgress1->hide();
+		m_plugin = 0;
 	}
 
 	void IPBlockingPrefPageWidget::apply()
@@ -158,7 +201,33 @@ namespace kt
 		KURLRequester* filter = m_filter;
 		IPBlockingPluginSettings::setFilterFile(filter->url());
 		IPBlockingPluginSettings::setFilterURL(m_url->url());
+		IPBlockingPluginSettings::setUseLevel1(checkUseLevel1->isChecked());
+		IPBlockingPluginSettings::setUseFilter(checkUseKTfilter->isChecked());
 		IPBlockingPluginSettings::writeConfig();
+		
+		if(checkUseLevel1->isChecked())
+		{
+			QFile target(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat");
+			if(target.exists())
+				lbl_status1->setText(i18n("Status: Loaded and running."));
+			else
+				lbl_status1->setText(i18n("Status: <font color=\"#ff0000\">Filter file not found.</font> Download and convert filter file."));
+		}
+		else
+			lbl_status1->setText(i18n("Status: Not loaded."));
+		
+		if(checkUseKTfilter->isChecked())
+		{
+			QString filter = IPBlockingPluginSettings::filterFile();
+			if(!filter.isEmpty())
+			{
+				lbl_status2->setText("Status: Loaded and running.");
+			}
+			else
+				lbl_status2->setText("Status: <font color=\"#ff0000\">Filter file not found.</font> Choose one.");
+		}
+		else
+			lbl_status2->setText(i18n("Status: Not loaded."));
 	}
 
 	void IPBlockingPrefPageWidget::btnDownload_clicked()
@@ -187,6 +256,35 @@ namespace kt
 		}
 		convert();
 	}
+	
+	void IPBlockingPrefPageWidget::checkUseLevel1_toggled(bool check)
+	{
+		if(check)
+		{
+			m_url->setEnabled(true);
+			btnDownload->setEnabled(true);
+		}
+		else
+		{
+			lbl_status1->setText("");
+			m_url->setEnabled(false);
+			btnDownload->setEnabled(false);
+		}
+	}
+	
+	void IPBlockingPrefPageWidget::checkUseKTfilter_toggled(bool check)
+	{
+		if(check)
+		{
+			m_filter->setEnabled(true);
+		}
+		else
+		{
+			lbl_status2->setText("");
+			m_filter->setEnabled(false);
+		}
+	}
+
 
 	void IPBlockingPrefPageWidget::convert()
 	{
@@ -196,12 +294,20 @@ namespace kt
 			if((KMessageBox::questionYesNo(this,i18n("Filter file (level1.dat) already exists, do you want to convert it again?"),i18n("File Exists")) == 4))
 				return;
 		}
-		ConvertThread* ct = new ConvertThread(kProgress1, lbl_progress);
+		ConvertThread* ct = new ConvertThread(kProgress1, lbl_progress, m_plugin);
 		ct->start(QThread::LowPriority);
 	}
+	
+	void IPBlockingPrefPageWidget::setPlugin(IPFilterPlugin* p)
+	{
+		m_plugin = p;
+	}
+	
+	
+	////////////////////////////////////////////////////////////////////////////////////
 
-	IPBlockingPrefPage::IPBlockingPrefPage(CoreInterface* core)
-	: PrefPageInterface(i18n("IPBlocking Filter"), i18n("IPBlocking Filter Options"), KGlobal::iconLoader()->loadIcon("filter",KIcon::NoGroup)), m_core(core)
+	IPBlockingPrefPage::IPBlockingPrefPage(CoreInterface* core, IPFilterPlugin* p)
+	: PrefPageInterface(i18n("IPBlocking Filter"), i18n("IPBlocking Filter Options"), KGlobal::iconLoader()->loadIcon("filter",KIcon::NoGroup)), m_core(core), m_plugin(p)
 	{
 		widget = 0;
 	}
@@ -212,7 +318,17 @@ namespace kt
 	bool IPBlockingPrefPage::apply()
 	{
 		widget->apply();
-		loadFilters();
+		
+		if(IPBlockingPluginSettings::useFilter())
+			loadFilters();
+		else
+			unloadFilters();
+		
+		if(IPBlockingPluginSettings::useLevel1())
+			m_plugin->loadAntiP2P();
+		else
+			m_plugin->unloadAntiP2P();
+		
 		return true;
 	}
 
@@ -227,7 +343,6 @@ namespace kt
 			QFile dat(listURL);
 			dat.open(IO_ReadOnly);
 
-			QString trt;
 			QTextStream stream( &dat );
 			QString line;
 			int i=0;
@@ -243,9 +358,36 @@ namespace kt
 		
 	}
 
+	void IPBlockingPrefPage::unloadFilters()
+	{
+		/** UNLOAD KT FILTER LIST **/
+		QString filter = IPBlockingPluginSettings::filterFile();
+		if(!filter.isEmpty())
+		{
+			//unload list
+			QString listURL = IPBlockingPluginSettings::filterFile();
+			QFile dat(listURL);
+			dat.open(IO_ReadOnly);
+
+			QTextStream stream( &dat );
+			QString line;
+			int i=0;
+			while ( !stream.atEnd() && i < MAX_RANGES )
+			{
+				line = stream.readLine();
+				m_core->removeBlockedIP(line);
+				++i;
+			}
+			Out() << "Unloaded " << i << " blocked IP ranges." << endl;
+			dat.close();
+		}
+		
+	}
+	
 	void IPBlockingPrefPage::createWidget(QWidget* parent)
 	{
 		widget = new IPBlockingPrefPageWidget(parent);
+		widget->setPlugin(m_plugin);
 	}
 
 	void IPBlockingPrefPage::deleteWidget()

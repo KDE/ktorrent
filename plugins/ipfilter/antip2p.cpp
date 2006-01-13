@@ -60,12 +60,15 @@ namespace kt
 			file = 0;
 			return;
 		}
+		Out() << "Loading Anti-P2P filter..." << endl;
   	}
 
   	AntiP2P::~AntiP2P()
   	{
 		if(file)
 			delete file;
+		
+		Out() << "Anti-P2P filter unloaded." << endl;
 	}
 	
 	void AntiP2P::loadHeader()
