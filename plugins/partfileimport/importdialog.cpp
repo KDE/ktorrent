@@ -133,13 +133,18 @@ namespace kt
 					linkTorFile(cache_dir,data_url,tor.getFile(i).getPath());
 				}
 				
+				saveStats(tor_dir + "stats",data_url);
 			}
 			else
 			{
 				// single file, just symlink the data_url to tor_dir/cache
 				bt::SymLink(data_url.path(),tor_dir + "cache");
+				QString durl = data_url.path();
+				int ds = durl.findRev(bt::DirSeparator());
+				durl = durl.left(ds);
+				saveStats(tor_dir + "stats",durl);
 			}
-			saveStats(tor_dir + "stats",data_url);
+			
 			// everything went OK, so load the whole shabang and start downloading
 			core->loadExistingTorrent(tor_dir);
 		}

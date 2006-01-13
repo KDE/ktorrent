@@ -47,6 +47,9 @@ namespace bt
 	
 	Uint32 PeerUploader::update(ChunkManager & cman,Uint32 opt_unchoked)
 	{
+		if (peer->areWeChoked())
+			return 0;
+		
 		Uint32 uploaded = 0;
 		std::set<Uint32> grabbed;
 
@@ -54,7 +57,7 @@ namespace bt
 		uploaded += pw.update();
 		
 		
-		if (peer->isSnubbed() && !peer->isChoked() &&
+		if (peer->isSnubbed() && !peer->areWeChoked() &&
 			cman.chunksLeft() != 0 && peer->getID() != opt_unchoked)
 			return 0;
 	

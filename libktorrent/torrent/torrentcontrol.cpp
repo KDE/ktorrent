@@ -174,6 +174,16 @@ namespace bt
 			DownloadCap::instance().update(stats.download_rate);
 			UploadCap::instance().update();
 			updateStats();
+			if (stats.download_rate > 0)
+				stalled_timer.update();
+			
+			// do a manual update if we are stalled for more then 2 minutes
+			if (stalled_timer.getElapsedSinceUpdate() > 120000)
+			{
+				Out() << "Stalled for to long, time to get some fresh blood" << endl;
+				tracker->manualUpdate();
+				stalled_timer.update();
+			}
 		}
 		catch (Error & e)
 		{
@@ -228,6 +238,7 @@ namespace bt
 		stats_save_timer.update();
 		tracker->start();
 		time_started_ul = time_started_dl = QDateTime::currentDateTime();
+		stalled_timer.update();
 	}
 
 	void TorrentControl::stop(bool user)

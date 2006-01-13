@@ -219,7 +219,7 @@ namespace bt
 		Uploader* up;
 		Choker* choke;
 		
-		Timer choker_update_timer,stats_save_timer;
+		Timer choker_update_timer,stats_save_timer,stalled_timer;
 		
 		QString datadir,old_datadir,outputdir;
 		QString error_msg,short_error_msg;
