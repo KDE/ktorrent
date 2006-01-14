@@ -134,10 +134,9 @@ namespace bt
 		{
 			PeerDownloader* pd = pman.getPeer(i)->getPeerDownloader();
 	
-			if (!pd->isNull() && !pd->isChoked() && pd->getNumRequests() < pd->getMaximumOutstandingReqs() - 2)
+			if (!pd->isNull() && !pd->isChoked() && pd->getNumGrabbed() < pd->getMaxChunkDonwloads())
 			{
-				//if (pd->getNumGrabbed() == 0 || (pd->getNumGrabbed() == 1 && pd->getNumRequests() < 8))
-					downloadFrom(pd);
+				downloadFrom(pd);
 			}
 		}
 	}
@@ -154,7 +153,7 @@ namespace bt
 					
 				if (!pd->isNull() && !pd->isChoked() &&
 					pd->hasChunk(cd->getChunk()->getIndex()) &&
-					pd->getNumRequests() < pd->getMaximumOutstandingReqs() - 2)
+					pd->getNumGrabbed() < pd->getMaxChunkDonwloads())
 				{
 					cd->assignPeer(pd);
 				}
@@ -215,7 +214,7 @@ namespace bt
 					tmon->downloadStarted(cd);
 			}
 		}
-		else 
+		else if (limit_exceeded)
 		{ 
           // If the peer hasn't got a chunk we want, 
           // try to assign it to a chunk we are currently downloading 

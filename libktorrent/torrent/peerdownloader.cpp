@@ -264,12 +264,26 @@ namespace bt
 	{
 		// get the download rate in KB/sec
 		double rate_kbs = (double)peer->getDownloadRate() / 1024.0;
+		// per 15 KB/s we can assign one downloader
 		Uint32 num_extra = (Uint32)floor(rate_kbs / 16.0);
+		
 		// we have a maximum of 25 outstanding chunk requests
 		if (num_extra > max_outstanding_reqs)
 			num_extra = max_outstanding_reqs;
 		
 		return 5 + num_extra;
+	}
+
+	Uint32 PeerDownloader::getMaxChunkDonwloads() const
+	{
+		// get the download rate in KB/sec
+		double rate_kbs = (double)peer->getDownloadRate() / 1024.0;
+		// per 15 KB/s we can assign one downloader
+		Uint32 num_extra = (Uint32)floor(rate_kbs / 15.0);
+		// if we nearly finished the last chunk increment num_extra
+		if (getMaximumOutstandingReqs() <= 2)
+			num_extra++;
+		return 1 + num_extra;
 	}
 	
 	Uint32 PeerDownloader::max_outstanding_reqs = 20;

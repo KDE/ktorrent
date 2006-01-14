@@ -58,7 +58,7 @@ void TrayIcon::finished(TorrentInterface* tc)
 {
 	const TorrentStats & s = tc->getStats();
 	double speed_up = (double)s.bytes_uploaded / 1024.0;
-	double speed_down = (double)s.bytes_downloaded/ 1024.0;
+	double speed_down = (double)(s.bytes_downloaded - s.imported_bytes)/ 1024.0;
 	
 	QString msg = i18n("<b>%1</b> has completed downloading."
 			"<br>Average speed: %2 DL / %3 UL.")

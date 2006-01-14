@@ -51,6 +51,8 @@ namespace kt
 
 	struct TorrentStats
 	{
+		/// The number of bytes imported (igore these for average speed)
+		Uint64 imported_bytes;
 		/// Total number of bytes downloaded.
 		Uint64 bytes_downloaded;
 		/// Total number of bytes uploaded.

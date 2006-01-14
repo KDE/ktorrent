@@ -63,6 +63,7 @@ namespace bt
 	TorrentControl::TorrentControl()
 			: tor(0),tracker(0),cman(0),pman(0),down(0),up(0),choke(0),tmon(0)
 	{
+		stats.imported_bytes = 0;
 		stats.running = false;
 		stats.started = false;
 		stats.stopped_by_error = false;
@@ -636,6 +637,7 @@ namespace bt
 		
 		out << "PRIORITY=" << priority << ::endl;
 		out << "AUTOSTART=" << stats.autostart << ::endl;
+		out << QString("IMPORTED=%1").arg(stats.imported_bytes) << ::endl;
 	}
 
 	void TorrentControl::loadStats()
@@ -707,6 +709,18 @@ namespace bt
 					Out() << "Warning : Can't get autostart bit out of line : "
 							<< line << endl;
 					stats.autostart = true;
+				}
+			}
+			else if (line.startsWith("IMPORTED="))
+			{
+				bool ok = true;
+				Uint64 p = line.mid(9).toULongLong(&ok);
+				if(ok)
+					stats.imported_bytes = p;
+				else
+				{
+					Out() << "Warning : Can't get imported_bytes out of line : "
+							<< line << endl;
 				}
 			}
 		}

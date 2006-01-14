@@ -145,11 +145,8 @@ namespace bt
 		{
 			Peer* p = *i;
  			if ( p->isSeeder() )
-			{
  				p->kill();
-			}
-			else
-				i++;
+			i++;
 		}
 	}
 

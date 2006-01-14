@@ -349,7 +349,7 @@ namespace kt
 		{
 			double r = (double)s.bytes_uploaded / 1024.0;
 			m_avg_up->setText(KBytesPerSecToString(r / secs));
-			r = (double)s.bytes_downloaded/ 1024.0;
+			r = (double)(s.bytes_downloaded - s.imported_bytes)/ 1024.0;
 			secs = curr_tc->getRunningTimeDL();
 			m_avg_down->setText(KBytesPerSecToString(r / secs));
 		}
