@@ -122,89 +122,90 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="KProgress" row="3" column="0" rowspan="1" colspan="2">
+                <widget class="QCheckBox" row="0" column="0">
                     <property name="name">
-                        <cstring>kProgress1</cstring>
+                        <cstring>checkUseLevel1</cstring>
                     </property>
-                    <property name="percentageVisible">
-                        <bool>true</bool>
+                    <property name="text">
+                        <string>Use level&amp;1 filter?</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+1</string>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
+                <widget class="QLayoutWidget" row="1" column="0">
                     <property name="name">
-                        <cstring>layout9</cstring>
+                        <cstring>layout5</cstring>
                     </property>
-                    <vbox>
+                    <hbox>
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLayoutWidget">
+                        <widget class="QLabel">
                             <property name="name">
-                                <cstring>layout5</cstring>
+                                <cstring>textLabel1_3</cstring>
                             </property>
-                            <hbox>
-                                <property name="name">
-                                    <cstring>unnamed</cstring>
-                                </property>
-                                <widget class="QLabel">
-                                    <property name="name">
-                                        <cstring>textLabel1_3</cstring>
-                                    </property>
-                                    <property name="text">
-                                        <string>IP filter file:</string>
-                                    </property>
-                                </widget>
-                                <widget class="KURLRequester">
-                                    <property name="name">
-                                        <cstring>m_url</cstring>
-                                    </property>
-                                    <property name="url" stdset="0">
-                                        <string>http://www.bluetack.co.uk/modules.php?name=Downloads&amp;d_op=getit&amp;lid=8</string>
-                                    </property>
-                                    <property name="showLocalProtocol">
-                                        <bool>false</bool>
-                                    </property>
-                                </widget>
-                            </hbox>
+                            <property name="text">
+                                <string>IP filter file:</string>
+                            </property>
                         </widget>
-                        <widget class="QLayoutWidget">
+                        <widget class="KURLRequester">
                             <property name="name">
-                                <cstring>layout3</cstring>
+                                <cstring>m_url</cstring>
                             </property>
-                            <hbox>
-                                <property name="name">
-                                    <cstring>unnamed</cstring>
-                                </property>
-                                <spacer>
-                                    <property name="name">
-                                        <cstring>spacer3</cstring>
-                                    </property>
-                                    <property name="orientation">
-                                        <enum>Horizontal</enum>
-                                    </property>
-                                    <property name="sizeType">
-                                        <enum>Expanding</enum>
-                                    </property>
-                                    <property name="sizeHint">
-                                        <size>
-                                            <width>361</width>
-                                            <height>20</height>
-                                        </size>
-                                    </property>
-                                </spacer>
-                                <widget class="QPushButton">
-                                    <property name="name">
-                                        <cstring>btnDownload</cstring>
-                                    </property>
-                                    <property name="text">
-                                        <string>Dow&amp;nload/Convert</string>
-                                    </property>
-                                </widget>
-                            </hbox>
+                            <property name="url" stdset="0">
+                                <string>http://www.bluetack.co.uk/modules.php?name=Downloads&amp;d_op=getit&amp;lid=8</string>
+                            </property>
+                            <property name="showLocalProtocol">
+                                <bool>false</bool>
+                            </property>
                         </widget>
-                    </vbox>
+                    </hbox>
                 </widget>
-                <spacer row="2" column="1">
+                <widget class="QLayoutWidget" row="2" column="0">
+                    <property name="name">
+                        <cstring>layout3</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer3</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>361</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QPushButton">
+                            <property name="name">
+                                <cstring>btnDownload</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Dow&amp;nload/Convert</string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QLabel" row="3" column="0">
+                    <property name="name">
+                        <cstring>lbl_status1</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+                <spacer row="4" column="0">
                     <property name="name">
                         <cstring>spacer6</cstring>
                     </property>
@@ -221,50 +222,6 @@
                         </size>
                     </property>
                 </spacer>
-                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>checkUseLevel1</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Use level&amp;1 filter?</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+1</string>
-                    </property>
-                </widget>
-                <spacer row="4" column="1">
-                    <property name="name">
-                        <cstring>spacer5_2</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QLabel" row="2" column="0">
-                    <property name="name">
-                        <cstring>lbl_progress</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="4" column="0">
-                    <property name="name">
-                        <cstring>lbl_status1</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
             </grid>
         </widget>
     </grid>
@@ -299,7 +256,6 @@
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
-    <includehint>kprogress.h</includehint>
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>

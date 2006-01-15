@@ -33,20 +33,6 @@ namespace kt
 {
 	class IPFilterPlugin;
 	
-	class ConvertThread : public QThread
-	{
-		public:
-			
-			ConvertThread(KProgress* kp, QLabel* lbl, IPFilterPlugin* p);
-			virtual void run();
-			
-		private:
-			KProgress* progress;
-			QLabel* lblProgress;
-			IPFilterPlugin* m_plugin;
-	};
-	
-	
 	/**
 	@author Ivan Vasic
 	*/
@@ -57,6 +43,9 @@ namespace kt
 			void apply();
 			void convert();
 			void setPlugin(IPFilterPlugin* p);
+			
+			//used with ConvertThread to enable/disable controls while converting
+			void setConverting(bool enable);
 			
 		public slots:
     		virtual void btnDownload_clicked();

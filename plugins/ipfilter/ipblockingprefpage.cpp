@@ -22,7 +22,9 @@
 #include "ipblockingpref.h"
 #include "ipfilterpluginsettings.h"
 #include "ipfilterplugin.h"
+#include "convertdialog.h"
 
+#include <kapplication.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
@@ -40,6 +42,10 @@
 #include <qthread.h>
 #include <qlabel.h>
 #include <qcheckbox.h>
+#include <qregexp.h>
+#include <qvalidator.h>
+#include <qlayout.h>
+#include <qdialog.h>
 
 using namespace bt;
 
@@ -47,115 +53,6 @@ using namespace bt;
 
 namespace kt
 {
-
-	typedef struct
-	{
-		Uint32 ip1;
-		Uint32 ip2;
-	} ipblock;
-
-
-	Uint32 toUint32(QString& ip)
-	{
-		bool test;
-		Uint32 ret = ip.section('.',0,0).toULongLong(&test);
-		ret <<= 8;
-		ret |= ip.section('.',1,1).toULong(&test);
-		ret <<= 8;
-		ret |= ip.section('.',2,2).toULong(&test);
-		ret <<= 8;
-		ret |= ip.section('.',3,3).toULong(&test);
-
-		return ret;
-	}
-
-	ipblock toBlock(QString& range)
-	{
-		ipblock block;
-		QStringList ls = QStringList::split('-', range);
-		block.ip1 = toUint32(ls[0]);
-		block.ip2 = toUint32(ls[1]);
-		return block;
-	}
-
-	ConvertThread::ConvertThread(KProgress* kp, QLabel* lbl, IPFilterPlugin* p) : QThread()
-	{
-		progress = kp;
-		lblProgress = lbl;
-		m_plugin = p;
-		
-		//Unload level1 filter to prevent eventual crashes
-		if(m_plugin)
-			m_plugin->unloadAntiP2P();
-	}
-
-	void ConvertThread::run()
-	{
-		QFile source(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.txt");
-		QFile target(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat");
-
-		/**    READ INPUT FILE  **/
-		QStringList list;
-		lblProgress->setText("Loading txt file...");
-		progress->show();
-		ulong source_size = source.size();
-		if ( source.open( IO_ReadOnly ) )
-		{
-			QTextStream stream( &source );
-
-			int i = 0;
-			while ( !stream.atEnd() ) {
-				QString line = stream.readLine();
-				list += line.section( ':' , -1 );
-				i += line.length() * sizeof(char); //rough estimation of string size
-				progress->setProgress(i*100/source_size);
-				++i;
-			}
-			source.close();
-		}
-		else
-		{
-			Out() << "Cannot find level1.txt" << endl;
-			return;
-		}
-
-		lblProgress->setText("Converting...");
-
-		ulong blocks = list.count();
-
-		/** WRITE TO OUTPUT **/
-		if (!target.open( IO_WriteOnly ))
-		{
-			Out() << "Unable to open file for writing" << endl;
-			return ;
-		}
-
-		Out() << "Loading finished. Starting conversion..." << endl;
-
-		for(ulong i=0; i<blocks; ++i)
-		{
-			ipblock block = toBlock(list[i]);
-			target.writeBlock( (char*) &block, sizeof(ipblock) );
-			if(i%1000 == 0)
-			{
-				progress->setProgress((int)100*i/blocks);
-				if(i%10000==0)
-					Out() << "Block " << i << " written." << endl;
-			}
-			if(i==30000)
-				continue;
-		}
-		Out() << "Finished converting." << endl;
-		lblProgress->setText("File converted.");
-
-		target.close();
-		progress->hide();
-		//reload level1 filter
-		if(m_plugin)
-			m_plugin->loadAntiP2P();
-		delete this;
-	}
-
 	IPBlockingPrefPageWidget::IPBlockingPrefPageWidget(QWidget* parent) : IPBlockingPref(parent)
 	{
 		m_filter->setURL(IPBlockingPluginSettings::filterFile());
@@ -192,7 +89,6 @@ namespace kt
 			m_filter->setEnabled(false);
 		}
 		
-		kProgress1->hide();
 		m_plugin = 0;
 	}
 
@@ -235,23 +131,36 @@ namespace kt
 		QString target(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.txt");
 		QFile target_file(target);
 		KURL url(m_url->url());
+		KURL dest(target);
 
 		bool download = true;
 
 		if(target_file.exists())
+		{
 			if((KMessageBox::questionYesNo(this, i18n("Selected file already exists, do you want to download it again?"),i18n("File Exists")) == 4))
 				download = false;
+			else
+				KIO::NetAccess::del(target, NULL);
+		}
 
 		if(download)
 		{
-			if (KIO::NetAccess::download(url,target,NULL))
+			if(!url.isLocalFile())
 			{
-				//Level1 list successfully downloaded, remove temporary file
-				KIO::NetAccess::removeTempFile(target);
+				if (KIO::NetAccess::download(url,target,NULL))
+				{
+					//Level1 list successfully downloaded, remove temporary file
+					KIO::NetAccess::removeTempFile(target);
+				}
+				else
+				{
+					KMessageBox::error(0,KIO::NetAccess::lastErrorString(),i18n("Error"));
+				}
 			}
 			else
 			{
-				KMessageBox::error(0,KIO::NetAccess::lastErrorString(),i18n("Error"));
+				if (!KIO::NetAccess::file_copy(url,dest, -1, true))
+					KMessageBox::error(0,KIO::NetAccess::lastErrorString(),i18n("Error"));
 			}
 		}
 		convert();
@@ -285,7 +194,6 @@ namespace kt
 		}
 	}
 
-
 	void IPBlockingPrefPageWidget::convert()
 	{
 		QFile target(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat");
@@ -293,14 +201,23 @@ namespace kt
 		{
 			if((KMessageBox::questionYesNo(this,i18n("Filter file (level1.dat) already exists, do you want to convert it again?"),i18n("File Exists")) == 4))
 				return;
+			else
+				KIO::NetAccess::del(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat", NULL);
 		}
-		ConvertThread* ct = new ConvertThread(kProgress1, lbl_progress, m_plugin);
-		ct->start(QThread::LowPriority);
+		ConvertDialog dlg(m_plugin);
+		dlg.exec();
 	}
 	
 	void IPBlockingPrefPageWidget::setPlugin(IPFilterPlugin* p)
 	{
 		m_plugin = p;
+	}
+	
+	void IPBlockingPrefPageWidget::setConverting(bool enable)
+	{
+		btnDownload->setEnabled(enable);
+		groupBox2->setEnabled(enable);
+		lbl_status1->setText("");
 	}
 	
 	

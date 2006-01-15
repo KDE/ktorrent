@@ -1,9 +1,11 @@
 INCLUDES = $(all_includes) -I$(srcdir)/../../libktorrent
 METASOURCES = AUTO
 kde_module_LTLIBRARIES = ktipfilterplugin.la
-noinst_HEADERS = ipfilterplugin.h ipblockingprefpage.h antip2p.h
+noinst_HEADERS = ipfilterplugin.h ipblockingprefpage.h antip2p.h \
+	convertdialog.h
 ktipfilterplugin_la_SOURCES = ipfilterplugin.cpp ipblockingpref.ui \
-			ipblockingprefpage.cpp ipfilterpluginsettings.kcfgc antip2p.cpp
+	ipblockingprefpage.cpp ipfilterpluginsettings.kcfgc antip2p.cpp convert_dlg.ui \
+	convertdialog.cpp
 
 # Libs needed by the plugin
 ktipfilterplugin_la_LIBADD = $(LIB_KHTML) $(LIB_KPARTS) \
