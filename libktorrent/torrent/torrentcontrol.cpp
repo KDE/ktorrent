@@ -355,13 +355,24 @@ namespace bt
 			// if it is not an old download
 			try
 			{
+				// in case of error copy torX dir to migrate-failed-tor
+				QString dd = datadir;
+				int pos = dd.findRev("tor");
+				if (pos != - 1)
+				{
+					dd = dd.replace(pos,3,"migrate-failed-tor");
+					Out() << "Copying " << datadir << " to " << dd << endl;
+					bt::CopyDir(datadir,dd,true);
+				}
+				
 				migrateTorrent(default_save_dir);
+				// delete backup
+				if (pos != - 1)
+					bt::Delete(dd);
 			}
 			catch (Error & err)
 			{
-				// in case of error rename torX dir to migrate-failed-tor
-				QString dd = datadir.replace("tor","migrate-failed-tor");
-				bt::Move(datadir,dd,true);
+				
 				throw Error(
 						i18n("Cannot migrate %1 : %2")
 						.arg(tor->getNameSuggestion()).arg(err.toString()));

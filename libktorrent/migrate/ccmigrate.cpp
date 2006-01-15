@@ -117,7 +117,7 @@ namespace bt
 		
 		// open a new file in the /tmp dir
 		File new_cc;
-		QString tmp = "/tmp/kt_current_chunks";
+		QString tmp = current_chunks + ".tmp";
 		if (!new_cc.open(tmp,"wb"))
 			throw Error(i18n("Cannot open file %1 : %2").arg(tmp).arg(old_cc.errorString()));
 		

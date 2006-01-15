@@ -59,6 +59,14 @@ namespace bt
 	void CopyFile(const QString & src,const QString & dst,bool nothrow = false);
 	
 	/**
+	 * Copy a file or directory
+	 * @param src The source file
+	 * @param dst The destination dir/file
+	 * @param nothrow wether or not we shouldn't throw an Error upon failure
+	 */
+	void CopyDir(const QString & src,const QString & dst,bool nothrow = false);
+	
+	/**
 	 * Check wether a file/dir exists
 	 * @param url The file/dir
 	 * @return true if it exits

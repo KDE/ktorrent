@@ -68,7 +68,7 @@ namespace bt
 
 	void Move(const QString & src,const QString & dst,bool nothrow)
 	{
-		if (rename(QFile::encodeName(src),QFile::encodeName(dst)) < 0)
+		if (!KIO::NetAccess::move(QFile::encodeName(src),QFile::encodeName(dst),0))
 		{
 			if (!nothrow)
 				throw Error(i18n("Cannot move %1 to %2: %3")
@@ -85,6 +85,22 @@ namespace bt
 	void CopyFile(const QString & src,const QString & dst,bool nothrow)
 	{
 		if (!KIO::NetAccess::file_copy(KURL::fromPathOrURL(src),KURL::fromPathOrURL(dst)))
+		{
+			if (!nothrow)
+				throw Error(i18n("Cannot copy %1 to %2: %3")
+						.arg(src).arg(dst)
+						.arg(KIO::NetAccess::lastErrorString()));
+			else
+				Out() << QString("Error : Cannot copy %1 to %2: %3")
+						.arg(src).arg(dst)
+						.arg(KIO::NetAccess::lastErrorString()) << endl;
+	
+		}
+	}
+	
+	void CopyDir(const QString & src,const QString & dst,bool nothrow)
+	{
+		if (!KIO::NetAccess::dircopy(KURL::fromPathOrURL(src),KURL::fromPathOrURL(dst),0))
 		{
 			if (!nothrow)
 				throw Error(i18n("Cannot copy %1 to %2: %3")
