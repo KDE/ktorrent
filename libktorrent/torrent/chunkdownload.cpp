@@ -402,5 +402,20 @@ namespace bt
 		s.pieces_downloaded = num_downloaded;
 		s.total_pieces = num;
 	}
+	
+	bool ChunkDownload::isStalled() const
+	{
+		QPtrList<PeerDownloader>::const_iterator i = pdown.begin();
+		while (i != pdown.end())
+		{
+			const PeerDownloader* pd = *i;
+			// if there is one which isn't choked and snubbed
+			// we are not stalled
+			if (!pd->isChoked() && !pd->getPeer()->isSnubbed())
+				return false;
+			i++;
+		}
+		return true;
+	}
 }
 #include "chunkdownload.moc"

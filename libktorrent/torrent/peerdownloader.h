@@ -156,7 +156,7 @@ namespace bt
 		Uint32 getMaximumOutstandingReqs() const;
 		
 		/// Get the maximum number of chunk downloads
-		Uint32 getMaxChunkDonwloads() const;
+		Uint32 getMaxChunkDownloads() const;
 	public slots:
 		/**
 		 * Send a Request. Note that the DownloadCap

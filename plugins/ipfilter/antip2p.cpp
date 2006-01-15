@@ -174,7 +174,7 @@ namespace kt
 	bool AntiP2P::searchFile(IPBlock* file_blocks, Uint32& ip, int start, int end)
 	{
 		if (end == 0)
-			return -1; //empty list
+			return false; //empty list, so not found
 		
 		if (end == 1)
 		{

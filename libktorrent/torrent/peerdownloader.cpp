@@ -96,9 +96,6 @@ namespace bt
 	
 	int PeerDownloader::grab()
 	{
-		if (peer->isChoked() || grabbed >= 2)
-			return 0;
-		
 		grabbed++;
 		return grabbed;
 	}
@@ -274,7 +271,7 @@ namespace bt
 		return 5 + num_extra;
 	}
 
-	Uint32 PeerDownloader::getMaxChunkDonwloads() const
+	Uint32 PeerDownloader::getMaxChunkDownloads() const
 	{
 		// get the download rate in KB/sec
 		double rate_kbs = (double)peer->getDownloadRate() / 1024.0;
@@ -283,6 +280,10 @@ namespace bt
 		// if we nearly finished the last chunk increment num_extra
 		if (getMaximumOutstandingReqs() <= 2)
 			num_extra++;
+		// lets not overreact
+		if (num_extra > 5)
+			num_extra = 5;
+					
 		return 1 + num_extra;
 	}
 	

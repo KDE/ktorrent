@@ -133,8 +133,13 @@ namespace bt
 		for (Uint32 i = 0; i < pman.getNumConnectedPeers();++i)
 		{
 			PeerDownloader* pd = pman.getPeer(i)->getPeerDownloader();
+			
+			if (pd->isNull() || pd->isChoked())
+				continue;
 	
-			if (!pd->isNull() && !pd->isChoked() && pd->getNumGrabbed() < pd->getMaxChunkDonwloads())
+			bool ok = pd->getNumGrabbed() < pd->getMaxChunkDownloads() && 
+					pd->getNumRequests() < pd->getMaximumOutstandingReqs();
+			if (ok)
 			{
 				downloadFrom(pd);
 			}
@@ -153,7 +158,7 @@ namespace bt
 					
 				if (!pd->isNull() && !pd->isChoked() &&
 					pd->hasChunk(cd->getChunk()->getIndex()) &&
-					pd->getNumGrabbed() < pd->getMaxChunkDonwloads())
+					pd->getNumGrabbed() < pd->getMaxChunkDownloads())
 				{
 					cd->assignPeer(pd);
 				}
@@ -172,10 +177,9 @@ namespace bt
 				continue;
 
 			// if cd hasn't got a downloader or when the current
-			// downloader has snubbed him
-			// assign him pd
+			// downloader is stalled
 			const Peer* p = cd->getCurrentPeer();
-			if (cd->getNumDownloaders() == 0 || (p && p->isSnubbed()))
+			if (cd->getNumDownloaders() == 0)
 			{
 				cd->assignPeer(pd);
 				return;
@@ -214,10 +218,11 @@ namespace bt
 					tmon->downloadStarted(cd);
 			}
 		}
-		else if (limit_exceeded)
+		else if (pd->getNumGrabbed() == 0)
 		{ 
-          // If the peer hasn't got a chunk we want, 
-          // try to assign it to a chunk we are currently downloading 
+			// If the peer hasn't got a chunk we want, 
+			// try to assign it to a chunk we are currently downloading 
+			// but we only do this if it hasn't been assigned to anything
 			ChunkDownload *cdmin=NULL; 
 			for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j) 
 			{ 

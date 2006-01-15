@@ -137,6 +137,9 @@ namespace bt
 		
 		/// See if a PeerDownloader is assigned to this chunk
 		bool containsPeer(PeerDownloader *pd) {return pdown.contains(pd);} 
+		
+		/// See if the download is stalled (i.e. all downloaders are snubbed or choked)
+		bool isStalled() const;
 	private slots:
 		void sendRequests(PeerDownloader* pd);
 		void sendCancels(PeerDownloader* pd);
