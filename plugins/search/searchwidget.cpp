@@ -211,7 +211,7 @@ namespace kt
 		out << "bitoogle.com http://search.bitoogle.com/search.php?q=FOOBAR&st=t" << ::endl; 
 		out << "bytenova.org http://www.bitenova.org/search.php?search=FOOBAR&start=0&start=0&ie=utf-8&oe=utf-8" << ::endl; 
 		out << "torrentspy.com http://torrentspy.com/search.asp?query=FOOBAR" << ::endl; 
-		out << "torrentz.com http://www.torrentz.com/s.php?q=FOOBAR" << ::endl; 
+		out << "torrentz.com http://www.torrentz.com/search_FOOBAR" << ::endl; 
 	}
 	
 	

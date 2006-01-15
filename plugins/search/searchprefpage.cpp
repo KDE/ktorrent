@@ -175,7 +175,7 @@ namespace kt
 		m_items.append(se);
 		m_engines->insertItem(se);
 
-		se = new QListViewItem(m_engines, "torrentz.com", "http://www.torrentz.com/s.php?q=FOOBAR");
+		se = new QListViewItem(m_engines, "torrentz.com", "http://www.torrentz.com/search_FOOBAR");
 		m_items.append(se);
 		m_engines->insertItem(se);
 	}
