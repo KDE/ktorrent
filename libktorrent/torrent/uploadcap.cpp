@@ -90,7 +90,10 @@ namespace bt
 	void UploadCap::update()
 	{
 		if (up_queue.count() == 0)
+		{
+			timer.update();
 			return;
+		}
 		
 		// first calculate the time since the last update
 		double el = timer.getElapsedSinceUpdate();
