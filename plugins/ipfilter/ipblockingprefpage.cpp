@@ -65,7 +65,7 @@ namespace kt
 		checkUseLevel1->setChecked(use_level1);
 		checkUseKTfilter->setChecked(use_filter);
 		
-		if(use_filter)
+		if(use_level1)
 		{
 			lbl_status1->setText(i18n("Status: Loaded and running."));
 			m_url->setEnabled(true);
@@ -78,7 +78,7 @@ namespace kt
 			btnDownload->setEnabled(false);
 		}
 		
-		if(use_level1)
+		if(use_filter)
 		{
 			lbl_status2->setText(i18n("Status: Loaded and running."));
 			m_filter->setEnabled(true);
