@@ -355,20 +355,7 @@ namespace bt
 			// if it is not an old download
 			try
 			{
-				// in case of error copy torX dir to migrate-failed-tor
-				QString dd = datadir;
-				int pos = dd.findRev("tor");
-				if (pos != - 1)
-				{
-					dd = dd.replace(pos,3,"migrate-failed-tor");
-					Out() << "Copying " << datadir << " to " << dd << endl;
-					bt::CopyDir(datadir,dd,true);
-				}
-				
 				migrateTorrent(default_save_dir);
-				// delete backup
-				if (pos != - 1)
-					bt::Delete(dd);
 			}
 			catch (Error & err)
 			{
@@ -866,6 +853,16 @@ namespace bt
 	{
 		if (bt::Exists(datadir + "current_chunks") && bt::IsPreMMap(datadir + "current_chunks"))
 		{
+			// in case of error copy torX dir to migrate-failed-tor
+			QString dd = datadir;
+			int pos = dd.findRev("tor");
+			if (pos != - 1)
+			{
+				dd = dd.replace(pos,3,"migrate-failed-tor");
+				Out() << "Copying " << datadir << " to " << dd << endl;
+				bt::CopyDir(datadir,dd,true);
+			}
+				
 			bt::MigrateCurrentChunks(*tor,datadir + "current_chunks");
 			if (outputdir.isNull() && bt::IsCacheMigrateNeeded(*tor,datadir + "cache"))
 			{
@@ -892,6 +889,10 @@ namespace bt
 				
 				bt::MigrateCache(*tor,datadir + "cache",outputdir);
 			}
+			
+			// delete backup
+			if (pos != - 1)
+				bt::Delete(dd);
 		}
 	}
 	
