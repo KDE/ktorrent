@@ -57,7 +57,7 @@ void StupidWarningMessagesFromQt( QtMsgType type, const char *msg )
 static const char description[] =
     I18N_NOOP("A BitTorrent program for KDE");
 
-static const char version[] = "1.2dev";
+static const char version[] = "1.2rc2";
 
 static KCmdLineOptions options[] =
 {
