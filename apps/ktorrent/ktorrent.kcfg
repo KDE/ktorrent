@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+		http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+		
+	<kcfgfile name="ktorrentrc"/>
+	<group name="downloads">
+		<entry name="maxDownloads" type="Int">
+			<label>Maximum number of downloads (0 = no limit)</label>
+			<default>0</default>
+			<min>0</min>
+		</entry>
+		<entry name="maxSeeds" type="Int">
+			<label>Maximum number of seeds (0 = no limit)</label>
+			<default>0</default>
+			<min>0</min>
+		</entry>
+		<entry name="maxConnections" type="Int">
+			<label>Maximum number of connections per download (0 = no limit)</label>
+			<default>120</default>
+			<min>0</min>
+		</entry>
+		<entry name="maxUploadRate" type="Int">
+			<label>Maximum upload speed in KB/sec (0 = no limit)</label>
+			<default>0</default>
+			<min>0</min>
+		</entry>
+		<entry name="maxDownloadRate" type="Int">
+			<label>Maximum download speed in KB/sec (0 = no limit)</label>
+			<default>0</default>
+			<min>0</min>
+		</entry>
+		<entry name="port" type="Int">
+			<label>Port</label>
+			<default>6881</default>
+			<min>0</min>
+			<max>65535</max>
+		</entry>
+		<entry name="udpTrackerPort" type="Int">
+			<label>Port</label>
+			<default>4444</default>
+			<min>0</min>
+			<max>65535</max>
+		</entry>
+		<entry name="showSystemTrayIcon" type="Bool">
+			<label>Show a system tray icon</label>
+			<default>false</default>
+		</entry>
+		<entry name="keepSeeding" type="Bool">
+			<label>Keep seeding after download has finished</label>
+			<default>true</default>
+		</entry>
+		<entry name="tempDir" type="String">
+			<label>Folder to store temporary files</label>
+			<default code="true">QString::null</default>
+		</entry>
+		<entry name="saveDir" type="String">
+			<label>Folder to store downloaded files</label>
+			<default code="true">QString::null</default>
+		</entry>
+		<entry name="externalIP" type="String">
+			<label>IP to pass to the tracker</label>
+			<default code="true">QString::null</default>
+		</entry>
+		<entry name="memoryUsage" type="Int">
+			<label>Memory usage</label>
+			<default>0</default>
+		</entry>
+		<entry name="guiUpdateInterval" type="Int">
+			<label>GUI update interval</label>
+			<default>0</default>
+		</entry>
+	</group>
+</kcfg>

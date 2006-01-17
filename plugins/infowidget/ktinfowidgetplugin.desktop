@@ -1,0 +1,18 @@
+[Desktop Entry]
+Name=SearchPlugin
+Name[bg]=Приставка за търсене
+Name[br]=Lugent klask
+Name[da]=SøgePlugin
+Name[el]=Πρόσθετο αναζήτησης
+Name[et]=Otsimisplugin
+Name[ga]=BreiseánCuardaigh
+Name[ja]=検索プラグイン
+Name[pl]=Wtyczka wyszukiwania
+Name[pt]='Plugin' de Procura
+Name[pt_BR]=Plugin de Busca
+Name[sr]=Прикључак претраге
+Name[sr@Latn]=Priključak pretrage
+Name[sv]=Sökinsticksprogram
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktinfowidgetplugin

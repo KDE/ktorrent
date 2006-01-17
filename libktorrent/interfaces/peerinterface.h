@@ -1,0 +1,66 @@
+/***************************************************************************
+ *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ ***************************************************************************/
+#ifndef KTPEERINTERFACE_H
+#define KTPEERINTERFACE_H
+
+#include <qstring.h>
+#include <util/constants.h>
+namespace kt
+{
+
+	/**
+	 * @author Joris Guisson
+	 * @brief Interface for a Peer
+	 *
+	 * This is the interface for a Peer, it allows other classes to
+	 * get statistics about a Peer.
+	*/
+	class PeerInterface
+	{
+	public:
+		PeerInterface();
+		virtual ~PeerInterface();
+
+		struct Stats
+		{
+			/// IP address of peer (dotted notation)
+			QString ip_addresss;
+			/// The client (Azureus, BitComet, ...)
+			QString client;
+			/// Download rate (bytes/s)
+			bt::Uint32 download_rate;
+			/// Upload rate (bytes/s)
+			bt::Uint32 upload_rate;
+			/// Choked or not
+			bool choked;
+			/// Snubbed or not (i.e. we haven't recieved a piece for a minute)
+			bool snubbed;
+			/// Percentage of file which the peer has
+			float perc_of_file;
+		};
+
+		virtual const Stats & getStats() const = 0;
+		
+		virtual void kill() = 0;
+	};
+
+}
+
+#endif
