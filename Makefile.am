@@ -11,5 +11,5 @@ messages: rc.cpp
 	if test -n "$$LIST"; then \
 		$(XGETTEXT) $$LIST -o $(podir)/ktorrent.pot; \
 	fi
-#	rm -f tips.cpp
+	#	rm -f tips.cpp
 	rm -f rc.cpp
