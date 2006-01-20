@@ -58,7 +58,11 @@ namespace bt
 
 	void QueueManager::remove(kt::TorrentInterface* tc)
 	{
-		downloads.remove(tc);
+		int index = downloads.findRef(tc);
+		if(index != -1)
+			downloads.remove(index);
+		else
+			Out() << "Could not delete removed torrent control." << endl;
 	}
 
 	void QueueManager::clear()
