@@ -17,54 +17,45 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTHTTPTRACKER_H
-#define BTHTTPTRACKER_H
-
-#include <qtimer.h>
-#include "tracker.h"
-
-namespace KIO
-{
-	class Job;
-}
+#include <torrent/globals.h>
+#include <kio/netaccess.h>
+#include "waitjob.h"
+#include "log.h"
 
 namespace bt
 {
-	
 
-	/**
-	 * @author Joris Guisson
-	 * @brief Communicates with the tracker
-	 *
-	 * This class uses the HTTP protocol to communicate with the tracker.
-	 */
-	class HTTPTracker : public Tracker
+	WaitJob::WaitJob(Uint32 millis) : KIO::Job(false)
 	{
-		Q_OBJECT
-	public:
-		HTTPTracker(kt::TorrentInterface* tor,const SHA1Hash & ih,const PeerID & pid);
-		virtual ~HTTPTracker();
-		
-		virtual void doRequest(const KURL & url);
-		virtual void updateData(PeerManager* pman);
-		
-		
-	private slots:
-		void onResult(KIO::Job* j);
-		void onDataRecieved(KIO::Job* j,const QByteArray & ba);
-		void onTimeout();
+		connect(&timer,SIGNAL(timeout()),this,SLOT(timerDone()));
+		timer.start(millis,true);
+	}
 
-	private:
-		void doRequest(const QString & host,const QString & path,Uint16 p);
+
+	WaitJob::~WaitJob()
+	{}
+
+	void WaitJob::kill(bool)
+	{
+		m_error = 0;
+		emitResult();
+	}
 		
-	private:
-		QTimer conn_timer;
-		int num_attempts;
-		KURL last_url;
-		QByteArray data;
-		KIO::Job* active_job;
-	};
+	void WaitJob::timerDone()
+	{
+		// set the error to null and emit the result
+		m_error = 0;
+		emitResult();
+	}
+	
+	void SynchronousWait(Uint32 millis)
+	{
+		Out() << "SynchronousWait" << endl;
+		WaitJob* j = new WaitJob(millis);
+		KIO::NetAccess::synchronousRun(j,0);
+	}
 
 }
 
-#endif
+#include "waitjob.moc"
+

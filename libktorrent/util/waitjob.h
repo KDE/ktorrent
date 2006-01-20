@@ -17,53 +17,38 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTHTTPTRACKER_H
-#define BTHTTPTRACKER_H
+#ifndef BTWAITJOB_H
+#define BTWAITJOB_H
 
 #include <qtimer.h>
-#include "tracker.h"
-
-namespace KIO
-{
-	class Job;
-}
+#include <kio/job.h>
+#include "constants.h"
 
 namespace bt
 {
-	
 
 	/**
-	 * @author Joris Guisson
-	 * @brief Communicates with the tracker
-	 *
-	 * This class uses the HTTP protocol to communicate with the tracker.
-	 */
-	class HTTPTracker : public Tracker
+		@author Joris Guisson <joris.guisson@gmail.com>
+	
+		Job to wait for a certain amount of time.
+	*/
+	class WaitJob : public KIO::Job
 	{
 		Q_OBJECT
 	public:
-		HTTPTracker(kt::TorrentInterface* tor,const SHA1Hash & ih,const PeerID & pid);
-		virtual ~HTTPTracker();
-		
-		virtual void doRequest(const KURL & url);
-		virtual void updateData(PeerManager* pman);
-		
+		WaitJob(Uint32 millis);
+		virtual ~WaitJob();
+
+		virtual void kill(bool quietly=true);
 		
 	private slots:
-		void onResult(KIO::Job* j);
-		void onDataRecieved(KIO::Job* j,const QByteArray & ba);
-		void onTimeout();
-
-	private:
-		void doRequest(const QString & host,const QString & path,Uint16 p);
+		void timerDone();
 		
 	private:
-		QTimer conn_timer;
-		int num_attempts;
-		KURL last_url;
-		QByteArray data;
-		KIO::Job* active_job;
+		QTimer timer;
 	};
+	
+	void SynchronousWait(Uint32 millis);
 
 }
 

@@ -25,6 +25,7 @@
 #include <util/error.h>
 #include <util/garbagecollector.h>
 #include <kio/job.h>
+#include <kio/netaccess.h>
 #include "bnode.h"
 #include "httptracker.h"
 #include "torrentcontrol.h"
@@ -189,6 +190,8 @@ namespace bt
 		connect(j,SIGNAL(data(KIO::Job*,const QByteArray &)),
 				this,SLOT(onDataRecieved(KIO::Job*, const QByteArray& )));
 		active_job = j;
+	//	if (event == "stopped")
+	//		KIO::NetAccess::synchronousRun(active_job,0);
 	}
 
 	void HTTPTracker::onResult(KIO::Job* j)
@@ -231,6 +234,5 @@ namespace bt
 	{
 		error();
 	}
-
 }
 #include "httptracker.moc"

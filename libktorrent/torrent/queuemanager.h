@@ -34,6 +34,7 @@ namespace bt
 	{
 		public:
 			QueuePtrList();
+			virtual ~QueuePtrList();
 			
 		protected:
 			int compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2);

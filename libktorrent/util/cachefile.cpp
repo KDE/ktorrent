@@ -193,12 +193,15 @@ namespace bt
 			}
 		}
 		file_size += num;
-//		fsync(fd);
+//		
 	//	Out() << QString("growing %1 = %2").arg(path).arg(kt::BytesToString(file_size)) << endl;
 		struct stat sb;
 		fstat(fd,&sb);
 		if (file_size != (Uint64)sb.st_size)
+		{
 			Out() << QString("Homer Simpson %1 %2").arg(file_size).arg(sb.st_size) << endl;
+			fsync(fd);
+		}
 	}
 		
 	void CacheFile::unmap(void* ptr,Uint32 size)

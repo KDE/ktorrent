@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <unistd.h>
 #include <qdir.h>
 #include <klocale.h>
 #include <kglobal.h>
@@ -48,6 +49,7 @@
 
 using namespace bt;
 using namespace kt;
+
 
 
 KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seeding(true),pman(0)
@@ -318,6 +320,8 @@ void KTorrentCore::setKeepSeeding(bool ks)
 
 void KTorrentCore::onExit()
 {
+	// stop timer to prevent updates during wait
+	update_timer.stop();
 	pman->saveConfigFile(KGlobal::dirs()->saveLocation("data","ktorrent") + "plugins");
 	// 	downloads.clear();
 	qman->clear();

@@ -26,6 +26,7 @@
 #include <util/log.h>
 #include <util/error.h>
 #include <util/sha1hash.h>
+#include <util/waitjob.h>
 #include <torrent/globals.h>
 #include <torrent/torrent.h>
 #include <torrent/torrentcontrol.h>
@@ -62,7 +63,12 @@ namespace bt
 
 	void QueueManager::clear()
 	{
+		Uint32 nd = downloads.count();
 		downloads.clear();
+		
+		// wait for a second to allow all http jobs to send the stopped event
+		if (nd > 0)
+			SynchronousWait(250);
 	}
 
 	void QueueManager::start(kt::TorrentInterface* tc)
@@ -333,6 +339,9 @@ namespace bt
 
 	
 	QueuePtrList::QueuePtrList() : QPtrList<kt::TorrentInterface>()
+	{}
+	
+	QueuePtrList::~QueuePtrList()
 	{}
 	
 	int QueuePtrList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2)
