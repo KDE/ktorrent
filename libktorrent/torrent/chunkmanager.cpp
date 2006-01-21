@@ -100,6 +100,11 @@ namespace bt
 	{
 		delete cache;
 	}
+	
+	QString ChunkManager::getDataDir() const
+	{
+		return cache->getDataDir();
+	}
 
 	void ChunkManager::changeDataDir(const QString & data_dir)
 	{
@@ -513,7 +518,6 @@ namespace bt
 
 			// first and last chunk may be part of multiple files
 			// so we can't just exclude them
-			
 			QValueList<Uint32> files;
 
 			// get list of files where first chunk lies in
@@ -550,7 +554,11 @@ namespace bt
 				return;
 			
 			exclude(first,last);
+			
+			
 		}
+		// alert the cache but first put things in critical operation mode
+		cache->downloadStatusChanged(tf,download);
 	}
 	
 	bool ChunkManager::prepareChunk(Chunk* c)

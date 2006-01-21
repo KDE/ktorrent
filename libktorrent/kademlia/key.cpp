@@ -17,7 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <qcstring.h>
+#include <util/constants.h>
 #include "key.h"
+
+using namespace bt;
 
 namespace dht
 {
@@ -27,6 +31,12 @@ namespace dht
 
 	Key::Key(const Key & k) : bt::SHA1Hash(k)
 	{
+	}
+	
+	Key::Key(const QByteArray & ba)
+	{
+		for (Uint32 i = 0;i < 20 && i < ba.size();i++)
+			hash[i] = ba[i];
 	}
 
 	Key::~Key()
@@ -38,17 +48,17 @@ namespace dht
 		return *this;
 	}
 
-	bool Key::operator == (const Key & other)
+	bool Key::operator == (const Key & other) const
 	{
 		return bt::SHA1Hash::operator ==(other);
 	}
 	
-	bool Key::operator != (const Key & other)
+	bool Key::operator != (const Key & other) const
 	{
 		return !operator == (other);
 	}
 	
-	bool Key::operator < (const Key & other)
+	bool Key::operator < (const Key & other) const
 	{
 		for (int i = 0;i < 20;i++)
 		{
@@ -60,12 +70,12 @@ namespace dht
 		return false;
 	}
 	
-	bool Key::operator <= (const Key & other)
+	bool Key::operator <= (const Key & other) const
 	{
 		return operator < (other) || operator == (other);
 	}
 	
-	bool Key::operator > (const Key & other)
+	bool Key::operator > (const Key & other) const
 	{
 		for (int i = 0;i < 20;i++)
 		{
@@ -77,7 +87,7 @@ namespace dht
 		return false;
 	}
 	
-	bool Key::operator >= (const Key & other)
+	bool Key::operator >= (const Key & other) const
 	{
 		return operator > (other) || operator == (other);
 	}

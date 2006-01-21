@@ -30,6 +30,7 @@ namespace KIO
 
 namespace bt
 {
+	
 
 	/**
 	 * @author Joris Guisson
@@ -43,10 +44,10 @@ namespace bt
 	public:
 		HTTPTracker(kt::TorrentInterface* tor,const SHA1Hash & ih,const PeerID & pid);
 		virtual ~HTTPTracker();
-
 		
 		virtual void doRequest(const KURL & url);
 		virtual void updateData(PeerManager* pman);
+		
 		
 	private slots:
 		void onResult(KIO::Job* j);

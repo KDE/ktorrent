@@ -29,6 +29,17 @@
 namespace bt
 {
 	class SHA1Hash;
+	
+	class QueuePtrList : public QPtrList<kt::TorrentInterface>
+	{
+		public:
+			QueuePtrList();
+			virtual ~QueuePtrList();
+			
+		protected:
+			int compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2);
+	};
+	
 	/**
 	 * @author Ivan Vasic
 	 * @brief This class contains list of all TorrentControls and is responsible for starting/stopping them
@@ -44,7 +55,7 @@ namespace bt
 			void clear();
 			
 			void start(kt::TorrentInterface* tc);
-			void stop(kt::TorrentInterface* tc);
+			void stop(kt::TorrentInterface* tc, bool user = false);
 			
 			void stopall();
 			void startall();
@@ -53,11 +64,13 @@ namespace bt
 			
 			int getNumRunning(bool onlyDownload = false, bool onlySeed = false);
 			
+			void startNext();
+			
 			QPtrList<kt::TorrentInterface>::iterator begin();
 			QPtrList<kt::TorrentInterface>::iterator end();
 			
 			/**
-			 * See if we allready loaded a torrent.
+			 * See if we already loaded a torrent.
 			 * @param ih The info hash of a torrent
 			 * @return true if we do, false if we don't
 			 */
@@ -67,8 +80,20 @@ namespace bt
 			void setMaxSeeds(int m);
 			
 			void setKeepSeeding(bool ks);
+			
+			/**
+			 * Places all torrents from downloads in the right order in queue.
+			 * Use this when torrent priorities get changed
+			 */
+			void orderQueue();
+		
+		public slots:
+			void torrentFinished(kt::TorrentInterface* tc);
+			void torrentAdded(kt::TorrentInterface* tc);
+			void torrentRemoved(kt::TorrentInterface* tc);
+			
 		private:
-			QPtrList<kt::TorrentInterface> downloads;
+			bt::QueuePtrList downloads;
 			
 			int max_downloads;
 			int max_seeds;

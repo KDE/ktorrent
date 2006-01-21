@@ -117,7 +117,9 @@ namespace kt
 			writeIndex(tor_dir + "index",dc->getDownloaded());
 			
 			// copy the torrent file
-			bt::CopyFile(tor_url,tor_dir + "torrent");
+			bt::CopyFile(tor_url.prettyURL(),tor_dir + "torrent");
+			
+			Uint64 imported = calcImportedBytes(dc->getDownloaded(),tor);
 			
 			// make the cache
 			if (tor.isMultiFile())
@@ -132,11 +134,17 @@ namespace kt
 				{
 					linkTorFile(cache_dir,data_url,tor.getFile(i).getPath());
 				}
+				
+				saveStats(tor_dir + "stats",data_url,imported);
 			}
 			else
 			{
 				// single file, just symlink the data_url to tor_dir/cache
 				bt::SymLink(data_url.path(),tor_dir + "cache");
+				QString durl = data_url.path();
+				int ds = durl.findRev(bt::DirSeparator());
+				durl = durl.left(ds);
+				saveStats(tor_dir + "stats",durl,imported);
 			}
 			
 			// everything went OK, so load the whole shabang and start downloading
@@ -204,6 +212,45 @@ namespace kt
 			bt::Touch(dfile);
 		// and make a symlink in the cache to it
 		bt::SymLink(dfile,cache_dir + fpath);
+	}
+	
+	void ImportDialog::saveStats(const QString & stats_file,const KURL & data_url,Uint64 imported)
+	{
+		QFile fptr(stats_file);
+		if (!fptr.open(IO_WriteOnly))
+		{
+			Out() << "Warning : can't create stats file" << endl;
+			return;
+		}
+
+		QTextStream out(&fptr);
+		out << "OUTPUTDIR=" << data_url.path() << ::endl;
+		out << "UPLOADED=0" << ::endl;
+		out << "RUNNING_TIME_DL=0" << ::endl;
+		out << "RUNNING_TIME_UL=0" << ::endl;
+		out << "PRIORITY=0" << ::endl;
+		out << "AUTOSTART=1" << ::endl;
+		out << QString("IMPORTED=%1").arg(imported) << ::endl;
+	}
+	
+	Uint64 ImportDialog::calcImportedBytes(const bt::BitSet & chunks,const Torrent & tor)
+	{
+		Uint64 nb = 0;
+		Uint64 ls = tor.getFileLength() % tor.getChunkSize();
+		if (ls == 0)
+			ls = tor.getChunkSize();
+		
+		for (Uint32 i = 0;i < chunks.getNumBits();i++)
+		{
+			if (!chunks.get(i))
+				continue;
+			
+			if (i == chunks.getNumBits() - 1)
+				nb += ls;
+			else
+				nb += tor.getChunkSize();
+		}
+		return nb;
 	}
 }
 

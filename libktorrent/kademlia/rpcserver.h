@@ -30,10 +30,17 @@ using KNetwork::KDatagramSocket;
 using bt::Uint16;
 using bt::Uint8;
 
+namespace bt
+{
+	class BDictNode;
+}
+
 namespace dht
 {
 	class KBucketEntry;
 	class RPCCall;
+	class RPCMsg;
+	class Node;
 
 	/**
 	 * @author Joris Guisson
@@ -44,20 +51,28 @@ namespace dht
 	{
 		Q_OBJECT
 	public:
-		RPCServer(Uint16 port,QObject *parent = 0);
+		RPCServer(Node* node,Uint16 port,QObject *parent = 0);
 		virtual ~RPCServer();
-
+		/*
 		RPCCall* ping(const KBucketEntry & to);
 		RPCCall* findNode(const KBucketEntry & to,const Key & k);
 		RPCCall* findValue(const KBucketEntry & to,const Key & k);
 		RPCCall* store(const KBucketEntry & to,const Key & k,const bt::Array<Uint8> & data);
-
+		*/
+		
 	private slots:
 		void readPacket();
-
+		
+	private:
+		void handleReq(const RPCMsg & msg);
+		void handleRsp(const RPCMsg & msg);
+		void handleErr(const RPCMsg & msg);
+		
 	private:
 		KDatagramSocket* sock;
 		bt::PtrMap<Key,RPCCall> active_calls;
+		Uint16 mtid;
+		Node* node;
 	};
 
 }

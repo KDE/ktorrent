@@ -64,10 +64,13 @@ namespace bt
 		BitSet bitset,excluded_chunks;
 		mutable Uint32 chunks_left;
 		mutable bool recalc_chunks_left;
+	
 	public:
 		ChunkManager(Torrent & tor,const QString & tmpdir,const QString & datadir);
 		virtual ~ChunkManager();
 
+		QString getDataDir() const;
+		
 		/// Remove obsolete chunks
 		void checkMemoryUsage();
 		
@@ -213,6 +216,7 @@ namespace bt
 		 * @param to Last chunk in range
 		 */
 		void include(Uint32 from,Uint32 to);
+		
 	signals:
 		/**
 		 * Emitted when a range of chunks has been excluded

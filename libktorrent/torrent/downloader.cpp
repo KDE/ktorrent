@@ -133,11 +133,15 @@ namespace bt
 		for (Uint32 i = 0; i < pman.getNumConnectedPeers();++i)
 		{
 			PeerDownloader* pd = pman.getPeer(i)->getPeerDownloader();
+			
+			if (pd->isNull() || pd->isChoked())
+				continue;
 	
-			if (!pd->isNull() && !pd->isChoked() && pd->getNumRequests() < pd->getMaximumOutstandingReqs() - 2)
+			bool ok = pd->getNumGrabbed() < pd->getMaxChunkDownloads() && 
+					pd->getNumRequests() < pd->getMaximumOutstandingReqs();
+			if (ok)
 			{
-				//if (pd->getNumGrabbed() == 0 || (pd->getNumGrabbed() == 1 && pd->getNumRequests() < 8))
-					downloadFrom(pd);
+				downloadFrom(pd);
 			}
 		}
 	}
@@ -154,9 +158,9 @@ namespace bt
 					
 				if (!pd->isNull() && !pd->isChoked() &&
 					pd->hasChunk(cd->getChunk()->getIndex()) &&
-					pd->getNumRequests() < pd->getMaximumOutstandingReqs() - 2)
+					pd->getNumGrabbed() < pd->getMaxChunkDownloads())
 				{
-					cd->assignPeer(pd,true);
+					cd->assignPeer(pd);
 				}
 			}
 		}
@@ -173,12 +177,11 @@ namespace bt
 				continue;
 
 			// if cd hasn't got a downloader or when the current
-			// downloader has snubbed him
-			// assign him pd
+			// downloader is stalled
 			const Peer* p = cd->getCurrentPeer();
-			if (cd->getNumDownloaders() == 0 || (p && p->isSnubbed()))
+			if (cd->getNumDownloaders() == 0)
 			{
-				cd->assignPeer(pd,false);
+				cd->assignPeer(pd);
 				return;
 			}
 		}
@@ -186,23 +189,40 @@ namespace bt
 	//	if (current_chunks.count() > 2*pdowners.count())
 	//		return;
 
+		Uint32 max = 1024 * 1024;
+		switch (mem_usage)
+		{	
+			case 1: // Medium
+				max *= 20; // 20 MB
+				break;
+			case 2: // High
+				max *= 40; // 40 MB
+				break;
+			case 0: // LOW
+			default:
+				max *= 10; // 10 MB
+				break;
+		}
+		
+		bool limit_exceeded = current_chunks.count() * tor.getChunkSize() >= max;
 		Uint32 chunk = 0;
-		if (chunk_selector->select(pd,chunk))
+		if (!limit_exceeded && chunk_selector->select(pd,chunk))
 		{
 			Chunk* c = cman.getChunk(chunk);
 			if (cman.prepareChunk(c))
 			{
 				ChunkDownload* cd = new ChunkDownload(c);
 				current_chunks.insert(chunk,cd);
-				cd->assignPeer(pd,false);
+				cd->assignPeer(pd);
 				if (tmon)
 					tmon->downloadStarted(cd);
 			}
 		}
-		else 
+		else if (pd->getNumGrabbed() == 0)
 		{ 
-          // If the peer hasn't got a chunk we want, 
-          // try to assign it to a chunk we are currently downloading 
+			// If the peer hasn't got a chunk we want, 
+			// try to assign it to a chunk we are currently downloading 
+			// but we only do this if it hasn't been assigned to anything
 			ChunkDownload *cdmin=NULL; 
 			for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j) 
 			{ 
@@ -219,7 +239,7 @@ namespace bt
 				} 
 			} 
 			if (cdmin) 
-				cdmin->assignPeer(pd,true); 
+				cdmin->assignPeer(pd); 
 		} 
 	}
 
@@ -355,7 +375,7 @@ namespace bt
 		hdr.num_chunks = current_chunks.count();
 		fptr.write(&hdr,sizeof(CurrentChunksHeader));
 
-		Out() << "sizeof(CurrentChunksHeader)" << sizeof(CurrentChunksHeader) << endl;
+//		Out() << "sizeof(CurrentChunksHeader)" << sizeof(CurrentChunksHeader) << endl;
 		Out() << "Saving " << current_chunks.count() << " chunk downloads" << endl;
 		for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();++i)
 		{
@@ -479,10 +499,22 @@ namespace bt
 			if (!cd)
 				continue;
 			cd->cancelAll();
+			Chunk* c = cd->getChunk();
 			if (tmon)
 				tmon->downloadRemoved(cd);
 			current_chunks.erase(i);
+			
+			if (c->getStatus() == Chunk::MMAPPED)
+				cman.saveChunk(i,false);
 		}
+	}
+	
+	Uint32 Downloader::mem_usage = 0;
+	
+	void Downloader::setMemoryUsage(Uint32 m)
+	{
+		mem_usage = m;
+		PeerDownloader::setMemoryUsage(m);
 	}
 }
 #include "downloader.moc"

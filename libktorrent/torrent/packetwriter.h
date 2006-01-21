@@ -100,6 +100,12 @@ namespace bt
 		 * @param bs The BitSet
 		 */
 		void sendBitSet(const BitSet & bs);
+		
+		/**
+		 * Send a port message
+		 * @param port The port
+		 */
+		void sendPort(Uint16 port);
 
 		/**
 		 * Try to send the remaining packets in the queue.
@@ -112,13 +118,14 @@ namespace bt
 
 		/**
 		 * Called by the upload cap, to tell the PacketWriter it
-		 * can send a packet
-		 * @param all Wether to send all packets
+		 * can send some bytes
+		 * @param bytes Num bytes to send (0 == all)
 		 */
-		void uploadUnsentPacket(bool all = false);
+		Uint32 uploadUnsentBytes(Uint32 bytes);
 	private:
-		void sendPacket(const Packet & p);
+		Uint32 sendPacket(const Packet & p,Uint32 max);
 		void queuePacket(Packet* p,bool ask);
+		void sendSmallPackets();
 	};
 
 }

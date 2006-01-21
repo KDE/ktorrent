@@ -26,6 +26,7 @@
 #include <util/log.h>
 #include <util/error.h>
 #include <util/sha1hash.h>
+#include <util/waitjob.h>
 #include <torrent/globals.h>
 #include <torrent/torrent.h>
 #include <torrent/torrentcontrol.h>
@@ -36,8 +37,7 @@ using namespace kt;
 namespace bt
 {
 
-	QueueManager::QueueManager()
-			: QObject()
+	QueueManager::QueueManager() : QObject()
 	{
 		downloads.setAutoDelete(true);
 		max_downloads = 0;
@@ -53,23 +53,33 @@ namespace bt
 	void QueueManager::append(kt::TorrentInterface* tc)
 	{
 		downloads.append(tc);
+		downloads.sort();
 	}
 
 	void QueueManager::remove(kt::TorrentInterface* tc)
 	{
-		downloads.remove(tc);
+		int index = downloads.findRef(tc);
+		if(index != -1)
+			downloads.remove(index);
+		else
+			Out() << "Could not delete removed torrent control." << endl;
 	}
 
 	void QueueManager::clear()
 	{
+		Uint32 nd = downloads.count();
 		downloads.clear();
+		
+		// wait for a second to allow all http jobs to send the stopped event
+		if (nd > 0)
+			SynchronousWait(250);
 	}
 
 	void QueueManager::start(kt::TorrentInterface* tc)
 	{
 		const TorrentStats & s = tc->getStats();
-		bool start_tc = (s.bytes_left == 0 && (keep_seeding && ( max_seeds == 0 || getNumRunning(false, true) < max_seeds) ) ||
-		                (s.bytes_left != 0 &&
+		bool start_tc = (s.completed && (keep_seeding && ( max_seeds == 0 || getNumRunning(false, true) < max_seeds) ) ||
+	    	            (!s.completed &&
 				(max_downloads == 0 || getNumRunning(true) < max_downloads)));
 		if (start_tc)
 		{
@@ -88,14 +98,16 @@ namespace bt
 		}
 	}
 
-	void QueueManager::stop(kt::TorrentInterface* tc)
+	void QueueManager::stop(kt::TorrentInterface* tc, bool user)
 	{
 		const TorrentStats & s = tc->getStats();
 		if (s.started && s.running)
 		{
 			try
 			{
-				tc->stop(false);
+				tc->stop(user);
+				if(user)
+					tc->setPriority(0);
 			}
 			catch (bt::Error & err)
 			{
@@ -105,6 +117,8 @@ namespace bt
 				KMessageBox::error(0,msg,i18n("Error"));
 			}
 		}
+		
+		orderQueue();
 	}
 	
 	void QueueManager::startall()
@@ -126,29 +140,38 @@ namespace bt
 			kt::TorrentInterface* tc = *i;
 			if (tc->getStats().running)
 				tc->stop(true);
+			else //if torrent is not running but it is queued we need to make it user controlled
+				tc->setPriority(0); 
 			i++;
 		}
+	}
+	
+	void QueueManager::startNext()
+	{
+		orderQueue();
 	}
 
 	int QueueManager::getNumRunning(bool onlyDownload, bool onlySeed)
 	{
 		int nr = 0;
+	//	int test = 1;
 		QPtrList<TorrentInterface>::const_iterator i = downloads.begin();
 		while (i != downloads.end())
 		{
 			const TorrentInterface* tc = *i;
 			const TorrentStats & s = tc->getStats();
+			//Out() << "Torrent " << test++ << s.torrent_name << " priority: " << tc->getPriority() << endl;
 			if (s.running)
 			{
 				if(onlyDownload)
 				{
-					if(s.bytes_left != 0) nr++;
+					if(!s.completed) nr++;
 				}
 				else
 				{
 					if(onlySeed)
 					{
-						if(s.bytes_left == 0) nr++;
+						if(s.completed) nr++;
 					}
 					else
 						nr++;
@@ -156,6 +179,7 @@ namespace bt
 			}
 			i++;
 		}
+	//	Out() << endl;
 		return nr;
 	}
 
@@ -196,6 +220,149 @@ namespace bt
 		}
 		return false;
 	}
+	
+	void QueueManager::orderQueue()
+	{
+		downloads.sort();
+		
+		int num_running = 0;
+		
+		QPtrList<TorrentInterface>::const_iterator it = downloads.begin();
+		QPtrList<TorrentInterface>::const_iterator end_queue = downloads.end();
+		
+		if(max_downloads != 0)
+		{
+			int user_running = 0;
+			for( ; it!=downloads.end(); ++it)
+			{
+				TorrentInterface* tc = *it;
+				const TorrentStats & s = tc->getStats();
+			
+				if(s.running)
+				{
+					if(s.user_controlled && !s.completed)
+						++user_running;
+				}
+			}
+			
+			int max_qm_downloads = max_downloads - user_running;
+			//update QM boundary
+			end_queue = downloads.begin();
+			for(int i=0; end_queue!=downloads.end() && i<max_qm_downloads; ++i, ++end_queue);
+			//stop all QM started torrents
+			for(it = end_queue; it != downloads.end(); ++it)
+			{
+				TorrentInterface* tc = *it;
+				const TorrentStats & s = tc->getStats();
+				
+				if(s.running && !s.user_controlled && !s.completed)
+					stop(tc);
+			}
+		}
+		
+		it = downloads.begin();
+		while (it != end_queue) //then check if some torrent needs to be started 
+		{ 
+			TorrentInterface* tc = *it; 
+			const TorrentStats & s = tc->getStats(); 
+			
+			if(!s.running && !s.completed && !s.user_controlled)
+				start(tc); 
+             
+			++it;
+		}
+		
+// 		if(it == downloads.end())
+// 			return;
+// 		
+// 		QPtrList<TorrentInterface>::const_iterator end_queue = it;
+// 		
+// 		while (it != downloads.end()) //first stop all torrents that aren't supposed to be running
+// 		{
+// 			TorrentInterface* tc = *it;
+// 			const TorrentStats & s = tc->getStats();
+// 			
+// 			if(s.running && !s.completed && s.autostart)
+// 				stop(tc);
+// 			
+// 			++it;
+// 		}
+// 		
+// 		it = downloads.begin();
+// 		
+// 		while (it != end_queue) //then check if some torrent needs to be started
+// 		{
+// 			TorrentInterface* tc = *it;
+// 			const TorrentStats & s = tc->getStats();
+// 			
+// 			if(!s.running && !s.completed && s.autostart)
+// 				start(tc);
+// 			
+// 			++it;
+// 		}
+	}
+	
+	
+	void QueueManager::torrentFinished(kt::TorrentInterface* tc)
+	{
+		//dequeue this tc
+		tc->setPriority(0);
+		//make sure the max_seeds is not reached
+		Out() << "GNR Seed" << getNumRunning(false,true) << endl;
+		if(max_seeds !=0 && max_seeds < getNumRunning(false,true))
+			tc->stop(true);
+		
+		orderQueue();
+	}
+	
+	void QueueManager::torrentAdded(kt::TorrentInterface* tc)
+	{
+		QPtrList<TorrentInterface>::const_iterator it = downloads.begin();
+		while (it != downloads.end())
+		{
+			TorrentInterface* _tc = *it;
+			int p = _tc->getPriority();
+			if(p==0)
+				break;
+			else
+				_tc->setPriority(++p);
+			
+			++it;
+		}
+		tc->setPriority(1);
+		orderQueue();
+	}
+	
+	void QueueManager::torrentRemoved(kt::TorrentInterface* tc)
+	{
+		remove(tc);
+		orderQueue();
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////
 
+	
+	QueuePtrList::QueuePtrList() : QPtrList<kt::TorrentInterface>()
+	{}
+	
+	QueuePtrList::~QueuePtrList()
+	{}
+	
+	int QueuePtrList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2)
+	{
+		kt::TorrentInterface* tc1 = (kt::TorrentInterface*) item1;
+		kt::TorrentInterface* tc2 = (kt::TorrentInterface*) item2;
+		
+		if(tc1->getPriority() == tc2->getPriority())
+			return 0;
+		
+		if(tc1->getPriority() == 0 && tc2->getPriority() != 0)
+			return 1;
+		else if(tc1->getPriority() != 0 && tc2->getPriority() == 0)
+			return -1;
+		
+		return tc1->getPriority() > tc2->getPriority() ? -1 : 1;
+		return 0;
+	}
 }
 

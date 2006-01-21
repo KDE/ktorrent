@@ -27,6 +27,7 @@
 
 namespace dht
 {
+	class RPCMsg;
 
 	/**
 	 * @author Joris Guisson
@@ -43,8 +44,14 @@ namespace dht
 		Node();
 		virtual ~Node();
 
+		/**
+		 * An RPCMsg was recieved, the node must now update
+		 * the right bucket.
+		 * @param msg The message
+		 */
+		void recieved(const RPCMsg & msg);
 	private:
-		Key id;
+		dht::Key our_id;
 		KBucket* bucket[160];
 	};
 

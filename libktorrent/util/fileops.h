@@ -21,7 +21,6 @@
 #define BTFILEOPS_H
 
 class QString;
-class KURL;
 
 namespace bt
 {
@@ -33,7 +32,7 @@ namespace bt
 	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 * @throw Error upon error
 	 */
-	void MakeDir(const KURL & dir,bool nothrow = false);
+	void MakeDir(const QString & dir,bool nothrow = false);
 
 	/**
 	 * Create a symbolic link @a link_url which links to @a link_to 
@@ -49,7 +48,7 @@ namespace bt
 	 * @param dst The destination file / directory
 	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 */
-	void Move(const KURL & src,const KURL & dst,bool nothrow = false);
+	void Move(const QString & src,const QString & dst,bool nothrow = false);
 
 	/**
 	 * Copy a file.
@@ -57,21 +56,29 @@ namespace bt
 	 * @param dst The destination dir/file
 	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 */
-	void CopyFile(const KURL & src,const KURL & dst,bool nothrow = false);
+	void CopyFile(const QString & src,const QString & dst,bool nothrow = false);
+	
+	/**
+	 * Copy a file or directory
+	 * @param src The source file
+	 * @param dst The destination dir/file
+	 * @param nothrow wether or not we shouldn't throw an Error upon failure
+	 */
+	void CopyDir(const QString & src,const QString & dst,bool nothrow = false);
 	
 	/**
 	 * Check wether a file/dir exists
 	 * @param url The file/dir
 	 * @return true if it exits
 	 */
-	bool Exists(const KURL & url);
+	bool Exists(const QString & url);
 
 	/**
 	 * Delete a file or directory.
 	 * @param url The url of the file/dir
 	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 */
-	void Delete(const KURL & url,bool nothrow = false);
+	void Delete(const QString & url,bool nothrow = false);
 
 	/**
 	 * Try to create a file. Doesn't do anything if the file

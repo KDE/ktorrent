@@ -131,9 +131,9 @@ namespace bt
 		 * @param peer_id The Peer's ID
 		 */
 #ifdef USE_KNETWORK_SOCKET_CLASSES
-		void newConnection(KNetwork::KBufferedSocket* sock,const PeerID & peer_id);
+		void newConnection(KNetwork::KBufferedSocket* sock,const PeerID & peer_id,bool dht_supported);
 #else
-		void newConnection(QSocket* sock,const PeerID & peer_id);
+		void newConnection(QSocket* sock,const PeerID & peer_id,bool dht_supported);
 #endif
 
 		/**
@@ -160,6 +160,7 @@ namespace bt
 		
 	private:
 		void peerAuthenticated(Authenticate* auth,bool ok);
+		void updateAvailableChunks();
 
 	private slots:
 		void onHave(Peer* p,Uint32 index);

@@ -51,6 +51,8 @@ namespace kt
 
 	struct TorrentStats
 	{
+		/// The number of bytes imported (igore these for average speed)
+		Uint64 imported_bytes;
 		/// Total number of bytes downloaded.
 		Uint64 bytes_downloaded;
 		/// Total number of bytes uploaded.
@@ -105,6 +107,8 @@ namespace kt
 		bool stopped_by_error;
 		/// See if the download is completed
 		bool completed;
+		/// See if this torrent is controlled by user
+		bool user_controlled;
 	};
 
 	/**
@@ -231,6 +235,14 @@ namespace kt
 		 * @return An URL
 		 */
 		virtual KURL getTrackerURL(bool prev_success) const = 0;
+		
+		
+		///Get the torrent queue number. Zero if not in queue
+		virtual int getPriority() const = 0;
+		
+		///Set the torrent queue number.
+		virtual void setPriority(int p) = 0;
+		
 	signals:
 		/**
 		 * Emited when we have finished downloading.

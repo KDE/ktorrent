@@ -46,8 +46,11 @@ namespace kt
 	{
 		if (col == 4)
 		{
-			IWFileTreeItem* other = static_cast<IWFileTreeItem*>(i);
-			return CompareVal(perc_complete,other->perc_complete);
+			IWFileTreeItem* other = dynamic_cast<IWFileTreeItem*>(i);
+			if (!other)
+				return 0;
+			else
+				return CompareVal(perc_complete,other->perc_complete);
 		}
 		else
 		{

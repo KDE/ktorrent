@@ -58,6 +58,7 @@
 #include <util/error.h>
 #include <torrent/globals.h>
 #include <torrent/tracker.h>
+#include <torrent/downloader.h>
 #include <torrent/udptrackersocket.h>
 #include <util/log.h>
 #include <util/fileops.h>
@@ -71,6 +72,7 @@
 #include "ktorrentdcop.h"
 #include "torrentcreatordlg.h"
 #include "pastedialog.h"
+#include "queuedialog.h"
 #include <util/functions.h>
 #include <interfaces/functions.h>
 #include <interfaces/plugin.h>
@@ -222,6 +224,28 @@ void KTorrent::applySettings(bool change_port)
 		m_core->changePort(Settings::port());
 	
 	Tracker::setCustomIP(Settings::externalIP());
+	Downloader::setMemoryUsage(Settings::memoryUsage());
+	
+	//Apply GUI update interval
+	int val = 500;
+	switch(Settings::guiUpdateInterval())
+	{
+		case 1:
+			val = 1000;
+			break;
+		case 2:
+			val = 2000;
+			break;
+		case 3:
+			val = 5000;
+			break;
+		default:
+			val = 500;
+	}
+	m_gui_update_timer.changeInterval(val);
+	
+	//update QM
+	m_core->getQueueManager()->orderQueue();
 }
 
 void KTorrent::load(const KURL& url)
@@ -290,6 +314,10 @@ void KTorrent::setupActions()
 			i18n("to paste torrent URL", "Paste Torrent URL..."), "ktstart",0,this, SLOT(torrentPaste()),
 	actionCollection(), "paste_url");
 	
+	m_queuemgr = new KAction(
+			i18n("to open Queue Manager", "Open QueueManager..."), "ktqueuemanager",0,this, SLOT(queueManagerShow()),
+	actionCollection(), "Queue manager");
+	
 	createGUI();
 }
 
@@ -310,8 +338,11 @@ bool KTorrent::queryClose()
 
 bool KTorrent::queryExit()
 {
+	// stop timers to prevent update
+	m_gui_update_timer.stop();
 	m_core->onExit();
 	KGlobal::config()->writeEntry( "hidden_on_exit",this->isHidden());
+	m_view->saveSettings();
 	return true;
 }
 
@@ -337,6 +368,13 @@ void KTorrent::fileOpen()
 void KTorrent::torrentPaste()
 {
 	PasteDialog dlg(m_core,this);
+	dlg.show();
+	dlg.exec();
+}
+
+void KTorrent::queueManagerShow()
+{
+	QueueDialog dlg(m_core->getQueueManager(), this);
 	dlg.show();
 	dlg.exec();
 }
@@ -387,7 +425,8 @@ void KTorrent::stopDownload()
 	TorrentInterface* tc = m_view->getCurrentTC();
 	if (tc && tc->getStats().running)
 	{
-		tc->stop(true);
+		//tc->stop(true);
+		m_core->stop(tc, true);
 		currentChanged(tc);
 	}
 }
@@ -414,7 +453,6 @@ void KTorrent::removeDownload()
 			else if (ret == KMessageBox::Yes)
 				data_to = true;
 		}
-		m_view->removeTorrent(tc);
 		m_core->remove(tc,data_to);
 		currentChanged(m_view->getCurrentTC());
 		notifyViewListeners(m_view->getCurrentTC());

@@ -39,7 +39,10 @@ namespace kt
 	ExpandableWidget::~ExpandableWidget()
 	{
 		if (begin)
+		{
+		//	delete begin->w;
 			delete begin;
+		}
 	}
 
 	void ExpandableWidget::expand(QWidget* w,Position pos)
@@ -69,12 +72,14 @@ namespace kt
 		if (pos == RIGHT || pos == ABOVE)
 		{
 			s->moveToFirst(w);
+			s->setResizeMode(w,QSplitter::KeepSize);
 			s->moveToLast(begin->s ? begin->s : begin->w);
 		}
 		else
 		{
 			s->moveToFirst(begin->s ? begin->s : begin->w);
 			s->moveToLast(w);
+			s->setResizeMode(w,QSplitter::KeepSize);
 		}
 		// make se new top of stack
 		begin = se;
@@ -151,12 +156,16 @@ namespace kt
 			if (prev->pos == RIGHT || prev->pos == ABOVE)
 			{
 				prev->s->moveToFirst(prev->w);
+				prev->s->setResizeMode(prev->w,QSplitter::KeepSize);
 				prev->s->moveToLast(next->s ? next->s : next->w);
+				prev->s->setResizeMode(next->s ? next->s : next->w,QSplitter::KeepSize);
 			}
 			else
 			{
 				prev->s->moveToFirst(next->s ? next->s : next->w);
+				prev->s->setResizeMode(next->s ? next->s : next->w,QSplitter::KeepSize);
 				prev->s->moveToLast(prev->w);
+				prev->s->setResizeMode(prev->w,QSplitter::KeepSize);
 			}
 
 			// delete se and splitter

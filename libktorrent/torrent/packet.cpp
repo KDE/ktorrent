@@ -37,6 +37,14 @@ namespace bt
 		hdr_length = 5;
 	}
 	
+	Packet::Packet(Uint16 port) : hdr_length(0),data(0),data_length(0),written(0),chunk(0)
+	{
+		WriteUint32(hdr,0,3);
+		hdr[4] = PORT;
+		WriteUint16(hdr,5,port);
+		hdr_length = 7;
+	}
+	
 	Packet::Packet(Uint32 chunk) : hdr_length(0),data(0),data_length(0),written(0),chunk(0)
 	{
 		WriteUint32(hdr,0,5);
@@ -105,6 +113,20 @@ namespace bt
 			case CANCEL : return QString("CANCEL %1 %2").arg(hdr_length).arg(data_length);
 			default: return QString("UNKNOWN %1 %2").arg(hdr_length).arg(data_length);
 		}
+	}
+	
+	bool Packet::isOK() const
+	{
+		if (getDataLength() > 0 && !getData())
+			return false;
+		
+		if (hdr[4] == PIECE && !chunk)
+			return false;
+		
+		if (hdr[4] == PIECE && !chunk->getData())
+			return false;
+		
+		return true;
 	}
 
 }

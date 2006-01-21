@@ -56,30 +56,51 @@ namespace bt
 		UploadCap::instance().killed(this);
 	}
 
-	void PacketWriter::sendPacket(const Packet & p)
+	Uint32 PacketWriter::sendPacket(const Packet & p,Uint32 max)
 	{
 #ifdef DEBUG_LOG_UPLOAD
 		ulog << p.debugString() << endl;
 #endif
+		// safety check
+		if (!p.isOK())
+			return p.getDataLength();
+			
 	//	Out() << "Sending " << p.getHeaderLength() << " " << p.getDataLength() << endl;
-		peer->sendData(p.getHeader(),p.getHeaderLength());
-		if (p.getDataLength() > 0)
-			peer->sendData(p.getData(),p.getDataLength(),p.getType() == PIECE);
-		if (p.getType() == PIECE)
-			uploaded += p.getDataLength();
+		if (max == 0)
+		{
+			peer->sendData(p.getHeader(),p.getHeaderLength());
+			if (p.getDataLength() > 0)
+				peer->sendData(p.getData(),p.getDataLength(),p.getType() == PIECE);
+			if (p.getType() == PIECE)
+				uploaded += p.getDataLength();
+			return p.getDataLength();
+		}
+		else
+		{
+			// send header if no data of packet is sent
+			if (p.getDataWritten() == 0)
+				peer->sendData(p.getHeader(),p.getHeaderLength());
+			
+			Uint32 off = p.getDataWritten();
+			Uint32 bytes_left = p.getDataLength() - off;
+			Uint32 to_send = max > bytes_left ? bytes_left : max;
+			peer->sendData(p.getData() + off,to_send,p.getType() == PIECE); 
+			if (p.getType() == PIECE)
+				uploaded += to_send;
+			
+			return to_send;
+		}
 	}
 	
 	void PacketWriter::queuePacket(Packet* p,bool ask)
 	{
 		bool ok = true;
 		if (ask)
-			ok = UploadCap::instance().allow(this,p->getHeaderLength() + p->getDataLength());
+			ok = UploadCap::instance().allow(this,p->getDataLength());
 		
 		if (ok && packets.count() == 0)
 		{
-			if (p->getType() == PIECE)
-				uploaded += p->getDataLength();
-			sendPacket(*p);
+			sendPacket(*p,0);
 			delete p;
 		}
 		else 
@@ -149,6 +170,11 @@ namespace bt
 		queuePacket(new Packet(index),false);
 	}
 	
+	void PacketWriter::sendPort(Uint16 port)
+	{
+		queuePacket(new Packet(port),false);
+	}
+	
 	void PacketWriter::sendBitSet(const BitSet & bs)
 	{
 		queuePacket(new Packet(bs),false);
@@ -175,6 +201,8 @@ namespace bt
 		if (packets.count() == 0)
 			return data_sent;
 		
+		sendSmallPackets();
+		
 		// if there is a limit return data_sent
 		if (UploadCap::instance().getMaxSpeed() > 0)
 			return data_sent;
@@ -183,41 +211,56 @@ namespace bt
 		while (packets.count() > 0)
 		{
 			Packet* p = packets.first();
-			if (p->getType() == PIECE)
-				uploaded += p->getDataLength();
-			sendPacket(*p);
+			sendPacket(*p,0);
 			packets.removeFirst();
 		}
-
+		
 		return data_sent;
 	}
 
-	void PacketWriter::uploadUnsentPacket(bool all)
+	
+	Uint32 PacketWriter::uploadUnsentBytes(Uint32 bytes)
 	{
 		if (packets.count() == 0)
-			return;
+			return 0;
 		
-
-		if (!all)
-		{
-			// send a big one
-			Packet* p = packets.first();	
-			if (p->getType() == PIECE)
-				uploaded += p->getDataLength();
-			sendPacket(*p);
-			packets.removeFirst();
-		}
-		else
+		if (bytes == 0)
 		{
 			// send all packets left
 			while (packets.count() > 0)
 			{
 				Packet* p = packets.first();
-				if (p->getType() == PIECE)
-					uploaded += p->getDataLength();
-				sendPacket(*p);
+				sendPacket(*p,0);
 				packets.removeFirst();
-			}	
+			}
+			return 0;
+		}
+		else
+		{
+			sendSmallPackets();
+			Packet* p = packets.first();
+			Uint32 nb = sendPacket(*p,bytes);
+			p->dataWritten(nb);
+			// if the packet is fully sent remove it
+			if (p->getDataWritten() == p->getDataLength())
+			{
+				packets.removeFirst();
+				sendSmallPackets();
+			}
+			return nb;
+		}
+	}
+	
+	void PacketWriter::sendSmallPackets()
+	{
+		while (packets.count() > 0)
+		{
+			Packet* p = packets.first();
+			if (p->getType() == PIECE)
+				break;
+			
+			sendPacket(*p,0);
+			packets.removeFirst();
 		}
 	}
 }

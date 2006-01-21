@@ -27,6 +27,7 @@
 #include <kmessagebox.h>
 #include <interfaces/torrentinterface.h>
 #include <torrent/globals.h>
+#include <util/log.h>
 #include <kmessagebox.h>
 #include "ktorrentview.h"
 #include "ktorrentviewitem.h"
@@ -85,13 +86,22 @@ KTorrentView::KTorrentView(QWidget *parent)
 	setColumnWidthMode(1,QListView::Manual);
 	setShowSortIndicator(true);
 	setAcceptDrops(true);
+	
+	for (Uint32 i = 2;i < columns();i++)
+		setColumnWidthMode(i,QListView::Manual);
 
 	restoreLayout(KGlobal::config(),"KTorrentView");
 }
 
 KTorrentView::~KTorrentView()
 {
+}
+
+void KTorrentView::saveSettings()
+{
+	Out() << "USE THE FORCE KTORRENTVIEW !!!!" << endl;
 	saveLayout(KGlobal::config(),"KTorrentView");
+	KGlobal::config()->sync();
 }
 
 void KTorrentView::setShowDebugView(bool yes)

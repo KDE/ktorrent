@@ -70,7 +70,7 @@
                 <cstring>kActiveLabel1</cstring>
             </property>
             <property name="text">
-                <string>Please specify the torrent and the data allready downloaded for that torrent.</string>
+                <string>Please specify the torrent and the data already downloaded for that torrent.</string>
             </property>
         </widget>
         <widget class="KProgress">

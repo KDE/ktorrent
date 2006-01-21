@@ -49,7 +49,7 @@ namespace bt
 			MMAPPED,
 			BUFFERED,
 			ON_DISK,
-			NOT_DOWNLOADED,
+			NOT_DOWNLOADED
 		};
 
 		/// Get the chunks status.
@@ -88,7 +88,7 @@ namespace bt
 		/// reference coun > 0
 		bool taken() const;
 
-		/// allocate data if not allready done, sets the status to buffered
+		/// allocate data if not already done, sets the status to buffered
 		void allocate();
 
 		/// Is chunk prioritised

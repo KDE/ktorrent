@@ -81,64 +81,64 @@ namespace bt
 
 	void IPBlocklist::addRange(QString ip)
 	{
-		bool ok;
-		int tmp = 0;
-		Uint32 addr = 0;
-		Uint32 mask = 0xFFFFFFFF;
-
-		tmp = ip.section('.',0,0).toInt(&ok);
-		if(!ok)
-		{
-			if(ip.section('.',0,0) == "*")
-				mask &= 0x00FFFFFF;
-			else return; //illegal character
+		bool ok; 
+		int tmp = 0; 
+		Uint32 addr = 0; 
+		Uint32 mask = 0xFFFFFFFF; 
+		 
+		tmp = ip.section('.',0,0).toInt(&ok); 
+		if(!ok) 
+		{ 
+			if(ip.section('.',0,0) == "*") 
+				mask &= 0x00FFFFFF; 
+			else return; //illegal character 
+		} 
+		else 
+			addr = tmp; 
+			 
+		tmp = ip.section('.',1,1).toInt(&ok); 
+		if(!ok) 
+		{ 
+			addr <<= 8; 
+			if(ip.section('.',1,1) == "*") 
+				mask &= 0xFF00FFFF; 
+			else return; //illegal character 
+		} 
+		else 
+		{ 
+			addr <<= 8; 
+			addr |= tmp; 
+		}  
+		
+		tmp = ip.section('.',2,2).toInt(&ok); 
+		if(!ok) 
+		{ 
+			addr <<= 8; 
+			if(ip.section('.',2,2) == "*") 
+				mask &= 0xFFFF00FF; 
+			else return; //illegal character 
+		} 
+		else 
+		{ 
+			addr <<= 8; 
+			addr |= tmp; 
+		}  
+		
+		tmp = ip.section('.',3,3).toInt(&ok); 
+		if(!ok) 
+		{ 
+			addr <<= 8; 
+			if(ip.section('.',3,3) == "*") 
+				mask &=0xFFFFFF00; 
+			else return; //illegal character 
 		}
-		else
-			addr = tmp;
-
-		tmp = ip.section('.',1,1).toInt(&ok);
-		if(!ok)
-		{
-			addr <<= 8;
-			if(ip.section('.',1,1) == "*")
-				mask &= 0xFF00FFFF;
-			else return; //illegal character
-		}
-		else
-		{
-			addr <<= 8;
-			addr |= tmp;
-		}
-
-		tmp = ip.section('.',2,2).toInt(&ok);
-		if(!ok)
-		{
-			addr <<= 8;
-			if(ip.section('.',2,2) == "*")
-				mask &= 0xFFFF00FF;
-			else return; //illegal character
-		}
-		else
-		{
-			addr <<= 8;
-			addr |= tmp;
-		}
-
-		tmp = ip.section('.',3,3).toInt(&ok);
-		if(!ok)
-		{
-			addr <<= 8;
-			if(ip.section('.',3,3) == "*")
-				mask &=0xFFFFFF00;
-			else return; //illegal character
-		}
-		else
-		{
-			addr <<= 8;
-			addr |= tmp;
-		}
-
-		IPKey key(addr, mask);
+		else 
+		{ 
+			addr <<= 8; 
+			addr |= tmp; 
+		} 
+		
+		IPKey key(addr, mask); 
 		this->insertRangeIP(key);
 	}
 
@@ -160,6 +160,74 @@ namespace bt
 		}
 		else
 			m_peers.insert(key,state);
+	}
+	
+	void IPBlocklist::removeRange(QString ip)
+	{
+		bool ok; 
+		int tmp = 0; 
+		Uint32 addr = 0; 
+		Uint32 mask = 0xFFFFFFFF; 
+		 
+		tmp = ip.section('.',0,0).toInt(&ok); 
+		if(!ok) 
+		{ 
+			if(ip.section('.',0,0) == "*") 
+				mask &= 0x00FFFFFF; 
+			else return; //illegal character 
+		} 
+		else 
+			addr = tmp; 
+			 
+		tmp = ip.section('.',1,1).toInt(&ok); 
+		if(!ok) 
+		{ 
+			addr <<= 8; 
+			if(ip.section('.',1,1) == "*") 
+				mask &= 0xFF00FFFF; 
+			else return; //illegal character 
+		} 
+		else 
+		{ 
+			addr <<= 8; 
+			addr |= tmp; 
+		}  
+		
+		tmp = ip.section('.',2,2).toInt(&ok); 
+		if(!ok) 
+		{ 
+			addr <<= 8; 
+			if(ip.section('.',2,2) == "*") 
+				mask &= 0xFFFF00FF; 
+			else return; //illegal character 
+		} 
+		else 
+		{ 
+			addr <<= 8; 
+			addr |= tmp; 
+		}  
+		
+		tmp = ip.section('.',3,3).toInt(&ok); 
+		if(!ok) 
+		{ 
+			addr <<= 8; 
+			if(ip.section('.',3,3) == "*") 
+				mask &=0xFFFFFF00; 
+			else return; //illegal character 
+		}
+		else 
+		{ 
+			addr <<= 8; 
+			addr |= tmp; 
+		} 
+		
+		IPKey key(addr, mask); 
+		
+		QMap<IPKey, int>::iterator it = m_peers.find(key);
+		if (it == m_peers.end())
+			return;
+		
+		m_peers.remove(key);
 	}
 	
 	void IPBlocklist::setPluginInterfacePtr( kt::IPBlockingInterface* ptr )
@@ -252,5 +320,6 @@ namespace bt
 	}
 
 	IPKey::~ IPKey()
-{}}
+	{}
+}
 

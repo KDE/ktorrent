@@ -21,14 +21,6 @@
 
 namespace dht
 {
-	const QString TID = "t";
-	const QString REQ = "q";
-	const QString RSP = "r";
-	const QString TYP = "y";
-	const QString ARG = "a";
-	const QString ERR = "e";
-
-	//msg = {TID : chr(self.mtid), TYP : REQ,  REQ : method, ARG : args}
 
 	RPCCall::RPCCall(QObject *parent) : QObject(parent)
 	{}

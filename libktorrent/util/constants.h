@@ -46,6 +46,7 @@ namespace bt
 	const Uint8 REQUEST = 6;
 	const Uint8 PIECE = 7;
 	const Uint8 CANCEL = 8;
+	const Uint8 PORT = 9;
 }
 
 

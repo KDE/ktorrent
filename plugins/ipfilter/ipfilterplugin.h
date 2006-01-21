@@ -30,7 +30,9 @@
 class QString;
 
 namespace kt
-{
+{	
+	class IPBlockingPrefPage;
+	
 	/**
 	 * @author Ivan Vasic <ivasic@gmail.com>
 	 * @brief IP filter plugin
@@ -52,6 +54,9 @@ namespace kt
 		
 		///Loads the anti-p2p filter list
 		bool loadAntiP2P();
+		
+		///Unloads the anti-p2p filter list
+		bool unloadAntiP2P();
 		
 		
 		///Checks if IP is listed in AntiP2P filter list.

@@ -43,6 +43,7 @@ namespace bt
 		Chunk* chunk;
 	public:
 		Packet(Uint8 type);
+		Packet(Uint16 port);
 		Packet(Uint32 chunk);
 		Packet(const BitSet & bs);
 		Packet(const Request & req,bool cancel);
@@ -50,6 +51,8 @@ namespace bt
 		virtual ~Packet();
 
 		Uint8 getType() const {return hdr[4];}
+		
+		bool isOK() const;
 		
 		const Uint8* getHeader() const {return hdr;}
 		Uint32 getHeaderLength() const {return hdr_length;}

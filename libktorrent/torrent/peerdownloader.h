@@ -154,6 +154,9 @@ namespace bt
 		
 		/// Get the maximum outstanding requests allowed.
 		Uint32 getMaximumOutstandingReqs() const;
+		
+		/// Get the maximum number of chunk downloads
+		Uint32 getMaxChunkDownloads() const;
 	public slots:
 		/**
 		 * Send a Request. Note that the DownloadCap
@@ -173,6 +176,8 @@ namespace bt
 		 * Cancel all Requests
 		 */
 		void cancelAll();
+		
+		static void setMemoryUsage(Uint32 m);
 		
 	private slots:
 		void piece(const Piece & p);
@@ -197,6 +202,7 @@ namespace bt
 		Peer* peer;
 		QValueList<TimeStampedRequest> reqs,unsent_reqs;
 		int grabbed;
+		static Uint32 max_outstanding_reqs;
 	};
 
 }

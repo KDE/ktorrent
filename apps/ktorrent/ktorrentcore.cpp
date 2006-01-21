@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <unistd.h>
 #include <qdir.h>
 #include <klocale.h>
 #include <kglobal.h>
@@ -48,6 +49,7 @@
 
 using namespace bt;
 using namespace kt;
+
 
 
 KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seeding(true),pman(0)
@@ -139,8 +141,8 @@ void KTorrentCore::load(const QString & target,const QString & dir)
 			dlg.execute(tc);
 		}
 		// 		start(tc);
-		qman->start(tc);
 		torrentAdded(tc);
+		qman->torrentAdded(tc);
 	}
 	catch (bt::Error & err)
 	{
@@ -184,9 +186,9 @@ void KTorrentCore::start(kt::TorrentInterface* tc)
 	qman->start(tc);
 }
 
-void KTorrentCore::stop(TorrentInterface* tc)
+void KTorrentCore::stop(TorrentInterface* tc, bool user)
 {
-	qman->stop(tc);
+	qman->stop(tc, user);
 }
 
 int KTorrentCore::getNumRunning() const
@@ -253,6 +255,7 @@ void KTorrentCore::loadTorrents()
 		Out() << "Loading " << idir << endl;
 		loadExistingTorrent(idir);
 	}
+	qman->orderQueue();
 }
 
 void KTorrentCore::remove(TorrentInterface* tc,bool data_to)
@@ -268,9 +271,7 @@ void KTorrentCore::remove(TorrentInterface* tc,bool data_to)
 		QString data_dir = tc->getDataDir() + s.torrent_name;
 		
 		torrentRemoved(tc);
-		// 		downloads.remove(tc);
-		qman->remove(tc);
-		
+		qman->torrentRemoved(tc);
 	
 		try
 		{
@@ -309,6 +310,7 @@ void KTorrentCore::torrentFinished(kt::TorrentInterface* tc)
 		tc->stop(false);
 
 	finished(tc);
+	qman->torrentFinished(tc);
 }
 
 void KTorrentCore::setKeepSeeding(bool ks)
@@ -318,6 +320,8 @@ void KTorrentCore::setKeepSeeding(bool ks)
 
 void KTorrentCore::onExit()
 {
+	// stop timer to prevent updates during wait
+	update_timer.stop();
 	pman->saveConfigFile(KGlobal::dirs()->saveLocation("data","ktorrent") + "plugins");
 	// 	downloads.clear();
 	qman->clear();
@@ -527,6 +531,17 @@ void KTorrentCore::addBlockedIP(QString& ip)
 {
 	IPBlocklist& filter = IPBlocklist::instance();
 	filter.addRange(ip);
+}
+
+void KTorrentCore::removeBlockedIP(QString& ip)
+{
+	IPBlocklist& filter = IPBlocklist::instance();
+	filter.removeRange(ip);
+}
+
+bt::QueueManager* KTorrentCore::getQueueManager()
+{
+	return this->qman;
 }
 
 #include "ktorrentcore.moc"

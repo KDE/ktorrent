@@ -52,7 +52,19 @@ namespace kt
 	AntiP2P::AntiP2P()
 	{
 		header_loaded = false;
+		load();
+  	}
+
+  	AntiP2P::~AntiP2P()
+  	{
+		if(file)
+			delete file;
 		
+		Out() << "Anti-P2P filter unloaded." << endl;
+	}
+	
+	void AntiP2P::load()
+	{
 		file = new MMapFile();
 		if(! file->open(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat", MMapFile::READ) )
 		{
@@ -60,12 +72,7 @@ namespace kt
 			file = 0;
 			return;
 		}
-  	}
-
-  	AntiP2P::~AntiP2P()
-  	{
-		if(file)
-			delete file;
+		Out() << "Loading Anti-P2P filter..." << endl;
 	}
 	
 	void AntiP2P::loadHeader()
@@ -167,7 +174,7 @@ namespace kt
 	bool AntiP2P::searchFile(IPBlock* file_blocks, Uint32& ip, int start, int end)
 	{
 		if (end == 0)
-			return -1; //empty list
+			return false; //empty list, so not found
 		
 		if (end == 1)
 		{

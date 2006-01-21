@@ -100,14 +100,12 @@ namespace bt
 
 	void SingleFileCache::create()
 	{
-		if (!bt::Exists(datadir + tor.getNameSuggestion()))
-		{
-			QString out_file = datadir + tor.getNameSuggestion();
-			if (!bt::Exists(out_file))
-				bt::Touch(out_file);
-			if (!bt::Exists(cache_file))
-				bt::SymLink(out_file,cache_file);
-		}
+		QString out_file = datadir + tor.getNameSuggestion();
+		if (!bt::Exists(out_file))
+			bt::Touch(out_file);
+
+		if (!bt::Exists(cache_file))
+			bt::SymLink(out_file,cache_file);
 	}
 	
 	void SingleFileCache::close()

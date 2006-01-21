@@ -35,7 +35,10 @@ namespace bt
 	{
 		first_chunk = off / chunk_size;
 		first_chunk_off = off % chunk_size;
-		last_chunk = (off + size - 1) / chunk_size;
+		if (size > 0)
+			last_chunk = (off + size - 1) / chunk_size;
+		else
+			last_chunk = 0;
 		last_chunk_size = (off + size) - last_chunk * chunk_size;
 		do_not_download = false;
 	}

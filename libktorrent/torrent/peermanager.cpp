@@ -62,7 +62,7 @@ namespace bt
 
 	void PeerManager::update()
 	{
-		if (!started)
+		if (!started || Globals::instance().inCriticalOperationMode())
 			return;
 
 		// update the speed of each peer,
@@ -74,6 +74,7 @@ namespace bt
 			if (p->isKilled())
 			{
 				cnt->decBitSet(p->getBitSet());
+				updateAvailableChunks();
 				i = peer_list.erase(i);
 				killed.append(p);
 				peer_map.erase(p->getID());
@@ -81,7 +82,7 @@ namespace bt
 			}
 			else
 			{
-				p->updateSpeed();
+				p->update();
 				i++;
 			}
 		}
@@ -144,16 +145,8 @@ namespace bt
 		{
 			Peer* p = *i;
  			if ( p->isSeeder() )
-			{
-				cnt->decBitSet(p->getBitSet());
  				p->kill();
-				i = peer_list.erase(i);
-				killed.append(p);
-				peer_map.erase(p->getID());
-				peerKilled(p);
-			}
-			else
-				i++;
+			i++;
 		}
 	}
 
@@ -177,10 +170,10 @@ namespace bt
 	
 #ifdef USE_KNETWORK_SOCKET_CLASSES
 	void PeerManager::newConnection(KNetwork::KBufferedSocket* sock,
-									const PeerID & peer_id)
+									const PeerID & peer_id,bool dht_supported)
 #else
 	void PeerManager::newConnection(QSocket* sock,
-									const PeerID & peer_id)
+									const PeerID & peer_id,bool dht_supported)
 #endif
 	{
 		Uint32 total = peer_list.count() + pending.count();
@@ -190,7 +183,7 @@ namespace bt
 			return;
 		}
 
-		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks());
+		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),dht_supported);
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));
@@ -211,7 +204,7 @@ namespace bt
 			return;
 			
 		Peer* peer = new Peer(
-				auth->takeSocket(),auth->getPeerID(),tor.getNumChunks());
+				auth->takeSocket(),auth->getPeerID(),tor.getNumChunks(),auth->supportsDHT());
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));
@@ -333,6 +326,14 @@ namespace bt
 		// so that the next update in TorrentControl
 		// will be forced to do the choking
 		killed.append(0);
+	}
+	
+	void PeerManager::updateAvailableChunks()
+	{
+		for (Uint32 i = 0;i < available_chunks.getNumBits();i++)
+		{
+			available_chunks.set(i,cnt->get(i) > 0);
+		}
 	}
 }
 #include "peermanager.moc"

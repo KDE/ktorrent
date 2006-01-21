@@ -50,10 +50,11 @@ namespace bt
 			while (i != up_queue.end())
 			{
 				Entry & e = *i;
-				e.pw->uploadUnsentPacket(true);
+				e.pw->uploadUnsentBytes(0);
 				i++;
 			}
 			up_queue.clear();
+			leftover = 0;
 		}
 	}
 
@@ -89,7 +90,10 @@ namespace bt
 	void UploadCap::update()
 	{
 		if (up_queue.count() == 0)
+		{
+			timer.update();
 			return;
+		}
 		
 		// first calculate the time since the last update
 		double el = timer.getElapsedSinceUpdate();
@@ -97,40 +101,34 @@ namespace bt
 		// calculate the number of bytes we can send, including those leftover from the last time
 		Uint32 nb = (Uint32)floor((el / 1000.0) * max_bytes_per_sec) + leftover;
 		leftover = 0;
-		Out() << "nb = " << nb << endl;
+	//	Out() << "nb = " << nb << endl;
 		
-		bool sent_one = false;
-
 		while (up_queue.count() > 0 && nb > 0)
 		{
 			// get the first
 			Entry & e = up_queue.first();
 			PacketWriter* pw = e.pw;
 			
-			if (pw->getNumPacketsToWrite() > 0 )
+			if (e.bytes <= nb)
 			{
-				if (e.bytes <= nb)
-				{
-					// upload one
-					pw->uploadUnsentPacket(false);
-					nb -= e.bytes;
-					sent_one = true;
-					up_queue.pop_front();
-				}
-				else
-				{
-					// make sure we exit the loop
-					leftover = nb;
-					nb = 0;
-				}
+				// we can send all remaining bytes of the packet
+				Uint32 s = pw->uploadUnsentBytes(e.bytes);
+			//	Out() << QString("Sending full packet : %1 %2").arg(e.bytes).arg(s) << endl;
+				nb -= s;
+				up_queue.pop_front();
 			}
 			else
 			{
-				up_queue.pop_front();
+				// sent nb bytes of the packets
+				Uint32 s = pw->uploadUnsentBytes(nb);
+			//	Out() << QString("Sending partial : %1 %2 %3").arg(nb).arg(s).arg(e.bytes - s) << endl;
+				nb -= s;
+				e.bytes -= s;
 			}
+			
 		}
 		
-		if (sent_one)
-			timer.update();
+		leftover = nb;
+		timer.update();
 	}
 }

@@ -324,7 +324,7 @@ namespace bt
 		for (Uint32 i = 0;i < files.count();i++)
 		{
 			const TorrentFile & f = files[i];
-			if (chunk >= f.getFirstChunk() && chunk <= f.getLastChunk())
+			if (chunk >= f.getFirstChunk() && chunk <= f.getLastChunk() && f.getSize() != 0)
 				file_list.append(f.getIndex());
 		}
 	}

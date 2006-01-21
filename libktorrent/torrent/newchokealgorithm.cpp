@@ -235,29 +235,52 @@ namespace bt
 			return;
 		
 		// first get all unchoked and interested peers
-		PeerPtrList peers;
+		PeerPtrList peers,others;
 		for (Uint32 i = 0;i < num_peers;i++)
 		{
 			Peer* p = pman.getPeer(i);
 			if (p && !p->isChoked() && p->isInterested())
 				peers.append(p);
+			else
+				others.append(p);
 		}
 		
 		// sort them
 		peers.setCompareFunc(NChokeCmp);
 		peers.sort();
+		others.setCompareFunc(NChokeCmp);
+		others.sort();
 		
 		// first round so take the 4 first peers
 		if (round_state == 1)
 		{
+			Uint32 num_unchoked = 0;
 			for (Uint32 i = 0;i < peers.count();i++)
 			{
 				Peer* p = peers.at(i);
 				if (!p)
 					continue;
 				
-				if (i < 4)
+				if (num_unchoked < 4)
+				{
 					p->getPacketWriter().sendUnchoke();
+					num_unchoked++;
+				}
+				else
+					p->getPacketWriter().sendChoke();
+			}
+			// go over the other peers and unchoke, if we do not have enough
+			for (Uint32 i = 0;i < others.count();i++)
+			{
+				Peer* p = others.at(i);
+				if (!p)
+					continue;
+				
+				if (num_unchoked < 4)
+				{
+					p->getPacketWriter().sendUnchoke();
+					num_unchoked++;
+				}
 				else
 					p->getPacketWriter().sendChoke();
 			}
@@ -268,6 +291,7 @@ namespace bt
 			if (peers.count() > 3)
 				rnd = 3 + rand() % (peers.count() - 3); 
 			
+			Uint32 num_unchoked = 0;
 			// take the first 3 and a random one
 			for (Uint32 i = 0;i < peers.count();i++)
 			{
@@ -275,8 +299,27 @@ namespace bt
 				if (!p)
 					continue;
 				
-				if (i < 3 || i == rnd)
+				if (num_unchoked < 4 || i == rnd)
+				{
 					p->getPacketWriter().sendUnchoke();
+					num_unchoked++;
+				}
+				else 
+					p->getPacketWriter().sendChoke();
+			}
+			
+			// go over the other peers and unchoke, if we do not have enough
+			for (Uint32 i = 0;i < others.count();i++)
+			{
+				Peer* p = others.at(i);
+				if (!p)
+					continue;
+				
+				if (num_unchoked < 4 || i == rnd)
+				{
+					p->getPacketWriter().sendUnchoke();
+					num_unchoked++;
+				}
 				else 
 					p->getPacketWriter().sendChoke();
 			}

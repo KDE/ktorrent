@@ -35,6 +35,21 @@ namespace bt
 
 		fptr->write(str,len);
 	}
+	
+	////////////////////////////////////
+	
+	BEncoderBufferOutput::BEncoderBufferOutput(QByteArray & data) : data(data),ptr(0)
+	{
+	}
+
+	void BEncoderBufferOutput::write(const char* str,Uint32 len)
+	{
+		if (ptr + len > data.size())
+			data.resize(ptr + len);
+		
+		for (Uint32 i = 0;i < len;i++)
+			data[ptr++] = str[i];
+	}
 
 	////////////////////////////////////
 
@@ -43,7 +58,7 @@ namespace bt
 		out = new BEncoderFileOutput(fptr);
 	}
 
-	BEncoder::BEncoder(BEncoderOutput* out) : out(out),del(false)
+	BEncoder::BEncoder(BEncoderOutput* out) : out(out),del(true)
 	{
 	}
 

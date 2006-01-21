@@ -12,6 +12,8 @@
 	<Separator/>
 	<Action name="Start all"/>
 	<Action name="Stop all"/>
+	<Separator/>
+	<Action name="Queue manager"/>
   </Menu>
 </MenuBar>
 
@@ -29,5 +31,6 @@
 	<Action name="Remove"/>
 	<Action name="Start all"/>
 	<Action name="Stop all"/>
+	<Action name="Queue manager"/>
 </ToolBar>
 </kpartgui>

@@ -20,6 +20,8 @@
 #include <klocale.h>
 #include <kpushbutton.h>
 #include <klistview.h>
+#include <kglobal.h>
+#include <kiconloader.h>
 #include "pluginmanager.h"
 #include "pluginmanagerwidget.h"
 #include "pluginmanagerprefpage.h"
@@ -29,7 +31,7 @@ namespace kt
 {
 
 	PluginManagerPrefPage::PluginManagerPrefPage(PluginManager* pman)
-	: PrefPageInterface(i18n("Plugins"), i18n("Plugin Options"),QPixmap()),pman(pman)
+	: PrefPageInterface(i18n("Plugins"), i18n("Plugin Options"),KGlobal::iconLoader()->loadIcon("ktplugins",KIcon::NoGroup)),pman(pman)
 	{
 		pmw = 0;
 	}

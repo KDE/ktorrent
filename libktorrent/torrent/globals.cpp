@@ -20,45 +20,30 @@
 
 #include <util/log.h>
 #include <util/error.h>
+#include <kademlia/dht.h>
 
 #include "globals.h"
 #include "server.h"
 
-#ifdef KT_DEBUG_GC
-#include <util/garbagecollector.h>
-#endif
-
-
 namespace bt
-{
-	
-	
+{	
 
 	Globals* Globals::inst = 0;
-
-
-
-
 
 	Globals::Globals()
 	{
 		debug_mode = false;
+		critical_operation = false;
 		log = new Log();
-#ifdef KT_DEBUG_GC
-		gc = new GarbageCollector();
-#endif
-
 		server = 0;
+		dh_table = new dht::DHT();
 	}
 
 	Globals::~ Globals()
 	{
 		delete server;
 		delete log;
-#ifdef KT_DEBUG_GC
-		gc->clear();
-		delete gc;
-#endif
+		delete dh_table;
 	}
 	
 	Globals & Globals::instance() 

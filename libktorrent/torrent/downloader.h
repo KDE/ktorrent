@@ -117,9 +117,9 @@ namespace bt
 		void loadDownloads(const QString & file);
 
 		/**
-		 * Get the number of bytes allready downloaded in the current_chunks file.
+		 * Get the number of bytes already downloaded in the current_chunks file.
 		 * @param file The path of the current_chunks file
-		 * @return The bytes allready downloading
+		 * @return The bytes already downloading
 		 */
 		Uint32 getDownloadedBytesOfCurrentChunksFile(const QString & file);
 	public slots:
@@ -145,6 +145,8 @@ namespace bt
 		 * @param tmo 
 		 */
 		void setMonitor(kt::MonitorInterface* tmo);
+		
+		static void setMemoryUsage(Uint32 m);
 		
 	private slots:
 		void pieceRecieved(const Piece & p);
@@ -179,6 +181,7 @@ namespace bt
 		ChunkSelector* chunk_selector;
 		
 		kt::MonitorInterface* tmon;
+		static Uint32 mem_usage;
 	};
 	
 

@@ -18,7 +18,7 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 
-
+#include <signal.h>
 #include <klocale.h>
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -68,6 +68,8 @@ static KCmdLineOptions options[] =
 
 int main(int argc, char **argv)
 {
+	// ignore SIGPIPE's
+	signal(SIGPIPE,SIG_IGN);
 //	qInstallMsgHandler( StupidWarningMessagesFromQt );
 	KAboutData about("ktorrent", I18N_NOOP("KTorrent"), version, description,
 					 KAboutData::License_GPL, "(C) 2005 Joris Guisson", 0,

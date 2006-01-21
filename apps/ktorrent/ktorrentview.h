@@ -35,6 +35,7 @@ namespace kt
 	class TorrentInterface;
 }
 
+
 using namespace bt;
 
 /**
@@ -67,6 +68,10 @@ public:
 
 	/// Enable or disable the debug view
 	void setShowDebugView(bool yes);
+	
+	/// Save the views settings
+	void saveSettings();
+	
 public slots:
 	void addTorrent(kt::TorrentInterface* tc);
 	void removeTorrent(kt::TorrentInterface* tc);

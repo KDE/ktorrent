@@ -73,14 +73,24 @@ namespace kt
 		setEnabled(false);
 		showPeerView( InfoWidgetPluginSettings::showPeerView() );
 		showChunkView( InfoWidgetPluginSettings::showChunkView() );
+		
+		KGlobal::config()->setGroup("InfoWidget");
+		if (KGlobal::config()->hasKey("InfoWidgetSize"))
+		{
+			QSize s = KGlobal::config()->readSizeEntry("InfoWidgetSize",0);
+			resize(s);
+		}
 	}
 	
 	InfoWidget::~InfoWidget()
 	{
+		KGlobal::config()->setGroup("InfoWidget");
+		KGlobal::config()->writeEntry("InfoWidgetSize",size());
 		if (cd_view)
 			cd_view->saveLayout(KGlobal::config(),"ChunkDownloadView");
 		if (peer_view)
 			peer_view->saveLayout(KGlobal::config(),"PeerView");
+		KGlobal::config()->sync();
 		delete monitor;
 	}
 	
@@ -327,7 +337,7 @@ namespace kt
 			ratio = (float) s.bytes_uploaded / (float)s.bytes_downloaded;
 	
 		
-		m_share_ratio->setText(KGlobal::locale()->formatNumber(ratio,2));
+		m_share_ratio->setText(QString("<font color=\"%1\">%2</font>").arg(ratio <= 0.8 ? "#ff0000" : "#00ff00").arg(KGlobal::locale()->formatNumber(ratio,2)));
 	
 		Uint32 secs = curr_tc->getRunningTimeUL(); 
 		if (secs == 0)
@@ -339,7 +349,7 @@ namespace kt
 		{
 			double r = (double)s.bytes_uploaded / 1024.0;
 			m_avg_up->setText(KBytesPerSecToString(r / secs));
-			r = (double)s.bytes_downloaded/ 1024.0;
+			r = (double)(s.bytes_downloaded - s.imported_bytes)/ 1024.0;
 			secs = curr_tc->getRunningTimeDL();
 			m_avg_down->setText(KBytesPerSecToString(r / secs));
 		}

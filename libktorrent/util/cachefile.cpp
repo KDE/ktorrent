@@ -33,6 +33,16 @@
 #include "error.h"
 #include "cachefile.h"
 
+// Not all systems have an O_LARGEFILE - Solaris depending
+// on command-line defines, FreeBSD never - so in those cases,
+// make it a zero bitmask. As long as it's only OR'ed into
+// open(2) flags, that's fine.
+//
+#ifndef O_LARGEFILE
+#define O_LARGEFILE (0)
+#endif
+
+
 namespace bt
 {
 
@@ -68,7 +78,7 @@ namespace bt
 			CacheFile::Entry e = i.data();
 			i++;
 			mappings.erase(e.ptr);
-			e.ptr = map(e.thing,e.offset,e.size,e.mode);
+			e.ptr = map(e.thing,e.offset,e.size - e.diff,e.mode);
 			if (e.ptr)
 				e.thing->remapped(e.ptr);
 		}
@@ -79,6 +89,7 @@ namespace bt
 		if (off + size > max_size)
 		{
 			Out() << "Warning : writing past the end of " << path << endl;
+			Out() << (off + size) << " " << max_size << endl;
 			return 0;
 		}
 		
@@ -159,7 +170,10 @@ namespace bt
 		lseek(fd,0,SEEK_END);
 		
 		if (file_size + to_write > max_size)
+		{
 			Out() << "Warning : writing past the end of " << path << endl;
+			Out() << (file_size + to_write) << " " << max_size << endl;
+		}
 		
 		Uint8 buf[1024];
 		memset(buf,0,1024);
@@ -179,12 +193,15 @@ namespace bt
 			}
 		}
 		file_size += num;
-//		fsync(fd);
+//		
 	//	Out() << QString("growing %1 = %2").arg(path).arg(kt::BytesToString(file_size)) << endl;
 		struct stat sb;
 		fstat(fd,&sb);
 		if (file_size != (Uint64)sb.st_size)
+		{
 			Out() << QString("Homer Simpson %1 %2").arg(file_size).arg(sb.st_size) << endl;
+			fsync(fd);
+		}
 	}
 		
 	void CacheFile::unmap(void* ptr,Uint32 size)
@@ -215,8 +232,8 @@ namespace bt
 		while (i != mappings.end())
 		{
 			CacheFile::Entry & e = i.data();
-			if (e.offset > 0)
-				munmap((char*)e.ptr - e.offset,e.size);
+			if (e.diff > 0)
+				munmap((char*)e.ptr - e.diff,e.size);
 			else
 				munmap(e.ptr,e.size);
 			e.thing->unmapped(to_be_reopened);
@@ -252,7 +269,10 @@ namespace bt
 	void CacheFile::write(const Uint8* buf,Uint32 size,Uint64 off)
 	{
 		if (off + size > max_size)
+		{
 			Out() << "Warning : writing past the end of " << path << endl;
+			Out() << (off + size) << " " << max_size << endl;
+		}
 		
 		if (file_size < off)
 		{

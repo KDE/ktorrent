@@ -21,17 +21,17 @@
 
 namespace dht
 {
-	KBucketEntry::KBucketEntry() : ip_address(0),udp_port(0)
+	KBucketEntry::KBucketEntry()
 	{
 	}
 	
-	KBucketEntry::KBucketEntry(Uint32 ip,Uint16 port,const Key & id)
-		: ip_address(ip),udp_port(port),node_id(id)
+	KBucketEntry::KBucketEntry(const KSocketAddress & addr,const Key & id)
+	: addr(addr),node_id(id)
 	{
 	}
 		
 	KBucketEntry::KBucketEntry(const KBucketEntry & other)
-	: ip_address(other.ip_address),udp_port(other.udp_port),node_id(other.node_id)
+	: addr(other.addr),node_id(other.node_id)
 	{}
 
 		
@@ -40,10 +40,14 @@ namespace dht
 
 	KBucketEntry & KBucketEntry::operator = (const KBucketEntry & other)
 	{
-		ip_address = other.ip_address;
-		udp_port = other.udp_port;
+		addr = other.addr;
 		node_id = other.node_id;
 		return *this;
+	}
+	
+	bool KBucketEntry::operator == (const KBucketEntry & entry) const
+	{
+		return addr == entry.addr && node_id == entry.node_id;
 	}
 
 	KBucket::KBucket()
@@ -52,6 +56,20 @@ namespace dht
 	
 	KBucket::~KBucket()
 	{}
+	
+	bool KBucket::insert(const KBucketEntry & entry)
+	{
+		if (entries.count() < dht::K)
+		{
+			entries.append(entry);
+			return true;
+		}
+		return false;
+	}
 
+	bool KBucket::contains(const KBucketEntry & entry) const
+	{
+		return entries.contains(entry);
+	}
 }
 

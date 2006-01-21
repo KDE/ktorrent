@@ -44,11 +44,11 @@ namespace bt
 	
 	static Uint32 peer_id_counter = 1;
 #ifdef USE_KNETWORK_SOCKET_CLASSES
-	Peer::Peer(KNetwork::KBufferedSocket* sock,const PeerID & peer_id,Uint32 num_chunks)
+	Peer::Peer(KNetwork::KBufferedSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported)
 #else
-	Peer::Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks)
+	Peer::Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported)
 #endif
-	: sock(sock),pieces(num_chunks),peer_id(peer_id)
+	: sock(sock),pieces(num_chunks),peer_id(peer_id),dht_supported(dht_supported)
 	{
 		id = peer_id_counter;
 		peer_id_counter++;
@@ -59,6 +59,7 @@ namespace bt
 		choked = am_choked = true;
 		interested = am_interested = false;
 		killed = false;
+		recieved_packet = false;
 		downloader = new PeerDownloader(this);
 		uploader = new PeerUploader(this);
 		
@@ -119,7 +120,8 @@ namespace bt
 	void Peer::readyRead() 
 	{
 		if (killed) return;
-		readPacket();
+		// set a flag indicating that packets are ready
+		recieved_packet = true;
 	}
 	
 	void Peer::error(int)
@@ -147,6 +149,8 @@ namespace bt
 		
 		if (!preader->ok())
 			error(0);
+		
+		recieved_packet = false;
 	}
 	
 	void Peer::handlePacket(Uint32 len)
@@ -286,6 +290,19 @@ namespace bt
 					uploader->removeRequest(r);
 				}
 				break;
+			case PORT:
+				if (len != 3)
+				{
+					Out() << "len err PORT" << endl;
+					error(0);
+					return;
+				}
+				
+				{
+					Uint16 port = ReadUint16(tmp_buf,1);
+					Out() << "Got PORT packet : " << port << endl;
+				}
+				break;
 		}
 	}
 	
@@ -299,6 +316,7 @@ namespace bt
 
 	void Peer::dataWritten(int bytes)
 	{
+	//	Out() << "dataWritten " << bytes << endl;
 		up_speed->bytesWritten(bytes);
 	}
 	
@@ -317,8 +335,10 @@ namespace bt
 		return true;
 	}
 	
-	void Peer::updateSpeed()
+	void Peer::update()
 	{
+		if (recieved_packet)
+			readPacket();
 		speed->update();
 		up_speed->update();
 	}

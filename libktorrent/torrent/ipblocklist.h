@@ -86,6 +86,14 @@ namespace bt
 			* @param ip QString peer IP address. Uses ''*" for ranges.
 			 **/
 			void addRange(QString ip);
+			
+			
+			/**
+			 * @brief Removes IP range from list
+			 * It is used  for blocking plugin.
+			 * @param ip QString peer IP address. Uses ''*" for ranges.
+			 **/
+			void removeRange(QString ip);
 
 			/**
 			 * Checks if IP is in the blocking list

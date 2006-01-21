@@ -28,8 +28,7 @@
 namespace kt
 {
 
-	UPnPPrefPage::UPnPPrefPage(UPnPMCastSocket* sock): PrefPageInterface(i18n("UPnP"), i18n("UPnP Devices"),
-	/*KGlobal::iconLoader()->loadIcon("viewmag",KIcon::NoGroup)*/QPixmap()),sock(sock)
+	UPnPPrefPage::UPnPPrefPage(UPnPMCastSocket* sock): PrefPageInterface(i18n("UPnP"), i18n("UPnP Devices"),KGlobal::iconLoader()->loadIcon("ktupnp",KIcon::NoGroup)),sock(sock)
 	{
 		widget = 0;
 	}

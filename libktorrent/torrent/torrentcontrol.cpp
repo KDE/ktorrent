@@ -63,6 +63,7 @@ namespace bt
 	TorrentControl::TorrentControl()
 			: tor(0),tracker(0),cman(0),pman(0),down(0),up(0),choke(0),tmon(0)
 	{
+		stats.imported_bytes = 0;
 		stats.running = false;
 		stats.started = false;
 		stats.stopped_by_error = false;
@@ -71,10 +72,12 @@ namespace bt
 		old_datadir = QString::null;
 		stats.status = NOT_STARTED;
 		stats.autostart = true;
+		stats.user_controlled = false;
 		running_time_dl = running_time_ul = 0;
 		prev_bytes_dl = 0;
 		prev_bytes_ul = 0;
 		io_error = false;
+		priority = 0;
 
 		updateStats();
 	}
@@ -100,6 +103,10 @@ namespace bt
 
 	void TorrentControl::update()
 	{
+		// do not update during critical operation mode
+		if (Globals::instance().inCriticalOperationMode())
+			return;
+		
 		if (io_error)
 		{
 			stop(false);
@@ -126,6 +133,7 @@ namespace bt
 				pman->killSeeders();
 				QDateTime now = QDateTime::currentDateTime();
 				running_time_dl += time_started_dl.secsTo(now);
+				updateStatusMsg();
 				finished(this);
 			}
 			else if (!stats.completed && comp)
@@ -167,6 +175,16 @@ namespace bt
 			DownloadCap::instance().update(stats.download_rate);
 			UploadCap::instance().update();
 			updateStats();
+			if (stats.download_rate > 0)
+				stalled_timer.update();
+			
+			// do a manual update if we are stalled for more then 2 minutes
+			if (stalled_timer.getElapsedSinceUpdate() > 120000)
+			{
+				Out() << "Stalled for to long, time to get some fresh blood" << endl;
+				tracker->manualUpdate();
+				stalled_timer.update();
+			}
 		}
 		catch (Error & e)
 		{
@@ -213,15 +231,15 @@ namespace bt
 			Out() << "Warning : " << e.toString() << endl;
 		}
 		
-		
-		
 		loadStats();
 		stats.running = true;
 		stats.started = true;
+		stats.autostart = true;
 		choker_update_timer.update();
 		stats_save_timer.update();
 		tracker->start();
 		time_started_ul = time_started_dl = QDateTime::currentDateTime();
+		stalled_timer.update();
 	}
 
 	void TorrentControl::stop(bool user)
@@ -252,7 +270,11 @@ namespace bt
 			
 			down->clearDownloads();
 			if (user)
-				bt::Touch(datadir + "stopped",true);
+			{
+				//make this torrent user controlled
+				setPriority(0);
+				stats.autostart = false;
+			}
 		}
 		pman->stop();
 		pman->closeAllConnections();
@@ -284,8 +306,8 @@ namespace bt
 		if (!datadir.endsWith(DirSeparator()))
 			datadir += DirSeparator();
 
-		outputdir = ddir;
-		if (!outputdir.isNull() && !outputdir.endsWith(DirSeparator()))
+		outputdir = ddir.stripWhiteSpace();
+		if (outputdir.length() > 0 && !outputdir.endsWith(DirSeparator()))
 			outputdir += DirSeparator();
 
 		// first load the torrent file
@@ -297,14 +319,15 @@ namespace bt
 		catch (...)
 		{
 			delete tor;
-			throw Error(i18n("An error occured whilst loading the torrent,"
-					" the torrent is probably corrupt or it isn't a torrent file"));
+			tor = 0;
+			throw Error(i18n("An error occurred while loading the torrent."
+					" The torrent is probably corrupt or is not a torrent file."));
 		}
 		
-		// check if we haven't allready loaded the torrent
+		// check if we haven't already loaded the torrent
 		// only do this when qman isn't 0
 		if (qman && qman->allreadyLoaded(tor->getInfoHash()))
-			throw Error(i18n("You are allready downloading this torrent !"));
+			throw Error(i18n("You are already downloading this torrent."));
 		
 		if (!bt::Exists(datadir))
 		{
@@ -316,7 +339,7 @@ namespace bt
 		stats.total_bytes = tor->getFileLength();
 		
 		// load stats if outputdir is null
-		if (outputdir.isNull())
+		if (outputdir.isNull() || outputdir.length() == 0)
 			loadOutputDir();
 		
 		// copy torrent in temp dir
@@ -336,9 +359,7 @@ namespace bt
 			}
 			catch (Error & err)
 			{
-				// in case of error rename torX dir to migrate-failed-tor
-				QString dd = datadir.replace("tor","migrate-failed-tor");
-				bt::Move(datadir,dd,true);
+				
 				throw Error(
 						i18n("Cannot migrate %1 : %2")
 						.arg(tor->getNameSuggestion()).arg(err.toString()));
@@ -356,10 +377,14 @@ namespace bt
 		connect(tracker,SIGNAL(error()),this,SLOT(trackerResponseError()));
 		connect(tracker,SIGNAL(dataReady()),this,SLOT(trackerResponse()));
 
-		
+
 		// Create chunkmanager, load the index file if it exists
 		// else create all the necesarry files
 		cman = new ChunkManager(*tor,datadir,outputdir);
+		// outputdir is null, see if the cache has figured out what it is
+		if (outputdir.length() == 0)
+			outputdir = cman->getDataDir();
+		
 		connect(cman,SIGNAL(updateStats()),this,SLOT(updateStats()));
 		if (bt::Exists(datadir + "index"))
 			cman->loadIndexFile();
@@ -383,12 +408,10 @@ namespace bt
 		connect(cman,SIGNAL(excluded(Uint32, Uint32 )),
 		        down,SLOT(onExcluded(Uint32, Uint32 )));
 
-		if (bt::Exists(datadir + "stopped"))
-			stats.autostart = false;
 		updateStatusMsg();
 
 		// to get rid of phantom bytes we need to take into account
-		// the data from downloads allready in progress
+		// the data from downloads already in progress
 		try
 		{
 			Uint64 db = down->bytesDownloaded();
@@ -407,6 +430,7 @@ namespace bt
 		
 		loadStats();
 		updateStats();
+		saveStats();
 	}
 
 	void TorrentControl::trackerResponse()
@@ -449,6 +473,11 @@ namespace bt
 		p->getPacketWriter().sendBitSet(cman->getBitSet());
 		if (!stats.completed)
 			p->getPacketWriter().sendInterested();
+		if (p->isDHTSupported())
+			p->getPacketWriter().sendPort(4444);
+		else
+			p->kill();
+		
 		if (tmon)
 			tmon->peerAdded(p);
 	}
@@ -593,7 +622,9 @@ namespace bt
 		}
 
 		QTextStream out(&fptr);
-		out << "OUTPUTDIR=" << outputdir << ::endl;
+		out << "OUTPUTDIR=" << cman->getDataDir() << ::endl;
+		if (cman->getDataDir() != outputdir)
+			outputdir = cman->getDataDir();
 		out << "UPLOADED=" << QString::number(up->bytesUploaded()) << ::endl;
 		if (stats.running)
 		{
@@ -606,6 +637,10 @@ namespace bt
 			out << "RUNNING_TIME_DL=" << running_time_dl << ::endl;
 			out << "RUNNING_TIME_UL=" << running_time_ul << ::endl;
 		}
+		
+		out << "PRIORITY=" << priority << ::endl;
+		out << "AUTOSTART=" << stats.autostart << ::endl;
+		out << QString("IMPORTED=%1").arg(stats.imported_bytes) << ::endl;
 	}
 
 	void TorrentControl::loadStats()
@@ -651,7 +686,45 @@ namespace bt
 			}
 			else if (line.startsWith("OUTPUTDIR="))
 			{
-				outputdir = line.mid(10);
+				outputdir = line.mid(10).stripWhiteSpace();
+			}
+			else if (line.startsWith("PRIORITY="))
+			{
+				bool ok = true;
+				int p = line.mid(9).toInt(&ok);
+				if(ok)
+				{
+					priority = p;
+					stats.user_controlled = p == 0 ? true : false;
+				}
+				else
+					Out() << "Warning : Can't get priority out of line : "
+							<< line << endl;
+			}
+			else if (line.startsWith("AUTOSTART="))
+			{
+				bool ok = true;
+				int p = line.mid(10).toInt(&ok);
+				if(ok)
+					stats.autostart = (bool) p;
+				else
+				{
+					Out() << "Warning : Can't get autostart bit out of line : "
+							<< line << endl;
+					stats.autostart = true;
+				}
+			}
+			else if (line.startsWith("IMPORTED="))
+			{
+				bool ok = true;
+				Uint64 p = line.mid(9).toULongLong(&ok);
+				if(ok)
+					stats.imported_bytes = p;
+				else
+				{
+					Out() << "Warning : Can't get imported_bytes out of line : "
+							<< line << endl;
+				}
 			}
 		}
 	}
@@ -668,7 +741,9 @@ namespace bt
 			QString line = in.readLine();
 			if (line.startsWith("OUTPUTDIR="))
 			{
-				outputdir = line.mid(10);
+				outputdir = line.mid(10).stripWhiteSpace();
+				if (outputdir.length() > 0 && !outputdir.endsWith(bt::DirSeparator()))
+					outputdir += bt::DirSeparator();
 				return;
 			}
 		}
@@ -783,6 +858,16 @@ namespace bt
 	{
 		if (bt::Exists(datadir + "current_chunks") && bt::IsPreMMap(datadir + "current_chunks"))
 		{
+			// in case of error copy torX dir to migrate-failed-tor
+			QString dd = datadir;
+			int pos = dd.findRev("tor");
+			if (pos != - 1)
+			{
+				dd = dd.replace(pos,3,"migrate-failed-tor");
+				Out() << "Copying " << datadir << " to " << dd << endl;
+				bt::CopyDir(datadir,dd,true);
+			}
+				
 			bt::MigrateCurrentChunks(*tor,datadir + "current_chunks");
 			if (outputdir.isNull() && bt::IsCacheMigrateNeeded(*tor,datadir + "cache"))
 			{
@@ -809,7 +894,18 @@ namespace bt
 				
 				bt::MigrateCache(*tor,datadir + "cache",outputdir);
 			}
+			
+			// delete backup
+			if (pos != - 1)
+				bt::Delete(dd);
 		}
+	}
+	
+	void TorrentControl::setPriority(int p)
+	{
+		priority = p;
+		stats.user_controlled = p == 0 ? true : false;
+		saveStats();
 	}
 }
 

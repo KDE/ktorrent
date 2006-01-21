@@ -83,8 +83,9 @@ namespace kt
 		/**
 		 * Stop a torrent, may start another download if it hasn't been started.
 		 * @param tc The TorrentControl
+		 * @param user true if user stopped the torrent, false otherwise
 		 */
-		virtual void stop(TorrentInterface* tc) = 0;
+		virtual void stop(TorrentInterface* tc, bool user = false) = 0;
 
 		/**
 		 * Switch the port when no torrents are running.
@@ -134,13 +135,21 @@ namespace kt
 		virtual void addBlockedIP(QString& ip) = 0;
 		
 		/**
+		 * Removes IP range from IPBlocklist
+		 * @param ip QString reference to single IP or IP range. For example:
+		 * single - 127.0.0.5
+		 * range - 127.0.*.*
+		 **/
+		virtual void removeBlockedIP(QString& ip) = 0;
+		
+		/**
 		 * Find the next free torX dir.
 		 * @return Path to the dir (including the torX part)
 		 */
 		virtual QString findNewTorrentDir() const = 0;
 		
 		/**
-		 * Load an existing torrent, which has allready a properly set up torX dir.
+		 * Load an existing torrent, which has already a properly set up torX dir.
 		 * @param tor_dir The torX dir
 		 */
 		virtual void loadExistingTorrent(const QString & tor_dir) = 0;

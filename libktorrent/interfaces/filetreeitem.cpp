@@ -22,6 +22,7 @@
 #include <kiconloader.h>
 #include <kmimetype.h>
 #include <interfaces/functions.h>
+#include <torrent/globals.h>
 #include "filetreeitem.h"
 #include "filetreediritem.h"
 #include "torrentfileinterface.h"
@@ -61,7 +62,9 @@ namespace kt
 
 	void FileTreeItem::stateChange(bool on)
 	{
+		Globals::instance().setCriticalOperationMode(true);
 		file.setDoNotDownload(!on);
+		Globals::instance().setCriticalOperationMode(false);
 		setText(2,on ? i18n("Yes") : i18n("No"));
 		if (!manual_change)
 			parent->childStateChange();
@@ -72,8 +75,11 @@ namespace kt
 	{
 		if (col == 1)
 		{
-			FileTreeItem* other = static_cast<FileTreeItem*>(i);
-			return (int)(file.getSize() - other->file.getSize());
+			FileTreeItem* other = dynamic_cast<FileTreeItem*>(i);
+			if (!other)
+				return 0;
+			else
+				return (int)(file.getSize() - other->file.getSize());
 		}
 		else
 		{

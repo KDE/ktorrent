@@ -40,21 +40,44 @@ namespace bt
 
 	MultiFileCache::MultiFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir) : Cache(tor, tmpdir,datadir)
 	{
-		cache_dir = tmpdir + "cache/";
-		output_dir = datadir + tor.getNameSuggestion() + bt::DirSeparator();
+		cache_dir = tmpdir + "cache" + bt::DirSeparator();
+		if (datadir.length() == 0)
+			this->datadir = guessDataDir();
+		output_dir = this->datadir + tor.getNameSuggestion() + bt::DirSeparator();
 		files.setAutoDelete(true);
-		for (Uint32 i = 0;i < tor.getNumFiles();i++)
-		{
-			TorrentFile & tf = tor.getFile(i);
-			connect(&tf,SIGNAL(downloadStatusChanged( TorrentFile*, bool )),
-					 this,SLOT(downloadStatusChanged( TorrentFile*, bool )));
-		}
-		
 	}
 
 
 	MultiFileCache::~MultiFileCache()
 	{}
+	
+	QString MultiFileCache::guessDataDir()
+	{
+		for (Uint32 i = 0;i < tor.getNumFiles();i++)
+		{
+			TorrentFile & tf = tor.getFile(i);
+			if (tf.doNotDownload())
+				continue;
+			
+			QString p = cache_dir + tf.getPath();
+			QFileInfo fi(p);
+			if (!fi.isSymLink())
+				continue;
+			
+			QString dst = fi.readLink();
+			QString tmp = tor.getNameSuggestion() + bt::DirSeparator() + tf.getPath();
+			dst = dst.left(dst.length() - tmp.length());
+			if (dst.length() == 0)
+				continue;
+			
+			if (!dst.endsWith(bt::DirSeparator()))
+				dst += bt::DirSeparator();
+			Out() << "Guessed outputdir to be " << dst << endl;
+			return dst;
+		}
+		
+		return QString::null;
+	}
 
 	void MultiFileCache::close()
 	{
@@ -311,11 +334,11 @@ namespace bt
 		CacheFile* fd = files.find(tf->getIndex());
 		
 		QString dnd_dir = tmpdir + "dnd" + bt::DirSeparator();
-		// if it is dnd and it is allready in the dnd tree do nothing
+		// if it is dnd and it is already in the dnd tree do nothing
 		if (dnd && bt::Exists(dnd_dir + tf->getPath()))
 			return;
 		
-		// if it is !dnd and it is allready in the output_dir tree do nothing
+		// if it is !dnd and it is already in the output_dir tree do nothing
 		if (!dnd && bt::Exists(output_dir + tf->getPath()))
 			return;
 		
@@ -364,4 +387,3 @@ namespace bt
 	}
 }
 
-#include "multifilecache.moc"

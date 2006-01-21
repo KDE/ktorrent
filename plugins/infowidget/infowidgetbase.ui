@@ -12,6 +12,14 @@
             <height>293</height>
         </rect>
     </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>5</hsizetype>
+            <vsizetype>1</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
     <property name="caption">
         <string>InfoWidgetBase</string>
     </property>
@@ -739,8 +747,5 @@
 </images>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>downloadedchunkbar.h</includehint>
-    <includehint>availabilitychunkbar.h</includehint>
-    <includehint>klistview.h</includehint>
 </includehints>
 </UI>

@@ -86,8 +86,13 @@ namespace kt
 			bt::MMapFile* file;
 			QValueList<HeaderBlock> blocks;
 			
+			///Is AntiP2P header loaded
 			bool header_loaded;
 			
+			/**
+			 * Loads filter file
+			*/
+			void load();
 			
 			/**
 			 * Binary searches AntiP2P::blocks to find range where IP could be.

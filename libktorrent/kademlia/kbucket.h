@@ -22,13 +22,17 @@
 
 #include <qvaluelist.h>
 #include <util/constants.h>
+#include <ksocketaddress.h>
 #include "key.h"
 
 using bt::Uint32;
 using bt::Uint16;
+using KNetwork::KSocketAddress;
 
 namespace dht
 {
+	const Uint32 K = 8;
+	
 	/**
 	 * @author Joris Guisson
 	 *
@@ -37,8 +41,7 @@ namespace dht
 	 */
 	class KBucketEntry
 	{
-		Uint32 ip_address;
-		Uint16 udp_port;
+		KSocketAddress addr;
 		Key node_id;
 	public:
 		/**
@@ -49,11 +52,10 @@ namespace dht
 		
 		/**
 		 * Constructor, set the ip, port and key
-		 * @param ip IP address
-		 * @param port UDP port
+		 * @param addr socket address
 		 * @param id ID of node
 		 */
-		KBucketEntry(Uint32 ip,Uint16 port,const Key & id);
+		KBucketEntry(const KSocketAddress & addr,const Key & id);
 		
 		/**
 		 * Copy constructor.
@@ -71,6 +73,9 @@ namespace dht
 		 * @return this KBucketEntry
 		 */
 		KBucketEntry & operator = (const KBucketEntry & other);
+		
+		/// Equality operator
+		bool operator == (const KBucketEntry & entry) const;
 	};
 	
 	/**
@@ -87,7 +92,23 @@ namespace dht
 	public:
 		KBucket();
 		virtual ~KBucket();
+		
+		/**
+		 * Inserts an entry into the bucket. Only works when there is room in
+		 * the bucket (only K entries allowed)
+		 * @param entry 
+		 * @return 
+		 */
+		bool insert(const KBucketEntry & entry);
+		
+		/// Get the least recently seen node
+		const KBucketEntry & leastRecentlySeen() const {return entries[0];}
+		
+		/// Get the number of entries
+		Uint32 getNumEntries() const {return entries.count();}
 	
+		/// See if this bucket contains an entry
+		bool contains(const KBucketEntry & entry) const;
 	};
 }
 

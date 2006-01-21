@@ -50,6 +50,8 @@ namespace bt
 	};
 	
 	
+	
+	
 	/**
 	 * @author Joris Guisson
 	 * @brief Handles the download off one Chunk off a Peer
@@ -58,7 +60,6 @@ namespace bt
 	*/
 					  
 	class ChunkDownload : public QObject,public kt::ChunkDownloadInterface 
-					  //,public Object
 	{
 		Q_OBJECT
 	public:
@@ -95,10 +96,9 @@ namespace bt
 		/**
 		 * Assign the downloader to download from.
 		 * @param pd The downloader
-		 * @param endgame Wether or not we are in endgame mode
 		 * @return true if the peer was asigned, false if not
 		 */
-		bool assignPeer(PeerDownloader* pd,bool endgame);
+		bool assignPeer(PeerDownloader* pd);
 		
 		Uint32 getNumDownloaders() const {return pdown.count();}
 
@@ -137,6 +137,9 @@ namespace bt
 		
 		/// See if a PeerDownloader is assigned to this chunk
 		bool containsPeer(PeerDownloader *pd) {return pdown.contains(pd);} 
+		
+		/// See if the download is stalled (i.e. all downloaders are snubbed or choked)
+		bool isStalled() const;
 	private slots:
 		void sendRequests(PeerDownloader* pd);
 		void sendCancels(PeerDownloader* pd);
@@ -147,6 +150,7 @@ namespace bt
 		void releaseAllPDs();
 		
 		BitSet pieces;
+		QValueList<Uint32> piece_queue;
 		Chunk* chunk;
 		Uint32 num;
 		Uint32 num_downloaded;

@@ -23,6 +23,7 @@
 namespace bt
 {
 	class Torrent;
+	class TorrentFile;
 	class Chunk;
 
 	/**
@@ -42,6 +43,9 @@ namespace bt
 		Cache(Torrent & tor,const QString & tmpdir,const QString & datadir);
 		virtual ~Cache();
 
+		/// Get the datadir
+		QString getDataDir() const {return datadir;}
+		
 		/**
 		 * Changes the tmp dir. All data files should allready been moved.
 		 * This just modifies the tmpdir variable.
@@ -84,6 +88,9 @@ namespace bt
 		 * Open the cache file(s)
 		 */
 		virtual void open() = 0;
+		
+		/// Does nothing, can be overridden to be alerted of download status changes of a TorrentFile
+		virtual void downloadStatusChanged(TorrentFile*, bool) {};
 	};
 
 }

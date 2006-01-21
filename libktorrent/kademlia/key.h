@@ -22,6 +22,7 @@
 
 #include <util/sha1hash.h>
 
+
 namespace dht
 {
 
@@ -45,6 +46,12 @@ namespace dht
 		 * @param k Key to copy
 		 */
 		Key(const Key & k);
+		
+		/**
+		 * Make a key out of a bytearray
+		 * @param ba The QByteArray
+		 */
+		Key(const QByteArray & ba);
 
 		/// Destructor.
 		virtual ~Key();
@@ -60,21 +67,21 @@ namespace dht
 		 * @param other The key to compare
 		 * @return true if this key is equal to other
 		 */
-		bool operator == (const Key & other);
+		bool operator == (const Key & other) const;
 
 		/**
 		 * Inequality operator.
 		 * @param other The key to compare
 		 * @return true if this key is not equal to other
 		 */
-		bool operator != (const Key & other);
+		bool operator != (const Key & other) const;
 		
 		/**
 		 * Smaller then operator.
 		 * @param other The key to compare
 		 * @return rue if this key is smaller then other
 		 */
-		bool operator < (const Key & other);
+		bool operator < (const Key & other) const;
 
 		
 		/**
@@ -82,7 +89,7 @@ namespace dht
 		 * @param other The key to compare
 		 * @return rue if this key is smaller then or equal to other
 		 */
-		bool operator <= (const Key & other);
+		bool operator <= (const Key & other) const;
 
 		
 		/**
@@ -90,14 +97,14 @@ namespace dht
 		 * @param other The key to compare
 		 * @return rue if this key is greater then other
 		 */
-		bool operator > (const Key & other);
+		bool operator > (const Key & other) const;
 
 		/**
 		 * Greater then or equal operator.
 		 * @param other The key to compare
 		 * @return rue if this key is greater then or equal to other
 		 */
-		bool operator >= (const Key & other);
+		bool operator >= (const Key & other) const;
 		
 		/**
 		 * The distance of two keys is the keys xor together.

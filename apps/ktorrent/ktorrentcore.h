@@ -74,7 +74,7 @@ public:
 	void loadTorrents();
 	
 	/**
-	 * Load an existing torrent, which has allready a properly set up torX dir.
+	 * Load an existing torrent, which has already a properly set up torX dir.
 	 * @param tor_dir The torX dir
 	 */
 	void loadExistingTorrent(const QString & tor_dir);
@@ -133,7 +133,7 @@ public:
 	 * Stop a torrent, may start another download if it hasn't been started.
 	 * @param tc The TorrentInterface
 	 */
-	void stop(kt::TorrentInterface* tc);
+	void stop(kt::TorrentInterface* tc, bool user = false);
 
 	/**
 	 * Make a torrent file
@@ -168,6 +168,9 @@ public:
 	///Inserts blocked IP range into IPBlocklist
 	void addBlockedIP(QString& ip);
 	
+	///Removes blocked IP range from IPBlocklist
+	void removeBlockedIP(QString& ip);
+	
 	/**
 	 * Find the next free torX dir.
 	 * @return Path to the dir (including the torX part)
@@ -180,6 +183,10 @@ public:
 	void loadPlugins();
 	
 	virtual void load(const KURL& url);
+	
+	
+	bt::QueueManager* getQueueManager();
+	
 public slots:
 	/**
 	 * Load a torrent file. Pops up an error dialog
