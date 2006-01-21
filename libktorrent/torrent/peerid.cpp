@@ -132,7 +132,7 @@ namespace bt
 			Map["SB"] = "Swiftbit";
 			Map["MP"] = "MooPolice";
 			Map["QT"] = "Qt 4 Torrent example";
-			Map["UT"] = "µTorrent";
+			Map["UT"] = QString("%1Torrent").arg(QChar(0x00B5)); // µTorrent, 0x00B5 is unicode for µ
 			Map["SZ"] = "Shareaza";
 			//SHADOWS STYLE
 			Map["A"] = "ABC";
