@@ -18,6 +18,8 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <klocale.h>
+#include <kglobal.h>
+#include <kstandarddirs.h>
 #include <qstringlist.h>
 #include <kio/netaccess.h>
 #include <torrent/globals.h>
@@ -129,6 +131,10 @@ namespace kt
 			if (!ret)
 			{
 				Out() << "Error parsing router description !" << endl;
+				QString dest = KGlobal::dirs()->saveLocation("data","ktorrent") + "upnp_failure";
+				if (bt::Exists(dest))
+					bt::Delete(dest,true);
+				bt::CopyFile(target,dest,true);
 			}
 			// and remove the temp file
 			KIO::NetAccess::removeTempFile(target);

@@ -49,11 +49,10 @@ namespace bt
 
 	bool MMapFile::open(const QString & file,Mode mode)
 	{
-		KIO::UDSEntry entry;
-		if (!KIO::NetAccess::stat(file,entry,0))
-			return false;
+		struct stat sb;
+		stat(QFile::encodeName(file),&sb);
 		
-		return open(file,mode,KFileItem(entry,file).size());
+		return open(file,mode,(Uint64)sb.st_size);
 	}
 	
 	bool MMapFile::open(const QString & file,Mode mode,Uint64 size)
@@ -96,10 +95,10 @@ namespace bt
 		// read the file size
 		this->size = size;
 		this->mode = mode;
-		KIO::UDSEntry entry;
-		if (!KIO::NetAccess::stat(file,entry,0))
-			return false;
-		file_size = KFileItem(entry,file).size();
+		
+		struct stat sb;
+		stat(QFile::encodeName(file),&sb);
+		file_size = (Uint64)sb.st_size;
 		filename = file;
 		
 		// mmap the file
