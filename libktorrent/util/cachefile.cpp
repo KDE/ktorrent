@@ -201,6 +201,12 @@ namespace bt
 		{
 			Out() << QString("Homer Simpson %1 %2").arg(file_size).arg(sb.st_size) << endl;
 			fsync(fd);
+			
+			fstat(fd,&sb);
+			if (file_size != (Uint64)sb.st_size)
+			{
+				throw Error(i18n("Cannot expand file %1").arg(path));;
+			}
 		}
 	}
 		
