@@ -135,7 +135,12 @@ namespace kt
 					linkTorFile(cache_dir,data_url,tor.getFile(i).getPath());
 				}
 				
-				saveStats(tor_dir + "stats",data_url,imported);
+				QString durl = data_url.path();
+				if (durl.endsWith(bt::DirSeparator()))
+					durl = durl.left(durl.length() - 1);
+				int ds = durl.findRev(bt::DirSeparator());
+				durl = durl.left(ds);
+				saveStats(tor_dir + "stats",durl,imported);
 			}
 			else
 			{
