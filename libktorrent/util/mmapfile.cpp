@@ -17,6 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -49,8 +53,13 @@ namespace bt
 
 	bool MMapFile::open(const QString & file,Mode mode)
 	{
+#if HAVE_STAT64
+		struct stat64 sb;
+		stat64(QFile::encodeName(file),&sb);
+#else
 		struct stat sb;
 		stat(QFile::encodeName(file),&sb);
+#endif
 		
 		return open(file,mode,(Uint64)sb.st_size);
 	}
@@ -96,8 +105,13 @@ namespace bt
 		this->size = size;
 		this->mode = mode;
 		
+#if HAVE_STAT64
+		struct stat64 sb;
+		stat64(QFile::encodeName(file),&sb);
+#else
 		struct stat sb;
 		stat(QFile::encodeName(file),&sb);
+#endif
 		file_size = (Uint64)sb.st_size;
 		filename = file;
 		
