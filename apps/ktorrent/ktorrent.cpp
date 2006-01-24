@@ -116,6 +116,12 @@ KTorrent::KTorrent()
 
 	connect(m_view,SIGNAL(dropped(QDropEvent*,QListViewItem*)),
 			this,SLOT(urlDropped(QDropEvent*,QListViewItem*)));
+	
+	connect(m_view,SIGNAL(wantToStart( kt::TorrentInterface* )),
+			m_core,SLOT(start( kt::TorrentInterface* )));
+	
+	connect(m_view,SIGNAL(wantToStop( kt::TorrentInterface*, bool )),
+			m_core,SLOT(stop( kt::TorrentInterface*, bool )));
 
 	// then, setup our actions
 	setupActions();

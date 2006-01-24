@@ -129,27 +129,36 @@ void KTorrentView::startDownload()
 		return;
 
 	TorrentInterface* tc = curr->getTC();
-	const TorrentStats & s = tc->getStats();
-	
-	bool keep_seeding = Settings::keepSeeding();
-	int max_downloads = Settings::maxDownloads();
-	bool start_tc = (s.bytes_left == 0 && keep_seeding) ||
-			(s.bytes_left != 0 &&
-			(max_downloads == 0 || getNumRunning() < max_downloads));
-	
-	if(start_tc)
+	if (tc && !tc->getStats().running)
 	{
-		tc->start();
+		wantToStart(tc);
+		if (!tc->getStats().running && !tc->getStats().stopped_by_error)
+		{
+			bool seed = tc->getStats().bytes_left == 0;
+			int nr = seed ? Settings::maxSeeds() : Settings::maxDownloads();
+			
+			if(!seed)
+				KMessageBox::error(this,
+								   i18n("Cannot start more than 1 download."
+										   " Go to Settings -> Configure KTorrent,"
+										   " if you want to change the limit.",
+								   "Cannot start more than %n downloads."
+										   " Go to Settings -> Configure KTorrent,"
+										   " if you want to change the limit.",
+								   nr),
+								   i18n("Error"));
+			else
+				KMessageBox::error(this,
+								   i18n("Cannot start more than 1 seed."
+										   " Go to Settings -> Configure KTorrent,"
+										   " if you want to change the limit.",
+								   "Cannot start more than %n seeds."
+										   " Go to Settings -> Configure KTorrent,"
+										   " if you want to change the limit.",
+								   nr),
+								   i18n("Error"));
+		}
 	}
-	else KMessageBox::error(this,
-							i18n("Cannot start more than 1 download."
-									" Go to Settings -> Configure KTorrent,"
-									" if you want to change the limit.",
-							"Cannot start more than %n downloads."
-									" Go to Settings -> Configure KTorrent,"
-									" if you want to change the limit.",
-							Settings::maxDownloads()),
-							i18n("Error"));
 }
 	
 void KTorrentView::stopDownload()
@@ -158,7 +167,7 @@ void KTorrentView::stopDownload()
 		return;
 
 	TorrentInterface* tc = curr->getTC();
-	tc->stop(true);
+	wantToStop(tc,true);
 }
 	
 void KTorrentView::removeDownload()

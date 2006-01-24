@@ -123,17 +123,7 @@ public:
 	 */
 	void stopAll();
 
-	/**
-	 * Start a torrent, takes into account the maximum number of downloads.
-	 * @param tc The TorrentInterface
-	 */
-	void start(kt::TorrentInterface* tc);
 
-	/**
-	 * Stop a torrent, may start another download if it hasn't been started.
-	 * @param tc The TorrentInterface
-	 */
-	void stop(kt::TorrentInterface* tc, bool user = false);
 
 	/**
 	 * Make a torrent file
@@ -210,6 +200,18 @@ public slots:
 	 * Update all torrents.
 	 */
 	void update();
+	
+		/**
+	 * Start a torrent, takes into account the maximum number of downloads.
+	 * @param tc The TorrentInterface
+		 */
+	void start(kt::TorrentInterface* tc);
+
+	/**
+	 * Stop a torrent, may start another download if it hasn't been started.
+	 * @param tc The TorrentInterface
+	 */
+	void stop(kt::TorrentInterface* tc, bool user = false);
 	
 signals:
 	/**
