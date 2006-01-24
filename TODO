@@ -20,6 +20,8 @@ If something is done put # in front of it.
 12) Work around FAT32 limitations
 13) Special upload cap when there are only torrents seeding
 14) Allow searchplugin to open page in external browser (Konq, FF, Moz, ...)
+15) Global and per-torrent speed limiting
+
 
 2.0 :
 -----
