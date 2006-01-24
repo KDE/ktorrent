@@ -40,6 +40,7 @@ namespace kt
 		QObject::connect(this,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
 		QObject::connect(this,SIGNAL(gotError(int)),this,SLOT(onError(int)));
 		setAddressReuseable(true);
+		setBlocking(true);
 		for (Uint32 i = 0;i < 10;i++)
 		{
 			if (!bind(QString::null,QString::number(1900 + i)))
@@ -47,6 +48,7 @@ namespace kt
 			else
 				break;
 		}	
+		setBlocking(false);
 	}
 	
 	
