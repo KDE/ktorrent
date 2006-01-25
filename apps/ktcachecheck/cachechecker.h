@@ -29,7 +29,7 @@ namespace bt
 	class Torrent;
 }
 
-namespace debug
+namespace ktdebug
 {
 
 	/**

@@ -28,7 +28,7 @@
 
 
 using namespace bt;
-using namespace debug;
+using namespace ktdebug;
 
 void Help()
 {

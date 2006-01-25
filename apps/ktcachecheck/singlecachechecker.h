@@ -22,7 +22,7 @@
 
 #include "cachechecker.h"
 
-namespace debug
+namespace ktdebug
 {
 
 	/**
