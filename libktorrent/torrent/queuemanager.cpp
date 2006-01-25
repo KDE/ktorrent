@@ -78,9 +78,12 @@ namespace bt
 	void QueueManager::start(kt::TorrentInterface* tc)
 	{
 		const TorrentStats & s = tc->getStats();
-		bool start_tc = (s.completed && (keep_seeding && ( max_seeds == 0 || getNumRunning(false, true) < max_seeds) ) ||
-	    	            (!s.completed &&
-				(max_downloads == 0 || getNumRunning(true) < max_downloads)));
+		bool start_tc = false;
+		if (s.completed)
+			start_tc = (max_seeds == 0 || getNumRunning(false, true) < max_seeds);
+		else 
+	    	start_tc = (max_downloads == 0 || getNumRunning(true) < max_downloads);
+		
 		if (start_tc)
 		{
 			Out() << "Starting download" << endl;
