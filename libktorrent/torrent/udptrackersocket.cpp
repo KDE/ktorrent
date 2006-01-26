@@ -47,7 +47,7 @@ namespace bt
 			KMessageBox::information(0,
 				i18n("Specified udp port (%1) is unavailable or in"
 					" use by another application. KTorrent is bound to port %2.")
-					.arg(port).arg(port + i - 1));
+					.arg(port).arg(port + i));
 		else if (i > 0 && !sock->isValid())
 			KMessageBox::error(0,
 				i18n("Cannot bind to udp port %1 or the 10 following ports.").arg(port));
