@@ -72,7 +72,7 @@ namespace bt
 		
 		// wait for a second to allow all http jobs to send the stopped event
 		if (nd > 0)
-			SynchronousWait(250);
+			SynchronousWait(500);
 	}
 
 	void QueueManager::start(kt::TorrentInterface* tc)
