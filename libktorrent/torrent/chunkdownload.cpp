@@ -131,7 +131,8 @@ namespace bt
 		if (buf)
 		{
 			memcpy(buf + p.getOffset(),p.getData(),p.getLength());
-			ds->remove(pp);
+			if (ds)
+				ds->remove(pp);
 			pieces.set(pp,true);
 			piece_queue.remove(pp);
 			piece_providers.insert(p.getPeer());
@@ -146,7 +147,6 @@ namespace bt
 		if (num_downloaded == num)
 		{
 			releaseAllPDs();
-			pdown.clear();
 			return true;
 		}
 		
@@ -164,6 +164,8 @@ namespace bt
 			pd->release();
 			disconnect(pd,SIGNAL(timedout(const Request& )),this,SLOT(onTimeout(const Request& )));
 		}
+		dstatus.clear();
+		pdown.clear();
 	}
 	
 	bool ChunkDownload::assignPeer(PeerDownloader* pd)
@@ -403,15 +405,14 @@ namespace bt
 		s.total_pieces = num;
 	}
 	
-	bool ChunkDownload::isStalled() const
+	bool ChunkDownload::isChoked() const
 	{
 		QPtrList<PeerDownloader>::const_iterator i = pdown.begin();
 		while (i != pdown.end())
 		{
 			const PeerDownloader* pd = *i;
-			// if there is one which isn't choked and snubbed
-			// we are not stalled
-			if (!pd->isChoked() && !pd->getPeer()->isSnubbed())
+			// if there is one which isn't choked 
+			if (!pd->isChoked())
 				return false;
 			i++;
 		}

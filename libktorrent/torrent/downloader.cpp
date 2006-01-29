@@ -144,6 +144,13 @@ namespace bt
 				downloadFrom(pd);
 			}
 		}
+		
+		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
+		{
+			ChunkDownload* cd = j->second;
+			if (cd->isChoked())
+				cd->releaseAllPDs();
+		}
 	}
 	
 	void Downloader::endgameUpdate()
@@ -178,7 +185,6 @@ namespace bt
 
 			// if cd hasn't got a downloader or when the current
 			// downloader is stalled
-			const Peer* p = cd->getCurrentPeer();
 			if (cd->getNumDownloaders() == 0)
 			{
 				cd->assignPeer(pd);
