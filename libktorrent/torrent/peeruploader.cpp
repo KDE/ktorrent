@@ -38,7 +38,9 @@ namespace bt
 	void PeerUploader::addRequest(const Request & r)
 	{
 		if (!peer->areWeChoked())
+		{
 			requests.append(r);
+		}
 	}
 	
 	void PeerUploader::removeRequest(const Request & r)
