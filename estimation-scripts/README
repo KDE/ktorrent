@@ -1,0 +1,40 @@
+Introduction
+============
+
+This directory contains patches and scripts for my experiments regarding download time estimation 
+algorithms, using KTorrent for gathering data ;-)
+
+Files
+=====
+
+enable-logging.diff - Patch to apply to enable logging download stats once per second to $KDEHOME/share/apps/ktorrent/log (by Ivan). Apply it if you want to help collecting test cases.
+
+processlog.rb - extracts logs for single torrents from $KDEHOME/share/apps/ktorrent/log and stores them in $FILENAME-torrent.log
+
+Sample.rb - class representing a sample, does the parsing (given a line from adjustTimestmaps output)
+
+Estimators.rb - Some basic estimators, for estimation based on current speed, average speed and moving average speed.
+
+EstimationResults.rb - Calculates and holds the estimation results of an estimator, including statistics such as relative error for each estimation, root mean square error and the like
+
+What to do
+==========
+
+1) Apply the patch: In torrent/ dir, apply it via 
+  
+  cat enable-logging.diff | patch -p0
+
+2) Run ktorrent and download torrents. When completed, run processlog.rb:
+
+  ruby processlog.rb $KDEHOME/share/apps/ktorrent/log
+
+Extracted logs end up in $TORRENTFILENAME-torrent.log. ATTENTION: existing files are overwritten!
+
+4) Now, analyze the -adjusted file with a ruby script, using Sample.rb, Estimators.rb, and EstimationResults.rb...  ;-)
+I will upload something useful as soon as finished.
+
+
+Frank Osterfeld, <frank.osterfeld at kdemail.net>
+
+
+
