@@ -1,0 +1,100 @@
+Changelog since v1.1 (October 10th, 2005)
+****************************************************************************************
+- KT now has a new directory structure.
+- Created plugin system for KT
+- Search feature is modified to be plugin
+- InfoWidget is also plugin now
+- Added User-Agent string to HTTP header in HTTPTracker
+- Fixed bug with QDateTime in runningDL() when KT runs over 24h
+- Fixed issue with initialization of stats in TorrentControl
+- If tracker is down at the moment KT keeps trying to get connected (after 5 failed attempts, we use a 30 second delay)
+- Uploading is now a lot fairer (114390)
+- Added warmup mode, which gives KT's downloads a flying start.
+- KTorrentView,PeerView and ChunkDownloadView now remeber their layout (fixes 114781)
+- Fixed fileops.cpp
+- Files now get saved immediatly to their final location.
+- Fixed 114904 : by switching to KIO::get
+- Added IP filter plugin
+- Added the graphical plugin manager.
+- KTorrent now deletes data from incomplete torrents
+- Switched to KNetwork classes
+- Added option to paste URL to .torrent files
+- Made a log viewer plugin
+- Requests time out after 60 seconds
+- Added UPnP plugin (108930)
+- Rarest piece first downloading
+- Added new choking algorithm
+- Allow to send a custom IP to the tracker (116115)
+- No more duplicate torrents (117324)
+- Torrents can now be save from searchwidget (115077)
+- Added partial file import plugin
+- Fixed crash when deselecting files
+- Added new icons
+- GUI PasteDlg now uses standard KDE stuff + added cancel button
+- Excluded files do not appear anymore in the place chosen by the user
+- Fixed crash bug which will follow a restart after a crash GUI
+- Fixed overwriting of num_peers, which caused CPU usage jumps
+- Fixed random acting of marking directories in infowidget file tab
+- Fixed starting minimized to system tray when the session is restored. (116342)
+- Fixed crashes when the partition writen to was full. (117862)
+- Added patch which should gives us some speedup during the last part of a download (thanks to Par H)
+- Fixed hacks in TorrrentControl::init, which resulted in the double loading of current_chunks file
+- Made the usage of socket classes configurable through a define, default Qt's socket classes
+- Torrrents can now be saved from searchwidget (115077)
+- No more duplicate downloads  (117324)
+- Fixed some compiler warnings, thanks to Daniel Kukawka
+- Added key field to tracker requests
+- Fixed error handling in TorrentControl::init 
+- Added plugin to import fully or partially downloaded files
+- Fixed crash in infowidget.cpp  (117026)
+- Added % of file complete in infowidget thanks to Felipe Sateler (116986)
+- Fixed name clash in plugins which prevented the searchplugin from getting loaded.
+- Added check to see if incoming connections are not from peers we allready are connected to
+- Added option to ban peer from PeerView
+- Fixed issue with KTorrentView not saving settings
+- Made sure memory usage does not get out of hand. Also made it configurable.
+- Fixed bug with empty files
+- Added QueueManager
+- InfoWidget and LogViewer now save and restore their size
+- Added option to control GUI update interval
+- Colorized share ratio in InfoWidget
+- Fixed crash when selecting and deselecting lots of files
+- Ditched slow KIO::NetAccess for lower level functions in fileops.cpp
+- Added options to load/unload both KT filter and antip2p filter
+- Added checks for IPBlocking filter files
+- Fixed bug with KT not parsing ssdp reply correctly.
+- Fixed bug when importing single file downloads
+- available_chunks bitset now gets updated when a peer gets removed, which keeps the chunkbar OK
+- Made some tweaks to the download process
+- Small fix to the upload cap, should prevent starting peaks above limit
+- Updated torrentz.com's search URL (thanks to cafeine) (120163)
+
+
+- Fixed BUG: 
+	-114103
+	-113155
+	-114156
+	-114373
+	-114390
+	-114781
+	-114904
+	-115442
+	-115393
+	-115484
+	-108930
+	-116115
+	-117324
+	-115077
+	-119387
+	-118208
+	-115368
+	-116342
+	-117862
+	-112080
+	-117080
+	-117026
+	-116986
+	-117008
+	-119792
+	-120163
+	-120430
