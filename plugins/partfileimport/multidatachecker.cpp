@@ -86,11 +86,15 @@ namespace bt
 				{
 					// we can read the chunk from this file
 					File fptr;
-					if (!fptr.open(cache + tf.getPath(),"rb"))
-						throw Error(i18n("Cannot open %1 : %2").arg(cache + tf.getPath()).arg(fptr.errorString()));
-
-					fptr.seek(File::BEGIN,curr_file_off);
-					fptr.read(buf + bytes_offset,to_read);
+					if (fptr.open(cache + tf.getPath(),"rb"))
+					{
+						fptr.seek(File::BEGIN,curr_file_off);
+						fptr.read(buf + bytes_offset,to_read);
+					}
+					else
+					{
+						Out() << QString("Warning : Cannot open %1 : %2").arg(cache + tf.getPath()).arg(fptr.errorString()) << endl;
+					}
 					bytes_offset += to_read;
 					curr_file_off += to_read;
 				}
@@ -101,11 +105,15 @@ namespace bt
 					to_read = tf.getSize() - curr_file_off;
 // 					Out() << "Partially reading " << to_read << endl;
 					File fptr;
-					if (!fptr.open(cache + tf.getPath(),"rb"))
-						throw Error(i18n("Cannot open %1 : %2").arg(cache + tf.getPath()).arg(fptr.errorString()));
-
-					fptr.seek(File::BEGIN,curr_file_off);
-					fptr.read(buf + bytes_offset,to_read);
+					if (fptr.open(cache + tf.getPath(),"rb"))
+					{
+						fptr.seek(File::BEGIN,curr_file_off);
+						fptr.read(buf + bytes_offset,to_read);
+					}
+					else
+					{
+						Out() << QString("Warning : Cannot open %1 : %2").arg(cache + tf.getPath()).arg(fptr.errorString()) << endl;
+					}
 					bytes_offset += to_read;
 					// update curr_file and offset
 					curr_file++;
