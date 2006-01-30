@@ -374,14 +374,12 @@ void KTorrent::fileOpen()
 void KTorrent::torrentPaste()
 {
 	PasteDialog dlg(m_core,this);
-	dlg.show();
 	dlg.exec();
 }
 
 void KTorrent::queueManagerShow()
 {
 	QueueDialog dlg(m_core->getQueueManager(), this);
-	dlg.show();
 	dlg.exec();
 }
 
