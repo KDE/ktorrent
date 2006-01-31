@@ -29,7 +29,7 @@
 
 using namespace bt;
 
-namespace debug
+namespace ktdebug
 {
 
 	SingleCacheChecker::SingleCacheChecker(bt::Torrent& tor): CacheChecker(tor)

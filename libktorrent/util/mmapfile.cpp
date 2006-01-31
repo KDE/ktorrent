@@ -17,6 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -49,11 +53,15 @@ namespace bt
 
 	bool MMapFile::open(const QString & file,Mode mode)
 	{
-		KIO::UDSEntry entry;
-		if (!KIO::NetAccess::stat(file,entry,0))
-			return false;
+#if HAVE_STAT64
+		struct stat64 sb;
+		stat64(QFile::encodeName(file),&sb);
+#else
+		struct stat sb;
+		stat(QFile::encodeName(file),&sb);
+#endif
 		
-		return open(file,mode,KFileItem(entry,file).size());
+		return open(file,mode,(Uint64)sb.st_size);
 	}
 	
 	bool MMapFile::open(const QString & file,Mode mode,Uint64 size)
@@ -96,10 +104,15 @@ namespace bt
 		// read the file size
 		this->size = size;
 		this->mode = mode;
-		KIO::UDSEntry entry;
-		if (!KIO::NetAccess::stat(file,entry,0))
-			return false;
-		file_size = KFileItem(entry,file).size();
+		
+#if HAVE_STAT64
+		struct stat64 sb;
+		stat64(QFile::encodeName(file),&sb);
+#else
+		struct stat sb;
+		stat(QFile::encodeName(file),&sb);
+#endif
+		file_size = (Uint64)sb.st_size;
 		filename = file;
 		
 		// mmap the file

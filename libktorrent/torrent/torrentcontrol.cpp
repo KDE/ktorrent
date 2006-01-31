@@ -179,7 +179,7 @@ namespace bt
 				stalled_timer.update();
 			
 			// do a manual update if we are stalled for more then 2 minutes
-			if (stalled_timer.getElapsedSinceUpdate() > 120000)
+			if (stalled_timer.getElapsedSinceUpdate() > 120000 && stats.bytes_left > 0)
 			{
 				Out() << "Stalled for to long, time to get some fresh blood" << endl;
 				tracker->manualUpdate();

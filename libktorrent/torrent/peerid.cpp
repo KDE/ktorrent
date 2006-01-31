@@ -32,7 +32,7 @@ namespace bt
 		int r[12];
 		for (int i = 0;i < 12;i++)
 			r[i] = rand() % 10;
-		QString peer_id = "-KT12DV-";
+		QString peer_id = "-KT13DV-";
 		for (int i = 0;i < 12;i++)
 			peer_id += QString("%1").arg(r[i]);
 		memcpy(id,peer_id.ascii(),20);
@@ -132,7 +132,7 @@ namespace bt
 			Map["SB"] = "Swiftbit";
 			Map["MP"] = "MooPolice";
 			Map["QT"] = "Qt 4 Torrent example";
-			Map["UT"] = "µTorrent";
+			Map["UT"] = QString("%1Torrent").arg(QChar(0x00B5)); // µTorrent, 0x00B5 is unicode for µ
 			Map["SZ"] = "Shareaza";
 			//SHADOWS STYLE
 			Map["A"] = "ABC";

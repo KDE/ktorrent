@@ -50,7 +50,11 @@ namespace kt
 	
 	private:
 		void writeIndex(const QString & file,const bt::BitSet & chunks);
-		void linkTorFile(const QString & cache_dir,const KURL & data_url,const QString & fpath);
+		void linkTorFile(const QString & cache_dir,const QString & dnd_dir,
+						 const KURL & data_url,const QString & fpath,bool & dnd);
+		void saveStats(const QString & stats_file,const KURL & data_url,bt::Uint64 imported);
+		bt::Uint64 calcImportedBytes(const bt::BitSet & chunks,const bt::Torrent & tor);
+		void saveFileInfo(const QString & file_info_file,QValueList<bt::Uint32> & dnd);
 		void saveStats(const QString & stats_file,const KURL & data_url,bt::Uint64 imported);
 		bt::Uint64 calcImportedBytes(const bt::BitSet & chunks,const bt::Torrent & tor);
 	private:

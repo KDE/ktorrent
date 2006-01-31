@@ -17,6 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #include <signal.h>
 #include <klocale.h>
@@ -57,7 +60,7 @@ void StupidWarningMessagesFromQt( QtMsgType type, const char *msg )
 static const char description[] =
     I18N_NOOP("A BitTorrent program for KDE");
 
-static const char version[] = "1.2dev";
+static const char version[] = "1.3dev";
 
 static KCmdLineOptions options[] =
 {

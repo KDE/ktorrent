@@ -25,7 +25,7 @@
 namespace kt
 {
 	const bt::Uint32 MAJOR = 1;
-	const bt::Uint32 MINOR = 2;
+	const bt::Uint32 MINOR = 3;
 }
 
 #endif

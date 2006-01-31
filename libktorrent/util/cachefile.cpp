@@ -17,6 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -43,6 +48,8 @@
 #endif
 
 
+
+
 namespace bt
 {
 
@@ -66,9 +73,15 @@ namespace bt
 		{
 			throw Error(i18n("Cannot open %1 : %2").arg(path).arg(strerror(errno)));
 		}
+#if HAVE_STAT64
+		struct stat64 sb;
+		fstat64(fd,&sb);
+		file_size = sb.st_size;
+#else
 		struct stat sb;
 		fstat(fd,&sb);
 		file_size = sb.st_size;
+#endif
 	//	Out() << QString("CacheFile %1 = %2").arg(path).arg(file_size) << endl;
 		
 		// re do all mappings if there are any
@@ -195,12 +208,26 @@ namespace bt
 		file_size += num;
 //		
 	//	Out() << QString("growing %1 = %2").arg(path).arg(kt::BytesToString(file_size)) << endl;
+#if HAVE_STAT64
+		struct stat64 sb;
+		fstat64(fd,&sb);
+#else
 		struct stat sb;
 		fstat(fd,&sb);
+#endif
 		if (file_size != (Uint64)sb.st_size)
 		{
 			Out() << QString("Homer Simpson %1 %2").arg(file_size).arg(sb.st_size) << endl;
 			fsync(fd);
+#if HAVE_STAT64	
+			fstat64(fd,&sb);
+#else
+			fstat(fd,&sb);
+#endif
+			if (file_size != (Uint64)sb.st_size)
+			{
+				throw Error(i18n("Cannot expand file %1").arg(path));;
+			}
 		}
 	}
 		

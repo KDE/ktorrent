@@ -19,8 +19,6 @@
  ***************************************************************************/
 #include <qxml.h>
 #include <qvaluestack.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
 #include <util/fileops.h>
 #include "upnprouter.h"
 #include "upnpdescriptionparser.h"
@@ -81,7 +79,7 @@ namespace kt
 		
 		if (!ret)
 		{
-			bt::CopyFile(file,KGlobal::dirs()->saveLocation("data","ktorrent") + "upnp_failure",true);
+			
 			return false;
 		}
 		return true;

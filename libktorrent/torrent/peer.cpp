@@ -21,6 +21,7 @@
 #include <kbufferedsocket.h>
 #else
 #include <qsocket.h>
+#include <qsocketdevice.h> 
 #endif
 
 #include <util/log.h>
@@ -75,6 +76,8 @@ namespace bt
 		connect(sock,SIGNAL(gotError(int)),this,SLOT(error(int)));
 		connect(sock,SIGNAL(bytesWritten(int)),this,SLOT(dataWritten(int )));
 #else
+		sock->socketDevice()->setReceiveBufferSize(49512);
+		sock->socketDevice()->setSendBufferSize(49512);
 		connect(sock,SIGNAL(connectionClosed()),this,SLOT(connectionClosed()));
 		connect(sock,SIGNAL(readyRead()),this,SLOT(readyRead()));
 		connect(sock,SIGNAL(error(int)),this,SLOT(error(int)));
@@ -87,6 +90,11 @@ namespace bt
 		stats.upload_rate = 0;
 		stats.perc_of_file = 0;
 		stats.snubbed = false;
+		if (stats.ip_addresss == "0.0.0.0")
+		{
+			Out() << "No more 0.0.0.0" << endl;
+			kill();
+		}
 	}
 
 
@@ -356,11 +364,13 @@ namespace bt
 	QString Peer::getIPAddresss() const
 	{
 		if (sock)
+		{
 #ifdef USE_KNETWORK_SOCKET_CLASSES
 			return sock->peerAddress().nodeName();
 #else
 			return sock->peerAddress().toString();
 #endif
+		}
 		else
 			return QString::null;
 	}

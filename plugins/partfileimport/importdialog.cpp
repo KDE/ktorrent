@@ -98,7 +98,7 @@ namespace kt
 		catch (Error & e)
 		{
 			delete dc;
-			KMessageBox::error(this,i18n("Cannot verify data : %s").arg(e.toString()),i18n("Error"));
+			KMessageBox::error(this,i18n("Cannot verify data : %1").arg(e.toString()),i18n("Error"));
 			reject();
 			return;
 		}
@@ -124,18 +124,33 @@ namespace kt
 			// make the cache
 			if (tor.isMultiFile())
 			{
+				QValueList<Uint32> dnd_files;
+				bool dnd = false;
 				// first make tor_dir/cache/
 				QString cache_dir = tor_dir + "cache" + bt::DirSeparator();
+				QString dnd_dir = tor_dir + "dnd" + bt::DirSeparator();
 				if (!bt::Exists(cache_dir))
 					MakeDir(cache_dir);
+				if (!bt::Exists(dnd_dir))
+					MakeDir(dnd_dir);
+				
 				
 				// make all sub symlinks
 				for (Uint32 i = 0;i < tor.getNumFiles();i++)
 				{
-					linkTorFile(cache_dir,data_url,tor.getFile(i).getPath());
+					linkTorFile(cache_dir,dnd_dir,data_url,tor.getFile(i).getPath(),dnd);
+					if (dnd)
+						dnd_files.append(i);
+					dnd = false;
 				}
 				
-				saveStats(tor_dir + "stats",data_url,imported);
+				QString durl = data_url.path();
+				if (durl.endsWith(bt::DirSeparator()))
+					durl = durl.left(durl.length() - 1);
+				int ds = durl.findRev(bt::DirSeparator());
+				durl = durl.left(ds);
+				saveStats(tor_dir + "stats",durl,imported);
+				saveFileInfo(tor_dir + "file_info",dnd_files);
 			}
 			else
 			{
@@ -185,33 +200,49 @@ namespace kt
 		}
 	}
 	
-	void ImportDialog::linkTorFile(const QString & cache_dir,const KURL & data_url,const QString & fpath)
+	void ImportDialog::linkTorFile(const QString & cache_dir,const QString & dnd_dir,
+								   const KURL & data_url,const QString & fpath,bool & dnd)
 	{
 		QStringList sl = QStringList::split(bt::DirSeparator(),fpath);
 
 		// create all necessary subdirs
 		QString ctmp = cache_dir;
 		QString otmp = data_url.path();
+		QString dtmp = dnd_dir;
 		for (Uint32 i = 0;i < sl.count() - 1;i++)
 		{
 			otmp += sl[i];
 			ctmp += sl[i];
+			dtmp += sl[i];
 			// we need to make the same directory structure in the cache
 			// as the output dir
 			if (!bt::Exists(ctmp))
 				MakeDir(ctmp);
 			if (!bt::Exists(otmp))
 				MakeDir(otmp);
+			if (!bt::Exists(dtmp))
+				MakeDir(dtmp);
 			otmp += bt::DirSeparator();
 			ctmp += bt::DirSeparator();
+			dtmp += bt::DirSeparator();
 		}
 
 		QString dfile = otmp + sl.last();
-		// then make the file if it doesn't exist
 		if (!bt::Exists(dfile))
+		{
+			// if it does not exist, assume that it is not to be downloaded
+			dfile = dtmp + sl.last();
 			bt::Touch(dfile);
-		// and make a symlink in the cache to it
-		bt::SymLink(dfile,cache_dir + fpath);
+			// and make a symlink in the cache to it
+			bt::SymLink(dfile,cache_dir + fpath);
+			dnd = true;
+		}
+		else
+		{
+			// just symlink the existing file
+			bt::SymLink(dfile,cache_dir + fpath);
+			dnd = false;
+		}
 	}
 	
 	void ImportDialog::saveStats(const QString & stats_file,const KURL & data_url,Uint64 imported)
@@ -251,6 +282,30 @@ namespace kt
 				nb += tor.getChunkSize();
 		}
 		return nb;
+	}
+	
+	void ImportDialog::saveFileInfo(const QString & file_info_file,QValueList<Uint32> & dnd)
+	{
+		// saves which TorrentFile's do not need to be downloaded
+		File fptr;
+		if (!fptr.open(file_info_file,"wb"))
+		{
+			Out() << "Warning : Can't save chunk_info file : " << fptr.errorString() << endl;
+			return;
+		}
+
+		;
+
+		// first write the number of excluded ones
+		Uint32 tmp = dnd.count();
+		fptr.write(&tmp,sizeof(Uint32));
+		// then all the excluded ones
+		for (Uint32 i = 0;i < dnd.count();i++)
+		{
+			tmp = dnd[i];
+			fptr.write(&tmp,sizeof(Uint32));
+		}
+		fptr.flush();
 	}
 }
 

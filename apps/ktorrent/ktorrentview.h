@@ -90,6 +90,8 @@ signals:
 	void torrentClicked(kt::TorrentInterface* tc);
 	void currentChanged(kt::TorrentInterface* tc);
 	void wantToRemove(kt::TorrentInterface* tc,bool data_to);
+	void wantToStop(kt::TorrentInterface* tc,bool user);
+	void wantToStart(kt::TorrentInterface* tc);
 
 private:
 	bool acceptDrag(QDropEvent* event) const;

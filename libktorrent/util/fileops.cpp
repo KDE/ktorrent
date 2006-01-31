@@ -17,6 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
@@ -117,8 +121,7 @@ namespace bt
 	bool Exists(const QString & url)
 	{
 	//	Out() << "Testing if " << url << " exists " << endl;
-		struct stat s;
-		if (stat(QFile::encodeName(url),&s) < 0)
+		if (access(QFile::encodeName(url),F_OK) < 0)
 		{
 	//		Out() << "No " << endl;
 			return false;
@@ -163,11 +166,16 @@ namespace bt
 
 	void Delete(const QString & url,bool nothrow)
 	{
-		struct stat statbuf;
 		QCString fn = QFile::encodeName(url);
-
+#if HAVE_STAT64
+		struct stat64 statbuf;
+		if (stat64(fn, &statbuf) < 0)
+			return;
+#else
+		struct stat statbuf;
 		if (stat(fn, &statbuf) < 0)
 			return;
+#endif
 		
 		bool ok = true;
 		// first see if it is a directory

@@ -52,7 +52,22 @@ Changelog since v1.1 (October 10th, 2005)
 - Added check to see if incoming connections are not from peers we allready are connected to
 - Added option to ban peer from PeerView
 - Fixed issue with KTorrentView not saving settings
-- 
+- Made sure memory usage does not get out of hand. Also made it configurable.
+- Fixed bug with empty files
+- Added QueueManager
+- InfoWidget and LogViewer now save and restore their size
+- Added option to control GUI update interval
+- Colorized share ratio in InfoWidget
+- Fixed crash when selecting and deselecting lots of files
+- Ditched slow KIO::NetAccess for lower level functions in fileops.cpp
+- Added options to load/unload both KT filter and antip2p filter
+- Added checks for IPBlocking filter files
+- Fixed bug with KT not parsing ssdp reply correctly.
+- Fixed bug when importing single file downloads
+- available_chunks bitset now gets updated when a peer gets removed, which keeps the chunkbar OK
+- Made some tweaks to the download process
+- Small fix to the upload cap, should prevent starting peaks above limit
+- Updated torrentz.com's search URL (thanks to cafeine) (120163)
 
 
 - Fixed BUG: 
@@ -79,3 +94,7 @@ Changelog since v1.1 (October 10th, 2005)
 	-117080
 	-117026
 	-116986
+	-117008
+	-119792
+	-120163
+	-120430

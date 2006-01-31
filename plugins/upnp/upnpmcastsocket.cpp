@@ -40,8 +40,15 @@ namespace kt
 		QObject::connect(this,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
 		QObject::connect(this,SIGNAL(gotError(int)),this,SLOT(onError(int)));
 		setAddressReuseable(true);
-		if (!bind(QString::null,"1900"))
-			Out() << "Cannot bind to UDP port 1900" << endl;
+		setBlocking(true);
+		for (Uint32 i = 0;i < 10;i++)
+		{
+			if (!bind(QString::null,QString::number(1900 + i)))
+				Out() << "Cannot bind to UDP port 1900" << endl;
+			else
+				break;
+		}	
+		setBlocking(false);
 	}
 	
 	

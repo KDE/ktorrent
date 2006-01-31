@@ -153,11 +153,18 @@ void KTorrentViewItem::update()
 	}
 	else
 	{
-		perc = 100.0 - ((double)s.bytes_left / s.total_bytes_to_download) * 100.0;
-		if (perc > 100.0)
+		if (s.total_bytes_to_download == 0)
+		{
 			perc = 100.0;
-		else if (perc > 99.9)
-			perc = 99.9;
+		}
+		else
+		{
+			perc = 100.0 - ((double)s.bytes_left / s.total_bytes_to_download) * 100.0;
+			if (perc > 100.0)
+				perc = 100.0;
+			else if (perc > 99.9)
+				perc = 99.9;
+		}
 	}
 	setText(9,i18n("%1 %").arg(loc->formatNumber(perc,2)));
 }
@@ -184,10 +191,10 @@ int KTorrentViewItem::compare(QListViewItem * i,int col,bool) const
 		case 8: return CompareVal(s.num_peers,os.num_peers);
 		case 9:
 		{
-			double perc = ((double)s.bytes_downloaded / s.total_bytes_to_download) * 100.0;
+			double perc = s.total_bytes_to_download == 0 ? 100.0 : ((double)s.bytes_downloaded / s.total_bytes_to_download) * 100.0;
 			if (perc > 100.0)
 				perc = 100.0;
-			double operc = ((double)os.bytes_downloaded / os.total_bytes_to_download) * 100.0;
+			double operc = os.total_bytes_to_download == 0 ? 100.0 : ((double)os.bytes_downloaded / os.total_bytes_to_download) * 100.0;
 			if (operc > 100.0)
 				operc = 100.0;
 			return CompareVal(perc,operc);
