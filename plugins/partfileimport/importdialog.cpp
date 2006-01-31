@@ -98,7 +98,7 @@ namespace kt
 		catch (Error & e)
 		{
 			delete dc;
-			KMessageBox::error(this,i18n("Cannot verify data : %s").arg(e.toString()),i18n("Error"));
+			KMessageBox::error(this,i18n("Cannot verify data : %1").arg(e.toString()),i18n("Error"));
 			reject();
 			return;
 		}
