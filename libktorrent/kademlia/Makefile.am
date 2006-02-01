@@ -5,4 +5,4 @@ noinst_LTLIBRARIES = libkademlia.la
 noinst_HEADERS = key.h node.h kbucket.h rpccall.h rpcserver.h database.h dht.h \
 	rpcmsg.h
 libkademlia_la_SOURCES = key.cpp node.cpp kbucket.cpp rpccall.cpp rpcserver.cpp \
-		database.cpp dht.cpp rpcmsg.cpp
+	database.cpp dht.cpp rpcmsg.cpp

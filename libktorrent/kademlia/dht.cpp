@@ -17,58 +17,54 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef DHTRPCSERVER_H
-#define DHTRPCSERVER_H
-
-#include <kdatagramsocket.h>
-#include <util/constants.h>
-#include <util/array.h>
-#include <util/ptrmap.h>
-
-
-using KNetwork::KDatagramSocket;
-using bt::Uint16;
-using bt::Uint8;
-
-namespace bt
-{
-	class BDictNode;
-}
+#include "dht.h"
+#include "node.h"
+#include "rpcserver.h"
+#include "rpcmsg.h"
 
 namespace dht
 {
-	class KBucketEntry;
-	class RPCCall;
-	class RPCMsg;
-	class Node;
-	class DHT;
 
-	/**
-	 * @author Joris Guisson
-	 *
-	 * 
-	 */
-	class RPCServer : public QObject
+	DHT::DHT() : node(0),srv(0)
 	{
-		Q_OBJECT
-	public:
-		RPCServer(DHT* dh_table,Uint16 port,QObject *parent = 0);
-		virtual ~RPCServer();
-		/*
-		RPCCall* ping(const KBucketEntry & to);
-		RPCCall* findNode(const KBucketEntry & to,const Key & k);
-		RPCCall* findValue(const KBucketEntry & to,const Key & k);
-		RPCCall* store(const KBucketEntry & to,const Key & k,const bt::Array<Uint8> & data);
-		*/
-		
-	private slots:
-		void readPacket();
-			
-	private:
-		KDatagramSocket* sock;
-		DHT* dh_table;
-	};
+		node = new Node();
+		srv = new RPCServer(this,4000);
+	}
+
+
+	DHT::~DHT()
+	{
+		delete srv;
+		delete node;
+	}
+
+	void DHT::ping(PingReq* r)
+	{
+	}
+	
+	void DHT::ping(PingRsp* r)
+	{
+	}
+	
+	void DHT::findNode(FindNodeReq* r)
+	{}
+	
+	void DHT::findNode(FindNodeRsp* r)
+	{}
+	
+	void DHT::findValue(FindValueReq* r)
+	{}
+	
+	void DHT::findValue(FindValueRsp* r)
+	{}
+	
+	void DHT::storeValue(StoreValueReq* r)
+	{}
+	
+	void DHT::storeValue(StoreValueRsp* r)
+	{}
+	
+	void DHT::error(ErrMsg* r)
+	{}
 
 }
-
-#endif

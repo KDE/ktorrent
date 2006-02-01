@@ -37,13 +37,13 @@ namespace dht
 	
 
 
-	RPCServer::RPCServer(Node* node,Uint16 port,QObject *parent) : QObject(parent),node(node)
+	RPCServer::RPCServer(DHT* dh_table,Uint16 port,QObject *parent) : QObject(parent),dh_table(dh_table)
 	{
 		sock = new KDatagramSocket(this);
 		sock->setBlocking(false);
+		sock->setAddressReuseable(true);
 		connect(sock,SIGNAL(readyRead()),this,SLOT(readPacket()));
 		sock->bind(QString::null,QString::number(port));
-		mtid = 0;
 	}
 
 
@@ -69,57 +69,16 @@ namespace dht
 		}
 		
 		// try to make a RPCMsg of it
-		RPCMsg msg = RPCMsg::parse((BDictNode*)n);
-		delete node;
-		if (!msg.isValid())
+		MsgBase* msg = MakeRPCMsg((BDictNode*)n);
+		if (!msg)
 			return;
 	
-		msg.setOrigin(pck.address());
-		// we now have a valid packet, so we must update our buckets
-		node->recieved(msg);
-			
-		switch (msg.getType())
-		{
-			case RPCMsg::REQ_MSG:
-				handleReq(msg);
-				break;
-			case RPCMsg::RSP_MSG:
-				handleRsp(msg);
-				break;
-			case RPCMsg::ERR_MSG:
-				handleErr(msg);
-			case RPCMsg::NONE:
-			default:
-				break;
-		}
-		
+		msg->setOrigin(pck.address());
+		msg->apply(dh_table);
+		delete msg;
 	}
 	
-	void RPCServer::handleReq(const RPCMsg & msg)
-	{
-		switch (msg.getMethod())
-		{
-			case RPCMsg::PING:
-				break;
-			case RPCMsg::FIND_NODE:
-			case RPCMsg::FIND_VALUE:
-			case RPCMsg::STORE_VALUE:
-			case RPCMsg::STORE_VALUES:
-				break;
-			case RPCMsg::INVALID:
-			default:
-				break;
-		}
-	}
 	
-	void RPCServer::handleRsp(const RPCMsg & msg)
-	{
-	}
-	
-	void RPCServer::handleErr(const RPCMsg & msg)
-	{
-	}
-
 	/*
 	
 	void sendRequest(const QString & method)

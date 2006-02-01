@@ -38,6 +38,7 @@ namespace dht
 			delete bucket[i];
 	}
 	
+	/*
 	void Node::recieved(const RPCMsg & msg)
 	{
 		// get the id of the sender and calculate the distance between our ID 
@@ -45,6 +46,7 @@ namespace dht
 		dht::Key id = msg.getID();
 		dht::Key dst = dht::Key::distance(our_id,id);
 	}
+	*/
 }
 
 #include "node.moc"

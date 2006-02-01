@@ -27,8 +27,6 @@
 
 namespace dht
 {
-	class RPCMsg;
-
 	/**
 	 * @author Joris Guisson
 	 *
@@ -49,7 +47,7 @@ namespace dht
 		 * the right bucket.
 		 * @param msg The message
 		 */
-		void recieved(const RPCMsg & msg);
+		//void recieved(const RPCMsg & msg);
 	private:
 		dht::Key our_id;
 		KBucket* bucket[160];
