@@ -165,7 +165,23 @@ KTorrent::KTorrent()
 	m_core->loadPlugins();
 
 	connect(&m_gui_update_timer, SIGNAL(timeout()), this, SLOT(updatedStats()));
-	m_gui_update_timer.start(500);
+	//Apply GUI update interval
+	int val = 500;
+	switch(Settings::guiUpdateInterval())
+	{
+		case 1:
+			val = 1000;
+			break;
+		case 2:
+			val = 2000;
+			break;
+		case 3:
+			val = 5000;
+			break;
+		default:
+			val = 500;
+	}
+	m_gui_update_timer.start(val);
 
 	bool hidden_on_exit = KGlobal::config()->readBoolEntry("hidden_on_exit",false);
 	if (!(Settings::showSystemTrayIcon() && hidden_on_exit))
