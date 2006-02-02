@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>libktorrent/kademlia/libkademlia.la</activetarget>
+      <activetarget>libktorrent/mse/libmse.la</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>

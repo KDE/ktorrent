@@ -62,6 +62,9 @@ namespace bt
 		 */
 		virtual ~SHA1Hash();
 
+		/// Get the idx'th byte of the hash.
+		Uint8 operator [] (const Uint32 idx) const {return idx < 20 ? hash[idx] : 0;}
+		
 		/**
 		 * Assignment operator.
 		 * @param other Hash to copy
