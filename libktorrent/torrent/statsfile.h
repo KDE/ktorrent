@@ -72,6 +72,13 @@ namespace bt
 			///Writes data from m_values to stats file.
 			void writeSync();
 			
+			/**
+			 * See if there is a key in the stats file
+			 * @param key The key
+			 * @return true if key is in the stats file
+			 */
+			bool hasKey(const QString & key) const {return m_values.contains(key);}
+			
 		private:
 			QString m_filename;
 			QFile m_file;

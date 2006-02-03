@@ -51,6 +51,8 @@ namespace bt
 		QValueList<SHA1Hash> hashes;
 		//
 		Uint32 cur_chunk;
+		bool priv;
+		Uint64 tot_size;
 	public:
 		/**
 		 * Constructor.
@@ -59,10 +61,11 @@ namespace bt
 		 * @param chunk_size The size of each chunk
 		 * @param name The name suggestion
 		 * @param comments The comments field of the torrent
+		 * @param priv Private torrent or not
 		 */
 		TorrentCreator(const QString & target,const QStringList & trackers,
 					   Uint32 chunk_size,const QString & name,
-					   const QString & comments);
+					   const QString & comments,bool priv);
 		virtual ~TorrentCreator();
 
 		

@@ -44,7 +44,9 @@ namespace bt
 	public:	
 		ServerSocket(Server* srv,Uint16 port) : QServerSocket(port),srv(srv)
 		{
-			socketDevice()->setAddressReusable(true);
+			QSocketDevice* sd = socketDevice();
+			if (sd)
+				sd->setAddressReusable(true);
 		}
 		
 		virtual ~ServerSocket()

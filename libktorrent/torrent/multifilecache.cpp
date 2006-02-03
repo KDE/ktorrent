@@ -38,12 +38,15 @@ namespace bt
 	static Uint64 FileOffset(Chunk* c,const TorrentFile & f,Uint64 chunk_size);
 
 
-	MultiFileCache::MultiFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir) : Cache(tor, tmpdir,datadir)
+	MultiFileCache::MultiFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir,bool custom_output_name) : Cache(tor, tmpdir,datadir)
 	{
 		cache_dir = tmpdir + "cache" + bt::DirSeparator();
 		if (datadir.length() == 0)
 			this->datadir = guessDataDir();
-		output_dir = this->datadir + tor.getNameSuggestion() + bt::DirSeparator();
+		if (!custom_output_name)
+			output_dir = this->datadir + tor.getNameSuggestion() + bt::DirSeparator();
+		else
+			output_dir = this->datadir;
 		files.setAutoDelete(true);
 	}
 

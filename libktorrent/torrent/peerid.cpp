@@ -111,35 +111,44 @@ namespace bt
 
 		if (first)
 		{
+			// Keep things a bit alphabetic to make it easier add new ones
 			//AZUREUS STYLE
+			Map["AR"] = "Arctic";
 			Map["AZ"] = "Azureus";
 			Map["BC"] = "BitComet";
 			Map["BB"] = "BitBuddy";
+			Map["BG"] = "BTGetit";
+			Map["BM"] = "BitMagnet";
+			Map["BS"] = "BTSlave"; 
 			Map["BX"] = "BitTorrent X";
 			Map["CT"] = "CTorrent";
 			Map["G3"] = "G3 Torrent";
-			Map["MT"] = "MoonLight";
-			Map["LT"] = "libtorrent";
+			Map["KT"] = "KTorrent"; // lets not forget our own client
 			Map["lt"] = "libTorrent";
+			Map["LT"] = "libtorrent";
+			Map["ML"] = "MLDonkey";
+			Map["MP"] = "MooPolice";
+			Map["MT"] = "MoonLight";
+			Map["QT"] = "Qt 4 Torrent example";
+			Map["RS"] = "Rufus";
+			Map["SB"] = "Swiftbit";
 			Map["SS"] = "SwarmScope";
+			Map["SZ"] = "Shareaza";
 			Map["TN"] = "Torrent .NET";
 			Map["TS"] = "Torrent Storm";
+			Map["UT"] = QString("%1Torrent").arg(QChar(0x00B5)); // µTorrent, 0x00B5 is unicode for µ
 			Map["XT"] = "Xan Torrent";
 			Map["ZT"] = "Zip Torrent";
-			Map["KT"] = "KTorrent"; // lets not forget our own client
-			Map["BS"] = "BTSlave"; 
-			Map["AR"] = "Arctic";
-			Map["SB"] = "Swiftbit";
-			Map["MP"] = "MooPolice";
-			Map["QT"] = "Qt 4 Torrent example";
-			Map["UT"] = QString("%1Torrent").arg(QChar(0x00B5)); // µTorrent, 0x00B5 is unicode for µ
-			Map["SZ"] = "Shareaza";
+			
 			//SHADOWS STYLE
 			Map["A"] = "ABC";
 			Map["S"] = "Shadow's";
 			Map["T"] = "BitTornado";
 			Map["U"] = "UPnP NAT BitTorrent";
 			//OTHER
+			Map["Plus"] = "Plus! II";
+			Map["OP"] = "Opera";
+			Map["BOW"] = "Bits on Wheels";
 			Map["M"] = "BitTorrent";
 			Map["exbc"] = "BitComet";
 			Map["Mbrst"] = "burst!";
@@ -170,9 +179,23 @@ namespace bt
 			name = Map["M"] + " " + peer_id.at(1) + "." +
 					peer_id.at(3) + "." + peer_id.at(5);
 		}
-		
-		if ( peer_id.startsWith("exbc") )
+		else if (peer_id.startsWith("OP"))
+		{
+			name = Map["OP"];
+		}
+		else if ( peer_id.startsWith("exbc") )
+		{
 			name = Map["exbc"];
+		}
+		else if ( peer_id.mid(1,3) == "BOW")
+		{
+			name = Map["BOW"];
+		}
+		else if ( peer_id.startsWith("Plus"))
+		{
+			name = Map["Plus"];
+		}
+			
 		return name;
 	}
 }

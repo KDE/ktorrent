@@ -229,6 +229,7 @@ namespace bt
 		unsigned long running_time_dl, running_time_ul;
 		Uint64 prev_bytes_dl, prev_bytes_ul;
 		bool io_error;
+		bool custom_output_name;
 		int priority;
 	};
 }

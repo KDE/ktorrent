@@ -84,7 +84,9 @@ namespace bt
 	
 	void StatsFile::readSync()
 	{
-		m_file.open(IO_ReadOnly);
+		if (!m_file.open(IO_ReadOnly))
+			return;
+		
 		QTextStream in(&m_file);
 		while (!in.atEnd())
 		{
@@ -97,7 +99,8 @@ namespace bt
 	
 	void StatsFile::writeSync()
 	{
-		m_file.open(IO_WriteOnly);
+		if (!m_file.open(IO_WriteOnly))
+			return;
 		QTextStream out(&m_file);
 		QMap<QString, QString>::iterator it = m_values.begin();
 		while(it!=m_values.end())

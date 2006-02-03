@@ -79,6 +79,7 @@ namespace bt
 		prev_bytes_ul = 0;
 		io_error = false;
 		priority = 0;
+		custom_output_name = false;
 
 		updateStats();
 	}
@@ -339,6 +340,13 @@ namespace bt
 		stats.multi_file_torrent = tor->isMultiFile();
 		stats.total_bytes = tor->getFileLength();
 		
+		// check the stats file for the custom_output_name variable
+		StatsFile st(datadir + "stats");
+		if (st.hasKey("CUSTOM_OUTPUT_NAME") && st.readULong("CUSTOM_OUTPUT_NAME") == 1)
+		{
+			custom_output_name = true;
+		}
+		
 		// load stats if outputdir is null
 		if (outputdir.isNull() || outputdir.length() == 0)
 			loadOutputDir();
@@ -381,7 +389,7 @@ namespace bt
 
 		// Create chunkmanager, load the index file if it exists
 		// else create all the necesarry files
-		cman = new ChunkManager(*tor,datadir,outputdir);
+		cman = new ChunkManager(*tor,datadir,outputdir,custom_output_name);
 		// outputdir is null, see if the cache has figured out what it is
 		if (outputdir.length() == 0)
 			outputdir = cman->getDataDir();
@@ -634,7 +642,7 @@ namespace bt
 		st.write("PRIORITY", QString("%1").arg(priority));
 		st.write("AUTOSTART", QString("%1").arg(stats.autostart));
 		st.write("IMPORTED", QString("%1").arg(stats.imported_bytes));
-		
+		st.write("CUSTOM_OUTPUT_NAME",custom_output_name ? "1" : "0");
 		st.writeSync();
 	}
 
@@ -649,6 +657,10 @@ namespace bt
 		this->running_time_dl = st.readULong("RUNNING_TIME_DL");
 		this->running_time_ul = st.readULong("RUNNING_TIME_UL");
 		outputdir = st.readString("OUTPUTDIR").stripWhiteSpace();
+		if (st.hasKey("CUSTOM_OUTPUT_NAME") && st.readULong("CUSTOM_OUTPUT_NAME") == 1)
+		{
+			custom_output_name = true;
+		}
 		
 		priority = st.readInt("PRIORITY");
 		stats.user_controlled = priority == 0 ? true : false;
@@ -659,21 +671,14 @@ namespace bt
 
 	void TorrentControl::loadOutputDir()
 	{
-		QFile fptr(datadir + "stats");
-		if (!fptr.open(IO_ReadOnly))
+		StatsFile st(datadir + "stats");
+		if (!st.hasKey("OUTPUTDIR"))
 			return;
-
-		QTextStream in(&fptr);
-		while (!in.atEnd())
+		
+		outputdir = st.readString("OUTPUTDIR").stripWhiteSpace();
+		if (st.hasKey("CUSTOM_OUTPUT_NAME") && st.readULong("CUSTOM_OUTPUT_NAME") == 1)
 		{
-			QString line = in.readLine();
-			if (line.startsWith("OUTPUTDIR="))
-			{
-				outputdir = line.mid(10).stripWhiteSpace();
-				if (outputdir.length() > 0 && !outputdir.endsWith(bt::DirSeparator()))
-					outputdir += bt::DirSeparator();
-				return;
-			}
+			custom_output_name = true;
 		}
 	}
 
