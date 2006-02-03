@@ -40,6 +40,7 @@ namespace kt
 		QObject::connect(this,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
 		QObject::connect(this,SIGNAL(gotError(int)),this,SLOT(onError(int)));
 		setAddressReuseable(true);
+		setFamily(KNetwork::KResolver::IPv4Family);
 		setBlocking(true);
 		for (Uint32 i = 0;i < 10;i++)
 		{
