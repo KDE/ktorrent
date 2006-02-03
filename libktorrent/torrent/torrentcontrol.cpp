@@ -53,6 +53,7 @@
 #include "downloadcap.h"
 #include "uploadcap.h"
 #include "queuemanager.h"
+#include "statsfile.h"
 
 using namespace kt;
 
@@ -609,119 +610,51 @@ namespace bt
 
 	void TorrentControl::saveStats()
 	{
-		QFile fptr(datadir + "stats");
-		if (!fptr.open(IO_WriteOnly))
-		{
-			Out() << "Warning : can't create stats file" << endl;
-			return;
-		}
+		StatsFile st(datadir + "stats");
 
-		QTextStream out(&fptr);
-		out << "OUTPUTDIR=" << cman->getDataDir() << ::endl;
+		st.write("OUTPUTDIR", cman->getDataDir());
+		
 		if (cman->getDataDir() != outputdir)
 			outputdir = cman->getDataDir();
-		out << "UPLOADED=" << QString::number(up->bytesUploaded()) << ::endl;
+		
+		st.write("UPLOADED", QString::number(up->bytesUploaded()));
+		
 		if (stats.running)
 		{
 			QDateTime now = QDateTime::currentDateTime();
-			out << "RUNNING_TIME_DL=" << (running_time_dl + time_started_dl.secsTo(now)) << ::endl;
-			out << "RUNNING_TIME_UL=" << (running_time_ul + time_started_ul.secsTo(now)) << ::endl;
+			st.write("RUNNING_TIME_DL",QString("%1").arg(running_time_dl + time_started_dl.secsTo(now)));
+			st.write("RUNNING_TIME_UL",QString("%1").arg(running_time_ul + time_started_ul.secsTo(now)));
 		}
 		else
 		{
-			out << "RUNNING_TIME_DL=" << running_time_dl << ::endl;
-			out << "RUNNING_TIME_UL=" << running_time_ul << ::endl;
+			st.write("RUNNING_TIME_DL", QString("%1").arg(running_time_dl));
+			st.write("RUNNING_TIME_UL", QString("%1").arg(running_time_ul));
 		}
 		
-		out << "PRIORITY=" << priority << ::endl;
-		out << "AUTOSTART=" << stats.autostart << ::endl;
-		out << QString("IMPORTED=%1").arg(stats.imported_bytes) << ::endl;
+		st.write("PRIORITY", QString("%1").arg(priority));
+		st.write("AUTOSTART", QString("%1").arg(stats.autostart));
+		st.write("IMPORTED", QString("%1").arg(stats.imported_bytes));
+		
+		st.writeSync();
 	}
 
 	void TorrentControl::loadStats()
 	{
-		QFile fptr(datadir + "stats");
-		if (!fptr.open(IO_ReadOnly))
-			return;
-
-		QTextStream in(&fptr);
-		while (!in.atEnd())
-		{
-			QString line = in.readLine();
-			if (line.startsWith("UPLOADED="))
-			{
-				bool ok = true;
-				Uint64 val = line.mid(9).toULongLong(&ok);
-				if (ok)
-					up->setBytesUploaded(val);
-				else
-					Out() << "Warning : can't get bytes uploaded out of line : "
-					<< line << endl;
-				prev_bytes_ul = val;
-			}
-			else if (line.startsWith("RUNNING_TIME_DL="))
-			{
-				bool ok = true;
-				unsigned long val  = line.mid(16).toULong(&ok);
-				if(ok)
-					this->running_time_dl = val;
-				else
-					Out() << "Warning : can't get running time out of line : "
-					<< line << endl;
-			}
-			else if (line.startsWith("RUNNING_TIME_UL="))
-			{
-				bool ok = true;
-				unsigned long val = line.mid(16).toULong(&ok);
-				if(ok)
-					this->running_time_ul = val;
-				else
-					Out() << "Warning : can't get running time out of line : "
-					<< line << endl;
-			}
-			else if (line.startsWith("OUTPUTDIR="))
-			{
-				outputdir = line.mid(10).stripWhiteSpace();
-			}
-			else if (line.startsWith("PRIORITY="))
-			{
-				bool ok = true;
-				int p = line.mid(9).toInt(&ok);
-				if(ok)
-				{
-					priority = p;
-					stats.user_controlled = p == 0 ? true : false;
-				}
-				else
-					Out() << "Warning : Can't get priority out of line : "
-							<< line << endl;
-			}
-			else if (line.startsWith("AUTOSTART="))
-			{
-				bool ok = true;
-				int p = line.mid(10).toInt(&ok);
-				if(ok)
-					stats.autostart = (bool) p;
-				else
-				{
-					Out() << "Warning : Can't get autostart bit out of line : "
-							<< line << endl;
-					stats.autostart = true;
-				}
-			}
-			else if (line.startsWith("IMPORTED="))
-			{
-				bool ok = true;
-				Uint64 p = line.mid(9).toULongLong(&ok);
-				if(ok)
-					stats.imported_bytes = p;
-				else
-				{
-					Out() << "Warning : Can't get imported_bytes out of line : "
-							<< line << endl;
-				}
-			}
-		}
+		StatsFile st(datadir + "stats");
+		
+		Uint64 val = st.readUint64("UPLOADED");
+		prev_bytes_ul = val;
+		up->setBytesUploaded(val);
+		
+		this->running_time_dl = st.readULong("RUNNING_TIME_DL");
+		this->running_time_ul = st.readULong("RUNNING_TIME_UL");
+		outputdir = st.readString("OUTPUTDIR").stripWhiteSpace();
+		
+		priority = st.readInt("PRIORITY");
+		stats.user_controlled = priority == 0 ? true : false;
+		stats.autostart = st.readBoolean("AUTOSTART");
+		
+		stats.imported_bytes = st.readUint64("IMPORTED");
 	}
 
 	void TorrentControl::loadOutputDir()
