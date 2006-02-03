@@ -1,4 +1,4 @@
-INCLUDES = $(all_includes) -I$(srcdir)/../../libktorrent
+INCLUDES = -I$(srcdir)/../../libktorrent $(all_includes)
 METASOURCES = AUTO
 kde_module_LTLIBRARIES = ktpartfileimportplugin.la
 noinst_HEADERS = partfileimportplugin.h multidatachecker.h importdialog.h
