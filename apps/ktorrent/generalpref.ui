@@ -52,10 +52,10 @@
                         <cstring>custom_ip_check</cstring>
                     </property>
                     <property name="text">
-                        <string>Send the tracker a c&amp;ustom IP or hostname</string>
+                        <string>Send the trac&amp;ker a custom IP or hostname</string>
                     </property>
                     <property name="accel">
-                        <string>Alt+U</string>
+                        <string>Alt+K</string>
                     </property>
                 </widget>
                 <widget class="QLayoutWidget">
@@ -150,7 +150,7 @@
                 <cstring>groupBox3_2</cstring>
             </property>
             <property name="title">
-                <string>Miscelanious</string>
+                <string>Miscellaneous</string>
             </property>
             <grid>
                 <property name="name">
@@ -286,6 +286,8 @@
         </widget>
     </grid>
 </widget>
+<customwidgets>
+</customwidgets>
 <tabstops>
     <tabstop>autosave_downloads_check</tabstop>
     <tabstop>show_systray_icon</tabstop>
