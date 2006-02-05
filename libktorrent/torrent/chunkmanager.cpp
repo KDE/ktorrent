@@ -561,9 +561,9 @@ namespace bt
 		cache->downloadStatusChanged(tf,download);
 	}
 	
-	bool ChunkManager::prepareChunk(Chunk* c)
+	bool ChunkManager::prepareChunk(Chunk* c,bool allways)
 	{
-		if (c->getStatus() != Chunk::NOT_DOWNLOADED)
+		if (!allways && c->getStatus() != Chunk::NOT_DOWNLOADED)
 			return false;
 		
 		return cache->prep(c);

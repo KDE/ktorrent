@@ -232,11 +232,6 @@ namespace bt
 	
 	bool MultiFileCache::prep(Chunk* c)
 	{
-		if (c->getStatus() != Chunk::NOT_DOWNLOADED)
-		{
-			Out() << "Warning : can only prep NOT_DOWNLOADED chunks  !" << endl;
-			return false;
-		}
 		// find out in which files a chunk lies
 		QValueList<Uint32> tflist;
 		tor.calcChunkPos(c->getIndex(),tflist);
@@ -253,6 +248,7 @@ namespace bt
 				// if mmap fails use buffered mode
 				Out() << "Warning : mmap failed, falling back to buffered mode" << endl;
 				c->allocate();
+				c->setStatus(Chunk::BUFFERED);
 			}
 			else
 			{
@@ -263,6 +259,7 @@ namespace bt
 		{
 			// just allocate it
 			c->allocate();
+			c->setStatus(Chunk::BUFFERED);
 		}
 		return true;
 	}

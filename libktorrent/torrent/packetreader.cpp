@@ -77,8 +77,9 @@ namespace bt
 			return false;
 		}
 		
+		// a keep alive message
 		if (packet_length == 0)
-			return false;
+			return true;
 			
 		available = sock->bytesAvailable();
 		// see if the entire packet is available
