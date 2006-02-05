@@ -714,6 +714,7 @@ namespace bt
 		stats.total_chunks = cman ? cman->getNumChunks() : 0;
 		stats.num_chunks_downloaded = cman ? cman->getNumChunks() - cman->chunksExcluded() - cman->chunksLeft() : 0;
 		stats.num_chunks_excluded = cman ? cman->chunksExcluded() : 0;
+		stats.chunk_size = tor ? tor->getChunkSize() : 0;
 		stats.total_bytes_to_download = (tor && cman) ?	tor->getFileLength() - cman->bytesExcluded() : 0;
 		stats.session_bytes_downloaded = stats.bytes_downloaded - prev_bytes_dl;
 		stats.session_bytes_uploaded = stats.bytes_uploaded - prev_bytes_ul;

@@ -23,7 +23,7 @@
     <property name="caption">
         <string>InfoWidgetBase</string>
     </property>
-    <hbox>
+    <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
@@ -36,7 +36,7 @@
                     <cstring>tab</cstring>
                 </property>
                 <attribute name="title">
-                    <string>St&amp;atus</string>
+                    <string>&amp;Status</string>
                 </attribute>
                 <vbox>
                     <property name="name">
@@ -70,7 +70,7 @@
                     </widget>
                     <widget class="QLayoutWidget">
                         <property name="name">
-                            <cstring>layout50</cstring>
+                            <cstring>layout136</cstring>
                         </property>
                         <hbox>
                             <property name="name">
@@ -78,7 +78,7 @@
                             </property>
                             <widget class="QLayoutWidget">
                                 <property name="name">
-                                    <cstring>layout49</cstring>
+                                    <cstring>layout135</cstring>
                                 </property>
                                 <vbox>
                                     <property name="name">
@@ -565,6 +565,44 @@
                                                     </widget>
                                                 </hbox>
                                             </widget>
+                                            <widget class="QLayoutWidget">
+                                                <property name="name">
+                                                    <cstring>layout24</cstring>
+                                                </property>
+                                                <hbox>
+                                                    <property name="name">
+                                                        <cstring>unnamed</cstring>
+                                                    </property>
+                                                    <widget class="QLabel">
+                                                        <property name="name">
+                                                            <cstring>textLabel1_8</cstring>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string>Size:</string>
+                                                        </property>
+                                                    </widget>
+                                                    <widget class="QLabel">
+                                                        <property name="name">
+                                                            <cstring>m_size_chunks</cstring>
+                                                        </property>
+                                                        <property name="minimumSize">
+                                                            <size>
+                                                                <width>70</width>
+                                                                <height>0</height>
+                                                            </size>
+                                                        </property>
+                                                        <property name="frameShape">
+                                                            <enum>Panel</enum>
+                                                        </property>
+                                                        <property name="text">
+                                                            <string></string>
+                                                        </property>
+                                                        <property name="alignment">
+                                                            <set>AlignVCenter|AlignRight</set>
+                                                        </property>
+                                                    </widget>
+                                                </hbox>
+                                            </widget>
                                             <spacer>
                                                 <property name="name">
                                                     <cstring>spacer12</cstring>
@@ -577,7 +615,7 @@
                                                 </property>
                                                 <property name="sizeHint">
                                                     <size>
-                                                        <width>31</width>
+                                                        <width>57</width>
                                                         <height>20</height>
                                                     </size>
                                                 </property>
@@ -598,7 +636,7 @@
                                 </property>
                                 <property name="sizeHint">
                                     <size>
-                                        <width>178</width>
+                                        <width>145</width>
                                         <height>20</height>
                                     </size>
                                 </property>
@@ -704,7 +742,7 @@
                 </hbox>
             </widget>
         </widget>
-    </hbox>
+    </vbox>
 </widget>
 <customwidgets>
     <customwidget>
@@ -747,5 +785,8 @@
 </images>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>kt::downloadedchunkbar.h</includehint>
+    <includehint>kt::availabilitychunkbar.h</includehint>
+    <includehint>klistview.h</includehint>
 </includehints>
 </UI>

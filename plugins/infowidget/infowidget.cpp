@@ -2,6 +2,7 @@
  *   Copyright (C) 2005 by                                                 *
  *   Joris Guisson <joris.guisson@gmail.com>                               *
  *   Ivan Vasic <ivasic@gmail.com>                                         *
+ *   Marcello Maggioni <marcello.maggioni@gmail.com>                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -308,6 +309,10 @@ namespace kt
 		m_excluded_chunks->setText(QString::number(s.num_chunks_excluded));
 		m_chunk_bar->updateBar();
 		m_av_chunk_bar->updateBar();
+		if( s.chunk_size / 1024 < 1024 )
+			m_size_chunks->setText(QString::number(s.chunk_size / 1024) + "." + QString::number((s.chunk_size % 1024) / 100) + " KB");
+		else
+			m_size_chunks->setText(QString::number(s.chunk_size / 1024 / 1024) + "." + QString::number(((s.chunk_size / 1024) % 1024) / 100) + " MB");
 		if (peer_view)
 			peer_view->update();
 		if (cd_view)

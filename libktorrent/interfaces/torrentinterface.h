@@ -77,6 +77,8 @@ namespace kt
 		Uint32 num_chunks_downloaded;
 		/// Get the number of chunks which have been excluded
 		Uint32 num_chunks_excluded;
+		/// Size of each chunk
+		Uint32 chunk_size;
 		/// Total seeders in swarm
 		Uint32 seeders_total;
 		/// Num seeders connected to
