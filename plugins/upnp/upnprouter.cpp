@@ -22,6 +22,7 @@
 #include <kstandarddirs.h>
 #include <qstringlist.h>
 #include <kio/netaccess.h>
+#include <kio/job.h>
 #include <torrent/globals.h>
 #include <util/log.h>
 #include <util/array.h>
@@ -132,9 +133,7 @@ namespace kt
 			{
 				Out() << "Error parsing router description !" << endl;
 				QString dest = KGlobal::dirs()->saveLocation("data","ktorrent") + "upnp_failure";
-				if (bt::Exists(dest))
-					bt::Delete(dest,true);
-				bt::CopyFile(target,dest,true);
+				KIO::file_copy(target,dest,-1,true,false,false);
 			}
 			// and remove the temp file
 			KIO::NetAccess::removeTempFile(target);
