@@ -322,10 +322,10 @@ void KTorrentCore::onExit()
 {
 	// stop timer to prevent updates during wait
 	update_timer.stop();
-	pman->saveConfigFile(KGlobal::dirs()->saveLocation("data","ktorrent") + "plugins");
+	//pman->saveConfigFile(KGlobal::dirs()->saveLocation("data","ktorrent") + "plugins");
 	// 	downloads.clear();
 	qman->clear();
-	pman->unloadAll();
+	pman->unloadAll(false);
 }
 
 bool KTorrentCore::changeDataDir(const QString & new_dir)

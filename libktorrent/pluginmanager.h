@@ -45,6 +45,7 @@ namespace kt
 		GUIInterface* gui;
 		PluginManagerPrefPage* prefpage;
 		QStringList pltoload;
+		QString cfg_file;
 	public:
 		PluginManager(CoreInterface* core,GUIInterface* gui);
 		virtual ~PluginManager();
@@ -102,7 +103,7 @@ namespace kt
 		/**
 		 * Unload all loaded plugins.
 		 */
-		void unloadAll();
+		void unloadAll(bool save = true);
 
 		/**
 		 * Update all plugins who need a periodical GUI update.
