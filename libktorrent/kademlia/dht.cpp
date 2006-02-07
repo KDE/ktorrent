@@ -17,18 +17,26 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <util/log.h>
+#include <torrent/bnode.h>
+#include <torrent/globals.h>
+#include <ksocketaddress.h>
 #include "dht.h"
 #include "node.h"
 #include "rpcserver.h"
 #include "rpcmsg.h"
 
+using namespace bt;
+using namespace KNetwork;
+
 namespace dht
 {
 
-	DHT::DHT() : node(0),srv(0)
+
+	DHT::DHT() : node(0),srv(0),mtid(0)
 	{
 		node = new Node();
-		srv = new RPCServer(this,4000);
+		srv = new RPCServer(this,4444);
 	}
 
 
@@ -40,6 +48,11 @@ namespace dht
 
 	void DHT::ping(PingReq* r)
 	{
+		Out() << "Sending ping response" << endl;
+		PingRsp* rsp = new PingRsp(r->getMTID(),node->getOurID());
+		rsp->setOrigin(r->getOrigin());
+		srv->sendMsg(r);
+		delete rsp;
 	}
 	
 	void DHT::ping(PingRsp* r)
@@ -67,4 +80,11 @@ namespace dht
 	void DHT::error(ErrMsg* r)
 	{}
 
+	void DHT::portRecieved(const QString & ip,bt::Uint16 port)
+	{
+		Out() << "Sending ping request to " << ip << ":" << port << endl;
+		PingReq* r = new PingReq(mtid,node->getOurID());
+		r->setOrigin(KInetSocketAddress(ip,port));
+		srv->doCall(r);
+	}
 }

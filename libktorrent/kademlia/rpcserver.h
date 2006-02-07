@@ -27,6 +27,7 @@
 
 
 using KNetwork::KDatagramSocket;
+using bt::Uint32;
 using bt::Uint16;
 using bt::Uint8;
 
@@ -42,11 +43,12 @@ namespace dht
 	class RPCMsg;
 	class Node;
 	class DHT;
+	class MsgBase;
 
 	/**
 	 * @author Joris Guisson
 	 *
-	 * 
+	 * Class to handle incoming and outgoing RPC messages.
 	 */
 	class RPCServer : public QObject
 	{
@@ -54,19 +56,37 @@ namespace dht
 	public:
 		RPCServer(DHT* dh_table,Uint16 port,QObject *parent = 0);
 		virtual ~RPCServer();
-		/*
-		RPCCall* ping(const KBucketEntry & to);
-		RPCCall* findNode(const KBucketEntry & to,const Key & k);
-		RPCCall* findValue(const KBucketEntry & to,const Key & k);
-		RPCCall* store(const KBucketEntry & to,const Key & k,const bt::Array<Uint8> & data);
-		*/
 		
+		
+		/**
+		 * Do a RPC call.
+		 * @param msg The message to send
+		 */
+		void doCall(MsgBase* msg);
+		
+		/**
+		 * Send a message, this only sends the message, it does not keep any call
+		 * information. This should be used for replies.
+		 * @param msg The message to send
+		 */
+		void sendMsg(MsgBase* msg);
+		
+		
+		/**
+		 * A call was timed out.
+		 * @param mtid mtid of call
+		 */
+		void timedOut(Uint8 mtid);
 	private slots:
 		void readPacket();
+		
+	private:
+		void send(const KNetwork::KSocketAddress & addr,const QByteArray & msg);
 			
 	private:
 		KDatagramSocket* sock;
 		DHT* dh_table;
+		bt::PtrMap<bt::Uint8,RPCCall> calls;
 	};
 
 }

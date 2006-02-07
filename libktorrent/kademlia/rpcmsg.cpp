@@ -17,7 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <util/log.h>
 #include <torrent/bnode.h>
+#include <torrent/globals.h>
+#include <torrent/bencoder.h>
 #include "rpcmsg.h"
 #include "dht.h"
 
@@ -25,12 +28,7 @@ using namespace bt;
 
 namespace dht
 {
-	const QString TID = "t";
-	const QString REQ = "q";
-	const QString RSP = "r";
-	const QString TYP = "y";
-	const QString ARG = "a";
-	const QString ERR = "e";
+
 	
 	MsgBase* MakeMsg(bt::BDictNode* dict);
 	
@@ -39,11 +37,18 @@ namespace dht
 	{
 		BValueNode* vn = dict->getValue(REQ);
 		BDictNode*	args = dict->getDict(ARG);
-		if (!vn || !args || !args->getValue("id") || !args->getValue(TID))
+		if (!vn || !args)
+			return 0;
+		
+		if (!args->getValue("id"))
+			return 0;
+		
+		if (!dict->getValue(TID))
 			return 0;
 			
 		Key id = Key(args->getValue("id")->data().toByteArray());
-		Uint32 mtid = args->getValue(TID)->data().toInt();
+		QString mt_id = dict->getValue(TID)->data().toString();
+		Uint8 mtid = (char)mt_id.at(0).latin1();
 		
 		QString str = vn->data().toString();
 		if (str == "ping")
@@ -90,11 +95,12 @@ namespace dht
 	{
 		BValueNode* vn = dict->getValue(RSP);
 		BDictNode*	args = dict->getDict(ARG);
-		if (!vn || !args || !args->getValue("id") || !args->getValue(TID))
+		if (!vn || !args || !args->getValue("id") || !dict->getValue(TID))
 			return 0;
 			
 		Key id = Key(args->getValue("id")->data().toByteArray());
-		Uint32 mtid = args->getValue(TID)->data().toInt();
+		QString mt_id = dict->getValue(TID)->data().toString();
+		Uint8 mtid = (char)mt_id.at(0).latin1();
 		QString str = vn->data().toString();
 		if (str == "ping")
 		{	
@@ -130,11 +136,12 @@ namespace dht
 	{
 		BValueNode* vn = dict->getValue(RSP);
 		BDictNode*	args = dict->getDict(ARG);
-		if (!vn || !args || !args->getValue("id") || !args->getValue(TID))
+		if (!vn || !args || !args->getValue("id") || !dict->getValue(TID))
 			return 0;
 			
 		Key id = Key(args->getValue("id")->data().toByteArray());
-		Uint32 mtid = args->getValue(TID)->data().toInt();
+		QString mt_id = dict->getValue(TID)->data().toString();
+		Uint8 mtid = (char)mt_id.at(0).latin1();
 		QString str = vn->data().toString();
 		
 		return new ErrMsg(mtid,id,str);
@@ -163,7 +170,7 @@ namespace dht
 		return 0;
 	}
 	
-	MsgBase::MsgBase(Uint32 mtid,Method m,Type type,const Key & id)
+	MsgBase::MsgBase(Uint8 mtid,Method m,Type type,const Key & id)
 	: mtid(mtid),method(m),type(type),id(id) 
 	{}
 	
@@ -172,7 +179,7 @@ namespace dht
 	
 	////////////////////////////////
 	
-	PingReq::PingReq(Uint32 mtid,const Key & id) : MsgBase(mtid,PING,REQ_MSG,id)
+	PingReq::PingReq(Uint8 mtid,const Key & id) : MsgBase(mtid,PING,REQ_MSG,id)
 	{
 	}
 	
@@ -184,9 +191,31 @@ namespace dht
 		dh_table->ping(this);
 	}
 	
+	void PingReq::print()
+	{
+		Out() << QString("REQ: %1 %2 : ping").arg(mtid).arg(id.toString()) << endl;
+	}
+	
+	void PingReq::encode(QByteArray & arr)
+	{
+		BEncoder enc(new BEncoderBufferOutput(arr));
+		enc.beginDict();
+		{
+			enc.write(TYP); enc.write(REQ);
+			enc.write(REQ); enc.write("ping");
+			enc.write(ARG); enc.beginDict();
+			{
+				enc.write("id"); enc.write(id.getData(),20);
+			}
+			enc.end();
+			enc.write(TID); enc.write(&mtid,1);
+		}
+		enc.end();
+	}
+	
 	////////////////////////////////
 	
-	FindNodeReq::FindNodeReq(Uint32 mtid,const Key & id,const Key & target)
+	FindNodeReq::FindNodeReq(Uint8 mtid,const Key & id,const Key & target)
 	: MsgBase(mtid,FIND_NODE,REQ_MSG,id),target(target)
 	{}
 	
@@ -198,9 +227,18 @@ namespace dht
 		dh_table->findNode(this);
 	}
 	
+	void FindNodeReq::print()
+	{
+		Out() << QString("REQ: %1 %2 : find_node %3")
+				.arg(mtid).arg(id.toString()).arg(target.toString()) << endl;
+	}
+	
+	void FindNodeReq::encode(QByteArray & arr)
+	{}
+	
 	////////////////////////////////
 	
-	FindValueReq::FindValueReq(Uint32 mtid,const Key & id,const Key & key)
+	FindValueReq::FindValueReq(Uint8 mtid,const Key & id,const Key & key)
 	: MsgBase(mtid,FIND_VALUE,REQ_MSG,id),key(key)
 	{}
 	
@@ -211,9 +249,18 @@ namespace dht
 	{
 		dh_table->findValue(this);
 	}
+	
+	void FindValueReq::print()
+	{
+		Out() << QString("REQ: %1 %2 : find_value %3")
+				.arg(mtid).arg(id.toString()).arg(key.toString()) << endl;
+	}
+	
+	void FindValueReq::encode(QByteArray & arr)
+	{}
 
 	////////////////////////////////
-	StoreValueReq::StoreValueReq(Uint32 mtid,const Key & id,const Key & key,const QByteArray & ba)
+	StoreValueReq::StoreValueReq(Uint8 mtid,const Key & id,const Key & key,const QByteArray & ba)
 	: MsgBase(mtid,STORE_VALUE,REQ_MSG,id),key(key),data(ba)
 	{}
 	
@@ -225,9 +272,18 @@ namespace dht
 		dh_table->storeValue(this);
 	}
 	
+	void StoreValueReq::print()
+	{
+		Out() << QString("REQ: %1 %2 : store_value %3")
+				.arg(mtid).arg(id.toString()).arg(id.toString()).arg(key.toString()) << endl;
+	}
+	
+	void StoreValueReq::encode(QByteArray & arr)
+	{}
+	
 	////////////////////////////////
 	
-	PingRsp::PingRsp(Uint32 mtid,const Key & id)
+	PingRsp::PingRsp(Uint8 mtid,const Key & id)
 	: MsgBase(mtid,PING,RSP_MSG,id)
 	{}
 	
@@ -238,9 +294,32 @@ namespace dht
 		dh_table->ping(this);
 	}
 	
+	void PingRsp::print()
+	{
+		Out() << QString("RSP: %1 %2 : ping")
+					.arg(mtid).arg(id.toString()) << endl;
+	}
+	
+	void PingRsp::encode(QByteArray & arr)
+	{
+		BEncoder enc(new BEncoderBufferOutput(arr));
+		enc.beginDict();
+		{
+			enc.write(TYP); enc.write(RSP);
+			enc.write(RSP); enc.write("ping");
+			enc.write(ARG); enc.beginDict();
+			{
+				enc.write("id"); enc.write(id.getData(),20);
+			}
+			enc.end();
+			enc.write(TID); enc.write(&mtid,1);
+		}
+		enc.end();
+	}
+	
 	////////////////////////////////
 	
-	FindNodeRsp::FindNodeRsp(Uint32 mtid,const Key & id,const QByteArray & nodes)
+	FindNodeRsp::FindNodeRsp(Uint8 mtid,const Key & id,const QByteArray & nodes)
 	: MsgBase(mtid,FIND_NODE,RSP_MSG,id),nodes(nodes)
 	{}
 	
@@ -251,9 +330,19 @@ namespace dht
 		dh_table->findNode(this);
 	}
 	
+	void FindNodeRsp::print()
+	{
+		Out() << QString("RSP: %1 %2 : find_node")
+				.arg(mtid).arg(id.toString()) << endl;
+	}
+	
+	void FindNodeRsp::encode(QByteArray & arr)
+	{}
+
+	
 	////////////////////////////////
 	
-	FindValueRsp::FindValueRsp(Uint32 mtid,const Key & id,const QByteArray & values) 
+	FindValueRsp::FindValueRsp(Uint8 mtid,const Key & id,const QByteArray & values) 
 	: MsgBase(mtid,FIND_VALUE,RSP_MSG,id),values(values)
 	{}
 	
@@ -264,9 +353,18 @@ namespace dht
 		dh_table->findValue(this);
 	}
 	
+	void FindValueRsp::print()
+	{
+		Out() << QString("RSP: %1 %2 : find_value")
+				.arg(mtid).arg(id.toString()) << endl;
+	}
+	
+	void FindValueRsp::encode(QByteArray & arr)
+	{}
+	
 	////////////////////////////////
 	
-	StoreValueRsp::StoreValueRsp(Uint32 mtid,const Key & id) 
+	StoreValueRsp::StoreValueRsp(Uint8 mtid,const Key & id) 
 	: MsgBase(mtid,STORE_VALUE,RSP_MSG,id) 
 	{}
 	
@@ -277,9 +375,18 @@ namespace dht
 		dh_table->storeValue(this);
 	}
 	
+	void StoreValueRsp::print()
+	{
+		Out() << QString("RSP: %1 %2 : store_value")
+				.arg(mtid).arg(id.toString()) << endl;
+	}
+	
+	void StoreValueRsp::encode(QByteArray & arr)
+	{}
+	
 	////////////////////////////////
 	
-	ErrMsg::ErrMsg(Uint32 mtid,const Key & id,const QString & msg)
+	ErrMsg::ErrMsg(Uint8 mtid,const Key & id,const QString & msg)
 	: MsgBase(mtid,NONE,ERR_MSG,id),msg(msg)
 	{}
 	
@@ -290,4 +397,12 @@ namespace dht
 	{
 		dh_table->error(this);
 	}
+	
+	void ErrMsg::print()
+	{
+		Out() << "ERR: " << mtid << " " << msg << endl;
+	}
+	
+	void ErrMsg::encode(QByteArray & arr)
+	{}
 }

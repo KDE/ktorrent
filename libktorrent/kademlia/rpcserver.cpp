@@ -50,6 +50,8 @@ namespace dht
 	RPCServer::~RPCServer()
 	{
 		sock->close();
+		calls.setAutoDelete(true);
+		calls.clear();
 	}
 
 	void RPCServer::readPacket()
@@ -61,7 +63,6 @@ namespace dht
 		BDecoder bdec(pck.data(),false);
 		
 		BNode* n = bdec.decode();
-		n->printDebugInfo();
 		if (n->getType() != BNode::DICT)
 		{
 			delete n;
@@ -71,13 +72,63 @@ namespace dht
 		// try to make a RPCMsg of it
 		MsgBase* msg = MakeRPCMsg((BDictNode*)n);
 		if (!msg)
+		{
+			Out() << "Error parsing message : " << endl;
+			Out() << QString(pck.data()) << endl;
 			return;
-	
-		msg->setOrigin(pck.address());
-		msg->apply(dh_table);
-		delete msg;
+		}
+		else
+		{
+			msg->setOrigin(pck.address());
+			msg->print();
+			msg->apply(dh_table);
+			// erase an existing call
+			if (msg->getType() == RSP_MSG && calls.contains(msg->getMTID()))
+			{
+				// delete the call
+				RPCCall* c = calls.find(msg->getMTID());
+				calls.erase(msg->getMTID());
+				delete c;
+			}
+			delete msg;
+		}
 	}
 	
+	
+	void RPCServer::send(const KNetwork::KSocketAddress & addr,const QByteArray & msg)
+	{
+		sock->send(KNetwork::KDatagramPacket(msg,addr));
+	}
+	
+	void RPCServer::doCall(MsgBase* msg)
+	{
+		sendMsg(msg);
+		RPCCall* c = new RPCCall(this,msg);
+		calls.insert(msg->getMTID(),c);
+	}
+	
+	void RPCServer::sendMsg(MsgBase* msg)
+	{
+		QByteArray data;
+		msg->encode(data);
+		send(msg->getOrigin(),data);
+		
+		for (Uint32 i = 0;i < data.size();i++)
+			if (data[i] == 0)
+				data[i] = '#';
+		Out() << QString(data) << endl;
+	}
+	
+	void RPCServer::timedOut(Uint8 mtid)
+	{
+		// delete the call
+		RPCCall* c = calls.find(mtid);
+		if (c)
+		{
+			calls.erase(mtid);
+			c->deleteLater();
+		}
+	}
 	
 	/*
 	

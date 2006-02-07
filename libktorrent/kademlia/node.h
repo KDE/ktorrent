@@ -48,6 +48,8 @@ namespace dht
 		 * @param msg The message
 		 */
 		//void recieved(const RPCMsg & msg);
+		
+		const dht::Key & getOurID() const {return our_id;}
 	private:
 		dht::Key our_id;
 		KBucket* bucket[160];

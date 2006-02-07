@@ -55,6 +55,12 @@ namespace dht
 
 		/// Destructor.
 		virtual ~Key();
+		
+		/**
+		 * Create a random key.
+		 * @return A random Key
+		 */
+		static Key random();
 
 		/**
 		 * Assignment operator.

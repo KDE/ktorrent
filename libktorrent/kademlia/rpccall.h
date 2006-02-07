@@ -20,11 +20,13 @@
 #ifndef DHTRPCCALL_H
 #define DHTRPCCALL_H
 
-#include <qobject.h>
+#include <qtimer.h>
 #include "key.h"
 
 namespace dht
 {
+	class MsgBase;
+	class RPCServer;
 	
 
 	/**
@@ -34,15 +36,16 @@ namespace dht
 	{
 		Q_OBJECT
 	public:
-		RPCCall(QObject *parent = 0);
+		RPCCall(RPCServer* rpc,MsgBase* msg);
 		virtual ~RPCCall();
-
 		
-	signals:
-		void reply();
+	private slots:
+		void onTimeout();
 
 	private:
-		Key msg_id;
+		MsgBase* msg;
+		QTimer timer; 
+		RPCServer* rpc;
 	};
 
 }

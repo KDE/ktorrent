@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <time.h>
+#include <stdlib.h>
 #include <qcstring.h>
 #include <util/constants.h>
 #include "key.h"
@@ -98,6 +100,17 @@ namespace dht
 		for (int i = 0;i < 20;i++)
 		{
 			k.hash[i] = a.hash[i] ^ b.hash[i];
+		}
+		return k;
+	}
+	
+	Key Key::random()
+	{
+		srand(time(0));
+		Key k;
+		for (int i = 0;i < 20;i++)
+		{
+			k.hash[i] = (Uint8)rand() % 0xFF;
 		}
 		return k;
 	}

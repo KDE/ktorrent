@@ -20,6 +20,9 @@
 #ifndef DHTDHT_H
 #define DHTDHT_H
 
+#include <qstring.h>
+#include <util/constants.h>
+
 namespace dht
 {
 	class Node;
@@ -52,10 +55,13 @@ namespace dht
 		void storeValue(StoreValueReq* r);
 		void storeValue(StoreValueRsp* r);
 		void error(ErrMsg* r);
+		
+		void portRecieved(const QString & ip,bt::Uint16 port);
 
 	private:
 		Node* node;
 		RPCServer* srv;
+		bt::Uint8 mtid;
 	};
 
 }

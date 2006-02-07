@@ -17,18 +17,30 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "dht.h"
+#include "rpcmsg.h"
 #include "rpccall.h"
+#include "rpcserver.h"
 
 namespace dht
 {
 
-	RPCCall::RPCCall(QObject *parent) : QObject(parent)
-	{}
+	RPCCall::RPCCall(RPCServer* rpc,MsgBase* msg) : rpc(rpc),msg(msg)
+	{
+		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
+		timer.start(20*1000,true);
+	}
 
 
 	RPCCall::~RPCCall()
-	{}
-
+	{
+		delete msg;
+	}
+	
+	void RPCCall::onTimeout()
+	{
+		rpc->timedOut(msg->getMTID());
+	}
 
 }
 #include "rpccall.moc"

@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <math.h>
+
 #ifdef USE_KNETWORK_SOCKET_CLASSES
 #include <kbufferedsocket.h>
 #else
@@ -24,8 +26,11 @@
 #include <qsocketdevice.h> 
 #endif
 
+#include <kademlia/dht.h>
 #include <util/log.h>
-#include <math.h>
+#include <util/functions.h>
+
+
 #include "peer.h"
 #include "chunk.h"
 #include "speedestimater.h"
@@ -36,7 +41,7 @@
 #include "packetwriter.h"
 #include "peerdownloader.h"
 #include "peeruploader.h"
-#include <util/functions.h>
+
 
 namespace bt
 {
@@ -309,6 +314,7 @@ namespace bt
 				{
 					Uint16 port = ReadUint16(tmp_buf,1);
 					Out() << "Got PORT packet : " << port << endl;
+					Globals::instance().getDHT().portRecieved(getIPAddresss(),port);
 				}
 				break;
 		}

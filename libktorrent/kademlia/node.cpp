@@ -26,7 +26,7 @@ namespace dht
 
 	Node::Node()
 	{
-		
+		our_id = dht::Key::random();
 		for (int i = 0;i < 160;i++)
 			bucket[i] = 0;
 	}
