@@ -85,8 +85,9 @@ namespace dht
 			// erase an existing call
 			if (msg->getType() == RSP_MSG && calls.contains(msg->getMTID()))
 			{
-				// delete the call
+				// delete the call, but first notify it off the response
 				RPCCall* c = calls.find(msg->getMTID());
+				c->response(msg);
 				calls.erase(msg->getMTID());
 				delete c;
 			}
@@ -100,11 +101,12 @@ namespace dht
 		sock->send(KNetwork::KDatagramPacket(msg,addr));
 	}
 	
-	void RPCServer::doCall(MsgBase* msg)
+	RPCCall* RPCServer::doCall(MsgBase* msg)
 	{
 		sendMsg(msg);
 		RPCCall* c = new RPCCall(this,msg);
 		calls.insert(msg->getMTID(),c);
+		return c;
 	}
 	
 	void RPCServer::sendMsg(MsgBase* msg)

@@ -25,7 +25,7 @@ namespace dht
 	{
 	}
 	
-	KBucketEntry::KBucketEntry(const KSocketAddress & addr,const Key & id)
+	KBucketEntry::KBucketEntry(const KInetSocketAddress & addr,const Key & id)
 	: addr(addr),node_id(id)
 	{
 	}
@@ -57,13 +57,33 @@ namespace dht
 	KBucket::~KBucket()
 	{}
 	
-	bool KBucket::insert(const KBucketEntry & entry)
+	bool KBucket::insert(const KBucketEntry & entry,bool force)
 	{
-		if (entries.count() < dht::K)
+		QValueList<KBucketEntry>::iterator i = entries.find(entry);
+	
+		// If in the list, move it to the end
+		if (i != entries.end())
+		{
+			entries.remove(i);
+			entries.append(entry);
+			return true;
+		}
+		
+		// insert if not allready in the list and we still have room
+		if (i == entries.end() && entries.count() < dht::K)
 		{
 			entries.append(entry);
 			return true;
 		}
+		
+		// if force is on, get rid of the first and append the entry
+		if (force)
+		{
+			entries.pop_front();
+			entries.append(entry);
+			return true;
+		}
+		
 		return false;
 	}
 

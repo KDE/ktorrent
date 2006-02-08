@@ -25,7 +25,7 @@
 namespace dht
 {
 
-	RPCCall::RPCCall(RPCServer* rpc,MsgBase* msg) : rpc(rpc),msg(msg)
+	RPCCall::RPCCall(RPCServer* rpc,MsgBase* msg) : msg(msg),rpc(rpc),listener(0)
 	{
 		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 		timer.start(20*1000,true);
@@ -40,6 +40,12 @@ namespace dht
 	void RPCCall::onTimeout()
 	{
 		rpc->timedOut(msg->getMTID());
+	}
+	
+	void RPCCall::response(MsgBase* rsp)
+	{
+		if (listener)
+			listener->onResponse(rsp);
 	}
 
 }

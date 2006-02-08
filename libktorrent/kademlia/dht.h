@@ -36,6 +36,7 @@ namespace dht
 	class StoreValueReq;
 	class StoreValueRsp;
 	class ErrMsg;
+	class MsgBase;
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
@@ -56,6 +57,11 @@ namespace dht
 		void storeValue(StoreValueRsp* r);
 		void error(ErrMsg* r);
 		
+		/**
+		 * A Peer has recieved a PORT message, and uses this function to alert the DHT of it.
+		 * @param ip The IP of the peer
+		 * @param port The port in the PORT message
+		 */
 		void portRecieved(const QString & ip,bt::Uint16 port);
 
 	private:

@@ -61,8 +61,9 @@ namespace dht
 		/**
 		 * Do a RPC call.
 		 * @param msg The message to send
+		 * @return The call object
 		 */
-		void doCall(MsgBase* msg);
+		RPCCall* doCall(MsgBase* msg);
 		
 		/**
 		 * Send a message, this only sends the message, it does not keep any call

@@ -28,6 +28,18 @@ namespace dht
 	class MsgBase;
 	class RPCServer;
 	
+	/**
+	 * Class which objects should derive from, if they want to know the result of a call.
+	*/
+	class RPCCallListener
+	{
+	public:
+		/**
+		 * A response was received.
+		 * @param rsp The response
+		 */
+		virtual void onResponse(MsgBase* rsp) = 0;
+	};
 
 	/**
 	 * @author Joris Guisson
@@ -39,6 +51,18 @@ namespace dht
 		RPCCall(RPCServer* rpc,MsgBase* msg);
 		virtual ~RPCCall();
 		
+		/**
+		 * Called by the server if a response is received.
+		 * @param rsp 
+		 */
+		void response(MsgBase* rsp);
+		
+		/**
+		 * Set the listener, which wishes to recieve the result of the call.
+		 * @param cl The listener
+		 */
+		void setListener(RPCCallListener* cl) {listener = cl;}
+		
 	private slots:
 		void onTimeout();
 
@@ -46,6 +70,7 @@ namespace dht
 		MsgBase* msg;
 		QTimer timer; 
 		RPCServer* rpc;
+		RPCCallListener* listener;
 	};
 
 }

@@ -27,7 +27,7 @@
 
 using bt::Uint32;
 using bt::Uint16;
-using KNetwork::KSocketAddress;
+using KNetwork::KInetSocketAddress;
 
 namespace dht
 {
@@ -41,7 +41,7 @@ namespace dht
 	 */
 	class KBucketEntry
 	{
-		KSocketAddress addr;
+		KInetSocketAddress addr;
 		Key node_id;
 	public:
 		/**
@@ -55,7 +55,7 @@ namespace dht
 		 * @param addr socket address
 		 * @param id ID of node
 		 */
-		KBucketEntry(const KSocketAddress & addr,const Key & id);
+		KBucketEntry(const KInetSocketAddress & addr,const Key & id);
 		
 		/**
 		 * Copy constructor.
@@ -96,10 +96,11 @@ namespace dht
 		/**
 		 * Inserts an entry into the bucket. Only works when there is room in
 		 * the bucket (only K entries allowed)
-		 * @param entry 
-		 * @return 
+		 * @param entry The entry to insert
+		 * @param force Force if bucket is full (remove the first one)
+		 * @return true if the entry was inserted
 		 */
-		bool insert(const KBucketEntry & entry);
+		bool insert(const KBucketEntry & entry,bool force = false);
 		
 		/// Get the least recently seen node
 		const KBucketEntry & leastRecentlySeen() const {return entries[0];}

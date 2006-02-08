@@ -23,10 +23,15 @@
 #include <qobject.h>
 #include "key.h"
 #include "kbucket.h"
+#include "rpccall.h"
 
+using bt::Uint8;
 
 namespace dht
 {
+	class MsgBase;
+	class RPCServer;
+	
 	/**
 	 * @author Joris Guisson
 	 *
@@ -35,7 +40,7 @@ namespace dht
 	 * A KBucketEntry is in node i, when the difference between our id and
 	 * the KBucketEntry's id is between 2 to the power i and 2 to the power i+1.
 	*/
-	class Node : public QObject
+	class Node : public QObject,public RPCCallListener
 	{
 		Q_OBJECT
 	public:
@@ -43,13 +48,20 @@ namespace dht
 		virtual ~Node();
 
 		/**
-		 * An RPCMsg was recieved, the node must now update
+		 * An RPC message was recieved, the node must now update
 		 * the right bucket.
 		 * @param msg The message
+		 * @param srv The RPCServer to send a ping if necessary
+		 * @param mtid If we need to send a ping, this mtid should be used (and incremented)
 		 */
-		//void recieved(const RPCMsg & msg);
+		void recieved(const MsgBase* msg,RPCServer* srv,Uint8 & mtid);
+		
+		virtual void onResponse(MsgBase* rsp);
 		
 		const dht::Key & getOurID() const {return our_id;}
+	private:
+		Uint8 findBucket(const dht::Key & id);
+		
 	private:
 		dht::Key our_id;
 		KBucket* bucket[160];

@@ -53,29 +53,43 @@ namespace dht
 		rsp->setOrigin(r->getOrigin());
 		srv->sendMsg(r);
 		delete rsp;
+		node->recieved(r,srv,mtid);
 	}
 	
 	void DHT::ping(PingRsp* r)
 	{
+		node->recieved(r,srv,mtid);
 	}
 	
 	void DHT::findNode(FindNodeReq* r)
-	{}
+	{
+		node->recieved(r,srv,mtid);
+	}
 	
 	void DHT::findNode(FindNodeRsp* r)
-	{}
+	{
+		node->recieved(r,srv,mtid);
+	}
 	
 	void DHT::findValue(FindValueReq* r)
-	{}
+	{
+		node->recieved(r,srv,mtid);
+	}
 	
 	void DHT::findValue(FindValueRsp* r)
-	{}
+	{
+		node->recieved(r,srv,mtid);
+	}
 	
 	void DHT::storeValue(StoreValueReq* r)
-	{}
+	{
+		node->recieved(r,srv,mtid);
+	}
 	
 	void DHT::storeValue(StoreValueRsp* r)
-	{}
+	{
+		node->recieved(r,srv,mtid);
+	}
 	
 	void DHT::error(ErrMsg* r)
 	{}
@@ -87,4 +101,5 @@ namespace dht
 		r->setOrigin(KInetSocketAddress(ip,port));
 		srv->doCall(r);
 	}
+
 }
