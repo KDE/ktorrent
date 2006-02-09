@@ -181,6 +181,7 @@ namespace bt
 		KIO::MetaData md;
 		md["UserAgent"] = "ktorrent";
 		md["SendLanguageSettings"] = "false";
+		md["Cookies"] = "none";
 		
 		KIO::TransferJob* j = KIO::get(url,true,false);
 		// set the meta data
