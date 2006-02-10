@@ -96,12 +96,20 @@ namespace bt
 
 	void SingleFileCache::create()
 	{
-		QString out_file = datadir + tor.getNameSuggestion();
-		if (!bt::Exists(out_file))
-			bt::Touch(out_file);
+		QFileInfo fi(cache_file);
+		if (!fi.exists())
+		{
+			QString out_file = fi.readLink();
+					
+			if (out_file.isNull())
+					out_file = datadir + tor.getNameSuggestion();
+			
+			if (!bt::Exists(out_file))
+				bt::Touch(out_file);
 
-		if (!bt::Exists(cache_file))
-			bt::SymLink(out_file,cache_file);
+			if (!bt::Exists(cache_file))
+				bt::SymLink(out_file,cache_file);
+		}
 	}
 	
 	void SingleFileCache::close()
