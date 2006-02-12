@@ -568,6 +568,11 @@ namespace bt
 		
 		return cache->prep(c);
 	}
+	
+	QString ChunkManager::getOutputPath() const
+	{
+		return cache->getOutputPath();
+	}
 }
 
 #include "chunkmanager.moc"

@@ -81,6 +81,11 @@ namespace bt
 		
 		return QString::null;
 	}
+	
+	QString MultiFileCache::getOutputPath() const
+	{
+		return output_dir;
+	}
 
 	void MultiFileCache::close()
 	{
@@ -385,5 +390,7 @@ namespace bt
 			off += (chunk_size - f.getFirstChunkOffset());
 		return off;
 	}
+	
+	
 }
 

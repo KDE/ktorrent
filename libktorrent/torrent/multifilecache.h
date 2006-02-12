@@ -50,6 +50,7 @@ namespace bt
 		virtual bool prep(Chunk* c);
 		virtual void close();
 		virtual void open();
+		virtual QString getOutputPath() const;
 	private:
 		void touch(const QString fpath,bool dnd);
 		virtual void downloadStatusChanged(TorrentFile*, bool);

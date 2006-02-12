@@ -347,10 +347,10 @@ namespace bt
 			custom_output_name = true;
 		}
 		
-		// load stats if outputdir is null
+		// load outputdir if outputdir is null
 		if (outputdir.isNull() || outputdir.length() == 0)
 			loadOutputDir();
-		
+					
 		// copy torrent in temp dir
 		QString tor_copy = datadir + "torrent";
 
@@ -393,6 +393,8 @@ namespace bt
 		// outputdir is null, see if the cache has figured out what it is
 		if (outputdir.length() == 0)
 			outputdir = cman->getDataDir();
+		
+		// store the outputdir into the output_path variable, so others can access it	
 		
 		connect(cman,SIGNAL(updateStats()),this,SLOT(updateStats()));
 		if (bt::Exists(datadir + "index"))
@@ -440,6 +442,8 @@ namespace bt
 		loadStats();
 		updateStats();
 		saveStats();
+		stats.output_path = cman->getOutputPath();
+		Out() << "OutputPath = " << stats.output_path << endl;
 	}
 
 	void TorrentControl::trackerResponse()

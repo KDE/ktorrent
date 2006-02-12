@@ -69,7 +69,11 @@ namespace bt
 		ChunkManager(Torrent & tor,const QString & tmpdir,const QString & datadir,bool custom_output_name);
 		virtual ~ChunkManager();
 
+		/// Get the data dir
 		QString getDataDir() const;
+		
+		/// Get the actual output path
+		QString getOutputPath() const;
 		
 		/// Remove obsolete chunks
 		void checkMemoryUsage();

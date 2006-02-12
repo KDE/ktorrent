@@ -284,7 +284,7 @@ namespace kt
 			if (!it.current())
 				return;
 			
-			if (IsMultimediaFile(curr_tc->getStats().torrent_name))
+			if (IsMultimediaFile(curr_tc->getStats().output_path))
 			{
 				if ( curr_tc->readyForPreview() )
 					it.current()->setText(3, i18n("Available"));
@@ -389,7 +389,7 @@ namespace kt
 		}
 		else
 		{
-			if ( curr_tc->readyForPreview() && IsMultimediaFile(s.torrent_name))
+			if ( curr_tc->readyForPreview() && IsMultimediaFile(s.output_path))
 			{
 				context_menu->setItemEnabled(preview_id, true);
 				preview_path = "cache";

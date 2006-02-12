@@ -37,6 +37,7 @@ namespace bt
 	: Cache(tor,tmpdir,datadir),fd(0)
 	{
 		cache_file = tmpdir + "cache";
+		output_file = QFileInfo(cache_file).readLink();
 	}
 
 
@@ -109,6 +110,7 @@ namespace bt
 
 			if (!bt::Exists(cache_file))
 				bt::SymLink(out_file,cache_file);
+			output_file = out_file;
 		}
 	}
 	

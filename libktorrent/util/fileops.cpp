@@ -149,7 +149,7 @@ namespace bt
 				return false;	
 		}
 		
-		QStringList files = d.entryList(QDir::Files);
+		QStringList files = d.entryList(QDir::Files | QDir::System);
 		for (QStringList::iterator i = files.begin(); i != files.end();i++)
 		{
 			QString entry = *i;
@@ -206,7 +206,7 @@ namespace bt
 			return;
 		
 		File fptr;
-		if (!fptr.open(url,"wt"))
+		if (!fptr.open(url,"wb"))
 		{
 			if (!nothrow)
 				throw Error(i18n("Cannot create %1: %2")

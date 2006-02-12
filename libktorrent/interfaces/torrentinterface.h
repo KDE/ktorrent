@@ -97,6 +97,8 @@ namespace kt
 		Uint64 session_bytes_uploaded;
 		/// Name of the torrent
 		QString torrent_name;
+		/// Path of the dir or file where the data will get saved
+		QString output_path;
 		/// See if we are running
 		bool running;
 		/// See if the torrent has been started
