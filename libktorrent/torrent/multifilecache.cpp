@@ -346,12 +346,12 @@ namespace bt
 		// if it is !dnd and it is already in the output_dir tree do nothing
 		if (!dnd && bt::Exists(output_dir + tf->getPath()))
 			return;
+		if (fd)
+			fd->close(true);
 		
 		try
 		{
 			// now move it from output_dir tree to dnd tree or vica versa
-			if (fd)
-				fd->close(true);
 			// delete the symlink
 			bt::Delete(cache_dir + tf->getPath());
 			if (dnd)
@@ -364,19 +364,15 @@ namespace bt
 				bt::Move(dnd_dir + tf->getPath(),output_dir + tf->getPath());
 				bt::SymLink(output_dir + tf->getPath(),cache_dir + tf->getPath());
 			}
-			if (fd)
-				fd->open(cache_dir + tf->getPath(),tf->getSize());
+			
 		}
-		catch (...)
+		catch (bt::Error & e)
 		{
-			if (fd)
-			{
-				delete fd;
-				fd = 0;
-				files.erase(tf->getIndex());
-			}
-			throw;
+			Out() << e.toString() << endl;
 		}
+		
+		if (fd)
+			fd->open(cache_dir + tf->getPath(),tf->getSize());
 	}
 	
 	///////////////////////////////
