@@ -22,6 +22,8 @@
 #include <torrent/globals.h>
 #include <torrent/bencoder.h>
 #include "rpcmsg.h"
+#include "rpccall.h"
+#include "rpcserver.h"
 #include "dht.h"
 
 using namespace bt;
@@ -47,8 +49,7 @@ namespace dht
 			return 0;
 			
 		Key id = Key(args->getValue("id")->data().toByteArray());
-		QString mt_id = dict->getValue(TID)->data().toString();
-		Uint8 mtid = (char)mt_id.at(0).latin1();
+		Uint8 mtid = (Uint8)dict->getValue(TID)->data().toByteArray().at(0);
 		
 		QString str = vn->data().toString();
 		if (str == "ping")
@@ -91,44 +92,39 @@ namespace dht
 		return 0;
 	}
 
-	MsgBase* ParseRsp(bt::BDictNode* dict)
+	MsgBase* ParseRsp(bt::BDictNode* dict,RPCServer* srv)
 	{
-		BValueNode* vn = dict->getValue(RSP);
-		BDictNode*	args = dict->getDict(ARG);
-		if (!vn || !args || !args->getValue("id") || !dict->getValue(TID))
+		BDictNode*	args = dict->getDict(RSP);
+		if (args || !args->getValue("id") || !dict->getValue(TID))
 			return 0;
 			
 		Key id = Key(args->getValue("id")->data().toByteArray());
-		QString mt_id = dict->getValue(TID)->data().toString();
-		Uint8 mtid = (char)mt_id.at(0).latin1();
-		QString str = vn->data().toString();
-		if (str == "ping")
-		{	
-			return new PingRsp(mtid,id);
-		}
-		else if (str == "find_node")
+		Uint8 mtid = (Uint8)dict->getValue(TID)->data().toByteArray().at(0);
+		// find the call
+		const RPCCall* c = srv->findCall(mtid);
+		if (!c)
+			return 0;
+	
+		switch (c->getMsgMethod())
 		{
-			if (!args->getValue("nodes"))
+			case PING : 
+				return new PingRsp(mtid,id);
+			case FIND_NODE :
+				if (!args->getValue("nodes"))
+					return 0;
+				else
+					return new FindNodeRsp(mtid,id,args->getValue("nodes")->data().toByteArray());
+			case FIND_VALUE:
+				if (!args->getValue("values"))
+					return 0;
+				else
+					return new FindValueRsp(mtid,id,args->getValue("values")->data().toByteArray());
+			case STORE_VALUE :
+			case STORE_VALUES :
+				return new StoreValueRsp(mtid,id);
+			default:
 				return 0;
-			else
-				return new FindNodeRsp(mtid,id,args->getValue("nodes")->data().toByteArray());
 		}
-		else if (str == "find_value")
-		{
-			if (!args->getValue("values"))
-				return 0;
-			else
-				return new FindValueRsp(mtid,id,args->getValue("values")->data().toByteArray());
-		}
-		else if (str == "store_value")
-		{
-			return new StoreValueRsp(mtid,id);
-		}
-		else if (str == "store_values")
-		{
-			return new StoreValueRsp(mtid,id);
-		}
-		
 		return 0;
 	}
 	
@@ -148,7 +144,7 @@ namespace dht
 	}
 	
 	
-	MsgBase* MakeRPCMsg(bt::BDictNode* dict)
+	MsgBase* MakeRPCMsg(bt::BDictNode* dict,RPCServer* srv)
 	{
 		BValueNode* vn = dict->getValue(TYP);
 		if (!vn)
@@ -160,7 +156,7 @@ namespace dht
 		}
 		else if (vn->data().toString() == RSP)
 		{
-			return ParseRsp(dict);
+			return ParseRsp(dict,srv);
 		}
 		else if (vn->data().toString() == ERR)
 		{
@@ -201,14 +197,14 @@ namespace dht
 		BEncoder enc(new BEncoderBufferOutput(arr));
 		enc.beginDict();
 		{
-			enc.write(TYP); enc.write(REQ);
-			enc.write(REQ); enc.write("ping");
 			enc.write(ARG); enc.beginDict();
 			{
 				enc.write("id"); enc.write(id.getData(),20);
 			}
 			enc.end();
+			enc.write(REQ); enc.write("ping");
 			enc.write(TID); enc.write(&mtid,1);
+			enc.write(TYP); enc.write(REQ);
 		}
 		enc.end();
 	}
@@ -234,7 +230,22 @@ namespace dht
 	}
 	
 	void FindNodeReq::encode(QByteArray & arr)
-	{}
+	{
+		BEncoder enc(new BEncoderBufferOutput(arr));
+		enc.beginDict();
+		{
+			enc.write(ARG); enc.beginDict();
+			{
+				enc.write("id"); enc.write(id.getData(),20);
+				enc.write("target"); enc.write(target.getData(),20);
+			}
+			enc.end();
+			enc.write(REQ); enc.write("find_node");
+			enc.write(TID); enc.write(&mtid,1);
+			enc.write(TYP); enc.write(REQ);
+		}
+		enc.end();
+	}
 	
 	////////////////////////////////
 	
@@ -257,7 +268,22 @@ namespace dht
 	}
 	
 	void FindValueReq::encode(QByteArray & arr)
-	{}
+	{
+		BEncoder enc(new BEncoderBufferOutput(arr));
+		enc.beginDict();
+		{
+			enc.write(ARG); enc.beginDict();
+			{
+				enc.write("id"); enc.write(id.getData(),20);
+				enc.write("key"); enc.write(key.getData(),20);
+			}
+			enc.end();
+			enc.write(REQ); enc.write("find_value");
+			enc.write(TID); enc.write(&mtid,1);
+			enc.write(TYP); enc.write(REQ);
+		}
+		enc.end();
+	}
 
 	////////////////////////////////
 	StoreValueReq::StoreValueReq(Uint8 mtid,const Key & id,const Key & key,const QByteArray & ba)
@@ -279,7 +305,23 @@ namespace dht
 	}
 	
 	void StoreValueReq::encode(QByteArray & arr)
-	{}
+	{
+		BEncoder enc(new BEncoderBufferOutput(arr));
+		enc.beginDict();
+		{
+			enc.write(ARG); enc.beginDict();
+			{
+				enc.write("id"); enc.write(id.getData(),20);
+				enc.write("key"); enc.write(key.getData(),20);
+				enc.write("value"); enc.write(data);
+			}
+			enc.end();
+			enc.write(REQ); enc.write("store_value");
+			enc.write(TID); enc.write(&mtid,1);
+			enc.write(TYP); enc.write(REQ);
+		}
+		enc.end();
+	}
 	
 	////////////////////////////////
 	
@@ -305,14 +347,13 @@ namespace dht
 		BEncoder enc(new BEncoderBufferOutput(arr));
 		enc.beginDict();
 		{
-			enc.write(TYP); enc.write(RSP);
-			enc.write(RSP); enc.write("ping");
-			enc.write(ARG); enc.beginDict();
+			enc.write(RSP); enc.beginDict();
 			{
 				enc.write("id"); enc.write(id.getData(),20);
 			}
 			enc.end();
 			enc.write(TID); enc.write(&mtid,1);
+			enc.write(TYP); enc.write(RSP);
 		}
 		enc.end();
 	}
@@ -337,7 +378,21 @@ namespace dht
 	}
 	
 	void FindNodeRsp::encode(QByteArray & arr)
-	{}
+	{
+		BEncoder enc(new BEncoderBufferOutput(arr));
+		enc.beginDict();
+		{
+			enc.write(RSP); enc.beginDict();
+			{
+				enc.write("id"); enc.write(id.getData(),20);
+				enc.write("nodes"); enc.write(nodes);
+			}
+			enc.end();
+			enc.write(TID); enc.write(&mtid,1);
+			enc.write(TYP); enc.write(RSP);
+		}
+		enc.end();
+	}
 
 	
 	////////////////////////////////
@@ -360,7 +415,21 @@ namespace dht
 	}
 	
 	void FindValueRsp::encode(QByteArray & arr)
-	{}
+	{
+		BEncoder enc(new BEncoderBufferOutput(arr));
+		enc.beginDict();
+		{
+			enc.write(RSP); enc.beginDict();
+			{
+				enc.write("id"); enc.write(id.getData(),20);
+				enc.write("values"); enc.write(values);
+			}
+			enc.end();
+			enc.write(TID); enc.write(&mtid,1);
+			enc.write(TYP); enc.write(RSP);
+		}
+		enc.end();
+	}
 	
 	////////////////////////////////
 	
@@ -382,7 +451,20 @@ namespace dht
 	}
 	
 	void StoreValueRsp::encode(QByteArray & arr)
-	{}
+	{
+		BEncoder enc(new BEncoderBufferOutput(arr));
+		enc.beginDict();
+		{
+			enc.write(RSP); enc.beginDict();
+			{
+				enc.write("id"); enc.write(id.getData(),20);
+			}
+			enc.end();
+			enc.write(TID); enc.write(&mtid,1);
+			enc.write(TYP); enc.write(RSP);
+		}
+		enc.end();
+	}
 	
 	////////////////////////////////
 	

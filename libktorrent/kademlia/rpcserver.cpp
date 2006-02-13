@@ -59,6 +59,13 @@ namespace dht
 		Out() << "RPCServer::readPacket" << endl;
 		KDatagramPacket pck = sock->receive();
 		
+		QByteArray data = pck.data();
+		for (Uint32 i = 0;i < data.size();i++)
+			if (data[i] == 0)
+				data[i] = '#';
+		
+		Out() << QString(data) << endl;
+		
 		// read and decode the packet
 		BDecoder bdec(pck.data(),false);
 		
@@ -70,7 +77,7 @@ namespace dht
 		}
 		
 		// try to make a RPCMsg of it
-		MsgBase* msg = MakeRPCMsg((BDictNode*)n);
+		MsgBase* msg = MakeRPCMsg((BDictNode*)n,this);
 		if (!msg)
 		{
 			Out() << "Error parsing message : " << endl;
@@ -130,6 +137,11 @@ namespace dht
 			calls.erase(mtid);
 			c->deleteLater();
 		}
+	}
+	
+	const RPCCall* RPCServer::findCall(Uint8 mtid) const
+	{
+		return calls.find(mtid);
 	}
 	
 	/*

@@ -47,6 +47,11 @@ namespace dht
 		if (listener)
 			listener->onResponse(rsp);
 	}
+	
+	Method RPCCall::getMsgMethod() const
+	{
+		return msg->getMethod();
+	}
 
 }
 #include "rpccall.moc"

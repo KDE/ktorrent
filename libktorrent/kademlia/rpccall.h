@@ -22,10 +22,10 @@
 
 #include <qtimer.h>
 #include "key.h"
+#include "rpcmsg.h"
 
 namespace dht
 {
-	class MsgBase;
 	class RPCServer;
 	
 	/**
@@ -62,6 +62,9 @@ namespace dht
 		 * @param cl The listener
 		 */
 		void setListener(RPCCallListener* cl) {listener = cl;}
+		
+		/// Get the message type
+		Method getMsgMethod() const;
 		
 	private slots:
 		void onTimeout();

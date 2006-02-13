@@ -78,6 +78,14 @@ namespace dht
 		 * @param mtid mtid of call
 		 */
 		void timedOut(Uint8 mtid);
+		
+		
+		/**
+		 * Find a RPC call, based on the mtid
+		 * @param mtid The mtid
+		 * @return The call
+		 */
+		const RPCCall* findCall(Uint8 mtid) const;
 	private slots:
 		void readPacket();
 		

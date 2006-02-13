@@ -35,6 +35,7 @@ using bt::Uint32;
 namespace dht
 {
 	class DHT;
+	class RPCServer;
 	
 	enum Type
 	{
@@ -104,6 +105,9 @@ namespace dht
 		/// Get the type of the message
 		Type getType() const {return type;}
 		
+		/// Get the message it's method
+		Method getMethod() const {return method;}
+		
 	protected:
 		Uint8 mtid;
 		Method method;
@@ -112,7 +116,7 @@ namespace dht
 		KNetwork::KSocketAddress origin;
 	};
 	
-	MsgBase* MakeRPCMsg(bt::BDictNode* dict);
+	MsgBase* MakeRPCMsg(bt::BDictNode* dict,RPCServer* srv);
 	
 	class ErrMsg : public MsgBase
 	{

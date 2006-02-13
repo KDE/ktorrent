@@ -51,7 +51,7 @@ namespace dht
 		Out() << "Sending ping response" << endl;
 		PingRsp* rsp = new PingRsp(r->getMTID(),node->getOurID());
 		rsp->setOrigin(r->getOrigin());
-		srv->sendMsg(r);
+		srv->sendMsg(rsp);
 		delete rsp;
 		node->recieved(r,srv,mtid);
 	}
