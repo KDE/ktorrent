@@ -106,8 +106,13 @@ namespace kt
 	
 	void PeerView::removePeer(kt::PeerInterface* peer)
 	{
-		PeerViewItem* it = items[peer];
-		delete it;
+		QMap<kt::PeerInterface*,PeerViewItem*>::iterator it = items.find(peer);
+		if (it == items.end())
+		{
+			return;
+		}
+
+		delete *it;
 		items.erase(peer);
 	}
 	
