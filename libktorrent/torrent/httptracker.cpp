@@ -52,7 +52,7 @@ namespace bt
 
 	void HTTPTracker::updateData(PeerManager* pman)
 	{
-		//#define DEBUG_PRINT_RESPONSE
+//#define DEBUG_PRINT_RESPONSE
 #ifdef DEBUG_PRINT_RESPONSE
 		Out() << "Data : " << endl;
 		Out() << QString(data) << endl;
