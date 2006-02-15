@@ -22,6 +22,7 @@
 #include "key.h"
 #include "rpccall.h"
 #include "rpcserver.h"
+#include "kclosestnodessearch.h"
 
 
 namespace dht
@@ -110,8 +111,20 @@ namespace dht
 		
 		KBucket* kb = bucket[bit_on];
 		// insert it into the bucket
+		kb->insert(KBucketEntry(rsp->getOrigin(),rsp->getID()),true);
 	}
 
+	void Node::findKClosestNodes(KClosestNodesSearch & kns)
+	{
+		// go over all buckets until
+		for (Uint32 i = 0;i < 160;i++)
+		{
+			if (bucket[i])
+			{
+				bucket[i]->findKClosestNodes(kns);
+			}
+		}
+	}
 }
 
 #include "node.moc"

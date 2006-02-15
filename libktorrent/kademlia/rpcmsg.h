@@ -152,6 +152,8 @@ namespace dht
 		virtual void print();
 		virtual void encode(QByteArray & arr);
 		
+		const Key & getTarget() const {return target;}
+		
 	private:
 		Key target;
 	};
@@ -165,6 +167,9 @@ namespace dht
 		virtual void apply(DHT* dh_table);
 		virtual void print();
 		virtual void encode(QByteArray & arr);
+		
+		const Key & getKey() const {return key;}
+		
 	private:
 		Key key;
 	};
@@ -179,6 +184,9 @@ namespace dht
 		virtual void apply(DHT* dh_table);
 		virtual void print();
 		virtual void encode(QByteArray & arr);
+		
+		const Key & getKey() const {return key;}
+		const QByteArray & getData() const {return data;}
 	private:
 		Key key;
 		QByteArray data;

@@ -29,5 +29,17 @@ namespace dht
 	Database::~Database()
 	{}
 
+	void Database::store(const dht::Key & key,const QByteArray & data)
+	{
+		dmap.insert(key,data);
+	}
+	
+	const QByteArray & Database::find(const dht::Key & key) const
+	{
+		if (!dmap.contains(key))
+			return QByteArray();
+		else
+			return dmap[key];
+	}
 
 }

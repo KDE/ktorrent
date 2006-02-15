@@ -31,6 +31,7 @@ namespace dht
 {
 	class MsgBase;
 	class RPCServer;
+	class KClosestNodesSearch;
 	
 	/**
 	 * @author Joris Guisson
@@ -58,7 +59,16 @@ namespace dht
 		
 		virtual void onResponse(MsgBase* rsp);
 		
+		/// Get our own ID
 		const dht::Key & getOurID() const {return our_id;}
+		
+		
+		/**
+		 * Find the K closest entries to a key and store them in the KClosestNodesSearch
+		 * object.
+		 * @param kns The object to storre the search results
+		 */
+		void findKClosestNodes(KClosestNodesSearch & kns);
 	private:
 		Uint8 findBucket(const dht::Key & id);
 		

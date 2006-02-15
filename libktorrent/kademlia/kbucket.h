@@ -27,10 +27,13 @@
 
 using bt::Uint32;
 using bt::Uint16;
+using bt::Uint8;
 using KNetwork::KInetSocketAddress;
 
 namespace dht
 {
+	class KClosestNodesSearch;
+	
 	const Uint32 K = 8;
 	
 	/**
@@ -76,7 +79,11 @@ namespace dht
 		
 		/// Equality operator
 		bool operator == (const KBucketEntry & entry) const;
+		
+		const KInetSocketAddress & getAddress() const {return addr;}
+		const Key & getID() const {return node_id;}
 	};
+	
 	
 	/**
 	 * @author Joris Guisson
@@ -110,6 +117,13 @@ namespace dht
 	
 		/// See if this bucket contains an entry
 		bool contains(const KBucketEntry & entry) const;
+		
+		/**
+		 * Find the K closest entries to a key and store them in the KClosestNodesSearch
+		 * object.
+		 * @param kns The object to storre the search results
+		 */
+		void findKClosestNodes(KClosestNodesSearch & kns);
 	};
 }
 

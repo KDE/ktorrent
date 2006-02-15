@@ -20,7 +20,9 @@
 #ifndef DHTKEY_H
 #define DHTKEY_H
 
+#include <qcstring.h>
 #include <util/sha1hash.h>
+
 
 
 namespace dht

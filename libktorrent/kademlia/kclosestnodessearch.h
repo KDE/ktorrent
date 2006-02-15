@@ -17,59 +17,58 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef DHTDHT_H
-#define DHTDHT_H
+#ifndef DHTKCLOSESTNODESSEARCH_H
+#define DHTKCLOSESTNODESSEARCH_H
 
-#include <qstring.h>
-#include <util/constants.h>
+#include <map>
+#include "key.h"
+#include "kbucket.h"
 
 namespace dht
 {
-	class Node;
-	class RPCServer;
-	class PingReq;
-	class PingRsp;
-	class FindNodeReq;
-	class FindNodeRsp;
-	class FindValueReq;
-	class FindValueRsp;
-	class StoreValueReq;
-	class StoreValueRsp;
-	class ErrMsg;
-	class MsgBase;
-	class Database;
 
 	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
+	 * @author Joris Guisson <joris.guisson@gmail.com>
+	 * 
+	 * Class used to store the search results during a K closests nodes search
+	 * Note: we use a std::map because of lack of functionality in QMap
 	*/
-	class DHT
+	class KClosestNodesSearch
 	{
+		dht::Key key;
+		std::map<dht::Key,KBucketEntry> emap;
+		Uint32 max_entries;
 	public:
-		DHT();
-		virtual ~DHT();
-		
-		void ping(PingReq* r);
-		void ping(PingRsp* r);
-		void findNode(FindNodeReq* r);
-		void findNode(FindNodeRsp* r);
-		void findValue(FindValueReq* r);
-		void findValue(FindValueRsp* r);
-		void storeValue(StoreValueReq* r);
-		void storeValue(StoreValueRsp* r);
-		void error(ErrMsg* r);
+		/**
+		 * Constructor sets the key to compare with
+		 * @param key The key to compare with
+		 * @param max_entries The maximum number of entries can be in the map
+		 * @return 
+		 */
+		KClosestNodesSearch(const dht::Key & key,Uint32 max_entries);
+		virtual ~KClosestNodesSearch();
+
+		/**
+		 * Try to insert an entry. 
+		 * @param e The entry
+		 */
+		void tryInsert(const KBucketEntry & e);
 		
 		/**
-		 * A Peer has recieved a PORT message, and uses this function to alert the DHT of it.
-		 * @param ip The IP of the peer
-		 * @param port The port in the PORT message
+		 * Gets the required space in bytes to pack the nodes.
+		 * This should be used to determin the size of the buffer
+		 * passed to pack.
+		 * @return 26 * number of entries
 		 */
-		void portRecieved(const QString & ip,bt::Uint16 port);
-
-	private:
-		Node* node;
-		RPCServer* srv;
-		Database* db;
-		bt::Uint8 mtid;
+		Uint32 requiredSpace() const {return emap.size()* 26;}
+		
+		/**
+		 * Pack the search results in a buffer, the buffer should have
+		 * enough space to store requiredSpace() bytes.
+		 * @param buffer The buffer to store the data
+		 * @param max_size Max size of buffer, should be equal to requiredSpace()
+		 */
+		void pack(Uint8* buffer,Uint32 max_size);
 	};
 
 }

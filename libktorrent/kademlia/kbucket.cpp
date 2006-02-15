@@ -18,6 +18,7 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include "kbucket.h"
+#include "kclosestnodessearch.h"
 
 namespace dht
 {
@@ -90,6 +91,16 @@ namespace dht
 	bool KBucket::contains(const KBucketEntry & entry) const
 	{
 		return entries.contains(entry);
+	}
+	
+	void KBucket::findKClosestNodes(KClosestNodesSearch & kns)
+	{
+		QValueList<KBucketEntry>::iterator i = entries.begin();
+		while (i != entries.end())
+		{
+			kns.tryInsert(*i);
+			i++;
+		}
 	}
 }
 

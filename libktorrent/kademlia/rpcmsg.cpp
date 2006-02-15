@@ -116,7 +116,14 @@ namespace dht
 					return new FindNodeRsp(mtid,id,args->getValue("nodes")->data().toByteArray());
 			case FIND_VALUE:
 				if (!args->getValue("values"))
-					return 0;
+				{
+					// FIND_VALUE will return a FIND_NODE when it does not know
+					// the key
+					if (!args->getValue("nodes"))
+						return 0;
+					else
+						return new FindNodeRsp(mtid,id,args->getValue("nodes")->data().toByteArray());
+				}
 				else
 					return new FindValueRsp(mtid,id,args->getValue("values")->data().toByteArray());
 			case STORE_VALUE :

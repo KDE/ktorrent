@@ -30,15 +30,31 @@ namespace dht
 {
 
 	/**
-	@author Joris Guisson
+	 * @author Joris Guisson
+	 * 
+	 * Class where all the key value paires get stored.
 	*/
 	class Database
 	{
-		QMap<Key,bt::Array<bt::Uint8> > data;
+		QMap<dht::Key,QByteArray> dmap;
 	public:
 		Database();
-		~Database();
+		virtual ~Database();
 
+		/**
+		 * Store an entry in the database
+		 * @param key The key
+		 * @param data The data
+		 */
+		void store(const dht::Key & key,const QByteArray & data);
+		
+		
+		/**
+		 * Find a key value pair, returns a null array if the keys is not present in the map.
+		 * @param key The key
+		 * @return The data
+		 */
+		const QByteArray & find(const dht::Key & key) const;
 	};
 
 }
