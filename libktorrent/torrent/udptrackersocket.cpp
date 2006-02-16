@@ -42,6 +42,7 @@ namespace bt
 			Out() << "Failed to bind socket to port " << (port+i) << endl;
 			i++;
 		}
+		
 
 		if (i > 0 && sock->isValid())
 			KMessageBox::information(0,
@@ -94,7 +95,9 @@ namespace bt
 		QMap<Int32,Action>::iterator i = transactions.find(tid);
 		// if we can't find the transaction, just return
 		if (i == transactions.end())
+		{
 			return;
+		}
 
 		// check wether the transaction is a CONNECT
 		if (i.data() != CONNECT)

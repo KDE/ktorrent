@@ -36,13 +36,44 @@ namespace bt
 {
 	class TorrentControl;
 	class PeerManager;
+	class Tracker;
+	
+	
+	/**
+	 * Backend class, does the actual communication with the tracker.
+	*/
+	class TrackerBackend : public QObject
+	{
+		Q_OBJECT
+				
+		
+	public:
+		TrackerBackend(Tracker* trk);
+		virtual ~TrackerBackend();
+		
+		/**
+		 * Do a request to the tracker.
+		 * @param url The path and query
+		 */
+		virtual void doRequest(const KURL & url) = 0;
+
+		/**
+		 * Update all the data. If something is wrong in this function,
+		 * an Error should be thrown.
+		 * @param pman The PeerManager
+		 */
+		virtual void updateData(PeerManager* pman) = 0;
+	protected:
+		Tracker* frontend;
+	};
 
 	/**
 	 * @author Joris Guisson
 	 * @brief Communicates with the tracker
 	 * 
-	 * Class to communicate with the tracker. This is an abstract class
-	 * because there are trackers over UDP and HTTP.
+	 * Class to communicate with the tracker. This class acts as a frontend for
+	 * 2 possible backends (one for UDP one for HTTP), depending on the URL it will decide what backend
+	 * to use.
 	 *
 	 * Once the data comes in, the Tracker should emit a signal.
 	 */
@@ -66,14 +97,14 @@ namespace bt
 		 * Do a request to the tracker.
 		 * @param url The path and query
 		 */
-		virtual void doRequest(const KURL & url) = 0;
+		void doRequest(const KURL & url);
 
 		/**
 		 * Update all the data. If something is wrong in this function,
 		 * an Error should be thrown.
 		 * @param pman The PeerManager
 		 */
-		virtual void updateData(PeerManager* pman) = 0;
+		void updateData(PeerManager* pman);
 		
 		/**
 		 * Set the custom IP
@@ -135,8 +166,11 @@ namespace bt
 	private slots:
 		void onTimeout();
 		void onErrorTimeout();
+		
 	protected:
 		void updateOK();
+		void emitError() {error();}
+		void emitDataReady() {dataReady();}
 		
 
 	protected:
@@ -152,6 +186,12 @@ namespace bt
 		bool error_mode;
 		Uint32 key;
 		static QString custom_ip,custom_ip_resolved;
+		TrackerBackend* udp;
+		TrackerBackend* http;
+		TrackerBackend* curr;
+		
+		friend class UDPTracker;
+		friend class HTTPTracker;
 	};
 
 }

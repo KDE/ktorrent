@@ -37,7 +37,7 @@ namespace bt
 	Uint32 UDPTracker::num_instances = 0;
 	
 
-	UDPTracker::UDPTracker(kt::TorrentInterface* tor,const SHA1Hash & ih,const PeerID & pid) : Tracker(tor,ih,pid),n(0)
+	UDPTracker::UDPTracker(Tracker* trk) : TrackerBackend(trk),n(0)
 	{
 		num_instances++;
 		if (!socket)
@@ -45,7 +45,7 @@ namespace bt
 		
 		connection_id = 0;
 		transaction_id = 0;
-		leechers = seeders = interval = 0;
+		interval = 0;
 		connect(&conn_timer,SIGNAL(timeout()),this,SLOT(onConnTimeout()));
 		connect(socket,SIGNAL(announceRecieved(Int32, const Array< Uint8 >& )),
 				this,SLOT(announceRecieved(Int32, const Array< Uint8 >& )));
@@ -92,10 +92,10 @@ namespace bt
 		20 + 6 * N
 		*/
 		interval = ReadInt32(buf,8);
-		leechers = ReadInt32(buf,12);
-		seeders = ReadInt32(buf,16);
+		frontend->leechers = ReadInt32(buf,12);
+		frontend->seeders = ReadInt32(buf,16);
 
-		Uint32 nip = leechers + seeders;
+		Uint32 nip = frontend->leechers + frontend->seeders;
 		Uint32 j = 0;
 		for (Uint32 i = 20;i < buf.size() && j < nip;i+=6,j++)
 		{
@@ -104,7 +104,7 @@ namespace bt
 			pp.port = ReadUint16(buf,i+4);
 			ppeers.append(pp);
 		}
-		dataReady();
+		frontend->emitDataReady();
 	}
 	
 	void UDPTracker::onError(Int32 tid,const QString & error_string)
@@ -113,7 +113,7 @@ namespace bt
 			return;
 
 		Out() << "UDPTracker::error : " << error_string << endl;
-		error();
+		frontend->emitError();
 	}
 
 
@@ -150,6 +150,7 @@ namespace bt
 
 	void UDPTracker::sendAnnounce()
 	{
+		
 	//	Out() << "UDPTracker::sendAnnounce()" << endl;
 		transaction_id = socket->newTransactionID();
 		/*
@@ -170,35 +171,35 @@ namespace bt
 		*/
 
 		Uint32 ev = NONE;
-		if (event == "started")
+		if (frontend->event == "started")
 			ev = STARTED;
-		else if (event == "completed")
+		else if (frontend->event == "completed")
 			ev = COMPLETED;
-		else if (event == "stopped")
+		else if (frontend->event == "stopped")
 			ev = STOPPED;
 
-		const TorrentStats & s = tor->getStats();
+		const TorrentStats & s = frontend->tor->getStats();
 		Uint16 port = Globals::instance().getServer().getPortInUse();
 		Uint8 buf[98];
 		WriteInt64(buf,0,connection_id);
 		WriteInt32(buf,8,ANNOUNCE);
 		WriteInt32(buf,12,transaction_id);
-		memcpy(buf+16,info_hash.getData(),20);
-		memcpy(buf+36,peer_id.data(),20);
+		memcpy(buf+16,frontend->info_hash.getData(),20);
+		memcpy(buf+36,frontend->peer_id.data(),20);
 		WriteInt64(buf,56,s.bytes_downloaded);
 		WriteInt64(buf,64,s.bytes_left);
 		WriteInt64(buf,72,s.bytes_uploaded);
 		WriteInt32(buf,80,ev);
-		if (custom_ip_resolved.isNull())
+		if (Tracker::custom_ip_resolved.isNull())
 		{
 			WriteUint32(buf,84,0);
 		}
 		else
 		{
-			KNetwork::KIpAddress addr(custom_ip_resolved);
+			KNetwork::KIpAddress addr(Tracker::custom_ip_resolved);
 			WriteUint32(buf,84,addr.IPv4Addr(true));
 		}
-		WriteUint32(buf,88,key);
+		WriteUint32(buf,88,frontend->key);
 		WriteInt32(buf,92,100);
 		WriteUint16(buf,96,port);
 
@@ -213,7 +214,7 @@ namespace bt
 
 	void UDPTracker::updateData(PeerManager* pman)
 	{
-		setInterval(interval);
+		frontend->setInterval(interval);
 
 		QValueList<PotentialPeer>::iterator i = ppeers.begin();
 		while (i != ppeers.end())
@@ -222,7 +223,7 @@ namespace bt
 			i++;
 		}
 		ppeers.clear();
-		updateOK();
+		frontend->updateOK();
 	}
 
 	

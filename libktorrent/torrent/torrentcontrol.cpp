@@ -378,11 +378,9 @@ namespace bt
 
 		// create PeerManager and Tracker
 		pman = new PeerManager(*tor);
-		if (tor->getTrackerURL(true).protocol() == "udp")
-			tracker = new UDPTracker(this,tor->getInfoHash(),tor->getPeerID());
-		else
-			tracker = new HTTPTracker(this,tor->getInfoHash(),tor->getPeerID());
-
+		KURL url = tor->getTrackerURL(true);
+		//Out() << "Tracker url " << url << " " << url.protocol() << " " << url.prettyURL() << endl;
+		tracker = new Tracker(this,tor->getInfoHash(),tor->getPeerID());
 		connect(tracker,SIGNAL(error()),this,SLOT(trackerResponseError()));
 		connect(tracker,SIGNAL(dataReady()),this,SLOT(trackerResponse()));
 
