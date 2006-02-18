@@ -35,6 +35,7 @@ k_dcop:
 	virtual void setMaxSeeds(int max) = 0;
 	virtual void setKeepSeeding(bool ks) = 0;
 	virtual void setMaxUploadSpeed(int kbytes_per_sec) = 0;
+	virtual void setMaxDownloadSpeed(int kbytes_per_sec) = 0;
 	virtual void setMaxConnectionsPerDownload(int max) = 0;
 	virtual void setShowSysTrayIcon(bool yes) = 0;
 	virtual bool changeDataDir(const QString & new_dir) = 0;

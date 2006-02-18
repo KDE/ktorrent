@@ -79,6 +79,13 @@ void KTorrentDCOP::setMaxUploadSpeed(int kbytes_per_sec)
 	app->applySettings();
 }
 
+void KTorrentDCOP::setMaxDownloadSpeed(int kbytes_per_sec)
+{
+	Settings::setMaxDownloadRate(kbytes_per_sec);
+	Settings::writeConfig();
+	app->applySettings();
+}
+
 void KTorrentDCOP::setShowSysTrayIcon(bool yes)
 {
 	Settings::setShowSystemTrayIcon(yes);
