@@ -50,46 +50,42 @@ namespace dht
 			
 		Key id = Key(args->getValue("id")->data().toByteArray());
 		Uint8 mtid = (Uint8)dict->getValue(TID)->data().toByteArray().at(0);
+		MsgBase* msg = 0;
 		
 		QString str = vn->data().toString();
 		if (str == "ping")
 		{	
-			return new PingReq(mtid,id);
+			msg = new PingReq(id);
 		}
 		else if (str == "find_node")
 		{
-			if (!args->getValue("target"))
-				return 0;
-			else
-				return new FindNodeReq(mtid,id,Key(args->getValue("target")->data().toByteArray()));
+			if (args->getValue("target"))
+				msg = new FindNodeReq(id,Key(args->getValue("target")->data().toByteArray()));
 		}
 		else if (str == "find_value")
 		{
-			if (!args->getValue("key"))
-				return 0;
-			else
-				return new FindValueReq(mtid,id,Key(args->getValue("key")->data().toByteArray()));
+			if (args->getValue("key"))
+				msg = new FindValueReq(id,Key(args->getValue("key")->data().toByteArray()));
 		}
 		else if (str == "store_value")
 		{
-			if (!args->getValue("key") || !args->getValue("value"))
-				return 0;
-			
-			return new StoreValueReq(mtid,id,
+			if (args->getValue("key") && args->getValue("value"))
+				msg = new StoreValueReq(id,
 									 Key(args->getValue("key")->data().toByteArray()),
 									 args->getValue("value")->data().toByteArray());
 		}
 		else if (str == "store_values")
 		{
-			if (!args->getValue("key") || !args->getValue("values"))
-				return 0;
-			
-			return new StoreValueReq(mtid,id,
+			if (args->getValue("key") && args->getValue("values"))
+				msg = new StoreValueReq(id,
 									 Key(args->getValue("key")->data().toByteArray()),
 									 args->getValue("values")->data().toByteArray());
 		}
 		
-		return 0;
+		if (msg)
+			msg->setMTID(mtid);
+		
+		return msg;
 	}
 
 	MsgBase* ParseRsp(bt::BDictNode* dict,RPCServer* srv)
@@ -182,7 +178,7 @@ namespace dht
 	
 	////////////////////////////////
 	
-	PingReq::PingReq(Uint8 mtid,const Key & id) : MsgBase(mtid,PING,REQ_MSG,id)
+	PingReq::PingReq(const Key & id) : MsgBase(0xFF,PING,REQ_MSG,id)
 	{
 	}
 	
@@ -218,8 +214,8 @@ namespace dht
 	
 	////////////////////////////////
 	
-	FindNodeReq::FindNodeReq(Uint8 mtid,const Key & id,const Key & target)
-	: MsgBase(mtid,FIND_NODE,REQ_MSG,id),target(target)
+	FindNodeReq::FindNodeReq(const Key & id,const Key & target)
+	: MsgBase(0xFF,FIND_NODE,REQ_MSG,id),target(target)
 	{}
 	
 	FindNodeReq::~FindNodeReq()
@@ -256,8 +252,8 @@ namespace dht
 	
 	////////////////////////////////
 	
-	FindValueReq::FindValueReq(Uint8 mtid,const Key & id,const Key & key)
-	: MsgBase(mtid,FIND_VALUE,REQ_MSG,id),key(key)
+	FindValueReq::FindValueReq(const Key & id,const Key & key)
+	: MsgBase(0xFF,FIND_VALUE,REQ_MSG,id),key(key)
 	{}
 	
 	FindValueReq::~FindValueReq()
@@ -293,8 +289,8 @@ namespace dht
 	}
 
 	////////////////////////////////
-	StoreValueReq::StoreValueReq(Uint8 mtid,const Key & id,const Key & key,const QByteArray & ba)
-	: MsgBase(mtid,STORE_VALUE,REQ_MSG,id),key(key),data(ba)
+	StoreValueReq::StoreValueReq(const Key & id,const Key & key,const QByteArray & ba)
+	: MsgBase(0xFF,STORE_VALUE,REQ_MSG,id),key(key),data(ba)
 	{}
 	
 	StoreValueReq::~StoreValueReq()

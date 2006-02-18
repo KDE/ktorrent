@@ -69,7 +69,7 @@ namespace dht
 		return bit_on;
 	}
 
-	void Node::recieved(const MsgBase* msg,RPCServer* srv,Uint8 & mtid)
+	void Node::recieved(const MsgBase* msg,RPCServer* srv)
 	{
 		Uint8 bit_on = findBucket(msg->getID());
 		
@@ -88,15 +88,14 @@ namespace dht
 		if (!kb->insert(KBucketEntry(msg->getOrigin(),msg->getID())))
 		{
 			// insert failed, bucket is full
-			PingReq* p = new PingReq(mtid,our_id);
+			PingReq* p = new PingReq(our_id);
 			RPCCall* c = srv->doCall(p);
-			mtid = mtid + 1;
 			if (c)
 				c->setListener(this);
 		}
 	}
 	
-	void Node::onResponse(MsgBase* rsp)
+	void Node::onResponse(RPCCall*,MsgBase* rsp)
 	{
 		Uint8 bit_on = findBucket(rsp->getID());
 		
@@ -113,6 +112,8 @@ namespace dht
 		// insert it into the bucket
 		kb->insert(KBucketEntry(rsp->getOrigin(),rsp->getID()),true);
 	}
+	
+	void Node::onTimeout(RPCCall* ) {}
 
 	void Node::findKClosestNodes(KClosestNodesSearch & kns)
 	{

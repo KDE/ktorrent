@@ -69,7 +69,6 @@ namespace dht
 		Node* node;
 		RPCServer* srv;
 		Database* db;
-		bt::Uint8 mtid;
 	};
 
 }

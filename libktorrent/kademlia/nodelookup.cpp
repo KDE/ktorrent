@@ -17,88 +17,42 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef DHTRPCSERVER_H
-#define DHTRPCSERVER_H
-
-#include <kdatagramsocket.h>
-#include <util/constants.h>
-#include <util/array.h>
-#include <util/ptrmap.h>
-
-
-using KNetwork::KDatagramSocket;
-using bt::Uint32;
-using bt::Uint16;
-using bt::Uint8;
-
-namespace bt
-{
-	class BDictNode;
-}
+#include "nodelookup.h"
+#include "rpcmsg.h"
+#include "node.h"
 
 namespace dht
 {
-	class KBucketEntry;
-	class RPCCall;
-	class RPCMsg;
-	class Node;
-	class DHT;
-	class MsgBase;
 
-	/**
-	 * @author Joris Guisson
-	 *
-	 * Class to handle incoming and outgoing RPC messages.
-	 */
-	class RPCServer : public QObject
+	NodeLookup::NodeLookup(const dht::Key & key,RPCServer* rpc,Node* node) 
+	: Task(rpc),node_id(key),node(node)
 	{
-		Q_OBJECT
-	public:
-		RPCServer(DHT* dh_table,Uint16 port,QObject *parent = 0);
-		virtual ~RPCServer();
-		
-		
-		/**
-		 * Do a RPC call.
-		 * @param msg The message to send
-		 * @return The call object
-		 */
-		RPCCall* doCall(MsgBase* msg);
-		
-		/**
-		 * Send a message, this only sends the message, it does not keep any call
-		 * information. This should be used for replies.
-		 * @param msg The message to send
-		 */
-		void sendMsg(MsgBase* msg);
-		
-		
-		/**
-		 * A call was timed out.
-		 * @param mtid mtid of call
-		 */
-		void timedOut(Uint8 mtid);
-		
-		
-		/**
-		 * Find a RPC call, based on the mtid
-		 * @param mtid The mtid
-		 * @return The call
-		 */
-		const RPCCall* findCall(Uint8 mtid) const;
-	private slots:
-		void readPacket();
-		
-	private:
-		void send(const KNetwork::KSocketAddress & addr,const QByteArray & msg);
-			
-	private:
-		KDatagramSocket* sock;
-		DHT* dh_table;
-		bt::PtrMap<bt::Uint8,RPCCall> calls;
-		bt::Uint8 next_mtid;
-	};
+	}
 
+
+	NodeLookup::~NodeLookup()
+	{}
+
+
+	void NodeLookup::callFinished(RPCCall* c, MsgBase* rsp)
+	{
+	}
+	
+	void NodeLookup::callTimeout(RPCCall* c)
+	{}
+	
+	void NodeLookup::update()
+	{
+		QValueList<KBucketEntry>::iterator i = todo.begin();
+		while (i != todo.end() && canDoRequest())
+		{
+			const KBucketEntry & e = *i;
+			// send a findNode to the node
+			FindNodeReq fnr(node->getOurID(),node_id);
+			fnr.setOrigin(e.getAddress());
+			rpcCall(&fnr);
+			// TODO remove entry from todo list
+			i++;
+		}
+	}
 }
-
-#endif

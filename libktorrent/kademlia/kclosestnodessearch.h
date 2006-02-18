@@ -48,6 +48,21 @@ namespace dht
 		KClosestNodesSearch(const dht::Key & key,Uint32 max_entries);
 		virtual ~KClosestNodesSearch();
 
+		typedef std::map<dht::Key,KBucketEntry>::iterator Itr;
+		typedef std::map<dht::Key,KBucketEntry>::const_iterator CItr;
+		
+		Itr begin() {return emap.begin();}
+		Itr end() {return emap.end();}
+		
+		CItr begin() const {return emap.begin();}
+		CItr end() const {return emap.end();}
+		
+		/// Get the target key of the search3
+		const dht::Key & getSearchTarget() const {return key;}
+		
+		/// Get the number of entries.
+		bt::Uint32 getNumEntries() const {return emap.size();}
+		
 		/**
 		 * Try to insert an entry. 
 		 * @param e The entry

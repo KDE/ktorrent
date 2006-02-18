@@ -37,7 +37,7 @@ namespace dht
 	
 
 
-	RPCServer::RPCServer(DHT* dh_table,Uint16 port,QObject *parent) : QObject(parent),dh_table(dh_table)
+	RPCServer::RPCServer(DHT* dh_table,Uint16 port,QObject *parent) : QObject(parent),dh_table(dh_table),next_mtid(0)
 	{
 		sock = new KDatagramSocket(this);
 		sock->setBlocking(false);
@@ -110,6 +110,7 @@ namespace dht
 	
 	RPCCall* RPCServer::doCall(MsgBase* msg)
 	{
+		msg->setMTID(next_mtid++);
 		sendMsg(msg);
 		RPCCall* c = new RPCCall(this,msg);
 		calls.insert(msg->getMTID(),c);

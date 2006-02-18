@@ -39,13 +39,16 @@ namespace dht
 	
 	void RPCCall::onTimeout()
 	{
+		if (listener)
+			listener->onTimeout(this);
+		
 		rpc->timedOut(msg->getMTID());
 	}
 	
 	void RPCCall::response(MsgBase* rsp)
 	{
 		if (listener)
-			listener->onResponse(rsp);
+			listener->onResponse(this,rsp);
 	}
 	
 	Method RPCCall::getMsgMethod() const

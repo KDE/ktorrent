@@ -27,6 +27,7 @@
 namespace dht
 {
 	class RPCServer;
+	class RPCCall;
 	
 	/**
 	 * Class which objects should derive from, if they want to know the result of a call.
@@ -36,9 +37,16 @@ namespace dht
 	public:
 		/**
 		 * A response was received.
+		 * @param c The call
 		 * @param rsp The response
 		 */
-		virtual void onResponse(MsgBase* rsp) = 0;
+		virtual void onResponse(RPCCall* c,MsgBase* rsp) = 0;
+		
+		/**
+		 * The call has timed out.
+		 * @param c The call
+		 */
+		virtual void onTimeout(RPCCall* c) = 0;
 	};
 
 	/**

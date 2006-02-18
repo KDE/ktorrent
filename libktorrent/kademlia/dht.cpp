@@ -38,7 +38,7 @@ namespace dht
 	
 
 
-	DHT::DHT() : node(0),srv(0),db(0),mtid(0)
+	DHT::DHT() : node(0),srv(0),db(0)
 	{
 		node = new Node();
 		srv = new RPCServer(this,4444);
@@ -59,18 +59,18 @@ namespace dht
 		PingRsp rsp(r->getMTID(),node->getOurID());
 		rsp.setOrigin(r->getOrigin());
 		srv->sendMsg(&rsp);
-		node->recieved(r,srv,mtid);
+		node->recieved(r,srv);
 	}
 	
 	void DHT::ping(PingRsp* r)
 	{
-		node->recieved(r,srv,mtid);
+		node->recieved(r,srv);
 		
 	}
 	
 	void DHT::findNode(FindNodeReq* r)
 	{
-		node->recieved(r,srv,mtid);
+		node->recieved(r,srv);
 		// find the K closest nodes and pack them
 		KClosestNodesSearch kns(r->getTarget(),K);
 		
@@ -93,12 +93,12 @@ namespace dht
 	
 	void DHT::findNode(FindNodeRsp* r)
 	{
-		node->recieved(r,srv,mtid);
+		node->recieved(r,srv);
 	}
 	
 	void DHT::findValue(FindValueReq* r)
 	{
-		node->recieved(r,srv,mtid);
+		node->recieved(r,srv);
 		const QByteArray & data = db->find(r->getKey());
 		if (data.isNull())
 		{
@@ -134,12 +134,12 @@ namespace dht
 	
 	void DHT::findValue(FindValueRsp* r)
 	{
-		node->recieved(r,srv,mtid);
+		node->recieved(r,srv);
 	}
 	
 	void DHT::storeValue(StoreValueReq* r)
 	{
-		node->recieved(r,srv,mtid);
+		node->recieved(r,srv);
 		// store the key data pair in the db
 		db->store(r->getKey(),r->getData());
 		
@@ -151,7 +151,7 @@ namespace dht
 	
 	void DHT::storeValue(StoreValueRsp* r)
 	{
-		node->recieved(r,srv,mtid);
+		node->recieved(r,srv);
 	}
 	
 	void DHT::error(ErrMsg* )
@@ -160,7 +160,7 @@ namespace dht
 	void DHT::portRecieved(const QString & ip,bt::Uint16 port)
 	{
 		Out() << "Sending ping request to " << ip << ":" << port << endl;
-		PingReq* r = new PingReq(mtid,node->getOurID());
+		PingReq* r = new PingReq(node->getOurID());
 		r->setOrigin(KInetSocketAddress(ip,port));
 		srv->doCall(r);
 	}

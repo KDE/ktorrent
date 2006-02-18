@@ -53,11 +53,11 @@ namespace dht
 		 * the right bucket.
 		 * @param msg The message
 		 * @param srv The RPCServer to send a ping if necessary
-		 * @param mtid If we need to send a ping, this mtid should be used (and incremented)
 		 */
-		void recieved(const MsgBase* msg,RPCServer* srv,Uint8 & mtid);
+		void recieved(const MsgBase* msg,RPCServer* srv);
 		
-		virtual void onResponse(MsgBase* rsp);
+		virtual void onResponse(RPCCall* c,MsgBase* rsp);
+		virtual void onTimeout(RPCCall* c);
 		
 		/// Get our own ID
 		const dht::Key & getOurID() const {return our_id;}

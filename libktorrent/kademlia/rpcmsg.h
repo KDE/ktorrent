@@ -99,6 +99,9 @@ namespace dht
 		/// Get the MTID
 		Uint8 getMTID() const {return mtid;}
 		
+		/// Set the MTID
+		void setMTID(Uint8 m) {mtid = m;}
+		
 		/// Get the id of the sender
 		const Key & getID() const {return id;}
 		
@@ -134,7 +137,7 @@ namespace dht
 	class PingReq : public MsgBase
 	{
 	public:
-		PingReq(Uint8 mtid,const Key & id);
+		PingReq(const Key & id);
 		virtual ~PingReq();
 		
 		virtual void apply(DHT* dh_table);
@@ -145,7 +148,7 @@ namespace dht
 	class FindNodeReq : public MsgBase
 	{
 	public:
-		FindNodeReq(Uint8 mtid,const Key & id,const Key & target);
+		FindNodeReq(const Key & id,const Key & target);
 		virtual ~FindNodeReq();
 		
 		virtual void apply(DHT* dh_table);
@@ -161,7 +164,7 @@ namespace dht
 	class FindValueReq : public MsgBase
 	{
 	public:
-		FindValueReq(Uint8 mtid,const Key & id,const Key & key);
+		FindValueReq(const Key & id,const Key & key);
 		virtual ~FindValueReq();
 	
 		virtual void apply(DHT* dh_table);
@@ -178,7 +181,7 @@ namespace dht
 	class StoreValueReq : public MsgBase
 	{
 	public:
-		StoreValueReq(Uint8 mtid,const Key & id,const Key & key,const QByteArray & ba);
+		StoreValueReq(const Key & id,const Key & key,const QByteArray & ba);
 		virtual ~StoreValueReq();
 
 		virtual void apply(DHT* dh_table);
