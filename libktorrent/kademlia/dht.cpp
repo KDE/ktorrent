@@ -81,10 +81,7 @@ namespace dht
 		QByteArray nodes(rs);
 		// pack the found nodes in a byte array
 		if (rs > 0)
-		{
-			Uint8* ptr = (Uint8*)nodes.data();
-			kns.pack(ptr,rs);
-		}
+			kns.pack(nodes);
 		
 		FindNodeRsp fnr(r->getMTID(),node->getOurID(),nodes);
 		fnr.setOrigin(r->getOrigin());
@@ -114,10 +111,7 @@ namespace dht
 			QByteArray nodes(rs);
 			// pack the found nodes in a byte array
 			if (rs > 0)
-			{
-				Uint8* ptr = (Uint8*)nodes.data();
-				kns.pack(ptr,rs);
-			}
+				kns.pack(nodes);
 		
 			FindNodeRsp fnr(r->getMTID(),node->getOurID(),nodes);
 			fnr.setOrigin(r->getOrigin());

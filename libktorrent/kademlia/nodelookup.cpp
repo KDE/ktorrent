@@ -20,6 +20,9 @@
 #include "nodelookup.h"
 #include "rpcmsg.h"
 #include "node.h"
+#include "pack.h"
+
+using namespace bt;
 
 namespace dht
 {
@@ -34,25 +37,54 @@ namespace dht
 	{}
 
 
-	void NodeLookup::callFinished(RPCCall* c, MsgBase* rsp)
+	void NodeLookup::callFinished(RPCCall* ,MsgBase* rsp)
 	{
+		if (isFinished())
+			return;
+		
+		// check the response and see if it is a good one
+		if (rsp->getMethod() == dht::FIND_NODE || rsp->getType() == dht::RSP_MSG)
+		{
+			FindNodeRsp* fnr = (FindNodeRsp*)rsp;
+			const QByteArray & nodes = fnr->getNodes();
+			Uint32 nnodes = nodes.size() / 26;
+			for (Uint32 j = 0;j < nnodes;j++)
+			{
+				// unpack an entry and add it to the todo list
+				KBucketEntry e = UnpackBucketEntry(nodes,j*26);
+				// lets not talk to ourself
+				if (e.getID() != node->getOurID())
+					todo.append(e);
+			}
+		}
+		// do an update
+		update();	
 	}
 	
-	void NodeLookup::callTimeout(RPCCall* c)
-	{}
+	void NodeLookup::callTimeout(RPCCall*)
+	{
+		if (!isFinished())
+			update();
+	}
 	
 	void NodeLookup::update()
 	{
-		QValueList<KBucketEntry>::iterator i = todo.begin();
-		while (i != todo.end() && canDoRequest())
+		// go over the todo list and send find node calls
+		// until we have nothing left
+		while (!todo.empty() && canDoRequest())
 		{
-			const KBucketEntry & e = *i;
-			// send a findNode to the node
-			FindNodeReq fnr(node->getOurID(),node_id);
-			fnr.setOrigin(e.getAddress());
-			rpcCall(&fnr);
-			// TODO remove entry from todo list
-			i++;
+			KBucketEntry e = todo.first();
+			// only send a findNode if we haven't allrready visited the node
+			if (!visited.contains(e))
+			{
+				// send a findNode to the node
+				FindNodeReq fnr(node->getOurID(),node_id);
+				fnr.setOrigin(e.getAddress());
+				rpcCall(&fnr);
+				visited.append(e);
+			}
+			// remove the entry from the todo list
+			todo.pop_front();
 		}
 	}
 }

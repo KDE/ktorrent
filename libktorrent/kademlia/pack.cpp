@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <util/error.h>
 #include <util/functions.h>
-#include "kclosestnodessearch.h"
 #include "pack.h"
 
 using namespace bt;
@@ -26,57 +26,37 @@ using namespace KNetwork;
 
 namespace dht
 {
-	typedef std::map<dht::Key,KBucketEntry>::iterator KNSitr;
 
-	KClosestNodesSearch::KClosestNodesSearch(const dht::Key & key,Uint32 max_entries) 
-	: key(key),max_entries(max_entries)
-	{}
-
-
-	KClosestNodesSearch::~KClosestNodesSearch()
-	{}
-
-	
-	void KClosestNodesSearch::tryInsert(const KBucketEntry & e)
+	void PackBucketEntry(const KBucketEntry & e,QByteArray & ba,Uint32 off)
 	{
-		// calculate distance between key and e
-		dht::Key d = dht::Key::distance(key,e.getID());
+		// first check size
+		if (off + 26 >= ba.size())
+			throw bt::Error("Not enough room in buffer");
 		
-		if (emap.size() < max_entries)
-		{
-			// room in the map so just insert
-			emap.insert(std::make_pair(d,e));
-		}
-		else
-		{
-			// now find the max distance
-			// seeing that the last element of the map has also 
-			// the biggest distance to key (std::map is sorted on the distance)
-			// we just take the last
-			const dht::Key & max = emap.rbegin()->first;
-			if (d < max)
-			{
-				// insert if d is smaller then max
-				emap.insert(std::make_pair(d,e));
-				// erase the old max value
-				emap.erase(max);
-			}
-		}
+		Uint8* data = (Uint8*)ba.data();
+		Uint8* ptr = data + off;
 		
+		const KInetSocketAddress & addr = e.getAddress();
+		// copy ID, IP address and port into the buffer
+		memcpy(ptr,e.getID().getData(),20);
+		bt::WriteUint32(ptr,20,addr.ipAddress().IPv4Addr());
+		bt::WriteUint16(ptr,24,addr.port());
 	}
 	
-	void KClosestNodesSearch::pack(QByteArray & ba)
+	KBucketEntry UnpackBucketEntry(const QByteArray & ba,Uint32 off)
 	{
-		// make sure we do not writ to much
-		Uint32 max_items = ba.size() / 26;
-		Uint32 j = 0;
+		if (off + 26 >= ba.size())
+			throw bt::Error("Not enough room in buffer");
 		
-		KNSitr i = emap.begin();
-		while (i != emap.end() && j < max_items)
-		{
-			PackBucketEntry(i->second,ba,j*26);
-			j++;
-		}
+		const Uint8* data = (Uint8*)ba.data();
+		const Uint8* ptr = data + off;
+		
+		// get the port, ip and key);
+		Uint16 port = bt::ReadUint16(ptr,24);
+		Uint8 key[20];
+		memcpy(key,ptr,20);
+		
+		return KBucketEntry(KInetSocketAddress(KIpAddress(data+20,4),port),dht::Key(key));
 	}
 
 }

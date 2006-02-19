@@ -17,66 +17,32 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <util/functions.h>
-#include "kclosestnodessearch.h"
-#include "pack.h"
+#ifndef DHTPACK_H
+#define DHTPACK_H
 
-using namespace bt;
-using namespace KNetwork;
+#include "kbucket.h"
 
 namespace dht
 {
-	typedef std::map<dht::Key,KBucketEntry>::iterator KNSitr;
 
-	KClosestNodesSearch::KClosestNodesSearch(const dht::Key & key,Uint32 max_entries) 
-	: key(key),max_entries(max_entries)
-	{}
-
-
-	KClosestNodesSearch::~KClosestNodesSearch()
-	{}
-
+	/**
+	 * Pack a KBucketEntry into a byte array.
+	 * If the array is not large enough, an error will be thrown
+	 * @param e The entry
+	 * @param ba The byte array
+	 * @param off The offset into the array
+	 */
+	void PackBucketEntry(const KBucketEntry & e,QByteArray & ba,Uint32 off);
 	
-	void KClosestNodesSearch::tryInsert(const KBucketEntry & e)
-	{
-		// calculate distance between key and e
-		dht::Key d = dht::Key::distance(key,e.getID());
-		
-		if (emap.size() < max_entries)
-		{
-			// room in the map so just insert
-			emap.insert(std::make_pair(d,e));
-		}
-		else
-		{
-			// now find the max distance
-			// seeing that the last element of the map has also 
-			// the biggest distance to key (std::map is sorted on the distance)
-			// we just take the last
-			const dht::Key & max = emap.rbegin()->first;
-			if (d < max)
-			{
-				// insert if d is smaller then max
-				emap.insert(std::make_pair(d,e));
-				// erase the old max value
-				emap.erase(max);
-			}
-		}
-		
-	}
-	
-	void KClosestNodesSearch::pack(QByteArray & ba)
-	{
-		// make sure we do not writ to much
-		Uint32 max_items = ba.size() / 26;
-		Uint32 j = 0;
-		
-		KNSitr i = emap.begin();
-		while (i != emap.end() && j < max_items)
-		{
-			PackBucketEntry(i->second,ba,j*26);
-			j++;
-		}
-	}
+	/**
+	 * Unpack a KBucketEntry from a byte array.
+	 * If a full entry cannot be read an error will be thrown.
+	 * @param ba The byte array
+	 * @param off The offset
+	 * @return The entry
+	 */
+	KBucketEntry UnpackBucketEntry(const QByteArray & ba,Uint32 off);
 
 }
+
+#endif

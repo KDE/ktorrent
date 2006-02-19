@@ -80,10 +80,9 @@ namespace dht
 		/**
 		 * Pack the search results in a buffer, the buffer should have
 		 * enough space to store requiredSpace() bytes.
-		 * @param buffer The buffer to store the data
-		 * @param max_size Max size of buffer, should be equal to requiredSpace()
+		 * @param ba The buffer
 		 */
-		void pack(Uint8* buffer,Uint32 max_size);
+		void pack(QByteArray & ba);
 	};
 
 }

@@ -35,6 +35,10 @@ namespace dht
 	{
 	}
 	
+	Key::Key(const Uint8* d) : bt::SHA1Hash(d)
+	{
+	}
+	
 	Key::Key(const QByteArray & ba)
 	{
 		for (Uint32 i = 0;i < 20 && i < ba.size();i++)

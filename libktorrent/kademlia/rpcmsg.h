@@ -218,6 +218,7 @@ namespace dht
 		virtual void print();
 		virtual void encode(QByteArray & arr);
 		
+		const QByteArray & getNodes() const {return nodes;}
 	private:
 		QByteArray nodes;
 	};

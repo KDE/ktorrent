@@ -17,66 +17,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <util/functions.h>
-#include "kclosestnodessearch.h"
-#include "pack.h"
+#ifndef DHTVALUELOOKUP_H
+#define DHTVALUELOOKUP_H
 
-using namespace bt;
-using namespace KNetwork;
+#include "task.h"
 
 namespace dht
 {
-	typedef std::map<dht::Key,KBucketEntry>::iterator KNSitr;
 
-	KClosestNodesSearch::KClosestNodesSearch(const dht::Key & key,Uint32 max_entries) 
-	: key(key),max_entries(max_entries)
-	{}
-
-
-	KClosestNodesSearch::~KClosestNodesSearch()
-	{}
-
-	
-	void KClosestNodesSearch::tryInsert(const KBucketEntry & e)
+	/**
+		@author Joris Guisson <joris.guisson@gmail.com>
+	*/
+	class ValueLookup : public Task
 	{
-		// calculate distance between key and e
-		dht::Key d = dht::Key::distance(key,e.getID());
-		
-		if (emap.size() < max_entries)
-		{
-			// room in the map so just insert
-			emap.insert(std::make_pair(d,e));
-		}
-		else
-		{
-			// now find the max distance
-			// seeing that the last element of the map has also 
-			// the biggest distance to key (std::map is sorted on the distance)
-			// we just take the last
-			const dht::Key & max = emap.rbegin()->first;
-			if (d < max)
-			{
-				// insert if d is smaller then max
-				emap.insert(std::make_pair(d,e));
-				// erase the old max value
-				emap.erase(max);
-			}
-		}
-		
-	}
-	
-	void KClosestNodesSearch::pack(QByteArray & ba)
-	{
-		// make sure we do not writ to much
-		Uint32 max_items = ba.size() / 26;
-		Uint32 j = 0;
-		
-		KNSitr i = emap.begin();
-		while (i != emap.end() && j < max_items)
-		{
-			PackBucketEntry(i->second,ba,j*26);
-			j++;
-		}
-	}
+	public:
+		ValueLookup(RPCServer* rpc);
+		virtual ~ValueLookup();
+
+		virtual void callFinished(RPCCall* c, MsgBase* rsp);
+		virtual void callTimeout(RPCCall* c);
+		virtual void update();
+
+	};
 
 }
+
+#endif

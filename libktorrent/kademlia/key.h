@@ -54,6 +54,12 @@ namespace dht
 		 * @param ba The QByteArray
 		 */
 		Key(const QByteArray & ba);
+		
+		/**
+		 * Make a key out of a 20 byte array.
+		 * @param d The array
+		 */
+		Key(const bt::Uint8* d);
 
 		/// Destructor.
 		virtual ~Key();
