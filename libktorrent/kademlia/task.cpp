@@ -24,7 +24,7 @@
 namespace dht
 {
 
-	Task::Task(RPCServer* rpc) : rpc(rpc),outstanding_reqs(0)
+	Task::Task(RPCServer* rpc,Node* node) : node(node),rpc(rpc),outstanding_reqs(0)
 	{
 		
 	}

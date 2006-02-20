@@ -26,6 +26,7 @@
 
 namespace dht
 {
+	class Node;
 	class KClosestNodesSearch;
 	
 	const Uint32 MAX_CONCURRENT_REQS = 8;
@@ -42,8 +43,9 @@ namespace dht
 		/**
 		 * Create a task. 
 		 * @param rpc The RPC server to do RPC calls
+		 * @param node The node
 		 */
-		Task(RPCServer* rpc);
+		Task(RPCServer* rpc,Node* node);
 		virtual ~Task();
 		
 		/**
@@ -89,11 +91,11 @@ namespace dht
 		bool canDoRequest() const {return outstanding_reqs < MAX_CONCURRENT_REQS;}
 		
 		/// The task is done when the todo list is empty and there are no outstanding_reqs
-		bool isFinished() const {return todo.empty() && outstanding_reqs == 0;}
+		virtual bool isFinished() const {return todo.empty() && outstanding_reqs == 0;}
 	protected:	
 		QValueList<KBucketEntry> visited; // nodes visited
 		QValueList<KBucketEntry> todo; // nodes todo
-		
+		Node* node;
 	private:
 		RPCServer* rpc;
 		bt::Uint32 outstanding_reqs;

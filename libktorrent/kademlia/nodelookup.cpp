@@ -28,7 +28,7 @@ namespace dht
 {
 
 	NodeLookup::NodeLookup(const dht::Key & key,RPCServer* rpc,Node* node) 
-	: Task(rpc),node_id(key),node(node)
+	: Task(rpc,node),node_id(key)
 	{
 	}
 
@@ -57,14 +57,10 @@ namespace dht
 					todo.append(e);
 			}
 		}
-		// do an update
-		update();	
 	}
 	
 	void NodeLookup::callTimeout(RPCCall*)
 	{
-		if (!isFinished())
-			update();
 	}
 	
 	void NodeLookup::update()

@@ -18,11 +18,14 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include "storevalue.h"
+#include "node.h"
 
 namespace dht
 {
+	
 
-	StoreValue::StoreValue(RPCServer* rpc): Task(rpc)
+	StoreValue::StoreValue(const dht::Key & key,const QByteArray & data,RPCServer* rpc,Node* node)
+	: Task(rpc,node),key(key),data(data),succesfull_stores(0)
 	{}
 
 
@@ -30,13 +33,36 @@ namespace dht
 	{}
 
 
-	void StoreValue::callFinished(RPCCall* c, MsgBase* rsp)
-	{}
+	void StoreValue::callFinished(RPCCall* , MsgBase* rsp)
+	{
+		if (rsp->getType() == dht::RSP_MSG && rsp->getMethod() == dht::STORE_VALUE)
+		{
+			succesfull_stores++;
+		}
+	}
 
-	void StoreValue::callTimeout(RPCCall* c)
+	void StoreValue::callTimeout(RPCCall*)
 	{}
 
 	void StoreValue::update()
-	{}
+	{
+		// go over the todo list and send find value calls
+		// until we have nothing left
+		while (!todo.empty() && canDoRequest())
+		{
+			KBucketEntry e = todo.first();
+			// only send a findNode if we haven't allrready visited the node
+			if (!visited.contains(e))
+			{
+				// send a findValue to the node
+				StoreValueReq str(node->getOurID(),key,data);
+				str.setOrigin(e.getAddress());
+				rpcCall(&str);
+				visited.append(e);
+			}
+			// remove the entry from the todo list
+			todo.pop_front();
+		}
+	}
 
 }

@@ -24,6 +24,7 @@
 
 namespace dht
 {
+	const Uint32 STORE_REDUNDANCY = 3;
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
@@ -31,13 +32,18 @@ namespace dht
 	class StoreValue : public Task
 	{
 	public:
-		StoreValue(RPCServer* rpc);
+		StoreValue(const dht::Key & key,const QByteArray & data,RPCServer* rpc,Node* node);
 		virtual ~StoreValue();
 
 		virtual void callFinished(RPCCall* c, MsgBase* rsp);
 		virtual void callTimeout(RPCCall* c);
 		virtual void update();
-
+		
+		virtual bool isFinished() const {return succesfull_stores >= STORE_REDUNDANCY && Task::isFinished();}
+	private:
+		dht::Key key;
+		QByteArray data;
+		bt::Uint32 succesfull_stores;
 	};
 
 }

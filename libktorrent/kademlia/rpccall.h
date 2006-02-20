@@ -34,7 +34,11 @@ namespace dht
 	*/
 	class RPCCallListener
 	{
+		RPCCall* call;
 	public:
+		RPCCallListener();
+		virtual ~RPCCallListener();
+		
 		/**
 		 * A response was received.
 		 * @param c The call
@@ -47,6 +51,8 @@ namespace dht
 		 * @param c The call
 		 */
 		virtual void onTimeout(RPCCall* c) = 0;
+		
+		friend class RPCCall;
 	};
 
 	/**
@@ -69,7 +75,7 @@ namespace dht
 		 * Set the listener, which wishes to recieve the result of the call.
 		 * @param cl The listener
 		 */
-		void setListener(RPCCallListener* cl) {listener = cl;}
+		void setListener(RPCCallListener* cl);
 		
 		/// Get the message type
 		Method getMsgMethod() const;

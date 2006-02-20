@@ -31,13 +31,22 @@ namespace dht
 	class ValueLookup : public Task
 	{
 	public:
-		ValueLookup(RPCServer* rpc);
+		ValueLookup(const dht::Key & key,RPCServer* rpc,Node* node);
 		virtual ~ValueLookup();
 
-		virtual void callFinished(RPCCall* c, MsgBase* rsp);
-		virtual void callTimeout(RPCCall* c);
+		virtual void callFinished(RPCCall* , MsgBase* rsp);
+		virtual void callTimeout(RPCCall* );
 		virtual void update();
+		
+		/// Get the found value, will be a null array if nothing is found
+		const QByteArray & getValue() const;
+		
+		/// Override isFinshed to first check for data in value
+		virtual bool isFinished() const {return value.size() > 0 || Task::isFinished();}
 
+	private:
+		dht::Key key;
+		QByteArray value;
 	};
 
 }

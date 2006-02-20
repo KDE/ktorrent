@@ -24,6 +24,13 @@
 
 namespace dht
 {
+	RPCCallListener::RPCCallListener() : call(0) {}
+	
+	RPCCallListener::~RPCCallListener() 
+	{
+		if (call)
+			call->setListener(0);
+	}
 
 	RPCCall::RPCCall(RPCServer* rpc,MsgBase* msg) : msg(msg),rpc(rpc),listener(0)
 	{
@@ -54,6 +61,16 @@ namespace dht
 	Method RPCCall::getMsgMethod() const
 	{
 		return msg->getMethod();
+	}
+	
+	void RPCCall::setListener(RPCCallListener* cl)
+	{
+		if (listener)
+			listener->call = 0;
+		
+		listener = cl;
+		if (listener)
+			listener->call = this;
 	}
 
 }

@@ -233,6 +233,8 @@ namespace dht
 		virtual void apply(DHT* dh_table);
 		virtual void print();
 		virtual void encode(QByteArray & arr);
+		
+		const QByteArray & getValue() const {return values;}
 	private:
 		QByteArray values;
 	};
