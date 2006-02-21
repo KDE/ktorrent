@@ -76,9 +76,12 @@ void TrayIcon::torrentStoppedByError(kt::TorrentInterface* tc, QString msg)
 	QString err_msg = i18n("<b>%1</b> has been stopped with the following error: <br>%2")
 			.arg(s.torrent_name).arg(msg);
 	KPassivePopup::message(i18n("Error"),err_msg,loadIcon("ktorrent"),this);
-} 
- 
+}
 
-
+void TrayIcon::viewChanged(kt::TorrentInterface* tc)
+{
+	const TorrentStats & s = tc->getStats();
+	KPassivePopup::message(i18n("Torrent moved to download panel"), i18n("<b>%1</b> torrent has been moved to download panel.").arg(s.torrent_name),loadIcon("ktorrent"), this);
+}
 
 #include "trayicon.moc"

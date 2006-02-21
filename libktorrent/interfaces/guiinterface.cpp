@@ -31,13 +31,24 @@ namespace kt
 	{}
 
 
-	void GUIInterface::notifyViewListeners(TorrentInterface* tc)
+	void GUIInterface::notifyDownloadViewListeners(TorrentInterface* tc)
 	{
 		QPtrList<ViewListener>::iterator i = listeners.begin();
 		while (i != listeners.end())
 		{
 			ViewListener* vl = *i;
-			vl->currentChanged(tc);
+			vl->currentDownloadChanged(tc);
+			i++;
+		}
+	}
+	
+	void GUIInterface::notifySeedViewListeners(TorrentInterface* tc)
+	{
+		QPtrList<ViewListener>::iterator i = listeners.begin();
+		while (i != listeners.end())
+		{
+			ViewListener* vl = *i;
+			vl->currentSeedChanged(tc);
 			i++;
 		}
 	}

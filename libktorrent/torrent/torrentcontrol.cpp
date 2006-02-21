@@ -79,6 +79,7 @@ namespace bt
 		prev_bytes_ul = 0;
 		io_error = false;
 		priority = 0;
+		maxShareRatio = 0.00f;
 		custom_output_name = false;
 
 		updateStats();
@@ -187,6 +188,10 @@ namespace bt
 				tracker->manualUpdate();
 				stalled_timer.update();
 			}
+			
+			if(overMaxRatio())
+				stop(true);
+			
 		}
 		catch (Error & e)
 		{
@@ -205,7 +210,7 @@ namespace bt
 	}
 
 	void TorrentControl::start()
-	{
+	{	
 		if (bt::Exists(datadir + "stopped"))
 			bt::Delete(datadir + "stopped",true);
 
@@ -645,6 +650,8 @@ namespace bt
 		st.write("AUTOSTART", QString("%1").arg(stats.autostart));
 		st.write("IMPORTED", QString("%1").arg(stats.imported_bytes));
 		st.write("CUSTOM_OUTPUT_NAME",custom_output_name ? "1" : "0");
+		st.write("MAX_RATIO", QString("%1").arg(maxShareRatio,0,'f',2));
+		
 		st.writeSync();
 	}
 
@@ -669,6 +676,10 @@ namespace bt
 		stats.autostart = st.readBoolean("AUTOSTART");
 		
 		stats.imported_bytes = st.readUint64("IMPORTED");
+		float rat = st.readFloat("MAX_RATIO");
+		maxShareRatio = rat;
+		
+		return;
 	}
 
 	void TorrentControl::loadOutputDir()
@@ -843,8 +854,25 @@ namespace bt
 		stats.user_controlled = p == 0 ? true : false;
 		saveStats();
 	}
+	
+	void TorrentControl::setMaxShareRatio(float ratio)
+	{
+		maxShareRatio = ratio;
+		saveStats();
+		emit maxRatioChanged(this);
+	}
+	
+	bool TorrentControl::overMaxRatio()
+	{
+		if(stats.completed && stats.bytes_uploaded != 0 && stats.bytes_downloaded != 0 && maxShareRatio > 0)
+		{
+			float val = (float) stats.bytes_uploaded / stats.bytes_downloaded;
+			if(val >= maxShareRatio)
+				return true;
+		}
+		
+		return false;
+	}
 }
 
-
-		
 #include "torrentcontrol.moc"

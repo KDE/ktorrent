@@ -155,6 +155,11 @@ namespace bt
 		
 		void setPriority(int p);
 		
+		bool overMaxRatio();
+		
+		void setMaxShareRatio(float ratio);
+		float getMaxShareRatio() const { return maxShareRatio; }
+		
 	public slots:
 		/**
 		 * Update the object, should be called periodically.
@@ -231,6 +236,7 @@ namespace bt
 		bool io_error;
 		bool custom_output_name;
 		int priority;
+		float maxShareRatio;
 	};
 }
 

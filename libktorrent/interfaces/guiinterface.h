@@ -39,6 +39,14 @@ namespace kt
 		ABOVE, ///< New widgets will be added above the old
 		BELOW  ///< New widgets will be added below the old
 	};
+	
+	enum PanelView
+	{
+		DOWNLOAD_VIEW,	///Download panel is currently visible
+		SEED_VIEW,		///Seed panel is currently visible
+		SEARCH_VIEW,	///Search panel is currently visible
+		NO_VIEW			///No panel is visible (KT is in tray)
+	};
 
 	/**
 	 * Small interface for classes who want to know when
@@ -47,7 +55,8 @@ namespace kt
 	class ViewListener
 	{
 	public:
-		virtual void currentChanged(TorrentInterface* tc) = 0;
+		virtual void currentDownloadChanged(TorrentInterface* tc) = 0;
+		virtual void currentSeedChanged(TorrentInterface* tc) = 0;
 	};
 	
 	/**
@@ -132,6 +141,21 @@ namespace kt
 		virtual void removeWidgetFromView(QWidget* w) = 0;
 		
 		/**
+		 * Embed a widget in the view in the SeedView
+		 * The view and the new widget will be separated by a separator.
+		 * @param w The widget
+		 * @param pos How the widget will be positioned against the already present widgets
+		 */
+		virtual void addWidgetInSeedView(QWidget* w,Position pos) = 0;
+
+		/**
+		 * Remove a widget added with addWidgetInSeedView.
+		 * The widget will be reparented to 0.
+		 * @param w The widget 
+		 */
+		virtual void removeWidgetFromSeedView(QWidget* w) = 0;
+		
+		/**
 		 * Add a widget below the view.
 		 * @param w The widget
 		 */
@@ -145,12 +169,22 @@ namespace kt
 
 		/// Get the current torrent.
 		virtual const TorrentInterface* getCurrentTorrent() const = 0;
+		
+		///Checks which panel is currently visible - download or seed.
+		virtual PanelView getCurrentPanel() = 0;
+		
 	protected:
 		/**
-		 * Notifies all view listeners of the change in the current TorrentInterface
+		 * Notifies all view listeners of the change in the current downloading TorrentInterface
 		 * @param tc Pointer to current TorrentInterface
 		 */
-		void notifyViewListeners(TorrentInterface* tc);
+		void notifyDownloadViewListeners(TorrentInterface* tc);
+		
+		/**
+		 * Notifies all view listeners of the change in the current seeding TorrentInterface
+		 * @param tc Pointer to current TorrentInterface
+		 */
+		void notifySeedViewListeners(TorrentInterface* tc);
 	};
 
 }

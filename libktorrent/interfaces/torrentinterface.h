@@ -113,6 +113,8 @@ namespace kt
 		bool completed;
 		/// See if this torrent is controlled by user
 		bool user_controlled;
+		/// Maximum share ratio
+		float max_share_ratio;
 	};
 
 	/**
@@ -247,6 +249,10 @@ namespace kt
 		///Set the torrent queue number.
 		virtual void setPriority(int p) = 0;
 		
+		virtual void setMaxShareRatio(float ratio) = 0;
+		
+		virtual float getMaxShareRatio() const = 0;
+		
 	signals:
 		/**
 		 * Emited when we have finished downloading.
@@ -260,6 +266,12 @@ namespace kt
 		 * @param msg Error message
 		 */
 		void stoppedByError(kt::TorrentInterface* me, QString msg);
+		
+		/**
+		 * Emited when maximum share ratio for this torrent is changed
+		 * @param me The object which emitted the signal.
+		 */
+		void maxRatioChanged(kt::TorrentInterface* me);
 
 	protected:
 		TorrentStats stats;

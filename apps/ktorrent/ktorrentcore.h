@@ -123,8 +123,6 @@ public:
 	 */
 	void stopAll();
 
-
-
 	/**
 	 * Make a torrent file
 	 * @param file The file or dir to make a torrent of
@@ -177,6 +175,13 @@ public:
 	
 	
 	bt::QueueManager* getQueueManager();
+	
+	///Gets the number of torrents running
+	int getNumRunning(bool onlyDownloads = true, bool onlySeeds = false) const;
+	///Gets the number of torrents that are in state 'download' - total
+	int countDownloads() const;
+	///Gets the number of torrents that are in state 'seed' - total
+	int countSeeds() const;
 	
 public slots:
 	/**
@@ -246,10 +251,7 @@ signals:
 	**/
 	void statsUpdated();
 
-
-
 private:
-	int getNumRunning() const;
 	void rollback(const QPtrList<kt::TorrentInterface> & success);
 	
 private slots:

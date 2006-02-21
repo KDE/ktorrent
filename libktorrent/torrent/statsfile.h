@@ -57,6 +57,7 @@ namespace bt
 			bool readBoolean(QString key);
 			int readInt(QString key);
 			unsigned long readULong(QString key);
+			float readFloat(QString key);
 		
 			/**
 			 * @brief Writes key and value.

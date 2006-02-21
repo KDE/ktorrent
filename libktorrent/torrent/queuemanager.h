@@ -61,6 +61,8 @@ namespace bt
 			void startall();
 			
 			int count() { return downloads.count(); }
+			int countDownloads();
+			int countSeeds();
 			
 			int getNumRunning(bool onlyDownload = false, bool onlySeed = false);
 			

@@ -94,6 +94,9 @@ public:
 	virtual void addWidgetBelowView(QWidget* w);
 	virtual void removeWidgetBelowView(QWidget* w);
 	virtual const kt::TorrentInterface* getCurrentTorrent() const;
+	
+	KTorrentView* getCurrentView();
+	kt::PanelView getCurrentPanel();
 
 public slots:
 	/**
@@ -133,9 +136,11 @@ private slots:
 	void newToolbarConfig();
 	void changeStatusbar(const QString& text);
 	void changeCaption(const QString& text);
-	void currentChanged(kt::TorrentInterface* tc);
+	void currentDownloadChanged(kt::TorrentInterface* tc);
+	void currentSeedChanged(kt::TorrentInterface* tc);
 	void updatedStats();
 	void urlDropped(QDropEvent*,QListViewItem*);
+	void currentTabChanged(QWidget* tab);
 
 private:
 	void setupAccel();
@@ -144,10 +149,13 @@ private:
 	bool queryExit();
 	virtual void addWidgetInView(QWidget* w,kt::Position pos);
 	virtual void removeWidgetFromView(QWidget* w);
+	virtual void addWidgetInSeedView(QWidget* w,kt::Position pos);
+	virtual void removeWidgetFromSeedView(QWidget* w);
 	
 	
 private:
 	KTorrentView *m_view;
+	KTorrentView *m_seedView;
 	KToggleAction *m_statusbarAction;
 	KAction *m_start,*m_stop,*m_remove,*m_startall, *m_stopall, *m_pasteurl, *m_queuemgr;
 	KTorrentCore* m_core;
@@ -158,6 +166,7 @@ private:
 	KTorrentPreferences* m_pref;
 	kt::ExpandableWidget* m_exp;
 	kt::ExpandableWidget* m_view_exp;
+	kt::ExpandableWidget* m_seedView_exp;
 
 	QLabel* m_statusInfo;
 	QLabel* m_statusTransfer;

@@ -82,6 +82,12 @@ namespace bt
 		return readString(key).toULong(&ok);
 	}
 	
+	float bt::StatsFile::readFloat( QString key )
+	{
+		bool ok = true;
+		return readString(key).toFloat(&ok);
+	}
+	
 	void StatsFile::readSync()
 	{
 		if (!m_file.open(IO_ReadOnly))

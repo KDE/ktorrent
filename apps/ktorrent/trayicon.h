@@ -42,7 +42,8 @@ public:
 	
 private slots:
 	void finished(kt::TorrentInterface* tc);
-	void torrentStoppedByError(kt::TorrentInterface* tc, QString msg); 
+	void torrentStoppedByError(kt::TorrentInterface* tc, QString msg);
+	void viewChanged(kt::TorrentInterface* tc);
 
 private:
 	KTorrentCore* m_core;

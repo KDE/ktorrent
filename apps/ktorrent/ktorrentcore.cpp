@@ -191,9 +191,9 @@ void KTorrentCore::stop(TorrentInterface* tc, bool user)
 	qman->stop(tc, user);
 }
 
-int KTorrentCore::getNumRunning() const
+int KTorrentCore::getNumRunning(bool onlyDownloads, bool onlySeeds) const
 {
-	return qman->getNumRunning(true);
+	return qman->getNumRunning(onlyDownloads, onlySeeds);
 }
 
 QString KTorrentCore::findNewTorrentDir() const
@@ -524,6 +524,16 @@ Uint32 KTorrentCore::getNumTorrentsRunning() const
 Uint32 KTorrentCore::getNumTorrentsNotRunning() const
 {
 	return qman->count() - qman->getNumRunning();
+}
+
+int KTorrentCore::countSeeds() const
+{
+	return qman->countSeeds();
+}
+
+int KTorrentCore::countDownloads() const
+{
+	return qman->countDownloads();
 }
 
 void KTorrentCore::addBlockedIP(QString& ip)
