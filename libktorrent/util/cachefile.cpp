@@ -63,10 +63,8 @@ namespace bt
 			close(false);
 	}
 	
-	void CacheFile::open(const QString & path,Uint64 size)
+	void CacheFile::openFile()
 	{
-		this->path = path;
-		max_size = size;
 		fd = ::open(QFile::encodeName(path),O_RDWR | O_LARGEFILE);
 		
 		if (fd < 0)
@@ -96,9 +94,26 @@ namespace bt
 				e.thing->remapped(e.ptr);
 		}
 	}
+	
+	void CacheFile::open(const QString & path,Uint64 size)
+	{
+		// only set the path and the max size, we only open the file when it is needed
+		this->path = path;
+		max_size = size;
+		// if there are mappings we must reopen the file and restore them
+		if (mappings.count() > 0)
+			openFile();
+	}
 		
 	void* CacheFile::map(MMappeable* thing,Uint64 off,Uint32 size,Mode mode)
 	{
+		// reopen the file if necessary
+		if (fd == -1)
+		{
+			Out() << "Reopening " << path << endl;
+			openFile();
+		}
+		
 		if (off + size > max_size)
 		{
 			Out() << "Warning : writing past the end of " << path << endl;
@@ -179,6 +194,13 @@ namespace bt
 	
 	void CacheFile::growFile(Uint64 to_write)
 	{
+		// reopen the file if necessary
+		if (fd == -1)
+		{
+		//	Out() << "Reopening " << path << endl;
+			openFile();
+		}
+		
 		// jump to the end of the file
 		lseek(fd,0,SEEK_END);
 		
@@ -243,6 +265,9 @@ namespace bt
 				munmap(ptr,e.size);
 			
 			mappings.erase(ptr);
+			// no mappings, close temporary
+			if (mappings.count() == 0)
+				closeTemporary();
 		}
 		else
 		{
@@ -282,6 +307,13 @@ namespace bt
 	
 	void CacheFile::read(Uint8* buf,Uint32 size,Uint64 off)
 	{
+		// reopen the file if necessary
+		if (fd == -1)
+		{
+		//	Out() << "Reopening " << path << endl;
+			openFile();
+		}
+		
 		if (off >= file_size || off >= max_size)
 		{
 			throw Error(i18n("Error : Reading past the end of the file %1").arg(path));
@@ -295,6 +327,13 @@ namespace bt
 	
 	void CacheFile::write(const Uint8* buf,Uint32 size,Uint64 off)
 	{
+		// reopen the file if necessary
+		if (fd == -1)
+		{
+		//	Out() << "Reopening " << path << endl;
+			openFile();
+		}
+		
 		if (off + size > max_size)
 		{
 			Out() << "Warning : writing past the end of " << path << endl;
@@ -321,5 +360,16 @@ namespace bt
 		if (off + size > file_size)
 			file_size = off + size;
 	}
+	
+	void CacheFile::closeTemporary()
+	{
+		if (fd == -1 || mappings.count() > 0)
+			return;
+			
+		close(fd);
+		fd = -1;
+		//Out() << "Temporarely closed " << path << endl;
+	}
+	
 
 }

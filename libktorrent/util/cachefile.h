@@ -65,6 +65,7 @@ namespace bt
 			READ,WRITE,RW
 		};
 
+		
 		/**
 		 * Open the file.
 		 * @param path Path of the file
@@ -115,6 +116,8 @@ namespace bt
 		
 	private:
 		void growFile(Uint64 to_write);
+		void closeTemporary();
+		void openFile();
 		
 	private:
 		int fd;
