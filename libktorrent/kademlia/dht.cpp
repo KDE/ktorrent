@@ -38,8 +38,9 @@ namespace dht
 	
 
 
-	DHT::DHT() : node(0),srv(0),db(0)
+	DHT::DHT() : node(0),srv(0),db(0),next_id(0)
 	{
+		tasks.setAutoDelete(true);
 		node = new Node();
 		srv = new RPCServer(this,4444);
 		db = new Database();
@@ -159,4 +160,34 @@ namespace dht
 		srv->doCall(r);
 	}
 
+	Uint32 DHT::startTask(Task* task)
+	{
+		Uint32 tid = next_id++;
+		task->setTaskID(tid);
+		tasks.insert(tid,task);
+		return tid;
+	}
+		
+	void DHT::update()
+	{
+		if (tasks.count() == 0)
+			return;
+		
+		QValueList<Uint32> to_del;
+		bt::PtrMap<Uint32,Task>::iterator i = tasks.begin();
+		while (i != tasks.end())
+		{
+			Task* t = i->second;
+			if (t->isFinished())
+				to_del.append(i->first);
+			i++;
+		}
+		
+		QValueList<Uint32>::iterator itr = to_del.begin();
+		while (itr != to_del.end())
+		{
+			tasks.erase(*itr);
+			itr++;
+		}
+	}
 }

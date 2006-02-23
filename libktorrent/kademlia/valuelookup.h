@@ -40,10 +40,6 @@ namespace dht
 		
 		/// Get the found value, will be a null array if nothing is found
 		const QByteArray & getValue() const;
-		
-		/// Override isFinshed to first check for data in value
-		virtual bool isFinished() const {return value.size() > 0 || Task::isFinished();}
-
 	private:
 		dht::Key key;
 		QByteArray value;

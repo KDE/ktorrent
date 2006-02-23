@@ -38,6 +38,7 @@
 #include <torrent/server.h>
 #include <util/functions.h>
 #include <torrent/ipblocklist.h>
+#include <kademlia/dht.h>
 
 #include "pluginmanager.h"
 #include <torrent/queuemanager.h>
@@ -413,6 +414,7 @@ void KTorrentCore::stopAll()
 void KTorrentCore::update()
 {
 	Globals::instance().getServer().update();
+	Globals::instance().getDHT().update();
 
 	QPtrList<kt::TorrentInterface>::iterator i = qman->begin();
 	//Uint32 down_speed = 0;

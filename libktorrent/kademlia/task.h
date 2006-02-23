@@ -27,9 +27,30 @@
 namespace dht
 {
 	class Node;
+	class Task;
 	class KClosestNodesSearch;
 	
 	const Uint32 MAX_CONCURRENT_REQS = 8;
+	
+	/**
+	 * Classes who which to be informed of the status of tasks, shoul derive from
+	 * this class.
+	 */
+	class TaskListener
+	{
+		Task* task;
+	public:
+		TaskListener();
+		virtual ~TaskListener();
+		
+		/**
+		 * The task is finsihed.
+		 * @param t The Task
+		 */
+		virtual void onFinished(Task* t) = 0;
+		
+		friend class Task;
+	};
 
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
@@ -90,15 +111,34 @@ namespace dht
 		/// See if we can do a request
 		bool canDoRequest() const {return outstanding_reqs < MAX_CONCURRENT_REQS;}
 		
-		/// The task is done when the todo list is empty and there are no outstanding_reqs
-		virtual bool isFinished() const {return todo.empty() && outstanding_reqs == 0;}
+		/// Is the task finished
+		bool isFinished() const {return finished;}
+		
+		/// Set the task listener
+		void setListener(TaskListener* tl);
+		
+		/// Set the task ID
+		void setTaskID(bt::Uint32 tid) {task_id = tid;}
+		
+		/// Get the task ID
+		bt::Uint32 getTaskID() const {return task_id;}
+		
+		/// Get the number of outstanding requests
+		bt::Uint32 getNumOutstandingRequests() const {return outstanding_reqs;}
+	protected:
+		void done();
+				
 	protected:	
 		QValueList<KBucketEntry> visited; // nodes visited
 		QValueList<KBucketEntry> todo; // nodes todo
 		Node* node;
+		
 	private:
 		RPCServer* rpc;
 		bt::Uint32 outstanding_reqs;
+		TaskListener* lst;
+		bt::Uint32 task_id; 
+		bool finished;
 	};
 
 }

@@ -59,6 +59,7 @@ namespace dht
 			value = fv->getValue();
 			// clear todo list, the task is finished
 			todo.clear();
+			done();
 		}
 	}
 
@@ -85,6 +86,9 @@ namespace dht
 			// remove the entry from the todo list
 			todo.pop_front();
 		}
+		
+		if (todo.empty() && getNumOutstandingRequests() == 0 && !isFinished())
+			done();
 	}
 
 }

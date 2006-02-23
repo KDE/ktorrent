@@ -23,15 +23,39 @@
 
 namespace dht
 {
+	TaskListener::TaskListener() : task(0)
+	{}
+			
+	TaskListener::~TaskListener()
+	{
+		if (task)
+			task->setListener(0);
+	}
 
-	Task::Task(RPCServer* rpc,Node* node) : node(node),rpc(rpc),outstanding_reqs(0)
+	Task::Task(RPCServer* rpc,Node* node) 
+		: node(node),rpc(rpc),outstanding_reqs(0),
+		lst(0),finished(false)
 	{
 		
 	}
 
 
 	Task::~Task()
-	{}
+	{
+		if (lst)
+			lst->task = 0;
+	}
+	
+	void Task::setListener(TaskListener* tl)
+	{
+		if (lst)
+			lst->task = 0;
+		
+		lst = tl;
+		
+		if (lst)
+			lst->task = this;
+	}
 	
 	void Task::start(const KClosestNodesSearch & kns)
 	{
@@ -47,10 +71,13 @@ namespace dht
 		if (outstanding_reqs > 0)
 			outstanding_reqs--;
 		
-		callFinished(c,rsp);
+		if (!isFinished())
+		{
+			callFinished(c,rsp);
 		
-		if (canDoRequest() && !isFinished())
-			update(); 
+			if (canDoRequest() && !isFinished())
+				update(); 
+		}
 	}
 
 	void Task::onTimeout(RPCCall* c)
@@ -58,10 +85,13 @@ namespace dht
 		if (outstanding_reqs > 0)
 			outstanding_reqs--;
 		
-		callTimeout(c);
-		
-		if (canDoRequest() && !isFinished())
-			update(); 
+		if (!isFinished())
+		{
+			callTimeout(c);
+			
+			if (canDoRequest() && !isFinished())
+				update(); 
+		}
 	}
 	
 	bool Task::rpcCall(MsgBase* req)
@@ -75,5 +105,11 @@ namespace dht
 		return true;
 	}
 	
+	void Task::done()
+	{
+		finished = true;
+		if (lst)
+			lst->onFinished(this);
+	}
 
 }

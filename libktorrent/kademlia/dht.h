@@ -22,6 +22,8 @@
 
 #include <qstring.h>
 #include <util/constants.h>
+#include <util/ptrmap.h>
+#include "task.h"
 
 namespace dht
 {
@@ -64,11 +66,26 @@ namespace dht
 		 * @param port The port in the PORT message
 		 */
 		void portRecieved(const QString & ip,bt::Uint16 port);
+		
+		/**
+		 * Start a new Task, the dht will make sure the task 
+		 * is deleted at the appropriate time.
+		 * @param task A Task (must be created with new)
+		 * @return The ID of the task
+		 */
+		Uint32 startTask(Task* task);
+		
+		/**
+		 * Update the dht.
+		 */
+		void update();
 
 	private:
 		Node* node;
 		RPCServer* srv;
 		Database* db;
+		bt::PtrMap<Uint32,Task> tasks;
+		bt::Uint32 next_id;
 	};
 
 }

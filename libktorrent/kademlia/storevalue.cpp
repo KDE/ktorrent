@@ -63,6 +63,9 @@ namespace dht
 			// remove the entry from the todo list
 			todo.pop_front();
 		}
+		
+		if (succesfull_stores >= STORE_REDUNDANCY && !isFinished())
+			done();
 	}
 
 }

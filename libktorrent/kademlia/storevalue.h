@@ -38,8 +38,6 @@ namespace dht
 		virtual void callFinished(RPCCall* c, MsgBase* rsp);
 		virtual void callTimeout(RPCCall* c);
 		virtual void update();
-		
-		virtual bool isFinished() const {return succesfull_stores >= STORE_REDUNDANCY && Task::isFinished();}
 	private:
 		dht::Key key;
 		QByteArray data;
