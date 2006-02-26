@@ -56,9 +56,6 @@
             <property name="text">
                 <string>&amp;Close</string>
             </property>
-            <property name="accel">
-                <string>Alt+C</string>
-            </property>
         </widget>
         <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
             <property name="name">

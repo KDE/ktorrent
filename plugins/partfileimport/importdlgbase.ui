@@ -140,9 +140,6 @@
                     <property name="text">
                         <string>Ca&amp;ncel</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+N</string>
-                    </property>
                 </widget>
             </hbox>
         </widget>

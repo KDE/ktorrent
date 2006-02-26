@@ -77,9 +77,6 @@
                     <property name="text">
                         <string>Use &amp;KTorrent filter?</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+K</string>
-                    </property>
                 </widget>
                 <spacer row="2" column="1">
                     <property name="name">

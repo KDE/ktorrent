@@ -159,7 +159,7 @@
                 <cstring>btnOk</cstring>
             </property>
             <property name="text">
-                <string>&amp;Ok</string>
+                <string>&amp;OK</string>
             </property>
         </widget>
     </grid>
