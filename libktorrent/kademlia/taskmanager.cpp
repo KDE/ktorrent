@@ -17,75 +17,45 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef DHTDHT_H
-#define DHTDHT_H
+#include "taskmanager.h"
 
-#include <qstring.h>
-#include <util/constants.h>
-#include "key.h"
-
-namespace bt
-{
-	class SHA1Hash;
-}
-
+using namespace bt;
 
 namespace dht
 {
-	class Node;
-	class RPCServer;
-	class PingReq;
-	class FindNodeReq;
-	class FindValueReq;
-	class StoreValueReq;
-	class GetPeersReq;
-	class MsgBase;
-	class ErrMsg;
-	class MsgBase;
-	class Database;
-	class TaskManager;
-	class Task;
 
-	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	*/
-	class DHT
+	TaskManager::TaskManager() : next_id(0)
 	{
-	public:
-		DHT();
-		virtual ~DHT();
+		tasks.setAutoDelete(true);
+	}
+
+
+	TaskManager::~TaskManager()
+	{}
+
+	
+	void TaskManager::addTask(Task* task)
+	{
+		Uint32 id = next_id++;
+		task->setTaskID(id);
+		tasks.insert(id,task);
+	}
 		
-		void ping(PingReq* r);
-		void findNode(FindNodeReq* r);
-		void findValue(FindValueReq* r);
-		void storeValue(StoreValueReq* r);
-		void response(MsgBase* r);
-		void getPeers(GetPeersReq* r);
-		void error(ErrMsg* r);
+	void TaskManager::removeTask(Task* task)
+	{
+		tasks.erase(task->getTaskID());
+	}
 		
-		/**
-		 * A Peer has recieved a PORT message, and uses this function to alert the DHT of it.
-		 * @param ip The IP of the peer
-		 * @param port The port in the PORT message
-		 */
-		void portRecieved(const QString & ip,bt::Uint16 port);
+	void TaskManager::removeFinishedTasks()
+	{
+		typedef bt::PtrMap<Uint32,Task>::iterator TaskItr;
+		QValueList<Uint32> rm;
+		for (TaskItr i = tasks.begin();i != tasks.end();i++)
+			if (i->second->isFinished())
+				rm.append(i->first);
 		
-		/**
-		 * Do an announce on the DHT network
-		 * @param info_hash The info_hash
-		 * @param port The port
-		 * @return The task which handles this
-		 */
-		Task* announce(const bt::SHA1Hash & info_hash,bt::Uint16 port);
-		
-	private:
-		Node* node;
-		RPCServer* srv;
-		Database* db;
-		TaskManager* tman;
-		Key cur_token,last_token;
-	};
+		for (QValueList<Uint32>::iterator i = rm.begin();i != rm.end();i++)
+			tasks.erase(*i);
+	}
 
 }
-
-#endif

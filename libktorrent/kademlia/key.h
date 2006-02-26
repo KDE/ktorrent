@@ -44,10 +44,11 @@ namespace dht
 		Key();
 		
 		/**
-		 * Copy constructor.
-		 * @param k Key to copy
+		 * Copy constructor. Seeing that Key doesn't add any data
+		 * we just pass a SHA1Hash, Key's are automatically covered by this
+		 * @param k Hash to copy
 		 */
-		Key(const Key & k);
+		Key(const bt::SHA1Hash & k);
 		
 		/**
 		 * Make a key out of a bytearray
@@ -69,12 +70,6 @@ namespace dht
 		 * @return A random Key
 		 */
 		static Key random();
-
-		/**
-		 * Assignment operator.
-		 * @param k Key to copy
-		 */
-		Key & operator = (const Key & k);
 
 		/**
 		 * Equality operator.

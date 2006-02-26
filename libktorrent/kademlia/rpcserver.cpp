@@ -53,19 +53,28 @@ namespace dht
 		calls.setAutoDelete(true);
 		calls.clear();
 	}
+	
+	static void PrintRawData(const QByteArray & data)
+	{
+		QString tmp;
+		for (Uint32 i = 0;i < data.size();i++)
+		{
+			if (!QChar(data[i]).isPrint())
+				tmp += '#';
+			else
+				tmp += data[i];
+		}
+		
+		Out() << tmp << endl;
+	}
 
 	void RPCServer::readPacket()
 	{
 		Out() << "RPCServer::readPacket" << endl;
 		KDatagramPacket pck = sock->receive();
 		
-		QByteArray data = pck.data();
-		for (Uint32 i = 0;i < data.size();i++)
-			if (data[i] == 0)
-				data[i] = '#';
 		
-		Out() << QString(data) << endl;
-		
+		PrintRawData(pck.data());
 		// read and decode the packet
 		BDecoder bdec(pck.data(),false);
 		
@@ -76,12 +85,14 @@ namespace dht
 			return;
 		}
 		
+		
+		
 		// try to make a RPCMsg of it
 		MsgBase* msg = MakeRPCMsg((BDictNode*)n,this);
 		if (!msg)
 		{
 			Out() << "Error parsing message : " << endl;
-			Out() << QString(pck.data()) << endl;
+			PrintRawData(pck.data());
 			return;
 		}
 		else
@@ -123,10 +134,7 @@ namespace dht
 		msg->encode(data);
 		send(msg->getOrigin(),data);
 		
-		for (Uint32 i = 0;i < data.size();i++)
-			if (data[i] == 0)
-				data[i] = '#';
-		Out() << QString(data) << endl;
+		PrintRawData(data);
 	}
 	
 	void RPCServer::timedOut(Uint8 mtid)

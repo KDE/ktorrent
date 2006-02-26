@@ -31,7 +31,7 @@ namespace dht
 	Key::Key()
 	{}
 
-	Key::Key(const Key & k) : bt::SHA1Hash(k)
+	Key::Key(const bt::SHA1Hash & k) : bt::SHA1Hash(k)
 	{
 	}
 	
@@ -47,12 +47,6 @@ namespace dht
 
 	Key::~Key()
 	{}
-
-	Key & Key::operator = (const Key & k)
-	{
-		bt::SHA1Hash::operator = (k);
-		return *this;
-	}
 
 	bool Key::operator == (const Key & other) const
 	{

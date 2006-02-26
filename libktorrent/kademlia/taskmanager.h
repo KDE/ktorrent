@@ -17,73 +17,47 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef DHTDHT_H
-#define DHTDHT_H
+#ifndef DHTTASKMANAGER_H
+#define DHTTASKMANAGER_H
 
-#include <qstring.h>
+#include <util/ptrmap.h>
 #include <util/constants.h>
-#include "key.h"
-
-namespace bt
-{
-	class SHA1Hash;
-}
-
+#include "task.h"
 
 namespace dht
 {
-	class Node;
-	class RPCServer;
-	class PingReq;
-	class FindNodeReq;
-	class FindValueReq;
-	class StoreValueReq;
-	class GetPeersReq;
-	class MsgBase;
-	class ErrMsg;
-	class MsgBase;
-	class Database;
-	class TaskManager;
-	class Task;
 
 	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
+	 * @author Joris Guisson <joris.guisson@gmail.com>
+	 * 
+	 * Manages all dht tasks.
 	*/
-	class DHT
+	class TaskManager
 	{
 	public:
-		DHT();
-		virtual ~DHT();
-		
-		void ping(PingReq* r);
-		void findNode(FindNodeReq* r);
-		void findValue(FindValueReq* r);
-		void storeValue(StoreValueReq* r);
-		void response(MsgBase* r);
-		void getPeers(GetPeersReq* r);
-		void error(ErrMsg* r);
+		TaskManager();
+		virtual ~TaskManager();
 		
 		/**
-		 * A Peer has recieved a PORT message, and uses this function to alert the DHT of it.
-		 * @param ip The IP of the peer
-		 * @param port The port in the PORT message
+		 * Add a task to manage.
+		 * @param task 
 		 */
-		void portRecieved(const QString & ip,bt::Uint16 port);
+		void addTask(Task* task);
 		
 		/**
-		 * Do an announce on the DHT network
-		 * @param info_hash The info_hash
-		 * @param port The port
-		 * @return The task which handles this
+		 * Remove a task, also deletes it.
+		 * @param task The task
 		 */
-		Task* announce(const bt::SHA1Hash & info_hash,bt::Uint16 port);
+		void removeTask(Task* task);
 		
+		/**
+		 * Remove all finished tasks.
+		 */
+		void removeFinishedTasks();
+
 	private:
-		Node* node;
-		RPCServer* srv;
-		Database* db;
-		TaskManager* tman;
-		Key cur_token,last_token;
+		bt::PtrMap<Uint32,Task> tasks;
+		bt::Uint32 next_id;
 	};
 
 }

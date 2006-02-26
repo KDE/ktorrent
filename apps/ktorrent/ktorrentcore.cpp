@@ -414,7 +414,6 @@ void KTorrentCore::stopAll()
 void KTorrentCore::update()
 {
 	Globals::instance().getServer().update();
-	Globals::instance().getDHT().update();
 
 	QPtrList<kt::TorrentInterface>::iterator i = qman->begin();
 	//Uint32 down_speed = 0;

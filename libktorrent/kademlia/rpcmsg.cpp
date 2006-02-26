@@ -81,6 +81,14 @@ namespace dht
 									 Key(args->getValue("key")->data().toByteArray()),
 									 args->getValue("values")->data().toByteArray());
 		}
+		else if (str == "get_peers")
+		{
+			if (args->getValue("info_hash"))
+				msg = new GetPeersReq(id,Key(args->getValue("info_hash")->data().toByteArray()));
+		}
+		else if (str == "announce_peer")
+		{
+		}
 		
 		if (msg)
 			msg->setMTID(mtid);
@@ -91,15 +99,21 @@ namespace dht
 	MsgBase* ParseRsp(bt::BDictNode* dict,RPCServer* srv)
 	{
 		BDictNode*	args = dict->getDict(RSP);
-		if (args || !args->getValue("id") || !dict->getValue(TID))
+		if (!args || !args->getValue("id") || !dict->getValue(TID))
+		{
+			Out() << "ParseRsp : args || !args->getValue(id) || !dict->getValue(TID)" << endl;
 			return 0;
+		}
 			
 		Key id = Key(args->getValue("id")->data().toByteArray());
 		Uint8 mtid = (Uint8)dict->getValue(TID)->data().toByteArray().at(0);
 		// find the call
 		const RPCCall* c = srv->findCall(mtid);
 		if (!c)
+		{
+			Out() << "Cannot find RPC call" << endl;
 			return 0;
+		}
 	
 		switch (c->getMsgMethod())
 		{
@@ -125,6 +139,22 @@ namespace dht
 			case STORE_VALUE :
 			case STORE_VALUES :
 				return new StoreValueRsp(mtid,id);
+			case GET_PEERS :
+				if (args->getValue("token"))
+				{
+					Key token = args->getValue("token")->data().toByteArray();
+					
+					if (!args->getValue("values"))
+					{
+						if (!args->getValue("nodes"))
+							return 0;
+						else
+							return new GetPeersNodesRsp(mtid,id,args->getValue("nodes")->data().toByteArray(),token);
+					}
+					else
+						return new GetPeersValuesRsp(mtid,id,args->getValue("values")->data().toByteArray(),token);
+				}
+			case ANNOUNCE_PEER :
 			default:
 				return 0;
 		}
@@ -304,7 +334,7 @@ namespace dht
 	void StoreValueReq::print()
 	{
 		Out() << QString("REQ: %1 %2 : store_value %3")
-				.arg(mtid).arg(id.toString()).arg(id.toString()).arg(key.toString()) << endl;
+				.arg(mtid).arg(id.toString()).arg(key.toString()) << endl;
 	}
 	
 	void StoreValueReq::encode(QByteArray & arr)
@@ -327,6 +357,43 @@ namespace dht
 	}
 	
 	////////////////////////////////
+	GetPeersReq::GetPeersReq(const Key & id,const Key & info_hash) 
+		: MsgBase(0xFF,GET_PEERS,REQ_MSG,id),info_hash(info_hash)
+	{}
+	
+	GetPeersReq::~GetPeersReq()
+	{}
+		
+	void GetPeersReq::apply(DHT* dh_table)
+	{
+		dh_table->getPeers(this);
+	}
+	
+	void GetPeersReq::print()
+	{
+		Out() << QString("REQ: %1 %2 : get_peers %3")
+				.arg(mtid).arg(id.toString()).arg(info_hash.toString()) << endl;
+	}
+	
+	void GetPeersReq::encode(QByteArray & arr)
+	{
+		BEncoder enc(new BEncoderBufferOutput(arr));
+		enc.beginDict();
+		{
+			enc.write(ARG); enc.beginDict();
+			{
+				enc.write("id"); enc.write(id.getData(),20);
+				enc.write("info_hash"); enc.write(info_hash.getData(),20);
+			}
+			enc.end();
+			enc.write(REQ); enc.write("get_peers");
+			enc.write(TID); enc.write(&mtid,1);
+			enc.write(TYP); enc.write(REQ);
+		}
+		enc.end();
+	}
+	
+	////////////////////////////////
 	
 	PingRsp::PingRsp(Uint8 mtid,const Key & id)
 	: MsgBase(mtid,PING,RSP_MSG,id)
@@ -336,7 +403,7 @@ namespace dht
 		
 	void PingRsp::apply(DHT* dh_table) 
 	{
-		dh_table->ping(this);
+		dh_table->response(this);
 	}
 	
 	void PingRsp::print()
@@ -371,7 +438,7 @@ namespace dht
 		
 	void FindNodeRsp::apply(DHT* dh_table) 
 	{
-		dh_table->findNode(this);
+		dh_table->response(this);
 	}
 	
 	void FindNodeRsp::print()
@@ -396,6 +463,39 @@ namespace dht
 		}
 		enc.end();
 	}
+	
+	////////////////////////////////
+	
+	GetPeersNodesRsp::GetPeersNodesRsp(Uint8 mtid,const Key & id,const QByteArray & nodes,const Key & token)
+	: FindNodeRsp(mtid,id,nodes),token(token)
+	{}
+		
+	GetPeersNodesRsp::~GetPeersNodesRsp()
+	{}
+		
+	void GetPeersNodesRsp::print()
+	{
+		Out() << QString("RSP: %1 %2 : get_peers(nodes)")
+				.arg(mtid).arg(id.toString()) << endl;
+	}
+
+	void GetPeersNodesRsp::encode(QByteArray & arr)
+	{
+		BEncoder enc(new BEncoderBufferOutput(arr));
+		enc.beginDict();
+		{
+			enc.write(RSP); enc.beginDict();
+			{
+				enc.write("id"); enc.write(id.getData(),20);
+				enc.write("nodes"); enc.write(nodes);
+				enc.write("token"); enc.write(token.getData(),20);
+			}
+			enc.end();
+			enc.write(TID); enc.write(&mtid,1);
+			enc.write(TYP); enc.write(RSP);
+		}
+		enc.end();
+	}
 
 	
 	////////////////////////////////
@@ -408,7 +508,7 @@ namespace dht
 	
 	void FindValueRsp::apply(DHT* dh_table) 
 	{
-		dh_table->findValue(this);
+		dh_table->response(this);
 	}
 	
 	void FindValueRsp::print()
@@ -434,6 +534,40 @@ namespace dht
 		enc.end();
 	}
 	
+	/////////////////////////////////
+	
+	GetPeersValuesRsp::GetPeersValuesRsp(Uint8 mtid,const Key & id,const QByteArray & values,const Key & token)
+		: FindValueRsp(mtid,id,values),token(token)
+	{
+	}
+	
+	GetPeersValuesRsp::~GetPeersValuesRsp()
+	{}
+		
+	void GetPeersValuesRsp::print()
+	{
+		Out() << QString("RSP: %1 %2 : get_peers(values)")
+				.arg(mtid).arg(id.toString()) << endl;
+	}
+	
+	void GetPeersValuesRsp::encode(QByteArray & arr)
+	{
+		BEncoder enc(new BEncoderBufferOutput(arr));
+		enc.beginDict();
+		{
+			enc.write(RSP); enc.beginDict();
+			{
+				enc.write("id"); enc.write(id.getData(),20);
+				enc.write("token"); enc.write(token.getData(),20);
+				enc.write("values"); enc.write(values);
+			}
+			enc.end();
+			enc.write(TID); enc.write(&mtid,1);
+			enc.write(TYP); enc.write(RSP);
+		}
+		enc.end();
+	}
+	
 	////////////////////////////////
 	
 	StoreValueRsp::StoreValueRsp(Uint8 mtid,const Key & id) 
@@ -444,7 +578,7 @@ namespace dht
 		
 	void StoreValueRsp::apply(DHT* dh_table) 
 	{
-		dh_table->storeValue(this);
+		dh_table->response(this);
 	}
 	
 	void StoreValueRsp::print()

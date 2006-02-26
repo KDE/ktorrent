@@ -29,6 +29,8 @@
 #include "rpcmsg.h"
 #include "kclosestnodessearch.h"
 #include "database.h"
+#include "taskmanager.h"
+
 
 using namespace bt;
 using namespace KNetwork;
@@ -38,17 +40,19 @@ namespace dht
 	
 
 
-	DHT::DHT() : node(0),srv(0),db(0),next_id(0)
+	DHT::DHT() : node(0),srv(0),db(0),tman(0)
 	{
-		tasks.setAutoDelete(true);
 		node = new Node();
 		srv = new RPCServer(this,4444);
 		db = new Database();
+		tman = new TaskManager();
+		cur_token = last_token = SHA1Hash::generate(0,0);
 	}
 
 
 	DHT::~DHT()
 	{
+		delete tman;
 		delete db;
 		delete srv;
 		delete node;
@@ -61,12 +65,6 @@ namespace dht
 		rsp.setOrigin(r->getOrigin());
 		srv->sendMsg(&rsp);
 		node->recieved(r,srv);
-	}
-	
-	void DHT::ping(PingRsp* r)
-	{
-		node->recieved(r,srv);
-		
 	}
 	
 	void DHT::findNode(FindNodeReq* r)
@@ -87,11 +85,6 @@ namespace dht
 		FindNodeRsp fnr(r->getMTID(),node->getOurID(),nodes);
 		fnr.setOrigin(r->getOrigin());
 		srv->sendMsg(&fnr);
-	}
-	
-	void DHT::findNode(FindNodeRsp* r)
-	{
-		node->recieved(r,srv);
 	}
 	
 	void DHT::findValue(FindValueReq* r)
@@ -127,11 +120,6 @@ namespace dht
 		}
 	}
 	
-	void DHT::findValue(FindValueRsp* r)
-	{
-		node->recieved(r,srv);
-	}
-	
 	void DHT::storeValue(StoreValueReq* r)
 	{
 		node->recieved(r,srv);
@@ -144,13 +132,50 @@ namespace dht
 		srv->sendMsg(&rsp);
 	}
 	
-	void DHT::storeValue(StoreValueRsp* r)
+	void DHT::getPeers(GetPeersReq* r)
+	{
+		node->recieved(r,srv);
+		const QByteArray & data = db->find(r->getInfoHash());
+		
+		Key token = cur_token;
+		
+		if (data.isNull())
+		{
+			// if data is null do the same as when we have a findNode request
+			
+			// find the K closest nodes and pack them
+			KClosestNodesSearch kns(r->getInfoHash(),K);
+		
+			node->findKClosestNodes(kns);
+		
+			Uint32 rs = kns.requiredSpace();
+			// create the data
+			QByteArray nodes(rs);
+			// pack the found nodes in a byte array
+			if (rs > 0)
+				kns.pack(nodes);
+		
+			GetPeersNodesRsp fnr(r->getMTID(),node->getOurID(),nodes,token);
+			fnr.setOrigin(r->getOrigin());
+			srv->sendMsg(&fnr);
+		}
+		else
+		{
+			// send a find value response
+			GetPeersValuesRsp fvr(r->getMTID(),node->getOurID(),data,token);
+			fvr.setOrigin(r->getOrigin());
+			srv->sendMsg(&fvr);
+		}
+	}
+	
+	void DHT::response(MsgBase* r)
 	{
 		node->recieved(r,srv);
 	}
 	
 	void DHT::error(ErrMsg* )
 	{}
+	
 
 	void DHT::portRecieved(const QString & ip,bt::Uint16 port)
 	{
@@ -159,35 +184,9 @@ namespace dht
 		r->setOrigin(KInetSocketAddress(ip,port));
 		srv->doCall(r);
 	}
-
-	Uint32 DHT::startTask(Task* task)
+	
+	Task* DHT::announce(const bt::SHA1Hash & info_hash,bt::Uint16 port)
 	{
-		Uint32 tid = next_id++;
-		task->setTaskID(tid);
-		tasks.insert(tid,task);
-		return tid;
-	}
-		
-	void DHT::update()
-	{
-		if (tasks.count() == 0)
-			return;
-		
-		QValueList<Uint32> to_del;
-		bt::PtrMap<Uint32,Task>::iterator i = tasks.begin();
-		while (i != tasks.end())
-		{
-			Task* t = i->second;
-			if (t->isFinished())
-				to_del.append(i->first);
-			i++;
-		}
-		
-		QValueList<Uint32>::iterator itr = to_del.begin();
-		while (itr != to_del.end())
-		{
-			tasks.erase(*itr);
-			itr++;
-		}
+		return 0;
 	}
 }

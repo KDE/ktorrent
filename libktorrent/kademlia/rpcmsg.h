@@ -52,6 +52,8 @@ namespace dht
 		FIND_VALUE,
 		STORE_VALUE,
 		STORE_VALUES,
+		GET_PEERS,
+		ANNOUNCE_PEER,
 		NONE,
 	};
 	
@@ -195,6 +197,20 @@ namespace dht
 		QByteArray data;
 	};
 	
+	class GetPeersReq : public MsgBase
+	{
+	public:
+		GetPeersReq(const Key & id,const Key & info_hash);
+		virtual ~GetPeersReq();
+		
+		const Key & getInfoHash() const {return info_hash;}
+		virtual void apply(DHT* dh_table);
+		virtual void print();
+		virtual void encode(QByteArray & arr);
+	private:
+		Key info_hash;
+	};
+	
 	class PingRsp : public MsgBase
 	{
 	public:
@@ -219,8 +235,20 @@ namespace dht
 		virtual void encode(QByteArray & arr);
 		
 		const QByteArray & getNodes() const {return nodes;}
-	private:
+	protected:
 		QByteArray nodes;
+	};
+	
+	class GetPeersNodesRsp : public FindNodeRsp
+	{
+	public:
+		GetPeersNodesRsp(Uint8 mtid,const Key & id,const QByteArray & nodes,const Key & token);
+		virtual ~GetPeersNodesRsp();
+		
+		virtual void print();
+		virtual void encode(QByteArray & arr);
+	private:
+		Key token;
 	};
 	
 	
@@ -235,8 +263,20 @@ namespace dht
 		virtual void encode(QByteArray & arr);
 		
 		const QByteArray & getValue() const {return values;}
-	private:
+	protected:
 		QByteArray values;
+	};
+	
+	class GetPeersValuesRsp : public FindValueRsp
+	{
+	public:
+		GetPeersValuesRsp(Uint8 mtid,const Key & id,const QByteArray & values,const Key & token);
+		virtual ~GetPeersValuesRsp();
+		
+		virtual void print();
+		virtual void encode(QByteArray & arr);
+	private:
+		Key token;
 	};
 	
 	class StoreValueRsp : public MsgBase
@@ -249,6 +289,7 @@ namespace dht
 		virtual void print();
 		virtual void encode(QByteArray & arr);
 	};
+	
 	
 }
 
