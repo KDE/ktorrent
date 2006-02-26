@@ -54,9 +54,6 @@
                     <property name="text">
                         <string>Send the trac&amp;ker a custom IP or hostname</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+K</string>
-                    </property>
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
@@ -88,7 +85,7 @@
                 <cstring>groupBox1</cstring>
             </property>
             <property name="title">
-                <string>Directories</string>
+                <string>Folders</string>
             </property>
             <vbox>
                 <property name="name">
@@ -131,9 +128,6 @@
                             </property>
                             <property name="text">
                                 <string>&amp;Automatically save downloads to:</string>
-                            </property>
-                            <property name="accel">
-                                <string>Alt+A</string>
                             </property>
                         </widget>
                         <widget class="KURLRequester">
@@ -278,16 +272,11 @@
                     <property name="text">
                         <string>Show s&amp;ystem tray icon</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+Y</string>
-                    </property>
                 </widget>
             </grid>
         </widget>
     </grid>
 </widget>
-<customwidgets>
-</customwidgets>
 <tabstops>
     <tabstop>autosave_downloads_check</tabstop>
     <tabstop>show_systray_icon</tabstop>

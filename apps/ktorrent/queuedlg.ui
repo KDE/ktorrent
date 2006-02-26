@@ -67,9 +67,6 @@
                     <property name="text">
                         <string>Move &amp;up</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+U</string>
-                    </property>
                 </widget>
                 <widget class="QPushButton">
                     <property name="name">
@@ -77,9 +74,6 @@
                     </property>
                     <property name="text">
                         <string>Move dow&amp;n</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+N</string>
                     </property>
                 </widget>
             </vbox>
@@ -114,10 +108,7 @@
                         <cstring>btnEnqueue</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;QM controlled</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+Q</string>
+                        <string>&amp;QM Controlled</string>
                     </property>
                 </widget>
                 <widget class="QPushButton">
@@ -125,10 +116,7 @@
                         <cstring>btnDequeue</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;User controlled</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+U</string>
+                        <string>&amp;User Controlled</string>
                     </property>
                 </widget>
             </vbox>
@@ -157,9 +145,6 @@
             <property name="text">
                 <string>&amp;Cancel</string>
             </property>
-            <property name="accel">
-                <string>Alt+C</string>
-            </property>
         </widget>
         <widget class="QPushButton" row="5" column="1">
             <property name="name">
@@ -168,9 +153,6 @@
             <property name="text">
                 <string>&amp;Apply</string>
             </property>
-            <property name="accel">
-                <string>Alt+A</string>
-            </property>
         </widget>
         <widget class="QPushButton" row="4" column="1">
             <property name="name">
@@ -178,9 +160,6 @@
             </property>
             <property name="text">
                 <string>&amp;Ok</string>
-            </property>
-            <property name="accel">
-                <string>Alt+O</string>
             </property>
         </widget>
     </grid>

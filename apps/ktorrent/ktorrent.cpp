@@ -384,11 +384,12 @@ void KTorrent::setupActions()
 	
 	m_pasteurl = new KAction(
 			i18n("to paste torrent URL", "Paste Torrent URL..."), "ktstart",0,this, SLOT(torrentPaste()),
-	actionCollection(), "paste_url");
+			actionCollection(), "paste_url");
 	
 	m_queuemgr = new KAction(
-			i18n("to open Queue Manager", "Open QueueManager..."), "ktqueuemanager",0,this, SLOT(queueManagerShow()),
-	actionCollection(), "Queue manager");
+			i18n("to open Queue Manager", "Open Queue Manager..."),
+			"ktqueuemanager", 0, this, SLOT(queueManagerShow()),
+			actionCollection(), "Queue manager");
 	
 	createGUI();
 }
@@ -498,7 +499,7 @@ void KTorrent::removeDownload()
 		if (s.bytes_left > 0)
 		{
 			QString msg = i18n("The torrent %1 has not finished downloading, "
-					"do you want to delete the incomplete data too ?").arg(s.torrent_name);
+					"do you want to delete the incomplete data, too?").arg(s.torrent_name);
 			int ret = KMessageBox::questionYesNoCancel(this,msg,i18n("Remove Download"));
 			if (ret == KMessageBox::Cancel)
 				return;
