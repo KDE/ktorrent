@@ -86,6 +86,9 @@ namespace bt
 
 		void getStats(Stats & s);
 		
+		/// See if a chunkdownload is idle (i.e. has no downloaders)
+		bool isIdle() const {return pdown.count() == 0;}
+		
 		/**
 		 * A Piece has arived.
 		 * @param p The Piece

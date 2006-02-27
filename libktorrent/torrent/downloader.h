@@ -169,8 +169,6 @@ namespace bt
 	private:
 		void downloadFrom(PeerDownloader* pd);
 		void normalUpdate();
-		void endgameUpdate();
-		void warmupUpdate();
 		
 	private:
 		Torrent & tor;
@@ -178,6 +176,7 @@ namespace bt
 		ChunkManager & cman;
 		Uint64 downloaded,curr_chunks_dowloaded;
 		PtrMap<Uint32,ChunkDownload> current_chunks;
+		Uint32 num_non_idle;
 		ChunkSelector* chunk_selector;
 		
 		kt::MonitorInterface* tmon;

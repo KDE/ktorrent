@@ -47,6 +47,12 @@ namespace bt
 		QString getDataDir() const {return datadir;}
 		
 		/**
+		 * Get the actual output path.
+		 * @return The output path
+		 */
+		virtual QString getOutputPath() const = 0;
+		
+		/**
 		 * Changes the tmp dir. All data files should allready been moved.
 		 * This just modifies the tmpdir variable.
 		 * @param ndir The new tmpdir

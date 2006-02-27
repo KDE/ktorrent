@@ -41,10 +41,12 @@ namespace kt
 		virtual void load();
 		virtual void unload();
 		virtual void guiUpdate();
-		virtual void currentChanged(TorrentInterface* tc);
+		virtual void currentDownloadChanged(TorrentInterface* tc);
+		virtual void currentSeedChanged(TorrentInterface* tc);
 		
 	private:
 		InfoWidget* iw;
+		InfoWidget* iw_seed;
 		InfoWidgetPrefPage* pref;
 	};
 

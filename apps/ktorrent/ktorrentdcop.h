@@ -42,6 +42,7 @@ public:
 	virtual void setMaxDownloads(int max);
 	virtual void setMaxSeeds(int max);
 	virtual void setMaxUploadSpeed(int kbytes_per_sec);
+	virtual void setMaxDownloadSpeed(int kbytes_per_sec);
 	virtual void setShowSysTrayIcon(bool yes);
 	virtual void startAll();
 	virtual void stopAll();

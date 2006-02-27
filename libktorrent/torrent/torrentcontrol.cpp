@@ -53,6 +53,7 @@
 #include "downloadcap.h"
 #include "uploadcap.h"
 #include "queuemanager.h"
+#include "statsfile.h"
 
 using namespace kt;
 
@@ -78,6 +79,8 @@ namespace bt
 		prev_bytes_ul = 0;
 		io_error = false;
 		priority = 0;
+		maxShareRatio = 0.00f;
+		custom_output_name = false;
 
 		updateStats();
 	}
@@ -185,6 +188,10 @@ namespace bt
 				tracker->manualUpdate();
 				stalled_timer.update();
 			}
+			
+			if(overMaxRatio())
+				stop(true);
+			
 		}
 		catch (Error & e)
 		{
@@ -203,7 +210,7 @@ namespace bt
 	}
 
 	void TorrentControl::start()
-	{
+	{	
 		if (bt::Exists(datadir + "stopped"))
 			bt::Delete(datadir + "stopped",true);
 
@@ -338,10 +345,17 @@ namespace bt
 		stats.multi_file_torrent = tor->isMultiFile();
 		stats.total_bytes = tor->getFileLength();
 		
-		// load stats if outputdir is null
+		// check the stats file for the custom_output_name variable
+		StatsFile st(datadir + "stats");
+		if (st.hasKey("CUSTOM_OUTPUT_NAME") && st.readULong("CUSTOM_OUTPUT_NAME") == 1)
+		{
+			custom_output_name = true;
+		}
+		
+		// load outputdir if outputdir is null
 		if (outputdir.isNull() || outputdir.length() == 0)
 			loadOutputDir();
-		
+					
 		// copy torrent in temp dir
 		QString tor_copy = datadir + "torrent";
 
@@ -369,21 +383,21 @@ namespace bt
 
 		// create PeerManager and Tracker
 		pman = new PeerManager(*tor);
-		if (tor->getTrackerURL(true).protocol() == "udp")
-			tracker = new UDPTracker(this,tor->getInfoHash(),tor->getPeerID());
-		else
-			tracker = new HTTPTracker(this,tor->getInfoHash(),tor->getPeerID());
-
+		KURL url = tor->getTrackerURL(true);
+		//Out() << "Tracker url " << url << " " << url.protocol() << " " << url.prettyURL() << endl;
+		tracker = new Tracker(this,tor->getInfoHash(),tor->getPeerID());
 		connect(tracker,SIGNAL(error()),this,SLOT(trackerResponseError()));
 		connect(tracker,SIGNAL(dataReady()),this,SLOT(trackerResponse()));
 
 
 		// Create chunkmanager, load the index file if it exists
 		// else create all the necesarry files
-		cman = new ChunkManager(*tor,datadir,outputdir);
+		cman = new ChunkManager(*tor,datadir,outputdir,custom_output_name);
 		// outputdir is null, see if the cache has figured out what it is
 		if (outputdir.length() == 0)
 			outputdir = cman->getDataDir();
+		
+		// store the outputdir into the output_path variable, so others can access it	
 		
 		connect(cman,SIGNAL(updateStats()),this,SLOT(updateStats()));
 		if (bt::Exists(datadir + "index"))
@@ -431,6 +445,8 @@ namespace bt
 		loadStats();
 		updateStats();
 		saveStats();
+		stats.output_path = cman->getOutputPath();
+		Out() << "OutputPath = " << stats.output_path << endl;
 	}
 
 	void TorrentControl::trackerResponse()
@@ -614,138 +630,73 @@ namespace bt
 
 	void TorrentControl::saveStats()
 	{
-		QFile fptr(datadir + "stats");
-		if (!fptr.open(IO_WriteOnly))
-		{
-			Out() << "Warning : can't create stats file" << endl;
-			return;
-		}
+		StatsFile st(datadir + "stats");
 
-		QTextStream out(&fptr);
-		out << "OUTPUTDIR=" << cman->getDataDir() << ::endl;
+		st.write("OUTPUTDIR", cman->getDataDir());
+		
 		if (cman->getDataDir() != outputdir)
 			outputdir = cman->getDataDir();
-		out << "UPLOADED=" << QString::number(up->bytesUploaded()) << ::endl;
+		
+		st.write("UPLOADED", QString::number(up->bytesUploaded()));
+		
 		if (stats.running)
 		{
 			QDateTime now = QDateTime::currentDateTime();
-			out << "RUNNING_TIME_DL=" << (running_time_dl + time_started_dl.secsTo(now)) << ::endl;
-			out << "RUNNING_TIME_UL=" << (running_time_ul + time_started_ul.secsTo(now)) << ::endl;
+			st.write("RUNNING_TIME_DL",QString("%1").arg(running_time_dl + time_started_dl.secsTo(now)));
+			st.write("RUNNING_TIME_UL",QString("%1").arg(running_time_ul + time_started_ul.secsTo(now)));
 		}
 		else
 		{
-			out << "RUNNING_TIME_DL=" << running_time_dl << ::endl;
-			out << "RUNNING_TIME_UL=" << running_time_ul << ::endl;
+			st.write("RUNNING_TIME_DL", QString("%1").arg(running_time_dl));
+			st.write("RUNNING_TIME_UL", QString("%1").arg(running_time_ul));
 		}
 		
-		out << "PRIORITY=" << priority << ::endl;
-		out << "AUTOSTART=" << stats.autostart << ::endl;
-		out << QString("IMPORTED=%1").arg(stats.imported_bytes) << ::endl;
+		st.write("PRIORITY", QString("%1").arg(priority));
+		st.write("AUTOSTART", QString("%1").arg(stats.autostart));
+		st.write("IMPORTED", QString("%1").arg(stats.imported_bytes));
+		st.write("CUSTOM_OUTPUT_NAME",custom_output_name ? "1" : "0");
+		st.write("MAX_RATIO", QString("%1").arg(maxShareRatio,0,'f',2));
+		
+		st.writeSync();
 	}
 
 	void TorrentControl::loadStats()
 	{
-		QFile fptr(datadir + "stats");
-		if (!fptr.open(IO_ReadOnly))
-			return;
-
-		QTextStream in(&fptr);
-		while (!in.atEnd())
+		StatsFile st(datadir + "stats");
+		
+		Uint64 val = st.readUint64("UPLOADED");
+		prev_bytes_ul = val;
+		up->setBytesUploaded(val);
+		
+		this->running_time_dl = st.readULong("RUNNING_TIME_DL");
+		this->running_time_ul = st.readULong("RUNNING_TIME_UL");
+		outputdir = st.readString("OUTPUTDIR").stripWhiteSpace();
+		if (st.hasKey("CUSTOM_OUTPUT_NAME") && st.readULong("CUSTOM_OUTPUT_NAME") == 1)
 		{
-			QString line = in.readLine();
-			if (line.startsWith("UPLOADED="))
-			{
-				bool ok = true;
-				Uint64 val = line.mid(9).toULongLong(&ok);
-				if (ok)
-					up->setBytesUploaded(val);
-				else
-					Out() << "Warning : can't get bytes uploaded out of line : "
-					<< line << endl;
-				prev_bytes_ul = val;
-			}
-			else if (line.startsWith("RUNNING_TIME_DL="))
-			{
-				bool ok = true;
-				unsigned long val  = line.mid(16).toULong(&ok);
-				if(ok)
-					this->running_time_dl = val;
-				else
-					Out() << "Warning : can't get running time out of line : "
-					<< line << endl;
-			}
-			else if (line.startsWith("RUNNING_TIME_UL="))
-			{
-				bool ok = true;
-				unsigned long val = line.mid(16).toULong(&ok);
-				if(ok)
-					this->running_time_ul = val;
-				else
-					Out() << "Warning : can't get running time out of line : "
-					<< line << endl;
-			}
-			else if (line.startsWith("OUTPUTDIR="))
-			{
-				outputdir = line.mid(10).stripWhiteSpace();
-			}
-			else if (line.startsWith("PRIORITY="))
-			{
-				bool ok = true;
-				int p = line.mid(9).toInt(&ok);
-				if(ok)
-				{
-					priority = p;
-					stats.user_controlled = p == 0 ? true : false;
-				}
-				else
-					Out() << "Warning : Can't get priority out of line : "
-							<< line << endl;
-			}
-			else if (line.startsWith("AUTOSTART="))
-			{
-				bool ok = true;
-				int p = line.mid(10).toInt(&ok);
-				if(ok)
-					stats.autostart = (bool) p;
-				else
-				{
-					Out() << "Warning : Can't get autostart bit out of line : "
-							<< line << endl;
-					stats.autostart = true;
-				}
-			}
-			else if (line.startsWith("IMPORTED="))
-			{
-				bool ok = true;
-				Uint64 p = line.mid(9).toULongLong(&ok);
-				if(ok)
-					stats.imported_bytes = p;
-				else
-				{
-					Out() << "Warning : Can't get imported_bytes out of line : "
-							<< line << endl;
-				}
-			}
+			custom_output_name = true;
 		}
+		
+		priority = st.readInt("PRIORITY");
+		stats.user_controlled = priority == 0 ? true : false;
+		stats.autostart = st.readBoolean("AUTOSTART");
+		
+		stats.imported_bytes = st.readUint64("IMPORTED");
+		float rat = st.readFloat("MAX_RATIO");
+		maxShareRatio = rat;
+		
+		return;
 	}
 
 	void TorrentControl::loadOutputDir()
 	{
-		QFile fptr(datadir + "stats");
-		if (!fptr.open(IO_ReadOnly))
+		StatsFile st(datadir + "stats");
+		if (!st.hasKey("OUTPUTDIR"))
 			return;
-
-		QTextStream in(&fptr);
-		while (!in.atEnd())
+		
+		outputdir = st.readString("OUTPUTDIR").stripWhiteSpace();
+		if (st.hasKey("CUSTOM_OUTPUT_NAME") && st.readULong("CUSTOM_OUTPUT_NAME") == 1)
 		{
-			QString line = in.readLine();
-			if (line.startsWith("OUTPUTDIR="))
-			{
-				outputdir = line.mid(10).stripWhiteSpace();
-				if (outputdir.length() > 0 && !outputdir.endsWith(bt::DirSeparator()))
-					outputdir += bt::DirSeparator();
-				return;
-			}
+			custom_output_name = true;
 		}
 	}
 
@@ -781,6 +732,7 @@ namespace bt
 		stats.total_chunks = cman ? cman->getNumChunks() : 0;
 		stats.num_chunks_downloaded = cman ? cman->getNumChunks() - cman->chunksExcluded() - cman->chunksLeft() : 0;
 		stats.num_chunks_excluded = cman ? cman->chunksExcluded() : 0;
+		stats.chunk_size = tor ? tor->getChunkSize() : 0;
 		stats.total_bytes_to_download = (tor && cman) ?	tor->getFileLength() - cman->bytesExcluded() : 0;
 		stats.session_bytes_downloaded = stats.bytes_downloaded - prev_bytes_dl;
 		stats.session_bytes_uploaded = stats.bytes_uploaded - prev_bytes_ul;
@@ -907,8 +859,25 @@ namespace bt
 		stats.user_controlled = p == 0 ? true : false;
 		saveStats();
 	}
+	
+	void TorrentControl::setMaxShareRatio(float ratio)
+	{
+		maxShareRatio = ratio;
+		saveStats();
+		emit maxRatioChanged(this);
+	}
+	
+	bool TorrentControl::overMaxRatio()
+	{
+		if(stats.completed && stats.bytes_uploaded != 0 && stats.bytes_downloaded != 0 && maxShareRatio > 0)
+		{
+			float val = (float) stats.bytes_uploaded / stats.bytes_downloaded;
+			if(val >= maxShareRatio)
+				return true;
+		}
+		
+		return false;
+	}
 }
 
-
-		
 #include "torrentcontrol.moc"

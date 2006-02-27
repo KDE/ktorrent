@@ -148,8 +148,15 @@ namespace kt
 				if (durl.endsWith(bt::DirSeparator()))
 					durl = durl.left(durl.length() - 1);
 				int ds = durl.findRev(bt::DirSeparator());
-				durl = durl.left(ds);
-				saveStats(tor_dir + "stats",durl,imported);
+				if (durl.mid(ds+1) == tor.getNameSuggestion())
+				{
+					durl = durl.left(ds);
+					saveStats(tor_dir + "stats",durl,imported,false);
+				}
+				else
+				{
+					saveStats(tor_dir + "stats",durl,imported,true);
+				}
 				saveFileInfo(tor_dir + "file_info",dnd_files);
 			}
 			else
@@ -159,7 +166,7 @@ namespace kt
 				QString durl = data_url.path();
 				int ds = durl.findRev(bt::DirSeparator());
 				durl = durl.left(ds);
-				saveStats(tor_dir + "stats",durl,imported);
+				saveStats(tor_dir + "stats",durl,imported,false);
 			}
 			
 			// everything went OK, so load the whole shabang and start downloading
@@ -245,7 +252,7 @@ namespace kt
 		}
 	}
 	
-	void ImportDialog::saveStats(const QString & stats_file,const KURL & data_url,Uint64 imported)
+	void ImportDialog::saveStats(const QString & stats_file,const KURL & data_url,Uint64 imported,bool custom_output_name)
 	{
 		QFile fptr(stats_file);
 		if (!fptr.open(IO_WriteOnly))
@@ -262,6 +269,8 @@ namespace kt
 		out << "PRIORITY=0" << ::endl;
 		out << "AUTOSTART=1" << ::endl;
 		out << QString("IMPORTED=%1").arg(imported) << ::endl;
+		if (custom_output_name)
+			out << "CUSTOM_OUTPUT_NAME=1" << endl;
 	}
 	
 	Uint64 ImportDialog::calcImportedBytes(const bt::BitSet & chunks,const Torrent & tor)

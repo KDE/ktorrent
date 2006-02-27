@@ -21,6 +21,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <interfaces/guiinterface.h>
+#include <interfaces/torrentinterface.h>
 #include "infowidget.h"
 #include "infowidgetplugin.h"
 #include "infowidgetprefpage.h"
@@ -51,9 +52,11 @@ namespace kt
 	void InfoWidgetPlugin::load()
 	{
 		iw = new InfoWidget(0);
+		iw_seed = new InfoWidget(true, 0);
 		pref = new InfoWidgetPrefPage(iw);
 		getGUI()->addViewListener(this);
 		getGUI()->addWidgetInView(iw,kt::BELOW);
+		getGUI()->addWidgetInSeedView(iw_seed, kt::BELOW);
 		getGUI()->addPrefPage(pref);
 		iw->changeTC(const_cast<kt::TorrentInterface*>(getGUI()->getCurrentTorrent()));
 	}
@@ -63,20 +66,34 @@ namespace kt
 		getGUI()->removeViewListener(this);
 		getGUI()->removePrefPage(pref);
 		getGUI()->removeWidgetFromView(iw);
+		getGUI()->removeWidgetFromSeedView(iw_seed);
 		delete pref;
 		pref = 0;
 		delete iw;
 		iw = 0;
+		delete iw_seed;
+		iw_seed = 0;
 	}
 
 	void InfoWidgetPlugin::guiUpdate()
 	{
-		iw->update();
+		if(getGUI()->getCurrentPanel() == DOWNLOAD_VIEW)
+			iw->update();
+		
+		if(getGUI()->getCurrentPanel() == SEED_VIEW)
+			iw_seed->update();
 	}
 
-	void InfoWidgetPlugin::currentChanged(TorrentInterface* tc)
+	void InfoWidgetPlugin::currentDownloadChanged(TorrentInterface* tc)
 	{
-		iw->changeTC(tc);
+		if(getGUI()->getCurrentPanel() == DOWNLOAD_VIEW)
+			iw->changeTC(tc);
+	}
+	
+	void InfoWidgetPlugin::currentSeedChanged(TorrentInterface* tc)
+	{
+		if(getGUI()->getCurrentPanel() == SEED_VIEW)
+			iw_seed->changeTC(tc);		
 	}
 }
 

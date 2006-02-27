@@ -86,41 +86,72 @@ using namespace kt;
 
 KTorrent::KTorrent()
 		: KMainWindow( 0, "KTorrent" ),
-		m_view(0),m_systray_icon(0)
+		m_view(0), m_seedView(0), m_systray_icon(0)
 {
 	bool debug = bt::Globals::instance().isDebugModeSet();
 	KIconLoader* iload = KGlobal::iconLoader();
 
 	m_tabs = new KTabWidget(0);
 	m_view = new KTorrentView(0);
+	m_seedView = new KTorrentView(0, true);
 	m_exp = new ExpandableWidget(m_tabs,this);
 	m_view_exp = new ExpandableWidget(m_view,m_tabs);
+	m_seedView_exp = new ExpandableWidget(m_seedView,m_tabs);
 	m_tabs->addTab(m_view_exp,iload->loadIconSet("down", KIcon::Small),i18n("Downloads"));
+	m_tabs->addTab(m_seedView_exp,iload->loadIconSet("up", KIcon::Small),i18n("Uploads"));
 
 	m_pref = new KTorrentPreferences(*this);
 	m_core = new KTorrentCore(this);
-	m_systray_icon = new TrayIcon(m_core, this); 
+	m_systray_icon = new TrayIcon(m_core, this);
+	
+	connect(m_tabs, SIGNAL(currentChanged(QWidget*)), this, SLOT(currentTabChanged( QWidget* )));
+	
+	connect(m_core, SIGNAL(finished( kt::TorrentInterface* )), m_view, SLOT(torrentFinished( kt::TorrentInterface* )));
+	
+	connect(m_view, SIGNAL(viewChange( kt::TorrentInterface* )), m_seedView, SLOT(addTorrent( kt::TorrentInterface* )));
+	connect(m_seedView, SIGNAL(viewChange( kt::TorrentInterface* )), m_view, SLOT(addTorrent( kt::TorrentInterface* )));
+	connect(m_seedView, SIGNAL(viewChange( kt::TorrentInterface* )), m_systray_icon, SLOT(viewChanged( kt::TorrentInterface* )));
 
 	connect(m_core,SIGNAL(torrentAdded(kt::TorrentInterface* )),
 			m_view,SLOT(addTorrent(kt::TorrentInterface* )));
+	
+	connect(m_core,SIGNAL(torrentAdded(kt::TorrentInterface* )),
+			m_seedView,SLOT(addTorrent(kt::TorrentInterface* )));
 
 	connect(m_core,SIGNAL(torrentRemoved(kt::TorrentInterface* )),
 			m_view,SLOT(removeTorrent(kt::TorrentInterface* )));
+	
+	connect(m_core,SIGNAL(torrentRemoved(kt::TorrentInterface* )),
+			m_seedView,SLOT(removeTorrent(kt::TorrentInterface* )));
 
 	connect(m_view,SIGNAL(currentChanged(kt::TorrentInterface* )),
-			this,SLOT(currentChanged(kt::TorrentInterface* )));
+			this,SLOT(currentDownloadChanged(kt::TorrentInterface* )));
+	
+	connect(m_seedView,SIGNAL(currentChanged(kt::TorrentInterface* )),
+			this,SLOT(currentSeedChanged(kt::TorrentInterface* )));
 
 	connect(m_view,SIGNAL(wantToRemove(kt::TorrentInterface*,bool )),
 			m_core,SLOT(remove(kt::TorrentInterface*,bool )));
-
+	
+	connect(m_seedView,SIGNAL(wantToRemove(kt::TorrentInterface*,bool )),
+			m_core,SLOT(remove(kt::TorrentInterface*,bool )));
 
 	connect(m_view,SIGNAL(dropped(QDropEvent*,QListViewItem*)),
+			this,SLOT(urlDropped(QDropEvent*,QListViewItem*)));
+	
+	connect(m_seedView,SIGNAL(dropped(QDropEvent*,QListViewItem*)),
 			this,SLOT(urlDropped(QDropEvent*,QListViewItem*)));
 	
 	connect(m_view,SIGNAL(wantToStart( kt::TorrentInterface* )),
 			m_core,SLOT(start( kt::TorrentInterface* )));
 	
+	connect(m_seedView,SIGNAL(wantToStart( kt::TorrentInterface* )),
+			m_core,SLOT(start( kt::TorrentInterface* )));
+	
 	connect(m_view,SIGNAL(wantToStop( kt::TorrentInterface*, bool )),
+			m_core,SLOT(stop( kt::TorrentInterface*, bool )));
+	
+	connect(m_seedView,SIGNAL(wantToStop( kt::TorrentInterface*, bool )),
 			m_core,SLOT(stop( kt::TorrentInterface*, bool )));
 
 	// then, setup our actions
@@ -134,7 +165,7 @@ KTorrent::KTorrent()
 	// position, icon size, etc.
 	setAutoSaveSettings();
 
-	currentChanged(0);
+	currentDownloadChanged(0);
 	applySettings(false);
 
 	setCentralWidget(m_exp);
@@ -165,7 +196,23 @@ KTorrent::KTorrent()
 	m_core->loadPlugins();
 
 	connect(&m_gui_update_timer, SIGNAL(timeout()), this, SLOT(updatedStats()));
-	m_gui_update_timer.start(500);
+	//Apply GUI update interval
+	int val = 500;
+	switch(Settings::guiUpdateInterval())
+	{
+		case 1:
+			val = 1000;
+			break;
+		case 2:
+			val = 2000;
+			break;
+		case 3:
+			val = 5000;
+			break;
+		default:
+			val = 500;
+	}
+	m_gui_update_timer.start(val);
 
 	bool hidden_on_exit = KGlobal::config()->readBoolEntry("hidden_on_exit",false);
 	if (!(Settings::showSystemTrayIcon() && hidden_on_exit))
@@ -259,7 +306,7 @@ void KTorrent::load(const KURL& url)
 	m_core->load(url);
 }
 
-void KTorrent::currentChanged(kt::TorrentInterface* tc)
+void KTorrent::currentDownloadChanged(kt::TorrentInterface* tc)
 {
 	if (tc)
 	{
@@ -275,7 +322,26 @@ void KTorrent::currentChanged(kt::TorrentInterface* tc)
 		m_remove->setEnabled(false);
 	}
 
-	notifyViewListeners(tc);
+	notifyDownloadViewListeners(tc);
+}
+
+void KTorrent::currentSeedChanged(kt::TorrentInterface* tc)
+{
+	if (tc)
+	{
+		const TorrentStats & s = tc->getStats();
+		m_start->setEnabled(!s.running);
+		m_stop->setEnabled(s.running);
+		m_remove->setEnabled(true);
+	}
+	else
+	{
+		m_start->setEnabled(false);
+		m_stop->setEnabled(false);
+		m_remove->setEnabled(false);
+	}
+
+	notifySeedViewListeners(tc);
 }
 
 void KTorrent::setupActions()
@@ -318,11 +384,12 @@ void KTorrent::setupActions()
 	
 	m_pasteurl = new KAction(
 			i18n("to paste torrent URL", "Paste Torrent URL..."), "ktstart",0,this, SLOT(torrentPaste()),
-	actionCollection(), "paste_url");
+			actionCollection(), "paste_url");
 	
 	m_queuemgr = new KAction(
-			i18n("to open Queue Manager", "Open QueueManager..."), "ktqueuemanager",0,this, SLOT(queueManagerShow()),
-	actionCollection(), "Queue manager");
+			i18n("to open Queue Manager", "Open Queue Manager..."),
+			"ktqueuemanager", 0, this, SLOT(queueManagerShow()),
+			actionCollection(), "Queue manager");
 	
 	createGUI();
 }
@@ -349,6 +416,7 @@ bool KTorrent::queryExit()
 	m_core->onExit();
 	KGlobal::config()->writeEntry( "hidden_on_exit",this->isHidden());
 	m_view->saveSettings();
+	m_seedView->saveSettings();
 	return true;
 }
 
@@ -385,37 +453,15 @@ void KTorrent::queueManagerShow()
 
 void KTorrent::startDownload()
 {
-	TorrentInterface* tc = m_view->getCurrentTC();
+	TorrentInterface* tc = getCurrentView()->getCurrentTC();
 	if (tc && !tc->getStats().running)
 	{
 		m_core->start(tc);
-		if (!tc->getStats().running && !tc->getStats().stopped_by_error)
-		{
-			bool seed = tc->getStats().bytes_left == 0;
-			int nr = seed ? Settings::maxSeeds() : Settings::maxDownloads();
-			
-			if(!seed)
-				KMessageBox::error(this,
-								   i18n("Cannot start more than 1 download."
-										   " Go to Settings -> Configure KTorrent,"
-										   " if you want to change the limit.",
-								   			"Cannot start more than %n downloads."
-										   " Go to Settings -> Configure KTorrent,"
-										   " if you want to change the limit.",
-											nr),
-								   	i18n("Error"));
-			else
-				KMessageBox::error(this,
-								   i18n("Cannot start more than 1 seed."
-										   " Go to Settings -> Configure KTorrent,"
-										   " if you want to change the limit.",
-								   "Cannot start more than %n seeds."
-										   " Go to Settings -> Configure KTorrent,"
-										   " if you want to change the limit.",
-								   nr),
-								   i18n("Error"));
-		}
-		currentChanged(tc);
+
+		if(getCurrentPanel() == DOWNLOAD_VIEW)
+			currentDownloadChanged(tc);
+		if(getCurrentPanel() == SEED_VIEW)
+			currentSeedChanged(tc);
 	}
 }
 
@@ -426,12 +472,15 @@ void KTorrent::startAllDownloads()
 
 void KTorrent::stopDownload()
 {
-	TorrentInterface* tc = m_view->getCurrentTC();
+	TorrentInterface* tc = getCurrentView()->getCurrentTC();
 	if (tc && tc->getStats().running)
 	{
 		//tc->stop(true);
 		m_core->stop(tc, true);
-		currentChanged(tc);
+		if(getCurrentPanel() == DOWNLOAD_VIEW)
+			currentDownloadChanged(tc);
+		if(getCurrentPanel() == SEED_VIEW)
+			currentSeedChanged(tc);
 	}
 }
 
@@ -442,7 +491,7 @@ void KTorrent::stopAllDownloads()
 
 void KTorrent::removeDownload()
 {
-	TorrentInterface* tc = m_view->getCurrentTC();
+	TorrentInterface* tc = getCurrentView()->getCurrentTC();
 	if (tc)
 	{
 		const TorrentStats & s = tc->getStats();
@@ -450,7 +499,7 @@ void KTorrent::removeDownload()
 		if (s.bytes_left > 0)
 		{
 			QString msg = i18n("The torrent %1 has not finished downloading, "
-					"do you want to delete the incomplete data too ?").arg(s.torrent_name);
+					"do you want to delete the incomplete data, too?").arg(s.torrent_name);
 			int ret = KMessageBox::questionYesNoCancel(this,msg,i18n("Remove Download"));
 			if (ret == KMessageBox::Cancel)
 				return;
@@ -458,8 +507,16 @@ void KTorrent::removeDownload()
 				data_to = true;
 		}
 		m_core->remove(tc,data_to);
-		currentChanged(m_view->getCurrentTC());
-		notifyViewListeners(m_view->getCurrentTC());
+		if(getCurrentPanel() == DOWNLOAD_VIEW)
+		{
+			currentDownloadChanged(m_view->getCurrentTC());
+			notifyDownloadViewListeners(m_view->getCurrentTC());
+		}
+		if(getCurrentPanel() == SEED_VIEW)
+		{
+			currentSeedChanged(m_seedView->getCurrentTC());
+			notifySeedViewListeners(m_seedView->getCurrentTC());
+		}
 	}
 }
 
@@ -566,7 +623,7 @@ void KTorrent::urlDropped(QDropEvent* event,QListViewItem*)
 
 void KTorrent::updatedStats()
 {
-	TorrentInterface* tc = m_view->getCurrentTC();
+	TorrentInterface* tc = getCurrentView()->getCurrentTC();
 	if (tc)
 	{
 		const TorrentStats & s = tc->getStats();
@@ -598,9 +655,13 @@ void KTorrent::updatedStats()
 			.arg(BytesToString(stats.bytes_downloaded));
 	m_statusTransfer->setText(tmp1);
 
-	m_view->update();
+	getCurrentView()->update();
 	m_systray_icon->updateStats(tmp + "<br>" + tmp1 + "<br>");
 	m_core->getPluginManager().updateGuiPlugins();
+	
+	//update tab labels
+	m_tabs->setTabLabel(m_view_exp, QString("%1 %2/%3").arg(i18n("Downloads")).arg(m_core->getNumRunning(true)).arg(m_core->countDownloads()));
+	m_tabs->setTabLabel(m_seedView_exp, QString("%1 %2/%3").arg(i18n("Uploads")).arg(m_core->getNumRunning(false,true)).arg(m_core->countSeeds()));
 }
 
 void KTorrent::mergePluginGui(Plugin* p)
@@ -629,6 +690,20 @@ void KTorrent::removeWidgetFromView(QWidget* w)
 	m_view_exp->remove(w);
 }
 
+void KTorrent::addWidgetInSeedView( QWidget * w, kt::Position pos )
+{
+	if (!w) return;
+	
+	m_seedView_exp->expand(w,pos);
+}
+
+void KTorrent::removeWidgetFromSeedView( QWidget * w )
+{
+	if (!w) return;
+	
+	m_seedView_exp->remove(w);
+}
+
 void KTorrent::addWidgetBelowView(QWidget* w)
 {
 	if (!w) return;
@@ -646,6 +721,27 @@ void KTorrent::removeWidgetBelowView(QWidget* w)
 const TorrentInterface* KTorrent::getCurrentTorrent() const
 {
 	return m_view->getCurrentTC();
+}
+
+KTorrentView* KTorrent::getCurrentView()
+{
+	return m_tabs->currentPageIndex() == 1 ? m_seedView : m_view;
+}
+
+PanelView KTorrent::getCurrentPanel()
+{
+	if(!isVisible())
+		return NO_VIEW;
+	
+	return (PanelView) m_tabs->currentPageIndex();
+}
+
+void KTorrent::currentTabChanged(QWidget* tab)
+{
+	if(m_tabs->currentPageIndex() == 1)
+		currentSeedChanged(m_seedView->getCurrentTC());
+	if(m_tabs->currentPageIndex() == 0)
+		currentDownloadChanged(m_view->getCurrentTC());
 }
 
 #include "ktorrent.moc"

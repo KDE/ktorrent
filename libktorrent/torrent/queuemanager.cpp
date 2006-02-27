@@ -89,7 +89,20 @@ namespace bt
 			Out() << "Starting download" << endl;
 			try
 			{
-				tc->start();
+				float ratio = (float) s.bytes_uploaded / s.bytes_downloaded;
+				float max_ratio = tc->getMaxShareRatio();
+				if(s.completed && max_ratio > 0 && ratio >= max_ratio)
+				{
+					if(KMessageBox::questionYesNo(0, i18n("This torrent has reached its maximum share ratio. Ignore the limit and start seeding anyway?"),i18n("Maximum share ratio limit reached.")) == KMessageBox::Yes)
+					{
+						tc->setMaxShareRatio(0.00f);
+						tc->start();
+					}
+					else
+						return;
+				}
+				else
+					tc->start();
 			}
 			catch (bt::Error & err)
 			{
@@ -97,6 +110,35 @@ namespace bt
 						i18n("Error starting torrent %1 : %2")
 						.arg(s.torrent_name).arg(err.toString());
 				KMessageBox::error(0,msg,i18n("Error"));
+			}
+		}
+		else
+		{
+			if (!tc->getStats().running && !tc->getStats().stopped_by_error)
+			{
+				bool seed = tc->getStats().completed;
+				int nr = seed ? max_seeds : max_downloads;
+			
+				if(!seed)
+					KMessageBox::error(0,
+									   i18n("Cannot start more than 1 download."
+											   " Go to Settings -> Configure KTorrent,"
+											   " if you want to change the limit.",
+									   "Cannot start more than %n downloads."
+											   " Go to Settings -> Configure KTorrent,"
+											   " if you want to change the limit.",
+									   nr),
+									   i18n("Error"));
+				else
+					KMessageBox::error(0,
+									   i18n("Cannot start more than 1 seed."
+											   " Go to Settings -> Configure KTorrent,"
+											   " if you want to change the limit.",
+									   "Cannot start more than %n seeds."
+											   " Go to Settings -> Configure KTorrent,"
+											   " if you want to change the limit.",
+									   nr),
+									   i18n("Error"));
 			}
 		}
 	}
@@ -154,6 +196,32 @@ namespace bt
 		orderQueue();
 	}
 
+	int QueueManager::countDownloads( )
+	{
+		int nr = 0;
+		QPtrList<TorrentInterface>::const_iterator i = downloads.begin();
+		while (i != downloads.end())
+		{
+			if(!(*i)->getStats().completed)
+				++nr;
+			++i;
+		}
+		return nr;
+	}
+
+	int QueueManager::countSeeds( )
+	{
+		int nr = 0;
+		QPtrList<TorrentInterface>::const_iterator i = downloads.begin();
+		while (i != downloads.end())
+		{
+			if((*i)->getStats().completed)
+				++nr;
+			++i;
+		}
+		return nr;
+	}
+	
 	int QueueManager::getNumRunning(bool onlyDownload, bool onlySeed)
 	{
 		int nr = 0;
@@ -274,44 +342,13 @@ namespace bt
              
 			++it;
 		}
-		
-// 		if(it == downloads.end())
-// 			return;
-// 		
-// 		QPtrList<TorrentInterface>::const_iterator end_queue = it;
-// 		
-// 		while (it != downloads.end()) //first stop all torrents that aren't supposed to be running
-// 		{
-// 			TorrentInterface* tc = *it;
-// 			const TorrentStats & s = tc->getStats();
-// 			
-// 			if(s.running && !s.completed && s.autostart)
-// 				stop(tc);
-// 			
-// 			++it;
-// 		}
-// 		
-// 		it = downloads.begin();
-// 		
-// 		while (it != end_queue) //then check if some torrent needs to be started
-// 		{
-// 			TorrentInterface* tc = *it;
-// 			const TorrentStats & s = tc->getStats();
-// 			
-// 			if(!s.running && !s.completed && s.autostart)
-// 				start(tc);
-// 			
-// 			++it;
-// 		}
 	}
-	
 	
 	void QueueManager::torrentFinished(kt::TorrentInterface* tc)
 	{
 		//dequeue this tc
 		tc->setPriority(0);
 		//make sure the max_seeds is not reached
-		Out() << "GNR Seed" << getNumRunning(false,true) << endl;
 		if(max_seeds !=0 && max_seeds < getNumRunning(false,true))
 			tc->stop(true);
 		
@@ -368,4 +405,3 @@ namespace bt
 		return 0;
 	}
 }
-

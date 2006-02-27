@@ -35,6 +35,7 @@ namespace bt
 	class SingleFileCache : public Cache
 	{
 		QString cache_file;
+		QString output_file;
 		CacheFile* fd;
 	public:
 		SingleFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir);
@@ -47,6 +48,7 @@ namespace bt
 		virtual void close();
 		virtual void open();
 		virtual void changeDataDir(const QString & ndir);
+		virtual QString getOutputPath() const {return output_file;}
 	};
 
 }

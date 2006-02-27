@@ -46,7 +46,7 @@ namespace kt
 		Q_OBJECT
 	
 	public:
-		InfoWidget(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+		InfoWidget(bool seed = false, QWidget* parent = 0, const char* name = 0, WFlags fl = 0);
 		virtual ~InfoWidget();
 		
 		///Show PeerView in main window
@@ -61,11 +61,14 @@ namespace kt
 	
 		///preview slot
 		void contextItem(int id);
+    	virtual void maxRatio_returnPressed();
+    	virtual void useLimit_toggled(bool);
 	
 	private:
 		void fillFileTree();
 		void readyPreview();
 		void readyPercentage();
+		void maxRatioUpdate();
 		
 	private:
 		KTorrentMonitor* monitor;
@@ -78,6 +81,7 @@ namespace kt
 		PeerView* peer_view;
 		QWidget* cd_page;
 		ChunkDownloadView* cd_view;
+		bool m_seed;
 	};
 }
 

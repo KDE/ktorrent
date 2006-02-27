@@ -38,12 +38,15 @@ namespace bt
 	static Uint64 FileOffset(Chunk* c,const TorrentFile & f,Uint64 chunk_size);
 
 
-	MultiFileCache::MultiFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir) : Cache(tor, tmpdir,datadir)
+	MultiFileCache::MultiFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir,bool custom_output_name) : Cache(tor, tmpdir,datadir)
 	{
 		cache_dir = tmpdir + "cache" + bt::DirSeparator();
 		if (datadir.length() == 0)
 			this->datadir = guessDataDir();
-		output_dir = this->datadir + tor.getNameSuggestion() + bt::DirSeparator();
+		if (!custom_output_name)
+			output_dir = this->datadir + tor.getNameSuggestion() + bt::DirSeparator();
+		else
+			output_dir = this->datadir;
 		files.setAutoDelete(true);
 	}
 
@@ -77,6 +80,11 @@ namespace bt
 		}
 		
 		return QString::null;
+	}
+	
+	QString MultiFileCache::getOutputPath() const
+	{
+		return output_dir;
 	}
 
 	void MultiFileCache::close()
@@ -229,11 +237,6 @@ namespace bt
 	
 	bool MultiFileCache::prep(Chunk* c)
 	{
-		if (c->getStatus() != Chunk::NOT_DOWNLOADED)
-		{
-			Out() << "Warning : can only prep NOT_DOWNLOADED chunks  !" << endl;
-			return false;
-		}
 		// find out in which files a chunk lies
 		QValueList<Uint32> tflist;
 		tor.calcChunkPos(c->getIndex(),tflist);
@@ -250,6 +253,7 @@ namespace bt
 				// if mmap fails use buffered mode
 				Out() << "Warning : mmap failed, falling back to buffered mode" << endl;
 				c->allocate();
+				c->setStatus(Chunk::BUFFERED);
 			}
 			else
 			{
@@ -260,6 +264,7 @@ namespace bt
 		{
 			// just allocate it
 			c->allocate();
+			c->setStatus(Chunk::BUFFERED);
 		}
 		return true;
 	}
@@ -341,12 +346,12 @@ namespace bt
 		// if it is !dnd and it is already in the output_dir tree do nothing
 		if (!dnd && bt::Exists(output_dir + tf->getPath()))
 			return;
+		if (fd)
+			fd->close(true);
 		
 		try
 		{
 			// now move it from output_dir tree to dnd tree or vica versa
-			if (fd)
-				fd->close(true);
 			// delete the symlink
 			bt::Delete(cache_dir + tf->getPath());
 			if (dnd)
@@ -359,19 +364,15 @@ namespace bt
 				bt::Move(dnd_dir + tf->getPath(),output_dir + tf->getPath());
 				bt::SymLink(output_dir + tf->getPath(),cache_dir + tf->getPath());
 			}
-			if (fd)
-				fd->open(cache_dir + tf->getPath(),tf->getSize());
+			
 		}
-		catch (...)
+		catch (bt::Error & e)
 		{
-			if (fd)
-			{
-				delete fd;
-				fd = 0;
-				files.erase(tf->getIndex());
-			}
-			throw;
+			Out() << e.toString() << endl;
 		}
+		
+		if (fd)
+			fd->open(cache_dir + tf->getPath(),tf->getSize());
 	}
 	
 	///////////////////////////////
@@ -385,5 +386,7 @@ namespace bt
 			off += (chunk_size - f.getFirstChunkOffset());
 		return off;
 	}
+	
+	
 }
 

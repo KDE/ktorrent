@@ -123,8 +123,6 @@ public:
 	 */
 	void stopAll();
 
-
-
 	/**
 	 * Make a torrent file
 	 * @param file The file or dir to make a torrent of
@@ -134,11 +132,12 @@ public:
 	 * @param comments The comments
 	 * @param seed Wether or not to start seeding or not
 	 * @param output_file File to store the torrent file
+	 * @param priv_tor Is this a private torrent
 	 * @param prog Progress bar to update
 	 */
 	void makeTorrent(const QString & file,const QStringList & trackers,
 					 int chunk_size,const QString & name,const QString & comments,
-					 bool seed,const QString & output_file,KProgress* prog);
+					 bool seed,const QString & output_file,bool priv_tor,KProgress* prog);
 
 	CurrentStats getStats();
 
@@ -176,6 +175,13 @@ public:
 	
 	
 	bt::QueueManager* getQueueManager();
+	
+	///Gets the number of torrents running
+	int getNumRunning(bool onlyDownloads = true, bool onlySeeds = false) const;
+	///Gets the number of torrents that are in state 'download' - total
+	int countDownloads() const;
+	///Gets the number of torrents that are in state 'seed' - total
+	int countSeeds() const;
 	
 public slots:
 	/**
@@ -245,10 +251,7 @@ signals:
 	**/
 	void statsUpdated();
 
-
-
 private:
-	int getNumRunning() const;
 	void rollback(const QPtrList<kt::TorrentInterface> & success);
 	
 private slots:

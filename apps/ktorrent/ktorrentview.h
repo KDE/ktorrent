@@ -56,7 +56,7 @@ public:
 	/**
 	 * Default constructor
 	 */
-	KTorrentView(QWidget *parent);
+	KTorrentView(QWidget *parent, bool seed_view = false);
 
 	/**
 	 * Destructor
@@ -76,6 +76,7 @@ public slots:
 	void addTorrent(kt::TorrentInterface* tc);
 	void removeTorrent(kt::TorrentInterface* tc);
 	void update();
+	void torrentFinished(kt::TorrentInterface* tc);
 
 private slots:
 	void onExecuted(QListViewItem* item);
@@ -92,12 +93,14 @@ signals:
 	void wantToRemove(kt::TorrentInterface* tc,bool data_to);
 	void wantToStop(kt::TorrentInterface* tc,bool user);
 	void wantToStart(kt::TorrentInterface* tc);
+	void viewChange(kt::TorrentInterface* tc);
 
 private:
 	bool acceptDrag(QDropEvent* event) const;
 	int getNumRunning();
 		
 private:
+	bool m_seedView;
 	QMap<kt::TorrentInterface*,KTorrentViewItem*> items;
 	bool show_debug_view;
 	KPopupMenu* menu;

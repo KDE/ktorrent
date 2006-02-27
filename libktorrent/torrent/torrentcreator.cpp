@@ -33,6 +33,7 @@
 #include <util/functions.h>
 #include "globals.h"
 #include "chunkmanager.h"
+#include "statsfile.h"
 
 namespace bt
 {
@@ -41,9 +42,9 @@ namespace bt
 								   const QStringList & track,
 								   Uint32 cs,
 								   const QString & name,
-								   const QString & comments)
+								   const QString & comments,bool priv)
 	: target(tar),trackers(track),chunk_size(cs),
-	name(name),comments(comments),cur_chunk(0)
+	name(name),comments(comments),cur_chunk(0),priv(priv),tot_size(0)
 	{
 		this->chunk_size *= 1024;
 		QFileInfo fi(target);
@@ -52,7 +53,7 @@ namespace bt
 			if (!this->target.endsWith(bt::DirSeparator()))
 				this->target += bt::DirSeparator();
 			
-			Uint64 tot_size = 0;
+			tot_size = 0;
 			buildFileList("",tot_size);
 			num_chunks = tot_size / chunk_size;
 			if (tot_size % chunk_size > 0)
@@ -67,6 +68,7 @@ namespace bt
 				num_chunks++;
 			last_size = fi.size() % chunk_size;
 			Out() << "Tot Size : " << fi.size() << endl;
+			tot_size = fi.size();
 		}
 
 		if (last_size == 0)
@@ -170,6 +172,8 @@ namespace bt
 		enc.write("name"); enc.write(name);
 		enc.write("piece length"); enc.write((Uint64)chunk_size);
 		enc.write("pieces"); savePieces(enc);
+		if (priv)
+			enc.write("private"); enc.write((Uint64)1);
 		enc.end();
 	}
 
@@ -342,8 +346,30 @@ namespace bt
 		{
 			// get the parent dir of target
 			QFileInfo fi = QFileInfo(target);
+			
+			QString odir;
+			StatsFile st(dd + "stats");
+			if (fi.fileName() == name)
+			{
+				st.write("OUTPUTDIR", fi.dirPath(true));
+				odir = fi.dirPath(true);
+			}
+			else
+			{
+				st.write("CUSTOM_OUTPUT_NAME","1");
+				st.write("OUTPUTDIR", target);
+				odir = target;
+			}
+			st.write("UPLOADED", "0");
+			st.write("RUNNING_TIME_DL","0");
+			st.write("RUNNING_TIME_UL","0");
+			st.write("PRIORITY", "0");
+			st.write("AUTOSTART", "1");
+			st.write("IMPORTED", QString::number(tot_size));
+			st.writeSync();
+			
 			// init will create symlinks and stuff
-			tc->init(0,dd + "torrent",dd,fi.dirPath(true),QString::null);
+			tc->init(0,dd + "torrent",dd,odir,QString::null);
 		}
 		catch (...)
 		{

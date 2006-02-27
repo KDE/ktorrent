@@ -77,6 +77,8 @@ namespace kt
 		Uint32 num_chunks_downloaded;
 		/// Get the number of chunks which have been excluded
 		Uint32 num_chunks_excluded;
+		/// Size of each chunk
+		Uint32 chunk_size;
 		/// Total seeders in swarm
 		Uint32 seeders_total;
 		/// Num seeders connected to
@@ -95,6 +97,8 @@ namespace kt
 		Uint64 session_bytes_uploaded;
 		/// Name of the torrent
 		QString torrent_name;
+		/// Path of the dir or file where the data will get saved
+		QString output_path;
 		/// See if we are running
 		bool running;
 		/// See if the torrent has been started
@@ -109,6 +113,8 @@ namespace kt
 		bool completed;
 		/// See if this torrent is controlled by user
 		bool user_controlled;
+		/// Maximum share ratio
+		float max_share_ratio;
 	};
 
 	/**
@@ -243,6 +249,10 @@ namespace kt
 		///Set the torrent queue number.
 		virtual void setPriority(int p) = 0;
 		
+		virtual void setMaxShareRatio(float ratio) = 0;
+		
+		virtual float getMaxShareRatio() const = 0;
+		
 	signals:
 		/**
 		 * Emited when we have finished downloading.
@@ -256,6 +266,12 @@ namespace kt
 		 * @param msg Error message
 		 */
 		void stoppedByError(kt::TorrentInterface* me, QString msg);
+		
+		/**
+		 * Emited when maximum share ratio for this torrent is changed
+		 * @param me The object which emitted the signal.
+		 */
+		void maxRatioChanged(kt::TorrentInterface* me);
 
 	protected:
 		TorrentStats stats;

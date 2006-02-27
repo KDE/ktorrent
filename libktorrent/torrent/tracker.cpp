@@ -26,6 +26,8 @@
 #include <torrent/globals.h>
 #include <interfaces/torrentinterface.h>
 #include "tracker.h"
+#include "udptracker.h"
+#include "httptracker.h"
 
 using namespace KNetwork;
 
@@ -33,6 +35,12 @@ namespace bt
 {
 	QString Tracker::custom_ip;
 	QString Tracker::custom_ip_resolved;
+	
+	TrackerBackend::TrackerBackend(Tracker* trk) : frontend(trk)
+	{}
+	
+	TrackerBackend::~TrackerBackend()
+	{}
 
 	Tracker::Tracker(kt::TorrentInterface* tor,
 					 const SHA1Hash & ih,const PeerID & id) : tor(tor)
@@ -48,11 +56,41 @@ namespace bt
 		
 		srand(time(0));
 		key = rand();
+		udp = http = curr = 0;
 	}
 
 
 	Tracker::~Tracker()
-	{}
+	{
+		delete udp;
+		delete http;
+	}
+	
+	void Tracker::doRequest(const KURL & url)
+	{
+		if (url.protocol() == "udp" || url.prettyURL().startsWith("udp"))
+		{
+			if (!udp)
+				udp = new UDPTracker(this);
+			
+			udp->doRequest(url);
+			curr = udp;
+		}
+		else
+		{
+			if (!http)
+				http = new HTTPTracker(this);
+			
+			http->doRequest(url);
+			curr = http;
+		}
+	}
+
+	void Tracker::updateData(PeerManager* pman)
+	{
+		if (curr)
+			curr->updateData(pman);
+	}
 
 	void Tracker::start()
 	{
@@ -64,6 +102,9 @@ namespace bt
 		
 	void Tracker::setInterval(Uint32 secs)
 	{
+		if (secs == 0)
+			secs = 120;
+		
 		if (interval != secs)
 		{
 			update_timer.changeInterval(1000*secs);

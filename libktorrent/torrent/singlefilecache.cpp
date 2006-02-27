@@ -37,6 +37,7 @@ namespace bt
 	: Cache(tor,tmpdir,datadir),fd(0)
 	{
 		cache_file = tmpdir + "cache";
+		output_file = QFileInfo(cache_file).readLink();
 	}
 
 
@@ -51,11 +52,6 @@ namespace bt
 	
 	bool SingleFileCache::prep(Chunk* c)
 	{
-		if (c->getStatus() != Chunk::NOT_DOWNLOADED)
-		{
-			Out() << "Warning : can only prep NOT_DOWNLOADED chunks !" << endl;
-			return false;
-		}
 		Uint64 off = c->getIndex() * tor.getChunkSize();
 		Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::RW);
 		if (!buf)
@@ -63,6 +59,7 @@ namespace bt
 			// buffer it if mmapping fails
 			Out() << "Warning : mmap failure, falling back to buffered mode" << endl;
 			c->allocate();
+			c->setStatus(Chunk::BUFFERED);
 		}
 		else
 		{
@@ -100,12 +97,21 @@ namespace bt
 
 	void SingleFileCache::create()
 	{
-		QString out_file = datadir + tor.getNameSuggestion();
-		if (!bt::Exists(out_file))
-			bt::Touch(out_file);
+		QFileInfo fi(cache_file);
+		if (!fi.exists())
+		{
+			QString out_file = fi.readLink();
+					
+			if (out_file.isNull())
+					out_file = datadir + tor.getNameSuggestion();
+			
+			if (!bt::Exists(out_file))
+				bt::Touch(out_file);
 
-		if (!bt::Exists(cache_file))
-			bt::SymLink(out_file,cache_file);
+			if (!bt::Exists(cache_file))
+				bt::SymLink(out_file,cache_file);
+			output_file = out_file;
+		}
 	}
 	
 	void SingleFileCache::close()

@@ -27,6 +27,7 @@
 #include <util/array.h>
 #include "tracker.h"
 #include "globals.h"
+#include "peermanager.h"
 
 
 namespace bt
@@ -41,11 +42,11 @@ namespace bt
 	 * This is an implementation of the protocol described in
 	 * http://xbtt.sourceforge.net/udp_tracker_protocol.html
 	 */
-	class UDPTracker : public Tracker
+	class UDPTracker : public TrackerBackend
 	{
 		Q_OBJECT
 	public:
-		UDPTracker(kt::TorrentInterface* tor,const SHA1Hash & ih,const PeerID & pid);
+		UDPTracker(Tracker* trk);
 		virtual ~UDPTracker();
 
 		virtual void doRequest(const KURL & url);

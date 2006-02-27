@@ -105,9 +105,6 @@
                     <property name="text">
                         <string>O&amp;K</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+K</string>
-                    </property>
                 </widget>
                 <widget class="KPushButton">
                     <property name="name">
@@ -115,9 +112,6 @@
                     </property>
                     <property name="text">
                         <string>C&amp;ancel</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+A</string>
                     </property>
                 </widget>
             </hbox>

@@ -66,10 +66,14 @@ namespace bt
 		mutable bool recalc_chunks_left;
 	
 	public:
-		ChunkManager(Torrent & tor,const QString & tmpdir,const QString & datadir);
+		ChunkManager(Torrent & tor,const QString & tmpdir,const QString & datadir,bool custom_output_name);
 		virtual ~ChunkManager();
 
+		/// Get the data dir
 		QString getDataDir() const;
+		
+		/// Get the actual output path
+		QString getOutputPath() const;
 		
 		/// Remove obsolete chunks
 		void checkMemoryUsage();
@@ -122,9 +126,10 @@ namespace bt
 		/**
 		 * Prepare a chunk for downloading
 		 * @param c The Chunk
+		 * @param allways Allways do this, even if the chunk is not NOT_DOWNLOADED
 		 * @return true if ok, false if the chunk is not NOT_DOWNLOADED
 		 */
-		bool prepareChunk(Chunk* c);
+		bool prepareChunk(Chunk* c,bool allways = false);
 		
 		/**
 		 * The upload is done, and the Chunk is no longer needed.

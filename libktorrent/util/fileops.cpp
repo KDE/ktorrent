@@ -72,16 +72,17 @@ namespace bt
 
 	void Move(const QString & src,const QString & dst,bool nothrow)
 	{
-		if (!KIO::NetAccess::move(QFile::encodeName(src),QFile::encodeName(dst),0))
+	//	Out() << "Moving " << src << " -> " << dst << endl;
+		if (!KIO::NetAccess::move(KURL::fromPathOrURL(src),KURL::fromPathOrURL(dst),0))
 		{
 			if (!nothrow)
 				throw Error(i18n("Cannot move %1 to %2: %3")
 					.arg(src).arg(dst)
-						.arg(strerror(errno)));
+						.arg(KIO::NetAccess::lastErrorString()));
 			else
 				Out() << QString("Error : Cannot move %1 to %2: %3")
 						.arg(src).arg(dst)
-						.arg(strerror(errno)) << endl;
+						.arg(KIO::NetAccess::lastErrorString()) << endl;
 		
 		}
 	}
@@ -149,7 +150,7 @@ namespace bt
 				return false;	
 		}
 		
-		QStringList files = d.entryList(QDir::Files);
+		QStringList files = d.entryList(QDir::Files | QDir::System);
 		for (QStringList::iterator i = files.begin(); i != files.end();i++)
 		{
 			QString entry = *i;
@@ -206,7 +207,7 @@ namespace bt
 			return;
 		
 		File fptr;
-		if (!fptr.open(url,"wt"))
+		if (!fptr.open(url,"wb"))
 		{
 			if (!nothrow)
 				throw Error(i18n("Cannot create %1: %2")

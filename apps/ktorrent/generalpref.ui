@@ -52,10 +52,7 @@
                         <cstring>custom_ip_check</cstring>
                     </property>
                     <property name="text">
-                        <string>Send the tracker a c&amp;ustom IP or hostname</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+U</string>
+                        <string>Send the trac&amp;ker a custom IP or hostname</string>
                     </property>
                 </widget>
                 <widget class="QLayoutWidget">
@@ -88,7 +85,7 @@
                 <cstring>groupBox1</cstring>
             </property>
             <property name="title">
-                <string>Directories</string>
+                <string>Folders</string>
             </property>
             <vbox>
                 <property name="name">
@@ -132,9 +129,6 @@
                             <property name="text">
                                 <string>&amp;Automatically save downloads to:</string>
                             </property>
-                            <property name="accel">
-                                <string>Alt+A</string>
-                            </property>
                         </widget>
                         <widget class="KURLRequester">
                             <property name="name">
@@ -150,7 +144,7 @@
                 <cstring>groupBox3_2</cstring>
             </property>
             <property name="title">
-                <string>Miscelanious</string>
+                <string>Miscellaneous</string>
             </property>
             <grid>
                 <property name="name">
@@ -277,9 +271,6 @@
                     </property>
                     <property name="text">
                         <string>Show s&amp;ystem tray icon</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+Y</string>
                     </property>
                 </widget>
             </grid>

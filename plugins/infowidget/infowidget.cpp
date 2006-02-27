@@ -2,6 +2,7 @@
  *   Copyright (C) 2005 by                                                 *
  *   Joris Guisson <joris.guisson@gmail.com>                               *
  *   Ivan Vasic <ivasic@gmail.com>                                         *
+ *   Marcello Maggioni <marcello.maggioni@gmail.com>                       *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -26,10 +27,12 @@
 #include <kpopupmenu.h>
 #include <krun.h>
 #include <qlabel.h>
+#include <qstring.h>
 #include <qcheckbox.h>
 #include <qpainter.h>
 #include <qtabwidget.h>
 #include <qlayout.h>
+#include <qlineedit.h>
 #include <util/functions.h>
 #include <interfaces/functions.h>
 #include <util/log.h>
@@ -53,8 +56,8 @@ using namespace kt;
 namespace kt
 {
 	
-	InfoWidget::InfoWidget(QWidget* parent, const char* name, WFlags fl)
-		: InfoWidgetBase(parent,name,fl),peer_view(0),cd_view(0)
+	InfoWidget::InfoWidget(bool seed, QWidget* parent, const char* name, WFlags fl)
+		: InfoWidgetBase(parent,name,fl),peer_view(0),cd_view(0), m_seed(seed)
 	{
 		multi_root = 0;
 		monitor = 0;
@@ -74,17 +77,40 @@ namespace kt
 		showPeerView( InfoWidgetPluginSettings::showPeerView() );
 		showChunkView( InfoWidgetPluginSettings::showChunkView() );
 		
-		KGlobal::config()->setGroup("InfoWidget");
+		if(!m_seed)
+			KGlobal::config()->setGroup("InfoWidget");
+		else
+			KGlobal::config()->setGroup("SeedInfoWidget");
+		
 		if (KGlobal::config()->hasKey("InfoWidgetSize"))
 		{
 			QSize s = KGlobal::config()->readSizeEntry("InfoWidgetSize",0);
 			resize(s);
 		}
+		
+		if(!m_seed)
+		{
+			maxRatio->hide();
+			maxRatioLabel->hide();
+			useLimit->hide();
+		}
+		else
+		{
+			textLabel1_2->hide();
+			textLabel1_3->hide();
+			m_chunk_bar->hide();
+			m_av_chunk_bar->hide();
+		}
+		
 	}
 	
 	InfoWidget::~InfoWidget()
 	{
-		KGlobal::config()->setGroup("InfoWidget");
+		if(!m_seed)
+			KGlobal::config()->setGroup("InfoWidget");
+		else
+			KGlobal::config()->setGroup("SeedInfoWidget");
+		
 		KGlobal::config()->writeEntry("InfoWidgetSize",size());
 		if (cd_view)
 			cd_view->saveLayout(KGlobal::config(),"ChunkDownloadView");
@@ -223,8 +249,11 @@ namespace kt
 			monitor = new KTorrentMonitor(curr_tc,peer_view,cd_view);
 	
 		fillFileTree();
-		m_chunk_bar->setTC(tc);
-		m_av_chunk_bar->setTC(tc);
+		if(!m_seed)
+		{
+			m_chunk_bar->setTC(tc);
+			m_av_chunk_bar->setTC(tc);
+		}
 		setEnabled(tc != 0);
 		if (peer_view)
 		{
@@ -236,6 +265,24 @@ namespace kt
 			cd_page->setEnabled(tc != 0);
 			cd_view->setEnabled(tc != 0);
 		}
+		
+		if (curr_tc)
+		{
+			float ratio = curr_tc->getMaxShareRatio();
+			if(ratio > 0)
+			{
+				useLimit->setChecked(true);
+				maxRatio->setText(QString("%1").arg(ratio,0,'f',2));
+			}
+			else
+			{
+				maxRatio->setText("0.00");
+				useLimit->setChecked(false);
+				maxRatio->setEnabled(false);
+			}
+		}
+		else
+			maxRatio->clear();
 		
 		update();
 	}
@@ -283,7 +330,7 @@ namespace kt
 			if (!it.current())
 				return;
 			
-			if (IsMultimediaFile(curr_tc->getStats().torrent_name))
+			if (IsMultimediaFile(curr_tc->getStats().output_path))
 			{
 				if ( curr_tc->readyForPreview() )
 					it.current()->setText(3, i18n("Available"));
@@ -306,8 +353,16 @@ namespace kt
 		m_chunks_downloaded->setText(QString::number(s.num_chunks_downloaded));
 		m_total_chunks->setText(QString::number(s.total_chunks));
 		m_excluded_chunks->setText(QString::number(s.num_chunks_excluded));
-		m_chunk_bar->updateBar();
-		m_av_chunk_bar->updateBar();
+		if(!m_seed)
+		{
+			m_chunk_bar->updateBar();
+			m_av_chunk_bar->updateBar();
+		}
+		
+		if( s.chunk_size / 1024 < 1024 )
+			m_size_chunks->setText(QString::number(s.chunk_size / 1024) + "." + QString::number((s.chunk_size % 1024) / 100) + " KB");
+		else
+			m_size_chunks->setText(QString::number(s.chunk_size / 1024 / 1024) + "." + QString::number(((s.chunk_size / 1024) % 1024) / 100) + " MB");
 		if (peer_view)
 			peer_view->update();
 		if (cd_view)
@@ -335,7 +390,9 @@ namespace kt
 		float ratio = 0.0f;
 		if (s.bytes_downloaded > 0)
 			ratio = (float) s.bytes_uploaded / (float)s.bytes_downloaded;
-	
+		
+		if(!maxRatio->hasFocus() && useLimit->isChecked())
+			maxRatioUpdate();
 		
 		m_share_ratio->setText(QString("<font color=\"%1\">%2</font>").arg(ratio <= 0.8 ? "#ff0000" : "#00ff00").arg(KGlobal::locale()->formatNumber(ratio,2)));
 	
@@ -384,7 +441,7 @@ namespace kt
 		}
 		else
 		{
-			if ( curr_tc->readyForPreview() && IsMultimediaFile(s.torrent_name))
+			if ( curr_tc->readyForPreview() && IsMultimediaFile(s.output_path))
 			{
 				context_menu->setItemEnabled(preview_id, true);
 				preview_path = "cache";
@@ -401,7 +458,60 @@ namespace kt
 			new KRun(this->curr_tc->getTorDir()+preview_path, 0, true, true);
 	}
 	
+	void InfoWidget::maxRatio_returnPressed()
+	{
+		if(!curr_tc)
+			return;
+		
+		bool ok;
+		double ratio = maxRatio->text().toFloat(&ok);
+		
+		if(!ok)
+		{
+			maxRatio->setText(QString("%1").arg(curr_tc->getMaxShareRatio(),0,'f',2));
+			return;
+		}
+		
+		curr_tc->setMaxShareRatio(ratio);
+	}
+	
+	void InfoWidget::useLimit_toggled(bool state)
+	{
+		if(!curr_tc)
+			return;
+		
+		maxRatio->setEnabled(state);
+		if(!state)
+		{
+			curr_tc->setMaxShareRatio(0.00f);
+			maxRatio->setText("0.00");
+		}
+		else
+		{
+			curr_tc->setMaxShareRatio(1.00f);
+			maxRatio->setText(QString("%1").arg(1.00f,0,'f',2));
+		}
+	}
+	
+	void InfoWidget::maxRatioUpdate()
+	{
+		if(!curr_tc)
+			return;
+		
+		float ratio = curr_tc->getMaxShareRatio();
+		if(ratio > 0)
+		{
+			maxRatio->setEnabled(true);
+			maxRatio->setText(QString("%1").arg(curr_tc->getMaxShareRatio(),0,'f',2));
+			useLimit->setChecked(true);
+		}
+		else
+		{
+			maxRatio->setEnabled(false);
+			maxRatio->setText("0.00");
+			useLimit->setChecked(false);
+		}
+	}
 }
 
 #include "infowidget.moc"
-

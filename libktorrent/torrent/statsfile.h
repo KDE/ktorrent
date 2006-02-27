@@ -17,48 +17,75 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#ifndef BTSTATSFILE_H
+#define BTSTATSFILE_H
 
-#ifndef IMPORTDIALOG_H
-#define IMPORTDIALOG_H
+#include <qstring.h>
+#include <qfile.h>
+#include <qmap.h>
 
 #include <util/constants.h>
-#include "importdlgbase.h"
-
-class KURL;
 
 namespace bt
 {
-	class BitSet;
-	class Torrent;
-}
 
-
-namespace kt
-{
-	class CoreInterface;
-	
-	class ImportDialog : public ImportDlgBase
+	/**
+	 * @brief This class is used for loading/storing torrent stats in a file.
+	 * @author Ivan Vasic <ivasic@gmail.com>
+	*/
+	class StatsFile
 	{
-		Q_OBJECT
-	
-	public:
-		ImportDialog(CoreInterface* core,QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
-		virtual ~ImportDialog();
+		public:
+			/**
+			 * @brief A constructor.
+			 * Constructs StatsFile object and calls readSync().
+			 */
+			StatsFile(QString filename);
+			~StatsFile();
+			
+			///Closes QFile
+			void close();
+			
+			/**
+			 * @brief Main read function.
+			 * @return QString value that correspodents to key.
+			 * @param key - QString stats key.
+			 */
+			QString readString(QString key);
+			
+			Uint64 readUint64(QString key);
+			bool readBoolean(QString key);
+			int readInt(QString key);
+			unsigned long readULong(QString key);
+			float readFloat(QString key);
 		
-	public slots:
-		void onImport();
-	
-	private:
-		void writeIndex(const QString & file,const bt::BitSet & chunks);
-		void linkTorFile(const QString & cache_dir,const QString & dnd_dir,
-						 const KURL & data_url,const QString & fpath,bool & dnd);
-		void saveStats(const QString & stats_file,const KURL & data_url,bt::Uint64 imported,bool custom_output_name);
-		bt::Uint64 calcImportedBytes(const bt::BitSet & chunks,const bt::Torrent & tor);
-		void saveFileInfo(const QString & file_info_file,QValueList<bt::Uint32> & dnd);
-	private:
-		CoreInterface* core;
+			/**
+			 * @brief Writes key and value.
+			 * It only inserts pair of key/value to the m_values. To make changes to file call writeSync().
+			 * @param key - QString key
+			 * @param value - QString value.
+			 */
+			void write(QString key, QString value);
+			
+			///Reads data from stats file to m_values.
+			void readSync();
+			
+			///Writes data from m_values to stats file.
+			void writeSync();
+			
+			/**
+			 * See if there is a key in the stats file
+			 * @param key The key
+			 * @return true if key is in the stats file
+			 */
+			bool hasKey(const QString & key) const {return m_values.contains(key);}
+			
+		private:
+			QString m_filename;
+			QFile m_file;
+			
+			QMap<QString, QString> m_values;
 	};
 }
 
 #endif
-

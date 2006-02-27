@@ -92,6 +92,9 @@ namespace kt
 		unloaded.erase(name);
 		plugins.insert(p->getName(),p);
 		p->loaded = true;
+		
+		if (!cfg_file.isNull())
+			saveConfigFile(cfg_file);
 	}
 		
 	void PluginManager::unload(const QString & name)
@@ -105,6 +108,9 @@ namespace kt
 		plugins.erase(name);
 		unloaded.insert(p->getName(),p);
 		p->loaded = false;
+		
+		if (!cfg_file.isNull())
+			saveConfigFile(cfg_file);
 	}
 		
 	void PluginManager::loadAll()
@@ -122,9 +128,11 @@ namespace kt
 			i++;
 		}
 		unloaded.clear();
+		if (!cfg_file.isNull())
+			saveConfigFile(cfg_file);
 	}
 
-	void PluginManager::unloadAll()
+	void PluginManager::unloadAll(bool save)
 	{
 		bt::PtrMap<QString,Plugin>::iterator i = plugins.begin();
 		while (i != plugins.end())
@@ -137,6 +145,8 @@ namespace kt
 			i++;
 		}
 		plugins.clear();
+		if (save && !cfg_file.isNull())
+			saveConfigFile(cfg_file);
 	}
 
 	void PluginManager::updateGuiPlugins()
@@ -178,6 +188,7 @@ namespace kt
 
 	void PluginManager::loadConfigFile(const QString & file)
 	{
+		cfg_file = file;
 		// make a default config file if doesn't exist
 		if (!bt::Exists(file))
 		{
@@ -207,6 +218,7 @@ namespace kt
 
 	void PluginManager::saveConfigFile(const QString & file)
 	{
+		cfg_file = file;
 		QFile f(file);
 		if (!f.open(IO_WriteOnly))
 		{

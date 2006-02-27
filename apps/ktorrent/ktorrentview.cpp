@@ -38,8 +38,8 @@
 using namespace bt;
 using namespace kt;
 
-KTorrentView::KTorrentView(QWidget *parent)
-	: KListView(parent),show_debug_view(false),menu(0),curr(0)
+KTorrentView::KTorrentView(QWidget *parent, bool seed_view)
+	: KListView(parent),show_debug_view(false),menu(0),curr(0), m_seedView(seed_view)
 
 {
 	addColumn(i18n("File"));
@@ -181,7 +181,7 @@ void KTorrentView::removeDownload()
 	if (s.bytes_left > 0)
 	{
 		QString msg = i18n("The torrent %1 has not finished downloading, "
-				"do you want to delete the incomplete data too ?").arg(s.torrent_name);
+				"do you want to delete the incomplete data, too?").arg(s.torrent_name);
 		int ret = KMessageBox::questionYesNoCancel(this,msg,i18n("Remove Download"));
 		if (ret == KMessageBox::Cancel)
 			return;
@@ -246,6 +246,11 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem* item,const QPoint 
 
 void KTorrentView::addTorrent(TorrentInterface* tc)
 {
+	if(m_seedView && !tc->getStats().completed)
+		return;
+	if(!m_seedView && tc->getStats().completed)
+		return;
+	
 	KTorrentViewItem* tvi = new KTorrentViewItem(this,tc);
 	items.insert(tc,tvi);
 	tvi->update();
@@ -271,13 +276,29 @@ void KTorrentView::removeTorrent(TorrentInterface* tc)
 
 
 void KTorrentView::update()
-{
+{	
+	kt::TorrentInterface* tc = 0l;
 	QMap<kt::TorrentInterface*,KTorrentViewItem*>::iterator i = items.begin();
 	while (i != items.end())
 	{
 		KTorrentViewItem* tvi = i.data();
 		tvi->update();
+		//check if seeded torrent is activated and move it to downloadView
+		kt::TorrentInterface* ti = i.key();
+		if(!ti->getStats().completed && m_seedView)
+			tc = ti;
 		i++;
+	}
+	if(tc)
+	{
+		QMap<kt::TorrentInterface*,KTorrentViewItem*>::iterator i = items.find(tc);
+		if (i != items.end())
+		{
+			items.remove(i);
+			delete i.data();
+		}
+		emit viewChange(tc);
+		Out() << "Torrent moved to DownloadView." << endl;
 	}
 	sort();
 }
@@ -286,6 +307,21 @@ bool KTorrentView::acceptDrag(QDropEvent* event) const
 {
 	// accept uri drops only
 	return KURLDrag::canDecode(event);
+}
+
+void KTorrentView::torrentFinished(kt::TorrentInterface* tc)
+{
+	if(m_seedView)
+		return;
+	
+	QMap<kt::TorrentInterface*,KTorrentViewItem*>::iterator i = items.find(tc);
+	if (i != items.end())
+	{
+		items.remove(i);
+		delete i.data();
+	}
+	emit viewChange(tc);
+	Out() << "Torrent moved to SeedView." << endl;
 }
 
 

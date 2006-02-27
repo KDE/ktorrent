@@ -37,12 +37,12 @@ namespace bt
 	
 	
 
-	ChunkManager::ChunkManager(Torrent & tor,const QString & tmpdir,const QString & datadir)
+	ChunkManager::ChunkManager(Torrent & tor,const QString & tmpdir,const QString & datadir,bool custom_output_name)
 	: tor(tor),chunks(tor.getNumChunks()),
 	bitset(tor.getNumChunks()),excluded_chunks(tor.getNumChunks())
 	{
 		if (tor.isMultiFile())
-			cache = new MultiFileCache(tor,tmpdir,datadir);
+			cache = new MultiFileCache(tor,tmpdir,datadir,custom_output_name);
 		else
 			cache = new SingleFileCache(tor,tmpdir,datadir);
 		
@@ -561,12 +561,17 @@ namespace bt
 		cache->downloadStatusChanged(tf,download);
 	}
 	
-	bool ChunkManager::prepareChunk(Chunk* c)
+	bool ChunkManager::prepareChunk(Chunk* c,bool allways)
 	{
-		if (c->getStatus() != Chunk::NOT_DOWNLOADED)
+		if (!allways && c->getStatus() != Chunk::NOT_DOWNLOADED)
 			return false;
 		
 		return cache->prep(c);
+	}
+	
+	QString ChunkManager::getOutputPath() const
+	{
+		return cache->getOutputPath();
 	}
 }
 

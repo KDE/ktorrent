@@ -192,9 +192,9 @@ void KTorrentCore::stop(TorrentInterface* tc, bool user)
 	qman->stop(tc, user);
 }
 
-int KTorrentCore::getNumRunning() const
+int KTorrentCore::getNumRunning(bool onlyDownloads, bool onlySeeds) const
 {
-	return qman->getNumRunning(true);
+	return qman->getNumRunning(onlyDownloads, onlySeeds);
 }
 
 QString KTorrentCore::findNewTorrentDir() const
@@ -269,8 +269,7 @@ void KTorrentCore::remove(TorrentInterface* tc,bool data_to)
 		stop(tc);
 
 		QString dir = tc->getTorDir();
-		QString data_dir = tc->getDataDir() + s.torrent_name;
-		
+		QString output_path = s.output_path;
 		torrentRemoved(tc);
 		qman->torrentRemoved(tc);
 	
@@ -282,12 +281,12 @@ void KTorrentCore::remove(TorrentInterface* tc,bool data_to)
 		{
 			// if the first delete fails, still try to do the second
 			if (data_to)
-				bt::Delete(data_dir,false);
+				bt::Delete(output_path,false);
 			throw; // pass the error along
 		}
 		
 		if (data_to)
-			bt::Delete(data_dir,false);
+			bt::Delete(output_path,false);
 	}
 	catch (Error & e)
 	{
@@ -323,10 +322,10 @@ void KTorrentCore::onExit()
 {
 	// stop timer to prevent updates during wait
 	update_timer.stop();
-	pman->saveConfigFile(KGlobal::dirs()->saveLocation("data","ktorrent") + "plugins");
+	//pman->saveConfigFile(KGlobal::dirs()->saveLocation("data","ktorrent") + "plugins");
 	// 	downloads.clear();
 	qman->clear();
-	pman->unloadAll();
+	pman->unloadAll(false);
 }
 
 bool KTorrentCore::changeDataDir(const QString & new_dir)
@@ -431,7 +430,7 @@ void KTorrentCore::update()
 void KTorrentCore::makeTorrent(const QString & file,const QStringList & trackers,
                                int chunk_size,const QString & name,
                                const QString & comments,bool seed,
-                               const QString & output_file,KProgress* prog)
+							   const QString & output_file,bool priv_tor,KProgress* prog)
 {
 	QString tdir;
 	try
@@ -439,7 +438,7 @@ void KTorrentCore::makeTorrent(const QString & file,const QStringList & trackers
 		if (chunk_size < 0)
 			chunk_size = 256;
 
-		bt::TorrentCreator mktor(file,trackers,chunk_size,name,comments);
+		bt::TorrentCreator mktor(file,trackers,chunk_size,name,comments,priv_tor);
 		prog->setTotalSteps(mktor.getNumChunks());
 		Uint32 ns = 0;
 		while (!mktor.calculateHash())
@@ -526,6 +525,16 @@ Uint32 KTorrentCore::getNumTorrentsRunning() const
 Uint32 KTorrentCore::getNumTorrentsNotRunning() const
 {
 	return qman->count() - qman->getNumRunning();
+}
+
+int KTorrentCore::countSeeds() const
+{
+	return qman->countSeeds();
+}
+
+int KTorrentCore::countDownloads() const
+{
+	return qman->countDownloads();
 }
 
 void KTorrentCore::addBlockedIP(QString& ip)

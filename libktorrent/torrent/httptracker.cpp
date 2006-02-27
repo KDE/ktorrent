@@ -40,7 +40,7 @@ using namespace kt;
 namespace bt
 {
 
-	HTTPTracker::HTTPTracker(kt::TorrentInterface* tor,const SHA1Hash & ih,const PeerID & pid) : Tracker(tor,ih,pid)
+	HTTPTracker::HTTPTracker(Tracker* trk) : TrackerBackend(trk)
 	{
 		active_job = 0;
 		
@@ -52,7 +52,7 @@ namespace bt
 
 	void HTTPTracker::updateData(PeerManager* pman)
 	{
-		//#define DEBUG_PRINT_RESPONSE
+//#define DEBUG_PRINT_RESPONSE
 #ifdef DEBUG_PRINT_RESPONSE
 		Out() << "Data : " << endl;
 		Out() << QString(data) << endl;
@@ -80,15 +80,15 @@ namespace bt
 			throw Error(i18n("Parse Error"));
 		}
 			
-		setInterval(vn->data().toInt());
+		frontend->setInterval(vn->data().toInt());
 
 		vn = dict->getValue("incomplete");
 		if (vn)
-			leechers = vn->data().toInt();
+			frontend->leechers = vn->data().toInt();
 
 		vn = dict->getValue("complete");
 		if (vn)
-			seeders = vn->data().toInt();
+			frontend->seeders = vn->data().toInt();
 	
 		BListNode* ln = dict->getList("peers");
 		if (!ln)
@@ -138,7 +138,7 @@ namespace bt
 			}
 		}
 		delete n;
-		updateOK();
+		frontend->updateOK();
 	}
 
 	void HTTPTracker::doRequest(const KURL & u)
@@ -146,27 +146,27 @@ namespace bt
 		// clear data array
 		data = QByteArray();
 		
-		const TorrentStats & s = tor->getStats();
+		const TorrentStats & s = frontend->tor->getStats();
 		last_url = u;
 		KURL url = u;
 
 		Uint16 port = Globals::instance().getServer().getPortInUse();;
 		
-		url.addQueryItem("peer_id", peer_id.toString());
+		url.addQueryItem("peer_id", frontend->peer_id.toString());
 		url.addQueryItem("port",QString::number(port));
 		url.addQueryItem("uploaded",QString::number(s.bytes_uploaded));
 		url.addQueryItem("downloaded",QString::number(s.bytes_downloaded));
 		url.addQueryItem("left",QString::number(s.bytes_left));
 		url.addQueryItem("compact","1");
 		url.addQueryItem("numwant","100");
-		url.addQueryItem("key",QString::number(key));
-		if (!custom_ip_resolved.isNull())
-			url.addQueryItem("ip",custom_ip_resolved);
+		url.addQueryItem("key",QString::number(frontend->key));
+		if (!Tracker::custom_ip_resolved.isNull())
+			url.addQueryItem("ip",Tracker::custom_ip_resolved);
 
-		if (event != QString::null)
-			url.addQueryItem("event",event);
+		if (frontend->event != QString::null)
+			url.addQueryItem("event",frontend->event);
 		QString epq = url.encodedPathAndQuery();
-		epq += "&info_hash=" + info_hash.toURLString();
+		epq += "&info_hash=" + frontend->info_hash.toURLString();
 
 
 //   warning, this debug contains the password
@@ -181,6 +181,7 @@ namespace bt
 		KIO::MetaData md;
 		md["UserAgent"] = "ktorrent";
 		md["SendLanguageSettings"] = "false";
+		md["Cookies"] = "none";
 		
 		KIO::TransferJob* j = KIO::get(url,true,false);
 		// set the meta data
@@ -205,12 +206,12 @@ namespace bt
 		{
 			Out() << "Error : " << j->errorString() << endl;
 			active_job = 0;
-			error();
+			frontend->emitError();
 		}
 		else
 		{
 			active_job = 0;
-			dataReady();
+			frontend->emitDataReady();
 		}
 	}
 	
@@ -232,7 +233,7 @@ namespace bt
 
 	void HTTPTracker::onTimeout()
 	{
-		error();
+		frontend->emitError();
 	}
 }
 #include "httptracker.moc"

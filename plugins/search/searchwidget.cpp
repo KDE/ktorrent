@@ -148,7 +148,7 @@ namespace kt
 		s_url.replace("FOOBAR", text, true);
 		KURL url = KURL::fromPathOrURL(s_url);
 	
-		statusBarMsg(i18n("Searching for %1 ...").arg(text));
+		statusBarMsg(i18n("Searching for %1...").arg(text));
 		//html_part->openURL(url);
 		html_part->openURLRequest(url,KParts::URLArgs());
 	}

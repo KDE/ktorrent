@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2005 by Joris Guisson & Maggioni Marcello               *
  *   joris.guisson@gmail.com                                               *
+ *   marcello.maggioni@gmail.com                                           *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -53,80 +54,48 @@ namespace bt
 		if (!cache.endsWith(bt::DirSeparator()))
 			cache += bt::DirSeparator();
 		
-		Uint64 curr_file_off = 0;
-		Uint32 curr_file = 0;
 		Uint64 chunk_size = tor.getChunkSize();
-
+		Uint32 NumOfFiles = 0;
+		Uint32 CurrentChunk = 0;
+		Uint32 ReadBytes = 0;
 		prog->setTotalSteps(num_chunks);
 		
 		Array<Uint8> buf((Uint32)tor.getChunkSize());
 		
-		for (Uint32 i = 0;i < num_chunks;i++)
+		NumOfFiles = tor.getNumFiles();
+		for (Uint32 CurrentFile = 0;CurrentFile < NumOfFiles;CurrentFile++)
 		{
-			prog->setProgress(i);
-			if (i % 50 == 0 && i > 0)
+			
+			const TorrentFile & FileToRead = tor.getFile(CurrentFile);
+			CurrentChunk = FileToRead.getFirstChunk();
+			ReadBytes = FileToRead.getFirstChunkOffset();
+			File FilePointer;
+			if (!FilePointer.open(cache + FileToRead.getPath(), "rb"))
 			{
-				Out() << "Checked " << i << " chunks" << endl;
-				KApplication::kApplication()->processEvents();
+				Out() << QString("Warning : Cannot open %1 : %2").arg(cache + 
+				FileToRead.getPath()).arg(FilePointer.errorString()) << endl;
 			}
-	
-			Uint64 size = chunk_size;
-			if (i == tor.getNumChunks() - 1 && tor.getFileLength() % chunk_size != 0)
-				size = tor.getFileLength() % chunk_size;
+			else
+			{	
+				for ( ; CurrentChunk <= FileToRead.getLastChunk(); CurrentChunk++ )
+				{	
+					prog->setProgress(CurrentChunk);
+				
+					Out() << "Checked " << CurrentChunk << " chunks" << endl;
+					KApplication::kApplication()->processEvents();
 
-			//Out() << "Loading chunk (size = " << size << ")" << endl;
-			Uint64 bytes_offset = 0;
-			while (bytes_offset < size)
-			{
-				const TorrentFile & tf = tor.getFile(curr_file);
-// 				Out() << "Current file : " << tf.getPath() << " (" << curr_file << ")" << endl;
-				Uint64 to_read = size - bytes_offset;
-// 				Out() << "to_read = " << to_read << endl;
-				if (to_read <= tf.getSize() - curr_file_off)
-				{
-					// we can read the chunk from this file
-					File fptr;
-					if (fptr.open(cache + tf.getPath(),"rb"))
+					ReadBytes += FilePointer.read(buf + ReadBytes, chunk_size - ReadBytes);
+					if (ReadBytes == chunk_size || CurrentChunk + 1 == tor.getNumChunks() )
 					{
-						fptr.seek(File::BEGIN,curr_file_off);
-						fptr.read(buf + bytes_offset,to_read);
+						SHA1Hash ChunkHash = SHA1Hash::generate(buf, ReadBytes );
+						bool ok = (ChunkHash == tor.getHash(CurrentChunk));
+						downloaded.set(CurrentChunk,ok);
+						failed.set(CurrentChunk,!ok);
+						ReadBytes = 0;
 					}
-					else
-					{
-						Out() << QString("Warning : Cannot open %1 : %2").arg(cache + tf.getPath()).arg(fptr.errorString()) << endl;
-					}
-					bytes_offset += to_read;
-					curr_file_off += to_read;
 				}
-				else
-				{
-					
-					// read partially the data which can be read
-					to_read = tf.getSize() - curr_file_off;
-// 					Out() << "Partially reading " << to_read << endl;
-					File fptr;
-					if (fptr.open(cache + tf.getPath(),"rb"))
-					{
-						fptr.seek(File::BEGIN,curr_file_off);
-						fptr.read(buf + bytes_offset,to_read);
-					}
-					else
-					{
-						Out() << QString("Warning : Cannot open %1 : %2").arg(cache + tf.getPath()).arg(fptr.errorString()) << endl;
-					}
-					bytes_offset += to_read;
-					// update curr_file and offset
-					curr_file++;
-					curr_file_off = 0;
-				}
-			} // end file reading while
-
-			// calculate hash and check it
-			SHA1Hash h = SHA1Hash::generate(buf,size);
-			bool ok = h == tor.getHash(i);
-			downloaded.set(i,ok);
-			failed.set(i,!ok);
+			}
+				
 		}
 	}
-
 }

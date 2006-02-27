@@ -40,7 +40,7 @@ namespace bt
 		QString cache_dir,output_dir;
 		PtrMap<Uint32,CacheFile> files;
 	public:
-		MultiFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir);
+		MultiFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir,bool custom_output_name);
 		virtual ~MultiFileCache();
 
 		virtual void changeDataDir(const QString& ndir);
@@ -50,6 +50,7 @@ namespace bt
 		virtual bool prep(Chunk* c);
 		virtual void close();
 		virtual void open();
+		virtual QString getOutputPath() const;
 	private:
 		void touch(const QString fpath,bool dnd);
 		virtual void downloadStatusChanged(TorrentFile*, bool);

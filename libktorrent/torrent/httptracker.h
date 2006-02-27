@@ -38,11 +38,11 @@ namespace bt
 	 *
 	 * This class uses the HTTP protocol to communicate with the tracker.
 	 */
-	class HTTPTracker : public Tracker
+	class HTTPTracker : public TrackerBackend
 	{
 		Q_OBJECT
 	public:
-		HTTPTracker(kt::TorrentInterface* tor,const SHA1Hash & ih,const PeerID & pid);
+		HTTPTracker(Tracker* trk);
 		virtual ~HTTPTracker();
 		
 		virtual void doRequest(const KURL & url);

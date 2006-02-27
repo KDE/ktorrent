@@ -39,14 +39,20 @@ namespace bt
 	{
 		QTime now = QTime::currentTime();
 
-		elapsed = last.msecsTo(now);
+		int d = last.msecsTo(now);
+		if (d < 0)
+			d = 0;
+		elapsed = d;
 		last = now;
 	}
 	
 	Uint32 Timer::getElapsedSinceUpdate() const
 	{
 		QTime now = QTime::currentTime();
-		return last.msecsTo(now);
+		int d = last.msecsTo(now);
+		if (d < 0)
+			d = 0;
+		return d;
 	}
 	
 	Timer & Timer::operator = (const Timer & t)

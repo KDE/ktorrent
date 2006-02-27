@@ -155,7 +155,7 @@ namespace bt
 		
 		// check if data fits in memory mapping
 		if (ptr + buf_size > size)
-			throw Error(i18n("Cannot write beyond end of the mmap buffer !"));
+			throw Error(i18n("Cannot write beyond end of the mmap buffer!"));
 		
 		Out() << "MMapFile::write : " << (ptr + buf_size) << " " << file_size << endl;
 		// enlarge the file if necessary

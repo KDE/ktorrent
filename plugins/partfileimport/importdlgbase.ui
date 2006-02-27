@@ -21,47 +21,69 @@
         </property>
         <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>layout1</cstring>
+                <cstring>layout6</cstring>
             </property>
             <hbox>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel">
+                <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>textLabel1</cstring>
+                        <cstring>layout5</cstring>
                     </property>
-                    <property name="text">
-                        <string>Torrent</string>
-                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1</cstring>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>60</width>
+                                    <height>0</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string>Torrent:</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel2</cstring>
+                            </property>
+                            <property name="minimumSize">
+                                <size>
+                                    <width>60</width>
+                                    <height>0</height>
+                                </size>
+                            </property>
+                            <property name="text">
+                                <string>Data:</string>
+                            </property>
+                        </widget>
+                    </vbox>
                 </widget>
-                <widget class="KURLRequester">
+                <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>m_torrent_url</cstring>
+                        <cstring>layout4</cstring>
                     </property>
-                </widget>
-            </hbox>
-        </widget>
-        <widget class="QLayoutWidget">
-            <property name="name">
-                <cstring>layout2</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>textLabel2</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Data</string>
-                    </property>
-                </widget>
-                <widget class="KURLRequester">
-                    <property name="name">
-                        <cstring>m_data_url</cstring>
-                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="KURLRequester">
+                            <property name="name">
+                                <cstring>m_torrent_url</cstring>
+                            </property>
+                        </widget>
+                        <widget class="KURLRequester">
+                            <property name="name">
+                                <cstring>m_data_url</cstring>
+                            </property>
+                        </widget>
+                    </vbox>
                 </widget>
             </hbox>
         </widget>
@@ -108,7 +130,7 @@
                         <cstring>m_import_btn</cstring>
                     </property>
                     <property name="text">
-                        <string>Impo&amp;rt</string>
+                        <string>&amp;Import</string>
                     </property>
                 </widget>
                 <widget class="KPushButton">
@@ -118,14 +140,13 @@
                     <property name="text">
                         <string>Ca&amp;ncel</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+N</string>
-                    </property>
                 </widget>
             </hbox>
         </widget>
     </vbox>
 </widget>
+<customwidgets>
+</customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kurlrequester.h</includehint>

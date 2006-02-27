@@ -88,6 +88,7 @@ void TorrentCreatorDlg::onCreate()
 			url,trackers,chunk_size,
 			name,m_comments->text(),
 			m_start_seeding->isChecked(),s,
+			m_private->isChecked(),
 			dlg->progressBar());
 	delete dlg;
 	accept();
