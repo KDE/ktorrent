@@ -191,16 +191,22 @@ namespace bt
 
 	Uint32 PacketWriter::update()
 	{
-		Uint32 data_sent = uploaded;
-		uploaded = 0;
 		if (packets.count() == 0)
+		{
+			Uint32 data_sent = uploaded;
+			uploaded = 0;
 			return data_sent;
+		}
 		
 		sendSmallPackets();
 		
 		// if there is a limit return data_sent
 		if (UploadCap::instance().getMaxSpeed() > 0)
+		{
+			Uint32 data_sent = uploaded;
+			uploaded = 0;
 			return data_sent;
+		}
 		
 		// no limit, go wild
 		while (packets.count() > 0)
@@ -210,6 +216,9 @@ namespace bt
 			packets.removeFirst();
 		}
 		
+		
+		Uint32 data_sent = uploaded;
+		uploaded = 0;
 		return data_sent;
 	}
 
