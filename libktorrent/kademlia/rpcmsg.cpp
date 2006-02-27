@@ -88,6 +88,13 @@ namespace dht
 		}
 		else if (str == "announce_peer")
 		{
+			if (args->getValue("info_hash") && args->getValue("port") && args->getValue("token"))
+			{
+				msg = new AnnounceReq(id,
+						Key(args->getValue("info_hash")->data().toByteArray()),
+						args->getValue("port")->data().toInt(),
+						Key(args->getValue("token")->data().toByteArray()));
+			}
 		}
 		
 		if (msg)
@@ -155,6 +162,7 @@ namespace dht
 						return new GetPeersValuesRsp(mtid,id,args->getValue("values")->data().toByteArray(),token);
 				}
 			case ANNOUNCE_PEER :
+				return new AnnounceRsp(mtid,id);
 			default:
 				return 0;
 		}
@@ -395,6 +403,45 @@ namespace dht
 	
 	////////////////////////////////
 	
+	AnnounceReq::AnnounceReq(const Key & id,const Key & info_hash,Uint16 port,const Key & token) 
+	: GetPeersReq(id,info_hash),port(port),token(token)
+	{}
+	
+	AnnounceReq::~AnnounceReq() {}
+		
+	void AnnounceReq::apply(DHT* dh_table)
+	{
+	}
+	
+	void AnnounceReq::print()
+	{
+		Out() << QString("REQ: %1 %2 : announce_peer %3 %4 %5")
+				.arg(mtid).arg(id.toString()).arg(info_hash.toString())
+				.arg(port).arg(token.toString()) << endl;
+	}
+	
+	void AnnounceReq::encode(QByteArray & arr)
+	{
+		BEncoder enc(new BEncoderBufferOutput(arr));
+		enc.beginDict();
+		{
+			enc.write(ARG); enc.beginDict();
+			{
+				enc.write("id"); enc.write(id.getData(),20);
+				enc.write("info_hash"); enc.write(info_hash.getData(),20);
+				enc.write("port"); enc.write((Uint32)port);
+				enc.write("token"); enc.write(token.getData(),20);
+			}
+			enc.end();
+			enc.write(REQ); enc.write("announce_peer");
+			enc.write(TID); enc.write(&mtid,1);
+			enc.write(TYP); enc.write(REQ);
+		}
+		enc.end();
+	}
+	
+	////////////////////////////////
+	
 	PingRsp::PingRsp(Uint8 mtid,const Key & id)
 	: MsgBase(mtid,PING,RSP_MSG,id)
 	{}
@@ -602,6 +649,41 @@ namespace dht
 		}
 		enc.end();
 	}
+	
+	////////////////////////////////
+	
+	AnnounceRsp::AnnounceRsp(Uint8 mtid,const Key & id) : MsgBase(mtid,ANNOUNCE_PEER,RSP_MSG,id)
+	{}
+	
+	AnnounceRsp::~AnnounceRsp(){}
+	
+	void AnnounceRsp::apply(DHT* dh_table)
+	{
+		dh_table->response(this);
+	}
+	
+	void AnnounceRsp::print()
+	{
+		Out() << QString("RSP: %1 %2 : announce_peer")
+				.arg(mtid).arg(id.toString()) << endl;
+	}
+	
+	void AnnounceRsp::encode(QByteArray & arr)
+	{
+		BEncoder enc(new BEncoderBufferOutput(arr));
+		enc.beginDict();
+		{
+			enc.write(RSP); enc.beginDict();
+			{
+				enc.write("id"); enc.write(id.getData(),20);
+			}
+			enc.end();
+			enc.write(TID); enc.write(&mtid,1);
+			enc.write(TYP); enc.write(RSP);
+		}
+		enc.end();
+	}
+	
 	
 	////////////////////////////////
 	

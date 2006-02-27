@@ -207,8 +207,22 @@ namespace dht
 		virtual void apply(DHT* dh_table);
 		virtual void print();
 		virtual void encode(QByteArray & arr);
-	private:
+	protected:
 		Key info_hash;
+	};
+	
+	class AnnounceReq : public GetPeersReq
+	{
+	public:
+		AnnounceReq(const Key & id,const Key & info_hash,bt::Uint16 port,const Key & token);
+		virtual ~AnnounceReq();
+		
+		virtual void apply(DHT* dh_table);
+		virtual void print();
+		virtual void encode(QByteArray & arr);
+	private:
+		bt::Uint16 port;
+		Key token;
 	};
 	
 	class PingRsp : public MsgBase
@@ -285,6 +299,17 @@ namespace dht
 		StoreValueRsp(Uint8 mtid,const Key & id);
 		virtual ~StoreValueRsp();
 		
+		virtual void apply(DHT* dh_table);
+		virtual void print();
+		virtual void encode(QByteArray & arr);
+	};
+	
+	class AnnounceRsp : public MsgBase
+	{
+	public:
+		AnnounceRsp(Uint8 mtid,const Key & id);
+		virtual ~AnnounceRsp();
+	
 		virtual void apply(DHT* dh_table);
 		virtual void print();
 		virtual void encode(QByteArray & arr);

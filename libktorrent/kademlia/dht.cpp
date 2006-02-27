@@ -23,6 +23,7 @@
 #include <torrent/bnode.h>
 #include <torrent/globals.h>
 #include <ksocketaddress.h>
+#include "announcetask.h"
 #include "dht.h"
 #include "node.h"
 #include "rpcserver.h"
@@ -187,6 +188,16 @@ namespace dht
 	
 	Task* DHT::announce(const bt::SHA1Hash & info_hash,bt::Uint16 port)
 	{
+		KClosestNodesSearch kns(info_hash,K);
+		node->findKClosestNodes(kns);
+		if (kns.getNumEntries() > 0)
+		{
+			Out() << "Doing DHT announce " << endl;
+			AnnounceTask* at = new AnnounceTask(srv,node,info_hash);
+			tman->addTask(at);
+			return at;
+		}
+		
 		return 0;
 	}
 }
