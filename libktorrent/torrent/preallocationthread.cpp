@@ -17,70 +17,71 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <set>
 #include <util/log.h>
-#include "peeruploader.h"
-#include "peer.h"
-#include "chunkmanager.h"
-#include "packetwriter.h"
+#include "preallocationthread.h"
+#include "torrentcontrol.h"
+#include "globals.h"
 
 namespace bt
 {
 
-	PeerUploader::PeerUploader(Peer* peer) : peer(peer)
+	PreallocationThread::PreallocationThread(TorrentControl* tc) : tc(tc),stopped(false)
 	{
+		bytes_written = 0;
 	}
 
 
-	PeerUploader::~PeerUploader()
+	PreallocationThread::~PreallocationThread()
 	{}
 
-	void PeerUploader::addRequest(const Request & r)
+	void PreallocationThread::run()
 	{
-		if (!peer->areWeChoked())
-		{
-			requests.append(r);
-		}
+		tc->preallocateDiskSpace(this);
+		Out() << "PreallocationThread::run finished" << endl;
 	}
 	
-	void PeerUploader::removeRequest(const Request & r)
+	void PreallocationThread::stop() 
 	{
-		requests.remove(r);
+		mutex.lock();
+		stopped = true;
+		mutex.unlock();
 	}
-	
-	Uint32 PeerUploader::update(ChunkManager & cman,Uint32 opt_unchoked)
+		
+	void PreallocationThread::setErrorMsg(const QString & msg) 
 	{
-		Uint32 uploaded = 0;
-
-		PacketWriter & pw = peer->getPacketWriter();
-		uploaded += pw.update();
+		mutex.lock();
+		error_msg = msg; stopped = true;
+		mutex.unlock();
+	}
 		
-	//	if (peer->areWeChoked())
-	//		return uploaded;
+	bool PreallocationThread::isStopped() const 
+	{
+		mutex.lock();
+		bool tmp = stopped;
+		mutex.unlock();
+		return tmp;
+	}
 		
-		if (peer->isSnubbed() && !peer->areWeChoked() &&
-			cman.chunksLeft() != 0 && peer->getID() != opt_unchoked)
-			return uploaded;
-	
-
-		while (!requests.empty() && pw.getNumPacketsToWrite() == 0)
-		{	
-			Request r = requests.front();
-			Chunk* c = cman.grabChunk(r.getIndex());
-			
-			if (c)
-			{
-				pw.sendChunk(r.getIndex(),r.getOffset(),r.getLength(),c);
-				requests.remove(r);
-				uploaded += pw.update();
-			}
-			else
-			{
-				// remove requests we can't satisfy
-				requests.remove(r);
-			}
-		}
+	bool PreallocationThread::errorHappened() const 
+	{
+		mutex.lock();
+		bool ret = !error_msg.isNull();
+		mutex.unlock();
+		return ret;
+	}
 		
-		return uploaded;
+	void PreallocationThread::written(Uint64 nb) 
+	{
+		mutex.lock();
+		bytes_written += nb;
+		mutex.unlock();
+	}
+		
+	Uint64 PreallocationThread::bytesWritten()
+	{
+		mutex.lock();
+		Uint64 tmp = bytes_written;
+		mutex.unlock();
+		return tmp;
 	}
 }

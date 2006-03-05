@@ -20,11 +20,13 @@
 #ifndef BTCACHE_H
 #define BTCACHE_H
 
+
 namespace bt
 {
 	class Torrent;
 	class TorrentFile;
 	class Chunk;
+	class PreallocationThread;
 
 	/**
 	 * @author Joris Guisson
@@ -97,6 +99,11 @@ namespace bt
 		
 		/// Does nothing, can be overridden to be alerted of download status changes of a TorrentFile
 		virtual void downloadStatusChanged(TorrentFile*, bool) {};
+		
+		/**
+		 * Preallocate diskspace for all files
+		 */
+		virtual void preallocateDiskSpace(PreallocationThread* pt) = 0;
 	};
 
 }

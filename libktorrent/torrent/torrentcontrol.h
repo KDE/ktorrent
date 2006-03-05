@@ -30,7 +30,8 @@
 #include <interfaces/torrentinterface.h>
 #include <interfaces/monitorinterface.h>
 
-class KProgressDialog;
+
+
 
 namespace bt
 {
@@ -44,6 +45,7 @@ namespace bt
 	class Peer;
 	class BitSet;
 	class QueueManager;
+	class PreallocationThread;
 	
 	/**
 	 * @author Joris Guisson
@@ -160,6 +162,12 @@ namespace bt
 		void setMaxShareRatio(float ratio);
 		float getMaxShareRatio() const { return maxShareRatio; }
 		
+		/// Tell the TorrentControl obj to preallocate diskspace in the next update
+		void setPreallocateDiskSpace(bool pa) {prealloc = pa;}
+		
+		/// Make a string out of the status message
+		virtual QString statusToString() const;
+		
 	public slots:
 		/**
 		 * Update the object, should be called periodically.
@@ -213,6 +221,7 @@ namespace bt
 		void getSeederInfo(Uint32 & total,Uint32 & connected_to) const;
 		void getLeecherInfo(Uint32 & total,Uint32 & connected_to) const;
 		void migrateTorrent(const QString & default_save_dir);
+		void preallocateDiskSpace(PreallocationThread* pt);
 
 		
 	private:
@@ -237,6 +246,10 @@ namespace bt
 		bool custom_output_name;
 		int priority;
 		float maxShareRatio;
+		bool prealloc;
+		PreallocationThread* prealloc_thread;
+		
+		friend class PreallocationThread;
 	};
 }
 

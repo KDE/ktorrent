@@ -38,7 +38,7 @@ QueueItem::QueueItem(kt::TorrentInterface* t, QListView* parent)
 	setText(0, QString(tc->getStats().torrent_name));
 }
 
-int QueueItem::compare(QListViewItem *i, int col, bool ascending ) const
+int QueueItem::compare(QListViewItem *i, int , bool ) const
 {
 	QueueItem* it = (QueueItem*) i;
 	if(it->getPriority() == torrentPriority)
@@ -215,5 +215,5 @@ void QueueDialog::btnOk_clicked()
 	this->close();
 }
 
-
+#include "queuedialog.moc"
 

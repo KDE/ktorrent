@@ -39,7 +39,7 @@ using namespace bt;
 using namespace kt;
 
 KTorrentView::KTorrentView(QWidget *parent, bool seed_view)
-	: KListView(parent),show_debug_view(false),menu(0),curr(0), m_seedView(seed_view)
+	: KListView(parent),m_seedView(seed_view),show_debug_view(false),menu(0),curr(0)
 
 {
 	addColumn(i18n("File"));
@@ -87,10 +87,10 @@ KTorrentView::KTorrentView(QWidget *parent, bool seed_view)
 	setShowSortIndicator(true);
 	setAcceptDrops(true);
 	
-	for (Uint32 i = 2;i < columns();i++)
+	for (Uint32 i = 2;i < (Uint32)columns();i++)
 		setColumnWidthMode(i,QListView::Manual);
 
-	restoreLayout(KGlobal::config(),"KTorrentView");
+	restoreLayout(KGlobal::config(),m_seedView ? "KTorrentSeedView" : "KTorrentView");
 }
 
 KTorrentView::~KTorrentView()
@@ -99,8 +99,7 @@ KTorrentView::~KTorrentView()
 
 void KTorrentView::saveSettings()
 {
-	Out() << "USE THE FORCE KTORRENTVIEW !!!!" << endl;
-	saveLayout(KGlobal::config(),"KTorrentView");
+	saveLayout(KGlobal::config(),m_seedView ? "KTorrentSeedView" : "KTorrentView");
 	KGlobal::config()->sync();
 }
 

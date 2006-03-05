@@ -140,7 +140,10 @@ void KTorrentCore::load(const QString & target,const QString & dir)
 
 			dlg.execute(tc);
 		}
-		// 		start(tc);
+		
+	
+		tc->setPreallocateDiskSpace(true);
+	
 		torrentAdded(tc);
 		qman->torrentAdded(tc);
 	}

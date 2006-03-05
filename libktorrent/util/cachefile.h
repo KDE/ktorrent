@@ -26,6 +26,8 @@
 
 namespace bt
 {
+	class PreallocationThread;
+	
 	/**
 	 * Interface which classes must implement to be able to map something from a CacheFile
 	 * It will also be used to notify when things get unmapped or remapped
@@ -113,6 +115,11 @@ namespace bt
 		 * @param off Offset to read from in file
 		 */
 		void write(const Uint8* buf,Uint32 size,Uint64 off);
+		
+		/**
+		 * Preallocate disk space
+		 */
+		void preallocate(PreallocationThread* pt);
 		
 	private:
 		void growFile(Uint64 to_write);

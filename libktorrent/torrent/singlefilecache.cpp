@@ -28,6 +28,7 @@
 #include "torrent.h"
 #include "chunk.h"
 #include "globals.h"
+#include "preallocationthread.h"
 
 
 namespace bt
@@ -126,6 +127,9 @@ namespace bt
 	
 	void SingleFileCache::open()
 	{	
+		if (fd)
+			return;
+		
 		try
 		{
 			fd = new CacheFile();
@@ -138,6 +142,14 @@ namespace bt
 			fd = 0;
 			throw;
 		}
+	}
+	
+	void SingleFileCache::preallocateDiskSpace(PreallocationThread* pt)
+	{
+		if (!fd)
+			open();
+		
+		fd->preallocate(pt);
 	}
 
 }

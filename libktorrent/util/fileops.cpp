@@ -219,6 +219,23 @@ namespace bt
 		
 		}
 	}
+	
+	Uint64 FileSize(const QString & url)
+	{
+		int ret = 0;
+#if HAVE_STAT64
+		struct stat64 sb;
+		ret = stat64(QFile::encodeName(url),&sb);
+#else
+		struct stat sb;
+		ret = stat(QFile::encodeName(url),&sb);
+#endif
+		if (ret < 0)
+			throw Error(i18n("Cannot calculate the filesize of %1: %2")
+					.arg(url).arg(strerror(errno)));
+		
+		return (Uint64)sb.st_size;
+	}
 
 	/*
 	switch (errno)

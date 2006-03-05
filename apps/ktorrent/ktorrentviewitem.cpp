@@ -29,7 +29,7 @@
 
 using namespace bt;
 using namespace kt;
-
+/*
 static QString StatusToString(TorrentInterface* tc,TorrentStatus s)
 {
 	switch (s)
@@ -48,9 +48,12 @@ static QString StatusToString(TorrentInterface* tc,TorrentStatus s)
 			return i18n("Stopped");
 		case kt::ERROR :
 			return i18n("Error: ") + tc->getShortErrorMessage(); 
+		case kt::ALLOCATING_DISKSPACE:
+			return i18n("Allocating diskspace");
 	}
 	return QString::null;
 }
+*/
 
 static QColor StatusToColor(TorrentStatus s,const QColorGroup & cg)
 {
@@ -65,6 +68,7 @@ static QColor StatusToColor(TorrentStatus s,const QColorGroup & cg)
 		case kt::SEEDING :
 		case kt::DOWNLOADING:
 		case kt::COMPLETE :
+		case kt::ALLOCATING_DISKSPACE :
 			return green;
 		case kt::STALLED:
 			return yellow;
@@ -103,7 +107,7 @@ void KTorrentViewItem::update()
 	const TorrentStats & s = tc->getStats();
 
 	setText(0,s.torrent_name);
-	setText(1,StatusToString(tc,s.status));
+	setText(1,tc->statusToString());
 	Uint64 nb = s.bytes_downloaded > s.total_bytes ? s.total_bytes : s.bytes_downloaded;
 	setText(2,BytesToString(nb));
 	setText(3,BytesToString(s.total_bytes_to_download));
@@ -180,8 +184,7 @@ int KTorrentViewItem::compare(QListViewItem * i,int col,bool) const
 	switch (col)
 	{
 		case 0: return QString::compare(s.torrent_name,os.torrent_name);
-		case 1: return QString::compare(StatusToString(tc,s.status),
-										StatusToString(otc,os.status));
+		case 1: return QString::compare(tc->statusToString(),otc->statusToString());
 		case 2: return CompareVal(s.bytes_downloaded,os.bytes_downloaded);
 		case 3: return CompareVal(s.total_bytes_to_download,os.total_bytes_to_download);
 		case 4: return CompareVal(s.bytes_uploaded,os.bytes_uploaded);

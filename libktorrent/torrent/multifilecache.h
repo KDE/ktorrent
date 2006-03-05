@@ -27,6 +27,7 @@
 namespace bt
 {
 	class CacheFile;
+	class PreallocationThread;
 
 	/**
 	 * @author Joris Guisson
@@ -51,6 +52,7 @@ namespace bt
 		virtual void close();
 		virtual void open();
 		virtual QString getOutputPath() const;
+		virtual void preallocateDiskSpace(PreallocationThread* pt);
 	private:
 		void touch(const QString fpath,bool dnd);
 		virtual void downloadStatusChanged(TorrentFile*, bool);

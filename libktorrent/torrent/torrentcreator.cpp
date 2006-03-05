@@ -63,12 +63,13 @@ namespace bt
 		}
 		else
 		{
-			num_chunks = fi.size() / chunk_size;
-			if (fi.size() % chunk_size > 0)
+			tot_size = bt::FileSize(target);
+			num_chunks = tot_size / chunk_size;
+			if (tot_size % chunk_size > 0)
 				num_chunks++;
-			last_size = fi.size() % chunk_size;
-			Out() << "Tot Size : " << fi.size() << endl;
-			tot_size = fi.size();
+			last_size = tot_size % chunk_size;
+			Out() << "Tot Size : " << tot_size << endl;
+			
 		}
 
 		if (last_size == 0)
@@ -92,11 +93,11 @@ namespace bt
 		for (QStringList::iterator i = dfiles.begin();i != dfiles.end();++i)
 		{
 			// add a TorrentFile to the list
-			QFileInfo fi(target + dir + *i);
-			TorrentFile f(cnt,dir + *i,tot_size,fi.size(),chunk_size);
+			Uint64 fs = bt::FileSize(target + dir + *i);
+			TorrentFile f(cnt,dir + *i,tot_size,fs,chunk_size);
 			files.append(f);
 			// update total size
-			tot_size += fi.size();
+			tot_size += fs;
 			cnt++;
 		}
 
@@ -229,7 +230,6 @@ namespace bt
 		
 		Uint32 s = cur_chunk != num_chunks - 1 ? chunk_size : last_size;
 		// first find the file(s) the chunk lies in
-		Out() << "Size = " << s << endl;
 		Array<Uint8> buf(s);
 		QValueList<TorrentFile> file_list;
 		Uint32 i = 0;

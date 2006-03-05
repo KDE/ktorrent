@@ -25,6 +25,7 @@
 namespace bt
 {
 	class CacheFile;
+	class PreallocationThread;
 
 	/**
 	 * @author Joris Guisson
@@ -49,6 +50,7 @@ namespace bt
 		virtual void open();
 		virtual void changeDataDir(const QString & ndir);
 		virtual QString getOutputPath() const {return output_file;}
+		virtual void preallocateDiskSpace(PreallocationThread* pt);
 	};
 
 }

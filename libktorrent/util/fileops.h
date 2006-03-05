@@ -20,6 +20,7 @@
 #ifndef BTFILEOPS_H
 #define BTFILEOPS_H
 
+#include <util/constants.h>
 class QString;
 
 namespace bt
@@ -87,6 +88,14 @@ namespace bt
 	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 */
 	void Touch(const QString & url,bool nothrow = false);
+	
+	/**
+	 * Calculates the size of a file
+	 * @param url Name of the file
+	 * @return The size of the file
+	 * @throw Error if the file doesn't exist, or something else goes wrong
+	 */
+	Uint64 FileSize(const QString & url);
 }
 
 #endif

@@ -17,70 +17,65 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <set>
-#include <util/log.h>
-#include "peeruploader.h"
-#include "peer.h"
-#include "chunkmanager.h"
-#include "packetwriter.h"
+#ifndef BTPREALLOCATIONTHREAD_H
+#define BTPREALLOCATIONTHREAD_H
+
+#include <qstring.h>
+#include <qthread.h>
+#include <qmutex.h>
+#include <util/constants.h>
+
+
 
 namespace bt
 {
+	class TorrentControl;	
 
-	PeerUploader::PeerUploader(Peer* peer) : peer(peer)
+	/**
+	 * @author Joris Guisson <joris.guisson@gmail.com>
+	 * 
+	 * Thread to preallocate diskspace
+	*/
+	class PreallocationThread : public QThread
 	{
-	}
+		TorrentControl* tc;
+		bool stopped;
+		QString error_msg;
+		Uint64 bytes_written;
+		mutable QMutex mutex;
+	public:
+		PreallocationThread(TorrentControl* tc);
+		virtual ~PreallocationThread();
 
-
-	PeerUploader::~PeerUploader()
-	{}
-
-	void PeerUploader::addRequest(const Request & r)
-	{
-		if (!peer->areWeChoked())
-		{
-			requests.append(r);
-		}
-	}
-	
-	void PeerUploader::removeRequest(const Request & r)
-	{
-		requests.remove(r);
-	}
-	
-	Uint32 PeerUploader::update(ChunkManager & cman,Uint32 opt_unchoked)
-	{
-		Uint32 uploaded = 0;
-
-		PacketWriter & pw = peer->getPacketWriter();
-		uploaded += pw.update();
+		virtual void run();
 		
-	//	if (peer->areWeChoked())
-	//		return uploaded;
+		/**
+		 * Stop the thread. 
+		 */
+		void stop();
 		
-		if (peer->isSnubbed() && !peer->areWeChoked() &&
-			cman.chunksLeft() != 0 && peer->getID() != opt_unchoked)
-			return uploaded;
-	
+		/**
+		 * Set an error message, also calls stop
+		 * @param msg The message
+		 */
+		void setErrorMsg(const QString & msg);
+		
+		/// See if the thread has been stopped
+		bool isStopped() const;
+		
+		/// Did an error occur during the preallocation ?
+		bool errorHappened() const;
+		
+		/// Get the error_msg
+		const QString & errorMessage() const {return error_msg;}
+		
+		/// nb Number of bytes have been written
+		void written(Uint64 nb);
+		
+		/// Get the number of bytes written
+		Uint64 bytesWritten();
+	};
 
-		while (!requests.empty() && pw.getNumPacketsToWrite() == 0)
-		{	
-			Request r = requests.front();
-			Chunk* c = cman.grabChunk(r.getIndex());
-			
-			if (c)
-			{
-				pw.sendChunk(r.getIndex(),r.getOffset(),r.getLength(),c);
-				requests.remove(r);
-				uploaded += pw.update();
-			}
-			else
-			{
-				// remove requests we can't satisfy
-				requests.remove(r);
-			}
-		}
-		
-		return uploaded;
-	}
 }
+
+#endif

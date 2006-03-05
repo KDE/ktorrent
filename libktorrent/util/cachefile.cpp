@@ -32,11 +32,15 @@
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kfileitem.h>
+#include <util/array.h>
 #include <torrent/globals.h>
+#include <torrent/preallocationthread.h>
 #include <interfaces/functions.h>
+#include <kapplication.h>
 #include "log.h"
 #include "error.h"
 #include "cachefile.h"
+
 
 // Not all systems have an O_LARGEFILE - Solaris depending
 // on command-line defines, FreeBSD never - so in those cases,
@@ -110,7 +114,7 @@ namespace bt
 		// reopen the file if necessary
 		if (fd == -1)
 		{
-			Out() << "Reopening " << path << endl;
+		//	Out() << "Reopening " << path << endl;
 			openFile();
 		}
 		
@@ -218,13 +222,13 @@ namespace bt
 		{
 			if (to_write < 1024)
 			{
-					::write(fd,buf,to_write);
-					to_write = 0;
+				::write(fd,buf,to_write);
+				to_write = 0;
 			}
 			else
 			{
-					::write(fd,buf,1024);
-					to_write -= 1024;
+				::write(fd,buf,1024);
+				to_write -= 1024;
 			}
 		}
 		file_size += num;
@@ -239,7 +243,7 @@ namespace bt
 #endif
 		if (file_size != (Uint64)sb.st_size)
 		{
-			Out() << QString("Homer Simpson %1 %2").arg(file_size).arg(sb.st_size) << endl;
+//			Out() << QString("Homer Simpson %1 %2").arg(file_size).arg(sb.st_size) << endl;
 			fsync(fd);
 #if HAVE_STAT64	
 			fstat64(fd,&sb);
@@ -248,7 +252,7 @@ namespace bt
 #endif
 			if (file_size != (Uint64)sb.st_size)
 			{
-				throw Error(i18n("Cannot expand file %1").arg(path));;
+				throw Error(i18n("Cannot expand file %1").arg(path));
 			}
 		}
 	}
@@ -371,5 +375,61 @@ namespace bt
 		//Out() << "Temporarely closed " << path << endl;
 	}
 	
+	void CacheFile::preallocate(PreallocationThread* pt)
+	{
+		Out() << "Preallocating file " << path << " (" << max_size << " bytes)" << endl;
+		if (max_size - file_size == 0)
+			return;
+		try
+		{
+			
+			if (fd == -1)
+			{
+			//	Out() << "Reopening " << path << endl;
+				openFile();
+			}
+			
+			const Uint64 ONE_MB = 1024;
+			Array<Uint8> buf(ONE_MB);
+			buf.fill(0);
+			
+			Uint32 todo = max_size - file_size;
+			while (todo > 0 && !pt->isStopped())
+			{
+				if (todo < ONE_MB)
+				{
+					if (::write(fd,buf,todo) != todo)
+					{
+						if (errno == ENOSPC)
+							throw Error(i18n("Not enough diskspace for torrent"));
+						else
+							throw Error(i18n("Cannot preallocate file %1").arg(path));
+					}
+					
+					file_size += todo;
+					pt->written(todo);
+					todo = 0;
+				}
+				else
+				{
+					if (::write(fd,buf,ONE_MB) != ONE_MB)
+					{
+						if (errno == ENOSPC)
+							throw Error(i18n("Not enough diskspace for torrent"));
+						else
+							throw Error(i18n("Cannot preallocate file %1").arg(path));
+					}
+					todo -= ONE_MB;
+					file_size += ONE_MB;
+					pt->written(ONE_MB);
+				}
+			}
+			//fsync(fd);
+		}
+		catch (Error & err)
+		{
+			pt->setErrorMsg(err.toString());
+		}
+	}
 
 }

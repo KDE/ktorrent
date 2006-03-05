@@ -25,6 +25,7 @@
 #include <qptrlist.h>
 #include <iostream>
 #include <interfaces/logmonitorinterface.h>
+#include <qmutex.h> 
 #include "log.h"
 #include "error.h"
 
@@ -40,6 +41,7 @@ namespace bt
 		bool to_cout;
 		QPtrList<LogMonitorInterface> monitors;
 		QString tmp;
+		QMutex mutex;
 	public:
 		Private() : out(0),to_cout(false)
 		{
@@ -65,15 +67,18 @@ namespace bt
 
 		void write(const QString & line)
 		{
+			mutex.lock();
 			*out << line;
 			if (to_cout)
 				std::cout << line.local8Bit();
 
 			tmp += line;
+			mutex.unlock();
 		}
 
 		void endline()
 		{
+			mutex.lock();
 			*out << ::endl;
 			fptr.flush();
 			if (to_cout)
@@ -90,6 +95,7 @@ namespace bt
 				}
 			}
 			tmp = "";
+			mutex.unlock();
 		}
 	};
 	

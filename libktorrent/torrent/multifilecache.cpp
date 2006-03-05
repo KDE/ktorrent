@@ -31,6 +31,7 @@
 #include "globals.h"
 #include "chunk.h"
 #include <util/cachefile.h>
+#include "preallocationthread.h"
 
 
 namespace bt
@@ -373,6 +374,18 @@ namespace bt
 		
 		if (fd)
 			fd->open(cache_dir + tf->getPath(),tf->getSize());
+	}
+	
+	void MultiFileCache::preallocateDiskSpace(PreallocationThread* pt)
+	{
+		Out() << "MultiFileCache::preallocateDiskSpace" << endl;
+		PtrMap<Uint32,CacheFile>::iterator i = files.begin();
+		while (i != files.end() && !pt->isStopped())
+		{
+			CacheFile* cf = i->second;
+			cf->preallocate(pt);
+			i++;
+		}
 	}
 	
 	///////////////////////////////

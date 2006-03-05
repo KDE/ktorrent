@@ -28,11 +28,13 @@
 #include "chunk.h"
 #include "globals.h"
 
+
 namespace bt
 {
 	class Torrent;
 	class Cache;
 	class TorrentFile;
+	class PreallocationThread;
 
 	struct NewChunkHeader
 	{
@@ -58,7 +60,6 @@ namespace bt
 		QString index_file,file_info_file;
 		QPtrVector<Chunk> chunks;
 		Uint32 num_chunks_in_cache_file;
-		Uint32 max_allowed;
 		Cache* cache;
 		QValueList<Uint32> loaded;
 		BitSet bitset,excluded_chunks;
@@ -95,6 +96,11 @@ namespace bt
 		 * @throw Error When it can be created
 		 */
 		void createFiles();
+		
+		/**
+		 * Preallocate diskspace for all files
+		 */
+		void preallocateDiskSpace(PreallocationThread* pt);
 		
 		/**
 		 * Open the necessary files when the download gets started.
@@ -184,18 +190,6 @@ namespace bt
 
 		/// Get the number of chunks into the file.
 		Uint32 getNumChunks() const {return chunks.count();}
-
-		/**
-		 * Get the highest chunk num, we are allowed to download.
-		 * In order to avoid huge writes to the cache file in the beginning
-		 * of the download. We artificially limit which pieces can be downloaded.
-		 * 
-		 * In the beggining we can only dowload the first 50 pieces. Once a piece
-		 * comes in, we up the limit to that piece number + 50. Thus ensuring that
-		 * the cache file will be expanded slowly.
-		 * @return The maximum allowed chunk
-		 */
-		Uint32 getMaxAllowedChunk() const {return max_allowed;}
 
 		/// Print memory usage to log file
 		void debugPrintMemUsage();

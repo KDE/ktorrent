@@ -20,7 +20,8 @@
 #ifndef BTCHUNKSELECTOR_H
 #define BTCHUNKSELECTOR_H
 
-
+#include <list>
+#include <util/timer.h>
 
 namespace bt
 {
@@ -31,14 +32,15 @@ namespace bt
 	/**
 	 * @author Joris Guisson
 	 *
-	 * Selects which Chunks to download.
+	 * Selects which Chunks to download. 
 	*/
 	class ChunkSelector
 	{
 		ChunkManager & cman;
 		Downloader & downer;
-		
 		PeerManager & pman;
+		std::list<Uint32> chunks;
+		Timer sort_timer;
 	public:
 		ChunkSelector(ChunkManager & cman,Downloader & downer,PeerManager &pman);
 		virtual ~ChunkSelector();
@@ -50,9 +52,6 @@ namespace bt
 		 * @return true upon succes, false otherwise
 		 */
 		bool select(PeerDownloader* pd,Uint32 & chunk);
-
-	private:
-		bool findPriorityChunk(PeerDownloader* pd,Uint32 & chunk);
 	};
 
 }

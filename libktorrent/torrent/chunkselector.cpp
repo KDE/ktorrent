@@ -18,6 +18,8 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <stdlib.h>
+#include <vector>
+#include <algorithm>
 #include <util/log.h>
 #include <util/bitset.h>
 #include "chunkcounter.h"
@@ -31,112 +33,98 @@
 
 namespace bt
 {
+	struct RareCmp
+	{
+		ChunkManager & cman;
+		ChunkCounter & cc;
+		bool warmup;
+		
+		RareCmp(ChunkManager & cman,ChunkCounter & cc,bool warmup) : cman(cman),cc(cc),warmup(warmup) {}
+		
+		bool operator()(Uint32 a,Uint32 b)
+		{
+			// the sorting is done on two criteria, priority and rareness
+			bool pa = cman.getChunk(a)->isPriority();
+			bool pb = cman.getChunk(b)->isPriority();
+			if ((pa && pb) || (!pa && !pb))
+				return normalCmp(a,b); // if both have same priority compare on rareness
+			else if (pa && !pb) // pa has priority over pb, so select pa
+				return true;
+			else // pb has priority over pa, so select pb
+				return false;
+		}
+		
+		bool normalCmp(Uint32 a,Uint32 b)
+		{
+			// during warmup mode choose most common chunks
+			if (!warmup)
+				return cc.get(a) < cc.get(b);
+			else
+				return cc.get(a) > cc.get(b);
+		}
+	};
 
 	ChunkSelector::ChunkSelector(ChunkManager & cman,Downloader & downer,PeerManager & pman)
 	: cman(cman),downer(downer),pman(pman)
-	{
+	{	
+		std::vector<Uint32> tmp;
+		for (Uint32 i = 0;i < cman.getNumChunks();i++)
+		{
+			if (!cman.getBitSet().get(i))
+			{
+				tmp.push_back(i);
+			}
+		}
+		std::random_shuffle(tmp.begin(),tmp.end());
+		// std::list does not support random_shuffle so we use a vector as a temporary storage
+		// for the random_shuffle
+		chunks.insert(chunks.begin(),tmp.begin(),tmp.end());
+		sort_timer.update();
 	}
 
 
 	ChunkSelector::~ChunkSelector()
 	{}
 
-	bool ChunkSelector::findPriorityChunk(PeerDownloader* pd,Uint32 & chunk)
-	{
-		const BitSet & bs = cman.getBitSet();
-		
-		Uint32 i = 0;
-		while (i < cman.getNumChunks())
-		{
-			Chunk* c = cman.getChunk(i);
-			if (c->isPriority() && !c->isExcluded() && pd->hasChunk(i) &&
-				!downer.areWeDownloading(i) && !bs.get(i))
-			{
-				chunk = i;
-				return true;
-			}
-			i++;
-		}
-		return false;
-	}
 
 	bool ChunkSelector::select(PeerDownloader* pd,Uint32 & chunk)
-	{
-		// first try to find priority chunks
-		if (findPriorityChunk(pd,chunk))
-			return true;
-		
-		// cap the maximum chunk to download
-		// to not get monster writes to the cache file
-		Uint32 max_c = cman.getMaxAllowedChunk();
-		if (max_c > cman.getNumChunks())
-			max_c = cman.getNumChunks();
-
+	{		
 		const BitSet & bs = cman.getBitSet();
-		Uint32 rarest_chunk=0xFFFFFFFF;
-		Uint32 rarest_peer_cnt=0x7FFFFFFF;
 		bool warmup = cman.getNumChunks() - cman.chunksLeft() <= 4;
 		
-		// pick a random chunk to download, by picking
-		// a random starting value in the range 0 .. max_c
-		Uint32 s = int(((double)rand() / (RAND_MAX - 1)) * max_c);
-		Uint32 i = s;
-		i = (i + 1) % max_c;
-		// first try the range 0 .. max_c
-		while (i != s)
+		// sort the chunks every 2 seconds
+		if (sort_timer.getElapsedSinceUpdate() > 2000)
 		{
-			Chunk* c = cman.getChunk(i);
-			// pd has to have the selected chunk
-			// and we don't have it
-			if (pd->hasChunk(i) && !downer.areWeDownloading(i) &&
-				!bs.get(i) && !c->isExcluded())
+			chunks.sort(RareCmp(cman,pman.getChunkCounter(),warmup));
+			sort_timer.update();
+		}
+	
+		std::list<Uint32>::iterator itr = chunks.begin();
+		while (itr != chunks.end())
+		{
+			Uint32 i = *itr;
+			Chunk* c = cman.getChunk(*itr);
+			
+			// if we have the chunk remove it from the list
+			if (bs.get(i))
 			{
-				// find out how many peers already have the chunk			
-				Uint32 peer_cnt = pman.getChunkCounter().get(i);
-				Uint32 peers = pman.getNumConnectedPeers();
-				if (warmup) 
+				std::list<Uint32>::iterator tmp = itr;
+				itr++;
+				chunks.erase(tmp);
+			}
+			else
+			{
+				// pd has to have the selected chunk and it needs to be not excluded
+				if (pd->hasChunk(i) && !downer.areWeDownloading(i) && !c->isExcluded())
 				{
-					// if in warmup mode, select the chunk 
-					// 1/2 of the peers (approx) has .
-					if (abs(int(peer_cnt)-int(peers/2))<
-						abs(int(rarest_peer_cnt)-int(peers/2)))
-					{
-						rarest_chunk=i;
-						rarest_peer_cnt=peer_cnt;
-						if (abs(int(rarest_peer_cnt)-int(peers/2))<=1)
-							break;
-					}
-				} 
-				else if (peer_cnt<rarest_peer_cnt) 
-				{
-					// normal mode - select rarest chunk
-					rarest_chunk=i;
-					rarest_peer_cnt=peer_cnt;
-					if (rarest_peer_cnt==1) break;
+					// we have a chunk
+					chunk = i;
+					return true;
 				}
-			}
-			i = (i + 1) % max_c;
-		}
-
-		if (rarest_chunk!=0xFFFFFFFF) {
-			chunk=rarest_chunk;
-			return true;
-		} 
-
-		// then try everything else
-		for (i = max_c;i < cman.getNumChunks();i++)
-		{
-			Chunk* c = cman.getChunk(i);
-			// pd has to have the selected chunk
-			// and we don't have it
-			if (pd->hasChunk(i) && !downer.areWeDownloading(i) &&
-						 !bs.get(i) && !c->isExcluded())
-			{
-				chunk = i;
-				return true;
+				itr++;
 			}
 		}
-
+		
 		return false;
 	}
 

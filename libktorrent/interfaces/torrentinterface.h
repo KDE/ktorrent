@@ -46,6 +46,7 @@ namespace kt
 		DOWNLOADING,
 		STALLED,
 		STOPPED,
+		ALLOCATING_DISKSPACE,
 		ERROR
 	};
 
@@ -252,6 +253,9 @@ namespace kt
 		virtual void setMaxShareRatio(float ratio) = 0;
 		
 		virtual float getMaxShareRatio() const = 0;
+		
+		/// Make a string of the current status
+		virtual QString statusToString() const = 0;
 		
 	signals:
 		/**

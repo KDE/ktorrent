@@ -61,7 +61,6 @@ namespace bt
 		}
 		chunks.setAutoDelete(true);
 		num_chunks_in_cache_file = 0;
-		max_allowed = 50;
 		chunks_left = 0;
 		recalc_chunks_left = true;
 
@@ -159,7 +158,6 @@ namespace bt
 				Chunk* c = getChunk(hdr.index);
 				if (c)
 				{
-					max_allowed = hdr.index + 50;
 					c->setStatus(Chunk::ON_DISK);
 					bitset.set(hdr.index,true);
 					recalc_chunks_left = true;
@@ -329,8 +327,6 @@ namespace bt
 		NewChunkHeader hdr;
 		hdr.index = c->getIndex();
 		fptr.write(&hdr,sizeof(NewChunkHeader));
-		if (c->getIndex() + 50 > max_allowed)
-			max_allowed = c->getIndex() + 50;
 	}
 	
 	Uint64 ChunkManager::bytesLeft() const
@@ -572,6 +568,11 @@ namespace bt
 	QString ChunkManager::getOutputPath() const
 	{
 		return cache->getOutputPath();
+	}
+	
+	void ChunkManager::preallocateDiskSpace(PreallocationThread* pt)
+	{
+		cache->preallocateDiskSpace(pt);
 	}
 }
 
