@@ -138,6 +138,9 @@ namespace bt
 		* Checks if torrent file is audio or video.
 		**/
 		bool isMultimedia() const;
+		
+		/// See if the torrent is private
+		bool isPrivate() const {return priv_torrent;}
 
 	private:
 		void loadInfo(BDictNode* node);
@@ -160,6 +163,7 @@ namespace bt
 		QValueVector<TorrentFile> files;
 		AnnounceList* anon_list;
 		QString encoding;
+		bool priv_torrent;
 	};
 
 }

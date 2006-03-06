@@ -49,6 +49,13 @@ namespace dht
 		 */
 		virtual void onFinished(Task* t) = 0;
 		
+		/**
+		 * Called by the task when data is ready.
+		 * Can be overrided if wanted.
+		 * @param t The Task
+		 */
+		virtual void onDataReady(Task* t);
+		
 		friend class Task;
 	};
 
@@ -125,6 +132,11 @@ namespace dht
 		
 		/// Get the number of outstanding requests
 		bt::Uint32 getNumOutstandingRequests() const {return outstanding_reqs;}
+		
+		/**
+		 * Tell listeners data is ready.
+		 */
+		void emitDataReady();
 	protected:
 		void done();
 				

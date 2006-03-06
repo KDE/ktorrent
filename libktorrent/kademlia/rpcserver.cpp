@@ -121,6 +121,9 @@ namespace dht
 	
 	RPCCall* RPCServer::doCall(MsgBase* msg)
 	{
+		while (calls.contains(next_mtid))
+			next_mtid++;
+		
 		msg->setMTID(next_mtid++);
 		sendMsg(msg);
 		RPCCall* c = new RPCCall(this,msg);
@@ -153,35 +156,7 @@ namespace dht
 		return calls.find(mtid);
 	}
 	
-	/*
 	
-	void sendRequest(const QString & method)
-	{
-		QByteArray data;
-		BEncoder enc(new BEncoderBufferOutput(data));
-	}
-	*/
-	/*
-	RPCCall* RPCServer::ping(const KBucketEntry & to)
-	{
-		return 0;
-	}
-	
-	RPCCall* RPCServer::findNode(const KBucketEntry & to,const Key & k)
-	{
-		return 0;
-	}
-	
-	RPCCall* RPCServer::findValue(const KBucketEntry & to,const Key & k)
-	{
-		return 0;
-	}
-	
-	RPCCall* RPCServer::store(const KBucketEntry & to,const Key & k,const bt::Array<Uint8> & data)
-	{
-		return 0;
-	}
-	*/
 
 }
 #include "rpcserver.moc"

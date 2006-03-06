@@ -150,16 +150,35 @@ namespace dht
 				if (args->getValue("token"))
 				{
 					Key token = args->getValue("token")->data().toByteArray();
-					
-					if (!args->getValue("values"))
+					QByteArray data;
+					BListNode* vals = args->getList("values");
+					DBItemList dbl;
+					if (vals)
 					{
-						if (!args->getValue("nodes"))
-							return 0;
-						else
-							return new GetPeersNodesRsp(mtid,id,args->getValue("nodes")->data().toByteArray(),token);
+						for (Uint32 i = 0;i < vals->getNumChildren();i++)
+						{
+							BValueNode* vn = dynamic_cast<BValueNode*>(vals->getChild(i));
+							if (!vn)
+								continue;
+							dbl.append(DBItem((Uint8*)vn->data().toByteArray().data()));
+						}
+						data = args->getValue("values")->data().toByteArray();
+						return new GetPeersRsp(mtid,id,dbl,token);
+					}
+					else if (args->getValue("nodes"))
+					{
+						data = args->getValue("nodes")->data().toByteArray();
+						return new GetPeersRsp(mtid,id,data,token);
 					}
 					else
-						return new GetPeersValuesRsp(mtid,id,args->getValue("values")->data().toByteArray(),token);
+					{
+						Out() << "No nodes or values in get_peers response" << endl;
+						return 0;
+					}
+				}
+				else
+				{
+					Out() << "No token in get_peers response" << endl;
 				}
 			case ANNOUNCE_PEER :
 				return new AnnounceRsp(mtid,id);
@@ -405,12 +424,15 @@ namespace dht
 	
 	AnnounceReq::AnnounceReq(const Key & id,const Key & info_hash,Uint16 port,const Key & token) 
 	: GetPeersReq(id,info_hash),port(port),token(token)
-	{}
+	{
+		method = dht::ANNOUNCE_PEER;
+	}
 	
 	AnnounceReq::~AnnounceReq() {}
 		
 	void AnnounceReq::apply(DHT* dh_table)
 	{
+		dh_table->announce(this);
 	}
 	
 	void AnnounceReq::print()
@@ -513,20 +535,30 @@ namespace dht
 	
 	////////////////////////////////
 	
-	GetPeersNodesRsp::GetPeersNodesRsp(Uint8 mtid,const Key & id,const QByteArray & nodes,const Key & token)
-	: FindNodeRsp(mtid,id,nodes),token(token)
-	{}
-		
-	GetPeersNodesRsp::~GetPeersNodesRsp()
-	{}
-		
-	void GetPeersNodesRsp::print()
+	GetPeersRsp::GetPeersRsp(Uint8 mtid,const Key & id,const QByteArray & data,const Key & token)
+	: MsgBase(mtid,dht::GET_PEERS,dht::RSP_MSG,id),token(token),data(data)
 	{
-		Out() << QString("RSP: %1 %2 : get_peers(nodes)")
-				.arg(mtid).arg(id.toString()) << endl;
+		this->data.detach();
+	}
+	
+	GetPeersRsp::GetPeersRsp(Uint8 mtid,const Key & id,const DBItemList & values,const Key & token)
+	: MsgBase(mtid,dht::GET_PEERS,dht::RSP_MSG,id),token(token),items(values)
+	{}
+		
+	GetPeersRsp::~GetPeersRsp()
+	{}
+		
+	void GetPeersRsp::apply(DHT* dh_table) 
+	{
+		dh_table->response(this);
+	}
+	void GetPeersRsp::print()
+	{
+		Out() << QString("RSP: %1 %2 : get_peers(%3)")
+				.arg(mtid).arg(id.toString()).arg(data.size() > 0 ? "nodes" : "values") << endl;
 	}
 
-	void GetPeersNodesRsp::encode(QByteArray & arr)
+	void GetPeersRsp::encode(QByteArray & arr)
 	{
 		BEncoder enc(new BEncoderBufferOutput(arr));
 		enc.beginDict();
@@ -534,8 +566,24 @@ namespace dht
 			enc.write(RSP); enc.beginDict();
 			{
 				enc.write("id"); enc.write(id.getData(),20);
-				enc.write("nodes"); enc.write(nodes);
-				enc.write("token"); enc.write(token.getData(),20);
+				if (data.size() > 0)
+				{
+					enc.write("nodes"); enc.write(data);
+					enc.write("token"); enc.write(token.getData(),20);
+				}
+				else
+				{
+					enc.write("token"); enc.write(token.getData(),20);
+					enc.write("values"); enc.beginList();
+					DBItemList::iterator i = items.begin();
+					while (i != items.end())
+					{
+						const DBItem & item = *i;
+						enc.write(item.getData(),6);
+						i++;
+					}
+					enc.end();
+				}
 			}
 			enc.end();
 			enc.write(TID); enc.write(&mtid,1);
@@ -572,40 +620,6 @@ namespace dht
 			enc.write(RSP); enc.beginDict();
 			{
 				enc.write("id"); enc.write(id.getData(),20);
-				enc.write("values"); enc.write(values);
-			}
-			enc.end();
-			enc.write(TID); enc.write(&mtid,1);
-			enc.write(TYP); enc.write(RSP);
-		}
-		enc.end();
-	}
-	
-	/////////////////////////////////
-	
-	GetPeersValuesRsp::GetPeersValuesRsp(Uint8 mtid,const Key & id,const QByteArray & values,const Key & token)
-		: FindValueRsp(mtid,id,values),token(token)
-	{
-	}
-	
-	GetPeersValuesRsp::~GetPeersValuesRsp()
-	{}
-		
-	void GetPeersValuesRsp::print()
-	{
-		Out() << QString("RSP: %1 %2 : get_peers(values)")
-				.arg(mtid).arg(id.toString()) << endl;
-	}
-	
-	void GetPeersValuesRsp::encode(QByteArray & arr)
-	{
-		BEncoder enc(new BEncoderBufferOutput(arr));
-		enc.beginDict();
-		{
-			enc.write(RSP); enc.beginDict();
-			{
-				enc.write("id"); enc.write(id.getData(),20);
-				enc.write("token"); enc.write(token.getData(),20);
 				enc.write("values"); enc.write(values);
 			}
 			enc.end();

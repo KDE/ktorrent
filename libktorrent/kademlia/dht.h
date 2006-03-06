@@ -42,9 +42,11 @@ namespace dht
 	class MsgBase;
 	class ErrMsg;
 	class MsgBase;
+	class AnnounceReq;
 	class Database;
 	class TaskManager;
 	class Task;
+	class AnnounceTask;
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
@@ -61,6 +63,7 @@ namespace dht
 		void storeValue(StoreValueReq* r);
 		void response(MsgBase* r);
 		void getPeers(GetPeersReq* r);
+		void announce(AnnounceReq* r);
 		void error(ErrMsg* r);
 		
 		/**
@@ -76,14 +79,17 @@ namespace dht
 		 * @param port The port
 		 * @return The task which handles this
 		 */
-		Task* announce(const bt::SHA1Hash & info_hash,bt::Uint16 port);
+		AnnounceTask* announce(const bt::SHA1Hash & info_hash,bt::Uint16 port);
+		
+	private:
+		dht::Key genToken(GetPeersReq* r);
 		
 	private:
 		Node* node;
 		RPCServer* srv;
 		Database* db;
 		TaskManager* tman;
-		Key cur_token,last_token;
+		
 	};
 
 }

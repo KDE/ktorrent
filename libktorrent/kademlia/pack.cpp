@@ -30,7 +30,7 @@ namespace dht
 	void PackBucketEntry(const KBucketEntry & e,QByteArray & ba,Uint32 off)
 	{
 		// first check size
-		if (off + 26 >= ba.size())
+		if (off + 26 > ba.size())
 			throw bt::Error("Not enough room in buffer");
 		
 		Uint8* data = (Uint8*)ba.data();
@@ -45,7 +45,7 @@ namespace dht
 	
 	KBucketEntry UnpackBucketEntry(const QByteArray & ba,Uint32 off)
 	{
-		if (off + 26 >= ba.size())
+		if (off + 26 > ba.size())
 			throw bt::Error("Not enough room in buffer");
 		
 		const Uint8* data = (Uint8*)ba.data();

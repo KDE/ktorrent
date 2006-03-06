@@ -55,9 +55,9 @@ namespace dht
 			if (!visited.contains(e))
 			{
 				// send a findValue to the node
-				StoreValueReq str(node->getOurID(),key,data);
-				str.setOrigin(e.getAddress());
-				rpcCall(&str);
+				StoreValueReq* str = new StoreValueReq(node->getOurID(),key,data);
+				str->setOrigin(e.getAddress());
+				rpcCall(str);
 				visited.append(e);
 			}
 			// remove the entry from the todo list

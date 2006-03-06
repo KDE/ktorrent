@@ -47,7 +47,6 @@ namespace dht
 		srv = new RPCServer(this,4444);
 		db = new Database();
 		tman = new TaskManager();
-		cur_token = last_token = SHA1Hash::generate(0,0);
 	}
 
 
@@ -91,6 +90,7 @@ namespace dht
 	void DHT::findValue(FindValueReq* r)
 	{
 		node->recieved(r,srv);
+#if 0
 		const QByteArray & data = db->find(r->getKey());
 		if (data.isNull())
 		{
@@ -119,13 +119,14 @@ namespace dht
 			fvr.setOrigin(r->getOrigin());
 			srv->sendMsg(&fvr);
 		}
+#endif
 	}
 	
 	void DHT::storeValue(StoreValueReq* r)
 	{
 		node->recieved(r,srv);
 		// store the key data pair in the db
-		db->store(r->getKey(),r->getData());
+		//db->store(r->getKey(),r->getData());
 		
 		// send a response
 		StoreValueRsp rsp(r->getMTID(),node->getOurID());
@@ -133,22 +134,41 @@ namespace dht
 		srv->sendMsg(&rsp);
 	}
 	
+	void DHT::announce(AnnounceReq* r)
+	{
+		node->recieved(r,srv);
+		// first check if the token is OK
+		dht::Key token = r->getToken();
+		if (!db->checkToken(token,r->getOrigin().ipAddress().IPv4Addr(),r->getOrigin().port()))
+			return;
+		
+		// everything OK, so store the value
+		Uint8 tdata[6];
+		bt::WriteUint32(tdata,0,r->getOrigin().ipAddress().IPv4Addr());
+		bt::WriteUint16(tdata,4,r->getPort());
+		db->store(r->getInfoHash(),DBItem(tdata));
+		// send a proper response to indicate everything is OK
+		AnnounceRsp rsp(r->getMTID(),node->getOurID());
+		srv->sendMsg(&rsp);
+	}
+	
+	
+	
 	void DHT::getPeers(GetPeersReq* r)
 	{
 		node->recieved(r,srv);
-		const QByteArray & data = db->find(r->getInfoHash());
+		DBItemList dbl;
+		db->sample(r->getInfoHash(),dbl,50);
 		
-		Key token = cur_token;
+		// generate a token
+		Key token = db->genToken(r->getOrigin().ipAddress().IPv4Addr(),r->getOrigin().port());
 		
-		if (data.isNull())
+		if (dbl.count() == 0)
 		{
 			// if data is null do the same as when we have a findNode request
-			
 			// find the K closest nodes and pack them
 			KClosestNodesSearch kns(r->getInfoHash(),K);
-		
 			node->findKClosestNodes(kns);
-		
 			Uint32 rs = kns.requiredSpace();
 			// create the data
 			QByteArray nodes(rs);
@@ -156,14 +176,14 @@ namespace dht
 			if (rs > 0)
 				kns.pack(nodes);
 		
-			GetPeersNodesRsp fnr(r->getMTID(),node->getOurID(),nodes,token);
+			GetPeersRsp fnr(r->getMTID(),node->getOurID(),nodes,token);
 			fnr.setOrigin(r->getOrigin());
 			srv->sendMsg(&fnr);
 		}
 		else
-		{
-			// send a find value response
-			GetPeersValuesRsp fvr(r->getMTID(),node->getOurID(),data,token);
+		{			
+			// send a get peers response
+			GetPeersRsp fvr(r->getMTID(),node->getOurID(),dbl,token);
 			fvr.setOrigin(r->getOrigin());
 			srv->sendMsg(&fvr);
 		}
@@ -186,15 +206,16 @@ namespace dht
 		srv->doCall(r);
 	}
 	
-	Task* DHT::announce(const bt::SHA1Hash & info_hash,bt::Uint16 port)
+	AnnounceTask* DHT::announce(const bt::SHA1Hash & info_hash,bt::Uint16 port)
 	{
 		KClosestNodesSearch kns(info_hash,K);
 		node->findKClosestNodes(kns);
 		if (kns.getNumEntries() > 0)
 		{
 			Out() << "Doing DHT announce " << endl;
-			AnnounceTask* at = new AnnounceTask(srv,node,info_hash);
+			AnnounceTask* at = new AnnounceTask(db,srv,node,info_hash,port);
 			tman->addTask(at);
+			at->start(kns);
 			return at;
 		}
 		

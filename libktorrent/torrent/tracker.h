@@ -32,6 +32,11 @@ namespace kt
 	class TorrentInterface;
 }
 
+namespace dht
+{
+	class DHTTrackerBackend;
+}
+
 namespace bt
 {
 	class TorrentControl;
@@ -189,9 +194,11 @@ namespace bt
 		TrackerBackend* udp;
 		TrackerBackend* http;
 		TrackerBackend* curr;
+		TrackerBackend* dht_ba;
 		
 		friend class UDPTracker;
 		friend class HTTPTracker;
+		friend class dht::DHTTrackerBackend;
 	};
 
 }

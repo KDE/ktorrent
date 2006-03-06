@@ -74,6 +74,7 @@ namespace bt
 		stats.status = NOT_STARTED;
 		stats.autostart = true;
 		stats.user_controlled = false;
+		stats.priv_torrent = false;
 		running_time_dl = running_time_ul = 0;
 		prev_bytes_dl = 0;
 		prev_bytes_ul = 0;
@@ -491,8 +492,6 @@ namespace bt
 			p->getPacketWriter().sendInterested();
 		if (p->isDHTSupported())
 			p->getPacketWriter().sendPort(4444);
-		else
-			p->kill();
 		
 		if (tmon)
 			tmon->peerAdded(p);

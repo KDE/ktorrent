@@ -36,7 +36,7 @@
 namespace bt
 {
 
-	Torrent::Torrent() : piece_length(0),file_length(0),anon_list(0)
+	Torrent::Torrent() : piece_length(0),file_length(0),anon_list(0),priv_torrent(false)
 	{}
 
 
@@ -104,6 +104,9 @@ namespace bt
 		
 		loadHash(dict->getValue("pieces"));
 		loadName(dict->getValue("name"));
+		n = dict->getValue("private");
+		if (n && n->data().toInt() == 1)
+			priv_torrent = true;
 	}
 	
 	void Torrent::loadFiles(BListNode* node)

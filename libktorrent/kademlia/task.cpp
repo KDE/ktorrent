@@ -31,6 +31,9 @@ namespace dht
 		if (task)
 			task->setListener(0);
 	}
+	
+	void TaskListener::onDataReady(Task*) 
+	{}
 
 	Task::Task(RPCServer* rpc,Node* node) 
 		: node(node),rpc(rpc),outstanding_reqs(0),
@@ -110,6 +113,12 @@ namespace dht
 		finished = true;
 		if (lst)
 			lst->onFinished(this);
+	}
+	
+	void Task::emitDataReady()
+	{
+		if (lst)
+			lst->onDataReady(this);
 	}
 
 }

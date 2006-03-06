@@ -25,6 +25,8 @@
 #include <util/log.h>
 #include <torrent/globals.h>
 #include <interfaces/torrentinterface.h>
+#include <kademlia/dhttrackerbackend.h>
+#include "server.h"
 #include "tracker.h"
 #include "udptracker.h"
 #include "httptracker.h"
@@ -56,12 +58,15 @@ namespace bt
 		
 		srand(time(0));
 		key = rand();
-		udp = http = curr = 0;
+		udp = http = curr = dht_ba = 0;
+		if (!tor->getStats().priv_torrent)
+			dht_ba = new dht::DHTTrackerBackend(this,Globals::instance().getDHT());
 	}
 
 
 	Tracker::~Tracker()
 	{
+		delete dht_ba;
 		delete udp;
 		delete http;
 	}
@@ -84,12 +89,21 @@ namespace bt
 			http->doRequest(url);
 			curr = http;
 		}
+		
+		if (dht_ba)
+		{
+			Uint16 port = Globals::instance().getServer().getPortInUse();
+			dht_ba->doRequest(QString("http://localhost:%1/announce").arg(port));
+		}
 	}
 
 	void Tracker::updateData(PeerManager* pman)
 	{
 		if (curr)
 			curr->updateData(pman);
+		
+		if (dht_ba)
+			dht_ba->updateData(pman);
 	}
 
 	void Tracker::start()

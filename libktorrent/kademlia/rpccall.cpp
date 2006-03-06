@@ -50,6 +50,8 @@ namespace dht
 			listener->onTimeout(this);
 		
 		rpc->timedOut(msg->getMTID());
+		delete msg;
+		msg = 0;
 	}
 	
 	void RPCCall::response(MsgBase* rsp)
@@ -60,7 +62,10 @@ namespace dht
 	
 	Method RPCCall::getMsgMethod() const
 	{
-		return msg->getMethod();
+		if (msg)
+			return msg->getMethod();
+		else
+			return dht::NONE;
 	}
 	
 	void RPCCall::setListener(RPCCallListener* cl)

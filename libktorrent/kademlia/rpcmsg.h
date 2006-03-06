@@ -23,6 +23,7 @@
 #include <ksocketaddress.h>
 #include <util/constants.h>
 #include "key.h"
+#include "database.h"
 
 namespace bt
 {
@@ -96,7 +97,7 @@ namespace dht
 		void setOrigin(const KNetwork::KSocketAddress & o) {origin = o;}
 		
 		/// Get the origin
-		const KNetwork::KSocketAddress & getOrigin() const {return origin;}
+		const KNetwork::KInetSocketAddress & getOrigin() const {return origin;}
 		
 		/// Get the MTID
 		Uint8 getMTID() const {return mtid;}
@@ -118,7 +119,7 @@ namespace dht
 		Method method;
 		Type type;
 		Key id;
-		KNetwork::KSocketAddress origin;
+		KNetwork::KInetSocketAddress origin;
 	};
 	
 	MsgBase* MakeRPCMsg(bt::BDictNode* dict,RPCServer* srv);
@@ -220,6 +221,9 @@ namespace dht
 		virtual void apply(DHT* dh_table);
 		virtual void print();
 		virtual void encode(QByteArray & arr);
+		
+		const Key & getToken() const {return token;}
+		bt::Uint16 getPort() const {return port;}
 	private:
 		bt::Uint16 port;
 		Key token;
@@ -253,16 +257,26 @@ namespace dht
 		QByteArray nodes;
 	};
 	
-	class GetPeersNodesRsp : public FindNodeRsp
+	class GetPeersRsp : public MsgBase
 	{
 	public:
-		GetPeersNodesRsp(Uint8 mtid,const Key & id,const QByteArray & nodes,const Key & token);
-		virtual ~GetPeersNodesRsp();
+		GetPeersRsp(Uint8 mtid,const Key & id,const QByteArray & data,const Key & token);
+		GetPeersRsp(Uint8 mtid,const Key & id,const DBItemList & values,const Key & token);
+		virtual ~GetPeersRsp();
 		
+		virtual void apply(DHT* dh_table);
 		virtual void print();
 		virtual void encode(QByteArray & arr);
+		
+		const QByteArray & getData() const {return data;}
+		const DBItemList & getItemList() const {return items;}
+		const Key & getToken() const {return token;}
+		bool containsNodes() const {return data.size() > 0;}
+		bool containsValues() const {return data.size() == 0;}
 	private:
 		Key token;
+		QByteArray data;
+		DBItemList items;
 	};
 	
 	
@@ -279,18 +293,6 @@ namespace dht
 		const QByteArray & getValue() const {return values;}
 	protected:
 		QByteArray values;
-	};
-	
-	class GetPeersValuesRsp : public FindValueRsp
-	{
-	public:
-		GetPeersValuesRsp(Uint8 mtid,const Key & id,const QByteArray & values,const Key & token);
-		virtual ~GetPeersValuesRsp();
-		
-		virtual void print();
-		virtual void encode(QByteArray & arr);
-	private:
-		Key token;
 	};
 	
 	class StoreValueRsp : public MsgBase

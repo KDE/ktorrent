@@ -17,29 +17,154 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <util/functions.h>
+#include <util/log.h>
+#include <torrent/globals.h>
 #include "database.h"
+
+using namespace bt;
 
 namespace dht
 {
-
-	Database::Database()
+	DBItem::DBItem()
+	{
+		memset(item,0,9);
+		time_stamp = bt::GetCurrentTime();
+	}
+	
+	DBItem::DBItem(const bt::Uint8* ip_port)
+	{
+		memcpy(item,ip_port,6);
+		time_stamp = bt::GetCurrentTime();
+	}
+	
+	DBItem::DBItem(const DBItem & it)
+	{
+		memcpy(item,it.item,6);
+		time_stamp = it.time_stamp;	
+	}
+	
+	DBItem::~DBItem()
 	{}
+		
+	bool DBItem::expired(bt::Uint32 now) const
+	{
+		return (now - time_stamp >= MAX_ITEM_AGE);
+	}
+	
+	DBItem & DBItem::operator = (const DBItem & it)
+	{
+		memcpy(item,it.item,6);
+		time_stamp = it.time_stamp;	
+	}
+
+	///////////////////////////////////////////////
+	
+	Database::Database()
+	{
+		items.setAutoDelete(true);
+	}
 
 
 	Database::~Database()
 	{}
 
-	void Database::store(const dht::Key & key,const QByteArray & data)
+	void Database::store(const dht::Key & key,const DBItem & dbi)
 	{
-		dmap.insert(key,data);
+		DBItemList* dbl = items.find(key);
+		if (!dbl)
+		{
+			dbl = new DBItemList();
+			items.insert(key,dbl);
+		}
+		dbl->append(dbi);
 	}
 	
-	const QByteArray & Database::find(const dht::Key & key) const
+	void Database::sample(const dht::Key & key,DBItemList & tdbl,bt::Uint32 max_entries)
 	{
-		if (!dmap.contains(key))
-			return QByteArray();
+		DBItemList* dbl = items.find(key);
+		if (!dbl)
+			return;
+		
+		if (dbl->count() < max_entries)
+		{
+			DBItemList::iterator i = dbl->begin();
+			while (i != dbl->end())
+			{
+				tdbl.append(*i);
+				i++;
+			}
+		}
 		else
-			return dmap[key];
+		{
+			Uint32 num_added = 0;
+			DBItemList::iterator i = dbl->begin();
+			while (i != dbl->end() && num_added < max_entries)
+			{
+				tdbl.append(*i);
+				num_added++;
+				i++;
+			}
+		}
 	}
-
+	
+	void Database::expire(bt::Uint32 now)
+	{
+		bt::PtrMap<dht::Key,DBItemList>::iterator itr = items.begin();
+		while (itr != items.end())
+		{
+			DBItemList* dbl = itr->second;
+			// newer keys are inserted at the back
+			// so we can stop when we hit the first key which is not expired
+			while (dbl->count() > 0 && dbl->first().expired(now))
+			{
+				dbl->pop_front();
+			}
+			itr++;
+		}
+	}
+	
+	dht::Key Database::genToken(Uint32 ip,Uint16 port)
+	{
+		Uint8 tdata[10];
+		Uint32 now = bt::GetCurrentTime();
+		// generate a hash of the ip port and the current time
+		// should prevent anybody from crapping things up
+		bt::WriteUint32(tdata,0,ip);
+		bt::WriteUint16(tdata,4,port);
+		bt::WriteUint32(tdata,6,now);
+			
+		dht::Key token = SHA1Hash::generate(tdata,10);
+		// keep track of the token, tokens will expire after a while
+		tokens.insert(token,now);
+		return token;
+	}
+	
+	bool Database::checkToken(const dht::Key & token,Uint32 ip,Uint16 port)
+	{
+		// the token must be in the map
+		if (!tokens.contains(token))
+		{
+			Out() << "Unknown token" << endl;
+			return false;
+		}
+		
+		// in the map so now get the timestamp and regenerate the token
+		// using the IP and port of the sender
+		Uint32 ts = tokens[token];
+		Uint8 tdata[10];
+		bt::WriteUint32(tdata,0,ip);
+		bt::WriteUint16(tdata,4,port);
+		bt::WriteUint32(tdata,6,ts);
+		dht::Key ct = SHA1Hash::generate(tdata,10);
+		// compare the generated token to the one received
+		if (token != ct)  // not good, this peer didn't went through the proper channels
+		{
+			Out() << "Invalid token" << endl;
+			return false;
+		}
+		// expire the token
+		tokens.erase(token);
+		return true;
+	}
 }

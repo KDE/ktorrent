@@ -24,6 +24,19 @@
 
 namespace dht
 {
+	class Database;
+	
+	class KBucketEntryAndToken : public KBucketEntry
+	{
+		Key token;
+	public:
+		KBucketEntryAndToken() {}
+		KBucketEntryAndToken(const KBucketEntry & e,const Key & token)
+			: KBucketEntry(e),token(token) {}
+		virtual ~KBucketEntryAndToken() {}
+		
+		const Key & getToken() const {return token;}
+	};
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
@@ -31,16 +44,28 @@ namespace dht
 	class AnnounceTask : public Task
 	{
 	public:
-		AnnounceTask(RPCServer* rpc, Node* node,const Key & info_hash);
+		AnnounceTask(Database* db,RPCServer* rpc, Node* node,const Key & info_hash,bt::Uint16 port);
 		virtual ~AnnounceTask();
 
 		virtual void callFinished(RPCCall* c, MsgBase* rsp);
 		virtual void callTimeout(RPCCall* c);
 		virtual void update();
+		
+		/**
+		 * Take one item from the returned values.
+		 * Returns false if there is no item to take.
+		 * @param item The item
+		 * @return false if no item to take, true else
+		 */
+		bool takeItem(DBItem & item);
 	private:
 		Key info_hash;
-		QValueList<KBucketEntry> answered; // nodes which have answered with values
-		QValueList<KBucketEntry> answered_visited; // nodes which have answered with values
+		bt::Uint16 port;
+		QValueList<KBucketEntryAndToken> answered; // nodes which have answered with values
+		QValueList<KBucketEntry> answered_visited; // nodes which have answered with values which have been visited
+		Database* db;
+		DBItemList returned_items;
+		
 	};
 
 }

@@ -116,8 +116,13 @@ namespace bt
 		
 		if (handshake[27])
 		{
-			Out() << "Peer supports DHT\n" << endl;
+			Out() << "Peer supports DHT" << endl;
 			dht_support = true;
+		}
+		else
+		{
+			onFinish(false);
+			return;
 		}
 		
 		handshakeRecieved(true);

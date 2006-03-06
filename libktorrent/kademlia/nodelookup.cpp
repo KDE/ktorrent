@@ -74,9 +74,9 @@ namespace dht
 			if (!visited.contains(e))
 			{
 				// send a findNode to the node
-				FindNodeReq fnr(node->getOurID(),node_id);
-				fnr.setOrigin(e.getAddress());
-				rpcCall(&fnr);
+				FindNodeReq* fnr = new FindNodeReq(node->getOurID(),node_id);
+				fnr->setOrigin(e.getAddress());
+				rpcCall(fnr);
 				visited.append(e);
 			}
 			// remove the entry from the todo list
