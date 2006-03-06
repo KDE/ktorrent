@@ -232,7 +232,7 @@ void KTorrentCore::loadExistingTorrent(const QString & tor_dir)
 				this,SLOT(torrentFinished(kt::TorrentInterface* )));
 		connect(tc, SIGNAL(stoppedByError(kt::TorrentInterface*, QString )),
 				this, SLOT(slotStoppedByError(kt::TorrentInterface*, QString )));
-		if (tc->getStats().autostart)
+		if (tc->getStats().autostart && tc->getStats().user_controlled)
 			start(tc);
 		torrentAdded(tc);
 	}
