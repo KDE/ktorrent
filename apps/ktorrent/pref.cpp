@@ -207,33 +207,28 @@ bool PrefPageTwo::apply()
 		Settings::setTempDir(u->url());
 	}
 
-	if (gp->autosave_downloads_check->isChecked())
-	{
-		u = gp->autosave_location;
-		Settings::setSaveDir(u->url());
-	}
-	else
-	{
-		Settings::setSaveDir(QString::null);
-	}
+	Settings::setSaveDir(gp->autosave_location->url());
+	bool useSaveDir = gp->autosave_downloads_check->isChecked();
+	Settings::setUseSaveDir(useSaveDir);
+
+        bool useExternalIP = gp->custom_ip_check->isChecked();
 	
-	if (gp->custom_ip_check->isChecked())
+	Settings::setUseExternalIP(useExternalIP);
+	QString externalIP = gp->custom_ip->text();
+	Settings::setExternalIP(externalIP);
+			
+	if (useExternalIP)
 	{
-		QString eip = gp->custom_ip->text();
-		KResolverResults res = KResolver::resolve(eip,QString::null);
+
+		KResolverResults res = KResolver::resolve(externalIP, QString::null);
 		if (res.error())
 		{
 			QString err = KResolver::errorString(res.error());
-			QString msg = i18n("Cannot lookup %1 : %2\n"
-					"Please provide a valid IP address or hostname.").arg(eip).arg(err);
+			QString msg = i18n("Cannot lookup %1: %2\n"
+					"Please provide a valid IP address or hostname.").arg(externalIP).arg(err);
 			KMessageBox::error(0,msg,i18n("Error"));
 			return false;
 		}
-		Settings::setExternalIP(eip);
-	}
-	else
-	{
-		Settings::setExternalIP(QString::null);
 	}
 	
 	Settings::setMemoryUsage(gp->mem_usage->currentItem());
@@ -243,34 +238,13 @@ bool PrefPageTwo::apply()
 
 void PrefPageTwo::autosaveChecked(bool on)
 {
-	KURLRequester* u = gp->autosave_location;
-	if (on)
-	{
-		u->setEnabled(true);
-		if (Settings::saveDir() == QString::null)
-			u->setURL(QDir::homeDirPath());
-		else
-			u->setURL(Settings::saveDir());
-	}
-	else
-	{
-		u->setEnabled(false);
-		u->clear();
-	}
+	gp->autosave_location->setEnabled(on);
 }
 
 void PrefPageTwo::customIPChecked(bool on)
 {
-	if (on)
-	{
-		gp->custom_ip->setText("");
-		gp->custom_ip->setEnabled(true);
-	}
-	else
-	{
-		gp->custom_ip->clear();
-		gp->custom_ip->setEnabled(false);
-	}
+	gp->custom_ip->setEnabled(on);
+	gp->custom_ip_label->setEnabled(on);
 }
 
 void PrefPageTwo::updateData()
@@ -292,33 +266,21 @@ void PrefPageTwo::updateData()
 
 	u = gp->autosave_location;
 	u->fileDialog()->setMode(KFile::Directory);
-	if (Settings::saveDir() == QString::null)
-	{
-		gp->autosave_downloads_check->setChecked(false);
-		u->setEnabled(false);
-		u->clear();
-	}
-	else
-	{
-		gp->autosave_downloads_check->setChecked(true);
-		u->setURL(QDir::homeDirPath());
-		u->setURL(Settings::saveDir());
-		u->setEnabled(true);
-	}
 	
-	QString external_ip = Settings::externalIP();
-	if (external_ip.isNull())
-	{
-		gp->custom_ip_check->setChecked(false);
-		gp->custom_ip->clear();
-		gp->custom_ip->setEnabled(false);
-	}
-	else
-	{
-		gp->custom_ip_check->setChecked(true);
-		gp->custom_ip->setText(external_ip);
-		gp->custom_ip->setEnabled(true);
-	}
+	bool useSaveDir = Settings::useSaveDir();
+        QString saveDir = Settings::saveDir();
+
+	gp->autosave_downloads_check->setChecked(useSaveDir);
+	u->setEnabled(useSaveDir);
+
+	u->setURL(!saveDir.isEmpty() ? saveDir : QDir::homeDirPath());
+
+	gp->custom_ip->setText(Settings::externalIP());	
+
+	bool useExternalIP = Settings::useExternalIP();
+	gp->custom_ip_check->setChecked(useExternalIP);
+	gp->custom_ip->setEnabled(useExternalIP);
+	gp->custom_ip_label->setEnabled(useExternalIP);
 	
 	gp->mem_usage->setCurrentItem(Settings::memoryUsage());
 	gp->gui_interval->setCurrentItem(Settings::guiUpdateInterval());

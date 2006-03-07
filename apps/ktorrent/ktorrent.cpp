@@ -276,7 +276,9 @@ void KTorrent::applySettings(bool change_port)
 	if (change_port)
 		m_core->changePort(Settings::port());
 	
-	Tracker::setCustomIP(Settings::externalIP());
+	if (Settings::useExternalIP())
+		Tracker::setCustomIP(Settings::externalIP());
+        
 	Downloader::setMemoryUsage(Settings::memoryUsage());
 	
 	//Apply GUI update interval

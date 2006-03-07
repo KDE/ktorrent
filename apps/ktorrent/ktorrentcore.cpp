@@ -127,7 +127,9 @@ void KTorrentCore::load(const QString & target,const QString & dir)
 	{
 		Out() << "Loading file " << target << endl;
 		tc = new TorrentControl();
-		tc->init(qman,target,tdir,dir,Settings::saveDir());
+		tc->init(qman, target, tdir, dir, 
+		         Settings::useSaveDir() ? Settings::saveDir() : QString());
+
 		connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
 		        this,SLOT(torrentFinished(kt::TorrentInterface* )));
 		connect(tc, SIGNAL(stoppedByError(kt::TorrentInterface*, QString )),
@@ -166,7 +168,7 @@ void KTorrentCore::load(const KURL& url)
 	{
 		// load in the file (target is always local)
 		QString dir = Settings::saveDir();
-		if (dir == QString::null)
+		if (!Settings::useSaveDir())
 			dir = KFileDialog::getExistingDirectory(QString::null, 0,
 			                                        i18n("Select Folder to Save To"));
 
@@ -226,7 +228,12 @@ void KTorrentCore::loadExistingTorrent(const QString & tor_dir)
 	try
 	{
 		tc = new TorrentControl();
-		tc->init(qman,idir + "torrent",idir,QString::null,Settings::saveDir());
+		tc->init(qman,
+		         idir + "torrent",
+			 idir,
+			 QString::null,
+			 Settings::useSaveDir() ? Settings::saveDir() 
+			    : QString());
 		qman->append(tc);
 		connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
 				this,SLOT(torrentFinished(kt::TorrentInterface* )));
