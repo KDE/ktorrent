@@ -154,8 +154,8 @@ namespace bt
 		
 		url.addQueryItem("peer_id", frontend->peer_id.toString());
 		url.addQueryItem("port",QString::number(port));
-		url.addQueryItem("uploaded",QString::number(s.bytes_uploaded));
-		url.addQueryItem("downloaded",QString::number(s.bytes_downloaded));
+		url.addQueryItem("uploaded",QString::number(s.trk_bytes_uploaded));
+		url.addQueryItem("downloaded",QString::number(s.trk_bytes_downloaded));
 		url.addQueryItem("left",QString::number(s.bytes_left));
 		url.addQueryItem("compact","1");
 		url.addQueryItem("numwant","100");

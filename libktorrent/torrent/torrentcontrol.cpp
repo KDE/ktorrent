@@ -67,6 +67,8 @@ namespace bt
 	: tor(0),tracker(0),cman(0),pman(0),down(0),up(0),choke(0),tmon(0),prealloc(false)
 	{
 		stats.imported_bytes = 0;
+		stats.trk_bytes_downloaded = 0;
+		stats.trk_bytes_uploaded = 0;
 		stats.running = false;
 		stats.started = false;
 		stats.stopped_by_error = false;
@@ -79,12 +81,13 @@ namespace bt
 		running_time_dl = running_time_ul = 0;
 		prev_bytes_dl = 0;
 		prev_bytes_ul = 0;
+		trk_prev_bytes_dl = trk_prev_bytes_ul = 0;
 		io_error = false;
 		priority = 0;
 		maxShareRatio = 0.00f;
 		custom_output_name = false;
 		prealloc_thread = 0;
-
+		
 		updateStats();
 	}
 
@@ -300,9 +303,14 @@ namespace bt
 		stats.autostart = true;
 		choker_update_timer.update();
 		stats_save_timer.update();
-		tracker->start();
+		
 		time_started_ul = time_started_dl = QDateTime::currentDateTime();
 		stalled_timer.update();
+		trk_prev_bytes_dl = stats.bytes_downloaded,
+		trk_prev_bytes_ul = stats.bytes_uploaded,
+		stats.trk_bytes_downloaded = 0;
+		stats.trk_bytes_uploaded = 0;
+		tracker->start();
 	}
 
 	void TorrentControl::stop(bool user)
@@ -326,6 +334,8 @@ namespace bt
 			running_time_dl += time_started_dl.secsTo(now);
 		running_time_ul += time_started_ul.secsTo(now);
 		time_started_ul = time_started_dl = now;
+		
+		
 	
 		if (stats.running)
 		{
@@ -362,6 +372,8 @@ namespace bt
 		saveStats();
 		updateStatusMsg();
 		updateStats();
+		stats.trk_bytes_downloaded = 0;
+		stats.trk_bytes_uploaded = 0;
 	}
 
 	void TorrentControl::setMonitor(kt::MonitorInterface* tmo)
@@ -805,6 +817,8 @@ namespace bt
 		stats.total_bytes_to_download = (tor && cman) ?	tor->getFileLength() - cman->bytesExcluded() : 0;
 		stats.session_bytes_downloaded = stats.bytes_downloaded - prev_bytes_dl;
 		stats.session_bytes_uploaded = stats.bytes_uploaded - prev_bytes_ul;
+		stats.trk_bytes_downloaded = stats.bytes_downloaded - trk_prev_bytes_dl;
+		stats.trk_bytes_uploaded = stats.bytes_uploaded - trk_prev_bytes_ul;
 		getSeederInfo(stats.seeders_total,stats.seeders_connected_to);
 		getLeecherInfo(stats.leechers_total,stats.leechers_connected_to);
 	}

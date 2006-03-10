@@ -186,9 +186,9 @@ namespace bt
 		WriteInt32(buf,12,transaction_id);
 		memcpy(buf+16,frontend->info_hash.getData(),20);
 		memcpy(buf+36,frontend->peer_id.data(),20);
-		WriteInt64(buf,56,s.bytes_downloaded);
+		WriteInt64(buf,56,s.trk_bytes_downloaded);
 		WriteInt64(buf,64,s.bytes_left);
-		WriteInt64(buf,72,s.bytes_uploaded);
+		WriteInt64(buf,72,s.trk_bytes_uploaded);
 		WriteInt32(buf,80,ev);
 		if (Tracker::custom_ip_resolved.isNull())
 		{

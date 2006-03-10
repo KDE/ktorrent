@@ -96,6 +96,10 @@ namespace kt
 		Uint64 session_bytes_downloaded;
 		/// The number of bytes uploaded in this session
 		Uint64 session_bytes_uploaded;
+		/// The number of bytes downloaded since the last started event, this gets sent to the tracker
+		Uint64 trk_bytes_downloaded;
+		/// The number of bytes upload since the last started event, this gets sent to the tracker
+		Uint64 trk_bytes_uploaded;
 		/// Name of the torrent
 		QString torrent_name;
 		/// Path of the dir or file where the data will get saved
@@ -116,6 +120,7 @@ namespace kt
 		bool user_controlled;
 		/// Maximum share ratio
 		float max_share_ratio;
+		
 	};
 
 	/**
