@@ -29,7 +29,6 @@
 #include <qmime.h>
 #include <qimage.h>
 #include <util/log.h>
-#include <util/profile.h>
 #include <interfaces/torrentinterface.h>
 #include <util/bitset.h>
 #include <torrent/globals.h>

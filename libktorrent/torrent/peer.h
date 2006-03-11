@@ -25,7 +25,6 @@
 #include <util/timer.h>
 #include <interfaces/peerinterface.h>
 #include <util/bitset.h>
-#include <util/object.h>
 #include "globals.h"
 #include "peerid.h"
 

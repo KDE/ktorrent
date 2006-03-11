@@ -35,7 +35,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <util/error.h>
-#include <util/object.h>
 #include <torrent/globals.h>
 
 using namespace bt;

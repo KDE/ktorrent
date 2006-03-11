@@ -23,7 +23,6 @@
 #include <util/log.h>
 #include <util/functions.h>
 #include <util/error.h>
-#include <util/garbagecollector.h>
 #include <kio/job.h>
 #include <kio/netaccess.h>
 #include "bnode.h"
