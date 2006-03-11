@@ -66,7 +66,7 @@ namespace dht
 	 * Class where all the key value paires get stored.
 	*/
 	class Database
-	{
+	{		
 		bt::PtrMap<dht::Key,DBItemList> items;
 		QMap<dht::Key,bt::Uint32> tokens;
 	public:

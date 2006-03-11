@@ -17,85 +17,66 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef DHTDHT_H
-#define DHTDHT_H
+#include <kurl.h>
+#include <util/functions.h>
+#include <torrent/peermanager.h>
+#include "dhttrackerbackend.h"
+#include "dht.h"
+#include "announcetask.h"
 
-#include <qstring.h>
-#include <util/constants.h>
-#include <util/timer.h>
-#include "key.h"
-
-namespace bt
-{
-	class SHA1Hash;
-}
-
+using namespace bt;
 
 namespace dht
 {
-	class Node;
-	class RPCServer;
-	class PingReq;
-	class FindNodeReq;
-	class FindValueReq;
-	class StoreValueReq;
-	class GetPeersReq;
-	class MsgBase;
-	class ErrMsg;
-	class MsgBase;
-	class AnnounceReq;
-	class Database;
-	class TaskManager;
-	class Task;
-	class AnnounceTask;
 
-	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	*/
-	class DHT
+	DHTTrackerBackend::DHTTrackerBackend(Tracker* trk,DHT & dh_table)
+	: TrackerBackend(trk),dh_table(dh_table),curr_task(0)
+	{}
+
+
+	DHTTrackerBackend::~DHTTrackerBackend()
+	{}
+
+
+	void DHTTrackerBackend::doRequest(const KURL& url)
 	{
-	public:
-		DHT();
-		virtual ~DHT();
+		if (curr_task)
+			return;
 		
-		void ping(PingReq* r);
-		void findNode(FindNodeReq* r);
-		void findValue(FindValueReq* r);
-		void storeValue(StoreValueReq* r);
-		void response(MsgBase* r);
-		void getPeers(GetPeersReq* r);
-		void announce(AnnounceReq* r);
-		void error(ErrMsg* r);
-		
-		/**
-		 * A Peer has recieved a PORT message, and uses this function to alert the DHT of it.
-		 * @param ip The IP of the peer
-		 * @param port The port in the PORT message
-		 */
-		void portRecieved(const QString & ip,bt::Uint16 port);
-		
-		/**
-		 * Do an announce on the DHT network
-		 * @param info_hash The info_hash
-		 * @param port The port
-		 * @return The task which handles this
-		 */
-		AnnounceTask* announce(const bt::SHA1Hash & info_hash,bt::Uint16 port);
-		
+		curr_task = dh_table.announce(frontend->info_hash,url.port());
+		if (curr_task)
+			curr_task->setListener(this);
+	}
 
-		/**
-		 * Update the DHT
-		 */
-		void update();
+	void DHTTrackerBackend::updateData(PeerManager* pman)
+	{
+		if (!curr_task)
+			return;
 		
-	private:
-		Node* node;
-		RPCServer* srv;
-		Database* db;
-		TaskManager* tman;
-		bt::Timer expire_timer;
-	};
-
+		DBItem item;
+		while (curr_task->takeItem(item))
+		{
+			bt::PotentialPeer pp;
+			pp.port = bt::ReadUint16(item.getData(),4);
+			pp.ip = bt::ReadUint32(item.getData(),0);
+			pman->addPotentialPeer(pp);
+		}
+	}
+	
+	void DHTTrackerBackend::onFinished(Task* t)
+	{
+		if (curr_task == t)
+		{
+			frontend->emitDataReady();
+			curr_task = 0;
+		}
+	}
+	
+	void DHTTrackerBackend::onDataReady(Task* t)
+	{
+		if (curr_task == t)
+		{
+			frontend->emitDataReady();
+		}
+	}
 }
-
-#endif

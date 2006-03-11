@@ -47,6 +47,7 @@ namespace dht
 		srv = new RPCServer(this,4444);
 		db = new Database();
 		tman = new TaskManager();
+		expire_timer.update();
 	}
 
 
@@ -220,5 +221,11 @@ namespace dht
 		}
 		
 		return 0;
+	}
+	
+	void DHT::update()
+	{
+		if (expire_timer.getElapsedSinceUpdate() > 5*60*1000)
+			db->expire(bt::GetCurrentTime());
 	}
 }

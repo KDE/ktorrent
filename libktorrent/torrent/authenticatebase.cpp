@@ -119,11 +119,6 @@ namespace bt
 			Out() << "Peer supports DHT" << endl;
 			dht_support = true;
 		}
-		else
-		{
-			onFinish(false);
-			return;
-		}
 		
 		handshakeRecieved(true);
 	}

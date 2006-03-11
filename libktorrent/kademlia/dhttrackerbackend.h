@@ -17,83 +17,39 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef DHTDHT_H
-#define DHTDHT_H
+#ifndef DHTDHTTRACKERBACKEND_H
+#define DHTDHTTRACKERBACKEND_H
 
-#include <qstring.h>
-#include <util/constants.h>
-#include <util/timer.h>
-#include "key.h"
+#include <torrent/tracker.h>
+#include "task.h"
 
 namespace bt
 {
-	class SHA1Hash;
+	class PeerManager;
 }
-
 
 namespace dht
 {
-	class Node;
-	class RPCServer;
-	class PingReq;
-	class FindNodeReq;
-	class FindValueReq;
-	class StoreValueReq;
-	class GetPeersReq;
-	class MsgBase;
-	class ErrMsg;
-	class MsgBase;
-	class AnnounceReq;
-	class Database;
-	class TaskManager;
-	class Task;
+	class DHT;
 	class AnnounceTask;
+	
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class DHT
+	class DHTTrackerBackend : public bt::TrackerBackend,public TaskListener
 	{
 	public:
-		DHT();
-		virtual ~DHT();
-		
-		void ping(PingReq* r);
-		void findNode(FindNodeReq* r);
-		void findValue(FindValueReq* r);
-		void storeValue(StoreValueReq* r);
-		void response(MsgBase* r);
-		void getPeers(GetPeersReq* r);
-		void announce(AnnounceReq* r);
-		void error(ErrMsg* r);
-		
-		/**
-		 * A Peer has recieved a PORT message, and uses this function to alert the DHT of it.
-		 * @param ip The IP of the peer
-		 * @param port The port in the PORT message
-		 */
-		void portRecieved(const QString & ip,bt::Uint16 port);
-		
-		/**
-		 * Do an announce on the DHT network
-		 * @param info_hash The info_hash
-		 * @param port The port
-		 * @return The task which handles this
-		 */
-		AnnounceTask* announce(const bt::SHA1Hash & info_hash,bt::Uint16 port);
-		
+		DHTTrackerBackend(bt::Tracker* trk,DHT & dh_table);
+		virtual ~DHTTrackerBackend();
 
-		/**
-		 * Update the DHT
-		 */
-		void update();
-		
+		virtual void doRequest(const KURL& url);
+		virtual void updateData(bt::PeerManager* pman);
+		virtual void onFinished(Task* t);
+		virtual void onDataReady(Task* t);
 	private:
-		Node* node;
-		RPCServer* srv;
-		Database* db;
-		TaskManager* tman;
-		bt::Timer expire_timer;
+		DHT & dh_table;
+		AnnounceTask* curr_task;
 	};
 
 }
