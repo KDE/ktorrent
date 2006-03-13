@@ -27,37 +27,76 @@
 
 
 using KNetwork::KDatagramSocket;
+using bt::Uint32;
 using bt::Uint16;
 using bt::Uint8;
+
+namespace bt
+{
+	class BDictNode;
+}
 
 namespace dht
 {
 	class KBucketEntry;
 	class RPCCall;
+	class RPCMsg;
+	class Node;
+	class DHT;
+	class MsgBase;
 
 	/**
 	 * @author Joris Guisson
 	 *
-	 * 
+	 * Class to handle incoming and outgoing RPC messages.
 	 */
 	class RPCServer : public QObject
 	{
 		Q_OBJECT
 	public:
-		RPCServer(Uint16 port,QObject *parent = 0);
+		RPCServer(DHT* dh_table,Uint16 port,QObject *parent = 0);
 		virtual ~RPCServer();
-
-		RPCCall* ping(const KBucketEntry & to);
-		RPCCall* findNode(const KBucketEntry & to,const Key & k);
-		RPCCall* findValue(const KBucketEntry & to,const Key & k);
-		RPCCall* store(const KBucketEntry & to,const Key & k,const bt::Array<Uint8> & data);
-
+		
+		
+		/**
+		 * Do a RPC call.
+		 * @param msg The message to send
+		 * @return The call object
+		 */
+		RPCCall* doCall(MsgBase* msg);
+		
+		/**
+		 * Send a message, this only sends the message, it does not keep any call
+		 * information. This should be used for replies.
+		 * @param msg The message to send
+		 */
+		void sendMsg(MsgBase* msg);
+		
+		
+		/**
+		 * A call was timed out.
+		 * @param mtid mtid of call
+		 */
+		void timedOut(Uint8 mtid);
+		
+		
+		/**
+		 * Find a RPC call, based on the mtid
+		 * @param mtid The mtid
+		 * @return The call
+		 */
+		const RPCCall* findCall(Uint8 mtid) const;
 	private slots:
 		void readPacket();
-
+		
+	private:
+		void send(const KNetwork::KSocketAddress & addr,const QByteArray & msg);
+			
 	private:
 		KDatagramSocket* sock;
-		bt::PtrMap<Key,RPCCall> active_calls;
+		DHT* dh_table;
+		bt::PtrMap<bt::Uint8,RPCCall> calls;
+		bt::Uint8 next_mtid;
 	};
 
 }

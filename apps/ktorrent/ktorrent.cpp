@@ -62,6 +62,7 @@
 #include <torrent/udptrackersocket.h>
 #include <util/log.h>
 #include <util/fileops.h>
+#include <kademlia/dht.h>
 
 #include "ktorrentcore.h"
 #include "ktorrentview.h"
@@ -301,6 +302,12 @@ void KTorrent::applySettings(bool change_port)
 	
 	//update QM
 	m_core->getQueueManager()->orderQueue();
+	dht::DHT & ht = Globals::instance().getDHT();
+	if (Settings::dhtSupport() && !ht.isRunning())
+		ht.start(4444);
+	else if (!Settings::dhtSupport() && ht.isRunning())
+		ht.stop();
+	
 }
 
 void KTorrent::load(const KURL& url)

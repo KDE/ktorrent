@@ -100,6 +100,12 @@ namespace bt
 		 * @param bs The BitSet
 		 */
 		void sendBitSet(const BitSet & bs);
+		
+		/**
+		 * Send a port message
+		 * @param port The port
+		 */
+		void sendPort(Uint16 port);
 
 		/**
 		 * Try to send the remaining packets in the queue.

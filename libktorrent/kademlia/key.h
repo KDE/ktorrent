@@ -20,7 +20,10 @@
 #ifndef DHTKEY_H
 #define DHTKEY_H
 
+#include <qcstring.h>
 #include <util/sha1hash.h>
+
+
 
 namespace dht
 {
@@ -41,40 +44,53 @@ namespace dht
 		Key();
 		
 		/**
-		 * Copy constructor.
-		 * @param k Key to copy
+		 * Copy constructor. Seeing that Key doesn't add any data
+		 * we just pass a SHA1Hash, Key's are automatically covered by this
+		 * @param k Hash to copy
 		 */
-		Key(const Key & k);
+		Key(const bt::SHA1Hash & k);
+		
+		/**
+		 * Make a key out of a bytearray
+		 * @param ba The QByteArray
+		 */
+		Key(const QByteArray & ba);
+		
+		/**
+		 * Make a key out of a 20 byte array.
+		 * @param d The array
+		 */
+		Key(const bt::Uint8* d);
 
 		/// Destructor.
 		virtual ~Key();
-
+		
 		/**
-		 * Assignment operator.
-		 * @param k Key to copy
+		 * Create a random key.
+		 * @return A random Key
 		 */
-		Key & operator = (const Key & k);
+		static Key random();
 
 		/**
 		 * Equality operator.
 		 * @param other The key to compare
 		 * @return true if this key is equal to other
 		 */
-		bool operator == (const Key & other);
+		bool operator == (const Key & other) const;
 
 		/**
 		 * Inequality operator.
 		 * @param other The key to compare
 		 * @return true if this key is not equal to other
 		 */
-		bool operator != (const Key & other);
+		bool operator != (const Key & other) const;
 		
 		/**
 		 * Smaller then operator.
 		 * @param other The key to compare
 		 * @return rue if this key is smaller then other
 		 */
-		bool operator < (const Key & other);
+		bool operator < (const Key & other) const;
 
 		
 		/**
@@ -82,7 +98,7 @@ namespace dht
 		 * @param other The key to compare
 		 * @return rue if this key is smaller then or equal to other
 		 */
-		bool operator <= (const Key & other);
+		bool operator <= (const Key & other) const;
 
 		
 		/**
@@ -90,14 +106,14 @@ namespace dht
 		 * @param other The key to compare
 		 * @return rue if this key is greater then other
 		 */
-		bool operator > (const Key & other);
+		bool operator > (const Key & other) const;
 
 		/**
 		 * Greater then or equal operator.
 		 * @param other The key to compare
 		 * @return rue if this key is greater then or equal to other
 		 */
-		bool operator >= (const Key & other);
+		bool operator >= (const Key & other) const;
 		
 		/**
 		 * The distance of two keys is the keys xor together.

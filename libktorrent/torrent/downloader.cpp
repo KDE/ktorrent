@@ -167,6 +167,7 @@ namespace bt
 		}
 	}
 
+
 	void Downloader::downloadFrom(PeerDownloader* pd)
 	{
 		// calculate the max memory usage

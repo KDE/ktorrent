@@ -43,6 +43,7 @@ namespace bt
 		Chunk* chunk;
 	public:
 		Packet(Uint8 type);
+		Packet(Uint16 port);
 		Packet(Uint32 chunk);
 		Packet(const BitSet & bs);
 		Packet(const Request & req,bool cancel);

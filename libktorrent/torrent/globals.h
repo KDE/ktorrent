@@ -24,11 +24,15 @@
 
 class QString;
 
+namespace dht
+{
+	class DHT;
+}
+
 namespace bt
 {
 	class Log;
 	class Server;
-	class GarbageCollector;
 
 	Log& Out();
 
@@ -46,10 +50,8 @@ namespace bt
 
 		Log & getLog() {return *log;}
 		Server & getServer() {return *server;}
-#ifdef KT_DEBUG_GC
-		GarbageCollector & getGC() {return *gc;}
-#endif
-		
+		dht::DHT & getDHT() {return *dh_table;}
+				
 		static Globals & instance();
 		static void cleanup();
 	private:
@@ -59,9 +61,8 @@ namespace bt
 		bool critical_operation;
 		Log* log;
 		Server* server;
-#ifdef KT_DEBUG_GC
-		GarbageCollector* gc;
-#endif
+		dht::DHT* dh_table;
+		
 		friend Log& Out();
 
 		static Globals* inst;

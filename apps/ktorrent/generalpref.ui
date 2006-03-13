@@ -52,7 +52,7 @@
                         <cstring>custom_ip_check</cstring>
                     </property>
                     <property name="text">
-                        <string>Send the trac&amp;ker a custom IP or hostname</string>
+                        <string>Se&amp;nd the tracker a custom IP or hostname</string>
                     </property>
                 </widget>
                 <widget class="QLayoutWidget">
@@ -146,11 +146,33 @@
             <property name="title">
                 <string>Miscellaneous</string>
             </property>
-            <grid>
+            <vbox>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLayoutWidget" row="1" column="0">
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>show_systray_icon</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show s&amp;ystem tray icon</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+Y</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>use_dht</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Use DHT to get additional peers (EXPERIMENTAL)</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+U</string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
                     <property name="name">
                         <cstring>layout5</cstring>
                     </property>
@@ -205,7 +227,7 @@
                         </spacer>
                     </hbox>
                 </widget>
-                <widget class="QLayoutWidget" row="2" column="0">
+                <widget class="QLayoutWidget">
                     <property name="name">
                         <cstring>layout5_2</cstring>
                     </property>
@@ -265,18 +287,12 @@
                         </spacer>
                     </hbox>
                 </widget>
-                <widget class="QCheckBox" row="0" column="0">
-                    <property name="name">
-                        <cstring>show_systray_icon</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Show s&amp;ystem tray icon</string>
-                    </property>
-                </widget>
-            </grid>
+            </vbox>
         </widget>
     </grid>
 </widget>
+<customwidgets>
+</customwidgets>
 <tabstops>
     <tabstop>autosave_downloads_check</tabstop>
     <tabstop>show_systray_icon</tabstop>

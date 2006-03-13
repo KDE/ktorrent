@@ -17,26 +17,66 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "dht.h"
+#include "rpcmsg.h"
 #include "rpccall.h"
+#include "rpcserver.h"
 
 namespace dht
 {
-	const QString TID = "t";
-	const QString REQ = "q";
-	const QString RSP = "r";
-	const QString TYP = "y";
-	const QString ARG = "a";
-	const QString ERR = "e";
+	RPCCallListener::RPCCallListener() : call(0) {}
+	
+	RPCCallListener::~RPCCallListener() 
+	{
+		if (call)
+			call->setListener(0);
+	}
 
-	//msg = {TID : chr(self.mtid), TYP : REQ,  REQ : method, ARG : args}
-
-	RPCCall::RPCCall(QObject *parent) : QObject(parent)
-	{}
+	RPCCall::RPCCall(RPCServer* rpc,MsgBase* msg) : msg(msg),rpc(rpc),listener(0)
+	{
+		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
+		timer.start(20*1000,true);
+	}
 
 
 	RPCCall::~RPCCall()
-	{}
-
+	{
+		delete msg;
+	}
+	
+	void RPCCall::onTimeout()
+	{
+		if (listener)
+			listener->onTimeout(this);
+		
+		rpc->timedOut(msg->getMTID());
+		delete msg;
+		msg = 0;
+	}
+	
+	void RPCCall::response(MsgBase* rsp)
+	{
+		if (listener)
+			listener->onResponse(this,rsp);
+	}
+	
+	Method RPCCall::getMsgMethod() const
+	{
+		if (msg)
+			return msg->getMethod();
+		else
+			return dht::NONE;
+	}
+	
+	void RPCCall::setListener(RPCCallListener* cl)
+	{
+		if (listener)
+			listener->call = 0;
+		
+		listener = cl;
+		if (listener)
+			listener->call = this;
+	}
 
 }
 #include "rpccall.moc"

@@ -58,6 +58,9 @@ namespace bt
 		/// See if the authentication is finished
 		bool isFinished() const {return finished;}
 		
+		/// See if DHT is supported
+		bool supportsDHT() const {return dht_support;}
+		
 	protected:
 		/**
 		 * Send a handshake
@@ -95,6 +98,7 @@ namespace bt
 		bool finished;
 		Uint8 handshake[68];
 		Uint32 bytes_of_handshake_recieved;
+		bool dht_support;
 	};
 
 }

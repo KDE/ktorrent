@@ -17,7 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <time.h>
+#include <stdlib.h>
+#include <qcstring.h>
+#include <util/constants.h>
 #include "key.h"
+
+using namespace bt;
 
 namespace dht
 {
@@ -25,30 +31,34 @@ namespace dht
 	Key::Key()
 	{}
 
-	Key::Key(const Key & k) : bt::SHA1Hash(k)
+	Key::Key(const bt::SHA1Hash & k) : bt::SHA1Hash(k)
 	{
+	}
+	
+	Key::Key(const Uint8* d) : bt::SHA1Hash(d)
+	{
+	}
+	
+	Key::Key(const QByteArray & ba)
+	{
+		for (Uint32 i = 0;i < 20 && i < ba.size();i++)
+			hash[i] = ba[i];
 	}
 
 	Key::~Key()
 	{}
 
-	Key & Key::operator = (const Key & k)
-	{
-		bt::SHA1Hash::operator = (k);
-		return *this;
-	}
-
-	bool Key::operator == (const Key & other)
+	bool Key::operator == (const Key & other) const
 	{
 		return bt::SHA1Hash::operator ==(other);
 	}
 	
-	bool Key::operator != (const Key & other)
+	bool Key::operator != (const Key & other) const
 	{
 		return !operator == (other);
 	}
 	
-	bool Key::operator < (const Key & other)
+	bool Key::operator < (const Key & other) const
 	{
 		for (int i = 0;i < 20;i++)
 		{
@@ -60,12 +70,12 @@ namespace dht
 		return false;
 	}
 	
-	bool Key::operator <= (const Key & other)
+	bool Key::operator <= (const Key & other) const
 	{
 		return operator < (other) || operator == (other);
 	}
 	
-	bool Key::operator > (const Key & other)
+	bool Key::operator > (const Key & other) const
 	{
 		for (int i = 0;i < 20;i++)
 		{
@@ -77,7 +87,7 @@ namespace dht
 		return false;
 	}
 	
-	bool Key::operator >= (const Key & other)
+	bool Key::operator >= (const Key & other) const
 	{
 		return operator > (other) || operator == (other);
 	}
@@ -88,6 +98,17 @@ namespace dht
 		for (int i = 0;i < 20;i++)
 		{
 			k.hash[i] = a.hash[i] ^ b.hash[i];
+		}
+		return k;
+	}
+	
+	Key Key::random()
+	{
+		srand(time(0));
+		Key k;
+		for (int i = 0;i < 20;i++)
+		{
+			k.hash[i] = (Uint8)rand() % 0xFF;
 		}
 		return k;
 	}

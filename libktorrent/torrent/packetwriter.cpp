@@ -170,6 +170,11 @@ namespace bt
 		queuePacket(new Packet(index),false);
 	}
 	
+	void PacketWriter::sendPort(Uint16 port)
+	{
+		queuePacket(new Packet(port),false);
+	}
+	
 	void PacketWriter::sendBitSet(const BitSet & bs)
 	{
 		queuePacket(new Packet(bs),false);

@@ -131,7 +131,7 @@ namespace bt
 			sendHandshake(rh,pman->getTorrent().getPeerID());
 			onFinish(true);
 			// hand over connection
-			pman->newConnection(sock,peer_id);
+			pman->newConnection(sock,peer_id,supportsDHT());
 			sock = 0;
 		}
 		else

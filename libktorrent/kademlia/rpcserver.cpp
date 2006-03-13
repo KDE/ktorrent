@@ -17,17 +17,31 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <string.h>
+#include <util/log.h>
+#include <torrent/globals.h>
+#include <torrent/bnode.h>
+#include <torrent/bdecoder.h>
+#include <torrent/bencoder.h>
 #include "rpcserver.h"
 #include "rpccall.h"
+#include "rpcmsg.h"
 #include "kbucket.h"
+#include "node.h"
+
+using namespace KNetwork;
+using namespace bt;
 
 namespace dht
 {
+	
 
-	RPCServer::RPCServer(Uint16 port,QObject *parent) : QObject(parent)
+
+	RPCServer::RPCServer(DHT* dh_table,Uint16 port,QObject *parent) : QObject(parent),dh_table(dh_table),next_mtid(0)
 	{
 		sock = new KDatagramSocket(this);
 		sock->setBlocking(false);
+		sock->setAddressReuseable(true);
 		connect(sock,SIGNAL(readyRead()),this,SLOT(readPacket()));
 		sock->bind(QString::null,QString::number(port));
 	}
@@ -36,32 +50,113 @@ namespace dht
 	RPCServer::~RPCServer()
 	{
 		sock->close();
+		calls.setAutoDelete(true);
+		calls.clear();
+	}
+	
+	static void PrintRawData(const QByteArray & data)
+	{
+		QString tmp;
+		for (Uint32 i = 0;i < data.size();i++)
+		{
+			if (!QChar(data[i]).isPrint())
+				tmp += '#';
+			else
+				tmp += data[i];
+		}
+		
+		Out() << tmp << endl;
 	}
 
 	void RPCServer::readPacket()
 	{
-	}
-
-	RPCCall* RPCServer::ping(const KBucketEntry & to)
-	{
-		return 0;
+		Out() << "RPCServer::readPacket" << endl;
+		KDatagramPacket pck = sock->receive();
+		
+		
+		PrintRawData(pck.data());
+		// read and decode the packet
+		BDecoder bdec(pck.data(),false);
+		
+		BNode* n = bdec.decode();
+		if (n->getType() != BNode::DICT)
+		{
+			delete n;
+			return;
+		}
+		
+		
+		
+		// try to make a RPCMsg of it
+		MsgBase* msg = MakeRPCMsg((BDictNode*)n,this);
+		if (!msg)
+		{
+			Out() << "Error parsing message : " << endl;
+			PrintRawData(pck.data());
+			return;
+		}
+		else
+		{
+			msg->setOrigin(pck.address());
+			msg->print();
+			msg->apply(dh_table);
+			// erase an existing call
+			if (msg->getType() == RSP_MSG && calls.contains(msg->getMTID()))
+			{
+				// delete the call, but first notify it off the response
+				RPCCall* c = calls.find(msg->getMTID());
+				c->response(msg);
+				calls.erase(msg->getMTID());
+				delete c;
+			}
+			delete msg;
+		}
 	}
 	
-	RPCCall* RPCServer::findNode(const KBucketEntry & to,const Key & k)
+	
+	void RPCServer::send(const KNetwork::KSocketAddress & addr,const QByteArray & msg)
 	{
-		return 0;
+		sock->send(KNetwork::KDatagramPacket(msg,addr));
 	}
 	
-	RPCCall* RPCServer::findValue(const KBucketEntry & to,const Key & k)
+	RPCCall* RPCServer::doCall(MsgBase* msg)
 	{
-		return 0;
+		while (calls.contains(next_mtid))
+			next_mtid++;
+		
+		msg->setMTID(next_mtid++);
+		sendMsg(msg);
+		RPCCall* c = new RPCCall(this,msg);
+		calls.insert(msg->getMTID(),c);
+		return c;
 	}
 	
-	RPCCall* RPCServer::store(const KBucketEntry & to,const Key & k,const bt::Array<Uint8> & data)
+	void RPCServer::sendMsg(MsgBase* msg)
 	{
-		return 0;
+		QByteArray data;
+		msg->encode(data);
+		send(msg->getOrigin(),data);
+		
+		PrintRawData(data);
 	}
-
+	
+	void RPCServer::timedOut(Uint8 mtid)
+	{
+		// delete the call
+		RPCCall* c = calls.find(mtid);
+		if (c)
+		{
+			calls.erase(mtid);
+			c->deleteLater();
+		}
+	}
+	
+	const RPCCall* RPCServer::findCall(Uint8 mtid) const
+	{
+		return calls.find(mtid);
+	}
+	
+	
 
 }
 #include "rpcserver.moc"

@@ -22,13 +22,20 @@
 
 #include <qvaluelist.h>
 #include <util/constants.h>
+#include <ksocketaddress.h>
 #include "key.h"
 
 using bt::Uint32;
 using bt::Uint16;
+using bt::Uint8;
+using KNetwork::KInetSocketAddress;
 
 namespace dht
 {
+	class KClosestNodesSearch;
+	
+	const Uint32 K = 8;
+	
 	/**
 	 * @author Joris Guisson
 	 *
@@ -37,8 +44,7 @@ namespace dht
 	 */
 	class KBucketEntry
 	{
-		Uint32 ip_address;
-		Uint16 udp_port;
+		KInetSocketAddress addr;
 		Key node_id;
 	public:
 		/**
@@ -49,11 +55,10 @@ namespace dht
 		
 		/**
 		 * Constructor, set the ip, port and key
-		 * @param ip IP address
-		 * @param port UDP port
+		 * @param addr socket address
 		 * @param id ID of node
 		 */
-		KBucketEntry(Uint32 ip,Uint16 port,const Key & id);
+		KBucketEntry(const KInetSocketAddress & addr,const Key & id);
 		
 		/**
 		 * Copy constructor.
@@ -71,7 +76,14 @@ namespace dht
 		 * @return this KBucketEntry
 		 */
 		KBucketEntry & operator = (const KBucketEntry & other);
+		
+		/// Equality operator
+		bool operator == (const KBucketEntry & entry) const;
+		
+		const KInetSocketAddress & getAddress() const {return addr;}
+		const Key & getID() const {return node_id;}
 	};
+	
 	
 	/**
 	 * @author Joris Guisson
@@ -87,7 +99,31 @@ namespace dht
 	public:
 		KBucket();
 		virtual ~KBucket();
+		
+		/**
+		 * Inserts an entry into the bucket. Only works when there is room in
+		 * the bucket (only K entries allowed)
+		 * @param entry The entry to insert
+		 * @param force Force if bucket is full (remove the first one)
+		 * @return true if the entry was inserted
+		 */
+		bool insert(const KBucketEntry & entry,bool force = false);
+		
+		/// Get the least recently seen node
+		const KBucketEntry & leastRecentlySeen() const {return entries[0];}
+		
+		/// Get the number of entries
+		Uint32 getNumEntries() const {return entries.count();}
 	
+		/// See if this bucket contains an entry
+		bool contains(const KBucketEntry & entry) const;
+		
+		/**
+		 * Find the K closest entries to a key and store them in the KClosestNodesSearch
+		 * object.
+		 * @param kns The object to storre the search results
+		 */
+		void findKClosestNodes(KClosestNodesSearch & kns);
 	};
 }
 

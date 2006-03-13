@@ -23,11 +23,16 @@
 #include <qobject.h>
 #include "key.h"
 #include "kbucket.h"
+#include "rpccall.h"
 
+using bt::Uint8;
 
 namespace dht
 {
-
+	class MsgBase;
+	class RPCServer;
+	class KClosestNodesSearch;
+	
 	/**
 	 * @author Joris Guisson
 	 *
@@ -36,15 +41,39 @@ namespace dht
 	 * A KBucketEntry is in node i, when the difference between our id and
 	 * the KBucketEntry's id is between 2 to the power i and 2 to the power i+1.
 	*/
-	class Node : public QObject
+	class Node : public QObject,public RPCCallListener
 	{
 		Q_OBJECT
 	public:
 		Node();
 		virtual ~Node();
 
+		/**
+		 * An RPC message was recieved, the node must now update
+		 * the right bucket.
+		 * @param msg The message
+		 * @param srv The RPCServer to send a ping if necessary
+		 */
+		void recieved(const MsgBase* msg,RPCServer* srv);
+		
+		virtual void onResponse(RPCCall* c,MsgBase* rsp);
+		virtual void onTimeout(RPCCall* c);
+		
+		/// Get our own ID
+		const dht::Key & getOurID() const {return our_id;}
+		
+		
+		/**
+		 * Find the K closest entries to a key and store them in the KClosestNodesSearch
+		 * object.
+		 * @param kns The object to storre the search results
+		 */
+		void findKClosestNodes(KClosestNodesSearch & kns);
 	private:
-		Key id;
+		Uint8 findBucket(const dht::Key & id);
+		
+	private:
+		dht::Key our_id;
 		KBucket* bucket[160];
 	};
 

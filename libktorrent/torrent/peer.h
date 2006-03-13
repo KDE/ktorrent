@@ -72,11 +72,12 @@ namespace bt
 		 * @param sock The socket
 		 * @param peer_id The Peer's BitTorrent ID
 		 * @param num_chunks The number of chunks in the file
+		 * @param dht_supported Wether or not the peer supports DHT (mainline)
 		 */
 #ifdef USE_KNETWORK_SOCKET_CLASSES
-		Peer(KNetwork::KBufferedSocket* sock,const PeerID & peer_id,Uint32 num_chunks);
+		Peer(KNetwork::KBufferedSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported);
 #else
-		Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks);
+		Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported);
 #endif
 		virtual ~Peer();
 
@@ -178,6 +179,8 @@ namespace bt
 		 */
 		float percentAvailable() const;
 
+		/// See if the peer supports DHT
+		bool isDHTSupported() const {return dht_supported;}
 	private slots:
 		void connectionClosed(); 
 		void readyRead();
@@ -220,6 +223,7 @@ namespace bt
 		 * Emitted when the peer is unchoked and interested changes value.
 		 */
 		void rerunChoker();
+		
 	private:
 		void readPacket();
 		void handlePacket(Uint32 len);
@@ -245,6 +249,8 @@ namespace bt
 		PeerDownloader* downloader;
 		PeerUploader* uploader;
 		mutable kt::PeerInterface::Stats stats;
+		
+		bool dht_supported;
 
 		QTime connect_time;
 

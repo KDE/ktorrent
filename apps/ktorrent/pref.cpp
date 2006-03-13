@@ -233,6 +233,7 @@ bool PrefPageTwo::apply()
 	
 	Settings::setMemoryUsage(gp->mem_usage->currentItem());
 	Settings::setGuiUpdateInterval(gp->gui_interval->currentItem());
+	Settings::setDhtSupport(gp->use_dht->isChecked());
 	return true;
 }
 
@@ -284,6 +285,8 @@ void PrefPageTwo::updateData()
 	
 	gp->mem_usage->setCurrentItem(Settings::memoryUsage());
 	gp->gui_interval->setCurrentItem(Settings::guiUpdateInterval());
+	
+	gp->use_dht->setChecked(Settings::dhtSupport());
 }
 
 void PrefPageTwo::deleteWidget()

@@ -78,6 +78,7 @@ namespace bt
 		stats.status = NOT_STARTED;
 		stats.autostart = true;
 		stats.user_controlled = false;
+		stats.priv_torrent = false;
 		running_time_dl = running_time_ul = 0;
 		prev_bytes_dl = 0;
 		prev_bytes_ul = 0;
@@ -87,7 +88,6 @@ namespace bt
 		maxShareRatio = 0.00f;
 		custom_output_name = false;
 		prealloc_thread = 0;
-		
 		updateStats();
 	}
 
@@ -297,7 +297,6 @@ namespace bt
 		}
 		
 		loadStats();
-		
 		stats.running = true;
 		stats.started = true;
 		stats.autostart = true;
@@ -311,6 +310,7 @@ namespace bt
 		stats.trk_bytes_downloaded = 0;
 		stats.trk_bytes_uploaded = 0;
 		tracker->start();
+		stalled_timer.update();
 	}
 
 	void TorrentControl::stop(bool user)
@@ -575,6 +575,9 @@ namespace bt
 		p->getPacketWriter().sendBitSet(cman->getBitSet());
 		if (!stats.completed)
 			p->getPacketWriter().sendInterested();
+		if (p->isDHTSupported())
+			p->getPacketWriter().sendPort(4444);
+		
 		if (tmon)
 			tmon->peerAdded(p);
 	}

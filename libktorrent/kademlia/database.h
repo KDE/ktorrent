@@ -21,6 +21,8 @@
 #define DHTDATABASE_H
 
 #include <qmap.h>
+#include <qvaluelist.h>
+#include <util/ptrmap.h>
 #include <util/constants.h>
 #include <util/array.h>
 #include "key.h"
@@ -28,17 +30,92 @@
 
 namespace dht
 {
+	/// Each item may only exist for 30 minutes
+	const bt::Uint32 MAX_ITEM_AGE = 30 * 60 * 1000;
+	
+	/**
+	 * @author Joris Guisson
+	 * 
+	 * Item in the database, will keep track of an IP and port combination.
+	 * As well as the time it was inserted.
+	 */
+	class DBItem
+	{
+		bt::Uint8 item[6];
+		bt::Uint32 time_stamp;
+	public:
+		DBItem();
+		DBItem(const bt::Uint8* ip_port);
+		DBItem(const DBItem & item);
+		virtual ~DBItem();
+		
+		/// See if the item is expired
+		bool expired(bt::Uint32 now) const;
+		
+		/// Get the data of an item
+		const bt::Uint8* getData() const {return item;}
+		
+		DBItem & operator = (const DBItem & item);
+	};
+	
+	typedef QValueList<DBItem> DBItemList;
 
 	/**
-	@author Joris Guisson
+	 * @author Joris Guisson
+	 * 
+	 * Class where all the key value paires get stored.
 	*/
 	class Database
-	{
-		QMap<Key,bt::Array<bt::Uint8> > data;
+	{		
+		bt::PtrMap<dht::Key,DBItemList> items;
+		QMap<dht::Key,bt::Uint32> tokens;
 	public:
 		Database();
-		~Database();
+		virtual ~Database();
 
+		/**
+		 * Store an entry in the database
+		 * @param key The key
+		 * @param dbi The DBItem to store
+		 */
+		void store(const dht::Key & key,const DBItem & dbi);
+		
+		/**
+		 * Get max_entries items from the database, which have
+		 * the same key, items are taken randomly from the list.
+		 * If the key is not present no items will be returned, if
+		 * there are fewer then max_entries items for the key, all
+		 * entries will be returned
+		 * @param key The key to search for
+		 * @param dbl The list to store the items in
+		 * @param max_entries The maximum number entries
+		 */
+		void sample(const dht::Key & key,DBItemList & dbl,bt::Uint32 max_entries);
+		
+		/**
+		 * Expire all items older then 30 minutes
+		 * @param now The time it is now 
+		 * (we pass this along so we only have to calculate it once)
+		 */
+		void expire(bt::Uint32 now);
+		
+		/**
+		 * Generate a write token, which will give peers write access to
+		 * the DB.
+		 * @param ip The IP of the peer
+		 * @param port The port of the peer
+		 * @return A Key
+		 */
+		dht::Key genToken(bt::Uint32 ip,bt::Uint16 port);
+		
+		/**
+		 * Check if a received token is OK.
+		 * @param token The token received
+		 * @param ip The ip of the sender
+		 * @param port The port of the sender
+		 * @return true if the token was given to this peer, false other wise
+		 */
+		bool checkToken(const dht::Key & token,bt::Uint32 ip,bt::Uint16 port);
 	};
 
 }

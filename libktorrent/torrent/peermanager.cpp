@@ -170,10 +170,10 @@ namespace bt
 	
 #ifdef USE_KNETWORK_SOCKET_CLASSES
 	void PeerManager::newConnection(KNetwork::KBufferedSocket* sock,
-									const PeerID & peer_id)
+									const PeerID & peer_id,bool dht_supported)
 #else
 	void PeerManager::newConnection(QSocket* sock,
-									const PeerID & peer_id)
+									const PeerID & peer_id,bool dht_supported)
 #endif
 	{
 		Uint32 total = peer_list.count() + pending.count();
@@ -183,7 +183,7 @@ namespace bt
 			return;
 		}
 
-		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks());
+		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),dht_supported);
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));
@@ -204,7 +204,7 @@ namespace bt
 			return;
 			
 		Peer* peer = new Peer(
-				auth->takeSocket(),auth->getPeerID(),tor.getNumChunks());
+				auth->takeSocket(),auth->getPeerID(),tor.getNumChunks(),auth->supportsDHT());
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));

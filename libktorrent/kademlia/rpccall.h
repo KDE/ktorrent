@@ -20,12 +20,40 @@
 #ifndef DHTRPCCALL_H
 #define DHTRPCCALL_H
 
-#include <qobject.h>
+#include <qtimer.h>
 #include "key.h"
+#include "rpcmsg.h"
 
 namespace dht
 {
+	class RPCServer;
+	class RPCCall;
 	
+	/**
+	 * Class which objects should derive from, if they want to know the result of a call.
+	*/
+	class RPCCallListener
+	{
+		RPCCall* call;
+	public:
+		RPCCallListener();
+		virtual ~RPCCallListener();
+		
+		/**
+		 * A response was received.
+		 * @param c The call
+		 * @param rsp The response
+		 */
+		virtual void onResponse(RPCCall* c,MsgBase* rsp) = 0;
+		
+		/**
+		 * The call has timed out.
+		 * @param c The call
+		 */
+		virtual void onTimeout(RPCCall* c) = 0;
+		
+		friend class RPCCall;
+	};
 
 	/**
 	 * @author Joris Guisson
@@ -34,15 +62,32 @@ namespace dht
 	{
 		Q_OBJECT
 	public:
-		RPCCall(QObject *parent = 0);
+		RPCCall(RPCServer* rpc,MsgBase* msg);
 		virtual ~RPCCall();
-
 		
-	signals:
-		void reply();
+		/**
+		 * Called by the server if a response is received.
+		 * @param rsp 
+		 */
+		void response(MsgBase* rsp);
+		
+		/**
+		 * Set the listener, which wishes to recieve the result of the call.
+		 * @param cl The listener
+		 */
+		void setListener(RPCCallListener* cl);
+		
+		/// Get the message type
+		Method getMsgMethod() const;
+		
+	private slots:
+		void onTimeout();
 
 	private:
-		Key msg_id;
+		MsgBase* msg;
+		QTimer timer; 
+		RPCServer* rpc;
+		RPCCallListener* listener;
 	};
 
 }

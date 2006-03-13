@@ -120,7 +120,8 @@ namespace kt
 		bool user_controlled;
 		/// Maximum share ratio
 		float max_share_ratio;
-		
+		/// Private torrent (i.e. no use of DHT)
+		bool priv_torrent;
 	};
 
 	/**

@@ -40,7 +40,6 @@ using namespace kt;
 
 KTorrentView::KTorrentView(QWidget *parent, bool seed_view)
 	: KListView(parent),m_seedView(seed_view),show_debug_view(false),menu(0),curr(0)
-
 {
 	addColumn(i18n("File"));
 	addColumn(i18n("Status"));
@@ -86,7 +85,6 @@ KTorrentView::KTorrentView(QWidget *parent, bool seed_view)
 	setColumnWidthMode(1,QListView::Manual);
 	setShowSortIndicator(true);
 	setAcceptDrops(true);
-	
 	for (Uint32 i = 2;i < (Uint32)columns();i++)
 		setColumnWidthMode(i,QListView::Manual);
 

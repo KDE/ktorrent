@@ -23,6 +23,7 @@
 
 #include <util/sha1hash.h>
 #include <util/log.h>
+#include <kademlia/dht.h>
 #include "globals.h"
 #include "peerid.h"
 #include "authenticatebase.h"
@@ -40,6 +41,7 @@ namespace bt
 		timer.start(20000,true);
 		memset(handshake,0x00,68);
 		bytes_of_handshake_recieved = 0;
+		dht_support = false;
 	}
 
 
@@ -57,7 +59,15 @@ namespace bt
 		const char* pstr = "BitTorrent protocol";
 		hs[0] = 19;
 		memcpy(hs+1,pstr,19);
-		memset(hs+20,0x00,8);
+		if (Globals::instance().getDHT().isRunning())
+		{
+			memset(hs+20,0x00,7);
+			memset(hs+27,0x01,1); // enable DHT support
+		}
+		else
+		{
+			memset(hs+20,0x00,8);
+		}
 		memcpy(hs+28,info_hash.getData(),20);
 		memcpy(hs+48,our_peer_id.data(),20);
 		
@@ -80,6 +90,8 @@ namespace bt
 				// read partial
 				sock->readBlock((char*)handshake,ba);
 				bytes_of_handshake_recieved += ba;
+				if (ba >= 27 && handshake[27])
+					dht_support = true;
 				// tell subclasses of a partial handshake
 				handshakeRecieved(false);
 				return;
@@ -109,6 +121,13 @@ namespace bt
 			onFinish(false);
 			return;
 		}
+		
+		if (Globals::instance().getDHT().isRunning() && handshake[27])
+		{
+			Out() << "Peer supports DHT" << endl;
+			dht_support = true;
+		}
+		
 		handshakeRecieved(true);
 	}
 

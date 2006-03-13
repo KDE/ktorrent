@@ -55,6 +55,19 @@ namespace bt
 
 		void write(const char* str,Uint32 len);
 	};
+	
+	/**
+	 * Write the output of a BEncoder to a QByteArray
+	 */
+	class BEncoderBufferOutput : public BEncoderOutput
+	{
+		QByteArray & data;
+		Uint32 ptr;
+	public:
+		BEncoderBufferOutput(QByteArray & data);
+
+		void write(const char* str,Uint32 len);
+	};
 
 
 	/**

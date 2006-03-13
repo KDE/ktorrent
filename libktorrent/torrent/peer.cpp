@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <math.h>
+
 #ifdef USE_KNETWORK_SOCKET_CLASSES
 #include <kbufferedsocket.h>
 #else
@@ -24,8 +26,11 @@
 #include <qsocketdevice.h> 
 #endif
 
+#include <kademlia/dht.h>
 #include <util/log.h>
-#include <math.h>
+#include <util/functions.h>
+
+
 #include "peer.h"
 #include "chunk.h"
 #include "speedestimater.h"
@@ -36,7 +41,7 @@
 #include "packetwriter.h"
 #include "peerdownloader.h"
 #include "peeruploader.h"
-#include <util/functions.h>
+
 
 namespace bt
 {
@@ -45,11 +50,11 @@ namespace bt
 	
 	static Uint32 peer_id_counter = 1;
 #ifdef USE_KNETWORK_SOCKET_CLASSES
-	Peer::Peer(KNetwork::KBufferedSocket* sock,const PeerID & peer_id,Uint32 num_chunks)
+	Peer::Peer(KNetwork::KBufferedSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported)
 #else
-	Peer::Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks)
+	Peer::Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported)
 #endif
-	: sock(sock),pieces(num_chunks),peer_id(peer_id)
+	: sock(sock),pieces(num_chunks),peer_id(peer_id),dht_supported(dht_supported)
 	{
 		id = peer_id_counter;
 		peer_id_counter++;
@@ -296,6 +301,21 @@ namespace bt
 							  ReadUint32(tmp_buf,9),
 							  id);
 					uploader->removeRequest(r);
+				}
+				break;
+			case PORT:
+				if (len != 3)
+				{
+					Out() << "len err PORT" << endl;
+					error(0);
+					return;
+				}
+				
+				{
+					Uint16 port = ReadUint16(tmp_buf,1);
+					Out() << "Got PORT packet : " << port << endl;
+					if (Globals::instance().getDHT().isRunning())
+						Globals::instance().getDHT().portRecieved(getIPAddresss(),port);
 				}
 				break;
 		}

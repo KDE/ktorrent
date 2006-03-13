@@ -18,20 +18,21 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include "kbucket.h"
+#include "kclosestnodessearch.h"
 
 namespace dht
 {
-	KBucketEntry::KBucketEntry() : ip_address(0),udp_port(0)
+	KBucketEntry::KBucketEntry()
 	{
 	}
 	
-	KBucketEntry::KBucketEntry(Uint32 ip,Uint16 port,const Key & id)
-		: ip_address(ip),udp_port(port),node_id(id)
+	KBucketEntry::KBucketEntry(const KInetSocketAddress & addr,const Key & id)
+	: addr(addr),node_id(id)
 	{
 	}
 		
 	KBucketEntry::KBucketEntry(const KBucketEntry & other)
-	: ip_address(other.ip_address),udp_port(other.udp_port),node_id(other.node_id)
+	: addr(other.addr),node_id(other.node_id)
 	{}
 
 		
@@ -40,10 +41,14 @@ namespace dht
 
 	KBucketEntry & KBucketEntry::operator = (const KBucketEntry & other)
 	{
-		ip_address = other.ip_address;
-		udp_port = other.udp_port;
+		addr = other.addr;
 		node_id = other.node_id;
 		return *this;
+	}
+	
+	bool KBucketEntry::operator == (const KBucketEntry & entry) const
+	{
+		return addr == entry.addr && node_id == entry.node_id;
 	}
 
 	KBucket::KBucket()
@@ -52,6 +57,50 @@ namespace dht
 	
 	KBucket::~KBucket()
 	{}
+	
+	bool KBucket::insert(const KBucketEntry & entry,bool force)
+	{
+		QValueList<KBucketEntry>::iterator i = entries.find(entry);
+	
+		// If in the list, move it to the end
+		if (i != entries.end())
+		{
+			entries.remove(i);
+			entries.append(entry);
+			return true;
+		}
+		
+		// insert if not allready in the list and we still have room
+		if (i == entries.end() && entries.count() < dht::K)
+		{
+			entries.append(entry);
+			return true;
+		}
+		
+		// if force is on, get rid of the first and append the entry
+		if (force)
+		{
+			entries.pop_front();
+			entries.append(entry);
+			return true;
+		}
+		
+		return false;
+	}
 
+	bool KBucket::contains(const KBucketEntry & entry) const
+	{
+		return entries.contains(entry);
+	}
+	
+	void KBucket::findKClosestNodes(KClosestNodesSearch & kns)
+	{
+		QValueList<KBucketEntry>::iterator i = entries.begin();
+		while (i != entries.end())
+		{
+			kns.tryInsert(*i);
+			i++;
+		}
+	}
 }
 
