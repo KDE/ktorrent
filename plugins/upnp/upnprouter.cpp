@@ -135,6 +135,10 @@ namespace kt
 				QString dest = KGlobal::dirs()->saveLocation("data","ktorrent") + "upnp_failure";
 				KIO::file_copy(target,dest,-1,true,false,false);
 			}
+			else
+			{
+				debugPrintData();
+			}
 			// and remove the temp file
 			KIO::NetAccess::removeTempFile(target);
 			return ret;

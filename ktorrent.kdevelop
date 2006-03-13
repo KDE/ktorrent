@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>libktorrent/torrent/libtorrent.la</activetarget>
+      <activetarget>plugins/upnp/libktupnp.la</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>
@@ -37,6 +37,7 @@
         <kttorinfo/>
         <cachecheck/>
         <ktcachecheck/>
+        <ktupnptest></ktupnptest>
       </runarguments>
     </run>
     <make>

@@ -178,6 +178,7 @@ namespace kt
 		 */
 		void undoForward(Uint16 remote,Protocol prot);
 		
+		void debugPrintData();
 		
 		QValueList<Forwarding>::iterator beginPortMappings() {return fwds.begin();}
 		QValueList<Forwarding>::iterator endPortMappings() {return fwds.end();}
@@ -196,7 +197,7 @@ namespace kt
 		
 	private:
 		QValueList<UPnPService>::iterator findPortForwardingService();		
-		void debugPrintData();
+		
 		bt::HTTPRequest* sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl);
 	};
 

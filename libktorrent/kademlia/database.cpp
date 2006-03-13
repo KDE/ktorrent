@@ -56,6 +56,7 @@ namespace dht
 	{
 		memcpy(item,it.item,6);
 		time_stamp = it.time_stamp;	
+		return *this;
 	}
 
 	///////////////////////////////////////////////

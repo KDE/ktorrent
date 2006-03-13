@@ -3,12 +3,12 @@ METASOURCES = AUTO
 kde_module_LTLIBRARIES = ktupnpplugin.la
 noinst_HEADERS = upnpplugin.h upnpmcastsocket.h upnprouter.h upnpprefpage.h \
 		upnpprefwidget.h upnpdescriptionparser.h soap.h
-ktupnpplugin_la_SOURCES = upnpplugin.cpp upnpmcastsocket.cpp upnprouter.cpp \
-		upnpprefpage.cpp upnpwidget.ui upnpprefwidget.cpp upnpdescriptionparser.cpp soap.cpp upnppluginsettings.kcfgc
+ktupnpplugin_la_SOURCES = upnpplugin.cpp upnpprefpage.cpp upnpwidget.ui \
+	upnpprefwidget.cpp upnppluginsettings.kcfgc
 
 # Libs needed by the plugin
-ktupnpplugin_la_LIBADD = $(LIB_KDECORE) $(LIB_KPARTS) \
-	../../libktorrent/libktorrent.la
+ktupnpplugin_la_LIBADD = $(top_builddir)/plugins/upnp/libktupnp.la \
+	$(LIB_KDECORE) $(LIB_KPARTS) ../../libktorrent/libktorrent.la
 
 # LD flags for the plugin
 # -module says: this is a module, i.e. something you're going to dlopen
@@ -24,3 +24,7 @@ kde_services_DATA = ktupnpplugin.desktop
 
 kde_kcfg_DATA = ktupnpplugin.kcfg
 
+libktupnp_la_LDFLAGS = $(all_libraries)
+noinst_LTLIBRARIES = libktupnp.la
+libktupnp_la_SOURCES = soap.cpp upnpdescriptionparser.cpp upnpmcastsocket.cpp\
+	upnprouter.cpp
