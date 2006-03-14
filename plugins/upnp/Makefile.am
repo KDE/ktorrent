@@ -7,7 +7,7 @@ ktupnpplugin_la_SOURCES = upnpplugin.cpp upnpprefpage.cpp upnpwidget.ui \
 	upnpprefwidget.cpp upnppluginsettings.kcfgc
 
 # Libs needed by the plugin
-ktupnpplugin_la_LIBADD = $(top_builddir)/plugins/upnp/libktupnp.la \
+ktupnpplugin_la_LIBADD = ../../plugins/upnp/libktupnp.la \
 	$(LIB_KDECORE) $(LIB_KPARTS) ../../libktorrent/libktorrent.la
 
 # LD flags for the plugin

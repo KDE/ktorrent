@@ -3,5 +3,5 @@ METASOURCES = AUTO
 bin_PROGRAMS = ktupnptest
 
 ktupnptest_SOURCES = main.cpp
-ktupnptest_LDADD = $(top_builddir)/plugins/upnp/libktupnp.la \
-	$(top_builddir)/libktorrent/libktorrent.la
+ktupnptest_LDADD = ../../plugins/upnp/libktupnp.la \
+	../../libktorrent/libktorrent.la
