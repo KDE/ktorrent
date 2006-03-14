@@ -85,6 +85,9 @@ namespace dht
 
 	void DHT::ping(PingReq* r)
 	{
+		if (!running)
+			return;
+		
 		Out() << "Sending ping response" << endl;
 		PingRsp rsp(r->getMTID(),node->getOurID());
 		rsp.setOrigin(r->getOrigin());
@@ -94,6 +97,9 @@ namespace dht
 	
 	void DHT::findNode(FindNodeReq* r)
 	{
+		if (!running)
+			return;
+		
 		node->recieved(r,srv);
 		// find the K closest nodes and pack them
 		KClosestNodesSearch kns(r->getTarget(),K);
@@ -114,6 +120,9 @@ namespace dht
 	
 	void DHT::findValue(FindValueReq* r)
 	{
+		if (!running)
+			return;
+		
 		node->recieved(r,srv);
 #if 0
 		const QByteArray & data = db->find(r->getKey());
@@ -149,6 +158,9 @@ namespace dht
 	
 	void DHT::storeValue(StoreValueReq* r)
 	{
+		if (!running)
+			return;
+		
 		node->recieved(r,srv);
 		// store the key data pair in the db
 		//db->store(r->getKey(),r->getData());
@@ -161,6 +173,9 @@ namespace dht
 	
 	void DHT::announce(AnnounceReq* r)
 	{
+		if (!running)
+			return;
+		
 		node->recieved(r,srv);
 		// first check if the token is OK
 		dht::Key token = r->getToken();
@@ -181,6 +196,9 @@ namespace dht
 	
 	void DHT::getPeers(GetPeersReq* r)
 	{
+		if (!running)
+			return;
+		
 		node->recieved(r,srv);
 		DBItemList dbl;
 		db->sample(r->getInfoHash(),dbl,50);
@@ -216,6 +234,9 @@ namespace dht
 	
 	void DHT::response(MsgBase* r)
 	{
+		if (!running)
+			return;
+		
 		node->recieved(r,srv);
 	}
 	
@@ -225,6 +246,9 @@ namespace dht
 
 	void DHT::portRecieved(const QString & ip,bt::Uint16 port)
 	{
+		if (!running)
+			return;
+		
 		Out() << "Sending ping request to " << ip << ":" << port << endl;
 		PingReq* r = new PingReq(node->getOurID());
 		r->setOrigin(KInetSocketAddress(ip,port));
@@ -233,6 +257,9 @@ namespace dht
 	
 	AnnounceTask* DHT::announce(const bt::SHA1Hash & info_hash,bt::Uint16 port)
 	{
+		if (!running)
+			return 0;
+		
 		KClosestNodesSearch kns(info_hash,K);
 		node->findKClosestNodes(kns);
 		if (kns.getNumEntries() > 0)
