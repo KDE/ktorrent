@@ -128,7 +128,7 @@ namespace kt
 			line = lines[i];
 			if (line.startsWith("Location") || line.startsWith("LOCATION") || line.startsWith("location"))
 			{
-				location = line.mid(line.find(':') + 1);
+				location = line.mid(line.find(':') + 1).stripWhiteSpace();
 				if (!location.isValid())
 				{
 					Out() << "Invalid URL" << endl;

@@ -37,7 +37,7 @@
         <kttorinfo/>
         <cachecheck/>
         <ktcachecheck/>
-        <ktupnptest></ktupnptest>
+        <ktupnptest/>
       </runarguments>
     </run>
     <make>

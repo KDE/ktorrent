@@ -81,8 +81,8 @@ namespace bt
 			mutex.lock();
 			*out << ::endl;
 			fptr.flush();
-	//		if (to_cout)
-//				std::cout << std::endl;;
+			if (to_cout)
+				std::cout << std::endl;;
 			
 			if (monitors.count() > 0)
 			{

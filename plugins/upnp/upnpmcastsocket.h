@@ -74,7 +74,7 @@ namespace kt
 		 */
 		void discovered(UPnPRouter* router);
 		
-	private:
+	public:
 		UPnPRouter* parseResponse(const QByteArray & arr);
 	
 	private:	
