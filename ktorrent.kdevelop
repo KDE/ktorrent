@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>plugins/upnp/libktupnp.la</activetarget>
+      <activetarget>utests/ktutester</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>
@@ -33,11 +33,12 @@
       <autocompile>true</autocompile>
       <envvars/>
       <runarguments>
-        <ktorrent/>
+        <ktorrent></ktorrent>
         <kttorinfo/>
         <cachecheck/>
         <ktcachecheck/>
         <ktupnptest/>
+        <ktutester></ktutester>
       </runarguments>
     </run>
     <make>

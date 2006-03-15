@@ -20,8 +20,12 @@
 #include <qxml.h>
 #include <qvaluestack.h>
 #include <util/fileops.h>
+#include <util/log.h>
+#include <torrent/globals.h>
 #include "upnprouter.h"
 #include "upnpdescriptionparser.h"
+
+using namespace bt;
 
 namespace kt
 {
@@ -79,7 +83,7 @@ namespace kt
 		
 		if (!ret)
 		{
-			
+			Out() << "Error parsing XML" << endl;
 			return false;
 		}
 		return true;
