@@ -54,6 +54,7 @@ namespace kt
 		setText(4,s.choked ? i18n("yes") : i18n("no"));
 		setText(5,s.snubbed ? i18n("yes") : i18n("no"));
 		setText(6,QString("%1 %").arg(loc->formatNumber(s.perc_of_file,2)));
+		setText(7,s.dht_support ? i18n("yes") : i18n("no"));
 	}
 	
 	int PeerViewItem::compare(QListViewItem * i,int col,bool) const
@@ -70,6 +71,7 @@ namespace kt
 			case 4: return CompareVal(s.choked,os.choked);
 			case 5: return CompareVal(s.snubbed,os.snubbed);
 			case 6: return CompareVal(s.perc_of_file,os.perc_of_file);
+			case 7: return CompareVal(s.dht_support,os.dht_support);
 		}
 		return 0;
 	}
@@ -84,6 +86,7 @@ namespace kt
 		addColumn(i18n("Choked"));
 		addColumn(i18n("Snubbed"));
 		addColumn(i18n("Availability"));
+		addColumn(i18n("DHT"));
 		setShowSortIndicator(true);
 		
 		menu = new KPopupMenu(this);

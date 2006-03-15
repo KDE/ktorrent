@@ -54,7 +54,7 @@ namespace bt
 #else
 	Peer::Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported)
 #endif
-	: sock(sock),pieces(num_chunks),peer_id(peer_id),dht_supported(dht_supported)
+	: sock(sock),pieces(num_chunks),peer_id(peer_id)
 	{
 		id = peer_id_counter;
 		peer_id_counter++;
@@ -95,6 +95,7 @@ namespace bt
 		stats.upload_rate = 0;
 		stats.perc_of_file = 0;
 		stats.snubbed = false;
+		stats.dht_support = dht_supported;
 		if (stats.ip_addresss == "0.0.0.0")
 		{
 			Out() << "No more 0.0.0.0" << endl;

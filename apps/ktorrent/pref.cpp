@@ -194,6 +194,8 @@ void PrefPageTwo::createWidget(QWidget* parent)
 			this,SLOT(autosaveChecked(bool )));
 	connect(gp->custom_ip_check,SIGNAL(toggled(bool)),
 			this,SLOT(customIPChecked(bool )));
+	connect(gp->use_dht,SIGNAL(toggled(bool)),
+			this,SLOT(dhtChecked( bool )));
 }
 
 bool PrefPageTwo::apply()
@@ -234,6 +236,7 @@ bool PrefPageTwo::apply()
 	Settings::setMemoryUsage(gp->mem_usage->currentItem());
 	Settings::setGuiUpdateInterval(gp->gui_interval->currentItem());
 	Settings::setDhtSupport(gp->use_dht->isChecked());
+	Settings::setDhtPort(gp->dht_port->value());
 	return true;
 }
 
@@ -246,6 +249,11 @@ void PrefPageTwo::customIPChecked(bool on)
 {
 	gp->custom_ip->setEnabled(on);
 	gp->custom_ip_label->setEnabled(on);
+}
+
+void PrefPageTwo::dhtChecked(bool on)
+{
+	gp->dht_port->setEnabled(on);
 }
 
 void PrefPageTwo::updateData()
@@ -287,6 +295,8 @@ void PrefPageTwo::updateData()
 	gp->gui_interval->setCurrentItem(Settings::guiUpdateInterval());
 	
 	gp->use_dht->setChecked(Settings::dhtSupport());
+	gp->dht_port->setValue(Settings::dhtPort());
+	gp->dht_port->setEnabled(Settings::dhtSupport());
 }
 
 void PrefPageTwo::deleteWidget()

@@ -180,7 +180,7 @@ namespace bt
 		float percentAvailable() const;
 
 		/// See if the peer supports DHT
-		bool isDHTSupported() const {return dht_supported;}
+		bool isDHTSupported() const {return stats.dht_support;}
 	private slots:
 		void connectionClosed(); 
 		void readyRead();
@@ -249,9 +249,6 @@ namespace bt
 		PeerDownloader* downloader;
 		PeerUploader* uploader;
 		mutable kt::PeerInterface::Stats stats;
-		
-		bool dht_supported;
-
 		QTime connect_time;
 
 		friend class PacketWriter;

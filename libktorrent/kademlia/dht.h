@@ -104,6 +104,9 @@ namespace dht
 		 */
 		void update();
 		
+		/// Get the DHT port
+		bt::Uint16 getPort() const {return port;}
+		
 	private:
 		Node* node;
 		RPCServer* srv;
@@ -111,6 +114,7 @@ namespace dht
 		TaskManager* tman;
 		bt::Timer expire_timer;
 		bool running;
+		bt::Uint16 port;
 	};
 
 }

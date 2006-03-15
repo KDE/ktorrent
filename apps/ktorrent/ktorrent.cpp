@@ -304,9 +304,15 @@ void KTorrent::applySettings(bool change_port)
 	m_core->getQueueManager()->orderQueue();
 	dht::DHT & ht = Globals::instance().getDHT();
 	if (Settings::dhtSupport() && !ht.isRunning())
-		ht.start(4444);
+		ht.start(Settings::dhtPort());
 	else if (!Settings::dhtSupport() && ht.isRunning())
 		ht.stop();
+	else if (Settings::dhtSupport() && ht.getPort() != Settings::dhtPort())
+	{
+		Out() << "Restarting DHT with new port " << Settings::dhtPort() << endl;
+		ht.stop();
+		ht.start(Settings::dhtPort());
+	}
 	
 }
 

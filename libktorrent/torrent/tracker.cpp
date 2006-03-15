@@ -54,6 +54,7 @@ namespace bt
 		num_failed_attempts = 0;
 		connect(&update_timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 		connect(&error_update_timer,SIGNAL(timeout()),this,SLOT(onErrorTimeout()));
+		connect(&dht_update_timer,SIGNAL(timeout()),this,SLOT(onDHTUpdate()));
 		error_mode = false;
 		
 		srand(time(0));
@@ -89,12 +90,6 @@ namespace bt
 			http->doRequest(url);
 			curr = http;
 		}
-		
-		if (dht_ba && event != "stopped")
-		{
-			Uint16 port = Globals::instance().getServer().getPortInUse();
-			dht_ba->doRequest(QString("http://localhost:%1/announce").arg(port));
-		}
 	}
 
 	void Tracker::updateData(PeerManager* pman)
@@ -112,6 +107,9 @@ namespace bt
 		doRequest(tor->getTrackerURL(true));
 		update_timer.start(interval*1000);
 		time_of_last_update = GetCurrentTime();
+		// start the DHT after one minute, so we can get some peers first
+		if (dht_ba)
+			dht_update_timer.start(60*1000,true);
 	}
 		
 	void Tracker::setInterval(Uint32 secs)
@@ -132,6 +130,7 @@ namespace bt
 		event = "stopped";
 		doRequest(tor->getTrackerURL(true));
 		update_timer.stop();
+		dht_update_timer.stop();
 	}
 
 	void Tracker::onTimeout()
@@ -148,6 +147,17 @@ namespace bt
 	{
 		doRequest(tor->getTrackerURL(false));
 		time_of_last_update = GetCurrentTime();
+	}
+	
+	void Tracker::onDHTUpdate()
+	{
+		if (dht_ba && event != "stopped")
+		{
+			Uint16 port = Globals::instance().getServer().getPortInUse();
+			dht_ba->doRequest(QString("http://localhost:%1/announce").arg(port));
+			// do the next update in 15 minutes
+			dht_update_timer.start(15*60*1000,true);
+		}
 	}
 
 	void Tracker::updateOK()
@@ -174,12 +184,21 @@ namespace bt
 				error_update_timer.start(30*1000,true);
 		}
 	}
+	
+	
 
 	void Tracker::manualUpdate()
 	{
 		event = QString::null;
 		doRequest(tor->getTrackerURL(true));
 		time_of_last_update = GetCurrentTime();
+		if (dht_ba)
+		{
+			dht_update_timer.stop();
+			Uint16 port = Globals::instance().getServer().getPortInUse();
+			dht_ba->doRequest(QString("http://localhost:%1/announce").arg(port));
+			dht_update_timer.start(15*60*1000,true);
+		}
 	}
 
 	void Tracker::completed()

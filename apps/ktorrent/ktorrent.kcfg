@@ -83,5 +83,11 @@
 			<label>Support for DHT</label>
 			<default>false</default>
 		</entry>
+		<entry name="dhtPort" type="Int">
+		     <label>DHT port</label>
+			<default>6881</default>
+			<min>0</min>
+			<max>65535</max>
+		</entry>
 	</group>
 </kcfg>

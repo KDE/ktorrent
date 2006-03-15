@@ -54,6 +54,8 @@ namespace kt
 			bool snubbed;
 			/// Percentage of file which the peer has
 			float perc_of_file;
+			/// Does this peer support DHT
+			bool dht_support;
 		};
 
 		virtual const Stats & getStats() const = 0;

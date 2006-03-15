@@ -32,11 +32,11 @@ namespace utest
 	{
 	public:
 		UPnPParseDescriptionTest();
-
-		~UPnPParseDescriptionTest();
+		virtual ~UPnPParseDescriptionTest();
 
 		virtual bool doTest();
-
+	private:
+		bool doParse(const char* data);
 	};
 
 }

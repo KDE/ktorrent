@@ -107,110 +107,90 @@ namespace utest
 			"</device>\n"
 			"</root>";
 	
-#if 0
-	static const char* test_data2 = "<root> 
-			− 
-			<specVersion> 
-			<major>1</major> 
-			<minor>0</minor> 
-			</specVersion> 
-			<URLBase>http://192.168.1.1:52869</URLBase> 
-			− 
-			<device> 
-			− 
-			<deviceType> 
-			urn:schemas-upnp-org:device:InternetGatewayDevice:1 
-			</deviceType> 
-			<friendlyName>DLINK Internet Gateway Device</friendlyName> 
-			<manufacturer>DLINK</manufacturer> 
-			<manufacturerURL>http://www.dlink.com</manufacturerURL> 
-			<modelName>DLINK IGD</modelName> 
-			<UDN>uuid:75802409-bccb-40e7-8e6c-fa095ecce13e</UDN> 
-			− 
-			<iconList> 
-			− 
-			<icon> 
-			<mimetype>image/gif</mimetype> 
-			<width>118</width> 
-			<height>119</height> 
-			<depth>8</depth> 
-			<url>/ligd.gif</url> 
-			</icon> 
-			</iconList> 
-			− 
-			<serviceList> 
-			− 
-			<service> 
-			<serviceType>urn:schemas-microsoft-com:service:OSInfo:1</serviceType> 
-			<serviceId>urn:microsoft-com:serviceId:OSInfo1</serviceId> 
-			<controlURL>/upnp/control/OSInfo1</controlURL> 
-			<eventSubURL>/upnp/event/OSInfo1</eventSubURL> 
-			<SCPDURL>/gateinfoSCPD.xml</SCPDURL> 
-			</service> 
-			</serviceList> 
-			− 
-			<deviceList> 
-			− 
-			<device> 
-			<deviceType>urn:schemas-upnp-org:device:WANDevice:1</deviceType> 
-			<friendlyName>WANDevice</friendlyName> 
-			<manufacturer>DLINK</manufacturer> 
-			<manufacturerURL>http://www.dlink.com</manufacturerURL> 
-			<modelDescription>WAN Device on DLINK IGD</modelDescription> 
-			<modelName>DLINK IGD</modelName> 
-			<modelNumber>0.92</modelNumber> 
-			<modelURL>http://www.dlink.com</modelURL> 
-			<serialNumber>0.92</serialNumber> 
-			<UDN>uuid:75802409-bccb-40e7-8e6c-fa095ecce13e</UDN> 
-			<UPC>DLINK IGD</UPC> 
-			− 
-			<serviceList> 
-			− 
-			<service> 
-			− 
-			<serviceType> 
-			urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1 
-			</serviceType> 
-			<serviceId>urn:upnp-org:serviceId:WANCommonIFC1</serviceId> 
-			<controlURL>/upnp/control/WANCommonIFC1</controlURL> 
-			<eventSubURL>/upnp/control/WANCommonIFC1</eventSubURL> 
-			<SCPDURL>/gateicfgSCPD.xml</SCPDURL> 
-			</service> 
-			</serviceList> 
-			− 
-			<deviceList> 
-			− 
-			<device> 
-			<deviceType>urn:schemas-upnp-org:device:WANConnectionDevice:1</deviceType> 
-			<friendlyName>WANConnectionDevice</friendlyName> 
-			<manufacturer>DLINK</manufacturer> 
-			<manufacturerURL>http://www.dlink.com</manufacturerURL> 
-			<modelDescription>WanConnectionDevice on DLINK IGD</modelDescription> 
-			<modelName>DLINK IGD</modelName> 
-			<modelNumber>0.92</modelNumber> 
-			<modelURL>http://www.dlink.com</modelURL> 
-			<serialNumber>0.92</serialNumber> 
-			<UDN>uuid:75802409-bccb-40e7-8e6c-fa095ecce13e</UDN> 
-			<UPC>DLINK IGD</UPC> 
-			− 
-			<serviceList> 
-			− 
-			<service> 
-			<serviceType>urn:schemas-upnp-org:service:WANIPConnection:1</serviceType> 
-			<serviceId>urn:upnp-org:serviceId:WANIPConn1</serviceId> 
-			<controlURL>/upnp/control/WANIPConn1</controlURL> 
-			<eventSubURL>/upnp/control/WANIPConn1</eventSubURL> 
-			<SCPDURL>/gateconnSCPD.xml</SCPDURL> 
-			</service> 
-			</serviceList> 
-			</device> 
-			</deviceList> 
-			</device> 
-			</deviceList> 
-			<presentationURL>http://192.168.1.1/</presentationURL> 
-			</device> 
-			</root> 
-#endif
+	static const char* test_data2 = "<?xml version=\"1.0\"?> \n"
+			"<root xmlns=\"urn:schemas-upnp-org:device-1-0\"> \n"
+			"<specVersion> \n"
+			"<major>1</major> \n"
+			"<minor>0</minor> \n"
+			"</specVersion> \n"
+			"<URLBase>http://192.168.1.1:52869</URLBase> \n"
+			"<device> \n"
+			"<deviceType>urn:schemas-upnp-org:device:InternetGatewayDevice:1</deviceType> \n"
+			"<friendlyName>DLINK Internet Gateway Device</friendlyName> \n"
+			"<manufacturer>DLINK</manufacturer> \n"
+			"<manufacturerURL>http://www.dlink.com</manufacturerURL> \n"
+			"<modelName>DLINK IGD</modelName> \n"
+			"<UDN>uuid:75802409-bccb-40e7-8e6c-fa095ecce13e</UDN> \n"
+			"<iconList> \n"
+			"<icon> \n"
+			"<mimetype>image/gif</mimetype> \n"
+			"<width>118</width> \n"
+			"<height>119</height> \n"
+			"<depth>8</depth> \n"
+			"<url>/ligd.gif</url> \n"
+			"</icon> \n"
+			"</iconList> \n"
+			"<serviceList> \n"
+			"<service> \n"
+			"<serviceType>urn:schemas-microsoft-com:service:OSInfo:1</serviceType> \n"
+			"<serviceId>urn:microsoft-com:serviceId:OSInfo1</serviceId> \n"
+			"<controlURL>/upnp/control/OSInfo1</controlURL> \n"
+			"<eventSubURL>/upnp/event/OSInfo1</eventSubURL> \n"
+			"<SCPDURL>/gateinfoSCPD.xml</SCPDURL> \n"
+			"</service> \n"
+			"</serviceList> \n"
+			"<deviceList> \n"
+			"<device> \n"
+			"<deviceType>urn:schemas-upnp-org:device:WANDevice:1</deviceType> \n"
+			"<friendlyName>WANDevice</friendlyName> \n"
+			"<manufacturer>DLINK</manufacturer> \n"
+			"<manufacturerURL>http://www.dlink.com</manufacturerURL> \n"
+			"<modelDescription>WAN Device on DLINK IGD</modelDescription> \n"
+			"<modelName>DLINK IGD</modelName> \n"
+			"<modelNumber>0.92</modelNumber> \n"
+			"<modelURL>http://www.dlink.com</modelURL> \n"
+			"<serialNumber>0.92</serialNumber> \n"
+			"<UDN>uuid:75802409-bccb-40e7-8e6c-fa095ecce13e</UDN> \n"
+			"<UPC>DLINK IGD</UPC> \n"
+			"<serviceList> \n"
+			"<service> \n"
+			"<serviceType>urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1</serviceType> \n"
+			"<serviceId>urn:upnp-org:serviceId:WANCommonIFC1</serviceId> \n"
+			"<controlURL>/upnp/control/WANCommonIFC1</controlURL> \n"
+			"<eventSubURL>/upnp/control/WANCommonIFC1</eventSubURL> \n"
+			"<SCPDURL>/gateicfgSCPD.xml</SCPDURL> \n"
+			"</service> \n"
+			"</serviceList> \n"
+			"<deviceList> \n"
+			"<device> \n"
+			"<deviceType>urn:schemas-upnp-org:device:WANConnectionDevice:1</deviceType> \n"
+			"<friendlyName>WANConnectionDevice</friendlyName> \n"
+			"<manufacturer>DLINK</manufacturer> \n"
+			"<manufacturerURL>http://www.dlink.com</manufacturerURL> \n"
+			"<modelDescription>WanConnectionDevice on DLINK IGD</modelDescription> \n"
+			"<modelName>DLINK IGD</modelName> \n"
+			"<modelNumber>0.92</modelNumber> \n"
+			"<modelURL>http://www.dlink.com</modelURL> \n"
+			"<serialNumber>0.92</serialNumber> \n"
+			"<UDN>uuid:75802409-bccb-40e7-8e6c-fa095ecce13e</UDN> \n"
+			"<UPC>DLINK IGD</UPC> \n"
+			"<serviceList> \n"
+			"<service> \n"
+			"<serviceType>urn:schemas-upnp-org:service:WANIPConnection:1</serviceType> \n"
+			"<serviceId>urn:upnp-org:serviceId:WANIPConn1</serviceId> \n"
+			"<controlURL>/upnp/control/WANIPConn1</controlURL> \n"
+			"<eventSubURL>/upnp/control/WANIPConn1</eventSubURL> \n"
+			"<SCPDURL>/gateconnSCPD.xml</SCPDURL> \n"
+			"</service> \n"
+			"</serviceList> \n"
+			"</device> \n"
+			"</deviceList> \n"
+			"</device> \n"
+			"</deviceList> \n"
+			"<presentationURL>http://192.168.1.1/</presentationURL> \n"
+			"</device> \n"
+			"</root> ";
+
 
 	UPnPParseDescriptionTest::UPnPParseDescriptionTest() : UnitTest("UPnPParseDescriptionTest")
 	{}
@@ -219,8 +199,7 @@ namespace utest
 	UPnPParseDescriptionTest::~UPnPParseDescriptionTest()
 	{}
 
-
-	bool UPnPParseDescriptionTest::doTest()
+	bool UPnPParseDescriptionTest::doParse(const char* data)
 	{
 		QString fn = "/tmp/UPnPParseDescriptionTest";
 		QFile fptr(fn);
@@ -229,7 +208,7 @@ namespace utest
 			Out() << "Cannot open " << fn << " : " << fptr.errorString() << endl;
 			return false;
 		}
-		fptr.writeBlock(test_data1,strlen(test_data1));
+		fptr.writeBlock(data,strlen(data));
 		fptr.close();
 		
 		kt::UPnPRouter router(QString::null,"http://foobar.com");
@@ -247,7 +226,24 @@ namespace utest
 			router.debugPrintData();
 			return true;
 		}
-		return false;
+	}
+
+	bool UPnPParseDescriptionTest::doTest()
+	{
+		bool ret = true;
+		if (!doParse(test_data1))
+		{
+			Out() << "Test data 1 failed" << endl;
+			ret = false;
+		}
+		
+		if (!doParse(test_data2))
+		{
+			Out() << "Test data 2 failed" << endl;
+			ret = false;
+		}	
+		
+		return ret;
 	}
 
 }

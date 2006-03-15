@@ -41,7 +41,7 @@ namespace dht
 	
 
 
-	DHT::DHT() : node(0),srv(0),db(0),tman(0),running(false)
+	DHT::DHT() : node(0),srv(0),db(0),tman(0),running(false),port(6881)
 	{
 		
 	}
@@ -60,6 +60,7 @@ namespace dht
 		if (running)
 			return;
 		
+		this->port = port;
 		Out() << "Starting DHT on port " << port << endl;
 		node = new Node();
 		srv = new RPCServer(this,port);
