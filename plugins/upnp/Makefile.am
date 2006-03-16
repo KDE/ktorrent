@@ -1,5 +1,11 @@
 INCLUDES = $(all_includes) -I$(srcdir)/../../libktorrent
 METASOURCES = AUTO
+
+libktupnp_la_LDFLAGS = $(all_libraries)
+noinst_LTLIBRARIES = libktupnp.la
+libktupnp_la_SOURCES = soap.cpp upnpdescriptionparser.cpp upnpmcastsocket.cpp\
+	upnprouter.cpp
+
 kde_module_LTLIBRARIES = ktupnpplugin.la
 noinst_HEADERS = upnpplugin.h upnpmcastsocket.h upnprouter.h upnpprefpage.h \
 		upnpprefwidget.h upnpdescriptionparser.h soap.h
@@ -7,7 +13,7 @@ ktupnpplugin_la_SOURCES = upnpplugin.cpp upnpprefpage.cpp upnpwidget.ui \
 	upnpprefwidget.cpp upnppluginsettings.kcfgc
 
 # Libs needed by the plugin
-ktupnpplugin_la_LIBADD = ../../plugins/upnp/libktupnp.la \
+ktupnpplugin_la_LIBADD = libktupnp.la \
 	$(LIB_KDECORE) $(LIB_KPARTS) ../../libktorrent/libktorrent.la
 
 # LD flags for the plugin
@@ -24,7 +30,4 @@ kde_services_DATA = ktupnpplugin.desktop
 
 kde_kcfg_DATA = ktupnpplugin.kcfg
 
-libktupnp_la_LDFLAGS = $(all_libraries)
-noinst_LTLIBRARIES = libktupnp.la
-libktupnp_la_SOURCES = soap.cpp upnpdescriptionparser.cpp upnpmcastsocket.cpp\
-	upnprouter.cpp
+
