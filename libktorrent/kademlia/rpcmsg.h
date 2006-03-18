@@ -122,7 +122,15 @@ namespace dht
 		KNetwork::KInetSocketAddress origin;
 	};
 	
+	/**
+	 * Creates a message out of a BDictNode.
+	 * @param dict The BDictNode
+	 * @param srv The RPCServer
+	 * @return A newly created message or 0 upon error
+	 */
 	MsgBase* MakeRPCMsg(bt::BDictNode* dict,RPCServer* srv);
+	
+	MsgBase* MakeRPCMsgTest(bt::BDictNode* dict,dht::Method req_method);
 	
 	class ErrMsg : public MsgBase
 	{

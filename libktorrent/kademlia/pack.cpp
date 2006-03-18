@@ -56,7 +56,7 @@ namespace dht
 		Uint8 key[20];
 		memcpy(key,ptr,20);
 		
-		return KBucketEntry(KInetSocketAddress(KIpAddress(data+20,4),port),dht::Key(key));
+		return KBucketEntry(KInetSocketAddress(KIpAddress(ptr+20,4),port),dht::Key(key));
 	}
 
 }

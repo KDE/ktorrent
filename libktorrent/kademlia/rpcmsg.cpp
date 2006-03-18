@@ -102,27 +102,16 @@ namespace dht
 		
 		return msg;
 	}
-
-	MsgBase* ParseRsp(bt::BDictNode* dict,RPCServer* srv)
-	{
-		BDictNode*	args = dict->getDict(RSP);
-		if (!args || !args->getValue("id") || !dict->getValue(TID))
-		{
-			Out() << "ParseRsp : args || !args->getValue(id) || !dict->getValue(TID)" << endl;
-			return 0;
-		}
-			
-		Key id = Key(args->getValue("id")->data().toByteArray());
-		Uint8 mtid = (Uint8)dict->getValue(TID)->data().toByteArray().at(0);
-		// find the call
-		const RPCCall* c = srv->findCall(mtid);
-		if (!c)
-		{
-			Out() << "Cannot find RPC call" << endl;
-			return 0;
-		}
 	
-		switch (c->getMsgMethod())
+	MsgBase* ParseRsp(bt::BDictNode* dict,dht::Method req_method,Uint8 mtid)
+	{
+		BDictNode* args = dict->getDict(RSP);
+		if (!args || !args->getValue("id"))
+			return 0;
+		
+		Key id = Key(args->getValue("id")->data().toByteArray());
+		
+		switch (req_method)
 		{
 			case PING : 
 				return new PingRsp(mtid,id);
@@ -162,7 +151,6 @@ namespace dht
 								continue;
 							dbl.append(DBItem((Uint8*)vn->data().toByteArray().data()));
 						}
-						data = args->getValue("values")->data().toByteArray();
 						return new GetPeersRsp(mtid,id,dbl,token);
 					}
 					else if (args->getValue("nodes"))
@@ -186,6 +174,28 @@ namespace dht
 				return 0;
 		}
 		return 0;
+	}
+
+	MsgBase* ParseRsp(bt::BDictNode* dict,RPCServer* srv)
+	{
+		BDictNode*	args = dict->getDict(RSP);
+		if (!args || !dict->getValue(TID))
+		{
+			Out() << "ParseRsp : args || !args->getValue(id) || !dict->getValue(TID)" << endl;
+			return 0;
+		}
+			
+		
+		Uint8 mtid = (Uint8)dict->getValue(TID)->data().toByteArray().at(0);
+		// find the call
+		const RPCCall* c = srv->findCall(mtid);
+		if (!c)
+		{
+			Out() << "Cannot find RPC call" << endl;
+			return 0;
+		}
+	
+		return ParseRsp(dict,c->getMsgMethod(),mtid);
 	}
 	
 	MsgBase* ParseErr(bt::BDictNode* dict)
@@ -217,6 +227,28 @@ namespace dht
 		else if (vn->data().toString() == RSP)
 		{
 			return ParseRsp(dict,srv);
+		}
+		else if (vn->data().toString() == ERR)
+		{
+			return ParseErr(dict);
+		}
+		
+		return 0;
+	}
+	
+	MsgBase* MakeRPCMsgTest(bt::BDictNode* dict,dht::Method req_method)
+	{
+		BValueNode* vn = dict->getValue(TYP);
+		if (!vn)
+			return 0;
+		
+		if (vn->data().toString() == REQ)
+		{
+			return ParseReq(dict);
+		}
+		else if (vn->data().toString() == RSP)
+		{
+			return ParseRsp(dict,req_method,0);
 		}
 		else if (vn->data().toString() == ERR)
 		{

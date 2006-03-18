@@ -124,8 +124,9 @@ namespace kt
 		 * Construct a router.
 		 * @param server The name of the router
 		 * @param location The location of it's xml description file
+		 * @param verbose Print lots of debug info
 		 */
-		UPnPRouter(const QString & server,const KURL & location);	
+		UPnPRouter(const QString & server,const KURL & location,bool verbose = false);	
 		virtual ~UPnPRouter();
 		
 		/// Get the name  of the server
@@ -199,6 +200,7 @@ namespace kt
 		QValueList<UPnPService>::iterator findPortForwardingService();		
 		
 		bt::HTTPRequest* sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl);
+		bool verbose;
 	};
 
 }

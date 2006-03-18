@@ -17,70 +17,57 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTUPNPMCASTSOCKET_H
-#define KTUPNPMCASTSOCKET_H
+#include <kpushbutton.h>
+#include <klocale.h>
+#include <kapplication.h>
+#include <qtextbrowser.h>
+#include "upnptestapp.h"
+#include "mainwidget.h"
 
-#include <util/ptrmap.h>
-#include <kdatagramsocket.h>
-#include <util/constants.h>
-#include "upnprouter.h"
+using namespace bt;
+using namespace kt;
 
-using bt::Uint32;
-
-namespace kt
+UPnPTestApp::UPnPTestApp(QWidget *parent, const char *name)
+		: KMainWindow(parent, name)
 {
-	class UPnPRouter;
-	
-	/**
-	 * @author Joris Guisson
-	 * 
-	 * Socket used to discover UPnP devices. This class will keep track
-	 * of all discovered devices. 
-	*/
-	class UPnPMCastSocket : public KNetwork::KDatagramSocket
-	{
-	Q_OBJECT
-	public:
-		UPnPMCastSocket(bool verbose = false);
-		virtual ~UPnPMCastSocket();
-		
-		/// Get the number of routers discovered
-		Uint32 getNumDevicesDiscovered() const {return routers.count();}
-		
-		/// Find a router using it's server name
-		UPnPRouter* findDevice(const QString & name) {return routers.find(name);}
-		
-		/// Save all routers to a file (for convenience at startup)
-		void saveRouters(const QString & file);
-		
-		/// Load all routers from a file
-		void loadRouters(const QString & file);
-		
-	public slots:
-		/**
-		 * Try to discover a UPnP device on the network.
-		 * A signal will be emitted when a device is found.
-		 */
-		void discover();
-	
-	private slots:
-		void onReadyRead();
-		void onError(int);
-		
-	signals:
-		/**
-		 * Emitted when a router or internet gateway device is detected.
-		 * @param router The router
-		 */
-		void discovered(UPnPRouter* router);
-		
-	public:
-		UPnPRouter* parseResponse(const QByteArray & arr);
-	
-	private:	
-		bt::PtrMap<QString,UPnPRouter> routers;
-		bool verbose;
-	};
+	sock = new UPnPMCastSocket(true);
+	connect(sock,SIGNAL(discovered( UPnPRouter* )),this,SLOT(discovered( UPnPRouter* )));
+	mwnd = new MainWidget(this);
+	setCentralWidget(mwnd);
+	connect(mwnd->test_btn,SIGNAL(clicked()),this,SLOT(onTestBtn()));
+	connect(mwnd->close_btn,SIGNAL(clicked()),this,SLOT(onCloseBtn()));
+	bt::Log & lg = Out();
+	lg.addMonitor(this);
+	Out() << "UPnPTestApp started up !" << endl;
 }
 
-#endif
+
+UPnPTestApp::~UPnPTestApp()
+{
+	bt::Log & lg = Out();
+	lg.removeMonitor(this);
+	delete sock;
+}
+
+void UPnPTestApp::discovered(kt::UPnPRouter* router)
+{
+	router->forward(9999,UPnPRouter::TCP);
+}
+
+void UPnPTestApp::onTestBtn()
+{
+	sock->discover();
+}
+
+void UPnPTestApp::onCloseBtn()
+{
+	kapp->quit();
+}
+
+void UPnPTestApp::message(const QString& line)
+{
+	mwnd->output->append(line);
+}
+
+
+#include "upnptestapp.moc"

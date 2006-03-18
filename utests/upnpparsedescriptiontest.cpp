@@ -221,9 +221,9 @@ namespace utest
 		}
 		else
 		{
-		//	Out() << "Succesfully parsed the UPnP contents" << endl;
+			Out() << "Succesfully parsed the UPnP contents" << endl;
 			bt::Delete(fn,true);
-			router.debugPrintData();
+		//	router.debugPrintData();
 			return true;
 		}
 	}

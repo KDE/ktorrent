@@ -18,6 +18,7 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <util/log.h>
+#include <util/error.h>
 #include <torrent/globals.h>
 #include "testrunner.h"
 
@@ -49,7 +50,16 @@ namespace utest
 		{
 			Out() << "======================" << endl;
 			UnitTest* t = *i;
-			bool res = t->doTest();
+			bool res = false;
+			try
+			{
+				res = t->doTest();
+			}
+			catch (bt::Error & err)
+			{
+				Out() << "Caught Error : " << err.toString() << endl;
+				res = false;
+			}
 			bt::Out() << "Doing test " << t->getName() << " : " << (res ? "SUCCES" : "FAILURE") << endl;
 			if (res)
 				succes++;

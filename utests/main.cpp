@@ -24,6 +24,7 @@
 #include "testrunner.h"
 #include "upnpparsedescriptiontest.h"
 #include "upnpparseresponsetest.h"
+#include "dhtmsgparsetest.h"
 
 using namespace kt;
 using namespace bt;
@@ -38,6 +39,7 @@ int main(int argc,char** argv)
 	TestRunner tr;
 	tr.addTest(new UPnPParseDescriptionTest());
 	tr.addTest(new UPnPParseResponseTest());
+	tr.addTest(new DHTMsgParseTest());
 	tr.doAllTests();
 	Globals::cleanup();
 	return 0;

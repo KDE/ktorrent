@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <string.h>
 #include <util/log.h>
+#include <util/error.h>
 #include <torrent/globals.h>
 #include <torrent/bnode.h>
 #include <torrent/bdecoder.h>
@@ -59,10 +60,11 @@ namespace dht
 		QString tmp;
 		for (Uint32 i = 0;i < data.size();i++)
 		{
-			if (!QChar(data[i]).isPrint())
+			char c = QChar(data[i]).latin1();
+			if (!QChar(data[i]).isPrint() || c == 0)
 				tmp += '#';
 			else
-				tmp += data[i];
+				tmp += c;
 		}
 		
 		Out() << tmp << endl;
@@ -72,45 +74,49 @@ namespace dht
 	{
 		Out() << "RPCServer::readPacket" << endl;
 		KDatagramPacket pck = sock->receive();
-		
-		
 		PrintRawData(pck.data());
+		BNode* n = 0;
+		try
+		{
 		// read and decode the packet
-		BDecoder bdec(pck.data(),false);
-		
-		BNode* n = bdec.decode();
-		if (n->getType() != BNode::DICT)
-		{
-			delete n;
-			return;
-		}
-		
-		
-		
-		// try to make a RPCMsg of it
-		MsgBase* msg = MakeRPCMsg((BDictNode*)n,this);
-		if (!msg)
-		{
-			Out() << "Error parsing message : " << endl;
-			PrintRawData(pck.data());
-			return;
-		}
-		else
-		{
-			msg->setOrigin(pck.address());
-			msg->print();
-			msg->apply(dh_table);
-			// erase an existing call
-			if (msg->getType() == RSP_MSG && calls.contains(msg->getMTID()))
+			BDecoder bdec(pck.data(),false);	
+			n = bdec.decode();
+			if (n->getType() != BNode::DICT)
 			{
-				// delete the call, but first notify it off the response
-				RPCCall* c = calls.find(msg->getMTID());
-				c->response(msg);
-				calls.erase(msg->getMTID());
-				delete c;
+				delete n;
+				return;
 			}
-			delete msg;
+			
+			// try to make a RPCMsg of it
+			MsgBase* msg = MakeRPCMsg((BDictNode*)n,this);
+			if (!msg)
+			{
+				Out() << "Error parsing message : " << endl;
+				PrintRawData(pck.data());
+				return;
+			}
+			else
+			{
+				msg->setOrigin(pck.address());
+				msg->print();
+				msg->apply(dh_table);
+			// erase an existing call
+				if (msg->getType() == RSP_MSG && calls.contains(msg->getMTID()))
+				{
+				// delete the call, but first notify it off the response
+					RPCCall* c = calls.find(msg->getMTID());
+					c->response(msg);
+					calls.erase(msg->getMTID());
+					delete c;
+				}
+				delete msg;
+			}
 		}
+		catch (bt::Error & err)
+		{
+			Out() << "Error happened during parsing : " << err.toString() << endl;
+		}
+		delete n;
 	}
 	
 	

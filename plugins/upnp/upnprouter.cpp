@@ -106,7 +106,7 @@ namespace kt
 	
 	///////////////////////////////////////
 	
-	UPnPRouter::UPnPRouter(const QString & server,const KURL & location) : server(server),location(location)
+	UPnPRouter::UPnPRouter(const QString & server,const KURL & location,bool verbose) : server(server),location(location),verbose(verbose)
 	{
 	}
 	
@@ -137,7 +137,8 @@ namespace kt
 			}
 			else
 			{
-				debugPrintData();
+				if (verbose)
+					debugPrintData();
 			}
 			// and remove the temp file
 			KIO::NetAccess::removeTempFile(target);
@@ -196,6 +197,8 @@ namespace kt
 	
 	void UPnPRouter::forward(Uint16 port,Protocol prot)
 	{
+		if (verbose)
+			Out() << "Forwarding port " << port << " (" << (prot == UDP ? "UDP" : "TCP") << ")" << endl;
 		// first find the right service
 		QValueList<UPnPService>::iterator i = findPortForwardingService();
 		if (i == services.end())
@@ -251,6 +254,7 @@ namespace kt
 	
 	void UPnPRouter::undoForward(Uint16 port,Protocol prot)
 	{
+		Out() << "Undoing forward of port " << port << " (" << (prot == UDP ? "UDP" : "TCP") << ")" << endl;
 		// first find the right service
 		QValueList<UPnPService>::iterator i = findPortForwardingService();
 		if (i == services.end())
@@ -332,6 +336,8 @@ namespace kt
 
 	void UPnPRouter::onReplyOK(bt::HTTPRequest* r,const QString &)
 	{
+		if (verbose)
+			Out() << "UPnPRouter : OK" << endl;
 		if (reqs.contains(r))
 		{
 			(*reqs[r]).pending = false;
@@ -343,6 +349,8 @@ namespace kt
 	
 	void UPnPRouter::onReplyError(bt::HTTPRequest* r,const QString &)
 	{
+		if (verbose)
+			Out() << "UPnPRouter : Error" << endl;
 		if (reqs.contains(r))
 		{
 			fwds.erase(reqs[r]);

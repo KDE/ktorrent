@@ -19,39 +19,50 @@
  ***************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
-#include <libktorrent/util/log.h>
-#include <libktorrent/torrent/globals.h>
-#include <plugins/upnp/upnprouter.h>
-#include <plugins/upnp/upnpdescriptionparser.h>
-#include <plugins/upnp/upnpmcastsocket.h>
+#include <klocale.h>
+#include <kaboutdata.h>
+#include <kapplication.h>
+#include <kcmdlineargs.h>
+
+
+#include "upnptestapp.h"
 
 using namespace kt;
 using namespace bt;
 
-void help()
-{
-	Out() << "Usage : ktupnptest <textfile>" << endl;
-	exit(0);
-}
+static const char description[] =
+		I18N_NOOP("A KDE KPart Application");
 
-static const char* test_ps = "M-SEARCH * HTTP/1.1\r\n"
-		"HOST: 239.255.255.250:1900\r\n"
-		"ST:urn:schemas-upnp-org:device:InternetGatewayDevice:1\r\n"
-		"MAN:\"ssdp:discover\"\r\n"
-		"MX:3\r\n"
-		"HTTP/1.1 200 OK\r\n"
-		"CACHE-CONTROL: max-age=1800\r\n"
-		"DATE: Mon, 13 Mar 2006 19:55:10 GMT \r\n"
-		"EXT:\r\n"
-		"LOCATION: http://192.168.1.1:52869/gatedesc.xml\r\n"
-		"SERVER: Linux/2.4.17_mvl21-malta-mips_fp_le, UPnP/1.0, Intel SDK for UPnP devices /1.2\r\n"
-		"ST: urn:schemas-upnp-org:device:InternetGatewayDevice:1\r\n"
-		"USN: uuid:75802409-bccb-40e7-8e6c-fa095ecce13e::urn:schemas-upnp-org:device:InternetGatewayDevice:1\r\n\r\n";
+static const char version[] = "1.3dev";
+
+static KCmdLineOptions options[] =
+{
+//    { "+[URL]", I18N_NOOP( "Document to open" ), 0 },
+	KCmdLineLastOption
+};
+
+
+
 
 int main(int argc,char** argv)
 {
 	Globals::instance().setDebugMode(true);
 	Globals::instance().initLog("ktupnptest.log");
+	KAboutData about("ktupnptest", I18N_NOOP("KTUPnPTest"), version, description,
+					 KAboutData::License_GPL, "(C) 2005 Joris Guisson", 0,
+					 "http://ktorrent.org/");
+	KCmdLineArgs::init(argc, argv,&about);
+	KCmdLineArgs::addCmdLineOptions( options );
+	KApplication app;
+	UPnPTestApp mwnd;
+
+	app.setMainWidget(&mwnd);
+	mwnd.show();
+	app.exec();
+	Globals::cleanup();
+	return 0;
+	
+	/*
 	if (argc >= 2)
 	{
 		kt::UPnPRouter router(QString::null,"http://foobar.com");
@@ -81,7 +92,6 @@ int main(int argc,char** argv)
 	{
 		Out() << "Failed to parse test_ps" << endl;
 	}
+	*/
 	
-	Globals::cleanup();
-	return 0;
 }

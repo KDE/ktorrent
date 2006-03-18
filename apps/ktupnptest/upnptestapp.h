@@ -17,70 +17,41 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef KTUPNPMCASTSOCKET_H
-#define KTUPNPMCASTSOCKET_H
+#ifndef UPNPTESTAPP_H
+#define UPNPTESTAPP_H
 
-#include <util/ptrmap.h>
-#include <kdatagramsocket.h>
-#include <util/constants.h>
-#include "upnprouter.h"
+#include <kmainwindow.h>
+#include <libktorrent/util/log.h>
+#include <libktorrent/torrent/globals.h>
+#include <plugins/upnp/upnprouter.h>
+#include <plugins/upnp/upnpdescriptionparser.h>
+#include <plugins/upnp/upnpmcastsocket.h>
+#include <interfaces/logmonitorinterface.h>
 
-using bt::Uint32;
+class MainWidget;
 
-namespace kt
+using kt::UPnPRouter;
+
+/**
+	@author Joris Guisson <joris.guisson@gmail.com>
+*/
+class UPnPTestApp : public KMainWindow, public kt::LogMonitorInterface
 {
-	class UPnPRouter;
-	
-	/**
-	 * @author Joris Guisson
-	 * 
-	 * Socket used to discover UPnP devices. This class will keep track
-	 * of all discovered devices. 
-	*/
-	class UPnPMCastSocket : public KNetwork::KDatagramSocket
-	{
 	Q_OBJECT
-	public:
-		UPnPMCastSocket(bool verbose = false);
-		virtual ~UPnPMCastSocket();
-		
-		/// Get the number of routers discovered
-		Uint32 getNumDevicesDiscovered() const {return routers.count();}
-		
-		/// Find a router using it's server name
-		UPnPRouter* findDevice(const QString & name) {return routers.find(name);}
-		
-		/// Save all routers to a file (for convenience at startup)
-		void saveRouters(const QString & file);
-		
-		/// Load all routers from a file
-		void loadRouters(const QString & file);
-		
-	public slots:
-		/**
-		 * Try to discover a UPnP device on the network.
-		 * A signal will be emitted when a device is found.
-		 */
-		void discover();
+public:
+	UPnPTestApp(QWidget *parent = 0, const char *name = 0);
+	virtual ~UPnPTestApp();
 	
-	private slots:
-		void onReadyRead();
-		void onError(int);
-		
-	signals:
-		/**
-		 * Emitted when a router or internet gateway device is detected.
-		 * @param router The router
-		 */
-		void discovered(UPnPRouter* router);
-		
-	public:
-		UPnPRouter* parseResponse(const QByteArray & arr);
+	virtual void message(const QString& line);
 	
-	private:	
-		bt::PtrMap<QString,UPnPRouter> routers;
-		bool verbose;
-	};
-}
+private slots:
+	void discovered(UPnPRouter* router);
+	void onTestBtn();
+	void onCloseBtn();
+	
+private:
+	kt::UPnPMCastSocket* sock;
+	MainWidget* mwnd;
+};
 
 #endif
