@@ -70,6 +70,12 @@ namespace kt
 				"MX:3\r\n"
 				"\r\n\0";
 		
+		if (verbose)
+		{
+			Out() << "Sending : " << endl;
+			Out() << data << endl;
+		}
+		
 		KDatagramSocket::send(KNetwork::KDatagramPacket(data,strlen(data),KInetSocketAddress("239.255.255.250",1900)));
 	}
 	
@@ -78,6 +84,12 @@ namespace kt
 		KNetwork::KDatagramPacket p = KDatagramSocket::receive();
 		if (p.isNull())
 			return;
+		
+		if (verbose)
+		{
+			Out() << "Received : " << endl;
+			Out() << QString(p.data()) << endl;
+		}
 		
 		// try to make a router of it
 		UPnPRouter* r = parseResponse(p.data());

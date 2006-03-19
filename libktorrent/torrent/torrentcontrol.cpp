@@ -32,6 +32,7 @@
 #include <interfaces/functions.h>
 #include <migrate/ccmigrate.h>
 #include <migrate/cachemigrate.h>
+#include <kademlia/dht.h>
 #include "downloader.h"
 #include "uploader.h"
 #include "tracker.h"
@@ -576,7 +577,7 @@ namespace bt
 		if (!stats.completed)
 			p->getPacketWriter().sendInterested();
 		if (p->isDHTSupported())
-			p->getPacketWriter().sendPort(4444);
+			p->getPacketWriter().sendPort(Globals::instance().getDHT().getPort());
 		
 		if (tmon)
 			tmon->peerAdded(p);

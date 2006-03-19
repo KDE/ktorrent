@@ -175,7 +175,10 @@ namespace bt
 		enc.write("piece length"); enc.write((Uint64)chunk_size);
 		enc.write("pieces"); savePieces(enc);
 		if (priv)
-			enc.write("private"); enc.write((Uint64)1);
+		{
+			enc.write("private"); 
+			enc.write((Uint64)1);
+		}
 		enc.end();
 	}
 

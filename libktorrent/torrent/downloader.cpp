@@ -336,6 +336,7 @@ namespace bt
 			Out() << "Hash verification error on chunk "  << c->getIndex() << endl;
 			Out() << "Is        : " << h << endl;
 			Out() << "Should be : " << tor.getHash(c->getIndex()) << endl;
+			
 			Uint32 pid;
 			if (cd->getOnlyDownloader(pid))
 			{

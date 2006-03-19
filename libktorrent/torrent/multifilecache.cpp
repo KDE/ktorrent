@@ -199,9 +199,6 @@ namespace bt
 			return;
 		}
 		
-		// multiple files, so allocate the chunk
-		c->allocate();
-		
 		Uint8* data = new Uint8[c->getSize()];
 		Uint64 read = 0; // number of bytes read
 		for (Uint32 i = 0;i < tflist.count();i++)
@@ -229,7 +226,7 @@ namespace bt
 			
 		
 			// read part of data
-			fd->read(c->getData() + read,to_read,off);
+			fd->read(data + read,to_read,off);
 			read += to_read;
 		}
 		c->setData(data,Chunk::BUFFERED);
