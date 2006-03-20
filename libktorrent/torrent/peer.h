@@ -224,6 +224,13 @@ namespace bt
 		 */
 		void rerunChoker();
 		
+		/**
+		 * Got a port packet from this peer.
+		 * @param ip The IP
+		 * @param port The port
+		 */
+		void gotPortPacket(const QString & ip,Uint16 port);
+		
 	private:
 		void readPacket();
 		void handlePacket(Uint32 len);

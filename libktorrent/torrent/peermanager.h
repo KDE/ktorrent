@@ -167,6 +167,7 @@ namespace bt
 		void onBitSetRecieved(const BitSet & bs);
 		void onRerunChoker();
 		
+		
 	signals:
 		void newPeer(Peer* p);
 		void peerKilled(Peer* p);

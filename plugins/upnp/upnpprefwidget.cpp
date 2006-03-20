@@ -23,6 +23,7 @@
 #include <torrent/udptrackersocket.h>
 #include <torrent/globals.h>
 #include <torrent/server.h>
+#include <kademlia/dht.h>
 #include "upnpprefwidget.h"
 #include <util/log.h>
 #include <torrent/globals.h>
@@ -68,6 +69,7 @@ namespace kt
 			// forward both ports
 			r->forward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
 			r->forward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
+			r->forward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
 			def_router = r;
 		}
 	}
@@ -84,6 +86,7 @@ namespace kt
 		
 		r->forward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
 		r->forward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
+		r->forward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
 		QString def_dev = UPnPPluginSettings::defaultDevice();
 		if (def_dev != r->getServer())
 		{
@@ -112,6 +115,7 @@ namespace kt
 		
 		r->undoForward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
 		r->undoForward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
+		r->undoForward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
 		QString def_dev = UPnPPluginSettings::defaultDevice();
 		if (def_dev == r->getServer())
 		{

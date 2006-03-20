@@ -27,7 +27,7 @@
 namespace bt 
 {
 
-	HTTPRequest::HTTPRequest(const QString & hdr,const QString & payload,const QString & host,Uint16 port) : hdr(hdr),payload(payload)
+	HTTPRequest::HTTPRequest(const QString & hdr,const QString & payload,const QString & host,Uint16 port,bool verbose) : hdr(hdr),payload(payload),verbose(verbose)
 	{
 		sock = new KNetwork::KStreamSocket(host,QString::number(port),this,0);
 		sock->enableRead(true);
@@ -52,9 +52,13 @@ namespace bt
 		{
 			payload = payload.replace("$LOCAL_IP",sock->localAddress().nodeName());
 			hdr = hdr.replace("$CONTENT_LENGTH",QString::number(payload.length()));
+			
 			QString req = hdr + payload;
-		//	Out() << "Sending " << endl;
-		//	Out() << req << endl;
+			if (verbose)
+			{
+				Out() << "Sending " << endl;
+				Out() << hdr << payload << endl;
+			}
 			sock->writeBlock(req.ascii(),req.length());
 		}
 		else
@@ -72,8 +76,11 @@ namespace bt
 		QString strdata((const char*)data);
 		QStringList sl = QStringList::split("\r\n",strdata,false);	
 		
-	//	Out() << "Got reply : " << endl;
-	//	Out() << strdata << endl;
+		if (verbose)
+		{
+			Out() << "Got reply : " << endl;
+			Out() << strdata << endl;
+		}
 		
 		if (sl.first().contains("HTTP") && sl.first().contains("200"))
 		{

@@ -573,10 +573,13 @@ namespace bt
 
 	void TorrentControl::onNewPeer(Peer* p)
 	{
+		connect(p,SIGNAL(gotPortPacket( const QString&, Uint16 )),
+				this,SLOT(onPortPacket( const QString&, Uint16 )));
 		p->getPacketWriter().sendBitSet(cman->getBitSet());
 		if (!stats.completed)
 			p->getPacketWriter().sendInterested();
-		if (p->isDHTSupported())
+		
+		if (p->isDHTSupported() && !stats.priv_torrent)
 			p->getPacketWriter().sendPort(Globals::instance().getDHT().getPort());
 		
 		if (tmon)
@@ -585,6 +588,8 @@ namespace bt
 
 	void TorrentControl::onPeerRemoved(Peer* p)
 	{
+		disconnect(p,SIGNAL(gotPortPacket( const QString&, Uint16 )),
+				this,SLOT(onPortPacket( const QString&, Uint16 )));
 		if (tmon)
 			tmon->peerRemoved(p);
 	}
@@ -1000,6 +1005,12 @@ namespace bt
 					return i18n("Allocating diskspace");
 		}
 		return QString::null;
+	}
+	
+	void TorrentControl::onPortPacket(const QString & ip,Uint16 port)
+	{
+		if (Globals::instance().getDHT().isRunning() && !stats.priv_torrent)
+			Globals::instance().getDHT().portRecieved(ip,port);
 	}
 
 }

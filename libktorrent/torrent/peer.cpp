@@ -26,7 +26,6 @@
 #include <qsocketdevice.h> 
 #endif
 
-#include <kademlia/dht.h>
 #include <util/log.h>
 #include <util/functions.h>
 
@@ -315,8 +314,7 @@ namespace bt
 				{
 					Uint16 port = ReadUint16(tmp_buf,1);
 					Out() << "Got PORT packet : " << port << endl;
-					if (Globals::instance().getDHT().isRunning())
-						Globals::instance().getDHT().portRecieved(getIPAddresss(),port);
+					gotPortPacket(getIPAddresss(),port);
 				}
 				break;
 		}

@@ -188,6 +188,7 @@ namespace bt
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));
 		connect(peer,SIGNAL(rerunChoker()),this,SLOT(onRerunChoker()));
+		
 		peer_list.append(peer);
 		peer_map.insert(peer->getID(),peer);
 		newPeer(peer);
@@ -209,6 +210,7 @@ namespace bt
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));
 		connect(peer,SIGNAL(rerunChoker()),this,SLOT(onRerunChoker()));
+		
 		peer_list.append(peer);
 		peer_map.insert(peer->getID(),peer);
 			
@@ -335,5 +337,7 @@ namespace bt
 			available_chunks.set(i,cnt->get(i) > 0);
 		}
 	}
+	
+	
 }
 #include "peermanager.moc"

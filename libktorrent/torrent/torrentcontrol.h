@@ -198,6 +198,7 @@ namespace bt
 		void onPeerRemoved(Peer* p);
 		void doChoking();
 		void onIOError(const QString & msg);
+		void onPortPacket(const QString & ip,Uint16 port);
 
 		/**
 		 * An error occured during the update of the tracker.

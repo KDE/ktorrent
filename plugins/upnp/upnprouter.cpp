@@ -280,6 +280,18 @@ namespace kt
 		QString action = "DeletePortMapping";
 		QString comm = SOAP::createCommand(action,s.servicetype,args);
 		sendSoapQuery(comm,s.servicetype + "#" + action,s.controlurl);
+		QValueList<Forwarding>::iterator itr = fwds.begin();
+		while (itr != fwds.end())
+		{
+			Forwarding & wd = *itr;
+			if (wd.port == port && wd.prot == prot)
+			{
+				fwds.erase(itr);
+				break;
+			}
+			itr++;
+		}
+		updateGUI();
 	}
 	
 	void UPnPRouter::isPortForwarded(Uint16 port,Protocol prot)
@@ -322,7 +334,7 @@ namespace kt
 				"\r\n").arg(controlurl).arg(location.host()).arg(location.port()).arg(soapact);
 
 		
-		HTTPRequest* r = new HTTPRequest(http_hdr,query,location.host(),location.port());
+		HTTPRequest* r = new HTTPRequest(http_hdr,query,location.host(),location.port(),verbose);
 		connect(r,SIGNAL(replyError(bt::HTTPRequest* ,const QString& )),
 				this,SLOT(onReplyError(bt::HTTPRequest* ,const QString& )));
 		connect(r,SIGNAL(replyOK(bt::HTTPRequest* ,const QString& )),

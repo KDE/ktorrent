@@ -93,23 +93,6 @@ namespace dht
 	void AnnounceTask::update()
 	{
 		Out() << "AnnounceTask::update" << endl;
-		// go over the todo list and send get_peers requests
-		// until we have nothing left
-		while (!todo.empty() && canDoRequest())
-		{
-			KBucketEntry e = todo.first();
-			// only send a findNode if we haven't allrready visited the node
-			if (!visited.contains(e))
-			{
-				// send a findNode to the node
-				GetPeersReq* gpr = new GetPeersReq(node->getOurID(),info_hash);
-				gpr->setOrigin(e.getAddress());
-				rpcCall(gpr);
-				visited.append(e);
-			}
-			// remove the entry from the todo list
-			todo.pop_front();
-		}
 		
 		while (!answered.empty() && canDoRequest())
 		{
@@ -121,6 +104,24 @@ namespace dht
 				rpcCall(anr);
 				visited.append(e);
 			}
+			answered.pop_front();
+		}
+		
+		// go over the todo list and send get_peers requests
+		// until we have nothing left
+		while (!todo.empty() && canDoRequest())
+		{
+			KBucketEntry e = todo.first();
+			// onLy send a findNode if we haven't allrready visited the node
+			if (!visited.contains(e))
+			{
+				// send a findNode to the node
+				GetPeersReq* gpr = new GetPeersReq(node->getOurID(),info_hash);
+				gpr->setOrigin(e.getAddress());
+				rpcCall(gpr);
+				visited.append(e);
+			}
+			// remove the entry from the todo list
 			todo.pop_front();
 		}
 		

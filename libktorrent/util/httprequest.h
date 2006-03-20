@@ -45,8 +45,10 @@ namespace bt
 		 * @param payload The payload
 		 * @param host The host
 		 * @param port THe port
+		 * @param verbose Print traffic to the log
 		 */
-		HTTPRequest(const QString & hdr,const QString & payload,const QString & host,Uint16 port);
+		HTTPRequest(const QString & hdr,const QString & payload,const QString & host,
+					Uint16 port,bool verbose);
 		virtual ~HTTPRequest();
 		
 		/**
@@ -84,6 +86,7 @@ namespace bt
 	private:
 		KNetwork::KStreamSocket* sock;
 		QString hdr,payload;
+		bool verbose;
 	};
 
 }

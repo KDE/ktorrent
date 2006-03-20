@@ -152,6 +152,12 @@ bool PrefPageOne::apply()
 	Settings::setMaxDownloadRate(dp->max_download_rate->value());
 	Settings::setKeepSeeding(dp->keep_seeding->isChecked());
 	Settings::setPort(dp->port->value());
+	if (Settings::dhtSupport() && dp->udp_tracker_port->value() == Settings::dhtPort())
+	{
+		QString msg = i18n("The DHT port needs to be different then the UDP tracker port !");
+		KMessageBox::error(0,msg,i18n("Error"));
+		return false;
+	}
 	Settings::setUdpTrackerPort(dp->udp_tracker_port->value());
 	return true;
 }
@@ -235,6 +241,14 @@ bool PrefPageTwo::apply()
 	
 	Settings::setMemoryUsage(gp->mem_usage->currentItem());
 	Settings::setGuiUpdateInterval(gp->gui_interval->currentItem());
+	
+	if (gp->use_dht->isChecked() && gp->dht_port->value() == Settings::udpTrackerPort())
+	{
+		QString msg = i18n("The DHT port needs to be different then the UDP tracker port !");
+		KMessageBox::error(0,msg,i18n("Error"));
+		return false;
+	}
+	
 	Settings::setDhtSupport(gp->use_dht->isChecked());
 	Settings::setDhtPort(gp->dht_port->value());
 	return true;
