@@ -100,7 +100,7 @@ namespace bt
 		/**
 		 * Preallocate diskspace for all files
 		 */
-		void preallocateDiskSpace(PreallocationThread* pt);
+		void preallocateDiskSpace();
 		
 		/**
 		 * Open the necessary files when the download gets started.

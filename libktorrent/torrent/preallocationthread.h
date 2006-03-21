@@ -22,6 +22,7 @@
 
 #include <qstring.h>
 #include <qthread.h>
+#include <qmap.h>
 #include <qmutex.h>
 #include <util/constants.h>
 
@@ -43,11 +44,19 @@ namespace bt
 		QString error_msg;
 		Uint64 bytes_written;
 		mutable QMutex mutex;
+		QMap<QString,bt::Uint64> todo;
 	public:
 		PreallocationThread(TorrentControl* tc);
 		virtual ~PreallocationThread();
 
 		virtual void run();
+		
+		/**
+		 * Add a file
+		 * @param path The path
+		 * @param total_size Total size the file must be
+		 */
+		void addFile(const QString & path,Uint64 total_size);
 		
 		/**
 		 * Stop the thread. 
@@ -74,6 +83,8 @@ namespace bt
 		
 		/// Get the number of bytes written
 		Uint64 bytesWritten();
+	private:
+		bool expand(const QString & path,Uint64 max_size);
 	};
 
 }

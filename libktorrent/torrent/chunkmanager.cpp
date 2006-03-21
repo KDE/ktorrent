@@ -570,9 +570,9 @@ namespace bt
 		return cache->getOutputPath();
 	}
 	
-	void ChunkManager::preallocateDiskSpace(PreallocationThread* pt)
+	void ChunkManager::preallocateDiskSpace()
 	{
-		cache->preallocateDiskSpace(pt);
+		cache->preallocateDiskSpace();
 	}
 }
 

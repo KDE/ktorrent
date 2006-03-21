@@ -26,7 +26,7 @@ namespace bt
 	class Torrent;
 	class TorrentFile;
 	class Chunk;
-	class PreallocationThread;
+
 
 	/**
 	 * @author Joris Guisson
@@ -103,7 +103,7 @@ namespace bt
 		/**
 		 * Preallocate diskspace for all files
 		 */
-		virtual void preallocateDiskSpace(PreallocationThread* pt) = 0;
+		virtual void preallocateDiskSpace() = 0;
 	};
 
 }

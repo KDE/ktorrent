@@ -144,12 +144,12 @@ namespace bt
 		}
 	}
 	
-	void SingleFileCache::preallocateDiskSpace(PreallocationThread* pt)
+	void SingleFileCache::preallocateDiskSpace()
 	{
 		if (!fd)
 			open();
 		
-		fd->preallocate(pt);
+		fd->preallocate();
 	}
 
 }

@@ -26,7 +26,7 @@
 
 namespace bt
 {
-	class PreallocationThread;
+
 	
 	/**
 	 * Interface which classes must implement to be able to map something from a CacheFile
@@ -119,7 +119,7 @@ namespace bt
 		/**
 		 * Preallocate disk space
 		 */
-		void preallocate(PreallocationThread* pt);
+		void preallocate();
 		
 	private:
 		void growFile(Uint64 to_write);

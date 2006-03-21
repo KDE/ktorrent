@@ -34,7 +34,6 @@
 #include <kfileitem.h>
 #include <util/array.h>
 #include <torrent/globals.h>
-#include <torrent/preallocationthread.h>
 #include <interfaces/functions.h>
 #include <kapplication.h>
 #include "log.h"
@@ -375,61 +374,31 @@ namespace bt
 		//Out() << "Temporarely closed " << path << endl;
 	}
 	
-	void CacheFile::preallocate(PreallocationThread* pt)
+	void CacheFile::preallocate()
 	{
 		Out() << "Preallocating file " << path << " (" << max_size << " bytes)" << endl;
-		if (max_size - file_size == 0)
-			return;
-		try
+		if (fd == -1)
 		{
-			
-			if (fd == -1)
-			{
-			//	Out() << "Reopening " << path << endl;
-				openFile();
-			}
-			
-			const Uint64 ONE_MB = 1024;
-			Array<Uint8> buf(ONE_MB);
-			buf.fill(0);
-			
-			Uint32 todo = max_size - file_size;
-			while (todo > 0 && !pt->isStopped())
-			{
-				if (todo < ONE_MB)
-				{
-					if (::write(fd,buf,todo) != todo)
-					{
-						if (errno == ENOSPC)
-							throw Error(i18n("Not enough diskspace for torrent"));
-						else
-							throw Error(i18n("Cannot preallocate file %1").arg(path));
-					}
-					
-					file_size += todo;
-					pt->written(todo);
-					todo = 0;
-				}
-				else
-				{
-					if (::write(fd,buf,ONE_MB) != ONE_MB)
-					{
-						if (errno == ENOSPC)
-							throw Error(i18n("Not enough diskspace for torrent"));
-						else
-							throw Error(i18n("Cannot preallocate file %1").arg(path));
-					}
-					todo -= ONE_MB;
-					file_size += ONE_MB;
-					pt->written(ONE_MB);
-				}
-			}
-			//fsync(fd);
+			openFile();
 		}
-		catch (Error & err)
+#if HAVE_FTRUNCATE64
+		if (ftruncate64(fd,max_size) == -1)
+#else
+		if (ftruncate(fd,max_size) == -1)
+#endif
 		{
-			pt->setErrorMsg(err.toString());
+			throw Error(i18n("Cannot preallocate diskspace : %s").arg(strerror(errno)));
 		}
+#if HAVE_STAT64
+		struct stat64 sb;
+		fstat64(fd,&sb);
+		file_size = sb.st_size;
+#else
+		struct stat sb;
+		fstat(fd,&sb);
+		file_size = sb.st_size;
+#endif
+		Out() << "file_size = " << file_size << endl;
 	}
 
 }

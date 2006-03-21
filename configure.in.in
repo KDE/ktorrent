@@ -8,8 +8,9 @@ AC_SYS_LARGEFILE
 AC_FUNC_FSEEKO
 AC_CHECK_FUNCS(fseeko64, ktorrent_cv_func_fseek64=yes, ktorrent_cv_func_fseek64=no)
 AC_CHECK_FUNCS(ftello64, ktorrent_cv_func_ftell64=yes, ktorrent_cv_func_ftell64=no)
-AC_CHECK_FUNCS(fstat64, ktorrent_cv_func_fstat64=yes, ktorrent_cv_func_ftell64=no)
-AC_CHECK_FUNCS(stat64, ktorrent_cv_func_stat64=yes, ktorrent_cv_func_ftell64=no)
+AC_CHECK_FUNCS(fstat64, ktorrent_cv_func_fstat64=yes, ktorrent_cv_func_fstat64=no)
+AC_CHECK_FUNCS(stat64, ktorrent_cv_func_stat64=yes, ktorrent_cv_func_stat64=no)
+AC_CHECK_FUNCS(ftruncate64, ktorrent_cv_func_ftruncate64=yes, ktorrent_cv_func_ftruncate64=no)
 
 if test "$ktorrent_cv_func_fseek64" = yes -a "$ktorrent_cv_func_ftell64" = yes; then
     AC_DEFINE(HAVE_FSEEKO64, 1)
@@ -22,6 +23,13 @@ if test "$ktorrent_cv_func_fstat64" = yes -a "$ktorrent_cv_func_stat64" = yes ; 
 else
 	AC_DEFINE(HAVE_STAT64,0)
 fi
+
+if test "$ktorrent_cv_func_ftruncate64" = yes ; then
+	AC_DEFINE(HAVE_FTRUNCATE64,1)
+else
+	AC_DEFINE(HAVE_FTRUNCATE64,0)
+fi
+
 
 KDE_INIT_DOXYGEN([The API Reference], [Version $VERSION])
 

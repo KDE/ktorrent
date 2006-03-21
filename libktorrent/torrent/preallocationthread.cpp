@@ -17,7 +17,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <errno.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
 #include <util/log.h>
+#include <qfile.h>
+#include <klocale.h>
 #include "preallocationthread.h"
 #include "torrentcontrol.h"
 #include "globals.h"
@@ -33,10 +41,50 @@ namespace bt
 
 	PreallocationThread::~PreallocationThread()
 	{}
+	
+	void PreallocationThread::addFile(const QString & path,Uint64 total_size)
+	{
+		mutex.lock();
+		todo.insert(path,total_size);
+		mutex.unlock();
+	}
+	
+	bool PreallocationThread::expand(const QString & path,Uint64 max_size)
+	{
+		int fd = ::open(QFile::encodeName(path),O_WRONLY | O_LARGEFILE);
+		if (ftruncate(fd,max_size) == -1)
+		{
+			setErrorMsg(i18n("Cannot preallocate diskspace : %1").arg(strerror(errno)));
+			::close(fd);
+			return false;
+		}
+		::close(fd);
+		return true;
+	}
 
 	void PreallocationThread::run()
 	{
-		tc->preallocateDiskSpace(this);
+		
+		
+		// start working on them
+		while (!todo.empty() && !stopped)
+		{
+			QString path;
+			Uint64 max_size = 0;
+			
+			// get the first from the map
+			mutex.lock();
+			QMap<QString,bt::Uint64>::iterator i = todo.begin();
+			path = i.key();
+			max_size = i.data();
+			todo.erase(i);
+			mutex.unlock();
+			
+			// expand it
+			if (!expand(path,max_size))
+				return;
+		}
+		
 		Out() << "PreallocationThread::run finished" << endl;
 	}
 	

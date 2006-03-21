@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>apps/ktupnptest/ktupnptest</activetarget>
+      <activetarget>libktorrent/util/libutil.la</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>

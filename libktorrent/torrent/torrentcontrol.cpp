@@ -56,7 +56,6 @@
 #include "uploadcap.h"
 #include "queuemanager.h"
 #include "statsfile.h"
-#include "preallocationthread.h"
 #include "announcelist.h"
 
 using namespace kt;
@@ -90,7 +89,6 @@ namespace bt
 		priority = 0;
 		maxShareRatio = 0.00f;
 		custom_output_name = false;
-		prealloc_thread = 0;
 		updateStats();
 	}
 
@@ -115,36 +113,6 @@ namespace bt
 
 	void TorrentControl::update()
 	{
-		// no updates during preallocation
-		if (prealloc_thread && prealloc_thread->running())
-		{
-			return;
-		}
-		
-		// if the prealloc_thread has finished start the torrent
-		if (prealloc_thread && !prealloc_thread->running())
-		{
-			Out() << "Preallocation thread finished, starting download" << endl;
-			if (prealloc_thread->errorHappened())
-			{
-				QString t = prealloc_thread->errorMessage();
-				delete prealloc_thread;
-				prealloc_thread = 0;
-				onIOError(t);
-				prealloc = true;
-			}
-			else
-			{
-				delete prealloc_thread;
-				prealloc_thread = 0;
-				stats.status = kt::NOT_STARTED;
-				stats.running = false;
-				stats.started = false;
-				start();
-			}
-			return;
-		}
-		
 		// do not update during critical operation mode
 		if (Globals::instance().inCriticalOperationMode())
 			return;
@@ -256,10 +224,6 @@ namespace bt
 		stats.stopped_by_error = false;
 		io_error = false;
 		
-		// if the thread is running we cannot start
-		if (prealloc_thread)
-			return;
-		
 		
 		try
 		{
@@ -271,20 +235,19 @@ namespace bt
 			throw;
 		}
 		
-		// start the preallocation thread if necesarry
 		if (prealloc)
 		{
-			if (!prealloc_thread)
+			Out() << "Prealocating diskspace" << endl;
+			try
 			{
-				Out() << "Prealocating diskspace" << endl;
-				stats.status = kt::ALLOCATING_DISKSPACE;
-				prealloc_thread = new PreallocationThread(this);
+				cman->preallocateDiskSpace();
 				prealloc = false;
-				prealloc_thread->start(QThread::LowestPriority);
-				stats.running = true;
-				stats.started = true;
 			}
-			return;
+			catch (Error & e)
+			{
+				onIOError(e.toString());
+				throw;
+			}
 		}
 		
 		pman->start();
@@ -318,20 +281,6 @@ namespace bt
 
 	void TorrentControl::stop(bool user)
 	{
-		// first stop the prealloc_thread if running
-		if (prealloc_thread)
-		{
-			Out() << "Stopping preallocation thread" << endl;
-			prealloc_thread->stop();
-			// wait for thread to finish
-			prealloc_thread->wait();
-			if (prealloc_thread->running())
-				prealloc_thread->terminate();
-			delete prealloc_thread;
-			prealloc_thread = 0;
-			prealloc = true;
-		}
-		
 		QDateTime now = QDateTime::currentDateTime();
 		if(!stats.completed)
 			running_time_dl += time_started_dl.secsTo(now);
@@ -984,13 +933,7 @@ namespace bt
 		
 		return false;
 	}
-	
-	void TorrentControl::preallocateDiskSpace(PreallocationThread* pt)
-	{
-		cman->preallocateDiskSpace(pt);
-		Out() << "Finished preallocation" << endl;
-		stats.status = kt::DOWNLOADING;
-	}
+
 	
 	QString TorrentControl::statusToString() const
 	{
@@ -1011,10 +954,7 @@ namespace bt
 			case kt::ERROR :
 				return i18n("Error: ") + getShortErrorMessage(); 
 			case kt::ALLOCATING_DISKSPACE:
-				if (prealloc_thread)
-					return i18n("Allocating diskspace (%1 done)").arg(BytesToString(prealloc_thread->bytesWritten()));
-				else
-					return i18n("Allocating diskspace");
+				return i18n("Allocating diskspace");
 		}
 		return QString::null;
 	}
