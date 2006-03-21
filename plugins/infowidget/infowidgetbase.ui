@@ -20,6 +20,9 @@
             <verstretch>0</verstretch>
         </sizepolicy>
     </property>
+    <property name="caption">
+        <string>InfoWidgetBase</string>
+    </property>
     <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -410,6 +413,9 @@
                                                                 <property name="text">
                                                                     <string>Max ratio:</string>
                                                                 </property>
+                                                                <property name="toolTip" stdset="0">
+                                                                    <string>Limit works only in seed mode</string>
+                                                                </property>
                                                             </widget>
                                                             <widget class="QLineEdit">
                                                                 <property name="name">
@@ -453,6 +459,9 @@
                                                         </property>
                                                         <property name="accel">
                                                             <string></string>
+                                                        </property>
+                                                        <property name="toolTip" stdset="0">
+                                                            <string>Limit works only in seed mode</string>
                                                         </property>
                                                     </widget>
                                                 </grid>
@@ -868,8 +877,8 @@
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>downloadedchunkbar.h</includehint>
-    <includehint>availabilitychunkbar.h</includehint>
+    <includehint>kt::downloadedchunkbar.h</includehint>
+    <includehint>kt::availabilitychunkbar.h</includehint>
     <includehint>klistview.h</includehint>
 </includehints>
 </UI>

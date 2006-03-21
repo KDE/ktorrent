@@ -29,6 +29,7 @@
 #include <util/timer.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/monitorinterface.h>
+#include <interfaces/trackerslist.h>
 
 
 
@@ -108,6 +109,12 @@ namespace bt
 		void rollback();
 
 		KURL getTrackerURL(bool prev_success) const;
+		
+		/// Gets the TrackersList interface
+		kt::TrackersList* getTrackersList();
+		
+		/// Creates TrackersList object (AnnounceList) and returns a pointer to that object
+		kt::TrackersList* createTrackersList();
 
 		/// Get the data directory of this torrent
 		QString getDataDir() const {return outputdir;}
@@ -167,6 +174,8 @@ namespace bt
 		
 		/// Make a string out of the status message
 		virtual QString statusToString() const;
+		
+		
 		
 	public slots:
 		/**

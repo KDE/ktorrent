@@ -17,58 +17,18 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <klocale.h>
-#include <qcheckbox.h>
-#include <kglobal.h>
-#include <kiconloader.h>
-#include "infowidget.h"
-#include "infowidgetprefpage.h"
-#include "infowidgetpluginsettings.h"
-#include "iwpref.h"
+#include "trackerslist.h"
 
+namespace kt {
 
-namespace kt
+TrackersList::TrackersList()
 {
-
-	InfoWidgetPrefPage::InfoWidgetPrefPage(InfoWidget* iw)
-	: PrefPageInterface(i18n("Info Widget"),i18n("Information Widget Options"),KGlobal::iconLoader()->loadIcon("ktinfowidget",KIcon::NoGroup)),iw(iw)
-	{
-		pref = 0;
-	}
+}
 
 
-	InfoWidgetPrefPage::~InfoWidgetPrefPage()
-	{}
+TrackersList::~TrackersList()
+{
+}
 
-
-	bool InfoWidgetPrefPage::apply()
-	{
-		InfoWidgetPluginSettings::setShowPeerView(pref->m_show_pv->isChecked());
-		InfoWidgetPluginSettings::setShowChunkView(pref->m_show_cdv->isChecked());
-		InfoWidgetPluginSettings::setShowTrackersView(pref->m_show_tv->isChecked());
-		InfoWidgetPluginSettings::writeConfig();
-		iw->showPeerView( InfoWidgetPluginSettings::showPeerView() );
-		iw->showChunkView( InfoWidgetPluginSettings::showChunkView() );
-		iw->showTrackerView( InfoWidgetPluginSettings::showTrackersView() );
-		return true;
-	}
-
-	void InfoWidgetPrefPage::createWidget(QWidget* parent)
-	{
-		pref = new IWPref(parent);
-		updateData();
-	}
-
-	void InfoWidgetPrefPage::deleteWidget()
-	{
-		delete pref;
-	}
-
-	void InfoWidgetPrefPage::updateData()
-	{
-		pref->m_show_pv->setChecked(InfoWidgetPluginSettings::showPeerView());
-		pref->m_show_cdv->setChecked(InfoWidgetPluginSettings::showChunkView());
-		pref->m_show_tv->setChecked(InfoWidgetPluginSettings::showTrackersView());
-	}
 
 }

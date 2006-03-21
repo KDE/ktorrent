@@ -37,6 +37,7 @@ namespace kt
 	class TorrentInterface;
 	class PeerView;
 	class ChunkDownloadView;
+	class TrackerView;
 	class KTorrentMonitor;
 	class IWFileTreeDirItem;
 
@@ -53,6 +54,8 @@ namespace kt
 		void showPeerView(bool show);
 		///Show ChunkDownloadView in main window
 		void showChunkView(bool show);
+		///Show TrackerView in main window
+		void showTrackerView(bool show);
 	
 	public slots:
 		void changeTC(kt::TorrentInterface* tc);
@@ -81,6 +84,8 @@ namespace kt
 		PeerView* peer_view;
 		QWidget* cd_page;
 		ChunkDownloadView* cd_view;
+		QWidget* tracker_page;
+		TrackerView* tracker_view;
 		bool m_seed;
 	};
 }

@@ -22,8 +22,9 @@
 
 #include <qobject.h>
 #include <util/constants.h>
+#include <interfaces/trackerslist.h>
 
-class KURL;
+#include <kurl.h>
 
 namespace bt
 {
@@ -249,6 +250,11 @@ namespace kt
 		 */
 		virtual KURL getTrackerURL(bool prev_success) const = 0;
 		
+		///Get a pointer to TrackersList object
+		virtual TrackersList* getTrackersList() = 0;
+		
+		///Creates TrackerList object and returns a pointer
+		virtual TrackersList* createTrackersList() = 0;
 		
 		///Get the torrent queue number. Zero if not in queue
 		virtual int getPriority() const = 0;

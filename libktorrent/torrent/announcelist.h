@@ -21,6 +21,8 @@
 #define BTANNOUNCELIST_H
 
 #include <kurl.h>
+#include <qstring.h>
+#include <interfaces/trackerslist.h>
 
 namespace bt
 {
@@ -33,9 +35,10 @@ namespace bt
 	 * This class keeps track of a list of tracker URL. Whenever the update
 	 * of Tracker failed, a new URL will be asked from this class.
 	*/
-	class AnnounceList
+	class AnnounceList : public kt::TrackersList
 	{
 		KURL::List trackers;
+		KURL::List custom_trackers;
 		mutable int curr;
 	public:
 		AnnounceList();
@@ -53,11 +56,43 @@ namespace bt
 		 * @return An URL
 		 */
 		KURL getTrackerURL(bool last_was_succesfull) const;
+		
+		
+		///Gets a list of trackers (URLs)
+		const KURL::List getTrackerURLs();
+		
+		///Adds new tracker URL to the list
+		void addTracker(KURL url, bool custom = true);
+		
+		/**
+		 * Removes a tracker from the list
+		 * @param url Tracker URL to remove from custom trackers list.
+		 * @returns TRUE if URL is in custom list and it is removed or FALSE if it could not be removed or it's a default tracker
+		 */
+		bool removeTracker(KURL url);
+		
+		///Changes current tracker
+		void setTracker(KURL url);
+		
+		///Restores the default torrent tracker
+		void restoreDefault();
 
 		/// Get the number of tracker URLs
 		unsigned int getNumTrackerURLs() const {return trackers.count();}
 
 		void debugPrintURLList();
+		
+		///Saves custom trackers in a file
+		void saveTrackers();
+		
+		///Loads custom trackers from a file
+		void loadTrackers();
+
+		void setDatadir(const QString& theValue);
+		
+	private:
+		QString m_datadir;
+		
 	};
 
 }

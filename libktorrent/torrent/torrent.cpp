@@ -332,9 +332,18 @@ namespace bt
 		}
 	}
 
-
 	bool Torrent::isMultimedia() const
 	{
 		return IsMultimediaFile(this->getNameSuggestion());
+	}
+	
+	AnnounceList* Torrent::createAnnounceList()
+	{
+		if(!anon_list)
+			anon_list = new AnnounceList();
+		
+		anon_list->addTracker(tracker_url);
+
+		return anon_list;
 	}
 }

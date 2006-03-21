@@ -43,6 +43,7 @@
 #include "infowidget.h"
 #include "peerview.h"
 #include "chunkdownloadview.h"
+#include "trackerview.h"
 #include "functions.h"
 #include "downloadedchunkbar.h"
 #include "availabilitychunkbar.h"
@@ -57,12 +58,11 @@ namespace kt
 {
 	
 	InfoWidget::InfoWidget(bool seed, QWidget* parent, const char* name, WFlags fl)
-		: InfoWidgetBase(parent,name,fl),peer_view(0),cd_view(0), m_seed(seed)
+		: InfoWidgetBase(parent,name,fl),peer_view(0),cd_view(0), tracker_view(0), m_seed(seed)
 	{
 		multi_root = 0;
 		monitor = 0;
 		curr_tc = 0;
-		
 	
 		KIconLoader* iload = KGlobal::iconLoader();
 		context_menu = new KPopupMenu(this);
@@ -76,6 +76,7 @@ namespace kt
 		setEnabled(false);
 		showPeerView( InfoWidgetPluginSettings::showPeerView() );
 		showChunkView( InfoWidgetPluginSettings::showChunkView() );
+		showTrackerView(InfoWidgetPluginSettings::showTrackersView());
 		
 		if(!m_seed)
 			KGlobal::config()->setGroup("InfoWidget");
@@ -87,21 +88,6 @@ namespace kt
 			QSize s = KGlobal::config()->readSizeEntry("InfoWidgetSize",0);
 			resize(s);
 		}
-		
-		if(!m_seed)
-		{
-			maxRatio->hide();
-			maxRatioLabel->hide();
-			useLimit->hide();
-		}
-		else
-		{
-			textLabel1_2->hide();
-			textLabel1_3->hide();
-			m_chunk_bar->hide();
-			m_av_chunk_bar->hide();
-		}
-		
 	}
 	
 	InfoWidget::~InfoWidget()
@@ -194,6 +180,31 @@ namespace kt
 		}
 	}
 	
+	void InfoWidget::showTrackerView(bool show)
+	{
+		if( tracker_view == 0 && show)
+		{
+			tracker_page = new QWidget(m_tabs);
+			QHBoxLayout* tracker_page_layout = new QHBoxLayout(tracker_page, 11, 6);
+	
+			tracker_view = new TrackerView(curr_tc, tracker_page);
+			tracker_page_layout->add(tracker_view);
+	
+			m_tabs->addTab(tracker_page,i18n("Trackers"));;
+			tracker_view->setEnabled(curr_tc != 0);
+			setEnabled(curr_tc != 0);
+// 			tracker_view->restoreLayout(KGlobal::config(),"TrackerView");
+		}
+		else if (!show && tracker_view != 0)
+		{
+// 			tracker_view->saveLayout(KGlobal::config(),"TrackerView");
+			m_tabs->removePage( tracker_page );
+			tracker_page->reparent(0,QPoint(),false);
+			delete tracker_page;
+			tracker_view = 0;
+		}
+	}
+	
 	void InfoWidget::fillFileTree()
 	{
 		multi_root = 0;
@@ -237,6 +248,9 @@ namespace kt
 		curr_tc = tc;
 		if (monitor)
 		{
+/*			if(!curr_tc)
+				monitor->destroyed();
+			*/
 			delete monitor;
 			monitor = 0;
 			if (peer_view)
@@ -264,6 +278,12 @@ namespace kt
 		{
 			cd_page->setEnabled(tc != 0);
 			cd_view->setEnabled(tc != 0);
+		}
+		if(tracker_view)
+		{
+			tracker_page->setEnabled(tc != 0);
+			tracker_view->setEnabled(tc != 0);
+			tracker_view->torrentChanged(tc);
 		}
 		
 		if (curr_tc)
@@ -367,6 +387,8 @@ namespace kt
 			peer_view->update();
 		if (cd_view)
 			cd_view->update();
+		if(tracker_view)
+			tracker_view->update(curr_tc);
 		
 		if (s.running)
 		{
@@ -488,8 +510,11 @@ namespace kt
 		}
 		else
 		{
-			curr_tc->setMaxShareRatio(1.00f);
-			maxRatio->setText(QString("%1").arg(1.00f,0,'f',2));
+			if(maxRatio->text() == "0.00")
+			{	
+				curr_tc->setMaxShareRatio(1.00f);
+				maxRatio->setText(QString("%1").arg(1.00f,0,'f',2));
+			}
 		}
 	}
 	
@@ -502,14 +527,14 @@ namespace kt
 		if(ratio > 0)
 		{
 			maxRatio->setEnabled(true);
-			maxRatio->setText(QString("%1").arg(curr_tc->getMaxShareRatio(),0,'f',2));
 			useLimit->setChecked(true);
+			maxRatio->setText(QString("%1").arg(ratio,0,'f',2));
 		}
 		else
 		{
 			maxRatio->setEnabled(false);
-			maxRatio->setText("0.00");
 			useLimit->setChecked(false);
+			maxRatio->setText("0.00");
 		}
 	}
 }

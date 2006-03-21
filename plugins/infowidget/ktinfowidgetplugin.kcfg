@@ -14,5 +14,9 @@
 			<label>Show chunk download view tab in main window</label>
 			<default>true</default>
 		</entry>
+		<entry name="showTrackersView" type="Bool">
+			<label>Show trackers view tab in main window</label>
+			<default>true</default>
+		</entry>
 	</group>
 </kcfg>

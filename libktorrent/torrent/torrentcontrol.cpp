@@ -30,6 +30,7 @@
 #include <util/functions.h>
 #include <util/fileops.h>
 #include <interfaces/functions.h>
+#include <interfaces/trackerslist.h>
 #include <migrate/ccmigrate.h>
 #include <migrate/cachemigrate.h>
 #include <kademlia/dht.h>
@@ -56,6 +57,7 @@
 #include "queuemanager.h"
 #include "statsfile.h"
 #include "preallocationthread.h"
+#include "announcelist.h"
 
 using namespace kt;
 
@@ -534,6 +536,12 @@ namespace bt
 		saveStats();
 		stats.output_path = cman->getOutputPath();
 		Out() << "OutputPath = " << stats.output_path << endl;
+		
+		AnnounceList* list = tor->getAnnounceList();
+		if(!list)
+			list = tor->createAnnounceList();
+		
+		list->setDatadir(datadir);
 	}
 
 	void TorrentControl::trackerResponse()
@@ -569,7 +577,6 @@ namespace bt
 	{
 		return tor->getTrackerURL(prev_success);
 	}
-
 
 	void TorrentControl::onNewPeer(Peer* p)
 	{
@@ -954,7 +961,14 @@ namespace bt
 	
 	void TorrentControl::setMaxShareRatio(float ratio)
 	{
-		maxShareRatio = ratio;
+		if(ratio == 1.00f)
+		{
+			if(maxShareRatio != ratio)
+				maxShareRatio = ratio;
+		}
+		else
+			maxShareRatio = ratio;
+		
 		saveStats();
 		emit maxRatioChanged(this);
 	}
@@ -970,8 +984,6 @@ namespace bt
 		
 		return false;
 	}
-	
-	
 	
 	void TorrentControl::preallocateDiskSpace(PreallocationThread* pt)
 	{
@@ -1006,13 +1018,26 @@ namespace bt
 		}
 		return QString::null;
 	}
+
+	TrackersList* TorrentControl::getTrackersList()
+	{
+		AnnounceList* list = tor->getAnnounceList();
+		if(!list)
+			list = tor->createAnnounceList();
+		
+		return list;
+	}
 	
+	TrackersList* TorrentControl::createTrackersList()
+	{
+		return tor->createAnnounceList();
+	}
+
 	void TorrentControl::onPortPacket(const QString & ip,Uint16 port)
 	{
 		if (Globals::instance().getDHT().isRunning() && !stats.priv_torrent)
 			Globals::instance().getDHT().portRecieved(ip,port);
 	}
-
 }
 
 #include "torrentcontrol.moc"

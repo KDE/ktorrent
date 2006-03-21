@@ -141,6 +141,12 @@ namespace bt
 		
 		/// See if the torrent is private
 		bool isPrivate() const {return priv_torrent;}
+		
+		///Gets a pointer to AnnounceList
+		AnnounceList* getAnnounceList() { return anon_list; }
+		
+		///Creates announce list if one doesn't exist to add some custom trackers.
+		AnnounceList* createAnnounceList();
 
 	private:
 		void loadInfo(BDictNode* node);

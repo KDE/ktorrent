@@ -24,18 +24,24 @@
 #include <util/log.h>
 
 #include <klocale.h>
+#include <qstringlist.h>
+#include <qfile.h>
+#include <qtextstream.h>
 
 namespace bt
 {
 
 	AnnounceList::AnnounceList()
+		:m_datadir(QString::null)
 	{
 		curr = 0;
 	}
 
 
 	AnnounceList::~AnnounceList()
-	{}
+	{
+		saveTrackers();
+	}
 
 	void AnnounceList::load(BNode* node)
 	{
@@ -63,13 +69,44 @@ namespace bt
 		}
 	}
 	
+	const KURL::List AnnounceList::getTrackerURLs()
+	{
+		KURL::List complete(trackers);
+		complete += custom_trackers;
+		return complete;
+	}
+	
+	void AnnounceList::addTracker(KURL url, bool custom)
+	{
+		if(custom)
+			custom_trackers.append(url);
+		else
+			trackers.append(url);
+	}
+	
+	bool AnnounceList::removeTracker(KURL url)
+	{
+		KURL::List::iterator i = custom_trackers.find(url);
+		if(i != custom_trackers.end())
+		{
+			custom_trackers.remove(i);
+			return true;
+		}
+		else
+			return false;
+	}
+	
 	KURL AnnounceList::getTrackerURL(bool last_was_succesfull) const
 	{
-		if (last_was_succesfull)
-			return *trackers.at(curr);
+		int defaults = trackers.count();
+		int customs = custom_trackers.count();
+		int total = defaults + customs;
 		
-		curr = (curr + 1) % trackers.count();
-		return *trackers.at(curr);
+		if (last_was_succesfull)
+			return curr < defaults ? *trackers.at(curr) : *custom_trackers.at(curr % customs);
+		
+		curr = (curr + 1) % total;
+		return curr < defaults ? *trackers.at(curr) : *custom_trackers.at(curr % customs);
 	}
 
 	void AnnounceList::debugPrintURLList()
@@ -77,6 +114,68 @@ namespace bt
 		Out() << "Announce List : " << endl;
 		for (KURL::List::iterator i = trackers.begin();i != trackers.end();i++)
 			Out() << "URL : " << *i << endl;
+	}
+	
+	void AnnounceList::saveTrackers()
+	{
+		QFile file(m_datadir + "trackers");
+		if(!file.open(IO_WriteOnly))
+			return;
+		
+		QTextStream stream(&file);
+		for (KURL::List::iterator i = custom_trackers.begin();i != custom_trackers.end();i++)
+			stream << (*i).prettyURL() << ::endl;
+		file.close();
+	}
+	
+	void AnnounceList::loadTrackers()
+	{
+		QFile file(m_datadir + "trackers");
+		if(!file.open(IO_ReadOnly))
+			return;
+		
+		QTextStream stream(&file);
+		while (!stream.atEnd()) 
+		{
+			KURL url(stream.readLine());
+			custom_trackers.append(url);
+		}
+		
+		file.close();
+	}
+	
+	void AnnounceList::setDatadir(const QString& theValue)
+	{
+		m_datadir = theValue;
+		loadTrackers();
+	}
+	
+	void AnnounceList::setTracker(KURL url)
+	{
+		int defaults = trackers.count();
+		int customs = custom_trackers.count();
+		int total = defaults + customs;
+		
+		int backup = curr;
+		
+		for(curr=0; curr<defaults; ++curr)
+		{
+			if( *trackers.at(curr) == url )
+				return;
+		}
+		
+		for( ; curr<total; ++curr)
+		{
+			if( *custom_trackers.at(curr % customs) == url )
+				return;
+		}
+		
+		curr = backup;
+	}
+	
+	void AnnounceList::restoreDefault()
+	{
+		curr = 0;
 	}
 
 }
