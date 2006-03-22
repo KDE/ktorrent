@@ -13,7 +13,7 @@ If something is done put # in front of it.
 5) Add option to allow the user to rename the top directory of multifile torrents
 # 6) Add "Max d/u ratio" option (for seeding)
 7) Add RSS plugin
-8) Add properties dialog to show announce url, and allow users to edit the list of trackers
+#8) Add properties dialog to show announce url, and allow users to edit the list of trackers
 9) letting the user configure columns in listview (maybe add share ratio column)
 10) Add scheduled download feature + allow KT to shutdown PC after a download is finished
 11) Super Seeding
