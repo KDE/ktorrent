@@ -38,7 +38,7 @@ namespace bt
 		if (size > 0)
 			last_chunk = (off + size - 1) / chunk_size;
 		else
-			last_chunk = 0;
+			last_chunk = first_chunk;
 		last_chunk_size = (off + size) - last_chunk * chunk_size;
 		do_not_download = false;
 	}
