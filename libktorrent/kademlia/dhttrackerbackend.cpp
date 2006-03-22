@@ -18,7 +18,10 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <kurl.h>
+#include <qhostaddress.h>
+#include <util/log.h>
 #include <util/functions.h>
+#include <torrent/globals.h>
 #include <torrent/peermanager.h>
 #include "dhttrackerbackend.h"
 #include "dht.h"
@@ -58,7 +61,8 @@ namespace dht
 		{
 			bt::PotentialPeer pp;
 			pp.port = bt::ReadUint16(item.getData(),4);
-			pp.ip = bt::ReadUint32(item.getData(),0);
+			pp.ip = QHostAddress(ReadUint32(item.getData(),0)).toString();
+			Out() << "DHT: Got PotentialPeer " << pp.ip << ":" << pp.port << endl;
 			pman->addPotentialPeer(pp);
 		}
 	}
