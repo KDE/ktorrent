@@ -510,7 +510,7 @@ namespace kt
 		}
 		else
 		{
-			if(maxRatio->text() == "0.00")
+			if(curr_tc->getMaxShareRatio() == 0.00f)
 			{	
 				curr_tc->setMaxShareRatio(1.00f);
 				maxRatio->setText(QString("%1").arg(1.00f,0,'f',2));
