@@ -342,7 +342,7 @@ namespace bt
 		if(!anon_list)
 			anon_list = new AnnounceList();
 		
-		anon_list->addTracker(tracker_url);
+		anon_list->addTracker(tracker_url, false);
 
 		return anon_list;
 	}

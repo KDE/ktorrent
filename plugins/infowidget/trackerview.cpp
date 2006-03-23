@@ -76,6 +76,8 @@ namespace kt
 		KURL url(current->text(0));
 		if(tc->getTrackersList()->removeTracker(url))
 			delete current;
+		else
+			KMessageBox::sorry(0, i18n("Cannot remove torrent default tracker."));
 	}
 
 	void TrackerView::btnChange_clicked()
