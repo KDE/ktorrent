@@ -56,47 +56,38 @@ namespace bt
 		UploadCap::instance().killed(this);
 	}
 
-	Uint32 PacketWriter::sendPacket(const Packet & p,Uint32 max)
+	bool PacketWriter::sendPacket(Packet & p,Uint32 max)
 	{
 #ifdef DEBUG_LOG_UPLOAD
 		ulog << p.debugString() << endl;
 #endif
 		// safety check
 		if (!p.isOK())
-			return p.getDataLength();
+			return true;
 			
+		bool ret = true;
+		Uint32 bs = 0;
 	//	Out() << "Sending " << p.getHeaderLength() << " " << p.getDataLength() << endl;
 		if (max == 0)
 		{
-			peer->sendData(p.getHeader(),p.getHeaderLength());
-			if (p.getDataLength() > 0)
-				peer->sendData(p.getData(),p.getDataLength(),p.getType() == PIECE);
-			if (p.getType() == PIECE)
-				uploaded += p.getDataLength();
-			return p.getDataLength();
+			// send full packet
+			ret = p.send(peer,p.getDataLength() + p.getHeaderLength(),bs);
 		}
 		else
 		{
-			// send header if no data of packet is sent
-			if (p.getDataWritten() == 0)
-				peer->sendData(p.getHeader(),p.getHeaderLength());
-			
-			Uint32 off = p.getDataWritten();
-			Uint32 bytes_left = p.getDataLength() - off;
-			Uint32 to_send = max > bytes_left ? bytes_left : max;
-			peer->sendData(p.getData() + off,to_send,p.getType() == PIECE); 
-			if (p.getType() == PIECE)
-				uploaded += to_send;
-			
-			return to_send;
+			ret = p.send(peer,max,bs);
 		}
+		if (p.getType() == PIECE)
+			uploaded += bs;
+		return ret;
 	}
 	
 	void PacketWriter::queuePacket(Packet* p,bool ask)
 	{
 		bool ok = true;
 		if (ask)
-			ok = UploadCap::instance().allow(this,p->getDataLength());
+			ok = UploadCap::instance().allow(this,p->getDataLength() + p->getHeaderLength());
+		
 		
 		if (ok && packets.count() == 0)
 		{
@@ -228,10 +219,10 @@ namespace bt
 	}
 
 	
-	Uint32 PacketWriter::uploadUnsentBytes(Uint32 bytes)
+	void PacketWriter::uploadUnsentBytes(Uint32 bytes)
 	{
 		if (packets.count() == 0)
-			return 0;
+			return;
 		
 		if (bytes == 0)
 		{
@@ -239,24 +230,18 @@ namespace bt
 			while (packets.count() > 0)
 			{
 				Packet* p = packets.first();
-				sendPacket(*p,0);
-				packets.removeFirst();
+				if (sendPacket(*p,0))
+					packets.removeFirst();
 			}
-			return 0;
 		}
 		else
 		{
-			sendSmallPackets();
 			Packet* p = packets.first();
-			Uint32 nb = sendPacket(*p,bytes);
-			p->dataWritten(nb);
-			// if the packet is fully sent remove it
-			if (p->getDataWritten() == p->getDataLength())
+			if (sendPacket(*p,bytes));
 			{
 				packets.removeFirst();
 				sendSmallPackets();
 			}
-			return nb;
 		}
 	}
 	
@@ -266,10 +251,11 @@ namespace bt
 		{
 			Packet* p = packets.first();
 			if (p->getType() == PIECE)
-				break;
+				return;
 			
 			sendPacket(*p,0);
 			packets.removeFirst();
 		}
 	}
+	
 }

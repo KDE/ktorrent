@@ -28,6 +28,33 @@
 namespace bt
 {
 	class PacketWriter;
+	
+	/**
+	 * Slot to upload one packet to the network.
+	 */
+	class UploadSlot
+	{
+		PacketWriter* pw;
+		Uint32 bytes;
+	public:
+		UploadSlot();
+		UploadSlot(PacketWriter* pw,Uint32 bytes);
+		UploadSlot(const UploadSlot & us);
+		virtual ~UploadSlot();
+		
+		/// Get the number of bytes left to upload
+		Uint32 bytesLeft() const {return bytes;}
+		
+		/// Test if this slot is from a PacketWriter
+		bool fromPW(PacketWriter* other) const {return other == pw;}
+		
+		/**
+		 * Tell the PacketWriter to upload nb bytes.
+		 * @param nb The number of bytes to upload (0 is unlimited)
+		 * @return true if all bytes have been upload
+		 */
+		bool doUpload(Uint32 nb);
+	};
 
 	/**
 	 * @author Joris Guisson
@@ -42,12 +69,7 @@ namespace bt
 	{
 		static UploadCap self;
 		
-		struct Entry
-		{
-			PacketWriter* pw;
-			Uint32 bytes;
-		};
-		QValueList<Entry> up_queue;
+		QValueList<UploadSlot> up_queue;
 		Uint32 max_bytes_per_sec;
 		Timer timer;
 		Uint32 leftover;

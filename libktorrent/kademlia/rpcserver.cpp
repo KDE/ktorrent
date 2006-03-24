@@ -72,16 +72,19 @@ namespace dht
 
 	void RPCServer::readPacket()
 	{
-		Out() << "RPCServer::readPacket" << endl;
 		KDatagramPacket pck = sock->receive();
+		/*
+		Out() << "RPCServer::readPacket" << endl;
 		PrintRawData(pck.data());
+		*/
 		BNode* n = 0;
 		try
 		{
 		// read and decode the packet
 			BDecoder bdec(pck.data(),false);	
 			n = bdec.decode();
-			if (n->getType() != BNode::DICT)
+			
+			if (!n || n->getType() != BNode::DICT)
 			{
 				delete n;
 				return;
@@ -93,12 +96,11 @@ namespace dht
 			{
 				Out() << "Error parsing message : " << endl;
 				PrintRawData(pck.data());
-				return;
 			}
 			else
 			{
 				msg->setOrigin(pck.address());
-				msg->print();
+			//	msg->print();
 				msg->apply(dh_table);
 			// erase an existing call
 				if (msg->getType() == RSP_MSG && calls.contains(msg->getMTID()))
@@ -143,7 +145,7 @@ namespace dht
 		msg->encode(data);
 		send(msg->getOrigin(),data);
 		
-		PrintRawData(data);
+	//	PrintRawData(data);
 	}
 	
 	void RPCServer::timedOut(Uint8 mtid)

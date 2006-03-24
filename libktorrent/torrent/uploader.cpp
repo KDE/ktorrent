@@ -53,13 +53,14 @@ namespace bt
 
 	Uint32 Uploader::uploadRate() const
 	{
-		Uint32 rate = 0;
+		Uint32 rate = 0,proto = 0;
 		for (Uint32 i = 0;i < pman.getNumConnectedPeers();++i)
 		{
 			const Peer* p = pman.getPeer(i);
 			rate += p->getUploadRate();
+			proto += p->getProtocolUploadRate();
 		}
-		return rate;
+		return rate + proto;
 	}
 	
 

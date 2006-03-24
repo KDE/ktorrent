@@ -64,11 +64,21 @@ namespace bt
 
 		/// Get the upload rate 
 		double uploadRate() const {return upload_rate;}
+		
+		/// Get the protocol overhead 
+		double protocollOverhead() const {return proto_upload_rate;}
+	private:
+		double rate(QValueList<Entry> & el);
+		
 	private:
 		double upload_rate;
+		double proto_upload_rate;
 		Uint32 accumulated_bytes;
 		QValueList<Entry> outstanding_bytes;
 		QValueList<Entry> written_bytes;
+#ifdef MEASURE_PROTO_OVERHEAD
+		QValueList<Entry> proto_bytes;
+#endif
 	};
 
 }

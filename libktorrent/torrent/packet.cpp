@@ -19,11 +19,12 @@
  ***************************************************************************/
 #include <qstring.h>
 #include <string.h>
+#include <util/bitset.h>
+#include <util/functions.h>
 #include "packet.h"
 #include "request.h"
 #include "chunk.h"
-#include <util/bitset.h>
-#include <util/functions.h>
+#include "peer.h"
 
 namespace bt
 {
@@ -129,4 +130,54 @@ namespace bt
 		return true;
 	}
 
+	bool Packet::send(Peer* peer,Uint32 max_bytes,Uint32 & bytes_sent)
+	{
+		bool proto = hdr[4] != PIECE;
+		bytes_sent = 0;
+		Uint32 ttw = max_bytes; // total bytes we can write
+		// if we haven't written the header yet, write it
+		if (written < hdr_length)
+		{
+			Uint32 tw = hdr_length - written;
+			if (ttw < tw)
+			{
+				// we can't send the full header
+				peer->sendData(hdr + written,ttw,proto);
+				written += ttw;
+				bytes_sent += ttw;
+				ttw = 0;
+			}
+			else
+			{
+				// send the full header
+				peer->sendData(hdr + written,tw,proto);
+				written += tw;
+				bytes_sent += tw;
+				ttw -= tw;
+			}
+		}
+		
+		if (ttw == 0 || data_length == 0)
+			return written >= hdr_length + data_length;
+		
+		
+		// number of data bytes we need to write
+		Uint32 dtw = (hdr_length + data_length) - written;
+		Uint32 off = written - hdr_length;
+		if (ttw < dtw)
+		{
+			// we can't send them all
+			peer->sendData(data + off,ttw,proto);
+			written += ttw;
+			bytes_sent += ttw;
+		}
+		else
+		{
+			// send the whole packet
+			peer->sendData(data + off,dtw,proto);
+			bytes_sent += dtw;
+			written += dtw;
+		}
+		return written >= hdr_length + data_length;
+	}
 }

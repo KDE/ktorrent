@@ -26,7 +26,28 @@
 
 namespace bt
 {
-	typedef QMap<PacketWriter*,QValueList<Uint32> >::iterator ByteMapItr;
+	
+	UploadSlot::UploadSlot() : pw(0),bytes(0) {}
+	
+	UploadSlot::UploadSlot(PacketWriter* pw,Uint32 bytes) : pw(pw),bytes(bytes)
+	{}
+	
+	UploadSlot::UploadSlot(const UploadSlot & us) : pw(us.pw),bytes(us.bytes)
+	{}
+	
+	UploadSlot::~UploadSlot()
+	{}
+		
+	bool UploadSlot::doUpload(Uint32 nb)
+	{
+		pw->uploadUnsentBytes(nb);
+		bytes -= nb;
+		return bytes == 0;
+	}
+	
+	//////////////////////////
+	
+	typedef QValueList<UploadSlot>::iterator UpQueueItr;
 	
 	UploadCap UploadCap::self;
 
@@ -46,11 +67,11 @@ namespace bt
 		// tell everybody to go wild
 		if (max_bytes_per_sec == 0)
 		{
-			QValueList<Entry>::iterator i = up_queue.begin();
+			UpQueueItr i = up_queue.begin();
 			while (i != up_queue.end())
 			{
-				Entry & e = *i;
-				e.pw->uploadUnsentBytes(0);
+				UploadSlot & us = *i;
+				us.doUpload(0);
 				i++;
 			}
 			up_queue.clear();
@@ -67,20 +88,17 @@ namespace bt
 		}
 
 		// append pd to queue
-		Entry e;
-		e.bytes = bytes;
-		e.pw = pd;
-		up_queue.append(e);
+		up_queue.append(UploadSlot(pd,bytes));
 		return false;
 	}
 
 	void UploadCap::killed(PacketWriter* pd)
 	{
-		QValueList<Entry>::iterator i = up_queue.begin();
+		UpQueueItr i = up_queue.begin();
 		while (i != up_queue.end())
 		{
-			Entry & e = *i;
-			if (e.pw == pd)
+			UploadSlot & e = *i;
+			if (e.fromPW(pd))
 				i = up_queue.erase(i);
 			else
 				i++;
@@ -106,26 +124,21 @@ namespace bt
 		while (up_queue.count() > 0 && nb > 0)
 		{
 			// get the first
-			Entry & e = up_queue.first();
-			PacketWriter* pw = e.pw;
+			UploadSlot & e = up_queue.first();
 			
-			if (e.bytes <= nb)
+			if (e.bytesLeft() <= nb)
 			{
+				nb -= e.bytesLeft();
 				// we can send all remaining bytes of the packet
-				Uint32 s = pw->uploadUnsentBytes(e.bytes);
-			//	Out() << QString("Sending full packet : %1 %2").arg(e.bytes).arg(s) << endl;
-				nb -= s;
+				e.doUpload(e.bytesLeft());
 				up_queue.pop_front();
 			}
 			else
 			{
 				// sent nb bytes of the packets
-				Uint32 s = pw->uploadUnsentBytes(nb);
-			//	Out() << QString("Sending partial : %1 %2 %3").arg(nb).arg(s).arg(e.bytes - s) << endl;
-				nb -= s;
-				e.bytes -= s;
+				e.doUpload(nb);
+				nb = 0;
 			}
-			
 		}
 		
 		leftover = nb;

@@ -110,6 +110,9 @@ namespace bt
 		
 		/// Get the upload rate in bytes per sec
 		Uint32 getUploadRate() const;
+		
+		/// Get the upload rate in bytes per sec of the protocoll (non PIECE packets)
+		Uint32 getProtocolUploadRate() const;
 
 		/// Get the download rate in bytes per sec
 		Uint32 getDownloadRate() const;
@@ -133,9 +136,9 @@ namespace bt
 		 * Send a chunk of data.
 		 * @param data The data
 		 * @param len The length
-		 * @param record This packet contributes to the upload rate
+		 * @param proto Indicates wether the packed is data or a protocol message
 		 */
-		void sendData(const Uint8* data,Uint32 len,bool record = false);
+		void sendData(const Uint8* data,Uint32 len,bool proto);
 		
 		/**
 		 * See if all previously written data, has been sent.

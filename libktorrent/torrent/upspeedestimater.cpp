@@ -28,6 +28,7 @@ namespace bt
 	{
 		accumulated_bytes = 0;
 		upload_rate = 0.0;
+		proto_upload_rate = 0.0;
 	}
 
 
@@ -35,12 +36,12 @@ namespace bt
 	{}
 
 
-	void UpSpeedEstimater::writeBytes(Uint32 bytes,bool rec)
+	void UpSpeedEstimater::writeBytes(Uint32 bytes,bool proto)
 	{
 		// add entry to outstanding_bytes
 		Entry e;
 		e.bytes = bytes;
-		e.data = rec;
+		e.data = !proto;
 		e.start_time = GetCurrentTime();
 		outstanding_bytes.append(e);
 	}
@@ -65,6 +66,13 @@ namespace bt
 					e.duration = now - e.start_time;
 					written_bytes.append(e);
 				}
+				else
+				{
+					e.duration = now - e.start_time;
+#ifdef MEASURE_PROTO_OVERHEAD
+					proto_bytes.append(e);
+#endif
+				}
 			}
 			else
 			{
@@ -73,21 +81,17 @@ namespace bt
 			}
 		}
 	}
-
-	void UpSpeedEstimater::update()
+	
+	double UpSpeedEstimater::rate(QValueList<Entry> & el)
 	{
-		upload_rate = 0;
-		if (written_bytes.empty())
-			return;
-
 		Uint32 now = GetCurrentTime();
 		const Uint32 INTERVAL = 3000;
 		
 		Uint32 tot_bytes = 0;
-		
 		Uint32 oldest_time = now;
-		QValueList<Entry>::iterator i = written_bytes.begin();
-		while (i != written_bytes.end())
+		
+		QValueList<Entry>::iterator i = el.begin();
+		while (i != el.end())
 		{
 			Entry & e = *i;
 			Uint32 end_time = e.start_time + e.duration;
@@ -95,7 +99,7 @@ namespace bt
 			if (now - end_time > INTERVAL)
 			{
 				// get rid of old entries
-				i = written_bytes.erase(i);
+				i = el.erase(i);
 			}
 			else if (now - e.start_time <= INTERVAL)
 			{
@@ -118,11 +122,25 @@ namespace bt
 			}
 		}
 
-		/*Uint32 tot_time = now - oldest_time;
-		if (tot_time == 0)
+		return (double)tot_bytes / (INTERVAL * 0.001);
+	}
+
+	void UpSpeedEstimater::update()
+	{
+		if (!written_bytes.empty())
+		{
 			upload_rate = 0;
-		else*/
-			upload_rate = (double)tot_bytes / (INTERVAL * 0.001);
+			upload_rate = rate(written_bytes);
+		}
+
+		
+#ifdef MEASURE_PROTO_OVERHEAD
+		if (!proto_bytes.empty())
+		{
+			proto_upload_rate = 0;
+			proto_upload_rate = rate(proto_bytes);
+		}
+#endif
 	}
 
 }

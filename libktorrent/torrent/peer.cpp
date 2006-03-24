@@ -320,12 +320,12 @@ namespace bt
 		}
 	}
 	
-	void Peer::sendData(const Uint8* data,Uint32 len,bool record)
+	void Peer::sendData(const Uint8* data,Uint32 len,bool proto)
 	{
 		if (killed) return;
 		
 		sock->writeBlock((const char*)data,len);
-		up_speed->writeBytes(len,record);
+		up_speed->writeBytes(len,proto);
 	}
 
 	void Peer::dataWritten(int bytes)
@@ -337,6 +337,11 @@ namespace bt
 	Uint32 Peer::getUploadRate() const 
 	{
 		return (Uint32)ceil(up_speed->uploadRate());
+	}
+	
+	Uint32 Peer::getProtocolUploadRate() const
+	{
+		return (Uint32)ceil(up_speed->protocollOverhead());
 	}
 	
 	Uint32 Peer::getDownloadRate() const 

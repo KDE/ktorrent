@@ -121,9 +121,9 @@ namespace bt
 		 * can send some bytes
 		 * @param bytes Num bytes to send (0 == all)
 		 */
-		Uint32 uploadUnsentBytes(Uint32 bytes);
+		void uploadUnsentBytes(Uint32 bytes);
 	private:
-		Uint32 sendPacket(const Packet & p,Uint32 max);
+		bool sendPacket(Packet & p,Uint32 max);
 		void queuePacket(Packet* p,bool ask);
 		void sendSmallPackets();
 	};

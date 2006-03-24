@@ -29,9 +29,12 @@ namespace bt
 	class BitSet;
 	class Request;
 	class Chunk;
+	class Peer;
 
 	/**
-	@author Joris Guisson
+	 * @author Joris Guisson
+	 * 
+	 * Packet off data, which gets sent to a Peer
 	*/
 	class Packet
 	{
@@ -60,11 +63,20 @@ namespace bt
 		const Uint8* getData() const {return data;}
 		Uint32 getDataLength() const {return data_length;}
 
-		void dataWritten(Uint32 bytes) {written += bytes;}
-		Uint32 getDataWritten() const {return written;}
+	//	void dataWritten(Uint32 bytes) {written += bytes;}
+	//	Uint32 getDataWritten() const {return written;}
 		
 		/// Make a description of the packet for debug purposes
 		QString debugString() const;
+		
+		/**
+		 * Send the packet to a peer, return true if the full packet was written.
+		 * @param peer The peer
+		 * @param max_bytes The maximum number of bytes to write
+		 * @param bytes_sent The number of bytes actually sent are placed in here
+		 * @return true if the packet was written fully
+		 */
+		bool send(Peer* peer,Uint32 max_bytes,Uint32 & bytes_sent);
 	};
 
 }
