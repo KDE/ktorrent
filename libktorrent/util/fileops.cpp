@@ -236,53 +236,44 @@ namespace bt
 		
 		return (Uint64)sb.st_size;
 	}
-
-	/*
-	switch (errno)
+	
+	Uint64 FileSize(int fd)
 	{
-	case EPERM:
-	Out() << "EPERM" << endl;
-	break;
-	case EFAULT:
-	Out() << "EFAULT" << endl;
-	break;
-	case EACCES:
-	Out() << "EACCESS" << endl;
-	break;
+		int ret = 0;
+#if HAVE_STAT64
+		struct stat64 sb;
+		ret = fstat64(fd,&sb);
+#else
+		struct stat sb;
+		ret = fstat(fd,&sb);
+#endif
+		if (ret < 0)
+			throw Error(i18n("Cannot calculate the filesize : %2").arg(strerror(errno)));
+		
+		return (Uint64)sb.st_size;
+	}
 	
-	case ENAMETOOLONG:
-	Out() << "ENAMETOOLONG" << endl;
-	break;
 	
-	case ENOENT:
-	Out() << "ENOENT" << endl;
-	break;
 	
-	case ENOTDIR:
-	Out() << "ENOTDIR" << endl;
-	break;
+
+	void TruncateFile(int fd,Uint64 size)
+	{
+#if HAVE_FTRUNCATE64
+		if (ftruncate64(fd,size) == -1)
+#else
+		if (ftruncate(fd,size) == -1)
+#endif
+			throw Error(i18n("Cannot expand file : %1").arg(strerror(errno)));
+	}
 	
-	case ENOMEM:
-	Out() << "ENOMEM" << endl;
-	break;
-	case EROFS:
-	Out() << "EROFS" << endl;
-	break;
+	void SeekFile(int fd,Int64 off,int whence)
+	{
+#if HAVE_LSEEK64
+		if (lseek64(fd,off,whence) == -1)
+#else
+		if (lseek(fd,off,whence) == -1)
+#endif
+			throw Error(i18n("Cannot seek in file : %1").arg(strerror(errno)));
+	}
 	
-	case EEXIST:
-	Out() << "EEXIST" << endl;
-	break;
-	
-	case ELOOP:
-	Out() << "ELOOP" << endl;
-	break;
-	case ENOSPC:
-	Out() << "ENOSPC" << endl;
-	break;
-	
-	case EIO:
-	Out() << "EIO" << endl;
-	break;
-	
-}*/
 }

@@ -33,6 +33,7 @@
 #include <klocale.h>
 #include <kfileitem.h>
 #include <util/array.h>
+#include <util/fileops.h>
 #include <torrent/globals.h>
 #include <interfaces/functions.h>
 #include <kapplication.h>
@@ -74,15 +75,9 @@ namespace bt
 		{
 			throw Error(i18n("Cannot open %1 : %2").arg(path).arg(strerror(errno)));
 		}
-#if HAVE_STAT64
-		struct stat64 sb;
-		fstat64(fd,&sb);
-		file_size = sb.st_size;
-#else
-		struct stat sb;
-		fstat(fd,&sb);
-		file_size = sb.st_size;
-#endif
+
+		file_size = FileSize(fd);
+
 	//	Out() << QString("CacheFile %1 = %2").arg(path).arg(file_size) << endl;
 		
 		// re do all mappings if there are any
@@ -205,7 +200,7 @@ namespace bt
 		}
 		
 		// jump to the end of the file
-		lseek(fd,0,SEEK_END);
+		SeekFile(fd,0,SEEK_END);
 		
 		if (file_size + to_write > max_size)
 		{
@@ -233,23 +228,12 @@ namespace bt
 		file_size += num;
 //		
 	//	Out() << QString("growing %1 = %2").arg(path).arg(kt::BytesToString(file_size)) << endl;
-#if HAVE_STAT64
-		struct stat64 sb;
-		fstat64(fd,&sb);
-#else
-		struct stat sb;
-		fstat(fd,&sb);
-#endif
-		if (file_size != (Uint64)sb.st_size)
+
+		if (file_size != FileSize(fd))
 		{
 //			Out() << QString("Homer Simpson %1 %2").arg(file_size).arg(sb.st_size) << endl;
 			fsync(fd);
-#if HAVE_STAT64	
-			fstat64(fd,&sb);
-#else
-			fstat(fd,&sb);
-#endif
-			if (file_size != (Uint64)sb.st_size)
+			if (file_size != FileSize(fd))
 			{
 				throw Error(i18n("Cannot expand file %1").arg(path));
 			}
@@ -323,7 +307,7 @@ namespace bt
 		}
 		
 		// jump to right position
-		lseek(fd,off,SEEK_SET);
+		SeekFile(fd,off,SEEK_SET);
 		if ((Uint32)::read(fd,buf,size) != size)
 			throw Error(i18n("Error reading from %1").arg(path));
 	}
@@ -350,7 +334,7 @@ namespace bt
 		}
 		
 		// jump to right position
-		lseek(fd,off,SEEK_SET);
+		SeekFile(fd,off,SEEK_SET);
 		int ret = ::write(fd,buf,size);
 		if (ret == -1)
 			throw Error(i18n("Error writing to %1 : %2").arg(path).arg(strerror(errno)));
@@ -374,6 +358,25 @@ namespace bt
 		//Out() << "Temporarely closed " << path << endl;
 	}
 	
+	static bool FatPreallocate(int fd,Uint64 size)
+	{
+		try
+		{
+			SeekFile(fd, size, SEEK_SET);
+			char zero = 0;		
+			if (write(fd, &zero, 1) == -1)
+				return false;
+				
+			TruncateFile(fd,size);
+		}
+		catch (bt::Error & e)
+		{
+			Out() << e.toString() << endl;
+			return false;
+		}
+		return true;
+	}
+		
 	void CacheFile::preallocate()
 	{
 		Out() << "Preallocating file " << path << " (" << max_size << " bytes)" << endl;
@@ -381,24 +384,21 @@ namespace bt
 		{
 			openFile();
 		}
-#if HAVE_FTRUNCATE64
-		if (ftruncate64(fd,max_size) == -1)
-#else
-		if (ftruncate(fd,max_size) == -1)
-#endif
+
+		try
 		{
-			throw Error(i18n("Cannot preallocate diskspace : %s").arg(strerror(errno)));
+			bt::TruncateFile(fd,max_size);
 		}
-#if HAVE_STAT64
-		struct stat64 sb;
-		fstat64(fd,&sb);
-		file_size = sb.st_size;
-#else
-		struct stat sb;
-		fstat(fd,&sb);
-		file_size = sb.st_size;
-#endif
+		catch (bt::Error & e)
+		{
+			// first attempt failed, must be fat so try that
+			if (!FatPreallocate(fd,max_size))
+				throw Error(i18n("Cannot preallocate diskspace : %1").arg(strerror(errno)));
+		}
+
+		file_size = FileSize(fd);
 		Out() << "file_size = " << file_size << endl;
 	}
 
+	
 }

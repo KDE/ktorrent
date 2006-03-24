@@ -96,6 +96,31 @@ namespace bt
 	 * @throw Error if the file doesn't exist, or something else goes wrong
 	 */
 	Uint64 FileSize(const QString & url);
+	
+	/**
+	 * Get the size of a file.
+	 * @param fd The file descriptor of the file
+	 * @return The size
+	 * @throw Error if the file doesn't exist, or something else goes wrong
+	 */
+	Uint64 FileSize(int fd);
+	
+	/**
+	 * Truncate a file (wrapper around ftruncate)
+	 * @param fd The file descriptor of the file
+	 * @param size The size to truncate to
+	 * @throw Error if the file doesn't exist, or something else goes wrong
+	 */
+	void TruncateFile(int fd,Uint64 size);
+	
+	/**
+	 * Seek in a file, wrapper around lseek
+	 * @param fd The file descriptor
+	 * @param off Offset
+	 * @param whence Position to seek from
+	 * @throw Error if something else goes wrong
+	 */
+	void SeekFile(int fd,Int64 off,int whence);
 }
 
 #endif
