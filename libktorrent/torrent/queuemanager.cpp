@@ -75,7 +75,7 @@ namespace bt
 			SynchronousWait(500);
 	}
 
-	void QueueManager::start(kt::TorrentInterface* tc)
+	void QueueManager::start(kt::TorrentInterface* tc, bool user)
 	{
 		const TorrentStats & s = tc->getStats();
 		bool start_tc = false;
@@ -114,7 +114,7 @@ namespace bt
 		}
 		else
 		{
-			if (!tc->getStats().running && !tc->getStats().stopped_by_error)
+			if (!tc->getStats().running && !tc->getStats().stopped_by_error && user)
 			{
 				bool seed = tc->getStats().completed;
 				int nr = seed ? max_seeds : max_downloads;
@@ -172,7 +172,7 @@ namespace bt
 		while (i != downloads.end())
 		{
 			kt::TorrentInterface* tc = *i;
-			start(tc);
+			start(tc, false);
 			i++;
 		}
 	}
