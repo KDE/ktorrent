@@ -782,8 +782,21 @@ namespace bt
 		stats.total_bytes_to_download = (tor && cman) ?	tor->getFileLength() - cman->bytesExcluded() : 0;
 		stats.session_bytes_downloaded = stats.bytes_downloaded - prev_bytes_dl;
 		stats.session_bytes_uploaded = stats.bytes_uploaded - prev_bytes_ul;
-		stats.trk_bytes_downloaded = stats.bytes_downloaded - trk_prev_bytes_dl;
-		stats.trk_bytes_uploaded = stats.bytes_uploaded - trk_prev_bytes_ul;
+		/*
+			Safety check, it is possible that stats.bytes_downloaded gets subtracted in Downloader.
+			Which can cause stats.bytes_downloaded to be smaller the trk_prev_bytes_dl.
+			This can screw up your download ratio.
+		*/
+		if (stats.bytes_downloaded >= trk_prev_bytes_dl)
+			stats.trk_bytes_downloaded = stats.bytes_downloaded - trk_prev_bytes_dl;
+		else
+			stats.trk_bytes_downloaded = 0;
+		
+		if (stats.trk_bytes_uploaded >= trk_prev_bytes_ul)
+			stats.trk_bytes_uploaded = stats.bytes_uploaded - trk_prev_bytes_ul;
+		else
+			stats.trk_bytes_uploaded = 0;
+		
 		getSeederInfo(stats.seeders_total,stats.seeders_connected_to);
 		getLeecherInfo(stats.leechers_total,stats.leechers_connected_to);
 	}
