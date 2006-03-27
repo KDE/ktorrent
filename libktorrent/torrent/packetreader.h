@@ -22,39 +22,24 @@
 
 #include "globals.h"
 
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-namespace KNetwork
-{
-	class KBufferedSocket;
-}
-#else
-class QSocket;
-#endif
 
 namespace bt
 {
 	class SpeedEstimater;
+	class Peer;
 
 	/**
 	@author Joris Guisson
 	*/
 	class PacketReader
 	{
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		KNetwork::KBufferedSocket* sock;
-#else
-		QSocket* sock;
-#endif
+		Peer* peer;
 		SpeedEstimater* speed;
 		Uint8* read_buf;
 		Uint32 packet_length,read_buf_ptr,serial;
 		bool error;
 	public:
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		PacketReader(KNetwork::KBufferedSocket* sock,SpeedEstimater* speed);
-#else
-		PacketReader(QSocket* sock,SpeedEstimater* speed);
-#endif
+		PacketReader(Peer* peer,SpeedEstimater* speed);
 		virtual ~PacketReader();
 
 		bool readPacket();

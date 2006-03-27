@@ -43,7 +43,7 @@ namespace mse
 		 * All bits will be set to 0.
 		 * @param num_bits The number of bits
 		 */
-		BigInt(Uint32 num_bits);
+		BigInt(Uint32 num_bits = 0);
 		
 		/**
 		 * Create a big integer of a string. The string must be
@@ -88,6 +88,23 @@ namespace mse
 		 */
 		static BigInt exclusiveOr(const BigInt & a,const BigInt & b);
 		
+		/// Get the number of bits
+		Uint32 getNumBits() const {return num_bits;}
+		
+		/// Get the number of bytes
+		Uint32 getNumBytes() const {return num_bytes;}
+		
+		/// Get the data
+		const Uint8* getData() const {return data;}
+		
+		/// Test if the BigInt is equal to 0
+		bool isNull() const;
+		
+		friend bool operator > (const BigInt & a,const BigInt & b);
+		friend bool operator == (const BigInt & a,const BigInt & b);
+		friend bool operator != (const BigInt & a,const BigInt & b);
+	private:
+		void hexDump() const;
 	private:
 		Uint8* data; // data is stored in reversed byte order (i.e. little endian)
 		Uint32 num_bits,num_bytes;

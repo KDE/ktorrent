@@ -63,8 +63,6 @@ namespace bt
 		const Uint8* getData() const {return data;}
 		Uint32 getDataLength() const {return data_length;}
 
-	//	void dataWritten(Uint32 bytes) {written += bytes;}
-	//	Uint32 getDataWritten() const {return written;}
 		
 		/// Make a description of the packet for debug purposes
 		QString debugString() const;

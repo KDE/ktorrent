@@ -17,17 +17,31 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include "encryptor.h"
+#ifndef UTESTBIGINTTEST_H
+#define UTESTBIGINTTEST_H
 
-namespace mse
+#include "unittest.h"
+
+namespace utest
 {
 
-	Encryptor::Encryptor()
-	{}
+	/**
+		@author Joris Guisson <joris.guisson@gmail.com>
+	*/
+	class BigIntTest : public UnitTest
+	{
+	public:
+		BigIntTest();
+		virtual ~BigIntTest();
 
-
-	Encryptor::~Encryptor()
-	{}
-
+		virtual bool doTest();
+	private:
+		bool conversionTest();
+		bool xorTest();
+		bool cmpTest();
+		bool modTest();
+	};
 
 }
+
+#endif

@@ -17,27 +17,22 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-#include <kbufferedsocket.h>
-#else
-#include <qsocket.h>
-#endif
+
 
 #include <util/log.h>
+#include <util/functions.h>
 #include "packetreader.h"
 #include "speedestimater.h"
-#include <util/functions.h>
+#include "peer.h"
+
 
 namespace bt
 {
 	static Uint32 dodo = 0;
 
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-	PacketReader::PacketReader(KNetwork::KBufferedSocket* sock,SpeedEstimater* speed)
-#else
-	PacketReader::PacketReader(QSocket* sock,SpeedEstimater* speed)
-#endif
-	: sock(sock),speed(speed),error(false)
+
+	PacketReader::PacketReader(Peer* peer,SpeedEstimater* speed) 
+		: peer(peer),speed(speed),error(false)
 	{
 		read_buf_ptr = packet_length = 0;
 		read_buf = new Uint8[MAX_PIECE_LEN + 13];
@@ -53,15 +48,14 @@ namespace bt
 	
 	bool PacketReader::newPacket()
 	{
-		Uint32 available = sock->bytesAvailable();
+		Uint32 available = peer->bytesAvailable();
 		read_buf_ptr = 0;
 		if (available < 4)
 			return false;
 		
 		Uint8 len[4];
-		if (sock->readBlock((char*)len,4) != 4)
+		if (peer->readData(len,4) != 4)
 		{
-		//	Out() << serial << " sock->readBlock error" << endl;
 			error = true;
 			return false;
 		}
@@ -81,12 +75,12 @@ namespace bt
 		if (packet_length == 0)
 			return true;
 			
-		available = sock->bytesAvailable();
+		available = peer->bytesAvailable();
 		// see if the entire packet is available
 		if (available < packet_length)
 		{
 			// not enough for the entire packet so store in read bufer
-			sock->readBlock((char*)read_buf,available);
+			peer->readData(read_buf,available);
 			read_buf_ptr += available;
 			if (read_buf[0] == PIECE)
 			{
@@ -96,7 +90,7 @@ namespace bt
 		}
 		else
 		{
-			sock->readBlock((char*)read_buf,packet_length);
+			peer->readData(read_buf,packet_length);
 			if (read_buf[0] == PIECE)
 			{
 				speed->onRead(packet_length);
@@ -115,12 +109,12 @@ namespace bt
 		if (read_buf_ptr == 0)
 			return newPacket();
 		
-		Uint32 available = sock->bytesAvailable();
+		Uint32 available = peer->bytesAvailable();
 		//	Out() << serial << " available = " << available << endl;
 		//	Out() << serial << " accum = " << (read_buf_ptr + available) << " " << packet_length << endl;
 		if (read_buf_ptr + available < packet_length)
 		{
-			sock->readBlock((char*)read_buf + read_buf_ptr,available);
+			peer->readData(read_buf + read_buf_ptr,available);
 			read_buf_ptr += available;
 			if (read_buf[0] == PIECE)
 			{
@@ -130,7 +124,7 @@ namespace bt
 		else
 		{
 			Uint32 to_read = packet_length - read_buf_ptr;
-			sock->readBlock((char*)read_buf + read_buf_ptr,to_read);
+			peer->readData(read_buf + read_buf_ptr,to_read);
 			//	Out() << serial << " Packet finished " << packet_length << " " << 
 			//			(packet_length - read_buf_ptr) << endl;
 			if (read_buf[0] == PIECE)
@@ -147,7 +141,7 @@ namespace bt
 	
 	bool PacketReader::moreData() const
 	{
-		return sock->bytesAvailable() > 0;
+		return peer->bytesAvailable() > 0;
 	}
 
 }

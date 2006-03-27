@@ -183,7 +183,7 @@ namespace bt
 			return;
 		}
 
-		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),dht_supported);
+		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),dht_supported,0);
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));
@@ -205,7 +205,7 @@ namespace bt
 			return;
 			
 		Peer* peer = new Peer(
-				auth->takeSocket(),auth->getPeerID(),tor.getNumChunks(),auth->supportsDHT());
+				auth->takeSocket(),auth->getPeerID(),tor.getNumChunks(),auth->supportsDHT(),0);
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));

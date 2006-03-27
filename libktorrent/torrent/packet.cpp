@@ -19,8 +19,10 @@
  ***************************************************************************/
 #include <qstring.h>
 #include <string.h>
+#include <util/log.h>
 #include <util/bitset.h>
 #include <util/functions.h>
+#include <torrent/globals.h>
 #include "packet.h"
 #include "request.h"
 #include "chunk.h"

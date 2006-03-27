@@ -79,6 +79,7 @@ namespace bt
 		}
 		if (p.getType() == PIECE)
 			uploaded += bs;
+		
 		return ret;
 	}
 	
@@ -237,7 +238,7 @@ namespace bt
 		else
 		{
 			Packet* p = packets.first();
-			if (sendPacket(*p,bytes));
+			if (sendPacket(*p,bytes))
 			{
 				packets.removeFirst();
 				sendSmallPackets();

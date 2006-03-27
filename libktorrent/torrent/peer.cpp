@@ -28,7 +28,7 @@
 
 #include <util/log.h>
 #include <util/functions.h>
-
+#include <mse/rc4encryptor.h>
 
 #include "peer.h"
 #include "chunk.h"
@@ -49,18 +49,18 @@ namespace bt
 	
 	static Uint32 peer_id_counter = 1;
 #ifdef USE_KNETWORK_SOCKET_CLASSES
-	Peer::Peer(KNetwork::KBufferedSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported)
+	Peer::Peer(KNetwork::KBufferedSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported,mse::RC4Encryptor* enc)
 #else
-	Peer::Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported)
+	Peer::Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported,mse::RC4Encryptor* enc)
 #endif
-	: sock(sock),pieces(num_chunks),peer_id(peer_id)
+	: sock(sock),pieces(num_chunks),peer_id(peer_id),enc(enc)
 	{
 		id = peer_id_counter;
 		peer_id_counter++;
 		
 		speed = new SpeedEstimater();
 		up_speed = new UpSpeedEstimater();
-		preader = new PacketReader(sock,speed);
+		preader = new PacketReader(this,speed);
 		choked = am_choked = true;
 		interested = am_interested = false;
 		killed = false;
@@ -116,6 +116,7 @@ namespace bt
 		}
 		delete speed;
 		delete up_speed;
+		delete enc;
 	}
 
 	void Peer::connectionClosed() 
@@ -324,8 +325,28 @@ namespace bt
 	{
 		if (killed) return;
 		
-		sock->writeBlock((const char*)data,len);
+		if (enc)
+			sock->writeBlock((const char*)enc->encrypt(data,len),len);
+		else
+			sock->writeBlock((const char*)data,len);
+		
 		up_speed->writeBytes(len,proto);
+	}
+	
+	Uint32 Peer::readData(Uint8* buf,Uint32 len)
+	{
+		if (killed) return 0;
+		
+		Uint32 ret = sock->readBlock((char*)buf,len);
+		if (ret > 0 && enc)
+			enc->decrypt(buf,ret);
+		
+		return ret;
+	}
+	
+	Uint32 Peer::bytesAvailable() const
+	{
+		return sock->bytesAvailable();
 	}
 
 	void Peer::dataWritten(int bytes)

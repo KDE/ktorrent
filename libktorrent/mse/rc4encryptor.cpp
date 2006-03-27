@@ -27,6 +27,8 @@ namespace mse
 		a = b;
 		b = tmp;
 	}
+	
+	static Uint8 rc4_enc_buffer[bt::MAX_MSGLEN];
 
 	RC4Encryptor::RC4Encryptor(const bt::SHA1Hash & dkey,const bt::SHA1Hash & ekey) 
 	: dkey(dkey),ekey(ekey),di(0),dj(0),ei(0),ej(0)
@@ -59,20 +61,21 @@ namespace mse
 	{}
 
 
-	void RC4Encryptor::decrypt(bt::Array< Uint8 >& data)
+	void RC4Encryptor::decrypt(Uint8* data,Uint32 len)
 	{
-		for (Uint32 k = 0;k < data.size();k++)
+		for (Uint32 k = 0;k < len;k++)
 		{
 			data[k] = prga(true) ^ data[k];
 		}
 	}
 
-	void RC4Encryptor::encrypt(bt::Array< Uint8 >& data)
+	const Uint8* RC4Encryptor::encrypt(const Uint8* data,Uint32 len)
 	{
-		for (Uint32 k = 0;k < data.size();k++)
+		for (Uint32 k = 0;k < len;k++)
 		{
-			data[k] = prga(false) ^ data[k];
+			rc4_enc_buffer[k] = prga(false) ^ data[k];
 		}
+		return rc4_enc_buffer;
 	}
 	
 	Uint8 RC4Encryptor::prga(bool d)

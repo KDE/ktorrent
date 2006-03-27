@@ -39,6 +39,11 @@ namespace KNetwork
 class QSocket;
 #endif
 
+namespace mse
+{
+	class RC4Encryptor;
+}
+
 namespace bt
 {
 	class Chunk;
@@ -73,11 +78,20 @@ namespace bt
 		 * @param peer_id The Peer's BitTorrent ID
 		 * @param num_chunks The number of chunks in the file
 		 * @param dht_supported Wether or not the peer supports DHT (mainline)
+		 * @param enc An RC4 encryptor (0 if no encryption is wanted
 		 */
 #ifdef USE_KNETWORK_SOCKET_CLASSES
-		Peer(KNetwork::KBufferedSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported);
+		Peer(KNetwork::KBufferedSocket* sock,
+			 const PeerID & peer_id,
+			 Uint32 num_chunks,
+			 bool dht_supported,
+			 mse::RC4Encryptor* enc);
 #else
-		Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported);
+		Peer(QSocket* sock,
+			 const PeerID & peer_id,
+			 Uint32 num_chunks,
+			 bool dht_supported,
+			 mse::RC4Encryptor* enc);
 #endif
 		virtual ~Peer();
 
@@ -139,6 +153,17 @@ namespace bt
 		 * @param proto Indicates wether the packed is data or a protocol message
 		 */
 		void sendData(const Uint8* data,Uint32 len,bool proto);
+		
+		/**
+		 * Reads data from the peer.
+		 * @param buf The buffer to store the data
+		 * @param len The maximum number of bytes to read
+		 * @return The number of bytes read
+		 */
+		Uint32 readData(Uint8* buf,Uint32 len);
+		
+		/// Get the number of bytes available to read.
+		Uint32 bytesAvailable() const;
 		
 		/**
 		 * See if all previously written data, has been sent.
@@ -260,6 +285,8 @@ namespace bt
 		PeerUploader* uploader;
 		mutable kt::PeerInterface::Stats stats;
 		QTime connect_time;
+		
+		mse::RC4Encryptor* enc;
 
 		friend class PacketWriter;
 	};

@@ -25,6 +25,7 @@
 #include "upnpparsedescriptiontest.h"
 #include "upnpparseresponsetest.h"
 #include "dhtmsgparsetest.h"
+#include "biginttest.h"
 
 using namespace kt;
 using namespace bt;
@@ -40,6 +41,7 @@ int main(int argc,char** argv)
 	tr.addTest(new UPnPParseDescriptionTest());
 	tr.addTest(new UPnPParseResponseTest());
 	tr.addTest(new DHTMsgParseTest());
+	tr.addTest(new BigIntTest());
 	tr.doAllTests();
 	Globals::cleanup();
 	return 0;
