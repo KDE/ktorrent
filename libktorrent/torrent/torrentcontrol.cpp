@@ -792,7 +792,7 @@ namespace bt
 		else
 			stats.trk_bytes_downloaded = 0;
 		
-		if (stats.trk_bytes_uploaded >= trk_prev_bytes_ul)
+		if (stats.bytes_uploaded >= trk_prev_bytes_ul)
 			stats.trk_bytes_uploaded = stats.bytes_uploaded - trk_prev_bytes_ul;
 		else
 			stats.trk_bytes_uploaded = 0;
