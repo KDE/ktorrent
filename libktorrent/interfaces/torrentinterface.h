@@ -48,7 +48,8 @@ namespace kt
 		STALLED,
 		STOPPED,
 		ALLOCATING_DISKSPACE,
-		ERROR
+		ERROR,
+		QUEUED
 	};
 
 	struct TorrentStats

@@ -38,6 +38,8 @@ class QueueItem: public QListViewItem
 		
 		void setTorrentPriority(int p);
 		
+		const kt::TorrentInterface* getTC() { return tc; }
+		
 	private:
 		//void updatePriorities(QueueItem* to, bool from_end, int val);
 		void paintCell(QPainter* p,const QColorGroup & cg,int column,int width,int align);
@@ -59,6 +61,8 @@ class QueueDialog: public QueueDlg
     	virtual void btnEnqueue_clicked();
     	virtual void btnApply_clicked();
     	virtual void btnOk_clicked();
+    	virtual void seedList_currentChanged(QListViewItem*);
+    	virtual void downloadList_currentChanged(QListViewItem*);
     	
 		
 	private:
@@ -68,7 +72,9 @@ class QueueDialog: public QueueDlg
 		///Writes the queue order into QueueManager
 		void writeQueue();
 		
-		QListView* torrentView;
+		///Gets the pointer to currently visible torrentList (download or seed)
+		QListView* getCurrentList();
+
 		bt::QueueManager* qman;
 };
 

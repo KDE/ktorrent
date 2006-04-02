@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>577</width>
-            <height>420</height>
+            <width>651</width>
+            <height>400</height>
         </rect>
     </property>
     <property name="caption">
@@ -19,42 +19,88 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QListView" row="0" column="0" rowspan="7" colspan="1">
-            <column>
-                <property name="text">
-                    <string>Torrent</string>
-                </property>
-                <property name="clickable">
-                    <bool>true</bool>
-                </property>
-                <property name="resizable">
-                    <bool>true</bool>
-                </property>
-            </column>
-            <column>
-                <property name="text">
-                    <string>Controlled by</string>
-                </property>
-                <property name="clickable">
-                    <bool>true</bool>
-                </property>
-                <property name="resizable">
-                    <bool>true</bool>
-                </property>
-            </column>
+        <widget class="QPushButton" row="7" column="1">
             <property name="name">
-                <cstring>torrentList</cstring>
+                <cstring>btnCancel</cstring>
             </property>
-            <property name="allColumnsShowFocus">
-                <bool>true</bool>
+            <property name="text">
+                <string>&amp;Cancel</string>
             </property>
-            <property name="resizeMode">
-                <enum>AllColumns</enum>
+            <property name="accel">
+                <string>Alt+C</string>
             </property>
         </widget>
-        <widget class="QLayoutWidget" row="0" column="1">
+        <widget class="QPushButton" row="5" column="1">
             <property name="name">
-                <cstring>layout1</cstring>
+                <cstring>btnOk</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;OK</string>
+            </property>
+            <property name="accel">
+                <string>Alt+O</string>
+            </property>
+        </widget>
+        <widget class="QPushButton" row="6" column="1">
+            <property name="name">
+                <cstring>btnApply</cstring>
+            </property>
+            <property name="text">
+                <string>Appl&amp;y</string>
+            </property>
+            <property name="accel">
+                <string>Alt+Y</string>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget" row="3" column="1">
+            <property name="name">
+                <cstring>layout3</cstring>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>btnEnqueue</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;QM Controlled</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+Q</string>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>btnDequeue</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;User Controlled</string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+        <spacer row="4" column="1">
+            <property name="name">
+                <cstring>spacer1</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>60</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QLayoutWidget" row="1" column="1">
+            <property name="name">
+                <cstring>moveButtons</cstring>
             </property>
             <vbox>
                 <property name="name">
@@ -67,6 +113,9 @@
                     <property name="text">
                         <string>Move &amp;up</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+U</string>
+                    </property>
                 </widget>
                 <widget class="QPushButton">
                     <property name="name">
@@ -75,10 +124,13 @@
                     <property name="text">
                         <string>Move dow&amp;n</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+N</string>
+                    </property>
                 </widget>
             </vbox>
         </widget>
-        <spacer row="1" column="1">
+        <spacer row="2" column="1">
             <property name="name">
                 <cstring>spacer2</cstring>
             </property>
@@ -95,35 +147,9 @@
                 </size>
             </property>
         </spacer>
-        <widget class="QLayoutWidget" row="2" column="1">
+        <spacer row="0" column="1">
             <property name="name">
-                <cstring>layout3</cstring>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>btnEnqueue</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;QM Controlled</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>btnDequeue</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;User Controlled</string>
-                    </property>
-                </widget>
-            </vbox>
-        </widget>
-        <spacer row="3" column="1">
-            <property name="name">
-                <cstring>spacer1</cstring>
+                <cstring>spacer2_2</cstring>
             </property>
             <property name="orientation">
                 <enum>Vertical</enum>
@@ -134,33 +160,348 @@
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>90</height>
+                    <height>16</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QPushButton" row="6" column="1">
+        <widget class="QTabWidget" row="0" column="0" rowspan="8" colspan="1">
             <property name="name">
-                <cstring>btnCancel</cstring>
+                <cstring>m_tabs</cstring>
             </property>
-            <property name="text">
-                <string>&amp;Cancel</string>
-            </property>
-        </widget>
-        <widget class="QPushButton" row="5" column="1">
-            <property name="name">
-                <cstring>btnApply</cstring>
-            </property>
-            <property name="text">
-                <string>&amp;Apply</string>
-            </property>
-        </widget>
-        <widget class="QPushButton" row="4" column="1">
-            <property name="name">
-                <cstring>btnOk</cstring>
-            </property>
-            <property name="text">
-                <string>&amp;OK</string>
-            </property>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>tab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>Downlo&amp;ad</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QListView" row="0" column="0">
+                        <column>
+                            <property name="text">
+                                <string>Torrent</string>
+                            </property>
+                            <property name="clickable">
+                                <bool>false</bool>
+                            </property>
+                            <property name="resizable">
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <column>
+                            <property name="text">
+                                <string>Controlled by</string>
+                            </property>
+                            <property name="clickable">
+                                <bool>false</bool>
+                            </property>
+                            <property name="resizable">
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <property name="name">
+                            <cstring>downloadList</cstring>
+                        </property>
+                        <property name="allColumnsShowFocus">
+                            <bool>true</bool>
+                        </property>
+                        <property name="resizeMode">
+                            <enum>AllColumns</enum>
+                        </property>
+                    </widget>
+                    <widget class="QGroupBox" row="1" column="0">
+                        <property name="name">
+                            <cstring>InfoDownload</cstring>
+                        </property>
+                        <property name="title">
+                            <string>Info</string>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QLayoutWidget" row="0" column="0">
+                                <property name="name">
+                                    <cstring>layout13</cstring>
+                                </property>
+                                <vbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>textLabel3</cstring>
+                                        </property>
+                                        <property name="sizePolicy">
+                                            <sizepolicy>
+                                                <hsizetype>4</hsizetype>
+                                                <vsizetype>5</vsizetype>
+                                                <horstretch>0</horstretch>
+                                                <verstretch>0</verstretch>
+                                            </sizepolicy>
+                                        </property>
+                                        <property name="text">
+                                            <string>Status:</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>textLabel1</cstring>
+                                        </property>
+                                        <property name="sizePolicy">
+                                            <sizepolicy>
+                                                <hsizetype>4</hsizetype>
+                                                <vsizetype>5</vsizetype>
+                                                <horstretch>0</horstretch>
+                                                <verstretch>0</verstretch>
+                                            </sizepolicy>
+                                        </property>
+                                        <property name="text">
+                                            <string>Tracker:</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>textLabel4</cstring>
+                                        </property>
+                                        <property name="sizePolicy">
+                                            <sizepolicy>
+                                                <hsizetype>4</hsizetype>
+                                                <vsizetype>5</vsizetype>
+                                                <horstretch>0</horstretch>
+                                                <verstretch>0</verstretch>
+                                            </sizepolicy>
+                                        </property>
+                                        <property name="text">
+                                            <string>Share ratio:</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>textLabel2</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>Bytes left:</string>
+                                        </property>
+                                    </widget>
+                                </vbox>
+                            </widget>
+                            <widget class="QLayoutWidget" row="0" column="1">
+                                <property name="name">
+                                    <cstring>layout14</cstring>
+                                </property>
+                                <vbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>dlStatus</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string></string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>dlTracker</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string></string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>dlRatio</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string></string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>dlBytes</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string></string>
+                                        </property>
+                                    </widget>
+                                </vbox>
+                            </widget>
+                        </grid>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>tab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>&amp;Seed</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QListView" row="0" column="0">
+                        <column>
+                            <property name="text">
+                                <string>Torrent</string>
+                            </property>
+                            <property name="clickable">
+                                <bool>true</bool>
+                            </property>
+                            <property name="resizable">
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <column>
+                            <property name="text">
+                                <string>Controlled by</string>
+                            </property>
+                            <property name="clickable">
+                                <bool>true</bool>
+                            </property>
+                            <property name="resizable">
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <property name="name">
+                            <cstring>seedList</cstring>
+                        </property>
+                        <property name="allColumnsShowFocus">
+                            <bool>true</bool>
+                        </property>
+                        <property name="resizeMode">
+                            <enum>AllColumns</enum>
+                        </property>
+                    </widget>
+                    <widget class="QGroupBox" row="1" column="0">
+                        <property name="name">
+                            <cstring>InfoSeed</cstring>
+                        </property>
+                        <property name="title">
+                            <string>Info</string>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QLayoutWidget" row="0" column="0">
+                                <property name="name">
+                                    <cstring>layout7</cstring>
+                                </property>
+                                <vbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>textLabel3_2</cstring>
+                                        </property>
+                                        <property name="sizePolicy">
+                                            <sizepolicy>
+                                                <hsizetype>4</hsizetype>
+                                                <vsizetype>5</vsizetype>
+                                                <horstretch>0</horstretch>
+                                                <verstretch>0</verstretch>
+                                            </sizepolicy>
+                                        </property>
+                                        <property name="text">
+                                            <string>Status:</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>textLabel1_2</cstring>
+                                        </property>
+                                        <property name="sizePolicy">
+                                            <sizepolicy>
+                                                <hsizetype>4</hsizetype>
+                                                <vsizetype>5</vsizetype>
+                                                <horstretch>0</horstretch>
+                                                <verstretch>0</verstretch>
+                                            </sizepolicy>
+                                        </property>
+                                        <property name="text">
+                                            <string>Tracker:</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>textLabel4_2</cstring>
+                                        </property>
+                                        <property name="sizePolicy">
+                                            <sizepolicy>
+                                                <hsizetype>4</hsizetype>
+                                                <vsizetype>5</vsizetype>
+                                                <horstretch>0</horstretch>
+                                                <verstretch>0</verstretch>
+                                            </sizepolicy>
+                                        </property>
+                                        <property name="text">
+                                            <string>Share ratio:</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>textLabel1_3</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>Uploaded:</string>
+                                        </property>
+                                    </widget>
+                                </vbox>
+                            </widget>
+                            <widget class="QLayoutWidget" row="0" column="1">
+                                <property name="name">
+                                    <cstring>layout8</cstring>
+                                </property>
+                                <vbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>ulStatus</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string></string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>ulTracker</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string></string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>ulRatio</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string></string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>ulBytes</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string></string>
+                                        </property>
+                                    </widget>
+                                </vbox>
+                            </widget>
+                        </grid>
+                    </widget>
+                </grid>
+            </widget>
         </widget>
     </grid>
 </widget>
@@ -207,6 +548,18 @@
         <receiver>QueueDlg</receiver>
         <slot>btnOk_clicked()</slot>
     </connection>
+    <connection>
+        <sender>downloadList</sender>
+        <signal>currentChanged(QListViewItem*)</signal>
+        <receiver>QueueDlg</receiver>
+        <slot>downloadList_currentChanged(QListViewItem*)</slot>
+    </connection>
+    <connection>
+        <sender>seedList</sender>
+        <signal>currentChanged(QListViewItem*)</signal>
+        <receiver>QueueDlg</receiver>
+        <slot>seedList_currentChanged(QListViewItem*)</slot>
+    </connection>
 </connections>
 <tabstops>
     <tabstop>btnOk</tabstop>
@@ -216,7 +569,7 @@
     <tabstop>btnMoveDown</tabstop>
     <tabstop>btnEnqueue</tabstop>
     <tabstop>btnDequeue</tabstop>
-    <tabstop>torrentList</tabstop>
+    <tabstop>downloadList</tabstop>
 </tabstops>
 <slots>
     <slot>btnMoveUp_clicked()</slot>
@@ -228,6 +581,8 @@
     <slot>btnApply_clicked()</slot>
     <slot>btnDequeue_clicked()</slot>
     <slot>btnOk_clicked()</slot>
+    <slot>downloadList_currentChanged(QListViewItem*)</slot>
+    <slot>seedList_currentChanged(QListViewItem*)</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

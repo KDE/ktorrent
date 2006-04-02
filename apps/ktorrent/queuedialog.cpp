@@ -19,14 +19,23 @@
  ***************************************************************************/
 #include "queuedialog.h"
 #include <interfaces/torrentinterface.h>
+#include <interfaces/functions.h>
 #include <torrent/queuemanager.h>
 
 #include <qlistview.h>
 #include <qstring.h>
 #include <qmessagebox.h>
 #include <qptrlist.h>
+#include <qlabel.h>
+#include <qtabwidget.h>
+#include <qgroupbox.h>
+#include <qpushbutton.h>
+#include <qlayout.h>
 
 #include <klocale.h>
+#include <kglobal.h>
+#include <kurl.h>
+#include <kiconloader.h>
 
 using namespace bt;
 using namespace kt;
@@ -42,7 +51,12 @@ int QueueItem::compare(QListViewItem *i, int , bool ) const
 {
 	QueueItem* it = (QueueItem*) i;
 	if(it->getPriority() == torrentPriority)
-		return 0;
+	{
+		const TorrentInterface* ti = it->getTC();
+		QString name1 = tc->getStats().torrent_name;
+		QString name2 = ti->getStats().torrent_name;
+		return name1.compare(name2);
+	}
 			
 	return it->getPriority() < torrentPriority ? -1 : 1;
 }
@@ -80,25 +94,35 @@ void QueueItem::paintCell(QPainter* p,const QColorGroup & cg,int column,int widt
 QueueDialog::QueueDialog(bt::QueueManager* qm, QWidget *parent, const char *name)
 	:QueueDlg(parent, name)
 {
-	this->qman = qm;
 	
-	torrentView = torrentList;
+	KIconLoader* iload = KGlobal::iconLoader();
+	btnMoveUp->setPixmap(iload->loadIcon("up", KIcon::Small));
+	btnMoveDown->setPixmap(iload->loadIcon("down", KIcon::Small));
+	
+	this->qman = qm;
 
 	QPtrList<kt::TorrentInterface>::iterator it = qman->begin();
 	for( ; it != qman->end(); ++it)
 	{
 		TorrentInterface* tc = *it;
 		TorrentStatus ts = tc->getStats().status;
+		
 		if(ts == kt::SEEDING || ts == kt::COMPLETE || tc->getStats().completed)
-			continue;
-		QueueItem* item = new QueueItem(tc, torrentView);
-		torrentView->insertItem(item);
+		{
+			QueueItem* item = new QueueItem(tc, seedList);
+			seedList->insertItem(item);
+		}
+		else
+		{
+			QueueItem* item = new QueueItem(tc, downloadList);
+			downloadList->insertItem(item);
+		}
 	}
 }
 
 void QueueDialog::btnMoveUp_clicked()
 {	
-	QueueItem* current = (QueueItem*) torrentView->selectedItem();
+	QueueItem* current = (QueueItem*) getCurrentList()->selectedItem();
 	if(current == 0)
 		return;
 	
@@ -113,13 +137,13 @@ void QueueDialog::btnMoveUp_clicked()
 		int tmp = previous->getPriority();
 		previous->setPriority(current->getPriority());
 		current->setPriority(tmp);
-		torrentView->sort();
+		getCurrentList()->sort();
 	}
 }
 
 void QueueDialog::btnMoveDown_clicked()
-{	
-	QueueItem* current = (QueueItem*) torrentView->selectedItem();
+{
+	QueueItem* current = (QueueItem*) getCurrentList()->selectedItem();
 	if(current == 0)
 		return;
 	
@@ -136,7 +160,7 @@ void QueueDialog::btnMoveDown_clicked()
 			return;
 		previous->setPriority(current->getPriority());
 		current->setPriority(tmp);
-		torrentView->sort();
+		getCurrentList()->sort();
 	}
 }
 
@@ -152,25 +176,25 @@ void QueueDialog::btnEnqueue_clicked()
 
 void QueueDialog::btnDequeue_clicked()
 {
-	QueueItem* current = (QueueItem*) torrentView->selectedItem();
+	QueueItem* current = (QueueItem*) getCurrentList()->selectedItem();
 	if(current == 0)
 		return;
 	if(current->getPriority() == 0)
 		return;
 			
 	current->setPriority(0);
-	torrentView->sort();
+	getCurrentList()->sort();
 }
 
 void QueueDialog::enqueue(QueueItem* curr)
 {
-	QueueItem* current = curr == 0 ? (QueueItem*) torrentView->selectedItem() : curr;
+	QueueItem* current = curr == 0 ? (QueueItem*) getCurrentList()->selectedItem() : curr;
 	if(current == 0)
 		return;
 	if(current->getPriority() != 0)
 		return;
 	
-	QueueItem* item = (QueueItem*) torrentView->firstChild();
+	QueueItem* item = (QueueItem*) getCurrentList()->firstChild();
 	if(item == 0)
 		return;
 	
@@ -182,16 +206,34 @@ void QueueDialog::enqueue(QueueItem* curr)
 	}
 	
 	current->setPriority(1);
-	torrentView->sort();
+	getCurrentList()->sort();
 }
 
 void QueueDialog::writeQueue()
 {
-	QueueItem* item = (QueueItem*) torrentView->lastItem();
+	downloadList->sort();
+	seedList->sort();
+	
+	QueueItem* item = (QueueItem*) downloadList->lastItem();
 	if(item == 0)
 		return;
 	
 	int p = 0;
+	
+	while(item != 0)
+	{
+		if(item->getPriority() != 0)
+			item->setTorrentPriority(++p);
+		else
+			item->setTorrentPriority(0);
+		item = (QueueItem*) item->itemAbove();
+	}
+	
+	item = (QueueItem*) seedList->lastItem();
+	if(item == 0)
+		return;
+	
+	p = 0;
 	
 	while(item != 0)
 	{
@@ -214,6 +256,72 @@ void QueueDialog::btnOk_clicked()
 	writeQueue();
 	this->close();
 }
+
+QListView* QueueDialog::getCurrentList()
+{
+	return m_tabs->currentPageIndex() == 0 ? downloadList : seedList;
+}
+
+void QueueDialog::downloadList_currentChanged(QListViewItem* item)
+{
+	if(!item)
+	{
+		dlStatus->clear();
+		dlTracker->clear();
+		dlRatio->clear();
+// 		dlDHT->clear();
+		return;
+	}
+	
+	const TorrentInterface* tc = ((QueueItem*)item)->getTC();
+	TorrentStats s = tc->getStats();
+	
+	QString tracker = tc->getTrackerURL(true).prettyURL();
+	
+	if(tracker.length() > 50)
+	{
+		tracker.truncate(47);
+		tracker += "...";
+	}
+	
+	dlStatus->setText(tc->statusToString());
+	dlTracker->setText(tracker);
+	dlRatio->setText(QString("%1").arg((float)s.bytes_uploaded / s.bytes_downloaded,0,'f',2));
+	dlBytes->setText(BytesToString(s.bytes_left));
+// 	dlDHT->setText(s.priv_torrent ? i18n("No (private torrent)") : i18n("Yes"));
+}
+
+void QueueDialog::seedList_currentChanged(QListViewItem* item)
+{
+	if(!item)
+	{
+		ulStatus->clear();
+		ulTracker->clear();
+		ulRatio->clear();
+// 		ulDHT->clear();
+		return;
+	}
+	
+	const TorrentInterface* tc = ((QueueItem*)item)->getTC();
+	TorrentStats s = tc->getStats();
+	
+	QString tracker = tc->getTrackerURL(true).prettyURL();
+	
+	if(tracker.length() > 50)
+	{
+		tracker.truncate(47);
+		tracker += "...";
+	}
+	
+	ulStatus->setText(tc->statusToString());
+	ulTracker->setText(tracker);
+	ulRatio->setText(QString("%1").arg((float)s.bytes_uploaded / s.bytes_downloaded,0,'f',2));
+	ulBytes->setText(BytesToString(s.bytes_uploaded));
+// 	ulDHT->setText(s.priv_torrent ? i18n("No (private torrent)") : i18n("Yes"));
+}
+
+
+
 
 #include "queuedialog.moc"
 

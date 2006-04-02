@@ -639,6 +639,8 @@ namespace bt
 			stats.status = kt::ERROR;
 		else if (!stats.started)
 			stats.status = kt::NOT_STARTED;
+		else if(!stats.running && !stats.user_controlled)
+			stats.status = kt::QUEUED;
 		else if (!stats.running && stats.completed)
 			stats.status = kt::COMPLETE;
 		else if (!stats.running)
@@ -722,7 +724,7 @@ namespace bt
 			custom_output_name = true;
 		}
 		
-		priority = st.readInt("PRIORITY");
+		setPriority(st.readInt("PRIORITY"));
 		stats.user_controlled = priority == 0 ? true : false;
 		stats.autostart = st.readBoolean("AUTOSTART");
 		
@@ -918,6 +920,11 @@ namespace bt
 	{
 		priority = p;
 		stats.user_controlled = p == 0 ? true : false;
+		if(p)
+			stats.status = kt::QUEUED;
+		else
+			updateStatusMsg();
+		
 		saveStats();
 	}
 	
@@ -968,6 +975,8 @@ namespace bt
 				return i18n("Error: ") + getShortErrorMessage(); 
 			case kt::ALLOCATING_DISKSPACE:
 				return i18n("Allocating diskspace");
+			case kt::QUEUED:
+				return i18n("Queued");
 		}
 		return QString::null;
 	}
