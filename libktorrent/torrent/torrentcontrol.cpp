@@ -382,6 +382,7 @@ namespace bt
 		stats.torrent_name = tor->getNameSuggestion();
 		stats.multi_file_torrent = tor->isMultiFile();
 		stats.total_bytes = tor->getFileLength();
+		stats.priv_torrent = tor->isPrivate();
 		
 		// check the stats file for the custom_output_name variable
 		StatsFile st(datadir + "stats");
