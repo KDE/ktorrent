@@ -95,6 +95,15 @@ QueueDialog::QueueDialog(bt::QueueManager* qm, QWidget *parent, const char *name
 	:QueueDlg(parent, name)
 {
 	
+	connect(downloadList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(downloadList_currentChanged( QListViewItem* )));
+	connect(seedList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(seedList_currentChanged( QListViewItem* )));
+	
+	if(downloadList->firstChild())
+		downloadList->setCurrentItem(downloadList->firstChild());
+	
+	if(seedList->firstChild())
+		seedList->setCurrentItem(seedList->firstChild());
+	
 	KIconLoader* iload = KGlobal::iconLoader();
 	btnMoveUp->setPixmap(iload->loadIcon("up", KIcon::Small));
 	btnMoveDown->setPixmap(iload->loadIcon("down", KIcon::Small));
@@ -269,7 +278,7 @@ void QueueDialog::downloadList_currentChanged(QListViewItem* item)
 		dlStatus->clear();
 		dlTracker->clear();
 		dlRatio->clear();
-// 		dlDHT->clear();
+		dlDHT->clear();
 		return;
 	}
 	
@@ -288,7 +297,7 @@ void QueueDialog::downloadList_currentChanged(QListViewItem* item)
 	dlTracker->setText(tracker);
 	dlRatio->setText(QString("%1").arg((float)s.bytes_uploaded / s.bytes_downloaded,0,'f',2));
 	dlBytes->setText(BytesToString(s.bytes_left));
-// 	dlDHT->setText(s.priv_torrent ? i18n("No (private torrent)") : i18n("Yes"));
+	dlDHT->setText(s.priv_torrent ? i18n("No (private torrent)") : i18n("Yes"));
 }
 
 void QueueDialog::seedList_currentChanged(QListViewItem* item)
@@ -298,7 +307,7 @@ void QueueDialog::seedList_currentChanged(QListViewItem* item)
 		ulStatus->clear();
 		ulTracker->clear();
 		ulRatio->clear();
-// 		ulDHT->clear();
+		ulDHT->clear();
 		return;
 	}
 	
@@ -317,11 +326,8 @@ void QueueDialog::seedList_currentChanged(QListViewItem* item)
 	ulTracker->setText(tracker);
 	ulRatio->setText(QString("%1").arg((float)s.bytes_uploaded / s.bytes_downloaded,0,'f',2));
 	ulBytes->setText(BytesToString(s.bytes_uploaded));
-// 	ulDHT->setText(s.priv_torrent ? i18n("No (private torrent)") : i18n("Yes"));
+	ulDHT->setText(s.priv_torrent ? i18n("No (private torrent)") : i18n("Yes"));
 }
-
-
-
 
 #include "queuedialog.moc"
 
