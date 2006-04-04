@@ -6,5 +6,5 @@ bin_PROGRAMS = ktutester
 ktutester_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 ktutester_SOURCES = unittest.cpp testrunner.cpp main.cpp \
 			upnpparsedescriptiontest.cpp upnpparseresponsetest.cpp dhtmsgparsetest.cpp biginttest.cpp
-ktutester_LDADD = $(top_builddir)/plugins/upnp/libktupnp.la \
-	$(top_builddir)/libktorrent/libktorrent.la
+ktutester_LDADD = $(top_builddir)/ktorrent/plugins/upnp/libktupnp.la \
+	$(top_builddir)/ktorrent/libktorrent/libktorrent.la
