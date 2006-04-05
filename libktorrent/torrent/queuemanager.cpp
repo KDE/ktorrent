@@ -298,94 +298,108 @@ namespace bt
 			return;
 		
 		downloads.sort();
-		
-		int user_downloading = 0;
-		int user_seeding = 0;
-		
+                
 		QPtrList<TorrentInterface>::const_iterator it = downloads.begin();
+		QPtrList<TorrentInterface>::const_iterator its = downloads.end();
 		
-		// 2. Count user started torrents
-		for( it=downloads.begin(); it!=downloads.end(); ++it)
-		{
-			TorrentInterface* tc = *it;
-			const TorrentStats & s = tc->getStats();
+                
+		if(max_downloads != 0 || max_seeds != 0)
+		{	
+			bt::QueuePtrList download_queue;
+			bt::QueuePtrList seed_queue;
 			
-			if(s.running && s.user_controlled)
+			int user_downloading = 0;
+			int user_seeding = 0;
+			
+			for( ; it!=downloads.end(); ++it)
 			{
-				if(s.completed)
-					user_seeding++;
-				else
-					user_downloading++;
+				TorrentInterface* tc = *it;
+				const TorrentStats & s = tc->getStats();
+                        
+				if(s.running && s.user_controlled)
+				{
+					if(!s.completed)
+						++user_downloading;
+					else
+						++user_seeding;
+				}
+				
+				if(!s.user_controlled)
+				{
+					if(s.completed)
+						seed_queue.append(tc);
+					else		
+						download_queue.append(tc);
+				}
 			}
-		}
-		
-		// 3. Set max possible started torrents for QM
-		int qm_downloads = max_downloads != 0 ? max_downloads - user_downloading : downloads.count();
-		int qm_seeds = max_seeds != 0 ? max_seeds - user_seeding : downloads.count();
-		
-		// 4. Speed&Safety check.
-		if(qm_downloads < 0 && qm_seeds < 0)
-			return;
-		
-		// 5. Set the counter to the torrent after which all torrents should be stopped
-		int counter = 0;
-		int seed_counter = 0;
-		int download_counter = 0;
-		QPtrList<TorrentInterface>::const_iterator boundary = downloads.begin();
-		if(max_downloads < max_seeds)
-			for(int i=0;boundary != downloads.end() && i<max_downloads; ++boundary, ++i);
-		else
-			for(int i=0;boundary != downloads.end() && i<max_seeds; ++boundary, ++i);
-		
-		for(it=downloads.begin(); it!=boundary && it!=downloads.end(); ++counter, ++it)
-		{
-			TorrentInterface* tc = *it;		
-			const TorrentStats & s = tc->getStats();
+                        
+			int max_qm_downloads = max_downloads - user_downloading;
+			int max_qm_seeds = max_seeds - user_seeding;
 			
-			if(s.completed)
-				++seed_counter;
-			else
-				++download_counter;
-		}
-		
-		// 6. Stop all torrents from 'counter' to the end
-		for( ; it != downloads.end(); ++counter, ++it)
-		{
-			TorrentInterface* tc = *it;
-			const TorrentStats & s = tc->getStats();
-			
-			if(s.running)
-			{	
-				if( (s.completed && seed_counter >= max_seeds && max_seeds) || (!s.completed && download_counter >= max_downloads && max_downloads))
+			//stop all QM started torrents
+			for(int i=max_qm_downloads; i<download_queue.count() && max_downloads; ++i)
+			{
+				TorrentInterface* tc = download_queue.at(i);
+				const TorrentStats & s = tc->getStats();
+                                
+				if(s.running && !s.user_controlled && !s.completed)
+				{
+					Out() << "QM Stopping: " << s.torrent_name << endl;
 					stop(tc);
+				}
 			}
-		
-			if(s.completed)
-				++seed_counter;
-			else
-				++download_counter;
-		}
-		
-		// 7. Start torrents that should be running
-		counter = 0;
-		for(it=downloads.begin(); it!=downloads.end() && (qm_downloads > 0 || qm_seeds > 0); ++counter, ++it)
-		{
-			TorrentInterface* tc = *it;
-			const TorrentStats & s = tc->getStats();
 			
-			if(counter >= user_downloading && (qm_downloads > 0) && !s.completed && !s.user_controlled)
+			//stop all QM started torrents
+			for(int i=max_qm_seeds; i<seed_queue.count() && max_seeds; ++i)
 			{
-				if(!s.running)
-					start(tc);
-				qm_downloads--;
+				TorrentInterface* tc = seed_queue.at(i);
+				const TorrentStats & s = tc->getStats();
+                                
+				if(s.running && !s.user_controlled && s.completed)
+				{
+					Out() << "QM Stopping: " << s.torrent_name << endl;
+					stop(tc);
+				}
 			}
-			else if(counter >= user_seeding && (qm_seeds > 0) && s.completed && !s.user_controlled)
+			
+			//Now start all needed torrents
+			if(max_downloads == 0)
+				max_qm_downloads = download_queue.count();
+			
+			if(max_seeds == 0) 
+				max_qm_seeds = seed_queue.count();
+			
+			for(int i=0; i<max_qm_downloads && i<download_queue.count(); ++i)
 			{
-				if(!s.running)
+				TorrentInterface* tc = download_queue.at(i);
+				const TorrentStats & s = tc->getStats();
+				
+				if(!s.running && !s.completed && !s.user_controlled)
 					start(tc);
-				qm_seeds--;
+			}
+			
+			for(int i=0; i<max_qm_seeds && i<seed_queue.count(); ++i)
+			{
+				TorrentInterface* tc = seed_queue.at(i);
+				const TorrentStats & s = tc->getStats();
+				
+				if(!s.running && s.completed && !s.user_controlled)
+					start(tc);
 			}
 		}
+		else
+		{
+			//no limits at all
+			for(it=downloads.begin(); it!=downloads.end(); ++it)
+			{
+				TorrentInterface* tc = *it;
+				const TorrentStats & s = tc->getStats();
+                        
+				if(!s.running)
+					start(tc);
+			}
+		}
+                
 	}
 	
 	void QueueManager::torrentFinished(kt::TorrentInterface* tc)
@@ -393,9 +407,9 @@ namespace bt
 		//dequeue this tc
 		tc->setPriority(0);
 		//make sure the max_seeds is not reached
-		if(max_seeds !=0 && max_seeds < getNumRunning(false,true))
-			tc->stop(true);
-		
+// 		if(max_seeds !=0 && max_seeds < getNumRunning(false,true))
+// 			tc->stop(true);
+		torrentAdded(tc);
 		orderQueue();
 	}
 	
