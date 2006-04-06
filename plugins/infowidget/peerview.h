@@ -34,6 +34,7 @@ namespace kt
 	class PeerViewItem : public KListViewItem
 	{
 		kt::PeerInterface* peer;
+		QString m_country;
 	public:
 		PeerViewItem(PeerView* pv,kt::PeerInterface* peer);
 	

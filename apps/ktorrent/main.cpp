@@ -93,6 +93,7 @@ int main(int argc, char **argv)
 					"bflat1@gmx.net");
 	about.addCredit("Andreas Kling",0,"kling@impul.se");
 	about.addCredit("Felipe Sateler",0,"fsateler@gmail.com");
+	about.addCredit("Maxmind", I18N_NOOP("Country locator for InfoWidget plugin. Flags are taken from http://flags.blogpotato.de/ so thanks to them too."), "http://www.maxmind.com/");
 	
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);
