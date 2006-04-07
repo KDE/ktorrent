@@ -94,9 +94,10 @@ namespace kt
 		{
 			case 0: return QString::compare(s.ip_addresss,os.ip_addresss);
 			case 1:	
+			{
 				int ret = QString::compare(m_country, pvi->m_country);
 				return ret;
-				
+			}	
 			case 2: return QString::compare(s.client,os.client);
 			case 3: return CompareVal(s.download_rate,os.download_rate);
 			case 4: return CompareVal(s.upload_rate,os.upload_rate);
