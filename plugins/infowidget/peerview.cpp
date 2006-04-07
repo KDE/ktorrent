@@ -62,6 +62,8 @@ namespace kt
 		setText(0,s.ip_addresss);
 		setText(2,s.client);
 		setText(1, country_name);
+
+		m_country = QString(country_name);
 		
 		QPixmap pix(locate("data", QString("ktorrent/geoip/%1.png").arg(QString(country_code)).lower()));
 		setPixmap(0, pix);
@@ -84,13 +86,17 @@ namespace kt
 	
 	int PeerViewItem::compare(QListViewItem * i,int col,bool) const
 	{
-		PeerInterface* op = ((PeerViewItem*)i)->peer;
+		PeerViewItem* pvi = (PeerViewItem*) i;
+		PeerInterface* op = pvi->peer;
 		const PeerInterface::Stats & s = peer->getStats();
 		const PeerInterface::Stats & os = op->getStats();
 		switch (col)
 		{
 			case 0: return QString::compare(s.ip_addresss,os.ip_addresss);
-			case 1:	return QString::compare(m_country, ((PeerViewItem*)i)->m_country);
+			case 1:	
+				int ret = QString::compare(m_country, pvi->m_country);
+				return ret;
+				
 			case 2: return QString::compare(s.client,os.client);
 			case 3: return CompareVal(s.download_rate,os.download_rate);
 			case 4: return CompareVal(s.upload_rate,os.upload_rate);
