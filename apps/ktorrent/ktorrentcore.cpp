@@ -135,7 +135,8 @@ void KTorrentCore::load(const QString & target,const QString & dir)
 		        this,SLOT(torrentFinished(kt::TorrentInterface* )));
 		connect(tc, SIGNAL(stoppedByError(kt::TorrentInterface*, QString )),
 		        this, SLOT(slotStoppedByError(kt::TorrentInterface*, QString )));
-		// 		downloads.append(tc);
+		connect(tc, SIGNAL(seedingAutoStopped( kt::TorrentInterface* )),
+				this, SLOT(torrentSeedAutoStopped( kt::TorrentInterface* )));
 		qman->append(tc);
 		if (tc->getStats().multi_file_torrent)
 		{
@@ -239,6 +240,8 @@ void KTorrentCore::loadExistingTorrent(const QString & tor_dir)
 				this,SLOT(torrentFinished(kt::TorrentInterface* )));
 		connect(tc, SIGNAL(stoppedByError(kt::TorrentInterface*, QString )),
 				this, SLOT(slotStoppedByError(kt::TorrentInterface*, QString )));
+		connect(tc, SIGNAL(seedingAutoStopped( kt::TorrentInterface* )),
+				this, SLOT(torrentSeedAutoStopped( kt::TorrentInterface* )));
 		if (tc->getStats().autostart && tc->getStats().user_controlled)
 			start(tc);
 		torrentAdded(tc);
@@ -409,14 +412,14 @@ void KTorrentCore::rollback(const QPtrList<kt::TorrentInterface> & succes)
 	update_timer.start(100);
 }
 
-void KTorrentCore::startAll()
+void KTorrentCore::startAll(int type)
 {
-	qman->startall();
+	qman->startall(type);
 }
 
-void KTorrentCore::stopAll()
+void KTorrentCore::stopAll(int type)
 {
-	qman->stopall();
+	qman->stopall(type);
 }
 
 void KTorrentCore::update()
@@ -562,6 +565,11 @@ void KTorrentCore::removeBlockedIP(QString& ip)
 bt::QueueManager* KTorrentCore::getQueueManager()
 {
 	return this->qman;
+}
+
+void KTorrentCore::torrentSeedAutoStopped( kt::TorrentInterface * tc )
+{
+	qman->startNext();
 }
 
 #include "ktorrentcore.moc"

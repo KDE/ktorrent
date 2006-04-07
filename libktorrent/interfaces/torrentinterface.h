@@ -289,6 +289,13 @@ namespace kt
 		 * @param me The object which emitted the signal.
 		 */
 		void maxRatioChanged(kt::TorrentInterface* me);
+		
+		/**
+		 * Emited then torrent is stopped from seeding by KTorrent. 
+		 * Happens when torrent has reached maximum share ratio and maybe we'll add something more...
+		 * @param me The object which emitted the signal.
+		 */
+		void seedingAutoStopped(kt::TorrentInterface* me);
 
 	protected:
 		TorrentStats stats;

@@ -62,7 +62,7 @@ namespace bt
 				if (!vn)
 					throw Error(i18n("Parse Error"));
 
-				KURL url(vn->data().toString());
+				KURL url(vn->data().toString().stripWhiteSpace());
 				trackers.append(url);
 				//Out() << "Added tracker " << url << endl;
 			}
@@ -137,7 +137,7 @@ namespace bt
 		QTextStream stream(&file);
 		while (!stream.atEnd()) 
 		{
-			KURL url(stream.readLine());
+			KURL url(stream.readLine().stripWhiteSpace());
 			custom_trackers.append(url);
 		}
 		

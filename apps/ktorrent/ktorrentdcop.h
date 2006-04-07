@@ -44,8 +44,8 @@ public:
 	virtual void setMaxUploadSpeed(int kbytes_per_sec);
 	virtual void setMaxDownloadSpeed(int kbytes_per_sec);
 	virtual void setShowSysTrayIcon(bool yes);
-	virtual void startAll();
-	virtual void stopAll();
+	virtual void startAll(int type = 3);
+	virtual void stopAll(int type = 3);
 
 };
 

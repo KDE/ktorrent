@@ -197,7 +197,10 @@ namespace bt
 			}
 			
 			if(overMaxRatio())
+			{
 				stop(true);
+				emit seedingAutoStopped(this);
+			}
 			
 		}
 		catch (Error & e)

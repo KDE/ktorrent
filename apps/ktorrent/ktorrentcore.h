@@ -115,13 +115,15 @@ public:
 
 	/**
 	 * Start all, takes into account the maximum number of downloads.
+	 * @param type Wether to start all downloads or seeds. 1=Downloads, 2=Seeds, 3=All
 	 */
-	void startAll();
+	void startAll(int type);
 
 	/**
 	 * Stop all torrents.
+	 * @param type Wether to start all downloads or seeds. 1=Downloads, 2=Seeds, 3=All
 	 */
-	void stopAll();
+	void stopAll(int type);
 
 	/**
 	 * Make a torrent file
@@ -257,6 +259,7 @@ private:
 private slots:
 	void torrentFinished(kt::TorrentInterface* tc);
 	void slotStoppedByError(kt::TorrentInterface* tc, QString msg);
+	void torrentSeedAutoStopped(kt::TorrentInterface* tc);
 	
 private:
 // 	QPtrList<kt::TorrentInterface> downloads;

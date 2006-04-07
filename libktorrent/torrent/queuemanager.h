@@ -57,8 +57,8 @@ namespace bt
 			void start(kt::TorrentInterface* tc, bool user = true);
 			void stop(kt::TorrentInterface* tc, bool user = false);
 			
-			void stopall();
-			void startall();
+			void stopall(int type);
+			void startall(int type);
 			
 			int count() { return downloads.count(); }
 			int countDownloads();

@@ -482,7 +482,8 @@ void KTorrent::startDownload()
 
 void KTorrent::startAllDownloads()
 {
-	m_core->startAll();
+	kt::PanelView what = getCurrentPanel();
+	m_core->startAll(((int)what)+1);
 }
 
 void KTorrent::stopDownload()
@@ -501,7 +502,8 @@ void KTorrent::stopDownload()
 
 void KTorrent::stopAllDownloads()
 {
-	m_core->stopAll();
+	kt::PanelView what = getCurrentPanel();
+	m_core->stopAll(((int)what)+1);
 }
 
 void KTorrent::removeDownload()

@@ -29,8 +29,8 @@ class DCOPInterface : virtual public DCOPObject
 {
 	K_DCOP
 k_dcop:
-	virtual void startAll() = 0;
-	virtual void stopAll() = 0;
+	virtual void startAll(int type = 3) = 0;
+	virtual void stopAll(int type = 3) = 0;
 	virtual void setMaxDownloads(int max) = 0;
 	virtual void setMaxSeeds(int max) = 0;
 	virtual void setKeepSeeding(bool ks) = 0;

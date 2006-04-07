@@ -166,25 +166,39 @@ namespace bt
 		orderQueue();
 	}
 	
-	void QueueManager::startall()
+	void QueueManager::startall(int type)
 	{
 		QPtrList<kt::TorrentInterface>::iterator i = downloads.begin();
 		while (i != downloads.end())
 		{
 			kt::TorrentInterface* tc = *i;
-			start(tc, false);
+			if(type >= 3)
+				start(tc, false);
+			else
+			{
+				if( (tc->getStats().completed && type == 2) || (!tc->getStats().completed && type == 1) )
+					start(tc, false);
+			}
 			i++;
 		}
 	}
 
-	void QueueManager::stopall()
+	void QueueManager::stopall(int type)
 	{
 		QPtrList<kt::TorrentInterface>::iterator i = downloads.begin();
 		while (i != downloads.end())
 		{
 			kt::TorrentInterface* tc = *i;
 			if (tc->getStats().running)
-				tc->stop(true);
+			{
+				if(type >= 3)
+					tc->stop(true);
+				else
+				{
+					if( (tc->getStats().completed && type == 2) || (!tc->getStats().completed && type == 1) )
+						tc->stop(true);
+				}
+			}
 			else //if torrent is not running but it is queued we need to make it user controlled
 				tc->setPriority(0); 
 			i++;

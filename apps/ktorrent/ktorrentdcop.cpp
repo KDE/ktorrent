@@ -93,14 +93,14 @@ void KTorrentDCOP::setShowSysTrayIcon(bool yes)
 	app->applySettings();
 }
 
-void KTorrentDCOP::startAll()
+void KTorrentDCOP::startAll(int type)
 {
-	app->getCore().startAll();
+	app->getCore().startAll(type);
 }
 
-void KTorrentDCOP::stopAll()
+void KTorrentDCOP::stopAll(int type)
 {
-	app->getCore().stopAll();
+	app->getCore().stopAll(type);
 }
 
 #include "ktorrentdcop.moc"

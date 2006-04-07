@@ -169,7 +169,7 @@ namespace bt
 		if (!node || node->data().getType() != Value::STRING)
 			throw Error(i18n("Corrupted torrent!"));
 		
-		tracker_url = node->data().toString(encoding);
+		tracker_url = node->data().toString(encoding).stripWhiteSpace();
 	}
 	
 	void Torrent::loadPieceLength(BValueNode* node)

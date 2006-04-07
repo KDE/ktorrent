@@ -66,13 +66,15 @@ namespace kt
 
 		/**
 		 * Start all, takes into account the maximum number of downloads.
+		 * @param type - Weather to start downloads, seeds or both. 1=Downloads, 2=Seeds, 3=All
 		 */
-		virtual void startAll() = 0;
+		virtual void startAll(int type) = 0;
 
 		/**
 		 * Stop all torrents.
+		 * @param type - Weather to start downloads, seeds or both. 1=Downloads, 2=Seeds, 3=All
 		 */
-		virtual void stopAll() = 0;
+		virtual void stopAll(int type) = 0;
 
 		/**
 		 * Start a torrent, takes into account the maximum number of downloads.
