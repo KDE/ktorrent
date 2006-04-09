@@ -26,12 +26,14 @@
 #include "ipfilterplugin.h"
 #include <interfaces/coreinterface.h>
 #include <qthread.h>
+#include <qobject.h>
 
 class KProgress;
 
 namespace kt
 {
 	class IPFilterPlugin;
+	class IPBlockingPrefPage;
 	
 	/**
 	@author Ivan Vasic
@@ -43,6 +45,7 @@ namespace kt
 			void apply();
 			void convert();
 			void setPlugin(IPFilterPlugin* p);
+			void setPrefPage(IPBlockingPrefPage* p);
 			
 			//used with ConvertThread to enable/disable controls while converting
 			void setConverting(bool enable);
@@ -54,6 +57,7 @@ namespace kt
 			
 		private:
 			IPFilterPlugin* m_plugin;
+			IPBlockingPrefPage* m_prefpage;
 	};
 	
 	/**
@@ -73,11 +77,14 @@ namespace kt
 			
 			void loadFilters();
 			void unloadFilters();
+			
+			void filterChanged();
 
 		private:
 			CoreInterface* m_core;
 			IPBlockingPrefPageWidget* widget;
 			IPFilterPlugin* m_plugin;
+			bool ktfilter_loaded;
 	};
 }
 #endif

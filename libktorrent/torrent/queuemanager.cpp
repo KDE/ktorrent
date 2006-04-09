@@ -409,7 +409,7 @@ namespace bt
 				TorrentInterface* tc = *it;
 				const TorrentStats & s = tc->getStats();
                         
-				if(!s.running)
+				if(!s.running && !s.user_controlled)
 					start(tc);
 			}
 		}

@@ -46,6 +46,7 @@
 #include <qvalidator.h>
 #include <qlayout.h>
 #include <qdialog.h>
+#include <qobject.h>
 
 using namespace bt;
 
@@ -95,6 +96,9 @@ namespace kt
 	void IPBlockingPrefPageWidget::apply()
 	{
 		KURLRequester* filter = m_filter;
+		if(IPBlockingPluginSettings::filterFile() != filter->url() && m_prefpage)
+			m_prefpage->filterChanged();
+		
 		IPBlockingPluginSettings::setFilterFile(filter->url());
 		IPBlockingPluginSettings::setFilterURL(m_url->url());
 		IPBlockingPluginSettings::setUseLevel1(checkUseLevel1->isChecked());
@@ -213,6 +217,11 @@ namespace kt
 		m_plugin = p;
 	}
 	
+	void IPBlockingPrefPageWidget::setPrefPage( IPBlockingPrefPage * p )
+	{
+		m_prefpage = p;
+	}
+	
 	void IPBlockingPrefPageWidget::setConverting(bool enable)
 	{
 		btnDownload->setEnabled(enable);
@@ -227,6 +236,7 @@ namespace kt
 	: PrefPageInterface(i18n("IPBlocking Filter"), i18n("IPBlocking Filter Options"), KGlobal::iconLoader()->loadIcon("filter",KIcon::NoGroup)), m_core(core), m_plugin(p)
 	{
 		widget = 0;
+		ktfilter_loaded = IPBlockingPluginSettings::useFilter();
 	}
 
 	IPBlockingPrefPage::~IPBlockingPrefPage()
@@ -237,9 +247,17 @@ namespace kt
 		widget->apply();
 		
 		if(IPBlockingPluginSettings::useFilter())
-			loadFilters();
+		{
+			if(!ktfilter_loaded)
+				loadFilters();
+			ktfilter_loaded = true;
+		}
 		else
-			unloadFilters();
+		{
+			if(ktfilter_loaded)
+				unloadFilters();
+			ktfilter_loaded = false;
+		}
 		
 		if(IPBlockingPluginSettings::useLevel1())
 			m_plugin->loadAntiP2P();
@@ -263,13 +281,22 @@ namespace kt
 			QTextStream stream( &dat );
 			QString line;
 			int i=0;
+			int count=0;
+			int var=0;
 			while ( !stream.atEnd() && i < MAX_RANGES )
 			{
+				QRegExp rx("([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3})");
+				QRegExpValidator v( rx,0);
 				line = stream.readLine();
+				if ( v.validate( line, var ) != QValidator::Acceptable )
+					continue;
+				else
+					++count;
+				
 				m_core->addBlockedIP(line);
 				++i;
 			}
-			Out() << "Loaded " << i << " blocked IP ranges." << endl;
+			Out() << "Loaded " << count << " blocked IP ranges." << endl;
 			dat.close();
 		}
 		
@@ -289,13 +316,22 @@ namespace kt
 			QTextStream stream( &dat );
 			QString line;
 			int i=0;
+			int count = 0;
+			int var = 0;
 			while ( !stream.atEnd() && i < MAX_RANGES )
 			{
+				QRegExp rx("([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3})");
+				QRegExpValidator v( rx,0);
 				line = stream.readLine();
+				if ( v.validate( line, var ) != QValidator::Acceptable )
+					continue;
+				else
+					++count;
+				
 				m_core->removeBlockedIP(line);
 				++i;
 			}
-			Out() << "Unloaded " << i << " blocked IP ranges." << endl;
+			Out() << "Unloaded " << count << " blocked IP ranges." << endl;
 			dat.close();
 		}
 		
@@ -305,6 +341,7 @@ namespace kt
 	{
 		widget = new IPBlockingPrefPageWidget(parent);
 		widget->setPlugin(m_plugin);
+		widget->setPrefPage(this);
 	}
 
 	void IPBlockingPrefPage::deleteWidget()
@@ -315,7 +352,9 @@ namespace kt
 
 	void IPBlockingPrefPage::updateData()
 	{}
+	
+	void IPBlockingPrefPage::filterChanged()
+	{
+		ktfilter_loaded = false;
+	}
 }
-
-
-
