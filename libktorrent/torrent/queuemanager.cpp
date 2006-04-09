@@ -146,7 +146,7 @@ namespace bt
 	void QueueManager::stop(kt::TorrentInterface* tc, bool user)
 	{
 		const TorrentStats & s = tc->getStats();
-		if (s.started && s.running)
+		if (s.running)
 		{
 			try
 			{
