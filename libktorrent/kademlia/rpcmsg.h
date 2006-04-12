@@ -55,7 +55,7 @@ namespace dht
 		STORE_VALUES,
 		GET_PEERS,
 		ANNOUNCE_PEER,
-		NONE,
+		NONE
 	};
 	
 	const QString TID = "t";
