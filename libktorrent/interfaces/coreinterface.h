@@ -107,8 +107,9 @@ namespace kt
 		 * if something goes wrong.
 		 * @param file The torrent file
 		 * @param savedir Dir to save the data
+		 * @param silently Wether or not to do this silently
 		 */
-		virtual void load(const QString & file,const QString & savedir) = 0;
+		virtual void load(const QString & file,const QString & savedir,bool silently) = 0;
 
 		/**
 		 * Load a torrent file. Pops up an error dialog
@@ -117,6 +118,14 @@ namespace kt
 		 * @param url The torrent file
 		 */
 		virtual void load(const KURL& url) = 0;
+		
+		/**
+		 * Load a torrent file. Pops up an error dialog
+		 * if something goes wrong. Will ask the user for a save location, or use
+		 * the default. This will not popup a file selection dialog for multi file torrents.
+		 * @param url The torrent file
+		 */
+		virtual void loadSilently(const KURL& url) = 0;
 		
 		/**
 		 * Remove a download.This will delete all temp

@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <config.h>
+ 
 #include <kurl.h>
 #include <klocale.h>
 #include <qhostaddress.h>
@@ -178,7 +180,7 @@ namespace bt
 		
 		
 		KIO::MetaData md;
-		md["UserAgent"] = "ktorrent";
+		md["UserAgent"] = "ktorrent/" VERSION;
 		md["SendLanguageSettings"] = "false";
 		md["Cookies"] = "none";
 		

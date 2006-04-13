@@ -174,6 +174,7 @@ public:
 	void loadPlugins();
 	
 	virtual void load(const KURL& url);
+	virtual void loadSilently(const KURL& url);
 	
 	
 	bt::QueueManager* getQueueManager();
@@ -191,8 +192,9 @@ public slots:
 	 * if something goes wrong.
 	 * @param file The torrent file
 	 * @param dir Directory to save the data
+	 * @param silently Wether or not to do this silently
 	 */
-	void load(const QString & file,const QString & dir);
+	void load(const QString & file,const QString & dir,bool silently);
 	
 	/**
 	 * Remove a download.This will delete all temp

@@ -321,6 +321,11 @@ void KTorrent::load(const KURL& url)
 	m_core->load(url);
 }
 
+void KTorrent::loadSilently(const KURL& url)
+{
+	m_core->loadSilently(url);
+}
+
 void KTorrent::currentDownloadChanged(kt::TorrentInterface* tc)
 {
 	if (tc)

@@ -37,6 +37,7 @@ public:
 
 	virtual bool changeDataDir(const QString& new_dir);
 	virtual void openTorrent(const QString& file);
+	virtual void openTorrentSilently(const QString & file);
 	virtual void setKeepSeeding(bool ks);
 	virtual void setMaxConnectionsPerDownload(int max);
 	virtual void setMaxDownloads(int max);

@@ -103,6 +103,11 @@ public slots:
 	 * Use this method to load whatever file/URL you have
 	 */
 	void load(const KURL& url);
+	
+	/**
+	 * Does the same as load, but doesn't ask any questions
+	*/
+	void loadSilently(const KURL& url);
 
 protected:
 	/**

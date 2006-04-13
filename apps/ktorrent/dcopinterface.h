@@ -40,7 +40,7 @@ k_dcop:
 	virtual void setShowSysTrayIcon(bool yes) = 0;
 	virtual bool changeDataDir(const QString & new_dir) = 0;
 	virtual void openTorrent(const QString & file) = 0;
-
+	virtual void openTorrentSilently(const QString & file) = 0;
 };
 
 

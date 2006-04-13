@@ -120,7 +120,7 @@ void KTorrentCore::loadPlugins()
 	pman->loadPluginList();
 }
 
-void KTorrentCore::load(const QString & target,const QString & dir)
+void KTorrentCore::load(const QString & target,const QString & dir,bool silently)
 {
 	TorrentControl* tc = 0;
 	QString tdir = findNewTorrentDir();
@@ -138,7 +138,7 @@ void KTorrentCore::load(const QString & target,const QString & dir)
 		connect(tc, SIGNAL(seedingAutoStopped( kt::TorrentInterface* )),
 				this, SLOT(torrentSeedAutoStopped( kt::TorrentInterface* )));
 		qman->append(tc);
-		if (tc->getStats().multi_file_torrent)
+		if (tc->getStats().multi_file_torrent && !silently)
 		{
 			FileSelectDlg dlg;
 
@@ -176,7 +176,35 @@ void KTorrentCore::load(const KURL& url)
 
 		if (dir != QString::null)
 		{
-			load(target,dir);
+			load(target,dir,false);
+		}
+		// and remove the temp file
+		KIO::NetAccess::removeTempFile(target);
+	}
+	else
+	{
+		KMessageBox::error(0,KIO::NetAccess::lastErrorString(),i18n("Error"));
+	}
+}
+
+void KTorrentCore::loadSilently(const KURL& url)
+{
+	QString target;
+	// download the contents
+	if (KIO::NetAccess::download(url,target,0))
+	{
+		// load in the file (target is always local)
+		QString dir = Settings::saveDir();
+		if (!Settings::useSaveDir())
+		{
+			KMessageBox::error(0,i18n("You need to have default save directory selected to load torrents silently."),i18n("Error"));
+		}
+		else
+		{
+			if (dir != QString::null)
+			{
+				load(target,dir,true);
+			}
 		}
 		// and remove the temp file
 		KIO::NetAccess::removeTempFile(target);

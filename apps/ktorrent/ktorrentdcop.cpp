@@ -44,6 +44,11 @@ void KTorrentDCOP::openTorrent(const QString& file)
 	app->load(KURL(file));
 }
 
+void KTorrentDCOP::openTorrentSilently(const QString & file)
+{
+	app->loadSilently(KURL(file));
+}
+
 void KTorrentDCOP::setKeepSeeding(bool ks)
 {
 	Settings::setKeepSeeding(ks);
