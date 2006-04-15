@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>utests/ktutester</activetarget>
+      <activetarget>libktorrent/torrent/libtorrent.la</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>

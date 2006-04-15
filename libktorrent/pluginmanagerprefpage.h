@@ -23,6 +23,7 @@
 #include <qobject.h>
 #include <interfaces/prefpageinterface.h>
 
+class QListViewItem;
 class PluginManagerWidget;
 
 namespace kt
@@ -50,6 +51,10 @@ namespace kt
 		void onUnload();
 		void onLoadAll();
 		void onUnloadAll();
+		void onCurrentChanged(QListViewItem* item);
+		
+	private:
+		void updateAllButtons();
 		
 	private:
 		PluginManager* pman;

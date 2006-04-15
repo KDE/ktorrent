@@ -22,10 +22,12 @@
 #include <klistview.h>
 #include <kglobal.h>
 #include <kiconloader.h>
+#include <util/constants.h>
 #include "pluginmanager.h"
 #include "pluginmanagerwidget.h"
 #include "pluginmanagerprefpage.h"
 
+using namespace bt;
 
 namespace kt
 {
@@ -52,6 +54,8 @@ namespace kt
 		connect(pmw->unload_btn,SIGNAL(clicked()),this,SLOT(onUnload()));
 		connect(pmw->load_all_btn,SIGNAL(clicked()),this,SLOT(onLoadAll()));
 		connect(pmw->unload_all_btn,SIGNAL(clicked()),this,SLOT(onUnloadAll()));
+		KListView* lv = pmw->plugin_view;
+		connect(lv,SIGNAL(currentChanged(QListViewItem * )),this,SLOT(onCurrentChanged( QListViewItem* )));
 		updateData();
 	}
 	
@@ -63,7 +67,7 @@ namespace kt
 		// get list of plugins
 		QPtrList<Plugin> pl;
 		pman->fillPluginList(pl);
-
+		
 		QPtrList<Plugin>::iterator i = pl.begin();
 		while (i != pl.end())
 		{
@@ -75,12 +79,62 @@ namespace kt
 			li->setText(3,p->getAuthor());
 			i++;
 		}
+		
+		updateAllButtons();
 	}
+	
+	
 	
 	void PluginManagerPrefPage::deleteWidget()
 	{
 		delete pmw;
 		pmw = 0;
+	}
+	
+	void PluginManagerPrefPage::onCurrentChanged(QListViewItem* item)
+	{
+		if (!item)
+		{
+			pmw->load_btn->setEnabled(false);
+			pmw->unload_btn->setEnabled(false);
+		}
+		else
+		{
+			bool loaded = pman->isLoaded(item->text(0));
+			pmw->load_btn->setEnabled(!loaded);
+			pmw->unload_btn->setEnabled(loaded);
+		}
+	}
+	
+	void PluginManagerPrefPage::updateAllButtons()
+	{
+		Uint32 tot = 0;
+		Uint32 loaded = 0;
+		// get list of plugins
+		QPtrList<Plugin> pl;
+		pman->fillPluginList(pl);
+		
+		QPtrList<Plugin>::iterator i = pl.begin();
+		while (i != pl.end())
+		{
+			Plugin* p = *i;
+			tot++;
+			if (p->isLoaded())
+				loaded++;
+			i++;
+		}
+		
+		if (loaded == tot)
+		{
+			pmw->load_all_btn->setEnabled(false);
+			pmw->unload_all_btn->setEnabled(true);
+		}
+		else if (loaded == 0)
+		{
+			pmw->load_all_btn->setEnabled(true);
+			pmw->unload_all_btn->setEnabled(false);
+		}
+		onCurrentChanged(pmw->plugin_view->currentItem());
 	}
 
 	void PluginManagerPrefPage::onLoad()
@@ -91,6 +145,7 @@ namespace kt
 		{
 			pman->load(vi->text(0));
 			vi->setText(1,pman->isLoaded(vi->text(0)) ? i18n("Loaded") : i18n("Not loaded"));
+			updateAllButtons();
 		}
 	}
 	
@@ -102,6 +157,7 @@ namespace kt
 		{
 			pman->unload(vi->text(0));
 			vi->setText(1,pman->isLoaded(vi->text(0)) ? i18n("Loaded") : i18n("Not loaded"));
+			updateAllButtons();
 		}
 	}
 	
