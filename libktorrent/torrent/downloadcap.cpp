@@ -28,7 +28,7 @@ namespace bt
 
 	const Uint32 SLOT_SIZE = 5*1024;
 	
-	DownloadCap::DownloadCap()
+	DownloadCap::DownloadCap() : Cap(true)
 	{
 	}
 

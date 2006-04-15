@@ -48,7 +48,7 @@ namespace bt
 	class Cap
 	{
 	public:
-		Cap();
+		Cap(bool percentage_check);
 		virtual ~Cap();
 
 		struct Entry
@@ -104,6 +104,7 @@ namespace bt
 		Timer timer;
 		Uint32 leftover;
 		Uint32 current_speed;
+		bool percentage_check;
 	};
 
 }

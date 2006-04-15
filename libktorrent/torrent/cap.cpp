@@ -24,7 +24,7 @@ namespace bt
 {
 	typedef QValueList<Cap::Entry>::iterator CapItr;
 
-	Cap::Cap() : max_bytes_per_sec(0),leftover(0),current_speed(0)
+	Cap::Cap(bool percentage_check) : max_bytes_per_sec(0),leftover(0),current_speed(0),percentage_check(percentage_check)
 	{
 		timer.update();
 	}
@@ -53,7 +53,7 @@ namespace bt
 	
 	bool Cap::allow(Cappable* pd,Uint32 bytes)
 	{
-		if (max_bytes_per_sec == 0 || (double)current_speed / (double)max_bytes_per_sec < 0.75)
+		if (max_bytes_per_sec == 0 || (percentage_check && (double)current_speed / (double)max_bytes_per_sec < 0.75))
 		{
 			timer.update();
 			return true;

@@ -29,7 +29,7 @@ namespace bt
 	
 	UploadCap UploadCap::self;
 
-	UploadCap::UploadCap()
+	UploadCap::UploadCap() : Cap(false)
 	{
 	}
 
