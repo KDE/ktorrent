@@ -261,8 +261,8 @@ namespace bt
 		
 	private:
 		void readPacket();
-		void handlePacket(Uint32 len);
 		virtual const Stats & getStats() const;
+		void packetReady(const Uint8* packet,Uint32 size);
 
 	private:
 #ifdef USE_KNETWORK_SOCKET_CLASSES
@@ -289,6 +289,7 @@ namespace bt
 		mse::RC4Encryptor* enc;
 
 		friend class PacketWriter;
+		friend class PacketReader;
 	};
 }
 

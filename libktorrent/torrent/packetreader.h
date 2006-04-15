@@ -21,6 +21,7 @@
 #define BTPACKETREADER_H
 
 #include "globals.h"
+#include "cap.h"
 
 
 namespace bt
@@ -31,28 +32,28 @@ namespace bt
 	/**
 	@author Joris Guisson
 	*/
-	class PacketReader
+	class PacketReader : public Cappable
 	{
 		Peer* peer;
 		SpeedEstimater* speed;
 		Uint8* read_buf;
-		Uint32 packet_length,read_buf_ptr,serial;
+		Uint32 packet_length,read_buf_ptr;
 		bool error;
+		bool wait;
+		bool current_packet_no_limit;
 	public:
 		PacketReader(Peer* peer,SpeedEstimater* speed);
 		virtual ~PacketReader();
 
-		bool readPacket();
-	
+		void update();
 		Uint32 getPacketLength() const {return packet_length;}
-		
 		const Uint8* getData() const {return read_buf;}
-		
 		bool ok() const {return !error;}
-		
 		bool moreData() const;
+		void proceed(Uint32 bytes);
 	private:
-		bool newPacket();
+		void newPacket();
+		void readPacket(Uint32 mb);
 	};
 
 }

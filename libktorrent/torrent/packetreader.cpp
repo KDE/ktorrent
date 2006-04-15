@@ -24,94 +24,103 @@
 #include "packetreader.h"
 #include "speedestimater.h"
 #include "peer.h"
+#include "downloadcap.h"
 
 
 namespace bt
 {
-	static Uint32 dodo = 0;
-
 
 	PacketReader::PacketReader(Peer* peer,SpeedEstimater* speed) 
 		: peer(peer),speed(speed),error(false)
 	{
 		read_buf_ptr = packet_length = 0;
 		read_buf = new Uint8[MAX_PIECE_LEN + 13];
-		serial = dodo;
-		dodo++;
+		wait = false;
+		current_packet_no_limit = false;
 	}
 
 
 	PacketReader::~PacketReader()
 	{
 		delete [] read_buf;
+		DownloadCap::instance().killed(this);
 	}
 	
-	bool PacketReader::newPacket()
+	void PacketReader::proceed(Uint32 bytes)
+	{
+		if (bytes == 0)
+			readPacket(0);
+		else if (wait)
+			readPacket(bytes);
+	}
+	
+	void PacketReader::update()
+	{
+		if (wait || peer->bytesAvailable() == 0)
+			return;
+		
+	
+		if (read_buf_ptr == 0)
+			newPacket();
+		else if (current_packet_no_limit)
+			readPacket(0);
+	}
+	
+	void PacketReader::newPacket()
 	{
 		Uint32 available = peer->bytesAvailable();
 		read_buf_ptr = 0;
 		if (available < 4)
-			return false;
+			return;
 		
 		Uint8 len[4];
 		if (peer->readData(len,4) != 4)
 		{
 			error = true;
-			return false;
+			return;
 		}
 			
 		packet_length = ReadUint32(len,0);
-	//	Out() << serial << " packet_length = " << packet_length << endl;
-		if (packet_length > MAX_PIECE_LEN + 13)
-		{
-			Out() << serial << " packet_length to large " << packet_length << endl;
-			Out() << " " << len[0] << " " << len[1] << " "
-					<< len[2] << " " << len[3] << endl;
-			error = true;
-			return false;
-		}
 		
 		// a keep alive message
 		if (packet_length == 0)
-			return true;
-			
-		available = peer->bytesAvailable();
-		// see if the entire packet is available
-		if (available < packet_length)
+			return;
+		
+		if (packet_length > MAX_PIECE_LEN + 13)
 		{
-			// not enough for the entire packet so store in read bufer
-			peer->readData(read_buf,available);
-			read_buf_ptr += available;
-			if (read_buf[0] == PIECE)
+			Out() << " packet_length to large " << packet_length << endl;
+			Out() << " " << len[0] << " " << len[1] << " "
+					<< len[2] << " " << len[3] << endl;
+			error = true;
+			return;
+		}
+		
+		if (packet_length > 17)
+		{
+			if (DownloadCap::instance().allow(this,packet_length))
 			{
-		//		Out() << serial << " available = " << available << endl;
-				speed->onRead(available);
+				current_packet_no_limit = true;
+				readPacket(0);
+			}
+			else
+			{
+				wait = true;
+				current_packet_no_limit = false;
 			}
 		}
 		else
 		{
-			peer->readData(read_buf,packet_length);
-			if (read_buf[0] == PIECE)
-			{
-				speed->onRead(packet_length);
-			//	Out() << serial << " Packet finished " << packet_length << endl;
-			}
-			read_buf_ptr = 0;
-			return true;
+			current_packet_no_limit = true;
+			readPacket(0);
 		}
-		return false;
 	}
 
-	bool PacketReader::readPacket()
+	void PacketReader::readPacket(Uint32 mb)
 	{
-		// packet_length > 0 indicates that
-		// we're busy reading a big package
-		if (read_buf_ptr == 0)
-			return newPacket();
-		
 		Uint32 available = peer->bytesAvailable();
-		//	Out() << serial << " available = " << available << endl;
-		//	Out() << serial << " accum = " << (read_buf_ptr + available) << " " << packet_length << endl;
+		if (available > mb && mb != 0)
+			available = mb;
+	
 		if (read_buf_ptr + available < packet_length)
 		{
 			peer->readData(read_buf + read_buf_ptr,available);
@@ -125,18 +134,16 @@ namespace bt
 		{
 			Uint32 to_read = packet_length - read_buf_ptr;
 			peer->readData(read_buf + read_buf_ptr,to_read);
-			//	Out() << serial << " Packet finished " << packet_length << " " << 
-			//			(packet_length - read_buf_ptr) << endl;
 			if (read_buf[0] == PIECE)
 			{
-				//	Out() << serial << " Packet finished " << packet_length << " " << to_read << endl;
 				speed->onRead(to_read);
 			}
 			read_buf_ptr = 0;
-			return true;
+			wait = false;
+			current_packet_no_limit = false;
+			peer->packetReady(read_buf,packet_length);
+			update();
 		}
-		
-		return false;
 	}
 	
 	bool PacketReader::moreData() const

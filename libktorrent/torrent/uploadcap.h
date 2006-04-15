@@ -20,41 +20,13 @@
 #ifndef BTUPLOADCAP_H
 #define BTUPLOADCAP_H
 
-#include <qmap.h>
-#include <qvaluelist.h>
-#include <util/timer.h>
-#include "globals.h"
+#include "cap.h"
 
 namespace bt
 {
 	class PacketWriter;
 	
-	/**
-	 * Slot to upload one packet to the network.
-	 */
-	class UploadSlot
-	{
-		PacketWriter* pw;
-		Uint32 bytes;
-	public:
-		UploadSlot();
-		UploadSlot(PacketWriter* pw,Uint32 bytes);
-		UploadSlot(const UploadSlot & us);
-		virtual ~UploadSlot();
-		
-		/// Get the number of bytes left to upload
-		Uint32 bytesLeft() const {return bytes;}
-		
-		/// Test if this slot is from a PacketWriter
-		bool fromPW(PacketWriter* other) const {return other == pw;}
-		
-		/**
-		 * Tell the PacketWriter to upload nb bytes.
-		 * @param nb The number of bytes to upload (0 is unlimited)
-		 * @return true if all bytes have been upload
-		 */
-		bool doUpload(Uint32 nb);
-	};
+	
 
 	/**
 	 * @author Joris Guisson
@@ -65,50 +37,14 @@ namespace bt
 	 * that the upload rate remains under a specified threshold. When the
 	 * threshold is set to 0, no upload capping will be done.
 	*/
-	class UploadCap
+	class UploadCap : public Cap
 	{
 		static UploadCap self;
-		
-		QValueList<UploadSlot> up_queue;
-		Uint32 max_bytes_per_sec;
-		Timer timer;
-		Uint32 leftover;
 
 		UploadCap();
 	public:
-		~UploadCap();
-		/**
-		 * Set the speed cap in bytes per second. 0 indicates
-		 * no limit.
-		 * @param max Maximum number of bytes per second.
-		 */
-		void setMaxSpeed(Uint32 max);
+		virtual ~UploadCap();
 		
-		/// Get max bytes/sec
-		Uint32 getMaxSpeed() const {return max_bytes_per_sec;}
-
-		/**
-		 * Allow or disallow somebody from sending a piece. If somebody
-		 * is disallowed they will be stored in a queue, and will be notified
-		 * when there turn is up.
-		 * @param pd PacketWriter doing the request
-		 * @param bytes Bytes it wants to send
-		 * @return true if the piece is allowed or not
-		 */
-		bool allow(PacketWriter* pd,Uint32 bytes);
-
-		/**
-		 * PacketWriter should call this when they get destroyed. To
-		 * remove them from the queue.
-		 * @param pd The PeerUploader
-		 */
-		void killed(PacketWriter* pd);
-
-		/**
-		 * Update the downloadcap.
-		 */
-		void update();
-	
 
 		static UploadCap & instance() {return self;}
 	};

@@ -155,11 +155,7 @@ namespace bt
 	void Peer::readPacket()
 	{
 		if (killed) return;
-		
-		while (preader->readPacket() && preader->ok())
-		{
-			handlePacket(preader->getPacketLength());
-		}
+		preader->update();
 		
 		if (!preader->ok())
 			error(0);
@@ -167,13 +163,13 @@ namespace bt
 		recieved_packet = false;
 	}
 	
-	void Peer::handlePacket(Uint32 len)
+	void Peer::packetReady(const Uint8* packet,Uint32 len)
 	{
 		if (killed) return;
 		
 		if (len == 0)
 			return;
-		const Uint8* tmp_buf = preader->getData();
+		const Uint8* tmp_buf = packet;
 		//Out() << "Got packet : " << len << " type = " << type <<  endl;
 		Uint8 type = tmp_buf[0];
 		switch (type)

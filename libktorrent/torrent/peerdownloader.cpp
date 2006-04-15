@@ -25,7 +25,6 @@
 #include "peer.h"
 #include "piece.h"
 #include "packetwriter.h"
-#include "downloadcap.h"
 
 
 namespace bt
@@ -78,7 +77,6 @@ namespace bt
 
 	PeerDownloader::~PeerDownloader()
 	{
-		DownloadCap::instance().killed(this);
 	}
 #if 0
 	void PeerDownloader::retransmitRequests()
@@ -113,16 +111,8 @@ namespace bt
 			return;
 		
 		TimeStampedRequest r = TimeStampedRequest(req);
-
-		if (DownloadCap::instance().allow(this))
-		{	
-			reqs.append(r);
-			peer->getPacketWriter().sendRequest(req);
-		}
-		else
-		{
-			unsent_reqs.append(r);
-		}
+		reqs.append(r);
+		peer->getPacketWriter().sendRequest(req);
 	}
 	
 	void PeerDownloader::cancel(const Request & req)

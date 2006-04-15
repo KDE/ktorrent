@@ -126,6 +126,8 @@ namespace bt
 		
 		try
 		{
+			// update download cap so data can be read
+			DownloadCap::instance().update();
 			// first update peermanager
 			pman->update();
 			bool comp = stats.completed;
@@ -182,7 +184,7 @@ namespace bt
 			}
 
 			// Update DownloadCap
-			DownloadCap::instance().update(stats.download_rate);
+			
 			UploadCap::instance().update();
 			updateStats();
 			if (stats.download_rate > 0)
@@ -777,7 +779,9 @@ namespace bt
 		stats.num_chunks_downloading = down ? down->numActiveDownloads() : 0;
 		stats.num_peers = pman ? pman->getNumConnectedPeers() : 0;
 		stats.upload_rate = up && stats.running ? up->uploadRate() : 0;
+		UploadCap::instance().setCurrentSpeed(stats.upload_rate);
 		stats.download_rate = down && stats.running ? down->downloadRate() : 0;
+		DownloadCap::instance().setCurrentSpeed(stats.download_rate);
 		stats.bytes_left = cman ? cman->bytesLeft() : 0;
 		stats.bytes_uploaded = up ? up->bytesUploaded() : 0;
 		stats.bytes_downloaded = down ? down->bytesDownloaded() : 0;

@@ -22,6 +22,7 @@
 
 #include <qptrlist.h>
 #include "globals.h"
+#include "cap.h"
 
 namespace bt
 {
@@ -34,7 +35,7 @@ namespace bt
 	/**
 	@author Joris Guisson
 	*/
-	class PacketWriter
+	class PacketWriter : public Cappable
 	{
 		Peer* peer;
 		QPtrList<Packet> packets;
@@ -122,6 +123,8 @@ namespace bt
 		 * @param bytes Num bytes to send (0 == all)
 		 */
 		void uploadUnsentBytes(Uint32 bytes);
+		
+		void proceed(Uint32 bytes) {uploadUnsentBytes(bytes);}
 	private:
 		bool sendPacket(Packet & p,Uint32 max);
 		void queuePacket(Packet* p,bool ask);
