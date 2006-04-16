@@ -83,6 +83,7 @@ namespace kt
 		btnClose->setText(i18n("Convert"));
 		to_convert = true;
 		converting = false;
+		kProgress1->setEnabled(false);
 	}
 
 	void ConvertDialog::convert()
@@ -103,6 +104,7 @@ namespace kt
 		if ( source.open( IO_ReadOnly ) )
 		{
 			QTextStream stream( &source );
+			kProgress1->setEnabled(true);
 
 			int i = 0;
 			QRegExp rx( "[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}-[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}" );

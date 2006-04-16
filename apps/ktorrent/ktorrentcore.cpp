@@ -600,4 +600,19 @@ void KTorrentCore::torrentSeedAutoStopped( kt::TorrentInterface * tc )
 	qman->startNext();
 }
 
+int KTorrentCore::getMaxUploadSpeed()
+{
+	return Settings::maxUploadRate();
+}
+
+int KTorrentCore::getMaxDownloadSpeed()
+{
+	return Settings::maxDownloadRate();
+}
+
+void KTorrentCore::setPausedState(bool pause)
+{
+	qman->setPausedState(pause);
+}
+
 #include "ktorrentcore.moc"

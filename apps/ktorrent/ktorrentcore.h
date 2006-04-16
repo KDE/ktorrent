@@ -186,6 +186,11 @@ public:
 	///Gets the number of torrents that are in state 'seed' - total
 	int countSeeds() const;
 	
+	int getMaxDownloadSpeed();
+	int getMaxUploadSpeed();
+	
+	void setPausedState(bool pause);
+	
 public slots:
 	/**
 	 * Load a torrent file. Pops up an error dialog

@@ -84,6 +84,12 @@ namespace bt
 			void setKeepSeeding(bool ks);
 			
 			/**
+			 * Sets global paused state for QueueManager and stopps all running torrents.
+			 * No torrents will be automatically started/stopped with QM.
+			 */
+			void setPausedState(bool pause);
+			
+			/**
 			 * Places all torrents from downloads in the right order in queue.
 			 * Use this when torrent priorities get changed
 			 */
@@ -96,10 +102,13 @@ namespace bt
 			
 		private:
 			bt::QueuePtrList downloads;
+			bt::QueuePtrList* paused_torrents;
 			
 			int max_downloads;
 			int max_seeds;
 			
+			
+			bool paused_state;
 			bool keep_seeding;
 	};
 }

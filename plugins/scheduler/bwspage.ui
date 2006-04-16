@@ -1,0 +1,790 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>BWSPage</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>BWSPage</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>416</width>
+            <height>262</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>KTorrent Scheduler Page</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget" row="3" column="0" rowspan="1" colspan="3">
+            <property name="name">
+                <cstring>layout19</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>btnSave</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string>S&amp;ave to file</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+A</string>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>btnLoad</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Load from file</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+L</string>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>btnReset</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string>Reset S&amp;chedule</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="3">
+            <property name="name">
+                <cstring>layout17</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QComboBox">
+                    <item>
+                        <property name="text">
+                            <string>Monday</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Tuesday</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Wednesday</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Thursday</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Friday</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Saturday</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Sunday</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>comboDay</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                </widget>
+                <widget class="QComboBox">
+                    <item>
+                        <property name="text">
+                            <string>00:00 - 00:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>01:00 - 01:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>02:00 - 02:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>03:00 - 03:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>04:00 - 04:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>05:00 - 05:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>06:00 - 06:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>07:00 - 07:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>08:00 - 08:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>09:00 - 09:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>10:00 - 10:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>11:00 - 11:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>12:00 - 12:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>13:00 - 13:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>14:00 - 14:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>15:00 - 15:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>16:00 - 16:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>17:00 - 17:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>18:00 - 18:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>19:00 - 19:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>20:00 - 20:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>21:00 - 21:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>22:00 - 22:59 h</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>23:00 - 23:59 h</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>comboTime</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                </widget>
+                <widget class="QComboBox">
+                    <item>
+                        <property name="text">
+                            <string>Normal</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>1. Category</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>2. Category</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>3. Category</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Turn off (0 bandwidth)</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>comboCategory</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QCheckBox" row="0" column="0">
+            <property name="name">
+                <cstring>useBS</cstring>
+            </property>
+            <property name="text">
+                <string>Use ba&amp;ndwidth scheduler?</string>
+            </property>
+        </widget>
+        <spacer row="0" column="1" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>spacer7</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>40</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QLabel" row="4" column="2">
+            <property name="name">
+                <cstring>textLabel10</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>* zero means no limit</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="4" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>lblStatus</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="text">
+                <string></string>
+            </property>
+        </widget>
+        <spacer row="5" column="1">
+            <property name="name">
+                <cstring>spacer3</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>16</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QGroupBox" row="2" column="0" rowspan="1" colspan="3">
+            <property name="name">
+                <cstring>groupCategories</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="title">
+                <string>Categories</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget" row="0" column="0">
+                    <property name="name">
+                        <cstring>layout12</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel8</cstring>
+                            </property>
+                            <property name="text">
+                                <string>1. Category</string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer4</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel6</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>0</hsizetype>
+                                    <vsizetype>5</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string>download:</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntSpinBox">
+                            <property name="name">
+                                <cstring>dlCat1</cstring>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer6</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel6_4</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>0</hsizetype>
+                                    <vsizetype>5</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string>upload:</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntSpinBox">
+                            <property name="name">
+                                <cstring>ulCat1</cstring>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel9</cstring>
+                            </property>
+                            <property name="text">
+                                <string>KB/s *</string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QLayoutWidget" row="1" column="0">
+                    <property name="name">
+                        <cstring>layout13</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel8_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>2. Category</string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer7_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel6_2</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>0</hsizetype>
+                                    <vsizetype>5</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string>download:</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntSpinBox">
+                            <property name="name">
+                                <cstring>dlCat2</cstring>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer8</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel6_4_2</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>0</hsizetype>
+                                    <vsizetype>5</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string>upload:</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntSpinBox">
+                            <property name="name">
+                                <cstring>ulCat2</cstring>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel9_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>KB/s *</string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QLayoutWidget" row="2" column="0">
+                    <property name="name">
+                        <cstring>layout14</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel8_3</cstring>
+                            </property>
+                            <property name="text">
+                                <string>3. Category</string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer9</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel6_3</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>0</hsizetype>
+                                    <vsizetype>5</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string>download:</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntSpinBox">
+                            <property name="name">
+                                <cstring>dlCat3</cstring>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer10</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel6_4_3</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>0</hsizetype>
+                                    <vsizetype>5</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string>upload:</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntSpinBox">
+                            <property name="name">
+                                <cstring>ulCat3</cstring>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel9_3</cstring>
+                            </property>
+                            <property name="text">
+                                <string>KB/s *</string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+            </grid>
+        </widget>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>useBS</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>comboDay</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>useBS</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>comboTime</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>useBS</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>comboCategory</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>useBS</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>groupCategories</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>useBS</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>btnLoad</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>useBS</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>btnReset</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>useBS</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>btnSave</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>comboDay</sender>
+        <signal>activated(int)</signal>
+        <receiver>BWSPage</receiver>
+        <slot>comboDay_activated(int)</slot>
+    </connection>
+    <connection>
+        <sender>comboTime</sender>
+        <signal>activated(int)</signal>
+        <receiver>BWSPage</receiver>
+        <slot>comboTime_activated(int)</slot>
+    </connection>
+    <connection>
+        <sender>btnSave</sender>
+        <signal>clicked()</signal>
+        <receiver>BWSPage</receiver>
+        <slot>btnSave_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnLoad</sender>
+        <signal>clicked()</signal>
+        <receiver>BWSPage</receiver>
+        <slot>btnLoad_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnReset</sender>
+        <signal>clicked()</signal>
+        <receiver>BWSPage</receiver>
+        <slot>btnReset_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>comboCategory</sender>
+        <signal>activated(int)</signal>
+        <receiver>BWSPage</receiver>
+        <slot>comboCategory_activated(int)</slot>
+    </connection>
+    <connection>
+        <sender>useBS</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>lblStatus</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>useBS</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>textLabel10</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>comboDay_activated(int)</slot>
+    <slot>comboTime_activated(int)</slot>
+    <slot>btnSave_clicked()</slot>
+    <slot>btnLoad_clicked()</slot>
+    <slot>btnReset_clicked()</slot>
+    <slot>comboCategory_activated(int)</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+</includehints>
+</UI>

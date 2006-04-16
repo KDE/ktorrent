@@ -164,6 +164,22 @@ namespace kt
 		 * @param tor_dir The torX dir
 		 */
 		virtual void loadExistingTorrent(const QString & tor_dir) = 0;
+		
+		/**
+		 * Returns maximum allowed download speed.
+		 */
+		virtual int getMaxDownloadSpeed() = 0;
+		
+		/**
+		 * Returns maximum allowed upload speed.
+		 */
+		virtual int getMaxUploadSpeed() = 0;
+		
+		/**
+		 * Sets global paused state for all torrents (QueueManager) and stopps all torrents.
+		 * No torrents will be automatically started/stopped.
+		 */
+		virtual void setPausedState(bool pause) = 0;
 	};
 
 }

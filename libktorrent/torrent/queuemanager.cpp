@@ -42,8 +42,10 @@ namespace bt
 		downloads.setAutoDelete(true);
 		max_downloads = 0;
 		max_seeds = 0; //for testing. Needs to be added to Settings::
+		paused_torrents = 0;
 		
 		keep_seeding = true; //test. Will be passed from Core
+		paused_state = false;
 	}
 
 
@@ -311,6 +313,9 @@ namespace bt
 		if(!downloads.count())
 			return;
 		
+		if(paused_state)
+			return;
+		
 		downloads.sort();
                 
 		QPtrList<TorrentInterface>::const_iterator it = downloads.begin();
@@ -449,6 +454,47 @@ namespace bt
 	{
 		remove(tc);
 		orderQueue();
+	}
+	
+	void QueueManager::setPausedState(bool pause)
+	{
+		if(paused_state && pause || !paused_state && !pause)
+			return;
+		
+		if(!pause)
+		{
+			QPtrList<TorrentInterface>::const_iterator it = paused_torrents->begin();
+		
+			for( ; it!=paused_torrents->end(); ++it)
+			{
+				TorrentInterface* tc = *it;
+				const TorrentStats & s = tc->getStats();
+				
+				tc->start();
+			}
+			
+			delete paused_torrents;
+			paused_torrents = 0;
+		}
+		else
+		{
+			paused_torrents = new QueuePtrList();
+			QPtrList<TorrentInterface>::const_iterator it = downloads.begin();
+		
+			for( ; it!=downloads.end(); ++it)
+			{
+				TorrentInterface* tc = *it;
+				const TorrentStats & s = tc->getStats();
+			          
+				if(s.running)
+				{
+					paused_torrents->append(tc);
+					tc->stop(false);
+				}
+			}
+		}
+		
+		paused_state = pause;
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
