@@ -41,6 +41,7 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qevent.h>
+#include <qurloperator.h>
 
 using namespace bt;
 
@@ -83,6 +84,7 @@ namespace kt
 		btnClose->setText(i18n("Convert"));
 		to_convert = true;
 		converting = false;
+		canceled = false;
 		kProgress1->setEnabled(false);
 	}
 
@@ -90,11 +92,18 @@ namespace kt
 	{
 		QFile source( KGlobal::dirs() ->saveLocation( "data", "ktorrent" ) + "level1.txt" );
 		QFile target( KGlobal::dirs() ->saveLocation( "data", "ktorrent" ) + "level1.dat" );
+		QFile temp( KGlobal::dirs() ->saveLocation( "data", "ktorrent" ) + "level1.dat.tmp" );
+		
+		if(target.exists())
+		{
+			//make backup
+			KIO::NetAccess::file_copy(KGlobal::dirs() ->saveLocation( "data", "ktorrent" ) + "level1.dat", KGlobal::dirs() ->saveLocation( "data", "ktorrent" ) + "level1.dat.tmp", -1, true);
+		}
 
-		/**    READ INPUT FILE  **/
+		/*    READ INPUT FILE  */
 		QStringList list;
 		lbl_progress->setText( i18n( "Loading txt file..." ) );
-		label1->setText( i18n("This could take a couple of minutes. Please wait...") );
+		label1->setText( i18n("Please wait...") );
 		ulong source_size = source.size();
 		btnClose->setEnabled( false );
 		converting = true;
@@ -113,6 +122,9 @@ namespace kt
 
 			while ( !stream.atEnd() )
 			{
+				if(canceled)
+					return;
+				
 				KApplication::kApplication() ->processEvents();
 				QString line = stream.readLine();
 				i += line.length() * sizeof( char ); //rough estimation of string size
@@ -173,6 +185,9 @@ namespace kt
 						Out() << "Block " << i << " written." << endl;
 				}
 				KApplication::kApplication()->processEvents();
+				
+				if(canceled)
+					return;
 			}
 			kProgress1->setProgress(100);
 			Out() << "Finished converting." << endl;
@@ -218,7 +233,30 @@ namespace kt
 		else
 			e->ignore();
 	}
-
+	
+	void ConvertDialog::btnCancel_clicked()
+	{
+		if(converting)
+		{
+			QFile target( KGlobal::dirs() ->saveLocation( "data", "ktorrent" ) + "level1.dat" );
+			if(target.exists())
+				target.remove();
+			
+			QFile temp( KGlobal::dirs() ->saveLocation( "data", "ktorrent" ) + "level1.dat.tmp");
+			if(temp.exists())
+			{
+				KIO::NetAccess::file_copy(KGlobal::dirs() ->saveLocation( "data", "ktorrent" ) + "level1.dat.tmp", KGlobal::dirs() ->saveLocation( "data", "ktorrent" ) + "level1.dat", -1, true);
+				temp.remove();
+			}
+			
+			canceled = true;
+			Out() << "Conversion canceled." << endl;
+		}
+		
+		
+		this->reject();
+	}
 
 }
+
 #include "convertdialog.moc"

@@ -42,9 +42,11 @@ namespace kt
 			IPFilterPlugin* m_plugin;
 			bool to_convert;
 			bool converting;
+			bool canceled;
 			
 		private slots:
 			void closeEvent(QCloseEvent* e);
+    		virtual void btnCancel_clicked();
 	};
 }
 #endif

@@ -136,6 +136,7 @@ namespace kt
 		QFile target_file(target);
 		KURL url(m_url->url());
 		KURL dest(target);
+		KURL temp(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.tmp");
 
 		bool download = true;
 
@@ -144,7 +145,7 @@ namespace kt
 			if((KMessageBox::questionYesNo(this, i18n("Selected file already exists, do you want to download it again?"),i18n("File Exists")) == 4))
 				download = false;
 			else
-				KIO::NetAccess::del(target, NULL);
+				KIO::NetAccess::move(target, temp);
 		}
 
 		if(download)
@@ -155,16 +156,28 @@ namespace kt
 				{
 					//Level1 list successfully downloaded, remove temporary file
 					KIO::NetAccess::removeTempFile(target);
+					KIO::NetAccess::del(temp, this);
 				}
 				else
 				{
-					KMessageBox::error(0,KIO::NetAccess::lastErrorString(),i18n("Error"));
+					QString err = KIO::NetAccess::lastErrorString();
+					if(err != QString::null)
+						KMessageBox::error(0,KIO::NetAccess::lastErrorString(),i18n("Error"));
+					else
+						KIO::NetAccess::move(temp, target);
+					
+					
+					//we don't want to convert since download failed
+					return;
 				}
 			}
 			else
 			{
 				if (!KIO::NetAccess::file_copy(url,dest, -1, true))
+				{
 					KMessageBox::error(0,KIO::NetAccess::lastErrorString(),i18n("Error"));
+					return;
+				}
 			}
 		}
 		convert();
@@ -205,8 +218,8 @@ namespace kt
 		{
 			if((KMessageBox::questionYesNo(this,i18n("Filter file (level1.dat) already exists, do you want to convert it again?"),i18n("File Exists")) == 4))
 				return;
-			else
-				KIO::NetAccess::del(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat", NULL);
+// 			else
+// 				KIO::NetAccess::del(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat", NULL);
 		}
 		ConvertDialog dlg(m_plugin);
 		dlg.exec();
