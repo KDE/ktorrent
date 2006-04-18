@@ -1,5 +1,7 @@
 [Desktop Entry]
 Name=SchedulerPlugin
+Name[el]=Πρόσθετο προγραμματισμού
+Name[sv]=Insticksprogram för schemaläggning
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktschedulerplugin
