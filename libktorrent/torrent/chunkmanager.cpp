@@ -414,7 +414,6 @@ namespace bt
 			i++;
 		}
 		recalc_chunks_left = true;
-		saveFileInfo();
 		excluded(from,to);
 		updateStats();
 	}
@@ -433,7 +432,6 @@ namespace bt
 			i++;
 		}
 		recalc_chunks_left = true;
-		saveFileInfo();
 		updateStats();
 	}
 
@@ -502,6 +500,7 @@ namespace bt
 
 	void ChunkManager::downloadStatusChanged(TorrentFile* tf,bool download)
 	{
+		saveFileInfo();
 		if (download)
 		{
 			// include the range of the file
@@ -520,7 +519,10 @@ namespace bt
 			tor.calcChunkPos(first,files);
 			// check for exceptional case which causes very long loops
 			if (first == last && files.count() > 1)
+			{
+				cache->downloadStatusChanged(tf,download);
 				return;
+			}
 			
 			// if one file in the list needs to be downloaded,increment first
 			for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
@@ -547,7 +549,10 @@ namespace bt
 
 			// last smaller then first is not normal, so just return
 			if (last < first)
+			{
+				cache->downloadStatusChanged(tf,download);
 				return;
+			}
 			
 			exclude(first,last);
 			
