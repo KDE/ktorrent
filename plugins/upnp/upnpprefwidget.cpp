@@ -19,6 +19,7 @@
  ***************************************************************************/
 
 #include <klistview.h>
+#include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <torrent/udptrackersocket.h>
 #include <torrent/globals.h>
@@ -26,6 +27,7 @@
 #include <kademlia/dht.h>
 #include "upnpprefwidget.h"
 #include <util/log.h>
+#include <util/error.h>
 #include <torrent/globals.h>
 #include "upnppluginsettings.h"
 
@@ -46,8 +48,16 @@ namespace kt
 	{
 		if (def_router)
 		{
-			def_router->undoForward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
-			def_router->undoForward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
+			try
+			{
+				def_router->undoForward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
+				def_router->undoForward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
+				def_router->undoForward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
+			}
+			catch (Error e)
+			{
+				Out() << "Error : " << e.toString() << endl;
+			}
 		}
 	}
 	
@@ -66,11 +76,18 @@ namespace kt
 			UPnPPluginSettings::setDefaultDevice(r->getServer());
 			UPnPPluginSettings::writeConfig();
 			
-			// forward both ports
-			r->forward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
-			r->forward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
-			r->forward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
-			def_router = r;
+			try
+			{
+				// forward both ports
+				r->forward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
+				r->forward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
+				r->forward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
+				def_router = r;
+			}
+			catch (Error & e)
+			{
+				KMessageBox::error(this,e.toString());
+			}
 		}
 	}
 		
@@ -84,17 +101,24 @@ namespace kt
 		if (!r)
 			return;
 		
-		r->forward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
-		r->forward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
-		r->forward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
-		QString def_dev = UPnPPluginSettings::defaultDevice();
-		if (def_dev != r->getServer())
+		try
 		{
-			UPnPPluginSettings::setDefaultDevice(r->getServer());
-			UPnPPluginSettings::writeConfig();
-			def_router = r;
-		}
+			r->forward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
+			r->forward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
+			r->forward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
+			QString def_dev = UPnPPluginSettings::defaultDevice();
+			if (def_dev != r->getServer())
+			{
+				UPnPPluginSettings::setDefaultDevice(r->getServer());
+				UPnPPluginSettings::writeConfig();
+				def_router = r;
+			}
 			
+		}
+		catch (Error & e)
+		{
+			KMessageBox::error(this,e.toString());
+		}	
 	}
 	
 	void UPnPPrefWidget::onRescanClicked()
@@ -113,15 +137,22 @@ namespace kt
 		if (!r)
 			return;
 		
-		r->undoForward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
-		r->undoForward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
-		r->undoForward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
-		QString def_dev = UPnPPluginSettings::defaultDevice();
-		if (def_dev == r->getServer())
+		try
 		{
-			UPnPPluginSettings::setDefaultDevice(QString::null);
-			UPnPPluginSettings::writeConfig();
-			def_router = 0;
+			r->undoForward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
+			r->undoForward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
+			r->undoForward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
+			QString def_dev = UPnPPluginSettings::defaultDevice();
+			if (def_dev == r->getServer())
+			{
+				UPnPPluginSettings::setDefaultDevice(QString::null);
+				UPnPPluginSettings::writeConfig();
+				def_router = 0;
+			}
+		}
+		catch (Error & e)
+		{
+			KMessageBox::error(this,e.toString());
 		}
 	}
 

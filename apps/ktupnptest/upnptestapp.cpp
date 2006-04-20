@@ -20,7 +20,9 @@
 #include <kpushbutton.h>
 #include <klocale.h>
 #include <kapplication.h>
+#include <kmessagebox.h>
 #include <qtextbrowser.h>
+#include <util/error.h>
 #include "upnptestapp.h"
 #include "mainwidget.h"
 
@@ -51,7 +53,14 @@ UPnPTestApp::~UPnPTestApp()
 
 void UPnPTestApp::discovered(kt::UPnPRouter* router)
 {
-	router->forward(9999,UPnPRouter::TCP);
+	try
+	{
+		router->forward(9999,UPnPRouter::TCP);
+	}
+	catch (Error & e)
+	{
+		KMessageBox::error(this,e.toString());
+	}
 }
 
 void UPnPTestApp::onTestBtn()
