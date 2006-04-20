@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=SchedulerPlugin
+Name[da]=Skemalægger-Plugin
 Name[el]=Πρόσθετο προγραμματισμού
 Name[sv]=Insticksprogram för schemaläggning
 ServiceTypes=KTorrent/Plugin
