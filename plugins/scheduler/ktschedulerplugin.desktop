@@ -2,6 +2,7 @@
 Name=SchedulerPlugin
 Name[da]=Skemalægger-Plugin
 Name[el]=Πρόσθετο προγραμματισμού
+Name[ja]=スケジューラプラグイン
 Name[sv]=Insticksprogram för schemaläggning
 ServiceTypes=KTorrent/Plugin
 Type=Service
