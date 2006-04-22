@@ -25,6 +25,7 @@
 #include <qlistview.h>
 #include <kpopupmenu.h>
 #include <qpoint.h>
+#include <util/constants.h>
 
 namespace kt
 {
@@ -35,12 +36,16 @@ namespace kt
 	{
 		kt::PeerInterface* peer;
 		QString m_country;
+		// counter to keep track of how many PeerViewItem objects are in existance
+		static bt::Uint32 pvi_count;
 	public:
 		PeerViewItem(PeerView* pv,kt::PeerInterface* peer);
+		virtual ~PeerViewItem();
 	
 		void update();
 		int compare(QListViewItem * i,int col,bool) const;
 		kt::PeerInterface* getPeer() { return peer; }
+		
 	};
 	
 	/**

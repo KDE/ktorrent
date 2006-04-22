@@ -37,27 +37,33 @@ using namespace kt;
 
 namespace kt
 {
+	
+	Uint32 PeerViewItem::pvi_count = 0;
+	// Global GeoIP pointer, gets destroyed when no PeerViewItem's exist
+	static GeoIP* geo_ip = 0; 
+	
 		
 	PeerViewItem::PeerViewItem(PeerView* pv,kt::PeerInterface* peer) : KListViewItem(pv),peer(peer)
 	{	
-		const char * hostname;
+		pvi_count++;
+		const char * hostname = 0;
 		const char * country_code = 0;
-		const char * country_name;
-		int country_id;
+		const char * country_name = 0;
+		int country_id = 0;
 
-		GeoIP * gi;
-			
 		const PeerInterface::Stats & s = peer->getStats();
 		hostname = s.ip_addresss.ascii();
 
-		gi = GeoIP_open(locate("data", "ktorrent/geoip/geoip.dat").ascii(),0);
+		// open GeoIP if necessary
+		if (!geo_ip)
+			geo_ip = GeoIP_open(locate("data", "ktorrent/geoip/geoip.dat").ascii(),0);
 		
-		country_id = GeoIP_id_by_name(gi, hostname);
-		country_code = GeoIP_country_code[country_id];
-		country_name = GeoIP_country_name[country_id];
-		
-		if(gi)
-		GeoIP_delete(gi);
+		if (geo_ip)
+		{
+			country_id = GeoIP_id_by_name(geo_ip, hostname);
+			country_code = GeoIP_country_code[country_id];
+			country_name = GeoIP_country_name[country_id];
+		}
 		
 		setText(0,s.ip_addresss);
 		setText(2,s.client);
@@ -68,6 +74,19 @@ namespace kt
 		QPixmap pix(locate("data", QString("ktorrent/geoip/%1.png").arg(QString(country_code)).lower()));
 		setPixmap(0, pix);
 		update();
+	}
+	
+	PeerViewItem::~PeerViewItem()
+	{
+		if (pvi_count > 0) // just to be sure, let this not wrap around
+			pvi_count--;
+		
+		// destroy when not needed anymore
+		if (pvi_count == 0 && geo_ip)
+		{
+			GeoIP_delete(geo_ip);
+			geo_ip = 0;
+		}
 	}
 	
 	
