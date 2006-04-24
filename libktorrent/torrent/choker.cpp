@@ -17,12 +17,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
+
 #include <qptrlist.h>
 #include <interfaces/functions.h>
 #include "choker.h"
 #include "peermanager.h"
-#include "oldchokealgorithm.h"
 #include "newchokealgorithm.h"
+#include "advancedchokealgorithm.h"
 
 using namespace kt;
 
@@ -53,11 +55,18 @@ namespace bt
 	{
 	}
 	
+	
 	/////////////////////////////////
+	
+	Uint32 Choker::num_upload_slots = 4;
 
 	Choker::Choker(PeerManager & pman) : pman(pman)
 	{
+#ifdef USE_OLD_CHOKE
 		choke = new NewChokeAlgorithm();
+#else
+		choke = new AdvancedChokeAlgorithm();
+#endif
 	}
 
 
@@ -66,9 +75,12 @@ namespace bt
 		delete choke;
 	}
 
-	void Choker::update(bool have_all)
+	void Choker::update(bool have_all,const kt::TorrentStats & stats)
 	{
-		choke->doChoking(pman,have_all);
+		if (have_all)
+			choke->doChokingSeedingState(pman,stats);
+		else
+			choke->doChokingLeechingState(pman,stats);
 	}
 	
 }

@@ -95,6 +95,10 @@ namespace bt
 		stats.perc_of_file = 0;
 		stats.snubbed = false;
 		stats.dht_support = dht_supported;
+		stats.bytes_downloaded = stats.bytes_uploaded = 0;
+		stats.aca_score = 0.0;
+		stats.evil = false;
+		stats.has_upload_slot = false;
 		if (stats.ip_addresss == "0.0.0.0")
 		{
 			Out() << "No more 0.0.0.0" << endl;
@@ -278,6 +282,10 @@ namespace bt
 				snub_timer.update();
 				
 				{
+					stats.bytes_downloaded += (len - 9);
+					// turn on evil bit
+					if (stats.evil)
+						stats.evil = false;
 					Piece p(ReadUint32(tmp_buf,1),
 							ReadUint32(tmp_buf,5),
 							len - 9,id,tmp_buf+9);
@@ -422,6 +430,11 @@ namespace bt
 		stats.perc_of_file = this->percentAvailable();
 		stats.snubbed = this->isSnubbed();
 		return stats;
+	}
+	
+	void Peer::setACAScore(double s)
+	{
+		stats.aca_score = s;
 	}
 }
 

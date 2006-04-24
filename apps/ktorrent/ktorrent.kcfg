@@ -89,5 +89,11 @@
 			<min>0</min>
 			<max>65535</max>
 		</entry>
+		<entry name="numUploadSlots" type="Int">
+			<label>Number of upload slots</label>
+			<default>4</default>
+			<min>4</min>
+			<max>100</max>
+		</entry>
 	</group>
 </kcfg>

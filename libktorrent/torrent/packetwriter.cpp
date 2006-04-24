@@ -77,8 +77,12 @@ namespace bt
 		{
 			ret = p.send(peer,max,bs);
 		}
+		
 		if (p.getType() == PIECE)
+		{
+			peer->stats.bytes_uploaded += bs;
 			uploaded += bs;
+		}
 		
 		return ret;
 	}
@@ -110,15 +114,18 @@ namespace bt
 		
 		queuePacket(new Packet(CHOKE),false);
 		peer->am_choked = true;
+		peer->stats.has_upload_slot = false;
 	}
 	
 	void PacketWriter::sendUnchoke()
 	{
+//		Out() << "UNCHOKE" << endl;
 		if (peer->am_choked == false)
 			return;
 		
 		queuePacket(new Packet(UNCHOKE),false);
 		peer->am_choked = false;
+		peer->stats.has_upload_slot = true;
 	}
 	
 	void PacketWriter::sendInterested()
@@ -174,6 +181,7 @@ namespace bt
 			
 	void PacketWriter::sendChunk(Uint32 index,Uint32 begin,Uint32 len,Chunk * ch)
 	{
+//		Out() << "sendChunk " << index << " " << begin << " " << len << endl;
 		if (begin >= ch->getSize() || begin + len > ch->getSize())
 		{
 			Out() << "Warning : Illegal piece request" << endl;

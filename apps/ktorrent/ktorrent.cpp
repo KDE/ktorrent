@@ -59,6 +59,7 @@
 #include <torrent/globals.h>
 #include <torrent/tracker.h>
 #include <torrent/downloader.h>
+#include <torrent/choker.h>
 #include <torrent/udptrackersocket.h>
 #include <util/log.h>
 #include <util/fileops.h>
@@ -281,6 +282,7 @@ void KTorrent::applySettings(bool change_port)
 		Tracker::setCustomIP(Settings::externalIP());
         
 	Downloader::setMemoryUsage(Settings::memoryUsage());
+	Choker::setNumUploadSlots(Settings::numUploadSlots());
 	
 	//Apply GUI update interval
 	int val = 500;

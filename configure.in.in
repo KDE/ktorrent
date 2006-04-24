@@ -53,5 +53,12 @@ AC_ARG_ENABLE(
 AC_ARG_ENABLE(
 	utests,
 	[AS_HELP_STRING(--enable-utests,[Enable compilation of unit tests])],
-	[CXXFLAGS="$CXXFLAGS -DKT_LEAKTRACE"])
+	[UTESTS_DIR="utests"])
+
+AC_ARG_ENABLE(
+	old-choke,
+	[AS_HELP_STRING(--enable-old-choke,[Use the old choke algorithm])],
+	[CXXFLAGS="$CXXFLAGS -DUSE_OLD_CHOKE"])
+
+
 

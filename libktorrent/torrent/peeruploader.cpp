@@ -37,33 +37,32 @@ namespace bt
 
 	void PeerUploader::addRequest(const Request & r)
 	{
-		if (!peer->areWeChoked())
-		{
-			requests.append(r);
-		}
+		requests.append(r);
+	//	Out() << "Num requests : " << requests.count() << endl;
 	}
 	
 	void PeerUploader::removeRequest(const Request & r)
 	{
+	//	Out() << "removeRequest " << r.getIndex() << " " << r.getOffset() << endl;
 		requests.remove(r);
 	}
 	
 	Uint32 PeerUploader::update(ChunkManager & cman,Uint32 opt_unchoked)
 	{
-		Uint32 uploaded = 0;
+		Uint32 uploaded = 0;	
 
 		PacketWriter & pw = peer->getPacketWriter();
 		uploaded += pw.update();
 		
-	//	if (peer->areWeChoked())
-	//		return uploaded;
+		// if we have choked the peer do not upload
+		if (peer->areWeChoked())
+			return uploaded;
 		
 		if (peer->isSnubbed() && !peer->areWeChoked() &&
 			cman.chunksLeft() != 0 && peer->getID() != opt_unchoked)
 			return uploaded;
-	
 
-		while (!requests.empty() && pw.getNumPacketsToWrite() == 0)
+		while (!requests.empty()/* && pw.getNumPacketsToWrite() == 0*/)
 		{	
 			Request r = requests.front();
 			Chunk* c = cman.grabChunk(r.getIndex());
@@ -71,13 +70,14 @@ namespace bt
 			if (c)
 			{
 				pw.sendChunk(r.getIndex(),r.getOffset(),r.getLength(),c);
-				requests.remove(r);
+				requests.pop_front();
 				uploaded += pw.update();
 			}
 			else
 			{
 				// remove requests we can't satisfy
-				requests.remove(r);
+				Out() << "Cannot satisfy request" << endl;
+				requests.pop_front();
 			}
 		}
 		

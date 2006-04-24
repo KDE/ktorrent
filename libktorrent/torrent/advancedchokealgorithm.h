@@ -17,33 +17,34 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTNEWCHOKEALGORITHM_H
-#define BTNEWCHOKEALGORITHM_H
+#ifndef BTADVANCEDCHOKEALGORITHM_H
+#define BTADVANCEDCHOKEALGORITHM_H
 
-#include <choker.h>
+#include "choker.h"
 
 namespace bt
 {
+	class Peer;
+	class PeerPtrList;
+	
 
 	/**
-	 * @author Joris Guisson
-	 * 
-	 * The new choking algorithm.
+		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class NewChokeAlgorithm : public ChokeAlgorithm
+	class AdvancedChokeAlgorithm : public ChokeAlgorithm
 	{
-		Uint32 round_state;
+		Uint32 last_opt_sel_time; // last time we updated the optimistic unchoked peer
 	public:
-		NewChokeAlgorithm();
-		virtual ~NewChokeAlgorithm();
+		AdvancedChokeAlgorithm();
+		virtual ~AdvancedChokeAlgorithm();
 
 		virtual void doChokingLeechingState(PeerManager & pman,const kt::TorrentStats & stats);
 		virtual void doChokingSeedingState(PeerManager & pman,const kt::TorrentStats & stats);
+		
 	private:
-		void doChokingLeecherState(PeerManager& pman);
-		void doChokingSeederState(PeerManager& pman);
-	
-		Uint32 findPlannedOptimisticUnchokedPeer(PeerManager& pman);
+		void calcACAScore(Peer* p,const kt::TorrentStats & stats);
+		Peer* updateOptimisticPeer(PeerManager & pman);
+		void doUnchoking(PeerPtrList & ppl,Peer* poup);
 	};
 
 }

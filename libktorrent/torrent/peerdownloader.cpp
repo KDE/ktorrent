@@ -239,6 +239,9 @@ namespace bt
 				// cancel it
 				peer->getPacketWriter().sendCancel(tr.req);
 				i = reqs.erase(i);
+				// we now have a timeout
+				if (!peer->isChoked() && peer->isSnubbed())
+					peer->stats.evil = true;
 			}
 			else
 			{ 

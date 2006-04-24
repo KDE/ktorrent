@@ -1,4 +1,7 @@
 SUBDIRS = libktorrent plugins apps utests
+
+# $(UTESTS_DIR)
+
 EXTRA_DIST = AUTHORS COPYING ChangeLog INSTALL README TODO
 
 messages: rc.cpp

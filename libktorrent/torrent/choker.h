@@ -24,9 +24,15 @@
 #include <util/constants.h>
 #include "peer.h"
 
+namespace kt
+{
+	struct TorrentStats;
+}
+
 namespace bt
 {
 	class PeerManager;
+	
 	
 	typedef int (*PeerCompareFunc)(Peer* a,Peer* b);
 	
@@ -54,11 +60,18 @@ namespace bt
 		virtual ~ChokeAlgorithm();
 		
 		/**
-		 * Do the actual choking
-		 * @param pman 
-		 * @param have_all 
+		 * Do the actual choking when we are still downloading.
+		 * @param pman The PeerManager
+		 * @param stats The torrent stats
 		 */
-		virtual void doChoking(PeerManager & pman,bool have_all) = 0;
+		virtual void doChokingLeechingState(PeerManager & pman,const kt::TorrentStats & stats) = 0;
+		
+		/**
+		 * Do the actual choking when we are seeding
+		 * @param pman The PeerManager
+		 * @param stats The torrent stats
+		 */
+		virtual void doChokingSeedingState(PeerManager & pman,const kt::TorrentStats & stats) = 0;
 		
 		/// Get the optimisticly unchoked peer ID
 		Uint32 getOptimisticlyUnchokedPeerID() const {return opt_unchoked_peer_id;}
@@ -77,7 +90,7 @@ namespace bt
 	{
 		ChokeAlgorithm* choke;
 		PeerManager & pman;
-		
+		static Uint32 num_upload_slots;
 	public:
 		Choker(PeerManager & pman);
 		virtual ~Choker();
@@ -85,11 +98,18 @@ namespace bt
 		/**
 		 * Update which peers are choked or not.
 		 * @param have_all Indicates wether we have the entire file
+		 * @param stats Statistic of the torrent
 		 */
-		void update(bool have_all);
+		void update(bool have_all,const kt::TorrentStats & stats);
 
 		/// Get the PeerID of the optimisticly unchoked peer.
 		Uint32 getOptimisticlyUnchokedPeerID() const {return choke->getOptimisticlyUnchokedPeerID();}
+		
+		/// Set the number of upload slots
+		static void setNumUploadSlots(Uint32 n) {num_upload_slots = n;}
+		
+		/// Get the number of upload slots
+		static Uint32 getNumUploadSlots() {return num_upload_slots;}
 	};
 
 }

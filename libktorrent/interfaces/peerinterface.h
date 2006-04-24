@@ -56,6 +56,17 @@ namespace kt
 			float perc_of_file;
 			/// Does this peer support DHT
 			bool dht_support;
+			/// Amount of data uploaded
+			bt::Uint64 bytes_uploaded;
+			/// Amount of data downloaded
+			bt::Uint64 bytes_downloaded;
+			/// Advanced choke algorithm score
+			double aca_score;
+			/// The evil flag is on when the peer has not choked us, 
+			/// but has snubbed us and requests have timedout
+			bool evil;
+			/// Flag to indicate if this peer has an upload slot
+			bool has_upload_slot;
 		};
 
 		virtual const Stats & getStats() const = 0;

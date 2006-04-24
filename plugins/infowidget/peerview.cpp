@@ -41,10 +41,21 @@ namespace kt
 	Uint32 PeerViewItem::pvi_count = 0;
 	// Global GeoIP pointer, gets destroyed when no PeerViewItem's exist
 	static GeoIP* geo_ip = 0; 
+	static QPixmap yes_pix;
+	static QPixmap no_pix;
+	static bool yes_no_pix_loaded = false;
 	
 		
 	PeerViewItem::PeerViewItem(PeerView* pv,kt::PeerInterface* peer) : KListViewItem(pv),peer(peer)
 	{	
+		if (!yes_no_pix_loaded)
+		{
+			KIconLoader* iload = KGlobal::iconLoader();
+			yes_pix = iload->loadIcon("button_ok",KIcon::Small);
+			no_pix = iload->loadIcon("button_cancel",KIcon::Small);
+			yes_no_pix_loaded = true;
+		}
+		
 		pvi_count++;
 		const char * hostname = 0;
 		const char * country_code = 0;
@@ -97,10 +108,14 @@ namespace kt
 		
 		setText(3,KBytesPerSecToString(s.download_rate / 1024.0));
 		setText(4,KBytesPerSecToString(s.upload_rate / 1024.0));
-		setText(5,s.choked ? i18n("yes") : i18n("no"));
-		setText(6,s.snubbed ? i18n("yes") : i18n("no"));
+		//setPixmap(5,!s.choked ? yes_pix : no_pix);
+		setText(5,s.choked ? i18n("Yes") : i18n("No"));
+		//setPixmap(6,!s.snubbed ? yes_pix : no_pix);
+		setText(6,s.snubbed ? i18n("Yes") : i18n("No"));
 		setText(7,QString("%1 %").arg(loc->formatNumber(s.perc_of_file,2)));
-		setText(8,s.dht_support ? i18n("yes") : i18n("no"));
+		setPixmap(8,s.dht_support ? yes_pix : no_pix);
+		setText(9,loc->formatNumber(s.aca_score,2));
+		setPixmap(10,s.has_upload_slot ? yes_pix : QPixmap());
 	}
 	
 	int PeerViewItem::compare(QListViewItem * i,int col,bool) const
@@ -124,6 +139,8 @@ namespace kt
 			case 6: return CompareVal(s.snubbed,os.snubbed);
 			case 7: return CompareVal(s.perc_of_file,os.perc_of_file);
 			case 8: return CompareVal(s.dht_support,os.dht_support);
+			case 9: return CompareVal(s.aca_score,os.aca_score);
+			case 10: return CompareVal(s.has_upload_slot,os.has_upload_slot);
 		}
 		return 0;
 	}
@@ -140,6 +157,8 @@ namespace kt
 		addColumn(i18n("Snubbed"));
 		addColumn(i18n("Availability"));
 		addColumn(i18n("DHT"));
+		addColumn(i18n("Score"));
+		addColumn(i18n("Upload Slot"));
 		setShowSortIndicator(true);
 		
 		menu = new KPopupMenu(this);

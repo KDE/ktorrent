@@ -152,6 +152,7 @@ bool PrefPageOne::apply()
 	Settings::setMaxDownloadRate(dp->max_download_rate->value());
 	Settings::setKeepSeeding(dp->keep_seeding->isChecked());
 	Settings::setPort(dp->port->value());
+	Settings::setNumUploadSlots(dp->num_upload_slots->value());
 	if (Settings::dhtSupport() && dp->udp_tracker_port->value() == Settings::dhtPort())
 	{
 		QString msg = i18n("The DHT port needs to be different then the UDP tracker port !");
@@ -173,6 +174,7 @@ void PrefPageOne::updateData()
 	dp->keep_seeding->setChecked(Settings::keepSeeding());
 	dp->udp_tracker_port->setValue(Settings::udpTrackerPort());
 	dp->port->setValue(Settings::port());
+	dp->num_upload_slots->setValue(Settings::numUploadSlots());
 }
 
 void PrefPageOne::deleteWidget()

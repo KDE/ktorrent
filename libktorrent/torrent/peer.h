@@ -209,6 +209,13 @@ namespace bt
 
 		/// See if the peer supports DHT
 		bool isDHTSupported() const {return stats.dht_support;}
+		
+		/// Set the ACA score
+		void setACAScore(double s);
+		
+		/// Get the stats of the peer
+		virtual const Stats & getStats() const;
+		
 	private slots:
 		void connectionClosed(); 
 		void readyRead();
@@ -261,7 +268,7 @@ namespace bt
 		
 	private:
 		void readPacket();
-		virtual const Stats & getStats() const;
+		
 		void packetReady(const Uint8* packet,Uint32 size);
 
 	private:
@@ -290,6 +297,7 @@ namespace bt
 
 		friend class PacketWriter;
 		friend class PacketReader;
+		friend class PeerDownloader;
 	};
 }
 

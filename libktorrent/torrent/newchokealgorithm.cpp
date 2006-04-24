@@ -45,17 +45,6 @@ namespace bt
 	NewChokeAlgorithm::~NewChokeAlgorithm()
 	{}
 
-
-	void NewChokeAlgorithm::doChoking(PeerManager& pman, bool have_all)
-	{
-		// first update the master list
-	//	fillMaster(pman);
-		if (have_all)
-			doChokingSeederState(pman);
-		else
-			doChokingLeecherState(pman);
-	}
-	
 	int RevDownloadRateCmp(Peer* a,Peer* b)
 	{
 		if (b->getDownloadRate() > a->getDownloadRate())
@@ -66,7 +55,7 @@ namespace bt
 			return 0;
 	}
 	
-	void NewChokeAlgorithm::doChokingLeecherState(PeerManager& pman)
+	void NewChokeAlgorithm::doChokingLeechingState(PeerManager & pman,const kt::TorrentStats & stats)
 	{
 		Uint32 num_peers = pman.getNumConnectedPeers();
 		if (num_peers == 0)
@@ -92,10 +81,17 @@ namespace bt
 			if (!p)
 				continue;
 			
-			if (p->isInterested() && now - p->getTimeSinceLastPiece() <= 30000)
-				peers.append(p);
+			if (!p->isSeeder())
+			{
+				if (p->isInterested() && now - p->getTimeSinceLastPiece() <= 30000)
+					peers.append(p);
+				else
+					other.append(p);
+			}
 			else
-				other.append(p);
+			{
+				p->getPacketWriter().sendChoke();
+			}
 		}
 		
 		// sort them using a reverse download rate compare
@@ -185,7 +181,7 @@ namespace bt
 		while (i != start)
 		{
 			Peer* p = pman.getPeer(i);
-			if (p && p->isChoked() && p->isInterested())
+			if (p && p->isChoked() && p->isInterested() && !p->isSeeder())
 				return p->getID();
 			i = (i + 1) % num_peers;
 		}
@@ -227,8 +223,9 @@ namespace bt
 				return 0;
 		}
 	}
+
 	
-	void NewChokeAlgorithm::doChokingSeederState(PeerManager& pman)
+	void NewChokeAlgorithm::doChokingSeedingState(PeerManager & pman,const kt::TorrentStats & stats)
 	{
 		Uint32 num_peers = pman.getNumConnectedPeers();
 		if (num_peers == 0)
@@ -239,10 +236,20 @@ namespace bt
 		for (Uint32 i = 0;i < num_peers;i++)
 		{
 			Peer* p = pman.getPeer(i);
-			if (p && !p->isChoked() && p->isInterested())
-				peers.append(p);
+			if (!p)
+				continue;
+			
+			if (!p->isSeeder())
+			{
+				if (!p->isChoked() && p->isInterested())
+					peers.append(p);
+				else
+					others.append(p);
+			}
 			else
-				others.append(p);
+			{
+				p->getPacketWriter().sendChoke();
+			}
 		}
 		
 		// sort them
