@@ -37,9 +37,6 @@
                     <property name="text">
                         <string>S&amp;ave to file</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+A</string>
-                    </property>
                 </widget>
                 <widget class="QPushButton">
                     <property name="name">
@@ -50,9 +47,6 @@
                     </property>
                     <property name="text">
                         <string>&amp;Load from file</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+L</string>
                     </property>
                 </widget>
                 <widget class="QPushButton">

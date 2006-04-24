@@ -26,9 +26,6 @@
             <property name="text">
                 <string>&amp;Cancel</string>
             </property>
-            <property name="accel">
-                <string>Alt+C</string>
-            </property>
         </widget>
         <widget class="QPushButton" row="5" column="1">
             <property name="name">
@@ -37,9 +34,6 @@
             <property name="text">
                 <string>&amp;OK</string>
             </property>
-            <property name="accel">
-                <string>Alt+O</string>
-            </property>
         </widget>
         <widget class="QPushButton" row="6" column="1">
             <property name="name">
@@ -47,9 +41,6 @@
             </property>
             <property name="text">
                 <string>Appl&amp;y</string>
-            </property>
-            <property name="accel">
-                <string>Alt+Y</string>
             </property>
         </widget>
         <widget class="QLayoutWidget" row="3" column="1">
@@ -66,9 +57,6 @@
                     </property>
                     <property name="text">
                         <string>&amp;QM Controlled</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+Q</string>
                     </property>
                 </widget>
                 <widget class="QPushButton">
@@ -113,9 +101,6 @@
                     <property name="text">
                         <string>Move &amp;up</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+U</string>
-                    </property>
                 </widget>
                 <widget class="QPushButton">
                     <property name="name">
@@ -123,9 +108,6 @@
                     </property>
                     <property name="text">
                         <string>Move dow&amp;n</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+N</string>
                     </property>
                 </widget>
             </vbox>

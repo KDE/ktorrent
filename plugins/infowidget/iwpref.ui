@@ -12,9 +12,6 @@
             <height>138</height>
         </rect>
     </property>
-    <property name="caption">
-        <string>IWPref</string>
-    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -36,9 +33,6 @@
             </property>
             <property name="text">
                 <string>Show list of chunks currentl&amp;y downloading</string>
-            </property>
-            <property name="accel">
-                <string>Alt+Y</string>
             </property>
         </widget>
         <spacer row="3" column="0">

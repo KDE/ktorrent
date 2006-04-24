@@ -111,9 +111,6 @@
                     <property name="text">
                         <string>&amp;Close</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+C</string>
-                    </property>
                 </widget>
                 <widget class="QPushButton">
                     <property name="name">
@@ -129,9 +126,6 @@
                     </property>
                     <property name="text">
                         <string>C&amp;ancel</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+A</string>
                     </property>
                 </widget>
             </hbox>
