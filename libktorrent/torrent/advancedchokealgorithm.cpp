@@ -56,8 +56,12 @@ namespace bt
 			}
 			else
 			{
-				double bd = p->getStats().bytes_downloaded / stats.trk_bytes_downloaded;
-				double ds = p->getStats().download_rate/ stats.download_rate;
+				double bd = 0;
+				if (stats.trk_bytes_downloaded > 0)
+				 	bd = p->getStats().bytes_downloaded / stats.trk_bytes_downloaded;
+				double ds = 0;
+				if (stats.download_rate > 0)
+					ds = p->getStats().download_rate/ stats.download_rate;
 				p->setACAScore(5*bd + 5*ds);
 			}
 			return;
