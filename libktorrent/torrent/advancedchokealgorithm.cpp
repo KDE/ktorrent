@@ -48,26 +48,20 @@ namespace bt
 	
 	void AdvancedChokeAlgorithm::calcACAScore(Peer* p,const kt::TorrentStats & stats)
 	{
+		const PeerInterface::Stats & s = p->getStats();
 		if (p->isSeeder())
 		{
-			if (stats.trk_bytes_uploaded == 0 || stats.upload_rate == 0)
-			{
-				p->setACAScore(0.0); // no bytes uploaded or no upload rate so nobody is doing anything
-			}
-			else
-			{
-				double bd = 0;
-				if (stats.trk_bytes_downloaded > 0)
-				 	bd = p->getStats().bytes_downloaded / stats.trk_bytes_downloaded;
-				double ds = 0;
-				if (stats.download_rate > 0)
-					ds = p->getStats().download_rate/ stats.download_rate;
-				p->setACAScore(5*bd + 5*ds);
-			}
+			double bd = 0;
+			if (stats.trk_bytes_downloaded > 0)
+			 	bd = s.bytes_downloaded / stats.trk_bytes_downloaded;
+			double ds = 0;
+			if (stats.download_rate > 0)
+				ds = s.download_rate/ stats.download_rate;
+			p->setACAScore(5*bd + 5*ds);
 			return;
 		}
 		
-		const PeerInterface::Stats & s = p->getStats();
+		
 		
 		double nb = 0.0; // newbie bonus
 		double cp = 0.0; // choke penalty
@@ -123,7 +117,9 @@ namespace bt
 			if (p)
 			{
 				calcACAScore(p,stats); // update the ACA score in the process
-				if (!p->isSeeder())
+				if (p->getStats().evil)
+					p->getPacketWriter().sendEvilUnchoke(); // be very wicked with snubbers
+				else if (!p->isSeeder())
 					ppl.append(p);
 				else
 					// choke seeders they do not want to download from us anyway

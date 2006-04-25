@@ -62,7 +62,7 @@ namespace bt
 			cman.chunksLeft() != 0 && peer->getID() != opt_unchoked)
 			return uploaded;
 
-		while (!requests.empty()/* && pw.getNumPacketsToWrite() == 0*/)
+		while (!requests.empty() && pw.getNumPacketsToWrite() == 0)
 		{	
 			Request r = requests.front();
 			Chunk* c = cman.grabChunk(r.getIndex());

@@ -128,6 +128,13 @@ namespace bt
 		peer->stats.has_upload_slot = true;
 	}
 	
+	void PacketWriter::sendEvilUnchoke()
+	{
+		queuePacket(new Packet(UNCHOKE),false);
+		peer->am_choked = true;
+		peer->stats.has_upload_slot = false;
+	}
+	
 	void PacketWriter::sendInterested()
 	{
 		if (peer->am_interested == true)

@@ -55,6 +55,12 @@ namespace bt
 		void sendUnchoke();
 		
 		/**
+		 * Sends an unchoke message but doesn't update the am_choked field so KT still thinks
+		 * it is choked (and will not upload to it), this is to punish snubbers.
+		 */
+		void sendEvilUnchoke();
+		
+		/**
 		 * Send an interested packet.
 		 */
 		void sendInterested();
