@@ -27,6 +27,7 @@
 #include <qlistview.h>
 #include <qlineedit.h>
 #include <qpushbutton.h>
+#include <qtooltip.h>
 
 #include <klocale.h>
 #include <kurl.h>
@@ -127,8 +128,16 @@ namespace kt
 			lblUpdate->setText(t.toString("mm:ss"));
 		}
 	
+		QString tracker_url = tc->getTrackerURL(true).prettyURL();
+		
+		QToolTip::add(lblCurrent, tracker_url);
+		if(tracker_url.length() > 50)
+		{
+			tracker_url.truncate(47);
+			tracker_url += "...";
+		}
 		lblStatus->setText("<b>" + s.trackerstatus + "</b>");
-		lblCurrent->setText("<b>" + tc->getTrackerURL(true).prettyURL() + "</b>");
+		lblCurrent->setText("<b>" + tracker_url + "</b>");
 		btnAdd->setEnabled(txtTracker->text() != QString::null);
 	}
 	
