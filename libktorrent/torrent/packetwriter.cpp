@@ -18,6 +18,7 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <util/log.h>
+#include <util/functions.h>
 #include "packetwriter.h"
 #include "peer.h"
 #include "request.h"
@@ -48,6 +49,7 @@ namespace bt
 			upload_log_initialized = true;
 		}
 #endif
+		time_of_last_transmit = bt::GetCurrentTime();
 	}
 
 
@@ -83,6 +85,8 @@ namespace bt
 			peer->stats.bytes_uploaded += bs;
 			uploaded += bs;
 		}
+		
+		time_of_last_transmit = bt::GetCurrentTime();
 		
 		return ret;
 	}
@@ -152,14 +156,6 @@ namespace bt
 		queuePacket(new Packet(NOT_INTERESTED),false);
 		peer->am_interested = false;
 	}
-
-	/*
-	void PacketWriter::sendKeepAlive()
-	{
-		Uint8 buf[4];
-		WriteUint32(buf,0,0);
-		peer->sendData(buf,4);
-	}*/
 	
 	void PacketWriter::sendRequest(const Request & r)
 	{
@@ -205,6 +201,16 @@ namespace bt
 	{
 		if (packets.count() == 0)
 		{
+			// send a keep alive if we haven't sent anything in 2 minutes
+			Uint32 now = bt::GetCurrentTime();
+			if (now - time_of_last_transmit > 120 * 1000)
+			{
+				Uint8 buf[4];
+				WriteUint32(buf,0,0);
+				peer->sendData(buf,4,true);
+				time_of_last_transmit = now;
+			}
+			
 			Uint32 data_sent = uploaded;
 			uploaded = 0;
 			return data_sent;

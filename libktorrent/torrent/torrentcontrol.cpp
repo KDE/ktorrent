@@ -449,7 +449,8 @@ namespace bt
 
 		//if (!bt::Exists(datadir + "cache"))
 		// as a sanity check make sure all files are created properly
-		cman->createFiles();
+		if (!stats.completed)
+			cman->createFiles();
 
 		stats.completed = cman->chunksLeft() == 0;
 

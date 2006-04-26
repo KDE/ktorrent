@@ -40,6 +40,7 @@ namespace bt
 		Peer* peer;
 		QPtrList<Packet> packets;
 		Uint32 uploaded;
+		Uint32 time_of_last_transmit;
 	public:
 		PacketWriter(Peer* peer);
 		virtual ~PacketWriter();
@@ -69,11 +70,6 @@ namespace bt
 		 * Send a not interested packet.
 		 */
 		void sendNotInterested();
-		
-		/**
-		 * Send a keep alive packet.
-		 */
-		//void sendKeepAlive();
 		
 		/**
 		 * Send a request for data.
