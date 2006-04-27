@@ -223,6 +223,10 @@ namespace bt
 
 	void TorrentControl::start()
 	{	
+		// do not start running torrents
+		if (stats.running)
+			return;
+		
 		if (bt::Exists(datadir + "stopped"))
 			bt::Delete(datadir + "stopped",true);
 
