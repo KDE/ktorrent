@@ -21,6 +21,7 @@
 #include <plugins/upnp/upnprouter.h>
 #include <plugins/upnp/upnpdescriptionparser.h>
 #include <util/fileops.h>
+#include <util/error.h>
 #include <util/log.h>
 #include <torrent/globals.h>
 #include "upnpparsedescriptiontest.h"
@@ -190,6 +191,80 @@ namespace utest
 			"<presentationURL>http://192.168.1.1/</presentationURL> \n"
 			"</device> \n"
 			"</root> ";
+	
+	static const char* test_data3 = "<?xml version=\"1.0\"?> \
+			<root xmlns=\"urn:schemas-upnp-org:device-1-0\">  \
+			<specVersion> \
+			<major>1</major> \
+			<minor>0</minor> \
+			</specVersion> \
+			<URLBase>http://192.168.0.5:5431/</URLBase> \
+			<device> \
+			<deviceType>urn:schemas-upnp-org:device:InternetGatewayDevice:1</deviceType> \
+			<presentationURL>http://192.168.0.5:80/</presentationURL> \
+			<friendlyName>Dynalink Wireless ADSL Router</friendlyName> \
+			<manufacturer>Danalink</manufacturer> \
+			<manufacturerURL>http://www.dynalink.co.nz/</manufacturerURL> \
+			<modelDescription>Broadcom single-chip ADSL router</modelDescription> \
+			<modelName>BCM6345+BCM4306</modelName> \
+			<modelNumber>1.0</modelNumber> \
+			<modelURL>http://www.dynalink.co.nz/</modelURL> \
+			<UDN>uuid:10740000-0000-1000-b710-107c0032dca6</UDN> \
+			<serviceList> \
+			<service> \
+			<serviceType>urn:schemas-upnp-org:service:Layer3Forwarding:1</serviceType> \
+			<serviceId>urn:upnp-org:serviceId:Layer3Forwarding:11</serviceId> \
+			<controlURL>/uuid:10740000-0000-1000-b710-107c0032dca6/Layer3Forwarding:1</controlURL> \
+			<eventSubURL>/uuid:10740000-0000-1000-b710-107c0032dca6/Layer3Forwarding:1</eventSubURL> \
+			<SCPDURL>/dynsvc/Layer3Forwarding:1.xml</SCPDURL> \
+			</service> \
+			</serviceList> \
+			<deviceList> \
+			<device> \
+			<deviceType>urn:schemas-upnp-org:device:WANDevice:1</deviceType> \
+			<friendlyName>urn:schemas-upnp-org:device:WANDevice:1</friendlyName> \
+			<manufacturer>Danalink</manufacturer> \
+			<manufacturerURL>http://www.dynalink.co.nz/</manufacturerURL> \
+			<modelDescription>Broadcom single-chip ADSL router</modelDescription> \
+			<modelName>BCM6345+BCM4306</modelName> \
+			<modelNumber>1.0</modelNumber> \
+			<modelURL>http://www.dynalink.co.nz/</modelURL> \
+			<UDN>uuid:10740000-0000-1000-b710-107c0132dca6</UDN> \
+			<serviceList> \
+			<service> \
+			<serviceType>urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1</serviceType> \
+			<serviceId>urn:upnp-org:serviceId:WANCommonIFC1</serviceId> \
+			<controlURL>/uuid:10740000-0000-1000-b710-107c0132dca6/WANCommonInterfaceConfig:1</controlURL> \
+			<eventSubURL>/uuid:10740000-0000-1000-b710-107c0132dca6/WANCommonInterfaceConfig:1</eventSubURL> \
+			<SCPDURL>/dynsvc/WANCommonInterfaceConfig:1.xml</SCPDURL> \
+			</service> \
+			</serviceList> \
+			<deviceList> \
+			<device> \
+			<deviceType>urn:schemas-upnp-org:device:WANConnectionDevice:1</deviceType> \
+			<friendlyName>urn:schemas-upnp-org:device:WANConnectionDevice:1</friendlyName> \
+			<manufacturer>Danalink</manufacturer> \
+			<manufacturerURL>http://www.dynalink.co.nz/</manufacturerURL> \
+			<modelDescription>Broadcom single-chip ADSL router</modelDescription> \
+			<modelName>BCM6345+BCM4306</modelName> \
+			<modelNumber>1.0</modelNumber> \
+			<modelURL>http://www.dynalink.co.nz/</modelURL> \
+			<UDN>uuid:10740000-0000-1000-b710-107c0232dca6</UDN> \
+			<serviceList> \
+			<service> \
+			<serviceType>urn:schemas-upnp-org:service:WANPPPConnection:1</serviceType> \
+			<serviceId>urn:upnp-org:serviceId:WANPPPConn1</serviceId> \
+			<controlURL>/uuid:10740000-0000-1000-b710-107c0232dca6/WANPPPConnection:1</controlURL> \
+			<eventSubURL>/uuid:10740000-0000-1000-b710-107c0232dca6/WANPPPConnection:1</eventSubURL> \
+			<SCPDURL>/dynsvc/WANPPPConnection:1.xml</SCPDURL> \
+			</service> \
+			</serviceList> \
+			</device> \
+			</deviceList> \
+			</device> \
+			</deviceList> \
+			</device> \
+			</root> ";
 
 
 	UPnPParseDescriptionTest::UPnPParseDescriptionTest() : UnitTest("UPnPParseDescriptionTest")
@@ -199,7 +274,7 @@ namespace utest
 	UPnPParseDescriptionTest::~UPnPParseDescriptionTest()
 	{}
 
-	bool UPnPParseDescriptionTest::doParse(const char* data)
+	bool UPnPParseDescriptionTest::doParse(const char* data,bool forward_test)
 	{
 		QString fn = "/tmp/UPnPParseDescriptionTest";
 		QFile fptr(fn);
@@ -223,6 +298,19 @@ namespace utest
 		{
 			Out() << "Succesfully parsed the UPnP contents" << endl;
 			bt::Delete(fn,true);
+			if (forward_test)
+			{
+				try
+				{
+					Out() << "Attempting to forward port 9999" << endl;
+					router.forward(9999,UPnPRouter::TCP);
+				}
+				catch (Error & e)
+				{
+					Out() << "Error forwarding : "<< e.toString() << endl;
+					return false;
+				}
+			}
 		//	router.debugPrintData();
 			return true;
 		}
@@ -231,17 +319,23 @@ namespace utest
 	bool UPnPParseDescriptionTest::doTest()
 	{
 		bool ret = true;
-		if (!doParse(test_data1))
+		if (!doParse(test_data1,false))
 		{
 			Out() << "Test data 1 failed" << endl;
 			ret = false;
 		}
 		
-		if (!doParse(test_data2))
+		if (!doParse(test_data2,false))
 		{
 			Out() << "Test data 2 failed" << endl;
 			ret = false;
-		}	
+		}
+			
+		if (!doParse(test_data3,true))
+		{
+			Out() << "Test data 3 failed" << endl;
+			ret = false;
+		}
 		
 		return ret;
 	}

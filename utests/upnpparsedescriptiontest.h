@@ -36,7 +36,7 @@ namespace utest
 
 		virtual bool doTest();
 	private:
-		bool doParse(const char* data);
+		bool doParse(const char* data,bool forward_test);
 	};
 
 }
