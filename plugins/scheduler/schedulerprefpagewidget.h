@@ -17,66 +17,32 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.           *
  ***************************************************************************/
-#ifndef KTBWSPREFPAGEWIDGET_H
-#define KTBWSPREFPAGEWIDGET_H
+#ifndef KTSCHEDULERPREFPAGEWIDGET_H
+#define KTSCHEDULERPREFPAGEWIDGET_H
 
 #include <qwidget.h>
-
-#include "bwspage.h"
-#include "bwscheduler.h"
+#include "schedulerpage.h"
 
 namespace kt
 {
 	/**
-	 * @brief Bandwidth Scheduler page
+	 * @brief Scheduler Preferences Page.
 	 * @author Ivan Vasic <ivasic@gmail.com>
 	 */
-	class BWSPrefPageWidget : public BWSPage
+	class SchedulerPrefPageWidget : public SchedulerPage
 	{
 			Q_OBJECT
 		public:
-			BWSPrefPageWidget(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
-			~BWSPrefPageWidget();
-			/*$PUBLIC_FUNCTIONS$*/
-			
-			/**
-			 * @brief Loads default schedule.
-			 * Default schedule is currently active (if enabled) and it's in ~/.kde/share/apps/ktorrent/bwschedule
-			 */
-			void loadDefault();
-			
-			/**
-			 * Loads a schedule from HD.
-			 * @param fn Schedule filename
-			 * @param showmsg Should I show msgBox if file doesn't exist.
-			 * @ref BWSPrefPageWidget::btnLoad_clicked()
-			 * @ref BWSPrefPageWidget::loadDefault()
-			 */
-			void loadSchedule(QString& fn, bool showmsg = true);
-			
-			/**
-			 * Saves current schedule to HD.
-			 * @param fn Schedule filename.
-			 */
-			void saveSchedule(QString& fn);
-			
+			SchedulerPrefPageWidget(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
 
-		public slots:
-			/*$PUBLIC_SLOTS$*/
-			virtual void btnReset_clicked();
-			virtual void btnLoad_clicked();
-			virtual void btnSave_clicked();
-			virtual void btnApply_clicked();
-			virtual void btnOk_clicked();
-			
-		private slots:
-			void categoryChanged(int);
+			~SchedulerPrefPageWidget();
 
-			///Applies settings
 			void apply();
-
-		private:
-			BWS schedule;
+			
+		public slots:
+    		virtual void btnEditBWS_clicked();
+			void scheduler_trigger();
+    		virtual void useColors_toggled(bool);
 	};
 
 }

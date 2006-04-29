@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2006 by Ivan Vasić                                      *
- *   ivan@ktorrent.org                                                     *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -30,11 +30,15 @@
 
 #include <kmessagebox.h>
 #include <klocale.h>
+#include <kstdaction.h>
+#include <kiconloader.h>
+#include <kglobal.h>
 
 #include "schedulerplugin.h"
 #include "schedulerpluginsettings.h"
-#include "bwsprefpage.h"
 #include "bwscheduler.h"
+#include "schedulerprefpage.h"
+#include "bwsprefpagewidget.h"
 
 #include <torrent/downloadcap.h>
 #include <torrent/uploadcap.h>
@@ -54,7 +58,8 @@ namespace kt
 	SchedulerPlugin::SchedulerPlugin(QObject* parent, const char* name, const QStringList& args)
 	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,DESCRIPTION)
 	{
-		// setXMLFile("ktpluginui.rc");
+		setXMLFile("ktschedulerpluginui.rc");
+		bws_action = 0;
 		connect(&m_timer, SIGNAL(timeout()), this, SLOT(timer_triggered()));
 	}
 
@@ -65,15 +70,18 @@ namespace kt
 
 	void SchedulerPlugin::load()
 	{
-		BWSPref = new BWSPrefPage();
-		getGUI()->addPrefPage(BWSPref);
+		Pref = new SchedulerPrefPage(this);
+		getGUI()->addPrefPage(Pref);
 		BWScheduler::instance().setCoreInterface(getCore());
 		
 		QDateTime now = QDateTime::currentDateTime();
-		QDateTime hour = now.addSecs(3600);
-// 		QDateTime hour = now.addSecs(60);
 		
+		//each hour
+		QDateTime hour = now.addSecs(3600);
 		QTime t(hour.time().hour(), 0);
+		
+		//each minute
+// 		QDateTime hour = now.addSecs(60);
 // 		QTime t(hour.time().hour(), hour.time().minute());
 		
 		QDateTime round(hour.date(), t);
@@ -81,16 +89,24 @@ namespace kt
 		int secs_to = now.secsTo(round);
 		
 		m_timer.start(secs_to*1000);
+
+		BWScheduler::instance().trigger();
 		
-		if(SchedulerPluginSettings::enableBWS())
-			BWScheduler::instance().trigger();
+// 		updateEnabledBWS();
+		bws_action = new KAction(i18n("Open Bandwidth Scheduler" ), "clock", 0, this,
+								 SLOT(openBWS()), actionCollection(), "bwscheduler" );
 	}
 
 	void SchedulerPlugin::unload()
 	{
-		getGUI()->removePrefPage(BWSPref);
-		delete BWSPref;
-		BWSPref = 0;
+		getGUI()->removePrefPage(Pref);
+		if(Pref)
+			delete Pref;
+		Pref = 0;
+		
+		if(bws_action)
+			delete bws_action;
+		bws_action = 0;
 		
 		m_timer.stop();
 	}
@@ -102,6 +118,29 @@ namespace kt
 		BWScheduler::instance().trigger();
 	}
 	
+	void SchedulerPlugin::openBWS()
+	{
+		if(SchedulerPluginSettings::enableBWS())
+		{
+			BWSPrefPageWidget dlg;
+			dlg.exec();
+		}
+		else
+			KMessageBox::sorry(0, i18n("Bandwidth scheduler is disabled. Go to Preferences->Scheduler to enable it."));
+	}
+	
+	void SchedulerPlugin::updateEnabledBWS()
+	{
+		if(SchedulerPluginSettings::enableBWS())
+		{
+			bws_action = new KAction(i18n("Open Bandwidth Scheduler" ), "clock", 0, this,
+									 SLOT(openBWS()), actionCollection(), "bwscheduler" );
+		}
+		else
+		{
+			if(bws_action)
+				delete bws_action;
+			bws_action = 0;
+		}
+	}
 }
-
-

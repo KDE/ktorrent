@@ -17,68 +17,67 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.           *
  ***************************************************************************/
-#ifndef KTBWSPREFPAGEWIDGET_H
-#define KTBWSPREFPAGEWIDGET_H
-
-#include <qwidget.h>
-
-#include "bwspage.h"
+#include "schedulerprefpagewidget.h"
+#include "bwsprefpagewidget.h"
 #include "bwscheduler.h"
+#include "schedulerpluginsettings.h"
+
+#include <qcheckbox.h>
+#include <qtimer.h>
+#include <qpushbutton.h>
+#include <qgroupbox.h>
 
 namespace kt
 {
-	/**
-	 * @brief Bandwidth Scheduler page
-	 * @author Ivan Vasic <ivasic@gmail.com>
-	 */
-	class BWSPrefPageWidget : public BWSPage
+
+	SchedulerPrefPageWidget::SchedulerPrefPageWidget(QWidget* parent, const char* name, WFlags fl)
+			: SchedulerPage(parent,name,fl)
 	{
-			Q_OBJECT
-		public:
-			BWSPrefPageWidget(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
-			~BWSPrefPageWidget();
-			/*$PUBLIC_FUNCTIONS$*/
-			
-			/**
-			 * @brief Loads default schedule.
-			 * Default schedule is currently active (if enabled) and it's in ~/.kde/share/apps/ktorrent/bwschedule
-			 */
-			void loadDefault();
-			
-			/**
-			 * Loads a schedule from HD.
-			 * @param fn Schedule filename
-			 * @param showmsg Should I show msgBox if file doesn't exist.
-			 * @ref BWSPrefPageWidget::btnLoad_clicked()
-			 * @ref BWSPrefPageWidget::loadDefault()
-			 */
-			void loadSchedule(QString& fn, bool showmsg = true);
-			
-			/**
-			 * Saves current schedule to HD.
-			 * @param fn Schedule filename.
-			 */
-			void saveSchedule(QString& fn);
-			
+		groupBWS->setEnabled(false);
+		bool useit = SchedulerPluginSettings::enableBWS();
+		bool use_colors = SchedulerPluginSettings::useColors();
+		useBS->setChecked(useit);
+		useColors->setChecked(use_colors);
+	}
 
-		public slots:
-			/*$PUBLIC_SLOTS$*/
-			virtual void btnReset_clicked();
-			virtual void btnLoad_clicked();
-			virtual void btnSave_clicked();
-			virtual void btnApply_clicked();
-			virtual void btnOk_clicked();
-			
-		private slots:
-			void categoryChanged(int);
 
-			///Applies settings
-			void apply();
+	SchedulerPrefPageWidget::~SchedulerPrefPageWidget()
+	{}
 
-		private:
-			BWS schedule;
-	};
+	void SchedulerPrefPageWidget::btnEditBWS_clicked()
+	{
+		BWSPrefPageWidget w(this);
+		w.exec();
+	}
+	
+	void SchedulerPrefPageWidget::apply()
+	{
+		bool use_bws = useBS->isChecked();
+		
+		SchedulerPluginSettings::setEnableBWS(use_bws);
+		SchedulerPluginSettings::setUseColors(useColors->isChecked());
+		SchedulerPluginSettings::writeConfig();
+		
+		/* force trigger since the schedule has changed but after KTorrent::apply()
+		* Used QTimer with fixed interval - not very nice solution... */
+		if(useBS->isChecked())
+			QTimer::singleShot(1000, this, SLOT(scheduler_trigger()));
+		
+		BWScheduler::instance().setEnabled(use_bws);
+	}
+	
+	void SchedulerPrefPageWidget::scheduler_trigger()
+	{
+		BWScheduler::instance().trigger();
+	}
+	
+	void SchedulerPrefPageWidget::useColors_toggled(bool)
+	{
+		SchedulerPluginSettings::setUseColors(useColors->isChecked());
+		SchedulerPluginSettings::writeConfig();
+	}
 
 }
 
-#endif
+
+

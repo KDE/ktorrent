@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2006 by Ivan Vasić                                      *
- *   ivan@ktorrent.org                                                     *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,6 +20,7 @@
 #include "bwspage.h"
 #include "bwsprefpagewidget.h"
 #include "bwscheduler.h"
+#include "bwswidget.h"
 #include "schedulerpluginsettings.h"
 
 #include <knuminput.h>
@@ -28,13 +29,16 @@
 #include <kstandarddirs.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
+#include <kiconloader.h>
+#include <kstdguiitem.h>
+#include <kpushbutton.h>
 
 #include <qcombobox.h>
 #include <qfile.h>
 #include <qdatastream.h>
 #include <qlabel.h>
 #include <qcheckbox.h>
-#include <qtimer.h>
+#include <qradiobutton.h>
 
 namespace kt
 {
@@ -44,38 +48,71 @@ namespace kt
 	BWSPrefPageWidget::BWSPrefPageWidget(QWidget* parent, const char* name, WFlags fl)
 			: BWSPage(parent,name,fl)
 	{
-		bool useit = SchedulerPluginSettings::enableBWS();
-		
-		if(useit)
-			loadDefault();
-		
-		useBS->setChecked(useit);
+
+		loadDefault();
 
 		lblStatus->clear();
+
+		pix_icon->setPixmap(KGlobal::iconLoader()->loadIcon("clock",KIcon::NoGroup));
 		
-		connect(useBS, SIGNAL(toggled(bool)), this, SLOT(use_toggled( bool )));
+		btnOk->setGuiItem(KStdGuiItem::ok());
+		btnCancel->setGuiItem(KStdGuiItem::cancel());
+		btnApply->setGuiItem(KStdGuiItem::apply());
+		btnSave->setGuiItem(KStdGuiItem::saveAs());
+		btnLoad->setGuiItem(KStdGuiItem::open());
+		btnReset->setGuiItem(KStdGuiItem::reset());
+		
+
+		bool use_colors = SchedulerPluginSettings::useColors();
+
+		if(use_colors) //set up colors
+		{
+			pix1->setPaletteBackgroundColor(QColor(30,165,105));
+			pix2->setPaletteBackgroundColor(QColor(195,195,70));
+			pix3->setPaletteBackgroundColor(QColor(195,195,70));
+			pix4->setPaletteBackgroundColor(QColor(195,195,70));
+			pix5->setPaletteBackgroundColor(QColor(190,30,30));
+			
+			pix12->setPaletteBackgroundColor(QColor(30,165,105));
+			pix22->setPaletteBackgroundColor(QColor(195,195,70));
+			pix32->setPaletteBackgroundColor(QColor(195,195,70));
+			pix42->setPaletteBackgroundColor(QColor(195,195,70));
+			pix52->setPaletteBackgroundColor(QColor(190,30,30));
+		} else //set up pixmaps
+		{
+			pix1->setPixmap(QPixmap(locate("data", QString("ktorrent/icons/cell-a-0000.png"))));
+			pix2->setPixmap(QPixmap(locate("data", QString("ktorrent/icons/cell-a-0001.png"))));
+			pix3->setPixmap(QPixmap(locate("data", QString("ktorrent/icons/cell-a-0002.png"))));
+			pix4->setPixmap(QPixmap(locate("data", QString("ktorrent/icons/cell-a-0003.png"))));
+			pix5->setPixmap(QPixmap(locate("data", QString("ktorrent/icons/cell-a-0004.png"))));
+
+			pix12->setPixmap(QPixmap(locate("data", QString("ktorrent/icons/cell-a-0000.png"))));
+			pix22->setPixmap(QPixmap(locate("data", QString("ktorrent/icons/cell-a-0001.png"))));
+			pix32->setPixmap(QPixmap(locate("data", QString("ktorrent/icons/cell-a-0002.png"))));
+			pix42->setPixmap(QPixmap(locate("data", QString("ktorrent/icons/cell-a-0003.png"))));
+			pix52->setPixmap(QPixmap(locate("data", QString("ktorrent/icons/cell-a-0004.png"))));
+		}
+
+		connect(radio1, SIGNAL(stateChanged(int)), this, SLOT(categoryChanged(int)));
+		connect(radio2, SIGNAL(stateChanged(int)), this, SLOT(categoryChanged(int)));
+		connect(radio3, SIGNAL(stateChanged(int)), this, SLOT(categoryChanged(int)));
+		connect(radio4, SIGNAL(stateChanged(int)), this, SLOT(categoryChanged(int)));
+		connect(radio5, SIGNAL(stateChanged(int)), this, SLOT(categoryChanged(int)));
+		connect(radio12, SIGNAL(stateChanged(int)), this, SLOT(categoryChanged(int)));
+		connect(radio22, SIGNAL(stateChanged(int)), this, SLOT(categoryChanged(int)));
+		connect(radio32, SIGNAL(stateChanged(int)), this, SLOT(categoryChanged(int)));
+		connect(radio42, SIGNAL(stateChanged(int)), this, SLOT(categoryChanged(int)));
+		connect(radio52, SIGNAL(stateChanged(int)), this, SLOT(categoryChanged(int)));
+
+		//pre-check default categories (say 1 for left and 0 for right)
+		radio2->setChecked(true);
+		radio12->setChecked(true);
+
+		m_bwsWidget->setSchedule(schedule);
 	}
 
 	BWSPrefPageWidget::~BWSPrefPageWidget()
 	{}
-
-	void BWSPrefPageWidget::comboDay_activated(int i)
-	{
-		comboCategory->setCurrentItem( (int) schedule.getCategory(i, comboTime->currentItem()) );
-		lblStatus->clear();
-	}
-
-	void BWSPrefPageWidget::comboTime_activated(int i)
-	{
-		comboCategory->setCurrentItem( (int) schedule.getCategory(comboDay->currentItem(), i) );
-		lblStatus->clear();
-	}
-
-	void BWSPrefPageWidget::comboCategory_activated(int index)
-	{
-		schedule.setCategory(comboDay->currentItem(), comboTime->currentItem(), (ScheduleCategory) index);
-		lblStatus->clear();
-	}
 
 	void BWSPrefPageWidget::btnSave_clicked()
 	{
@@ -93,13 +130,15 @@ namespace kt
 
 		if(lf.isEmpty())
 			return;
-		
+
 		btnReset_clicked();
 		loadSchedule(lf);
 	}
-	
+
 	void BWSPrefPageWidget::saveSchedule(QString& fn)
 	{
+		schedule = m_bwsWidget->schedule();
+
 		QFile file(fn);
 
 		file.open(IO_WriteOnly);
@@ -130,8 +169,7 @@ namespace kt
 	{
 		QFile file(fn);
 
-		if(!file.exists())
-		{
+		if(!file.exists()) {
 			if(showmsg)
 				KMessageBox::error(this, i18n("File not found."), i18n("Error"));
 			return;
@@ -165,33 +203,22 @@ namespace kt
 		}
 
 		file.close();
-		comboDay->setCurrentItem(0);
-		comboTime->setCurrentItem(0);
-		comboCategory->setCurrentItem((int)schedule.getCategory(0, 0));
 
+		m_bwsWidget->setSchedule(schedule);
 		lblStatus->setText(i18n("Schedule loaded."));
 	}
-	
+
 	void BWSPrefPageWidget::loadDefault()
 	{
 		//read schedule from HD
 		QString fn = KGlobal::dirs()->saveLocation("data","ktorrent") + "bwschedule";
 		loadSchedule(fn, false);
 	}
-	
-	void BWSPrefPageWidget::use_toggled(bool useit)
-	{
-		if(useit)
-			loadDefault();
-	}
 
 	void BWSPrefPageWidget::btnReset_clicked()
 	{
 		schedule.reset();
-
-		comboDay->setCurrentItem(0);
-		comboTime->setCurrentItem(0);
-		comboCategory->setCurrentItem(0);
+		m_bwsWidget->resetSchedule();
 
 		dlCat1->setValue(0);
 		dlCat2->setValue(0);
@@ -206,9 +233,10 @@ namespace kt
 
 	void BWSPrefPageWidget::apply()
 	{
-		SchedulerPluginSettings::setEnableBWS(useBS->isChecked());
+		schedule = m_bwsWidget->schedule();
+
 		SchedulerPluginSettings::writeConfig();
-		
+
 		//update category values...
 		schedule.setDownload(0, dlCat1->value());
 		schedule.setUpload(0, ulCat1->value());
@@ -216,23 +244,48 @@ namespace kt
 		schedule.setUpload(1, ulCat2->value());
 		schedule.setDownload(2, dlCat3->value());
 		schedule.setUpload(2, ulCat3->value());
-		
-		
-		if(useBS->isChecked())
-		{
-			//set new schedule
-			BWScheduler::instance().setSchedule(schedule);
-			
-			/* force trigger since the schedule has changed but after KTorrent::apply()
-			* Used QTimer with fixed interval - not very nice solution... */
-			QTimer::singleShot(1000, this, SLOT(scheduler_trigger()));
-		}
+
+		//set new schedule
+		BWScheduler::instance().setSchedule(schedule);
 	}
-	
-	void BWSPrefPageWidget::scheduler_trigger()
+
+	void BWSPrefPageWidget::btnOk_clicked()
 	{
-		BWScheduler::instance().trigger();
+		apply();
+		accept();
+	}
+
+	void BWSPrefPageWidget::btnApply_clicked()
+	{
+		apply();
 	}
 }
+
+void kt::BWSPrefPageWidget::categoryChanged(int)
+{
+	if(radio1->isChecked())
+		m_bwsWidget->setLeftCategory(0);
+	else if(radio2->isChecked())
+		m_bwsWidget->setLeftCategory(1);
+	else if(radio3->isChecked())
+		m_bwsWidget->setLeftCategory(2);
+	else if(radio4->isChecked())
+		m_bwsWidget->setLeftCategory(3);
+	else if(radio5->isChecked())
+		m_bwsWidget->setLeftCategory(4);
+
+	if(radio12->isChecked())
+		m_bwsWidget->setRightCategory(0);
+	else if(radio22->isChecked())
+		m_bwsWidget->setRightCategory(1);
+	else if(radio32->isChecked())
+		m_bwsWidget->setRightCategory(2);
+	else if(radio42->isChecked())
+		m_bwsWidget->setRightCategory(3);
+	else if(radio52->isChecked())
+		m_bwsWidget->setRightCategory(4);
+}
+
+
 
 #include "bwsprefpagewidget.moc"

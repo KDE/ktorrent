@@ -17,68 +17,48 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.           *
  ***************************************************************************/
-#ifndef KTBWSPREFPAGEWIDGET_H
-#define KTBWSPREFPAGEWIDGET_H
 
-#include <qwidget.h>
+#include "schedulerprefpage.h"
+#include "bwsprefpagewidget.h"
+#include "schedulerplugin.h"
+#include "schedulerpluginsettings.h"
 
-#include "bwspage.h"
-#include "bwscheduler.h"
+#include <klocale.h>
+#include <kglobal.h>
+#include <kiconloader.h>
+
 
 namespace kt
 {
-	/**
-	 * @brief Bandwidth Scheduler page
-	 * @author Ivan Vasic <ivasic@gmail.com>
-	 */
-	class BWSPrefPageWidget : public BWSPage
+
+	SchedulerPrefPage::SchedulerPrefPage(SchedulerPlugin* plugin)
+		: PrefPageInterface(i18n("Scheduler"), i18n("Scheduler plugin options"), KGlobal::iconLoader()->loadIcon("clock",KIcon::NoGroup)), m_plugin(plugin)
 	{
-			Q_OBJECT
-		public:
-			BWSPrefPageWidget(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
-			~BWSPrefPageWidget();
-			/*$PUBLIC_FUNCTIONS$*/
-			
-			/**
-			 * @brief Loads default schedule.
-			 * Default schedule is currently active (if enabled) and it's in ~/.kde/share/apps/ktorrent/bwschedule
-			 */
-			void loadDefault();
-			
-			/**
-			 * Loads a schedule from HD.
-			 * @param fn Schedule filename
-			 * @param showmsg Should I show msgBox if file doesn't exist.
-			 * @ref BWSPrefPageWidget::btnLoad_clicked()
-			 * @ref BWSPrefPageWidget::loadDefault()
-			 */
-			void loadSchedule(QString& fn, bool showmsg = true);
-			
-			/**
-			 * Saves current schedule to HD.
-			 * @param fn Schedule filename.
-			 */
-			void saveSchedule(QString& fn);
-			
+		widget = 0;
+	}
 
-		public slots:
-			/*$PUBLIC_SLOTS$*/
-			virtual void btnReset_clicked();
-			virtual void btnLoad_clicked();
-			virtual void btnSave_clicked();
-			virtual void btnApply_clicked();
-			virtual void btnOk_clicked();
-			
-		private slots:
-			void categoryChanged(int);
 
-			///Applies settings
-			void apply();
+	SchedulerPrefPage::~SchedulerPrefPage()
+	{}
 
-		private:
-			BWS schedule;
-	};
+	bool SchedulerPrefPage::apply()
+	{
+		widget->apply();
+//		m_plugin->updateEnabledBWS();
+		return true;
+	}
 
+	void SchedulerPrefPage::createWidget( QWidget * parent )
+	{
+		widget = new SchedulerPrefPageWidget(parent);
+	}
+
+	void SchedulerPrefPage::updateData()
+	{}
+
+	void SchedulerPrefPage::deleteWidget()
+	{
+		delete widget;
+		widget = 0;
+	}
 }
-
-#endif

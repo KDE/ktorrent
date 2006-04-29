@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2005 by Joris Guisson, Ivan Vasic                       *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -204,6 +205,7 @@ namespace kt
 		QTextStream out(&fptr);
 		out << "# PLEASE DO NOT MODIFY THIS FILE. Use KTorrent configuration dialog for adding new search engines." << ::endl;
 		out << "# SEARCH ENGINES list" << ::endl;
+		out << "KTorrents http://www.ktorrents.com/search.php?lg=0&sourceid=ktorrent&q=FOOBAR&f=0" << ::endl;
 		out << "bittorrent.com http://search.bittorrent.com/search.jsp?query=FOOBAR" << ::endl; 
 		out << "isohunt.com http://isohunt.com/torrents.php?ihq=FOOBAR&op=and" << ::endl; 
 		out << "mininova.org http://www.mininova.org/search.php?search=FOOBAR" << ::endl; 

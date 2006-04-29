@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2006 by Ivan Vasić                                      *
- *   ivan@ktorrent.org                                                     *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -24,6 +24,7 @@
 
 namespace kt
 {
+	
 	typedef enum bws_category
 	{
 		CAT_NORMAL,
@@ -36,12 +37,16 @@ namespace kt
 	/**
 	 * @author Ivan Vasic <ivasic@gmail.com>
 	 * @brief This class represents bandwidth schedule for the week.
+	 * It simplifies usage of 2 dimensional schedule (array) and its transfer between classes.
 	 */
 	class BWS
-	{	
+	{
+		///Schedule
 		ScheduleCategory** m_schedule;
 									   
+		///Download categories
 		int download[3];
+		///Upload categories
 		int upload[3];
 		
 		public:
@@ -49,23 +54,68 @@ namespace kt
 			BWS& operator=(const BWS& b);
 			~BWS();
 			
+			/**
+			 * @brief Resets this schedule.
+			 */
 			void reset();
 			
+			
+			/**
+			 * Gets download rate for category <i>cat</i>.
+			 * @param cat download category index
+			 * @return Download rate in KB/s
+			 */
 			int getDownload(int cat);
+			
+			/**
+			 * Gets upload rate for category <i>cat</i>.
+			 * @param cat upload category index
+			 * @return upload rate in KB/s
+			 */
 			int getUpload(int cat);
+			
+			
+			/**
+			 * @brief Gets category for specified <i>day</i> and <i>hour</i>.
+			 * @param day Number of day in a week.
+			 * @param hour Hour of the day.
+			 * @return ScheduleCategory - category associated with that day/hour.
+			 */
 			ScheduleCategory getCategory(int day, int hour);
 			
+			
+			/**
+			 * @brief Sets download rate for a category.
+			 * @param cat Category to set rate to.
+			 * @param val Download rate to set to category in KB/s
+			 */
 			void setDownload(int cat, int val);
+			
+			/**
+			 * @brief Sets upload rate for a category.
+			 * @param cat Category to set rate to.
+			 * @param val Upload rate to set to category in KB/s
+			 */
 			void setUpload(int cat, int val);
+			
+			
+			/**
+			 * @brief Sets category for specified <i>day</i>/<i>hour</i> combination.
+			 * @param day Day of the week.
+			 * @param hour Hour of the day.
+			 * @param val Category value.
+			 */
 			void setCategory(int day, int hour, ScheduleCategory val);
 			
+			///Prints schedule to LogViewer. Used only for debugging.
 			void debug();
 	};
 	
 	
 	/**
 	 * @brief Bandwidth scheduler class.
-	 * @author Ivan Vasic <ivan@ktorrent.org>
+	 * @author Ivan Vasic <ivasic@gmail.com>
+	 * Singleton class. Used to keep bandwidth schedule and change download/upload rate as necessary.
 	 */
 	class BWScheduler
 	{
@@ -96,15 +146,16 @@ namespace kt
 			 */
 			void setCoreInterface(CoreInterface* core);
 			
-			/**
-			 * Pauses all torrents (TURN OFF category)
-			 */
+			///Pauses all torrents (TURN OFF category)
 			void pauseAll();
 			
 			///Loads schedule from HD
 			void loadSchedule();
 			///Saves schedule to HD
 			void saveSchedule();
+
+	void setEnabled(bool theValue);
+	
 			
 		protected:
 			BWScheduler();
@@ -113,6 +164,8 @@ namespace kt
 			
 			BWS m_schedule;
 			CoreInterface* m_core;
+			
+			bool m_enabled;
 	};
 }
 

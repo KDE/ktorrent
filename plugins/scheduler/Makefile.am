@@ -1,10 +1,11 @@
 INCLUDES = $(all_includes) -I$(srcdir)/../../libktorrent
 METASOURCES = AUTO
 kde_module_LTLIBRARIES = ktschedulerplugin.la
-noinst_HEADERS = schedulerplugin.h bwsprefpagewidget.h bwsprefpage.h \
-	bwscheduler.h
+noinst_HEADERS = schedulerplugin.h bwscheduler.h schedulerprefpagewidget.h \
+	bwsprefpagewidget.h bwswidget.h schedulerprefpage.h
 ktschedulerplugin_la_SOURCES = schedulerplugin.cpp \
-	schedulerpluginsettings.kcfgc bwspage.ui bwsprefpagewidget.cpp bwsprefpage.cpp bwscheduler.cpp
+	schedulerpluginsettings.kcfgc bwscheduler.cpp schedulerprefpagewidget.cpp schedulerpage.ui bwspage.ui \
+	bwsprefpagewidget.cpp bwswidget.cpp schedulerprefpage.cpp
 
 # Libs needed by the plugin
 ktschedulerplugin_la_LIBADD = $(LIB_KHTML) $(LIB_KPARTS) \
@@ -24,3 +25,10 @@ kde_services_DATA = ktschedulerplugin.desktop
 
 kde_kcfg_DATA = ktschedulerplugin.kcfg
 
+kticonsdir = $(kde_datadir)/ktorrent/icons
+
+kticons_DATA = cell-a-0000.png cell-a-0001.png cell-a-0002.png cell-a-0003.png\
+	cell-a-0004.png cell-b-0000.png cell-b-0001.png cell-b-0002.png\
+	cell-b-0003.png cell-b-0004.png
+rcdir = $(kde_datadir)/ktorrent
+rc_DATA = ktschedulerpluginui.rc

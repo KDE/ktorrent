@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2006 by Ivan Vasić                                      *
- *   ivan@ktorrent.org                                                     *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,6 +18,7 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.           *
  ***************************************************************************/
 #include "bwscheduler.h"
+#include "schedulerpluginsettings.h"
 
 #include <torrent/globals.h>
 #include <torrent/downloadcap.h>
@@ -132,6 +133,7 @@ namespace kt
 	BWScheduler::BWScheduler()
 		: m_core(0)
 	{
+		m_enabled = SchedulerPluginSettings::enableBWS();
 		loadSchedule();
 	}
 	
@@ -141,8 +143,10 @@ namespace kt
 	
 	void BWScheduler::setSchedule(const BWS& sch)
 	{
+		Out() << "BWS: Setting new schedule..." << endl;
 		m_schedule = sch;
 		saveSchedule();
+		trigger();
 	}
 	
 	void BWScheduler::setCoreInterface(CoreInterface* core)
@@ -151,7 +155,10 @@ namespace kt
 	}
 	
 	void BWScheduler::trigger()
-	{	
+	{
+		if(!m_enabled)
+			return;
+		
 		QDateTime now = QDateTime::currentDateTime();
 		Out() << "BWS: " << now.toString() << " :: ";
 		
@@ -255,5 +262,10 @@ namespace kt
 				stream << (int) m_schedule.getCategory(i, j);
 
 		file.close();
+	}
+	
+	void BWScheduler::setEnabled(bool theValue)
+	{
+		m_enabled = theValue;
 	}
 }

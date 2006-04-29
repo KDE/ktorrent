@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2005 by Joris Guisson, Ivan Vasic                       *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -147,7 +148,11 @@ namespace kt
  
 	void SearchPrefPageWidget::addDefaultClicked()
 	{
-		QListViewItem* se = new QListViewItem(m_engines, "bittorrent.com", "http://search.bittorrent.com/search.jsp?query=FOOBAR");
+		QListViewItem* se = new QListViewItem(m_engines, "KTorrents", "http://www.ktorrents.com/search.php?lg=0&sourceid=ktorrent&q=FOOBAR&f=0");
+		m_items.append(se);
+		m_engines->insertItem(se);
+		
+		se = new QListViewItem(m_engines, "bittorrent.com", "http://search.bittorrent.com/search.jsp?query=FOOBAR");
 		m_items.append(se);
 		m_engines->insertItem(se);
      

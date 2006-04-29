@@ -17,68 +17,37 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.           *
  ***************************************************************************/
-#ifndef KTBWSPREFPAGEWIDGET_H
-#define KTBWSPREFPAGEWIDGET_H
+ 
+#ifndef KTSchedulerPREFPAGE_H
+#define KTSchedulerPREFPAGE_H
 
-#include <qwidget.h>
+#include <interfaces/prefpageinterface.h>
 
-#include "bwspage.h"
-#include "bwscheduler.h"
+#include "schedulerprefpagewidget.h"
 
 namespace kt
 {
+	class SchedulerPlugin;
+	
 	/**
-	 * @brief Bandwidth Scheduler page
+	 * @brief Scheduler Preferences Page.
 	 * @author Ivan Vasic <ivasic@gmail.com>
-	 */
-	class BWSPrefPageWidget : public BWSPage
+	*/
+	class SchedulerPrefPage : public PrefPageInterface
 	{
-			Q_OBJECT
 		public:
-			BWSPrefPageWidget(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
-			~BWSPrefPageWidget();
-			/*$PUBLIC_FUNCTIONS$*/
+			SchedulerPrefPage(SchedulerPlugin* plugin);
+			virtual ~SchedulerPrefPage();
 			
-			/**
-			 * @brief Loads default schedule.
-			 * Default schedule is currently active (if enabled) and it's in ~/.kde/share/apps/ktorrent/bwschedule
-			 */
-			void loadDefault();
+			virtual bool apply();
+			virtual void createWidget(QWidget* parent);
+			virtual void updateData();
+			virtual void deleteWidget();
 			
-			/**
-			 * Loads a schedule from HD.
-			 * @param fn Schedule filename
-			 * @param showmsg Should I show msgBox if file doesn't exist.
-			 * @ref BWSPrefPageWidget::btnLoad_clicked()
-			 * @ref BWSPrefPageWidget::loadDefault()
-			 */
-			void loadSchedule(QString& fn, bool showmsg = true);
-			
-			/**
-			 * Saves current schedule to HD.
-			 * @param fn Schedule filename.
-			 */
-			void saveSchedule(QString& fn);
-			
-
-		public slots:
-			/*$PUBLIC_SLOTS$*/
-			virtual void btnReset_clicked();
-			virtual void btnLoad_clicked();
-			virtual void btnSave_clicked();
-			virtual void btnApply_clicked();
-			virtual void btnOk_clicked();
-			
-		private slots:
-			void categoryChanged(int);
-
-			///Applies settings
-			void apply();
-
 		private:
-			BWS schedule;
+			SchedulerPlugin* m_plugin;
+			SchedulerPrefPageWidget* widget;
 	};
-
 }
 
 #endif

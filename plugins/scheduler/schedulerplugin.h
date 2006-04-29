@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2006 by Ivan Vasić                                      *
- *   ivan@ktorrent.org                                                     *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,7 +22,11 @@
 
 #include <interfaces/plugin.h>
 
+#include "schedulerprefpage.h"
+
 #include <qtimer.h>
+
+#include <kstdaction.h>
 
 class QString;
 
@@ -33,8 +37,8 @@ namespace kt
 	
 	/**
 	 * @author Ivan Vasic <ivasic@gmail.com>
-	 * @brief KTorrent scheduler plugin
-	 * 
+	 * @brief KTorrent scheduler plugin.
+	 *
 	 */
 	class SchedulerPlugin : public Plugin
 	{
@@ -46,14 +50,18 @@ namespace kt
 		virtual void load();
 		virtual void unload();
 		
+		void updateEnabledBWS();
+		
 	public slots:
 		void timer_triggered();
+		void openBWS();
 	
 	private:
 		QTimer m_timer;
 		
 		/* BANDWIDTH SCHEDULE PLUGIN */
- 		BWSPrefPage* BWSPref;
+ 		SchedulerPrefPage* Pref;
+		KAction* bws_action;
 	};
 
 }
