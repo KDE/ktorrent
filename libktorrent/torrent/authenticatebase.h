@@ -23,13 +23,14 @@
 #include <qobject.h>
 #include <qsocket.h>
 #include <qtimer.h>
+#include <util/constants.h>
 
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-namespace KNetwork
+
+namespace mse
 {
-	class KBufferedSocket;
+	class StreamSocket;
 }
-#endif
+
 
 namespace bt
 {
@@ -48,11 +49,7 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		AuthenticateBase(KNetwork::KBufferedSocket* s = 0);
-#else
-		AuthenticateBase(QSocket* s = 0);
-#endif
+		AuthenticateBase(mse::StreamSocket* s = 0);
 		virtual ~AuthenticateBase();
 
 		/// See if the authentication is finished
@@ -83,17 +80,18 @@ namespace bt
 		 */
 		virtual void handshakeRecieved(bool full) = 0;
 		
-	private slots:
+		/**
+		 * Fill in the handshake in a buffer.
+		*/
+		void makeHandshake(bt::Uint8* buf,const SHA1Hash & info_hash,const PeerID & our_peer_id);
+		
+	protected slots:
 		void onTimeout();
 		void onError(int err);
-		void onReadyRead();
+		virtual void onReadyRead();
 
 	protected:
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		KNetwork::KBufferedSocket* sock;
-#else
-		QSocket* sock;
-#endif
+		mse::StreamSocket* sock;
 		QTimer timer;
 		bool finished;
 		Uint8 handshake[68];

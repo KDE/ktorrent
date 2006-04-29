@@ -17,66 +17,57 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <stdio.h>
-#include <mse/bigint.h>
 #include <util/log.h>
 #include <torrent/globals.h>
-#include "biginttest.h"
+#include <util/sha1hash.h>
+#include "functions.h"
+#include "bigint.h"
 
 using namespace bt;
-using namespace mse;
 
-namespace utest
+namespace mse
 {
-
-	BigIntTest::BigIntTest() : UnitTest("BigIntTest")
-	{}
-
-
-	BigIntTest::~BigIntTest()
-	{}
+	/*
+	static const BigInt P = BigInt(
+			"0xFFFFFFFFFFFFFFFFC90FDAA22168C234C4C6628B80DC1CD"
+			"129024E088A67CC74020BBEA63B139B22514A08798E3404"
+			"DDEF9519B3CD3A431B302B0A6DF25F14374FE1356D6D51C"
+			"245E485B576625E7EC6F44C42E9A63A36210000000000090563");
+	*/
+	static const BigInt P = BigInt("0xFFFFFFFFFFFFFFFFC90FDAA22168C234C4C6628B80DC1CD129024E088A67CC74020BBEA63B139B22514A08798E3404DDEF9519B3CD3A431B302B0A6DF25F14374FE1356D6D51C245E485B576625E7EC6F44C42E9A63A36210000000000090563");
 	
-	static void PrintBigInt(BigInt & b)
+	void GeneratePublicPrivateKey(BigInt & priv,BigInt & pub)
 	{
-		Uint8 buf[10];
-		memset(buf,0,10);
-		b.toBuffer(buf,10);
-		for (Uint32 i = 0;i < 10;i++)
+		BigInt G = BigInt("0x02");
+		priv = BigInt::random();
+		pub = BigInt::powerMod(G,priv,P);
+	}
+
+	BigInt DHSecret(const BigInt & our_priv,const BigInt & peer_pub)
+	{
+		return BigInt::powerMod(peer_pub,our_priv,P);
+	}
+	
+	bt::SHA1Hash EncryptionKey(bool a,const BigInt & s,const bt::SHA1Hash & skey)
+	{
+		Uint8 buf[120];
+		memcpy(buf,"key",3);
+		buf[3] = (Uint8)(a ? 'A' : 'B');
+		s.toBuffer(buf + 4,96);
+		memcpy(buf + 100,skey.getData(),20);
+		return bt::SHA1Hash::generate(buf,120);
+	}
+	
+	void DumpBigInt(const QString & name,const BigInt & bi)
+	{
+		static Uint8 buf[512];
+		Uint32 nb = bi.toBuffer(buf,512);
+		Out() << name << " (" << nb << ") = ";
+		for (Uint32 i = 0;i < nb;i++)
 		{
 			Out() << QString("0x%1 ").arg(buf[i],0,16);
 		}
 		Out() << endl;
-	}
-
-	bool BigIntTest::doTest()
-	{
-		Out() << "First test : " << endl;
-		BigInt a("0x1E");
-		BigInt b("0x42");
-		BigInt c("0xFFFFEE");
-		BigInt d = BigInt::powerMod(a,b,c);
-		PrintBigInt(a);
-		PrintBigInt(b);
-		PrintBigInt(c);
-		PrintBigInt(d);
-		Out() << "Second test : " << endl;
-		Uint8 test[] = {0xAB,0x12,0x34,0xE4,0xF6};
-		a = BigInt::fromBuffer(test,5);
-		PrintBigInt(a);
-		Uint8 foobar[5];
-		a.toBuffer(foobar,5);
-		for (Uint32 i = 0;i < 5;i++)
-		{
-			Out() << QString("0x%1 ").arg(foobar[i],0,16);
-		}
-		Out() << endl;
-		Out() << "Third test" << endl;
-		a = BigInt("0xABCD1234");
-		PrintBigInt(a);
-		a.toBuffer(foobar,4);
-		c = BigInt::fromBuffer(foobar,4);
-		PrintBigInt(c);
-		return true;
 	}
 
 }

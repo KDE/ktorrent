@@ -204,6 +204,8 @@ void PrefPageTwo::createWidget(QWidget* parent)
 			this,SLOT(customIPChecked(bool )));
 	connect(gp->use_dht,SIGNAL(toggled(bool)),
 			this,SLOT(dhtChecked( bool )));
+	connect(gp->use_encryption,SIGNAL(toggled(bool)),
+			this,SLOT(useEncryptionChecked( bool )));
 }
 
 bool PrefPageTwo::apply()
@@ -253,7 +255,14 @@ bool PrefPageTwo::apply()
 	
 	Settings::setDhtSupport(gp->use_dht->isChecked());
 	Settings::setDhtPort(gp->dht_port->value());
+	Settings::setUseEncryption(gp->use_encryption->isChecked());
+	Settings::setAllowUnencryptedConnections(gp->allow_unencrypted->isChecked());
 	return true;
+}
+
+void PrefPageTwo::useEncryptionChecked(bool on)
+{
+	gp->allow_unencrypted->setEnabled(on);
 }
 
 void PrefPageTwo::autosaveChecked(bool on)
@@ -313,6 +322,10 @@ void PrefPageTwo::updateData()
 	gp->use_dht->setChecked(Settings::dhtSupport());
 	gp->dht_port->setValue(Settings::dhtPort());
 	gp->dht_port->setEnabled(Settings::dhtSupport());
+	
+	gp->use_encryption->setChecked(Settings::useEncryption());
+	gp->allow_unencrypted->setChecked(Settings::allowUnencryptedConnections());
+	gp->allow_unencrypted->setEnabled(Settings::useEncryption());
 }
 
 void PrefPageTwo::deleteWidget()

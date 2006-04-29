@@ -18,17 +18,9 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <math.h>
-
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-#include <kbufferedsocket.h>
-#else
-#include <qsocket.h>
-#include <qsocketdevice.h> 
-#endif
-
 #include <util/log.h>
 #include <util/functions.h>
-#include <mse/rc4encryptor.h>
+#include <mse/streamsocket.h>
 
 #include "peer.h"
 #include "chunk.h"
@@ -48,12 +40,10 @@ namespace bt
 	
 	
 	static Uint32 peer_id_counter = 1;
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-	Peer::Peer(KNetwork::KBufferedSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported,mse::RC4Encryptor* enc)
-#else
-	Peer::Peer(QSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported,mse::RC4Encryptor* enc)
-#endif
-	: sock(sock),pieces(num_chunks),peer_id(peer_id),enc(enc)
+	
+	
+	Peer::Peer(mse::StreamSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported)
+	: sock(sock),pieces(num_chunks),peer_id(peer_id)
 	{
 		id = peer_id_counter;
 		peer_id_counter++;
@@ -74,19 +64,7 @@ namespace bt
 		time_unchoked = 0;
 		
 		connect_time = QTime::currentTime();
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		connect(sock,SIGNAL(closed()),this,SLOT(connectionClosed()));
-		connect(sock,SIGNAL(readyRead()),this,SLOT(readyRead()));
-		connect(sock,SIGNAL(gotError(int)),this,SLOT(error(int)));
-		connect(sock,SIGNAL(bytesWritten(int)),this,SLOT(dataWritten(int )));
-#else
-		sock->socketDevice()->setReceiveBufferSize(49512);
-		sock->socketDevice()->setSendBufferSize(49512);
-		connect(sock,SIGNAL(connectionClosed()),this,SLOT(connectionClosed()));
-		connect(sock,SIGNAL(readyRead()),this,SLOT(readyRead()));
-		connect(sock,SIGNAL(error(int)),this,SLOT(error(int)));
-		connect(sock,SIGNAL(bytesWritten(int)),this,SLOT(dataWritten(int )));
-#endif
+		sock->attachPeer(this);
 		stats.client = peer_id.identifyClient();
 		stats.ip_addresss = getIPAddresss();
 		stats.choked = true;
@@ -104,6 +82,11 @@ namespace bt
 			Out() << "No more 0.0.0.0" << endl;
 			kill();
 		}
+		
+		if (sock->bytesAvailable() > 0)
+			recieved_packet = true;
+		
+		stats.encrypted = sock->encrypted();
 	}
 
 
@@ -120,7 +103,6 @@ namespace bt
 		}
 		delete speed;
 		delete up_speed;
-		delete enc;
 	}
 
 	void Peer::connectionClosed() 
@@ -329,11 +311,7 @@ namespace bt
 	{
 		if (killed) return;
 		
-		if (enc)
-			sock->writeBlock((const char*)enc->encrypt(data,len),len);
-		else
-			sock->writeBlock((const char*)data,len);
-		
+		sock->sendData(data,len);
 		up_speed->writeBytes(len,proto);
 	}
 	
@@ -341,11 +319,7 @@ namespace bt
 	{
 		if (killed) return 0;
 		
-		Uint32 ret = sock->readBlock((char*)buf,len);
-		if (ret > 0 && enc)
-			enc->decrypt(buf,ret);
-		
-		return ret;
+		return sock->readData(buf,len);
 	}
 	
 	Uint32 Peer::bytesAvailable() const
@@ -401,13 +375,7 @@ namespace bt
 	QString Peer::getIPAddresss() const
 	{
 		if (sock)
-		{
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-			return sock->peerAddress().nodeName();
-#else
-			return sock->peerAddress().toString();
-#endif
-		}
+			return sock->getIPAddress();
 		else
 			return QString::null;
 	}

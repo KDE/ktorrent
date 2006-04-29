@@ -138,6 +138,13 @@ namespace bt
 				pman->addPotentialPeer(pp);
 			}
 		}
+		
+		/*
+		PotentialPeer pp;
+		pp.ip = "127.0.0.1";
+		pp.port = 5555;
+		pman->addPotentialPeer(pp);
+		*/
 		delete n;
 		frontend->updateOK();
 	}
@@ -169,9 +176,6 @@ namespace bt
 		QString epq = url.encodedPathAndQuery();
 		epq += "&info_hash=" + frontend->info_hash.toURLString();
 
-
-//   warning, this debug contains the password
-//              kdDebug(14140) << k_funcinfo << "Auth request: " << authRequest << endl;
 
 		url.setEncodedPathAndQuery(epq);
 	//	Out() << "query : " << url.query() << endl;

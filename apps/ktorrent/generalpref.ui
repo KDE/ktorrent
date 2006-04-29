@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>600</width>
-            <height>573</height>
+            <height>657</height>
         </rect>
     </property>
     <property name="caption">
@@ -80,73 +80,6 @@
         </widget>
         <widget class="QGroupBox">
             <property name="name">
-                <cstring>groupBox4</cstring>
-            </property>
-            <property name="title">
-                <string>DHT</string>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>use_dht</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Use DHT to get additional peers (EXPERIMENTAL)</string>
-                    </property>
-                </widget>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>layout7</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel1_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>UDP port for DHT communication:</string>
-                            </property>
-                        </widget>
-                        <widget class="KIntSpinBox">
-                            <property name="name">
-                                <cstring>dht_port</cstring>
-                            </property>
-                            <property name="maxValue">
-                                <number>65535</number>
-                            </property>
-                            <property name="value">
-                                <number>6881</number>
-                            </property>
-                        </widget>
-                        <spacer>
-                            <property name="name">
-                                <cstring>spacer4</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>40</width>
-                                    <height>20</height>
-                                </size>
-                            </property>
-                        </spacer>
-                    </hbox>
-                </widget>
-            </vbox>
-        </widget>
-        <widget class="QGroupBox">
-            <property name="name">
                 <cstring>groupBox3_2</cstring>
             </property>
             <property name="title">
@@ -162,6 +95,9 @@
                     </property>
                     <property name="text">
                         <string>Show s&amp;ystem tray icon</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+Y</string>
                     </property>
                 </widget>
                 <widget class="QLayoutWidget">
@@ -325,6 +261,105 @@
                 </widget>
             </vbox>
         </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox4</cstring>
+            </property>
+            <property name="title">
+                <string>DHT</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>use_dht</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Use DHT to get additional peers (EXPERIMENTAL)</string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout7</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>UDP port for DHT communication:</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntSpinBox">
+                            <property name="name">
+                                <cstring>dht_port</cstring>
+                            </property>
+                            <property name="maxValue">
+                                <number>65535</number>
+                            </property>
+                            <property name="value">
+                                <number>6881</number>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer4</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox5</cstring>
+            </property>
+            <property name="title">
+                <string>Encryption</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>use_encryption</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use protocol encryption</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>allow_unencrypted</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Allow unencrypted connections</string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
         <spacer>
             <property name="name">
                 <cstring>spacer2</cstring>
@@ -338,7 +373,7 @@
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>60</height>
+                    <height>50</height>
                 </size>
             </property>
         </spacer>
@@ -359,9 +394,9 @@
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
-    <includehint>knuminput.h</includehint>
     <includehint>kcombobox.h</includehint>
     <includehint>kcombobox.h</includehint>
     <includehint>klineedit.h</includehint>
+    <includehint>knuminput.h</includehint>
 </includehints>
 </UI>

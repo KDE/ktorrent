@@ -17,10 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-#include <kbufferedsocket.h>
-#endif
 
+#include <mse/streamsocket.h>
 #include <util/sha1hash.h>
 #include <util/log.h>
 #include <util/log.h>
@@ -35,21 +33,12 @@
 namespace bt
 {
 
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-	ServerAuthenticate::ServerAuthenticate(KNetwork::KBufferedSocket* sock,Server* server)
+
+	ServerAuthenticate::ServerAuthenticate(mse::StreamSocket* sock,Server* server)
 	: AuthenticateBase(sock),server(server)
 	{
-		connect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-		connect(sock,SIGNAL(gotError(int)),this,SLOT(onError(int )));
+		sock->attachAuthenticate(this);
 	}
-#else
-	ServerAuthenticate::ServerAuthenticate(QSocket* sock,Server* server)
-	: AuthenticateBase(sock),server(server)
-	{
-		connect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-		connect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
-	}
-#endif
 
 
 	ServerAuthenticate::~ServerAuthenticate()
@@ -59,21 +48,13 @@ namespace bt
 	{
 		if (!sock) return;
 		
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		Out() << "Authentication(S) to " << sock->peerAddress().nodeName()
-			<< " : " << (succes ? "ok" : "failure") << endl;
-		disconnect(sock,SIGNAL(gotError(int)),this,SLOT(onError(int )));
-#else
-		Out() << "Authentication(S) to " << sock->peerAddress().toString()
-			<< " : " << (succes ? "ok" : "failure") << endl;
-		disconnect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
-#endif
-		disconnect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-		
+		Out() << "Authentication(S) to " << sock->getIPAddress() 
+				<< " : " << (succes ? "ok" : "failure") << endl;
+		sock->detachAuthenticate(this);
 		finished = true;
 		if (!succes)
 		{
-			sock->deleteLater();
+			delete sock;
 			sock = 0;
 		}
 		timer.stop();
@@ -83,11 +64,9 @@ namespace bt
 	{
 		Uint8* hs = handshake;
 		IPBlocklist& ipfilter = IPBlocklist::instance();
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		QString IP(sock->peerAddress().toString().section(':',3).section(']',0,0));
-#else
-		QString IP(sock->peerAddress().toString());
-#endif
+
+		QString IP = sock->getIPAddress();
+
 		if (ipfilter.isBlocked( IP ))
 		{
 			onFinish(false);

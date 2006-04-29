@@ -64,6 +64,7 @@ private slots:
 	void autosaveChecked(bool on);
 	void customIPChecked(bool on);
 	void dhtChecked(bool on);
+	void useEncryptionChecked(bool on);
 };
 
 

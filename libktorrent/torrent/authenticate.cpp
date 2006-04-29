@@ -18,11 +18,8 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <util/log.h>
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-#include <kbufferedsocket.h>
-#else
-#include <qsocket.h>
-#endif
+
+#include <mse/streamsocket.h>
 #include "authenticate.h"
 #include "ipblocklist.h"
 #include "peermanager.h"
@@ -35,35 +32,19 @@ namespace bt
 	: info_hash(info_hash),our_peer_id(peer_id),pman(pman)
 	{
 		finished = succes = false;
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		sock = new KNetwork::KBufferedSocket();
-		sock->enableRead(true);
-		sock->enableWrite(true);
-		connect(sock,SIGNAL(connected(const KResolverEntry&)),
-				this,SLOT(connected(const KResolverEntry&)));
-		connect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-		connect(sock,SIGNAL(gotError(int)),this,SLOT(onError(int )));
-#else
-		sock  = new QSocket();
-		connect(sock,SIGNAL(connected()),this,SLOT(connected()));
-		connect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-		connect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
-#endif
+		sock = new mse::StreamSocket();
+		sock->attachAuthenticate(this);
+		sock->onConnected(this,SLOT(connected()));
 		host = ip;
+		this->port = port;
 		Out() << "Initiating connection to " << host << endl;
-		sock->connectToHost(host,port);
+		sock->connectTo(host,port);
 	}
 
 	Authenticate::~Authenticate()
 	{
 	}
-	
 
-	void Authenticate::connected(const KNetwork::KResolverEntry &)
-	{
-		sendHandshake(info_hash,our_peer_id);
-	}
-	
 	void Authenticate::connected()
 	{
 	//	Out() << "Authenticate::connected" << endl;
@@ -73,21 +54,12 @@ namespace bt
 	void Authenticate::onFinish(bool succes)
 	{
 		Out() << "Authentication to " << host << " : " << (succes ? "ok" : "failure") << endl;
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		disconnect(sock,SIGNAL(connected(const KResolverEntry&)),
-				   this,SLOT(connected(const KResolverEntry&)));
-		disconnect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-		disconnect(sock,SIGNAL(gotError(int)),this,SLOT(onError(int )));
-#else
-		disconnect(sock,SIGNAL(connected()),this,SLOT(connected()));
-		disconnect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-		disconnect(sock,SIGNAL(error(int)),this,SLOT(onError(int )));
-#endif
+		sock->detachAuthenticate(this);
 		finished = true;
 		this->succes = succes;
 		if (!succes)
 		{
-			sock->deleteLater();
+			delete sock;
 			sock = 0;
 		}
 		timer.stop();
@@ -137,21 +109,14 @@ namespace bt
 		if (full)
 			onFinish(true);
 	}
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-	KNetwork::KBufferedSocket* Authenticate::takeSocket()
+
+
+	mse::StreamSocket* Authenticate::takeSocket()
 	{
-		KNetwork::KBufferedSocket* s = sock;
+		mse::StreamSocket* s = sock;
 		sock = 0;
 		return s;
 	}
-#else
-	QSocket* Authenticate::takeSocket()
-	{
-		QSocket* s = sock;
-		sock = 0;
-		return s;
-	}
-#endif
 	
 }
 #include "authenticate.moc"

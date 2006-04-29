@@ -30,7 +30,8 @@
 #include "downloader.h"
 #include <util/functions.h>
 #include <qhostaddress.h>
-#include <qsocket.h> 
+#include <mse/streamsocket.h> 
+#include <mse/encryptedauthenticate.h>
 #include <klocale.h>
 #include "ipblocklist.h"
 #include "chunkcounter.h"
@@ -135,6 +136,7 @@ namespace bt
 	
 	void PeerManager::addPotentialPeer(const PotentialPeer & pp)
 	{
+		Out() << "Addding " << pp.ip << ":" << pp.port << endl;
 		potential_peers.append(pp);
 	}
 
@@ -168,22 +170,18 @@ namespace bt
 		}
 	}
 	
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-	void PeerManager::newConnection(KNetwork::KBufferedSocket* sock,
+
+	void PeerManager::newConnection(mse::StreamSocket* sock,
 									const PeerID & peer_id,bool dht_supported)
-#else
-	void PeerManager::newConnection(QSocket* sock,
-									const PeerID & peer_id,bool dht_supported)
-#endif
 	{
 		Uint32 total = peer_list.count() + pending.count();
 		if (!started || (max_connections > 0 && total >= max_connections))
 		{
-			sock->deleteLater();
+			delete sock;
 			return;
 		}
 
-		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),dht_supported,0);
+		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),dht_supported);
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));
@@ -199,13 +197,25 @@ namespace bt
 		pending.remove(auth);
 		num_pending--;
 		if (!ok)
+		{
+			mse::EncryptedAuthenticate* a = dynamic_cast<mse::EncryptedAuthenticate*>(auth);
+			if (a && Globals::instance().getServer().unencryptedConnectionsAllowed())
+			{
+				// if possible try unencrypted
+				QString ip = a->getIP();
+				Uint16 port = a->getPort();
+				Authenticate* st = new Authenticate(ip,port,tor.getInfoHash(),tor.getPeerID(),*this);
+						
+				pending.append(st);
+			}
 			return;
+		}
 		
 		if (connectedTo(auth->getPeerID()))
 			return;
 			
 		Peer* peer = new Peer(
-				auth->takeSocket(),auth->getPeerID(),tor.getNumChunks(),auth->supportsDHT(),0);
+				auth->takeSocket(),auth->getPeerID(),tor.getNumChunks(),auth->supportsDHT());
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));
@@ -254,12 +264,12 @@ namespace bt
 		if (pending.count() > 50)
 			return;
 		
-		if (num > 0)
+/*		if (num > 0)
 		{
 			Out() << "Connecting to " << num << " peers (" 
 					<< potential_peers.count() << ")" << endl;
 		}
-		
+	*/	
 		for (Uint32 i = 0;i < num;i++)
 		{
 			if (pending.count() > 50)
@@ -272,12 +282,19 @@ namespace bt
 				continue;
 
 			IPBlocklist& ipfilter = IPBlocklist::instance();
-			//Out() << "Dodo " << pp.ip << endl;
+			
 			if (ipfilter.isBlocked(pp.ip))
 				continue;
 			
-			Authenticate* auth = new Authenticate(pp.ip,pp.port,
-					tor.getInfoHash(),tor.getPeerID(),*this);
+
+		//	Out() << "EncryptedAuthenticate : " << pp.ip << ":" << pp.port << endl;
+			Authenticate* auth = 0;
+			
+			if (Globals::instance().getServer().isEncryptionEnabled())
+				auth = new mse::EncryptedAuthenticate(pp.ip,pp.port,
+			tor.getInfoHash(),tor.getPeerID(),*this);
+			else
+				auth = new Authenticate(pp.ip,pp.port,tor.getInfoHash(),tor.getPeerID(),*this);
 			pending.append(auth);
 			num_pending++;
 		}

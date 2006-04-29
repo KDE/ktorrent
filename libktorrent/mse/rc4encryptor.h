@@ -28,6 +28,19 @@ using bt::Uint32;
 
 namespace mse
 {
+	/**
+	 * Helper class to do the actual encryption / decryption
+	*/
+	class RC4
+	{
+		Uint8 i,j;
+		Uint8 s[256];
+	public:
+		RC4(const Uint8* key,Uint32 size);
+		virtual ~RC4();
+		
+		void process(const Uint8* in,Uint8* out,Uint32 size);
+	};
 
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
@@ -38,11 +51,7 @@ namespace mse
 	*/
 	class RC4Encryptor
 	{
-		bt::SHA1Hash dkey,ekey;
-		Uint8 di,dj,ei,ej;
-		Uint8 ds[256];
-		Uint8 es[256];
-		
+		RC4 enc,dec;
 	public:
 		RC4Encryptor(const bt::SHA1Hash & dkey,const bt::SHA1Hash & ekey);
 		virtual ~RC4Encryptor();
@@ -64,9 +73,6 @@ namespace mse
 		 * @return Pointer to the static buffer
 		 */
 		const Uint8* encrypt(const Uint8* data,Uint32 len);
-		
-	private:
-		Uint8 prga(bool d);		
 	};
 
 }

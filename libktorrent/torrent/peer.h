@@ -28,20 +28,12 @@
 #include "globals.h"
 #include "peerid.h"
 
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-#include <ksocketaddress.h>
-namespace KNetwork
-{
-	class KBufferedSocket;
-}
-#else
-#include <qhostaddress.h>
-class QSocket;
-#endif
+
 
 namespace mse
 {
 	class RC4Encryptor;
+	class StreamSocket;
 }
 
 namespace bt
@@ -80,19 +72,11 @@ namespace bt
 		 * @param dht_supported Wether or not the peer supports DHT (mainline)
 		 * @param enc An RC4 encryptor (0 if no encryption is wanted
 		 */
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		Peer(KNetwork::KBufferedSocket* sock,
+		Peer(mse::StreamSocket* sock,
 			 const PeerID & peer_id,
 			 Uint32 num_chunks,
-			 bool dht_supported,
-			 mse::RC4Encryptor* enc);
-#else
-		Peer(QSocket* sock,
-			 const PeerID & peer_id,
-			 Uint32 num_chunks,
-			 bool dht_supported,
-			 mse::RC4Encryptor* enc);
-#endif
+			 bool dht_supported);
+		
 		virtual ~Peer();
 
 		/// Get the peer's unique ID.
@@ -272,18 +256,19 @@ namespace bt
 		void packetReady(const Uint8* packet,Uint32 size);
 
 	private:
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		KNetwork::KBufferedSocket* sock;
-#else
-		QSocket* sock;
-#endif
-		
-		bool choked,interested,am_choked,am_interested,killed,recieved_packet;
-		Uint32 time_choked,time_unchoked,id;
+		mse::StreamSocket* sock;
+		bool choked;
+		bool interested;
+		bool am_choked;
+		bool am_interested;
+		bool killed;
+		bool recieved_packet;
+		Uint32 time_choked;
+		Uint32 time_unchoked;
+		Uint32 id;
 		BitSet pieces;
 		PeerID peer_id;
 		Timer snub_timer;
-	
 		SpeedEstimater* speed;
 		UpSpeedEstimater* up_speed;
 		PacketReader* preader;
@@ -292,8 +277,6 @@ namespace bt
 		PeerUploader* uploader;
 		mutable kt::PeerInterface::Stats stats;
 		QTime connect_time;
-		
-		mse::RC4Encryptor* enc;
 
 		friend class PacketWriter;
 		friend class PacketReader;

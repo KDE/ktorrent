@@ -118,6 +118,15 @@ namespace bt
 		 * @return out
 		 */
 		friend Log & operator << (Log & out,const SHA1Hash & h);
+		
+		
+		/**
+		 * XOR two SHA1Hashes
+		 * @param a The first hash
+		 * @param b The second
+		 * @return a xor b
+		 */
+		friend SHA1Hash operator ^ (const SHA1Hash & a,const SHA1Hash & b);
 	};
 
 }

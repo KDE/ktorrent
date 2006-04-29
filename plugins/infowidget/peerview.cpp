@@ -43,6 +43,7 @@ namespace kt
 	static GeoIP* geo_ip = 0; 
 	static QPixmap yes_pix;
 	static QPixmap no_pix;
+	static QPixmap lock_pix;
 	static bool yes_no_pix_loaded = false;
 	
 		
@@ -53,6 +54,7 @@ namespace kt
 			KIconLoader* iload = KGlobal::iconLoader();
 			yes_pix = iload->loadIcon("button_ok",KIcon::Small);
 			no_pix = iload->loadIcon("button_cancel",KIcon::Small);
+			lock_pix = iload->loadIcon("ktencrypted",KIcon::Small);
 			yes_no_pix_loaded = true;
 		}
 		
@@ -83,7 +85,9 @@ namespace kt
 		m_country = QString(country_name);
 		
 		QPixmap pix(locate("data", QString("ktorrent/geoip/%1.png").arg(QString(country_code)).lower()));
-		setPixmap(0, pix);
+		setPixmap(1, pix);
+		if (s.encrypted)
+			setPixmap(0,lock_pix);
 		update();
 	}
 	

@@ -94,12 +94,7 @@ namespace dht
 
 	Key Key::distance(const Key & a,const Key & b)
 	{
-		Key k;
-		for (int i = 0;i < 20;i++)
-		{
-			k.hash[i] = a.hash[i] ^ b.hash[i];
-		}
-		return k;
+		return a ^ b;
 	}
 	
 	Key Key::random()

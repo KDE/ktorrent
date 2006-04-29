@@ -26,14 +26,10 @@
 #include "globals.h"
 #include "peerid.h"
 
-namespace KNetwork
-{
-	class KResolverEntry;
-}
 
 namespace bt
 {
-	using KNetwork::KResolverEntry;
+
 	
 	class PeerManager;
 
@@ -70,29 +66,28 @@ namespace bt
 		 * to transfer ownership to a Peer object.
 		 * @return The socket
 		 */
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		KNetwork::KBufferedSocket* takeSocket();
-#else
-		QSocket* takeSocket();
-#endif
+		mse::StreamSocket* takeSocket();
 		
 		const PeerID & getPeerID() const {return peer_id;}
 
 		/// See if the authentication is succesfull
 		bool isSuccesfull() const {return succes;}
 		
-	private slots:
-		void connected(const KResolverEntry &);
-		void connected();
+		const QString & getIP() const {return host;}
+		Uint16 getPort() const {return port;}
 		
-	private:
+	protected slots:
+		virtual void connected();
+		
+	protected:
 		void onFinish(bool succes);
 		void handshakeRecieved(bool full);
 		
-	private:
+	protected:
 		SHA1Hash info_hash;
 		PeerID our_peer_id,peer_id;
 		QString host;
+		Uint16 port;
 		bool succes;
 		PeerManager & pman;
 	};

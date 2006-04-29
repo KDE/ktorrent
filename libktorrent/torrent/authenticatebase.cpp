@@ -17,10 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-#include <kbufferedsocket.h>
-#endif
 
+#include <mse/streamsocket.h>
 #include <util/sha1hash.h>
 #include <util/log.h>
 #include <kademlia/dht.h>
@@ -30,12 +28,8 @@
 
 namespace bt
 {
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-	AuthenticateBase::AuthenticateBase(KNetwork::KBufferedSocket* s)
-#else
-	AuthenticateBase::AuthenticateBase(QSocket* s)
-#endif
-		: sock(s),finished(false)
+
+	AuthenticateBase::AuthenticateBase(mse::StreamSocket*  s) : sock(s),finished(false)
 	{
 		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 		timer.start(20000,true);
@@ -56,6 +50,11 @@ namespace bt
 		if (!sock) return;
 		
 		Uint8 hs[68];
+		makeHandshake(hs,info_hash,our_peer_id);
+		sock->sendData(hs,68);
+	}
+	void AuthenticateBase::makeHandshake(Uint8* hs,const SHA1Hash & info_hash,const PeerID & our_peer_id)
+	{
 		const char* pstr = "BitTorrent protocol";
 		hs[0] = 19;
 		memcpy(hs+1,pstr,19);
@@ -70,13 +69,11 @@ namespace bt
 		}
 		memcpy(hs+28,info_hash.getData(),20);
 		memcpy(hs+48,our_peer_id.data(),20);
-		
-		sock->writeBlock((const char*)hs,68);
 	}
 
 	void AuthenticateBase::onReadyRead()
 	{
-		//Out() << "AuthenticateBase::onReadyRead" << endl;
+	//	Out() << "AuthenticateBase::onReadyRead" << endl;
 		if (!sock || finished || sock->bytesAvailable() < 48)
 			return;
 		
@@ -88,7 +85,7 @@ namespace bt
 			if (ba < 68)
 			{
 				// read partial
-				sock->readBlock((char*)handshake,ba);
+				sock->readData(handshake,ba);
 				bytes_of_handshake_recieved += ba;
 				if (ba >= 27 && handshake[27])
 					dht_support = true;
@@ -99,14 +96,14 @@ namespace bt
 			else
 			{
 				// read full handshake
-				sock->readBlock((char*)handshake,68);
+				sock->readData(handshake,68);
 			}
 		}
 		else
 		{
 			// read remaining part
 			Uint32 to_read = 68 - bytes_of_handshake_recieved;
-			sock->readBlock((char*)handshake + bytes_of_handshake_recieved,to_read);
+			sock->readData(handshake + bytes_of_handshake_recieved,to_read);
 		}
 	
 		if (handshake[0] != 19)
@@ -135,9 +132,6 @@ namespace bt
 	{
 		if (finished)
 			return;
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		Out() << "Socket error : " << sock->errorString() << endl;
-#endif
 		onFinish(false);
 	}
 

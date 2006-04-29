@@ -39,18 +39,14 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		ServerAuthenticate(KNetwork::KBufferedSocket* sock,Server* server);
-#else
-		ServerAuthenticate(QSocket* sock,Server* server);
-#endif
+		ServerAuthenticate(mse::StreamSocket* sock,Server* server);
 		virtual ~ServerAuthenticate();
 
-	private:
+	protected:
 		void onFinish(bool succes);
 		void handshakeRecieved(bool full);
 
-	private:
+	protected:
 		Server* server;
 	};
 

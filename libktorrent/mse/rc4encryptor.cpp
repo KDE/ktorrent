@@ -1,4 +1,4 @@
-/***************************************************************************
+ /***************************************************************************
  *   Copyright (C) 2005 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
@@ -29,31 +29,46 @@ namespace mse
 	}
 	
 	static Uint8 rc4_enc_buffer[bt::MAX_MSGLEN];
-
-	RC4Encryptor::RC4Encryptor(const bt::SHA1Hash & dkey,const bt::SHA1Hash & ekey) 
-	: dkey(dkey),ekey(ekey),di(0),dj(0),ei(0),ej(0)
+	
+	RC4::RC4(const Uint8* key,Uint32 size) : i(0),j(0)
 	{
-		Uint32 j = 0,i = 0;
-		// Key scheduling algorithm for decrypt and encrypt side
-		for (i = 0;i < 256;i++)
-			ds[i] = i;
+		// initialize state
+		for (Uint32 t = 0;t < 256;t++)
+			s[t] = t;
 		
 		j = 0;
-		for (i=0;i < 255;i++)
+		for (Uint32 t=0;t < 256;t++)
 		{
-			j = (j + ds[i] + dkey[i % 20]) % 256;
-			swap(ds[i],ds[j]);
+			j = (j + s[t] + key[t % size]) & 0xff;
+			swap(s[t],s[j]);
 		}
 		
-		for (i = 0;i < 256;i++)
-			es[i] = i;
+		i = j = 0;
+	}
+	
+	RC4::~RC4()
+	{
+	}
 		
-		j = 0;
-		for (i=0;i < 255;i++)
+	void RC4::process(const Uint8* in,Uint8* out,Uint32 size)
+	{
+		for (Uint32 k = 0;k < size;k++)
 		{
-			j = (j + es[i] + ekey[i % 20]) % 256;
-			swap(es[i],es[j]);
+			i = (i + 1) & 0xff;
+			j = (j + s[i]) & 0xff;
+			swap(s[i],s[j]);
+			Uint8 b = s[ (s[i] + s[j]) & 0xff];
+			out[k] = b ^ in[k];
 		}
+	}
+	
+
+	RC4Encryptor::RC4Encryptor(const bt::SHA1Hash & dk,const bt::SHA1Hash & ek) 
+	: enc(ek.getData(),20),dec(dk.getData(),20)
+	{
+		Uint8 tmp[1024];
+		enc.process(tmp,tmp,1024);
+		dec.process(tmp,tmp,1024);
 	}
 
 
@@ -63,37 +78,12 @@ namespace mse
 
 	void RC4Encryptor::decrypt(Uint8* data,Uint32 len)
 	{
-		for (Uint32 k = 0;k < len;k++)
-		{
-			data[k] = prga(true) ^ data[k];
-		}
+		dec.process(data,data,len);
 	}
 
 	const Uint8* RC4Encryptor::encrypt(const Uint8* data,Uint32 len)
 	{
-		for (Uint32 k = 0;k < len;k++)
-		{
-			rc4_enc_buffer[k] = prga(false) ^ data[k];
-		}
+		enc.process(data,rc4_enc_buffer,len);
 		return rc4_enc_buffer;
 	}
-	
-	Uint8 RC4Encryptor::prga(bool d)
-	{
-		if (d)
-		{
-			di = (di + 1) % 256;
-			dj = (dj + ds[di]) % 256;
-			swap(ds[di],ds[dj]);
-			return ds[ (ds[di] + ds[dj]) % 256];
-		}
-		else
-		{
-			ei = (ei + 1) % 256;
-			ej = (ej + es[ei]) % 256;
-			swap(es[ei],es[ej]);
-			return es[ (es[ei] + es[ej]) % 256];
-		}
-	}
-
 }

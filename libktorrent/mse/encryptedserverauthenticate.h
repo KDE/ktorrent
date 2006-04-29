@@ -17,66 +17,63 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <stdio.h>
-#include <mse/bigint.h>
-#include <util/log.h>
-#include <torrent/globals.h>
-#include "biginttest.h"
+#ifndef MSEENCRYPTEDSERVERAUTHENTICATE_H
+#define MSEENCRYPTEDSERVERAUTHENTICATE_H
 
-using namespace bt;
-using namespace mse;
+#include <util/sha1hash.h>
+#include <torrent/serverauthenticate.h>
+#include "bigint.h"
 
-namespace utest
+namespace mse
 {
-
-	BigIntTest::BigIntTest() : UnitTest("BigIntTest")
-	{}
-
-
-	BigIntTest::~BigIntTest()
-	{}
+	class RC4Encryptor;
 	
-	static void PrintBigInt(BigInt & b)
-	{
-		Uint8 buf[10];
-		memset(buf,0,10);
-		b.toBuffer(buf,10);
-		for (Uint32 i = 0;i < 10;i++)
-		{
-			Out() << QString("0x%1 ").arg(buf[i],0,16);
-		}
-		Out() << endl;
-	}
 
-	bool BigIntTest::doTest()
+	const Uint32 MAX_SEA_BUF_SIZE = 608 + 20 + 20 + 8 + 4 + 2 + 512 + 2 + 68;
+	/**
+		@author Joris Guisson <joris.guisson@gmail.com>
+	*/
+	class EncryptedServerAuthenticate : public bt::ServerAuthenticate
 	{
-		Out() << "First test : " << endl;
-		BigInt a("0x1E");
-		BigInt b("0x42");
-		BigInt c("0xFFFFEE");
-		BigInt d = BigInt::powerMod(a,b,c);
-		PrintBigInt(a);
-		PrintBigInt(b);
-		PrintBigInt(c);
-		PrintBigInt(d);
-		Out() << "Second test : " << endl;
-		Uint8 test[] = {0xAB,0x12,0x34,0xE4,0xF6};
-		a = BigInt::fromBuffer(test,5);
-		PrintBigInt(a);
-		Uint8 foobar[5];
-		a.toBuffer(foobar,5);
-		for (Uint32 i = 0;i < 5;i++)
+		Q_OBJECT
+	public:
+		EncryptedServerAuthenticate(mse::StreamSocket* sock, bt::Server* server);
+		virtual ~EncryptedServerAuthenticate();
+
+	private slots:
+		virtual void onReadyRead();
+		
+	private:
+		void handleYA();
+		void findReq1();
+		void calculateSKey();
+		void processVC();
+		void handlePadC();
+		void handleIA();
+		
+	private:
+		enum State
 		{
-			Out() << QString("0x%1 ").arg(foobar[i],0,16);
-		}
-		Out() << endl;
-		Out() << "Third test" << endl;
-		a = BigInt("0xABCD1234");
-		PrintBigInt(a);
-		a.toBuffer(foobar,4);
-		c = BigInt::fromBuffer(foobar,4);
-		PrintBigInt(c);
-		return true;
-	}
+			WAITING_FOR_YA,
+			WAITING_FOR_REQ1,
+			FOUND_REQ1,
+			FOUND_INFO_HASH,
+			WAIT_FOR_PAD_C,
+			WAIT_FOR_IA,
+			NON_ENCRYPTED_HANDSHAKE
+		};
+		BigInt xb,yb,s,ya;
+		bt::SHA1Hash skey,info_hash;
+		State state;
+		Uint8 buf[MAX_SEA_BUF_SIZE];
+		Uint32 buf_size;
+		Uint32 req1_off;
+		Uint32 crypto_provide,crypto_select;
+		Uint16 pad_C_len;
+		Uint16 ia_len;
+		RC4Encryptor* our_rc4;
+	};
 
 }
+
+#endif

@@ -35,11 +35,6 @@ namespace utest
 		virtual ~BigIntTest();
 
 		virtual bool doTest();
-	private:
-		bool conversionTest();
-		bool xorTest();
-		bool cmpTest();
-		bool modTest();
 	};
 
 }

@@ -20,7 +20,7 @@
 #ifndef BTPEERMANAGER_H
 #define BTPEERMANAGER_H
 
-#include <kbufferedsocket.h>
+#include <qobject.h>
 #include <qvaluelist.h>
 #include <qptrlist.h>
 #include <util/ptrmap.h>
@@ -28,7 +28,10 @@
 #include "peerid.h"
 #include <util/bitset.h>
 
-class QSocket;
+namespace mse
+{
+	class StreamSocket;
+}
 
 namespace bt
 {
@@ -130,11 +133,8 @@ namespace bt
 		 * @param sock The socket
 		 * @param peer_id The Peer's ID
 		 */
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		void newConnection(KNetwork::KBufferedSocket* sock,const PeerID & peer_id,bool dht_supported);
-#else
-		void newConnection(QSocket* sock,const PeerID & peer_id,bool dht_supported);
-#endif
+
+		void newConnection(mse::StreamSocket* sock,const PeerID & peer_id,bool dht_supported);
 
 		/**
 		 * Add a potential peer

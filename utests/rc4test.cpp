@@ -18,10 +18,10 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <stdio.h>
-#include <mse/bigint.h>
+#include <mse/rc4encryptor.h>
 #include <util/log.h>
 #include <torrent/globals.h>
-#include "biginttest.h"
+#include "rc4test.h"
 
 using namespace bt;
 using namespace mse;
@@ -29,53 +29,66 @@ using namespace mse;
 namespace utest
 {
 
-	BigIntTest::BigIntTest() : UnitTest("BigIntTest")
+	RC4Test::RC4Test() : UnitTest("RC4")
 	{}
 
 
-	BigIntTest::~BigIntTest()
+	RC4Test::~RC4Test()
 	{}
-	
-	static void PrintBigInt(BigInt & b)
+
+
+	bool RC4Test::doTest()
 	{
-		Uint8 buf[10];
-		memset(buf,0,10);
-		b.toBuffer(buf,10);
-		for (Uint32 i = 0;i < 10;i++)
-		{
-			Out() << QString("0x%1 ").arg(buf[i],0,16);
-		}
-		Out() << endl;
+		bool ret1 = firstTest();
+		bool ret2 = secondTest();
+		return ret1 && ret2;
 	}
-
-	bool BigIntTest::doTest()
+	
+	bool RC4Test::firstTest()
 	{
-		Out() << "First test : " << endl;
-		BigInt a("0x1E");
-		BigInt b("0x42");
-		BigInt c("0xFFFFEE");
-		BigInt d = BigInt::powerMod(a,b,c);
-		PrintBigInt(a);
-		PrintBigInt(b);
-		PrintBigInt(c);
-		PrintBigInt(d);
-		Out() << "Second test : " << endl;
-		Uint8 test[] = {0xAB,0x12,0x34,0xE4,0xF6};
-		a = BigInt::fromBuffer(test,5);
-		PrintBigInt(a);
-		Uint8 foobar[5];
-		a.toBuffer(foobar,5);
-		for (Uint32 i = 0;i < 5;i++)
+		Out() << "First RC4 test" << endl;
+		SHA1Hash a = SHA1Hash::generate((Uint8*)"keyA",4);
+		SHA1Hash b = SHA1Hash::generate((Uint8*)"keyB",4);
+		
+		RC4Encryptor as(b,a);
+		RC4Encryptor bs(a,b);
+		char* test = "Dit is een test";
+		int tlen = strlen(test);
+		Uint8* dec = (Uint8*)as.encrypt((Uint8*)test,tlen);
+		bs.decrypt(dec,tlen);
+		if (memcmp(dec,test,tlen) == 0)
 		{
-			Out() << QString("0x%1 ").arg(foobar[i],0,16);
+			Out() << "Test succesfull" << endl;
+			Out() << QString(test) << endl;
+			Out() << QString((char*)dec) << endl;
+			return true;
 		}
-		Out() << endl;
-		Out() << "Third test" << endl;
-		a = BigInt("0xABCD1234");
-		PrintBigInt(a);
-		a.toBuffer(foobar,4);
-		c = BigInt::fromBuffer(foobar,4);
-		PrintBigInt(c);
+		else
+		{
+			Out() << "Test not succesfull" << endl;
+			Out() << QString(test) << endl;
+			Out() << QString((char*)dec) << endl;
+			return false;
+		}
+	}
+	
+	bool RC4Test::secondTest()
+	{
+		Out() << "Second RC4 test" << endl;
+		Uint8 output[100];
+		Uint8 result[] = {0xbb,0xf3,0x16, 0xe8 , 0xd9, 0x40, 0xaf,0x0a ,0xd3 };
+		// RC4( "Key", "Plaintext" ) == "bbf316e8 d940af0a d3"
+		char* key = "Key";
+		char* pt = "Plaintext";
+		RC4 enc((const Uint8*)key,3);
+		enc.process((const Uint8*)pt,output,strlen(pt));
+		
+		for (Uint32 i = 0;i < strlen(pt);i++)
+		{
+			if (output[i] != result[i])
+				return false;
+		}
+		
 		return true;
 	}
 

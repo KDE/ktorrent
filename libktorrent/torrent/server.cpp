@@ -17,16 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-#include <kbufferedsocket.h>
-using namespace KNetwork;
-#else
+
 #include <qserversocket.h>
-#endif
-
-
+#include <mse/streamsocket.h>
 #include <util/sha1hash.h>
 #include <util/log.h>
+#include <mse/encryptedserverauthenticate.h>
 #include "globals.h"
 #include "torrent.h"
 #include "server.h"
@@ -37,7 +33,7 @@ using namespace KNetwork;
 
 namespace bt
 {
-#ifndef USE_KNETWORK_SOCKET_CLASSES
+
 	class ServerSocket : public QServerSocket
 	{
 		Server* srv;
@@ -58,32 +54,27 @@ namespace bt
 		}
 	};
 
-#endif
+
 	
 
 	Server::Server(Uint16 port) : sock(0),port(0)
 	{
 		pending.setAutoDelete(false);
 		changePort(port);
+		encryption = false;
+		allow_unencrypted = true;
 	}
 
 
 	Server::~Server()
 	{
 		pending.setAutoDelete(true);
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		sock->close();
-#endif
 		delete sock;
 	}
 
 	bool Server::isOK() const
 	{
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		return sock->error() == KSocketBase::NoError;
-#else
 		return sock->ok();
-#endif
 	}
 
 	void Server::changePort(Uint16 p)
@@ -93,19 +84,7 @@ namespace bt
 
 		port = p;
 		delete sock;
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		sock = new KServerSocket();
-		sock->setIPv6Only(true);
-		connect(sock, SIGNAL(readyAccept()), this, SLOT(newConnection()));
-		connect(sock, SIGNAL(gotError(int)), this, SLOT(onError(int )));
-		sock->setFamily(KResolver::IPv4Family);
-		sock->setAddress(QString::number(port));
-		sock->setAcceptBuffered(true);
-		sock->setAddressReuseable(true);
-		sock->listen();
-#else
 		sock = new ServerSocket(this,port);
-#endif
 	}
 
 	void Server::addPeerManager(PeerManager* pman)
@@ -117,48 +96,10 @@ namespace bt
 	{
 		peer_managers.remove(pman);
 	}
-
-	void Server::newConnection()
-	{
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		KActiveSocketBase* b = sock->accept();
-		KBufferedSocket* conn = dynamic_cast<KBufferedSocket*>(b);
-
-		if (!conn)
-		{
-			Out() << "Conn = 0 !" << endl;
-			if (dynamic_cast<KStreamSocket*>(b))
-				Out() << "Stream socket !!" << endl;
-			return;
-		}
-		
-		if (peer_managers.count() == 0)
-		{
-			conn->close();
-			delete conn;
-		}
-		else
-		{
-			IPBlocklist& ipfilter = IPBlocklist::instance();
-			QString IP(conn->peerAddress().toString());
-			if (ipfilter.isBlocked( IP ))
-			{
-				Out() << "Peer " << IP << " is blacklisted. Aborting connection." << endl;
-				delete conn;
-				return;
-			}
-			
-			ServerAuthenticate* auth = new ServerAuthenticate(conn,this);
-			pending.append(auth);
-		}
-#endif
-	}
-
+	
 	void Server::newConnection(int socket)
 	{
-#ifndef USE_KNETWORK_SOCKET_CLASSES
-		QSocket* s = new QSocket();
-		s->setSocket(socket);
+		mse::StreamSocket* s = new mse::StreamSocket(socket);
 		if (peer_managers.count() == 0)
 		{
 			s->close();
@@ -167,7 +108,7 @@ namespace bt
 		else
 		{
 			IPBlocklist& ipfilter = IPBlocklist::instance();
-			QString IP(s->peerAddress().toString());
+			QString IP(s->getIPAddress());
 			if (ipfilter.isBlocked( IP ))
 			{
 				Out() << "Peer " << IP << " is blacklisted. Aborting connection." << endl;
@@ -175,10 +116,18 @@ namespace bt
 				return;
 			}
 			
-			ServerAuthenticate* auth = new ServerAuthenticate(s,this);
+			
+			Out() << "EncryptedServerAuthenticate created for " << IP << endl;
+			
+			ServerAuthenticate* auth = 0;
+			
+			if (encryption)
+				auth = new mse::EncryptedServerAuthenticate(s,this);
+			else
+				auth = new ServerAuthenticate(s,this);
+			
 			pending.append(auth);
 		}
-#endif
 	}
 
 	Uint16 Server::getPortInUse() const
@@ -198,12 +147,28 @@ namespace bt
 		}
 		return 0;
 	}
+	
+	bool Server::findInfoHash(const SHA1Hash & skey,SHA1Hash & info_hash)
+	{
+		Uint8 buf[24];
+		memcpy(buf,"req2",4);
+		QPtrList<PeerManager>::iterator i = peer_managers.begin();
+		while (i != peer_managers.end())
+		{
+			PeerManager* pm = *i;
+			memcpy(buf+4,pm->getTorrent().getInfoHash().getData(),20);
+			if (SHA1Hash::generate(buf,24) == skey)
+			{
+				info_hash = pm->getTorrent().getInfoHash();
+				return true;
+			}
+			i++;
+		}
+		return false;
+	}
 
 	void Server::onError(int)
 	{
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		Out() << "Server error : " << sock->errorString() << endl;
-#endif
 	}
 	
 	void Server::update()
@@ -222,6 +187,17 @@ namespace bt
 				i++;
 			}
 		}
+	}
+	
+	void Server::enableEncryption(bool allow_unencrypted)
+	{
+		encryption = true;
+		this->allow_unencrypted = allow_unencrypted;
+	}	
+	
+	void Server::disableEncryption()
+	{
+		encryption = false;
 	}
 }
 

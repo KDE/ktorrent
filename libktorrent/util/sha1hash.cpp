@@ -97,6 +97,15 @@ namespace bt
 		return out;
 	}
 
+	SHA1Hash operator ^ (const SHA1Hash & a,const SHA1Hash & b)
+	{
+		SHA1Hash k;
+		for (int i = 0;i < 20;i++)
+		{
+			k.hash[i] = a.hash[i] ^ b.hash[i];
+		}
+		return k;
+	}
 
 }
 

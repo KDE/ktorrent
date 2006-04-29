@@ -67,6 +67,8 @@ namespace kt
 			bool evil;
 			/// Flag to indicate if this peer has an upload slot
 			bool has_upload_slot;
+			/// Wether or not this connection is encrypted
+			bool encrypted;
 		};
 
 		virtual const Stats & getStats() const = 0;

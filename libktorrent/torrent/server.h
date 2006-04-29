@@ -22,9 +22,6 @@
 
 #include <qptrlist.h>
 #include <qobject.h>
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-#include <kserversocket.h>
-#endif
 #include "globals.h"
 
 namespace bt
@@ -32,10 +29,8 @@ namespace bt
 	class PeerManager;
 	class ServerAuthenticate;
 	class SHA1Hash;
-
-#ifndef USE_KNETWORK_SOCKET_CLASSES
 	class ServerSocket;
-#endif
+
 
 	/**
 	 * @author Joris Guisson
@@ -53,12 +48,10 @@ namespace bt
 
 		QPtrList<PeerManager> peer_managers;
 		QPtrList<ServerAuthenticate> pending;
-#ifdef USE_KNETWORK_SOCKET_CLASSES
-		KNetwork::KServerSocket* sock;
-#else
 		ServerSocket* sock;
-#endif
 		Uint16 port;
+		bool encryption;
+		bool allow_unencrypted;
 	public:
 		Server(Uint16 port);
 		virtual ~Server();
@@ -95,19 +88,40 @@ namespace bt
 		PeerManager* findPeerManager(const SHA1Hash & hash);
 		
 		/**
+		 * Find the info_hash based on the skey hash. The skey hash is a hash
+		 * of 'req2' followed by the info_hash. This function finds the info_hash
+		 * which matches the skey hash.
+		 * @param skey HASH('req2',info_hash)
+		 * @param info_hash which matches
+		 * @return true If one was found
+		*/
+		bool findInfoHash(const SHA1Hash & skey,SHA1Hash & info_hash);
+		
+		/**
 		 * Update the Server.
 		 */
 		void update();
+		
+		/**
+		 * Enable encryption. 
+		 * @param allow_unencrypted Allow unencrypted connections (if encryption fails)
+		 */
+		void enableEncryption(bool allow_unencrypted);
+		
+		/**
+		 * Disable encrypted authentication.
+		 */
+		void disableEncryption();
+		
+		bool isEncryptionEnabled() const {return encryption;}
+		bool unencryptedConnectionsAllowed() const {return allow_unencrypted;}
 
 	private slots:
-		void newConnection();
-		void newConnection(int socket);
+		void newConnection(int sock);
 		void onError(int);
 		
 	private:
-#ifndef USE_KNETWORK_SOCKET_CLASSES
 		friend class ServerSocket;
-#endif
 	};
 
 }

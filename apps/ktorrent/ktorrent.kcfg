@@ -95,5 +95,13 @@
 			<min>4</min>
 			<max>100</max>
 		</entry>
+		<entry name="useEncryption" type="Bool">
+			<label>Use protocol encryption</label>
+			<default>false</default>
+		</entry>
+		<entry name="allowUnencryptedConnections" type="Bool">
+			<label>Allow unencrypted connections</label>
+			<default>true</default>
+		</entry>
 	</group>
 </kcfg>

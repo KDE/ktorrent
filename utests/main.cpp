@@ -26,6 +26,8 @@
 #include "upnpparseresponsetest.h"
 #include "dhtmsgparsetest.h"
 #include "biginttest.h"
+#include "rc4test.h"
+#include "difflehellmantest.h"
 
 using namespace kt;
 using namespace bt;
@@ -42,6 +44,8 @@ int main(int argc,char** argv)
 	tr.addTest(new UPnPParseResponseTest());
 	tr.addTest(new DHTMsgParseTest());
 	tr.addTest(new BigIntTest());
+	tr.addTest(new RC4Test());
+	tr.addTest(new DiffleHellmanTest());
 	tr.doAllTests();
 	Globals::cleanup();
 	return 0;

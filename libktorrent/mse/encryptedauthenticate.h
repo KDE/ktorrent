@@ -17,80 +17,64 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef MSEBIGINT_H
-#define MSEBIGINT_H
+#ifndef MSEENCRYPTEDAUTHENTICATE_H
+#define MSEENCRYPTEDAUTHENTICATE_H
 
-#include <qstring.h>
-#include <util/constants.h>
-#include <stdio.h>
-#include <gmp.h>
+#include <util/sha1hash.h>
+#include <torrent/authenticate.h>
+#include "bigint.h"
 
-using bt::Uint8;
-using bt::Uint16;
-using bt::Uint32;
-using bt::Uint64;
 
 namespace mse
 {
+	class RC4Encryptor;
+	
+	const Uint32 MAX_EA_BUF_SIZE = 622 + 512;
 
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
 	 * 
-	 * Class which can hold an arbitrary large integer. This will be a very important part of our
-	 * MSE implementation.
+	 * Encrypted version of the Authenticate class
 	*/
-	class BigInt
+	class EncryptedAuthenticate : public bt::Authenticate
 	{
+		Q_OBJECT
 	public:
-		/**
-		 * Create a big integer, with num_bits bits.
-		 * All bits will be set to 0.
-		 * @param num_bits The number of bits
-		 */
-		BigInt(Uint32 num_bits = 0);
+		EncryptedAuthenticate(const QString& ip, Uint16 port, const bt::SHA1Hash& info_hash, const bt::PeerID& peer_id, bt::PeerManager& pman);
+		virtual ~EncryptedAuthenticate();
 		
-		/**
-		 * Create a big integer of a string. The string must be
-		 * a hexadecimal representation of an integer. For example :
-		 * 12AFFE123488BBBE123
-		 * 
-		 * Letters can be upper or lower case. Invalid chars will create an invalid number.
-		 * @param value The hexadecimal representation of the number
-		 */
-		BigInt(const QString & value);
-		
-		/**
-		 * Copy constructor.
-		 * @param bi BigInt to copy
-		 */
-		BigInt(const BigInt & bi);
-		virtual ~BigInt();
-		
-		/**
-		 * Assignment operator.
-		 * @param bi The BigInt to copy
-		 * @return *this
-		 */
-		BigInt & operator = (const BigInt & bi);
-		
-		/**
-		 * Calculates
-		 * (x ^ e) mod d 
-		 * ^ is power
-		 */
-		static BigInt powerMod(const BigInt & x,const BigInt & e,const BigInt & d);
-		
-		/// Make a random BigInt
-		static BigInt random();
-		
-		/// Export the bigint ot a buffer
-		Uint32 toBuffer(Uint8* buf,Uint32 max_size) const;
-		
-		/// Make a BigInt out of a buffer
-		static BigInt fromBuffer(const Uint8* buf,Uint32 size);
+	private slots:
+		virtual void connected();
+		virtual void onReadyRead();
 		
 	private:
-		mpz_t val;
+		void handleYB();
+		void handleCryptoSelect();
+		void findVC();
+		void handlePadD();
+		
+	private:
+		enum State
+		{
+			NOT_CONNECTED,
+			SENT_YA,
+			GOT_YB,
+			FOUND_VC,
+			WAIT_FOR_PAD_D,
+			NORMAL_HANDSHAKE,
+		};
+		
+		BigInt xa,ya,s,skey,yb;
+		State state; 
+		RC4Encryptor* our_rc4;
+		Uint8 buf[MAX_EA_BUF_SIZE];
+		Uint32 buf_size;
+		Uint32 vc_off;
+		Uint32 dec_bytes;
+		bt::SHA1Hash enc,dec;
+		Uint32 crypto_select;
+		Uint16 pad_D_len;
+		Uint32 end_of_crypto_handshake;
 	};
 
 }
