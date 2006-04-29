@@ -46,7 +46,7 @@ namespace kt
 	QString KBytesPerSecToString(double speed,int precision)
 	{
 		KLocale* loc = KGlobal::locale();
-		return i18n("%1 KB/sec").arg(loc->formatNumber(speed,precision));
+		return i18n("%1 KB/s").arg(loc->formatNumber(speed,precision));
 	}
 
 	QString DurationToString(Uint32 nsecs)
