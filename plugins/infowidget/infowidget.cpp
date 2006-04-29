@@ -416,7 +416,7 @@ namespace kt
 		if(!maxRatio->hasFocus() && useLimit->isChecked())
 			maxRatioUpdate();
 		
-		m_share_ratio->setText(QString("<font color=\"%1\">%2</font>").arg(ratio <= 0.8 ? "#ff0000" : "#00ff00").arg(KGlobal::locale()->formatNumber(ratio,2)));
+		m_share_ratio->setText(QString("<font color=\"%1\">%2</font>").arg(ratio <= 0.8 ? "#ff0000" : "#1c9a1c").arg(KGlobal::locale()->formatNumber(ratio,2)));
 	
 		Uint32 secs = curr_tc->getRunningTimeUL(); 
 		if (secs == 0)

@@ -24,6 +24,8 @@
 #include <interfaces/prefpageinterface.h>
 #include "searchpref.h"
 
+#include <qstring.h>
+
 namespace kt
 {
 	class SearchPrefPageWidget : public SEPreferences
@@ -35,6 +37,10 @@ namespace kt
 		bool apply();
 		void loadSearchEngines();
 		void saveSearchEngines();
+		void updateList(QString& source);
+		
+	public slots:
+		virtual void btnUpdate_clicked();
 	
 	private slots:
 		void addClicked();

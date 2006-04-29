@@ -29,6 +29,8 @@
 #include <klistview.h>
 #include <klineedit.h>
 #include <kmessagebox.h>
+#include <kio/netaccess.h>
+
 #include <util/constants.h>
 #include "searchprefpage.h"
 
@@ -191,6 +193,80 @@ namespace kt
 		m_items.clear();
 	}
 	
+	void SearchPrefPageWidget::btnUpdate_clicked()
+	{
+		QString fn = KGlobal::dirs()->saveLocation("data","ktorrent") + "search_engines.tmp";
+		KURL source("http://www.ktorrent.org/downloads/search_engines");
+		
+		if (KIO::NetAccess::download(source,fn,NULL))
+		{
+			//list successfully downloaded, remove temporary file
+			KIO::NetAccess::removeTempFile(fn);
+			updateList(fn);
+			saveSearchEngines();
+			KIO::NetAccess::del(fn);
+		}
+	}
+	
+	void SearchPrefPageWidget::updateList(QString& source)
+	{
+		QFile fptr(source);
+     
+		if (!fptr.open(IO_ReadOnly))
+			return;
+ 
+		QTextStream in(&fptr);
+		
+		QStringList sNames;
+		QStringList sUrls;
+
+		while (!in.atEnd())
+		{
+			QString line = in.readLine();
+
+			if(line.startsWith("#") || line.startsWith(" ") || line.isEmpty() )
+				continue;
+
+			QStringList tokens = QStringList::split(" ", line);
+			QString name = tokens[0];
+			name = name.replace("%20"," ");
+			
+			KURL url = KURL::fromPathOrURL(tokens[1]);
+			for(Uint32 i=2; i<tokens.count(); ++i)
+				url.addQueryItem(tokens[i].section("=",0,0), tokens[i].section("=", 1, 1));
+			
+			sNames << name;
+			sUrls << url.url();
+		}
+		
+		QStringList existing;
+		//modify
+		for(int i=0; i<m_items.count(); ++i)
+		{	
+			int index = sNames.findIndex(m_items.at(i)->text(0));
+			if(index != -1)
+			{
+				//replace
+				QListViewItem* se = m_items.at(i);
+				se->setText(1, sUrls[index]);
+				
+				sNames.remove(sNames.at(index));
+				sUrls.remove(sUrls.at(index));
+			}
+		}
+		
+		int i=0;
+		for(QStringList::Iterator it = sNames.begin(); it != sNames.end(); ++it, ++i) 
+		{
+			QListViewItem* se = new QListViewItem(m_engines, *it, sUrls[i]);
+			m_items.append(se);
+			m_engines->insertItem(se);
+		}
+		
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////
+	
 
 	SearchPrefPage::SearchPrefPage()
 	: PrefPageInterface(i18n("a noun", "Search"), i18n("Search Engine Options"),
@@ -223,7 +299,6 @@ namespace kt
 	{
 		widget->loadSearchEngines();
 	}
-
 }
 
 #include "searchprefpage.moc"

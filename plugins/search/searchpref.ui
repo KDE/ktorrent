@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>SEPreferences</class>
 <widget class="QWidget">
     <property name="name">
@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>500</width>
-            <height>357</height>
+            <height>350</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -29,89 +29,19 @@
     <property name="caption">
         <string>Search Preferences</string>
     </property>
-    <hbox>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLayoutWidget">
+        <widget class="QLayoutWidget" row="0" column="0">
             <property name="name">
-                <cstring>layout5</cstring>
+                <cstring>layout6</cstring>
             </property>
-            <vbox>
+            <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="KActiveLabel">
-                    <property name="name">
-                        <cstring>m_infoLabel</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>layout22</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel3</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Search engine name:</string>
-                            </property>
-                        </widget>
-                        <widget class="KLineEdit">
-                            <property name="name">
-                                <cstring>m_engine_name</cstring>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>layout23</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel4</cstring>
-                            </property>
-                            <property name="text">
-                                <string>URL:</string>
-                            </property>
-                        </widget>
-                        <widget class="KLineEdit">
-                            <property name="name">
-                                <cstring>m_engine_url</cstring>
-                            </property>
-                        </widget>
-                        <widget class="QPushButton">
-                            <property name="name">
-                                <cstring>btnAdd</cstring>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>0</hsizetype>
-                                    <vsizetype>0</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                            <property name="text">
-                                <string>&amp;Add</string>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-                <widget class="QGroupBox">
+                <widget class="QGroupBox" row="3" column="0">
                     <property name="name">
                         <cstring>groupBox1</cstring>
                     </property>
@@ -126,11 +56,11 @@
                     <property name="title">
                         <string>Search Engines</string>
                     </property>
-                    <vbox>
+                    <grid>
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QListView">
+                        <widget class="QListView" row="0" column="0">
                             <column>
                                 <property name="text">
                                     <string>Engines</string>
@@ -174,9 +104,9 @@
                                 <enum>AllColumns</enum>
                             </property>
                         </widget>
-                        <widget class="QLayoutWidget">
+                        <widget class="QLayoutWidget" row="1" column="0">
                             <property name="name">
-                                <cstring>layout4</cstring>
+                                <cstring>layout5</cstring>
                             </property>
                             <hbox>
                                 <property name="name">
@@ -189,6 +119,9 @@
                                     <property name="text">
                                         <string>&amp;Remove</string>
                                     </property>
+                                    <property name="accel">
+                                        <string>Alt+R</string>
+                                    </property>
                                 </widget>
                                 <widget class="QPushButton">
                                     <property name="name">
@@ -196,6 +129,9 @@
                                     </property>
                                     <property name="text">
                                         <string>R&amp;emove All</string>
+                                    </property>
+                                    <property name="accel">
+                                        <string>Alt+E</string>
                                     </property>
                                 </widget>
                                 <spacer>
@@ -222,12 +158,46 @@
                                     <property name="text">
                                         <string>Add Defau&amp;lt</string>
                                     </property>
+                                    <property name="accel">
+                                        <string>Alt+L</string>
+                                    </property>
+                                </widget>
+                                <widget class="KPushButton">
+                                    <property name="name">
+                                        <cstring>btnUpdate</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Update from internet</string>
+                                    </property>
                                 </widget>
                             </hbox>
                         </widget>
-                    </vbox>
+                    </grid>
                 </widget>
-                <spacer>
+                <widget class="QLayoutWidget" row="1" column="0">
+                    <property name="name">
+                        <cstring>layout22</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel3</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Search engine name:</string>
+                            </property>
+                        </widget>
+                        <widget class="KLineEdit">
+                            <property name="name">
+                                <cstring>m_engine_name</cstring>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <spacer row="4" column="0">
                     <property name="name">
                         <cstring>spacer12</cstring>
                     </property>
@@ -244,16 +214,73 @@
                         </size>
                     </property>
                 </spacer>
-            </vbox>
+                <widget class="QLayoutWidget" row="2" column="0">
+                    <property name="name">
+                        <cstring>layout23</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel4</cstring>
+                            </property>
+                            <property name="text">
+                                <string>URL:</string>
+                            </property>
+                        </widget>
+                        <widget class="KLineEdit">
+                            <property name="name">
+                                <cstring>m_engine_url</cstring>
+                            </property>
+                        </widget>
+                        <widget class="QPushButton">
+                            <property name="name">
+                                <cstring>btnAdd</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>0</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Add</string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="KActiveLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>m_infoLabel</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+            </grid>
         </widget>
-    </hbox>
+    </grid>
 </widget>
-<customwidgets>
-</customwidgets>
+<connections>
+    <connection>
+        <sender>btnUpdate</sender>
+        <signal>clicked()</signal>
+        <receiver>SEPreferences</receiver>
+        <slot>btnUpdate_clicked()</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>btnUpdate_clicked()</slot>
+</slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>klineedit.h</includehint>
     <includehint>kactivelabel.h</includehint>
-    <includehint>klineedit.h</includehint>
-    <includehint>klineedit.h</includehint>
 </includehints>
 </UI>
