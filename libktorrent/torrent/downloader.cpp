@@ -337,6 +337,7 @@ namespace bt
 			Out() << "Is        : " << h << endl;
 			Out() << "Should be : " << tor.getHash(c->getIndex()) << endl;
 			
+			c->setStatus(Chunk::NOT_DOWNLOADED);
 			Uint32 pid;
 			if (cd->getOnlyDownloader(pid))
 			{
