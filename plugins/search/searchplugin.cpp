@@ -60,9 +60,9 @@ namespace kt
 		getGUI()->addTabPage(
 				search,iload->loadIconSet("viewmag", KIcon::Small),
 				i18n("Search"));
-		search->loadSearchEngines();
 		
-		pref = new SearchPrefPage();
+		
+		pref = new SearchPrefPage(this);
 		getGUI()->addPrefPage(pref);
 
 		KAction* copy_act = KStdAction::copy(search,SLOT(copy()),actionCollection());
@@ -78,6 +78,12 @@ namespace kt
 		search = 0;
 		delete pref;
 		pref = 0;
+	}
+	
+	void SearchPlugin::preferencesUpdated()
+	{
+		if(search)
+			search->loadSearchEngines();
 	}
 
 }

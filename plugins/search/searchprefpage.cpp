@@ -33,6 +33,7 @@
 
 #include <util/constants.h>
 #include "searchprefpage.h"
+#include "searchplugin.h"
 
 using namespace bt;
 
@@ -268,9 +269,9 @@ namespace kt
 	////////////////////////////////////////////////////////////////////////////////////////////
 	
 
-	SearchPrefPage::SearchPrefPage()
-	: PrefPageInterface(i18n("a noun", "Search"), i18n("Search Engine Options"),
-						KGlobal::iconLoader()->loadIcon("viewmag",KIcon::NoGroup))
+	SearchPrefPage::SearchPrefPage(SearchPlugin* plugin)
+		: PrefPageInterface(i18n("a noun", "Search"), i18n("Search Engine Options"),
+							KGlobal::iconLoader()->loadIcon("viewmag",KIcon::NoGroup)), m_plugin(plugin)
 	{
 		widget = 0;
 	}
@@ -282,7 +283,11 @@ namespace kt
 
 	bool SearchPrefPage::apply()
 	{
-		return widget->apply();
+		bool ret = widget->apply();
+		if(ret)
+			m_plugin->preferencesUpdated();
+		
+		return ret;
 	}
 
 	void SearchPrefPage::createWidget(QWidget* parent)

@@ -27,7 +27,9 @@
 #include <qstring.h>
 
 namespace kt
-{
+{	
+	class SearchPlugin;
+	
 	class SearchPrefPageWidget : public SEPreferences
 	{
 		Q_OBJECT
@@ -57,7 +59,7 @@ namespace kt
 	class SearchPrefPage : public PrefPageInterface
 	{
 	public:
-		SearchPrefPage();
+		SearchPrefPage(SearchPlugin* plugin);
 		virtual ~SearchPrefPage();
 
 		virtual bool apply();
@@ -67,6 +69,7 @@ namespace kt
 
 	private:
 		SearchPrefPageWidget* widget;
+		SearchPlugin* m_plugin;
 	};
 
 }

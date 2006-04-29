@@ -39,6 +39,9 @@ namespace kt
 
 		virtual void load();
 		virtual void unload();
+		
+		void preferencesUpdated();
+		
 	private:
 		SearchWidget* search;
 		SearchPrefPage* pref;
