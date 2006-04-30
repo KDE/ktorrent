@@ -60,9 +60,6 @@
                             <property name="text">
                                 <string>Categor&amp;y 1</string>
                             </property>
-                            <property name="accel">
-                                <string>Alt+Y</string>
-                            </property>
                         </widget>
                         <widget class="QLabel" row="0" column="0">
                             <property name="name">
@@ -159,9 +156,6 @@
                             <property name="text">
                                 <string>T&amp;urn off</string>
                             </property>
-                            <property name="accel">
-                                <string>Alt+U</string>
-                            </property>
                         </widget>
                         <widget class="QRadioButton" row="0" column="1">
                             <property name="name">
@@ -169,9 +163,6 @@
                             </property>
                             <property name="text">
                                 <string>&amp;Normal</string>
-                            </property>
-                            <property name="accel">
-                                <string>Alt+N</string>
                             </property>
                         </widget>
                         <widget class="QLabel" row="3" column="0">
@@ -337,9 +328,6 @@
                             <property name="text">
                                 <string>T&amp;urn off</string>
                             </property>
-                            <property name="accel">
-                                <string>Alt+U</string>
-                            </property>
                         </widget>
                         <widget class="QRadioButton" row="0" column="1">
                             <property name="name">
@@ -347,9 +335,6 @@
                             </property>
                             <property name="text">
                                 <string>&amp;Normal</string>
-                            </property>
-                            <property name="accel">
-                                <string>Alt+N</string>
                             </property>
                         </widget>
                         <widget class="QLabel" row="3" column="0">
@@ -380,9 +365,6 @@
                             </property>
                             <property name="text">
                                 <string>&amp;Category 3</string>
-                            </property>
-                            <property name="accel">
-                                <string>Alt+C</string>
                             </property>
                         </widget>
                         <widget class="QRadioButton" row="2" column="1">
@@ -697,9 +679,6 @@
                             <property name="text">
                                 <string>&amp;Load from file</string>
                             </property>
-                            <property name="accel">
-                                <string>Alt+L</string>
-                            </property>
                         </widget>
                         <widget class="KPushButton">
                             <property name="name">
@@ -770,9 +749,6 @@
                             </property>
                             <property name="text">
                                 <string>O&amp;k</string>
-                            </property>
-                            <property name="accel">
-                                <string>Alt+K</string>
                             </property>
                         </widget>
                         <widget class="KPushButton">

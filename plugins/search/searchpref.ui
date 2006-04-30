@@ -119,9 +119,6 @@
                                     <property name="text">
                                         <string>&amp;Remove</string>
                                     </property>
-                                    <property name="accel">
-                                        <string>Alt+R</string>
-                                    </property>
                                 </widget>
                                 <widget class="QPushButton">
                                     <property name="name">
@@ -129,9 +126,6 @@
                                     </property>
                                     <property name="text">
                                         <string>R&amp;emove All</string>
-                                    </property>
-                                    <property name="accel">
-                                        <string>Alt+E</string>
                                     </property>
                                 </widget>
                                 <spacer>
@@ -157,9 +151,6 @@
                                     </property>
                                     <property name="text">
                                         <string>Add Defau&amp;lt</string>
-                                    </property>
-                                    <property name="accel">
-                                        <string>Alt+L</string>
                                     </property>
                                 </widget>
                                 <widget class="KPushButton">

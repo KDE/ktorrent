@@ -96,9 +96,6 @@
                     <property name="text">
                         <string>Show s&amp;ystem tray icon</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+Y</string>
-                    </property>
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
