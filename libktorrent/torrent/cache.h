@@ -81,7 +81,7 @@ namespace bt
 		 * @return true if ok, false otherwise
 		 */
 		virtual bool prep(Chunk* c) = 0;
-
+		
 		/**
 		 * Create all the data files to store the data.
 		 */

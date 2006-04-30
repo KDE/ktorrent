@@ -265,6 +265,19 @@ namespace bt
 		}
 	}
 	
+	void ChunkManager::resetChunk(unsigned int i)
+	{
+		if (i >= chunks.size())
+			return;
+		
+		Chunk* c = chunks[i];
+		if (c->getStatus() == Chunk::MMAPPED)
+			cache->save(c);
+		c->clear();
+		c->setStatus(Chunk::NOT_DOWNLOADED);
+		loaded.remove(i);
+	}
+	
 	void ChunkManager::checkMemoryUsage()
 	{
 		Uint32 num_removed = 0;

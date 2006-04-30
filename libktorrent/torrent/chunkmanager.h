@@ -146,6 +146,12 @@ namespace bt
 		void releaseChunk(unsigned int i);
 		
 		/**
+		 * Reset a chunk as if it were never downloaded.
+		 * @param i The chunk
+		 */
+		void resetChunk(unsigned int i);
+		
+		/**
 		 * Save the i'th Chunk to the cache_file.
 		 * Also changes the Chunk's status to ON_DISK.
 		 * The Chunk's data is immediatly cleared.
