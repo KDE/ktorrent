@@ -1,6 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Comment=BitTorrent Download
+Comment[ga]=Íosluchtú BitTorrent
+Comment[pt]=Transferência do BitTorrent
+Comment[pt_BR]=Transferência do BitTorrent
 Hidden=false
 MimeType=application/x-bittorrent
 Icon=ktorrent
