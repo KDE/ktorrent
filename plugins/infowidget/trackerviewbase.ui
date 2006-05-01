@@ -152,7 +152,7 @@
                         <cstring>btnUpdate</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Update tracker</string>
+                        <string>&amp;Update Tracker</string>
                     </property>
                 </widget>
             </hbox>
@@ -173,7 +173,7 @@
                         <cstring>btnAdd</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Add tracker</string>
+                        <string>&amp;Add Tracker</string>
                     </property>
                 </widget>
                 <widget class="QPushButton" row="1" column="1">
@@ -181,7 +181,7 @@
                         <cstring>btnRemove</cstring>
                     </property>
                     <property name="text">
-                        <string>Remove tracker</string>
+                        <string>Remove Tracker</string>
                     </property>
                     <property name="accel">
                         <string></string>
@@ -192,7 +192,7 @@
                         <cstring>btnChange</cstring>
                     </property>
                     <property name="text">
-                        <string>Cha&amp;nge tracker</string>
+                        <string>Cha&amp;nge Tracker</string>
                     </property>
                 </widget>
                 <widget class="QPushButton" row="4" column="1">
@@ -200,7 +200,7 @@
                         <cstring>btnRestore</cstring>
                     </property>
                     <property name="text">
-                        <string>Restore defau&amp;lt</string>
+                        <string>Restore Defau&amp;lt</string>
                     </property>
                 </widget>
                 <widget class="QLineEdit" row="0" column="0">

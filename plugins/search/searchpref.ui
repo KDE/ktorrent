@@ -158,7 +158,7 @@
                                         <cstring>btnUpdate</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>Update from internet</string>
+                                        <string>Update from Internet</string>
                                     </property>
                                 </widget>
                             </hbox>
