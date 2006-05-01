@@ -39,7 +39,7 @@ using namespace bt;
 using namespace kt;
 
 KTorrentView::KTorrentView(QWidget *parent, bool seed_view)
-	: KListView(parent),m_seedView(seed_view),show_debug_view(false),menu(0),curr(0)
+	: KListView(parent),m_seedView(seed_view),show_debug_view(false),menu(0)
 {
 	addColumn(i18n("File"));
 	addColumn(i18n("Status"));
@@ -57,25 +57,27 @@ KTorrentView::KTorrentView(QWidget *parent, bool seed_view)
 	show_debug_view = bt::Globals::instance().isDebugModeSet();
 	connect(this,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )),
 			this,SLOT(showContextMenu(KListView*, QListViewItem*, const QPoint& )));
+	
+	connect(this,SIGNAL(selectionChanged()),this,SLOT(onSelectionChanged()));
 
 	KIconLoader* iload = KGlobal::iconLoader();
 	menu = new KPopupMenu(this);
 	
 	stop_id = menu->insertItem(
 			iload->loadIconSet("ktstop",KIcon::Small),i18n("to stop", "Stop"),
-			this,SLOT(stopDownload()));
+			this,SLOT(stopDownloads()));
 
 	start_id = menu->insertItem(
 			iload->loadIconSet("ktstart",KIcon::Small),i18n("to start", "Start"),
-			this,SLOT(startDownload()));
+			this,SLOT(startDownloads()));
 
 	remove_id = menu->insertItem(
 			iload->loadIconSet("ktremove",KIcon::Small),i18n("Remove"),
-			this,SLOT(removeDownload()));
+			this,SLOT(removeDownloads()));
 	menu->insertSeparator();
 
-    menu->insertItem(iload->loadIconSet("apply",KIcon::Small),i18n("Manual Announce"),this,SLOT(manualAnnounce())); 
-    preview_id = menu->insertItem(iload->loadIconSet("frame_image",KIcon::Small),i18n("Preview"), this, SLOT(previewFile())); 
+	announce_id = menu->insertItem(iload->loadIconSet("apply",KIcon::Small),i18n("Manual Announce"),this,SLOT(manualAnnounce())); 
+    preview_id = menu->insertItem(iload->loadIconSet("frame_image",KIcon::Small),i18n("Preview"), this, SLOT(previewFiles())); 
 
 	setAllColumnsShowFocus(true);
 
@@ -85,6 +87,7 @@ KTorrentView::KTorrentView(QWidget *parent, bool seed_view)
 	setColumnWidthMode(1,QListView::Manual);
 	setShowSortIndicator(true);
 	setAcceptDrops(true);
+	setSelectionMode(QListView::Extended);
 	for (Uint32 i = 2;i < (Uint32)columns();i++)
 		setColumnWidthMode(i,QListView::Manual);
 
@@ -120,88 +123,114 @@ int KTorrentView::getNumRunning()
 	return num;
 }
 
-void KTorrentView::startDownload()
+void KTorrentView::startDownloads()
 {
-	if (!curr)
-		return;
-
-	TorrentInterface* tc = curr->getTC();
-	if (tc && !tc->getStats().running)
+	bool err_seed = false, err_down = false;
+	
+	QPtrList<QListViewItem> sel = selectedItems();
+	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
-		wantToStart(tc);
-		if (!tc->getStats().running && !tc->getStats().stopped_by_error)
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
+		TorrentInterface* tc = kvi->getTC();
+		if (tc && !tc->getStats().running)
 		{
-			bool seed = tc->getStats().completed;
-			int nr = seed ? Settings::maxSeeds() : Settings::maxDownloads();
-			
-			if(!seed)
-				KMessageBox::error(this,
-								   i18n("Cannot start more than 1 download."
-										   " Go to Settings -> Configure KTorrent,"
-										   " if you want to change the limit.",
-								   "Cannot start more than %n downloads."
-										   " Go to Settings -> Configure KTorrent,"
-										   " if you want to change the limit.",
-								   nr),
-								   i18n("Error"));
-			else
-				KMessageBox::error(this,
-								   i18n("Cannot start more than 1 seed."
-										   " Go to Settings -> Configure KTorrent,"
-										   " if you want to change the limit.",
-								   "Cannot start more than %n seeds."
-										   " Go to Settings -> Configure KTorrent,"
-										   " if you want to change the limit.",
-								   nr),
-								   i18n("Error"));
+			wantToStart(tc);
+			if (!tc->getStats().running && !tc->getStats().stopped_by_error)
+			{
+				if (tc->getStats().completed)
+					err_seed = true;
+				else
+					err_down = true;
+			}
 		}
 	}
+	
+	// downloads and seeds are in two separate views so 
+	// either err_seed is true or err_down is true or none are true
+	if (err_down)
+		KMessageBox::error(this,
+						   i18n("Cannot start more than 1 download."
+								   " Go to Settings -> Configure KTorrent,"
+								   " if you want to change the limit.",
+						   "Cannot start more than %n downloads."
+								   " Go to Settings -> Configure KTorrent,"
+								   " if you want to change the limit.",
+						   Settings::maxDownloads()),
+						   i18n("Error"));
+	else if (err_seed)
+		KMessageBox::error(this,
+						   i18n("Cannot start more than 1 seed."
+								   " Go to Settings -> Configure KTorrent,"
+								   " if you want to change the limit.",
+						   "Cannot start more than %n seeds."
+								   " Go to Settings -> Configure KTorrent,"
+								   " if you want to change the limit.",
+						   Settings::maxSeeds()),
+						   i18n("Error"));
 }
 	
-void KTorrentView::stopDownload()
+void KTorrentView::stopDownloads()
 {
-	if (!curr)
-		return;
-
-	TorrentInterface* tc = curr->getTC();
-	wantToStop(tc,true);
-}
-	
-void KTorrentView::removeDownload()
-{
-	if (!curr)
-		return;
-
-	TorrentInterface* tc = curr->getTC();
-	const TorrentStats & s = tc->getStats();
-	bool data_to = false;
-	if (s.bytes_left > 0)
+	QPtrList<QListViewItem> sel = selectedItems();
+	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
-		QString msg = i18n("The torrent %1 has not finished downloading, "
-				"do you want to delete the incomplete data, too?").arg(s.torrent_name);
-		int ret = KMessageBox::questionYesNoCancel(this,msg,i18n("Remove Download"));
-		if (ret == KMessageBox::Cancel)
-			return;
-		else if (ret == KMessageBox::Yes)
-			data_to = true;
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
+		TorrentInterface* tc = kvi->getTC();
+		if (tc && tc->getStats().running)
+			wantToStop(tc,true);
 	}
-	wantToRemove(tc,data_to);
+}
+	
+void KTorrentView::removeDownloads()
+{
+	QPtrList<QListViewItem> sel = selectedItems();
+	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
+	{
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
+		TorrentInterface* tc = kvi->getTC();
+		if (tc)
+		{	
+			const TorrentStats & s = tc->getStats();
+			bool data_to = false;
+			if (s.bytes_left > 0)
+			{
+				QString msg = i18n("The torrent %1 has not finished downloading, "
+						"do you want to delete the incomplete data, too?").arg(s.torrent_name);
+				int ret = KMessageBox::questionYesNoCancel(this,msg,i18n("Remove Download"));
+				if (ret == KMessageBox::Cancel)
+					return;
+				else if (ret == KMessageBox::Yes)
+					data_to = true;
+			}
+			wantToRemove(tc,data_to);
+		}
+	}
 }
 
 void KTorrentView::manualAnnounce()
 {
-	if (!curr)
-		return;
-
-	curr->getTC()->updateTracker();
+	QPtrList<QListViewItem> sel = selectedItems();
+	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
+	{
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
+		TorrentInterface* tc = kvi->getTC();
+		if (tc && tc->getStats().running)
+			tc->updateTracker();
+	}
 }
 
-void KTorrentView::previewFile() 
+void KTorrentView::previewFiles() 
 {
-    if (!curr) 
-        return; 
-
-	new KRun(curr->getTC()->getTorDir()+"cache", true, true);
+	QPtrList<QListViewItem> sel = selectedItems();
+	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
+	{
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
+		TorrentInterface* tc = kvi->getTC();
+		if (tc && tc->readyForPreview() && !tc->getStats().multi_file_torrent)
+		{
+			new KRun(tc->getTorDir()+"cache", true, true);
+		}
+	}
 }
 
 TorrentInterface* KTorrentView::getCurrentTC()
@@ -223,22 +252,42 @@ void KTorrentView::onExecuted(QListViewItem* item)
 	}
 }
 
-void KTorrentView::showContextMenu(KListView* ,QListViewItem* item,const QPoint & p)
+void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 {
-	if (!item)
-		return;
-
-	curr = dynamic_cast<KTorrentViewItem*>(item);
-	if (curr)
+	bool en_start = false;
+	bool en_stop = false;
+	bool en_remove = false;
+	bool en_prev = false;
+	bool en_announce = false;
+	
+	QPtrList<QListViewItem> sel = selectedItems();
+	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
-		TorrentInterface* tc = curr->getTC();
-		const TorrentStats & s = tc->getStats();
-		menu->setItemEnabled(start_id,!s.running);
-		menu->setItemEnabled(stop_id,s.running);
-		menu->setItemEnabled(remove_id,true);
-		menu->setItemEnabled(preview_id, tc->readyForPreview() && !s.multi_file_torrent);
-		menu->popup(p);
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
+		TorrentInterface* tc = kvi->getTC();
+		if (tc)
+		{
+			const TorrentStats & s = tc->getStats();
+			if (!s.running)
+				en_start = true;
+			else
+			{
+				en_stop = true;
+				en_announce = true;
+			}
+			
+			if (tc->readyForPreview() && !s.multi_file_torrent)
+				en_prev = true;
+		}
 	}
+	
+	en_remove = sel.count() > 0;
+	menu->setItemEnabled(start_id,en_start);
+	menu->setItemEnabled(stop_id,en_stop);
+	menu->setItemEnabled(remove_id,en_remove);
+	menu->setItemEnabled(preview_id,en_prev);
+	menu->setItemEnabled(announce_id,en_announce);
+	menu->popup(p);
 }
 
 void KTorrentView::addTorrent(TorrentInterface* tc)
@@ -321,6 +370,28 @@ void KTorrentView::torrentFinished(kt::TorrentInterface* tc)
 	emit currentChanged(0l);
 	emit viewChange(tc);
 	Out() << "Torrent moved to SeedView." << endl;
+}
+
+void KTorrentView::onSelectionChanged()
+{
+	bool en_start = false;
+	bool en_stop = false;
+	QPtrList<QListViewItem> sel = selectedItems();
+	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
+	{
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
+		TorrentInterface* tc = kvi->getTC();
+		if (tc)
+		{
+			const TorrentStats & s = tc->getStats();
+			if (!s.running)
+				en_start = true;
+			else
+				en_stop = true;
+		}
+	}
+	
+	updateActions(en_start,en_stop,sel.count() > 0);
 }
 
 

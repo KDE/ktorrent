@@ -105,7 +105,8 @@ namespace kt
 		{
 			r->forward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
 			r->forward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
-			r->forward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
+			if (bt::Globals::instance().getDHT().isRunning())
+				r->forward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
 			QString def_dev = UPnPPluginSettings::defaultDevice();
 			if (def_dev != r->getServer())
 			{
@@ -141,7 +142,9 @@ namespace kt
 		{
 			r->undoForward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
 			r->undoForward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
-			r->undoForward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
+			if (bt::Globals::instance().getDHT().isRunning())
+				r->undoForward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
+			
 			QString def_dev = UPnPPluginSettings::defaultDevice();
 			if (def_dev == r->getServer())
 			{

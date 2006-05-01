@@ -146,7 +146,9 @@ private slots:
 	void updatedStats();
 	void urlDropped(QDropEvent*,QListViewItem*);
 	void currentTabChanged(QWidget* tab);
-
+	void onUpdateActions(bool can_start,bool can_stop,bool can_remove);
+	
+	
 private:
 	void setupAccel();
 	void setupActions();

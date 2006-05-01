@@ -29,7 +29,10 @@ namespace dht
 	RPCCallListener::~RPCCallListener() 
 	{
 		if (call)
+		{
 			call->setListener(0);
+			call = 0;
+		}
 	}
 
 	RPCCall::RPCCall(RPCServer* rpc,MsgBase* msg) : msg(msg),rpc(rpc),listener(0)
@@ -41,6 +44,8 @@ namespace dht
 
 	RPCCall::~RPCCall()
 	{
+		if (listener)
+			listener->call = 0;
 		delete msg;
 	}
 	

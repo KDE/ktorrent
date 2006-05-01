@@ -156,6 +156,12 @@ KTorrent::KTorrent()
 	
 	connect(m_seedView,SIGNAL(wantToStop( kt::TorrentInterface*, bool )),
 			m_core,SLOT(stop( kt::TorrentInterface*, bool )));
+	
+	connect(m_view,SIGNAL(updateActions( bool, bool, bool )),
+			this,SLOT(onUpdateActions( bool, bool, bool )));
+	
+	connect(m_seedView,SIGNAL(updateActions( bool, bool, bool )),
+			this,SLOT(onUpdateActions( bool, bool, bool )));
 
 	// then, setup our actions
 	setupActions();
@@ -341,41 +347,21 @@ void KTorrent::loadSilently(const KURL& url)
 	m_core->loadSilently(url);
 }
 
+void KTorrent::onUpdateActions(bool can_start,bool can_stop,bool can_remove)
+{
+	Out() << "KTorrent::onUpdateActions" << endl;
+	m_start->setEnabled(can_start);
+	m_stop->setEnabled(can_stop);
+	m_remove->setEnabled(can_remove);
+}
+
 void KTorrent::currentDownloadChanged(kt::TorrentInterface* tc)
 {
-	if (tc)
-	{
-		const TorrentStats & s = tc->getStats();
-		m_start->setEnabled(!s.running);
-		m_stop->setEnabled(s.running);
-		m_remove->setEnabled(true);
-	}
-	else
-	{
-		m_start->setEnabled(false);
-		m_stop->setEnabled(false);
-		m_remove->setEnabled(false);
-	}
-
 	notifyDownloadViewListeners(tc);
 }
 
 void KTorrent::currentSeedChanged(kt::TorrentInterface* tc)
 {
-	if (tc)
-	{
-		const TorrentStats & s = tc->getStats();
-		m_start->setEnabled(!s.running);
-		m_stop->setEnabled(s.running);
-		m_remove->setEnabled(true);
-	}
-	else
-	{
-		m_start->setEnabled(false);
-		m_stop->setEnabled(false);
-		m_remove->setEnabled(false);
-	}
-
 	notifySeedViewListeners(tc);
 }
 
@@ -488,15 +474,21 @@ void KTorrent::queueManagerShow()
 
 void KTorrent::startDownload()
 {
-	TorrentInterface* tc = getCurrentView()->getCurrentTC();
-	if (tc && !tc->getStats().running)
+	KTorrentView* curr_view = getCurrentView();
+	curr_view->startDownloads();
+			
+	TorrentInterface* tc = curr_view->getCurrentTC();
+	
+	if(getCurrentPanel() == DOWNLOAD_VIEW)
 	{
-		m_core->start(tc);
-
-		if(getCurrentPanel() == DOWNLOAD_VIEW)
-			currentDownloadChanged(tc);
-		if(getCurrentPanel() == SEED_VIEW)
-			currentSeedChanged(tc);
+		currentDownloadChanged(tc);
+		m_view->onSelectionChanged(); // trigger an updateActions signal
+	}
+	
+	if(getCurrentPanel() == SEED_VIEW)
+	{
+		currentSeedChanged(tc);
+		m_seedView->onSelectionChanged(); // trigger an updateActions signal
 	}
 }
 
@@ -504,19 +496,34 @@ void KTorrent::startAllDownloads()
 {
 	kt::PanelView what = getCurrentPanel();
 	m_core->startAll(((int)what)+1);
+	
+	if(getCurrentPanel() == DOWNLOAD_VIEW)
+	{
+		m_view->onSelectionChanged(); // trigger an updateActions signal
+	}
+	if(getCurrentPanel() == SEED_VIEW)
+	{
+		m_seedView->onSelectionChanged(); // trigger an updateActions signal
+	}
 }
 
 void KTorrent::stopDownload()
 {
-	TorrentInterface* tc = getCurrentView()->getCurrentTC();
-	if (tc && tc->getStats().running)
+	KTorrentView* curr_view = getCurrentView();
+	curr_view->stopDownloads();
+			
+	TorrentInterface* tc = curr_view->getCurrentTC();
+	
+	if(getCurrentPanel() == DOWNLOAD_VIEW)
 	{
-		//tc->stop(true);
-		m_core->stop(tc, true);
-		if(getCurrentPanel() == DOWNLOAD_VIEW)
-			currentDownloadChanged(tc);
-		if(getCurrentPanel() == SEED_VIEW)
-			currentSeedChanged(tc);
+		currentDownloadChanged(tc);
+		m_view->onSelectionChanged(); // trigger an updateActions signal
+	}
+	
+	if(getCurrentPanel() == SEED_VIEW)
+	{
+		currentSeedChanged(tc);
+		m_seedView->onSelectionChanged(); // trigger an updateActions signal
 	}
 }
 
@@ -524,36 +531,34 @@ void KTorrent::stopAllDownloads()
 {
 	kt::PanelView what = getCurrentPanel();
 	m_core->stopAll(((int)what)+1);
+	
+	if(getCurrentPanel() == DOWNLOAD_VIEW)
+	{
+		m_view->onSelectionChanged(); // trigger an updateActions signal
+	}
+	if(getCurrentPanel() == SEED_VIEW)
+	{
+		m_seedView->onSelectionChanged(); // trigger an updateActions signal
+	}
 }
 
 void KTorrent::removeDownload()
 {
-	TorrentInterface* tc = getCurrentView()->getCurrentTC();
-	if (tc)
+	KTorrentView* curr_view = getCurrentView();
+	curr_view->removeDownloads();
+			
+	TorrentInterface* tc = curr_view->getCurrentTC();
+	if(getCurrentPanel() == DOWNLOAD_VIEW)
 	{
-		const TorrentStats & s = tc->getStats();
-		bool data_to = false;
-		if (s.bytes_left > 0)
-		{
-			QString msg = i18n("The torrent %1 has not finished downloading, "
-					"do you want to delete the incomplete data, too?").arg(s.torrent_name);
-			int ret = KMessageBox::questionYesNoCancel(this,msg,i18n("Remove Download"));
-			if (ret == KMessageBox::Cancel)
-				return;
-			else if (ret == KMessageBox::Yes)
-				data_to = true;
-		}
-		m_core->remove(tc,data_to);
-		if(getCurrentPanel() == DOWNLOAD_VIEW)
-		{
-			currentDownloadChanged(m_view->getCurrentTC());
-			notifyDownloadViewListeners(m_view->getCurrentTC());
-		}
-		if(getCurrentPanel() == SEED_VIEW)
-		{
-			currentSeedChanged(m_seedView->getCurrentTC());
-			notifySeedViewListeners(m_seedView->getCurrentTC());
-		}
+		currentDownloadChanged(tc);
+		notifyDownloadViewListeners(tc);
+		m_view->onSelectionChanged(); // trigger an updateActions signal
+	}
+	if(getCurrentPanel() == SEED_VIEW)
+	{
+		currentSeedChanged(tc);
+		notifySeedViewListeners(tc);
+		m_seedView->onSelectionChanged(); // trigger an updateActions signal
 	}
 }
 
@@ -660,21 +665,6 @@ void KTorrent::urlDropped(QDropEvent* event,QListViewItem*)
 
 void KTorrent::updatedStats()
 {
-	TorrentInterface* tc = getCurrentView()->getCurrentTC();
-	if (tc)
-	{
-		const TorrentStats & s = tc->getStats();
-		m_start->setEnabled(!s.running);
-		m_stop->setEnabled(s.running);
-		m_remove->setEnabled(true);
-	}
-	else
-	{
-		m_start->setEnabled(false);
-		m_stop->setEnabled(false);
-		m_remove->setEnabled(false);
-	}
-
 	m_startall->setEnabled(m_core->getNumTorrentsNotRunning() > 0);
 	m_stopall->setEnabled(m_core->getNumTorrentsRunning() > 0);
 	
@@ -776,9 +766,16 @@ PanelView KTorrent::getCurrentPanel()
 void KTorrent::currentTabChanged(QWidget* tab)
 {
 	if(m_tabs->currentPageIndex() == 1)
+	{
+		m_seedView->onSelectionChanged(); // trigger an updateActions signal
 		currentSeedChanged(m_seedView->getCurrentTC());
+	}
+	
 	if(m_tabs->currentPageIndex() == 0)
+	{
+		m_view->onSelectionChanged(); // trigger an updateActions signal
 		currentDownloadChanged(m_view->getCurrentTC());
+	}
 }
 
 #include "ktorrent.moc"

@@ -77,16 +77,18 @@ public slots:
 	void removeTorrent(kt::TorrentInterface* tc);
 	void update();
 	void torrentFinished(kt::TorrentInterface* tc);
+	void startDownloads();
+	void stopDownloads();
+	void manualAnnounce();
+	void previewFiles();
+	void removeDownloads();
+	void onSelectionChanged();
 
 private slots:
 	void onExecuted(QListViewItem* item);
 	void showContextMenu(KListView* ,QListViewItem* item,const QPoint & p);
-	void startDownload();
-	void stopDownload();
-	void manualAnnounce();
-    void previewFile();
-	void removeDownload();
-
+	
+	
 signals:
 	void torrentClicked(kt::TorrentInterface* tc);
 	void currentChanged(kt::TorrentInterface* tc);
@@ -94,6 +96,7 @@ signals:
 	void wantToStop(kt::TorrentInterface* tc,bool user);
 	void wantToStart(kt::TorrentInterface* tc);
 	void viewChange(kt::TorrentInterface* tc);
+	void updateActions(bool can_start,bool can_stop,bool can_remove);
 
 private:
 	bool acceptDrag(QDropEvent* event) const;
@@ -104,8 +107,7 @@ private:
 	QMap<kt::TorrentInterface*,KTorrentViewItem*> items;
 	bool show_debug_view;
 	KPopupMenu* menu;
-    int stop_id,start_id,remove_id, preview_id; 
-	KTorrentViewItem* curr;
+    int stop_id,start_id,remove_id, preview_id,announce_id; 
 };
 
 #endif // _KTORRENTVIEW_H_
