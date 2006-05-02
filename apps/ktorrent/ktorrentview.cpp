@@ -144,7 +144,7 @@ void KTorrentView::startDownloads()
 			}
 		}
 	}
-	
+
 	// downloads and seeds are in two separate views so 
 	// either err_seed is true or err_down is true or none are true
 	if (err_down)
@@ -167,6 +167,7 @@ void KTorrentView::startDownloads()
 								   " if you want to change the limit.",
 						   Settings::maxSeeds()),
 						   i18n("Error"));
+
 }
 	
 void KTorrentView::stopDownloads()

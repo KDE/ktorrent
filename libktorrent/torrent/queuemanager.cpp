@@ -116,6 +116,7 @@ namespace bt
 		}
 		else
 		{
+#if 0
 			if (!tc->getStats().running && !tc->getStats().stopped_by_error && user)
 			{
 				bool seed = tc->getStats().completed;
@@ -142,6 +143,7 @@ namespace bt
 									   nr),
 									   i18n("Error"));
 			}
+#endif
 		}
 	}
 
