@@ -92,6 +92,9 @@ namespace bt
 
 	Peer::~Peer()
 	{
+		if (sock)
+			sock->detachPeer(this);
+		
 		delete uploader;
 		delete downloader;
 		delete pwriter;

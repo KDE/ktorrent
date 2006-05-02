@@ -349,7 +349,6 @@ void KTorrent::loadSilently(const KURL& url)
 
 void KTorrent::onUpdateActions(bool can_start,bool can_stop,bool can_remove)
 {
-	Out() << "KTorrent::onUpdateActions" << endl;
 	m_start->setEnabled(can_start);
 	m_stop->setEnabled(can_stop);
 	m_remove->setEnabled(can_remove);

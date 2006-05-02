@@ -544,7 +544,6 @@ namespace bt
 				if (num_non_idle > 0) num_non_idle--;
 			
 			cd->cancelAll();
-			Chunk* c = cd->getChunk();
 			if (tmon)
 				tmon->downloadRemoved(cd);
 			current_chunks.erase(i);
