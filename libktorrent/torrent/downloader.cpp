@@ -548,9 +548,7 @@ namespace bt
 			if (tmon)
 				tmon->downloadRemoved(cd);
 			current_chunks.erase(i);
-			
-			if (c->getStatus() == Chunk::MMAPPED)
-				cman.saveChunk(i,false);
+			cman.resetChunk(i); // reset chunk it is not fully downloaded yet
 		}
 	}
 	
