@@ -24,13 +24,13 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QTabWidget">
+        <widget class="KTabWidget">
             <property name="name">
                 <cstring>m_tabs</cstring>
             </property>
             <widget class="QWidget">
                 <property name="name">
-                    <cstring>tab</cstring>
+                    <cstring>m_status_tab</cstring>
                 </property>
                 <attribute name="title">
                     <string>St&amp;atus</string>
@@ -727,7 +727,7 @@
             </widget>
             <widget class="QWidget">
                 <property name="name">
-                    <cstring>TabPage</cstring>
+                    <cstring>m_files_tab</cstring>
                 </property>
                 <attribute name="title">
                     <string>Fi&amp;les</string>

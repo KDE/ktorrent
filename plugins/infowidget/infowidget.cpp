@@ -25,6 +25,7 @@
 #include <kiconloader.h>
 #include <kmimetype.h>
 #include <kpopupmenu.h>
+#include <ktabwidget.h>
 #include <krun.h>
 #include <qlabel.h>
 #include <qstring.h>
@@ -63,6 +64,9 @@ namespace kt
 		multi_root = 0;
 		monitor = 0;
 		curr_tc = 0;
+		
+		m_tabs->addTab(m_status_tab,i18n("Status"));
+		m_tabs->addTab(m_files_tab,i18n("Files"));
 	
 		KIconLoader* iload = KGlobal::iconLoader();
 		context_menu = new KPopupMenu(this);
@@ -110,7 +114,7 @@ namespace kt
 	{
 		if( peer_view == 0 && show)
 		{
-			peer_page = new QWidget(m_tabs);
+			peer_page = new QWidget();
 			QHBoxLayout* peer_page_layout = new QHBoxLayout(peer_page, 11, 6);
 	
 			peer_view = new PeerView(peer_page);
@@ -147,7 +151,7 @@ namespace kt
 	{
 		if( cd_view == 0 && show)
 		{
-			cd_page = new QWidget(m_tabs);
+			cd_page = new QWidget();
 			QHBoxLayout* cd_page_layout = new QHBoxLayout(cd_page, 11, 6);
 	
 			cd_view = new ChunkDownloadView(cd_page);
@@ -184,7 +188,7 @@ namespace kt
 	{
 		if( tracker_view == 0 && show)
 		{
-			tracker_page = new QWidget(m_tabs);
+			tracker_page = new QWidget();
 			QHBoxLayout* tracker_page_layout = new QHBoxLayout(tracker_page, 11, 6);
 	
 			tracker_view = new TrackerView(curr_tc, tracker_page);
