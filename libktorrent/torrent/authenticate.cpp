@@ -59,7 +59,7 @@ namespace bt
 		this->succes = succes;
 		if (!succes)
 		{
-			delete sock;
+			sock->deleteLater();
 			sock = 0;
 		}
 		timer.stop();

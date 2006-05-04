@@ -20,10 +20,9 @@
 #ifndef MSESTREAMSOCKET_H
 #define MSESTREAMSOCKET_H
 
-
+#include <qobject.h>
 #include <util/constants.h>
 
-class QObject;
 class QSocket;
 class QString;
 
@@ -48,8 +47,9 @@ namespace mse
 	
 		Wrapper around a TCP socket which handles RC4 encryption.
 	*/
-	class StreamSocket
+	class StreamSocket : public QObject
 	{
+		Q_OBJECT
 	public:
 		StreamSocket();
 		StreamSocket(int fd);

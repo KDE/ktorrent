@@ -54,7 +54,7 @@ namespace bt
 		finished = true;
 		if (!succes)
 		{
-			delete sock;
+			sock->deleteLater();
 			sock = 0;
 		}
 		timer.stop();

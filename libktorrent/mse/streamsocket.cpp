@@ -200,3 +200,5 @@ namespace mse
 		memcpy(reinserted_data + off,d,size);
 	}
 }
+
+#include "streamsocket.moc"

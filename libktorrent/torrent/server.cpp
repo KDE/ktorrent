@@ -116,9 +116,6 @@ namespace bt
 				return;
 			}
 			
-			
-			Out() << "EncryptedServerAuthenticate created for " << IP << endl;
-			
 			ServerAuthenticate* auth = 0;
 			
 			if (encryption)
