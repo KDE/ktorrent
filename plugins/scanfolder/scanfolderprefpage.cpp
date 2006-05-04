@@ -1,7 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by                                                 *
- *   Joris Guisson <joris.guisson@gmail.com>                               *
- *   Ivan Vasic <ivasic@gmail.com>                                         *
+ *   Copyright (C) 2006 by Ivan Vasić   								   *
+ *   ivasic@gmail.com   												   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -16,50 +15,52 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef TRAYICON_H
-#define TRAYICON_H
+#include "scanfolderplugin.h"
+#include "scanfolderprefpage.h"
 
-#include <ksystemtray.h>
+#include <klocale.h>
+#include <kglobal.h>
+#include <kstandarddirs.h>
+#include <kiconloader.h>
 
-#include "ktorrentcore.h" 
-#include "interfaces/torrentinterface.h"
-#include <util/constants.h>
 
-using namespace bt; 
-class QString;
 
-typedef struct tray_stats
+namespace kt
 {
-	bt::Uint32 download_speed;
-	bt::Uint32 upload_speed;
-	bt::Uint64 bytes_downloaded;
-	bt::Uint64 bytes_uploaded;
-	
-	
-}TrayStats;
 
-/**
- * @author Joris Guisson
- * @author Ivan Vasic
-*/
-class TrayIcon : public KSystemTray
-{
-	Q_OBJECT
-public:
-	TrayIcon(KTorrentCore* tc, QWidget *parent = 0, const char *name = 0);
-	~TrayIcon();
+	ScanFolderPrefPage::ScanFolderPrefPage(ScanFolderPlugin* plugin)
+		: PrefPageInterface(i18n("ScanFolder"), i18n("ScanFolder Options"),
+							KGlobal::iconLoader()->loadIcon("view_sidetree",KIcon::NoGroup)), m_plugin(plugin)
+	{}
 
-	void updateStats(const CurrentStats stats);
-	
-private slots:
-	void finished(kt::TorrentInterface* tc);
-	void torrentStoppedByError(kt::TorrentInterface* tc, QString msg);
-	void viewChanged(kt::TorrentInterface* tc);
 
-private:
-	KTorrentCore* m_core;
-};
+	ScanFolderPrefPage::~ScanFolderPrefPage()
+	{}
 
-#endif
+	bool ScanFolderPrefPage::apply()
+	{
+		if(m_widget)
+			m_widget->apply();
+		
+		m_plugin->updateScanFolders();
+		
+		return true;
+	}
+
+	void ScanFolderPrefPage::createWidget(QWidget* parent)
+	{
+		m_widget = new ScanFolderPrefPageWidget(parent);
+	}
+
+	void ScanFolderPrefPage::updateData()
+	{
+	}
+
+	void ScanFolderPrefPage::deleteWidget()
+	{
+		delete m_widget;
+	}
+
+}

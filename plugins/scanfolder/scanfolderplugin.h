@@ -1,7 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by                                                 *
- *   Joris Guisson <joris.guisson@gmail.com>                               *
- *   Ivan Vasic <ivasic@gmail.com>                                         *
+ *   Copyright (C) 2006 by Ivan Vasić                                      *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -16,50 +15,46 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.           *
  ***************************************************************************/
-#ifndef TRAYICON_H
-#define TRAYICON_H
+#ifndef KTSCANFOLDERPLUGIN_H
+#define KTSCANFOLDERPLUGIN_H
 
-#include <ksystemtray.h>
+#include <interfaces/plugin.h>
 
-#include "ktorrentcore.h" 
-#include "interfaces/torrentinterface.h"
-#include <util/constants.h>
-
-using namespace bt; 
 class QString;
 
-typedef struct tray_stats
-{
-	bt::Uint32 download_speed;
-	bt::Uint32 upload_speed;
-	bt::Uint64 bytes_downloaded;
-	bt::Uint64 bytes_uploaded;
-	
-	
-}TrayStats;
 
-/**
- * @author Joris Guisson
- * @author Ivan Vasic
-*/
-class TrayIcon : public KSystemTray
-{
-	Q_OBJECT
-public:
-	TrayIcon(KTorrentCore* tc, QWidget *parent = 0, const char *name = 0);
-	~TrayIcon();
-
-	void updateStats(const CurrentStats stats);
+namespace kt
+{	
+	class ScanFolder;
+	class ScanFolderPrefPage;
 	
-private slots:
-	void finished(kt::TorrentInterface* tc);
-	void torrentStoppedByError(kt::TorrentInterface* tc, QString msg);
-	void viewChanged(kt::TorrentInterface* tc);
+	/**
+	 * @author Ivan Vasic <ivasic@gmail.com>
+	 * @brief KTorrent ScanFolder plugin
+	 * Automatically scans selected folder for torrent files and loads them.
+	 */
+	class ScanFolderPlugin : public Plugin
+	{
+		Q_OBJECT
+	public:
+		ScanFolderPlugin(QObject* parent, const char* name, const QStringList& args);
+		virtual ~ScanFolderPlugin();
 
-private:
-	KTorrentCore* m_core;
-};
+		virtual void load();
+		virtual void unload();
+		
+		void updateScanFolders();
+		
+		private:
+			ScanFolder* m_sf1;
+			ScanFolder* m_sf2;
+			ScanFolder* m_sf3;
+			
+			ScanFolderPrefPage* pref;
+	};
+
+}
 
 #endif

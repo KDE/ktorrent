@@ -379,9 +379,6 @@ void KTorrent::setupActions()
 
 	KAction* pref = KStdAction::preferences(this, SLOT(optionsPreferences()), actionCollection());
 
-	pref->plug(m_systray_icon->contextMenu(),1);
-
-
 	m_start = new KAction(
 			i18n("to start", "Start"), "ktstart",0,this, SLOT(startDownload()),
 			actionCollection(), "Start");
@@ -410,6 +407,14 @@ void KTorrent::setupActions()
 			i18n("to open Queue Manager", "Open Queue Manager..."),
 			"ktqueuemanager", 0, this, SLOT(queueManagerShow()),
 			actionCollection(), "Queue manager");
+	
+	//Plug actions to systemtray context menu
+	m_startall->plug(m_systray_icon->contextMenu());
+	m_stopall->plug(m_systray_icon->contextMenu());
+	m_systray_icon->contextMenu()->insertSeparator();
+	m_pasteurl->plug(m_systray_icon->contextMenu());
+	m_systray_icon->contextMenu()->insertSeparator();
+	pref->plug(m_systray_icon->contextMenu());
 	
 	createGUI();
 }
@@ -668,7 +673,7 @@ void KTorrent::updatedStats()
 	m_stopall->setEnabled(m_core->getNumTorrentsRunning() > 0);
 	
 	CurrentStats stats = this->m_core->getStats();
-
+	
 	//m_statusInfo->setText(i18n("Some info here e.g. connected/disconnected"));
 	QString tmp = i18n("Speed up: %1 / down: %2")
 			.arg(KBytesPerSecToString((double)stats.upload_speed/1024.0))
@@ -682,7 +687,7 @@ void KTorrent::updatedStats()
 	m_statusTransfer->setText(tmp1);
 
 	getCurrentView()->update();
-	m_systray_icon->updateStats(tmp + "<br>" + tmp1 + "<br>");
+	m_systray_icon->updateStats(stats);
 	m_core->getPluginManager().updateGuiPlugins();
 	
 	//update tab labels

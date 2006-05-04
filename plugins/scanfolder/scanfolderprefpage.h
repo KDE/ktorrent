@@ -1,7 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by                                                 *
- *   Joris Guisson <joris.guisson@gmail.com>                               *
- *   Ivan Vasic <ivasic@gmail.com>                                         *
+ *   Copyright (C) 2006 by Ivan Vasić   								   *
+ *   ivasic@gmail.com   												   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -16,50 +15,39 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef TRAYICON_H
-#define TRAYICON_H
+#ifndef KTSCANFOLDERPREFPAGE_H
+#define KTSCANFOLDERPREFPAGE_H
 
-#include <ksystemtray.h>
+#include <interfaces/prefpageinterface.h>
 
-#include "ktorrentcore.h" 
-#include "interfaces/torrentinterface.h"
-#include <util/constants.h>
+#include "scanfolderplugin.h"
+#include "scanfolderprefpagewidget.h"
 
-using namespace bt; 
-class QString;
-
-typedef struct tray_stats
+namespace kt
 {
-	bt::Uint32 download_speed;
-	bt::Uint32 upload_speed;
-	bt::Uint64 bytes_downloaded;
-	bt::Uint64 bytes_uploaded;
-	
-	
-}TrayStats;
 
-/**
- * @author Joris Guisson
- * @author Ivan Vasic
-*/
-class TrayIcon : public KSystemTray
-{
-	Q_OBJECT
-public:
-	TrayIcon(KTorrentCore* tc, QWidget *parent = 0, const char *name = 0);
-	~TrayIcon();
+	/**
+	 * ScanFolder plugin preferences page
+	 * @author Ivan Vasić <ivasic@gmail.com>
+	 */
+	class ScanFolderPrefPage : public PrefPageInterface
+	{
+		public:
+			ScanFolderPrefPage(ScanFolderPlugin* plugin);
+			virtual ~ScanFolderPrefPage();
 
-	void updateStats(const CurrentStats stats);
-	
-private slots:
-	void finished(kt::TorrentInterface* tc);
-	void torrentStoppedByError(kt::TorrentInterface* tc, QString msg);
-	void viewChanged(kt::TorrentInterface* tc);
+			virtual bool apply();
+			virtual void createWidget(QWidget* parent);
+			virtual void updateData();
+			virtual void deleteWidget();
 
-private:
-	KTorrentCore* m_core;
-};
+		private:
+			ScanFolderPlugin* m_plugin;
+			ScanFolderPrefPageWidget* m_widget;
+	};
+
+}
 
 #endif
