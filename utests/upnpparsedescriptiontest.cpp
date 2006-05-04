@@ -265,6 +265,90 @@ namespace utest
 			</deviceList> \
 			</device> \
 			</root> ";
+	
+	const char* test_data4 = "<?xml version=\"1.0\"?>  \
+			<root xmlns=\"urn:schemas-upnp-org:device-1-0\"> \
+			<specVersion> \
+			<major>1</major> \
+			<minor>0</minor> \
+			</specVersion> \
+			<URLBase>http://192.168.1.1:2869</URLBase> \
+			<device> \
+			<deviceType>urn:schemas-upnp-org:device:InternetGatewayDevice:1</deviceType> \
+			<friendlyName>OpenWrt Linux Internet Gateway Device</friendlyName> \
+			<manufacturer>OpenWrt Project</manufacturer> \
+			<manufacturerURL>http://www.openwrt.org</manufacturerURL> \
+			<modelName>WRT54G(S)</modelName> \
+			<UDN>uuid:75802409-bccb-40e7-8e6c-fa095ecce13e</UDN> \
+			<iconList> \
+			<icon> \
+			<mimetype>image/gif</mimetype> \
+			<width>118</width> \
+			<height>119</height>\
+			<depth>8</depth> \
+			<url>/ligd.gif</url> \
+			</icon> \
+			</iconList> \
+			<serviceList> \
+			<service> \
+			<serviceType>urn:schemas-microsoft-com:service:OSInfo:1</serviceType> \
+			<serviceId>urn:microsoft-com:serviceId:OSInfo1</serviceId> \
+			<controlURL>/upnp/control/OSInfo1</controlURL> \
+			<eventSubURL>/upnp/event/OSInfo1</eventSubURL> \
+			<SCPDURL>/gateinfoSCPD.xml</SCPDURL> \
+			</service> \
+			</serviceList> \
+			<deviceList> \
+			<device> \
+			<deviceType>urn:schemas-upnp-org:device:WANDevice:1</deviceType> \
+			<friendlyName>WANDevice</friendlyName> \
+			<manufacturer>OpenWrt Project</manufacturer> \
+			<manufacturerURL>http://www.openwrt.org</manufacturerURL> \
+			<modelDescription>WAN Device on OpenWrt Router</modelDescription> \
+			<modelName>WRT54G(S)</modelName> \
+			<modelNumber>1.0</modelNumber> \
+			<modelURL>http://www.linksys.com</modelURL> \
+			<serialNumber>XXXXXXXXXX</serialNumber> \
+			<UDN>uuid:75802409-bccb-40e7-8e6c-fa095ecce13e</UDN> \
+			<UPC>Linux IGD</UPC> \
+			<serviceList> \
+			<service> \
+			<serviceType>urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1</serviceType> \
+			<serviceId>urn:upnp-org:serviceId:WANCommonIFC1</serviceId> \
+			<controlURL>/upnp/control/WANCommonIFC1</controlURL> \
+			<eventSubURL>/upnp/control/WANCommonIFC1</eventSubURL> \
+			<SCPDURL>/gateicfgSCPD.xml</SCPDURL> \
+			</service> \
+			</serviceList> \
+			<deviceList> \
+			<device> \
+			<deviceType>urn:schemas-upnp-org:device:WANConnectionDevice:1</deviceType> \
+			<friendlyName>WANConnectionDevice</friendlyName> \
+			<manufacturer>OpenWrt Project</manufacturer> \
+			<manufacturerURL>http://www.openwrt.org</manufacturerURL> \
+			<modelDescription>WanConnectionDevice on OpenWrt Router</modelDescription> \
+			<modelName>WRT54G(S)</modelName> \
+			<modelNumber>1.0</modelNumber> \
+			<modelURL>http://www.linksys.com</modelURL> \
+			<serialNumber>XXXXXXXXXX</serialNumber> \
+			<UDN>uuid:75802409-bccb-40e7-8e6c-fa095ecce13e</UDN> \
+			<UPC>Linux IGD</UPC> \
+			<serviceList> \
+			<service> \
+			<serviceType>urn:schemas-upnp-org:service:WANIPConnection:1</serviceType> \
+			<serviceId>urn:upnp-org:serviceId:WANIPConn1</serviceId> \
+			<controlURL>/upnp/control/WANIPConn1</controlURL> \
+			<eventSubURL>/upnp/control/WANIPConn1</eventSubURL> \
+			<SCPDURL>/gateconnSCPD.xml</SCPDURL> \
+			</service> \
+			</serviceList> \
+			</device> \
+			</deviceList> \
+			</device> \
+			</deviceList> \
+			<presentationURL>http://192.168.1.1/</presentationURL> \
+			</device> \
+			</root> ";
 
 
 	UPnPParseDescriptionTest::UPnPParseDescriptionTest() : UnitTest("UPnPParseDescriptionTest")
@@ -331,9 +415,15 @@ namespace utest
 			ret = false;
 		}
 			
-		if (!doParse(test_data3,true))
+		if (!doParse(test_data3,false))
 		{
 			Out() << "Test data 3 failed" << endl;
+			ret = false;
+		}
+		
+		if (!doParse(test_data4,false))
+		{
+			Out() << "Test data 4 failed" << endl;
 			ret = false;
 		}
 		

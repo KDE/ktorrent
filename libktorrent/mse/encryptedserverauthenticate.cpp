@@ -70,6 +70,9 @@ namespace mse
 	
 	void EncryptedServerAuthenticate::findReq1()
 	{
+		if (buf_size - 20 <= 0) // safety check
+			return;
+		
 		//Out() << "Find Req1" << endl;
 		Uint8 tmp[100];
 		memcpy(tmp,"req1",4);
