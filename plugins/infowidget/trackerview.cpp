@@ -32,6 +32,8 @@
 #include <klocale.h>
 #include <kurl.h>
 #include <kmessagebox.h>
+#include <kpushbutton.h>
+#include <ksqueezedtextlabel.h>
 
 #include <torrent/globals.h>
 #include <util/log.h>
@@ -43,6 +45,10 @@ namespace kt
 	{
 		if(!tc)
 			return;
+		
+		btnAdd->setText(i18n("&Add tracker"));
+		btnRemove->setText(i18n("Rem&ove tracker"));
+		btnRestore->setText(i18n("Re&store default."));
 		
 		const KURL::List trackers = tc->getTrackersList()->getTrackerURLs();
 		if(trackers.empty())
@@ -127,17 +133,9 @@ namespace kt
 			t = t.addSecs(tc->getTimeToNextTrackerUpdate());
 			lblUpdate->setText(t.toString("mm:ss"));
 		}
-	
-		QString tracker_url = tc->getTrackerURL(true).prettyURL();
-		
-		QToolTip::add(lblCurrent, tracker_url);
-		if(tracker_url.length() > 50)
-		{
-			tracker_url.truncate(47);
-			tracker_url += "...";
-		}
+
 		lblStatus->setText("<b>" + s.trackerstatus + "</b>");
-		lblCurrent->setText("<b>" + tracker_url + "</b>");
+		lblCurrent->setText("<b>" + tc->getTrackerURL(true).prettyURL() + "</b>");
 		btnAdd->setEnabled(txtTracker->text() != QString::null);
 	}
 	

@@ -36,6 +36,10 @@
 #include <kglobal.h>
 #include <kurl.h>
 #include <kiconloader.h>
+#include <ksqueezedtextlabel.h>
+#include <ktabwidget.h>
+#include <kpushbutton.h>
+#include <kiconloader.h>
 
 using namespace bt;
 using namespace kt;
@@ -94,6 +98,12 @@ void QueueItem::paintCell(QPainter* p,const QColorGroup & cg,int column,int widt
 QueueDialog::QueueDialog(bt::QueueManager* qm, QWidget *parent, const char *name)
 	:QueueDlg(parent, name)
 {
+	KIconLoader* iload = KGlobal::iconLoader();
+	
+	m_tabs->setTabIconSet(m_tabs->page(0), iload->loadIconSet("down", KIcon::Small));
+	m_tabs->setTabIconSet(m_tabs->page(1), iload->loadIconSet("up", KIcon::Small));
+	
+	logo->setPixmap(iload->loadIcon("ktqueuemanager", KIcon::Desktop));
 	
 	connect(downloadList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(downloadList_currentChanged( QListViewItem* )));
 	connect(seedList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(seedList_currentChanged( QListViewItem* )));
@@ -104,7 +114,6 @@ QueueDialog::QueueDialog(bt::QueueManager* qm, QWidget *parent, const char *name
 	if(seedList->firstChild())
 		seedList->setCurrentItem(seedList->firstChild());
 	
-	KIconLoader* iload = KGlobal::iconLoader();
 	btnMoveUp->setPixmap(iload->loadIcon("up", KIcon::Small));
 	btnMoveDown->setPixmap(iload->loadIcon("down", KIcon::Small));
 	
@@ -285,16 +294,8 @@ void QueueDialog::downloadList_currentChanged(QListViewItem* item)
 	const TorrentInterface* tc = ((QueueItem*)item)->getTC();
 	TorrentStats s = tc->getStats();
 	
-	QString tracker = tc->getTrackerURL(true).prettyURL();
-	
-	if(tracker.length() > 50)
-	{
-		tracker.truncate(47);
-		tracker += "...";
-	}
-	
 	dlStatus->setText(tc->statusToString());
-	dlTracker->setText(tracker);
+	dlTracker->setText(tc->getTrackerURL(true).prettyURL());
 	dlRatio->setText(QString("%1").arg((float)s.bytes_uploaded / s.bytes_downloaded,0,'f',2));
 	dlBytes->setText(BytesToString(s.bytes_left));
 	dlDHT->setText(s.priv_torrent ? i18n("No (private torrent)") : i18n("Yes"));
@@ -314,16 +315,8 @@ void QueueDialog::seedList_currentChanged(QListViewItem* item)
 	const TorrentInterface* tc = ((QueueItem*)item)->getTC();
 	TorrentStats s = tc->getStats();
 	
-	QString tracker = tc->getTrackerURL(true).prettyURL();
-	
-	if(tracker.length() > 50)
-	{
-		tracker.truncate(47);
-		tracker += "...";
-	}
-	
 	ulStatus->setText(tc->statusToString());
-	ulTracker->setText(tracker);
+	ulTracker->setText(tc->getTrackerURL(true).prettyURL());
 	ulRatio->setText(QString("%1").arg((float)s.bytes_uploaded / s.bytes_downloaded,0,'f',2));
 	ulBytes->setText(BytesToString(s.bytes_uploaded));
 	ulDHT->setText(s.priv_torrent ? i18n("No (private torrent)") : i18n("Yes"));

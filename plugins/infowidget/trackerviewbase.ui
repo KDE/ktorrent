@@ -8,155 +8,17 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>653</width>
-            <height>248</height>
+            <width>648</width>
+            <height>294</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>TrackerViewBase</string>
     </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLayoutWidget" row="0" column="0">
-            <property name="name">
-                <cstring>layout4</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>textLabel1</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>4</hsizetype>
-                            <vsizetype>5</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string>Tracker URL:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>lblCurrent</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer5_2</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Fixed</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>10</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>textLabel3</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>4</hsizetype>
-                            <vsizetype>5</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string>Tracker status:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>lblStatus</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer15</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Fixed</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>10</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>textLabel5</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>4</hsizetype>
-                            <vsizetype>5</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string>Next update in:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>lblUpdate</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer14</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>21</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>btnUpdate</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Update Tracker</string>
-                    </property>
-                </widget>
-            </hbox>
-        </widget>
         <widget class="QButtonGroup" row="1" column="0">
             <property name="name">
                 <cstring>buttonGroup1</cstring>
@@ -168,41 +30,6 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QPushButton" row="0" column="1">
-                    <property name="name">
-                        <cstring>btnAdd</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Add Tracker</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton" row="1" column="1">
-                    <property name="name">
-                        <cstring>btnRemove</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Remove Tracker</string>
-                    </property>
-                    <property name="accel">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="QPushButton" row="2" column="1">
-                    <property name="name">
-                        <cstring>btnChange</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Cha&amp;nge Tracker</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton" row="4" column="1">
-                    <property name="name">
-                        <cstring>btnRestore</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Restore Defau&amp;lt</string>
-                    </property>
-                </widget>
                 <widget class="QLineEdit" row="0" column="0">
                     <property name="name">
                         <cstring>txtTracker</cstring>
@@ -240,7 +67,7 @@
                     <property name="sizeHint">
                         <size>
                             <width>20</width>
-                            <height>10</height>
+                            <height>16</height>
                         </size>
                     </property>
                 </spacer>
@@ -261,11 +88,247 @@
                         </size>
                     </property>
                 </spacer>
+                <widget class="KPushButton" row="0" column="1">
+                    <property name="name">
+                        <cstring>btnAdd</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Add tracker</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+A</string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>27</number>
+                    </property>
+                </widget>
+                <widget class="KPushButton" row="1" column="1">
+                    <property name="name">
+                        <cstring>btnRemove</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Rem&amp;ove tracker</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+O</string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>28</number>
+                    </property>
+                </widget>
+                <widget class="QPushButton" row="2" column="1">
+                    <property name="name">
+                        <cstring>btnChange</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Change Tracker</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+C</string>
+                    </property>
+                </widget>
+                <widget class="KPushButton" row="4" column="1">
+                    <property name="name">
+                        <cstring>btnRestore</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Re&amp;store default</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+S</string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>21</number>
+                    </property>
+                </widget>
             </grid>
+        </widget>
+        <widget class="QLayoutWidget" row="0" column="0">
+            <property name="name">
+                <cstring>layout35</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout34</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>4</hsizetype>
+                                    <vsizetype>5</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string>Tracker URL:</string>
+                            </property>
+                        </widget>
+                        <widget class="KSqueezedTextLabel">
+                            <property name="name">
+                                <cstring>lblCurrent</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>7</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer5_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Fixed</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>16</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel3</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>4</hsizetype>
+                                    <vsizetype>5</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string>Tracker status:</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>lblStatus</cstring>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer15</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Fixed</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>16</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel5</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>4</hsizetype>
+                                    <vsizetype>5</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string>Next update in:</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>lblUpdate</cstring>
+                            </property>
+                            <property name="text">
+                                <string></string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer14</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Preferred</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>50</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>btnUpdate</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Update tracker</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>1</number>
+                    </property>
+                </widget>
+            </hbox>
         </widget>
     </grid>
 </widget>
 <connections>
+    <connection>
+        <sender>btnChange</sender>
+        <signal>clicked()</signal>
+        <receiver>TrackerViewBase</receiver>
+        <slot>btnChange_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>listTrackers</sender>
+        <signal>currentChanged(QListViewItem*)</signal>
+        <receiver>TrackerViewBase</receiver>
+        <slot>listTrackers_currentChanged(QListViewItem*)</slot>
+    </connection>
+    <connection>
+        <sender>btnUpdate</sender>
+        <signal>clicked()</signal>
+        <receiver>TrackerViewBase</receiver>
+        <slot>btnUpdate_clicked()</slot>
+    </connection>
     <connection>
         <sender>btnAdd</sender>
         <signal>clicked()</signal>
@@ -279,43 +342,26 @@
         <slot>btnRemove_clicked()</slot>
     </connection>
     <connection>
-        <sender>btnChange</sender>
-        <signal>clicked()</signal>
-        <receiver>TrackerViewBase</receiver>
-        <slot>btnChange_clicked()</slot>
-    </connection>
-    <connection>
         <sender>btnRestore</sender>
         <signal>clicked()</signal>
         <receiver>TrackerViewBase</receiver>
         <slot>btnRestore_clicked()</slot>
     </connection>
-    <connection>
-        <sender>btnUpdate</sender>
-        <signal>clicked()</signal>
-        <receiver>TrackerViewBase</receiver>
-        <slot>btnUpdate_clicked()</slot>
-    </connection>
-    <connection>
-        <sender>listTrackers</sender>
-        <signal>currentChanged(QListViewItem*)</signal>
-        <receiver>TrackerViewBase</receiver>
-        <slot>listTrackers_currentChanged(QListViewItem*)</slot>
-    </connection>
-    <connection>
-        <sender>txtTracker</sender>
-        <signal>returnPressed()</signal>
-        <receiver>btnAdd</receiver>
-        <slot>toggle()</slot>
-    </connection>
 </connections>
 <slots>
+    <slot>btnChange_clicked()</slot>
+    <slot>listTrackers_currentChanged(QListViewItem*)</slot>
+    <slot>btnUpdate_clicked()</slot>
     <slot>btnAdd_clicked()</slot>
     <slot>btnRemove_clicked()</slot>
-    <slot>btnChange_clicked()</slot>
     <slot>btnRestore_clicked()</slot>
-    <slot>btnUpdate_clicked()</slot>
-    <slot>listTrackers_currentChanged(QListViewItem*)</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>ksqueezedtextlabel.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+</includehints>
 </UI>
