@@ -1,9 +1,11 @@
 [Desktop Entry]
 Encoding=UTF-8
 Comment=BitTorrent Download
+Comment[da]=BitTorrent-nedtagning
 Comment[ga]=Íosluchtú BitTorrent
 Comment[pt]=Transferência do BitTorrent
 Comment[pt_BR]=Transferência do BitTorrent
+Comment[sv]=BitTorrent-nerladdning
 Hidden=false
 MimeType=application/x-bittorrent
 Icon=ktorrent
