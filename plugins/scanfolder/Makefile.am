@@ -3,11 +3,6 @@ METASOURCES = AUTO
 kde_module_LTLIBRARIES = ktscanfolderplugin.la
 
 
-
-# Libs needed by the plugin
-ktscanfolder_LIBADD = $(LIB_KHTML) $(LIB_KPARTS) \
-	../../libktorrent/libktorrent.la
-
 # LD flags for the plugin
 # -module says: this is a module, i.e. something you're going to dlopen
 # so e.g. it has no version number like a normal shared lib would have.
