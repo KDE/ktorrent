@@ -12,9 +12,6 @@
             <height>294</height>
         </rect>
     </property>
-    <property name="caption">
-        <string>TrackerViewBase</string>
-    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -95,9 +92,6 @@
                     <property name="text">
                         <string>&amp;Add tracker</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+A</string>
-                    </property>
                     <property name="stdItem" stdset="0">
                         <number>27</number>
                     </property>
@@ -108,9 +102,6 @@
                     </property>
                     <property name="text">
                         <string>Rem&amp;ove tracker</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+O</string>
                     </property>
                     <property name="stdItem" stdset="0">
                         <number>28</number>
@@ -123,9 +114,6 @@
                     <property name="text">
                         <string>&amp;Change Tracker</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+C</string>
-                    </property>
                 </widget>
                 <widget class="KPushButton" row="4" column="1">
                     <property name="name">
@@ -133,9 +121,6 @@
                     </property>
                     <property name="text">
                         <string>Re&amp;store default</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+S</string>
                     </property>
                     <property name="stdItem" stdset="0">
                         <number>21</number>

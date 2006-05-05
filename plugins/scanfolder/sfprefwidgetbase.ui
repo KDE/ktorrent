@@ -80,9 +80,6 @@
                     <property name="text">
                         <string>Move to "loaded" directory &amp;after loading</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+A</string>
-                    </property>
                     <property name="toolTip" stdset="0">
                         <string>Move torrent to "loaded" directory after loading it</string>
                     </property>
@@ -94,9 +91,6 @@
                     <property name="text">
                         <string>Open torrents silentl&amp;y</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+Y</string>
-                    </property>
                     <property name="toolTip" stdset="0">
                         <string>Don't show 'Select files to download' dialog</string>
                     </property>
@@ -107,9 +101,6 @@
                     </property>
                     <property name="text">
                         <string>Delete after loadin&amp;g</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+G</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Deletes torrent after loading</string>

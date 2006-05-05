@@ -485,9 +485,6 @@
                     <property name="text">
                         <string>M&amp;ove up</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+O</string>
-                    </property>
                 </widget>
                 <widget class="QPushButton">
                     <property name="name">
@@ -495,9 +492,6 @@
                     </property>
                     <property name="text">
                         <string>Move dow&amp;n</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+N</string>
                     </property>
                 </widget>
                 <spacer>
@@ -524,9 +518,6 @@
                     <property name="text">
                         <string>&amp;QM Controlled</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+Q</string>
-                    </property>
                 </widget>
                 <widget class="QPushButton">
                     <property name="name">
@@ -534,9 +525,6 @@
                     </property>
                     <property name="text">
                         <string>&amp;User Controlled</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+U</string>
                     </property>
                 </widget>
                 <spacer>
@@ -563,9 +551,6 @@
                     <property name="text">
                         <string>&amp;OK</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+O</string>
-                    </property>
                     <property name="stdItem" stdset="0">
                         <number>1</number>
                     </property>
@@ -577,9 +562,6 @@
                     <property name="text">
                         <string>&amp;Apply</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+A</string>
-                    </property>
                     <property name="stdItem" stdset="0">
                         <number>9</number>
                     </property>
@@ -590,9 +572,6 @@
                     </property>
                     <property name="text">
                         <string>&amp;Cancel</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+C</string>
                     </property>
                     <property name="stdItem" stdset="0">
                         <number>2</number>
