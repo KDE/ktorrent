@@ -33,7 +33,7 @@ using namespace kt;
 
 namespace bt
 {
-	const Uint32 UNDEFINED_ID = 0xFFFFFFFF;
+
 	
 
 	NewChokeAlgorithm::NewChokeAlgorithm(): ChokeAlgorithm()

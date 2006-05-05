@@ -29,7 +29,7 @@ using namespace kt;
 namespace bt
 {
 	
-	const Uint32 UNDEFINED_ID = 0xFFFFFFFF;
+	
 	const Uint32 OPT_SEL_INTERVAL = 30*1000; // we switch optimistic peer each 30 seconds
 	const double NEWBIE_BONUS = 1.0;
 	const double SNUB_PENALTY = 10.0;
