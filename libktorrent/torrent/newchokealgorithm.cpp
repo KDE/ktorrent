@@ -55,7 +55,7 @@ namespace bt
 			return 0;
 	}
 	
-	void NewChokeAlgorithm::doChokingLeechingState(PeerManager & pman,const kt::TorrentStats & stats)
+	void NewChokeAlgorithm::doChokingLeechingState(PeerManager & pman,ChunkManager & cman,const kt::TorrentStats & stats)
 	{
 		Uint32 num_peers = pman.getNumConnectedPeers();
 		if (num_peers == 0)
@@ -225,7 +225,7 @@ namespace bt
 	}
 
 	
-	void NewChokeAlgorithm::doChokingSeedingState(PeerManager & pman,const kt::TorrentStats & stats)
+	void NewChokeAlgorithm::doChokingSeedingState(PeerManager & pman,ChunkManager & cman,const kt::TorrentStats & stats)
 	{
 		Uint32 num_peers = pman.getNumConnectedPeers();
 		if (num_peers == 0)

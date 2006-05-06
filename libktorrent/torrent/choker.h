@@ -34,6 +34,7 @@ namespace bt
 	const Uint32 UNDEFINED_ID = 0xFFFFFFFF;
 	
 	class PeerManager;
+	class ChunkManager;
 	
 	
 	typedef int (*PeerCompareFunc)(Peer* a,Peer* b);
@@ -64,16 +65,18 @@ namespace bt
 		/**
 		 * Do the actual choking when we are still downloading.
 		 * @param pman The PeerManager
+		 * @param cman The ChunkManager
 		 * @param stats The torrent stats
 		 */
-		virtual void doChokingLeechingState(PeerManager & pman,const kt::TorrentStats & stats) = 0;
+		virtual void doChokingLeechingState(PeerManager & pman,ChunkManager & cman,const kt::TorrentStats & stats) = 0;
 		
 		/**
 		 * Do the actual choking when we are seeding
 		 * @param pman The PeerManager
+		 * @param cman The ChunkManager
 		 * @param stats The torrent stats
 		 */
-		virtual void doChokingSeedingState(PeerManager & pman,const kt::TorrentStats & stats) = 0;
+		virtual void doChokingSeedingState(PeerManager & pman,ChunkManager & cman,const kt::TorrentStats & stats) = 0;
 		
 		/// Get the optimisticly unchoked peer ID
 		Uint32 getOptimisticlyUnchokedPeerID() const {return opt_unchoked_peer_id;}
@@ -92,9 +95,10 @@ namespace bt
 	{
 		ChokeAlgorithm* choke;
 		PeerManager & pman;
+		ChunkManager & cman;
 		static Uint32 num_upload_slots;
 	public:
-		Choker(PeerManager & pman);
+		Choker(PeerManager & pman,ChunkManager & cman);
 		virtual ~Choker();
 
 		/**

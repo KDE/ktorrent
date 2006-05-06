@@ -38,11 +38,11 @@ namespace bt
 		AdvancedChokeAlgorithm();
 		virtual ~AdvancedChokeAlgorithm();
 
-		virtual void doChokingLeechingState(PeerManager & pman,const kt::TorrentStats & stats);
-		virtual void doChokingSeedingState(PeerManager & pman,const kt::TorrentStats & stats);
+		virtual void doChokingLeechingState(PeerManager & pman,ChunkManager & cman,const kt::TorrentStats & stats);
+		virtual void doChokingSeedingState(PeerManager & pman,ChunkManager & cman,const kt::TorrentStats & stats);
 		
 	private:
-		void calcACAScore(Peer* p,const kt::TorrentStats & stats);
+		void calcACAScore(Peer* p,ChunkManager & cman,const kt::TorrentStats & stats);
 		Peer* updateOptimisticPeer(PeerManager & pman);
 		void doUnchoking(PeerPtrList & ppl,Peer* poup);
 	};

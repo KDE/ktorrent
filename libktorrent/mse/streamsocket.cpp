@@ -25,6 +25,10 @@
 #include <torrent/globals.h>
 #include <torrent/authenticatebase.h>
 #include <malloc.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netinet/tcp.h>
 #include "streamsocket.h"
 #include "rc4encryptor.h"
 
@@ -36,22 +40,40 @@ namespace mse
 	StreamSocket::StreamSocket() : sock(0),enc(0)
 	{
 		sock = new QSocket();
-		sock->socketDevice()->setReceiveBufferSize(49512);
-		sock->socketDevice()->setSendBufferSize(49512);
+	//	sock->socketDevice()->setReceiveBufferSize(49512);
+	//	sock->socketDevice()->setSendBufferSize(49512);
 		reinserted_data = 0;
 		reinserted_data_size = 0;
 		reinserted_data_read = 0;
+#if 0
+		int flag = 1;
+		int result = setsockopt(sock->socketDevice()->socket(),            /* socket affected */
+								IPPROTO_TCP,     /* set option at TCP level */
+								TCP_NODELAY,     /* name of option */
+								(char *) &flag,  /* the cast is historical
+								cruft */
+								sizeof(int));    /* length of option value */
+#endif
 	}
 
 	StreamSocket::StreamSocket(int fd) : sock(0),enc(0)
 	{
 		sock = new QSocket();
 		sock->setSocket(fd);
-		sock->socketDevice()->setReceiveBufferSize(49512);
-		sock->socketDevice()->setSendBufferSize(49512);
+	//	sock->socketDevice()->setReceiveBufferSize(49512);
+	//	sock->socketDevice()->setSendBufferSize(49512);
 		reinserted_data = 0;
 		reinserted_data_size = 0;
 		reinserted_data_read = 0;
+#if 0
+		int flag = 1;
+		int result = setsockopt(fd,            /* socket affected */
+								IPPROTO_TCP,     /* set option at TCP level */
+								TCP_NODELAY,     /* name of option */
+								(char *) &flag,  /* the cast is historical
+								cruft */
+								sizeof(int));    /* length of option value */
+#endif
 	}
 
 	StreamSocket::~StreamSocket()

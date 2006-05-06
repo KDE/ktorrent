@@ -463,7 +463,7 @@ namespace bt
 		connect(down,SIGNAL(ioError(const QString& )),
 				this,SLOT(onIOError(const QString& )));
 		up = new Uploader(*cman,*pman);
-		choke = new Choker(*pman);
+		choke = new Choker(*pman,*cman);
 
 
 		connect(pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));

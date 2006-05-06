@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <util/functions.h>
 #include <interfaces/torrentinterface.h>
+#include "chunkmanager.h"
 #include "peer.h"
 #include "peermanager.h"
 #include "packetwriter.h"
@@ -46,7 +47,7 @@ namespace bt
 	AdvancedChokeAlgorithm::~AdvancedChokeAlgorithm()
 	{}
 	
-	void AdvancedChokeAlgorithm::calcACAScore(Peer* p,const kt::TorrentStats & stats)
+	void AdvancedChokeAlgorithm::calcACAScore(Peer* p,ChunkManager & cman,const kt::TorrentStats & stats)
 	{
 		const PeerInterface::Stats & s = p->getStats();
 		if (p->isSeeder())
@@ -64,6 +65,22 @@ namespace bt
 			return;
 		}
 		
+		bool should_be_interested = false;
+		// before we start calculating first check if we have piece that the peer doesn't have
+		const BitSet & ours = cman.getBitSet();
+		const BitSet & theirs = p->getBitSet();
+		for (Uint32 i = 0;i < ours.getNumBits() && !should_be_interested;i++)
+		{
+			if (ours.get(i) && !theirs.get(i))
+				should_be_interested = true;
+		}
+		
+		if (!should_be_interested || !p->isInterested())
+		{
+			// not interseted so it doesn't make sense to unchoke it
+			p->setACAScore(-5);
+			return;
+		}
 		
 		
 		double nb = 0.0; // newbie bonus
@@ -95,6 +112,10 @@ namespace bt
 		double K = 5.0;
 		double L = 5.0;
 		double aca = nb + (tbd > 0 ? K * (bd/tbd) : 0.0) + (tds > 0 ? L* (ds / tds) : 0.0) - cp - sp;
+		
+		
+		
+		
 		p->setACAScore(aca);
 	}
 	
@@ -109,7 +130,7 @@ namespace bt
 	}
 	
 
-	void AdvancedChokeAlgorithm::doChokingLeechingState(PeerManager & pman,const kt::TorrentStats & stats)
+	void AdvancedChokeAlgorithm::doChokingLeechingState(PeerManager & pman,ChunkManager & cman,const kt::TorrentStats & stats)
 	{
 		PeerPtrList ppl;
 		Uint32 np = pman.getNumConnectedPeers();
@@ -119,7 +140,7 @@ namespace bt
 			Peer* p = pman.getPeer(i);
 			if (p)
 			{
-				calcACAScore(p,stats); // update the ACA score in the process
+				calcACAScore(p,cman,stats); // update the ACA score in the process
 			/*	if (p->getStats().evil)
 					p->getPacketWriter().sendEvilUnchoke(); // be very wicked with snubbers
 				else */
@@ -175,7 +196,7 @@ namespace bt
 			return 0;
 	}
 
-	void AdvancedChokeAlgorithm::doChokingSeedingState(PeerManager & pman,const kt::TorrentStats & stats)
+	void AdvancedChokeAlgorithm::doChokingSeedingState(PeerManager & pman,ChunkManager & cman,const kt::TorrentStats & stats)
 	{
 		PeerPtrList ppl;
 		Uint32 np = pman.getNumConnectedPeers();
@@ -185,7 +206,7 @@ namespace bt
 			Peer* p = pman.getPeer(i);
 			if (p)
 			{
-				calcACAScore(p,stats); // update the ACA score in the process
+				calcACAScore(p,cman,stats); // update the ACA score in the process
 				if (!p->isSeeder())
 					ppl.append(p);
 				else

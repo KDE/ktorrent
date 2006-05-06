@@ -77,6 +77,7 @@ namespace bt
 		stats.aca_score = 0.0;
 		stats.evil = false;
 		stats.has_upload_slot = false;
+		stats.num_requests = 0;
 		if (stats.ip_addresss == "0.0.0.0")
 		{
 			Out() << "No more 0.0.0.0" << endl;
@@ -400,6 +401,7 @@ namespace bt
 		stats.upload_rate = this->getUploadRate();
 		stats.perc_of_file = this->percentAvailable();
 		stats.snubbed = this->isSnubbed();
+		stats.num_requests = uploader->getNumRequests();
 		return stats;
 	}
 	

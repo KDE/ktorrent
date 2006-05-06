@@ -48,7 +48,7 @@ UPnPTestApp::~UPnPTestApp()
 {
 	bt::Log & lg = Out();
 	lg.removeMonitor(this);
-	delete sock;
+	sock->deleteLater();
 }
 
 void UPnPTestApp::discovered(kt::UPnPRouter* router)

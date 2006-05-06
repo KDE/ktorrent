@@ -120,6 +120,10 @@ namespace kt
 		setPixmap(8,s.dht_support ? yes_pix : no_pix);
 		setText(9,loc->formatNumber(s.aca_score,2));
 		setPixmap(10,s.has_upload_slot ? yes_pix : QPixmap());
+#undef SHOW_REQUESTS
+#ifdef SHOW_REQUESTS
+		setText(11,QString::number(s.num_requests));
+#endif
 	}
 	
 	int PeerViewItem::compare(QListViewItem * i,int col,bool) const
@@ -163,6 +167,9 @@ namespace kt
 		addColumn(i18n("DHT"));
 		addColumn(i18n("Score"));
 		addColumn(i18n("Upload Slot"));
+#ifdef SHOW_REQUESTS
+		addColumn(i18n("Requests"));
+#endif
 		setShowSortIndicator(true);
 		
 		menu = new KPopupMenu(this);

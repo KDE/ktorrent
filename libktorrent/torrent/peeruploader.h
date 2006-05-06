@@ -43,6 +43,7 @@ namespace bt
 	{
 		Peer* peer;
 		QValueList<Request> requests;
+		Uint32 rone_time;
 	public:
 		/**
 		 * Constructor. Set the Peer.

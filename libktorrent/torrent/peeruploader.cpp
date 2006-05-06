@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <set>
 #include <util/log.h>
+#include <util/functions.h>
 #include "peeruploader.h"
 #include "peer.h"
 #include "chunkmanager.h"
@@ -29,6 +30,7 @@ namespace bt
 
 	PeerUploader::PeerUploader(Peer* peer) : peer(peer)
 	{
+		rone_time = 0;
 	}
 
 
@@ -50,6 +52,8 @@ namespace bt
 	Uint32 PeerUploader::update(ChunkManager & cman,Uint32 opt_unchoked)
 	{
 		Uint32 uploaded = 0;	
+		
+		
 
 		PacketWriter & pw = peer->getPacketWriter();
 		uploaded += pw.update();
@@ -61,16 +65,35 @@ namespace bt
 		if (peer->isSnubbed() && !peer->areWeChoked() &&
 			cman.chunksLeft() != 0 && peer->getID() != opt_unchoked)
 			return uploaded;
+		
+		
+		if (requests.count() > 1 || requests.count() == 0)
+		{
+			rone_time = bt::GetCurrentTime();
+		}
+		
+		bool rone_send = (requests.count() == 1 && bt::GetCurrentTime() - rone_time > 5000);
+		bool requests_left = requests.count() > 1 || rone_send;
+		
 
-		while (!requests.empty() && pw.getNumPacketsToWrite() == 0)
+		while ( requests_left && pw.getNumPacketsToWrite() == 0)
 		{	
 			Request r = requests.front();
 			Chunk* c = cman.grabChunk(r.getIndex());
-			
+
 			if (c)
 			{
 				pw.sendChunk(r.getIndex(),r.getOffset(),r.getLength(),c);
 				requests.pop_front();
+				
+			/*	if (peer->getStats().has_upload_slot)
+				{
+					Out() << QString("Peer : sending %1 %2 %3 : %4 requests left")
+							.arg(r.getIndex())
+							.arg(r.getOffset())
+							.arg(r.getLength())
+							.arg(requests.count()) << endl;
+			}*/
 				uploaded += pw.update();
 			}
 			else
@@ -79,6 +102,12 @@ namespace bt
 				Out() << "Cannot satisfy request" << endl;
 				requests.pop_front();
 			}
+			
+			if (rone_send)
+				rone_time = bt::GetCurrentTime();
+			
+			rone_send = (requests.count() == 1 && bt::GetCurrentTime() - rone_time > 5000);
+			requests_left = requests.count() > 1 || rone_send;
 		}
 		
 		return uploaded;

@@ -37,8 +37,8 @@ namespace bt
 		NewChokeAlgorithm();
 		virtual ~NewChokeAlgorithm();
 
-		virtual void doChokingLeechingState(PeerManager & pman,const kt::TorrentStats & stats);
-		virtual void doChokingSeedingState(PeerManager & pman,const kt::TorrentStats & stats);
+		virtual void doChokingLeechingState(PeerManager & pman,ChunkManager & cman,const kt::TorrentStats & stats);
+		virtual void doChokingSeedingState(PeerManager & pman,ChunkManager & cman,const kt::TorrentStats & stats);
 	private:
 		void doChokingLeecherState(PeerManager& pman);
 		void doChokingSeederState(PeerManager& pman);

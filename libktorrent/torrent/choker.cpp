@@ -60,7 +60,7 @@ namespace bt
 	
 	Uint32 Choker::num_upload_slots = 4;
 
-	Choker::Choker(PeerManager & pman) : pman(pman)
+	Choker::Choker(PeerManager & pman,ChunkManager & cman) : pman(pman),cman(cman)
 	{
 #ifdef USE_OLD_CHOKE
 		choke = new NewChokeAlgorithm();
@@ -78,9 +78,9 @@ namespace bt
 	void Choker::update(bool have_all,const kt::TorrentStats & stats)
 	{
 		if (have_all)
-			choke->doChokingSeedingState(pman,stats);
+			choke->doChokingSeedingState(pman,cman,stats);
 		else
-			choke->doChokingLeechingState(pman,stats);
+			choke->doChokingLeechingState(pman,cman,stats);
 	}
 	
 }
