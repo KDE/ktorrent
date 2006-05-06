@@ -129,10 +129,15 @@ namespace kt
 			pmw->load_all_btn->setEnabled(false);
 			pmw->unload_all_btn->setEnabled(true);
 		}
-		else if (loaded == 0)
+		else if (loaded < tot && loaded > 0)
 		{
+			pmw->unload_all_btn->setEnabled(true);
 			pmw->load_all_btn->setEnabled(true);
+		}
+		else
+		{
 			pmw->unload_all_btn->setEnabled(false);
+			pmw->load_all_btn->setEnabled(true);
 		}
 		onCurrentChanged(pmw->plugin_view->currentItem());
 	}
