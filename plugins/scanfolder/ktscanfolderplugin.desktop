@@ -1,5 +1,7 @@
 [Desktop Entry]
 Name=ScanFolderPlugin
+Name[da]=Plugin for mappesøgning
+Name[sv]=Insticksprogram för katalogsökning
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktscanfolderplugin
