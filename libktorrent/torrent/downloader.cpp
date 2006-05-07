@@ -52,7 +52,6 @@ namespace bt
 		current_chunks.setAutoDelete(true);
 		connect(&pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
 		connect(&pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerKilled(Peer*)));
-		num_non_idle = 0;
 	}
 
 
@@ -136,7 +135,6 @@ namespace bt
 				if (c->getStatus() == Chunk::MMAPPED)
 				{
 					cman.saveChunk(cd->getChunk()->getIndex(),false);
-					if (num_non_idle > 0) num_non_idle--;
 				}
 			} 
 			else if (cd->isChoked())
@@ -146,7 +144,6 @@ namespace bt
 				if (c->getStatus() == Chunk::MMAPPED)
 				{
 					cman.saveChunk(cd->getChunk()->getIndex(),false);
-					if (num_non_idle > 0) num_non_idle--;
 				}
 			}
 		}
@@ -196,6 +193,15 @@ namespace bt
 		
 		ChunkDownload* sel = 0;
 		Uint32 sel_left = 0xFFFFFFFF;
+		// calculate number of non idle chunks
+		Uint32 num_non_idle = 0;
+		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
+		{
+			ChunkDownload* cd = j->second;
+			if (!cd->isIdle())
+				num_non_idle++;
+		}
+		
 		// first see if there are ChunkDownload's which need a PeerDownloader
 		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
 		{
@@ -238,7 +244,6 @@ namespace bt
 				ChunkDownload* cd = new ChunkDownload(c);
 				current_chunks.insert(chunk,cd);
 				cd->assignPeer(pd);
-				num_non_idle++;
 				if (tmon)
 					tmon->downloadStarted(cd);
 			}
@@ -270,9 +275,6 @@ namespace bt
 				{
 					cman.prepareChunk(cdmin->getChunk(),true);
 				}
-				
-				if (cdmin->isIdle())
-					num_non_idle++;
 				
 				cdmin->assignPeer(pd); 
 			}
@@ -314,7 +316,6 @@ namespace bt
 			// hash ok so save it
 			try
 			{
-				if (num_non_idle > 0) num_non_idle--;
 				cman.saveChunk(c->getIndex());
 				Out() << "Chunk " << c->getIndex() << " downloaded " << endl;
 				// tell everybody we have the Chunk
@@ -337,7 +338,6 @@ namespace bt
 			Out() << "Is        : " << h << endl;
 			Out() << "Should be : " << tor.getHash(c->getIndex()) << endl;
 			
-			if (num_non_idle > 0) num_non_idle--;
 			cman.resetChunk(c->getIndex());
 			Uint32 pid;
 			if (cd->getOnlyDownloader(pid))
@@ -372,7 +372,6 @@ namespace bt
 			c->setStatus(Chunk::NOT_DOWNLOADED);
 		}
 		current_chunks.clear();
-		num_non_idle = 0;
 	}
 	
 	Uint32 Downloader::downloadRate() const
@@ -539,9 +538,6 @@ namespace bt
 			ChunkDownload* cd = current_chunks.find(i);
 			if (!cd)
 				continue;
-			
-			if (!cd->isIdle())
-				if (num_non_idle > 0) num_non_idle--;
 			
 			cd->cancelAll();
 			if (tmon)

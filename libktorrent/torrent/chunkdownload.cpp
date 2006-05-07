@@ -223,6 +223,10 @@ namespace bt
 			
 			Uint32 p  = r.getOffset() / MAX_PIECE_LEN;
 			ds->remove(p);
+			
+			// go over all PD's and do requets again
+			for (QPtrList<PeerDownloader>::iterator i = pdown.begin();i != pdown.end();++i)
+				sendRequests(*i);
 		}
 	}
 	
