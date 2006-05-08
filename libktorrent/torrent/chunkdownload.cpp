@@ -190,7 +190,7 @@ namespace bt
 		
 		Uint32 max_outstanding = pd->getMaximumOutstandingReqs();
 		Uint32 num_visited = 0;
-		while (num_visited < num && pd->getNumRequests() < max_outstanding)
+		while (num_visited < piece_queue.count() && pd->getNumRequests() < max_outstanding)
 		{
 			// get the first one in the queue
 			Uint32 i = piece_queue.first();
@@ -228,6 +228,13 @@ namespace bt
 			for (QPtrList<PeerDownloader>::iterator i = pdown.begin();i != pdown.end();++i)
 				sendRequests(*i);
 		}
+	}
+	
+	void ChunkDownload::update()
+	{
+		// go over all PD's and do requets again
+		for (QPtrList<PeerDownloader>::iterator i = pdown.begin();i != pdown.end();++i)
+			sendRequests(*i);
 	}
 	
 	

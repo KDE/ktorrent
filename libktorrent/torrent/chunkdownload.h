@@ -146,15 +146,19 @@ namespace bt
 		
 		/// Release all PD's and clear the requested chunks
 		void releaseAllPDs();
+		
+		/// Send requests to peers
+		void update();
+		
+		/// See if this CD hasn't been active in the last update
+		bool needsToBeUpdated() const {return timer.getElapsedSinceUpdate() > 60 * 1000;}
 	private slots:
 		void sendRequests(PeerDownloader* pd);
 		void sendCancels(PeerDownloader* pd);
 		void endgameCancel(const Piece & p);
 		void onTimeout(const Request & r);
 		
-	private:
-		
-		
+	private:		
 		BitSet pieces;
 		QValueList<Uint32> piece_queue;
 		Chunk* chunk;

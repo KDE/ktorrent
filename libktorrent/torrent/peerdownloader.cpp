@@ -89,7 +89,7 @@ namespace bt
 
 	Uint32 PeerDownloader::getNumRequests() const 
 	{
-		return reqs.count() + unsent_reqs.count();
+		return reqs.count();
 	}
 	
 	int PeerDownloader::grab()
@@ -125,10 +125,6 @@ namespace bt
 			reqs.remove(req);
 			peer->getPacketWriter().sendCancel(req);
 		}
-		else
-		{
-			unsent_reqs.remove(req);
-		}
 	}
 	
 	void PeerDownloader::cancelAll()
@@ -145,7 +141,6 @@ namespace bt
 		}
 	
 		reqs.clear();
-		unsent_reqs.clear();
 	}
 		
 	void PeerDownloader::piece(const Piece & p)
@@ -184,37 +179,6 @@ namespace bt
 		else
 			return false;
 	}
-
-	
-	void PeerDownloader::downloadUnsent()
-	{
-		if (!peer)
-			return;
-
-		QValueList<TimeStampedRequest>::iterator i = unsent_reqs.begin();
-		while (i != unsent_reqs.end())
-		{
-			TimeStampedRequest & tr = *i;
-			// update time stamp
-			tr.time_stamp = bt::GetCurrentTime();
-			reqs.append(tr);
-			peer->getPacketWriter().sendRequest(tr.req);
-			i = unsent_reqs.erase(i);
-		}
-	}
-
-	void PeerDownloader::downloadOneUnsent()
-	{
-		if (unsent_reqs.empty())
-			return;
-
-		TimeStampedRequest & tr = unsent_reqs.first();
-		tr.time_stamp = bt::GetCurrentTime();
-		reqs.append(tr);
-		peer->getPacketWriter().sendRequest(tr.req);
-		unsent_reqs.pop_front();
-	}
-	
 
 	Uint32 PeerDownloader::getDownloadRate() const
 	{

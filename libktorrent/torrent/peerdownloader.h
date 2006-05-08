@@ -137,17 +137,6 @@ namespace bt
 		Uint32 getDownloadRate() const;
 		
 		/**
-		 * Download all unsent requests.
-		 */
-		void downloadUnsent();
-
-		/**
-		 * Download one unsent request, this is called by
-		 * the DownloadCap, when the PeerDownloader's turn is up.
-		 */
-		void downloadOneUnsent();
-		
-		/**
 		 * Check for timed out requests.
 		 */
 		void checkTimeouts();
@@ -200,7 +189,7 @@ namespace bt
 		
 	private:
 		Peer* peer;
-		QValueList<TimeStampedRequest> reqs,unsent_reqs;
+		QValueList<TimeStampedRequest> reqs;
 		int grabbed;
 		static Uint32 max_outstanding_reqs;
 	};

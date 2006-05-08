@@ -146,6 +146,10 @@ namespace bt
 					cman.saveChunk(cd->getChunk()->getIndex(),false);
 				}
 			}
+			else if (cd->needsToBeUpdated())
+			{
+				cd->update();
+			}
 		}
 		
 		for (Uint32 i = 0; i < pman.getNumConnectedPeers();++i)
