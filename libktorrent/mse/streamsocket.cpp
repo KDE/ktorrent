@@ -24,7 +24,7 @@
 #include <torrent/peer.h>
 #include <torrent/globals.h>
 #include <torrent/authenticatebase.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
