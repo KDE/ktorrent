@@ -73,6 +73,8 @@ namespace bt
 			requested_pieces.clear();
 		}
 		
+		Uint32 getNumRequests() const {return requested_pieces.size();}
+		
 		iterator begin() {return requested_pieces.begin();}
 		iterator end() {return requested_pieces.end();}
 	};
@@ -187,6 +189,13 @@ namespace bt
 		DownloadStatus* ds = dstatus.find(pd->getPeer()->getID());
 		if (!ds)
 			return;
+		
+		if (pd->getNumRequests() == 0 && ds->getNumRequests() > 0)
+		{
+			Out() << "Weird bug detected !" << endl;
+			Out() << "Making sure everything is back OK" << endl;
+			ds->clear();
+		}
 		
 		Uint32 max_outstanding = pd->getMaximumOutstandingReqs();
 		Uint32 num_visited = 0;
