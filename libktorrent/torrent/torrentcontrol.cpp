@@ -66,7 +66,7 @@ namespace bt
 
 
 	TorrentControl::TorrentControl()
-	: tor(0),tracker(0),cman(0),pman(0),down(0),up(0),choke(0),tmon(0),prealloc(false)
+	: tor(0),tracker(0),cman(0),pman(0),down(0),up(0),choke(0),tmon(0),prealloc(false), last_announce(0)
 	{
 		stats.imported_bytes = 0;
 		stats.trk_bytes_downloaded = 0;
@@ -527,10 +527,25 @@ namespace bt
 		tracker->handleError();
 	}
 
+	bool TorrentControl::announceAllowed()
+	{
+		if(last_announce == 0)
+			return true;
+		
+		return bt::GetCurrentTime() - last_announce >= 60 * 1000;
+	}
+	
 	void TorrentControl::updateTracker()
 	{
-		if (stats.running)
+		Out() << "Trying to announce... " << endl;
+		if (stats.running && announceAllowed())
+		{
 			tracker->manualUpdate();
+			last_announce = bt::GetCurrentTime();
+			Out() << "Announced." << endl;
+		}
+		else
+			Out() << "Not announced." << endl;
 	}
 
 	KURL TorrentControl::getTrackerURL(bool prev_success) const

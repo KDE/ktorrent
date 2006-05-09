@@ -34,6 +34,8 @@
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <ksqueezedtextlabel.h>
+#include <kglobal.h>
+#include <kiconloader.h>
 
 #include <torrent/globals.h>
 #include <util/log.h>
@@ -43,12 +45,14 @@ namespace kt
 	TrackerView::TrackerView(TorrentInterface* ti, QWidget *parent, const char *name)
 		:TrackerViewBase(parent, name), tc(ti)
 	{
+		KIconLoader* iload = KGlobal::iconLoader();
+		btnUpdate->setIconSet(iload->loadIconSet("apply", KIcon::Small));
+		btnAdd->setIconSet(iload->loadIconSet("add", KIcon::Small));
+		btnRemove->setIconSet(iload->loadIconSet("remove", KIcon::Small));
+		btnRestore->setIconSet(iload->loadIconSet("undo", KIcon::Small));
+		
 		if(!tc)
 			return;
-		
-		btnAdd->setText(i18n("&Add tracker"));
-		btnRemove->setText(i18n("Rem&ove tracker"));
-		btnRestore->setText(i18n("Re&store default."));
 		
 		const KURL::List trackers = tc->getTrackersList()->getTrackerURLs();
 		if(trackers.empty())
@@ -133,6 +137,9 @@ namespace kt
 			t = t.addSecs(tc->getTimeToNextTrackerUpdate());
 			lblUpdate->setText(t.toString("mm:ss"));
 		}
+		
+		//Update manual annunce button
+		btnUpdate->setEnabled(tc->announceAllowed());
 
 		lblStatus->setText("<b>" + s.trackerstatus + "</b>");
 		lblCurrent->setText("<b>" + tc->getTrackerURL(true).prettyURL() + "</b>");

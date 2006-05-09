@@ -270,6 +270,9 @@ namespace kt
 		/// Make a string of the current status
 		virtual QString statusToString() const = 0;
 		
+		///Is manual announce allowed?
+		virtual bool announceAllowed() = 0;
+		
 	signals:
 		/**
 		 * Emited when we have finished downloading.

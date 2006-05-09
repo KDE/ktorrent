@@ -95,7 +95,7 @@ namespace bt
 				float max_ratio = tc->getMaxShareRatio();
 				if(s.completed && max_ratio > 0 && ratio >= max_ratio)
 				{
-					if(KMessageBox::questionYesNo(0, i18n("This torrent has reached its maximum share ratio. Ignore the limit and start seeding anyway?"),i18n("Maximum share ratio limit reached.")) == KMessageBox::Yes)
+					if(KMessageBox::questionYesNo(0, i18n("Torrent \"%1\" has reached its maximum share ratio. Ignore the limit and start seeding anyway?").arg(s.torrent_name),i18n("Maximum share ratio limit reached.")) == KMessageBox::Yes)
 					{
 						tc->setMaxShareRatio(0.00f);
 						tc->start();

@@ -259,7 +259,7 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 	bool en_stop = false;
 	bool en_remove = false;
 	bool en_prev = false;
-	bool en_announce = false;
+	bool en_announce = true;
 	
 	QPtrList<QListViewItem> sel = selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
@@ -270,11 +270,15 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 		{
 			const TorrentStats & s = tc->getStats();
 			if (!s.running)
+			{
 				en_start = true;
+				en_announce = false;
+			}
 			else
 			{
 				en_stop = true;
-				en_announce = true;
+				if(!tc->announceAllowed())
+					en_announce = false;
 			}
 			
 			if (tc->readyForPreview() && !s.multi_file_torrent)

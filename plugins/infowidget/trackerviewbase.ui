@@ -12,6 +12,9 @@
             <height>294</height>
         </rect>
     </property>
+    <property name="caption">
+        <string>TrackerViewBase</string>
+    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -90,10 +93,10 @@
                         <cstring>btnAdd</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Add tracker</string>
+                        <string>Add t&amp;racker</string>
                     </property>
-                    <property name="stdItem" stdset="0">
-                        <number>27</number>
+                    <property name="accel">
+                        <string>Alt+R</string>
                     </property>
                 </widget>
                 <widget class="KPushButton" row="1" column="1">
@@ -101,10 +104,7 @@
                         <cstring>btnRemove</cstring>
                     </property>
                     <property name="text">
-                        <string>Rem&amp;ove tracker</string>
-                    </property>
-                    <property name="stdItem" stdset="0">
-                        <number>28</number>
+                        <string>Remove tracker</string>
                     </property>
                 </widget>
                 <widget class="QPushButton" row="2" column="1">
@@ -112,7 +112,7 @@
                         <cstring>btnChange</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Change Tracker</string>
+                        <string>Cha&amp;nge Tracker</string>
                     </property>
                 </widget>
                 <widget class="KPushButton" row="4" column="1">
@@ -120,10 +120,10 @@
                         <cstring>btnRestore</cstring>
                     </property>
                     <property name="text">
-                        <string>Re&amp;store default</string>
+                        <string>Restore defaults</string>
                     </property>
-                    <property name="stdItem" stdset="0">
-                        <number>21</number>
+                    <property name="accel">
+                        <string></string>
                     </property>
                 </widget>
             </grid>
@@ -282,13 +282,13 @@
                         <cstring>btnUpdate</cstring>
                     </property>
                     <property name="text">
-                        <string>Update tracker</string>
+                        <string>Upd&amp;ate tracker</string>
                     </property>
                     <property name="accel">
-                        <string></string>
+                        <string>Alt+A</string>
                     </property>
-                    <property name="stdItem" stdset="0">
-                        <number>1</number>
+                    <property name="toolTip" stdset="0">
+                        <string>Minimum update interval - 60 seconds</string>
                     </property>
                 </widget>
             </hbox>

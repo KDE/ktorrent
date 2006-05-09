@@ -174,6 +174,8 @@ namespace bt
 		/// Make a string out of the status message
 		virtual QString statusToString() const;
 		
+		/// Checks if tracker announce is allowed (minimum interval 60 seconds)
+		bool announceAllowed();
 		
 		
 	public slots:
@@ -256,6 +258,7 @@ namespace bt
 		int priority;
 		float maxShareRatio;
 		bool prealloc;
+		Uint32 last_announce;
 		
 		friend class PreallocationThread;
 	};
