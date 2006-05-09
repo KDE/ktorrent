@@ -37,10 +37,11 @@ else
 	AC_DEFINE(HAVE_LSEEK64,0)
 fi
 
-AC_CHECK_LIB(gmp, __gmpz_init,[LDFLAGS="$LDFLAGS -lgmp"],[
-	echo "Error! You need to have the GNU MP library around."
-	exit -1 ])
-
+KDE_CHECK_LIB(gmp, __gmpz_init,	[have_gmp=yes],
+	[
+		have_gmp=no
+		DO_NOT_COMPILE="$DO_NOT_COMPILE ktorrent"
+	])
 
 KDE_INIT_DOXYGEN([The API Reference], [Version $VERSION])
 

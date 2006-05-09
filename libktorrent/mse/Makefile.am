@@ -1,6 +1,6 @@
 INCLUDES = -I$(srcdir)/.. $(all_includes)
 METASOURCES = AUTO
-libmse_la_LDFLAGS = $(all_libraries)
+libmse_la_LDFLAGS = -lgmp $(all_libraries)
 noinst_LTLIBRARIES = libmse.la
 noinst_HEADERS = bigint.h rc4encryptor.h streamsocket.h encryptedauthenticate.h \
 	encryptedserverauthenticate.h functions.h

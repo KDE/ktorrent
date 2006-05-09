@@ -1,0 +1,9 @@
+if test x$have_gmp = xno; then
+        echo ""
+        echo "----------------------------------------------------------"
+        echo "KTorrent ERROR:"
+        echo "KTorrent requires gmp (http://www.swox.com/gmp)"
+        echo "----------------------------------------------------------"
+        echo ""
+fi
+
