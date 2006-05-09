@@ -139,7 +139,7 @@ namespace kt
 	
 	void SearchWidget::search(const QString & text,int engine)
 	{
-		if (!html_part)
+		if (!html_part || m_search_engines.count() == 0)
 			return;
 	
 		if (engine < 0 || (Uint32)engine >= m_search_engines.count())
@@ -206,7 +206,7 @@ namespace kt
 		out << "# PLEASE DO NOT MODIFY THIS FILE. Use KTorrent configuration dialog for adding new search engines." << ::endl;
 		out << "# SEARCH ENGINES list" << ::endl;
 		out << "KTorrents http://www.ktorrents.com/search.php?lg=0&sourceid=ktorrent&q=FOOBAR&f=0" << ::endl;
-		out << "bittorrent.com http://search.bittorrent.com/search.jsp?query=FOOBAR" << ::endl; 
+		out << "bittorrent.com http://www.bittorrent.com/search_result.myt?search=FOOBAR" << ::endl; 
 		out << "isohunt.com http://isohunt.com/torrents.php?ihq=FOOBAR&op=and" << ::endl; 
 		out << "mininova.org http://www.mininova.org/search.php?search=FOOBAR" << ::endl; 
 		out << "thepiratebay.org http://thepiratebay.org/search.php?q=FOOBAR" << ::endl; 
