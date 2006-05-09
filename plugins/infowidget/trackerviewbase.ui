@@ -12,9 +12,6 @@
             <height>294</height>
         </rect>
     </property>
-    <property name="caption">
-        <string>TrackerViewBase</string>
-    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -94,9 +91,6 @@
                     </property>
                     <property name="text">
                         <string>Add t&amp;racker</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+R</string>
                     </property>
                 </widget>
                 <widget class="KPushButton" row="1" column="1">
@@ -283,9 +277,6 @@
                     </property>
                     <property name="text">
                         <string>Upd&amp;ate tracker</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+A</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Minimum update interval - 60 seconds</string>
