@@ -166,7 +166,10 @@ namespace bt
 		url.addQueryItem("downloaded",QString::number(s.trk_bytes_downloaded));
 		url.addQueryItem("left",QString::number(s.bytes_left));
 		url.addQueryItem("compact","1");
-		url.addQueryItem("numwant","100");
+		if (frontend->event != "stopped")
+			url.addQueryItem("numwant","100");
+		else
+			url.addQueryItem("numwant","0");
 		url.addQueryItem("key",QString::number(frontend->key));
 		if (!Tracker::custom_ip_resolved.isNull())
 			url.addQueryItem("ip",Tracker::custom_ip_resolved);

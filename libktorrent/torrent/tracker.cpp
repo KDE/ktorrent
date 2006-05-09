@@ -205,6 +205,7 @@ namespace bt
 	{
 		event = "completed";
 		doRequest(tor->getTrackerURL(true));
+		time_of_last_update = GetCurrentTime();
 	}
 
 	Uint32 Tracker::getTimeToNextUpdate() const

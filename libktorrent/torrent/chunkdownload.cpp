@@ -127,17 +127,17 @@ namespace bt
 	//	Out() << "ChunkDownload::piece " << chunk->getIndex() << endl;
 	//	Out() << "Piece " << p.getIndex() << " " << p.getOffset() << " " << pp << endl;
 		DownloadStatus* ds = dstatus.find(p.getPeer());
+		if (ds)
+			ds->remove(pp);
+		
 		Uint8* buf = chunk->getData();
 		if (buf)
 		{
-			memcpy(buf + p.getOffset(),p.getData(),p.getLength());
-			if (ds)
-				ds->remove(pp);
+			memcpy(buf + p.getOffset(),p.getData(),p.getLength());	
 			pieces.set(pp,true);
 			piece_queue.remove(pp);
 			piece_providers.insert(p.getPeer());
 			num_downloaded++;
-			
 			if (pdown.count() > 1)
 			{
 				endgameCancel(p);
@@ -218,11 +218,11 @@ namespace bt
 		{
 			// find the peer 
 			DownloadStatus* ds = dstatus.find(r.getPeer());
-			if (!ds)
-				return;
-			
-			Uint32 p  = r.getOffset() / MAX_PIECE_LEN;
-			ds->remove(p);
+			if (ds)
+			{
+				Uint32 p  = r.getOffset() / MAX_PIECE_LEN;
+				ds->remove(p);
+			}
 			
 			// go over all PD's and do requets again
 			for (QPtrList<PeerDownloader>::iterator i = pdown.begin();i != pdown.end();++i)

@@ -191,7 +191,9 @@ namespace bt
 				stalled_timer.update();
 			
 			// do a manual update if we are stalled for more then 2 minutes
-			if (stalled_timer.getElapsedSinceUpdate() > 120000 && stats.bytes_left > 0)
+			// we do not do this for private torrents
+			if (stalled_timer.getElapsedSinceUpdate() > 120000 && stats.bytes_left > 0 &&
+				!stats.priv_torrent)
 			{
 				Out() << "Stalled for to long, time to get some fresh blood" << endl;
 				tracker->manualUpdate();
