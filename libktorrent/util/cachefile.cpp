@@ -380,9 +380,11 @@ namespace bt
 	void CacheFile::preallocate()
 	{
 		Out() << "Preallocating file " << path << " (" << max_size << " bytes)" << endl;
+		bool close_again = false;
 		if (fd == -1)
 		{
 			openFile();
+			close_again = true;
 		}
 
 		try
@@ -393,11 +395,18 @@ namespace bt
 		{
 			// first attempt failed, must be fat so try that
 			if (!FatPreallocate(fd,max_size))
+			{
+				if (close_again)
+					closeTemporary();
+				
 				throw Error(i18n("Cannot preallocate diskspace : %1").arg(strerror(errno)));
+			}
 		}
 
 		file_size = FileSize(fd);
 		Out() << "file_size = " << file_size << endl;
+		if (close_again)
+			closeTemporary();
 	}
 
 	
