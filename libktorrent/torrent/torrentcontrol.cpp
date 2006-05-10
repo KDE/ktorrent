@@ -76,6 +76,7 @@ namespace bt
 		stats.stopped_by_error = false;
 		stats.session_bytes_downloaded = 0;
 		stats.session_bytes_uploaded = 0;
+		session_bytes_uploaded = 0;
 		old_datadir = QString::null;
 		stats.status = NOT_STARTED;
 		stats.autostart = true;
@@ -741,6 +742,9 @@ namespace bt
 		StatsFile st(datadir + "stats");
 		
 		Uint64 val = st.readUint64("UPLOADED");
+		// stats.session_bytes_uploaded will be calculated based upon prev_bytes_ul
+		// seeing that this will change here, we need to save it 
+		session_bytes_uploaded = stats.session_bytes_uploaded; 
 		prev_bytes_ul = val;
 		up->setBytesUploaded(val);
 		
@@ -812,8 +816,16 @@ namespace bt
 		stats.num_chunks_excluded = cman ? cman->chunksExcluded() : 0;
 		stats.chunk_size = tor ? tor->getChunkSize() : 0;
 		stats.total_bytes_to_download = (tor && cman) ?	tor->getFileLength() - cman->bytesExcluded() : 0;
-		stats.session_bytes_downloaded = stats.bytes_downloaded - prev_bytes_dl;
-		stats.session_bytes_uploaded = stats.bytes_uploaded - prev_bytes_ul;
+		
+		if (stats.bytes_downloaded >= prev_bytes_dl)
+			stats.session_bytes_downloaded = stats.bytes_downloaded - prev_bytes_dl;
+		else
+			stats.session_bytes_downloaded = 0;
+					
+		if (stats.bytes_uploaded >= prev_bytes_ul)
+			stats.session_bytes_uploaded = (stats.bytes_uploaded - prev_bytes_ul) + session_bytes_uploaded;
+		else
+			stats.session_bytes_uploaded = session_bytes_uploaded;
 		/*
 			Safety check, it is possible that stats.bytes_downloaded gets subtracted in Downloader.
 			Which can cause stats.bytes_downloaded to be smaller the trk_prev_bytes_dl.
