@@ -2,6 +2,7 @@
 Name=ScanFolderPlugin
 Name[da]=Plugin for mappesøgning
 Name[el]=Πρόσθετο σάρωσης φακέλων
+Name[ja]=スキャンフォルダプラグイン
 Name[sv]=Insticksprogram för katalogsökning
 ServiceTypes=KTorrent/Plugin
 Type=Service
