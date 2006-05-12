@@ -13,6 +13,8 @@
 	<Action name="Start all"/>
 	<Action name="Stop all"/>
 	<Separator/>
+	<Action name="queue_action"/>
+	<Separator/>
 	<Action name="Queue manager"/>
   </Menu>
 </MenuBar>
@@ -31,6 +33,7 @@
 	<Action name="Remove"/>
 	<Action name="Start all"/>
 	<Action name="Stop all"/>
+	<Action name="queue_action"/>
 	<Separator/>
 	<Action name="Queue manager"/>
 </ToolBar>

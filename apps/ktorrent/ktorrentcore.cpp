@@ -615,4 +615,9 @@ void KTorrentCore::setPausedState(bool pause)
 	qman->setPausedState(pause);
 }
 
+void KTorrentCore::queue(kt::TorrentInterface* tc)
+{
+	qman->queue(tc);
+}
+
 #include "ktorrentcore.moc"

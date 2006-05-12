@@ -113,7 +113,7 @@ namespace kt
 	
 	void SchedulerPlugin::timer_triggered()
 	{
-		m_timer.changeInterval(60*1000);
+		m_timer.changeInterval(3600*1000);
 		QDateTime now = QDateTime::currentDateTime();
 		BWScheduler::instance().trigger();
 	}

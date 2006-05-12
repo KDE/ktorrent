@@ -228,6 +228,13 @@ public slots:
 	 */
 	void stop(kt::TorrentInterface* tc, bool user = false);
 	
+	/**
+	 * Enqueue/Dequeue function. Places a torrent in queue. 
+	 * If the torrent is already in queue this will remove it from queue.
+	 * @param tc TorrentControl pointer.
+	 */
+	void queue(kt::TorrentInterface* tc);
+	
 signals:
 	/**
 	 * A TorrentInterface was added

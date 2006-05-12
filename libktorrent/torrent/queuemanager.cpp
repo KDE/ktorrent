@@ -204,7 +204,8 @@ namespace bt
 				}
 			}
 			else //if torrent is not running but it is queued we need to make it user controlled
-				tc->setPriority(0); 
+				if( (tc->getStats().completed && type == 2) || (!tc->getStats().completed && type == 1) )
+					tc->setPriority(0); 
 			i++;
 		}
 	}
@@ -497,6 +498,47 @@ namespace bt
 		}
 		
 		paused_state = pause;
+	}
+	
+	void QueueManager::enqueue(kt::TorrentInterface* tc)
+	{
+		torrentAdded(tc);
+	}
+	
+	void QueueManager::dequeue(kt::TorrentInterface* tc)
+	{
+		int tp = tc->getPriority();
+		bool completed = tc->getStats().completed;
+		QPtrList<TorrentInterface>::const_iterator it = downloads.begin();
+		while (it != downloads.end())
+		{
+			TorrentInterface* _tc = *it;
+			bool _completed = _tc->getStats().completed;
+			
+			if(tc == _tc || (_completed != completed))
+			{
+				++it;
+				continue;
+			}
+			
+			int p = _tc->getPriority();
+			if(p<tp)
+				break;
+			else
+				_tc->setPriority(--p);
+			
+			++it;
+		}
+		tc->setPriority(0);
+		orderQueue();
+	}
+	
+	void bt::QueueManager::queue(kt::TorrentInterface* tc)
+	{
+		if(tc->getPriority() == 0)
+			enqueue(tc);
+		else
+			dequeue(tc);
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////

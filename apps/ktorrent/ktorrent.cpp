@@ -162,6 +162,11 @@ KTorrent::KTorrent()
 	
 	connect(m_seedView,SIGNAL(updateActions( bool, bool, bool )),
 			this,SLOT(onUpdateActions( bool, bool, bool )));
+	
+	
+	//connect Core queue() with queue() from KTView.
+	connect(m_view, SIGNAL(queue( kt::TorrentInterface* )), m_core, SLOT(queue( kt::TorrentInterface* )));
+	connect(m_seedView, SIGNAL(queue( kt::TorrentInterface* )), m_core, SLOT(queue( kt::TorrentInterface* )));
 
 	// then, setup our actions
 	setupActions();
@@ -352,6 +357,7 @@ void KTorrent::onUpdateActions(bool can_start,bool can_stop,bool can_remove)
 	m_start->setEnabled(can_start);
 	m_stop->setEnabled(can_stop);
 	m_remove->setEnabled(can_remove);
+	m_queueaction->setEnabled(can_remove);
 }
 
 void KTorrent::currentDownloadChanged(kt::TorrentInterface* tc)
@@ -407,6 +413,11 @@ void KTorrent::setupActions()
 			i18n("to open Queue Manager", "Open Queue Manager..."),
 			"ktqueuemanager", 0, this, SLOT(queueManagerShow()),
 			actionCollection(), "Queue manager");
+	
+	m_queueaction = new KAction(
+			i18n("Enqueue/Dequeue"),
+	"player_playlist", 0, this, SLOT(queueAction()),
+	actionCollection(), "queue_action");
 	
 	//Plug actions to systemtray context menu
 	m_startall->plug(m_systray_icon->contextMenu());
@@ -780,6 +791,11 @@ void KTorrent::currentTabChanged(QWidget* tab)
 		m_view->onSelectionChanged(); // trigger an updateActions signal
 		currentDownloadChanged(m_view->getCurrentTC());
 	}
+}
+
+void KTorrent::queueAction()
+{
+	getCurrentView()->queueSlot();
 }
 
 #include "ktorrent.moc"

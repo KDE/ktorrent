@@ -88,6 +88,13 @@ namespace kt
 		 * @param user true if user stopped the torrent, false otherwise
 		 */
 		virtual void stop(TorrentInterface* tc, bool user = false) = 0;
+		
+		/**
+		 * Enqueue/Dequeue function. Places a torrent in queue. 
+		 * If the torrent is already in queue this will remove it from queue.
+		 * @param tc TorrentControl pointer.
+		 */
+		virtual void queue(kt::TorrentInterface* tc) = 0;
 
 		/**
 		 * Switch the port when no torrents are running.

@@ -66,6 +66,7 @@ namespace kt
 	{
 		pref = new ScanFolderPrefPage(this);
 		getGUI()->addPrefPage(pref);
+		updateScanFolders();
 	}
 
 	void ScanFolderPlugin::unload()

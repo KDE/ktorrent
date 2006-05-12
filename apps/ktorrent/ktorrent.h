@@ -132,6 +132,7 @@ private slots:
 	void startAllDownloads();
 	void stopDownload();
 	void stopAllDownloads();
+	void queueAction();
 	void removeDownload();
 	void queueManagerShow();
 	void optionsShowStatusbar();
@@ -164,7 +165,7 @@ private:
 	KTorrentView *m_view;
 	KTorrentView *m_seedView;
 	KToggleAction *m_statusbarAction;
-	KAction *m_start,*m_stop,*m_remove,*m_startall, *m_stopall, *m_pasteurl, *m_queuemgr;
+	KAction *m_start,*m_stop,*m_remove,*m_startall, *m_stopall, *m_pasteurl, *m_queuemgr, *m_queueaction;
 	KTorrentCore* m_core;
 	TrayIcon* m_systray_icon;
 	KTabWidget* m_tabs;

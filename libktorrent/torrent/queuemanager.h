@@ -60,6 +60,13 @@ namespace bt
 			void stopall(int type);
 			void startall(int type);
 			
+			/**
+			 * Enqueue/Dequeue function. Places a torrent in queue. 
+			 * If the torrent is already in queue this will remove it from queue.
+			 * @param tc TorrentControl pointer.
+			 */
+			void queue(kt::TorrentInterface* tc);
+			
 			int count() { return downloads.count(); }
 			int countDownloads();
 			int countSeeds();
@@ -98,9 +105,12 @@ namespace bt
 		public slots:
 			void torrentFinished(kt::TorrentInterface* tc);
 			void torrentAdded(kt::TorrentInterface* tc);
-			void torrentRemoved(kt::TorrentInterface* tc);
+			void torrentRemoved(kt::TorrentInterface* tc);		
 			
 		private:
+			void enqueue(kt::TorrentInterface* tc);
+			void dequeue(kt::TorrentInterface* tc);
+			
 			bt::QueuePtrList downloads;
 			bt::QueuePtrList* paused_torrents;
 			

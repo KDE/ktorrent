@@ -74,6 +74,11 @@ KTorrentView::KTorrentView(QWidget *parent, bool seed_view)
 	remove_id = menu->insertItem(
 			iload->loadIconSet("ktremove",KIcon::Small),i18n("Remove"),
 			this,SLOT(removeDownloads()));
+	
+	queue_id = menu->insertItem(
+			iload->loadIconSet("player_playlist",KIcon::Small),i18n("Enqueue/Dequeue"),
+	this,SLOT(queueSlot()));
+	
 	menu->insertSeparator();
 
 	announce_id = menu->insertItem(iload->loadIconSet("apply",KIcon::Small),i18n("Manual Announce"),this,SLOT(manualAnnounce())); 
@@ -292,6 +297,7 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 	menu->setItemEnabled(remove_id,en_remove);
 	menu->setItemEnabled(preview_id,en_prev);
 	menu->setItemEnabled(announce_id,en_announce);
+	menu->setItemEnabled(queue_id, en_remove);
 	menu->popup(p);
 }
 
@@ -397,6 +403,18 @@ void KTorrentView::onSelectionChanged()
 	}
 	
 	updateActions(en_start,en_stop,sel.count() > 0);
+}
+
+void KTorrentView::queueSlot()
+{
+	QPtrList<QListViewItem> sel = selectedItems();
+	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
+	{
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
+		TorrentInterface* tc = kvi->getTC();
+		if (tc)
+			emit queue(tc);
+	}
 }
 
 
