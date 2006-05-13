@@ -249,7 +249,10 @@ void QueueDialog::writeQueue()
 	
 	item = (QueueItem*) seedList->lastItem();
 	if(item == 0)
+	{
+		qman->orderQueue();
 		return;
+	}
 	
 	p = 0;
 	
