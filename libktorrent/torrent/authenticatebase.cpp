@@ -21,7 +21,7 @@
 #include <mse/streamsocket.h>
 #include <util/sha1hash.h>
 #include <util/log.h>
-#include <kademlia/dht.h>
+#include <kademlia/dhtbase.h>
 #include "globals.h"
 #include "peerid.h"
 #include "authenticatebase.h"

@@ -62,25 +62,6 @@ namespace dht
 			if (args->getValue("target"))
 				msg = new FindNodeReq(id,Key(args->getValue("target")->data().toByteArray()));
 		}
-		else if (str == "find_value")
-		{
-			if (args->getValue("key"))
-				msg = new FindValueReq(id,Key(args->getValue("key")->data().toByteArray()));
-		}
-		else if (str == "store_value")
-		{
-			if (args->getValue("key") && args->getValue("value"))
-				msg = new StoreValueReq(id,
-									 Key(args->getValue("key")->data().toByteArray()),
-									 args->getValue("value")->data().toByteArray());
-		}
-		else if (str == "store_values")
-		{
-			if (args->getValue("key") && args->getValue("values"))
-				msg = new StoreValueReq(id,
-									 Key(args->getValue("key")->data().toByteArray()),
-									 args->getValue("values")->data().toByteArray());
-		}
 		else if (str == "get_peers")
 		{
 			if (args->getValue("info_hash"))
@@ -120,21 +101,6 @@ namespace dht
 					return 0;
 				else
 					return new FindNodeRsp(mtid,id,args->getValue("nodes")->data().toByteArray());
-			case FIND_VALUE:
-				if (!args->getValue("values"))
-				{
-					// FIND_VALUE will return a FIND_NODE when it does not know
-					// the key
-					if (!args->getValue("nodes"))
-						return 0;
-					else
-						return new FindNodeRsp(mtid,id,args->getValue("nodes")->data().toByteArray());
-				}
-				else
-					return new FindValueRsp(mtid,id,args->getValue("values")->data().toByteArray());
-			case STORE_VALUE :
-			case STORE_VALUES :
-				return new StoreValueRsp(mtid,id);
 			case GET_PEERS :
 				if (args->getValue("token"))
 				{
@@ -340,81 +306,7 @@ namespace dht
 	}
 	
 	////////////////////////////////
-	
-	FindValueReq::FindValueReq(const Key & id,const Key & key)
-	: MsgBase(0xFF,FIND_VALUE,REQ_MSG,id),key(key)
-	{}
-	
-	FindValueReq::~FindValueReq()
-	{}
-	
-	void FindValueReq::apply(DHT* dh_table)
-	{
-		dh_table->findValue(this);
-	}
-	
-	void FindValueReq::print()
-	{
-		Out() << QString("REQ: %1 %2 : find_value %3")
-				.arg(mtid).arg(id.toString()).arg(key.toString()) << endl;
-	}
-	
-	void FindValueReq::encode(QByteArray & arr)
-	{
-		BEncoder enc(new BEncoderBufferOutput(arr));
-		enc.beginDict();
-		{
-			enc.write(ARG); enc.beginDict();
-			{
-				enc.write("id"); enc.write(id.getData(),20);
-				enc.write("key"); enc.write(key.getData(),20);
-			}
-			enc.end();
-			enc.write(REQ); enc.write("find_value");
-			enc.write(TID); enc.write(&mtid,1);
-			enc.write(TYP); enc.write(REQ);
-		}
-		enc.end();
-	}
 
-	////////////////////////////////
-	StoreValueReq::StoreValueReq(const Key & id,const Key & key,const QByteArray & ba)
-	: MsgBase(0xFF,STORE_VALUE,REQ_MSG,id),key(key),data(ba)
-	{}
-	
-	StoreValueReq::~StoreValueReq()
-	{}
-
-	void StoreValueReq::apply(DHT* dh_table)
-	{
-		dh_table->storeValue(this);
-	}
-	
-	void StoreValueReq::print()
-	{
-		Out() << QString("REQ: %1 %2 : store_value %3")
-				.arg(mtid).arg(id.toString()).arg(key.toString()) << endl;
-	}
-	
-	void StoreValueReq::encode(QByteArray & arr)
-	{
-		BEncoder enc(new BEncoderBufferOutput(arr));
-		enc.beginDict();
-		{
-			enc.write(ARG); enc.beginDict();
-			{
-				enc.write("id"); enc.write(id.getData(),20);
-				enc.write("key"); enc.write(key.getData(),20);
-				enc.write("value"); enc.write(data);
-			}
-			enc.end();
-			enc.write(REQ); enc.write("store_value");
-			enc.write(TID); enc.write(&mtid,1);
-			enc.write(TYP); enc.write(REQ);
-		}
-		enc.end();
-	}
-	
 	////////////////////////////////
 	GetPeersReq::GetPeersReq(const Key & id,const Key & info_hash) 
 		: MsgBase(0xFF,GET_PEERS,REQ_MSG,id),info_hash(info_hash)
@@ -626,76 +518,6 @@ namespace dht
 
 	
 	////////////////////////////////
-	
-	FindValueRsp::FindValueRsp(Uint8 mtid,const Key & id,const QByteArray & values) 
-	: MsgBase(mtid,FIND_VALUE,RSP_MSG,id),values(values)
-	{}
-	
-	FindValueRsp::~FindValueRsp() {}
-	
-	void FindValueRsp::apply(DHT* dh_table) 
-	{
-		dh_table->response(this);
-	}
-	
-	void FindValueRsp::print()
-	{
-		Out() << QString("RSP: %1 %2 : find_value")
-				.arg(mtid).arg(id.toString()) << endl;
-	}
-	
-	void FindValueRsp::encode(QByteArray & arr)
-	{
-		BEncoder enc(new BEncoderBufferOutput(arr));
-		enc.beginDict();
-		{
-			enc.write(RSP); enc.beginDict();
-			{
-				enc.write("id"); enc.write(id.getData(),20);
-				enc.write("values"); enc.write(values);
-			}
-			enc.end();
-			enc.write(TID); enc.write(&mtid,1);
-			enc.write(TYP); enc.write(RSP);
-		}
-		enc.end();
-	}
-	
-	////////////////////////////////
-	
-	StoreValueRsp::StoreValueRsp(Uint8 mtid,const Key & id) 
-	: MsgBase(mtid,STORE_VALUE,RSP_MSG,id) 
-	{}
-	
-	StoreValueRsp::~StoreValueRsp() {}
-		
-	void StoreValueRsp::apply(DHT* dh_table) 
-	{
-		dh_table->response(this);
-	}
-	
-	void StoreValueRsp::print()
-	{
-		Out() << QString("RSP: %1 %2 : store_value")
-				.arg(mtid).arg(id.toString()) << endl;
-	}
-	
-	void StoreValueRsp::encode(QByteArray & arr)
-	{
-		BEncoder enc(new BEncoderBufferOutput(arr));
-		enc.beginDict();
-		{
-			enc.write(RSP); enc.beginDict();
-			{
-				enc.write("id"); enc.write(id.getData(),20);
-			}
-			enc.end();
-			enc.write(TID); enc.write(&mtid,1);
-			enc.write(TYP); enc.write(RSP);
-		}
-		enc.end();
-	}
-	
 	////////////////////////////////
 	
 	AnnounceRsp::AnnounceRsp(Uint8 mtid,const Key & id) : MsgBase(mtid,ANNOUNCE_PEER,RSP_MSG,id)

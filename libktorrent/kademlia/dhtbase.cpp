@@ -17,34 +17,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef DHTVALUELOOKUP_H
-#define DHTVALUELOOKUP_H
-
-#include "task.h"
+#include "dhtbase.h"
 
 namespace dht
 {
 
-	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	*/
-	class ValueLookup : public Task
-	{
-	public:
-		ValueLookup(const dht::Key & key,RPCServer* rpc,Node* node);
-		virtual ~ValueLookup();
+	DHTBase::DHTBase() : running(false),port(0)
+	{}
 
-		virtual void callFinished(RPCCall* , MsgBase* rsp);
-		virtual void callTimeout(RPCCall* );
-		virtual void update();
-		
-		/// Get the found value, will be a null array if nothing is found
-		const QByteArray & getValue() const;
-	private:
-		dht::Key key;
-		QByteArray value;
-	};
+
+	DHTBase::~DHTBase()
+	{}
+
 
 }
-
-#endif

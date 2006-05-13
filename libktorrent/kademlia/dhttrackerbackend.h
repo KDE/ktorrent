@@ -30,7 +30,7 @@ namespace bt
 
 namespace dht
 {
-	class DHT;
+	class DHTBase;
 	class AnnounceTask;
 	
 
@@ -40,15 +40,16 @@ namespace dht
 	class DHTTrackerBackend : public bt::TrackerBackend,public TaskListener
 	{
 	public:
-		DHTTrackerBackend(bt::Tracker* trk,DHT & dh_table);
+		DHTTrackerBackend(bt::Tracker* trk,DHTBase & dh_table);
 		virtual ~DHTTrackerBackend();
 
-		virtual void doRequest(const KURL& url);
+		virtual bool doRequest(const KURL& url);
 		virtual void updateData(bt::PeerManager* pman);
 		virtual void onFinished(Task* t);
 		virtual void onDataReady(Task* t);
+		virtual void onDestroyed(Task* t);
 	private:
-		DHT & dh_table;
+		DHTBase & dh_table;
 		AnnounceTask* curr_task;
 	};
 

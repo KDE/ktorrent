@@ -149,7 +149,7 @@ namespace bt
 		frontend->updateOK();
 	}
 
-	void HTTPTracker::doRequest(const KURL & u)
+	bool HTTPTracker::doRequest(const KURL & u)
 	{	
 		// clear data array
 		data = QByteArray();
@@ -201,6 +201,7 @@ namespace bt
 		active_job = j;
 	//	if (event == "stopped")
 	//		KIO::NetAccess::synchronousRun(active_job,0);
+		return true;
 	}
 
 	void HTTPTracker::onResult(KIO::Job* j)

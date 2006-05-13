@@ -32,7 +32,7 @@ using namespace bt;
 namespace dht
 {
 
-	DHTTrackerBackend::DHTTrackerBackend(Tracker* trk,DHT & dh_table)
+	DHTTrackerBackend::DHTTrackerBackend(Tracker* trk,DHTBase & dh_table)
 	: TrackerBackend(trk),dh_table(dh_table),curr_task(0)
 	{}
 
@@ -41,14 +41,19 @@ namespace dht
 	{}
 
 
-	void DHTTrackerBackend::doRequest(const KURL& url)
+	bool DHTTrackerBackend::doRequest(const KURL& url)
 	{
 		if (curr_task)
-			return;
+			return true;
 		
 		curr_task = dh_table.announce(frontend->info_hash,url.port());
 		if (curr_task)
+		{
 			curr_task->setListener(this);
+			return true;
+		}
+		
+		return false;
 	}
 
 	void DHTTrackerBackend::updateData(PeerManager* pman)
@@ -82,5 +87,10 @@ namespace dht
 		{
 			frontend->emitDataReady();
 		}
+	}
+	
+	void DHTTrackerBackend::onDestroyed(Task* t)
+	{
+		curr_task = 0;
 	}
 }

@@ -24,12 +24,17 @@
 #include <util/constants.h>
 #include <util/timer.h>
 #include "key.h"
+#include "dhtbase.h"
 
 namespace bt
 {
 	class SHA1Hash;
 }
 
+namespace KNetwork
+{
+	class KInetSocketAddress;
+}
 
 namespace dht
 {
@@ -48,11 +53,13 @@ namespace dht
 	class TaskManager;
 	class Task;
 	class AnnounceTask;
+	class NodeLookup;
+	class KBucket;
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class DHT
+	class DHT : public DHTBase
 	{
 	public:
 		DHT();
@@ -60,12 +67,15 @@ namespace dht
 		
 		void ping(PingReq* r);
 		void findNode(FindNodeReq* r);
+#if 0
 		void findValue(FindValueReq* r);
 		void storeValue(StoreValueReq* r);
+#endif
 		void response(MsgBase* r);
 		void getPeers(GetPeersReq* r);
 		void announce(AnnounceReq* r);
 		void error(ErrMsg* r);
+		void timeout(const MsgBase* r);
 		
 		/**
 		 * A Peer has recieved a PORT message, and uses this function to alert the DHT of it.
@@ -82,30 +92,23 @@ namespace dht
 		 */
 		AnnounceTask* announce(const bt::SHA1Hash & info_hash,bt::Uint16 port);
 		
+		/**
+		 * Refresh a bucket using a find node task.
+		 * @param id The id
+		 * @param bucket The bucket to refresh
+		 */
+		NodeLookup* refreshBucket(const Key & id,KBucket & bucket);
 
 		/**
-		 * See if the DHT is running.
+		 * Do a NodeLookup.
+		 * @param id The id of the key to search
 		 */
-		bool isRunning() const {return running;}
+		NodeLookup* findNode(const Key & id);
 		
-		/**
-		 * Start the DHT
-		 * @param port The port to use
-		 */
-		void start(bt::Uint16 port);
 		
-		/**
-		 * Stop the DHT
-		 */
+		void start(const QString & table,bt::Uint16 port);
 		void stop();
-		
-		/**
-		 * Update the DHT
-		 */
 		void update();
-		
-		/// Get the DHT port
-		bt::Uint16 getPort() const {return port;}
 		
 	private:
 		Node* node;
@@ -113,8 +116,7 @@ namespace dht
 		Database* db;
 		TaskManager* tman;
 		bt::Timer expire_timer;
-		bool running;
-		bt::Uint16 port;
+		QString table_file;
 	};
 
 }

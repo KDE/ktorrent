@@ -56,6 +56,11 @@ namespace dht
 		 */
 		virtual void onDataReady(Task* t);
 		
+		/**
+		 * Called by the task it is about to be deleted.
+		 */
+		virtual void onDestroyed(Task* t) = 0;
+		
 		friend class Task;
 	};
 

@@ -117,7 +117,7 @@ namespace bt
 	}
 
 
-	void UDPTracker::doRequest(const KURL & url)
+	bool UDPTracker::doRequest(const KURL & url)
 	{
 		if (old_url != url)
 		{
@@ -136,6 +136,7 @@ namespace bt
 			sendAnnounce();
 
 		old_url = url;
+		return true;
 	}
 
 	void UDPTracker::sendConnect()
@@ -200,7 +201,10 @@ namespace bt
 			WriteUint32(buf,84,addr.IPv4Addr(true));
 		}
 		WriteUint32(buf,88,frontend->key);
-		WriteInt32(buf,92,100);
+		if (ev != STOPPED)
+			WriteInt32(buf,92,100);
+		else
+			WriteInt32(buf,92,0);
 		WriteUint16(buf,96,port);
 
 		socket->sendAnnounce(transaction_id,buf,addr,udp_port);

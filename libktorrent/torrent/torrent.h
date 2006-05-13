@@ -37,6 +37,12 @@ namespace bt
 	class BListNode;
 	class AnnounceList;
 	
+	struct DHTNode
+	{
+		QString ip;
+		Uint16 port;
+	};
+	
 	/**
 	 * @author Joris Guisson
 	 * @brief Loads a .torrent file
@@ -147,6 +153,12 @@ namespace bt
 		
 		///Creates announce list if one doesn't exist to add some custom trackers.
 		AnnounceList* createAnnounceList();
+		
+		/// Get the number of initial DHT nodes
+		Uint32 getNumDHTNodes() const {return nodes.count();}
+		
+		/// Get a DHT node
+		const DHTNode & getDHTNode(Uint32 i) {return nodes[i];}
 
 	private:
 		void loadInfo(BDictNode* node);
@@ -156,6 +168,7 @@ namespace bt
 		void loadHash(BValueNode* node);
 		void loadName(BValueNode* node);
 		void loadFiles(BListNode* node);
+		void loadNodes(BListNode* node);
 		void loadAnnounceList(BNode* node);
 		
 	private:
@@ -167,6 +180,7 @@ namespace bt
 		PeerID peer_id;
 		QValueVector<SHA1Hash> hash_pieces;
 		QValueVector<TorrentFile> files;
+		QValueVector<DHTNode> nodes;
 		AnnounceList* anon_list;
 		QString encoding;
 		bool priv_torrent;

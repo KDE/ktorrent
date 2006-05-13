@@ -26,7 +26,7 @@ class QString;
 
 namespace dht
 {
-	class DHT;
+	class DHTBase;
 }
 
 namespace bt
@@ -50,7 +50,7 @@ namespace bt
 
 		Log & getLog() {return *log;}
 		Server & getServer() {return *server;}
-		dht::DHT & getDHT() {return *dh_table;}
+		dht::DHTBase & getDHT() {return *dh_table;}
 				
 		static Globals & instance();
 		static void cleanup();
@@ -61,7 +61,7 @@ namespace bt
 		bool critical_operation;
 		Log* log;
 		Server* server;
-		dht::DHT* dh_table;
+		dht::DHTBase* dh_table;
 		
 		friend Log& Out();
 

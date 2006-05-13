@@ -49,7 +49,7 @@ namespace bt
 		UDPTracker(Tracker* trk);
 		virtual ~UDPTracker();
 
-		virtual void doRequest(const KURL & url);
+		virtual bool doRequest(const KURL & url);
 		virtual void updateData(PeerManager* pman);
 
 	private slots:

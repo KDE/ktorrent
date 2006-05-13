@@ -24,15 +24,23 @@
 #include <util/constants.h>
 #include <ksocketaddress.h>
 #include "key.h"
+#include "rpccall.h"
 
 using bt::Uint32;
 using bt::Uint16;
 using bt::Uint8;
 using KNetwork::KInetSocketAddress;
 
+namespace bt
+{
+	class File;
+}
+
 namespace dht
 {
+	class RPCServer;
 	class KClosestNodesSearch;
+	class Node;
 	
 	const Uint32 K = 8;
 	
@@ -46,6 +54,8 @@ namespace dht
 	{
 		KInetSocketAddress addr;
 		Key node_id;
+		Uint32 last_responded;
+		Uint32 failed_queries;
 	public:
 		/**
 		 * Constructor, sets everything to 0.
@@ -80,8 +90,29 @@ namespace dht
 		/// Equality operator
 		bool operator == (const KBucketEntry & entry) const;
 		
+		/// Get the socket address of the node
 		const KInetSocketAddress & getAddress() const {return addr;}
+		
+		/// Get it's ID
 		const Key & getID() const {return node_id;}
+		
+		/// Is this node a good node
+		bool isGood() const;
+		
+		/// Is this node questionable (haven't heard from it in the last 15 minutes)
+		bool isQuestionable() const;
+		
+		/// Is it a bad node. (Hasn't responded to a query
+		bool isBad() const;
+		
+		/// Signal the entry that the peer has responded
+		void hasResponded();
+		
+		/// A request timed out
+		void requestTimeout() {failed_queries++;}
+		
+		/// The null entry
+		static KBucketEntry null; 
 	};
 	
 	
@@ -93,21 +124,22 @@ namespace dht
 	 * The first element is the least recently seen, the last
 	 * the most recently seen.
 	 */
-	class KBucket
+	class KBucket : public RPCCallListener
 	{
 		QValueList<KBucketEntry> entries;
+		RPCServer* srv;
+		Node* node;
+		QMap<RPCCall*,KBucketEntry> pending_entries;
+		Uint32 last_modified;
 	public:
-		KBucket();
+		KBucket(RPCServer* srv,Node* node);
 		virtual ~KBucket();
 		
 		/**
-		 * Inserts an entry into the bucket. Only works when there is room in
-		 * the bucket (only K entries allowed)
+		 * Inserts an entry into the bucket. 
 		 * @param entry The entry to insert
-		 * @param force Force if bucket is full (remove the first one)
-		 * @return true if the entry was inserted
 		 */
-		bool insert(const KBucketEntry & entry,bool force = false);
+		void insert(const KBucketEntry & entry);
 		
 		/// Get the least recently seen node
 		const KBucketEntry & leastRecentlySeen() const {return entries[0];}
@@ -124,6 +156,23 @@ namespace dht
 		 * @param kns The object to storre the search results
 		 */
 		void findKClosestNodes(KClosestNodesSearch & kns);
+		
+		/**
+		 * A peer failed to respond
+		 * @param addr Address of the peer
+		 */
+		bool onTimeout(const KInetSocketAddress & addr);
+		
+		/// Check if the bucket needs to be refreshed
+		bool needsToBeRefreshed() const;
+		
+		void save(bt::File & fptr);
+		
+	private:
+		virtual void onResponse(RPCCall* c,MsgBase* rsp);
+		virtual void onTimeout(RPCCall* c);
+		void pingQuestionable(const KBucketEntry & replacement_entry);
+		bool replaceBadEntry(const KBucketEntry & entry);
 	};
 }
 

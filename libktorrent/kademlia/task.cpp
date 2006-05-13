@@ -46,7 +46,10 @@ namespace dht
 	Task::~Task()
 	{
 		if (lst)
+		{
+			lst->onDestroyed(this);
 			lst->task = 0;
+		}
 	}
 	
 	void Task::setListener(TaskListener* tl)

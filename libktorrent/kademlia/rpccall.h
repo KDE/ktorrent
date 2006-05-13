@@ -80,6 +80,9 @@ namespace dht
 		/// Get the message type
 		Method getMsgMethod() const;
 		
+		/// Get the request sent
+		const MsgBase* getRequest() const {return msg;}
+		
 	private slots:
 		void onTimeout();
 

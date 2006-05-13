@@ -44,7 +44,6 @@ namespace dht
 		virtual void callTimeout(RPCCall* c);
 	private:
 		dht::Key node_id;
-		Node* node;
 	};
 
 }

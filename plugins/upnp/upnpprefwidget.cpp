@@ -24,7 +24,7 @@
 #include <torrent/udptrackersocket.h>
 #include <torrent/globals.h>
 #include <torrent/server.h>
-#include <kademlia/dht.h>
+#include <kademlia/dhtbase.h>
 #include "upnpprefwidget.h"
 #include <util/log.h>
 #include <util/error.h>
@@ -81,7 +81,8 @@ namespace kt
 				// forward both ports
 				r->forward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
 				r->forward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
-				r->forward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
+				if (bt::Globals::instance().getDHT().isRunning())
+					r->forward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
 				def_router = r;
 			}
 			catch (Error & e)

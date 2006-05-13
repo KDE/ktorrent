@@ -38,6 +38,7 @@ namespace bt
 
 namespace dht
 {
+	class Key;
 	class KBucketEntry;
 	class RPCCall;
 	class RPCMsg;
@@ -57,6 +58,11 @@ namespace dht
 		RPCServer(DHT* dh_table,Uint16 port,QObject *parent = 0);
 		virtual ~RPCServer();
 		
+		/// Start the server
+		void start();
+		
+		/// Stop the server
+		void stop();
 		
 		/**
 		 * Do a RPC call.
@@ -79,6 +85,11 @@ namespace dht
 		 */
 		void timedOut(Uint8 mtid);
 		
+		/**
+		 * Ping a node, we don't care about the MTID.
+		 * @param addr The address
+		 */
+		void ping(const dht::Key & our_id,const KNetwork::KSocketAddress & addr);
 		
 		/**
 		 * Find a RPC call, based on the mtid
@@ -97,6 +108,7 @@ namespace dht
 		DHT* dh_table;
 		bt::PtrMap<bt::Uint8,RPCCall> calls;
 		bt::Uint8 next_mtid;
+		bt::Uint16 port;
 	};
 
 }

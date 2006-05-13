@@ -38,7 +38,7 @@
 #include <torrent/server.h>
 #include <util/functions.h>
 #include <torrent/ipblocklist.h>
-#include <kademlia/dht.h>
+#include <kademlia/dhtbase.h>
 
 #include "pluginmanager.h"
 #include <torrent/queuemanager.h>

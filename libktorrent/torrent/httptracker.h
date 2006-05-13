@@ -45,7 +45,7 @@ namespace bt
 		HTTPTracker(Tracker* trk);
 		virtual ~HTTPTracker();
 		
-		virtual void doRequest(const KURL & url);
+		virtual bool doRequest(const KURL & url);
 		virtual void updateData(PeerManager* pman);
 		
 		

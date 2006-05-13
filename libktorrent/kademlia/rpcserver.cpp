@@ -29,6 +29,7 @@
 #include "rpcmsg.h"
 #include "kbucket.h"
 #include "node.h"
+#include "dht.h"
 
 using namespace KNetwork;
 using namespace bt;
@@ -38,13 +39,11 @@ namespace dht
 	
 
 
-	RPCServer::RPCServer(DHT* dh_table,Uint16 port,QObject *parent) : QObject(parent),dh_table(dh_table),next_mtid(0)
+	RPCServer::RPCServer(DHT* dh_table,Uint16 port,QObject *parent) : QObject(parent),dh_table(dh_table),next_mtid(0),port(port)
 	{
 		sock = new KDatagramSocket(this);
 		sock->setBlocking(false);
 		sock->setAddressReuseable(true);
-		connect(sock,SIGNAL(readyRead()),this,SLOT(readPacket()));
-		sock->bind(QString::null,QString::number(port));
 	}
 
 
@@ -53,6 +52,17 @@ namespace dht
 		sock->close();
 		calls.setAutoDelete(true);
 		calls.clear();
+	}
+	
+	void RPCServer::start()
+	{
+		connect(sock,SIGNAL(readyRead()),this,SLOT(readPacket()));
+		sock->bind(QString::null,QString::number(port));
+	}
+		
+	void RPCServer::stop()
+	{
+		sock->close();
 	}
 	
 	static void PrintRawData(const QByteArray & data)
@@ -143,7 +153,7 @@ namespace dht
 	{
 		QByteArray data;
 		msg->encode(data);
-		send(msg->getOrigin(),data);
+		send(msg->getDestination(),data);
 		
 	//	PrintRawData(data);
 	}
@@ -154,6 +164,7 @@ namespace dht
 		RPCCall* c = calls.find(mtid);
 		if (c)
 		{
+			dh_table->timeout(c->getRequest());
 			calls.erase(mtid);
 			c->deleteLater();
 		}
@@ -164,6 +175,12 @@ namespace dht
 		return calls.find(mtid);
 	}
 	
+	void RPCServer::ping(const dht::Key & our_id,const KNetwork::KSocketAddress & addr)
+	{
+		PingReq req(our_id);
+		req.setOrigin(addr);
+		sendMsg(&req);
+	}
 	
 
 }

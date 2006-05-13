@@ -59,8 +59,9 @@ namespace bt
 		/**
 		 * Do a request to the tracker.
 		 * @param url The path and query
+		 * @return true if request was made, false if not
 		 */
-		virtual void doRequest(const KURL & url) = 0;
+		virtual bool doRequest(const KURL & url) = 0;
 
 		/**
 		 * Update all the data. If something is wrong in this function,
@@ -196,6 +197,7 @@ namespace bt
 		TrackerBackend* http;
 		TrackerBackend* curr;
 		TrackerBackend* dht_ba;
+		KURL last_url;
 		
 		friend class UDPTracker;
 		friend class HTTPTracker;

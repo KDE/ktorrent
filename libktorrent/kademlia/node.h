@@ -23,12 +23,12 @@
 #include <qobject.h>
 #include "key.h"
 #include "kbucket.h"
-#include "rpccall.h"
 
 using bt::Uint8;
 
 namespace dht
 {
+	class DHT;
 	class MsgBase;
 	class RPCServer;
 	class KClosestNodesSearch;
@@ -41,27 +41,24 @@ namespace dht
 	 * A KBucketEntry is in node i, when the difference between our id and
 	 * the KBucketEntry's id is between 2 to the power i and 2 to the power i+1.
 	*/
-	class Node : public QObject,public RPCCallListener
+	class Node : public QObject
 	{
 		Q_OBJECT
 	public:
-		Node();
+		Node(RPCServer* srv);
 		virtual ~Node();
 
 		/**
 		 * An RPC message was recieved, the node must now update
 		 * the right bucket.
+		 * @param dh_table The DHT
 		 * @param msg The message
 		 * @param srv The RPCServer to send a ping if necessary
 		 */
-		void recieved(const MsgBase* msg,RPCServer* srv);
-		
-		virtual void onResponse(RPCCall* c,MsgBase* rsp);
-		virtual void onTimeout(RPCCall* c);
+		void recieved(DHT* dh_table,const MsgBase* msg);
 		
 		/// Get our own ID
 		const dht::Key & getOurID() const {return our_id;}
-		
 		
 		/**
 		 * Find the K closest entries to a key and store them in the KClosestNodesSearch
@@ -69,12 +66,28 @@ namespace dht
 		 * @param kns The object to storre the search results
 		 */
 		void findKClosestNodes(KClosestNodesSearch & kns);
+		
+		/**
+		 * Increase the failed queries count of the bucket entry we sent the message to
+		*/
+		void onTimeout(const MsgBase* msg);
+		
+		/// Check if a buckets needs to be refreshed, and refresh if necesarry
+		void refreshBuckets(DHT* dh_table);
+		
+		/// Save the routing table to a file
+		void saveTable(const QString & file);
+		
+		/// Load the routing table from a file
+		void loadTable(const QString & file);
 	private:
 		Uint8 findBucket(const dht::Key & id);
 		
 	private:
 		dht::Key our_id;
 		KBucket* bucket[160];
+		RPCServer* srv;
+		bool first_entry;
 	};
 
 }

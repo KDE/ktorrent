@@ -31,7 +31,9 @@ namespace dht
 
 
 	TaskManager::~TaskManager()
-	{}
+	{
+		tasks.clear();
+	}
 
 	
 	void TaskManager::addTask(Task* task)

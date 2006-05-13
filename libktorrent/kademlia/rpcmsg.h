@@ -50,9 +50,6 @@ namespace dht
 	{
 		PING,
 		FIND_NODE,
-		FIND_VALUE,
-		STORE_VALUE,
-		STORE_VALUES,
 		GET_PEERS,
 		ANNOUNCE_PEER,
 		NONE
@@ -98,6 +95,12 @@ namespace dht
 		
 		/// Get the origin
 		const KNetwork::KInetSocketAddress & getOrigin() const {return origin;}
+		
+		/// Set the origin (i.e. where the message came from)
+		void setDestination(const KNetwork::KSocketAddress & o) {origin = o;}
+		
+		/// Get the origin
+		const KNetwork::KInetSocketAddress & getDestination() const {return origin;}
 		
 		/// Get the MTID
 		Uint8 getMTID() const {return mtid;}
@@ -171,41 +174,7 @@ namespace dht
 	private:
 		Key target;
 	};
-	
-	class FindValueReq : public MsgBase
-	{
-	public:
-		FindValueReq(const Key & id,const Key & key);
-		virtual ~FindValueReq();
-	
-		virtual void apply(DHT* dh_table);
-		virtual void print();
-		virtual void encode(QByteArray & arr);
-		
-		const Key & getKey() const {return key;}
-		
-	private:
-		Key key;
-	};
 
-	
-	class StoreValueReq : public MsgBase
-	{
-	public:
-		StoreValueReq(const Key & id,const Key & key,const QByteArray & ba);
-		virtual ~StoreValueReq();
-
-		virtual void apply(DHT* dh_table);
-		virtual void print();
-		virtual void encode(QByteArray & arr);
-		
-		const Key & getKey() const {return key;}
-		const QByteArray & getData() const {return data;}
-	private:
-		Key key;
-		QByteArray data;
-	};
-	
 	class GetPeersReq : public MsgBase
 	{
 	public:
@@ -287,33 +256,7 @@ namespace dht
 		DBItemList items;
 	};
 	
-	
-	class FindValueRsp : public MsgBase
-	{
-	public:
-		FindValueRsp(Uint8 mtid,const Key & id,const QByteArray & values);
-		virtual ~FindValueRsp();
-	
-		virtual void apply(DHT* dh_table);
-		virtual void print();
-		virtual void encode(QByteArray & arr);
-		
-		const QByteArray & getValue() const {return values;}
-	protected:
-		QByteArray values;
-	};
-	
-	class StoreValueRsp : public MsgBase
-	{
-	public:
-		StoreValueRsp(Uint8 mtid,const Key & id);
-		virtual ~StoreValueRsp();
-		
-		virtual void apply(DHT* dh_table);
-		virtual void print();
-		virtual void encode(QByteArray & arr);
-	};
-	
+
 	class AnnounceRsp : public MsgBase
 	{
 	public:

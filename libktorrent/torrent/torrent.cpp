@@ -74,7 +74,13 @@ namespace bt
 				Out() << "Encoding : " << encoding << endl;
 			}
 
-			loadTrackerURL(dict->getValue("announce"));
+			if (dict->getValue("announce"))
+				loadTrackerURL(dict->getValue("announce"));
+			else if (dict->getList("nodes")) // DHT torrrents have a node key
+				loadNodes(dict->getList("nodes"));
+			else
+				throw Error(i18n("Torrent has no announce or nodes field"));
+				
 			loadInfo(dict->getDict("info"));
 			loadAnnounceList(dict->getData("announce-list"));
 			BNode* n = dict->getData("info");
@@ -235,6 +241,28 @@ namespace bt
 		
 		anon_list = new AnnounceList();
 		anon_list->load(node);
+	}
+	
+	void Torrent::loadNodes(BListNode* node)
+	{
+		for (Uint32 i = 0;i < node->getNumChildren();i++)
+		{
+			BListNode* c = node->getList(i);
+			if (!c || c->getNumChildren() != 2)
+				throw Error(i18n("Corrupted torrent!"));
+			
+			// first child is the IP, second the port
+			BValueNode* ip = c->getValue(0);
+			BValueNode* port = c->getValue(1);
+			if (!ip || !port || ip->getType() != Value::STRING || port->getType() != Value::INT)
+				throw Error(i18n("Corrupted torrent!"));
+			
+			// add the DHT node
+			DHTNode n;
+			n.ip = ip->data().toString();
+			n.port = port->data().toInt();
+			nodes.append(n);
+		}
 	}
 
 	void Torrent::debugPrintInfo()

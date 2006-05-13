@@ -36,6 +36,7 @@
 #include <kstatusbar.h>
 #include <kkeydialog.h>
 #include <kaccel.h>
+#include <kstandarddirs.h>
 #include <kio/netaccess.h>
 #include <kfiledialog.h>
 #include <kconfig.h>
@@ -64,7 +65,7 @@
 #include <torrent/udptrackersocket.h>
 #include <util/log.h>
 #include <util/fileops.h>
-#include <kademlia/dht.h>
+#include <kademlia/dhtbase.h>
 
 #include "ktorrentcore.h"
 #include "ktorrentview.h"
@@ -316,10 +317,10 @@ void KTorrent::applySettings(bool change_port)
 	
 	//update QM
 	m_core->getQueueManager()->orderQueue();
-	dht::DHT & ht = Globals::instance().getDHT();
+	dht::DHTBase & ht = Globals::instance().getDHT();
 	if (Settings::dhtSupport() && !ht.isRunning())
 	{
-		ht.start(Settings::dhtPort());
+		ht.start(KGlobal::dirs()->saveLocation("data","ktorrent") + "dht_table",Settings::dhtPort());
 	}
 	else if (!Settings::dhtSupport() && ht.isRunning())
 	{
@@ -329,7 +330,7 @@ void KTorrent::applySettings(bool change_port)
 	{
 		Out() << "Restarting DHT with new port " << Settings::dhtPort() << endl;
 		ht.stop();
-		ht.start(Settings::dhtPort());
+		ht.start(KGlobal::dirs()->saveLocation("data","ktorrent") + "dht_table",Settings::dhtPort());
 	}
 	
 	if (Settings::useEncryption())
@@ -450,6 +451,10 @@ bool KTorrent::queryExit()
 	// stop timers to prevent update
 	m_gui_update_timer.stop();
 	m_core->onExit();
+	
+	if (Globals::instance().getDHT().isRunning())
+		Globals::instance().getDHT().stop();
+	
 	KGlobal::config()->writeEntry( "hidden_on_exit",this->isHidden());
 	m_view->saveSettings();
 	m_seedView->saveSettings();

@@ -116,6 +116,12 @@ namespace dht
 		 * @return true if the token was given to this peer, false other wise
 		 */
 		bool checkToken(const dht::Key & token,bt::Uint32 ip,bt::Uint16 port);
+		
+		/// Test wether or not the DB contains a key
+		bool contains(const dht::Key & key) const;
+		
+		/// Insert an empty item (only if it isn't allready in the DB)
+		void insert(const dht::Key & key);
 	};
 
 }

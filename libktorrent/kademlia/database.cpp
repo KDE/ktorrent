@@ -168,4 +168,19 @@ namespace dht
 		tokens.erase(token);
 		return true;
 	}
+	
+	bool Database::contains(const dht::Key & key) const
+	{
+		return items.find(key) != 0;
+	}
+	
+	void Database::insert(const dht::Key & key)
+	{
+		DBItemList* dbl = items.find(key);
+		if (!dbl)
+		{
+			dbl = new DBItemList();
+			items.insert(key,dbl);
+		}
+	}
 }

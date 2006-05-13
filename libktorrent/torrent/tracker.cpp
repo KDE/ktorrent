@@ -25,6 +25,7 @@
 #include <util/log.h>
 #include <torrent/globals.h>
 #include <interfaces/torrentinterface.h>
+#include <kademlia/dhtbase.h>
 #include <kademlia/dhttrackerbackend.h>
 #include "server.h"
 #include "tracker.h"
@@ -60,7 +61,7 @@ namespace bt
 		srand(time(0));
 		key = rand();
 		udp = http = curr = dht_ba = 0;
-		if (!tor->getStats().priv_torrent)
+		if (!tor->getStats().priv_torrent && Globals::instance().getDHT().isRunning())
 			dht_ba = new dht::DHTTrackerBackend(this,Globals::instance().getDHT());
 	}
 
@@ -74,6 +75,9 @@ namespace bt
 	
 	void Tracker::doRequest(const KURL & url)
 	{
+		if (!url.isValid())
+			return;
+		
 		if (url.protocol() == "udp" || url.prettyURL().startsWith("udp"))
 		{
 			if (!udp)
@@ -90,6 +94,7 @@ namespace bt
 			http->doRequest(url);
 			curr = http;
 		}
+		last_url = url;
 	}
 
 	void Tracker::updateData(PeerManager* pman)
@@ -109,7 +114,19 @@ namespace bt
 		time_of_last_update = GetCurrentTime();
 		// start the DHT after one minute, so we can get some peers first
 		if (dht_ba)
-			dht_update_timer.start(60*1000,true);
+		{
+			Uint16 port = Globals::instance().getServer().getPortInUse();
+			if (dht_ba->doRequest(QString("http://localhost:%1/announce").arg(port)))
+			{
+				// do the next update in 15 minutes
+				dht_update_timer.start(15*60*1000,true);
+			}
+			else
+			{
+				// no peers, try again in 10 seconds
+				dht_update_timer.start(10*1000,true);
+			}
+		}
 	}
 		
 	void Tracker::setInterval(Uint32 secs)
@@ -128,7 +145,7 @@ namespace bt
 	void Tracker::stop()
 	{
 		event = "stopped";
-		doRequest(tor->getTrackerURL(true));
+		doRequest(/*tor->getTrackerURL(true)*/last_url);
 		update_timer.stop();
 		dht_update_timer.stop();
 	}
@@ -154,9 +171,16 @@ namespace bt
 		if (dht_ba && event != "stopped")
 		{
 			Uint16 port = Globals::instance().getServer().getPortInUse();
-			dht_ba->doRequest(QString("http://localhost:%1/announce").arg(port));
-			// do the next update in 15 minutes
-			dht_update_timer.start(15*60*1000,true);
+			if (dht_ba->doRequest(QString("http://localhost:%1/announce").arg(port)))
+			{
+				// do the next update in 15 minutes
+				dht_update_timer.start(15*60*1000,true);
+			}
+			else
+			{
+				// not succes full try again in 10 seconds
+				dht_update_timer.start(10*1000,true);
+			}
 		}
 	}
 
@@ -192,6 +216,11 @@ namespace bt
 		event = QString::null;
 		doRequest(tor->getTrackerURL(true));
 		time_of_last_update = GetCurrentTime();
+		
+		// start DHT backend if we can
+		if (!dht_ba && !tor->getStats().priv_torrent && Globals::instance().getDHT().isRunning())
+			dht_ba = new dht::DHTTrackerBackend(this,Globals::instance().getDHT());
+		
 		if (dht_ba)
 		{
 			dht_update_timer.stop();

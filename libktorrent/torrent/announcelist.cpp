@@ -102,6 +102,9 @@ namespace bt
 		int customs = custom_trackers.count();
 		int total = defaults + customs;
 		
+		if (total == 0)
+			return KURL(); // return invalid url is there are no trackers
+		
 		if (last_was_succesfull)
 			return curr < defaults ? *trackers.at(curr) : *custom_trackers.at(curr % customs);
 		

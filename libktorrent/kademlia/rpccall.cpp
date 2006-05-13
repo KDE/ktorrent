@@ -55,8 +55,6 @@ namespace dht
 			listener->onTimeout(this);
 		
 		rpc->timedOut(msg->getMTID());
-		delete msg;
-		msg = 0;
 	}
 	
 	void RPCCall::response(MsgBase* rsp)

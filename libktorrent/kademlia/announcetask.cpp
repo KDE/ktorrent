@@ -60,7 +60,6 @@ namespace dht
 				KBucketEntry e = UnpackBucketEntry(n,i*26);
 				if (!todo.contains(e) && !visited.contains(e))
 				{
-					Out() << "Adding " << e.getAddress().nodeName() << " to todo list" << endl;
 					todo.append(e);
 				}
 			}
