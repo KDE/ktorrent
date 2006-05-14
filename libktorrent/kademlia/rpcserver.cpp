@@ -177,9 +177,10 @@ namespace dht
 	
 	void RPCServer::ping(const dht::Key & our_id,const KNetwork::KSocketAddress & addr)
 	{
-		PingReq req(our_id);
-		req.setOrigin(addr);
-		sendMsg(&req);
+		Out() << "DHT: pinging " << addr.nodeName() << endl;
+		PingReq* pr = new PingReq(our_id);
+		pr->setOrigin(addr);
+		doCall(pr);
 	}
 	
 

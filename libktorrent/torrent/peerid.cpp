@@ -22,6 +22,7 @@
 #include <qmap.h>
 #include <klocale.h>
 #include "peerid.h"
+#include "ktversion.h"
 
 namespace bt
 {
@@ -32,7 +33,7 @@ namespace bt
 		int r[12];
 		for (int i = 0;i < 12;i++)
 			r[i] = rand() % 10;
-		QString peer_id = "-KT13DV-";
+		QString peer_id = kt::PEER_ID;
 		for (int i = 0;i < 12;i++)
 			peer_id += QString("%1").arg(r[i]);
 		memcpy(id,peer_id.ascii(),20);

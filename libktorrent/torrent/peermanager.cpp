@@ -136,7 +136,7 @@ namespace bt
 	
 	void PeerManager::addPotentialPeer(const PotentialPeer & pp)
 	{
-		Out() << "Addding " << pp.ip << ":" << pp.port << endl;
+//		Out() << "Addding " << pp.ip << ":" << pp.port << endl;
 		potential_peers.append(pp);
 	}
 

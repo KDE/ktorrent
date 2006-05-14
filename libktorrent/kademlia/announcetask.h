@@ -44,7 +44,7 @@ namespace dht
 	class AnnounceTask : public Task
 	{
 	public:
-		AnnounceTask(Database* db,RPCServer* rpc, Node* node,const Key & info_hash,bt::Uint16 port);
+		AnnounceTask(Database* db,RPCServer* rpc, Node* node,const dht::Key & info_hash,bt::Uint16 port);
 		virtual ~AnnounceTask();
 
 		virtual void callFinished(RPCCall* c, MsgBase* rsp);
@@ -59,7 +59,7 @@ namespace dht
 		 */
 		bool takeItem(DBItem & item);
 	private:
-		Key info_hash;
+		dht::Key info_hash;
 		bt::Uint16 port;
 		QValueList<KBucketEntryAndToken> answered; // nodes which have answered with values
 		QValueList<KBucketEntry> answered_visited; // nodes which have answered with values which have been visited

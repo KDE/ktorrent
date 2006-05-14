@@ -47,15 +47,14 @@ kdelnk_DATA = ktorrent.desktop
 rcdir = $(kde_datadir)/ktorrent
 rc_DATA = ktorrentui.rc
 
-KDE_ICON = AUTO
+KDE_ICON= torrent
 
 appicondir = $(kde_datadir)/ktorrent/icons
 appicon_ICON = AUTO
 
 kde_servicetypes_DATA = ktorrentplugin.desktop
 EXTRA_DIST = ktorrentplugin.desktop
-mimedirdir = $(kde_mimedir)/application
 
 mimedir = $(kde_mimedir)/application
-
+mimeicondir=$(kde_mimedir)/icons
 mime_DATA = x-bittorrent.desktop

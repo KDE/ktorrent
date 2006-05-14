@@ -48,17 +48,13 @@ namespace dht
 		if (lst)
 		{
 			lst->onDestroyed(this);
-			lst->task = 0;
+			lst = 0;
 		}
 	}
 	
 	void Task::setListener(TaskListener* tl)
 	{
-		if (lst)
-			lst->task = 0;
-		
 		lst = tl;
-		
 		if (lst)
 			lst->task = this;
 	}
@@ -106,7 +102,7 @@ namespace dht
 			return false;
 		
 		RPCCall* c = rpc->doCall(req);
-		c->setListener(this);
+		c->addListener(this);
 		outstanding_reqs++;
 		return true;
 	}

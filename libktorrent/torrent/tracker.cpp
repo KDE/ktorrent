@@ -115,17 +115,8 @@ namespace bt
 		// start the DHT after one minute, so we can get some peers first
 		if (dht_ba)
 		{
-			Uint16 port = Globals::instance().getServer().getPortInUse();
-			if (dht_ba->doRequest(QString("http://localhost:%1/announce").arg(port)))
-			{
-				// do the next update in 15 minutes
-				dht_update_timer.start(15*60*1000,true);
-			}
-			else
-			{
-				// no peers, try again in 10 seconds
-				dht_update_timer.start(10*1000,true);
-			}
+			// start after 15 seconds
+			dht_update_timer.start(15*1000,true);
 		}
 	}
 		

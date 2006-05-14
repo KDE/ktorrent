@@ -18,11 +18,13 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include "taskmanager.h"
+#include "nodelookup.h"
 
 using namespace bt;
 
 namespace dht
 {
+	typedef bt::PtrMap<Uint32,Task>::iterator TaskItr;
 
 	TaskManager::TaskManager() : next_id(0)
 	{
@@ -32,6 +34,11 @@ namespace dht
 
 	TaskManager::~TaskManager()
 	{
+	/*	Task* task = new NodeLookup(Key::random(),0,0);
+		Uint32 id = next_id++;
+		task->setTaskID(id);
+		tasks.insert(id,task);
+	*/
 		tasks.clear();
 	}
 
@@ -50,7 +57,6 @@ namespace dht
 		
 	void TaskManager::removeFinishedTasks()
 	{
-		typedef bt::PtrMap<Uint32,Task>::iterator TaskItr;
 		QValueList<Uint32> rm;
 		for (TaskItr i = tasks.begin();i != tasks.end();i++)
 			if (i->second->isFinished())

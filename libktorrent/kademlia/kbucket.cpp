@@ -100,7 +100,8 @@ namespace dht
 
 	//////////////////////////////////////////////////////////
 	
-	KBucket::KBucket(RPCServer* srv,Node* node) : srv(srv),node(node)
+	KBucket::KBucket(Uint32 idx,RPCServer* srv,Node* node) 
+		: idx(idx),srv(srv),node(node)
 	{
 		last_modified = bt::GetCurrentTime();
 	}
@@ -151,6 +152,7 @@ namespace dht
 		// if we do not have room see if we can get rid of some bad peers
 		if (!replaceBadEntry(entry)) // if no bad peers ping a questionable one
 			pingQuestionable(entry);
+		
 	}
 	
 	
@@ -192,7 +194,7 @@ namespace dht
 				RPCCall* c = srv->doCall(p);
 				if (c)
 				{
-					c->setListener(this);
+					c->addListener(this);
 					// add the pending entry
 					pending_entries.insert(c,replacement_entry);
 				}
@@ -254,32 +256,48 @@ namespace dht
 		return (bt::GetCurrentTime() - last_modified > 15 * 60 * 1000);
 	}
 	
+	
+	
 	void KBucket::save(bt::File & fptr)
 	{
-		QValueList<KBucketEntry>::iterator i;
+		BucketHeader hdr;
+		hdr.magic = BUCKET_MAGIC_NUMBER;
+		hdr.index = idx;
+		hdr.num_entries = entries.count();
 		
+		fptr.write(&hdr,sizeof(BucketHeader));
+		QValueList<KBucketEntry>::iterator i;
 		for (i = entries.begin();i != entries.end();i++)
 		{
 			KBucketEntry & e = *i;
 			const KIpAddress & ip = e.getAddress().ipAddress();
-			bt::Uint8 tmp[19];
-			if (ip.isIPv4Addr() || ip.isV4Compat())
-			{
-				tmp[0] = 0x04;
-				bt::WriteUint32(tmp,1,ip.IPv4Addr());
-				bt::WriteUint16(tmp,5,e.getAddress().port());
-				fptr.write(tmp,7);
-			}
-			else
-			{
-				tmp[0] = 0x06;
-				const sockaddr_in6*  addr = (const sockaddr_in6*)e.getAddress();
-				memcpy(tmp+1,addr->sin6_addr.s6_addr,16);
-				bt::WriteUint16(tmp,17,e.getAddress().port());
-				fptr.write(tmp,19);
-			}
+			Uint8 tmp[26];
+			bt::WriteUint32(tmp,0,ip.IPv4Addr());
+			bt::WriteUint16(tmp,4,e.getAddress().port());
+			memcpy(tmp+6,e.getID().getData(),20);
+			fptr.write(tmp,26);
 		}
 	}
+	
+	void KBucket::load(bt::File & fptr,const BucketHeader & hdr)
+	{
+		if (hdr.num_entries > K)
+			return;
+		
+		for (Uint32 i = 0;i < hdr.num_entries;i++)
+		{
+			Uint8 tmp[26];
+			if (fptr.read(tmp,26) != 26)
+				return;
+			
+			entries.append(KBucketEntry(
+				KInetSocketAddress(
+					KIpAddress(bt::ReadUint32(tmp,0)),
+					bt::ReadUint16(tmp,4)),
+				dht::Key(tmp+6)));
+		}
+	}
+	
 	
 }
 

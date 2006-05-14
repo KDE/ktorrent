@@ -32,13 +32,14 @@ namespace dht
 	/**
 	 * Class which objects should derive from, if they want to know the result of a call.
 	*/
-	class RPCCallListener
+	class RPCCallListener : public QObject
 	{
-		RPCCall* call;
+		Q_OBJECT
 	public:
 		RPCCallListener();
 		virtual ~RPCCallListener();
 		
+	public slots:
 		/**
 		 * A response was received.
 		 * @param c The call
@@ -52,7 +53,6 @@ namespace dht
 		 */
 		virtual void onTimeout(RPCCall* c) = 0;
 		
-		friend class RPCCall;
 	};
 
 	/**
@@ -72,10 +72,10 @@ namespace dht
 		void response(MsgBase* rsp);
 		
 		/**
-		 * Set the listener, which wishes to recieve the result of the call.
+		 * Add a listener for this call
 		 * @param cl The listener
 		 */
-		void setListener(RPCCallListener* cl);
+		void addListener(RPCCallListener* cl);
 		
 		/// Get the message type
 		Method getMsgMethod() const;
@@ -85,12 +85,15 @@ namespace dht
 		
 	private slots:
 		void onTimeout();
+		
+	signals:
+		void onCallResponse(RPCCall* c,MsgBase* rsp);
+		void onCallTimeout(RPCCall* c);
 
 	private:
 		MsgBase* msg;
 		QTimer timer; 
 		RPCServer* rpc;
-		RPCCallListener* listener;
 	};
 
 }

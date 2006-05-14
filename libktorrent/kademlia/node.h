@@ -80,6 +80,9 @@ namespace dht
 		
 		/// Load the routing table from a file
 		void loadTable(const QString & file);
+		
+		/// Get the number of entries in the routing table
+		Uint32 getNumEntriesInRoutingTable() const {return num_entries;}
 	private:
 		Uint8 findBucket(const dht::Key & id);
 		
@@ -87,7 +90,8 @@ namespace dht
 		dht::Key our_id;
 		KBucket* bucket[160];
 		RPCServer* srv;
-		bool first_entry;
+		Uint32 num_receives;
+		Uint32 num_entries;
 	};
 
 }

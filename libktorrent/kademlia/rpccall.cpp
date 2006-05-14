@@ -24,43 +24,34 @@
 
 namespace dht
 {
-	RPCCallListener::RPCCallListener() : call(0) {}
+	RPCCallListener::RPCCallListener()
+	{}
 	
 	RPCCallListener::~RPCCallListener() 
 	{
-		if (call)
-		{
-			call->setListener(0);
-			call = 0;
-		}
 	}
 
-	RPCCall::RPCCall(RPCServer* rpc,MsgBase* msg) : msg(msg),rpc(rpc),listener(0)
+	RPCCall::RPCCall(RPCServer* rpc,MsgBase* msg) : msg(msg),rpc(rpc)
 	{
 		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
-		timer.start(20*1000,true);
+		timer.start(30*1000,true);
 	}
 
 
 	RPCCall::~RPCCall()
 	{
-		if (listener)
-			listener->call = 0;
 		delete msg;
 	}
 	
 	void RPCCall::onTimeout()
 	{
-		if (listener)
-			listener->onTimeout(this);
-		
+		onCallTimeout(this);
 		rpc->timedOut(msg->getMTID());
 	}
 	
 	void RPCCall::response(MsgBase* rsp)
 	{
-		if (listener)
-			listener->onResponse(this,rsp);
+		onCallResponse(this,rsp);
 	}
 	
 	Method RPCCall::getMsgMethod() const
@@ -71,14 +62,10 @@ namespace dht
 			return dht::NONE;
 	}
 	
-	void RPCCall::setListener(RPCCallListener* cl)
+	void RPCCall::addListener(RPCCallListener* cl)
 	{
-		if (listener)
-			listener->call = 0;
-		
-		listener = cl;
-		if (listener)
-			listener->call = this;
+		connect(this,SIGNAL(onCallResponse( RPCCall*, MsgBase* )),cl,SLOT(onResponse( RPCCall*, MsgBase* )));
+		connect(this,SIGNAL(onCallTimeout( RPCCall* )),cl,SLOT(onTimeout( RPCCall* )));
 	}
 
 }

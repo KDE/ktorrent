@@ -36,6 +36,7 @@
 #include <stdlib.h>
 #include <util/error.h>
 #include <torrent/globals.h>
+#include <ktversion.h>
 
 using namespace bt;
 
@@ -59,7 +60,7 @@ void StupidWarningMessagesFromQt( QtMsgType type, const char *msg )
 static const char description[] =
     I18N_NOOP("A BitTorrent program for KDE");
 
-static const char version[] = "1.3dev";
+
 
 static KCmdLineOptions options[] =
 {
@@ -73,7 +74,7 @@ int main(int argc, char **argv)
 	// ignore SIGPIPE's
 	signal(SIGPIPE,SIG_IGN);
 //	qInstallMsgHandler( StupidWarningMessagesFromQt );
-	KAboutData about("ktorrent", I18N_NOOP("KTorrent"), version, description,
+	KAboutData about("ktorrent", I18N_NOOP("KTorrent"), kt::VERSION_STRING, description,
 					 KAboutData::License_GPL, "(C) 2005 Joris Guisson", 0,
 					 "http://ktorrent.pwsp.net/");
 	about.addAuthor("Joris Guisson", 0, "joris.guisson@gmail.com" );

@@ -39,7 +39,8 @@ namespace dht
 
 	Node::Node(RPCServer* srv) : srv(srv)
 	{
-		first_entry = true;
+		num_receives = 0;
+		num_entries = 0;
 		our_id = dht::Key::random();
 		for (int i = 0;i < 160;i++)
 			bucket[i] = 0;
@@ -93,18 +94,23 @@ namespace dht
 		
 		// make the bucket if it doesn't exist
 		if (!bucket[bit_on])
-			bucket[bit_on] = new KBucket(srv,this);
+			bucket[bit_on] = new KBucket(bit_on,srv,this);
 		
 		// insert it into the bucket
 		KBucket* kb = bucket[bit_on];
 		kb->insert(KBucketEntry(msg->getOrigin(),msg->getID()));
-		if (first_entry)
+		num_receives++;
+		if (num_receives == 3)
 		{
 			// do a node lookup upon our own id 
 			// when we insert the first entry in the table
 			dh_table->findNode(our_id);
-			first_entry = false;
 		}
+		
+		num_entries = 0;
+		for (Uint32 i = 0;i < 160;i++)
+			if (bucket[i])
+				num_entries += bucket[i]->getNumEntries();
 	}
 
 	void Node::findKClosestNodes(KClosestNodesSearch & kns)
@@ -131,7 +137,7 @@ namespace dht
 	}
 	
 	/// Generate a random key which lies in a certain bucket
-	const Key & RandomKeyInBucket(Uint32 b,const Key & our_id)
+	Key RandomKeyInBucket(Uint32 b,const Key & our_id)
 	{
 		// first generate a random one
 		Key r = dht::Key::random();
@@ -203,35 +209,27 @@ namespace dht
 			Out() << "DHT: Cannot open file " << file << " : " << fptr.errorString() << endl;
 			return;
 		}
-		Uint8 tmp[18];
 		
+		num_entries = 0;
 		while (!fptr.eof())
 		{
-			Uint8 t = 0;
-			fptr.read(&t,1);
+			BucketHeader hdr;
+			if (fptr.read(&hdr,sizeof(BucketHeader)) != sizeof(BucketHeader))
+				return;
 			
-			switch (t)
-			{
-				case 0x04:
-					fptr.read(tmp,6);
-					srv->ping(
-							our_id,
-							KInetSocketAddress(
-								KIpAddress(bt::ReadUint32(tmp,0)),
-								bt::ReadUint16(tmp,4)));
-					break;
-				case 0x06:
-					fptr.read(tmp,18);
-					srv->ping(
-							our_id,
-							KInetSocketAddress(
-								KIpAddress(tmp,6),
-								bt::ReadUint16(tmp,16)));
-					break;
-				default:
-					Out() << "Unknown IP address type : " << t << endl;
-					return;
-			}
+			if (hdr.magic != dht::BUCKET_MAGIC_NUMBER || hdr.num_entries > dht::K || hdr.index > 160)
+				return;
+			
+			if (hdr.num_entries == 0)
+				continue;
+			
+			Out() << "DHT: Loading bucket " << hdr.index << endl;
+			if (bucket[hdr.index])
+				delete bucket[hdr.index];
+			
+			bucket[hdr.index] = new KBucket(hdr.index,srv,this);
+			bucket[hdr.index]->load(fptr,hdr);
+			num_entries += bucket[hdr.index]->getNumEntries();
 		}
 	}
 }

@@ -54,6 +54,9 @@ namespace dht
 		 * Remove all finished tasks.
 		 */
 		void removeFinishedTasks();
+		
+		/// Get the number of running tasks
+		bt::Uint32 getNumTasks() const {return tasks.count();}
 
 	private:
 		bt::PtrMap<Uint32,Task> tasks;

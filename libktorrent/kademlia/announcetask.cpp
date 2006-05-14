@@ -28,7 +28,7 @@ using namespace bt;
 namespace dht
 {
 
-	AnnounceTask::AnnounceTask(Database* db,RPCServer* rpc, Node* node,const Key & info_hash,bt::Uint16 port)
+	AnnounceTask::AnnounceTask(Database* db,RPCServer* rpc, Node* node,const dht::Key & info_hash,bt::Uint16 port)
 	: Task(rpc, node),info_hash(info_hash),port(port),db(db)
 	{}
 
@@ -58,7 +58,8 @@ namespace dht
 			{
 				// add node to todo list
 				KBucketEntry e = UnpackBucketEntry(n,i*26);
-				if (!todo.contains(e) && !visited.contains(e))
+				if (!todo.contains(e) && !visited.contains(e) && 
+					todo.count() < 100)
 				{
 					todo.append(e);
 				}
@@ -87,12 +88,16 @@ namespace dht
 	}
 
 	void AnnounceTask::callTimeout(RPCCall* )
-	{}
+	{
+		//Out() << "AnnounceTask::callTimeout " << endl;
+	}
 
 	void AnnounceTask::update()
 	{
-	//	Out() << "AnnounceTask::update" << endl;
-		
+/*		Out() << "AnnounceTask::update " << endl;
+		Out() << "todo " << todo.count() << " ; answered " << answered.count() << endl;
+		Out() << "visited " << visited.count() << " ; answered_visited " << answered_visited.count() << endl;
+	*/
 		while (!answered.empty() && canDoRequest())
 		{
 			KBucketEntryAndToken & e = answered.first();
@@ -101,7 +106,7 @@ namespace dht
 				AnnounceReq* anr = new AnnounceReq(node->getOurID(),info_hash,port,e.getToken());
 				anr->setOrigin(e.getAddress());
 				rpcCall(anr);
-				visited.append(e);
+				answered_visited.append(e);
 			}
 			answered.pop_front();
 		}
@@ -125,7 +130,16 @@ namespace dht
 		}
 		
 		if (todo.empty() && answered.empty() && getNumOutstandingRequests() == 0 && !isFinished())
+		{
+			Out() << "DHT: AnnounceTask done" << endl;
 			done();
+		}
+		else if (answered_visited.count() >= dht::K)
+		{
+			// if K announces have occured stop
+			Out() << "DHT: AnnounceTask done" << endl;
+			done();
+		}
 	}
 
 	bool AnnounceTask::takeItem(DBItem & item)

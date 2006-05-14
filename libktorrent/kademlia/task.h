@@ -30,7 +30,7 @@ namespace dht
 	class Task;
 	class KClosestNodesSearch;
 	
-	const Uint32 MAX_CONCURRENT_REQS = 8;
+	const Uint32 MAX_CONCURRENT_REQS = 16;
 	
 	/**
 	 * Classes who which to be informed of the status of tasks, shoul derive from

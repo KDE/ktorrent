@@ -197,10 +197,12 @@ KTorrent::KTorrent()
 	m_statusInfo = new KSqueezedTextLabel(this);
 	m_statusSpeed = new QLabel(this);
 	m_statusTransfer = new QLabel(this);
+	m_statusDHT = new QLabel(this);
 	
 
 
 	statusBar()->addWidget(m_statusInfo,1);
+	statusBar()->addWidget(m_statusDHT);
 	statusBar()->addWidget(m_statusSpeed);
 	statusBar()->addWidget(m_statusTransfer);
 
@@ -450,11 +452,10 @@ bool KTorrent::queryExit()
 {
 	// stop timers to prevent update
 	m_gui_update_timer.stop();
-	m_core->onExit();
-	
 	if (Globals::instance().getDHT().isRunning())
 		Globals::instance().getDHT().stop();
 	
+	m_core->onExit();
 	KGlobal::config()->writeEntry( "hidden_on_exit",this->isHidden());
 	m_view->saveSettings();
 	m_seedView->saveSettings();
@@ -709,6 +710,15 @@ void KTorrent::updatedStats()
 	//update tab labels
 	m_tabs->setTabLabel(m_view_exp, QString("%1 %2/%3").arg(i18n("Downloads")).arg(m_core->getNumRunning(true)).arg(m_core->countDownloads()));
 	m_tabs->setTabLabel(m_seedView_exp, QString("%1 %2/%3").arg(i18n("Uploads")).arg(m_core->getNumRunning(false,true)).arg(m_core->countSeeds()));
+	
+	if (Globals::instance().getDHT().isRunning())
+	{
+		const dht::Stats & s = Globals::instance().getDHT().getStats();
+		m_statusDHT->setText(i18n("DHT: %1 nodes, %2 tasks")
+				.arg(s.num_peers).arg(s.num_tasks));
+	}
+	else
+		m_statusDHT->setText(i18n("DHT: off"));
 }
 
 void KTorrent::mergePluginGui(Plugin* p)

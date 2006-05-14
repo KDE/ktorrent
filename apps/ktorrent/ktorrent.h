@@ -179,6 +179,7 @@ private:
 	QLabel* m_statusInfo;
 	QLabel* m_statusTransfer;
 	QLabel* m_statusSpeed;
+	QLabel* m_statusDHT;
 };
 
 #endif // _KTORRENT_H_

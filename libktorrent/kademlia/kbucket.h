@@ -43,6 +43,14 @@ namespace dht
 	class Node;
 	
 	const Uint32 K = 8;
+	const Uint32 BUCKET_MAGIC_NUMBER = 0xB0C4B0C4;
+	
+	struct BucketHeader
+	{
+		Uint32 magic;
+		Uint32 index;
+		Uint32 num_entries;
+	};
 	
 	/**
 	 * @author Joris Guisson
@@ -126,13 +134,14 @@ namespace dht
 	 */
 	class KBucket : public RPCCallListener
 	{
+		Uint32 idx;
 		QValueList<KBucketEntry> entries;
 		RPCServer* srv;
 		Node* node;
 		QMap<RPCCall*,KBucketEntry> pending_entries;
 		Uint32 last_modified;
 	public:
-		KBucket(RPCServer* srv,Node* node);
+		KBucket(Uint32 idx,RPCServer* srv,Node* node);
 		virtual ~KBucket();
 		
 		/**
@@ -166,7 +175,11 @@ namespace dht
 		/// Check if the bucket needs to be refreshed
 		bool needsToBeRefreshed() const;
 		
+		/// save the bucket to a file
 		void save(bt::File & fptr);
+		
+		/// Load the bucket from a file
+		void load(bt::File & fptr,const BucketHeader & hdr);
 		
 	private:
 		virtual void onResponse(RPCCall* c,MsgBase* rsp);

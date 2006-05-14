@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <util/log.h>
+#include <torrent/globals.h>
 #include "nodelookup.h"
 #include "rpcmsg.h"
 #include "node.h"
@@ -28,7 +30,7 @@ namespace dht
 {
 
 	NodeLookup::NodeLookup(const dht::Key & key,RPCServer* rpc,Node* node) 
-	: Task(rpc,node),node_id(key)
+	: Task(rpc,node),node_id(key),num_nodes_rsp(0)
 	{
 	}
 
@@ -39,11 +41,12 @@ namespace dht
 
 	void NodeLookup::callFinished(RPCCall* ,MsgBase* rsp)
 	{
+	//	Out() << "NodeLookup::callFinished" << endl;
 		if (isFinished())
 			return;
 		
 		// check the response and see if it is a good one
-		if (rsp->getMethod() == dht::FIND_NODE || rsp->getType() == dht::RSP_MSG)
+		if (rsp->getMethod() == dht::FIND_NODE && rsp->getType() == dht::RSP_MSG)
 		{
 			FindNodeRsp* fnr = (FindNodeRsp*)rsp;
 			const QByteArray & nodes = fnr->getNodes();
@@ -53,18 +56,22 @@ namespace dht
 				// unpack an entry and add it to the todo list
 				KBucketEntry e = UnpackBucketEntry(nodes,j*26);
 				// lets not talk to ourself
-				if (e.getID() != node->getOurID())
+				if (e.getID() != node->getOurID() && !todo.contains(e) && !visited.contains(e))
 					todo.append(e);
 			}
+			num_nodes_rsp++;
 		}
 	}
 	
 	void NodeLookup::callTimeout(RPCCall*)
 	{
+	//	Out() << "NodeLookup::callTimeout" << endl;
 	}
 	
 	void NodeLookup::update()
 	{
+	//	Out() << "NodeLookup::update" << endl;
+	//	Out() << "todo = " << todo.count() << " ; visited = " << visited.count() << endl;
 		// go over the todo list and send find node calls
 		// until we have nothing left
 		while (!todo.empty() && canDoRequest())
@@ -85,5 +92,7 @@ namespace dht
 		
 		if (todo.empty() && getNumOutstandingRequests() == 0 && !isFinished())
 			done();
+		else if (num_nodes_rsp > 50)
+			done(); // quit after 50 nodes responses
 	}
 }

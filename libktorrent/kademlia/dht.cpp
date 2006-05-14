@@ -122,30 +122,7 @@ namespace dht
 		fnr.setOrigin(r->getOrigin());
 		srv->sendMsg(&fnr);
 	}
-#if 0
-	void DHT::findValue(FindValueReq* r)
-	{
-		if (!running)
-			return;
-		
-		node->recieved(r,srv);
-	}
-	
-	void DHT::storeValue(StoreValueReq* r)
-	{
-		if (!running)
-			return;
-		
-		node->recieved(r,srv);
-		// store the key data pair in the db
-		//db->store(r->getKey(),r->getData());
-		
-		// send a response
-		StoreValueRsp rsp(r->getMTID(),node->getOurID());
-		rsp.setOrigin(r->getOrigin());
-		srv->sendMsg(&rsp);
-	}
-#endif
+
 	
 	void DHT::announce(AnnounceReq* r)
 	{
@@ -304,6 +281,9 @@ namespace dht
 		}
 		
 		node->refreshBuckets(this);
+		tman->removeFinishedTasks();
+		stats.num_tasks = tman->getNumTasks();
+		stats.num_peers = node->getNumEntriesInRoutingTable();
 	}
 	
 	void DHT::timeout(const MsgBase* r)

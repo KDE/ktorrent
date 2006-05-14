@@ -47,21 +47,23 @@ namespace bt
 			return true;
 		}
 		
-		if (chdr.major == 1 && chdr.minor >= 2)
+		if (chdr.major >= 2 || (chdr.major == 1 && chdr.minor >= 2))
 		{
-			// version number is 1.2 so post
+			// version number is 1.2 or greater
 			return false;
 		}
 		
-		return true;
+		return false;
 	}
 	
-	static void MigrateChunk(const Torrent & tor,File & new_cc,File & old_cc)
+	static bool MigrateChunk(const Torrent & tor,File & new_cc,File & old_cc)
 	{
 		Uint32 ch = 0;
 		old_cc.read(&ch,sizeof(Uint32));
 		
 		Out() << "Migrating chunk " << ch << endl;
+		if (ch >= tor.getNumChunks())
+			return false;
 			
 			// calculate the size
 		Uint32 csize = 0;
@@ -105,6 +107,7 @@ namespace bt
 		// save the bitset
 		new_cc.write(pieces_bs.getData(),pieces_bs.getNumBytes());
 		new_cc.write(data,csize);
+		return true;
 	}
 
 	static void MigrateCC(const Torrent & tor,const QString & current_chunks)
@@ -136,7 +139,8 @@ namespace bt
 
 		for (Uint32 i = 0;i < num;i++)
 		{
-			MigrateChunk(tor,new_cc,old_cc);
+			if (!MigrateChunk(tor,new_cc,old_cc))
+				break;
 		}
 		
 		// migrate done, close both files and move new_cc to  old_cc

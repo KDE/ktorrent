@@ -32,6 +32,14 @@ namespace bt
 namespace dht
 {
 	class AnnounceTask;
+	
+	struct Stats
+	{
+		/// number of peers in the routing table
+		bt::Uint32 num_peers;
+		/// Number of running tasks
+		bt::Uint32 num_tasks;
+	};
 
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
@@ -86,9 +94,13 @@ namespace dht
 		/// Get the DHT port
 		bt::Uint16 getPort() const {return port;}
 		
+		/// Get statistics about the DHT
+		const dht::Stats & getStats() const {return stats;}
+		
 	protected:
 		bool running;
 		bt::Uint16 port;
+		dht::Stats stats;
 	};
 
 }
