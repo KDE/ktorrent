@@ -31,6 +31,13 @@ namespace bt
 	typedef int Int32;
 	typedef short Int16;
 	typedef char Int8;
+        typedef enum {
+                        PREVIEW_PRIORITY = 4,
+                        FIRST_PRIORITY = 3,
+                        NORMAL_PRIORITY = 2,
+                        LAST_PRIORITY = 1,
+                        EXCLUDED = 0,
+        } Priority;
 	
 	const Uint32 MAX_MSGLEN = 9 + 131072;
 	const Uint16 MIN_PORT = 6881;

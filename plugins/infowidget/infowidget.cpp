@@ -64,15 +64,22 @@ namespace kt
 		multi_root = 0;
 		monitor = 0;
 		curr_tc = 0;
-		
+
 		m_tabs->addTab(m_status_tab,i18n("Status"));
 		m_tabs->addTab(m_files_tab,i18n("Files"));
 	
 		KIconLoader* iload = KGlobal::iconLoader();
 		context_menu = new KPopupMenu(this);
 		preview_id = context_menu->insertItem(iload->loadIconSet("frame_image",KIcon::Small), i18n("Preview"));
-		context_menu->setItemEnabled(1, false);
-	
+	        context_menu->insertSeparator();
+		first_id = context_menu->insertItem(i18n("Download First"));
+		normal_id = context_menu->insertItem(i18n("Download Normally"));
+		last_id = context_menu->insertItem(i18n("Download Last"));
+		context_menu->setItemEnabled(preview_id, false);
+		context_menu->setItemEnabled(first_id, false);
+		context_menu->setItemEnabled(normal_id, false);
+		context_menu->setItemEnabled(last_id, false);
+
 		connect(m_file_view,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )),
 				this,SLOT(showContextMenu(KListView*, QListViewItem*, const QPoint& )));
 		connect(context_menu, SIGNAL ( activated ( int ) ), this, SLOT ( contextItem ( int ) ) );
@@ -170,7 +177,7 @@ namespace kt
 			delete cd_page;
 			cd_view = 0;
 		}
-	
+
 		if (monitor && curr_tc)
 		{
 			delete monitor;
@@ -224,12 +231,13 @@ namespace kt
 			
 			for (Uint32 i = 0;i < curr_tc->getNumFiles();i++)
 			{
-				TorrentFileInterface & file = curr_tc->getTorrentFile(i);
-				root->insert(file.getPath(),file);
+                               TorrentFileInterface & file = curr_tc->getTorrentFile(i);
+                               root->insert(file.getPath(),file);
 			}
 			root->setOpen(true);
 			m_file_view->setRootIsDecorated(true);
 			multi_root = root;
+			multi_root->updatePriorityInformation(curr_tc);
 		}
 		else
 		{
@@ -447,18 +455,41 @@ namespace kt
 		if (!item || item->childCount() > 0)
 			return;
 		
+		context_menu->setItemEnabled(first_id, false);
+		context_menu->setItemEnabled(normal_id, false);
+		context_menu->setItemEnabled(last_id, false);
 		if(s.multi_file_torrent)
 		{
 			kt::TorrentFileInterface & file = ((FileTreeItem*)item)->getTorrentFile();
-			if (!file.isNull() && file.isMultimedia())
+			if (!file.isNull())
 			{
-				if ( curr_tc->readyForPreview(file.getFirstChunk(), file.getFirstChunk()+1) )
+				selecteditem = item;
+				if(file.isMultimedia() && curr_tc->readyForPreview(file.getFirstChunk(), file.getFirstChunk()+1) )
 				{
 					context_menu->setItemEnabled(preview_id, true);
 					this->preview_path = "cache" + bt::DirSeparator() + file.getPath();
 				}
 				else
 					context_menu->setItemEnabled(preview_id, false);
+				/* get the priority of the file and disable the corresponding menu item */
+				switch(file.getPriority())
+				{
+				case FIRST_PRIORITY:
+					context_menu->setItemEnabled(normal_id, true);
+					context_menu->setItemEnabled(last_id, true);
+					break;
+				case LAST_PRIORITY:
+					context_menu->setItemEnabled(first_id, true);
+					context_menu->setItemEnabled(normal_id, true);
+					break;
+				case EXCLUDED:
+				case PREVIEW_PRIORITY:
+					break;
+				default:
+					context_menu->setItemEnabled(first_id, true);
+					context_menu->setItemEnabled(last_id, true);
+					break;
+				}
 			}
 			else
 			{
@@ -481,9 +512,32 @@ namespace kt
 	void InfoWidget::contextItem(int id)
 	{
 		if(id == this->preview_id)
+		{
 			new KRun(this->curr_tc->getTorDir()+preview_path, 0, true, true);
+			return;
+		}
+		else
+		{
+			TorrentFileInterface & file = multi_root->findTorrentFile(selecteditem);
+			if(id == this->first_id)
+			{
+				/* set the priorities for chunks from this file to first */
+				file.setPriority(FIRST_PRIORITY);
+			}
+			else if(id == this->normal_id)
+			{
+				/* set the priorities for chunks from this file to normal */
+				file.setPriority(NORMAL_PRIORITY);
+			}
+			else if(id == this->last_id)
+			{
+				/* set the priorities for chunks from this file to last */				
+				file.setPriority(LAST_PRIORITY);
+			}
+			multi_root->updatePriorityInformation(curr_tc);
+		}
 	}
-	
+
 	void InfoWidget::maxRatio_returnPressed()
 	{
 		if(!curr_tc)

@@ -57,7 +57,7 @@ namespace bt
 		Q_OBJECT
 				
 		Torrent & tor;
-		QString index_file,file_info_file;
+		QString index_file,file_info_file,file_priority_file;
 		QPtrVector<Chunk> chunks;
 		Uint32 num_chunks_in_cache_file;
 		Cache* cache;
@@ -205,7 +205,7 @@ namespace bt
 		 * @param from First chunk in range
 		 * @param to Last chunk in range
 		 */
-		void prioritise(Uint32 from,Uint32 to);
+		void prioritise(Uint32 from,Uint32 to, Priority priority);
 
 		/**
 		 * Make sure that a range will not be downloaded.
@@ -241,9 +241,12 @@ namespace bt
 		void writeIndexFileEntry(Chunk* c);
 		void saveFileInfo();
 		void loadFileInfo();
+		void savePriorityInfo();
+		void loadPriorityInfo();
 
 	private slots:
 		void downloadStatusChanged(TorrentFile* tf,bool download);
+		void downloadPriorityChanged(TorrentFile* tf,Priority newpriority);
 	};
 
 }

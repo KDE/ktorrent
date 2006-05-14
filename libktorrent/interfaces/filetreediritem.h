@@ -26,10 +26,11 @@
 
 namespace kt
 {
-	using bt::Uint64;
+	using namespace bt;
 	
 	class FileTreeItem;
 	class TorrentFileInterface;
+	class TorrentInterface;
 
 	/**
 	 * @author Joris Guisson
@@ -83,6 +84,8 @@ namespace kt
 		 * Called by the child to notify the parent it's state has changed.
 		 */
 		void childStateChange();
+
+		FileTreeDirItem* getParent() {return parent;}
 
 	protected:
 		/**

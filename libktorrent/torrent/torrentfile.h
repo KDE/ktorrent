@@ -43,7 +43,7 @@ namespace bt
 		Uint64 cache_offset;
 		Uint64 first_chunk_off;
 		Uint64 last_chunk_size;
-		bool do_not_download;
+		Priority priority;
 	public:
 		/**
 		 * Default constructor. Creates a null TorrentFile.
@@ -81,13 +81,20 @@ namespace bt
 		Uint64 getLastChunkSize() const {return last_chunk_size;}
 
 		/// Check if this file doesn't have to be downloaded
-		bool doNotDownload() const {return do_not_download;}
+		bool doNotDownload() const 
+			{if(priority == EXCLUDED) return true; else return false;}
 
 		/// Set wether we have to not download this file
 		void setDoNotDownload(bool dnd);
 		
 		/// Checks if this file is multimedial
 		bool isMultimedia() const;
+
+		/// Gets the priority of the file
+		Priority getPriority() const {return priority;}
+
+		/// Sets the priority of the file
+		void setPriority(Priority newpriority = NORMAL_PRIORITY);
 
 		/**
 		 * Assignment operator
@@ -99,11 +106,14 @@ namespace bt
 		static TorrentFile null;
 	signals:
 		/**
-		 * Signal emitted when the do_not_download variable changes.
+		 * Signal emitted when the Priority variable changes from or to EXCLUDED.
 		 * @param tf The TorrentFile which emitted the signal
 		 * @param download Download the file or not
 		 */
 		void downloadStatusChanged(TorrentFile* tf,bool download);
+
+		// signal emitted when the Priority variable changes
+                void downloadPriorityChanged(TorrentFile* tf,Priority newpriority);
 	};
 
 }

@@ -25,7 +25,6 @@
 
 #include "infowidgetbase.h"
 
-
 class KPopupMenu; 
 class QString;
 class QWidget;
@@ -35,6 +34,7 @@ class QHBoxLayout;
 namespace kt
 {
 	class TorrentInterface;
+	class TorrentFileInterface;
 	class PeerView;
 	class ChunkDownloadView;
 	class TrackerView;
@@ -79,7 +79,11 @@ namespace kt
 		IWFileTreeDirItem* multi_root;
 		KPopupMenu* context_menu;
 		QString preview_path;
+		QListViewItem* selecteditem;
 		int preview_id;
+		int first_id;
+		int normal_id;
+		int last_id;
 		QWidget* peer_page;
 		PeerView* peer_view;
 		QWidget* cd_page;
@@ -91,4 +95,3 @@ namespace kt
 }
 
 #endif
-

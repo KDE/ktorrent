@@ -24,10 +24,11 @@
 
 
 
-using bt::Uint32;
+using namespace bt;
 
 namespace kt
 {
+	class TorrentFileInterface;
 	class TorrentInterface;
 	class IWFileTreeDirItem;
 
@@ -45,6 +46,7 @@ namespace kt
 	
 		void updatePreviewInformation(kt::TorrentInterface* tc);
 		void updatePercentageInformation(kt::TorrentInterface* tc);
+                void updatePriorityInformation(kt::TorrentInterface* tc);
 	protected:
 		virtual int compare(QListViewItem* i, int col, bool ascending) const;
 	};

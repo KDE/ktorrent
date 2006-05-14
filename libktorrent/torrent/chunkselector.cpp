@@ -44,11 +44,11 @@ namespace bt
 		bool operator()(Uint32 a,Uint32 b)
 		{
 			// the sorting is done on two criteria, priority and rareness
-			bool pa = cman.getChunk(a)->isPriority();
-			bool pb = cman.getChunk(b)->isPriority();
-			if ((pa && pb) || (!pa && !pb))
+			Priority pa = cman.getChunk(a)->getPriority();
+			Priority pb = cman.getChunk(b)->getPriority();
+			if (pa == pb)
 				return normalCmp(a,b); // if both have same priority compare on rareness
-			else if (pa && !pb) // pa has priority over pb, so select pa
+			else if (pa > pb) // pa has priority over pb, so select pa
 				return true;
 			else // pb has priority over pa, so select pb
 				return false;

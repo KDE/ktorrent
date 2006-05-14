@@ -79,8 +79,8 @@ int main(int argc, char **argv)
 					 "http://ktorrent.pwsp.net/");
 	about.addAuthor("Joris Guisson", 0, "joris.guisson@gmail.com" );
 	about.addAuthor("Ivan Vasic",0,"ivasic@gmail.com");
-	
-	about.addCredit("The-Error",I18N_NOOP("The downloads icon"),"zotrix@eunet.yu");
+
+		about.addCredit("The-Error",I18N_NOOP("The downloads icon"),"zotrix@eunet.yu");
 	about.addCredit("Adam Treat", 0, "treat@kde.org" );
 	about.addCredit("Danny Allen",
 					I18N_NOOP("1.0 application icon"),
@@ -95,7 +95,8 @@ int main(int argc, char **argv)
 	about.addCredit("Andreas Kling",0,"kling@impul.se");
 	about.addCredit("Felipe Sateler",0,"fsateler@gmail.com");
 	about.addCredit("Maxmind", I18N_NOOP("Country locator for InfoWidget plugin. Flags are taken from http://flags.blogpotato.de/ so thanks to them too."), "http://www.maxmind.com/");
-	
+	about.addCredit("Adam",I18N_NOOP("File prioritization"),"phantom042@gmail.com");
+
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);
 	

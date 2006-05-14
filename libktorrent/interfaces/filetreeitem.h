@@ -23,11 +23,12 @@
 #include <klistview.h>
 #include <util/constants.h>
 
-using bt::Uint32;
+using namespace bt;
 
 namespace kt
 {
 	class TorrentFileInterface;
+	class TorrentInterface;
 	class FileTreeDirItem;
 
 	/**

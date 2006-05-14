@@ -97,4 +97,25 @@ namespace kt
 		setText(4,i18n("%1 %").arg(loc->formatNumber(percent,2)));
 		perc_complete = percent;
 	}
+
+        void IWFileTreeItem::updatePriorityInformation(kt::TorrentInterface* tc)
+        {
+                switch(file.getPriority())
+                {
+                case FIRST_PRIORITY:
+                        setText(2, i18n("Yes, First"));
+                        break;
+                case LAST_PRIORITY:
+                        setText(2, i18n("Yes, Last"));
+                        break;
+                case EXCLUDED:
+                        setText(2, i18n("No"));
+                        break;
+                case PREVIEW_PRIORITY:
+                        break;
+                default:
+                        setText(2, i18n("Yes"));
+                        break;
+                }
+        }
 }

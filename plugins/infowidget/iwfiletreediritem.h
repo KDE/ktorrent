@@ -25,6 +25,12 @@
 class IWFileTreeItem;
 
 using bt::Uint32;
+using bt::Priority;
+using bt::FIRST_PRIORITY;
+using bt::NORMAL_PRIORITY;
+using bt::LAST_PRIORITY;
+using bt::PREVIEW_PRIORITY;
+using bt::EXCLUDED;
 
 namespace bt
 {
@@ -34,6 +40,7 @@ namespace bt
 
 namespace kt
 {
+	using namespace bt;
 	/**
 	* @author Joris Guisson
 	*
@@ -51,12 +58,15 @@ namespace kt
 		* @param tc The TorrentInterface object
 		*/
 		void updatePreviewInformation(kt::TorrentInterface* tc);
+
 		/**
 		 * Update the downloaded percentage information.
 		 * @param tc The TorrentInterface object
 		 */
 		void updatePercentageInformation(kt::TorrentInterface* tc);
-	
+
+                Priority updatePriorityInformation(kt::TorrentInterface* tc);
+
 		virtual kt::FileTreeItem* newFileTreeItem(const QString & name, kt::TorrentFileInterface & file);
 		virtual kt::FileTreeDirItem* newFileTreeDirItem(const QString & subdir);
 	};

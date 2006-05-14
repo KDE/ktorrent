@@ -87,6 +87,84 @@ namespace kt
 		}
 	}
 	
+        Priority IWFileTreeDirItem::updatePriorityInformation(kt::TorrentInterface* tc)
+        {
+                // first set all the child items
+                bt::PtrMap<QString,FileTreeItem>::iterator i = children.begin();
+                bool setpriority = false;
+                bool oneexcluded = false;
+                Priority priority = PREVIEW_PRIORITY;
+                if(i != children.end())
+                {
+                        IWFileTreeItem* item = (IWFileTreeItem*)i->second;
+                        item->updatePriorityInformation(tc);
+                        i++;
+                        priority = item->getTorrentFile().getPriority();
+                        if(priority == EXCLUDED)
+                                oneexcluded = true;
+                        setpriority = true;
+                }
+                while (i != children.end())
+                {
+                        IWFileTreeItem* item = (IWFileTreeItem*)i->second;
+                        item->updatePriorityInformation(tc);
+                        i++;
+                        if(item->getTorrentFile().getPriority() != priority)
+                                setpriority = false;
+                        if(item->getTorrentFile().getPriority() == EXCLUDED)
+                                oneexcluded = true;
+                }
+
+                // then recursivly move on to subdirs
+                bt::PtrMap<QString,FileTreeDirItem>::iterator j = subdirs.begin();
+                if(j != subdirs.end() && children.begin() == children.end())
+                {
+                        Priority priority =
+                        ((IWFileTreeDirItem*)j->second)->updatePriorityInformation(tc);
+                        if(priority != PREVIEW_PRIORITY)
+                                setpriority = true;
+                        if(priority == EXCLUDED)
+                                oneexcluded = true;
+                        j++;
+                }
+
+                while (j != subdirs.end())
+                {
+                        if(((IWFileTreeDirItem*)j->second)->updatePriorityInformation(tc)
+                        != priority)
+                                setpriority = false;
+                        if(((IWFileTreeDirItem*)j->second)->updatePriorityInformation(tc)
+                        == EXCLUDED)
+                                oneexcluded = true;
+                        j++;
+                }
+
+                if(setpriority)
+                {
+                        switch(priority)
+                        {
+                        case FIRST_PRIORITY:
+                                setText(2, i18n("Yes, First"));
+                                break;
+                        case LAST_PRIORITY:
+                                setText(2, i18n("Yes, Last"));
+                                break;
+                        case EXCLUDED:
+                                setText(2, i18n("No"));
+                                break;
+                        default:
+                                setText(2, i18n("Yes"));
+                                break;
+                        }
+                        return priority;
+                }
+                if(oneexcluded)
+                        setText(2, i18n("No"));
+                else
+                        setText(2, i18n("Yes"));
+        return PREVIEW_PRIORITY;
+        }
+
 	FileTreeItem* IWFileTreeDirItem::newFileTreeItem(const QString & name,TorrentFileInterface & file)
 	{
 		return new IWFileTreeItem(this,name,file);
@@ -96,4 +174,5 @@ namespace kt
 	{
 		return new IWFileTreeDirItem(this,subdir);
 	}
+
 }

@@ -40,7 +40,7 @@ namespace bt
 		else
 			last_chunk = first_chunk;
 		last_chunk_size = (off + size) - last_chunk * chunk_size;
-		do_not_download = false;
+		priority = NORMAL_PRIORITY;
 	}
 	
 	TorrentFile::TorrentFile(const TorrentFile & tf)
@@ -54,7 +54,7 @@ namespace bt
 		first_chunk_off = tf.getFirstChunkOffset();
 		last_chunk = tf.getLastChunk();
 		last_chunk_size = tf.getLastChunkSize();
-		do_not_download = tf.doNotDownload();
+		priority = tf.getPriority();
 	}
 
 	TorrentFile::~TorrentFile()
@@ -62,18 +62,30 @@ namespace bt
 
 	void TorrentFile::setDoNotDownload(bool dnd)
 	{
-		if (do_not_download != dnd)
+		if (priority != EXCLUDED && dnd)
 		{
-			do_not_download = dnd;
-		//	Out() << "file : " << index << " " << dnd << endl;
+			priority = EXCLUDED;
+			emit downloadStatusChanged(this,!dnd);
+		}
+		if (priority == EXCLUDED && (!dnd))
+		{
+			priority = NORMAL_PRIORITY;
 			emit downloadStatusChanged(this,!dnd);
 		}
 	}
-	
 
 	bool TorrentFile::isMultimedia() const
 	{
 		return IsMultimediaFile(getPath());
+	}
+
+	void TorrentFile::setPriority(Priority newpriority)
+	{
+		if(priority != newpriority)
+		{
+			priority = newpriority;
+			emit downloadPriorityChanged(this,newpriority);
+		}
 	}
 
 	TorrentFile & TorrentFile::operator = (const TorrentFile & tf)
@@ -86,7 +98,7 @@ namespace bt
 		first_chunk_off = tf.getFirstChunkOffset();
 		last_chunk = tf.getLastChunk();
 		last_chunk_size = tf.getLastChunkSize();
-		do_not_download = tf.doNotDownload();
+		priority = tf.getPriority();
 		return *this;
 	}
 

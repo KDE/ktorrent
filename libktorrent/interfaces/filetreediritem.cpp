@@ -27,6 +27,7 @@
 #include "filetreediritem.h"
 #include "filetreeitem.h"
 #include "torrentfileinterface.h"
+#include <torrent/torrentfile.h>
 
 using namespace bt;
 
@@ -194,6 +195,31 @@ namespace kt
 		}
 	}
 
+	TorrentFileInterface & FileTreeDirItem::findTorrentFile(QListViewItem* item)
+	{
+	// first check all the child items
+		TorrentFileInterface & nullfile = (TorrentFileInterface &)TorrentFile::null;
+		bt::PtrMap<QString,FileTreeItem>::iterator i = children.begin();
+		while (i != children.end())
+		{
+			FileTreeItem* file = i->second;
+			if (file == (FileTreeItem*)item)
+				return file->getTorrentFile();
+			i++;
+		}
+
+	// then recursivly move on to subdirs
+		bt::PtrMap<QString,FileTreeDirItem>::iterator j = subdirs.begin();
+		while (j != subdirs.end())
+		{
+			TorrentFileInterface & thefile = j->second->findTorrentFile(item);
+			if(!thefile.isNull())
+				return thefile;
+			j++;
+		}
+		return nullfile;
+	}
+
 	FileTreeItem* FileTreeDirItem::newFileTreeItem(const QString & name,TorrentFileInterface & file)
 	{
 		return new FileTreeItem(this,name,file);
@@ -205,3 +231,4 @@ namespace kt
 	}
 
 }
+

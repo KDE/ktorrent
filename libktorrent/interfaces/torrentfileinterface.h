@@ -27,6 +27,12 @@ namespace kt
 {
 	using bt::Uint32;
 	using bt::Uint64;
+	using bt::Priority;
+	using bt::PREVIEW_PRIORITY;
+	using bt::FIRST_PRIORITY;
+	using bt::NORMAL_PRIORITY;
+	using bt::LAST_PRIORITY;
+	using bt::EXCLUDED;
 
 	/**
 	 * @author Joris Guisson
@@ -68,11 +74,19 @@ namespace kt
 
 		/// Checks if this file is multimedial
 		virtual bool isMultimedia() const = 0;
+
+		/// Gets the current priority of the torrent
+		virtual Priority getPriority() const {return priority;}
+
+		/// Sets the priority of the torrent
+		virtual void setPriority(Priority newpriority = NORMAL_PRIORITY) = 0;
+
 	protected:
 		QString path;
 		Uint64 size;
 		Uint32 first_chunk;
 		Uint32 last_chunk;
+		Priority priority;
 	};
 
 }

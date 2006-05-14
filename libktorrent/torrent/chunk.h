@@ -91,11 +91,11 @@ namespace bt
 		/// allocate data if not already done, sets the status to buffered
 		void allocate();
 
-		/// Is chunk prioritised
-		bool isPriority() const;
+		/// get chunk priority
+		Priority getPriority() const;
 
-		/// (De)prioritise chunk
-		void setPriority(bool yes);
+		/// set chunk priority
+		void setPriority(Priority newpriority = NORMAL_PRIORITY);
 
 		/// Is chunk excluded
 		bool isExcluded() const;
@@ -111,8 +111,7 @@ namespace bt
 		Uint8* data;
 		Uint32 size;
 		int ref_count;
-		bool priority;
-		bool exclude;
+		Priority priority;
 	};
 
 	inline Chunk::Status Chunk::getStatus() const
@@ -135,10 +134,12 @@ namespace bt
 	inline void Chunk::unref() {ref_count--;}
 	inline bool Chunk::taken() const {return ref_count > 0;}
 
-	inline bool Chunk::isPriority() const {return priority;}
-	inline void Chunk::setPriority(bool yes) {priority = yes;}
-	inline bool Chunk::isExcluded() const {return exclude;}
-	inline void Chunk::setExclude(bool yes) {exclude = yes;}
+	inline Priority Chunk::getPriority() const {return priority;}
+	inline void Chunk::setPriority(Priority newpriority) {priority = newpriority;}
+	inline bool Chunk::isExcluded() const 
+		{if(priority == EXCLUDED) return true; else return false;}
+	inline void Chunk::setExclude(bool yes)
+		{if(yes) priority = EXCLUDED; else priority = NORMAL_PRIORITY;}
 }
 
 #endif

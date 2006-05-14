@@ -56,7 +56,23 @@ namespace kt
 		setChecked(!file.doNotDownload());
 		setText(0,name);
 		setText(1,BytesToString(file.getSize()));
-		setText(2,file.doNotDownload() ? i18n("No") : i18n("Yes"));
+		switch(file.getPriority())
+		{
+		case FIRST_PRIORITY:
+			setText(2,i18n("Yes, First"));
+			break;
+		case LAST_PRIORITY:
+			setText(2,i18n("Yes, Last"));
+			break;
+		case EXCLUDED:
+			setText(2,i18n("No"));
+			break;
+		case PREVIEW_PRIORITY:
+			break;
+		default:
+			setText(2,i18n("Yes"));
+			break;
+		}
 		setPixmap(0,KMimeType::findByPath(name)->pixmap(KIcon::Small));
 	}
 
@@ -65,11 +81,26 @@ namespace kt
 		Globals::instance().setCriticalOperationMode(true);
 		file.setDoNotDownload(!on);
 		Globals::instance().setCriticalOperationMode(false);
-		setText(2,on ? i18n("Yes") : i18n("No"));
+		switch(file.getPriority())
+		{
+		case FIRST_PRIORITY:
+			setText(2,i18n("Yes, First"));
+			break;
+		case LAST_PRIORITY:
+			setText(2,i18n("Yes, Last"));
+			break;
+		case EXCLUDED:
+			setText(2,i18n("No"));
+			break;
+		case PREVIEW_PRIORITY:
+			break;
+		default:
+			setText(2,i18n("Yes"));
+			break;
+		}
 		if (!manual_change)
 			parent->childStateChange();
 	}
-
 	
 	int FileTreeItem::compare(QListViewItem* i, int col, bool ascending) const
 	{
