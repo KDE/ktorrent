@@ -194,6 +194,14 @@
                         </widget>
                     </hbox>
                 </widget>
+                <widget class="QLabel" row="5" column="0">
+                    <property name="name">
+                        <cstring>textLabel1_2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Note: ZIP file from bluetack.co.uk is now supported.</string>
+                    </property>
+                </widget>
                 <widget class="QLabel" row="3" column="0">
                     <property name="name">
                         <cstring>lbl_status1</cstring>

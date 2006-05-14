@@ -34,6 +34,7 @@
 #include <kmessagebox.h>
 #include <kio/netaccess.h>
 #include <kprogress.h>
+#include <kmimetype.h>
 
 #include <util/log.h>
 #include <torrent/globals.h>
@@ -59,7 +60,7 @@ namespace kt
 		m_filter->setURL(IPBlockingPluginSettings::filterFile());
 		m_url->setURL(IPBlockingPluginSettings::filterURL());
 		if (m_url->url() == "")
-			m_url->setURL(QString("http://www.bluetack.co.uk/config/antip2p.txt"));
+			m_url->setURL(QString("www.bluetack.co.uk/config/splist.zip"));
 		
 		bool use_level1 = IPBlockingPluginSettings::useLevel1();
 		bool use_filter = IPBlockingPluginSettings::useFilter();
@@ -132,15 +133,16 @@ namespace kt
 
 	void IPBlockingPrefPageWidget::btnDownload_clicked()
 	{
-		QString target(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.txt");
+		QString target(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1");
 		QFile target_file(target);
+		QFile txtfile(target + ".txt");
 		KURL url(m_url->url());
 		KURL dest(target);
 		KURL temp(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.tmp");
 
 		bool download = true;
 
-		if(target_file.exists())
+		if(txtfile.exists())
 		{
 			if((KMessageBox::questionYesNo(this, i18n("Selected file already exists, do you want to download it again?"),i18n("File Exists")) == 4))
 				download = false;
@@ -179,6 +181,22 @@ namespace kt
 					return;
 				}
 			}
+			
+			//now determine if it's ZIP or TXT file
+			KMimeType::Ptr ptr = KMimeType::findByPath(target);
+			if(ptr->name() == "application/x-zip")
+			{
+				KURL zipfile("zip:" + target + "/splist.txt");
+				KURL destinationfile(target + ".txt");
+				KIO::NetAccess::file_copy(zipfile,destinationfile, -1, true);
+			}
+			else
+			{
+				KURL zipfile(target);
+				KURL destinationfile(target + ".txt");
+				KIO::NetAccess::file_copy(zipfile,destinationfile, -1, true);
+			}
+			
 		}
 		convert();
 	}

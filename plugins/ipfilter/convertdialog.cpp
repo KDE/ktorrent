@@ -27,6 +27,7 @@
 #include <kmessagebox.h>
 #include <kio/netaccess.h>
 #include <kprogress.h>
+#include <kmimetype.h>
 
 #include <util/log.h>
 #include <util/constants.h>
@@ -143,7 +144,7 @@ namespace kt
 		}
 		else
 		{
-			Out() << "Cannot find level1.txt" << endl;
+			Out() << "Cannot find level1 file" << endl;
 			btnClose->setEnabled( true );
 			btnClose->setText(i18n("&Close"));
 			label1->setText("");
