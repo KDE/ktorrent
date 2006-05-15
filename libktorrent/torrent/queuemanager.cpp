@@ -180,7 +180,7 @@ namespace bt
 				start(tc, false);
 			else
 			{
-				if( (tc->getStats().completed && type == 2) || (!tc->getStats().completed && type == 1) )
+				if( (tc->getStats().completed && type == 2) || (!tc->getStats().completed && type == 1) || (type == 3) )
 					start(tc, false);
 			}
 			i++;
@@ -204,7 +204,7 @@ namespace bt
 				}
 			}
 			else //if torrent is not running but it is queued we need to make it user controlled
-				if( (tc->getStats().completed && type == 2) || (!tc->getStats().completed && type == 1) )
+				if( (tc->getStats().completed && type == 2) || (!tc->getStats().completed && type == 1) || (type == 3) )
 					tc->setPriority(0); 
 			i++;
 		}
