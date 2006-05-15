@@ -238,6 +238,7 @@ namespace dht
 		
 		KClosestNodesSearch kns(id,K);
 		bucket.findKClosestNodes(kns);
+		bucket.updateRefreshTimer();
 		if (kns.getNumEntries() > 0)
 		{
 			Out() << "DHT: refreshing bucket " << endl;

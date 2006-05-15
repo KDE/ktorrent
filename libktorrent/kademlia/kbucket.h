@@ -181,6 +181,9 @@ namespace dht
 		/// Load the bucket from a file
 		void load(bt::File & fptr,const BucketHeader & hdr);
 		
+		/// Update the refresh timer of the bucket
+		void updateRefreshTimer();
+		
 	private:
 		virtual void onResponse(RPCCall* c,MsgBase* rsp);
 		virtual void onTimeout(RPCCall* c);

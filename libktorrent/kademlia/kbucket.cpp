@@ -253,7 +253,12 @@ namespace dht
 	
 	bool KBucket::needsToBeRefreshed() const
 	{
-		return (bt::GetCurrentTime() - last_modified > 15 * 60 * 1000);
+		return entries.count() > 0 && (bt::GetCurrentTime() - last_modified > 15 * 60 * 1000);
+	}
+	
+	void KBucket::updateRefreshTimer()
+	{
+		last_modified = bt::GetCurrentTime();
 	}
 	
 	
