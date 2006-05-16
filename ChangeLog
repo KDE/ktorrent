@@ -1,3 +1,101 @@
+Changelog since v1.2 (January 2005)
+***************************************************************************************
+
+- ADD: Added file prioritization code, thanks to Adam for providing it.
+- ADD: New icons for KTorrent thanks to Mladen
+- FIX: Updated IPFilter URL. It now supports ZIP file from Bluetack.co.uk
+- ADD: Torrents can be enqueued/dequeued from context menu or toolbar.
+- FIX: Small bug in QueueManager causing all torrents to be started/queued.
+- FIX: Fixed small bug which caused wrong session bytes uploaded to be calculated when a torrent got started and stopped and started again
+- FIX: Fixed crash when searching with no search engine in the list + updated bittorrent.com url
+- ADD: Manual announces are allowed at minimum 60seconds interval.
+- FIX: Changed some messages for maximum share ratio.
+- FIX: Only try to link against libgmp where needed
+- FIX: Don't error out if libgmp is not present. Instead don't compile ktorrent and
+present an error message at the end of the configure stage
+- FIX: Look for libgmp in non-standard locations, which fixes the build on FreeBSD
+- FIX: Define O_LARGEFILE if not present in order to fix the build on FreeBSD (and
+possibly other platforms)
+- FIX: Made some improvements which will result in better upload behavior
+- FIX: Made sure KT builds with enable-final configure option (BUG: 126801)
+- ADD: Added ScanFolder plugin.
+- FIX: Improved SystemTray a bit.
+- Fixed a minor bug with disabled InfoWidget on torrent finish. 
+- Changed Qt labels to KDE squeezed labels. 
+- Changed some Qt widgets to appropriate KDE ones. 
+- A few cosmetic fixes.
+- FIX: Reset currently downloading chunks after a chunk is excluded
+- ADD: Implemented multi selection in KTorrentView. (BUG: 121689)
+- FIX: Fixed 99.90 % stalled bug. Big thanks to Nikolay on the KT forums for pointing out the cause of the bug. (BUG: 126293)
+- ADD: Big update : Added RC4 protocol encryption!
+- ADD: Search engines can be updated from internet now.
+- FIX: Changed annoying green share ratio color to less annoying green one.
+- ADD: Added new GUI for bandwidth scheduler. (BUG:112215)
+- ADD: Added .torrent mimetype (BUG:125154)
+- ADD: Added new KTorrents search engine
+- FIX: KB/s instead of KB/sec (BUG:126457)
+- FIX: Made sure routers which only provide a WANPPPConnection can also forward ports
+- FIX: Made sure allready running torrents cannot be started
+- ADD: Added snubbing punishing mode + made some further refinements to the uploader and choke algorithm
+- FIX: Resized tracker url in TrackerView to fit smaller resolutions up to 800x600.
+- ADD: Added the advanced choking algorithm.  Old choking algo can still be chosen using ./configure --enable-old-choke
+- FIX: Fixed bug with saving which files are excluded
+- Added 'cancel' button to converting dialog. (IPFilter)
+- Canceling level1 file download keeps the old file (IPFilter)
+- Canceling antip2p conversion keeps the old file (IPFilter)
+- ADD: Bandwidth scheduler plugin
+- Buttons in plugin pref page are now disabled and enabled when logical. (BUG: 121661)
+- FIX: Significantly improved download cap. Speed should remain constant near the cap.
+- Added dcop method to open torrents silently (without showing file selection dialog)
+- User-Agent string in HTTP tracker requests now contains version
+- Fixed a small bug in QueueManager - thanks to Cade
+- Fixed & prevented several bugs in IPFilter plugin.
+- FIX: Fixed seeding queue. When torrent reaches maxShareRatio - it'll start the next one.
+- FIX: Fixed tracker to work if there are whitespaces in URL.
+- FIX: StartAll/StopAll now affects currently visible panel only (or starts/stops ALL torrents if neither download nor upload tab are not current).
+- ADD: Added country locator for InfoWidget
+- ADD: Improved QueueManager: works for seeding now too.
+- ADD: Introduced new torrent state - Queued.
+- FIX: Chunkbars in upload infoWidget are updated properly now.
+- Fixed a bug with StartAll button causing lots of error messageBoxes.
+- Fixed bug which can cause an insanely huge number of bytes downloaded to be reported to the tracker
+- Workaround for preallocation with FAT partitions
+- Added TrackersView tab
+- Fixed minor max share ratio bug
+- FIX: Fixed small uploading bug
+- FIX: Fixed bug in upnp plugin which caused the parsing of a http M-SEARCH to fail
+- ADD: Implemented DHT with specification from www.bittorrent.org
+- ADD: Added upnp test program
+- FIX: Fixed bug with reporting the wrong stats to the torrent
+- FIX: Fixed bug with creating torrents with files > 4 GB
+- FIX: Redid chunk selection algorithm (should get rid of 99.90 stalled bug)
+- ADD: Implemented preallocation (gets rid of slowly increasing chunk limit)
+- We now unload cache files which are not needed, this should help users who are hitting their system limits with multi file torrent which have lots of files.
+- ADD: Main view splitted into 'Downloads' and 'Uploads' view
+- ADD: Added maximum share ratio feature
+- ADD: Max download speed now controllable through DCOP. (Thanks to Knut for making the patch)
+- Fixed huge bug on 64 bit platforms where sizeof(Uint32) == 8. This also fixes the UDP tracker on 64 bit platforms
+- Made sure KT can handle announce lists with both UDP and HTTP trackers
+- FIX: occassional crashes during hectic torrent sessions where lots of peers were coming and going
+- FIX: Fixed bug with file (de)selection
+- Fixed issue with broken symlinks not being deleted. Did some various other fixes.
+- FIX: Do not create empty file when name of output file of a single file torrent is not equal to the name suggestion. (BUG: 121687)
+- Fixed bug with Bitmetv.org (BUG:121453)
+- FIX: Only save the plugins file when it changes, which should also fix BUG: 121363
+- Added patch from Marcello which improves the data checking algorithm
+- ADD: Added patch from Marcelo to show chunk size in infowidget
+- FIX: Fixed issue with, unresponsiveness of GUI, when the UPnP plugin fails.
+- Chunks which have no peers are not kept in memory.
+- Warmup and endgame mode are not needed anymore because of some tweaks to normal mode
+- Allways select the most complete chunk when assigning PeerDownloaders to ChunkDownloads
+- FIX: Fix build if libtorrent is present
+- Explicitly set the address family to IPv4. This fixes UPnP discovery on FreeBSD.
+- Add possibility to create private torrents
+- Imported downloads can now have different top level name as name suggestion of torrent (same for created torrents)
+- Added StatsFile class and stats parsing moved from TorrentControl to this class.
+- Fixed bug with gui update timer not being properly set when the timer gets started. (BUG: 121181)
+- In Timer if a negative value is the result of msecsTo, we set it to 0
+
 Changelog since v1.1 (October 10th, 2005)
 ****************************************************************************************
 - KT now has a new directory structure.
@@ -68,33 +166,3 @@ Changelog since v1.1 (October 10th, 2005)
 - Made some tweaks to the download process
 - Small fix to the upload cap, should prevent starting peaks above limit
 - Updated torrentz.com's search URL (thanks to cafeine) (120163)
-
-
-- Fixed BUG: 
-	-114103
-	-113155
-	-114156
-	-114373
-	-114390
-	-114781
-	-114904
-	-115442
-	-115393
-	-115484
-	-108930
-	-116115
-	-117324
-	-115077
-	-119387
-	-118208
-	-115368
-	-116342
-	-117862
-	-112080
-	-117080
-	-117026
-	-116986
-	-117008
-	-119792
-	-120163
-	-120430

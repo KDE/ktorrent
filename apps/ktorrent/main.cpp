@@ -76,10 +76,12 @@ int main(int argc, char **argv)
 //	qInstallMsgHandler( StupidWarningMessagesFromQt );
 	KAboutData about("ktorrent", I18N_NOOP("KTorrent"), kt::VERSION_STRING, description,
 					 KAboutData::License_GPL, "(C) 2005 Joris Guisson", 0,
-					 "http://ktorrent.pwsp.net/");
+					 "http://www.ktorrent.org/");
 	about.addAuthor("Joris Guisson", 0, "joris.guisson@gmail.com" );
 	about.addAuthor("Ivan Vasic",0,"ivasic@gmail.com");
 
+	about.addCredit("Mladen Babic",
+					I18N_NOOP("Application icon and a couple of others"),"bmladen@EUnet.yu");
 		about.addCredit("The-Error",I18N_NOOP("The downloads icon"),"zotrix@eunet.yu");
 	about.addCredit("Adam Treat", 0, "treat@kde.org" );
 	about.addCredit("Danny Allen",
@@ -87,8 +89,6 @@ int main(int argc, char **argv)
 					"danny@dannyallen.co.uk");
 	about.addCredit("Vincent Wagelaar",0,"vincent@ricardis.tudelft.nl");
 	about.addCredit("Knut Morten Johansson",0,"knut@johansson.com");
-	about.addCredit("Mladen Babic",
-					I18N_NOOP("1.1 application icon and a couple of others"),"bmladen@EUnet.yu");
 	about.addCredit("Felix Berger",
 					I18N_NOOP("ChunkBar's tooltip and IWFileTreeItem sorting"),
 					"bflat1@gmx.net");
