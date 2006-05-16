@@ -52,6 +52,8 @@ namespace dht
 		sock->close();
 		calls.setAutoDelete(true);
 		calls.clear();
+		call_queue.setAutoDelete(true);
+		call_queue.clear();
 	}
 	
 	void RPCServer::start()
@@ -120,6 +122,7 @@ namespace dht
 					c->response(msg);
 					calls.erase(msg->getMTID());
 					delete c;
+					doQueuedCalls();
 				}
 				delete msg;
 			}
@@ -139,12 +142,23 @@ namespace dht
 	
 	RPCCall* RPCServer::doCall(MsgBase* msg)
 	{
+		Uint8 start = next_mtid;
 		while (calls.contains(next_mtid))
+		{
 			next_mtid++;
+			if (next_mtid == start) // if this happens we cannot do any calls
+			{
+				// so queue the call
+				RPCCall* c = new RPCCall(this,msg,true);
+				call_queue.append(c);
+				Out() << "Queueing RPC call, no slots available at the moment" << endl;
+				return c; 
+			}
+		}
 		
 		msg->setMTID(next_mtid++);
 		sendMsg(msg);
-		RPCCall* c = new RPCCall(this,msg);
+		RPCCall* c = new RPCCall(this,msg,false);
 		calls.insert(msg->getMTID(),c);
 		return c;
 	}
@@ -167,6 +181,25 @@ namespace dht
 			dh_table->timeout(c->getRequest());
 			calls.erase(mtid);
 			c->deleteLater();
+		}
+		doQueuedCalls();	
+	}
+	
+	void RPCServer::doQueuedCalls()
+	{
+		while (call_queue.count() > 0 && calls.count() < 256)
+		{
+			RPCCall* c = call_queue.first();
+			call_queue.removeFirst();
+			
+			while (calls.contains(next_mtid))
+				next_mtid++;
+			
+			MsgBase* msg = c->getRequest();
+			msg->setMTID(next_mtid++);
+			sendMsg(msg);
+			calls.insert(msg->getMTID(),c);
+			c->start();
 		}
 	}
 	

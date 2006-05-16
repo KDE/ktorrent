@@ -823,7 +823,6 @@ namespace bt
 		stats.upload_rate = up && stats.running ? up->uploadRate() : 0;
 		UploadCap::instance().setCurrentSpeed(stats.upload_rate);
 		stats.download_rate = down && stats.running ? down->downloadRate() : 0;
-		DownloadCap::instance().setCurrentSpeed(stats.download_rate);
 		stats.bytes_left = cman ? cman->bytesLeft() : 0;
 		stats.bytes_uploaded = up ? up->bytesUploaded() : 0;
 		stats.bytes_downloaded = down ? down->bytesDownloaded() : 0;

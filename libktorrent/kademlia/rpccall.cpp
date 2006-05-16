@@ -31,16 +31,23 @@ namespace dht
 	{
 	}
 
-	RPCCall::RPCCall(RPCServer* rpc,MsgBase* msg) : msg(msg),rpc(rpc)
+	RPCCall::RPCCall(RPCServer* rpc,MsgBase* msg,bool queued) : msg(msg),rpc(rpc),queued(queued)
 	{
 		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
-		timer.start(30*1000,true);
+		if (!queued)
+			timer.start(30*1000,true);
 	}
 
 
 	RPCCall::~RPCCall()
 	{
 		delete msg;
+	}
+	
+	void RPCCall::start()
+	{
+		queued = false;
+		timer.start(30*1000,true);
 	}
 	
 	void RPCCall::onTimeout()

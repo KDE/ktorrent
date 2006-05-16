@@ -62,6 +62,7 @@
 #include <torrent/downloader.h>
 #include <torrent/choker.h>
 #include <torrent/server.h>
+#include <torrent/downloadcap.h>
 #include <torrent/udptrackersocket.h>
 #include <util/log.h>
 #include <util/fileops.h>
@@ -719,6 +720,8 @@ void KTorrent::updatedStats()
 	}
 	else
 		m_statusDHT->setText(i18n("DHT: off"));
+	
+	DownloadCap::instance().setCurrentSpeed(stats.download_speed);
 }
 
 void KTorrent::mergePluginGui(Plugin* p)

@@ -20,6 +20,7 @@
 #ifndef DHTRPCSERVER_H
 #define DHTRPCSERVER_H
 
+#include <qptrlist.h>
 #include <kdatagramsocket.h>
 #include <util/constants.h>
 #include <util/array.h>
@@ -102,11 +103,13 @@ namespace dht
 		
 	private:
 		void send(const KNetwork::KSocketAddress & addr,const QByteArray & msg);
+		void doQueuedCalls();
 			
 	private:
 		KDatagramSocket* sock;
 		DHT* dh_table;
 		bt::PtrMap<bt::Uint8,RPCCall> calls;
+		QPtrList<RPCCall> call_queue;
 		bt::Uint8 next_mtid;
 		bt::Uint16 port;
 	};

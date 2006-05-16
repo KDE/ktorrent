@@ -62,8 +62,13 @@ namespace dht
 	{
 		Q_OBJECT
 	public:
-		RPCCall(RPCServer* rpc,MsgBase* msg);
+		RPCCall(RPCServer* rpc,MsgBase* msg,bool queued);
 		virtual ~RPCCall();
+		
+		/**
+		 * Called when a queued call gets started. Starts the timeout timer.
+		 */
+		void start();
 		
 		/**
 		 * Called by the server if a response is received.
@@ -83,6 +88,9 @@ namespace dht
 		/// Get the request sent
 		const MsgBase* getRequest() const {return msg;}
 		
+		/// Get the request sent
+		MsgBase* getRequest() {return msg;}
+		
 	private slots:
 		void onTimeout();
 		
@@ -94,6 +102,7 @@ namespace dht
 		MsgBase* msg;
 		QTimer timer; 
 		RPCServer* rpc;
+		bool queued;
 	};
 
 }

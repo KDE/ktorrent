@@ -466,6 +466,8 @@ void KTorrentCore::update()
 		}
 		i++;
 	}
+	
+	
 }
 
 void KTorrentCore::makeTorrent(const QString & file,const QStringList & trackers,
