@@ -25,6 +25,7 @@
 #include <ksocketaddress.h>
 #include "key.h"
 #include "rpccall.h"
+#include "task.h"
 
 using bt::Uint32;
 using bt::Uint16;
@@ -41,9 +42,12 @@ namespace dht
 	class RPCServer;
 	class KClosestNodesSearch;
 	class Node;
+	class Task;
 	
 	const Uint32 K = 8;
 	const Uint32 BUCKET_MAGIC_NUMBER = 0xB0C4B0C4;
+	const Uint32 BUCKET_REFRESH_INTERVAL = 15 * 60 * 1000;
+//	const Uint32 BUCKET_REFRESH_INTERVAL = 120 * 1000;
 	
 	struct BucketHeader
 	{
@@ -132,14 +136,15 @@ namespace dht
 	 * The first element is the least recently seen, the last
 	 * the most recently seen.
 	 */
-	class KBucket : public RPCCallListener
+	class KBucket : public RPCCallListener,public TaskListener
 	{
 		Uint32 idx;
 		QValueList<KBucketEntry> entries;
 		RPCServer* srv;
 		Node* node;
 		QMap<RPCCall*,KBucketEntry> pending_entries;
-		Uint32 last_modified;
+		mutable Uint32 last_modified;
+		Task* refresh_task;
 	public:
 		KBucket(Uint32 idx,RPCServer* srv,Node* node);
 		virtual ~KBucket();
@@ -184,9 +189,15 @@ namespace dht
 		/// Update the refresh timer of the bucket
 		void updateRefreshTimer();
 		
+		/// Set the refresh task
+		void setRefreshTask(Task* t);
+		
 	private:
 		virtual void onResponse(RPCCall* c,MsgBase* rsp);
 		virtual void onTimeout(RPCCall* c);
+		virtual void onDestroyed(Task* t);
+		virtual void onFinished(Task* t);
+		
 		void pingQuestionable(const KBucketEntry & replacement_entry);
 		bool replaceBadEntry(const KBucketEntry & entry);
 	};

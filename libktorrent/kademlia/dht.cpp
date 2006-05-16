@@ -222,7 +222,7 @@ namespace dht
 			Out() << "DHT: Doing announce " << endl;
 			AnnounceTask* at = new AnnounceTask(db,srv,node,info_hash,port);
 			tman->addTask(at);
-			at->start(kns);
+			at->start(kns,tman->getNumTasks() > 8);
 			if (!db->contains(info_hash))
 				db->insert(info_hash);
 			return at;
@@ -244,7 +244,7 @@ namespace dht
 			Out() << "DHT: refreshing bucket " << endl;
 			NodeLookup* nl = new NodeLookup(id,srv,node);
 			tman->addTask(nl);
-			nl->start(kns);
+			nl->start(kns,tman->getNumTasks() > 8);
 			return nl;
 		}
 		
@@ -263,7 +263,7 @@ namespace dht
 			Out() << "DHT: finding node " << endl;
 			NodeLookup* at = new NodeLookup(id,srv,node);
 			tman->addTask(at);
-			at->start(kns);
+			at->start(kns,tman->getNumTasks() > 8);
 			return at;
 		}
 		

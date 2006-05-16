@@ -176,7 +176,9 @@ namespace dht
 			if (b && b->needsToBeRefreshed())
 			{
 				// the key needs to be the refreshed
-				dh_table->refreshBucket(RandomKeyInBucket(i,our_id),*b);
+				NodeLookup* nl = dh_table->refreshBucket(RandomKeyInBucket(i,our_id),*b);
+				if (nl)
+					b->setRefreshTask(nl);
 			}
 		}
 	}

@@ -104,12 +104,7 @@ namespace dht
 			
 			// try to make a RPCMsg of it
 			MsgBase* msg = MakeRPCMsg((BDictNode*)n,this);
-			if (!msg)
-			{
-				Out() << "Error parsing message : " << endl;
-				PrintRawData(pck.data());
-			}
-			else
+			if (msg)
 			{
 				msg->setOrigin(pck.address());
 			//	msg->print();

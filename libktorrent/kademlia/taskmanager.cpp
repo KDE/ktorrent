@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <util/log.h>
+#include <torrent/globals.h>
 #include "taskmanager.h"
 #include "nodelookup.h"
 
@@ -57,13 +59,38 @@ namespace dht
 		
 	void TaskManager::removeFinishedTasks()
 	{
+		Uint32 num_running = 0;
+		Uint32 num_not_running = 0;
 		QValueList<Uint32> rm;
 		for (TaskItr i = tasks.begin();i != tasks.end();i++)
+		{
 			if (i->second->isFinished())
 				rm.append(i->first);
+			else if (!i->second->isQueued())
+				num_running++;
+			else
+				num_not_running++;
+		}
 		
 		for (QValueList<Uint32>::iterator i = rm.begin();i != rm.end();i++)
 			tasks.erase(*i);
+		
+		while (num_not_running > 0 && num_running < 8)
+		{
+			for (TaskItr i = tasks.begin();i != tasks.end();i++)
+			{
+				Task* t = i->second;
+				if (t->isQueued())
+				{
+					num_not_running--;
+					num_running++;
+					Out() << "DHT: starting queued task" << endl;
+					t->start();
+					if (num_running >= 8)
+						break;
+				}
+			}
+		}
 	}
 
 }

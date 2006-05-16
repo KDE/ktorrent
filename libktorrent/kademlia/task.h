@@ -22,13 +22,14 @@
 
 #include <qvaluelist.h>
 #include "rpccall.h"
-#include "kbucket.h"
+//#include "kbucket.h"
 
 namespace dht
 {
 	class Node;
 	class Task;
 	class KClosestNodesSearch;
+	class KBucketEntry;
 	
 	const Uint32 MAX_CONCURRENT_REQS = 16;
 	
@@ -83,10 +84,17 @@ namespace dht
 		
 		/**
 		 * This will copy the results from the KClosestNodesSearch
-		 * object into the todo list. And call update.
+		 * object into the todo list. And call update if the task is not queued.
 		 * @param kns The KClosestNodesSearch object
+		 * @param queued Is the task queued
 		 */
-		void start(const KClosestNodesSearch & kns);
+		void start(const KClosestNodesSearch & kns,bool queued);
+		
+		
+		/**
+		 *  Start the task, to be used when a task is queued.
+		 */
+		void start();
 
 		/// Decrements the outstanding_reqs
 		virtual void onResponse(RPCCall* c, MsgBase* rsp);
@@ -138,10 +146,15 @@ namespace dht
 		/// Get the number of outstanding requests
 		bt::Uint32 getNumOutstandingRequests() const {return outstanding_reqs;}
 		
+		bool isQueued() const {return queued;}
+		
 		/**
 		 * Tell listeners data is ready.
 		 */
 		void emitDataReady();
+		
+		/// Kills the task
+		void kill();
 	protected:
 		void done();
 				
@@ -156,6 +169,7 @@ namespace dht
 		TaskListener* lst;
 		bt::Uint32 task_id; 
 		bool finished;
+		bool queued;
 	};
 
 }

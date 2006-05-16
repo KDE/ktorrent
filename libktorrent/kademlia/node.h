@@ -24,6 +24,7 @@
 #include "key.h"
 #include "kbucket.h"
 
+
 using bt::Uint8;
 
 namespace dht
@@ -85,6 +86,8 @@ namespace dht
 		Uint32 getNumEntriesInRoutingTable() const {return num_entries;}
 	private:
 		Uint8 findBucket(const dht::Key & id);
+		
+		
 		
 	private:
 		dht::Key our_id;

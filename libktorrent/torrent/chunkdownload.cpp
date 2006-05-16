@@ -192,8 +192,7 @@ namespace bt
 		
 		if (pd->getNumRequests() == 0 && ds->getNumRequests() > 0)
 		{
-			Out() << "Weird bug detected !" << endl;
-			Out() << "Making sure everything is back OK" << endl;
+			Out() << "Retransmitting timed out requests!" << endl;
 			ds->clear();
 		}
 		

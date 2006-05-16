@@ -104,6 +104,7 @@ namespace dht
 		: idx(idx),srv(srv),node(node)
 	{
 		last_modified = bt::GetCurrentTime();
+		refresh_task = 0;
 	}
 	
 	
@@ -253,7 +254,14 @@ namespace dht
 	
 	bool KBucket::needsToBeRefreshed() const
 	{
-		return entries.count() > 0 && (bt::GetCurrentTime() - last_modified > 15 * 60 * 1000);
+		Uint32 now = bt::GetCurrentTime();
+		if (last_modified > now)
+		{
+			last_modified = now;
+			return false;
+		}
+		
+		return !refresh_task && entries.count() > 0 && (now - last_modified > BUCKET_REFRESH_INTERVAL);
 	}
 	
 	void KBucket::updateRefreshTimer()
@@ -303,6 +311,24 @@ namespace dht
 		}
 	}
 	
+	void KBucket::onDestroyed(Task* t)
+	{
+		if (t == refresh_task)
+			refresh_task = 0;
+	}
+	
+	void KBucket::onFinished(Task* t)
+	{
+		if (t == refresh_task)
+			refresh_task = 0;
+	}
+	
+	void KBucket::setRefreshTask(Task* t)
+	{
+		refresh_task = t;
+		if (refresh_task)
+			refresh_task->setListener(this);
+	}
 	
 }
 

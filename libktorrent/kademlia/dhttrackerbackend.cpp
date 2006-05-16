@@ -38,7 +38,10 @@ namespace dht
 
 
 	DHTTrackerBackend::~DHTTrackerBackend()
-	{}
+	{
+		if (curr_task)
+			curr_task->kill();
+	}
 
 
 	bool DHTTrackerBackend::doRequest(const KURL& url)

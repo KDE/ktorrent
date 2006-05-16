@@ -20,6 +20,7 @@
 #include "task.h"
 #include "kclosestnodessearch.h"
 #include "rpcserver.h"
+#include "kbucket.h"
 
 namespace dht
 {
@@ -37,7 +38,7 @@ namespace dht
 
 	Task::Task(RPCServer* rpc,Node* node) 
 		: node(node),rpc(rpc),outstanding_reqs(0),
-		lst(0),finished(false)
+		lst(0),finished(false),queued(queued)
 	{
 		
 	}
@@ -59,12 +60,23 @@ namespace dht
 			lst->task = this;
 	}
 	
-	void Task::start(const KClosestNodesSearch & kns)
+	void Task::start(const KClosestNodesSearch & kns,bool queued)
 	{
 		// fill the todo list
 		for (KClosestNodesSearch::CItr i = kns.begin(); i != kns.end();i++)
 			todo.append(i->second);
-		update();
+		this->queued = queued;
+		if (!queued)
+			update();
+	}
+	
+	void Task::start()
+	{
+		if (queued)
+		{
+			queued = false;
+			update();
+		}
 	}
 
 
@@ -118,6 +130,13 @@ namespace dht
 	{
 		if (lst)
 			lst->onDataReady(this);
+	}
+	
+	void Task::kill()
+	{
+		finished = true;
+		if (lst)
+			lst->onFinished(this);
 	}
 
 }

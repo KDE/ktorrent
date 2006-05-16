@@ -21,6 +21,7 @@
 #define DHTANNOUNCETASK_H
 
 #include <task.h>
+#include "kbucket.h"
 
 namespace dht
 {
