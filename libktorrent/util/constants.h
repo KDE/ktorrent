@@ -36,7 +36,7 @@ namespace bt
                         FIRST_PRIORITY = 3,
                         NORMAL_PRIORITY = 2,
                         LAST_PRIORITY = 1,
-                        EXCLUDED = 0,
+                        EXCLUDED = 0
         } Priority;
 	
 	const Uint32 MAX_MSGLEN = 9 + 131072;
