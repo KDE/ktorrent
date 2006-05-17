@@ -67,6 +67,12 @@ namespace kt
 		if(!tc)
 			return;
 		
+		if(tc->getStats().priv_torrent)
+		{
+			KMessageBox::sorry(0, i18n("Cannot add a tracker to a private torrent."));
+			return;
+		}
+		
 		KURL url(txtTracker->text());
 		if(!url.isValid())
 		{
