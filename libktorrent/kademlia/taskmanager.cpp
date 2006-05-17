@@ -21,6 +21,7 @@
 #include <torrent/globals.h>
 #include "taskmanager.h"
 #include "nodelookup.h"
+#include "dht.h"
 
 using namespace bt;
 
@@ -36,11 +37,7 @@ namespace dht
 
 	TaskManager::~TaskManager()
 	{
-	/*	Task* task = new NodeLookup(Key::random(),0,0);
-		Uint32 id = next_id++;
-		task->setTaskID(id);
-		tasks.insert(id,task);
-	*/
+		queued.setAutoDelete(true);
 		tasks.clear();
 	}
 
@@ -49,47 +46,31 @@ namespace dht
 	{
 		Uint32 id = next_id++;
 		task->setTaskID(id);
-		tasks.insert(id,task);
+		if (task->isQueued())
+			queued.append(task);
+		else
+			tasks.insert(id,task);
 	}
 		
-	void TaskManager::removeTask(Task* task)
+	void TaskManager::removeFinishedTasks(const DHT* dh_table)
 	{
-		tasks.erase(task->getTaskID());
-	}
-		
-	void TaskManager::removeFinishedTasks()
-	{
-		Uint32 num_running = 0;
-		Uint32 num_not_running = 0;
 		QValueList<Uint32> rm;
 		for (TaskItr i = tasks.begin();i != tasks.end();i++)
 		{
 			if (i->second->isFinished())
 				rm.append(i->first);
-			else if (!i->second->isQueued())
-				num_running++;
-			else
-				num_not_running++;
 		}
 		
 		for (QValueList<Uint32>::iterator i = rm.begin();i != rm.end();i++)
 			tasks.erase(*i);
 		
-		while (num_not_running > 0 && num_running < 8)
+		while (dh_table->canStartTask() && queued.count() > 0)
 		{
-			for (TaskItr i = tasks.begin();i != tasks.end();i++)
-			{
-				Task* t = i->second;
-				if (t->isQueued())
-				{
-					num_not_running--;
-					num_running++;
-					Out() << "DHT: starting queued task" << endl;
-					t->start();
-					if (num_running >= 8)
-						break;
-				}
-			}
+			Task* t = queued.first();
+			queued.removeFirst();
+			Out() << "DHT: starting queued task" << endl;
+			t->start();
+			tasks.insert(t->getTaskID(),t);
 		}
 	}
 

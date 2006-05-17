@@ -99,6 +99,8 @@ namespace dht
 		node->recieved(this,r);
 	}
 	
+	
+	
 	void DHT::findNode(FindNodeReq* r)
 	{
 		if (!running)
@@ -210,6 +212,18 @@ namespace dht
 		srv->doCall(r);
 	}
 	
+	bool DHT::canStartTask() const
+	{
+		// we can start a task if we have less then 8 tasks runnning and
+		// there are at least 8 RPC slots available
+		if (tman->getNumTasks() >= 8)
+			return false;
+		else if (256 - srv->getNumActiveRPCCalls() <= 8)
+			return false;
+		
+		return true;	
+	}
+	
 	AnnounceTask* DHT::announce(const bt::SHA1Hash & info_hash,bt::Uint16 port)
 	{
 		if (!running)
@@ -221,8 +235,8 @@ namespace dht
 		{
 			Out() << "DHT: Doing announce " << endl;
 			AnnounceTask* at = new AnnounceTask(db,srv,node,info_hash,port);
+			at->start(kns,!canStartTask());
 			tman->addTask(at);
-			at->start(kns,tman->getNumTasks() > 8);
 			if (!db->contains(info_hash))
 				db->insert(info_hash);
 			return at;
@@ -243,8 +257,8 @@ namespace dht
 		{
 			Out() << "DHT: refreshing bucket " << endl;
 			NodeLookup* nl = new NodeLookup(id,srv,node);
+			nl->start(kns,!canStartTask());
 			tman->addTask(nl);
-			nl->start(kns,tman->getNumTasks() > 8);
 			return nl;
 		}
 		
@@ -262,8 +276,8 @@ namespace dht
 		{
 			Out() << "DHT: finding node " << endl;
 			NodeLookup* at = new NodeLookup(id,srv,node);
+			at->start(kns,!canStartTask());
 			tman->addTask(at);
-			at->start(kns,tman->getNumTasks() > 8);
 			return at;
 		}
 		
@@ -282,8 +296,8 @@ namespace dht
 		}
 		
 		node->refreshBuckets(this);
-		tman->removeFinishedTasks();
-		stats.num_tasks = tman->getNumTasks();
+		tman->removeFinishedTasks(this);
+		stats.num_tasks = tman->getNumTasks() + tman->getNumQueuedTasks();
 		stats.num_peers = node->getNumEntriesInRoutingTable();
 	}
 	

@@ -20,12 +20,14 @@
 #ifndef DHTTASKMANAGER_H
 #define DHTTASKMANAGER_H
 
+#include <qptrlist.h>
 #include <util/ptrmap.h>
 #include <util/constants.h>
 #include "task.h"
 
 namespace dht
 {
+	class DHT;
 
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
@@ -43,23 +45,22 @@ namespace dht
 		 * @param task 
 		 */
 		void addTask(Task* task);
-		
-		/**
-		 * Remove a task, also deletes it.
-		 * @param task The task
-		 */
-		void removeTask(Task* task);
-		
+				
 		/**
 		 * Remove all finished tasks.
+		 * @param dh_table Needed to ask permission to start a task
 		 */
-		void removeFinishedTasks();
+		void removeFinishedTasks(const DHT* dh_table);
 		
 		/// Get the number of running tasks
 		bt::Uint32 getNumTasks() const {return tasks.count();}
+		
+		/// Get the number of queued tasks
+		bt::Uint32 getNumQueuedTasks() const {return queued.count();}
 
 	private:
 		bt::PtrMap<Uint32,Task> tasks;
+		QPtrList<Task> queued;
 		bt::Uint32 next_id;
 	};
 

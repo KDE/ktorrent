@@ -109,6 +109,9 @@ namespace dht
 		void start(const QString & table,bt::Uint16 port);
 		void stop();
 		void update();
+	
+		/// See if it is possible to start a task
+		bool canStartTask() const;
 		
 	private:
 		Node* node;

@@ -95,7 +95,7 @@ int main(int argc, char **argv)
 	about.addCredit("Andreas Kling",0,"kling@impul.se");
 	about.addCredit("Felipe Sateler",0,"fsateler@gmail.com");
 	about.addCredit("Maxmind", I18N_NOOP("Country locator for InfoWidget plugin. Flags are taken from http://flags.blogpotato.de/ so thanks to them too."), "http://www.maxmind.com/");
-	about.addCredit("Adam",I18N_NOOP("File prioritization"),"phantom042@gmail.com");
+	about.addCredit("Adam Forsyth",I18N_NOOP("File prioritization"),"agforsyth@gmail.com");
 
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);

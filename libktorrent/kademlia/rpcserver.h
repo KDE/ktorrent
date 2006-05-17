@@ -98,6 +98,9 @@ namespace dht
 		 * @return The call
 		 */
 		const RPCCall* findCall(Uint8 mtid) const;
+		
+		/// Get the number of active calls
+		Uint32 getNumActiveRPCCalls() const {return calls.count();}
 	private slots:
 		void readPacket();
 		
