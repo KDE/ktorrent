@@ -75,10 +75,12 @@ namespace kt
 		first_id = context_menu->insertItem(i18n("Download First"));
 		normal_id = context_menu->insertItem(i18n("Download Normally"));
 		last_id = context_menu->insertItem(i18n("Download Last"));
+		dnd_id = context_menu->insertItem(i18n("Do Not Download"));
 		context_menu->setItemEnabled(preview_id, false);
 		context_menu->setItemEnabled(first_id, false);
 		context_menu->setItemEnabled(normal_id, false);
 		context_menu->setItemEnabled(last_id, false);
+		context_menu->setItemEnabled(dnd_id, false);
 
 		connect(m_file_view,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )),
 				this,SLOT(showContextMenu(KListView*, QListViewItem*, const QPoint& )));
@@ -88,6 +90,8 @@ namespace kt
 		showPeerView( InfoWidgetPluginSettings::showPeerView() );
 		showChunkView( InfoWidgetPluginSettings::showChunkView() );
 		showTrackerView(InfoWidgetPluginSettings::showTrackersView());
+
+		m_file_view->setSelectionMode(QListView::Extended);
 		
 		if(!m_seed)
 			KGlobal::config()->setGroup("InfoWidget");
@@ -448,22 +452,40 @@ namespace kt
 		readyPercentage();
 	}
 	
-	void InfoWidget::showContextMenu(KListView* ,QListViewItem* item,const QPoint & p)
+	void InfoWidget::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 	{
 		const TorrentStats & s = curr_tc->getStats();
 		// don't show a menu if item is 0 or if it is a directory
-		if (!item || item->childCount() > 0)
-			return;
 		
+		QPtrList<QListViewItem> sel = m_file_view->selectedItems();
+		switch(sel.count())
+		{
+		case 0:
+			return;
+			break;
+		case 1:
+			break;
+		default:
+			context_menu->setItemEnabled(first_id, true);
+			context_menu->setItemEnabled(normal_id, true);
+			context_menu->setItemEnabled(last_id, true);
+			context_menu->setItemEnabled(dnd_id, true);
+			context_menu->setItemEnabled(preview_id, false);
+			context_menu->popup(p);
+			return;
+			break;
+		}
+		QListViewItem* item = sel.getFirst();
+
 		context_menu->setItemEnabled(first_id, false);
 		context_menu->setItemEnabled(normal_id, false);
 		context_menu->setItemEnabled(last_id, false);
-		if(s.multi_file_torrent)
+		context_menu->setItemEnabled(dnd_id, false);
+		if(s.multi_file_torrent && item->childCount() == 0)
 		{
 			kt::TorrentFileInterface & file = ((FileTreeItem*)item)->getTorrentFile();
 			if (!file.isNull())
 			{
-				selecteditem = item;
 				if(file.isMultimedia() && curr_tc->readyForPreview(file.getFirstChunk(), file.getFirstChunk()+1) )
 				{
 					context_menu->setItemEnabled(preview_id, true);
@@ -477,16 +499,23 @@ namespace kt
 				case FIRST_PRIORITY:
 					context_menu->setItemEnabled(normal_id, true);
 					context_menu->setItemEnabled(last_id, true);
+					context_menu->setItemEnabled(dnd_id, true);
 					break;
 				case LAST_PRIORITY:
 					context_menu->setItemEnabled(first_id, true);
 					context_menu->setItemEnabled(normal_id, true);
+					context_menu->setItemEnabled(dnd_id, true);
 					break;
 				case EXCLUDED:
+					context_menu->setItemEnabled(first_id, true);
+					context_menu->setItemEnabled(last_id, true);
+					context_menu->setItemEnabled(normal_id, true);
+					break;
 				case PREVIEW_PRIORITY:
 					break;
 				default:
 					context_menu->setItemEnabled(first_id, true);
+					context_menu->setItemEnabled(dnd_id, true);
 					context_menu->setItemEnabled(last_id, true);
 					break;
 				}
@@ -498,6 +527,13 @@ namespace kt
 		}
 		else
 		{
+			if(item->childCount() != 0)
+			{
+				context_menu->setItemEnabled(first_id, true);
+				context_menu->setItemEnabled(normal_id, true);
+				context_menu->setItemEnabled(last_id, true);
+				context_menu->setItemEnabled(dnd_id, true);
+			}
 			if ( curr_tc->readyForPreview() && IsMultimediaFile(s.output_path))
 			{
 				context_menu->setItemEnabled(preview_id, true);
@@ -506,36 +542,56 @@ namespace kt
 			else
 				context_menu->setItemEnabled(preview_id, false);
 		}
+
 		context_menu->popup(p);
 	}
 	
 	void InfoWidget::contextItem(int id)
 	{
+		Priority newpriority = NORMAL_PRIORITY;
 		if(id == this->preview_id)
 		{
 			new KRun(this->curr_tc->getTorDir()+preview_path, 0, true, true);
 			return;
 		}
-		else
+		else if(id == this->first_id)
 		{
-			TorrentFileInterface & file = multi_root->findTorrentFile(selecteditem);
-			if(id == this->first_id)
-			{
-				/* set the priorities for chunks from this file to first */
-				file.setPriority(FIRST_PRIORITY);
-			}
-			else if(id == this->normal_id)
-			{
-				/* set the priorities for chunks from this file to normal */
-				file.setPriority(NORMAL_PRIORITY);
-			}
-			else if(id == this->last_id)
-			{
-				/* set the priorities for chunks from this file to last */				
-				file.setPriority(LAST_PRIORITY);
-			}
-			multi_root->updatePriorityInformation(curr_tc);
+			newpriority = FIRST_PRIORITY;
 		}
+		else if(id == this->last_id)
+		{
+			newpriority = LAST_PRIORITY;
+		}
+		else if(id == this->dnd_id)
+		{
+			newpriority = EXCLUDED;
+		}
+
+		QPtrList<QListViewItem> sel = m_file_view->selectedItems();
+		QPtrList<QListViewItem>::Iterator i = sel.begin();
+		while(i != sel.end())
+		{
+			QListViewItem* item = *i;
+			changePriority(item, newpriority);
+			multi_root->updatePriorityInformation(curr_tc);
+			i++;
+		}
+	}
+
+	void InfoWidget::changePriority(QListViewItem* item, Priority newpriority)
+	{
+		if(item->childCount() == 0)
+		{
+			TorrentFileInterface & file = multi_root->findTorrentFile(item);
+			file.setPriority(newpriority);
+			return;
+		}
+		QListViewItem* myChild = item->firstChild();
+		while( myChild )
+		{
+			changePriority(myChild, newpriority);
+			myChild = myChild->nextSibling();
+	        }
 	}
 
 	void InfoWidget::maxRatio_returnPressed()

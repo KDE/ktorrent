@@ -24,6 +24,7 @@
 
 
 #include "infowidgetbase.h"
+#include <util/constants.h>
 
 class KPopupMenu; 
 class QString;
@@ -41,6 +42,7 @@ namespace kt
 	class KTorrentMonitor;
 	class IWFileTreeDirItem;
 
+	using bt::Priority;
 
 	class InfoWidget : public InfoWidgetBase
 	{
@@ -56,7 +58,9 @@ namespace kt
 		void showChunkView(bool show);
 		///Show TrackerView in main window
 		void showTrackerView(bool show);
-	
+		//change the priority of all children of a directory
+	        void changePriority(QListViewItem* item, Priority newpriority);
+
 	public slots:
 		void changeTC(kt::TorrentInterface* tc);
 		void update();
@@ -79,11 +83,11 @@ namespace kt
 		IWFileTreeDirItem* multi_root;
 		KPopupMenu* context_menu;
 		QString preview_path;
-		QListViewItem* selecteditem;
 		int preview_id;
 		int first_id;
 		int normal_id;
 		int last_id;
+		int dnd_id;
 		QWidget* peer_page;
 		PeerView* peer_view;
 		QWidget* cd_page;

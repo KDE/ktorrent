@@ -145,23 +145,33 @@ namespace kt
                         {
                         case FIRST_PRIORITY:
                                 setText(2, i18n("Yes, First"));
+				childStateChange();
                                 break;
                         case LAST_PRIORITY:
                                 setText(2, i18n("Yes, Last"));
+				childStateChange();
                                 break;
                         case EXCLUDED:
                                 setText(2, i18n("No"));
+				childStateChange();
                                 break;
                         default:
                                 setText(2, i18n("Yes"));
+				childStateChange();
                                 break;
                         }
                         return priority;
                 }
                 if(oneexcluded)
+		{
                         setText(2, i18n("No"));
+			childStateChange();
+		}
                 else
+		{
                         setText(2, i18n("Yes"));
+			childStateChange();
+		}
         return PREVIEW_PRIORITY;
         }
 

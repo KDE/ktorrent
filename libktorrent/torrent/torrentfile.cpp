@@ -83,8 +83,19 @@ namespace bt
 	{
 		if(priority != newpriority)
 		{
-			priority = newpriority;
-			emit downloadPriorityChanged(this,newpriority);
+			if(priority == EXCLUDED)
+			{
+				setDoNotDownload(false);
+			}
+			if(newpriority == EXCLUDED)
+			{
+				setDoNotDownload(true);
+			}
+			else
+			{
+				priority = newpriority;
+				emit downloadPriorityChanged(this,newpriority);
+			}
 		}
 	}
 

@@ -60,6 +60,15 @@ namespace kt
 		
 		for (KURL::List::const_iterator i = trackers.begin();i != trackers.end();i++)
 			new QListViewItem(listTrackers, (*i).prettyURL());
+		
+		if (tc->getStats().priv_torrent)
+		{
+			btnAdd->setEnabled(false);
+			btnRemove->setEnabled(false);
+			btnRestore->setEnabled(false);
+			txtTracker->setText(i18n("You cannot add trackers to a private torrent"));
+			txtTracker->setEnabled(false);
+		}
 	}
 
 	void TrackerView::btnAdd_clicked()
@@ -149,7 +158,7 @@ namespace kt
 
 		lblStatus->setText("<b>" + s.trackerstatus + "</b>");
 		lblCurrent->setText("<b>" + tc->getTrackerURL(true).prettyURL() + "</b>");
-		btnAdd->setEnabled(txtTracker->text() != QString::null);
+		btnAdd->setEnabled(txtTracker->text() != QString::null && !tc->getStats().priv_torrent);
 	}
 	
 	void TrackerView::torrentChanged(TorrentInterface* ti)
@@ -158,6 +167,24 @@ namespace kt
 		listTrackers->clear();
 		if(!tc)
 			return;
+		
+		if (tc->getStats().priv_torrent)
+		{
+			btnAdd->setEnabled(false);
+			btnRemove->setEnabled(false);
+			btnRestore->setEnabled(false);
+			txtTracker->setText(i18n("You cannot add trackers to a private torrent"));
+			txtTracker->setEnabled(false);
+		}
+		else
+		{
+			btnAdd->setEnabled(true);
+			btnRemove->setEnabled(true);
+			btnRestore->setEnabled(true);
+			txtTracker->clear();
+			txtTracker->setEnabled(true);
+		}
+		
 		
 // 		const KURL::List trackers = tc-> getTrackers();
 		const KURL::List trackers = tc->getTrackersList()->getTrackerURLs();
