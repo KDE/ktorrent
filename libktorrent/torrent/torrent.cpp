@@ -254,7 +254,13 @@ namespace bt
 			// first child is the IP, second the port
 			BValueNode* ip = c->getValue(0);
 			BValueNode* port = c->getValue(1);
-			if (!ip || !port || ip->getType() != Value::STRING || port->getType() != Value::INT)
+			if (!ip || !port)
+				throw Error(i18n("Corrupted torrent!"));
+			
+			if (ip->data().getType() != Value::STRING) 
+				throw Error(i18n("Corrupted torrent!"));
+			
+			if (port->data().getType() != Value::INT)
 				throw Error(i18n("Corrupted torrent!"));
 			
 			// add the DHT node
