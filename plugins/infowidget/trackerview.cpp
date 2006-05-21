@@ -166,7 +166,13 @@ namespace kt
 		tc = ti;
 		listTrackers->clear();
 		if(!tc)
+		{
+			lblStatus->clear();
+			lblCurrent->clear();
+			lblUpdate->clear();
+			txtTracker->clear();
 			return;
+		}
 		
 		if (tc->getStats().priv_torrent)
 		{

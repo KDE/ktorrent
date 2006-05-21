@@ -318,7 +318,21 @@ namespace kt
 			}
 		}
 		else
+		{
 			maxRatio->clear();
+			m_share_ratio->clear();
+			m_tracker_status->clear();
+			m_seeders->clear();
+			m_leechers->clear();
+			m_chunks_downloading->clear();
+			m_chunks_downloaded->clear();
+			m_total_chunks->clear();
+			m_excluded_chunks->clear();
+			m_tracker_update_time->clear();
+			m_avg_up->clear();
+			m_avg_down->clear();
+			m_size_chunks->clear();
+		}
 		
 		update();
 	}
@@ -591,7 +605,7 @@ namespace kt
 		{
 			changePriority(myChild, newpriority);
 			myChild = myChild->nextSibling();
-	        }
+		}
 	}
 
 	void InfoWidget::maxRatio_returnPressed()
