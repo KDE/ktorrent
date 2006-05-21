@@ -146,7 +146,7 @@ namespace kt
 			engine = sbar->m_search_engine->currentItem();
 		
 		QString s_url = m_search_engines[engine].url.url();
-		s_url.replace("FOOBAR", text, true);
+		s_url.replace("FOOBAR", KURL::encode_string(text), true);
 		KURL url = KURL::fromPathOrURL(s_url);
 	
 		statusBarMsg(i18n("Searching for %1...").arg(text));
