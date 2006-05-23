@@ -70,6 +70,9 @@ namespace bt
 		ChunkManager(Torrent & tor,const QString & tmpdir,const QString & datadir,bool custom_output_name);
 		virtual ~ChunkManager();
 
+		/// Get the torrent
+		const Torrent & getTorrent() const {return tor;}
+		
 		/// Get the data dir
 		QString getDataDir() const;
 		

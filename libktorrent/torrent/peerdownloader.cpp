@@ -127,6 +127,18 @@ namespace bt
 		}
 	}
 	
+	void PeerDownloader::onRejected(const Request & req)
+	{
+		if (!peer)
+			return;
+
+		if (reqs.contains(req))
+		{
+			reqs.remove(req);
+			rejected(req);
+		}
+	}
+	
 	void PeerDownloader::cancelAll()
 	{
 		if (peer)
@@ -214,6 +226,16 @@ namespace bt
 		}
 	}
 	
+	void PeerDownloader::addAllowedFastChunk(Uint32 chunk)
+	{
+		allowed_fast.insert(chunk);
+	}
+	
+	bool PeerDownloader::inAllowedFastChunks(Uint32 chunk)
+	{
+		return allowed_fast.count(chunk) > 0;
+	}
+	
 	Uint32 PeerDownloader::getMaximumOutstandingReqs() const
 	{
 		// get the download rate in KB/sec
@@ -262,6 +284,8 @@ namespace bt
 				break;
 		}
 	}
+	
+	
 	
 }
 #include "peerdownloader.moc"

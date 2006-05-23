@@ -156,22 +156,28 @@ namespace bt
 		{
 			PeerDownloader* pd = pman.getPeer(i)->getPeerDownloader();
 			
-			if (pd->isNull() || pd->isChoked())
+			if (pd->isNull())
 				continue;
 	
 			bool ok = pd->getNumGrabbed() < pd->getMaxChunkDownloads() && 
 					pd->getNumRequests() < pd->getMaximumOutstandingReqs();
+			
+			
 			if (ok)
 			{
-				downloadFrom(pd);
+				if (pd->isChoked())
+				{
+					if (pd->getNumAllowedFastChunks() > 0)
+						downloadFromAF(pd);
+				}
+				else
+					downloadFrom(pd);
 			}
 		}
 	}
 
-
-	void Downloader::downloadFrom(PeerDownloader* pd)
+	Uint32 Downloader::maxMemoryUsage()
 	{
-		// calculate the max memory usage
 		Uint32 max = 1024 * 1024;
 		if (cman.getNumChunks() - cman.chunksLeft() <= 4)
 		{
@@ -194,10 +200,11 @@ namespace bt
 					break;
 			}
 		}
-		
-		ChunkDownload* sel = 0;
-		Uint32 sel_left = 0xFFFFFFFF;
-		// calculate number of non idle chunks
+		return max;
+	}
+	
+	Uint32 Downloader::numNonIdle()
+	{
 		Uint32 num_non_idle = 0;
 		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
 		{
@@ -205,6 +212,13 @@ namespace bt
 			if (!cd->isIdle())
 				num_non_idle++;
 		}
+		return num_non_idle;
+	}
+	
+	bool Downloader::findDownloadForPD(PeerDownloader* pd)
+	{
+		ChunkDownload* sel = 0;
+		Uint32 sel_left = 0xFFFFFFFF;
 		
 		// first see if there are ChunkDownload's which need a PeerDownloader
 		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
@@ -212,12 +226,22 @@ namespace bt
 			ChunkDownload* cd = j->second;
 			if (!pd->hasChunk(cd->getChunk()->getIndex()))
 				continue;
-
-			// if cd hasn't got a downloader we can try it
-			if (cd->getNumDownloaders() == 0 && num_non_idle * tor.getChunkSize() <= max)
+			
+			// if the peer is choked we only try allowed fast chunks
+			if (pd->isChoked())
 			{
+				if (pd->inAllowedFastChunks(cd->getChunk()->getIndex()))
+				{
+					sel = cd;
+					break; // allowed fast so break
+				}
+			}
+			else
+			{
+				// if cd hasn't got a downloader we can try it
 				// lets favor the ones which are nearly finished
-				if (!sel || cd->getTotalPieces() - cd->getPiecesDownloaded() < sel_left)
+				if (cd->getNumDownloaders() == 0 && 
+					(!sel || cd->getTotalPieces() - cd->getPiecesDownloaded() < sel_left))
 				{
 					sel = cd;
 					sel_left = sel->getTotalPieces() - sel->getPiecesDownloaded();
@@ -229,14 +253,24 @@ namespace bt
 		{
 			// if it is on disk, reload it
 			if (sel->getChunk()->getStatus() == Chunk::ON_DISK)
-			{
 				cman.prepareChunk(sel->getChunk(),true);
-				num_non_idle++;
-			}
-				
+			
 			sel->assignPeer(pd);
-			return;
+			return true;
 		}
+		return false;
+	}
+
+	void Downloader::downloadFrom(PeerDownloader* pd)
+	{
+		// calculate the max memory usage
+		Uint32 max = maxMemoryUsage();
+		// calculate number of non idle chunks
+		Uint32 num_non_idle = numNonIdle();
+		
+		// first see if we can use an existing dowload
+		if (findDownloadForPD(pd))
+			return;
 		
 		bool limit_exceeded = num_non_idle * tor.getChunkSize() >= max;
 		Uint32 chunk = 0;
@@ -283,6 +317,44 @@ namespace bt
 				cdmin->assignPeer(pd); 
 			}
 		} 
+	}
+	
+	void Downloader::downloadFromAF(PeerDownloader* pd)
+	{
+		// calculate the max memory usage
+		Uint32 max = maxMemoryUsage();
+		// calculate number of non idle chunks
+		Uint32 num_non_idle = numNonIdle();
+		
+		// first see if we can use an existing dowload
+		if (findDownloadForPD(pd))
+			return;
+		
+		bool limit_exceeded = num_non_idle * tor.getChunkSize() >= max;
+		Uint32 chunk = 0;
+		if (limit_exceeded)
+			return;
+		
+		// try to find a chunk in the allowed fast set
+		AllowedFastSet::const_iterator itr = pd->beginAF();
+		while (itr != pd->endAF())
+		{
+			if (pd->hasChunk(*itr) && !current_chunks.contains(*itr))
+			{
+				Uint32 chunk = *itr;
+				Chunk* c = cman.getChunk(chunk);
+				if (cman.prepareChunk(c))
+				{
+					ChunkDownload* cd = new ChunkDownload(c);
+					current_chunks.insert(chunk,cd);
+					cd->assignPeer(pd);
+					if (tmon)
+						tmon->downloadStarted(cd);
+					return;
+				}	
+			}
+			itr++;
+		}
 	}
 
 	bool Downloader::areWeDownloading(Uint32 chunk) const

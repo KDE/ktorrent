@@ -159,17 +159,22 @@ namespace bt
 	
 	void PacketWriter::sendRequest(const Request & r)
 	{
-		queuePacket(new Packet(r,false),false);
+		queuePacket(new Packet(r,bt::REQUEST),false);
 	}
 	
 	void PacketWriter::sendCancel(const Request & r)
 	{
-		queuePacket(new Packet(r,true),false);
+		queuePacket(new Packet(r,bt::CANCEL),false);
+	}
+	
+	void PacketWriter::sendReject(const Request & r)
+	{
+		queuePacket(new Packet(r,bt::REJECT_REQUEST),false);
 	}
 	
 	void PacketWriter::sendHave(Uint32 index)
 	{
-		queuePacket(new Packet(index),false);
+		queuePacket(new Packet(index,bt::HAVE),false);
 	}
 	
 	void PacketWriter::sendPort(Uint16 port)
@@ -180,6 +185,26 @@ namespace bt
 	void PacketWriter::sendBitSet(const BitSet & bs)
 	{
 		queuePacket(new Packet(bs),false);
+	}
+	
+	void PacketWriter::sendHaveAll()
+	{
+		queuePacket(new Packet(bt::HAVE_ALL),false);
+	}
+
+	void PacketWriter::sendHaveNone()
+	{
+		queuePacket(new Packet(bt::HAVE_NONE),false);
+	}
+	
+	void PacketWriter::sendSuggestPiece(Uint32 index)
+	{
+		queuePacket(new Packet(index,bt::SUGGEST_PIECE),false);
+	}
+	
+	void PacketWriter::sendAllowedFast(Uint32 index)
+	{
+		queuePacket(new Packet(index,bt::ALLOWED_FAST),false);
 	}
 			
 	void PacketWriter::sendChunk(Uint32 index,Uint32 begin,Uint32 len,Chunk * ch)

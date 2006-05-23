@@ -75,6 +75,9 @@ namespace bt
 		 */
 		void set(Uint32 i,bool on);
 		
+		/// Set all bits on or off
+		void setAll(bool on);
+		
 		Uint32 getNumBytes() const {return num_bytes;}
 		Uint32 getNumBits() const {return num_bits;}
 		const Uint8* getData() const {return data;}

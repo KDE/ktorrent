@@ -37,8 +37,8 @@
 #include <torrent/globals.h>
 #include <interfaces/functions.h>
 #include <kapplication.h>
-#include "log.h"
-#include "error.h"
+#include <util/log.h>
+#include <util/error.h>
 #include "cachefile.h"
 
 

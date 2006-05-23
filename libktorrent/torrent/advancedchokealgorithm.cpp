@@ -148,7 +148,7 @@ namespace bt
 					ppl.append(p);
 				else
 					// choke seeders they do not want to download from us anyway
-					p->getPacketWriter().sendChoke();  
+					p->choke();
 			}
 		}
 		
@@ -181,7 +181,7 @@ namespace bt
 			}
 			else
 			{
-				p->getPacketWriter().sendChoke();
+				p->choke();
 			}
 		}
 	}
@@ -211,7 +211,7 @@ namespace bt
 					ppl.append(p);
 				else
 					// choke seeders they do not want to download from us anyway
-					p->getPacketWriter().sendChoke();  
+					p->choke();  
 			}
 		}
 		

@@ -41,7 +41,7 @@ namespace bt
 	SHA1HashGen::~SHA1HashGen()
 	{}
 
-	SHA1Hash SHA1HashGen::generate(Uint8* data,Uint32 len)
+	SHA1Hash SHA1HashGen::generate(const Uint8* data,Uint32 len)
 	{
 		h0 = 0x67452301;
 		h1 = 0xEFCDAB89;
@@ -99,7 +99,7 @@ namespace bt
 	
 	
 
-	void SHA1HashGen::processChunk(Uint8* chunk)
+	void SHA1HashGen::processChunk(const Uint8* chunk)
 	{
 		Uint32 w[80];
 		for (int i = 0;i < 80;i++)

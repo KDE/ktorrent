@@ -47,9 +47,9 @@ namespace bt
 	public:
 		Packet(Uint8 type);
 		Packet(Uint16 port);
-		Packet(Uint32 chunk);
+		Packet(Uint32 chunk,Uint8 type);
 		Packet(const BitSet & bs);
-		Packet(const Request & req,bool cancel);
+		Packet(const Request & req,Uint8 type);
 		Packet(Uint32 index,Uint32 begin,Uint32 len,Chunk* ch);
 		virtual ~Packet();
 

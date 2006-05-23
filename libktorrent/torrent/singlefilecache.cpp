@@ -20,15 +20,14 @@
 #include <klocale.h>
 #include <qfileinfo.h>
 #include <util/fileops.h>
-#include <util/cachefile.h>
-#include "singlefilecache.h"
 #include <util/error.h>
 #include <util/functions.h>
 #include <util/log.h>
 #include "torrent.h"
 #include "chunk.h"
 #include "globals.h"
-#include "preallocationthread.h"
+#include "cachefile.h"
+#include "singlefilecache.h"
 
 
 namespace bt

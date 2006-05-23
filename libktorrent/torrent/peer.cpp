@@ -42,7 +42,7 @@ namespace bt
 	static Uint32 peer_id_counter = 1;
 	
 	
-	Peer::Peer(mse::StreamSocket* sock,const PeerID & peer_id,Uint32 num_chunks,bool dht_supported)
+	Peer::Peer(mse::StreamSocket* sock,const PeerID & peer_id,Uint32 num_chunks,Uint32 support)
 	: sock(sock),pieces(num_chunks),peer_id(peer_id)
 	{
 		id = peer_id_counter;
@@ -72,7 +72,8 @@ namespace bt
 		stats.upload_rate = 0;
 		stats.perc_of_file = 0;
 		stats.snubbed = false;
-		stats.dht_support = dht_supported;
+		stats.dht_support = support & DHT_SUPPORT;
+		stats.fast_extensions = support & FAST_EXT_SUPPORT;
 		stats.bytes_downloaded = stats.bytes_uploaded = 0;
 		stats.aca_score = 0.0;
 		stats.evil = false;
@@ -237,6 +238,9 @@ namespace bt
 				
 				pieces = BitSet(tmp_buf+1,pieces.getNumBits());
 				bitSetRecieved(pieces);
+				// less then 5 pieces and support for fast_extensions so enable allowed fast
+				if (stats.fast_extensions && pieces.numOnBits() < 5)
+					uploader->enableAllowedFast();
 				break;
 			case REQUEST:
 				if (len != 13)
@@ -294,6 +298,22 @@ namespace bt
 					uploader->removeRequest(r);
 				}
 				break;
+			case REJECT_REQUEST:
+				if (len != 13)
+				{
+					Out() << "len err REJECT_REQUEST" << endl;
+					error(0);
+					return;
+				}
+				
+				{
+					Request r(ReadUint32(tmp_buf,1),
+							  ReadUint32(tmp_buf,5),
+							  ReadUint32(tmp_buf,9),
+							  id);
+					downloader->onRejected(r);
+				}
+				break;
 			case PORT:
 				if (len != 3)
 				{
@@ -307,6 +327,45 @@ namespace bt
 					Out() << "Got PORT packet : " << port << endl;
 					gotPortPacket(getIPAddresss(),port);
 				}
+				break;
+			case HAVE_ALL:
+				if (len != 1)
+				{
+					Out() << "len err HAVE_ALL" << endl;
+					error(0);
+					return;
+				}
+				Out() << "HAVE_ALL" << endl;
+				pieces.setAll(true);
+				bitSetRecieved(pieces);
+				break;
+			case HAVE_NONE:
+				if (len != 1)
+				{
+					Out() << "len err HAVE_NONE" << endl;
+					error(0);
+					return;
+				}
+				Out() << "HAVE_NONE" << endl;
+				pieces.setAll(false);
+				bitSetRecieved(pieces);
+				// no pieces so give enable AF if peer supports it
+				if (stats.fast_extensions)
+					uploader->enableAllowedFast();
+				break;
+			case SUGGEST_PIECE:
+				Out() << "SUGGEST_PIECE" << endl;
+				// ignore suggestions for the moment
+				break;
+			case ALLOWED_FAST:
+				if (len != 5)
+				{
+					Out() << "len err ALLOWED_FAST" << endl;
+					error(0);
+					return;
+				}
+				Out() << "ALLOWED_FAST " << ReadUint32(tmp_buf,1) << endl;
+				downloader->addAllowedFastChunk(ReadUint32(tmp_buf,1));
 				break;
 		}
 	}
@@ -408,6 +467,19 @@ namespace bt
 	void Peer::setACAScore(double s)
 	{
 		stats.aca_score = s;
+	}
+	
+	void Peer::choke()
+	{
+		if (am_choked)
+			return;
+		
+		pwriter->sendChoke();
+		if (stats.fast_extensions)
+		{
+			// send rejects for all queued up packets
+			uploader->rejectAll();
+		}
 	}
 }
 

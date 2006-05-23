@@ -21,7 +21,7 @@
 #define BTCHUNK_H
 
 #include <util/constants.h>
-#include <util/cachefile.h>
+#include "cachefile.h"
 
 namespace bt
 {

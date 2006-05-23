@@ -165,6 +165,7 @@ namespace bt
 			PeerDownloader* pd = pdown.at(i);
 			pd->release();
 			disconnect(pd,SIGNAL(timedout(const Request& )),this,SLOT(onTimeout(const Request& )));
+			disconnect(pd,SIGNAL(rejected( const Request& )),this,SLOT(onRejected( const Request& )));
 		}
 		dstatus.clear();
 		pdown.clear();
@@ -180,7 +181,20 @@ namespace bt
 		dstatus.insert(pd->getPeer()->getID(),new DownloadStatus());
 		sendRequests(pd);
 		connect(pd,SIGNAL(timedout(const Request& )),this,SLOT(onTimeout(const Request& )));
+		connect(pd,SIGNAL(rejected( const Request& )),this,SLOT(onRejected( const Request& )));
 		return true;
+	}
+	
+	void ChunkDownload::onRejected(const Request & r)
+	{
+		DownloadStatus* ds = dstatus.find(r.getPeer());
+		if (!ds)
+			return;
+		
+		Uint32 pp = r.getOffset() / MAX_PIECE_LEN;
+		ds->remove(pp);
+		for (QPtrList<PeerDownloader>::iterator i = pdown.begin();i != pdown.end();++i)
+			sendRequests(*i);
 	}
 	
 	void ChunkDownload::sendRequests(PeerDownloader* pd)
@@ -292,6 +306,7 @@ namespace bt
 		dstatus.erase(pd->getPeer()->getID());
 		pdown.remove(pd);
 		disconnect(pd,SIGNAL(timedout(const Request& )),this,SLOT(onTimeout(const Request& )));
+		disconnect(pd,SIGNAL(rejected( const Request& )),this,SLOT(onRejected( const Request& )));
 	}
 	
 	

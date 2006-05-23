@@ -91,7 +91,7 @@ namespace bt
 		 * @param len Size in bytes of data
 		 * @return The generated SHA1 hash
 		 */
-		static SHA1Hash generate(Uint8* data,Uint32 len);
+		static SHA1Hash generate(const Uint8* data,Uint32 len);
 
 		/**
 		 * Convert the hash to a printable string.

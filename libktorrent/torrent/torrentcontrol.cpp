@@ -576,7 +576,22 @@ namespace bt
 	{
 		connect(p,SIGNAL(gotPortPacket( const QString&, Uint16 )),
 				this,SLOT(onPortPacket( const QString&, Uint16 )));
-		p->getPacketWriter().sendBitSet(cman->getBitSet());
+		
+		if (p->getStats().fast_extensions)
+		{
+			const BitSet & bs = cman->getBitSet();
+			if (bs.allOn())
+				p->getPacketWriter().sendHaveAll();
+			else if (bs.numOnBits() == 0)
+				p->getPacketWriter().sendHaveNone();
+			else
+				p->getPacketWriter().sendBitSet(bs);
+		}
+		else
+		{
+			p->getPacketWriter().sendBitSet(cman->getBitSet());
+		}
+		
 		if (!stats.completed)
 			p->getPacketWriter().sendInterested();
 		

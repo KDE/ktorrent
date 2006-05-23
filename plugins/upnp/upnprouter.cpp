@@ -249,6 +249,17 @@ namespace kt
 		QString comm = SOAP::createCommand(action,s.servicetype,args);
 		
 		Forwarding fw = {port,prot,true};
+		// erase old forwarding if one exists
+		QValueList<Forwarding>::iterator itr = fwds.begin();
+		while (itr != fwds.end())
+		{
+			Forwarding & fwo = *itr;
+			if (fwo.port == port && fwo.prot == prot)
+				itr = fwds.erase(itr);
+			else
+				itr++;
+		}
+		
 		bt::HTTPRequest* r = sendSoapQuery(comm,s.servicetype + "#" + action,s.controlurl);
 		reqs[r] = fwds.append(fw);
 	}

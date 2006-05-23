@@ -42,9 +42,9 @@ namespace bt
 		SHA1HashGen();
 		~SHA1HashGen();
 
-		SHA1Hash generate(Uint8* data,Uint32 len);
+		SHA1Hash generate(const Uint8* data,Uint32 len);
 	private:
-		void processChunk(Uint8* c);
+		void processChunk(const Uint8* c);
 	};
 
 }

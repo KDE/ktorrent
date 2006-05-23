@@ -20,6 +20,7 @@
 #ifndef BTPEERDOWNLOADER_H
 #define BTPEERDOWNLOADER_H
 
+#include <set>
 #include <qvaluelist.h>
 #include <qobject.h>
 #include "globals.h"
@@ -30,6 +31,8 @@ namespace bt
 	class Peer;
 	class Request;
 	class Piece;
+	
+	typedef std::set<Uint32> AllowedFastSet;
 	/**
 	 * Request with a timestamp. 
 	 */
@@ -146,6 +149,23 @@ namespace bt
 		
 		/// Get the maximum number of chunk downloads
 		Uint32 getMaxChunkDownloads() const;
+		
+		/// Add an allowed fast chunk
+		void addAllowedFastChunk(Uint32 chunk);
+		
+		/**
+		 * See if a chunk is an allowed fast chunk
+		 * @param chunk The chunk
+		 * @return true if the chunk is allowed_fast
+		 */
+		bool inAllowedFastChunks(Uint32 chunk);
+		
+		/// Get the number of allowed fast chunks
+		Uint32 getNumAllowedFastChunks() const {return allowed_fast.size();}
+		
+		AllowedFastSet::const_iterator beginAF() const {return allowed_fast.begin();}
+		AllowedFastSet::const_iterator endAF() const {return allowed_fast.end();}
+		
 	public slots:
 		/**
 		 * Send a Request. Note that the DownloadCap
@@ -165,6 +185,12 @@ namespace bt
 		 * Cancel all Requests
 		 */
 		void cancelAll();
+		
+		/**
+		 * Handles a rejected request.
+		 * @param req 
+		 */
+		void onRejected(const Request & req);
 		
 		static void setMemoryUsage(Uint32 m);
 		
@@ -187,10 +213,17 @@ namespace bt
 		 */
 		void timedout(const Request & r);
 		
+		/**
+		 * A request was rejected.
+		 * @param req The Request
+		 */
+		void rejected(const Request & req);
+		
 	private:
 		Peer* peer;
 		QValueList<TimeStampedRequest> reqs;
 		int grabbed;
+		AllowedFastSet allowed_fast;
 		static Uint32 max_outstanding_reqs;
 	};
 

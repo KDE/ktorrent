@@ -71,11 +71,16 @@ namespace bt
 		num_on = bs.num_on;
 		return *this;
 	}
+	
+	void BitSet::setAll(bool on)
+	{
+		std::fill(data,data+num_bytes,on ? 0xFF : 0x00);
+		num_on = on ? num_bits : 0;
+	}
 
 	void BitSet::clear()
 	{
-		std::fill(data,data+num_bytes,0x00);
-		num_on = 0;
+		setAll(false);
 	}
 
 	void BitSet::orBitSet(const BitSet & other)

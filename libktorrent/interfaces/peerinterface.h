@@ -71,6 +71,8 @@ namespace kt
 			bool encrypted;
 			/// Number of requests queued
 			bt::Uint32 num_requests;
+			/// Supports the fast extensions
+			bool fast_extensions;
 		};
 
 		virtual const Stats & getStats() const = 0;

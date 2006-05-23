@@ -48,10 +48,10 @@ namespace bt
 		hdr_length = 7;
 	}
 	
-	Packet::Packet(Uint32 chunk) : hdr_length(0),data(0),data_length(0),written(0),chunk(0)
+	Packet::Packet(Uint32 chunk,Uint8 type) : hdr_length(0),data(0),data_length(0),written(0),chunk(0)
 	{
 		WriteUint32(hdr,0,5);
-		hdr[4] = HAVE;
+		hdr[4] = type;
 		WriteUint32(hdr,5,chunk);
 		hdr_length = 9;
 	}
@@ -66,11 +66,11 @@ namespace bt
 		memcpy(data,bs.getData(),data_length);
 	}
 	
-	Packet::Packet(const Request & r,bool cancel)
+	Packet::Packet(const Request & r,Uint8 type)
 	: hdr_length(0),data(0),data_length(0),written(0),chunk(0)
 	{
 		WriteUint32(hdr,0,13);
-		hdr[4] = cancel ? CANCEL : REQUEST;
+		hdr[4] = type;
 		WriteUint32(hdr,5,r.getIndex());
 		WriteUint32(hdr,9,r.getOffset());
 		WriteUint32(hdr,13,r.getLength());

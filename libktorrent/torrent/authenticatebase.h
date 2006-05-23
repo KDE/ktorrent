@@ -58,6 +58,9 @@ namespace bt
 		/// See if DHT is supported
 		bool supportsDHT() const {return dht_support;}
 		
+		/// See if the Peer supports fast_extensions
+		bool supportsFastExtensions() const {return fast_extensions;}
+		
 	protected:
 		/**
 		 * Send a handshake
@@ -97,6 +100,7 @@ namespace bt
 		Uint8 handshake[68];
 		Uint32 bytes_of_handshake_recieved;
 		bool dht_support;
+		bool fast_extensions;
 	};
 
 }

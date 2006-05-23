@@ -132,9 +132,9 @@ namespace bt
 		 * A new connection is ready for this PeerManager.
 		 * @param sock The socket
 		 * @param peer_id The Peer's ID
+		 * @param support What extensions the peer supports
 		 */
-
-		void newConnection(mse::StreamSocket* sock,const PeerID & peer_id,bool dht_supported);
+		void newConnection(mse::StreamSocket* sock,const PeerID & peer_id,Uint32 support);
 
 		/**
 		 * Add a potential peer

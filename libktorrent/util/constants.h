@@ -31,13 +31,14 @@ namespace bt
 	typedef int Int32;
 	typedef short Int16;
 	typedef char Int8;
-        typedef enum {
-                        PREVIEW_PRIORITY = 4,
-                        FIRST_PRIORITY = 3,
-                        NORMAL_PRIORITY = 2,
-                        LAST_PRIORITY = 1,
-                        EXCLUDED = 0
-        } Priority;
+	typedef enum 
+	{
+		PREVIEW_PRIORITY = 4,
+		FIRST_PRIORITY = 3,
+		NORMAL_PRIORITY = 2,
+		LAST_PRIORITY = 1,
+		EXCLUDED = 0
+	}Priority;
 	
 	const Uint32 MAX_MSGLEN = 9 + 131072;
 	const Uint16 MIN_PORT = 6881;
@@ -54,6 +55,16 @@ namespace bt
 	const Uint8 PIECE = 7;
 	const Uint8 CANCEL = 8;
 	const Uint8 PORT = 9;
+	const Uint8 SUGGEST_PIECE = 13;
+	const Uint8 HAVE_ALL = 14;
+	const Uint8 HAVE_NONE = 15;
+	const Uint8 REJECT_REQUEST = 16;
+	const Uint8 ALLOWED_FAST = 17;
+	
+	
+	// flags for things which a peer supports
+	const Uint32 DHT_SUPPORT = 0x01;
+	const Uint32 FAST_EXT_SUPPORT = 0x04;
 }
 
 

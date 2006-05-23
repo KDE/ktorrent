@@ -36,6 +36,7 @@ namespace bt
 		memset(handshake,0x00,68);
 		bytes_of_handshake_recieved = 0;
 		dht_support = false;
+		fast_extensions = false;
 	}
 
 
@@ -53,6 +54,7 @@ namespace bt
 		makeHandshake(hs,info_hash,our_peer_id);
 		sock->sendData(hs,68);
 	}
+	
 	void AuthenticateBase::makeHandshake(Uint8* hs,const SHA1Hash & info_hash,const PeerID & our_peer_id)
 	{
 		const char* pstr = "BitTorrent protocol";
@@ -61,11 +63,13 @@ namespace bt
 		if (Globals::instance().getDHT().isRunning())
 		{
 			memset(hs+20,0x00,7);
-			memset(hs+27,0x01,1); // enable DHT support
+			memset(hs+27,0x04 | 0x01,1); 
+			// enable DHT support and fast extensions
+			// 0x01 for DHT and 0x04 for fast extensions
 		}
 		else
 		{
-			memset(hs+20,0x00,8);
+			memset(hs+20,0x04,8);
 		}
 		memcpy(hs+28,info_hash.getData(),20);
 		memcpy(hs+48,our_peer_id.data(),20);
@@ -119,10 +123,16 @@ namespace bt
 			return;
 		}
 		
-		if (Globals::instance().getDHT().isRunning() && handshake[27])
+		if (Globals::instance().getDHT().isRunning() && (handshake[27] & 0x01))
 		{
 			Out() << "Peer supports DHT" << endl;
 			dht_support = true;
+		}
+		
+		if (handshake[27] & 0x04)
+		{
+			Out() << "Peer supports Fast Extensions" << endl;
+			fast_extensions = true;
 		}
 		
 		handshakeRecieved(true);

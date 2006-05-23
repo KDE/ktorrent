@@ -60,7 +60,7 @@ namespace kt
 		m_filter->setURL(IPBlockingPluginSettings::filterFile());
 		m_url->setURL(IPBlockingPluginSettings::filterURL());
 		if (m_url->url() == "")
-			m_url->setURL(QString("www.bluetack.co.uk/config/splist.zip"));
+			m_url->setURL(QString("http://www.bluetack.co.uk/config/splist.zip"));
 		
 		bool use_level1 = IPBlockingPluginSettings::useLevel1();
 		bool use_filter = IPBlockingPluginSettings::useFilter();

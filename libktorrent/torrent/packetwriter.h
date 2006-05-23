@@ -83,11 +83,24 @@ namespace bt
 		 */
 		void sendCancel(const Request & r);
 		
+		
+		/**
+		 * Send a reject for a request
+		 * @param req The Request
+		 */
+		void sendReject(const Request & r);
+		
 		/**
 		 * Send a have packet.
 		 * @param index
 		 */
 		void sendHave(Uint32 index);
+		
+		/**
+		 * Send an allowed fast packet
+		 * @param index
+		 */
+		void sendAllowedFast(Uint32 index);
 		
 		/**
 		 * Send a chunk of data.
@@ -109,6 +122,18 @@ namespace bt
 		 * @param port The port
 		 */
 		void sendPort(Uint16 port);
+		
+		/// Send a have all message
+		void sendHaveAll();
+		
+		/// Send a have none message
+		void sendHaveNone();
+		
+		/**
+		 * Send a suggest piece packet
+		 * @param index Index of the chunk
+		 */
+		void sendSuggestPiece(Uint32 index);
 
 		/**
 		 * Try to send the remaining packets in the queue.

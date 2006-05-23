@@ -171,8 +171,7 @@ namespace bt
 	}
 	
 
-	void PeerManager::newConnection(mse::StreamSocket* sock,
-									const PeerID & peer_id,bool dht_supported)
+	void PeerManager::newConnection(mse::StreamSocket* sock,const PeerID & peer_id,Uint32 support)
 	{
 		Uint32 total = peer_list.count() + pending.count();
 		if (!started || (max_connections > 0 && total >= max_connections))
@@ -181,7 +180,7 @@ namespace bt
 			return;
 		}
 
-		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),dht_supported);
+		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),support);
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));
@@ -214,8 +213,13 @@ namespace bt
 		if (connectedTo(auth->getPeerID()))
 			return;
 			
-		Peer* peer = new Peer(
-				auth->takeSocket(),auth->getPeerID(),tor.getNumChunks(),auth->supportsDHT());
+		Uint32 flags = 0;
+		if (auth->supportsDHT())
+			flags |= bt::DHT_SUPPORT;
+		if (auth->supportsFastExtensions())
+			flags |= bt::FAST_EXT_SUPPORT;
+		
+		Peer* peer = new Peer(auth->takeSocket(),auth->getPeerID(),tor.getNumChunks(),flags);
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));

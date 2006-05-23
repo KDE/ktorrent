@@ -22,7 +22,7 @@
 
 #include <qmap.h>
 #include <qstring.h>
-#include "constants.h"
+#include <util/constants.h>
 
 namespace bt
 {
@@ -37,7 +37,6 @@ namespace bt
 	public:
 		/**
 		 * When a CacheFile is closed, this will be called on all existing mappings.
-		 * @param fd The CacheFile
 	 	 * @param remap_intended A remap will happen
 		 */
 		virtual void unmapped(bool remap_intended) = 0;
@@ -45,7 +44,6 @@ namespace bt
 		/**
 		 * When a previously unmapped thing is remapped again. This happens
 		 * if the CacheFile is moved on disk.
-		 * @param fd The CacheFile
 		 * @param ptr The new pointer to the mapping
 		 */
 		virtual void remapped(void* ptr) = 0;

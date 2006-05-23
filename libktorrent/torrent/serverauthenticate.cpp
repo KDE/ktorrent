@@ -30,6 +30,7 @@
 #include "torrent.h"
 #include "ipblocklist.h"
 
+
 namespace bt
 {
 
@@ -110,7 +111,13 @@ namespace bt
 			sendHandshake(rh,pman->getTorrent().getPeerID());
 			onFinish(true);
 			// hand over connection
-			pman->newConnection(sock,peer_id,supportsDHT());
+			Uint32 flags = 0;
+			if (supportsDHT())
+				flags |= bt::DHT_SUPPORT;
+			if (supportsFastExtensions())
+				flags |= bt::FAST_EXT_SUPPORT;
+			
+			pman->newConnection(sock,peer_id,flags);
 			sock = 0;
 		}
 		else

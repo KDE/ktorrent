@@ -157,6 +157,7 @@ namespace bt
 		void sendCancels(PeerDownloader* pd);
 		void endgameCancel(const Piece & p);
 		void onTimeout(const Request & r);
+		void onRejected(const Request & r);
 		
 	private:		
 		BitSet pieces;

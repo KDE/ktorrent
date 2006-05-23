@@ -90,7 +90,7 @@ namespace bt
 			}
 			else
 			{
-				p->getPacketWriter().sendChoke();
+				p->choke();
 			}
 		}
 		
@@ -161,7 +161,7 @@ namespace bt
 			if (p == unchokers[0] || p == unchokers[1] || p == unchokers[2] || p == unchokers[3])
 				continue;
 			if (p)
-				p->getPacketWriter().sendChoke();
+				p->choke();
 		}
 		
 		round_state++;
@@ -248,7 +248,7 @@ namespace bt
 			}
 			else
 			{
-				p->getPacketWriter().sendChoke();
+				p->choke();
 			}
 		}
 		
@@ -274,7 +274,7 @@ namespace bt
 					num_unchoked++;
 				}
 				else
-					p->getPacketWriter().sendChoke();
+					p->choke();
 			}
 			// go over the other peers and unchoke, if we do not have enough
 			for (Uint32 i = 0;i < others.count();i++)
@@ -289,7 +289,7 @@ namespace bt
 					num_unchoked++;
 				}
 				else
-					p->getPacketWriter().sendChoke();
+					p->choke();
 			}
 		}
 		else
@@ -312,7 +312,7 @@ namespace bt
 					num_unchoked++;
 				}
 				else 
-					p->getPacketWriter().sendChoke();
+					p->choke();
 			}
 			
 			// go over the other peers and unchoke, if we do not have enough
@@ -328,7 +328,7 @@ namespace bt
 					num_unchoked++;
 				}
 				else 
-					p->getPacketWriter().sendChoke();
+					p->choke();
 			}
 		}
 		

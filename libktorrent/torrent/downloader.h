@@ -168,7 +168,11 @@ namespace bt
 		
 	private:
 		void downloadFrom(PeerDownloader* pd);
+		void downloadFromAF(PeerDownloader* pd);
 		void normalUpdate();
+		Uint32 maxMemoryUsage();
+		Uint32 numNonIdle();
+		bool findDownloadForPD(PeerDownloader* pd);
 		
 	private:
 		Torrent & tor;

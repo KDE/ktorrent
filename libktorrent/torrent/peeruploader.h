@@ -20,6 +20,7 @@
 #ifndef BTPEERUPLOADER_H
 #define BTPEERUPLOADER_H
 
+#include <set>
 #include <qvaluelist.h>
 #include "request.h"
 
@@ -29,6 +30,8 @@ namespace bt
 {
 	class Peer;
 	class ChunkManager;
+	
+	const Uint32 ALLOWED_FAST_SIZE = 8;
 	
 	/**
 	 * @author Joris Guisson
@@ -44,6 +47,8 @@ namespace bt
 		Peer* peer;
 		QValueList<Request> requests;
 		Uint32 rone_time;
+		std::set<Uint32> allowed_fast;
+		bool can_generate_af;
 	public:
 		/**
 		 * Constructor. Set the Peer.
@@ -52,8 +57,9 @@ namespace bt
 		PeerUploader(Peer* peer);
 		virtual ~PeerUploader();
 		
+		/// Enable the allowed fast set
+		void enableAllowedFast();
 		
-
 		/**
 		 * Add a Request to the list of Requests.
 		 * @param r The Request
@@ -77,6 +83,11 @@ namespace bt
 		
 		/// Get the number of requests
 		Uint32 getNumRequests() const {return requests.count();}
+		
+		/// Reject all packets
+		void rejectAll();
+	private:
+		void generateAF(ChunkManager & cman);
 	};
 
 }

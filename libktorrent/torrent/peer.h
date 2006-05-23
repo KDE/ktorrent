@@ -49,6 +49,9 @@ namespace bt
 	class PeerDownloader;
 	class PeerUploader;
 	
+	
+
+	
 
 	/**
 	 * @author Joris Guisson
@@ -69,13 +72,13 @@ namespace bt
 		 * @param sock The socket
 		 * @param peer_id The Peer's BitTorrent ID
 		 * @param num_chunks The number of chunks in the file
-		 * @param dht_supported Wether or not the peer supports DHT (mainline)
+		 * @param support Which extensions the peer supports
 		 * @param enc An RC4 encryptor (0 if no encryption is wanted
 		 */
 		Peer(mse::StreamSocket* sock,
 			 const PeerID & peer_id,
 			 Uint32 num_chunks,
-			 bool dht_supported);
+			 Uint32 support);
 		
 		virtual ~Peer();
 
@@ -199,6 +202,9 @@ namespace bt
 		
 		/// Get the stats of the peer
 		virtual const Stats & getStats() const;
+		
+		/// Choke the peer
+		void choke();
 		
 	private slots:
 		void connectionClosed(); 
