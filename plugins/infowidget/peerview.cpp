@@ -45,6 +45,7 @@ namespace kt
 	static QPixmap no_pix;
 	static QPixmap lock_pix;
 	static bool yes_no_pix_loaded = false;
+	static bool geoip_db_exists = true;
 	
 		
 	PeerViewItem::PeerViewItem(PeerView* pv,kt::PeerInterface* peer) : KListViewItem(pv),peer(peer)
@@ -55,6 +56,7 @@ namespace kt
 			yes_pix = iload->loadIcon("button_ok",KIcon::Small);
 			no_pix = iload->loadIcon("button_cancel",KIcon::Small);
 			lock_pix = iload->loadIcon("ktencrypted",KIcon::Small);
+			geoip_db_exists = !locate("data", "ktorrent/geoip/geoip.dat").isNull();
 			yes_no_pix_loaded = true;
 		}
 		
@@ -68,7 +70,7 @@ namespace kt
 		hostname = s.ip_addresss.ascii();
 
 		// open GeoIP if necessary
-		if (!geo_ip)
+		if (!geo_ip && geoip_db_exists)
 			geo_ip = GeoIP_open(locate("data", "ktorrent/geoip/geoip.dat").ascii(),0);
 		
 		if (geo_ip)
@@ -76,16 +78,23 @@ namespace kt
 			country_id = GeoIP_id_by_name(geo_ip, hostname);
 			country_code = GeoIP_country_code[country_id];
 			country_name = GeoIP_country_name[country_id];
+			setText(1, country_name);
+			m_country = QString(country_name);
+		}
+		else
+		{
+			setText(1,"N/A");
 		}
 		
 		setText(0,s.ip_addresss);
 		setText(2,s.client);
-		setText(1, country_name);
-
-		m_country = QString(country_name);
 		
-		QPixmap pix(locate("data", QString("ktorrent/geoip/%1.png").arg(QString(country_code)).lower()));
-		setPixmap(1, pix);
+		if (country_code)
+		{
+			QPixmap pix(locate("data", 	QString("ktorrent/geoip/%1.png").arg(QString(country_code)).lower()));
+			setPixmap(1, pix);
+		}
+		
 		if (s.encrypted)
 			setPixmap(0,lock_pix);
 		update();
