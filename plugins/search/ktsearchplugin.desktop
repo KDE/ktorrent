@@ -18,6 +18,7 @@ Name[sr@Latn]=Priključak pretrage
 Name[sv]=Sökinsticksprogram
 Name[xx]=xxSearchPluginxx
 Comment=Search plugin for KTorrent
+Comment[bg]=Приставка за търсене за KTorrentt
 Comment[br]=Lugent klask evit KTorrent
 Comment[cs]=Vyhledávací modul pro KTorrent
 Comment[da]=Søge-plugin for KTorrent
