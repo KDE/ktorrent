@@ -5,6 +5,7 @@ Name[cs]=Modul prohledávání složek
 Name[da]=Plugin for mappesøgning
 Name[el]=Πρόσθετο σάρωσης φακέλων
 Name[ja]=スキャンフォルダプラグイン
+Name[pt_BR]=Plugins de Busca
 Name[sv]=Insticksprogram för katalogsökning
 ServiceTypes=KTorrent/Plugin
 Type=Service
