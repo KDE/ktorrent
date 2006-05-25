@@ -110,6 +110,8 @@ namespace mse
 		 * which will be destroyed when the reinserted data has been read.
 		 */
 		void reinsert(const Uint8* d,Uint32 size);
+	private slots:
+		void onConnected();
 		
 	private:
 		QSocket* sock;

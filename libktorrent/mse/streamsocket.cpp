@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <errno.h>
 #include <qsocket.h>
 #include <qsocketdevice.h>
 #include <util/sha1hash.h>
@@ -28,6 +29,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <netinet/ip.h> 
 #include <netinet/tcp.h>
 #include "streamsocket.h"
 #include "rc4encryptor.h"
@@ -36,6 +38,18 @@ using namespace bt;
 
 namespace mse
 {
+	
+	static bool SetTOS(QSocket* s,char type_of_service)
+	{
+		char c = type_of_service;
+		if (setsockopt(s->socketDevice()->socket(),IPPROTO_IP,IP_TOS,&c,sizeof(char)) < 0)
+		{
+			Out() << QString("Failed to set TOS to %1 : %2")
+					.arg((int)type_of_service).arg(strerror(errno)) << endl;
+			return false;
+		}
+		return true;
+	}
 
 	StreamSocket::StreamSocket() : sock(0),enc(0)
 	{
@@ -45,15 +59,7 @@ namespace mse
 		reinserted_data = 0;
 		reinserted_data_size = 0;
 		reinserted_data_read = 0;
-#if 0
-		int flag = 1;
-		int result = setsockopt(sock->socketDevice()->socket(),            /* socket affected */
-								IPPROTO_TCP,     /* set option at TCP level */
-								TCP_NODELAY,     /* name of option */
-								(char *) &flag,  /* the cast is historical
-								cruft */
-								sizeof(int));    /* length of option value */
-#endif
+		connect(sock,SIGNAL(connected()),this,SLOT(onConnected()));
 	}
 
 	StreamSocket::StreamSocket(int fd) : sock(0),enc(0)
@@ -65,15 +71,7 @@ namespace mse
 		reinserted_data = 0;
 		reinserted_data_size = 0;
 		reinserted_data_read = 0;
-#if 0
-		int flag = 1;
-		int result = setsockopt(fd,            /* socket affected */
-								IPPROTO_TCP,     /* set option at TCP level */
-								TCP_NODELAY,     /* name of option */
-								(char *) &flag,  /* the cast is historical
-								cruft */
-								sizeof(int));    /* length of option value */
-#endif
+		SetTOS(sock,IPTOS_THROUGHPUT);
 	}
 
 	StreamSocket::~StreamSocket()
@@ -142,6 +140,11 @@ namespace mse
 	void StreamSocket::connectTo(const QString & ip,Uint16 port)
 	{
 		sock->connectToHost(ip,port);
+	}
+	
+	void StreamSocket::onConnected()
+	{
+		SetTOS(sock,IPTOS_THROUGHPUT);
 	}
 		
 	void StreamSocket::initCrypt(const bt::SHA1Hash & dkey,const bt::SHA1Hash & ekey)
