@@ -116,7 +116,7 @@ namespace dht
 					RPCCall* c = calls.find(msg->getMTID());
 					c->response(msg);
 					calls.erase(msg->getMTID());
-					delete c;
+					c->deleteLater();
 					doQueuedCalls();
 				}
 				delete msg;
