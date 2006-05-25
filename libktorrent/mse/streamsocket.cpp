@@ -77,8 +77,8 @@ namespace mse
 	StreamSocket::~StreamSocket()
 	{
 		delete [] reinserted_data;
-		delete sock;
 		delete enc;
+		sock->deleteLater();
 	}
 	
 		
