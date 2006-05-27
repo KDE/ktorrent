@@ -20,6 +20,7 @@
  ***************************************************************************/
 #include <algorithm>
 #include <util/file.h>
+#include <qstringlist.h>
 #include "chunkmanager.h"
 #include "torrent.h"
 #include <util/error.h>
@@ -61,7 +62,6 @@ namespace bt
 				chunks.insert(i,new Chunk(i,lsize));
 		}
 		chunks.setAutoDelete(true);
-		num_chunks_in_cache_file = 0;
 		chunks_left = 0;
 		recalc_chunks_left = true;
 
@@ -202,6 +202,11 @@ namespace bt
 		}
 		cache->create();
 	}
+	
+	bool ChunkManager::hasMissingFiles(QStringList & sl)
+	{
+		return cache->hasMissingFiles(sl);
+	}
 
 	Chunk* ChunkManager::getChunk(unsigned int i)
 	{
@@ -322,7 +327,6 @@ namespace bt
 		// update the index file
 		if (update_index)
 		{
-			num_chunks_in_cache_file++;
 			bitset.set(i,true);
 			recalc_chunks_left = true;
 			writeIndexFileEntry(c);
@@ -765,6 +769,42 @@ namespace bt
 	void ChunkManager::preallocateDiskSpace()
 	{
 		cache->preallocateDiskSpace();
+	}
+	
+	void ChunkManager::dataChecked(const BitSet & ok_chunks)
+	{
+		// go over all chunks at check each of them
+		for (Uint32 i = 0;i < chunks.count();i++)
+		{
+			Chunk* c = chunks[i];
+			if (ok_chunks.get(i) && !bitset.get(i))
+			{
+				// We think we do not hae a chunk, but we do have it
+				bitset.set(i,true);
+				// the chunk must be on disk
+				c->setStatus(Chunk::ON_DISK); 
+			}
+			else if (!ok_chunks.get(i) && bitset.get(i))
+			{
+				// We think we have a chunk, but we don't
+				bitset.set(i,false);
+				if (c->getStatus() == Chunk::ON_DISK)
+				{
+					c->setStatus(Chunk::NOT_DOWNLOADED);
+				}
+				else if (c->getStatus() == Chunk::MMAPPED || c->getStatus() == Chunk::BUFFERED)
+				{
+					resetChunk(i);
+				}
+			}
+		}
+		recalc_chunks_left = true;
+		saveIndexFile();
+	}
+	
+	bool ChunkManager::hasExistingFiles() const
+	{
+		return cache->hasExistingFiles();
 	}
 }
 

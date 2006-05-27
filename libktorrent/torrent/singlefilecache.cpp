@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <klocale.h>
 #include <qfileinfo.h>
+#include <qstringlist.h> 
 #include <util/fileops.h>
 #include <util/error.h>
 #include <util/functions.h>
@@ -107,9 +108,10 @@ namespace bt
 			
 			if (!bt::Exists(out_file))
 				bt::Touch(out_file);
+			else
+				preexisting_files = true;
 
-			if (!bt::Exists(cache_file))
-				bt::SymLink(out_file,cache_file);
+			bt::SymLink(out_file,cache_file);
 			output_file = out_file;
 		}
 	}
@@ -149,6 +151,18 @@ namespace bt
 			open();
 		
 		fd->preallocate();
+	}
+	
+	bool SingleFileCache::hasMissingFiles(QStringList & sl)
+	{
+		QFileInfo fi(cache_file);
+		if (!fi.exists())
+		{
+			QString out_file = fi.readLink();
+			sl.append(fi.readLink());
+			return true;
+		}
+		return false;
 	}
 
 }

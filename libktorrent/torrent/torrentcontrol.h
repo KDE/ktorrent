@@ -31,7 +31,7 @@
 #include <interfaces/monitorinterface.h>
 #include <interfaces/trackerslist.h>
 
-
+class QStringList;
 
 
 namespace bt
@@ -87,8 +87,8 @@ namespace bt
 		 * @param default_save_dir Default save directory (null if not set)
 		 * @throw Error when something goes wrong
 		 */
-		void init(const QueueManager* qman,const 
-				QString & torrent,
+		void init(const QueueManager* qman,
+				const QString & torrent,
 				const QString & tmpdir,
 				const QString & datadir,
 				const QString & default_save_dir);
@@ -160,11 +160,9 @@ namespace bt
 		virtual kt::TorrentFileInterface & getTorrentFile(Uint32 index);
 		
 		int getPriority() const { return priority; }
-		
 		void setPriority(int p);
-		
-		bool overMaxRatio();
-		
+
+		bool overMaxRatio();		
 		void setMaxShareRatio(float ratio);
 		float getMaxShareRatio() const { return maxShareRatio; }
 		
@@ -177,6 +175,16 @@ namespace bt
 		/// Checks if tracker announce is allowed (minimum interval 60 seconds)
 		bool announceAllowed();
 		
+		void doDataCheck(bt::DataCheckerListener* lst);
+		
+		/// Test if the torrent has existing files, only works the first time a torrent is loaded
+		bool hasExistingFiles() const;
+		
+		/**
+		 * Test all files and see if they are not missing.
+		 * If so put them in a list
+		 */
+		bool hasMissingFiles(QStringList & sl);
 		
 	public slots:
 		/**
@@ -260,8 +268,6 @@ namespace bt
 		float maxShareRatio;
 		bool prealloc;
 		Uint32 last_announce;
-		
-		friend class PreallocationThread;
 	};
 }
 

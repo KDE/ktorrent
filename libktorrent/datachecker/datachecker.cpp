@@ -17,28 +17,18 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTSINGLEDATACHECKER_H
-#define BTSINGLEDATACHECKER_H
+#include "datachecker.h"
 
-#include <datachecker.h>
-
-namespace bt
-{
-
-	/**
-	 * @author Joris Guisson
-	 * 
-	 * Data checker for single file torrents.
-	 */
-	class SingleDataChecker : public DataChecker
+namespace bt {
+	
+	DataChecker::DataChecker() : listener(0)
 	{
-	public:
-		SingleDataChecker();
-		virtual ~SingleDataChecker();
+	}
+	
+	
+	DataChecker::~DataChecker()
+	{
+	}
 
-		virtual void check(const QString& path, const Torrent& tor,KProgress* prog);
-	};
 
 }
-
-#endif

@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>libktorrent/kademlia/libkademlia.la</activetarget>
+      <activetarget>apps/ktorrent/ktorrent</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>
@@ -87,6 +87,8 @@
       <subclass uifile="/plugins/upnp/upnpwidget.ui" sourcefile="/plugins/upnp/upnpprefwidget.h" />
       <subclass uifile="/plugins/partfileimport/importdlgbase.ui" sourcefile="/plugins/partfileimport/importdialog.cpp" />
       <subclass uifile="/plugins/partfileimport/importdlgbase.ui" sourcefile="/plugins/partfileimport/importdialog.h" />
+      <subclass uifile="/apps/ktorrent/scandlgbase.ui" sourcefile="/apps/ktorrent/scandialog.cpp" />
+      <subclass uifile="/apps/ktorrent/scandlgbase.ui" sourcefile="/apps/ktorrent/scandialog.h" />
     </subclassing>
   </kdevautoproject>
   <kdevfileview>

@@ -33,6 +33,8 @@ namespace bt
 
 		if (!tmpdir.endsWith(bt::DirSeparator()))
 			this->tmpdir += bt::DirSeparator();
+		
+		preexisting_files = false;
 	}
 
 

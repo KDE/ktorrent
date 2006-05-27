@@ -32,6 +32,7 @@ namespace kt
 
 namespace bt
 {
+	class BitSet;
 	class Torrent;
 	class ChunkManager;
 	class PeerManager;
@@ -147,6 +148,12 @@ namespace bt
 		void setMonitor(kt::MonitorInterface* tmo);
 		
 		static void setMemoryUsage(Uint32 m);
+		
+		/**
+		 * Data has been checked, and these chunks are OK.
+		 * @param ok_chunks The ok_chunks
+		 */
+		void dataChecked(const BitSet & ok_chunks);
 		
 	private slots:
 		void pieceRecieved(const Piece & p);

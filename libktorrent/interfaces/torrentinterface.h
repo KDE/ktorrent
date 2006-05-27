@@ -29,6 +29,7 @@
 namespace bt
 {
 	class BitSet;
+	class DataCheckerListener;
 }
 
 namespace kt
@@ -49,7 +50,8 @@ namespace kt
 		STOPPED,
 		ALLOCATING_DISKSPACE,
 		ERROR,
-		QUEUED
+		QUEUED,
+		CHECKING_DATA
 	};
 
 	struct TorrentStats
@@ -272,6 +274,18 @@ namespace kt
 		
 		///Is manual announce allowed?
 		virtual bool announceAllowed() = 0;
+		
+		/**
+		 * Verify the correctness of all data.
+		 */
+		virtual void doDataCheck(bt::DataCheckerListener* lst) = 0;
+		
+		/**
+		 * Test all files and see if they are not missing.
+		 * If so put them in a list
+		 */
+		virtual bool hasMissingFiles(QStringList & sl) = 0;
+		
 		
 	signals:
 		/**

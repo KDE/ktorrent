@@ -331,7 +331,6 @@ namespace bt
 			return;
 		
 		bool limit_exceeded = num_non_idle * tor.getChunkSize() >= max;
-		Uint32 chunk = 0;
 		if (limit_exceeded)
 			return;
 		
@@ -630,5 +629,24 @@ namespace bt
 		mem_usage = m;
 		PeerDownloader::setMemoryUsage(m);
 	}
+	
+	void Downloader::dataChecked(const BitSet & ok_chunks)
+	{
+		for (Uint32 i = 0;i < ok_chunks.getNumBits();i++)
+		{
+			ChunkDownload* cd = current_chunks.find(i);
+			if (ok_chunks.get(i) && cd)
+			{
+				// we have a chunk and we are downloading it so kill it
+				cd->releaseAllPDs();
+				if (tmon)
+					tmon->downloadRemoved(cd);
+				
+				current_chunks.erase(i);
+			}
+		}
+		chunk_selector->dataChecked(ok_chunks);
+	}
 }
+
 #include "downloader.moc"

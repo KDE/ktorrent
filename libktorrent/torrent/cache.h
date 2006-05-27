@@ -20,6 +20,7 @@
 #ifndef BTCACHE_H
 #define BTCACHE_H
 
+class QStringList;
 
 namespace bt
 {
@@ -41,6 +42,7 @@ namespace bt
 		Torrent & tor;
 		QString tmpdir;
 		QString datadir;
+		bool preexisting_files;
 	public:
 		Cache(Torrent & tor,const QString & tmpdir,const QString & datadir);
 		virtual ~Cache();
@@ -104,6 +106,16 @@ namespace bt
 		 * Preallocate diskspace for all files
 		 */
 		virtual void preallocateDiskSpace() = 0;
+		
+		/// See if the download has existing files
+		bool hasExistingFiles() const {return preexisting_files;}
+		
+		
+		/**
+		 * Test all files and see if they are not missing.
+		 * If so put them in a list
+		 */
+		virtual bool hasMissingFiles(QStringList & sl) = 0;
 	};
 
 }

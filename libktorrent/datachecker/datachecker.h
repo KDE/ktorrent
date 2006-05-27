@@ -17,53 +17,58 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#ifndef BTDATACHECKER_H
+#define BTDATACHECKER_H
 
-#ifndef IMPORTDIALOG_H
-#define IMPORTDIALOG_H
+#include <util/bitset.h>
+#include "datacheckerlistener.h"
 
-#include <util/constants.h>
-#include <datachecker/datacheckerlistener.h>
-#include "importdlgbase.h"
+class QString;
 
-class KURL;
 
-namespace bt
+namespace bt 
 {
-	class BitSet;
 	class Torrent;
-}
-
-
-namespace kt
-{
-	class CoreInterface;
 	
-	class ImportDialog : public ImportDlgBase,public bt::DataCheckerListener
+
+	/**
+	 * @author Joris Guisson
+	 * 
+	 * Checks which data is downloaded, given a torrent and a file or directory containing
+	 * files of the torrent.
+	*/
+	class DataChecker
 	{
-		Q_OBJECT
-	
 	public:
-		ImportDialog(CoreInterface* core,QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
-		virtual ~ImportDialog();
-		
-	public slots:
-		void onImport();
+		DataChecker();	
+		virtual ~DataChecker();
 	
-	private:
-		void writeIndex(const QString & file,const bt::BitSet & chunks);
-		void linkTorFile(const QString & cache_dir,const QString & dnd_dir,
-						 const KURL & data_url,const QString & fpath,bool & dnd);
-		void saveStats(const QString & stats_file,const KURL & data_url,bt::Uint64 imported,bool custom_output_name);
-		bt::Uint64 calcImportedBytes(const bt::BitSet & chunks,const bt::Torrent & tor);
-		void saveFileInfo(const QString & file_info_file,QValueList<bt::Uint32> & dnd);
+		/// Set the listener
+		void setListener(DataCheckerListener* l) {listener = l;}
 		
-		virtual void progress(bt::Uint32 num,bt::Uint32 total);
-		virtual void status(bt::Uint32 num_failed,bt::Uint32 num_downloaded);
+		/**
+		 * Check to see which chunks have been downloaded of a torrent, and which chunks fail.
+		 * The corresponding bitsets should be filled with this information.
+		 * If anything goes wrong and Error should be thrown. 
+		 * @param path path to the file or dir (this needs to end with the name suggestion of the torrent)
+		 * @param tor The torrent
+		 */
+		virtual void check(const QString & path,const Torrent & tor) = 0;
 		
-	private:
-		CoreInterface* core;
+		/**
+		 * Get the BitSet representing all the downloaded chunks.
+		 */
+		const BitSet & getDownloaded() const {return downloaded;}
+		
+		/**
+		 * Get the BitSet representing all the failed chunks.
+		 */
+		const BitSet & getFailed() const {return failed;}
+	protected:
+		BitSet failed,downloaded;
+		DataCheckerListener* listener;
 	};
+
 }
 
 #endif
-

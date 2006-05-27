@@ -98,28 +98,28 @@ namespace kt
 		perc_complete = percent;
 	}
 
-        void IWFileTreeItem::updatePriorityInformation(kt::TorrentInterface* tc)
-        {
-                switch(file.getPriority())
-                {
-                case FIRST_PRIORITY:
-                        setText(2, i18n("Yes, First"));
-			setChecked(true);
-                        break;
-                case LAST_PRIORITY:
-                        setText(2, i18n("Yes, Last"));
-			setChecked(true);
-                        break;
-                case EXCLUDED:
-                        setText(2, i18n("No"));
-			setChecked(false);
-                        break;
-                case PREVIEW_PRIORITY:
-                        break;
-                default:
-                        setText(2, i18n("Yes"));
-			setChecked(true);
-                        break;
-                }
-        }
+	void IWFileTreeItem::updatePriorityInformation(kt::TorrentInterface* tc)
+	{
+		switch(file.getPriority())
+		{
+			case FIRST_PRIORITY:
+				setText(2, i18n("Yes, First"));
+				setChecked(true);
+				break;
+			case LAST_PRIORITY:
+				setText(2, i18n("Yes, Last"));
+				setChecked(true);
+				break;
+			case EXCLUDED:
+				setText(2, i18n("No"));
+				setChecked(false);
+				break;
+			case PREVIEW_PRIORITY:
+				break;
+			default:
+				setText(2, i18n("Yes"));
+				setChecked(true);
+				break;
+		}
+	}
 }

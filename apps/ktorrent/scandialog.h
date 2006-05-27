@@ -17,18 +17,43 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include "datachecker.h"
 
-namespace bt {
+#ifndef SCANDIALOG_H
+#define SCANDIALOG_H
 
-DataChecker::DataChecker()
+#include <datachecker/datacheckerlistener.h>
+#include "scandlgbase.h"
+
+
+namespace kt
 {
+	class TorrentInterface;
 }
 
-
-DataChecker::~DataChecker()
+class ScanDialog : public ScanDlgBase, public bt::DataCheckerListener
 {
-}
+	Q_OBJECT
+public:
+	ScanDialog(QWidget* parent = 0, const char* name = 0, bool modal = true, WFlags fl = 0 );
+	virtual ~ScanDialog();
+
+	void execute(kt::TorrentInterface* tc,bool silently);
+
+protected:
+	virtual void progress(bt::Uint32 num,bt::Uint32 total);
+	virtual void status(bt::Uint32 num_failed,bt::Uint32 num_downloaded);
+	
+
+protected slots:
+	virtual void reject();
+	virtual void accept();
+	void scan();
+
+private:
+	kt::TorrentInterface* tc;
+	bool silently;
+};
 
 
-}
+#endif
+

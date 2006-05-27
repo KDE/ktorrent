@@ -25,6 +25,7 @@
 
 namespace bt
 {
+	class BitSet;
 	class PeerDownloader;
 	class ChunkManager;
 	class Downloader;
@@ -52,6 +53,12 @@ namespace bt
 		 * @return true upon succes, false otherwise
 		 */
 		bool select(PeerDownloader* pd,Uint32 & chunk);
+		
+		/**
+		 * Data has been checked, and these chunks are OK.
+		 * @param ok_chunks The ok_chunks
+		 */
+		void dataChecked(const BitSet & ok_chunks);
 	};
 
 }

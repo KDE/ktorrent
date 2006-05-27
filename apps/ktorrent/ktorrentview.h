@@ -29,6 +29,7 @@ class KURL;
 class KTorrentViewItem;
 class KPopupMenu;
 class KTorrentCore;
+class ScanDialog;
 
 namespace kt
 {
@@ -84,6 +85,7 @@ public slots:
 	void removeDownloads();
 	void onSelectionChanged();
 	void queueSlot();
+	void checkDataIntegrity();
 
 private slots:
 	void onExecuted(QListViewItem* item);
@@ -97,19 +99,20 @@ signals:
 	void wantToStop(kt::TorrentInterface* tc,bool user);
 	void wantToStart(kt::TorrentInterface* tc);
 	void viewChange(kt::TorrentInterface* tc);
-	void updateActions(bool can_start,bool can_stop,bool can_remove);
+	void updateActions(bool can_start,bool can_stop,bool can_remove,bool can_scan);
 	void queue(kt::TorrentInterface* tc);
 
 private:
 	bool acceptDrag(QDropEvent* event) const;
 	int getNumRunning();
+	void makeMenu();
 		
 private:
 	bool m_seedView;
 	QMap<kt::TorrentInterface*,KTorrentViewItem*> items;
 	bool show_debug_view;
 	KPopupMenu* menu;
-	int stop_id, start_id, remove_id, preview_id, announce_id, queue_id;
+	int stop_id, start_id, remove_id, preview_id, announce_id, queue_id,scan_id;
 };
 
 #endif // _KTORRENTVIEW_H_

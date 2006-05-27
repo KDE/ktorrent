@@ -28,13 +28,13 @@
 #include "chunk.h"
 #include "globals.h"
 
+class QStringList;
 
 namespace bt
 {
 	class Torrent;
 	class Cache;
 	class TorrentFile;
-	class PreallocationThread;
 
 	struct NewChunkHeader
 	{
@@ -59,7 +59,6 @@ namespace bt
 		Torrent & tor;
 		QString index_file,file_info_file,file_priority_file;
 		QPtrVector<Chunk> chunks;
-		Uint32 num_chunks_in_cache_file;
 		Cache* cache;
 		QValueList<Uint32> loaded;
 		BitSet bitset,excluded_chunks;
@@ -99,6 +98,12 @@ namespace bt
 		 * @throw Error When it can be created
 		 */
 		void createFiles();
+		
+		/**
+		 * Test all files and see if they are not missing.
+		 * If so put them in a list
+		 */
+		bool hasMissingFiles(QStringList & sl);
 		
 		/**
 		 * Preallocate diskspace for all files
@@ -224,6 +229,17 @@ namespace bt
 		 * @param to Last chunk in range
 		 */
 		void include(Uint32 from,Uint32 to);
+		
+		
+		/**
+		 * Data has been checked, and these chunks are OK.
+		 * The ChunkManager will update it's internal structures
+		 * @param ok_chunks The ok_chunks
+		 */
+		void dataChecked(const BitSet & ok_chunks);
+		
+		/// Test if the torrent has existing files, only works the first time a torrent is loaded
+		bool hasExistingFiles() const;
 		
 	signals:
 		/**

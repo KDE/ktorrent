@@ -159,11 +159,11 @@ KTorrent::KTorrent()
 	connect(m_seedView,SIGNAL(wantToStop( kt::TorrentInterface*, bool )),
 			m_core,SLOT(stop( kt::TorrentInterface*, bool )));
 	
-	connect(m_view,SIGNAL(updateActions( bool, bool, bool )),
-			this,SLOT(onUpdateActions( bool, bool, bool )));
+	connect(m_view,SIGNAL(updateActions( bool, bool, bool, bool )),
+			this,SLOT(onUpdateActions( bool, bool, bool, bool )));
 	
-	connect(m_seedView,SIGNAL(updateActions( bool, bool, bool )),
-			this,SLOT(onUpdateActions( bool, bool, bool )));
+	connect(m_seedView,SIGNAL(updateActions( bool, bool, bool, bool )),
+			this,SLOT(onUpdateActions( bool, bool, bool, bool )));
 	
 	
 	//connect Core queue() with queue() from KTView.
@@ -356,12 +356,13 @@ void KTorrent::loadSilently(const KURL& url)
 	m_core->loadSilently(url);
 }
 
-void KTorrent::onUpdateActions(bool can_start,bool can_stop,bool can_remove)
+void KTorrent::onUpdateActions(bool can_start,bool can_stop,bool can_remove,bool can_scan)
 {
 	m_start->setEnabled(can_start);
 	m_stop->setEnabled(can_stop);
 	m_remove->setEnabled(can_remove);
 	m_queueaction->setEnabled(can_remove);
+	m_datacheck->setEnabled(can_scan);
 }
 
 void KTorrent::currentDownloadChanged(kt::TorrentInterface* tc)
@@ -420,8 +421,12 @@ void KTorrent::setupActions()
 	
 	m_queueaction = new KAction(
 			i18n("Enqueue/Dequeue"),
-	"player_playlist", 0, this, SLOT(queueAction()),
-	actionCollection(), "queue_action");
+			"player_playlist", 0, this, SLOT(queueAction()),
+			actionCollection(), "queue_action");
+	
+	m_datacheck = new KAction(
+			i18n("Check Data Integrity"),
+	QString::null,0,this,SLOT(checkDataIntegrity()),actionCollection(),"check_data");
 	
 	//Plug actions to systemtray context menu
 	m_startall->plug(m_systray_icon->contextMenu());
@@ -814,6 +819,11 @@ void KTorrent::currentTabChanged(QWidget* tab)
 void KTorrent::queueAction()
 {
 	getCurrentView()->queueSlot();
+}
+
+void KTorrent::checkDataIntegrity()
+{
+	getCurrentView()->checkDataIntegrity();
 }
 
 #include "ktorrent.moc"

@@ -128,7 +128,23 @@ namespace bt
 		return false;
 	}
 
-	
+	void ChunkSelector::dataChecked(const BitSet & ok_chunks)
+	{
+		for (Uint32 i = 0;i < ok_chunks.getNumBits();i++)
+		{
+			bool in_chunks = std::find(chunks.begin(),chunks.end(),i) != chunks.end();
+			if (in_chunks && ok_chunks.get(i))
+			{
+				// if we have the chunk, remove it from the chunks list
+				chunks.remove(i);
+			}
+			else if (!in_chunks && !ok_chunks.get(i))
+			{
+				// if we don't have the chunk, add it to the list if it wasn't allrready in there
+				chunks.push_back(i);
+			}
+		}
+	}
 
 
 

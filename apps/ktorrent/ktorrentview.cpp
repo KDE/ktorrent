@@ -32,6 +32,7 @@
 #include "ktorrentview.h"
 #include "ktorrentviewitem.h"
 #include "settings.h"
+#include "scandialog.h"
 
 
 
@@ -39,7 +40,8 @@ using namespace bt;
 using namespace kt;
 
 KTorrentView::KTorrentView(QWidget *parent, bool seed_view)
-	: KListView(parent),m_seedView(seed_view),show_debug_view(false),menu(0)
+	: KListView(parent),m_seedView(seed_view),
+	show_debug_view(false),menu(0)
 {
 	addColumn(i18n("File"));
 	addColumn(i18n("Status"));
@@ -60,29 +62,7 @@ KTorrentView::KTorrentView(QWidget *parent, bool seed_view)
 	
 	connect(this,SIGNAL(selectionChanged()),this,SLOT(onSelectionChanged()));
 
-	KIconLoader* iload = KGlobal::iconLoader();
-	menu = new KPopupMenu(this);
-	
-	stop_id = menu->insertItem(
-			iload->loadIconSet("ktstop",KIcon::Small),i18n("to stop", "Stop"),
-			this,SLOT(stopDownloads()));
-
-	start_id = menu->insertItem(
-			iload->loadIconSet("ktstart",KIcon::Small),i18n("to start", "Start"),
-			this,SLOT(startDownloads()));
-
-	remove_id = menu->insertItem(
-			iload->loadIconSet("ktremove",KIcon::Small),i18n("Remove"),
-			this,SLOT(removeDownloads()));
-	
-	queue_id = menu->insertItem(
-			iload->loadIconSet("player_playlist",KIcon::Small),i18n("Enqueue/Dequeue"),
-	this,SLOT(queueSlot()));
-	
-	menu->insertSeparator();
-
-	announce_id = menu->insertItem(iload->loadIconSet("apply",KIcon::Small),i18n("Manual Announce"),this,SLOT(manualAnnounce())); 
-    preview_id = menu->insertItem(iload->loadIconSet("frame_image",KIcon::Small),i18n("Preview"), this, SLOT(previewFiles())); 
+	makeMenu();
 
 	setAllColumnsShowFocus(true);
 
@@ -101,6 +81,40 @@ KTorrentView::KTorrentView(QWidget *parent, bool seed_view)
 
 KTorrentView::~KTorrentView()
 {
+}
+
+void KTorrentView::makeMenu()
+{
+	KIconLoader* iload = KGlobal::iconLoader();
+	menu = new KPopupMenu(this);
+	
+	stop_id = menu->insertItem(
+			iload->loadIconSet("ktstop",KIcon::Small),i18n("to stop", "Stop"),
+			this,SLOT(stopDownloads()));
+
+	start_id = menu->insertItem(
+			iload->loadIconSet("ktstart",KIcon::Small),i18n("to start", "Start"),
+			this,SLOT(startDownloads()));
+
+	remove_id = menu->insertItem(
+			iload->loadIconSet("ktremove",KIcon::Small),i18n("Remove"),
+			this,SLOT(removeDownloads()));
+	
+	queue_id = menu->insertItem(
+			iload->loadIconSet("player_playlist",KIcon::Small),i18n("Enqueue/Dequeue"),
+			this,SLOT(queueSlot()));
+	
+	menu->insertSeparator();
+
+	announce_id = menu->insertItem(
+			iload->loadIconSet("apply",KIcon::Small),i18n("Manual Announce"),
+			this,SLOT(manualAnnounce())); 
+	
+	preview_id = menu->insertItem(
+			iload->loadIconSet("frame_image",KIcon::Small),i18n("Preview"), 
+			this, SLOT(previewFiles())); 
+	menu->insertSeparator();
+	scan_id = menu->insertItem(i18n("Check Data Integrity"),this, SLOT(checkDataIntegrity()));
 }
 
 void KTorrentView::saveSettings()
@@ -298,6 +312,7 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 	menu->setItemEnabled(preview_id,en_prev);
 	menu->setItemEnabled(announce_id,en_announce);
 	menu->setItemEnabled(queue_id, en_remove);
+	menu->setItemEnabled(scan_id, sel.count() == 1);
 	menu->popup(p);
 }
 
@@ -402,7 +417,7 @@ void KTorrentView::onSelectionChanged()
 		}
 	}
 	
-	updateActions(en_start,en_stop,sel.count() > 0);
+	updateActions(en_start,en_stop,sel.count() > 0,sel.count() == 1);
 }
 
 void KTorrentView::queueSlot()
@@ -415,6 +430,21 @@ void KTorrentView::queueSlot()
 		if (tc)
 			emit queue(tc);
 	}
+}
+
+
+void KTorrentView::checkDataIntegrity()
+{	
+	QPtrList<QListViewItem> sel = selectedItems();
+	if (sel.count() == 0)
+		return;
+	
+	KTorrentViewItem* kvi = (KTorrentViewItem*)sel.first();
+	TorrentInterface* tc = kvi->getTC();
+	ScanDialog* scan_dlg = new ScanDialog(this);
+	scan_dlg->show();
+	scan_dlg->execute(tc,false);
+	scan_dlg->deleteLater();
 }
 
 

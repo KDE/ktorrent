@@ -17,53 +17,28 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#ifndef BTSINGLEDATACHECKER_H
+#define BTSINGLEDATACHECKER_H
 
-#ifndef IMPORTDIALOG_H
-#define IMPORTDIALOG_H
-
-#include <util/constants.h>
-#include <datachecker/datacheckerlistener.h>
-#include "importdlgbase.h"
-
-class KURL;
+#include "datachecker.h"
 
 namespace bt
 {
-	class BitSet;
-	class Torrent;
-}
 
-
-namespace kt
-{
-	class CoreInterface;
-	
-	class ImportDialog : public ImportDlgBase,public bt::DataCheckerListener
+	/**
+	 * @author Joris Guisson
+	 * 
+	 * Data checker for single file torrents.
+	 */
+	class SingleDataChecker : public DataChecker
 	{
-		Q_OBJECT
-	
 	public:
-		ImportDialog(CoreInterface* core,QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
-		virtual ~ImportDialog();
-		
-	public slots:
-		void onImport();
-	
-	private:
-		void writeIndex(const QString & file,const bt::BitSet & chunks);
-		void linkTorFile(const QString & cache_dir,const QString & dnd_dir,
-						 const KURL & data_url,const QString & fpath,bool & dnd);
-		void saveStats(const QString & stats_file,const KURL & data_url,bt::Uint64 imported,bool custom_output_name);
-		bt::Uint64 calcImportedBytes(const bt::BitSet & chunks,const bt::Torrent & tor);
-		void saveFileInfo(const QString & file_info_file,QValueList<bt::Uint32> & dnd);
-		
-		virtual void progress(bt::Uint32 num,bt::Uint32 total);
-		virtual void status(bt::Uint32 num_failed,bt::Uint32 num_downloaded);
-		
-	private:
-		CoreInterface* core;
+		SingleDataChecker();
+		virtual ~SingleDataChecker();
+
+		virtual void check(const QString& path, const Torrent& tor);
 	};
+
 }
 
 #endif
-

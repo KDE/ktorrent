@@ -17,26 +17,51 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTMULTIDATACHECKER_H
-#define BTMULTIDATACHECKER_H
+#ifndef BTDATACHECKERLISTENER_H
+#define BTDATACHECKERLISTENER_H
 
-#include <datachecker.h>
+#include <util/constants.h>
 
 namespace bt
 {
 
 	/**
-	@author Joris Guisson
+		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class MultiDataChecker : public DataChecker
+	class DataCheckerListener
 	{
 	public:
-		MultiDataChecker();
+		DataCheckerListener();
+		virtual ~DataCheckerListener();
 
-		~MultiDataChecker();
-
-		virtual void check(const QString& path, const Torrent& tor,KProgress* prog);
-
+		/**
+		 * Called when a chunk has  been proccessed.
+		 * @param num The number processed
+		 * @param total The total number of pieces to process
+		*/
+		virtual void progress(Uint32 num,Uint32 total) = 0;
+	
+		/**
+		 * Called when a failed or dowloaded chunk is found.
+		 * @param num_failed The number of failed chunks
+		 * @param num_downloaded Number of downloaded chunks
+		 */
+		virtual void status(Uint32 num_failed,Uint32 num_downloaded) = 0;
+		
+		/**
+		 * Test if we need to stop.
+		 */
+		bool needToStop() const {return stopped;}
+		
+		/// Check if the check has been stopped
+		bool isStopped() const {return stopped;}
+		
+		/**
+		 * Stop the data check.
+		 */
+		void stop() {stopped = true;}
+	private:
+		bool stopped;
 	};
 
 }

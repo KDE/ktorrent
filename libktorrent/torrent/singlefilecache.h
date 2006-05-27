@@ -51,6 +51,7 @@ namespace bt
 		virtual void changeDataDir(const QString & ndir);
 		virtual QString getOutputPath() const {return output_file;}
 		virtual void preallocateDiskSpace();
+		virtual bool hasMissingFiles(QStringList & sl);
 	};
 
 }

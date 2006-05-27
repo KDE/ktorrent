@@ -20,7 +20,6 @@
  ***************************************************************************/
 
 #include <klocale.h>
-#include <kprogress.h>
 #include <kapplication.h>
 #include <util/log.h>
 #include <util/file.h>
@@ -43,7 +42,7 @@ namespace bt
 	{}
 
 
-	void MultiDataChecker::check(const QString& path, const Torrent& tor,KProgress* prog)
+	void MultiDataChecker::check(const QString& path, const Torrent& tor)
 	{
 		Uint32 num_chunks = tor.getNumChunks();
 		// initialize the bitsets
@@ -55,43 +54,58 @@ namespace bt
 			cache += bt::DirSeparator();
 		
 		Uint64 chunk_size = tor.getChunkSize();
-		Uint32 NumOfFiles = 0;
-		Uint32 CurrentChunk = 0;
-		Uint32 ReadBytes = 0;
-		prog->setTotalSteps(num_chunks);
+		Uint32 num_files = 0;
+		Uint32 cur_chunk = 0;
+		Uint32 bytes_read = 0;
 		
-		Array<Uint8> buf((Uint32)tor.getChunkSize());
+		Uint32 last_update_time = bt::GetCurrentTime();
 		
-		NumOfFiles = tor.getNumFiles();
-		for (Uint32 CurrentFile = 0;CurrentFile < NumOfFiles;CurrentFile++)
+		Array<Uint8> buf(chunk_size);
+		
+		num_files = tor.getNumFiles();
+		for (Uint32 CurrentFile = 0;CurrentFile < num_files;CurrentFile++)
 		{
+			if (listener && listener->needToStop())
+				return;
 			
-			const TorrentFile & FileToRead = tor.getFile(CurrentFile);
-			CurrentChunk = FileToRead.getFirstChunk();
-			ReadBytes = FileToRead.getFirstChunkOffset();
-			File FilePointer;
-			if (!FilePointer.open(cache + FileToRead.getPath(), "rb"))
+			const TorrentFile & tf = tor.getFile(CurrentFile);
+			cur_chunk = tf.getFirstChunk();
+			bytes_read = tf.getFirstChunkOffset();
+			File fptr;
+			if (!fptr.open(cache + tf.getPath(), "rb"))
 			{
 				Out() << QString("Warning : Cannot open %1 : %2").arg(cache + 
-				FileToRead.getPath()).arg(FilePointer.errorString()) << endl;
+				tf.getPath()).arg(fptr.errorString()) << endl;
 			}
 			else
 			{	
-				for ( ; CurrentChunk <= FileToRead.getLastChunk(); CurrentChunk++ )
+				for ( ; cur_chunk <= tf.getLastChunk(); cur_chunk++ )
 				{	
-					prog->setProgress(CurrentChunk);
-				
-					Out() << "Checked " << CurrentChunk << " chunks" << endl;
-					KApplication::kApplication()->processEvents();
-
-					ReadBytes += FilePointer.read(buf + ReadBytes, chunk_size - ReadBytes);
-					if (ReadBytes == chunk_size || CurrentChunk + 1 == tor.getNumChunks() )
+					if (listener)
 					{
-						SHA1Hash ChunkHash = SHA1Hash::generate(buf, ReadBytes );
-						bool ok = (ChunkHash == tor.getHash(CurrentChunk));
-						downloaded.set(CurrentChunk,ok);
-						failed.set(CurrentChunk,!ok);
-						ReadBytes = 0;
+						listener->progress(cur_chunk,num_chunks);
+						if (listener->needToStop())
+							return;
+					}
+				
+					Uint32 now = bt::GetCurrentTime();
+					if (now - last_update_time > 1000)
+					{
+						Out() << "Checked " << cur_chunk << " chunks" << endl;
+						KApplication::kApplication()->processEvents();
+						last_update_time = now;
+					}
+
+					bytes_read += fptr.read(buf + bytes_read, chunk_size - bytes_read);
+					if (bytes_read == chunk_size || cur_chunk + 1 == tor.getNumChunks() )
+					{
+						SHA1Hash ChunkHash = SHA1Hash::generate(buf, bytes_read );
+						bool ok = (ChunkHash == tor.getHash(cur_chunk));
+						downloaded.set(cur_chunk,ok);
+						failed.set(cur_chunk,!ok);
+						bytes_read = 0;
+						if (listener)
+							listener->status(failed.numOnBits(),downloaded.numOnBits());
 					}
 				}
 			}

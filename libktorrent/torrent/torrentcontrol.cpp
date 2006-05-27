@@ -31,6 +31,9 @@
 #include <util/fileops.h>
 #include <interfaces/functions.h>
 #include <interfaces/trackerslist.h>
+#include <datachecker/singledatachecker.h>
+#include <datachecker/multidatachecker.h>
+#include <datachecker/datacheckerlistener.h>
 #include <migrate/ccmigrate.h>
 #include <migrate/cachemigrate.h>
 #include <kademlia/dhtbase.h>
@@ -114,8 +117,8 @@ namespace bt
 
 	void TorrentControl::update()
 	{
-		// do not update during critical operation mode
-		if (Globals::instance().inCriticalOperationMode())
+		// do not update during critical operation mode or when we are data checking
+		if (Globals::instance().inCriticalOperationMode() || stats.status == kt::CHECKING_DATA)
 			return;
 		
 		if (io_error)
@@ -229,9 +232,6 @@ namespace bt
 		// do not start running torrents
 		if (stats.running)
 			return;
-		
-		if (bt::Exists(datadir + "stopped"))
-			bt::Delete(datadir + "stopped",true);
 
 		stats.stopped_by_error = false;
 		io_error = false;
@@ -248,7 +248,6 @@ namespace bt
 				pman->addPotentialPeer(pp);
 			}
 		}
-		
 		
 		try
 		{
@@ -467,9 +466,9 @@ namespace bt
 		if (bt::Exists(datadir + "index"))
 			cman->loadIndexFile();
 
-		//if (!bt::Exists(datadir + "cache"))
-		// as a sanity check make sure all files are created properly
-		if (!stats.completed)
+	
+		// as a sanity check make sure all files are created properly the first time we load this torrent
+		if (!stats.completed && !ddir.isNull())
 			cman->createFiles();
 
 		stats.completed = cman->chunksLeft() == 0;
@@ -1049,6 +1048,8 @@ namespace bt
 				return i18n("Allocating diskspace");
 			case kt::QUEUED:
 				return i18n("Queued");
+			case kt::CHECKING_DATA:
+				return i18n("Checking data");
 		}
 		return QString::null;
 	}
@@ -1071,6 +1072,40 @@ namespace bt
 	{
 		if (Globals::instance().getDHT().isRunning() && !stats.priv_torrent)
 			Globals::instance().getDHT().portRecieved(ip,port);
+	}
+	
+	void TorrentControl::doDataCheck(bt::DataCheckerListener* lst)
+	{
+		DataChecker* dc = 0;
+		stats.status = kt::CHECKING_DATA;
+		if (stats.multi_file_torrent)
+			dc = new MultiDataChecker();
+		else
+			dc = new SingleDataChecker();
+	
+		dc->setListener(lst);
+		dc->check(stats.output_path,*tor);
+		
+		if (lst && !lst->isStopped())
+		{
+			down->dataChecked(dc->getDownloaded());
+			// update chunk manager
+			cman->dataChecked(dc->getDownloaded());
+		}
+		delete dc;
+		// update the status
+		updateStatusMsg();
+		updateStats();
+	}
+	
+	bool TorrentControl::hasExistingFiles() const
+	{
+		return cman->hasExistingFiles();
+	}
+	
+	bool TorrentControl::hasMissingFiles(QStringList & sl)
+	{
+		return cman->hasMissingFiles(sl);
 	}
 }
 

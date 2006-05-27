@@ -61,21 +61,23 @@ static QColor StatusToColor(TorrentStatus s,const QColorGroup & cg)
 	QColor yellow(255,174,0);
 	switch (s)
 	{
-		case kt::NOT_STARTED :
-		case kt::STOPPED:
-			return cg.text();
-			
 		case kt::SEEDING :
 		case kt::DOWNLOADING:
 		case kt::COMPLETE :
 		case kt::ALLOCATING_DISKSPACE :
 			return green;
 		case kt::STALLED:
+		case kt::CHECKING_DATA:
 			return yellow;
 		case kt::ERROR :
 			return Qt::red;
+		case kt::NOT_STARTED :
+		case kt::STOPPED:
+		case kt::QUEUED:
+		default:
+			return cg.text();
 	}
-	return QString::null;
+	return cg.text();
 }
 
 

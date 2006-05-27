@@ -17,54 +17,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTDATACHECKER_H
-#define BTDATACHECKER_H
+#include "datacheckerlistener.h"
 
-#include <util/bitset.h>
-
-class QString;
-class KProgress;
-
-namespace bt 
+namespace bt
 {
-	class Torrent;
-	
 
-	/**
-	 * @author Joris Guisson
-	 * 
-	 * Checks which data is downloaded, given a torrent and a file or directory containing
-	 * files of the torrent.
-	*/
-	class DataChecker
-	{
-	public:
-		DataChecker();	
-		virtual ~DataChecker();
-	
-		/**
-		 * Check to see which chunks have been downloaded of a torrent, and which chunks fail.
-		 * The corresponding bitsets should be filled with this information.
-		 * If anything goes wrong and Error should be thrown. 
-		 * @param path path to the file or dir (this needs to end with the name suggestion of the torrent)
-		 * @param tor The torrent
-		 * @param prog Progress bar to update
-		 */
-		virtual void check(const QString & path,const Torrent & tor,KProgress* prog) = 0;
-		
-		/**
-		 * Get the BitSet representing all the downloaded chunks.
-		 */
-		const BitSet & getDownloaded() const {return downloaded;}
-		
-		/**
-		 * Get the BitSet representing all the failed chunks.
-		 */
-		const BitSet & getFailed() const {return failed;}
-	protected:
-		BitSet failed,downloaded;
-	};
+	DataCheckerListener::DataCheckerListener() : stopped(false)
+	{}
+
+
+	DataCheckerListener::~DataCheckerListener()
+	{}
+
 
 }
-
-#endif

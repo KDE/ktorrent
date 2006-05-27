@@ -258,6 +258,9 @@ namespace bt
 
 	void TruncateFile(int fd,Uint64 size)
 	{
+		if (FileSize(fd) == size)
+			return;
+		
 #if HAVE_FTRUNCATE64
 		if (ftruncate64(fd,size) == -1)
 #else

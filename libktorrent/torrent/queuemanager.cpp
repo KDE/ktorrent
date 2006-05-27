@@ -114,37 +114,6 @@ namespace bt
 				KMessageBox::error(0,msg,i18n("Error"));
 			}
 		}
-		else
-		{
-#if 0
-			if (!tc->getStats().running && !tc->getStats().stopped_by_error && user)
-			{
-				bool seed = tc->getStats().completed;
-				int nr = seed ? max_seeds : max_downloads;
-			
-				if(!seed)
-					KMessageBox::error(0,
-									   i18n("Cannot start more than 1 download."
-											   " Go to Settings -> Configure KTorrent,"
-											   " if you want to change the limit.",
-									   "Cannot start more than %n downloads."
-											   " Go to Settings -> Configure KTorrent,"
-											   " if you want to change the limit.",
-									   nr),
-									   i18n("Error"));
-				else
-					KMessageBox::error(0,
-									   i18n("Cannot start more than 1 seed."
-											   " Go to Settings -> Configure KTorrent,"
-											   " if you want to change the limit.",
-									   "Cannot start more than %n seeds."
-											   " Go to Settings -> Configure KTorrent,"
-											   " if you want to change the limit.",
-									   nr),
-									   i18n("Error"));
-			}
-#endif
-		}
 	}
 
 	void QueueManager::stop(kt::TorrentInterface* tc, bool user)
@@ -359,7 +328,7 @@ namespace bt
 			int max_qm_seeds = max_seeds - user_seeding;
 			
 			//stop all QM started torrents
-			for(int i=max_qm_downloads; i<download_queue.count() && max_downloads; ++i)
+			for(Uint32 i=max_qm_downloads; i<download_queue.count() && max_downloads; ++i)
 			{
 				TorrentInterface* tc = download_queue.at(i);
 				const TorrentStats & s = tc->getStats();
@@ -372,7 +341,7 @@ namespace bt
 			}
 			
 			//stop all QM started torrents
-			for(int i=max_qm_seeds; i<seed_queue.count() && max_seeds; ++i)
+			for(Uint32 i=max_qm_seeds; i<seed_queue.count() && max_seeds; ++i)
 			{
 				TorrentInterface* tc = seed_queue.at(i);
 				const TorrentStats & s = tc->getStats();
@@ -391,7 +360,7 @@ namespace bt
 			if(max_seeds == 0) 
 				max_qm_seeds = seed_queue.count();
 			
-			for(int i=0; i<max_qm_downloads && i<download_queue.count(); ++i)
+			for(Uint32 i=0; i<max_qm_downloads && i<download_queue.count(); ++i)
 			{
 				TorrentInterface* tc = download_queue.at(i);
 				const TorrentStats & s = tc->getStats();
@@ -400,7 +369,7 @@ namespace bt
 					start(tc);
 			}
 			
-			for(int i=0; i<max_qm_seeds && i<seed_queue.count(); ++i)
+			for(Uint32 i=0; i<max_qm_seeds && i<seed_queue.count(); ++i)
 			{
 				TorrentInterface* tc = seed_queue.at(i);
 				const TorrentStats & s = tc->getStats();
@@ -541,6 +510,17 @@ namespace bt
 			dequeue(tc);
 	}
 	
+	/*
+	void QueueManager::startWithFileCheck(kt::TorrentInterface* tc)
+	{
+		QStringList sl;
+		if (tc->hasMissingFiles(sl) && tc->getStats().multi_file_torrent)
+		{
+			
+		}
+		tc->start();
+	}
+	*/
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	

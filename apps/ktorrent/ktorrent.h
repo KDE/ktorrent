@@ -147,7 +147,8 @@ private slots:
 	void updatedStats();
 	void urlDropped(QDropEvent*,QListViewItem*);
 	void currentTabChanged(QWidget* tab);
-	void onUpdateActions(bool can_start,bool can_stop,bool can_remove);
+	void onUpdateActions(bool can_start,bool can_stop,bool can_remove,bool can_scan);
+	void checkDataIntegrity();
 	
 	
 private:
@@ -165,13 +166,14 @@ private:
 	KTorrentView *m_view;
 	KTorrentView *m_seedView;
 	KToggleAction *m_statusbarAction;
-	KAction *m_start,*m_stop,*m_remove,*m_startall, *m_stopall, *m_pasteurl, *m_queuemgr, *m_queueaction;
+	
 	KTorrentCore* m_core;
 	TrayIcon* m_systray_icon;
 	KTabWidget* m_tabs;
 	KTorrentDCOP* m_dcop;
 	QTimer m_gui_update_timer;
 	KTorrentPreferences* m_pref;
+	
 	kt::ExpandableWidget* m_exp;
 	kt::ExpandableWidget* m_view_exp;
 	kt::ExpandableWidget* m_seedView_exp;
@@ -180,6 +182,16 @@ private:
 	QLabel* m_statusTransfer;
 	QLabel* m_statusSpeed;
 	QLabel* m_statusDHT;
+	
+	KAction* m_start;
+	KAction* m_stop;
+	KAction* m_remove;
+	KAction* m_startall;
+	KAction* m_stopall;
+	KAction* m_pasteurl;
+	KAction* m_queuemgr; 
+	KAction* m_queueaction;
+	KAction* m_datacheck;
 };
 
 #endif // _KTORRENT_H_

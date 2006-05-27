@@ -47,6 +47,7 @@
 #include "settings.h"
 #include "functions.h"
 #include "fileselectdlg.h"
+#include "scandialog.h"
 
 using namespace bt;
 using namespace kt;
@@ -144,7 +145,15 @@ void KTorrentCore::load(const QString & target,const QString & dir,bool silently
 
 			dlg.execute(tc);
 		}
-	
+		
+		if (tc->hasExistingFiles())
+		{
+			ScanDialog* scan_dlg = new ScanDialog(0);
+			scan_dlg->show();
+			scan_dlg->execute(tc,true);
+			scan_dlg->deleteLater();
+		}
+		
 		tc->setPreallocateDiskSpace(true);
 	
 		torrentAdded(tc);

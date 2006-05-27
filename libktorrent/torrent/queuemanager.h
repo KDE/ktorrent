@@ -110,6 +110,7 @@ namespace bt
 		private:
 			void enqueue(kt::TorrentInterface* tc);
 			void dequeue(kt::TorrentInterface* tc);
+//			void startWithFileCheck(kt::TorrentInterface* tc);
 			
 			bt::QueuePtrList downloads;
 			bt::QueuePtrList* paused_torrents;

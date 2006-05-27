@@ -87,17 +87,14 @@ namespace bt
 		hdr[4] = PIECE;
 		WriteUint32(hdr,5,index);
 		WriteUint32(hdr,9,begin);
-		data = ch->getData() + begin;
-		ch->ref();
+		data = new Uint8[len];
+		memcpy(data,ch->getData() + begin,len);
 	}
 
 
 	Packet::~Packet()
 	{
-		if (chunk)
-			chunk->unref();
-		else
-			delete [] data;
+		delete [] data;
 	}
 	
 

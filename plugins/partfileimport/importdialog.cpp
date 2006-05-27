@@ -33,8 +33,8 @@
 #include <torrent/chunkmanager.h>
 #include <interfaces/coreinterface.h>
 #include "importdialog.h"
-#include "singledatachecker.h"
-#include "multidatachecker.h"
+#include <datachecker/singledatachecker.h>
+#include <datachecker/multidatachecker.h>
 
 using namespace bt;
 
@@ -57,6 +57,17 @@ namespace kt
 	
 	ImportDialog::~ImportDialog()
 	{}
+	
+	void ImportDialog::progress(Uint32 num,Uint32 total)
+	{
+		m_progress->setTotalSteps(total);
+		m_progress->setProgress(num);
+	}
+	
+	void ImportDialog::status(Uint32 ,Uint32 )
+	{
+		// don't care
+	}
 	
 	void ImportDialog::onImport()
 	{
@@ -93,7 +104,8 @@ namespace kt
 		
 		try
 		{
-			dc->check(data_url.path(),tor,m_progress);
+			dc->setListener(this);
+			dc->check(data_url.path(),tor);
 		}
 		catch (Error & e)
 		{

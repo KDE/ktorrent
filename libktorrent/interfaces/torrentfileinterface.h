@@ -80,6 +80,8 @@ namespace kt
 
 		/// Sets the priority of the torrent
 		virtual void setPriority(Priority newpriority = NORMAL_PRIORITY) = 0;
+		
+	;
 
 	protected:
 		QString path;

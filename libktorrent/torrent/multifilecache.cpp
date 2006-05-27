@@ -176,6 +176,8 @@ namespace bt
 		QString tmp = dnd ? tmpdir + "dnd" + bt::DirSeparator() : output_dir;
 		if (!bt::Exists(tmp + fpath))
 			bt::Touch(tmp + fpath);
+		else if (!dnd)
+			preexisting_files = true;
 		
 		// and make a symlink in the cache to it
 		if (!bt::Exists(cache_dir + fpath))
@@ -383,6 +385,23 @@ namespace bt
 			cf->preallocate();
 			i++;
 		}
+	}
+	
+	bool MultiFileCache::hasMissingFiles(QStringList & sl)
+	{
+		bool ret = false;
+		for (Uint32 i = 0;i < tor.getNumFiles();i++)
+		{
+			TorrentFile & tf = tor.getFile(i);
+			QString p = cache_dir + tf.getPath();
+			QFileInfo fi(p);
+			if (!fi.exists())
+			{
+				ret = true;
+				sl.append(fi.readLink());
+			}
+		}
+		return ret;
 	}
 	
 	///////////////////////////////

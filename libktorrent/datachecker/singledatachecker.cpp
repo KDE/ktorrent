@@ -18,12 +18,12 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <klocale.h>
-#include <kprogress.h>
 #include <kapplication.h>
 #include <util/log.h>
 #include <util/file.h>
 #include <util/error.h>
 #include <util/array.h>
+#include <util/functions.h>
 #include <torrent/globals.h>
 #include <torrent/torrent.h>
 #include "singledatachecker.h"
@@ -39,10 +39,11 @@ namespace bt
 	{}
 
 
-	void SingleDataChecker::check(const QString& path, const Torrent& tor,KProgress* prog)
+	void SingleDataChecker::check(const QString& path, const Torrent& tor)
 	{
 		// open the file
 		Uint32 num_chunks = tor.getNumChunks();
+		Uint32 chunk_size = tor.getChunkSize();
 		File fptr;
 		if (!fptr.open(path,"rb"))
 		{
@@ -53,18 +54,26 @@ namespace bt
 		// initialize the bitsets
 		downloaded = BitSet(num_chunks);
 		failed = BitSet(num_chunks);
-	
-		prog->setTotalSteps(num_chunks);
+		
+		Uint32 last_update_time = bt::GetCurrentTime();
 		
 		// loop over all chunks
-		Array<Uint8> buf((Uint32)tor.getChunkSize());
+		Array<Uint8> buf(chunk_size);
 		for (Uint32 i = 0;i < num_chunks;i++)
 		{
-			prog->setProgress(i);
-			if (i % 50 == 0 && i > 0)
+			if (listener)
+			{
+				listener->progress(i,num_chunks);
+				if (listener->needToStop()) // if we need to stop just return
+					return;
+			}
+			
+			Uint32 now = bt::GetCurrentTime();
+			if (now - last_update_time > 1000)
 			{
 				Out() << "Checked " << i << " chunks" << endl;
 				KApplication::kApplication()->processEvents();
+				last_update_time = now;
 			}
 	
 			if (!fptr.eof())
@@ -86,6 +95,8 @@ namespace bt
 				downloaded.set(i,false);
 				failed.set(i,true);
 			}
+			if (listener)
+				listener->status(failed.numOnBits(),downloaded.numOnBits());
 		}
 	}
 

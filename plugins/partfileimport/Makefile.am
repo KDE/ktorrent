@@ -1,9 +1,8 @@
 INCLUDES = -I$(srcdir)/../../libktorrent $(all_includes)
 METASOURCES = AUTO
 kde_module_LTLIBRARIES = ktpartfileimportplugin.la
-noinst_HEADERS = partfileimportplugin.h multidatachecker.h importdialog.h
-ktpartfileimportplugin_la_SOURCES = partfileimportplugin.cpp datachecker.cpp \
-		singledatachecker.cpp multidatachecker.cpp importdlgbase.ui importdialog.cpp
+noinst_HEADERS = partfileimportplugin.h importdialog.h
+ktpartfileimportplugin_la_SOURCES = partfileimportplugin.cpp importdlgbase.ui importdialog.cpp
 
 # Libs needed by the plugin
 ktpartfileimportplugin_la_LIBADD = $(LIB_KHTML) $(LIB_KPARTS) \

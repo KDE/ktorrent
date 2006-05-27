@@ -13,8 +13,9 @@
 	<Action name="Start all"/>
 	<Action name="Stop all"/>
 	<Separator/>
-	<Action name="queue_action"/>
+	<Action name="check_data"/>
 	<Separator/>
+	<Action name="queue_action"/>
 	<Action name="Queue manager"/>
   </Menu>
 </MenuBar>
