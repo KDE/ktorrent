@@ -41,7 +41,7 @@ namespace kt
 {
 
 	SearchPlugin::SearchPlugin(QObject* parent, const char* name, const QStringList& args)
-	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,i18n("KTorrent's search plugin"))
+	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,i18n("Search for torrents on several popular torrent search engines"))
 	{
 		// setXMLFile("ktsearchpluginui.rc");
 		search = 0;

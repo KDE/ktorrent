@@ -39,7 +39,7 @@ namespace kt
 	
 
 	InfoWidgetPlugin::InfoWidgetPlugin(QObject* parent, const char* name, const QStringList& args)
-	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,i18n("KTorrent's information widget plugin, it shows additional information about a download."))
+	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,i18n("Shows additional information about a download. Like which chunks have been downloaded, how many seeders and leechers ..."))
 	{
 		iw = 0; pref = 0;
 	}

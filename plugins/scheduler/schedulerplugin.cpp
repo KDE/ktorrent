@@ -53,7 +53,7 @@ namespace kt
 	const QString NAME = "schedulerplugin";
 	const QString AUTHOR = "Ivan Vasic";
 	const QString EMAIL = "ivasic@gmail.com";
-	const QString DESCRIPTION = i18n("KTorrent's schedule plugin");
+	const QString DESCRIPTION = i18n("Bandwidth scheduling plugin");
 
 	SchedulerPlugin::SchedulerPlugin(QObject* parent, const char* name, const QStringList& args)
 	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,DESCRIPTION)

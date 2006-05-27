@@ -43,7 +43,7 @@ namespace kt
 {
 
 	UPnPPlugin::UPnPPlugin(QObject* parent, const char* name, const QStringList& args)
-	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,i18n("KTorrent's UPnP plugin"))
+	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,i18n("Uses UPnP to automatically forward ports on your router"))
 	{
 		sock = 0;
 		pref = 0;
