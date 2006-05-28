@@ -147,11 +147,12 @@ namespace bt
 	{
 		if (killed) return;
 		preader->update();
+		recieved_packet = false;
 		
 		if (!preader->ok())
 			error(0);
-		
-		recieved_packet = false;
+		else if (preader->moreData())
+			recieved_packet = true;
 	}
 	
 	void Peer::packetReady(const Uint8* packet,Uint32 len)
