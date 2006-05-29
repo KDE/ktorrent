@@ -72,8 +72,10 @@ namespace kt
 			setColumnWidth(i,40);
 			setColumnStretchable(i, true);
 		}
-		for(int i=0; i<24; ++i)
+		for(int i=0; i<24; ++i) {
+			setColumnWidth(i,40);
 			setRowStretchable(i, true);
+		}
 
 		setColumnMovingEnabled(false);
 		setRowMovingEnabled(false);

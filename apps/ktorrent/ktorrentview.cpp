@@ -369,8 +369,9 @@ void KTorrentView::update()
 			items.remove(i);
 			delete i.data();
 		}
-// 		emit currentChanged(0l);
 		emit viewChange(tc);
+		if(items.count() == 0)
+			emit currentChanged(0l);
 		Out() << "Torrent moved to DownloadView." << endl;
 	}
 	sort();
@@ -393,8 +394,9 @@ void KTorrentView::torrentFinished(kt::TorrentInterface* tc)
 		items.remove(i);
 		delete i.data();
 	}
-// 	emit currentChanged(0l);
 	emit viewChange(tc);
+	if(items.count() == 0)
+		emit currentChanged(0l);
 	Out() << "Torrent moved to SeedView." << endl;
 }
 
