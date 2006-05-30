@@ -96,6 +96,9 @@ namespace kt
 		resetSchedule();
 
 		setSelectionMode(QTable::NoSelection);
+		
+		setHScrollBarMode(QTable::AlwaysOff);
+		setVScrollBarMode(QTable::AlwaysOff);
 
 		connect(this, SIGNAL(currentChanged( int, int )), this, SLOT(cellSelectionChanged( int, int )));
 		connect(this, SIGNAL(pressed(int, int, int, const QPoint&)), this, SLOT(cellMouseDown(int, int, int, const QPoint& )));
