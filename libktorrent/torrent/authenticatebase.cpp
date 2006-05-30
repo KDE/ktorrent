@@ -150,7 +150,7 @@ namespace bt
 		if (finished)
 			return;
 		
-		Out() << "Timeout occured" << endl;
+		Out() << "Timeout occurred" << endl;
 		onFinish(false);
 	}
 }

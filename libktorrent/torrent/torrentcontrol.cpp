@@ -261,7 +261,7 @@ namespace bt
 		
 		if (prealloc)
 		{
-			Out() << "Prealocating diskspace" << endl;
+			Out() << "Pre-allocating diskspace" << endl;
 			try
 			{
 				cman->preallocateDiskSpace();
