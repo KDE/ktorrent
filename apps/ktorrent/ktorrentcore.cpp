@@ -143,7 +143,11 @@ void KTorrentCore::load(const QString & target,const QString & dir,bool silently
 		{
 			FileSelectDlg dlg;
 
-			dlg.execute(tc);
+			if (dlg.execute(tc) != QDialog::Accepted)
+			{
+				remove(tc,true);
+				return;
+			}
 		}
 		
 		if (tc->hasExistingFiles())

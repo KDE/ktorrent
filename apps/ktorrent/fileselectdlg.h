@@ -46,7 +46,7 @@ public:
 				  bool modal = true, WFlags fl = 0 );
 	virtual ~FileSelectDlg();
 	
-	void execute(kt::TorrentInterface* tc);
+	int execute(kt::TorrentInterface* tc);
 	
 protected slots:
 	virtual void reject();

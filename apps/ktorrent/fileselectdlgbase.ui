@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>FileSelectDlgBase</class>
 <widget class="QDialog">
     <property name="name">
@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>465</width>
-            <height>231</height>
+            <width>571</width>
+            <height>286</height>
         </rect>
     </property>
     <property name="caption">
@@ -72,6 +72,9 @@
                     <property name="text">
                         <string>O&amp;K</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+K</string>
+                    </property>
                 </widget>
                 <widget class="KPushButton">
                     <property name="name">
@@ -110,10 +113,18 @@
                     <property name="sizeHint">
                         <size>
                             <width>20</width>
-                            <height>40</height>
+                            <height>30</height>
                         </size>
                     </property>
                 </spacer>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>m_cancel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Cancel</string>
+                    </property>
+                </widget>
             </vbox>
         </widget>
     </hbox>
@@ -122,6 +133,8 @@
 </customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>klistview.h</includehint>
+    <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>

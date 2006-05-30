@@ -18,6 +18,7 @@
  *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <klistview.h>
+#include <kstdguiitem.h>
 #include <kpushbutton.h>
 #include <interfaces/torrentfileinterface.h>
 #include <interfaces/torrentinterface.h>
@@ -33,12 +34,15 @@ FileSelectDlg::FileSelectDlg(QWidget* parent, const char* name, bool modal, WFla
 	connect(m_select_none,SIGNAL(clicked()),this,SLOT(selectNone()));
 	connect(m_invert_selection,SIGNAL(clicked()),this,SLOT(invertSelection()));
 	connect(m_ok,SIGNAL(clicked()),this,SLOT(accept()));
+	connect(m_cancel,SIGNAL(clicked()),this,SLOT(reject()));
+	m_ok->setGuiItem(KStdGuiItem::ok());
+	m_cancel->setGuiItem(KStdGuiItem::cancel());
 }
 
 FileSelectDlg::~FileSelectDlg()
 {}
 
-void FileSelectDlg::execute(kt::TorrentInterface* tc)
+int FileSelectDlg::execute(kt::TorrentInterface* tc)
 {
 	this->tc = tc;
 	if (tc)
@@ -52,8 +56,9 @@ void FileSelectDlg::execute(kt::TorrentInterface* tc)
 		}
 		root->setOpen(true);
 		m_file_view->setRootIsDecorated(true);
-		exec();
+		return exec();
 	}
+	return QDialog::Rejected;
 }
 
 void FileSelectDlg::reject()

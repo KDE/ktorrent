@@ -125,8 +125,6 @@ namespace bt
 
 		BEncoder enc(&fptr);
 		enc.beginDict(); // top dict
-		enc.write("info");
-		saveInfo(enc);
 		enc.write("announce"); enc.write(trackers[0]);
 		if (trackers.count() > 1)
 		{
@@ -139,13 +137,15 @@ namespace bt
 			enc.end();
 			
 		}
-		enc.write("created by");enc.write("KTorrent 1.0");
-		enc.write("creation date");enc.write((Uint64)time(0));
 		if (comments.length() > 0)
 		{
 			enc.write("comments");
 			enc.write(comments);
 		}
+		enc.write("created by");enc.write("KTorrent 1.0");
+		enc.write("creation date");enc.write((Uint64)time(0));
+		enc.write("info");
+		saveInfo(enc);
 		enc.end();
 	}
 
