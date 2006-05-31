@@ -73,7 +73,7 @@ namespace bt
 		if (max == 0)
 		{
 			// send full packet
-			ret = p.send(peer,p.getDataLength() + p.getHeaderLength(),bs);
+			ret = p.send(peer,p.getDataLength(),bs);
 		}
 		else
 		{
@@ -95,7 +95,7 @@ namespace bt
 	{
 		bool ok = true;
 		if (ask)
-			ok = UploadCap::instance().allow(this,p->getDataLength() + p->getHeaderLength());
+			ok = UploadCap::instance().allow(this,p->getDataLength());
 		
 		
 		if (ok && packets.count() == 0)

@@ -38,12 +38,9 @@ namespace bt
 	*/
 	class Packet
 	{
-		Uint8 hdr[17];
-		Uint32 hdr_length;
 		Uint8* data;
-		Uint32 data_length;
+		Uint32 size;
 		Uint32 written;
-		Chunk* chunk;
 	public:
 		Packet(Uint8 type);
 		Packet(Uint16 port);
@@ -53,19 +50,16 @@ namespace bt
 		Packet(Uint32 index,Uint32 begin,Uint32 len,Chunk* ch);
 		virtual ~Packet();
 
-		Uint8 getType() const {return hdr[4];}
+		Uint8 getType() const {return data ? data[4] : 0;}
 		
 		bool isOK() const;
 		
-		const Uint8* getHeader() const {return hdr;}
-		Uint32 getHeaderLength() const {return hdr_length;}
-		
-		const Uint8* getData() const {return data;}
-		Uint32 getDataLength() const {return data_length;}
+		//const Uint8* getData() const {return data;}
+		Uint32 getDataLength() const {return size;}
 
 		
 		/// Make a description of the packet for debug purposes
-		QString debugString() const;
+		//QString debugString() const;
 		
 		/**
 		 * Send the packet to a peer, return true if the full packet was written.

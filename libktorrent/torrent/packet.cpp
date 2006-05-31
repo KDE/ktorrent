@@ -31,64 +31,59 @@
 namespace bt
 {
 
+	static Uint8* AllocPacket(Uint32 size,Uint8 type)
+	{
+		Uint8* data = new Uint8[size];
+		WriteUint32(data,0,size - 4);
+		data[4] = type;
+		return data;
+	}
 
 
-	Packet::Packet(Uint8 type) : hdr_length(0),data(0),data_length(0),written(0),chunk(0)
+	Packet::Packet(Uint8 type) : data(0),size(0),written(0)
 	{
-		WriteUint32(hdr,0,1);
-		hdr[4] = type;
-		hdr_length = 5;
+		size = 5;
+		data = AllocPacket(size,type);
 	}
 	
-	Packet::Packet(Uint16 port) : hdr_length(0),data(0),data_length(0),written(0),chunk(0)
+	Packet::Packet(Uint16 port) : data(0),size(0),written(0)
 	{
-		WriteUint32(hdr,0,3);
-		hdr[4] = PORT;
-		WriteUint16(hdr,5,port);
-		hdr_length = 7;
-	}
-	
-	Packet::Packet(Uint32 chunk,Uint8 type) : hdr_length(0),data(0),data_length(0),written(0),chunk(0)
-	{
-		WriteUint32(hdr,0,5);
-		hdr[4] = type;
-		WriteUint32(hdr,5,chunk);
-		hdr_length = 9;
-	}
-	
-	Packet::Packet(const BitSet & bs) : hdr_length(0),data(0),data_length(0),written(0),chunk(0)
-	{
-		WriteUint32(hdr,0,1 + bs.getNumBytes());
-		hdr[4] = BITFIELD;
-		hdr_length = 5;
-		data_length = bs.getNumBytes();
-		data = new Uint8[data_length];
-		memcpy(data,bs.getData(),data_length);
-	}
-	
-	Packet::Packet(const Request & r,Uint8 type)
-	: hdr_length(0),data(0),data_length(0),written(0),chunk(0)
-	{
-		WriteUint32(hdr,0,13);
-		hdr[4] = type;
-		WriteUint32(hdr,5,r.getIndex());
-		WriteUint32(hdr,9,r.getOffset());
-		WriteUint32(hdr,13,r.getLength());
-		hdr_length = 17;
-	}
-	
-	Packet::Packet(Uint32 index,Uint32 begin,Uint32 len,Chunk* ch)
-	: hdr_length(0),data(0),data_length(0),written(0),chunk(ch)
-	{
-		WriteUint32(hdr,0,9 + len);
-		hdr_length = 13;
-		data_length = len;
+		size = 7;
+		data = AllocPacket(size,PORT);
+		WriteUint16(data,5,port);
 		
-		hdr[4] = PIECE;
-		WriteUint32(hdr,5,index);
-		WriteUint32(hdr,9,begin);
-		data = new Uint8[len];
-		memcpy(data,ch->getData() + begin,len);
+	}
+	
+	Packet::Packet(Uint32 chunk,Uint8 type) : data(0),size(0),written(0)
+	{
+		size = 9;
+		data = AllocPacket(size,type);
+		WriteUint32(data,5,chunk);
+	}
+	
+	Packet::Packet(const BitSet & bs) : data(0),size(0),written(0)
+	{
+		size = 5 + bs.getNumBytes();
+		data = AllocPacket(size,BITFIELD);
+		memcpy(data+5,bs.getData(),bs.getNumBytes());
+	}
+	
+	Packet::Packet(const Request & r,Uint8 type) : data(0),size(0),written(0)
+	{
+		size = 17;
+		data = AllocPacket(size,type);
+		WriteUint32(data,5,r.getIndex());
+		WriteUint32(data,9,r.getOffset());
+		WriteUint32(data,13,r.getLength());
+	}
+	
+	Packet::Packet(Uint32 index,Uint32 begin,Uint32 len,Chunk* ch) : data(0),size(0),written(0)
+	{
+		size = 13 + len;
+		data = AllocPacket(size,PIECE);
+		WriteUint32(data,5,index);
+		WriteUint32(data,9,begin);
+		memcpy(data+13,ch->getData() + begin,len);
 	}
 
 
@@ -97,10 +92,13 @@ namespace bt
 		delete [] data;
 	}
 	
-
+	/*
 	QString Packet::debugString() const
 	{
-		switch (hdr[4])
+		if (!data)
+			return QString::null;
+		
+		switch (data[4])
 		{
 			case CHOKE : return QString("CHOKE %1 %2").arg(hdr_length).arg(data_length);
 			case UNCHOKE : return QString("UNCHOKE %1 %2").arg(hdr_length).arg(data_length);
@@ -114,69 +112,31 @@ namespace bt
 			default: return QString("UNKNOWN %1 %2").arg(hdr_length).arg(data_length);
 		}
 	}
-	
+	*/
 	bool Packet::isOK() const
 	{
-		if (getDataLength() > 0 && !getData())
+		if (!data)
 			return false;
-		
-		if (hdr[4] == PIECE && !chunk)
-			return false;
-		
-		if (hdr[4] == PIECE && !chunk->getData())
-			return false;
-		
+
 		return true;
 	}
 
 	bool Packet::send(Peer* peer,Uint32 max_bytes,Uint32 & bytes_sent)
 	{
-		bool proto = hdr[4] != PIECE;
-		bytes_sent = 0;
-		Uint32 ttw = max_bytes; // total bytes we can write
-		// if we haven't written the header yet, write it
-		if (written < hdr_length)
+		bool proto = data[4] != PIECE;
+		if (written + max_bytes >= size)
 		{
-			Uint32 tw = hdr_length - written;
-			if (ttw < tw)
-			{
-				// we can't send the full header
-				peer->sendData(hdr + written,ttw,proto);
-				written += ttw;
-				bytes_sent += ttw;
-				ttw = 0;
-			}
-			else
-			{
-				// send the full header
-				peer->sendData(hdr + written,tw,proto);
-				written += tw;
-				bytes_sent += tw;
-				ttw -= tw;
-			}
-		}
-		
-		if (ttw == 0 || data_length == 0)
-			return written >= hdr_length + data_length;
-		
-		
-		// number of data bytes we need to write
-		Uint32 dtw = (hdr_length + data_length) - written;
-		Uint32 off = written - hdr_length;
-		if (ttw < dtw)
-		{
-			// we can't send them all
-			peer->sendData(data + off,ttw,proto);
-			written += ttw;
-			bytes_sent += ttw;
+			peer->sendData(data + written,size - written,proto);
+			written = size;
+			bytes_sent = size - written;
+			return true;
 		}
 		else
 		{
-			// send the whole packet
-			peer->sendData(data + off,dtw,proto);
-			bytes_sent += dtw;
-			written += dtw;
+			peer->sendData(data + written,max_bytes,proto);
+			written += max_bytes;
+			bytes_sent = max_bytes;
+			return false;
 		}
-		return written >= hdr_length + data_length;
 	}
 }
