@@ -286,6 +286,15 @@ namespace kt
 		 */
 		virtual bool hasMissingFiles(QStringList & sl) = 0;
 		
+		/**
+		 * Recreate missing files.
+		*/
+		virtual void recreateMissingFiles() = 0;
+		
+		/**
+		 * Mark missing files as do not download.
+		 */
+		virtual void dndMissingFiles() = 0;
 		
 	signals:
 		/**
@@ -313,6 +322,20 @@ namespace kt
 		 * @param me The object which emitted the signal.
 		 */
 		void seedingAutoStopped(kt::TorrentInterface* me);
+		
+		/**
+		 * Emitted just before the torrent is started, this should be used to do some
+		 * checks on the files in the cache.
+		 * @param me The torrent which emitted the signal
+		 */
+		void aboutToBeStarted(kt::TorrentInterface* me);
+		
+		/**
+		 * Emitted when missing files have been marked as dnd.
+		 * The intention of this signal is to update the GUI.
+		 * @param me The torrent which emitted the signal
+		*/
+		void missingFilesMarkedDND(kt::TorrentInterface* me);
 
 	protected:
 		TorrentStats stats;

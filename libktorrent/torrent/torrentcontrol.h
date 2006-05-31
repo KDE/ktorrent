@@ -158,6 +158,8 @@ namespace bt
 		
 		virtual Uint32 getNumFiles() const;
 		virtual kt::TorrentFileInterface & getTorrentFile(Uint32 index);
+		virtual void recreateMissingFiles();
+		virtual void dndMissingFiles();
 		
 		int getPriority() const { return priority; }
 		void setPriority(int p);

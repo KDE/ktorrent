@@ -65,6 +65,7 @@ namespace kt
 		void changeTC(kt::TorrentInterface* tc);
 		void update();
 		void showContextMenu(KListView* ,QListViewItem* item,const QPoint & p);
+		void refreshFileTree(kt::TorrentInterface* tc);
 	
 		///preview slot
 		void contextItem(int id);

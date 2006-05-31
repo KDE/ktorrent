@@ -241,6 +241,12 @@ namespace bt
 		/// Test if the torrent has existing files, only works the first time a torrent is loaded
 		bool hasExistingFiles() const;
 		
+		/// Recreates missing files
+		void recreateMissingFiles();
+		
+		/// Set missing files as do not download
+		void dndMissingFiles();
+		
 	signals:
 		/**
 		 * Emitted when a range of chunks has been excluded

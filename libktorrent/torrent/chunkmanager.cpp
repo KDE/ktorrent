@@ -288,6 +288,7 @@ namespace bt
 			cache->save(c);
 		c->clear();
 		c->setStatus(Chunk::NOT_DOWNLOADED);
+		bitset.set(i,false);
 		loaded.remove(i);
 	}
 	
@@ -805,6 +806,54 @@ namespace bt
 	bool ChunkManager::hasExistingFiles() const
 	{
 		return cache->hasExistingFiles();
+	}
+	
+	
+	void ChunkManager::recreateMissingFiles()
+	{
+		createFiles();
+		if (tor.isMultiFile())
+		{
+			// loop over all files and mark all chunks of all missing files as
+			// not downloaded
+			for (Uint32 i = 0;i < tor.getNumFiles();i++)
+			{
+				TorrentFile & tf = tor.getFile(i);
+				if (!tf.isMissing())
+					continue;
+				
+				for (Uint32 j = tf.getFirstChunk(); j <= tf.getLastChunk();j++)
+					resetChunk(j);
+				tf.setMissing(false);
+			}
+		}
+		else
+		{
+			// reset all chunks in case of single file torrent
+			for (Uint32 j = 0; j < tor.getNumChunks();j++)
+				resetChunk(j);
+		}
+		saveIndexFile();
+	}
+	
+	void ChunkManager::dndMissingFiles()
+	{
+		createFiles(); // create them again
+		// loop over all files and mark all chunks of all missing files as
+		// not downloaded
+		for (Uint32 i = 0;i < tor.getNumFiles();i++)
+		{
+			TorrentFile & tf = tor.getFile(i);
+			if (!tf.isMissing())
+				continue;
+				
+			for (Uint32 j = tf.getFirstChunk(); j <= tf.getLastChunk();j++)
+				resetChunk(j);
+			tf.setMissing(false);
+			tf.setDoNotDownload(true); // set do not download
+		}
+		saveFileInfo();
+		saveIndexFile();
 	}
 }
 

@@ -180,8 +180,10 @@ namespace bt
 			preexisting_files = true;
 		
 		// and make a symlink in the cache to it
-		if (!bt::Exists(cache_dir + fpath))
-			bt::SymLink(tmp + fpath,cache_dir + fpath);
+		if (bt::Exists(cache_dir + fpath))
+			bt::Delete(cache_dir + fpath); // delete any existing symlinks
+		
+		bt::SymLink(tmp + fpath,cache_dir + fpath);
 	}
 
 	void MultiFileCache::load(Chunk* c)
@@ -399,6 +401,7 @@ namespace bt
 			{
 				ret = true;
 				sl.append(fi.readLink());
+				tf.setMissing(true);
 			}
 		}
 		return ret;

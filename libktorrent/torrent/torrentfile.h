@@ -44,6 +44,7 @@ namespace bt
 		Uint64 first_chunk_off;
 		Uint64 last_chunk_size;
 		Priority priority;
+		bool missing;
 	public:
 		/**
 		 * Default constructor. Creates a null TorrentFile.
@@ -102,6 +103,12 @@ namespace bt
 		 * @return *this
 		 */
 		TorrentFile & operator = (const TorrentFile & tf);
+		
+		/// See if the file is missing
+		bool isMissing() const {return missing;}
+		
+		/// Set the file to be missing or not
+		void setMissing(bool m) {missing = m;}
 
 		static TorrentFile null;
 	signals:

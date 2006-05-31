@@ -235,6 +235,12 @@ public slots:
 	 */
 	void queue(kt::TorrentInterface* tc);
 	
+	/**
+	 * A torrent is about to be started. We will do some file checks upon this signal.
+	 * @param tc The TorrentInterface
+	*/
+	void aboutToBeStarted(kt::TorrentInterface* tc);
+	
 signals:
 	/**
 	 * A TorrentInterface was added
@@ -269,6 +275,7 @@ signals:
 
 private:
 	void rollback(const QPtrList<kt::TorrentInterface> & success);
+	void connectSignals(kt::TorrentInterface* tc);
 	
 private slots:
 	void torrentFinished(kt::TorrentInterface* tc);

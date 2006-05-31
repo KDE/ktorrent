@@ -276,7 +276,11 @@ namespace kt
 		}
 	
 		if (tc)
+		{
 			monitor = new KTorrentMonitor(curr_tc,peer_view,cd_view);
+			connect(tc,SIGNAL(missingFilesMarkedDND( kt::TorrentInterface* )),
+					this,SLOT(refreshFileTree( kt::TorrentInterface* )));
+		}
 	
 		fillFileTree();
 // 		if(!m_seed)
@@ -664,6 +668,15 @@ namespace kt
 			useLimit->setChecked(false);
 			maxRatio->setText("0.00");
 		}
+	}
+	
+	void InfoWidget::refreshFileTree(kt::TorrentInterface* tc)
+	{
+		if (!tc || curr_tc != tc)
+			return;
+		
+		if (multi_root)
+			multi_root->updateDNDInformation();
 	}
 }
 

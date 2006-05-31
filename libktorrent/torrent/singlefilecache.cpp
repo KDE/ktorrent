@@ -111,6 +111,9 @@ namespace bt
 			else
 				preexisting_files = true;
 
+			if (bt::Exists(cache_file))
+				bt::Delete(cache_file);
+			
 			bt::SymLink(out_file,cache_file);
 			output_file = out_file;
 		}

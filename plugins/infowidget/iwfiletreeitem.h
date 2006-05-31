@@ -46,7 +46,8 @@ namespace kt
 	
 		void updatePreviewInformation(kt::TorrentInterface* tc);
 		void updatePercentageInformation(kt::TorrentInterface* tc);
-                void updatePriorityInformation(kt::TorrentInterface* tc);
+		void updatePriorityInformation(kt::TorrentInterface* tc);
+		void updateDNDInformation();
 	protected:
 		virtual int compare(QListViewItem* i, int col, bool ascending) const;
 	};

@@ -122,4 +122,13 @@ namespace kt
 				break;
 		}
 	}
+	
+	void IWFileTreeItem::updateDNDInformation()
+	{
+		if (file.doNotDownload() && isOn())
+		{
+			setChecked(false);
+			setText(2, i18n("No"));
+		}
+	}
 }

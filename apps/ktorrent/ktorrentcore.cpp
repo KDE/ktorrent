@@ -132,12 +132,7 @@ void KTorrentCore::load(const QString & target,const QString & dir,bool silently
 		tc->init(qman, target, tdir, dir, 
 		         Settings::useSaveDir() ? Settings::saveDir() : QString());
 
-		connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
-		        this,SLOT(torrentFinished(kt::TorrentInterface* )));
-		connect(tc, SIGNAL(stoppedByError(kt::TorrentInterface*, QString )),
-		        this, SLOT(slotStoppedByError(kt::TorrentInterface*, QString )));
-		connect(tc, SIGNAL(seedingAutoStopped( kt::TorrentInterface* )),
-				this, SLOT(torrentSeedAutoStopped( kt::TorrentInterface* )));
+		connectSignals(tc);
 		qman->append(tc);
 		if (tc->getStats().multi_file_torrent && !silently)
 		{
@@ -145,7 +140,10 @@ void KTorrentCore::load(const QString & target,const QString & dir,bool silently
 
 			if (dlg.execute(tc) != QDialog::Accepted)
 			{
-				remove(tc,true);
+				if (!tc->hasExistingFiles())
+					remove(tc,true);
+				else
+					remove(tc,false);
 				return;
 			}
 		}
@@ -270,19 +268,11 @@ void KTorrentCore::loadExistingTorrent(const QString & tor_dir)
 	try
 	{
 		tc = new TorrentControl();
-		tc->init(qman,
-		         idir + "torrent",
-			 idir,
-			 QString::null,
-			 Settings::useSaveDir() ? Settings::saveDir() 
-			    : QString());
+		tc->init(qman,idir + "torrent",idir,QString::null,
+			 Settings::useSaveDir() ? Settings::saveDir() : QString());
+			
 		qman->append(tc);
-		connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
-				this,SLOT(torrentFinished(kt::TorrentInterface* )));
-		connect(tc, SIGNAL(stoppedByError(kt::TorrentInterface*, QString )),
-				this, SLOT(slotStoppedByError(kt::TorrentInterface*, QString )));
-		connect(tc, SIGNAL(seedingAutoStopped( kt::TorrentInterface* )),
-				this, SLOT(torrentSeedAutoStopped( kt::TorrentInterface* )));
+		connectSignals(tc);
 		if (tc->getStats().autostart && tc->getStats().user_controlled)
 			start(tc);
 		torrentAdded(tc);
@@ -510,8 +500,7 @@ void KTorrentCore::makeTorrent(const QString & file,const QStringList & trackers
 		kt::TorrentInterface* tc = mktor.makeTC(tdir);
 		if (tc)
 		{
-			connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
-			        this,SLOT(torrentFinished(kt::TorrentInterface* )));
+			connectSignals(tc);
 			qman->append(tc);
 			if (seed)
 				start(tc);
@@ -633,6 +622,52 @@ void KTorrentCore::setPausedState(bool pause)
 void KTorrentCore::queue(kt::TorrentInterface* tc)
 {
 	qman->queue(tc);
+}
+
+void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc)
+{
+	QStringList missing;
+	if (tc->hasMissingFiles(missing))
+	{
+		if (tc->getStats().multi_file_torrent)
+		{
+			QString msg = i18n("Several data files of the torrent \"%1\" are missing, do you want to recreate them, or do you want to not download them ?").arg(tc->getStats().torrent_name);
+					
+			int ret = KMessageBox::warningYesNoList(0,msg,missing,QString::null,
+					KGuiItem(i18n("Recreate")),KGuiItem(i18n("Do not download")));
+			if (ret == KMessageBox::Yes)
+			{
+				// recreate them
+				tc->recreateMissingFiles();
+			}
+			else
+			{
+				// mark them as do not download
+				tc->dndMissingFiles();
+			}
+		}
+		else
+		{
+			QString msg = i18n("The file where the data is saved of the torrent \"%1\" is missing, do you want to recreate it ?").arg(tc->getStats().torrent_name);
+			int ret = KMessageBox::warningYesNo(0,msg);
+			if (ret == KMessageBox::Yes)
+			{
+				tc->recreateMissingFiles();
+			}
+		}
+	}
+}
+
+void KTorrentCore::connectSignals(kt::TorrentInterface* tc)
+{
+	connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
+			this,SLOT(torrentFinished(kt::TorrentInterface* )));
+	connect(tc, SIGNAL(stoppedByError(kt::TorrentInterface*, QString )),
+			this, SLOT(slotStoppedByError(kt::TorrentInterface*, QString )));
+	connect(tc, SIGNAL(seedingAutoStopped( kt::TorrentInterface* )),
+			this, SLOT(torrentSeedAutoStopped( kt::TorrentInterface* )));
+	connect(tc,SIGNAL(aboutToBeStarted( kt::TorrentInterface* )),
+			this, SLOT(aboutToBeStarted( kt::TorrentInterface* )));
 }
 
 #include "ktorrentcore.moc"

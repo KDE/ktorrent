@@ -26,12 +26,12 @@
 namespace bt
 {
 
-	TorrentFile::TorrentFile() : TorrentFileInterface(QString::null,0)
+	TorrentFile::TorrentFile() : TorrentFileInterface(QString::null,0),missing(false)
 	{}
 
 	TorrentFile::TorrentFile(Uint32 index,const QString & path,
 							 Uint64 off,Uint64 size,Uint64 chunk_size)
-	: TorrentFileInterface(path,size),index(index),cache_offset(off)
+	: TorrentFileInterface(path,size),index(index),cache_offset(off),missing(false)
 	{
 		first_chunk = off / chunk_size;
 		first_chunk_off = off % chunk_size;
@@ -55,6 +55,7 @@ namespace bt
 		last_chunk = tf.getLastChunk();
 		last_chunk_size = tf.getLastChunkSize();
 		priority = tf.getPriority();
+		missing = tf.isMissing();
 	}
 
 	TorrentFile::~TorrentFile()
@@ -110,6 +111,7 @@ namespace bt
 		last_chunk = tf.getLastChunk();
 		last_chunk_size = tf.getLastChunkSize();
 		priority = tf.getPriority();
+		missing = tf.isMissing();
 		return *this;
 	}
 

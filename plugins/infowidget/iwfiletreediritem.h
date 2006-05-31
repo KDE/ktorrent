@@ -65,7 +65,12 @@ namespace kt
 		 */
 		void updatePercentageInformation(kt::TorrentInterface* tc);
 
-                Priority updatePriorityInformation(kt::TorrentInterface* tc);
+		Priority updatePriorityInformation(kt::TorrentInterface* tc);
+		
+		/**
+		 * Update the DND information of each file item.
+		*/
+		void updateDNDInformation();
 
 		virtual kt::FileTreeItem* newFileTreeItem(const QString & name, kt::TorrentFileInterface & file);
 		virtual kt::FileTreeDirItem* newFileTreeDirItem(const QString & subdir);

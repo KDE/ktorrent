@@ -233,6 +233,7 @@ namespace bt
 		if (stats.running)
 			return;
 
+		aboutToBeStarted(this);
 		stats.stopped_by_error = false;
 		io_error = false;
 		
@@ -1106,6 +1107,21 @@ namespace bt
 	bool TorrentControl::hasMissingFiles(QStringList & sl)
 	{
 		return cman->hasMissingFiles(sl);
+	}
+	
+	void TorrentControl::recreateMissingFiles()
+	{
+		cman->recreateMissingFiles();
+		prealloc = true; // set prealloc to true so files will be truncated again
+		down->dataChecked(cman->getBitSet()); // update chunk selector
+	}
+	
+	void TorrentControl::dndMissingFiles()
+	{
+		cman->dndMissingFiles();
+		prealloc = true; // set prealloc to true so files will be truncated again
+		missingFilesMarkedDND(this);
+		down->dataChecked(cman->getBitSet()); // update chunk selector
 	}
 }
 
