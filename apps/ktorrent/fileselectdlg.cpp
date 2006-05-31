@@ -72,7 +72,7 @@ void FileSelectDlg::accept()
 	for (Uint32 i = 0;i < tc->getNumFiles();i++)
 	{
 		kt::TorrentFileInterface & file = tc->getTorrentFile(i);
-		file.setEmitDownloadStatusChanged(false);
+		file.setEmitDownloadStatusChanged(true);
 		file.setDoNotDownload(file.doNotDownload());
 	}
 	
