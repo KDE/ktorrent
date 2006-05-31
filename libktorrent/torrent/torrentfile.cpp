@@ -66,12 +66,14 @@ namespace bt
 		if (priority != EXCLUDED && dnd)
 		{
 			priority = EXCLUDED;
-			emit downloadStatusChanged(this,!dnd);
+			if(m_emitDlStatusChanged)
+				emit downloadStatusChanged(this,!dnd);
 		}
 		if (priority == EXCLUDED && (!dnd))
 		{
 			priority = NORMAL_PRIORITY;
-			emit downloadStatusChanged(this,!dnd);
+			if(m_emitDlStatusChanged)
+				emit downloadStatusChanged(this,!dnd);
 		}
 	}
 

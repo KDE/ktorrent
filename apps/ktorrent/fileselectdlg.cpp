@@ -52,6 +52,7 @@ int FileSelectDlg::execute(kt::TorrentInterface* tc)
 		for (Uint32 i = 0;i < tc->getNumFiles();i++)
 		{
 			kt::TorrentFileInterface & file = tc->getTorrentFile(i);
+			file.setEmitDownloadStatusChanged(false);
 			root->insert(file.getPath(),file);
 		}
 		root->setOpen(true);
@@ -68,6 +69,13 @@ void FileSelectDlg::reject()
 
 void FileSelectDlg::accept()
 {
+	for (Uint32 i = 0;i < tc->getNumFiles();i++)
+	{
+		kt::TorrentFileInterface & file = tc->getTorrentFile(i);
+		file.setEmitDownloadStatusChanged(false);
+		file.setDoNotDownload(file.doNotDownload());
+	}
+	
 	QDialog::accept();
 }
 

@@ -96,6 +96,8 @@ namespace bt
 
 		/// Sets the priority of the file
 		void setPriority(Priority newpriority = NORMAL_PRIORITY);
+		
+		void setEmitDownloadStatusChanged(bool show) { m_emitDlStatusChanged = show; }
 
 		/**
 		 * Assignment operator

@@ -81,6 +81,9 @@ namespace kt
 		/// Sets the priority of the torrent
 		virtual void setPriority(Priority newpriority = NORMAL_PRIORITY) = 0;
 		
+		/// Wheather to emit signal when dl status changes or not.
+		virtual void setEmitDownloadStatusChanged(bool show) = 0;
+		
 	;
 
 	protected:
@@ -89,6 +92,8 @@ namespace kt
 		Uint32 first_chunk;
 		Uint32 last_chunk;
 		Priority priority;
+		
+		bool m_emitDlStatusChanged;
 	};
 
 }
