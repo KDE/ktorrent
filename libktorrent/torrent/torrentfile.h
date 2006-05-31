@@ -97,6 +97,10 @@ namespace bt
 		/// Sets the priority of the file
 		void setPriority(Priority newpriority = NORMAL_PRIORITY);
 		
+		
+		/// emits signal.
+		void emitDownloadStatusChanged();
+		
 		void setEmitDownloadStatusChanged(bool show) { m_emitDlStatusChanged = show; }
 
 		/**
@@ -113,14 +117,15 @@ namespace bt
 		void setMissing(bool m) {missing = m;}
 
 		static TorrentFile null;
+		
 	signals:
 		/**
 		 * Signal emitted when the Priority variable changes from or to EXCLUDED.
 		 * @param tf The TorrentFile which emitted the signal
 		 * @param download Download the file or not
 		 */
-		void downloadStatusChanged(TorrentFile* tf,bool download);
-
+			void downloadStatusChanged(TorrentFile* tf,bool download);
+			
 		// signal emitted when the Priority variable changes
                 void downloadPriorityChanged(TorrentFile* tf,Priority newpriority);
 	};

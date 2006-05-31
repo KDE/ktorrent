@@ -84,6 +84,8 @@ namespace kt
 		/// Wheather to emit signal when dl status changes or not.
 		virtual void setEmitDownloadStatusChanged(bool show) = 0;
 		
+		/// Emits signal dlStatusChanged. Use it only with FileSelectDialog!
+		virtual void emitDownloadStatusChanged() = 0;
 	;
 
 	protected:

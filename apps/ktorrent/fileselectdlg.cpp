@@ -73,7 +73,7 @@ void FileSelectDlg::accept()
 	{
 		kt::TorrentFileInterface & file = tc->getTorrentFile(i);
 		file.setEmitDownloadStatusChanged(true);
-		file.setDoNotDownload(file.doNotDownload());
+		file.emitDownloadStatusChanged();
 	}
 	
 	QDialog::accept();

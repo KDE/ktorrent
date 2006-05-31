@@ -76,6 +76,13 @@ namespace bt
 				emit downloadStatusChanged(this,!dnd);
 		}
 	}
+	
+	void TorrentFile::emitDownloadStatusChanged()
+	{
+		if(priority == EXCLUDED)
+			emit downloadStatusChanged(this, false);
+	}
+
 
 	bool TorrentFile::isMultimedia() const
 	{
@@ -119,5 +126,4 @@ namespace bt
 
 	TorrentFile TorrentFile::null;
 }
-
 #include "torrentfile.moc"
