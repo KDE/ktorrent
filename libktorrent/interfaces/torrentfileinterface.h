@@ -86,7 +86,6 @@ namespace kt
 		
 		/// Emits signal dlStatusChanged. Use it only with FileSelectDialog!
 		virtual void emitDownloadStatusChanged() = 0;
-	;
 
 	protected:
 		QString path;
