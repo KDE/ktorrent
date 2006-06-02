@@ -423,7 +423,8 @@ namespace kt
 			cd_view->update();
 		if(tracker_view)
 			tracker_view->update(curr_tc);
-		
+		if(s.multi_file_torrent)
+			multi_root->updatePriorityInformation(curr_tc);
 		if (s.running)
 		{
 			QTime t;

@@ -28,6 +28,7 @@
 #include <kstandarddirs.h>
 #include <kapplication.h>
 #include <kio/netaccess.h>
+#include <qregexp.h>
 
 #include <util/log.h>
 #include <torrent/torrentcontrol.h>
@@ -39,6 +40,7 @@
 #include <util/functions.h>
 #include <torrent/ipblocklist.h>
 #include <kademlia/dhtbase.h>
+#include <torrent/torrentfile.h>
 
 #include "pluginmanager.h"
 #include <torrent/queuemanager.h>
@@ -622,6 +624,133 @@ void KTorrentCore::setPausedState(bool pause)
 void KTorrentCore::queue(kt::TorrentInterface* tc)
 {
 	qman->queue(tc);
+}
+
+TorrentInterface* KTorrentCore::getTorFromNumber(int tornumber)
+{
+        QString tordir = data_dir + "tor" + QString("%1").arg(tornumber) + "/";
+	Out() << "tordir " << tordir << endl;
+        QPtrList<TorrentInterface>::iterator i = qman->begin();
+        while(i != qman->end())
+        {
+                TorrentInterface* tc = *i;
+                QString td = tc->getTorDir();
+                if(td == tordir)
+                        return tc;
+                i++;
+        }
+        TorrentInterface* nullinterface = 0;
+        return nullinterface;
+}
+
+QValueList<int> KTorrentCore::getTorrentNumbers(int type = 3)
+{
+	QValueList<int> tornums;
+        QPtrList<TorrentInterface>::iterator i = qman->begin();
+        while(i != qman->end())
+        {
+                TorrentInterface* tc = *i;
+		if((type == 1 && tc->getStats().completed) || 
+			(type == 2 && !(tc->getStats().completed)))
+		{
+			Out() << "Skipping a torrent" << endl;
+			i++;
+			continue;
+		}
+                QString td = tc->getTorDir();
+		Out() << td << endl;
+		td = td.remove(0, td.length() - 6);
+		td = td.remove(QRegExp("[^0-9]*"));
+		Out() << td << endl;
+		tornums.append(td.toInt());
+                i++;
+        }
+	return tornums;
+}
+
+Uint32 KTorrentCore::getFileCount(int tornumber)
+{
+        kt::TorrentInterface* tc = getTorFromNumber(tornumber);
+	if(tc)
+	        return tc->getNumFiles();
+	else
+		return 0;
+}
+
+QCStringList KTorrentCore::getFileNames(int tornumber)
+{
+        QCStringList filenames;
+        kt::TorrentInterface* tc = getTorFromNumber(tornumber);
+        if(!tc || tc->getNumFiles() == 0)
+                return filenames;
+	for(Uint32 i = 0; i < tc->getNumFiles(); i++)
+        {
+                QCString filename = tc->getTorrentFile(i).getPath().ascii();
+                filenames.append(filename);
+        }
+
+        return filenames;
+}
+
+QValueList<int> KTorrentCore::getFilePriorities(int tornumber)
+{
+        QValueList<int> priorities;
+        kt::TorrentInterface* tc = getTorFromNumber(tornumber);
+        if(!tc || tc->getNumFiles() == 0)
+                return priorities;
+
+	for(Uint32 i = 0; i < tc->getNumFiles(); i++)
+        {
+                bt::Priority priority = tc->getTorrentFile(i).getPriority();
+                int newpriority;
+                switch(priority)
+                {
+                        case bt::FIRST_PRIORITY:
+                                newpriority = 3;
+                                break;
+                        case bt::LAST_PRIORITY:
+                                newpriority = 1;
+                                break;
+                        case bt::EXCLUDED:
+                                newpriority = 0;
+                                break;
+                        default:
+                                newpriority = 2;
+                        break;
+                }
+                priorities.append(newpriority);
+        }
+        return priorities;
+}
+
+void KTorrentCore::setFilePriority(kt::TorrentInterface* tc, Uint32 index, 
+		int priority)
+{
+        bt::Priority newpriority;
+        switch(priority)
+        {
+                case 3:
+                        newpriority = bt::FIRST_PRIORITY;
+                        break;
+                case 1:
+                        newpriority = bt::LAST_PRIORITY;
+                        break;
+                case 0:
+                        newpriority = bt::EXCLUDED;
+                        break;
+                default:
+                        newpriority = bt::NORMAL_PRIORITY;
+                        break;
+        }
+
+        tc->getTorrentFile(index).setPriority(newpriority);
+}
+
+void KTorrentCore::announceByTorNum(int tornumber)
+{
+        kt::TorrentInterface* tc = getTorFromNumber(tornumber);
+	if(tc)
+	        tc->updateTracker();
 }
 
 void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc)

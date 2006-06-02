@@ -262,6 +262,25 @@ TorrentInterface* KTorrentView::getCurrentTC()
 		return 0;
 }
 
+QCStringList KTorrentView::getTorrentInfo(kt::TorrentInterface* tc)
+{
+	QCStringList torrentinfo;
+        KTorrentViewItem* tvi = 0;
+        QMap<TorrentInterface*,KTorrentViewItem*>::iterator i = items.begin();
+        while (i != items.end())
+        {
+                tvi = i.data();
+		TorrentInterface* cur = tvi->getTC();
+		if(tc == cur)
+			break;
+                i++;
+        }
+	if(tvi)
+		for(int i = 0; i < 10; i++)
+			torrentinfo.append(tvi->text(i).ascii());
+	return torrentinfo;
+}
+
 void KTorrentView::onExecuted(QListViewItem* item)
 {
 	KTorrentViewItem* tvi = dynamic_cast<KTorrentViewItem*>(item);

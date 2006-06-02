@@ -47,6 +47,25 @@ public:
 	virtual void setShowSysTrayIcon(bool yes);
 	virtual void startAll(int type = 3);
 	virtual void stopAll(int type = 3);
+	virtual QValueList<int> getTorrentNumbers(int type = 3);
+	virtual QCStringList getTorrentInfo(int tornumber);
+	virtual unsigned int getFileCount(int tornumber);
+	virtual QCStringList getInfo();
+	virtual QCStringList getFileNames(int tornumber);
+	virtual QValueList<int> getFilePriorities(int tornumber);
+	virtual void setFilePriority(int tornumber, unsigned int index, int priority);
+	virtual void start(int tornumber);
+	virtual void stop(int tornumber, bool user);
+	virtual void remove(int tornumber, bool del_data);
+	virtual void announce(int tornumber);
+	virtual QCString dataDir();
+	virtual int maxDownloads();
+	virtual int maxSeeds();
+	virtual int maxConnections();
+	virtual int maxUploadRate();
+	virtual int maxDownloadRate();
+	virtual bool keepSeeding();
+	virtual bool showSystemTrayIcon();
 
 };
 

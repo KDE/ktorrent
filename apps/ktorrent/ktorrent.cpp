@@ -709,7 +709,8 @@ void KTorrent::updatedStats()
 			.arg(BytesToString(stats.bytes_downloaded));
 	m_statusTransfer->setText(tmp1);
 
-	getCurrentView()->update();
+	m_view->update();
+	m_seedView->update();
 	m_systray_icon->updateStats(stats);
 	m_core->getPluginManager().updateGuiPlugins();
 	
@@ -826,4 +827,37 @@ void KTorrent::checkDataIntegrity()
 	getCurrentView()->checkDataIntegrity();
 }
 
+QString KTorrent::getStatusInfo() 
+{
+	return m_statusInfo->text();
+}
+
+QString KTorrent::getStatusTransfer() 
+{
+	return m_statusTransfer->text();
+}
+
+QString KTorrent::getStatusSpeed() 
+{
+	return m_statusSpeed->text();
+}
+
+QString KTorrent::getStatusDHT() 
+{
+	return m_statusDHT->text();
+}
+
+QCStringList KTorrent::getTorrentInfo(kt::TorrentInterface* tc)
+{
+	QCStringList torrentinfo;
+	if(!tc)
+		return torrentinfo;
+	if(tc->getStats().completed)
+		torrentinfo = m_seedView->getTorrentInfo(tc);
+	else
+		torrentinfo = m_view->getTorrentInfo(tc);
+	return torrentinfo;
+}
+
 #include "ktorrent.moc"
+

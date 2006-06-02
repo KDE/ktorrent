@@ -41,6 +41,25 @@ k_dcop:
 	virtual bool changeDataDir(const QString & new_dir) = 0;
 	virtual void openTorrent(const QString & file) = 0;
 	virtual void openTorrentSilently(const QString & file) = 0;
+	virtual QValueList<int> getTorrentNumbers(int type = 3) = 0;
+	virtual QCStringList getTorrentInfo(int tornumber) = 0;
+	virtual unsigned int getFileCount(int tornumber) = 0;
+	virtual QCStringList getInfo() = 0;
+	virtual QCStringList getFileNames(int tornumber) = 0;
+	virtual QValueList<int> getFilePriorities(int tornumber) = 0;
+	virtual void setFilePriority(int tornumber, unsigned int index, int priority) = 0;
+	virtual void start(int tornumber) = 0;
+	virtual void stop(int tornumber, bool user) = 0;
+	virtual void remove(int tornumber, bool del_data) = 0;
+	virtual void announce(int tornumber) = 0;
+	virtual QCString dataDir() = 0;
+	virtual int maxDownloads() = 0;
+	virtual int maxSeeds() = 0;
+	virtual int maxConnections() = 0;
+	virtual int maxUploadRate() = 0;
+	virtual int maxDownloadRate() = 0;
+	virtual bool keepSeeding() = 0;
+	virtual bool showSystemTrayIcon() = 0;
 };
 
 

@@ -22,8 +22,11 @@
 
 #include <qobject.h>
 #include <qtimer.h>
+#include <qcstring.h>
 #include <util/constants.h>
 #include <interfaces/coreinterface.h>
+
+typedef QValueList<QCString> QCStringList;
 
 namespace bt
 {
@@ -191,6 +194,14 @@ public:
 	
 	void setPausedState(bool pause);
 	
+	kt::TorrentInterface* getTorFromNumber(int tornumber);
+	QValueList<int> getTorrentNumbers(int type);
+        unsigned int getFileCount(int tornumber);
+        QCStringList getFileNames(int tornumber);
+        QValueList<int> getFilePriorities(int tornumber);
+        void setFilePriority(kt::TorrentInterface* tc, bt::Uint32 index, int priority);
+        void announceByTorNum(int tornumber);
+
 public slots:
 	/**
 	 * Load a torrent file. Pops up an error dialog

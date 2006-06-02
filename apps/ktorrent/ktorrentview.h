@@ -25,6 +25,8 @@
 
 #include <klistview.h>
 
+typedef QValueList<QCString> QCStringList;
+
 class KURL;
 class KTorrentViewItem;
 class KPopupMenu;
@@ -66,6 +68,8 @@ public:
 
 	/// Get the current TorrentInterface object
 	kt::TorrentInterface* getCurrentTC();
+
+	QCStringList getTorrentInfo(kt::TorrentInterface* tc);
 
 	/// Enable or disable the debug view
 	void setShowDebugView(bool yes);

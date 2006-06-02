@@ -31,7 +31,7 @@
 #include <qtimer.h>
 #include <interfaces/guiinterface.h>
 
-
+typedef QValueList<QCString> QCStringList;
 
 class KPrinter;
 class KAction;
@@ -98,6 +98,12 @@ public:
 	KTorrentView* getCurrentView();
 	kt::PanelView getCurrentPanel();
 
+	QString	getStatusInfo();
+	QString	getStatusTransfer();
+	QString	getStatusSpeed();
+	QString	getStatusDHT();
+	QCStringList getTorrentInfo(kt::TorrentInterface* tc);
+
 public slots:
 	/**
 	 * Use this method to load whatever file/URL you have
@@ -149,7 +155,6 @@ private slots:
 	void currentTabChanged(QWidget* tab);
 	void onUpdateActions(bool can_start,bool can_stop,bool can_remove,bool can_scan);
 	void checkDataIntegrity();
-	
 	
 private:
 	void setupAccel();
