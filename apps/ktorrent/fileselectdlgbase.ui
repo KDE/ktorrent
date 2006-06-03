@@ -72,9 +72,6 @@
                     <property name="text">
                         <string>O&amp;K</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+K</string>
-                    </property>
                 </widget>
                 <widget class="KPushButton">
                     <property name="name">
