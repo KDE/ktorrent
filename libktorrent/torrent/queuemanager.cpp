@@ -162,18 +162,26 @@ namespace bt
 		while (i != downloads.end())
 		{
 			kt::TorrentInterface* tc = *i;
+			const TorrentStats & s = tc->getStats();
 			if (tc->getStats().running)
 			{
-				if(type >= 3)
-					tc->stop(true);
-				else
+				try
 				{
-					if( (tc->getStats().completed && type == 2) || (!tc->getStats().completed && type == 1) )
+					if(type >= 3)
 						tc->stop(true);
+					else if( (s.completed && type == 2) || (!s.completed && type == 1) )
+						tc->stop(true);
+				}
+				catch (bt::Error & err)
+				{
+					QString msg =
+							i18n("Error stopping torrent %1 : %2")
+							.arg(s.torrent_name).arg(err.toString());
+					KMessageBox::error(0,msg,i18n("Error"));
 				}
 			}
 			else //if torrent is not running but it is queued we need to make it user controlled
-				if( (tc->getStats().completed && type == 2) || (!tc->getStats().completed && type == 1) || (type == 3) )
+				if( (s.completed && type == 2) || (!s.completed && type == 1) || (type == 3) )
 					tc->setPriority(0); 
 			i++;
 		}
@@ -441,8 +449,17 @@ namespace bt
 			{
 				TorrentInterface* tc = *it;
 				const TorrentStats & s = tc->getStats();
-				
-				tc->start();
+				try
+				{
+					tc->start();
+				}
+				catch (bt::Error & err)
+				{
+					QString msg =
+							i18n("Error starting torrent %1 : %2")
+							.arg(s.torrent_name).arg(err.toString());
+					KMessageBox::error(0,msg,i18n("Error"));
+				}
 			}
 			
 			delete paused_torrents;
@@ -461,7 +478,17 @@ namespace bt
 				if(s.running)
 				{
 					paused_torrents->append(tc);
-					tc->stop(false);
+					try
+					{
+						tc->stop(false);
+					}
+					catch (bt::Error & err)
+					{
+						QString msg =
+								i18n("Error stopping torrent %1 : %2")
+								.arg(s.torrent_name).arg(err.toString());
+						KMessageBox::error(0,msg,i18n("Error"));
+					}
 				}
 			}
 		}

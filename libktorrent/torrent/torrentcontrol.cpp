@@ -233,9 +233,19 @@ namespace bt
 		if (stats.running)
 			return;
 
-		aboutToBeStarted(this);
 		stats.stopped_by_error = false;
 		io_error = false;
+		try
+		{
+			aboutToBeStarted(this);
+		}
+		catch (Error & err)
+		{
+			// something went wrong when files were recreated, set error and rethrow
+			onIOError(err.toString());
+			throw;
+		}
+		
 		
 		// if the torrent has DHT nodes add them as potential peers to the PeerManager
 		if (tor->getNumDHTNodes() > 0)
