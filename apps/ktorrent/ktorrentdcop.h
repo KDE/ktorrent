@@ -66,6 +66,7 @@ public:
 	virtual int maxDownloadRate();
 	virtual bool keepSeeding();
 	virtual bool showSystemTrayIcon();
+	virtual QValueList<int> intSettings();
 
 };
 

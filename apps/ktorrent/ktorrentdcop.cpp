@@ -227,4 +227,17 @@ bool KTorrentDCOP::showSystemTrayIcon()
 	return Settings::showSystemTrayIcon();
 }
 
+QValueList<int> KTorrentDCOP::intSettings()
+{
+	QValueList<int> intsettings;
+	intsettings.append(Settings::maxDownloads());
+	intsettings.append(Settings::maxSeeds());
+	intsettings.append(Settings::maxConnections());
+	intsettings.append(Settings::maxUploadRate());
+	intsettings.append(Settings::maxDownloadRate());
+	intsettings.append((int)Settings::keepSeeding());
+	intsettings.append((int)Settings::showSystemTrayIcon());
+	return intsettings;
+}
+
 #include "ktorrentdcop.moc"

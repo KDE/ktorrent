@@ -60,6 +60,7 @@ k_dcop:
 	virtual int maxDownloadRate() = 0;
 	virtual bool keepSeeding() = 0;
 	virtual bool showSystemTrayIcon() = 0;
+	virtual QValueList<int> intSettings() = 0;
 };
 
 
