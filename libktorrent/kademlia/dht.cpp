@@ -214,11 +214,11 @@ namespace dht
 	
 	bool DHT::canStartTask() const
 	{
-		// we can start a task if we have less then 8 tasks runnning and
-		// there are at least 8 RPC slots available
-		if (tman->getNumTasks() >= 8)
+		// we can start a task if we have less then  7 runnning and
+		// there are at least 16 RPC slots available
+		if (tman->getNumTasks() >= 7)
 			return false;
-		else if (256 - srv->getNumActiveRPCCalls() <= 8)
+		else if (256 - srv->getNumActiveRPCCalls() <= 16)
 			return false;
 		
 		return true;	
