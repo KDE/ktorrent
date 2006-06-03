@@ -110,7 +110,8 @@ namespace bt
 		private:
 			void enqueue(kt::TorrentInterface* tc);
 			void dequeue(kt::TorrentInterface* tc);
-//			void startWithFileCheck(kt::TorrentInterface* tc);
+			void startSafely(kt::TorrentInterface* tc);
+			void stopSafely(kt::TorrentInterface* tc,bool user);
 			
 			bt::QueuePtrList downloads;
 			bt::QueuePtrList* paused_torrents;

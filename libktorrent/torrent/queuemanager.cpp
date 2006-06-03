@@ -89,30 +89,20 @@ namespace bt
 		if (start_tc)
 		{
 			Out() << "Starting download" << endl;
-			try
+			float ratio = (float) s.bytes_uploaded / s.bytes_downloaded;
+			float max_ratio = tc->getMaxShareRatio();
+			if(s.completed && max_ratio > 0 && ratio >= max_ratio)
 			{
-				float ratio = (float) s.bytes_uploaded / s.bytes_downloaded;
-				float max_ratio = tc->getMaxShareRatio();
-				if(s.completed && max_ratio > 0 && ratio >= max_ratio)
+				if(KMessageBox::questionYesNo(0, i18n("Torrent \"%1\" has reached its maximum share ratio. Ignore the limit and start seeding anyway?").arg(s.torrent_name),i18n("Maximum share ratio limit reached.")) == KMessageBox::Yes)
 				{
-					if(KMessageBox::questionYesNo(0, i18n("Torrent \"%1\" has reached its maximum share ratio. Ignore the limit and start seeding anyway?").arg(s.torrent_name),i18n("Maximum share ratio limit reached.")) == KMessageBox::Yes)
-					{
-						tc->setMaxShareRatio(0.00f);
-						tc->start();
-					}
-					else
-						return;
+					tc->setMaxShareRatio(0.00f);
+					startSafely(tc);
 				}
 				else
-					tc->start();
+					return;
 			}
-			catch (bt::Error & err)
-			{
-				QString msg =
-						i18n("Error starting torrent %1 : %2")
-						.arg(s.torrent_name).arg(err.toString());
-				KMessageBox::error(0,msg,i18n("Error"));
-			}
+			else
+				startSafely(tc);
 		}
 	}
 
@@ -121,19 +111,9 @@ namespace bt
 		const TorrentStats & s = tc->getStats();
 		if (s.running)
 		{
-			try
-			{
-				tc->stop(user);
-				if(user)
-					tc->setPriority(0);
-			}
-			catch (bt::Error & err)
-			{
-				QString msg =
-						i18n("Error stopping torrent %1 : %2")
-						.arg(s.torrent_name).arg(err.toString());
-				KMessageBox::error(0,msg,i18n("Error"));
-			}
+			stopSafely(tc,user);
+			if(user)
+				tc->setPriority(0);
 		}
 		
 		orderQueue();
@@ -168,9 +148,9 @@ namespace bt
 				try
 				{
 					if(type >= 3)
-						tc->stop(true);
+						stopSafely(tc,true);
 					else if( (s.completed && type == 2) || (!s.completed && type == 1) )
-						tc->stop(true);
+						stopSafely(tc,true);
 				}
 				catch (bt::Error & err)
 				{
@@ -448,18 +428,7 @@ namespace bt
 			for( ; it!=paused_torrents->end(); ++it)
 			{
 				TorrentInterface* tc = *it;
-				const TorrentStats & s = tc->getStats();
-				try
-				{
-					tc->start();
-				}
-				catch (bt::Error & err)
-				{
-					QString msg =
-							i18n("Error starting torrent %1 : %2")
-							.arg(s.torrent_name).arg(err.toString());
-					KMessageBox::error(0,msg,i18n("Error"));
-				}
+				startSafely(tc);
 			}
 			
 			delete paused_torrents;
@@ -478,17 +447,7 @@ namespace bt
 				if(s.running)
 				{
 					paused_torrents->append(tc);
-					try
-					{
-						tc->stop(false);
-					}
-					catch (bt::Error & err)
-					{
-						QString msg =
-								i18n("Error stopping torrent %1 : %2")
-								.arg(s.torrent_name).arg(err.toString());
-						KMessageBox::error(0,msg,i18n("Error"));
-					}
+					stopSafely(tc,false);
 				}
 			}
 		}
@@ -537,17 +496,38 @@ namespace bt
 			dequeue(tc);
 	}
 	
-	/*
-	void QueueManager::startWithFileCheck(kt::TorrentInterface* tc)
+	void QueueManager::startSafely(kt::TorrentInterface* tc)
 	{
-		QStringList sl;
-		if (tc->hasMissingFiles(sl) && tc->getStats().multi_file_torrent)
+		try
 		{
-			
+			tc->start();
 		}
-		tc->start();
+		catch (bt::Error & err)
+		{
+			const TorrentStats & s = tc->getStats();
+			QString msg =
+					i18n("Error starting torrent %1 : %2")
+					.arg(s.torrent_name).arg(err.toString());
+			KMessageBox::error(0,msg,i18n("Error"));
+		}
 	}
-	*/
+	
+	void QueueManager::stopSafely(kt::TorrentInterface* tc,bool user)
+	{
+		try
+		{
+			tc->stop(user);
+		}
+		catch (bt::Error & err)
+		{
+			const TorrentStats & s = tc->getStats();
+			QString msg =
+					i18n("Error stopping torrent %1 : %2")
+					.arg(s.torrent_name).arg(err.toString());
+			KMessageBox::error(0,msg,i18n("Error"));
+		}
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	
