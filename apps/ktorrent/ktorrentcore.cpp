@@ -756,35 +756,58 @@ void KTorrentCore::announceByTorNum(int tornumber)
 void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc)
 {
 	QStringList missing;
-	if (tc->hasMissingFiles(missing))
+	if (!tc->hasMissingFiles(missing))
+		return;
+	
+	
+	if (tc->getStats().multi_file_torrent)
 	{
-		if (tc->getStats().multi_file_torrent)
-		{
-			QString msg = i18n("Several data files of the torrent \"%1\" are missing, do you want to recreate them, or do you want to not download them ?").arg(tc->getStats().torrent_name);
+		QString msg = i18n("Several data files of the torrent \"%1\" are missing, do you want to recreate them, or do you want to not download them ?").arg(tc->getStats().torrent_name);
 					
-			int ret = KMessageBox::warningYesNoList(0,msg,missing,QString::null,
-					KGuiItem(i18n("Recreate")),KGuiItem(i18n("Do not download")));
-			if (ret == KMessageBox::Yes)
+		int ret = KMessageBox::warningYesNoList(0,msg,missing,QString::null,
+				KGuiItem(i18n("Recreate")),KGuiItem(i18n("Do not download")));
+		if (ret == KMessageBox::Yes)
+		{
+			try
 			{
 				// recreate them
 				tc->recreateMissingFiles();
 			}
-			else
+			catch (bt::Error & e)
 			{
-				// mark them as do not download
-				tc->dndMissingFiles();
+				KMessageBox::error(0,i18n("Cannot recreate missing files : %1").arg(e.toString()));
 			}
 		}
 		else
 		{
-			QString msg = i18n("The file where the data is saved of the torrent \"%1\" is missing, do you want to recreate it ?").arg(tc->getStats().torrent_name);
-			int ret = KMessageBox::warningYesNo(0,msg);
-			if (ret == KMessageBox::Yes)
+			try
 			{
-				tc->recreateMissingFiles();
+				// mark them as do not download
+				tc->dndMissingFiles();
+			}
+			catch (bt::Error & e)
+			{
+				KMessageBox::error(0,i18n("Cannot deselect missing files : %1").arg(e.toString()));
 			}
 		}
 	}
+	else
+	{
+		QString msg = i18n("The file where the data is saved of the torrent \"%1\" is missing, do you want to recreate it ?").arg(tc->getStats().torrent_name);
+		int ret = KMessageBox::warningYesNo(0,msg);
+		if (ret == KMessageBox::Yes)
+		{
+			try
+			{
+				tc->recreateMissingFiles();
+			}
+			catch (bt::Error & e)
+			{
+				KMessageBox::error(0,i18n("Cannot recreate data file : %1").arg(e.toString()));
+			}
+		}
+	}
+	
 }
 
 void KTorrentCore::connectSignals(kt::TorrentInterface* tc)
