@@ -1121,17 +1121,33 @@ namespace bt
 	
 	void TorrentControl::recreateMissingFiles()
 	{
-		cman->recreateMissingFiles();
-		prealloc = true; // set prealloc to true so files will be truncated again
-		down->dataChecked(cman->getBitSet()); // update chunk selector
+		try
+		{
+			cman->recreateMissingFiles();
+			prealloc = true; // set prealloc to true so files will be truncated again
+			down->dataChecked(cman->getBitSet()); // update chunk selector
+		}
+		catch (Error & err)
+		{
+			onIOError(err.toString());
+			throw;
+		}
 	}
 	
 	void TorrentControl::dndMissingFiles()
 	{
-		cman->dndMissingFiles();
-		prealloc = true; // set prealloc to true so files will be truncated again
-		missingFilesMarkedDND(this);
-		down->dataChecked(cman->getBitSet()); // update chunk selector
+		try
+		{
+			cman->dndMissingFiles();
+			prealloc = true; // set prealloc to true so files will be truncated again
+			missingFilesMarkedDND(this);
+			down->dataChecked(cman->getBitSet()); // update chunk selector
+		}
+		catch (Error & err)
+		{
+			onIOError(err.toString());
+			throw;
+		}
 	}
 }
 
