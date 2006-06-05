@@ -43,11 +43,11 @@ k_dcop:
 	virtual void openTorrentSilently(const QString & file) = 0;
 	virtual QValueList<int> getTorrentNumbers(int type = 3) = 0;
 	virtual QCStringList getTorrentInfo(int tornumber) = 0;
-	virtual unsigned int getFileCount(int tornumber) = 0;
+	virtual int getFileCount(int tornumber) = 0;
 	virtual QCStringList getInfo() = 0;
 	virtual QCStringList getFileNames(int tornumber) = 0;
 	virtual QValueList<int> getFilePriorities(int tornumber) = 0;
-	virtual void setFilePriority(int tornumber, unsigned int index, int priority) = 0;
+	virtual void setFilePriority(int tornumber, int index, int priority) = 0;
 	virtual void start(int tornumber) = 0;
 	virtual void stop(int tornumber, bool user) = 0;
 	virtual void remove(int tornumber, bool del_data) = 0;

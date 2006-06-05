@@ -49,11 +49,11 @@ public:
 	virtual void stopAll(int type = 3);
 	virtual QValueList<int> getTorrentNumbers(int type = 3);
 	virtual QCStringList getTorrentInfo(int tornumber);
-	virtual unsigned int getFileCount(int tornumber);
+	virtual int getFileCount(int tornumber);
 	virtual QCStringList getInfo();
 	virtual QCStringList getFileNames(int tornumber);
 	virtual QValueList<int> getFilePriorities(int tornumber);
-	virtual void setFilePriority(int tornumber, unsigned int index, int priority);
+	virtual void setFilePriority(int tornumber, int index, int priority);
 	virtual void start(int tornumber);
 	virtual void stop(int tornumber, bool user);
 	virtual void remove(int tornumber, bool del_data);

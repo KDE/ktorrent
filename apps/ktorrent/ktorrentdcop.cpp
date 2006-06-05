@@ -151,7 +151,7 @@ QCStringList KTorrentDCOP::getInfo()
 	return info;
 }
 
-unsigned int KTorrentDCOP::getFileCount(int tornumber)
+int KTorrentDCOP::getFileCount(int tornumber)
 {
 	return app->getCore().getFileCount(tornumber);
 }
@@ -167,7 +167,7 @@ QValueList<int> KTorrentDCOP::getFilePriorities(int tornumber)
 }
 
 void KTorrentDCOP::setFilePriority(int tornumber, 
-	unsigned int index, int priority)
+	int index, int priority)
 {
 	kt::TorrentInterface* tc = app->getCore().getTorFromNumber(tornumber);
 	if(tc)
