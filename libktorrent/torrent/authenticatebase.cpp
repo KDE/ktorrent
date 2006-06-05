@@ -42,7 +42,7 @@ namespace bt
 
 	AuthenticateBase::~AuthenticateBase()
 	{
-		delete sock;
+		sock->deleteLater();
 	}
 
 	void AuthenticateBase::sendHandshake(const SHA1Hash & info_hash,const PeerID & our_peer_id)
