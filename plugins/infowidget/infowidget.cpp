@@ -48,6 +48,7 @@
 #include "functions.h"
 #include "downloadedchunkbar.h"
 #include "availabilitychunkbar.h"
+#include "floatspinbox.h"
 #include "iwfiletreeitem.h"
 #include "iwfiletreediritem.h"
 #include "infowidgetpluginsettings.h"
@@ -103,6 +104,10 @@ namespace kt
 			QSize s = KGlobal::config()->readSizeEntry("InfoWidgetSize",0);
 			resize(s);
 		}
+		maxRatio->setMinValue(0.0f);
+		maxRatio->setMaxValue(100.0f);
+		maxRatio->setStep(0.1f);
+		connect(maxRatio, SIGNAL(valueHasChanged()), this, SLOT(maxRatio_returnPressed()));
 	}
 	
 	InfoWidget::~InfoWidget()
@@ -312,18 +317,18 @@ namespace kt
 			if(ratio > 0)
 			{
 				useLimit->setChecked(true);
-				maxRatio->setText(QString("%1").arg(ratio,0,'f',2));
+				maxRatio->setValue(ratio);
 			}
 			else
 			{
-				maxRatio->setText("0.00");
+				maxRatio->setValue(0.0);
 				useLimit->setChecked(false);
 				maxRatio->setEnabled(false);
 			}
 		}
 		else
 		{
-			maxRatio->clear();
+			maxRatio->setValue(0.00f);
 			m_share_ratio->clear();
 			m_tracker_status->clear();
 			m_seeders->clear();
@@ -618,16 +623,7 @@ namespace kt
 		if(!curr_tc)
 			return;
 		
-		bool ok;
-		double ratio = maxRatio->text().toFloat(&ok);
-		
-		if(!ok)
-		{
-			maxRatio->setText(QString("%1").arg(curr_tc->getMaxShareRatio(),0,'f',2));
-			return;
-		}
-		
-		curr_tc->setMaxShareRatio(ratio);
+		curr_tc->setMaxShareRatio(maxRatio->value());
 	}
 	
 	void InfoWidget::useLimit_toggled(bool state)
@@ -639,14 +635,14 @@ namespace kt
 		if(!state)
 		{
 			curr_tc->setMaxShareRatio(0.00f);
-			maxRatio->setText("0.00");
+			maxRatio->setValue(0.00f);
 		}
 		else
 		{
 			if(curr_tc->getMaxShareRatio() == 0.00f)
 			{	
 				curr_tc->setMaxShareRatio(1.00f);
-				maxRatio->setText(QString("%1").arg(1.00f,0,'f',2));
+				maxRatio->setValue(1.00f);
 			}
 		}
 	}
@@ -657,17 +653,17 @@ namespace kt
 			return;
 		
 		float ratio = curr_tc->getMaxShareRatio();
-		if(ratio > 0)
+		if(ratio > 0.00f)
 		{
 			maxRatio->setEnabled(true);
 			useLimit->setChecked(true);
-			maxRatio->setText(QString("%1").arg(ratio,0,'f',2));
+			maxRatio->setValue(ratio);
 		}
 		else
 		{
 			maxRatio->setEnabled(false);
 			useLimit->setChecked(false);
-			maxRatio->setText("0.00");
+			maxRatio->setValue(0.00f);
 		}
 	}
 	

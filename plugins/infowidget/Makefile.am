@@ -3,10 +3,10 @@ METASOURCES = AUTO
 kde_module_LTLIBRARIES = ktinfowidgetplugin.la
 noinst_HEADERS = infowidgetplugin.h infowidgetprefpage.h trackerview.h GeoIP.h
 ktinfowidgetplugin_la_SOURCES = infowidgetplugin.cpp availabilitychunkbar.cpp \
-		chunkbar.cpp chunkdownloadview.cpp downloadedchunkbar.cpp infowidget.cpp \
-		infowidgetbase.ui peerview.cpp ktorrentmonitor.cpp iwfiletreediritem.cpp \
-		iwfiletreeitem.cpp infowidgetprefpage.cpp infowidgetpluginsettings.kcfgc iwpref.ui \
-		trackerviewbase.ui trackerview.cpp GeoIP.c
+			chunkbar.cpp chunkdownloadview.cpp downloadedchunkbar.cpp infowidget.cpp \
+			infowidgetbase.ui peerview.cpp ktorrentmonitor.cpp iwfiletreediritem.cpp \
+			iwfiletreeitem.cpp infowidgetprefpage.cpp infowidgetpluginsettings.kcfgc iwpref.ui \
+			trackerviewbase.ui trackerview.cpp GeoIP.c floatspinbox.cpp localefloatvalidator.cpp
 
 # Libs needed by the plugin
 ktinfowidgetplugin_la_LIBADD = $(LIB_KHTML) $(LIB_KPARTS) \
