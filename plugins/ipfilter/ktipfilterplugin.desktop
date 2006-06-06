@@ -2,7 +2,7 @@
 Name=IPFilterPlugin
 Name[bg]=Приставка за IP-филтриране
 Name[br]=Lugent Sil IP
-Name[de]=IP-Filter-Plugin
+Name[de]=IPFilter-Erweiterung
 Name[el]=Πρόσθετο φίλτρου IP
 Name[es]=Filtro de IP
 Name[et]=IP-filtri plugin
@@ -18,7 +18,7 @@ Comment=IP filter plugin for KTorrent
 Comment[bg]=Приставка за IP-филтриране на KTorrent
 Comment[br]=Lugent sil IP evit KTorrentt
 Comment[cs]=IP filtr modul pro KTorrent
-Comment[de]=IP-Filter-Plugin für KTorrent
+Comment[de]=IPFilter-Erweiterung für KTorrent
 Comment[el]=Πρόσθετο φίλτρου IP για το KTorrent
 Comment[es]=Complemento de filtro de IP de KTorrent
 Comment[et]=KTorrenti IP-filtri plugin
