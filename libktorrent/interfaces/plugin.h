@@ -111,6 +111,7 @@ namespace kt
 
 		/// See if the plugin is loaded
 		bool isLoaded() const {return loaded;}
+		
 	private:
 		QString name;
 		QString author;

@@ -113,7 +113,7 @@ namespace bt
 	bool ChunkDownload::piece(const Piece & p)
 	{
 		timer.update();
-		if (num_downloaded == num)
+		if (num_downloaded >= num)
 		{
 		//	Out() << "num_downloaded == num" << endl;
 			return true;
@@ -146,7 +146,7 @@ namespace bt
 			}
 		}
 		
-		if (num_downloaded == num)
+		if (num_downloaded >= num)
 		{
 			releaseAllPDs();
 			return true;

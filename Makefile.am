@@ -1,4 +1,4 @@
-SUBDIRS = libktorrent plugins apps utests
+SUBDIRS = libktorrent plugins apps utests scripts
 
 # $(UTESTS_DIR)
 
