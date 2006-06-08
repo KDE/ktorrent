@@ -39,7 +39,7 @@ namespace bt
 	{
 		KMimeType::Ptr ptr = KMimeType::findByPath(filename);
 		QString name = ptr->name();
-		return name.startsWith("audio") || name.startsWith("video");
+		return name.startsWith("audio") || name.startsWith("video") || name == "application/ogg";
 	}
 	
 	QHostAddress LookUpHost(const QString & host)

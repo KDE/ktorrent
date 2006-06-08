@@ -88,7 +88,11 @@ namespace bt
 			{
 				bt::TorrentFile & file = tor.getFile(i);
 				if(file.isMultimedia()) 
+				{
 					prioritise(file.getFirstChunk(), file.getFirstChunk()+1, PREVIEW_PRIORITY);
+					if (file.getLastChunk() - file.getFirstChunk() > 2)
+						prioritise(file.getLastChunk() -1,file.getLastChunk(), PREVIEW_PRIORITY);
+				}
 			}
 		}
 		else
@@ -96,6 +100,8 @@ namespace bt
 			if(tor.isMultimedia() )
 			{
 				prioritise(0,1,PREVIEW_PRIORITY);
+				if (tor.getNumChunks() > 2)
+					prioritise(tor.getNumChunks() - 2,tor.getNumChunks() - 1,PREVIEW_PRIORITY);
 				//this->prioritise(getNumChunks()-2, getNumChunks()-1);
 			}
 		}
@@ -625,7 +631,11 @@ namespace bt
 		{
 			// include the range of the file
 			if(tf->isMultimedia())
+			{
 				prioritise(first,first+1,PREVIEW_PRIORITY);
+				if (last - first > 2)
+					prioritise(last -1,last, PREVIEW_PRIORITY);
+			}
 			if(chunks[first]->getPriority() > NORMAL_PRIORITY)
 				first++;
 			if(chunks[last]->getPriority() > NORMAL_PRIORITY)
