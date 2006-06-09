@@ -73,7 +73,7 @@ namespace kt
 
 	void TrackerView::btnAdd_clicked()
 	{
-		if(!tc)
+		if(!tc || txtTracker->text().isEmpty())
 			return;
 		
 		if(tc->getStats().priv_torrent)
@@ -205,5 +205,6 @@ namespace kt
 			new QListViewItem(listTrackers, (*i).prettyURL());
 	}
 }
+
 
 #include "trackerview.moc"

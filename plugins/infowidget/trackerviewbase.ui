@@ -106,7 +106,7 @@
                         <cstring>btnChange</cstring>
                     </property>
                     <property name="text">
-                        <string>Cha&amp;nge Tracker</string>
+                        <string>Cha&amp;nge tracker</string>
                     </property>
                 </widget>
                 <widget class="KPushButton" row="4" column="1">
