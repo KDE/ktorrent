@@ -115,6 +115,13 @@ namespace bt
 		
 		/// Set the file to be missing or not
 		void setMissing(bool m) {missing = m;}
+		
+		/**
+		 * Calculate the offset of a chunk in the file
+		 * @param cindex Index of chunk
+		 * @param chunk_size Size of each chunk
+		 */
+		Uint64 fileOffset(Uint32 cindex,Uint64 chunk_size) const;
 
 		static TorrentFile null;
 		

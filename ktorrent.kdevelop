@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>apps/ktorrent/ktorrent</activetarget>
+      <activetarget>libktorrent/torrent/libtorrent.la</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>
@@ -51,6 +51,7 @@
       <dontact>false</dontact>
       <makebin/>
       <prio>0</prio>
+      <runmultiplejobs>false</runmultiplejobs>
     </make>
     <configurations>
       <optimized>

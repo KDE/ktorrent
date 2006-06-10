@@ -39,7 +39,7 @@ namespace bt
 	{}
 
 
-	void SingleDataChecker::check(const QString& path, const Torrent& tor)
+	void SingleDataChecker::check(const QString& path, const Torrent& tor,const QString &)
 	{
 		// open the file
 		Uint32 num_chunks = tor.getNumChunks();

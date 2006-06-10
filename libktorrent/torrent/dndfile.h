@@ -15,28 +15,70 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Steet, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTSINGLEDATACHECKER_H
-#define BTSINGLEDATACHECKER_H
+#ifndef BTDNDFILE_H
+#define BTDNDFILE_H
 
-#include "datachecker.h"
+#include <qstring.h>
+#include <util/constants.h>
 
 namespace bt
 {
+	
 
 	/**
-	 * @author Joris Guisson
+	 * @author Joris Guisson <joris.guisson@gmail.com>
 	 * 
-	 * Data checker for single file torrents.
+	 * Special file where we keep the first and last chunk of a file which is marked as do not download.
+	 * THe first and last chunk of a file will most certainly be partial chunks.
 	 */
-	class SingleDataChecker : public DataChecker
+	class DNDFile
 	{
 	public:
-		SingleDataChecker();
-		virtual ~SingleDataChecker();
+		DNDFile(const QString & path);
+		virtual ~DNDFile();
+		
+		/**
+		 * CHeck integrity of the file, create it if it doesn't exist.
+		 */
+		void checkIntegrity();
+		
+		/**
+		 * Read the (partial)first chunk into a buffer.
+		 * @param buf The buffer
+		 * @param off OFfset into the buffer
+		 * @param buf_size Size of the buffer
+		*/
+		Uint32 readFirstChunk(Uint8* buf,Uint32 off,Uint32 buf_size);
+		
+		/**
+		 * Read the (partial)last chunk into a buffer.
+		 * @param buf The buffer
+		 * @param off OFfset into the buffer
+		 * @param buf_size Size of the buffer
+		 */
+		Uint32 readLastChunk(Uint8* buf,Uint32 off,Uint32 buf_size);
+		
+		/**
+		 * Write the partial first chunk.
+		 * @param buf The buffer
+		 * @param fc_size Size to write
+		 */
+		void writeFirstChunk(const Uint8* buf,Uint32 fc_size);
+		
+		/**
+		 * Write the partial last chunk.
+		 * @param buf The buffer
+		 * @param lc_size Size to write
+		 */
+		void writeLastChunk(const Uint8* buf,Uint32 lc_size);
+		
+	private:
+		void create();
 
-		virtual void check(const QString& path, const Torrent& tor,const QString & dnddir);
+	private:
+		QString path;
 	};
 
 }

@@ -38,7 +38,11 @@ namespace bt
 	
 	
 
-	ChunkManager::ChunkManager(Torrent & tor,const QString & tmpdir,const QString & datadir,bool custom_output_name)
+	ChunkManager::ChunkManager(
+			Torrent & tor,
+			const QString & tmpdir,
+			const QString & datadir,
+			bool custom_output_name)
 	: tor(tor),chunks(tor.getNumChunks()),
 	bitset(tor.getNumChunks()),excluded_chunks(tor.getNumChunks())
 	{
@@ -653,16 +657,29 @@ namespace bt
 
 			// first and last chunk may be part of multiple files
 			// so we can't just exclude them
-			QValueList<Uint32> files;
+			QValueList<Uint32> files,last_files;
 
 			// get list of files where first chunk lies in
 			tor.calcChunkPos(first,files);
+			tor.calcChunkPos(last,last_files);
 			// check for exceptional case which causes very long loops
 			if (first == last && files.count() > 1)
 			{
 				cache->downloadStatusChanged(tf,download);
 				return;
 			}
+			
+			// go over all chunks from first to last and mark them as not downloaded 
+			// (first and last not included)
+			for (Uint32 i = first + 1;i < last;i++)
+				resetChunk(i);
+			
+			// if the first and last chunk only lie in one file mark them as not downloaded
+			if (files.count() == 1) 
+				resetChunk(first);
+			
+			if (last != first && last_files.count() == 1)
+				resetChunk(first);
 			
 			// if one file in the list needs to be downloaded,increment first
 			for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
@@ -848,7 +865,7 @@ namespace bt
 	
 	void ChunkManager::dndMissingFiles()
 	{
-		createFiles(); // create them again
+	//	createFiles(); // create them again
 		// loop over all files and mark all chunks of all missing files as
 		// not downloaded
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)

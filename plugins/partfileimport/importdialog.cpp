@@ -105,7 +105,7 @@ namespace kt
 		try
 		{
 			dc->setListener(this);
-			dc->check(data_url.path(),tor);
+			dc->check(data_url.path(),tor,QString::null);
 		}
 		catch (Error & e)
 		{
@@ -249,12 +249,9 @@ namespace kt
 		QString dfile = otmp + sl.last();
 		if (!bt::Exists(dfile))
 		{
-			// if it does not exist, assume that it is not to be downloaded
-			dfile = dtmp + sl.last();
-			bt::Touch(dfile);
-			// and make a symlink in the cache to it
-			bt::SymLink(dfile,cache_dir + fpath);
-			dnd = true;
+			// when we start the torrent the user will be asked what to do
+		//	bt::SymLink(dfile,cache_dir + fpath);
+			dnd = false;
 		}
 		else
 		{

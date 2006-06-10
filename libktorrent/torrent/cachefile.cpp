@@ -358,24 +358,7 @@ namespace bt
 		//Out() << "Temporarely closed " << path << endl;
 	}
 	
-	static bool FatPreallocate(int fd,Uint64 size)
-	{
-		try
-		{
-			SeekFile(fd, size, SEEK_SET);
-			char zero = 0;		
-			if (write(fd, &zero, 1) == -1)
-				return false;
-				
-			TruncateFile(fd,size);
-		}
-		catch (bt::Error & e)
-		{
-			Out() << e.toString() << endl;
-			return false;
-		}
-		return true;
-	}
+	
 		
 	void CacheFile::preallocate()
 	{

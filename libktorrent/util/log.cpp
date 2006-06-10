@@ -69,8 +69,8 @@ namespace bt
 		{
 			mutex.lock();
 			*out << line;
-		//	if (to_cout)
-		//		std::cout << line.local8Bit();
+			if (to_cout)
+				std::cout << line.local8Bit();
 
 			tmp += line;
 			mutex.unlock();
@@ -81,8 +81,8 @@ namespace bt
 			mutex.lock();
 			*out << ::endl;
 			fptr.flush();
-		//	if (to_cout)
-		//		std::cout << std::endl;;
+			if (to_cout)
+				std::cout << std::endl;;
 			
 			if (monitors.count() > 0)
 			{

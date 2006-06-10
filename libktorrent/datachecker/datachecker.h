@@ -52,8 +52,9 @@ namespace bt
 		 * If anything goes wrong and Error should be thrown. 
 		 * @param path path to the file or dir (this needs to end with the name suggestion of the torrent)
 		 * @param tor The torrent
+		 * @param dnddir DND dir, optional argument if we know this
 		 */
-		virtual void check(const QString & path,const Torrent & tor) = 0;
+		virtual void check(const QString & path,const Torrent & tor,const QString & dnddir) = 0;
 		
 		/**
 		 * Get the BitSet representing all the downloaded chunks.

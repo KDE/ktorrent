@@ -28,6 +28,7 @@
 #include <kio/netaccess.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <fcntl.h>
 #include <qdir.h>
 #include <qfile.h>
 #include <qstringlist.h>
@@ -253,7 +254,35 @@ namespace bt
 		return (Uint64)sb.st_size;
 	}
 	
+	bool FatPreallocate(int fd,Uint64 size)
+	{
+		try
+		{
+			SeekFile(fd, size, SEEK_SET);
+			char zero = 0;		
+			if (write(fd, &zero, 1) == -1)
+				return false;
+				
+			TruncateFile(fd,size);
+		}
+		catch (bt::Error & e)
+		{
+			Out() << e.toString() << endl;
+			return false;
+		}
+		return true;
+	}
 	
+	bool FatPreallocate(const QString & path,Uint64 size)
+	{
+		int fd = ::open(QFile::encodeName(path),O_RDWR | O_LARGEFILE);
+		if (fd < 0)
+			throw Error(i18n("Cannot open %1 : %2").arg(path).arg(strerror(errno)));
+		
+		bool ret = FatPreallocate(fd,size);
+		close(fd);
+		return ret;
+	}
 	
 
 	void TruncateFile(int fd,Uint64 size)
@@ -267,6 +296,24 @@ namespace bt
 		if (ftruncate(fd,size) == -1)
 #endif
 			throw Error(i18n("Cannot expand file : %1").arg(strerror(errno)));
+	}
+	
+	void TruncateFile(const QString & path,Uint64 size)
+	{
+		int fd = ::open(QFile::encodeName(path),O_RDWR | O_LARGEFILE);
+		if (fd < 0)
+			throw Error(i18n("Cannot open %1 : %2").arg(path).arg(strerror(errno)));
+		
+		try
+		{
+			TruncateFile(fd,size);
+			close(fd);
+		}
+		catch (...)
+		{
+			close(fd);
+			throw;
+		}
 	}
 	
 	void SeekFile(int fd,Int64 off,int whence)

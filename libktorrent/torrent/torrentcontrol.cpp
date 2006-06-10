@@ -1095,7 +1095,7 @@ namespace bt
 			dc = new SingleDataChecker();
 	
 		dc->setListener(lst);
-		dc->check(stats.output_path,*tor);
+		dc->check(stats.output_path,*tor,datadir + "dnd" + bt::DirSeparator());
 		
 		if (lst && !lst->isStopped())
 		{

@@ -23,9 +23,11 @@
 #include <kapplication.h>
 #include <util/log.h>
 #include <util/file.h>
+#include <util/fileops.h>
 #include <util/error.h>
 #include <util/array.h>
 #include <util/functions.h>
+#include <torrent/dndfile.h>
 #include <torrent/globals.h>
 #include <torrent/torrent.h>
 #include <torrent/torrentfile.h>
@@ -34,82 +36,155 @@
 namespace bt
 {
 
-	MultiDataChecker::MultiDataChecker(): DataChecker()
+	MultiDataChecker::MultiDataChecker(): DataChecker(),buf(0)
 	{}
 
 
 	MultiDataChecker::~MultiDataChecker()
-	{}
-
-
-	void MultiDataChecker::check(const QString& path, const Torrent& tor)
+	{
+		delete [] buf;
+	}
+	
+	void MultiDataChecker::check(const QString& path, const Torrent& tor,const QString & dnddir)
 	{
 		Uint32 num_chunks = tor.getNumChunks();
 		// initialize the bitsets
 		downloaded = BitSet(num_chunks);
 		failed = BitSet(num_chunks);
 		
-		QString cache = path;
+		cache = path;
 		if (!cache.endsWith(bt::DirSeparator()))
 			cache += bt::DirSeparator();
 		
-		Uint64 chunk_size = tor.getChunkSize();
-		Uint32 num_files = 0;
-		Uint32 cur_chunk = 0;
-		Uint32 bytes_read = 0;
+		dnd_dir = dnddir;
+		if (!dnddir.endsWith(bt::DirSeparator()))
+			dnd_dir += bt::DirSeparator();
 		
+		Uint64 chunk_size = tor.getChunkSize();
+		Uint32 cur_chunk = 0;
 		Uint32 last_update_time = bt::GetCurrentTime();
 		
-		Array<Uint8> buf(chunk_size);
+		buf = new Uint8[chunk_size];
 		
-		num_files = tor.getNumFiles();
-		for (Uint32 CurrentFile = 0;CurrentFile < num_files;CurrentFile++)
+		for (cur_chunk = 0;cur_chunk < num_chunks;cur_chunk++)
 		{
-			if (listener && listener->needToStop())
-				return;
+			Uint32 cs = (cur_chunk == num_chunks - 1) ? tor.getFileLength() % chunk_size : chunk_size;
+			if (cs == 0)
+				cs = chunk_size;
+			loadChunk(cur_chunk,cs,tor);
 			
-			const TorrentFile & tf = tor.getFile(CurrentFile);
-			cur_chunk = tf.getFirstChunk();
-			bytes_read = tf.getFirstChunkOffset();
-			File fptr;
-			if (!fptr.open(cache + tf.getPath(), "rb"))
+			bool ok = (SHA1Hash::generate(buf,cs) == tor.getHash(cur_chunk));
+			downloaded.set(cur_chunk,ok);
+			failed.set(cur_chunk,!ok);
+			
+			if (listener)
 			{
-				Out() << QString("Warning : Cannot open %1 : %2").arg(cache + 
-				tf.getPath()).arg(fptr.errorString()) << endl;
+				listener->status(failed.numOnBits(),downloaded.numOnBits());
+				listener->progress(cur_chunk,num_chunks);
+				if (listener->needToStop())
+					return;
 			}
-			else
-			{	
-				for ( ; cur_chunk <= tf.getLastChunk(); cur_chunk++ )
-				{	
-					if (listener)
-					{
-						listener->progress(cur_chunk,num_chunks);
-						if (listener->needToStop())
-							return;
-					}
+			
+			Uint32 now = bt::GetCurrentTime();
+			if (now - last_update_time > 1000)
+			{
+				Out() << "Checked " << cur_chunk << " chunks" << endl;
+				KApplication::kApplication()->processEvents();
+				last_update_time = now;
+			}
+		}	
+	}
+	
+	static Uint32 ReadFullChunk(Uint32 chunk,Uint32 cs,
+								const TorrentFile & tf,
+								const Torrent & tor,
+								Uint8* buf,
+								const QString & cache)
+	{
+		File fptr;
+		if (!fptr.open(cache + tf.getPath(), "rb"))
+		{
+			Out() << QString("Warning : Cannot open %1 : %2").arg(cache + 
+					tf.getPath()).arg(fptr.errorString()) << endl;
+			return 0;
+		}
+		
+		Uint64 off = tf.fileOffset(chunk,tor.getChunkSize());
+		fptr.seek(File::BEGIN,off);
+		return fptr.read(buf,cs);
+	}
+	
+	void MultiDataChecker::loadChunk(Uint32 ci,Uint32 cs,const Torrent & tor)
+	{
+		QValueList<Uint32> tflist;
+		tor.calcChunkPos(ci,tflist);
+		
+		// one file is simple
+		if (tflist.count() == 1)
+		{
+			const TorrentFile & f = tor.getFile(tflist.first());
+			if (!f.doNotDownload())
+				ReadFullChunk(ci,cs,f,tor,buf,cache);
+			return;
+		}
+		
+		Uint64 read = 0; // number of bytes read
+		for (Uint32 i = 0;i < tflist.count();i++)
+		{
+			const TorrentFile & f = tor.getFile(tflist[i]);
 				
-					Uint32 now = bt::GetCurrentTime();
-					if (now - last_update_time > 1000)
-					{
-						Out() << "Checked " << cur_chunk << " chunks" << endl;
-						KApplication::kApplication()->processEvents();
-						last_update_time = now;
-					}
-
-					bytes_read += fptr.read(buf + bytes_read, chunk_size - bytes_read);
-					if (bytes_read == chunk_size || cur_chunk + 1 == tor.getNumChunks() )
-					{
-						SHA1Hash ChunkHash = SHA1Hash::generate(buf, bytes_read );
-						bool ok = (ChunkHash == tor.getHash(cur_chunk));
-						downloaded.set(cur_chunk,ok);
-						failed.set(cur_chunk,!ok);
-						bytes_read = 0;
-						if (listener)
-							listener->status(failed.numOnBits(),downloaded.numOnBits());
-					}
+			// first calculate offset into file
+			// only the first file can have an offset
+			// the following files will start at the beginning
+			Uint64 off = 0;
+			if (i == 0)
+				off = f.fileOffset(ci,tor.getChunkSize());
+			
+			Uint32 to_read = 0;
+			// then the amount of data we can read from this file
+			if (i == 0)
+				to_read = f.getLastChunkSize();
+			else if (i == tflist.count() - 1)
+				to_read = cs - read;
+			else
+				to_read = f.getSize();
+			
+			// read part of data
+			if (f.doNotDownload())
+			{
+				if (!dnd_dir.isNull() && bt::Exists(dnd_dir + f.getPath() + ".dnd"))
+				{
+					Uint32 ret = 0;
+					DNDFile dfd(dnd_dir + f.getPath() + ".dnd");
+					if (i == 0)
+						ret = dfd.readLastChunk(buf,read,cs);
+					else if (i == tflist.count() - 1)
+						ret = dfd.readFirstChunk(buf,read,cs);
+					else
+						ret = dfd.readFirstChunk(buf,read,cs);
+					
+					if (ret > 0 && ret != to_read)
+						Out() << "Warning : MultiDataChecker::load ret != to_read (dnd)" << endl;
 				}
 			}
-				
+			else
+			{
+				File fptr;
+				if (!fptr.open(cache + f.getPath(), "rb"))
+				{
+					Out() << QString("Warning : Cannot open %1 : %2").arg(cache + 
+							f.getPath()).arg(fptr.errorString()) << endl;
+					
+				}
+				else
+				{
+					fptr.seek(File::BEGIN,off);
+					if (fptr.read(buf+read,to_read) != to_read)
+						Out() << "Warning : MultiDataChecker::load ret != to_read" << endl;
+				}
+			}
+			read += to_read;
 		}
+		
 	}
 }

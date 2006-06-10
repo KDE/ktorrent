@@ -463,6 +463,7 @@ void KTorrentView::checkDataIntegrity()
 	KTorrentViewItem* kvi = (KTorrentViewItem*)sel.first();
 	TorrentInterface* tc = kvi->getTC();
 	ScanDialog* scan_dlg = new ScanDialog(this);
+	scan_dlg->setCaption(i18n("Checking Data Integrity"));
 	scan_dlg->show();
 	scan_dlg->execute(tc,false);
 	scan_dlg->deleteLater();

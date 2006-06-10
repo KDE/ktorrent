@@ -62,7 +62,7 @@ namespace bt
 	void Globals::initLog(const QString & file)
 	{
 		log->setOutputFile(file);
-		log->setOutputToConsole(debug_mode);
+	//	log->setOutputToConsole(debug_mode);
 	}
 
 	void Globals::initServer(Uint16 port)
@@ -79,7 +79,7 @@ namespace bt
 	Log & Out()
 	{
 		Log & lg = Globals::instance().getLog();
-		lg.setOutputToConsole(Globals::instance().isDebugModeSet());
+//		lg.setOutputToConsole(Globals::instance().isDebugModeSet());
 		return lg;
 	}
 }

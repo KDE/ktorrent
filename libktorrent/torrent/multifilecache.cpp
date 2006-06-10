@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <errno.h>
 #include <qstringlist.h>
 #include <qfileinfo.h>
 #include <klocale.h>
@@ -31,12 +32,14 @@
 #include "globals.h"
 #include "chunk.h"
 #include "cachefile.h"
+#include "dndfile.h"
 
 
 
 namespace bt
 {
 	static Uint64 FileOffset(Chunk* c,const TorrentFile & f,Uint64 chunk_size);
+	static Uint64 FileOffset(Uint32 cindex,const TorrentFile & f,Uint64 chunk_size);
 
 
 	MultiFileCache::MultiFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir,bool custom_output_name) : Cache(tor, tmpdir,datadir)
@@ -95,23 +98,40 @@ namespace bt
 	
 	void MultiFileCache::open()
 	{
+		QString dnd_dir = tmpdir + "dnd" + bt::DirSeparator();
 		// open all files
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
 			TorrentFile & tf = tor.getFile(i);
-			if (files.contains(i))
-				files.erase(i);
-			
-			CacheFile* fd = new CacheFile();
+			CacheFile* fd = 0;
+			DNDFile* dfd = 0;
 			try
 			{
-				fd->open(cache_dir + tf.getPath(),tf.getSize());
-				files.insert(i,fd);
+				if (!tf.doNotDownload())
+				{
+					if (files.contains(i))
+						files.erase(i);
+					
+					fd = new CacheFile();
+					fd->open(cache_dir + tf.getPath(),tf.getSize());
+					files.insert(i,fd);
+				}
+				else
+				{
+					if (dnd_files.contains(i))
+						dnd_files.erase(i);
+					
+					dfd = new DNDFile(dnd_dir + tf.getPath() + ".dnd");
+					dfd->checkIntegrity();
+					dnd_files.insert(i,dfd);
+				}
 			}
 			catch (...)
 			{
 				delete fd;
 				fd = 0;
+				delete dfd;
+				dfd = 0;
 				throw;
 			}
 		}
@@ -135,14 +155,7 @@ namespace bt
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
 			TorrentFile & tf = tor.getFile(i);
-			if (tf.doNotDownload())
-			{
-				touch(tf.getPath(),true);
-			}
-			else
-			{
-				touch(tf.getPath(),false);
-			}
+			touch(tf.getPath(),tf.doNotDownload());
 		}
 	}
 
@@ -171,19 +184,26 @@ namespace bt
 			ctmp += bt::DirSeparator();
 			dtmp += bt::DirSeparator();
 		}
+		
+		if (bt::Exists(cache_dir + fpath))
+			bt::Delete(cache_dir + fpath); // delete any existing symlinks
 
 		// then make the file
 		QString tmp = dnd ? tmpdir + "dnd" + bt::DirSeparator() : output_dir;
-		if (!bt::Exists(tmp + fpath))
-			bt::Touch(tmp + fpath);
-		else if (!dnd)
-			preexisting_files = true;
-		
-		// and make a symlink in the cache to it
-		if (bt::Exists(cache_dir + fpath))
-			bt::Delete(cache_dir + fpath); // delete any existing symlinks
-		
-		bt::SymLink(tmp + fpath,cache_dir + fpath);
+		if (dnd)
+		{
+			// only symlink, when we open the files a default dnd file will be made if the file is corrupt or doesn't exist
+			bt::SymLink(tmp + fpath + ".dnd",cache_dir + fpath);
+		}
+		else
+		{
+			if (!bt::Exists(tmp + fpath))
+				bt::Touch(tmp + fpath);
+			else
+				preexisting_files = true;
+			
+			bt::SymLink(tmp + fpath,cache_dir + fpath);
+		}
 	}
 
 	void MultiFileCache::load(Chunk* c)
@@ -196,6 +216,9 @@ namespace bt
 		{
 			const TorrentFile & f = tor.getFile(tflist.first());
 			CacheFile* fd = files.find(tflist.first());
+			if (!fd)
+				return;
+			
 			Uint64 off = FileOffset(c,f,tor.getChunkSize());
 			Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::READ);
 			if (buf)
@@ -209,7 +232,8 @@ namespace bt
 		{
 			const TorrentFile & f = tor.getFile(tflist[i]);
 			CacheFile* fd = files.find(tflist[i]);
-			
+			DNDFile* dfd = dnd_files.find(tflist[i]);
+				
 			// first calculate offset into file
 			// only the first file can have an offset
 			// the following files will start at the beginning
@@ -230,7 +254,21 @@ namespace bt
 			
 		
 			// read part of data
-			fd->read(data + read,to_read,off);
+			if (fd)
+				fd->read(data + read,to_read,off);
+			else if (dfd)
+			{
+				Uint32 ret = 0;
+				if (i == 0)
+					ret = dfd->readLastChunk(data,read,c->getSize());
+				else if (i == tflist.count() - 1)
+					ret = dfd->readFirstChunk(data,read,c->getSize());
+				else
+					ret = dfd->readFirstChunk(data,read,c->getSize());
+				
+				if (ret > 0 && ret != to_read)
+					Out() << "Warning : MultiFileCache::load ret != to_read" << endl;
+			}
 			read += to_read;
 		}
 		c->setData(data,Chunk::BUFFERED);
@@ -280,15 +318,21 @@ namespace bt
 		{
 			// mapped chunks are easy
 			CacheFile* fd = files.find(tflist[0]);
+			if (!fd)
+				return;
+			
 			fd->unmap(c->getData(),c->getSize());
 			c->clear();
 			c->setStatus(Chunk::ON_DISK);
 			return;
 		}
-		else if (tflist.count() == 0 && c->getStatus() == Chunk::BUFFERED)
+		else if (tflist.count() == 1 && c->getStatus() == Chunk::BUFFERED)
 		{
 			// buffered chunks are slightly more difficult
 			CacheFile* fd = files.find(tflist[0]);
+			if (!fd)
+				return;
+			
 			Uint64 off = c->getIndex() * tor.getChunkSize();
 			fd->write(c->getData(),c->getSize(),off);
 			c->clear();
@@ -302,7 +346,7 @@ namespace bt
 		{
 			const TorrentFile & f = tor.getFile(tflist[i]);
 			CacheFile* fd = files.find(tflist[i]);
-			
+			DNDFile* dfd = dnd_files.find(tflist[i]);
 
 			// first calculate offset into file
 			// only the first file can have an offset
@@ -326,7 +370,18 @@ namespace bt
 			
 		//	Out() << "to_write " << to_write << endl;
 			// write the data
-			fd->write(c->getData() + written,to_write,off);
+			if (fd)
+				fd->write(c->getData() + written,to_write,off);
+			else if (dfd)
+			{
+				if (i == 0)
+					dfd->writeLastChunk(c->getData() + written,to_write);
+				else if (i == tflist.count() - 1)
+					dfd->writeFirstChunk(c->getData() + written,to_write);
+				else
+					dfd->writeFirstChunk(c->getData() + written,to_write);
+			}
+			
 			written += to_write;
 		}
 		
@@ -334,8 +389,8 @@ namespace bt
 		c->clear();
 		c->setStatus(Chunk::ON_DISK);
 	}
-	
-	void MultiFileCache::downloadStatusChanged(TorrentFile* tf, bool download)
+	/*	
+	void MultiFileCache::oldDownloadStatusChanged(TorrentFile* tf, bool download)
 	{
 		bool dnd = !download;
 		CacheFile* fd = files.find(tf->getIndex());
@@ -376,6 +431,183 @@ namespace bt
 		if (fd)
 			fd->open(cache_dir + tf->getPath(),tf->getSize());
 	}
+	*/
+	void MultiFileCache::downloadStatusChanged(TorrentFile* tf, bool download)
+	{	
+		bool dnd = !download;
+		QString dnd_dir = tmpdir + "dnd" + bt::DirSeparator();
+		// if it is dnd and it is already in the dnd tree do nothing
+		if (dnd && bt::Exists(dnd_dir + tf->getPath() + ".dnd"))
+			return;
+		
+		// if it is !dnd and it is already in the output_dir tree do nothing
+		if (!dnd && bt::Exists(output_dir + tf->getPath()))
+			return;
+		
+		
+		DNDFile* dfd = 0;
+		CacheFile* fd = 0;
+		try
+		{
+			
+			if (dnd && bt::Exists(dnd_dir + tf->getPath()))
+			{
+				// old download, we need to convert it
+				// save first and last chunk of the file
+				saveFirstAndLastChunk(tf,dnd_dir + tf->getPath(),dnd_dir + tf->getPath() + ".dnd");
+				bt::Delete(dnd_dir + tf->getPath()); // delete old dnd file
+				// delete symlink
+				bt::Delete(cache_dir + tf->getPath());
+				// recreate it
+				bt::SymLink(dnd_dir + tf->getPath() + ".dnd",cache_dir + tf->getPath());
+				
+				files.erase(tf->getIndex());
+				dfd = new DNDFile(dnd_dir + tf->getPath() + ".dnd");
+				dfd->checkIntegrity();
+				dnd_files.insert(tf->getIndex(),dfd);
+			}
+			else if (dnd)
+			{
+				// save first and last chunk of the file
+				if (bt::Exists(output_dir + tf->getPath()))
+					saveFirstAndLastChunk(tf,output_dir + tf->getPath(),dnd_dir + tf->getPath() + ".dnd");
+				
+				// delete data file
+				bt::Delete(output_dir + tf->getPath(),true);
+				// delete symlink
+				bt::Delete(cache_dir + tf->getPath());
+				// recreate it
+				bt::SymLink(dnd_dir + tf->getPath() + ".dnd",cache_dir + tf->getPath());
+				
+				files.erase(tf->getIndex());
+				dfd = new DNDFile(dnd_dir + tf->getPath() + ".dnd");
+				dfd->checkIntegrity();
+				dnd_files.insert(tf->getIndex(),dfd);
+			}
+			else
+			{
+				// recreate the file
+				recreateFile(tf,dnd_dir + tf->getPath() + ".dnd",output_dir + tf->getPath());
+				// delete symlink and dnd file
+				bt::Delete(cache_dir + tf->getPath());
+				bt::Delete(dnd_dir + tf->getPath() + ".dnd");
+				// recreate it
+				bt::SymLink(output_dir + tf->getPath(),cache_dir + tf->getPath());
+				dnd_files.erase(tf->getIndex());
+				
+				fd = new CacheFile();
+				fd->open(output_dir + tf->getPath(),tf->getSize());
+				files.insert(tf->getIndex(),fd);
+			}
+		}
+		catch (bt::Error & err)
+		{
+			delete fd;
+			delete dfd;
+			Out() << err.toString() << endl;
+		}
+	}
+	
+
+	
+	void MultiFileCache::saveFirstAndLastChunk(TorrentFile* tf,const QString & src_file,const QString & dst_file)
+	{
+		DNDFile out(dst_file);
+		File fptr;
+		if (!fptr.open(src_file,"rb"))
+			throw Error(i18n("Cannot open file %1 : %2").arg(src_file).arg(fptr.errorString()));
+		
+		Uint32 cs = 0;
+		if (tf->getFirstChunk() == tor.getNumChunks() - 1)
+		{
+			cs = tor.getFileLength() % tor.getChunkSize();
+			if (cs == 0)
+				cs = tor.getChunkSize();
+		}
+		else
+			cs = tor.getChunkSize();
+		
+		Uint8* tmp = new Uint8[tor.getChunkSize()];
+		try
+		{
+			fptr.read(tmp,cs - tf->getFirstChunkOffset());
+			out.writeFirstChunk(tmp,cs - tf->getFirstChunkOffset());
+			
+			if (tf->getFirstChunk() != tf->getLastChunk())
+			{
+				Uint64 off = FileOffset(tf->getLastChunk(),*tf,tor.getChunkSize());
+				fptr.seek(File::BEGIN,off);
+				fptr.read(tmp,tf->getLastChunkSize());
+				out.writeLastChunk(tmp,tf->getLastChunkSize());
+			}
+			delete [] tmp;
+		}
+		catch (...)
+		{
+			delete [] tmp;
+			throw;
+		}
+	}
+	
+	void MultiFileCache::recreateFile(TorrentFile* tf,const QString & dnd_file,const QString & output_file)
+	{
+		DNDFile dnd(dnd_file);
+		
+		// create the output file
+		bt::Touch(output_file);
+		// truncate it
+		try
+		{
+			bt::TruncateFile(output_file,tf->getSize());
+		}
+		catch (bt::Error & e)
+		{
+			// first attempt failed, must be fat so try that
+			if (!FatPreallocate(output_file,tf->getSize()))
+			{	
+				throw Error(i18n("Cannot preallocate diskspace : %1").arg(strerror(errno)));
+			}
+		}
+		
+		Uint32 cs = 0;
+		if (tf->getFirstChunk() == tor.getNumChunks() - 1)
+		{
+			cs = tor.getFileLength() % tor.getChunkSize();
+			if (cs == 0)
+				cs = tor.getChunkSize();
+		}
+		else
+			cs = tor.getChunkSize();
+		
+		File fptr;
+		if (!fptr.open(output_file,"r+b"))
+			throw Error(i18n("Cannot open file %1 : %2").arg(output_file).arg(fptr.errorString()));
+			
+		
+		Uint32 ts = cs - tf->getFirstChunkOffset() > tf->getLastChunkSize() ? 
+				cs - tf->getFirstChunkOffset() : tf->getLastChunkSize();
+		Uint8* tmp = new Uint8[ts];
+		
+		try
+		{
+			dnd.readFirstChunk(tmp,0,cs - tf->getFirstChunkOffset());
+			fptr.write(tmp,cs - tf->getFirstChunkOffset());
+			
+			if (tf->getFirstChunk() != tf->getLastChunk())
+			{
+				Uint64 off = FileOffset(tf->getLastChunk(),*tf,tor.getChunkSize());
+				fptr.seek(File::BEGIN,off);
+				dnd.readLastChunk(tmp,0,tf->getLastChunkSize());
+				fptr.write(tmp,tf->getLastChunkSize());
+			}
+			delete [] tmp;
+		}
+		catch (...)
+		{
+			delete [] tmp;
+			throw;
+		}
+	}
 	
 	void MultiFileCache::preallocateDiskSpace()
 	{
@@ -397,11 +629,26 @@ namespace bt
 			TorrentFile & tf = tor.getFile(i);
 			QString p = cache_dir + tf.getPath();
 			QFileInfo fi(p);
+			// allways use symlink first, file might have been moved
 			if (!fi.exists())
 			{
 				ret = true;
-				sl.append(fi.readLink());
+				p = fi.readLink();
+				if (p.isNull())
+					p = output_dir + tf.getPath();
+				sl.append(p);
 				tf.setMissing(true);
+			}
+			else
+			{
+				p = output_dir + tf.getPath();
+				// no symlink so try the actual file
+				if (!bt::Exists(p))
+				{
+					ret = true;
+					sl.append(p);
+					tf.setMissing(true);
+				}
 			}
 		}
 		return ret;
@@ -411,10 +658,15 @@ namespace bt
 
 	Uint64 FileOffset(Chunk* c,const TorrentFile & f,Uint64 chunk_size)
 	{
+		return FileOffset(c->getIndex(),f,chunk_size);
+	}
+	
+	Uint64 FileOffset(Uint32 cindex,const TorrentFile & f,Uint64 chunk_size)
+	{
 		Uint64 off = 0;
-		if (c->getIndex() - f.getFirstChunk() > 0)
-			off = (c->getIndex() - f.getFirstChunk() - 1) * chunk_size;
-		if (c->getIndex() > 0)
+		if (cindex - f.getFirstChunk() > 0)
+			off = (cindex - f.getFirstChunk() - 1) * chunk_size;
+		if (cindex > 0)
 			off += (chunk_size - f.getFirstChunkOffset());
 		return off;
 	}

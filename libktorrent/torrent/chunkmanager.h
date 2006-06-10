@@ -66,7 +66,10 @@ namespace bt
 		mutable bool recalc_chunks_left;
 	
 	public:
-		ChunkManager(Torrent & tor,const QString & tmpdir,const QString & datadir,bool custom_output_name);
+		ChunkManager(Torrent & tor,
+					 const QString & tmpdir,
+					 const QString & datadir,
+					 bool custom_output_name);
 		virtual ~ChunkManager();
 
 		/// Get the torrent
