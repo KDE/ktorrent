@@ -627,6 +627,9 @@ namespace bt
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
 			TorrentFile & tf = tor.getFile(i);
+			if (tf.doNotDownload())
+				continue;
+			
 			QString p = cache_dir + tf.getPath();
 			QFileInfo fi(p);
 			// allways use symlink first, file might have been moved
