@@ -223,7 +223,8 @@ namespace bt
 						Request(
 							chunk->getIndex(),
 							i*MAX_PIECE_LEN,
-							i+1<num ? MAX_PIECE_LEN : last_size,0));
+							i+1<num ? MAX_PIECE_LEN : last_size,
+							pd->getPeer()->getID()));
 				ds->add(i);
 			}
 			// move to the back so that it will take a while before it's turn is up
@@ -238,10 +239,13 @@ namespace bt
 		// see if we are dealing with a piece of ours
 		if (chunk->getIndex() == r.getIndex())
 		{
+		/*	Out() << QString("ChunkDownload::onTimeout %1 %2 %3 %4").arg(r.getIndex()).arg(r.getOffset()).arg(r.getOffset()).arg(r.getPeer()) << endl;
+		*/
 			// find the peer 
 			DownloadStatus* ds = dstatus.find(r.getPeer());
 			if (ds)
 			{
+			//	Out() << "ds != 0"  << endl;
 				Uint32 p  = r.getOffset() / MAX_PIECE_LEN;
 				ds->remove(p);
 			}
