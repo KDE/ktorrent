@@ -37,6 +37,10 @@
 #include "log.h"
 #include "file.h"
 
+#ifndef O_LARGEFILE
+#define O_LARGEFILE 0
+#endif
+
 namespace bt
 {
 	extern Log& Out();
