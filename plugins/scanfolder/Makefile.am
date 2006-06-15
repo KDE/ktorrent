@@ -24,4 +24,7 @@ noinst_HEADERS = scanfolderplugin.h scanfolderprefpage.h \
 ktscanfolderplugin_la_SOURCES = scanfolderplugin.cpp \
 	scanfolderpluginsettings.kcfgc scanfolderprefpage.cpp sfprefwidgetbase.ui scanfolderprefpagewidget.cpp \
 	scanfolder.cpp
-ktscanfolderplugin_la_LIBADD = $(LIB_KPARTS) ../../libktorrent/libktorrent.la
+ktscanfolderplugin_la_LIBADD = $(LIB_KPARTS) ../../libktorrent/libktorrent.la \
+		       $(LIB_QT) $(LIB_KDECORE) $(LIB_KDEUI) $(LIB_KFILE)
+
+

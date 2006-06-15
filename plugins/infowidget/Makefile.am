@@ -9,8 +9,9 @@ ktinfowidgetplugin_la_SOURCES = infowidgetplugin.cpp availabilitychunkbar.cpp \
 			trackerviewbase.ui trackerview.cpp GeoIP.c floatspinbox.cpp localefloatvalidator.cpp
 
 # Libs needed by the plugin
-ktinfowidgetplugin_la_LIBADD = $(LIB_KHTML) $(LIB_KPARTS) \
-	../../libktorrent/libktorrent.la
+ktinfowidgetplugin_la_LIBADD = ../../libktorrent/libktorrent.la \
+			   $(LIB_KHTML) $(LIB_KPARTS) $(LIB_QT) \
+			   $(LIB_KDECORE) $(LIB_KDEUI) $(LIB_KFILE)
 
 # LD flags for the plugin
 # -module says: this is a module, i.e. something you're going to dlopen

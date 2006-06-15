@@ -14,7 +14,11 @@ ktupnpplugin_la_SOURCES = upnpplugin.cpp upnpprefpage.cpp upnpwidget.ui \
 
 # Libs needed by the plugin
 ktupnpplugin_la_LIBADD = libktupnp.la \
-	$(LIB_KDECORE) $(LIB_KPARTS) ../../libktorrent/libktorrent.la
+	$(LIB_KPARTS) ../../libktorrent/libktorrent.la \
+	$(LIB_QT) \
+	$(LIB_KDECORE) $(LIB_KDEUI) $(LIB_KFILE)
+
+
 
 # LD flags for the plugin
 # -module says: this is a module, i.e. something you're going to dlopen
