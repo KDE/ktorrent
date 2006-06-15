@@ -40,6 +40,7 @@ class KURL;
 class KTorrentCore;
 class KTorrentView;
 class TrayIcon;
+class SetMaxRate;
 class KTabWidget;
 class KTorrentDCOP;
 class QLabel;
@@ -174,6 +175,8 @@ private:
 	
 	KTorrentCore* m_core;
 	TrayIcon* m_systray_icon;
+	SetMaxRate* m_set_max_upload_rate;
+	SetMaxRate* m_set_max_download_rate;
 	KTabWidget* m_tabs;
 	KTorrentDCOP* m_dcop;
 	QTimer m_gui_update_timer;

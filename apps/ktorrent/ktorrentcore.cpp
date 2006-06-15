@@ -616,6 +616,16 @@ int KTorrentCore::getMaxDownloadSpeed()
 	return Settings::maxDownloadRate();
 }
 
+void KTorrentCore::setMaxUploadSpeed(int v)
+{
+	return Settings::setMaxUploadRate(v);
+}
+
+void KTorrentCore::setMaxDownloadSpeed(int v)
+{
+	return Settings::setMaxDownloadRate(v);
+}
+
 void KTorrentCore::setPausedState(bool pause)
 {
 	qman->setPausedState(pause);

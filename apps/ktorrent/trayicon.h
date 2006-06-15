@@ -22,12 +22,14 @@
 #define TRAYICON_H
 
 #include <ksystemtray.h>
+#include <kpopupmenu.h>
 
-#include "ktorrentcore.h" 
+#include "ktorrentcore.h"
+#include "settings.h"
 #include "interfaces/torrentinterface.h"
 #include <util/constants.h>
 
-using namespace bt; 
+using namespace bt;
 class QString;
 
 typedef struct tray_stats
@@ -36,9 +38,10 @@ typedef struct tray_stats
 	bt::Uint32 upload_speed;
 	bt::Uint64 bytes_downloaded;
 	bt::Uint64 bytes_uploaded;
-	
-	
-}TrayStats;
+
+
+}
+TrayStats;
 
 /**
  * @author Joris Guisson
@@ -46,20 +49,38 @@ typedef struct tray_stats
 */
 class TrayIcon : public KSystemTray
 {
-	Q_OBJECT
-public:
-	TrayIcon(KTorrentCore* tc, QWidget *parent = 0, const char *name = 0);
-	~TrayIcon();
+		Q_OBJECT
+	public:
+		TrayIcon(KTorrentCore* tc, QWidget *parent = 0, const char *name = 0);
+		~TrayIcon();
 
-	void updateStats(const CurrentStats stats);
-	
-private slots:
-	void finished(kt::TorrentInterface* tc);
-	void torrentStoppedByError(kt::TorrentInterface* tc, QString msg);
-	void viewChanged(kt::TorrentInterface* tc);
+		void updateStats(const CurrentStats stats);
 
-private:
-	KTorrentCore* m_core;
+	private slots:
+		void finished(kt::TorrentInterface* tc);
+		void torrentStoppedByError(kt::TorrentInterface* tc, QString msg);
+		void viewChanged(kt::TorrentInterface* tc);
+
+	private:
+		KTorrentCore* m_core;
+};
+
+class SetMaxRate : public KPopupMenu
+{
+		Q_OBJECT
+	public:
+		SetMaxRate(KTorrentCore* tc, int t, QWidget *parent=0, const char *name=0); // type: 0 Upload; 1 Download
+		~SetMaxRate()
+		{}
+		;
+
+		void update();
+	private:
+		KTorrentCore* m_core;
+		int type;
+		void makeMenu();
+	private slots:
+		void rateSelected(int id);
 };
 
 #endif

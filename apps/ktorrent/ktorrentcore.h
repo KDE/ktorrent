@@ -191,7 +191,9 @@ public:
 	
 	int getMaxDownloadSpeed();
 	int getMaxUploadSpeed();
-	
+	void setMaxDownloadSpeed(int v);
+	void setMaxUploadSpeed(int v);
+
 	void setPausedState(bool pause);
 	
 	kt::TorrentInterface* getTorFromNumber(int tornumber);

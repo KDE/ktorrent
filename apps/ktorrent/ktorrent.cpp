@@ -283,6 +283,8 @@ void KTorrent::applySettings(bool change_port)
 	if (Settings::showSystemTrayIcon())
 	{
 		m_systray_icon->show();
+		m_set_max_upload_rate->update();
+		m_set_max_download_rate->update();
 	}
 	else
 	{
@@ -434,6 +436,13 @@ void KTorrent::setupActions()
 	m_systray_icon->contextMenu()->insertSeparator();
 	m_pasteurl->plug(m_systray_icon->contextMenu());
 	m_systray_icon->contextMenu()->insertSeparator();
+
+	m_set_max_upload_rate = new SetMaxRate(m_core, 0, this);
+	m_systray_icon->contextMenu()->insertItem(i18n("Set max upload rate"),m_set_max_upload_rate);
+
+	m_set_max_download_rate = new SetMaxRate(m_core, 1, this);
+	m_systray_icon->contextMenu()->insertItem(i18n("Set max download rate"),m_set_max_download_rate);
+
 	pref->plug(m_systray_icon->contextMenu());
 	
 	createGUI();
