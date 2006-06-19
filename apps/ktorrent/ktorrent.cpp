@@ -724,8 +724,14 @@ void KTorrent::updatedStats()
 	m_core->getPluginManager().updateGuiPlugins();
 	
 	//update tab labels
-	m_tabs->setTabLabel(m_view_exp, QString("%1 %2/%3").arg(i18n("Downloads")).arg(m_core->getNumRunning(true)).arg(m_core->countDownloads()));
-	m_tabs->setTabLabel(m_seedView_exp, QString("%1 %2/%3").arg(i18n("Uploads")).arg(m_core->getNumRunning(false,true)).arg(m_core->countSeeds()));
+	QString tabText = i18n("Downloads %1/%2").arg(m_core->getNumRunning(true)).arg(m_core->countDownloads());
+	//kdDebug() << "tabtext: " << tabText << " " << m_tabs->tabLabel(m_view_exp) << endl;
+	if (tabText != m_tabs->tabLabel(m_view_exp).replace('&', ""))
+		m_tabs->setTabLabel(m_view_exp, tabText);
+		
+	tabText = i18n("Uploads %1/%2").arg(m_core->getNumRunning(false,true)).arg(m_core->countSeeds());
+	if (tabText != m_tabs->tabLabel(m_seedView_exp).replace('&', ""))
+		m_tabs->setTabLabel(m_seedView_exp, tabText);
 	
 	if (Globals::instance().getDHT().isRunning())
 	{
