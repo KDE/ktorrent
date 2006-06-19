@@ -151,6 +151,9 @@ namespace bt
 		///Gets a pointer to AnnounceList
 		AnnounceList* getAnnounceList() { return anon_list; }
 		
+		///Gets a pointer to AnnounceList
+		const AnnounceList* getAnnounceList() const { return anon_list; }
+		
 		///Creates announce list if one doesn't exist to add some custom trackers.
 		AnnounceList* createAnnounceList();
 		
@@ -159,6 +162,7 @@ namespace bt
 		
 		/// Get a DHT node
 		const DHTNode & getDHTNode(Uint32 i) {return nodes[i];}
+		
 
 	private:
 		void loadInfo(BDictNode* node);

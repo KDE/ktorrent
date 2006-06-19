@@ -87,7 +87,7 @@ namespace bt
 		 * @param default_save_dir Default save directory (null if not set)
 		 * @throw Error when something goes wrong
 		 */
-		void init(const QueueManager* qman,
+		void init(QueueManager* qman,
 				const QString & torrent,
 				const QString & tmpdir,
 				const QString & datadir,

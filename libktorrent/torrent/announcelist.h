@@ -90,6 +90,12 @@ namespace bt
 
 		void setDatadir(const QString& theValue);
 		
+		/**
+		 * Merge an other announce list to this one.
+		 * @param al The AnnounceList
+		 */
+		void merge(const AnnounceList* al);
+		
 	private:
 		QString m_datadir;
 		

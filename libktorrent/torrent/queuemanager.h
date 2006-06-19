@@ -29,6 +29,7 @@
 namespace bt
 {
 	class SHA1Hash;
+	class AnnounceList;
 	
 	class QueuePtrList : public QPtrList<kt::TorrentInterface>
 	{
@@ -84,6 +85,17 @@ namespace bt
 			 * @return true if we do, false if we don't
 			 */
 			bool allreadyLoaded(const SHA1Hash & ih) const;
+			
+			
+			/**
+			 * Merge announce lists to a torrent
+			 * @param ih The info_hash of the torrent to merge to
+			 * @param al The AnnounceList
+			 */
+			void mergeAnnounceList(const SHA1Hash & ih,const AnnounceList* al);
+			
+			/// Add a tracker URL to a torrent
+			void addTrackerURL(const SHA1Hash & ih,const KURL & url);
 			
 			void setMaxDownloads(int m);
 			void setMaxSeeds(int m);

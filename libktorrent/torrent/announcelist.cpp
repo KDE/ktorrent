@@ -181,4 +181,13 @@ namespace bt
 		curr = 0;
 	}
 
+	void AnnounceList::merge(const AnnounceList* al)
+	{
+		for (Uint32 i = 0;i < al->getNumTrackerURLs();i++)
+		{
+			KURL url = *al->trackers.at(i);
+			if (!trackers.contains(url) && !custom_trackers.contains(url))
+				custom_trackers.append(url);
+		}
+	}
 }

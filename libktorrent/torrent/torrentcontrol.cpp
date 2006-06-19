@@ -374,7 +374,7 @@ namespace bt
 		}
 	}
 
-	void TorrentControl::init(const QueueManager* qman,
+	void TorrentControl::init(QueueManager* qman,
 							  const QString & torrent,
 							  const QString & tmpdir,
 							  const QString & ddir,
@@ -407,7 +407,17 @@ namespace bt
 		// check if we haven't already loaded the torrent
 		// only do this when qman isn't 0
 		if (qman && qman->allreadyLoaded(tor->getInfoHash()))
-			throw Error(i18n("You are already downloading this torrent."));
+		{
+			if (tor->getAnnounceList())
+			{
+				qman->mergeAnnounceList(tor->getInfoHash(),tor->getAnnounceList());
+			}
+			else 
+			{
+				qman->addTrackerURL(tor->getInfoHash(),tor->getTrackerURL(true));
+			}
+			throw Error(i18n("You are already downloading this torrent, the list of trackers of both torrents has been merged."));
+		}
 		
 		if (!bt::Exists(datadir))
 		{
