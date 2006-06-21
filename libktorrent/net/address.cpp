@@ -15,34 +15,52 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTDOWNLOADCAP_H
-#define BTDOWNLOADCAP_H
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include "address.h"
 
-#if 0
-#include <qvaluelist.h>
-#include <util/timer.h>
-#include "globals.h"
-#include "cap.h"
-
-namespace bt
+namespace net
 {
 
-	/**
-	 * @author Joris Guisson
-	*/
-	class DownloadCap : public Cap
+	Address::Address() : m_ip(0),m_port(0) {}
+	
+	Address::Address(const QString & host,Uint16 port) : m_ip(0),m_port(port)
 	{
-		static DownloadCap self;
+		struct in_addr a;
+		if (inet_aton(host.ascii(),&a))
+			m_ip = ntohl(a.s_addr);
+	}
+	
+	Address::Address(const Address & addr) : m_ip(addr.ip()),m_port(addr.port())
+	{
+	}
+	
+	Address:: ~Address()
+	{}
 
-		DownloadCap();
-	public:
-		~DownloadCap();
+	
+	Address & Address::operator = (const Address & a)
+	{
+		m_ip = a.ip();
+		m_port = a.port();
+		return *this;
+	}
 
-		static DownloadCap & instance() {return self;}
-	};
+	
+	bool Address::operator == (const Address & a)
+	{
+		return m_ip == a.ip() && m_port == a.port();
+	}
+
+	QString Address::toString() const
+	{
+		return QString("%1.%2.%3.%4")
+				.arg((m_ip & 0xFF000000) >> 24)
+				.arg((m_ip & 0x00FF0000) >> 16)
+				.arg((m_ip & 0x0000FF00) >> 8)
+				.arg(m_ip & 0x000000FF);
+	}
 
 }
-#endif
-#endif

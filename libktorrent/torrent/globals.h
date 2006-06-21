@@ -68,8 +68,6 @@ namespace bt
 		static Globals* inst;
 		
 	};
-
-
 }
 
 #endif

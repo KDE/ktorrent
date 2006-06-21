@@ -40,6 +40,7 @@ namespace mse
 		virtual ~RC4();
 		
 		void process(const Uint8* in,Uint8* out,Uint32 size);
+		Uint8 process(Uint8 b);
 	};
 
 	/**
@@ -73,6 +74,13 @@ namespace mse
 		 * @return Pointer to the static buffer
 		 */
 		const Uint8* encrypt(const Uint8* data,Uint32 len);
+		
+		/**
+		 * Encrypts one byte.
+		 * @param b The byte to encrypt
+		 * @return The encrypted byte
+		 */
+		Uint8 encrypt(Uint8 b) {return enc.process(b);}
 	};
 
 }

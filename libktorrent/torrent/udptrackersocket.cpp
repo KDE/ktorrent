@@ -54,6 +54,7 @@ namespace bt
 				i18n("Cannot bind to udp port %1 or the 10 following ports.").arg(port));
 
 		sn = new QSocketNotifier(sock->socket(),QSocketNotifier::Read);
+		
 		connect(sn,SIGNAL(activated(int)),this,SLOT(dataRecieved(int )));
 	}
 	

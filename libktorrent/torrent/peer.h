@@ -138,8 +138,9 @@ namespace bt
 		 * @param data The data
 		 * @param len The length
 		 * @param proto Indicates wether the packed is data or a protocol message
+		 * @return Number of bytes written
 		 */
-		void sendData(const Uint8* data,Uint32 len,bool proto);
+		Uint32 sendData(const Uint8* data,Uint32 len,bool proto);
 		
 		/**
 		 * Reads data from the peer.
@@ -206,10 +207,9 @@ namespace bt
 		/// Choke the peer
 		void choke();
 		
+		
+		
 	private slots:
-		void connectionClosed(); 
-		void readyRead();
-		void error(int err);
 		void dataWritten(int bytes);
 
 	signals:
@@ -268,7 +268,6 @@ namespace bt
 		bool am_choked;
 		bool am_interested;
 		bool killed;
-		bool recieved_packet;
 		Uint32 time_choked;
 		Uint32 time_unchoked;
 		Uint32 id;

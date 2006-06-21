@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#if 0
 #include <math.h>
 #include <util/log.h>
 #include <torrent/globals.h>
@@ -41,3 +42,4 @@ namespace bt
 
 
 }
+#endif

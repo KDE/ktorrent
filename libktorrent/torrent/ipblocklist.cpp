@@ -250,7 +250,7 @@ namespace bt
 			Out() << "IP " << ip << " is blacklisted. Connection denied." << endl;
 			return true;
 		}
-		
+
 		return false;
 	}
 	

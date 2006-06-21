@@ -54,12 +54,17 @@ namespace mse
 	{
 		for (Uint32 k = 0;k < size;k++)
 		{
-			i = (i + 1) & 0xff;
-			j = (j + s[i]) & 0xff;
-			swap(s[i],s[j]);
-			Uint8 b = s[ (s[i] + s[j]) & 0xff];
-			out[k] = b ^ in[k];
+			out[k] = process(in[k]);
 		}
+	}
+	
+	Uint8 RC4::process(Uint8 b)
+	{
+		i = (i + 1) & 0xff;
+		j = (j + s[i]) & 0xff;
+		swap(s[i],s[j]);
+		Uint8 tmp = s[ (s[i] + s[j]) & 0xff];
+		return tmp ^ b;
 	}
 	
 
@@ -86,4 +91,5 @@ namespace mse
 		enc.process(data,rc4_enc_buffer,len);
 		return rc4_enc_buffer;
 	}
+	
 }

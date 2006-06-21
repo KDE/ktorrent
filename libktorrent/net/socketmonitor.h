@@ -15,34 +15,52 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTDOWNLOADCAP_H
-#define BTDOWNLOADCAP_H
+#ifndef NETSOCKETMONITOR_H
+#define NETSOCKETMONITOR_H
 
-#if 0
-#include <qvaluelist.h>
-#include <util/timer.h>
-#include "globals.h"
-#include "cap.h"
+#include <qstring.h>
+#include <qmutex.h>
+#include <qptrlist.h>
+#include <util/constants.h>
 
-namespace bt
+
+namespace net
 {
+	using bt::Uint32;
+	
+	class BufferedSocket;
+	class MonitorThread;
 
 	/**
-	 * @author Joris Guisson
+		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class DownloadCap : public Cap
+	class SocketMonitor 
 	{
-		static DownloadCap self;
-
-		DownloadCap();
+		static SocketMonitor self;
+		static Uint32 dcap,ucap;
+		QMutex mutex;
+		MonitorThread* mt;
+		QPtrList<BufferedSocket> smap;
+		Uint32 last_selected;
+		
+		SocketMonitor();	
 	public:
-		~DownloadCap();
-
-		static DownloadCap & instance() {return self;}
+		virtual ~SocketMonitor();
+		
+		void add(BufferedSocket* sock);
+		void remove(BufferedSocket* sock);
+		void update();
+		
+		static void setDownloadCap(Uint32 bytes_per_sec);
+		static void setUploadCap(Uint32 bytes_per_sec);
+		static SocketMonitor & instance() {return self;}
+	private:
+		void processOutgoingData(QPtrList<BufferedSocket> & wbs,Uint32 now);
+		void processIncomingData(QPtrList<BufferedSocket> & rbs,Uint32 now);
 	};
 
 }
-#endif
+
 #endif

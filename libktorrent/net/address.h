@@ -15,34 +15,46 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTDOWNLOADCAP_H
-#define BTDOWNLOADCAP_H
+#ifndef NETADDRESS_H
+#define NETADDRESS_H
 
-#if 0
-#include <qvaluelist.h>
-#include <util/timer.h>
-#include "globals.h"
-#include "cap.h"
+#include <qstring.h>
+#include <util/constants.h>
 
-namespace bt
+namespace net
 {
+	using bt::Uint32;
+	using bt::Uint16;
 
 	/**
-	 * @author Joris Guisson
+		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class DownloadCap : public Cap
+	class Address
 	{
-		static DownloadCap self;
-
-		DownloadCap();
+		Uint32 m_ip;
+		Uint16 m_port;
 	public:
-		~DownloadCap();
+		Address();
+		Address(const QString & host,Uint16 port);
+		Address(const Address & addr);
+		virtual ~Address();
 
-		static DownloadCap & instance() {return self;}
+	
+		Address & operator = (const Address & a);
+		bool operator == (const Address & a);
+		
+		Uint32 ip() const {return m_ip;}
+		void setIP(Uint32 ip) {m_ip = ip;}
+		
+		Uint16 port() const {return m_port;}
+		void setPort(Uint16 p) {m_port = p;}
+
+		QString toString() const;
+
 	};
 
 }
-#endif
+
 #endif

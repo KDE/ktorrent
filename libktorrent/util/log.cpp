@@ -67,18 +67,15 @@ namespace bt
 
 		void write(const QString & line)
 		{
-			mutex.lock();
 			*out << line;
 			if (to_cout)
 				std::cout << line.local8Bit();
 
 			tmp += line;
-			mutex.unlock();
 		}
 
 		void endline()
 		{
-			mutex.lock();
 			*out << ::endl;
 			fptr.flush();
 			if (to_cout)
@@ -95,7 +92,6 @@ namespace bt
 				}
 			}
 			tmp = "";
-			mutex.unlock();
 		}
 	};
 	
@@ -134,6 +130,7 @@ namespace bt
 	Log & endl(Log & lg)
 	{
 		lg.priv->endline();
+		lg.priv->mutex.unlock(); // unlock after end of line
 		return lg;
 	}
 
@@ -164,4 +161,11 @@ namespace bt
 	{
 		return operator << (QString::number(v));
 	}
+	
+	void Log::lock()
+	{
+		priv->mutex.lock();
+	}
+	
+	
 }	

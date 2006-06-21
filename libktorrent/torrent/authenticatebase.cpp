@@ -17,7 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-
+#include <qsocketnotifier.h> 
 #include <mse/streamsocket.h>
 #include <util/sha1hash.h>
 #include <util/log.h>
@@ -37,12 +37,21 @@ namespace bt
 		bytes_of_handshake_recieved = 0;
 		dht_support = false;
 		fast_extensions = false;
+		if (s)
+		{
+			sn = new QSocketNotifier(s->fd(),QSocketNotifier::Read);
+			connect(sn,SIGNAL(activated(int)),this,SLOT(onReadyRead()));
+			sn->setEnabled(true);
+		}
+		else
+			sn = 0;
 	}
 
 
 	AuthenticateBase::~AuthenticateBase()
 	{
 		sock->deleteLater();
+		delete sn;
 	}
 
 	void AuthenticateBase::sendHandshake(const SHA1Hash & info_hash,const PeerID & our_peer_id)
@@ -77,11 +86,16 @@ namespace bt
 
 	void AuthenticateBase::onReadyRead()
 	{
-	//	Out() << "AuthenticateBase::onReadyRead" << endl;
-		if (!sock || finished || sock->bytesAvailable() < 48)
-			return;
-		
 		Uint32 ba = sock->bytesAvailable();
+	//	Out() << "AuthenticateBase::onReadyRead " << ba << endl;
+		if (ba == 0)
+		{
+			onFinish(false);
+			return;
+		}
+		
+		if (!sock || finished || ba < 48)
+			return;
 		
 		// first see if we already have some bytes from the handshake
 		if (bytes_of_handshake_recieved == 0)

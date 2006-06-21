@@ -121,22 +121,12 @@ namespace bt
 		return true;
 	}
 
-	bool Packet::send(Peer* peer,Uint32 max_bytes,Uint32 & bytes_sent)
+	bool Packet::send(Peer* peer,Uint32 & bytes_sent)
 	{
 		bool proto = data[4] != PIECE;
-		if (written + max_bytes >= size)
-		{
-			peer->sendData(data + written,size - written,proto);
-			written = size;
-			bytes_sent = size - written;
-			return true;
-		}
-		else
-		{
-			peer->sendData(data + written,max_bytes,proto);
-			written += max_bytes;
-			bytes_sent = max_bytes;
-			return false;
-		}
+		Uint32 ret = peer->sendData(data + written,size - written,proto);
+		written += ret;
+		bytes_sent = ret;
+		return written == size;
 	}
 }

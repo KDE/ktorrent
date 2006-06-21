@@ -77,11 +77,13 @@ namespace bt
 		Uint16 getPort() const {return port;}
 		
 	protected slots:
-		virtual void connected();
+		void onReadyWrite();
+		
 		
 	protected:
 		void onFinish(bool succes);
 		void handshakeRecieved(bool full);
+		virtual void connected();
 		
 	protected:
 		SHA1Hash info_hash;

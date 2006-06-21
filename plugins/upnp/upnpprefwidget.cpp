@@ -54,7 +54,7 @@ namespace kt
 				def_router->undoForward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
 				def_router->undoForward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
 			}
-			catch (Error e)
+			catch (Error & e)
 			{
 				Out() << "Error : " << e.toString() << endl;
 			}

@@ -20,6 +20,7 @@
 #ifndef BTCAP_H
 #define BTCAP_H
 
+#if 0
 #include <qvaluelist.h>
 #include <util/timer.h>
 #include <util/constants.h>
@@ -108,5 +109,5 @@ namespace bt
 	};
 
 }
-
+#endif
 #endif

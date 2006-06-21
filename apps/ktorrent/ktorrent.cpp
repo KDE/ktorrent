@@ -64,6 +64,7 @@
 #include <torrent/server.h>
 #include <torrent/downloadcap.h>
 #include <torrent/udptrackersocket.h>
+#include <net/socketmonitor.h>
 #include <util/log.h>
 #include <util/fileops.h>
 #include <kademlia/dhtbase.h>
@@ -276,8 +277,10 @@ void KTorrent::applySettings(bool change_port)
 	m_core->setMaxDownloads(Settings::maxDownloads());
 	m_core->setMaxSeeds(Settings::maxSeeds());
 	PeerManager::setMaxConnections(Settings::maxConnections());
-	UploadCap::instance().setMaxSpeed(Settings::maxUploadRate() * 1024);
-	DownloadCap::instance().setMaxSpeed(Settings::maxDownloadRate()*1024);
+//	UploadCap::instance().setMaxSpeed(Settings::maxUploadRate() * 1024);
+//	DownloadCap::instance().setMaxSpeed(Settings::maxDownloadRate()*1024);
+	net::SocketMonitor::setDownloadCap(Settings::maxDownloadRate()*1024);
+	net::SocketMonitor::setUploadCap(Settings::maxUploadRate()*1024);
 	m_core->setKeepSeeding(Settings::keepSeeding());
 
 	if (Settings::showSystemTrayIcon())
@@ -741,8 +744,6 @@ void KTorrent::updatedStats()
 	}
 	else
 		m_statusDHT->setText(i18n("DHT: off"));
-	
-	DownloadCap::instance().setCurrentSpeed(stats.download_speed);
 }
 
 void KTorrent::mergePluginGui(Plugin* p)

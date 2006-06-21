@@ -20,6 +20,7 @@
 #include <math.h>
 #include <util/log.h>
 #include <util/functions.h>
+
 #include <mse/streamsocket.h>
 
 #include "peer.h"
@@ -33,6 +34,7 @@
 #include "peerdownloader.h"
 #include "peeruploader.h"
 
+using namespace net;
 
 namespace bt
 {
@@ -54,7 +56,6 @@ namespace bt
 		choked = am_choked = true;
 		interested = am_interested = false;
 		killed = false;
-		recieved_packet = false;
 		downloader = new PeerDownloader(this);
 		uploader = new PeerUploader(this);
 		
@@ -64,7 +65,7 @@ namespace bt
 		time_unchoked = 0;
 		
 		connect_time = QTime::currentTime();
-		sock->attachPeer(this);
+		//sock->attachPeer(this);
 		stats.client = peer_id.identifyClient();
 		stats.ip_addresss = getIPAddresss();
 		stats.choked = true;
@@ -79,62 +80,36 @@ namespace bt
 		stats.evil = false;
 		stats.has_upload_slot = false;
 		stats.num_requests = 0;
+		stats.encrypted = sock->encrypted();
 		if (stats.ip_addresss == "0.0.0.0")
 		{
 			Out() << "No more 0.0.0.0" << endl;
 			kill();
 		}
-		
-		if (sock->bytesAvailable() > 0)
-			recieved_packet = true;
-		
-		stats.encrypted = sock->encrypted();
+		else
+		{
+			sock->startMonitoring();
+		}
 	}
 
 
 	Peer::~Peer()
 	{
-		if (sock)
-			sock->detachPeer(this);
-		
 		delete uploader;
 		delete downloader;
 		delete pwriter;
 		delete preader;
-		if (sock)
-		{
-			sock->close();
-			delete sock;
-		}
+		delete sock;
 		delete speed;
 		delete up_speed;
 	}
 
-	void Peer::connectionClosed() 
-	{
-		Out() << "Connection Closed" << endl;
-		closeConnection();
-		killed = true;
-	} 
 	
 	void Peer::closeConnection()
 	{
 		sock->close();
 	}
 	
-	void Peer::readyRead() 
-	{
-		if (killed) return;
-		// set a flag indicating that packets are ready
-		recieved_packet = true;
-	}
-	
-	void Peer::error(int)
-	{
-		//Out() << "Error : " << err << endl;
-		sock->close();
-		killed = true;
-	}
 
 	void Peer::kill()
 	{
@@ -145,14 +120,12 @@ namespace bt
 	
 	void Peer::readPacket()
 	{
-		if (killed) return;
-		preader->update();
-		recieved_packet = false;
+		if (killed) 
+			return;
 		
+		preader->update();
 		if (!preader->ok())
-			error(0);
-		else if (preader->moreData())
-			recieved_packet = true;
+			kill();
 	}
 	
 	void Peer::packetReady(const Uint8* packet,Uint32 len)
@@ -170,7 +143,7 @@ namespace bt
 				if (len != 1)
 				{
 					Out() << "len err CHOKE" << endl;
-					error(0);
+					kill();
 					return;
 				}
 				
@@ -184,7 +157,7 @@ namespace bt
 				if (len != 1)
 				{
 					Out() << "len err UNCHOKE" << endl;
-					error(0);
+					kill();
 					return;
 				}
 				
@@ -196,7 +169,7 @@ namespace bt
 				if (len != 1)
 				{
 					Out() << "len err INTERESTED" << endl;
-					error(0);
+					kill();
 					return;
 				}
 				if (!interested)
@@ -209,7 +182,7 @@ namespace bt
 				if (len != 1)
 				{
 					Out() << "len err NOT_INTERESTED" << endl;
-					error(0);
+					kill();
 					return;
 				}
 				if (interested)
@@ -222,7 +195,7 @@ namespace bt
 				if (len != 5)
 				{
 					Out() << "len err HAVE" << endl;
-					error(0);
+					kill();
 					return;
 				}
 				
@@ -233,7 +206,7 @@ namespace bt
 				if (len != 1 + pieces.getNumBytes())
 				{
 					Out() << "len err BITFIELD" << endl;
-					error(0);
+					kill();
 					return;
 				}
 				
@@ -247,7 +220,7 @@ namespace bt
 				if (len != 13)
 				{
 					Out() << "len err REQUEST" << endl;
-					error(0);
+					kill();
 					return;
 				}
 				
@@ -266,7 +239,7 @@ namespace bt
 				if (len < 9)
 				{
 					Out() << "len err PIECE" << endl;
-					error(0);
+					kill();
 					return;
 				}
 				
@@ -287,7 +260,7 @@ namespace bt
 				if (len != 13)
 				{
 					Out() << "len err CANCEL" << endl;
-					error(0);
+					kill();
 					return;
 				}
 				
@@ -303,7 +276,7 @@ namespace bt
 				if (len != 13)
 				{
 					Out() << "len err REJECT_REQUEST" << endl;
-					error(0);
+					kill();
 					return;
 				}
 				
@@ -319,7 +292,7 @@ namespace bt
 				if (len != 3)
 				{
 					Out() << "len err PORT" << endl;
-					error(0);
+					kill();
 					return;
 				}
 				
@@ -333,7 +306,7 @@ namespace bt
 				if (len != 1)
 				{
 					Out() << "len err HAVE_ALL" << endl;
-					error(0);
+					kill();
 					return;
 				}
 				Out() << "HAVE_ALL" << endl;
@@ -344,7 +317,7 @@ namespace bt
 				if (len != 1)
 				{
 					Out() << "len err HAVE_NONE" << endl;
-					error(0);
+					kill();
 					return;
 				}
 				Out() << "HAVE_NONE" << endl;
@@ -362,7 +335,7 @@ namespace bt
 				if (len != 5)
 				{
 					Out() << "len err ALLOWED_FAST" << endl;
-					error(0);
+					kill();
 					return;
 				}
 				Out() << "ALLOWED_FAST " << ReadUint32(tmp_buf,1) << endl;
@@ -371,19 +344,28 @@ namespace bt
 		}
 	}
 	
-	void Peer::sendData(const Uint8* data,Uint32 len,bool proto)
+	Uint32 Peer::sendData(const Uint8* data,Uint32 len,bool proto)
 	{
-		if (killed) return;
+		if (killed) return 0;
 		
-		sock->sendData(data,len);
-		up_speed->writeBytes(len,proto);
+		Uint32 ret = sock->sendData(data,len);
+		up_speed->writeBytes(ret,proto);
+		if (!sock->ok())
+			kill();
+		
+		return ret;
 	}
 	
 	Uint32 Peer::readData(Uint8* buf,Uint32 len)
 	{
 		if (killed) return 0;
 		
-		return sock->readData(buf,len);
+		Uint32 ret = sock->readData(buf,len);
+		
+		if (!sock->ok())
+			kill();
+		
+		return ret;
 	}
 	
 	Uint32 Peer::bytesAvailable() const
@@ -419,8 +401,10 @@ namespace bt
 	
 	void Peer::update()
 	{
-		if (recieved_packet)
+		while (preader->moreData() && !killed)
 			readPacket();
+		
+		up_speed->bytesWritten(sock->getBytesSent());
 		speed->update();
 		up_speed->update();
 	}

@@ -22,8 +22,8 @@
 
 #include <qobject.h>
 #include <util/constants.h>
+#include <net/bufferedsocket.h>
 
-class QSocket;
 class QString;
 
 using bt::Uint8;
@@ -59,8 +59,9 @@ namespace mse
 		 * Send a chunk of data.
 		 * @param data The data
 		 * @param len The length
+		 * @return Number of bytes written
 		 */
-		void sendData(const Uint8* data,Uint32 len);
+		Uint32 sendData(const Uint8* data,Uint32 len);
 		
 		/**
 		 * Reads data from the peer.
@@ -92,14 +93,8 @@ namespace mse
 		/// Close the socket
 		void close();
 		
-		void attachPeer(bt::Peer* peer);
-		void detachPeer(bt::Peer* peer);
-		void attachAuthenticate(bt::AuthenticateBase* auth);
-		void detachAuthenticate(bt::AuthenticateBase* auth);
-		void onConnected(QObject* obj,const char* method);
-		
 		/// Connect the socket to a remote host
-		void connectTo(const QString & ip,Uint16 port);
+		bool connectTo(const QString & ip,Uint16 port);
 		
 		/// Get the IP address of the remote peer
 		QString getIPAddress() const;
@@ -110,15 +105,31 @@ namespace mse
 		 * which will be destroyed when the reinserted data has been read.
 		 */
 		void reinsert(const Uint8* d,Uint32 size);
-	private slots:
-		void onConnected();
+	
+		/// see if the socket is still OK
+		bool ok() const;
 		
+		/// Get the file descriptor
+		int fd() const {return sock->fd();}
+		
+		/// Start monitoring of this socket by the monitor thread
+		void startMonitoring();
+		
+		/// Is this socket connecting to a remote host
+		bool connecting() const;
+		
+		/// See if a connect was success full
+		bool connectSuccesFull() const {return sock->connectSuccesFull();}
+		
+		/// Get the number of bytes sent
+		Uint32 getBytesSent() {return sock->getBytesSent();}
 	private:
-		QSocket* sock;
+		net::BufferedSocket* sock;
 		RC4Encryptor* enc;
 		Uint8* reinserted_data;
 		Uint32 reinserted_data_size;
 		Uint32 reinserted_data_read;
+		bool monitored;
 	};
 
 }

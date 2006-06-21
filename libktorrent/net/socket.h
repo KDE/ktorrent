@@ -15,34 +15,59 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTDOWNLOADCAP_H
-#define BTDOWNLOADCAP_H
+#ifndef NETSOCKET_H
+#define NETSOCKET_H
 
-#if 0
-#include <qvaluelist.h>
-#include <util/timer.h>
-#include "globals.h"
-#include "cap.h"
+#include <util/constants.h>
+#include "address.h"
 
-namespace bt
+namespace net
 {
 
 	/**
-	 * @author Joris Guisson
+		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class DownloadCap : public Cap
+	class Socket
 	{
-		static DownloadCap self;
-
-		DownloadCap();
 	public:
-		~DownloadCap();
-
-		static DownloadCap & instance() {return self;}
+		enum State
+		{
+			IDLE,
+			CONNECTING,
+			CONNECTED,
+			BOUND,
+			CLOSED
+		};
+		
+		Socket(int fd);
+		Socket(bool tcp);
+		virtual ~Socket();
+		
+		void setNonBlocking();
+		bool connectTo(const Address & addr);
+		/// See if a connectTo was succesfull in non blocking mode
+		bool connectSuccesFull();
+		bool bind(Uint16 port,bool also_listen);
+		int send(const bt::Uint8* buf,int len);
+		int recv(bt::Uint8* buf,int max_len);
+		int sendTo(const bt::Uint8* buf,int size,const Address & addr);
+		int recvFrom(bt::Uint8* buf,int max_size,Address & addr);
+		int accept(Address & a);
+		bool ok() const {return m_fd >= 0;}
+		int fd() const {return m_fd;}
+		bool setTOS(char type_of_service);
+		Address getPeerName() const;
+		void close();
+		State state() const {return m_state;}
+		
+		Uint32 bytesAvailable() const;
+	private:
+		int m_fd;
+		State m_state;
 	};
 
 }
-#endif
+
 #endif

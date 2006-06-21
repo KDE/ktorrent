@@ -71,7 +71,12 @@ namespace bt
 			Uint32 cs = (cur_chunk == num_chunks - 1) ? tor.getFileLength() % chunk_size : chunk_size;
 			if (cs == 0)
 				cs = chunk_size;
-			loadChunk(cur_chunk,cs,tor);
+			if (!loadChunk(cur_chunk,cs,tor))
+			{
+				downloaded.set(cur_chunk,false);
+				failed.set(cur_chunk,true);
+				continue;
+			}
 			
 			bool ok = (SHA1Hash::generate(buf,cs) == tor.getHash(cur_chunk));
 			downloaded.set(cur_chunk,ok);
@@ -114,7 +119,7 @@ namespace bt
 		return fptr.read(buf,cs);
 	}
 	
-	void MultiDataChecker::loadChunk(Uint32 ci,Uint32 cs,const Torrent & tor)
+	bool MultiDataChecker::loadChunk(Uint32 ci,Uint32 cs,const Torrent & tor)
 	{
 		QValueList<Uint32> tflist;
 		tor.calcChunkPos(ci,tflist);
@@ -124,8 +129,11 @@ namespace bt
 		{
 			const TorrentFile & f = tor.getFile(tflist.first());
 			if (!f.doNotDownload())
+			{
 				ReadFullChunk(ci,cs,f,tor,buf,cache);
-			return;
+				return true;
+			}
+			return false;
 		}
 		
 		Uint64 read = 0; // number of bytes read
@@ -169,12 +177,15 @@ namespace bt
 			}
 			else
 			{
+				if (!bt::Exists(cache + f.getPath()) || bt::FileSize(cache + f.getPath()) < off)
+					return false;
+				
 				File fptr;
 				if (!fptr.open(cache + f.getPath(), "rb"))
 				{
 					Out() << QString("Warning : Cannot open %1 : %2").arg(cache + 
 							f.getPath()).arg(fptr.errorString()) << endl;
-					
+					return false;
 				}
 				else
 				{
@@ -185,6 +196,6 @@ namespace bt
 			}
 			read += to_read;
 		}
-		
+		return true;
 	}
 }

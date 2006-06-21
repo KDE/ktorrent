@@ -25,6 +25,7 @@
 #include <qtimer.h>
 #include <util/constants.h>
 
+class QSocketNotifier;
 
 namespace mse
 {
@@ -95,6 +96,7 @@ namespace bt
 
 	protected:
 		mse::StreamSocket* sock;
+		QSocketNotifier* sn;
 		QTimer timer;
 		bool finished;
 		Uint8 handshake[68];

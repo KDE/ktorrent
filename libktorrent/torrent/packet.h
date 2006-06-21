@@ -54,7 +54,7 @@ namespace bt
 		
 		bool isOK() const;
 		
-		//const Uint8* getData() const {return data;}
+		const Uint8* getData() const {return data;}
 		Uint32 getDataLength() const {return size;}
 
 		
@@ -64,11 +64,10 @@ namespace bt
 		/**
 		 * Send the packet to a peer, return true if the full packet was written.
 		 * @param peer The peer
-		 * @param max_bytes The maximum number of bytes to write
 		 * @param bytes_sent The number of bytes actually sent are placed in here
 		 * @return true if the packet was written fully
 		 */
-		bool send(Peer* peer,Uint32 max_bytes,Uint32 & bytes_sent);
+		bool send(Peer* peer,Uint32 & bytes_sent);
 	};
 
 }

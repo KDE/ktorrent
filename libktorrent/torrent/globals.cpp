@@ -79,6 +79,7 @@ namespace bt
 	Log & Out()
 	{
 		Log & lg = Globals::instance().getLog();
+		lg.lock();
 //		lg.setOutputToConsole(Globals::instance().isDebugModeSet());
 		return lg;
 	}

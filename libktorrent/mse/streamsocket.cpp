@@ -32,63 +32,85 @@
 #include <netinet/in_systm.h>
 #include <netinet/ip.h> 
 #include <netinet/tcp.h>
+#include <net/socketmonitor.h>
 #include "streamsocket.h"
 #include "rc4encryptor.h"
 
 using namespace bt;
+using namespace net;
 
 namespace mse
 {
 	
-	static bool SetTOS(QSocket* s,char type_of_service)
-	{
-		char c = type_of_service;
-		if (setsockopt(s->socketDevice()->socket(),IPPROTO_IP,IP_TOS,&c,sizeof(char)) < 0)
-		{
-			Out() << QString("Failed to set TOS to %1 : %2")
-					.arg((int)type_of_service).arg(strerror(errno)) << endl;
-			return false;
-		}
-		return true;
-	}
 
-	StreamSocket::StreamSocket() : sock(0),enc(0)
+	StreamSocket::StreamSocket() : sock(0),enc(0),monitored(false)
 	{
-		sock = new QSocket();
-	//	sock->socketDevice()->setReceiveBufferSize(49512);
-	//	sock->socketDevice()->setSendBufferSize(49512);
+		sock = new BufferedSocket(true,2*(MAX_PIECE_LEN + 13),2*(MAX_PIECE_LEN + 13));
 		reinserted_data = 0;
 		reinserted_data_size = 0;
 		reinserted_data_read = 0;
-		connect(sock,SIGNAL(connected()),this,SLOT(onConnected()));
+		
 	}
 
-	StreamSocket::StreamSocket(int fd) : sock(0),enc(0)
+	StreamSocket::StreamSocket(int fd) : sock(0),enc(0),monitored(false)
 	{
-		sock = new QSocket();
-		sock->setSocket(fd);
-	//	sock->socketDevice()->setReceiveBufferSize(49512);
-	//	sock->socketDevice()->setSendBufferSize(49512);
+		sock = new BufferedSocket(fd,2*(MAX_PIECE_LEN + 13),2*(MAX_PIECE_LEN + 13));
 		reinserted_data = 0;
 		reinserted_data_size = 0;
 		reinserted_data_read = 0;
-		SetTOS(sock,IPTOS_THROUGHPUT);
+		sock->setTOS(IPTOS_THROUGHPUT);
 	}
 
 	StreamSocket::~StreamSocket()
 	{
+		SocketMonitor::instance().remove(sock);
 		delete [] reinserted_data;
 		delete enc;
-		sock->deleteLater();
+		delete sock;
+	}
+	
+	void StreamSocket::startMonitoring()
+	{
+		SocketMonitor::instance().add(sock);
+		monitored = true;
 	}
 	
 		
-	void StreamSocket::sendData(const Uint8* data,Uint32 len)
+	Uint32 StreamSocket::sendData(const Uint8* data,Uint32 len)
 	{
-		if (enc)
-			sock->writeBlock((const char*)enc->encrypt(data,len),len);
+		if (!monitored)
+		{
+			if (enc)
+			{
+				// we need to make sure all data is sent because of the encryption
+				Uint32 ds = 0;
+				const Uint8* ed = enc->encrypt(data,len);
+				while (sock->ok() && ds < len)
+				{
+					ds += sock->send(ed + ds,len - ds);
+				}
+				return ds;
+			}
+			else
+				return sock->send(data,len);
+		}
 		else
-			sock->writeBlock((const char*)data,len);
+		{
+			// if the buffer is full return 0
+			Uint32 fs = sock->freeSpaceInWriteBuffer();
+			if (fs == 0)
+				return 0;
+			
+			if (enc)
+			{
+				// only encrypt the amount we can put in the buffer
+				if (len > fs)
+					len = fs;
+				return sock->write(enc->encrypt(data,len),len);
+			}
+			else
+				return sock->write(data,len);
+		}
 	}
 		
 	Uint32 StreamSocket::readData(Uint8* buf,Uint32 len)
@@ -118,7 +140,12 @@ namespace mse
 				return tr;
 		}
 		
-		Uint32 ret = sock->readBlock((char*)buf + off,len);
+		Uint32 ret = 0;
+		if (monitored)
+			ret = sock->read(buf + off,len);
+		else
+			ret = sock->recv(buf + off,len);
+		
 		if (ret > 0 && enc)
 			enc->decrypt(buf,ret);
 		
@@ -127,10 +154,11 @@ namespace mse
 		
 	Uint32 StreamSocket::bytesAvailable() const
 	{
+		Uint32 ba = monitored ? sock->bytesBufferedAvailable() : sock->bytesAvailable();
 		if (reinserted_data_size - reinserted_data_read > 0)
-			return sock->bytesAvailable() + (reinserted_data_size - reinserted_data_read);
+			return  ba + (reinserted_data_size - reinserted_data_read);
 		else
-			return sock->bytesAvailable();
+			return ba;
 	}
 	
 	void StreamSocket::close()
@@ -138,16 +166,18 @@ namespace mse
 		sock->close();
 	}
 	
-	void StreamSocket::connectTo(const QString & ip,Uint16 port)
+	bool StreamSocket::connectTo(const QString & ip,Uint16 port)
 	{
-		sock->connectToHost(ip,port);
+		// we don't wanna block the current thread so set non blocking
+		sock->setNonBlocking();
+		if (sock->connectTo(Address(ip,port)))
+		{
+			sock->setTOS(IPTOS_THROUGHPUT);
+			return true;
+		}
+		return false;
 	}
-	
-	void StreamSocket::onConnected()
-	{
-		SetTOS(sock,IPTOS_THROUGHPUT);
-	}
-		
+			
 	void StreamSocket::initCrypt(const bt::SHA1Hash & dkey,const bt::SHA1Hash & ekey)
 	{
 		if (enc)
@@ -161,7 +191,7 @@ namespace mse
 		delete enc;
 		enc = 0;
 	}
-	
+	/*
 	void StreamSocket::attachPeer(bt::Peer* peer)
 	{
 		QObject::connect(sock,SIGNAL(connectionClosed()),peer,SLOT(connectionClosed()));
@@ -194,10 +224,16 @@ namespace mse
 	{
 		QObject::connect(sock,SIGNAL(connected()),obj,method);
 	}
+	*/
+	
+	bool StreamSocket::ok() const
+	{
+		return sock->ok();
+	}
 
 	QString StreamSocket::getIPAddress() const
 	{
-		return sock->peerAddress().toString();
+		return sock->getPeerName().toString();
 	}
 	
 	void StreamSocket::setRC4Encryptor(RC4Encryptor* e)
@@ -224,6 +260,11 @@ namespace mse
 			reinserted_data_size = size;
 		}
 		memcpy(reinserted_data + off,d,size);
+	}
+	
+	bool StreamSocket::connecting() const
+	{
+		return sock->state() == net::Socket::CONNECTING;
 	}
 }
 

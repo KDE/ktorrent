@@ -18,8 +18,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <util/log.h>
-
 #include <mse/streamsocket.h>
+#include <qsocketnotifier.h>
 #include "authenticate.h"
 #include "ipblocklist.h"
 #include "peermanager.h"
@@ -33,34 +33,72 @@ namespace bt
 	{
 		finished = succes = false;
 		sock = new mse::StreamSocket();
-		sock->attachAuthenticate(this);
-		sock->onConnected(this,SLOT(connected()));
 		host = ip;
 		this->port = port;
+		
 		Out() << "Initiating connection to " << host << endl;
-		sock->connectTo(host,port);
+		if (sock->connectTo(host,port))
+		{
+			sn = new QSocketNotifier(sock->fd(),QSocketNotifier::Read);
+			sn->setEnabled(true);
+			connect(sn,SIGNAL(activated(int)),this,SLOT(onReadyRead()));
+			connected();
+		}
+		else if (sock->connecting())
+		{
+			// start up a write notifier, so we can wait until the socket is connected
+			sn = new QSocketNotifier(sock->fd(),QSocketNotifier::Write);
+			connect(sn,SIGNAL(activated(int)),this,SLOT(onReadyWrite()));
+			sn->setEnabled(true);
+		}
+		else
+		{
+			onFinish(false);
+		}
 	}
 
 	Authenticate::~Authenticate()
 	{
 	}
+	
+	void Authenticate::onReadyWrite()
+	{
+//		Out() << "Authenticate::onReadyWrite()" << endl;
+		delete sn;
+		sn = 0;
+		if (sock->connectSuccesFull())
+		{
+			// create new read notifier and call connected
+			sn = new QSocketNotifier(sock->fd(),QSocketNotifier::Read);
+			connect(sn,SIGNAL(activated(int)),this,SLOT(onReadyRead()));
+			sn->setEnabled(true);
+			connected();
+		}
+		else
+		{
+			onFinish(false);
+		}
+	}
 
 	void Authenticate::connected()
 	{
-	//	Out() << "Authenticate::connected" << endl;
 		sendHandshake(info_hash,our_peer_id);
 	}
 
 	void Authenticate::onFinish(bool succes)
 	{
 		Out() << "Authentication to " << host << " : " << (succes ? "ok" : "failure") << endl;
-		sock->detachAuthenticate(this);
 		finished = true;
 		this->succes = succes;
 		if (!succes)
 		{
 			sock->deleteLater();
 			sock = 0;
+		}
+		if (sn)
+		{
+			delete sn;
+			sn = 0;
 		}
 		timer.stop();
 	}

@@ -21,12 +21,12 @@
 #include "schedulerpluginsettings.h"
 
 #include <torrent/globals.h>
-#include <torrent/downloadcap.h>
-#include <torrent/uploadcap.h>
 #include <torrent/queuemanager.h>
 
 #include <interfaces/coreinterface.h>
 #include <interfaces/torrentinterface.h>
+
+#include <net/socketmonitor.h>
 
 #include <util/constants.h>
 #include <util/log.h>
@@ -173,32 +173,32 @@ namespace kt
 				if(!m_core)
 					break;
 				m_core->setPausedState(false);
-				DownloadCap::instance().setMaxSpeed(1024 * m_core->getMaxDownloadSpeed());
-				UploadCap::instance().setMaxSpeed(1024 * m_core->getMaxUploadSpeed());
+				net::SocketMonitor::setDownloadCap(1024 * m_core->getMaxDownloadSpeed());
+				net::SocketMonitor::setUploadCap(1024 * m_core->getMaxUploadSpeed());
 				break;
 			case CAT_FIRST:
 				Out() << "Switching to FIRST category" << endl;
 				if(!m_core)
 					break;
 				m_core->setPausedState(false);
-				DownloadCap::instance().setMaxSpeed(1024 * m_schedule.getDownload(0));
-				UploadCap::instance().setMaxSpeed(1024 * m_schedule.getUpload(0));
+				net::SocketMonitor::setDownloadCap(1024 * m_schedule.getDownload(0));
+				net::SocketMonitor::setUploadCap(1024 * m_schedule.getUpload(0));
 				break;
 			case CAT_SECOND:
 				Out() << "Switching to SECOND category" << endl;
 				if(!m_core)
 					break;
 				m_core->setPausedState(false);
-				DownloadCap::instance().setMaxSpeed(1024 * m_schedule.getDownload(1));
-				UploadCap::instance().setMaxSpeed(1024 * m_schedule.getUpload(1));
+				net::SocketMonitor::setDownloadCap(1024 * m_schedule.getDownload(1));
+				net::SocketMonitor::setUploadCap(1024 * m_schedule.getUpload(1));
 				break;
 			case CAT_THIRD:
 				Out() << "Switching to THIRD category" << endl;
 				if(!m_core)
 					break;
 				m_core->setPausedState(false);
-				DownloadCap::instance().setMaxSpeed(1024 * m_schedule.getDownload(2));
-				UploadCap::instance().setMaxSpeed(1024 * m_schedule.getUpload(2));
+				net::SocketMonitor::setDownloadCap(1024 * m_schedule.getDownload(2));
+				net::SocketMonitor::setUploadCap(1024 * m_schedule.getUpload(2));
 				break;
 			case CAT_OFF:
 				Out() << "Switching to OFF" << endl;

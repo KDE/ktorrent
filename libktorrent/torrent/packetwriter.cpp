@@ -17,7 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+//#define LOG_PACKET
+
 #include <util/log.h>
+#include <util/file.h>
 #include <util/functions.h>
 #include "packetwriter.h"
 #include "peer.h"
@@ -29,40 +32,88 @@
 #include <util/log.h>
 #include "globals.h"
 
-namespace bt
-{
-//#define DEBUG_LOG_UPLOAD
-#ifdef DEBUG_LOG_UPLOAD
-	static Log ulog;
-	static bool upload_log_initialized = false;
+#ifdef LOG_PACKET
+#include <sys/types.h>
+#include <unistd.h>
 #endif
 
+namespace bt
+{
+#ifdef LOG_PACKET
+	static void LogPacket(const Uint8* data,Uint32 size)
+	{
+		QString file = QString("/tmp/kt-packetwriter-%1.log").arg(getpid());
+		File fptr;
+		if (!fptr.open(file,"a"))
+			return;
+			
+		QString tmp = QString("PACKET len = %1, type = %2\nDATA: \n").arg(ReadUint32(data,0)).arg(data[4]);
+		
+		fptr.write(tmp.ascii(),tmp.length());
+		
+		data = data + 4;
+		size -= 4;
+		Uint32 j = 0;
+		if (size <= 40)
+		{
+			for (Uint32 i = 0;i < size;i++)
+			{
+				tmp = QString("0x%1 ").arg(data[i],0,16);
+				fptr.write(tmp.ascii(),tmp.length());
+				j++;
+				if (j > 10)
+				{
+					fptr.write("\n",1);
+					j = 0;
+				}
+			}
+		}
+		else
+		{
+			for (Uint32 i = 0;i < 20;i++)
+			{
+				tmp = QString("0x%1 ").arg(data[i],0,16);
+				fptr.write(tmp.ascii(),tmp.length());
+				j++;
+				if (j > 10)
+				{
+					fptr.write("\n",1);
+					j = 0;
+				}
+			}
+			tmp = QString("\n ... \n");
+			fptr.write(tmp.ascii(),tmp.length());
+			for (Uint32 i = size - 20;i < size;i++)
+			{
+				tmp = QString("0x%1 ").arg(data[i],0,16);
+				fptr.write(tmp.ascii(),tmp.length());
+				j++;
+				if (j > 10)
+				{
+					fptr.write("\n",1);
+					j = 0;
+				}
+			}
+		}
+		fptr.write("\n",1);
+	}
+#endif
 
 	PacketWriter::PacketWriter(Peer* peer) : peer(peer)
 	{
 		uploaded = 0;
 		packets.setAutoDelete(true);
-#ifdef DEBUG_LOG_UPLOAD
-		if (!upload_log_initialized)
-		{
-			ulog.setOutputFile("upload.log");
-			upload_log_initialized = true;
-		}
-#endif
 		time_of_last_transmit = bt::GetCurrentTime();
 	}
 
 
 	PacketWriter::~PacketWriter()
 	{
-		UploadCap::instance().killed(this);
+//		UploadCap::instance().killed(this);
 	}
 
-	bool PacketWriter::sendPacket(Packet & p,Uint32 max)
+	bool PacketWriter::sendPacket(Packet & p)
 	{
-#ifdef DEBUG_LOG_UPLOAD
-		ulog << p.debugString() << endl;
-#endif
 		// safety check
 		if (!p.isOK())
 			return true;
@@ -70,16 +121,7 @@ namespace bt
 		bool ret = true;
 		Uint32 bs = 0;
 	//	Out() << "Sending " << p.getHeaderLength() << " " << p.getDataLength() << endl;
-		if (max == 0)
-		{
-			// send full packet
-			ret = p.send(peer,p.getDataLength(),bs);
-		}
-		else
-		{
-			ret = p.send(peer,max,bs);
-		}
-		
+		ret = p.send(peer,bs);
 		if (p.getType() == PIECE)
 		{
 			peer->stats.bytes_uploaded += bs;
@@ -91,17 +133,20 @@ namespace bt
 		return ret;
 	}
 	
-	void PacketWriter::queuePacket(Packet* p,bool ask)
+	void PacketWriter::queuePacket(Packet* p)
 	{
-		bool ok = true;
-		if (ask)
-			ok = UploadCap::instance().allow(this,p->getDataLength());
-		
-		
-		if (ok && packets.count() == 0)
+		bool ok = true;		
+		if (packets.count() == 0)
 		{
-			sendPacket(*p,0);
-			delete p;
+			if (sendPacket(*p))
+			{
+#ifdef LOG_PACKET
+				LogPacket(p->getData(),p->getDataLength());
+#endif
+				delete p;
+			}
+			else
+				packets.append(p); // can't send if fully so queue it up
 		}
 		else 
 		{
@@ -116,7 +161,7 @@ namespace bt
 		if (peer->am_choked == true)
 			return;
 		
-		queuePacket(new Packet(CHOKE),false);
+		queuePacket(new Packet(CHOKE));
 		peer->am_choked = true;
 		peer->stats.has_upload_slot = false;
 	}
@@ -127,14 +172,14 @@ namespace bt
 		if (peer->am_choked == false)
 			return;
 		
-		queuePacket(new Packet(UNCHOKE),false);
+		queuePacket(new Packet(UNCHOKE));
 		peer->am_choked = false;
 		peer->stats.has_upload_slot = true;
 	}
 	
 	void PacketWriter::sendEvilUnchoke()
 	{
-		queuePacket(new Packet(UNCHOKE),false);
+		queuePacket(new Packet(UNCHOKE));
 		peer->am_choked = true;
 		peer->stats.has_upload_slot = false;
 	}
@@ -144,7 +189,7 @@ namespace bt
 		if (peer->am_interested == true)
 			return;
 		
-		queuePacket(new Packet(INTERESTED),false);
+		queuePacket(new Packet(INTERESTED));
 		peer->am_interested = true;
 	}
 	
@@ -153,58 +198,58 @@ namespace bt
 		if (peer->am_interested == false)
 			return;
 		
-		queuePacket(new Packet(NOT_INTERESTED),false);
+		queuePacket(new Packet(NOT_INTERESTED));
 		peer->am_interested = false;
 	}
 	
 	void PacketWriter::sendRequest(const Request & r)
 	{
-		queuePacket(new Packet(r,bt::REQUEST),false);
+		queuePacket(new Packet(r,bt::REQUEST));
 	}
 	
 	void PacketWriter::sendCancel(const Request & r)
 	{
-		queuePacket(new Packet(r,bt::CANCEL),false);
+		queuePacket(new Packet(r,bt::CANCEL));
 	}
 	
 	void PacketWriter::sendReject(const Request & r)
 	{
-		queuePacket(new Packet(r,bt::REJECT_REQUEST),false);
+		queuePacket(new Packet(r,bt::REJECT_REQUEST));
 	}
 	
 	void PacketWriter::sendHave(Uint32 index)
 	{
-		queuePacket(new Packet(index,bt::HAVE),false);
+		queuePacket(new Packet(index,bt::HAVE));
 	}
 	
 	void PacketWriter::sendPort(Uint16 port)
 	{
-		queuePacket(new Packet(port),false);
+		queuePacket(new Packet(port));
 	}
 	
 	void PacketWriter::sendBitSet(const BitSet & bs)
 	{
-		queuePacket(new Packet(bs),false);
+		queuePacket(new Packet(bs));
 	}
 	
 	void PacketWriter::sendHaveAll()
 	{
-		queuePacket(new Packet(bt::HAVE_ALL),false);
+		queuePacket(new Packet(bt::HAVE_ALL));
 	}
 
 	void PacketWriter::sendHaveNone()
 	{
-		queuePacket(new Packet(bt::HAVE_NONE),false);
+		queuePacket(new Packet(bt::HAVE_NONE));
 	}
 	
 	void PacketWriter::sendSuggestPiece(Uint32 index)
 	{
-		queuePacket(new Packet(index,bt::SUGGEST_PIECE),false);
+		queuePacket(new Packet(index,bt::SUGGEST_PIECE));
 	}
 	
 	void PacketWriter::sendAllowedFast(Uint32 index)
 	{
-		queuePacket(new Packet(index,bt::ALLOWED_FAST),false);
+		queuePacket(new Packet(index,bt::ALLOWED_FAST));
 	}
 			
 	void PacketWriter::sendChunk(Uint32 index,Uint32 begin,Uint32 len,Chunk * ch)
@@ -218,33 +263,13 @@ namespace bt
 		}
 		else
 		{
-			queuePacket(new Packet(index,begin,len,ch),true);
+			queuePacket(new Packet(index,begin,len,ch));
 		}
 	}
 
 	Uint32 PacketWriter::update()
 	{
 		if (packets.count() == 0)
-		{
-			// send a keep alive if we haven't sent anything in 2 minutes
-			Uint32 now = bt::GetCurrentTime();
-			if (now - time_of_last_transmit > 120 * 1000)
-			{
-				Uint8 buf[4];
-				WriteUint32(buf,0,0);
-				peer->sendData(buf,4,true);
-				time_of_last_transmit = now;
-			}
-			
-			Uint32 data_sent = uploaded;
-			uploaded = 0;
-			return data_sent;
-		}
-		
-		sendSmallPackets();
-		
-		// if there is a limit return data_sent
-		if (UploadCap::instance().getMaxSpeed() > 0)
 		{
 			Uint32 data_sent = uploaded;
 			uploaded = 0;
@@ -255,8 +280,15 @@ namespace bt
 		while (packets.count() > 0)
 		{
 			Packet* p = packets.first();
-			sendPacket(*p,0);
-			packets.removeFirst();
+			if (sendPacket(*p))
+			{
+#ifdef LOG_PACKET
+				LogPacket(p->getData(),p->getDataLength());
+#endif
+				packets.removeFirst();
+			}
+			else
+				break; // if we can't send the full packet
 		}
 		
 		
@@ -266,43 +298,5 @@ namespace bt
 	}
 
 	
-	void PacketWriter::uploadUnsentBytes(Uint32 bytes)
-	{
-		if (packets.count() == 0)
-			return;
-		
-		if (bytes == 0)
-		{
-			// send all packets left
-			while (packets.count() > 0)
-			{
-				Packet* p = packets.first();
-				if (sendPacket(*p,0))
-					packets.removeFirst();
-			}
-		}
-		else
-		{
-			Packet* p = packets.first();
-			if (sendPacket(*p,bytes))
-			{
-				packets.removeFirst();
-				sendSmallPackets();
-			}
-		}
-	}
-	
-	void PacketWriter::sendSmallPackets()
-	{
-		while (packets.count() > 0)
-		{
-			Packet* p = packets.first();
-			if (p->getType() == PIECE)
-				return;
-			
-			sendPacket(*p,0);
-			packets.removeFirst();
-		}
-	}
 	
 }

@@ -53,14 +53,14 @@ namespace kt
 	{
 		lv = new LogViewer();
 		this->getGUI()->addWidgetBelowView(lv);
-		bt::Log & lg = Out();
+		bt::Log & lg = Globals::instance().getLog();
 		lg.addMonitor(lv);
 	}
 
 	void LogViewerPlugin::unload()
 	{
 		this->getGUI()->removeWidgetBelowView(lv);
-		bt::Log & lg = Out();
+		bt::Log & lg = Globals::instance().getLog();
 		lg.removeMonitor(lv);
 		delete lv;
 		lv = 0;

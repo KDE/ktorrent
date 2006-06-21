@@ -287,7 +287,9 @@ namespace bt
 			// in one so just mmap it
 			Uint64 off = FileOffset(c,tor.getFile(tflist.first()),tor.getChunkSize());
 			CacheFile* fd = files.find(tflist.first());
-			Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::RW);
+			Uint8* buf = 0;
+			if (fd)
+				buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::RW);
 			if (!buf)
 			{
 				// if mmap fails use buffered mode

@@ -36,7 +36,7 @@ namespace bt
 
 		virtual void check(const QString& path, const Torrent& tor,const QString & dnddir);
 	private:
-		void loadChunk(Uint32 ci,Uint32 cs,const Torrent & to);
+		bool loadChunk(Uint32 ci,Uint32 cs,const Torrent & to);
 		
 	private:
 		QString cache;

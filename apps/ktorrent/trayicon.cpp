@@ -28,8 +28,8 @@
 #include <interfaces/torrentinterface.h>
 #include "ktorrentcore.h"
 #include <interfaces/functions.h>
-#include <torrent/uploadcap.h>
-#include <torrent/downloadcap.h>
+#include <net/socketmonitor.h>
+
 
 using namespace bt;
 using namespace kt;
@@ -166,12 +166,12 @@ void SetMaxRate::rateSelected(int id)
 	if(type==0)
 	{
 		m_core->setMaxUploadSpeed(rate);
-		UploadCap::instance().setMaxSpeed(Settings::maxUploadRate() * 1024);
+		net::SocketMonitor::setUploadCap( Settings::maxUploadRate() * 1024);
 	}
 	else
 	{
 		m_core->setMaxDownloadSpeed(rate);
-		DownloadCap::instance().setMaxSpeed(Settings::maxDownloadRate()*1024);
+		net::SocketMonitor::setDownloadCap(Settings::maxDownloadRate()*1024);
 	}
 	Settings::writeConfig();
 

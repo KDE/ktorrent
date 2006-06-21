@@ -17,7 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-
+#include <qsocketnotifier.h>
 #include <mse/streamsocket.h>
 #include <util/sha1hash.h>
 #include <util/log.h>
@@ -38,7 +38,6 @@ namespace bt
 	ServerAuthenticate::ServerAuthenticate(mse::StreamSocket* sock,Server* server)
 	: AuthenticateBase(sock),server(server)
 	{
-		sock->attachAuthenticate(this);
 	}
 
 
@@ -51,12 +50,16 @@ namespace bt
 		
 		Out() << "Authentication(S) to " << sock->getIPAddress() 
 				<< " : " << (succes ? "ok" : "failure") << endl;
-		sock->detachAuthenticate(this);
 		finished = true;
 		if (!succes)
 		{
 			sock->deleteLater();
 			sock = 0;
+		}
+		if (sn)
+		{
+			delete sn;
+			sn = 0;
 		}
 		timer.stop();
 	}

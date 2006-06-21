@@ -156,6 +156,9 @@ namespace bt
 		 * @return This Log
 		 */
 		Log & operator << (const KURL & url);
+		
+		/// Lock the mutex of the log, should be called in Out()
+		void lock();
 	};
 
 	Log & endl(Log & lg);

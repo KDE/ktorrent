@@ -20,6 +20,8 @@
 #ifndef BTUPLOADCAP_H
 #define BTUPLOADCAP_H
 
+// DEPRECATED
+#if 0
 #include "cap.h"
 
 namespace bt
@@ -50,5 +52,5 @@ namespace bt
 	};
 
 }
-
+#endif
 #endif
