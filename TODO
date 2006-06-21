@@ -3,17 +3,15 @@ TODO LIST :
 
 If something is done put # in front of it.
 
-2.0 :
+2.1 :
 -----
 
-#1) Implement trackerless torrent like official client. (This will be big)
+1) Moving downloaded files somewhere lese
 2) Make something similar like konquerer's change browser identification but then for KT's PeerID
 3) Make and show more statistics. (e.g. uptime, average transfer rates, connected peers, etc...) (UI clutter needs to be avoided)
-# 4) Split "Download" view into Download and Upload views. This way we separate torrents we are leeching from the ones we are seeding.
+4) Global share ratio limit
 5) Add option to allow the user to rename the top directory of multifile torrents
-# 6) Add "Max d/u ratio" option (for seeding)
 7) Add RSS plugin
-#8) Add properties dialog to show announce url, and allow users to edit the list of trackers
 9) letting the user configure columns in listview (maybe add share ratio column)
 10) Add scheduled download feature + allow KT to shutdown PC after a download is finished
 11) Super Seeding
