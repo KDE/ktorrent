@@ -17,6 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
+#include <qglobal.h>
+
 #include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
@@ -26,7 +29,9 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
+#ifdef Q_OS_LINUX
 #include <asm/ioctls.h>
+#endif
 #include <unistd.h>
 #include <fcntl.h>
 
