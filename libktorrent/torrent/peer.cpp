@@ -401,8 +401,12 @@ namespace bt
 	
 	void Peer::update()
 	{
-		while (preader->moreData() && !killed)
+		Uint32 cnt = 0;
+		while (preader->moreData() && !killed && cnt < 10)
+		{
 			readPacket();
+			cnt++;
+		}
 		
 		up_speed->bytesWritten(sock->getBytesSent());
 		speed->update();
