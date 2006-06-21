@@ -259,6 +259,11 @@ namespace mse
 		
 	
 		Uint32 ba = sock->bytesAvailable();
+		if (ba == 0)
+		{
+			onFinish(false);
+			return;
+		}
 		
 		if (state != NORMAL_HANDSHAKE)
 		{

@@ -70,7 +70,7 @@ namespace mse
 	
 	void EncryptedServerAuthenticate::findReq1()
 	{
-		if (buf_size - 20 <= 0) // safety check
+		if (buf_size < 116) // safety check
 			return;
 		
 		//Out() << "Find Req1" << endl;
