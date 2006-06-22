@@ -457,9 +457,9 @@ namespace bt
 				// old download, we need to convert it
 				// save first and last chunk of the file
 				saveFirstAndLastChunk(tf,dnd_dir + tf->getPath(),dnd_dir + tf->getPath() + ".dnd");
-				bt::Delete(dnd_dir + tf->getPath()); // delete old dnd file
 				// delete symlink
 				bt::Delete(cache_dir + tf->getPath());
+				bt::Delete(dnd_dir + tf->getPath()); // delete old dnd file
 				// recreate it
 				bt::SymLink(dnd_dir + tf->getPath() + ".dnd",cache_dir + tf->getPath());
 				
@@ -474,10 +474,10 @@ namespace bt
 				if (bt::Exists(output_dir + tf->getPath()))
 					saveFirstAndLastChunk(tf,output_dir + tf->getPath(),dnd_dir + tf->getPath() + ".dnd");
 				
-				// delete data file
-				bt::Delete(output_dir + tf->getPath(),true);
 				// delete symlink
 				bt::Delete(cache_dir + tf->getPath());
+				// delete data file
+				bt::Delete(output_dir + tf->getPath(),true);
 				// recreate it
 				bt::SymLink(dnd_dir + tf->getPath() + ".dnd",cache_dir + tf->getPath());
 				

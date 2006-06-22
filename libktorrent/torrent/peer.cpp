@@ -402,7 +402,7 @@ namespace bt
 	void Peer::update()
 	{
 		Uint32 cnt = 0;
-		while (preader->moreData() && !killed && cnt < 10)
+		while (preader->moreData() && !killed && cnt < 5)
 		{
 			readPacket();
 			cnt++;
