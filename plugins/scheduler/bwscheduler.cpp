@@ -122,9 +122,10 @@ namespace kt
 	{
 		for(int i=0; i<7; ++i)
 		{
+			Log & lg = Out();
 			for(int j=0; j<24; ++j)
-				Out() << m_schedule[i][j];
-			Out() << endl;
+				lg << m_schedule[i][j];
+			lg << endl;
 		}
 	}
 	
@@ -160,7 +161,7 @@ namespace kt
 			return;
 		
 		QDateTime now = QDateTime::currentDateTime();
-		Out() << "BWS: " << now.toString() << " :: ";
+		QString prefix = QString("BWS: %1 :: ").arg(now.toString());
 		
 		int t1 = now.date().dayOfWeek();
 		int t2 = now.time().hour();
@@ -169,7 +170,7 @@ namespace kt
 		switch(sch)
 		{
 			case CAT_NORMAL:
-				Out() << "Switching to NORMAL category" << endl;
+				Out() << prefix << "Switching to NORMAL category" << endl;
 				if(!m_core)
 					break;
 				m_core->setPausedState(false);
@@ -177,7 +178,7 @@ namespace kt
 				net::SocketMonitor::setUploadCap(1024 * m_core->getMaxUploadSpeed());
 				break;
 			case CAT_FIRST:
-				Out() << "Switching to FIRST category" << endl;
+				Out() << prefix << "Switching to FIRST category" << endl;
 				if(!m_core)
 					break;
 				m_core->setPausedState(false);
@@ -185,7 +186,7 @@ namespace kt
 				net::SocketMonitor::setUploadCap(1024 * m_schedule.getUpload(0));
 				break;
 			case CAT_SECOND:
-				Out() << "Switching to SECOND category" << endl;
+				Out() << prefix << "Switching to SECOND category" << endl;
 				if(!m_core)
 					break;
 				m_core->setPausedState(false);
@@ -193,7 +194,7 @@ namespace kt
 				net::SocketMonitor::setUploadCap(1024 * m_schedule.getUpload(1));
 				break;
 			case CAT_THIRD:
-				Out() << "Switching to THIRD category" << endl;
+				Out() << prefix << "Switching to THIRD category" << endl;
 				if(!m_core)
 					break;
 				m_core->setPausedState(false);
@@ -201,7 +202,7 @@ namespace kt
 				net::SocketMonitor::setUploadCap(1024 * m_schedule.getUpload(2));
 				break;
 			case CAT_OFF:
-				Out() << "Switching to OFF" << endl;
+				Out() << prefix << "Switching to OFF" << endl;
 				if(!m_core)
 					break;
 				m_core->setPausedState(true);
