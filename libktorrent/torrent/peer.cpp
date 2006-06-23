@@ -83,7 +83,7 @@ namespace bt
 		stats.encrypted = sock->encrypted();
 		if (stats.ip_addresss == "0.0.0.0")
 		{
-			Out() << "No more 0.0.0.0" << endl;
+			Out(SYS_CON|LOG_DEBUG) << "No more 0.0.0.0" << endl;
 			kill();
 		}
 		else
@@ -103,7 +103,6 @@ namespace bt
 		delete speed;
 		delete up_speed;
 	}
-
 	
 	void Peer::closeConnection()
 	{

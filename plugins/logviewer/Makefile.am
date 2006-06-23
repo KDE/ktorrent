@@ -23,5 +23,10 @@ ktlogviewerplugin_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 # Install the desktop file needed to detect the plugin
 kde_services_DATA = ktlogviewerplugin.desktop
 
-noinst_HEADERS = logviewerplugin.h logviewer.h
-ktlogviewerplugin_la_SOURCES = logviewerplugin.cpp logviewer.cpp
+kde_kcfg_DATA = ktlogviewerplugin.kcfg
+
+noinst_HEADERS = logviewerplugin.h logviewer.h logprefpage.h logprefwidget.h \
+	logflags.h
+ktlogviewerplugin_la_SOURCES = logviewerplugin.cpp logviewer.cpp \
+		logprefpage.cpp logprefwidgetbase.ui logprefwidget.cpp logviewerpluginsettings.kcfgc \
+	logflags.cpp

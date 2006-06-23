@@ -35,8 +35,9 @@ namespace bt
 		sock = new mse::StreamSocket();
 		host = ip;
 		this->port = port;
-		
-		Out() << "Initiating connection to " << host << endl;
+
+		Out(SYS_CON|LOG_NOTICE) << "Initiating connection to " << host << endl;
+
 		if (sock->connectTo(host,port))
 		{
 			sn = new QSocketNotifier(sock->fd(),QSocketNotifier::Read);
@@ -87,7 +88,7 @@ namespace bt
 
 	void Authenticate::onFinish(bool succes)
 	{
-		Out() << "Authentication to " << host << " : " << (succes ? "ok" : "failure") << endl;
+		Out(SYS_CON|LOG_NOTICE) << "Authentication to " << host << " : " << (succes ? "ok" : "failure") << endl;
 		finished = true;
 		this->succes = succes;
 		if (!succes)
@@ -130,7 +131,7 @@ namespace bt
 		
 		if (our_peer_id == peer_id /*|| peer_id.startsWith("Yoda")*/)
 		{
-			Out() << "Lets not connect to our selves " << endl;
+			Out(SYS_CON|LOG_DEBUG) << "Lets not connect to our selves " << endl;
 			onFinish(false);
 			return;
 		}
@@ -138,7 +139,7 @@ namespace bt
 		// check if we aren't already connected to the client
 		if (pman.connectedTo(peer_id))
 		{
-			Out() << "Already connected to " << peer_id.toString() << endl;
+			Out(SYS_CON|LOG_NOTICE) << "Already connected to " << peer_id.toString() << endl;
 			onFinish(false);
 			return;
 		}

@@ -22,23 +22,27 @@
 
 #include <ktextbrowser.h>
 #include <interfaces/logmonitorinterface.h>
+#include "logflags.h"
 
 namespace kt
 {
-
 	/**
-	@author Joris Guisson
+	 * @author Joris Guisson
 	*/
 	class LogViewer : public KTextBrowser, public LogMonitorInterface
 	{
-		Q_OBJECT
-	public:
-		LogViewer(QWidget *parent = 0, const char *name = 0);
+			Q_OBJECT
+		public:
+			LogViewer(QWidget *parent = 0, const char *name = 0);
 
-		~LogViewer();
+			~LogViewer();
 
-		virtual void message(const QString& line);
-
+			virtual void message(const QString& line, unsigned int arg);
+			
+			void setRichText(bool val);
+			
+		private:
+			bool m_useRichText;
 	};
 
 }

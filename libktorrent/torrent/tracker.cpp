@@ -252,7 +252,7 @@ namespace bt
 		if (custom_ip == ip)
 			return;
 		
-		Out() << "Setting custom ip to " << ip << endl;
+		Out(SYS_TRK|LOG_NOTICE) << "Setting custom ip to " << ip << endl;
 		custom_ip = ip;
 		custom_ip_resolved = QString::null;
 		if (ip.isNull())
@@ -266,7 +266,7 @@ namespace bt
 		else
 		{
 			custom_ip_resolved = res.first().address().nodeName();
-			Out() << "custom_ip_resolved = " << custom_ip_resolved << endl;
+			Out(SYS_TRK|LOG_NOTICE) << "custom_ip_resolved = " << custom_ip_resolved << endl;
 		}
 	}
 }

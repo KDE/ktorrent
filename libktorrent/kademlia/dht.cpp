@@ -60,7 +60,7 @@ namespace dht
 			return;
 		table_file = table;
 		this->port = port;
-		Out() << "DHT: Starting on port " << port << endl;
+		Out(SYS_DHT|LOG_NOTICE) << "DHT: Starting on port " << port << endl;
 		srv = new RPCServer(this,port);
 		node = new Node(srv);
 		db = new Database();
@@ -77,7 +77,7 @@ namespace dht
 		if (!running)
 			return;
 		
-		Out() << "DHT: Stopping " << endl;
+		Out(SYS_DHT|LOG_NOTICE) << "DHT: Stopping " << endl;
 		srv->stop();
 		node->saveTable(table_file);
 		delete tman; tman = 0;
@@ -92,7 +92,7 @@ namespace dht
 		if (!running)
 			return;
 		
-		Out() << "DHT: Sending ping response" << endl;
+		Out(SYS_DHT|LOG_NOTICE) << "DHT: Sending ping response" << endl;
 		PingRsp rsp(r->getMTID(),node->getOurID());
 		rsp.setOrigin(r->getOrigin());
 		srv->sendMsg(&rsp);
@@ -106,7 +106,7 @@ namespace dht
 		if (!running)
 			return;
 		
-		Out() << "DHT: got findNode request" << endl;
+		Out(SYS_DHT|LOG_DEBUG) << "DHT: got findNode request" << endl;
 		node->recieved(this,r);
 		// find the K closest nodes and pack them
 		KClosestNodesSearch kns(r->getTarget(),K);
@@ -131,7 +131,7 @@ namespace dht
 		if (!running)
 			return;
 		
-		Out() << "DHT: got announce request" << endl;
+		Out(SYS_DHT|LOG_DEBUG) << "DHT: got announce request" << endl;
 		node->recieved(this,r);
 		// first check if the token is OK
 		dht::Key token = r->getToken();
@@ -155,7 +155,7 @@ namespace dht
 		if (!running)
 			return;
 		
-		Out() << "DHT: got getPeers request" << endl;
+		Out(SYS_DHT|LOG_DEBUG) << "DHT: got getPeers request" << endl;
 		node->recieved(this,r);
 		DBItemList dbl;
 		db->sample(r->getInfoHash(),dbl,50);
@@ -206,7 +206,7 @@ namespace dht
 		if (!running)
 			return;
 		
-		Out() << "Sending ping request to " << ip << ":" << port << endl;
+		Out(SYS_DHT|LOG_DEBUG) << "Sending ping request to " << ip << ":" << port << endl;
 		PingReq* r = new PingReq(node->getOurID());
 		r->setOrigin(KInetSocketAddress(ip,port));
 		srv->doCall(r);
@@ -233,7 +233,7 @@ namespace dht
 		node->findKClosestNodes(kns);
 		if (kns.getNumEntries() > 0)
 		{
-			Out() << "DHT: Doing announce " << endl;
+			Out(SYS_DHT|LOG_NOTICE) << "DHT: Doing announce " << endl;
 			AnnounceTask* at = new AnnounceTask(db,srv,node,info_hash,port);
 			at->start(kns,!canStartTask());
 			tman->addTask(at);
@@ -255,7 +255,7 @@ namespace dht
 		bucket.updateRefreshTimer();
 		if (kns.getNumEntries() > 0)
 		{
-			Out() << "DHT: refreshing bucket " << endl;
+			Out(SYS_DHT|LOG_DEBUG) << "DHT: refreshing bucket " << endl;
 			NodeLookup* nl = new NodeLookup(id,srv,node);
 			nl->start(kns,!canStartTask());
 			tman->addTask(nl);
@@ -274,7 +274,7 @@ namespace dht
 		node->findKClosestNodes(kns);
 		if (kns.getNumEntries() > 0)
 		{
-			Out() << "DHT: finding node " << endl;
+			Out(SYS_DHT|LOG_DEBUG) << "DHT: finding node " << endl;
 			NodeLookup* at = new NodeLookup(id,srv,node);
 			at->start(kns,!canStartTask());
 			tman->addTask(at);

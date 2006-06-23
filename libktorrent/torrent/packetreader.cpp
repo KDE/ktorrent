@@ -162,7 +162,8 @@ namespace bt
 		
 		if (packet_length > MAX_PIECE_LEN + 13)
 		{
-			Out() << "packet_length to large " << packet_length << endl;
+			Out() << " packet_length too large " << packet_length << endl;
+
 			Out() << " " << len[0] << " " << len[1] << " "
 					<< len[2] << " " << len[3] << endl;
 			packet_length = 0;

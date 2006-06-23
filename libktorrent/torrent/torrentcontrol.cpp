@@ -546,7 +546,7 @@ namespace bt
 		}
 		catch (Error & e)
 		{
-			Out() << "Error : " << e.toString() << endl;
+			Out(SYS_TRK|LOG_IMPORTANT) << "Error : " << e.toString() << endl;
 			stats.trackerstatus = i18n("Invalid response");
 			tracker->handleError();
 		}
@@ -554,7 +554,7 @@ namespace bt
 
 	void TorrentControl::trackerResponseError()
 	{
-		Out() << "Tracker Response Error" << endl;
+		Out(SYS_TRK|LOG_IMPORTANT) << "Tracker Response Error" << endl;
 		stats.trackerstatus = i18n("Unreachable");
 		tracker->handleError();
 	}
@@ -569,15 +569,11 @@ namespace bt
 	
 	void TorrentControl::updateTracker()
 	{
-		Out() << "Trying to announce... " << endl;
 		if (stats.running && announceAllowed())
 		{
 			tracker->manualUpdate();
 			last_announce = bt::GetCurrentTime();
-			Out() << "Announced." << endl;
 		}
-		else
-			Out() << "Not announced." << endl;
 	}
 
 	KURL TorrentControl::getTrackerURL(bool prev_success) const

@@ -144,7 +144,7 @@ namespace kt
 	
 	void BWScheduler::setSchedule(const BWS& sch)
 	{
-		Out() << "BWS: Setting new schedule..." << endl;
+		Out(SYS_SCD|LOG_NOTICE) << "BWS: Setting new schedule..." << endl;
 		m_schedule = sch;
 		saveSchedule();
 		trigger();
@@ -161,6 +161,7 @@ namespace kt
 			return;
 		
 		QDateTime now = QDateTime::currentDateTime();
+
 		QString prefix = QString("BWS: %1 :: ").arg(now.toString());
 		
 		int t1 = now.date().dayOfWeek();
@@ -170,7 +171,8 @@ namespace kt
 		switch(sch)
 		{
 			case CAT_NORMAL:
-				Out() << prefix << "Switching to NORMAL category" << endl;
+				Out(SYS_SCD|LOG_NOTICE) << prefix << "Switching to NORMAL category" << endl;
+
 				if(!m_core)
 					break;
 				m_core->setPausedState(false);
@@ -178,7 +180,8 @@ namespace kt
 				net::SocketMonitor::setUploadCap(1024 * m_core->getMaxUploadSpeed());
 				break;
 			case CAT_FIRST:
-				Out() << prefix << "Switching to FIRST category" << endl;
+				Out(SYS_SCD|LOG_NOTICE) << prefix << "Switching to FIRST category" << endl;
+
 				if(!m_core)
 					break;
 				m_core->setPausedState(false);
@@ -186,7 +189,8 @@ namespace kt
 				net::SocketMonitor::setUploadCap(1024 * m_schedule.getUpload(0));
 				break;
 			case CAT_SECOND:
-				Out() << prefix << "Switching to SECOND category" << endl;
+				Out(SYS_SCD|LOG_NOTICE) << prefix << "Switching to SECOND category" << endl;
+
 				if(!m_core)
 					break;
 				m_core->setPausedState(false);
@@ -194,7 +198,8 @@ namespace kt
 				net::SocketMonitor::setUploadCap(1024 * m_schedule.getUpload(1));
 				break;
 			case CAT_THIRD:
-				Out() << prefix << "Switching to THIRD category" << endl;
+				Out(SYS_SCD|LOG_NOTICE) << prefix << "Switching to THIRD category" << endl;
+
 				if(!m_core)
 					break;
 				m_core->setPausedState(false);
@@ -202,7 +207,8 @@ namespace kt
 				net::SocketMonitor::setUploadCap(1024 * m_schedule.getUpload(2));
 				break;
 			case CAT_OFF:
-				Out() << prefix << "Switching to OFF" << endl;
+				Out(SYS_SCD|LOG_NOTICE) << prefix << "Switching to OFF" << endl;
+
 				if(!m_core)
 					break;
 				m_core->setPausedState(true);

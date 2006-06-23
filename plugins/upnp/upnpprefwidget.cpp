@@ -56,7 +56,7 @@ namespace kt
 			}
 			catch (Error & e)
 			{
-				Out() << "Error : " << e.toString() << endl;
+				Out(SYS_PNP|LOG_DEBUG) << "Error : " << e.toString() << endl;
 			}
 		}
 	}
@@ -72,7 +72,7 @@ namespace kt
 		QString def_dev = UPnPPluginSettings::defaultDevice();
 		if (def_dev == r->getServer() || def_dev.length() == 0)
 		{
-			Out() << "Doing default port mappings ..." << endl;
+			Out(SYS_PNP|LOG_DEBUG) << "Doing default port mappings ..." << endl;
 			UPnPPluginSettings::setDefaultDevice(r->getServer());
 			UPnPPluginSettings::writeConfig();
 			

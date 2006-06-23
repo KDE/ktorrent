@@ -25,6 +25,27 @@
 #include "constants.h"
 #include <qstring.h>
 
+// LOG MESSAGES CONSTANTS
+#define LOG_NONE 0x00
+#define LOG_IMPORTANT 0x01
+#define LOG_NOTICE 0x03
+#define LOG_DEBUG 0x07
+#define LOG_ALL 0x0F
+
+#define SYS_GEN 0x10 // Genereral info messages
+#define SYS_CON 0x20 // Connections
+#define SYS_TRK 0x40 // Tracker
+#define SYS_DHT 0x80 // DHT
+
+//plugins
+#define SYS_IPF 0x1000  // IPFilter
+#define SYS_SRC 0x2000  // Search plugin
+#define SYS_PNP 0x4000  // UPnP plugin
+#define SYS_INW 0x8000  // InfoWidget
+#define SYS_SNF 0x10000 // ScanFolder plugin
+#define SYS_PFI 0x20000 // Part file import
+#define SYS_SCD 0x40000 // Scheduler plugin
+
 class KURL;
 
 
@@ -156,6 +177,8 @@ namespace bt
 		 * @return This Log
 		 */
 		Log & operator << (const KURL & url);
+		
+		void setFilter(unsigned int filter);
 		
 		/// Lock the mutex of the log, should be called in Out()
 		void lock();

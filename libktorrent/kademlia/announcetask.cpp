@@ -131,13 +131,13 @@ namespace dht
 		
 		if (todo.empty() && answered.empty() && getNumOutstandingRequests() == 0 && !isFinished())
 		{
-			Out() << "DHT: AnnounceTask done" << endl;
+			Out(SYS_DHT|LOG_NOTICE) << "DHT: AnnounceTask done" << endl;
 			done();
 		}
 		else if (answered_visited.count() >= dht::K)
 		{
 			// if K announces have occured stop
-			Out() << "DHT: AnnounceTask done" << endl;
+			Out(SYS_DHT|LOG_NOTICE) << "DHT: AnnounceTask done" << endl;
 			done();
 		}
 	}

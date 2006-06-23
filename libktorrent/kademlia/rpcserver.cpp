@@ -79,7 +79,7 @@ namespace dht
 				tmp += c;
 		}
 		
-		Out() << tmp << endl;
+		Out(SYS_DHT|LOG_DEBUG) << tmp << endl;
 	}
 
 	void RPCServer::readPacket()
@@ -124,7 +124,7 @@ namespace dht
 		}
 		catch (bt::Error & err)
 		{
-			Out() << "Error happened during parsing : " << err.toString() << endl;
+			Out(SYS_DHT|LOG_IMPORTANT) << "Error happened during parsing : " << err.toString() << endl;
 		}
 		delete n;
 	}
@@ -146,7 +146,7 @@ namespace dht
 				// so queue the call
 				RPCCall* c = new RPCCall(this,msg,true);
 				call_queue.append(c);
-				Out() << "Queueing RPC call, no slots available at the moment" << endl;
+				Out(SYS_DHT|LOG_NOTICE) << "Queueing RPC call, no slots available at the moment" << endl;
 				return c; 
 			}
 		}
@@ -205,7 +205,7 @@ namespace dht
 	
 	void RPCServer::ping(const dht::Key & our_id,const KNetwork::KSocketAddress & addr)
 	{
-		Out() << "DHT: pinging " << addr.nodeName() << endl;
+		Out(SYS_DHT|LOG_NOTICE) << "DHT: pinging " << addr.nodeName() << endl;
 		PingReq* pr = new PingReq(our_id);
 		pr->setOrigin(addr);
 		doCall(pr);

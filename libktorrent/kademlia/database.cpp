@@ -146,7 +146,7 @@ namespace dht
 		// the token must be in the map
 		if (!tokens.contains(token))
 		{
-			Out() << "Unknown token" << endl;
+			Out(SYS_DHT|LOG_DEBUG) << "Unknown token" << endl;
 			return false;
 		}
 		
@@ -161,7 +161,7 @@ namespace dht
 		// compare the generated token to the one received
 		if (token != ct)  // not good, this peer didn't went through the proper channels
 		{
-			Out() << "Invalid token" << endl;
+			Out(SYS_DHT|LOG_DEBUG) << "Invalid token" << endl;
 			return false;
 		}
 		// expire the token

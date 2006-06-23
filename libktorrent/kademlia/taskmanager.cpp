@@ -68,7 +68,7 @@ namespace dht
 		{
 			Task* t = queued.first();
 			queued.removeFirst();
-			Out() << "DHT: starting queued task" << endl;
+			Out(SYS_DHT|LOG_NOTICE) << "DHT: starting queued task" << endl;
 			t->start();
 			tasks.insert(t->getTaskID(),t);
 		}

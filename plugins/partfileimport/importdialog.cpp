@@ -266,7 +266,7 @@ namespace kt
 		QFile fptr(stats_file);
 		if (!fptr.open(IO_WriteOnly))
 		{
-			Out() << "Warning : can't create stats file" << endl;
+			Out(SYS_PFI|LOG_IMPORTANT) << "Warning : can't create stats file" << endl;
 			return;
 		}
 
@@ -308,7 +308,7 @@ namespace kt
 		File fptr;
 		if (!fptr.open(file_info_file,"wb"))
 		{
-			Out() << "Warning : Can't save chunk_info file : " << fptr.errorString() << endl;
+			Out(SYS_PFI|LOG_IMPORTANT) << "Warning : Can't save chunk_info file : " << fptr.errorString() << endl;
 			return;
 		}
 

@@ -70,7 +70,7 @@ namespace dht
 			bt::PotentialPeer pp;
 			pp.port = bt::ReadUint16(item.getData(),4);
 			pp.ip = QHostAddress(ReadUint32(item.getData(),0)).toString();
-			Out() << "DHT: Got PotentialPeer " << pp.ip << ":" << pp.port << endl;
+			Out(SYS_DHT|LOG_NOTICE) << "DHT: Got PotentialPeer " << pp.ip << ":" << pp.port << endl;
 			pman->addPotentialPeer(pp);
 		}
 	}

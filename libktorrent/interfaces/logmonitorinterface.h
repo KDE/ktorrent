@@ -42,7 +42,7 @@ namespace kt
 		 * A line was written to the log file.
 		 * @param line The line
 		 */
-		virtual void message(const QString & line) = 0;
+		virtual void message(const QString & line, unsigned int arg) = 0;
 	};
 
 }

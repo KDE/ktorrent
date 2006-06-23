@@ -25,21 +25,23 @@
 namespace kt
 {
 	class LogViewer;
+	class LogPrefPage;
 
 	/**
-	@author Joris Guisson
+	 * @author Joris Guisson
 	*/
 	class LogViewerPlugin : public Plugin
 	{
-		Q_OBJECT
-	public:
-		LogViewerPlugin(QObject* parent, const char* qt_name, const QStringList& args);
-		virtual ~LogViewerPlugin();
+			Q_OBJECT
+		public:
+			LogViewerPlugin(QObject* parent, const char* qt_name, const QStringList& args);
+			virtual ~LogViewerPlugin();
 
-		virtual void load();
-		virtual void unload();
-	private:
-		LogViewer* lv;
+			virtual void load();
+			virtual void unload();
+		private:
+			LogViewer* lv;
+			LogPrefPage* pref;
 	};
 
 }

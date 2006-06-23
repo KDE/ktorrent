@@ -53,7 +53,7 @@ namespace net
 		int fd = socket(PF_INET,tcp ? SOCK_STREAM : SOCK_DGRAM,0);
 		if (fd < 0)
 		{
-			Out() << QString("Cannot create socket : %1").arg(strerror(errno)) << endl;
+			Out(SYS_GEN|LOG_IMPORTANT) << QString("Cannot create socket : %1").arg(strerror(errno)) << endl;
 		}
 		m_fd = fd;
 		
@@ -92,13 +92,13 @@ namespace net
 		{
 			if (errno == EINPROGRESS)
 			{
-				Out() << "Socket is connecting" << endl;
+				Out(SYS_CON|LOG_DEBUG) << "Socket is connecting" << endl;
 				m_state = CONNECTING;
 				return false;
 			}
 			else
 			{
-				Out() << QString("Cannot connect to host %1:%2 : %3")
+				Out(SYS_CON|LOG_NOTICE) << QString("Cannot connect to host %1:%2 : %3")
 					.arg(a.toString()).arg(a.port()).arg(strerror(errno)) << endl;
 				return false;
 			}
@@ -142,7 +142,7 @@ namespace net
 		{
 			if (errno != EAGAIN && errno != EWOULDBLOCK)
 			{
-				Out() << "Send error : " << QString(strerror(errno)) << endl;
+				Out(SYS_CON|LOG_DEBUG) << "Send error : " << QString(strerror(errno)) << endl;
 				close();
 			}
 			return 0;
@@ -157,7 +157,7 @@ namespace net
 		{
 			if (errno != EAGAIN && errno != EWOULDBLOCK)
 			{
-				Out() << "Receive error : " << QString(strerror(errno)) << endl;
+				Out(SYS_CON|LOG_DEBUG) << "Receive error : " << QString(strerror(errno)) << endl;
 				close();
 			}
 			return 0;
@@ -186,7 +186,7 @@ namespace net
 			int ret = ::sendto(m_fd,(char*)buf + ns,left,0,(struct sockaddr*)&addr,sizeof(struct sockaddr));
 			if (ret < 0)
 			{
-				Out() << "Send error : " << QString(strerror(errno)) << endl;
+				Out(SYS_CON|LOG_DEBUG) << "Send error : " << QString(strerror(errno)) << endl;
 				return 0;
 			}
 
@@ -204,7 +204,7 @@ namespace net
 		int ret = ::recvfrom(m_fd,buf,max_len,0,(struct sockaddr*)&addr,&sl);
 		if (ret < 0)
 		{
-			Out() << "Receive error : " << QString(strerror(errno)) << endl;
+			Out(SYS_CON|LOG_DEBUG) << "Receive error : " << QString(strerror(errno)) << endl;
 			return 0;
 		}
 

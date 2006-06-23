@@ -35,6 +35,7 @@
 #include "fileops.h"
 #include "error.h"
 #include "log.h"
+#include <torrent/globals.h>
 #include "file.h"
 
 #ifndef O_LARGEFILE
@@ -43,8 +44,6 @@
 
 namespace bt
 {
-	extern Log& Out();
-
 	void MakeDir(const QString & dir,bool nothrow)
 	{
 		if (mkdir(QFile::encodeName(dir),0755) < -1)

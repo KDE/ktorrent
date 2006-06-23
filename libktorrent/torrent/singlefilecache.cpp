@@ -58,7 +58,7 @@ namespace bt
 		if (!buf)
 		{
 			// buffer it if mmapping fails
-			Out() << "Warning : mmap failure, falling back to buffered mode" << endl;
+			Out(SYS_GEN|LOG_IMPORTANT) << "Warning : mmap failure, falling back to buffered mode" << endl;
 			c->allocate();
 			c->setStatus(Chunk::BUFFERED);
 		}

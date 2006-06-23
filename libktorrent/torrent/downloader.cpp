@@ -424,11 +424,7 @@ namespace bt
 				Out() << "Peer " << IP << " sent bad data" << endl;
 				IPBlocklist & ipfilter = IPBlocklist::instance();
 				ipfilter.insert( IP );
-				if (ipfilter.isBlocked( IP ))
-				{
-					Out() << "Peer " << IP << " has been blacklisted" << endl;
-					p->kill(); 
-				}
+				p->kill(); 
 			}
 			return false;
 		}

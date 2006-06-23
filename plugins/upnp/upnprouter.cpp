@@ -71,11 +71,11 @@ namespace kt
 	
 	void UPnPService::debugPrintData()
 	{
-		Out() << "    servicetype = " << servicetype << endl;
-		Out() << "    controlurl = " << controlurl << endl;
-		Out() << "    eventsuburl = " << eventsuburl << endl;
-		Out() << "    scpdurl = " << scpdurl << endl;
-		Out() << "    serviceid = " << serviceid << endl;
+		Out(SYS_PNP|LOG_DEBUG) << "    servicetype = " << servicetype << endl;
+		Out(SYS_PNP|LOG_DEBUG) << "    controlurl = " << controlurl << endl;
+		Out(SYS_PNP|LOG_DEBUG) << "    eventsuburl = " << eventsuburl << endl;
+		Out(SYS_PNP|LOG_DEBUG) << "    scpdurl = " << scpdurl << endl;
+		Out(SYS_PNP|LOG_DEBUG) << "    serviceid = " << serviceid << endl;
 	}
 	
 	UPnPService & UPnPService::operator = (const UPnPService & s)
@@ -131,7 +131,7 @@ namespace kt
 			bool ret = desc_parse.parse(target,this);
 			if (!ret)
 			{
-				Out() << "Error parsing router description !" << endl;
+				Out(SYS_PNP|LOG_IMPORTANT) << "Error parsing router description !" << endl;
 				QString dest = KGlobal::dirs()->saveLocation("data","ktorrent") + "upnp_failure";
 				KIO::file_copy(target,dest,-1,true,false,false);
 			}
@@ -153,20 +153,20 @@ namespace kt
 	
 	void UPnPRouter::debugPrintData()
 	{
-		Out() << "UPnPRouter : " << endl;
-		Out() << "Friendly name = " << desc.friendlyName << endl;
-		Out() << "Manufacterer = " << desc.manufacturer << endl;
-		Out() << "Model description = " << desc.modelDescription << endl;
-		Out() << "Model name = " << desc.modelName << endl;
-		Out() << "Model number = " << desc.modelNumber << endl;
+		Out(SYS_PNP|LOG_DEBUG) << "UPnPRouter : " << endl;
+		Out(SYS_PNP|LOG_DEBUG) << "Friendly name = " << desc.friendlyName << endl;
+		Out(SYS_PNP|LOG_DEBUG) << "Manufacterer = " << desc.manufacturer << endl;
+		Out(SYS_PNP|LOG_DEBUG) << "Model description = " << desc.modelDescription << endl;
+		Out(SYS_PNP|LOG_DEBUG) << "Model name = " << desc.modelName << endl;
+		Out(SYS_PNP|LOG_DEBUG) << "Model number = " << desc.modelNumber << endl;
 		for (QValueList<UPnPService>::iterator i = services.begin();i != services.end();i++)
 		{
 			UPnPService & s = *i;
 			Out() << "Service : " << endl;
 			s.debugPrintData();
-			Out() << "Done" << endl;
+			Out(SYS_PNP|LOG_DEBUG) << "Done" << endl;
 		}
-		Out() << "Done" << endl;
+		Out(SYS_PNP|LOG_DEBUG) << "Done" << endl;
 	}
 	
 	QValueList<UPnPService>::iterator UPnPRouter::findPortForwardingService()
@@ -199,7 +199,7 @@ namespace kt
 	void UPnPRouter::forward(Uint16 port,Protocol prot)
 	{
 		if (verbose)
-			Out() << "Forwarding port " << port << " (" << (prot == UDP ? "UDP" : "TCP") << ")" << endl;
+			Out(SYS_PNP|LOG_NOTICE) << "Forwarding port " << port << " (" << (prot == UDP ? "UDP" : "TCP") << ")" << endl;
 		// first find the right service
 		QValueList<UPnPService>::iterator i = findPortForwardingService();
 		if (i == services.end())
@@ -266,7 +266,7 @@ namespace kt
 	
 	void UPnPRouter::undoForward(Uint16 port,Protocol prot)
 	{
-		Out() << "Undoing forward of port " << port << " (" << (prot == UDP ? "UDP" : "TCP") << ")" << endl;
+		Out(SYS_PNP|LOG_NOTICE) << "Undoing forward of port " << port << " (" << (prot == UDP ? "UDP" : "TCP") << ")" << endl;
 		// first find the right service
 		QValueList<UPnPService>::iterator i = findPortForwardingService();
 		if (i == services.end())
@@ -361,7 +361,7 @@ namespace kt
 	void UPnPRouter::onReplyOK(bt::HTTPRequest* r,const QString &)
 	{
 		if (verbose)
-			Out() << "UPnPRouter : OK" << endl;
+			Out(SYS_PNP|LOG_NOTICE) << "UPnPRouter : OK" << endl;
 		if (reqs.contains(r))
 		{
 			(*reqs[r]).pending = false;
@@ -374,7 +374,7 @@ namespace kt
 	void UPnPRouter::onReplyError(bt::HTTPRequest* r,const QString &)
 	{
 		if (verbose)
-			Out() << "UPnPRouter : Error" << endl;
+			Out(SYS_PNP|LOG_IMPORTANT) << "UPnPRouter : Error" << endl;
 		if (reqs.contains(r))
 		{
 			fwds.erase(reqs[r]);

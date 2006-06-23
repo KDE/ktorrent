@@ -144,7 +144,7 @@ namespace kt
 		}
 		else
 		{
-			Out() << "Cannot find level1 file" << endl;
+			Out(SYS_IPF|LOG_IMPORTANT) << "Cannot find level1 file" << endl;
 			btnClose->setEnabled( true );
 			btnClose->setText(i18n("&Close"));
 			label1->setText("");
@@ -164,7 +164,7 @@ namespace kt
 			/** WRITE TO OUTPUT **/
 			if ( !target.open( IO_WriteOnly ) )
 			{
-				Out() << "Unable to open file for writing" << endl;
+				Out(SYS_IPF|LOG_IMPORTANT) << "Unable to open file for writing" << endl;
 				btnClose->setEnabled( true );
 				btnClose->setText(i18n("&Close"));
 				label1->setText("");
@@ -173,7 +173,7 @@ namespace kt
 				return ;
 			}
 
-			Out() << "Loading finished. Starting conversion..." << endl;
+			Out(SYS_IPF|LOG_NOTICE) << "Loading finished. Starting conversion..." << endl;
 
 			for ( ulong i = 0; i < blocks; ++i )
 			{
@@ -183,7 +183,7 @@ namespace kt
 				{
 					kProgress1->setProgress( ( int ) 100 * i / blocks );
 					if ( i % 10000 == 0 )
-						Out() << "Block " << i << " written." << endl;
+						Out(SYS_IPF|LOG_DEBUG) << "Block " << i << " written." << endl;
 				}
 				KApplication::kApplication()->processEvents();
 				
@@ -191,7 +191,7 @@ namespace kt
 					return;
 			}
 			kProgress1->setProgress(100);
-			Out() << "Finished converting." << endl;
+			Out(SYS_IPF|LOG_NOTICE) << "Finished converting." << endl;
 			lbl_progress->setText( i18n( "File converted." ) );
 			target.close();
 		}
@@ -251,7 +251,7 @@ namespace kt
 			}
 			
 			canceled = true;
-			Out() << "Conversion canceled." << endl;
+			Out(SYS_IPF|LOG_NOTICE) << "Conversion canceled." << endl;
 		}
 		
 		

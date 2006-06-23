@@ -83,7 +83,7 @@ namespace kt
 		
 		if (!ret)
 		{
-			Out() << "Error parsing XML" << endl;
+			Out(SYS_PNP|LOG_IMPORTANT) << "Error parsing XML" << endl;
 			return false;
 		}
 		return true;

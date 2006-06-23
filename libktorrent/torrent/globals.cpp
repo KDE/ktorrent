@@ -75,10 +75,16 @@ namespace bt
 		
 		server = new Server(port);
 	}
-
-	Log & Out()
+	
+	Log& Globals::getLog(unsigned int arg)
 	{
-		Log & lg = Globals::instance().getLog();
+		log->setFilter(arg);
+		return *log;
+	}
+
+	Log & Out(unsigned int arg)
+	{
+		Log & lg = Globals::instance().getLog(arg);
 		lg.lock();
 //		lg.setOutputToConsole(Globals::instance().isDebugModeSet());
 		return lg;

@@ -26,6 +26,8 @@
 #include <interfaces/guiinterface.h>
 #include "logviewerplugin.h"
 #include "logviewer.h"
+#include "logprefpage.h"
+#include "logflags.h"
 
 #define NAME "logviewerplugin"
 #define AUTHOR "Joris Guisson"
@@ -53,17 +55,23 @@ namespace kt
 	{
 		lv = new LogViewer();
 		this->getGUI()->addWidgetBelowView(lv);
-		bt::Log & lg = Globals::instance().getLog();
+		bt::Log & lg = Globals::instance().getLog(0);
 		lg.addMonitor(lv);
+		pref = new LogPrefPage();
+		this->getGUI()->addPrefPage(pref);
 	}
 
 	void LogViewerPlugin::unload()
 	{
 		this->getGUI()->removeWidgetBelowView(lv);
-		bt::Log & lg = Globals::instance().getLog();
+		bt::Log & lg = Globals::instance().getLog(0);
 		lg.removeMonitor(lv);
 		delete lv;
 		lv = 0;
+		this->getGUI()->removePrefPage(pref);
+		delete pref;
+		pref = 0;
+		LogFlags::finalize();
 	}
 
 }

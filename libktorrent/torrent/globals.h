@@ -34,7 +34,7 @@ namespace bt
 	class Log;
 	class Server;
 
-	Log& Out();
+	Log& Out(unsigned int arg = 0x00);
 
 	class Globals
 	{
@@ -48,7 +48,7 @@ namespace bt
 		bool inCriticalOperationMode() const {return critical_operation;}
 		bool isDebugModeSet() const {return debug_mode;}
 
-		Log & getLog() {return *log;}
+		Log & getLog(unsigned int arg);
 		Server & getServer() {return *server;}
 		dht::DHTBase & getDHT() {return *dh_table;}
 				
@@ -63,7 +63,7 @@ namespace bt
 		Server* server;
 		dht::DHTBase* dh_table;
 		
-		friend Log& Out();
+		friend Log& Out(unsigned int arg);
 
 		static Globals* inst;
 		

@@ -60,7 +60,7 @@ namespace kt
 		if(file)
 			delete file;
 		
-		Out() << "Anti-P2P filter unloaded." << endl;
+		Out(SYS_IPF|LOG_ALL) << "Anti-P2P filter unloaded." << endl;
 	}
 	
 	void AntiP2P::load()
@@ -68,11 +68,11 @@ namespace kt
 		file = new MMapFile();
 		if(! file->open(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat", MMapFile::READ) )
 		{
-			Out() << "Anti-p2p file not loaded." << endl;
+			Out(SYS_IPF|LOG_NOTICE) << "Anti-p2p file not loaded." << endl;
 			file = 0;
 			return;
 		}
-		Out() << "Loading Anti-P2P filter..." << endl;
+		Out(SYS_IPF|LOG_ALL) << "Loading Anti-P2P filter..." << endl;
 	}
 	
 	void AntiP2P::loadHeader()
@@ -148,7 +148,7 @@ namespace kt
 	{
 		if (!header_loaded)
 		{
-			Out() << "Tried to check if IP was blocked, but no AntiP2P header was loaded." << endl;
+			Out(SYS_IPF|LOG_IMPORTANT) << "Tried to check if IP was blocked, but no AntiP2P header was loaded." << endl;
 			return false;
 		}
 

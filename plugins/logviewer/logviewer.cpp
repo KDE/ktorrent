@@ -20,6 +20,8 @@
 #include <kglobal.h>
 #include <kconfig.h>
 #include "logviewer.h"
+#include "logflags.h"
+#include "logviewerpluginsettings.h"
 
 namespace kt
 {
@@ -27,7 +29,11 @@ namespace kt
 	LogViewer::LogViewer(QWidget *parent, const char *name)
 			: KTextBrowser(parent, name), LogMonitorInterface()
 	{
-		setTextFormat(Qt::PlainText);
+		if(m_useRichText = LogViewerPluginSettings::useRichText())
+			setTextFormat(Qt::RichText);
+		else
+			setTextFormat(Qt::PlainText);
+		
 		setMaxLogLines(100);
 		setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Minimum);
 		KGlobal::config()->setGroup("LogViewer");
@@ -36,6 +42,8 @@ namespace kt
 			QSize s = KGlobal::config()->readSizeEntry("LogViewerWidgetSize",0);
 			resize(s);
 		}
+		
+		LogFlags::instance().setLog(this);
 	}
 
 
@@ -43,13 +51,32 @@ namespace kt
 	{
 		KGlobal::config()->setGroup("LogViewer");
 		KGlobal::config()->writeEntry("LogViewerWidgetSize",size());
+		LogFlags::instance().setLog(0);
 	}
 
 
-	void LogViewer::message(const QString& line)
+	void LogViewer::message(const QString& line, unsigned int arg)
 	{
-		append(line);
+		if(arg==0x00 || LogFlags::instance().checkFlags(arg))
+		{
+			if(m_useRichText)
+			{
+				QString tmp = line;
+				append(LogFlags::instance().getFormattedMessage(arg, tmp));
+			}
+			else
+				append(line);
+		}
 	}
-
+	
+	void LogViewer::setRichText(bool val)
+	{
+		if(val)
+			setTextFormat(Qt::RichText);
+		else
+			setTextFormat(Qt::PlainText);
+		
+		m_useRichText = val;
+	}
 }
 #include "logviewer.moc"

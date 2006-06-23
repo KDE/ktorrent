@@ -139,13 +139,13 @@ namespace bt
 		
 		if (Globals::instance().getDHT().isRunning() && (handshake[27] & 0x01))
 		{
-			Out() << "Peer supports DHT" << endl;
+			Out(SYS_CON|LOG_NOTICE) << "Peer supports DHT" << endl;
 			dht_support = true;
 		}
 		
 		if (handshake[27] & 0x04)
 		{
-			Out() << "Peer supports Fast Extensions" << endl;
+			Out(SYS_CON|LOG_NOTICE) << "Peer supports Fast Extensions" << endl;
 			fast_extensions = true;
 		}
 		
@@ -164,7 +164,7 @@ namespace bt
 		if (finished)
 			return;
 		
-		Out() << "Timeout occurred" << endl;
+		Out(SYS_CON|LOG_DEBUG) << "Timeout occurred" << endl;
 		onFinish(false);
 	}
 }

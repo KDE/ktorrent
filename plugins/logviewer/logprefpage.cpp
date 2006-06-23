@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2006 by Ivan Vasic                                      *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,43 +15,49 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef UPNPTESTAPP_H
-#define UPNPTESTAPP_H
+#include "logprefpage.h"
+#include "logprefwidget.h"
 
-#include <kmainwindow.h>
-#include <libktorrent/util/log.h>
-#include <libktorrent/torrent/globals.h>
-#include <plugins/upnp/upnprouter.h>
-#include <plugins/upnp/upnpdescriptionparser.h>
-#include <plugins/upnp/upnpmcastsocket.h>
-#include <interfaces/logmonitorinterface.h>
+#include <klocale.h>
+#include <kglobal.h>
+#include <kiconloader.h>
 
-class MainWidget;
-
-using kt::UPnPRouter;
-
-/**
-	@author Joris Guisson <joris.guisson@gmail.com>
-*/
-class UPnPTestApp : public KMainWindow, public kt::LogMonitorInterface
+namespace kt
 {
-	Q_OBJECT
-public:
-	UPnPTestApp(QWidget *parent = 0, const char *name = 0);
-	virtual ~UPnPTestApp();
-	
-	virtual void message(const QString& line, unsigned int arg);
-	
-private slots:
-	void discovered(UPnPRouter* router);
-	void onTestBtn();
-	void onCloseBtn();
-	
-private:
-	kt::UPnPMCastSocket* sock;
-	MainWidget* mwnd;
-};
 
-#endif
+	LogPrefPage::LogPrefPage()
+		: PrefPageInterface(i18n("LogViewer"), i18n("LogViewer Options"),
+						KGlobal::iconLoader()->loadIcon("toggle_log",KIcon::NoGroup))
+	{
+		m_widget = 0;
+	}
+
+
+	LogPrefPage::~LogPrefPage()
+	{}
+	
+	bool LogPrefPage::apply()
+	{
+		if(m_widget)
+			return m_widget->apply();
+		
+		return true;
+	}
+
+	void LogPrefPage::createWidget(QWidget* parent)
+	{
+		m_widget = new LogPrefWidget(parent);
+	}
+
+	void LogPrefPage::updateData()
+	{
+	}
+
+	void LogPrefPage::deleteWidget()
+	{
+		if(m_widget)
+			delete m_widget;
+	}
+}

@@ -42,6 +42,7 @@ namespace bt
 		QPtrList<LogMonitorInterface> monitors;
 		QString tmp;
 		QMutex mutex;
+		unsigned int m_filter;
 	public:
 		Private() : out(0),to_cout(false)
 		{
@@ -51,6 +52,11 @@ namespace bt
 		~Private()
 		{
 			delete out;
+		}
+		
+		void setFilter(unsigned int filter)
+		{
+			m_filter = filter;
 		}
 
 		void setOutputFile(const QString & file)
@@ -87,7 +93,7 @@ namespace bt
 				while (i != monitors.end())
 				{
 					kt::LogMonitorInterface* lmi = *i;
-					lmi->message(tmp);
+					lmi->message(tmp,m_filter);
 					i++;
 				}
 			}
@@ -161,11 +167,14 @@ namespace bt
 	{
 		return operator << (QString::number(v));
 	}
-	
+
+	void Log::setFilter(unsigned int filter)
+	{
+		priv->setFilter(filter);
+	}
+
 	void Log::lock()
 	{
 		priv->mutex.lock();
 	}
-	
-	
-}	
+}

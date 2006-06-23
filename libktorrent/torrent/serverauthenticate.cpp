@@ -48,7 +48,7 @@ namespace bt
 	{
 		if (!sock) return;
 		
-		Out() << "Authentication(S) to " << sock->getIPAddress() 
+		Out(SYS_CON|LOG_NOTICE) << "Authentication(S) to " << sock->getIPAddress() 
 				<< " : " << (succes ? "ok" : "failure") << endl;
 		finished = true;
 		if (!succes)
@@ -82,7 +82,7 @@ namespace bt
 		PeerManager* pman = server->findPeerManager(rh);
 		if (!pman)
 		{
-			Out() << "Cannot find PeerManager for hash : " << rh.toString() << endl;
+			Out(SYS_GEN|LOG_NOTICE) << "Cannot find PeerManager for hash : " << rh.toString() << endl;
 			onFinish(false);
 			return;
 		}
@@ -96,7 +96,7 @@ namespace bt
 			PeerID peer_id = PeerID(tmp);
 			if (pman->getTorrent().getPeerID() == peer_id)
 			{
-				Out() << "Lets not connect to our self" << endl;
+				Out(SYS_CON|LOG_NOTICE) << "Lets not connect to our self" << endl;
 				onFinish(false);
 				return;
 			}
@@ -104,7 +104,7 @@ namespace bt
 			// check if we aren't already connected to the client
 			if (pman->connectedTo(peer_id))
 			{
-				Out() << "Already connected to " << peer_id.toString() << endl;
+				Out(SYS_CON|LOG_NOTICE) << "Already connected to " << peer_id.toString() << endl;
 				onFinish(false);
 				return;
 			}

@@ -45,7 +45,7 @@ namespace kt
 		for (Uint32 i = 0;i < 10;i++)
 		{
 			if (!bind(QString::null,QString::number(1900 + i)))
-				Out() << "Cannot bind to UDP port 1900" << endl;
+				Out(SYS_PNP|LOG_IMPORTANT) << "Cannot bind to UDP port 1900" << endl;
 			else
 				break;
 		}	
@@ -60,7 +60,7 @@ namespace kt
 	
 	void UPnPMCastSocket::discover()
 	{
-		Out() << "Trying to find UPnP devices on the local network" << endl;
+		Out(SYS_PNP|LOG_NOTICE) << "Trying to find UPnP devices on the local network" << endl;
 		
 		// send a HTTP M-SEARCH message to 239.255.255.250:1900
 		const char* data = "M-SEARCH * HTTP/1.1\r\n" 
@@ -72,8 +72,8 @@ namespace kt
 		
 		if (verbose)
 		{
-			Out() << "Sending : " << endl;
-			Out() << data << endl;
+			Out(SYS_PNP|LOG_NOTICE) << "Sending : " << endl;
+			Out(SYS_PNP|LOG_NOTICE) << data << endl;
 		}
 		
 		KDatagramSocket::send(KNetwork::KDatagramPacket(data,strlen(data),KInetSocketAddress("239.255.255.250",1900)));
@@ -87,8 +87,8 @@ namespace kt
 		
 		if (verbose)
 		{
-			Out() << "Received : " << endl;
-			Out() << QString(p.data()) << endl;
+			Out(SYS_PNP|LOG_NOTICE) << "Received : " << endl;
+			Out(SYS_PNP|LOG_NOTICE) << QString(p.data()) << endl;
 		}
 		
 		// try to make a router of it
@@ -141,13 +141,13 @@ namespace kt
 			line = lines[idx]; 
 			if (line.contains("ST:") && line.contains("InternetGatewayDevice")) 
 			{
-				Out() << "Valid Internet Gateway Device has responded, parsing response...." << endl; 
+				Out(SYS_PNP|LOG_NOTICE) << "Valid Internet Gateway Device has responded, parsing response...." << endl; 
 				validDevice = true; 
 			}
 		} 
 		if (!validDevice)
 		{
-			Out() << "Not a valid Internet Gateway Device" << endl;
+			Out(SYS_PNP|LOG_IMPORTANT) << "Not a valid Internet Gateway Device" << endl;
 			return 0; 
 		}
 		
@@ -160,17 +160,17 @@ namespace kt
 				location = line.mid(line.find(':') + 1).stripWhiteSpace();
 				if (!location.isValid())
 				{
-					Out() << "Invalid URL" << endl;
+					Out(SYS_PNP|LOG_IMPORTANT) << "Invalid URL" << endl;
 					return 0;
 				}
-				Out() << "Location : " << location << endl;
+				Out(SYS_PNP|LOG_NOTICE) << "Location : " << location << endl;
 			}
 			else if (line.startsWith("Server") || line.startsWith("server") || line.startsWith("SERVER"))
 			{
 				server = line.mid(line.find(':') + 1).stripWhiteSpace();
 				if (server.length() == 0)
 					return 0;
-				Out() << "Server : " << server << endl;
+				Out(SYS_PNP|LOG_NOTICE) << "Server : " << server << endl;
 			}
 		}
 		
@@ -183,7 +183,7 @@ namespace kt
 	
 	void UPnPMCastSocket::onError(int)
 	{
-		Out() << "UPnPMCastSocket Error : " << errorString() << endl;
+		Out(SYS_PNP|LOG_IMPORTANT) << "UPnPMCastSocket Error : " << errorString() << endl;
 	}
 	
 	void UPnPMCastSocket::saveRouters(const QString & file)
@@ -191,7 +191,7 @@ namespace kt
 		QFile fptr(file);
 		if (!fptr.open(IO_WriteOnly))
 		{
-			Out() << "Cannot open file " << file << " : " << fptr.errorString() << endl;
+			Out(SYS_PNP|LOG_IMPORTANT) << "Cannot open file " << file << " : " << fptr.errorString() << endl;
 			return;
 		}
 		
@@ -213,7 +213,7 @@ namespace kt
 		QFile fptr(file);
 		if (!fptr.open(IO_ReadOnly))
 		{
-			Out() << "Cannot open file " << file << " : " << fptr.errorString() << endl;
+			Out(SYS_PNP|LOG_IMPORTANT) << "Cannot open file " << file << " : " << fptr.errorString() << endl;
 			return;
 		}
 		

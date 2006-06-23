@@ -327,7 +327,7 @@ namespace kt
 				m_core->addBlockedIP(line);
 				++i;
 			}
-			Out() << "Loaded " << count << " blocked IP ranges." << endl;
+			Out(SYS_IPF|LOG_NOTICE) << "Loaded " << count << " blocked IP ranges." << endl;
 			dat.close();
 		}
 		
@@ -362,7 +362,7 @@ namespace kt
 				m_core->removeBlockedIP(line);
 				++i;
 			}
-			Out() << "Unloaded " << count << " blocked IP ranges." << endl;
+			Out(SYS_IPF|LOG_NOTICE) << "Unloaded " << count << " blocked IP ranges." << endl;
 			dat.close();
 		}
 		

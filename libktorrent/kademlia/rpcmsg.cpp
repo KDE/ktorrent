@@ -126,13 +126,13 @@ namespace dht
 					}
 					else
 					{
-						Out() << "No nodes or values in get_peers response" << endl;
+						Out(SYS_DHT|LOG_DEBUG) << "No nodes or values in get_peers response" << endl;
 						return 0;
 					}
 				}
 				else
 				{
-					Out() << "No token in get_peers response" << endl;
+					Out(SYS_DHT|LOG_DEBUG) << "No token in get_peers response" << endl;
 				}
 			case ANNOUNCE_PEER :
 				return new AnnounceRsp(mtid,id);
@@ -147,7 +147,7 @@ namespace dht
 		BDictNode*	args = dict->getDict(RSP);
 		if (!args || !dict->getValue(TID))
 		{
-			Out() << "ParseRsp : args || !args->getValue(id) || !dict->getValue(TID)" << endl;
+			Out(SYS_DHT|LOG_DEBUG) << "ParseRsp : args || !args->getValue(id) || !dict->getValue(TID)" << endl;
 			return 0;
 		}
 			
@@ -157,7 +157,7 @@ namespace dht
 		const RPCCall* c = srv->findCall(mtid);
 		if (!c)
 		{
-			Out() << "Cannot find RPC call" << endl;
+			Out(SYS_DHT|LOG_NOTICE) << "Cannot find RPC call" << endl;
 			return 0;
 		}
 	
@@ -247,7 +247,7 @@ namespace dht
 	
 	void PingReq::print()
 	{
-		Out() << QString("REQ: %1 %2 : ping").arg(mtid).arg(id.toString()) << endl;
+		Out(SYS_DHT|LOG_DEBUG) << QString("REQ: %1 %2 : ping").arg(mtid).arg(id.toString()) << endl;
 	}
 	
 	void PingReq::encode(QByteArray & arr)
@@ -283,7 +283,7 @@ namespace dht
 	
 	void FindNodeReq::print()
 	{
-		Out() << QString("REQ: %1 %2 : find_node %3")
+		Out(SYS_DHT|LOG_NOTICE) << QString("REQ: %1 %2 : find_node %3")
 				.arg(mtid).arg(id.toString()).arg(target.toString()) << endl;
 	}
 	
@@ -322,7 +322,7 @@ namespace dht
 	
 	void GetPeersReq::print()
 	{
-		Out() << QString("REQ: %1 %2 : get_peers %3")
+		Out(SYS_DHT|LOG_DEBUG) << QString("REQ: %1 %2 : get_peers %3")
 				.arg(mtid).arg(id.toString()).arg(info_hash.toString()) << endl;
 	}
 	
@@ -361,7 +361,7 @@ namespace dht
 	
 	void AnnounceReq::print()
 	{
-		Out() << QString("REQ: %1 %2 : announce_peer %3 %4 %5")
+		Out(SYS_DHT|LOG_DEBUG) << QString("REQ: %1 %2 : announce_peer %3 %4 %5")
 				.arg(mtid).arg(id.toString()).arg(info_hash.toString())
 				.arg(port).arg(token.toString()) << endl;
 	}
@@ -401,7 +401,7 @@ namespace dht
 	
 	void PingRsp::print()
 	{
-		Out() << QString("RSP: %1 %2 : ping")
+		Out(SYS_DHT|LOG_DEBUG) << QString("RSP: %1 %2 : ping")
 					.arg(mtid).arg(id.toString()) << endl;
 	}
 	
@@ -436,7 +436,7 @@ namespace dht
 	
 	void FindNodeRsp::print()
 	{
-		Out() << QString("RSP: %1 %2 : find_node")
+		Out(SYS_DHT|LOG_DEBUG) << QString("RSP: %1 %2 : find_node")
 				.arg(mtid).arg(id.toString()) << endl;
 	}
 	
@@ -569,7 +569,7 @@ namespace dht
 	
 	void ErrMsg::print()
 	{
-		Out() << "ERR: " << mtid << " " << msg << endl;
+		Out(SYS_DHT|LOG_NOTICE) << "ERR: " << mtid << " " << msg << endl;
 	}
 	
 	void ErrMsg::encode(QByteArray & arr)

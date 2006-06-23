@@ -76,7 +76,7 @@ namespace bt
 			return;
 		IPKey key(ipi,0xFFFFFFFF); //-- you can test ranges here. Just specify your mask.
 		insertRangeIP(key, state);
-		Out() << "IP " << ip << " banned." << endl;
+		Out(SYS_IPF|LOG_NOTICE) << "IP " << ip << " banned." << endl;
 	}
 
 	void IPBlocklist::addRange(QString ip)
@@ -240,14 +240,14 @@ namespace bt
 		//First check local filter list
 		if(isBlockedLocal(ip))
 		{
-			Out() << "IP " << ip << " is blacklisted. Connection denied." << endl;
+			Out(SYS_IPF|LOG_NOTICE) << "IP " << ip << " is blacklisted. Connection denied." << endl;
 			return true;
 		}
 		
 		//Then we ask plugin
 		if(isBlockedPlugin(ip))
 		{
-			Out() << "IP " << ip << " is blacklisted. Connection denied." << endl;
+			Out(SYS_IPF|LOG_NOTICE) << "IP " << ip << " is blacklisted. Connection denied." << endl;
 			return true;
 		}
 

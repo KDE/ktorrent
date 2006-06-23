@@ -189,7 +189,7 @@ namespace dht
 		bt::File fptr;
 		if (!fptr.open(file,"wb"))
 		{
-			Out() << "DHT: Cannot open file " << file << " : " << fptr.errorString() << endl;
+			Out(SYS_DHT|LOG_IMPORTANT) << "DHT: Cannot open file " << file << " : " << fptr.errorString() << endl;
 			return;
 		}
 		
@@ -208,7 +208,7 @@ namespace dht
 		bt::File fptr;
 		if (!fptr.open(file,"rb"))
 		{
-			Out() << "DHT: Cannot open file " << file << " : " << fptr.errorString() << endl;
+			Out(SYS_DHT|LOG_IMPORTANT) << "DHT: Cannot open file " << file << " : " << fptr.errorString() << endl;
 			return;
 		}
 		
@@ -225,7 +225,7 @@ namespace dht
 			if (hdr.num_entries == 0)
 				continue;
 			
-			Out() << "DHT: Loading bucket " << hdr.index << endl;
+			Out(SYS_DHT|LOG_NOTICE) << "DHT: Loading bucket " << hdr.index << endl;
 			if (bucket[hdr.index])
 				delete bucket[hdr.index];
 			

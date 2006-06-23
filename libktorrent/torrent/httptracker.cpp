@@ -182,7 +182,7 @@ namespace bt
 
 		url.setEncodedPathAndQuery(epq);
 	//	Out() << "query : " << url.query() << endl;
-		Out() << "Doing tracker request to url : " << url.prettyURL() << endl;
+		Out(SYS_TRK|LOG_NOTICE) << "Doing tracker request to url : " << url.prettyURL() << endl;
 
 		
 		
@@ -213,7 +213,7 @@ namespace bt
 		
 		if (j->error())
 		{
-			Out() << "Error : " << j->errorString() << endl;
+			Out(SYS_TRK|LOG_IMPORTANT) << "Error : " << j->errorString() << endl;
 			active_job = 0;
 			frontend->emitError();
 		}

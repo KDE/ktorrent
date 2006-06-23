@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2006 by Ivan Vasic                                      *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,43 +15,37 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef UPNPTESTAPP_H
-#define UPNPTESTAPP_H
+#ifndef KTLOGPREFPAGE_H
+#define KTLOGPREFPAGE_H
 
-#include <kmainwindow.h>
-#include <libktorrent/util/log.h>
-#include <libktorrent/torrent/globals.h>
-#include <plugins/upnp/upnprouter.h>
-#include <plugins/upnp/upnpdescriptionparser.h>
-#include <plugins/upnp/upnpmcastsocket.h>
-#include <interfaces/logmonitorinterface.h>
+#include <interfaces/prefpageinterface.h>
 
-class MainWidget;
+#include "logprefwidget.h"
 
-using kt::UPnPRouter;
-
-/**
-	@author Joris Guisson <joris.guisson@gmail.com>
-*/
-class UPnPTestApp : public KMainWindow, public kt::LogMonitorInterface
+namespace kt
 {
-	Q_OBJECT
-public:
-	UPnPTestApp(QWidget *parent = 0, const char *name = 0);
-	virtual ~UPnPTestApp();
-	
-	virtual void message(const QString& line, unsigned int arg);
-	
-private slots:
-	void discovered(UPnPRouter* router);
-	void onTestBtn();
-	void onCloseBtn();
-	
-private:
-	kt::UPnPMCastSocket* sock;
-	MainWidget* mwnd;
-};
+
+	/**
+	 * LogViewer plugin preferences page
+	 * @author Ivan Vasic <ivasic@gmail.com>
+	*/
+	class LogPrefPage : public PrefPageInterface
+	{
+		public:
+			LogPrefPage();
+			virtual ~LogPrefPage();
+
+			virtual bool apply();
+			virtual void createWidget(QWidget* parent);
+			virtual void updateData();
+			virtual void deleteWidget();
+			
+		private:
+			LogPrefWidget* m_widget;
+	};
+
+}
 
 #endif

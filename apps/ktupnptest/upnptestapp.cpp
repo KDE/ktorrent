@@ -38,7 +38,7 @@ UPnPTestApp::UPnPTestApp(QWidget *parent, const char *name)
 	setCentralWidget(mwnd);
 	connect(mwnd->test_btn,SIGNAL(clicked()),this,SLOT(onTestBtn()));
 	connect(mwnd->close_btn,SIGNAL(clicked()),this,SLOT(onCloseBtn()));
-	bt::Log & lg = bt::Globals::instance().getLog();
+	bt::Log & lg = bt::Globals::instance().getLog(0);
 	lg.addMonitor(this);
 	Out() << "UPnPTestApp started up !" << endl;
 }
@@ -46,7 +46,7 @@ UPnPTestApp::UPnPTestApp(QWidget *parent, const char *name)
 
 UPnPTestApp::~UPnPTestApp()
 {
-	bt::Log & lg = bt::Globals::instance().getLog();
+	bt::Log & lg = bt::Globals::instance().getLog(0);
 	lg.removeMonitor(this);
 	sock->deleteLater();
 }
@@ -73,7 +73,7 @@ void UPnPTestApp::onCloseBtn()
 	kapp->quit();
 }
 
-void UPnPTestApp::message(const QString& line)
+void UPnPTestApp::message(const QString& line, unsigned int arg)
 {
 	mwnd->output->append(line);
 }
