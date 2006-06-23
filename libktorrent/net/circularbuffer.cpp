@@ -51,7 +51,7 @@ namespace net
 		mutex.lock();
 		Uint32 wp = (first + size) % max_size;
 		Uint32 j = 0;
-		while (size < max_size && j < dsize)
+		while (size < max_size && (dsize == 0 || j < dsize))
 		{
 			buf[wp] = data[j];
 			j++;
