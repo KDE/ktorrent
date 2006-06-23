@@ -102,7 +102,7 @@ namespace kt
 			blocks.push_back(hb);
 		}
 		
-		Out() << "AntiP2P header loaded." << endl;
+		Out(SYS_IPF|LOG_NOTICE) << "AntiP2P header loaded." << endl;
 		header_loaded = true;
 	}
 	

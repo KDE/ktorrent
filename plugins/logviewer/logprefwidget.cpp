@@ -81,11 +81,11 @@ namespace kt
 		{
 			case 0x0F:
 				return 0;
-			case 0x01:
+			case 0x07:
 				return 1;
 			case 0x03:
 				return 2;
-			case 0x07:
+			case 0x01:
 				return 3;
 			case 0x00:
 				return 4;
@@ -101,11 +101,11 @@ namespace kt
 			case 0:
 				return 0x0F;
 			case 1:
-				return 0x01;
+				return 0x07;
 			case 2:
 				return 0x03;
 			case 3:
-				return 0x07;
+				return 0x01;
 			case 4:
 				return 0x00;
 			default:

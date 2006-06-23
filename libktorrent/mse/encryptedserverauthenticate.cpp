@@ -253,7 +253,7 @@ namespace mse
 			if (ba <= 68 && Globals::instance().getServer().unencryptedConnectionsAllowed())
 			{
 				// assume normal handshake if less then 68 bytes have arrived
-				Out() << "Going the normal ServerAuthenticate routte" << endl;
+				Out(SYS_CON|LOG_DEBUG) << "Going the normal ServerAuthenticate routte" << endl;
 				state = NON_ENCRYPTED_HANDSHAKE;
 				ServerAuthenticate::onReadyRead();
 			}

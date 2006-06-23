@@ -53,16 +53,22 @@ namespace kt
 			
 			static LogFlags& instance();
 			
+			///Checks current flags with arg. Return true if message should be shown
 			bool checkFlags(unsigned int arg);
 			
+			///Updates flags from Settings::
 			void updateFlags();
 			
+			///Destroys this object
 			static void finalize();
 			
+			///Checks if LogViewer should print rich text format.
 			bool useRichText();
 			
+			///Sets a pointer to LogViewer
 			void setLog(LogViewer* log);
 			
+			///Makes line rich text according to arg level.
 			QString& getFormattedMessage(unsigned int arg, QString& line);
 			
 		private:

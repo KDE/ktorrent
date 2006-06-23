@@ -99,7 +99,7 @@ namespace net
 		
 		if (start_thread)
 		{
-			Out() << "Starting socketmonitor thread" << endl;
+			Out(SYS_CON|LOG_DEBUG) << "Starting socketmonitor thread" << endl;
 			last_selected = bt::GetCurrentTime();
 			if (!mt)
 				mt = new MonitorThread(this);
@@ -115,7 +115,7 @@ namespace net
 		mutex.unlock();
 		if (mt && smap.count() == 0)
 		{
-			Out() << "Stopping socketmonitor thread" << endl;
+			Out(SYS_CON|LOG_DEBUG) << "Stopping socketmonitor thread" << endl;
 			mt->stop();
 		}
 	}

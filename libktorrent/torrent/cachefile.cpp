@@ -362,7 +362,7 @@ namespace bt
 		
 	void CacheFile::preallocate()
 	{
-		Out() << "Preallocating file " << path << " (" << max_size << " bytes)" << endl;
+		Out(SYS_GEN|LOG_NOTICE) << "Preallocating file " << path << " (" << max_size << " bytes)" << endl;
 		bool close_again = false;
 		if (fd == -1)
 		{
@@ -387,7 +387,7 @@ namespace bt
 		}
 
 		file_size = FileSize(fd);
-		Out() << "file_size = " << file_size << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "file_size = " << file_size << endl;
 		if (close_again)
 			closeTemporary();
 	}

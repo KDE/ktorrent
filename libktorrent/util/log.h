@@ -178,6 +178,10 @@ namespace bt
 		 */
 		Log & operator << (const KURL & url);
 		
+		/**
+		 * Sets a filter for log messages. Applies only to listeners via LogMonitorInterface!
+		 * @param filter SYS & LOG flags combined with bitwise OR.
+		 */
 		void setFilter(unsigned int filter);
 		
 		/// Lock the mutex of the log, should be called in Out()

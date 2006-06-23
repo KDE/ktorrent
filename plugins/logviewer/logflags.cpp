@@ -55,34 +55,34 @@ namespace kt
 			return m_flags.SYSGEN & arg;
 
 		if(arg & SYS_CON)
-			return m_flags.SYSCON & arg;
+			return (arg & m_flags.SYSCON) && ((arg & 0x0000000F) <= m_flags.SYSCON);
 
 		if(arg & SYS_DHT)
-			return m_flags.SYSDHT & arg;
+			return (arg & m_flags.SYSDHT) && ((arg & 0x0000000F) <= m_flags.SYSDHT);
 
 		if(arg & SYS_TRK)
-			return m_flags.SYSTRK & arg;
+			return (arg & m_flags.SYSTRK) && ((arg & 0x0000000F) <= m_flags.SYSTRK);
 
 		if(arg & SYS_INW)
-			return m_flags.SYSINW & arg;
+			return (arg & m_flags.SYSINW) && ((arg & 0x0000000F) <= m_flags.SYSINW);
 
 		if(arg & SYS_IPF)
-			return m_flags.SYSIPF & arg;
+			return (arg & m_flags.SYSIPF) && ((arg & 0x0000000F) <= m_flags.SYSIPF);
 
 		if(arg & SYS_PFI)
-			return m_flags.SYSPFI & arg;
+			return (arg & m_flags.SYSPFI) && ((arg & 0x0000000F) <= m_flags.SYSPFI);
 
 		if(arg & SYS_PNP)
-			return m_flags.SYSPNP & arg;
+			return (arg & m_flags.SYSPNP) && ((arg & 0x0000000F) <= m_flags.SYSPNP);
 
 		if(arg & SYS_SCD)
-			return m_flags.SYSSCD & arg;
+			return (arg & m_flags.SYSSCD) && ((arg & 0x0000000F) <= m_flags.SYSSCD);
 
 		if(arg & SYS_SNF)
-			return m_flags.SYSSNF & arg;
+			return (arg & m_flags.SYSSNF) && ((arg & 0x0000000F) <= m_flags.SYSSNF);
 
 		if(arg & SYS_SRC)
-			return m_flags.SYSSRC & arg;
+			return (arg & m_flags.SYSSRC) && ((arg & 0x0000000F) <= m_flags.SYSSRC);
 
 		return true;
 	}
