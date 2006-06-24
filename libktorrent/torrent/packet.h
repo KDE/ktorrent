@@ -57,17 +57,19 @@ namespace bt
 		const Uint8* getData() const {return data;}
 		Uint32 getDataLength() const {return size;}
 
+		Uint32 isSent() const {return written == size;}
 		
 		/// Make a description of the packet for debug purposes
 		//QString debugString() const;
 		
 		/**
-		 * Send the packet to a peer, return true if the full packet was written.
-		 * @param peer The peer
-		 * @param bytes_sent The number of bytes actually sent are placed in here
-		 * @return true if the packet was written fully
+		 * Put the packet in an output buffer.
+		 * @param buf The buffer
+		 * @param max_to_put Maximum bytes to put
+		 * @param piece Set to true if this is a piece 
+		 * @return The number of bytes put in the buffer
 		 */
-		bool send(Peer* peer,Uint32 & bytes_sent);
+		Uint32 putInOutputBuffer(Uint8* buf,Uint32 max_to_put,bool & piece);
 	};
 
 }

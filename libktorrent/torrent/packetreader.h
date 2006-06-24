@@ -20,36 +20,49 @@
 #ifndef BTPACKETREADER_H
 #define BTPACKETREADER_H
 
+#include <qmutex.h>
+#include <qptrlist.h>
+#include <net/bufferedsocket.h>
 #include "globals.h"
 
 namespace bt
 {
 	class SpeedEstimater;
 	class Peer;
+	
+	struct IncomingPacket
+	{
+		Uint8* data;
+		Uint32 size;
+		Uint32 read;
+		
+		IncomingPacket(Uint32 size);
+		virtual ~IncomingPacket();
+	};
 
 	/**
 	@author Joris Guisson
 	*/
-	class PacketReader
+	class PacketReader : public net::SocketReader
 	{
 		Peer* peer;
 		SpeedEstimater* speed;
-		Uint32 packet_length;
-		Uint8 type;
-		Uint32 data_read;
 		bool error;
-		bool type_read;
+		QPtrList<IncomingPacket> packet_queue;
+		QMutex mutex;
+		Uint8 len[4];
+		int len_received;
 	public:
 		PacketReader(Peer* peer,SpeedEstimater* speed);
 		virtual ~PacketReader();
-
+		
 		void update();
-		Uint32 getPacketLength() const {return packet_length;}
 		bool ok() const {return !error;}
-		bool moreData() const;
 	private:
-		void newPacket();
-		void readPacket();
+		Uint32 newPacket(Uint8* buf,Uint32 size);
+		Uint32 readPacket(Uint8* buf,Uint32 size);
+		virtual void onDataReady(Uint8* buf,Uint32 size);
+		
 	};
 
 }

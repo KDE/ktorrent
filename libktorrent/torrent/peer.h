@@ -257,8 +257,6 @@ namespace bt
 		void gotPortPacket(const QString & ip,Uint16 port);
 		
 	private:
-		void readPacket();
-		
 		void packetReady(const Uint8* packet,Uint32 size);
 
 	private:

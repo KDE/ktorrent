@@ -149,7 +149,6 @@ namespace net
 			Uint32 as = (Uint32)floor(allowance / (wbs.count() - cnt));
 			BufferedSocket* s = *i;
 			Uint32 ret = s->writeBuffered(as);
-			s->addBytesSent(ret);
 			if (ret > allowance)
 				allowance = 0;
 			else
@@ -165,7 +164,6 @@ namespace net
 		fd_set fds,wfds;
 		FD_ZERO(&fds);
 		FD_ZERO(&wfds);
-		Uint32 sleep_time = 0;
 		
 		int max = 0;
 		mutex.lock();
@@ -176,7 +174,7 @@ namespace net
 			if (s && s->ok())
 			{
 				// if we have bytes to write, see if we can write them
-				if (s->bytesReadyToWrite() > 0)
+				if (s->bytesReadyToWrite())
 					FD_SET(s->fd(),&wfds);
 				
 				FD_SET(s->fd(),&fds);
@@ -188,7 +186,7 @@ namespace net
 		}
 		mutex.unlock();
 		
-		struct timeval tv = {0,100*1000};
+		struct timeval tv = {0,50*1000};
 		
 		if (select(max+1,&fds,&wfds,NULL,&tv) > 0)
 		{
@@ -222,7 +220,7 @@ namespace net
 					if (ucap == 0)
 					{
 						// we can send bytes from the buffer so send them
-						s->addBytesSent(s->writeBuffered(0));
+						s->writeBuffered(0);
 					}
 					else
 					{
@@ -240,8 +238,17 @@ namespace net
 				processOutgoingData(wbs,now);
 			
 			mutex.unlock();
+			if (dcap > 0 || ucap > 0)
+			{
+				// sleep enough, so we don't consume to much
+				if (last_selected - now < 50)
+				{
+					last_selected = now;
+					usleep(100*1000);
+				}	
+			}
 			last_selected = now;
-			usleep(100*1000); // sleep here, otherwise we will consume to much CPU 
+			
 		}
 		
 	//	if (sleep_time)

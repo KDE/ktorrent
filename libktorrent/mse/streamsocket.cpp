@@ -45,7 +45,8 @@ namespace mse
 
 	StreamSocket::StreamSocket() : sock(0),enc(0),monitored(false)
 	{
-		sock = new BufferedSocket(true,2*(MAX_PIECE_LEN + 13),2*(MAX_PIECE_LEN + 13));
+		sock = new BufferedSocket(true);
+		sock->setNonBlocking();
 		reinserted_data = 0;
 		reinserted_data_size = 0;
 		reinserted_data_read = 0;
@@ -54,7 +55,8 @@ namespace mse
 
 	StreamSocket::StreamSocket(int fd) : sock(0),enc(0),monitored(false)
 	{
-		sock = new BufferedSocket(fd,2*(MAX_PIECE_LEN + 13),2*(MAX_PIECE_LEN + 13));
+		sock = new BufferedSocket(fd);
+		sock->setNonBlocking();
 		reinserted_data = 0;
 		reinserted_data_size = 0;
 		reinserted_data_read = 0;
@@ -69,92 +71,91 @@ namespace mse
 		delete sock;
 	}
 	
-	void StreamSocket::startMonitoring()
+	void StreamSocket::startMonitoring(net::SocketReader* rdr,net::SocketWriter* wrt)
 	{
+		this->rdr = rdr;
+		this->wrt = wrt;
+		sock->setReader(this);
+		sock->setWriter(this);
 		SocketMonitor::instance().add(sock);
 		monitored = true;
+		if (reinserted_data)
+		{
+			if (enc)
+				enc->decrypt(reinserted_data + reinserted_data_read,
+							 reinserted_data_size - reinserted_data_read);
+			
+			rdr->onDataReady(reinserted_data + reinserted_data_read,
+							 reinserted_data_size - reinserted_data_read);
+			delete [] reinserted_data;
+			reinserted_data = 0;
+			reinserted_data_size = 0;
+		}
 	}
 	
 		
 	Uint32 StreamSocket::sendData(const Uint8* data,Uint32 len)
 	{
-		if (!monitored)
+		if (enc)
 		{
-			if (enc)
+			// we need to make sure all data is sent because of the encryption
+			Uint32 ds = 0;
+			const Uint8* ed = enc->encrypt(data,len);
+			while (sock->ok() && ds < len)
 			{
-				// we need to make sure all data is sent because of the encryption
-				Uint32 ds = 0;
-				const Uint8* ed = enc->encrypt(data,len);
-				while (sock->ok() && ds < len)
-				{
-					ds += sock->send(ed + ds,len - ds);
-				}
-				return ds;
+				ds += sock->send(ed + ds,len - ds);
 			}
-			else
-				return sock->send(data,len);
+			if (ds != len)
+				Out() << "ds != len" << endl;
+			return ds;
 		}
 		else
 		{
-			// if the buffer is full return 0
-			Uint32 fs = sock->freeSpaceInWriteBuffer();
-			if (fs == 0)
-				return 0;
-			
-			if (enc)
-			{
-				// only encrypt the amount we can put in the buffer
-				if (len > fs)
-					len = fs;
-				return sock->write(enc->encrypt(data,len),len);
-			}
-			else
-				return sock->write(data,len);
+			Uint32 ret = sock->send(data,len);
+			if (ret != len)
+				Out() << "ret != len" << endl;
+			return ret;
 		}
 	}
 		
 	Uint32 StreamSocket::readData(Uint8* buf,Uint32 len)
-	{	
-		Uint32 off = 0;
-		if (reinserted_data && reinserted_data_size - reinserted_data_read > 0)
+	{
+		Uint32 ret2 = 0;
+		if (reinserted_data)
 		{
 			Uint32 tr = reinserted_data_size - reinserted_data_read;
-			if (tr > len)
-				tr = len;
-			
-			memcpy(buf,reinserted_data + reinserted_data_read,tr);
-			reinserted_data_read += tr;
-			if (reinserted_data_size == reinserted_data_read)
+			if (tr <= len)
 			{
-				// the reinserted data has been read, so clear it
+				memcpy(buf,reinserted_data + reinserted_data_read,tr);
 				delete [] reinserted_data;
 				reinserted_data = 0;
 				reinserted_data_size = reinserted_data_read = 0;
+				ret2 = tr;
 			}
-			if (enc)
-				enc->decrypt(buf,tr);
-			
-			len -= tr;
-			off = tr;
-			if (len == 0)
+			else
+			{
+				tr = len;
+				memcpy(buf,reinserted_data + reinserted_data_read,tr);
+				reinserted_data_read += tr;
+				if (enc)
+					enc->decrypt(buf,tr);
 				return tr;
+			}
 		}
 		
-		Uint32 ret = 0;
-		if (monitored)
-			ret = sock->read(buf + off,len);
-		else
-			ret = sock->recv(buf + off,len);
+		if (len == ret2)
+			return ret2;
 		
-		if (ret > 0 && enc)
-			enc->decrypt(buf,ret);
+		Uint32 ret = sock->recv(buf + ret2,len - ret2);
+		if (ret + ret2 > 0 && enc)
+			enc->decrypt(buf,ret + ret2);
 		
 		return ret;
 	}
 		
 	Uint32 StreamSocket::bytesAvailable() const
 	{
-		Uint32 ba = monitored ? sock->bytesBufferedAvailable() : sock->bytesAvailable();
+		Uint32 ba = sock->bytesAvailable();
 		if (reinserted_data_size - reinserted_data_read > 0)
 			return  ba + (reinserted_data_size - reinserted_data_read);
 		else
@@ -191,40 +192,6 @@ namespace mse
 		delete enc;
 		enc = 0;
 	}
-	/*
-	void StreamSocket::attachPeer(bt::Peer* peer)
-	{
-		QObject::connect(sock,SIGNAL(connectionClosed()),peer,SLOT(connectionClosed()));
-		QObject::connect(sock,SIGNAL(readyRead()),peer,SLOT(readyRead()));
-		QObject::connect(sock,SIGNAL(error(int)),peer,SLOT(error(int)));
-		QObject::connect(sock,SIGNAL(bytesWritten(int)),peer,SLOT(dataWritten(int )));
-	}
-	
-	void StreamSocket::detachPeer(bt::Peer* peer)
-	{
-		QObject::disconnect(sock,SIGNAL(connectionClosed()),peer,SLOT(connectionClosed()));
-		QObject::disconnect(sock,SIGNAL(readyRead()),peer,SLOT(readyRead()));
-		QObject::disconnect(sock,SIGNAL(error(int)),peer,SLOT(error(int)));
-		QObject::disconnect(sock,SIGNAL(bytesWritten(int)),peer,SLOT(dataWritten(int)));
-	}
-	
-	void StreamSocket::attachAuthenticate(bt::AuthenticateBase* auth)
-	{
-		QObject::connect(sock,SIGNAL(readyRead()),auth,SLOT(onReadyRead()));
-		QObject::connect(sock,SIGNAL(error(int)),auth,SLOT(onError(int )));
-	}
-	
-	void StreamSocket::detachAuthenticate(bt::AuthenticateBase* auth)
-	{
-		QObject::disconnect(sock,SIGNAL(readyRead()),auth,SLOT(onReadyRead()));
-		QObject::disconnect(sock,SIGNAL(error(int)),auth,SLOT(onError(int )));
-	}
-	
-	void StreamSocket::onConnected(QObject* obj,const char* method)
-	{
-		QObject::connect(sock,SIGNAL(connected()),obj,method);
-	}
-	*/
 	
 	bool StreamSocket::ok() const
 	{
@@ -265,6 +232,38 @@ namespace mse
 	bool StreamSocket::connecting() const
 	{
 		return sock->state() == net::Socket::CONNECTING;
+	}
+	
+	void StreamSocket::onDataReady(Uint8* buf,Uint32 size)
+	{
+		if (enc)
+			enc->decrypt(buf,size);
+		
+		if (rdr)
+			rdr->onDataReady(buf,size);
+	}
+	
+	Uint32 StreamSocket::onReadyToWrite(Uint8* data,Uint32 max_to_write)
+	{
+		if (!wrt)
+			return 0;
+		
+		Uint32 ret = wrt->onReadyToWrite(data,max_to_write);
+		if (enc > 0 && ret > 0) // do encryption if necessary
+			enc->encryptReplace(data,ret);
+		
+		
+		return ret;
+	}
+	
+	bool StreamSocket::hasBytesToWrite() const
+	{
+		return wrt ? wrt->hasBytesToWrite() : false;
+	}
+	
+	Uint32 StreamSocket::dataWritten() const
+	{
+		return sock ? sock->dataWritten() : 0;
 	}
 }
 

@@ -93,13 +93,21 @@ namespace bt
 	}
 #endif
 
+	IncomingPacket::IncomingPacket(Uint32 size) : data(0),size(size),read(0)
+	{
+		data = new Uint8[size];
+	}
+	
+	IncomingPacket::~IncomingPacket()
+	{
+		delete [] data;
+	}
 	
 	PacketReader::PacketReader(Peer* peer,SpeedEstimater* speed) 
 		: peer(peer),speed(speed),error(false)
 	{
-		packet_length = 0;
-		data_read = 0;
-		type = 0;
+		packet_queue.setAutoDelete(true);
+		len_received = -1;
 	}
 
 
@@ -113,124 +121,129 @@ namespace bt
 		if (error)
 			return;
 		
-		if (packet_length == 0)
+		mutex.lock();
+		// pass packets to peer
+		while (packet_queue.count() > 0)
 		{
-			if (peer->bytesAvailable() > 0)
-				newPacket();
+			IncomingPacket* pck = packet_queue.first();
+			if (pck->read == pck->size)
+			{
+				// full packet is read pass it to peer
+				peer->packetReady(pck->data,pck->size);
+				packet_queue.removeFirst();
+			}
+			else
+			{
+				// packet is not yet full, break out of loop
+				break;
+			}
 		}
-		else 
-		{
-			// only update if there is new data
-			if (peer->bytesAvailable() > data_read)
-				readPacket();
-		}
+		mutex.unlock();
 	}
 	
-	void PacketReader::newPacket()
+	Uint32 PacketReader::newPacket(Uint8* buf,Uint32 size)
 	{
-		data_read = 0;
-		type = 0;
-		type_read = false;
-		Uint32 available = peer->bytesAvailable();
-		if (available < 4)
-			return;
-		
-		Uint8 len[4];
-		if (peer->readData(len,4) != 4)
+		Uint32 packet_length = 0;
+		Uint32 am_of_len_read = 0;
+		if (len_received > 0)
 		{
-			error = true;
-			return;
+			if (size < 4 - len_received)
+			{
+				memcpy(len + len_received,buf,size);
+				len_received += size;
+				return size;
+			}
+			else
+			{
+				memcpy(len + len_received,buf,4 - len_received);
+				am_of_len_read = 4 - len_received;
+				len_received = 0;
+				packet_length = ReadUint32(len,0);
+				
+			}
 		}
-			
-		packet_length = ReadUint32(len,0);
-		
-		// a keep alive message
-		if (packet_length == 0)
-			return;
-		
-		if (peer->bytesAvailable() >= 1)
+		else if (size < 4)
 		{
-			// read the type
-			peer->readData(&type,1);
-			type_read = true;
+			memcpy(len,buf,size);
+			len_received = size;
+			return size;
 		}
 		else
 		{
-			return;
+			packet_length = ReadUint32(buf,0);
+			am_of_len_read = 4;
 		}
 		
+		if (packet_length == 0)
+			return am_of_len_read;
 		
 		if (packet_length > MAX_PIECE_LEN + 13)
 		{
 			Out() << " packet_length too large " << packet_length << endl;
 
-			Out() << " " << len[0] << " " << len[1] << " "
-					<< len[2] << " " << len[3] << endl;
-			packet_length = 0;
 			error = true;
-			return;
+			return size;
 		}
 		
-		if (packet_length == 1)
+		IncomingPacket* pck = new IncomingPacket(packet_length);
+		packet_queue.append(pck);
+		return am_of_len_read + readPacket(buf + am_of_len_read,size - am_of_len_read);
+	}
+
+	Uint32 PacketReader::readPacket(Uint8* buf,Uint32 size)
+	{
+		if (!size)
+			return 0;
+		
+		IncomingPacket* pck = packet_queue.last();
+		if (pck->read + size >= pck->size)
 		{
-			peer->packetReady(&type,1);
-			packet_length = 0;
+			// we can read the full packet
+			Uint32 tr = pck->size - pck->read;
+			memcpy(pck->data + pck->read,buf,tr);
+			pck->read += tr;
+			if (pck->data[0] == PIECE)
+				speed->onRead(tr);
+			return tr;
 		}
 		else
 		{
-			readPacket();
+			// we can do a partial read
+			Uint32 tr = size;
+			memcpy(pck->data + pck->read,buf,tr);
+			pck->read += tr;
+			if (pck->data[0] == PIECE)
+				speed->onRead(tr);
+			return tr;
 		}
-	}
-
-	void PacketReader::readPacket()
-	{
-		static Uint8 rbuffer[MAX_PIECE_LEN + 13];
-		
-		
-		Uint32 ba = peer->bytesAvailable();
-		if (!type_read)
-		{
-			if (ba >= 1)
-			{
-				peer->readData(&type,1);
-				type_read = true;
-				ba -= 1;
-			}
-			else
-			{
-				return;
-			}
-		}
-		
-		if (ba < packet_length - 1) // packet length - 1 , we have allready read the first byte
-		{
-			if (ba > data_read && type == PIECE)
-			{
-				// update download speed
-				speed->onRead(ba - data_read);
-				data_read = ba;
-			}
-			return;
-		}
-		
-		
-		Uint32 ret = peer->readData(rbuffer+1,packet_length - 1);
-		rbuffer[0] = type;
-		if (type == PIECE)
-		{
-			speed->onRead(packet_length - data_read);
-		}
-		
-		peer->packetReady(rbuffer,packet_length);
-		packet_length = 0;
-#ifdef LOG_PACKET
-		LogPacket(rbuffer,packet_length);
-#endif
 	}
 	
-	bool PacketReader::moreData() const
-	{
-		return packet_length == 0 ? peer->bytesAvailable() > 0 : peer->bytesAvailable() > data_read;
-	}
 
+	void PacketReader::onDataReady(Uint8* buf,Uint32 size)
+	{
+		mutex.lock();
+		if (packet_queue.count() == 0)
+		{
+			Uint32 ret = 0;
+			while (ret < size && !error)
+			{
+				ret += newPacket(buf + ret,size - ret);
+			}
+		}
+		else
+		{
+			Uint32 ret = 0;
+			IncomingPacket* pck = packet_queue.last();
+			if (pck->read == pck->size) // last packet in queue is fully read
+				ret = newPacket(buf,size);
+			else
+			 	ret = readPacket(buf,size);
+			
+			while (ret < size  && !error)
+			{
+				ret += newPacket(buf + ret,size - ret);
+			}
+		}
+		mutex.unlock();
+	}
 }

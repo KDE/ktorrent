@@ -37,6 +37,7 @@ namespace bt
 	{
 		rone_time = 0;
 		can_generate_af = false;
+		uploaded = 0;
 	}
 
 
@@ -59,25 +60,24 @@ namespace bt
 	
 	Uint32 PeerUploader::update(ChunkManager & cman,Uint32 opt_unchoked)
 	{
-		Uint32 uploaded = 0;	
-		
+		Uint32 ret = uploaded;
+		uploaded = 0;
 		// generate allowed fast set
 		if (can_generate_af)
 		{
 			generateAF(cman);
 			can_generate_af = false;
 		}
-
+		
 		PacketWriter & pw = peer->getPacketWriter();
-		uploaded += pw.update();
 		
 		// if we have choked the peer do not upload
 		if (peer->areWeChoked() && allowed_fast.size() == 0)
-			return uploaded;
+			return ret;
 				
 		if (peer->isSnubbed() && !peer->areWeChoked() &&
 			cman.chunksLeft() != 0 && peer->getID() != opt_unchoked)
-			return uploaded;
+			return ret;
 		
 		if (requests.count() > 1 || requests.count() == 0)
 			rone_time = bt::GetCurrentTime();
@@ -85,20 +85,19 @@ namespace bt
 		bool rone_send = (requests.count() == 1 && bt::GetCurrentTime() - rone_time > 5000);
 		bool requests_left = requests.count() > 1 || rone_send;
 		
-		while (requests_left && pw.getNumPacketsToWrite() == 0)
+		while (requests_left && pw.getNumPacketsToWrite() < 5)
 		{	
 			Request r = requests.front();
 			// if we are choked only send when the request
 			// is in the allowed_fast set
 			if (peer->areWeChoked() && allowed_fast.count(r.getIndex()) == 0)
-				return uploaded;
+				return ret;
 
 			Chunk* c = cman.grabChunk(r.getIndex());	
 			if (c)
 			{
 				pw.sendChunk(r.getIndex(),r.getOffset(),r.getLength(),c);
 				requests.pop_front();
-				uploaded += pw.update();
 			}
 			else
 			{
@@ -114,7 +113,7 @@ namespace bt
 			requests_left = requests.count() > 1 || rone_send;
 		}
 		
-		return uploaded;
+		return ret;
 	}
 	
 	void PeerUploader::rejectAll()

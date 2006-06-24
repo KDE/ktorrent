@@ -76,6 +76,14 @@ namespace mse
 		const Uint8* encrypt(const Uint8* data,Uint32 len);
 		
 		/**
+		 * Encrypt data, encryption will happen in the same buffer. So data will 
+		 * be changed replaced by it's encrypted version.
+		 * @param data The data to encrypt 
+		 * @param len The length of the data
+		 */
+		void encryptReplace(Uint8* data,Uint32 len);
+		
+		/**
 		 * Encrypts one byte.
 		 * @param b The byte to encrypt
 		 * @return The encrypted byte

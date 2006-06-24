@@ -92,4 +92,9 @@ namespace mse
 		return rc4_enc_buffer;
 	}
 	
+	void RC4Encryptor::encryptReplace(Uint8* data,Uint32 len)
+	{
+		enc.process(data,data,len);
+	}
+	
 }

@@ -27,12 +27,20 @@ using namespace bt;
 namespace net
 {
 
-	BufferedSocket::BufferedSocket(int fd,Uint32 rbuf_size,Uint32 wbuf_size) : Socket(fd),rbuf(rbuf_size),wbuf(wbuf_size),bytes_sent(0)
+	BufferedSocket::BufferedSocket(int fd) : Socket(fd),rdr(0),wrt(0)
 	{
+		bytes_in_output_buffer = 0;
+		bytes_sent = 0;
+		outstanding_bytes = 0;
+		outstanding_bytes_transmitted = 0;
 	}
 	
-	BufferedSocket::BufferedSocket(bool tcp,Uint32 rbuf_size,Uint32 wbuf_size) : Socket(tcp),rbuf(rbuf_size),wbuf(wbuf_size),bytes_sent(0)
+	BufferedSocket::BufferedSocket(bool tcp) : Socket(tcp),rdr(0),wrt(0)
 	{
+		bytes_in_output_buffer = 0;
+		bytes_sent = 0;
+		outstanding_bytes = 0;
+		outstanding_bytes_transmitted = 0;
 	}
 
 
@@ -41,28 +49,24 @@ namespace net
 	}
 
 	Uint32 BufferedSocket::readBuffered(Uint32 max_bytes_to_read)
-	{
-		if (rbuf.freeSpace() == 0)
-			return 0;
-		
-		Uint8 tmp[512];
+	{	
+		Uint8 tmp[4096];
 		Uint32 br = 0;
 		bool no_limit = (max_bytes_to_read == 0);
 			
-		while ((br < max_bytes_to_read || no_limit) && bytesAvailable() > 0 && rbuf.freeSpace() > 0)
+		while ((br < max_bytes_to_read || no_limit) && bytesAvailable() > 0)
 		{
 			Uint32 tr = bytesAvailable();
-			if (tr > 512)
-				tr = 512;
-			if (tr > rbuf.freeSpace())
-				tr = rbuf.freeSpace();
+			if (tr > 4096)
+				tr = 4096;
 			if (!no_limit && tr + br > max_bytes_to_read)
 				tr = max_bytes_to_read - br;
 			
 			int ret = Socket::recv(tmp,tr);
 			if (ret != 0)
 			{
-				rbuf.write(tmp,ret);
+				if (rdr)
+					rdr->onDataReady(tmp,ret);
 				br += ret;
 			}
 			else
@@ -76,48 +80,89 @@ namespace net
 		return br;
 	}
 	
-	Uint32 BufferedSocket::read(Uint8* data,Uint32 max_to_read)
+	Uint32 BufferedSocket::sendOutputBuffer(Uint32 max)
 	{
-		return rbuf.read(data,max_to_read);
-	}
-
-	Uint32 BufferedSocket::bytesBufferedAvailable() const
-	{
-		return rbuf.capacity() - rbuf.freeSpace();
+		if (bytes_in_output_buffer == 0)
+			return 0;
+		
+		if (max == 0 || bytes_in_output_buffer <= max)
+		{
+			// try to send everything
+			Uint32 bw = bytes_in_output_buffer;
+			Uint32 off = bytes_sent;
+			Uint32 ret = Socket::send(output_buffer + off,bw);
+			bytes_in_output_buffer -= ret;
+			bytes_sent += ret;
+			if (bytes_sent == bytes_in_output_buffer)
+				bytes_in_output_buffer = bytes_sent = 0;
+			return ret;
+		}
+		else 
+		{
+			Uint32 bw = max;
+			Uint32 off = bytes_sent;
+			Uint32 ret = Socket::send(output_buffer + off,bw);
+			bytes_in_output_buffer -= ret;
+			bytes_sent += ret;
+			return ret;
+		}
 	}
 	
 	Uint32 BufferedSocket::writeBuffered(Uint32 max)
 	{
-		Uint32 brw = bytesReadyToWrite();
-		if (!brw)
+		// we now know that all previously outstanding_bytes are written
+		mutex.lock();
+		outstanding_bytes_transmitted += outstanding_bytes;
+		outstanding_bytes = 0;
+		mutex.unlock();
+		
+		if (!wrt)
 			return 0;
 		
-		return wbuf.send(this,max);
+		Uint32 bw = 0;
+		bool no_limit = max == 0;
+		if (bytes_in_output_buffer > 0)
+		{
+			Uint32 ret = sendOutputBuffer(max);
+			if (bytes_in_output_buffer > 0)
+			{
+				mutex.lock();
+				outstanding_bytes += ret;
+				mutex.unlock();
+				// haven't sent it fully so return
+				return ret; 
+			}
+			else if (!no_limit)
+				max -= ret; // decrease limit when there is none
+			
+			bw += ret;
+		}
+		
+		// run as long as we do not hit the limit and we can send everything
+		while ((no_limit || bw < max) && bytes_in_output_buffer == 0)
+		{
+			// fill output buffer
+			bytes_in_output_buffer = wrt->onReadyToWrite(output_buffer,4096);
+			bytes_sent = 0;
+			if (bytes_in_output_buffer == 0)
+				break; // no data provided so just break out of the loop
+			
+			// try to send 
+			bw += sendOutputBuffer(max - bw);
+		}
+		
+		mutex.lock();
+		outstanding_bytes += bw;
+		mutex.unlock();
+		return bw;
 	}
 	
-	Uint32 BufferedSocket::write(const Uint8* data,Uint32 nb)
-	{
-		return wbuf.write(data,nb);
-	}
-	
-	Uint32 BufferedSocket::bytesReadyToWrite() const
-	{
-		return wbuf.capacity() - wbuf.freeSpace();
-	}
-	
-	Uint32 BufferedSocket::getBytesSent()
+	Uint32 BufferedSocket::dataWritten() const
 	{
 		mutex.lock();
-		Uint32 ret = bytes_sent;
-		bytes_sent = 0;
+		Uint32 ret = outstanding_bytes_transmitted;
+		outstanding_bytes_transmitted = 0;
 		mutex.unlock();
 		return ret;
-	}
-		
-	void BufferedSocket::addBytesSent(Uint32 bs)
-	{
-		mutex.lock();
-		bytes_sent += bs;
-		mutex.unlock();
 	}
 }

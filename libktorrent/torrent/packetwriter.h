@@ -20,7 +20,9 @@
 #ifndef BTPACKETWRITER_H
 #define BTPACKETWRITER_H
 
+#include <qmutex.h>
 #include <qptrlist.h>
+#include <net/bufferedsocket.h>
 #include "globals.h"
 
 namespace bt
@@ -34,12 +36,13 @@ namespace bt
 	/**
 	@author Joris Guisson
 	*/
-	class PacketWriter
+	class PacketWriter : public net::SocketWriter
 	{
 		Peer* peer;
 		QPtrList<Packet> packets;
-		Uint32 uploaded;
-		Uint32 time_of_last_transmit;
+		mutable Uint32 uploaded;
+		mutable Uint32 uploaded_non_data;
+		mutable QMutex mutex;
 	public:
 		PacketWriter(Peer* peer);
 		virtual ~PacketWriter();
@@ -134,20 +137,20 @@ namespace bt
 		 */
 		void sendSuggestPiece(Uint32 index);
 
-		/**
-		 * Try to send the remaining packets in the queue.
-		 * @return bytes written
-		 */
-		Uint32 update();
-
 		/// Get the number of packets which need to be written
-		Uint32 getNumPacketsToWrite() const {return packets.count();}
+		Uint32 getNumPacketsToWrite() const;
+		
+		/// Get the number of data bytes uploaded
+		Uint32 getUploadedDataBytes() const;
+		
+		/// Get the number of bytes uploaded
+		Uint32 getUploadedNonDataBytes() const;
 
 	
 	private:
-		bool sendPacket(Packet & p);
 		void queuePacket(Packet* p);
-		void sendSmallPackets();
+		virtual Uint32 onReadyToWrite(Uint8* data,Uint32 max_to_write);
+		virtual bool hasBytesToWrite() const;
 	};
 
 }

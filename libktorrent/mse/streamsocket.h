@@ -41,13 +41,18 @@ namespace mse
 {
 	class RC4Encryptor;
 	
+	
+	
 
 	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	
-		Wrapper around a TCP socket which handles RC4 encryption.
+	 * @author Joris Guisson <joris.guisson@gmail.com>
+	 * 
+	 * Wrapper around a TCP socket which handles RC4 encryption.
+	 * Once authentication is done, the sendData and readData interfaces should
+	 * not be used anymore, a SocketReader and SocketWriter should be provided,
+	 * so that reading and writing is controlled from the monitor thread.
 	*/
-	class StreamSocket : public QObject
+	class StreamSocket : public QObject,public net::SocketReader,public net::SocketWriter
 	{
 		Q_OBJECT
 	public:
@@ -113,7 +118,7 @@ namespace mse
 		int fd() const {return sock->fd();}
 		
 		/// Start monitoring of this socket by the monitor thread
-		void startMonitoring();
+		void startMonitoring(net::SocketReader* rdr,net::SocketWriter* wrt);
 		
 		/// Is this socket connecting to a remote host
 		bool connecting() const;
@@ -121,8 +126,13 @@ namespace mse
 		/// See if a connect was success full
 		bool connectSuccesFull() const {return sock->connectSuccesFull();}
 		
-		/// Get the number of bytes sent
-		Uint32 getBytesSent() {return sock->getBytesSent();}
+		/// Get the number of bytes which were sent (by the actual socket)
+		Uint32 dataWritten() const;
+	private:
+		virtual void onDataReady(Uint8* buf,Uint32 size);
+		virtual Uint32 onReadyToWrite(Uint8* data,Uint32 max_to_write);
+		virtual bool hasBytesToWrite() const;
+		
 	private:
 		net::BufferedSocket* sock;
 		RC4Encryptor* enc;
@@ -130,6 +140,8 @@ namespace mse
 		Uint32 reinserted_data_size;
 		Uint32 reinserted_data_read;
 		bool monitored;
+		net::SocketReader* rdr;
+		net::SocketWriter* wrt;
 	};
 
 }

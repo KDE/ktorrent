@@ -88,7 +88,7 @@ namespace bt
 		}
 		else
 		{
-			sock->startMonitoring();
+			sock->startMonitoring(preader,pwriter);
 		}
 	}
 
@@ -117,15 +117,7 @@ namespace bt
 	}
 
 	
-	void Peer::readPacket()
-	{
-		if (killed) 
-			return;
-		
-		preader->update();
-		if (!preader->ok())
-			kill();
-	}
+	
 	
 	void Peer::packetReady(const Uint8* packet,Uint32 len)
 	{
@@ -375,7 +367,7 @@ namespace bt
 	void Peer::dataWritten(int bytes)
 	{
 	//	Out() << "dataWritten " << bytes << endl;
-		up_speed->bytesWritten(bytes);
+		
 	}
 	
 	Uint32 Peer::getUploadRate() const 
@@ -400,14 +392,27 @@ namespace bt
 	
 	void Peer::update()
 	{
-		Uint32 cnt = 0;
-		while (preader->moreData() && !killed && cnt < 5)
+		if (killed)
+			return;
+		
+		preader->update();
+		
+		Uint32 data_bytes = pwriter->getUploadedDataBytes();
+		Uint32 non_data_bytes = pwriter->getUploadedNonDataBytes();
+		Uint32 dw = sock->dataWritten();
+		
+		if (data_bytes > 0)
 		{
-			readPacket();
-			cnt++;
+			up_speed->writeBytes(data_bytes,false);
+			stats.bytes_uploaded += data_bytes;
+			uploader->addUploadedBytes(data_bytes);
 		}
 		
-		up_speed->bytesWritten(sock->getBytesSent());
+		if (non_data_bytes > 0)
+			up_speed->writeBytes(non_data_bytes,true);
+		if (dw > 0)
+			up_speed->bytesWritten(dw);
+		
 		speed->update();
 		up_speed->update();
 	}

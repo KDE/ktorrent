@@ -19,6 +19,8 @@
  ***************************************************************************/
 #include <math.h>
 #include <util/functions.h>
+#include <util/log.h>
+#include <torrent/globals.h>
 #include "upspeedestimater.h"
 
 namespace bt

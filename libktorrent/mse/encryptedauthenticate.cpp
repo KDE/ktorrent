@@ -67,11 +67,8 @@ namespace mse
 		// we are connected so send ya and some padding
 		Uint8 tmp[608];
 		ya.toBuffer(tmp,96);
-		//DumpBigInt("Xa",xa);
-		//DumpBigInt("Ya",ya);
 		sock->sendData(tmp,96 + rand() % 512);
 		state = SENT_YA;
-//		Out() << "Sent YA" << endl;
 	}
 	
 	/*
@@ -86,7 +83,6 @@ namespace mse
 	
 	void EncryptedAuthenticate::handleYB()
 	{
-//		Out() << "Handle YB" << endl;
 		// if you can't sent 96 bytes you are not worth the effort
 		if (buf_size < 96)
 		{
@@ -97,10 +93,10 @@ namespace mse
 		
 		// read Yb
 		yb = BigInt::fromBuffer(buf,96);
-		//DumpBigInt("Yb",yb);
+		
 		// calculate s
 		s = mse::DHSecret(xa,yb);
-		//DumpBigInt("S",s);
+		
 		state = GOT_YB;
 		// now we must send line 3 
 		Uint8 tmp_buf[120]; // temporary buffer
@@ -111,19 +107,16 @@ namespace mse
 		s.toBuffer(tmp_buf + 4,96);
 		h1 = SHA1Hash::generate(tmp_buf,100);
 		sock->sendData(h1.getData(),20);
-//		Out() << "req1 = " << h1.toString() << endl;
 		
 		// generate second and third hash and xor them
 		memcpy(tmp_buf,"req2",4);
 		memcpy(tmp_buf+4,info_hash.getData(),20);
 		h1 = SHA1Hash::generate(tmp_buf,24);
-//		Out() << "req2 = " << h1.toString() << endl;
 		
 		memcpy(tmp_buf,"req3",4);
 		s.toBuffer(tmp_buf + 4,96);
 		h2 = SHA1Hash::generate(tmp_buf,100);
 		sock->sendData((h1 ^ h2).getData(),20);
-//		Out() << "req3 = " << h2.toString() << endl;
 		
 		// now we enter encrypted mode the keys are :
 		// HASH('keyA', S, SKEY) for the encryption key
@@ -131,9 +124,6 @@ namespace mse
 		enc = mse::EncryptionKey(true,s,info_hash);
 		dec = mse::EncryptionKey(false,s,info_hash);
 		
-//		Out() << "enc = " << enc.toString() << endl;
-//		Out() << "dec = " << dec.toString() << endl;
-	
 		our_rc4 = new RC4Encryptor(dec,enc);
 		
 		// now we must send ENCRYPT(VC, crypto_provide, len(PadC), PadC, len(IA))
@@ -154,21 +144,16 @@ namespace mse
 	
 	void EncryptedAuthenticate::findVC()
 	{
-//		Out() << "Looking for VC" << endl;
 		Uint8 vc[8] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 		
 		RC4Encryptor rc4(enc,dec);
 		memcpy(vc,rc4.encrypt(vc,8),8);
-/*		Out() << QString("VC = 0x%1 0x%2 0x%3 0x%4 0x%5 0x%6 0x%7 0x%8")
-				.arg(vc[0],0,16).arg(vc[1],0,16).arg(vc[2],0,16).arg(vc[3],0,16)
-				.arg(vc[4],0,16).arg(vc[5],0,16).arg(vc[6],0,16).arg(vc[7],0,16) << endl;
-	*/	
+		
 		Uint32 max_i = buf_size - 8;		
 		for (Uint32 i = 96;i < max_i;i++)
 		{	
 			if (vc[0] == buf[i] && memcmp(buf+i,vc,8) == 0)
 			{
-	//			Out() << "Found VC" << endl;
 				state = FOUND_VC;
 				vc_off = i;
 				handleCryptoSelect();
@@ -179,7 +164,6 @@ namespace mse
 		// we haven't found it in the first 616 bytes (96 + max 512 padding + 8 bytes VC)
 		if (buf_size >= 616)
 		{
-	//		Out() << "Cannot find VC" << endl;
 			onFinish(false);
 		}
 	}
@@ -209,7 +193,6 @@ namespace mse
 		if (!(vc_off + 14 + pad_D_len < buf_size))
 		{
 			// padD is not complete, wait for that
-		//	Out() << "Waiting for padD" << endl;
 			state = WAIT_FOR_PAD_D;
 			return;
 		}
@@ -236,7 +219,6 @@ namespace mse
 		}
 		else // we don't support anything else so error out
 		{
-		//	Out() << "crypto_select = " << crypto_select << " is not OK" << endl;
 			onFinish(false);
 			return;
 		}

@@ -32,126 +32,28 @@
 #include <util/log.h>
 #include "globals.h"
 
-#ifdef LOG_PACKET
-#include <sys/types.h>
-#include <unistd.h>
-#endif
 
 namespace bt
 {
-#ifdef LOG_PACKET
-	static void LogPacket(const Uint8* data,Uint32 size)
-	{
-		QString file = QString("/tmp/kt-packetwriter-%1.log").arg(getpid());
-		File fptr;
-		if (!fptr.open(file,"a"))
-			return;
-			
-		QString tmp = QString("PACKET len = %1, type = %2\nDATA: \n").arg(ReadUint32(data,0)).arg(data[4]);
-		
-		fptr.write(tmp.ascii(),tmp.length());
-		
-		data = data + 4;
-		size -= 4;
-		Uint32 j = 0;
-		if (size <= 40)
-		{
-			for (Uint32 i = 0;i < size;i++)
-			{
-				tmp = QString("0x%1 ").arg(data[i],0,16);
-				fptr.write(tmp.ascii(),tmp.length());
-				j++;
-				if (j > 10)
-				{
-					fptr.write("\n",1);
-					j = 0;
-				}
-			}
-		}
-		else
-		{
-			for (Uint32 i = 0;i < 20;i++)
-			{
-				tmp = QString("0x%1 ").arg(data[i],0,16);
-				fptr.write(tmp.ascii(),tmp.length());
-				j++;
-				if (j > 10)
-				{
-					fptr.write("\n",1);
-					j = 0;
-				}
-			}
-			tmp = QString("\n ... \n");
-			fptr.write(tmp.ascii(),tmp.length());
-			for (Uint32 i = size - 20;i < size;i++)
-			{
-				tmp = QString("0x%1 ").arg(data[i],0,16);
-				fptr.write(tmp.ascii(),tmp.length());
-				j++;
-				if (j > 10)
-				{
-					fptr.write("\n",1);
-					j = 0;
-				}
-			}
-		}
-		fptr.write("\n",1);
-	}
-#endif
+
 
 	PacketWriter::PacketWriter(Peer* peer) : peer(peer)
 	{
 		uploaded = 0;
+		uploaded_non_data = 0;
 		packets.setAutoDelete(true);
-		time_of_last_transmit = bt::GetCurrentTime();
 	}
 
 
 	PacketWriter::~PacketWriter()
 	{
-//		UploadCap::instance().killed(this);
-	}
-
-	bool PacketWriter::sendPacket(Packet & p)
-	{
-		// safety check
-		if (!p.isOK())
-			return true;
-			
-		bool ret = true;
-		Uint32 bs = 0;
-	//	Out() << "Sending " << p.getHeaderLength() << " " << p.getDataLength() << endl;
-		ret = p.send(peer,bs);
-		if (p.getType() == PIECE)
-		{
-			peer->stats.bytes_uploaded += bs;
-			uploaded += bs;
-		}
-		
-		time_of_last_transmit = bt::GetCurrentTime();
-		
-		return ret;
 	}
 	
 	void PacketWriter::queuePacket(Packet* p)
 	{
-		bool ok = true;		
-		if (packets.count() == 0)
-		{
-			if (sendPacket(*p))
-			{
-#ifdef LOG_PACKET
-				LogPacket(p->getData(),p->getDataLength());
-#endif
-				delete p;
-			}
-			else
-				packets.append(p); // can't send if fully so queue it up
-		}
-		else 
-		{
-			packets.append(p);
-		}
+		mutex.lock();
+		packets.append(p);
+		mutex.unlock();
 	}
 	
 	
@@ -267,36 +169,65 @@ namespace bt
 		}
 	}
 
-	Uint32 PacketWriter::update()
+	Uint32 PacketWriter::onReadyToWrite(Uint8* data,Uint32 max_to_write)
 	{
-		if (packets.count() == 0)
-		{
-			Uint32 data_sent = uploaded;
-			uploaded = 0;
-			return data_sent;
-		}
-		
-		// no limit, go wild
-		while (packets.count() > 0)
+		mutex.lock();
+		Uint32 written = 0;
+		while (packets.count() > 0 && written < max_to_write)
 		{
 			Packet* p = packets.first();
-			if (sendPacket(*p))
+			bool count_as_data = false;
+			Uint32 ret = p->putInOutputBuffer(data + written,max_to_write - written,count_as_data);
+			written += ret;
+			if (count_as_data)
+				uploaded += ret;
+			else
+				uploaded_non_data += ret;
+					
+			if (p->isSent())
 			{
-#ifdef LOG_PACKET
-				LogPacket(p->getData(),p->getDataLength());
-#endif
+				// packet sent, so remove it
 				packets.removeFirst();
 			}
 			else
-				break; // if we can't send the full packet
+			{
+				// we can't send it fully, so break out of loop
+				break;
+			}
 		}
 		
-		
-		Uint32 data_sent = uploaded;
-		uploaded = 0;
-		return data_sent;
+		mutex.unlock();
+		return written;
 	}
-
 	
+	bool PacketWriter::hasBytesToWrite() const
+	{
+		return getNumPacketsToWrite() > 0;
+	}
 	
+	Uint32 PacketWriter::getUploadedDataBytes() const
+	{
+		mutex.lock();
+		Uint32 ret = uploaded;
+		uploaded = 0;
+		mutex.unlock();
+		return ret;
+	}
+	
+	Uint32 PacketWriter::getUploadedNonDataBytes() const
+	{
+		mutex.lock();
+		Uint32 ret = uploaded_non_data;
+		uploaded_non_data = 0;
+		mutex.unlock();
+		return ret;
+	}
+	
+	Uint32 PacketWriter::getNumPacketsToWrite() const
+	{
+		mutex.lock();
+		Uint32 ret = packets.count();
+		mutex.unlock();
+		return ret;
+	}
 }

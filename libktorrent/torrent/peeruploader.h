@@ -49,6 +49,7 @@ namespace bt
 		Uint32 rone_time;
 		std::set<Uint32> allowed_fast;
 		bool can_generate_af;
+		Uint32 uploaded;
 	public:
 		/**
 		 * Constructor. Set the Peer.
@@ -86,6 +87,8 @@ namespace bt
 		
 		/// Reject all packets
 		void rejectAll();
+		
+		void addUploadedBytes(Uint32 bytes) {uploaded += bytes;}
 	private:
 		void generateAF(ChunkManager & cman);
 	};

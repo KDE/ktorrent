@@ -20,28 +20,66 @@
 #ifndef NETBUFFEREDSOCKET_H
 #define NETBUFFEREDSOCKET_H
 
+#include <qmutex.h>
 #include <net/socket.h>
-#include "circularbuffer.h"
 
 namespace net
 {
+	using bt::Uint8;
+	using bt::Uint32;
+	
+	class SocketReader
+	{
+	public:
+		/**
+		 * Function which will be called whenever data has been read from the socket.
+		 * This data should be dealt with, otherwise it will be discarded.
+		 * @param buf The buffer
+		 * @param size The size of the buffer
+		 */
+		virtual void onDataReady(Uint8* buf,Uint32 size) = 0;	
+	};
+	
+	class SocketWriter
+	{
+	public:		
+		/**
+		 * The socket is ready to write, the writer is asked to provide the data.
+		 * The data will be fully sent, before another request is done.
+		 * @param data The data
+		 * @param max_to_write The maximum number of bytes to put in the buffer
+		 * @param The number of bytes placed in the buffer 
+		 */
+		virtual Uint32 onReadyToWrite(Uint8* data,Uint32 max_to_write) = 0;	
+		
+		/// Check if data is ready to write
+		virtual bool hasBytesToWrite() const = 0;
+
+	};
 
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
 	 * 
-	 * Extends the Socket class with a circular read buffer.
+	 * Extends the Socket class with
 	 */
 	class BufferedSocket : public Socket
 	{
-		CircularBuffer rbuf;
-		CircularBuffer wbuf;
-		Uint32 bytes_sent;
-		QMutex mutex;
+		mutable QMutex mutex;
+		SocketReader* rdr;
+		SocketWriter* wrt;
+		Uint8 output_buffer[4096];
+		Uint32 bytes_in_output_buffer; // bytes in the output buffer
+		Uint32 bytes_sent; // bytes written of the output buffer
+		Uint32 outstanding_bytes;
+		mutable Uint32 outstanding_bytes_transmitted;
 	public:
-		BufferedSocket(int fd,Uint32 rbuf_size,Uint32 wbuf_size);
-		BufferedSocket(bool tcp,Uint32 rbuf_size,Uint32 wbuf_size);
+		BufferedSocket(int fd);
+		BufferedSocket(bool tcp);
 		virtual ~BufferedSocket();
 
+		
+		void setReader(SocketReader* r) {rdr = r;}
+		void setWriter(SocketWriter* r) {wrt = r;}
 		
 		/**
 		 * Reads data from the socket to the buffer.
@@ -51,45 +89,19 @@ namespace net
 		Uint32 readBuffered(Uint32 max_bytes_to_read);
 		
 		/**
-		 * Read from the buffer
-		 * @param data Buffer to store read data
-		 * @param max_to_read Maximum amount of bytes to read
-		 * @return The number of bytes read
-		 */
-		Uint32 read(Uint8* data,Uint32 max_to_read);
-		
-		/// Get the number of bytes available in the read buffer
-		Uint32 bytesBufferedAvailable() const;
-		
-		/**
 		 * Writes data from the buffer to the socket.
 		 * @param max The maximum number of bytes to send over the socket (0 = no limit)
 		 * @return The number of bytes written
 		 */
 		Uint32 writeBuffered(Uint32 max);
 		
-		/**
-		 * Write data to the write buffer.
-		 * @param data The data
-		 * @param nb The number of bytes
-		 * @return The number of bytes placed into the write buffer
-		 */
-		Uint32 write(const Uint8* data,Uint32 nb);
+		/// See if the socket has something ready to write
+		bool bytesReadyToWrite() const {return !wrt ? false : wrt->hasBytesToWrite();}
 		
-		/**
-		 * @return The number of bytes ready to write.
-		 */
-		Uint32 bytesReadyToWrite() const;
+		Uint32 dataWritten() const;
 		
-		/// Get the number of bytes sent
-		/// Also resets this variable to zero
-		Uint32 getBytesSent();
-		
-		/// Add bytes sent.
-		void addBytesSent(Uint32 bs);
-		
-		/// Get the amountof free space in the write buffer
-		Uint32 freeSpaceInWriteBuffer() const {return wbuf.freeSpace();}
+	private:
+		Uint32 sendOutputBuffer(Uint32 max);
 	};
 
 }
