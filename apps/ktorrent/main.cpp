@@ -41,7 +41,7 @@
 
 using namespace bt;
 
-
+/*
 void StupidWarningMessagesFromQt( QtMsgType type, const char *msg )
 {
 	switch ( type ) {
@@ -56,7 +56,7 @@ void StupidWarningMessagesFromQt( QtMsgType type, const char *msg )
 			abort();                    // deliberately core dump
 	}
 }
-
+*/
 
 static const char description[] =
     I18N_NOOP("A BitTorrent program for KDE");
@@ -74,7 +74,7 @@ int main(int argc, char **argv)
 {
 	// ignore SIGPIPE's
 	signal(SIGPIPE,SIG_IGN);
-	qInstallMsgHandler( StupidWarningMessagesFromQt );
+//	qInstallMsgHandler( StupidWarningMessagesFromQt );
 	KAboutData about("ktorrent", I18N_NOOP("KTorrent"), kt::VERSION_STRING, description,
 					 KAboutData::License_GPL, "(C) 2005 Joris Guisson", 0,
 					 "http://www.ktorrent.org/");
