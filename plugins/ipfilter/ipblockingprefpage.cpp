@@ -139,6 +139,8 @@ namespace kt
 		KURL url(m_url->url());
 		KURL dest(target);
 		KURL temp(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.tmp");
+		if(KIO::NetAccess::exists(temp,false, this))
+			KIO::NetAccess::del(temp,this);
 
 		bool download = true;
 

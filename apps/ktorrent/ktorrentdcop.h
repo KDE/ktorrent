@@ -67,6 +67,7 @@ public:
 	virtual bool keepSeeding();
 	virtual bool showSystemTrayIcon();
 	virtual QValueList<int> intSettings();
+	virtual bool isBlockedIP(QString ip);
 
 };
 

@@ -22,6 +22,7 @@
 #include "ktorrent.h"
 #include "ktorrentcore.h"
 #include "settings.h"
+#include <torrent/ipblocklist.h>
 
 KTorrentDCOP::KTorrentDCOP(KTorrent* app)
 	: DCOPObject("KTorrent"),app(app)
@@ -238,6 +239,11 @@ QValueList<int> KTorrentDCOP::intSettings()
 	intsettings.append((int)Settings::keepSeeding());
 	intsettings.append((int)Settings::showSystemTrayIcon());
 	return intsettings;
+}
+
+bool KTorrentDCOP::isBlockedIP(QString ip)
+{
+	return bt::IPBlocklist::instance().isBlocked(ip);	
 }
 
 #include "ktorrentdcop.moc"

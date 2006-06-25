@@ -49,6 +49,30 @@ namespace kt
 		return ret;
 	}
 	
+	QString fromUint32(Uint32 ip)
+	{
+		Uint32 tmp = ip;
+		QString out;
+	
+		tmp = ip;
+		tmp &= 0x000000FF;
+		out.prepend(QString("%1").arg(tmp));
+		ip >>= 8;
+		tmp = ip;
+		tmp &= 0x000000FF;
+		out.prepend(QString("%1.").arg(tmp));
+		ip >>= 8;
+		tmp = ip;
+		tmp &= 0x000000FF;
+		out.prepend(QString("%1.").arg(tmp));
+		ip >>= 8;
+		tmp = ip;
+		tmp &= 0x000000FF;
+		out.prepend(QString("%1.").arg(tmp));
+	
+		return out;
+	}
+	
 	AntiP2P::AntiP2P()
 	{
 		header_loaded = false;
@@ -91,14 +115,20 @@ namespace kt
 			file->seek(MMapFile::BEGIN, i);
 			file->read(&ipb, sizeof(IPBlock));
 			hb.ip1 = ipb.ip1;
+			if ( i  + (blocksize-1)*sizeof(IPBlock) > file->getSize() ) //last entry
+			{
+				file->seek(MMapFile::BEGIN, file->getSize() - sizeof(IPBlock));
+				file->read(&ipb, sizeof(IPBlock));
+				hb.ip2 = ipb.ip2;
+				hb.nrEntries = nrElements % blocksize;
+				
+				blocks.push_back(hb);
+				break;
+			}
 			file->seek(MMapFile::BEGIN, i  + (blocksize-1)*sizeof(IPBlock));
 			file->read(&ipb, sizeof(IPBlock));
 			hb.ip2 = ipb.ip2;
 			hb.nrEntries = blocksize;
-			if ( i  + (blocksize-1)*sizeof(IPBlock) > file->getSize() ) //last entry
-			{
-				hb.nrEntries = file->getSize() % blocksize;
-			}
 			blocks.push_back(hb);
 		}
 		
