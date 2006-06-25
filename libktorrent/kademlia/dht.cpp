@@ -44,7 +44,7 @@ namespace dht
 
 	DHT::DHT() : node(0),srv(0),db(0),tman(0)
 	{
-		
+		connect(&update_timer,SIGNAL(timeout()),this,SLOT(update()));
 	}
 
 
@@ -69,6 +69,7 @@ namespace dht
 		running = true;
 		srv->start();
 		node->loadTable(table);
+		update_timer.start(1000);
 	}
 		
 		
@@ -77,6 +78,7 @@ namespace dht
 		if (!running)
 			return;
 		
+		update_timer.stop();
 		Out(SYS_DHT|LOG_NOTICE) << "DHT: Stopping " << endl;
 		srv->stop();
 		node->saveTable(table_file);
@@ -161,7 +163,7 @@ namespace dht
 		db->sample(r->getInfoHash(),dbl,50);
 		
 		// generate a token
-		Key token = db->genToken(r->getOrigin().ipAddress().IPv4Addr(),r->getOrigin().port());
+		dht::Key token = db->genToken(r->getOrigin().ipAddress().IPv4Addr(),r->getOrigin().port());
 		
 		if (dbl.count() == 0)
 		{
@@ -245,7 +247,7 @@ namespace dht
 		return 0;
 	}
 	
-	NodeLookup* DHT::refreshBucket(const Key & id,KBucket & bucket)
+	NodeLookup* DHT::refreshBucket(const dht::Key & id,KBucket & bucket)
 	{
 		if (!running)
 			return 0;
@@ -265,7 +267,7 @@ namespace dht
 		return 0;
 	}
 	
-	NodeLookup* DHT::findNode(const Key & id)
+	NodeLookup* DHT::findNode(const dht::Key & id)
 	{
 		if (!running)
 			return 0;
@@ -306,3 +308,5 @@ namespace dht
 		node->onTimeout(r);
 	}
 }
+
+#include "dht.moc"

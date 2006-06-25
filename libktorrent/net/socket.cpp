@@ -116,20 +116,20 @@ namespace net
 	
 		if (::bind(m_fd,(struct sockaddr*)&addr,sizeof(struct sockaddr)) < 0)
 		{
-			Out() << QString("Cannot bind to port %1 : %2").arg(port).arg(strerror(errno)) << endl;
+			Out(SYS_CON|LOG_IMPORTANT) << QString("Cannot bind to port %1 : %2").arg(port).arg(strerror(errno)) << endl;
 			return false;
 		}
 
 		if (also_listen && listen(m_fd,5) < 0)
 		{
-			Out() << QString("Cannot listen to port %1 : %2").arg(port).arg(strerror(errno)) << endl;
+			Out(SYS_CON|LOG_IMPORTANT) << QString("Cannot listen to port %1 : %2").arg(port).arg(strerror(errno)) << endl;
 			return false;
 		}
 
 		int val = 1;
 		if (setsockopt(m_fd,SOL_SOCKET,SO_REUSEADDR,&val,sizeof(int)) < 0)
 		{
-			Out() << QString("Failed to set the reuseaddr option : %1").arg(strerror(errno)) << endl;
+			Out(SYS_CON|LOG_NOTICE) << QString("Failed to set the reuseaddr option : %1").arg(strerror(errno)) << endl;
 		}
 		m_state = BOUND;
 		return true;
@@ -222,14 +222,14 @@ namespace net
 		int sfd = ::accept(m_fd,(struct sockaddr*)&addr,&slen);
 		if (sfd < 0)
 		{
-			Out() << "Accept error : " << QString(strerror(errno)) << endl;
+			Out(SYS_CON|LOG_DEBUG) << "Accept error : " << QString(strerror(errno)) << endl;
 			return -1;
 		}
 		
 		a.setPort(ntohs(addr.sin_port));
 		a.setIP(ntohl(addr.sin_addr.s_addr));
 
-		Out() << "Accepted connection from " << QString(inet_ntoa(addr.sin_addr)) << endl;
+		Out(SYS_CON|LOG_DEBUG) << "Accepted connection from " << QString(inet_ntoa(addr.sin_addr)) << endl;
 		return sfd;
 	}
 	
@@ -238,7 +238,7 @@ namespace net
 		char c = type_of_service;
 		if (setsockopt(m_fd,IPPROTO_IP,IP_TOS,&c,sizeof(char)) < 0)
 		{
-			Out() << QString("Failed to set TOS to %1 : %2")
+			Out(SYS_CON|LOG_NOTICE) << QString("Failed to set TOS to %1 : %2")
 					.arg((int)type_of_service).arg(strerror(errno)) << endl;
 			return false;
 		}

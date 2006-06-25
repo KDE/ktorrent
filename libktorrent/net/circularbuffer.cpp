@@ -60,7 +60,6 @@ namespace net
 		} 
 		
 		mutex.unlock();
-	//	Out() << QString("CircularBuffer::write %1 %2 %3").arg(first).arg(size).arg(j) << endl;
 		return j;
 	}
 	
@@ -79,7 +78,6 @@ namespace net
 			size--;
 		}
 		mutex.unlock();
-	//	Out() << QString("CircularBuffer::read %1 %2 %3").arg(first).arg(size).arg(j) << endl;
 		return j;
 	}
 	
@@ -141,7 +139,6 @@ namespace net
 				size -= ret2;
 			}
 		}
-	//	Out() << QString("CircularBuffer::send %1 %2 %3").arg(first).arg(size).arg(ret) << endl;
 		mutex.unlock();
 		return ret;
 	}

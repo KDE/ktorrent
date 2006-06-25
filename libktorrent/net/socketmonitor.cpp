@@ -250,9 +250,6 @@ namespace net
 			last_selected = now;
 			
 		}
-		
-	//	if (sleep_time)
-			
 	}
 
 

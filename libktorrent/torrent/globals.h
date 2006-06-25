@@ -34,7 +34,7 @@ namespace bt
 	class Log;
 	class Server;
 
-	Log& Out(unsigned int arg = 0x00);
+	
 
 	class Globals
 	{

@@ -32,10 +32,10 @@
 #define LOG_DEBUG 0x07
 #define LOG_ALL 0x0F
 
-#define SYS_GEN 0x10 // Genereral info messages
-#define SYS_CON 0x20 // Connections
-#define SYS_TRK 0x40 // Tracker
-#define SYS_DHT 0x80 // DHT
+#define SYS_GEN 0x0010 // Genereral info messages
+#define SYS_CON 0x0020 // Connections
+#define SYS_TRK 0x0040 // Tracker
+#define SYS_DHT 0x0080 // DHT
 
 //plugins
 #define SYS_IPF 0x1000  // IPFilter
@@ -189,6 +189,13 @@ namespace bt
 	};
 
 	Log & endl(Log & lg);
+	
+	
+	Log & Out(unsigned int arg = 0x00);
+	inline Log & GenOut(unsigned int arg) {return Out(SYS_GEN|arg);}
+	inline Log & DHTOut(unsigned int arg) {return Out(SYS_DHT|arg);}
+	inline Log & ConOut(unsigned int arg) {return Out(SYS_CON|arg);}
+	inline Log & TrkOut(unsigned int arg) {return Out(SYS_TRK|arg);}
 
 }
 

@@ -72,11 +72,9 @@ namespace net
 			else
 			{
 				// connection closed, so just return the number of bytes read
-	//			Out() << "BufferedSocket::readBuffered " << br << endl;
 				return br;
 			}
 		}
-	//	Out() << "BufferedSocket::readBuffered " << br << endl;
 		return br;
 	}
 	

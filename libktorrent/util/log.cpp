@@ -24,6 +24,7 @@
 #include <qfile.h>
 #include <qptrlist.h>
 #include <iostream>
+#include <torrent/globals.h>
 #include <interfaces/logmonitorinterface.h>
 #include <qmutex.h> 
 #include "log.h"
@@ -176,5 +177,13 @@ namespace bt
 	void Log::lock()
 	{
 		priv->mutex.lock();
+	}
+	
+	Log & Out(unsigned int arg)
+	{
+		Log & lg = Globals::instance().getLog(arg);
+		lg.lock();
+//		lg.setOutputToConsole(Globals::instance().isDebugModeSet());
+		return lg;
 	}
 }

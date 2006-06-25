@@ -20,6 +20,7 @@
 #ifndef DHTDHT_H
 #define DHTDHT_H
 
+#include <qtimer.h>
 #include <qstring.h>
 #include <util/constants.h>
 #include <util/timer.h>
@@ -59,18 +60,15 @@ namespace dht
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class DHT : public DHTBase
+	class DHT : public QObject, public DHTBase
 	{
+		Q_OBJECT
 	public:
 		DHT();
 		virtual ~DHT();
 		
 		void ping(PingReq* r);
 		void findNode(FindNodeReq* r);
-#if 0
-		void findValue(FindValueReq* r);
-		void storeValue(StoreValueReq* r);
-#endif
 		void response(MsgBase* r);
 		void getPeers(GetPeersReq* r);
 		void announce(AnnounceReq* r);
@@ -97,21 +95,22 @@ namespace dht
 		 * @param id The id
 		 * @param bucket The bucket to refresh
 		 */
-		NodeLookup* refreshBucket(const Key & id,KBucket & bucket);
+		NodeLookup* refreshBucket(const dht::Key & id,KBucket & bucket);
 
 		/**
 		 * Do a NodeLookup.
 		 * @param id The id of the key to search
 		 */
-		NodeLookup* findNode(const Key & id);
+		NodeLookup* findNode(const dht::Key & id);
 		
+		/// See if it is possible to start a task
+		bool canStartTask() const;
 		
 		void start(const QString & table,bt::Uint16 port);
 		void stop();
+		
+	private slots:
 		void update();
-	
-		/// See if it is possible to start a task
-		bool canStartTask() const;
 		
 	private:
 		Node* node;
@@ -120,6 +119,7 @@ namespace dht
 		TaskManager* tman;
 		bt::Timer expire_timer;
 		QString table_file;
+		QTimer update_timer;
 	};
 
 }

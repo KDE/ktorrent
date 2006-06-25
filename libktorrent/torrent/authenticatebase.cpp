@@ -50,7 +50,8 @@ namespace bt
 
 	AuthenticateBase::~AuthenticateBase()
 	{
-		sock->deleteLater();
+		if (sock)
+			sock->deleteLater();
 		delete sn;
 	}
 

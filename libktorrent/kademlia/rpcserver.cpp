@@ -107,7 +107,6 @@ namespace dht
 			if (msg)
 			{
 				msg->setOrigin(pck.address());
-			//	msg->print();
 				msg->apply(dh_table);
 			// erase an existing call
 				if (msg->getType() == RSP_MSG && calls.contains(msg->getMTID()))

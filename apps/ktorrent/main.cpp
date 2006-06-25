@@ -35,27 +35,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <util/error.h>
+#include <util/log.h>
 #include <torrent/globals.h>
 #include <ktversion.h>
 
 using namespace bt;
 
-/*
+
 void StupidWarningMessagesFromQt( QtMsgType type, const char *msg )
 {
 	switch ( type ) {
 		case QtDebugMsg:
-			fprintf( stderr, "Debug: %s\n", msg );
+			Out(SYS_GEN|LOG_DEBUG) << QString("Qt: Debug: %1").arg(msg) << endl;
 			break;
 		case QtWarningMsg:
-			fprintf( stderr, "Warning: %s\n", msg );
+			Out(SYS_GEN|LOG_NOTICE) << QString("Qt: Warning: %1").arg(msg) << endl;
 			break;
 		case QtFatalMsg:
-			fprintf( stderr, "Fatal: %s\n", msg );
+			Out(SYS_GEN|LOG_IMPORTANT) << QString("Qt: Fatal: %1").arg(msg) << endl;
 			abort();                    // deliberately core dump
 	}
 }
-*/
+
 
 static const char description[] =
     I18N_NOOP("A BitTorrent program for KDE");
@@ -73,7 +74,7 @@ int main(int argc, char **argv)
 {
 	// ignore SIGPIPE's
 	signal(SIGPIPE,SIG_IGN);
-//	qInstallMsgHandler( StupidWarningMessagesFromQt );
+	qInstallMsgHandler( StupidWarningMessagesFromQt );
 	KAboutData about("ktorrent", I18N_NOOP("KTorrent"), kt::VERSION_STRING, description,
 					 KAboutData::License_GPL, "(C) 2005 Joris Guisson", 0,
 					 "http://www.ktorrent.org/");
