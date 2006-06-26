@@ -36,7 +36,7 @@
                     <cstring>m_status_tab</cstring>
                 </property>
                 <attribute name="title">
-                    <string>St&amp;&amp;atus</string>
+                    <string>St&amp;atus</string>
                 </attribute>
                 <vbox>
                     <property name="name">
@@ -718,7 +718,7 @@
                     <cstring>m_files_tab</cstring>
                 </property>
                 <attribute name="title">
-                    <string>Fi&amp;&amp;les</string>
+                    <string>Fi&amp;les</string>
                 </attribute>
                 <hbox>
                     <property name="name">
