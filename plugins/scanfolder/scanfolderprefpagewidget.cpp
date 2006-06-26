@@ -38,15 +38,15 @@ namespace kt
 		use1->setChecked(ScanFolderPluginSettings::useFolder1());
 		use2->setChecked(ScanFolderPluginSettings::useFolder2());
 		use3->setChecked(ScanFolderPluginSettings::useFolder3());
-		
+
 		url1->setURL(ScanFolderPluginSettings::folder1());
 		url2->setURL(ScanFolderPluginSettings::folder2());
 		url3->setURL(ScanFolderPluginSettings::folder3());
-		
+
 		openSilently->setChecked(ScanFolderPluginSettings::openSilently());
 		deleteCheck->setChecked(ScanFolderPluginSettings::actionDelete());
 		moveCheck->setChecked(ScanFolderPluginSettings::actionMove());
-		
+
 		url1->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
 		url2->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
 		url3->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
@@ -57,49 +57,50 @@ namespace kt
 		bool usesf1 = use1->isChecked();
 		bool usesf2 = use2->isChecked();
 		bool usesf3 = use3->isChecked();
-		
+
 		QString sfPath1 = url1->url();
 		QString sfPath2 = url2->url();
 		QString sfPath3 = url3->url();
-		
+
 		bool silently = openSilently->isChecked();
 		bool deleteChecked = deleteCheck->isChecked();
 		bool moveChecked = moveCheck->isChecked();
-		
+
 		ScanFolderPluginSettings::setOpenSilently(silently);
 		ScanFolderPluginSettings::setActionDelete(deleteChecked);
 		ScanFolderPluginSettings::setActionMove(moveChecked);
 
-		
+
+    QString message( "ScanFolder - Folder %1: Invalid URL or folder doesn't exist. Please, choose a valid directory." );
 		if(!QFile::exists(sfPath1) && usesf1)
 		{
-			KMessageBox::sorry(0, i18n("ScanFolder - Folder 1: Invalid URL or folder doesn't exist. Please, choose a valid directory."));
+			KMessageBox::sorry(0, message.arg( 1 ) );
 			usesf1 = false;
 		}
 		else
 			ScanFolderPluginSettings::setFolder1(sfPath1);
-		
+
 		if(!QFile::exists(sfPath2) && usesf2)
 		{
-			KMessageBox::sorry(0, i18n("ScanFolder - Folder 2: Invalid URL or folder doesn't exist. Please, choose a valid directory."));
+			KMessageBox::sorry(0, message.arg( 2 ) );
 			usesf2 = false;
 		}
 		else
 			ScanFolderPluginSettings::setFolder2(sfPath2);
-		
+
 		if(!QFile::exists(sfPath3) && usesf3)
 		{
-			KMessageBox::sorry(0, i18n("ScanFolder - Folder 3: Invalid URL or folder doesn't exist. Please, choose a valid directory."));
+			KMessageBox::sorry(0, message.arg( 3 ) );
 			usesf3 = false;
 		}
 		else
 			ScanFolderPluginSettings::setFolder3(sfPath3);
-			
-		
+
+
 		ScanFolderPluginSettings::setUseFolder1(usesf1);
 		ScanFolderPluginSettings::setUseFolder2(usesf2);
 		ScanFolderPluginSettings::setUseFolder3(usesf3);
-				
+
 		ScanFolderPluginSettings::writeConfig();
 	}
 
