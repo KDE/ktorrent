@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>519</width>
-            <height>572</height>
+            <height>584</height>
         </rect>
     </property>
     <property name="caption">
@@ -141,6 +141,21 @@
                             <item>
                                 <property name="text">
                                     <string>1024</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>2048</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>4096</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>8192</string>
                                 </property>
                             </item>
                             <property name="name">
@@ -294,6 +309,8 @@
         </widget>
     </vbox>
 </widget>
+<customwidgets>
+</customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kurlrequester.h</includehint>

@@ -143,11 +143,11 @@ namespace dht
 	{
 		last_modified = bt::GetCurrentTime();
 		
-		if (!pending_entries.contains(c))
+		if (!pending_entries_busy_pinging.contains(c))
 			return;
 		
-		KBucketEntry entry = pending_entries[c];
-		pending_entries.erase(c); // call is done so erase it
+		KBucketEntry entry = pending_entries_busy_pinging[c];
+		pending_entries_busy_pinging.erase(c); // call is done so erase it
 		
 		// we have a response so try to find the next bad or questionable node
 		// if we do not have room see if we can get rid of some bad peers
@@ -160,10 +160,10 @@ namespace dht
 	
 	void KBucket::onTimeout(RPCCall* c)
 	{
-		if (!pending_entries.contains(c))
+		if (!pending_entries_busy_pinging.contains(c))
 			return;
 		
-		KBucketEntry entry = pending_entries[c];
+		KBucketEntry entry = pending_entries_busy_pinging[c];
 		
 		// replace the entry which timed out
 		QValueList<KBucketEntry>::iterator i;
@@ -178,11 +178,25 @@ namespace dht
 				break;
 			}
 		}
-		pending_entries.erase(c); // call is done so erase it
+		pending_entries_busy_pinging.erase(c); // call is done so erase it
+		// see if we can do another pending entry
+		if (pending_entries_busy_pinging.count() < 2 && pending_entries.count() > 0)
+		{
+			KBucketEntry pe = pending_entries.front();
+			pending_entries.pop_front();
+			if (!replaceBadEntry(pe)) // if no bad peers ping a questionable one
+				pingQuestionable(pe);
+		}
 	}
 	
 	void KBucket::pingQuestionable(const KBucketEntry & replacement_entry)
 	{
+		if (pending_entries_busy_pinging.count() >= 2)
+		{
+			pending_entries.append(replacement_entry); // lets not have to many pending_entries calls going on
+			return;
+		}
+		
 		QValueList<KBucketEntry>::iterator i;
 		// we haven't found any bad ones so try the questionable ones
 		for (i = entries.begin();i != entries.end();i++)
@@ -197,7 +211,8 @@ namespace dht
 				{
 					c->addListener(this);
 					// add the pending entry
-					pending_entries.insert(c,replacement_entry);
+					pending_entries_busy_pinging.insert(c,replacement_entry);
+					return;
 				}
 			}
 		}

@@ -29,8 +29,6 @@ namespace dht
 			
 	TaskListener::~TaskListener()
 	{
-		if (task)
-			task->setListener(0);
 	}
 	
 	void TaskListener::onDataReady(Task*) 

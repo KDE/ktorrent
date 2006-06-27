@@ -28,6 +28,8 @@
 
 namespace bt
 {
+	
+	
 
 	AuthenticateBase::AuthenticateBase(mse::StreamSocket*  s) : sock(s),finished(false)
 	{

@@ -164,8 +164,8 @@ namespace bt
 			Uint16 port = Globals::instance().getServer().getPortInUse();
 			if (dht_ba->doRequest(QString("http://localhost:%1/announce").arg(port)))
 			{
-				// do the next update in 15 minutes
-				dht_update_timer.start(15*60*1000,true);
+				// do the next update in 5 minutes
+				dht_update_timer.start(5*60*1000,true);
 			}
 			else
 			{
@@ -217,7 +217,7 @@ namespace bt
 			dht_update_timer.stop();
 			Uint16 port = Globals::instance().getServer().getPortInUse();
 			dht_ba->doRequest(QString("http://localhost:%1/announce").arg(port));
-			dht_update_timer.start(15*60*1000,true);
+			dht_update_timer.start(5*60*1000,true);
 		}
 	}
 

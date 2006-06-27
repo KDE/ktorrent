@@ -139,10 +139,10 @@ namespace dht
 	class KBucket : public RPCCallListener,public TaskListener
 	{
 		Uint32 idx;
-		QValueList<KBucketEntry> entries;
+		QValueList<KBucketEntry> entries,pending_entries;
 		RPCServer* srv;
 		Node* node;
-		QMap<RPCCall*,KBucketEntry> pending_entries;
+		QMap<RPCCall*,KBucketEntry> pending_entries_busy_pinging;
 		mutable Uint32 last_modified;
 		Task* refresh_task;
 	public:

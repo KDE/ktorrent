@@ -88,6 +88,7 @@ namespace bt
 			}
 		}
 
+
 		// check all pending connections, wether they authenticated
 		// properly
 		QPtrList<Authenticate>::iterator j = pending.begin();
@@ -105,7 +106,7 @@ namespace bt
 				j++;
 			}
 		}
-
+		
 		// connect to some new peers
 		connectToPeers();
 	}
@@ -204,14 +205,17 @@ namespace bt
 				QString ip = a->getIP();
 				Uint16 port = a->getPort();
 				Authenticate* st = new Authenticate(ip,port,tor.getInfoHash(),tor.getPeerID(),*this);
-						
 				pending.append(st);
 			}
+			auth->deleteLater();
 			return;
 		}
 		
 		if (connectedTo(auth->getPeerID()))
+		{
+			auth->deleteLater();
 			return;
+		}
 			
 		Uint32 flags = 0;
 		if (auth->supportsDHT())
@@ -230,6 +234,7 @@ namespace bt
 			
 		//	Out() << "New peer connected !" << endl;
 		newPeer(peer);
+		auth->deleteLater();
 	}
 		
 	bool PeerManager::connectedTo(const PeerID & peer_id)
