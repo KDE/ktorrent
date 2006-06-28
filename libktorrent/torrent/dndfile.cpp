@@ -65,6 +65,7 @@ namespace bt
 			return;
 		}
 		
+#if 0
 		if (hdr.first_size > 0 || hdr.last_size > 0)
 		{
 			// check hash
@@ -86,6 +87,7 @@ namespace bt
 			
 			delete [] buf;
 		}
+#endif
 	}
 	
 	void DNDFile::create()
