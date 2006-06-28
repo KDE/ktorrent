@@ -91,15 +91,17 @@ namespace bt
 		Out(SYS_CON|LOG_NOTICE) << "Authentication to " << host << " : " << (succes ? "ok" : "failure") << endl;
 		finished = true;
 		this->succes = succes;
+		if (sn)
+		{
+			sn->setEnabled(false);
+			sn->deleteLater();
+			sn = 0;
+		}
+		
 		if (!succes)
 		{
 			sock->deleteLater();
 			sock = 0;
-		}
-		if (sn)
-		{
-			delete sn;
-			sn = 0;
 		}
 		timer.stop();
 	}

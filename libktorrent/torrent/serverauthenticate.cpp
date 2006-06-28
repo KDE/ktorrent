@@ -51,16 +51,19 @@ namespace bt
 		Out(SYS_CON|LOG_NOTICE) << "Authentication(S) to " << sock->getIPAddress() 
 				<< " : " << (succes ? "ok" : "failure") << endl;
 		finished = true;
+		
+		if (sn)
+		{
+			sn->setEnabled(false);
+			sn->deleteLater();
+			sn = 0;
+		}
 		if (!succes)
 		{
 			sock->deleteLater();
 			sock = 0;
 		}
-		if (sn)
-		{
-			delete sn;
-			sn = 0;
-		}
+		
 		timer.stop();
 	}
 
