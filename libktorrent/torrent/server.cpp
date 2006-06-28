@@ -111,7 +111,6 @@ namespace bt
 			QString IP(s->getIPAddress());
 			if (ipfilter.isBlocked( IP ))
 			{
-				Out(SYS_IPF|LOG_NOTICE) << "Peer " << IP << " is blacklisted. Aborting connection." << endl;
 				delete s;
 				return;
 			}

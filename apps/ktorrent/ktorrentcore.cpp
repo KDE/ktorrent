@@ -97,13 +97,13 @@ KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seedin
 			                              " use by another application. KTorrent is bound to port %2.")
 			                         .arg(port).arg(port + i - 1));
 
-		Out() << "Bound to port " << (port + i - 1) << endl;
+		Out(SYS_GEN|LOG_NOTICE) << "Bound to port " << (port + i - 1) << endl;
 	}
 	else
 	{
 		KMessageBox::error(0,
 		                   i18n("Cannot bind to port %1 or the 10 following ports.").arg(port));
-		Out() << "Cannot find free port" << endl;
+		Out(SYS_GEN|LOG_IMPORTANT) << "Cannot find free port" << endl;
 	}
 
 	
@@ -129,7 +129,7 @@ void KTorrentCore::load(const QString & target,const QString & dir,bool silently
 	QString tdir = findNewTorrentDir();
 	try
 	{
-		Out() << "Loading file " << target << endl;
+		Out(SYS_GEN|LOG_NOTICE) << "Loading file " << target << endl;
 		tc = new TorrentControl();
 		tc->init(qman, target, tdir, dir, 
 		         Settings::useSaveDir() ? Settings::saveDir() : QString());
@@ -298,7 +298,7 @@ void KTorrentCore::loadTorrents()
 		if (!idir.endsWith(DirSeparator()))
 			idir.append(DirSeparator());
 
-		Out() << "Loading " << idir << endl;
+		Out(SYS_GEN|LOG_NOTICE) << "Loading " << idir << endl;
 		loadExistingTorrent(idir);
 	}
 	qman->orderQueue();
@@ -426,7 +426,7 @@ bool KTorrentCore::changeDataDir(const QString & new_dir)
 	}
 	catch (bt::Error & e)
 	{
-		Out() << "Error : " << e.toString() << endl;
+		Out(SYS_GEN|LOG_IMPORTANT) << "Error : " << e.toString() << endl;
 		update_timer.start(100);
 		return false;
 	}

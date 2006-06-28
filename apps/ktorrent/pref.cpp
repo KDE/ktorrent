@@ -213,6 +213,7 @@ void PrefPageTwo::createWidget(QWidget* parent)
 bool PrefPageTwo::apply()
 {
 	Settings::setShowSystemTrayIcon(gp->show_systray_icon->isChecked());
+	Settings::setShowPopups(gp->show_popups->isChecked());
 	QString ourl = Settings::tempDir();
 	
 	KURLRequester* u = gp->temp_dir;
@@ -286,6 +287,7 @@ void PrefPageTwo::dhtChecked(bool on)
 void PrefPageTwo::updateData()
 {
 	gp->show_systray_icon->setChecked(Settings::showSystemTrayIcon());
+	gp->show_popups->setChecked(Settings::showPopups());
 	KURLRequester* u = gp->temp_dir;
 	u->fileDialog()->setMode(KFile::Directory);
 	if (Settings::tempDir() == QString::null)

@@ -236,7 +236,7 @@ KTorrent::KTorrent()
 	bool hidden_on_exit = KGlobal::config()->readBoolEntry("hidden_on_exit",false);
 	if (!(Settings::showSystemTrayIcon() && hidden_on_exit))
 	{
-		Out() << "Showing KT" << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Showing KT" << endl;
 		show();
 	}
 }
@@ -337,7 +337,7 @@ void KTorrent::applySettings(bool change_port)
 	}
 	else if (Settings::dhtSupport() && ht.getPort() != Settings::dhtPort())
 	{
-		Out() << "Restarting DHT with new port " << Settings::dhtPort() << endl;
+		Out(SYS_GEN|LOG_NOTICE) << "Restarting DHT with new port " << Settings::dhtPort() << endl;
 		ht.stop();
 		ht.start(KGlobal::dirs()->saveLocation("data","ktorrent") + "dht_table",Settings::dhtPort());
 	}
@@ -683,7 +683,7 @@ void KTorrent::readProperties(KConfig*)
 	bool hidden_on_exit = KGlobal::config()->readBoolEntry("hidden_on_exit",false);
 	if (!(Settings::showSystemTrayIcon() && hidden_on_exit))
 	{
-		Out() << "Showing KT" << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Showing KT" << endl;
 		show();
 	}
 	else

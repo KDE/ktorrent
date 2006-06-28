@@ -391,7 +391,7 @@ void KTorrentView::update()
 		emit viewChange(tc);
 		if(items.count() == 0)
 			emit currentChanged(0l);
-		Out() << "Torrent moved to DownloadView." << endl;
+		Out(SYS_GEN|LOG_NOTICE) << "Torrent moved to DownloadView." << endl;
 	}
 	sort();
 }
@@ -416,7 +416,7 @@ void KTorrentView::torrentFinished(kt::TorrentInterface* tc)
 	emit viewChange(tc);
 	if(items.count() == 0)
 		emit currentChanged(0l);
-	Out() << "Torrent moved to SeedView." << endl;
+	Out(SYS_GEN|LOG_NOTICE) << "Torrent moved to SeedView." << endl;
 }
 
 void KTorrentView::onSelectionChanged()

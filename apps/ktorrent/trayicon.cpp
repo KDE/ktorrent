@@ -62,28 +62,32 @@ void TrayIcon::finished(TorrentInterface* tc)
 	double speed_up = (double)s.bytes_uploaded / 1024.0;
 	double speed_down = (double)(s.bytes_downloaded - s.imported_bytes)/ 1024.0;
 
-	QString msg = i18n("<b>%1</b> has completed downloading."
-	                   "<br>Average speed: %2 DL / %3 UL.")
-	              .arg(s.torrent_name)
-	              .arg(KBytesPerSecToString(speed_down / tc->getRunningTimeDL()))
-	              .arg(KBytesPerSecToString(speed_up / tc->getRunningTimeUL()));
+	if(Settings::showPopups())
+	{
+		QString msg = i18n("<b>%1</b> has completed downloading."
+						"<br>Average speed: %2 DL / %3 UL.")
+						.arg(s.torrent_name)
+						.arg(KBytesPerSecToString(speed_down / tc->getRunningTimeDL()))
+						.arg(KBytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
-	KPassivePopup::message(i18n("Download completed"),
-	                       msg,loadIcon("ktorrent"), this);
+		KPassivePopup::message(i18n("Download completed"),
+							   msg,loadIcon("ktorrent"), this);
+	}
 }
 
 void TrayIcon::torrentStoppedByError(kt::TorrentInterface* tc, QString msg)
 {
 	const TorrentStats & s = tc->getStats();
 	QString err_msg = i18n("<b>%1</b> has been stopped with the following error: <br>%2")
-	                  .arg(s.torrent_name).arg(msg);
+				.arg(s.torrent_name).arg(msg);
 	KPassivePopup::message(i18n("Error"),err_msg,loadIcon("ktorrent"),this);
 }
 
 void TrayIcon::viewChanged(kt::TorrentInterface* tc)
 {
 	const TorrentStats & s = tc->getStats();
-	KPassivePopup::message(i18n("Torrent moved to download panel"), i18n("<b>%1</b> torrent has been moved to download panel.").arg(s.torrent_name),loadIcon("ktorrent"), this);
+	if(Settings::showPopups())
+		KPassivePopup::message(i18n("Torrent moved to download panel"), i18n("<b>%1</b> torrent has been moved to download panel.").arg(s.torrent_name),loadIcon("ktorrent"), this);
 }
 
 SetMaxRate::SetMaxRate( KTorrentCore* tc, int t, QWidget *parent, const char *name):KPopupMenu(parent, name)

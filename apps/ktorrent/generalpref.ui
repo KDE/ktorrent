@@ -85,74 +85,22 @@
             <property name="title">
                 <string>General</string>
             </property>
-            <vbox>
+            <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox">
+                <widget class="QCheckBox" row="0" column="0">
                     <property name="name">
                         <cstring>show_systray_icon</cstring>
                     </property>
                     <property name="text">
                         <string>Show s&amp;ystem tray icon</string>
                     </property>
-                </widget>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>layout5</cstring>
+                    <property name="accel">
+                        <string>Alt+Y</string>
                     </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel1_3</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Memory usage:</string>
-                            </property>
-                        </widget>
-                        <widget class="KComboBox">
-                            <item>
-                                <property name="text">
-                                    <string>Low</string>
-                                </property>
-                            </item>
-                            <item>
-                                <property name="text">
-                                    <string>Medium</string>
-                                </property>
-                            </item>
-                            <item>
-                                <property name="text">
-                                    <string>High</string>
-                                </property>
-                            </item>
-                            <property name="name">
-                                <cstring>mem_usage</cstring>
-                            </property>
-                        </widget>
-                        <spacer>
-                            <property name="name">
-                                <cstring>spacer2_2</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>111</width>
-                                    <height>20</height>
-                                </size>
-                            </property>
-                        </spacer>
-                    </hbox>
                 </widget>
-                <widget class="QLayoutWidget">
+                <widget class="QLayoutWidget" row="3" column="0">
                     <property name="name">
                         <cstring>layout5_2</cstring>
                     </property>
@@ -212,7 +160,73 @@
                         </spacer>
                     </hbox>
                 </widget>
-            </vbox>
+                <widget class="QLayoutWidget" row="2" column="0">
+                    <property name="name">
+                        <cstring>layout5</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_3</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Memory usage:</string>
+                            </property>
+                        </widget>
+                        <widget class="KComboBox">
+                            <item>
+                                <property name="text">
+                                    <string>Low</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Medium</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>High</string>
+                                </property>
+                            </item>
+                            <property name="name">
+                                <cstring>mem_usage</cstring>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer2_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>111</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+                <widget class="QCheckBox" row="1" column="0">
+                    <property name="name">
+                        <cstring>show_popups</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show "torrent finished" popup messages?</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                </widget>
+            </grid>
         </widget>
         <widget class="QGroupBox">
             <property name="name">
@@ -376,8 +390,6 @@
         </spacer>
     </vbox>
 </widget>
-<customwidgets>
-</customwidgets>
 <tabstops>
     <tabstop>autosave_downloads_check</tabstop>
     <tabstop>show_systray_icon</tabstop>

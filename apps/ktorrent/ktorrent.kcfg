@@ -52,6 +52,10 @@
 			<label>Show a system tray icon</label>
 			<default>false</default>
 		</entry>
+		<entry name="showPopups" type="Bool">
+			<label>Show popup messages when torrent is finished.</label>
+			<default>true</default>
+		</entry>
 		<entry name="keepSeeding" type="Bool">
 			<label>Keep seeding after download has finished</label>
 			<default>true</default>
