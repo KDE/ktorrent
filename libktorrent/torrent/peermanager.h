@@ -124,6 +124,9 @@ namespace bt
 		
 		static void setMaxConnections(Uint32 max);
 		static Uint32 getMaxConnections() {return max_connections;}
+		
+		static void setMaxTotalConnections(Uint32 max);
+		static Uint32 getMaxTotalConnections() {return max_total_connections;}
 
 		/// Get the Torrent
 		Torrent & getTorrent() {return tor;}
@@ -184,6 +187,8 @@ namespace bt
 		ChunkCounter* cnt;
 		
 		static Uint32 max_connections;
+		static Uint32 max_total_connections;
+		static Uint32 total_connections;
 	};
 
 }

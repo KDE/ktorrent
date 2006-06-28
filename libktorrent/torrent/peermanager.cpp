@@ -39,6 +39,8 @@
 namespace bt
 {
 	Uint32 PeerManager::max_connections = 0;
+	Uint32 PeerManager::max_total_connections = 0;
+	Uint32 PeerManager::total_connections = 0;
 
 	PeerManager::PeerManager(Torrent & tor)
 		: tor(tor),available_chunks(tor.getNumChunks())
@@ -57,6 +59,11 @@ namespace bt
 		Globals::instance().getServer().removePeerManager(this);
 		pending.setAutoDelete(true);
 		pending.clear();
+		if (peer_list.count() <= total_connections)
+			total_connections -= peer_list.count();
+		else
+			total_connections == 0;
+		
 		peer_list.setAutoDelete(true);
 		peer_list.clear();
 	}
@@ -79,6 +86,8 @@ namespace bt
 				i = peer_list.erase(i);
 				killed.append(p);
 				peer_map.erase(p->getID());
+				if (total_connections > 0)
+					total_connections--;
 				peerKilled(p);
 			}
 			else
@@ -135,10 +144,17 @@ namespace bt
 		max_connections = max;
 	}
 	
+	void PeerManager::setMaxTotalConnections(Uint32 max)
+	{
+		max_total_connections = max;
+	}
+	
 	void PeerManager::addPotentialPeer(const PotentialPeer & pp)
 	{
 //		Out() << "Addding " << pp.ip << ":" << pp.port << endl;
-		potential_peers.append(pp);
+		// lets not add to many potential peer, we can only connect to so many peers
+		if (potential_peers.count() < 100)
+			potential_peers.append(pp);
 	}
 
 	void PeerManager::killSeeders()
@@ -175,7 +191,10 @@ namespace bt
 	void PeerManager::newConnection(mse::StreamSocket* sock,const PeerID & peer_id,Uint32 support)
 	{
 		Uint32 total = peer_list.count() + pending.count();
-		if (!started || (max_connections > 0 && total >= max_connections))
+		bool local_not_ok = (max_connections > 0 && total >= max_connections);
+		bool global_not_ok = (max_total_connections > 0 && total_connections >= max_total_connections);
+		
+		if (!started || local_not_ok || global_not_ok)
 		{
 			delete sock;
 			return;
@@ -189,11 +208,15 @@ namespace bt
 		
 		peer_list.append(peer);
 		peer_map.insert(peer->getID(),peer);
+		total_connections++;
 		newPeer(peer);
 	}
 	
 	void PeerManager::peerAuthenticated(Authenticate* auth,bool ok)
 	{
+		if (total_connections > 0)
+			total_connections--;
+		
 		pending.remove(auth);
 		num_pending--;
 		if (!ok)
@@ -206,6 +229,7 @@ namespace bt
 				Uint16 port = a->getPort();
 				Authenticate* st = new Authenticate(ip,port,tor.getInfoHash(),tor.getPeerID(),*this);
 				pending.append(st);
+				total_connections++;
 			}
 			auth->deleteLater();
 			return;
@@ -231,7 +255,7 @@ namespace bt
 		
 		peer_list.append(peer);
 		peer_map.insert(peer->getID(),peer);
-			
+		total_connections++;
 		//	Out() << "New peer connected !" << endl;
 		newPeer(peer);
 		auth->deleteLater();
@@ -258,6 +282,12 @@ namespace bt
 		if (peer_list.count() + pending.count() >= max_connections && max_connections > 0)
 			return;
 		
+		if (total_connections >= max_total_connections && max_total_connections > 0)
+			return;
+		
+		if (pending.count() > 50)
+			return;
+		
 		Uint32 num = 0;
 		if (max_connections > 0)
 		{
@@ -269,16 +299,10 @@ namespace bt
 		{
 			num = potential_peers.count();
 		}
-
-		if (pending.count() > 50)
-			return;
 		
-/*		if (num > 0)
-		{
-			Out() << "Connecting to " << num << " peers (" 
-					<< potential_peers.count() << ")" << endl;
-		}
-	*/	
+		if (num + total_connections >= max_total_connections && max_total_connections > 0)
+			num = max_total_connections - total_connections;
+		
 		for (Uint32 i = 0;i < num;i++)
 		{
 			if (pending.count() > 50)
@@ -306,6 +330,7 @@ namespace bt
 				auth = new Authenticate(pp.ip,pp.port,tor.getInfoHash(),tor.getPeerID(),*this);
 			pending.append(auth);
 			num_pending++;
+			total_connections++;
 		}
 	}
 	
@@ -321,6 +346,11 @@ namespace bt
 	void PeerManager::closeAllConnections()
 	{
 		killed.clear();
+		
+		if (peer_list.count() <= total_connections)
+			total_connections -= peer_list.count();
+		else
+			total_connections = 0;
 
 		peer_map.clear();
 		peer_list.setAutoDelete(true);

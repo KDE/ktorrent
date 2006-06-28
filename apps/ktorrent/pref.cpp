@@ -148,6 +148,7 @@ bool PrefPageOne::apply()
 	Settings::setMaxDownloads(dp->max_downloads->value());
 	Settings::setMaxSeeds(dp->max_seeds->value());
 	Settings::setMaxConnections(dp->max_conns->value());
+	Settings::setMaxTotalConnections(dp->max_total_conns->value());
 	Settings::setMaxUploadRate(dp->max_upload_rate->value());
 	Settings::setMaxDownloadRate(dp->max_download_rate->value());
 	Settings::setKeepSeeding(dp->keep_seeding->isChecked());
@@ -169,6 +170,7 @@ void PrefPageOne::updateData()
 	dp->max_downloads->setValue(Settings::maxDownloads());
 	dp->max_seeds->setValue(Settings::maxSeeds());
 	dp->max_conns->setValue(Settings::maxConnections());
+	dp->max_total_conns->setValue(Settings::maxTotalConnections());
 	dp->max_upload_rate->setValue(Settings::maxUploadRate());
 	dp->max_download_rate->setValue(Settings::maxDownloadRate());
 	dp->keep_seeding->setChecked(Settings::keepSeeding());

@@ -21,6 +21,11 @@
 			<default>120</default>
 			<min>0</min>
 		</entry>
+		<entry name="maxTotalConnections" type="Int">
+			<label>Maximum number of connections for all downloads (0 = no limit) </label>
+			<default>800</default>
+			<min>0</min>
+		</entry>
 		<entry name="maxUploadRate" type="Int">
 			<label>Maximum upload speed in KB/sec (0 = no limit)</label>
 			<default>0</default>
@@ -103,5 +108,6 @@
 			<label>Allow unencrypted connections</label>
 			<default>true</default>
 		</entry>
+		
 	</group>
 </kcfg>

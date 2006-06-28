@@ -9,8 +9,11 @@
             <x>0</x>
             <y>0</y>
             <width>604</width>
-            <height>460</height>
+            <height>499</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>DownloadPref</string>
     </property>
     <vbox>
         <property name="name">
@@ -18,7 +21,7 @@
         </property>
         <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>layout14</cstring>
+                <cstring>layout8</cstring>
             </property>
             <hbox>
                 <property name="name">
@@ -26,7 +29,7 @@
                 </property>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>layout13</cstring>
+                        <cstring>layout6</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -54,6 +57,14 @@
                             </property>
                             <property name="text">
                                 <string>Maximum connections per download:</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_7</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Global connection limit</string>
                             </property>
                         </widget>
                         <widget class="QLabel">
@@ -100,7 +111,7 @@
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>layout12</cstring>
+                        <cstring>layout5</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -134,6 +145,17 @@
                             </property>
                             <property name="value">
                                 <number>100</number>
+                            </property>
+                            <property name="minValue">
+                                <number>0</number>
+                            </property>
+                        </widget>
+                        <widget class="KIntNumInput">
+                            <property name="name">
+                                <cstring>max_total_conns</cstring>
+                            </property>
+                            <property name="value">
+                                <number>800</number>
                             </property>
                             <property name="minValue">
                                 <number>0</number>
@@ -204,7 +226,7 @@
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>layout11</cstring>
+                        <cstring>layout7</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -229,6 +251,14 @@
                         <widget class="QLabel">
                             <property name="name">
                                 <cstring>textLabel1_2_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>(0 is no limit)</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_2_2_2</cstring>
                             </property>
                             <property name="text">
                                 <string>(0 is no limit)</string>
@@ -296,7 +326,7 @@
                             </property>
                             <property name="sizeHint">
                                 <size>
-                                    <width>141</width>
+                                    <width>179</width>
                                     <height>20</height>
                                 </size>
                             </property>
@@ -311,6 +341,9 @@
             </property>
             <property name="text">
                 <string>&amp;Keep seeding after download is finished</string>
+            </property>
+            <property name="accel">
+                <string>Alt+K</string>
             </property>
             <property name="checked">
                 <bool>true</bool>
@@ -360,6 +393,8 @@
 </customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
