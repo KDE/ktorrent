@@ -60,7 +60,7 @@ namespace dht
 		/**
 		 * Called by the task it is about to be deleted.
 		 */
-		virtual void onDestroyed(Task* t) = 0;
+		virtual void onDestroyed(Task* t);
 		
 		friend class Task;
 	};

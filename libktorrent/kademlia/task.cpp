@@ -36,6 +36,12 @@ namespace dht
 		}
 	}
 	
+	void TaskListener::onDestroyed(Task* t)
+	{
+		if (task == t)
+			task = 0;
+	}
+	
 	void TaskListener::onDataReady(Task*) 
 	{}
 

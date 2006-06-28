@@ -94,6 +94,7 @@ namespace dht
 	
 	void DHTTrackerBackend::onDestroyed(Task* t)
 	{
+		TaskListener::onDestroyed(t);
 		curr_task = 0;
 	}
 }

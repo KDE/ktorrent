@@ -328,6 +328,7 @@ namespace dht
 	
 	void KBucket::onDestroyed(Task* t)
 	{
+		TaskListener::onDestroyed(t);
 		if (t == refresh_task)
 			refresh_task = 0;
 	}
