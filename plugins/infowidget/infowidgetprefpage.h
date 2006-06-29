@@ -35,9 +35,10 @@ namespace kt
 	class InfoWidgetPrefPage : public PrefPageInterface
 	{
 		InfoWidget* iw;
+		InfoWidget* iw_seed;
 		IWPref* pref;
 	public:
-		InfoWidgetPrefPage(InfoWidget* iw);
+		InfoWidgetPrefPage(InfoWidget* iw, InfoWidget* iw_seed);
 		virtual ~InfoWidgetPrefPage();
 
 		virtual bool apply();

@@ -30,8 +30,8 @@
 namespace kt
 {
 
-	InfoWidgetPrefPage::InfoWidgetPrefPage(InfoWidget* iw)
-	: PrefPageInterface(i18n("Info Widget"),i18n("Information Widget Options"),KGlobal::iconLoader()->loadIcon("ktinfowidget",KIcon::NoGroup)),iw(iw)
+	InfoWidgetPrefPage::InfoWidgetPrefPage(InfoWidget* iw, InfoWidget* iw_seed)
+	: PrefPageInterface(i18n("Info Widget"),i18n("Information Widget Options"),KGlobal::iconLoader()->loadIcon("ktinfowidget",KIcon::NoGroup)),iw(iw), iw_seed(iw_seed)
 	{
 		pref = 0;
 	}
@@ -50,6 +50,9 @@ namespace kt
 		iw->showPeerView( InfoWidgetPluginSettings::showPeerView() );
 		iw->showChunkView( InfoWidgetPluginSettings::showChunkView() );
 		iw->showTrackerView( InfoWidgetPluginSettings::showTrackersView() );
+		iw_seed->showPeerView( InfoWidgetPluginSettings::showPeerView() );
+		iw_seed->showChunkView( InfoWidgetPluginSettings::showChunkView() );
+		iw_seed->showTrackerView( InfoWidgetPluginSettings::showTrackersView() );
 		return true;
 	}
 

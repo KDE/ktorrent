@@ -53,7 +53,7 @@ namespace kt
 	{
 		iw = new InfoWidget(0);
 		iw_seed = new InfoWidget(true, 0);
-		pref = new InfoWidgetPrefPage(iw);
+		pref = new InfoWidgetPrefPage(iw,iw_seed);
 		getGUI()->addViewListener(this);
 		getGUI()->addWidgetInView(iw,kt::BELOW);
 		getGUI()->addWidgetInSeedView(iw_seed, kt::BELOW);
