@@ -103,7 +103,12 @@ namespace mse
 			const Uint8* ed = enc->encrypt(data,len);
 			while (sock->ok() && ds < len)
 			{
-				ds += sock->send(ed + ds,len - ds);
+				Uint32 ret = sock->send(ed + ds,len - ds);
+				ds += ret;
+				if (ret == 0)
+				{
+					Out(SYS_CON|LOG_DEBUG) << "ret = 0" << endl;
+				}
 			}
 			if (ds != len)
 				Out() << "ds != len" << endl;

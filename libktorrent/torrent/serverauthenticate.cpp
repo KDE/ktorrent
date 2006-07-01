@@ -45,9 +45,7 @@ namespace bt
 	{}
 	
 	void ServerAuthenticate::onFinish(bool succes)
-	{
-		if (!sock) return;
-		
+	{		
 		Out(SYS_CON|LOG_NOTICE) << "Authentication(S) to " << sock->getIPAddress() 
 				<< " : " << (succes ? "ok" : "failure") << endl;
 		finished = true;

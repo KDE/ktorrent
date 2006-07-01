@@ -246,7 +246,16 @@ namespace mse
 	
 	void EncryptedServerAuthenticate::onReadyRead()
 	{
+		if (!sock)
+			return;
+		
 		Uint32 ba = sock->bytesAvailable();
+		if (!ba)
+		{
+			onFinish(false);
+			return;
+		}
+		
 		switch (state)
 		{
 		case WAITING_FOR_YA:

@@ -61,7 +61,7 @@ namespace mse
 		virtual ~StreamSocket();
 		
 		/**
-		 * Send a chunk of data.
+		 * Send a chunk of data. (Does not encrypt the data)
 		 * @param data The data
 		 * @param len The length
 		 * @return Number of bytes written
