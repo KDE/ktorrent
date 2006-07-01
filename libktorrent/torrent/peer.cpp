@@ -395,6 +395,12 @@ namespace bt
 		if (killed)
 			return;
 		
+		if (!sock->ok())
+		{
+			kill();
+			return;
+		}
+		
 		preader->update();
 		
 		Uint32 data_bytes = pwriter->getUploadedDataBytes();
