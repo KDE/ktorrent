@@ -127,6 +127,9 @@ namespace bt
 		
 		static void setMaxTotalConnections(Uint32 max);
 		static Uint32 getMaxTotalConnections() {return max_total_connections;}
+		
+		/// Is the peer manager started
+		bool isStarted() const {return started;}
 
 		/// Get the Torrent
 		Torrent & getTorrent() {return tor;}

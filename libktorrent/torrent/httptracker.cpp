@@ -164,7 +164,12 @@ namespace bt
 		url.addQueryItem("port",QString::number(port));
 		url.addQueryItem("uploaded",QString::number(s.trk_bytes_uploaded));
 		url.addQueryItem("downloaded",QString::number(s.trk_bytes_downloaded));
-		url.addQueryItem("left",QString::number(s.bytes_left));
+		
+		if (frontend->event == "completed")
+			url.addQueryItem("left","0"); // need to send 0 when we are completed
+		else
+			url.addQueryItem("left",QString::number(s.bytes_left));
+		
 		url.addQueryItem("compact","1");
 		if (frontend->event != "stopped")
 			url.addQueryItem("numwant","100");

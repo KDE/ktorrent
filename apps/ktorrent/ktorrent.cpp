@@ -819,7 +819,7 @@ PanelView KTorrent::getCurrentPanel()
 	return (PanelView) m_tabs->currentPageIndex();
 }
 
-void KTorrent::currentTabChanged(QWidget* tab)
+void KTorrent::currentTabChanged(QWidget* )
 {
 	if(m_tabs->currentPageIndex() == 1)
 	{

@@ -62,7 +62,7 @@ namespace bt
 		if (peer_list.count() <= total_connections)
 			total_connections -= peer_list.count();
 		else
-			total_connections == 0;
+			total_connections = 0;
 		
 		peer_list.setAutoDelete(true);
 		peer_list.clear();

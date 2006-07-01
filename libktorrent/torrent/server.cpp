@@ -138,7 +138,12 @@ namespace bt
 		{
 			PeerManager* pm = *i;
 			if (pm->getTorrent().getInfoHash() == hash)
-				return pm;
+			{
+				if (!pm->isStarted())
+					return 0;
+				else
+					return pm;
+			}
 			i++;
 		}
 		return 0;
