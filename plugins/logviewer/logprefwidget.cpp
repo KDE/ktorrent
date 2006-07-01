@@ -38,6 +38,7 @@ namespace kt
 		m_syscon->setCurrentItem(getLevel(LogViewerPluginSettings::sysCON()));
 		m_sysdht->setCurrentItem(getLevel(LogViewerPluginSettings::sysDHT()));
 		m_systrk->setCurrentItem(getLevel(LogViewerPluginSettings::sysTRK()));
+		m_sysdio->setCurrentItem(getLevel(LogViewerPluginSettings::sysDIO()));
 		
 		m_sysipf->setCurrentItem(getLevel(LogViewerPluginSettings::sysIPF()));
 		m_syspfi->setCurrentItem(getLevel(LogViewerPluginSettings::sysPFI()));
@@ -56,6 +57,7 @@ namespace kt
 		LogViewerPluginSettings::setSysCON(getArg(m_syscon->currentItem()));
 		LogViewerPluginSettings::setSysDHT(getArg(m_sysdht->currentItem()));
 		LogViewerPluginSettings::setSysTRK(getArg(m_systrk->currentItem()));
+		LogViewerPluginSettings::setSysDIO(getArg(m_sysdio->currentItem()));
 		
 		LogViewerPluginSettings::setSysIPF(getArg(m_sysipf->currentItem()));
 		LogViewerPluginSettings::setSysPFI(getArg(m_syspfi->currentItem()));

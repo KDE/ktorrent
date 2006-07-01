@@ -166,6 +166,13 @@ namespace bt
 		 */
 		void onExcluded(Uint32 from,Uint32 to);
 		
+		/**
+		 * Make sure chunk selector is back OK, when chunks are included back again.
+		 * @param from First chunk
+		 * @param to Last chunk
+		 */
+		void onIncluded(Uint32 from,Uint32 to);
+		
 	signals:
 		/**
 		 * An error occured while we we're writing or reading from disk.

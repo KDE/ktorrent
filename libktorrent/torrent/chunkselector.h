@@ -59,6 +59,13 @@ namespace bt
 		 * @param ok_chunks The ok_chunks
 		 */
 		void dataChecked(const BitSet & ok_chunks);
+		
+		/**
+		 * A range of chunks has been reincluded.
+		 * @param from The first chunk
+		 * @param to The last chunk
+		 */
+		void reIncluded(Uint32 from, Uint32 to);
 	};
 
 }

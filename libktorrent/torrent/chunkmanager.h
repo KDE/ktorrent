@@ -259,6 +259,13 @@ namespace bt
 		void excluded(Uint32 from,Uint32 to);
 		
 		/**
+		 * Emitted when a range of chunks has been included back.
+		 * @param from First chunk in range
+		 * @param to Last chunk in range
+		 */
+		void included(Uint32 from,Uint32 to);
+		
+		/**
 		 * Emitted when chunks get excluded or included, so
 		 * that the statistics can be updated.
 		 */

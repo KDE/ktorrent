@@ -62,6 +62,9 @@ namespace kt
 
 		if(arg & SYS_TRK)
 			return (arg & m_flags.SYSTRK) && ((arg & 0x0000000F) <= m_flags.SYSTRK);
+		
+		if(arg & SYS_DIO)
+			return (arg & m_flags.SYSDIO) && ((arg & 0x0000000F) <= m_flags.SYSDIO);
 
 		if(arg & SYS_INW)
 			return (arg & m_flags.SYSINW) && ((arg & 0x0000000F) <= m_flags.SYSINW);
@@ -93,6 +96,7 @@ namespace kt
 		m_flags.SYSCON = LogViewerPluginSettings::sysCON();
 		m_flags.SYSDHT = LogViewerPluginSettings::sysDHT();
 		m_flags.SYSTRK = LogViewerPluginSettings::sysTRK();
+		m_flags.SYSDIO = LogViewerPluginSettings::sysDIO();
 
 		m_flags.SYSINW = LogViewerPluginSettings::sysINW();
 		m_flags.SYSIPF = LogViewerPluginSettings::sysIPF();

@@ -161,7 +161,7 @@ namespace bt
 		{
 			// no index file, so assume it's empty
 			bt::Touch(index_file,true);
-			Out() << "Can't open index file : " << fptr.errorString() << endl;
+			Out(SYS_DIO|LOG_IMPORTANT) << "Can't open index file : " << fptr.errorString() << endl;
 			return;
 		}
 
@@ -333,14 +333,21 @@ namespace bt
 			return;
 
 		Chunk* c = chunks[i];
-		cache->save(c);
-		
-		// update the index file
-		if (update_index)
+		if (!c->isExcluded())
 		{
-			bitset.set(i,true);
-			recalc_chunks_left = true;
-			writeIndexFileEntry(c);
+			cache->save(c);
+			
+			// update the index file
+			if (update_index)
+			{
+				bitset.set(i,true);
+				recalc_chunks_left = true;
+				writeIndexFileEntry(c);
+			}
+		}
+		else
+		{
+			Out(SYS_DIO|LOG_IMPORTANT) << "Warning: attempted to save a chunk which was excluded" << endl;
 		}
 	}
 
@@ -351,7 +358,7 @@ namespace bt
 		{
 			// no index file, so assume it's empty
 			bt::Touch(index_file,true);
-			Out() << "Can't open index file : " << fptr.errorString() << endl;
+			Out(SYS_DIO|LOG_IMPORTANT) << "Can't open index file : " << fptr.errorString() << endl;
 			// try again
 			if (!fptr.open(index_file,"r+b"))
 				// panick if it failes
@@ -419,7 +426,7 @@ namespace bt
 	
 	void ChunkManager::debugPrintMemUsage()
 	{
-		Out() << "Active Chunks : " << loaded.count()<< endl;
+		Out(SYS_DIO|LOG_DEBUG) << "Active Chunks : " << loaded.count()<< endl;
 	}
 
 	void ChunkManager::prioritise(Uint32 from,Uint32 to,Priority priority)
@@ -470,6 +477,7 @@ namespace bt
 		}
 		recalc_chunks_left = true;
 		updateStats();
+		included(from,to);
 	}
 
 	void ChunkManager::saveFileInfo()
@@ -478,7 +486,7 @@ namespace bt
 		File fptr;
 		if (!fptr.open(file_info_file,"wb"))
 		{
-			Out() << "Warning : Can't save chunk_info file : " << fptr.errorString() << endl;
+			Out(SYS_DIO|LOG_IMPORTANT) << "Warning : Can't save chunk_info file : " << fptr.errorString() << endl;
 			return;
 		}
 
@@ -514,7 +522,7 @@ namespace bt
 		// first read the number of dnd files
 		if (fptr.read(&num,sizeof(Uint32)) != sizeof(Uint32))
 		{
-			Out() << "Warning : error reading chunk_info file" << endl;
+			Out(SYS_DIO|LOG_IMPORTANT) << "Warning : error reading chunk_info file" << endl;
 			return;
 		}
 
@@ -522,14 +530,14 @@ namespace bt
 		{
 			if (fptr.read(&tmp,sizeof(Uint32)) != sizeof(Uint32))
 			{
-				Out() << "Warning : error reading chunk_info file" << endl;
+				Out(SYS_DIO|LOG_IMPORTANT) << "Warning : error reading chunk_info file" << endl;
 				return;
 			}
 
 			bt::TorrentFile & tf = tor.getFile(tmp);
 			if (!tf.isNull())
 			{
-				Out() << "Excluding : " << tf.getPath() << endl;
+				Out(SYS_DIO|LOG_DEBUG) << "Excluding : " << tf.getPath() << endl;
 				tf.setDoNotDownload(true);
 			}
 		}
@@ -542,7 +550,7 @@ namespace bt
 		File fptr;
 		if (!fptr.open(file_priority_file,"wb"))
 		{
-			Out() << "Warning : Can't save chunk_info file : " << fptr.errorString() << endl;
+			Out(SYS_DIO|LOG_IMPORTANT) << "Warning : Can't save chunk_info file : " << fptr.errorString() << endl;
 			return;
 		}
 
@@ -583,7 +591,7 @@ namespace bt
 		// first read the number of lines
 		if (fptr.read(&num,sizeof(Uint32)) != sizeof(Uint32))
 		{
-			Out() << "Warning : error reading chunk_info file" << endl;
+			Out(SYS_DIO|LOG_IMPORTANT) << "Warning : error reading chunk_info file" << endl;
 			loadFileInfo();
 			return;
 		}
@@ -592,7 +600,7 @@ namespace bt
 		{
 			if (fptr.read(&tmp,sizeof(Uint32)) != sizeof(Uint32))
 			{
-				Out() << "Warning : error reading chunk_info file" << endl;
+				Out(SYS_DIO|LOG_IMPORTANT) << "Warning : error reading chunk_info file" << endl;
 				loadFileInfo();
 				return;
 			}
@@ -600,7 +608,7 @@ namespace bt
 			bt::TorrentFile & tf = tor.getFile(tmp);
 			if (fptr.read(&tmp,sizeof(Uint32)) != sizeof(Uint32))
 			{
-				Out() << "Warning : error reading chunk_info file" << endl;
+				Out(SYS_DIO|LOG_IMPORTANT) << "Warning : error reading chunk_info file" << endl;
 				loadFileInfo();
 				return;
 			}

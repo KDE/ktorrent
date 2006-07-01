@@ -27,7 +27,10 @@
 			<label>Tracker info messages flag</label>
 			<default>0</default>
 		</entry>
-		
+		<entry name="sysDIO" type="UInt">
+			<label>Disk IO info messages flag</label>
+			<default>0</default>
+		</entry>
 		<entry name="sysIPF" type="UInt">
 			<label>IPFilter plugin messages flag</label>
 			<default>0</default>

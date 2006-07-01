@@ -500,8 +500,8 @@ namespace bt
 
 		connect(pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
 		connect(pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerRemoved(Peer* )));
-		connect(cman,SIGNAL(excluded(Uint32, Uint32 )),
-		        down,SLOT(onExcluded(Uint32, Uint32 )));
+		connect(cman,SIGNAL(excluded(Uint32, Uint32 )),down,SLOT(onExcluded(Uint32, Uint32 )));
+		connect(cman,SIGNAL(included( Uint32, Uint32 )),down,SLOT(onIncluded( Uint32, Uint32 )));
 
 		updateStatusMsg();
 

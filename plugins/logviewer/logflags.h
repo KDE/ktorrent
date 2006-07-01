@@ -30,6 +30,7 @@ namespace kt
 		unsigned int SYSTRK;
 		unsigned int SYSDHT;
 		unsigned int SYSGEN;
+		unsigned int SYSDIO;
 
 		unsigned int SYSIPF;
 		unsigned int SYSSRC;

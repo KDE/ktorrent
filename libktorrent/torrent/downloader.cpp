@@ -531,7 +531,7 @@ namespace bt
 				return;
 			}
 			Chunk* c = cman.getChunk(hdr.index);
-			if (cman.prepareChunk(c))
+			if (!c->isExcluded() && cman.prepareChunk(c))
 			{
 				ChunkDownload* cd = new ChunkDownload(c);
 				current_chunks.insert(hdr.index,cd);
@@ -616,6 +616,11 @@ namespace bt
 			current_chunks.erase(i);
 			cman.resetChunk(i); // reset chunk it is not fully downloaded yet
 		}
+	}
+	
+	void Downloader::onIncluded(Uint32 from,Uint32 to)
+	{
+		chunk_selector->reIncluded(from,to);
 	}
 	
 	Uint32 Downloader::mem_usage = 0;
