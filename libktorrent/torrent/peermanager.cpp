@@ -279,6 +279,9 @@ namespace bt
 	
 	void PeerManager::connectToPeers()
 	{
+		if (potential_peers.count() == 0)
+			return;
+		
 		if (peer_list.count() + pending.count() >= max_connections && max_connections > 0)
 			return;
 		

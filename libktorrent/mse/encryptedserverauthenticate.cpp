@@ -43,8 +43,8 @@ namespace mse
 		
 		Uint8 tmp[608];
 		yb.toBuffer(tmp,96);
-		//DumpBigInt("Xb",xb);
-		//DumpBigInt("Yb",yb);
+	//	DumpBigInt("Xb",xb);
+	//	DumpBigInt("Yb",yb);
 		sock->sendData(tmp,96 + rand() % 512);
 		//Out() << "Sent YB" << endl;
 	}
@@ -59,7 +59,7 @@ namespace mse
 	void EncryptedServerAuthenticate::handleYA()
 	{
 		ya = BigInt::fromBuffer(buf,96);
-		//DumpBigInt("Ya",ya);
+	//	DumpBigInt("Ya",ya);
 		// now calculate secret 
 		s = mse::DHSecret(xb,ya);
 	//	DumpBigInt("S",s);
@@ -73,7 +73,7 @@ namespace mse
 		if (buf_size < 116) // safety check
 			return;
 		
-		//Out() << "Find Req1" << endl;
+	//	Out() << "Find Req1" << endl;
 		Uint8 tmp[100];
 		memcpy(tmp,"req1",4);
 		s.toBuffer(tmp + 4,96);
@@ -91,14 +91,14 @@ namespace mse
 		
 		if (buf_size > 608)
 		{
-			Out() << "Couldn't find req1" << endl;
+	//		Out(SYS_CON|LOG_DEBUG) << "Couldn't find req1" << endl;
 			onFinish(false);
 		}
 	}
 	
 	void EncryptedServerAuthenticate::calculateSKey()
 	{
-		//Out() << "Calculate SKEY" << endl;
+	//	Out(SYS_CON|LOG_DEBUG) << "Calculate SKEY" << endl;
 		// not enough data return
 		if (req1_off + 40 > buf_size)
 			return;
@@ -113,7 +113,7 @@ namespace mse
 		SHA1Hash r2 = r ^ r3; // now calculate HASH('req2', SKEY)
 		if (!server->findInfoHash(r2,info_hash))
 		{
-			Out() << "Unknown info_hash" << endl;
+	//		Out(SYS_CON|LOG_DEBUG) << "Unknown info_hash" << endl;
 			onFinish(false);
 			return;
 		}
@@ -124,7 +124,7 @@ namespace mse
 	
 	void EncryptedServerAuthenticate::processVC()
 	{
-		//Out() << "Process VC" << endl;
+	//	Out(SYS_CON|LOG_DEBUG) << "Process VC" << endl;
 		// calculate the keys
 		SHA1Hash enc = mse::EncryptionKey(false,s,info_hash);
 		SHA1Hash dec = mse::EncryptionKey(true,s,info_hash);
@@ -146,7 +146,7 @@ namespace mse
 		{
 			if (buf[off + i])
 			{
-				Out() << "Illegal VC" << endl;
+		//		Out(SYS_CON|LOG_DEBUG) << "Illegal VC" << endl;
 				onFinish(false);
 				return;
 			}
@@ -186,7 +186,7 @@ namespace mse
 	
 	void EncryptedServerAuthenticate::handlePadC()
 	{
-		//Out() << "Handle PAD C" << endl;
+	//	Out(SYS_CON|LOG_DEBUG) << "Handle PAD C" << endl;
 		// not enough data, so return, we need padC and the length of IA
 		if (buf_size < req1_off + 54 + pad_C_len + 2)
 			return;
@@ -206,7 +206,7 @@ namespace mse
 	
 	void EncryptedServerAuthenticate::handleIA()
 	{
-		//Out() << "Handle IA" << endl;
+	//	Out(SYS_CON|LOG_DEBUG) << "Handle IA" << endl;
 		// not enough data, so return, we need padC and the length of IA
 		if (buf_size < req1_off + 54 + pad_C_len + 2 + ia_len)
 			return;
@@ -229,7 +229,7 @@ namespace mse
 		else if (!allow_unenc && crypto_select & 0x00000001)
 		{
 			// if no encrypted connections 
-			Out() << "Unencrypted connections not allowed" << endl;
+			Out(SYS_CON|LOG_DEBUG) << "Unencrypted connections not allowed" << endl;
 			onFinish(false);
 			return;
 		}
@@ -269,7 +269,8 @@ namespace mse
 			else
 			{
 				buf_size += sock->readData(buf + buf_size,ba);
-				handleYA();
+				if (buf_size >= 96)
+					handleYA();
 			}
 			break;
 		case WAITING_FOR_REQ1:

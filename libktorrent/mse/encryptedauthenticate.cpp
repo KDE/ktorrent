@@ -52,6 +52,7 @@ namespace mse
 		crypto_select = 0;
 		pad_D_len = 0;
 		end_of_crypto_handshake = 0;
+		//Out(SYS_CON|LOG_DEBUG) << "EncryptedAuthenticate : " << ip << ":" << port << endl;
 	}
 
 

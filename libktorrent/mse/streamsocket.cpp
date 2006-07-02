@@ -129,13 +129,15 @@ namespace mse
 		if (reinserted_data)
 		{
 			Uint32 tr = reinserted_data_size - reinserted_data_read;
-			if (tr <= len)
+			if (tr < len)
 			{
 				memcpy(buf,reinserted_data + reinserted_data_read,tr);
 				delete [] reinserted_data;
 				reinserted_data = 0;
 				reinserted_data_size = reinserted_data_read = 0;
 				ret2 = tr;
+				if (enc)
+					enc->decrypt(buf,tr);
 			}
 			else
 			{

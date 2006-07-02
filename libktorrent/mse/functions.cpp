@@ -62,12 +62,13 @@ namespace mse
 	{
 		static Uint8 buf[512];
 		Uint32 nb = bi.toBuffer(buf,512);
-		Out() << name << " (" << nb << ") = ";
+		bt::Log & lg = Out();
+		lg << name << " (" << nb << ") = ";
 		for (Uint32 i = 0;i < nb;i++)
 		{
-			Out() << QString("0x%1 ").arg(buf[i],0,16);
+			lg << QString("0x%1 ").arg(buf[i],0,16);
 		}
-		Out() << endl;
+		lg << endl;
 	}
 
 }
