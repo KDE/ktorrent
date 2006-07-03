@@ -14,6 +14,7 @@ Comment[nl]=BitTorrent-download
 Comment[pt]=Transferência do BitTorrent
 Comment[pt_BR]=Um programa BitTorrent para download
 Comment[sv]=BitTorrent-nerladdning
+Comment[zh_TW]=BitTorrent 下載
 Hidden=false
 MimeType=application/x-bittorrent
 Icon=torrent

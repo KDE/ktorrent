@@ -12,6 +12,7 @@ Name[pt]=Importação de Ficheiros Parciais
 Name[pt_BR]=Plugin de Importação Parcial de Arquivo
 Name[sv]=Insticksprogram för partiell filimport
 Name[xx]=xxPartialFileImportPluginxx
+Name[zh_TW]=PartialFileImport外掛程式
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktpartfileimportplugin

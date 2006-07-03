@@ -18,6 +18,7 @@ Name[sr]=Прикључак претраге
 Name[sr@Latn]=Priključak pretrage
 Name[sv]=Sökinsticksprogram
 Name[xx]=xxSearchPluginxx
+Name[zh_TW]=搜尋外掛程式
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktinfowidgetplugin
