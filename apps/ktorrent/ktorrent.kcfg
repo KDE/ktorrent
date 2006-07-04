@@ -17,12 +17,12 @@
 			<min>0</min>
 		</entry>
 		<entry name="maxConnections" type="Int">
-			<label>Maximum number of connections per download (0 = no limit)</label>
+			<label>Maximum number of connections per torrent (0 = no limit)</label>
 			<default>120</default>
 			<min>0</min>
 		</entry>
 		<entry name="maxTotalConnections" type="Int">
-			<label>Maximum number of connections for all downloads (0 = no limit) </label>
+			<label>Maximum number of connections for all torrents (0 = no limit) </label>
 			<default>800</default>
 			<min>0</min>
 		</entry>

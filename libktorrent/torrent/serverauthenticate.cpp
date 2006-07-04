@@ -83,7 +83,7 @@ namespace bt
 		PeerManager* pman = server->findPeerManager(rh);
 		if (!pman)
 		{
-			Out(SYS_GEN|LOG_NOTICE) << "Cannot find PeerManager for hash : " << rh.toString() << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Cannot find PeerManager for hash : " << rh.toString() << endl;
 			onFinish(false);
 			return;
 		}

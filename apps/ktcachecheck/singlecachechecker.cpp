@@ -57,7 +57,7 @@ namespace ktdebug
 		for (Uint32 i = 0;i < num_chunks;i++)
 		{
 			if (i % 100 == 0)
-				Out() << "Checked " << i << " chunks" << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "Checked " << i << " chunks" << endl;
 	//	Out() << "Chunk " << i << " : ";
 			if (!fptr.eof())
 			{

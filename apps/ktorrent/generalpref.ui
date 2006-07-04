@@ -220,7 +220,7 @@
                         <cstring>show_popups</cstring>
                     </property>
                     <property name="text">
-                        <string>Show "torrent finished" popup messages?</string>
+                        <string>Show "torrent finished" popup messages</string>
                     </property>
                     <property name="accel">
                         <string></string>
