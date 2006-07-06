@@ -125,12 +125,15 @@ namespace mse
 	void EncryptedServerAuthenticate::processVC()
 	{
 	//	Out(SYS_CON|LOG_DEBUG) << "Process VC" << endl;
-		// calculate the keys
-		SHA1Hash enc = mse::EncryptionKey(false,s,info_hash);
-		SHA1Hash dec = mse::EncryptionKey(true,s,info_hash);
-		//Out() << "enc = " << enc.toString() << endl;
-		//Out() << "dec = " << dec.toString() << endl;
-		our_rc4 = new RC4Encryptor(dec,enc);
+		if (!our_rc4)
+		{
+			// calculate the keys
+			SHA1Hash enc = mse::EncryptionKey(false,s,info_hash);
+			SHA1Hash dec = mse::EncryptionKey(true,s,info_hash);
+			//Out() << "enc = " << enc.toString() << endl;
+			//Out() << "dec = " << dec.toString() << endl;
+			our_rc4 = new RC4Encryptor(dec,enc);
+		}
 		
 		// if we do not have everything return
 		if (buf_size < req1_off + 40 + 14)
