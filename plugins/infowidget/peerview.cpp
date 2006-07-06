@@ -207,8 +207,13 @@ namespace kt
 			return;
 		}
 
-		delete *it;
+		PeerViewItem* pvi = it.data();
+		if (pvi == curr)
+			curr = 0;
+				  
+		delete pvi;
 		items.erase(peer);
+		
 	}
 	
 	void PeerView::banPeer(kt::PeerInterface* peer)

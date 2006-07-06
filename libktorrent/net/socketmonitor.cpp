@@ -113,7 +113,7 @@ namespace net
 		mutex.lock();
 		smap.remove(sock);
 		mutex.unlock();
-		if (mt && smap.count() == 0)
+		if (mt && smap.count() == 0 && mt->isRunning())
 		{
 			Out(SYS_CON|LOG_DEBUG) << "Stopping socketmonitor thread" << endl;
 			mt->stop();
