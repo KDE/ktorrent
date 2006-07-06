@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <kresolver.h>
 #include <util/log.h>
 #include <util/array.h>
 #include <util/functions.h>
@@ -306,6 +307,18 @@ namespace dht
 	void DHT::timeout(const MsgBase* r)
 	{
 		node->onTimeout(r);
+	}
+	
+	void DHT::addDHTNode(const QString & host,Uint16 hport)
+	{
+		if (!running)
+			return;
+		
+		KResolverResults res = KResolver::resolve(host,QString::number(hport));
+		if (res.count() > 0)
+		{
+			srv->ping(node->getOurID(),res.front().address());
+		}
 	}
 }
 

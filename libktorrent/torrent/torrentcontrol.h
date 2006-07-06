@@ -188,6 +188,10 @@ namespace bt
 		 */
 		bool hasMissingFiles(QStringList & sl);
 		
+		
+		virtual Uint32 getNumDHTNodes() const;
+		virtual const kt::DHTNode & getDHTNode(Uint32 i) const;
+		
 	public slots:
 		/**
 		 * Update the object, should be called periodically.

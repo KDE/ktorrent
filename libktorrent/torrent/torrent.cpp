@@ -264,7 +264,7 @@ namespace bt
 				throw Error(i18n("Corrupted torrent!"));
 			
 			// add the DHT node
-			DHTNode n;
+			kt::DHTNode n;
 			n.ip = ip->data().toString();
 			n.port = port->data().toInt();
 			nodes.append(n);

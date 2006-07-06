@@ -25,9 +25,12 @@
 #include <qvaluevector.h>
 #include <util/sha1hash.h>
 #include <util/constants.h>
+#include <interfaces/torrentinterface.h>
 #include "globals.h"
 #include "peerid.h"
 #include "torrentfile.h"
+
+
 
 namespace bt
 {
@@ -37,11 +40,7 @@ namespace bt
 	class BListNode;
 	class AnnounceList;
 	
-	struct DHTNode
-	{
-		QString ip;
-		Uint16 port;
-	};
+	
 	
 	/**
 	 * @author Joris Guisson
@@ -161,7 +160,7 @@ namespace bt
 		Uint32 getNumDHTNodes() const {return nodes.count();}
 		
 		/// Get a DHT node
-		const DHTNode & getDHTNode(Uint32 i) {return nodes[i];}
+		const kt::DHTNode & getDHTNode(Uint32 i) {return nodes[i];}
 		
 
 	private:
@@ -184,7 +183,7 @@ namespace bt
 		PeerID peer_id;
 		QValueVector<SHA1Hash> hash_pieces;
 		QValueVector<TorrentFile> files;
-		QValueVector<DHTNode> nodes;
+		QValueVector<kt::DHTNode> nodes;
 		AnnounceList* anon_list;
 		QString encoding;
 		bool priv_torrent;

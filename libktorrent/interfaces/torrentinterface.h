@@ -127,6 +127,13 @@ namespace kt
 		/// Private torrent (i.e. no use of DHT)
 		bool priv_torrent;
 	};
+	
+		
+	struct DHTNode
+	{
+		QString ip;
+		bt::Uint16 port;
+	};
 
 	/**
 	 * @author Joris Guisson
@@ -142,8 +149,7 @@ namespace kt
 		TorrentInterface();
 		virtual ~TorrentInterface();
 
-		
-
+	
 		/**
 		 * Update the object, should be called periodically.
 		 */
@@ -295,6 +301,13 @@ namespace kt
 		 * Mark missing files as do not download.
 		 */
 		virtual void dndMissingFiles() = 0;
+		
+		
+		/// Get the number of initial DHT nodes
+		virtual Uint32 getNumDHTNodes() const = 0;
+		
+		/// Get a DHT node
+		virtual const DHTNode & getDHTNode(Uint32 i) const = 0;
 		
 	signals:
 		/**

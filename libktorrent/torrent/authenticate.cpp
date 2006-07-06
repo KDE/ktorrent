@@ -19,7 +19,6 @@
  ***************************************************************************/
 #include <util/log.h>
 #include <mse/streamsocket.h>
-#include <qsocketnotifier.h>
 #include "authenticate.h"
 #include "ipblocklist.h"
 #include "peermanager.h"
@@ -40,17 +39,11 @@ namespace bt
 
 		if (sock->connectTo(host,port))
 		{
-			sn = new QSocketNotifier(sock->fd(),QSocketNotifier::Read);
-			sn->setEnabled(true);
-			connect(sn,SIGNAL(activated(int)),this,SLOT(onReadyRead()));
 			connected();
 		}
 		else if (sock->connecting())
 		{
-			// start up a write notifier, so we can wait until the socket is connected
-			sn = new QSocketNotifier(sock->fd(),QSocketNotifier::Write);
-			connect(sn,SIGNAL(activated(int)),this,SLOT(onReadyWrite()));
-			sn->setEnabled(true);
+			// do nothing the monitor will notify us when we are connected
 		}
 		else
 		{
@@ -65,14 +58,8 @@ namespace bt
 	void Authenticate::onReadyWrite()
 	{
 //		Out() << "Authenticate::onReadyWrite()" << endl;
-		delete sn;
-		sn = 0;
 		if (sock->connectSuccesFull())
 		{
-			// create new read notifier and call connected
-			sn = new QSocketNotifier(sock->fd(),QSocketNotifier::Read);
-			connect(sn,SIGNAL(activated(int)),this,SLOT(onReadyRead()));
-			sn->setEnabled(true);
 			connected();
 		}
 		else
@@ -91,12 +78,6 @@ namespace bt
 		Out(SYS_CON|LOG_NOTICE) << "Authentication to " << host << " : " << (succes ? "ok" : "failure") << endl;
 		finished = true;
 		this->succes = succes;
-		if (sn)
-		{
-			sn->setEnabled(false);
-			sn->deleteLater();
-			sn = 0;
-		}
 		
 		if (!succes)
 		{
@@ -104,6 +85,7 @@ namespace bt
 			sock = 0;
 		}
 		timer.stop();
+		pman.peerAuthenticated(this,succes);
 	}
 	
 	void Authenticate::handshakeRecieved(bool full)

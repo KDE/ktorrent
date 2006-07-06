@@ -29,6 +29,7 @@
 #include "peermanager.h"
 #include "serverauthenticate.h"
 #include "ipblocklist.h"
+#include "authenticationmonitor.h"
 
 
 namespace bt
@@ -59,7 +60,6 @@ namespace bt
 
 	Server::Server(Uint16 port) : sock(0),port(0)
 	{
-		pending.setAutoDelete(false);
 		changePort(port);
 		encryption = false;
 		allow_unencrypted = true;
@@ -68,7 +68,6 @@ namespace bt
 
 	Server::~Server()
 	{
-		pending.setAutoDelete(true);
 		delete sock;
 	}
 
@@ -122,7 +121,7 @@ namespace bt
 			else
 				auth = new ServerAuthenticate(s,this);
 			
-			pending.append(auth);
+			AuthenticationMonitor::instance().add(auth);
 		}
 	}
 
@@ -174,20 +173,7 @@ namespace bt
 	
 	void Server::update()
 	{
-		QPtrList<ServerAuthenticate>::iterator i = pending.begin();
-		while (i != pending.end())
-		{
-			ServerAuthenticate* auth = *i;
-			if (auth->isFinished())
-			{
-				delete auth;
-				i = pending.erase(i);
-			}
-			else
-			{
-				i++;
-			}
-		}
+		AuthenticationMonitor::instance().update();
 	}
 	
 	void Server::enableEncryption(bool allow_unencrypted)

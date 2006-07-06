@@ -92,7 +92,7 @@ namespace net
 		{
 			if (errno == EINPROGRESS)
 			{
-				Out(SYS_CON|LOG_DEBUG) << "Socket is connecting" << endl;
+			//	Out(SYS_CON|LOG_DEBUG) << "Socket is connecting" << endl;
 				m_state = CONNECTING;
 				return false;
 			}
@@ -142,7 +142,7 @@ namespace net
 		{
 			if (errno != EAGAIN && errno != EWOULDBLOCK)
 			{
-				Out(SYS_CON|LOG_DEBUG) << "Send error : " << QString(strerror(errno)) << endl;
+			//	Out(SYS_CON|LOG_DEBUG) << "Send error : " << QString(strerror(errno)) << endl;
 				close();
 			}
 			return 0;
@@ -157,7 +157,7 @@ namespace net
 		{
 			if (errno != EAGAIN && errno != EWOULDBLOCK)
 			{
-				Out(SYS_CON|LOG_DEBUG) << "Receive error : " << QString(strerror(errno)) << endl;
+			//	Out(SYS_CON|LOG_DEBUG) << "Receive error : " << QString(strerror(errno)) << endl;
 				close();
 			}
 			return 0;

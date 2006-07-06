@@ -17,10 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <kresolver.h>
 #include "task.h"
 #include "kclosestnodessearch.h"
 #include "rpcserver.h"
 #include "kbucket.h"
+
+using namespace KNetwork;
 
 namespace dht
 {
@@ -147,5 +150,22 @@ namespace dht
 		if (lst)
 			lst->onFinished(this);
 	}
+	
+	void Task::addDHTNode(const QString & ip,bt::Uint16 port)
+	{
+		KResolver::resolveAsync(this,SLOT(onResolverResults( KNetwork::KResolverResults )),
+								ip,QString::number(port));
+		
+	}
+	
+	void Task::onResolverResults(KNetwork::KResolverResults res)
+	{
+		if (res.count() == 0)
+			return;
+		
+		todo.append(KBucketEntry(res.front().address(),dht::Key()));
+	}
 
 }
+
+#include "task.moc"

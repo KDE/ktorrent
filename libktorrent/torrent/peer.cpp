@@ -397,6 +397,7 @@ namespace bt
 		
 		if (!sock->ok())
 		{
+			Out(SYS_CON|LOG_DEBUG) << "Connection closed" << endl;
 			kill();
 			return;
 		}

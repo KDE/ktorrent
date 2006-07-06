@@ -108,6 +108,7 @@ namespace dht
 		
 		void start(const QString & table,bt::Uint16 port);
 		void stop();
+		void addDHTNode(const QString & host,bt::Uint16 hport);
 		
 	private slots:
 		void update();

@@ -97,6 +97,13 @@ namespace dht
 		/// Get statistics about the DHT
 		const dht::Stats & getStats() const {return stats;}
 		
+		/**
+		 * Add a DHT node. This node shall be pinged immediatly.
+		 * @param host The hostname or ip
+		 * @param hport The port of the host
+		 */
+		virtual void addDHTNode(const QString & host,bt::Uint16 hport) = 0;
+		
 	protected:
 		bool running;
 		bt::Uint16 port;

@@ -24,6 +24,11 @@
 #include "rpccall.h"
 //#include "kbucket.h"
 
+namespace KNetwork
+{
+	class KResolverResults;
+}
+
 namespace dht
 {
 	class Node;
@@ -32,6 +37,7 @@ namespace dht
 	class KBucketEntry;
 	
 	const Uint32 MAX_CONCURRENT_REQS = 16;
+
 	
 	/**
 	 * Classes who which to be informed of the status of tasks, shoul derive from
@@ -73,6 +79,7 @@ namespace dht
 	 */
 	class Task : public RPCCallListener
 	{
+		Q_OBJECT
 	public:
 		/**
 		 * Create a task. 
@@ -155,8 +162,18 @@ namespace dht
 		
 		/// Kills the task
 		void kill();
+		
+		/**
+		 * Add a node to the todo list
+		 * @param ip The ip or hostname of the node
+		 * @param port The port
+		 */
+		void addDHTNode(const QString & ip,bt::Uint16 port);
 	protected:
 		void done();
+		
+	protected slots:
+		void onResolverResults(KNetwork::KResolverResults res);
 				
 	protected:	
 		QValueList<KBucketEntry> visited; // nodes visited

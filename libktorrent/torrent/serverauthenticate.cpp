@@ -17,7 +17,6 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <qsocketnotifier.h>
 #include <mse/streamsocket.h>
 #include <util/sha1hash.h>
 #include <util/log.h>
@@ -50,12 +49,6 @@ namespace bt
 				<< " : " << (succes ? "ok" : "failure") << endl;
 		finished = true;
 		
-		if (sn)
-		{
-			sn->setEnabled(false);
-			sn->deleteLater();
-			sn = 0;
-		}
 		if (!succes)
 		{
 			sock->deleteLater();

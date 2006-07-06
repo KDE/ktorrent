@@ -242,20 +242,6 @@ namespace bt
 			throw;
 		}
 		
-		
-		// if the torrent has DHT nodes add them as potential peers to the PeerManager
-		if (tor->getNumDHTNodes() > 0)
-		{
-			for (Uint32 i = 0;i < tor->getNumDHTNodes();i++)
-			{
-				const DHTNode & n = tor->getDHTNode(i);
-				PotentialPeer pp;
-				pp.ip = n.ip;
-				pp.port = n.port;
-				pman->addPotentialPeer(pp);
-			}
-		}
-		
 		try
 		{
 			cman->start();
@@ -1149,6 +1135,16 @@ namespace bt
 			onIOError(err.toString());
 			throw;
 		}
+	}
+	
+	Uint32 TorrentControl::getNumDHTNodes() const
+	{
+		return tor->getNumDHTNodes();
+	}
+	
+	const kt::DHTNode & TorrentControl::getDHTNode(Uint32 i) const 
+	{
+		return tor->getDHTNode(i);
 	}
 }
 

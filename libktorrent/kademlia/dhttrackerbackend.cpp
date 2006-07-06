@@ -23,6 +23,7 @@
 #include <util/functions.h>
 #include <torrent/globals.h>
 #include <torrent/peermanager.h>
+#include <interfaces/torrentinterface.h>
 #include "dhttrackerbackend.h"
 #include "dht.h"
 #include "announcetask.h"
@@ -52,6 +53,12 @@ namespace dht
 		curr_task = dh_table.announce(frontend->info_hash,url.port());
 		if (curr_task)
 		{
+			kt::TorrentInterface* tor = frontend->tor;
+			for (Uint32 i = 0;i < tor->getNumDHTNodes();i++)
+			{
+				const kt::DHTNode & n = tor->getDHTNode(i);
+				curr_task->addDHTNode(n.ip,n.port);
+			}
 			curr_task->setListener(this);
 			return true;
 		}

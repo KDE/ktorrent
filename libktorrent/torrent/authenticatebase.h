@@ -25,7 +25,6 @@
 #include <qtimer.h>
 #include <util/constants.h>
 
-class QSocketNotifier;
 
 namespace mse
 {
@@ -62,6 +61,15 @@ namespace bt
 		/// See if the Peer supports fast_extensions
 		bool supportsFastExtensions() const {return fast_extensions;}
 		
+		/// get teh socket
+		const mse::StreamSocket* getSocket() const {return sock;}
+		
+		/// We can read from the socket
+		virtual void onReadyRead();
+		
+		/// We can write to the socket (used to detect a succesfull connection)
+		virtual void onReadyWrite();
+		
 	protected:
 		/**
 		 * Send a handshake
@@ -89,14 +97,14 @@ namespace bt
 		*/
 		void makeHandshake(bt::Uint8* buf,const SHA1Hash & info_hash,const PeerID & our_peer_id);
 		
+		
+		
 	protected slots:
 		void onTimeout();
 		void onError(int err);
-		virtual void onReadyRead();
-
+		
 	protected:
 		mse::StreamSocket* sock;
-		QSocketNotifier* sn;
 		QTimer timer;
 		bool finished;
 		Uint8 handshake[68];

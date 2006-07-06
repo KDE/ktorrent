@@ -47,7 +47,6 @@ namespace bt
 		Q_OBJECT
 
 		QPtrList<PeerManager> peer_managers;
-		QPtrList<ServerAuthenticate> pending;
 		ServerSocket* sock;
 		Uint16 port;
 		bool encryption;

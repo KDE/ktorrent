@@ -47,6 +47,8 @@ namespace bt
 		QString ip;
 		Uint16 port;
 	};
+	
+	const Uint32 MAX_SIMULTANIOUS_AUTHS = 20;
 
 	/**
 	 * @author Joris Guisson
@@ -164,6 +166,13 @@ namespace bt
 		/// Are we connected to a Peer given it's PeerID ?
 		bool connectedTo(const PeerID & peer_id);	
 		
+		/**
+		 * A peer has authenticated.
+		 * @param auth The Authenticate object
+		 * @param ok Wether or not the attempt was succesfull
+		 */
+		void peerAuthenticated(Authenticate* auth,bool ok);
+		
 	private:
 		void updateAvailableChunks();
 
@@ -171,8 +180,6 @@ namespace bt
 		void onHave(Peer* p,Uint32 index);
 		void onBitSetRecieved(const BitSet & bs);
 		void onRerunChoker();
-		void peerAuthenticated(Authenticate* auth,bool ok);
-		
 		
 	signals:
 		void newPeer(Peer* p);
@@ -181,7 +188,6 @@ namespace bt
 	private:
 		PtrMap<Uint32,Peer> peer_map;
 		QPtrList<Peer> peer_list,killed;
-		QPtrList<Authenticate> pending;
 		Uint32 num_seeders,num_leechers,num_pending;
 		QValueList<PotentialPeer> potential_peers;
 		Torrent & tor;
