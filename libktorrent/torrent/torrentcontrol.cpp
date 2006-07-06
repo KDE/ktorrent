@@ -1015,8 +1015,7 @@ namespace bt
 	{
 		if(stats.completed && stats.bytes_uploaded != 0 && stats.bytes_downloaded != 0 && maxShareRatio > 0)
 		{
-			float val = (float) stats.bytes_uploaded / stats.bytes_downloaded;
-			if(val >= maxShareRatio)
+			if(kt::ShareRatio(stats) >= maxShareRatio)
 				return true;
 		}
 		

@@ -21,6 +21,12 @@
 
 namespace kt
 {
+	
+	float ShareRatio(const TorrentStats & stats) 
+	{
+		return (float) stats.bytes_uploaded / (stats.bytes_downloaded + stats.imported_bytes);
+	}
+	
 
 	TorrentInterface::TorrentInterface()
 	{}

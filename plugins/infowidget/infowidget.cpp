@@ -449,10 +449,7 @@ namespace kt
 		m_leechers->setText(QString("%1 (%2)")
 				.arg(s.leechers_connected_to).arg(s.leechers_total));
 	
-		float ratio = 0.0f;
-		if (s.bytes_downloaded > 0)
-			ratio = (float) s.bytes_uploaded / (float)s.bytes_downloaded;
-		
+		float ratio = kt::ShareRatio(s);
 		if(!maxRatio->hasFocus() && useLimit->isChecked())
 			maxRatioUpdate();
 		

@@ -90,7 +90,7 @@ namespace bt
 		if (start_tc)
 		{
 			Out() << "Starting download" << endl;
-			float ratio = (float) s.bytes_uploaded / s.bytes_downloaded;
+			float ratio = kt::ShareRatio(s);
 			float max_ratio = tc->getMaxShareRatio();
 			if(s.completed && max_ratio > 0 && ratio >= max_ratio)
 			{

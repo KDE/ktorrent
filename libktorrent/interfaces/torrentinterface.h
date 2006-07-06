@@ -134,6 +134,7 @@ namespace kt
 		QString ip;
 		bt::Uint16 port;
 	};
+	
 
 	/**
 	 * @author Joris Guisson
@@ -355,6 +356,12 @@ namespace kt
 	};
 
 
+	/**
+	 * Calculates the share ratio of a torrent.
+	 * @param stats The stats of the torrent
+	 * @return The share ratio
+	 */
+	float ShareRatio(const TorrentStats & stats);
 
 }
 
