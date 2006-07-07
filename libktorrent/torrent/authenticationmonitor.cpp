@@ -70,8 +70,11 @@ namespace bt
 		while (itr != auths.end())
 		{
 			AuthenticateBase* ab = *itr;
-			if (ab->isFinished())
+			if (!ab || ab->isFinished() || !ab->getSocket())
 			{
+				if (ab)
+					ab->deleteLater();
+				
 				std::set<AuthenticateBase*>::iterator j = itr;
 				itr++;
 				auths.erase(j);
