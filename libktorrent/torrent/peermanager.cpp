@@ -211,6 +211,7 @@ namespace bt
 				QString ip = a->getIP();
 				Uint16 port = a->getPort();
 				Authenticate* st = new Authenticate(ip,port,tor.getInfoHash(),tor.getPeerID(),*this);
+				AuthenticationMonitor::instance().add(st);
 				total_connections++;
 			}
 			return;
