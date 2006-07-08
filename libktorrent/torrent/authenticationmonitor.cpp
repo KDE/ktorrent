@@ -104,14 +104,17 @@ namespace bt
 		while (itr != auths.end())
 		{
 			AuthenticateBase* ab = *itr;
-			int fd = ab->getSocket()->fd();
-			if (FD_ISSET(fd,&rfds))
+			if (ab->getSocket() && ab->getSocket()->fd() >= 0)
 			{
-				ab->onReadyRead();
-			}
-			else if (FD_ISSET(fd,&wfds))
-			{
-				ab->onReadyWrite();
+				int fd = ab->getSocket()->fd();
+				if (FD_ISSET(fd,&rfds))
+				{
+					ab->onReadyRead();
+				}
+				else if (FD_ISSET(fd,&wfds))
+				{
+					ab->onReadyWrite();
+				}
 			}
 			
 			if (ab->isFinished())
