@@ -212,6 +212,7 @@ namespace bt
 				Uint16 port = a->getPort();
 				Authenticate* st = new Authenticate(ip,port,tor.getInfoHash(),tor.getPeerID(),*this);
 				AuthenticationMonitor::instance().add(st);
+				num_pending++;
 				total_connections++;
 			}
 			return;
