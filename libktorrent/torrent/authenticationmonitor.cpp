@@ -70,7 +70,7 @@ namespace bt
 		while (itr != auths.end())
 		{
 			AuthenticateBase* ab = *itr;
-			if (!ab || ab->isFinished() || !ab->getSocket())
+			if (!ab || ab->isFinished())
 			{
 				if (ab)
 					ab->deleteLater();
@@ -81,14 +81,17 @@ namespace bt
 			}
 			else
 			{
-				int fd = ab->getSocket()->fd();
-				if (!ab->getSocket()->connecting())
-					FD_SET(fd,&rfds);
-				else
-					FD_SET(fd,&wfds);
-				
-				if (fd > max_fd)
-					max_fd = fd;
+				if (ab->getSocket() && ab->getSocket()->fd() >= 0)
+				{
+					int fd = ab->getSocket()->fd();
+					if (!ab->getSocket()->connecting())
+						FD_SET(fd,&rfds);
+					else
+						FD_SET(fd,&wfds);
+					
+					if (fd > max_fd)
+						max_fd = fd;
+				}
 				itr++;
 			}
 		}
