@@ -184,6 +184,7 @@ namespace bt
 	signals:
 		void newPeer(Peer* p);
 		void peerKilled(Peer* p);
+		void stopped();
 		
 	private:
 		PtrMap<Uint32,Peer> peer_map;

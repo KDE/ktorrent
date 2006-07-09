@@ -56,7 +56,7 @@ namespace bt
 		 */
 		Authenticate(const QString & ip,Uint16 port,
 					 const SHA1Hash & info_hash,const PeerID & peer_id,
-					 PeerManager & pman);
+					 PeerManager* pman);
 		
 		virtual ~Authenticate();
 
@@ -78,7 +78,7 @@ namespace bt
 		
 	protected slots:
 		void onReadyWrite();
-		
+		void onPeerManagerDestroyed();
 		
 	protected:
 		void onFinish(bool succes);
@@ -91,7 +91,7 @@ namespace bt
 		QString host;
 		Uint16 port;
 		bool succes;
-		PeerManager & pman;
+		PeerManager* pman;
 	};
 }
 

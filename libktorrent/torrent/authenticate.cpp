@@ -27,7 +27,7 @@ namespace bt
 {
 
 	Authenticate::Authenticate(const QString & ip,Uint16 port,
-							   const SHA1Hash & info_hash,const PeerID & peer_id,PeerManager & pman) 
+							   const SHA1Hash & info_hash,const PeerID & peer_id,PeerManager* pman) 
 	: info_hash(info_hash),our_peer_id(peer_id),pman(pman)
 	{
 		finished = succes = false;
@@ -85,7 +85,8 @@ namespace bt
 			sock = 0;
 		}
 		timer.stop();
-		pman.peerAuthenticated(this,succes);
+		if (pman)
+			pman->peerAuthenticated(this,succes);
 	}
 	
 	void Authenticate::handshakeRecieved(bool full)
@@ -121,7 +122,7 @@ namespace bt
 		}
 		
 		// check if we aren't already connected to the client
-		if (pman.connectedTo(peer_id))
+		if (pman->connectedTo(peer_id))
 		{
 			Out(SYS_CON|LOG_NOTICE) << "Already connected to " << peer_id.toString() << endl;
 			onFinish(false);
@@ -139,6 +140,16 @@ namespace bt
 		mse::StreamSocket* s = sock;
 		sock = 0;
 		return s;
+	}
+	
+	void Authenticate::onPeerManagerDestroyed()
+	{
+	//	Out(SYS_CON|LOG_NOTICE) << "Authenticate::onPeerManagerDestroyed()" << endl;
+		pman = 0;
+		if (finished)
+			return;
+		
+		onFinish(false);
 	}
 	
 }

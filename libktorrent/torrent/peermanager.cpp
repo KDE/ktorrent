@@ -49,7 +49,7 @@ namespace bt
 		num_seeders = num_leechers = num_pending = 0;
 		killed.setAutoDelete(true);
 		started = false;
-		Globals::instance().getServer().addPeerManager(this);
+		
 		cnt = new ChunkCounter(tor.getNumChunks());
 	}
 
@@ -210,7 +210,8 @@ namespace bt
 				// if possible try unencrypted
 				QString ip = a->getIP();
 				Uint16 port = a->getPort();
-				Authenticate* st = new Authenticate(ip,port,tor.getInfoHash(),tor.getPeerID(),*this);
+				Authenticate* st = new Authenticate(ip,port,tor.getInfoHash(),tor.getPeerID(),this);
+				connect(this,SIGNAL(stopped()),st,SLOT(onPeerManagerDestroyed()));
 				AuthenticationMonitor::instance().add(st);
 				num_pending++;
 				total_connections++;
@@ -309,10 +310,10 @@ namespace bt
 			
 			if (Globals::instance().getServer().isEncryptionEnabled())
 				auth = new mse::EncryptedAuthenticate(pp.ip,pp.port,
-			tor.getInfoHash(),tor.getPeerID(),*this);
+			tor.getInfoHash(),tor.getPeerID(),this);
 			else
-				auth = new Authenticate(pp.ip,pp.port,tor.getInfoHash(),tor.getPeerID(),*this);
-			
+				auth = new Authenticate(pp.ip,pp.port,tor.getInfoHash(),tor.getPeerID(),this);
+			connect(this,SIGNAL(stopped()),auth,SLOT(onPeerManagerDestroyed()));
 			AuthenticationMonitor::instance().add(auth);
 			num_pending++;
 			total_connections++;
@@ -346,12 +347,16 @@ namespace bt
 	void PeerManager::start()
 	{
 		started = true;
+		Globals::instance().getServer().addPeerManager(this);
 	}
 		
 	
 	void PeerManager::stop()
 	{
 		started = false;
+		Globals::instance().getServer().removePeerManager(this);
+		stopped();
+		num_pending = 0;
 	}
 
 	Peer* PeerManager::findPeer(Uint32 peer_id)

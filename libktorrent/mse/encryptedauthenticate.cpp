@@ -40,7 +40,7 @@ namespace mse
 			Uint16 port, 
 			const SHA1Hash& info_hash, 
 			const PeerID& peer_id, 
-			PeerManager& pman)
+			PeerManager* pman)
 	: Authenticate(ip, port, info_hash, peer_id, pman)
 	{
 		mse::GeneratePublicPrivateKey(xa,ya);
