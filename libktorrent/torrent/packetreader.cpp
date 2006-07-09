@@ -221,6 +221,9 @@ namespace bt
 
 	void PacketReader::onDataReady(Uint8* buf,Uint32 size)
 	{
+		if (error)
+			return;
+		
 		mutex.lock();
 		if (packet_queue.count() == 0)
 		{

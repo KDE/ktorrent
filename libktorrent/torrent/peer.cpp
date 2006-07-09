@@ -395,7 +395,7 @@ namespace bt
 		if (killed)
 			return;
 		
-		if (!sock->ok())
+		if (!sock->ok() || !preader->ok())
 		{
 			Out(SYS_CON|LOG_DEBUG) << "Connection closed" << endl;
 			kill();
