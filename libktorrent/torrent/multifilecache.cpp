@@ -185,8 +185,8 @@ namespace bt
 			dtmp += bt::DirSeparator();
 		}
 		
-		if (bt::Exists(cache_dir + fpath))
-			bt::Delete(cache_dir + fpath); // delete any existing symlinks
+		
+		bt::Delete(cache_dir + fpath,true); // delete any existing symlinks
 
 		// then make the file
 		QString tmp = dnd ? tmpdir + "dnd" + bt::DirSeparator() : output_dir;

@@ -869,6 +869,7 @@ namespace bt
 				resetChunk(j);
 		}
 		saveIndexFile();
+		recalc_chunks_left = true;
 	}
 	
 	void ChunkManager::dndMissingFiles()
@@ -889,6 +890,7 @@ namespace bt
 		}
 		saveFileInfo();
 		saveIndexFile();
+		recalc_chunks_left = true;
 	}
 }
 

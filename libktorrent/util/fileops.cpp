@@ -174,11 +174,11 @@ namespace bt
 		QCString fn = QFile::encodeName(url);
 #if HAVE_STAT64
 		struct stat64 statbuf;
-		if (stat64(fn, &statbuf) < 0)
+		if (lstat64(fn, &statbuf) < 0)
 			return;
 #else
 		struct stat statbuf;
-		if (stat(fn, &statbuf) < 0)
+		if (lstat(fn, &statbuf) < 0)
 			return;
 #endif
 		
