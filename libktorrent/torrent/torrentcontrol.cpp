@@ -1145,6 +1145,11 @@ namespace bt
 	{
 		return tor->getDHTNode(i);
 	}
+
+	void TorrentControl::deleteDataFiles()
+	{
+		cman->deleteDataFiles();
+	}
 }
 
 #include "torrentcontrol.moc"

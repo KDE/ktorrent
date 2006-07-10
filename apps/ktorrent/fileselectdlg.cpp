@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <klocale.h>
+#include <kmessagebox.h>
 #include <klistview.h>
 #include <kstdguiitem.h>
 #include <kpushbutton.h>
@@ -69,6 +71,36 @@ void FileSelectDlg::reject()
 
 void FileSelectDlg::accept()
 {
+	QStringList pe_ex;
+	for (Uint32 i = 0;i < tc->getNumFiles();i++)
+	{
+		kt::TorrentFileInterface & file = tc->getTorrentFile(i);
+		if (file.doNotDownload() && file.isPreExistingFile())
+		{
+			// we have excluded a preexsting file
+			pe_ex.append(file.getPath());
+		}
+	}
+	
+	if (pe_ex.count() > 0)
+	{
+		QString msg = i18n("You have deselected the following existing files. "
+				"You will lose all data in these files, are you sure you want to do this ?");
+		// better ask the user if (s)he wants to delete the allready existing data
+		int ret = KMessageBox::warningYesNoList(0,msg,pe_ex,QString::null,
+											   KGuiItem(i18n("Yes, delete the files")),
+											   KGuiItem(i18n("No, keep the files")));
+		if (ret == KMessageBox::No)
+		{
+			for (Uint32 i = 0;i < tc->getNumFiles();i++)
+			{
+				kt::TorrentFileInterface & file = tc->getTorrentFile(i);
+				if (file.doNotDownload() && file.isPreExistingFile())
+					file.setDoNotDownload(false);
+			}
+		}
+	}
+	
 	for (Uint32 i = 0;i < tc->getNumFiles();i++)
 	{
 		kt::TorrentFileInterface & file = tc->getTorrentFile(i);

@@ -250,6 +250,8 @@ namespace bt
 		/// Set missing files as do not download
 		void dndMissingFiles();
 		
+		/// Delete all data files 
+		void deleteDataFiles();
 	signals:
 		/**
 		 * Emitted when a range of chunks has been excluded

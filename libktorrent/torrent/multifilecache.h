@@ -55,8 +55,9 @@ namespace bt
 		virtual QString getOutputPath() const;
 		virtual void preallocateDiskSpace();
 		virtual bool hasMissingFiles(QStringList & sl);
+		virtual void deleteDataFiles();
 	private:
-		void touch(const QString fpath,bool dnd);
+		void touch(TorrentFile & tf);
 		virtual void downloadStatusChanged(TorrentFile*, bool);
 		QString guessDataDir();
 		void saveFirstAndLastChunk(TorrentFile* tf,const QString & src_file,const QString & dst_file);

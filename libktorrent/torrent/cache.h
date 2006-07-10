@@ -116,6 +116,12 @@ namespace bt
 		 * If so put them in a list
 		 */
 		virtual bool hasMissingFiles(QStringList & sl) = 0;
+
+		/**
+		 * Delete all data files, in case of multi file torrents
+		 * empty directories should also be deleted.
+		 */
+		virtual void deleteDataFiles() = 0;
 	};
 
 }

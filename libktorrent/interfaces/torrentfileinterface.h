@@ -86,6 +86,12 @@ namespace kt
 		
 		/// Emits signal dlStatusChanged. Use it only with FileSelectDialog!
 		virtual void emitDownloadStatusChanged() = 0;
+		
+		/// Did this file exist before the torrent was loaded by KT
+		bool isPreExistingFile() const {return preexisting;}
+		
+		/// Set wether this file is preexisting
+		void setPreExisting(bool pe) {preexisting = pe;}
 
 	protected:
 		QString path;
@@ -93,7 +99,7 @@ namespace kt
 		Uint32 first_chunk;
 		Uint32 last_chunk;
 		Priority priority;
-		
+		bool preexisting;
 		bool m_emitDlStatusChanged;
 	};
 

@@ -168,4 +168,8 @@ namespace bt
 		return false;
 	}
 
+	void SingleFileCache::deleteDataFiles()
+	{
+		bt::Delete(output_file);
+	}
 }

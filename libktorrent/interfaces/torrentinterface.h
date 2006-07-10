@@ -309,7 +309,11 @@ namespace kt
 		
 		/// Get a DHT node
 		virtual const DHTNode & getDHTNode(Uint32 i) const = 0;
-		
+	
+		/** Delete the data files of the torrent,
+		 * they will be lost permanently
+		 */
+		virtual void deleteDataFiles() = 0;
 	signals:
 		/**
 		 * Emited when we have finished downloading.

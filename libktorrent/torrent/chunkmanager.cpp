@@ -892,6 +892,11 @@ namespace bt
 		saveIndexFile();
 		recalc_chunks_left = true;
 	}
+	
+	void ChunkManager::deleteDataFiles()
+	{
+		cache->deleteDataFiles();
+	}
 }
 
 #include "chunkmanager.moc"

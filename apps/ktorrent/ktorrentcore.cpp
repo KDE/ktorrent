@@ -314,24 +314,21 @@ void KTorrentCore::remove(TorrentInterface* tc,bool data_to)
 		stop(tc);
 
 		QString dir = tc->getTorDir();
-		QString output_path = s.output_path;
-		torrentRemoved(tc);
-		qman->torrentRemoved(tc);
-	
+		
 		try
 		{
-			bt::Delete(dir,false);
-		}
-		catch (...)
-		{
-			// if the first delete fails, still try to do the second
 			if (data_to)
-				bt::Delete(output_path,false);
-			throw; // pass the error along
+				tc->deleteDataFiles();
+		}
+		catch (Error & e)
+		{
+			KMessageBox::error(0,e.toString());
 		}
 		
-		if (data_to)
-			bt::Delete(output_path,false);
+		torrentRemoved(tc);
+		qman->torrentRemoved(tc);
+
+		bt::Delete(dir,false);
 	}
 	catch (Error & e)
 	{

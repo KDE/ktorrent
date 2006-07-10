@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <errno.h>
+#include <qdir.h>
 #include <qstringlist.h>
 #include <qfileinfo.h>
 #include <klocale.h>
@@ -155,12 +156,14 @@ namespace bt
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
 			TorrentFile & tf = tor.getFile(i);
-			touch(tf.getPath(),tf.doNotDownload());
+			touch(tf);
 		}
 	}
 
-	void MultiFileCache::touch(const QString fpath,bool dnd)
+	void MultiFileCache::touch(TorrentFile & tf)
 	{
+		QString fpath = tf.getPath();
+		bool dnd = tf.doNotDownload();
 		// first split fpath by / seperator
 		QStringList sl = QStringList::split(bt::DirSeparator(),fpath);
 		// create all necessary subdirs
@@ -198,9 +201,14 @@ namespace bt
 		else
 		{
 			if (!bt::Exists(tmp + fpath))
+			{
 				bt::Touch(tmp + fpath);
+			}
 			else
+			{
 				preexisting_files = true;
+				tf.setPreExisting(true); // mark the file as preexisting
+			}
 			
 			bt::SymLink(tmp + fpath,cache_dir + fpath);
 		}
@@ -659,6 +667,67 @@ namespace bt
 		return ret;
 	}
 	
+	static void DeleteEmptyDirs(const QString & output_dir,const QString & fpath)
+	{
+		QStringList sl = QStringList::split(bt::DirSeparator(),fpath);
+		// remove the last, which is just the filename
+		sl.pop_back();
+		
+		while (sl.count() > 0)
+		{
+			QString path = output_dir;
+			// reassemble the full directory path
+			for (QStringList::iterator itr = sl.begin(); itr != sl.end();itr++)
+				path += *itr + bt::DirSeparator();
+			
+			QDir dir(path);
+			QStringList el = dir.entryList(QDir::All|QDir::System|QDir::Hidden);
+			el.remove(".");
+			el.remove("..");
+			if (el.count() == 0)
+			{
+				// no childern so delete the directory
+				Out(SYS_GEN|LOG_IMPORTANT) << "Deleting empty directory : " << path << endl;
+				bt::Delete(path);
+				sl.pop_back(); // remove the last so we can go one higher
+			}
+			else
+			{
+				
+				// children, so we cannot delete any more directories higher up
+				return;
+			}
+		}
+		
+		// now the output_dir itself
+		QDir dir(output_dir);
+		QStringList el = dir.entryList(QDir::All|QDir::System|QDir::Hidden);
+		el.remove(".");
+		el.remove("..");
+		if (el.count() == 0)
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Deleting empty directory : " << output_dir << endl;
+			bt::Delete(output_dir);
+		}
+	}
+	
+	void MultiFileCache::deleteDataFiles()
+	{
+		for (Uint32 i = 0;i < tor.getNumFiles();i++)
+		{
+			TorrentFile & tf = tor.getFile(i);
+			if (tf.doNotDownload())
+				continue;
+			
+			QString fpath = tf.getPath();
+			// first delete the file
+			bt::Delete(output_dir + fpath);
+			
+			// check for subdirectories
+			DeleteEmptyDirs(output_dir,fpath);
+		}
+	}
+
 	///////////////////////////////
 
 	Uint64 FileOffset(Chunk* c,const TorrentFile & f,Uint64 chunk_size)
@@ -675,7 +744,6 @@ namespace bt
 			off += (chunk_size - f.getFirstChunkOffset());
 		return off;
 	}
-	
 	
 }
 

@@ -24,7 +24,9 @@ namespace kt
 
 	TorrentFileInterface::TorrentFileInterface(const QString & path,Uint64 size)
 	: path(path),size(size),first_chunk(0),last_chunk(0),priority(NORMAL_PRIORITY),m_emitDlStatusChanged(true)
-	{}
+	{
+		preexisting = false;
+	}
 
 
 	TorrentFileInterface::~TorrentFileInterface()
