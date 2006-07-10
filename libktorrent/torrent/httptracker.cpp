@@ -58,7 +58,19 @@ namespace bt
 		Out() << "Data : " << endl;
 		Out() << QString(data) << endl;
 #endif
-		BDecoder dec(data,false);
+		// search for dictionary, there might be random garbage infront of the data
+		Uint32 i = 0;
+		while (i < data.size())
+		{
+			if (data[i] == 'd')
+				break;
+			i++;
+		}
+		
+		if (i == data.size())
+			throw Error(i18n("Parse Error"));
+		
+		BDecoder dec(data,false,i);
 		BNode* n = dec.decode();
 			
 		if (!n || n->getType() != BNode::DICT)

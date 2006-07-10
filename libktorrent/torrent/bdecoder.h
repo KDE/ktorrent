@@ -21,6 +21,7 @@
 #define BTBDECODER_H
 
 #include <qstring.h>
+#include <util/constants.h>
 
 namespace bt
 {
@@ -39,15 +40,16 @@ namespace bt
 	class BDecoder
 	{
 		const QByteArray & data;
-		unsigned int pos;
+		Uint32 pos;
 		bool verbose;
 	public:
 		/**
 		 * Constructor, passes in the data to decode.
 		 * @param data The data
 		 * @param verbose Verbose output to the log
+		 * @param off Offset to start parsing
 		 */
-		BDecoder(const QByteArray & data,bool verbose);
+		BDecoder(const QByteArray & data,bool verbose,Uint32 off = 0);
 		virtual ~BDecoder();
 
 		/**

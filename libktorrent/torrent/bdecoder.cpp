@@ -27,8 +27,8 @@
 namespace bt
 {
 
-	BDecoder::BDecoder(const QByteArray & data,bool verbose)
-	: data(data),pos(0),verbose(verbose)
+	BDecoder::BDecoder(const QByteArray & data,bool verbose,Uint32 off)
+	: data(data),pos(off),verbose(verbose)
 	{
 	}
 
