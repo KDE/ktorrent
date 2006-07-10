@@ -53,8 +53,14 @@ namespace net
 		Uint8 tmp[4096];
 		Uint32 br = 0;
 		bool no_limit = (max_bytes_to_read == 0);
+		
+		if (bytesAvailable() == 0)
+		{
+			close();
+			return 0;
+		}
 			
-		while ((br < max_bytes_to_read || no_limit) && bytesAvailable() > 0)
+		while ((br < max_bytes_to_read || no_limit)  && bytesAvailable() > 0)
 		{
 			Uint32 tr = bytesAvailable();
 			if (tr > 4096)
