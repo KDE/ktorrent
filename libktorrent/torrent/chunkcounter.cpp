@@ -34,6 +34,11 @@ namespace bt
 	{
 	}
 	
+	void ChunkCounter::reset()
+	{
+		cnt.fill(0);
+	}
+	
 	void ChunkCounter::incBitSet(const BitSet & bs)
 	{
 		for (Uint32 i = 0;i < cnt.size();i++)

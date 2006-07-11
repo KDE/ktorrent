@@ -152,7 +152,7 @@ void KTorrentCore::load(const QString & target,const QString & dir,bool silently
 		
 		if (tc->hasExistingFiles())
 		{
-			ScanDialog* scan_dlg = new ScanDialog(0);
+			ScanDialog* scan_dlg = new ScanDialog(true);
 			scan_dlg->show();
 			scan_dlg->execute(tc,true);
 			scan_dlg->deleteLater();

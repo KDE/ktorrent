@@ -353,6 +353,8 @@ namespace bt
 	
 	void PeerManager::stop()
 	{
+		cnt->reset();
+		available_chunks.clear();
 		started = false;
 		Globals::instance().getServer().removePeerManager(this);
 		stopped();

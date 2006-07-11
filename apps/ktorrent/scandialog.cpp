@@ -33,8 +33,8 @@ using namespace kt;
 
 
 	
-ScanDialog::ScanDialog(QWidget* parent, const char* name, bool modal, WFlags fl)
-: ScanDlgBase(parent,name, modal,fl)
+ScanDialog::ScanDialog(bool auto_import,QWidget* parent, const char* name, bool modal, WFlags fl)
+	: ScanDlgBase(parent,name, modal,fl),auto_import(auto_import)
 {
 	m_ok->setGuiItem(KStdGuiItem::ok());
 	m_ok->setDisabled(true);
@@ -53,7 +53,7 @@ void ScanDialog::scan()
 {
 	try
 	{
-		tc->doDataCheck(this);
+		tc->doDataCheck(this,auto_import);
 	}
 	catch (bt::Error & err)
 	{

@@ -34,7 +34,7 @@ class ScanDialog : public ScanDlgBase, public bt::DataCheckerListener
 {
 	Q_OBJECT
 public:
-	ScanDialog(QWidget* parent = 0, const char* name = 0, bool modal = true, WFlags fl = 0 );
+	ScanDialog(bool auto_import,QWidget* parent = 0, const char* name = 0, bool modal = true, WFlags fl = 0 );
 	virtual ~ScanDialog();
 
 	void execute(kt::TorrentInterface* tc,bool silently);
@@ -52,6 +52,7 @@ protected slots:
 private:
 	kt::TorrentInterface* tc;
 	bool silently;
+	bool auto_import;
 };
 
 

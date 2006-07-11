@@ -284,8 +284,10 @@ namespace kt
 		
 		/**
 		 * Verify the correctness of all data.
+		 * @param lst The listener
+		 * @param auto_import Wether or not this is an initial import
 		 */
-		virtual void doDataCheck(bt::DataCheckerListener* lst) = 0;
+		virtual void doDataCheck(bt::DataCheckerListener* lst,bool auto_import) = 0;
 		
 		/**
 		 * Test all files and see if they are not missing.

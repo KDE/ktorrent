@@ -414,6 +414,7 @@ namespace bt
 			Out() << "Should be : " << tor.getHash(c->getIndex()) << endl;
 			
 			cman.resetChunk(c->getIndex());
+			chunk_selector->reinsert(c->getIndex());
 			Uint32 pid;
 			if (cd->getOnlyDownloader(pid))
 			{
@@ -620,7 +621,7 @@ namespace bt
 	
 	void Downloader::onIncluded(Uint32 from,Uint32 to)
 	{
-		chunk_selector->reIncluded(from,to);
+		chunk_selector->reincluded(from,to);
 	}
 	
 	Uint32 Downloader::mem_usage = 0;
@@ -647,6 +648,12 @@ namespace bt
 			}
 		}
 		chunk_selector->dataChecked(ok_chunks);
+	}
+	
+	void Downloader::recalcDownloaded()
+	{
+		Uint64 total = tor.getFileLength();
+		downloaded = (total - cman.bytesLeft() - cman.bytesExcluded());
 	}
 }
 

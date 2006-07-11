@@ -177,7 +177,7 @@ namespace bt
 		/// Checks if tracker announce is allowed (minimum interval 60 seconds)
 		bool announceAllowed();
 		
-		void doDataCheck(bt::DataCheckerListener* lst);
+		void doDataCheck(bt::DataCheckerListener* lst,bool auto_import);
 		
 		/// Test if the torrent has existing files, only works the first time a torrent is loaded
 		bool hasExistingFiles() const;

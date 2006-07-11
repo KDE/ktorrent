@@ -124,6 +124,7 @@ void KTorrentViewItem::update()
 	if (s.bytes_left == 0)
 	{
 		setText(7,i18n("finished"));
+		eta = -1;
 	}
 	else if (s.running) 
 	{
@@ -131,23 +132,28 @@ void KTorrentViewItem::update()
 		if( bytes_downloaded < 1 ) //if we just started download use old algorithm
 		{
 			if (s.download_rate == 0)
+			{
 				setText(7,i18n("infinity"));
+				eta = -2;
+			}
 			else
 			{
 				Uint32 secs = (int)floor( (float)s.bytes_left / (float)s.download_rate);
+				eta = secs;
 				setText(7,DurationToString(secs));
 			}
 		}
 		else 
 		{
 			double avg_speed = (double)bytes_downloaded / (double)tc->getRunningTimeDL();
-			double eta = s.bytes_left / avg_speed;
-			setText(7,DurationToString((int)floor(eta)));
+			eta = (Int64)floor(s.bytes_left / avg_speed);
+			setText(7,DurationToString((int)floor(s.bytes_left / avg_speed)));
 		}
 	}
 	else
 	{
 		setText(7,i18n("infinity"));
+		eta = -2;
 	}
 	
 	setText(8,QString::number(s.num_peers));
@@ -192,7 +198,17 @@ int KTorrentViewItem::compare(QListViewItem * i,int col,bool) const
 		case 4: return CompareVal(s.bytes_uploaded,os.bytes_uploaded);
 		case 5: return CompareVal(s.download_rate,os.download_rate);
 		case 6: return CompareVal(s.upload_rate,os.upload_rate);
-		case 7: return QString::compare(text(6),other->text(6));
+		case 7: 
+			if (eta == other->eta)
+				return 0;
+			else if (eta >= 0 && other->eta >= 0)
+				return CompareVal(eta,other->eta);
+			else if (eta == -1)
+				return -1;
+			else if (other->eta == -1)
+				return 1;
+			else 
+				return CompareVal(eta,other->eta);
 		case 8: return CompareVal(s.num_peers,os.num_peers);
 		case 9:
 		{

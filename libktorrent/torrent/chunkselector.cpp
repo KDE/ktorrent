@@ -90,11 +90,13 @@ namespace bt
 	bool ChunkSelector::select(PeerDownloader* pd,Uint32 & chunk)
 	{		
 		const BitSet & bs = cman.getBitSet();
-		bool warmup = cman.getNumChunks() - cman.chunksLeft() <= 4;
+		
 		
 		// sort the chunks every 2 seconds
 		if (sort_timer.getElapsedSinceUpdate() > 2000)
 		{
+			bool warmup = cman.getNumChunks() - cman.chunksLeft() <= 4;
+//			dataChecked(bs);
 			chunks.sort(RareCmp(cman,pman.getChunkCounter(),warmup));
 			sort_timer.update();
 		}
@@ -146,7 +148,7 @@ namespace bt
 		}
 	}
 
-	void ChunkSelector::reIncluded(Uint32 from, Uint32 to)
+	void ChunkSelector::reincluded(Uint32 from, Uint32 to)
 	{
 		
 		for (Uint32 i = from;i <= to;i++)
@@ -158,6 +160,13 @@ namespace bt
 				chunks.push_back(i);
 			}
 		}
+	}
+	
+	void ChunkSelector::reinsert(Uint32 chunk)
+	{
+		bool in_chunks = std::find(chunks.begin(),chunks.end(),chunk) != chunks.end();
+		if (!in_chunks)
+			chunks.push_back(chunk);
 	}
 
 

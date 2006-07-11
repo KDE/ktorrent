@@ -155,6 +155,11 @@ namespace bt
 		 */
 		void dataChecked(const BitSet & ok_chunks);
 		
+		/**
+		 * Recalculate the number of bytes downloaded.
+		 */
+		void recalcDownloaded();
+		
 	private slots:
 		void pieceRecieved(const Piece & p);
 		bool finished(ChunkDownload* c);

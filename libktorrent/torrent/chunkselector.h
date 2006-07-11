@@ -65,7 +65,13 @@ namespace bt
 		 * @param from The first chunk
 		 * @param to The last chunk
 		 */
-		void reIncluded(Uint32 from, Uint32 to);
+		void reincluded(Uint32 from, Uint32 to);
+		
+		/**
+		 * Reinsert a chunk.
+		 * @param chunk The chunk
+		 */
+		void reinsert(Uint32 chunk);
 	};
 
 }

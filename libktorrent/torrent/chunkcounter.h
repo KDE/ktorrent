@@ -71,6 +71,11 @@ namespace bt
 		 * @param idx Index of the chunk
 		 */
 		Uint32 get(Uint32 idx) const;
+		
+		/**
+		 * Reset all values to 0
+		 */
+		void reset();
 	};
 
 }

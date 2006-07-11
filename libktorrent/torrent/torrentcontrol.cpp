@@ -1071,7 +1071,7 @@ namespace bt
 			Globals::instance().getDHT().portRecieved(ip,port);
 	}
 	
-	void TorrentControl::doDataCheck(bt::DataCheckerListener* lst)
+	void TorrentControl::doDataCheck(bt::DataCheckerListener* lst,bool auto_import)
 	{
 		DataChecker* dc = 0;
 		stats.status = kt::CHECKING_DATA;
@@ -1088,6 +1088,8 @@ namespace bt
 			down->dataChecked(dc->getDownloaded());
 			// update chunk manager
 			cman->dataChecked(dc->getDownloaded());
+			if (auto_import)
+				down->recalcDownloaded();
 		}
 		delete dc;
 		// update the status
