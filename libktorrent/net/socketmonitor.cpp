@@ -149,11 +149,7 @@ namespace net
 			Uint32 as = (Uint32)round(allowance / (wbs.count() - cnt));
 			BufferedSocket* s = *i;
 			Uint32 ret = s->writeBuffered(as);
-/*			if (ret != as)
-				bt::Out(SYS_GEN|LOG_DEBUG) << 
-						fffffffff
-						{}QString("as = %1 != ret = %2").arg(as).arg(ret) << endl;
-	*/		
+		
 			if (ret > allowance)
 				allowance = 0;
 			else

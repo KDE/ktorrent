@@ -136,8 +136,6 @@ namespace net
 				// haven't sent it fully so return
 				return ret; 
 			}
-			else if (!no_limit)
-				max -= ret; // decrease limit when there is none
 			
 			bw += ret;
 		}
@@ -148,11 +146,16 @@ namespace net
 			// fill output buffer
 			bytes_in_output_buffer = wrt->onReadyToWrite(output_buffer,4096);
 			bytes_sent = 0;
-			if (bytes_in_output_buffer == 0)
-				break; // no data provided so just break out of the loop
-			
-			// try to send 
-			bw += sendOutputBuffer(max - bw);
+			if (bytes_in_output_buffer > 0)
+			{
+				// try to send 
+				bw += sendOutputBuffer(max - bw);
+			}
+			else
+			{
+				// no bytes available in output buffer so break
+				break;
+			}
 		}
 		
 		mutex.lock();
