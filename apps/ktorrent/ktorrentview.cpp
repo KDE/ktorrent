@@ -157,7 +157,10 @@ void KTorrentView::startDownloads()
 			if (!tc->getStats().running && !tc->getStats().stopped_by_error)
 			{
 				if (tc->getStats().completed)
-					err_seed = true;
+				{
+					if (!tc->overMaxRatio())
+						err_seed = true;
+				}
 				else
 					err_down = true;
 			}

@@ -382,22 +382,36 @@ namespace bt
 			if(max_seeds == 0) 
 				max_qm_seeds = seed_queue.count();
 			
-			for(Uint32 i=0; i<max_qm_downloads && i<download_queue.count(); ++i)
+			Uint32 counter = 0;
+			for(Uint32 i=0; counter<max_qm_downloads && i<download_queue.count(); ++i)
 			{
 				TorrentInterface* tc = download_queue.at(i);
 				const TorrentStats & s = tc->getStats();
 				
 				if(!s.running && !s.completed && !s.user_controlled)
+				{
 					start(tc);
+					if(tc->getStats().stopped_by_error)
+						continue;
+				}
+				
+				++counter;
 			}
 			
-			for(Uint32 i=0; i<max_qm_seeds && i<seed_queue.count(); ++i)
+			counter = 0;
+			for(Uint32 i=0; counter<max_qm_seeds && i<seed_queue.count(); ++i)
 			{
 				TorrentInterface* tc = seed_queue.at(i);
 				const TorrentStats & s = tc->getStats();
 				
 				if(!s.running && s.completed && !s.user_controlled)
+				{
 					start(tc);
+					if(tc->getStats().stopped_by_error)
+						continue;
+				}
+				
+				++counter;
 			}
 		}
 		else
@@ -491,6 +505,13 @@ namespace bt
 	
 	void QueueManager::enqueue(kt::TorrentInterface* tc)
 	{
+		//if a seeding torrent reached its maximum share ratio don't enqueue it...
+		if(tc->getStats().completed && tc->overMaxRatio())
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Torrent has reached max share ratio and cannot be started automatically." << endl;
+			return;
+		}
+		
 		torrentAdded(tc);
 	}
 	

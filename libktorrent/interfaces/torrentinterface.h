@@ -316,6 +316,9 @@ namespace kt
 		 * they will be lost permanently
 		 */
 		virtual void deleteDataFiles() = 0;
+		
+		///Checks if a seeding torrent has reached its maximum share ratio
+		virtual bool overMaxRatio() = 0;
 	signals:
 		/**
 		 * Emited when we have finished downloading.
