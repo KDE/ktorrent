@@ -259,6 +259,10 @@ namespace mse
 			return;
 		}
 		
+		// make sure we don't write past the end of the buffer
+		if (buf_size + ba > MAX_SEA_BUF_SIZE)
+			ba = MAX_SEA_BUF_SIZE - buf_size;
+		
 		switch (state)
 		{
 		case WAITING_FOR_YA:
@@ -270,7 +274,7 @@ namespace mse
 				ServerAuthenticate::onReadyRead();
 			}
 			else
-			{
+			{	
 				buf_size += sock->readData(buf + buf_size,ba);
 				if (buf_size >= 96)
 					handleYA();
