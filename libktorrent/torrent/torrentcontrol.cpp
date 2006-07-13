@@ -239,7 +239,7 @@ namespace bt
 		{
 			// something went wrong when files were recreated, set error and rethrow
 			onIOError(err.toString());
-			throw;
+			return;
 		}
 		
 		try
