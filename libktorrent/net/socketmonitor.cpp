@@ -122,12 +122,12 @@ namespace net
 	
 	void SocketMonitor::processIncomingData(QPtrList<BufferedSocket> & rbs,Uint32 now)
 	{
-		Uint32 allowance = (Uint32)round(dcap * (now - last_selected) * 0.001);
+		Uint32 allowance = (Uint32)floor(dcap * (now - last_selected) * 0.001);
 		Uint32 cnt = 0;
 		QPtrList<BufferedSocket>::iterator i = rbs.begin();
 		while (i != rbs.end() && allowance > 0)
 		{
-			Uint32 as = (Uint32)round(allowance / (rbs.count() - cnt));
+			Uint32 as = (Uint32)floor(allowance / (rbs.count() - cnt));
 			BufferedSocket* s = *i;
 			Uint32 ret = s->readBuffered(as);
 			if (ret > allowance)
@@ -141,12 +141,12 @@ namespace net
 	
 	void SocketMonitor::processOutgoingData(QPtrList<BufferedSocket> & wbs,Uint32 now)
 	{
-		Uint32 allowance = (Uint32)round(ucap * (now - last_selected) * 0.001);
+		Uint32 allowance = (Uint32)floor(ucap * (now - last_selected) * 0.001);
 		Uint32 cnt = 0;
 		QPtrList<BufferedSocket>::iterator i = wbs.begin();
 		while (i != wbs.end() && allowance > 0)
 		{
-			Uint32 as = (Uint32)round(allowance / (wbs.count() - cnt));
+			Uint32 as = (Uint32)floor(allowance / (wbs.count() - cnt));
 			BufferedSocket* s = *i;
 			Uint32 ret = s->writeBuffered(as);
 		
