@@ -781,6 +781,7 @@ void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc)
 			catch (bt::Error & e)
 			{
 				KMessageBox::error(0,i18n("Cannot recreate missing files : %1").arg(e.toString()));
+				throw Error(i18n("Data files are missing"));
 			}
 		}
 		else if (ret == KMessageBox::No)
@@ -793,6 +794,7 @@ void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc)
 			catch (bt::Error & e)
 			{
 				KMessageBox::error(0,i18n("Cannot deselect missing files : %1").arg(e.toString()));
+				throw Error(i18n("Data files are missing"));
 			}
 		}
 		else
@@ -813,6 +815,7 @@ void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc)
 			catch (bt::Error & e)
 			{
 				KMessageBox::error(0,i18n("Cannot recreate data file : %1").arg(e.toString()));
+				throw Error(i18n("Data file is missing"));
 			}
 		}
 		else
