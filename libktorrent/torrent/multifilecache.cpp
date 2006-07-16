@@ -34,6 +34,7 @@
 #include "chunk.h"
 #include "cachefile.h"
 #include "dndfile.h"
+#include "preallocationthread.h"
 
 
 
@@ -619,14 +620,23 @@ namespace bt
 		}
 	}
 	
-	void MultiFileCache::preallocateDiskSpace()
+	void MultiFileCache::preallocateDiskSpace(PreallocationThread* prealloc)
 	{
 		Out() << "MultiFileCache::preallocateDiskSpace" << endl;
 		PtrMap<Uint32,CacheFile>::iterator i = files.begin();
 		while (i != files.end())
 		{
 			CacheFile* cf = i->second;
-			cf->preallocate();
+			if (!prealloc->isStopped())
+			{
+				cf->preallocate(prealloc);
+			}
+			else
+			{
+				// we got interrupted tell the thread we are not finished and return
+				prealloc->setNotFinished();
+				return;
+			}
 			i++;
 		}
 	}

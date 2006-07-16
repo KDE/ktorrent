@@ -334,7 +334,19 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 	menu->setItemEnabled(preview_id,en_prev);
 	menu->setItemEnabled(announce_id,en_announce);
 	menu->setItemEnabled(queue_id, en_remove);
-	menu->setItemEnabled(scan_id, sel.count() == 1);
+	
+	if (sel.count() == 1)
+	{
+		KTorrentViewItem* kvi = (KTorrentViewItem*)sel.getFirst();
+		TorrentInterface* tc = kvi->getTC();
+		// no data check when we are preallocating diskspace
+		menu->setItemEnabled(scan_id, 
+							 tc->getStats().status != kt::ALLOCATING_DISKSPACE);
+	}
+	else
+	{
+		menu->setItemEnabled(scan_id,false);
+	}
 	menu->popup(p);
 }
 

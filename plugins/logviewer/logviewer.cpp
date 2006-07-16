@@ -19,12 +19,27 @@
  ***************************************************************************/
 #include <kglobal.h>
 #include <kconfig.h>
+#include <qapplication.h>
 #include "logviewer.h"
 #include "logflags.h"
 #include "logviewerpluginsettings.h"
 
 namespace kt
 {
+	const int LOG_EVENT_TYPE = 65432;
+	
+	class LogEvent : public QCustomEvent
+	{
+		QString str;
+	public:
+		LogEvent(const QString & str) : QCustomEvent(LOG_EVENT_TYPE),str(str)
+		{}
+		
+		virtual ~LogEvent()
+		{}
+		
+		const QString & msg() const {return str;}
+	};
 
 	LogViewer::LogViewer(QWidget *parent, const char *name)
 			: KTextBrowser(parent, name), LogMonitorInterface()
@@ -58,15 +73,33 @@ namespace kt
 
 	void LogViewer::message(const QString& line, unsigned int arg)
 	{
+		/*
+			IMPORTANT: because QTextBrowser is not thread safe, we must use the Qt event mechanism 
+			to add strings to it, this will ensure that strings will only be added in the main application
+			thread.
+		*/
 		if(arg==0x00 || LogFlags::instance().checkFlags(arg))
 		{
 			if(m_useRichText)
 			{
 				QString tmp = line;
-				append(LogFlags::instance().getFormattedMessage(arg, tmp));
+				LogEvent* le = new LogEvent(LogFlags::instance().getFormattedMessage(arg, tmp));
+				QApplication::postEvent(this,le);
 			}
 			else
-				append(line);
+			{
+				LogEvent* le = new LogEvent(line);
+				QApplication::postEvent(this,le);
+			}
+		}
+	}
+	
+	void LogViewer::customEvent(QCustomEvent* ev)
+	{
+		if (ev->type() == LOG_EVENT_TYPE)
+		{
+			LogEvent* le = (LogEvent*)ev;
+			append(le->msg());
 		}
 	}
 	

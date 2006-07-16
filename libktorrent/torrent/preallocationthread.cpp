@@ -24,10 +24,11 @@
 #include <sys/stat.h>
 
 #include <util/log.h>
+#include <util/error.h>
 #include <qfile.h>
 #include <klocale.h>
 #include "preallocationthread.h"
-#include "torrentcontrol.h"
+#include "chunkmanager.h"
 #include "globals.h"
 
 #ifndef O_LARGEFILE
@@ -37,7 +38,7 @@
 namespace bt
 {
 
-	PreallocationThread::PreallocationThread(TorrentControl* tc) : tc(tc),stopped(false)
+	PreallocationThread::PreallocationThread(ChunkManager* cman) : cman(cman),stopped(false),not_finished(false),done(false)
 	{
 		bytes_written = 0;
 	}
@@ -45,51 +46,22 @@ namespace bt
 
 	PreallocationThread::~PreallocationThread()
 	{}
-	
-	void PreallocationThread::addFile(const QString & path,Uint64 total_size)
-	{
-		mutex.lock();
-		todo.insert(path,total_size);
-		mutex.unlock();
-	}
-	
-	bool PreallocationThread::expand(const QString & path,Uint64 max_size)
-	{
-		int fd = ::open(QFile::encodeName(path),O_WRONLY | O_LARGEFILE);
-		if (ftruncate(fd,max_size) == -1)
-		{
-			setErrorMsg(i18n("Cannot preallocate diskspace : %1").arg(strerror(errno)));
-			::close(fd);
-			return false;
-		}
-		::close(fd);
-		return true;
-	}
 
 	void PreallocationThread::run()
 	{
-		
-		
-		// start working on them
-		while (!todo.empty() && !stopped)
+		try
 		{
-			QString path;
-			Uint64 max_size = 0;
-			
-			// get the first from the map
-			mutex.lock();
-			QMap<QString,bt::Uint64>::iterator i = todo.begin();
-			path = i.key();
-			max_size = i.data();
-			todo.erase(i);
-			mutex.unlock();
-			
-			// expand it
-			if (!expand(path,max_size))
-				return;
+			cman->preallocateDiskSpace(this);
+		}
+		catch (Error & err)
+		{
+			setErrorMsg(err.toString());
 		}
 		
-		Out() << "PreallocationThread::run finished" << endl;
+		mutex.lock();
+		done = true;
+		mutex.unlock();
+		Out(SYS_GEN|LOG_NOTICE) << "PreallocationThread has finished" << endl;
 	}
 	
 	void PreallocationThread::stop() 
@@ -135,5 +107,28 @@ namespace bt
 		Uint64 tmp = bytes_written;
 		mutex.unlock();
 		return tmp;
+	}
+	
+	bool PreallocationThread::isDone() const
+	{
+		mutex.lock();
+		bool tmp = done;
+		mutex.unlock();
+		return tmp;
+	}
+	
+	bool PreallocationThread::isNotFinished() const
+	{
+		mutex.lock();
+		bool tmp = not_finished;
+		mutex.unlock();
+		return tmp;
+	}
+	
+	void PreallocationThread::setNotFinished()
+	{
+		mutex.lock();
+		not_finished = true;
+		mutex.unlock();
 	}
 }

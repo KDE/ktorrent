@@ -60,6 +60,7 @@
 #include "queuemanager.h"
 #include "statsfile.h"
 #include "announcelist.h"
+#include "preallocationthread.h"
 
 using namespace kt;
 
@@ -94,6 +95,7 @@ namespace bt
 		maxShareRatio = 0.00f;
 		custom_output_name = false;
 		updateStats();
+		prealoc_thread = 0;
 	}
 
 
@@ -126,6 +128,35 @@ namespace bt
 			stop(false);
 			emit stoppedByError(this, error_msg);
 			return;
+		}
+		
+		if (prealoc_thread)
+		{
+			if (prealoc_thread->isDone())
+			{
+				// thread done
+				if (prealoc_thread->errorHappened())
+				{
+					// upon error just call onIOError and return
+					onIOError(prealoc_thread->errorMessage());
+					delete prealoc_thread;
+					prealoc_thread = 0;
+					prealloc = true; // still need to do preallocation
+					return;
+				}
+				else
+				{
+					// continue the startup of the torrent
+					delete prealoc_thread;
+					prealoc_thread = 0;
+					prealloc = false;
+					stats.status = kt::NOT_STARTED;
+					saveStats();
+					continueStart();
+				}
+			}
+			else
+				return; // preallocation still going on, so just return
 		}
 		
 		try
@@ -226,7 +257,7 @@ namespace bt
 	void TorrentControl::start()
 	{	
 		// do not start running torrents
-		if (stats.running)
+		if (stats.running || stats.status == kt::ALLOCATING_DISKSPACE)
 			return;
 
 		stats.stopped_by_error = false;
@@ -254,19 +285,20 @@ namespace bt
 		
 		if (prealloc)
 		{
-			Out() << "Pre-allocating diskspace" << endl;
-			try
-			{
-				cman->preallocateDiskSpace();
-				prealloc = false;
-			}
-			catch (Error & e)
-			{
-				onIOError(e.toString());
-				throw;
-			}
+			Out(SYS_GEN|LOG_NOTICE) << "Pre-allocating diskspace" << endl;
+			prealoc_thread = new PreallocationThread(cman);
+			stats.running = true;
+			stats.status = kt::ALLOCATING_DISKSPACE;
+			prealoc_thread->start();
+			return;
 		}
 		
+		continueStart();
+	}
+	
+	void TorrentControl::continueStart()
+	{
+		// continues start after the prealoc_thread has finished preallocation
 		pman->start();
 		try
 		{
@@ -276,7 +308,7 @@ namespace bt
 		{
 			// print out warning in case of failure
 			// we can still continue the download
-			Out() << "Warning : " << e.toString() << endl;
+			Out(SYS_GEN|LOG_NOTICE) << "Warning : " << e.toString() << endl;
 		}
 		
 		loadStats();
@@ -295,6 +327,7 @@ namespace bt
 		tracker->start();
 		stalled_timer.update();
 	}
+		
 
 	void TorrentControl::stop(bool user)
 	{
@@ -304,7 +337,26 @@ namespace bt
 		running_time_ul += time_started_ul.secsTo(now);
 		time_started_ul = time_started_dl = now;
 		
-		
+		// stop preallocation thread if necesarry
+		if (prealoc_thread)
+		{
+			prealoc_thread->stop();
+			prealoc_thread->wait();
+			
+			if (prealoc_thread->errorHappened() || prealoc_thread->isNotFinished())
+			{
+				delete prealoc_thread;
+				prealoc_thread = 0;
+				prealloc = true;
+				saveStats(); // save stats, so that we will start preallocating the next time
+			}
+			else
+			{
+				delete prealoc_thread;
+				prealoc_thread = 0;
+				prealloc = false;
+			}
+		}
 	
 		if (stats.running)
 		{
@@ -762,6 +814,7 @@ namespace bt
 		st.write("IMPORTED", QString("%1").arg(stats.imported_bytes));
 		st.write("CUSTOM_OUTPUT_NAME",custom_output_name ? "1" : "0");
 		st.write("MAX_RATIO", QString("%1").arg(maxShareRatio,0,'f',2));
+		st.write("RESTART_DISK_PREALLOCATION",prealloc ? "1" : "0");
 		
 		st.writeSync();
 	}
@@ -792,6 +845,8 @@ namespace bt
 		stats.imported_bytes = st.readUint64("IMPORTED");
 		float rat = st.readFloat("MAX_RATIO");
 		maxShareRatio = rat;
+		if (st.hasKey("RESTART_DISK_PREALLOCATION"))
+			prealloc = st.readString("RESTART_DISK_PREALLOCATION") == "1";
 		
 		return;
 	}
@@ -1073,6 +1128,9 @@ namespace bt
 	
 	void TorrentControl::doDataCheck(bt::DataCheckerListener* lst,bool auto_import)
 	{
+		if (stats.status == kt::ALLOCATING_DISKSPACE)
+			return;
+		
 		DataChecker* dc = 0;
 		stats.status = kt::CHECKING_DATA;
 		if (stats.multi_file_torrent)

@@ -26,6 +26,7 @@
 
 namespace bt
 {
+	class PreallocationThread;
 
 	
 	/**
@@ -117,7 +118,7 @@ namespace bt
 		/**
 		 * Preallocate disk space
 		 */
-		void preallocate();
+		void preallocate(PreallocationThread* prealloc);
 		
 	private:
 		void growFile(Uint64 to_write);

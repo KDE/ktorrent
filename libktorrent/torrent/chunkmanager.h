@@ -35,6 +35,7 @@ namespace bt
 	class Torrent;
 	class Cache;
 	class TorrentFile;
+	class PreallocationThread;
 
 	struct NewChunkHeader
 	{
@@ -110,8 +111,9 @@ namespace bt
 		
 		/**
 		 * Preallocate diskspace for all files
+		 * @param prealloc The thread doing the preallocation
 		 */
-		void preallocateDiskSpace();
+		void preallocateDiskSpace(PreallocationThread* prealloc);
 		
 		/**
 		 * Open the necessary files when the download gets started.

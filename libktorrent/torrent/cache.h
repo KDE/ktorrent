@@ -27,6 +27,7 @@ namespace bt
 	class Torrent;
 	class TorrentFile;
 	class Chunk;
+	class PreallocationThread;
 
 
 	/**
@@ -104,8 +105,9 @@ namespace bt
 		
 		/**
 		 * Preallocate diskspace for all files
+		 * @param prealloc The thread doing the preallocation
 		 */
-		virtual void preallocateDiskSpace() = 0;
+		virtual void preallocateDiskSpace(PreallocationThread* prealloc) = 0;
 		
 		/// See if the download has existing files
 		bool hasExistingFiles() const {return preexisting_files;}

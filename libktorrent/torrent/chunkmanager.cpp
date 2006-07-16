@@ -802,9 +802,9 @@ namespace bt
 		return cache->getOutputPath();
 	}
 	
-	void ChunkManager::preallocateDiskSpace()
+	void ChunkManager::preallocateDiskSpace(PreallocationThread* prealloc)
 	{
-		cache->preallocateDiskSpace();
+		cache->preallocateDiskSpace(prealloc);
 	}
 	
 	void ChunkManager::dataChecked(const BitSet & ok_chunks)

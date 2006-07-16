@@ -53,7 +53,7 @@ namespace bt
 		virtual void close();
 		virtual void open();
 		virtual QString getOutputPath() const;
-		virtual void preallocateDiskSpace();
+		virtual void preallocateDiskSpace(PreallocationThread* prealloc);
 		virtual bool hasMissingFiles(QStringList & sl);
 		virtual void deleteDataFiles();
 	private:

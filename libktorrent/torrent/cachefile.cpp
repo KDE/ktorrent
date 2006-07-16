@@ -40,6 +40,7 @@
 #include <util/log.h>
 #include <util/error.h>
 #include "cachefile.h"
+#include "preallocationthread.h"
 
 
 // Not all systems have an O_LARGEFILE - Solaris depending
@@ -360,7 +361,7 @@ namespace bt
 	
 	
 		
-	void CacheFile::preallocate()
+	void CacheFile::preallocate(PreallocationThread* prealloc)
 	{
 		Out(SYS_GEN|LOG_NOTICE) << "Preallocating file " << path << " (" << max_size << " bytes)" << endl;
 		bool close_again = false;

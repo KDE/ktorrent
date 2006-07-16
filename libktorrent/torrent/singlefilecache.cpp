@@ -29,6 +29,7 @@
 #include "globals.h"
 #include "cachefile.h"
 #include "singlefilecache.h"
+#include "preallocationthread.h"
 
 
 namespace bt
@@ -148,12 +149,15 @@ namespace bt
 		}
 	}
 	
-	void SingleFileCache::preallocateDiskSpace()
+	void SingleFileCache::preallocateDiskSpace(PreallocationThread* prealloc)
 	{
 		if (!fd)
 			open();
 		
-		fd->preallocate();
+		if (!prealloc->isStopped())
+			fd->preallocate(prealloc);
+		else
+			prealloc->setNotFinished();
 	}
 	
 	bool SingleFileCache::hasMissingFiles(QStringList & sl)

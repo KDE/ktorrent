@@ -34,10 +34,10 @@ namespace kt
 			Q_OBJECT
 		public:
 			LogViewer(QWidget *parent = 0, const char *name = 0);
-
-			~LogViewer();
+			virtual ~LogViewer();
 
 			virtual void message(const QString& line, unsigned int arg);
+			virtual void customEvent(QCustomEvent* ev);
 			
 			void setRichText(bool val);
 			

@@ -46,6 +46,7 @@ namespace bt
 	class Peer;
 	class BitSet;
 	class QueueManager;
+	class PreallocationThread;
 	
 	/**
 	 * @author Joris Guisson
@@ -247,6 +248,7 @@ namespace bt
 		void getSeederInfo(Uint32 & total,Uint32 & connected_to) const;
 		void getLeecherInfo(Uint32 & total,Uint32 & connected_to) const;
 		void migrateTorrent(const QString & default_save_dir);
+		void continueStart();
 
 		
 	private:
@@ -274,6 +276,7 @@ namespace bt
 		int priority;
 		float maxShareRatio;
 		bool prealloc;
+		PreallocationThread* prealoc_thread;
 		Uint32 last_announce;
 	};
 }

@@ -30,7 +30,7 @@
 
 namespace bt
 {
-	class TorrentControl;	
+	class ChunkManager;
 
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
@@ -39,24 +39,17 @@ namespace bt
 	*/
 	class PreallocationThread : public QThread
 	{
-		TorrentControl* tc;
-		bool stopped;
+		ChunkManager* cman;
+		bool stopped,not_finished,done;
 		QString error_msg;
 		Uint64 bytes_written;
 		mutable QMutex mutex;
-		QMap<QString,bt::Uint64> todo;
 	public:
-		PreallocationThread(TorrentControl* tc);
+		PreallocationThread(ChunkManager* cman);
 		virtual ~PreallocationThread();
 
 		virtual void run();
 		
-		/**
-		 * Add a file
-		 * @param path The path
-		 * @param total_size Total size the file must be
-		 */
-		void addFile(const QString & path,Uint64 total_size);
 		
 		/**
 		 * Stop the thread. 
@@ -83,6 +76,15 @@ namespace bt
 		
 		/// Get the number of bytes written
 		Uint64 bytesWritten();
+		
+		/// Allocation was aborted, so the next time the torrent is started it needs to be started again
+		void setNotFinished();
+		
+		/// See if the allocation hasn't completed yet
+		bool isNotFinished() const;
+		
+		/// See if the thread was done
+		bool isDone() const;
 	private:
 		bool expand(const QString & path,Uint64 max_size);
 	};
