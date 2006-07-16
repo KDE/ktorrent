@@ -21,6 +21,7 @@
 #define BTCACHEFILE_H
 
 #include <qmap.h>
+#include <qmutex.h>
 #include <qstring.h>
 #include <util/constants.h>
 
@@ -139,6 +140,7 @@ namespace bt
 			Mode mode;
 		};
 		QMap<void*,Entry> mappings; // mappings where offset wasn't a multiple of 4K
+		mutable QMutex mutex;
 	};
 
 }

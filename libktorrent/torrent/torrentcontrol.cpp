@@ -283,6 +283,12 @@ namespace bt
 			throw;
 		}
 		
+		time_started_ul = time_started_dl = QDateTime::currentDateTime();
+		trk_prev_bytes_dl = stats.bytes_downloaded,
+		trk_prev_bytes_ul = stats.bytes_uploaded,
+		stats.trk_bytes_downloaded = 0;
+		stats.trk_bytes_uploaded = 0;
+		
 		if (prealloc)
 		{
 			Out(SYS_GEN|LOG_NOTICE) << "Pre-allocating diskspace" << endl;
@@ -318,12 +324,8 @@ namespace bt
 		choker_update_timer.update();
 		stats_save_timer.update();
 		
-		time_started_ul = time_started_dl = QDateTime::currentDateTime();
+		
 		stalled_timer.update();
-		trk_prev_bytes_dl = stats.bytes_downloaded,
-		trk_prev_bytes_ul = stats.bytes_uploaded,
-		stats.trk_bytes_downloaded = 0;
-		stats.trk_bytes_uploaded = 0;
 		tracker->start();
 		stalled_timer.update();
 	}

@@ -58,7 +58,7 @@
 namespace bt
 {
 
-	CacheFile::CacheFile() : fd(-1),max_size(0),file_size(0)
+	CacheFile::CacheFile() : fd(-1),max_size(0),file_size(0),mutex(true)
 	{}
 
 
@@ -96,6 +96,7 @@ namespace bt
 	
 	void CacheFile::open(const QString & path,Uint64 size)
 	{
+		QMutexLocker lock(&mutex);
 		// only set the path and the max size, we only open the file when it is needed
 		this->path = path;
 		max_size = size;
@@ -106,6 +107,7 @@ namespace bt
 		
 	void* CacheFile::map(MMappeable* thing,Uint64 off,Uint32 size,Mode mode)
 	{
+		QMutexLocker lock(&mutex);
 		// reopen the file if necessary
 		if (fd == -1)
 		{
@@ -243,6 +245,7 @@ namespace bt
 		
 	void CacheFile::unmap(void* ptr,Uint32 size)
 	{
+		QMutexLocker lock(&mutex);
 		// see if it wasn't an offsetted mapping
 		if (mappings.contains(ptr))
 		{
@@ -265,6 +268,8 @@ namespace bt
 		
 	void CacheFile::close(bool to_be_reopened)
 	{
+		QMutexLocker lock(&mutex);
+		
 		if (fd == -1)
 			return;
 		
@@ -295,6 +300,8 @@ namespace bt
 	
 	void CacheFile::read(Uint8* buf,Uint32 size,Uint64 off)
 	{
+		QMutexLocker lock(&mutex);
+		
 		// reopen the file if necessary
 		if (fd == -1)
 		{
@@ -315,6 +322,8 @@ namespace bt
 	
 	void CacheFile::write(const Uint8* buf,Uint32 size,Uint64 off)
 	{
+		QMutexLocker lock(&mutex);
+		
 		// reopen the file if necessary
 		if (fd == -1)
 		{
@@ -363,6 +372,8 @@ namespace bt
 		
 	void CacheFile::preallocate(PreallocationThread* prealloc)
 	{
+		QMutexLocker lock(&mutex);
+		
 		Out(SYS_GEN|LOG_NOTICE) << "Preallocating file " << path << " (" << max_size << " bytes)" << endl;
 		bool close_again = false;
 		if (fd == -1)
