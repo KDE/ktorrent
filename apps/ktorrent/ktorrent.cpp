@@ -456,7 +456,7 @@ void KTorrent::setupActions()
 
 bool KTorrent::queryClose()
 {
-	if (Settings::showSystemTrayIcon())
+	if (Settings::showSystemTrayIcon() && !KApplication::kApplication()->sessionSaving())
 	{
 		hide();
 		return false;
