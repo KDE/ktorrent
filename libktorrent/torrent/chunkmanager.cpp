@@ -258,7 +258,7 @@ namespace bt
 			return 0;
 		
 		Chunk* c = chunks[i];
-		if (c->getStatus() == Chunk::NOT_DOWNLOADED)
+		if (c->getStatus() == Chunk::NOT_DOWNLOADED || c->isExcluded())
 		{
 			return 0;
 		}
@@ -662,7 +662,7 @@ namespace bt
 		}
 		else
 		{
-
+		//	Out(SYS_DIO|LOG_DEBUG) << "Excluding chunks " << first << " to " << last << endl;
 			// first and last chunk may be part of multiple files
 			// so we can't just exclude them
 			QValueList<Uint32> files,last_files;
@@ -682,12 +682,19 @@ namespace bt
 			for (Uint32 i = first + 1;i < last;i++)
 				resetChunk(i);
 			
-			// if the first and last chunk only lie in one file mark them as not downloaded
+			// if the first chunk only lies in one file, reset it
 			if (files.count() == 1) 
+			{
+		//		Out(SYS_DIO|LOG_DEBUG) << "Resetting first " << first << endl;
 				resetChunk(first);
+			}
 			
+			// if the last chunk only lies in one file reset it
 			if (last != first && last_files.count() == 1)
-				resetChunk(first);
+			{
+		//		Out(SYS_DIO|LOG_DEBUG) << "Resetting last " << last << endl;
+				resetChunk(last);
+			}
 			
 			// if one file in the list needs to be downloaded,increment first
 			for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
@@ -699,11 +706,8 @@ namespace bt
 				}
 			}
 			
-			files.clear();
-			// get list of files where last chunk lies in
-			tor.calcChunkPos(last,files);
 			// if one file in the list needs to be downloaded,decrement last
-			for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
+			for (QValueList<Uint32>::iterator i = last_files.begin();i != last_files.end();i++)
 			{
 				if (!tor.getFile(*i).doNotDownload())
 				{
@@ -719,6 +723,7 @@ namespace bt
 				return;
 			}
 			
+		//	Out(SYS_DIO|LOG_DEBUG) << "exclude " << first << " to " << last << endl;
 			exclude(first,last);
 			
 		}
