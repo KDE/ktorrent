@@ -79,6 +79,22 @@ namespace kt
 		KDatagramSocket::send(KNetwork::KDatagramPacket(data,strlen(data),KInetSocketAddress("239.255.255.250",1900)));
 	}
 	
+	void UPnPMCastSocket::onXmlFileDownloaded(UPnPRouter* r,bool success)
+	{
+		if (!success)
+		{
+			// we couldn't download and parse the XML file so 
+			// get rid of it
+			r->deleteLater();
+		}
+		else
+		{
+			// add it to the list and emit the signal
+			routers.insert(r->getServer(),r);
+			discovered(r);
+		}
+	}
+	
 	void UPnPMCastSocket::onReadyRead()
 	{
 		KNetwork::KDatagramPacket p = KDatagramSocket::receive();
@@ -95,30 +111,13 @@ namespace kt
 		UPnPRouter* r = parseResponse(p.data());
 		if (r)
 		{
+			QObject::connect(r,SIGNAL(xmlFileDownloaded( UPnPRouter*, bool )),
+					this,SLOT(onXmlFileDownloaded( UPnPRouter*, bool )));
+			
 			// download it's xml file
-			bool ret = r->downloadXMLFile();
-			if (!ret)
-			{
-				// we couldn't download and parse the XML file so 
-				// get rid of it
-				delete r;
-			}
-			else
-			{
-				// add it to the list and emit the signal
-				routers.insert(r->getServer(),r);
-				discovered(r);
-			}
+			r->downloadXMLFile();
+			
 		}
-		/*else
-		{
-			Out() << "UPnPMCastSocket : got packet" << endl;
-			Out() << "Sender : " << p.address().toString() << endl;
-			Out() << "Data (" << p.length() << ") : " << endl;
-			Out() << QString(p.data()) << endl;
-			Out() << endl;
-			Out() << "Please send the log file to the KTorrent development if you see this message" << endl;
-	}*/
 	}
 	
 	UPnPRouter* UPnPMCastSocket::parseResponse(const QByteArray & arr)
@@ -230,17 +229,8 @@ namespace kt
 			{
 				UPnPRouter* r = new UPnPRouter(server,location);
 				// download it's xml file
-				if (!r->downloadXMLFile())
-				{
-				// we couldn't download and parse the XML file so 
-				// get rid of it
-					delete r;
-				}
-				else
-				{
-					routers.insert(server,r);
-					discovered(r);
-				}
+				QObject::connect(r,SIGNAL(xmlFileDownloaded( UPnPRouter*, bool )),this,SLOT(onXmlFileDownloaded( UPnPRouter*, bool )));
+				r->downloadXMLFile();
 			}
 		}
 	}

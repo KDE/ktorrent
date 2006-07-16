@@ -32,6 +32,11 @@ namespace bt
 	class HTTPRequest;
 }
 
+namespace KIO
+{
+	class Job;
+}
+
 namespace kt 
 {
 	/**
@@ -114,6 +119,7 @@ namespace kt
 		};
 	private:	
 		QString server;
+		QString tmp_file;
 		KURL location;
 		UPnPDeviceDescription desc;
 		QValueList<UPnPService> services;
@@ -144,7 +150,7 @@ namespace kt
 		/**
 		 * Download the XML File of the router.
 		 */
-		bool downloadXMLFile();
+		void downloadXMLFile();
 		
 		/**
 		 * Add a service to the router.
@@ -188,6 +194,8 @@ namespace kt
 		void onReplyOK(bt::HTTPRequest* r,const QString &);
 		void onReplyError(bt::HTTPRequest* r,const QString &);
 		void onError(bt::HTTPRequest* r,bool);
+		void downloadFinished(KIO::Job* j);
+		
 		
 		
 	signals:
@@ -195,6 +203,13 @@ namespace kt
 		 * Tell the GUI that it needs to be updated.
 		 */
 		void updateGUI();
+		
+		/**
+		 * Signal which indicates that the XML was downloaded succesfully or not.
+		 * @param r The router which emitted the signal
+		 * @param success Wether or not it succeeded
+		 */
+		void xmlFileDownloaded(UPnPRouter* r,bool success);
 		
 	private:
 		QValueList<UPnPService>::iterator findPortForwardingService();		

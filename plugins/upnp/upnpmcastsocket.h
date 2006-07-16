@@ -66,6 +66,7 @@ namespace kt
 	private slots:
 		void onReadyRead();
 		void onError(int);
+		void onXmlFileDownloaded(UPnPRouter* r,bool success);
 		
 	signals:
 		/**

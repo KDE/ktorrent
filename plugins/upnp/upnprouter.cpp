@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <stdlib.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
@@ -27,6 +28,7 @@
 #include <util/log.h>
 #include <util/array.h>
 #include <util/error.h>
+#include <util/functions.h>
 #include <util/fileops.h>
 #include <util/httprequest.h>
 #include "upnprouter.h"
@@ -108,6 +110,8 @@ namespace kt
 	
 	UPnPRouter::UPnPRouter(const QString & server,const KURL & location,bool verbose) : server(server),location(location),verbose(verbose)
 	{
+		// make the tmp_file unique, current time * a random number should be enough
+		tmp_file = QString("/tmp/ktorrent_upnp_description-%1.xml").arg(bt::GetCurrentTime() * rand());
 	}
 	
 	
@@ -120,35 +124,38 @@ namespace kt
 		services.append(s);
 	}
 	
-	bool UPnPRouter::downloadXMLFile()
+	void UPnPRouter::downloadFinished(KIO::Job* j)
 	{
-		QString target;
-		// download the contents
-		if (KIO::NetAccess::download(location,target,0))
+		if (j->error())
 		{
-			// load in the file (target is always local)
-			UPnPDescriptionParser desc_parse;
-			bool ret = desc_parse.parse(target,this);
-			if (!ret)
-			{
-				Out(SYS_PNP|LOG_IMPORTANT) << "Error parsing router description !" << endl;
-				QString dest = KGlobal::dirs()->saveLocation("data","ktorrent") + "upnp_failure";
-				KIO::file_copy(target,dest,-1,true,false,false);
-			}
-			else
-			{
-				if (verbose)
-					debugPrintData();
-			}
-			// and remove the temp file
-			KIO::NetAccess::removeTempFile(target);
-			return ret;
+			Out(SYS_PNP|LOG_IMPORTANT) << "Failed to download " << location << " : " << j->errorString() << endl;
+			return;
+		}
+		
+		QString target = tmp_file;
+		// load in the file (target is always local)
+		UPnPDescriptionParser desc_parse;
+		bool ret = desc_parse.parse(target,this);
+		if (!ret)
+		{
+			Out(SYS_PNP|LOG_IMPORTANT) << "Error parsing router description !" << endl;
+			QString dest = KGlobal::dirs()->saveLocation("data","ktorrent") + "upnp_failure";
+			KIO::file_copy(target,dest,-1,true,false,false);
 		}
 		else
 		{
-			return false;
+			if (verbose)
+				debugPrintData();
 		}
-		return true;
+		xmlFileDownloaded(this,ret);
+		bt::Delete(target);
+	}
+	
+	void UPnPRouter::downloadXMLFile()
+	{
+		// downlaod XML description into a temporary file in /tmp
+		KIO::Job* job = KIO::file_copy(location,tmp_file,-1,true,false,false);
+		connect(job,SIGNAL(result(KIO::Job *)),this,SLOT(downloadFinished( KIO::Job* )));
 	}
 	
 	void UPnPRouter::debugPrintData()
