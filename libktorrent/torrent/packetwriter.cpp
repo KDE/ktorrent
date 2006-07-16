@@ -159,9 +159,13 @@ namespace bt
 //		Out() << "sendChunk " << index << " " << begin << " " << len << endl;
 		if (begin >= ch->getSize() || begin + len > ch->getSize())
 		{
-			Out() << "Warning : Illegal piece request" << endl;
-			Out() << "\tChunk : index " << index << " size = " << ch->getSize() << endl;
-			Out() << "\tPiece : begin = " << begin << " len = " << len << endl;
+			Out(SYS_CON|LOG_NOTICE) << "Warning : Illegal piece request" << endl;
+			Out(SYS_CON|LOG_NOTICE) << "\tChunk : index " << index << " size = " << ch->getSize() << endl;
+			Out(SYS_CON|LOG_NOTICE) << "\tPiece : begin = " << begin << " len = " << len << endl;
+		}
+		else if (!ch || ch->getData() == 0)
+		{
+			Out(SYS_CON|LOG_NOTICE) << "Warning : attempted to upload an invalid chunk" << endl;
 		}
 		else
 		{
