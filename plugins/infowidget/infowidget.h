@@ -91,9 +91,7 @@ namespace kt
 		int dnd_id;
 		QWidget* peer_page;
 		PeerView* peer_view;
-		QWidget* cd_page;
 		ChunkDownloadView* cd_view;
-		QWidget* tracker_page;
 		TrackerView* tracker_view;
 		bool m_seed;
 	};

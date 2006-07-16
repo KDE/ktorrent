@@ -22,6 +22,7 @@
 
 #include <klistview.h>
 #include <qmap.h>
+#include "chunkdownloadviewbase.h"
 
 namespace kt
 {
@@ -32,7 +33,7 @@ namespace kt
 	{
 		kt::ChunkDownloadInterface* cd;
 	public:
-		ChunkDownloadViewItem(ChunkDownloadView* cdv,kt::ChunkDownloadInterface* cd);
+		ChunkDownloadViewItem(KListView* cdv,kt::ChunkDownloadInterface* cd);
 	
 		void update();
 		int compare(QListViewItem * i,int col,bool) const;
@@ -42,7 +43,7 @@ namespace kt
 	/**
 	@author Joris Guisson
 	*/
-	class ChunkDownloadView : public KListView
+	class ChunkDownloadView : public ChunkDownloadViewBase
 	{
 		Q_OBJECT
 	
@@ -50,12 +51,16 @@ namespace kt
 	public:
 		ChunkDownloadView(QWidget *parent = 0, const char *name = 0);
 		virtual ~ChunkDownloadView();
+		
+		void saveLayout(KConfig* cfg,const QString & group_name);
+		void restoreLayout(KConfig* cfg,const QString & group_name);
+		void clear();
 	
 	public slots:
 		void addDownload(kt::ChunkDownloadInterface* cd);
 		void removeDownload(kt::ChunkDownloadInterface* cd);
 		void removeAll();
-		void update();
+		void update(kt::TorrentInterface* curr_tc);
 	};
 }	
 

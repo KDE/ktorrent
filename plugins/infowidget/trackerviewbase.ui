@@ -9,122 +9,38 @@
             <x>0</x>
             <y>0</y>
             <width>648</width>
-            <height>294</height>
+            <height>206</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>TrackerViewBase</string>
     </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QButtonGroup" row="1" column="0">
-            <property name="name">
-                <cstring>buttonGroup1</cstring>
-            </property>
-            <property name="title">
-                <string>Available trackers:</string>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
+        <widget class="QListView" row="2" column="0">
+            <column>
+                <property name="text">
+                    <string>Tracker</string>
                 </property>
-                <widget class="QLineEdit" row="0" column="0">
-                    <property name="name">
-                        <cstring>txtTracker</cstring>
-                    </property>
-                </widget>
-                <widget class="QListView" row="1" column="0" rowspan="5" colspan="1">
-                    <column>
-                        <property name="text">
-                            <string>Tracker</string>
-                        </property>
-                        <property name="clickable">
-                            <bool>true</bool>
-                        </property>
-                        <property name="resizable">
-                            <bool>false</bool>
-                        </property>
-                    </column>
-                    <property name="name">
-                        <cstring>listTrackers</cstring>
-                    </property>
-                    <property name="resizeMode">
-                        <enum>LastColumn</enum>
-                    </property>
-                </widget>
-                <spacer row="3" column="1">
-                    <property name="name">
-                        <cstring>spacer4_2</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Fixed</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>16</height>
-                        </size>
-                    </property>
-                </spacer>
-                <spacer row="5" column="1">
-                    <property name="name">
-                        <cstring>spacer5</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>40</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="KPushButton" row="0" column="1">
-                    <property name="name">
-                        <cstring>btnAdd</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Add t&amp;racker</string>
-                    </property>
-                </widget>
-                <widget class="KPushButton" row="1" column="1">
-                    <property name="name">
-                        <cstring>btnRemove</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Remove tracker</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton" row="2" column="1">
-                    <property name="name">
-                        <cstring>btnChange</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Cha&amp;nge tracker</string>
-                    </property>
-                </widget>
-                <widget class="KPushButton" row="4" column="1">
-                    <property name="name">
-                        <cstring>btnRestore</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Restore defaults</string>
-                    </property>
-                    <property name="accel">
-                        <string></string>
-                    </property>
-                </widget>
-            </grid>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>false</bool>
+                </property>
+            </column>
+            <property name="name">
+                <cstring>listTrackers</cstring>
+            </property>
+            <property name="resizeMode">
+                <enum>LastColumn</enum>
+            </property>
         </widget>
         <widget class="QLayoutWidget" row="0" column="0">
             <property name="name">
-                <cstring>layout35</cstring>
+                <cstring>layout14</cstring>
             </property>
             <hbox>
                 <property name="name">
@@ -266,26 +182,107 @@
                     </property>
                     <property name="sizeHint">
                         <size>
-                            <width>50</width>
+                            <width>46</width>
                             <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+            </hbox>
+        </widget>
+        <widget class="QLineEdit" row="1" column="0">
+            <property name="name">
+                <cstring>txtTracker</cstring>
+            </property>
+        </widget>
+        <widget class="KPushButton" row="0" column="1">
+            <property name="name">
+                <cstring>btnUpdate</cstring>
+            </property>
+            <property name="text">
+                <string>Upd&amp;ate tracker</string>
+            </property>
+            <property name="accel">
+                <string>Alt+A</string>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Minimum update interval - 60 seconds</string>
+            </property>
+        </widget>
+        <widget class="KPushButton" row="1" column="1">
+            <property name="name">
+                <cstring>btnAdd</cstring>
+            </property>
+            <property name="text">
+                <string>Add t&amp;racker</string>
+            </property>
+            <property name="accel">
+                <string>Alt+R</string>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget" row="2" column="1">
+            <property name="name">
+                <cstring>layout8</cstring>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>btnRemove</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Remove tracker</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>btnChange</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Cha&amp;nge tracker</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+N</string>
+                    </property>
+                </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer4_2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>68</height>
                         </size>
                     </property>
                 </spacer>
                 <widget class="KPushButton">
                     <property name="name">
-                        <cstring>btnUpdate</cstring>
+                        <cstring>btnRestore</cstring>
                     </property>
                     <property name="text">
-                        <string>Upd&amp;ate tracker</string>
+                        <string>Restore defaults</string>
                     </property>
-                    <property name="toolTip" stdset="0">
-                        <string>Minimum update interval - 60 seconds</string>
+                    <property name="accel">
+                        <string></string>
                     </property>
                 </widget>
-            </hbox>
+            </vbox>
         </widget>
     </grid>
 </widget>
+<customwidgets>
+</customwidgets>
 <connections>
     <connection>
         <sender>btnChange</sender>
@@ -334,10 +331,10 @@
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>kpushbutton.h</includehint>
-    <includehint>kpushbutton.h</includehint>
-    <includehint>kpushbutton.h</includehint>
     <includehint>ksqueezedtextlabel.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
 </includehints>
 </UI>

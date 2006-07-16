@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <qscrollview.h>
 #include <kgenericfactory.h>
 #include <kglobal.h>
 #include <klocale.h>
@@ -51,7 +52,7 @@ namespace kt
 
 	void InfoWidgetPlugin::load()
 	{
-		iw = new InfoWidget(0);
+		iw = new InfoWidget(false,0);
 		iw_seed = new InfoWidget(true, 0);
 		pref = new InfoWidgetPrefPage(iw,iw_seed);
 		getGUI()->addViewListener(this);

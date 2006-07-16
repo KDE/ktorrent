@@ -18,8 +18,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <klocale.h>
+#include <qlabel.h>
 #include <interfaces/chunkdownloadinterface.h>
 #include <interfaces/functions.h>
+#include <interfaces/torrentinterface.h>
 #include "chunkdownloadview.h"
 
 
@@ -29,7 +31,7 @@ using namespace kt;
 namespace kt
 {
 	
-	ChunkDownloadViewItem::ChunkDownloadViewItem(ChunkDownloadView* cdv,kt::ChunkDownloadInterface* cd)
+	ChunkDownloadViewItem::ChunkDownloadViewItem(KListView* cdv,kt::ChunkDownloadInterface* cd)
 		: KListViewItem(cdv),cd(cd)
 	{
 		update();
@@ -68,14 +70,9 @@ namespace kt
 	
 	
 	ChunkDownloadView::ChunkDownloadView(QWidget *parent, const char *name)
-	: KListView(parent, name)
+	: ChunkDownloadViewBase(parent, name)
 	{
-		addColumn(i18n("Chunk"));
-		addColumn(i18n("Progress"));
-		addColumn(i18n("Peer"));
-		addColumn(i18n("Down Speed"));
-		addColumn(i18n("Assigned Peers"));
-		setShowSortIndicator(true);
+		m_list_view->setShowSortIndicator(true);
 	}
 	
 	
@@ -85,7 +82,7 @@ namespace kt
 	
 	void ChunkDownloadView::addDownload(kt::ChunkDownloadInterface* cd)
 	{
-		ChunkDownloadViewItem* it = new ChunkDownloadViewItem(this,cd);
+		ChunkDownloadViewItem* it = new ChunkDownloadViewItem(m_list_view,cd);
 		items.insert(cd,it);
 	}
 		
@@ -101,11 +98,11 @@ namespace kt
 	
 	void ChunkDownloadView::removeAll()
 	{
-		clear();
+		m_list_view->clear();
 		items.clear();
 	}
 	
-	void ChunkDownloadView::update()
+	void ChunkDownloadView::update(kt::TorrentInterface* curr_tc)
 	{
 		QMap<ChunkDownloadInterface*,ChunkDownloadViewItem*>::iterator i = items.begin();
 		while (i != items.end())
@@ -114,7 +111,37 @@ namespace kt
 			it->update();
 			i++;
 		}
-		sort();
+		m_list_view->sort();
+		
+		const TorrentStats & s = curr_tc->getStats();
+		m_chunks_downloading->setText(QString::number(s.num_chunks_downloading));
+		m_chunks_downloaded->setText(QString::number(s.num_chunks_downloaded));
+		m_total_chunks->setText(QString::number(s.total_chunks));
+		m_excluded_chunks->setText(QString::number(s.num_chunks_excluded));
+		
+		if( s.chunk_size / 1024 < 1024 )
+			m_size_chunks->setText(QString::number(s.chunk_size / 1024) + "." + QString::number((s.chunk_size % 1024) / 100) + " KB");
+		else
+			m_size_chunks->setText(QString::number(s.chunk_size / 1024 / 1024) + "." + QString::number(((s.chunk_size / 1024) % 1024) / 100) + " MB");
+	}
+	
+	void ChunkDownloadView::saveLayout(KConfig* cfg,const QString & group_name)
+	{
+		m_list_view->saveLayout(cfg,group_name);
+	}
+	
+	void ChunkDownloadView::restoreLayout(KConfig* cfg,const QString & group_name)
+	{
+		m_list_view->restoreLayout(cfg,group_name);
+	}
+	
+	void ChunkDownloadView::clear()
+	{
+		m_chunks_downloading->clear();
+		m_chunks_downloaded->clear();
+		m_total_chunks->clear();
+		m_excluded_chunks->clear();
+		m_size_chunks->clear();
 	}
 }
 

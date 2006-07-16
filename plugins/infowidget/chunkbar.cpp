@@ -90,7 +90,7 @@ namespace kt
 		setFrameShadow(Sunken);
 		setLineWidth(3);
 		setMidLineWidth(3);
-		setFixedHeight((int)ceil(fontMetrics().height()*1.5));
+		
 		show_excluded = false;
 		
 		InitializeToolTipImages(this);

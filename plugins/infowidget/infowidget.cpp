@@ -19,6 +19,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <math.h>
 #include <klistview.h>
 #include <kglobal.h>
 #include <klocale.h>
@@ -108,6 +109,10 @@ namespace kt
 		maxRatio->setMaxValue(100.0f);
 		maxRatio->setStep(0.1f);
 		connect(maxRatio, SIGNAL(valueHasChanged()), this, SLOT(maxRatio_returnPressed()));
+		
+		int h = (int)ceil(fontMetrics().height()*1.25);
+		m_chunk_bar->setFixedHeight(h);
+		m_av_chunk_bar->setFixedHeight(h);
 	}
 	
 	InfoWidget::~InfoWidget()
@@ -150,7 +155,7 @@ namespace kt
 			peer_view = 0;
 		}
 	
-		if (monitor && curr_tc)
+		if (monitor)
 		{
 			delete monitor;
 			monitor = 0;
@@ -167,13 +172,8 @@ namespace kt
 	{
 		if( cd_view == 0 && show)
 		{
-			cd_page = new QWidget();
-			QHBoxLayout* cd_page_layout = new QHBoxLayout(cd_page, 11, 6);
-	
-			cd_view = new ChunkDownloadView(cd_page);
-			cd_page_layout->add(cd_view);
-	
-			m_tabs->addTab(cd_page,i18n("Chunks"));
+			cd_view = new ChunkDownloadView();
+			m_tabs->addTab(cd_view,i18n("Chunks"));
 			cd_view->setEnabled(curr_tc != 0);
 			setEnabled(curr_tc != 0);
 			cd_view->restoreLayout(KGlobal::config(),"ChunkDownloadView");
@@ -181,13 +181,12 @@ namespace kt
 		else if (!show && cd_view != 0)
 		{
 			cd_view->saveLayout(KGlobal::config(),"ChunkDownloadView");
-			m_tabs->removePage( cd_page );
-			cd_page->reparent(0,QPoint(),false);
-			delete cd_page;
+			m_tabs->removePage( cd_view );
+			delete cd_view;
 			cd_view = 0;
 		}
 
-		if (monitor && curr_tc)
+		if (monitor)
 		{
 			delete monitor;
 			monitor = 0;
@@ -204,23 +203,15 @@ namespace kt
 	{
 		if( tracker_view == 0 && show)
 		{
-			tracker_page = new QWidget();
-			QHBoxLayout* tracker_page_layout = new QHBoxLayout(tracker_page, 11, 6);
-	
-			tracker_view = new TrackerView(curr_tc, tracker_page);
-			tracker_page_layout->add(tracker_view);
-	
-			m_tabs->addTab(tracker_page,i18n("Trackers"));;
+			tracker_view = new TrackerView(curr_tc, m_tabs);
+			m_tabs->addTab(tracker_view,i18n("Trackers"));;
 			tracker_view->setEnabled(curr_tc != 0);
 			setEnabled(curr_tc != 0);
-// 			tracker_view->restoreLayout(KGlobal::config(),"TrackerView");
 		}
 		else if (!show && tracker_view != 0)
 		{
-// 			tracker_view->saveLayout(KGlobal::config(),"TrackerView");
-			m_tabs->removePage( tracker_page );
-			tracker_page->reparent(0,QPoint(),false);
-			delete tracker_page;
+			m_tabs->removePage( tracker_view );
+			delete tracker_view;
 			tracker_view = 0;
 		}
 	}
@@ -301,12 +292,13 @@ namespace kt
 		}
 		if (cd_view)
 		{
-			cd_page->setEnabled(tc != 0);
+			if (!tc)
+				cd_view->clear();
+			
 			cd_view->setEnabled(tc != 0);
 		}
 		if(tracker_view)
 		{
-			tracker_page->setEnabled(tc != 0);
 			tracker_view->setEnabled(tc != 0);
 			tracker_view->torrentChanged(tc);
 		}
@@ -333,14 +325,9 @@ namespace kt
 			m_tracker_status->clear();
 			m_seeders->clear();
 			m_leechers->clear();
-			m_chunks_downloading->clear();
-			m_chunks_downloaded->clear();
-			m_total_chunks->clear();
-			m_excluded_chunks->clear();
 			m_tracker_update_time->clear();
 			m_avg_up->clear();
 			m_avg_down->clear();
-			m_size_chunks->clear();
 		}
 		
 		update();
@@ -408,24 +395,15 @@ namespace kt
 			return;
 	
 		const TorrentStats & s = curr_tc->getStats();
-		m_chunks_downloading->setText(QString::number(s.num_chunks_downloading));
-		m_chunks_downloaded->setText(QString::number(s.num_chunks_downloaded));
-		m_total_chunks->setText(QString::number(s.total_chunks));
-		m_excluded_chunks->setText(QString::number(s.num_chunks_excluded));
-// 		if(!m_seed)
-// 		{
-			m_chunk_bar->updateBar();
-			m_av_chunk_bar->updateBar();
-// 		}
 		
-		if( s.chunk_size / 1024 < 1024 )
-			m_size_chunks->setText(QString::number(s.chunk_size / 1024) + "." + QString::number((s.chunk_size % 1024) / 100) + " KB");
-		else
-			m_size_chunks->setText(QString::number(s.chunk_size / 1024 / 1024) + "." + QString::number(((s.chunk_size / 1024) % 1024) / 100) + " MB");
+		m_chunk_bar->updateBar();
+		m_av_chunk_bar->updateBar();
+		
+		
 		if (peer_view)
 			peer_view->update();
 		if (cd_view)
-			cd_view->update();
+			cd_view->update(curr_tc);
 		if(tracker_view)
 			tracker_view->update(curr_tc);
 		if(s.multi_file_torrent)

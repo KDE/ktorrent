@@ -23,6 +23,8 @@
 #include <interfaces/plugin.h>
 #include <interfaces/guiinterface.h>
 
+
+
 namespace kt
 {
 	class InfoWidget;

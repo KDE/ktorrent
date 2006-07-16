@@ -16,15 +16,15 @@ noinst_HEADERS = bencoder.h value.h bdecoder.h bnode.h torrent.h chunkmanager.h 
 							cachefile.h dndfile.h authenticationmonitor.h
 					
 libtorrent_la_SOURCES = bencoder.cpp value.cpp bdecoder.cpp bnode.cpp \
-			torrent.cpp chunkmanager.cpp chunk.cpp peer.cpp globals.cpp peermanager.cpp \
-			tracker.cpp downloader.cpp authenticate.cpp uploader.cpp torrentcontrol.cpp \
-			choker.cpp chunkdownload.cpp speedestimater.cpp peerdownloader.cpp request.cpp \
-			piece.cpp peerid.cpp announcelist.cpp peeruploader.cpp uploadcap.cpp \
-			packetreader.cpp packetwriter.cpp packet.cpp httptracker.cpp udptracker.cpp cache.cpp \
-			singlefilecache.cpp multifilecache.cpp torrentcreator.cpp downloadcap.cpp torrentfile.cpp \
-			chunkselector.cpp server.cpp serverauthenticate.cpp authenticatebase.cpp \
-			udptrackersocket.cpp upspeedestimater.cpp ipblocklist.cpp queuemanager.cpp chunkcounter.cpp \
-			newchokealgorithm.cpp statsfile.cpp preallocationthread.cpp cap.cpp \
-			advancedchokealgorithm.cpp cachefile.cpp dndfile.cpp authenticationmonitor.cpp
+	torrent.cpp chunkmanager.cpp chunk.cpp peer.cpp globals.cpp peermanager.cpp \
+	tracker.cpp downloader.cpp authenticate.cpp uploader.cpp torrentcontrol.cpp \
+	choker.cpp chunkdownload.cpp speedestimater.cpp peerdownloader.cpp request.cpp \
+	piece.cpp peerid.cpp announcelist.cpp peeruploader.cpp uploadcap.cpp \
+	packetreader.cpp packetwriter.cpp packet.cpp httptracker.cpp udptracker.cpp cache.cpp \
+	singlefilecache.cpp multifilecache.cpp torrentcreator.cpp downloadcap.cpp torrentfile.cpp \
+	chunkselector.cpp server.cpp serverauthenticate.cpp authenticatebase.cpp \
+	udptrackersocket.cpp upspeedestimater.cpp ipblocklist.cpp queuemanager.cpp chunkcounter.cpp \
+	newchokealgorithm.cpp statsfile.cpp preallocationthread.cpp cap.cpp \
+	advancedchokealgorithm.cpp cachefile.cpp dndfile.cpp authenticationmonitor.cpp
 
 

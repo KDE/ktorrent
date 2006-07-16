@@ -35,6 +35,7 @@ namespace kt
 			setTextFormat(Qt::PlainText);
 		
 		setMaxLogLines(100);
+		setMinimumSize(QSize(0,50));
 		setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Minimum);
 		KGlobal::config()->setGroup("LogViewer");
 		if (KGlobal::config()->hasKey("LogViewerWidgetSize"))
