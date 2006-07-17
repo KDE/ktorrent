@@ -260,9 +260,6 @@ namespace kt
 		curr_tc = tc;
 		if (monitor)
 		{
-/*			if(!curr_tc)
-				monitor->destroyed();
-			*/
 			delete monitor;
 			monitor = 0;
 			if (peer_view)
@@ -279,11 +276,8 @@ namespace kt
 		}
 	
 		fillFileTree();
-// 		if(!m_seed)
-// 		{
-			m_chunk_bar->setTC(tc);
-			m_av_chunk_bar->setTC(tc);
-// 		}
+		m_chunk_bar->setTC(tc);
+		m_av_chunk_bar->setTC(tc);
 		setEnabled(tc != 0);
 		if (peer_view)
 		{
