@@ -76,7 +76,7 @@ int main(int argc, char **argv)
 	signal(SIGPIPE,SIG_IGN);
 //	qInstallMsgHandler( StupidWarningMessagesFromQt );
 	KAboutData about("ktorrent", I18N_NOOP("KTorrent"), kt::VERSION_STRING, description,
-					 KAboutData::License_GPL, "(C) 2005 Joris Guisson", 0,
+					 KAboutData::License_GPL, "(C) 2005 -2006 Joris Guisson and Ivan Vasic", 0,
 					 "http://www.ktorrent.org/");
 	about.addAuthor("Joris Guisson", 0, "joris.guisson@gmail.com" );
 	about.addAuthor("Ivan Vasic",0,"ivasic@gmail.com");
