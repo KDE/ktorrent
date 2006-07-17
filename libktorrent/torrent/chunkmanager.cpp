@@ -760,12 +760,14 @@ namespace bt
 		if (c->getPriority() == PREVIEW_PRIORITY)
 			first++;
 		else
-		for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
 		{
-			if (tor.getFile(*i).getPriority() > newpriority && i != files.end())
+			for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
 			{
-				first++;
-				break;
+				if (tor.getFile(*i).getPriority() > newpriority && i != files.end())
+				{
+					first++;
+					break;
+				}
 			}
 		}
 		
@@ -777,12 +779,14 @@ namespace bt
 		if (c->getPriority() == PREVIEW_PRIORITY)
 			last--;
 		else
-		for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
 		{
-			if (tor.getFile(*i).getPriority() > newpriority && i != files.begin())
+			for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
 			{
-				last--;
-				break;
+				if (tor.getFile(*i).getPriority() > newpriority && i != files.begin())
+				{
+					last--;
+					break;
+				}
 			}
 		}
 		// last smaller then first is not normal, so just return
@@ -841,6 +845,7 @@ namespace bt
 		}
 		recalc_chunks_left = true;
 		saveIndexFile();
+		chunksLeft();
 	}
 	
 	bool ChunkManager::hasExistingFiles() const
@@ -875,6 +880,7 @@ namespace bt
 		}
 		saveIndexFile();
 		recalc_chunks_left = true;
+		chunksLeft();
 	}
 	
 	void ChunkManager::dndMissingFiles()
@@ -896,6 +902,7 @@ namespace bt
 		saveFileInfo();
 		saveIndexFile();
 		recalc_chunks_left = true;
+		chunksLeft();
 	}
 	
 	void ChunkManager::deleteDataFiles()
