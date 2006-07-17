@@ -276,6 +276,9 @@
             <property name="title">
                 <string>DHT</string>
             </property>
+            <property name="toolTip" stdset="0">
+                <string>&lt;b&gt;D&lt;/b&gt;istributed &lt;b&gt;H&lt;/b&gt;ash &lt;b&gt;T&lt;/b&gt;able protocol.&lt;br&gt;Decentralized peers exchange protocol. See manual for more info.</string>
+            </property>
             <vbox>
                 <property name="name">
                     <cstring>unnamed</cstring>
@@ -346,6 +349,9 @@
             <property name="title">
                 <string>Encryption</string>
             </property>
+            <property name="toolTip" stdset="0">
+                <string>Secure connection with other clients. May also help if your ISP is shaping your traffic.</string>
+            </property>
             <vbox>
                 <property name="name">
                     <cstring>unnamed</cstring>
@@ -367,6 +373,9 @@
                     </property>
                     <property name="text">
                         <string>Allow unencrypted connections</string>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>If unchecked, you'll be able to connect only to clients supporting encryption.</string>
                     </property>
                 </widget>
             </vbox>
@@ -390,8 +399,6 @@
         </spacer>
     </vbox>
 </widget>
-<customwidgets>
-</customwidgets>
 <tabstops>
     <tabstop>autosave_downloads_check</tabstop>
     <tabstop>show_systray_icon</tabstop>
