@@ -90,8 +90,15 @@ namespace kt
 		else
 		{
 			// add it to the list and emit the signal
-			routers.insert(r->getServer(),r);
-			discovered(r);
+			if (!routers.contains(r->getServer()))
+			{
+				routers.insert(r->getServer(),r);
+				discovered(r);
+			}
+			else
+			{
+				r->deleteLater();
+			}
 		}
 	}
 	
@@ -116,7 +123,6 @@ namespace kt
 			
 			// download it's xml file
 			r->downloadXMLFile();
-			
 		}
 	}
 	
