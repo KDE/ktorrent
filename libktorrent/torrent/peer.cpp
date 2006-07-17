@@ -289,7 +289,7 @@ namespace bt
 				
 				{
 					Uint16 port = ReadUint16(tmp_buf,1);
-					Out() << "Got PORT packet : " << port << endl;
+				//	Out() << "Got PORT packet : " << port << endl;
 					gotPortPacket(getIPAddresss(),port);
 				}
 				break;
@@ -300,7 +300,6 @@ namespace bt
 					kill();
 					return;
 				}
-				Out() << "HAVE_ALL" << endl;
 				pieces.setAll(true);
 				bitSetRecieved(pieces);
 				break;
@@ -311,7 +310,6 @@ namespace bt
 					kill();
 					return;
 				}
-				Out() << "HAVE_NONE" << endl;
 				pieces.setAll(false);
 				bitSetRecieved(pieces);
 				// no pieces so give enable AF if peer supports it
@@ -319,7 +317,6 @@ namespace bt
 					uploader->enableAllowedFast();
 				break;
 			case SUGGEST_PIECE:
-				Out() << "SUGGEST_PIECE" << endl;
 				// ignore suggestions for the moment
 				break;
 			case ALLOWED_FAST:
@@ -329,7 +326,6 @@ namespace bt
 					kill();
 					return;
 				}
-				Out() << "ALLOWED_FAST " << ReadUint32(tmp_buf,1) << endl;
 				downloader->addAllowedFastChunk(ReadUint32(tmp_buf,1));
 				break;
 		}

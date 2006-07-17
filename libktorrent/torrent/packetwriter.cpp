@@ -154,7 +154,7 @@ namespace bt
 		queuePacket(new Packet(index,bt::ALLOWED_FAST));
 	}
 			
-	void PacketWriter::sendChunk(Uint32 index,Uint32 begin,Uint32 len,Chunk * ch)
+	bool PacketWriter::sendChunk(Uint32 index,Uint32 begin,Uint32 len,Chunk * ch)
 	{
 //		Out() << "sendChunk " << index << " " << begin << " " << len << endl;
 		if (begin >= ch->getSize() || begin + len > ch->getSize())
@@ -162,14 +162,21 @@ namespace bt
 			Out(SYS_CON|LOG_NOTICE) << "Warning : Illegal piece request" << endl;
 			Out(SYS_CON|LOG_NOTICE) << "\tChunk : index " << index << " size = " << ch->getSize() << endl;
 			Out(SYS_CON|LOG_NOTICE) << "\tPiece : begin = " << begin << " len = " << len << endl;
+			return false;
 		}
 		else if (!ch || ch->getData() == 0)
 		{
 			Out(SYS_CON|LOG_NOTICE) << "Warning : attempted to upload an invalid chunk" << endl;
+			return false;
 		}
 		else
 		{
+	/*		Out(SYS_CON|LOG_DEBUG) << QString("Uploading %1 %2 %3 %4 %5")
+					.arg(index).arg(begin).arg(len).arg((Q_ULLONG)ch,0,16).arg((Q_ULLONG)ch->getData(),0,16) 
+					<< endl;;
+	*/
 			queuePacket(new Packet(index,begin,len,ch));
+			return true;
 		}
 	}
 

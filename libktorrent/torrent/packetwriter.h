@@ -110,8 +110,9 @@ namespace bt
 		 * @param begin Offset into chunk
 		 * @param len Length of data
 		 * @param ch The Chunk
+		 * @return true If we satisfy the request, false otherwise
 		 */
-		void sendChunk(Uint32 index,Uint32 begin,Uint32 len,Chunk * ch);
+		bool sendChunk(Uint32 index,Uint32 begin,Uint32 len,Chunk * ch);
 		
 		/**
 		 * Send a BitSet. The BitSet indicates which chunks we have.

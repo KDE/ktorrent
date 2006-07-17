@@ -285,7 +285,10 @@
                         <cstring>use_dht</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Use DHT to get additional peers (EXPERIMENTAL)</string>
+                        <string>&amp;Use DHT to get additional peers</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+U</string>
                     </property>
                 </widget>
                 <widget class="QLayoutWidget">
@@ -387,6 +390,8 @@
         </spacer>
     </vbox>
 </widget>
+<customwidgets>
+</customwidgets>
 <tabstops>
     <tabstop>autosave_downloads_check</tabstop>
     <tabstop>show_systray_icon</tabstop>

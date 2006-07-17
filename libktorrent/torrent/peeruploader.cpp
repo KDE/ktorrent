@@ -94,15 +94,21 @@ namespace bt
 				return ret;
 
 			Chunk* c = cman.grabChunk(r.getIndex());	
-			if (c)
+			if (c && c->getData())
 			{
-				pw.sendChunk(r.getIndex(),r.getOffset(),r.getLength(),c);
+				if (!pw.sendChunk(r.getIndex(),r.getOffset(),r.getLength(),c))
+				{
+					if (peer->getStats().fast_extensions)
+						pw.sendReject(r);
+				}
 				requests.pop_front();
 			}
 			else
 			{
 				// remove requests we can't satisfy
 				Out() << "Cannot satisfy request" << endl;
+				if (peer->getStats().fast_extensions)
+					pw.sendReject(r);
 				requests.pop_front();
 			}
 					
