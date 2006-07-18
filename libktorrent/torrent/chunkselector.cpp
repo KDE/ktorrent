@@ -150,6 +150,12 @@ namespace bt
 
 	void ChunkSelector::reincluded(Uint32 from, Uint32 to)
 	{
+		// lets do a safety check first
+		if (from >= cman.getNumChunks() || to >= cman.getNumChunks())
+		{
+			Out(SYS_DIO|LOG_NOTICE) << "Internal error in chunkselector" << endl;
+			return;
+		}
 		
 		for (Uint32 i = from;i <= to;i++)
 		{

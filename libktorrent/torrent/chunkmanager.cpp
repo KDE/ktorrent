@@ -648,9 +648,9 @@ namespace bt
 				if (last - first > 2)
 					prioritise(last -1,last, PREVIEW_PRIORITY);
 			}
-			if(chunks[first]->getPriority() > NORMAL_PRIORITY)
+			if(chunks[first]->getPriority() > NORMAL_PRIORITY && first < tor.getNumChunks() - 1)
 				first++;
-			if(chunks[last]->getPriority() > NORMAL_PRIORITY)
+			if(chunks[last]->getPriority() > NORMAL_PRIORITY && last > 0)
 				last--;
 			// last smaller then first is not normal, so just return
 			if (last < first)
@@ -701,7 +701,8 @@ namespace bt
 			{
 				if (!tor.getFile(*i).doNotDownload())
 				{
-					first++;
+					if (first < tor.getNumChunks() - 1)
+						first++;
 					break;
 				}
 			}
@@ -711,7 +712,8 @@ namespace bt
 			{
 				if (!tor.getFile(*i).doNotDownload())
 				{
-					last--;
+					if (last > 0)
+						last--;
 					break;
 				}
 			}
