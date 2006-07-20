@@ -20,9 +20,6 @@
             <verstretch>0</verstretch>
         </sizepolicy>
     </property>
-    <property name="caption">
-        <string>InfoWidgetBase</string>
-    </property>
     <hbox>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -516,9 +513,6 @@
                                                 </property>
                                                 <property name="text">
                                                     <string>&amp;Use limit?</string>
-                                                </property>
-                                                <property name="accel">
-                                                    <string>Alt+U</string>
                                                 </property>
                                                 <property name="toolTip" stdset="0">
                                                     <string>Limit works only in seed mode</string>

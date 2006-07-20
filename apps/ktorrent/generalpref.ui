@@ -290,9 +290,6 @@
                     <property name="text">
                         <string>&amp;Use DHT to get additional peers</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+U</string>
-                    </property>
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
