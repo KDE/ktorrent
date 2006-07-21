@@ -758,8 +758,10 @@ void KTorrentCore::announceByTorNum(int tornumber)
 	        tc->updateTracker();
 }
 
-void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc)
+void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc,bool & ret)
 {
+	ret = true;
+	
 	QStringList missing;
 	if (!tc->hasMissingFiles(missing))
 		return;
@@ -781,7 +783,8 @@ void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc)
 			catch (bt::Error & e)
 			{
 				KMessageBox::error(0,i18n("Cannot recreate missing files : %1").arg(e.toString()));
-				throw Error(i18n("Data files are missing"));
+				tc->handleError(i18n("Data files are missing"));
+				ret = false;
 			}
 		}
 		else if (ret == KMessageBox::No)
@@ -794,12 +797,14 @@ void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc)
 			catch (bt::Error & e)
 			{
 				KMessageBox::error(0,i18n("Cannot deselect missing files : %1").arg(e.toString()));
-				throw Error(i18n("Data files are missing"));
+				tc->handleError(i18n("Data files are missing"));
+				ret = false;
 			}
 		}
 		else
 		{
-			throw Error(i18n("Data files are missing"));
+			tc->handleError(i18n("Data files are missing"));
+			ret = false;
 		}
 	}
 	else
@@ -815,12 +820,14 @@ void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc)
 			catch (bt::Error & e)
 			{
 				KMessageBox::error(0,i18n("Cannot recreate data file : %1").arg(e.toString()));
-				throw Error(i18n("Data file is missing"));
+				tc->handleError(i18n("Data file is missing"));
+				ret = false;
 			}
 		}
 		else
 		{
-			throw Error(i18n("Data file is missing"));
+			tc->handleError(i18n("Data file is missing"));
+			ret = false;
 		}
 	}
 	
@@ -834,8 +841,8 @@ void KTorrentCore::connectSignals(kt::TorrentInterface* tc)
 			this, SLOT(slotStoppedByError(kt::TorrentInterface*, QString )));
 	connect(tc, SIGNAL(seedingAutoStopped( kt::TorrentInterface* )),
 			this, SLOT(torrentSeedAutoStopped( kt::TorrentInterface* )));
-	connect(tc,SIGNAL(aboutToBeStarted( kt::TorrentInterface* )),
-			this, SLOT(aboutToBeStarted( kt::TorrentInterface* )));
+	connect(tc,SIGNAL(aboutToBeStarted( kt::TorrentInterface*,bool & )),
+			this, SLOT(aboutToBeStarted( kt::TorrentInterface*,bool & )));
 }
 
 #include "ktorrentcore.moc"

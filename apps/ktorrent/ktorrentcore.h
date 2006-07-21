@@ -252,7 +252,7 @@ public slots:
 	 * A torrent is about to be started. We will do some file checks upon this signal.
 	 * @param tc The TorrentInterface
 	*/
-	void aboutToBeStarted(kt::TorrentInterface* tc);
+	void aboutToBeStarted(kt::TorrentInterface* tc,bool & ret);
 	
 signals:
 	/**

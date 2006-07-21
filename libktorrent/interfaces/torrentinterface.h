@@ -319,6 +319,9 @@ namespace kt
 		
 		///Checks if a seeding torrent has reached its maximum share ratio
 		virtual bool overMaxRatio() = 0;
+		
+		/// Handle an error
+		virtual void handleError(const QString & err) = 0;
 	signals:
 		/**
 		 * Emited when we have finished downloading.
@@ -350,8 +353,9 @@ namespace kt
 		 * Emitted just before the torrent is started, this should be used to do some
 		 * checks on the files in the cache.
 		 * @param me The torrent which emitted the signal
+		 * @param ret The return value
 		 */
-		void aboutToBeStarted(kt::TorrentInterface* me);
+		void aboutToBeStarted(kt::TorrentInterface* me,bool & ret);
 		
 		/**
 		 * Emitted when missing files have been marked as dnd.

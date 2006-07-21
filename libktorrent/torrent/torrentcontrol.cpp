@@ -264,7 +264,10 @@ namespace bt
 		io_error = false;
 		try
 		{
-			aboutToBeStarted(this);
+			bool ret = true;
+			aboutToBeStarted(this,ret);
+			if (!ret)
+				return;
 		}
 		catch (Error & err)
 		{
@@ -1196,6 +1199,11 @@ namespace bt
 			onIOError(err.toString());
 			throw;
 		}
+	}
+	
+	void TorrentControl::handleError(const QString & err)
+	{
+		onIOError(err);
 	}
 	
 	Uint32 TorrentControl::getNumDHTNodes() const

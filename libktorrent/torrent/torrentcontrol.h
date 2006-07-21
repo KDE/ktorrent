@@ -249,6 +249,7 @@ namespace bt
 		void getLeecherInfo(Uint32 & total,Uint32 & connected_to) const;
 		void migrateTorrent(const QString & default_save_dir);
 		void continueStart();
+		virtual void handleError(const QString & err);
 
 		
 	private:
