@@ -27,7 +27,6 @@
 
 namespace bt
 {
-	class SpeedEstimater;
 	class Peer;
 	
 	struct IncomingPacket
@@ -46,14 +45,13 @@ namespace bt
 	class PacketReader : public net::SocketReader
 	{
 		Peer* peer;
-		SpeedEstimater* speed;
 		bool error;
 		QPtrList<IncomingPacket> packet_queue;
 		QMutex mutex;
 		Uint8 len[4];
 		int len_received;
 	public:
-		PacketReader(Peer* peer,SpeedEstimater* speed);
+		PacketReader(Peer* peer);
 		virtual ~PacketReader();
 		
 		void update();

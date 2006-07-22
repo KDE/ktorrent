@@ -15,53 +15,65 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <util/log.h>
-#include "uploader.h"
-#include "peer.h"
-#include "chunkmanager.h"
-#include "request.h"
-#include "uploader.h"
-#include "peeruploader.h"
-#include "peermanager.h"
+#include <util/timer.h>
+#include <util/functions.h>
+#include "speed.h"
 
+using namespace bt;
 
-namespace bt
+namespace net
 {
+	const Uint32 SPEED_INTERVAL = 2000;
 
-	Uploader::Uploader(ChunkManager & cman,PeerManager & pman) 
-	: cman(cman),pman(pman),uploaded(0)
+	Speed::Speed()
 	{}
 
 
-	Uploader::~Uploader()
+	Speed::~Speed()
+	{}
+	
+	void Speed::onData(Uint32 bytes)
 	{
+		dlrate.append(qMakePair(bytes,GetCurrentTime()));
 	}
 
-	
-		
-	void Uploader::update(Uint32 opt_unchoked)
+	void Speed::update()
 	{
-		for (Uint32 i = 0;i < pman.getNumConnectedPeers();++i)
+		Uint32 now = GetCurrentTime();
+			
+		Uint32 bytes = 0,oldest = now;
+		QValueList<QPair<Uint32,Uint32> >::iterator i = dlrate.begin();
+		while (i != dlrate.end())
 		{
-			PeerUploader* p = pman.getPeer(i)->getPeerUploader();
-			uploaded += p->update(cman,opt_unchoked);
+			QPair<Uint32,Uint32> & p = *i;
+			if (now - p.second > SPEED_INTERVAL)
+			{
+				i = dlrate.erase(i);
+			}
+			else
+			{
+				if (p.second < oldest)
+					oldest = p.second;
+					
+				bytes += p.first;
+				i++;
+			}
+		}
+			
+		Uint32 d = SPEED_INTERVAL;
+			
+		if (bytes == 0)
+		{
+			rate = 0;
+		}
+		else
+		{
+			//	Out() << "bytes = " << bytes << " d = " << d << endl;
+			rate = (float) bytes / (d * (1.0/1024.0));
 		}
 	}
-	
-
-	Uint32 Uploader::uploadRate() const
-	{
-		Uint32 rate = 0;
-		for (Uint32 i = 0;i < pman.getNumConnectedPeers();++i)
-		{
-			const Peer* p = pman.getPeer(i);
-			rate += p->getUploadRate();
-		}
-		return rate;
-	}
-	
 
 }
-#include "uploader.moc"

@@ -21,6 +21,7 @@
 #include <torrent/globals.h>
 #include "bufferedsocket.h"
 #include "circularbuffer.h"
+#include "speed.h"
 
 using namespace bt;
 
@@ -31,21 +32,39 @@ namespace net
 	{
 		bytes_in_output_buffer = 0;
 		bytes_sent = 0;
-		outstanding_bytes = 0;
-		outstanding_bytes_transmitted = 0;
+		down_speed = new Speed();
+		up_speed = new Speed();
 	}
 	
 	BufferedSocket::BufferedSocket(bool tcp) : Socket(tcp),rdr(0),wrt(0)
 	{
 		bytes_in_output_buffer = 0;
 		bytes_sent = 0;
-		outstanding_bytes = 0;
-		outstanding_bytes_transmitted = 0;
+		down_speed = new Speed();
+		up_speed = new Speed();
 	}
 
 
 	BufferedSocket::~BufferedSocket()
 	{
+		delete up_speed;
+		delete down_speed;
+	}
+	
+	float BufferedSocket::getDownloadRate() const
+	{
+		mutex.lock();
+		float ret = down_speed->getRate();
+		mutex.unlock();
+		return ret;
+	}
+	
+	float BufferedSocket::getUploadRate() const
+	{
+		mutex.lock();
+		float ret = up_speed->getRate();
+		mutex.unlock();
+		return ret;
 	}
 
 	Uint32 BufferedSocket::readBuffered(Uint32 max_bytes_to_read)
@@ -71,6 +90,9 @@ namespace net
 			int ret = Socket::recv(tmp,tr);
 			if (ret != 0)
 			{
+				mutex.lock();
+				down_speed->onData(ret);
+				mutex.unlock();
 				if (rdr)
 					rdr->onDataReady(tmp,ret);
 				br += ret;
@@ -95,6 +117,12 @@ namespace net
 			Uint32 bw = bytes_in_output_buffer;
 			Uint32 off = bytes_sent;
 			Uint32 ret = Socket::send(output_buffer + off,bw);
+			if (ret > 0)
+			{
+				mutex.lock();
+				up_speed->onData(ret);
+				mutex.unlock();
+			}
 			bytes_in_output_buffer -= ret;
 			bytes_sent += ret;
 			if (bytes_sent == bytes_in_output_buffer)
@@ -106,6 +134,12 @@ namespace net
 			Uint32 bw = max;
 			Uint32 off = bytes_sent;
 			Uint32 ret = Socket::send(output_buffer + off,bw);
+			if (ret > 0)
+			{
+				mutex.lock();
+				up_speed->onData(ret);
+				mutex.unlock();
+			}
 			bytes_in_output_buffer -= ret;
 			bytes_sent += ret;
 			return ret;
@@ -114,12 +148,6 @@ namespace net
 	
 	Uint32 BufferedSocket::writeBuffered(Uint32 max)
 	{
-		// we now know that all previously outstanding_bytes are written
-		mutex.lock();
-		outstanding_bytes_transmitted += outstanding_bytes;
-		outstanding_bytes = 0;
-		mutex.unlock();
-		
 		if (!wrt)
 			return 0;
 		
@@ -130,9 +158,6 @@ namespace net
 			Uint32 ret = sendOutputBuffer(max);
 			if (bytes_in_output_buffer > 0)
 			{
-				mutex.lock();
-				outstanding_bytes += ret;
-				mutex.unlock();
 				// haven't sent it fully so return
 				return ret; 
 			}
@@ -158,18 +183,12 @@ namespace net
 			}
 		}
 		
-		mutex.lock();
-		outstanding_bytes += bw;
-		mutex.unlock();
 		return bw;
 	}
 	
-	Uint32 BufferedSocket::dataWritten() const
+	void BufferedSocket::updateSpeeds()
 	{
-		mutex.lock();
-		Uint32 ret = outstanding_bytes_transmitted;
-		outstanding_bytes_transmitted = 0;
-		mutex.unlock();
-		return ret;
+		down_speed->update();
+		up_speed->update();
 	}
 }

@@ -28,7 +28,6 @@
 #include <util/file.h>
 #include <util/functions.h>
 #include "packetreader.h"
-#include "speedestimater.h"
 #include "peer.h"
 
 
@@ -103,8 +102,8 @@ namespace bt
 		delete [] data;
 	}
 	
-	PacketReader::PacketReader(Peer* peer,SpeedEstimater* speed) 
-		: peer(peer),speed(speed),error(false)
+	PacketReader::PacketReader(Peer* peer) 
+		: peer(peer),error(false)
 	{
 		packet_queue.setAutoDelete(true);
 		len_received = -1;
@@ -202,8 +201,6 @@ namespace bt
 			Uint32 tr = pck->size - pck->read;
 			memcpy(pck->data + pck->read,buf,tr);
 			pck->read += tr;
-			if (pck->data[0] == PIECE)
-				speed->onRead(tr);
 			return tr;
 		}
 		else
@@ -212,8 +209,6 @@ namespace bt
 			Uint32 tr = size;
 			memcpy(pck->data + pck->read,buf,tr);
 			pck->read += tr;
-			if (pck->data[0] == PIECE)
-				speed->onRead(tr);
 			return tr;
 		}
 	}

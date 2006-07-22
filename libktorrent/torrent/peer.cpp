@@ -25,8 +25,6 @@
 
 #include "peer.h"
 #include "chunk.h"
-#include "speedestimater.h"
-#include "upspeedestimater.h"
 #include "piece.h"
 #include "request.h"
 #include "packetreader.h"
@@ -50,9 +48,7 @@ namespace bt
 		id = peer_id_counter;
 		peer_id_counter++;
 		
-		speed = new SpeedEstimater();
-		up_speed = new UpSpeedEstimater();
-		preader = new PacketReader(this,speed);
+		preader = new PacketReader(this);
 		choked = am_choked = true;
 		interested = am_interested = false;
 		killed = false;
@@ -100,8 +96,6 @@ namespace bt
 		delete pwriter;
 		delete preader;
 		delete sock;
-		delete speed;
-		delete up_speed;
 	}
 	
 	void Peer::closeConnection()
@@ -336,7 +330,6 @@ namespace bt
 		if (killed) return 0;
 		
 		Uint32 ret = sock->sendData(data,len);
-		up_speed->writeBytes(ret,proto);
 		if (!sock->ok())
 			kill();
 		
@@ -368,17 +361,18 @@ namespace bt
 	
 	Uint32 Peer::getUploadRate() const 
 	{
-		return (Uint32)ceil(up_speed->uploadRate());
-	}
-	
-	Uint32 Peer::getProtocolUploadRate() const
-	{
-		return (Uint32)ceil(up_speed->protocollOverhead());
+		if (sock)
+			return (Uint32)ceil(sock->getUploadRate());
+		else
+			return 0;
 	}
 	
 	Uint32 Peer::getDownloadRate() const 
 	{
-		return (Uint32)ceil(speed->downloadRate());
+		if (sock)
+			return (Uint32)ceil(sock->getDownloadRate());
+		else
+			return 0;
 	}
 	
 	bool Peer::readyToSend() const 
@@ -402,22 +396,12 @@ namespace bt
 		
 		Uint32 data_bytes = pwriter->getUploadedDataBytes();
 		Uint32 non_data_bytes = pwriter->getUploadedNonDataBytes();
-		Uint32 dw = sock->dataWritten();
 		
 		if (data_bytes > 0)
 		{
-			up_speed->writeBytes(data_bytes,false);
 			stats.bytes_uploaded += data_bytes;
 			uploader->addUploadedBytes(data_bytes);
 		}
-		
-		if (non_data_bytes > 0)
-			up_speed->writeBytes(non_data_bytes,true);
-		if (dw > 0)
-			up_speed->bytesWritten(dw);
-		
-		speed->update();
-		up_speed->update();
 	}
 	
 	bool Peer::isSnubbed() const

@@ -28,6 +28,8 @@ namespace net
 	using bt::Uint8;
 	using bt::Uint32;
 	
+	class Speed;
+	
 	class SocketReader
 	{
 	public:
@@ -70,8 +72,8 @@ namespace net
 		Uint8 output_buffer[4096];
 		Uint32 bytes_in_output_buffer; // bytes in the output buffer
 		Uint32 bytes_sent; // bytes written of the output buffer
-		Uint32 outstanding_bytes;
-		mutable Uint32 outstanding_bytes_transmitted;
+		Speed* down_speed;
+		Speed* up_speed;
 	public:
 		BufferedSocket(int fd);
 		BufferedSocket(bool tcp);
@@ -97,8 +99,16 @@ namespace net
 		
 		/// See if the socket has something ready to write
 		bool bytesReadyToWrite() const {return !wrt ? false : wrt->hasBytesToWrite();}
+	
 		
-		Uint32 dataWritten() const;
+		/// Get the current download rate
+		float getDownloadRate() const;
+		
+		/// Get the current download rate
+		float getUploadRate() const;
+		
+		/// Update the speeds of the socket
+		void updateSpeeds();
 		
 	private:
 		Uint32 sendOutputBuffer(Uint32 max);

@@ -126,8 +126,11 @@ namespace mse
 		/// See if a connect was success full
 		bool connectSuccesFull() const {return sock->connectSuccesFull();}
 		
-		/// Get the number of bytes which were sent (by the actual socket)
-		Uint32 dataWritten() const;
+		/// Get the current download rate
+		float getDownloadRate() const;
+		
+		/// Get the current download rate
+		float getUploadRate() const;
 	private:
 		virtual void onDataReady(Uint8* buf,Uint32 size);
 		virtual Uint32 onReadyToWrite(Uint8* data,Uint32 max_to_write);

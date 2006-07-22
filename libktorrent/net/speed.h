@@ -15,53 +15,36 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <util/log.h>
-#include "uploader.h"
-#include "peer.h"
-#include "chunkmanager.h"
-#include "request.h"
-#include "uploader.h"
-#include "peeruploader.h"
-#include "peermanager.h"
+#ifndef NETSPEED_H
+#define NETSPEED_H
 
+#include <qpair.h>
+#include <qvaluelist.h>
+#include <util/constants.h>
 
-namespace bt
+namespace net
 {
 
-	Uploader::Uploader(ChunkManager & cman,PeerManager & pman) 
-	: cman(cman),pman(pman),uploaded(0)
-	{}
-
-
-	Uploader::~Uploader()
-	{
-	}
-
-	
+	/**
+		@author Joris Guisson <joris.guisson@gmail.com>
 		
-	void Uploader::update(Uint32 opt_unchoked)
+		Measures the download and upload speed.
+	*/
+	class Speed
 	{
-		for (Uint32 i = 0;i < pman.getNumConnectedPeers();++i)
-		{
-			PeerUploader* p = pman.getPeer(i)->getPeerUploader();
-			uploaded += p->update(cman,opt_unchoked);
-		}
-	}
-	
-
-	Uint32 Uploader::uploadRate() const
-	{
-		Uint32 rate = 0;
-		for (Uint32 i = 0;i < pman.getNumConnectedPeers();++i)
-		{
-			const Peer* p = pman.getPeer(i);
-			rate += p->getUploadRate();
-		}
-		return rate;
-	}
-	
+		float rate;
+		QValueList<QPair<bt::Uint32,bt::Uint32> > dlrate;
+	public:
+		Speed();
+		virtual ~Speed();
+		
+		void onData(bt::Uint32 bytes);
+		void update();
+		float getRate() const {return rate;}
+	};
 
 }
-#include "uploader.moc"
+
+#endif

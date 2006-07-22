@@ -39,8 +39,6 @@ namespace mse
 namespace bt
 {
 	class Chunk;
-	class SpeedEstimater;
-	class UpSpeedEstimater;
 	class Peer;
 	class Request;
 	class Piece;
@@ -111,9 +109,6 @@ namespace bt
 		
 		/// Get the upload rate in bytes per sec
 		Uint32 getUploadRate() const;
-		
-		/// Get the upload rate in bytes per sec of the protocoll (non PIECE packets)
-		Uint32 getProtocolUploadRate() const;
 
 		/// Get the download rate in bytes per sec
 		Uint32 getDownloadRate() const;
@@ -272,8 +267,6 @@ namespace bt
 		BitSet pieces;
 		PeerID peer_id;
 		Timer snub_timer;
-		SpeedEstimater* speed;
-		UpSpeedEstimater* up_speed;
 		PacketReader* preader;
 		PacketWriter* pwriter;
 		PeerDownloader* downloader;

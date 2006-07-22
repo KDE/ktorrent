@@ -268,9 +268,14 @@ namespace mse
 		return wrt ? wrt->hasBytesToWrite() : false;
 	}
 	
-	Uint32 StreamSocket::dataWritten() const
+	float StreamSocket::getDownloadRate() const
 	{
-		return sock ? sock->dataWritten() : 0;
+		return sock ? sock->getDownloadRate() : 0.0f;
+	}
+	
+	float StreamSocket::getUploadRate() const
+	{
+		return sock ? sock->getUploadRate() : 0.0f;
 	}
 }
 
