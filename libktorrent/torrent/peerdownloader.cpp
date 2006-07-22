@@ -132,6 +132,8 @@ namespace bt
 		if (!peer)
 			return;
 
+		Out(SYS_CON|LOG_DEBUG) << "Rejected : " << req.getIndex() << " " 
+				<< req.getOffset() << " " << req.getLength() << endl;
 		if (reqs.contains(req))
 		{
 			reqs.remove(req);
@@ -211,10 +213,11 @@ namespace bt
 			if (bt::GetCurrentTime() - tr.time_stamp > MAX_INTERVAL)
 			{
 			//	Out() << "Request " << tr.req.getIndex() << " " << tr.req.getOffset() << " timed out !" << endl;
-				timedout(tr.req);
 				// cancel it
+				Request r = tr.req;
 				peer->getPacketWriter().sendCancel(tr.req);
 				i = reqs.erase(i);
+				timedout(r);
 				// we now have a timeout
 				if (!peer->isChoked() && peer->isSnubbed())
 					peer->stats.evil = true;

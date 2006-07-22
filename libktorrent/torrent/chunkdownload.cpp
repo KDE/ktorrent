@@ -193,6 +193,7 @@ namespace bt
 		
 		Uint32 pp = r.getOffset() / MAX_PIECE_LEN;
 		ds->remove(pp);
+		pieces.set(pp,false);
 		for (QPtrList<PeerDownloader>::iterator i = pdown.begin();i != pdown.end();++i)
 			sendRequests(*i);
 	}
@@ -239,8 +240,8 @@ namespace bt
 		// see if we are dealing with a piece of ours
 		if (chunk->getIndex() == r.getIndex())
 		{
-		/*	Out() << QString("ChunkDownload::onTimeout %1 %2 %3 %4").arg(r.getIndex()).arg(r.getOffset()).arg(r.getOffset()).arg(r.getPeer()) << endl;
-		*/
+	//		Out(SYS_CON|LOG_DEBUG) << QString("ChunkDownload::onTimeout %1 %2 %3 %4").arg(r.getIndex()).arg(r.getOffset()).arg(r.getLength()).arg(r.getPeer()) << endl;
+		
 			// find the peer 
 			DownloadStatus* ds = dstatus.find(r.getPeer());
 			if (ds)

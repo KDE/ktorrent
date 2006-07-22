@@ -46,6 +46,9 @@ namespace bt
 
 	void PeerUploader::addRequest(const Request & r)
 	{
+	//	Out(SYS_CON|LOG_DEBUG) << 
+	//			QString("PeerUploader::addRequest %1 %2 %3\n").arg(r.getIndex()).arg(r.getOffset()).arg(r.getLength()) << endl;
+		
 		// allowed fast chunks go to the front of the queue
 		if (allowed_fast.count(r.getIndex()) > 0)
 			requests.prepend(r);
@@ -55,6 +58,8 @@ namespace bt
 	
 	void PeerUploader::removeRequest(const Request & r)
 	{
+	//	Out(SYS_CON|LOG_DEBUG) << 
+	//			QString("PeerUploader::removeRequest %1 %2 %3\n").arg(r.getIndex()).arg(r.getOffset()).arg(r.getLength()) << endl;
 		requests.remove(r);
 	}
 	
@@ -106,7 +111,7 @@ namespace bt
 			else
 			{
 				// remove requests we can't satisfy
-				Out() << "Cannot satisfy request" << endl;
+				Out(SYS_CON|LOG_DEBUG) << "Cannot satisfy request" << endl;
 				if (peer->getStats().fast_extensions)
 					pw.sendReject(r);
 				requests.pop_front();
