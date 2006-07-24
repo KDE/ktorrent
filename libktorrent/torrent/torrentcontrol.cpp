@@ -1152,7 +1152,10 @@ namespace bt
 			// update chunk manager
 			cman->dataChecked(dc->getDownloaded());
 			if (auto_import)
+			{
 				down->recalcDownloaded();
+				stats.imported_bytes = down->bytesDownloaded();
+			}
 		}
 		delete dc;
 		// update the status
