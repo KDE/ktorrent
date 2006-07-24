@@ -86,7 +86,8 @@ namespace kt
 		
 		QDateTime round(hour.date(), t);
 		
-		int secs_to = now.secsTo(round);
+		// add a 5 second safety margin (BUG: 131246)
+		int secs_to = now.secsTo(round) + 5;
 		
 		m_timer.start(secs_to*1000);
 

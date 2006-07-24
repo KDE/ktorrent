@@ -172,39 +172,43 @@ namespace kt
 		{
 			case CAT_NORMAL:
 				Out(SYS_SCD|LOG_NOTICE) << prefix << "Switching to NORMAL category" << endl;
-
+				Out(SYS_SCD|LOG_NOTICE) << prefix << QString("%1 Up, %2 Down")
+						.arg(m_core->getMaxUploadSpeed()).arg(m_core->getMaxDownloadSpeed()) << endl;
 				if(!m_core)
 					break;
 				m_core->setPausedState(false);
-				net::SocketMonitor::setDownloadCap(1024 * m_core->getMaxDownloadSpeed());
-				net::SocketMonitor::setUploadCap(1024 * m_core->getMaxUploadSpeed());
+				net::SocketMonitor::setDownloadCap(1000 * m_core->getMaxDownloadSpeed());
+				net::SocketMonitor::setUploadCap(1000 * m_core->getMaxUploadSpeed());
 				break;
 			case CAT_FIRST:
 				Out(SYS_SCD|LOG_NOTICE) << prefix << "Switching to FIRST category" << endl;
-
+				Out(SYS_SCD|LOG_NOTICE) << prefix << QString("%1 Up, %2 Down")
+						.arg(m_schedule.getUpload(0)).arg(m_schedule.getDownload(0)) << endl;
 				if(!m_core)
 					break;
 				m_core->setPausedState(false);
-				net::SocketMonitor::setDownloadCap(1024 * m_schedule.getDownload(0));
-				net::SocketMonitor::setUploadCap(1024 * m_schedule.getUpload(0));
+				net::SocketMonitor::setDownloadCap(1000 * m_schedule.getDownload(0));
+				net::SocketMonitor::setUploadCap(1000 * m_schedule.getUpload(0));
 				break;
 			case CAT_SECOND:
 				Out(SYS_SCD|LOG_NOTICE) << prefix << "Switching to SECOND category" << endl;
-
+				Out(SYS_SCD|LOG_NOTICE) << prefix << QString("%1 Up, %2 Down")
+						.arg(m_schedule.getUpload(1)).arg(m_schedule.getDownload(1)) << endl;
 				if(!m_core)
 					break;
 				m_core->setPausedState(false);
-				net::SocketMonitor::setDownloadCap(1024 * m_schedule.getDownload(1));
-				net::SocketMonitor::setUploadCap(1024 * m_schedule.getUpload(1));
+				net::SocketMonitor::setDownloadCap(1000 * m_schedule.getDownload(1));
+				net::SocketMonitor::setUploadCap(1000 * m_schedule.getUpload(1));
 				break;
 			case CAT_THIRD:
 				Out(SYS_SCD|LOG_NOTICE) << prefix << "Switching to THIRD category" << endl;
-
+				Out(SYS_SCD|LOG_NOTICE) << prefix << QString("%1 Up, %2 Down")
+						.arg(m_schedule.getUpload(2)).arg(m_schedule.getDownload(2)) << endl;
 				if(!m_core)
 					break;
 				m_core->setPausedState(false);
-				net::SocketMonitor::setDownloadCap(1024 * m_schedule.getDownload(2));
-				net::SocketMonitor::setUploadCap(1024 * m_schedule.getUpload(2));
+				net::SocketMonitor::setDownloadCap(1000 * m_schedule.getDownload(2));
+				net::SocketMonitor::setUploadCap(1000 * m_schedule.getUpload(2));
 				break;
 			case CAT_OFF:
 				Out(SYS_SCD|LOG_NOTICE) << prefix << "Switching to OFF" << endl;
