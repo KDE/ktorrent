@@ -34,6 +34,7 @@ Comment[pt_BR]=Plugin de Filtro de IP para o KTorrent
 Comment[sr]=Прикључак IP филтера за KTorrent
 Comment[sr@Latn]=Priključak IP filtera za KTorrent
 Comment[sv]=IP-filterinsticksprogram för Ktorrent
+Comment[uk]=Втулок фільтрування IP для KTorrent
 Comment[xx]=xxIP filter plugin for KTorrentxx
 Comment[zh_TW]=KTorrent IP 過濾器外掛程式
 ServiceTypes=KTorrent/Plugin

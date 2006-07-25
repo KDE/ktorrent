@@ -34,6 +34,7 @@ Comment[nl]=Zoekplugin voor KTorrent
 Comment[pt]='Plugin' de procura para o KTorrent
 Comment[pt_BR]=Busca de plug-in para o KTorrent
 Comment[sv]=Sökinsticksprogram för Ktorrent
+Comment[uk]=Втулок пошуку для KTorrent
 Comment[zh_TW]=KTorrent 搜尋外掛程式
 ServiceTypes=KTorrent/Plugin
 Type=Service
