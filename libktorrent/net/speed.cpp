@@ -72,7 +72,7 @@ namespace net
 		else
 		{
 			//	Out() << "bytes = " << bytes << " d = " << d << endl;
-			rate = (float) bytes / (d * (1.0/1024.0));
+			rate = (float) bytes / (float)(d * 0.001);
 		}
 	}
 
