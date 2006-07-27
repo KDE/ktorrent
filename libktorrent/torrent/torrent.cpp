@@ -37,7 +37,9 @@ namespace bt
 {
 
 	Torrent::Torrent() : piece_length(0),file_length(0),anon_list(0),priv_torrent(false)
-	{}
+	{
+		encoding = "utf8";
+	}
 
 
 	Torrent::~Torrent()
