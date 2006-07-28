@@ -179,6 +179,7 @@ namespace bt
 				QDateTime now = QDateTime::currentDateTime();
 				running_time_dl += time_started_dl.secsTo(now);
 				updateStatusMsg();
+				updateStats();
 				finished(this);
 			}
 			else if (!stats.completed && comp)
