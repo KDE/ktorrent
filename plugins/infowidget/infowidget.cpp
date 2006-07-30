@@ -431,16 +431,25 @@ namespace kt
 		if (secs == 0)
 		{
 			m_avg_up->setText(KBytesPerSecToString(0));
-			m_avg_down->setText(KBytesPerSecToString(0));
+			
 		}
 		else
 		{
 			double r = (double)s.bytes_uploaded / 1024.0;
 			m_avg_up->setText(KBytesPerSecToString(r / secs));
-			r = (double)(s.bytes_downloaded - s.imported_bytes)/ 1024.0;
-			secs = curr_tc->getRunningTimeDL();
+		}
+		
+		secs = curr_tc->getRunningTimeDL();
+		if (secs == 0)
+		{
+			m_avg_down->setText(KBytesPerSecToString(0));
+		}
+		else
+		{
+			double r = (double)(s.bytes_downloaded - s.imported_bytes)/ 1024.0;
 			m_avg_down->setText(KBytesPerSecToString(r / secs));
 		}
+		
 		readyPreview();
 		readyPercentage();
 	}

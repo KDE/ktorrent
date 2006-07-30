@@ -178,8 +178,8 @@ namespace bt
 			hdr.first_size = fc_size;
 			fptr.seek(File::BEGIN,0);
 			// update hash first
-			SHA1Hash h = SHA1Hash::generate(buf,fc_size);
-			memcpy(hdr.data_sha1,h.getData(),20);
+		//	SHA1Hash h = SHA1Hash::generate(buf,fc_size);
+		//	memcpy(hdr.data_sha1,h.getData(),20);
 			// write header
 			fptr.write(&hdr,sizeof(DNDFileHeader));
 			// write data
@@ -198,8 +198,8 @@ namespace bt
 				fptr.read(tmp + hdr.first_size,hdr.last_size);
 				
 				// update the hash of the header
-				SHA1Hash h = SHA1Hash::generate(tmp,hdr.first_size + hdr.last_size);
-				memcpy(hdr.data_sha1,h.getData(),20);
+		//		SHA1Hash h = SHA1Hash::generate(tmp,hdr.first_size + hdr.last_size);
+		//		memcpy(hdr.data_sha1,h.getData(),20);
 				
 				// write header + data
 				fptr.seek(File::BEGIN,0);
@@ -244,8 +244,8 @@ namespace bt
 			}
 				
 			// update the hash of the header
-			SHA1Hash h = SHA1Hash::generate(tmp,hdr.first_size + hdr.last_size);
-			memcpy(hdr.data_sha1,h.getData(),20);
+		//	SHA1Hash h = SHA1Hash::generate(tmp,hdr.first_size + hdr.last_size);
+		//	memcpy(hdr.data_sha1,h.getData(),20);
 				
 			// write header + data
 			fptr.seek(File::BEGIN,0);

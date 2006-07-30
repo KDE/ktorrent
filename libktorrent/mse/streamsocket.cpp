@@ -256,7 +256,7 @@ namespace mse
 			return 0;
 		
 		Uint32 ret = wrt->onReadyToWrite(data,max_to_write);
-		if (enc > 0 && ret > 0) // do encryption if necessary
+		if (enc && ret > 0) // do encryption if necessary
 			enc->encryptReplace(data,ret);
 		
 		
