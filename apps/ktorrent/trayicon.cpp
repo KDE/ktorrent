@@ -51,7 +51,7 @@ TrayIcon::~TrayIcon()
 
 void TrayIcon::updateStats(const CurrentStats stats)
 {
-	QString tip = QString("<center><b>KTorrent</b></center><table cellpadding='2' cellspacing='2' align='center'><tr><td><b>Speed:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%1</font></td><td>Upload: <font color='#990000'>%2</font></td></tr><tr><td><b>Transfer:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%3</font></td><td>Upload: <font color='#990000'>%4</font></td></tr></table>").arg(KBytesPerSecToString((double)stats.download_speed/1024.0)).arg(KBytesPerSecToString((double)stats.upload_speed/1024.0)).arg(BytesToString(stats.bytes_downloaded)).arg(BytesToString(stats.bytes_uploaded));
+	QString tip = i18n("<center><b>KTorrent</b></center><table cellpadding='2' cellspacing='2' align='center'><tr><td><b>Speed:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%1</font></td><td>Upload: <font color='#990000'>%2</font></td></tr><tr><td><b>Transfer:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%3</font></td><td>Upload: <font color='#990000'>%4</font></td></tr></table>").arg(KBytesPerSecToString((double)stats.download_speed/1024.0)).arg(KBytesPerSecToString((double)stats.upload_speed/1024.0)).arg(BytesToString(stats.bytes_downloaded)).arg(BytesToString(stats.bytes_uploaded));
 	QToolTip::add
 		(this, tip);
 }
@@ -106,7 +106,7 @@ void SetMaxRate::makeMenu()
 	int maxBandwidthRounded;
 
 	setCheckable(true);
-	insertTitle("Speed limit in KB/s");
+	insertTitle(i18n("Speed limit in KB/s"));
 
 	if(rate == 0)
 		setItemChecked(insertItem(i18n("Unlimited")), true);

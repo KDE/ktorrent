@@ -69,9 +69,8 @@ namespace kt
 		ScanFolderPluginSettings::setOpenSilently(silently);
 		ScanFolderPluginSettings::setActionDelete(deleteChecked);
 		ScanFolderPluginSettings::setActionMove(moveChecked);
-
-
-    QString message( "ScanFolder - Folder %1: Invalid URL or folder doesn't exist. Please, choose a valid directory." );
+		
+		QString message = i18n( "ScanFolder - Folder %1: Invalid URL or folder doesn't exist. Please, choose a valid directory." );
 		if(!QFile::exists(sfPath1) && usesf1)
 		{
 			KMessageBox::sorry(0, message.arg( 1 ) );
