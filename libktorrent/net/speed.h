@@ -35,6 +35,7 @@ namespace net
 	class Speed
 	{
 		float rate;
+		bt::Uint32 bytes;
 		QValueList<QPair<bt::Uint32,bt::Uint32> > dlrate;
 	public:
 		Speed();

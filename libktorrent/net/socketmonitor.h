@@ -44,6 +44,8 @@ namespace net
 		MonitorThread* mt;
 		QPtrList<BufferedSocket> smap;
 		Uint32 last_selected;
+		Uint32 speeds_last_updated;
+		Uint32 leftover_d,leftover_u;
 		
 		SocketMonitor();	
 	public:

@@ -61,8 +61,10 @@ namespace net
 		bool isRunning() const {return running;}
 	};
 
-	SocketMonitor::SocketMonitor() : mt(mt)
-	{}
+	SocketMonitor::SocketMonitor() : mt(mt),last_selected(0),speeds_last_updated(0)
+	{
+		leftover_d = leftover_u;
+	}
 
 
 	SocketMonitor::~SocketMonitor()
@@ -96,7 +98,7 @@ namespace net
 		start_thread = smap.count() == 0 && (!mt || !mt->isRunning());
 		smap.append(sock);
 		mutex.unlock();
-		
+			
 		if (start_thread)
 		{
 			Out(SYS_CON|LOG_DEBUG) << "Starting socketmonitor thread" << endl;
@@ -122,7 +124,7 @@ namespace net
 	
 	void SocketMonitor::processIncomingData(QPtrList<BufferedSocket> & rbs,Uint32 now)
 	{
-		Uint32 allowance = (Uint32)floor(dcap * (now - last_selected) * (1.0 / 1024.0));
+		Uint32 allowance = (Uint32)floor(dcap * (now - last_selected) * (1.0 / 1024.0)) + leftover_d;
 		Uint32 cnt = 0;
 		QPtrList<BufferedSocket>::iterator i = rbs.begin();
 		while (i != rbs.end() && allowance > 0)
@@ -142,11 +144,13 @@ namespace net
 			cnt++;
 			i++;
 		}
+		
+		leftover_d = allowance;
 	}
 	
 	void SocketMonitor::processOutgoingData(QPtrList<BufferedSocket> & wbs,Uint32 now)
 	{
-		Uint32 allowance = (Uint32)floor(ucap * (now - last_selected) * (1.0 / 1024.0));
+		Uint32 allowance = (Uint32)floor(ucap * (now - last_selected) * (1.0 / 1024.0)) + leftover_u;
 		Uint32 cnt = 0;
 		QPtrList<BufferedSocket>::iterator i = wbs.begin();
 		while (i != wbs.end() && allowance > 0)
@@ -166,6 +170,8 @@ namespace net
 			cnt++;
 			i++;
 		}
+		
+		leftover_u = allowance;
 	}
 	
 	void SocketMonitor::update()
@@ -175,6 +181,10 @@ namespace net
 		FD_ZERO(&fds);
 		FD_ZERO(&wfds);
 		
+	/*	bool update_speed = bt::GetCurrentTime() - speeds_last_updated >= 250;
+		if (update_speed)
+			speeds_last_updated = bt::GetCurrentTime();
+	*/
 		int max = 0;
 		mutex.lock();
 		QPtrList<BufferedSocket>::iterator itr = smap.begin();

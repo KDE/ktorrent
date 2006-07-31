@@ -62,6 +62,12 @@ namespace net
 		void close();
 		State state() const {return m_state;}
 		
+		/**
+		 * Set the size of the TCP read buffer.
+		 * @param rbs 
+		 */
+//		void setReadBufferSize(Uint32 rbs);
+		
 		Uint32 bytesAvailable() const;
 	private:
 		int m_fd;

@@ -28,23 +28,23 @@ namespace net
 {
 	const Uint32 SPEED_INTERVAL = 2000;
 
-	Speed::Speed()
+	Speed::Speed() : rate(0),bytes(0)
 	{}
 
 
 	Speed::~Speed()
 	{}
 	
-	void Speed::onData(Uint32 bytes)
+	void Speed::onData(Uint32 b)
 	{
-		dlrate.append(qMakePair(bytes,GetCurrentTime()));
+		dlrate.append(qMakePair(b,GetCurrentTime()));
+		bytes += b;
 	}
 
 	void Speed::update()
 	{
 		Uint32 now = GetCurrentTime();
 			
-		Uint32 bytes = 0,oldest = now;
 		QValueList<QPair<Uint32,Uint32> >::iterator i = dlrate.begin();
 		while (i != dlrate.end())
 		{
@@ -52,18 +52,19 @@ namespace net
 			if (now - p.second > SPEED_INTERVAL)
 			{
 				i = dlrate.erase(i);
+				if (bytes >= p.first) // make sure we don't wrap around
+					bytes -= p.first; // subtract bytes
+				else
+					bytes = 0;
 			}
 			else
-			{
-				if (p.second < oldest)
-					oldest = p.second;
-					
-				bytes += p.first;
-				i++;
+			{	
+				// seeing that newer entries are appended, they are in the list chronologically
+				// so once we hit an entry which is in the interval, we can just break out of the loop
+				// because all following entries will be in the interval
+				break;
 			}
 		}
-			
-		Uint32 d = SPEED_INTERVAL;
 			
 		if (bytes == 0)
 		{
@@ -72,7 +73,7 @@ namespace net
 		else
 		{
 			//	Out() << "bytes = " << bytes << " d = " << d << endl;
-			rate = (float) bytes / (float)(d * 0.001);
+			rate = (float) bytes / (float)(SPEED_INTERVAL * 0.001);
 		}
 	}
 
