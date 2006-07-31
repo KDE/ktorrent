@@ -50,7 +50,8 @@ namespace net
 	Socket::Socket(int fd) : m_fd(fd),m_state(IDLE)
 	{
 #if defined(Q_OS_MACX) || defined(Q_OS_DARWIN)
-		if (setsockopt(m_fd,SOL_SOCKET,SO_NOSIGPIPE,0L,0) < 0)
+	Uint32 val = 0 
+		if (setsockopt(m_fd,SOL_SOCKET,SO_NOSIGPIPE,&val,sizeof(Uint32)) < 0)
 		{
 			Out(SYS_CON|LOG_NOTICE) << QString("Failed to set the NOSIGPIPE option : %1").arg(strerror(errno)) << endl;
 		}
@@ -65,8 +66,9 @@ namespace net
 			Out(SYS_GEN|LOG_IMPORTANT) << QString("Cannot create socket : %1").arg(strerror(errno)) << endl;
 		}
 		m_fd = fd;
- #if defined(Q_OS_MACX) || defined(Q_OS_DARWIN)
-		if (setsockopt(m_fd,SOL_SOCKET,SO_NOSIGPIPE,0L,0) < 0)
+#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN)
+		Uint32 val = 0 
+		if (setsockopt(m_fd,SOL_SOCKET,SO_NOSIGPIPE,&val,sizeof(Uint32)) < 0)
 		{
 			Out(SYS_CON|LOG_NOTICE) << QString("Failed to set the NOSIGPIPE option : %1").arg(strerror(errno)) << endl;
 		}
@@ -298,5 +300,13 @@ namespace net
 		return err == 0;
 	}
 
-
+	/*
+	void Socket::setReadBufferSize(int rbs)
+	{
+		if (setsockopt(m_fd, SOL_SOCKET, SO_RCVBUF, (char *)&rbs,sizeof(int)) < 0)
+		{
+			Out(SYS_CON|LOG_DEBUG) << "Failed to set read buffer size " << endl;
+		}
+	}
+	*/
 }
