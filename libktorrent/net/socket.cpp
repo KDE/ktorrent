@@ -32,7 +32,7 @@
 #ifdef Q_OS_LINUX
 #include <asm/ioctls.h>
 #endif
-#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN)
+#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020)
 #define MSG_NOSIGNAL 0
 #endif
 #include <unistd.h>
@@ -49,7 +49,7 @@ namespace net
 
 	Socket::Socket(int fd) : m_fd(fd),m_state(IDLE)
 	{
-#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN)
+#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020)
 		int val = 1; 
 		if (setsockopt(m_fd,SOL_SOCKET,SO_NOSIGPIPE,&val,sizeof(int)) < 0)
 		{
@@ -66,7 +66,7 @@ namespace net
 			Out(SYS_GEN|LOG_IMPORTANT) << QString("Cannot create socket : %1").arg(strerror(errno)) << endl;
 		}
 		m_fd = fd;
-#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN)
+#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020)
 		int val = 1;
 		if (setsockopt(m_fd,SOL_SOCKET,SO_NOSIGPIPE,&val,sizeof(int)) < 0)
 		{
