@@ -93,9 +93,9 @@ namespace bt
 	{
 		delete uploader;
 		delete downloader;
+		delete sock;
 		delete pwriter;
 		delete preader;
-		delete sock;
 	}
 	
 	void Peer::closeConnection()
