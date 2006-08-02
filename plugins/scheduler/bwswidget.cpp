@@ -20,6 +20,7 @@
 #include "bwswidget.h"
 #include "schedulerpluginsettings.h"
 
+#include <klocale.h>
 #include <qstringlist.h>
 #include <qpixmap.h>
 #include <qtable.h>
@@ -41,7 +42,7 @@ namespace kt
 		QStringList days;
 		QStringList hours;
 
-		days << "MON" << "TUE" << "WED" << "THU" << "FRI" << "SAT" << "SUN";
+		days << i18n("MON") << i18n("TUE") << i18n("WED") << i18n("THU") << i18n("FRI") << i18n("SAT") << i18n("SUN");
 		hours <<
 		"00:00-00:59h" << "01:00-01:59h" <<
 		"02:00-02:59h" << "03:00-03:59h" <<
