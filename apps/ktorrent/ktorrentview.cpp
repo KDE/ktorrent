@@ -251,7 +251,7 @@ void KTorrentView::previewFiles()
 		TorrentInterface* tc = kvi->getTC();
 		if (tc && tc->readyForPreview() && !tc->getStats().multi_file_torrent)
 		{
-			new KRun(tc->getTorDir()+"cache", true, true);
+			new KRun(KURL::fromPathOrURL(tc->getTorDir()+"cache"), true, true);
 		}
 	}
 }

@@ -553,7 +553,7 @@ namespace kt
 		Priority newpriority = NORMAL_PRIORITY;
 		if(id == this->preview_id)
 		{
-			new KRun(this->curr_tc->getTorDir()+preview_path, 0, true, true);
+			new KRun(KURL::fromPathOrURL(this->curr_tc->getTorDir()+preview_path), 0, true, true);
 			return;
 		}
 		else if(id == this->first_id)
