@@ -277,6 +277,15 @@ namespace mse
 	{
 		return sock ? sock->getUploadRate() : 0.0f;
 	}
+	
+	bool StreamSocket::connectSuccesFull() const 
+	{
+		bool ret = sock->connectSuccesFull();
+		if (ret)
+			sock->setTOS(IPTOS_THROUGHPUT);
+		
+		return ret;
+	}
 }
 
 #include "streamsocket.moc"

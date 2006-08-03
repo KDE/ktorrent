@@ -124,7 +124,7 @@ namespace mse
 		bool connecting() const;
 		
 		/// See if a connect was success full
-		bool connectSuccesFull() const {return sock->connectSuccesFull();}
+		bool connectSuccesFull() const;
 		
 		/// Get the current download rate
 		float getDownloadRate() const;

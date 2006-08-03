@@ -251,8 +251,12 @@ namespace net
 	
 	bool Socket::setTOS(char type_of_service)
 	{
+#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020)
+		int c = type_of_service;
+#else
 		char c = type_of_service;
-		if (setsockopt(m_fd,IPPROTO_IP,IP_TOS,&c,sizeof(char)) < 0)
+#endif
+		if (setsockopt(m_fd,IPPROTO_IP,IP_TOS,&c,sizeof(c)) < 0)
 		{
 			Out(SYS_CON|LOG_NOTICE) << QString("Failed to set TOS to %1 : %2")
 					.arg((int)type_of_service).arg(strerror(errno)) << endl;
