@@ -203,11 +203,15 @@ int KTorrentViewItem::compare(QListViewItem * i,int col,bool) const
 				return 0;
 			else if (eta >= 0 && other->eta >= 0)
 				return CompareVal(eta,other->eta);
-			else if (eta == -1)
+			else if (eta == -1) // finsihed is minux one
 				return -1;
 			else if (other->eta == -1)
 				return 1;
-			else 
+			else if (eta == -2) // infinity is minus 2
+				return 1;
+			else if (other->eta == -2)
+				return -1;
+			else
 				return CompareVal(eta,other->eta);
 		case 8: return CompareVal(s.num_peers,os.num_peers);
 		case 9:
