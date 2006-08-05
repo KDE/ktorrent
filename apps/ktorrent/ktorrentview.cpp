@@ -190,6 +190,8 @@ void KTorrentView::startDownloads()
 						   Settings::maxSeeds()),
 						   i18n("Error"));
 
+	// make sure toolbuttons get updated
+	onSelectionChanged();
 }
 	
 void KTorrentView::stopDownloads()
@@ -202,6 +204,9 @@ void KTorrentView::stopDownloads()
 		if (tc && tc->getStats().running)
 			wantToStop(tc,true);
 	}
+	
+	// make sure toolbuttons get updated
+	onSelectionChanged();
 }
 	
 void KTorrentView::removeDownloads()
@@ -228,6 +233,9 @@ void KTorrentView::removeDownloads()
 			wantToRemove(tc,data_to);
 		}
 	}
+	
+	// make sure toolbuttons get updated
+	onSelectionChanged();
 }
 
 void KTorrentView::manualAnnounce()
