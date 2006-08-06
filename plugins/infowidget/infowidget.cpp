@@ -450,8 +450,11 @@ namespace kt
 			m_avg_down->setText(KBytesPerSecToString(r / secs));
 		}
 		
-		readyPreview();
-		readyPercentage();
+		if (m_tabs->currentPage() == m_files_tab)
+		{
+			readyPreview();
+			readyPercentage();
+		}
 	}
 	
 	void InfoWidget::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
