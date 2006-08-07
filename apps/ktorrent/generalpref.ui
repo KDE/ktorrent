@@ -1,0 +1,420 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>GeneralPref</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>GeneralPref</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>600</width>
+            <height>657</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>General Options</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox1</cstring>
+            </property>
+            <property name="title">
+                <string>Folders</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout1</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Folder to store temporary files:</string>
+                            </property>
+                        </widget>
+                        <widget class="KURLRequester">
+                            <property name="name">
+                                <cstring>temp_dir</cstring>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout2</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>autosave_downloads_check</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Automatically save downloads to:</string>
+                            </property>
+                        </widget>
+                        <widget class="KURLRequester">
+                            <property name="name">
+                                <cstring>autosave_location</cstring>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox3_2</cstring>
+            </property>
+            <property name="title">
+                <string>General</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="0" column="0">
+                    <property name="name">
+                        <cstring>show_systray_icon</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show s&amp;ystem tray icon</string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget" row="3" column="0">
+                    <property name="name">
+                        <cstring>layout5_2</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_3_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>GUI update interval:</string>
+                            </property>
+                        </widget>
+                        <widget class="KComboBox">
+                            <item>
+                                <property name="text">
+                                    <string>500ms</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>1s</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>2s</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>5s</string>
+                                </property>
+                            </item>
+                            <property name="name">
+                                <cstring>gui_interval</cstring>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer2_2_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>111</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+                <widget class="QLayoutWidget" row="2" column="0">
+                    <property name="name">
+                        <cstring>layout5</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_3</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Memory usage:</string>
+                            </property>
+                        </widget>
+                        <widget class="KComboBox">
+                            <item>
+                                <property name="text">
+                                    <string>Low</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Medium</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>High</string>
+                                </property>
+                            </item>
+                            <property name="name">
+                                <cstring>mem_usage</cstring>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer2_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>111</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+                <widget class="QCheckBox" row="1" column="0">
+                    <property name="name">
+                        <cstring>show_popups</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show "torrent finished" popup messages</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox3</cstring>
+            </property>
+            <property name="title">
+                <string>Custom IP</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>custom_ip_check</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Se&amp;nd the tracker a custom IP or hostname</string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout3</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>custom_ip_label</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Custom IP or hostname:</string>
+                            </property>
+                        </widget>
+                        <widget class="KLineEdit">
+                            <property name="name">
+                                <cstring>custom_ip</cstring>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox4</cstring>
+            </property>
+            <property name="title">
+                <string>DHT</string>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>&lt;b&gt;D&lt;/b&gt;istributed &lt;b&gt;H&lt;/b&gt;ash &lt;b&gt;T&lt;/b&gt;able protocol.&lt;br&gt;Decentralized peers exchange protocol. See manual for more info.</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>use_dht</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Use DHT to get additional peers</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+U</string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout7</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>UDP port for DHT communication:</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntSpinBox">
+                            <property name="name">
+                                <cstring>dht_port</cstring>
+                            </property>
+                            <property name="maxValue">
+                                <number>65535</number>
+                            </property>
+                            <property name="value">
+                                <number>6881</number>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer4</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox5</cstring>
+            </property>
+            <property name="title">
+                <string>Encryption</string>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>Secure connection with other clients. May also help if your ISP is shaping your traffic.</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>use_encryption</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use protocol encryption</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>allow_unencrypted</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Allow unencrypted connections</string>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>If unchecked, you'll be able to connect only to clients supporting encryption.</string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer2</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>50</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
+</widget>
+<tabstops>
+    <tabstop>autosave_downloads_check</tabstop>
+    <tabstop>show_systray_icon</tabstop>
+</tabstops>
+<pixmapinproject/>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kcombobox.h</includehint>
+    <includehint>kcombobox.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>knuminput.h</includehint>
+</includehints>
+</UI>

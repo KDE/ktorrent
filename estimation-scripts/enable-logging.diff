@@ -1,0 +1,224 @@
+Index: estimation-scripts/enable-logging.diff
+===================================================================
+--- estimation-scripts/enable-logging.diff	(revision 472081)
++++ estimation-scripts/enable-logging.diff	(working copy)
+@@ -1,106 +0,0 @@
+-Index: apps/ktorrent/ktorrentviewitem.cpp
+-===================================================================
+---- apps/ktorrent/ktorrentviewitem.cpp	(revision 469614)
+-+++ apps/ktorrent/ktorrentviewitem.cpp	(working copy)
+-@@ -25,6 +25,7 @@
+- #include <math.h>
+- #include "ktorrentviewitem.h"
+- #include "functions.h"
+-+#include <util/log.h>
+- 
+- using namespace bt;
+- 
+-@@ -77,6 +78,9 @@
+- KTorrentViewItem::KTorrentViewItem(QListView* parent,bt::TorrentControl* tc)
+- 	: KListViewItem(parent),tc(tc)
+- {
+-+	toLog = true;
+-+	counter = 1;
+-+	started = false;
+- 	update();
+- }
+- 
+-@@ -86,6 +90,7 @@
+- 
+- void KTorrentViewItem::update()
+- {
+-+	bool tmpLog = true;
+- 	/*
+- 	addColumn(i18n("File"));
+- 	addColumn(i18n("Status"));
+-@@ -114,8 +119,43 @@
+- 	setText(6,KBytesPerSecToString(tc->getUploadRate() / 1024.0));
+-   
+- 	KLocale* loc = KGlobal::locale();
+-+
+-+ 	
+-+ 	if(counter==1)
+-+ 	{
+-+ 		if (tc->isRunning())
+-+ 		{
+-+ 			if(!started)
+-+ 			{
+-+ 				Out() << "{" << tc->getTorrentName() << "}," << QDateTime::currentDateTime().toTime_t() << "," << tc->getDownloadRate() << "," << tc->getBytesDownloaded() << "," << tc->getBytesLeft() << "," << tc->getNumPeers() << ",ACTIVATED" << endl;
+-+ 				tmpLog = false;
+-+ 				started = true;
+-+ 				toLog = true;
+-+ 			}
+-+ 		}
+-+ 		
+-+ 		if(!tc->isRunning())
+-+ 		{
+-+ 			if(started)
+-+ 			{
+-+ 				Out() << "{" << tc->getTorrentName() << "}," << QDateTime::currentDateTime().toTime_t() << "," << tc->getDownloadRate() << "," << tc->getBytesDownloaded() << "," << tc->getBytesLeft() << "," << tc->getNumPeers() << ",DEACTIVATED" <<endl;
+-+ 				tmpLog = false;
+-+ 				started = false;
+-+ 			}
+-+ 			toLog = false;
+-+ 		}
+-+ 	}
+-+ 	
+-+ 	if(counter!=1) tmpLog=false;
+-+	counter *= -1;
+-+
+-+
+- 	if (tc->getBytesLeft() == 0)
+- 	{
+-+ 		if(toLog && tmpLog) 
+-+ 			Out() << "{" << tc->getTorrentName() << "}," << QDateTime::currentDateTime().toTime_t() << "," << tc->getDownloadRate() << "," << tc->getBytesDownloaded() << "," << 0 << "," << tc->getNumPeers() << ",FINISHED" << endl;
+-+ 		toLog = false;
+-+
+- 		setText(7,i18n("finished"));
+- 	}
+- 	else 
+-@@ -124,9 +164,16 @@
+- 		if( bytes_downloaded < 1 ) //if we just started download use old algorithm
+- 		{
+- 			if (tc->getDownloadRate() == 0)
+-+			{
+-+ 				if(toLog && tmpLog) 
+-+ 					Out() << "{" << tc->getTorrentName() << "}," << QDateTime::currentDateTime().toTime_t() << "," << 0 << "," << tc->getBytesDownloaded() << "," << tc->getBytesLeft() << "," << tc->getNumPeers() << ",RUNNING" << endl;
+- 				setText(7,i18n("infinity"));
+-+			}
+- 			else
+- 			{
+-+				if(toLog && tmpLog) 
+-+ 					Out() << "{" << tc->getTorrentName() << "}," << QDateTime::currentDateTime().toTime_t() << "," << tc->getDownloadRate() << "," << tc->getBytesDownloaded() << "," << tc->getBytesLeft() << "," << tc->getNumPeers() << ",RUNNING" << endl;
+-+
+- 				Uint32 secs = (int)floor( (float)tc->getBytesLeft() / (float)tc->getDownloadRate() );
+- 				QTime t;
+- 				t = t.addSecs(secs);
+-Index: apps/ktorrent/ktorrentviewitem.h
+-===================================================================
+---- apps/ktorrent/ktorrentviewitem.h	(revision 469614)
+-+++ apps/ktorrent/ktorrentviewitem.h	(working copy)
+-@@ -41,6 +41,10 @@
+- 	void update();
+- 
+- private:
+-+	bool toLog;
+-+	int counter;
+-+	bool started;
+-+	uint start_timestamp;
+- 	int compare(QListViewItem * i,int col,bool ascending) const;
+- 	void paintCell(QPainter* p,const QColorGroup & cg,int column,int width,int align);
+- 
+Index: apps/ktorrent/ktorrentviewitem.cpp
+===================================================================
+--- apps/ktorrent/ktorrentviewitem.cpp	(revision 472081)
++++ apps/ktorrent/ktorrentviewitem.cpp	(working copy)
+@@ -25,7 +25,10 @@
+ #include <math.h>
+ #include "ktorrentviewitem.h"
+ #include "functions.h"
++#include <util/log.h>
++#include <torrent/globals.h>
+ 
++
+ using namespace bt;
+ using namespace kt;
+ 
+@@ -78,6 +81,9 @@
+ KTorrentViewItem::KTorrentViewItem(QListView* parent,TorrentInterface* tc)
+ 	: KListViewItem(parent),tc(tc)
+ {
++	toLog = true;
++	counter = 1;
++	started = false;
+ 	update();
+ }
+ 
+@@ -87,6 +93,7 @@
+ 
+ void KTorrentViewItem::update()
+ {
++	bool tmpLog = true;
+ 	/*
+ 	addColumn(i18n("File"));
+ 	addColumn(i18n("Status"));
+@@ -114,8 +121,46 @@
+ 	setText(6,KBytesPerSecToString(s.upload_rate / 1024.0));
+   
+ 	KLocale* loc = KGlobal::locale();
++
++ 
++  	
++  	if(counter==1)
++  	{
++  		if (s.running)
++  		{
++  			if(!started)
++  			{
++  				Out() << "{" << s.torrent_name << "}," << QDateTime::currentDateTime().toTime_t() << "," << s.download_rate << "," << s.bytes_downloaded << "," << s.bytes_left << "," << s.num_peers << ",ACTIVATED" << endl;
++  				tmpLog = false;
++  				started = true;
++  				toLog = true;
++  			}
++  		}
++	
++  		if(!s.running)
++  		{
++  			if(started)
++  			{
++  				Out() << "{" << s.torrent_name << "}," << QDateTime::currentDateTime().toTime_t() << "," << s.download_rate << "," << s.bytes_downloaded << "," << s.bytes_left << "," << s.num_peers << ",DEACTIVATED" <<endl;
++  				tmpLog = false;
++  				started = false;
++  			}
++  			toLog = false;
++  		}
++  	}
++  	
++  	if(counter!=1) tmpLog=false;
++ 	counter *= -1;
++ 
++ 
++
+ 	if (s.bytes_left == 0)
+ 	{
++  		if(toLog && tmpLog) 
++  			Out() << "{" << s.torrent_name << "}," << QDateTime::currentDateTime().toTime_t() << "," << s.download_rate << "," << s.bytes_downloaded << "," << 0 << "," << s.num_peers << ",FINISHED" << endl;
++  		toLog = false;
++ 
++
+ 		setText(7,i18n("finished"));
+ 	}
+ 	else 
+@@ -124,9 +169,17 @@
+ 		if( bytes_downloaded < 1 ) //if we just started download use old algorithm
+ 		{
+ 			if (s.download_rate == 0)
++			{
++  				if(toLog && tmpLog) 
++  					Out() << "{" << s.torrent_name << "}," << QDateTime::currentDateTime().toTime_t() << "," << 0 << "," << s.bytes_downloaded << "," << s.bytes_left << "," << s.num_peers << ",RUNNING" << endl;
++
+ 				setText(7,i18n("infinity"));
++			}
+ 			else
+ 			{
++ 				if(toLog && tmpLog) 
++  					Out() << "{" << s.torrent_name << "}," << QDateTime::currentDateTime().toTime_t() << "," << s.download_rate << "," << s.bytes_downloaded << "," << s.bytes_left << "," << s.num_peers << ",RUNNING" << endl;
++
+ 				Uint32 secs = (int)floor( (float)s.bytes_left / (float)s.download_rate);
+ 				setText(7,DurationToString(secs));
+ 			}
+Index: apps/ktorrent/ktorrentviewitem.h
+===================================================================
+--- apps/ktorrent/ktorrentviewitem.h	(revision 472081)
++++ apps/ktorrent/ktorrentviewitem.h	(working copy)
+@@ -41,6 +41,10 @@
+ 	void update();
+ 
+ private:
++	bool toLog;
++	int counter;
++	bool started;
++	uint start_timestamp;
+ 	int compare(QListViewItem * i,int col,bool ascending) const;
+ 	void paintCell(QPainter* p,const QColorGroup & cg,int column,int width,int align);
+ 
