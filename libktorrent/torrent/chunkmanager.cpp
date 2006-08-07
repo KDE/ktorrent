@@ -379,7 +379,10 @@ namespace bt
 		if (!bitset.get(last) && !excluded_chunks.get(last))
 		{
 			Chunk* c = chunks[last];
-			return (num_left - 1)*tor.getChunkSize() + c->getSize();
+			if (c)
+				return (num_left - 1)*tor.getChunkSize() + c->getSize();
+			else
+				return num_left*tor.getChunkSize();
 		}
 		else
 		{
