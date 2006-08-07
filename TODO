@@ -1,0 +1,27 @@
+TODO LIST :
+-----------
+
+If something is done put # in front of it.
+
+2.1 :
+-----
+
+1) Moving downloaded files somewhere lese
+2) Make something similar like konquerer's change browser identification but then for KT's PeerID
+3) Make and show more statistics. (e.g. uptime, average transfer rates, connected peers, etc...) (UI clutter needs to be avoided)
+4) Global share ratio limit
+5) Add option to allow the user to rename the top directory of multifile torrents
+7) Add RSS plugin
+9) letting the user configure columns in listview (maybe add share ratio column)
+10) Add scheduled download feature + allow KT to shutdown PC after a download is finished
+11) Super Seeding
+12) Work around FAT32 limitations
+13) Special upload cap when there are only torrents seeding
+14) Allow searchplugin to open page in external browser (Konq, FF, Moz, ...)
+15) Global and per-torrent speed limiting
+
+
+3.0 :
+-----
+1) Switch to KDE 4 and Qt 4
+
