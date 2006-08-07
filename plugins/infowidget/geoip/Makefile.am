@@ -3,6 +3,12 @@ METASOURCES = AUTO
 
 ktdatadir = $(kde_datadir)/ktorrent/geoip
 
+if ENABLE_GEOIP
+GEOIP_FILES = geoip.dat GeoIP-LICENSE.txt
+else
+GEOIP_FILES = 
+endif
+
 
 ktdata_DATA = ad.png ae.png af.png ag.png ai.png al.png am.png an.png ao.png \
 		aq.png ar.png as.png at.png au.png aw.png az.png ba.png bb.png bd.png be.png \
@@ -26,9 +32,8 @@ ktdata_DATA = ad.png ae.png af.png ag.png ai.png al.png am.png an.png ao.png \
 		tg.png th.png tj.png tk.png tl.png tm.png tn.png to.png tp.png tr.png tt.png \
 		tv.png tw.png tz.png ua.png ug.png um.png us.png uy.png uz.png va.png vc.png \
 		ve.png vg.png vi.png vn.png vu.png wf.png ws.png ye.png yt.png yu.png za.png \
-		zm.png zw.png FLAGS_LICENCE 
-		
-if ENABLE_GEOIP
-	ktdata_DATA += geoip.dat GeoIP-LICENSE.txt
-endif
+		zm.png zw.png FLAGS_LICENCE $(GEOIP_FILES)
+	
+
+
 
