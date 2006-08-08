@@ -124,7 +124,8 @@ namespace net
 	
 	void SocketMonitor::processIncomingData(QPtrList<BufferedSocket> & rbs,Uint32 now)
 	{
-		Uint32 allowance = (Uint32)floor(dcap * (now - last_selected) * (1.0 / 1024.0)) + leftover_d;
+		Uint32 allowed = (Uint32)floor(dcap * (now - last_selected) * (1.0 / 1024.0));
+		Uint32 allowance = allowed + leftover_d;
 		Uint32 cnt = 0;
 		QPtrList<BufferedSocket>::iterator i = rbs.begin();
 		while (i != rbs.end() && allowance > 0)
@@ -145,12 +146,16 @@ namespace net
 			i++;
 		}
 		
+		Uint32 pld = leftover_d;
 		leftover_d = allowance;
+		if (leftover_d > pld)
+			leftover_d -= pld;
 	}
 	
 	void SocketMonitor::processOutgoingData(QPtrList<BufferedSocket> & wbs,Uint32 now)
 	{
-		Uint32 allowance = (Uint32)floor(ucap * (now - last_selected) * (1.0 / 1024.0)) + leftover_u;
+		Uint32 allowed = (Uint32)floor(ucap * (now - last_selected) * (1.0 / 1024.0));
+		Uint32 allowance = allowed + leftover_u;
 		Uint32 cnt = 0;
 		QPtrList<BufferedSocket>::iterator i = wbs.begin();
 		while (i != wbs.end() && allowance > 0)
@@ -171,7 +176,10 @@ namespace net
 			i++;
 		}
 		
+		Uint32 plu = leftover_u;
 		leftover_u = allowance;
+		if (leftover_u > plu)
+			leftover_u -= plu;
 	}
 	
 	void SocketMonitor::update()
