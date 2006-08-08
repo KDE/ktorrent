@@ -78,6 +78,9 @@ void TorrentCreatorDlg::onCreate()
 
 	if (s.isNull())
 		return;
+	
+	if (!s.endsWith(".torrent"))
+		s += ".torrent";
 
 	KProgressDialog* dlg = new KProgressDialog(this,0);
 	dlg->setLabel(i18n("Creating %1...").arg(s));
