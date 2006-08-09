@@ -301,7 +301,7 @@
                         </property>
                         <widget class="QLabel">
                             <property name="name">
-                                <cstring>textLabel1_2</cstring>
+                                <cstring>dht_port_label</cstring>
                             </property>
                             <property name="text">
                                 <string>UDP port for DHT communication:</string>
@@ -396,6 +396,8 @@
         </spacer>
     </vbox>
 </widget>
+<customwidgets>
+</customwidgets>
 <tabstops>
     <tabstop>autosave_downloads_check</tabstop>
     <tabstop>show_systray_icon</tabstop>
@@ -404,14 +406,10 @@
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kurlrequester.h</includehint>
-    <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kurlrequester.h</includehint>
-    <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kcombobox.h</includehint>
     <includehint>kcombobox.h</includehint>
-    <includehint>klineedit.h</includehint>
-    <includehint>knuminput.h</includehint>
 </includehints>
 </UI>

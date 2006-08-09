@@ -282,6 +282,7 @@ void PrefPageTwo::customIPChecked(bool on)
 void PrefPageTwo::dhtChecked(bool on)
 {
 	gp->dht_port->setEnabled(on);
+	gp->dht_port_label->setEnabled(on);
 }
 
 void PrefPageTwo::updateData()
@@ -326,7 +327,8 @@ void PrefPageTwo::updateData()
 	gp->use_dht->setChecked(Settings::dhtSupport());
 	gp->dht_port->setValue(Settings::dhtPort());
 	gp->dht_port->setEnabled(Settings::dhtSupport());
-	
+	gp->dht_port_label->setEnabled(Settings::dhtSupport());
+
 	gp->use_encryption->setChecked(Settings::useEncryption());
 	gp->allow_unencrypted->setChecked(Settings::allowUnencryptedConnections());
 	gp->allow_unencrypted->setEnabled(Settings::useEncryption());
