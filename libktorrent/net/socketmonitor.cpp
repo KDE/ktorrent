@@ -148,8 +148,10 @@ namespace net
 		
 		Uint32 pld = leftover_d;
 		leftover_d = allowance;
-		if (leftover_d > pld)
+		if (leftover_d >= pld)
 			leftover_d -= pld;
+		else
+			leftover_d = 0;
 	}
 	
 	void SocketMonitor::processOutgoingData(QPtrList<BufferedSocket> & wbs,Uint32 now)
@@ -176,10 +178,12 @@ namespace net
 			i++;
 		}
 		
-		Uint32 plu = leftover_u;
+	/*	Uint32 plu = leftover_u;
 		leftover_u = allowance;
-		if (leftover_u > plu)
+		if (leftover_u >= plu)
 			leftover_u -= plu;
+		else*/
+			leftover_u = 0;
 	}
 	
 	void SocketMonitor::update()
