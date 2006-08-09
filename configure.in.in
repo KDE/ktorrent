@@ -43,6 +43,12 @@ KDE_CHECK_LIB(gmp, __gmpz_init,	[have_gmp=yes],
 		DO_NOT_COMPILE="$DO_NOT_COMPILE ktorrent"
 	])
 
+KDE_CHECK_HEADER(gmp.h, [have_gmp=yes], 
+	[
+		have_gmp=no
+		DO_NOT_COMPILE="$DO_NOT_COMPILE ktorrent"
+	])
+
 KDE_INIT_DOXYGEN([The API Reference], [Version $VERSION])
 
 AC_ARG_ENABLE(
