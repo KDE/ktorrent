@@ -25,7 +25,6 @@ public:
 
 public slots:
 	void onCreate();
-	void onURLChanged(const QString & str);
 
 private:
 	void errorMsg(const QString & text);

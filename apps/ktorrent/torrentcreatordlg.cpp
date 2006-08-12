@@ -33,8 +33,6 @@ TorrentCreatorDlg::TorrentCreatorDlg(KTorrentCore* core,QWidget *parent, const c
 	KComboBox* cb = m_chunk_size;
 	cb->setCurrentItem(3);
 	
-	connect(m_file_or_dir,SIGNAL(urlSelected(const QString& )),
-			this,SLOT(onURLChanged(const QString& )));
 	connect(m_create_btn,SIGNAL(clicked()),this,SLOT(onCreate()));
 	connect(m_cancel_btn,SIGNAL(clicked()),this,SLOT(reject()));
 }
@@ -55,12 +53,6 @@ void TorrentCreatorDlg::onCreate()
 		return;
 	}
 
-	if (m_name->text().length() == 0)
-	{
-		errorMsg(i18n("You must fill in the name field."));
-		return;
-	}
-
 	if (eb->items().count() == 0)
 	{
 		errorMsg(i18n("You must add at least one tracker."));
@@ -69,7 +61,7 @@ void TorrentCreatorDlg::onCreate()
 
 	QString url = r->url();
 	int chunk_size = cb->currentText().toInt();
-	QString name = m_name->text();
+	QString name = KURL(r->url()).fileName();
 	QStringList trackers = eb->items();
 
 	QString s = KFileDialog::getSaveFileName(
@@ -95,13 +87,6 @@ void TorrentCreatorDlg::onCreate()
 			dlg->progressBar());
 	delete dlg;
 	accept();
-}
-
-void TorrentCreatorDlg::onURLChanged(const QString & str)
-{
-	KURL url(str);
-	if (m_name->text().length() == 0)
-		m_name->setText(url.fileName());
 }
 
 void TorrentCreatorDlg::errorMsg(const QString & text)
