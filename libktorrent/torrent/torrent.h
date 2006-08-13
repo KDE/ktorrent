@@ -162,6 +162,18 @@ namespace bt
 		/// Get a DHT node
 		const kt::DHTNode & getDHTNode(Uint32 i) {return nodes[i];}
 		
+		/**
+		 * Update the percentage of all files.
+		 * @param bs The BitSet with all downloaded chunks
+		 */
+		void updateFilePercentage(const BitSet & bs);
+		
+		/**
+		 * Update the percentage of a all files which have a particular chunk.
+		 * @param bs The BitSet with all downloaded chunks
+		 */
+		void updateFilePercentage(Uint32 chunk,const BitSet & bs);
+		
 
 	private:
 		void loadInfo(BDictNode* node);

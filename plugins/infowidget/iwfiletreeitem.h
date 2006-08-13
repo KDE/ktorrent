@@ -20,9 +20,8 @@
 #ifndef IWFILETREEITEM_H
 #define IWFILETREEITEM_H
 
+#include <qobject.h>
 #include <interfaces/filetreeitem.h>
-
-
 
 using namespace bt;
 
@@ -37,19 +36,25 @@ namespace kt
 	*
 	* File item in the InfoWidget's file view.
 	*/
-	class IWFileTreeItem : public kt::FileTreeItem
+	class IWFileTreeItem : public QObject, public kt::FileTreeItem
 	{
+		Q_OBJECT
+				
 		double perc_complete;
 	public:
 		IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file);
 		virtual ~IWFileTreeItem();
 	
 		void updatePreviewInformation(kt::TorrentInterface* tc);
-		void updatePercentageInformation(kt::TorrentInterface* tc);
+		void updatePercentageInformation();
 		void updatePriorityInformation(kt::TorrentInterface* tc);
 		void updateDNDInformation();
 	protected:
 		virtual int compare(QListViewItem* i, int col, bool ascending) const;
+		
+	protected slots:
+		void onPercentageUpdated(float p);
+		void onPreviewAvailable(bool av);
 	};
 }
 

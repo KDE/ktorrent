@@ -22,12 +22,12 @@
 #define BTTORRENTFILE_H
 
 #include <qstring.h>
-#include <qobject.h>
 #include <util/constants.h>
 #include <interfaces/torrentfileinterface.h>
 
 namespace bt
 {
+	class BitSet;
 
 	/**
 	 * @author Joris Guisson
@@ -35,7 +35,7 @@ namespace bt
 	 * File in a multi file torrent. Keeps track of the path of the file,
 	 * it's size, offset into the cache and between which chunks it lies.
 	 */
-	class TorrentFile : public QObject,public kt::TorrentFileInterface
+	class TorrentFile : public kt::TorrentFileInterface
 	{
 		Q_OBJECT
 
@@ -45,6 +45,13 @@ namespace bt
 		Uint64 last_chunk_size;
 		Priority priority;
 		bool missing;
+		enum FileType
+		{
+			UNKNOWN,
+			MULTIMEDIA,
+			NORMAL
+		};
+		mutable FileType filetype;
 	public:
 		/**
 		 * Default constructor. Creates a null TorrentFile.
@@ -125,16 +132,22 @@ namespace bt
 
 		static TorrentFile null;
 		
+		/**
+		 * Update the number of downloaded chunks for this file.
+		 * @param bs The current bitset of all chunks
+		 */
+		void updateNumDownloadedChunks(const BitSet & bs);
+		
 	signals:
 		/**
 		 * Signal emitted when the Priority variable changes from or to EXCLUDED.
 		 * @param tf The TorrentFile which emitted the signal
 		 * @param download Download the file or not
 		 */
-			void downloadStatusChanged(TorrentFile* tf,bool download);
+		void downloadStatusChanged(TorrentFile* tf,bool download);
 			
-		// signal emitted when the Priority variable changes
-                void downloadPriorityChanged(TorrentFile* tf,Priority newpriority);
+		/// signal emitted when the Priority variable changes
+		void downloadPriorityChanged(TorrentFile* tf,Priority newpriority);
 	};
 
 }

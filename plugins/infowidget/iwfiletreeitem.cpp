@@ -36,6 +36,8 @@ namespace kt
 		: FileTreeItem(item,name,file)
 	{
 		perc_complete = 0.0;
+		connect(&file,SIGNAL(downloadPercentageChanged( float )),this,SLOT(onPercentageUpdated( float )));
+		connect(&file,SIGNAL(previewAvailable( bool )),this,SLOT(onPreviewAvailable( bool )));
 	}
 	
 	IWFileTreeItem::~IWFileTreeItem()
@@ -76,19 +78,14 @@ namespace kt
 			setText(3, i18n("No"));
 	}
 
-	void IWFileTreeItem::updatePercentageInformation(kt::TorrentInterface* tc)
+	void IWFileTreeItem::updatePercentageInformation()
 	{
-		Uint32 start, index, end, total;
-		start = file.getFirstChunk();
-		end = file.getLastChunk();
-		total = 0;
-		const bt::BitSet & bs = tc->downloadedChunksBitSet();
-		for(index = start; index <= end; index++)
-		{
-			if (bs.get(index))
-				total++;
-		}
-		double percent = (double)total/(double)((end-start) + 1)*100.0;
+		onPercentageUpdated(file.getDownloadPercentage());
+	}
+	
+	void IWFileTreeItem::onPercentageUpdated(float p)
+	{
+		double percent = p;
 		if (percent < 0.0)
 			percent = 0.0;
 		else if (percent > 100.0)
@@ -96,6 +93,22 @@ namespace kt
 		KLocale* loc = KGlobal::locale();
 		setText(4,i18n("%1 %").arg(loc->formatNumber(percent,2)));
 		perc_complete = percent;
+	}
+	
+	void IWFileTreeItem::onPreviewAvailable(bool av)
+	{
+		if (av)
+		{
+			setText(3, i18n("Available"));
+		}
+		else if (file.isMultimedia())
+		{
+			setText(3, i18n("Pending"));
+		}
+		else
+		{
+			setText(3, i18n("No"));
+		}
 	}
 
 	void IWFileTreeItem::updatePriorityInformation(kt::TorrentInterface* tc)
@@ -132,3 +145,5 @@ namespace kt
 		}
 	}
 }
+
+#include "iwfiletreeitem.moc"

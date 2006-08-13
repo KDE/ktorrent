@@ -182,6 +182,7 @@ namespace bt
 				}
 			}
 		}
+		tor.updateFilePercentage(bitset);
 	}
 	
 	void ChunkManager::saveIndexFile()
@@ -300,6 +301,7 @@ namespace bt
 		c->setStatus(Chunk::NOT_DOWNLOADED);
 		bitset.set(i,false);
 		loaded.remove(i);
+		tor.updateFilePercentage(i,bitset);
 	}
 	
 	void ChunkManager::checkMemoryUsage()
@@ -343,6 +345,7 @@ namespace bt
 				bitset.set(i,true);
 				recalc_chunks_left = true;
 				writeIndexFileEntry(c);
+				tor.updateFilePercentage(i,bitset);
 			}
 		}
 		else
@@ -832,7 +835,8 @@ namespace bt
 				// We think we do not hae a chunk, but we do have it
 				bitset.set(i,true);
 				// the chunk must be on disk
-				c->setStatus(Chunk::ON_DISK); 
+				c->setStatus(Chunk::ON_DISK);
+				tor.updateFilePercentage(i,bitset); 
 			}
 			else if (!ok_chunks.get(i) && bitset.get(i))
 			{
@@ -841,10 +845,15 @@ namespace bt
 				if (c->getStatus() == Chunk::ON_DISK)
 				{
 					c->setStatus(Chunk::NOT_DOWNLOADED);
+					tor.updateFilePercentage(i,bitset);
 				}
 				else if (c->getStatus() == Chunk::MMAPPED || c->getStatus() == Chunk::BUFFERED)
 				{
 					resetChunk(i);
+				}
+				else
+				{
+					tor.updateFilePercentage(i,bitset);
 				}
 			}
 		}

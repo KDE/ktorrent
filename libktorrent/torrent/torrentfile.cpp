@@ -18,7 +18,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <math.h>
 #include <util/log.h>
+#include <util/bitset.h>
 #include <util/functions.h>
 #include "globals.h"
 #include "torrentfile.h"
@@ -26,12 +28,12 @@
 namespace bt
 {
 
-	TorrentFile::TorrentFile() : TorrentFileInterface(QString::null,0),missing(false)
+	TorrentFile::TorrentFile() : TorrentFileInterface(QString::null,0),missing(false),filetype(UNKNOWN)
 	{}
 
 	TorrentFile::TorrentFile(Uint32 index,const QString & path,
 							 Uint64 off,Uint64 size,Uint64 chunk_size)
-	: TorrentFileInterface(path,size),index(index),cache_offset(off),missing(false)
+	: TorrentFileInterface(path,size),index(index),cache_offset(off),missing(false),filetype(UNKNOWN)
 	{
 		first_chunk = off / chunk_size;
 		first_chunk_off = off % chunk_size;
@@ -44,7 +46,7 @@ namespace bt
 	}
 	
 	TorrentFile::TorrentFile(const TorrentFile & tf)
-		: QObject(0,0),TorrentFileInterface(QString::null,0)
+		: TorrentFileInterface(QString::null,0)
 	{
 		index = tf.getIndex();
 		path = tf.getPath();
@@ -56,6 +58,7 @@ namespace bt
 		last_chunk_size = tf.getLastChunkSize();
 		priority = tf.getPriority();
 		missing = tf.isMissing();
+		filetype = UNKNOWN;
 	}
 
 	TorrentFile::~TorrentFile()
@@ -86,7 +89,20 @@ namespace bt
 
 	bool TorrentFile::isMultimedia() const
 	{
-		return IsMultimediaFile(getPath());
+		if (filetype == UNKNOWN)
+		{
+			if (IsMultimediaFile(getPath()))
+			{
+				filetype = MULTIMEDIA;
+				return true;
+			}
+			else
+			{
+				filetype = NORMAL;
+				return false;
+			}
+		}
+		return filetype == MULTIMEDIA;
 	}
 
 	void TorrentFile::setPriority(Priority newpriority)
@@ -135,6 +151,33 @@ namespace bt
 		if (cindex > 0)
 			off += (chunk_size - this->getFirstChunkOffset());
 		return off;
+	}
+	
+	void TorrentFile::updateNumDownloadedChunks(const BitSet & bs)
+	{
+		float p = getDownloadPercentage();
+		num_chunks_downloaded = 0;
+		bool prev = preview;
+		preview = true;
+		for (Uint32 i = first_chunk;i <= last_chunk;i++)
+		{
+			if (bs.get(i))
+			{
+				num_chunks_downloaded++;
+			}
+			else if (i == first_chunk || i == first_chunk + 1)
+			{
+				preview = false;
+			}
+		}
+		preview = isMultimedia() && preview;
+		
+		float np = getDownloadPercentage();
+		if (fabs(np - p) >= 0.01f)
+			downloadPercentageChanged(np);
+		
+		if (prev != preview)
+			previewAvailable(preview);
 	}
 }
 #include "torrentfile.moc"

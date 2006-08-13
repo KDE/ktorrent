@@ -20,6 +20,7 @@
 #ifndef KTTORRENTFILEINTERFACE_H
 #define KTTORRENTFILEINTERFACE_H
 
+#include <qobject.h>
 #include <qstring.h>
 #include <util/constants.h>
 
@@ -40,8 +41,9 @@ namespace kt
 	 *
 	 * This class is the interface for a file in a multifile torrent.
 	*/
-	class TorrentFileInterface
+	class TorrentFileInterface : public QObject
 	{
+		Q_OBJECT
 	public:
 		/**
 		 * Constructor, set the path and size.
@@ -92,15 +94,36 @@ namespace kt
 		
 		/// Set wether this file is preexisting
 		void setPreExisting(bool pe) {preexisting = pe;}
-
+		
+		/// Get the % of the file which is downloaded
+		float getDownloadPercentage() const;
+		
+		/// See if preview is available
+		bool isPreviewAvailable() const {return preview;}
+		
+	signals:
+		/**
+		 * Emitted when the download percentage has been changed.
+		 * @param p The new percentage
+		 */
+		void downloadPercentageChanged(float p);
+		
+		/**
+		 * Emitted when the preview becomes available or not.
+		 * @param available 
+		 */
+		void previewAvailable(bool available);
+		
 	protected:
 		QString path;
 		Uint64 size;
 		Uint32 first_chunk;
 		Uint32 last_chunk;
+		Uint32 num_chunks_downloaded;
 		Priority priority;
 		bool preexisting;
 		bool m_emitDlStatusChanged;
+		bool preview;
 	};
 
 }

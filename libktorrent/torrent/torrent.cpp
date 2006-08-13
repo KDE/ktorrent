@@ -382,4 +382,27 @@ namespace bt
 
 		return anon_list;
 	}
+	
+	void Torrent::updateFilePercentage(const BitSet & bs)
+	{
+		for (Uint32 i = 0;i < files.count();i++)
+		{
+			TorrentFile & f = files[i];
+			f.updateNumDownloadedChunks(bs);
+		}
+	}
+	
+	void Torrent::updateFilePercentage(Uint32 chunk,const BitSet & bs)
+	{
+		QValueList<Uint32> cfiles;
+		calcChunkPos(chunk,cfiles);
+		
+		QValueList<Uint32>::iterator i = cfiles.begin();
+		while (i != cfiles.end())
+		{
+			TorrentFile & f = getFile(*i);
+			f.updateNumDownloadedChunks(bs);
+			i++;
+		}
+	}
 }

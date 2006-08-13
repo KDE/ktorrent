@@ -61,9 +61,8 @@ namespace kt
 
 		/**
 		 * Update the downloaded percentage information.
-		 * @param tc The TorrentInterface object
 		 */
-		void updatePercentageInformation(kt::TorrentInterface* tc);
+		void updatePercentageInformation();
 
 		Priority updatePriorityInformation(kt::TorrentInterface* tc);
 		
