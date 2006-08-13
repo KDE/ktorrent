@@ -22,6 +22,7 @@
 #include <klocale.h>
 #include <time.h>
 #include <util/error.h>
+#include <ktversion.h>
 #include "torrentcontrol.h"
 #include "torrentcreator.h"
 #include "bencoder.h"
@@ -142,7 +143,7 @@ namespace bt
 			enc.write("comments");
 			enc.write(comments);
 		}
-		enc.write("created by");enc.write("KTorrent 1.0");
+		enc.write("created by");enc.write(QString("KTorrent %1").arg(kt::VERSION_STRING));
 		enc.write("creation date");enc.write((Uint64)time(0));
 		enc.write("info");
 		saveInfo(enc);

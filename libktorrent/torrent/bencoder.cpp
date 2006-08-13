@@ -87,32 +87,34 @@ namespace bt
 	{
 		if (!out) return;
 		
-		QString s = QString("i%1e").arg(val);
-		out->write(s.utf8(),s.length());
+		QCString s = QString("i%1e").arg(val).utf8();
+		out->write(s,s.length());
 	}
 
 	void BEncoder::write(Uint64 val)
 	{
 		if (!out) return;
 		
-		QString s = QString("i%1e").arg(val);
-		out->write(s.utf8(),s.length());
+		QCString s = QString("i%1e").arg(val).utf8();
+		out->write(s,s.length());
 	}
 	
 	void BEncoder::write(const QString & str)
 	{
 		if (!out) return;
 		
-		QString s = QString("%1:%2").arg(str.length()).arg(str);
-		out->write(s.utf8(),s.length());
+		QCString u = str.utf8();
+		QCString s = QString("%1:").arg(u.length()).utf8();
+		out->write(s,s.length());
+		out->write(u,u.length());
 	}
 	
 	void BEncoder::write(const QByteArray & data)
 	{
 		if (!out) return;
 		
-		QString s = QString::number(data.size());
-		out->write(s.utf8(),s.length());
+		QCString s = QString::number(data.size()).utf8();
+		out->write(s,s.length());
 		out->write(":",1);
 		out->write(data.data(),data.size());
 	}
@@ -121,8 +123,8 @@ namespace bt
 	{
 		if (!out) return;
 		
-		QString s = QString::number(size) + ":";
-		out->write(s.utf8(),s.length());
+		QCString s = QString("%1:").arg(size).utf8();
+		out->write(s,s.length());
 		out->write((const char*)data,size);
 	}
 	
