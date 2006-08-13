@@ -231,13 +231,15 @@ namespace kt
 			
 			for (Uint32 i = 0;i < curr_tc->getNumFiles();i++)
 			{
-                               TorrentFileInterface & file = curr_tc->getTorrentFile(i);
-                               root->insert(file.getPath(),file);
+				TorrentFileInterface & file = curr_tc->getTorrentFile(i);
+				root->insert(file.getPath(),file);
 			}
 			root->setOpen(true);
 			m_file_view->setRootIsDecorated(true);
 			multi_root = root;
 			multi_root->updatePriorityInformation(curr_tc);
+			multi_root->updatePercentageInformation();
+			multi_root->updatePreviewInformation(curr_tc);
 		}
 		else
 		{
@@ -329,42 +331,28 @@ namespace kt
 	
 	void InfoWidget::readyPercentage()
 	{
-		if(curr_tc->getStats().multi_file_torrent)
-		{
-			multi_root->updatePercentageInformation(curr_tc);
-		}
-		else
+		if (curr_tc && !curr_tc->getStats().multi_file_torrent)
 		{
 			QListViewItemIterator it(m_file_view);
 			if (!it.current())
 				return;
-
-			Uint32 index, end, total;
-			end = curr_tc->downloadedChunksBitSet().getNumBits();
-			total = 0;
-			for(index = 0; index < end; index++)
-			{
-				if (curr_tc->downloadedChunksBitSet().get(index))
-					total++;
-			}
-			double percent = (double)total/(double)(end)*100.0;
+						
+			const BitSet & bs = curr_tc->downloadedChunksBitSet();
+			Uint32 total = bs.getNumBits();
+			Uint32 on = bs.numOnBits();			
+			double percent = 100.0 * ((double)on/(double)total);
 			if (percent < 0.0)
 				percent = 0.0;
 			else if (percent > 100.0)
 				percent = 100.0;
 			KLocale* loc = KGlobal::locale();
 			it.current()->setText(4,i18n("%1 %").arg(loc->formatNumber(percent,2)));
-			
 		}
 	}
 
 	void InfoWidget::readyPreview()
 	{
-		if(curr_tc->getStats().multi_file_torrent)
-		{
-			multi_root->updatePreviewInformation(curr_tc);
-		}
-		else
+		if (curr_tc && !curr_tc->getStats().multi_file_torrent)
 		{
 			QListViewItemIterator it(m_file_view);
 			if (!it.current())
@@ -400,8 +388,7 @@ namespace kt
 			cd_view->update(curr_tc);
 		if(tracker_view)
 			tracker_view->update(curr_tc);
-		if(s.multi_file_torrent)
-			multi_root->updatePriorityInformation(curr_tc);
+		
 		if (s.running)
 		{
 			QTime t;

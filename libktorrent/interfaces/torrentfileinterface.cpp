@@ -23,7 +23,8 @@ namespace kt
 {
 
 	TorrentFileInterface::TorrentFileInterface(const QString & path,Uint64 size)
-	: path(path),size(size),first_chunk(0),last_chunk(0),priority(NORMAL_PRIORITY),m_emitDlStatusChanged(true)
+	: path(path),size(size),first_chunk(0),last_chunk(0),num_chunks_downloaded(0),
+	priority(NORMAL_PRIORITY),m_emitDlStatusChanged(true),preview(false)
 	{
 		preexisting = false;
 	}
@@ -32,4 +33,12 @@ namespace kt
 	TorrentFileInterface::~TorrentFileInterface()
 	{}
 
+	float TorrentFileInterface::getDownloadPercentage() const
+	{
+		Uint32 num = last_chunk - first_chunk + 1;
+		return 100.0f * (float)num_chunks_downloaded / num;
+	}
 }
+
+#include "torrentfileinterface.moc"
+
