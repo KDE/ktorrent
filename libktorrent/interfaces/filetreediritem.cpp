@@ -138,6 +138,14 @@ namespace kt
 	{
 		if (!manual_change)
 		{
+			if (!on && !deselectOK())
+			{
+				manual_change = true;
+				setOn(true);
+				manual_change = false;
+				return;
+			}
+			
 			setAllChecked(on);
 			if (parent)
 				parent->childStateChange();
@@ -230,5 +238,9 @@ namespace kt
 		return new FileTreeDirItem(this,subdir);
 	}
 
+	bool FileTreeDirItem::deselectOK()
+	{
+		return true;
+	}
 }
 

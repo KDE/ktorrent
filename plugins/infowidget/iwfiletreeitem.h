@@ -51,6 +51,7 @@ namespace kt
 		void updateDNDInformation();
 	protected:
 		virtual int compare(QListViewItem* i, int col, bool ascending) const;
+		virtual bool deselectOK();
 		
 	protected slots:
 		void onPercentageUpdated(float p);

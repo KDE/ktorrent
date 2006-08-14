@@ -20,6 +20,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <kiconloader.h>
+#include <kmessagebox.h>
 #include <util/functions.h>
 #include <interfaces/torrentfileinterface.h>
 #include <interfaces/torrentinterface.h>
@@ -205,4 +206,12 @@ namespace kt
 		}
 	}
 
+	bool IWFileTreeDirItem::deselectOK()
+	{
+		int ret = KMessageBox::warningYesNo(0,i18n("If you deselect a directory, you will lose all the data off all files in this directory. Are you sure you want to do this ?"));
+		if (ret == KMessageBox::Yes)
+			return true;
+		
+		return false;
+	}
 }

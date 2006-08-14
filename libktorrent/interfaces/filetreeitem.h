@@ -72,6 +72,12 @@ namespace kt
 		
 	protected:
 		virtual int compare(QListViewItem* i, int col, bool ascending) const;
+		
+		/**
+		 * Subclasses should override this if they want to show a confirmation dialog. 
+		 * @return true if the deselect can continue, false otherwise
+		 */
+		virtual bool deselectOK();
 	};
 }
 

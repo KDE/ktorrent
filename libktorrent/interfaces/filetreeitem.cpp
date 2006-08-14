@@ -78,6 +78,15 @@ namespace kt
 
 	void FileTreeItem::stateChange(bool on)
 	{
+		if (!manual_change && !on)
+		{
+			if (!deselectOK())
+			{
+				manual_change = true;
+				setOn(true);
+				manual_change = false;
+			}	
+		}
 		Globals::instance().setCriticalOperationMode(true);
 		file.setDoNotDownload(!on);
 		Globals::instance().setCriticalOperationMode(false);
@@ -119,5 +128,9 @@ namespace kt
 	}
 
 
+	bool FileTreeItem::deselectOK()
+	{
+		return true;
+	}
 
 }

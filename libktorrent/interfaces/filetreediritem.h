@@ -106,6 +106,14 @@ namespace kt
 		 * @return A newly created FileTreeDirItem
 		 */
 		virtual FileTreeDirItem* newFileTreeDirItem(const QString & subdir);
+		
+		
+		/**
+		 * Subclasses should override this if they want to show a confirmation dialog. 
+		 * @return true if the deselect can continue, false otherwise
+		 */
+		virtual bool deselectOK();
+		
 	private:
 		virtual void stateChange(bool on);
 		virtual int compare(QListViewItem* i, int col, bool ascending) const;

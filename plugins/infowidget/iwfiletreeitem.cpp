@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <klocale.h>
 #include <kglobal.h>
+#include <kmessagebox.h>
 #include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
@@ -143,6 +144,15 @@ namespace kt
 			setChecked(false);
 			setText(2, i18n("No"));
 		}
+	}
+	
+	bool IWFileTreeItem::deselectOK()
+	{
+		int ret = KMessageBox::warningYesNo(0,i18n("If you deselect a file, you will lose all the data off this file. Are you sure you want to do this ?"));
+		if (ret == KMessageBox::Yes)
+			return true;
+		
+		return false;
 	}
 }
 
