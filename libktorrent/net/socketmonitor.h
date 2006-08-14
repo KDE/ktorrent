@@ -23,6 +23,7 @@
 #include <qstring.h>
 #include <qmutex.h>
 #include <qptrlist.h>
+#include <qvaluelist.h>
 #include <util/constants.h>
 
 
@@ -43,9 +44,8 @@ namespace net
 		QMutex mutex;
 		MonitorThread* mt;
 		QPtrList<BufferedSocket> smap;
-		Uint32 last_selected;
-		Uint32 speeds_last_updated;
-		Uint32 leftover_d,leftover_u;
+		Uint32 prev_upload_time;
+		Uint32 prev_download_time;
 		
 		SocketMonitor();	
 	public:
@@ -59,8 +59,8 @@ namespace net
 		static void setUploadCap(Uint32 bytes_per_sec);
 		static SocketMonitor & instance() {return self;}
 	private:
-		void processOutgoingData(QPtrList<BufferedSocket> & wbs,Uint32 now);
-		void processIncomingData(QPtrList<BufferedSocket> & rbs,Uint32 now);
+		void processOutgoingData(QValueList<BufferedSocket*> & wbs);
+		void processIncomingData(QValueList<BufferedSocket*> & rbs);
 	};
 
 }

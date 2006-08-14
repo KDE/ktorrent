@@ -61,9 +61,8 @@ namespace net
 		bool isRunning() const {return running;}
 	};
 
-	SocketMonitor::SocketMonitor() : mt(mt),last_selected(0),speeds_last_updated(0)
+	SocketMonitor::SocketMonitor() : mt(mt),prev_upload_time(0),prev_download_time(0)
 	{
-		leftover_d = leftover_u;
 	}
 
 
@@ -102,7 +101,7 @@ namespace net
 		if (start_thread)
 		{
 			Out(SYS_CON|LOG_DEBUG) << "Starting socketmonitor thread" << endl;
-			last_selected = bt::GetCurrentTime();
+			prev_upload_time = prev_download_time = bt::GetCurrentTime();
 			if (!mt)
 				mt = new MonitorThread(this);
 			
@@ -122,68 +121,60 @@ namespace net
 		}
 	}
 	
-	void SocketMonitor::processIncomingData(QPtrList<BufferedSocket> & rbs,Uint32 now)
+	void SocketMonitor::processIncomingData(QValueList<BufferedSocket*> & rbs)
 	{
-		Uint32 allowed = (Uint32)floor(dcap * (now - last_selected) * (1.0 / 1024.0));
-		Uint32 allowance = allowed + leftover_d;
-		Uint32 cnt = 0;
-		QPtrList<BufferedSocket>::iterator i = rbs.begin();
-		while (i != rbs.end() && allowance > 0)
+		Uint32 now = bt::GetCurrentTime();
+		Uint32 allowance = (Uint32)ceil(1.02 * dcap * (now - prev_download_time) * 0.001);
+		prev_download_time = now;
+		
+		Uint32 bslot = allowance / rbs.count() + 1;
+	
+		while (rbs.count() > 0 && allowance > 0)
 		{
-			Uint32 as = (Uint32)floor(allowance / (rbs.count() - cnt));
-			BufferedSocket* s = *i;
-			Uint32 ret = 0;
-			if (as > 0)
-				ret = s->readBuffered(as);
-			else
-				ret = s->readBuffered(allowance);
+			Uint32 as = bslot;
+			if (as > allowance)
+				as = allowance;
+			
+			BufferedSocket* s = rbs.first();
+			rbs.pop_front();
+			
+			Uint32 ret = s->readBuffered(as);
+			if (ret == as) // if this socket did what it was supposed to do, it can have another go if stuff is leftover
+				rbs.append(s);
 			
 			if (ret > allowance)
 				allowance = 0;
 			else
 				allowance -= ret;
-			cnt++;
-			i++;
 		}
-		
-		Uint32 pld = leftover_d;
-		leftover_d = allowance;
-		if (leftover_d >= pld)
-			leftover_d -= pld;
-		else
-			leftover_d = 0;
 	}
 	
-	void SocketMonitor::processOutgoingData(QPtrList<BufferedSocket> & wbs,Uint32 now)
+	void SocketMonitor::processOutgoingData(QValueList<BufferedSocket*> & wbs)
 	{
-		Uint32 allowed = (Uint32)floor(ucap * (now - last_selected) * (1.0 / 1024.0));
-		Uint32 allowance = allowed + leftover_u;
-		Uint32 cnt = 0;
-		QPtrList<BufferedSocket>::iterator i = wbs.begin();
-		while (i != wbs.end() && allowance > 0)
+		Uint32 now = bt::GetCurrentTime();
+		Uint32 allowance = (Uint32)ceil(ucap * (now - prev_upload_time) * 0.001);
+		prev_upload_time = now;
+		
+		Uint32 bslot = allowance / wbs.count() + 1;
+		
+		while (wbs.count() > 0 && allowance > 0)
 		{
-			Uint32 as = (Uint32)floor(allowance / (wbs.count() - cnt));
-			BufferedSocket* s = *i;
-			Uint32 ret = 0;
-			if (as > 0)
-				ret = s->writeBuffered(as);
-			else
-				ret = s->writeBuffered(allowance); 
+			Uint32 as = bslot;
+			if (as > allowance)
+				as = allowance;
+			
+			BufferedSocket* s = wbs.first();
+			wbs.pop_front();
+			
+			Uint32 ret = s->writeBuffered(as);
+			if (ret == as)
+				wbs.append(s); // it can go again if necessary  
 		
 			if (ret > allowance)
 				allowance = 0;
 			else
 				allowance -= ret;
-			cnt++;
-			i++;
 		}
-		
-	/*	Uint32 plu = leftover_u;
-		leftover_u = allowance;
-		if (leftover_u >= plu)
-			leftover_u -= plu;
-		else*/
-			leftover_u = 0;
 	}
 	
 	void SocketMonitor::update()
@@ -192,11 +183,7 @@ namespace net
 		fd_set fds,wfds;
 		FD_ZERO(&fds);
 		FD_ZERO(&wfds);
-		
-	/*	bool update_speed = bt::GetCurrentTime() - speeds_last_updated >= 250;
-		if (update_speed)
-			speeds_last_updated = bt::GetCurrentTime();
-	*/
+	
 		int max = 0;
 		mutex.lock();
 		QPtrList<BufferedSocket>::iterator itr = smap.begin();
@@ -220,14 +207,14 @@ namespace net
 		}
 		mutex.unlock();
 		
-		struct timeval tv = {0,50*1000};
-		
+		struct timeval tv = {0,100*1000};
+		Uint32 before = bt::GetCurrentTime(); // get the current time
 		if (select(max+1,&fds,&wfds,NULL,&tv) > 0)
 		{
 			Uint32 now = bt::GetCurrentTime(); // get the current time
 			Uint32 num_to_read = 0;
-			QPtrList<BufferedSocket> rbs;
-			QPtrList<BufferedSocket> wbs;
+			QValueList<BufferedSocket*> rbs;
+			QValueList<BufferedSocket*> wbs;
 			
 			mutex.lock();
 			QPtrList<BufferedSocket>::iterator itr = smap.begin();
@@ -265,31 +252,25 @@ namespace net
 				itr++;
 			}
 			
-			if (dcap > 0)
-				processIncomingData(rbs,now);	
+			if (dcap > 0 && rbs.count() > 0)
+				processIncomingData(rbs);
+			else
+				prev_download_time = now;	
 			
-			if (ucap > 0)
-				processOutgoingData(wbs,now);
+			if (ucap > 0 && wbs.count() > 0)
+				processOutgoingData(wbs);
+			else
+				prev_upload_time = now;
 			
 			mutex.unlock();
-			if (dcap > 0 || ucap > 0)
-			{
-				// sleep enough, so we don't consume to much
-				if (last_selected - now < 50)
-				{
-					last_selected = now;
-					usleep(100*1000);
-				}
-				else
-				{
-					last_selected = now;
-				}
-			}
-			else
-			{
-				last_selected = now;
-			}
-			
+			if (now - before < 100)
+				usleep(100*1000);	
+		}
+		else
+		{
+			Uint32 now = bt::GetCurrentTime(); // get the current time
+			if (now - before < 100)
+				usleep(100*1000);
 		}
 	}
 
