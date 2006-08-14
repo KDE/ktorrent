@@ -108,6 +108,12 @@ namespace net
 		float getUploadRate() const;
 		
 		/// Update the speeds of the socket
+		void updateUpSpeed();
+		
+		/// Update the speeds of the socket
+		void updateDownSpeed();
+		
+		/// Update up and down speed
 		void updateSpeeds();
 		
 	private:
