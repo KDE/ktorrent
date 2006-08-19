@@ -227,7 +227,7 @@ namespace bt
 			if (stalled_timer.getElapsedSinceUpdate() > 120000 && stats.bytes_left > 0 &&
 				!stats.priv_torrent)
 			{
-				Out() << "Stalled for to long, time to get some fresh blood" << endl;
+				Out() << "Stalled for too long, time to get some fresh blood" << endl;
 				tracker->manualUpdate();
 				stalled_timer.update();
 			}
