@@ -12,9 +12,10 @@ Stuff we should do :
 - Move QM from dialog to panel in IDEAl interface
 - Make columns in view configurable and add more
 - Moving downloaded files somewhere else
+- Scrape
+- Per torrent speed limits
 
 Other stuff :
-- Scrape
 - Make and show more statistics. (e.g. uptime, average transfer rates, connected peers, etc...) (UI clutter needs to be avoided)
 - Global share ratio limit
 - Add RSS plugin
