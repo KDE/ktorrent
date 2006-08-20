@@ -98,8 +98,9 @@ namespace bt
 		/**
 		 * Constructor, set the Peer
 		 * @param peer The Peer
+		 * @param chunk_size Size of a chunk in bytes
 		 */
-		PeerDownloader(Peer* peer);
+		PeerDownloader(Peer* peer,Uint32 chunk_size);
 		virtual ~PeerDownloader();
 
 		/// Get the number of active requests
@@ -224,6 +225,7 @@ namespace bt
 		QValueList<TimeStampedRequest> reqs;
 		int grabbed;
 		AllowedFastSet allowed_fast;
+		Uint32 chunk_size;
 		static Uint32 max_outstanding_reqs;
 	};
 

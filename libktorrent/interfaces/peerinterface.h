@@ -69,8 +69,10 @@ namespace kt
 			bool has_upload_slot;
 			/// Wether or not this connection is encrypted
 			bool encrypted;
-			/// Number of requests queued
-			bt::Uint32 num_requests;
+			/// Number of upload requests queued
+			bt::Uint32 num_up_requests;
+			/// Number of outstanding download requests queued
+			bt::Uint32 num_down_requests;
 			/// Supports the fast extensions
 			bool fast_extensions;
 		};

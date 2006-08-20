@@ -131,7 +131,7 @@ namespace kt
 		setPixmap(10,s.has_upload_slot ? yes_pix : QPixmap());
 #undef SHOW_REQUESTS
 #ifdef SHOW_REQUESTS
-		setText(11,QString::number(s.num_requests));
+		setText(11,QString("%1 / %2").arg(s.num_down_requests).arg(s.num_up_requests));
 #endif
 	}
 	

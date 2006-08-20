@@ -61,9 +61,18 @@ AC_ARG_ENABLE(geoip,
      [case "${enableval}" in
        yes) geoip=true ;;
        no)  geoip=false ;;
-       *) AC_MSG_ERROR(bad value ${enableval} for --enable-debug) ;;
+       *) AC_MSG_ERROR(bad value ${enableval} for --enable-geoip) ;;
      esac],[geoip=true])
 
 AM_CONDITIONAL(ENABLE_GEOIP, test x$geoip = xtrue)
 
+AC_ARG_ENABLE(torrent-mimetype,
+     [  --enable-torrent-mimetype Enables the installation of the torrent mimetype which uses a KTorrent based icon],
+     [case "${enableval}" in
+       yes) mimetype_install=true ;;
+       no)  mimetype_install=false ;;
+       *) AC_MSG_ERROR(bad value ${enableval} for --enable-torrent-mimetype) ;;
+     esac],[mimetype_install=false])
+
+AM_CONDITIONAL(ENABLE_TORRENT_MIMETYPE, test x$mimetype_install = xtrue)
 

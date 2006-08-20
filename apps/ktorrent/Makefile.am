@@ -56,5 +56,7 @@ appicon_ICON = ktencrypted ktremove ktstart_all ktstart ktstop_all ktstop ktplug
 kde_servicetypes_DATA = ktorrentplugin.desktop
 EXTRA_DIST = ktorrentplugin.desktop
 
+if ENABLE_TORRENT_MIMETYPE
 mimedir = $(kde_mimedir)/application
 mime_DATA = x-bittorrent.desktop
+endif
