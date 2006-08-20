@@ -85,6 +85,7 @@ namespace kt
 				manual_change = true;
 				setOn(true);
 				manual_change = false;
+				return;
 			}	
 		}
 		Globals::instance().setCriticalOperationMode(true);
