@@ -68,7 +68,7 @@ namespace bt
 		return *this;
 	}
 
-	PeerDownloader::PeerDownloader(Peer* peer) : peer(peer),grabbed(0)
+	PeerDownloader::PeerDownloader(Peer* peer,Uint32 chunk_size) : peer(peer),grabbed(0),chunk_size(chunk_size / MAX_PIECE_LEN)
 	{
 		connect(peer,SIGNAL(piece(const Piece& )),this,SLOT(piece(const Piece& )));
 		connect(peer,SIGNAL(destroyed()),this,SLOT(peerDestroyed()));
@@ -242,48 +242,52 @@ namespace bt
 	Uint32 PeerDownloader::getMaximumOutstandingReqs() const
 	{
 		// get the download rate in KB/sec
-		double rate_kbs = (double)peer->getDownloadRate() / 1024.0;
-		// per 15 KB/s we can assign one downloader
-		Uint32 num_extra = (Uint32)floor(rate_kbs / 1);
+		double pieces_per_sec = (double)peer->getDownloadRate() / MAX_PIECE_LEN;
 		
-		// we have a maximum of 25 outstanding chunk requests
-		if (num_extra > max_outstanding_reqs)
-			num_extra = max_outstanding_reqs;
-		
-		return 10 + num_extra;
+		if (pieces_per_sec < 1.0)
+			return 5;
+		else
+			return 5 + (Uint32)ceil(2*pieces_per_sec);
 	}
 
 	Uint32 PeerDownloader::getMaxChunkDownloads() const
 	{
 		// get the download rate in KB/sec
-		double rate_kbs = (double)peer->getDownloadRate() / 1024.0;
-		// per 15 KB/s we can assign one downloader
-		Uint32 num_extra = (Uint32)floor(rate_kbs / 15.0);
-		// if we nearly finished the last chunk increment num_extra
-		if (getMaximumOutstandingReqs() <= 2)
-			num_extra++;
-		// lets not overreact
-		if (num_extra > 5)
-			num_extra = 5;
-					
-		return 1 + num_extra;
+		Uint32 rate_kbs = peer->getDownloadRate() / 1024;
+		Uint32 num_extra = 0;
+		if (rate_kbs >= 50)
+			num_extra = 1;
+		else if (rate_kbs >= 100)
+			num_extra = 2;
+		else if (rate_kbs >= 150)
+			num_extra = 3;
+		
+		// also take into account the size of each chunk
+		// if a chunk has less then 16 pieces we multiply by 16 / num_pieces_per_chunk
+		Uint32 mul_factor = 1;
+		if (chunk_size >= 16)
+			mul_factor = 1;
+		else
+			mul_factor = 16 / chunk_size;
+		 
+		return mul_factor * (1 + num_extra);
 	}
 	
-	Uint32 PeerDownloader::max_outstanding_reqs = 20;
+	Uint32 PeerDownloader::max_outstanding_reqs = 5;
 	
 	void PeerDownloader::setMemoryUsage(Uint32 m)
 	{
 		switch (m)
 		{
 			case 2:
-				max_outstanding_reqs = 40;
+				max_outstanding_reqs = 15;
 				break;
 			case 1:
-				max_outstanding_reqs = 30;
+				max_outstanding_reqs = 10;
 				break;
 			case 0:
 			default:
-				max_outstanding_reqs = 20;
+				max_outstanding_reqs = 5;
 				break;
 		}
 	}

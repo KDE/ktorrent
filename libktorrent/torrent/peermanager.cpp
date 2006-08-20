@@ -181,7 +181,7 @@ namespace bt
 			return;
 		}
 
-		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),support);
+		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),tor.getChunkSize(),support);
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));
@@ -230,7 +230,7 @@ namespace bt
 		if (auth->supportsFastExtensions())
 			flags |= bt::FAST_EXT_SUPPORT;
 		
-		Peer* peer = new Peer(auth->takeSocket(),auth->getPeerID(),tor.getNumChunks(),flags);
+		Peer* peer = new Peer(auth->takeSocket(),auth->getPeerID(),tor.getNumChunks(),tor.getChunkSize(),flags);
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));

@@ -689,7 +689,7 @@ namespace bt
 				resetChunk(i);
 			
 			// if the first chunk only lies in one file, reset it
-			if (files.count() == 1) 
+			if (files.count() == 1 && first != 0) 
 			{
 		//		Out(SYS_DIO|LOG_DEBUG) << "Resetting first " << first << endl;
 				resetChunk(first);

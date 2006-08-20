@@ -70,12 +70,13 @@ namespace bt
 		 * @param sock The socket
 		 * @param peer_id The Peer's BitTorrent ID
 		 * @param num_chunks The number of chunks in the file
+		 * @param chunk_size Size of each chunk 
 		 * @param support Which extensions the peer supports
-		 * @param enc An RC4 encryptor (0 if no encryption is wanted
 		 */
 		Peer(mse::StreamSocket* sock,
 			 const PeerID & peer_id,
 			 Uint32 num_chunks,
+			 Uint32 chunk_size,
 			 Uint32 support);
 		
 		virtual ~Peer();

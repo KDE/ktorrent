@@ -62,7 +62,7 @@
         <cxxflags>-O2 -g0</cxxflags>
       </optimized>
       <debug>
-        <configargs>--enable-debug=full</configargs>
+        <configargs>--enable-debug=full --enable-torrent-mimetype</configargs>
         <builddir>debug</builddir>
         <ccompiler>kdevgccoptions</ccompiler>
         <cxxcompiler>kdevgppoptions</cxxcompiler>

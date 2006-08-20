@@ -42,7 +42,7 @@ namespace bt
 	static Uint32 peer_id_counter = 1;
 	
 	
-	Peer::Peer(mse::StreamSocket* sock,const PeerID & peer_id,Uint32 num_chunks,Uint32 support)
+	Peer::Peer(mse::StreamSocket* sock,const PeerID & peer_id,Uint32 num_chunks,Uint32 chunk_size,Uint32 support)
 	: sock(sock),pieces(num_chunks),peer_id(peer_id)
 	{
 		id = peer_id_counter;
@@ -52,7 +52,7 @@ namespace bt
 		choked = am_choked = true;
 		interested = am_interested = false;
 		killed = false;
-		downloader = new PeerDownloader(this);
+		downloader = new PeerDownloader(this,chunk_size);
 		uploader = new PeerUploader(this);
 		
 		
@@ -75,7 +75,7 @@ namespace bt
 		stats.aca_score = 0.0;
 		stats.evil = false;
 		stats.has_upload_slot = false;
-		stats.num_requests = 0;
+		stats.num_up_requests = stats.num_down_requests = 0;
 		stats.encrypted = sock->encrypted();
 		if (stats.ip_addresss == "0.0.0.0")
 		{
@@ -440,7 +440,8 @@ namespace bt
 		stats.upload_rate = this->getUploadRate();
 		stats.perc_of_file = this->percentAvailable();
 		stats.snubbed = this->isSnubbed();
-		stats.num_requests = uploader->getNumRequests();
+		stats.num_up_requests = uploader->getNumRequests();
+		stats.num_down_requests = downloader->getNumRequests();
 		return stats;
 	}
 	
