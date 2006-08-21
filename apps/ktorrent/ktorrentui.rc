@@ -3,6 +3,7 @@
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
 	  <Action name="paste_url"/>
+	  <Action name="ipfilter_action"/>
 	  <Merge/>
   </Menu>
   <Menu name="Downloads"><text>Downloads</text>
@@ -27,6 +28,8 @@
     <Separator/>
     <Action name="edit_copy"/>
     <Action name="edit_paste"/>
+	<Separator/>
+	<Action name="ipfilter_action"/>
 </ToolBar>
 <ToolBar name="DownloadToolBar" noMerge="1"><text>Download Toolbar</text>
 	<Action name="Start"/>

@@ -140,6 +140,7 @@ private slots:
 	void stopDownload();
 	void stopAllDownloads();
 	void queueAction();
+	void showIPFilter();
 	void removeDownload();
 	void queueManagerShow();
 	void optionsShowStatusbar();
@@ -200,6 +201,7 @@ private:
 	KAction* m_queuemgr; 
 	KAction* m_queueaction;
 	KAction* m_datacheck;
+	KAction* m_ipfilter;
 };
 
 #endif // _KTORRENT_H_

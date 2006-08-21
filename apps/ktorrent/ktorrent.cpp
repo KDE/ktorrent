@@ -79,6 +79,7 @@
 #include "torrentcreatordlg.h"
 #include "pastedialog.h"
 #include "queuedialog.h"
+#include "ipfilterwidget.h"
 #include <util/functions.h>
 #include <interfaces/functions.h>
 #include <interfaces/plugin.h>
@@ -429,6 +430,11 @@ void KTorrent::setupActions()
 			i18n("Enqueue/Dequeue"),
 			"player_playlist", 0, this, SLOT(queueAction()),
 			actionCollection(), "queue_action");
+	
+	m_ipfilter = new KAction(
+			i18n("IPFilter"),
+			"filter", 0, this, SLOT(showIPFilter()),
+			actionCollection(), "ipfilter_action");
 	
 	m_datacheck = new KAction(
 			i18n("Check Data Integrity"),
@@ -874,6 +880,12 @@ QCStringList KTorrent::getTorrentInfo(kt::TorrentInterface* tc)
 	else
 		torrentinfo = m_view->getTorrentInfo(tc);
 	return torrentinfo;
+}
+
+void KTorrent::showIPFilter()
+{
+	IPFilterWidget ipf(this);
+	ipf.exec();
 }
 
 #include "ktorrent.moc"

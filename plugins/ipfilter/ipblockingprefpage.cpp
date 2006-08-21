@@ -57,15 +57,13 @@ namespace kt
 {
 	IPBlockingPrefPageWidget::IPBlockingPrefPageWidget(QWidget* parent) : IPBlockingPref(parent)
 	{
-		m_filter->setURL(IPBlockingPluginSettings::filterFile());
 		m_url->setURL(IPBlockingPluginSettings::filterURL());
 		if (m_url->url() == "")
 			m_url->setURL(QString("http://www.bluetack.co.uk/config/splist.zip"));
 		
 		bool use_level1 = IPBlockingPluginSettings::useLevel1();
-		bool use_filter = IPBlockingPluginSettings::useFilter();
+
 		checkUseLevel1->setChecked(use_level1);
-		checkUseKTfilter->setChecked(use_filter);
 		
 		if(use_level1)
 		{
@@ -80,30 +78,13 @@ namespace kt
 			btnDownload->setEnabled(false);
 		}
 		
-		if(use_filter)
-		{
-			lbl_status2->setText(i18n("Status: Loaded and running."));
-			m_filter->setEnabled(true);
-		}
-		else
-		{
-			lbl_status2->setText(i18n("Status: Not loaded."));
-			m_filter->setEnabled(false);
-		}
-		
 		m_plugin = 0;
 	}
 
 	void IPBlockingPrefPageWidget::apply()
 	{
-		KURLRequester* filter = m_filter;
-		if(IPBlockingPluginSettings::filterFile() != filter->url() && m_prefpage)
-			m_prefpage->filterChanged();
-		
-		IPBlockingPluginSettings::setFilterFile(filter->url());
 		IPBlockingPluginSettings::setFilterURL(m_url->url());
 		IPBlockingPluginSettings::setUseLevel1(checkUseLevel1->isChecked());
-		IPBlockingPluginSettings::setUseFilter(checkUseKTfilter->isChecked());
 		IPBlockingPluginSettings::writeConfig();
 		
 		if(checkUseLevel1->isChecked())
@@ -116,19 +97,6 @@ namespace kt
 		}
 		else
 			lbl_status1->setText(i18n("Status: Not loaded."));
-		
-		if(checkUseKTfilter->isChecked())
-		{
-			QString filter = IPBlockingPluginSettings::filterFile();
-			if(!filter.isEmpty())
-			{
-				lbl_status2->setText("Status: Loaded and running.");
-			}
-			else
-				lbl_status2->setText("Status: <font color=\"#ff0000\">Filter file not found.</font> Choose one.");
-		}
-		else
-			lbl_status2->setText(i18n("Status: Not loaded."));
 	}
 
 	void IPBlockingPrefPageWidget::btnDownload_clicked()
@@ -218,19 +186,6 @@ namespace kt
 		}
 	}
 	
-	void IPBlockingPrefPageWidget::checkUseKTfilter_toggled(bool check)
-	{
-		if(check)
-		{
-			m_filter->setEnabled(true);
-		}
-		else
-		{
-			lbl_status2->setText("");
-			m_filter->setEnabled(false);
-		}
-	}
-
 	void IPBlockingPrefPageWidget::convert()
 	{
 		QFile target(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat");
@@ -258,7 +213,6 @@ namespace kt
 	void IPBlockingPrefPageWidget::setConverting(bool enable)
 	{
 		btnDownload->setEnabled(enable);
-		groupBox2->setEnabled(enable);
 		lbl_status1->setText("");
 	}
 	
@@ -269,7 +223,6 @@ namespace kt
 	: PrefPageInterface(i18n("IPBlocking Filter"), i18n("IPBlocking Filter Options"), KGlobal::iconLoader()->loadIcon("filter",KIcon::NoGroup)), m_core(core), m_plugin(p)
 	{
 		widget = 0;
-		ktfilter_loaded = IPBlockingPluginSettings::useFilter();
 	}
 
 	IPBlockingPrefPage::~IPBlockingPrefPage()
@@ -279,95 +232,12 @@ namespace kt
 	{
 		widget->apply();
 		
-		if(IPBlockingPluginSettings::useFilter())
-		{
-			if(!ktfilter_loaded)
-				loadFilters();
-			ktfilter_loaded = true;
-		}
-		else
-		{
-			if(ktfilter_loaded)
-				unloadFilters();
-			ktfilter_loaded = false;
-		}
-		
 		if(IPBlockingPluginSettings::useLevel1())
 			m_plugin->loadAntiP2P();
 		else
 			m_plugin->unloadAntiP2P();
 		
 		return true;
-	}
-
-	void IPBlockingPrefPage::loadFilters()
-	{
-		/** LOAD KT FILTER LIST **/
-		QString filter = IPBlockingPluginSettings::filterFile();
-		if(!filter.isEmpty())
-		{
-			//load list
-			QString listURL = IPBlockingPluginSettings::filterFile();
-			QFile dat(listURL);
-			dat.open(IO_ReadOnly);
-
-			QTextStream stream( &dat );
-			QString line;
-			int i=0;
-			int count=0;
-			int var=0;
-			while ( !stream.atEnd() && i < MAX_RANGES )
-			{
-				QRegExp rx("([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3})");
-				QRegExpValidator v( rx,0);
-				line = stream.readLine();
-				if ( v.validate( line, var ) != QValidator::Acceptable )
-					continue;
-				else
-					++count;
-				
-				m_core->addBlockedIP(line);
-				++i;
-			}
-			Out(SYS_IPF|LOG_NOTICE) << "Loaded " << count << " blocked IP ranges." << endl;
-			dat.close();
-		}
-		
-	}
-
-	void IPBlockingPrefPage::unloadFilters()
-	{
-		/** UNLOAD KT FILTER LIST **/
-		QString filter = IPBlockingPluginSettings::filterFile();
-		if(!filter.isEmpty())
-		{
-			//unload list
-			QString listURL = IPBlockingPluginSettings::filterFile();
-			QFile dat(listURL);
-			dat.open(IO_ReadOnly);
-
-			QTextStream stream( &dat );
-			QString line;
-			int i=0;
-			int count = 0;
-			int var = 0;
-			while ( !stream.atEnd() && i < MAX_RANGES )
-			{
-				QRegExp rx("([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3})");
-				QRegExpValidator v( rx,0);
-				line = stream.readLine();
-				if ( v.validate( line, var ) != QValidator::Acceptable )
-					continue;
-				else
-					++count;
-				
-				m_core->removeBlockedIP(line);
-				++i;
-			}
-			Out(SYS_IPF|LOG_NOTICE) << "Unloaded " << count << " blocked IP ranges." << endl;
-			dat.close();
-		}
-		
 	}
 	
 	void IPBlockingPrefPage::createWidget(QWidget* parent)
@@ -385,9 +255,4 @@ namespace kt
 
 	void IPBlockingPrefPage::updateData()
 	{}
-	
-	void IPBlockingPrefPage::filterChanged()
-	{
-		ktfilter_loaded = false;
-	}
 }

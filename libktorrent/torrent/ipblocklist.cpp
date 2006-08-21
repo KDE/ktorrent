@@ -22,6 +22,7 @@
 #include "ipblocklist.h"
 #include <qmap.h>
 #include <qstring.h>
+#include <qstringlist.h>
 #include <util/constants.h>
 #include <util/log.h>
 #include "globals.h"
@@ -277,6 +278,26 @@ namespace bt
 		else
 			return pluginInterface->isBlockedIP(ip);
 	}
+	
+	QStringList* IPBlocklist::getBlocklist()
+	{
+		QStringList* ret = new QStringList();
+		QMap<IPKey,int>::iterator it = m_peers.begin();
+		for( ;it!=m_peers.end();++it)
+		{
+			IPKey key = it.key();
+			*ret << key.toString();
+		}
+		
+		return ret;
+	}
+	
+	void IPBlocklist::setBlocklist(QStringList* list)
+	{
+		m_peers.clear();
+		for (QStringList::Iterator it = list->begin(); it != list->end(); ++it ) 
+			addRange(*it);
+	}
 
 	/***  IPKey   *****************************************************************************************************************/
 
@@ -292,11 +313,66 @@ namespace bt
 		bool ok;
 		this->m_ip = toUint32(ip, &ok);
 	}
+	
+	IPKey::IPKey(const IPKey& ip)
+	{
+		m_ip = ip.m_ip;
+		m_mask = ip.m_mask;
+	}
 
 	IPKey::IPKey(Uint32 ip, Uint32 mask)
 			: m_ip(ip), m_mask(mask)
 	{}
 
+	QString IPKey::toString()
+	{
+		Uint32 tmp, tmpmask;
+		Uint32 ip = m_ip;
+		Uint32 mask = m_mask;
+		QString out;
+	
+		tmp = ip;
+		tmpmask = mask;
+		tmp &= 0x000000FF;
+		tmpmask &= 0x000000FF;
+		if(tmpmask == 0)
+			out.prepend("*");
+		else
+			out.prepend(QString("%1").arg(tmp));
+		ip >>= 8;
+		mask >>= 8;
+		tmp = ip;
+		tmpmask = mask;
+		tmp &= 0x000000FF;
+		tmpmask &= 0x000000FF;
+		if(tmpmask == 0)
+			out.prepend("*.");
+		else
+			out.prepend(QString("%1.").arg(tmp));
+		ip >>= 8;
+		mask >>= 8;
+		tmp = ip;
+		tmpmask = mask;
+		tmp &= 0x000000FF;
+		tmpmask &= 0x000000FF;
+		if(tmpmask == 0)
+			out.prepend("*.");
+		else
+			out.prepend(QString("%1.").arg(tmp));
+		ip >>= 8;
+		mask >>= 8;
+		tmp = ip;
+		tmpmask = mask;
+		tmp &= 0x000000FF;
+		tmpmask &= 0x000000FF;
+		if(tmpmask == 0)
+			out.prepend("*.");
+		else
+			out.prepend(QString("%1.").arg(tmp));
+	
+		return out;
+	}
+	
 	bool IPKey::operator ==(const IPKey& ip) const
 	{
 		return  (m_ip & m_mask) == m_mask & ip.m_ip;
@@ -322,4 +398,3 @@ namespace bt
 	IPKey::~ IPKey()
 	{}
 }
-

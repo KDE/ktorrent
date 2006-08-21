@@ -52,7 +52,6 @@ namespace kt
 			
 		public slots:
     		virtual void btnDownload_clicked();
-    		virtual void checkUseKTfilter_toggled(bool);
     		virtual void checkUseLevel1_toggled(bool);
 			
 		private:
@@ -74,17 +73,11 @@ namespace kt
 			virtual void createWidget(QWidget* parent);
 			virtual void updateData();
 			virtual void deleteWidget();
-			
-			void loadFilters();
-			void unloadFilters();
-			
-			void filterChanged();
 
 		private:
 			CoreInterface* m_core;
 			IPBlockingPrefPageWidget* widget;
 			IPFilterPlugin* m_plugin;
-			bool ktfilter_loaded;
 	};
 }
 #endif

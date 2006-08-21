@@ -62,8 +62,6 @@ namespace kt
 		pref = new IPBlockingPrefPage(getCore(), this);
 		getGUI()->addPrefPage(pref);
 		
-		if(IPBlockingPluginSettings::useFilter())
-			pref->loadFilters();
 		if(IPBlockingPluginSettings::useLevel1())
 			loadAntiP2P();
 		

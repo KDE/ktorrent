@@ -24,6 +24,7 @@
 #include <interfaces/ipblockinginterface.h>
 
 #include <qmap.h>
+#include <qstringlist.h>
 #include <util/constants.h>
 
 class QString;
@@ -43,6 +44,8 @@ namespace bt
 			bool operator!= (const IPKey& ip) const;
 			bool operator < (const IPKey & ip) const;
 			IPKey&  operator= (const IPKey& ip);
+			
+			QString toString();
 
 			Uint32 m_ip;
 			Uint32 m_mask;
@@ -114,6 +117,22 @@ namespace bt
 			 * Call this when IPBlockingPlugin gets unloaded or deleted
 			 */
 			void unsetPluginInterfacePtr() { pluginInterface = 0; }
+			
+			
+			/**
+			 * @brief This function will fill QStringList with all banned peer IP addresses.
+			 * @return QStringList filled with blacklisted peers. 
+			 * It will create a new QStringList object so don't forget to delete it after using.
+			 */
+			QStringList* getBlocklist();
+			
+			
+			/**
+			 * @brief This function will load blacklisted peers to IPFilter.
+			 * @param list QStringList containing all banned peers.
+			 * @note This function will remove current peers from blocklist before setting new list!!!
+			 */
+			void setBlocklist(QStringList* list);
 
 		private:
 			
