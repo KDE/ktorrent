@@ -159,7 +159,9 @@ namespace bt
 			if (pd->isNull())
 				continue;
 	
-			bool ok = pd->getNumGrabbed() < pd->getMaxChunkDownloads() && 
+			bool ok = 
+					(pd->getNumGrabbed() < pd->getMaxChunkDownloads() ||
+						pd->isNearlyDone()) && 
 					pd->getNumRequests() < pd->getMaximumOutstandingReqs();
 			
 			
@@ -172,6 +174,8 @@ namespace bt
 				}
 				else
 					downloadFrom(pd);
+				
+				pd->setNearlyDone(false);
 			}
 		}
 	}

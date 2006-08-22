@@ -118,6 +118,12 @@ namespace bt
 		 */
 		bool hasChunk(Uint32 idx) const;
 		
+		/// See if this PeerDownloader has nearly finished a chunk
+		bool isNearlyDone() const {return grabbed == 1 && nearly_done;}
+		
+		/// Set the nearly done status of the PeerDownloader
+		void setNearlyDone(bool nd) {nearly_done = nd;}
+		
 		/**
 		 * Grab the Peer, indicates how many ChunkDownload's
 		 * are using this PeerDownloader.
@@ -226,6 +232,7 @@ namespace bt
 		int grabbed;
 		AllowedFastSet allowed_fast;
 		Uint32 chunk_size;
+		bool nearly_done;
 		static Uint32 max_outstanding_reqs;
 	};
 
