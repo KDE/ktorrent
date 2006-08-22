@@ -72,6 +72,7 @@ namespace bt
 	{
 		connect(peer,SIGNAL(piece(const Piece& )),this,SLOT(piece(const Piece& )));
 		connect(peer,SIGNAL(destroyed()),this,SLOT(peerDestroyed()));
+		nearly_done = false;
 	}
 
 
@@ -265,6 +266,7 @@ namespace bt
 		// also take into account the size of each chunk
 		// if a chunk has less then 16 pieces we multiply by 16 / num_pieces_per_chunk
 		Uint32 mul_factor = 1;
+		
 		if (chunk_size >= 16)
 			mul_factor = 1;
 		else

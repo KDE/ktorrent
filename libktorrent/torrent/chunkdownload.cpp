@@ -233,6 +233,9 @@ namespace bt
 			piece_queue.append(i);
 			num_visited++;
 		}
+		
+		if (piece_queue.count() < 2 && piece_queue.count() > 0)
+			pd->setNearlyDone(true);
 	}
 	
 	void ChunkDownload::onTimeout(const Request & r)
