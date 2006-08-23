@@ -337,19 +337,23 @@ namespace bt
 			c->setStatus(Chunk::ON_DISK);
 			return;
 		}
-		else if (tflist.count() == 1 && c->getStatus() == Chunk::BUFFERED)
+	/*	else if (tflist.count() == 1 && c->getStatus() == Chunk::BUFFERED)
 		{
 			// buffered chunks are slightly more difficult
 			CacheFile* fd = files.find(tflist[0]);
 			if (!fd)
 				return;
 			
-			Uint64 off = c->getIndex() * tor.getChunkSize();
+			const TorrentFile & f = tor.getFile(tflist[0]);
+			
+			Uint64 off = FileOffset(c,f,tor.getChunkSize()); 
+					//c->getIndex() * tor.getChunkSize();
 			fd->write(c->getData(),c->getSize(),off);
 			c->clear();
 			c->setStatus(Chunk::ON_DISK);
 			return;
 		}
+	*/
 		
 	//	Out() << "Writing to " << tflist.count() << " files " << endl;
 		Uint64 written = 0; // number of bytes written
