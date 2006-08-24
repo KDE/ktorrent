@@ -196,7 +196,7 @@
                 <cstring>btnUpdate</cstring>
             </property>
             <property name="text">
-                <string>Upd&amp;ate tracker</string>
+                <string>Upd&amp;ate Tracker</string>
             </property>
             <property name="toolTip" stdset="0">
                 <string>Minimum update interval - 60 seconds</string>
@@ -207,7 +207,7 @@
                 <cstring>btnAdd</cstring>
             </property>
             <property name="text">
-                <string>Add t&amp;racker</string>
+                <string>Add T&amp;racker</string>
             </property>
         </widget>
         <widget class="QLayoutWidget" row="2" column="1">
@@ -223,7 +223,7 @@
                         <cstring>btnRemove</cstring>
                     </property>
                     <property name="text">
-                        <string>Remove tracker</string>
+                        <string>Remove Tracker</string>
                     </property>
                     <property name="accel">
                         <string></string>
@@ -234,7 +234,7 @@
                         <cstring>btnChange</cstring>
                     </property>
                     <property name="text">
-                        <string>Cha&amp;nge tracker</string>
+                        <string>Cha&amp;nge Tracker</string>
                     </property>
                 </widget>
                 <spacer>
@@ -259,7 +259,7 @@
                         <cstring>btnRestore</cstring>
                     </property>
                     <property name="text">
-                        <string>Restore defaults</string>
+                        <string>Restore Defaults</string>
                     </property>
                     <property name="accel">
                         <string></string>
