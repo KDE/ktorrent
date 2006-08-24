@@ -13,7 +13,7 @@
         </rect>
     </property>
     <property name="caption">
-        <string>KTorrent blacklist</string>
+        <string>KTorrent Blacklist</string>
     </property>
     <grid>
         <property name="name">
@@ -38,7 +38,7 @@
                 <cstring>groupBox1</cstring>
             </property>
             <property name="title">
-                <string>Banned peers</string>
+                <string>Banned Peers</string>
             </property>
             <grid>
                 <property name="name">
@@ -257,7 +257,7 @@
                                 <cstring>btnApply</cstring>
                             </property>
                             <property name="text">
-                                <string>Appl&amp;y</string>
+                                <string>&amp;Apply</string>
                             </property>
                             <property name="stdItem" stdset="0">
                                 <number>9</number>
@@ -268,7 +268,7 @@
                                 <cstring>btnCancel</cstring>
                             </property>
                             <property name="text">
-                                <string>Ca&amp;ncel</string>
+                                <string>&amp;Cancel</string>
                             </property>
                             <property name="stdItem" stdset="0">
                                 <number>2</number>
@@ -280,6 +280,8 @@
         </widget>
     </grid>
 </widget>
+<customwidgets>
+</customwidgets>
 <connections>
     <connection>
         <sender>btnCancel</sender>
@@ -354,7 +356,6 @@
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>klistview.h</includehint>
-    <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
