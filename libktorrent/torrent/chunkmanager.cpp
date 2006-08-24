@@ -840,6 +840,7 @@ namespace bt
 			}
 			else if (!ok_chunks.get(i) && bitset.get(i))
 			{
+				Out() << "Previously OK chunk " << i << " is corrupt !!!!!" << endl;
 				// We think we have a chunk, but we don't
 				bitset.set(i,false);
 				if (c->getStatus() == Chunk::ON_DISK)
