@@ -149,7 +149,7 @@ namespace bt
 			// off is not a multiple of the page_size
 			// so we play around a bit
 			Uint32 diff = (off % page_size);
-			Uint32 noff = off - diff;
+			Uint64 noff = off - diff;
 		//	Out() << "Offsetted mmap : " << diff << endl;
 			char* ptr = (char*)mmap(0, size + diff, mmap_flag, MAP_SHARED, fd, noff);
 			if (ptr == MAP_FAILED) 
