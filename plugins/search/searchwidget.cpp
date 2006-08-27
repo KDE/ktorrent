@@ -67,7 +67,8 @@ namespace kt
 		right_click_menu = new KPopupMenu(this);
 		right_click_menu->insertSeparator();
 		back_id = right_click_menu->insertItem(
-				KGlobal::iconLoader()->loadIconSet("back",KIcon::Small),
+                        KGlobal::iconLoader()->loadIconSet(QApplication::reverseLayout() 
+                        ? "forward" : "back",KIcon::Small),
 				i18n("Back"),html_part,SLOT(back()));
 		right_click_menu->insertItem(
 				KGlobal::iconLoader()->loadIconSet("reload",KIcon::Small),
@@ -82,9 +83,11 @@ namespace kt
 		connect(sbar->m_reload,SIGNAL(clicked()),html_part,SLOT(reload()));
 	
 		sbar->m_clear_button->setIconSet(
-				KGlobal::iconLoader()->loadIconSet(QApplication::reverseLayout() ? "clear_left" : "locationbar_erase",KIcon::Small));
+				KGlobal::iconLoader()->loadIconSet(QApplication::reverseLayout() 
+                        ? "clear_left" : "locationbar_erase",KIcon::Small));
 		sbar->m_back->setIconSet(
-				KGlobal::iconLoader()->loadIconSet("back",KIcon::Small));
+                        KGlobal::iconLoader()->loadIconSet(QApplication::reverseLayout() 
+                        ? "forward" : "back", KIcon::Small));
 		sbar->m_reload->setIconSet(
 				KGlobal::iconLoader()->loadIconSet("reload",KIcon::Small));
 		
