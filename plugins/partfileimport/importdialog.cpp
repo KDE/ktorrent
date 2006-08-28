@@ -227,6 +227,9 @@ namespace kt
 		// create all necessary subdirs
 		QString ctmp = cache_dir;
 		QString otmp = data_url.path();
+		if (!otmp.endsWith(bt::DirSeparator()))
+			otmp += bt::DirSeparator();
+		
 		QString dtmp = dnd_dir;
 		for (Uint32 i = 0;i < sl.count() - 1;i++)
 		{
