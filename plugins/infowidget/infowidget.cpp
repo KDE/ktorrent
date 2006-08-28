@@ -60,8 +60,8 @@ using namespace kt;
 namespace kt
 {
 	
-	InfoWidget::InfoWidget(bool seed, QWidget* parent, const char* name, WFlags fl)
-		: InfoWidgetBase(parent,name,fl),peer_view(0),cd_view(0), tracker_view(0), m_seed(seed)
+	InfoWidget::InfoWidget(QWidget* parent, const char* name, WFlags fl)
+		: InfoWidgetBase(parent,name,fl),peer_view(0),cd_view(0), tracker_view(0)
 	{
 		multi_root = 0;
 		monitor = 0;
@@ -95,16 +95,14 @@ namespace kt
 
 		m_file_view->setSelectionMode(QListView::Extended);
 		
-		if(!m_seed)
-			KGlobal::config()->setGroup("InfoWidget");
-		else
-			KGlobal::config()->setGroup("SeedInfoWidget");
+		KGlobal::config()->setGroup("InfoWidget");
 		
 		if (KGlobal::config()->hasKey("InfoWidgetSize"))
 		{
 			QSize s = KGlobal::config()->readSizeEntry("InfoWidgetSize",0);
 			resize(s);
 		}
+		
 		maxRatio->setMinValue(0.0f);
 		maxRatio->setMaxValue(100.0f);
 		maxRatio->setStep(0.1f);
@@ -117,10 +115,7 @@ namespace kt
 	
 	InfoWidget::~InfoWidget()
 	{
-		if(!m_seed)
-			KGlobal::config()->setGroup("InfoWidget");
-		else
-			KGlobal::config()->setGroup("SeedInfoWidget");
+		KGlobal::config()->setGroup("InfoWidget");
 		
 		KGlobal::config()->writeEntry("InfoWidgetSize",size());
 		if (cd_view)

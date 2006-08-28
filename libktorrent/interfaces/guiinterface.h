@@ -40,14 +40,6 @@ namespace kt
 		BELOW  ///< New widgets will be added below the old
 	};
 	
-	enum PanelView
-	{
-		DOWNLOAD_VIEW,	///Download panel is currently visible
-		SEED_VIEW,		///Seed panel is currently visible
-		SEARCH_VIEW,	///Search panel is currently visible
-		NO_VIEW			///No panel is visible (KT is in tray)
-	};
-
 	/**
 	 * Small interface for classes who want to know when
 	 * current torrent in the gui changes.
@@ -55,8 +47,7 @@ namespace kt
 	class ViewListener
 	{
 	public:
-		virtual void currentDownloadChanged(TorrentInterface* tc) = 0;
-		virtual void currentSeedChanged(TorrentInterface* tc) = 0;
+		virtual void currentTorrentChanged(TorrentInterface* tc) = 0;
 	};
 	
 	/**
@@ -141,50 +132,51 @@ namespace kt
 		virtual void removeWidgetFromView(QWidget* w) = 0;
 		
 		/**
-		 * Embed a widget in the view in the SeedView
-		 * The view and the new widget will be separated by a separator.
-		 * @param w The widget
-		 * @param pos How the widget will be positioned against the already present widgets
-		 */
-		virtual void addWidgetInSeedView(QWidget* w,Position pos) = 0;
-
-		/**
-		 * Remove a widget added with addWidgetInSeedView.
-		 * The widget will be reparented to 0.
-		 * @param w The widget 
-		 */
-		virtual void removeWidgetFromSeedView(QWidget* w) = 0;
-		
-		/**
 		 * Add a widget below the view.
 		 * @param w The widget
+		 * @param icon Name of icon to use
+		 * @param caption The caption to use
 		 */
-		virtual void addWidgetBelowView(QWidget* w) = 0;
+		virtual void addWidgetBelowView(QWidget* w,const QString & icon,const QString & caption) = 0;
 		
 		/**
 		 * Remove a widget, which was added below the view.
 		 * @param w The widget
 		 */
 		virtual void removeWidgetBelowView(QWidget* w) = 0;
+		
+		enum ToolDock
+		{
+			DOCK_LEFT,
+			DOCK_RIGHT,
+			DOCK_BOTTOM
+		};
+		
+		/**
+		 * Add a tool widget.
+		 * @param w The widget
+		 * @param icon Name of icon to use
+		 * @param caption The caption to use
+		 * @param dock Where to dock the widget
+		 */
+		virtual void addToolWidget(QWidget* w,const QString & icon,const QString & caption,ToolDock dock) = 0;
+		
+		/**
+		 * Remove a tool widget.
+		 * @param w The widget
+		 */
+		virtual void removeToolWidget(QWidget* w) = 0;
 
 		/// Get the current torrent.
 		virtual const TorrentInterface* getCurrentTorrent() const = 0;
 		
-		///Checks which panel is currently visible - download or seed.
-		virtual PanelView getCurrentPanel() = 0;
 		
 	protected:
 		/**
 		 * Notifies all view listeners of the change in the current downloading TorrentInterface
 		 * @param tc Pointer to current TorrentInterface
 		 */
-		void notifyDownloadViewListeners(TorrentInterface* tc);
-		
-		/**
-		 * Notifies all view listeners of the change in the current seeding TorrentInterface
-		 * @param tc Pointer to current TorrentInterface
-		 */
-		void notifySeedViewListeners(TorrentInterface* tc);
+		void notifyViewListeners(TorrentInterface* tc);
 	};
 
 }

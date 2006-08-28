@@ -107,5 +107,17 @@ namespace bt
 		return k;
 	}
 
+	bool operator < (const SHA1Hash & a,const SHA1Hash & b)
+	{
+		for (int i = 0;i < 20;i++)
+		{
+			if (a.hash[i] < b.hash[i])
+				return true;
+			else if (a.hash[i] > b.hash[i])
+				return false;
+		}
+		
+		return false;
+	}
 }
 

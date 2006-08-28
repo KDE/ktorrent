@@ -36,6 +36,7 @@ class ScanDialog;
 namespace kt
 {
 	class TorrentInterface;
+	class Group;
 }
 
 
@@ -59,7 +60,7 @@ public:
 	/**
 	 * Default constructor
 	 */
-	KTorrentView(QWidget *parent, bool seed_view = false);
+	KTorrentView(QWidget *parent);
 
 	/**
 	 * Destructor
@@ -70,26 +71,42 @@ public:
 	kt::TorrentInterface* getCurrentTC();
 
 	QCStringList getTorrentInfo(kt::TorrentInterface* tc);
-
-	/// Enable or disable the debug view
-	void setShowDebugView(bool yes);
 	
 	/// Save the views settings
 	void saveSettings();
 	
+	/**
+	 * Put the current selection in a list.
+	 * @param sel The list to put it in
+	 */
+	void getSelection(QPtrList<kt::TorrentInterface> & sel);
+	
+	/// Get the groups sub menu
+	KPopupMenu* getGroupsSubMenu() {return groups_sub_menu;}
+	
+	/**
+	 * Add the current selection to a group. 
+	 * @param g The group
+	 */
+	void addSelectionToGroup(kt::Group* g);
+	
 public slots:
+	void setCurrentGroup(kt::Group* group);
 	void addTorrent(kt::TorrentInterface* tc);
 	void removeTorrent(kt::TorrentInterface* tc);
 	void update();
 	void torrentFinished(kt::TorrentInterface* tc);
 	void startDownloads();
 	void stopDownloads();
+	void startAllDownloads();
+	void stopAllDownloads();
 	void manualAnnounce();
 	void previewFiles();
 	void removeDownloads();
 	void onSelectionChanged();
 	void queueSlot();
 	void checkDataIntegrity();
+	void removeFromGroup();
 
 private slots:
 	void onExecuted(QListViewItem* item);
@@ -110,13 +127,25 @@ private:
 	bool acceptDrag(QDropEvent* event) const;
 	int getNumRunning();
 	void makeMenu();
+	bool startDownload(kt::TorrentInterface* tc);
+	void stopDownload(kt::TorrentInterface* tc);
+	void showStartError();
+	virtual QDragObject* dragObject();
 		
 private:
-	bool m_seedView;
 	QMap<kt::TorrentInterface*,KTorrentViewItem*> items;
-	bool show_debug_view;
 	KPopupMenu* menu;
-	int stop_id, start_id, remove_id, preview_id, announce_id, queue_id,scan_id;
+	KPopupMenu* groups_sub_menu;
+	int stop_id;
+	int start_id;
+	int remove_id;
+	int preview_id;
+	int announce_id;
+	int queue_id;
+	int scan_id;
+	int remove_from_group_id;
+	int add_to_group_id;
+	kt::Group* current_group;
 };
 
 #endif // _KTORRENTVIEW_H_

@@ -49,7 +49,7 @@ namespace kt
 		Q_OBJECT
 	
 	public:
-		InfoWidget(bool seed = false, QWidget* parent = 0, const char* name = 0, WFlags fl = 0);
+		InfoWidget(QWidget* parent = 0, const char* name = 0, WFlags fl = 0);
 		virtual ~InfoWidget();
 		
 		///Show PeerView in main window

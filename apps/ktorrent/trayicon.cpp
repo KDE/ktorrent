@@ -44,6 +44,9 @@ TrayIcon::TrayIcon( KTorrentCore* tc, QWidget *parent, const char *name)
 	        this, SLOT(finished(kt::TorrentInterface* )));
 	connect(m_core,SIGNAL(torrentStoppedByError(kt::TorrentInterface*, QString )),
 	        this,SLOT(torrentStoppedByError(kt::TorrentInterface*, QString )));
+	connect(m_core,SIGNAL(maxShareRatioReached( kt::TorrentInterface* )),
+			this,SLOT(maxShareRatioReached( kt::TorrentInterface* )));
+	
 }
 
 TrayIcon::~TrayIcon()
@@ -62,7 +65,7 @@ void TrayIcon::finished(TorrentInterface* tc)
 	double speed_up = (double)s.bytes_uploaded / 1024.0;
 	double speed_down = (double)(s.bytes_downloaded - s.imported_bytes)/ 1024.0;
 
-	if(Settings::showPopups())
+	if (Settings::showPopups())
 	{
 		QString msg = i18n("<b>%1</b> has completed downloading."
 						"<br>Average speed: %2 DL / %3 UL.")
@@ -75,8 +78,31 @@ void TrayIcon::finished(TorrentInterface* tc)
 	}
 }
 
+void TrayIcon::maxShareRatioReached(kt::TorrentInterface* tc)
+{
+	if (!Settings::showPopups())
+		return;
+	
+	const TorrentStats & s = tc->getStats();
+	
+	double speed_up = (double)s.bytes_uploaded / 1024.0;
+	
+	QString msg = i18n("<b>%1</b> has reached it's maximum share ratio of %2 and has been stopped."
+			"<br>Uploaded %3 at an average speed of %4.")
+			.arg(s.torrent_name)
+			.arg(s.max_share_ratio)
+			.arg(BytesToString(s.bytes_uploaded))
+			.arg(KBytesPerSecToString(speed_up / tc->getRunningTimeUL()));
+	
+	KPassivePopup::message(i18n("Seeding completed"),
+						   msg,loadIcon("ktorrent"), this);
+}
+
 void TrayIcon::torrentStoppedByError(kt::TorrentInterface* tc, QString msg)
 {
+	if (!Settings::showPopups())
+		return;
+	
 	const TorrentStats & s = tc->getStats();
 	QString err_msg = i18n("<b>%1</b> has been stopped with the following error: <br>%2")
 				.arg(s.torrent_name).arg(msg);

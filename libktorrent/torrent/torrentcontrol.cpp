@@ -1224,6 +1224,11 @@ namespace bt
 	{
 		cman->deleteDataFiles();
 	}
+	
+	const bt::SHA1Hash & TorrentControl::getInfoHash() const
+	{
+		return tor->getInfoHash();
+	}
 }
 
 #include "torrentcontrol.moc"

@@ -193,6 +193,7 @@ namespace bt
 		virtual Uint32 getNumDHTNodes() const;
 		virtual const kt::DHTNode & getDHTNode(Uint32 i) const;
 		virtual void deleteDataFiles();
+		virtual const SHA1Hash & getInfoHash() const;
 		
 	public slots:
 		/**

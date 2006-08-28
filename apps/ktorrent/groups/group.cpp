@@ -15,38 +15,47 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTINFOWIDGETPREFPAGE_H
-#define KTINFOWIDGETPREFPAGE_H
-
-#include <interfaces/prefpageinterface.h>
-
-class IWPref;
+#include <kiconloader.h>
+#include <kglobal.h>
+#include "group.h"
 
 namespace kt
 {
-	class InfoWidget;
-	
 
-	/**
-	@author Joris Guisson
-	*/
-	class InfoWidgetPrefPage : public PrefPageInterface
+	Group::Group(const QString & name,bool custom) : name(name),custom(custom)
+	{}
+
+
+	Group::~Group()
+	{}
+
+	void Group::save(bt::BEncoder*)
 	{
-		InfoWidget* iw;
-		IWPref* pref;
-	public:
-		InfoWidgetPrefPage(InfoWidget* iw);
-		virtual ~InfoWidgetPrefPage();
+	}
+	
+	void Group::load(bt::BDictNode* )
+	{
+	}
 
-		virtual bool apply();
-		virtual void createWidget(QWidget* parent);
-		virtual void deleteWidget();
-		virtual void updateData();
-
-	};
-
+	void Group::setIconByName(const QString & in)
+	{
+		icon_name = in;
+		icon = KGlobal::iconLoader()->loadIcon(in,KIcon::Small);
+	}
+	
+	void Group::rename(const QString & nn)
+	{
+		name = nn;
+	}
+	
+	void Group::torrentRemoved(TorrentInterface* )
+	{}
+	
+	void Group::removeTorrent(TorrentInterface* )
+	{}
+	
+	void Group::addTorrent(TorrentInterface* )
+	{}
 }
-
-#endif

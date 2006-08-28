@@ -32,7 +32,7 @@
 using namespace bt;
 class QString;
 
-typedef struct tray_stats
+struct TrayStats
 {
 	bt::Uint32 download_speed;
 	bt::Uint32 upload_speed;
@@ -40,8 +40,7 @@ typedef struct tray_stats
 	bt::Uint64 bytes_uploaded;
 
 
-}
-TrayStats;
+};
 
 /**
  * @author Joris Guisson
@@ -49,20 +48,37 @@ TrayStats;
 */
 class TrayIcon : public KSystemTray
 {
-		Q_OBJECT
-	public:
-		TrayIcon(KTorrentCore* tc, QWidget *parent = 0, const char *name = 0);
-		~TrayIcon();
+	Q_OBJECT
+public:
+	TrayIcon(KTorrentCore* tc, QWidget *parent = 0, const char *name = 0);
+	virtual ~TrayIcon();
 
-		void updateStats(const CurrentStats stats);
+	void updateStats(const CurrentStats stats);
 
-	private slots:
-		void finished(kt::TorrentInterface* tc);
-		void torrentStoppedByError(kt::TorrentInterface* tc, QString msg);
-		void viewChanged(kt::TorrentInterface* tc);
+private slots:
+	/**
+	 * Show a passive popup, that the torrent has stopped downloading.
+	 * @param tc The torrent
+	 */
+	void finished(kt::TorrentInterface* tc);
+	
+	/**
+	 * Show a passive popup that a torrent has reached it's max share ratio. 
+	 * @param tc The torrent
+	 */
+	void maxShareRatioReached(kt::TorrentInterface* tc);
+	
+	/**
+	 * Show a passive popup when a torrent has been stopped by an error.
+	 * @param tc The torrent 
+	 * @param msg Error message
+	 */
+	void torrentStoppedByError(kt::TorrentInterface* tc, QString msg);
+	
+	void viewChanged(kt::TorrentInterface* tc);
 
-	private:
-		KTorrentCore* m_core;
+private:
+	KTorrentCore* m_core;
 };
 
 class SetMaxRate : public KPopupMenu

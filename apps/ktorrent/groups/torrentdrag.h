@@ -15,35 +15,26 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTINFOWIDGETPREFPAGE_H
-#define KTINFOWIDGETPREFPAGE_H
+#ifndef KTTORRENTDRAG_H
+#define KTTORRENTDRAG_H
 
-#include <interfaces/prefpageinterface.h>
-
-class IWPref;
+#include <qdragobject.h>
 
 namespace kt
 {
-	class InfoWidget;
 	
-
+	
 	/**
-	@author Joris Guisson
+		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class InfoWidgetPrefPage : public PrefPageInterface
+	class TorrentDrag : public QStoredDrag
 	{
-		InfoWidget* iw;
-		IWPref* pref;
+		Q_OBJECT
 	public:
-		InfoWidgetPrefPage(InfoWidget* iw);
-		virtual ~InfoWidgetPrefPage();
-
-		virtual bool apply();
-		virtual void createWidget(QWidget* parent);
-		virtual void deleteWidget();
-		virtual void updateData();
+		TorrentDrag(QWidget* src,const char *name = 0);
+		virtual ~TorrentDrag();
 
 	};
 

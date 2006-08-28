@@ -54,7 +54,7 @@ namespace kt
 	void LogViewerPlugin::load()
 	{
 		lv = new LogViewer();
-		this->getGUI()->addWidgetBelowView(lv);
+		this->getGUI()->addWidgetBelowView(lv,"log",i18n("Log Viewer"));
 		bt::Log & lg = Globals::instance().getLog(0);
 		lg.addMonitor(lv);
 		pref = new LogPrefPage();

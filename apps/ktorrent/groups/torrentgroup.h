@@ -15,36 +15,40 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTINFOWIDGETPREFPAGE_H
-#define KTINFOWIDGETPREFPAGE_H
+#ifndef KTTORRENTGROUP_H
+#define KTTORRENTGROUP_H
 
-#include <interfaces/prefpageinterface.h>
+#include <set>
+#include <group.h>
+#include <util/sha1hash.h>
 
-class IWPref;
 
 namespace kt
 {
-	class InfoWidget;
-	
+	class TorrentInterface;
 
 	/**
-	@author Joris Guisson
+		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class InfoWidgetPrefPage : public PrefPageInterface
+	class TorrentGroup : public Group
 	{
-		InfoWidget* iw;
-		IWPref* pref;
+		std::set<TorrentInterface*> torrents;
+		std::set<bt::SHA1Hash> hashes;
 	public:
-		InfoWidgetPrefPage(InfoWidget* iw);
-		virtual ~InfoWidgetPrefPage();
+		TorrentGroup(const QString& name);
+		virtual ~TorrentGroup();
 
-		virtual bool apply();
-		virtual void createWidget(QWidget* parent);
-		virtual void deleteWidget();
-		virtual void updateData();
+		virtual bool isMember(TorrentInterface* tor);
+		virtual void save(bt::BEncoder* enc);
+		virtual void load(bt::BDictNode* n);
+		virtual void torrentRemoved(TorrentInterface* tor);
+		virtual void removeTorrent(TorrentInterface* tor);
+		virtual void addTorrent(TorrentInterface* tor);
 
+		void add(TorrentInterface* tor);
+		void remove(TorrentInterface* tor);
 	};
 
 }

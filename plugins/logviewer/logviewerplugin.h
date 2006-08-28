@@ -22,6 +22,8 @@
 
 #include <interfaces/plugin.h>
 
+
+
 namespace kt
 {
 	class LogViewer;
@@ -32,16 +34,16 @@ namespace kt
 	*/
 	class LogViewerPlugin : public Plugin
 	{
-			Q_OBJECT
-		public:
-			LogViewerPlugin(QObject* parent, const char* qt_name, const QStringList& args);
-			virtual ~LogViewerPlugin();
-
-			virtual void load();
-			virtual void unload();
-		private:
-			LogViewer* lv;
-			LogPrefPage* pref;
+		Q_OBJECT
+	public:
+		LogViewerPlugin(QObject* parent, const char* qt_name, const QStringList& args);
+		virtual ~LogViewerPlugin();
+			
+		virtual void load();
+		virtual void unload();
+	private:
+		LogViewer* lv;
+		LogPrefPage* pref;
 	};
 
 }

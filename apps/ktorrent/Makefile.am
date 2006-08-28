@@ -1,5 +1,5 @@
 ## Makefile.am for ktorrent
-
+SUBDIRS = groups
 # this is the program that gets installed.  it's name is used for all
 # of the other Makefile.am variables
 bin_PROGRAMS = ktorrent
@@ -13,8 +13,8 @@ INCLUDES = -I$(srcdir)/../../libktorrent $(all_includes)
 ktorrent_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 
 # the libraries to link against.
-ktorrent_LDADD = $(LIB_KPARTS) ../../libktorrent/libktorrent.la $(LIB_KFILE) \
-	$(LIB_KIO)
+ktorrent_LDADD = ../../apps/ktorrent/groups/libgroups.la -lkmdi $(LIB_KPARTS) \
+	../../libktorrent/libktorrent.la $(LIB_KFILE) $(LIB_KIO)
 
 # which sources should be compiled for ktorrent
 ktorrent_SOURCES = dcopinterface.skel settings.kcfgc main.cpp ktorrent.cpp \

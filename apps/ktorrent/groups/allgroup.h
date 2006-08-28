@@ -15,35 +15,26 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTINFOWIDGETPREFPAGE_H
-#define KTINFOWIDGETPREFPAGE_H
+#ifndef KTALLGROUP_H
+#define KTALLGROUP_H
 
-#include <interfaces/prefpageinterface.h>
-
-class IWPref;
+#include <group.h>
 
 namespace kt
 {
-	class InfoWidget;
-	
 
 	/**
-	@author Joris Guisson
+		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class InfoWidgetPrefPage : public PrefPageInterface
+	class AllGroup : public Group
 	{
-		InfoWidget* iw;
-		IWPref* pref;
 	public:
-		InfoWidgetPrefPage(InfoWidget* iw);
-		virtual ~InfoWidgetPrefPage();
+		AllGroup();
+		virtual ~AllGroup();
 
-		virtual bool apply();
-		virtual void createWidget(QWidget* parent);
-		virtual void deleteWidget();
-		virtual void updateData();
+		virtual bool isMember(TorrentInterface* tor);
 
 	};
 

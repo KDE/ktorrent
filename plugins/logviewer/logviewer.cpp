@@ -51,7 +51,7 @@ namespace kt
 		
 		setMaxLogLines(100);
 		setMinimumSize(QSize(0,50));
-		setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Minimum);
+		setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 		KGlobal::config()->setGroup("LogViewer");
 		if (KGlobal::config()->hasKey("LogViewerWidgetSize"))
 		{

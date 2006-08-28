@@ -599,6 +599,7 @@ bt::QueueManager* KTorrentCore::getQueueManager()
 void KTorrentCore::torrentSeedAutoStopped( kt::TorrentInterface * tc )
 {
 	qman->startNext();
+	maxShareRatioReached(tc);
 }
 
 int KTorrentCore::getMaxUploadSpeed()

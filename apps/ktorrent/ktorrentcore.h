@@ -285,6 +285,12 @@ signals:
 	* TorrentCore torrents have beed updated. Stats are changed.
 	**/
 	void statsUpdated();
+	
+	/**
+	 * Emitted when a torrent has reached it's max share ratio.
+	 * @param tc The torrent
+	 */
+	void maxShareRatioReached(kt::TorrentInterface* tc);
 
 private:
 	void rollback(const QPtrList<kt::TorrentInterface> & success);

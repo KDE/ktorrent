@@ -52,12 +52,10 @@ namespace kt
 
 	void InfoWidgetPlugin::load()
 	{
-		iw = new InfoWidget(false,0);
-		iw_seed = new InfoWidget(true, 0);
-		pref = new InfoWidgetPrefPage(iw,iw_seed);
+		iw = new InfoWidget(0);
+		pref = new InfoWidgetPrefPage(iw);
 		getGUI()->addViewListener(this);
 		getGUI()->addWidgetInView(iw,kt::BELOW);
-		getGUI()->addWidgetInSeedView(iw_seed, kt::BELOW);
 		getGUI()->addPrefPage(pref);
 		iw->changeTC(const_cast<kt::TorrentInterface*>(getGUI()->getCurrentTorrent()));
 	}
@@ -67,34 +65,20 @@ namespace kt
 		getGUI()->removeViewListener(this);
 		getGUI()->removePrefPage(pref);
 		getGUI()->removeWidgetFromView(iw);
-		getGUI()->removeWidgetFromSeedView(iw_seed);
 		delete pref;
 		pref = 0;
 		delete iw;
 		iw = 0;
-		delete iw_seed;
-		iw_seed = 0;
 	}
 
 	void InfoWidgetPlugin::guiUpdate()
 	{
-		if(getGUI()->getCurrentPanel() == DOWNLOAD_VIEW)
-			iw->update();
-		
-		if(getGUI()->getCurrentPanel() == SEED_VIEW)
-			iw_seed->update();
+		iw->update();
 	}
 
-	void InfoWidgetPlugin::currentDownloadChanged(TorrentInterface* tc)
+	void InfoWidgetPlugin::currentTorrentChanged(TorrentInterface* tc)
 	{
-		if(getGUI()->getCurrentPanel() == DOWNLOAD_VIEW)
-			iw->changeTC(tc);
-	}
-	
-	void InfoWidgetPlugin::currentSeedChanged(TorrentInterface* tc)
-	{
-		if(getGUI()->getCurrentPanel() == SEED_VIEW)
-			iw_seed->changeTC(tc);		
+		iw->changeTC(tc);
 	}
 }
 

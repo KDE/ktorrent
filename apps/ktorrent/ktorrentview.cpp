@@ -29,6 +29,8 @@
 #include <torrent/globals.h>
 #include <util/log.h>
 #include <kmessagebox.h>
+#include <groups/group.h>
+#include <groups/torrentdrag.h>
 #include "ktorrentview.h"
 #include "ktorrentviewitem.h"
 #include "settings.h"
@@ -39,9 +41,8 @@
 using namespace bt;
 using namespace kt;
 
-KTorrentView::KTorrentView(QWidget *parent, bool seed_view)
-	: KListView(parent),m_seedView(seed_view),
-	show_debug_view(false),menu(0)
+KTorrentView::KTorrentView(QWidget *parent)
+	: KListView(parent),menu(0),current_group(0)
 {
 	addColumn(i18n("File"));
 	addColumn(i18n("Status"));
@@ -54,9 +55,10 @@ KTorrentView::KTorrentView(QWidget *parent, bool seed_view)
 	addColumn(i18n("Peers"));
 	addColumn(i18n("% Complete"));
 
+
 	connect(this,SIGNAL(currentChanged(QListViewItem* )),
 			this,SLOT(onExecuted(QListViewItem* )));
-	show_debug_view = bt::Globals::instance().isDebugModeSet();
+	
 	connect(this,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )),
 			this,SLOT(showContextMenu(KListView*, QListViewItem*, const QPoint& )));
 	
@@ -76,11 +78,51 @@ KTorrentView::KTorrentView(QWidget *parent, bool seed_view)
 	for (Uint32 i = 2;i < (Uint32)columns();i++)
 		setColumnWidthMode(i,QListView::Manual);
 
-	restoreLayout(KGlobal::config(),m_seedView ? "KTorrentSeedView" : "KTorrentView");
+	restoreLayout(KGlobal::config(),"KTorrentView");
+	setDragEnabled(true);
 }
 
 KTorrentView::~KTorrentView()
 {
+}
+
+void KTorrentView::setCurrentGroup(Group* group)
+{
+	if (current_group == group)
+		return;
+	
+	current_group = group;
+	
+	if (current_group)
+		setCaption(current_group->groupName());
+	else
+		setCaption(i18n("All Torrents"));
+	
+	// go over the current items, if they still match keep them, else remove them
+	// add new itesm if necessary
+	QMap<TorrentInterface*,KTorrentViewItem*>::iterator i = items.begin();
+	while (i != items.end())
+	{
+		KTorrentViewItem* tvi = i.data();
+		TorrentInterface* tc = i.key();
+		if (current_group && !current_group->isMember(tc))
+		{
+			if (tvi)
+			{
+				delete tvi;
+				i.data() = 0;
+			}
+		}
+		else if (!tvi)
+		{
+			tvi = new KTorrentViewItem(this,tc);
+			i.data() = tvi;
+		}
+
+		i++;
+	}
+	
+	onExecuted(currentItem());
 }
 
 void KTorrentView::makeMenu()
@@ -113,20 +155,24 @@ void KTorrentView::makeMenu()
 	preview_id = menu->insertItem(
 			iload->loadIconSet("frame_image",KIcon::Small),i18n("Preview"), 
 			this, SLOT(previewFiles())); 
+	
+	menu->insertSeparator();
+	remove_from_group_id =  menu->insertItem(i18n("Remove From Group"),this, SLOT(removeFromGroup()));
+	groups_sub_menu = new KPopupMenu(menu);
+	
+	add_to_group_id = menu->insertItem(i18n("Add To Group"),groups_sub_menu);
+	
 	menu->insertSeparator();
 	scan_id = menu->insertItem(i18n("Check Data Integrity"),this, SLOT(checkDataIntegrity()));
+	
 }
 
 void KTorrentView::saveSettings()
 {
-	saveLayout(KGlobal::config(),m_seedView ? "KTorrentSeedView" : "KTorrentView");
+	saveLayout(KGlobal::config(),"KTorrentView");
 	KGlobal::config()->sync();
 }
 
-void KTorrentView::setShowDebugView(bool yes)
-{
-	show_debug_view = yes;
-}
 
 int KTorrentView::getNumRunning()
 {
@@ -135,61 +181,69 @@ int KTorrentView::getNumRunning()
 	while (i != items.end())
 	{
 		KTorrentViewItem* tvi = i.data();
-		TorrentInterface* tc = tvi->getTC();
-		num += tc->getStats().running ? 1 : 0;
+		if (tvi)
+		{
+			TorrentInterface* tc = tvi->getTC();
+			num += tc->getStats().running ? 1 : 0;
+		}
 		i++;
 	}
 	return num;
 }
 
+bool KTorrentView::startDownload(kt::TorrentInterface* tc)
+{
+	if (tc && !tc->getStats().running)
+	{
+		wantToStart(tc);
+		if (!tc->getStats().running && !tc->getStats().stopped_by_error)
+		{
+			if (tc->getStats().completed)
+			{
+				if (!tc->overMaxRatio())
+					return false;
+			}
+			else
+				return false;
+		}
+	}
+	return true;
+}
+
+void KTorrentView::stopDownload(kt::TorrentInterface* tc)
+{
+	if (tc && tc->getStats().running)
+		wantToStop(tc,true);
+}
+
+void KTorrentView::showStartError()
+{
+	QString err = i18n("Cannot start more than 1 download, ",
+					   "Cannot start more than %n downloads, ",Settings::maxDownloads());
+		
+	err += i18n("and 1 seed. ","and %n seeds. ",Settings::maxSeeds());
+	err += i18n("Go to Settings -> Configure KTorrent, if you want to change the limits.");
+	KMessageBox::error(this,err);
+}
+
 void KTorrentView::startDownloads()
 {
-	bool err_seed = false, err_down = false;
+	bool err = false;
 	
 	QPtrList<QListViewItem> sel = selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
 		TorrentInterface* tc = kvi->getTC();
-		if (tc && !tc->getStats().running)
-		{
-			wantToStart(tc);
-			if (!tc->getStats().running && !tc->getStats().stopped_by_error)
-			{
-				if (tc->getStats().completed)
-				{
-					if (!tc->overMaxRatio())
-						err_seed = true;
-				}
-				else
-					err_down = true;
-			}
-		}
+		if (!startDownload(tc))
+			err = true;;
 	}
 
-	// downloads and seeds are in two separate views so 
-	// either err_seed is true or err_down is true or none are true
-	if (err_down)
-		KMessageBox::error(this,
-						   i18n("Cannot start more than 1 download."
-								   " Go to Settings -> Configure KTorrent,"
-								   " if you want to change the limit.",
-						   "Cannot start more than %n downloads."
-								   " Go to Settings -> Configure KTorrent,"
-								   " if you want to change the limit.",
-						   Settings::maxDownloads()),
-						   i18n("Error"));
-	else if (err_seed)
-		KMessageBox::error(this,
-						   i18n("Cannot start more than 1 seed."
-								   " Go to Settings -> Configure KTorrent,"
-								   " if you want to change the limit.",
-						   "Cannot start more than %n seeds."
-								   " Go to Settings -> Configure KTorrent,"
-								   " if you want to change the limit.",
-						   Settings::maxSeeds()),
-						   i18n("Error"));
-
+	if (err)
+	{
+		showStartError();
+	}
+	
 	// make sure toolbuttons get updated
 	onSelectionChanged();
 }
@@ -200,13 +254,43 @@ void KTorrentView::stopDownloads()
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
-		TorrentInterface* tc = kvi->getTC();
-		if (tc && tc->getStats().running)
-			wantToStop(tc,true);
+		stopDownload(kvi->getTC());
 	}
 	
 	// make sure toolbuttons get updated
 	onSelectionChanged();
+}
+
+void KTorrentView::startAllDownloads()
+{
+	bool err = false;
+	QMap<TorrentInterface*,KTorrentViewItem*>::iterator i = items.begin();
+	while (i != items.end())
+	{
+		KTorrentViewItem* tvi = i.data();
+		if (tvi && !startDownload(tvi->getTC()))
+			err = true;
+			
+		i++;
+	}
+	
+	if (err)
+	{
+		showStartError();
+	}
+}
+
+void KTorrentView::stopAllDownloads()
+{
+	QMap<TorrentInterface*,KTorrentViewItem*>::iterator i = items.begin();
+	while (i != items.end())
+	{
+		KTorrentViewItem* tvi = i.data();
+		if (tvi)
+			stopDownload(tvi->getTC());
+	
+		i++;
+	}
 }
 	
 void KTorrentView::removeDownloads()
@@ -276,17 +360,18 @@ TorrentInterface* KTorrentView::getCurrentTC()
 QCStringList KTorrentView::getTorrentInfo(kt::TorrentInterface* tc)
 {
 	QCStringList torrentinfo;
-        KTorrentViewItem* tvi = 0;
-        QMap<TorrentInterface*,KTorrentViewItem*>::iterator i = items.begin();
-        while (i != items.end())
-        {
-                tvi = i.data();
-		TorrentInterface* cur = tvi->getTC();
-		if(tc == cur)
+	KTorrentViewItem* tvi = 0;
+	QMap<TorrentInterface*,KTorrentViewItem*>::iterator i = items.begin();
+	while (i != items.end())
+	{
+		tvi = i.data();
+		TorrentInterface* cur = i.key();
+		if (tc == cur)
 			break;
-                i++;
-        }
-	if(tvi)
+		i++;
+	}
+	
+	if (tvi)
 		for(int i = 0; i < 10; i++)
 			torrentinfo.append(tvi->text(i).ascii());
 	return torrentinfo;
@@ -299,6 +384,10 @@ void KTorrentView::onExecuted(QListViewItem* item)
 	{
 		torrentClicked(tvi->getTC());
 		currentChanged(tvi->getTC());
+	}
+	else
+	{
+		currentChanged(0);
 	}
 }
 
@@ -343,6 +432,9 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 	menu->setItemEnabled(announce_id,en_announce);
 	menu->setItemEnabled(queue_id, en_remove);
 	
+	menu->setItemEnabled(remove_from_group_id,current_group && !current_group->isStandardGroup());
+	menu->setItemEnabled(add_to_group_id,groups_sub_menu->count() > 0);
+	
 	if (sel.count() == 1)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)sel.getFirst();
@@ -360,16 +452,18 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 
 void KTorrentView::addTorrent(TorrentInterface* tc)
 {
-	if(m_seedView && !tc->getStats().completed)
-		return;
-	if(!m_seedView && tc->getStats().completed)
-		return;
-	
-	KTorrentViewItem* tvi = new KTorrentViewItem(this,tc);
-	items.insert(tc,tvi);
-	tvi->update();
-	if (items.count() == 1)
-		currentChanged(tc);
+	if (current_group && !current_group->isMember(tc))
+	{
+		items.insert(tc,0);
+	}
+	else
+	{
+		KTorrentViewItem* tvi = new KTorrentViewItem(this,tc);
+		items.insert(tc,tvi);
+		tvi->update();
+		if (items.count() == 1)
+			currentChanged(tc);
+	}
 }
 
 void KTorrentView::removeTorrent(TorrentInterface* tc)
@@ -391,18 +485,32 @@ void KTorrentView::removeTorrent(TorrentInterface* tc)
 
 void KTorrentView::update()
 {	
-	kt::TorrentInterface* tc = 0l;
 	QMap<kt::TorrentInterface*,KTorrentViewItem*>::iterator i = items.begin();
 	while (i != items.end())
 	{
 		KTorrentViewItem* tvi = i.data();
-		tvi->update();
-		//check if seeded torrent is activated and move it to downloadView
+		if (tvi)
+			tvi->update();
+		
+		
+		// check if the torrent still is part of the group
 		kt::TorrentInterface* ti = i.key();
-		if(!ti->getStats().completed && m_seedView)
-			tc = ti;
+		if (tvi && current_group && !current_group->isMember(ti))
+		{
+			// torrent is no longer a member of this group so remove it from the view
+			delete tvi;
+			i.data() = 0;
+		}
+		else if (!tvi && (!current_group || current_group->isMember(ti)))
+		{
+			tvi = new KTorrentViewItem(this,ti);
+			i.data() = tvi;
+		}
+		
 		i++;
 	}
+	
+# if 0
 	if(tc)
 	{
 		QMap<kt::TorrentInterface*,KTorrentViewItem*>::iterator i = items.find(tc);
@@ -416,6 +524,7 @@ void KTorrentView::update()
 			emit currentChanged(0l);
 		Out(SYS_GEN|LOG_NOTICE) << "Torrent moved to DownloadView." << endl;
 	}
+#endif
 	sort();
 }
 
@@ -427,8 +536,7 @@ bool KTorrentView::acceptDrag(QDropEvent* event) const
 
 void KTorrentView::torrentFinished(kt::TorrentInterface* tc)
 {
-	if(m_seedView)
-		return;
+#if 0
 	
 	QMap<kt::TorrentInterface*,KTorrentViewItem*>::iterator i = items.find(tc);
 	if (i != items.end())
@@ -440,6 +548,7 @@ void KTorrentView::torrentFinished(kt::TorrentInterface* tc)
 	if(items.count() == 0)
 		emit currentChanged(0l);
 	Out(SYS_GEN|LOG_NOTICE) << "Torrent moved to SeedView." << endl;
+#endif
 }
 
 void KTorrentView::onSelectionChanged()
@@ -492,5 +601,63 @@ void KTorrentView::checkDataIntegrity()
 	scan_dlg->deleteLater();
 }
 
+QDragObject* KTorrentView::dragObject()
+{
+	QPtrList<QListViewItem> sel = selectedItems();
+	if (sel.count() == 0)
+		return 0;
+	 
+	return new TorrentDrag(this);
+}
+
+void KTorrentView::getSelection(QPtrList<kt::TorrentInterface> & sel)
+{
+	QPtrList<QListViewItem> s = selectedItems();
+	if (s.count() == 0)
+		return;
+	
+	QPtrList<QListViewItem>::iterator i = s.begin();
+	while (i != s.end())
+	{
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*i;
+		TorrentInterface* tc = kvi->getTC();
+		sel.append(tc);
+		i++;
+	}
+}
+
+void KTorrentView::removeFromGroup()
+{
+	QPtrList<QListViewItem> s = selectedItems();
+	if (s.count() == 0 || !current_group || current_group->isStandardGroup())
+		return;
+	
+	QPtrList<QListViewItem>::iterator i = s.begin();
+	while (i != s.end())
+	{
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*i;
+		TorrentInterface* tc = kvi->getTC();
+		current_group->removeTorrent(tc);
+		delete kvi;
+		items[tc] = 0;
+		i++;
+	}
+}
+
+void KTorrentView::addSelectionToGroup(kt::Group* g)
+{
+	QPtrList<QListViewItem> s = selectedItems();
+	if (s.count() == 0 || !g)
+		return;
+	
+	QPtrList<QListViewItem>::iterator i = s.begin();
+	while (i != s.end())
+	{
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*i;
+		TorrentInterface* tc = kvi->getTC();
+		g->addTorrent(tc);
+		i++;
+	}
+}
 
 #include "ktorrentview.moc"

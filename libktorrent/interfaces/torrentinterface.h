@@ -30,6 +30,7 @@ namespace bt
 {
 	class BitSet;
 	class DataCheckerListener;
+	class SHA1Hash;
 }
 
 namespace kt
@@ -322,6 +323,9 @@ namespace kt
 		
 		/// Handle an error
 		virtual void handleError(const QString & err) = 0;
+		
+		/// Get the info_hash.
+		virtual const bt::SHA1Hash & getInfoHash() const  = 0;
 	signals:
 		/**
 		 * Emited when we have finished downloading.

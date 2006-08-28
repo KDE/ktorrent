@@ -127,6 +127,15 @@ namespace bt
 		 * @return a xor b
 		 */
 		friend SHA1Hash operator ^ (const SHA1Hash & a,const SHA1Hash & b);
+		
+		/**
+		 * Function to compare 2 hashes
+		 * @param a The first hash
+		 * @param h The second hash
+		 * @return wether a is smaller then b
+		 */
+		friend bool operator < (const SHA1Hash & a,const SHA1Hash & b);
+		
 	};
 
 }

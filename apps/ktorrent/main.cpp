@@ -41,22 +41,24 @@
 
 using namespace bt;
 
-/*
+
 void StupidWarningMessagesFromQt( QtMsgType type, const char *msg )
 {
-	switch ( type ) {
+	switch ( type ) 
+	{
 		case QtDebugMsg:
-			Out(SYS_GEN|LOG_DEBUG) << QString("Qt: Debug: %1").arg(msg) << endl;
+		//	printf("Qt: Debug: %s\n",msg);
 			break;
 		case QtWarningMsg:
-			Out(SYS_GEN|LOG_NOTICE) << QString("Qt: Warning: %1").arg(msg) << endl;
+			printf("Qt: Warning: %s\n",msg);
 			break;
 		case QtFatalMsg:
-			Out(SYS_GEN|LOG_IMPORTANT) << QString("Qt: Fatal: %1").arg(msg) << endl;
+			printf("Qt: Fatal : %s\n",msg);
 			abort();                    // deliberately core dump
+			break;
 	}
 }
-*/
+
 
 static const char description[] =
     I18N_NOOP("A BitTorrent program for KDE");
@@ -74,7 +76,7 @@ int main(int argc, char **argv)
 {
 	// ignore SIGPIPE's
 	signal(SIGPIPE,SIG_IGN);
-//	qInstallMsgHandler( StupidWarningMessagesFromQt );
+	qInstallMsgHandler( StupidWarningMessagesFromQt );
 	KAboutData about("ktorrent", I18N_NOOP("KTorrent"), kt::VERSION_STRING, description,
 					 KAboutData::License_GPL, "(C) 2005 -2006 Joris Guisson and Ivan Vasic", 0,
 					 "http://www.ktorrent.org/");

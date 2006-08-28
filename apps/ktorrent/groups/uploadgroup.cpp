@@ -15,38 +15,31 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTINFOWIDGETPREFPAGE_H
-#define KTINFOWIDGETPREFPAGE_H
-
-#include <interfaces/prefpageinterface.h>
-
-class IWPref;
+#include <klocale.h>
+#include <interfaces/torrentinterface.h>
+#include "uploadgroup.h"
 
 namespace kt
 {
-	class InfoWidget;
-	
 
-	/**
-	@author Joris Guisson
-	*/
-	class InfoWidgetPrefPage : public PrefPageInterface
+	UploadGroup::UploadGroup() : Group(i18n("Uploads"),false)
 	{
-		InfoWidget* iw;
-		IWPref* pref;
-	public:
-		InfoWidgetPrefPage(InfoWidget* iw);
-		virtual ~InfoWidgetPrefPage();
+		setIconByName("up");
+	}
 
-		virtual bool apply();
-		virtual void createWidget(QWidget* parent);
-		virtual void deleteWidget();
-		virtual void updateData();
 
-	};
+	UploadGroup::~UploadGroup()
+	{}
+
+
+	bool UploadGroup::isMember(TorrentInterface* tor)
+	{
+		if (!tor)
+			return false;
+		
+		return tor->getStats().completed;
+	}
 
 }
-
-#endif
