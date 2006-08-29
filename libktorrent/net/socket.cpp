@@ -29,12 +29,19 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
+
 #ifdef Q_OS_LINUX
 #include <asm/ioctls.h>
 #endif
-#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020)
+
+#ifdef Q_OS_SOLARIS
+#include <sys/filio.h>
+#endif
+
+#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020) || defined (Q_OS_SOLARIS)
 #define MSG_NOSIGNAL 0
 #endif
+
 #include <unistd.h>
 #include <fcntl.h>
 
