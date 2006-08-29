@@ -379,7 +379,7 @@ namespace bt
 	{
 		Uint32 num_left = chunksLeft();
 		Uint32 last = chunks.size() - 1;
-		if (!bitset.get(last) && !excluded_chunks.get(last))
+		if (last < chunks.size() && !bitset.get(last) && !excluded_chunks.get(last))
 		{
 			Chunk* c = chunks[last];
 			if (c)
