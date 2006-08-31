@@ -35,7 +35,7 @@
 #include <kcombobox.h>
 #include <kpopupmenu.h>
 #include <kparts/partmanager.h>
-#include <kio/netaccess.h>
+#include <kio/job.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 #include <util/log.h>
@@ -205,8 +205,10 @@ namespace kt
 		if (fdlg.exec() == QDialog::Accepted)
 		{
 			KURL save_url = fdlg.selectedURL();
-			if (!KIO::NetAccess::copy(url,save_url,this))
-				KMessageBox::error(this,KIO::NetAccess::lastErrorString());
+			// start a copy job
+			KIO::Job* j = KIO::file_copy(url,save_url,-1,true);
+			// let it deal with the errors
+			j->setAutoErrorHandlingEnabled(true,0);
 		}
 	}
 	

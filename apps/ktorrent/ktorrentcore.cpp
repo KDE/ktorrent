@@ -27,6 +27,7 @@
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
+#include <kio/job.h>
 #include <kio/netaccess.h>
 #include <qregexp.h>
 
@@ -174,40 +175,51 @@ void KTorrentCore::load(const QString & target,const QString & dir,bool silently
 	}
 }
 
-void KTorrentCore::load(const KURL& url)
+void KTorrentCore::downloadFinished(KIO::Job *job)
 {
-	QString target;
-	// download the contents
-	if (KIO::NetAccess::download(url,target,0))
+	KIO::FileCopyJob* j = (KIO::FileCopyJob*)job;
+	if (j->error())
+	{
+		j->showErrorDialog(0);
+	}
+	else
 	{
 		// load in the file (target is always local)
 		QString dir = Settings::saveDir();
 		if (!Settings::useSaveDir())
 			dir = KFileDialog::getExistingDirectory(QString::null, 0,
-			                                        i18n("Select Folder to Save To"));
-
-
+				i18n("Select Folder to Save To"));
+	
+		
+		QString target = j->destURL().pathOrURL();
 		if (dir != QString::null)
 		{
 			load(target,dir,false);
 		}
-		// and remove the temp file
-		KIO::NetAccess::removeTempFile(target);
+	}
+	// remove tmp file
+	bt::Delete(j->destURL().pathOrURL(),true);
+}
+
+void KTorrentCore::load(const KURL& url)
+{	
+	// download to a random file in tmp
+	KIO::Job* j = KIO::file_copy(url,QString("/tmp/kt-tmp-torrent%1").arg(bt::GetCurrentTime()),-1,true);
+	connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadFinished( KIO::Job* )));
+}
+
+void KTorrentCore::downloadFinishedSilently(KIO::Job *job)
+{
+	KIO::FileCopyJob* j = (KIO::FileCopyJob*)job;
+	if (j->error())
+	{
+		j->showErrorDialog(0);
 	}
 	else
 	{
-		KMessageBox::error(0,KIO::NetAccess::lastErrorString(),i18n("Error"));
-	}
-}
-
-void KTorrentCore::loadSilently(const KURL& url)
-{
-	QString target;
-	// download the contents
-	if (KIO::NetAccess::download(url,target,0))
-	{
 		// load in the file (target is always local)
 		QString dir = Settings::saveDir();
+		QString target = j->destURL().pathOrURL();
 		if (!Settings::useSaveDir())
 		{
 			KMessageBox::error(0,i18n("You need to have default save directory selected to load torrents silently."),i18n("Error"));
@@ -219,13 +231,15 @@ void KTorrentCore::loadSilently(const KURL& url)
 				load(target,dir,true);
 			}
 		}
-		// and remove the temp file
-		KIO::NetAccess::removeTempFile(target);
 	}
-	else
-	{
-		KMessageBox::error(0,KIO::NetAccess::lastErrorString(),i18n("Error"));
-	}
+	bt::Delete(j->destURL().pathOrURL(),true);
+}
+
+void KTorrentCore::loadSilently(const KURL& url)
+{
+	// download to a random file in tmp
+	KIO::Job* j = KIO::file_copy(url,QString("/tmp/kt-tmp-torrent%1").arg(bt::GetCurrentTime()),-1,true);
+	connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadSilentlyFinished( KIO::Job* )));
 }
 
 void KTorrentCore::start(kt::TorrentInterface* tc)

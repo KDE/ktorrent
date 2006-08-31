@@ -34,6 +34,11 @@ namespace bt
 	class QueueManager;
 }
 
+namespace KIO
+{
+	class Job;
+}
+
 namespace kt
 {
 	class Plugin;
@@ -300,6 +305,8 @@ private slots:
 	void torrentFinished(kt::TorrentInterface* tc);
 	void slotStoppedByError(kt::TorrentInterface* tc, QString msg);
 	void torrentSeedAutoStopped(kt::TorrentInterface* tc);
+	void downloadFinished(KIO::Job *job);
+	void downloadFinishedSilently(KIO::Job *job);
 	
 private:
 // 	QPtrList<kt::TorrentInterface> downloads;
