@@ -446,7 +446,7 @@ namespace bt
 		
 		// check if we haven't already loaded the torrent
 		// only do this when qman isn't 0
-		if (qman && qman->allreadyLoaded(tor->getInfoHash()))
+		if (qman && qman->allreadyLoaded(tor->getInfoHash()) && !stats.priv_torrent)
 		{
 			if (tor->getAnnounceList())
 			{
