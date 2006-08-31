@@ -26,7 +26,7 @@ using namespace bt;
 
 namespace net
 {
-	const Uint32 SPEED_INTERVAL = 2000;
+	const Uint32 SPEED_INTERVAL = 5000;
 
 	Speed::Speed() : rate(0),bytes(0)
 	{}
