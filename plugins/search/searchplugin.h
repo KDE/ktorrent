@@ -20,17 +20,21 @@
 #ifndef KTSEARCHPLUGIN_H
 #define KTSEARCHPLUGIN_H
 
+#include <qptrlist.h>
 #include <interfaces/plugin.h>
+#include <interfaces/guiinterface.h>
+#include "searchenginelist.h"
 
 namespace kt
 {
 	class SearchWidget;
 	class SearchPrefPage;
+	class SearchTab;
 
 	/**
 	@author Joris Guisson
 	*/
-	class SearchPlugin : public Plugin
+	class SearchPlugin : public Plugin, public kt::CloseTabListener
 	{
 		Q_OBJECT
 	public:
@@ -42,9 +46,18 @@ namespace kt
 		
 		void preferencesUpdated();
 		
+		const SearchEngineList & getSearchEngineList() const {return engines;}
+	private slots:
+		void search(const QString & text,int engine,bool cur_tab);
+		
 	private:
-		SearchWidget* search;
+		virtual void tabCloseRequest(QWidget* tab);
+		
+	private:
 		SearchPrefPage* pref;
+		SearchTab* tab;
+		SearchEngineList engines;
+		QPtrList<SearchWidget> searches;
 	};
 
 }

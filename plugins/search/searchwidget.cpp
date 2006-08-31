@@ -45,8 +45,8 @@
 #include "searchwidget.h"
 #include "searchbar.h"
 #include "htmlpart.h"
-#include "searchpluginsettings.h"
 #include "searchplugin.h"
+#include "searchenginelist.h"
 
 
 
@@ -56,8 +56,7 @@ namespace kt
 {
 	
 	
-	SearchWidget::SearchWidget(SearchPlugin* sp,QWidget* parent,const char* name)
-	: QWidget(parent,name),html_part(0),sp(sp)
+	SearchWidget::SearchWidget(SearchPlugin* sp) : html_part(0),sp(sp)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setAutoAdd(true);
@@ -106,15 +105,23 @@ namespace kt
 	
 		KParts::PartManager* pman = html_part->partManager();
 		connect(pman,SIGNAL(partAdded(KParts::Part*)),this,SLOT(onFrameAdded(KParts::Part* )));
-	
-		loadSearchEngines();
 	}
 	
 	
 	SearchWidget::~SearchWidget()
 	{
-		SearchPluginSettings::setSearchEngine(sbar->m_search_engine->currentItem());
-		SearchPluginSettings::writeConfig();
+
+	}
+	
+	void SearchWidget::updateSearchEngines(const SearchEngineList & sl)
+	{
+		int ci = sbar->m_search_engine->currentItem(); 
+		sbar->m_search_engine->clear();
+		for (Uint32 i = 0;i < sl.getNumEngines();i++)
+		{
+			sbar->m_search_engine->insertItem(sl.getEngineName(i));
+		}
+		sbar->m_search_engine->setCurrentItem(ci);
 	}
 	
 	void SearchWidget::onBackAvailable(bool available)
@@ -142,83 +149,28 @@ namespace kt
 	
 	void SearchWidget::search(const QString & text,int engine)
 	{
-		if (!html_part || m_search_engines.count() == 0)
+		if (!html_part)
 			return;
+		
+		if (sbar->m_search_text->text() != text)
+			sbar->m_search_text->setText(text);
+		
+		if (sbar->m_search_engine->currentItem() != engine)
+			sbar->m_search_engine->setCurrentItem(engine);
 	
-		if (engine < 0 || (Uint32)engine >= m_search_engines.count())
+		const SearchEngineList & sl = sp->getSearchEngineList();
+		
+		if (engine < 0 || (Uint32)engine >= sl.getNumEngines())
 			engine = sbar->m_search_engine->currentItem();
 		
-		QString s_url = m_search_engines[engine].url.url();
+		QString s_url = sl.getSearchURL(engine).prettyURL();
 		s_url.replace("FOOBAR", KURL::encode_string(text), true);
 		KURL url = KURL::fromPathOrURL(s_url);
 	
 		statusBarMsg(i18n("Searching for %1...").arg(text));
 		//html_part->openURL(url);
 		html_part->openURLRequest(url,KParts::URLArgs());
-	}
-	
-	void SearchWidget::loadSearchEngines() 
-	{
-		m_search_engines.clear();
-		QFile fptr(KGlobal::dirs()->saveLocation("data","ktorrent") + "search_engines");
-		
-		if(!fptr.exists())
-			makeDefaultSearchEngines();
-		
-		if (!fptr.open(IO_ReadOnly))
-			return;
-		
-		QTextStream in(&fptr);
-		
-		int id = 0;
-		
-		while (!in.atEnd())
-		{
-			QString line = in.readLine();
-		
-			if(line.startsWith("#") || line.startsWith(" ") || line.isEmpty() ) continue;
-		
-			QStringList tokens = QStringList::split(" ", line);
-		
-			SearchEngine se;
-			se.name = tokens[0];
-			se.name = se.name.replace("%20"," ");
-			se.url = KURL::fromPathOrURL(tokens[1]);
-			se.id = id;
-		
-			for(Uint32 i=2; i<tokens.count(); ++i)
-				se.url.addQueryItem(tokens[i].section("=",0,0), tokens[i].section("=", 1, 1));
-		
-			m_search_engines.append(se);
-		
-			++id;
-		}
-	
-		sbar->m_search_engine->clear();
-		for(Uint32 i=0; i<m_search_engines.count(); ++i)
-			sbar->m_search_engine->insertItem(m_search_engines[i].name);
-		sbar->m_search_engine->setCurrentItem(SearchPluginSettings::searchEngine());
-	}
-	
-	void SearchWidget::makeDefaultSearchEngines()
-	{
-		QFile fptr(KGlobal::dirs()->saveLocation("data","ktorrent") + "search_engines");
-		if (!fptr.open(IO_WriteOnly))
-			return;
-		QTextStream out(&fptr);
-		out << "# PLEASE DO NOT MODIFY THIS FILE. Use KTorrent configuration dialog for adding new search engines." << ::endl;
-		out << "# SEARCH ENGINES list" << ::endl;
-		out << "KTorrents http://www.ktorrents.com/search.php?lg=0&sourceid=ktorrent&q=FOOBAR&f=0" << ::endl;
-		out << "bittorrent.com http://www.bittorrent.com/search_result.myt?search=FOOBAR" << ::endl; 
-		out << "isohunt.com http://isohunt.com/torrents.php?ihq=FOOBAR&op=and" << ::endl; 
-		out << "mininova.org http://www.mininova.org/search.php?search=FOOBAR" << ::endl; 
-		out << "thepiratebay.org http://thepiratebay.org/search.php?q=FOOBAR" << ::endl; 
-		out << "bitoogle.com http://search.bitoogle.com/search.php?q=FOOBAR&st=t" << ::endl; 
-		out << "bytenova.org http://www.bitenova.org/search.php?search=FOOBAR&start=0&start=0&ie=utf-8&oe=utf-8" << ::endl; 
-		out << "torrentspy.com http://torrentspy.com/search.asp?query=FOOBAR" << ::endl; 
-		out << "torrentz.com http://www.torrentz.com/search_FOOBAR" << ::endl; 
-	}
-	
+	}	
 	
 	void SearchWidget::searchPressed()
 	{

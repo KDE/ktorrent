@@ -23,10 +23,12 @@
 #include <kiconloader.h>
 #include <kstdaction.h>
 #include <kpopupmenu.h>
+#include <kstandarddirs.h>
 #include <interfaces/guiinterface.h>
 #include "searchplugin.h"
 #include "searchwidget.h"
 #include "searchprefpage.h"
+#include "searchtab.h"
 
 
 #define NAME "searchplugin"
@@ -44,8 +46,8 @@ namespace kt
 	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,i18n("Search for torrents on several popular torrent search engines"))
 	{
 		// setXMLFile("ktsearchpluginui.rc");
-		search = 0;
 		pref = 0;
+		tab = 0;
 	}
 
 
@@ -55,35 +57,70 @@ namespace kt
 
 	void SearchPlugin::load()
 	{
-		KIconLoader* iload = KGlobal::iconLoader();
-		search = new SearchWidget(this);
-		getGUI()->addTabPage(
-				search,iload->loadIconSet("viewmag", KIcon::Small),
-				i18n("Search"));
+		engines.load(KGlobal::dirs()->saveLocation("data","ktorrent") + "search_engines");
+		tab = new SearchTab();
+		connect(tab,SIGNAL(search( const QString&, int, bool )),
+				this,SLOT(search( const QString&, int, bool )));
 		
-		
+		getGUI()->addToolWidget(tab,"viewmag",i18n("Search"),GUIInterface::DOCK_LEFT);
+		 
 		pref = new SearchPrefPage(this);
 		getGUI()->addPrefPage(pref);
-
-		KAction* copy_act = KStdAction::copy(search,SLOT(copy()),actionCollection());
-		copy_act->plug(search->rightClickMenu(),0);
+		tab->updateSearchEngines(engines);
 	}
 
 	void SearchPlugin::unload()
 	{
-		search->onShutDown();
-		getGUI()->removeTabPage(search);
+		SearchWidget* s = 0;
+		while ((s = searches.first()) != 0)
+		{
+			getGUI()->removeTabPage(s);
+			searches.removeFirst();
+			delete s;
+		}
+		getGUI()->removeToolWidget(tab);
 		getGUI()->removePrefPage(pref);
-		delete search;
-		search = 0;
 		delete pref;
 		pref = 0;
+		delete tab;
+		tab = 0;
+	}
+	
+	void SearchPlugin::search(const QString & text,int engine,bool cur_tab)
+	{
+		KIconLoader* iload = KGlobal::iconLoader();
+		SearchWidget* search = new SearchWidget(this);
+		getGUI()->addTabPage(search,iload->loadIconSet("viewmag", KIcon::Small),text,this);
+		
+		KAction* copy_act = KStdAction::copy(search,SLOT(copy()),actionCollection());
+		copy_act->plug(search->rightClickMenu(),0);
+		searches.append(search);
+		
+		search->updateSearchEngines(engines);
+		search->search(text,engine);
 	}
 	
 	void SearchPlugin::preferencesUpdated()
 	{
-		if(search)
-			search->loadSearchEngines();
+		engines.load(KGlobal::dirs()->saveLocation("data","ktorrent") + "search_engines");
+		if (tab)
+			tab->updateSearchEngines(engines);
+		
+		for (QPtrList<SearchWidget>::iterator i = searches.begin(); i != searches.end();i++)
+		{
+			SearchWidget* w = *i;
+			w->updateSearchEngines(engines);
+		}
+	}
+	
+	void SearchPlugin::tabCloseRequest(QWidget* tab)
+	{
+		if (searches.contains((SearchWidget*)tab))
+		{
+			searches.remove((SearchWidget*)tab);
+			getGUI()->removeTabPage(tab);
+			tab->deleteLater();
+		}
 	}
 
 }

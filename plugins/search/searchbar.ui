@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>SearchBar</class>
 <widget class="QWidget">
     <property name="name">
@@ -8,9 +8,12 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>600</width>
-            <height>48</height>
+            <width>804</width>
+            <height>52</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>SearchBar</string>
     </property>
     <hbox>
         <property name="name">
@@ -32,27 +35,27 @@
                 <string></string>
             </property>
         </widget>
-	<widget class="KPushButton">
-		<property name="name">
-			<cstring>m_clear_button</cstring>
-		</property>
-		<property name="text">
-			<string></string>
-		</property>
-	</widget>
+        <widget class="KPushButton">
+            <property name="name">
+                <cstring>m_clear_button</cstring>
+            </property>
+            <property name="text">
+                <string></string>
+            </property>
+        </widget>
         <widget class="KLineEdit">
             <property name="name">
                 <cstring>m_search_text</cstring>
             </property>
         </widget>
-	<widget class="KPushButton">
-		<property name="name">
-			<cstring>m_search_button</cstring>
-		</property>
-		<property name="text">
-			<string>Search</string>
-		</property>
-	</widget>
+        <widget class="KPushButton">
+            <property name="name">
+                <cstring>m_search_button</cstring>
+            </property>
+            <property name="text">
+                <string>Search</string>
+            </property>
+        </widget>
         <spacer>
             <property name="name">
                 <cstring>spacer1</cstring>
@@ -61,7 +64,7 @@
                 <enum>Horizontal</enum>
             </property>
             <property name="sizeType">
-                <enum>Expanding</enum>
+                <enum>Maximum</enum>
             </property>
             <property name="sizeHint">
                 <size>

@@ -47,7 +47,7 @@ class KTorrentDCOP;
 class QLabel;
 class QListViewItem;
 class KTorrentPreferences;
-
+class KPushButton;
 
 
 namespace kt
@@ -89,7 +89,8 @@ public:
 	 */
 	void applySettings(bool change_port = true);
 
-	virtual void addTabPage(QWidget* page,const QIconSet & icon,const QString & caption);
+	virtual void addTabPage(QWidget* page,const QIconSet & icon,
+							const QString & caption,kt::CloseTabListener* ctl = 0);
 	virtual void removeTabPage(QWidget* page);
 	virtual void addPrefPage(kt::PrefPageInterface* page);
 	virtual void removePrefPage(kt::PrefPageInterface* page);
@@ -158,6 +159,8 @@ private slots:
 	void onUpdateActions(bool can_start,bool can_stop,bool can_remove,bool can_scan);
 	void checkDataIntegrity();
 	void groupChanged(kt::Group* g);
+	void tabClosePressed();
+	void currentTabChanged(QWidget* w);
 	
 private:
 	void setupAccel();
@@ -182,8 +185,15 @@ private:
 	QTimer m_gui_update_timer;
 	KTorrentPreferences* m_pref;
 	
+	struct Tab
+	{
+		KMdiChildView* child;
+		kt::CloseTabListener* ctl;
+	};
+	
 	kt::ExpandableWidget* m_view_exp;
-	QMap<QWidget*,KMdiChildView*> m_tab_map;
+	QMap<QWidget*,Tab> m_tab_map;
+	KPushButton* m_close_cur_tab;
 
 	QLabel* m_statusInfo;
 	QLabel* m_statusTransfer;

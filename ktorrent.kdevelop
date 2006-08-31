@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>apps/ktorrent/groups/libgroups.la</activetarget>
+      <activetarget>plugins/search/ktsearchplugin.la</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>
@@ -90,6 +90,8 @@
       <subclass uifile="/plugins/partfileimport/importdlgbase.ui" sourcefile="/plugins/partfileimport/importdialog.h" />
       <subclass uifile="/apps/ktorrent/scandlgbase.ui" sourcefile="/apps/ktorrent/scandialog.cpp" />
       <subclass uifile="/apps/ktorrent/scandlgbase.ui" sourcefile="/apps/ktorrent/scandialog.h" />
+      <subclass uifile="/plugins/search/searchtabbase.ui" sourcefile="/plugins/search/searchtab.cpp" />
+      <subclass uifile="/plugins/search/searchtabbase.ui" sourcefile="/plugins/search/searchtab.h" />
     </subclassing>
   </kdevautoproject>
   <kdevfileview>

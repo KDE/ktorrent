@@ -15,61 +15,44 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTSEARCHPREFPAGE_H
-#define KTSEARCHPREFPAGE_H
+#ifndef KTSEARCHENGINELIST_H
+#define KTSEARCHENGINELIST_H
 
-
-#include <interfaces/prefpageinterface.h>
-#include "searchpref.h"
-
-#include <qstring.h>
+#include <kurl.h>
+#include <qvaluelist.h>
+#include <util/constants.h>
 
 namespace kt
-{	
-	class SearchPlugin;
-	class SearchEngineList;
+{
 	
-	class SearchPrefPageWidget : public SEPreferences
-	{
-		Q_OBJECT
-	public:
-		SearchPrefPageWidget(QWidget *parent = 0);
-	
-		bool apply();
-		void saveSearchEngines();
-		void updateList(QString& source);
-		
-		void updateSearchEngines(const SearchEngineList & se);
-		
-	public slots:
-		virtual void btnUpdate_clicked();
-	
-	private slots:
-		void addClicked();
-		void removeClicked();
-		void addDefaultClicked();
-		void removeAllClicked();
-	}; 
 
 	/**
-	@author Joris Guisson
+		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class SearchPrefPage : public PrefPageInterface
+	class SearchEngineList
 	{
+		struct SearchEngine
+		{
+			QString name;
+			KURL url;
+		};
+		
+		QValueList<SearchEngine> m_search_engines;
 	public:
-		SearchPrefPage(SearchPlugin* plugin);
-		virtual ~SearchPrefPage();
+		SearchEngineList();
+		virtual ~SearchEngineList();
 
-		virtual bool apply();
-		virtual void createWidget(QWidget* parent);
-		virtual void updateData();
-		virtual void deleteWidget();
-
-	private:
-		SearchPrefPageWidget* widget;
-		SearchPlugin* m_plugin;
+		void save(const QString& file);
+		void load(const QString& file);
+		void makeDefaultFile(const QString& file);
+		
+		KURL getSearchURL(bt::Uint32 engine) const;
+		QString getEngineName(bt::Uint32 engine) const;
+		
+		/// Get the number of engines
+		bt::Uint32 getNumEngines() const {return m_search_engines.count();} 
 	};
 
 }

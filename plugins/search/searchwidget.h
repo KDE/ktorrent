@@ -37,13 +37,7 @@ namespace kt
 {
 	class HTMLPart;
 	class SearchPlugin;
-	
-	struct SearchEngine
-	{
-		QString name;
-		KURL url;
-		int id;
-	};
+	class SearchEngineList;
 	
 	
 	/**
@@ -53,15 +47,12 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		SearchWidget(SearchPlugin* sp,QWidget* parent = 0,const char* name = 0);
+		SearchWidget(SearchPlugin* sp);
 		virtual ~SearchWidget();
 	
 		KPopupMenu* rightClickMenu();
-	
-		/**
-		* Load the list of search engines.
-		*/
-		void loadSearchEngines();
+		
+		void updateSearchEngines(const SearchEngineList & sl);
 	
 	public slots:
 		void search(const QString & text,int engine = 0);
@@ -87,10 +78,7 @@ namespace kt
 		SearchBar* sbar;
 		KPopupMenu* right_click_menu;
 		int back_id;
-		QValueVector<SearchEngine> m_search_engines;
 		SearchPlugin* sp;
-	
-		void makeDefaultSearchEngines();
 	};
 
 }

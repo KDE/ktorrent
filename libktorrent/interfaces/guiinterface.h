@@ -51,6 +51,17 @@ namespace kt
 	};
 	
 	/**
+	 * Plugins wanting to add closeable tabs, should implement this interface.
+	 * That way they can be notified of close requests.
+	 * Not providing this interface in addTabPage means the tab cannot be closed.
+	*/
+	class CloseTabListener
+	{
+	public:
+		virtual void tabCloseRequest(QWidget* tab) = 0;
+	};
+	
+	/**
 	 * @author Joris Guisson
 	 * @brief Interface to modify the GUI
 	 *
@@ -75,8 +86,10 @@ namespace kt
 		 * @param page The widget
 		 * @param icon Icon for the tab
 		 * @param caption Text on the tab
+		 * @param ctl For closeable tabs this pointer should be set
 		 */
-		virtual void addTabPage(QWidget* page,const QIconSet & icon,const QString & caption) = 0;
+		virtual void addTabPage(QWidget* page,const QIconSet & icon,
+								const QString & caption,CloseTabListener* ctl = 0) = 0;
 
 		/**
 		 * Remove a tab page, does nothing if the page

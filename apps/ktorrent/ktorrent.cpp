@@ -47,6 +47,7 @@
 #include <ktabwidget.h>
 #include <kedittoolbar.h>
 #include <ksqueezedtextlabel.h>
+#include <kpushbutton.h>
 
 #include <kstdaccel.h>
 #include <kaction.h>
@@ -214,6 +215,10 @@ KTorrent::KTorrent()
 	groupChanged(m_group_view->currentGroup());
 	tabWidget()->setHoverCloseButton(false);
 	
+	m_close_cur_tab = new KPushButton(KGuiItem(QString::null,"tab_remove"),tabWidget());
+	connect(m_close_cur_tab,SIGNAL(clicked()),this,SLOT(tabClosePressed()));
+	tabWidget()->setCornerWidget(m_close_cur_tab,Qt::TopRight);
+	connect(tabWidget(),SIGNAL(currentChanged(QWidget*)),this,SLOT(currentTabChanged( QWidget* )));
 	statusBar()->show();
 
 	
@@ -229,7 +234,7 @@ KTorrent::~KTorrent()
 {
 	while (m_tab_map.count() > 0)
 	{
-		QMap<QWidget*,KMdiChildView*>::iterator itr = m_tab_map.begin();
+		QMap<QWidget*,Tab>::iterator itr = m_tab_map.begin();
 		removeTabPage(itr.key());
 	}
 	delete m_dcop;
@@ -243,7 +248,10 @@ KTorrent::~KTorrent()
 
 void KTorrent::groupChanged(kt::Group* g)
 {
-	KMdiChildView* cv = m_tab_map[m_view_exp];
+	if (!m_tab_map.contains(m_view_exp))
+		return;
+	
+	KMdiChildView* cv = m_tab_map[m_view_exp].child;
 	if (cv)
 	{
 		cv->setCaption(g->groupName());
@@ -254,12 +262,16 @@ void KTorrent::groupChanged(kt::Group* g)
 	m_view->setCurrentGroup(g);
 }
 
-void KTorrent::addTabPage(QWidget* page,const QIconSet & icon,const QString & caption)
+void KTorrent::addTabPage(QWidget* page,const QIconSet & icon,
+						  const QString & caption,kt::CloseTabListener* ctl)
 {
 	KMdiChildView* cv = createWrapper(page,caption,caption);
 	addWindow(cv);
 	cv->setIcon(icon.pixmap(QIconSet::Small,QIconSet::Active));
-	m_tab_map.insert(page,cv);
+	Tab t;
+	t.child = cv;
+	t.ctl = ctl;
+	m_tab_map.insert(page,t);
 }
 
 void KTorrent::removeTabPage(QWidget* page)
@@ -267,7 +279,7 @@ void KTorrent::removeTabPage(QWidget* page)
 	if (!m_tab_map.contains(page))
 		return;
 	
-	KMdiChildView* cv = m_tab_map[page];
+	KMdiChildView* cv = m_tab_map[page].child;
 	m_tab_map.erase(page);
 	page->reparent(0,QPoint());
 	closeWindow(cv);
@@ -823,6 +835,44 @@ void KTorrent::showIPFilter()
 {
 	IPFilterWidget ipf(this);
 	ipf.exec();
+}
+
+void KTorrent::tabClosePressed()
+{
+	KMdiChildView* child = activeWindow();
+	if (!child)
+		return;
+	
+	QMap<QWidget*,Tab>::iterator i = m_tab_map.begin();
+	while (i != m_tab_map.end())
+	{
+		if (i.data().child == child)
+		{
+			kt::CloseTabListener* ctl = i.data().ctl;
+			ctl->tabCloseRequest(i.key());
+			return; 
+		}
+		i++;
+	}
+}
+
+void KTorrent::currentTabChanged(QWidget* w)
+{
+	KMdiChildView* child = activeWindow();
+	if (!child)
+		return;
+	
+	QMap<QWidget*,Tab>::iterator i = m_tab_map.begin();
+	while (i != m_tab_map.end())
+	{
+		if (i.data().child == child)
+		{
+			m_close_cur_tab->setEnabled(i.data().ctl != 0);
+			return;
+		}
+		i++;
+	}
+	m_close_cur_tab->setEnabled(false);
 }
 
 #include "ktorrent.moc"

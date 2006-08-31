@@ -15,63 +15,39 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTSEARCHPREFPAGE_H
-#define KTSEARCHPREFPAGE_H
 
+#ifndef SEARCHTAB_H
+#define SEARCHTAB_H
 
-#include <interfaces/prefpageinterface.h>
-#include "searchpref.h"
-
-#include <qstring.h>
+#include "searchtabbase.h"
 
 namespace kt
-{	
-	class SearchPlugin;
+{
 	class SearchEngineList;
-	
-	class SearchPrefPageWidget : public SEPreferences
+
+	class SearchTab : public SearchTabBase
 	{
 		Q_OBJECT
-	public:
-		SearchPrefPageWidget(QWidget *parent = 0);
 	
-		bool apply();
-		void saveSearchEngines();
-		void updateList(QString& source);
-		
-		void updateSearchEngines(const SearchEngineList & se);
-		
-	public slots:
-		virtual void btnUpdate_clicked();
-	
-	private slots:
-		void addClicked();
-		void removeClicked();
-		void addDefaultClicked();
-		void removeAllClicked();
-	}; 
-
-	/**
-	@author Joris Guisson
-	*/
-	class SearchPrefPage : public PrefPageInterface
-	{
 	public:
-		SearchPrefPage(SearchPlugin* plugin);
-		virtual ~SearchPrefPage();
-
-		virtual bool apply();
-		virtual void createWidget(QWidget* parent);
-		virtual void updateData();
-		virtual void deleteWidget();
-
-	private:
-		SearchPrefPageWidget* widget;
-		SearchPlugin* m_plugin;
+		SearchTab(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+		virtual ~SearchTab();
+	
+		void updateSearchEngines(const SearchEngineList & sl);
+	
+	protected slots:
+		void clearButtonPressed();
+		void searchNewTabPressed();
+		void clearHistoryPressed();
+		void searchBoxReturn(const QString & str);
+		void textChanged(const QString & str);
+		
+	signals:
+		void search(const QString & text,int engine,bool cur_tab);
 	};
-
 }
 
 #endif
+
