@@ -66,6 +66,7 @@ namespace kt
 		 
 		pref = new SearchPrefPage(this);
 		getGUI()->addPrefPage(pref);
+		pref->updateData();
 		tab->updateSearchEngines(engines);
 	}
 
