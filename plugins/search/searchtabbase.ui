@@ -132,9 +132,6 @@
                     <property name="text">
                         <string>Clear Search Histor&amp;y</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+Y</string>
-                    </property>
                 </widget>
             </vbox>
         </widget>

@@ -12,9 +12,6 @@
             <height>52</height>
         </rect>
     </property>
-    <property name="caption">
-        <string>SearchBar</string>
-    </property>
     <hbox>
         <property name="name">
             <cstring>unnamed</cstring>
