@@ -56,7 +56,9 @@ namespace kt
 			yes_pix = iload->loadIcon("button_ok",KIcon::Small);
 			no_pix = iload->loadIcon("button_cancel",KIcon::Small);
 			lock_pix = iload->loadIcon("ktencrypted",KIcon::Small);
-			geoip_db_exists = !locate("data", "ktorrent/geoip/geoip.dat").isNull();
+			geoip_db_exists = !locate("data", "ktorrent/geoip/geoip.dat").isNull(); 
+			if(!geoip_db_exists)
+				geoip_db_exists = !locate("data", "ktorrent/geoip/GeoIP.dat").isNull();
 			yes_no_pix_loaded = true;
 		}
 		
