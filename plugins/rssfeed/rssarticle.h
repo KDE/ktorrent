@@ -53,6 +53,8 @@ namespace kt
  			bool operator==(const RssArticle &other) const;
 			RssArticle(QString title, KURL link, QString description, QDateTime pubDate, QString guid);
 			
+			void setTitle(const QString& title) { m_title=title; }
+			
 			QString title() const { return m_title; }
 			KURL link() const { return m_link; }
 			QString description() const { return m_description; }

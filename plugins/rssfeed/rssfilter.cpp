@@ -247,9 +247,9 @@ namespace kt
 		return true;
 	}
 		
-	bool RssFilter::scanArticle( RssArticle article, bool ignoreMatches )
+	bool RssFilter::scanArticle( RssArticle article, bool ignoreMatches, bool saveMatch)
 	{
-		if (!m_active)
+		if (!m_active && saveMatch)
 			return false;
 	
 		QRegExp regEx;
@@ -324,7 +324,7 @@ namespace kt
 				}
 		}
 		
-		if (!alreadyDownloaded)
+		if (!alreadyDownloaded && saveMatch)
 		{
 			FilterMatch newMatch(season, episode, article.link().prettyURL());
 			m_matches.append(newMatch);

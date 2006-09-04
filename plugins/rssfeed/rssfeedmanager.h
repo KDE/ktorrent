@@ -58,10 +58,11 @@ namespace kt
 			~RssFeedManager();
 
 		public slots:
-			bool processLink(const QString &link, bool silent = true);
+			bool processLink(const QString &link, bool silent = true, bool noHtml = false);
 			void processHtml(const QString &link, bool silent = true);
 			void changedActiveFeed();
 			void changedArticleSelection();
+			void changedFeedUrl();
 			void changedMatchSelection();
 			void updateArticles(const RssArticle::List& articles);
 			void downloadSelectedArticles();
@@ -96,6 +97,9 @@ namespace kt
 			
 			void scanArticle(RssArticle article, RssFilter * filter = NULL);
 			void rescanFilter();
+			
+			void testTextChanged();
+			void testFilter();
 
 		private:
 			CoreInterface* m_core;

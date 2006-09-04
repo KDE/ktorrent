@@ -41,6 +41,7 @@
 #include <qdatetimeedit.h>
 #include <qtable.h>
 #include <qregexp.h>
+#include <qlayout.h>
 
 #include <torrent/globals.h>
 #include <util/log.h>
@@ -112,6 +113,9 @@ namespace kt
 		//connect the changing of the active feed
 		connect(feedlist, SIGNAL(selectionChanged()), this, SLOT(changedActiveFeed()) );
 		
+		//connect the changing of the url to enable the refresh button
+		connect(feedUrl, SIGNAL(textChanged(const QString &)), this, SLOT(changedFeedUrl()) );
+		
 		//connect the changing of the filters
 		connect(acceptFilterList, SIGNAL(selectionChanged()), this, SLOT(changedActiveAcceptFilter()) );
 		connect(rejectFilterList, SIGNAL(selectionChanged()), this, SLOT(changedActiveRejectFilter()) );
@@ -124,6 +128,9 @@ namespace kt
 		connect(filterMatches, SIGNAL(selectionChanged()), this, SLOT(changedMatchSelection()) );
 		connect(downloadFilterMatch, SIGNAL(clicked()), this, SLOT(downloadSelectedMatches()) );
 		
+		//connect the test text update to the slot
+		connect(testText, SIGNAL(textChanged(const QString &)), this, SLOT(testTextChanged()) );
+		connect(testTestText, SIGNAL(clicked()), this, SLOT(testFilter()) );
 		
 	}
 
@@ -160,7 +167,7 @@ namespace kt
 					abslink = url.url();
 				}
 				
-				if (processLink(abslink))
+				if (processLink(abslink, silent, true))
 					{
 					return;
 					}
@@ -178,7 +185,7 @@ namespace kt
 					abslink = url.protocol() + "://" + url.host() + abslink;
 				}
 				
-				if (processLink(abslink))
+				if (processLink(abslink, silent))
 					{
 					return;
 					}
@@ -186,7 +193,12 @@ namespace kt
 		}
 	}
 	
-	bool RssFeedManager::processLink(const QString &link, bool silent)
+	void RssFeedManager::changedFeedUrl()
+	{
+		refreshFeed->setEnabled(!feedUrl->url().isEmpty());
+	}
+	
+	bool RssFeedManager::processLink(const QString &link, bool silent, bool noHtml)
 	{
 		//m_core->loadSilently(torrent);
 		KMimeType linkType = *KMimeType::findByURL(link);
@@ -207,7 +219,10 @@ namespace kt
 		
 		if (linkType.is("text/html"))
 		{
-			processHtml(link, silent);
+			if (!noHtml)
+			{
+				processHtml(link, silent);
+			}
 			return false;
 		}
 		
@@ -280,6 +295,9 @@ namespace kt
 		
 		//articles
 		connect(feeds.at(index), SIGNAL(articlesChanged(const RssArticle::List&)), this, SLOT(updateArticles(const RssArticle::List&) ) );
+		
+		//connect the refresh button
+		connect(refreshFeed, SIGNAL(clicked()), feeds.at(index), SLOT(refreshFeed()) );
 	}
 	
 	void RssFeedManager::disconnectFeed(int index)
@@ -309,6 +327,8 @@ namespace kt
 		
 		//articles
 		disconnect(feeds.at(index), SIGNAL(articlesChanged(const RssArticle::List&)), this, SLOT(updateArticles(const RssArticle::List&) ) );
+		
+		disconnect(refreshFeed, SIGNAL(clicked()), feeds.at(index), SLOT(refreshFeed()) );
 	}
 	
 	void RssFeedManager::connectFilter(int index, bool acceptFilter)
@@ -343,6 +363,8 @@ namespace kt
 		connect(acceptFilters.at(index), SIGNAL(maxEpisodeChanged(int)), filterMaxEpisode, SLOT(setValue(int) ) );
 		//matches
 		connect(acceptFilters.at(index), SIGNAL(matchesChanged(const QValueList<FilterMatch>&)), this, SLOT(updateMatches(const QValueList<FilterMatch>&) ) );
+		
+		connect(processFilter, SIGNAL(clicked()), acceptFilters.at(index), SIGNAL(rescanFilter()) );
 
 		}
 		else
@@ -375,6 +397,8 @@ namespace kt
 		connect(rejectFilters.at(index), SIGNAL(maxEpisodeChanged(int)), filterMaxEpisode, SLOT(setValue(int) ) );
 		//matches
 		connect(rejectFilters.at(index), SIGNAL(matchesChanged(const QValueList<FilterMatch>&)), this, SLOT(updateMatches(const QValueList<FilterMatch>&) ) );
+		
+		connect(processFilter, SIGNAL(clicked()), rejectFilters.at(index), SIGNAL(rescanFilter()) );
 		
 		}
 	}
@@ -411,6 +435,8 @@ namespace kt
 		disconnect(acceptFilters.at(index), SIGNAL(maxEpisodeChanged(int)), filterMaxEpisode, SLOT(setValue(int) ) );
 		//matches
 		disconnect(acceptFilters.at(index), SIGNAL(matchesChanged(const QValueList<FilterMatch>&)), this, SLOT(updateMatches(const QValueList<FilterMatch>&) ) ); 
+		
+		disconnect(processFilter, SIGNAL(clicked()), acceptFilters.at(index), SIGNAL(rescanFilter()) );
 		}
 		else
 		{
@@ -442,6 +468,8 @@ namespace kt
 		disconnect(rejectFilters.at(index), SIGNAL(maxEpisodeChanged(int)), filterMaxEpisode, SLOT(setValue(int) ) );
 		//matches
 		disconnect(rejectFilters.at(index), SIGNAL(matchesChanged(const QValueList<FilterMatch>&)), this, SLOT(updateMatches(const QValueList<FilterMatch>&) ) );
+		
+		disconnect(processFilter, SIGNAL(clicked()), rejectFilters.at(index), SIGNAL(rescanFilter()) );
 		
 		}
 	}
@@ -514,25 +542,28 @@ namespace kt
 		//matches
 		connect(acceptFilters.at(index), SIGNAL(matchesChanged( const QValueList<FilterMatch>& )), this, SLOT(saveFilterList() ) );
 		
-		//connect all except the matchesChanged to the rescanFilter slot
-				//title
-		connect(acceptFilters.at(index), SIGNAL(titleChanged(const QString &)), this, SLOT(rescanFilter() ) );
-		//active
-		connect(acceptFilters.at(index), SIGNAL(activeChanged( bool )), this, SLOT(rescanFilter() ) );
-		//regexps
-		connect(acceptFilters.at(index), SIGNAL(regExpsChanged( const QStringList& )), this, SLOT(rescanFilter() ) );
-		//series
-		connect(acceptFilters.at(index), SIGNAL(seriesChanged( bool )), this, SLOT(rescanFilter() ) );
-		//sansEpisode
-		connect(acceptFilters.at(index), SIGNAL(sansEpisodeChanged( bool )), this, SLOT(rescanFilter() ) );
-		//minSeason
-		connect(acceptFilters.at(index), SIGNAL(minSeasonChanged (int )), this, SLOT(rescanFilter() ) );
-		//minEpisode
-		connect(acceptFilters.at(index), SIGNAL(minEpisodeChanged (int )), this, SLOT(rescanFilter() ) );
-		//maxSeason
-		connect(acceptFilters.at(index), SIGNAL(maxSeasonChanged (int )), this, SLOT(rescanFilter() ) );
-		//maxEpiosde
-		connect(acceptFilters.at(index), SIGNAL(maxEpisodeChanged (int )), this, SLOT(rescanFilter() ) );
+		//connect the rescan signal to the rescan slot
+		connect(acceptFilters.at(index), SIGNAL(rescanFilter()), this, SLOT(rescanFilter()) );
+		
+// 		//connect all except the matchesChanged to the rescanFilter slot
+// 		//title
+// 		connect(acceptFilters.at(index), SIGNAL(titleChanged(const QString &)), this, SLOT(rescanFilter() ) );
+// 		//active
+// 		connect(acceptFilters.at(index), SIGNAL(activeChanged( bool )), this, SLOT(rescanFilter() ) );
+// 		//regexps
+// 		connect(acceptFilters.at(index), SIGNAL(regExpsChanged( const QStringList& )), this, SLOT(rescanFilter() ) );
+// 		//series
+// 		connect(acceptFilters.at(index), SIGNAL(seriesChanged( bool )), this, SLOT(rescanFilter() ) );
+// 		//sansEpisode
+// 		connect(acceptFilters.at(index), SIGNAL(sansEpisodeChanged( bool )), this, SLOT(rescanFilter() ) );
+// 		//minSeason
+// 		connect(acceptFilters.at(index), SIGNAL(minSeasonChanged (int )), this, SLOT(rescanFilter() ) );
+// 		//minEpisode
+// 		connect(acceptFilters.at(index), SIGNAL(minEpisodeChanged (int )), this, SLOT(rescanFilter() ) );
+// 		//maxSeason
+// 		connect(acceptFilters.at(index), SIGNAL(maxSeasonChanged (int )), this, SLOT(rescanFilter() ) );
+// 		//maxEpiosde
+// 		connect(acceptFilters.at(index), SIGNAL(maxEpisodeChanged (int )), this, SLOT(rescanFilter() ) );
 
 	}
 	
@@ -865,6 +896,19 @@ namespace kt
 				//articles
 				updateArticles(feeds.at(currentFeed)->articles());
 				
+				//title
+				feedTitle->setEnabled(true);
+				//url
+				feedUrl->setEnabled(true);
+				//articleAge
+				feedArticleAge->setEnabled(true);
+				//active
+				feedActive->setEnabled(true);
+				//autoRefresh
+				feedAutoRefresh->setEnabled(true);
+				//ignoreTTL
+				feedIgnoreTTL->setEnabled(true);
+				
 				//connect all the signals
 				connectFeed(currentFeed);
 			}
@@ -885,6 +929,19 @@ namespace kt
 				feedIgnoreTTL->setChecked(false);
 				//articles
 				feedArticles->setNumRows(0);
+				
+				//title
+				feedTitle->setEnabled(false);
+				//url
+				feedUrl->setEnabled(false);
+				//articleAge
+				feedArticleAge->setEnabled(false);
+				//active
+				feedActive->setEnabled(false);
+				//autoRefresh
+				feedAutoRefresh->setEnabled(false);
+				//ignoreTTL
+				feedIgnoreTTL->setEnabled(false);
 			}
 		}
 	}
@@ -915,7 +972,6 @@ namespace kt
 			if (currentAcceptFilter >= 0)
 			{
 				//set the values
-				//title
 				filterTitle->setText(acceptFilters.at(currentAcceptFilter)->title());
 				filterActive->setChecked(acceptFilters.at(currentAcceptFilter)->active());
 				filterRegExps->setItems(acceptFilters.at(currentAcceptFilter)->regExps());
@@ -927,6 +983,19 @@ namespace kt
 				filterMaxEpisode->setValue(acceptFilters.at(currentAcceptFilter)->maxEpisode());
 				
 				updateMatches(acceptFilters.at(currentAcceptFilter)->matches());
+				
+				filterTitle->setEnabled(true);
+				filterActive->setEnabled(true);
+				filterRegExps->setEnabled(true);
+				filterSeries->setEnabled(true);
+				filterSansEpisode->setEnabled(true);
+				filterMinSeason->setEnabled(true);
+				filterMinEpisode->setEnabled(true);
+				filterMaxSeason->setEnabled(true);
+				filterMaxEpisode->setEnabled(true);
+				
+				processFilter->setEnabled(true);
+				testText->setEnabled(true);
 				
 				//connect all the signals
 				connectFilter(currentAcceptFilter, true);
@@ -946,6 +1015,20 @@ namespace kt
 					filterMaxSeason->setValue(0);
 					filterMaxEpisode->setValue(0);
 					filterMatches->setNumRows(0);
+					
+					filterTitle->setEnabled(false);
+					filterActive->setEnabled(false);
+					filterRegExps->setEnabled(false);
+					filterSeries->setEnabled(false);
+					filterSansEpisode->setEnabled(false);
+					filterMinSeason->setEnabled(false);
+					filterMinEpisode->setEnabled(false);
+					filterMaxSeason->setEnabled(false);
+					filterMaxEpisode->setEnabled(false);
+					
+					processFilter->setEnabled(false);
+					testText->setEnabled(false);
+					
 				}
 			}
 		}
@@ -989,6 +1072,19 @@ namespace kt
 				
 				updateMatches(rejectFilters.at(currentRejectFilter)->matches());
 				
+				filterTitle->setEnabled(true);
+				filterActive->setEnabled(true);
+				filterRegExps->setEnabled(true);
+				filterSeries->setEnabled(true);
+				filterSansEpisode->setEnabled(true);
+				filterMinSeason->setEnabled(true);
+				filterMinEpisode->setEnabled(true);
+				filterMaxSeason->setEnabled(true);
+				filterMaxEpisode->setEnabled(true);
+				
+				processFilter->setEnabled(true);
+				testText->setEnabled(true);
+				
 				//connect all the signals
 				connectFilter(currentRejectFilter, false);
 			}
@@ -1007,6 +1103,19 @@ namespace kt
 					filterMaxSeason->setValue(0);
 					filterMaxEpisode->setValue(0);
 					filterMatches->setNumRows(0);
+					
+					filterTitle->setEnabled(false);
+					filterActive->setEnabled(false);
+					filterRegExps->setEnabled(false);
+					filterSeries->setEnabled(false);
+					filterSansEpisode->setEnabled(false);
+					filterMinSeason->setEnabled(false);
+					filterMinEpisode->setEnabled(false);
+					filterMaxSeason->setEnabled(false);
+					filterMaxEpisode->setEnabled(false);
+					
+					processFilter->setEnabled(false);
+					testText->setEnabled(false);
 				}
 			}
 		}
@@ -1189,6 +1298,39 @@ namespace kt
 					scanArticle(feeds.at(i)->articles()[j], (RssFilter *)sender());
 				}
 			}
+		}
+	}
+	
+	void RssFeedManager::testTextChanged()
+	{
+		testText->setPaletteBackgroundColor(QColor(255, 255, 255));
+		testTestText->setEnabled(!testText->text().isEmpty());
+	}
+	
+	void RssFeedManager::testFilter()
+	{
+		RssFilter * curFilter;
+		if (currentRejectFilter<0)
+		{
+			//we're currently testing an acceptFilter
+			curFilter = acceptFilters.at(currentAcceptFilter);
+		}
+		else
+		{
+			//it's a reject filter
+			curFilter = rejectFilters.at(currentRejectFilter);
+		}
+		
+		RssArticle testArticle;
+		testArticle.setTitle(testText->text());
+		
+		if (curFilter->scanArticle(testArticle, false, false))
+		{
+		testText->setPaletteBackgroundColor(QColor(0, 255, 0));
+		}
+		else
+		{
+		testText->setPaletteBackgroundColor(QColor(255, 0, 0));
 		}
 	}
 

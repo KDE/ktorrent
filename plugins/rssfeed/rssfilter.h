@@ -93,7 +93,7 @@ namespace kt
 			int maxEpisode() const { return m_maxEpisode; }
 			QValueList<FilterMatch> matches() const { return m_matches; }
 			
-			bool scanArticle(RssArticle article, bool ignoreMatches = true);
+			bool scanArticle(RssArticle article, bool ignoreMatches = true, bool saveMatch = true);
 
 		public slots:
 			void setTitle( const QString& title );
@@ -107,6 +107,8 @@ namespace kt
 			void setMaxEpisode( int maxEpisode );
 			void setMatches( const QValueList<FilterMatch>& matches );
 			
+			//void scanFilter();
+			
 		signals:
 			void titleChanged( const QString& title );
 			void activeChanged( bool active );
@@ -118,6 +120,8 @@ namespace kt
 			void maxSeasonChanged (int maxSeason);
 			void maxEpisodeChanged (int maxEpisode);
 			void matchesChanged( const QValueList<FilterMatch>& matches );
+			
+			void rescanFilter();
 
 		private:
 			QString m_title;
