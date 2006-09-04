@@ -239,7 +239,7 @@ void KTorrentCore::loadSilently(const KURL& url)
 {
 	// download to a random file in tmp
 	KIO::Job* j = KIO::file_copy(url,QString("/tmp/kt-tmp-torrent%1").arg(bt::GetCurrentTime()),-1,true);
-	connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadSilentlyFinished( KIO::Job* )));
+	connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadFinishedSilently( KIO::Job* )));
 }
 
 void KTorrentCore::start(kt::TorrentInterface* tc)
