@@ -60,7 +60,7 @@ namespace dht
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class DHT : public QObject, public DHTBase
+	class DHT : public DHTBase
 	{
 		Q_OBJECT
 	public:

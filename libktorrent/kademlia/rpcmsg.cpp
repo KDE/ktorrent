@@ -572,6 +572,6 @@ namespace dht
 		Out(SYS_DHT|LOG_NOTICE) << "ERR: " << mtid << " " << msg << endl;
 	}
 	
-	void ErrMsg::encode(QByteArray & arr)
+	void ErrMsg::encode(QByteArray & )
 	{}
 }

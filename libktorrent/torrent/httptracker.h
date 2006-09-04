@@ -38,16 +38,18 @@ namespace bt
 	 *
 	 * This class uses the HTTP protocol to communicate with the tracker.
 	 */
-	class HTTPTracker : public TrackerBackend
+	class HTTPTracker : public Tracker
 	{
 		Q_OBJECT
 	public:
-		HTTPTracker(Tracker* trk);
+		HTTPTracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id);
 		virtual ~HTTPTracker();
 		
-		virtual bool doRequest(const KURL & url);
-		virtual void updateData(PeerManager* pman);
-		
+		virtual void start();
+		virtual void stop();
+		virtual void completed();
+		virtual void manualUpdate();
+		virtual Uint32 failureCount() const {return failures;}
 		
 	private slots:
 		void onResult(KIO::Job* j);
@@ -55,14 +57,15 @@ namespace bt
 		void onTimeout();
 
 	private:
-		void doRequest(const QString & host,const QString & path,Uint16 p);
+		void doRequest();
+		bool updateData();
 		
 	private:
-		QTimer conn_timer;
-		int num_attempts;
-		KURL last_url;
+		QTimer timer;
 		QByteArray data;
 		KIO::Job* active_job;
+		QString event;
+		Uint32 failures;
 	};
 
 }

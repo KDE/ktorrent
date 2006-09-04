@@ -27,6 +27,7 @@
 #include "globals.h"
 #include "peerid.h"
 #include <util/bitset.h>
+#include <interfaces/peersource.h>
 
 namespace mse
 {
@@ -41,12 +42,7 @@ namespace bt
 	class Authenticate;
 	class ChunkCounter;
 
-	struct PotentialPeer
-	{
-		PeerID id;
-		QString ip;
-		Uint16 port;
-	};
+
 	
 	const Uint32 MAX_SIMULTANIOUS_AUTHS = 20;
 
@@ -148,7 +144,7 @@ namespace bt
 		 * Add a potential peer
 		 * @param pp The PotentialPeer
 		 */
-		void addPotentialPeer(const PotentialPeer & pp);
+		void addPotentialPeer(const kt::PotentialPeer & pp);
 		
 		/**
 		 * Kills all connections to seeders. 
@@ -173,6 +169,13 @@ namespace bt
 		 */
 		void peerAuthenticated(Authenticate* auth,bool ok);
 		
+	public slots:
+		/**
+		 * A PeerSource, has new potential peers.
+		 * @param ps The PeerSource
+		 */
+		void peerSourceReady(kt::PeerSource* ps);
+		
 	private:
 		void updateAvailableChunks();
 
@@ -188,13 +191,14 @@ namespace bt
 		
 	private:
 		PtrMap<Uint32,Peer> peer_map;
-		QPtrList<Peer> peer_list,killed;
-		Uint32 num_seeders,num_leechers,num_pending;
-		QValueList<PotentialPeer> potential_peers;
+		QPtrList<Peer> peer_list;
+		QPtrList<Peer> killed;
+		QValueList<kt::PotentialPeer> potential_peers;
 		Torrent & tor;
 		bool started;
 		BitSet available_chunks;
 		ChunkCounter* cnt;
+		Uint32 num_pending;
 		
 		static Uint32 max_connections;
 		static Uint32 max_total_connections;

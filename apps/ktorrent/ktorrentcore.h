@@ -203,11 +203,11 @@ public:
 	
 	kt::TorrentInterface* getTorFromNumber(int tornumber);
 	QValueList<int> getTorrentNumbers(int type);
-        unsigned int getFileCount(int tornumber);
-        QCStringList getFileNames(int tornumber);
-        QValueList<int> getFilePriorities(int tornumber);
-        void setFilePriority(kt::TorrentInterface* tc, bt::Uint32 index, int priority);
-        void announceByTorNum(int tornumber);
+	unsigned int getFileCount(int tornumber);
+	QCStringList getFileNames(int tornumber);
+	QValueList<int> getFilePriorities(int tornumber);
+	void setFilePriority(kt::TorrentInterface* tc, bt::Uint32 index, int priority);
+	void announceByTorNum(int tornumber);
 
 public slots:
 	/**

@@ -19,16 +19,27 @@
  ***************************************************************************/
 #include "trackerslist.h"
 
-namespace kt {
-
-TrackersList::TrackersList()
+namespace kt 
 {
-}
 
-
-TrackersList::~TrackersList()
-{
-}
-
+	TrackersList::TrackersList()
+	{
+	}
+	
+	
+	TrackersList::~TrackersList()
+	{
+	}
+	
+	void TrackersList::merge(TrackersList* al)
+	{
+		KURL::List urls = al->getTrackerURLs();
+		KURL::List::iterator i = urls.begin();
+		while (i != urls.end())
+		{
+			addTracker(*i,true);
+			i++;
+		}
+	}
 
 }

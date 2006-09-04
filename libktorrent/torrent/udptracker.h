@@ -32,6 +32,14 @@
 
 namespace bt
 {
+	enum Event
+	{
+		NONE = 0,
+		COMPLETED = 1,
+		STARTED = 2,
+		STOPPED = 3
+	};
+	
 	class UDPTrackerSocket;
 
 	/**
@@ -42,15 +50,19 @@ namespace bt
 	 * This is an implementation of the protocol described in
 	 * http://xbtt.sourceforge.net/udp_tracker_protocol.html
 	 */
-	class UDPTracker : public TrackerBackend
+	class UDPTracker : public Tracker
 	{
 		Q_OBJECT
 	public:
-		UDPTracker(Tracker* trk);
+		UDPTracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id);
 		virtual ~UDPTracker();
 
-		virtual bool doRequest(const KURL & url);
-		virtual void updateData(PeerManager* pman);
+		virtual void start();
+		virtual void stop();
+		virtual void completed();
+		virtual void manualUpdate();
+		virtual Uint32 failureCount() const {return n;}
+		
 
 	private slots:
 		void onConnTimeout();
@@ -61,18 +73,18 @@ namespace bt
 	private:
 		void sendConnect();
 		void sendAnnounce();
+		bool doRequest();
 
 	private:
 		QHostAddress addr;
 		Uint16 udp_port;
 		Int32 transaction_id;
 		Int64 connection_id;
-		KURL old_url;
 
-		Uint32 interval,data_read;
-		QValueList<PotentialPeer> ppeers;
+		Uint32 data_read;
 		int n;
 		QTimer conn_timer;
+		Event event;
 
 		static UDPTrackerSocket* socket;
 		static Uint32 num_instances;

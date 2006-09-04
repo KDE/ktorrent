@@ -40,6 +40,7 @@ namespace kt
 
 	class MonitorInterface;
 	class TorrentFileInterface;
+	class PeerSource;
 	
 	enum TorrentStatus
 	{
@@ -253,19 +254,12 @@ namespace kt
 		 * @return The TorrentFileInterface (isNull() will be true in case of error)
 		 */
 		virtual TorrentFileInterface & getTorrentFile(Uint32 index) = 0;
-
-		/**
-		 * Get a tracker url. Used by the tracker to obtain an URL.
-		 * @param prev_success Wether or not previous tracker update was succesfull
-		 * @return An URL
-		 */
-		virtual KURL getTrackerURL(bool prev_success) const = 0;
 		
 		///Get a pointer to TrackersList object
 		virtual TrackersList* getTrackersList() = 0;
 		
-		///Creates TrackerList object and returns a pointer
-		virtual TrackersList* createTrackersList() = 0;
+		///Get a pointer to TrackersList object
+		virtual const TrackersList* getTrackersList() const = 0;
 		
 		///Get the torrent queue number. Zero if not in queue
 		virtual int getPriority() const = 0;
@@ -326,6 +320,18 @@ namespace kt
 		
 		/// Get the info_hash.
 		virtual const bt::SHA1Hash & getInfoHash() const  = 0;
+		
+		/**
+		 * Add a new PeerSource
+		 * @param ps 
+		 */
+		virtual void addPeerSource(PeerSource* ps) = 0;
+		
+		/**
+		 * Remove a nPeerSource
+		 * @param ps 
+		 */
+		virtual void removePeerSource(PeerSource* ps) = 0;
 	signals:
 		/**
 		 * Emited when we have finished downloading.

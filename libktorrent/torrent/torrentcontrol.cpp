@@ -39,7 +39,7 @@
 #include <kademlia/dhtbase.h>
 #include "downloader.h"
 #include "uploader.h"
-#include "tracker.h"
+#include "peersourcemanager.h"
 #include "chunkmanager.h"
 #include "torrent.h"
 #include "peermanager.h"
@@ -70,7 +70,7 @@ namespace bt
 
 
 	TorrentControl::TorrentControl()
-	: tor(0),tracker(0),cman(0),pman(0),down(0),up(0),choke(0),tmon(0),prealloc(false), last_announce(0)
+	: tor(0),psman(0),cman(0),pman(0),down(0),up(0),choke(0),tmon(0),prealloc(false), last_announce(0)
 	{
 		stats.imported_bytes = 0;
 		stats.trk_bytes_downloaded = 0;
@@ -86,6 +86,8 @@ namespace bt
 		stats.autostart = true;
 		stats.user_controlled = false;
 		stats.priv_torrent = false;
+		stats.seeders_connected_to = stats.seeders_total = 0;
+		stats.leechers_connected_to = stats.leechers_total = 0;
 		running_time_dl = running_time_ul = 0;
 		prev_bytes_dl = 0;
 		prev_bytes_ul = 0;
@@ -113,7 +115,7 @@ namespace bt
 		delete up;
 		delete cman;
 		delete pman;
-		delete tracker;
+		delete psman;
 		delete tor;
 	}
 
@@ -174,7 +176,7 @@ namespace bt
 			if (stats.completed && !comp)
 			{
 				// download has just been completed
-				tracker->completed();
+				psman->completed();
 				pman->killSeeders();
 				QDateTime now = QDateTime::currentDateTime();
 				running_time_dl += time_started_dl.secsTo(now);
@@ -187,7 +189,8 @@ namespace bt
 				// restart download if necesarry
 				// when user selects that files which were previously excluded,
 				// should now be downloaded
-				tracker->start();
+				psman->start();
+				last_announce = bt::GetCurrentTime();
 				time_started_dl = QDateTime::currentDateTime();
 			}
 			updateStatusMsg();
@@ -228,7 +231,7 @@ namespace bt
 				!stats.priv_torrent)
 			{
 				Out() << "Stalled for too long, time to get some fresh blood" << endl;
-				tracker->manualUpdate();
+				psman->manualUpdate();
 				stalled_timer.update();
 			}
 			
@@ -288,10 +291,7 @@ namespace bt
 		}
 		
 		time_started_ul = time_started_dl = QDateTime::currentDateTime();
-		trk_prev_bytes_dl = stats.bytes_downloaded,
-		trk_prev_bytes_ul = stats.bytes_uploaded,
-		stats.trk_bytes_downloaded = 0;
-		stats.trk_bytes_uploaded = 0;
+		resetTrackerStats();
 		
 		if (prealloc)
 		{
@@ -330,7 +330,8 @@ namespace bt
 		
 		
 		stalled_timer.update();
-		tracker->start();
+		psman->start();
+		last_announce = bt::GetCurrentTime();
 		stalled_timer.update();
 	}
 		
@@ -366,7 +367,7 @@ namespace bt
 	
 		if (stats.running)
 		{
-			tracker->stop();
+			psman->stop();
 
 			if (tmon)
 				tmon->stopped();
@@ -446,17 +447,19 @@ namespace bt
 		
 		// check if we haven't already loaded the torrent
 		// only do this when qman isn't 0
-		if (qman && qman->allreadyLoaded(tor->getInfoHash()) && !stats.priv_torrent)
+		if (qman && qman->allreadyLoaded(tor->getInfoHash()))
 		{
-			if (tor->getAnnounceList())
+			if (!stats.priv_torrent)
 			{
-				qman->mergeAnnounceList(tor->getInfoHash(),tor->getAnnounceList());
+				qman->mergeAnnounceList(tor->getInfoHash(),psman);
+
+				throw Error(i18n("You are already downloading this torrent %1, the list of trackers of both torrents has been merged.").arg(tor->getNameSuggestion()));
 			}
-			else 
+			else
 			{
-				qman->addTrackerURL(tor->getInfoHash(),tor->getTrackerURL(true));
+				throw Error(i18n("You are already downloading the torrent %1")
+						.arg(tor->getNameSuggestion()));
 			}
-			throw Error(i18n("You are already downloading this torrent, the list of trackers of both torrents has been merged."));
 		}
 		
 		if (!bt::Exists(datadir))
@@ -507,11 +510,10 @@ namespace bt
 
 		// create PeerManager and Tracker
 		pman = new PeerManager(*tor);
-		KURL url = tor->getTrackerURL(true);
 		//Out() << "Tracker url " << url << " " << url.protocol() << " " << url.prettyURL() << endl;
-		tracker = new Tracker(this,tor->getInfoHash(),tor->getPeerID());
-		connect(tracker,SIGNAL(error()),this,SLOT(trackerResponseError()));
-		connect(tracker,SIGNAL(dataReady()),this,SLOT(trackerResponse()));
+		psman = new PeerSourceManager(this,pman);
+		connect(psman,SIGNAL(statusChanged( const QString& )),
+				this,SLOT(trackerStatusChanged( const QString& )));
 
 
 		// Create chunkmanager, load the index file if it exists
@@ -572,60 +574,27 @@ namespace bt
 		saveStats();
 		stats.output_path = cman->getOutputPath();
 		Out() << "OutputPath = " << stats.output_path << endl;
-		
-		AnnounceList* list = tor->getAnnounceList();
-		if(!list)
-			list = tor->createAnnounceList();
-		
-		list->setDatadir(datadir);
 	}
 
-	void TorrentControl::trackerResponse()
-	{
-		try
-		{
-			tracker->updateData(pman);
-			updateStatusMsg();
-			stats.trackerstatus = i18n("OK");
-		}
-		catch (Error & e)
-		{
-			Out(SYS_TRK|LOG_IMPORTANT) << "Error : " << e.toString() << endl;
-			stats.trackerstatus = i18n("Invalid response");
-			tracker->handleError();
-		}
-	}
-
-	void TorrentControl::trackerResponseError()
-	{
-		Out(SYS_TRK|LOG_IMPORTANT) << "Tracker Response Error" << endl;
-		stats.trackerstatus = i18n("Unreachable");
-		tracker->handleError();
-	}
 
 	bool TorrentControl::announceAllowed()
 	{
 		if(last_announce == 0)
 			return true;
 		
-		return bt::GetCurrentTime() - last_announce >= 60 * 1000;
+		if (psman && psman->getNumFailures() == 0)
+			return bt::GetCurrentTime() - last_announce >= 60 * 1000;
+		else
+			return true;
 	}
 	
 	void TorrentControl::updateTracker()
 	{
 		if (stats.running && announceAllowed())
 		{
-			tracker->manualUpdate();
+			psman->manualUpdate();
 			last_announce = bt::GetCurrentTime();
 		}
-	}
-
-	KURL TorrentControl::getTrackerURL(bool prev_success) const
-	{
-		if (tor)
-			return tor->getTrackerURL(prev_success);
-		else
-			return KURL();
 	}
 
 	void TorrentControl::onNewPeer(Peer* p)
@@ -884,8 +853,8 @@ namespace bt
 
 	Uint32 TorrentControl::getTimeToNextTrackerUpdate() const
 	{
-		if (tracker)
-			return tracker->getTimeToNextUpdate();
+		if (psman)
+			return psman->getTimeToNextUpdate();
 		else
 			return 0;
 	}
@@ -937,7 +906,7 @@ namespace bt
 	{
 		total = 0;
 		connected_to = 0;
-		if (!pman || !tracker)
+		if (!pman || !psman)
 			return;
 
 		for (Uint32 i = 0;i < pman->getNumConnectedPeers();i++)
@@ -945,7 +914,7 @@ namespace bt
 			if (pman->getPeer(i)->isSeeder())
 				connected_to++;
 		}
-		total = tracker->getNumSeeders();
+		total = psman->getNumSeeders();
 		if (total == 0)
 			total = connected_to;
 	}
@@ -954,7 +923,7 @@ namespace bt
 	{
 		total = 0;
 		connected_to = 0;
-		if (!pman || !tracker)
+		if (!pman || !psman)
 			return;
 
 		for (Uint32 i = 0;i < pman->getNumConnectedPeers();i++)
@@ -962,7 +931,7 @@ namespace bt
 			if (!pman->getPeer(i)->isSeeder())
 				connected_to++;
 		}
-		total = tracker->getNumLeechers();
+		total = psman->getNumLeechers();
 		if (total == 0)
 			total = connected_to;
 	}
@@ -1114,16 +1083,12 @@ namespace bt
 
 	TrackersList* TorrentControl::getTrackersList()
 	{
-		AnnounceList* list = tor->getAnnounceList();
-		if(!list)
-			list = tor->createAnnounceList();
-		
-		return list;
+		return psman;
 	}
 	
-	TrackersList* TorrentControl::createTrackersList()
+	const TrackersList* TorrentControl::getTrackersList() const 
 	{
-		return tor->createAnnounceList();
+		return psman;
 	}
 
 	void TorrentControl::onPortPacket(const QString & ip,Uint16 port)
@@ -1228,6 +1193,31 @@ namespace bt
 	const bt::SHA1Hash & TorrentControl::getInfoHash() const
 	{
 		return tor->getInfoHash();
+	}
+	
+	void TorrentControl::resetTrackerStats()
+	{
+		trk_prev_bytes_dl = stats.bytes_downloaded,
+		trk_prev_bytes_ul = stats.bytes_uploaded,
+		stats.trk_bytes_downloaded = 0;
+		stats.trk_bytes_uploaded = 0;
+	}
+	
+	void TorrentControl::trackerStatusChanged(const QString & ns)
+	{
+		stats.trackerstatus = ns;
+	}
+	
+	void TorrentControl::addPeerSource(kt::PeerSource* ps)
+	{
+		if (psman)
+			psman->addPeerSource(ps);
+	}
+	
+	void TorrentControl::removePeerSource(kt::PeerSource* ps)
+	{
+		if (psman)
+			psman->removePeerSource(ps);
 	}
 }
 

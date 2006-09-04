@@ -59,6 +59,7 @@ namespace dht
 	{
 		if (running)
 			return;
+		
 		table_file = table;
 		this->port = port;
 		Out(SYS_DHT|LOG_NOTICE) << "DHT: Starting on port " << port << endl;
@@ -71,6 +72,7 @@ namespace dht
 		srv->start();
 		node->loadTable(table);
 		update_timer.start(1000);
+		started();
 	}
 		
 		
@@ -88,6 +90,7 @@ namespace dht
 		delete node; node = 0;
 		delete srv; srv = 0;
 		running = false;
+		stopped();
 	}
 
 	void DHT::ping(PingReq* r)

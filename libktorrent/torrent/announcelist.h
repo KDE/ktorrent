@@ -20,6 +20,7 @@
 #ifndef BTANNOUNCELIST_H
 #define BTANNOUNCELIST_H
 
+#if 0
 #include <kurl.h>
 #include <qstring.h>
 #include <interfaces/trackerslist.h>
@@ -32,14 +33,13 @@ namespace bt
 	 * @author Joris Guisson
 	 * @brief Keep track of a list of trackers
 	 * 
-	 * This class keeps track of a list of tracker URL. Whenever the update
-	 * of Tracker failed, a new URL will be asked from this class.
+	 * This class keeps track of a list of tracker URL. 
 	*/
 	class AnnounceList : public kt::TrackersList
 	{
 		KURL::List trackers;
 		KURL::List custom_trackers;
-		mutable int curr;
+		
 	public:
 		AnnounceList();
 		virtual ~AnnounceList();
@@ -102,5 +102,6 @@ namespace bt
 	};
 
 }
+#endif
 
 #endif

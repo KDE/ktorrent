@@ -37,6 +37,8 @@
 #include "chunkcounter.h"
 #include "authenticationmonitor.h"
 
+using namespace kt;
+
 namespace bt
 {
 	Uint32 PeerManager::max_connections = 0;
@@ -46,11 +48,11 @@ namespace bt
 	PeerManager::PeerManager(Torrent & tor)
 		: tor(tor),available_chunks(tor.getNumChunks())
 	{
-		num_seeders = num_leechers = num_pending = 0;
 		killed.setAutoDelete(true);
 		started = false;
 		
 		cnt = new ChunkCounter(tor.getNumChunks());
+		num_pending = 0;
 	}
 
 
@@ -295,9 +297,6 @@ namespace bt
 			
 			PotentialPeer pp = potential_peers.front();
 			potential_peers.pop_front();
-			
-			if (connectedTo(pp.id))
-				continue;
 
 			IPBlocklist& ipfilter = IPBlocklist::instance();
 			
@@ -382,6 +381,12 @@ namespace bt
 		}
 	}
 	
+	void PeerManager::peerSourceReady(kt::PeerSource* ps)
+	{
+		PotentialPeer pp;
+		while (ps->takePotentialPeer(pp))
+			potential_peers.append(pp);
+	}
 	
 }
 #include "peermanager.moc"

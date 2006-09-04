@@ -36,15 +36,14 @@ namespace kt
 			virtual ~TrackersList();
 			
 			/**
-			 * Gets the tracker URL.
-			 * @param last_was_succesfull Weather last connect attempt was successfull (if not the next available tracker URL is returned).
+			 * Get the current tracker URL.
 			 */
-			virtual KURL getTrackerURL(bool last_was_succesfull) const = 0;
+			virtual KURL getTrackerURL() const = 0;
 			
 			/**
 			 * Gets a list of available trackers.
 			 */
-			virtual const KURL::List getTrackerURLs() = 0;
+			virtual KURL::List getTrackerURLs() = 0;
 		
 			/**
 			 * Adds a tracker URL to the list.
@@ -68,6 +67,12 @@ namespace kt
 			 * Restores the default tracker and does the announce.
 			 */
 			virtual void restoreDefault() = 0;
+			
+			/**
+			 * Merge an other tracker list.
+			 * @param al The TrackersList
+			 */
+			void merge(TrackersList* al);
 
 	};
 

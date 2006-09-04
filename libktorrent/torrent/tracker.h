@@ -20,10 +20,11 @@
 #ifndef BTTRACKER_H
 #define BTTRACKER_H
 
-#include <qtimer.h>
+#include <kurl.h>
+#include <util/sha1hash.h>
+#include <interfaces/peersource.h>
 #include "globals.h"
 #include "peerid.h"
-#include <util/sha1hash.h>
 
 class KURL;
 
@@ -32,85 +33,23 @@ namespace kt
 	class TorrentInterface;
 }
 
-namespace dht
-{
-	class DHTTrackerBackend;
-}
 
 namespace bt
 {
-	class TorrentControl;
-	class PeerManager;
 	class Tracker;
 	
-	
 	/**
-	 * Backend class, does the actual communication with the tracker.
+	 * Base class for all tracker classes.
 	*/
-	class TrackerBackend : public QObject
-	{
-		Q_OBJECT
-				
-		
-	public:
-		TrackerBackend(Tracker* trk);
-		virtual ~TrackerBackend();
-		
-		/**
-		 * Do a request to the tracker.
-		 * @param url The path and query
-		 * @return true if request was made, false if not
-		 */
-		virtual bool doRequest(const KURL & url) = 0;
-
-		/**
-		 * Update all the data. If something is wrong in this function,
-		 * an Error should be thrown.
-		 * @param pman The PeerManager
-		 */
-		virtual void updateData(PeerManager* pman) = 0;
-	protected:
-		Tracker* frontend;
-	};
-
-	/**
-	 * @author Joris Guisson
-	 * @brief Communicates with the tracker
-	 * 
-	 * Class to communicate with the tracker. This class acts as a frontend for
-	 * 2 possible backends (one for UDP one for HTTP), depending on the URL it will decide what backend
-	 * to use.
-	 *
-	 * Once the data comes in, the Tracker should emit a signal.
-	 */
-	class Tracker : public QObject
+	class Tracker : public kt::PeerSource
 	{
 		Q_OBJECT
 	public:
-		/**
-		 * Constructor.
-		 */
-		Tracker(kt::TorrentInterface* tor,const SHA1Hash & ih,const PeerID & pid);
+		Tracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id);
 		virtual ~Tracker();
-
-		/// Get the number of seeders
-		Uint32 getNumSeeders() const {return seeders;}
-
-		/// Get the number of leechers
-		Uint32 getNumLeechers() const {return leechers;}
 		
-		/**
-		 * Do a request to the tracker.
-		 * @param url The path and query
-		 */
-		void doRequest(const KURL & url);
-
-		/**
-		 * Update all the data. If something is wrong in this function,
-		 * an Error should be thrown.
-		 * @param pman The PeerManager
-		 */
-		void updateData(PeerManager* pman);
+		/// See if a start request succeeded
+		bool isStarted() const {return started;}
 		
 		/**
 		 * Set the custom IP
@@ -118,92 +57,66 @@ namespace bt
 		 */
 		static void setCustomIP(const QString & str);
 		
-		/**
-		 * Start the tracker.
-		 */
-		void start();
+		/// get the tracker url
+		KURL trackerURL() const {return url;}
 		
 		/**
-		 * Set the interval between attempts.
-		 * @param secs Number of secs
+		 * Delete the tracker in ms milliseconds, or when the stopDone signal is emitted.
+		 * @param ms Number of ms to wait
 		 */
-		void setInterval(Uint32 secs);
-
+		void timedDelete(int ms);
+		
 		/**
-		 * Get the interval between attempts in seconds.
-		 * @param secs Number of secs
+		 * Get the number of failed attempts to reach a tracker.
+		 * @return The number of failed attempts
+		 */
+		virtual Uint32 failureCount() const = 0;
+		
+		/**
+		 * Get the update interval in ms
+		 * @return interval
 		 */
 		Uint32 getInterval() const {return interval;}
 		
-		/**
-		 * Stop the tracker.
-		 */
-		void stop();
-
-		/**
-		 * Manually update the tracker.
-		 */
-		void manualUpdate();
-
-		/**
-		 * Alert the tracker that an error occured. 
-		 */
-		void handleError();
-
-		/**
-		 * The download was completed, alert the tracker of this
-		 * fact.
-		 */
-		void completed();
-
-		/// Get the time to the next update in seconds.
-		Uint32 getTimeToNextUpdate() const;
+		/// Set the interval
+		void setInterval(Uint32 i) {interval = i;}
+		
+		/// Get the number of seeders
+		Uint32 getNumSeeders() const {return seeders;}
+		
+		/// Get the number of leechers
+		Uint32 getNumLeechers() const {return leechers;}
 	signals:
 		/**
-		 * Signal to notify of errors.
+		 * Emitted when an error happens.
+		 * @param failure_reason The reason why we couldn't reach the tracker
 		 */
-		void error();
+		void requestFailed(const QString & failure_reason);
 		
 		/**
-		 * Update succeeded data has been recieved.
+		 * Emitted when a stop is done.
 		 */
-		void dataReady();
-
-	private slots:
-		void onTimeout();
-		void onErrorTimeout();
-		void onDHTUpdate();
+		void stopDone();
+		
+		/**
+		 * Emitted when a request to the tracker succeeded
+		 */
+		void requestOK();
+		
+		/**
+		 * A request to the tracker has been started.
+		 */
+		void requestPending();
 		
 	protected:
-		void updateOK();
-		void emitError() {error();}
-		void emitDataReady() {dataReady();}
-		
-
-	protected:
-		SHA1Hash info_hash;
+		KURL url;
 		PeerID peer_id;
-		Uint32 seeders,leechers;
-		QString event;
-		Uint32 interval;
 		kt::TorrentInterface* tor;
-		QTimer update_timer,error_update_timer,dht_update_timer;
-		Uint32 time_of_last_update;
-		Uint32 num_failed_attempts;
-		bool error_mode;
-		Uint32 key;
+		Uint32 interval,seeders,leechers,key;
+		bool started;
 		static QString custom_ip,custom_ip_resolved;
-		TrackerBackend* udp;
-		TrackerBackend* http;
-		TrackerBackend* curr;
-		TrackerBackend* dht_ba;
-		KURL last_url;
-		
-		friend class UDPTracker;
-		friend class HTTPTracker;
-		friend class dht::DHTTrackerBackend;
 	};
-
+	
 }
 
 #endif

@@ -31,7 +31,7 @@
 #include <torrent/torrent.h>
 #include <torrent/torrentcontrol.h>
 #include <interfaces/torrentinterface.h>
-#include "announcelist.h"
+#include <interfaces/trackerslist.h>
 
 using namespace kt;
 
@@ -269,7 +269,7 @@ namespace bt
 		return false;
 	}
 	
-	void QueueManager::mergeAnnounceList(const SHA1Hash & ih,const AnnounceList* al)
+	void QueueManager::mergeAnnounceList(const SHA1Hash & ih,kt::TrackersList* al)
 	{
 		QPtrList<kt::TorrentInterface>::iterator itr = downloads.begin();
 		while (itr != downloads.end())
@@ -277,25 +277,8 @@ namespace bt
 			TorrentControl* tor = (TorrentControl*)(*itr);
 			if (tor->getTorrent().getInfoHash() == ih)
 			{
-				AnnounceList* ta = const_cast<AnnounceList*>(tor->getTorrent().getAnnounceList());
+				TrackersList* ta = tor->getTrackersList(); 
 				ta->merge(al);
-				return;
-			}
-			itr++;
-		}
-	}
-	
-	void QueueManager::addTrackerURL(const SHA1Hash & ih,const KURL & url)
-	{
-		QPtrList<kt::TorrentInterface>::iterator itr = downloads.begin();
-		while (itr != downloads.end())
-		{
-			TorrentControl* tor = (TorrentControl*)(*itr);
-			if (tor->getTorrent().getInfoHash() == ih)
-			{
-				AnnounceList* ta = const_cast<AnnounceList*>(tor->getTorrent().getAnnounceList());
-				if (!ta->getTrackerURLs().contains(url))
-					ta->addTracker(url,true);
 				return;
 			}
 			itr++;

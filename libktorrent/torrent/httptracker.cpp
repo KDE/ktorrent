@@ -41,17 +41,120 @@ using namespace kt;
 namespace bt
 {
 
-	HTTPTracker::HTTPTracker(Tracker* trk) : TrackerBackend(trk)
+	HTTPTracker::HTTPTracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id)
+		: Tracker(url,tor,id)
 	{
 		active_job = 0;
 		
+		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
+		interval = 5 * 60 * 1000; // default interval 5 minutes
+		failures = 0;
+		seeders = leechers = 0;
 	}
 
 
 	HTTPTracker::~HTTPTracker()
 	{}
+	
+	void HTTPTracker::start()
+	{
+		event = "started";
+		doRequest();
+		// time out after 30 seconds
+		timer.stop();
+		timer.start(30000);
+	}
+	
+	void HTTPTracker::stop()
+	{
+		if (!started)
+			return;
+		
+		event = "stopped";
+		doRequest();
+		timer.stop();
+		started = false;
+	}
+	
+	void HTTPTracker::completed()
+	{
+		event = "completed";
+		doRequest();
+		event = QString::null;
+		// time out after 30 seconds
+		timer.stop();
+		timer.start(30000);
+	}
+	
+	void HTTPTracker::manualUpdate()
+	{
+		if (!started)
+			event = "started";
+		doRequest();
+		// time out after 30 seconds
+		timer.stop();
+		timer.start(30000);
+	}
+	
+	void HTTPTracker::doRequest()
+	{	
+		// clear data array
+		data = QByteArray();
+		
+		const TorrentStats & s = tor->getStats();
+		
+		KURL u = url;
 
-	void HTTPTracker::updateData(PeerManager* pman)
+		Uint16 port = Globals::instance().getServer().getPortInUse();;
+		
+		u.addQueryItem("peer_id",peer_id.toString());
+		u.addQueryItem("port",QString::number(port));
+		u.addQueryItem("uploaded",QString::number(s.trk_bytes_uploaded));
+		u.addQueryItem("downloaded",QString::number(s.trk_bytes_downloaded));
+		
+		if (event == "completed")
+			u.addQueryItem("left","0"); // need to send 0 when we are completed
+		else
+			u.addQueryItem("left",QString::number(s.bytes_left));
+		
+		u.addQueryItem("compact","1");
+		if (event != "stopped")
+			u.addQueryItem("numwant","100");
+		else
+			u.addQueryItem("numwant","0");
+		
+		u.addQueryItem("key",QString::number(key));
+		if (!Tracker::custom_ip_resolved.isNull())
+			u.addQueryItem("ip",Tracker::custom_ip_resolved);
+
+		if (event != QString::null)
+			u.addQueryItem("event",event);
+		QString epq = u.encodedPathAndQuery();
+		const SHA1Hash & info_hash = tor->getInfoHash();
+		epq += "&info_hash=" + info_hash.toURLString();
+
+
+		u.setEncodedPathAndQuery(epq);
+	
+		Out(SYS_TRK|LOG_NOTICE) << "Doing tracker request to url : " << u.prettyURL() << endl;
+
+		KIO::MetaData md;
+		md["UserAgent"] = "ktorrent/" VERSION;
+		md["SendLanguageSettings"] = "false";
+		md["Cookies"] = "none";
+		
+		KIO::TransferJob* j = KIO::get(u,true,false);
+		// set the meta data
+		j->setMetaData(md);
+		
+		connect(j,SIGNAL(result(KIO::Job* )),this,SLOT(onResult(KIO::Job* )));
+		connect(j,SIGNAL(data(KIO::Job*,const QByteArray &)),
+				this,SLOT(onDataRecieved(KIO::Job*, const QByteArray& )));
+		active_job = j;
+		requestPending();
+	}
+
+	bool HTTPTracker::updateData()
 	{
 //#define DEBUG_PRINT_RESPONSE
 #ifdef DEBUG_PRINT_RESPONSE
@@ -68,13 +171,19 @@ namespace bt
 		}
 		
 		if (i == data.size())
-			throw Error(i18n("Parse Error"));
+		{
+			requestFailed(i18n("Invalid response from tracker"));
+			return false;
+		}
 		
 		BDecoder dec(data,false,i);
 		BNode* n = dec.decode();
 			
 		if (!n || n->getType() != BNode::DICT)
-			throw Error(i18n("Parse Error"));
+		{
+			requestFailed(i18n("Invalid response from tracker"));
+			return false;
+		}
 			
 		BDictNode* dict = (BDictNode*)n;
 		if (dict->getData("failure reason"))
@@ -82,26 +191,25 @@ namespace bt
 			BValueNode* vn = dict->getValue("failure reason");
 			QString msg = vn->data().toString();
 			delete n;
-			throw Error(msg);
+			requestFailed(msg);
+			return false;
 		}
 			
 		BValueNode* vn = dict->getValue("interval");
 			
-		if (!vn)
-		{
-			delete n;
-			throw Error(i18n("Parse Error"));
-		}
+		// if no interval is specified, use 5 minutes
+		if (vn)
+			interval = vn->data().toInt();
+		else
+			interval = 5 * 60 * 1000;
 			
-		frontend->setInterval(vn->data().toInt());
-
 		vn = dict->getValue("incomplete");
 		if (vn)
-			frontend->leechers = vn->data().toInt();
+			leechers = vn->data().toInt();
 
 		vn = dict->getValue("complete");
 		if (vn)
-			frontend->seeders = vn->data().toInt();
+			seeders = vn->data().toInt();
 	
 		BListNode* ln = dict->getList("peers");
 		if (!ln)
@@ -111,7 +219,8 @@ namespace bt
 			if (!vn)
 			{
 				delete n;
-				throw Error(i18n("Parse error"));
+				requestFailed(i18n("Invalid response from tracker"));
+				return false;
 			}
 
 			QByteArray arr = vn->data().toByteArray();
@@ -121,10 +230,7 @@ namespace bt
 				for (int j = 0;j < 6;j++)
 					buf[j] = arr[i + j];
 
-				PotentialPeer pp;
-				pp.ip = QHostAddress(ReadUint32(buf,0)).toString();
-				pp.port = ReadUint16(buf,4);
-				pman->addPotentialPeer(pp);
+				addPeer(QHostAddress(ReadUint32(buf,0)).toString(),ReadUint16(buf,4));
 			}
 		}
 		else
@@ -143,83 +249,15 @@ namespace bt
 				if (!ip_node || !port_node || !id_node)
 					continue;
 				
-				PotentialPeer pp;
-				pp.ip = ip_node->data().toString();
-				pp.port = port_node->data().toInt();
-				pp.id = PeerID(id_node->data().toByteArray().data());
-				pman->addPotentialPeer(pp);
+				addPeer(ip_node->data().toString(),port_node->data().toInt());
 			}
 		}
 		
-		/*
-		PotentialPeer pp;
-		pp.ip = "127.0.0.1";
-		pp.port = 5555;
-		pman->addPotentialPeer(pp);
-		*/
 		delete n;
-		frontend->updateOK();
-	}
-
-	bool HTTPTracker::doRequest(const KURL & u)
-	{	
-		// clear data array
-		data = QByteArray();
-		
-		const TorrentStats & s = frontend->tor->getStats();
-		last_url = u;
-		KURL url = u;
-
-		Uint16 port = Globals::instance().getServer().getPortInUse();;
-		
-		url.addQueryItem("peer_id", frontend->peer_id.toString());
-		url.addQueryItem("port",QString::number(port));
-		url.addQueryItem("uploaded",QString::number(s.trk_bytes_uploaded));
-		url.addQueryItem("downloaded",QString::number(s.trk_bytes_downloaded));
-		
-		if (frontend->event == "completed")
-			url.addQueryItem("left","0"); // need to send 0 when we are completed
-		else
-			url.addQueryItem("left",QString::number(s.bytes_left));
-		
-		url.addQueryItem("compact","1");
-		if (frontend->event != "stopped")
-			url.addQueryItem("numwant","100");
-		else
-			url.addQueryItem("numwant","0");
-		url.addQueryItem("key",QString::number(frontend->key));
-		if (!Tracker::custom_ip_resolved.isNull())
-			url.addQueryItem("ip",Tracker::custom_ip_resolved);
-
-		if (frontend->event != QString::null)
-			url.addQueryItem("event",frontend->event);
-		QString epq = url.encodedPathAndQuery();
-		epq += "&info_hash=" + frontend->info_hash.toURLString();
-
-
-		url.setEncodedPathAndQuery(epq);
-	//	Out() << "query : " << url.query() << endl;
-		Out(SYS_TRK|LOG_NOTICE) << "Doing tracker request to url : " << url.prettyURL() << endl;
-
-		
-		
-		KIO::MetaData md;
-		md["UserAgent"] = "ktorrent/" VERSION;
-		md["SendLanguageSettings"] = "false";
-		md["Cookies"] = "none";
-		
-		KIO::TransferJob* j = KIO::get(url,true,false);
-		// set the meta data
-		j->setMetaData(md);
-		
-		connect(j,SIGNAL(result(KIO::Job* )),this,SLOT(onResult(KIO::Job* )));
-		connect(j,SIGNAL(data(KIO::Job*,const QByteArray &)),
-				this,SLOT(onDataRecieved(KIO::Job*, const QByteArray& )));
-		active_job = j;
-	//	if (event == "stopped")
-	//		KIO::NetAccess::synchronousRun(active_job,0);
 		return true;
 	}
+
+	
 
 	void HTTPTracker::onResult(KIO::Job* j)
 	{
@@ -232,12 +270,47 @@ namespace bt
 		{
 			Out(SYS_TRK|LOG_IMPORTANT) << "Error : " << j->errorString() << endl;
 			active_job = 0;
-			frontend->emitError();
+			
+			timer.stop();
+			if (event != "stopped")
+			{
+				failures++;
+				requestFailed(j->errorString());
+			}
+			else
+			{
+				stopDone();
+			}
 		}
 		else
 		{
+			timer.stop();
+			failures = 0;
 			active_job = 0;
-			frontend->emitDataReady();
+			if (event != "stopped")
+			{
+				if (event == "started")
+					started = true;
+				
+				event = QString::null;
+			
+				try
+				{
+					if (updateData())
+					{
+						peersReady(this);
+						requestOK();
+					}
+				}
+				catch (bt::Error & err)
+				{
+					requestFailed(i18n("Invalid response from tracker"));
+				}
+			}
+			else
+			{
+				stopDone();
+			}
 		}
 	}
 	
@@ -255,11 +328,44 @@ namespace bt
 			for (Uint32 i = old_size;i < data.size();i++)
 				data[i] = ba[i - old_size];
 		}
+		
 	}
 
 	void HTTPTracker::onTimeout()
 	{
-		frontend->emitError();
+		if (active_job)
+		{
+			// current job timed out kill it
+			active_job->kill();
+			active_job = 0;
+			requestFailed(i18n("Tracker request timed out"));
+			
+			// try again 
+			if (event != "stopped")
+			{
+				failures++;
+				timer.stop();
+				if (failures < 5)
+					timer.start(30000);
+				else
+					timer.start(5 * 60 * 1000);
+			}
+			else
+			{
+				stopDone();
+			}
+		}
+		else
+		{
+			if (event != "stopped")
+			{
+				// do a new request
+				doRequest();
+				timer.stop();
+				// timeout in 30 seconds
+				timer.start(30000);
+			}
+		}
 	}
 }
 #include "httptracker.moc"

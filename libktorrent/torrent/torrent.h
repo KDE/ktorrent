@@ -38,7 +38,7 @@ namespace bt
 	class BValueNode;
 	class BDictNode;
 	class BListNode;
-	class AnnounceList;
+//	class AnnounceList;
 	
 	
 	
@@ -70,9 +70,6 @@ namespace bt
 		
 		/// Get the size of a chunk.
 		Uint64 getChunkSize() const {return piece_length;}
-		
-		/// Get the tracker URL.
-		KURL getTrackerURL(bool last_was_succesfull = true) const;
 		
 		/// Get the info_hash.
 		const SHA1Hash & getInfoHash() const {return info_hash;}
@@ -148,13 +145,7 @@ namespace bt
 		bool isPrivate() const {return priv_torrent;}
 		
 		///Gets a pointer to AnnounceList
-		AnnounceList* getAnnounceList() { return anon_list; }
-		
-		///Gets a pointer to AnnounceList
-		const AnnounceList* getAnnounceList() const { return anon_list; }
-		
-		///Creates announce list if one doesn't exist to add some custom trackers.
-		AnnounceList* createAnnounceList();
+		const KURL::List & getTrackerList() const { return tracker_urls; }
 		
 		/// Get the number of initial DHT nodes
 		Uint32 getNumDHTNodes() const {return nodes.count();}
@@ -187,7 +178,7 @@ namespace bt
 		void loadAnnounceList(BNode* node);
 		
 	private:
-		KURL tracker_url;
+		KURL::List tracker_urls;
 		QString name_suggestion;
 		Uint64 piece_length;
 		Uint64 file_length;
@@ -196,7 +187,6 @@ namespace bt
 		QValueVector<SHA1Hash> hash_pieces;
 		QValueVector<TorrentFile> files;
 		QValueVector<kt::DHTNode> nodes;
-		AnnounceList* anon_list;
 		QString encoding;
 		bool priv_torrent;
 	};

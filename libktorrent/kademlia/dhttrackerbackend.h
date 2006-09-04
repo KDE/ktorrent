@@ -20,13 +20,15 @@
 #ifndef DHTDHTTRACKERBACKEND_H
 #define DHTDHTTRACKERBACKEND_H
 
-#include <torrent/tracker.h>
+#include <qtimer.h>
+#include <interfaces/peersource.h>
 #include "task.h"
 
-namespace bt
+namespace kt
 {
-	class PeerManager;
+	class TorrentInterface;
 }
+
 
 namespace dht
 {
@@ -37,20 +39,31 @@ namespace dht
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class DHTTrackerBackend : public bt::TrackerBackend,public TaskListener
+	class DHTTrackerBackend : public kt::PeerSource,public TaskListener
 	{
+		Q_OBJECT
 	public:
-		DHTTrackerBackend(bt::Tracker* trk,DHTBase & dh_table);
+		DHTTrackerBackend(DHTBase & dh_table,kt::TorrentInterface* tor);
 		virtual ~DHTTrackerBackend();
 
-		virtual bool doRequest(const KURL& url);
-		virtual void updateData(bt::PeerManager* pman);
+		virtual void start();
+		virtual void stop();
+		virtual void manualUpdate();
 		virtual void onFinished(Task* t);
 		virtual void onDataReady(Task* t);
 		virtual void onDestroyed(Task* t);
+	
+	private slots:
+		void onTimeout();
+		bool doRequest();
+		
+		
 	private:
 		DHTBase & dh_table;
 		AnnounceTask* curr_task;
+		kt::TorrentInterface* tor;
+		QTimer timer;
+		bool started;
 	};
 
 }

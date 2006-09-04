@@ -17,19 +17,44 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef FUNCTIONS_H
-#define FUNCTIONS_H
-
-#include <qstring.h>
-#include <util/constants.h>
+#include "peersource.h"
 
 namespace kt
 {
-	/**
-	 * Will return the data directory
-	 * @return ~/.kde/share/apps/ktorrent/
-	 */
-	QString DataDir();
-}
 
-#endif
+	PeerSource::PeerSource()
+	{}
+
+
+	PeerSource::~PeerSource()
+	{}
+	
+	void PeerSource::completed()
+	{}
+	
+	void PeerSource::manualUpdate()
+	{}
+	
+	void PeerSource::addPeer(const QString & ip,bt::Uint16 port)
+	{
+		PotentialPeer pp;
+		pp.ip = ip;
+		pp.port = port;
+		peers.append(pp);
+	}
+		
+	bool PeerSource::takePotentialPeer(PotentialPeer & pp)
+	{
+		if (peers.count() > 0)
+		{
+			pp = peers.front();
+			peers.pop_front();
+			return true;
+		}
+		return false;
+	}
+
+	
+
+}
+#include "peersource.moc"

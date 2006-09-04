@@ -12,6 +12,9 @@
             <height>206</height>
         </rect>
     </property>
+    <property name="caption">
+        <string>TrackerViewBase</string>
+    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -119,6 +122,14 @@
                         <widget class="QLabel">
                             <property name="name">
                                 <cstring>lblStatus</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>7</hsizetype>
+                                    <vsizetype>5</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
                             </property>
                             <property name="text">
                                 <string></string>

@@ -22,6 +22,7 @@
 #include <util/log.h>
 #include <util/functions.h>
 #include <torrent/globals.h>
+#include <torrent/server.h>
 #include <torrent/peermanager.h>
 #include <interfaces/torrentinterface.h>
 #include "dhttrackerbackend.h"
@@ -33,9 +34,14 @@ using namespace bt;
 namespace dht
 {
 
-	DHTTrackerBackend::DHTTrackerBackend(Tracker* trk,DHTBase & dh_table)
-	: TrackerBackend(trk),dh_table(dh_table),curr_task(0)
-	{}
+	DHTTrackerBackend::DHTTrackerBackend(DHTBase & dh_table,kt::TorrentInterface* tor) 
+		: dh_table(dh_table),curr_task(0),tor(tor)
+	{
+		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
+		connect(&dh_table,SIGNAL(started()),this,SLOT(manualUpdate()));
+		connect(&dh_table,SIGNAL(stopped()),this,SLOT(stop()));
+		started = false;
+	}
 
 
 	DHTTrackerBackend::~DHTTrackerBackend()
@@ -43,17 +49,44 @@ namespace dht
 		if (curr_task)
 			curr_task->kill();
 	}
-
-
-	bool DHTTrackerBackend::doRequest(const KURL& url)
+	
+	void DHTTrackerBackend::start()
 	{
+		started = true;
+		if (dh_table.isRunning())
+			doRequest();
+	}
+	
+	void DHTTrackerBackend::stop()
+	{
+		started = false;
+		if (curr_task)
+		{
+			curr_task->kill();
+			timer.stop();
+		}
+	}
+	
+	void DHTTrackerBackend::manualUpdate()
+	{
+		if (dh_table.isRunning() && started)
+			doRequest();
+	}
+
+
+	bool DHTTrackerBackend::doRequest()
+	{
+		if (!dh_table.isRunning())
+			return false;
+		
 		if (curr_task)
 			return true;
 		
-		curr_task = dh_table.announce(frontend->info_hash,url.port());
+		const SHA1Hash & info_hash = tor->getInfoHash();
+		Uint16 port = bt::Globals::instance().getServer().getPortInUse();
+		curr_task = dh_table.announce(info_hash,port);
 		if (curr_task)
 		{
-			kt::TorrentInterface* tor = frontend->tor;
 			for (Uint32 i = 0;i < tor->getNumDHTNodes();i++)
 			{
 				const kt::DHTNode & n = tor->getDHTNode(i);
@@ -65,29 +98,15 @@ namespace dht
 		
 		return false;
 	}
-
-	void DHTTrackerBackend::updateData(PeerManager* pman)
-	{
-		if (!curr_task)
-			return;
-		
-		DBItem item;
-		while (curr_task->takeItem(item))
-		{
-			bt::PotentialPeer pp;
-			pp.port = bt::ReadUint16(item.getData(),4);
-			pp.ip = QHostAddress(ReadUint32(item.getData(),0)).toString();
-			Out(SYS_DHT|LOG_NOTICE) << "DHT: Got PotentialPeer " << pp.ip << ":" << pp.port << endl;
-			pman->addPotentialPeer(pp);
-		}
-	}
 	
 	void DHTTrackerBackend::onFinished(Task* t)
 	{
 		if (curr_task == t)
 		{
-			frontend->emitDataReady();
+			onDataReady(curr_task);
 			curr_task = 0;
+			// do another announce in 5 minutes or so
+			timer.start(5 * 60 * 1000,true);
 		}
 	}
 	
@@ -95,7 +114,18 @@ namespace dht
 	{
 		if (curr_task == t)
 		{
-			frontend->emitDataReady();
+			Uint32 cnt = 0;
+			DBItem item;
+			while (curr_task->takeItem(item))
+			{
+				Uint16 port = bt::ReadUint16(item.getData(),4);
+				QString ip = QHostAddress(ReadUint32(item.getData(),0)).toString();
+				Out(SYS_DHT|LOG_NOTICE) << "DHT: Got PotentialPeer " << ip << ":" << port << endl;
+				addPeer(ip,port);
+				cnt++;
+			}
+			if (cnt)
+				peersReady(this);
 		}
 	}
 	
@@ -103,5 +133,15 @@ namespace dht
 	{
 		TaskListener::onDestroyed(t);
 		curr_task = 0;
+		timer.start(10 * 60 * 1000,true);
 	}
+	
+	void DHTTrackerBackend::onTimeout()
+	{
+		if (dh_table.isRunning() && started)
+			doRequest();
+	}
+	
 }
+
+#include "dhttrackerbackend.moc"

@@ -31,6 +31,7 @@ namespace dht
 
 	DHTBase::~DHTBase()
 	{}
-
-
 }
+
+#include "dhtbase.moc"
+

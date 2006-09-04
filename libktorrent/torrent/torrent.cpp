@@ -36,7 +36,7 @@
 namespace bt
 {
 
-	Torrent::Torrent() : piece_length(0),file_length(0),anon_list(0),priv_torrent(false)
+	Torrent::Torrent() : piece_length(0),file_length(0),priv_torrent(false)
 	{
 		encoding = "utf8";
 	}
@@ -44,7 +44,6 @@ namespace bt
 
 	Torrent::~Torrent()
 	{
-		delete anon_list;
 	}
 
 	void Torrent::load(const QString & file,bool verbose)
@@ -177,7 +176,7 @@ namespace bt
 		if (!node || node->data().getType() != Value::STRING)
 			throw Error(i18n("Corrupted torrent!"));
 		
-		tracker_url = node->data().toString(encoding).stripWhiteSpace();
+		tracker_urls.append(KURL(node->data().toString(encoding).stripWhiteSpace()));
 	}
 	
 	void Torrent::loadPieceLength(BValueNode* node)
@@ -235,14 +234,28 @@ namespace bt
 		if (!node)
 			return;
 		
-		if (anon_list)
-		{
-			delete anon_list;
-			anon_list = 0;
-		}
+		BListNode* ml = dynamic_cast<BListNode*>(node);
+		if (!ml)
+			return;
 		
-		anon_list = new AnnounceList();
-		anon_list->load(node);
+		//ml->printDebugInfo();
+		for (Uint32 i = 0;i < ml->getNumChildren();i++)
+		{
+			BListNode* url = dynamic_cast<BListNode*>(ml->getChild(i));
+			if (!url)
+				throw Error(i18n("Parse Error"));
+			
+			for (Uint32 j = 0;j < url->getNumChildren();j++)
+			{
+				BValueNode* vn = dynamic_cast<BValueNode*>(url->getChild(j));
+				if (!vn)
+					throw Error(i18n("Parse Error"));
+
+				KURL url(vn->data().toString().stripWhiteSpace());
+				tracker_urls.append(url);
+				//Out() << "Added tracker " << url << endl;
+			}
+		}
 	}
 	
 	void Torrent::loadNodes(BListNode* node)
@@ -276,10 +289,9 @@ namespace bt
 	void Torrent::debugPrintInfo()
 	{
 		Out() << "Name : " << name_suggestion << endl;
-		if (!anon_list)
-			Out() << "Tracker URL : " << tracker_url << endl;
-		else
-			anon_list->debugPrintURLList();
+		
+		for (KURL::List::iterator i = tracker_urls.begin();i != tracker_urls.end();i++)
+			Out() << "Tracker URL : " << *i << endl;
 		
 		Out() << "Piece Length : " << piece_length << endl;
 		if (this->isMultiFile())
@@ -337,21 +349,10 @@ namespace bt
 		
 		return files.at(idx);
 	}
-	
-	KURL Torrent::getTrackerURL(bool last_was_succesfull) const
-	{
-		if (anon_list)
-			return anon_list->getTrackerURL(last_was_succesfull);
-		else
-			return tracker_url;
-	}
 
 	unsigned int Torrent::getNumTrackerURLs() const
 	{
-		if (anon_list)
-			return anon_list->getNumTrackerURLs();
-		else
-			return 1;
+		return tracker_urls.count();
 	}
 
 	void Torrent::calcChunkPos(Uint32 chunk,QValueList<Uint32> & file_list) const
@@ -371,16 +372,6 @@ namespace bt
 	bool Torrent::isMultimedia() const
 	{
 		return IsMultimediaFile(this->getNameSuggestion());
-	}
-	
-	AnnounceList* Torrent::createAnnounceList()
-	{
-		if(!anon_list)
-			anon_list = new AnnounceList();
-		
-		anon_list->addTracker(tracker_url, false);
-
-		return anon_list;
 	}
 	
 	void Torrent::updateFilePercentage(const BitSet & bs)

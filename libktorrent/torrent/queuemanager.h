@@ -26,6 +26,11 @@
 
 #include <interfaces/torrentinterface.h>
 
+namespace kt
+{
+	class TrackersList;
+}
+
 namespace bt
 {
 	class SHA1Hash;
@@ -90,12 +95,9 @@ namespace bt
 			/**
 			 * Merge announce lists to a torrent
 			 * @param ih The info_hash of the torrent to merge to
-			 * @param al The AnnounceList
+			 * @param al The TrackersList
 			 */
-			void mergeAnnounceList(const SHA1Hash & ih,const AnnounceList* al);
-			
-			/// Add a tracker URL to a torrent
-			void addTrackerURL(const SHA1Hash & ih,const KURL & url);
+			void mergeAnnounceList(const SHA1Hash & ih,kt::TrackersList* al);
 			
 			void setMaxDownloads(int m);
 			void setMaxSeeds(int m);

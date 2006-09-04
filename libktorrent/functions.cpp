@@ -20,11 +20,21 @@
 #include <qdatetime.h>
 #include <klocale.h>
 #include <kglobal.h>
+#include <kstandarddirs.h>
+#include <util/functions.h>
 #include "functions.h"
 
 using namespace bt;
 
 namespace kt
 {
+	QString DataDir()
+	{
+		QString str = KGlobal::dirs()->saveLocation("data","ktorrent");
+		if (!str.endsWith(bt::DirSeparator()))
+			return str + bt::DirSeparator();
+		else
+			return str;
+	}
 
 }

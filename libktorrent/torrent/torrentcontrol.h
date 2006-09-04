@@ -38,7 +38,7 @@ namespace bt
 {
 	class Choker;
 	class Torrent;
-	class Tracker;
+	class PeerSourceManager;
 	class ChunkManager;
 	class PeerManager;
 	class Downloader;
@@ -107,15 +107,13 @@ namespace bt
 		 * Does nothing if there was no previous changeDataDir call.
 		 */
 		void rollback();
-
-		KURL getTrackerURL(bool prev_success) const;
-		
+	
 		/// Gets the TrackersList interface
 		kt::TrackersList* getTrackersList();
 		
-		/// Creates TrackersList object (AnnounceList) and returns a pointer to that object
-		kt::TrackersList* createTrackersList();
-
+		/// Gets the TrackersList interface
+		const kt::TrackersList* getTrackersList() const;
+	
 		/// Get the data directory of this torrent
 		QString getDataDir() const {return outputdir;}
 
@@ -161,6 +159,8 @@ namespace bt
 		virtual kt::TorrentFileInterface & getTorrentFile(Uint32 index);
 		virtual void recreateMissingFiles();
 		virtual void dndMissingFiles();
+		virtual void addPeerSource(kt::PeerSource* ps);
+		virtual void removePeerSource(kt::PeerSource* ps);
 		
 		int getPriority() const { return priority; }
 		void setPriority(int p);
@@ -195,6 +195,11 @@ namespace bt
 		virtual void deleteDataFiles();
 		virtual const SHA1Hash & getInfoHash() const;
 		
+		/**
+		 * Called by the PeerSourceManager when it is going to start a new tracker.
+		 */
+		void resetTrackerStats();
+		
 	public slots:
 		/**
 		 * Update the object, should be called periodically.
@@ -218,7 +223,11 @@ namespace bt
 		 */
 		void updateTracker();
 
-	
+		/**
+		 * The tracker status has changed.
+		 * @param ns New status
+		 */
+		void trackerStatusChanged(const QString & ns);
 		
 	private slots:
 		void onNewPeer(Peer* p);
@@ -226,17 +235,6 @@ namespace bt
 		void doChoking();
 		void onIOError(const QString & msg);
 		void onPortPacket(const QString & ip,Uint16 port);
-
-		/**
-		 * An error occured during the update of the tracker.
-		 */
-		void trackerResponseError();
-
-		/**
-		 * The Tracker updated.
-		 */
-		void trackerResponse();
-		
 		/// Update the stats of the torrent.
 		void updateStats();
 		
@@ -255,7 +253,7 @@ namespace bt
 		
 	private:
 		Torrent* tor;
-		Tracker* tracker;
+		PeerSourceManager* psman;
 		ChunkManager* cman;
 		PeerManager* pman;
 		Downloader* down;

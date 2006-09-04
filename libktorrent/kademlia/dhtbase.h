@@ -20,6 +20,7 @@
 #ifndef DHTDHTBASE_H
 #define DHTDHTBASE_H
 
+#include <qobject.h>
 #include <util/constants.h>
 
 class QString;
@@ -47,8 +48,9 @@ namespace dht
 	 * Interface for DHT class, this is to keep other things separate from the inner workings
 	 * of the DHT.
 	 */
-	class DHTBase
+	class DHTBase : public QObject
 	{
+		Q_OBJECT
 	public:
 		DHTBase();
 		virtual ~DHTBase();
@@ -103,6 +105,10 @@ namespace dht
 		 * @param hport The port of the host
 		 */
 		virtual void addDHTNode(const QString & host,bt::Uint16 hport) = 0;
+		
+	signals:
+		void started();
+		void stopped();
 		
 	protected:
 		bool running;

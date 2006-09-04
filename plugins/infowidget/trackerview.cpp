@@ -90,7 +90,7 @@ namespace kt
 		}
 			
 		new QListViewItem(listTrackers, txtTracker->text());
-		tc->getTrackersList()->addTracker(url);
+		tc->getTrackersList()->addTracker(url,true);
 	}
 
 	void TrackerView::btnRemove_clicked()
@@ -121,6 +121,16 @@ namespace kt
 	{
 		tc->getTrackersList()->restoreDefault();
 		tc->updateTracker();
+		
+		// update the list of trackers
+		listTrackers->clear();
+		
+		const KURL::List trackers = tc->getTrackersList()->getTrackerURLs();
+		if(trackers.empty())
+			return;
+		
+		for (KURL::List::const_iterator i = trackers.begin();i != trackers.end();i++)
+			new QListViewItem(listTrackers, (*i).prettyURL());
 	}
 
 	void TrackerView::btnUpdate_clicked()
@@ -157,7 +167,7 @@ namespace kt
 		btnUpdate->setEnabled(tc->announceAllowed());
 
 		lblStatus->setText("<b>" + s.trackerstatus + "</b>");
-		lblCurrent->setText("<b>" + tc->getTrackerURL(true).prettyURL() + "</b>");
+		lblCurrent->setText("<b>" + tc->getTrackersList()->getTrackerURL().prettyURL() + "</b>");
 		btnAdd->setEnabled(txtTracker->text() != QString::null && !tc->getStats().priv_torrent);
 	}
 	
@@ -197,7 +207,7 @@ namespace kt
 		if(trackers.empty())
 		{
 // 			new QListViewItem(listTrackers, tc->getTrackerURL(true).prettyURL());
-			new QListViewItem(listTrackers, tc->getTrackersList()->getTrackerURL(true).prettyURL());
+			new QListViewItem(listTrackers, tc->getTrackersList()->getTrackerURL().prettyURL());
 			return;
 		}
 		
