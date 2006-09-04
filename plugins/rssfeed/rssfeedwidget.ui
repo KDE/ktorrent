@@ -74,9 +74,6 @@
                                     <property name="text">
                                         <string>De&amp;lete</string>
                                     </property>
-                                    <property name="accel">
-                                        <string>Alt+L</string>
-                                    </property>
                                 </widget>
                                 <widget class="QPushButton" row="1" column="0">
                                     <property name="name">
@@ -84,9 +81,6 @@
                                     </property>
                                     <property name="text">
                                         <string>&amp;New</string>
-                                    </property>
-                                    <property name="accel">
-                                        <string>Alt+N</string>
                                     </property>
                                 </widget>
                             </grid>
@@ -244,9 +238,6 @@
                                             <property name="text">
                                                 <string>I&amp;gnore TTL</string>
                                             </property>
-                                            <property name="accel">
-                                                <string>Alt+G</string>
-                                            </property>
                                         </widget>
                                         <spacer>
                                             <property name="name">
@@ -349,9 +340,6 @@
                                             <property name="text">
                                                 <string>&amp;Active</string>
                                             </property>
-                                            <property name="accel">
-                                                <string>Alt+A</string>
-                                            </property>
                                         </widget>
                                     </hbox>
                                 </widget>
@@ -431,9 +419,6 @@
                                             <property name="text">
                                                 <string>&amp;New</string>
                                             </property>
-                                            <property name="accel">
-                                                <string>Alt+N</string>
-                                            </property>
                                         </widget>
                                     </grid>
                                 </widget>
@@ -481,9 +466,6 @@
                                             </property>
                                             <property name="text">
                                                 <string>&amp;New</string>
-                                            </property>
-                                            <property name="accel">
-                                                <string>Alt+N</string>
                                             </property>
                                         </widget>
                                     </grid>
@@ -545,9 +527,6 @@
                                             </property>
                                             <property name="text">
                                                 <string>Te&amp;st</string>
-                                            </property>
-                                            <property name="accel">
-                                                <string>Alt+S</string>
                                             </property>
                                         </widget>
                                     </hbox>
@@ -681,9 +660,6 @@
                                             </property>
                                             <property name="text">
                                                 <string>&amp;Active</string>
-                                            </property>
-                                            <property name="accel">
-                                                <string>Alt+A</string>
                                             </property>
                                         </widget>
                                     </hbox>
@@ -869,9 +845,6 @@
                                     </property>
                                     <property name="text">
                                         <string>Treat as &amp;Series</string>
-                                    </property>
-                                    <property name="accel">
-                                        <string>Alt+S</string>
                                     </property>
                                     <property name="checked">
                                         <bool>true</bool>

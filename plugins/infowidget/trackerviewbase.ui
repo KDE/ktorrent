@@ -12,9 +12,6 @@
             <height>206</height>
         </rect>
     </property>
-    <property name="caption">
-        <string>TrackerViewBase</string>
-    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
