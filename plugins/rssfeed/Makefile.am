@@ -1,0 +1,31 @@
+INCLUDES = $(all_includes) -I$(srcdir)/../../libktorrent
+METASOURCES = AUTO
+kde_module_LTLIBRARIES = ktrssfeedplugin.la
+
+
+# LD flags for the plugin
+# -module says: this is a module, i.e. something you're going to dlopen
+# so e.g. it has no version number like a normal shared lib would have.
+ktrssfeedplugin_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+
+# rc file containing the GUI for the plugin
+# pluginsdir = $(kde_datadir)/ktrssfeedplugin
+# plugins_DATA = ktrssfeedpluginui.rc
+
+# Install the desktop file needed to detect the plugin
+
+rcdir = $(kde_datadir)/ktorrent
+
+kde_kcfg_DATA = ktrssfeedplugin.kcfg
+kde_services_DATA = ktrssfeedplugin.desktop
+
+noinst_HEADERS = rssfeedplugin.h rssfeedmanager.h rssfeed.h rssfilter.h \
+	rssarticle.h
+ktrssfeedplugin_la_SOURCES = rssfeedplugin.cpp rssfeedmanager.cpp \
+		rssfeedwidget.ui rssfeed.cpp rssfilter.cpp rssarticle.cpp
+ktrssfeedplugin_la_LIBADD = $(top_builddir)/plugins/rssfeed/rss/librsslocal.la \
+	$(top_builddir)/libktorrent/torrent/libtorrent.la $(LIB_KHTML) $(LIB_KPARTS) ../../libktorrent/libktorrent.la $(LIB_QT) \
+	$(LIB_KDECORE) $(LIB_KDEUI) $(LIB_KFILE)
+
+
+SUBDIRS = rss

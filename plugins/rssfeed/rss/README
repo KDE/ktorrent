@@ -1,0 +1,6 @@
+This is NOT original librss by Frerich Raabe, though based on it.
+
+This version is supposed to be called libsyndication but is not renamed to relieve packaging burden a bit
+(honestly, we just didn't yet get to it).
+
+Please DO NOT report any bugs about it to Frerich, since he most probably did not introduce the found bugs.
