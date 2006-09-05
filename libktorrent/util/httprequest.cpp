@@ -33,10 +33,12 @@ namespace bt
 		sock->enableRead(true);
 		sock->enableWrite(true);
 		sock->setTimeout(30000);
-		sock->setBlocking(true);
+		sock->setBlocking(false);
 		connect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
 		connect(sock,SIGNAL(gotError(int)),this,SLOT(onError(int )));
 		connect(sock,SIGNAL(timedOut()),this,SLOT(onTimeout()));
+		connect(sock,SIGNAL(connected(const KResolverEntry&)),
+				this, SLOT(onConnect( const KResolverEntry& )));
 	}
 	
 	
@@ -48,29 +50,33 @@ namespace bt
 	
 	void HTTPRequest::start()
 	{
-		if (sock->connect())
-		{
-			payload = payload.replace("$LOCAL_IP",sock->localAddress().nodeName());
-			hdr = hdr.replace("$CONTENT_LENGTH",QString::number(payload.length()));
+		sock->connect();
+	}
+	
+	void HTTPRequest::onConnect(const KResolverEntry&)
+	{
+		payload = payload.replace("$LOCAL_IP",sock->localAddress().nodeName());
+		hdr = hdr.replace("$CONTENT_LENGTH",QString::number(payload.length()));
 			
-			QString req = hdr + payload;
-			if (verbose)
-			{
-				Out() << "Sending " << endl;
-				Out() << hdr << payload << endl;
-			}
-			sock->writeBlock(req.ascii(),req.length());
-		}
-		else
+		QString req = hdr + payload;
+		if (verbose)
 		{
-			error(this,false);
-			sock->close();
+			Out() << "Sending " << endl;
+			Out() << hdr << payload << endl;
 		}
+		sock->writeBlock(req.ascii(),req.length());
 	}
 	
 	void HTTPRequest::onReadyRead()
 	{
 		Uint32 ba = sock->bytesAvailable();
+		if (ba == 0)
+		{
+			error(this,false);
+			sock->close();
+			return;
+		}
+			
 		Array<char> data(ba);
 		ba = sock->readBlock(data,ba);
 		QString strdata((const char*)data);

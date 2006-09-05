@@ -117,6 +117,12 @@ namespace kt
 	
 	UPnPRouter::~UPnPRouter()
 	{
+		QValueList<HTTPRequest*>::iterator i = active_reqs.begin();
+		while (i != active_reqs.end())
+		{
+			(*i)->deleteLater();
+			i++;
+		}
 	}
 	
 	void UPnPRouter::addService(const UPnPService & s)
@@ -361,6 +367,7 @@ namespace kt
 		connect(r,SIGNAL(error(bt::HTTPRequest*, bool )),
 				this,SLOT(onError(bt::HTTPRequest*, bool )));
 		r->start();
+		active_reqs.append(r);
 		return r;
 	}
 	
@@ -375,6 +382,7 @@ namespace kt
 			reqs.erase(r);
 		}
 		updateGUI();
+		active_reqs.remove(r);
 		r->deleteLater();
 	}
 	
@@ -388,6 +396,7 @@ namespace kt
 			reqs.erase(r);
 		}
 		updateGUI();
+		active_reqs.remove(r);
 		r->deleteLater();
 	}
 	
@@ -399,6 +408,7 @@ namespace kt
 			reqs.erase(r);
 		}
 		updateGUI();
+		active_reqs.remove(r);
 		r->deleteLater();
 	}
 	
