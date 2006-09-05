@@ -125,6 +125,7 @@ namespace kt
 		QValueList<UPnPService> services;
 		QValueList<Forwarding> fwds;
 		QMap<bt::HTTPRequest*,QValueList<Forwarding>::iterator > reqs;
+		QValueList<bt::HTTPRequest*> active_reqs;
 	public:
 		/**
 		 * Construct a router.

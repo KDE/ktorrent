@@ -25,6 +25,8 @@
 #include <kstreamsocket.h>
 #include "constants.h"
 
+using KNetwork::KResolverEntry;
+
 namespace bt 
 {
 	
@@ -82,6 +84,7 @@ namespace bt
 		void onReadyRead();
 		void onError(int);
 		void onTimeout();
+		void onConnect(const KResolverEntry&);
 		
 	private:
 		KNetwork::KStreamSocket* sock;

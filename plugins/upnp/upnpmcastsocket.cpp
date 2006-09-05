@@ -55,7 +55,8 @@ namespace kt
 	
 	UPnPMCastSocket::~UPnPMCastSocket()
 	{
-		close();
+		QObject::disconnect(this,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
+		QObject::disconnect(this,SIGNAL(gotError(int)),this,SLOT(onError(int)));
 	}
 	
 	void UPnPMCastSocket::discover()
