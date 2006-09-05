@@ -18,12 +18,12 @@ ktorrent_LDADD = ../../apps/ktorrent/groups/libgroups.la -lkmdi $(LIB_KPARTS) \
 
 # which sources should be compiled for ktorrent
 ktorrent_SOURCES = dcopinterface.skel settings.kcfgc main.cpp ktorrent.cpp \
-	ktorrentview.cpp pref.cpp ktorrentviewitem.cpp ktorrentcore.cpp downloadpref.ui \
-	trayicon.cpp ktorrentdcop.cpp ktorrentapp.cpp torrentcreatordlg.cpp \
-	torrentcreatordlg.h torrentcreatordlgbase.ui fileselectdlgbase.ui fileselectdlg.cpp \
-	generalpref.ui pastedlgbase.ui pastedialog.cpp leaktrace.cpp queuedlg.ui \
-	queuedialog.cpp queuedialog.h scandlgbase.ui scandialog.cpp ipfilterwidgetbase.ui \
-	ipfilterwidget.cpp
+		ktorrentview.cpp pref.cpp ktorrentviewitem.cpp ktorrentcore.cpp downloadpref.ui \
+		trayicon.cpp ktorrentdcop.cpp ktorrentapp.cpp torrentcreatordlg.cpp \
+		torrentcreatordlg.h torrentcreatordlgbase.ui fileselectdlgbase.ui fileselectdlg.cpp \
+		generalpref.ui pastedlgbase.ui pastedialog.cpp leaktrace.cpp queuedlg.ui \
+		queuedialog.cpp queuedialog.h scandlgbase.ui scandialog.cpp ipfilterwidgetbase.ui \
+		ipfilterwidget.cpp addpeerwidgetbase.ui addpeerwidget.cpp addpeerwidget.h
 
 xdg_apps_DATA = ktorrent.desktop
 kde_kcfg_DATA = ktorrent.kcfg

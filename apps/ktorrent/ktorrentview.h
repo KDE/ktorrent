@@ -107,6 +107,7 @@ public slots:
 	void queueSlot();
 	void checkDataIntegrity();
 	void removeFromGroup();
+	void showAddPeersWidget();
 
 private slots:
 	void onExecuted(QListViewItem* item);
@@ -145,6 +146,7 @@ private:
 	int scan_id;
 	int remove_from_group_id;
 	int add_to_group_id;
+	int add_peer_id;
 	kt::Group* current_group;
 };
 

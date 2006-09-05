@@ -35,6 +35,7 @@
 #include "ktorrentviewitem.h"
 #include "settings.h"
 #include "scandialog.h"
+#include "addpeerwidget.h"
 
 
 
@@ -147,6 +148,10 @@ void KTorrentView::makeMenu()
 			this,SLOT(queueSlot()));
 	
 	menu->insertSeparator();
+	
+	add_peer_id = menu->insertItem(
+			iload->loadIconSet("add", KIcon::Small), i18n("Add peers..."),
+			this, SLOT(showAddPeersWidget())); 
 
 	announce_id = menu->insertItem(
 			iload->loadIconSet("apply",KIcon::Small),i18n("Manual Announce"),
@@ -154,7 +159,7 @@ void KTorrentView::makeMenu()
 	
 	preview_id = menu->insertItem(
 			iload->loadIconSet("frame_image",KIcon::Small),i18n("Preview"), 
-			this, SLOT(previewFiles())); 
+			this, SLOT(previewFiles()));
 	
 	menu->insertSeparator();
 	remove_from_group_id =  menu->insertItem(i18n("Remove From Group"),this, SLOT(removeFromGroup()));
@@ -398,6 +403,7 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 	bool en_remove = false;
 	bool en_prev = false;
 	bool en_announce = true;
+	bool en_add_peer = true;
 	
 	QPtrList<QListViewItem> sel = selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
@@ -421,14 +427,19 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 			
 			if (tc->readyForPreview() && !s.multi_file_torrent)
 				en_prev = true;
+			
+			if(s.priv_torrent)
+				en_add_peer = false;
 		}
 	}
 	
 	en_remove = sel.count() > 0;
+	en_add_peer = en_add_peer && en_stop;
 	menu->setItemEnabled(start_id,en_start);
 	menu->setItemEnabled(stop_id,en_stop);
 	menu->setItemEnabled(remove_id,en_remove);
 	menu->setItemEnabled(preview_id,en_prev);
+	menu->setItemEnabled(add_peer_id, en_add_peer);
 	menu->setItemEnabled(announce_id,en_announce);
 	menu->setItemEnabled(queue_id, en_remove);
 	
@@ -657,6 +668,21 @@ void KTorrentView::addSelectionToGroup(kt::Group* g)
 		TorrentInterface* tc = kvi->getTC();
 		g->addTorrent(tc);
 		i++;
+	}
+}
+
+void KTorrentView::showAddPeersWidget()
+{
+	QPtrList<QListViewItem> sel = selectedItems();
+	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
+	{
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
+		TorrentInterface* tc = kvi->getTC();
+		if (tc)
+		{
+			AddPeerWidget dlg(tc, this);
+			dlg.exec();
+		}
 	}
 }
 
