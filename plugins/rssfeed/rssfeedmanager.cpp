@@ -107,9 +107,6 @@ namespace kt
 		connect(newRejectFilter, SIGNAL(clicked()), this, SLOT(addNewRejectFilter() ) );
 		connect(deleteRejectFilter, SIGNAL(clicked()), this, SLOT(deleteSelectedRejectFilter() ) );
 		
-		//connect(acceptFilterList, SIGNAL(clicked()), rejectFilterList, SLOT(clearSelection()) );
-		//connect(rejectFilterList, SIGNAL(clicked()), acceptFilterList, SLOT(clearSelection()) );
-
 		//connect the changing of the active feed
 		connect(feedlist, SIGNAL(selectionChanged()), this, SLOT(changedActiveFeed()) );
 		
@@ -131,6 +128,10 @@ namespace kt
 		//connect the test text update to the slot
 		connect(testText, SIGNAL(textChanged(const QString &)), this, SLOT(testTextChanged()) );
 		connect(testTestText, SIGNAL(clicked()), this, SLOT(testFilter()) );
+		
+		changedActiveFeed();
+		changedActiveAcceptFilter();
+		changedActiveRejectFilter();
 		
 	}
 
@@ -877,7 +878,6 @@ namespace kt
 			
 			//update the currentFeed
 			currentFeed = feedlist->currentItem();
-			
 			if (currentFeed >= 0)
 			{
 				//set the values
@@ -885,6 +885,7 @@ namespace kt
 				feedTitle->setText(feeds.at(currentFeed)->title());
 				//url
 				feedUrl->setKURL(feeds.at(currentFeed)->feedUrl());
+				refreshFeed->setEnabled(!feeds.at(currentFeed)->feedUrl().url().isEmpty());
 				//articleAge
 				feedArticleAge->setValue(feeds.at(currentFeed)->articleAge());
 				//active
@@ -893,6 +894,7 @@ namespace kt
 				feedAutoRefresh->setTime(feeds.at(currentFeed)->autoRefresh());
 				//ignoreTTL
 				feedIgnoreTTL->setChecked(feeds.at(currentFeed)->ignoreTTL());
+				feedAutoRefresh->setEnabled(feeds.at(currentFeed)->ignoreTTL());
 				//articles
 				updateArticles(feeds.at(currentFeed)->articles());
 				
@@ -904,8 +906,6 @@ namespace kt
 				feedArticleAge->setEnabled(true);
 				//active
 				feedActive->setEnabled(true);
-				//autoRefresh
-				feedAutoRefresh->setEnabled(true);
 				//ignoreTTL
 				feedIgnoreTTL->setEnabled(true);
 				

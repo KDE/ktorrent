@@ -241,7 +241,6 @@ namespace kt
 		
 		feedLoading = true;
 		cleanArticles();
-		
 		Loader * feedLoader = Loader::create();
 		connect( feedLoader, SIGNAL( loadingComplete( Loader *, Document, Status ) ),
 			this, SLOT( feedLoaded( Loader *, Document, Status ) ) );
@@ -263,7 +262,14 @@ namespace kt
 			
 			if (!m_ignoreTTL)
 			{
-				setAutoRefresh(QTime().addSecs(doc.ttl() * 60));
+				if (doc.ttl() < 0)
+				{
+					setAutoRefresh(QTime().addSecs(3600));
+				}
+				else
+				{
+					setAutoRefresh(QTime().addSecs(doc.ttl() * 60));
+				}
 			}
 	
 			RssArticle curArticle;
