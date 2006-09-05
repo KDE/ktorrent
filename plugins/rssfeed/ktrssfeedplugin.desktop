@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=RssFeedPlugin
+Name[ja]=RSSフィードプラグイン
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktrssfeedplugin
