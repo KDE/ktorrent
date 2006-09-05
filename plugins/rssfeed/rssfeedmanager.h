@@ -59,7 +59,7 @@ namespace kt
 
 		public slots:
 			bool processLink(const QString &link, bool silent = true, bool noHtml = false);
-			void processHtml(const QString &link, bool silent = true);
+			bool processHtml(const QString &link, const QString& filename, bool silent = true);
 			void changedActiveFeed();
 			void changedArticleSelection();
 			void changedFeedUrl();

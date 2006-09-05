@@ -25,8 +25,6 @@
 #include <kio/netaccess.h>
 #include <kstandarddirs.h>
 #include <keditlistbox.h>
-#include <dom/html_misc.h>
-#include <dom/html_document.h>
 #include <kmimetype.h>
 
 #include <qstring.h>
@@ -54,7 +52,6 @@
 #include "../../libktorrent/torrent/bdecoder.h"
 #include "../../libktorrent/torrent/bnode.h"
 
-using namespace DOM;
 using namespace bt;
 
 namespace kt
@@ -140,58 +137,79 @@ namespace kt
 		//Destruct the manager
 	}
 	
-	void RssFeedManager::processHtml(const QString &link, bool silent)
+	bool RssFeedManager::processHtml(const QString &link, const QString &filename, bool silent)
 	{
-		HTMLDocument html;
-		html.setAsync(false);
-		html.load(link);
+		KURL url = link;
+		//let's open the file
+		QFile file(filename);
 		
-		HTMLCollection links = html.links();
-		//first check for any links which have download in the href
-		for (int i=0; i<links.length(); i++)
+		if (!file.exists())
 		{
-			NamedNodeMap attributes = links.item(i).attributes();
-			
-			Node href = attributes.getNamedItem("href");
-			
-			QRegExp testHref = QString("\\.torrent$");
-			testHref.setCaseSensitive(false);
-			if (href.nodeValue().string().contains(testHref))
-			{
-				QString abslink = href.nodeValue().string();
-				KURL url = link;
-				if (abslink.startsWith("/"))
-				{
-					abslink = url.protocol() + "://" + url.host() + abslink;
-				} else if (!abslink.startsWith("http://", false)) {
-					url.setFileName(abslink);
-					abslink = url.url();
-				}
-				
-				if (processLink(abslink, silent, true))
-					{
-					return;
-					}
-			}
-			
-			
-			testHref = QString("^\\/.*download.*");
-			
-			if (href.nodeValue().string().contains(testHref))
-			{
-				QString abslink = href.nodeValue().string();
-				KURL url = link;
-				if (abslink.startsWith("/"))
-				{
-					abslink = url.protocol() + "://" + url.host() + abslink;
-				}
-				
-				if (processLink(abslink, silent))
-					{
-					return;
-					}
-			}
+			return false;
 		}
+		
+		if (!file.open(IO_ReadOnly))
+		{
+			return false;
+		}
+		
+		QTextStream html(&file);
+		
+		//go through a line at a time checking for a torrent
+		QString htmlline = html.readLine();
+		while (!htmlline.isNull())
+		{
+			QRegExp hrefTags = QString("HREF=\"([^><]*)\"");
+			hrefTags.setCaseSensitive(false);
+			
+			int matchPos = 0;
+			while (htmlline.find(hrefTags, matchPos) >= 0)
+			{
+				//lets get the captured link and increment the matchPos for the next search
+				QString hrefLink = hrefTags.capturedTexts()[1];
+				matchPos += hrefTags.matchedLength();
+				
+				//now let's process the link to decide what to do with it.
+				QRegExp testHref = QString("\\.torrent$");
+				testHref.setCaseSensitive(false);
+				if (hrefLink.contains(testHref))
+				{
+					if (hrefLink.startsWith("/"))
+					{
+						hrefLink = url.protocol() + "://" + url.host() + hrefLink;
+					} else if (!hrefLink.startsWith("http://", false)) {
+						url.setFileName(hrefLink);
+						hrefLink = url.url();
+					}
+					
+					if (processLink(hrefLink, silent, true))
+						{
+						return true;
+						}
+				}
+				
+				testHref = QString("^(/|" + url.protocol() + "://" + url.host() + ").*download");
+				
+				if (hrefLink.contains(testHref))
+				{
+					if (hrefLink.startsWith("/"))
+					{
+						hrefLink = url.protocol() + "://" + url.host() + hrefLink;
+					}
+					
+					if (processLink(hrefLink, silent))
+						{
+						return true;
+						}
+				}
+			}
+			
+			//run the query again
+			htmlline = html.readLine();
+		}
+		
+		
+		return false;
 	}
 	
 	void RssFeedManager::changedFeedUrl()
@@ -205,24 +223,19 @@ namespace kt
 		KMimeType linkType = *KMimeType::findByURL(link);
 		QString filename;
 		
-		if (linkType.name() == KMimeType::defaultMimeType())
+		if( !KIO::NetAccess::download( link, filename, qApp->mainWidget() ) )
 		{
-			//couldn't figure out the filetype - so let's try by downloading it
-			// = QString("/tmp/kt-tmp-rssproc%1").arg(QDateTime::currentDateTime().toTime_t());
-			
-			if( !KIO::NetAccess::download( link, filename, qApp->mainWidget() ) )
- 			{
- 				qDebug("couldn't download file: %s", link.ascii());
- 				return false;
- 			}
-			linkType = *KMimeType::findByFileContent(filename);
+			qDebug("couldn't download file: %s", link.ascii());
+			return false;
 		}
+		
+		linkType = *KMimeType::findByFileContent(filename);
 		
 		if (linkType.is("text/html"))
 		{
 			if (!noHtml)
 			{
-				processHtml(link, silent);
+				return processHtml(link, filename, silent);
 			}
 			return false;
 		}
@@ -1270,7 +1283,10 @@ namespace kt
 			//we were passed a filter - so just scan it with that one
 			if (filter->scanArticle(article))
 			{
-				processLink(article.link().prettyURL());
+				if (!processLink(article.link().prettyURL()))
+				{
+					filter->deleteMatch(article.link().prettyURL());
+				}
 			}
 		}
 		else
@@ -1279,7 +1295,10 @@ namespace kt
 			{
 				if (acceptFilters.at(i)->scanArticle(article))
 				{
-					processLink(article.link().prettyURL());
+					if (!processLink(article.link().prettyURL()))
+					{
+						acceptFilters.at(i)->deleteMatch(article.link().prettyURL());
+					}
 				}
 			}
 		}

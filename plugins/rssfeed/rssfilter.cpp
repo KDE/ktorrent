@@ -334,6 +334,20 @@ namespace kt
 		return true;
 	}
 	
+	void RssFilter::deleteMatch(const QString& link)
+	{
+	
+		QValueList<FilterMatch>::iterator it;
+		for ( it = m_matches.begin(); it != m_matches.end(); ++it )
+		{
+			if ((*it).link() == link)
+			{
+				m_matches.remove(it);
+			}
+		}
+		
+	}
+	
 	QDataStream &operator<<( QDataStream &out, const FilterMatch &filterMatch )
 	{
 		out << filterMatch.season() << filterMatch.episode() << filterMatch.time() << filterMatch.link();

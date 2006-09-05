@@ -94,6 +94,7 @@ namespace kt
 			QValueList<FilterMatch> matches() const { return m_matches; }
 			
 			bool scanArticle(RssArticle article, bool ignoreMatches = true, bool saveMatch = true);
+			void deleteMatch(const QString& link);
 
 		public slots:
 			void setTitle( const QString& title );
