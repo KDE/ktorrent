@@ -116,6 +116,13 @@ Article::Article(const QDomNode &node, Format format) : d(new Private)
 		  d->pubDate.setTime_t(_time);
 	}
 
+	//no luck so far - so let's set it to the current time
+	if (!d->pubDate.isValid())
+	{
+		d->pubDate = QDateTime::currentDateTime();
+	}
+	
+
 	if (!(elemText = extractNode(node, QString::fromLatin1("wfw:comment"))).isNull()) {
 		d->commentsLink = elemText;
 	}

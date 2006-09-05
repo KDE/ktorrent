@@ -278,11 +278,11 @@ namespace kt
 			{
 				curArticle = doc.articles()[i];
 				if (curArticle.pubDate().daysTo(QDateTime::currentDateTime()) < m_articleAge && !m_articles.contains(curArticle))
-					{
+				{
 					m_articles.prepend(curArticle);
 					emit scanRssArticle(curArticle);
 					added = true;
-					}
+				}
 			}
 			
 			if (added)
