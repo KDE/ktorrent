@@ -23,9 +23,7 @@ noinst_HEADERS = rssfeedplugin.h rssfeedmanager.h rssfeed.h rssfilter.h \
 	rssarticle.h
 ktrssfeedplugin_la_SOURCES = rssfeedplugin.cpp rssfeedmanager.cpp \
 		rssfeedwidget.ui rssfeed.cpp rssfilter.cpp rssarticle.cpp
-ktrssfeedplugin_la_LIBADD = $(top_builddir)/plugins/rssfeed/rss/librsslocal.la \
-	$(top_builddir)/libktorrent/torrent/libtorrent.la $(LIB_KHTML) $(LIB_KPARTS) ../../libktorrent/libktorrent.la $(LIB_QT) \
-	$(LIB_KDECORE) $(LIB_KDEUI) $(LIB_KFILE)
-
+ktrssfeedplugin_la_LIBADD = rss/librsslocal.la ../../libktorrent/torrent/libtorrent.la \
+	../../libktorrent/libktorrent.la $(LIB_KHTML) $(LIB_KPARTS)
 
 SUBDIRS = rss
