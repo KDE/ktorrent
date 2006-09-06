@@ -128,7 +128,6 @@ namespace kt
 		
 		changedActiveFeed();
 		changedActiveAcceptFilter();
-		changedActiveRejectFilter();
 		
 	}
 
@@ -747,6 +746,8 @@ namespace kt
 			//just update item
 			feedlist->changeItem(feeds.at(item)->title(), item);
 		}
+		
+		feedTitle->setFocus();
 	}
 	
 	void RssFeedManager::updateAcceptFilterList(int item)
@@ -774,6 +775,8 @@ namespace kt
 			//just update item
 			acceptFilterList->changeItem(acceptFilters.at(item)->title(), item);
 		}
+		
+		filterTitle->setFocus();
 	}
 	
 	void RssFeedManager::updateRejectFilterList(int item)
@@ -801,6 +804,8 @@ namespace kt
 			//just update item
 			rejectFilterList->changeItem(rejectFilters.at(item)->title(), item);
 		}
+		
+		filterTitle->setFocus();
 	}
 	
 	void RssFeedManager::updateArticles(const RssArticle::List& articles)
