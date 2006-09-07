@@ -304,7 +304,6 @@ namespace bt
 	
 	void PeerSourceManager::onTrackerError(const QString & err)
 	{
-		Out(SYS_TRK|LOG_DEBUG) << "PeerSourceManager::onTrackerError " << err << endl;
 		failures++;
 		pending = false;
 		if (started)
@@ -377,7 +376,6 @@ namespace bt
 		
 	void PeerSourceManager::onTrackerOK()
 	{
-		Out(SYS_TRK|LOG_DEBUG) << "PeerSourceManager::onTrackerOK " << endl;
 		failures = 0;
 		if (started)
 		{
@@ -392,7 +390,6 @@ namespace bt
 		
 	void PeerSourceManager::onTrackerRequestPending()
 	{
-		Out(SYS_TRK|LOG_DEBUG) << "PeerSourceManager::onTrackerPending " << endl;
 		if (started)
 			statusChanged(i18n("Announcing"));
 		pending = true;

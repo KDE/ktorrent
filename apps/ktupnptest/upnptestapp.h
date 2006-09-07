@@ -43,6 +43,7 @@ public:
 	virtual ~UPnPTestApp();
 	
 	virtual void message(const QString& line, unsigned int arg);
+	bool queryExit();
 	
 private slots:
 	void discovered(UPnPRouter* router);

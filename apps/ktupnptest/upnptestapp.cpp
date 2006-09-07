@@ -46,8 +46,6 @@ UPnPTestApp::UPnPTestApp(QWidget *parent, const char *name)
 
 UPnPTestApp::~UPnPTestApp()
 {
-	bt::Log & lg = bt::Globals::instance().getLog(0);
-	lg.removeMonitor(this);
 	sock->deleteLater();
 }
 
@@ -71,6 +69,13 @@ void UPnPTestApp::onTestBtn()
 void UPnPTestApp::onCloseBtn()
 {
 	kapp->quit();
+}
+
+bool UPnPTestApp::queryExit()
+{
+	bt::Log & lg = bt::Globals::instance().getLog(0);
+	lg.removeMonitor(this);
+	return true;
 }
 
 void UPnPTestApp::message(const QString& line, unsigned int arg)
