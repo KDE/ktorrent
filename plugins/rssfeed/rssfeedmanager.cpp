@@ -26,6 +26,7 @@
 #include <kstandarddirs.h>
 #include <keditlistbox.h>
 #include <kmimetype.h>
+#include <kmessagebox.h>
 
 #include <qstring.h>
 #include <qobject.h>
@@ -158,49 +159,42 @@ namespace kt
 		QString htmlline = html.readLine();
 		while (!htmlline.isNull())
 		{
-			QRegExp hrefTags = QString("HREF=\"([^><]*)\"");
+			QRegExp hrefTags = QString("<A.*HREF.*</A");
 			hrefTags.setCaseSensitive(false);
 			
 			int matchPos = 0;
 			while (htmlline.find(hrefTags, matchPos) >= 0)
 			{
-				//lets get the captured link and increment the matchPos for the next search
-				QString hrefLink = hrefTags.capturedTexts()[1];
 				matchPos += hrefTags.matchedLength();
+				//we're found an <a href tag - let's check it if contains download
+				QRegExp hrefText = QString("d(own)?load");
+				hrefText.setCaseSensitive(false);
 				
-				//now let's process the link to decide what to do with it.
-				QRegExp testHref = QString("\\.torrent$");
-				testHref.setCaseSensitive(false);
-				if (hrefLink.contains(testHref))
+				if (!hrefTags.capturedTexts()[0].contains(hrefText))
 				{
-					if (hrefLink.startsWith("/"))
-					{
-						hrefLink = url.protocol() + "://" + url.host() + hrefLink;
-					} else if (!hrefLink.startsWith("http://", false)) {
-						url.setFileName(hrefLink);
-						hrefLink = url.url();
-					}
-					
-					if (processLink(hrefLink, silent, true))
-						{
-						return true;
-						}
+					//link text doesn't contain dload/download
+					continue;
 				}
 				
-				testHref = QString("^(/|" + url.protocol() + "://" + url.host() + ").*download");
-				
-				if (hrefLink.contains(testHref))
+				//we're found an <a href tag - now let's the the url out of it
+				hrefText = QString("HREF=\"?([^\">< ]*)[\" ]");
+				hrefText.setCaseSensitive(false);
+
+				hrefTags.capturedTexts()[0].find(hrefText);
+				//lets get the captured
+				QString hrefLink = hrefText.capturedTexts()[1];
+				if (hrefLink.startsWith("/"))
 				{
-					if (hrefLink.startsWith("/"))
-					{
-						hrefLink = url.protocol() + "://" + url.host() + hrefLink;
-					}
-					
-					if (processLink(hrefLink, silent))
-						{
-						return true;
-						}
+					hrefLink = url.protocol() + "://" + url.host() + hrefLink;
+				} else if (!hrefLink.startsWith("http://", false)) {
+					hrefLink = url.url().left(url.url().findRev("/")+1) + hrefLink;
 				}
+				
+				if (processLink(hrefLink, silent, true))
+					{
+					return true;
+					}
+			
 			}
 			
 			//run the query again
@@ -221,7 +215,6 @@ namespace kt
 		//m_core->loadSilently(torrent);
 		KMimeType linkType = *KMimeType::findByURL(link);
 		QString filename;
-		
 		if( !KIO::NetAccess::download( link, filename, qApp->mainWidget() ) )
 		{
 			qDebug("couldn't download file: %s", link.ascii());
@@ -229,7 +222,6 @@ namespace kt
 		}
 		
 		linkType = *KMimeType::findByFileContent(filename);
-		
 		if (linkType.is("text/html"))
 		{
 			if (!noHtml)
@@ -260,21 +252,28 @@ namespace kt
 		QByteArray data(fptr.size());
 		fptr.readBlock(data.data(),fptr.size());
 		
-		BNode* node = 0;
-		BDecoder decoder(data,false);
-		node = decoder.decode();
-		BDictNode* dict = dynamic_cast<BDictNode*>(node);
-		if (dict)
+		try
 		{
-			if (silent)
+			BNode* node = 0;
+			BDecoder decoder(data,false);
+			node = decoder.decode();
+			BDictNode* dict = dynamic_cast<BDictNode*>(node);
+			if (dict)
 			{
-				m_core->loadSilently( link );
+				if (silent)
+				{
+					m_core->loadSilently( link );
+				}
+				else
+				{
+					m_core->load( link );
+				}
+				return true;
 			}
-			else
-			{
-				m_core->load( link );
-			}
-			return true;
+		}
+		catch (...)
+		{
+			//we can just ignore any errors here
 		}
 		
 		return false;
@@ -873,7 +872,11 @@ namespace kt
 			int endRow = feedArticles->selection(i).topRow() + feedArticles->selection(i).numRows(); 
 			for (int j=feedArticles->selection(i).topRow(); j<endRow; j++)
 			{
-				processLink(feedArticles->text(j, 2), false);
+				if (!processLink(feedArticles->text(j, 2), false))
+				{
+					//the file failed to download a torrent
+					KMessageBox::error(0,"Failed to find and download a valid torrent for " + feedArticles->text(j,0));
+				}
 			}
 		}
 	}
@@ -885,7 +888,10 @@ namespace kt
 			int endRow = filterMatches->selection(i).topRow() + filterMatches->selection(i).numRows(); 
 			for (int j=filterMatches->selection(i).topRow(); j<endRow; j++)
 			{
-				processLink(filterMatches->text(j, 3), false);
+				if (!processLink(filterMatches->text(j, 3), false))
+				{
+					KMessageBox::error(0,"Failed to find and download a valid torrent for season " + filterMatches->text(j,0) + " episode " + filterMatches->text(j,1));
+				}
 			}
 		}
 	}
