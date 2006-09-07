@@ -739,6 +739,10 @@ namespace kt
 			{
 				//just change the feed sending the signal
 				feedlist->changeItem(feeds.at(pos)->title(), pos);
+				if (feedlist->isSelected(pos))
+				{
+					feedTitle->setFocus();
+				}
 			}
 		}
 		else
@@ -746,8 +750,6 @@ namespace kt
 			//just update item
 			feedlist->changeItem(feeds.at(item)->title(), item);
 		}
-		
-		feedTitle->setFocus();
 	}
 	
 	void RssFeedManager::updateAcceptFilterList(int item)
@@ -768,6 +770,10 @@ namespace kt
 			{
 				//just change the feed sending the signal
 				acceptFilterList->changeItem(acceptFilters.at(pos)->title(), pos);
+				if (acceptFilterList->isSelected(pos))
+				{
+					filterTitle->setFocus();
+				}
 			}
 		}
 		else
@@ -775,8 +781,6 @@ namespace kt
 			//just update item
 			acceptFilterList->changeItem(acceptFilters.at(item)->title(), item);
 		}
-		
-		filterTitle->setFocus();
 	}
 	
 	void RssFeedManager::updateRejectFilterList(int item)
@@ -797,6 +801,10 @@ namespace kt
 			{
 				//just change the feed sending the signal
 				rejectFilterList->changeItem(rejectFilters.at(pos)->title(), pos);
+				if (rejectFilterList->isSelected(pos))
+				{
+					filterTitle->setFocus();
+				}
 			}
 		}
 		else
@@ -805,7 +813,6 @@ namespace kt
 			rejectFilterList->changeItem(rejectFilters.at(item)->title(), item);
 		}
 		
-		filterTitle->setFocus();
 	}
 	
 	void RssFeedManager::updateArticles(const RssArticle::List& articles)
