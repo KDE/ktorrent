@@ -71,6 +71,8 @@ namespace kt
 			void changedActiveAcceptFilter();
 			void changedActiveRejectFilter();
 			
+			void clearArticles();
+			
 			void updateFeedList(int item=-1);
 			void addNewFeed(RssFeed feed = RssFeed());
 			void deleteSelectedFeed();

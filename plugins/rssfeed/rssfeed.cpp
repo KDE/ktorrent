@@ -234,6 +234,11 @@ namespace kt
 	
 	}
 	
+	void RssFeed::clearArticles()
+	{
+		m_articles.clear();
+	}
+	
 	void RssFeed::refreshFeed()
 	{
 		if (feedLoading)

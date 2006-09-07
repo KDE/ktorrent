@@ -205,6 +205,21 @@ namespace kt
 		return false;
 	}
 	
+	void RssFeedManager::clearArticles()
+	{
+		int pos = feeds.find((RssFeed *)sender());
+			
+		if (pos >= 0)
+		{
+			feeds.at(pos)->clearArticles();
+			if (feedlist->isSelected(pos))
+			{
+				//this feed is active so we should update the display
+				feedArticles->setNumRows(0);
+			}
+		}
+	}
+	
 	void RssFeedManager::changedFeedUrl()
 	{
 		refreshFeed->setEnabled(!feedUrl->url().isEmpty());
@@ -499,6 +514,9 @@ namespace kt
 		
 		//update the feed list
 		connect(feeds.at(index), SIGNAL(titleChanged(const QString&)), this, SLOT(updateFeedList()) );
+		
+		//clear the articles list when the url is changed
+		connect(feeds.at(index), SIGNAL(feedUrlChanged(const KURL&)), this, SLOT(clearArticles() ) );
 		
 		//connect the scanArticle signal to the scanArticle slot
 		connect(feeds.at(index), SIGNAL(scanRssArticle(RssArticle)), this, SLOT(scanArticle(RssArticle) ) );

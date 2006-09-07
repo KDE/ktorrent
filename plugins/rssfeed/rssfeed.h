@@ -66,12 +66,15 @@ namespace kt
  			QTime autoRefresh() const { return m_autoRefresh; }
  			bool ignoreTTL() const { return m_ignoreTTL; }
  			
+ 			
  			RssArticle::List articles() const { return m_articles; }
  			
 
 		public slots:
 			void refreshFeed();
 			void feedLoaded(Loader *feedLoader, Document doc, Status status);
+			
+			void clearArticles();
 			
 			void setFeedUrl( const KURL& url );
 			void setFeedUrl( const QString& url );
