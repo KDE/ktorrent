@@ -45,18 +45,10 @@ namespace bt
 	Torrent::~Torrent()
 	{
 	}
-
-	void Torrent::load(const QString & file,bool verbose)
+	
+	
+	void Torrent::load(const QByteArray & data,bool verbose)
 	{
-		QFile fptr(file);
-		if (!fptr.open(IO_ReadOnly))
-			throw Error(i18n(" Unable to open torrent file %1 : %2")
-					.arg(file).arg(fptr.errorString()));
-		
-		QByteArray data(fptr.size());
-	//	Out() << "File size = " << fptr.size() << endl;
-		fptr.readBlock(data.data(),fptr.size());
-		
 		BNode* node = 0;
 		 
 		try
@@ -95,6 +87,20 @@ namespace bt
 			delete node;
 			throw;
 		}
+	}
+
+	void Torrent::load(const QString & file,bool verbose)
+	{
+		QFile fptr(file);
+		if (!fptr.open(IO_ReadOnly))
+			throw Error(i18n(" Unable to open torrent file %1 : %2")
+					.arg(file).arg(fptr.errorString()));
+		
+		QByteArray data(fptr.size());
+	//	Out() << "File size = " << fptr.size() << endl;
+		fptr.readBlock(data.data(),fptr.size());
+		
+		load(data,verbose);
 	}
 	
 	void Torrent::loadInfo(BDictNode* dict)

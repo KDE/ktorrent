@@ -63,6 +63,14 @@ namespace bt
 		 */
 		void load(const QString & file,bool verbose);
 		
+		/**
+		 * Load a .torrent file.
+		 * @param data The data
+		 * @param verbose Wether to print information to the log
+		 * @throw Error if something goes wrong
+		 */
+		void load(const QByteArray & data,bool verbose);
+		
 		void debugPrintInfo();
 		
 		/// Get the number of chunks.

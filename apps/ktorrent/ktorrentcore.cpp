@@ -124,45 +124,74 @@ void KTorrentCore::loadPlugins()
 	pman->loadPluginList();
 }
 
+void KTorrentCore::init(TorrentControl* tc,bool silently)
+{
+	connectSignals(tc);
+	qman->append(tc);
+	if (tc->getStats().multi_file_torrent && !silently)
+	{
+		FileSelectDlg dlg;
+
+		if (dlg.execute(tc) != QDialog::Accepted)
+		{
+			if (!tc->hasExistingFiles())
+				remove(tc,true);
+			else
+				remove(tc,false);
+			return;
+		}
+	}
+		
+	if (tc->hasExistingFiles())
+	{
+		ScanDialog* scan_dlg = new ScanDialog(true);
+		scan_dlg->show();
+		scan_dlg->execute(tc,true);
+		scan_dlg->deleteLater();
+	}
+		
+	tc->setPreallocateDiskSpace(true);
+	
+	torrentAdded(tc);
+	qman->torrentAdded(tc);	
+}
+
+void KTorrentCore::load(const QByteArray & data,const QString & dir,bool silently)
+{
+	QString tdir = findNewTorrentDir();
+	TorrentControl* tc = 0;
+	try
+	{
+		Out(SYS_GEN|LOG_NOTICE) << "Loading torrent from data " << endl;
+		tc = new TorrentControl();
+		tc->init(qman, data, tdir, dir, 
+				 Settings::useSaveDir() ? Settings::saveDir() : QString());
+		
+		init(tc,silently);
+	}
+	catch (bt::Error & err)
+	{
+		KMessageBox::error(0,err.toString());
+		delete tc;
+		tc = 0;
+		// delete tdir if necesarry
+		if (bt::Exists(tdir))
+			bt::Delete(tdir,true);
+	}
+}
+
 void KTorrentCore::load(const QString & target,const QString & dir,bool silently)
 {
-	TorrentControl* tc = 0;
 	QString tdir = findNewTorrentDir();
+	TorrentControl* tc = 0;
 	try
 	{
 		Out(SYS_GEN|LOG_NOTICE) << "Loading file " << target << endl;
 		tc = new TorrentControl();
 		tc->init(qman, target, tdir, dir, 
-		         Settings::useSaveDir() ? Settings::saveDir() : QString());
-
-		connectSignals(tc);
-		qman->append(tc);
-		if (tc->getStats().multi_file_torrent && !silently)
-		{
-			FileSelectDlg dlg;
-
-			if (dlg.execute(tc) != QDialog::Accepted)
-			{
-				if (!tc->hasExistingFiles())
-					remove(tc,true);
-				else
-					remove(tc,false);
-				return;
-			}
-		}
+			 Settings::useSaveDir() ? Settings::saveDir() : QString());
 		
-		if (tc->hasExistingFiles())
-		{
-			ScanDialog* scan_dlg = new ScanDialog(true);
-			scan_dlg->show();
-			scan_dlg->execute(tc,true);
-			scan_dlg->deleteLater();
-		}
-		
-		tc->setPreallocateDiskSpace(true);
-	
-		torrentAdded(tc);
-		qman->torrentAdded(tc);
+		init(tc,silently);
 	}
 	catch (bt::Error & err)
 	{
@@ -177,8 +206,12 @@ void KTorrentCore::load(const QString & target,const QString & dir,bool silently
 
 void KTorrentCore::downloadFinished(KIO::Job *job)
 {
-	KIO::FileCopyJob* j = (KIO::FileCopyJob*)job;
-	if (j->error())
+	KIO::StoredTransferJob* j = (KIO::StoredTransferJob*)job;
+	int err = j->error();
+	if (err == KIO::ERR_USER_CANCELED)
+		return;
+	
+	if (err)
 	{
 		j->showErrorDialog(0);
 	}
@@ -190,28 +223,27 @@ void KTorrentCore::downloadFinished(KIO::Job *job)
 			dir = KFileDialog::getExistingDirectory(QString::null, 0,
 				i18n("Select Folder to Save To"));
 	
-		
-		QString target = j->destURL().pathOrURL();
 		if (dir != QString::null)
 		{
-			load(target,dir,false);
+			load(j->data(),dir,false);
 		}
 	}
-	// remove tmp file
-	bt::Delete(j->destURL().pathOrURL(),true);
 }
 
 void KTorrentCore::load(const KURL& url)
-{	
-	// download to a random file in tmp
-	KIO::Job* j = KIO::file_copy(url,QString("/tmp/kt-tmp-torrent%1").arg(bt::GetCurrentTime()),-1,true);
+{
+	KIO::Job* j = KIO::storedGet(url,false,true);
 	connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadFinished( KIO::Job* )));
 }
 
 void KTorrentCore::downloadFinishedSilently(KIO::Job *job)
 {
-	KIO::FileCopyJob* j = (KIO::FileCopyJob*)job;
-	if (j->error())
+	KIO::StoredTransferJob* j = (KIO::StoredTransferJob*)job;
+	int err = j->error();
+	if (err == KIO::ERR_USER_CANCELED)
+		return;
+	
+	if (err)
 	{
 		j->showErrorDialog(0);
 	}
@@ -219,7 +251,6 @@ void KTorrentCore::downloadFinishedSilently(KIO::Job *job)
 	{
 		// load in the file (target is always local)
 		QString dir = Settings::saveDir();
-		QString target = j->destURL().pathOrURL();
 		if (!Settings::useSaveDir())
 		{
 			KMessageBox::error(0,i18n("You need to have default save directory selected to load torrents silently."),i18n("Error"));
@@ -228,17 +259,16 @@ void KTorrentCore::downloadFinishedSilently(KIO::Job *job)
 		{
 			if (dir != QString::null)
 			{
-				load(target,dir,true);
+				load(j->data(),dir,true);
 			}
 		}
 	}
-	bt::Delete(j->destURL().pathOrURL(),true);
 }
 
 void KTorrentCore::loadSilently(const KURL& url)
 {
 	// download to a random file in tmp
-	KIO::Job* j = KIO::file_copy(url,QString("/tmp/kt-tmp-torrent%1").arg(bt::GetCurrentTime()),-1,true);
+	KIO::Job* j = KIO::storedGet(url,false,true);
 	connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadFinishedSilently( KIO::Job* )));
 }
 

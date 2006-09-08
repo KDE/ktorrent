@@ -93,6 +93,22 @@ namespace bt
 				const QString & tmpdir,
 				const QString & datadir,
 				const QString & default_save_dir);
+		
+		/**
+		 * Initialize the TorrentControl. 
+		 * @param qman The QueueManager
+		 * @param data The data of the torrent
+		 * @param tmpdir The directory to store temporary data
+		 * @param datadir The directory to store the actual file(s)
+		 * 		(only used the first time we load a torrent)
+		 * @param default_save_dir Default save directory (null if not set)
+		 * @throw Error when something goes wrong
+		 */
+		void init(QueueManager* qman,
+				  const QByteArray & data,
+				  const QString & tmpdir,
+				  const QString & datadir,
+				  const QString & default_save_dir);
 
 		/**
 		 * Change to a new data dir. If this fails
@@ -250,6 +266,15 @@ namespace bt
 		void continueStart();
 		virtual void handleError(const QString & err);
 
+		
+		
+		void initInternal(QueueManager* qman,const QString & tmpdir,
+						  const QString & ddir,const QString & default_save_dir,bool first_time);
+		
+		void checkExisting(QueueManager* qman);
+		void setupDirs(const QString & tmpdir,const QString & ddir);
+		void setupStats();
+		void setupData(const QString & ddir);
 		
 	private:
 		Torrent* tor;

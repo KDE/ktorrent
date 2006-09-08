@@ -32,6 +32,7 @@ namespace bt
 {
 	class Server;
 	class QueueManager;
+	class TorrentControl;
 }
 
 namespace KIO
@@ -220,6 +221,15 @@ public slots:
 	void load(const QString & file,const QString & dir,bool silently);
 	
 	/**
+	 * Load a torrent file. Pops up an error dialog
+	 * if something goes wrong.
+	 * @param data Byte array of the torrent file
+	 * @param dir Directory to save the data
+	 * @param silently Wether or not to do this silently
+	 */
+	void load(const QByteArray & data,const QString & dir,bool silently);
+	
+	/**
 	 * Remove a download.This will delete all temp
 	 * data from this TorrentInterface And delete the
 	 * TorrentInterface itself. It can also potentially
@@ -300,6 +310,7 @@ signals:
 private:
 	void rollback(const QPtrList<kt::TorrentInterface> & success);
 	void connectSignals(kt::TorrentInterface* tc);
+	void init(bt::TorrentControl* tc,bool silently);
 	
 private slots:
 	void torrentFinished(kt::TorrentInterface* tc);

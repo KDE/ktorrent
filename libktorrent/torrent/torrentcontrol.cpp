@@ -414,23 +414,14 @@ namespace bt
 				tmon->peerAdded(pman->getPeer(i));
 		}
 	}
-
+	
+	
 	void TorrentControl::init(QueueManager* qman,
 							  const QString & torrent,
 							  const QString & tmpdir,
 							  const QString & ddir,
 							  const QString & default_save_dir)
 	{
-		datadir = tmpdir;
-		stats.completed = false;
-		stats.running = false;
-		if (!datadir.endsWith(DirSeparator()))
-			datadir += DirSeparator();
-
-		outputdir = ddir.stripWhiteSpace();
-		if (outputdir.length() > 0 && !outputdir.endsWith(DirSeparator()))
-			outputdir += DirSeparator();
-
 		// first load the torrent file
 		tor = new Torrent();
 		try
@@ -445,6 +436,47 @@ namespace bt
 					" The torrent is probably corrupt or is not a torrent file."));
 		}
 		
+		initInternal(qman,tmpdir,ddir,default_save_dir,torrent.startsWith(tmpdir));
+		
+		// copy torrent in tor dir
+		QString tor_copy = datadir + "torrent";
+		if (tor_copy != torrent)
+		{
+			bt::CopyFile(torrent,tor_copy);
+		}
+	}
+	
+	
+	void TorrentControl::init(QueueManager* qman, const QByteArray & data,const QString & tmpdir,
+							  const QString & ddir,const QString & default_save_dir)
+	{
+		// first load the torrent file
+		tor = new Torrent();
+		try
+		{
+			tor->load(data,false);
+		}
+		catch (...)
+		{
+			delete tor;
+			tor = 0;
+			throw Error(i18n("An error occurred while loading the torrent."
+					" The torrent is probably corrupt or is not a torrent file."));
+		}
+		
+		initInternal(qman,tmpdir,ddir,default_save_dir,true);
+		// copy data into torrent file
+		QString tor_copy = datadir + "torrent";
+		QFile fptr(tor_copy);
+		if (!fptr.open(IO_WriteOnly))
+			throw Error(i18n("Unable to create %1 : %2")
+					.arg(tor_copy).arg(fptr.errorString()));
+	
+		fptr.writeBlock(data.data(),data.size());
+	}
+	
+	void TorrentControl::checkExisting(QueueManager* qman)
+	{
 		// check if we haven't already loaded the torrent
 		// only do this when qman isn't 0
 		if (qman && qman->allreadyLoaded(tor->getInfoHash()))
@@ -461,12 +493,29 @@ namespace bt
 						.arg(tor->getNameSuggestion()));
 			}
 		}
+	}
+	
+	void TorrentControl::setupDirs(const QString & tmpdir,const QString & ddir)
+	{
+		datadir = tmpdir;
+		
+		if (!datadir.endsWith(DirSeparator()))
+			datadir += DirSeparator();
+
+		outputdir = ddir.stripWhiteSpace();
+		if (outputdir.length() > 0 && !outputdir.endsWith(DirSeparator()))
+			outputdir += DirSeparator();
 		
 		if (!bt::Exists(datadir))
 		{
 			bt::MakeDir(datadir);
 		}
-
+	}
+	
+	void TorrentControl::setupStats()
+	{
+		stats.completed = false;
+		stats.running = false;
 		stats.torrent_name = tor->getNameSuggestion();
 		stats.multi_file_torrent = tor->isMultiFile();
 		stats.total_bytes = tor->getFileLength();
@@ -482,32 +531,10 @@ namespace bt
 		// load outputdir if outputdir is null
 		if (outputdir.isNull() || outputdir.length() == 0)
 			loadOutputDir();
-					
-		// copy torrent in temp dir
-		QString tor_copy = datadir + "torrent";
-
-		if (tor_copy != torrent)
-		{
-			bt::CopyFile(torrent,tor_copy);
-		}
-		else
-		{
-			// if we do not need to copy the torrent, it is an existing download and we need to see
-			// if it is not an old download
-			try
-			{
-				migrateTorrent(default_save_dir);
-			}
-			catch (Error & err)
-			{
-				
-				throw Error(
-						i18n("Cannot migrate %1 : %2")
-						.arg(tor->getNameSuggestion()).arg(err.toString()));
-			}
-		}
-
-
+	}
+	
+	void TorrentControl::setupData(const QString & ddir)
+	{
 		// create PeerManager and Tracker
 		pman = new PeerManager(*tor);
 		//Out() << "Tracker url " << url << " " << url.protocol() << " " << url.prettyURL() << endl;
@@ -548,6 +575,35 @@ namespace bt
 		connect(pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerRemoved(Peer* )));
 		connect(cman,SIGNAL(excluded(Uint32, Uint32 )),down,SLOT(onExcluded(Uint32, Uint32 )));
 		connect(cman,SIGNAL(included( Uint32, Uint32 )),down,SLOT(onIncluded( Uint32, Uint32 )));
+	}
+	
+	void TorrentControl::initInternal(QueueManager* qman,
+									  const QString & tmpdir,
+									  const QString & ddir,
+									  const QString & default_save_dir,
+									  bool first_time)
+	{
+		checkExisting(qman);
+		setupDirs(tmpdir,ddir);
+		setupStats();
+
+		if (!first_time)
+		{
+			// if we do not need to copy the torrent, it is an existing download and we need to see
+			// if it is not an old download
+			try
+			{
+				migrateTorrent(default_save_dir);
+			}
+			catch (Error & err)
+			{
+				
+				throw Error(
+						i18n("Cannot migrate %1 : %2")
+						.arg(tor->getNameSuggestion()).arg(err.toString()));
+			}
+		}
+		setupData(ddir);
 
 		updateStatusMsg();
 
@@ -575,6 +631,7 @@ namespace bt
 		stats.output_path = cman->getOutputPath();
 		Out() << "OutputPath = " << stats.output_path << endl;
 	}
+	
 
 
 	bool TorrentControl::announceAllowed()
