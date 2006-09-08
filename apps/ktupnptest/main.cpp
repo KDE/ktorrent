@@ -23,6 +23,7 @@
 #include <kaboutdata.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
+#include <libktorrent/functions.h>
 
 
 #include "upnptestapp.h"
@@ -47,17 +48,17 @@ static KCmdLineOptions options[] =
 int main(int argc,char** argv)
 {
 	Globals::instance().setDebugMode(true);
-	Globals::instance().initLog("ktupnptest.log");
 	KAboutData about("ktupnptest", I18N_NOOP("KTUPnPTest"), version, description,
 					 KAboutData::License_GPL, "(C) 2005 Joris Guisson", 0,
 					 "http://ktorrent.org/");
 	KCmdLineArgs::init(argc, argv,&about);
 	KCmdLineArgs::addCmdLineOptions( options );
 	KApplication app;
-	UPnPTestApp mwnd;
+	Globals::instance().initLog(kt::DataDir() + "ktupnptest.log");
+	UPnPTestApp* mwnd = new UPnPTestApp();
 
-	app.setMainWidget(&mwnd);
-	mwnd.show();
+	app.setMainWidget(mwnd);
+	mwnd->show();
 	app.exec();
 	Globals::cleanup();
 	return 0;
