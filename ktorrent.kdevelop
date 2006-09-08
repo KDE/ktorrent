@@ -25,7 +25,7 @@
       <useactivetarget>true</useactivetarget>
     </general>
     <run>
-      <mainprogram>apps/ktupnptest/ktupnptest</mainprogram>
+      <mainprogram>apps/ktorrent/ktorrent</mainprogram>
       <terminal>false</terminal>
       <directoryradio>executable</directoryradio>
       <customdirectory>/</customdirectory>

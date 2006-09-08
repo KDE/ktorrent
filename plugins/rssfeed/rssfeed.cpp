@@ -218,12 +218,16 @@ namespace kt
 		bool removed = false;
 		
 		RssArticle::List::iterator it;
-		for ( it = m_articles.begin(); it != m_articles.end(); ++it )
+		for ( it = m_articles.begin(); it != m_articles.end();  )
 			{
 			if ((*it).pubDate().daysTo(QDateTime::currentDateTime()) > m_articleAge)
 				{
-				m_articles.remove(it);
+				it = m_articles.erase(it);
 				removed = true;
+				}
+			else
+				{
+					it++;
 				}
 			}
 		
