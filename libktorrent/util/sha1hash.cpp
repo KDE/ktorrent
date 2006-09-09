@@ -85,6 +85,13 @@ namespace bt
 				hash[15],hash[16],hash[17],hash[18],hash[19]);
 		return QString(tmp);
 	}
+	
+	QByteArray SHA1Hash::toByteArray() const
+	{
+		QByteArray arr(20);
+		arr.duplicate((const char*)hash,20);
+		return arr;
+	}
 
 	QString SHA1Hash::toURLString() const
 	{

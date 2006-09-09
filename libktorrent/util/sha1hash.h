@@ -20,6 +20,7 @@
 #ifndef BTSHA1HASH_H
 #define BTSHA1HASH_H
 
+#include <qcstring.h> 
 #include "constants.h"
 
 class QString;
@@ -136,6 +137,10 @@ namespace bt
 		 */
 		friend bool operator < (const SHA1Hash & a,const SHA1Hash & b);
 		
+		/**
+		 * Convert the hash to a byte array.
+		 */
+		QByteArray toByteArray() const;
 	};
 
 }

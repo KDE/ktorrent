@@ -75,13 +75,17 @@ namespace bt
 			while (data[pos] != 'e' && pos < data.size())
 			{
 				if (verbose) Out() << "Key : " << endl;
-				BValueNode* k = dynamic_cast<BValueNode*>(decode());
+				BNode* kn = decode(); 
+				BValueNode* k = dynamic_cast<BValueNode*>(kn);
 				if (!k || k->data().getType() != Value::STRING)
+				{
+					delete kn;
 					throw Error(i18n("Decode error"));
+				}
 
-				QString key = k->data().toString();
-				delete k;
-
+				QByteArray key = k->data().toByteArray();
+				delete kn;
+				
 				BNode* data = decode();
 				curr->insert(key,data);
 			}

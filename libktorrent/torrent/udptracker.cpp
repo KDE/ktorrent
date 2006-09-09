@@ -162,14 +162,14 @@ namespace bt
 		if (tid != transaction_id)
 			return;
 
-		Out() << "UDPTracker::error : " << error_string << endl;
+		Out(SYS_TRK|LOG_IMPORTANT) << "UDPTracker::error : " << error_string << endl;
 		requestFailed(error_string);
 	}
 
 
 	bool UDPTracker::doRequest()
 	{
-		Out() << "Doing tracker request to url : " << url << endl;
+		Out(SYS_TRK|LOG_NOTICE) << "Doing tracker request to url : " << url << endl;
 		if (connection_id == 0)
 		{
 			n = 0;
@@ -180,6 +180,10 @@ namespace bt
 
 		requestPending();
 		return true;
+	}
+	
+	void UDPTracker::scrape()
+	{
 	}
 
 	void UDPTracker::sendConnect()
@@ -194,7 +198,7 @@ namespace bt
 
 	void UDPTracker::sendAnnounce()
 	{		
-	//	Out() << "UDPTracker::sendAnnounce()" << endl;
+	//	Out(SYS_TRK|LOG_NOTICE) << "UDPTracker::sendAnnounce()" << endl;
 		transaction_id = socket->newTransactionID();
 		/*
 		0  64-bit integer  connection_id

@@ -380,8 +380,8 @@ namespace bt
 		if (started)
 		{
 			timer.start(curr->getInterval() * 1000,true);
+			curr->scrape();
 		}
-		
 		pending = false;
 		if (started)
 			statusChanged(i18n("OK"));

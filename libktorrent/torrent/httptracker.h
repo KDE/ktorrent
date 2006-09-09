@@ -50,20 +50,21 @@ namespace bt
 		virtual void completed();
 		virtual void manualUpdate();
 		virtual Uint32 failureCount() const {return failures;}
+		virtual void scrape();
 		
 	private slots:
-		void onResult(KIO::Job* j);
-		void onDataRecieved(KIO::Job* j,const QByteArray & ba);
+		void onAnnounceResult(KIO::Job* j);
+		void onScrapeResult(KIO::Job* j);
 		void onTimeout();
 
 	private:
 		void doRequest();
-		bool updateData();
+		bool updateData(const QByteArray & data);
 		
 	private:
 		QTimer timer;
-		QByteArray data;
 		KIO::Job* active_job;
+		KIO::Job* active_scrape_job;
 		QString event;
 		Uint32 failures;
 	};

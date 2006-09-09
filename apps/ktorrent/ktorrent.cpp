@@ -101,8 +101,7 @@ KTorrent::KTorrent()
 	hide();
 	setAutoSaveSettings();
 	setToolviewStyle(KMdi::TextAndIcon);
-	
-	bool debug = bt::Globals::instance().isDebugModeSet();
+
 	KIconLoader* iload = KGlobal::iconLoader();
 	
 	m_view = new KTorrentView(0);
@@ -856,7 +855,7 @@ void KTorrent::tabClosePressed()
 	}
 }
 
-void KTorrent::currentTabChanged(QWidget* w)
+void KTorrent::currentTabChanged(QWidget* )
 {
 	KMdiChildView* child = activeWindow();
 	if (!child)

@@ -62,7 +62,7 @@ namespace bt
 		virtual void completed();
 		virtual void manualUpdate();
 		virtual Uint32 failureCount() const {return n;}
-		
+		virtual void scrape();
 
 	private slots:
 		void onConnTimeout();

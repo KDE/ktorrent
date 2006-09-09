@@ -44,7 +44,7 @@ namespace bt
 	HTTPTracker::HTTPTracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id)
 		: Tracker(url,tor,id)
 	{
-		active_job = 0;
+		active_job = active_scrape_job = 0;
 		
 		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 		interval = 5 * 60 * 1000; // default interval 5 minutes
@@ -54,7 +54,8 @@ namespace bt
 
 
 	HTTPTracker::~HTTPTracker()
-	{}
+	{
+	}
 	
 	void HTTPTracker::start()
 	{
@@ -96,11 +97,94 @@ namespace bt
 		timer.start(30000);
 	}
 	
+	void HTTPTracker::scrape()
+	{
+		if (!url.fileName(false).startsWith("announce"))
+		{
+			Out(SYS_TRK|LOG_NOTICE) << "Tracker " << url << " does not support scraping" << endl;
+			return;
+		}
+		
+		KURL scrape_url = url;
+		scrape_url.setFileName(url.fileName(false).replace("announce","scrape"));
+		
+		QString epq = scrape_url.encodedPathAndQuery();
+		const SHA1Hash & info_hash = tor->getInfoHash();
+		if (scrape_url.queryItems().count() > 0)
+			epq += "&infohash=" + info_hash.toURLString();
+		else
+			epq += "?infohash=" + info_hash.toURLString();
+		scrape_url.setEncodedPathAndQuery(epq);
+	
+		Out(SYS_TRK|LOG_NOTICE) << "Doing scrape request to url : " << scrape_url.prettyURL() << endl;
+		KIO::MetaData md;
+		md["UserAgent"] = "ktorrent/" VERSION;
+		md["SendLanguageSettings"] = "false";
+		md["Cookies"] = "none";
+		
+		KIO::StoredTransferJob* j = KIO::storedGet(scrape_url,false,false);
+		// set the meta data
+		j->setMetaData(md);
+		
+		connect(j,SIGNAL(result(KIO::Job* )),this,SLOT(onScrapeResult( KIO::Job* )));
+		active_scrape_job = j;
+	}
+	
+	void HTTPTracker::onScrapeResult(KIO::Job* j)
+	{
+		if (j->error())
+		{
+			Out(SYS_TRK|LOG_IMPORTANT) << "Scrape failed : " << j->errorString() << endl;
+			return;
+		}
+		
+		KIO::StoredTransferJob* st = (KIO::StoredTransferJob*)j;
+		BDecoder dec(st->data(),false,0);
+		BNode* n = 0;
+		
+		try
+		{
+			n = dec.decode();
+		}
+		catch (bt::Error & err)
+		{
+			Out(SYS_TRK|LOG_IMPORTANT) << "Invalid scrape data " << err.toString() << endl;
+			return;
+		}
+			
+		if (n && n->getType() == BNode::DICT)
+		{
+			BDictNode* d = (BDictNode*)n;
+			d = d->getDict("files");
+			if (d)
+			{
+				d = d->getDict(tor->getInfoHash().toByteArray());
+				if (d)
+				{
+					BValueNode* vn = d->getValue("complete");
+					if (vn && vn->data().getType() == Value::INT)
+					{
+						seeders = vn->data().toInt();
+					} 
+						
+					
+					vn = d->getValue("incomplete");
+					if (vn && vn->data().getType() == Value::INT)
+					{
+						leechers = vn->data().toInt();
+					}
+					
+					Out(SYS_TRK|LOG_DEBUG) << "Scrape : leechers = " << leechers 
+							<< ", seeders = " << seeders << endl;
+				}
+			}
+		}
+		
+		delete n;
+	}
+	
 	void HTTPTracker::doRequest()
 	{	
-		// clear data array
-		data = QByteArray();
-		
 		const TorrentStats & s = tor->getStats();
 		
 		KURL u = url;
@@ -143,18 +227,17 @@ namespace bt
 		md["SendLanguageSettings"] = "false";
 		md["Cookies"] = "none";
 		
-		KIO::TransferJob* j = KIO::get(u,true,false);
+		KIO::StoredTransferJob* j = KIO::storedGet(u,false,false);
 		// set the meta data
 		j->setMetaData(md);
 		
-		connect(j,SIGNAL(result(KIO::Job* )),this,SLOT(onResult(KIO::Job* )));
-		connect(j,SIGNAL(data(KIO::Job*,const QByteArray &)),
-				this,SLOT(onDataRecieved(KIO::Job*, const QByteArray& )));
+		connect(j,SIGNAL(result(KIO::Job* )),this,SLOT(onAnnounceResult( KIO::Job* )));
+		
 		active_job = j;
 		requestPending();
 	}
 
-	bool HTTPTracker::updateData()
+	bool HTTPTracker::updateData(const QByteArray & data)
 	{
 //#define DEBUG_PRINT_RESPONSE
 #ifdef DEBUG_PRINT_RESPONSE
@@ -177,7 +260,16 @@ namespace bt
 		}
 		
 		BDecoder dec(data,false,i);
-		BNode* n = dec.decode();
+		BNode* n = 0;
+		try
+		{
+			n = dec.decode();
+		}
+		catch (...)
+		{
+			requestFailed(i18n("Invalid data from tracker"));
+			return false;
+		}
 			
 		if (!n || n->getType() != BNode::DICT)
 		{
@@ -258,8 +350,7 @@ namespace bt
 	}
 
 	
-
-	void HTTPTracker::onResult(KIO::Job* j)
+	void HTTPTracker::onAnnounceResult(KIO::Job* j)
 	{
 		if (j != active_job)
 		{
@@ -285,6 +376,7 @@ namespace bt
 		else
 		{
 			timer.stop();
+			KIO::StoredTransferJob* st = (KIO::StoredTransferJob*)active_job;
 			failures = 0;
 			active_job = 0;
 			if (event != "stopped")
@@ -293,10 +385,9 @@ namespace bt
 					started = true;
 				
 				event = QString::null;
-			
 				try
 				{
-					if (updateData())
+					if (updateData(st->data()))
 					{
 						peersReady(this);
 						requestOK();
@@ -312,23 +403,6 @@ namespace bt
 				stopDone();
 			}
 		}
-	}
-	
-	void HTTPTracker::onDataRecieved(KIO::Job* j,const QByteArray & ba)
-	{
-		if (j != active_job)
-		{
-			return;
-		}
-
-		if (ba.size() > 0)
-		{
-			Uint32 old_size = data.size();
-			data.resize(data.size() + ba.size());
-			for (Uint32 i = old_size;i < data.size();i++)
-				data[i] = ba[i - old_size];
-		}
-		
 	}
 
 	void HTTPTracker::onTimeout()

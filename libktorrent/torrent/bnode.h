@@ -21,9 +21,10 @@
 #define BTBNODE_H
 
 #include <qptrlist.h>
-#include <qdict.h>
-#include "value.h"
+#include <qvaluelist.h>
 #include <util/constants.h>
+#include "value.h"
+
 
 namespace bt
 {
@@ -96,7 +97,12 @@ namespace bt
 	 */
 	class BDictNode : public BNode
 	{
-		QDict<BNode> children;
+		struct DictEntry
+		{
+			QByteArray key;
+			BNode* node;
+		};
+		QValueList<DictEntry> children;
 	public:
 		BDictNode(Uint32 off);
 		virtual ~BDictNode();
@@ -106,7 +112,7 @@ namespace bt
 		 * @param key The key
 		 * @param node The node
 		 */
-		void insert(const QString & key,BNode* node);
+		void insert(const QByteArray & key,BNode* node);
 		
 		/**
 		 * Get a BNode.
@@ -128,6 +134,13 @@ namespace bt
 		 * @return The node or 0 if there is no dict node with has key @a key
 		 */
 		BDictNode* getDict(const QString & key);
+		
+		/**
+		 * Get a BDictNode.
+		 * @param key The key
+		 * @return The node or 0 if there is no dict node with has key @a key
+		 */
+		BDictNode* getDict(const QByteArray & key);
 
 		/**
 		 * Get a BValueNode.

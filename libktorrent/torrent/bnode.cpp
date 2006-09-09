@@ -52,21 +52,51 @@ namespace bt
 
 	BDictNode::BDictNode(Uint32 off) : BNode(DICT,off)
 	{
-		children.setAutoDelete(true);
 	}
 	
 	BDictNode::~BDictNode()
 	{
+		QValueList<DictEntry>::iterator i = children.begin();
+		while (i != children.end())
+		{
+			DictEntry & e = *i;
+			delete e.node;
+			i++;
+		}
 	}
 	
-	void BDictNode::insert(const QString & key,BNode* node)
+	void BDictNode::insert(const QByteArray & key,BNode* node)
 	{
-		children.insert(key,node);
+		DictEntry entry;
+		entry.key = key;
+		entry.node = node;
+		children.append(entry);
 	}
 	
 	BNode* BDictNode::getData(const QString & key)
 	{
-		return children.find(key);
+		QValueList<DictEntry>::iterator i = children.begin();
+		while (i != children.end())
+		{
+			DictEntry & e = *i;
+			if (QString(e.key) == key)
+				return e.node;
+			i++;
+		}
+		return 0;
+	}
+	
+	BDictNode* BDictNode::getDict(const QByteArray & key)
+	{
+		QValueList<DictEntry>::iterator i = children.begin();
+		while (i != children.end())
+		{
+			DictEntry & e = *i;
+			if (e.key == key)
+				return dynamic_cast<BDictNode*>(e.node);
+			i++;
+		}
+		return 0;
 	}
 
 	BListNode* BDictNode::getList(const QString & key)
@@ -90,11 +120,13 @@ namespace bt
 	void BDictNode::printDebugInfo()
 	{
 		Out() << "DICT" << endl;
-		QDictIterator<BNode> it( children );
-		for( ; it.current(); ++it )
+		QValueList<DictEntry>::iterator i = children.begin();
+		while (i != children.end())
 		{
-			Out() << it.currentKey() << ": " << endl;
-			it.current()->printDebugInfo();
+			DictEntry & e = *i;
+			Out() << QString(e.key) << ": " << endl;
+			e.node->printDebugInfo();
+			i++;
 		}
 		Out() << "END" << endl;
 	}

@@ -73,6 +73,12 @@ namespace bt
 		virtual Uint32 failureCount() const = 0;
 		
 		/**
+		 * Do a tracker scrape to get more accurate stats about a torrent.
+		 * Does nothing if the tracker does not support this.
+		 */
+		virtual void scrape() = 0;
+		
+		/**
 		 * Get the update interval in ms
 		 * @return interval
 		 */

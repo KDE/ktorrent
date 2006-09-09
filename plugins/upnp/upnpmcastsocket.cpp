@@ -153,7 +153,7 @@ namespace kt
 		} 
 		if (!validDevice)
 		{
-			Out(SYS_PNP|LOG_IMPORTANT) << "Not a valid Internet Gateway Device" << endl;
+		//	Out(SYS_PNP|LOG_IMPORTANT) << "Not a valid Internet Gateway Device" << endl;
 			return 0; 
 		}
 		
