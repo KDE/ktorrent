@@ -176,6 +176,9 @@ void KTorrentViewItem::update()
 				perc = 100.0;
 			else if (perc > 99.9)
 				perc = 99.9;
+			else if (perc < 0.0)
+				perc = 0.0;
+				
 		}
 	}
 	setText(9,i18n("%1 %").arg(loc->formatNumber(perc,2)));
