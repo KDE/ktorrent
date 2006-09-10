@@ -27,6 +27,7 @@
 #include <qstring.h>
 #include <qobject.h>
 #include <qfile.h>
+#include <qvaluelist.h>
 
 #include <torrent/globals.h>
 #include <util/log.h>
@@ -53,6 +54,7 @@ namespace kt
 		m_dir->setShowingDotFiles(true);
 
 		connect(m_dir, SIGNAL(newItems( const KFileItemList& )), this, SLOT(onNewItems( const KFileItemList& )));
+		connect(m_core, SIGNAL(loadingFinished( const KURL&, bool, bool )), this, SLOT(onLoadingFinished( const KURL&, bool, bool )));
 
 // 		Out() << "LOADING SCANFOLDER: " << m_dir->url().path() << endl;
 	}
@@ -68,7 +70,8 @@ namespace kt
 	{
 		KFileItemList list = items;
 		KFileItem* file;
-		for(file=list.first(); file; file=list.next()) {
+		for(file=list.first(); file; file=list.next()) 
+		{
 			QString name = file->name();
 			QString dirname = m_dir->url().path();
 			QString filename = dirname + "/" + name;
@@ -87,41 +90,63 @@ namespace kt
 			}
 
 			KURL source(filename);
-			KURL destination(dirname + "/" + i18n("loaded") + "/" + name);
 
 			//If torrent has it's hidden complement - skip it.
 			if(QFile::exists(dirname + "/." + name))
 				continue;
 			
+			//Add pending entry...
+			m_pendingURLs.push_back(source);
+			
 			//Load torrent
-// 			Out() << "SF Loading: " << name.ascii() << endl;
 			if(m_openSilently)
 				m_core->loadSilently(source);
 			else
 				m_core->load(source);
-
-			switch(m_loadedAction) {
-					case deleteAction:
+		}
+	}
+	
+	void ScanFolder::onLoadingFinished(const KURL & url, bool success, bool canceled)
+	{
+		if(m_pendingURLs.empty() || !success)
+			return;
+		
+		//search for entry
+		QValueList<KURL>::iterator it = m_pendingURLs.find(url);
+		
+		//if no entry is found than this torrent was not started by this plugin so - quit
+		if(it == m_pendingURLs.end())
+			return;
+		
+		//remove this entry
+		m_pendingURLs.erase(it);
+		
+		QString name = url.filename(false);
+		QString dirname = m_dir->url().path();
+		QString filename = dirname + "/" + name;
+		KURL destination(dirname + "/" + i18n("loaded") + "/" + name);
+		
+		switch(m_loadedAction) {
+			case deleteAction:
 					//If torrent has it's hidden complement - remove it too.
-					if(QFile::exists(dirname + "/." + name))
-						QFile::remove(dirname + "/." + name);
+				if(QFile::exists(dirname + "/." + name))
+					QFile::remove(dirname + "/." + name);
 					// 				Out() << "Deleting: " << name.ascii() << endl;
-					QFile::remove(filename);
-					break;
-					case moveAction:
+				QFile::remove(filename);
+				break;
+			case moveAction:
 					// 				Out() << "Moving: " << name.ascii() << endl;
 					//If torrent has it's hidden complement - remove it too.
-					if(QFile::exists(dirname + "/." + name))
-						QFile::remove(dirname + "/." + name);
+				if(QFile::exists(dirname + "/." + name))
+					QFile::remove(dirname + "/." + name);
 
-					KIO::NetAccess::move(source, destination);
-					break;
-					case defaultAction:
-					QFile f(dirname + "/." + name);
-					f.open(IO_WriteOnly);
-					f.close();
-					break;
-			}
+				KIO::NetAccess::move(url, destination);
+				break;
+			case defaultAction:
+				QFile f(dirname + "/." + name);
+				f.open(IO_WriteOnly);
+				f.close();
+				break;
 		}
 	}
 
@@ -149,3 +174,4 @@ namespace kt
 			m_valid = true;
 	}
 }
+

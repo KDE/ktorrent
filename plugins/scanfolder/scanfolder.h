@@ -25,6 +25,8 @@
 #include <qstring.h>
 #include <qobject.h>
 #include <qdir.h>
+#include <qvaluelist.h>
+#include <kurl.h>
 
 namespace kt
 {
@@ -60,7 +62,7 @@ namespace kt
 			 * @param core Pointer to core interface
 			 * @param dir Full directory path
 			 * @param action Action to perform on loaded torrents.
-			 * @param openSilently Wheather to open torrent silently or nor.
+			 * @param openSilently Wheather to open torrent silently or not.
 			 */
 			ScanFolder(CoreInterface* core, QString& dir, LoadedTorrentAction action = defaultAction, bool openSilently = true);
 			~ScanFolder();
@@ -83,6 +85,7 @@ namespace kt
 
 		public slots:
 			void onNewItems(const KFileItemList &items);
+			void onLoadingFinished(const KURL & url,bool success,bool canceled);
 
 		private:
 			CoreInterface* m_core;
@@ -92,6 +95,8 @@ namespace kt
 
 			LoadedTorrentAction m_loadedAction;
 			bool m_openSilently;
+			
+			QValueList<KURL> m_pendingURLs;
 
 	};
 }
