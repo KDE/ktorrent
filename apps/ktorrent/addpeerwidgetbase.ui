@@ -121,9 +121,6 @@
                     <property name="text">
                         <string>&amp;Close</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+C</string>
-                    </property>
                     <property name="stdItem" stdset="0">
                         <number>13</number>
                     </property>
