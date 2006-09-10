@@ -419,6 +419,10 @@ namespace bt
 		//make sure the max_seeds is not reached
 // 		if(max_seeds !=0 && max_seeds < getNumRunning(false,true))
 // 			tc->stop(true);
+		
+		if(!keep_seeding)
+			return;
+		
 		torrentAdded(tc);
 		orderQueue();
 	}

@@ -422,6 +422,7 @@ void KTorrentCore::torrentFinished(kt::TorrentInterface* tc)
 
 void KTorrentCore::setKeepSeeding(bool ks)
 {
+	keep_seeding = ks;
 	qman->setKeepSeeding(ks);
 }
 
