@@ -20,7 +20,6 @@
 #ifndef KTORRENTCORE_H
 #define KTORRENTCORE_H
 
-#include <qobject.h>
 #include <qtimer.h>
 #include <qcstring.h>
 #include <util/constants.h>
@@ -66,7 +65,7 @@ class KProgress;
  *
  * This class keeps track of all TorrentInterface objects.
  */
-class KTorrentCore : public QObject,public kt::CoreInterface
+class KTorrentCore : public kt::CoreInterface
 {
 	Q_OBJECT
 public:
@@ -214,11 +213,11 @@ public slots:
 	/**
 	 * Load a torrent file. Pops up an error dialog
 	 * if something goes wrong.
-	 * @param file The torrent file
+	 * @param file The torrent file (allways a local file)
 	 * @param dir Directory to save the data
 	 * @param silently Wether or not to do this silently
 	 */
-	void load(const QString & file,const QString & dir,bool silently);
+	bool load(const QString & file,const QString & dir,bool silently);
 	
 	/**
 	 * Load a torrent file. Pops up an error dialog
@@ -227,7 +226,7 @@ public slots:
 	 * @param dir Directory to save the data
 	 * @param silently Wether or not to do this silently
 	 */
-	void load(const QByteArray & data,const QString & dir,bool silently);
+	bool load(const QByteArray & data,const QString & dir,bool silently);
 	
 	/**
 	 * Remove a download.This will delete all temp

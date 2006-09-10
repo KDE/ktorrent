@@ -21,6 +21,7 @@
 #define KTCOREINTERFACE_H
 
 #include <kurl.h>
+#include <qobject.h>
 #include <util/constants.h>
 
 namespace kt
@@ -35,8 +36,9 @@ namespace kt
 	 * the applications core, the core is responsible for managing all
 	 * TorrentControl objects.
 	*/
-	class CoreInterface
+	class CoreInterface : public QObject
 	{
+		Q_OBJECT
 	public:
 		CoreInterface();
 		virtual ~CoreInterface();
@@ -116,7 +118,7 @@ namespace kt
 		 * @param savedir Dir to save the data
 		 * @param silently Wether or not to do this silently
 		 */
-		virtual void load(const QString & file,const QString & savedir,bool silently) = 0;
+		virtual bool load(const QString & file,const QString & savedir,bool silently) = 0;
 
 		/**
 		 * Load a torrent file. Pops up an error dialog
@@ -187,6 +189,16 @@ namespace kt
 		 * No torrents will be automatically started/stopped.
 		 */
 		virtual void setPausedState(bool pause) = 0;
+		
+	signals:
+		/**
+		 * Seeing that when load returns the loading process may not have finished yet,
+		 * and some code expects this. We emit this signal to notify that code of it.
+		 * @param url The url which has been loaded
+		 * @param success Wether or not it succeeded
+		 * @param canceled Wether or not it was canceled by the user
+		 */
+		void loadingFinished(const KURL & url,bool success,bool canceled);
 	};
 
 }

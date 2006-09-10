@@ -38,38 +38,6 @@ namespace dht
 	
 	const Uint32 MAX_CONCURRENT_REQS = 16;
 
-	
-	/**
-	 * Classes who which to be informed of the status of tasks, shoul derive from
-	 * this class.
-	 */
-	class TaskListener
-	{
-		Task* task;
-	public:
-		TaskListener();
-		virtual ~TaskListener();
-		
-		/**
-		 * The task is finsihed.
-		 * @param t The Task
-		 */
-		virtual void onFinished(Task* t) = 0;
-		
-		/**
-		 * Called by the task when data is ready.
-		 * Can be overrided if wanted.
-		 * @param t The Task
-		 */
-		virtual void onDataReady(Task* t);
-		
-		/**
-		 * Called by the task it is about to be deleted.
-		 */
-		virtual void onDestroyed(Task* t);
-		
-		friend class Task;
-	};
 
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
@@ -139,10 +107,7 @@ namespace dht
 		bool canDoRequest() const {return outstanding_reqs < MAX_CONCURRENT_REQS;}
 		
 		/// Is the task finished
-		bool isFinished() const {return finished;}
-		
-		/// Set the task listener
-		void setListener(TaskListener* tl);
+		bool isFinished() const {return task_finished;}
 		
 		/// Set the task ID
 		void setTaskID(bt::Uint32 tid) {task_id = tid;}
@@ -169,6 +134,21 @@ namespace dht
 		 * @param port The port
 		 */
 		void addDHTNode(const QString & ip,bt::Uint16 port);
+		
+	signals:
+		/**
+		 * The task is finsihed.
+		 * @param t The Task
+		 */
+		void finished(Task* t);
+		
+		/**
+		 * Called by the task when data is ready.
+		 * Can be overrided if wanted.
+		 * @param t The Task
+		 */
+		void dataReady(Task* t);
+		
 	protected:
 		void done();
 		
@@ -183,9 +163,8 @@ namespace dht
 	private:
 		RPCServer* rpc;
 		bt::Uint32 outstanding_reqs;
-		TaskListener* lst;
 		bt::Uint32 task_id; 
-		bool finished;
+		bool task_finished;
 		bool queued;
 	};
 

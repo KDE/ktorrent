@@ -62,7 +62,9 @@ namespace dht
 		}
 		
 		for (QValueList<Uint32>::iterator i = rm.begin();i != rm.end();i++)
+		{
 			tasks.erase(*i);
+		}
 		
 		while (dh_table->canStartTask() && queued.count() > 0)
 		{

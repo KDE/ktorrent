@@ -39,7 +39,7 @@ namespace dht
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class DHTTrackerBackend : public kt::PeerSource,public TaskListener
+	class DHTTrackerBackend : public kt::PeerSource
 	{
 		Q_OBJECT
 	public:
@@ -49,14 +49,12 @@ namespace dht
 		virtual void start();
 		virtual void stop();
 		virtual void manualUpdate();
-		virtual void onFinished(Task* t);
-		virtual void onDataReady(Task* t);
-		virtual void onDestroyed(Task* t);
 	
 	private slots:
 		void onTimeout();
 		bool doRequest();
-		
+		void onDataReady(Task* t);
+		void onFinished(Task* t);
 		
 	private:
 		DHTBase & dh_table;

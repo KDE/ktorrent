@@ -28,6 +28,6 @@ namespace kt
 
 	CoreInterface::~CoreInterface()
 	{}
-
-
 }
+
+#include "coreinterface.moc"

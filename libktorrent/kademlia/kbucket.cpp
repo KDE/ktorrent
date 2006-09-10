@@ -326,13 +326,6 @@ namespace dht
 		}
 	}
 	
-	void KBucket::onDestroyed(Task* t)
-	{
-		TaskListener::onDestroyed(t);
-		if (t == refresh_task)
-			refresh_task = 0;
-	}
-	
 	void KBucket::onFinished(Task* t)
 	{
 		if (t == refresh_task)
@@ -343,8 +336,12 @@ namespace dht
 	{
 		refresh_task = t;
 		if (refresh_task)
-			refresh_task->setListener(this);
+		{
+			connect(refresh_task,SIGNAL(finished( Task* )),
+					this,SLOT(onFinished( Task* )));
+		}
 	}
 	
 }
 
+#include "kbucket.moc"

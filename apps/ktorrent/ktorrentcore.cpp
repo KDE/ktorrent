@@ -38,6 +38,7 @@
 #include <util/fileops.h>
 #include <torrent/torrentcreator.h>
 #include <torrent/server.h>
+#include <torrent/authenticationmonitor.h>
 #include <util/functions.h>
 #include <torrent/ipblocklist.h>
 #include <kademlia/dhtbase.h>
@@ -156,7 +157,7 @@ void KTorrentCore::init(TorrentControl* tc,bool silently)
 	qman->torrentAdded(tc);	
 }
 
-void KTorrentCore::load(const QByteArray & data,const QString & dir,bool silently)
+bool KTorrentCore::load(const QByteArray & data,const QString & dir,bool silently)
 {
 	QString tdir = findNewTorrentDir();
 	TorrentControl* tc = 0;
@@ -168,6 +169,7 @@ void KTorrentCore::load(const QByteArray & data,const QString & dir,bool silentl
 				 Settings::useSaveDir() ? Settings::saveDir() : QString());
 		
 		init(tc,silently);
+		return true;
 	}
 	catch (bt::Error & err)
 	{
@@ -177,10 +179,12 @@ void KTorrentCore::load(const QByteArray & data,const QString & dir,bool silentl
 		// delete tdir if necesarry
 		if (bt::Exists(tdir))
 			bt::Delete(tdir,true);
+		
+		return false;
 	}
 }
 
-void KTorrentCore::load(const QString & target,const QString & dir,bool silently)
+bool KTorrentCore::load(const QString & target,const QString & dir,bool silently)
 {
 	QString tdir = findNewTorrentDir();
 	TorrentControl* tc = 0;
@@ -192,6 +196,7 @@ void KTorrentCore::load(const QString & target,const QString & dir,bool silently
 			 Settings::useSaveDir() ? Settings::saveDir() : QString());
 		
 		init(tc,silently);
+		return true;
 	}
 	catch (bt::Error & err)
 	{
@@ -201,6 +206,7 @@ void KTorrentCore::load(const QString & target,const QString & dir,bool silently
 		// delete tdir if necesarry
 		if (bt::Exists(tdir))
 			bt::Delete(tdir,true);
+		return false;
 	}
 }
 
@@ -209,10 +215,14 @@ void KTorrentCore::downloadFinished(KIO::Job *job)
 	KIO::StoredTransferJob* j = (KIO::StoredTransferJob*)job;
 	int err = j->error();
 	if (err == KIO::ERR_USER_CANCELED)
+	{
+		loadingFinished(j->url(),false,true);
 		return;
+	}
 	
 	if (err)
 	{
+		loadingFinished(j->url(),false,false);
 		j->showErrorDialog(0);
 	}
 	else
@@ -225,7 +235,14 @@ void KTorrentCore::downloadFinished(KIO::Job *job)
 	
 		if (dir != QString::null)
 		{
-			load(j->data(),dir,false);
+			if (load(j->data(),dir,false))
+				loadingFinished(j->url(),true,false);
+			else
+				loadingFinished(j->url(),false,false);
+		}
+		else
+		{
+			loadingFinished(j->url(),false,true);
 		}
 	}
 }
@@ -241,10 +258,14 @@ void KTorrentCore::downloadFinishedSilently(KIO::Job *job)
 	KIO::StoredTransferJob* j = (KIO::StoredTransferJob*)job;
 	int err = j->error();
 	if (err == KIO::ERR_USER_CANCELED)
+	{
+		loadingFinished(j->url(),false,true);
 		return;
+	}
 	
 	if (err)
 	{
+		loadingFinished(j->url(),false,false);
 		j->showErrorDialog(0);
 	}
 	else
@@ -253,14 +274,15 @@ void KTorrentCore::downloadFinishedSilently(KIO::Job *job)
 		QString dir = Settings::saveDir();
 		if (!Settings::useSaveDir())
 		{
+			loadingFinished(j->url(),false,false);
 			KMessageBox::error(0,i18n("You need to have default save directory selected to load torrents silently."),i18n("Error"));
 		}
 		else
 		{
-			if (dir != QString::null)
-			{
-				load(j->data(),dir,true);
-			}
+			if (dir != QString::null && load(j->data(),dir,true))
+				loadingFinished(j->url(),true,false);
+			else
+				loadingFinished(j->url(),false,false);
 		}
 	}
 }
@@ -407,6 +429,8 @@ void KTorrentCore::onExit()
 {
 	// stop timer to prevent updates during wait
 	update_timer.stop();
+	// stop all authentications going on
+	AuthenticationMonitor::instance().clear();
 	//pman->saveConfigFile(KGlobal::dirs()->saveLocation("data","ktorrent") + "plugins");
 	// 	downloads.clear();
 	qman->clear();
@@ -497,7 +521,7 @@ void KTorrentCore::stopAll(int type)
 
 void KTorrentCore::update()
 {
-	Globals::instance().getServer().update();
+	AuthenticationMonitor::instance().update();
 
 	QPtrList<kt::TorrentInterface>::iterator i = qman->begin();
 	//Uint32 down_speed = 0;

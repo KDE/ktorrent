@@ -92,7 +92,9 @@ namespace dht
 				const kt::DHTNode & n = tor->getDHTNode(i);
 				curr_task->addDHTNode(n.ip,n.port);
 			}
-			curr_task->setListener(this);
+			connect(curr_task,SIGNAL(dataReady( Task* )),this,SLOT(onDataReady( Task* )));
+			connect(curr_task,SIGNAL(finished( Task* )),this,SLOT(onFinished( Task* )));
+
 			return true;
 		}
 		
@@ -127,13 +129,6 @@ namespace dht
 			if (cnt)
 				peersReady(this);
 		}
-	}
-	
-	void DHTTrackerBackend::onDestroyed(Task* t)
-	{
-		TaskListener::onDestroyed(t);
-		curr_task = 0;
-		timer.start(10 * 60 * 1000,true);
 	}
 	
 	void DHTTrackerBackend::onTimeout()

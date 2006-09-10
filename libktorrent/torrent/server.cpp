@@ -171,10 +171,6 @@ namespace bt
 	{
 	}
 	
-	void Server::update()
-	{
-		AuthenticationMonitor::instance().update();
-	}
 	
 	void Server::enableEncryption(bool allow_unencrypted)
 	{

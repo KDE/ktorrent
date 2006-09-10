@@ -29,7 +29,7 @@ namespace bt
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	
-		Monitors ongoing authentication attempts.
+		Monitors ongoing authentication attempts. This class is a singleton.
 	*/
 	class AuthenticationMonitor
 	{
@@ -43,9 +43,27 @@ namespace bt
 		virtual ~AuthenticationMonitor();
 		
 		
+		/**
+		 * Add a new AuthenticateBase object.
+		 * @param s 
+		 */
 		void add(AuthenticateBase* s);
+		
+		/**
+		 * Remove an AuthenticateBase object
+		 * @param s 
+		 */
 		void remove(AuthenticateBase* s);
+		
+		/**
+		 * Check all AuthenticateBase objects.
+		 */
 		void update();
+		
+		/**
+		 * Clear all AuthenticateBase objects, also delets them
+		 */
+		void clear();
 		
 		static AuthenticationMonitor & instance() {return self;}
 	};

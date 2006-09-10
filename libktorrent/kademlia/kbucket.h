@@ -136,8 +136,10 @@ namespace dht
 	 * The first element is the least recently seen, the last
 	 * the most recently seen.
 	 */
-	class KBucket : public RPCCallListener,public TaskListener
+	class KBucket : public RPCCallListener
 	{
+		Q_OBJECT
+				
 		Uint32 idx;
 		QValueList<KBucketEntry> entries,pending_entries;
 		RPCServer* srv;
@@ -195,11 +197,11 @@ namespace dht
 	private:
 		virtual void onResponse(RPCCall* c,MsgBase* rsp);
 		virtual void onTimeout(RPCCall* c);
-		virtual void onDestroyed(Task* t);
-		virtual void onFinished(Task* t);
-		
 		void pingQuestionable(const KBucketEntry & replacement_entry);
 		bool replaceBadEntry(const KBucketEntry & entry);
+		
+	private slots:
+		void onFinished(Task* t);
 	};
 }
 

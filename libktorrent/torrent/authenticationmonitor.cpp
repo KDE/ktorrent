@@ -36,13 +36,19 @@ namespace bt
 
 	AuthenticationMonitor::~AuthenticationMonitor()
 	{
+		
+	}
+	
+	void AuthenticationMonitor::clear()
+	{
 		std::set<AuthenticateBase*>::iterator itr = auths.begin();
 		while (itr != auths.end())
 		{
 			AuthenticateBase* ab = *itr;
-			delete ab;
+			ab->deleteLater();
 			itr++;
 		}
+		auths.clear();
 	}
 
 

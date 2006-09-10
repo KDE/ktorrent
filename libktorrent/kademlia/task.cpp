@@ -27,30 +27,9 @@ using namespace KNetwork;
 
 namespace dht
 {
-	TaskListener::TaskListener() : task(0)
-	{}
-			
-	TaskListener::~TaskListener()
-	{
-		if (task)
-		{
-			task->setListener(0);
-			task = 0;
-		}
-	}
-	
-	void TaskListener::onDestroyed(Task* t)
-	{
-		if (task == t)
-			task = 0;
-	}
-	
-	void TaskListener::onDataReady(Task*) 
-	{}
 
 	Task::Task(RPCServer* rpc,Node* node) 
-		: node(node),rpc(rpc),outstanding_reqs(0),
-		lst(0),finished(false),queued(queued)
+	: node(node),rpc(rpc),outstanding_reqs(0),task_finished(false),queued(queued)
 	{
 		
 	}
@@ -58,18 +37,6 @@ namespace dht
 
 	Task::~Task()
 	{
-		if (lst)
-		{
-			lst->onDestroyed(this);
-			lst = 0;
-		}
-	}
-	
-	void Task::setListener(TaskListener* tl)
-	{
-		lst = tl;
-		if (lst)
-			lst->task = this;
 	}
 	
 	void Task::start(const KClosestNodesSearch & kns,bool queued)
@@ -133,29 +100,25 @@ namespace dht
 	
 	void Task::done()
 	{
-		finished = true;
-		if (lst)
-			lst->onFinished(this);
+		task_finished = true;
+		finished(this);
 	}
 	
 	void Task::emitDataReady()
 	{
-		if (lst)
-			lst->onDataReady(this);
+		dataReady(this);
 	}
 	
 	void Task::kill()
 	{
-		finished = true;
-		if (lst)
-			lst->onFinished(this);
+		task_finished = true;
+		finished(this);
 	}
 	
 	void Task::addDHTNode(const QString & ip,bt::Uint16 port)
 	{
 		KResolver::resolveAsync(this,SLOT(onResolverResults( KNetwork::KResolverResults )),
 								ip,QString::number(port));
-		
 	}
 	
 	void Task::onResolverResults(KNetwork::KResolverResults res)

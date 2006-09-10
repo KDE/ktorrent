@@ -97,11 +97,6 @@ namespace bt
 		bool findInfoHash(const SHA1Hash & skey,SHA1Hash & info_hash);
 		
 		/**
-		 * Update the Server.
-		 */
-		void update();
-		
-		/**
 		 * Enable encryption. 
 		 * @param allow_unencrypted Allow unencrypted connections (if encryption fails)
 		 */
