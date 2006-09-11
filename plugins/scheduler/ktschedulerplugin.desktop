@@ -9,6 +9,7 @@ Name[et]=Ajastamisplugin
 Name[ja]=スケジューラプラグイン
 Name[nl]=Plannerplugin
 Name[pt_BR]=Plugin de agendamento
+Name[sk]=Scheduler Plugin
 Name[sv]=Insticksprogram för schemaläggning
 Name[zh_TW]=排程器外掛程式
 ServiceTypes=KTorrent/Plugin

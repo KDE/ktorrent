@@ -9,6 +9,7 @@ Name[et]=Kataloogi uurimise plugin
 Name[ja]=スキャンフォルダプラグイン
 Name[nl]=Mapscanplugin
 Name[pt_BR]=Plugins de Busca
+Name[sk]=ScanFolder Plugin
 Name[sv]=Insticksprogram för katalogsökning
 Name[zh_TW]=掃描資料夾外掛程式
 ServiceTypes=KTorrent/Plugin
