@@ -454,7 +454,7 @@ namespace bt
 		{
 			const PeerDownloader* pd = *i;
 			// if there is one which isn't choked 
-			if (!pd->isChoked())
+			if (!pd->isChoked() || pd->inAllowedFastChunks(chunk->getIndex()))
 				return false;
 			i++;
 		}

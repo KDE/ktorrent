@@ -235,7 +235,7 @@ namespace bt
 		allowed_fast.insert(chunk);
 	}
 	
-	bool PeerDownloader::inAllowedFastChunks(Uint32 chunk)
+	bool PeerDownloader::inAllowedFastChunks(Uint32 chunk)  const
 	{
 		return allowed_fast.count(chunk) > 0;
 	}

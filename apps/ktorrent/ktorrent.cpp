@@ -98,10 +98,9 @@ KTorrent::KTorrent()
 	: KMdiMainFrm( 0, "KTorrent",KMdi::IDEAlMode ),m_group_view(0),
 		m_view(0), m_systray_icon(0)
 {
-	hide();
-	setAutoSaveSettings();
+	setHidden(true);
 	setToolviewStyle(KMdi::TextAndIcon);
-
+	
 	KIconLoader* iload = KGlobal::iconLoader();
 	
 	m_view = new KTorrentView(0);
@@ -109,7 +108,6 @@ KTorrent::KTorrent()
 	addTabPage(m_view_exp,iload->loadIconSet("folder", KIcon::Small),i18n("Torrents"));
 	
 	m_group_view = new kt::GroupView(m_view,actionCollection());
-	addToolWidget(m_group_view,"player_playlist",i18n("Groups"),DOCK_LEFT);
 	m_group_view->loadGroups();
 
 	m_pref = new KTorrentPreferences(*this);
@@ -124,12 +122,6 @@ KTorrent::KTorrent()
 	
 	connect(m_core, SIGNAL(finished( kt::TorrentInterface* )), 
 			m_view, SLOT(torrentFinished( kt::TorrentInterface* )));
-	
-	/*
-	connect(m_view, SIGNAL(viewChange( kt::TorrentInterface* )), m_seedView, SLOT(addTorrent( kt::TorrentInterface* )));
-	connect(m_seedView, SIGNAL(viewChange( kt::TorrentInterface* )), m_view, SLOT(addTorrent( kt::TorrentInterface* )));
-	connect(m_seedView, SIGNAL(viewChange( kt::TorrentInterface* )), m_systray_icon, SLOT(viewChanged( kt::TorrentInterface* )));
-	*/
 
 	connect(m_core,SIGNAL(torrentAdded(kt::TorrentInterface* )),
 			m_view,SLOT(addTorrent(kt::TorrentInterface* )));
@@ -163,16 +155,6 @@ KTorrent::KTorrent()
 			m_group_view, SLOT(onTorrentRemoved( kt::TorrentInterface* )));
 	
 
-	// then, setup our actions
-	setupActions();
-
-	currentTorrentChanged(0);
-
-	m_dcop = new KTorrentDCOP(this);
-
-	m_core->loadTorrents();
-	setStandardToolBarMenuEnabled(true);
-
 	m_statusInfo = new KSqueezedTextLabel(this);
 	m_statusSpeed = new QLabel(this);
 	m_statusTransfer = new QLabel(this);
@@ -184,6 +166,15 @@ KTorrent::KTorrent()
 	statusBar()->addWidget(m_statusDHT);
 	statusBar()->addWidget(m_statusSpeed);
 	statusBar()->addWidget(m_statusTransfer);
+
+	
+	setupActions();
+	currentTorrentChanged(0);
+	
+	m_dcop = new KTorrentDCOP(this);
+
+	m_core->loadTorrents();
+	setStandardToolBarMenuEnabled(true);
 
 	QToolTip::add(m_statusInfo, i18n("Info"));
 	QToolTip::add(m_statusTransfer, i18n("Data transferred during the current session"));
@@ -219,12 +210,26 @@ KTorrent::KTorrent()
 	tabWidget()->setCornerWidget(m_close_cur_tab,Qt::TopRight);
 	connect(tabWidget(),SIGNAL(currentChanged(QWidget*)),this,SLOT(currentTabChanged( QWidget* )));
 	statusBar()->show();
-
 	
+	addToolWidget(m_group_view,"player_playlist",i18n("Groups"),DOCK_LEFT);
+	
+	setAutoSaveSettings("WindowStatus",true);
+	KGlobal::config()->setGroup("WindowStatus");
 	bool hidden_on_exit = KGlobal::config()->readBoolEntry("hidden_on_exit",false);
-	if (!(Settings::showSystemTrayIcon() && hidden_on_exit))
+	if (Settings::showSystemTrayIcon())
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "Showing KT" << endl;
+		if (hidden_on_exit)
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "Starting minimized" << endl;
+			hide();
+		}
+		else
+		{
+			show();
+		}
+	}
+	else
+	{
 		show();
 	}
 }
@@ -499,6 +504,7 @@ bool KTorrent::queryExit()
 	if (Globals::instance().getDHT().isRunning())
 		Globals::instance().getDHT().stop();
 	
+	KGlobal::config()->setGroup("WindowStatus");
 	KGlobal::config()->writeEntry( "hidden_on_exit",this->isHidden());
 	m_view->saveSettings();
 	return true;

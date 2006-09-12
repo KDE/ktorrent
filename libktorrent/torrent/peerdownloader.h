@@ -165,7 +165,7 @@ namespace bt
 		 * @param chunk The chunk
 		 * @return true if the chunk is allowed_fast
 		 */
-		bool inAllowedFastChunks(Uint32 chunk);
+		bool inAllowedFastChunks(Uint32 chunk) const;
 		
 		/// Get the number of allowed fast chunks
 		Uint32 getNumAllowedFastChunks() const {return allowed_fast.size();}
