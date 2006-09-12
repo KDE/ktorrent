@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=RssFeedPlugin
+Name[el]=Πρόσθετο ροών Rss
 Name[ja]=RSSフィードプラグイン
 ServiceTypes=KTorrent/Plugin
 Type=Service
