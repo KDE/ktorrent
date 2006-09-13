@@ -47,7 +47,7 @@ namespace bt
 		active_job = active_scrape_job = 0;
 		
 		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
-		interval = 5 * 60 * 1000; // default interval 5 minutes
+		interval = 5 * 60; // default interval 5 minutes
 		failures = 0;
 		seeders = leechers = 0;
 	}
@@ -293,7 +293,7 @@ namespace bt
 		if (vn)
 			interval = vn->data().toInt();
 		else
-			interval = 5 * 60 * 1000;
+			interval = 5 * 60;
 			
 		vn = dict->getValue("incomplete");
 		if (vn)
@@ -336,9 +336,8 @@ namespace bt
 				
 				BValueNode* ip_node = dict->getValue("ip");
 				BValueNode* port_node = dict->getValue("port");
-				BValueNode* id_node = dict->getValue("peer id");
 
-				if (!ip_node || !port_node || !id_node)
+				if (!ip_node || !port_node)
 					continue;
 				
 				addPeer(ip_node->data().toString(),port_node->data().toInt());
