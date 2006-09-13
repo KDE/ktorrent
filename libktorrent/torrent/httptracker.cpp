@@ -140,13 +140,14 @@ namespace bt
 				BValueNode* port_node = dict->getValue("port");
 				BValueNode* id_node = dict->getValue("peer id");
 
-				if (!ip_node || !port_node || !id_node)
+				if (!ip_node || !port_node)
 					continue;
 				
 				PotentialPeer pp;
 				pp.ip = ip_node->data().toString();
 				pp.port = port_node->data().toInt();
-				pp.id = PeerID(id_node->data().toByteArray().data());
+				if (id_node)
+					pp.id = PeerID(id_node->data().toByteArray().data());
 				pman->addPotentialPeer(pp);
 			}
 		}

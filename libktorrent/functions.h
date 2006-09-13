@@ -25,7 +25,11 @@
 
 namespace kt
 {
-
+	/**
+	 * Will return the data directory
+	 * @return ~/.kde/share/apps/ktorrent/
+	 */
+	QString DataDir();
 }
 
 #endif
