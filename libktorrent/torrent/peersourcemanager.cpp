@@ -427,7 +427,7 @@ namespace bt
 	
 	Uint32 PeerSourceManager::getTimeToNextUpdate() const
 	{
-		if (pending || !started)
+		if (pending || !started || !curr)
 			return 0;
 		
 		return curr->getInterval() - request_time.secsTo(QDateTime::currentDateTime());
