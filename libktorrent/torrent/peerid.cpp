@@ -127,6 +127,7 @@ namespace bt
 			Map["KT"] = "KTorrent"; // lets not forget our own client
 			Map["lt"] = "libTorrent";
 			Map["LT"] = "libtorrent";
+			Map["LP"] = "Lphant";
 			Map["ML"] = "MLDonkey";
 			Map["MP"] = "MooPolice";
 			Map["MT"] = "MoonLight";
@@ -175,10 +176,13 @@ namespace bt
 				name = Map[ID] + " " + peer_id.at(1) + "." +
 						peer_id.at(2) + "." + peer_id.at(3);
 		}
-		else if (peer_id.at(0) == 'M' && peer_id.at(2) == '-' && peer_id.at(4) == '-' )
+		else if (peer_id.at(0) == 'M' && peer_id.at(2) == '-' && (peer_id.at(4) == '-' || peer_id.at(5) == '-'))
 		{
-			name = Map["M"] + " " + peer_id.at(1) + "." +
-					peer_id.at(3) + "." + peer_id.at(5);
+			name = Map["M"] + " " + peer_id.at(1) + "." + peer_id.at(3);
+			if(peer_id.at(4) == '-')
+				name += "." + peer_id.at(5);
+			else
+				name += peer_id.at(4) + "." + peer_id.at(6);
 		}
 		else if (peer_id.startsWith("OP"))
 		{
