@@ -31,10 +31,9 @@ namespace kt
 	{
 	}
 	
-	void TrackersList::merge(TrackersList* al)
+	void TrackersList::merge(const KURL::List & urls)
 	{
-		KURL::List urls = al->getTrackerURLs();
-		KURL::List::iterator i = urls.begin();
+		KURL::List::const_iterator i = urls.begin();
 		while (i != urls.end())
 		{
 			addTracker(*i,true);

@@ -62,6 +62,7 @@ namespace bt
 	public:
 		PeerSourceManager(TorrentControl* tor,PeerManager* pman);
 		virtual ~PeerSourceManager();
+	
 				
 		/**
 		 * Add a PeerSource, the difference between PeerSource and Tracker

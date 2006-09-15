@@ -95,9 +95,9 @@ namespace bt
 			/**
 			 * Merge announce lists to a torrent
 			 * @param ih The info_hash of the torrent to merge to
-			 * @param al The TrackersList
+			 * @param urls List of urls
 			 */
-			void mergeAnnounceList(const SHA1Hash & ih,kt::TrackersList* al);
+			void mergeAnnounceList(const SHA1Hash & ih,const KURL::List & urls);
 			
 			void setMaxDownloads(int m);
 			void setMaxSeeds(int m);

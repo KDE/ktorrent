@@ -72,7 +72,7 @@ namespace kt
 			 * Merge an other tracker list.
 			 * @param al The TrackersList
 			 */
-			void merge(TrackersList* al);
+			void merge(const KURL::List & ul);
 
 	};
 

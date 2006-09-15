@@ -483,7 +483,7 @@ namespace bt
 		{
 			if (!stats.priv_torrent)
 			{
-				qman->mergeAnnounceList(tor->getInfoHash(),psman);
+				qman->mergeAnnounceList(tor->getInfoHash(),tor->getTrackerList());
 
 				throw Error(i18n("You are already downloading this torrent %1, the list of trackers of both torrents has been merged.").arg(tor->getNameSuggestion()));
 			}
