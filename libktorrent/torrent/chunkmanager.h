@@ -190,6 +190,13 @@ namespace bt
 		 * @return The number of chunks to download
 		 */
 		Uint32 chunksLeft() const;
+		
+		/**
+		 * Check if we have all chunks, this is not the same as
+		 * chunksLeft() == 0, it does not look at excluded chunks.
+		 * @return true if all chunks have been downloaded
+		 */
+		bool haveAllChunks() const;
 
 		/**
 		 * Get the number of chunks which have been excluded.

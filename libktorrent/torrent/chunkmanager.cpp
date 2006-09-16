@@ -410,6 +410,18 @@ namespace bt
 		recalc_chunks_left = false;
 		return num;
 	}
+	
+	bool ChunkManager::haveAllChunks() const
+	{
+		Uint32 tot = chunks.size();
+		for (Uint32 i = 0;i < tot;i++)
+		{
+			const Chunk* c = chunks[i];
+			if (!bitset.get(i))
+				return false;
+		}
+		return true;
+	}
 
 	Uint64 ChunkManager::bytesExcluded() const
 	{
