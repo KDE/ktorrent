@@ -2,6 +2,7 @@
 Name=RssFeedPlugin
 Name[el]=Πρόσθετο ροών Rss
 Name[ja]=RSSフィードプラグイン
+Name[sk]=RssFeed Plugin
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktrssfeedplugin
