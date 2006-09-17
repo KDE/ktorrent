@@ -51,11 +51,11 @@ namespace net
 			QPair<Uint32,Uint32> & p = *i;
 			if (now - p.second > SPEED_INTERVAL)
 			{
-				i = dlrate.erase(i);
 				if (bytes >= p.first) // make sure we don't wrap around
 					bytes -= p.first; // subtract bytes
 				else
 					bytes = 0;
+				i = dlrate.erase(i);
 			}
 			else
 			{	
