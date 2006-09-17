@@ -159,6 +159,9 @@ namespace bt
 		void onTimeout(const Request & r);
 		void onRejected(const Request & r);
 		
+	private:
+		void notDownloaded(const Request & r,bool reject);
+		
 	private:		
 		BitSet pieces;
 		QValueList<Uint32> piece_queue;

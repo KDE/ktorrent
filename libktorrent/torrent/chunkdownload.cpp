@@ -43,10 +43,12 @@ namespace bt
 	class DownloadStatus
 	{
 		std::set<Uint32> requested_pieces;
+		Uint32 rejected_count;
 	public:
 		typedef std::set<Uint32>::iterator iterator;
 		DownloadStatus()
 		{
+			rejected_count = 0;
 		}
 
 		~DownloadStatus()
@@ -77,6 +79,10 @@ namespace bt
 		
 		iterator begin() {return requested_pieces.begin();}
 		iterator end() {return requested_pieces.end();}
+		
+		Uint32 getNumRejections() const {return rejected_count;}
+		
+		void newRejection() {rejected_count++;}
 	};
 	
 	ChunkDownload::ChunkDownload(Chunk* chunk) : chunk(chunk)
@@ -185,17 +191,43 @@ namespace bt
 		return true;
 	}
 	
-	void ChunkDownload::onRejected(const Request & r)
+	void ChunkDownload::notDownloaded(const Request & r,bool reject)
 	{
+		// find the peer 
 		DownloadStatus* ds = dstatus.find(r.getPeer());
-		if (!ds)
-			return;
-		
-		Uint32 pp = r.getOffset() / MAX_PIECE_LEN;
-		ds->remove(pp);
-		pieces.set(pp,false);
+		if (ds)
+		{
+			//	Out() << "ds != 0"  << endl;
+			Uint32 p  = r.getOffset() / MAX_PIECE_LEN;
+			ds->remove(p);
+			if (reject)
+				ds->newRejection();
+		}
+			
+			// go over all PD's and do requets again
 		for (QPtrList<PeerDownloader>::iterator i = pdown.begin();i != pdown.end();++i)
 			sendRequests(*i);
+	}
+	
+	void ChunkDownload::onRejected(const Request & r)
+	{
+		if (chunk->getIndex() == r.getIndex())
+		{
+			Out(SYS_CON|LOG_DEBUG) << QString("Request rejected %1 %2 %3 %4").arg(r.getIndex()).arg(r.getOffset()).arg(r.getLength()).arg(r.getPeer()) << endl;
+		
+			notDownloaded(r,true);
+		}
+	}
+	
+	void ChunkDownload::onTimeout(const Request & r)
+	{
+		// see if we are dealing with a piece of ours
+		if (chunk->getIndex() == r.getIndex())
+		{
+			Out(SYS_CON|LOG_DEBUG) << QString("Request timed out %1 %2 %3 %4").arg(r.getIndex()).arg(r.getOffset()).arg(r.getLength()).arg(r.getPeer()) << endl;
+		
+			notDownloaded(r,false);
+		}
 	}
 	
 	void ChunkDownload::sendRequests(PeerDownloader* pd)
@@ -238,27 +270,7 @@ namespace bt
 			pd->setNearlyDone(true);
 	}
 	
-	void ChunkDownload::onTimeout(const Request & r)
-	{
-		// see if we are dealing with a piece of ours
-		if (chunk->getIndex() == r.getIndex())
-		{
-	//		Out(SYS_CON|LOG_DEBUG) << QString("ChunkDownload::onTimeout %1 %2 %3 %4").arg(r.getIndex()).arg(r.getOffset()).arg(r.getLength()).arg(r.getPeer()) << endl;
-		
-			// find the peer 
-			DownloadStatus* ds = dstatus.find(r.getPeer());
-			if (ds)
-			{
-			//	Out() << "ds != 0"  << endl;
-				Uint32 p  = r.getOffset() / MAX_PIECE_LEN;
-				ds->remove(p);
-			}
-			
-			// go over all PD's and do requets again
-			for (QPtrList<PeerDownloader>::iterator i = pdown.begin();i != pdown.end();++i)
-				sendRequests(*i);
-		}
-	}
+	
 	
 	void ChunkDownload::update()
 	{
