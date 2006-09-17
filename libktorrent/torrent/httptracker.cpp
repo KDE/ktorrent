@@ -414,7 +414,7 @@ namespace bt
 			requestFailed(i18n("Tracker request timed out"));
 			
 			// try again 
-			if (event != "stopped")
+			if (event != "stopped" && started)
 			{
 				failures++;
 				timer.stop();
@@ -425,18 +425,23 @@ namespace bt
 			}
 			else
 			{
+				timer.stop();
 				stopDone();
 			}
 		}
 		else
 		{
-			if (event != "stopped")
+			if (event != "stopped" && started)
 			{
 				// do a new request
 				doRequest();
 				timer.stop();
 				// timeout in 30 seconds
 				timer.start(30000);
+			}
+			else
+			{
+				timer.stop();
 			}
 		}
 	}

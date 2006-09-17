@@ -122,6 +122,7 @@ namespace bt
 		if (curr)
 			curr->stop();
 		
+		timer.stop();
 		statusChanged(i18n("Stopped"));
 	}
 		
@@ -335,14 +336,14 @@ namespace bt
 				// we failed to contact the only tracker 3 times in a row, so try again in 
 				// a minute or 5, no need for hammering every 30 seconds
 				curr->setInterval(5 * 60);
-				timer.start(5 * 60 * 1000);
+				timer.start(5 * 60 * 1000,true);
 				request_time = QDateTime::currentDateTime();
 			}
 			else
 			{
 				// lets not hammer and wait 30 seconds
 				curr->setInterval(30);
-				timer.start(30 * 1000);
+				timer.start(30 * 1000,true);
 				request_time = QDateTime::currentDateTime();
 			}
 		}
@@ -361,14 +362,14 @@ namespace bt
 				// we tried everybody 3 times and it didn't work
 				// wait 5 minutes and try again
 				curr->setInterval(5 * 60);
-				timer.start(5 * 60 * 1000);
+				timer.start(5 * 60 * 1000,true);
 				request_time = QDateTime::currentDateTime();
 			}
 			else
 			{
 				// wait 30 seconds and try again
 				curr->setInterval(30);
-				timer.start(30 * 1000);
+				timer.start(30 * 1000,true);
 				request_time = QDateTime::currentDateTime();
 			}
 		}
