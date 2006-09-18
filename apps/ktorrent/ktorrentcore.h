@@ -226,7 +226,7 @@ public slots:
 	 * @param dir Directory to save the data
 	 * @param silently Wether or not to do this silently
 	 */
-	bool load(const QByteArray & data,const QString & dir,bool silently);
+	bool load(const QByteArray & data,const QString & dir,bool silently, const KURL& url);
 	
 	/**
 	 * Remove a download.This will delete all temp
@@ -309,7 +309,7 @@ signals:
 private:
 	void rollback(const QPtrList<kt::TorrentInterface> & success);
 	void connectSignals(kt::TorrentInterface* tc);
-	void init(bt::TorrentControl* tc,bool silently);
+	bool init(bt::TorrentControl* tc,bool silently);
 	
 private slots:
 	void torrentFinished(kt::TorrentInterface* tc);

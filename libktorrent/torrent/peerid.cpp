@@ -137,6 +137,7 @@ namespace bt
 			Map["SS"] = "SwarmScope";
 			Map["SZ"] = "Shareaza";
 			Map["TN"] = "Torrent .NET";
+			Map["TR"] = "Transmission";
 			Map["TS"] = "Torrent Storm";
 			Map["UT"] = QString("%1Torrent").arg(QChar(0x00B5)); // µTorrent, 0x00B5 is unicode for µ
 			Map["XT"] = "Xan Torrent";
@@ -153,7 +154,7 @@ namespace bt
 			Map["BOW"] = "Bits on Wheels";
 			Map["M"] = "BitTorrent";
 			Map["exbc"] = "BitComet";
-			Map["Mbrst"] = "burst!";
+			Map["Mbrst"] = "Burst!";
 			first = false;
 		}
 
@@ -199,6 +200,10 @@ namespace bt
 		else if ( peer_id.startsWith("Plus"))
 		{
 			name = Map["Plus"];
+		}
+		else if ( peer_id.startsWith("Mbrst"))
+		{
+			name = Map["Mbrst"] + " " + peer_id.at(5) + "." + peer_id.at(7);
 		}
 			
 		return name;

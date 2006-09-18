@@ -121,6 +121,9 @@ namespace kt
 		//remove this entry
 		m_pendingURLs.erase(it);
 		
+		if(canceled)
+			return;
+		
 		QString name = url.filename(false);
 		QString dirname = m_dir->url().path();
 		QString filename = dirname + "/" + name;

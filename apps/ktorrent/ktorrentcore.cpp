@@ -125,7 +125,7 @@ void KTorrentCore::loadPlugins()
 	pman->loadPluginList();
 }
 
-void KTorrentCore::init(TorrentControl* tc,bool silently)
+bool KTorrentCore::init(TorrentControl* tc,bool silently)
 {
 	connectSignals(tc);
 	qman->append(tc);
@@ -139,7 +139,7 @@ void KTorrentCore::init(TorrentControl* tc,bool silently)
 				remove(tc,true);
 			else
 				remove(tc,false);
-			return;
+			return false;
 		}
 	}
 		
@@ -154,10 +154,12 @@ void KTorrentCore::init(TorrentControl* tc,bool silently)
 	tc->setPreallocateDiskSpace(true);
 	
 	torrentAdded(tc);
-	qman->torrentAdded(tc);	
+	qman->torrentAdded(tc);
+		
+	return true;
 }
 
-bool KTorrentCore::load(const QByteArray & data,const QString & dir,bool silently)
+bool KTorrentCore::load(const QByteArray & data,const QString & dir,bool silently, const KURL& url)
 {
 	QString tdir = findNewTorrentDir();
 	TorrentControl* tc = 0;
@@ -168,7 +170,11 @@ bool KTorrentCore::load(const QByteArray & data,const QString & dir,bool silentl
 		tc->init(qman, data, tdir, dir, 
 				 Settings::useSaveDir() ? Settings::saveDir() : QString());
 		
-		init(tc,silently);
+		if(!init(tc,silently))
+			loadingFinished(url, false, true);
+		else
+			loadingFinished(url, true, false);
+		
 		return true;
 	}
 	catch (bt::Error & err)
@@ -179,6 +185,8 @@ bool KTorrentCore::load(const QByteArray & data,const QString & dir,bool silentl
 		// delete tdir if necesarry
 		if (bt::Exists(tdir))
 			bt::Delete(tdir,true);
+		
+		loadingFinished(url, false, false);
 		
 		return false;
 	}
@@ -234,16 +242,9 @@ void KTorrentCore::downloadFinished(KIO::Job *job)
 				i18n("Select Folder to Save To"));
 	
 		if (dir != QString::null)
-		{
-			if (load(j->data(),dir,false))
-				loadingFinished(j->url(),true,false);
-			else
-				loadingFinished(j->url(),false,false);
-		}
+			load(j->data(),dir,false, j->url());
 		else
-		{
 			loadingFinished(j->url(),false,true);
-		}
 	}
 }
 
