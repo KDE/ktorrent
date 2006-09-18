@@ -255,6 +255,7 @@ namespace bt
 		
 		if (i == data.size())
 		{
+			failures++;
 			requestFailed(i18n("Invalid response from tracker"));
 			return false;
 		}
@@ -267,12 +268,14 @@ namespace bt
 		}
 		catch (...)
 		{
+			failures++;
 			requestFailed(i18n("Invalid data from tracker"));
 			return false;
 		}
 			
 		if (!n || n->getType() != BNode::DICT)
 		{
+			failures++;
 			requestFailed(i18n("Invalid response from tracker"));
 			return false;
 		}
@@ -283,6 +286,7 @@ namespace bt
 			BValueNode* vn = dict->getValue("failure reason");
 			QString msg = vn->data().toString();
 			delete n;
+			failures++;
 			requestFailed(msg);
 			return false;
 		}
@@ -311,6 +315,7 @@ namespace bt
 			if (!vn)
 			{
 				delete n;
+				failures++;
 				requestFailed(i18n("Invalid response from tracker"));
 				return false;
 			}
@@ -394,6 +399,7 @@ namespace bt
 				}
 				catch (bt::Error & err)
 				{
+					failures++;
 					requestFailed(i18n("Invalid response from tracker"));
 				}
 			}
@@ -411,6 +417,7 @@ namespace bt
 			// current job timed out kill it
 			active_job->kill();
 			active_job = 0;
+			failures++;
 			requestFailed(i18n("Tracker request timed out"));
 			
 			// try again 
