@@ -42,7 +42,7 @@ namespace bt
 		virtual void doChokingSeedingState(PeerManager & pman,ChunkManager & cman,const kt::TorrentStats & stats);
 		
 	private:
-		void calcACAScore(Peer* p,ChunkManager & cman,const kt::TorrentStats & stats);
+		bool calcACAScore(Peer* p,ChunkManager & cman,const kt::TorrentStats & stats);
 		Peer* updateOptimisticPeer(PeerManager & pman);
 		void doUnchoking(PeerPtrList & ppl,Peer* poup);
 	};

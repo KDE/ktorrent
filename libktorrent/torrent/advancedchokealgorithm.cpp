@@ -47,7 +47,7 @@ namespace bt
 	AdvancedChokeAlgorithm::~AdvancedChokeAlgorithm()
 	{}
 	
-	void AdvancedChokeAlgorithm::calcACAScore(Peer* p,ChunkManager & cman,const kt::TorrentStats & stats)
+	bool AdvancedChokeAlgorithm::calcACAScore(Peer* p,ChunkManager & cman,const kt::TorrentStats & stats)
 	{
 		const PeerInterface::Stats & s = p->getStats();
 		if (p->isSeeder())
@@ -62,7 +62,7 @@ namespace bt
 			p->setACAScore(5*bd + 5*ds);
 			*/
 			p->setACAScore(0.0);
-			return;
+			return false;
 		}
 		
 		bool should_be_interested = false;
@@ -78,8 +78,8 @@ namespace bt
 		if (!should_be_interested || !p->isInterested())
 		{
 			// not interseted so it doesn't make sense to unchoke it
-			p->setACAScore(-5);
-			return;
+			p->setACAScore(-50.0);
+			return false;
 		}
 		
 		
@@ -113,10 +113,8 @@ namespace bt
 		double L = 5.0;
 		double aca = nb + (tbd > 0 ? K * (bd/tbd) : 0.0) + (tds > 0 ? L* (ds / tds) : 0.0) - cp - sp;
 		
-		
-		
-		
 		p->setACAScore(aca);
+		return true;
 	}
 	
 	static int ACACmp(Peer* a,Peer* b)
@@ -140,11 +138,11 @@ namespace bt
 			Peer* p = pman.getPeer(i);
 			if (p)
 			{
-				calcACAScore(p,cman,stats); // update the ACA score in the process
+				
 			/*	if (p->getStats().evil)
 					p->getPacketWriter().sendEvilUnchoke(); // be very wicked with snubbers
 				else */
-				if (!p->isSeeder())
+				if (calcACAScore(p,cman,stats))
 					ppl.append(p);
 				else
 					// choke seeders they do not want to download from us anyway
