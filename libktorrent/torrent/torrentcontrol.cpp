@@ -696,7 +696,7 @@ namespace bt
 
 	void TorrentControl::doChoking()
 	{
-		choke->update(cman->bytesLeft() == 0,stats);
+		choke->update(stats.completed,stats);
 	}
 
 	bool TorrentControl::changeDataDir(const QString & new_dir)
