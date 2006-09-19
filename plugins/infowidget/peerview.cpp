@@ -181,6 +181,9 @@ namespace kt
 #ifdef SHOW_REQUESTS
 		addColumn(i18n("Requests"));
 #endif
+		for (Uint32 i = 0;i < (Uint32)columns();i++)
+			setColumnWidthMode(i,QListView::Manual);
+			
 		setShowSortIndicator(true);
 		
 		menu = new KPopupMenu(this);
