@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by                                                 *
+ *   Copyright (C) 2005,2006 by                                            *
  *   Joris Guisson <joris.guisson@gmail.com>                               *
  *   Ivan Vasic <ivasic@gmail.com>                                         *
  *                                                                         *
@@ -23,21 +23,23 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 #include <krun.h>
+#include <kurl.h>
 #include <kurldrag.h>
 #include <kmessagebox.h>
+#include <kmessagebox.h>
+
 #include <interfaces/torrentinterface.h>
 #include <torrent/globals.h>
 #include <util/log.h>
-#include <kmessagebox.h>
+
 #include <groups/group.h>
 #include <groups/torrentdrag.h>
+
 #include "ktorrentview.h"
 #include "ktorrentviewitem.h"
 #include "settings.h"
 #include "scandialog.h"
 #include "addpeerwidget.h"
-
-
 
 using namespace bt;
 using namespace kt;
@@ -160,6 +162,12 @@ void KTorrentView::makeMenu()
 	preview_id = menu->insertItem(
 			iload->loadIconSet("frame_image",KIcon::Small),i18n("Preview"), 
 			this, SLOT(previewFiles()));
+	
+	menu->insertSeparator();
+	dirs_sub_menu = new KPopupMenu(menu);
+	dirs_id = menu->insertItem(i18n("Open directory..."), dirs_sub_menu);
+	outputdir_id = dirs_sub_menu->insertItem(iload->loadIconSet("folder",KIcon::Small), i18n("Data directory"), this, SLOT(openOutputDirectory()));
+	torxdir_id = dirs_sub_menu->insertItem(iload->loadIconSet("folder",KIcon::Small), i18n("Temporary directory"), this, SLOT(openTorXDirectory()));
 	
 	menu->insertSeparator();
 	remove_from_group_id =  menu->insertItem(i18n("Remove From Group"),this, SLOT(removeFromGroup()));
@@ -404,6 +412,7 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 	bool en_prev = false;
 	bool en_announce = true;
 	bool en_add_peer = true;
+	bool en_dirs = false;
 	
 	QPtrList<QListViewItem> sel = selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
@@ -448,6 +457,9 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 	
 	if (sel.count() == 1)
 	{
+		//enable directories
+		en_dirs = true;
+		
 		KTorrentViewItem* kvi = (KTorrentViewItem*)sel.getFirst();
 		TorrentInterface* tc = kvi->getTC();
 		// no data check when we are preallocating diskspace
@@ -458,6 +470,10 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 	{
 		menu->setItemEnabled(scan_id,false);
 	}
+	
+	dirs_sub_menu->setItemEnabled(outputdir_id, en_dirs);
+	dirs_sub_menu->setItemEnabled(torxdir_id, en_dirs);
+	
 	menu->popup(p);
 }
 
@@ -682,6 +698,37 @@ void KTorrentView::showAddPeersWidget()
 		{
 			AddPeerWidget dlg(tc, this);
 			dlg.exec();
+		}
+	}
+}
+
+void KTorrentView::openOutputDirectory()
+{
+	QPtrList<QListViewItem> sel = selectedItems();
+	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
+	{
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
+		TorrentInterface* tc = kvi->getTC();
+		if (tc)
+		{
+			if(tc->getStats().multi_file_torrent)
+				new KRun(KURL::fromPathOrURL(tc->getDataDir() + tc->getStats().torrent_name), 0, true, true);
+			else
+				new KRun(KURL::fromPathOrURL(tc->getDataDir()), 0, true, true);
+		}
+	}
+}
+
+void KTorrentView::openTorXDirectory()
+{
+	QPtrList<QListViewItem> sel = selectedItems();
+	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
+	{
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
+		TorrentInterface* tc = kvi->getTC();
+		if (tc)
+		{
+			new KRun(KURL::fromPathOrURL(tc->getTorDir()), 0, true, true);
 		}
 	}
 }

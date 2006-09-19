@@ -108,6 +108,8 @@ public slots:
 	void checkDataIntegrity();
 	void removeFromGroup();
 	void showAddPeersWidget();
+	void openOutputDirectory();
+	void openTorXDirectory();
 
 private slots:
 	void onExecuted(QListViewItem* item);
@@ -137,6 +139,7 @@ private:
 	QMap<kt::TorrentInterface*,KTorrentViewItem*> items;
 	KPopupMenu* menu;
 	KPopupMenu* groups_sub_menu;
+	KPopupMenu* dirs_sub_menu;
 	int stop_id;
 	int start_id;
 	int remove_id;
@@ -147,6 +150,9 @@ private:
 	int remove_from_group_id;
 	int add_to_group_id;
 	int add_peer_id;
+	int dirs_id;
+	int outputdir_id;
+	int torxdir_id;
 	kt::Group* current_group;
 };
 
