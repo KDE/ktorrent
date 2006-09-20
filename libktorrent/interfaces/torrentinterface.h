@@ -64,8 +64,10 @@ namespace kt
 		Uint64 bytes_downloaded;
 		/// Total number of bytes uploaded.
 		Uint64 bytes_uploaded;
-		/// The number of bytes left to download
+		/// The number of bytes left (gets sent to the tracker)
 		Uint64 bytes_left;
+		/// The number of bytes left to download (bytes_left - excluded bytes)
+		Uint64 bytes_left_to_download;
 		/// total number of bytes in torrent
 		Uint64 total_bytes;
 		/// The total number of bytes which need to be downloaded

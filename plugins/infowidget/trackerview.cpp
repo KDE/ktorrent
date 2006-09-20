@@ -167,7 +167,11 @@ namespace kt
 		btnUpdate->setEnabled(tc->announceAllowed());
 
 		lblStatus->setText("<b>" + s.trackerstatus + "</b>");
-		lblCurrent->setText("<b>" + tc->getTrackersList()->getTrackerURL().prettyURL() + "</b>");
+		if (tc->getTrackersList())
+			lblCurrent->setText("<b>" + tc->getTrackersList()->getTrackerURL().prettyURL() + "</b>");
+		else
+			lblCurrent->clear();
+		
 		btnAdd->setEnabled(txtTracker->text() != QString::null && !tc->getStats().priv_torrent);
 	}
 	

@@ -317,7 +317,7 @@ void KTorrentView::removeDownloads()
 		{	
 			const TorrentStats & s = tc->getStats();
 			bool data_to = false;
-			if (s.bytes_left > 0)
+			if (s.bytes_left_to_download > 0)
 			{
 				QString msg = i18n("The torrent %1 has not finished downloading, "
 						"do you want to delete the incomplete data, too?").arg(s.torrent_name);
