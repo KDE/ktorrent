@@ -161,6 +161,7 @@ namespace kt
 		{
 			QRegExp hrefTags = QString("<A.*HREF.*</A");
 			hrefTags.setCaseSensitive(false);
+			hrefTags.setMinimal(true);
 			
 			int matchPos = 0;
 			while (htmlline.find(hrefTags, matchPos) >= 0)
@@ -183,6 +184,7 @@ namespace kt
 				hrefTags.capturedTexts()[0].find(hrefText);
 				//lets get the captured
 				QString hrefLink = hrefText.capturedTexts()[1];
+				
 				if (hrefLink.startsWith("/"))
 				{
 					hrefLink = url.protocol() + "://" + url.host() + hrefLink;
@@ -232,7 +234,7 @@ namespace kt
 		QString filename;
 		if( !KIO::NetAccess::download( link, filename, qApp->mainWidget() ) )
 		{
-			qDebug("couldn't download file: %s", link.ascii());
+			Out() << "couldn't download file: %s" << link.ascii() << endl;
 			return false;
 		}
 		
@@ -259,22 +261,26 @@ namespace kt
 			return true;
 		}
 		
-		//last ditched brute force attempt to check if it's a torrent file
 		QFile fptr(filename);
 		if (!fptr.open(IO_ReadOnly))
 			return false;
 		
 		QByteArray data(fptr.size());
 		fptr.readBlock(data.data(),fptr.size());
-		
+	
 		try
 		{
+			//last ditched brute force attempt to check if it's a torrent file
 			BNode* node = 0;
 			BDecoder decoder(data,false);
 			node = decoder.decode();
 			BDictNode* dict = dynamic_cast<BDictNode*>(node);
+			
 			if (dict)
 			{
+				delete node;
+				node = dict = 0;
+				
 				if (silent)
 				{
 					m_core->loadSilently( link );
@@ -285,6 +291,8 @@ namespace kt
 				}
 				return true;
 			}
+			
+		
 		}
 		catch (...)
 		{
