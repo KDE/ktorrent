@@ -86,6 +86,9 @@ namespace bt
 
 	void PeerSourceManager::start()
 	{
+		if (started)
+			return;
+		
 		started = true;
 		QPtrList<kt::PeerSource>::iterator i = additional.begin();
 		while (i != additional.end())
@@ -111,6 +114,9 @@ namespace bt
 		
 	void PeerSourceManager::stop()
 	{
+		if (!started)
+			return;
+		
 		started = false;
 		QPtrList<kt::PeerSource>::iterator i = additional.begin();
 		while (i != additional.end())

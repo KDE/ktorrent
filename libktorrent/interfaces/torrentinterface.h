@@ -375,6 +375,12 @@ namespace kt
 		 * @param me The torrent which emitted the signal
 		*/
 		void missingFilesMarkedDND(kt::TorrentInterface* me);
+		
+		/**
+		 * A corrupted chunk has been found during upload.
+		 * @param me The torrent which emitted the signal
+		 */
+		void corruptedDataFound(kt::TorrentInterface* me);
 
 	protected:
 		TorrentStats stats;

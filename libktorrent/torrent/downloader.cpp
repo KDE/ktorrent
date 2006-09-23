@@ -627,6 +627,11 @@ namespace bt
 		chunk_selector->reincluded(from,to);
 	}
 	
+	void Downloader::corrupted(Uint32 chunk)
+	{
+		chunk_selector->reinsert(chunk);
+	}
+	
 	Uint32 Downloader::mem_usage = 0;
 	
 	void Downloader::setMemoryUsage(Uint32 m)

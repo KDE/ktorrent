@@ -253,6 +253,7 @@ namespace bt
 		void onPortPacket(const QString & ip,Uint16 port);
 		/// Update the stats of the torrent.
 		void updateStats();
+		void corrupted(Uint32 chunk);
 		
 	private:	
 		void updateTracker(const QString & ev,bool last_succes = true);

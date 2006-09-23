@@ -191,7 +191,10 @@ namespace bt
 				// restart download if necesarry
 				// when user selects that files which were previously excluded,
 				// should now be downloaded
-				psman->start();
+				if (!psman->isStarted())
+					psman->start();
+				else
+					psman->manualUpdate();
 				last_announce = bt::GetCurrentTime();
 				time_started_dl = QDateTime::currentDateTime();
 			}
@@ -577,6 +580,7 @@ namespace bt
 		connect(pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerRemoved(Peer* )));
 		connect(cman,SIGNAL(excluded(Uint32, Uint32 )),down,SLOT(onExcluded(Uint32, Uint32 )));
 		connect(cman,SIGNAL(included( Uint32, Uint32 )),down,SLOT(onIncluded( Uint32, Uint32 )));
+		connect(cman,SIGNAL(corrupted( Uint32 )),this,SLOT(corrupted( Uint32 )));
 	}
 	
 	void TorrentControl::initInternal(QueueManager* qman,
@@ -1282,6 +1286,17 @@ namespace bt
 	{
 		if (psman)
 			psman->removePeerSource(ps);
+	}
+	
+	void TorrentControl::corrupted(Uint32 chunk)
+	{
+		// make sure we will redownload the chunk
+		down->corrupted(chunk);
+		if (stats.completed)
+			stats.completed = false;
+		
+		// emit signal to show a systray message
+		corruptedDataFound(this);
 	}
 }
 

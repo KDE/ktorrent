@@ -904,6 +904,11 @@ void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc,bool & ret)
 	
 }
 
+void KTorrentCore::emitCorruptedData(kt::TorrentInterface* tc)
+{
+	corruptedData(tc);
+}
+
 void KTorrentCore::connectSignals(kt::TorrentInterface* tc)
 {
 	connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
@@ -914,6 +919,8 @@ void KTorrentCore::connectSignals(kt::TorrentInterface* tc)
 			this, SLOT(torrentSeedAutoStopped( kt::TorrentInterface* )));
 	connect(tc,SIGNAL(aboutToBeStarted( kt::TorrentInterface*,bool & )),
 			this, SLOT(aboutToBeStarted( kt::TorrentInterface*,bool & )));
+	connect(tc,SIGNAL(corruptedDataFound( kt::TorrentInterface* )),
+			this, SLOT(emitCorruptedData( kt::TorrentInterface* )));
 }
 
 #include "ktorrentcore.moc"

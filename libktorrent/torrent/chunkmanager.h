@@ -284,6 +284,12 @@ namespace bt
 		 */
 		void updateStats();
 		
+		/**
+		 * A corrupted chunk has been found during uploading.
+		 * @param chunk The chunk
+		 */
+		void corrupted(Uint32 chunk);
+		
 	private:
 		void saveIndexFile();
 		void writeIndexFileEntry(Chunk* c);

@@ -123,6 +123,12 @@ namespace bt
 		 * @return The bytes already downloading
 		 */
 		Uint32 getDownloadedBytesOfCurrentChunksFile(const QString & file);
+		
+		/**
+		 * A corrupted chunk has been detected, make sure we redownload it.
+		 * @param chunk The chunk
+		 */
+		void corrupted(Uint32 chunk);
 	public slots:
 		/**
 		 * Update the downloader.

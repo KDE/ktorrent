@@ -75,7 +75,11 @@ private slots:
 	 */
 	void torrentStoppedByError(kt::TorrentInterface* tc, QString msg);
 	
-	void viewChanged(kt::TorrentInterface* tc);
+	/**
+	 * Corrupted data has been found.
+	 * @param tc The torrent
+	 */
+	void corruptedData(kt::TorrentInterface* tc);
 
 private:
 	KTorrentCore* m_core;

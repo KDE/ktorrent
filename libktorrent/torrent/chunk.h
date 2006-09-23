@@ -25,6 +25,7 @@
 
 namespace bt
 {
+	class SHA1Hash;
 
 	/**
 	 * @author Joris Guisson
@@ -102,6 +103,13 @@ namespace bt
 
 		/// In/Exclude chunk
 		void setExclude(bool yes);
+		
+		/**
+		 * Check wehter the chunk matches it's hash.
+		 * @param h The hash
+		 * @return true if the data matches the hash
+		 */
+		bool checkHash(const SHA1Hash & h) const;
 		
 		virtual void unmapped(bool remap_intended);
 		virtual void remapped(void* ptr);

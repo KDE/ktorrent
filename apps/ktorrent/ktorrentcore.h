@@ -305,6 +305,12 @@ signals:
 	 * @param tc The torrent
 	 */
 	void maxShareRatioReached(kt::TorrentInterface* tc);
+	
+	/**
+	 * Corrupted data has been detected.
+	 * @param tc The torrent with the corrupted data
+	 */
+	void corruptedData(kt::TorrentInterface* tc);
 
 private:
 	void rollback(const QPtrList<kt::TorrentInterface> & success);
@@ -317,6 +323,7 @@ private slots:
 	void torrentSeedAutoStopped(kt::TorrentInterface* tc);
 	void downloadFinished(KIO::Job *job);
 	void downloadFinishedSilently(KIO::Job *job);
+	void emitCorruptedData(kt::TorrentInterface* tc);
 	
 private:
 // 	QPtrList<kt::TorrentInterface> downloads;

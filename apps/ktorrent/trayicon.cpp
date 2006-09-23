@@ -46,7 +46,8 @@ TrayIcon::TrayIcon( KTorrentCore* tc, QWidget *parent, const char *name)
 	        this,SLOT(torrentStoppedByError(kt::TorrentInterface*, QString )));
 	connect(m_core,SIGNAL(maxShareRatioReached( kt::TorrentInterface* )),
 			this,SLOT(maxShareRatioReached( kt::TorrentInterface* )));
-	
+	connect(m_core,SIGNAL(corruptedData( kt::TorrentInterface* )),
+			this,SLOT(corruptedData( kt::TorrentInterface* )));
 }
 
 TrayIcon::~TrayIcon()
@@ -109,11 +110,16 @@ void TrayIcon::torrentStoppedByError(kt::TorrentInterface* tc, QString msg)
 	KPassivePopup::message(i18n("Error"),err_msg,loadIcon("ktorrent"),this);
 }
 
-void TrayIcon::viewChanged(kt::TorrentInterface* tc)
+void TrayIcon::corruptedData(kt::TorrentInterface* tc)
 {
+	if (!Settings::showPopups())
+		return;
+	
 	const TorrentStats & s = tc->getStats();
-	if(Settings::showPopups())
-		KPassivePopup::message(i18n("Torrent moved to download panel"), i18n("<b>%1</b> torrent has been moved to download panel.").arg(s.torrent_name),loadIcon("ktorrent"), this);
+	QString err_msg = i18n("Corrupted data has been found in the torrent <b>%1</b>"
+			"<br>It would be a good idea to do a data integrity check on the torrent.")
+			.arg(s.torrent_name);
+	KPassivePopup::message(i18n("Error"),err_msg,loadIcon("ktorrent"),this);
 }
 
 SetMaxRate::SetMaxRate( KTorrentCore* tc, int t, QWidget *parent, const char *name):KPopupMenu(parent, name)

@@ -72,6 +72,10 @@ namespace bt
 		 */
 		void addPeerSource(kt::PeerSource* ps);
 
+		/**
+		 * See if the PeerSourceManager has been started 
+		 */
+		bool isStarted() const {return started;}
 		
 		/**
 		 * Start gathering peers

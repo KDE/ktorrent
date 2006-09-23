@@ -17,8 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <util/sha1hash.h>
 #include "chunk.h"
 #include "globals.h"
+
 
 namespace bt
 {
@@ -67,5 +69,17 @@ namespace bt
 	void Chunk::remapped(void* ptr)
 	{
 		setData((Uint8*)ptr,Chunk::MMAPPED);
+	}
+	
+	bool Chunk::checkHash(const SHA1Hash & h) const
+	{
+		if (status != BUFFERED && status != MMAPPED)
+		{
+			return false;
+		}
+		else
+		{
+			return SHA1Hash::generate(data,size) == h;
+		}
 	}
 }

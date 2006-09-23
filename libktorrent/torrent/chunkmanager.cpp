@@ -268,6 +268,23 @@ namespace bt
 			// load the chunk if it is on disk
 			cache->load(c);
 			loaded.append(i);
+			if (c->getData())
+			{
+			//	bool test = rand() % 100 < 50;
+				if (!c->checkHash(tor.getHash(i))/* || test*/)
+				{
+					Out(SYS_DIO|LOG_IMPORTANT) << "Chunk " << i 
+							<< " has been found invalid, redownloading" << endl;
+				//	if (test)
+				//		Out(SYS_DIO|LOG_IMPORTANT) << "This is a test just joking" << endl;
+					resetChunk(i);
+					tor.updateFilePercentage(i,bitset);
+					saveIndexFile();
+					recalc_chunks_left = true;
+					corrupted(i);
+					return 0;
+				}
+			}
 		}
 		
 		return c;
