@@ -213,7 +213,7 @@ public slots:
 	/**
 	 * Load a torrent file. Pops up an error dialog
 	 * if something goes wrong.
-	 * @param file The torrent file (allways a local file)
+	 * @param file The torrent file (always a local file)
 	 * @param dir Directory to save the data
 	 * @param silently Wether or not to do this silently
 	 */

@@ -59,7 +59,7 @@ namespace dht
 	/**
 	 * @author Joris Guisson
 	 *
-	 * Entry in a KBucket, it basicly contains an ip_address of a node,
+	 * Entry in a KBucket, it basically contains an ip_address of a node,
 	 * the udp port of the node and a node_id.
 	 */
 	class KBucketEntry

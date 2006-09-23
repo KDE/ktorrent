@@ -50,7 +50,7 @@ namespace kt
 			bt::Uint32 upload_rate;
 			/// Choked or not
 			bool choked;
-			/// Snubbed or not (i.e. we haven't recieved a piece for a minute)
+			/// Snubbed or not (i.e. we haven't received a piece for a minute)
 			bool snubbed;
 			/// Percentage of file which the peer has
 			float perc_of_file;

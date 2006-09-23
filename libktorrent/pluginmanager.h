@@ -52,7 +52,7 @@ namespace kt
 
 		/**
 		 * Load the list of plugins.
-		 * This basicly uses KTrader to get a list of available plugins, and
+		 * This basically uses KTrader to get a list of available plugins, and
 		 * loads those, but does not initialize them. We will consider a plugin loaded
 		 * when it's load method is called.
 		 */

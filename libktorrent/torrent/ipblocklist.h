@@ -55,7 +55,7 @@ namespace bt
 	 * @author Ivan Vasic <ivasic@gmail.com>
 	 * @brief Keeps track of blocked peers
 	 *
-	 * This class is used for keeping the IP adresses list of peers that
+	 * This class is used for keeping the IP addresses list of peers that
 	 * have sent bad chunks.
 	 *
 	 * Peers that have sent >= 3 bad chunks are blocked.

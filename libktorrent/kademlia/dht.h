@@ -76,7 +76,7 @@ namespace dht
 		void timeout(const MsgBase* r);
 		
 		/**
-		 * A Peer has recieved a PORT message, and uses this function to alert the DHT of it.
+		 * A Peer has received a PORT message, and uses this function to alert the DHT of it.
 		 * @param ip The IP of the peer
 		 * @param port The port in the PORT message
 		 */

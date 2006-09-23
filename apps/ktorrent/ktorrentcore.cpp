@@ -462,7 +462,7 @@ bool KTorrentCore::changeDataDir(const QString & new_dir)
 			nd += DirSeparator();
 
 		Out() << "Switching to datadir " << nd << endl;
-		// keep track of all TorrentInterface's which have succesfully
+		// keep track of all TorrentInterface's which have successfully
 		// moved to the new data dir
 		QPtrList<kt::TorrentInterface> succes;
 

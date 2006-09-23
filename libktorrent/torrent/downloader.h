@@ -186,7 +186,7 @@ namespace bt
 		
 	signals:
 		/**
-		 * An error occured while we we're writing or reading from disk.
+		 * An error occurred while we we're writing or reading from disk.
 		 * @param msg Message
 		 */
 		void ioError(const QString & msg);

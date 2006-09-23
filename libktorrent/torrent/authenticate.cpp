@@ -129,7 +129,7 @@ namespace bt
 			return;
 		}
 		
-		// only finish when the handshake was fully recieved
+		// only finish when the handshake was fully received
 		if (full)
 			onFinish(true);
 	}

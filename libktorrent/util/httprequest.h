@@ -34,8 +34,8 @@ namespace bt
 	 * @author Joris Guisson
 	 * 
 	 * Just create one, fill in the fields,
-	 * connect to the right signals and forget about it. After the reply has been recieved or
-	 * an error occured, the appropriate signal will be emitted.
+	 * connect to the right signals and forget about it. After the reply has been received or
+	 * an error occurred, the appropriate signal will be emitted.
 	*/
 	class HTTPRequest : public QObject
 	{
@@ -74,9 +74,9 @@ namespace bt
 		void replyError(bt::HTTPRequest* r,const QString & data);
 		
 		/**
-		 * No reply was sent and an error or timeout occured.
+		 * No reply was sent and an error or timeout occurred.
 		 * @param r The sender of the request
-		 * @param timeout Wether or not a timeout occured
+		 * @param timeout Wether or not a timeout occurred
 		 */
 		void error(bt::HTTPRequest* r,bool timeout);
 		

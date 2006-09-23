@@ -87,7 +87,7 @@ namespace mse
 		// if you can't sent 96 bytes you are not worth the effort
 		if (buf_size < 96)
 		{
-			Out() << "Not enough data recieved, encrypted authentication failed" << endl;
+			Out() << "Not enough data received, encrypted authentication failed" << endl;
 			onFinish(false);
 			return;
 		}

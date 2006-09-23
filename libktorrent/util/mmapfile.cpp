@@ -66,7 +66,7 @@ namespace bt
 	
 	bool MMapFile::open(const QString & file,Mode mode,Uint64 size)
 	{
-		// close allready open file
+		// close already open file
 		if (fd > 0)
 			close();
 		

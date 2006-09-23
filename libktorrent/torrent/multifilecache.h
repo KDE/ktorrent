@@ -34,7 +34,7 @@ namespace bt
 	 * @brief Cache for multi file torrents
 	 *
 	 * This class manages a multi file torrent cache. Everything gets stored in the
-	 * correct files immediatly. 
+	 * correct files immediately. 
 	 */
 	class MultiFileCache : public Cache
 	{

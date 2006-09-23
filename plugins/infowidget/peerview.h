@@ -36,7 +36,7 @@ namespace kt
 	{
 		kt::PeerInterface* peer;
 		QString m_country;
-		// counter to keep track of how many PeerViewItem objects are in existance
+		// counter to keep track of how many PeerViewItem objects are in existence
 		static bt::Uint32 pvi_count;
 	public:
 		PeerViewItem(PeerView* pv,kt::PeerInterface* peer);

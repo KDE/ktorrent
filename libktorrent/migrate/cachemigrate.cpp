@@ -32,7 +32,7 @@ namespace bt
 
 	bool IsCacheMigrateNeeded(const Torrent & tor,const QString & cache)
 	{
-		// mutli files allways need to be migrated
+		// mutli files always need to be migrated
 		if (tor.isMultiFile())
 			return true;
 		

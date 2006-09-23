@@ -83,7 +83,7 @@ namespace bt
 
 	/**
 	 * Try to create a file. Doesn't do anything if the file
-	 * allready exists.
+	 * already exists.
 	 * @param url The url of the file
 	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 */

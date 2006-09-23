@@ -67,7 +67,7 @@ namespace bt
 		/**
 		 * Add a PeerSource, the difference between PeerSource and Tracker
 		 * is that only one Tracker can be used at the same time, 
-		 * PeerSource can allways be used.
+		 * PeerSource can always be used.
 		 * @param ps The PeerSource
 		 */
 		void addPeerSource(kt::PeerSource* ps);

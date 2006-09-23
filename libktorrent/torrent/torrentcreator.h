@@ -35,7 +35,7 @@ namespace bt
 	 *
 	 * This class generates torrent files.
 	 * It also allows to create a TorrentControl object, so
-	 * that we immediatly can start to share the torrent.
+	 * that we immediately can start to share the torrent.
 	 */
 	class TorrentCreator
 	{

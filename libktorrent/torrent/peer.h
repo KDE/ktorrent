@@ -56,7 +56,7 @@ namespace bt
 	 * @brief Manages the connection with a peer
 	 * 
 	 * This class manages a connection with a peer in the P2P network.
-	 * It provides functions for sending packets. Packets it recieves
+	 * It provides functions for sending packets. Packets it receives
 	 * get relayed to the outside world using a bunch of signals.
 	*/
 	class Peer : public QObject, public kt::PeerInterface
@@ -180,7 +180,7 @@ namespace bt
 		 */
 		bool isSeeder() const;
 
-		/// Get the time in milliseconds since the last time a piece was recieved.
+		/// Get the time in milliseconds since the last time a piece was received.
 		Uint32 getTimeSinceLastPiece() const;
 
 		/// Get the time the peer connection was established.

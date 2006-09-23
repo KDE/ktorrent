@@ -46,7 +46,7 @@ namespace kt
 		/**
 		 * Create a new user created group.
 		 * @param name Name of the group
-		 * @return Pointer to the group or NULL, if another group allready exists with the same name.
+		 * @return Pointer to the group or NULL, if another group already exists with the same name.
 		 */
 		Group* newGroup(const QString & name);
 		

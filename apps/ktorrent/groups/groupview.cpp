@@ -156,7 +156,7 @@ namespace kt
 		
 		if (gman->find(name))
 		{
-			KMessageBox::error(this,i18n("The group %1 allready exists.").arg(name));
+			KMessageBox::error(this,i18n("The group %1 already exists.").arg(name));
 			return;
 		}
 		
@@ -208,7 +208,7 @@ namespace kt
 		
 		if (gman->find(name)) 
 		{
-			KMessageBox::error(this,i18n("The group %1 allready exists.").arg(name));
+			KMessageBox::error(this,i18n("The group %1 already exists.").arg(name));
 		}
 		else
 		{

@@ -165,7 +165,7 @@ namespace bt
 	{
 		QString fpath = tf.getPath();
 		bool dnd = tf.doNotDownload();
-		// first split fpath by / seperator
+		// first split fpath by / separator 
 		QStringList sl = QStringList::split(bt::DirSeparator(),fpath);
 		// create all necessary subdirs
 		QString ctmp = cache_dir;
@@ -656,7 +656,7 @@ namespace bt
 			
 			QString p = cache_dir + tf.getPath();
 			QFileInfo fi(p);
-			// allways use symlink first, file might have been moved
+			// always use symlink first, file might have been moved
 			if (!fi.exists())
 			{
 				ret = true;

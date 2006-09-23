@@ -102,14 +102,14 @@ namespace bt
 
 	signals:
 		/**
-		 * Emitted when a connect message is recieved.
+		 * Emitted when a connect message is received.
 		 * @param tid The transaction_id
 		 * @param connection_id The connection_id returned
 		 */
 		void connectRecieved(Int32 tid,Int64 connection_id);
 		
 		/**
-		 * Emitted when an annoucne message is recieved.
+		 * Emitted when an announce message is received.
 		 * @param tid The transaction_id
 		 * @param buf The data
 		 */

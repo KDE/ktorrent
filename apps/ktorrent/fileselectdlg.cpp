@@ -86,7 +86,7 @@ void FileSelectDlg::accept()
 	{
 		QString msg = i18n("You have deselected the following existing files. "
 				"You will lose all data in these files, are you sure you want to do this ?");
-		// better ask the user if (s)he wants to delete the allready existing data
+		// better ask the user if (s)he wants to delete the already existing data
 		int ret = KMessageBox::warningYesNoList(0,msg,pe_ex,QString::null,
 											   KGuiItem(i18n("Yes, delete the files")),
 											   KGuiItem(i18n("No, keep the files")));

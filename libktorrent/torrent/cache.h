@@ -58,7 +58,7 @@ namespace bt
 		virtual QString getOutputPath() const = 0;
 		
 		/**
-		 * Changes the tmp dir. All data files should allready been moved.
+		 * Changes the tmp dir. All data files should already been moved.
 		 * This just modifies the tmpdir variable.
 		 * @param ndir The new tmpdir
 		 */

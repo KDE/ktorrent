@@ -74,7 +74,7 @@ namespace dht
 		virtual void update() = 0;
 		
 		/**
-		 * A Peer has recieved a PORT message, and uses this function to alert the DHT of it.
+		 * A Peer has received a PORT message, and uses this function to alert the DHT of it.
 		 * @param ip The IP of the peer
 		 * @param port The port in the PORT message
 		 */
@@ -100,7 +100,7 @@ namespace dht
 		const dht::Stats & getStats() const {return stats;}
 		
 		/**
-		 * Add a DHT node. This node shall be pinged immediatly.
+		 * Add a DHT node. This node shall be pinged immediately.
 		 * @param host The hostname or ip
 		 * @param hport The port of the host
 		 */

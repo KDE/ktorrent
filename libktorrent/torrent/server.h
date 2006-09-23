@@ -55,7 +55,7 @@ namespace bt
 		Server(Uint16 port);
 		virtual ~Server();
 
-		/// Check if everything is ok (are we succesfully listening on the port)
+		/// Check if everything is ok (are we successfully listening on the port)
 		bool isOK() const;
 		
 		/**

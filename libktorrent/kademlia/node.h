@@ -50,7 +50,7 @@ namespace dht
 		virtual ~Node();
 
 		/**
-		 * An RPC message was recieved, the node must now update
+		 * An RPC message was received, the node must now update
 		 * the right bucket.
 		 * @param dh_table The DHT
 		 * @param msg The message

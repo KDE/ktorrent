@@ -29,7 +29,7 @@ namespace bt
 	* @brief Map of pointers
 	*
 	* A Map where the data is a pointer. The PtrMap has an autodeletion feature.
-	* When autodelete is on, everytime we remove something from the map, the data
+	* When autodelete is on, every time we remove something from the map, the data
 	* will be deleted.
 	*/
 	template <class Key,class Data>

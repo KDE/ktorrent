@@ -140,7 +140,7 @@ void IPFilterWidget::saveFilter(QString& fn)
 	
 	if (!fptr.open(IO_WriteOnly))
 	{
-		Out(SYS_GEN|LOG_NOTICE) << QString("Could not open file %1 for writting.").arg(fn) << endl;
+		Out(SYS_GEN|LOG_NOTICE) << QString("Could not open file %1 for writing.").arg(fn) << endl;
 		return;
 	}
 	

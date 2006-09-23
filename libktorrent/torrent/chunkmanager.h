@@ -47,7 +47,7 @@ namespace bt
 	 * @author Joris Guisson
 	 * 
 	 * Manages all Chunk's and the cache file, where all the chunk's are stored.
-	 * It also manages a seperate index file, where the position of each piece
+	 * It also manages a separate index file, where the position of each piece
 	 * in the cache file is stored.
 	 *
 	 * The chunks are stored in the cache file in the correct order. Eliminating
@@ -145,7 +145,7 @@ namespace bt
 		/**
 		 * Prepare a chunk for downloading
 		 * @param c The Chunk
-		 * @param allways Allways do this, even if the chunk is not NOT_DOWNLOADED
+		 * @param allways Always do this, even if the chunk is not NOT_DOWNLOADED
 		 * @return true if ok, false if the chunk is not NOT_DOWNLOADED
 		 */
 		bool prepareChunk(Chunk* c,bool allways = false);
@@ -167,7 +167,7 @@ namespace bt
 		/**
 		 * Save the i'th Chunk to the cache_file.
 		 * Also changes the Chunk's status to ON_DISK.
-		 * The Chunk's data is immediatly cleared.
+		 * The Chunk's data is immediately cleared.
 		 * @param i The Chunk's index
 		 * @param update_index Update the index or not
 		 */

@@ -58,7 +58,7 @@ namespace mse
 		virtual ~RC4Encryptor();
 
 		/**
-		 * Decrypt some data, decryption happens in place (orignal data gets overwritten)
+		 * Decrypt some data, decryption happens in place (original data gets overwritten)
 		 * @param data The data
 		 * @param len Size of the data
 		 */

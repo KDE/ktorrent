@@ -119,7 +119,7 @@ namespace bt
 		}
 		else
 		{
-			// if the handshake wasn't fully recieved just send our handshake
+			// if the handshake wasn't fully received just send our handshake
 			sendHandshake(rh,pman->getTorrent().getPeerID());
 		}
 	}

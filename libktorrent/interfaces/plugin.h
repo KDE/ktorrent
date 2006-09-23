@@ -61,7 +61,7 @@ namespace kt
 		 * Any changes made here must be later made undone, when unload is
 		 * called.
 		 * Upon error a bt::Error should be thrown. And the plugin should remain
-		 * in an unitialized state. The Error contains an error message, which will
+		 * in an uninitialized state. The Error contains an error message, which will
 		 * get show to the user.
 		 */
 		virtual void load() = 0;

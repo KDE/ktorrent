@@ -126,7 +126,7 @@ namespace dht
 			return;
 		}
 		
-		// insert if not allready in the list and we still have room
+		// insert if not already in the list and we still have room
 		if (i == entries.end() && entries.count() < dht::K)
 		{
 			entries.append(entry);

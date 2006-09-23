@@ -78,13 +78,13 @@ namespace dht
 		virtual void onTimeout(RPCCall* c);
 		
 		/**
-		 * Will continue the task, this will be called everytime we have
+		 * Will continue the task, this will be called every time we have
 		 * rpc slots available for this task. Should be implemented by derived classes.
 		 */
 		virtual void update() = 0;
 		
 		/**
-		 * A call is finsihed and a response was recieved.
+		 * A call is finished and a response was received.
 		 * @param c The call
 		 * @param rsp The response
 		 */

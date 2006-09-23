@@ -31,7 +31,7 @@ namespace bt
 	/**
 	 * @author Joris Guisson
 	 *
-	 * Interface for classes which wish to recieve the output from a BEncoder.
+	 * Interface for classes which wish to receive the output from a BEncoder.
 	 */
 	class BEncoderOutput
 	{

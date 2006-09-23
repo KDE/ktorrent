@@ -33,7 +33,7 @@ namespace bt
 	 * 
 	 * Keeps track of a piece of the file. The Chunk has 3 possible states :
 	 * - MMAPPED : It is memory mapped
-	 * - BUFFERED : It is in a buffer in dynamicly allocated memory 
+	 * - BUFFERED : It is in a buffer in dynamically allocated memory 
 	 *  (because the chunk is located in 2 or more separate files, so we cannot just set a pointer
 	 *   to a region of mmapped memory)
 	 * - ON_DISK : On disk

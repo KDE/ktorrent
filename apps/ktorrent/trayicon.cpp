@@ -88,7 +88,7 @@ void TrayIcon::maxShareRatioReached(kt::TorrentInterface* tc)
 	
 	double speed_up = (double)s.bytes_uploaded / 1024.0;
 	
-	QString msg = i18n("<b>%1</b> has reached it's maximum share ratio of %2 and has been stopped."
+	QString msg = i18n("<b>%1</b> has reached its maximum share ratio of %2 and has been stopped."
 			"<br>Uploaded %3 at an average speed of %4.")
 			.arg(s.torrent_name)
 			.arg(s.max_share_ratio)

@@ -206,7 +206,7 @@ namespace kt
 		void updateGUI();
 		
 		/**
-		 * Signal which indicates that the XML was downloaded succesfully or not.
+		 * Signal which indicates that the XML was downloaded successfully or not.
 		 * @param r The router which emitted the signal
 		 * @param success Wether or not it succeeded
 		 */
