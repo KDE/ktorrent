@@ -199,6 +199,32 @@ namespace kt
 		 * @param canceled Wether or not it was canceled by the user
 		 */
 		void loadingFinished(const KURL & url,bool success,bool canceled);
+		
+		/**
+		 * A TorrentInterface was added
+		 * @param tc 
+		 */
+		void torrentAdded(kt::TorrentInterface* tc);
+
+	
+		/**
+		 * A TorrentInterface was removed
+		 * @param tc
+		 */
+		void torrentRemoved(kt::TorrentInterface* tc);
+		
+		/**
+		 * A TorrentInterface has finished downloading.
+		 * @param tc
+		 */
+		void finished(kt::TorrentInterface* tc);
+
+    	/**
+		 * Torrent download is stopped by error
+		 * @param tc TorrentInterface
+		 * @param msg Error message
+		 */
+		void torrentStoppedByError(kt::TorrentInterface* tc, QString msg);
 	};
 
 }

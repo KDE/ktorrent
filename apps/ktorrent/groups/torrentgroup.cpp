@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <util/log.h>
 #include <util/error.h>
 #include <util/sha1hash.h>
 #include <torrent/bencoder.h>
@@ -49,6 +50,9 @@ namespace kt
 		{
 			if (hashes.count(tor->getInfoHash()))
 			{
+		/*		bt::Out(SYS_GEN|LOG_DEBUG) << 
+						QString("TG %1 : Torrent %2 from hashes list").arg(groupName()).arg(tor->getStats().torrent_name) << endl;
+		*/ 
 				hashes.erase(tor->getInfoHash());
 				torrents.insert(tor);
 				return true;
@@ -81,6 +85,12 @@ namespace kt
 			const bt::SHA1Hash & h = tc->getInfoHash();
 			enc->write(h.getData(),20);
 			i++;
+		}
+		std::set<bt::SHA1Hash>::iterator j = hashes.begin();
+		while (j != hashes.end())
+		{
+			enc->write(j->getData(),20);
+			j++;
 		}
 		enc->end();
 		enc->end();

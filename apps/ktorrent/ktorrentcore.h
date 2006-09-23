@@ -270,32 +270,6 @@ public slots:
 	
 signals:
 	/**
-	 * A TorrentInterface was added
-	 * @param tc 
-	 */
-	void torrentAdded(kt::TorrentInterface* tc);
-
-	
-	/**
-	 * A TorrentInterface was removed
-	 * @param tc
-	 */
-	void torrentRemoved(kt::TorrentInterface* tc);
-	
-	/**
-	 * A TorrentInterface has finished downloading.
-	 * @param tc
-	 */
-	void finished(kt::TorrentInterface* tc);
-
-    /**
-	 * Torrent download is stopped by error
-	 * @param tc TorrentInterface
-	 * @param msg Error message
-	 */
-	void torrentStoppedByError(kt::TorrentInterface* tc, QString msg);
-	
-	/**
 	* TorrentCore torrents have beed updated. Stats are changed.
 	**/
 	void statsUpdated();
@@ -326,7 +300,6 @@ private slots:
 	void emitCorruptedData(kt::TorrentInterface* tc);
 	
 private:
-// 	QPtrList<kt::TorrentInterface> downloads;
 	QString data_dir;
 	int max_downloads;
 	bool keep_seeding;
