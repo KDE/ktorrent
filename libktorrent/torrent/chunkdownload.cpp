@@ -237,15 +237,19 @@ namespace bt
 		if (!ds)
 			return;
 		
-		if (pd->getNumRequests() == 0 && ds->getNumRequests() > 0)
+#warning "Reenabled this"
+/*		if (pd->getNumRequests() == 0 && ds->getNumRequests() > 0)
 		{
 			Out() << "Retransmitting timed out requests!" << endl;
 			ds->clear();
 		}
-		
-		Uint32 max_outstanding = pd->getMaximumOutstandingReqs();
+*/		
+		// if the peer is choked and we are not downloading an allowed fast chunk
+		if (pd->isChoked() && !pd->inAllowedFastChunks(chunk->getIndex()))
+			return;
+			
 		Uint32 num_visited = 0;
-		while (num_visited < piece_queue.count() && pd->getNumRequests() < max_outstanding)
+		while (num_visited < piece_queue.count() && pd->canAddRequest())
 		{
 			// get the first one in the queue
 			Uint32 i = piece_queue.first();

@@ -121,13 +121,13 @@ namespace bt
 			
 			if (num < 4)
 			{
-				p->getPacketWriter().sendUnchoke();
+				p->choke();
 				downloaders.append(p);
 				num++;
 			}
 			else
 			{
-				p->getPacketWriter().sendChoke();
+				p->choke();
 			}
 		}
 	}

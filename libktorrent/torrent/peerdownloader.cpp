@@ -88,9 +88,14 @@ namespace bt
 	}
 #endif
 
+	bool PeerDownloader::canAddRequest() const
+	{
+		return wait_queue.count() < 50;
+	}
+
 	Uint32 PeerDownloader::getNumRequests() const 
 	{
-		return reqs.count();
+		return reqs.count() /*+ wait_queue.count() */;
 	}
 	
 	int PeerDownloader::grab()
@@ -111,17 +116,20 @@ namespace bt
 		if (!peer)
 			return;
 		
-		TimeStampedRequest r = TimeStampedRequest(req);
-		reqs.append(r);
-		peer->getPacketWriter().sendRequest(req);
+		wait_queue.append(req);
+		update();
 	}
 	
 	void PeerDownloader::cancel(const Request & req)
 	{
 		if (!peer)
 			return;
-
-		if (reqs.contains(req))
+		
+		if (wait_queue.contains(req))
+		{
+			wait_queue.remove(req);
+		}
+		else if (reqs.contains(req))
 		{
 			reqs.remove(req);
 			peer->getPacketWriter().sendCancel(req);
@@ -155,23 +163,20 @@ namespace bt
 			}
 		}
 	
+		wait_queue.clear();
 		reqs.clear();
 	}
 		
 	void PeerDownloader::piece(const Piece & p)
 	{
 		Request r(p);
-		if (reqs.contains(r))
-		{
+		if (wait_queue.contains(r))
+			wait_queue.remove(r);
+		else if (reqs.contains(r))
 			reqs.remove(r);
-			downloaded(p);
-		}
-		else 
-		{
-			// this is probably a timed out request
-			// emit the signal and let the chunkdownload handle it
-			downloaded(p);
-		}
+			
+		downloaded(p);
+		update();
 	}
 	
 	void PeerDownloader::peerDestroyed()
@@ -225,7 +230,9 @@ namespace bt
 			}
 			else
 			{ 
-				i++;
+				// new requests get appended so once we have found one
+				// which hasn't timed out all the following will also not have timed out
+				break;
 			}
 		}
 	}
@@ -240,6 +247,7 @@ namespace bt
 		return allowed_fast.count(chunk) > 0;
 	}
 	
+	/*
 	Uint32 PeerDownloader::getMaximumOutstandingReqs() const
 	{
 		// get the download rate in KB/sec
@@ -250,6 +258,7 @@ namespace bt
 		else
 			return 5 + (Uint32)ceil(2*pieces_per_sec);
 	}
+	*/
 
 	Uint32 PeerDownloader::getMaxChunkDownloads() const
 	{
@@ -275,26 +284,52 @@ namespace bt
 		return mul_factor * (1 + num_extra);
 	}
 	
-	Uint32 PeerDownloader::max_outstanding_reqs = 5;
-	
-	void PeerDownloader::setMemoryUsage(Uint32 m)
+	void PeerDownloader::choked()
 	{
-		switch (m)
+		QValueList<TimeStampedRequest>::iterator i = reqs.begin();
+		while (i != reqs.end())
 		{
-			case 2:
-				max_outstanding_reqs = 15;
-				break;
-			case 1:
-				max_outstanding_reqs = 10;
-				break;
-			case 0:
-			default:
-				max_outstanding_reqs = 5;
-				break;
+			TimeStampedRequest & tr = *i;
+			if (allowed_fast.count(tr.req.getIndex()) == 0)
+			{
+				rejected(tr.req);
+				i = reqs.erase(i);
+			}
+			else
+				i++;
+		}
+		
+		QValueList<Request>::iterator j = wait_queue.begin();
+		while (j != wait_queue.end())
+		{
+			Request & req = *j;
+			if (allowed_fast.count(req.getIndex()) == 0)
+			{
+				rejected(req);
+				j = wait_queue.erase(j);
+			}
+			else
+				j++;
 		}
 	}
 	
-	
-	
+	void PeerDownloader::update()
+	{
+		// modify the interval if necessary
+		double pieces_per_sec = (double)peer->getDownloadRate() / MAX_PIECE_LEN;
+		
+		Uint32 max_reqs = 1 + (Uint32)ceil(pieces_per_sec);
+		
+		while (wait_queue.count() > 0 && reqs.count() < max_reqs)
+		{
+			// get a request from the wait queue and send that
+			Request req = wait_queue.front();
+			wait_queue.pop_front();
+			TimeStampedRequest r = TimeStampedRequest(req);
+			reqs.append(r);
+			peer->getPacketWriter().sendRequest(req);
+		}
+	}
 }
+
 #include "peerdownloader.moc"

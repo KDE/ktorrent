@@ -138,6 +138,11 @@ namespace bt
 		}
 	}
 	
+	void PeerUploader::clearAllRequests()
+	{
+		requests.clear();
+	}
+	
 	void PeerUploader::enableAllowedFast()
 	{
 		can_generate_af = true;

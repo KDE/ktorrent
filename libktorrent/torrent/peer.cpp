@@ -137,6 +137,7 @@ namespace bt
 					time_choked = GetCurrentTime();
 				}
 				choked = true;
+				downloader->choked();
 				break;
 			case UNCHOKE:
 				if (len != 1)
@@ -460,6 +461,10 @@ namespace bt
 		{
 			// send rejects for all queued up packets
 			uploader->rejectAll();
+		}
+		else
+		{
+			uploader->clearAllRequests();
 		}
 	}
 }
