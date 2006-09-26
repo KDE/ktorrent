@@ -58,7 +58,7 @@ namespace bt
 	
 	/////////////////////////////////
 	
-	Uint32 Choker::num_upload_slots = 4;
+	Uint32 Choker::num_upload_slots = 2;
 
 	Choker::Choker(PeerManager & pman,ChunkManager & cman) : pman(pman),cman(cman)
 	{

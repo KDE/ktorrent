@@ -100,8 +100,8 @@
 		</entry>
 		<entry name="numUploadSlots" type="Int">
 			<label>Number of upload slots</label>
-			<default>4</default>
-			<min>4</min>
+			<default>2</default>
+			<min>2</min>
 			<max>100</max>
 		</entry>
 		<entry name="useEncryption" type="Bool">

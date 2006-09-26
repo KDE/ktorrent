@@ -210,13 +210,16 @@
                                 <cstring>num_upload_slots</cstring>
                             </property>
                             <property name="value">
-                                <number>4</number>
+                                <number>2</number>
                             </property>
                             <property name="minValue">
-                                <number>4</number>
+                                <number>2</number>
                             </property>
                             <property name="maxValue">
                                 <number>100</number>
+                            </property>
+                            <property name="referencePoint">
+                                <number>2</number>
                             </property>
                         </widget>
                     </vbox>
