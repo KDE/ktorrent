@@ -280,7 +280,7 @@ void KTorrentCore::downloadFinishedSilently(KIO::Job *job)
 		}
 		else
 		{
-			if (dir != QString::null && load(j->data(),dir,true))
+			if (dir != QString::null && load(j->data(),dir,true,j->url()))
 				loadingFinished(j->url(),true,false);
 			else
 				loadingFinished(j->url(),false,false);
