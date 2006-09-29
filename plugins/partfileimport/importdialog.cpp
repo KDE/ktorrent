@@ -78,8 +78,8 @@ namespace kt
 		m_data_url->setEnabled(false);
 		
 		// get the urls
-		KURL tor_url = m_torrent_url->url();
-		KURL data_url = m_data_url->url();
+		KURL tor_url = KURL::fromPathOrURL(m_torrent_url->url());
+		KURL data_url = KURL::fromPathOrURL(m_data_url->url());
 		Torrent tor;
 		
 		// try to load the torrent
@@ -163,11 +163,11 @@ namespace kt
 				if (durl.mid(ds+1) == tor.getNameSuggestion())
 				{
 					durl = durl.left(ds);
-					saveStats(tor_dir + "stats",durl,imported,false);
+					saveStats(tor_dir + "stats",KURL::fromPathOrURL(durl),imported,false);
 				}
 				else
 				{
-					saveStats(tor_dir + "stats",durl,imported,true);
+					saveStats(tor_dir + "stats",KURL::fromPathOrURL(durl),imported,true);
 				}
 				saveFileInfo(tor_dir + "file_info",dnd_files);
 			}

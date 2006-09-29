@@ -53,8 +53,7 @@ namespace bt
 					.arg(dir).arg(strerror(errno)));
 			else
 			{
-				Out() << "Error : Cannot create directory " << dir << " : "
-				<< KIO::NetAccess::lastErrorString() << endl;
+				Out() << QString("Error : Cannot create directory %1 : %2").arg(dir).arg(strerror(errno))<< endl;
 			}
 		}
 	}
