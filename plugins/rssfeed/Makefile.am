@@ -20,9 +20,9 @@ kde_kcfg_DATA = ktrssfeedplugin.kcfg
 kde_services_DATA = ktrssfeedplugin.desktop
 
 noinst_HEADERS = rssfeedplugin.h rssfeedmanager.h rssfeed.h rssfilter.h \
-	rssarticle.h
+		rssarticle.h rsslinkdownloader.h
 ktrssfeedplugin_la_SOURCES = rssfeedplugin.cpp rssfeedmanager.cpp \
-		rssfeedwidget.ui rssfeed.cpp rssfilter.cpp rssarticle.cpp
+			rssfeedwidget.ui rssfeed.cpp rssfilter.cpp rssarticle.cpp rsslinkdownloader.cpp
 ktrssfeedplugin_la_LIBADD = rss/librsslocal.la ../../libktorrent/torrent/libtorrent.la \
 	../../libktorrent/libktorrent.la $(LIB_KHTML) $(LIB_KPARTS)
 

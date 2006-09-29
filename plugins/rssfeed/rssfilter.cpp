@@ -276,7 +276,7 @@ namespace kt
 		if (m_series)
 		{
 			QStringList episodeFormats;
-			episodeFormats << "s([0-9]+)[de]([0-9]+)" << "([0-9]+)x([0-9]+)" << "([0-9]+)([0-9]{2})";
+			episodeFormats << "s([0-9]{1,2})[de]([0-9]{1,2})[^0-9]" << "[^0-9]([0-9]{1,2})x([0-9]{1,2})[^0-9]" << "[^0-9]([0-9]{1,2})([0-9]{2})[^0-9]";
 			for (int i=0; i<episodeFormats.count(); i++)
 			{
 				regEx.setPattern(*episodeFormats.at(i));

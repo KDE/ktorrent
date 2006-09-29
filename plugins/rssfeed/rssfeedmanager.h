@@ -58,8 +58,6 @@ namespace kt
 			~RssFeedManager();
 
 		public slots:
-			bool processLink(const QString &link, bool silent = true, bool noHtml = false);
-			bool processHtml(const QString &link, const QString& filename, bool silent = true);
 			void changedActiveFeed();
 			void changedArticleSelection();
 			void changedFeedUrl();

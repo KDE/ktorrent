@@ -25,7 +25,7 @@
 #include <kio/netaccess.h>
 #include <kstandarddirs.h>
 #include <keditlistbox.h>
-#include <kmimetype.h>
+// #include <kmimetype.h>
 #include <kmessagebox.h>
 
 #include <qstring.h>
@@ -52,6 +52,8 @@
 
 #include "../../libktorrent/torrent/bdecoder.h"
 #include "../../libktorrent/torrent/bnode.h"
+
+#include "rsslinkdownloader.h"
 
 using namespace bt;
 
@@ -137,76 +139,6 @@ namespace kt
 		//Destruct the manager
 	}
 	
-	bool RssFeedManager::processHtml(const QString &link, const QString &filename, bool silent)
-	{
-		KURL url = link;
-		//let's open the file
-		QFile file(filename);
-		
-		if (!file.exists())
-		{
-			return false;
-		}
-		
-		if (!file.open(IO_ReadOnly))
-		{
-			return false;
-		}
-		
-		QTextStream html(&file);
-		
-		//go through a line at a time checking for a torrent
-		QString htmlline = html.readLine();
-		while (!htmlline.isNull())
-		{
-			QRegExp hrefTags = QString("<A.*HREF.*</A");
-			hrefTags.setCaseSensitive(false);
-			hrefTags.setMinimal(true);
-			
-			int matchPos = 0;
-			while (htmlline.find(hrefTags, matchPos) >= 0)
-			{
-				matchPos += hrefTags.matchedLength();
-				//we're found an <a href tag - let's check it if contains download
-				QRegExp hrefText = QString("d(own)?load");
-				hrefText.setCaseSensitive(false);
-				
-				if (!hrefTags.capturedTexts()[0].contains(hrefText))
-				{
-					//link text doesn't contain dload/download
-					continue;
-				}
-				
-				//we're found an <a href tag - now let's the the url out of it
-				hrefText = QString("HREF=\"?([^\">< ]*)[\" ]");
-				hrefText.setCaseSensitive(false);
-
-				hrefTags.capturedTexts()[0].find(hrefText);
-				//lets get the captured
-				QString hrefLink = hrefText.capturedTexts()[1];
-				
-				if (hrefLink.startsWith("/"))
-				{
-					hrefLink = url.protocol() + "://" + url.host() + hrefLink;
-				} else if (!hrefLink.startsWith("http://", false)) {
-					hrefLink = url.url().left(url.url().findRev("/")+1) + hrefLink;
-				}
-				
-				if (processLink(hrefLink, silent, true))
-					{
-					return true;
-					}
-			
-			}
-			
-			//run the query again
-			htmlline = html.readLine();
-		}
-		
-		
-		return false;
-	}
-	
 	void RssFeedManager::clearArticles()
 	{
 		int pos = feeds.find((RssFeed *)sender());
@@ -225,81 +157,6 @@ namespace kt
 	void RssFeedManager::changedFeedUrl()
 	{
 		refreshFeed->setEnabled(!feedUrl->url().isEmpty());
-	}
-	
-	bool RssFeedManager::processLink(const QString &link, bool silent, bool noHtml)
-	{
-		//m_core->loadSilently(torrent);
-		KMimeType linkType = *KMimeType::findByURL(link);
-		QString filename;
-		if( !KIO::NetAccess::download( link, filename, qApp->mainWidget() ) )
-		{
-			Out() << "couldn't download file: %s" << link.ascii() << endl;
-			return false;
-		}
-		
-		linkType = *KMimeType::findByFileContent(filename);
-		if (linkType.is("text/html"))
-		{
-			if (!noHtml)
-			{
-				return processHtml(link, filename, silent);
-			}
-			return false;
-		}
-		
-		if (linkType.is("application/x-bittorrent"))
-		{
-			if (silent)
-			{
-				m_core->loadSilently( link );
-			}
-			else
-			{
-				m_core->load( link );
-			}
-			return true;
-		}
-		
-		QFile fptr(filename);
-		if (!fptr.open(IO_ReadOnly))
-			return false;
-		
-		QByteArray data(fptr.size());
-		fptr.readBlock(data.data(),fptr.size());
-	
-		try
-		{
-			//last ditched brute force attempt to check if it's a torrent file
-			BNode* node = 0;
-			BDecoder decoder(data,false);
-			node = decoder.decode();
-			BDictNode* dict = dynamic_cast<BDictNode*>(node);
-			
-			if (dict)
-			{
-				delete node;
-				node = dict = 0;
-				
-				if (silent)
-				{
-					m_core->loadSilently( link );
-				}
-				else
-				{
-					m_core->load( link );
-				}
-				return true;
-			}
-			
-		
-		}
-		catch (...)
-		{
-			//we can just ignore any errors here
-		}
-		
-		return false;
 	}
 	
 	void RssFeedManager::connectFeed(int index)
@@ -898,11 +755,7 @@ namespace kt
 			int endRow = feedArticles->selection(i).topRow() + feedArticles->selection(i).numRows(); 
 			for (int j=feedArticles->selection(i).topRow(); j<endRow; j++)
 			{
-				if (!processLink(feedArticles->text(j, 2), false))
-				{
-					//the file failed to download a torrent
-					KMessageBox::error(0,"Failed to find and download a valid torrent for " + feedArticles->text(j,0));
-				}
+				new RssLinkDownloader(m_core, feedArticles->text(j, 2));
 			}
 		}
 	}
@@ -914,10 +767,7 @@ namespace kt
 			int endRow = filterMatches->selection(i).topRow() + filterMatches->selection(i).numRows(); 
 			for (int j=filterMatches->selection(i).topRow(); j<endRow; j++)
 			{
-				if (!processLink(filterMatches->text(j, 3), false))
-				{
-					KMessageBox::error(0,"Failed to find and download a valid torrent for season " + filterMatches->text(j,0) + " episode " + filterMatches->text(j,1));
-				}
+				new RssLinkDownloader(m_core, filterMatches->text(j, 3));
 			}
 		}
 	}
@@ -1327,10 +1177,7 @@ namespace kt
 			//we were passed a filter - so just scan it with that one
 			if (filter->scanArticle(article))
 			{
-				if (!processLink(article.link().prettyURL()))
-				{
-					filter->deleteMatch(article.link().prettyURL());
-				}
+				new RssLinkDownloader(m_core, article.link().prettyURL(), filter);
 			}
 		}
 		else
@@ -1339,10 +1186,7 @@ namespace kt
 			{
 				if (acceptFilters.at(i)->scanArticle(article))
 				{
-					if (!processLink(article.link().prettyURL()))
-					{
-						acceptFilters.at(i)->deleteMatch(article.link().prettyURL());
-					}
+					new RssLinkDownloader(m_core, article.link().prettyURL(), acceptFilters.at(i));
 				}
 			}
 		}
