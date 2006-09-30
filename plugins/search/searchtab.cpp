@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <qapplication.h>
+#include <qcheckbox.h>
 #include <kglobal.h>
 #include <kpushbutton.h>
 #include <kiconloader.h>
@@ -76,7 +77,7 @@ namespace kt
 		comp->addItem(str);
 		m_search_text->insertItem(str);
 		m_search_text->clearEdit();
-		search(str,m_search_engine->currentItem(),false);
+		search(str,m_search_engine->currentItem(),false, externalBrowser->isChecked());
 	}
 	
 	void SearchTab::clearButtonPressed()

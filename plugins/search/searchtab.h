@@ -45,7 +45,7 @@ namespace kt
 		void textChanged(const QString & str);
 		
 	signals:
-		void search(const QString & text,int engine,bool cur_tab);
+		void search(const QString & text,int engine,bool cur_tab, bool external);
 	};
 }
 

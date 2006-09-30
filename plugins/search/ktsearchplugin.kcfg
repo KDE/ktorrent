@@ -10,5 +10,18 @@
 			<label>Current search engine</label>
 			<default>0</default>
 		</entry>
+		
+		<entry name="useDefaultBrowser" type ="Bool">
+			<label>Use default browser</label>
+			<default>true</default>
+		</entry>
+		<entry name="useCustomBrowser" type ="Bool">
+			<label>Use custom browser</label>
+			<default>false</default>
+		</entry>
+		<entry name="customBrowser" type ="String">
+			<label>Custom browser executable path</label>
+			<default>/usr/bin/firefox</default>
+		</entry>		
 	</group>
 </kcfg>

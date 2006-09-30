@@ -45,6 +45,7 @@ namespace kt
 		
 	public slots:
 		virtual void btnUpdate_clicked();
+		void customToggled(bool toggled);
 	
 	private slots:
 		void addClicked();

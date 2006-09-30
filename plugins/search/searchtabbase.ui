@@ -8,18 +8,18 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>262</width>
-            <height>381</height>
+            <width>335</width>
+            <height>552</height>
         </rect>
     </property>
     <property name="caption">
         <string>Search</string>
     </property>
-    <vbox>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLayoutWidget">
+        <widget class="QLayoutWidget" row="0" column="0">
             <property name="name">
                 <cstring>layout17</cstring>
             </property>
@@ -53,7 +53,7 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="QLayoutWidget" row="1" column="0">
             <property name="name">
                 <cstring>layout16</cstring>
             </property>
@@ -91,18 +91,35 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QGroupBox">
+        <spacer row="3" column="0">
+            <property name="name">
+                <cstring>spacer11</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>320</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QGroupBox" row="2" column="0">
             <property name="name">
                 <cstring>groupBox3</cstring>
             </property>
             <property name="title">
                 <string>Options</string>
             </property>
-            <vbox>
+            <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLayoutWidget">
+                <widget class="QLayoutWidget" row="1" column="0">
                     <property name="name">
                         <cstring>layout15</cstring>
                     </property>
@@ -125,37 +142,32 @@
                         </widget>
                     </hbox>
                 </widget>
-                <widget class="KPushButton">
+                <widget class="QCheckBox" row="0" column="0">
+                    <property name="name">
+                        <cstring>externalBrowser</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Open search results in e&amp;xternal browser</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+X</string>
+                    </property>
+                </widget>
+                <widget class="KPushButton" row="2" column="0">
                     <property name="name">
                         <cstring>m_clear_history</cstring>
                     </property>
                     <property name="text">
                         <string>Clear Search Histor&amp;y</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+Y</string>
+                    </property>
                 </widget>
-            </vbox>
+            </grid>
         </widget>
-        <spacer>
-            <property name="name">
-                <cstring>spacer11</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>41</height>
-                </size>
-            </property>
-        </spacer>
-    </vbox>
+    </grid>
 </widget>
-<customwidgets>
-</customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kpushbutton.h</includehint>

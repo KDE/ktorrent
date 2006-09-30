@@ -23,12 +23,16 @@
 #include <kiconloader.h>
 #include <kstdaction.h>
 #include <kpopupmenu.h>
+#include <kapplication.h>
 #include <kstandarddirs.h>
+#include <krun.h>
 #include <interfaces/guiinterface.h>
 #include "searchplugin.h"
 #include "searchwidget.h"
 #include "searchprefpage.h"
 #include "searchtab.h"
+#include "searchpluginsettings.h"
+#include "searchenginelist.h"
 
 
 #define NAME "searchplugin"
@@ -59,8 +63,8 @@ namespace kt
 	{
 		engines.load(KGlobal::dirs()->saveLocation("data","ktorrent") + "search_engines");
 		tab = new SearchTab();
-		connect(tab,SIGNAL(search( const QString&, int, bool )),
-				this,SLOT(search( const QString&, int, bool )));
+		connect(tab,SIGNAL(search( const QString&, int, bool, bool )),
+				this,SLOT(search( const QString&, int, bool, bool )));
 		
 		getGUI()->addToolWidget(tab,"viewmag",i18n("Search"),GUIInterface::DOCK_LEFT);
 		 
@@ -87,9 +91,29 @@ namespace kt
 		tab = 0;
 	}
 	
-	void SearchPlugin::search(const QString & text,int engine,bool cur_tab)
-	{
+	void SearchPlugin::search(const QString & text,int engine,bool cur_tab, bool external)
+	{	
+		if(external)
+		{
+			const SearchEngineList& sl = getSearchEngineList();
+		
+			if (engine < 0 || engine >= sl.getNumEngines())
+				engine = 0;
+		
+			QString s_url = sl.getSearchURL(engine).prettyURL();
+			s_url.replace("FOOBAR", KURL::encode_string(text), true);
+			KURL url = KURL::fromPathOrURL(s_url);
+			
+			if(SearchPluginSettings::useDefaultBrowser())
+				kapp->invokeBrowser(url.url());
+			else
+				KRun::runCommand(QString("%1 \"%2\"").arg(SearchPluginSettings::customBrowser()).arg(url.url()), SearchPluginSettings::customBrowser(), "viewmag" );
+			
+			return;
+		}
+		
 		KIconLoader* iload = KGlobal::iconLoader();
+		
 		SearchWidget* search = new SearchWidget(this);
 		getGUI()->addTabPage(search,iload->loadIconSet("viewmag", KIcon::Small),text,this);
 		

@@ -30,6 +30,10 @@
 #include <klineedit.h>
 #include <kmessagebox.h>
 #include <kio/netaccess.h>
+#include <klineedit.h>
+
+#include <qlabel.h>
+#include <qradiobutton.h>
 
 #include <util/constants.h>
 #include "searchprefpage.h"
@@ -51,6 +55,14 @@ namespace kt
 		connect(btnRemove, SIGNAL(clicked()), this, SLOT(removeClicked()));
 		connect(btn_add_default, SIGNAL(clicked()), this, SLOT(addDefaultClicked()));
 		connect(btnRemoveAll, SIGNAL(clicked()), this, SLOT(removeAllClicked()));
+		
+		connect(useCustomBrowser, SIGNAL(toggled(bool)), this, SLOT(customToggled( bool )));
+		
+		useCustomBrowser->setChecked(SearchPluginSettings::useCustomBrowser());
+		useDefaultBrowser->setChecked(SearchPluginSettings::useDefaultBrowser());
+		customBrowser->setText(SearchPluginSettings::customBrowser());
+		
+		customBrowser->setEnabled(useCustomBrowser->isChecked());
 	}
 	
 	void SearchPrefPageWidget::updateSearchEngines(const SearchEngineList & se)
@@ -66,6 +78,12 @@ namespace kt
 	bool SearchPrefPageWidget::apply()
 	{
 		saveSearchEngines();
+		
+		SearchPluginSettings::setUseCustomBrowser(useCustomBrowser->isChecked());
+		SearchPluginSettings::setUseDefaultBrowser(useDefaultBrowser->isChecked());
+		SearchPluginSettings::setCustomBrowser(customBrowser->text());
+		
+		SearchPluginSettings::writeConfig();
 		return true;
 	}
  
@@ -249,6 +267,11 @@ namespace kt
 	void SearchPrefPage::updateData()
 	{
 		widget->updateSearchEngines(m_plugin->getSearchEngineList());
+	}
+	
+	void SearchPrefPageWidget::customToggled(bool toggled)
+	{
+		customBrowser->setEnabled(toggled);
 	}
 }
 

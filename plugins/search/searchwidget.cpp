@@ -169,7 +169,7 @@ namespace kt
 	
 		statusBarMsg(i18n("Searching for %1...").arg(text));
 		//html_part->openURL(url);
-		html_part->openURLRequest(url,KParts::URLArgs());
+ 		html_part->openURLRequest(url,KParts::URLArgs());
 	}	
 	
 	void SearchWidget::searchPressed()
