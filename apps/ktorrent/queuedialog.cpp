@@ -103,7 +103,7 @@ QueueDialog::QueueDialog(bt::QueueManager* qm, QWidget *parent, const char *name
 	m_tabs->setTabIconSet(m_tabs->page(0), iload->loadIconSet("down", KIcon::Small));
 	m_tabs->setTabIconSet(m_tabs->page(1), iload->loadIconSet("up", KIcon::Small));
 	
-	logo->setPixmap(iload->loadIcon("ktqueuemanager", KIcon::Desktop));
+ 	logo->setPixmap(iload->loadIcon("ktqueuemanager", KIcon::Desktop));
 	
 	connect(downloadList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(downloadList_currentChanged( QListViewItem* )));
 	connect(seedList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(seedList_currentChanged( QListViewItem* )));
@@ -232,19 +232,19 @@ void QueueDialog::writeQueue()
 	downloadList->sort();
 	seedList->sort();
 	
-	QueueItem* item = (QueueItem*) downloadList->lastItem();
-	if(item == 0)
-		return;
-	
 	int p = 0;
 	
-	while(item != 0)
+	QueueItem* item = (QueueItem*) downloadList->lastItem();
+	if(item != 0)
 	{
-		if(item->getPriority() != 0)
-			item->setTorrentPriority(++p);
-		else
-			item->setTorrentPriority(0);
-		item = (QueueItem*) item->itemAbove();
+		while(item != 0)
+		{
+			if(item->getPriority() != 0)
+				item->setTorrentPriority(++p);
+			else
+				item->setTorrentPriority(0);
+			item = (QueueItem*) item->itemAbove();
+		}
 	}
 	
 	item = (QueueItem*) seedList->lastItem();
