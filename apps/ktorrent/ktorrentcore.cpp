@@ -152,6 +152,9 @@ bool KTorrentCore::init(TorrentControl* tc,bool silently)
 	}
 		
 	tc->setPreallocateDiskSpace(true);
+
+	if(Settings::maxRatio()>0)
+        	tc->setMaxShareRatio(Settings::maxRatio()); 
 	
 	torrentAdded(tc);
 	qman->torrentAdded(tc);
@@ -921,6 +924,11 @@ void KTorrentCore::connectSignals(kt::TorrentInterface* tc)
 			this, SLOT(aboutToBeStarted( kt::TorrentInterface*,bool & )));
 	connect(tc,SIGNAL(corruptedDataFound( kt::TorrentInterface* )),
 			this, SLOT(emitCorruptedData( kt::TorrentInterface* )));
+}
+
+float KTorrentCore::getGlobalMaxShareRatio() const
+{
+	return Settings::maxRatio();
 }
 
 #include "ktorrentcore.moc"

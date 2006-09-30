@@ -183,6 +183,7 @@ public:
 	
 	virtual void load(const KURL& url);
 	virtual void loadSilently(const KURL& url);
+	virtual float getGlobalMaxShareRatio() const;
 	
 	
 	bt::QueueManager* getQueueManager();

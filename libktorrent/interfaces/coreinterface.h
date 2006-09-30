@@ -190,6 +190,9 @@ namespace kt
 		 */
 		virtual void setPausedState(bool pause) = 0;
 		
+		/// Get the global share ratio limit
+		virtual float getGlobalMaxShareRatio() const = 0; 
+		
 	signals:
 		/**
 		 * Seeing that when load returns the loading process may not have finished yet,

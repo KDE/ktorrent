@@ -151,6 +151,7 @@ bool PrefPageOne::apply()
 	Settings::setMaxTotalConnections(dp->max_total_conns->value());
 	Settings::setMaxUploadRate(dp->max_upload_rate->value());
 	Settings::setMaxDownloadRate(dp->max_download_rate->value());
+	Settings::setMaxRatio(dp->num_max_ratio->value());
 	Settings::setKeepSeeding(dp->keep_seeding->isChecked());
 	Settings::setPort(dp->port->value());
 	Settings::setNumUploadSlots(dp->num_upload_slots->value());
@@ -173,6 +174,7 @@ void PrefPageOne::updateData()
 	dp->max_total_conns->setValue(Settings::maxTotalConnections());
 	dp->max_upload_rate->setValue(Settings::maxUploadRate());
 	dp->max_download_rate->setValue(Settings::maxDownloadRate());
+	dp->num_max_ratio->setValue(Settings::maxRatio());
 	dp->keep_seeding->setChecked(Settings::keepSeeding());
 	dp->udp_tracker_port->setValue(Settings::udpTrackerPort());
 	dp->port->setValue(Settings::port());

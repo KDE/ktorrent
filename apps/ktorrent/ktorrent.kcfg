@@ -36,6 +36,11 @@
 			<default>0</default>
 			<min>0</min>
 		</entry>
+		<entry name="maxRatio" type="Double">
+         		<label>Maximum share ratio(0 = no limit)</label>
+		        <default>0</default>
+         		<min>0</min>
+      		</entry>
 		<entry name="port" type="Int">
 			<label>Port</label>
 			<default>6881</default>

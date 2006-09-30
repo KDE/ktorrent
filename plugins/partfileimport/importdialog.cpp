@@ -35,6 +35,7 @@
 #include "importdialog.h"
 #include <datachecker/singledatachecker.h>
 #include <datachecker/multidatachecker.h>
+#include "settings.h"
 
 using namespace bt;
 
@@ -280,6 +281,8 @@ namespace kt
 		out << "RUNNING_TIME_UL=0" << ::endl;
 		out << "PRIORITY=0" << ::endl;
 		out << "AUTOSTART=1" << ::endl;
+		if (core->getGlobalMaxShareRatio() > 0)
+			out << QString("MAX_RATIO=%1").arg(core->getGlobalMaxShareRatio(),0,'f',2) << ::endl;
 		out << QString("IMPORTED=%1").arg(imported) << ::endl;
 		if (custom_output_name)
 			out << "CUSTOM_OUTPUT_NAME=1" << endl;
