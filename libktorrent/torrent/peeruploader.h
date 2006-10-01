@@ -89,6 +89,11 @@ namespace bt
 		void rejectAll();
 		
 		void addUploadedBytes(Uint32 bytes) {uploaded += bytes;}
+		
+		/**
+		 * Clear all pending requests.
+		 */
+		void clearAllRequests();
 	private:
 		void generateAF(ChunkManager & cman);
 	};

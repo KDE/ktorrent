@@ -162,7 +162,7 @@ namespace bt
 			bool ok = 
 					(pd->getNumGrabbed() < pd->getMaxChunkDownloads() ||
 						pd->isNearlyDone()) && 
-					pd->getNumRequests() < pd->getMaximumOutstandingReqs();
+					pd->canAddRequest();
 			
 			
 			if (ok)
@@ -632,7 +632,7 @@ namespace bt
 	void Downloader::setMemoryUsage(Uint32 m)
 	{
 		mem_usage = m;
-		PeerDownloader::setMemoryUsage(m);
+//		PeerDownloader::setMemoryUsage(m);
 	}
 	
 	void Downloader::dataChecked(const BitSet & ok_chunks)

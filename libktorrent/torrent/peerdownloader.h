@@ -103,6 +103,9 @@ namespace bt
 		PeerDownloader(Peer* peer,Uint32 chunk_size);
 		virtual ~PeerDownloader();
 
+		/// See if we can add a request to the wait_queue
+		bool canAddRequest() const;
+		
 		/// Get the number of active requests
 		Uint32 getNumRequests() const;
 
@@ -151,9 +154,6 @@ namespace bt
 		 */
 		void checkTimeouts();
 		
-		/// Get the maximum outstanding requests allowed.
-		Uint32 getMaximumOutstandingReqs() const;
-		
 		/// Get the maximum number of chunk downloads
 		Uint32 getMaxChunkDownloads() const;
 		
@@ -172,6 +172,12 @@ namespace bt
 		
 		AllowedFastSet::const_iterator beginAF() const {return allowed_fast.begin();}
 		AllowedFastSet::const_iterator endAF() const {return allowed_fast.end();}
+		
+		/**
+		 * The peer has been choked, all pending requests are rejected.
+		 * (except for allowed fast ones)
+		 */
+		void choked();
 		
 	public slots:
 		/**
@@ -199,11 +205,10 @@ namespace bt
 		 */
 		void onRejected(const Request & req);
 		
-		static void setMemoryUsage(Uint32 m);
-		
 	private slots:
 		void piece(const Piece & p);
 		void peerDestroyed();
+		void update();
 		
 	signals:
 		/**
@@ -225,15 +230,16 @@ namespace bt
 		 * @param req The Request
 		 */
 		void rejected(const Request & req);
+
 		
 	private:
 		Peer* peer;
 		QValueList<TimeStampedRequest> reqs;
+		QValueList<Request> wait_queue;
 		int grabbed;
 		AllowedFastSet allowed_fast;
 		Uint32 chunk_size;
 		bool nearly_done;
-		static Uint32 max_outstanding_reqs;
 	};
 
 }
