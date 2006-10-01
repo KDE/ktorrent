@@ -204,8 +204,8 @@ namespace bt
 			Peer* p = pman.getPeer(i);
 			if (p)
 			{
-				calcACAScore(p,cman,stats); // update the ACA score in the process
-				if (!p->isSeeder())
+				// update the ACA score in the process
+				if (calcACAScore(p,cman,stats))
 					ppl.append(p);
 				else
 					// choke seeders they do not want to download from us anyway
