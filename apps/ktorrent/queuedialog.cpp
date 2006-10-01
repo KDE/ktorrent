@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Ivan Vasić   *
- *   ivasic@gmail.com   *
+ *   Copyright (C) 2005,2006 by Ivan Vasić 								   *
+ *   ivasic@gmail.com   												   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -232,19 +232,19 @@ void QueueDialog::writeQueue()
 	downloadList->sort();
 	seedList->sort();
 	
-	QueueItem* item = (QueueItem*) downloadList->lastItem();
-	if(item == 0)
-		return;
-	
 	int p = 0;
 	
-	while(item != 0)
+	QueueItem* item = (QueueItem*) downloadList->lastItem();
+	if(item != 0)
 	{
-		if(item->getPriority() != 0)
-			item->setTorrentPriority(++p);
-		else
-			item->setTorrentPriority(0);
-		item = (QueueItem*) item->itemAbove();
+		while(item != 0)
+		{
+			if(item->getPriority() != 0)
+				item->setTorrentPriority(++p);
+			else
+				item->setTorrentPriority(0);
+			item = (QueueItem*) item->itemAbove();
+		}
 	}
 	
 	item = (QueueItem*) seedList->lastItem();
@@ -298,9 +298,9 @@ void QueueDialog::downloadList_currentChanged(QListViewItem* item)
 	TorrentStats s = tc->getStats();
 	
 	dlStatus->setText(tc->statusToString());
-	dlTracker->setText(tc->getTrackerURL(true).prettyURL());
+	dlTracker->setText(tc->getTrackersList()->getTrackerURL().prettyURL());
 	dlRatio->setText(QString("%1").arg((float)s.bytes_uploaded / s.bytes_downloaded,0,'f',2));
-	dlBytes->setText(BytesToString(s.bytes_left));
+	dlBytes->setText(BytesToString(s.bytes_left_to_download));
 	dlDHT->setText(s.priv_torrent ? i18n("No (private torrent)") : i18n("Yes"));
 }
 
@@ -319,11 +319,10 @@ void QueueDialog::seedList_currentChanged(QListViewItem* item)
 	TorrentStats s = tc->getStats();
 	
 	ulStatus->setText(tc->statusToString());
-	ulTracker->setText(tc->getTrackerURL(true).prettyURL());
+	ulTracker->setText(tc->getTrackersList()->getTrackerURL().prettyURL());
 	ulRatio->setText(QString("%1").arg((float)s.bytes_uploaded / s.bytes_downloaded,0,'f',2));
 	ulBytes->setText(BytesToString(s.bytes_uploaded));
 	ulDHT->setText(s.priv_torrent ? i18n("No (private torrent)") : i18n("Yes"));
 }
 
 #include "queuedialog.moc"
-
