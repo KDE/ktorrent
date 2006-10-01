@@ -59,7 +59,7 @@ namespace kt
 		///Show TrackerView in main window
 		void showTrackerView(bool show);
 		//change the priority of all children of a directory
-	        void changePriority(QListViewItem* item, Priority newpriority);
+		void changePriority(QListViewItem* item, Priority newpriority);
 
 	public slots:
 		void changeTC(kt::TorrentInterface* tc);
@@ -88,7 +88,9 @@ namespace kt
 		int first_id;
 		int normal_id;
 		int last_id;
-		int dnd_id;
+		int dnd_keep_id;
+		int dnd_throw_away_id;
+		
 		QWidget* peer_page;
 		PeerView* peer_view;
 		ChunkDownloadView* cd_view;

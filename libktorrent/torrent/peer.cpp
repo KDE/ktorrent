@@ -326,7 +326,7 @@ namespace bt
 		}
 	}
 	
-	Uint32 Peer::sendData(const Uint8* data,Uint32 len,bool proto)
+	Uint32 Peer::sendData(const Uint8* data,Uint32 len)
 	{
 		if (killed) return 0;
 		
@@ -354,7 +354,7 @@ namespace bt
 		return sock->bytesAvailable();
 	}
 
-	void Peer::dataWritten(int bytes)
+	void Peer::dataWritten(int )
 	{
 	//	Out() << "dataWritten " << bytes << endl;
 		
@@ -396,7 +396,6 @@ namespace bt
 		preader->update();
 		
 		Uint32 data_bytes = pwriter->getUploadedDataBytes();
-		Uint32 non_data_bytes = pwriter->getUploadedNonDataBytes();
 		
 		if (data_bytes > 0)
 		{

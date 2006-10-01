@@ -72,8 +72,9 @@ namespace kt
 		/**
 		 * Set all items checked or not.
 		 * @param on true everything checked, false everything not checked
+		 * @param keep_data In case of unchecking keep the data or not
 		 */
-		void setAllChecked(bool on);
+		void setAllChecked(bool on,bool keep_data = false);
 
 		/**
 		 * Invert all items, checked items become unchecked and unchecked become checked.
@@ -110,9 +111,9 @@ namespace kt
 		
 		/**
 		 * Subclasses should override this if they want to show a confirmation dialog. 
-		 * @return true if the deselect can continue, false otherwise
+		 * @return What to do (i.e. keep the data, get rid of it or do nothing
 		 */
-		virtual bool deselectOK();
+		virtual bt::ConfirmationResult confirmationDialog();
 		
 	private:
 		virtual void stateChange(bool on);

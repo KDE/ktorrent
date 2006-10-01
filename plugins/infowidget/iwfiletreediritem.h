@@ -73,7 +73,7 @@ namespace kt
 
 		virtual kt::FileTreeItem* newFileTreeItem(const QString & name, kt::TorrentFileInterface & file);
 		virtual kt::FileTreeDirItem* newFileTreeDirItem(const QString & subdir);
-		virtual bool deselectOK();
+		virtual bt::ConfirmationResult confirmationDialog();
 	};
 }
 

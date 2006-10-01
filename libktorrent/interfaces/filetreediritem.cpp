@@ -89,7 +89,7 @@ namespace kt
 		}
 	}
 	
-	void FileTreeDirItem::setAllChecked(bool on)
+	void FileTreeDirItem::setAllChecked(bool on,bool keep_data)
 	{
 		if (!manual_change)
 		{
@@ -101,7 +101,7 @@ namespace kt
 		bt::PtrMap<QString,FileTreeItem>::iterator i = children.begin();
 		while (i != children.end())
 		{
-			i->second->setChecked(on);
+			i->second->setChecked(on,keep_data);
 			i++;
 		}
 
@@ -109,10 +109,11 @@ namespace kt
 		bt::PtrMap<QString,FileTreeDirItem>::iterator j = subdirs.begin();
 		while (j != subdirs.end())
 		{
-			j->second->setAllChecked(on);
+			j->second->setAllChecked(on,keep_data);
 			j++;
 		}
 	}
+	
 
 	void FileTreeDirItem::invertChecked()
 	{
@@ -138,15 +139,28 @@ namespace kt
 	{
 		if (!manual_change)
 		{
-			if (!on && !deselectOK())
+			if (on)
 			{
-				manual_change = true;
-				setOn(true);
-				manual_change = false;
-				return;
+				setAllChecked(true);
 			}
-			
-			setAllChecked(on);
+			else
+			{
+				switch (confirmationDialog())
+				{
+					case KEEP_DATA:
+						setAllChecked(false,true);
+						break;
+					case THROW_AWAY_DATA:
+						setAllChecked(false,false);
+						break;
+					case CANCELED:
+					default:
+						manual_change = true;
+						setOn(true);
+						manual_change = false;
+						return;
+				}
+			}
 			if (parent)
 				parent->childStateChange();
 		}
@@ -238,9 +252,9 @@ namespace kt
 		return new FileTreeDirItem(this,subdir);
 	}
 
-	bool FileTreeDirItem::deselectOK()
+	bt::ConfirmationResult FileTreeDirItem::confirmationDialog()
 	{
-		return true;
+		return bt::THROW_AWAY_DATA;
 	}
 }
 

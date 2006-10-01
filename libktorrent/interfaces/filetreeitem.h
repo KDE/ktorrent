@@ -30,6 +30,8 @@ namespace kt
 	class TorrentFileInterface;
 	class TorrentInterface;
 	class FileTreeDirItem;
+	
+	
 
 	/**
 	 * @author Joris Guisson
@@ -63,21 +65,24 @@ namespace kt
 		/**
 		 * Set the box checked or not.
 		 * @param on Checked or not
+		 * @param keep_data In case of unchecking keep the data or not
 		 */
-		void setChecked(bool on);
+		void setChecked(bool on,bool keep_data = false);
+		
 	
 	private:
 		void init();
 		virtual void stateChange(bool on);
+		void updatePriorityText();
 		
 	protected:
 		virtual int compare(QListViewItem* i, int col, bool ascending) const;
 		
 		/**
 		 * Subclasses should override this if they want to show a confirmation dialog. 
-		 * @return true if the deselect can continue, false otherwise
+		 * @return What to do (i.e. keep the data, get rid of it or do nothing
 		 */
-		virtual bool deselectOK();
+		virtual bt::ConfirmationResult confirmationDialog();
 	};
 }
 

@@ -44,8 +44,10 @@ namespace bt
 			const QString & datadir,
 			bool custom_output_name)
 	: tor(tor),chunks(tor.getNumChunks()),
-	bitset(tor.getNumChunks()),excluded_chunks(tor.getNumChunks())
+	bitset(tor.getNumChunks()),excluded_chunks(tor.getNumChunks()),only_seed_chunks(tor.getNumChunks()),todo(tor.getNumChunks())
 	{
+		only_seed_chunks.setAll(false);
+		todo.setAll(true);
 		if (tor.isMultiFile())
 			cache = new MultiFileCache(tor,tmpdir,datadir,custom_output_name);
 		else
@@ -80,7 +82,7 @@ namespace bt
 			{
 				downloadStatusChanged(&tf,false);
 			}
-			if (tf.getPriority() == FIRST_PRIORITY || tf.getPriority() == LAST_PRIORITY)
+			if (tf.getPriority() != NORMAL_PRIORITY)
 			{
 				downloadPriorityChanged(&tf,tf.getPriority());
 			}
@@ -91,7 +93,7 @@ namespace bt
 			for(Uint32 i=0; i<tor.getNumFiles(); ++i)
 			{
 				bt::TorrentFile & file = tor.getFile(i);
-				if(file.isMultimedia()) 
+				if (file.isMultimedia() && file.getPriority() != bt::ONLY_SEED_PRIORITY) 
 				{
 					prioritise(file.getFirstChunk(), file.getFirstChunk()+1, PREVIEW_PRIORITY);
 					if (file.getLastChunk() - file.getFirstChunk() > 2)
@@ -101,7 +103,7 @@ namespace bt
 		}
 		else
 		{
-			if(tor.isMultimedia() )
+			if(tor.isMultimedia())
 			{
 				prioritise(0,1,PREVIEW_PRIORITY);
 				if (tor.getNumChunks() > 2)
@@ -178,6 +180,7 @@ namespace bt
 				{
 					c->setStatus(Chunk::ON_DISK);
 					bitset.set(hdr.index,true);
+					todo.set(hdr.index,false);
 					recalc_chunks_left = true;
 				}
 			}
@@ -317,6 +320,7 @@ namespace bt
 		c->clear();
 		c->setStatus(Chunk::NOT_DOWNLOADED);
 		bitset.set(i,false);
+		todo.set(i,!excluded_chunks.get(i) && !only_seed_chunks.get(i));
 		loaded.remove(i);
 		tor.updateFilePercentage(i,bitset);
 	}
@@ -360,6 +364,7 @@ namespace bt
 			if (update_index)
 			{
 				bitset.set(i,true);
+				todo.set(i,false);
 				recalc_chunks_left = true;
 				writeIndexFileEntry(c);
 				tor.updateFilePercentage(i,bitset);
@@ -392,9 +397,19 @@ namespace bt
 		fptr.write(&hdr,sizeof(NewChunkHeader));
 	}
 	
+	Uint32 ChunkManager::onlySeedChunks() const
+	{
+		return only_seed_chunks.numOnBits();
+	}
+	
+	bool ChunkManager::completed() const
+	{
+		return todo.numOnBits() == 0;
+	}
+	
 	Uint64 ChunkManager::bytesLeft() const
 	{
-		Uint32 num_left = chunksLeft() + chunksExcluded();
+		Uint32 num_left = bitset.getNumBits() - bitset.numOnBits();
 		Uint32 last = chunks.size() - 1;
 		if (last < chunks.size() && !bitset.get(last))
 		{
@@ -430,33 +445,44 @@ namespace bt
 	
 	bool ChunkManager::haveAllChunks() const
 	{
-		Uint32 tot = chunks.size();
-		for (Uint32 i = 0;i < tot;i++)
-		{
-			const Chunk* c = chunks[i];
-			if (!bitset.get(i))
-				return false;
-		}
-		return true;
+		return bitset.numOnBits() == bitset.getNumBits();
 	}
 
 	Uint64 ChunkManager::bytesExcluded() const
 	{
+		Uint64 excl = 0;
 		if (excluded_chunks.get(tor.getNumChunks() - 1))
 		{
 			Chunk* c = chunks[tor.getNumChunks() - 1];
 			Uint32 num = excluded_chunks.numOnBits() - 1;
-			return tor.getChunkSize() * num + c->getSize();
+			excl = tor.getChunkSize() * num + c->getSize();
 		}
 		else
 		{
-			return tor.getChunkSize() * excluded_chunks.numOnBits();
+			excl = tor.getChunkSize() * excluded_chunks.numOnBits();
 		}
+		
+		if (only_seed_chunks.get(tor.getNumChunks() - 1))
+		{
+			Chunk* c = chunks[tor.getNumChunks() - 1];
+			Uint32 num = only_seed_chunks.numOnBits() - 1;
+			excl += tor.getChunkSize() * num + c->getSize();
+		}
+		else
+		{
+			excl += tor.getChunkSize() * only_seed_chunks.numOnBits();
+		}
+		return excl;
 	}
 
 	Uint32 ChunkManager::chunksExcluded() const
 	{
-		return excluded_chunks.numOnBits();
+		return excluded_chunks.numOnBits() + only_seed_chunks.numOnBits();
+	}
+	
+	Uint32 ChunkManager::chunksDownloaded() const
+	{
+		return bitset.numOnBits();
 	}
 	
 	void ChunkManager::debugPrintMemUsage()
@@ -473,8 +499,21 @@ namespace bt
 		while (i <= to && i < chunks.count())
 		{
 			Chunk* c = chunks[i];
-			if(c->getPriority() != PREVIEW_PRIORITY || priority == EXCLUDED)
+			if (c->getPriority() != PREVIEW_PRIORITY || 
+				priority == EXCLUDED || priority == ONLY_SEED_PRIORITY)
 				c->setPriority(priority);
+			
+			if (priority == ONLY_SEED_PRIORITY)
+			{
+				only_seed_chunks.set(i,true);
+				todo.set(i,false);
+			}
+			else
+			{
+				only_seed_chunks.set(i,false);
+				todo.set(i,!bitset.get(i));
+			}
+			
 			i++;
 		}
 	}
@@ -490,6 +529,8 @@ namespace bt
 			Chunk* c = chunks[i];
 			c->setExclude(true);
 			excluded_chunks.set(i,true);
+			only_seed_chunks.set(i,false);
+			todo.set(i,false);
 			i++;
 		}
 		recalc_chunks_left = true;
@@ -508,6 +549,7 @@ namespace bt
 			Chunk* c = chunks[i];
 			c->setExclude(false);
 			excluded_chunks.set(i,false);
+			todo.set(i,true);
 			i++;
 		}
 		recalc_chunks_left = true;
@@ -660,6 +702,9 @@ namespace bt
 					break;
 				case 0:
 					tf.setDoNotDownload(true);
+					break;
+				case -1:
+					tf.setPriority(ONLY_SEED_PRIORITY);
 					break;
 				default:
 					tf.setPriority(LAST_PRIORITY);
@@ -833,6 +878,8 @@ namespace bt
 		}			
 
 		prioritise(first,last,newpriority);
+		if (newpriority == ONLY_SEED_PRIORITY)
+			excluded(first,last);
 	}
 	
 	bool ChunkManager::prepareChunk(Chunk* c,bool allways)
@@ -863,6 +910,7 @@ namespace bt
 			{
 				// We think we do not hae a chunk, but we do have it
 				bitset.set(i,true);
+				todo.set(i,false);
 				// the chunk must be on disk
 				c->setStatus(Chunk::ON_DISK);
 				tor.updateFilePercentage(i,bitset); 
@@ -872,6 +920,7 @@ namespace bt
 				Out() << "Previously OK chunk " << i << " is corrupt !!!!!" << endl;
 				// We think we have a chunk, but we don't
 				bitset.set(i,false);
+				todo.set(i,!only_seed_chunks.get(i) && !excluded_chunks.get(i));
 				if (c->getStatus() == Chunk::ON_DISK)
 				{
 					c->setStatus(Chunk::NOT_DOWNLOADED);

@@ -100,6 +100,9 @@ namespace bt
 
 		/// Is chunk excluded
 		bool isExcluded() const;
+		
+		/// Is this a seed only chunk
+		bool isExcludedForDownloading() const;
 
 		/// In/Exclude chunk
 		void setExclude(bool yes);
@@ -145,7 +148,15 @@ namespace bt
 	inline Priority Chunk::getPriority() const {return priority;}
 	inline void Chunk::setPriority(Priority newpriority) {priority = newpriority;}
 	inline bool Chunk::isExcluded() const 
-		{if(priority == EXCLUDED) return true; else return false;}
+	{
+		return priority == EXCLUDED; 
+	}
+	
+	inline bool Chunk::isExcludedForDownloading() const
+	{
+		return priority == ONLY_SEED_PRIORITY;
+	}
+	
 	inline void Chunk::setExclude(bool yes)
 		{if(yes) priority = EXCLUDED; else priority = NORMAL_PRIORITY;}
 }

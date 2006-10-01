@@ -81,7 +81,7 @@ namespace bt
 			return ret;
 				
 		if (peer->isSnubbed() && !peer->areWeChoked() &&
-			cman.chunksLeft() != 0 && peer->getID() != opt_unchoked)
+			!cman.completed() && peer->getID() != opt_unchoked)
 			return ret;
 		
 		if (requests.count() > 1 || requests.count() == 0)

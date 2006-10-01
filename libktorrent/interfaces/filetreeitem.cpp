@@ -44,72 +44,104 @@ namespace kt
 	{
 	}
 
-	void FileTreeItem::setChecked(bool on)
+	void FileTreeItem::setChecked(bool on,bool keep_data)
 	{
 		manual_change = true;
 		setOn(on);
 		manual_change = false;
+		
+		if (!on)
+		{
+			if (keep_data)
+				file.setPriority(ONLY_SEED_PRIORITY);
+			else
+				file.setDoNotDownload(true);	
+		}
+		else
+		{
+			if (file.getPriority() == ONLY_SEED_PRIORITY)
+				file.setPriority(NORMAL_PRIORITY);
+			else
+				file.setDoNotDownload(false);
+		}
+		
+		updatePriorityText();
+		parent->childStateChange();
+	}
+	
+	void FileTreeItem::updatePriorityText()
+	{
+		switch(file.getPriority())
+		{
+			case FIRST_PRIORITY:
+				setText(2,i18n("Yes, First"));
+				break;
+			case LAST_PRIORITY:
+				setText(2,i18n("Yes, Last"));
+				break;
+			case EXCLUDED:
+			case ONLY_SEED_PRIORITY:
+				setText(2,i18n("No"));
+				break;
+			case PREVIEW_PRIORITY:
+				break;
+			default:
+				setText(2,i18n("Yes"));
+				break;
+		}
 	}
 
 	void FileTreeItem::init()
 	{
-		setChecked(!file.doNotDownload());
+		manual_change = true;
+		if (file.doNotDownload() || file.getPriority() == ONLY_SEED_PRIORITY)
+			setOn(false);
+		else
+			setOn(true);
+		manual_change = false;
 		setText(0,name);
 		setText(1,BytesToString(file.getSize()));
-		switch(file.getPriority())
-		{
-		case FIRST_PRIORITY:
-			setText(2,i18n("Yes, First"));
-			break;
-		case LAST_PRIORITY:
-			setText(2,i18n("Yes, Last"));
-			break;
-		case EXCLUDED:
-			setText(2,i18n("No"));
-			break;
-		case PREVIEW_PRIORITY:
-			break;
-		default:
-			setText(2,i18n("Yes"));
-			break;
-		}
+		updatePriorityText();
 		setPixmap(0,KMimeType::findByPath(name)->pixmap(KIcon::Small));
 	}
 
 	void FileTreeItem::stateChange(bool on)
 	{
-		if (!manual_change && !on)
+		if (manual_change)
 		{
-			if (!deselectOK())
+			updatePriorityText();
+			return;
+		}
+		
+		if (!on)
+		{
+			switch (confirmationDialog())
 			{
+			case KEEP_DATA:
+				file.setPriority(ONLY_SEED_PRIORITY);
+				break;
+			case THROW_AWAY_DATA:
+				file.setDoNotDownload(true);
+				break;
+			case CANCELED:
+			default:
 				manual_change = true;
 				setOn(true);
 				manual_change = false;
 				return;
 			}	
 		}
-		Globals::instance().setCriticalOperationMode(true);
-		file.setDoNotDownload(!on);
-		Globals::instance().setCriticalOperationMode(false);
-		switch(file.getPriority())
+		else
 		{
-		case FIRST_PRIORITY:
-			setText(2,i18n("Yes, First"));
-			break;
-		case LAST_PRIORITY:
-			setText(2,i18n("Yes, Last"));
-			break;
-		case EXCLUDED:
-			setText(2,i18n("No"));
-			break;
-		case PREVIEW_PRIORITY:
-			break;
-		default:
-			setText(2,i18n("Yes"));
-			break;
+			if (file.getPriority() == ONLY_SEED_PRIORITY)
+				file.setPriority(NORMAL_PRIORITY);
+			else
+				file.setDoNotDownload(false);
+			
 		}
-		if (!manual_change)
-			parent->childStateChange();
+		
+		updatePriorityText();
+		parent->childStateChange();
 	}
 	
 	int FileTreeItem::compare(QListViewItem* i, int col, bool ascending) const
@@ -129,9 +161,12 @@ namespace kt
 	}
 
 
-	bool FileTreeItem::deselectOK()
+	ConfirmationResult FileTreeItem::confirmationDialog()
 	{
-		return true;
+		if (file.isPreExistingFile())
+			return KEEP_DATA;
+		else
+			return THROW_AWAY_DATA; 
 	}
 
 }

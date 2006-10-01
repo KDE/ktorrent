@@ -118,21 +118,18 @@ namespace kt
 		{
 			case FIRST_PRIORITY:
 				setText(2, i18n("Yes, First"));
-				setChecked(true);
 				break;
 			case LAST_PRIORITY:
 				setText(2, i18n("Yes, Last"));
-				setChecked(true);
 				break;
+			case ONLY_SEED_PRIORITY:
 			case EXCLUDED:
-				setText(2, i18n("No"));
-				setChecked(false);
+				setText(2, i18n("No"));		
 				break;
 			case PREVIEW_PRIORITY:
 				break;
 			default:
 				setText(2, i18n("Yes"));
-				setChecked(true);
 				break;
 		}
 	}
@@ -146,14 +143,23 @@ namespace kt
 		}
 	}
 	
-	bool IWFileTreeItem::deselectOK()
+	bt::ConfirmationResult IWFileTreeItem::confirmationDialog()
 	{
-		int ret = KMessageBox::warningYesNo(0,i18n("If you deselect a file, you will lose all the data off this file. Are you sure you want to do this ?"));
+		return bt::KEEP_DATA;
+		/*
+		QString msg = i18n("Do you want to keep the existing data for seeding ?");
+		int ret = KMessageBox::warningYesNoCancel(0,msg,QString::null,
+				KGuiItem(i18n("Keep the data")),
+				KGuiItem(i18n("Delete the data")));
 		if (ret == KMessageBox::Yes)
-			return true;
-		
-		return false;
+			return bt::KEEP_DATA;
+		else if (ret == KMessageBox::No)
+			return bt::THROW_AWAY_DATA;
+		else
+			return bt::CANCELED;
+		*/
 	}
+	
 }
 
 #include "iwfiletreeitem.moc"

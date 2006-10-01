@@ -206,12 +206,19 @@ namespace kt
 		}
 	}
 
-	bool IWFileTreeDirItem::deselectOK()
+	bt::ConfirmationResult IWFileTreeDirItem::confirmationDialog()
 	{
-		int ret = KMessageBox::warningYesNo(0,i18n("If you deselect a directory, you will lose all the data off all files in this directory. Are you sure you want to do this ?"));
+		return bt::KEEP_DATA;
+/*		QString msg = i18n("Do you want to keep the existing data for seeding ?");
+		int ret = KMessageBox::warningYesNoCancel(0,msg,QString::null,
+				KGuiItem(i18n("Keep the data")),
+				KGuiItem(i18n("Delete the data")));
 		if (ret == KMessageBox::Yes)
-			return true;
-		
-		return false;
+			return bt::KEEP_DATA;
+		else if (ret == KMessageBox::No)
+			return bt::THROW_AWAY_DATA;
+		else
+			return bt::CANCELED;
+		*/
 	}
 }

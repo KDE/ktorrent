@@ -28,6 +28,7 @@
 #include <kpopupmenu.h>
 #include <ktabwidget.h>
 #include <krun.h>
+#include <kmessagebox.h>
 #include <qlabel.h>
 #include <qstring.h>
 #include <qcheckbox.h>
@@ -72,17 +73,23 @@ namespace kt
 	
 		KIconLoader* iload = KGlobal::iconLoader();
 		context_menu = new KPopupMenu(this);
-		preview_id = context_menu->insertItem(iload->loadIconSet("frame_image",KIcon::Small), i18n("Preview"));
-	        context_menu->insertSeparator();
+		preview_id = context_menu->insertItem(iload->loadIconSet("frame_image",KIcon::Small),
+											  i18n("Preview"));
+	    context_menu->insertSeparator();
 		first_id = context_menu->insertItem(i18n("Download First"));
 		normal_id = context_menu->insertItem(i18n("Download Normally"));
 		last_id = context_menu->insertItem(i18n("Download Last"));
-		dnd_id = context_menu->insertItem(i18n("Do Not Download"));
+		context_menu->insertSeparator();
+		dnd_keep_id = context_menu->insertItem(i18n("Do Not Download"));
+		dnd_throw_away_id = context_menu->insertItem(i18n("Delete File(s)"));
+		
+		
 		context_menu->setItemEnabled(preview_id, false);
 		context_menu->setItemEnabled(first_id, false);
 		context_menu->setItemEnabled(normal_id, false);
 		context_menu->setItemEnabled(last_id, false);
-		context_menu->setItemEnabled(dnd_id, false);
+		context_menu->setItemEnabled(dnd_keep_id, false);
+		context_menu->setItemEnabled(dnd_throw_away_id, false);
 
 		connect(m_file_view,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )),
 				this,SLOT(showContextMenu(KListView*, QListViewItem*, const QPoint& )));
@@ -456,8 +463,9 @@ namespace kt
 			context_menu->setItemEnabled(first_id, true);
 			context_menu->setItemEnabled(normal_id, true);
 			context_menu->setItemEnabled(last_id, true);
-			context_menu->setItemEnabled(dnd_id, true);
 			context_menu->setItemEnabled(preview_id, false);
+			context_menu->setItemEnabled(dnd_keep_id,true);
+			context_menu->setItemEnabled(dnd_throw_away_id,true);
 			context_menu->popup(p);
 			return;
 			break;
@@ -467,7 +475,6 @@ namespace kt
 		context_menu->setItemEnabled(first_id, false);
 		context_menu->setItemEnabled(normal_id, false);
 		context_menu->setItemEnabled(last_id, false);
-		context_menu->setItemEnabled(dnd_id, false);
 		if(s.multi_file_torrent && item->childCount() == 0)
 		{
 			kt::TorrentFileInterface & file = ((FileTreeItem*)item)->getTorrentFile();
@@ -480,30 +487,44 @@ namespace kt
 				}
 				else
 					context_menu->setItemEnabled(preview_id, false);
-				/* get the priority of the file and disable the corresponding menu item */
+		
 				switch(file.getPriority())
 				{
 				case FIRST_PRIORITY:
 					context_menu->setItemEnabled(normal_id, true);
 					context_menu->setItemEnabled(last_id, true);
-					context_menu->setItemEnabled(dnd_id, true);
+					context_menu->setItemEnabled(dnd_keep_id,true);
+					context_menu->setItemEnabled(dnd_keep_id,true);
+					context_menu->setItemEnabled(dnd_throw_away_id,true);
 					break;
 				case LAST_PRIORITY:
 					context_menu->setItemEnabled(first_id, true);
 					context_menu->setItemEnabled(normal_id, true);
-					context_menu->setItemEnabled(dnd_id, true);
+					context_menu->setItemEnabled(dnd_keep_id,true);
+					context_menu->setItemEnabled(dnd_keep_id,true);
+					context_menu->setItemEnabled(dnd_throw_away_id,true);
 					break;
 				case EXCLUDED:
-					context_menu->setItemEnabled(first_id, true);
+					context_menu->setItemEnabled(first_id,true);
+					context_menu->setItemEnabled(normal_id,true);
 					context_menu->setItemEnabled(last_id, true);
-					context_menu->setItemEnabled(normal_id, true);
+					context_menu->setItemEnabled(dnd_keep_id,true);
+					context_menu->setItemEnabled(dnd_throw_away_id,false);
+					break;
+				case ONLY_SEED_PRIORITY:
+					context_menu->setItemEnabled(first_id,true);
+					context_menu->setItemEnabled(normal_id,true);
+					context_menu->setItemEnabled(last_id, true);
+					context_menu->setItemEnabled(dnd_keep_id,false);
+					context_menu->setItemEnabled(dnd_throw_away_id,true);
 					break;
 				case PREVIEW_PRIORITY:
-					break;
 				default:
 					context_menu->setItemEnabled(first_id, true);
-					context_menu->setItemEnabled(dnd_id, true);
+					context_menu->setItemEnabled(normal_id,false);
 					context_menu->setItemEnabled(last_id, true);
+					context_menu->setItemEnabled(dnd_keep_id,true);
+					context_menu->setItemEnabled(dnd_throw_away_id,true);
 					break;
 				}
 			}
@@ -519,8 +540,10 @@ namespace kt
 				context_menu->setItemEnabled(first_id, true);
 				context_menu->setItemEnabled(normal_id, true);
 				context_menu->setItemEnabled(last_id, true);
-				context_menu->setItemEnabled(dnd_id, true);
+				context_menu->setItemEnabled(dnd_keep_id,true);
+				context_menu->setItemEnabled(dnd_throw_away_id,true);
 			}
+			
 			if ( curr_tc->readyForPreview() && IsMultimediaFile(s.output_path))
 			{
 				context_menu->setItemEnabled(preview_id, true);
@@ -541,6 +564,14 @@ namespace kt
 			new KRun(KURL::fromPathOrURL(this->curr_tc->getTorDir()+preview_path), 0, true, true);
 			return;
 		}
+		else if (id == dnd_throw_away_id)
+		{
+			QString msg = i18n("You will lose all data in the deselected file(s),"
+					" are you sure you want to do this ?");
+			if (KMessageBox::warningYesNo(0,msg) == KMessageBox::No)
+				return; 
+			newpriority = EXCLUDED;
+		}
 		else if(id == this->first_id)
 		{
 			newpriority = FIRST_PRIORITY;
@@ -549,10 +580,15 @@ namespace kt
 		{
 			newpriority = LAST_PRIORITY;
 		}
-		else if(id == this->dnd_id)
+		else if(id == this->normal_id)
 		{
-			newpriority = EXCLUDED;
+			newpriority = NORMAL_PRIORITY;
 		}
+		else if (id == dnd_keep_id)
+		{
+			newpriority = ONLY_SEED_PRIORITY;
+		}
+		
 
 		QPtrList<QListViewItem> sel = m_file_view->selectedItems();
 		QPtrList<QListViewItem>::Iterator i = sel.begin();
@@ -566,11 +602,24 @@ namespace kt
 	}
 
 	void InfoWidget::changePriority(QListViewItem* item, Priority newpriority)
-	{
+	{	
 		if(item->childCount() == 0)
 		{
-			TorrentFileInterface & file = multi_root->findTorrentFile(item);
-			file.setPriority(newpriority);
+			FileTreeItem* fti = (FileTreeItem*)item;
+			if (newpriority == EXCLUDED)
+			{
+				fti->setChecked(false,false);
+			}
+			else if (newpriority == ONLY_SEED_PRIORITY)
+			{
+				fti->setChecked(false,true);
+			}
+			else 
+			{
+				if (!fti->isOn())
+					fti->setChecked(true,true);
+				fti->getTorrentFile().setPriority(newpriority);
+			}
 			return;
 		}
 		QListViewItem* myChild = item->firstChild();

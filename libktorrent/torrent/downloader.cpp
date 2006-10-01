@@ -62,7 +62,7 @@ namespace bt
 	
 	void Downloader::pieceRecieved(const Piece & p)
 	{
-		if (cman.chunksLeft() == 0)
+		if (cman.completed())
 			return;
 		
 		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
@@ -107,7 +107,7 @@ namespace bt
 	
 	void Downloader::update()
 	{
-		if (cman.chunksLeft() == 0)
+		if (cman.completed())
 			return;
 		
 		/*
@@ -502,7 +502,7 @@ namespace bt
 	void Downloader::loadDownloads(const QString & file)
 	{
 		// don't load stuff if download is finished
-		if (cman.chunksLeft() == 0)
+		if (cman.completed())
 			return;
 		
 		// Load all partial downloads
@@ -535,7 +535,7 @@ namespace bt
 				return;
 			}
 			Chunk* c = cman.getChunk(hdr.index);
-			if (!c->isExcluded() && cman.prepareChunk(c))
+			if (!c->isExcluded() && !c->isExcludedForDownloading() && cman.prepareChunk(c))
 			{
 				ChunkDownload* cd = new ChunkDownload(c);
 				current_chunks.insert(hdr.index,cd);
@@ -603,7 +603,7 @@ namespace bt
 
 	bool Downloader::isFinished() const
 	{
-		return cman.chunksLeft() == 0;
+		return cman.completed();
 	}
 
 	void Downloader::onExcluded(Uint32 from,Uint32 to)
@@ -615,6 +615,7 @@ namespace bt
 				continue;
 			
 			cd->cancelAll();
+			cd->releaseAllPDs();
 			if (tmon)
 				tmon->downloadRemoved(cd);
 			current_chunks.erase(i);

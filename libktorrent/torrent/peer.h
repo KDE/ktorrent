@@ -136,7 +136,7 @@ namespace bt
 		 * @param proto Indicates wether the packed is data or a protocol message
 		 * @return Number of bytes written
 		 */
-		Uint32 sendData(const Uint8* data,Uint32 len,bool proto);
+		Uint32 sendData(const Uint8* data,Uint32 len);
 		
 		/**
 		 * Reads data from the peer.

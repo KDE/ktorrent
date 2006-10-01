@@ -62,7 +62,10 @@ namespace bt
 		QPtrVector<Chunk> chunks;
 		Cache* cache;
 		QValueList<Uint32> loaded;
-		BitSet bitset,excluded_chunks;
+		BitSet bitset;
+		BitSet excluded_chunks;
+		BitSet only_seed_chunks;
+		BitSet todo;
 		mutable Uint32 chunks_left;
 		mutable bool recalc_chunks_left;
 	
@@ -207,6 +210,17 @@ namespace bt
 		Uint32 chunksExcluded() const;
 		
 		/**
+		 * Get the number of downloaded chunks
+		 * @return 
+		 */
+		Uint32 chunksDownloaded() const;
+		
+		/**
+		 * Get the number of only seed chunks.
+		 */
+		Uint32 onlySeedChunks() const;
+		
+		/**
 		 * Get a BitSet of the status of all Chunks
 		 */
 		const BitSet & getBitSet() const {return bitset;}
@@ -263,6 +277,9 @@ namespace bt
 		
 		/// Delete all data files 
 		void deleteDataFiles();
+		
+		/// Are all not deselected chunks downloaded.
+		bool completed() const;
 	signals:
 		/**
 		 * Emitted when a range of chunks has been excluded
