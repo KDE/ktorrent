@@ -39,6 +39,7 @@
 #include "searchprefpage.h"
 #include "searchplugin.h"
 #include "searchenginelist.h"
+#include "searchpluginsettings.h"
 
 using namespace bt;
 
