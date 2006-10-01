@@ -35,7 +35,6 @@
 #include "importdialog.h"
 #include <datachecker/singledatachecker.h>
 #include <datachecker/multidatachecker.h>
-#include "settings.h"
 
 using namespace bt;
 
