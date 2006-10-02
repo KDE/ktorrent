@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 declare -a filenames priorities torinfo filecounts ints info tors usernms ktorrents dcops
 
