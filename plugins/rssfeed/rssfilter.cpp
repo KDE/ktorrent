@@ -337,12 +337,16 @@ namespace kt
 	void RssFilter::deleteMatch(const QString& link)
 	{
 	
-		QValueList<FilterMatch>::iterator it;
-		for ( it = m_matches.begin(); it != m_matches.end(); ++it )
+		QValueList<FilterMatch>::iterator it = m_matches.begin();
+		while (it != m_matches.end())
 		{
 			if ((*it).link() == link)
 			{
-				m_matches.remove(it);
+				it = m_matches.remove(it);
+			}
+			else
+			{
+				it++;
 			}
 		}
 		
