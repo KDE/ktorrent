@@ -174,7 +174,9 @@ namespace bt
 			if (stats.completed && !comp)
 			{
 				// download has just been completed
-				tracker->completed();
+				// only sent completed to tracker when we have all chunks (so no excluded chunks)
+				if (cman->haveAllChunks())
+					tracker->completed();
 				pman->killSeeders();
 				QDateTime now = QDateTime::currentDateTime();
 				running_time_dl += time_started_dl.secsTo(now);
@@ -1156,6 +1158,8 @@ namespace bt
 			{
 				down->recalcDownloaded();
 				stats.imported_bytes = down->bytesDownloaded();
+				if (cman->haveAllChunks())
+					stats.completed = true;
 			}
 		}
 		delete dc;
