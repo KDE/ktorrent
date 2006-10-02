@@ -615,6 +615,7 @@ namespace bt
 				continue;
 			
 			cd->cancelAll();
+			cd->releaseAllPDs();
 			if (tmon)
 				tmon->downloadRemoved(cd);
 			current_chunks.erase(i);
