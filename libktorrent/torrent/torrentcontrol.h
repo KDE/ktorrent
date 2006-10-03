@@ -32,6 +32,7 @@
 #include <interfaces/trackerslist.h>
 
 class QStringList;
+class QString;
 
 
 namespace bt
@@ -47,6 +48,7 @@ namespace bt
 	class BitSet;
 	class QueueManager;
 	class PreallocationThread;
+	class TimeEstimator;
 	
 	/**
 	 * @author Joris Guisson
@@ -216,6 +218,12 @@ namespace bt
 		 */
 		void resetTrackerStats();
 		
+		/**
+		 * Returns estimated time left for finishing download. Returned value is in seconds.
+		 * Uses TimeEstimator class to calculate this value.
+		 */
+		Uint32 getETA();
+		
 	public slots:
 		/**
 		 * Update the object, should be called periodically.
@@ -285,6 +293,7 @@ namespace bt
 		Downloader* down;
 		Uploader* up;
 		Choker* choke;
+		TimeEstimator* m_eta;
 		
 		Timer choker_update_timer,stats_save_timer,stalled_timer;
 		

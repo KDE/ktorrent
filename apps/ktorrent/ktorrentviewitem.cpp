@@ -26,7 +26,6 @@
 #include <interfaces/functions.h>
 #include "ktorrentviewitem.h"
 
-
 using namespace bt;
 using namespace kt;
 /*
@@ -128,27 +127,18 @@ void KTorrentViewItem::update()
 	}
 	else if (s.running) 
 	{
-		float bytes_downloaded = (float)s.bytes_downloaded;
-		if( bytes_downloaded < 1 ) //if we just started download use old algorithm
+		Uint32 secs = tc->getETA();
+		if(secs == -1)
 		{
-			if (s.download_rate == 0)
-			{
-				setText(7,i18n("infinity"));
-				eta = -2;
-			}
-			else
-			{
-				Uint32 secs = (int)floor( (float)s.bytes_left_to_download / (float)s.download_rate);
-				eta = secs;
-				setText(7,DurationToString(secs));
-			}
+			setText(7,i18n("infinity"));
+			eta = -2;
 		}
-		else 
+		else
 		{
-			double avg_speed = (double)bytes_downloaded / (double)tc->getRunningTimeDL();
-			eta = (Int64)floor(s.bytes_left_to_download / avg_speed);
-			setText(7,DurationToString((int)floor(s.bytes_left_to_download / avg_speed)));
+			eta = secs;
+			setText(7,DurationToString(secs));
 		}
+			
 	}
 	else
 	{

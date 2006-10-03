@@ -61,6 +61,7 @@
 #include "statsfile.h"
 #include "announcelist.h"
 #include "preallocationthread.h"
+#include "timeestimator.h"
 
 using namespace kt;
 
@@ -98,6 +99,8 @@ namespace bt
 		custom_output_name = false;
 		updateStats();
 		prealoc_thread = 0;
+		
+		m_eta = new TimeEstimator(this);
 	}
 
 
@@ -117,6 +120,7 @@ namespace bt
 		delete pman;
 		delete psman;
 		delete tor;
+		delete m_eta;
 	}
 
 	void TorrentControl::update()
@@ -1297,6 +1301,11 @@ namespace bt
 		
 		// emit signal to show a systray message
 		corruptedDataFound(this);
+	}
+	
+	Uint32 TorrentControl::getETA()
+	{
+		return m_eta->estimate();
 	}
 }
 
