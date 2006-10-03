@@ -43,7 +43,7 @@ namespace bt
 		
 	private:
 		bool calcACAScore(Peer* p,ChunkManager & cman,const kt::TorrentStats & stats);
-		Peer* updateOptimisticPeer(PeerManager & pman);
+		Peer* updateOptimisticPeer(PeerManager & pman,const PeerPtrList & ppl);
 		void doUnchoking(PeerPtrList & ppl,Peer* poup);
 	};
 
