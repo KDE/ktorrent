@@ -180,6 +180,9 @@ namespace bt
 	
 	void PeerSourceManager::addTracker(KURL url, bool custom)
 	{
+		if (trackers.contains(url))
+			return;
+		
 		Tracker* trk = 0;
 		if (url.protocol() == "udp")
 			trk = new UDPTracker(url,tor,tor->getTorrent().getPeerID());
