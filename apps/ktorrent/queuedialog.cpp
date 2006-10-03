@@ -125,7 +125,8 @@ QueueDialog::QueueDialog(bt::QueueManager* qm, QWidget *parent, const char *name
 		TorrentInterface* tc = *it;
 		TorrentStatus ts = tc->getStats().status;
 		
-		if(ts == kt::SEEDING || ts == kt::COMPLETE || tc->getStats().completed)
+		if(ts == kt::SEEDING || ts == kt::DOWNLOAD_COMPLETE || 
+			ts == kt::SEEDING_COMPLETE || tc->getStats().completed)
 		{
 			QueueItem* item = new QueueItem(tc, seedList);
 			seedList->insertItem(item);

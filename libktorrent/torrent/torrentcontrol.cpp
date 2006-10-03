@@ -795,8 +795,10 @@ namespace bt
 			stats.status = kt::NOT_STARTED;
 		else if(!stats.running && !stats.user_controlled)
 			stats.status = kt::QUEUED;
+		else if (!stats.running && stats.completed && overMaxRatio())
+			stats.status = kt::SEEDING_COMPLETE;
 		else if (!stats.running && stats.completed)
-			stats.status = kt::COMPLETE;
+			stats.status = kt::DOWNLOAD_COMPLETE;
 		else if (!stats.running)
 			stats.status = kt::STOPPED;
 		else if (stats.running && stats.completed)
@@ -1131,8 +1133,10 @@ namespace bt
 		{
 			case kt::NOT_STARTED :
 				return i18n("Not started");
-			case kt::COMPLETE :
-				return i18n("Completed");
+			case kt::DOWNLOAD_COMPLETE :
+				return i18n("Download Completed");
+			case kt::SEEDING_COMPLETE :
+				return i18n("Seeding Completed");
 			case kt::SEEDING :
 				return i18n("Seeding");
 			case kt::DOWNLOADING:

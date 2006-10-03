@@ -45,7 +45,8 @@ namespace kt
 	enum TorrentStatus
 	{
 		NOT_STARTED,
-		COMPLETE,
+		SEEDING_COMPLETE,
+		DOWNLOAD_COMPLETE,
 		SEEDING,
 		DOWNLOADING,
 		STALLED,
