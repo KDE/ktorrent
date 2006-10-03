@@ -156,7 +156,7 @@ namespace bt
 		ppl.setCompareFunc(ACACmp); 
 		ppl.sort();
 		
-		doUnchoking(ppl,updateOptimisticPeer(pman));
+		doUnchoking(ppl,updateOptimisticPeer(pman,ppl));
 	}
 	
 	void AdvancedChokeAlgorithm::doUnchoking(PeerPtrList & ppl,Peer* poup)
@@ -218,10 +218,10 @@ namespace bt
 		ppl.setCompareFunc(UpRateCmp);
 		ppl.sort();
 		
-		doUnchoking(ppl,updateOptimisticPeer(pman));
+		doUnchoking(ppl,updateOptimisticPeer(pman,ppl));
 	}
 	
-	static Uint32 FindPlannedOptimisticUnchokedPeer(PeerManager& pman)
+	static Uint32 FindPlannedOptimisticUnchokedPeer(PeerManager& pman,const PeerPtrList & ppl)
 	{
 		Uint32 num_peers = pman.getNumConnectedPeers();
 		if (num_peers == 0)
@@ -233,7 +233,7 @@ namespace bt
 		while (i != start)
 		{
 			Peer* p = pman.getPeer(i);
-			if (p && p->isChoked() && p->isInterested() && !p->isSeeder())
+			if (p && p->isChoked() && p->isInterested() && !p->isSeeder() && ppl.contains(p))
 				return p->getID();
 			i = (i + 1) % num_peers;
 		}
@@ -242,15 +242,14 @@ namespace bt
 		return UNDEFINED_ID;
 	}
 	
-	Peer* AdvancedChokeAlgorithm::updateOptimisticPeer(PeerManager & pman)
+	Peer* AdvancedChokeAlgorithm::updateOptimisticPeer(PeerManager & pman,const PeerPtrList & ppl)
 	{
-		PeerPtrList ppl;
 		// get the planned optimistic unchoked peer and change it if necessary
 		Peer* poup = pman.findPeer(opt_unchoked_peer_id);
 		Uint32 now = GetCurrentTime();
 		if (now - last_opt_sel_time > OPT_SEL_INTERVAL || !poup)
 		{
-			opt_unchoked_peer_id = FindPlannedOptimisticUnchokedPeer(pman);
+			opt_unchoked_peer_id = FindPlannedOptimisticUnchokedPeer(pman,ppl);
 			last_opt_sel_time = now;
 			poup = pman.findPeer(opt_unchoked_peer_id);
 		}
