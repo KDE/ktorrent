@@ -93,6 +93,9 @@ namespace bt
 
 			Uint32 m_lastAvg;
 			Uint32 m_lastETA;
+			
+			//last percentage
+			double m_perc;
 	};
 
 }

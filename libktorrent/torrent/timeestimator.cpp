@@ -34,6 +34,7 @@ namespace bt
 	{
 		m_samples = new SampleQueue(20);
 		m_lastAvg = 0;
+		m_perc = -1;
 	}
 
 
@@ -51,7 +52,14 @@ namespace bt
 		//push new sample
 		m_samples->push(sample);
 		
-		int percentage = (int) (s.bytes_downloaded / s.total_bytes) * 100;
+		double perc = (double) s.bytes_downloaded / (double) s.total_bytes;
+		int percentage = (int) (perc) * 100;
+		
+		//calculate percentage increasement
+		double delta = 1 - 1 / (perc / m_perc);
+		//remember last percentage
+		m_perc = perc;
+		
 		 
 		if(s.bytes_downloaded < 1024*1024*100 && sample > 0) // < 100KB
 		{
@@ -76,13 +84,15 @@ namespace bt
 		}
 		else
 		{
-			m_lastETA = estimateMAVG();
+			m_lastETA = -1;
+			
+			if(delta > 0.0001)
+				m_lastETA = estimateMAVG();
 			
 			if(m_lastETA == -1)
 				m_lastETA = estimateGASA();
 		}
 
-		
 		return m_lastETA;
 	}
 	
@@ -124,13 +134,17 @@ namespace bt
 		
 		if(m_samples->count() > 0)
 		{
+			double lavg;
 		
-			double lavg = m_lastAvg - ( (double) m_samples->first() / (double) m_samples->count() ) + ( (double) m_samples->last() / (double) m_samples->count() );
+			if(m_lastAvg == 0)
+				lavg = (Uint32) m_samples->sum() / m_samples->count();
+			else
+			 	lavg = m_lastAvg - ( (double) m_samples->first() / (double) m_samples->count() ) + ( (double) m_samples->last() / (double) m_samples->count() );
 		
 			m_lastAvg = (Uint32) floor (lavg);
 			
 			if(lavg > 0)
-				return (Uint32) floor ( (double) s.bytes_left_to_download / ( (lavg+estimateGASA()) / 2 ) );
+				return (Uint32) floor ( (double) s.bytes_left_to_download / ( (lavg+(m_samples->sum() / m_samples->count())) / 2 ) );
 			
 			return -1;
 		}
