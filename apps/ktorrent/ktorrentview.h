@@ -103,6 +103,7 @@ public slots:
 	void manualAnnounce();
 	void previewFiles();
 	void removeDownloads();
+	void removeDownloadsAndData();
 	void onSelectionChanged();
 	void queueSlot();
 	void checkDataIntegrity();
@@ -143,6 +144,7 @@ private:
 	int stop_id;
 	int start_id;
 	int remove_id;
+	int remove_all_id;
 	int preview_id;
 	int announce_id;
 	int queue_id;

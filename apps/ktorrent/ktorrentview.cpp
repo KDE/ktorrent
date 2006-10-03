@@ -142,8 +142,12 @@ void KTorrentView::makeMenu()
 			this,SLOT(startDownloads()));
 
 	remove_id = menu->insertItem(
-			iload->loadIconSet("ktremove",KIcon::Small),i18n("Remove"),
+			iload->loadIconSet("ktremove",KIcon::Small),i18n("Remove Torrent"),
 			this,SLOT(removeDownloads()));
+	
+	remove_all_id = menu->insertItem(
+			iload->loadIconSet("ktremove",KIcon::Small),i18n("Remove Torrent And Data"),
+			this,SLOT(removeDownloadsAndData()));
 	
 	queue_id = menu->insertItem(
 			iload->loadIconSet("player_playlist",KIcon::Small),i18n("Enqueue/Dequeue"),
@@ -335,6 +339,25 @@ void KTorrentView::removeDownloads()
 	onSelectionChanged();
 }
 
+void KTorrentView::removeDownloadsAndData()
+{
+	QString msg = i18n("You will lose all the downloaded data. Are you sure you want to do this ?");
+	if (KMessageBox::warningYesNo(this,msg) == KMessageBox::No)
+		return;
+	
+	QPtrList<QListViewItem> sel = selectedItems();
+	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
+	{
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
+		TorrentInterface* tc = kvi->getTC();
+		if (tc)
+			wantToRemove(tc,true);
+	}
+	
+	// make sure toolbuttons get updated
+	onSelectionChanged();
+}
+
 void KTorrentView::manualAnnounce()
 {
 	QPtrList<QListViewItem> sel = selectedItems();
@@ -447,6 +470,7 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 	menu->setItemEnabled(start_id,en_start);
 	menu->setItemEnabled(stop_id,en_stop);
 	menu->setItemEnabled(remove_id,en_remove);
+	menu->setItemEnabled(remove_all_id,en_remove);
 	menu->setItemEnabled(preview_id,en_prev);
 	menu->setItemEnabled(add_peer_id, en_add_peer);
 	menu->setItemEnabled(announce_id,en_announce);
