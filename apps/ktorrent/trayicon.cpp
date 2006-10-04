@@ -39,6 +39,13 @@ TrayIcon::TrayIcon( KTorrentCore* tc, QWidget *parent, const char *name)
 {
 	m_core = tc;
 	setPixmap(loadIcon("ktorrent"));
+	paint=new QPainter( this );
+	drawContents ( paint );
+	downBar=loadIcon("ktdownloadbar");
+	upBar=loadIcon("ktuploadbar");
+	previousDownloadHeight=0;
+	previousUploadHeight=0;
+
 	connect(this,SIGNAL(quitSelected()),kapp,SLOT(quit()));
 	connect(m_core, SIGNAL(finished(kt::TorrentInterface* )),
 	        this, SLOT(finished(kt::TorrentInterface* )));
@@ -53,11 +60,30 @@ TrayIcon::TrayIcon( KTorrentCore* tc, QWidget *parent, const char *name)
 TrayIcon::~TrayIcon()
 {}
 
-void TrayIcon::updateStats(const CurrentStats stats)
+void TrayIcon::updateStats(const CurrentStats stats, bool showBars,int downloadBandwidth, int uploadBandwidth )
 {
 	QString tip = i18n("<center><b>KTorrent</b></center><table cellpadding='2' cellspacing='2' align='center'><tr><td><b>Speed:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%1</font></td><td>Upload: <font color='#990000'>%2</font></td></tr><tr><td><b>Transfer:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%3</font></td><td>Upload: <font color='#990000'>%4</font></td></tr></table>").arg(KBytesPerSecToString((double)stats.download_speed/1024.0)).arg(KBytesPerSecToString((double)stats.upload_speed/1024.0)).arg(BytesToString(stats.bytes_downloaded)).arg(BytesToString(stats.bytes_uploaded));
 	QToolTip::add
 		(this, tip);
+	if(showBars)
+		drawSpeedBar(stats.download_speed/1024,stats.upload_speed/1024, downloadBandwidth, uploadBandwidth);
+}
+
+void TrayIcon::drawSpeedBar(int downloadSpeed, int uploadSpeed, int downloadBandwidth, int uploadBandwidth )
+{
+	//check if need repaint
+	int DownloadHeight=((downloadSpeed*pixmap()->height())/downloadBandwidth);
+	int UploadHeight=((uploadSpeed*pixmap()->height())/uploadBandwidth);
+	if(previousDownloadHeight==DownloadHeight && previousUploadHeight==UploadHeight)
+		return;
+	
+	repaint ();
+
+	paint->drawPixmap(0,(pixmap()->height()-DownloadHeight)<0?0:(pixmap()->height()-DownloadHeight),downBar );
+	paint->drawPixmap(pixmap()->width()-upBar.width(),(pixmap()->height()-UploadHeight)<0?0:(pixmap()->height()-UploadHeight), upBar );
+
+	previousDownloadHeight=DownloadHeight;
+	previousUploadHeight=UploadHeight;	
 }
 
 void TrayIcon::finished(TorrentInterface* tc)

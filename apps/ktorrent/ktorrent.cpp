@@ -701,7 +701,7 @@ void KTorrent::updatedStats()
 	m_statusTransfer->setText(tmp1);
 
 	m_view->update();
-	m_systray_icon->updateStats(stats);
+	m_systray_icon->updateStats(stats,Settings::showSpeedBarInTrayIcon(),Settings::downloadBandwidth(), Settings::uploadBandwidth());
 	m_core->getPluginManager().updateGuiPlugins();
 	
 #if 0

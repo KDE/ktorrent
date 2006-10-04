@@ -52,7 +52,7 @@ rc_DATA = ktorrentui.rc
 KDE_ICON= torrent ktorrent
 
 appicondir = $(kde_datadir)/ktorrent/icons
-appicon_ICON = ktencrypted ktremove ktstart_all ktstart ktstop_all ktstop ktplugins ktinfowidget ktqueuemanager ktupnp ktprefdownloads
+appicon_ICON = ktencrypted ktremove ktstart_all ktstart ktstop_all ktstop ktplugins ktinfowidget ktqueuemanager ktupnp ktprefdownloads ktuploadbar ktdownloadbar
 
 kde_servicetypes_DATA = ktorrentplugin.desktop
 EXTRA_DIST = ktorrentplugin.desktop

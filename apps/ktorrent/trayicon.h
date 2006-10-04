@@ -23,6 +23,7 @@
 
 #include <ksystemtray.h>
 #include <kpopupmenu.h>
+#include <qpainter.h>
 
 #include "ktorrentcore.h"
 #include "settings.h"
@@ -53,7 +54,9 @@ public:
 	TrayIcon(KTorrentCore* tc, QWidget *parent = 0, const char *name = 0);
 	virtual ~TrayIcon();
 
-	void updateStats(const CurrentStats stats);
+	void updateStats(const CurrentStats stats, bool showBars=false, int downloadBandwidth=0, int uploadBandwidth=0);
+private:
+	void drawSpeedBar(int downloadSpeed, int uploadSpeed, int downloadBandwidth, int uploadBandwidth);
 
 private slots:
 	/**
@@ -83,6 +86,11 @@ private slots:
 
 private:
 	KTorrentCore* m_core;
+	QPainter *paint;
+	QPixmap downBar;
+	QPixmap upBar;
+	int previousDownloadHeight;
+	int previousUploadHeight;
 };
 
 class SetMaxRate : public KPopupMenu

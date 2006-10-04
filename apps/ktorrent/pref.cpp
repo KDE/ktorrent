@@ -215,6 +215,9 @@ void PrefPageTwo::createWidget(QWidget* parent)
 bool PrefPageTwo::apply()
 {
 	Settings::setShowSystemTrayIcon(gp->show_systray_icon->isChecked());
+	Settings::setShowSpeedBarInTrayIcon(gp->show_speedbar->isChecked());
+	Settings::setDownloadBandwidth(gp->downloadBandwidth->value());
+	Settings::setUploadBandwidth(gp->uploadBandwidth->value());
 	Settings::setShowPopups(gp->show_popups->isChecked());
 	QString ourl = Settings::tempDir();
 	
@@ -290,6 +293,9 @@ void PrefPageTwo::dhtChecked(bool on)
 void PrefPageTwo::updateData()
 {
 	gp->show_systray_icon->setChecked(Settings::showSystemTrayIcon());
+	gp->show_speedbar->setChecked(Settings::showSpeedBarInTrayIcon());
+	gp->downloadBandwidth->setValue(Settings::downloadBandwidth());
+	gp->uploadBandwidth->setValue(Settings::uploadBandwidth());
 	gp->show_popups->setChecked(Settings::showPopups());
 	KURLRequester* u = gp->temp_dir;
 	u->fileDialog()->setMode(KFile::Directory);
