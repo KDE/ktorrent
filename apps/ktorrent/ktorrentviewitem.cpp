@@ -114,14 +114,14 @@ void KTorrentViewItem::update()
 	setText(2,BytesToString(nb));
 	setText(3,BytesToString(s.total_bytes_to_download));
 	setText(4,BytesToString(s.bytes_uploaded));
-	if (s.bytes_left == 0)
+	if (s.bytes_left_to_download == 0)
 		setText(5,KBytesPerSecToString(0));
 	else
 		setText(5,KBytesPerSecToString(s.download_rate / 1024.0));
 	setText(6,KBytesPerSecToString(s.upload_rate / 1024.0));
   
 	KLocale* loc = KGlobal::locale();
-	if (s.bytes_left == 0)
+	if (s.bytes_left_to_download == 0)
 	{
 		setText(7,i18n("finished"));
 		eta = -1;
@@ -138,7 +138,7 @@ void KTorrentViewItem::update()
 			}
 			else
 			{
-				Uint32 secs = (int)floor( (float)s.bytes_left / (float)s.download_rate);
+				Uint32 secs = (int)floor( (float)s.bytes_left_to_download / (float)s.download_rate);
 				eta = secs;
 				setText(7,DurationToString(secs));
 			}
@@ -146,8 +146,8 @@ void KTorrentViewItem::update()
 		else 
 		{
 			double avg_speed = (double)bytes_downloaded / (double)tc->getRunningTimeDL();
-			eta = (Int64)floor(s.bytes_left / avg_speed);
-			setText(7,DurationToString((int)floor(s.bytes_left / avg_speed)));
+			eta = (Int64)floor(s.bytes_left_to_download / avg_speed);
+			setText(7,DurationToString((int)floor(s.bytes_left_to_download / avg_speed)));
 		}
 	}
 	else
@@ -159,7 +159,7 @@ void KTorrentViewItem::update()
 	setText(8,QString::number(s.num_peers));
 
 	double perc = 0;
-	if (s.bytes_left == 0)
+	if (s.bytes_left_to_download == 0)
 	{
 		perc = 100.0;
 	}
@@ -171,7 +171,7 @@ void KTorrentViewItem::update()
 		}
 		else
 		{
-			perc = 100.0 - ((double)s.bytes_left / s.total_bytes_to_download) * 100.0;
+			perc = 100.0 - ((double)s.bytes_left_to_download / s.total_bytes_to_download) * 100.0;
 			if (perc > 100.0)
 				perc = 100.0;
 			else if (perc > 99.9)

@@ -377,9 +377,9 @@ namespace bt
 	
 	Uint64 ChunkManager::bytesLeft() const
 	{
-		Uint32 num_left = chunksLeft();
+		Uint32 num_left = chunksLeft() + chunksExcluded();
 		Uint32 last = chunks.size() - 1;
-		if (last < chunks.size() && !bitset.get(last) && !excluded_chunks.get(last))
+		if (last < chunks.size() && !bitset.get(last))
 		{
 			Chunk* c = chunks[last];
 			if (c)

@@ -670,7 +670,7 @@ namespace bt
 
 	void TorrentControl::doChoking()
 	{
-		choke->update(cman->bytesLeft() == 0,stats);
+		choke->update(stats.completed,stats);
 	}
 
 	bool TorrentControl::changeDataDir(const QString & new_dir)
@@ -899,6 +899,7 @@ namespace bt
 		stats.upload_rate = up && stats.running ? up->uploadRate() : 0;
 		stats.download_rate = down && stats.running ? down->downloadRate() : 0;
 		stats.bytes_left = cman ? cman->bytesLeft() : 0;
+		stats.bytes_left_to_download = cman ? cman->bytesLeft() - cman->bytesExcluded() : 0;
 		stats.bytes_uploaded = up ? up->bytesUploaded() : 0;
 		stats.bytes_downloaded = down ? down->bytesDownloaded() : 0;
 		stats.total_chunks = cman ? cman->getNumChunks() : 0;
@@ -906,6 +907,8 @@ namespace bt
 		stats.num_chunks_excluded = cman ? cman->chunksExcluded() : 0;
 		stats.chunk_size = tor ? tor->getChunkSize() : 0;
 		stats.total_bytes_to_download = (tor && cman) ?	tor->getFileLength() - cman->bytesExcluded() : 0;
+		
+		
 		
 		if (stats.bytes_downloaded >= prev_bytes_dl)
 			stats.session_bytes_downloaded = stats.bytes_downloaded - prev_bytes_dl;

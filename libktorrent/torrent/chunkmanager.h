@@ -174,8 +174,9 @@ namespace bt
 		void saveChunk(unsigned int i,bool update_index = true);
 		
 		/**
-		 * Calculates the number of bytes left to download.
-		 * @return The number of bytes to download
+		 * Calculates the number of bytes left to download. Does include 
+		 * excluded chunks (this should be used for the tracker).
+		 * @return The number of bytes to download + the number of bytes excluded
 		 */
 		Uint64 bytesLeft() const;
 
@@ -186,7 +187,8 @@ namespace bt
 		Uint64 bytesExcluded() const;
 		
 		/**
-		 * Calculates the number of chunks left to download.
+		 * Calculates the number of chunks left to download. 
+		 * Does not include excluded chunks.
 		 * @return The number of chunks to download
 		 */
 		Uint32 chunksLeft() const;
