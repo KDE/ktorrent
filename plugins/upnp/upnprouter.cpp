@@ -350,6 +350,11 @@ namespace kt
 	
 	bt::HTTPRequest* UPnPRouter::sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl)
 	{
+		// if port is not set, 0 will be returned 
+		// thanks to Diego R. Brogna for spotting this bug
+		if (location.port()==0)
+			location.setPort(80);
+		
 		QString http_hdr = QString(
 				"POST %1 HTTP/1.1\r\n"
 				"HOST: %2:%3\r\n"
