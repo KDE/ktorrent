@@ -224,6 +224,15 @@ namespace bt
 		 */
 		Uint32 getETA();
 		
+		///Starts DHT for this torrent (if allowed)
+		void startDHT();
+		
+		///Stops DHT for this torrent
+		void stopDHT();
+		
+		///Checks if DHT was started
+		bool dhtStarted();
+		
 	public slots:
 		/**
 		 * Update the object, should be called periodically.
@@ -313,6 +322,7 @@ namespace bt
 		bool prealloc;
 		PreallocationThread* prealoc_thread;
 		Uint32 last_announce;
+		bool dht_on;
 	};
 }
 

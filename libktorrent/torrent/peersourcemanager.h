@@ -31,6 +31,11 @@ namespace kt
 	class PeerSource;
 }
 
+namespace dht
+{
+	class DHTTrackerBackend;
+}
+
 namespace bt
 {
 	class Tracker;
@@ -52,6 +57,7 @@ namespace bt
 		PtrMap<KURL,Tracker> trackers;
 		QPtrList<kt::PeerSource> additional;
 		Tracker* curr;
+		dht::DHTTrackerBackend* m_dht;
 		bool started;
 		bool pending;
 		KURL::List custom_trackers;
@@ -124,6 +130,13 @@ namespace bt
 		
 		/// Get the number of failures
 		Uint32 getNumFailures() const {return failures;}
+		
+		///Adds DHT as PeerSource for this torrent
+		void addDHT();
+		///Removes DHT from PeerSourceManager for this torrent.
+		void removeDHT();
+		///Checks if DHT is enabled
+		bool dhtStarted();
 		
 	private slots:
 		/**

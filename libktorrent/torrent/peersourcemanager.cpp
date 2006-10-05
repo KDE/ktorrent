@@ -36,7 +36,7 @@ namespace bt
 {
 
 	PeerSourceManager::PeerSourceManager(TorrentControl* tor,PeerManager* pman) 
-	: tor(tor),pman(pman),curr(0),started(false),pending(false)
+	: tor(tor),pman(pman),curr(0),started(false),pending(false), m_dht(0)
 	{
 		failures = 0;
 		trackers.setAutoDelete(true);
@@ -51,10 +51,11 @@ namespace bt
 			i++;
 		}
 		
-		loadCustomURLs();
-		
-		// add the DHT source
-		addPeerSource(new dht::DHTTrackerBackend(Globals::instance().getDHT(),tor));
+		if(!tor->getStats().priv_torrent)
+		{
+			//load custom trackers
+			loadCustomURLs();
+		}
 	}
 	
 	PeerSourceManager::~PeerSourceManager()
@@ -452,6 +453,38 @@ namespace bt
 	Uint32 PeerSourceManager::getNumLeechers() const
 	{
 		return curr ? curr->getNumLeechers() : 0;
+	}
+	
+	void PeerSourceManager::addDHT()
+	{
+		if(m_dht)
+		{
+			removePeerSource(m_dht);
+			delete m_dht;
+		}
+		
+		m_dht = new dht::DHTTrackerBackend(Globals::instance().getDHT(),tor);
+		
+		// add the DHT source
+		addPeerSource(m_dht);
+	}
+
+	void PeerSourceManager::removeDHT()
+	{
+		if(m_dht == 0)
+		{
+			removePeerSource(m_dht);
+			return;
+		}
+		
+		removePeerSource(m_dht);
+		delete m_dht;
+		m_dht = 0;
+	}
+	
+	bool PeerSourceManager::dhtStarted()
+	{
+		return m_dht != 0;
 	}
 }
 

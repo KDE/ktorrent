@@ -62,8 +62,6 @@ static QColor StatusToColor(TorrentStatus s,const QColorGroup & cg)
 	{
 		case kt::SEEDING :
 		case kt::DOWNLOADING:
-		case kt::DOWNLOAD_COMPLETE :
-		case kt::SEEDING_COMPLETE :
 		case kt::ALLOCATING_DISKSPACE :
 			return green;
 		case kt::STALLED:
@@ -74,6 +72,8 @@ static QColor StatusToColor(TorrentStatus s,const QColorGroup & cg)
 		case kt::NOT_STARTED :
 		case kt::STOPPED:
 		case kt::QUEUED:
+		case kt::DOWNLOAD_COMPLETE :
+		case kt::SEEDING_COMPLETE :
 		default:
 			return cg.text();
 	}

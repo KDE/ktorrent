@@ -158,7 +158,15 @@ void KTorrentView::makeMenu()
 	add_peer_id = menu->insertItem(
 			iload->loadIconSet("add", KIcon::Small), i18n("Add peers..."),
 			this, SLOT(showAddPeersWidget())); 
-
+	
+	peer_sources_menu = new KPopupMenu(menu);
+	peer_sources_id = menu->insertItem(i18n("Additional peer sources"), peer_sources_menu);
+	peer_sources_menu->insertTitle(i18n("Torrent peer sources:"));
+	peer_sources_menu->setCheckable(true);
+	dht_id = peer_sources_menu->insertItem(i18n("DHT"), this, SLOT(dhtSlot()));
+	
+	menu->insertSeparator();
+	
 	announce_id = menu->insertItem(
 			iload->loadIconSet("apply",KIcon::Small),i18n("Manual Announce"),
 			this,SLOT(manualAnnounce())); 
@@ -436,6 +444,7 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 	bool en_announce = true;
 	bool en_add_peer = true;
 	bool en_dirs = false;
+	bool en_peer_sources = true;
 	
 	QPtrList<QListViewItem> sel = selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
@@ -461,12 +470,16 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 				en_prev = true;
 			
 			if(s.priv_torrent)
+			{
 				en_add_peer = false;
+				en_peer_sources = false;
+			}
 		}
 	}
 	
 	en_remove = sel.count() > 0;
 	en_add_peer = en_add_peer && en_stop;
+	
 	menu->setItemEnabled(start_id,en_start);
 	menu->setItemEnabled(stop_id,en_stop);
 	menu->setItemEnabled(remove_id,en_remove);
@@ -489,14 +502,22 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 		// no data check when we are preallocating diskspace
 		menu->setItemEnabled(scan_id, 
 							 tc->getStats().status != kt::ALLOCATING_DISKSPACE);
+		
+		//enable additional peer sources if torrent is not private
+		menu->setItemEnabled(peer_sources_id, en_peer_sources);
+		
+		if(en_peer_sources)
+			peer_sources_menu->setItemChecked(dht_id, tc->dhtStarted());
 	}
 	else
 	{
 		menu->setItemEnabled(scan_id,false);
+		
+		//disable peer source
+		menu->setItemEnabled(peer_sources_id, false);	
 	}
 	
-	dirs_sub_menu->setItemEnabled(outputdir_id, en_dirs);
-	dirs_sub_menu->setItemEnabled(torxdir_id, en_dirs);
+	menu->setItemEnabled(dirs_id, en_dirs);
 	
 	menu->popup(p);
 }
@@ -753,6 +774,23 @@ void KTorrentView::openTorXDirectory()
 		if (tc)
 		{
 			new KRun(KURL::fromPathOrURL(tc->getTorDir()), 0, true, true);
+		}
+	}
+}
+
+void KTorrentView::dhtSlot()
+{
+	QPtrList<QListViewItem> sel = selectedItems();
+	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
+	{
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
+		TorrentInterface* tc = kvi->getTC();
+		if (tc)
+		{
+			if(tc->dhtStarted())
+				tc->stopDHT();
+			else
+				tc->startDHT();
 		}
 	}
 }

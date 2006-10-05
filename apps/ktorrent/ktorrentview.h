@@ -111,6 +111,7 @@ public slots:
 	void showAddPeersWidget();
 	void openOutputDirectory();
 	void openTorXDirectory();
+	void dhtSlot();
 
 private slots:
 	void onExecuted(QListViewItem* item);
@@ -141,6 +142,7 @@ private:
 	KPopupMenu* menu;
 	KPopupMenu* groups_sub_menu;
 	KPopupMenu* dirs_sub_menu;
+	KPopupMenu* peer_sources_menu;
 	int stop_id;
 	int start_id;
 	int remove_id;
@@ -155,6 +157,8 @@ private:
 	int dirs_id;
 	int outputdir_id;
 	int torxdir_id;
+	int peer_sources_id;
+	int dht_id;
 	kt::Group* current_group;
 };
 

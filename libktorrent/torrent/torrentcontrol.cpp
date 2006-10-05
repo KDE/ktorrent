@@ -99,6 +99,7 @@ namespace bt
 		custom_output_name = false;
 		updateStats();
 		prealoc_thread = 0;
+		dht_on = false;
 		
 		m_eta = new TimeEstimator(this);
 	}
@@ -317,7 +318,7 @@ namespace bt
 	
 	void TorrentControl::continueStart()
 	{
-		// continues start after the prealoc_thread has finished preallocation
+		// continues start after the prealoc_thread has finished preallocation	
 		pman->start();
 		try
 		{
@@ -862,6 +863,12 @@ namespace bt
 		st.write("MAX_RATIO", QString("%1").arg(maxShareRatio,0,'f',2));
 		st.write("RESTART_DISK_PREALLOCATION",prealloc ? "1" : "0");
 		
+		if(!stats.priv_torrent)
+		{
+			//save dht
+			st.write("DHT", dhtStarted() ? "1" : "0");
+		}
+		
 		st.writeSync();
 	}
 
@@ -893,6 +900,17 @@ namespace bt
 		maxShareRatio = rat;
 		if (st.hasKey("RESTART_DISK_PREALLOCATION"))
 			prealloc = st.readString("RESTART_DISK_PREALLOCATION") == "1";
+		
+		if(!stats.priv_torrent)
+		{
+			if(st.hasKey("DHT"))
+				dht_on = st.readBoolean("DHT");
+			else
+				dht_on = true;
+		}
+		
+		if(dht_on)
+			startDHT();
 		
 		return;
 	}
@@ -1134,9 +1152,9 @@ namespace bt
 			case kt::NOT_STARTED :
 				return i18n("Not started");
 			case kt::DOWNLOAD_COMPLETE :
-				return i18n("Download Completed");
+				return i18n("Download completed");
 			case kt::SEEDING_COMPLETE :
-				return i18n("Seeding Completed");
+				return i18n("Seeding completed");
 			case kt::SEEDING :
 				return i18n("Seeding");
 			case kt::DOWNLOADING:
@@ -1312,6 +1330,28 @@ namespace bt
 	Uint32 TorrentControl::getETA()
 	{
 		return m_eta->estimate();
+	}
+	
+	void TorrentControl::startDHT()
+	{
+		if(!stats.priv_torrent)
+		{
+			psman->addDHT();
+			dht_on = dhtStarted();
+			saveStats();
+		}
+	}
+
+	void TorrentControl::stopDHT()
+	{
+		psman->removeDHT();
+		dht_on = false;
+		saveStats();
+	}
+	
+	bool TorrentControl::dhtStarted()
+	{
+		return psman->dhtStarted();
 	}
 }
 

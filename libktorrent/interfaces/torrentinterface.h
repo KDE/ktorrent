@@ -342,6 +342,16 @@ namespace kt
 		 * @param ps 
 		 */
 		virtual void removePeerSource(PeerSource* ps) = 0;
+		
+		///Starts DHT for this torrent (if allowed)
+		virtual void startDHT() = 0;
+		
+		///Stops DHT for this torrent
+		virtual void stopDHT() = 0;
+		
+		///Checks if DHT was started
+		virtual bool dhtStarted() = 0;
+		
 	signals:
 		/**
 		 * Emited when we have finished downloading.
