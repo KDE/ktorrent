@@ -122,12 +122,18 @@ namespace dht
 			{
 				Uint16 port = bt::ReadUint16(item.getData(),4);
 				QString ip = QHostAddress(ReadUint32(item.getData(),0)).toString();
-				Out(SYS_DHT|LOG_NOTICE) << "DHT: Got PotentialPeer " << ip << ":" << port << endl;
+				
 				addPeer(ip,port);
 				cnt++;
 			}
+			
 			if (cnt)
+			{
+				Out(SYS_DHT|LOG_NOTICE) << 
+						QString("DHT: Got %1 potential peers for torrent %2")
+						.arg(cnt).arg(tor->getStats().torrent_name) << endl;
 				peersReady(this);
+			}
 		}
 	}
 	
