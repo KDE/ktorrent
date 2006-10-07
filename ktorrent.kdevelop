@@ -14,14 +14,14 @@
     </keywords>
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
-    <description/>
+    <description></description>
     <ignoreparts/>
     <versioncontrol>kdevsubversion</versioncontrol>
   </general>
   <kdevautoproject>
     <general>
       <activetarget>libktorrent/torrent/libtorrent.la</activetarget>
-      <useconfiguration>debug</useconfiguration>
+      <useconfiguration>optimized</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>
     <run>
@@ -59,7 +59,17 @@
         <ccompiler>kdevgccoptions</ccompiler>
         <cxxcompiler>kdevgppoptions</cxxcompiler>
         <f77compiler>kdevg77options</f77compiler>
-        <cxxflags>-O2 -g0</cxxflags>
+        <cxxflags>-O2 -march=athlon64 -msse3 -pipe</cxxflags>
+        <envvars/>
+        <configargs></configargs>
+        <topsourcedir></topsourcedir>
+        <cppflags></cppflags>
+        <ldflags></ldflags>
+        <ccompilerbinary></ccompilerbinary>
+        <cxxcompilerbinary></cxxcompilerbinary>
+        <f77compilerbinary></f77compilerbinary>
+        <cflags></cflags>
+        <f77flags></f77flags>
       </optimized>
       <debug>
         <configargs>--enable-debug=full --enable-torrent-mimetype</configargs>
@@ -150,14 +160,14 @@
     <general>
       <dbgshell>libtool</dbgshell>
       <programargs>--nofork --debug</programargs>
-      <gdbpath/>
+      <gdbpath></gdbpath>
       <breakonloadinglibs>true</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>
       <runappinappdirectory>true</runappinappdirectory>
-      <configGdbScript/>
-      <runShellScript/>
-      <runGdbScript/>
+      <configGdbScript></configGdbScript>
+      <runShellScript></runShellScript>
+      <runGdbScript></runGdbScript>
     </general>
     <display>
       <staticmembers>false</staticmembers>
@@ -232,7 +242,7 @@
       <headerCompletionDelay>250</headerCompletionDelay>
     </codecompletion>
     <creategettersetter>
-      <prefixGet/>
+      <prefixGet></prefixGet>
       <prefixSet>set</prefixSet>
       <prefixVariable>m_,_</prefixVariable>
       <parameterName>theValue</parameterName>
@@ -245,7 +255,7 @@
     <qt>
       <used>true</used>
       <version>3</version>
-      <root/>
+      <root></root>
     </qt>
   </kdevcppsupport>
   <kdevvisualadvance>

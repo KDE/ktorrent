@@ -180,15 +180,17 @@ namespace bt
 			stats.completed = cman->completed();
 			if (stats.completed && !comp)
 			{
-				// download has just been completed
-				// only sent completed to tracker when we have all chunks (so no excluded chunks)
-				if (cman->haveAllChunks())
-					psman->completed();
 				pman->killSeeders();
 				QDateTime now = QDateTime::currentDateTime();
 				running_time_dl += time_started_dl.secsTo(now);
 				updateStatusMsg();
 				updateStats();
+				
+				// download has just been completed
+				// only sent completed to tracker when we have all chunks (so no excluded chunks)
+				if (cman->haveAllChunks())
+					psman->completed();
+				
 				finished(this);
 			}
 			else if (!stats.completed && comp)

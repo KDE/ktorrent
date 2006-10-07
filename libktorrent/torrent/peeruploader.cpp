@@ -150,6 +150,7 @@ namespace bt
 	
 	void PeerUploader::generateAF(ChunkManager & cman)
 	{
+	//	return;
 		Uint32 cnt = 0;
 		Uint8 tmp[24];
 		SHA1Hash hash;
