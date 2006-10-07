@@ -676,6 +676,9 @@ namespace bt
 
 	bool TorrentControl::changeDataDir(const QString & new_dir)
 	{
+#warning "This code is broken at the moment, will fix later"
+		return false;
+
 		// new_dir doesn't contain the torX/ part
 		// so first get that and append it to new_dir
 		int dd = datadir.findRev(DirSeparator(),datadir.length() - 2,false);
