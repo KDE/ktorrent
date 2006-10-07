@@ -689,15 +689,15 @@ void KTorrent::updatedStats()
 	CurrentStats stats = this->m_core->getStats();
 	
 	//m_statusInfo->setText(i18n("Some info here e.g. connected/disconnected"));
-	QString tmp = i18n("Speed up: %1 / down: %2")
-			.arg(KBytesPerSecToString((double)stats.upload_speed/1024.0))
-			.arg(KBytesPerSecToString((double)stats.download_speed/1024.0));
+	QString tmp = i18n("Speed down: %1 / up: %2")
+			.arg(KBytesPerSecToString((double)stats.download_speed/1024.0))
+			.arg(KBytesPerSecToString((double)stats.upload_speed/1024.0));
 
 	m_statusSpeed->setText(tmp);
 
-	QString tmp1 = i18n("Transferred up: %1 / down: %2")
-			.arg(BytesToString(stats.bytes_uploaded))
-			.arg(BytesToString(stats.bytes_downloaded));
+	QString tmp1 = i18n("Transferred down: %1 / up: %2")
+			.arg(BytesToString(stats.bytes_downloaded))
+			.arg(BytesToString(stats.bytes_uploaded));
 	m_statusTransfer->setText(tmp1);
 
 	m_view->update();
