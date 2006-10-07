@@ -217,7 +217,10 @@ namespace bt
 							ReadUint32(tmp_buf,9),
 							id);
 					
-					uploader->addRequest(r);
+					if (!am_choked)
+						uploader->addRequest(r);
+					else if (stats.fast_extensions)
+						pwriter->sendReject(r);
 				//	Out() << "REQUEST " << r.getIndex() << " " << r.getOffset() << endl;
 				}
 				break;
