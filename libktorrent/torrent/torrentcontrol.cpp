@@ -173,15 +173,17 @@ namespace bt
 			stats.completed = cman->chunksLeft() == 0;
 			if (stats.completed && !comp)
 			{
-				// download has just been completed
-				// only sent completed to tracker when we have all chunks (so no excluded chunks)
-				if (cman->haveAllChunks())
-					tracker->completed();
 				pman->killSeeders();
 				QDateTime now = QDateTime::currentDateTime();
 				running_time_dl += time_started_dl.secsTo(now);
 				updateStatusMsg();
 				updateStats();
+				
+				// download has just been completed
+				// only sent completed to tracker when we have all chunks (so no excluded chunks)
+				if (cman->haveAllChunks())
+					tracker->completed();
+				
 				finished(this);
 			}
 			else if (!stats.completed && comp)
@@ -226,8 +228,7 @@ namespace bt
 			
 			// do a manual update if we are stalled for more then 2 minutes
 			// we do not do this for private torrents
-			if (stalled_timer.getElapsedSinceUpdate() > 120000 && stats.bytes_left > 0 &&
-				!stats.priv_torrent)
+			if (stalled_timer.getElapsedSinceUpdate() > 120000 && !stats.completed && !stats.priv_torrent)
 			{
 				Out() << "Stalled for to long, time to get some fresh blood" << endl;
 				tracker->manualUpdate();
