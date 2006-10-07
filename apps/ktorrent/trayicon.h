@@ -87,8 +87,6 @@ private slots:
 private:
 	KTorrentCore* m_core;
 	QPainter *paint;
-	QPixmap downBar;
-	QPixmap upBar;
 	int previousDownloadHeight;
 	int previousUploadHeight;
 };

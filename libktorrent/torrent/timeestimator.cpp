@@ -68,31 +68,31 @@ namespace bt
 		}
 		
 		if(percentage >= 99 && sample > 0 && s.bytes_left_to_download <= 10*1024^3) //1% of a very large torrent could be hundreds of MB so limit it to 10MB
-		{
-			m_lastETA = estimateCSA();	
+		{	
+			if(!m_samples->isFull())
+			{
+				m_lastETA = estimateWINX();
+			
+				if(m_lastETA == (Uint32) -1)
+					m_lastETA = estimateGASA();
+
+				return m_lastETA;
+			}
+			else
+			{
+				m_lastETA = (Uint32) -1;
+			
+				if(delta > 0.0001)
+					m_lastETA = estimateMAVG();
+			
+				if(m_lastETA == (Uint32) -1)
+					m_lastETA = estimateGASA();
+			}
+			
 			return m_lastETA;
 		}
 		
-		if(!m_samples->isFull())
-		{
-			m_lastETA = estimateWINX();
-			
-			if(m_lastETA == -1)
-				m_lastETA = estimateGASA();
-
-			return m_lastETA;
-		}
-		else
-		{
-			m_lastETA = -1;
-			
-			if(delta > 0.0001)
-				m_lastETA = estimateMAVG();
-			
-			if(m_lastETA == -1)
-				m_lastETA = estimateGASA();
-		}
-
+		m_lastETA = estimateGASA();
 		return m_lastETA;
 	}
 	
@@ -101,7 +101,7 @@ namespace bt
 		const TorrentStats& s = m_tc->getStats();
 		
 		if(s.download_rate == 0)
-			return -1;
+			return (Uint32) -1;
 		
 		return (int)floor( (float)s.bytes_left_to_download / (float)s.download_rate );
 	}
@@ -116,7 +116,7 @@ namespace bt
 			return (Uint32) floor ( (double) s.bytes_left_to_download / avg_speed);
 		}
 		
-		return -1;
+		return (Uint32) -1;
 	}
 	
 	Uint32 TimeEstimator::estimateWINX()
@@ -125,7 +125,7 @@ namespace bt
 		if(m_samples->sum() > 0 && m_samples->count() > 0)
 			return (Uint32) floor ( (double) s.bytes_left_to_download / ((double) m_samples->sum() / (double) m_samples->count()) );
 		
-		return -1;
+		return (Uint32) -1;
 	}
 	
 	Uint32 TimeEstimator::estimateMAVG()
@@ -146,16 +146,16 @@ namespace bt
 			if(lavg > 0)
 				return (Uint32) floor ( (double) s.bytes_left_to_download / ( (lavg+(m_samples->sum() / m_samples->count())) / 2 ) );
 			
-			return -1;
+			return (Uint32) -1;
 		}
 		
-		return -1;
+		return (Uint32) -1;
 	}
 
 }
 
 bt::SampleQueue::SampleQueue(int max)
-	:m_count(0), m_size(max)
+	:m_size(max), m_count(0)
 {
 	m_samples = new Uint32[max];
 	for(int i=0; i<m_size; ++i)

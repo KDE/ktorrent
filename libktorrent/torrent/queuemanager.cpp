@@ -365,8 +365,8 @@ namespace bt
 			if(max_seeds == 0) 
 				max_qm_seeds = seed_queue.count();
 			
-			Uint32 counter = 0;
-			for(Uint32 i=0; counter<max_qm_downloads && i<download_queue.count(); ++i)
+			int counter = 0;
+			for(int i=0; counter<max_qm_downloads && i<download_queue.count(); ++i)
 			{
 				TorrentInterface* tc = download_queue.at(i);
 				const TorrentStats & s = tc->getStats();
@@ -382,7 +382,7 @@ namespace bt
 			}
 			
 			counter = 0;
-			for(Uint32 i=0; counter<max_qm_seeds && i<seed_queue.count(); ++i)
+			for(int i=0; counter<max_qm_seeds && i<seed_queue.count(); ++i)
 			{
 				TorrentInterface* tc = seed_queue.at(i);
 				const TorrentStats & s = tc->getStats();

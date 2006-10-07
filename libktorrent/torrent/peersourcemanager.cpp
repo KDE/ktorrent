@@ -36,7 +36,7 @@ namespace bt
 {
 
 	PeerSourceManager::PeerSourceManager(TorrentControl* tor,PeerManager* pman) 
-	: tor(tor),pman(pman),curr(0),started(false),pending(false), m_dht(0)
+	: tor(tor),pman(pman),curr(0),started(false),m_dht(0),pending(false)
 	{
 		failures = 0;
 		trackers.setAutoDelete(true);

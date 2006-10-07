@@ -41,8 +41,6 @@ TrayIcon::TrayIcon( KTorrentCore* tc, QWidget *parent, const char *name)
 	setPixmap(loadIcon("ktorrent"));
 	paint=new QPainter( this );
 	drawContents ( paint );
-	downBar=loadIcon("ktdownloadbar");
-	upBar=loadIcon("ktuploadbar");
 	previousDownloadHeight=0;
 	previousUploadHeight=0;
 
@@ -79,8 +77,10 @@ void TrayIcon::drawSpeedBar(int downloadSpeed, int uploadSpeed, int downloadBand
 	
 	repaint ();
 
-	paint->drawPixmap(0,(pixmap()->height()-DownloadHeight)<0?0:(pixmap()->height()-DownloadHeight),downBar );
-	paint->drawPixmap(pixmap()->width()-upBar.width(),(pixmap()->height()-UploadHeight)<0?0:(pixmap()->height()-UploadHeight), upBar );
+	QBrush brushD(green);
+	QBrush brushU(red);
+	paint->fillRect(0,pixmap()->height(),2,-DownloadHeight,brushD);
+	paint->fillRect(pixmap()->width()-2,pixmap()->height(),2,-UploadHeight,brushU);
 
 	previousDownloadHeight=DownloadHeight;
 	previousUploadHeight=UploadHeight;	
