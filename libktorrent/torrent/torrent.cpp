@@ -39,11 +39,13 @@ namespace bt
 	Torrent::Torrent() : piece_length(0),file_length(0),priv_torrent(false)
 	{
 		encoding = "utf8";
+		trackers = 0;
 	}
 
 
 	Torrent::~Torrent()
 	{
+		delete trackers;
 	}
 	
 	
@@ -182,7 +184,11 @@ namespace bt
 		if (!node || node->data().getType() != Value::STRING)
 			throw Error(i18n("Corrupted torrent!"));
 		
-		tracker_urls.append(KURL(node->data().toString(encoding).stripWhiteSpace()));
+		// tracker_urls.append(KURL(node->data().toString(encoding).stripWhiteSpace()));
+		if (!trackers)
+			trackers = new TrackerTier();
+		
+		trackers->urls.append(KURL(node->data().toString(encoding).stripWhiteSpace()));
 	}
 	
 	void Torrent::loadPieceLength(BValueNode* node)
@@ -244,6 +250,10 @@ namespace bt
 		if (!ml)
 			return;
 		
+		if (!trackers)
+			trackers = new TrackerTier();
+		
+		TrackerTier* tier = trackers;
 		//ml->printDebugInfo();
 		for (Uint32 i = 0;i < ml->getNumChildren();i++)
 		{
@@ -258,9 +268,11 @@ namespace bt
 					throw Error(i18n("Parse Error"));
 
 				KURL url(vn->data().toString().stripWhiteSpace());
-				tracker_urls.append(url);
+				tier->urls.append(url);
 				//Out() << "Added tracker " << url << endl;
 			}
+			tier->next = new TrackerTier();
+			tier = tier->next;
 		}
 	}
 	
@@ -294,7 +306,7 @@ namespace bt
 
 	void Torrent::debugPrintInfo()
 	{
-		Out() << "Name : " << name_suggestion << endl;
+	/*	Out() << "Name : " << name_suggestion << endl;
 		
 		for (KURL::List::iterator i = tracker_urls.begin();i != tracker_urls.end();i++)
 			Out() << "Tracker URL : " << *i << endl;
@@ -321,6 +333,7 @@ namespace bt
 			Out() << "File Length : " << file_length << endl;
 		}
 		Out() << "Pieces : " << hash_pieces.size() << endl;
+	*/
 	}
 	
 	bool Torrent::verifyHash(const SHA1Hash & h,Uint32 index)
@@ -358,7 +371,14 @@ namespace bt
 
 	unsigned int Torrent::getNumTrackerURLs() const
 	{
-		return tracker_urls.count();
+		Uint32 count = 0;
+		TrackerTier* tt = trackers;
+		while (tt)
+		{
+			count += tt->urls.count();
+			tt = tt->next;
+		}
+		return count;
 	}
 
 	void Torrent::calcChunkPos(Uint32 chunk,QValueList<Uint32> & file_list) const

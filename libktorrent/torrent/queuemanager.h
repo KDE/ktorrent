@@ -35,6 +35,7 @@ namespace bt
 {
 	class SHA1Hash;
 	class AnnounceList;
+	struct TrackerTier;
 	
 	class QueuePtrList : public QPtrList<kt::TorrentInterface>
 	{
@@ -95,9 +96,9 @@ namespace bt
 			/**
 			 * Merge announce lists to a torrent
 			 * @param ih The info_hash of the torrent to merge to
-			 * @param urls List of urls
+			 * @param trk First tier of trackers
 			 */
-			void mergeAnnounceList(const SHA1Hash & ih,const KURL::List & urls);
+			void mergeAnnounceList(const SHA1Hash & ih,const TrackerTier* trk);
 			
 			void setMaxDownloads(int m);
 			void setMaxSeeds(int m);

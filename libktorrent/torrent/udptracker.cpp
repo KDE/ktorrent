@@ -37,8 +37,8 @@ namespace bt
 	Uint32 UDPTracker::num_instances = 0;
 	
 
-	UDPTracker::UDPTracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id) 
-	: Tracker(url,tor,id)
+	UDPTracker::UDPTracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id,int tier) 
+	: Tracker(url,tor,id,tier)
 	{
 		num_instances++;
 		if (!socket)

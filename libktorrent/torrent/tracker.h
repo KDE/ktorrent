@@ -45,7 +45,7 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-		Tracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id);
+		Tracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id,int tier);
 		virtual ~Tracker();
 		
 		/// See if a start request succeeded
@@ -77,6 +77,9 @@ namespace bt
 		 * Does nothing if the tracker does not support this.
 		 */
 		virtual void scrape() = 0;
+		
+		/// Get the trackers tier
+		int getTier() const {return tier;}
 		
 		/**
 		 * Get the update interval in ms
@@ -116,6 +119,7 @@ namespace bt
 		
 	protected:
 		KURL url;
+		int tier;
 		PeerID peer_id;
 		kt::TorrentInterface* tor;
 		Uint32 interval,seeders,leechers,key;

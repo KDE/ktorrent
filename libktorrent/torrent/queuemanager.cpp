@@ -269,7 +269,7 @@ namespace bt
 		return false;
 	}
 	
-	void QueueManager::mergeAnnounceList(const SHA1Hash & ih,const KURL::List & urls)
+	void QueueManager::mergeAnnounceList(const SHA1Hash & ih,const TrackerTier* trk)
 	{
 		QPtrList<kt::TorrentInterface>::iterator itr = downloads.begin();
 		while (itr != downloads.end())
@@ -278,7 +278,7 @@ namespace bt
 			if (tor->getTorrent().getInfoHash() == ih)
 			{
 				TrackersList* ta = tor->getTrackersList(); 
-				ta->merge(urls);
+				ta->merge(trk);
 				return;
 			}
 			itr++;

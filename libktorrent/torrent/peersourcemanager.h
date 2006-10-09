@@ -111,7 +111,7 @@ namespace bt
 		
 		virtual KURL getTrackerURL() const;
 		virtual KURL::List getTrackerURLs();
-		virtual void addTracker(KURL url, bool custom = true);
+		virtual void addTracker(KURL url, bool custom = true,int tier = 1);
 		virtual bool removeTracker(KURL url);
 		virtual void setTracker(KURL url);
 		virtual void restoreDefault();
@@ -168,6 +168,7 @@ namespace bt
 		void loadCustomURLs();
 		void addTracker(Tracker* trk);
 		void switchTracker(Tracker* trk);
+		Tracker* selectTracker();
 	};
 
 }

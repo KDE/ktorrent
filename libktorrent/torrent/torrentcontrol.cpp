@@ -239,7 +239,7 @@ namespace bt
 			
 			// do a manual update if we are stalled for more then 2 minutes
 			// we do not do this for private torrents
-			if (stalled_timer.getElapsedSinceUpdate() > 120000 && stats.bytes_left > 0 &&
+			if (stalled_timer.getElapsedSinceUpdate() > 120000 && !stats.completed &&
 				!stats.priv_torrent)
 			{
 				Out() << "Stalled for too long, time to get some fresh blood" << endl;

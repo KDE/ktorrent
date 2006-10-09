@@ -41,8 +41,8 @@ using namespace kt;
 namespace bt
 {
 
-	HTTPTracker::HTTPTracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id)
-		: Tracker(url,tor,id)
+	HTTPTracker::HTTPTracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id,int tier)
+		: Tracker(url,tor,id,tier)
 	{
 		active_job = active_scrape_job = 0;
 		

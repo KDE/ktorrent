@@ -42,7 +42,7 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-		HTTPTracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id);
+		HTTPTracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id,int tier);
 		virtual ~HTTPTracker();
 		
 		virtual void start();

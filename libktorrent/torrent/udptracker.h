@@ -54,7 +54,7 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-		UDPTracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id);
+		UDPTracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id,int tier);
 		virtual ~UDPTracker();
 
 		virtual void start();

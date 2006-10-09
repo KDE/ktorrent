@@ -38,8 +38,21 @@ namespace bt
 	class BValueNode;
 	class BDictNode;
 	class BListNode;
-//	class AnnounceList;
-	
+
+
+	struct TrackerTier
+	{
+		KURL::List urls;
+		TrackerTier* next;
+		
+		TrackerTier() : next(0)
+		{}
+		
+		~TrackerTier() 
+		{
+			delete next;
+		}
+	};
 	
 	
 	/**
@@ -153,7 +166,7 @@ namespace bt
 		bool isPrivate() const {return priv_torrent;}
 		
 		///Gets a pointer to AnnounceList
-		const KURL::List & getTrackerList() const { return tracker_urls; }
+		const TrackerTier* getTrackerList() const { return trackers; }
 		
 		/// Get the number of initial DHT nodes
 		Uint32 getNumDHTNodes() const {return nodes.count();}
@@ -186,7 +199,7 @@ namespace bt
 		void loadAnnounceList(BNode* node);
 		
 	private:
-		KURL::List tracker_urls;
+		TrackerTier* trackers;
 		QString name_suggestion;
 		Uint64 piece_length;
 		Uint64 file_length;

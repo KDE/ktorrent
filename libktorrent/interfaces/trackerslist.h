@@ -22,6 +22,11 @@
 
 #include <kurl.h>
 
+namespace bt
+{
+	struct TrackerTier;
+}
+
 namespace kt
 {
 	/**
@@ -47,9 +52,12 @@ namespace kt
 		
 			/**
 			 * Adds a tracker URL to the list.
-			 * @param custom - Weather or not the user added this tracker. Most of the time this is the case.
+			 * @param url The URL
+			 * @param custom Is it a custom tracker
+			 * @param tier Which tier (or priority) the tracker has, tier 1 are 
+			 * the main trackers, tier 2 are backups ...
 			 */
-			virtual void addTracker(KURL url, bool custom = true) = 0;
+			virtual void addTracker(KURL url, bool custom = true,int tier = 1) = 0;
 		
 			/**
 			 * Removes the tracker from the list.
@@ -70,9 +78,9 @@ namespace kt
 			
 			/**
 			 * Merge an other tracker list.
-			 * @param al The TrackersList
+			 * @param first The first TrackerTier
 			 */
-			void merge(const KURL::List & ul);
+			void merge(const bt::TrackerTier* first);
 
 	};
 

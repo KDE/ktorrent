@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <torrent/torrent.h>
 #include "trackerslist.h"
 
 namespace kt 
@@ -31,13 +32,19 @@ namespace kt
 	{
 	}
 	
-	void TrackersList::merge(const KURL::List & urls)
+	void TrackersList::merge(const bt::TrackerTier* first)
 	{
-		KURL::List::const_iterator i = urls.begin();
-		while (i != urls.end())
+		int tier = 1;
+		while (first)
 		{
-			addTracker(*i,true);
-			i++;
+			KURL::List::const_iterator i = first->urls.begin();
+			while (i != first->urls.end())
+			{
+				addTracker(*i,true,tier);
+				i++;
+			}
+			tier++;
+			first = first->next;
 		}
 	}
 

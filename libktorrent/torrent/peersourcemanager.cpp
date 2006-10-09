@@ -42,13 +42,21 @@ namespace bt
 		trackers.setAutoDelete(true);
 		no_save_custom_trackers = false;
 		
-		// add all standard trackers
-		const KURL::List & tr = tor->getTorrent().getTrackerList();
-		KURL::List::const_iterator i = tr.begin();
-		while (i != tr.end())
+		const TrackerTier* t = tor->getTorrent().getTrackerList();
+		int tier = 1;
+		while (t)
 		{
-			addTracker(*i,false);
-			i++;
+			// add all standard trackers
+			const KURL::List & tr = t->urls;
+			KURL::List::const_iterator i = tr.begin();
+			while (i != tr.end())
+			{
+				addTracker(*i,false,tier);
+				i++;
+			}
+			
+			tier++;
+			t = t->next;
 		}
 		
 		if(!tor->getStats().priv_torrent)
@@ -102,7 +110,7 @@ namespace bt
 		{
 			if (trackers.count() > 0)
 			{
-				switchTracker(trackers.begin()->second);
+				switchTracker(selectTracker());
 				tor->resetTrackerStats();
 				curr->start();
 			}
@@ -174,21 +182,28 @@ namespace bt
 	
 	KURL::List PeerSourceManager::getTrackerURLs()
 	{
-		KURL::List urls = tor->getTorrent().getTrackerList();
+		KURL::List urls;
+		const TrackerTier* t = tor->getTorrent().getTrackerList();
+		while (t)
+		{
+			urls += t->urls;
+			t = t->next;
+		}
+		
 		urls += custom_trackers; 
 		return urls; 
 	}
 	
-	void PeerSourceManager::addTracker(KURL url, bool custom)
+	void PeerSourceManager::addTracker(KURL url, bool custom,int tier)
 	{
 		if (trackers.contains(url))
 			return;
 		
 		Tracker* trk = 0;
 		if (url.protocol() == "udp")
-			trk = new UDPTracker(url,tor,tor->getTorrent().getPeerID());
+			trk = new UDPTracker(url,tor,tor->getTorrent().getPeerID(),tier);
 		else
-			trk = new HTTPTracker(url,tor,tor->getTorrent().getPeerID());
+			trk = new HTTPTracker(url,tor,tor->getTorrent().getPeerID(),tier);
 		
 		addTracker(trk);
 		if (custom)
@@ -313,6 +328,31 @@ namespace bt
 		no_save_custom_trackers = false;
 	}
 	
+	Tracker* PeerSourceManager::selectTracker()
+	{
+		Tracker* n = 0;
+		PtrMap<KURL,Tracker>::iterator i = trackers.begin();
+		while (i != trackers.end())
+		{
+			Tracker* t = i->second;
+			if (!n)
+				n = t;
+			else if (t->failureCount() < n->failureCount())
+				n = t;
+			else if (t->failureCount() == n->failureCount())
+				n = t->getTier() < n->getTier() ? t : n;
+			i++;
+		}
+		
+		if (n)
+		{
+			Out(SYS_TRK|LOG_DEBUG) << "Selected tracker " << n->trackerURL().prettyURL() 
+					<< " (tier = " << n->getTier() << ")" << endl;
+		}
+		
+		return n;
+	}
+	
 	void PeerSourceManager::onTrackerError(const QString & err)
 	{
 		failures++;
@@ -324,20 +364,7 @@ namespace bt
 			return;
 		
 		// select an other tracker
-		Tracker* trk = 0;
-		PtrMap<KURL,Tracker>::iterator i = trackers.begin();
-		while (i != trackers.end())
-		{
-			if (i->second != curr)
-			{
-				if (!trk)
-					trk = i->second;
-				else if (i->second->failureCount() < trk->failureCount())
-					trk = i->second;
-			}
-				
-			i++;
-		}
+		Tracker* trk = selectTracker();
 		
 		if (!trk)
 		{
@@ -410,8 +437,7 @@ namespace bt
 	{
 		if (curr == trk)
 			return;
-		
-		Out(SYS_TRK|LOG_NOTICE) << "Switching to tracker " << trk->trackerURL() << endl;
+	
 		if (curr)
 		{
 			disconnect(curr,SIGNAL(requestFailed( const QString& )),
@@ -423,17 +449,21 @@ namespace bt
 		}
 		
 		curr = trk;
-		QObject::connect(curr,SIGNAL(requestFailed( const QString& )),
-				this,SLOT(onTrackerError( const QString& )));
-		
-		QObject::connect(curr,SIGNAL(requestOK()),
-				this,SLOT(onTrackerOK()));
-		
-		QObject::connect(curr,SIGNAL(requestPending()),
-				this,SLOT(onTrackerRequestPending()));
-		
-		QObject::connect(&timer,SIGNAL(timeout()),
-				 curr,SLOT(manualUpdate()));
+		if (curr)
+		{
+			Out(SYS_TRK|LOG_NOTICE) << "Switching to tracker " << trk->trackerURL() << endl;
+			QObject::connect(curr,SIGNAL(requestFailed( const QString& )),
+					this,SLOT(onTrackerError( const QString& )));
+			
+			QObject::connect(curr,SIGNAL(requestOK()),
+					this,SLOT(onTrackerOK()));
+			
+			QObject::connect(curr,SIGNAL(requestPending()),
+					this,SLOT(onTrackerRequestPending()));
+			
+			QObject::connect(&timer,SIGNAL(timeout()),
+					curr,SLOT(manualUpdate()));
+		}
 	}
 	
 	Uint32 PeerSourceManager::getTimeToNextUpdate() const
@@ -486,6 +516,8 @@ namespace bt
 	{
 		return m_dht != 0;
 	}
+	
+	
 }
 
 #include "peersourcemanager.moc"
