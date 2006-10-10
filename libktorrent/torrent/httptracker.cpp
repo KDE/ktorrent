@@ -208,8 +208,9 @@ namespace bt
 			u.addQueryItem("numwant","0");
 		
 		u.addQueryItem("key",QString::number(key));
-		if (!Tracker::custom_ip_resolved.isNull())
-			u.addQueryItem("ip",Tracker::custom_ip_resolved);
+		QString cip = Tracker::getCustomIP();
+		if (!cip.isNull())
+			u.addQueryItem("ip",cip);
 
 		if (event != QString::null)
 			u.addQueryItem("event",event);

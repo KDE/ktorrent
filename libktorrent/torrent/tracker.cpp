@@ -36,8 +36,8 @@ using namespace KNetwork;
 
 namespace bt
 {
-	QString Tracker::custom_ip;
-	QString Tracker::custom_ip_resolved;
+	static QString custom_ip;
+	static QString custom_ip_resolved;
 	
 	Tracker::Tracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id,int tier) 
 	: url(url),peer_id(id),tor(tor),tier(tier)
@@ -75,6 +75,11 @@ namespace bt
 			custom_ip_resolved = res.first().address().nodeName();
 			Out(SYS_TRK|LOG_NOTICE) << "custom_ip_resolved = " << custom_ip_resolved << endl;
 		}
+	}
+	
+	QString Tracker::getCustomIP()
+	{
+		return custom_ip_resolved;
 	}
 	
 	void Tracker::timedDelete(int ms)

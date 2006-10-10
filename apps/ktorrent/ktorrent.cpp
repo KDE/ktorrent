@@ -329,6 +329,8 @@ void KTorrent::applySettings(bool change_port)
 	
 	if (Settings::useExternalIP())
 		Tracker::setCustomIP(Settings::externalIP());
+	else
+		Tracker::setCustomIP(QString::null);
         
 	Downloader::setMemoryUsage(Settings::memoryUsage());
 	Choker::setNumUploadSlots(Settings::numUploadSlots());

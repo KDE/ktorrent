@@ -95,6 +95,9 @@ namespace bt
 		
 		/// Get the number of leechers
 		Uint32 getNumLeechers() const {return leechers;}
+		
+		/// Get the custom ip to use, null if none is set
+		static QString getCustomIP();
 	signals:
 		/**
 		 * Emitted when an error happens.
@@ -124,7 +127,8 @@ namespace bt
 		kt::TorrentInterface* tor;
 		Uint32 interval,seeders,leechers,key;
 		bool started;
-		static QString custom_ip,custom_ip_resolved;
+	private:
+		//static QString custom_ip,custom_ip_resolved;
 	};
 	
 }

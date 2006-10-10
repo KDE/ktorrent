@@ -234,13 +234,14 @@ namespace bt
 			WriteInt64(buf,64,s.bytes_left);
 		WriteInt64(buf,72,s.trk_bytes_uploaded);
 		WriteInt32(buf,80,ev);
-		if (Tracker::custom_ip_resolved.isNull())
+		QString cip = Tracker::getCustomIP();
+		if (cip.isNull())
 		{
 			WriteUint32(buf,84,0);
 		}
 		else
 		{
-			KNetwork::KIpAddress addr(Tracker::custom_ip_resolved);
+			KNetwork::KIpAddress addr(cip);
 			WriteUint32(buf,84,addr.IPv4Addr(true));
 		}
 		WriteUint32(buf,88,key);

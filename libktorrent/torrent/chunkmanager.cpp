@@ -273,13 +273,12 @@ namespace bt
 			loaded.append(i);
 			if (c->getData())
 			{
-			//	bool test = rand() % 100 < 50;
-				if (!c->checkHash(tor.getHash(i))/* || test*/)
+#if 1
+				if (!c->checkHash(tor.getHash(i)))
 				{
 					Out(SYS_DIO|LOG_IMPORTANT) << "Chunk " << i 
 							<< " has been found invalid, redownloading" << endl;
-				//	if (test)
-				//		Out(SYS_DIO|LOG_IMPORTANT) << "This is a test just joking" << endl;
+				
 					resetChunk(i);
 					tor.updateFilePercentage(i,bitset);
 					saveIndexFile();
@@ -287,6 +286,7 @@ namespace bt
 					corrupted(i);
 					return 0;
 				}
+#endif
 			}
 		}
 		
@@ -347,7 +347,7 @@ namespace bt
 			}
 		}
 //		Uint32 num_in_mem = loaded.count();
-		//Out() << QString("Cleaned %1 chunks, %2 still in memory").arg(num_removed).arg(num_in_mem) << endl;
+//		Out() << QString("Cleaned %1 chunks, %2 still in memory").arg(num_removed).arg(num_in_mem) << endl;
 	}
 	
 	void ChunkManager::saveChunk(unsigned int i,bool update_index)
