@@ -25,3 +25,4 @@ kde_services_DATA = ktsearchplugin.desktop
 
 kde_kcfg_DATA = ktsearchplugin.kcfg
 
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

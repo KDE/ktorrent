@@ -11,3 +11,4 @@ messages: rc.cpp
 		$(XGETTEXT) $$LIST -o $(podir)/ktorrent.pot; \
 	fi
 	rm -f rc.cpp
+

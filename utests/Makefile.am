@@ -9,3 +9,4 @@ ktutester_SOURCES = unittest.cpp testrunner.cpp main.cpp \
 		rc4test.cpp difflehellmantest.cpp
 ktutester_LDADD = ../plugins/upnp/libktupnp.la \
 	../libktorrent/libktorrent.la
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

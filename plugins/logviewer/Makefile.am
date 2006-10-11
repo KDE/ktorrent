@@ -30,3 +30,4 @@ noinst_HEADERS = logviewerplugin.h logviewer.h logprefpage.h logprefwidget.h \
 ktlogviewerplugin_la_SOURCES = logviewerplugin.cpp logviewer.cpp \
 		logprefpage.cpp logprefwidgetbase.ui logprefwidget.cpp logviewerpluginsettings.kcfgc \
 	logflags.cpp
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

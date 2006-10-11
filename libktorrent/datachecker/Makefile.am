@@ -5,3 +5,4 @@ noinst_LTLIBRARIES = libdatachecker.la
 libdatachecker_la_SOURCES = datachecker.cpp multidatachecker.cpp \
 	singledatachecker.cpp datacheckerlistener.cpp
 noinst_HEADERS = datacheckerlistener.h
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

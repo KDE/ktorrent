@@ -28,3 +28,4 @@ ktscanfolderplugin_la_LIBADD = $(LIB_KPARTS) ../../libktorrent/libktorrent.la \
 		       $(LIB_QT) $(LIB_KDECORE) $(LIB_KDEUI) $(LIB_KFILE)
 
 
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

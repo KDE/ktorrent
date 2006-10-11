@@ -35,3 +35,4 @@ kde_services_DATA = ktupnpplugin.desktop
 kde_kcfg_DATA = ktupnpplugin.kcfg
 
 
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

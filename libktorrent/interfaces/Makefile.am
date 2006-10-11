@@ -11,3 +11,4 @@ libinterfaces_la_SOURCES = plugin.cpp coreinterface.cpp guiinterface.cpp \
 								peerinterface.cpp torrentfileinterface.cpp filetreeitem.cpp filetreediritem.cpp \
 					functions.cpp logmonitorinterface.cpp ipblockinginterface.cpp trackerslist.cpp \
 	peersource.cpp
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

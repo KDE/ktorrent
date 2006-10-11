@@ -1,6 +1,1 @@
 bin_SCRIPTS=ktshell
-
-
-
-
-

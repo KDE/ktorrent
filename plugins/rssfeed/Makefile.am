@@ -27,3 +27,4 @@ ktrssfeedplugin_la_LIBADD = rss/librsslocal.la ../../libktorrent/torrent/libtorr
 	../../libktorrent/libktorrent.la $(LIB_KHTML) $(LIB_KPARTS)
 
 SUBDIRS = rss
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

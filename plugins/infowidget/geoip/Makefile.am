@@ -33,7 +33,4 @@ ktdata_DATA = ad.png ae.png af.png ag.png ai.png al.png am.png an.png ao.png \
 		tv.png tw.png tz.png ua.png ug.png um.png us.png uy.png uz.png va.png vc.png \
 		ve.png vg.png vi.png vn.png vu.png wf.png ws.png ye.png yt.png yu.png za.png \
 		zm.png zw.png FLAGS_LICENCE $(GEOIP_FILES)
-	
-
-
 

@@ -7,3 +7,4 @@ kttorinfo_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 kttorinfo_LDADD = ../../libktorrent/libktorrent.la $(LIB_KPARTS) $(LIB_KFILE) \
 	$(LIB_KIO)
 
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

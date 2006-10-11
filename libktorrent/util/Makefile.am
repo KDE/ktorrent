@@ -13,3 +13,4 @@ libutil_la_SOURCES = array.cpp file.cpp functions.cpp ptrmap.cpp \
 
 
 
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

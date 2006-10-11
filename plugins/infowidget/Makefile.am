@@ -31,3 +31,4 @@ kde_kcfg_DATA = ktinfowidgetplugin.kcfg
 ktdatadir = $(kde_datadir)/ktorrent/geoip
 
 SUBDIRS = geoip
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

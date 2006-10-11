@@ -61,3 +61,5 @@ if ENABLE_TORRENT_MIMETYPE
 mimedir = $(kde_mimedir)/application
 mime_DATA = x-bittorrent.desktop
 endif
+
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

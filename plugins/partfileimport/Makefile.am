@@ -24,3 +24,4 @@ kde_services_DATA = ktpartfileimportplugin.desktop
 
 # kde_kcfg_DATA =  ktpartfileimportplugin.kcfg
 
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

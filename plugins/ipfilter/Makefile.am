@@ -28,3 +28,4 @@ kde_services_DATA = ktipfilterplugin.desktop
 
 kde_kcfg_DATA = ktipfilterplugin.kcfg
 
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

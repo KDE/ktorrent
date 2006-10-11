@@ -33,3 +33,4 @@ kticons_DATA = cell-a-0000.png cell-a-0001.png cell-a-0002.png cell-a-0003.png\
 	cell-b-0003.png cell-b-0004.png
 rcdir = $(kde_datadir)/ktorrent
 rc_DATA = ktschedulerpluginui.rc
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

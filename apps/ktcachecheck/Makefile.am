@@ -9,3 +9,4 @@ ktcachecheck_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 ktcachecheck_LDADD = $(LIB_KPARTS) ../../libktorrent/libktorrent.la \
 	$(LIB_KFILE) $(LIB_KIO)
 noinst_HEADERS = cachechecker.h singlecachechecker.h multicachechecker.h
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

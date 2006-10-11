@@ -14,7 +14,7 @@ noinst_HEADERS = bencoder.h value.h bdecoder.h bnode.h torrent.h chunkmanager.h 
 									upspeedestimater.h ipblocklist.h queuemanager.h chunkcounter.h oldchokealgorithm.h \
 									newchokealgorithm.h statsfile.h preallocationthread.h cap.h advancedchokealgorithm.h \
 									cachefile.h dndfile.h authenticationmonitor.h peersourcemanager.h timeestimator.h
-					
+
 libtorrent_la_SOURCES = bencoder.cpp value.cpp bdecoder.cpp bnode.cpp \
 			torrent.cpp chunkmanager.cpp chunk.cpp peer.cpp globals.cpp peermanager.cpp \
 			tracker.cpp downloader.cpp authenticate.cpp uploader.cpp torrentcontrol.cpp \
@@ -29,3 +29,4 @@ libtorrent_la_SOURCES = bencoder.cpp value.cpp bdecoder.cpp bnode.cpp \
 		peersourcemanager.cpp timeestimator.cpp
 
 
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

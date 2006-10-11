@@ -9,3 +9,4 @@ libkademlia_la_SOURCES = key.cpp node.cpp kbucket.cpp rpccall.cpp rpcserver.cpp 
 								database.cpp dht.cpp rpcmsg.cpp kclosestnodessearch.cpp nodelookup.cpp task.cpp \
 					pack.cpp taskmanager.cpp announcetask.cpp \
 		dhttrackerbackend.cpp dhtbase.cpp
+KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)
