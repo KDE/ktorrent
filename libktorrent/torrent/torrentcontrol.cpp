@@ -181,6 +181,7 @@ namespace bt
 			if (stats.completed && !comp)
 			{
 				pman->killSeeders();
+				pman->killUninterested();
 				QDateTime now = QDateTime::currentDateTime();
 				running_time_dl += time_started_dl.secsTo(now);
 				updateStatusMsg();
@@ -213,11 +214,14 @@ namespace bt
 			// we may need to update the choker
 			if (choker_update_timer.getElapsedSinceUpdate() >= 10000 || num_cleared > 0)
 			{
-				// also get rid of seeders when download is finished
+				// also get rid of seeders & uninterested when download is finished
 				// no need to keep them around, but also no need to do this
 				// every update, so once every 10 seconds is fine
 				if (stats.completed)
+				{
 					pman->killSeeders();
+					pman->killUninterested();
+				}
 				
 				doChoking();
 				choker_update_timer.update();

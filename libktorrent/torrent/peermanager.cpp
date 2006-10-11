@@ -36,6 +36,7 @@
 #include "ipblocklist.h"
 #include "chunkcounter.h"
 #include "authenticationmonitor.h"
+#include <qdatetime.h>
 
 using namespace kt;
 
@@ -148,6 +149,18 @@ namespace bt
 			Peer* p = *i;
  			if ( p->isSeeder() )
  				p->kill();
+			i++;
+		}
+	}
+	
+	void PeerManager::killUninterested()
+	{
+		QPtrList<Peer>::iterator i = peer_list.begin();
+		while (i != peer_list.end())
+		{
+			Peer* p = *i;
+			if ( !p->isInterested() && (p->getConnectTime().secsTo(QTime::currentTime()) > 30) )
+				p->kill();
 			i++;
 		}
 	}
@@ -389,4 +402,5 @@ namespace bt
 	}
 	
 }
+
 #include "peermanager.moc"

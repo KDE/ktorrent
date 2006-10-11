@@ -152,6 +152,12 @@ namespace bt
 		 * and we should drop all connections to seeders
 		 */
 		void killSeeders();
+		
+		/**
+		 * Kills all peers that are not interested for a long time.
+		 * This should be used when torrent is seeding ONLY.
+		 */
+		void killUninterested();
 
 		/// Get a BitSet of all available chunks
 		const BitSet & getAvailableChunksBitSet() const {return available_chunks;}
