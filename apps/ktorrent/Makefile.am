@@ -41,10 +41,6 @@ METASOURCES = AUTO
 messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/ktorrent.pot
 
-# this is where the kdelnk file will go 
-kdelnkdir = $(kde_appsdir)/Internet
-kdelnk_DATA = ktorrent.desktop
-
 # this is where the XML-GUI resource file goes
 rcdir = $(kde_datadir)/ktorrent
 rc_DATA = ktorrentui.rc
