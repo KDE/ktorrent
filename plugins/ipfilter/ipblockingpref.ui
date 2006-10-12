@@ -44,7 +44,7 @@
                 <bool>true</bool>
             </property>
             <property name="title">
-                <string>Select PeerGuardian filter file </string>
+                <string>Select PeerGuardian Filter File </string>
             </property>
             <grid>
                 <property name="name">
@@ -163,6 +163,8 @@ NOTE: ZIP file from bluetack.co.uk is supported.</string>
         </widget>
     </grid>
 </widget>
+<customwidgets>
+</customwidgets>
 <connections>
     <connection>
         <sender>btnDownload</sender>
@@ -197,7 +199,6 @@ NOTE: ZIP file from bluetack.co.uk is supported.</string>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kurlrequester.h</includehint>
-    <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
 </includehints>
 </UI>

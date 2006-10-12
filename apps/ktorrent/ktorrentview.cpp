@@ -146,7 +146,7 @@ void KTorrentView::makeMenu()
 			this,SLOT(removeDownloads()));
 	
 	remove_all_id = menu->insertItem(
-			iload->loadIconSet("ktremove",KIcon::Small),i18n("Remove Torrent And Data"),
+			iload->loadIconSet("ktremove",KIcon::Small),i18n("Remove Torrent and Data"),
 			this,SLOT(removeDownloadsAndData()));
 	
 	queue_id = menu->insertItem(
@@ -156,11 +156,11 @@ void KTorrentView::makeMenu()
 	menu->insertSeparator();
 	
 	add_peer_id = menu->insertItem(
-			iload->loadIconSet("add", KIcon::Small), i18n("Add peers..."),
+			iload->loadIconSet("add", KIcon::Small), i18n("Add Peers..."),
 			this, SLOT(showAddPeersWidget())); 
 	
 	peer_sources_menu = new KPopupMenu(menu);
-	peer_sources_id = menu->insertItem(i18n("Additional peer sources"), peer_sources_menu);
+	peer_sources_id = menu->insertItem(i18n("Additional Peer Sources"), peer_sources_menu);
 	peer_sources_menu->insertTitle(i18n("Torrent peer sources:"));
 	peer_sources_menu->setCheckable(true);
 	dht_id = peer_sources_menu->insertItem(i18n("DHT"), this, SLOT(dhtSlot()));
@@ -177,15 +177,15 @@ void KTorrentView::makeMenu()
 	
 	menu->insertSeparator();
 	dirs_sub_menu = new KPopupMenu(menu);
-	dirs_id = menu->insertItem(i18n("Open directory..."), dirs_sub_menu);
-	outputdir_id = dirs_sub_menu->insertItem(iload->loadIconSet("folder",KIcon::Small), i18n("Data directory"), this, SLOT(openOutputDirectory()));
-	torxdir_id = dirs_sub_menu->insertItem(iload->loadIconSet("folder",KIcon::Small), i18n("Temporary directory"), this, SLOT(openTorXDirectory()));
+	dirs_id = menu->insertItem(i18n("Open Directory..."), dirs_sub_menu);
+	outputdir_id = dirs_sub_menu->insertItem(iload->loadIconSet("folder",KIcon::Small), i18n("Data Directory"), this, SLOT(openOutputDirectory()));
+	torxdir_id = dirs_sub_menu->insertItem(iload->loadIconSet("folder",KIcon::Small), i18n("Temporary Directory"), this, SLOT(openTorXDirectory()));
 	
 	menu->insertSeparator();
 	remove_from_group_id =  menu->insertItem(i18n("Remove From Group"),this, SLOT(removeFromGroup()));
 	groups_sub_menu = new KPopupMenu(menu);
 	
-	add_to_group_id = menu->insertItem(i18n("Add To Group"),groups_sub_menu);
+	add_to_group_id = menu->insertItem(i18n("Add to Group"),groups_sub_menu);
 	
 	menu->insertSeparator();
 	scan_id = menu->insertItem(i18n("Check Data Integrity"),this, SLOT(checkDataIntegrity()));
