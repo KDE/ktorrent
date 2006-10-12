@@ -141,8 +141,8 @@ namespace bt
 		if (!peer)
 			return;
 
-		Out(SYS_CON|LOG_DEBUG) << "Rejected : " << req.getIndex() << " " 
-				<< req.getOffset() << " " << req.getLength() << endl;
+//		Out(SYS_CON|LOG_DEBUG) << "Rejected : " << req.getIndex() << " " 
+//				<< req.getOffset() << " " << req.getLength() << endl;
 		if (reqs.contains(req))
 		{
 			reqs.remove(req);

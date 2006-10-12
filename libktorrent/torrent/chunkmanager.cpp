@@ -840,13 +840,21 @@ namespace bt
 		Chunk* c = chunks[first];
 		// if one file in the list needs to be downloaded,increment first
 		if (c->getPriority() == PREVIEW_PRIORITY)
+		{
+			if (first == last)
+				return;
 			first++;
+		}
 		else
 		{
 			for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
 			{
 				if (tor.getFile(*i).getPriority() > newpriority && i != files.end())
 				{
+					// make sure we don't go past last
+					if (first == last)
+						return;
+					
 					first++;
 					break;
 				}
@@ -866,6 +874,10 @@ namespace bt
 			{
 				if (tor.getFile(*i).getPriority() > newpriority && i != files.begin())
 				{
+					// make sure we don't wrap around
+					if (last == 0 || last == first)
+						return;
+					
 					last--;
 					break;
 				}
@@ -875,9 +887,10 @@ namespace bt
 		if (last < first)
 		{
 			return;
-		}			
+		}
+		
 
-		prioritise(first,last,newpriority);
+		(first,last,newpriority);
 		if (newpriority == ONLY_SEED_PRIORITY)
 			excluded(first,last);
 	}

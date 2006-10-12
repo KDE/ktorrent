@@ -104,11 +104,7 @@ namespace bt
 		if (this->getNumBits() != bs.getNumBits())
 			return false;
 
-		for (Uint32 i = 0;i < bs.getNumBits();i++)
-			if (get(i) != bs.get(i))
-				return false;
-
-		return true;
+		return memcmp(data,bs.data,num_bytes) == 0;
 	}
 }
 

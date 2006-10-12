@@ -113,6 +113,11 @@ namespace bt
 		 * @return true if equal 
 		 */
 		bool operator == (const BitSet & bs);
+		
+		/**
+		 * Opposite of operator == 
+		 */
+		bool operator != (const BitSet & bs) {return ! operator == (bs);}
 
 		static BitSet null;
 	};
