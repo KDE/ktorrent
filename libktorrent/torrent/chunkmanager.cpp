@@ -867,7 +867,11 @@ namespace bt
 		c = chunks[last];
 		// if one file in the list needs to be downloaded,decrement last
 		if (c->getPriority() == PREVIEW_PRIORITY)
+		{
+			if (last == 0 || last == first)
+				return;
 			last--;
+		}
 		else
 		{
 			for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
@@ -890,7 +894,7 @@ namespace bt
 		}
 		
 
-		(first,last,newpriority);
+		prioritise(first,last,newpriority);
 		if (newpriority == ONLY_SEED_PRIORITY)
 			excluded(first,last);
 	}
