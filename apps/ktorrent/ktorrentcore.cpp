@@ -56,6 +56,8 @@
 using namespace bt;
 using namespace kt;
 
+const Uint32 CORE_UPDATE_INTERVAL = 250;
+
 
 
 KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seeding(true),pman(0)
@@ -80,8 +82,8 @@ KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seedin
 	// 	downloads.setAutoDelete(true);
 
 	connect(&update_timer,SIGNAL(timeout()),this,SLOT(update()));
-	update_timer.start(250);
-
+	update_timer.start(CORE_UPDATE_INTERVAL);
+	
 	Uint16 port = Settings::port();
 	Uint16 i = 0;
 	do
@@ -450,7 +452,7 @@ bool KTorrentCore::changeDataDir(const QString & new_dir)
 		// do nothing if new and old dir are the same
 		if (KURL(data_dir) == KURL(new_dir) || data_dir == (new_dir + bt::DirSeparator()))
 		{
-			update_timer.start(100);
+			update_timer.start(CORE_UPDATE_INTERVAL);
 			return true;
 		}
 
@@ -480,7 +482,7 @@ bool KTorrentCore::changeDataDir(const QString & new_dir)
 				// set back the old data_dir in Settings
 				Settings::setTempDir(data_dir);
 				Settings::self()->writeConfig();
-				update_timer.start(100);
+				update_timer.start(CORE_UPDATE_INTERVAL);
 				return false;
 			}
 			else
@@ -490,13 +492,13 @@ bool KTorrentCore::changeDataDir(const QString & new_dir)
 			i++;
 		}
 		data_dir = nd;
-		update_timer.start(100);
+		update_timer.start(CORE_UPDATE_INTERVAL);
 		return true;
 	}
 	catch (bt::Error & e)
 	{
 		Out(SYS_GEN|LOG_IMPORTANT) << "Error : " << e.toString() << endl;
-		update_timer.start(100);
+		update_timer.start(CORE_UPDATE_INTERVAL);
 		return false;
 	}
 }
@@ -511,7 +513,7 @@ void KTorrentCore::rollback(const QPtrList<kt::TorrentInterface> & succes)
 		(*i)->rollback();
 		i++;
 	}
-	update_timer.start(100);
+	update_timer.start(CORE_UPDATE_INTERVAL);
 }
 
 void KTorrentCore::startAll(int type)

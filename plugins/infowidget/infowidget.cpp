@@ -558,6 +558,8 @@ namespace kt
 	
 	void InfoWidget::contextItem(int id)
 	{
+		QPtrList<QListViewItem> sel = m_file_view->selectedItems();
+		
 		Priority newpriority = NORMAL_PRIORITY;
 		if(id == this->preview_id)
 		{
@@ -566,8 +568,17 @@ namespace kt
 		}
 		else if (id == dnd_throw_away_id)
 		{
-			QString msg = i18n("You will lose all data in the deselected file(s),"
-					" are you sure you want to do this ?");
+			Uint32 n = sel.count();
+			if (n == 1) // single item can be a directory
+			{ 
+				// the number of the beast > 1
+				n = (*sel.begin())->childCount() == 0 ? 1 : 666;
+			} 
+			
+			QString msg = i18n(
+					"You will lose all data in this file, are you sure you want to do this ?",
+					"You will lose all data in these files, are you sure you want to do this ?",n);
+					
 			if (KMessageBox::warningYesNo(0,msg) == KMessageBox::No)
 				return; 
 			newpriority = EXCLUDED;
@@ -590,7 +601,7 @@ namespace kt
 		}
 		
 
-		QPtrList<QListViewItem> sel = m_file_view->selectedItems();
+		
 		QPtrList<QListViewItem>::Iterator i = sel.begin();
 		while(i != sel.end())
 		{
