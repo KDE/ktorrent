@@ -213,7 +213,7 @@ namespace bt
 	{
 		if (chunk->getIndex() == r.getIndex())
 		{
-			Out(SYS_CON|LOG_DEBUG) << QString("Request rejected %1 %2 %3 %4").arg(r.getIndex()).arg(r.getOffset()).arg(r.getLength()).arg(r.getPeer()) << endl;
+//			Out(SYS_CON|LOG_DEBUG) << QString("Request rejected %1 %2 %3 %4").arg(r.getIndex()).arg(r.getOffset()).arg(r.getLength()).arg(r.getPeer()) << endl;
 		
 			notDownloaded(r,true);
 		}
