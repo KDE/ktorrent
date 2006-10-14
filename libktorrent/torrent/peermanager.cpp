@@ -411,7 +411,7 @@ namespace bt
 		for (PtrMap<Uint32,Peer>::iterator i = peer_map.begin();i != peer_map.end();i++)
 		{
 			Peer* p = i->second;
-			if (p->getStats().aca_score <= -10.0)
+			if (p->getStats().aca_score <= -5.0 && p->getStats().aca_score > -50.0)
 			{
 				Out(SYS_GEN|LOG_DEBUG) << "Killing bad peer, to make room for other peers" << endl;
 				p->kill();

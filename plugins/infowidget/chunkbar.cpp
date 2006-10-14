@@ -110,8 +110,10 @@ namespace kt
 		bool changed = !(curr == bs);
 		if (show_excluded && curr_tc)
 		{
-			const BitSet & ebs = curr_tc->excludedChunksBitSet();
+			BitSet ebs = curr_tc->excludedChunksBitSet();
+			ebs.orBitSet(curr_tc->onlySeedChunksBitSet()),
 			changed = changed || !(curr_ebs == ebs);
+			curr_ebs = ebs;
 		}
 		
 		if (changed || pixmap.isNull() || pixmap.width() != s.width())
@@ -170,14 +172,12 @@ namespace kt
 	
 			if (show_excluded && s.num_chunks_excluded > 0)
 			{
-				const BitSet & ebs = curr_tc->excludedChunksBitSet();
-				curr_ebs = ebs;
-				if (ebs.allOn())
+				if (curr_ebs.allOn())
 					drawAllOn(p,Qt::lightGray);
 				else if (s.total_chunks > w)
-					drawMoreChunksThenPixels(p,ebs,Qt::lightGray);
+					drawMoreChunksThenPixels(p,curr_ebs,Qt::lightGray);
 				else
-					drawEqual(p,ebs,Qt::lightGray);
+					drawEqual(p,curr_ebs,Qt::lightGray);
 			}
 		}
 		p->restoreWorldMatrix();

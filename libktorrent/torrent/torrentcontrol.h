@@ -81,6 +81,11 @@ namespace bt
 		const BitSet & excludedChunksBitSet() const;
 		
 		/**
+		 * Get a BitSet of the only seed chunks 
+		 */
+		const BitSet & onlySeedChunksBitSet() const;
+		
+		/**
 		 * Initialize the TorrentControl. 
 		 * @param qman The QueueManager
 		 * @param torrent The filename of the torrent file

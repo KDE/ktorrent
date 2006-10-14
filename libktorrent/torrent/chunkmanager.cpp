@@ -499,13 +499,19 @@ namespace bt
 		while (i <= to && i < chunks.count())
 		{
 			Chunk* c = chunks[i];
-			if (c->getPriority() != PREVIEW_PRIORITY || 
-				priority == EXCLUDED || priority == ONLY_SEED_PRIORITY)
+			if (priority == EXCLUDED || priority == ONLY_SEED_PRIORITY)
+				c->setPriority(priority);
+			else if (c->getPriority() != PREVIEW_PRIORITY)
 				c->setPriority(priority);
 			
 			if (priority == ONLY_SEED_PRIORITY)
 			{
 				only_seed_chunks.set(i,true);
+				todo.set(i,false);
+			}
+			else if (priority == EXCLUDED)
+			{
+				only_seed_chunks.set(i,false);
 				todo.set(i,false);
 			}
 			else
@@ -516,6 +522,7 @@ namespace bt
 			
 			i++;
 		}
+		updateStats();
 	}
 
 	void ChunkManager::exclude(Uint32 from,Uint32 to)
@@ -823,7 +830,6 @@ namespace bt
 		if(tf->getPriority() == EXCLUDED)
 		{
 			downloadStatusChanged(tf, true);
-			return;
 		}
 
 		savePriorityInfo();
@@ -839,25 +845,16 @@ namespace bt
 		
 		Chunk* c = chunks[first];
 		// if one file in the list needs to be downloaded,increment first
-		if (c->getPriority() == PREVIEW_PRIORITY)
+		for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
 		{
-			if (first == last)
-				return;
-			first++;
-		}
-		else
-		{
-			for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
+			if (tor.getFile(*i).getPriority() > newpriority && i != files.end())
 			{
-				if (tor.getFile(*i).getPriority() > newpriority && i != files.end())
-				{
-					// make sure we don't go past last
-					if (first == last)
-						return;
+				// make sure we don't go past last
+				if (first == last)
+					return;
 					
-					first++;
-					break;
-				}
+				first++;
+				break;
 			}
 		}
 		
@@ -866,27 +863,19 @@ namespace bt
 		tor.calcChunkPos(last,files);
 		c = chunks[last];
 		// if one file in the list needs to be downloaded,decrement last
-		if (c->getPriority() == PREVIEW_PRIORITY)
+		for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
 		{
-			if (last == 0 || last == first)
-				return;
-			last--;
-		}
-		else
-		{
-			for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
+			if (tor.getFile(*i).getPriority() > newpriority && i != files.begin())
 			{
-				if (tor.getFile(*i).getPriority() > newpriority && i != files.begin())
-				{
-					// make sure we don't wrap around
-					if (last == 0 || last == first)
-						return;
+				// make sure we don't wrap around
+				if (last == 0 || last == first)
+					return;
 					
-					last--;
-					break;
-				}
+				last--;
+				break;
 			}
 		}
+		
 		// last smaller then first is not normal, so just return
 		if (last < first)
 		{

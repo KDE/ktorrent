@@ -241,6 +241,11 @@ namespace kt
 		 * Get a BitSet of the excluded Chunks
 		 */
 		virtual const bt::BitSet & excludedChunksBitSet() const = 0;
+		
+		/**
+		 * Get a bitset of only seed chunks
+		 */
+		virtual const bt::BitSet & onlySeedChunksBitSet() const = 0;
 
 		/// Set the monitor
 		virtual void setMonitor(MonitorInterface* tmo) = 0;

@@ -838,6 +838,14 @@ namespace bt
 		else
 			return cman->getExcludedBitSet();
 	}
+	
+	const BitSet & TorrentControl::onlySeedChunksBitSet() const
+	{
+		if (!cman)
+			return BitSet::null;
+		else
+			return cman->getOnlySeedBitSet();
+	}
 
 	void TorrentControl::saveStats()
 	{

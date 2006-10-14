@@ -226,9 +226,14 @@ namespace bt
 		const BitSet & getBitSet() const {return bitset;}
 
 		/**
-		 * Get a BitSet of the status of all Chunks
+		 * Get the excluded bitset
 		 */
 		const BitSet & getExcludedBitSet() const {return excluded_chunks;}
+		
+		/**
+		 * Get the only seed bitset. 
+		 */
+		const BitSet & getOnlySeedBitSet() const {return only_seed_chunks;}
 
 		/// Get the number of chunks into the file.
 		Uint32 getNumChunks() const {return chunks.count();}
