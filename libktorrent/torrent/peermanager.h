@@ -184,6 +184,7 @@ namespace bt
 		
 	private:
 		void updateAvailableChunks();
+		bool killBadPeer();
 
 	private slots:
 		void onHave(Peer* p,Uint32 index);

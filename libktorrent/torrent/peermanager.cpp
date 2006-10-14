@@ -192,8 +192,13 @@ namespace bt
 		
 		if (!started || local_not_ok || global_not_ok)
 		{
-			delete sock;
-			return;
+			// get rid of bad peer and replace it by another one
+			if (!killBadPeer())
+			{
+				// we failed to find a bad peer, so just delete this one
+				delete sock;
+				return;
+			}
 		}
 
 		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),tor.getChunkSize(),support);
@@ -399,6 +404,21 @@ namespace bt
 		PotentialPeer pp;
 		while (ps->takePotentialPeer(pp))
 			potential_peers.append(pp);
+	}
+	
+	bool PeerManager::killBadPeer()
+	{
+		for (PtrMap<Uint32,Peer>::iterator i = peer_map.begin();i != peer_map.end();i++)
+		{
+			Peer* p = i->second;
+			if (p->getStats().aca_score <= -10.0)
+			{
+				Out(SYS_GEN|LOG_DEBUG) << "Killing bad peer, to make room for other peers" << endl;
+				p->kill();
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }
