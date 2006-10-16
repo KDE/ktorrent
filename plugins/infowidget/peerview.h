@@ -64,6 +64,7 @@ namespace kt
 		void addPeer(kt::PeerInterface* peer);
 		void removePeer(kt::PeerInterface* peer);
 		void banPeer(kt::PeerInterface* peer);
+		void kickPeer(kt::PeerInterface* peer);
 		void update();
 		void removeAll();
 		void showContextMenu(KListView* ,QListViewItem* item,const QPoint & p);
@@ -71,6 +72,7 @@ namespace kt
 	private:
 		KPopupMenu* menu;
 		int ban_id;
+		int kick_id;
 		PeerViewItem* curr;
 	};
 }

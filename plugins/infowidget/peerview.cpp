@@ -187,7 +187,8 @@ namespace kt
 		setShowSortIndicator(true);
 		
 		menu = new KPopupMenu(this);
-		ban_id = menu->insertItem(KGlobal::iconLoader()->loadIcon("filter",KIcon::NoGroup), i18n("to ban", "Ban Peer"));
+		kick_id = menu->insertItem(KGlobal::iconLoader()->loadIcon("delete_user", KIcon::NoGroup), i18n("to kick", "Kick peer"));
+		ban_id = menu->insertItem(KGlobal::iconLoader()->loadIcon("filter",KIcon::NoGroup), i18n("to ban", "Ban peer"));
 		
 		connect(this,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )),
 				this,SLOT(showContextMenu(KListView*, QListViewItem*, const QPoint& )));
@@ -243,6 +244,14 @@ namespace kt
 		peer->kill();
 	}
 	
+	void PeerView::kickPeer(kt::PeerInterface* peer)
+	{
+		if(!peer)
+			return;
+		
+		peer->kill();
+	}
+	
 	void PeerView::update()
 	{
 		QMap<kt::PeerInterface*,PeerViewItem*>::iterator i = items.begin();
@@ -270,14 +279,18 @@ namespace kt
 		if (curr)
 		{
 			menu->setItemEnabled(ban_id, true);
+			menu->setItemEnabled(kick_id, true);
 			menu->popup(p);
 		}
 	}
 	
-	void PeerView::contextItem( int id )
+	void PeerView::contextItem(int id)
 	{
 		if (id == ban_id && curr)
 			banPeer(curr->getPeer());
+		
+		if (id == kick_id && curr)
+			kickPeer(curr->getPeer());
 	}
 }
 	
