@@ -34,12 +34,22 @@ namespace bt
 	
 	typedef enum 
 	{
+		/* These are the old values, for compatability reasons with old chunk_info files we leave them here :
 		PREVIEW_PRIORITY = 4,
 		FIRST_PRIORITY = 3,
 		NORMAL_PRIORITY = 2,
 		LAST_PRIORITY = 1,
 		EXCLUDED = 0,
 		ONLY_SEED_PRIORITY = -1
+		*/
+		// make sure new values are different from old values
+		// also leave some room if we want to add new priorities in the future
+		PREVIEW_PRIORITY = 60,
+		FIRST_PRIORITY = 50,
+		NORMAL_PRIORITY = 40,
+		LAST_PRIORITY = 30,
+		ONLY_SEED_PRIORITY = 20,
+		EXCLUDED = 10,
 	}Priority;
 	
 	enum ConfirmationResult

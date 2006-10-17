@@ -499,10 +499,7 @@ namespace bt
 		while (i <= to && i < chunks.count())
 		{
 			Chunk* c = chunks[i];
-			if (priority == EXCLUDED || priority == ONLY_SEED_PRIORITY)
-				c->setPriority(priority);
-			else if (c->getPriority() != PREVIEW_PRIORITY)
-				c->setPriority(priority);
+			c->setPriority(priority);
 			
 			if (priority == ONLY_SEED_PRIORITY)
 			{
@@ -699,17 +696,23 @@ namespace bt
 
 			if (!tf.isNull())
 			{
+				// numbers are to be compatible with old chunk info files
 				switch(tmp)
 				{
+				case FIRST_PRIORITY:
 				case 3:
 					tf.setPriority(FIRST_PRIORITY);
 					break;
+				case NORMAL_PRIORITY:
 				case 2:
 					tf.setPriority(NORMAL_PRIORITY);
 					break;
+				case EXCLUDED:
 				case 0:
-					tf.setDoNotDownload(true);
+					//tf.setDoNotDownload(true);
+					tf.setPriority(EXCLUDED);
 					break;
+				case ONLY_SEED_PRIORITY:
 				case -1:
 					tf.setPriority(ONLY_SEED_PRIORITY);
 					break;
@@ -728,24 +731,16 @@ namespace bt
 		Uint32 last = tf->getLastChunk();
 		if (download)
 		{
-			// include the range of the file
-			if(tf->isMultimedia())
+			// include the chunks 
+			include(first,last);
+			
+			// if it is a multimedia file, prioritise first and last chunks of file
+			if (tf->isMultimedia())
 			{
 				prioritise(first,first+1,PREVIEW_PRIORITY);
 				if (last - first > 2)
 					prioritise(last -1,last, PREVIEW_PRIORITY);
 			}
-			if(chunks[first]->getPriority() > NORMAL_PRIORITY && first < tor.getNumChunks() - 1)
-				first++;
-			if(chunks[last]->getPriority() > NORMAL_PRIORITY && last > 0)
-				last--;
-			// last smaller then first is not normal, so just return
-			if (last < first)
-			{
-				cache->downloadStatusChanged(tf,download);
-				return;
-			}
-			include(first,last);
 		}
 		else
 		{
@@ -783,27 +778,60 @@ namespace bt
 				resetChunk(last);
 			}
 			
+			Priority maxp = ONLY_SEED_PRIORITY;
+			bool reprioritise_border_chunk = false;
+			bool modified = false;
+			
 			// if one file in the list needs to be downloaded,increment first
 			for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
 			{
-				if (!tor.getFile(*i).doNotDownload())
+				if (*i == tf->getIndex())
+					continue;
+				
+				if (tf->getPriority() > maxp)
+					maxp = tf->getPriority();
+				
+				if (!tor.getFile(*i).doNotDownload() && !modified)
 				{
-					if (first < tor.getNumChunks() - 1)
+					if (first != last)
+					{
 						first++;
-					break;
+						reprioritise_border_chunk = true;
+						modified = true;
+					}
 				}
 			}
+			
+			// in case we have incremented first, we better reprioritise the border chunk
+			if (reprioritise_border_chunk)
+				prioritise(first-1,first-1,maxp);
+			
+			maxp = ONLY_SEED_PRIORITY;
+			reprioritise_border_chunk = false;
+			modified = false;
 			
 			// if one file in the list needs to be downloaded,decrement last
 			for (QValueList<Uint32>::iterator i = last_files.begin();i != last_files.end();i++)
 			{
-				if (!tor.getFile(*i).doNotDownload())
+				if (*i == tf->getIndex())
+					continue;
+				
+				if (tf->getPriority() > maxp)
+					maxp = tf->getPriority();
+				
+				if (!tor.getFile(*i).doNotDownload() && !modified)
 				{
-					if (last > 0)
+					if (last != first && last > 0)
+					{
+						modified = true;
+						reprioritise_border_chunk = true;
 						last--;
-					break;
+					}
 				}
 			}
+			
+			if (reprioritise_border_chunk)
+				prioritise(last+1,last+1,maxp);
 
 			// last smaller then first is not normal, so just return
 			if (last < first)
@@ -814,7 +842,6 @@ namespace bt
 			
 		//	Out(SYS_DIO|LOG_DEBUG) << "exclude " << first << " to " << last << endl;
 			exclude(first,last);
-			
 		}
 		// alert the cache but first put things in critical operation mode
 		cache->downloadStatusChanged(tf,download);
@@ -830,11 +857,15 @@ namespace bt
 		if(tf->getPriority() == EXCLUDED)
 		{
 			downloadStatusChanged(tf, true);
+			return;
 		}
 
 		savePriorityInfo();
+		
 		Uint32 first = tf->getFirstChunk();
 		Uint32 last = tf->getLastChunk();
+		
+		Out(SYS_DIO|LOG_DEBUG) << QString("%1 : %2 %3 : %4").arg(tf->getPath()).arg(first).arg(last).arg(newpriority) << endl;
 
 		// first and last chunk may be part of multiple files
 		// so we can't just exclude them
@@ -847,8 +878,10 @@ namespace bt
 		// if one file in the list needs to be downloaded,increment first
 		for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
 		{
-			if (tor.getFile(*i).getPriority() > newpriority && i != files.end())
+			Priority np = tor.getFile(*i).getPriority();
+			if (np > newpriority && *i != tf->getIndex())
 			{
+				Out(SYS_DIO|LOG_DEBUG) << "newpriority = " << newpriority << " np = " << np << endl;
 				// make sure we don't go past last
 				if (first == last)
 					return;
@@ -865,8 +898,10 @@ namespace bt
 		// if one file in the list needs to be downloaded,decrement last
 		for (QValueList<Uint32>::iterator i = files.begin();i != files.end();i++)
 		{
-			if (tor.getFile(*i).getPriority() > newpriority && i != files.begin())
+			Priority np = tor.getFile(*i).getPriority();
+			if (np > newpriority && *i != tf->getIndex())
 			{
+				Out(SYS_DIO|LOG_DEBUG) << "newpriority = " << newpriority << " np = " << np << endl;
 				// make sure we don't wrap around
 				if (last == 0 || last == first)
 					return;
@@ -883,6 +918,7 @@ namespace bt
 		}
 		
 
+		Out(SYS_DIO|LOG_DEBUG) << QString("%1 : %2 %3 : %4").arg(tf->getPath()).arg(first).arg(last).arg(newpriority) << endl;
 		prioritise(first,last,newpriority);
 		if (newpriority == ONLY_SEED_PRIORITY)
 			excluded(first,last);
