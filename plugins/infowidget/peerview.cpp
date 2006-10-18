@@ -131,10 +131,9 @@ namespace kt
 		setPixmap(8,s.dht_support ? yes_pix : no_pix);
 		setText(9,loc->formatNumber(s.aca_score,2));
 		setPixmap(10,s.has_upload_slot ? yes_pix : QPixmap());
-#undef SHOW_REQUESTS
-#ifdef SHOW_REQUESTS
 		setText(11,QString("%1 / %2").arg(s.num_down_requests).arg(s.num_up_requests));
-#endif
+		setText(12, BytesToString(s.bytes_uploaded));
+		setText(13, BytesToString(s.bytes_downloaded));
 	}
 	
 	int PeerViewItem::compare(QListViewItem * i,int col,bool) const
@@ -160,6 +159,10 @@ namespace kt
 			case 8: return CompareVal(s.dht_support,os.dht_support);
 			case 9: return CompareVal(s.aca_score,os.aca_score);
 			case 10: return CompareVal(s.has_upload_slot,os.has_upload_slot);
+			case 11: return CompareVal(s.num_down_requests+s.num_up_requests, os.num_down_requests+os.num_up_requests);
+			case 12: return CompareVal(s.bytes_uploaded, os.bytes_uploaded);
+			case 13: return CompareVal(s.bytes_downloaded, os.bytes_downloaded);
+			
 		}
 		return 0;
 	}
@@ -178,9 +181,10 @@ namespace kt
 		addColumn(i18n("DHT"));
 		addColumn(i18n("Score"));
 		addColumn(i18n("Upload Slot"));
-#ifdef SHOW_REQUESTS
 		addColumn(i18n("Requests"));
-#endif
+		addColumn(i18n("Downloaded"));
+		addColumn(i18n("Uploaded"));
+		
 		for (Uint32 i = 0;i < (Uint32)columns();i++)
 			setColumnWidthMode(i,QListView::Manual);
 			
