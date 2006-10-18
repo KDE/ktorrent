@@ -27,6 +27,7 @@
 #include <util/error.h>
 #include <kio/job.h>
 #include <kio/netaccess.h>
+#include <kio/scheduler.h>
 #include "bnode.h"
 #include "httptracker.h"
 #include "torrentcontrol.h"
@@ -125,6 +126,7 @@ namespace bt
 		KIO::StoredTransferJob* j = KIO::storedGet(scrape_url,false,false);
 		// set the meta data
 		j->setMetaData(md);
+		KIO::Scheduler::scheduleJob(j);
 		
 		connect(j,SIGNAL(result(KIO::Job* )),this,SLOT(onScrapeResult( KIO::Job* )));
 		active_scrape_job = j;
@@ -231,6 +233,7 @@ namespace bt
 		KIO::StoredTransferJob* j = KIO::storedGet(u,false,false);
 		// set the meta data
 		j->setMetaData(md);
+		KIO::Scheduler::scheduleJob(j);
 		
 		connect(j,SIGNAL(result(KIO::Job* )),this,SLOT(onAnnounceResult( KIO::Job* )));
 		
