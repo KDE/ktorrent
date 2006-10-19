@@ -635,27 +635,35 @@ namespace bt
 			return;
 		}
 
-		QValueList<Uint32> dnd;
-		
-		Uint32 i = 0;
-		for ( ; i < tor.getNumFiles(); i++)
+		try
 		{
-			if(tor.getFile(i).getPriority() != NORMAL_PRIORITY)
+			QValueList<Uint32> dnd;
+			
+			Uint32 i = 0;
+			for ( ; i < tor.getNumFiles(); i++)
 			{
-				dnd.append(i);
-				dnd.append(tor.getFile(i).getPriority());
+				if(tor.getFile(i).getPriority() != NORMAL_PRIORITY)
+				{
+					dnd.append(i);
+					dnd.append(tor.getFile(i).getPriority());
+				}
 			}
-		}
-
-		Uint32 tmp = dnd.count();
-		fptr.write(&tmp,sizeof(Uint32));
-		// write all the non-default priority ones
-		for (i = 0;i < dnd.count();i++)
-		{
-			tmp = dnd[i];
+	
+			Uint32 tmp = dnd.count();
 			fptr.write(&tmp,sizeof(Uint32));
+			// write all the non-default priority ones
+			for (i = 0;i < dnd.count();i++)
+			{
+				tmp = dnd[i];
+				fptr.write(&tmp,sizeof(Uint32));
+			}
+			fptr.flush();
 		}
-		fptr.flush();
+		catch (bt::Error & err)
+		{
+			Out(SYS_DIO|LOG_IMPORTANT) << "Failed to save priority file " << err.toString() << endl;
+			bt::Delete(file_priority_file,true);
+		}
 	}
 	
 	void ChunkManager::loadPriorityInfo()
