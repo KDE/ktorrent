@@ -59,6 +59,10 @@
 			<label>Scheduler plugin messages flag</label>
 			<default>0</default>
 		</entry>
+		<entry name="sysRSS" type="UInt">
+			<label>RSS plugin messages flag</label>
+			<default>0</default>
+		</entry>
 		
 	</group>
 </kcfg>

@@ -46,6 +46,7 @@
 #define SYS_SNF 0x10000 // ScanFolder plugin
 #define SYS_PFI 0x20000 // Part file import
 #define SYS_SCD 0x40000 // Scheduler plugin
+#define SYS_RSS 0x80000 // RSS plugin
 
 class KURL;
 
