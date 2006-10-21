@@ -459,15 +459,7 @@ namespace bt
 			return;
 		
 		pwriter->sendChoke();
-		if (stats.fast_extensions)
-		{
-			// send rejects for all queued up packets
-			uploader->rejectAll();
-		}
-		else
-		{
-			uploader->clearAllRequests();
-		}
+		uploader->clearAllRequests();
 	}
 }
 

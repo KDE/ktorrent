@@ -91,6 +91,16 @@
 #include <groups/groupview.h>
 
 
+
+namespace kt
+{
+	QString DataDir();
+}
+
+#include <util/profiler.h>
+
+
+
 using namespace bt;
 using namespace kt;
 
@@ -499,6 +509,9 @@ bool KTorrent::queryClose()
 
 bool KTorrent::queryExit()
 {
+#ifdef KT_PROFILE
+	bt::Profiler::instance().saveToFile(kt::DataDir() + "profile");
+#endif
 	m_group_view->saveGroups();
 	// stop timers to prevent update
 	m_gui_update_timer.stop();
@@ -685,6 +698,8 @@ void KTorrent::urlDropped(QDropEvent* event,QListViewItem*)
 
 void KTorrent::updatedStats()
 {
+	KT_PROF_START("updatedStats");
+	KT_PROF_START("misc");
 	m_startall->setEnabled(m_core->getNumTorrentsNotRunning() > 0);
 	m_stopall->setEnabled(m_core->getNumTorrentsRunning() > 0);
 	
@@ -701,10 +716,19 @@ void KTorrent::updatedStats()
 			.arg(BytesToString(stats.bytes_downloaded))
 			.arg(BytesToString(stats.bytes_uploaded));
 	m_statusTransfer->setText(tmp1);
-
+	KT_PROF_END();
+	
+	KT_PROF_START("view");
 	m_view->update();
+	KT_PROF_END();
+	
+	KT_PROF_START("systray");
 	m_systray_icon->updateStats(stats,Settings::showSpeedBarInTrayIcon(),Settings::downloadBandwidth(), Settings::uploadBandwidth());
+	KT_PROF_END();
+	
+	KT_PROF_START("plugins");
 	m_core->getPluginManager().updateGuiPlugins();
+	KT_PROF_END();
 	
 #if 0
 
@@ -719,6 +743,7 @@ void KTorrent::updatedStats()
 		m_tabs->setTabLabel(m_seedView_exp, tabText);
 #endif
 
+	KT_PROF_START("DHT");
 	if (Globals::instance().getDHT().isRunning())
 	{
 		const dht::Stats & s = Globals::instance().getDHT().getStats();
@@ -727,6 +752,8 @@ void KTorrent::updatedStats()
 	}
 	else
 		m_statusDHT->setText(i18n("DHT: off"));
+	KT_PROF_END();
+	KT_PROF_END();
 }
 
 void KTorrent::mergePluginGui(Plugin* p)

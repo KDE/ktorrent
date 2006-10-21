@@ -132,8 +132,8 @@ namespace kt
 		setText(9,loc->formatNumber(s.aca_score,2));
 		setPixmap(10,s.has_upload_slot ? yes_pix : QPixmap());
 		setText(11,QString("%1 / %2").arg(s.num_down_requests).arg(s.num_up_requests));
-		setText(12, BytesToString(s.bytes_uploaded));
-		setText(13, BytesToString(s.bytes_downloaded));
+		setText(12, BytesToString(s.bytes_downloaded));
+		setText(13, BytesToString(s.bytes_uploaded));
 	}
 	
 	int PeerViewItem::compare(QListViewItem * i,int col,bool) const
@@ -160,8 +160,8 @@ namespace kt
 			case 9: return CompareVal(s.aca_score,os.aca_score);
 			case 10: return CompareVal(s.has_upload_slot,os.has_upload_slot);
 			case 11: return CompareVal(s.num_down_requests+s.num_up_requests, os.num_down_requests+os.num_up_requests);
-			case 12: return CompareVal(s.bytes_uploaded, os.bytes_uploaded);
-			case 13: return CompareVal(s.bytes_downloaded, os.bytes_downloaded);
+			case 12: return CompareVal(s.bytes_downloaded, os.bytes_downloaded);
+			case 13: return CompareVal(s.bytes_uploaded, os.bytes_uploaded);
 			
 		}
 		return 0;

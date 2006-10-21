@@ -29,6 +29,7 @@
 #include "singlefilecache.h"
 #include "multifilecache.h"
 #include <util/log.h>
+#include <util/functions.h>
 #include "globals.h"
 
 #include <klocale.h>
@@ -270,10 +271,10 @@ namespace bt
 		{
 			// load the chunk if it is on disk
 			cache->load(c);
-			loaded.append(i);
+			loaded.insert(i,bt::GetCurrentTime());
 			if (c->getData())
 			{
-#if 1
+			//	Out(SYS_DIO|LOG_IMPORTANT) << "Verifying chunk " << i << endl;
 				if (!c->checkHash(tor.getHash(i)))
 				{
 					Out(SYS_DIO|LOG_IMPORTANT) << "Chunk " << i 
@@ -286,10 +287,10 @@ namespace bt
 					corrupted(i);
 					return 0;
 				}
-#endif
 			}
 		}
 		
+		loaded.insert(i,bt::GetCurrentTime());
 		return c;
 	}
 		
@@ -328,17 +329,20 @@ namespace bt
 	void ChunkManager::checkMemoryUsage()
 	{
 		Uint32 num_removed = 0;
-		QValueList<Uint32>::iterator i = loaded.begin();
+		QMap<Uint32,Uint32>::iterator i = loaded.begin();
 		while (i != loaded.end())
 		{
-			Chunk* c = chunks[*i];
-			if (!c->taken())
+			Chunk* c = chunks[i.key()];
+			// get rid of chunk if nobody asked for it in the last 5 seconds
+			if (!c->taken() && bt::GetCurrentTime() - i.data() > 5000)
 			{
 				if (c->getStatus() == Chunk::MMAPPED)
 					cache->save(c);
 				c->clear();
 				c->setStatus(Chunk::ON_DISK);
-				i = loaded.erase(i);
+				QMap<Uint32,Uint32>::iterator j = i;
+				i++;
+				loaded.erase(j);
 				num_removed++;
 			}
 			else
@@ -346,8 +350,8 @@ namespace bt
 				i++;
 			}
 		}
-//		Uint32 num_in_mem = loaded.count();
-//		Out() << QString("Cleaned %1 chunks, %2 still in memory").arg(num_removed).arg(num_in_mem) << endl;
+	//	Uint32 num_in_mem = loaded.count();
+	//	Out() << QString("Cleaned %1 chunks, %2 still in memory").arg(num_removed).arg(num_in_mem) << endl;
 	}
 	
 	void ChunkManager::saveChunk(unsigned int i,bool update_index)

@@ -61,6 +61,7 @@ namespace bt
 	//	Out(SYS_CON|LOG_DEBUG) << 
 	//			QString("PeerUploader::removeRequest %1 %2 %3\n").arg(r.getIndex()).arg(r.getOffset()).arg(r.getLength()) << endl;
 		requests.remove(r);
+		peer->getPacketWriter().doNotSendPiece(r,peer->getStats().fast_extensions);
 	}
 	
 	Uint32 PeerUploader::update(ChunkManager & cman,Uint32 opt_unchoked)
@@ -84,13 +85,8 @@ namespace bt
 			!cman.completed() && peer->getID() != opt_unchoked)
 			return ret;
 		
-		if (requests.count() > 1 || requests.count() == 0)
-			rone_time = bt::GetCurrentTime();
 		
-		bool rone_send = (requests.count() == 1 && bt::GetCurrentTime() - rone_time > 5000);
-		bool requests_left = requests.count() > 1 || rone_send;
-		
-		while (requests_left && pw.getNumPacketsToWrite() < 5)
+		while (requests.count() > 0)
 		{	
 			Request r = requests.front();
 			// if we are choked only send when the request
@@ -116,30 +112,15 @@ namespace bt
 					pw.sendReject(r);
 				requests.pop_front();
 			}
-					
-			if (rone_send)
-				rone_time = bt::GetCurrentTime();
-			
-			rone_send = (requests.count() == 1 && bt::GetCurrentTime() - rone_time > 5000);
-			requests_left = requests.count() > 1 || rone_send;
 		}
 		
 		return ret;
 	}
 	
-	void PeerUploader::rejectAll()
-	{
-		PacketWriter & pw = peer->getPacketWriter();
-		while (requests.count() > 0)
-		{
-			Request r = requests.front();
-			pw.sendReject(r);
-			requests.pop_front();
-		}
-	}
-	
 	void PeerUploader::clearAllRequests()
 	{
+		PacketWriter & pw = peer->getPacketWriter();
+		pw.clearPieces();
 		requests.clear();
 	}
 	
@@ -183,5 +164,10 @@ namespace bt
 			pw.sendAllowedFast(*itr);
 			itr++;
 		}
+	}
+	
+	Uint32 PeerUploader::getNumRequests() const
+	{
+		return requests.count() + peer->getPacketWriter().getNumDataPacketsToWrite();
 	}
 }

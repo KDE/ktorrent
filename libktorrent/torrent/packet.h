@@ -59,8 +59,20 @@ namespace bt
 
 		Uint32 isSent() const {return written == size;}
 		
-		/// Make a description of the packet for debug purposes
-		//QString debugString() const;
+		/**
+		 * If this packet is a piece, make a reject of it.
+		 */
+		void makeRejectOfPiece();
+		
+		/// Are we sending this packet ?
+		bool sending() const {return written > 0;}
+		
+		/**
+		 * Is this a piece packet which matches a request
+		 * @param req The request
+		 * @return If this is a piece in response of this request
+		 */
+		bool isPiece(const Request & req) const;
 		
 		/**
 		 * Put the packet in an output buffer.

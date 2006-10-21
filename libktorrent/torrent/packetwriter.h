@@ -39,7 +39,10 @@ namespace bt
 	class PacketWriter : public net::SocketWriter
 	{
 		Peer* peer;
-		QPtrList<Packet> packets;
+		QPtrList<Packet> control_packets;
+		QPtrList<Packet> data_packets;
+		Packet* curr_packet;
+		Uint32 ctrl_packets_sent;
 		mutable Uint32 uploaded;
 		mutable Uint32 uploaded_non_data;
 		mutable QMutex mutex;
@@ -141,15 +144,31 @@ namespace bt
 		/// Get the number of packets which need to be written
 		Uint32 getNumPacketsToWrite() const;
 		
+		/// Get the number of data packets to write
+		Uint32 getNumDataPacketsToWrite() const;
+		
 		/// Get the number of data bytes uploaded
 		Uint32 getUploadedDataBytes() const;
 		
 		/// Get the number of bytes uploaded
 		Uint32 getUploadedNonDataBytes() const;
 
+		/**
+		 * Do not send a piece which matches this request.
+		 * But only if we are not allready sending the piece.
+		 * @param req The request
+		 * @param reject Wether we can send a reject instead
+		 */
+		void doNotSendPiece(const Request & req,bool reject);
+		
+		/**
+		 * Clear all pieces we are not in the progress of sending.
+		 */
+		void clearPieces();
 	
 	private:
 		void queuePacket(Packet* p);
+		Packet* selectPacket();
 		virtual Uint32 onReadyToWrite(Uint8* data,Uint32 max_to_write);
 		virtual bool hasBytesToWrite() const;
 	};

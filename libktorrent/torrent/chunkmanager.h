@@ -20,7 +20,7 @@
 #ifndef BTCHUNKMANAGER_H
 #define BTCHUNKMANAGER_H
 
-#include <qvaluelist.h>
+#include <qmap.h>
 #include <qstring.h>
 #include <qobject.h>
 #include <qptrvector.h> 
@@ -61,7 +61,7 @@ namespace bt
 		QString index_file,file_info_file,file_priority_file;
 		QPtrVector<Chunk> chunks;
 		Cache* cache;
-		QValueList<Uint32> loaded;
+		QMap<Uint32,Uint32> loaded; // loaded chunks and when they were loaded
 		BitSet bitset;
 		BitSet excluded_chunks;
 		BitSet only_seed_chunks;

@@ -54,6 +54,11 @@ AC_ARG_ENABLE(
 	memleak-check,
 	[AS_HELP_STRING(--enable-memleak-check,[Enable memory leak checking])],
 	[CXXFLAGS="$CXXFLAGS -DKT_LEAKTRACE"])
+	
+AC_ARG_ENABLE(
+	profile,
+	[AS_HELP_STRING(--enable-profile,[Enable profiling])],
+	[CXXFLAGS="$CXXFLAGS -DKT_PROFILE"])
 
 AC_ARG_ENABLE(geoip,
      [  --enable-geoip Enables GeoIP database installation],

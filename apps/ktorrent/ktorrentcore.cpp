@@ -53,6 +53,10 @@
 #include "fileselectdlg.h"
 #include "scandialog.h"
 
+
+#include <util/profiler.h>
+
+
 using namespace bt;
 using namespace kt;
 
@@ -528,8 +532,9 @@ void KTorrentCore::stopAll(int type)
 
 void KTorrentCore::update()
 {
+	KT_PROF_START("core");
 	AuthenticationMonitor::instance().update();
-
+	
 	QPtrList<kt::TorrentInterface>::iterator i = qman->begin();
 	//Uint32 down_speed = 0;
 	while (i != qman->end())
@@ -541,8 +546,7 @@ void KTorrentCore::update()
 		}
 		i++;
 	}
-	
-	
+	KT_PROF_END();
 }
 
 void KTorrentCore::makeTorrent(const QString & file,const QStringList & trackers,

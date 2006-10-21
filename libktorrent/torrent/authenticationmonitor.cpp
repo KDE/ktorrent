@@ -26,6 +26,9 @@
 #include "authenticationmonitor.h"
 #include "authenticatebase.h"
 
+#include <util/profiler.h>
+
+
 namespace bt
 {
 	AuthenticationMonitor AuthenticationMonitor::self;
@@ -66,7 +69,9 @@ namespace bt
 	{
 		if (auths.size() == 0)
 			return;
-			
+		
+		KT_PROF_START("auth");
+		
 		fd_set rfds,wfds;
 		int max_fd = 0;
 		FD_ZERO(&rfds);
@@ -103,36 +108,37 @@ namespace bt
 		}
 		
 		struct timeval tv = {0,1000};
-		if (select(max_fd+1,&rfds,&wfds,NULL,&tv) <= 0)
-			return;
-		
-		itr = auths.begin();
-		while (itr != auths.end())
+		if (select(max_fd+1,&rfds,&wfds,NULL,&tv) > 0)
 		{
-			AuthenticateBase* ab = *itr;
-			if (ab->getSocket() && ab->getSocket()->fd() >= 0)
+			itr = auths.begin();
+			while (itr != auths.end())
 			{
-				int fd = ab->getSocket()->fd();
-				if (FD_ISSET(fd,&rfds))
+				AuthenticateBase* ab = *itr;
+				if (ab->getSocket() && ab->getSocket()->fd() >= 0)
 				{
-					ab->onReadyRead();
+					int fd = ab->getSocket()->fd();
+					if (FD_ISSET(fd,&rfds))
+					{
+						ab->onReadyRead();
+					}
+					else if (FD_ISSET(fd,&wfds))
+					{
+						ab->onReadyWrite();
+					}
 				}
-				else if (FD_ISSET(fd,&wfds))
+				
+				if (ab->isFinished())
 				{
-					ab->onReadyWrite();
+					ab->deleteLater();
+					std::set<AuthenticateBase*>::iterator j = itr;
+					itr++;
+					auths.erase(j);
 				}
+				else
+					itr++;
 			}
-			
-			if (ab->isFinished())
-			{
-				ab->deleteLater();
-				std::set<AuthenticateBase*>::iterator j = itr;
-				itr++;
-				auths.erase(j);
-			}
-			else
-				itr++;
 		}
+		KT_PROF_END();
 	}
 	
 }

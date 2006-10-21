@@ -37,11 +37,14 @@ namespace bt
 {
 
 
-	PacketWriter::PacketWriter(Peer* peer) : peer(peer)
+	PacketWriter::PacketWriter(Peer* peer) : peer(peer),mutex(true) // this is a recursive mutex
 	{
 		uploaded = 0;
 		uploaded_non_data = 0;
-		packets.setAutoDelete(true);
+		data_packets.setAutoDelete(true);
+		control_packets.setAutoDelete(true);
+		curr_packet = 0;
+		ctrl_packets_sent = 0;
 	}
 
 
@@ -52,7 +55,10 @@ namespace bt
 	void PacketWriter::queuePacket(Packet* p)
 	{
 		mutex.lock();
-		packets.append(p);
+		if (p->getType() == PIECE)
+			data_packets.append(p);
+		else
+			control_packets.append(p);
 		mutex.unlock();
 	}
 	
@@ -179,14 +185,42 @@ namespace bt
 			return true;
 		}
 	}
-
+	
+	Packet* PacketWriter::selectPacket()
+	{
+		// this function should ensure that between
+		// each data packet at least 3 control packets are sent
+		// so requests can get through
+		if (ctrl_packets_sent < 3)
+		{
+			// try to send another control packet
+			if (control_packets.count() > 0)
+				return control_packets.first();
+			else if (data_packets.count() > 0)
+				return data_packets.first(); 
+		}
+		else
+		{
+			if (data_packets.count() > 0)
+			{
+				ctrl_packets_sent = 0;
+				return data_packets.first();
+			}
+			else if (control_packets.count() > 0)
+				return control_packets.first();
+		}
+		return 0;
+	}
+	
 	Uint32 PacketWriter::onReadyToWrite(Uint8* data,Uint32 max_to_write)
 	{
 		mutex.lock();
+		if (!curr_packet)
+			curr_packet = selectPacket();
 		Uint32 written = 0;
-		while (packets.count() > 0 && written < max_to_write)
+		while (curr_packet && written < max_to_write)
 		{
-			Packet* p = packets.first();
+			Packet* p = curr_packet;
 			bool count_as_data = false;
 			Uint32 ret = p->putInOutputBuffer(data + written,max_to_write - written,count_as_data);
 			written += ret;
@@ -198,7 +232,21 @@ namespace bt
 			if (p->isSent())
 			{
 				// packet sent, so remove it
-				packets.removeFirst();
+				if (p->getType() == PIECE)
+				{
+					// remove data packet
+					data_packets.removeFirst();
+					// reset ctrl_packets_sent so the next packet should be a ctrl packet
+					ctrl_packets_sent = 0;  
+					curr_packet = selectPacket();
+				}
+				else
+				{
+					// remove control packet and select another one to send
+					control_packets.removeFirst();
+					ctrl_packets_sent++;
+					curr_packet = selectPacket();
+				}
 			}
 			else
 			{
@@ -206,7 +254,6 @@ namespace bt
 				break;
 			}
 		}
-		
 		mutex.unlock();
 		return written;
 	}
@@ -237,8 +284,59 @@ namespace bt
 	Uint32 PacketWriter::getNumPacketsToWrite() const
 	{
 		mutex.lock();
-		Uint32 ret = packets.count();
+		Uint32 ret = data_packets.count() + control_packets.count();
 		mutex.unlock();
 		return ret;
+	}
+	
+	Uint32 PacketWriter::getNumDataPacketsToWrite() const
+	{
+		mutex.lock();
+		Uint32 ret = data_packets.count();
+		mutex.unlock();
+		return ret;
+	}
+	
+	void PacketWriter::doNotSendPiece(const Request & req,bool reject)
+	{
+		QMutexLocker locker(&mutex);
+		Packet* p = data_packets.first();
+		while (p)
+		{
+			if (p->isPiece(req) && !p->sending())
+			{
+				// remove current item
+				data_packets.remove();
+				p = data_packets.current();
+				if (reject)
+				{
+					// queue a reject packet
+					sendReject(req);
+				}
+			}
+			else
+			{
+				p = data_packets.next();
+			}
+		}
+	}
+	
+	void PacketWriter::clearPieces()
+	{
+		QMutexLocker locker(&mutex);
+		Packet* p = data_packets.first();
+		while (p)
+		{
+			if (p->getType() == bt::PIECE && !p->sending())
+			{
+				// remove current item
+				data_packets.remove();
+				p = data_packets.current();
+			}
+			else
+			{
+				p = data_packets.next();
+			}
+		}
 	}
 }

@@ -83,10 +83,8 @@ namespace bt
 		Uint32 update(ChunkManager & cman,Uint32 opt_unchoked);
 		
 		/// Get the number of requests
-		Uint32 getNumRequests() const {return requests.count();}
-		
-		/// Reject all packets
-		void rejectAll();
+		Uint32 getNumRequests() const;
+				
 		
 		void addUploadedBytes(Uint32 bytes) {uploaded += bytes;}
 		

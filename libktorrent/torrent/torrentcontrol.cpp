@@ -63,6 +63,9 @@
 #include "preallocationthread.h"
 #include "timeestimator.h"
 
+#include <util/profiler.h>
+
+
 using namespace kt;
 
 namespace bt
@@ -166,17 +169,27 @@ namespace bt
 				return; // preallocation still going on, so just return
 		}
 		
+
+		KT_PROF_START(QString("tor:%1").arg(stats.torrent_name));
 		try
 		{
 			// first update peermanager
+			KT_PROF_START("pman");
 			pman->update();
+			KT_PROF_END();
+			
 			bool comp = stats.completed;
 
+			KT_PROF_START("up");
 			// then the downloader and uploader
 			up->update(choke->getOptimisticlyUnchokedPeerID());
-			//if (!completed)
+			KT_PROF_END();
+			
+			KT_PROF_START("down");
 			down->update();
+			KT_PROF_END();
 
+			KT_PROF_START("comp");
 			stats.completed = cman->completed();
 			if (stats.completed && !comp)
 			{
@@ -207,13 +220,18 @@ namespace bt
 				time_started_dl = QDateTime::currentDateTime();
 			}
 			updateStatusMsg();
-
+			KT_PROF_END();
+			
+			KT_PROF_START("clearDeadPeers");
 			// get rid of dead Peers
 			Uint32 num_cleared = pman->clearDeadPeers();
+			KT_PROF_END();
+			
 			
 			// we may need to update the choker
 			if (choker_update_timer.getElapsedSinceUpdate() >= 10000 || num_cleared > 0)
 			{
+				KT_PROF_START("choke");
 				// also get rid of seeders & uninterested when download is finished
 				// no need to keep them around, but also no need to do this
 				// every update, so once every 10 seconds is fine
@@ -227,17 +245,22 @@ namespace bt
 				choker_update_timer.update();
 				// a good opportunity to make sure we are not keeping to much in memory
 				cman->checkMemoryUsage();
+				KT_PROF_END();
 			}
 
 			// to satisfy people obsessed with their share ratio
 			if (stats_save_timer.getElapsedSinceUpdate() >= 5*60*1000)
 			{
+				KT_PROF_START("saveStats");
 				saveStats();
 				stats_save_timer.update();
+				KT_PROF_END();
 			}
 
+			KT_PROF_START("updateStats");
 			// Update DownloadCap
 			updateStats();
+			KT_PROF_END();
 			if (stats.download_rate > 0)
 				stalled_timer.update();
 			
@@ -262,6 +285,7 @@ namespace bt
 		{
 			onIOError(e.toString());
 		}
+		KT_PROF_END();
 	}
 
 	void TorrentControl::onIOError(const QString & msg)

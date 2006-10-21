@@ -92,6 +92,37 @@ namespace bt
 		delete [] data;
 	}
 	
+	bool Packet::isPiece(const Request & req) const
+	{
+		if (data[4] == PIECE)
+		{
+			if (ReadUint32(data,5) != req.getIndex())
+				return false;
+			
+			if (ReadUint32(data,9) != req.getOffset())
+				return false; 
+			
+			if (ReadUint32(data,13) != req.getLength())
+				return false;
+			
+			return true;
+		}
+		return false;
+	}
+	
+	void Packet::makeRejectOfPiece()
+	{
+		if (getType() != PIECE)
+			return;
+		
+		// change type
+		data[4] = bt::REJECT_REQUEST;
+		// fill in length of piece
+		WriteUint32(data,13,size - 13);
+		// size of packet is now 17
+		size = 17;
+	}
+	
 	/*
 	QString Packet::debugString() const
 	{

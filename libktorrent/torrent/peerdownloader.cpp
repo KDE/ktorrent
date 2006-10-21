@@ -318,7 +318,7 @@ namespace bt
 		// modify the interval if necessary
 		double pieces_per_sec = (double)peer->getDownloadRate() / MAX_PIECE_LEN;
 		
-		Uint32 max_reqs = 1 + (Uint32)ceil(pieces_per_sec);
+		Uint32 max_reqs = 1 + (Uint32)ceil(8*pieces_per_sec);
 		
 		while (wait_queue.count() > 0 && reqs.count() < max_reqs)
 		{
