@@ -34,6 +34,9 @@
 
 namespace bt
 {
+	const Uint32 INITIAL_WAIT_TIME = 30; 
+	const Uint32 LONGER_WAIT_TIME = 300; 
+	const Uint32 FINAL_WAIT_TIME = 1800;
 
 	PeerSourceManager::PeerSourceManager(TorrentControl* tor,PeerManager* pman) 
 	: tor(tor),pman(pman),curr(0),started(false),m_dht(0),pending(false)
@@ -64,6 +67,8 @@ namespace bt
 			//load custom trackers
 			loadCustomURLs();
 		}
+		
+		connect(&timer,SIGNAL(timeout()),this,SLOT(updateCurrentManually()));
 	}
 	
 	PeerSourceManager::~PeerSourceManager()
@@ -117,6 +122,7 @@ namespace bt
 		}
 		else
 		{
+			tor->resetTrackerStats();
 			curr->start();
 		}
 	}
@@ -233,7 +239,7 @@ namespace bt
 			
 			if (trackers.count() > 0)
 			{
-				switchTracker(trackers.begin()->second);
+				switchTracker(selectTracker());
 				tor->resetTrackerStats();
 				curr->start();
 			}
@@ -368,19 +374,27 @@ namespace bt
 		
 		if (!trk)
 		{
-			if (failures >= 3)
+			if (curr->failureCount() > 5)
+			{
+				// we failed to contact the only tracker 5 times in a row, so try again in 
+				// 30 minutes
+				curr->setInterval(FINAL_WAIT_TIME);
+				timer.start(FINAL_WAIT_TIME * 1000,true);
+				request_time = QDateTime::currentDateTime();
+			}
+			else if (curr->failureCount() > 2)
 			{
 				// we failed to contact the only tracker 3 times in a row, so try again in 
 				// a minute or 5, no need for hammering every 30 seconds
-				curr->setInterval(5 * 60);
-				timer.start(5 * 60 * 1000,true);
+				curr->setInterval(LONGER_WAIT_TIME);
+				timer.start(LONGER_WAIT_TIME * 1000,true);
 				request_time = QDateTime::currentDateTime();
 			}
 			else
 			{
 				// lets not hammer and wait 30 seconds
-				curr->setInterval(30);
-				timer.start(30 * 1000,true);
+				curr->setInterval(INITIAL_WAIT_TIME);
+				timer.start(INITIAL_WAIT_TIME * 1000,true);
 				request_time = QDateTime::currentDateTime();
 			}
 		}
@@ -394,19 +408,25 @@ namespace bt
 				tor->resetTrackerStats();
 				curr->start();
 			}
-			else if (trk->failureCount() >= 3)
+			else if (trk->failureCount() > 5)
+			{
+				curr->setInterval(FINAL_WAIT_TIME);
+				timer.start(FINAL_WAIT_TIME * 1000,true);
+				request_time = QDateTime::currentDateTime();
+			}
+			else if (trk->failureCount() > 2)
 			{
 				// we tried everybody 3 times and it didn't work
 				// wait 5 minutes and try again
-				curr->setInterval(5 * 60);
-				timer.start(5 * 60 * 1000,true);
+				curr->setInterval(LONGER_WAIT_TIME);
+				timer.start(LONGER_WAIT_TIME * 1000,true);
 				request_time = QDateTime::currentDateTime();
 			}
 			else
 			{
 				// wait 30 seconds and try again
-				curr->setInterval(30);
-				timer.start(30 * 1000,true);
+				curr->setInterval(INITIAL_WAIT_TIME);
+				timer.start(INITIAL_WAIT_TIME * 1000,true);
 				request_time = QDateTime::currentDateTime();
 			}
 		}
@@ -433,6 +453,17 @@ namespace bt
 		pending = true;
 	}
 	
+	void PeerSourceManager::updateCurrentManually()
+	{
+		if (!curr)
+			return;
+		
+		if (!curr->isStarted())
+			tor->resetTrackerStats();
+		
+		curr->manualUpdate();
+	}
+	
 	void PeerSourceManager::switchTracker(Tracker* trk)
 	{
 		if (curr == trk)
@@ -444,7 +475,6 @@ namespace bt
 					   this,SLOT(onTrackerError( const QString& )));
 			disconnect(curr,SIGNAL(requestOK()),this,SLOT(onTrackerOK()));
 			disconnect(curr,SIGNAL(requestPending()),this,SLOT(onTrackerRequestPending()));
-			disconnect(&timer,SIGNAL(timeout()),curr,SLOT(manualUpdate()));
 			curr = 0;
 		}
 		
@@ -460,9 +490,6 @@ namespace bt
 			
 			QObject::connect(curr,SIGNAL(requestPending()),
 					this,SLOT(onTrackerRequestPending()));
-			
-			QObject::connect(&timer,SIGNAL(timeout()),
-					curr,SLOT(manualUpdate()));
 		}
 	}
 	

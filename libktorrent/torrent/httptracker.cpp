@@ -385,20 +385,19 @@ namespace bt
 		{
 			timer.stop();
 			KIO::StoredTransferJob* st = (KIO::StoredTransferJob*)active_job;
-			failures = 0;
 			active_job = 0;
 			if (event != "stopped")
 			{
-				if (event == "started")
-					started = true;
-				
 				event = QString::null;
 				try
 				{
 					if (updateData(st->data()))
 					{
+						failures = 0;
 						peersReady(this);
 						requestOK();
+						if (event == "started")
+							started = true;
 					}
 				}
 				catch (bt::Error & err)
@@ -409,6 +408,7 @@ namespace bt
 			}
 			else
 			{
+				failures = 0;
 				stopDone();
 			}
 		}

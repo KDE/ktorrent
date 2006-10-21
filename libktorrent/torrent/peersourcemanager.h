@@ -156,6 +156,11 @@ namespace bt
 		 */
 		void onTrackerRequestPending();
 		
+		/**
+		 * Update the current tracker manually
+		 */
+		void updateCurrentManually();
+		
 	signals:
 		/**
 		 * Status has changed of the tracker.
