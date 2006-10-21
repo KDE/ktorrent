@@ -2,7 +2,6 @@
 Name=RssFeedPlugin
 Name[bg]=Приставка за RssFeed
 Name[el]=Πρόσθετο ροών Rss
-Name[ja]=RSSフィードプラグイン
 Name[sk]=RssFeed Plugin
 Name[sv]=RSS-kanalinsticksprogram
 ServiceTypes=KTorrent/Plugin
