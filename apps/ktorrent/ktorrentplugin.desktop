@@ -2,6 +2,7 @@
 Type=ServiceType
 X-KDE-ServiceType=KTorrent/Plugin
 Name=KTorrent Plugin
+Name[ar]=قابس KTorrent
 Name[bg]=Приставка KTorrent
 Name[br]=Lugent KTorrent
 Name[ca]=Connector KTorrent
