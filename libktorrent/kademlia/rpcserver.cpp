@@ -58,8 +58,13 @@ namespace dht
 	
 	void RPCServer::start()
 	{
+		sock->setBlocking(true);
+		if (!sock->bind(QString::null,QString::number(port)))
+		{
+			Out(SYS_DHT|LOG_IMPORTANT) << "DHT: Failed to bind to UDP port " << port << " for DHT" << endl;
+		}
+		sock->setBlocking(false);
 		connect(sock,SIGNAL(readyRead()),this,SLOT(readPacket()));
-		sock->bind(QString::null,QString::number(port));
 	}
 		
 	void RPCServer::stop()

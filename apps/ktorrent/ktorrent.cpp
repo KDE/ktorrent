@@ -368,7 +368,7 @@ void KTorrent::applySettings(bool change_port)
 	dht::DHTBase & ht = Globals::instance().getDHT();
 	if (Settings::dhtSupport() && !ht.isRunning())
 	{
-		ht.start(KGlobal::dirs()->saveLocation("data","ktorrent") + "dht_table",Settings::dhtPort());
+		ht.start(kt::DataDir() + "dht_table",Settings::dhtPort());
 	}
 	else if (!Settings::dhtSupport() && ht.isRunning())
 	{
@@ -378,7 +378,7 @@ void KTorrent::applySettings(bool change_port)
 	{
 		Out(SYS_GEN|LOG_NOTICE) << "Restarting DHT with new port " << Settings::dhtPort() << endl;
 		ht.stop();
-		ht.start(KGlobal::dirs()->saveLocation("data","ktorrent") + "dht_table",Settings::dhtPort());
+		ht.start(kt::DataDir() + "dht_table",Settings::dhtPort());
 	}
 	
 	if (Settings::useEncryption())
