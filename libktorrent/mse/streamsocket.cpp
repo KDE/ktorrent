@@ -42,6 +42,7 @@ using namespace net;
 namespace mse
 {
 	
+	Uint8 StreamSocket::tos = IPTOS_THROUGHPUT;
 
 	StreamSocket::StreamSocket() : sock(0),enc(0),monitored(false)
 	{
@@ -60,7 +61,7 @@ namespace mse
 		reinserted_data = 0;
 		reinserted_data_size = 0;
 		reinserted_data_read = 0;
-		sock->setTOS(IPTOS_THROUGHPUT);
+		sock->setTOS(tos);
 	}
 
 	StreamSocket::~StreamSocket()
@@ -180,7 +181,7 @@ namespace mse
 		sock->setNonBlocking();
 		if (sock->connectTo(Address(ip,port)))
 		{
-			sock->setTOS(IPTOS_THROUGHPUT);
+			sock->setTOS(tos);
 			return true;
 		}
 		return false;
@@ -282,7 +283,7 @@ namespace mse
 	{
 		bool ret = sock->connectSuccesFull();
 		if (ret)
-			sock->setTOS(IPTOS_THROUGHPUT);
+			sock->setTOS(tos);
 		
 		return ret;
 	}

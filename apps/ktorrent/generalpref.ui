@@ -83,127 +83,12 @@
                 <cstring>groupBox3_2</cstring>
             </property>
             <property name="title">
-                <string>General</string>
+                <string>System Tray Icon</string>
             </property>
             <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLayoutWidget" row="4" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>layout5_2</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel1_3_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>GUI update interval:</string>
-                            </property>
-                        </widget>
-                        <widget class="KComboBox">
-                            <item>
-                                <property name="text">
-                                    <string>500ms</string>
-                                </property>
-                            </item>
-                            <item>
-                                <property name="text">
-                                    <string>1s</string>
-                                </property>
-                            </item>
-                            <item>
-                                <property name="text">
-                                    <string>2s</string>
-                                </property>
-                            </item>
-                            <item>
-                                <property name="text">
-                                    <string>5s</string>
-                                </property>
-                            </item>
-                            <property name="name">
-                                <cstring>gui_interval</cstring>
-                            </property>
-                        </widget>
-                        <spacer>
-                            <property name="name">
-                                <cstring>spacer2_2_2</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>111</width>
-                                    <height>20</height>
-                                </size>
-                            </property>
-                        </spacer>
-                    </hbox>
-                </widget>
-                <widget class="QLayoutWidget" row="3" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>layout5</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel1_3</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Memory usage:</string>
-                            </property>
-                        </widget>
-                        <widget class="KComboBox">
-                            <item>
-                                <property name="text">
-                                    <string>Low</string>
-                                </property>
-                            </item>
-                            <item>
-                                <property name="text">
-                                    <string>Medium</string>
-                                </property>
-                            </item>
-                            <item>
-                                <property name="text">
-                                    <string>High</string>
-                                </property>
-                            </item>
-                            <property name="name">
-                                <cstring>mem_usage</cstring>
-                            </property>
-                        </widget>
-                        <spacer>
-                            <property name="name">
-                                <cstring>spacer2_2</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>111</width>
-                                    <height>20</height>
-                                </size>
-                            </property>
-                        </spacer>
-                    </hbox>
-                </widget>
                 <widget class="QCheckBox" row="0" column="0">
                     <property name="name">
                         <cstring>show_systray_icon</cstring>
@@ -505,8 +390,6 @@
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
-    <includehint>kcombobox.h</includehint>
-    <includehint>kcombobox.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>klineedit.h</includehint>

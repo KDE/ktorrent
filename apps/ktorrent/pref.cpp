@@ -43,6 +43,7 @@
 #include "generalpref.h"
 #include "pref.h"
 #include "downloadpref.h"
+#include "advancedpref.h"
 #include "settings.h"
 #include "ktorrent.h"
 
@@ -57,16 +58,19 @@ KTorrentPreferences::KTorrentPreferences(KTorrent & ktor)
 	validation_err = false;
 	enableButtonSeparator(true);
 		
-	page_one = new PrefPageOne();
-	page_two = new PrefPageTwo();
+	page_one = new DownloadPrefPage();
+	page_two = new GeneralPrefPage();
+	page_three = new AdvancedPrefPage();
 	addPrefPage(page_one);
 	addPrefPage(page_two);
+	addPrefPage(page_three);
 }
 
 KTorrentPreferences::~KTorrentPreferences()
 {
 	delete page_one;
 	delete page_two;
+	delete page_three;
 }
 
 void KTorrentPreferences::slotOk()
@@ -128,22 +132,22 @@ void KTorrentPreferences::removePrefPage(kt::PrefPageInterface* pp)
 
 ///////////////////////////////////////////////////////
 
-PrefPageOne::PrefPageOne() : kt::PrefPageInterface(i18n("Downloads"), i18n("Download Options"),KGlobal::iconLoader()->loadIcon("down",KIcon::NoGroup)),dp(0)
+DownloadPrefPage::DownloadPrefPage() : kt::PrefPageInterface(i18n("Downloads"), i18n("Download Options"),KGlobal::iconLoader()->loadIcon("down",KIcon::NoGroup)),dp(0)
 {
 }
 
-PrefPageOne::~ PrefPageOne()
+DownloadPrefPage::~ DownloadPrefPage()
 {
 	delete dp;
 }
 
-void PrefPageOne::createWidget(QWidget* parent)
+void DownloadPrefPage::createWidget(QWidget* parent)
 {
 	dp = new DownloadPref(parent);
 	updateData();
 }
 
-bool PrefPageOne::apply()
+bool DownloadPrefPage::apply()
 {
 	Settings::setMaxDownloads(dp->max_downloads->value());
 	Settings::setMaxSeeds(dp->max_seeds->value());
@@ -165,7 +169,7 @@ bool PrefPageOne::apply()
 	return true;
 }
 
-void PrefPageOne::updateData()
+void DownloadPrefPage::updateData()
 {
 	//setMinimumSize(400,400);
 	dp->max_downloads->setValue(Settings::maxDownloads());
@@ -181,24 +185,25 @@ void PrefPageOne::updateData()
 	dp->num_upload_slots->setValue(Settings::numUploadSlots());
 }
 
-void PrefPageOne::deleteWidget()
+void DownloadPrefPage::deleteWidget()
 {
 	delete dp;
+	dp = 0;
 }
 
 //////////////////////////////////////
-PrefPageTwo::PrefPageTwo() :
+GeneralPrefPage::GeneralPrefPage() :
 		kt::PrefPageInterface(i18n("General"), i18n("General Options"),
 							  KGlobal::iconLoader()->loadIcon("package_settings",KIcon::NoGroup)),gp(0)
 {
 }
 
-PrefPageTwo::~PrefPageTwo()
+GeneralPrefPage::~GeneralPrefPage()
 {
 	delete gp;
 }
 
-void PrefPageTwo::createWidget(QWidget* parent)
+void GeneralPrefPage::createWidget(QWidget* parent)
 {
 	gp = new GeneralPref(parent);
 	updateData();
@@ -212,7 +217,7 @@ void PrefPageTwo::createWidget(QWidget* parent)
 			this,SLOT(useEncryptionChecked( bool )));
 }
 
-bool PrefPageTwo::apply()
+bool GeneralPrefPage::apply()
 {
 	Settings::setShowSystemTrayIcon(gp->show_systray_icon->isChecked());
 	Settings::setShowSpeedBarInTrayIcon(gp->show_speedbar->isChecked());
@@ -251,8 +256,7 @@ bool PrefPageTwo::apply()
 		}
 	}
 	
-	Settings::setMemoryUsage(gp->mem_usage->currentItem());
-	Settings::setGuiUpdateInterval(gp->gui_interval->currentItem());
+	
 	
 	if (gp->use_dht->isChecked() && gp->dht_port->value() == Settings::udpTrackerPort())
 	{
@@ -268,29 +272,29 @@ bool PrefPageTwo::apply()
 	return true;
 }
 
-void PrefPageTwo::useEncryptionChecked(bool on)
+void GeneralPrefPage::useEncryptionChecked(bool on)
 {
 	gp->allow_unencrypted->setEnabled(on);
 }
 
-void PrefPageTwo::autosaveChecked(bool on)
+void GeneralPrefPage::autosaveChecked(bool on)
 {
 	gp->autosave_location->setEnabled(on);
 }
 
-void PrefPageTwo::customIPChecked(bool on)
+void GeneralPrefPage::customIPChecked(bool on)
 {
 	gp->custom_ip->setEnabled(on);
 	gp->custom_ip_label->setEnabled(on);
 }
 
-void PrefPageTwo::dhtChecked(bool on)
+void GeneralPrefPage::dhtChecked(bool on)
 {
 	gp->dht_port->setEnabled(on);
 	gp->dht_port_label->setEnabled(on);
 }
 
-void PrefPageTwo::updateData()
+void GeneralPrefPage::updateData()
 {
 	gp->show_systray_icon->setChecked(Settings::showSystemTrayIcon());
 	gp->show_speedbar->setChecked(Settings::showSpeedBarInTrayIcon());
@@ -328,10 +332,7 @@ void PrefPageTwo::updateData()
 	gp->custom_ip_check->setChecked(useExternalIP);
 	gp->custom_ip->setEnabled(useExternalIP);
 	gp->custom_ip_label->setEnabled(useExternalIP);
-	
-	gp->mem_usage->setCurrentItem(Settings::memoryUsage());
-	gp->gui_interval->setCurrentItem(Settings::guiUpdateInterval());
-	
+		
 	gp->use_dht->setChecked(Settings::dhtSupport());
 	gp->dht_port->setValue(Settings::dhtPort());
 	gp->dht_port->setEnabled(Settings::dhtSupport());
@@ -342,9 +343,62 @@ void PrefPageTwo::updateData()
 	gp->allow_unencrypted->setEnabled(Settings::useEncryption());
 }
 
-void PrefPageTwo::deleteWidget()
+void GeneralPrefPage::deleteWidget()
 {
 	delete gp;
+	gp = 0;
+}
+
+/////////////////////////////////
+
+AdvancedPrefPage::AdvancedPrefPage() : 
+		kt::PrefPageInterface(i18n("Advanced"), i18n("Advanced Options"),
+		KGlobal::iconLoader()->loadIcon("package_settings",KIcon::NoGroup)),ap(0)
+{
+}
+
+AdvancedPrefPage::~AdvancedPrefPage()
+{
+	delete ap;
+}
+	
+bool AdvancedPrefPage::apply()
+{
+	Settings::setMemoryUsage(ap->mem_usage->currentItem());
+	Settings::setGuiUpdateInterval(ap->gui_interval->currentItem());
+	Settings::setTypeOfService(ap->tos_byte->value());
+	Settings::setAllwaysDoUploadDataCheck(!ap->no_recheck->isChecked());
+	Settings::setMaxSizeForUploadDataCheck(ap->recheck_size->value());
+	return true;
+}
+
+void AdvancedPrefPage::updateData()
+{
+	ap->mem_usage->setCurrentItem(Settings::memoryUsage());
+	ap->gui_interval->setCurrentItem(Settings::guiUpdateInterval());
+	ap->tos_byte->setValue(Settings::typeOfService());
+	ap->no_recheck->setChecked(!Settings::allwaysDoUploadDataCheck());
+	ap->recheck_size->setEnabled(!Settings::allwaysDoUploadDataCheck());
+	ap->recheck_size->setValue(Settings::maxSizeForUploadDataCheck());
+}
+			
+void AdvancedPrefPage::createWidget(QWidget* parent)
+{
+	ap = new AdvancedPref(parent);
+	updateData();
+	connect(ap->no_recheck,SIGNAL(toggled(bool)),
+			this,SLOT(noDataCheckChecked( bool )));
+}
+
+void AdvancedPrefPage::deleteWidget()
+{
+	delete ap;
+	ap = 0;
+}
+	
+void AdvancedPrefPage::noDataCheckChecked(bool on)
+{
+	ap->recheck_size->setEnabled(on);
 }
 
 #include "pref.moc"

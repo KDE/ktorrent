@@ -131,6 +131,12 @@ namespace mse
 		
 		/// Get the current download rate
 		float getUploadRate() const;
+		
+		/**
+		 * Set the TOS byte for new sockets.
+		 * @param t TOS value
+		 */
+		static void setTOS(Uint8 t) {tos = t;}
 	private:
 		virtual void onDataReady(Uint8* buf,Uint32 size);
 		virtual Uint32 onReadyToWrite(Uint8* data,Uint32 max_to_write);
@@ -145,6 +151,8 @@ namespace mse
 		bool monitored;
 		net::SocketReader* rdr;
 		net::SocketWriter* wrt;
+		
+		static Uint8 tos;
 	};
 
 }

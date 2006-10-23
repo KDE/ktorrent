@@ -37,6 +37,7 @@
 namespace bt
 {
 	
+	Uint32 ChunkManager::max_chunk_size_for_data_check = 0;
 	
 
 	ChunkManager::ChunkManager(
@@ -272,7 +273,8 @@ namespace bt
 			// load the chunk if it is on disk
 			cache->load(c);
 			loaded.insert(i,bt::GetCurrentTime());
-			if (c->getData())
+			bool check_allowed = (max_chunk_size_for_data_check == 0 || tor.getChunkSize() <= max_chunk_size_for_data_check);
+			if (c->getData() && check_allowed)
 			{
 			//	Out(SYS_DIO|LOG_IMPORTANT) << "Verifying chunk " << i << endl;
 				if (!c->checkHash(tor.getHash(i)))

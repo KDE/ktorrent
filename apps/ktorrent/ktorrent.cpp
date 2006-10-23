@@ -55,6 +55,7 @@
 
 #include <interfaces/torrentinterface.h>
 #include <torrent/peermanager.h>
+#include <torrent/chunkmanager.h>
 #include <torrent/uploadcap.h>
 #include <torrent/downloadcap.h>
 #include <util/error.h>
@@ -89,6 +90,7 @@
 #include <pluginmanager.h>
 #include <groups/group.h>
 #include <groups/groupview.h>
+#include <mse/streamsocket.h>
 
 
 
@@ -320,6 +322,11 @@ void KTorrent::applySettings(bool change_port)
 	net::SocketMonitor::setDownloadCap(Settings::maxDownloadRate()*1024);
 	net::SocketMonitor::setUploadCap(Settings::maxUploadRate()*1024);
 	m_core->setKeepSeeding(Settings::keepSeeding());
+	mse::StreamSocket::setTOS(Settings::typeOfService());
+	if (Settings::allwaysDoUploadDataCheck())
+		ChunkManager::setMaxChunkSizeForDataCheck(0);
+	else
+		ChunkManager::setMaxChunkSizeForDataCheck(Settings::maxSizeForUploadDataCheck() * 1024);
 
 	if (Settings::showSystemTrayIcon())
 	{

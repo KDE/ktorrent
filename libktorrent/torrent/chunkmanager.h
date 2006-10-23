@@ -285,6 +285,9 @@ namespace bt
 		
 		/// Are all not deselected chunks downloaded.
 		bool completed() const;
+		
+		/// Set the maximum chunk size for a data check, 0 means alllways check
+		static void setMaxChunkSizeForDataCheck(Uint32 mcs) {max_chunk_size_for_data_check = mcs;}
 	signals:
 		/**
 		 * Emitted when a range of chunks has been excluded
@@ -323,6 +326,8 @@ namespace bt
 	private slots:
 		void downloadStatusChanged(TorrentFile* tf,bool download);
 		void downloadPriorityChanged(TorrentFile* tf,Priority newpriority);
+		
+		static Uint32 max_chunk_size_for_data_check;
 	};
 
 }

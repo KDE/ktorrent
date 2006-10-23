@@ -30,16 +30,17 @@
 
 class DownloadPref;
 class GeneralPref;
+class AdvancedPref;
 class KTorrent;
 class QListViewItem; 
 
 
-class PrefPageOne : public kt::PrefPageInterface
+class DownloadPrefPage : public kt::PrefPageInterface
 {
 	DownloadPref* dp;
 public:
-	PrefPageOne();
-	virtual ~PrefPageOne();
+	DownloadPrefPage();
+	virtual ~DownloadPrefPage();
 	
 	virtual bool apply();
 	virtual void updateData();	
@@ -47,13 +48,13 @@ public:
 	virtual void deleteWidget();
 };
 
-class PrefPageTwo : public QObject,public kt::PrefPageInterface
+class GeneralPrefPage : public QObject,public kt::PrefPageInterface
 {
 	Q_OBJECT 
 	GeneralPref* gp;
 public:
-	PrefPageTwo();
-	virtual ~PrefPageTwo();
+	GeneralPrefPage();
+	virtual ~GeneralPrefPage();
 	
 	virtual bool apply();
 	virtual void updateData();
@@ -67,6 +68,23 @@ private slots:
 	void useEncryptionChecked(bool on);
 };
 
+class AdvancedPrefPage : public QObject,public kt::PrefPageInterface
+{
+	Q_OBJECT
+	 
+	AdvancedPref* ap;
+public:
+	AdvancedPrefPage();
+	virtual ~AdvancedPrefPage();
+	
+	virtual bool apply();
+	virtual void updateData();
+	virtual void createWidget(QWidget* parent);
+	virtual void deleteWidget();
+	
+private slots:
+	void noDataCheckChecked(bool on);
+};
 
  
 class KTorrentPreferences : public KDialogBase
@@ -87,8 +105,9 @@ private:
 	
 private:
 	KTorrent & ktor;
-	PrefPageOne* page_one;
-	PrefPageTwo* page_two;
+	DownloadPrefPage* page_one;
+	GeneralPrefPage* page_two;
+	AdvancedPrefPage* page_three;
 	QMap<kt::PrefPageInterface*,QFrame*> pages;
 	bool validation_err;
 };

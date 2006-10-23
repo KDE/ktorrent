@@ -133,6 +133,19 @@
 			<label>Allow unencrypted connections</label>
 			<default>true</default>
 		</entry>
+		<entry name="allwaysDoUploadDataCheck" type="Bool">
+			<default>true</default>
+		</entry>
+		<entry name="maxSizeForUploadDataCheck" type="Int">
+			<default>512</default>
+			<min>128</min>
+			<max>8192</max>
+		</entry>
+		<entry name="typeOfService" type="Int">
+			<default>8</default>
+			<min>0</min>
+			<max>255</max>
+		</entry>
 		
 	</group>
 </kcfg>
