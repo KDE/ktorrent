@@ -81,11 +81,15 @@ namespace bt
 	void QueueManager::start(kt::TorrentInterface* tc, bool user)
 	{
 		const TorrentStats & s = tc->getStats();
-		bool start_tc = false;
-		if (s.completed)
-			start_tc = (max_seeds == 0 || getNumRunning(false, true) < max_seeds);
-		else 
-	    	start_tc = (max_downloads == 0 || getNumRunning(true) < max_downloads);
+		bool start_tc = user;
+		
+		if(!user)
+		{
+			if (s.completed)
+				start_tc = (max_seeds == 0 || getNumRunning(false, true) < max_seeds);
+			else 
+	    		start_tc = (max_downloads == 0 || getNumRunning(true) < max_downloads);
+		}
 		
 		if (start_tc)
 		{
@@ -223,6 +227,38 @@ namespace bt
 					}
 					else
 						nr++;
+				}
+			}
+			i++;
+		}
+	//	Out() << endl;
+		return nr;
+	}
+	
+	int QueueManager::getNumRunning(bool userControlled, bool onlyDownloads, bool onlySeeds)
+	{
+		int nr = 0;
+	//	int test = 1;
+		QPtrList<TorrentInterface>::const_iterator i = downloads.begin();
+		while (i != downloads.end())
+		{
+			const TorrentInterface* tc = *i;
+			const TorrentStats & s = tc->getStats();
+			//Out() << "Torrent " << test++ << s.torrent_name << " priority: " << tc->getPriority() << endl;
+			if (s.running)
+			{
+				if(onlyDownloads)
+				{
+					if(!s.completed && (userControlled && s.user_controlled)) nr++;
+				}
+				else
+				{
+					if(onlySeeds)
+					{
+						if(s.completed && (userControlled && s.user_controlled)) nr++;
+					}
+					else
+						if(userControlled && s.user_controlled) nr++;
 				}
 			}
 			i++;

@@ -79,6 +79,7 @@ namespace bt
 			int countSeeds();
 			
 			int getNumRunning(bool onlyDownload = false, bool onlySeed = false);
+			int getNumRunning(bool userControlled, bool onlyDownloads, bool onlySeeds);
 			
 			void startNext();
 			

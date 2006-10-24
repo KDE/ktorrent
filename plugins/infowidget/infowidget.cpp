@@ -662,10 +662,19 @@ namespace kt
 		}
 		else
 		{
-			if(curr_tc->getMaxShareRatio() == 0.00f)
+			float msr = curr_tc->getMaxShareRatio();
+			if(msr == 0.00f)
 			{	
 				curr_tc->setMaxShareRatio(1.00f);
 				maxRatio->setValue(1.00f);
+			}
+			
+			float sr = kt::ShareRatio(curr_tc->getStats());
+			if(sr >= 1.00f)
+			{
+				//always add 1 to max share ratio to prevent stopping if torrent is running.
+				curr_tc->setMaxShareRatio(sr + 1.00f);
+				maxRatio->setValue(sr + 1.00f);
 			}
 		}
 	}
