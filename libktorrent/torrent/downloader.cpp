@@ -528,6 +528,11 @@ namespace bt
 			// first read header
 			fptr.read(&hdr,sizeof(ChunkDownloadHeader));
 			Out() << "Loading chunk " << hdr.index << endl;
+			if (hdr.index >= tor.getNumChunks())
+			{
+				Out() << "Warning : current_chunks file corrupted, invalid index " << hdr.index << endl;
+				return;
+			}
 			
 			if (!cman.getChunk(hdr.index) || current_chunks.contains(hdr.index))
 			{

@@ -130,7 +130,7 @@ namespace bt
 	void TorrentControl::update()
 	{
 		// do not update during critical operation mode or when we are data checking
-		if (Globals::instance().inCriticalOperationMode() || stats.status == kt::CHECKING_DATA)
+		if (stats.status == kt::CHECKING_DATA)
 			return;
 		
 		if (io_error)

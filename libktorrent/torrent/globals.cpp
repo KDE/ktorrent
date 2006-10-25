@@ -33,7 +33,6 @@ namespace bt
 	Globals::Globals()
 	{
 		debug_mode = false;
-		critical_operation = false;
 		log = new Log();
 		server = 0;
 		dh_table = new dht::DHT();

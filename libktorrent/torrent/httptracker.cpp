@@ -122,6 +122,7 @@ namespace bt
 		md["UserAgent"] = "ktorrent/" VERSION;
 		md["SendLanguageSettings"] = "false";
 		md["Cookies"] = "none";
+		md["accept"] = "text/plain";
 		
 		KIO::StoredTransferJob* j = KIO::storedGet(scrape_url,false,false);
 		// set the meta data
@@ -229,6 +230,7 @@ namespace bt
 		md["UserAgent"] = "ktorrent/" VERSION;
 		md["SendLanguageSettings"] = "false";
 		md["Cookies"] = "none";
+		md["accept"] = "text/plain";
 		
 		KIO::StoredTransferJob* j = KIO::storedGet(u,false,false);
 		// set the meta data
