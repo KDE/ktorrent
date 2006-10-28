@@ -46,6 +46,9 @@ namespace bt
 	Uint32 TimeEstimator::estimate()
 	{
 		const TorrentStats& s = m_tc->getStats();
+		// only estimate when we are downloading or stalled
+		if (!(s.status == kt::DOWNLOADING || s.status == kt::STALLED))
+			return (Uint32) -1;
 
 		Uint32 sample = (Uint32) s.download_rate;
 		

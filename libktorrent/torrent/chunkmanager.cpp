@@ -431,6 +431,24 @@ namespace bt
 		}
 	}
 	
+	Uint64 ChunkManager::bytesLeftToDownload() const
+	{
+		Uint32 num_left = todo.numOnBits();
+		Uint32 last = chunks.size() - 1;
+		if (last < chunks.size() && todo.get(last))
+		{
+			Chunk* c = chunks[last];
+			if (c)
+				return (num_left - 1)*tor.getChunkSize() + c->getSize();
+			else
+				return num_left*tor.getChunkSize();
+		}
+		else
+		{
+			return num_left*tor.getChunkSize();
+		}
+	}
+	
 	Uint32 ChunkManager::chunksLeft() const
 	{
 		if (!recalc_chunks_left)

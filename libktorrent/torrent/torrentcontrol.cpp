@@ -996,10 +996,10 @@ namespace bt
 		stats.upload_rate = up && stats.running ? up->uploadRate() : 0;
 		stats.download_rate = down && stats.running ? down->downloadRate() : 0;
 		stats.bytes_left = cman ? cman->bytesLeft() : 0;
-		stats.bytes_left_to_download = cman ? cman->bytesLeft() - cman->bytesExcluded() : 0;
+		stats.bytes_left_to_download = cman ? cman->bytesLeftToDownload() : 0;
 		stats.bytes_uploaded = up ? up->bytesUploaded() : 0;
 		stats.bytes_downloaded = down ? down->bytesDownloaded() : 0;
-		stats.total_chunks = cman ? cman->getNumChunks() : 0;
+		stats.total_chunks = tor ? tor->getNumChunks() : 0;
 		stats.num_chunks_downloaded = cman ? cman->chunksDownloaded() : 0;
 		stats.num_chunks_excluded = cman ? cman->chunksExcluded() : 0;
 		stats.chunk_size = tor ? tor->getChunkSize() : 0;
