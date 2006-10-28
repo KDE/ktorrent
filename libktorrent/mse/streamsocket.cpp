@@ -177,6 +177,10 @@ namespace mse
 	
 	bool StreamSocket::connectTo(const QString & ip,Uint16 port)
 	{
+		// do a safety check
+		if (ip.isNull() || ip.length() == 0)
+			return false;
+		
 		// we don't wanna block the current thread so set non blocking
 		sock->setNonBlocking();
 		if (sock->connectTo(Address(ip,port)))
