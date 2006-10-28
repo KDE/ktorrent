@@ -559,6 +559,7 @@ namespace bt
 			excluded_chunks.set(i,true);
 			only_seed_chunks.set(i,false);
 			todo.set(i,false);
+			bitset.set(i,false);
 			i++;
 		}
 		recalc_chunks_left = true;
