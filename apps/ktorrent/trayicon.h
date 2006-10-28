@@ -83,6 +83,12 @@ private slots:
 	 * @param tc The torrent
 	 */
 	void corruptedData(kt::TorrentInterface* tc);
+	
+	/**
+	 * User tried to enqueue a torrent that has reached max share ratio.
+	 * Show passive popup message.
+	 */
+	void queuedTorrentOverMaxRatio(kt::TorrentInterface* tc);
 
 private:
 	KTorrentCore* m_core;

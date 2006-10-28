@@ -269,6 +269,12 @@ public slots:
 	*/
 	void aboutToBeStarted(kt::TorrentInterface* tc,bool & ret);
 	
+	/**
+	 * User tried to enqueue a torrent that has reached max share ratio.
+	 * Emits appropriate signal.
+	 */
+	void enqueueTorrentOverMaxRatio(kt::TorrentInterface* tc);
+	
 signals:
 	/**
 	* TorrentCore torrents have beed updated. Stats are changed.
@@ -286,6 +292,13 @@ signals:
 	 * @param tc The torrent with the corrupted data
 	 */
 	void corruptedData(kt::TorrentInterface* tc);
+	
+	/**
+	 * User tried to enqueue a torrent that has reached max share ratio. It's not possible.
+	 * Signal should be connected to SysTray slot which shows appropriate KPassivePopup info.
+	 * @param tc The torrent in question.
+	 */
+	void queuingNotPossible(kt::TorrentInterface* tc);
 
 private:
 	void rollback(const QPtrList<kt::TorrentInterface> & success);

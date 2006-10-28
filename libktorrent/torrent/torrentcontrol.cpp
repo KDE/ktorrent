@@ -273,16 +273,6 @@ namespace bt
 				psman->manualUpdate();
 				stalled_timer.update();
 			}
-			
-			if(overMaxRatio())
-			{
-				if(priority!=0) //if it's queued make sure to dequeue it
-					setPriority(0);
-				
-				stop(true);
-				emit seedingAutoStopped(this);
-			}
-			
 		}
 		catch (Error & e)
 		{
@@ -1004,6 +994,7 @@ namespace bt
 		stats.num_chunks_excluded = cman ? cman->chunksExcluded() : 0;
 		stats.chunk_size = tor ? tor->getChunkSize() : 0;
 		stats.total_bytes_to_download = (tor && cman) ?	tor->getFileLength() - cman->bytesExcluded() : 0;
+		stats.max_share_ratio = maxShareRatio;
 		
 		
 		
@@ -1170,7 +1161,7 @@ namespace bt
 		else
 			maxShareRatio = ratio;
 		
-		if(!stats.running && !stats.user_controlled && (kt::ShareRatio(stats) >= maxShareRatio))
+		if(stats.completed && !stats.running && !stats.user_controlled && (kt::ShareRatio(stats) >= maxShareRatio))
 			setPriority(0); //dequeue it
 		
 		saveStats();

@@ -53,6 +53,8 @@ TrayIcon::TrayIcon( KTorrentCore* tc, QWidget *parent, const char *name)
 			this,SLOT(maxShareRatioReached( kt::TorrentInterface* )));
 	connect(m_core,SIGNAL(corruptedData( kt::TorrentInterface* )),
 			this,SLOT(corruptedData( kt::TorrentInterface* )));
+	connect(m_core, SIGNAL(queuingNotPossible( kt::TorrentInterface* )),
+			this, SLOT(queuedTorrentOverMaxRatio( kt::TorrentInterface* )));
 }
 
 TrayIcon::~TrayIcon()
@@ -148,6 +150,21 @@ void TrayIcon::corruptedData(kt::TorrentInterface* tc)
 	KPassivePopup::message(i18n("Error"),err_msg,loadIcon("ktorrent"),this);
 }
 
+void TrayIcon::queuedTorrentOverMaxRatio(kt::TorrentInterface* tc)
+{
+	if (!Settings::showPopups())
+		return;
+	
+	const TorrentStats & s = tc->getStats();
+	
+	double speed_up = (double)s.bytes_uploaded / 1024.0;
+	
+	QString msg = i18n("<b>%1</b> has reached its maximum share ratio of %2 and cannot be enqueued. Remove the limit manually if you want to continue seeding.").arg(s.torrent_name).arg(s.max_share_ratio);
+	
+	KPassivePopup::message(i18n("Torrent cannot be enqueued."),
+						   msg,loadIcon("ktorrent"), this);
+}
+
 SetMaxRate::SetMaxRate( KTorrentCore* tc, int t, QWidget *parent, const char *name):KPopupMenu(parent, name)
 {
 	m_core = tc;
@@ -239,4 +256,5 @@ void SetMaxRate::rateSelected(int id)
 
 	update();
 }
+
 #include "trayicon.moc"

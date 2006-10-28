@@ -532,6 +532,7 @@ namespace bt
 		if(tc->getStats().completed && tc->overMaxRatio())
 		{
 			Out(SYS_GEN|LOG_IMPORTANT) << "Torrent has reached max share ratio and cannot be started automatically." << endl;
+			emit queuingNotPossible(tc);
 			return;
 		}
 		
@@ -566,7 +567,7 @@ namespace bt
 		orderQueue();
 	}
 	
-	void bt::QueueManager::queue(kt::TorrentInterface* tc)
+	void QueueManager::queue(kt::TorrentInterface* tc)
 	{
 		if(tc->getPriority() == 0)
 			enqueue(tc);

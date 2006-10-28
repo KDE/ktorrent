@@ -930,11 +930,18 @@ void KTorrentCore::connectSignals(kt::TorrentInterface* tc)
 			this, SLOT(aboutToBeStarted( kt::TorrentInterface*,bool & )));
 	connect(tc,SIGNAL(corruptedDataFound( kt::TorrentInterface* )),
 			this, SLOT(emitCorruptedData( kt::TorrentInterface* )));
+	connect(qman, SIGNAL(queuingNotPossible( kt::TorrentInterface* )),
+			this, SLOT(enqueueTorrentOverMaxRatio( kt::TorrentInterface* )));
 }
 
 float KTorrentCore::getGlobalMaxShareRatio() const
 {
 	return Settings::maxRatio();
+}
+
+void KTorrentCore::enqueueTorrentOverMaxRatio(kt::TorrentInterface* tc)
+{
+	emit queuingNotPossible(tc);
 }
 
 #include "ktorrentcore.moc"
