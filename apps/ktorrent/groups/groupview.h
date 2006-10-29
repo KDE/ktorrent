@@ -80,7 +80,7 @@ namespace kt
 		
 	private:
 		void createMenu(KActionCollection* col);
-		void addGroup(Group* g,bool custom);
+		GroupViewItem* addGroup(Group* g,KListViewItem* parent);
 		void updateGroupsSubMenu();
 		
 	private:

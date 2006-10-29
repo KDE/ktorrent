@@ -65,7 +65,7 @@ namespace kt
 	}
 
 	GroupView::GroupView(KTorrentView* view,KActionCollection* col,QWidget *parent, const char *name)
-	: KListView(parent, name),view(view)
+	: KListView(parent, name),view(view),custom_root(0)
 	{
 		setFullWidth(true);
 		setRootIsDecorated(true);
@@ -73,9 +73,7 @@ namespace kt
 		setDropHighlighter(true);
 		setDropVisualizer(true);
 		addColumn(i18n("Groups"));
-		addColumn("sorting"); // special column to do the sorint we like
 		header()->hide();
-		hideColumn(1);
 		
 		gman = new GroupManager();
 	
@@ -90,19 +88,24 @@ namespace kt
 		KPopupMenu* p = view->getGroupsSubMenu();
 		connect(p,SIGNAL(activated(int)),this,SLOT(onGroupsSubMenuItemActivated( int )));
 		
-		custom_root = new KListViewItem(this,i18n("Custom Groups"));
-		custom_root->setPixmap(0,KGlobal::iconLoader()->loadIcon("folder",KIcon::Small));
-		setOpen(custom_root,true);
+		
 		
 		current_item = 0;
 		menu = 0;
 		createMenu(col);
 		save_file = KGlobal::dirs()->saveLocation("data","ktorrent") + "groups";
-		addGroup(gman->allGroup(),false);
-		addGroup(gman->downloadGroup(),false);
-		addGroup(gman->uploadGroup(),false);
-		// sort a second hidden column
-		setSorting(1,true);
+		GroupViewItem* all = addGroup(gman->allGroup(),0);
+		GroupViewItem* dwnld = addGroup(gman->downloadGroup(),all);
+		GroupViewItem* upld = addGroup(gman->uploadGroup(),all);
+		addGroup(gman->queuedDownloadsGroup(), dwnld);
+		addGroup(gman->queuedUploadsGroup(), upld);
+		addGroup(gman->userDownloadsGroup(), dwnld);
+		addGroup(gman->userUploadsGroup(), upld);
+		
+		custom_root = new KListViewItem(all,i18n("Custom Groups"));
+		custom_root->setPixmap(0,KGlobal::iconLoader()->loadIcon("folder",KIcon::Small));
+		setOpen(custom_root,true);
+		
 		updateGroupsSubMenu();
 	}
 
@@ -123,7 +126,7 @@ namespace kt
 		gman->loadGroups(save_file);
 		for (GroupManager::iterator i = gman->begin();i != gman->end();i++)
 		{
-			addGroup(i->second,true);
+			addGroup(i->second,custom_root);
 		}
 		sort();
 		updateGroupsSubMenu();
@@ -160,7 +163,7 @@ namespace kt
 			return;
 		}
 		
-		addGroup(gman->newGroup(name),true);
+		addGroup(gman->newGroup(name),custom_root);
 		saveGroups();
 		sort();
 		updateGroupsSubMenu();
@@ -220,11 +223,13 @@ namespace kt
 		}
 	}
 
-	void GroupView::addGroup(Group* g,bool custom)
+	GroupViewItem* GroupView::addGroup(Group* g,KListViewItem* parent)
 	{
 		GroupViewItem* li = 0;
-		if (custom)
-			li = new GroupViewItem(this,custom_root,g);
+		if (parent)
+		{
+			li = new GroupViewItem(this,parent,g);
+		}
 		else
 		{
 			li = new GroupViewItem(this,g);
@@ -232,8 +237,10 @@ namespace kt
 		}
 		
 		groups.insert(li,g);
-		if (groups.count() == 1 && custom)
+		if (custom_root && custom_root->childCount() == 1 && custom_root == parent)
 			setOpen(custom_root,true);
+		
+		return li;
 	}
 	
 	void GroupView::showContextMenu(KListView* ,QListViewItem* item,const QPoint & p)
@@ -278,7 +285,7 @@ namespace kt
 		if (!li)
 			return;
 		
-		TorrentGroup* g = (TorrentGroup*)groups.find(li);
+		TorrentGroup* g = dynamic_cast<TorrentGroup*>(groups.find(li));
 		if (g)
 		{
 			QPtrList<TorrentInterface> sel;

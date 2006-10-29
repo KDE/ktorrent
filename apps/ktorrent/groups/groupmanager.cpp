@@ -30,6 +30,10 @@
 #include "downloadgroup.h"
 #include "uploadgroup.h"
 #include "torrentgroup.h"
+#include "queueddownloadsgroup.h"
+#include "queueduploadsgroup.h"
+#include "userdownloadsgroup.h"
+#include "useruploadsgroup.h"
 
 using namespace bt;
 
@@ -42,11 +46,19 @@ namespace kt
 		all = new AllGroup();
 		uploads = new UploadGroup();
 		downloads = new DownloadGroup();
+		queuedDownloads = new QueuedDownloadsGroup();
+		queuedUploads = new QueuedUploadsGroup();
+		userDownloads = new UserDownloadsGroup();
+		userUploads = new UserUploadsGroup();
 	}
 
 
 	GroupManager::~GroupManager()
 	{
+		delete userUploads;
+		delete userDownloads;
+		delete queuedDownloads;
+		delete queuedUploads;
 		delete all;
 		delete uploads;
 		delete downloads;
@@ -65,7 +77,7 @@ namespace kt
 	
 	bool GroupManager::canRemove(const Group* g) const
 	{
-		return (g != all && g != downloads && g != uploads); 
+		return (g != all && g != downloads && g != uploads && g != queuedDownloads && g != queuedUploads && g != userDownloads && g != userUploads); 
 	}
 	
 	

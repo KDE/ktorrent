@@ -39,6 +39,11 @@ namespace kt
 		Group* all;
 		Group* uploads;
 		Group* downloads;
+		Group* queuedDownloads;
+		Group* queuedUploads;
+		Group* userDownloads;
+		Group* userUploads;
+		
 	public:
 		GroupManager();
 		virtual ~GroupManager();
@@ -58,6 +63,18 @@ namespace kt
 		
 		/// Get the group of seeds
 		Group* uploadGroup() {return uploads;}
+		
+		/// Get the group of queued downloads
+		Group* queuedDownloadsGroup() { return queuedDownloads; }
+		
+		/// Get the group of queued seeds
+		Group* queuedUploadsGroup() { return queuedUploads; }
+		
+		/// Get the group of user controlled downloads
+		Group* userDownloadsGroup() { return userDownloads; }
+		
+		/// Get the group of user controlled seeds
+		Group* userUploadsGroup() { return userUploads; }
 		
 		/**
 		 * Save the groups to a file.
