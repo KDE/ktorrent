@@ -74,8 +74,9 @@ namespace bt
 
 
 	TorrentControl::TorrentControl()
-	: tor(0),psman(0),cman(0),pman(0),down(0),up(0),choke(0),tmon(0),prealloc(false), last_announce(0)
+	: tor(0),psman(0),cman(0),pman(0),down(0),up(0),choke(0),tmon(0),prealloc(false)
 	{
+		istats.last_announce = 0;
 		stats.imported_bytes = 0;
 		stats.trk_bytes_downloaded = 0;
 		stats.trk_bytes_uploaded = 0;
@@ -84,7 +85,7 @@ namespace bt
 		stats.stopped_by_error = false;
 		stats.session_bytes_downloaded = 0;
 		stats.session_bytes_uploaded = 0;
-		session_bytes_uploaded = 0;
+		istats.session_bytes_uploaded = 0;
 		old_datadir = QString::null;
 		stats.status = NOT_STARTED;
 		stats.autostart = true;
@@ -92,17 +93,17 @@ namespace bt
 		stats.priv_torrent = false;
 		stats.seeders_connected_to = stats.seeders_total = 0;
 		stats.leechers_connected_to = stats.leechers_total = 0;
-		running_time_dl = running_time_ul = 0;
-		prev_bytes_dl = 0;
-		prev_bytes_ul = 0;
-		trk_prev_bytes_dl = trk_prev_bytes_ul = 0;
-		io_error = false;
-		priority = 0;
-		maxShareRatio = 0.00f;
-		custom_output_name = false;
+		istats.running_time_dl = istats.running_time_ul = 0;
+		istats.prev_bytes_dl = 0;
+		istats.prev_bytes_ul = 0;
+		istats.trk_prev_bytes_dl = istats.trk_prev_bytes_ul = 0;
+		istats.io_error = false;
+		istats.priority = 0;
+		istats.maxShareRatio = 0.00f;
+		istats.custom_output_name = false;
 		updateStats();
 		prealoc_thread = 0;
-		dht_on = false;
+		istats.dht_on = false;
 		
 		m_eta = new TimeEstimator(this);
 	}
@@ -133,7 +134,7 @@ namespace bt
 		if (stats.status == kt::CHECKING_DATA)
 			return;
 		
-		if (io_error)
+		if (istats.io_error)
 		{
 			stop(false);
 			emit stoppedByError(this, error_msg);
@@ -196,7 +197,7 @@ namespace bt
 				pman->killSeeders();
 				pman->killUninterested();
 				QDateTime now = QDateTime::currentDateTime();
-				running_time_dl += time_started_dl.secsTo(now);
+				istats.running_time_dl += istats.time_started_dl.secsTo(now);
 				updateStatusMsg();
 				updateStats();
 				
@@ -216,8 +217,8 @@ namespace bt
 					psman->start();
 				else
 					psman->manualUpdate();
-				last_announce = bt::GetCurrentTime();
-				time_started_dl = QDateTime::currentDateTime();
+				istats.last_announce = bt::GetCurrentTime();
+				istats.time_started_dl = QDateTime::currentDateTime();
 			}
 			updateStatusMsg();
 			KT_PROF_END();
@@ -287,8 +288,7 @@ namespace bt
 		stats.stopped_by_error = true;
 		stats.status = ERROR;
 		error_msg = msg;
-		short_error_msg = msg;
-		io_error = true;
+		istats.io_error = true;
 	}
 
 	void TorrentControl::start()
@@ -298,7 +298,7 @@ namespace bt
 			return;
 
 		stats.stopped_by_error = false;
-		io_error = false;
+		istats.io_error = false;
 		try
 		{
 			bool ret = true;
@@ -323,7 +323,7 @@ namespace bt
 			throw;
 		}
 		
-		time_started_ul = time_started_dl = QDateTime::currentDateTime();
+		istats.time_started_ul = istats.time_started_dl = QDateTime::currentDateTime();
 		resetTrackerStats();
 		
 		if (prealloc)
@@ -364,7 +364,7 @@ namespace bt
 		
 		stalled_timer.update();
 		psman->start();
-		last_announce = bt::GetCurrentTime();
+		istats.last_announce = bt::GetCurrentTime();
 		stalled_timer.update();
 	}
 		
@@ -373,9 +373,9 @@ namespace bt
 	{
 		QDateTime now = QDateTime::currentDateTime();
 		if(!stats.completed)
-			running_time_dl += time_started_dl.secsTo(now);
-		running_time_ul += time_started_ul.secsTo(now);
-		time_started_ul = time_started_dl = now;
+			istats.running_time_dl += istats.time_started_dl.secsTo(now);
+		istats.running_time_ul += istats.time_started_ul.secsTo(now);
+		istats.time_started_ul = istats.time_started_dl = now;
 		
 		// stop preallocation thread if necesarry
 		if (prealoc_thread)
@@ -558,7 +558,7 @@ namespace bt
 		StatsFile st(datadir + "stats");
 		if (st.hasKey("CUSTOM_OUTPUT_NAME") && st.readULong("CUSTOM_OUTPUT_NAME") == 1)
 		{
-			custom_output_name = true;
+			istats.custom_output_name = true;
 		}
 		
 		// load outputdir if outputdir is null
@@ -578,7 +578,7 @@ namespace bt
 
 		// Create chunkmanager, load the index file if it exists
 		// else create all the necesarry files
-		cman = new ChunkManager(*tor,datadir,outputdir,custom_output_name);
+		cman = new ChunkManager(*tor,datadir,outputdir,istats.custom_output_name);
 		// outputdir is null, see if the cache has figured out what it is
 		if (outputdir.length() == 0)
 			outputdir = cman->getDataDir();
@@ -647,7 +647,7 @@ namespace bt
 		{
 			Uint64 db = down->bytesDownloaded();
 			Uint64 cb = down->getDownloadedBytesOfCurrentChunksFile(datadir + "current_chunks");
-			prev_bytes_dl = db + cb;
+			istats.prev_bytes_dl = db + cb;
 				
 		//	Out() << "Downloaded : " << kt::BytesToString(db) << endl;
 		//	Out() << "current_chunks : " << kt::BytesToString(cb) << endl;
@@ -656,7 +656,7 @@ namespace bt
 		{
 			// print out warning in case of failure
 			Out() << "Warning : " << e.toString() << endl;
-			prev_bytes_dl = down->bytesDownloaded();
+			istats.prev_bytes_dl = down->bytesDownloaded();
 		}
 		
 		loadStats();
@@ -670,11 +670,11 @@ namespace bt
 
 	bool TorrentControl::announceAllowed()
 	{
-		if(last_announce == 0)
+		if(istats.last_announce == 0)
 			return true;
 		
 		if (psman && psman->getNumFailures() == 0)
-			return bt::GetCurrentTime() - last_announce >= 60 * 1000;
+			return bt::GetCurrentTime() - istats.last_announce >= 60 * 1000;
 		else
 			return true;
 	}
@@ -684,7 +684,7 @@ namespace bt
 		if (stats.running && announceAllowed())
 		{
 			psman->manualUpdate();
-			last_announce = bt::GetCurrentTime();
+			istats.last_announce = bt::GetCurrentTime();
 		}
 	}
 
@@ -878,20 +878,20 @@ namespace bt
 		if (stats.running)
 		{
 			QDateTime now = QDateTime::currentDateTime();
-			st.write("RUNNING_TIME_DL",QString("%1").arg(running_time_dl + time_started_dl.secsTo(now)));
-			st.write("RUNNING_TIME_UL",QString("%1").arg(running_time_ul + time_started_ul.secsTo(now)));
+			st.write("RUNNING_TIME_DL",QString("%1").arg(istats.running_time_dl + istats.time_started_dl.secsTo(now)));
+			st.write("RUNNING_TIME_UL",QString("%1").arg(istats.running_time_ul + istats.time_started_ul.secsTo(now)));
 		}
 		else
 		{
-			st.write("RUNNING_TIME_DL", QString("%1").arg(running_time_dl));
-			st.write("RUNNING_TIME_UL", QString("%1").arg(running_time_ul));
+			st.write("RUNNING_TIME_DL", QString("%1").arg(istats.running_time_dl));
+			st.write("RUNNING_TIME_UL", QString("%1").arg(istats.running_time_ul));
 		}
 		
-		st.write("PRIORITY", QString("%1").arg(priority));
+		st.write("PRIORITY", QString("%1").arg(istats.priority));
 		st.write("AUTOSTART", QString("%1").arg(stats.autostart));
 		st.write("IMPORTED", QString("%1").arg(stats.imported_bytes));
-		st.write("CUSTOM_OUTPUT_NAME",custom_output_name ? "1" : "0");
-		st.write("MAX_RATIO", QString("%1").arg(maxShareRatio,0,'f',2));
+		st.write("CUSTOM_OUTPUT_NAME",istats.custom_output_name ? "1" : "0");
+		st.write("MAX_RATIO", QString("%1").arg(istats.maxShareRatio,0,'f',2));
 		st.write("RESTART_DISK_PREALLOCATION",prealloc ? "1" : "0");
 		
 		if(!stats.priv_torrent)
@@ -910,37 +910,37 @@ namespace bt
 		Uint64 val = st.readUint64("UPLOADED");
 		// stats.session_bytes_uploaded will be calculated based upon prev_bytes_ul
 		// seeing that this will change here, we need to save it 
-		session_bytes_uploaded = stats.session_bytes_uploaded; 
-		prev_bytes_ul = val;
+		istats.session_bytes_uploaded = stats.session_bytes_uploaded; 
+		istats.prev_bytes_ul = val;
 		up->setBytesUploaded(val);
 		
-		this->running_time_dl = st.readULong("RUNNING_TIME_DL");
-		this->running_time_ul = st.readULong("RUNNING_TIME_UL");
+		this->istats.running_time_dl = st.readULong("RUNNING_TIME_DL");
+		this->istats.running_time_ul = st.readULong("RUNNING_TIME_UL");
 		outputdir = st.readString("OUTPUTDIR").stripWhiteSpace();
 		if (st.hasKey("CUSTOM_OUTPUT_NAME") && st.readULong("CUSTOM_OUTPUT_NAME") == 1)
 		{
-			custom_output_name = true;
+			istats.custom_output_name = true;
 		}
 		
 		setPriority(st.readInt("PRIORITY"));
-		stats.user_controlled = priority == 0 ? true : false;
+		stats.user_controlled = istats.priority == 0 ? true : false;
 		stats.autostart = st.readBoolean("AUTOSTART");
 		
 		stats.imported_bytes = st.readUint64("IMPORTED");
 		float rat = st.readFloat("MAX_RATIO");
-		maxShareRatio = rat;
+		istats.maxShareRatio = rat;
 		if (st.hasKey("RESTART_DISK_PREALLOCATION"))
 			prealloc = st.readString("RESTART_DISK_PREALLOCATION") == "1";
 		
 		if(!stats.priv_torrent)
 		{
 			if(st.hasKey("DHT"))
-				dht_on = st.readBoolean("DHT");
+				istats.dht_on = st.readBoolean("DHT");
 			else
-				dht_on = true;
+				istats.dht_on = true;
 		}
 		
-		if(dht_on)
+		if(istats.dht_on)
 			startDHT();
 		
 		return;
@@ -955,7 +955,7 @@ namespace bt
 		outputdir = st.readString("OUTPUTDIR").stripWhiteSpace();
 		if (st.hasKey("CUSTOM_OUTPUT_NAME") && st.readULong("CUSTOM_OUTPUT_NAME") == 1)
 		{
-			custom_output_name = true;
+			istats.custom_output_name = true;
 		}
 	}
 
@@ -994,31 +994,31 @@ namespace bt
 		stats.num_chunks_excluded = cman ? cman->chunksExcluded() : 0;
 		stats.chunk_size = tor ? tor->getChunkSize() : 0;
 		stats.total_bytes_to_download = (tor && cman) ?	tor->getFileLength() - cman->bytesExcluded() : 0;
-		stats.max_share_ratio = maxShareRatio;
+		stats.max_share_ratio = istats.maxShareRatio;
 		
 		
 		
-		if (stats.bytes_downloaded >= prev_bytes_dl)
-			stats.session_bytes_downloaded = stats.bytes_downloaded - prev_bytes_dl;
+		if (stats.bytes_downloaded >= istats.prev_bytes_dl)
+			stats.session_bytes_downloaded = stats.bytes_downloaded - istats.prev_bytes_dl;
 		else
 			stats.session_bytes_downloaded = 0;
 					
-		if (stats.bytes_uploaded >= prev_bytes_ul)
-			stats.session_bytes_uploaded = (stats.bytes_uploaded - prev_bytes_ul) + session_bytes_uploaded;
+		if (stats.bytes_uploaded >= istats.prev_bytes_ul)
+			stats.session_bytes_uploaded = (stats.bytes_uploaded - istats.prev_bytes_ul) + istats.session_bytes_uploaded;
 		else
-			stats.session_bytes_uploaded = session_bytes_uploaded;
+			stats.session_bytes_uploaded = istats.session_bytes_uploaded;
 		/*
 			Safety check, it is possible that stats.bytes_downloaded gets subtracted in Downloader.
-			Which can cause stats.bytes_downloaded to be smaller the trk_prev_bytes_dl.
+			Which can cause stats.bytes_downloaded to be smaller the istats.trk_prev_bytes_dl.
 			This can screw up your download ratio.
 		*/
-		if (stats.bytes_downloaded >= trk_prev_bytes_dl)
-			stats.trk_bytes_downloaded = stats.bytes_downloaded - trk_prev_bytes_dl;
+		if (stats.bytes_downloaded >= istats.trk_prev_bytes_dl)
+			stats.trk_bytes_downloaded = stats.bytes_downloaded - istats.trk_prev_bytes_dl;
 		else
 			stats.trk_bytes_downloaded = 0;
 		
-		if (stats.bytes_uploaded >= trk_prev_bytes_ul)
-			stats.trk_bytes_uploaded = stats.bytes_uploaded - trk_prev_bytes_ul;
+		if (stats.bytes_uploaded >= istats.trk_prev_bytes_ul)
+			stats.trk_bytes_uploaded = stats.bytes_uploaded - istats.trk_prev_bytes_ul;
 		else
 			stats.trk_bytes_uploaded = 0;
 		
@@ -1063,17 +1063,17 @@ namespace bt
 	Uint32 TorrentControl::getRunningTimeDL() const
 	{
 		if (!stats.running || stats.completed)
-			return running_time_dl;
+			return istats.running_time_dl;
 		else
-			return running_time_dl + time_started_dl.secsTo(QDateTime::currentDateTime());
+			return istats.running_time_dl + istats.time_started_dl.secsTo(QDateTime::currentDateTime());
 	}
 
 	Uint32 TorrentControl::getRunningTimeUL() const
 	{
 		if (!stats.running)
-			return running_time_ul;
+			return istats.running_time_ul;
 		else
-			return running_time_ul + time_started_ul.secsTo(QDateTime::currentDateTime());
+			return istats.running_time_ul + istats.time_started_ul.secsTo(QDateTime::currentDateTime());
 	}
 
 	Uint32 TorrentControl::getNumFiles() const
@@ -1141,7 +1141,7 @@ namespace bt
 	
 	void TorrentControl::setPriority(int p)
 	{
-		priority = p;
+		istats.priority = p;
 		stats.user_controlled = p == 0 ? true : false;
 		if(p)
 			stats.status = kt::QUEUED;
@@ -1155,13 +1155,13 @@ namespace bt
 	{
 		if(ratio == 1.00f)
 		{
-			if(maxShareRatio != ratio)
-				maxShareRatio = ratio;
+			if(istats.maxShareRatio != ratio)
+				istats.maxShareRatio = ratio;
 		}
 		else
-			maxShareRatio = ratio;
+			istats.maxShareRatio = ratio;
 		
-		if(stats.completed && !stats.running && !stats.user_controlled && (kt::ShareRatio(stats) >= maxShareRatio))
+		if(stats.completed && !stats.running && !stats.user_controlled && (kt::ShareRatio(stats) >= istats.maxShareRatio))
 			setPriority(0); //dequeue it
 		
 		saveStats();
@@ -1170,9 +1170,9 @@ namespace bt
 	
 	bool TorrentControl::overMaxRatio()
 	{
-		if(stats.completed && stats.bytes_uploaded != 0 && stats.bytes_downloaded != 0 && maxShareRatio > 0)
+		if(stats.completed && stats.bytes_uploaded != 0 && stats.bytes_downloaded != 0 && istats.maxShareRatio > 0)
 		{
-			if(kt::ShareRatio(stats) >= maxShareRatio)
+			if(kt::ShareRatio(stats) >= istats.maxShareRatio)
 				return true;
 		}
 		
@@ -1328,8 +1328,8 @@ namespace bt
 	
 	void TorrentControl::resetTrackerStats()
 	{
-		trk_prev_bytes_dl = stats.bytes_downloaded,
-		trk_prev_bytes_ul = stats.bytes_uploaded,
+		istats.trk_prev_bytes_dl = stats.bytes_downloaded,
+		istats.trk_prev_bytes_ul = stats.bytes_uploaded,
 		stats.trk_bytes_downloaded = 0;
 		stats.trk_bytes_uploaded = 0;
 	}
@@ -1372,7 +1372,7 @@ namespace bt
 		if(!stats.priv_torrent)
 		{
 			psman->addDHT();
-			dht_on = dhtStarted();
+			istats.dht_on = dhtStarted();
 			saveStats();
 		}
 	}
@@ -1380,7 +1380,7 @@ namespace bt
 	void TorrentControl::stopDHT()
 	{
 		psman->removeDHT();
-		dht_on = false;
+		istats.dht_on = false;
 		saveStats();
 	}
 	

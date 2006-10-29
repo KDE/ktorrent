@@ -148,9 +148,6 @@ namespace bt
 
 		/// Get the Torrent.
 		const Torrent & getTorrent() const {return *tor;}
-
-		/// Return an error message (only valid when status == ERROR).
-		QString getErrorMessage() const {return error_msg;}
 		
 		/**
 		 * Get the download running time of this torrent in seconds
@@ -176,7 +173,7 @@ namespace bt
 		Uint32 getTimeToNextTrackerUpdate() const;
 
 		/// Get a short error message
-		QString getShortErrorMessage() const {return short_error_msg;}
+		QString getShortErrorMessage() const {return error_msg;}
 		
 		virtual Uint32 getNumFiles() const;
 		virtual kt::TorrentFileInterface & getTorrentFile(Uint32 index);
@@ -185,12 +182,12 @@ namespace bt
 		virtual void addPeerSource(kt::PeerSource* ps);
 		virtual void removePeerSource(kt::PeerSource* ps);
 		
-		int getPriority() const { return priority; }
+		int getPriority() const { return istats.priority; }
 		void setPriority(int p);
 
 		bool overMaxRatio();		
 		void setMaxShareRatio(float ratio);
-		float getMaxShareRatio() const { return maxShareRatio; }
+		float getMaxShareRatio() const { return istats.maxShareRatio; }
 		
 		/// Tell the TorrentControl obj to preallocate diskspace in the next update
 		void setPreallocateDiskSpace(bool pa) {prealloc = pa;}
@@ -308,27 +305,44 @@ namespace bt
 		Uploader* up;
 		Choker* choke;
 		TimeEstimator* m_eta;
-		
-		Timer choker_update_timer,stats_save_timer,stalled_timer;
-		
-		QString datadir,old_datadir,outputdir;
-		QString error_msg,short_error_msg;
-		Uint16 port;
 		kt::MonitorInterface* tmon;
-		QDateTime time_started_dl, time_started_ul;
-		unsigned long running_time_dl, running_time_ul;
-		Uint64 prev_bytes_dl, prev_bytes_ul;
-		Uint64 trk_prev_bytes_dl, trk_prev_bytes_ul;
-		Uint64 session_bytes_uploaded;
-		bool io_error;
-		bool custom_output_name;
-		int priority;
-		float maxShareRatio;
+		
+		Timer choker_update_timer;
+		Timer stats_save_timer;
+		Timer stalled_timer;
+		
+		QString datadir;
+		QString old_datadir;
+		QString outputdir;
+		QString error_msg;
+		
 		bool prealloc;
 		PreallocationThread* prealoc_thread;
-		Uint32 last_announce;
-		bool dht_on;
+		
+		struct InternalStats
+		{
+			QDateTime time_started_dl; 
+			QDateTime time_started_ul;
+			Uint32 running_time_dl;
+			Uint32 running_time_ul;
+			Uint64 prev_bytes_dl;
+			Uint64 prev_bytes_ul;
+			Uint64 trk_prev_bytes_dl;
+			Uint64 trk_prev_bytes_ul;
+			Uint64 session_bytes_uploaded;
+			bool io_error;
+			bool custom_output_name;
+			Uint16 port;
+			float maxShareRatio;
+			int priority;
+			bool dht_on;
+			Uint32 last_announce;
+		};
+		
+		InternalStats istats;
 	};
+	
+	
 }
 
 #endif
