@@ -89,7 +89,8 @@ namespace kt
 				continue;
 			}
 
-			KURL source(filename);
+			KURL source;
+			source.setPath(filename);
 
 			//If torrent has it's hidden complement - skip it.
 			if(QFile::exists(dirname + "/." + name))
