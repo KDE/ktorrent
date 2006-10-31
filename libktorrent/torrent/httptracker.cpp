@@ -390,7 +390,6 @@ namespace bt
 			active_job = 0;
 			if (event != "stopped")
 			{
-				event = QString::null;
 				try
 				{
 					if (updateData(st->data()))
@@ -407,6 +406,7 @@ namespace bt
 					failures++;
 					requestFailed(i18n("Invalid response from tracker"));
 				}
+				event = QString::null;
 			}
 			else
 			{

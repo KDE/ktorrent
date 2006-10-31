@@ -633,3 +633,5 @@ namespace bt
 		return 0;
 	}
 }
+
+#include "queuemanager.moc"
