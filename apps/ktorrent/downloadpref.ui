@@ -12,9 +12,6 @@
             <height>525</height>
         </rect>
     </property>
-    <property name="caption">
-        <string>DownloadPref</string>
-    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -214,9 +211,6 @@
             </property>
             <property name="text">
                 <string>&amp;Keep seeding after download is finished</string>
-            </property>
-            <property name="accel">
-                <string>Alt+K</string>
             </property>
             <property name="checked">
                 <bool>true</bool>
