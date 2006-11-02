@@ -325,7 +325,8 @@ void KTorrentView::removeDownloads()
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
 		TorrentInterface* tc = kvi->getTC();
-		if (tc)
+		bool dummy = false;
+		if (tc && !tc->isCheckingData(dummy))
 		{	
 			const TorrentStats & s = tc->getStats();
 			bool data_to = false;
@@ -441,10 +442,11 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 	bool en_stop = false;
 	bool en_remove = false;
 	bool en_prev = false;
-	bool en_announce = true;
-	bool en_add_peer = true;
+	bool en_announce = false;
+	bool en_add_peer = false;
 	bool en_dirs = false;
-	bool en_peer_sources = true;
+	bool en_peer_sources = false;
+	bool dummy = false;
 	
 	QPtrList<QListViewItem> sel = selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
@@ -454,30 +456,38 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 		if (tc)
 		{
 			const TorrentStats & s = tc->getStats();
-			if (!s.running)
-			{
-				en_start = true;
-				en_announce = false;
-			}
-			else
-			{
-				en_stop = true;
-				if(!tc->announceAllowed())
-					en_announce = false;
-			}
 			
 			if (tc->readyForPreview() && !s.multi_file_torrent)
 				en_prev = true;
 			
-			if(s.priv_torrent)
+			if (!tc->isCheckingData(dummy))
+				en_remove = true;
+			
+			if (!s.running)
 			{
-				en_add_peer = false;
-				en_peer_sources = false;
+				if (!tc->isCheckingData(dummy))
+				{
+					en_start = true;
+				}
+			}
+			else
+			{
+				if (!tc->isCheckingData(dummy))
+				{
+					en_stop = true;
+					if (tc->announceAllowed())
+						en_announce = true;
+				}
+			}
+			
+			if (!s.priv_torrent && !tc->isCheckingData(dummy))
+			{
+				en_add_peer = true;
+				en_peer_sources = true;
 			}
 		}
 	}
 	
-	en_remove = sel.count() > 0;
 	en_add_peer = en_add_peer && en_stop;
 	
 	menu->setItemEnabled(start_id,en_start);
@@ -500,13 +510,15 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 		KTorrentViewItem* kvi = (KTorrentViewItem*)sel.getFirst();
 		TorrentInterface* tc = kvi->getTC();
 		// no data check when we are preallocating diskspace
-		menu->setItemEnabled(scan_id, 
-							 tc->getStats().status != kt::ALLOCATING_DISKSPACE);
+		if (tc->getStats().status == kt::ALLOCATING_DISKSPACE || tc->isCheckingData(dummy))
+			menu->setItemEnabled(scan_id, false);
+		else
+			menu->setItemEnabled(scan_id, true);
 		
 		//enable additional peer sources if torrent is not private
 		menu->setItemEnabled(peer_sources_id, en_peer_sources);
 		
-		if(en_peer_sources)
+		if (en_peer_sources)
 			peer_sources_menu->setItemChecked(dht_id, tc->dhtStarted());
 	}
 	else
@@ -582,21 +594,6 @@ void KTorrentView::update()
 		i++;
 	}
 	
-# if 0
-	if(tc)
-	{
-		QMap<kt::TorrentInterface*,KTorrentViewItem*>::iterator i = items.find(tc);
-		if (i != items.end())
-		{
-			items.remove(i);
-			delete i.data();
-		}
-		emit viewChange(tc);
-		if(items.count() == 0)
-			emit currentChanged(0l);
-		Out(SYS_GEN|LOG_NOTICE) << "Torrent moved to DownloadView." << endl;
-	}
-#endif
 	sort();
 }
 
@@ -608,19 +605,6 @@ bool KTorrentView::acceptDrag(QDropEvent* event) const
 
 void KTorrentView::torrentFinished(kt::TorrentInterface* tc)
 {
-#if 0
-	
-	QMap<kt::TorrentInterface*,KTorrentViewItem*>::iterator i = items.find(tc);
-	if (i != items.end())
-	{
-		items.remove(i);
-		delete i.data();
-	}
-	emit viewChange(tc);
-	if(items.count() == 0)
-		emit currentChanged(0l);
-	Out(SYS_GEN|LOG_NOTICE) << "Torrent moved to SeedView." << endl;
-#endif
 }
 
 void KTorrentView::onSelectionChanged()
@@ -632,7 +616,8 @@ void KTorrentView::onSelectionChanged()
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
 		TorrentInterface* tc = kvi->getTC();
-		if (tc)
+		bool dummy;
+		if (tc && !tc->isCheckingData(dummy))
 		{
 			const TorrentStats & s = tc->getStats();
 			if (!s.running)
@@ -652,7 +637,8 @@ void KTorrentView::queueSlot()
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
 		TorrentInterface* tc = kvi->getTC();
-		if (tc)
+		bool dummy;
+		if (tc && !tc->isCheckingData(dummy))
 			emit queue(tc);
 	}
 }
@@ -664,13 +650,17 @@ void KTorrentView::checkDataIntegrity()
 	if (sel.count() == 0)
 		return;
 	
+	bool dummy = false;
 	KTorrentViewItem* kvi = (KTorrentViewItem*)sel.first();
 	TorrentInterface* tc = kvi->getTC();
-	ScanDialog* scan_dlg = new ScanDialog(false,this);
-	scan_dlg->setCaption(i18n("Checking Data Integrity"));
-	scan_dlg->show();
-	scan_dlg->execute(tc,false);
-	scan_dlg->deleteLater();
+	if (!tc->isCheckingData(dummy))
+	{
+		needsDataCheck(tc);
+	}
+	else
+	{
+		KMessageBox::error(0,i18n("You are already checking the data of the torrent %1 !").arg(tc->getStats().torrent_name));
+	}
 }
 
 QDragObject* KTorrentView::dragObject()
@@ -739,7 +729,8 @@ void KTorrentView::showAddPeersWidget()
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
 		TorrentInterface* tc = kvi->getTC();
-		if (tc)
+		bool dummy;
+		if (tc && !tc->isCheckingData(dummy))
 		{
 			AddPeerWidget dlg(tc, this);
 			dlg.exec();
@@ -785,7 +776,8 @@ void KTorrentView::dhtSlot()
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
 		TorrentInterface* tc = kvi->getTC();
-		if (tc)
+		bool dummy;
+		if (tc && !tc->isCheckingData(dummy))
 		{
 			if(tc->dhtStarted())
 				tc->stopDHT();

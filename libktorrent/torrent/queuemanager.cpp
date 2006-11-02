@@ -83,6 +83,10 @@ namespace bt
 		const TorrentStats & s = tc->getStats();
 		bool start_tc = user;
 		
+		bool check_done = false;
+		if (tc->isCheckingData(check_done) && !check_done)
+			return;
+		
 		if(!user)
 		{
 			if (s.completed)
@@ -113,6 +117,10 @@ namespace bt
 
 	void QueueManager::stop(kt::TorrentInterface* tc, bool user)
 	{
+		bool check_done = false;
+		if (tc->isCheckingData(check_done) && !check_done)
+			return;
+		
 		const TorrentStats & s = tc->getStats();
 		if (s.running)
 		{

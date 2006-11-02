@@ -337,24 +337,7 @@ namespace bt
 			c->setStatus(Chunk::ON_DISK);
 			return;
 		}
-	/*	else if (tflist.count() == 1 && c->getStatus() == Chunk::BUFFERED)
-		{
-			// buffered chunks are slightly more difficult
-			CacheFile* fd = files.find(tflist[0]);
-			if (!fd)
-				return;
-			
-			const TorrentFile & f = tor.getFile(tflist[0]);
-			
-			Uint64 off = FileOffset(c,f,tor.getChunkSize()); 
-					//c->getIndex() * tor.getChunkSize();
-			fd->write(c->getData(),c->getSize(),off);
-			c->clear();
-			c->setStatus(Chunk::ON_DISK);
-			return;
-		}
-	*/
-		
+	
 	//	Out() << "Writing to " << tflist.count() << " files " << endl;
 		Uint64 written = 0; // number of bytes written
 		for (Uint32 i = 0;i < tflist.count();i++)
@@ -404,49 +387,7 @@ namespace bt
 		c->clear();
 		c->setStatus(Chunk::ON_DISK);
 	}
-	/*	
-	void MultiFileCache::oldDownloadStatusChanged(TorrentFile* tf, bool download)
-	{
-		bool dnd = !download;
-		CacheFile* fd = files.find(tf->getIndex());
-		
-		QString dnd_dir = tmpdir + "dnd" + bt::DirSeparator();
-		// if it is dnd and it is already in the dnd tree do nothing
-		if (dnd && bt::Exists(dnd_dir + tf->getPath()))
-			return;
-		
-		// if it is !dnd and it is already in the output_dir tree do nothing
-		if (!dnd && bt::Exists(output_dir + tf->getPath()))
-			return;
-		if (fd)
-			fd->close(true);
-		
-		try
-		{
-			// now move it from output_dir tree to dnd tree or vica versa
-			// delete the symlink
-			bt::Delete(cache_dir + tf->getPath());
-			if (dnd)
-			{
-				bt::Move(output_dir + tf->getPath(),dnd_dir + tf->getPath());
-				bt::SymLink(dnd_dir + tf->getPath(),cache_dir + tf->getPath());
-			}
-			else
-			{
-				bt::Move(dnd_dir + tf->getPath(),output_dir + tf->getPath());
-				bt::SymLink(output_dir + tf->getPath(),cache_dir + tf->getPath());
-			}
-			
-		}
-		catch (bt::Error & e)
-		{
-			Out() << e.toString() << endl;
-		}
-		
-		if (fd)
-			fd->open(cache_dir + tf->getPath(),tf->getSize());
-	}
-	*/
+	
 	void MultiFileCache::downloadStatusChanged(TorrentFile* tf, bool download)
 	{	
 		bool dnd = !download;

@@ -34,9 +34,11 @@
 #include <datachecker/singledatachecker.h>
 #include <datachecker/multidatachecker.h>
 #include <datachecker/datacheckerlistener.h>
+#include <datachecker/datacheckerthread.h>
 #include <migrate/ccmigrate.h>
 #include <migrate/cachemigrate.h>
 #include <kademlia/dhtbase.h>
+
 #include "downloader.h"
 #include "uploader.h"
 #include "peersourcemanager.h"
@@ -103,7 +105,9 @@ namespace bt
 		istats.custom_output_name = false;
 		updateStats();
 		prealoc_thread = 0;
+		dcheck_thread = 0;
 		istats.dht_on = false;
+		stats.num_corrupted_chunks = 0;
 		
 		m_eta = new TimeEstimator(this);
 	}
@@ -130,7 +134,6 @@ namespace bt
 
 	void TorrentControl::update()
 	{
-		// do not update during critical operation mode or when we are data checking
 		if (stats.status == kt::CHECKING_DATA)
 			return;
 		
@@ -1226,27 +1229,39 @@ namespace bt
 			Globals::instance().getDHT().portRecieved(ip,port);
 	}
 	
-	void TorrentControl::doDataCheck(bt::DataCheckerListener* lst,bool auto_import)
+	void TorrentControl::startDataCheck(bt::DataCheckerListener* lst,bool auto_import)
 	{
 		if (stats.status == kt::ALLOCATING_DISKSPACE)
 			return;
 		
+		
 		DataChecker* dc = 0;
 		stats.status = kt::CHECKING_DATA;
+		stats.num_corrupted_chunks = 0; // reset the number of corrupted chunks found
 		if (stats.multi_file_torrent)
 			dc = new MultiDataChecker();
 		else
 			dc = new SingleDataChecker();
 	
 		dc->setListener(lst);
-		dc->check(stats.output_path,*tor,datadir + "dnd" + bt::DirSeparator());
+		
+		dcheck_thread = new DataCheckerThread(dc,stats.output_path,*tor,datadir + "dnd" + bt::DirSeparator());
+		
+		// dc->check(stats.output_path,*tor,datadir + "dnd" + bt::DirSeparator());
+		dcheck_thread->start();
+	}
+	
+	void TorrentControl::afterDataCheck()
+	{
+		DataChecker* dc = dcheck_thread->getDataChecker();
+		DataCheckerListener* lst = dc->getListener();
 		
 		if (lst && !lst->isStopped())
 		{
 			down->dataChecked(dc->getDownloaded());
-			// update chunk manager
+				// update chunk manager
 			cman->dataChecked(dc->getDownloaded());
-			if (auto_import)
+			if (lst->isAutoImport())
 			{
 				down->recalcDownloaded();
 				stats.imported_bytes = down->bytesDownloaded();
@@ -1254,10 +1269,25 @@ namespace bt
 					stats.completed = true;
 			}
 		}
-		delete dc;
+			
+		if (lst)
+			lst->finished();
+		stats.status = kt::NOT_STARTED;
+		delete dcheck_thread;
+		dcheck_thread = 0;
 		// update the status
 		updateStatusMsg();
 		updateStats();
+	}
+	
+	bool TorrentControl::isCheckingData(bool & finished) const
+	{
+		if (dcheck_thread)
+		{
+			finished = !dcheck_thread->isRunning();
+			return true;
+		}
+		return false;
 	}
 	
 	bool TorrentControl::hasExistingFiles() const
@@ -1359,6 +1389,7 @@ namespace bt
 			stats.completed = false;
 		
 		// emit signal to show a systray message
+		stats.num_corrupted_chunks++;
 		corruptedDataFound(this);
 	}
 	

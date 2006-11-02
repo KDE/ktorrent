@@ -156,6 +156,9 @@ KTorrent::KTorrent()
 	connect(m_view,SIGNAL(wantToStop( kt::TorrentInterface*, bool )),
 			m_core,SLOT(stop( kt::TorrentInterface*, bool )));
 	
+	connect(m_view,SIGNAL(needsDataCheck( kt::TorrentInterface* )),
+			m_core,SLOT(doDataCheck( kt::TorrentInterface* )));
+	
 	connect(m_view,SIGNAL(updateActions( bool, bool, bool, bool )),
 			this,SLOT(onUpdateActions( bool, bool, bool, bool )));
 	

@@ -94,7 +94,7 @@ namespace bt
 			if (now - last_update_time > 1000)
 			{
 				Out() << "Checked " << cur_chunk << " chunks" << endl;
-				KApplication::kApplication()->processEvents();
+			//	KApplication::kApplication()->processEvents();
 				last_update_time = now;
 			}
 		}	

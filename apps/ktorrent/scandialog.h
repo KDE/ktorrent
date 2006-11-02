@@ -21,6 +21,8 @@
 #ifndef SCANDIALOG_H
 #define SCANDIALOG_H
 
+#include <qmutex.h>
+#include <qtimer.h>
 #include <datachecker/datacheckerlistener.h>
 #include "scandlgbase.h"
 
@@ -30,29 +32,49 @@ namespace kt
 	class TorrentInterface;
 }
 
+class KTorrentCore;
+
 class ScanDialog : public ScanDlgBase, public bt::DataCheckerListener
 {
 	Q_OBJECT
 public:
-	ScanDialog(bool auto_import,QWidget* parent = 0, const char* name = 0, bool modal = true, WFlags fl = 0 );
+	ScanDialog(KTorrentCore* core,bool auto_import,QWidget* parent = 0, const char* name = 0, bool modal = false, WFlags fl = WDestructiveClose  );
 	virtual ~ScanDialog();
 
+	/// Starts the scan thread
 	void execute(kt::TorrentInterface* tc,bool silently);
 
 protected:
+	/// Update progress info, runs in scan thread
 	virtual void progress(bt::Uint32 num,bt::Uint32 total);
+	
+	/// Update status info, runs in scan thread
 	virtual void status(bt::Uint32 num_failed,bt::Uint32 num_downloaded);
+	
+	/// Scan finished, runs in app thread
+	virtual void finished();
 	
 
 protected slots:
 	virtual void reject();
 	virtual void accept();
+	/// Updates the GUI in app thread
+	void update();
 	void scan();
 
 private:
 	kt::TorrentInterface* tc;
+	QMutex mutex;
+	QTimer timer;
+	bt::Uint32 num_chunks;
+	bt::Uint32 total_chunks;
+	bt::Uint32 num_downloaded;
+	bt::Uint32 num_failed;
 	bool silently;
-	bool auto_import;
+	bool restart;
+	bool qm_controlled;
+	int qm_priority;
+	KTorrentCore* core;
 };
 
 

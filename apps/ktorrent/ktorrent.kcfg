@@ -146,6 +146,12 @@
 			<min>0</min>
 			<max>255</max>
 		</entry>
-		
+		<entry name="autoRecheck" type="Bool">
+			<default>true</default>
+		</entry>
+		<entry name="maxCorruptedBeforeRecheck" type="Int">
+			<default>3</default>
+			<min>1</min>
+		</entry>
 	</group>
 </kcfg>

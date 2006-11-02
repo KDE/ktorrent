@@ -369,6 +369,8 @@ bool AdvancedPrefPage::apply()
 	Settings::setTypeOfService(ap->tos_byte->value());
 	Settings::setAllwaysDoUploadDataCheck(!ap->no_recheck->isChecked());
 	Settings::setMaxSizeForUploadDataCheck(ap->recheck_size->value());
+	Settings::setAutoRecheck(ap->auto_recheck->isChecked());
+	Settings::setMaxCorruptedBeforeRecheck(ap->num_corrupted->value());
 	return true;
 }
 
@@ -380,6 +382,9 @@ void AdvancedPrefPage::updateData()
 	ap->no_recheck->setChecked(!Settings::allwaysDoUploadDataCheck());
 	ap->recheck_size->setEnabled(!Settings::allwaysDoUploadDataCheck());
 	ap->recheck_size->setValue(Settings::maxSizeForUploadDataCheck());
+	ap->auto_recheck->setChecked(Settings::autoRecheck());
+	ap->num_corrupted->setValue(Settings::maxCorruptedBeforeRecheck());
+	ap->num_corrupted->setEnabled(Settings::autoRecheck());
 }
 			
 void AdvancedPrefPage::createWidget(QWidget* parent)
@@ -388,6 +393,8 @@ void AdvancedPrefPage::createWidget(QWidget* parent)
 	updateData();
 	connect(ap->no_recheck,SIGNAL(toggled(bool)),
 			this,SLOT(noDataCheckChecked( bool )));
+	connect(ap->auto_recheck,SIGNAL(toggled(bool)),
+			this,SLOT(autoRecheckChecked( bool )));
 }
 
 void AdvancedPrefPage::deleteWidget()
@@ -399,6 +406,11 @@ void AdvancedPrefPage::deleteWidget()
 void AdvancedPrefPage::noDataCheckChecked(bool on)
 {
 	ap->recheck_size->setEnabled(on);
+}
+
+void AdvancedPrefPage::autoRecheckChecked(bool on)
+{
+	ap->num_corrupted->setEnabled(on);
 }
 
 #include "pref.moc"

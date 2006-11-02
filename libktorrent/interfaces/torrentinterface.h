@@ -131,6 +131,8 @@ namespace kt
 		float max_share_ratio;
 		/// Private torrent (i.e. no use of DHT)
 		bool priv_torrent;
+		/// Number of corrupted chunks found since the last check
+		Uint32 num_corrupted_chunks;
 	};
 	
 		
@@ -297,7 +299,18 @@ namespace kt
 		 * @param lst The listener
 		 * @param auto_import Wether or not this is an initial import
 		 */
-		virtual void doDataCheck(bt::DataCheckerListener* lst,bool auto_import) = 0;
+		virtual void startDataCheck(bt::DataCheckerListener* lst,bool auto_import) = 0;
+		
+		/**
+		 * Data check has been finished, this should be called.
+		 */
+		virtual void afterDataCheck() = 0;
+		
+		/**
+		 * Are we doing a data check on this torrent.
+		 * @param finished This will be set to true if the data check is finished
+		 */
+		virtual bool isCheckingData(bool & finished) const = 0;
 		
 		/**
 		 * Test all files and see if they are not missing.

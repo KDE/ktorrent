@@ -151,10 +151,10 @@ bool KTorrentCore::init(TorrentControl* tc,bool silently)
 		
 	if (tc->hasExistingFiles())
 	{
-		ScanDialog* scan_dlg = new ScanDialog(true);
+		ScanDialog* scan_dlg = new ScanDialog(this,true);
 		scan_dlg->show();
 		scan_dlg->execute(tc,true);
-		scan_dlg->deleteLater();
+	//	scan_dlg->deleteLater();
 	}
 		
 	tc->setPreallocateDiskSpace(true);
@@ -539,10 +539,29 @@ void KTorrentCore::update()
 	//Uint32 down_speed = 0;
 	while (i != qman->end())
 	{
+		bool finished = false;
 		kt::TorrentInterface* tc = *i;
-		if (tc->getStats().running)
+		if (tc->isCheckingData(finished))
 		{
-			tc->update();
+			if (finished)
+				tc->afterDataCheck();
+		}
+		else if (tc->getStats().running)
+		{
+			// see if we need to do a auto data check
+			if (Settings::autoRecheck() && tc->getStats().num_corrupted_chunks >= Settings::maxCorruptedBeforeRecheck())
+			{
+				Out(SYS_GEN|LOG_IMPORTANT) << "Doing an automatic data check on " 
+						<< tc->getStats().torrent_name << endl;
+		
+				ScanDialog* scan_dlg = new ScanDialog(this,false);
+				scan_dlg->show();
+				scan_dlg->execute(tc,true);
+			}
+			else
+			{
+				tc->update();
+			}
 		}
 		i++;
 	}
@@ -916,6 +935,7 @@ void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc,bool & ret)
 void KTorrentCore::emitCorruptedData(kt::TorrentInterface* tc)
 {
 	corruptedData(tc);
+	
 }
 
 void KTorrentCore::connectSignals(kt::TorrentInterface* tc)
@@ -942,6 +962,19 @@ float KTorrentCore::getGlobalMaxShareRatio() const
 void KTorrentCore::enqueueTorrentOverMaxRatio(kt::TorrentInterface* tc)
 {
 	emit queuingNotPossible(tc);
+}
+
+
+void KTorrentCore::doDataCheck(kt::TorrentInterface* tc)
+{
+	bool dummy = false;
+	if (tc->isCheckingData(dummy))
+		return;
+	
+	ScanDialog* scan_dlg = new ScanDialog(this,false);
+	scan_dlg->setCaption(i18n("Checking Data Integrity"));
+	scan_dlg->show();
+	scan_dlg->execute(tc,false);
 }
 
 #include "ktorrentcore.moc"

@@ -22,7 +22,7 @@
 namespace bt
 {
 
-	DataCheckerListener::DataCheckerListener() : stopped(false)
+	DataCheckerListener::DataCheckerListener(bool auto_import) : stopped(false),auto_import(auto_import)
 	{}
 
 

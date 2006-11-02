@@ -31,7 +31,7 @@ namespace bt
 	class DataCheckerListener
 	{
 	public:
-		DataCheckerListener();
+		DataCheckerListener(bool auto_import);
 		virtual ~DataCheckerListener();
 
 		/**
@@ -49,6 +49,11 @@ namespace bt
 		virtual void status(Uint32 num_failed,Uint32 num_downloaded) = 0;
 		
 		/**
+		 * Data check has been finished.
+		 */
+		virtual void finished() = 0;
+		
+		/**
 		 * Test if we need to stop.
 		 */
 		bool needToStop() const {return stopped;}
@@ -56,12 +61,18 @@ namespace bt
 		/// Check if the check has been stopped
 		bool isStopped() const {return stopped;}
 		
+		/// Is this an auto_import
+		bool isAutoImport() const {return auto_import;}
+		
 		/**
 		 * Stop the data check.
 		 */
 		void stop() {stopped = true;}
 	private:
 		bool stopped;
+	
+	protected:
+		bool auto_import;
 	};
 
 }

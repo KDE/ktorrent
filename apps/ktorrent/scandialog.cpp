@@ -24,25 +24,35 @@
 #include <kstdguiitem.h>
 #include <kmessagebox.h>
 #include <util/error.h>
+#include <torrent/queuemanager.h>
 #include <torrent/torrentcontrol.h>
 
 #include "scandialog.h"
+#include "ktorrentcore.h"
 
 using namespace bt;
 using namespace kt;
 
 
 	
-ScanDialog::ScanDialog(bool auto_import,QWidget* parent, const char* name, bool modal, WFlags fl)
-	: ScanDlgBase(parent,name, modal,fl),auto_import(auto_import)
+ScanDialog::ScanDialog(KTorrentCore* core,bool auto_import,
+					   QWidget* parent, const char* name, bool modal, WFlags fl)
+	: ScanDlgBase(parent,name, modal,fl),DataCheckerListener(auto_import),mutex(true),core(core)
 {
 	m_ok->setGuiItem(KStdGuiItem::ok());
 	m_ok->setDisabled(true);
 	m_cancel->setGuiItem(KStdGuiItem::cancel());
 	connect(m_ok,SIGNAL(clicked()),this,SLOT(accept()));
 	connect(m_cancel,SIGNAL(clicked()),this,SLOT(reject()));
+	connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
 	tc = 0;
 	silently = false;
+	restart = false;
+	qm_controlled = false;
+	num_chunks = 0;
+	total_chunks = 0;
+	num_downloaded = 0;
+	num_failed = 0;
 }
 
 ScanDialog::~ScanDialog()
@@ -53,46 +63,110 @@ void ScanDialog::scan()
 {
 	try
 	{
-		tc->doDataCheck(this,auto_import);
+		tc->startDataCheck(this,auto_import);
+		timer.start(500);
 	}
 	catch (bt::Error & err)
 	{
 		KMessageBox::error(0,i18n("Error scanning data : %1").arg(err.toString()));
 	}
+	
+}
+
+void ScanDialog::execute(kt::TorrentInterface* tc,bool silently)
+{
+	m_torrent_label->setText(i18n("Scanning data of <b>%1</b> :").arg(tc->getStats().torrent_name));
+	m_ok->setEnabled(false);
+	m_cancel->setEnabled(true);
+	this->silently = silently;
+	this->tc = tc;
+	num_chunks = 0;
+	total_chunks = 0;
+	num_downloaded = 0;
+	num_failed = 0;
+	if (auto_import || tc->getStats().running)
+		restart = true;
+	
+	qm_controlled = !tc->getStats().user_controlled;
+	qm_priority = tc->getPriority();
+
+	if (tc->getStats().running)
+	{
+		if (qm_controlled)
+			core->getQueueManager()->stop(tc,true);
+		else
+			tc->stop(true);
+	}
+	
+	
+	scan();
+}
+
+void ScanDialog::finished()
+{
+	QMutexLocker lock(&mutex);
+	timer.stop();
+	update();
 	progress(100,100);
 	if (!isStopped())
 	{
 		m_ok->setEnabled(true);
 		m_cancel->setEnabled(false);
+		if (restart)
+		{
+			if (!qm_controlled)
+				tc->start();
+			else
+			{
+			//	core->queue(tc);
+				tc->setPriority(qm_priority);
+				core->getQueueManager()->orderQueue();
+			}
+		}
+		
 		if (silently)
 			accept();
 	}
 	else
 	{
+		if (restart)
+		{
+			if (!qm_controlled)
+				tc->start();
+			else
+			{
+			//	core->queue(tc);
+				tc->setPriority(qm_priority);
+				core->getQueueManager()->orderQueue();
+			}
+		}
+		
 		QDialog::reject();
 	}
 }
 
-void ScanDialog::execute(kt::TorrentInterface* tc,bool silently)
-{
-	m_ok->setEnabled(false);
-	m_cancel->setEnabled(true);
-	this->silently = silently;
-	this->tc = tc;
-	QTimer::singleShot(250,this,SLOT(scan()));
-	exec();
-}
-
 void ScanDialog::progress(bt::Uint32 num,bt::Uint32 total)
 {
-	m_progress->setTotalSteps(total);
-	m_progress->setProgress(num);
+	QMutexLocker lock(&mutex);
+	num_chunks = num;
+	total_chunks = total;
+	
 }
 
-void ScanDialog::status(bt::Uint32 num_failed,bt::Uint32 num_downloaded)
+void ScanDialog::update()
 {
+	QMutexLocker lock(&mutex);
+	m_progress->setTotalSteps(total_chunks);
+	m_progress->setProgress(num_chunks);
 	m_chunks_found->setText(QString::number(num_downloaded));
 	m_chunks_failed->setText(QString::number(num_failed));
+}
+
+void ScanDialog::status(bt::Uint32 failed,bt::Uint32 downloaded)
+{
+	QMutexLocker lock(&mutex);
+	num_failed = failed;
+	num_downloaded = downloaded;
 }
 
 void ScanDialog::reject()

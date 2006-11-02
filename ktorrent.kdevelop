@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>apps/ktorrent/ktorrent</activetarget>
+      <activetarget>libktorrent/datachecker/libdatachecker.la</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>

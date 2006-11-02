@@ -41,7 +41,7 @@ using namespace bt;
 namespace kt
 {
 	ImportDialog::ImportDialog(CoreInterface* core,QWidget* parent, const char* name, bool modal, WFlags fl)
-	: ImportDlgBase(parent,name, modal,fl),core(core)
+	: ImportDlgBase(parent,name, modal,fl),DataCheckerListener(false),core(core)
 	{
 		KURLRequester* r = m_torrent_url;
 		r->setMode(KFile::File|KFile::LocalOnly);
@@ -67,6 +67,11 @@ namespace kt
 	void ImportDialog::status(Uint32 ,Uint32 )
 	{
 		// don't care
+	}
+	
+	void ImportDialog::finished()
+	{
+		// only used for check in separate thread, so does not apply for the import plugin
 	}
 	
 	void ImportDialog::onImport()

@@ -210,6 +210,7 @@ public:
 	void setFilePriority(kt::TorrentInterface* tc, bt::Uint32 index, int priority);
 	void announceByTorNum(int tornumber);
 
+
 public slots:
 	/**
 	 * Load a torrent file. Pops up an error dialog
@@ -274,6 +275,12 @@ public slots:
 	 * Emits appropriate signal.
 	 */
 	void enqueueTorrentOverMaxRatio(kt::TorrentInterface* tc);
+	
+	/**
+	 * Do a data check on a torrent
+	 * @param tc 
+	 */
+	void doDataCheck(kt::TorrentInterface* tc);
 	
 signals:
 	/**

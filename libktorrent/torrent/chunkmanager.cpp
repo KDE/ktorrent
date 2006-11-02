@@ -378,6 +378,8 @@ namespace bt
 		}
 		else
 		{
+			c->clear();
+			c->setStatus(Chunk::NOT_DOWNLOADED);
 			Out(SYS_DIO|LOG_IMPORTANT) << "Warning: attempted to save a chunk which was excluded" << endl;
 		}
 	}

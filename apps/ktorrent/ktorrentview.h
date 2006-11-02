@@ -127,6 +127,7 @@ signals:
 	void viewChange(kt::TorrentInterface* tc);
 	void updateActions(bool can_start,bool can_stop,bool can_remove,bool can_scan);
 	void queue(kt::TorrentInterface* tc);
+	void needsDataCheck(kt::TorrentInterface* tc);
 
 private:
 	bool acceptDrag(QDropEvent* event) const;

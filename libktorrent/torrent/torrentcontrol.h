@@ -49,6 +49,7 @@ namespace bt
 	class QueueManager;
 	class PreallocationThread;
 	class TimeEstimator;
+	class DataCheckerThread;
 	
 	/**
 	 * @author Joris Guisson
@@ -198,7 +199,7 @@ namespace bt
 		/// Checks if tracker announce is allowed (minimum interval 60 seconds)
 		bool announceAllowed();
 		
-		void doDataCheck(bt::DataCheckerListener* lst,bool auto_import);
+		void startDataCheck(bt::DataCheckerListener* lst,bool auto_import);
 		
 		/// Test if the torrent has existing files, only works the first time a torrent is loaded
 		bool hasExistingFiles() const;
@@ -286,8 +287,6 @@ namespace bt
 		void continueStart();
 		virtual void handleError(const QString & err);
 
-		
-		
 		void initInternal(QueueManager* qman,const QString & tmpdir,
 						  const QString & ddir,const QString & default_save_dir,bool first_time);
 		
@@ -295,6 +294,8 @@ namespace bt
 		void setupDirs(const QString & tmpdir,const QString & ddir);
 		void setupStats();
 		void setupData(const QString & ddir);
+		virtual void afterDataCheck();
+		virtual bool isCheckingData(bool & finished) const;
 		
 	private:
 		Torrent* tor;
@@ -318,6 +319,8 @@ namespace bt
 		
 		bool prealloc;
 		PreallocationThread* prealoc_thread;
+		
+		DataCheckerThread* dcheck_thread;
 		
 		struct InternalStats
 		{

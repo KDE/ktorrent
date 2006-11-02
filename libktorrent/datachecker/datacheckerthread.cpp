@@ -15,56 +15,34 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-
-#ifndef IMPORTDIALOG_H
-#define IMPORTDIALOG_H
-
-#include <util/constants.h>
-#include <datachecker/datacheckerlistener.h>
-#include "importdlgbase.h"
-
-class KURL;
+#include <torrent/torrent.h>
+#include "datachecker.h"
+#include "datacheckerthread.h"
 
 namespace bt
 {
-	class BitSet;
-	class Torrent;
-}
 
-
-namespace kt
-{
-	class CoreInterface;
-	
-	class ImportDialog : public ImportDlgBase,public bt::DataCheckerListener
+	DataCheckerThread::DataCheckerThread(DataChecker* dc,
+										 const QString & path,
+										 const Torrent & tor,
+										 const QString & dnddir)
+		: dc(dc),path(path),tor(tor),dnddir(dnddir)
 	{
-		Q_OBJECT
-	
-	public:
-		ImportDialog(CoreInterface* core,QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
-		virtual ~ImportDialog();
-		
-	public slots:
-		void onImport();
-	
-	private:
-		void writeIndex(const QString & file,const bt::BitSet & chunks);
-		void linkTorFile(const QString & cache_dir,const QString & dnd_dir,
-						 const KURL & data_url,const QString & fpath,bool & dnd);
-		void saveStats(const QString & stats_file,const KURL & data_url,bt::Uint64 imported,bool custom_output_name);
-		bt::Uint64 calcImportedBytes(const bt::BitSet & chunks,const bt::Torrent & tor);
-		void saveFileInfo(const QString & file_info_file,QValueList<bt::Uint32> & dnd);
-		
-		virtual void progress(bt::Uint32 num,bt::Uint32 total);
-		virtual void status(bt::Uint32 num_failed,bt::Uint32 num_downloaded);
-		virtual void finished();
-		
-	private:
-		CoreInterface* core;
-	};
+		running = true;
+	}
+
+
+	DataCheckerThread::~DataCheckerThread()
+	{
+		delete dc;
+	}
+
+	void DataCheckerThread::run()
+	{
+		dc->check(path,tor,dnddir);
+		running = false;
+	}
+
 }
-
-#endif
-

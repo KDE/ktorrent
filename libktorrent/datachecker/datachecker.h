@@ -65,6 +65,9 @@ namespace bt
 		 * Get the BitSet representing all the failed chunks.
 		 */
 		const BitSet & getFailed() const {return failed;}
+		
+		/// Get the listener
+		DataCheckerListener* getListener() {return listener;}
 	protected:
 		BitSet failed,downloaded;
 		DataCheckerListener* listener;
