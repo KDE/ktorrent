@@ -277,6 +277,19 @@ namespace bt
 				psman->manualUpdate();
 				stalled_timer.update();
 			}
+			
+			if(overMaxRatio()) 
+			{ 
+				if(istats.priority!=0) //if it's queued make sure to dequeue it 
+				{
+					setPriority(0);
+					stats.user_controlled = true;
+				}
+                 
+				stop(true); 
+				emit seedingAutoStopped(this);
+            } 
+
 		}
 		catch (Error & e)
 		{
