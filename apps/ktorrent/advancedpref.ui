@@ -171,10 +171,7 @@
                                 <cstring>no_recheck</cstring>
                             </property>
                             <property name="text">
-                                <string>During uploading, do &amp;not recheck chunks bigger then</string>
-                            </property>
-                            <property name="accel">
-                                <string>Alt+N</string>
+                                <string>During uploading, do &amp;not recheck chunks bigger than</string>
                             </property>
                         </widget>
                         <widget class="KIntNumInput">
@@ -232,9 +229,6 @@
                             </property>
                             <property name="text">
                                 <string>Do a data integrit&amp;y check after</string>
-                            </property>
-                            <property name="accel">
-                                <string>Alt+Y</string>
                             </property>
                         </widget>
                         <widget class="KIntNumInput">

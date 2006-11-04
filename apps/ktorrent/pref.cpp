@@ -161,7 +161,7 @@ bool DownloadPrefPage::apply()
 	Settings::setNumUploadSlots(dp->num_upload_slots->value());
 	if (Settings::dhtSupport() && dp->udp_tracker_port->value() == Settings::dhtPort())
 	{
-		QString msg = i18n("The DHT port needs to be different then the UDP tracker port !");
+		QString msg = i18n("The DHT port needs to be different from the UDP tracker port!");
 		KMessageBox::error(0,msg,i18n("Error"));
 		return false;
 	}
@@ -260,7 +260,7 @@ bool GeneralPrefPage::apply()
 	
 	if (gp->use_dht->isChecked() && gp->dht_port->value() == Settings::udpTrackerPort())
 	{
-		QString msg = i18n("The DHT port needs to be different then the UDP tracker port !");
+		QString msg = i18n("The DHT port needs to be different from the UDP tracker port!");
 		KMessageBox::error(0,msg,i18n("Error"));
 		return false;
 	}

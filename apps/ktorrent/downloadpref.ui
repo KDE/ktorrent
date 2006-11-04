@@ -477,7 +477,7 @@
                                 <cstring>textLabel1_7</cstring>
                             </property>
                             <property name="text">
-                                <string>Global connection limit</string>
+                                <string>Global connection limit:</string>
                             </property>
                         </widget>
                         <widget class="QLabel">

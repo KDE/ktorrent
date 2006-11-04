@@ -68,7 +68,7 @@ void ScanDialog::scan()
 	}
 	catch (bt::Error & err)
 	{
-		KMessageBox::error(0,i18n("Error scanning data : %1").arg(err.toString()));
+		KMessageBox::error(0,i18n("Error scanning data: %1").arg(err.toString()));
 	}
 	
 }

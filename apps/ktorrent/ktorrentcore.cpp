@@ -868,10 +868,10 @@ void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc,bool & ret)
 	
 	if (tc->getStats().multi_file_torrent)
 	{
-		QString msg = i18n("Several data files of the torrent \"%1\" are missing, do you want to recreate them, or do you want to not download them ?").arg(tc->getStats().torrent_name);
+		QString msg = i18n("Several data files of the torrent \"%1\" are missing, do you want to recreate them, or do you want to not download them?").arg(tc->getStats().torrent_name);
 					
 		int ret = KMessageBox::warningYesNoCancelList(0,msg,missing,QString::null,
-				KGuiItem(i18n("Recreate")),KGuiItem(i18n("Do not download")));
+				KGuiItem(i18n("Recreate")),KGuiItem(i18n("Do Not Download")));
 		if (ret == KMessageBox::Yes)
 		{
 			try
@@ -881,7 +881,7 @@ void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc,bool & ret)
 			}
 			catch (bt::Error & e)
 			{
-				KMessageBox::error(0,i18n("Cannot recreate missing files : %1").arg(e.toString()));
+				KMessageBox::error(0,i18n("Cannot recreate missing files: %1").arg(e.toString()));
 				tc->handleError(i18n("Data files are missing"));
 				ret = false;
 			}
@@ -895,7 +895,7 @@ void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc,bool & ret)
 			}
 			catch (bt::Error & e)
 			{
-				KMessageBox::error(0,i18n("Cannot deselect missing files : %1").arg(e.toString()));
+				KMessageBox::error(0,i18n("Cannot deselect missing files: %1").arg(e.toString()));
 				tc->handleError(i18n("Data files are missing"));
 				ret = false;
 			}
@@ -918,7 +918,7 @@ void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc,bool & ret)
 			}
 			catch (bt::Error & e)
 			{
-				KMessageBox::error(0,i18n("Cannot recreate data file : %1").arg(e.toString()));
+				KMessageBox::error(0,i18n("Cannot recreate data file: %1").arg(e.toString()));
 				tc->handleError(i18n("Data file is missing"));
 				ret = false;
 			}
