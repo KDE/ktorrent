@@ -26,7 +26,7 @@
 #include <kurl.h>
 #include <kurldrag.h>
 #include <kmessagebox.h>
-#include <kmessagebox.h>
+#include <kstdguiitem.h>
 
 #include <interfaces/torrentinterface.h>
 #include <torrent/globals.h>
@@ -350,8 +350,9 @@ void KTorrentView::removeDownloads()
 
 void KTorrentView::removeDownloadsAndData()
 {
-	QString msg = i18n("You will lose all the downloaded data. Are you sure you want to do this ?");
-	if (KMessageBox::warningYesNo(this,msg) == KMessageBox::No)
+	QString msg = i18n("You will lose all the downloaded data. Are you sure you want to do this?");
+        // TODO: replace i18n("Remove") by KStdGuiItem::remove() in KDE4
+	if (KMessageBox::warningYesNo(this,msg, i18n("&Remove"), KStdGuiItem::cancel()) == KMessageBox::No)
 		return;
 	
 	QPtrList<QListViewItem> sel = selectedItems();
