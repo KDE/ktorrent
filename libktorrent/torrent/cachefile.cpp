@@ -245,15 +245,16 @@ namespace bt
 		
 	void CacheFile::unmap(void* ptr,Uint32 size)
 	{
+		int ret = 0;
 		QMutexLocker lock(&mutex);
 		// see if it wasn't an offsetted mapping
 		if (mappings.contains(ptr))
 		{
 			CacheFile::Entry & e = mappings[ptr];
 			if (e.diff > 0)
-				munmap((char*)ptr - e.diff,e.size);
+				ret = munmap((char*)ptr - e.diff,e.size);
 			else
-				munmap(ptr,e.size);
+				ret = munmap(ptr,e.size);
 			
 			mappings.erase(ptr);
 			// no mappings, close temporary
@@ -262,7 +263,12 @@ namespace bt
 		}
 		else
 		{
-			munmap(ptr,size);
+			ret = munmap(ptr,size);
+		}
+		
+		if (ret < 0)
+		{
+			Out(SYS_DIO|LOG_IMPORTANT) << QString("Munmap failed with error %1 : %2").arg(errno).arg(strerror(errno)) << endl;
 		}
 	}
 		
@@ -276,11 +282,12 @@ namespace bt
 		QMap<void*,Entry>::iterator i = mappings.begin();
 		while (i != mappings.end())
 		{
+			int ret = 0;
 			CacheFile::Entry & e = i.data();
 			if (e.diff > 0)
-				munmap((char*)e.ptr - e.diff,e.size);
+				ret = munmap((char*)e.ptr - e.diff,e.size);
 			else
-				munmap(e.ptr,e.size);
+				ret = munmap(e.ptr,e.size);
 			e.thing->unmapped(to_be_reopened);
 			// if it will be reopenend, we will not remove all mappings
 			// so that they will be redone on reopening
@@ -293,6 +300,11 @@ namespace bt
 				i++;
 				mappings.erase(e.ptr);
 			}
+			
+			if (ret < 0)
+			{
+				Out(SYS_DIO|LOG_IMPORTANT) << QString("Munmap failed with error %1 : %2").arg(errno).arg(strerror(errno)) << endl;
+			}	
 		}
 		::close(fd);
 		fd = -1;

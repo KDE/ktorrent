@@ -68,13 +68,14 @@ namespace bt
 	{
 		Uint32 ret = uploaded;
 		uploaded = 0;
+#if 0
 		// generate allowed fast set
 		if (can_generate_af)
 		{
 			generateAF(cman);
 			can_generate_af = false;
 		}
-		
+#endif	
 		PacketWriter & pw = peer->getPacketWriter();
 		
 		// if we have choked the peer do not upload
@@ -131,6 +132,7 @@ namespace bt
 	
 	void PeerUploader::generateAF(ChunkManager & cman)
 	{
+#if 0
 	//	return;
 		Uint32 cnt = 0;
 		Uint8 tmp[24];
@@ -164,6 +166,7 @@ namespace bt
 			pw.sendAllowedFast(*itr);
 			itr++;
 		}
+#endif
 	}
 	
 	Uint32 PeerUploader::getNumRequests() const

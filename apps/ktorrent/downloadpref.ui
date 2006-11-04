@@ -8,9 +8,12 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>500</width>
-            <height>525</height>
+            <width>575</width>
+            <height>568</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>DownloadPref</string>
     </property>
     <grid>
         <property name="name">
@@ -200,7 +203,7 @@
                         <cstring>kActiveLabel1</cstring>
                     </property>
                     <property name="text">
-                        <string>The above ports must be forwarded if you are behind a router. The UPnP plugin can do this for you.</string>
+                        <string>The above ports must also be forwarded if you are behind a router. The UPnP plugin can do this for you.</string>
                     </property>
                 </widget>
             </hbox>
@@ -534,6 +537,8 @@
         </widget>
     </grid>
 </widget>
+<customwidgets>
+</customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>knuminput.h</includehint>

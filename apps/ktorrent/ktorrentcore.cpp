@@ -102,7 +102,7 @@ KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seedin
 		if (port != port + i - 1)
 			KMessageBox::information(0,
 			                         i18n("Specified port (%1) is unavailable or in"
-			                              " use by another application. KTorrent is bound to port %2.")
+			                              " use by another application. KTorrent is now using port %2.")
 			                         .arg(port).arg(port + i - 1));
 
 		Out(SYS_GEN|LOG_NOTICE) << "Bound to port " << (port + i - 1) << endl;
@@ -110,7 +110,8 @@ KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seedin
 	else
 	{
 		KMessageBox::error(0,
-		                   i18n("Cannot bind to port %1 or the 10 following ports.").arg(port));
+			i18n("KTorrent is unable to accept connections because the ports %1 to %2 are "
+			   "already in use by another program.").arg(port).arg(port + i - 1));
 		Out(SYS_GEN|LOG_IMPORTANT) << "Cannot find free port" << endl;
 	}
 
