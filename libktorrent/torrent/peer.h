@@ -203,7 +203,10 @@ namespace bt
 		/// Choke the peer
 		void choke();
 		
-		
+		/**
+		 *  Emit the port packet signal.
+		 */
+		void emitPortPacket();
 		
 	private slots:
 		void dataWritten(int bytes);

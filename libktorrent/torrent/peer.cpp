@@ -421,7 +421,7 @@ namespace bt
 	QString Peer::getIPAddresss() const
 	{
 		if (sock)
-			return sock->getIPAddress();
+			return sock->getRemoteIPAddress();
 		else
 			return QString::null;
 	}
@@ -460,6 +460,11 @@ namespace bt
 		
 		pwriter->sendChoke();
 		uploader->clearAllRequests();
+	}
+	
+	void Peer::emitPortPacket()
+	{
+		gotPortPacket(sock->getRemoteIPAddress(),sock->getRemotePort());
 	}
 }
 

@@ -210,9 +210,14 @@ namespace mse
 		return sock->ok();
 	}
 
-	QString StreamSocket::getIPAddress() const
+	QString StreamSocket::getRemoteIPAddress() const
 	{
 		return sock->getPeerName().toString();
+	}
+	
+	bt::Uint16 StreamSocket::getRemotePort() const
+	{
+		return sock->getPeerName().port();
 	}
 	
 	void StreamSocket::setRC4Encryptor(RC4Encryptor* e)

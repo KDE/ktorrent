@@ -45,7 +45,7 @@ namespace bt
 	
 	void ServerAuthenticate::onFinish(bool succes)
 	{		
-		Out(SYS_CON|LOG_NOTICE) << "Authentication(S) to " << sock->getIPAddress() 
+		Out(SYS_CON|LOG_NOTICE) << "Authentication(S) to " << sock->getRemoteIPAddress() 
 				<< " : " << (succes ? "ok" : "failure") << endl;
 		finished = true;
 		
@@ -63,7 +63,7 @@ namespace bt
 		Uint8* hs = handshake;
 		IPBlocklist& ipfilter = IPBlocklist::instance();
 
-		QString IP = sock->getIPAddress();
+		QString IP = sock->getRemoteIPAddress();
 
 		if (ipfilter.isBlocked( IP ))
 		{

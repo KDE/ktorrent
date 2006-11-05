@@ -102,7 +102,10 @@ namespace mse
 		bool connectTo(const QString & ip,Uint16 port);
 		
 		/// Get the IP address of the remote peer
-		QString getIPAddress() const;
+		QString getRemoteIPAddress() const;
+		
+		/// Get the port of the remote peer
+		bt::Uint16 getRemotePort() const;
 		
 		/**
 		 * Reinsert data, this is needed when we read to much during the crypto handshake.

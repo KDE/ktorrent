@@ -107,7 +107,7 @@ namespace bt
 		else
 		{
 			IPBlocklist& ipfilter = IPBlocklist::instance();
-			QString IP(s->getIPAddress());
+			QString IP(s->getRemoteIPAddress());
 			if (ipfilter.isBlocked( IP ))
 			{
 				delete s;
