@@ -40,13 +40,6 @@ namespace mse
 		our_rc4 = 0;
 		pad_C_len = 0;
 		crypto_provide = crypto_select = 0;
-		
-		Uint8 tmp[608];
-		yb.toBuffer(tmp,96);
-	//	DumpBigInt("Xb",xb);
-	//	DumpBigInt("Yb",yb);
-		sock->sendData(tmp,96 + rand() % 512);
-		//Out() << "Sent YB" << endl;
 	}
 
 
@@ -55,9 +48,21 @@ namespace mse
 		delete our_rc4;
 	}
 	
+	void EncryptedServerAuthenticate::sendYB()
+	{
+		Uint8 tmp[608];
+		yb.toBuffer(tmp,96);
+	//	DumpBigInt("Xb",xb);
+	//	DumpBigInt("Yb",yb);
+		sock->sendData(tmp,96 + rand() % 512);
+		//Out() << "Sent YB" << endl;
+	}
+	
 	
 	void EncryptedServerAuthenticate::handleYA()
 	{
+		sendYB();
+		
 		ya = BigInt::fromBuffer(buf,96);
 	//	DumpBigInt("Ya",ya);
 		// now calculate secret 
@@ -268,8 +273,25 @@ namespace mse
 		case WAITING_FOR_YA:
 			if (ba <= 68 && Globals::instance().getServer().unencryptedConnectionsAllowed())
 			{
-				// assume normal handshake if less then 68 bytes have arrived
-				Out(SYS_CON|LOG_DEBUG) << "Going the normal ServerAuthenticate routte" << endl;
+				// this is most likely an unencrypted handshake, so if we can find a peer manager 
+				// for the info hash in it, add it to the list of potential peers of that peer manager
+				// so it will be contacted later on
+			/*	buf_size += sock->readData(buf + buf_size,ba);
+				if (buf_size >= 48)
+				{
+					SHA1Hash rh(buf+28);
+					PeerManager* pman = server->findPeerManager(rh);
+					if (pman)
+					{
+						PotentialPeer pp;
+						pp.ip = sock->getRemoteIPAddress();
+						pp.port = sock->getRemotePort();
+						pman->addPotentialPeer(pp);
+					}
+				}
+				onFinish(false);
+			*/
+				Out(SYS_CON|LOG_DEBUG) << "Switching back to normal server authenticate" << endl;
 				state = NON_ENCRYPTED_HANDSHAKE;
 				ServerAuthenticate::onReadyRead();
 			}

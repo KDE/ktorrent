@@ -45,6 +45,7 @@ namespace mse
 		
 	private:
 		void handleYA();
+		void sendYB();
 		void findReq1();
 		void calculateSKey();
 		void processVC();

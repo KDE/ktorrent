@@ -98,7 +98,7 @@ namespace bt
 				// read partial
 				sock->readData(handshake,ba);
 				bytes_of_handshake_recieved += ba;
-				if (ba >= 27 && handshake[27])
+				if (ba >= 27 && handshake[27] & 0x01)
 					dht_support = true;
 				// tell subclasses of a partial handshake
 				handshakeRecieved(false);
