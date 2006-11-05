@@ -97,6 +97,9 @@ namespace bt
 		
 		if (start_tc)
 		{
+			//User started this torrent so make it user controlled
+			tc->setPriority(0);
+			
 			Out() << "Starting download" << endl;
 			float ratio = kt::ShareRatio(s);
 			float max_ratio = tc->getMaxShareRatio();
