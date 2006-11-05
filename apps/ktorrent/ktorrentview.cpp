@@ -352,7 +352,8 @@ void KTorrentView::removeDownloadsAndData()
 {
 	QString msg = i18n("You will lose all the downloaded data. Are you sure you want to do this?");
         // TODO: replace i18n("Remove") by KStdGuiItem::remove() in KDE4
-	if (KMessageBox::warningYesNo(this,msg, i18n("&Remove"), KStdGuiItem::cancel()) == KMessageBox::No)
+	if (KMessageBox::warningYesNo(this,msg, i18n("Remove Torrent"), i18n("&Remove"), 
+            KStdGuiItem::cancel()) == KMessageBox::No)
 		return;
 	
 	QPtrList<QListViewItem> sel = selectedItems();
