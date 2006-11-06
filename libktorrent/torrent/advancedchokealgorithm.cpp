@@ -66,13 +66,19 @@ namespace bt
 		}
 		
 		bool should_be_interested = false;
+		bool should_we_be_interested = false;
 		// before we start calculating first check if we have piece that the peer doesn't have
 		const BitSet & ours = cman.getBitSet();
 		const BitSet & theirs = p->getBitSet();
-		for (Uint32 i = 0;i < ours.getNumBits() && !should_be_interested;i++)
+		for (Uint32 i = 0;i < ours.getNumBits();i++)
 		{
 			if (ours.get(i) && !theirs.get(i))
 				should_be_interested = true;
+			else if (!ours.get(i) && theirs.get(i))
+				should_we_be_interested = true;
+			
+			if (should_be_interested && should_we_be_interested)
+				break;
 		}
 		
 		if (!should_be_interested || !p->isInterested())
@@ -86,6 +92,7 @@ namespace bt
 		double nb = 0.0; // newbie bonus
 		double cp = 0.0; // choke penalty
 		double sp = 0.0; // snubbing penalty
+		double ib = should_we_be_interested ? 1.0 : 0.0; // interested bonus, the peer has chunks we want
 		double bd = s.bytes_downloaded; // bytes downloaded
 		double tbd = stats.trk_bytes_downloaded; // total bytes downloaded
 		double ds = s.download_rate; // current download rate
@@ -111,7 +118,7 @@ namespace bt
 		// NB + K * (BD/TBD) - CP - SP + L * (DS / TDS)
 		double K = 5.0;
 		double L = 5.0;
-		double aca = nb + (tbd > 0 ? K * (bd/tbd) : 0.0) + (tds > 0 ? L* (ds / tds) : 0.0) - cp - sp;
+		double aca = nb + (tbd > 0 ? K * (bd/tbd) : 0.0) + (tds > 0 ? L* (ds / tds) : 0.0) - cp - sp + ib;
 		
 		p->setACAScore(aca);
 		return true;
