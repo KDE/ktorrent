@@ -359,6 +359,7 @@ namespace bt
 	{
 		// continues start after the prealoc_thread has finished preallocation	
 		pman->start();
+		pman->loadPeerList(datadir + "peer_list");
 		try
 		{
 			down->loadDownloads(datadir + "current_chunks");
@@ -440,6 +441,7 @@ namespace bt
 				stats.autostart = false;
 			}
 		}
+		pman->savePeerList(datadir + "peer_list");
 		pman->stop();
 		pman->closeAllConnections();
 		pman->clearDeadPeers();

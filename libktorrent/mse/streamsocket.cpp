@@ -220,6 +220,11 @@ namespace mse
 		return sock->getPeerName().port();
 	}
 	
+	net::Address StreamSocket::getRemoteAddress() const
+	{
+		return sock->getPeerName();
+	}
+	
 	void StreamSocket::setRC4Encryptor(RC4Encryptor* e)
 	{
 		if (enc)

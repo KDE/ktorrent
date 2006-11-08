@@ -20,7 +20,7 @@
 #include <math.h>
 #include <util/log.h>
 #include <util/functions.h>
-
+#include <net/address.h>
 #include <mse/streamsocket.h>
 
 #include "peer.h"
@@ -424,6 +424,22 @@ namespace bt
 			return sock->getRemoteIPAddress();
 		else
 			return QString::null;
+	}
+	
+	Uint16 Peer::getPort() const
+	{
+		if (!sock)
+			return 0;
+		else
+			return sock->getRemotePort();
+	}
+	
+	net::Address Peer::getAddress() const
+	{
+		if (!sock)
+			return net::Address();
+		else
+			return sock->getRemoteAddress();
 	}
 
 	Uint32 Peer::getTimeSinceLastPiece() const

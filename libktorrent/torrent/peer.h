@@ -28,6 +28,10 @@
 #include "globals.h"
 #include "peerid.h"
 
+namespace net
+{
+	class Address;
+}
 
 
 namespace mse
@@ -86,6 +90,12 @@ namespace bt
 		
 		/// Get the IP address of the Peer.
 		QString getIPAddresss() const;
+		
+		/// Get the port of the Peer
+		Uint16 getPort() const;
+		
+		/// Get the address of the peer
+		net::Address getAddress() const;
 		
 		/// See if the peer has been killed.
 		bool isKilled() const {return killed;}

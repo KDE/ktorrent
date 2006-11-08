@@ -175,6 +175,16 @@ namespace bt
 		 */
 		void peerAuthenticated(Authenticate* auth,bool ok);
 		
+		/**
+		 * Save the IP's and port numbers of all peers.
+		 */
+		void savePeerList(const QString & file);
+		
+		/**
+		 * Load the peer list again and add them to the potential peers
+		 */
+		void loadPeerList(const QString & file);
+		
 	public slots:
 		/**
 		 * A PeerSource, has new potential peers.
@@ -190,6 +200,7 @@ namespace bt
 		void onHave(Peer* p,Uint32 index);
 		void onBitSetRecieved(const BitSet & bs);
 		void onRerunChoker();
+		
 		
 	signals:
 		void newPeer(Peer* p);

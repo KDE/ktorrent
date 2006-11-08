@@ -18,7 +18,9 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <util/log.h>
+#include <util/file.h>
 #include <util/error.h>
+#include <net/address.h>
 #include "peermanager.h"
 #include "peer.h"
 #include "bnode.h"
@@ -349,7 +351,7 @@ namespace bt
 	void PeerManager::closeAllConnections()
 	{
 		killed.clear();
-		
+	
 		if (peer_list.count() <= total_connections)
 			total_connections -= peer_list.count();
 		else
@@ -359,6 +361,107 @@ namespace bt
 		peer_list.setAutoDelete(true);
 		peer_list.clear();
 		peer_list.setAutoDelete(false);
+	}
+	
+	// pick a random magic number
+	const Uint32 PEER_LIST_HDR_MAGIC = 0xEF12AB34;
+	
+	struct PeerListHeader
+	{
+		Uint32 magic;
+		Uint32 num_peers;
+		Uint32 ip_version; // 4 or 6, 6 is for future purposes only (when we support IPv6)
+	};
+	
+	struct PeerListEntry
+	{
+		Uint32 ip;
+		Uint16 port;
+	};
+	
+	void PeerManager::savePeerList(const QString & file)
+	{
+		bt::File fptr;
+		if (!fptr.open(file,"wb"))
+			return;
+		
+		try
+		{
+			PeerListHeader hdr;
+			hdr.magic = PEER_LIST_HDR_MAGIC;
+			// we will save both the active and potential peers
+			hdr.num_peers = peer_list.count() + potential_peers.count();
+			hdr.ip_version = 4;
+			
+			fptr.write(&hdr,sizeof(PeerListHeader));
+			
+			Out(SYS_GEN|LOG_DEBUG) << "Saving list of peers to " << file << endl;
+			// first the active peers
+			for (QPtrList<Peer>::iterator itr = peer_list.begin(); itr != peer_list.end();itr++)
+			{
+				Peer* p = *itr;
+				PeerListEntry e;
+				net::Address addr = p->getAddress();
+				e.ip = addr.ip();
+				e.port = addr.port();
+				fptr.write(&e,sizeof(PeerListEntry));
+			}
+			
+			// now the potential_peers
+			QValueList<kt::PotentialPeer>::iterator i = potential_peers.begin();
+			while (i != potential_peers.end())
+			{
+				PotentialPeer & pp = *i;
+				net::Address addr(pp.ip,pp.port);
+				PeerListEntry e;
+				e.ip = addr.ip();
+				e.port = addr.port();
+				fptr.write(&e,sizeof(PeerListEntry));
+				i++;
+			}
+		}
+		catch (bt::Error & err)
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "Error happened during saving of peer list : " << err.toString() << endl;
+		}
+	}
+	
+	void PeerManager::loadPeerList(const QString & file)
+	{
+		bt::File fptr;
+		if (!fptr.open(file,"rb"))
+			return;
+		
+		try
+		{
+			PeerListHeader hdr;
+			fptr.read(&hdr,sizeof(PeerListHeader));
+			if (hdr.magic != PEER_LIST_HDR_MAGIC || hdr.ip_version != 4)
+				throw Error("Peer list file corrupted");
+			
+			Out(SYS_GEN|LOG_DEBUG) << "Loading list of peers from " << file << " (num_peers =  " << hdr.num_peers << ")" << endl;
+			
+			for (Uint32 i = 0;i < hdr.num_peers && !fptr.eof();i++)
+			{
+				PeerListEntry e;
+				fptr.read(&e,sizeof(PeerListEntry));
+				PotentialPeer pp;
+				
+				// convert IP address to string 
+				pp.ip = QString("%1.%2.%3.%4")
+						.arg((e.ip & 0xFF000000) >> 24)
+						.arg((e.ip & 0x00FF0000) >> 16)
+						.arg((e.ip & 0x0000FF00) >> 8)
+						.arg( e.ip & 0x000000FF);
+				pp.port = e.port;
+				potential_peers.append(pp);
+			}
+			
+		}
+		catch (bt::Error & err)
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "Error happened during saving of peer list : " << err.toString() << endl;
+		}
 	}
 	
 	void PeerManager::start()

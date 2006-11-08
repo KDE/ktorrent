@@ -107,6 +107,9 @@ namespace mse
 		/// Get the port of the remote peer
 		bt::Uint16 getRemotePort() const;
 		
+		/// Get the full address
+		net::Address getRemoteAddress() const;
+		
 		/**
 		 * Reinsert data, this is needed when we read to much during the crypto handshake.
 		 * This data will be the first to read out. The data will be copied to a temporary buffer
