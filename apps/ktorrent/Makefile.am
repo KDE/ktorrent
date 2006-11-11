@@ -7,7 +7,8 @@ bin_PROGRAMS = ktorrent
 
 
 # set the include path for X, qt and KDE
-INCLUDES = -I$(srcdir)/../../libktorrent $(all_includes)
+INCLUDES = -I$(top_builddir)/libktorrent -I$(srcdir)/../../libktorrent \
+	$(all_includes)
 
 # the library search path. 
 ktorrent_LDFLAGS = $(KDE_RPATH) $(all_libraries)
@@ -17,7 +18,7 @@ ktorrent_LDADD = ../../apps/ktorrent/groups/libgroups.la -lkmdi $(LIB_KPARTS) \
 	../../libktorrent/libktorrent.la $(LIB_KFILE) $(LIB_KIO)
 
 # which sources should be compiled for ktorrent
-ktorrent_SOURCES = dcopinterface.skel settings.kcfgc main.cpp ktorrent.cpp \
+ktorrent_SOURCES = dcopinterface.skel main.cpp ktorrent.cpp \
 			ktorrentview.cpp pref.cpp ktorrentviewitem.cpp ktorrentcore.cpp downloadpref.ui \
 			trayicon.cpp ktorrentdcop.cpp ktorrentapp.cpp torrentcreatordlg.cpp \
 			torrentcreatordlg.h torrentcreatordlgbase.ui fileselectdlgbase.ui fileselectdlg.cpp \
@@ -26,7 +27,7 @@ ktorrent_SOURCES = dcopinterface.skel settings.kcfgc main.cpp ktorrent.cpp \
 			ipfilterwidget.cpp addpeerwidgetbase.ui addpeerwidget.cpp addpeerwidget.h advancedpref.ui
 
 xdg_apps_DATA = ktorrent.desktop
-kde_kcfg_DATA = ktorrent.kcfg
+
 
 # these are the headers for your project
 noinst_HEADERS = ktorrent.h ktorrentview.h pref.h ktorrentviewitem.h \
