@@ -36,6 +36,7 @@
 #include "soap.h"
 
 using namespace bt;
+using namespace net;
 
 namespace kt 
 {
@@ -209,10 +210,9 @@ namespace kt
 		sendSoapQuery(comm,s.servicetype + "#" + action,s.controlurl);
 	}
 	
-	void UPnPRouter::forward(Uint16 port,Protocol prot)
+	void UPnPRouter::forward(const net::Port & port)
 	{
-		if (verbose)
-			Out(SYS_PNP|LOG_NOTICE) << "Forwarding port " << port << " (" << (prot == UDP ? "UDP" : "TCP") << ")" << endl;
+		Out(SYS_PNP|LOG_NOTICE) << "Forwarding port " << port.number << " (" << (port.proto == UDP ? "UDP" : "TCP") << ")" << endl;
 		// first find the right service
 		QValueList<UPnPService>::iterator i = findPortForwardingService();
 		if (i == services.end())
@@ -226,17 +226,17 @@ namespace kt
 		
 		// the external port
 		a.element = "NewExternalPort";
-		a.value = QString::number(port);
+		a.value = QString::number(port.number);
 		args.append(a);
 		
 		// the protocol
 		a.element = "NewProtocol";
-		a.value = prot == TCP ? "TCP" : "UDP";
+		a.value = port.proto == TCP ? "TCP" : "UDP";
 		args.append(a);
 		
 		// the local port
 		a.element = "NewInternalPort";
-		a.value = QString::number(port);
+		a.value = QString::number(port.number);
 		args.append(a);
 		
 		// the local IP address
@@ -261,13 +261,13 @@ namespace kt
 		QString action = "AddPortMapping";
 		QString comm = SOAP::createCommand(action,s.servicetype,args);
 		
-		Forwarding fw = {port,prot,true};
+		Forwarding fw = {port,true};
 		// erase old forwarding if one exists
 		QValueList<Forwarding>::iterator itr = fwds.begin();
 		while (itr != fwds.end())
 		{
 			Forwarding & fwo = *itr;
-			if (fwo.port == port && fwo.prot == prot)
+			if (fwo.port == port)
 				itr = fwds.erase(itr);
 			else
 				itr++;
@@ -277,9 +277,9 @@ namespace kt
 		reqs[r] = fwds.append(fw);
 	}
 	
-	void UPnPRouter::undoForward(Uint16 port,Protocol prot)
+	void UPnPRouter::undoForward(const net::Port & port)
 	{
-		Out(SYS_PNP|LOG_NOTICE) << "Undoing forward of port " << port << " (" << (prot == UDP ? "UDP" : "TCP") << ")" << endl;
+		Out(SYS_PNP|LOG_NOTICE) << "Undoing forward of port " << port.number << " (" << (port.proto == UDP ? "UDP" : "TCP") << ")" << endl;
 		// first find the right service
 		QValueList<UPnPService>::iterator i = findPortForwardingService();
 		if (i == services.end())
@@ -293,12 +293,12 @@ namespace kt
 		
 		// the external port
 		a.element = "NewExternalPort";
-		a.value = QString::number(port);
+		a.value = QString::number(port.number);
 		args.append(a);
 		
 		// the protocol
 		a.element = "NewProtocol";
-		a.value = prot == TCP ? "TCP" : "UDP";
+		a.value = port.proto == TCP ? "TCP" : "UDP";
 		args.append(a);
 		
 		UPnPService & s = *i;
@@ -309,7 +309,7 @@ namespace kt
 		while (itr != fwds.end())
 		{
 			Forwarding & wd = *itr;
-			if (wd.port == port && wd.prot == prot)
+			if (wd.port == port)
 			{
 				fwds.erase(itr);
 				break;
@@ -319,7 +319,7 @@ namespace kt
 		updateGUI();
 	}
 	
-	void UPnPRouter::isPortForwarded(Uint16 port,Protocol prot)
+	void UPnPRouter::isPortForwarded(const net::Port & port)
 	{
 		// first find the right service
 		QValueList<UPnPService>::iterator i = findPortForwardingService();
@@ -334,12 +334,12 @@ namespace kt
 		
 		// the external port
 		a.element = "NewExternalPort";
-		a.value = QString::number(port);
+		a.value = QString::number(port.number);
 		args.append(a);
 		
 		// the protocol
 		a.element = "NewProtocol";
-		a.value = prot == TCP ? "TCP" : "UDP";
+		a.value = port.proto == TCP ? "TCP" : "UDP";
 		args.append(a);
 		
 		UPnPService & s = *i;

@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <string.h>
+#include <net/portlist.h>
 #include <util/log.h>
 #include <util/error.h>
 #include <torrent/globals.h>
@@ -49,6 +50,7 @@ namespace dht
 
 	RPCServer::~RPCServer()
 	{
+		bt::Globals::instance().getPortList().removePort(port,net::UDP);
 		sock->close();
 		calls.setAutoDelete(true);
 		calls.clear();
@@ -63,12 +65,17 @@ namespace dht
 		{
 			Out(SYS_DHT|LOG_IMPORTANT) << "DHT: Failed to bind to UDP port " << port << " for DHT" << endl;
 		}
+		else
+		{
+			bt::Globals::instance().getPortList().addNewPort(port,net::UDP,true);
+		}
 		sock->setBlocking(false);
 		connect(sock,SIGNAL(readyRead()),this,SLOT(readPacket()));
 	}
 		
 	void RPCServer::stop()
 	{
+		bt::Globals::instance().getPortList().removePort(port,net::UDP);
 		sock->close();
 	}
 	

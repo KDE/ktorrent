@@ -23,7 +23,7 @@
 #include <kurl.h>
 #include <qstringlist.h>
 #include <kstreamsocket.h>
-#include <util/constants.h>
+#include <net/portlist.h>
 
 using bt::Uint16;
 
@@ -106,15 +106,9 @@ namespace kt
 		Q_OBJECT
 				
 	public:
-		enum Protocol
+		struct Forwarding 
 		{
-			UDP,TCP
-		};
-		
-		struct Forwarding
-		{
-			Uint16 port;
-			Protocol prot;
+			net::Port port;
 			bool pending;
 		};
 	private:	
@@ -162,9 +156,8 @@ namespace kt
 		/**
 		 * See if a port is forwarded
 		 * @param port The Port
-		 * @param protocol UDP or TCP
 		 */
-		void isPortForwarded(Uint16 port,Protocol protocol);	
+		void isPortForwarded(const net::Port & port);	
 		
 		/**
 		 * Get the external IP address.
@@ -173,18 +166,16 @@ namespace kt
 		
 		/**
 		 * Forward a local port
-		 * @param localip The local ip address
 		 * @param port The local port to forward
-		 * @param prot UDP or TCP
 		 */
-		void forward(Uint16 port,Protocol prot);
+		void forward(const net::Port & port);
 		
 		/**
 		 * Undo forwarding
 		 * @param port The port
 		 * @param prot UDP or TCP
 		 */
-		void undoForward(Uint16 remote,Protocol prot);
+		void undoForward(const net::Port & port);
 		
 		void debugPrintData();
 		

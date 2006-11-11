@@ -15,63 +15,59 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTGLOBALS_H
-#define BTGLOBALS_H
-
-#include <util/constants.h>
-
-class QString;
+#include "portlist.h"
 
 namespace net
 {
-	class PortList;
-}
+	Port::Port() : number(0),proto(TCP),forward(false)
+	{
+	}
+	
+	Port::Port(bt::Uint16 number,Protocol proto,bool forward)
+	: number(number),proto(proto),forward(forward)
+	{
+	}
+	
+	Port::Port(const Port & p) : number(p.number),proto(p.proto),forward(p.forward)
+	{
+	}
+	
+	bool Port::operator == (const Port & p) const
+	{
+		return number == p.number && proto == p.proto;
+	}
 
-namespace dht
-{
-	class DHTBase;
-}
+	PortList::PortList() : lst(0)
+	{}
 
-namespace bt
-{
-	class Log;
-	class Server;
 
+	PortList::~PortList()
+	{}
+
+		
+	void PortList::addNewPort(bt::Uint16 number,Protocol proto,bool forward)
+	{
+		Port p = Port(number,proto,forward);
+		append(p);
+		if (lst)
+			lst->portAdded(p);
+	}
+		
+		
+	void PortList::removePort(bt::Uint16 number,Protocol proto)
+	{
+		PortList::iterator itr = find(Port(number,proto,false));
+		if (itr == end())
+			return;
+		
+		if (lst)
+			lst->portRemoved(*itr);
+		
+		erase(itr);
+	}
+		
 	
 
-	class Globals
-	{
-	public:
-		virtual ~Globals();
-		
-		void initLog(const QString & file);
-		void initServer(Uint16 port);
-		void setDebugMode(bool on) {debug_mode = on;}
-		bool isDebugModeSet() const {return debug_mode;}
-
-		Log & getLog(unsigned int arg);
-		Server & getServer() {return *server;}
-		dht::DHTBase & getDHT() {return *dh_table;}
-		net::PortList & getPortList() {return *plist;}
-				
-		static Globals & instance();
-		static void cleanup();
-	private:
-		Globals();
-		
-		bool debug_mode;
-		Log* log;
-		Server* server;
-		dht::DHTBase* dh_table;
-		net::PortList* plist;
-		
-		friend Log& Out(unsigned int arg);
-
-		static Globals* inst;
-		
-	};
 }
-
-#endif

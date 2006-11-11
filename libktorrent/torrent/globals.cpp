@@ -20,6 +20,7 @@
 
 #include <util/log.h>
 #include <util/error.h>
+#include <net/portlist.h>
 #include <kademlia/dht.h>
 
 #include "globals.h"
@@ -32,6 +33,7 @@ namespace bt
 
 	Globals::Globals()
 	{
+		plist = new net::PortList();
 		debug_mode = false;
 		log = new Log();
 		server = 0;
@@ -43,6 +45,7 @@ namespace bt
 		delete server;
 		delete log;
 		delete dh_table;
+		delete plist;
 	}
 	
 	Globals & Globals::instance() 

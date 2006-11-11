@@ -53,7 +53,7 @@ void UPnPTestApp::discovered(kt::UPnPRouter* router)
 {
 	try
 	{
-		router->forward(9999,UPnPRouter::TCP);
+		router->forward(net::Port(9999,net::TCP,false));
 	}
 	catch (Error & e)
 	{

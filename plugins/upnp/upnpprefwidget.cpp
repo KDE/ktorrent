@@ -42,17 +42,24 @@ namespace kt
 		connect(m_forward_btn,SIGNAL(clicked()),this,SLOT(onForwardBtnClicked()));
 		connect(m_undo_forward_btn,SIGNAL(clicked()),this,SLOT(onUndoForwardBtnClicked()));
 		connect(m_rescan,SIGNAL(clicked()),this,SLOT(onRescanClicked()));
+		bt::Globals::instance().getPortList().setListener(this);
 	}
 	
 	UPnPPrefWidget::~UPnPPrefWidget()
 	{
+		bt::Globals::instance().getPortList().setListener(0);
 		if (def_router)
 		{
 			try
 			{
-				def_router->undoForward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
-				def_router->undoForward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
-				def_router->undoForward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
+				net::PortList & pl = bt::Globals::instance().getPortList();
+			
+				for (net::PortList::iterator i = pl.begin(); i != pl.end();i++)
+				{
+					net::Port & p = *i;
+					if (p.forward)
+						def_router->undoForward(p);
+				}
 			}
 			catch (Error & e)
 			{
@@ -78,11 +85,15 @@ namespace kt
 			
 			try
 			{
-				// forward both ports
-				r->forward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
-				r->forward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
-				if (bt::Globals::instance().getDHT().isRunning())
-					r->forward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
+				net::PortList & pl = bt::Globals::instance().getPortList();
+			
+				for (net::PortList::iterator i = pl.begin(); i != pl.end();i++)
+				{
+					net::Port & p = *i;
+					if (p.forward)
+						r->forward(p);
+				}
+				
 				def_router = r;
 			}
 			catch (Error & e)
@@ -104,10 +115,15 @@ namespace kt
 		
 		try
 		{
-			r->forward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
-			r->forward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
-			if (bt::Globals::instance().getDHT().isRunning())
-				r->forward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
+			net::PortList & pl = bt::Globals::instance().getPortList();
+			
+			for (net::PortList::iterator i = pl.begin(); i != pl.end();i++)
+			{
+				net::Port & p = *i;
+				if (p.forward)
+					r->forward(p);
+			}
+			
 			QString def_dev = UPnPPluginSettings::defaultDevice();
 			if (def_dev != r->getServer())
 			{
@@ -141,10 +157,14 @@ namespace kt
 		
 		try
 		{
-			r->undoForward(bt::Globals::instance().getServer().getPortInUse(),UPnPRouter::TCP);
-			r->undoForward(bt::UDPTrackerSocket::getPort(),UPnPRouter::UDP);
-			if (bt::Globals::instance().getDHT().isRunning())
-				r->undoForward(bt::Globals::instance().getDHT().getPort(),UPnPRouter::UDP);
+			net::PortList & pl = bt::Globals::instance().getPortList();
+			
+			for (net::PortList::iterator i = pl.begin(); i != pl.end();i++)
+			{
+				net::Port & p = *i;
+				if (p.forward)
+					r->undoForward(p);
+			}
 			
 			QString def_dev = UPnPPluginSettings::defaultDevice();
 			if (def_dev == r->getServer())
@@ -176,8 +196,8 @@ namespace kt
 				UPnPRouter::Forwarding & f = *j;
 				if (!f.pending)
 				{
-					msg += QString::number(f.port) + " (";
-					QString prot = (f.prot == UPnPRouter::UDP ? "UDP" : "TCP");
+					msg += QString::number(f.port.number) + " (";
+					QString prot = (f.port.proto == net::UDP ? "UDP" : "TCP");
 					msg +=  prot + ") ";
 				}
 				j++;
@@ -188,6 +208,31 @@ namespace kt
 	}
 	
 
+	void UPnPPrefWidget::portAdded(const net::Port & port)
+	{
+		try
+		{
+			if (def_router && port.forward)
+				def_router->forward(port);
+		}
+		catch (Error & e)
+		{
+			Out(SYS_PNP|LOG_DEBUG) << "Error : " << e.toString() << endl;
+		}
+	}
+	
+	void UPnPPrefWidget::portRemoved(const net::Port & port)
+	{
+		try
+		{
+			if (def_router && port.forward)
+				def_router->undoForward(port);
+		}
+		catch (Error & e)
+		{
+			Out(SYS_PNP|LOG_DEBUG) << "Error : " << e.toString() << endl;
+		}
+	}
 }
 
 

@@ -33,7 +33,7 @@ namespace kt
 	/**
 	 * Widget for the UPnP pref dialog page.
 	 */
-	class UPnPPrefWidget : public UPnPWidget
+	class UPnPPrefWidget : public UPnPWidget,public net::PortListener
 	{
 		Q_OBJECT
 	
@@ -61,6 +61,10 @@ namespace kt
 		void onUndoForwardBtnClicked();
 		void onRescanClicked();
 		void updatePortMappings();
+		
+	private:
+		virtual void portAdded(const net::Port & port);
+		virtual void portRemoved(const net::Port & port);
 		
 	private:
 		QMap<KListViewItem*,UPnPRouter*> itemmap;

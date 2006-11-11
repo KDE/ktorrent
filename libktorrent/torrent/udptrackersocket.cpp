@@ -22,6 +22,7 @@
 #include <util/array.h>
 #include <qsocketdevice.h>
 #include <qsocketnotifier.h>
+#include <net/portlist.h>
 #include <util/log.h>
 #include <util/functions.h>
 #include <klocale.h>
@@ -53,7 +54,11 @@ namespace bt
 			KMessageBox::error(0,
 				i18n("Cannot bind to udp port %1 or the 10 following ports.").arg(port));
 
+		port = port + i;
 		sn = new QSocketNotifier(sock->socket(),QSocketNotifier::Read);
+		
+		if (sock->isValid())
+			Globals::instance().getPortList().addNewPort(port,net::UDP,true);
 		
 		connect(sn,SIGNAL(activated(int)),this,SLOT(dataRecieved(int )));
 	}
@@ -61,6 +66,9 @@ namespace bt
 	
 	UDPTrackerSocket::~UDPTrackerSocket()
 	{
+		if (sock->isValid())
+			Globals::instance().getPortList().removePort(port,net::UDP);
+		
 		delete sock;
 		delete sn;
 	}

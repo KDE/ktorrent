@@ -387,7 +387,7 @@ namespace utest
 				try
 				{
 					Out() << "Attempting to forward port 9999" << endl;
-					router.forward(9999,UPnPRouter::TCP);
+					router.forward(net::Port(9999,net::TCP,true));
 				}
 				catch (Error & e)
 				{

@@ -22,6 +22,7 @@
 #include <mse/streamsocket.h>
 #include <util/sha1hash.h>
 #include <util/log.h>
+#include <net/portlist.h>
 #include <mse/encryptedserverauthenticate.h>
 #include "globals.h"
 #include "torrent.h"
@@ -81,9 +82,15 @@ namespace bt
 		if (p == port)
 			return;
 
+		
+		if (sock && sock->ok())
+			Globals::instance().getPortList().removePort(port,net::TCP);
+		
 		port = p;
 		delete sock;
 		sock = new ServerSocket(this,port);
+		if (isOK())
+			Globals::instance().getPortList().addNewPort(port,net::TCP,true);
 	}
 
 	void Server::addPeerManager(PeerManager* pman)
