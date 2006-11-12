@@ -7,7 +7,7 @@ bin_PROGRAMS = ktorrent
 
 
 # set the include path for X, qt and KDE
-INCLUDES = -I$(top_builddir)/libktorrent -I$(srcdir)/../../libktorrent \
+INCLUDES = -I$(top_builddir)/ktorrent/libktorrent -I$(srcdir)/../../libktorrent \
 	$(all_includes)
 
 # the library search path. 
