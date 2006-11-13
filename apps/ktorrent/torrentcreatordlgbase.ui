@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>519</width>
-            <height>584</height>
+            <width>512</width>
+            <height>715</height>
         </rect>
     </property>
     <property name="caption">
@@ -18,11 +18,11 @@
     <property name="sizeGripEnabled">
         <bool>true</bool>
     </property>
-    <vbox>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLayoutWidget">
+        <widget class="QLayoutWidget" row="0" column="0">
             <property name="name">
                 <cstring>layout2</cstring>
             </property>
@@ -45,18 +45,26 @@
                 </widget>
             </vbox>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="QLabel" row="2" column="0">
+            <property name="name">
+                <cstring>m_label1</cstring>
+            </property>
+            <property name="text">
+                <string>You must add at least one tracker or node.</string>
+            </property>
+        </widget>
+        <widget class="QGroupBox" row="1" column="0">
             <property name="name">
                 <cstring>groupBox1</cstring>
             </property>
             <property name="title">
                 <string>File Options</string>
             </property>
-            <vbox>
+            <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLayoutWidget">
+                <widget class="QLayoutWidget" row="0" column="0">
                     <property name="name">
                         <cstring>layout7</cstring>
                     </property>
@@ -149,18 +157,32 @@
                         </spacer>
                     </hbox>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="QCheckBox" row="1" column="0">
                     <property name="name">
                         <cstring>m_start_seeding</cstring>
                     </property>
                     <property name="text">
                         <string>Start seedin&amp;g the torrent</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+G</string>
+                    </property>
                     <property name="checked">
                         <bool>true</bool>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="QCheckBox" row="3" column="0">
+                    <property name="name">
+                        <cstring>m_decentralized</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Decentrali&amp;zed (DHT only)</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+Z</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="2" column="0">
                     <property name="name">
                         <cstring>m_private</cstring>
                     </property>
@@ -168,25 +190,9 @@
                         <string>Private torrent (DHT not allowed)</string>
                     </property>
                 </widget>
-            </vbox>
+            </grid>
         </widget>
-        <widget class="QLabel">
-            <property name="name">
-                <cstring>textLabel1_2</cstring>
-            </property>
-            <property name="text">
-                <string>You must add at least one tracker.</string>
-            </property>
-        </widget>
-        <widget class="KEditListBox">
-            <property name="name">
-                <cstring>m_trackers</cstring>
-            </property>
-            <property name="title">
-                <string>Trackers</string>
-            </property>
-        </widget>
-        <widget class="QLayoutWidget">
+        <widget class="QLayoutWidget" row="5" column="0">
             <property name="name">
                 <cstring>layout9</cstring>
             </property>
@@ -209,7 +215,7 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="QLayoutWidget" row="6" column="0">
             <property name="name">
                 <cstring>Layout1</cstring>
             </property>
@@ -245,7 +251,7 @@
                         <cstring>m_create_btn</cstring>
                     </property>
                     <property name="text">
-                        <string>Cre&amp;ate</string>
+                        <string>&amp;Create</string>
                     </property>
                     <property name="autoDefault">
                         <bool>true</bool>
@@ -267,18 +273,256 @@
                 </widget>
             </hbox>
         </widget>
-    </vbox>
+        <widget class="KEditListBox" row="3" column="0">
+            <property name="name">
+                <cstring>m_trackers</cstring>
+            </property>
+            <property name="title">
+                <string>Trackers</string>
+            </property>
+        </widget>
+        <widget class="QGroupBox" row="4" column="0">
+            <property name="name">
+                <cstring>m_nodes</cstring>
+            </property>
+            <property name="title">
+                <string>DHT nodes</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KPushButton" row="2" column="1" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>btnRemoveNode</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string>Remove</string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>28</number>
+                    </property>
+                </widget>
+                <widget class="KPushButton" row="1" column="1" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>btnAddNode</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string>Add</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>27</number>
+                    </property>
+                </widget>
+                <spacer row="3" column="2">
+                    <property name="name">
+                        <cstring>spacer5</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>73</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QLayoutWidget" row="0" column="0">
+                    <property name="name">
+                        <cstring>layout9</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Node:</string>
+                            </property>
+                        </widget>
+                        <widget class="KLineEdit">
+                            <property name="name">
+                                <cstring>m_node</cstring>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_2_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Port:</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntNumInput">
+                            <property name="name">
+                                <cstring>m_port</cstring>
+                            </property>
+                            <property name="value">
+                                <number>6882</number>
+                            </property>
+                            <property name="minValue">
+                                <number>0</number>
+                            </property>
+                            <property name="maxValue">
+                                <number>65535</number>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <spacer row="0" column="1">
+                    <property name="name">
+                        <cstring>spacer6</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Maximum</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>40</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KListView" row="1" column="0" rowspan="3" colspan="1">
+                    <column>
+                        <property name="text">
+                            <string>IP or hostname</string>
+                        </property>
+                        <property name="clickable">
+                            <bool>true</bool>
+                        </property>
+                        <property name="resizable">
+                            <bool>true</bool>
+                        </property>
+                    </column>
+                    <column>
+                        <property name="text">
+                            <string>Port</string>
+                        </property>
+                        <property name="clickable">
+                            <bool>true</bool>
+                        </property>
+                        <property name="resizable">
+                            <bool>true</bool>
+                        </property>
+                    </column>
+                    <property name="name">
+                        <cstring>m_nodeList</cstring>
+                    </property>
+                    <property name="allColumnsShowFocus">
+                        <bool>true</bool>
+                    </property>
+                    <property name="resizeMode">
+                        <enum>AllColumns</enum>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+    </grid>
 </widget>
-<customwidgets>
-</customwidgets>
+<connections>
+    <connection>
+        <sender>m_private</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>m_decentralized</receiver>
+        <slot>setDisabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>m_decentralized</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>m_private</receiver>
+        <slot>setDisabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>m_decentralized</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>m_trackers</receiver>
+        <slot>setHidden(bool)</slot>
+    </connection>
+    <connection>
+        <sender>m_decentralized</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>m_nodes</receiver>
+        <slot>setShown(bool)</slot>
+    </connection>
+    <connection>
+        <sender>btnRemoveNode</sender>
+        <signal>clicked()</signal>
+        <receiver>TorrentCreatorDlgBase</receiver>
+        <slot>btnRemoveNode_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnAddNode</sender>
+        <signal>clicked()</signal>
+        <receiver>TorrentCreatorDlgBase</receiver>
+        <slot>btnAddNode_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>m_node</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>TorrentCreatorDlgBase</receiver>
+        <slot>m_node_textChanged(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>m_nodeList</sender>
+        <signal>selectionChanged(QListViewItem*)</signal>
+        <receiver>TorrentCreatorDlgBase</receiver>
+        <slot>m_nodeList_selectionChanged(QListViewItem*)</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>m_file_or_dir</tabstop>
+    <tabstop>m_chunk_size</tabstop>
+    <tabstop>m_start_seeding</tabstop>
+    <tabstop>m_private</tabstop>
+    <tabstop>m_decentralized</tabstop>
+    <tabstop>m_node</tabstop>
+    <tabstop>m_port</tabstop>
+    <tabstop>btnAddNode</tabstop>
+    <tabstop>btnRemoveNode</tabstop>
+    <tabstop>m_comments</tabstop>
+    <tabstop>m_create_btn</tabstop>
+    <tabstop>m_cancel_btn</tabstop>
+</tabstops>
+<slots>
+    <slot>btnRemoveNode_clicked()</slot>
+    <slot>btnAddNode_clicked()</slot>
+    <slot>m_node_textChanged(const QString&amp;)</slot>
+    <slot>m_nodeList_selectionChanged(QListViewItem*)</slot>
+</slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kcombobox.h</includehint>
+    <includehint>klineedit.h</includehint>
     <includehint>keditlistbox.h</includehint>
     <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
     <includehint>klineedit.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>klistview.h</includehint>
 </includehints>
 </UI>

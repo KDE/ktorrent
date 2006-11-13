@@ -20,6 +20,8 @@
 #include <kpushbutton.h>
 #include <kfiledialog.h>
 #include <kprogress.h>
+#include <klistview.h>
+#include <knuminput.h>
 #include "torrentcreatordlg.h"
 #include "ktorrentcore.h"
 
@@ -35,6 +37,8 @@ TorrentCreatorDlg::TorrentCreatorDlg(KTorrentCore* core,QWidget *parent, const c
 	
 	connect(m_create_btn,SIGNAL(clicked()),this,SLOT(onCreate()));
 	connect(m_cancel_btn,SIGNAL(clicked()),this,SLOT(reject()));
+	
+	m_nodes->setHidden(true);
 }
 
 TorrentCreatorDlg::~TorrentCreatorDlg()
@@ -53,16 +57,31 @@ void TorrentCreatorDlg::onCreate()
 		return;
 	}
 
-	if (eb->items().count() == 0)
+	if (eb->items().count() == 0 && !m_decentralized->isChecked())
 	{
 		errorMsg(i18n("You must add at least one tracker."));
+		return;
+	}
+	
+	if (m_nodeList->childCount() == 0 && m_decentralized->isChecked())
+	{
+		errorMsg(i18n("You must add at least one node."));
 		return;
 	}
 
 	QString url = r->url();
 	int chunk_size = cb->currentText().toInt();
 	QString name = KURL(r->url()).fileName();
-	QStringList trackers = eb->items();
+	
+	QStringList trackers; 
+	
+	if(m_decentralized->isChecked())
+	{
+		for(int i=0; i<m_nodeList->childCount(); ++i)
+			trackers.append(m_nodeList->itemAtIndex(i)->text(0) + "," +  m_nodeList->itemAtIndex(i)->text(1));
+	}
+	else
+		trackers = eb->items();
 
 	QString s = KFileDialog::getSaveFileName(
 			QString::null,"*.torrent|" + i18n("Torrent Files (*.torrent)"),
@@ -84,7 +103,8 @@ void TorrentCreatorDlg::onCreate()
 			name,m_comments->text(),
 			m_start_seeding->isChecked(),s,
 			m_private->isChecked(),
-			dlg->progressBar());
+			dlg->progressBar(),
+			m_decentralized->isChecked());
 	delete dlg;
 	accept();
 }
@@ -92,6 +112,30 @@ void TorrentCreatorDlg::onCreate()
 void TorrentCreatorDlg::errorMsg(const QString & text)
 {
 	KMessageBox::error(this,text,i18n("Error"));
+}
+
+void TorrentCreatorDlg::btnRemoveNode_clicked()
+{
+	QListViewItem* item = m_nodeList->currentItem();
+	if(!item)
+		return;
+	
+	m_nodeList->removeItem(item);
+}
+
+void TorrentCreatorDlg::btnAddNode_clicked()
+{
+	new QListViewItem(m_nodeList, m_node->text(), QString("%1").arg(m_port->value()));
+}
+
+void TorrentCreatorDlg::m_nodeList_selectionChanged(QListViewItem*)
+{
+	btnRemoveNode->setEnabled(m_nodeList->selectedItem()!=0);
+}
+
+void TorrentCreatorDlg::m_node_textChanged(const QString& txt)
+{
+	btnAddNode->setEnabled(!txt.isEmpty());
 }
 
 #include "torrentcreatordlg.moc"

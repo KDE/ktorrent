@@ -53,6 +53,7 @@ namespace bt
 		Uint32 cur_chunk;
 		bool priv;
 		Uint64 tot_size;
+		bool decentralized;
 	public:
 		/**
 		 * Constructor.
@@ -65,7 +66,7 @@ namespace bt
 		 */
 		TorrentCreator(const QString & target,const QStringList & trackers,
 					   Uint32 chunk_size,const QString & name,
-					   const QString & comments,bool priv);
+					   const QString & comments,bool priv,bool decentralized);
 		virtual ~TorrentCreator();
 
 		

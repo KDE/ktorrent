@@ -43,9 +43,9 @@ namespace bt
 								   const QStringList & track,
 								   Uint32 cs,
 								   const QString & name,
-								   const QString & comments,bool priv)
+								   const QString & comments,bool priv, bool decentralized)
 	: target(tar),trackers(track),chunk_size(cs),
-	name(name),comments(comments),cur_chunk(0),priv(priv),tot_size(0)
+	name(name),comments(comments),cur_chunk(0),priv(priv),tot_size(0), decentralized(decentralized)
 	{
 		this->chunk_size *= 1024;
 		QFileInfo fi(target);
@@ -126,18 +126,39 @@ namespace bt
 
 		BEncoder enc(&fptr);
 		enc.beginDict(); // top dict
-		enc.write("announce"); enc.write(trackers[0]);
-		if (trackers.count() > 1)
+		
+		if(!decentralized)
 		{
-			enc.write("announce-list");
-			enc.beginList();
-			enc.beginList();
-			for (Uint32 i = 0;i < trackers.count();i++)
-				enc.write(trackers[i]);
-			enc.end();
-			enc.end();
+			enc.write("announce"); enc.write(trackers[0]);
+			if (trackers.count() > 1)
+			{
+				enc.write("announce-list");
+				enc.beginList();
+				enc.beginList();
+				for (Uint32 i = 0;i < trackers.count();i++)
+					enc.write(trackers[i]);
+				enc.end();
+				enc.end();
 			
+			}
 		}
+		else
+		{
+			//DHT torrent
+			enc.write("nodes");
+			enc.beginList();
+			
+			for(int i=0; i < trackers.count(); ++i)
+			{
+				QString t = trackers[i];
+				enc.beginList();
+				enc.write(t.section(',',0,0));
+				enc.write((Uint32)t.section(',',1,1).toInt());
+				enc.end();
+			}
+			enc.end();
+		}
+		
 		if (comments.length() > 0)
 		{
 			enc.write("comments");

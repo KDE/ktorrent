@@ -147,7 +147,7 @@ public:
 	 */
 	void makeTorrent(const QString & file,const QStringList & trackers,
 					 int chunk_size,const QString & name,const QString & comments,
-					 bool seed,const QString & output_file,bool priv_tor,KProgress* prog);
+					 bool seed,const QString & output_file,bool priv_tor,KProgress* prog, bool decentralized);
 
 	CurrentStats getStats();
 

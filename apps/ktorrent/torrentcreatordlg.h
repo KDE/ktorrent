@@ -25,7 +25,10 @@ public:
 
 public slots:
 	void onCreate();
-
+    virtual void btnAddNode_clicked();
+    virtual void btnRemoveNode_clicked();
+    virtual void m_nodeList_selectionChanged(QListViewItem*);
+    virtual void m_node_textChanged(const QString&);
 private:
 	void errorMsg(const QString & text);
 
