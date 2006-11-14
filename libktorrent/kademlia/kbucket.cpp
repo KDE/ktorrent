@@ -269,7 +269,7 @@ namespace dht
 	
 	bool KBucket::needsToBeRefreshed() const
 	{
-		Uint32 now = bt::GetCurrentTime();
+		bt::TimeStamp now = bt::GetCurrentTime();
 		if (last_modified > now)
 		{
 			last_modified = now;

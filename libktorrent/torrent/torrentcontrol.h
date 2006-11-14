@@ -339,7 +339,7 @@ namespace bt
 			float maxShareRatio;
 			int priority;
 			bool dht_on;
-			Uint32 last_announce;
+			TimeStamp last_announce;
 		};
 		
 		InternalStats istats;

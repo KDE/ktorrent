@@ -33,7 +33,7 @@ namespace bt
 	*/
 	class AdvancedChokeAlgorithm : public ChokeAlgorithm
 	{
-		Uint32 last_opt_sel_time; // last time we updated the optimistic unchoked peer
+		TimeStamp last_opt_sel_time; // last time we updated the optimistic unchoked peer
 	public:
 		AdvancedChokeAlgorithm();
 		virtual ~AdvancedChokeAlgorithm();

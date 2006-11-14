@@ -44,8 +44,8 @@ namespace net
 		QMutex mutex;
 		MonitorThread* mt;
 		QPtrList<BufferedSocket> smap;
-		Uint32 prev_upload_time;
-		Uint32 prev_download_time;
+		bt::TimeStamp prev_upload_time;
+		bt::TimeStamp prev_download_time;
 		
 		SocketMonitor();	
 	public:

@@ -43,12 +43,12 @@ namespace net
 
 	void Speed::update()
 	{
-		Uint32 now = GetCurrentTime();
+		TimeStamp now = GetCurrentTime();
 			
-		QValueList<QPair<Uint32,Uint32> >::iterator i = dlrate.begin();
+		QValueList<QPair<Uint32,TimeStamp> >::iterator i = dlrate.begin();
 		while (i != dlrate.end())
 		{
-			QPair<Uint32,Uint32> & p = *i;
+			QPair<Uint32,TimeStamp> & p = *i;
 			if (now - p.second > SPEED_INTERVAL)
 			{
 				if (bytes >= p.first) // make sure we don't wrap around

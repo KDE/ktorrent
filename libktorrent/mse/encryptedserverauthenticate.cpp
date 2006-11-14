@@ -162,6 +162,12 @@ namespace mse
 		// get crypto_provide and the length of pad_C
 		crypto_provide = bt::ReadUint32(buf,off + 8);
 		pad_C_len = bt::ReadUint16(buf,off + 12);
+		if (pad_C_len > 512)
+		{
+			Out(SYS_CON|LOG_DEBUG) << "Illegal pad C length" << endl;
+			onFinish(false);
+			return;
+		}
 		
 		// now we have crypto_provide we can send 
 		// ENCRYPT(VC, crypto_select, len(padD), padD)

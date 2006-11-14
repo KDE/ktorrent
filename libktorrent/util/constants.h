@@ -32,6 +32,8 @@ namespace bt
 	typedef short Int16;
 	typedef char Int8;
 	
+	typedef Uint64 TimeStamp;
+	
 	typedef enum 
 	{
 		/* These are the old values, for compatability reasons with old chunk_info files we leave them here :

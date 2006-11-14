@@ -178,12 +178,12 @@ namespace bt
 		/**
 		 * Get the time when this Peer was choked.
 		 */
-		Uint32 getChokeTime() const {return time_choked;}
+		TimeStamp getChokeTime() const {return time_choked;}
 		
 		/**
 		 * Get the time when this Peer was unchoked.
 		 */
-		Uint32 getUnchokeTime() const {return time_unchoked;}
+		TimeStamp getUnchokeTime() const {return time_unchoked;}
 
 		/**
 		 * See if the peer is a seeder.
@@ -275,8 +275,8 @@ namespace bt
 		bool am_choked;
 		bool am_interested;
 		bool killed;
-		Uint32 time_choked;
-		Uint32 time_unchoked;
+		TimeStamp time_choked;
+		TimeStamp time_unchoked;
 		Uint32 id;
 		BitSet pieces;
 		PeerID peer_id;

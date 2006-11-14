@@ -51,7 +51,7 @@ namespace bt
 	void UpSpeedEstimater::bytesWritten(Uint32 bytes)
 	{
 		QValueList<Entry>::iterator i = outstanding_bytes.begin();
-		Uint32 now = GetCurrentTime();
+		TimeStamp now = GetCurrentTime();
 		while (bytes > 0 && i != outstanding_bytes.end())
 		{
 			Entry e = *i;
@@ -86,7 +86,7 @@ namespace bt
 	
 	double UpSpeedEstimater::rate(QValueList<Entry> & el)
 	{
-		Uint32 now = GetCurrentTime();
+		TimeStamp now = GetCurrentTime();
 		const Uint32 INTERVAL = 3000;
 		
 		Uint32 tot_bytes = 0;

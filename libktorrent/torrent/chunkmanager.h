@@ -61,7 +61,7 @@ namespace bt
 		QString index_file,file_info_file,file_priority_file;
 		QPtrVector<Chunk> chunks;
 		Cache* cache;
-		QMap<Uint32,Uint32> loaded; // loaded chunks and when they were loaded
+		QMap<Uint32,TimeStamp> loaded; // loaded chunks and when they were loaded
 		BitSet bitset;
 		BitSet excluded_chunks;
 		BitSet only_seed_chunks;

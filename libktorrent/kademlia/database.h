@@ -42,7 +42,7 @@ namespace dht
 	class DBItem
 	{
 		bt::Uint8 item[6];
-		bt::Uint32 time_stamp;
+		bt::TimeStamp time_stamp;
 	public:
 		DBItem();
 		DBItem(const bt::Uint8* ip_port);
@@ -50,7 +50,7 @@ namespace dht
 		virtual ~DBItem();
 		
 		/// See if the item is expired
-		bool expired(bt::Uint32 now) const;
+		bool expired(bt::TimeStamp now) const;
 		
 		/// Get the data of an item
 		const bt::Uint8* getData() const {return item;}
@@ -97,7 +97,7 @@ namespace dht
 		 * @param now The time it is now 
 		 * (we pass this along so we only have to calculate it once)
 		 */
-		void expire(bt::Uint32 now);
+		void expire(bt::TimeStamp now);
 		
 		/**
 		 * Generate a write token, which will give peers write access to

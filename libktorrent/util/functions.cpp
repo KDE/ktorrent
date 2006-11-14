@@ -163,11 +163,11 @@ namespace bt
 		return (Int16)(buf[off] << 8) | buf[off + 1];
 	}
 
-	Uint32 GetCurrentTime()
+	Uint64 GetCurrentTime()
 	{
 		struct timeval tv;
 		gettimeofday(&tv,0);
-		return (Uint32)(tv.tv_sec * 1000 + tv.tv_usec * 0.001);
+		return (Uint64)(tv.tv_sec * 1000 + tv.tv_usec * 0.001);
 	}
 
 

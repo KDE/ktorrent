@@ -30,6 +30,7 @@
 #include "peer.h"
 #include "piece.h"
 #include "peerdownloader.h"
+#include <interfaces/functions.h>
 #include <interfaces/monitorinterface.h>
 #include "packetwriter.h"
 #include "chunkselector.h"
@@ -47,7 +48,8 @@ namespace bt
 		chunk_selector = new ChunkSelector(cman,*this,pman);
 		Uint64 total = tor.getFileLength();
 		downloaded = (total - cman.bytesLeft());
-		curr_chunks_dowloaded = 0;
+		curr_chunks_downloaded = 0;
+		unnecessary_data = 0;
 	
 		current_chunks.setAutoDelete(true);
 		connect(&pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
@@ -65,43 +67,64 @@ namespace bt
 		if (cman.completed())
 			return;
 		
+		ChunkDownload* cd = 0;
+		
 		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
 		{
 			if (p.getIndex() != j->first)
 				continue;
 			
-			ChunkDownload* cd = j->second;
-			// if the chunk is not in memory, reload it
-			if (cd->getChunk()->getStatus() == Chunk::ON_DISK)
-			{
-				cman.prepareChunk(cd->getChunk(),true);
-			}
+			cd = j->second;
+			break;
+		}
+		
+		if (!cd)
+		{
+			unnecessary_data += p.getLength();
+			Out(SYS_DIO|LOG_DEBUG) << 
+					"Unnecessary piece, total unnecessary data : " << kt::BytesToString(unnecessary_data) << endl;
+			return;
+		}
+		
+		// if the chunk is not in memory, reload it
+		if (cd->getChunk()->getStatus() == Chunk::ON_DISK)
+		{
+			cman.prepareChunk(cd->getChunk(),true);
+		}
 			
-			downloaded += p.getLength();
-			if (cd->piece(p))
+		bool ok = false;
+		downloaded += p.getLength();
+		if (cd->piece(p,ok))
+		{
+			if (tmon)
+				tmon->downloadRemoved(cd);
+				
+			if (!finished(cd))
 			{
-				if (tmon)
-					tmon->downloadRemoved(cd);
-
-				if (!finished(cd))
-				{
-					// if the chunk fails don't count the bytes downloaded
-					if (cd->getChunk()->getSize() > downloaded)
-						downloaded = 0;
-					else
-						downloaded -= cd->getChunk()->getSize();
-				}
-				current_chunks.erase(p.getIndex());
-				return;
+			/*	// if the chunk fails don't count the bytes downloaded
+				if (cd->getChunk()->getSize() > downloaded)
+					downloaded = 0;
+				else
+					downloaded -= cd->getChunk()->getSize();
+			*/
 			}
-			else
+			current_chunks.erase(p.getIndex());
+		}
+		else
+		{
+			// save to disk again, if it is idle
+			if (cd->isIdle() && cd->getChunk()->getStatus() == Chunk::MMAPPED)
 			{
-				// save to disk again, if it is idle
-				if (cd->isIdle() && cd->getChunk()->getStatus() == Chunk::MMAPPED)
-				{
-					cman.saveChunk(cd->getChunk()->getIndex(),false);
-				}
+				cman.saveChunk(cd->getChunk()->getIndex(),false);
 			}
+		}
+			
+		if (!ok)
+		{
+			unnecessary_data += p.getLength();
+			Out(SYS_DIO|LOG_DEBUG) << 
+					"Unnecessary piece, total unnecessary data : " << kt::BytesToString(unnecessary_data) << endl; 
+			
 		}
 	}
 	
@@ -193,14 +216,14 @@ namespace bt
 			switch (mem_usage)
 			{	
 				case 1: // Medium
-					max *= 20; // 20 MB
+					max *= 60; // 60 MB
 					break;
 				case 2: // High
-					max *= 40; // 40 MB
+					max *= 80; // 90 MB
 					break;
 				case 0: // LOW
 				default:
-					max *= 10; // 10 MB
+					max *= 40; // 30 MB
 					break;
 			}
 		}
@@ -277,6 +300,7 @@ namespace bt
 			return;
 		
 		bool limit_exceeded = num_non_idle * tor.getChunkSize() >= max;
+		
 		Uint32 chunk = 0;
 		if (!limit_exceeded && chunk_selector->select(pd,chunk))
 		{
@@ -553,7 +577,7 @@ namespace bt
 		}
 		
 		// reset curr_chunks_downloaded to 0
-		curr_chunks_dowloaded = 0;
+		curr_chunks_downloaded = 0;
 	}
 	
 	Uint32 Downloader::getDownloadedBytesOfCurrentChunksFile(const QString & file)
@@ -602,7 +626,7 @@ namespace bt
 			if (hdr.buffered)
 				fptr.seek(File::CURRENT,c->getSize());
 		}
-		curr_chunks_dowloaded = num_bytes;
+		curr_chunks_downloaded = num_bytes;
 		return num_bytes;
 	}
 

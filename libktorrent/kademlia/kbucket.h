@@ -66,7 +66,7 @@ namespace dht
 	{
 		KInetSocketAddress addr;
 		Key node_id;
-		Uint32 last_responded;
+		bt::TimeStamp last_responded;
 		Uint32 failed_queries;
 	public:
 		/**
@@ -145,7 +145,7 @@ namespace dht
 		RPCServer* srv;
 		Node* node;
 		QMap<RPCCall*,KBucketEntry> pending_entries_busy_pinging;
-		mutable Uint32 last_modified;
+		mutable bt::TimeStamp last_modified;
 		Task* refresh_task;
 	public:
 		KBucket(Uint32 idx,RPCServer* srv,Node* node);

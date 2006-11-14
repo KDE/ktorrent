@@ -123,7 +123,7 @@ namespace net
 	
 	void SocketMonitor::processIncomingData(QValueList<BufferedSocket*> & rbs)
 	{
-		Uint32 now = bt::GetCurrentTime();
+		TimeStamp now = bt::GetCurrentTime();
 		Uint32 allowance = (Uint32)ceil(1.02 * dcap * (now - prev_download_time) * 0.001);
 		prev_download_time = now;
 		
@@ -151,7 +151,7 @@ namespace net
 	
 	void SocketMonitor::processOutgoingData(QValueList<BufferedSocket*> & wbs)
 	{
-		Uint32 now = bt::GetCurrentTime();
+		TimeStamp now = bt::GetCurrentTime();
 		Uint32 allowance = (Uint32)ceil(ucap * (now - prev_upload_time) * 0.001);
 		prev_upload_time = now;
 		
@@ -208,10 +208,10 @@ namespace net
 		mutex.unlock();
 		
 		struct timeval tv = {0,100*1000};
-		Uint32 before = bt::GetCurrentTime(); // get the current time
+		TimeStamp before = bt::GetCurrentTime(); // get the current time
 		if (select(max+1,&fds,&wfds,NULL,&tv) > 0)
 		{
-			Uint32 now = bt::GetCurrentTime(); // get the current time
+			TimeStamp now = bt::GetCurrentTime(); // get the current time
 			Uint32 num_to_read = 0;
 			QValueList<BufferedSocket*> rbs;
 			QValueList<BufferedSocket*> wbs;
@@ -268,7 +268,7 @@ namespace net
 		}
 		else
 		{
-			Uint32 now = bt::GetCurrentTime(); // get the current time
+			TimeStamp now = bt::GetCurrentTime(); // get the current time
 			if (now - before < 100)
 				usleep(100*1000);
 		}

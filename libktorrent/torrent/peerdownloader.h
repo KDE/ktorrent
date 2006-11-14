@@ -39,7 +39,7 @@ namespace bt
 	struct TimeStampedRequest
 	{
 		Request req;
-		Uint32 time_stamp;
+		TimeStamp time_stamp;
 		
 		TimeStampedRequest();
 		

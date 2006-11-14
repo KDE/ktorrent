@@ -92,9 +92,10 @@ namespace bt
 		/**
 		 * A Piece has arived.
 		 * @param p The Piece
+		 * @param ok Wether or not the piece was needed
 		 * @return true If Chunk is complete
 		 */
-		bool piece(const Piece & p);	
+		bool piece(const Piece & p,bool & ok);	
 		
 		/**
 		 * Assign the downloader to download from.

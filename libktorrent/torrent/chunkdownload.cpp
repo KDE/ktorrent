@@ -33,22 +33,16 @@
 #include <klocale.h>
 
 namespace bt
-{
-	const Uint8 PIECE_NOT_DOWNLOADED = 0;
-	const Uint8 PIECE_REQUESTED = 1;
-	const Uint8 PIECE_DOWNLOADED = 2;
-	
-	
+{	
 
-	class DownloadStatus
+	class DownloadStatus : public std::set<Uint32>
 	{
-		std::set<Uint32> requested_pieces;
-		Uint32 rejected_count;
 	public:
-		typedef std::set<Uint32>::iterator iterator;
+	//	typedef std::set<Uint32>::iterator iterator;
+		
 		DownloadStatus()
 		{
-			rejected_count = 0;
+	
 		}
 
 		~DownloadStatus()
@@ -57,32 +51,18 @@ namespace bt
 
 		void add(Uint32 p)
 		{
-			requested_pieces.insert(p);
+			insert(p);
 		}
 		
 		void remove(Uint32 p)
 		{
-			requested_pieces.erase(p);
+			erase(p);
 		}
 		
 		bool contains(Uint32 p)
 		{
-			return requested_pieces.count(p) > 0;
+			return count(p) > 0;
 		}
-		
-		void clear()
-		{
-			requested_pieces.clear();
-		}
-		
-		Uint32 getNumRequests() const {return requested_pieces.size();}
-		
-		iterator begin() {return requested_pieces.begin();}
-		iterator end() {return requested_pieces.end();}
-		
-		Uint32 getNumRejections() const {return rejected_count;}
-		
-		void newRejection() {rejected_count++;}
 	};
 	
 	ChunkDownload::ChunkDownload(Chunk* chunk) : chunk(chunk)
@@ -116,24 +96,16 @@ namespace bt
 		chunk->unref();
 	}
 
-	bool ChunkDownload::piece(const Piece & p)
+	bool ChunkDownload::piece(const Piece & p,bool & ok)
 	{
+		ok = false;
 		timer.update();
-		if (num_downloaded >= num)
-		{
-		//	Out() << "num_downloaded == num" << endl;
-			return true;
-		}
 			
 		Uint32 pp = p.getOffset() / MAX_PIECE_LEN;
 		if (pieces.get(pp))
-		{
-		//	Out() << "pieces[pp] == PIECE_DOWNLOADED" << endl;
 			return false;
-		}
 
-	//	Out() << "ChunkDownload::piece " << chunk->getIndex() << endl;
-	//	Out() << "Piece " << p.getIndex() << " " << p.getOffset() << " " << pp << endl;
+	
 		DownloadStatus* ds = dstatus.find(p.getPeer());
 		if (ds)
 			ds->remove(pp);
@@ -141,6 +113,7 @@ namespace bt
 		Uint8* buf = chunk->getData();
 		if (buf)
 		{
+			ok = true;
 			memcpy(buf + p.getOffset(),p.getData(),p.getLength());	
 			pieces.set(pp,true);
 			piece_queue.remove(pp);
@@ -150,12 +123,12 @@ namespace bt
 			{
 				endgameCancel(p);
 			}
-		}
 		
-		if (num_downloaded >= num)
-		{
-			releaseAllPDs();
-			return true;
+			if (num_downloaded >= num)
+			{
+				releaseAllPDs();
+				return true;
+			}
 		}
 		
 		for (QPtrList<PeerDownloader>::iterator i = pdown.begin();i != pdown.end();++i)
@@ -200,8 +173,6 @@ namespace bt
 			//	Out() << "ds != 0"  << endl;
 			Uint32 p  = r.getOffset() / MAX_PIECE_LEN;
 			ds->remove(p);
-			if (reject)
-				ds->newRejection();
 		}
 			
 			// go over all PD's and do requets again
@@ -236,14 +207,7 @@ namespace bt
 		DownloadStatus* ds = dstatus.find(pd->getPeer()->getID());
 		if (!ds)
 			return;
-		
-#warning "Reenabled this"
-/*		if (pd->getNumRequests() == 0 && ds->getNumRequests() > 0)
-		{
-			Out() << "Retransmitting timed out requests!" << endl;
-			ds->clear();
-		}
-*/		
+			
 		// if the peer is choked and we are not downloading an allowed fast chunk
 		if (pd->isChoked() && !pd->inAllowedFastChunks(chunk->getIndex()))
 			return;

@@ -110,7 +110,7 @@ void KTorrentViewItem::update()
 
 	setText(0,s.torrent_name);
 	setText(1,tc->statusToString());
-	Uint64 nb = s.bytes_downloaded > s.total_bytes ? s.total_bytes : s.bytes_downloaded;
+	Uint64 nb = /*s.bytes_downloaded > s.total_bytes ? s.total_bytes : */s.bytes_downloaded;
 	setText(2,BytesToString(nb));
 	setText(3,BytesToString(s.total_bytes_to_download));
 	setText(4,BytesToString(s.bytes_uploaded));

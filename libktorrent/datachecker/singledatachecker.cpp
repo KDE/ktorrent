@@ -55,7 +55,7 @@ namespace bt
 		downloaded = BitSet(num_chunks);
 		failed = BitSet(num_chunks);
 		
-		Uint32 last_update_time = bt::GetCurrentTime();
+		TimeStamp last_update_time = bt::GetCurrentTime();
 		
 		// loop over all chunks
 		Array<Uint8> buf(chunk_size);
@@ -68,7 +68,7 @@ namespace bt
 					return;
 			}
 			
-			Uint32 now = bt::GetCurrentTime();
+			TimeStamp now = bt::GetCurrentTime();
 			if (now - last_update_time > 1000)
 			{
 				Out() << "Checked " << i << " chunks" << endl;

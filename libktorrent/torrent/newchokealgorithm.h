@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#if 0
 #ifndef BTNEWCHOKEALGORITHM_H
 #define BTNEWCHOKEALGORITHM_H
 
@@ -48,4 +49,5 @@ namespace bt
 
 }
 
+#endif
 #endif

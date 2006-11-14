@@ -62,7 +62,7 @@ namespace bt
 		
 		Uint64 chunk_size = tor.getChunkSize();
 		Uint32 cur_chunk = 0;
-		Uint32 last_update_time = bt::GetCurrentTime();
+		TimeStamp last_update_time = bt::GetCurrentTime();
 		
 		buf = new Uint8[chunk_size];
 		
@@ -90,7 +90,7 @@ namespace bt
 					return;
 			}
 			
-			Uint32 now = bt::GetCurrentTime();
+			TimeStamp now = bt::GetCurrentTime();
 			if (now - last_update_time > 1000)
 			{
 				Out() << "Checked " << cur_chunk << " chunks" << endl;

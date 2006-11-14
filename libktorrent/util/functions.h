@@ -48,8 +48,8 @@ namespace bt
 	void WriteInt16(Uint8* buf,Uint32 off,Int16 val);
 	Int16 ReadInt16(const Uint8* buf,Uint32 off);
 	
-	Uint32 GetCurrentTime();
-
+	TimeStamp GetCurrentTime();
+	
 	QHostAddress LookUpHost(const QString & host);
 	QString DirSeparator();
 	bool IsMultimediaFile(const QString & filename);

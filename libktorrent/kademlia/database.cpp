@@ -47,7 +47,7 @@ namespace dht
 	DBItem::~DBItem()
 	{}
 		
-	bool DBItem::expired(bt::Uint32 now) const
+	bool DBItem::expired(bt::TimeStamp now) const
 	{
 		return (now - time_stamp >= MAX_ITEM_AGE);
 	}
@@ -109,7 +109,7 @@ namespace dht
 		}
 	}
 	
-	void Database::expire(bt::Uint32 now)
+	void Database::expire(bt::TimeStamp now)
 	{
 		bt::PtrMap<dht::Key,DBItemList>::iterator itr = items.begin();
 		while (itr != items.end())
@@ -127,15 +127,15 @@ namespace dht
 	
 	dht::Key Database::genToken(Uint32 ip,Uint16 port)
 	{
-		Uint8 tdata[10];
-		Uint32 now = bt::GetCurrentTime();
+		Uint8 tdata[14];
+		TimeStamp now = bt::GetCurrentTime();
 		// generate a hash of the ip port and the current time
 		// should prevent anybody from crapping things up
 		bt::WriteUint32(tdata,0,ip);
 		bt::WriteUint16(tdata,4,port);
-		bt::WriteUint32(tdata,6,now);
+		bt::WriteUint64(tdata,6,now);
 			
-		dht::Key token = SHA1Hash::generate(tdata,10);
+		dht::Key token = SHA1Hash::generate(tdata,14);
 		// keep track of the token, tokens will expire after a while
 		tokens.insert(token,now);
 		return token;

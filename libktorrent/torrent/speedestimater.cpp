@@ -29,7 +29,7 @@ namespace bt
 	class SpeedEstimater::SpeedEstimaterPriv
 	{
 		float rate;
-		QValueList<QPair<Uint32,Uint32> > dlrate;
+		QValueList<QPair<Uint32,TimeStamp> > dlrate;
 	public:
 		SpeedEstimaterPriv() : rate(0) {}
 		~SpeedEstimaterPriv() {}
@@ -41,13 +41,13 @@ namespace bt
 		
 		void update()
 		{
-			Uint32 now = GetCurrentTime();
+			TimeStamp now = GetCurrentTime();
 			
 			Uint32 bytes = 0,oldest = now;
-			QValueList<QPair<Uint32,Uint32> >::iterator i = dlrate.begin();
+			QValueList<QPair<Uint32,TimeStamp> >::iterator i = dlrate.begin();
 			while (i != dlrate.end())
 			{
-				QPair<Uint32,Uint32> & p = *i;
+				QPair<Uint32,TimeStamp> & p = *i;
 				if (now - p.second > 3000)
 				{
 					i = dlrate.erase(i);

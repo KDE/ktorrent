@@ -39,7 +39,7 @@ namespace bt
 	const Uint32 FINAL_WAIT_TIME = 1800;
 
 	PeerSourceManager::PeerSourceManager(TorrentControl* tor,PeerManager* pman) 
-	: tor(tor),pman(pman),curr(0),started(false),m_dht(0),pending(false)
+	: tor(tor),pman(pman),curr(0),m_dht(0),started(false),pending(false)
 	{
 		failures = 0;
 		trackers.setAutoDelete(true);

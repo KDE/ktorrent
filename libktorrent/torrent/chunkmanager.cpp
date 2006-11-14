@@ -331,7 +331,7 @@ namespace bt
 	void ChunkManager::checkMemoryUsage()
 	{
 		Uint32 num_removed = 0;
-		QMap<Uint32,Uint32>::iterator i = loaded.begin();
+		QMap<Uint32,TimeStamp>::iterator i = loaded.begin();
 		while (i != loaded.end())
 		{
 			Chunk* c = chunks[i.key()];
@@ -342,7 +342,7 @@ namespace bt
 					cache->save(c);
 				c->clear();
 				c->setStatus(Chunk::ON_DISK);
-				QMap<Uint32,Uint32>::iterator j = i;
+				QMap<Uint32,TimeStamp>::iterator j = i;
 				i++;
 				loaded.erase(j);
 				num_removed++;

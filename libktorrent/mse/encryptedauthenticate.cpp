@@ -87,7 +87,7 @@ namespace mse
 		// if you can't sent 96 bytes you are not worth the effort
 		if (buf_size < 96)
 		{
-			Out() << "Not enough data received, encrypted authentication failed" << endl;
+			Out(SYS_CON|LOG_DEBUG) << "Not enough data received, encrypted authentication failed" << endl;
 			onFinish(false);
 			return;
 		}
@@ -182,7 +182,7 @@ namespace mse
 		{
 			if (buf[i])
 			{
-				Out() << "Invalid VC " << endl;
+				Out(SYS_CON|LOG_DEBUG) << "Invalid VC " << endl;
 				onFinish(false);
 				return;
 			}
@@ -190,6 +190,13 @@ namespace mse
 		
 		crypto_select = ReadUint32(buf,vc_off + 8);
 		pad_D_len = ReadUint16(buf,vc_off + 12);
+		if (pad_D_len > 512)
+		{
+			Out(SYS_CON|LOG_DEBUG) << "Invalid pad D length" << endl;
+			onFinish(false);
+			return;
+		}
+		
 		end_of_crypto_handshake = vc_off + 14 + pad_D_len;
 		if (!(vc_off + 14 + pad_D_len < buf_size))
 		{
