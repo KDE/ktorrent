@@ -22,6 +22,7 @@
 
 #include <qtimer.h>
 #include <qstring.h>
+#include <qmap.h>
 #include <util/constants.h>
 #include <util/timer.h>
 #include "key.h"
@@ -109,6 +110,13 @@ namespace dht
 		void start(const QString & table,bt::Uint16 port);
 		void stop();
 		void addDHTNode(const QString & host,bt::Uint16 hport);
+		
+		/**
+		 * Returns maxNodes number of <IP address, port> nodes 
+		 * that are closest to ourselves and are good.
+		 * @param maxNodes maximum nr of nodes in QMap to return.
+		 */
+		QMap<QString, int> getClosestGoodNodes(int maxNodes);
 		
 	private slots:
 		void update();

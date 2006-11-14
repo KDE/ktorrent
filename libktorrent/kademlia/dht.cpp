@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <qmap.h>
 #include <kresolver.h>
 #include <util/log.h>
 #include <util/array.h>
@@ -322,6 +323,35 @@ namespace dht
 		{
 			srv->ping(node->getOurID(),res.front().address());
 		}
+	}
+	
+	QMap<QString, int> DHT::getClosestGoodNodes(int maxNodes)
+	{
+		QMap<QString, int> map;
+		
+		if(!node)
+			return map;
+		
+		int max = 0;
+		KClosestNodesSearch kns(node->getOurID(), maxNodes*2);
+		node->findKClosestNodes(kns);
+		
+		KClosestNodesSearch::Itr it;
+		for(it = kns.begin(); it != kns.end(); ++it)
+		{
+			KBucketEntry e = it->second;
+			
+			if(!e.isGood())
+				continue;
+			
+			KInetSocketAddress a = e.getAddress();
+			
+			map.insert(a.ipAddress().toString(), a.port());
+			if(++max >= maxNodes)
+				break;
+		}
+		
+		return map;
 	}
 }
 

@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>512</width>
-            <height>715</height>
+            <width>503</width>
+            <height>669</height>
         </rect>
     </property>
     <property name="caption">
@@ -323,23 +323,6 @@
                         <number>27</number>
                     </property>
                 </widget>
-                <spacer row="3" column="2">
-                    <property name="name">
-                        <cstring>spacer5</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>73</height>
-                        </size>
-                    </property>
-                </spacer>
                 <widget class="QLayoutWidget" row="0" column="0">
                     <property name="name">
                         <cstring>layout9</cstring>
@@ -433,6 +416,34 @@
                     </property>
                     <property name="resizeMode">
                         <enum>AllColumns</enum>
+                    </property>
+                </widget>
+                <spacer row="3" column="2">
+                    <property name="name">
+                        <cstring>spacer5</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>40</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QLabel" row="4" column="0" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>textLabel1_3</cstring>
+                    </property>
+                    <property name="text">
+                        <string>NOTE: Some known good DHT nodes are already inserted. You should probably insert your own IP address and port too if you plan to seed this torrent.</string>
+                    </property>
+                    <property name="alignment">
+                        <set>WordBreak|AlignVCenter</set>
                     </property>
                 </widget>
             </grid>

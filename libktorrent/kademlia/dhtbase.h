@@ -106,6 +106,13 @@ namespace dht
 		 */
 		virtual void addDHTNode(const QString & host,bt::Uint16 hport) = 0;
 		
+		/**
+		 * Returns maxNodes number of <IP address, port> nodes 
+		 * that are closest to ourselves and are good.
+		 * @param maxNodes maximum nr of nodes in QMap to return.
+		 */
+		virtual QMap<QString, int> getClosestGoodNodes(int maxNodes) = 0;
+		
 	signals:
 		void started();
 		void stopped();

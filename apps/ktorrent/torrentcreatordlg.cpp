@@ -11,6 +11,7 @@
 //
 #include <qcheckbox.h>
 #include <qstringlist.h>
+#include <qmap.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kcombobox.h>
@@ -24,7 +25,9 @@
 #include <knuminput.h>
 #include "torrentcreatordlg.h"
 #include "ktorrentcore.h"
-
+#include <torrent/globals.h>
+#include <kademlia/dhtbase.h>
+		
 TorrentCreatorDlg::TorrentCreatorDlg(KTorrentCore* core,QWidget *parent, const char *name)
 	:TorrentCreatorDlgBase(parent, name),core(core)
 {
@@ -39,6 +42,11 @@ TorrentCreatorDlg::TorrentCreatorDlg(KTorrentCore* core,QWidget *parent, const c
 	connect(m_cancel_btn,SIGNAL(clicked()),this,SLOT(reject()));
 	
 	m_nodes->setHidden(true);
+	
+	QMap<QString, int> n = bt::Globals::instance().getDHT().getClosestGoodNodes(10);
+	
+	for(QMap<QString, int>::iterator it = n.begin(); it!=n.end(); ++it)
+		new QListViewItem(m_nodeList, it.key(), QString("%1").arg(it.data()));
 }
 
 TorrentCreatorDlg::~TorrentCreatorDlg()
