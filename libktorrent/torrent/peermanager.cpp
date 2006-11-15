@@ -137,10 +137,18 @@ namespace bt
 	
 	void PeerManager::addPotentialPeer(const PotentialPeer & pp)
 	{
-//		Out() << "Addding " << pp.ip << ":" << pp.port << endl;
-		// lets not add to many potential peer, we can only connect to so many peers
-		if (potential_peers.count() < 100)
-			potential_peers.append(pp);
+		if (potential_peers.size() > 150)
+			return;
+		
+		// avoid duplicates in the potential_peers map
+		std::pair<PPItr,PPItr> r = potential_peers.equal_range(pp.ip);
+		for (PPItr i = r.first;i != r.second;i++)
+		{
+			if (i->second == pp.port) // port and IP are the same so return
+				return;
+		}
+		
+		potential_peers.insert(std::make_pair(pp.ip,pp.port));
 	}
 
 	void PeerManager::killSeeders()
@@ -283,7 +291,7 @@ namespace bt
 	
 	void PeerManager::connectToPeers()
 	{
-		if (potential_peers.count() == 0)
+		if (potential_peers.size() == 0)
 			return;
 		
 		if (peer_list.count() + num_pending >= max_connections && max_connections > 0)
@@ -299,12 +307,12 @@ namespace bt
 		if (max_connections > 0)
 		{
 			Uint32 available = max_connections - (peer_list.count() + num_pending);
-			num = available >= potential_peers.count() ? 
-					potential_peers.count() : available;
+			num = available >= potential_peers.size() ? 
+					potential_peers.size() : available;
 		}
 		else
 		{
-			num = potential_peers.count();
+			num = potential_peers.size();
 		}
 		
 		if (num + total_connections >= max_total_connections && max_total_connections > 0)
@@ -315,27 +323,29 @@ namespace bt
 			if (num_pending > MAX_SIMULTANIOUS_AUTHS)
 				return;
 			
-			PotentialPeer pp = potential_peers.front();
-			potential_peers.pop_front();
-
+			PPItr itr = potential_peers.begin();
+			
 			IPBlocklist& ipfilter = IPBlocklist::instance();
 			
-			if (ipfilter.isBlocked(pp.ip))
-				continue;
-			
-
-		//	Out() << "EncryptedAuthenticate : " << pp.ip << ":" << pp.port << endl;
-			Authenticate* auth = 0;
-			
-			if (Globals::instance().getServer().isEncryptionEnabled())
-				auth = new mse::EncryptedAuthenticate(pp.ip,pp.port,
-			tor.getInfoHash(),tor.getPeerID(),this);
-			else
-				auth = new Authenticate(pp.ip,pp.port,tor.getInfoHash(),tor.getPeerID(),this);
-			connect(this,SIGNAL(stopped()),auth,SLOT(onPeerManagerDestroyed()));
-			AuthenticationMonitor::instance().add(auth);
-			num_pending++;
-			total_connections++;
+			if (!ipfilter.isBlocked(itr->first))
+			{
+			//	Out() << "EncryptedAuthenticate : " << pp.ip << ":" << pp.port << endl;
+				Authenticate* auth = 0;
+				
+				if (Globals::instance().getServer().isEncryptionEnabled())
+					auth = new mse::EncryptedAuthenticate(itr->first,itr->second,
+						tor.getInfoHash(),tor.getPeerID(),this);
+				else
+					auth = new Authenticate(itr->first,itr->second,
+											tor.getInfoHash(),tor.getPeerID(),this);
+				
+				connect(this,SIGNAL(stopped()),auth,SLOT(onPeerManagerDestroyed()));
+				
+				AuthenticationMonitor::instance().add(auth);
+				num_pending++;
+				total_connections++;
+			}
+			potential_peers.erase(itr);
 		}
 	}
 	
@@ -390,7 +400,7 @@ namespace bt
 			PeerListHeader hdr;
 			hdr.magic = PEER_LIST_HDR_MAGIC;
 			// we will save both the active and potential peers
-			hdr.num_peers = peer_list.count() + potential_peers.count();
+			hdr.num_peers = peer_list.count() + potential_peers.size();
 			hdr.ip_version = 4;
 			
 			fptr.write(&hdr,sizeof(PeerListHeader));
@@ -408,11 +418,10 @@ namespace bt
 			}
 			
 			// now the potential_peers
-			QValueList<kt::PotentialPeer>::iterator i = potential_peers.begin();
+			PPItr i = potential_peers.begin();
 			while (i != potential_peers.end())
 			{
-				PotentialPeer & pp = *i;
-				net::Address addr(pp.ip,pp.port);
+				net::Address addr(i->first,i->second);
 				PeerListEntry e;
 				e.ip = addr.ip();
 				e.port = addr.port();
@@ -454,7 +463,7 @@ namespace bt
 						.arg((e.ip & 0x0000FF00) >> 8)
 						.arg( e.ip & 0x000000FF);
 				pp.port = e.port;
-				potential_peers.append(pp);
+				addPotentialPeer(pp);
 			}
 			
 		}
@@ -506,7 +515,7 @@ namespace bt
 	{
 		PotentialPeer pp;
 		while (ps->takePotentialPeer(pp))
-			potential_peers.append(pp);
+			addPotentialPeer(pp);
 	}
 	
 	bool PeerManager::killBadPeer()

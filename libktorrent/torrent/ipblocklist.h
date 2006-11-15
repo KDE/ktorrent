@@ -103,7 +103,7 @@ namespace bt
 			 * @param ip - IP address to check
 			 * @returns true if IP is blocked
 			 */
-			bool isBlocked(QString& ip);
+			bool isBlocked(const QString& ip);
 			
 			/**
 			 * @brief Sets the pointer to the IPBlockingInterface (IPBlocking plugin)
@@ -161,13 +161,13 @@ namespace bt
 			 * Checks if IP is listed in local database (IPBlocklist::m_peers)
 			 * @return TRUE if IP is to be blocked
 			 */
-			bool isBlockedLocal(QString& ip);
+			bool isBlockedLocal(const QString& ip);
 			
 			/**
 			 * Checks if IP is listed in plugins antip2p file
 			 * @return TRUE if IP is to be blocked
 			 */
-			bool isBlockedPlugin(QString& ip);
+			bool isBlockedPlugin(const QString& ip);
 	};
 }
 

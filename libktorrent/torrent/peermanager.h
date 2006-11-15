@@ -20,8 +20,8 @@
 #ifndef BTPEERMANAGER_H
 #define BTPEERMANAGER_H
 
+#include <map>
 #include <qobject.h>
-#include <qvaluelist.h>
 #include <qptrlist.h>
 #include <util/ptrmap.h>
 #include "globals.h"
@@ -211,7 +211,7 @@ namespace bt
 		PtrMap<Uint32,Peer> peer_map;
 		QPtrList<Peer> peer_list;
 		QPtrList<Peer> killed;
-		QValueList<kt::PotentialPeer> potential_peers;
+		std::multimap<QString,bt::Uint16> potential_peers;
 		Torrent & tor;
 		bool started;
 		BitSet available_chunks;
@@ -221,6 +221,8 @@ namespace bt
 		static Uint32 max_connections;
 		static Uint32 max_total_connections;
 		static Uint32 total_connections;
+		
+		typedef std::multimap<QString,bt::Uint16>::iterator PPItr;
 	};
 
 }

@@ -31,7 +31,7 @@
 
 namespace bt
 {
-	Uint32 toUint32(QString& ip, bool* ok)
+	Uint32 toUint32(const QString& ip, bool* ok)
 	{
 		bool test;
 		*ok = true;
@@ -236,7 +236,7 @@ namespace bt
 		this->pluginInterface = ptr;
 	}
 
-	bool IPBlocklist::isBlocked( QString& ip )
+	bool IPBlocklist::isBlocked(const QString& ip )
 	{
 		//First check local filter list
 		if(isBlockedLocal(ip))
@@ -255,7 +255,7 @@ namespace bt
 		return false;
 	}
 	
-	bool IPBlocklist::isBlockedLocal( QString& ip )
+	bool IPBlocklist::isBlockedLocal(const QString& ip )
 	{
 		bool ok;
 		Uint32 ipi = toUint32(ip,&ok);
@@ -271,7 +271,7 @@ namespace bt
 		return m_peers[key] >= 3;
 	}
 	
-	bool IPBlocklist::isBlockedPlugin( QString& ip )
+	bool IPBlocklist::isBlockedPlugin(const QString& ip )
 	{
 		if (pluginInterface == 0) //the plugin is not loaded
 			return false;

@@ -114,7 +114,7 @@ namespace kt
 			return true;
 	}
 	
-	bool IPFilterPlugin::isBlockedIP(QString& ip)
+	bool IPFilterPlugin::isBlockedIP(const QString& ip)
 	{
 		if (level1 == 0)
 			return false;

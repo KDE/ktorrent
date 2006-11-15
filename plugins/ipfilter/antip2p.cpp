@@ -35,7 +35,7 @@ using namespace bt;
 
 namespace kt
 {	
-	Uint32 AntiP2P::toUint32(QString& ip)
+	Uint32 AntiP2P::toUint32(const QString& ip)
 	{
 		bool test;
 		Uint32 ret = ip.section('.',0,0).toULongLong(&test);
@@ -141,7 +141,7 @@ namespace kt
 		return file != 0;
 	}
 	
-	bool AntiP2P::isBlockedIP( QString& ip )
+	bool AntiP2P::isBlockedIP(const QString& ip )
 	{
 		Uint32 test = toUint32(ip);
 		return isBlockedIP(test);

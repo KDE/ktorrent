@@ -41,7 +41,7 @@ namespace kt
 			 * @return TRUE if IP should be blocked. FALSE otherwise
 			 * @arg ip String representation of IP address.
 			 */
-			virtual bool isBlockedIP(QString& ip) = 0;
+			virtual bool isBlockedIP(const QString& ip) = 0;
 			
 	};
 }

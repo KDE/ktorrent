@@ -70,7 +70,7 @@ namespace kt
 			 * @return TRUE if IP should be blocked, FALSE otherwise
 			 * @param ip QString representation of IP to be checked
 			 **/
-			bool isBlockedIP(QString& ip);
+			bool isBlockedIP(const QString& ip);
 			
 			/**
 			 * Overloaded function. Uses Uint32 IP to be checked
@@ -80,7 +80,7 @@ namespace kt
 			/**
 			 * This function converts QString IP to Uint32 format.
 			 **/
-			static bt::Uint32 toUint32(QString& ip);
+			static bt::Uint32 toUint32(const QString& ip);
 			
 		private:
 			bt::MMapFile* file;

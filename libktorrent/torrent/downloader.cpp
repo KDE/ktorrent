@@ -93,25 +93,30 @@ namespace bt
 		}
 			
 		bool ok = false;
-		downloaded += p.getLength();
+		
 		if (cd->piece(p,ok))
 		{
 			if (tmon)
 				tmon->downloadRemoved(cd);
 				
+			if (ok)
+				downloaded += p.getLength();
+			
 			if (!finished(cd))
 			{
-			/*	// if the chunk fails don't count the bytes downloaded
+				// if the chunk fails don't count the bytes downloaded
 				if (cd->getChunk()->getSize() > downloaded)
 					downloaded = 0;
 				else
 					downloaded -= cd->getChunk()->getSize();
-			*/
 			}
 			current_chunks.erase(p.getIndex());
 		}
 		else
 		{
+			if (ok)
+				downloaded += p.getLength();
+			
 			// save to disk again, if it is idle
 			if (cd->isIdle() && cd->getChunk()->getStatus() == Chunk::MMAPPED)
 			{
@@ -124,7 +129,6 @@ namespace bt
 			unnecessary_data += p.getLength();
 			Out(SYS_DIO|LOG_DEBUG) << 
 					"Unnecessary piece, total unnecessary data : " << kt::BytesToString(unnecessary_data) << endl; 
-			
 		}
 	}
 	
