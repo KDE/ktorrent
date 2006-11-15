@@ -89,6 +89,8 @@ namespace bt
 		
 		dstatus.setAutoDelete(true);
 		chunk->ref();
+		num_pieces_in_hash = 0;
+		hash_gen.start();
 	}
 
 	ChunkDownload::~ChunkDownload()
@@ -123,9 +125,11 @@ namespace bt
 			{
 				endgameCancel(p);
 			}
-		
+			updateHash();
 			if (num_downloaded >= num)
 			{
+				// finalize hash
+				hash_gen.end();
 				releaseAllPDs();
 				return true;
 			}
@@ -379,6 +383,8 @@ namespace bt
 		for (Uint32 i = 0;i < pieces.getNumBits();i++)
 			if (pieces.get(i))
 				piece_queue.remove(i);
+		
+		updateHash();
 	}
 
 	Uint32 ChunkDownload::bytesDownloaded() const
@@ -439,6 +445,21 @@ namespace bt
 			i++;
 		}
 		return true;
+	}
+	
+	void ChunkDownload::updateHash()
+	{
+		// update the hash until where we can
+		Uint32 nn = num_pieces_in_hash;
+		while (pieces.get(nn) && nn < num)
+			nn++;
+		
+		for (Uint32 i = num_pieces_in_hash;i < nn;i++)
+		{
+			const Uint8* data = chunk->getData() + i * MAX_PIECE_LEN;
+			hash_gen.update(data,i == num - 1 ? last_size : MAX_PIECE_LEN);
+		}
+		num_pieces_in_hash = nn;
 	}
 }
 #include "chunkdownload.moc"

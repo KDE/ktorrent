@@ -32,7 +32,7 @@ namespace bt
 	
 	
 
-	SHA1HashGen::SHA1HashGen()
+	SHA1HashGen::SHA1HashGen() : tmp_len(0),total_len(0)
 	{
 		
 	}
@@ -49,23 +49,15 @@ namespace bt
 		h3 = 0x10325476;
 		h4 = 0xC3D2E1F0;
 		
-		// first preprocess input : 
-		// calculate new length
-		Uint32 input_len = len;
-		while (input_len % 64 != 55)
-			input_len++;;
-		input_len += 9;
+		Uint32 num_64_byte_chunks = len / 64;
+		Uint32 left_over = len % 64; 
+		// proces regular data
+		for (Uint32 i = 0;i < num_64_byte_chunks;i++)
+		{
+			processChunk(data + (64*i));
+		}
 		
-		// allocate and copy over data
-		Uint8* input = new Uint8[input_len];
-		memcpy(input,data,len);
-		
-		// fill in the padding
-		input[len] = 0x80;
-		for (Uint32 i = len+1;i % 64 != 56;i++)
-			input[i] = 0x00;
-		
-		
+		// calculate the low and high byte of the data length
 		Uint32 total[2] = {0,0};
 		total[0] += len;
 		total[0] &= 0xFFFFFFFF;
@@ -75,17 +67,57 @@ namespace bt
 		
 		Uint32 high = ( total[0] >> 29 ) | ( total[1] <<  3 );
 		Uint32 low  = ( total[0] <<  3 );
-
 		
-		// put in the length as 64-bit integer (BIG-ENDIAN)
-		WriteUint32(input,input_len-8,high);
-		WriteUint32(input,input_len-4,low);
-		
-		// process chunks of 64 byte each
-		for (Uint32 i = 0;i < input_len;i+=64)
+		if (left_over == 0)
 		{
-			processChunk(input+i);
+			tmp[0] = 0x80;
+			for (Uint32 i = 1;i < 56;i++)
+				tmp[i] = 0;
+			 
+			// put in the length as 64-bit integer (BIG-ENDIAN)
+			WriteUint32(tmp,56,high);
+			WriteUint32(tmp,60,low);
+			// process the padding
+			processChunk(tmp);
 		}
+		else if (left_over < 56)
+		{
+			Uint32 off = num_64_byte_chunks * 64;
+			// copy left over bytes in tmp
+			memcpy(tmp,data + off, left_over);
+			tmp[left_over] = 0x80;
+			for (Uint32 i = left_over + 1;i < 56;i++)
+				tmp[i] = 0;
+			
+			// put in the length as 64-bit integer (BIG-ENDIAN)
+			WriteUint32(tmp,56,high);
+			WriteUint32(tmp,60,low);
+			// process the padding
+			processChunk(tmp);
+		}
+		else
+		{
+			// now we need to process 2 chunks
+			Uint32 off = num_64_byte_chunks * 64;
+			// copy left over bytes in tmp
+			memcpy(tmp,data + off, left_over);
+			tmp[left_over] = 0x80;
+			for (Uint32 i = left_over + 1;i < 64;i++)
+				tmp[i] = 0;
+			
+			// process first chunk
+			processChunk(tmp);
+			
+			for (Uint32 i = 0;i < 56;i++)
+				tmp[i] = 0;
+			
+			// put in the length as 64-bit integer (BIG-ENDIAN)
+			WriteUint32(tmp,56,high);
+			WriteUint32(tmp,60,low);
+			// process the second chunk
+			processChunk(tmp);
+		}
+				
 		// construct final message
 		Uint8 hash[20];
 		WriteUint32(hash,0,h0);
@@ -93,7 +125,7 @@ namespace bt
 		WriteUint32(hash,8,h2);
 		WriteUint32(hash,12,h3);
 		WriteUint32(hash,16,h4);
-		delete [] input;
+		
 		return SHA1Hash(hash);
 	}
 	
@@ -159,5 +191,147 @@ namespace bt
 		h2 = (h2 + c) & 0xffffffff;
 		h3 = (h3 + d) & 0xffffffff;
 		h4 = (h4 + e) & 0xffffffff;
+	}
+	
+	
+	void SHA1HashGen::start()
+	{
+		h0 = 0x67452301;
+		h1 = 0xEFCDAB89;
+		h2 = 0x98BADCFE;
+		h3 = 0x10325476;
+		h4 = 0xC3D2E1F0;
+		tmp_len = total_len = 0;
+		memset(tmp,0,64);
+	}
+		
+	void SHA1HashGen::update(const Uint8* data,Uint32 len)
+	{
+		if (tmp_len == 0)
+		{
+			Uint32 num_64_byte_chunks = len / 64;
+			Uint32 left_over = len % 64; 
+			// proces data in chunks of 64 byte
+			for (Uint32 i = 0;i < num_64_byte_chunks;i++)
+			{
+				processChunk(data + (64*i));
+			}
+			 
+			if (left_over > 0)
+			{
+				// if there is anything left over, copy it in tmp
+				memcpy(tmp,data + (64 * num_64_byte_chunks),left_over);
+				tmp_len = left_over;
+			}
+			total_len += len;
+		}
+		else
+		{
+			
+			if (tmp_len + len < 64)
+			{
+				// special case, not enough of data to fill tmp completely
+				memcpy(tmp + tmp_len,data,len);
+				tmp_len += len;
+				total_len += len;
+			}
+			else
+			{
+				// copy start of data in tmp and process it
+				Uint32 off = 64 - tmp_len;
+				memcpy(tmp + tmp_len,data, 64 - tmp_len);
+				processChunk(tmp); 
+				tmp_len = 0;
+				
+				Uint32 num_64_byte_chunks = (len - off) / 64;
+				Uint32 left_over = (len - off) % 64;
+				
+				for (Uint32 i = 0;i < num_64_byte_chunks;i++)
+				{
+					processChunk(data + (off + (64*i)));
+				}
+				
+				if (left_over > 0)
+				{
+				// if there is anything left over, copy it in tmp
+					memcpy(tmp,data + (off + 64 * num_64_byte_chunks),left_over);
+					tmp_len = left_over;
+				}
+				total_len += len;
+			}
+		}
+	}
+		
+	 
+	void SHA1HashGen::end()
+	{
+		// calculate the low and high byte of the data length
+		Uint32 total[2] = {0,0};
+		total[0] += total_len;
+		total[0] &= 0xFFFFFFFF;
+		
+		if (total[0] < total_len)
+			total[1]++;
+		
+		Uint32 high = ( total[0] >> 29 ) | ( total[1] <<  3 );
+		Uint32 low  = ( total[0] <<  3 );
+		
+		if (tmp_len == 0)
+		{
+			tmp[0] = 0x80;
+			for (Uint32 i = 1;i < 56;i++)
+				tmp[i] = 0;
+			 
+			// put in the length as 64-bit integer (BIG-ENDIAN)
+			WriteUint32(tmp,56,high);
+			WriteUint32(tmp,60,low);
+			// process the padding
+			processChunk(tmp);
+		}
+		else if (tmp_len < 56)
+		{
+			tmp[tmp_len] = 0x80;
+			for (Uint32 i = tmp_len + 1;i < 56;i++)
+				tmp[i] = 0;
+			
+			// put in the length as 64-bit integer (BIG-ENDIAN)
+			WriteUint32(tmp,56,high);
+			WriteUint32(tmp,60,low);
+			// process the padding
+			processChunk(tmp);
+		}
+		else
+		{
+			// now we need to process 2 chunks
+			tmp[tmp_len] = 0x80;
+			for (Uint32 i = tmp_len + 1;i < 56;i++)
+				tmp[i] = 0;
+			
+			// process first chunk
+			processChunk(tmp);
+			
+			for (Uint32 i = 0;i < 56;i++)
+				tmp[i] = 0;
+			
+			// put in the length as 64-bit integer (BIG-ENDIAN)
+			WriteUint32(tmp,56,high);
+			WriteUint32(tmp,60,low);
+			// process the second chunk
+			processChunk(tmp);
+		}
+	}
+		
+
+	SHA1Hash SHA1HashGen::get() const
+	{
+		// construct final message
+		Uint8 hash[20];
+		WriteUint32(hash,0,h0);
+		WriteUint32(hash,4,h1);
+		WriteUint32(hash,8,h2);
+		WriteUint32(hash,12,h3);
+		WriteUint32(hash,16,h4);
+		
+		return SHA1Hash(hash);
 	}
 }

@@ -25,6 +25,7 @@
 #include <qptrlist.h>
 #include <util/timer.h>
 #include <util/ptrmap.h>
+#include <util/sha1hashgen.h>
 #include <interfaces/chunkdownloadinterface.h>
 #include <util/bitset.h>
 #include "globals.h"
@@ -71,19 +72,31 @@ namespace bt
 		
 		virtual ~ChunkDownload();
 
+		/// Get the chunk
 		Chunk* getChunk() {return chunk;}
 	
+		/// Get the total number of pieces
 		Uint32 getTotalPieces() const {return num;}
+		
+		/// Get the number of pieces downloaded
 		Uint32 getPiecesDownloaded() const {return num_downloaded;}
 
 		/// Get the number of bytes downloaded.
 		Uint32 bytesDownloaded() const;
 		
+		/// Get the index of the chunk
 		Uint32 getChunkIndex() const;
+		
+		/// Get the current peer
 		const Peer* getCurrentPeer() const;
+		
+		/// Get the PeerID of the current peer
 		QString getCurrentPeerID() const;
+		
+		/// Get the download speed
 		Uint32 getDownloadSpeed() const;
 
+		/// Get download stats
 		void getStats(Stats & s);
 		
 		/// See if a chunkdownload is idle (i.e. has no downloaders)
@@ -153,6 +166,9 @@ namespace bt
 		
 		/// See if this CD hasn't been active in the last update
 		bool needsToBeUpdated() const {return timer.getElapsedSinceUpdate() > 60 * 1000;}
+		
+		/// Get the SHA1 hash of the downloaded chunk
+		SHA1Hash getHash() const {return hash_gen.get();}
 	private slots:
 		void sendRequests(PeerDownloader* pd);
 		void sendCancels(PeerDownloader* pd);
@@ -162,6 +178,7 @@ namespace bt
 		
 	private:
 		void notDownloaded(const Request & r,bool reject);
+		void updateHash();
 		
 	private:		
 		BitSet pieces;
@@ -174,6 +191,9 @@ namespace bt
 		QPtrList<PeerDownloader> pdown;
 		PtrMap<Uint32,DownloadStatus> dstatus;
 		std::set<Uint32> piece_providers;
+		
+		SHA1HashGen hash_gen;
+		Uint32 num_pieces_in_hash;
 
 		friend File & operator << (File & out,const ChunkDownload & cd);
 		friend File & operator >> (File & in,ChunkDownload & cd);

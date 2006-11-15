@@ -413,7 +413,8 @@ namespace bt
 	{
 		Chunk* c = cd->getChunk();
 		// verify the data
-		SHA1Hash h = SHA1Hash::generate(c->getData(),c->getSize());
+		SHA1Hash h = //SHA1Hash::generate(c->getData(),c->getSize());
+				cd->getHash();
 		if (tor.verifyHash(h,c->getIndex()))
 		{
 			// hash ok so save it
