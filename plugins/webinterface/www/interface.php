@@ -76,8 +76,26 @@
 						case 4:
 							echo "<td>DOWNLOADING</td>";
 							break;
+						case 5:
+							echo "<td>STALLED</td>";
+							break;
+						case 6:
+							echo "<td>STOPPED</td>";
+							break;
+						case 7:
+							echo "<td>ALLOCATING_DISKSPACE</td>";
+							break;
+						case 8:
+							echo "<td>ERROR</td>";
+							break;
+						case 9:
+							echo "<td>QUEUED</td>";
+							break;
+						case 10:
+							echo "<td>CHECKING_DATA</td>";
+							break;
 						default:
-							echo "<td>BHO</td>";
+							echo "<td>Not supported Status</td>";
 					}
 					echo "<td>$torrent[bytes_downloaded]</td>";
 					echo "<td>$torrent[total_bytes]</td>";
