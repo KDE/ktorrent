@@ -18,6 +18,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <qcstring.h>
+#include <qdatetime.h>
+
 #include <torrent/queuemanager.h>
 
 #include <interfaces/coreinterface.h>
@@ -214,6 +216,7 @@ namespace kt{
 	{
 		headerField.keepAlive=false;
 		headerField.gzip=false;
+		headerField.ifModifiedSince=false;
 		headerField.sessionId=0;
 		
 		for ( QStringList::Iterator it = headerLines.begin(); it != headerLines.end(); ++it ) {
@@ -231,7 +234,9 @@ namespace kt{
 				if((*it).contains("gzip"))
 					headerField.gzip=true;
 			}
-					
+			else if((*it).contains("If-Modified-Since:")){
+				headerField.ifModifiedSince=true;
+			}		
 		}
 	}
 	void HttpServer::processRequest(QSocket* s)
@@ -289,8 +294,9 @@ namespace kt{
 			QString data;
 			header="HTTP/1.1 404 Not Found\r\n";
 			header+="Server: ktorrent\r\n";
-			header+="Pragma: no-cache\r\n";
+			header+="Cache-Control: private\r\n";
 			header+="Connection: close\r\n";
+			header+=QDateTime::currentDateTime(Qt::UTC).toString("Date: ddd, dd MMM yyy hh:mm:ss UTC");
 			data=HTTP_404_ERROR;
 			header+=QString("Content-Length: %1\r\n\r\n").arg(data.length());
 			sendHtmlPage(s, QString(header+data).latin1());
@@ -302,8 +308,9 @@ namespace kt{
 			dataFile=QString(f.readAll().data());
 			header="HTTP/1.1 200 OK\r\n";
 			header+="Server: ktorrent\r\n";
-			header+="Pragma: no-cache\r\n";
+			header+="Cache-Control: private\r\n";
 			header+="Connection: close\r\n";
+			header+=QDateTime::currentDateTime(Qt::UTC).toString("Date: ddd, dd MMM yyy hh:mm:ss UTC");
 			header+="Content-Type: text/html\r\n";
 			header+=QString("Set-Cookie: SESSID=%1\r\n").arg(session.sessionId);
 			header+=QString("Content-Length: %1\r\n\r\n").arg(f.size());
@@ -316,8 +323,9 @@ namespace kt{
 			if(php_h->executeScript(dataFile, requestParams)){
 				header="HTTP/1.1 200 OK\r\n";
 				header+="Server: ktorrent\r\n";
-				header+="Pragma: no-cache\r\n";
+				header+="Cache-Control: private\r\n";
 				header+="Connection: close\r\n";
+				header+=QDateTime::currentDateTime(Qt::UTC).toString("Date: ddd, dd MMM yyy hh:mm:ss UTC");
 				header+="Content-Type: text/html\r\n";
 				header+=QString("Set-Cookie: SESSID=%1\r\n").arg(session.sessionId);
 				header+=QString("Content-Length: %1\r\n\r\n").arg(php_h->getOutput().length());
@@ -328,8 +336,9 @@ namespace kt{
 				QString data;
 				header="HTTP/1.1 500 OK\r\n";
 				header+="Server: ktorrent\r\n";
-				header+="Pragma: no-cache\r\n";
+				header+="Cache-Control: private\r\n";
 				header+="Connection: close\r\n";
+				header+=QDateTime::currentDateTime(Qt::UTC).toString("Date: ddd, dd MMM yyy hh:mm:ss UTC");
 				data=HTTP_500_ERROR;
 				data+="\nPHP executable error";
 				header+=QString("Content-Length: %1\r\n\r\n").arg(data.length());
@@ -339,13 +348,30 @@ namespace kt{
 			}
 		}
 		else if(finfo.extension()=="ico" || finfo.extension()=="png"){
-			header="HTTP/1.1 200 OK\r\n";
-			header+="Server: ktorrent\r\n";
-			header+="Pragma: no-cache\r\n";
-			header+=QString("Set-Cookie: SESSID=%1\r\n").arg(session.sessionId);
-			header+=QString("Content-Type: image/%1\r\n").arg(finfo.extension());
-			header+=QString("Content-Length: %1\r\n\r\n").arg(finfo.size());
-			sendRawData(s, header, &f);			
+			if(!headerField.ifModifiedSince){
+				header="HTTP/1.1 200 OK\r\n";
+				header+="Server: ktorrent\r\n";
+				header+=QString("Set-Cookie: SESSID=%1\r\n").arg(session.sessionId);
+				header+=QString("Date: ")+QDateTime::currentDateTime(Qt::UTC).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
+				header+=QString("Last-Modified: ")+finfo.lastModified().toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
+				header+=QString("Expires: ")+QDateTime::currentDateTime(Qt::UTC).addSecs(sessionTTL).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
+				header+="Cache-Control: private\r\n";
+				header+=QString("Content-Type: image/%1\r\n").arg(finfo.extension());
+				header+=QString("Content-Length: %1\r\n\r\n").arg(finfo.size());
+				sendRawData(s, header, &f);
+			}
+			else{
+				header="HTTP/1.1 304 Not Modified\r\n";
+				header+="Server: ktorrent\r\n";
+				header+=QString("Set-Cookie: SESSID=%1\r\n").arg(session.sessionId);
+				header+=QString("Date: ")+QDateTime::currentDateTime(Qt::UTC).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
+				header+="Cache-Control: max-age=0\r\n";
+				header+=QString("If-Modified-Since: ")+finfo.lastModified().toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
+				header+=QString("Content-Type: text/html\r\n");
+				header+=QString("Content-Length: 0\r\n\r\n");
+				sendHtmlPage(s, QString(header).latin1());
+			}
+			
 		}
 
 		f.close();

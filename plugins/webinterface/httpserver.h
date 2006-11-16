@@ -48,6 +48,7 @@ namespace kt {
 	bool gzip;
 	bool keepAlive;
 	int sessionId;
+	bool ifModifiedSince;
 	};
 	
 	class Image{
