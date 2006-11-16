@@ -42,12 +42,12 @@ bool KTorrentDCOP::changeDataDir(const QString& new_dir)
 
 void KTorrentDCOP::openTorrent(const QString& file)
 {
-	app->load(KURL(file));
+	app->load(KURL::fromPathOrURL(file));
 }
 
 void KTorrentDCOP::openTorrentSilently(const QString & file)
 {
-	app->loadSilently(KURL(file));
+	app->loadSilently(KURL::fromPathOrURL(file));
 }
 
 void KTorrentDCOP::setKeepSeeding(bool ks)
