@@ -23,7 +23,21 @@
 #include <kurl.h>
 #include <qobject.h>
 #include <util/constants.h>
+#include <torrent/queuemanager.h>
 
+///Stats struct
+struct CurrentStats
+{
+	bt::Uint32 download_speed;
+	bt::Uint32 upload_speed;
+	bt::Uint64 bytes_downloaded;
+	bt::Uint64 bytes_uploaded;
+};
+
+namespace bt
+{
+	class QueueManager;
+}
 namespace kt
 {
 	class TorrentInterface;
@@ -49,6 +63,11 @@ namespace kt
 		 */
 		virtual void setMaxDownloads(int max) = 0;
 	
+		virtual void setMaxSeeds(int max) = 0;
+
+		virtual void setMaxDownloadSpeed(int v) = 0;
+		virtual void setMaxUploadSpeed(int v) = 0;
+
 		/**
 		 * Set wether or not we should keep seeding after
 		 * a download has finished.
@@ -97,6 +116,10 @@ namespace kt
 		 * @param tc TorrentControl pointer.
 		 */
 		virtual void queue(kt::TorrentInterface* tc) = 0;
+
+		virtual bt::QueueManager* getQueueManager() = 0;
+
+		virtual CurrentStats getStats() = 0;
 
 		/**
 		 * Switch the port when no torrents are running.

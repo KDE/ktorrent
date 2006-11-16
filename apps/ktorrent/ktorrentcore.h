@@ -48,14 +48,7 @@ namespace kt
 }
 
 
-///Stats struct
-struct CurrentStats
-{
-	bt::Uint32 download_speed;
-	bt::Uint32 upload_speed;
-	bt::Uint64 bytes_downloaded;
-	bt::Uint64 bytes_uploaded;
-};
+
 
 class KProgress;
 
