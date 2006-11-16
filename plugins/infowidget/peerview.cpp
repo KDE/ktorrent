@@ -185,6 +185,21 @@ namespace kt
 		addColumn(i18n("Downloaded"));
 		addColumn(i18n("Uploaded"));
 		
+		setAllColumnsShowFocus(true);
+		setShowSortIndicator(true);
+		
+		setColumnAlignment(3,Qt::AlignRight);
+		setColumnAlignment(4,Qt::AlignRight);
+		setColumnAlignment(5,Qt::AlignCenter);
+		setColumnAlignment(6,Qt::AlignCenter);
+		setColumnAlignment(7,Qt::AlignRight);
+		setColumnAlignment(8,Qt::AlignCenter);
+		setColumnAlignment(9,Qt::AlignRight);
+		setColumnAlignment(10,Qt::AlignCenter);
+		setColumnAlignment(11,Qt::AlignCenter);
+		setColumnAlignment(12,Qt::AlignRight);
+		setColumnAlignment(13,Qt::AlignRight);
+		
 		for (Uint32 i = 0;i < (Uint32)columns();i++)
 			setColumnWidthMode(i,QListView::Manual);
 			

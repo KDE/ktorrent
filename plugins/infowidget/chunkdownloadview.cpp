@@ -73,6 +73,13 @@ namespace kt
 	: ChunkDownloadViewBase(parent, name)
 	{
 		m_list_view->setShowSortIndicator(true);
+		m_list_view->setAllColumnsShowFocus(true);
+		
+		
+		m_list_view->setColumnAlignment(0,Qt::AlignLeft);
+		m_list_view->setColumnAlignment(1,Qt::AlignCenter);
+		m_list_view->setColumnAlignment(3,Qt::AlignRight);
+		m_list_view->setColumnAlignment(4,Qt::AlignRight);
 	}
 	
 	

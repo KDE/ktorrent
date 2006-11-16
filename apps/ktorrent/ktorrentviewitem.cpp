@@ -123,7 +123,7 @@ void KTorrentViewItem::update()
 	KLocale* loc = KGlobal::locale();
 	if (s.bytes_left_to_download == 0)
 	{
-		setText(7,i18n("finished"));
+	//	setText(7,i18n("finished"));
 		eta = -1;
 	}
 	else if (s.running) 
@@ -131,7 +131,7 @@ void KTorrentViewItem::update()
 		Uint32 secs = tc->getETA();
 		if(secs == -1)
 		{
-			setText(7,i18n("infinity"));
+			setText(7,QString("%1").arg(QChar(0x221E)));
 			eta = -2;
 		}
 		else
@@ -143,7 +143,7 @@ void KTorrentViewItem::update()
 	}
 	else
 	{
-		setText(7,i18n("infinity"));
+		setText(7,QString("%1").arg(QChar(0x221E)));
 		eta = -2;
 	}
 	
