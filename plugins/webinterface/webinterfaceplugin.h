@@ -39,6 +39,7 @@ namespace kt
 			
 			virtual void load();
 			virtual void unload();
+			void preferencesUpdated();
 		private:
 			WebInterfacePrefPage* pref;
 			ServerThread *httpThread;

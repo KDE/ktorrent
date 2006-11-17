@@ -33,10 +33,11 @@ namespace kt
 	 * WebInterface plugin preferences page
 	 * @author Diego R. Brogna <dierbro@gmail.com>
 	*/
+	class WebInterfacePlugin;
 	class WebInterfacePrefPage : public PrefPageInterface
 	{
 		public:
-			WebInterfacePrefPage();
+			WebInterfacePrefPage(WebInterfacePlugin* plugin);
 			virtual ~WebInterfacePrefPage();
 
 			virtual bool apply();
@@ -46,6 +47,7 @@ namespace kt
 			
 		private:
 			WebInterfacePrefWidget* m_widget;
+			WebInterfacePlugin* w_plugin;
 	};
 
 }

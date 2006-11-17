@@ -24,10 +24,7 @@
 			<label>php executable path</label>
 			<default>/usr/bin/php</default>
 		</entry>
-		<entry name="rootDir" type ="String">
-			<label>webserver's root directory</label>
-			<default>/usr/kde/3.5/share/apps/ktorrent/www</default>
-		</entry>
+
 		<entry name="username" type ="String">
 			<label>username</label>
 			<default></default>

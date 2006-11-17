@@ -19,14 +19,16 @@
  ***************************************************************************/
 
 #include "webinterfaceprefpage.h"
+#include "webinterfaceplugin.h"
 namespace kt
 {
 
-	WebInterfacePrefPage::WebInterfacePrefPage()
+	WebInterfacePrefPage::WebInterfacePrefPage(WebInterfacePlugin* plugin)
 		: PrefPageInterface(i18n("WebInterface"), i18n("WebInterface Options"),
 						KGlobal::iconLoader()->loadIcon("toggle_log",KIcon::NoGroup))
 	{
 		m_widget = 0;
+		w_plugin=plugin;
 	}
 
 
@@ -36,8 +38,8 @@ namespace kt
 	bool WebInterfacePrefPage::apply()
 	{
 		if(m_widget)
-			return m_widget->apply();
-		
+			m_widget->apply();
+		w_plugin->preferencesUpdated();
 		return true;
 	}
 

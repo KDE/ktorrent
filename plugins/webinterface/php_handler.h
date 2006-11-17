@@ -28,9 +28,9 @@ class PhpHandler: public QObject{
 	Q_OBJECT
 
 	public:
-		PhpHandler(PhpInterface *php,QString p);
+		PhpHandler(PhpInterface *php);
 		~PhpHandler();
-		bool executeScript(QString, QMap<QString, QString> );
+		bool executeScript(QString, QString, QMap<QString, QString> );
 		QString getOutput(){return output;};
 		QString getError(){return error;};
 	private:

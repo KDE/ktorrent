@@ -30,6 +30,7 @@
 #include <qfile.h>
 #include <qcache.h>
 #include <qthread.h>
+#include <qmutex.h>
 #include "php_handler.h"
 #include "php_interface.h"
 #include <torrent/peermanager.h>
@@ -104,20 +105,17 @@ namespace kt {
 			core=c;
 			running=false;
 			p=0;
-			//server=0;
 		}
 		~ServerThread()
 		{		}
 		void stop();		
 		void run();
-		//bool ok(){return server->ok();}
 		int port(){return p;}
 		QMutex mutex;
 	private:
 		bool running;
 		CoreInterface *core;
 		int p;
-		//QMutex mutex;
 	};
 
 	

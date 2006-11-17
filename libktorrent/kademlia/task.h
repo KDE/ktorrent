@@ -38,6 +38,7 @@ namespace dht
 	
 	const Uint32 MAX_CONCURRENT_REQS = 16;
 
+	using KNetwork::KResolverResults;
 
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
@@ -153,7 +154,7 @@ namespace dht
 		void done();
 		
 	protected slots:
-		void onResolverResults(KNetwork::KResolverResults res);
+		void onResolverResults(KResolverResults res);
 				
 	protected:	
 		QValueList<KBucketEntry> visited; // nodes visited

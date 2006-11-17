@@ -34,6 +34,9 @@
 #include <kpassdlg.h>
 #include <kmdcodec.h>
 
+#include <net/portlist.h>
+#include <torrent/globals.h>
+using namespace bt;
 namespace kt
 {
 
@@ -43,19 +46,22 @@ WebInterfacePrefWidget::WebInterfacePrefWidget(QWidget *parent, const char *name
 	forward->setChecked(WebInterfacePluginSettings::forward());
 	sessionTTL->setValue(WebInterfacePluginSettings::sessionTTL());
 	phpExecutablePath->setURL (WebInterfacePluginSettings::phpExecutablePath());
-	rootDir->setMode(KFile::Directory);
-	rootDir->setURL (WebInterfacePluginSettings::rootDir());
 	username->setText(WebInterfacePluginSettings::username());
 	password->setText("_fakepass_");
 }
 
 bool WebInterfacePrefWidget::apply()
 {
+	if(WebInterfacePluginSettings::port()==port->value()){
+		if(forward->isChecked())
+			bt::Globals::instance().getPortList().addNewPort(port->value(),net::TCP,true);
+		else
+			bt::Globals::instance().getPortList().removePort(port->value(),net::TCP);
+	}		
 	WebInterfacePluginSettings::setPort(port->value () );
 	WebInterfacePluginSettings::setForward(forward->isChecked());
 	WebInterfacePluginSettings::setSessionTTL(sessionTTL->value () );
 	WebInterfacePluginSettings::setPhpExecutablePath(phpExecutablePath->url () );
-	WebInterfacePluginSettings::setRootDir(rootDir->url () );
 	if(!username->text().isEmpty() && !QString(password->password()).isEmpty() && QString(password->password())!="_fakepass_"){
 		WebInterfacePluginSettings::setUsername(username->text() );
 		KMD5 context(password->password());

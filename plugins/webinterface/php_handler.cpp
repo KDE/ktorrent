@@ -20,12 +20,11 @@
 #include "php_handler.h"
 
 using namespace kt;
-PhpHandler::PhpHandler(PhpInterface *php,QString p):QObject()
+PhpHandler::PhpHandler(PhpInterface *php):QObject()
 {
 	php_i=php;
-	cmd=p;
 	locked=false;
-	proc=new QProcess(QString(cmd));
+	proc=new QProcess();
 	connect(proc, SIGNAL(readyReadStdout()), this, SLOT(readStdout()));
 	connect(proc, SIGNAL(readyReadStderr()), this, SLOT(readStderr()));
 	connect(proc, SIGNAL(processExited()), this, SLOT(processExitedSlot()));
@@ -37,7 +36,7 @@ PhpHandler::~PhpHandler()
 	delete proc;
 }
 
-bool PhpHandler::executeScript(QString s, QMap<QString, QString> requestVars)
+bool PhpHandler::executeScript(QString cmd, QString s, QMap<QString, QString> requestVars)
 {
 	if(locked)
 		return false;
@@ -45,6 +44,7 @@ bool PhpHandler::executeScript(QString s, QMap<QString, QString> requestVars)
 	preParse(&s, requestVars);
 	output="";
 	error="";
+	proc->setArguments(cmd);
 	if(!proc->isRunning())
 		if(!proc->start())
 			return false;

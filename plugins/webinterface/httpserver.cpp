@@ -30,6 +30,7 @@
 #include <kmdcodec.h>
 #include <qsocketnotifier.h>
 #include <kmessagebox.h>
+#include <kstandarddirs.h>
 #include <net/portlist.h>
 
 #include <sys/mman.h>
@@ -87,10 +88,10 @@ namespace kt{
 
 	HttpServer::HttpServer(CoreInterface *core, int port) : QServerSocket(port, 5){
 		php_i=new PhpInterface(core);
-		php_h=new PhpHandler(php_i, WebInterfacePluginSettings::phpExecutablePath());
+		php_h=new PhpHandler(php_i);
 		imgCache.setAutoDelete(true);
-		rootDir=WebInterfacePluginSettings::rootDir();
-		sessionTTL=WebInterfacePluginSettings::sessionTTL();
+		rootDir=QFileInfo(locate("data", "ktorrent/www/login.html")).dirPath();
+		Out(SYS_WEB|LOG_DEBUG) << "WWW Root Directory "<< rootDir <<endl;
 		session.logged=false;
 	}
 	HttpServer::~HttpServer()
@@ -249,7 +250,7 @@ namespace kt{
 			session.logged=false;
 
 		if(headerField.sessionId==session.sessionId){
-			if(session.last_access.secsTo(QTime::currentTime())<sessionTTL){
+			if(session.last_access.secsTo(QTime::currentTime())<WebInterfacePluginSettings::sessionTTL()){
 				Out(SYS_WEB| LOG_DEBUG) << "Session valid" << endl;
 				session.last_access=QTime::currentTime();
 				}
@@ -320,7 +321,7 @@ namespace kt{
 			QString dataFile;
 			dataFile=QString(f.readAll().data());
 			dataFile.truncate(f.size());
-			if(php_h->executeScript(dataFile, requestParams)){
+			if(php_h->executeScript(WebInterfacePluginSettings::phpExecutablePath(), dataFile, requestParams)){
 				header="HTTP/1.1 200 OK\r\n";
 				header+="Server: ktorrent\r\n";
 				header+="Cache-Control: private\r\n";
@@ -354,7 +355,7 @@ namespace kt{
 				header+=QString("Set-Cookie: SESSID=%1\r\n").arg(session.sessionId);
 				header+=QString("Date: ")+QDateTime::currentDateTime(Qt::UTC).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
 				header+=QString("Last-Modified: ")+finfo.lastModified().toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
-				header+=QString("Expires: ")+QDateTime::currentDateTime(Qt::UTC).addSecs(sessionTTL).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
+				header+=QString("Expires: ")+QDateTime::currentDateTime(Qt::UTC).addSecs(3600).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
 				header+="Cache-Control: private\r\n";
 				header+=QString("Content-Type: image/%1\r\n").arg(finfo.extension());
 				header+=QString("Content-Length: %1\r\n\r\n").arg(finfo.size());

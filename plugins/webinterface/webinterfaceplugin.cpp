@@ -52,32 +52,6 @@ namespace kt
 	void WebInterfacePlugin::load()
 	{
 
-		/*int i=0, port=WebInterfacePluginSettings::port();
-		do{
-			if(!server)
-				delete server;
-			server=new HttpServer(getCore(), port+i);
-			i++;
-		}while(!server->ok() && i<10);
-
-		if(server->ok()){
-			if((i-1)!=0)
-				KMessageBox::information(0,
-			                         i18n("Specified port (%1) is unavailable or in"
-			                              " use by another application. WebInterface plugin is bound to port %2.")
-			                         .arg(port).arg(port + i - 1));
-			
-			Out(SYS_WEB|LOG_ALL) << "Web server listen on port "<< server->port() << endl;
-			if(WebInterfacePluginSettings::forward())
-				bt::Globals::instance().getPortList().addNewPort(httpThread->port(),net::TCP,true);
-		}
-		else{
-			KMessageBox::error(0,
-		                   i18n("Cannot bind to port %1 or the 10 following ports. WebInterface plugin cannot be loaded.").arg(port));
-			Out(SYS_WEB|LOG_ALL) << "Cannot bind to port " << port <<" or the 10 following ports. WebInterface plugin cannot be loaded." << endl;
-			unload();
-			return;
-		}*/
 		if(!httpThread)
 				delete httpThread;
 
@@ -85,14 +59,7 @@ namespace kt
 		
 		httpThread->start();
 
-	/*	if(httpThread->ok())
-			if(WebInterfacePluginSettings::forward())
-				bt::Globals::instance().getPortList().addNewPort(httpThread->port(),net::TCP,true);
-		else{
-			unload();
-			return;
-		}*/
-		pref = new WebInterfacePrefPage();
+		pref = new WebInterfacePrefPage(this);
 		getGUI()->addPrefPage(pref);
 
 	}
@@ -110,6 +77,20 @@ namespace kt
 
 	}
 
+	void WebInterfacePlugin::preferencesUpdated()
+	{
+		if(httpThread->port()!=WebInterfacePluginSettings::port()){
+			//stop and delete http server thread
+			bt::Globals::instance().getPortList().removePort(httpThread->port(),net::TCP);
+			httpThread->stop();
+			httpThread->wait();
+			delete httpThread;
+			httpThread=0;
+			//restart http server thread
+			httpThread=new ServerThread(getCore());
+			httpThread->start();
+		}
+	}
 
 }
 	
