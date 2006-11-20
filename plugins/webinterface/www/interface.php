@@ -25,11 +25,15 @@
 		echo "<tr><td><INPUT type=\"submit\"></tr></td>";
 		echo "</FORM>";
 ?>
-		
-		<tr><td><FORM method=\"GET\">
+		<tr><td><FORM method="GET">
+		<INPUT type="text" name="load_torrent">
+		<INPUT type="submit" name="Load torrent" value="Load torrent"></tr>
+		</FORM></tr></td>
+
+		<tr><td><FORM method="GET">
 		<INPUT type="submit" name="stopall" value="stopall">
 		</FORM></tr></td>
-		<tr><td><FORM method=\"GET\">
+		<tr><td><FORM method="GET">
 		<INPUT type="submit" name="startall" value="startall">
 		</FORM></tr></td>
 			</table>
