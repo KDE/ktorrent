@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 
+#include <kio/global.h>
 
 #include <net/socketmonitor.h>
 #include <torrent/choker.h>
@@ -61,14 +62,14 @@ QString PhpCodeGenerator::downloadStatus()
 		ret.append(QString("%1 => array(").arg(k));
 		
 		ret.append(QString("\"imported_bytes\" => %1,").arg(stats.imported_bytes));
-		ret.append(QString("\"bytes_downloaded\" => %1,").arg(stats.bytes_downloaded));
-		ret.append(QString("\"bytes_uploaded\" => %1,").arg(stats.bytes_uploaded));
+		ret.append(QString("\"bytes_downloaded\" => \"%1\",").arg(KIO::convertSize(stats.bytes_downloaded)));
+		ret.append(QString("\"bytes_uploaded\" => \"%1\",").arg(KIO::convertSize(stats.bytes_uploaded)));
 		ret.append(QString("\"bytes_left\" => %1,").arg(stats.bytes_left));
 		ret.append(QString("\"bytes_left_to_download\" => %1,").arg(stats.bytes_left_to_download));
-		ret.append(QString("\"total_bytes\" => %1,").arg(stats.total_bytes));
+		ret.append(QString("\"total_bytes\" => \"%1\",").arg(KIO::convertSize(stats.total_bytes)));
 		ret.append(QString("\"total_bytes_to_download\" => %1,").arg(stats.total_bytes_to_download));
-		ret.append(QString("\"download_rate\" => %1,").arg(stats.download_rate));
-		ret.append(QString("\"upload_rate\" => %1,").arg(stats.upload_rate));
+		ret.append(QString("\"download_rate\" => \"%1/s\",").arg(KIO::convertSize(stats.download_rate)));
+		ret.append(QString("\"upload_rate\" => \"%1/s\",").arg(KIO::convertSize(stats.upload_rate)));
 		ret.append(QString("\"num_peers\" => %1,").arg(stats.num_peers));
 		ret.append(QString("\"num_chunks_downloading\" => %1,").arg(stats.num_chunks_downloading));
 		ret.append(QString("\"total_chunks\" => %1,").arg(stats.total_chunks));
@@ -213,14 +214,6 @@ QMap<QString, QString>::Iterator it;
 					else
 						goto notsupported;
 					break;
-			/*	case 'l':
-					if(it.key()=="load_torrent"){
-						core->loadSilently(KURL::decode_string(it.data()));
-						}
-					else
-						goto notsupported;
-					break;
-			*/
 				case 'm':
 					if(it.key()=="maximum_downloads"){
 						core->setMaxDownloads(it.data().toInt());

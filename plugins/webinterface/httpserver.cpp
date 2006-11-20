@@ -309,7 +309,6 @@ namespace kt{
 		if(finfo.extension()=="html"){
 			QString dataFile;
 			dataFile=QString(f.readAll().data());
-			dataFile.truncate(dataFile.find("</html>"));
 			header="HTTP/1.1 200 OK\r\n";
 			header+="Server: ktorrent\r\n";
 			header+="Cache-Control: private\r\n";

@@ -1,4 +1,3 @@
-
 <html>
 <head>
 <title>KTorrent WebInterface</title>
@@ -8,57 +7,56 @@
   <tbody>
     <tr>
       <td>&nbsp;</td>
-      <td align="center"><IMG src="ktorrentwebinterfacelogo.png" width="340" height="150" align="top" border="0"></td>
+      <td align="center"><a href="interface.php"><img src="ktorrentwebinterfacelogo.png" width="340" height="150" align="top" border="0" /></a></td>
       <td>&nbsp;</td>
     </tr>
     <tr>
       <td>
       <table width="100%">
 
-<?php 
-      		$globalinfo=globalInfo();
+<?php
+		$globalinfo=globalInfo();
 		echo "<tr><td><strong> Settings </strong></tr></td>";
-		echo "<FORM method=\"GET\">";
-		echo "<tr><td><INPUT type=\"text\" name=\"maximum_upload_rate\" value=\"$globalinfo[max_upload_speed]\">UploadSpeed</tr></td>";
-		echo "<tr><td><INPUT type=\"text\" name=\"maximum_download_rate\" value=\"$globalinfo[max_download_speed]\">DownloadSpeed</tr></td>";
-		echo "<tr><td><INPUT type=\"text\" name=\"maximum_downloads\" value=\"$globalinfo[max_downloads]\">MaximumDownload</tr></td>";
-		echo "<tr><td><INPUT type=\"submit\"></tr></td>";
-		echo "</FORM>";
+		echo "<form method=\"get\">";
+		echo "<tr><td><input type=\"text\" name=\"maximum_upload_rate\" value=\"$globalinfo[max_upload_speed]\"> UploadSpeed</tr></td>";
+		echo "<tr><td><input type=\"text\" name=\"maximum_download_rate\" value=\"$globalinfo[max_download_speed]\"> DownloadSpeed</tr></td>";
+		echo "<tr><td><input type=\"text\" name=\"maximum_downloads\" value=\"$globalinfo[max_downloads]\"> MaximumDownload</tr></td>";
+		echo "<tr><td><input type=\"submit\"></tr></td>";
+		echo "</form>";
 ?>
-		<tr><td><FORM method="GET">
-		<INPUT type="text" name="load_torrent">
-		<INPUT type="submit" name="Load torrent" value="Load torrent"></tr>
-		</FORM></tr></td>
+		<tr><td><form method="get">
+		<input type="text" name="load_torrent">
+		<input type="submit" value="Load Torrent"></tr>
+		</form></tr></td>
 
-		<tr><td><FORM method="GET">
-		<INPUT type="submit" name="stopall" value="stopall">
-		</FORM></tr></td>
-		<tr><td><FORM method="GET">
-		<INPUT type="submit" name="startall" value="startall">
-		</FORM></tr></td>
-			</table>
+		<tr><td><form method="get">
+		<input type="submit" name="stopall" value="Stop All">
+		</form></tr></td>
 
+		<tr><td><form method="get">
+		<input type="submit" name="startall" value="Start All">
+		</form></tr></td>
+	</table>
       </td>
       <td>
 		<table width="100%">
 			<tr>
-				<td align="left">Actions</td>
-				<td align="left">File</td>
-				<td align="left">Status</td>
-				<td align="left">Downloaded</td>
-				<td align="left">Size</td>
-				<td align="left" >Uploaded</td>
-				<td align="left">Down Speed</td>
-				<td align="left">Up Speed</td>
-				<td align="left">Peers</td>
-				<td align="left">% Complete</td>
+				<td align="left"><strong>Actions</strong></td>
+				<td align="left"><strong>File</strong></td>
+				<td align="left"><strong>Status</strong></td>
+				<td align="left"><strong>Downloaded</strong></td>
+				<td align="left"><strong>Size</strong></td>
+				<td align="left"><strong>Uploaded</strong></td>
+				<td align="left"><strong>Down Speed</strong></td>
+				<td align="left"><strong>Up Speed</strong></td>
+				<td align="left"><strong>Peers</strong></td>
+				<td align="left"><strong>Complete</strong></td>
 			</tr>
-			
 				<?php
 				$stats=downloadStatus();
 				$a = 0;
 				foreach ($stats as $torrent) {
-				$perc=$torrent[bytes_downloaded]*100/$torrent[total_bytes];
+				$perc = round(100.0 - ($torrent[bytes_left_to_download] / $torrent[total_bytes_to_download]) * 100.0, 2);
 				echo "<tr>";
 					echo "<td><a href=\"interface.php?stop=$a\" title=\"STOP\"><img src=\"/stop.png\" name=\"stop\" width=\"16\" height=\"16\" border=\"0\"></a>";
 					echo "<a href=\"interface.php?start=$a\" title=\"START\"><img src=\"/start.png\" name=\"start\" width=\"16\" height=\"16\" border=\"0\"></a>";
@@ -66,37 +64,37 @@
 					echo "<td>$torrent[torrent_name]</td>";
 					switch ($torrent[status]) {
 						case 0:
-   							echo "<td>NOT_STARTED</td>";
+   							echo "<td>Not Started</td>";
 							break;
 						case 1:
-  							echo "<td>SEEDING_COMPLETE</td>";
+  							echo "<td>Seeding Complete</td>";
    							break;
 						case 2:
-							echo "<td>DOWNLOAD_COMPLETE</td>";
+							echo "<td>Download Complete</td>";
 							break;
 						case 3:
-							echo "<td>SEEDING</td>";
+							echo "<td>Seeding</td>";
 							break;
 						case 4:
-							echo "<td>DOWNLOADING</td>";
+							echo "<td>Downloading</td>";
 							break;
 						case 5:
-							echo "<td>STALLED</td>";
+							echo "<td>Stalled</td>";
 							break;
 						case 6:
-							echo "<td>STOPPED</td>";
+							echo "<td>Stopped</td>";
 							break;
 						case 7:
-							echo "<td>ALLOCATING_DISKSPACE</td>";
+							echo "<td>Allocating Diskspace</td>";
 							break;
 						case 8:
-							echo "<td>ERROR</td>";
+							echo "<td>Error</td>";
 							break;
 						case 9:
-							echo "<td>QUEUED</td>";
+							echo "<td>Queued</td>";
 							break;
 						case 10:
-							echo "<td>CHECKING_DATA</td>";
+							echo "<td>Checking Data</td>";
 							break;
 						default:
 							echo "<td>Not supported Status</td>";
@@ -107,20 +105,15 @@
 					echo "<td>$torrent[download_rate]</td>";
 					echo "<td>$torrent[upload_rate]</td>";
 					echo "<td>$torrent[num_peers]</td>";
-					echo "<td>$perc</td>";				
+					echo "<td>$perc %</td>";
 				echo"</tr>";
-				$a=$a+1;
+				$a++;
 				}
 			?>
-			
 		</table>
 	</td>
-      
     </tr>
   </tbody>
 </table>
-
-
 </body>
 </html>
-
