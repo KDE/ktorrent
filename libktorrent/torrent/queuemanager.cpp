@@ -94,12 +94,14 @@ namespace bt
 			else 
 	    		start_tc = (max_downloads == 0 || getNumRunning(true) < max_downloads);
 		}
-		
-		if (start_tc)
+		else
 		{
 			//User started this torrent so make it user controlled
 			tc->setPriority(0);
-			
+		}
+		
+		if (start_tc)
+		{
 			Out() << "Starting download" << endl;
 			float ratio = kt::ShareRatio(s);
 			float max_ratio = tc->getMaxShareRatio();
@@ -420,7 +422,7 @@ namespace bt
 				
 				if(!s.running && !s.completed && !s.user_controlled)
 				{
-					start(tc);
+					start(tc, false);
 					if(tc->getStats().stopped_by_error)
 						continue;
 				}

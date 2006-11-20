@@ -188,14 +188,16 @@ KTorrent::KTorrent()
 	
 	m_dcop = new KTorrentDCOP(this);
 
-	m_core->loadTorrents();
 	setStandardToolBarMenuEnabled(true);
 
 	QToolTip::add(m_statusInfo, i18n("Info"));
 	QToolTip::add(m_statusTransfer, i18n("Data transferred during the current session"));
 	QToolTip::add(m_statusSpeed, i18n("Current speed of all torrents combined"));
 	
+	//first apply settings..
 	applySettings(false);
+	//then load stuff from core
+	m_core->loadTorrents();
 	m_core->loadPlugins();
 
 	connect(&m_gui_update_timer, SIGNAL(timeout()), this, SLOT(updatedStats()));
