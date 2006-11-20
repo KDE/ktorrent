@@ -44,65 +44,6 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLayoutWidget" row="2" column="0">
-                    <property name="name">
-                        <cstring>layout5</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Php executable path:</string>
-                            </property>
-                        </widget>
-                        <widget class="KURLRequester">
-                            <property name="name">
-                                <cstring>phpExecutablePath</cstring>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-                <widget class="QLayoutWidget" row="3" column="0">
-                    <property name="name">
-                        <cstring>layout13</cstring>
-                    </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel" row="0" column="0">
-                            <property name="name">
-                                <cstring>textLabel5</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Username:</string>
-                            </property>
-                        </widget>
-                        <widget class="KPasswordEdit" row="1" column="1">
-                            <property name="name">
-                                <cstring>password</cstring>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="0">
-                            <property name="name">
-                                <cstring>textLabel6</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Password:</string>
-                            </property>
-                        </widget>
-                        <widget class="KLineEdit" row="0" column="1">
-                            <property name="name">
-                                <cstring>username</cstring>
-                            </property>
-                        </widget>
-                    </grid>
-                </widget>
                 <widget class="QLayoutWidget" row="0" column="0">
                     <property name="name">
                         <cstring>layout5</cstring>
@@ -185,21 +126,105 @@
                         </widget>
                     </hbox>
                 </widget>
+                <widget class="QLayoutWidget" row="3" column="0">
+                    <property name="name">
+                        <cstring>layout13</cstring>
+                    </property>
+                    <grid>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel" row="0" column="0">
+                            <property name="name">
+                                <cstring>textLabel5</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Username:</string>
+                            </property>
+                        </widget>
+                        <widget class="KPasswordEdit" row="1" column="1">
+                            <property name="name">
+                                <cstring>password</cstring>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="1" column="0">
+                            <property name="name">
+                                <cstring>textLabel6</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Password:</string>
+                            </property>
+                        </widget>
+                        <widget class="KLineEdit" row="0" column="1">
+                            <property name="name">
+                                <cstring>username</cstring>
+                            </property>
+                        </widget>
+                    </grid>
+                </widget>
+                <widget class="QLayoutWidget" row="2" column="0">
+                    <property name="name">
+                        <cstring>layout5</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Php executable path:</string>
+                            </property>
+                        </widget>
+                        <widget class="KURLRequester">
+                            <property name="name">
+                                <cstring>phpExecutablePath</cstring>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QLayoutWidget" row="1" column="0">
+                    <property name="name">
+                        <cstring>layout4</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Select interface:</string>
+                            </property>
+                        </widget>
+                        <widget class="QComboBox">
+                            <property name="name">
+                                <cstring>interfaceSkinBox</cstring>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
             </grid>
         </widget>
     </grid>
 </widget>
+<customwidgets>
+</customwidgets>
 <slots>
     <slot>btnUpdate_clicked()</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>kpassdlg.h</includehint>
+    <includehint>klineedit.h</includehint>
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
-    <includehint>kpassdlg.h</includehint>
-    <includehint>klineedit.h</includehint>
-    <includehint>knuminput.h</includehint>
-    <includehint>knuminput.h</includehint>
 </includehints>
 </UI>

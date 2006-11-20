@@ -20,6 +20,10 @@
 			<label>Session time to live</label>
 			<default>3600</default>
 		</entry>
+		<entry name="skin" type ="String">
+			<label>interface skin</label>
+			<default>default</default>
+		</entry>
 		<entry name="phpExecutablePath" type ="String">
 			<label>php executable path</label>
 			<default>/usr/bin/php</default>

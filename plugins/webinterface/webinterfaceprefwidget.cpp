@@ -24,10 +24,12 @@
 #include <klocale.h>
 #include <kglobal.h>
 #include <kiconloader.h>
+#include <kstandarddirs.h>
 
 #include <qwidget.h>
 #include <qstring.h>
 #include <qcheckbox.h>
+#include <qcombobox.h>
 #include <knuminput.h>
 #include <kurlrequester.h>
 #include <klineedit.h>
@@ -45,6 +47,17 @@ WebInterfacePrefWidget::WebInterfacePrefWidget(QWidget *parent, const char *name
 	port->setValue(WebInterfacePluginSettings::port());
 	forward->setChecked(WebInterfacePluginSettings::forward());
 	sessionTTL->setValue(WebInterfacePluginSettings::sessionTTL());
+	
+	QStringList dirList=KGlobal::instance()->dirs()->findDirs("data", "ktorrent/www");
+	QDir d(*(dirList.begin()));
+	QStringList skinList=d.entryList(QDir::Dirs);
+	for ( QStringList::Iterator it = skinList.begin(); it != skinList.end(); ++it ){ 
+		if(*it=="." || *it=="..")
+			continue;
+        	interfaceSkinBox->insertItem(*it);
+	}
+
+   	interfaceSkinBox->setCurrentText (WebInterfacePluginSettings::skin());
 	phpExecutablePath->setURL (WebInterfacePluginSettings::phpExecutablePath());
 	username->setText(WebInterfacePluginSettings::username());
 	password->setText("_fakepass_");
@@ -61,6 +74,7 @@ bool WebInterfacePrefWidget::apply()
 	WebInterfacePluginSettings::setPort(port->value () );
 	WebInterfacePluginSettings::setForward(forward->isChecked());
 	WebInterfacePluginSettings::setSessionTTL(sessionTTL->value () );
+	WebInterfacePluginSettings::setSkin(interfaceSkinBox->currentText());
 	WebInterfacePluginSettings::setPhpExecutablePath(phpExecutablePath->url () );
 	if(!username->text().isEmpty() && !QString(password->password()).isEmpty() && QString(password->password())!="_fakepass_"){
 		WebInterfacePluginSettings::setUsername(username->text() );

@@ -90,7 +90,8 @@ namespace kt{
 		php_i=new PhpInterface(core);
 		php_h=new PhpHandler(php_i);
 		imgCache.setAutoDelete(true);
-		rootDir=QFileInfo(locate("data", "ktorrent/www/login.html")).dirPath();
+		QStringList dirList=KGlobal::instance()->dirs()->findDirs("data", "ktorrent/www");
+		rootDir=*(dirList.begin());
 		Out(SYS_WEB|LOG_DEBUG) << "WWW Root Directory "<< rootDir <<endl;
 		session.logged=false;
 	}
@@ -242,7 +243,8 @@ namespace kt{
 	}
 	void HttpServer::processRequest(QSocket* s)
 	{	
-		QFile f(rootDir+'/'+requestedFile);
+		QFile f(rootDir+'/'+WebInterfacePluginSettings::skin()+'/'+requestedFile);
+		fprintf(stderr, "%s\n", QString(rootDir+'/'+WebInterfacePluginSettings::skin()+'/'+requestedFile).latin1());
 		QFileInfo finfo(f);
 
 		//Logout
@@ -264,7 +266,7 @@ namespace kt{
 
 		if(!session.logged){
 			if(requestParams.contains("username") && requestParams.contains("password")){
-				KMD5 context(requestParams["password"]);
+				KMD5 context(requestParams["password"].utf8());
 				if(requestParams["username"]==WebInterfacePluginSettings::username() && context.hexDigest().data()==WebInterfacePluginSettings::password()){
 					session.logged=true;
 					Out(SYS_WEB|LOG_ALL) << s->peerAddress().toString() << " logged in"  << endl;
@@ -280,7 +282,7 @@ namespace kt{
 		if(!session.logged){
 			if(finfo.extension()!="ico" && finfo.extension()!="png" && finfo.exists()){
 				requestedFile="login.html";
-				f.setName(rootDir+'/'+requestedFile);
+				f.setName(rootDir+'/'+WebInterfacePluginSettings::skin()+'/'+requestedFile);
 				finfo.setFile(f);
 				session.sessionId=0;
 			}
@@ -307,6 +309,7 @@ namespace kt{
 		if(finfo.extension()=="html"){
 			QString dataFile;
 			dataFile=QString(f.readAll().data());
+			dataFile.truncate(dataFile.find("</html>"));
 			header="HTTP/1.1 200 OK\r\n";
 			header+="Server: ktorrent\r\n";
 			header+="Cache-Control: private\r\n";

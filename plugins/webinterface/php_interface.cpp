@@ -213,6 +213,14 @@ QMap<QString, QString>::Iterator it;
 					else
 						goto notsupported;
 					break;
+			/*	case 'l':
+					if(it.key()=="load_torrent"){
+						core->loadSilently(KURL::decode_string(it.data()));
+						}
+					else
+						goto notsupported;
+					break;
+			*/
 				case 'm':
 					if(it.key()=="maximum_downloads"){
 						core->setMaxDownloads(it.data().toInt());
