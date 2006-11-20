@@ -123,7 +123,7 @@ void KTorrentViewItem::update()
 	KLocale* loc = KGlobal::locale();
 	if (s.bytes_left_to_download == 0)
 	{
-	//	setText(7,i18n("finished"));
+		setText(7,QString::null);
 		eta = -1;
 	}
 	else if (s.running) 
