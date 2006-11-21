@@ -81,8 +81,8 @@ namespace bt
 		if (!cd)
 		{
 			unnecessary_data += p.getLength();
-			Out(SYS_DIO|LOG_DEBUG) << 
-					"Unnecessary piece, total unnecessary data : " << kt::BytesToString(unnecessary_data) << endl;
+//			Out(SYS_DIO|LOG_DEBUG) << 
+//					"Unnecessary piece, total unnecessary data : " << kt::BytesToString(unnecessary_data) << endl;
 			return;
 		}
 		
@@ -127,8 +127,8 @@ namespace bt
 		if (!ok)
 		{
 			unnecessary_data += p.getLength();
-			Out(SYS_DIO|LOG_DEBUG) << 
-					"Unnecessary piece, total unnecessary data : " << kt::BytesToString(unnecessary_data) << endl; 
+//			Out(SYS_DIO|LOG_DEBUG) << 
+//					"Unnecessary piece, total unnecessary data : " << kt::BytesToString(unnecessary_data) << endl; 
 		}
 	}
 	

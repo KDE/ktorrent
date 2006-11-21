@@ -82,6 +82,8 @@ int main(int argc, char **argv)
 					 "http://www.ktorrent.org/");
 	about.addAuthor("Joris Guisson", 0, "joris.guisson@gmail.com" );
 	about.addAuthor("Ivan Vasic",0,"ivasic@gmail.com");
+	about.addAuthor("Alan Jones",0,"skyphyr@gmail.com");
+	about.addAuthor("Diego R. Brogna",0,"dierbro@gmail.com");
 
 	about.addCredit("Mladen Babic",
 					I18N_NOOP("Application icon and a couple of others"),"bmladen@EUnet.yu");
