@@ -22,42 +22,41 @@
 		$a = 0;
 		foreach ($stats as $torrent) {
 			echo "<tr>";
-
-			$perc=$torrent[bytes_downloaded]*100/$torrent[total_bytes];
+			$perc = round(100.0 - ($torrent[bytes_left_to_download] / $torrent[total_bytes_to_download]) * 100.0, 2);
 			echo "<td><a href=\"torrent.php?id=$a\" >$torrent[torrent_name]</a></td>";
 				switch ($torrent[status]) {
 						case 0:
-   							echo "<td>NOT_STARTED</td>";
+   							echo "<td>Not Started</td>";
 							break;
 						case 1:
-  							echo "<td>SEEDING_COMPLETE</td>";
+  							echo "<td>Seeding Complete</td>";
    							break;
 						case 2:
-							echo "<td>DOWNLOAD_COMPLETE</td>";
+							echo "<td>Download Complete</td>";
 							break;
 						case 3:
-							echo "<td>SEEDING</td>";
+							echo "<td>Seeding</td>";
 							break;
 						case 4:
-							echo "<td>DOWNLOADING</td>";
+							echo "<td>Downloading</td>";
 							break;
 						case 5:
-							echo "<td>STALLED</td>";
+							echo "<td>Stalled</td>";
 							break;
 						case 6:
-							echo "<td>STOPPED</td>";
+							echo "<td>Stopped</td>";
 							break;
 						case 7:
-							echo "<td>ALLOCATING_DISKSPACE</td>";
+							echo "<td>Allocating Diskspace</td>";
 							break;
 						case 8:
-							echo "<td>ERROR</td>";
+							echo "<td>Error</td>";
 							break;
 						case 9:
-							echo "<td>QUEUED</td>";
+							echo "<td>Queued</td>";
 							break;
 						case 10:
-							echo "<td>CHECKING_DATA</td>";
+							echo "<td>Checking Data</td>";
 							break;
 						default:
 							echo "<td>Not supported Status</td>";
@@ -106,7 +105,10 @@
 <INPUT type="text" name="load_torrent">
 <INPUT type="submit" name="Load torrent" value="Load torrent"></tr>
 </FORM>
-
+<FORM method="post" enctype="multipart/form-data" action="interface.php">
+Local File:<INPUT type="file" name="load_torrent">
+<INPUT type="submit" name="Upload Torrent" value="Upload Torrent"></tr>
+</FORM>
 
 </body>
 </html>

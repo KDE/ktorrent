@@ -75,7 +75,7 @@ namespace kt {
 		~HttpServer();
 		void newConnection(int s);
 	private:
-		QString waitPostData(QSocket* s);
+		QString readPostData(QSocket* s, unsigned int size, bool up);
 		void parseRequest(QString request);
 		void parseHeaderFields(QStringList headerLines);
 		void processRequest(QSocket* s);

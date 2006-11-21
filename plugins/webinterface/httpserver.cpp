@@ -110,11 +110,24 @@ namespace kt{
 	}
 
 	void HttpServer::slotSocketReadyToRead(){
-		QString request, data;
+		QString request, data, line;
 		unsigned int size=0;
+		bool torrentUpload=false, sessionValid=false;
 		QSocket* socket = (QSocket*)sender();
 		
-		data.append(socket->readAll()); 
+		while(1)
+		{
+			line=socket->readLine();
+			if(line.isEmpty()){
+				if(socket->waitForMore(500)>0)
+					continue;
+				else
+					break;
+			}
+			if(line=="\r\n")
+				break;
+			data.append(line);
+		}
 
         	if ( !data.isEmpty() ) {
 			QStringList headerLines = QStringList::split("\r\n", data);
@@ -130,24 +143,33 @@ namespace kt{
 
 				if(requestLine[0]=="POST"){
 					request.append('?');
-
-					for ( QStringList::Iterator it = headerLines.begin(); it != headerLines.end(); ++it )
-						if((*it).contains("Content-Length:")){
+					
+					//process post Header
+					for(QStringList::Iterator it = headerLines.begin(); it != headerLines.end(); ++it)
+					{
+						if((*it).contains("Content-Type:") && (*it).contains("multipart/form-data")){
+							torrentUpload=true;
+							}
+						else if((*it).contains("Cookie:")){
+							QString l=(*it);
+							QStringList tokens = QStringList::split('=', l.remove("Cookie: "));
+							if(tokens[0]=="SESSID")
+								if(tokens[1].toInt()==session.sessionId)
+									sessionValid=true;
+						}
+						else if((*it).contains("Content-Length:")){
 							QStringList token=QStringList::split(":", (*it));
 							size=token[1].toInt();
 						}
-
-					if(size>0){
-						if(headerLines.last().length()==size)
-							request.append(headerLines.last());
-						else
-							request.append("");
 					}
+					if(torrentUpload && !sessionValid)
+						request.remove('?');	
 					else
-						request.append(waitPostData(socket));
+						request.append(readPostData(socket, size, torrentUpload));
+
 				}
 				Out(SYS_WEB| LOG_DEBUG) << "request from "<< socket->peerAddress().toString() << ": " <<  request << endl;
-
+		
 				parseRequest(request);
 				
 				parseHeaderFields(headerLines);
@@ -161,31 +183,81 @@ namespace kt{
 				Out(SYS_WEB| LOG_DEBUG) << "Sorry method "<< requestLine[0].latin1() <<"not yet supported." << endl;
 			}
 		}
+	
 		socket->close();
 
 	}
 	
-	QString HttpServer::waitPostData(QSocket* s)
+	QString HttpServer::readPostData(QSocket* s, unsigned int size, bool up)
 	{
-			unsigned int size=0;
-			QString data;
+		if(up){
+			QStringList header;
+			QString line, name;
+			while(1)
+                        {
+                                line=s->readLine();
+                                if(line.isEmpty()){
+                                        if(s->waitForMore(500)>0)
+                                                continue;
+                                        else
+                                                break;
+                                }
+				size-=line.length();
+                                if(line=="\r\n")
+                                        break;
+                                header.append(line);
+                        }
+                        for(QStringList::Iterator it = header.begin(); it != header.end(); ++it)
+                        {
+                                if((*it).contains("Content-Disposition:") && (*it).contains("filename=")){
+                                        QStringList tokens = QStringList::split(';', (*it).remove("Content-Disposition: "));
+                                        for(QStringList::Iterator it2 = tokens.begin(); it2 != tokens.end(); ++it2)
+                                                        if((*it2).contains("filename")){
+                                                                QStringList fileRecord = QStringList::split('=', (*it2));
+                                                                name=fileRecord[1].remove("\"").remove("\r\n");
+                                                        }
+                                }
+
+                        }
+
+			QFile file;
+			QStringList dirList=KGlobal::instance()->dirs()->findDirs("tmp", "");
+			QDir::setCurrent( *(dirList.begin()) );
+			file.setName(name);
+
+			if(file.exists())
+				do{
+					file.setName(QString("%1-webinterface.torrent").arg(rand()));
+				}while(file.exists());
+
+			file.open( IO_WriteOnly);
+			
 			do{
-			data.append(s->readAll());
-			}while(s->waitForMore(500)>0);
+				file.writeBlock(s->readAll());
+			}while(s->waitForMore(500)>0 && file.size()<size);
 
-			QStringList tmp = QStringList::split("\r\n", data);
-			for ( QStringList::Iterator it = tmp.begin(); it != tmp.end(); ++it )
-				if((*it).contains("Content-Length:")){
-					QStringList token=QStringList::split(":", (*it));
-					size=token[1].toInt();
-				}
-
+			file.close();
+			
 			if(size>0){
-				if(tmp.last().length()==size)
-					return tmp.last();
+				if(file.size()==size)
+					return QString("load_torrent=")+KURL::encode_string(QString("file://%1").arg(QFileInfo(file).absFilePath()));
 			}
 			
 			return QString("");
+		}
+		else{
+			QString data;
+			do{
+			data.append(s->readAll());
+			}while(s->waitForMore(500)>0 && data.length()<size);
+
+			if(size>0){
+				if(data.length()==size)
+					return data;
+			}
+			
+			return QString("");
+		}
 	}
 
 	void HttpServer::slotConnectionClosed()
@@ -282,6 +354,7 @@ namespace kt{
 		if(!session.logged){
 			if(finfo.extension()!="ico" && finfo.extension()!="png" && finfo.exists()){
 				requestedFile="login.html";
+				Out(SYS_WEB| LOG_DEBUG) << "gone wrong" << endl;
 				f.setName(rootDir+'/'+WebInterfacePluginSettings::skin()+'/'+requestedFile);
 				finfo.setFile(f);
 				session.sessionId=0;
@@ -299,7 +372,7 @@ namespace kt{
 			header+="Server: ktorrent\r\n";
 			header+="Cache-Control: private\r\n";
 			header+="Connection: close\r\n";
-			header+=QDateTime::currentDateTime(Qt::UTC).toString("Date: ddd, dd MMM yyy hh:mm:ss UTC");
+			header+=QString("Date: ")+QDateTime::currentDateTime(Qt::UTC).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");			
 			data=HTTP_404_ERROR;
 			header+=QString("Content-Length: %1\r\n\r\n").arg(data.length());
 			sendHtmlPage(s, QString(header+data).latin1());
@@ -313,7 +386,7 @@ namespace kt{
 			header+="Server: ktorrent\r\n";
 			header+="Cache-Control: private\r\n";
 			header+="Connection: close\r\n";
-			header+=QDateTime::currentDateTime(Qt::UTC).toString("Date: ddd, dd MMM yyy hh:mm:ss UTC");
+			header+=QString("Date: ")+QDateTime::currentDateTime(Qt::UTC).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
 			header+="Content-Type: text/html\r\n";
 			header+=QString("Set-Cookie: SESSID=%1\r\n").arg(session.sessionId);
 			header+=QString("Content-Length: %1\r\n\r\n").arg(f.size());
@@ -328,7 +401,7 @@ namespace kt{
 				header+="Server: ktorrent\r\n";
 				header+="Cache-Control: private\r\n";
 				header+="Connection: close\r\n";
-				header+=QDateTime::currentDateTime(Qt::UTC).toString("Date: ddd, dd MMM yyy hh:mm:ss UTC");
+				header+=QString("Date: ")+QDateTime::currentDateTime(Qt::UTC).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
 				header+="Content-Type: text/html\r\n";
 				header+=QString("Set-Cookie: SESSID=%1\r\n").arg(session.sessionId);
 				header+=QString("Content-Length: %1\r\n\r\n").arg(php_h->getOutput().length());
@@ -341,7 +414,7 @@ namespace kt{
 				header+="Server: ktorrent\r\n";
 				header+="Cache-Control: private\r\n";
 				header+="Connection: close\r\n";
-				header+=QDateTime::currentDateTime(Qt::UTC).toString("Date: ddd, dd MMM yyy hh:mm:ss UTC");
+				header+=QString("Date: ")+QDateTime::currentDateTime(Qt::UTC).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
 				data=HTTP_500_ERROR;
 				data+="\nPHP executable error";
 				header+=QString("Content-Length: %1\r\n\r\n").arg(data.length());

@@ -72,17 +72,15 @@
 	echo "</tr>";
 	echo "<tr>";
 	echo "<td><strong>Down speed: </strong></td>";
-	$speed=$t[download_rate]/1024;
-	echo "<td>$speed kb/s</td>";
+	echo "<td>$t[download_rate]</td>";
 	echo "</tr>";
 	echo "<tr>";
 	echo "<td><strong>Up speed: </strong></td>";
-	$speed=$t[upload_rate]/1024;
-	echo "<td>$speed kb/s</td>";
+	echo "<td>$t[upload_rate]</td>";
 	echo "</tr>";
 	echo "<tr>";
 	echo "<td><strong>Complete: </strong></td>";
-	$perc=$t[bytes_downloaded]*100/$t[total_bytes];
+	$perc = round(100.0 - ($t[bytes_left_to_download] / $t[total_bytes_to_download]) * 100.0, 2);
 	echo "<td>$perc %</td>";
 	echo "</tr>";
       ?>
