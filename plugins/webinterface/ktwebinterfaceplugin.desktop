@@ -1,9 +1,11 @@
 [Desktop Entry]
 Name=WebInterface
+Name[bg]=Уеб-интерфейс
 Name[da]=Web-grænseflade
 Name[pt]=Interface Web
 Name[pt_BR]=Interface Web
 Name[sv]=Webb-gränssnitt
+Name[uk]=Веб-інтерфейс
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktwebinterfaceplugin
