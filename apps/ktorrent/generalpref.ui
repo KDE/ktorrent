@@ -8,7 +8,7 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>600</width>
+            <width>603</width>
             <height>657</height>
         </rect>
     </property>
@@ -110,7 +110,7 @@
                         <cstring>show_popups</cstring>
                     </property>
                     <property name="text">
-                        <string>Show "torrent finished" popup messages</string>
+                        <string>Show system tray popup messages</string>
                     </property>
                     <property name="accel">
                         <string></string>
@@ -129,7 +129,7 @@
                                 <cstring>textLabel1_3_2_2_2_2</cstring>
                             </property>
                             <property name="text">
-                                <string>Upload bandwidth (in kb/s):</string>
+                                <string>Upload bandwidth (in KB/sec):</string>
                             </property>
                         </widget>
                         <widget class="KIntSpinBox" row="1" column="1">
@@ -151,7 +151,7 @@
                                 <cstring>textLabel1_3_2_2_2</cstring>
                             </property>
                             <property name="text">
-                                <string>Download bandwidth (in kb/s):</string>
+                                <string>Download bandwidth (in KB/sec):</string>
                             </property>
                         </widget>
                         <widget class="KIntSpinBox" row="0" column="1">
@@ -237,6 +237,12 @@
                     <property name="text">
                         <string>&amp;Use DHT to get additional peers</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+U</string>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string></string>
+                    </property>
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
@@ -294,7 +300,7 @@
                 <string>Encryption</string>
             </property>
             <property name="toolTip" stdset="0">
-                <string>Secure connection with other clients. May also help if your ISP is shaping your traffic.</string>
+                <string></string>
             </property>
             <vbox>
                 <property name="name">
@@ -309,6 +315,9 @@
                     </property>
                     <property name="accel">
                         <string></string>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Protocol encryption is used to prevent ISP's from slowing down bittorrent connections.</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox">

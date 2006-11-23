@@ -90,21 +90,20 @@ void TrayIcon::drawSpeedBar(int downloadSpeed, int uploadSpeed, int downloadBand
 
 void TrayIcon::finished(TorrentInterface* tc)
 {
+	if (!Settings::showPopups())
+		return;
+	
 	const TorrentStats & s = tc->getStats();
 	double speed_up = (double)s.bytes_uploaded / 1024.0;
 	double speed_down = (double)(s.bytes_downloaded - s.imported_bytes)/ 1024.0;
 
-	if (Settings::showPopups())
-	{
-		QString msg = i18n("<b>%1</b> has completed downloading."
+	QString msg = i18n("<b>%1</b> has completed downloading."
 						"<br>Average speed: %2 DL / %3 UL.")
 						.arg(s.torrent_name)
 						.arg(KBytesPerSecToString(speed_down / tc->getRunningTimeDL()))
 						.arg(KBytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
-		KPassivePopup::message(i18n("Download completed"),
-							   msg,loadIcon("ktorrent"), this);
-	}
+	KPassivePopup::message(i18n("Download completed"),msg,loadIcon("ktorrent"), this);
 }
 
 void TrayIcon::maxShareRatioReached(kt::TorrentInterface* tc)
