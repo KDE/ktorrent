@@ -124,6 +124,7 @@ QString PhpCodeGenerator::globalInfo()
 	ret.append(QString("\"max_download_speed\" => \"%1\",").arg(core->getMaxDownloadSpeed()));
 	ret.append(QString("\"max_upload_speed\" => \"%1\",").arg(core->getMaxUploadSpeed()));
 	ret.append(QString("\"max_downloads\" => \"%1\",").arg(Settings::maxDownloads()));
+	ret.append(QString("\"max_seeds\"=> \"%1\",").arg(Settings::maxSeeds()));
 	ret.append(QString("\"dht_support\" => \"%1\",").arg(Settings::dhtSupport()));
 	ret.append(QString("\"use_encryption\" => \"%1\"").arg(Settings::useEncryption()));
 	ret.append(");\n}\n");

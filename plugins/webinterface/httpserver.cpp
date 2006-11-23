@@ -168,7 +168,7 @@ namespace kt{
 						request.append(readPostData(socket, size, torrentUpload));
 
 				}
-				Out(SYS_WEB| LOG_DEBUG) << "request from "<< socket->peerAddress().toString() << ": " <<  request << endl;
+				Out(SYS_WEB| LOG_DEBUG) << "request from "<< socket->peerAddress().toString() << endl;
 		
 				parseRequest(request);
 				
@@ -282,7 +282,8 @@ namespace kt{
 		for ( QStringList::Iterator it = tokens.begin(); it != tokens.end(); ++it ) {
 			QStringList req=QStringList::split( '=', *it );
 			requestParams[req[0]]=req[1];
-			Out(SYS_WEB| LOG_DEBUG) << "Request key [" << req[0].latin1() << "] value [" << req[1].latin1() <<"]" << endl;
+			if(req[0]!="password")
+				Out(SYS_WEB| LOG_DEBUG) << "Request key [" << req[0].latin1() << "] value [" << req[1].latin1() <<"]" << endl;
 		}
 	}
 

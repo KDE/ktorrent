@@ -31,7 +31,7 @@
 		echo"</tr>";
 		echo "<tr>";
 			echo "<td>Maximum seeds (0 is no limit): </td>";
-			echo "<td><INPUT type=\"text\" name=\"max_seeds\" value=\"$globalinfo[max_seeds]\"></td>";
+			echo "<td><INPUT type=\"text\" name=\"maximum_seeds\" value=\"$globalinfo[max_seeds]\"></td>";
 		echo"</tr>";
 		echo "<tr><td><INPUT type=\"submit\"></tr></td>";
 		echo "</FORM>";
