@@ -47,7 +47,6 @@ namespace bt
 	{
 		active_job = active_scrape_job = 0;
 		
-		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 		interval = 5 * 60; // default interval 5 minutes
 		failures = 0;
 		seeders = leechers = 0;
@@ -62,9 +61,6 @@ namespace bt
 	{
 		event = "started";
 		doRequest();
-		// time out after 30 seconds
-		timer.stop();
-		timer.start(30000);
 	}
 	
 	void HTTPTracker::stop()
@@ -74,7 +70,6 @@ namespace bt
 		
 		event = "stopped";
 		doRequest();
-		timer.stop();
 		started = false;
 	}
 	
@@ -83,9 +78,6 @@ namespace bt
 		event = "completed";
 		doRequest();
 		event = QString::null;
-		// time out after 30 seconds
-		timer.stop();
-		timer.start(30000);
 	}
 	
 	void HTTPTracker::manualUpdate()
@@ -93,9 +85,6 @@ namespace bt
 		if (!started)
 			event = "started";
 		doRequest();
-		// time out after 30 seconds
-		timer.stop();
-		timer.start(30000);
 	}
 	
 	void HTTPTracker::scrape()
@@ -372,7 +361,6 @@ namespace bt
 			Out(SYS_TRK|LOG_IMPORTANT) << "Error : " << j->errorString() << endl;
 			active_job = 0;
 			
-			timer.stop();
 			if (event != "stopped")
 			{
 				failures++;
@@ -385,7 +373,6 @@ namespace bt
 		}
 		else
 		{
-			timer.stop();
 			KIO::StoredTransferJob* st = (KIO::StoredTransferJob*)active_job;
 			active_job = 0;
 			if (event != "stopped")
@@ -416,47 +403,5 @@ namespace bt
 		}
 	}
 
-	void HTTPTracker::onTimeout()
-	{
-		if (active_job)
-		{
-			// current job timed out kill it
-			active_job->kill();
-			active_job = 0;
-			failures++;
-			requestFailed(i18n("Tracker request timed out"));
-			
-			// try again 
-			if (event != "stopped" && started)
-			{
-				failures++;
-				timer.stop();
-				if (failures < 5)
-					timer.start(30000);
-				else
-					timer.start(5 * 60 * 1000);
-			}
-			else
-			{
-				timer.stop();
-				stopDone();
-			}
-		}
-		else
-		{
-			if (event != "stopped" && started)
-			{
-				// do a new request
-				doRequest();
-				timer.stop();
-				// timeout in 30 seconds
-				timer.start(30000);
-			}
-			else
-			{
-				timer.stop();
-			}
-		}
-	}
 }
 #include "httptracker.moc"

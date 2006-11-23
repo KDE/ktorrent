@@ -55,14 +55,12 @@ namespace bt
 	private slots:
 		void onAnnounceResult(KIO::Job* j);
 		void onScrapeResult(KIO::Job* j);
-		void onTimeout();
 
 	private:
 		void doRequest();
 		bool updateData(const QByteArray & data);
 		
 	private:
-		QTimer timer;
 		KIO::Job* active_job;
 		KIO::Job* active_scrape_job;
 		QString event;
