@@ -41,7 +41,7 @@
 #define RAWREAD_BUFF_SIZE	2048
 
 #define HTTP_404_ERROR "<html><head><title>HTTP/1.1 404 Not Found</title></head><body>HTTP/1.1 404 Not Found</body</html>"
-#define HTTP_500_ERROR "<html><head><title>HTTP/1.1 500 Internal Server Error</title></head><body>HTTP/1.1 Internal Server Error</body</html>"
+#define HTTP_500_ERROR "<html><head><title>HTTP/1.1 500 Internal Server Error</title></head><body>HTTP/1.1 Internal Server Error<br>%1</body</html>"
 
 using namespace bt;
 
@@ -416,8 +416,7 @@ namespace kt{
 				header+="Cache-Control: private\r\n";
 				header+="Connection: close\r\n";
 				header+=QString("Date: ")+QDateTime::currentDateTime(Qt::UTC).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
-				data=HTTP_500_ERROR;
-				data+="\nPHP executable error";
+				data=QString(HTTP_500_ERROR).arg("PHP executable error");
 				header+=QString("Content-Length: %1\r\n\r\n").arg(data.length());
 				sendHtmlPage(s, QString(header+data).latin1());
 				return;
