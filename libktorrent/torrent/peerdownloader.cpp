@@ -91,7 +91,7 @@ namespace bt
 
 	bool PeerDownloader::canAddRequest() const
 	{
-		return wait_queue.count() < 500;//max_wait_queue_size;
+		return wait_queue.count() < max_wait_queue_size;
 	}
 
 	Uint32 PeerDownloader::getNumRequests() const 
