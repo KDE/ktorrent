@@ -73,10 +73,11 @@ namespace bt
 		connect(peer,SIGNAL(piece(const Piece& )),this,SLOT(piece(const Piece& )));
 		connect(peer,SIGNAL(destroyed()),this,SLOT(peerDestroyed()));
 		nearly_done = false;
+		max_wait_queue_size = 25;
 	}
 
 
-	PeerDownloader::~PeerDownloader()
+	PeerDownloader::~PeerDownloader() 
 	{
 	}
 #if 0
@@ -90,7 +91,7 @@ namespace bt
 
 	bool PeerDownloader::canAddRequest() const
 	{
-		return wait_queue.count() < 50;
+		return wait_queue.count() < 500;//max_wait_queue_size;
 	}
 
 	Uint32 PeerDownloader::getNumRequests() const 
@@ -263,25 +264,18 @@ namespace bt
 	Uint32 PeerDownloader::getMaxChunkDownloads() const
 	{
 		// get the download rate in KB/sec
-		Uint32 rate_kbs = peer->getDownloadRate() / 1024;
-		Uint32 num_extra = 0;
-		if (rate_kbs >= 50)
-			num_extra = 1;
-		else if (rate_kbs >= 100)
-			num_extra = 2;
-		else if (rate_kbs >= 150)
-			num_extra = 3;
-		
-		// also take into account the size of each chunk
-		// if a chunk has less then 16 pieces we multiply by 16 / num_pieces_per_chunk
-		Uint32 mul_factor = 1;
+		Uint32 rate_kbs = peer->getDownloadRate();
+		rate_kbs = rate_kbs / 1024;
+		Uint32 num_extra = rate_kbs / 50;
 		
 		if (chunk_size >= 16)
-			mul_factor = 1;
+		{
+			return 1 + 16 * num_extra / chunk_size;
+		}
 		else
-			mul_factor = 16 / chunk_size;
-		 
-		return mul_factor * (1 + num_extra);
+		{
+			return 1 + (16 / chunk_size) * num_extra;
+		}
 	}
 	
 	void PeerDownloader::choked()
@@ -329,6 +323,10 @@ namespace bt
 			reqs.append(r);
 			peer->getPacketWriter().sendRequest(req);
 		}
+		
+		max_wait_queue_size = 2*max_reqs;
+		if (max_wait_queue_size < 10)
+			max_wait_queue_size = 10;
 	}
 }
 

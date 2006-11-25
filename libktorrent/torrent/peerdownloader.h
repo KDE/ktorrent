@@ -236,6 +236,7 @@ namespace bt
 		Peer* peer;
 		QValueList<TimeStampedRequest> reqs;
 		QValueList<Request> wait_queue;
+		Uint32 max_wait_queue_size;
 		int grabbed;
 		AllowedFastSet allowed_fast;
 		Uint32 chunk_size;
