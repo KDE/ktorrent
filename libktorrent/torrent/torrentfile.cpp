@@ -70,20 +70,19 @@ namespace bt
 		{
 			priority = EXCLUDED;
 			if(m_emitDlStatusChanged)
-				emit downloadStatusChanged(this,!dnd);
+				emit downloadPriorityChanged(this,priority);
 		}
 		if (priority == EXCLUDED && (!dnd))
 		{
 			priority = NORMAL_PRIORITY;
 			if(m_emitDlStatusChanged)
-				emit downloadStatusChanged(this,!dnd);
+				emit downloadPriorityChanged(this,priority);
 		}
 	}
 	
 	void TorrentFile::emitDownloadStatusChanged()
 	{
-		if(priority == EXCLUDED)
-			emit downloadStatusChanged(this, false);
+		emit downloadPriorityChanged(this,priority);
 	}
 
 

@@ -76,14 +76,9 @@ namespace bt
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
 			TorrentFile & tf = tor.getFile(i);
-			connect(&tf,SIGNAL(downloadStatusChanged(TorrentFile*, bool )),
-					 this,SLOT(downloadStatusChanged(TorrentFile*, bool )));
 			connect(&tf,SIGNAL(downloadPriorityChanged(TorrentFile*, Priority )),
 					 this,SLOT(downloadPriorityChanged(TorrentFile*, Priority )));
-			if (tf.doNotDownload())
-			{
-				downloadStatusChanged(&tf,false);
-			}
+			
 			if (tf.getPriority() != NORMAL_PRIORITY)
 			{
 				downloadPriorityChanged(&tf,tf.getPriority());
@@ -823,17 +818,18 @@ namespace bt
 				if (*i == tf->getIndex())
 					continue;
 				
-				if (tf->getPriority() > maxp)
-					maxp = tf->getPriority();
-				
-				if (!tor.getFile(*i).doNotDownload() && !modified)
+				const TorrentFile & other = tor.getFile(*i);
+				if (!other.doNotDownload())
 				{
-					if (first != last)
+					if (first != last && !modified)
 					{
 						first++;
 						reprioritise_border_chunk = true;
 						modified = true;
 					}
+					
+					if (other.getPriority() > maxp)
+						maxp = other.getPriority();
 				}
 			}
 			
@@ -851,17 +847,18 @@ namespace bt
 				if (*i == tf->getIndex())
 					continue;
 				
-				if (tf->getPriority() > maxp)
-					maxp = tf->getPriority();
-				
-				if (!tor.getFile(*i).doNotDownload() && !modified)
+				const TorrentFile & other = tor.getFile(*i);
+				if (!other.doNotDownload())
 				{
-					if (last != first && last > 0)
+					if (first != last && last > 0 && !modified)
 					{
-						modified = true;
-						reprioritise_border_chunk = true;
 						last--;
+						reprioritise_border_chunk = true;
+						modified = true;
 					}
+					
+					if (other.getPriority() > maxp)
+						maxp = other.getPriority();
 				}
 			}
 			

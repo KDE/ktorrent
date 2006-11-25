@@ -140,13 +140,10 @@ namespace bt
 		
 	signals:
 		/**
-		 * Signal emitted when the Priority variable changes from or to EXCLUDED.
+		 * Signal emitted when the Priority variable changes.
 		 * @param tf The TorrentFile which emitted the signal
-		 * @param download Download the file or not
+		 * @param newpriority THe new priority of the file
 		 */
-		void downloadStatusChanged(TorrentFile* tf,bool download);
-			
-		/// signal emitted when the Priority variable changes
 		void downloadPriorityChanged(TorrentFile* tf,Priority newpriority);
 	};
 
