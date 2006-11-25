@@ -28,7 +28,7 @@
                     <cstring>tab</cstring>
                 </property>
                 <attribute name="title">
-                    <string>Download</string>
+                    <string>Downloads</string>
                 </attribute>
                 <grid>
                     <property name="name">
