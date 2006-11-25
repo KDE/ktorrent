@@ -260,13 +260,33 @@ namespace kt
 		
 		for (int i=0; i<m_regExps.count(); i++)
 		{
-			if ((*m_regExps.at(i)).isEmpty())
+			if (m_regExps[i].isEmpty())
 				continue;
 				
-			regEx.setPattern(*m_regExps.at(i));
-			if (!article.title().contains(regEx) && !article.link().prettyURL().contains(regEx) && !article.description().contains(regEx))
+			QString curExp = m_regExps[i];
+			bool invert=false;
+			
+			if (curExp.startsWith( "!" ))
+				{
+				invert=true;
+				curExp = curExp.remove( 0, 1);
+				}
+			
+			regEx.setPattern(curExp);
+			
+			if (!invert)
 			{
-				return false;
+				if (!article.title().contains(regEx) && !article.link().prettyURL().contains(regEx) && !article.description().contains(regEx) )
+				{
+					return false;
+				}
+			}
+			else
+			{
+				if (article.title().contains(regEx) || article.link().prettyURL().contains(regEx) || article.description().contains(regEx) )
+				{
+					return false;
+				}
 			}
 		}
 		
