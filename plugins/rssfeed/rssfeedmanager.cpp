@@ -774,7 +774,10 @@ namespace kt
 			for (int j=feedArticles->selection(i).topRow(); j<endRow; j++)
 			{
 				curDownload = new RssLinkDownloader(m_core, feedArticles->text(j, 2));
-				connect(curDownload, SIGNAL(linkDownloaded( QString, int )), feeds.at(currentFeed), SLOT(setDownloaded(QString, int)) );
+				for (int i=0; i<feeds.count(); i++)
+					{
+					connect(curDownload, SIGNAL(linkDownloaded( QString, int )), feeds.at(i), SLOT(setDownloaded(QString, int)) );
+					}
 			}
 		}
 	}
@@ -1229,7 +1232,11 @@ namespace kt
 			//we were passed a filter - so just scan it with that one
 			if (filter->scanArticle(article))
 			{
-				new RssLinkDownloader(m_core, article.link().prettyURL(), filter);
+				RssLinkDownloader * curDownload = new RssLinkDownloader(m_core, article.link().prettyURL(), filter);
+				for (int i=0; i<feeds.count(); i++)
+					{
+					connect(curDownload, SIGNAL(linkDownloaded( QString, int )), feeds.at(i), SLOT(setDownloaded(QString, int)) );
+					}
 			}
 		}
 		else
@@ -1238,7 +1245,11 @@ namespace kt
 			{
 				if (acceptFilters.at(i)->scanArticle(article))
 				{
-					new RssLinkDownloader(m_core, article.link().prettyURL(), acceptFilters.at(i));
+				RssLinkDownloader * curDownload = new RssLinkDownloader(m_core, article.link().prettyURL(), filter);
+				for (int i=0; i<feeds.count(); i++)
+					{
+					connect(curDownload, SIGNAL(linkDownloaded( QString, int )), feeds.at(i), SLOT(setDownloaded(QString, int)) );
+					}
 				}
 			}
 		}
