@@ -135,10 +135,12 @@ namespace kt
 							if (curFilter)
 							{
 								m_core->loadSilently( curSubLink );
+								emit linkDownloaded( curLink, 3);
 							}
 							else
 							{
 								m_core->load( curSubLink );
+								emit linkDownloaded( curLink, 1);
 							}
 							
 							//delete ourself and finish

@@ -31,6 +31,7 @@
 #include <qstring.h>
 
 #include "rssfilter.h"
+#include "rssarticle.h"
 
 using namespace RSS;
 
@@ -52,11 +53,15 @@ namespace kt
 			 * Default constructor.
 			 */
 			RssLinkDownloader(CoreInterface* core, QString link, RssFilter * filter = 0, QObject * parent = 0);
+			
  			~RssLinkDownloader();
  			
 
 		public slots:
 			void processLink(KIO::Job* jobStatus);
+			
+		signals:
+			void linkDownloaded( QString link, int downloaded );
 			
 		private:
 			KIO::StoredTransferJob * curFile;

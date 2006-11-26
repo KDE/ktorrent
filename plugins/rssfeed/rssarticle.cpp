@@ -35,6 +35,7 @@ namespace kt
 			m_description = article.description();
 			m_pubDate = article.pubDate();
 			m_guid = article.guid();
+			m_downloaded = 0;
 		}
 	
 	RssArticle::RssArticle(const RssArticle &other)
@@ -42,13 +43,14 @@ namespace kt
 			*this = other;
 		}
 	
-	RssArticle::RssArticle(QString title, KURL link, QString description, QDateTime pubDate, QString guid)
+	RssArticle::RssArticle(QString title, KURL link, QString description, QDateTime pubDate, QString guid, int downloaded)
 		{
 			m_title = title;
 			m_link = link;
 			m_description = description;
 			m_pubDate = pubDate;
 			m_guid = guid;
+			m_downloaded = downloaded;
 		}
 	
 	RssArticle &RssArticle::operator=(const RssArticle &other)
@@ -60,6 +62,7 @@ namespace kt
 			m_description = other.description();
 			m_pubDate = other.pubDate();
 			m_guid = other.guid();
+			m_downloaded = other.downloaded();
 		}
 		return *this;
 	}
@@ -73,7 +76,7 @@ namespace kt
 	
 	QDataStream &operator<<( QDataStream &out, const RssArticle &article )
 		{
-		out << article.title() << article.link() << article.description() << article.pubDate() << article.guid();
+		out << article.title() << article.link() << article.description() << article.pubDate() << article.guid() << article.downloaded();
 		
 		return out;
 		}
@@ -85,8 +88,9 @@ namespace kt
 		QString description;
 		QDateTime pubDate;
 		QString guid;
-		in >> title >> link >> description >> pubDate >> guid;
-		article = RssArticle(title, link, description, pubDate, guid);
+		int downloaded;
+		in >> title >> link >> description >> pubDate >> guid >> downloaded;
+		article = RssArticle(title, link, description, pubDate, guid, downloaded);
 		
 		return in;
 		}

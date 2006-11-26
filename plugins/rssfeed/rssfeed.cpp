@@ -25,6 +25,7 @@
 #include <kio/netaccess.h>
 #include <qfile.h>
 #include <qapplication.h>
+#include <qdir.h>
 
 namespace kt
 {
@@ -179,7 +180,9 @@ namespace kt
 	
 	QString RssFeed::getFilename()
 	{
-		return KGlobal::dirs()->saveLocation("data","ktorrent") + m_feedUrl.prettyURL(-1).replace("/", "_").replace(":", "_") + ".ktr";
+		QDir directory;
+		directory.mkdir(KGlobal::dirs()->saveLocation("data","ktorrent") + "rssfeeds");
+		return KGlobal::dirs()->saveLocation("data","ktorrent") + "rssfeeds/" + m_feedUrl.prettyURL(-1).replace("/", "_").replace(":", "_") + ".ktr";
 		
 	}
 	
@@ -307,6 +310,26 @@ namespace kt
 			this, SLOT( feedLoaded( Loader *, Document, Status ) ) );
 		feedLoader->deleteLater();
 
+	}
+	
+	void RssFeed::setDownloaded(QString link, int downloaded)
+	{
+		bool changed = false;
+		
+		RssArticle::List::iterator it;
+		for ( it = m_articles.begin(); it != m_articles.end(); it++ )
+			{
+			if ((*it).link().prettyURL() == link)
+				{
+				(*it).setDownloaded( downloaded );
+				changed = true;
+				}
+			}
+		
+		if (changed)
+		{
+			emit articlesChanged(m_articles);
+		}	
 	}
 	
 	QDataStream &operator<<( QDataStream &out, const RssFeed &feed )

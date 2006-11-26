@@ -85,6 +85,8 @@ namespace kt
 			void setIgnoreTTL( bool ignoreTTL );
 			void saveArticles();
 			
+			void setDownloaded(QString link, int downloaded);
+			
 		signals:
 			void feedUrlChanged( const KURL& url );
 			void activeChanged( bool active );

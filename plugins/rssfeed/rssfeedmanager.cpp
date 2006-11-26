@@ -707,7 +707,16 @@ namespace kt
 		feedArticles->setNumRows(articles.count());
 		for (int i=0; i<articles.count(); i++)
 			{
-			feedArticles->setText(i, 0, articles[i].title());
+			QString info;
+			if (articles[i].downloaded()==1)
+				{
+				info = ": Manually downloaded";
+				}
+			else if (articles[i].downloaded()==3)
+				{
+				info = ": Automatically downloaded";
+				}
+			feedArticles->setText(i, 0, articles[i].title() + info);
 			feedArticles->setText(i, 1, articles[i].description());
 			feedArticles->setText(i, 2, articles[i].link().prettyURL());
 			}
@@ -761,9 +770,11 @@ namespace kt
 		for (int i=0; i<feedArticles->numSelections(); i++)
 		{
 			int endRow = feedArticles->selection(i).topRow() + feedArticles->selection(i).numRows(); 
+			RssLinkDownloader * curDownload;
 			for (int j=feedArticles->selection(i).topRow(); j<endRow; j++)
 			{
-				new RssLinkDownloader(m_core, feedArticles->text(j, 2));
+				curDownload = new RssLinkDownloader(m_core, feedArticles->text(j, 2));
+				connect(curDownload, SIGNAL(linkDownloaded( QString, int )), feeds.at(currentFeed), SLOT(setDownloaded(QString, int)) );
 			}
 		}
 	}

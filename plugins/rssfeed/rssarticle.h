@@ -51,15 +51,17 @@ namespace kt
 			RssArticle(const RssArticle &other);
  			RssArticle &operator=(const RssArticle &other);
  			bool operator==(const RssArticle &other) const;
-			RssArticle(QString title, KURL link, QString description, QDateTime pubDate, QString guid);
+			RssArticle(QString title, KURL link, QString description, QDateTime pubDate, QString guid, int downloaded = 0);
 			
 			void setTitle(const QString& title) { m_title=title; }
+			void setDownloaded(const int downloaded) { m_downloaded=downloaded; }
 			
 			QString title() const { return m_title; }
 			KURL link() const { return m_link; }
 			QString description() const { return m_description; }
 			QDateTime pubDate() const { return m_pubDate; }
 			QString guid() const { return m_guid; }
+			int downloaded() const { return m_downloaded; }
 			
 			~RssArticle();
 
@@ -68,7 +70,8 @@ namespace kt
 			QString m_title;
 			QString m_description;
 			QDateTime m_pubDate;
-			QString m_guid;	
+			QString m_guid;
+			int m_downloaded;
 	};
 	
 	QDataStream &operator<<( QDataStream &out, const RssArticle &article );
