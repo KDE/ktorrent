@@ -184,7 +184,7 @@
                                                 <bool>true</bool>
                                             </property>
                                             <property name="selectionMode">
-                                                <enum>Multi</enum>
+                                                <enum>MultiRow</enum>
                                             </property>
                                         </widget>
                                     </grid>
@@ -614,7 +614,7 @@
                                         <property name="name">
                                             <cstring>unnamed</cstring>
                                         </property>
-                                        <widget class="Line" row="1" column="0" rowspan="1" colspan="2">
+                                        <widget class="Line" row="1" column="0" rowspan="1" colspan="3">
                                             <property name="name">
                                                 <cstring>line1</cstring>
                                             </property>
@@ -631,7 +631,7 @@
                                                 <enum>Horizontal</enum>
                                             </property>
                                         </widget>
-                                        <widget class="QLayoutWidget" row="2" column="0" rowspan="1" colspan="2">
+                                        <widget class="QLayoutWidget" row="2" column="0" rowspan="1" colspan="3">
                                             <property name="name">
                                                 <cstring>layout30</cstring>
                                             </property>
@@ -750,6 +750,17 @@
                                         </widget>
                                         <widget class="QCheckBox" row="0" column="1">
                                             <property name="name">
+                                                <cstring>downloadProper</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Download "Proper" ReReleases</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string></string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QCheckBox" row="0" column="2">
+                                            <property name="name">
                                                 <cstring>filterSansEpisode</cstring>
                                             </property>
                                             <property name="text">
@@ -866,17 +877,6 @@
                                                 </size>
                                             </property>
                                         </spacer>
-                                        <widget class="QPushButton" row="1" column="2">
-                                            <property name="name">
-                                                <cstring>newFilterMatch</cstring>
-                                            </property>
-                                            <property name="text">
-                                                <string>New</string>
-                                            </property>
-                                            <property name="accel">
-                                                <string></string>
-                                            </property>
-                                        </widget>
                                         <widget class="QPushButton" row="1" column="0">
                                             <property name="name">
                                                 <cstring>downloadFilterMatch</cstring>
@@ -917,6 +917,9 @@
                                             </property>
                                             <property name="readOnly">
                                                 <bool>true</bool>
+                                            </property>
+                                            <property name="selectionMode">
+                                                <enum>MultiRow</enum>
                                             </property>
                                         </widget>
                                     </grid>

@@ -267,6 +267,7 @@ namespace kt
 			if (m_title.isEmpty() || m_title == QString("New"))
 			{
 				setTitle(doc.title());
+				emit updateTitle(doc.title());
 			}
 			
 			if (!m_ignoreTTL)

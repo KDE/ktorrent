@@ -65,6 +65,7 @@ namespace kt
 			void updateArticles(const RssArticle::List& articles);
 			void downloadSelectedArticles();
 			void downloadSelectedMatches();
+			void deleteSelectedMatches();
 			
 			void changedActiveAcceptFilter();
 			void changedActiveRejectFilter();
@@ -100,6 +101,9 @@ namespace kt
 			
 			void testTextChanged();
 			void testFilter();
+			
+			void setFilterTitle(const QString& title);
+			void setFeedTitle(const QString& title);
 
 		private:
 			CoreInterface* m_core;

@@ -90,9 +90,8 @@ namespace kt
 		filterMatches->setColumnWidth(2, 180);
 		filterMatches->horizontalHeader()->setStretchEnabled(true, 3);
 		
-		//hide the new and delete for filter matches for now - will see later if it's worth implementing
-		newFilterMatch->hide();
-		deleteFilterMatch->hide();
+		//hide the proper rerelease download for now
+		downloadProper->hide();
 		
 		loadFeedList();
 		loadFilterList();
@@ -121,9 +120,10 @@ namespace kt
 		connect(feedArticles, SIGNAL(selectionChanged()), this, SLOT(changedArticleSelection()) );
 		connect(downloadArticle, SIGNAL(clicked()), this, SLOT(downloadSelectedArticles()) );
 		
-		//connect the selection and downloading of matches
+		//connect the selection, downloading and deletion of matches
 		connect(filterMatches, SIGNAL(selectionChanged()), this, SLOT(changedMatchSelection()) );
 		connect(downloadFilterMatch, SIGNAL(clicked()), this, SLOT(downloadSelectedMatches()) );
+		connect(deleteFilterMatch, SIGNAL(clicked()), this, SLOT(deleteSelectedMatches()) );
 		
 		//connect the test text update to the slot
 		connect(testText, SIGNAL(textChanged(const QString &)), this, SLOT(testTextChanged()) );
@@ -163,7 +163,7 @@ namespace kt
 	{
 	
 		connect(feedTitle, SIGNAL(textChanged(const QString &)), feeds.at(index), SLOT(setTitle(const QString &) ) );
-		connect(feeds.at(index), SIGNAL(titleChanged(const QString &)), feedTitle, SLOT(setText(const QString &) ) );
+		connect(feeds.at(index), SIGNAL(titleChanged(const QString &)), this, SLOT(setFeedTitle(const QString &) ) );
 		
 		//url
 		connect(feedUrl, SIGNAL(textChanged(const QString &)), feeds.at(index), SLOT(setFeedUrl(const QString&) ) );
@@ -195,7 +195,7 @@ namespace kt
 	void RssFeedManager::disconnectFeed(int index)
 	{
 		disconnect(feedTitle, SIGNAL(textChanged(const QString &)), feeds.at(index), SLOT(setTitle(const QString &) ) );
-		disconnect(feeds.at(index), SIGNAL(titleChanged(const QString &)), feedTitle, SLOT(setText(const QString &) ) );
+		disconnect(feeds.at(index), SIGNAL(titleChanged(const QString &)), this, SLOT(setFeedTitle(const QString &) ) );
 		
 		//url
 		disconnect(feedUrl, SIGNAL(textChanged(const QString &)), feeds.at(index), SLOT(setFeedUrl(const QString&) ) );
@@ -229,7 +229,7 @@ namespace kt
 		{
 		//title
 		connect(filterTitle, SIGNAL(textChanged(const QString &)), acceptFilters.at(index), SLOT(setTitle(const QString &) ) );
-		connect(acceptFilters.at(index), SIGNAL(titleChanged(const QString &)), filterTitle, SLOT(setText(const QString &) ) );
+		connect(acceptFilters.at(index), SIGNAL(titleChanged(const QString &)), this, SLOT(setFilterTitle(const QString &) ) );
 		//active
 		connect(filterActive, SIGNAL(toggled(bool)), acceptFilters.at(index), SLOT(setActive(bool) ) );
 		connect(acceptFilters.at(index), SIGNAL(activeChanged(bool)), filterActive, SLOT(setChecked(bool) ) );
@@ -263,7 +263,7 @@ namespace kt
 		{
 		//title
 		connect(filterTitle, SIGNAL(textChanged(const QString &)), rejectFilters.at(index), SLOT(setTitle(const QString &) ) );
-		connect(rejectFilters.at(index), SIGNAL(titleChanged(const QString &)), filterTitle, SLOT(setText(const QString &) ) );
+		connect(rejectFilters.at(index), SIGNAL(titleChanged(const QString &)), this, SLOT(setFilterTitle(const QString &) ) );
 		//active
 		connect(filterActive, SIGNAL(toggled(bool)), rejectFilters.at(index), SLOT(setActive(bool) ) );
 		connect(rejectFilters.at(index), SIGNAL(activeChanged(bool)), filterActive, SLOT(setChecked(bool) ) );
@@ -301,7 +301,7 @@ namespace kt
 		{
 		//title
 		disconnect(filterTitle, SIGNAL(textChanged(const QString &)), acceptFilters.at(index), SLOT(setTitle(const QString &) ) );
-		disconnect(acceptFilters.at(index), SIGNAL(titleChanged(const QString &)), filterTitle, SLOT(setText(const QString &) ) );
+		disconnect(acceptFilters.at(index), SIGNAL(titleChanged(const QString &)), this, SLOT(setFilterTitle(const QString &) ) );
 		//active
 		disconnect(filterActive, SIGNAL(toggled(bool)), acceptFilters.at(index), SLOT(setActive(bool) ) );
 		disconnect(acceptFilters.at(index), SIGNAL(activeChanged(bool)), filterActive, SLOT(setChecked(bool) ) );
@@ -334,7 +334,7 @@ namespace kt
 		{
 		//title
 		disconnect(filterTitle, SIGNAL(textChanged(const QString &)), rejectFilters.at(index), SLOT(setTitle(const QString &) ) );
-		disconnect(rejectFilters.at(index), SIGNAL(titleChanged(const QString &)), filterTitle, SLOT(setText(const QString &) ) );
+		disconnect(rejectFilters.at(index), SIGNAL(titleChanged(const QString &)), this, SLOT(setFilterTitle(const QString &) ) );
 		//active
 		disconnect(filterActive, SIGNAL(toggled(bool)), rejectFilters.at(index), SLOT(setActive(bool) ) );
 		disconnect(rejectFilters.at(index), SIGNAL(activeChanged(bool)), filterActive, SLOT(setChecked(bool) ) );
@@ -605,6 +605,7 @@ namespace kt
 	
 	void RssFeedManager::updateFeedList(int item)
 	{
+		int cursorPos = feedTitle->cursorPosition();
 		if (item < 0)
 		{
 			//let's check which one sent the signal - if we can't figure it all then update them all
@@ -632,10 +633,12 @@ namespace kt
 			//just update item
 			feedlist->changeItem(feeds.at(item)->title(), item);
 		}
+		feedTitle->setCursorPosition(cursorPos);
 	}
 	
 	void RssFeedManager::updateAcceptFilterList(int item)
 	{
+		int cursorPos = filterTitle->cursorPosition();
 		if (item < 0)
 		{
 			//let's check which one sent the signal - if we can't figure it all then update them all
@@ -663,10 +666,12 @@ namespace kt
 			//just update item
 			acceptFilterList->changeItem(acceptFilters.at(item)->title(), item);
 		}
+		filterTitle->setCursorPosition(cursorPos);
 	}
 	
 	void RssFeedManager::updateRejectFilterList(int item)
 	{
+		int cursorPos = filterTitle->cursorPosition();
 		if (item < 0)
 		{
 			//let's check which one sent the signal - if we can't figure it all then update them all
@@ -694,7 +699,7 @@ namespace kt
 			//just update item
 			rejectFilterList->changeItem(rejectFilters.at(item)->title(), item);
 		}
-		
+		filterTitle->setCursorPosition(cursorPos);
 	}
 	
 	void RssFeedManager::updateArticles(const RssArticle::List& articles)
@@ -718,6 +723,8 @@ namespace kt
 			filterMatches->setText(i, 2, matches[i].time());
 			filterMatches->setText(i, 3, matches[i].link());
 			}
+		
+		changedMatchSelection();
 	}
 	
 	void RssFeedManager::changedArticleSelection()
@@ -746,6 +753,7 @@ namespace kt
 			}
 		}
 		downloadFilterMatch->setEnabled(downloadEnabled);
+		deleteFilterMatch->setEnabled(downloadEnabled);
 	}
 	
 	void RssFeedManager::downloadSelectedArticles()
@@ -770,6 +778,39 @@ namespace kt
 				new RssLinkDownloader(m_core, filterMatches->text(j, 3));
 			}
 		}
+	}
+	
+	void RssFeedManager::deleteSelectedMatches()
+	{
+		QStringList selectedLinks;
+		for (int i=0; i<filterMatches->numSelections(); i++)
+		{
+			int endRow = filterMatches->selection(i).topRow() + filterMatches->selection(i).numRows(); 
+			for (int j=filterMatches->selection(i).topRow(); j<endRow; j++)
+			{
+				//add a match to the list of selected matches
+				selectedLinks.append(filterMatches->text(j, 3));
+			}
+		}
+		
+		RssFilter * curFilter;
+		if (currentRejectFilter<0)
+		{
+			//we're currently testing an acceptFilter
+			curFilter = acceptFilters.at(currentAcceptFilter);
+		}
+		else
+		{
+			//it's a reject filter
+			curFilter = rejectFilters.at(currentRejectFilter);
+		}
+		
+		for (int i=0; i<selectedLinks.count(); i++)
+		{
+			curFilter->deleteMatch( selectedLinks[i] );
+		}
+		
+		updateMatches(curFilter->matches());
 	}
 	
 	void RssFeedManager::changedActiveFeed()
@@ -1239,6 +1280,20 @@ namespace kt
 		{
 		testText->setPaletteBackgroundColor(QColor(255, 0, 0));
 		}
+	}
+	
+	void RssFeedManager::setFilterTitle(const QString& title)
+	{
+		int cursorPos = filterTitle->cursorPosition();
+		filterTitle->setText(title);
+		filterTitle->setCursorPosition(cursorPos);
+	}
+	
+	void RssFeedManager::setFeedTitle(const QString& title)
+	{
+		int cursorPos = feedTitle->cursorPosition();
+		feedTitle->setText(title);
+		feedTitle->setCursorPosition(cursorPos);
 	}
 
 }

@@ -90,6 +90,7 @@ namespace kt
 			void activeChanged( bool active );
 			void articleAgeChanged( int articleAge );
 			void titleChanged( const QString& title );
+			void updateTitle( const QString& title );
 			void autoRefreshChanged( const QTime& autoRefresh );
 			void ignoreTTLChanged( bool ignoreTTL );
 			
