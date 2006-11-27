@@ -213,7 +213,7 @@ namespace bt
 			return;
 			
 		// if the peer is choked and we are not downloading an allowed fast chunk
-		if (pd->isChoked() && !pd->inAllowedFastChunks(chunk->getIndex()))
+		if (pd->isChoked())
 			return;
 			
 		Uint32 num_visited = 0;
@@ -440,7 +440,7 @@ namespace bt
 		{
 			const PeerDownloader* pd = *i;
 			// if there is one which isn't choked 
-			if (!pd->isChoked() || pd->inAllowedFastChunks(chunk->getIndex()))
+			if (!pd->isChoked())
 				return false;
 			i++;
 		}

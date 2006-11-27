@@ -156,23 +156,7 @@ namespace bt
 		
 		/// Get the maximum number of chunk downloads
 		Uint32 getMaxChunkDownloads() const;
-		
-		/// Add an allowed fast chunk
-		void addAllowedFastChunk(Uint32 chunk);
-		
-		/**
-		 * See if a chunk is an allowed fast chunk
-		 * @param chunk The chunk
-		 * @return true if the chunk is allowed_fast
-		 */
-		bool inAllowedFastChunks(Uint32 chunk) const;
-		
-		/// Get the number of allowed fast chunks
-		Uint32 getNumAllowedFastChunks() const {return allowed_fast.size();}
-		
-		AllowedFastSet::const_iterator beginAF() const {return allowed_fast.begin();}
-		AllowedFastSet::const_iterator endAF() const {return allowed_fast.end();}
-		
+				
 		/**
 		 * The peer has been choked, all pending requests are rejected.
 		 * (except for allowed fast ones)
@@ -238,7 +222,6 @@ namespace bt
 		QValueList<Request> wait_queue;
 		Uint32 max_wait_queue_size;
 		int grabbed;
-		AllowedFastSet allowed_fast;
 		Uint32 chunk_size;
 		bool nearly_done;
 	};

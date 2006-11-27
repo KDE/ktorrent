@@ -194,12 +194,7 @@ namespace bt
 			
 			if (ok)
 			{
-				if (pd->isChoked())
-				{
-					if (pd->getNumAllowedFastChunks() > 0)
-						downloadFromAF(pd);
-				}
-				else
+				if (!pd->isChoked())
 					downloadFrom(pd);
 				
 				pd->setNearlyDone(false);
@@ -210,26 +205,18 @@ namespace bt
 	Uint32 Downloader::maxMemoryUsage()
 	{
 		Uint32 max = 1024 * 1024;
-		if (cman.getNumChunks() - cman.chunksLeft() <= 4)
-		{
-			// in the beginning stick to four chunks for warmup mode
-			max = tor.getChunkSize() * 4;
-		}
-		else
-		{
-			switch (mem_usage)
-			{	
-				case 1: // Medium
-					max *= 60; // 60 MB
-					break;
-				case 2: // High
-					max *= 80; // 90 MB
-					break;
-				case 0: // LOW
-				default:
-					max *= 40; // 30 MB
-					break;
-			}
+		switch (mem_usage)
+		{	
+			case 1: // Medium
+				max *= 60; // 60 MB
+				break;
+			case 2: // High
+				max *= 80; // 90 MB
+				break;
+			case 0: // LOW
+			default:
+				max *= 40; // 30 MB
+				break;
 		}
 		return max;
 	}
@@ -246,38 +233,44 @@ namespace bt
 		return num_non_idle;
 	}
 	
-	bool Downloader::findDownloadForPD(PeerDownloader* pd)
+	ChunkDownload* Downloader::selectCD(PeerDownloader* pd,Uint32 num)
 	{
 		ChunkDownload* sel = 0;
 		Uint32 sel_left = 0xFFFFFFFF;
 		
-		// first see if there are ChunkDownload's which need a PeerDownloader
 		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
 		{
 			ChunkDownload* cd = j->second;
-			if (!pd->hasChunk(cd->getChunk()->getIndex()))
+			if (pd->isChoked() || !pd->hasChunk(cd->getChunk()->getIndex()))
 				continue;
 			
-			// if the peer is choked we only try allowed fast chunks
-			if (pd->isChoked())
+			if (cd->getNumDownloaders() == num) 
 			{
-				if (pd->inAllowedFastChunks(cd->getChunk()->getIndex()))
-				{
-					sel = cd;
-					break; // allowed fast so break
-				}
-			}
-			else
-			{
-				// if cd hasn't got a downloader we can try it
 				// lets favor the ones which are nearly finished
-				if (cd->getNumDownloaders() == 0 && 
-					(!sel || cd->getTotalPieces() - cd->getPiecesDownloaded() < sel_left))
+				if (!sel || cd->getTotalPieces() - cd->getPiecesDownloaded() < sel_left)
 				{
 					sel = cd;
 					sel_left = sel->getTotalPieces() - sel->getPiecesDownloaded();
 				}
 			}
+		}
+		return sel;
+	}
+	
+	bool Downloader::findDownloadForPD(PeerDownloader* pd,bool warmup)
+	{
+		ChunkDownload* sel = 0;
+		
+		// first see if there are ChunkDownload's which need a PeerDownloader
+		sel = selectCD(pd,0);
+		
+		if (!sel && warmup)
+		{
+			// if we couldn't find one, try to select another 
+			// which only has one downloader
+			// so that during warmup, there are at the most 2 downloaders 
+			// assigned to one peer	
+			sel = selectCD(pd,1);
 		}
 		
 		if (sel)
@@ -289,7 +282,28 @@ namespace bt
 			sel->assignPeer(pd);
 			return true;
 		}
+		
 		return false;
+	}
+	
+	ChunkDownload* Downloader::selectWorst(PeerDownloader* pd)
+	{
+		ChunkDownload* cdmin = NULL;
+		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j) 
+		{ 
+			ChunkDownload* cd = j->second; 
+			if (!pd->hasChunk(cd->getChunk()->getIndex()) || cd->containsPeer(pd))
+				continue;
+			 
+			if (!cdmin) 
+				cdmin = cd;
+			else if (cd->getDownloadSpeed() < cdmin->getDownloadSpeed())
+				cdmin = cd;
+			else if (cd->getNumDownloaders() < cdmin->getNumDownloaders()) 
+				cdmin = cd; 
+		}
+		 
+		return cdmin;
 	}
 
 	void Downloader::downloadFrom(PeerDownloader* pd)
@@ -300,7 +314,7 @@ namespace bt
 		Uint32 num_non_idle = numNonIdle();
 		
 		// first see if we can use an existing dowload
-		if (findDownloadForPD(pd))
+		if (findDownloadForPD(pd,cman.getNumChunks() - cman.chunksLeft() <= 4))
 			return;
 		
 		bool limit_exceeded = num_non_idle * tor.getChunkSize() >= max;
@@ -321,23 +335,8 @@ namespace bt
 		else if (pd->getNumGrabbed() == 0)
 		{ 
 			// If the peer hasn't got a chunk we want, 
-			// try to assign it to a chunk we are currently downloading 
-			// but we only do this if it hasn't been assigned to anything
-			ChunkDownload *cdmin=NULL; 
-			for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j) 
-			{ 
-				ChunkDownload* cd = j->second; 
-				if (pd->hasChunk(cd->getChunk()->getIndex())) 
-				{ 
-					if (cd->containsPeer(pd)) 
-						continue; 
-					if (cdmin==NULL) 
-						cdmin=cd; 
-					else if (cd->getNumDownloaders()<cdmin->getNumDownloaders()) 
-						cdmin=cd; 
- 
-				} 
-			} 
+			ChunkDownload *cdmin = selectWorst(pd); 
+			
 			if (cdmin) 
 			{
 				// if it is on disk, reload it
@@ -351,42 +350,6 @@ namespace bt
 		} 
 	}
 	
-	void Downloader::downloadFromAF(PeerDownloader* pd)
-	{
-		// calculate the max memory usage
-		Uint32 max = maxMemoryUsage();
-		// calculate number of non idle chunks
-		Uint32 num_non_idle = numNonIdle();
-		
-		// first see if we can use an existing dowload
-		if (findDownloadForPD(pd))
-			return;
-		
-		bool limit_exceeded = num_non_idle * tor.getChunkSize() >= max;
-		if (limit_exceeded)
-			return;
-		
-		// try to find a chunk in the allowed fast set
-		AllowedFastSet::const_iterator itr = pd->beginAF();
-		while (itr != pd->endAF())
-		{
-			if (pd->hasChunk(*itr) && !current_chunks.contains(*itr))
-			{
-				Uint32 chunk = *itr;
-				Chunk* c = cman.getChunk(chunk);
-				if (cman.prepareChunk(c))
-				{
-					ChunkDownload* cd = new ChunkDownload(c);
-					current_chunks.insert(chunk,cd);
-					cd->assignPeer(pd);
-					if (tmon)
-						tmon->downloadStarted(cd);
-					return;
-				}	
-			}
-			itr++;
-		}
-	}
 
 	bool Downloader::areWeDownloading(Uint32 chunk) const
 	{

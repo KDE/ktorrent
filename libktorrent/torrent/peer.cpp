@@ -318,13 +318,7 @@ namespace bt
 				// ignore suggestions for the moment
 				break;
 			case ALLOWED_FAST:
-				if (len != 5)
-				{
-					Out() << "len err ALLOWED_FAST" << endl;
-					kill();
-					return;
-				}
-				downloader->addAllowedFastChunk(ReadUint32(tmp_buf,1));
+				// we no longer support this, so do nothing
 				break;
 		}
 	}

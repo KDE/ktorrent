@@ -238,29 +238,7 @@ namespace bt
 		}
 	}
 	
-	void PeerDownloader::addAllowedFastChunk(Uint32 chunk)
-	{
-		allowed_fast.insert(chunk);
-	}
 	
-	bool PeerDownloader::inAllowedFastChunks(Uint32 chunk)  const
-	{
-		return allowed_fast.count(chunk) > 0;
-	}
-	
-	/*
-	Uint32 PeerDownloader::getMaximumOutstandingReqs() const
-	{
-		// get the download rate in KB/sec
-		double pieces_per_sec = (double)peer->getDownloadRate() / MAX_PIECE_LEN;
-		
-		if (pieces_per_sec < 1.0)
-			return 5;
-		else
-			return 5 + (Uint32)ceil(2*pieces_per_sec);
-	}
-	*/
-
 	Uint32 PeerDownloader::getMaxChunkDownloads() const
 	{
 		// get the download rate in KB/sec
@@ -284,27 +262,19 @@ namespace bt
 		while (i != reqs.end())
 		{
 			TimeStampedRequest & tr = *i;
-			if (allowed_fast.count(tr.req.getIndex()) == 0)
-			{
-				rejected(tr.req);
-				i = reqs.erase(i);
-			}
-			else
-				i++;
+			rejected(tr.req);
+			i++;
 		}
+		reqs.clear();
 		
 		QValueList<Request>::iterator j = wait_queue.begin();
 		while (j != wait_queue.end())
 		{
 			Request & req = *j;
-			if (allowed_fast.count(req.getIndex()) == 0)
-			{
-				rejected(req);
-				j = wait_queue.erase(j);
-			}
-			else
-				j++;
+			rejected(req);
+			j++;
 		}
+		wait_queue.clear();
 	}
 	
 	void PeerDownloader::update()
