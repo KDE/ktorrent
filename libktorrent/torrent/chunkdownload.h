@@ -59,7 +59,6 @@ namespace bt
 	 * 
 	 * This class handles the download of one Chunk.
 	*/
-					  
 	class ChunkDownload : public QObject,public kt::ChunkDownloadInterface 
 	{
 		Q_OBJECT
@@ -169,6 +168,10 @@ namespace bt
 		
 		/// Get the SHA1 hash of the downloaded chunk
 		SHA1Hash getHash() const {return hash_gen.get();}
+		
+		/// Are we using the continous hashing feature for this chunk
+		bool usingContinuousHashing() const;
+
 	private slots:
 		void sendRequests(PeerDownloader* pd);
 		void sendCancels(PeerDownloader* pd);
@@ -192,6 +195,7 @@ namespace bt
 		PtrMap<Uint32,DownloadStatus> dstatus;
 		std::set<Uint32> piece_providers;
 		
+
 		SHA1HashGen hash_gen;
 		Uint32 num_pieces_in_hash;
 

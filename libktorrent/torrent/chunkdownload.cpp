@@ -89,8 +89,11 @@ namespace bt
 		
 		dstatus.setAutoDelete(true);
 		chunk->ref();
+
 		num_pieces_in_hash = 0;
-		hash_gen.start();
+		if (usingContinuousHashing())
+			hash_gen.start();
+
 	}
 
 	ChunkDownload::~ChunkDownload()
@@ -125,11 +128,16 @@ namespace bt
 			{
 				endgameCancel(p);
 			}
-			updateHash();
+			
+			if (usingContinuousHashing())
+				updateHash();
+			
 			if (num_downloaded >= num)
 			{
 				// finalize hash
-				hash_gen.end();
+				if (usingContinuousHashing())
+					hash_gen.end();
+
 				releaseAllPDs();
 				return true;
 			}
@@ -460,6 +468,12 @@ namespace bt
 			hash_gen.update(data,i == num - 1 ? last_size : MAX_PIECE_LEN);
 		}
 		num_pieces_in_hash = nn;
+	}
+	
+	bool ChunkDownload::usingContinuousHashing() const
+	{
+		// if the pieces are larger then 1 MB we will be using the continuous hashing feature
+		return pieces.getNumBits() > 64;
 	}
 }
 #include "chunkdownload.moc"
