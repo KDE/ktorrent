@@ -5,4 +5,4 @@ ktdatadir = $(kde_datadir)/ktorrent/www/mobile
 
 
 
-ktdata_DATA = favicon.ico interface.php ktorrentwebinterfacelogo.png login.html redirect.html remove.png start.png stop.png settings.php torrent.php
+ktdata_DATA = favicon.ico interface.php ktorrentwebinterfacelogo.png login.html remove.png start.png stop.png settings.php torrent.php
