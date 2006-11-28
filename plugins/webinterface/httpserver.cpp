@@ -489,7 +489,7 @@ namespace kt{
 				unsigned int count=0, r_size;
 				data=malloc(RAWREAD_BUFF_SIZE);
 				while(file->size() > count){
-					bzero(data,RAWREAD_BUFF_SIZE);
+					memset(data,0,RAWREAD_BUFF_SIZE);
 					r_size=file->readBlock((char *)data, RAWREAD_BUFF_SIZE);
 					s->writeBlock((const char *)data, r_size);
 					s->flush();
