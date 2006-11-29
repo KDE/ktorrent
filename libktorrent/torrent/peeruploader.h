@@ -46,9 +46,6 @@ namespace bt
 	{
 		Peer* peer;
 		QValueList<Request> requests;
-		Uint32 rone_time;
-		std::set<Uint32> allowed_fast;
-		bool can_generate_af;
 		Uint32 uploaded;
 	public:
 		/**
@@ -57,9 +54,6 @@ namespace bt
 		 */
 		PeerUploader(Peer* peer);
 		virtual ~PeerUploader();
-		
-		/// Enable the allowed fast set
-		void enableAllowedFast();
 		
 		/**
 		 * Add a Request to the list of Requests.
@@ -92,8 +86,6 @@ namespace bt
 		 * Clear all pending requests.
 		 */
 		void clearAllRequests();
-	private:
-		void generateAF(ChunkManager & cman);
 	};
 
 }

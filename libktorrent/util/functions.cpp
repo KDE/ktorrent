@@ -19,9 +19,12 @@
  ***************************************************************************/
 #include <qdir.h>
 #include <qhostaddress.h>
+#include <errno.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/time.h>
+#include <sys/resource.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
@@ -31,6 +34,7 @@
 #include <kglobal.h>
 #include "functions.h"
 #include "error.h"
+#include "log.h"
 
 namespace bt
 {
@@ -170,6 +174,21 @@ namespace bt
 		return (Uint64)(tv.tv_sec * 1000 + tv.tv_usec * 0.001);
 	}
 
+	bool MaximizeFileLimit()
+	{
+		// first get the current limits
+		struct rlimit lim;
+		getrlimit(RLIMIT_NOFILE,&lim);
+		
+		Out(SYS_GEN|LOG_DEBUG) << "Current limit for number of files : " << lim.rlim_cur << " (" << lim.rlim_max << " max)" << endl;
+		lim.rlim_cur = lim.rlim_max;
+		if (setrlimit(RLIMIT_NOFILE,&lim) < 0)
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "Failed to maximize file limit : " << QString(strerror(errno)) << endl;
+			return false;
+		}
+		return true;
+	}
 
 
 	

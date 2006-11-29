@@ -54,6 +54,11 @@ namespace bt
 	QString DirSeparator();
 	bool IsMultimediaFile(const QString & filename);
 
+	/**
+	 * Maximize the file limit using setrlimit.
+	 * @return The new limit 
+	 */
+	bool MaximizeFileLimit();
 }
 
 #endif

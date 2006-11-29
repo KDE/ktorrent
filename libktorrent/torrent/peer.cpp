@@ -198,9 +198,6 @@ namespace bt
 				
 				pieces = BitSet(tmp_buf+1,pieces.getNumBits());
 				bitSetRecieved(pieces);
-				// less then 5 pieces and support for fast_extensions so enable allowed fast
-				if (stats.fast_extensions && pieces.numOnBits() < 5)
-					uploader->enableAllowedFast();
 				break;
 			case REQUEST:
 				if (len != 13)
@@ -310,9 +307,6 @@ namespace bt
 				}
 				pieces.setAll(false);
 				bitSetRecieved(pieces);
-				// no pieces so give enable AF if peer supports it
-				if (stats.fast_extensions)
-					uploader->enableAllowedFast();
 				break;
 			case SUGGEST_PIECE:
 				// ignore suggestions for the moment

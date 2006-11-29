@@ -182,7 +182,7 @@
                                 <number>512</number>
                             </property>
                             <property name="minValue">
-                                <number>128</number>
+                                <number>16</number>
                             </property>
                             <property name="maxValue">
                                 <number>8192</number>

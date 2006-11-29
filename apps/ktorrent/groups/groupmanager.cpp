@@ -176,9 +176,9 @@ namespace kt
 			return;
 		
 		setAutoDelete(false);
+		erase(old_name);
 		g->rename(new_name);
 		insert(new_name,g);
-		erase(old_name);
 		setAutoDelete(true);
 	}
 }
