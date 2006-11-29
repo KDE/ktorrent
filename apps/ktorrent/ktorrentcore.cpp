@@ -344,6 +344,9 @@ void KTorrentCore::loadExistingTorrent(const QString & tor_dir)
 	if (!idir.endsWith(bt::DirSeparator()))
 		idir += bt::DirSeparator();
 	
+	if (!bt::Exists(idir + "torrent"))
+		return;
+	
 	try
 	{
 		tc = new TorrentControl();
