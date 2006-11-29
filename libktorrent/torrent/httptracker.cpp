@@ -101,9 +101,9 @@ namespace bt
 		QString epq = scrape_url.encodedPathAndQuery();
 		const SHA1Hash & info_hash = tor->getInfoHash();
 		if (scrape_url.queryItems().count() > 0)
-			epq += "&infohash=" + info_hash.toURLString();
+			epq += "&info_hash=" + info_hash.toURLString();
 		else
-			epq += "?infohash=" + info_hash.toURLString();
+			epq += "?info_hash=" + info_hash.toURLString();
 		scrape_url.setEncodedPathAndQuery(epq);
 	
 		Out(SYS_TRK|LOG_NOTICE) << "Doing scrape request to url : " << scrape_url.prettyURL() << endl;
