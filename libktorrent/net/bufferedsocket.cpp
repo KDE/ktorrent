@@ -67,7 +67,7 @@ namespace net
 		return ret;
 	}
 
-	Uint32 BufferedSocket::readBuffered(Uint32 max_bytes_to_read)
+	Uint32 BufferedSocket::readBuffered(Uint32 max_bytes_to_read,bt::TimeStamp now)
 	{	
 		Uint8 tmp[4096];
 		Uint32 br = 0;
@@ -91,7 +91,7 @@ namespace net
 			if (ret != 0)
 			{
 				mutex.lock();
-				down_speed->onData(ret);
+				down_speed->onData(ret,now);
 				mutex.unlock();
 				if (rdr)
 					rdr->onDataReady(tmp,ret);
@@ -106,7 +106,7 @@ namespace net
 		return br;
 	}
 	
-	Uint32 BufferedSocket::sendOutputBuffer(Uint32 max)
+	Uint32 BufferedSocket::sendOutputBuffer(Uint32 max,bt::TimeStamp now)
 	{
 		if (bytes_in_output_buffer == 0)
 			return 0;
@@ -120,7 +120,7 @@ namespace net
 			if (ret > 0)
 			{
 				mutex.lock();
-				up_speed->onData(ret);
+				up_speed->onData(ret,now);
 				mutex.unlock();
 			}
 			bytes_in_output_buffer -= ret;
@@ -137,7 +137,7 @@ namespace net
 			if (ret > 0)
 			{
 				mutex.lock();
-				up_speed->onData(ret);
+				up_speed->onData(ret,now);
 				mutex.unlock();
 			}
 			bytes_in_output_buffer -= ret;
@@ -146,7 +146,7 @@ namespace net
 		}
 	}
 	
-	Uint32 BufferedSocket::writeBuffered(Uint32 max)
+	Uint32 BufferedSocket::writeBuffered(Uint32 max,bt::TimeStamp now)
 	{
 		if (!wrt)
 			return 0;
@@ -155,7 +155,7 @@ namespace net
 		bool no_limit = max == 0;
 		if (bytes_in_output_buffer > 0)
 		{
-			Uint32 ret = sendOutputBuffer(max);
+			Uint32 ret = sendOutputBuffer(max,now);
 			if (bytes_in_output_buffer > 0)
 			{
 				// haven't sent it fully so return
@@ -174,7 +174,7 @@ namespace net
 			if (bytes_in_output_buffer > 0)
 			{
 				// try to send 
-				bw += sendOutputBuffer(max - bw);
+				bw += sendOutputBuffer(max - bw,now);
 			}
 			else
 			{

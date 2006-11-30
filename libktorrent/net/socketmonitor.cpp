@@ -121,9 +121,8 @@ namespace net
 		}
 	}
 	
-	void SocketMonitor::processIncomingData(QValueList<BufferedSocket*> & rbs)
+	void SocketMonitor::processIncomingData(QValueList<BufferedSocket*> & rbs,bt::TimeStamp now)
 	{
-		TimeStamp now = bt::GetCurrentTime();
 		Uint32 allowance = (Uint32)ceil(1.02 * dcap * (now - prev_download_time) * 0.001);
 		prev_download_time = now;
 		
@@ -138,7 +137,7 @@ namespace net
 			BufferedSocket* s = rbs.first();
 			rbs.pop_front();
 			
-			Uint32 ret = s->readBuffered(as);
+			Uint32 ret = s->readBuffered(as,now);
 			if (ret == as) // if this socket did what it was supposed to do, it can have another go if stuff is leftover
 				rbs.append(s);
 			
@@ -149,9 +148,8 @@ namespace net
 		}
 	}
 	
-	void SocketMonitor::processOutgoingData(QValueList<BufferedSocket*> & wbs)
+	void SocketMonitor::processOutgoingData(QValueList<BufferedSocket*> & wbs,bt::TimeStamp now)
 	{
-		TimeStamp now = bt::GetCurrentTime();
 		Uint32 allowance = (Uint32)ceil(ucap * (now - prev_upload_time) * 0.001);
 		prev_upload_time = now;
 		
@@ -166,7 +164,7 @@ namespace net
 			BufferedSocket* s = wbs.first();
 			wbs.pop_front();
 			
-			Uint32 ret = s->writeBuffered(as);
+			Uint32 ret = s->writeBuffered(as,now);
 			if (ret == as)
 				wbs.append(s); // it can go again if necessary  
 		
@@ -227,7 +225,7 @@ namespace net
 					// fd is set
 					if (dcap == 0)
 					{
-						s->readBuffered(0);
+						s->readBuffered(0,now);
 					}
 					else
 					{
@@ -241,7 +239,7 @@ namespace net
 					if (ucap == 0)
 					{
 						// we can send bytes from the buffer so send them
-						s->writeBuffered(0);
+						s->writeBuffered(0,now);
 					}
 					else
 					{
@@ -253,12 +251,12 @@ namespace net
 			}
 			
 			if (dcap > 0 && rbs.count() > 0)
-				processIncomingData(rbs);
+				processIncomingData(rbs,now);
 			else
 				prev_download_time = now;	
 			
 			if (ucap > 0 && wbs.count() > 0)
-				processOutgoingData(wbs);
+				processOutgoingData(wbs,now);
 			else
 				prev_upload_time = now;
 			

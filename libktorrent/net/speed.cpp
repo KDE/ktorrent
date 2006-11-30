@@ -35,9 +35,9 @@ namespace net
 	Speed::~Speed()
 	{}
 	
-	void Speed::onData(Uint32 b)
+	void Speed::onData(Uint32 b,bt::TimeStamp ts)
 	{
-		dlrate.append(qMakePair(b,GetCurrentTime()));
+		dlrate.append(qMakePair(b,ts));
 		bytes += b;
 	}
 

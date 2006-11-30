@@ -41,7 +41,7 @@ namespace net
 		Speed();
 		virtual ~Speed();
 		
-		void onData(bt::Uint32 bytes);
+		void onData(bt::Uint32 bytes,bt::TimeStamp ts);
 		void update();
 		float getRate() const {return rate;}
 	};

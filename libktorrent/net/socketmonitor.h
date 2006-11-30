@@ -59,8 +59,8 @@ namespace net
 		static void setUploadCap(Uint32 bytes_per_sec);
 		static SocketMonitor & instance() {return self;}
 	private:
-		void processOutgoingData(QValueList<BufferedSocket*> & wbs);
-		void processIncomingData(QValueList<BufferedSocket*> & rbs);
+		void processOutgoingData(QValueList<BufferedSocket*> & wbs,bt::TimeStamp now);
+		void processIncomingData(QValueList<BufferedSocket*> & rbs,bt::TimeStamp now);
 	};
 
 }

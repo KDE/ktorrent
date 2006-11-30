@@ -86,16 +86,18 @@ namespace net
 		/**
 		 * Reads data from the socket to the buffer.
 		 * @param max_bytes_to_read Maximum number of bytes to read (0 is no limit)
+		 * @param now Current time stamp
 		 * @return The number of bytes read
 		 */
-		Uint32 readBuffered(Uint32 max_bytes_to_read);
+		Uint32 readBuffered(Uint32 max_bytes_to_read,bt::TimeStamp now);
 		
 		/**
 		 * Writes data from the buffer to the socket.
 		 * @param max The maximum number of bytes to send over the socket (0 = no limit)
+		 * * @param now Current time stamp
 		 * @return The number of bytes written
 		 */
-		Uint32 writeBuffered(Uint32 max);
+		Uint32 writeBuffered(Uint32 max,bt::TimeStamp now);
 		
 		/// See if the socket has something ready to write
 		bool bytesReadyToWrite() const {return !wrt ? false : wrt->hasBytesToWrite();}
@@ -117,7 +119,7 @@ namespace net
 		void updateSpeeds();
 		
 	private:
-		Uint32 sendOutputBuffer(Uint32 max);
+		Uint32 sendOutputBuffer(Uint32 max,bt::TimeStamp now);
 	};
 
 }

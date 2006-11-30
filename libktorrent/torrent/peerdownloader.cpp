@@ -211,13 +211,14 @@ namespace bt
 	
 	void PeerDownloader::checkTimeouts()
 	{
+		TimeStamp now = bt::GetCurrentTime(); 
 		// we use a 60 second interval
 		const Uint32 MAX_INTERVAL = 60 * 1000;
 		QValueList<TimeStampedRequest>::iterator i = reqs.begin();
 		while (i != reqs.end())
 		{
 			TimeStampedRequest & tr = *i;
-			if (bt::GetCurrentTime() - tr.time_stamp > MAX_INTERVAL)
+			if (now - tr.time_stamp > MAX_INTERVAL)
 			{
 			//	Out() << "Request " << tr.req.getIndex() << " " << tr.req.getOffset() << " timed out !" << endl;
 				// cancel it
