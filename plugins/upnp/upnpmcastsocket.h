@@ -77,6 +77,10 @@ namespace kt
 		
 	public:
 		UPnPRouter* parseResponse(const QByteArray & arr);
+		
+	private:
+		void joinUPnPMCastGroup();
+		void leaveUPnPMCastGroup();
 	
 	private:	
 		bt::PtrMap<QString,UPnPRouter> routers;

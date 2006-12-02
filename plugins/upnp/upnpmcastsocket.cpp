@@ -18,7 +18,12 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <kurl.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netinet/ip.h>
 #include <qstringlist.h>
+#include <ksocketdevice.h>
 #include <ksocketaddress.h>
 #include <util/log.h>
 #include <torrent/globals.h>
@@ -50,11 +55,13 @@ namespace kt
 				break;
 		}	
 		setBlocking(false);
+		joinUPnPMCastGroup();
 	}
 	
 	
 	UPnPMCastSocket::~UPnPMCastSocket()
 	{
+		leaveUPnPMCastGroup();
 		QObject::disconnect(this,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
 		QObject::disconnect(this,SIGNAL(gotError(int)),this,SLOT(onError(int)));
 	}
@@ -133,21 +140,29 @@ namespace kt
 		QString server;
 		KURL location;
 		
+/*		Out(SYS_PNP|LOG_DEBUG) << "Received : " << endl;
+		for (Uint32 idx = 0;idx < lines.count(); idx++)
+			Out(SYS_PNP|LOG_DEBUG) << lines[idx] << endl;
+		*/ 
+		
 		// first read first line and see if contains a HTTP 200 OK message
 		QString line = lines.first();
-		if (!line.contains("HTTP") && !line.contains("200"))
+		if (!line.contains("HTTP"))
 		{
-			return 0;
+			// it is either a 200 OK or a NOTIFY
+			if (!line.contains("NOTIFY") && !line.contains("200")) 
+				return 0;
 		}
+		else if (line.contains("M-SEARCH")) // ignore M-SEARCH 
+			return 0;
 		
 		// quick check that the response being parsed is valid 
 		bool validDevice = false; 
 		for (Uint32 idx = 0;idx < lines.count() && !validDevice; idx++) 
 		{ 
 			line = lines[idx]; 
-			if (line.contains("ST:") && line.contains("InternetGatewayDevice")) 
+			if ((line.contains("ST:") || line.contains("NT:")) && line.contains("InternetGatewayDevice")) 
 			{
-				Out(SYS_PNP|LOG_NOTICE) << "Valid Internet Gateway Device has responded, parsing response...." << endl; 
 				validDevice = true; 
 			}
 		} 
@@ -165,26 +180,27 @@ namespace kt
 			{
 				location = line.mid(line.find(':') + 1).stripWhiteSpace();
 				if (!location.isValid())
-				{
-					Out(SYS_PNP|LOG_IMPORTANT) << "Invalid URL" << endl;
 					return 0;
-				}
-				Out(SYS_PNP|LOG_NOTICE) << "Location : " << location << endl;
 			}
 			else if (line.startsWith("Server") || line.startsWith("server") || line.startsWith("SERVER"))
 			{
 				server = line.mid(line.find(':') + 1).stripWhiteSpace();
 				if (server.length() == 0)
 					return 0;
-				Out(SYS_PNP|LOG_NOTICE) << "Server : " << server << endl;
+				
 			}
 		}
 		
 		if (routers.contains(server))
+		{
 			return 0;
-		
-		// everything OK, make a new UPnPRouter
-		return new UPnPRouter(server,location,verbose);
+		}
+		else
+		{
+			Out(SYS_PNP|LOG_NOTICE) << "Detected IGD " << server << endl;
+			// everything OK, make a new UPnPRouter
+			return new UPnPRouter(server,location,verbose); 
+		}
 	}
 	
 	void UPnPMCastSocket::onError(int)
@@ -240,6 +256,38 @@ namespace kt
 				r->downloadXMLFile();
 			}
 		}
+	}
+	
+	void UPnPMCastSocket::joinUPnPMCastGroup()
+	{
+		int fd = socketDevice()->socket();
+		struct ip_mreqn mreq;
+		
+		memset(&mreq,0,sizeof(struct ip_mreqn));
+		
+		inet_aton("239.255.255.250",&mreq.imr_multiaddr);
+		mreq.imr_address.s_addr = htonl(INADDR_ANY);
+		
+		if (setsockopt(fd,IPPROTO_IP,IP_ADD_MEMBERSHIP,&mreq,sizeof(struct ip_mreqn)) < 0)
+		{
+			Out(SYS_PNP|LOG_NOTICE) << "Failed to join multicast group 239.255.255.250" << endl; 
+		} 
+	}
+	
+	void UPnPMCastSocket::leaveUPnPMCastGroup()
+	{
+		int fd = socketDevice()->socket();
+		struct ip_mreqn mreq;
+		
+		memset(&mreq,0,sizeof(struct ip_mreqn));
+		
+		inet_aton("239.255.255.250",&mreq.imr_multiaddr);
+		mreq.imr_address.s_addr = htonl(INADDR_ANY);
+		
+		if (setsockopt(fd,IPPROTO_IP,IP_DROP_MEMBERSHIP,&mreq,sizeof(struct ip_mreqn)) < 0)
+		{
+			Out(SYS_PNP|LOG_NOTICE) << "Failed to leave multicast group 239.255.255.250" << endl; 
+		} 
 	}
 }
 
