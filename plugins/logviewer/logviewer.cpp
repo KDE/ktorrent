@@ -44,12 +44,11 @@ namespace kt
 	LogViewer::LogViewer(QWidget *parent, const char *name)
 			: KTextBrowser(parent, name), LogMonitorInterface()
 	{
-		if(m_useRichText = LogViewerPluginSettings::useRichText())
-			setTextFormat(Qt::RichText);
-		else
-			setTextFormat(Qt::PlainText);
-		
-		setMaxLogLines(100);
+		/*
+		IMPORTANT: use LogText mode, so that setMaxLogLines will work, if not everything will be kept in memory.
+		*/
+		setTextFormat(Qt::LogText);
+		setMaxLogLines(200);
 		setMinimumSize(QSize(0,50));
 		setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 		KGlobal::config()->setGroup("LogViewer");
@@ -105,11 +104,6 @@ namespace kt
 	
 	void LogViewer::setRichText(bool val)
 	{
-		if(val)
-			setTextFormat(Qt::RichText);
-		else
-			setTextFormat(Qt::PlainText);
-		
 		m_useRichText = val;
 	}
 }
