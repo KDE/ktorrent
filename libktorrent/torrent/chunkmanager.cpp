@@ -72,6 +72,7 @@ namespace bt
 		chunks.setAutoDelete(true);
 		chunks_left = 0;
 		recalc_chunks_left = true;
+		corrupted_count = recheck_counter = 0;
 
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
@@ -269,9 +270,14 @@ namespace bt
 			cache->load(c);
 			loaded.insert(i,bt::GetCurrentTime());
 			bool check_allowed = (max_chunk_size_for_data_check == 0 || tor.getChunkSize() <= max_chunk_size_for_data_check);
+			
+			// when no corruptions have been found, only check once every 5 chunks
+			if (check_allowed && recheck_counter < 5 && corrupted_count == 0)
+				check_allowed = false; 
+			 
 			if (c->getData() && check_allowed)
 			{
-			//	Out(SYS_DIO|LOG_IMPORTANT) << "Verifying chunk " << i << endl;
+				recheck_counter = 0;
 				if (!c->checkHash(tor.getHash(i)))
 				{
 					Out(SYS_DIO|LOG_IMPORTANT) << "Chunk " << i 
@@ -281,9 +287,14 @@ namespace bt
 					tor.updateFilePercentage(i,bitset);
 					saveIndexFile();
 					recalc_chunks_left = true;
+					corrupted_count++;
 					corrupted(i);
 					return 0;
 				}
+			}
+			else
+			{
+				recheck_counter++;
 			}
 		}
 		
@@ -897,8 +908,6 @@ namespace bt
 		Uint32 first = tf->getFirstChunk();
 		Uint32 last = tf->getLastChunk();
 		
-		Out(SYS_DIO|LOG_DEBUG) << QString("%1 : %2 %3 : %4").arg(tf->getPath()).arg(first).arg(last).arg(newpriority) << endl;
-
 		// first and last chunk may be part of multiple files
 		// so we can't just exclude them
 		QValueList<Uint32> files;
@@ -913,7 +922,6 @@ namespace bt
 			Priority np = tor.getFile(*i).getPriority();
 			if (np > newpriority && *i != tf->getIndex())
 			{
-				Out(SYS_DIO|LOG_DEBUG) << "newpriority = " << newpriority << " np = " << np << endl;
 				// make sure we don't go past last
 				if (first == last)
 					return;
@@ -933,7 +941,6 @@ namespace bt
 			Priority np = tor.getFile(*i).getPriority();
 			if (np > newpriority && *i != tf->getIndex())
 			{
-				Out(SYS_DIO|LOG_DEBUG) << "newpriority = " << newpriority << " np = " << np << endl;
 				// make sure we don't wrap around
 				if (last == 0 || last == first)
 					return;
@@ -950,7 +957,6 @@ namespace bt
 		}
 		
 
-		Out(SYS_DIO|LOG_DEBUG) << QString("%1 : %2 %3 : %4").arg(tf->getPath()).arg(first).arg(last).arg(newpriority) << endl;
 		prioritise(first,last,newpriority);
 		if (newpriority == ONLY_SEED_PRIORITY)
 			excluded(first,last);
@@ -1013,6 +1019,7 @@ namespace bt
 		recalc_chunks_left = true;
 		saveIndexFile();
 		chunksLeft();
+		corrupted_count = 0;
 	}
 	
 	bool ChunkManager::hasExistingFiles() const

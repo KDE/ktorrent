@@ -101,7 +101,7 @@ namespace net
 		if (start_thread)
 		{
 			Out(SYS_CON|LOG_DEBUG) << "Starting socketmonitor thread" << endl;
-			prev_upload_time = prev_download_time = bt::GetCurrentTime();
+			prev_upload_time = prev_download_time = bt::Now();
 			if (!mt)
 				mt = new MonitorThread(this);
 			
@@ -182,6 +182,7 @@ namespace net
 		FD_ZERO(&fds);
 		FD_ZERO(&wfds);
 	
+		TimeStamp ts = bt::Now();
 		int max = 0;
 		mutex.lock();
 		QPtrList<BufferedSocket>::iterator itr = smap.begin();
@@ -199,17 +200,17 @@ namespace net
 				if (s->fd() > max)
 					max = s->fd();
 				
-				s->updateSpeeds();
+				s->updateSpeeds(ts);
 			}
 			itr++;
 		}
 		mutex.unlock();
 		
 		struct timeval tv = {0,100*1000};
-		TimeStamp before = bt::GetCurrentTime(); // get the current time
+		TimeStamp before = bt::Now(); // get the current time
 		if (select(max+1,&fds,&wfds,NULL,&tv) > 0)
 		{
-			TimeStamp now = bt::GetCurrentTime(); // get the current time
+			TimeStamp now = bt::Now(); // get the current time
 			Uint32 num_to_read = 0;
 			QValueList<BufferedSocket*> rbs;
 			QValueList<BufferedSocket*> wbs;
@@ -266,7 +267,7 @@ namespace net
 		}
 		else
 		{
-			TimeStamp now = bt::GetCurrentTime(); // get the current time
+			TimeStamp now = bt::Now(); // get the current time
 			if (now - before < 100)
 				usleep(100*1000);
 		}

@@ -66,6 +66,7 @@ const Uint32 CORE_UPDATE_INTERVAL = 250;
 
 KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seeding(true),pman(0)
 {
+	UpdateCurrentTime();
 	qman = new QueueManager();
 	data_dir = Settings::tempDir();
 	bool dd_not_exist = !bt::Exists(data_dir);
@@ -536,6 +537,7 @@ void KTorrentCore::stopAll(int type)
 
 void KTorrentCore::update()
 {
+	bt::UpdateCurrentTime();
 	KT_PROF_START("core");
 	AuthenticationMonitor::instance().update();
 	

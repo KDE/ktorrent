@@ -41,10 +41,8 @@ namespace net
 		bytes += b;
 	}
 
-	void Speed::update()
-	{
-		TimeStamp now = GetCurrentTime();
-			
+	void Speed::update(bt::TimeStamp now)
+	{	
 		QValueList<QPair<Uint32,TimeStamp> >::iterator i = dlrate.begin();
 		while (i != dlrate.end())
 		{

@@ -48,7 +48,13 @@ namespace bt
 	void WriteInt16(Uint8* buf,Uint32 off,Int16 val);
 	Int16 ReadInt16(const Uint8* buf,Uint32 off);
 	
-	TimeStamp GetCurrentTime();
+	void UpdateCurrentTime();
+	
+	extern TimeStamp global_time_stamp;
+	
+	inline TimeStamp GetCurrentTime() {return global_time_stamp;}
+	
+	TimeStamp Now();
 	
 	QHostAddress LookUpHost(const QString & host);
 	QString DirSeparator();

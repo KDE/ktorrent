@@ -109,14 +109,8 @@ namespace net
 		/// Get the current download rate
 		float getUploadRate() const;
 		
-		/// Update the speeds of the socket
-		void updateUpSpeed();
-		
-		/// Update the speeds of the socket
-		void updateDownSpeed();
-		
 		/// Update up and down speed
-		void updateSpeeds();
+		void updateSpeeds(bt::TimeStamp now);
 		
 	private:
 		Uint32 sendOutputBuffer(Uint32 max,bt::TimeStamp now);

@@ -134,6 +134,7 @@ namespace bt
 
 	void TorrentControl::update()
 	{
+		UpdateCurrentTime();
 		if (stats.status == kt::CHECKING_DATA)
 			return;
 		

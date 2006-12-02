@@ -166,8 +166,15 @@ namespace bt
 	{
 		return (Int16)(buf[off] << 8) | buf[off + 1];
 	}
-
-	Uint64 GetCurrentTime()
+	
+	void UpdateCurrentTime()
+	{
+		global_time_stamp = Now();
+	}
+	
+	TimeStamp global_time_stamp = 0;
+	
+	Uint64 Now()
 	{
 		struct timeval tv;
 		gettimeofday(&tv,0);

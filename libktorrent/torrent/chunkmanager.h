@@ -68,6 +68,8 @@ namespace bt
 		BitSet todo;
 		mutable Uint32 chunks_left;
 		mutable bool recalc_chunks_left;
+		Uint32 corrupted_count;
+		Uint32 recheck_counter;
 	
 	public:
 		ChunkManager(Torrent & tor,

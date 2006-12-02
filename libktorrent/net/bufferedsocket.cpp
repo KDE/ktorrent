@@ -186,19 +186,9 @@ namespace net
 		return bw;
 	}
 	
-	void BufferedSocket::updateUpSpeed()
+	void BufferedSocket::updateSpeeds(bt::TimeStamp now)
 	{
-		up_speed->update();
-	}
-	
-	void BufferedSocket::updateDownSpeed()
-	{
-		down_speed->update();
-	}
-	
-	void BufferedSocket::updateSpeeds()
-	{
-		up_speed->update();
-		down_speed->update();
+		up_speed->update(now);
+		down_speed->update(now);
 	}
 }
