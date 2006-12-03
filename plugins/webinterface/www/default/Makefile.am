@@ -3,6 +3,4 @@ METASOURCES = AUTO
 
 ktdatadir = $(kde_datadir)/ktorrent/www/default
 
-
-
-ktdata_DATA = favicon.ico interface.php ktorrentwebinterfacelogo.png login.html redirect.html remove.png start.png stop.png
+ktdata_DATA = favicon.ico interface.php ktorrentwebinterfacelogo.png login.html remove.png start.png stop.png style.css

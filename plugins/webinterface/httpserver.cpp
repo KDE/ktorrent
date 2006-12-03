@@ -353,7 +353,7 @@ namespace kt{
 		}
 
 		if(!session.logged){
-			if(finfo.extension()!="ico" && finfo.extension()!="png" && finfo.exists()){
+			if(finfo.extension()!="ico" && finfo.extension()!="png" && finfo.extension()!="css" && finfo.exists()){
 				requestedFile="login.html";
 				Out(SYS_WEB| LOG_DEBUG) << "gone wrong" << endl;
 				f.setName(rootDir+'/'+WebInterfacePluginSettings::skin()+'/'+requestedFile);
@@ -367,7 +367,7 @@ namespace kt{
 			php_i->exec(requestParams);
 		QString header;
 		
-		if ( !f.open(IO_ReadOnly) || (finfo.extension()!="php" && finfo.extension()!="html" && finfo.extension()!="png" && finfo.extension()!="ico") ){
+		if ( !f.open(IO_ReadOnly) || (finfo.extension()!="php" && finfo.extension()!="html" && finfo.extension()!="png" && finfo.extension()!="ico" && finfo.extension()!="css") ){
 			QString data;
 			header="HTTP/1.1 404 Not Found\r\n";
 			header+="Server: ktorrent\r\n";
@@ -423,7 +423,7 @@ namespace kt{
 
 			}
 		}
-		else if(finfo.extension()=="ico" || finfo.extension()=="png"){
+		else if(finfo.extension()=="ico" || finfo.extension()=="png" || finfo.extension()=="css"){
 			if(!headerField.ifModifiedSince){
 				header="HTTP/1.1 200 OK\r\n";
 				header+="Server: ktorrent\r\n";

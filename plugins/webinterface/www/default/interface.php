@@ -1,14 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
 <head>
-<title>KTorrent WebInterface</title>
+    <title>KTorrent WebInterface</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-<table  width="100%">
+<table width="100%">
   <tbody>
     <tr>
-      <td>&nbsp;</td>
-      <td align="center"><a href="interface.php"><img src="ktorrentwebinterfacelogo.png" width="340" height="150" align="top" border="0" /></a></td>
-      <td>&nbsp;</td>
+      <td></td>
+      <td align="center"><a href="interface.php"><img src="ktorrentwebinterfacelogo.png" width="340" height="150" alt="KTorrent WebInterface" /></a></td>
     </tr>
     <tr>
       <td>
@@ -16,26 +19,25 @@
 
 <?php
 		$globalinfo=globalInfo();
-		echo "<tr><td><strong> Settings </strong></tr></td>";
-		echo "<form method=\"get\">";
-		echo "<tr><td><input type=\"text\" name=\"maximum_upload_rate\" value=\"$globalinfo[max_upload_speed]\"> UploadSpeed</tr></td>";
-		echo "<tr><td><input type=\"text\" name=\"maximum_download_rate\" value=\"$globalinfo[max_download_speed]\"> DownloadSpeed</tr></td>";
-		echo "<tr><td><input type=\"text\" name=\"maximum_downloads\" value=\"$globalinfo[max_downloads]\"> MaximumDownload</tr></td>";
-		echo "<tr><td><input type=\"submit\"></tr></td>";
+		echo "<form action=\"interface.php\" method=\"get\">";
+		echo "<tr><td><input type=\"text\" name=\"maximum_upload_rate\" value=\"$globalinfo[max_upload_speed]\" /> UploadSpeed</td></tr>";
+		echo "<tr><td><input type=\"text\" name=\"maximum_download_rate\" value=\"$globalinfo[max_download_speed]\" /> DownloadSpeed</td></tr>";
+		echo "<tr><td><input type=\"text\" name=\"maximum_downloads\" value=\"$globalinfo[max_downloads]\" /> MaximumDownload</td></tr>";
+		echo "<tr><td><input type=\"submit\" /></td></tr>";
 		echo "</form>";
 ?>
-		<tr><td><form method="get">
-		<input type="text" name="load_torrent">
-		<input type="submit" value="Load Torrent"></tr>
-		</form></tr></td>
+		<form action="interface.php" method="get">
+		<tr><td><input type="text" name="load_torrent" />
+		<input type="submit" value="Load Torrent" /></td></tr>
+		</form>
 
-		<tr><td><form method="get">
-		<input type="submit" name="stopall" value="Stop All">
-		</form></tr></td>
+		<tr><td><form action="interface.php" method="get">
+		<input type="submit" name="stopall" value="Stop All" /></td></tr>
+		</form>
 
-		<tr><td><form method="get">
-		<input type="submit" name="startall" value="Start All">
-		</form></tr></td>
+		<form action="interface.php" method="get">
+		<tr><td><input type="submit" name="startall" value="Start All" /></td></tr>
+		</form>
 	</table>
       </td>
       <td>

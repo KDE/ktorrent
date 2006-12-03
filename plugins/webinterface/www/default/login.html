@@ -1,24 +1,24 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
-
 <head>
-  <title>KTorrent  WebInterface - Login</title>
-  <meta name="GENERATOR" content="Quanta Plus">
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>KTorrent  WebInterface - Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
-<body>
-<TABLE align="center" >
-<tr><td><IMG src="ktorrentwebinterfacelogo.png" width="687" height="300" align="left" border="0"></td></tr>
-</TABLE>
-<TABLE align="center" >
-<FORM action="redirect.html" method="POST">
- 
-   <tr><td>Username</td><td><INPUT type="text" name="username"></td></tr>
-   <tr><td>Password</td><td><INPUT type="password" name="password"></td></tr>
-<tr><td></td><td><INPUT type="submit" name="Login"></td></tr>
-   
-</FORM>
-</TABLE>
+<body style="background-image:url(ktorrentwebinterfacelogo.png); background-repeat:no-repeat; background-position:120px 120px;">
+
+<form id="loginForm" action="interface.php" method="post">
+    <table style="padding-left:100px; padding-top: 350px;">
+        <tr><td>Username:</td><td><input type="text" name="username" /></td></tr>
+        <tr><td>Password:</td><td><input type="password" name="password" /></td></tr>
+        <tr><td></td><td><input type="submit" value="Login" /></td></tr>
+    </table>
+</form>
+
+<script type="text/javascript">
+    document.forms["loginForm"].elements["username"].focus();
+</script>
 
 </body>
 </html>
