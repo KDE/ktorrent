@@ -438,7 +438,7 @@ namespace bt
 				
 				if(!s.running && s.completed && !s.user_controlled)
 				{
-					start(tc);
+					start(tc, false);
 					if(tc->getStats().stopped_by_error)
 						continue;
 				}
@@ -455,7 +455,7 @@ namespace bt
 				const TorrentStats & s = tc->getStats();
                         
 				if(!s.running && !s.user_controlled)
-					start(tc);
+					start(tc, false);
 			}
 		}
                 
