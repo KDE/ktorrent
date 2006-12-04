@@ -178,7 +178,7 @@ namespace bt
 		
 		if (packet_length > MAX_PIECE_LEN + 13)
 		{
-			Out() << " packet_length too large " << packet_length << endl;
+			Out(SYS_CON|LOG_DEBUG) << " packet_length too large " << packet_length << endl;
 
 			error = true;
 			return size;

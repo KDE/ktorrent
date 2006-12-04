@@ -274,7 +274,7 @@ namespace bt
 			if (stalled_timer.getElapsedSinceUpdate() > 120000 && !stats.completed &&
 				!stats.priv_torrent)
 			{
-				Out() << "Stalled for too long, time to get some fresh blood" << endl;
+				Out(SYS_TRK|LOG_NOTICE) << "Stalled for too long, time to get some fresh blood" << endl;
 				psman->manualUpdate();
 				stalled_timer.update();
 			}
@@ -301,7 +301,7 @@ namespace bt
 
 	void TorrentControl::onIOError(const QString & msg)
 	{
-		Out() << "Error : " << msg << endl;
+		Out(SYS_DIO|LOG_IMPORTANT) << "Error : " << msg << endl;
 		stats.stopped_by_error = true;
 		stats.status = ERROR;
 		error_msg = msg;
@@ -431,7 +431,7 @@ namespace bt
 			{
 				// print out warning in case of failure
 				// it doesn't corrupt the data, so just a couple of lost chunks
-				Out() << "Warning : " << e.toString() << endl;
+				Out(SYS_GEN|LOG_NOTICE) << "Warning : " << e.toString() << endl;
 			}
 			
 			down->clearDownloads();

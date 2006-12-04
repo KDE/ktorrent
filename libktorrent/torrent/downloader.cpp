@@ -392,7 +392,7 @@ namespace bt
 			try
 			{
 				cman.saveChunk(c->getIndex());
-				Out() << "Chunk " << c->getIndex() << " downloaded " << endl;
+				Out(SYS_GEN|LOG_NOTICE) << "Chunk " << c->getIndex() << " downloaded " << endl;
 				// tell everybody we have the Chunk
 				for (Uint32 i = 0;i < pman.getNumConnectedPeers();i++)
 				{
@@ -401,16 +401,16 @@ namespace bt
 			}
 			catch (Error & e)
 			{
-				Out() << "Error " << e.toString() << endl;
+				Out(SYS_DIO|LOG_IMPORTANT) << "Error " << e.toString() << endl;
 				emit ioError(e.toString());
 				return false;
 			}
 		}
 		else
 		{
-			Out() << "Hash verification error on chunk "  << c->getIndex() << endl;
-			Out() << "Is        : " << h << endl;
-			Out() << "Should be : " << tor.getHash(c->getIndex()) << endl;
+			Out(SYS_GEN|LOG_IMPORTANT) << "Hash verification error on chunk "  << c->getIndex() << endl;
+			Out(SYS_GEN|LOG_IMPORTANT) << "Is        : " << h << endl;
+			Out(SYS_GEN|LOG_IMPORTANT) << "Should be : " << tor.getHash(c->getIndex()) << endl;
 			
 			cman.resetChunk(c->getIndex());
 			chunk_selector->reinsert(c->getIndex());
@@ -421,7 +421,7 @@ namespace bt
 				if (!p)
 					return false;
 				QString IP(p->getIPAddresss());
-				Out() << "Peer " << IP << " sent bad data" << endl;
+				Out(SYS_GEN|LOG_NOTICE) << "Peer " << IP << " sent bad data" << endl;
 				IPBlocklist & ipfilter = IPBlocklist::instance();
 				ipfilter.insert( IP );
 				p->kill(); 

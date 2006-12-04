@@ -65,7 +65,7 @@ namespace bt
 		if(index != -1)
 			downloads.remove(index);
 		else
-			Out() << "Could not delete removed torrent control." << endl;
+			Out(SYS_GEN|LOG_IMPORTANT) << "Could not delete removed torrent control." << endl;
 	}
 
 	void QueueManager::clear()
@@ -102,7 +102,7 @@ namespace bt
 		
 		if (start_tc)
 		{
-			Out() << "Starting download" << endl;
+			Out(SYS_GEN|LOG_NOTICE) << "Starting download" << endl;
 			float ratio = kt::ShareRatio(s);
 			float max_ratio = tc->getMaxShareRatio();
 			if(s.completed && max_ratio > 0 && ratio >= max_ratio)
@@ -389,7 +389,7 @@ namespace bt
                                 
 				if(s.running && !s.user_controlled && !s.completed)
 				{
-					Out() << "QM Stopping: " << s.torrent_name << endl;
+					Out(SYS_GEN|LOG_DEBUG) << "QM Stopping: " << s.torrent_name << endl;
 					stop(tc);
 				}
 			}
@@ -402,7 +402,7 @@ namespace bt
                                 
 				if(s.running && !s.user_controlled && s.completed)
 				{
-					Out() << "QM Stopping: " << s.torrent_name << endl;
+					Out(SYS_GEN|LOG_NOTICE) << "QM Stopping: " << s.torrent_name << endl;
 					stop(tc);
 				}
 			}

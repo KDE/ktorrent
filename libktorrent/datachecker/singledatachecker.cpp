@@ -71,7 +71,7 @@ namespace bt
 			TimeStamp now = bt::GetCurrentTime();
 			if (now - last_update_time > 1000)
 			{
-				Out() << "Checked " << i << " chunks" << endl;
+				Out(SYS_DIO|LOG_DEBUG) << "Checked " << i << " chunks" << endl;
 				last_update_time = now;
 			}
 	

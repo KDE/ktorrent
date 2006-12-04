@@ -997,7 +997,7 @@ namespace bt
 			}
 			else if (!ok_chunks.get(i) && bitset.get(i))
 			{
-				Out() << "Previously OK chunk " << i << " is corrupt !!!!!" << endl;
+				Out(SYS_DIO|LOG_IMPORTANT) << "Previously OK chunk " << i << " is corrupt !!!!!" << endl;
 				// We think we have a chunk, but we don't
 				bitset.set(i,false);
 				todo.set(i,!only_seed_chunks.get(i) && !excluded_chunks.get(i));
