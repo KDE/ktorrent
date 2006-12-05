@@ -36,6 +36,8 @@ namespace kt
 		virtual ~SearchTab();
 	
 		void updateSearchEngines(const SearchEngineList & sl);
+		
+		
 	
 	protected slots:
 		void clearButtonPressed();
@@ -46,6 +48,10 @@ namespace kt
 		
 	signals:
 		void search(const QString & text,int engine,bool cur_tab, bool external);
+		
+	private:
+		void loadSearchHistory();
+		void saveSearchHistory();
 	};
 }
 

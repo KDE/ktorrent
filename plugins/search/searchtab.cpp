@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <qfile.h>
+#include <qtextstream.h>
 #include <qapplication.h>
 #include <qcheckbox.h>
 #include <kglobal.h>
@@ -27,6 +29,7 @@
 #include "searchtab.h"
 #include "searchenginelist.h"
 #include "searchpluginsettings.h"
+#include "functions.h"
 
 using namespace bt;
 
@@ -47,6 +50,7 @@ namespace kt
 		m_search_text->setInsertionPolicy(QComboBox::AtTop);
 		m_search_text->setMaxCount(20);
 		m_search_new_tab->setEnabled(false);
+		loadSearchHistory();
 	}
 
 	SearchTab::~SearchTab()
@@ -77,6 +81,7 @@ namespace kt
 		comp->addItem(str);
 		m_search_text->insertItem(str);
 		m_search_text->clearEdit();
+		saveSearchHistory();
 		search(str,m_search_engine->currentItem(),false, externalBrowser->isChecked());
 	}
 	
@@ -95,6 +100,7 @@ namespace kt
 		KCompletion *comp = m_search_text->completionObject();
 		comp->clear();
 		m_search_text->clear();
+		saveSearchHistory();
 	}
 	
 	void SearchTab::textChanged(const QString & str)
@@ -102,6 +108,44 @@ namespace kt
 		m_search_new_tab->setEnabled(str.length() > 0);
 	}
 
+	void SearchTab::loadSearchHistory()
+	{
+		QFile fptr(kt::DataDir() + "search_history");
+		if (!fptr.open(IO_ReadOnly))
+			return;
+		
+		KCompletion *comp = m_search_text->completionObject();
+		
+		Uint32 cnt = 0;
+		QTextStream in(&fptr);
+		while (!in.atEnd() && cnt < 50)
+		{
+			QString line = in.readLine();
+			if (line.isNull())
+				break; 
+			
+			comp->addItem(line);
+			m_search_text->insertItem(line);
+			cnt++;
+		}
+		
+		m_search_text->clearEdit();
+	}
+	
+	void SearchTab::saveSearchHistory()
+	{
+		QFile fptr(kt::DataDir() + "search_history");
+		if (!fptr.open(IO_WriteOnly))
+			return;
+		
+		QTextStream out(&fptr);
+		KCompletion *comp = m_search_text->completionObject();
+		QStringList items = comp->items();
+		for (QStringList::iterator i = items.begin();i != items.end();i++)
+		{
+			out << *i << endl;
+		}
+	}
 }
 
 #include "searchtab.moc"
