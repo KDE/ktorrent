@@ -15,61 +15,53 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTWAITJOB_H
-#define BTWAITJOB_H
+#ifndef KTEXITOPERATION_H
+#define KTEXITOPERATION_H
 
-#include <qtimer.h>
+#include <qobject.h>
 #include <kio/job.h>
-#include <qvaluelist.h>
-#include <interfaces/exitoperation.h>
-#include "constants.h"
 
-namespace bt
+namespace kt
 {
 
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
 	 * 
-	 * Job to wait for a certain amount of time or until one or more ExitOperation's have
-	 * finished.
+	 * Object to derive from for operations which need to be performed at exit.
+	 * The operation should emit the operationFinished signal when they are done.
+	 * 
+	 * ExitOperation's can be used in combination with a WaitJob, to wait for a certain amount of time
+	 * to give serveral ExitOperation's the time time to finish up.
 	*/
-	class WaitJob : public KIO::Job
+	class ExitOperation : public QObject
 	{
 		Q_OBJECT
 	public:
-		WaitJob(Uint32 millis);
-		virtual ~WaitJob();
+		ExitOperation();
+		virtual ~ExitOperation();
 
-		virtual void kill(bool quietly=true);
-		
-		/**
-		 * Add an ExitOperation;
-		 * @param op The operation
-		 */
-		void addExitOperation(kt::ExitOperation* op);
-		
-		
-		/**
-		 * Execute a WaitJob
-		 * @param job The Job
-		 */
-		static void execute(WaitJob* job);
-		
-	private slots:
-		void timerDone();
-		void operationFinished(kt::ExitOperation* op);
-		
-	private:
-		QTimer timer;
-		QValueList<kt::ExitOperation*> exit_ops;
+		/// wether or not we can do a deleteLater on the job after it has finished.
+		virtual bool deleteAllowed() const {return true;}
+	signals:
+		void operationFinished(kt::ExitOperation* opt);
 	};
-	
-	void SynchronousWait(Uint32 millis);
-	
-	
 
+	/**
+	 * Exit operation which waits for a KIO::Job
+	 */
+	class ExitJobOperation : public ExitOperation
+	{
+		Q_OBJECT
+	public:
+		ExitJobOperation(KIO::Job* j);
+		virtual ~ExitJobOperation();
+		
+		virtual bool deleteAllowed() const {return false;}
+	private slots:
+		virtual void onResult(KIO::Job* j);
+	};
 }
 
 #endif

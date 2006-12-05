@@ -15,61 +15,33 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTWAITJOB_H
-#define BTWAITJOB_H
+#include "exitoperation.h"
 
-#include <qtimer.h>
-#include <kio/job.h>
-#include <qvaluelist.h>
-#include <interfaces/exitoperation.h>
-#include "constants.h"
-
-namespace bt
+namespace kt
 {
 
-	/**
-	 * @author Joris Guisson <joris.guisson@gmail.com>
-	 * 
-	 * Job to wait for a certain amount of time or until one or more ExitOperation's have
-	 * finished.
-	*/
-	class WaitJob : public KIO::Job
-	{
-		Q_OBJECT
-	public:
-		WaitJob(Uint32 millis);
-		virtual ~WaitJob();
+	ExitOperation::ExitOperation()
+	{}
 
-		virtual void kill(bool quietly=true);
-		
-		/**
-		 * Add an ExitOperation;
-		 * @param op The operation
-		 */
-		void addExitOperation(kt::ExitOperation* op);
-		
-		
-		/**
-		 * Execute a WaitJob
-		 * @param job The Job
-		 */
-		static void execute(WaitJob* job);
-		
-	private slots:
-		void timerDone();
-		void operationFinished(kt::ExitOperation* op);
-		
-	private:
-		QTimer timer;
-		QValueList<kt::ExitOperation*> exit_ops;
-	};
+
+	ExitOperation::~ExitOperation()
+	{}
+
+	ExitJobOperation::ExitJobOperation(KIO::Job* j)
+	{
+		connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(onResult( KIO::Job* )));
+	}
 	
-	void SynchronousWait(Uint32 millis);
+	ExitJobOperation::~ExitJobOperation()
+	{
+	}
 	
-	
+	void ExitJobOperation::onResult(KIO::Job* )
+	{
+		operationFinished(this);
+	}
 
 }
-
-#endif
+#include "exitoperation.moc"

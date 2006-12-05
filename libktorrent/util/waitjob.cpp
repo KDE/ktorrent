@@ -48,6 +48,31 @@ namespace bt
 		emitResult();
 	}
 	
+	void WaitJob::addExitOperation(kt::ExitOperation* op)
+	{
+		exit_ops.append(op);
+		connect(op,SIGNAL(operationFinished( kt::ExitOperation* )),
+				this,SLOT(operationFinished( kt::ExitOperation* )));
+	}
+	
+	void WaitJob::operationFinished(kt::ExitOperation* op)
+	{
+		if (exit_ops.count() > 0)
+		{
+			exit_ops.remove(op);
+			if (op->deleteAllowed())
+				op->deleteLater();
+			
+			if (exit_ops.count() == 0)
+				timerDone();
+		}
+	}
+	
+	void WaitJob::execute(WaitJob* job)
+	{
+		KIO::NetAccess::synchronousRun(job,0);
+	}
+	
 	void SynchronousWait(Uint32 millis)
 	{
 		Out() << "SynchronousWait" << endl;

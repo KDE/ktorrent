@@ -174,8 +174,9 @@ namespace kt
 		 * Undo forwarding
 		 * @param port The port
 		 * @param prot UDP or TCP
+		 * @param at_exit Wether we are exiting the plugin or not
 		 */
-		void undoForward(const net::Port & port);
+		bt::HTTPRequest* undoForward(const net::Port & port,bool at_exit);
 		
 		void debugPrintData();
 		
@@ -206,7 +207,7 @@ namespace kt
 	private:
 		QValueList<UPnPService>::iterator findPortForwardingService();		
 		
-		bt::HTTPRequest* sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl);
+		bt::HTTPRequest* sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl,bool at_exit = false);
 		bool verbose;
 	};
 

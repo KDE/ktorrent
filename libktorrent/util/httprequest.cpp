@@ -98,6 +98,7 @@ namespace bt
 			// emit reply error
 			replyError(this,sl.last());
 		}
+		operationFinished(this);
 	}
 	
 	void HTTPRequest::onError(int)
@@ -105,6 +106,7 @@ namespace bt
 		Out() << "HTTPRequest error : " << sock->errorString() << endl;
 		error(this,false);
 		sock->close();
+		operationFinished(this);
 	}
 	
 	void HTTPRequest::onTimeout()
@@ -112,6 +114,7 @@ namespace bt
 		Out() << "HTTPRequest timeout" << endl;
 		error(this,true);
 		sock->close();
+		operationFinished(this);
 	}
 
 

@@ -277,7 +277,8 @@ namespace kt
 		reqs[r] = fwds.append(fw);
 	}
 	
-	void UPnPRouter::undoForward(const net::Port & port)
+	
+	bt::HTTPRequest* UPnPRouter::undoForward(const net::Port & port,bool at_exit)
 	{
 		Out(SYS_PNP|LOG_NOTICE) << "Undoing forward of port " << port.number << " (" << (port.proto == UDP ? "UDP" : "TCP") << ")" << endl;
 		// first find the right service
@@ -304,7 +305,8 @@ namespace kt
 		UPnPService & s = *i;
 		QString action = "DeletePortMapping";
 		QString comm = SOAP::createCommand(action,s.servicetype,args);
-		sendSoapQuery(comm,s.servicetype + "#" + action,s.controlurl);
+		bt::HTTPRequest* r = sendSoapQuery(comm,s.servicetype + "#" + action,s.controlurl,at_exit);
+		
 		QValueList<Forwarding>::iterator itr = fwds.begin();
 		while (itr != fwds.end())
 		{
@@ -317,6 +319,7 @@ namespace kt
 			itr++;
 		}
 		updateGUI();
+		return r;
 	}
 	
 	void UPnPRouter::isPortForwarded(const net::Port & port)
@@ -348,7 +351,7 @@ namespace kt
 		sendSoapQuery(comm,s.servicetype + "#" + action,s.controlurl);
 	}
 	
-	bt::HTTPRequest* UPnPRouter::sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl)
+	bt::HTTPRequest* UPnPRouter::sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl,bool at_exit)
 	{
 		// if port is not set, 0 will be returned 
 		// thanks to Diego R. Brogna for spotting this bug
@@ -372,7 +375,8 @@ namespace kt
 		connect(r,SIGNAL(error(bt::HTTPRequest*, bool )),
 				this,SLOT(onError(bt::HTTPRequest*, bool )));
 		r->start();
-		active_reqs.append(r);
+		if (!at_exit)
+			active_reqs.append(r);
 		return r;
 	}
 	

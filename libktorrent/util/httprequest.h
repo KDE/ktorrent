@@ -23,6 +23,7 @@
 #include <qobject.h>
 #include <kurl.h>
 #include <kstreamsocket.h>
+#include <interfaces/exitoperation.h>
 #include "constants.h"
 
 using KNetwork::KResolverEntry;
@@ -37,7 +38,7 @@ namespace bt
 	 * connect to the right signals and forget about it. After the reply has been received or
 	 * an error occurred, the appropriate signal will be emitted.
 	*/
-	class HTTPRequest : public QObject
+	class HTTPRequest : public kt::ExitOperation
 	{
 		Q_OBJECT
 	public:

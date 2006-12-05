@@ -28,6 +28,8 @@
 #include "upnpprefwidget.h"
 #include <util/log.h>
 #include <util/error.h>
+#include <util/waitjob.h>
+#include <util/httprequest.h>
 #include <torrent/globals.h>
 #include "upnppluginsettings.h"
 
@@ -53,13 +55,20 @@ namespace kt
 			try
 			{
 				net::PortList & pl = bt::Globals::instance().getPortList();
+				
+				if (pl.count() == 0)
+					return;
 			
+				bt::WaitJob* job = new WaitJob(1000);
 				for (net::PortList::iterator i = pl.begin(); i != pl.end();i++)
 				{
 					net::Port & p = *i;
 					if (p.forward)
-						def_router->undoForward(p);
+						job->addExitOperation(def_router->undoForward(p,true));
 				}
+				
+				// wait for operations to finish or timeout
+				bt::WaitJob::execute(job);
 			}
 			catch (Error & e)
 			{
@@ -163,7 +172,7 @@ namespace kt
 			{
 				net::Port & p = *i;
 				if (p.forward)
-					r->undoForward(p);
+					r->undoForward(p,false);
 			}
 			
 			QString def_dev = UPnPPluginSettings::defaultDevice();
@@ -226,7 +235,7 @@ namespace kt
 		try
 		{
 			if (def_router && port.forward)
-				def_router->undoForward(port);
+				def_router->undoForward(port,false);
 		}
 		catch (Error & e)
 		{
