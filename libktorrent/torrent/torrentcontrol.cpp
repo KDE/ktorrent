@@ -1292,16 +1292,27 @@ namespace bt
 				if (cman->haveAllChunks())
 					stats.completed = true;
 			}
+			else
+			{
+				Uint64 downloaded = stats.bytes_downloaded;
+				down->recalcDownloaded();
+				updateStats();
+				if (stats.bytes_downloaded > downloaded)
+					stats.imported_bytes = stats.bytes_downloaded - downloaded;
+				 
+				if (cman->haveAllChunks())
+					stats.completed = true;
+			}
 		}
 			
-		if (lst)
-			lst->finished();
 		stats.status = kt::NOT_STARTED;
-		delete dcheck_thread;
-		dcheck_thread = 0;
 		// update the status
 		updateStatusMsg();
 		updateStats();
+		if (lst)
+			lst->finished();
+		delete dcheck_thread;
+		dcheck_thread = 0;
 	}
 	
 	bool TorrentControl::isCheckingData(bool & finished) const

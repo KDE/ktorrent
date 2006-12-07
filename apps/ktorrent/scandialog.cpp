@@ -118,7 +118,6 @@ void ScanDialog::finished()
 				tc->start();
 			else
 			{
-			//	core->queue(tc);
 				tc->setPriority(qm_priority);
 				core->getQueueManager()->orderQueue();
 			}
@@ -135,7 +134,6 @@ void ScanDialog::finished()
 				tc->start();
 			else
 			{
-			//	core->queue(tc);
 				tc->setPriority(qm_priority);
 				core->getQueueManager()->orderQueue();
 			}
