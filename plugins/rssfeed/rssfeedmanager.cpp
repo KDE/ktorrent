@@ -1245,7 +1245,7 @@ namespace kt
 			{
 				if (acceptFilters.at(i)->scanArticle(article))
 				{
-				RssLinkDownloader * curDownload = new RssLinkDownloader(m_core, article.link().prettyURL(), filter);
+				RssLinkDownloader * curDownload = new RssLinkDownloader(m_core, article.link().prettyURL(), acceptFilters.at(i));
 				for (int i=0; i<feeds.count(); i++)
 					{
 					connect(curDownload, SIGNAL(linkDownloaded( QString, int )), feeds.at(i), SLOT(setDownloaded(QString, int)) );
