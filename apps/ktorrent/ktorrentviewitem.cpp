@@ -227,6 +227,12 @@ int KTorrentViewItem::compare(QListViewItem * i,int col,bool) const
 				operc = 100.0;
 			return CompareVal(perc,operc);
 		}
+		case 10:
+		{
+			float r1 = kt::ShareRatio(s);
+			float r2 = kt::ShareRatio(os);
+			return CompareVal(r1,r2);
+		}
 	}
 
 	return 0;
@@ -247,6 +253,3 @@ void KTorrentViewItem::paintCell(QPainter* p,const QColorGroup & cg,
 
 	KListViewItem::paintCell(p,_cg,column,width,align);
 }
-
-
-
