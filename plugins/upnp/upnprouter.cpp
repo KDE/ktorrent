@@ -31,6 +31,7 @@
 #include <util/functions.h>
 #include <util/fileops.h>
 #include <util/httprequest.h>
+#include <util/waitjob.h>
 #include "upnprouter.h"
 #include "upnpdescriptionparser.h"
 #include "soap.h"
@@ -128,6 +129,14 @@ namespace kt
 	
 	void UPnPRouter::addService(const UPnPService & s)
 	{
+		QValueList<UPnPService>::iterator i = services.begin();
+		while (i != services.end())
+		{
+			UPnPService & os = *i;
+			if (s.servicetype == os.servicetype)
+				return;
+			i++;
+		}
 		services.append(s);
 	}
 	
@@ -183,41 +192,9 @@ namespace kt
 		Out(SYS_PNP|LOG_DEBUG) << "Done" << endl;
 	}
 	
-	QValueList<UPnPService>::iterator UPnPRouter::findPortForwardingService()
+ 
+	void UPnPRouter::forward(UPnPService* srv,const net::Port & port)
 	{
-		QValueList<UPnPService>::iterator i = services.begin();
-		while (i != services.end())
-		{
-			UPnPService & s = *i;
-			if (s.servicetype == "urn:schemas-upnp-org:service:WANIPConnection:1" ||
-						 s.servicetype == "urn:schemas-upnp-org:service:WANPPPConnection:1")
-				return i;
-			i++;
-		}
-		return services.end();
-	}
-
-	void UPnPRouter::getExternalIP()
-	{
-		// first find the right service
-		QValueList<UPnPService>::iterator i = findPortForwardingService();
-		if (i == services.end())
-			throw Error(i18n("Cannot find port forwarding service in the device's description!"));
-		
-		UPnPService & s = *i;
-		QString action = "GetExternalIPAddress";
-		QString comm = SOAP::createCommand(action,s.servicetype);
-		sendSoapQuery(comm,s.servicetype + "#" + action,s.controlurl);
-	}
-	
-	void UPnPRouter::forward(const net::Port & port)
-	{
-		Out(SYS_PNP|LOG_NOTICE) << "Forwarding port " << port.number << " (" << (port.proto == UDP ? "UDP" : "TCP") << ")" << endl;
-		// first find the right service
-		QValueList<UPnPService>::iterator i = findPortForwardingService();
-		if (i == services.end())
-			throw Error(i18n("Cannot find port forwarding service in the device's description!"));
-		
 		// add all the arguments for the command
 		QValueList<SOAP::Arg> args;
 		SOAP::Arg a;
@@ -257,35 +234,45 @@ namespace kt
 		a.value = "0";
 		args.append(a);
 		
-		UPnPService & s = *i;
 		QString action = "AddPortMapping";
-		QString comm = SOAP::createCommand(action,s.servicetype,args);
+		QString comm = SOAP::createCommand(action,srv->servicetype,args);
 		
-		Forwarding fw = {port,true};
+		Forwarding fw = {port,true,srv};
 		// erase old forwarding if one exists
 		QValueList<Forwarding>::iterator itr = fwds.begin();
 		while (itr != fwds.end())
 		{
 			Forwarding & fwo = *itr;
-			if (fwo.port == port)
+			if (fwo.port == port && fwo.service == srv)
 				itr = fwds.erase(itr);
 			else
 				itr++;
 		}
 		
-		bt::HTTPRequest* r = sendSoapQuery(comm,s.servicetype + "#" + action,s.controlurl);
+		bt::HTTPRequest* r = sendSoapQuery(comm,srv->servicetype + "#" + action,srv->controlurl);
 		reqs[r] = fwds.append(fw);
 	}
-	
-	
-	bt::HTTPRequest* UPnPRouter::undoForward(const net::Port & port,bool at_exit)
+
+	void UPnPRouter::forward(const net::Port & port)
 	{
-		Out(SYS_PNP|LOG_NOTICE) << "Undoing forward of port " << port.number << " (" << (port.proto == UDP ? "UDP" : "TCP") << ")" << endl;
+		Out(SYS_PNP|LOG_NOTICE) << "Forwarding port " << port.number << " (" << (port.proto == UDP ? "UDP" : "TCP") << ")" << endl;
 		// first find the right service
-		QValueList<UPnPService>::iterator i = findPortForwardingService();
-		if (i == services.end())
-			throw Error(i18n("Cannot find port forwarding service in the device's description!"));
+		QValueList<UPnPService>::iterator i = services.begin();
+		while (i != services.end())
+		{
+			UPnPService & s = *i;
+			if (s.servicetype == "urn:schemas-upnp-org:service:WANIPConnection:1" ||
+				s.servicetype == "urn:schemas-upnp-org:service:WANPPPConnection:1")
+			{
+				forward(&s,port);
+			}
+			i++;
+		}
 		
+	}
+	
+	void UPnPRouter::undoForward(UPnPService* srv,const net::Port & port,bt::WaitJob* waitjob)
+	{
 		// add all the arguments for the command
 		QValueList<SOAP::Arg> args;
 		SOAP::Arg a;
@@ -302,10 +289,22 @@ namespace kt
 		a.value = port.proto == TCP ? "TCP" : "UDP";
 		args.append(a);
 		
-		UPnPService & s = *i;
+		
 		QString action = "DeletePortMapping";
-		QString comm = SOAP::createCommand(action,s.servicetype,args);
-		bt::HTTPRequest* r = sendSoapQuery(comm,s.servicetype + "#" + action,s.controlurl,at_exit);
+		QString comm = SOAP::createCommand(action,srv->servicetype,args);
+		bt::HTTPRequest* r = sendSoapQuery(comm,srv->servicetype + "#" + action,srv->controlurl,waitjob != 0);
+		
+		if (waitjob)
+			waitjob->addExitOperation(r);
+		
+		updateGUI();
+	}
+	
+	
+	void UPnPRouter::undoForward(const net::Port & port,bt::WaitJob* waitjob)
+	{
+		Out(SYS_PNP|LOG_NOTICE) << "Undoing forward of port " << port.number 
+				<< " (" << (port.proto == UDP ? "UDP" : "TCP") << ")" << endl;
 		
 		QValueList<Forwarding>::iterator itr = fwds.begin();
 		while (itr != fwds.end())
@@ -313,42 +312,14 @@ namespace kt
 			Forwarding & wd = *itr;
 			if (wd.port == port)
 			{
-				fwds.erase(itr);
-				break;
+				undoForward(wd.service,wd.port,waitjob);
+				itr = fwds.erase(itr);
 			}
-			itr++;
+			else
+			{
+				itr++;
+			}
 		}
-		updateGUI();
-		return r;
-	}
-	
-	void UPnPRouter::isPortForwarded(const net::Port & port)
-	{
-		// first find the right service
-		QValueList<UPnPService>::iterator i = findPortForwardingService();
-		if (i == services.end())
-			throw Error(i18n("Cannot find port forwarding service in the device's description!"));
-		
-		// add all the arguments for the command
-		QValueList<SOAP::Arg> args;
-		SOAP::Arg a;
-		a.element = "NewRemoteHost";
-		args.append(a);
-		
-		// the external port
-		a.element = "NewExternalPort";
-		a.value = QString::number(port.number);
-		args.append(a);
-		
-		// the protocol
-		a.element = "NewProtocol";
-		a.value = port.proto == TCP ? "TCP" : "UDP";
-		args.append(a);
-		
-		UPnPService & s = *i;
-		QString action = "GetSpecificPortMappingEntry";
-		QString comm = SOAP::createCommand(action,s.servicetype,args);
-		sendSoapQuery(comm,s.servicetype + "#" + action,s.controlurl);
 	}
 	
 	bt::HTTPRequest* UPnPRouter::sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl,bool at_exit)
@@ -420,6 +391,66 @@ namespace kt
 		active_reqs.remove(r);
 		r->deleteLater();
 	}
+	
+#if 0
+	QValueList<UPnPService>::iterator UPnPRouter::findPortForwardingService()
+	{
+		QValueList<UPnPService>::iterator i = services.begin();
+		while (i != services.end())
+		{
+			UPnPService & s = *i;
+			if (s.servicetype == "urn:schemas-upnp-org:service:WANIPConnection:1" ||
+						 s.servicetype == "urn:schemas-upnp-org:service:WANPPPConnection:1")
+				return i;
+			i++;
+		}
+		return services.end();
+	}
+
+
+	void UPnPRouter::getExternalIP()
+	{
+		// first find the right service
+		QValueList<UPnPService>::iterator i = findPortForwardingService();
+		if (i == services.end())
+			throw Error(i18n("Cannot find port forwarding service in the device's description!"));
+		
+		UPnPService & s = *i;
+		QString action = "GetExternalIPAddress";
+		QString comm = SOAP::createCommand(action,s.servicetype);
+		sendSoapQuery(comm,s.servicetype + "#" + action,s.controlurl);
+	}
+	
+	void UPnPRouter::isPortForwarded(const net::Port & port)
+	{
+		// first find the right service
+		QValueList<UPnPService>::iterator i = findPortForwardingService();
+		if (i == services.end())
+			throw Error(i18n("Cannot find port forwarding service in the device's description!"));
+		
+		// add all the arguments for the command
+		QValueList<SOAP::Arg> args;
+		SOAP::Arg a;
+		a.element = "NewRemoteHost";
+		args.append(a);
+		
+		// the external port
+		a.element = "NewExternalPort";
+		a.value = QString::number(port.number);
+		args.append(a);
+		
+		// the protocol
+		a.element = "NewProtocol";
+		a.value = port.proto == TCP ? "TCP" : "UDP";
+		args.append(a);
+		
+		UPnPService & s = *i;
+		QString action = "GetSpecificPortMappingEntry";
+		QString comm = SOAP::createCommand(action,s.servicetype,args);
+		sendSoapQuery(comm,s.servicetype + "#" + action,s.controlurl);
+	}
+#endif
+
 	
 }
 

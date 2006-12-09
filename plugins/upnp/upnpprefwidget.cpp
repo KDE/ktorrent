@@ -64,7 +64,7 @@ namespace kt
 				{
 					net::Port & p = *i;
 					if (p.forward)
-						job->addExitOperation(def_router->undoForward(p,true));
+						def_router->undoForward(p,job);
 				}
 				
 				// wait for operations to finish or timeout
@@ -82,6 +82,7 @@ namespace kt
 	{
 		connect(r,SIGNAL(updateGUI()),this,SLOT(updatePortMappings()));
 		KListViewItem* item = new KListViewItem(m_device_list,r->getDescription().friendlyName);
+		item->setMultiLinesEnabled(true);
 		itemmap[item] = r;
 		// if we have discovered the default device or there is none
 		// forward it's ports
@@ -198,7 +199,7 @@ namespace kt
 		{
 			UPnPRouter* r = i.data();
 			KListViewItem* item = i.key();
-			QString msg;
+			QString msg,services;
 			QValueList<UPnPRouter::Forwarding>::iterator j = r->beginPortMappings();
 			while (j != r->endPortMappings())
 			{
@@ -207,11 +208,21 @@ namespace kt
 				{
 					msg += QString::number(f.port.number) + " (";
 					QString prot = (f.port.proto == net::UDP ? "UDP" : "TCP");
-					msg +=  prot + ") ";
+					msg +=  prot + ")";
+					if (f.service->servicetype.contains("WANPPPConnection"))
+						services += "PPP";
+					else
+						services += "IP";
 				}
 				j++;
+				if (j != r->endPortMappings())
+				{
+					msg += "\n";
+					services += "\n";
+				}
 			}
 			item->setText(1,msg);
+			item->setText(2,services);
 			i++;
 		}
 	}

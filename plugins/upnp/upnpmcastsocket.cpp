@@ -151,10 +151,11 @@ namespace kt
 		QString server;
 		KURL location;
 		
-/*		Out(SYS_PNP|LOG_DEBUG) << "Received : " << endl;
+		/*
+		Out(SYS_PNP|LOG_DEBUG) << "Received : " << endl;
 		for (Uint32 idx = 0;idx < lines.count(); idx++)
 			Out(SYS_PNP|LOG_DEBUG) << lines[idx] << endl;
-		*/ 
+		*/
 		
 		// first read first line and see if contains a HTTP 200 OK message
 		QString line = lines.first();

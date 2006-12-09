@@ -58,6 +58,17 @@
                             <bool>true</bool>
                         </property>
                     </column>
+                    <column>
+                        <property name="text">
+                            <string>WAN Connection</string>
+                        </property>
+                        <property name="clickable">
+                            <bool>true</bool>
+                        </property>
+                        <property name="resizable">
+                            <bool>true</bool>
+                        </property>
+                    </column>
                     <property name="name">
                         <cstring>m_device_list</cstring>
                     </property>
@@ -77,7 +88,7 @@
                         <cstring>m_forward_btn</cstring>
                     </property>
                     <property name="text">
-                        <string>Forward Ports</string>
+                        <string>Forw&amp;ard Ports</string>
                     </property>
                 </widget>
                 <widget class="KPushButton">
@@ -117,6 +128,8 @@
         </widget>
     </vbox>
 </widget>
+<customwidgets>
+</customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>klistview.h</includehint>

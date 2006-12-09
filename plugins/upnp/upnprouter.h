@@ -30,6 +30,7 @@ using bt::Uint16;
 namespace bt
 {
 	class HTTPRequest;
+	class WaitJob;
 }
 
 namespace KIO
@@ -110,6 +111,7 @@ namespace kt
 		{
 			net::Port port;
 			bool pending;
+			UPnPService* service;
 		};
 	private:	
 		QString server;
@@ -153,6 +155,7 @@ namespace kt
 		 */
 		void addService(const UPnPService & s);
 			
+#if 0
 		/**
 		 * See if a port is forwarded
 		 * @param port The Port
@@ -163,6 +166,7 @@ namespace kt
 		 * Get the external IP address.
 		 */
 		void getExternalIP();
+#endif
 		
 		/**
 		 * Forward a local port
@@ -173,10 +177,10 @@ namespace kt
 		/**
 		 * Undo forwarding
 		 * @param port The port
-		 * @param prot UDP or TCP
-		 * @param at_exit Wether we are exiting the plugin or not
+		 * @param waitjob When this is set the jobs needs to be added to the waitjob, 
+		 * so we can wait for their completeion at exit
 		 */
-		bt::HTTPRequest* undoForward(const net::Port & port,bool at_exit);
+		void undoForward(const net::Port & port,bt::WaitJob* waitjob = 0);
 		
 		void debugPrintData();
 		
@@ -209,6 +213,9 @@ namespace kt
 		
 		bt::HTTPRequest* sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl,bool at_exit = false);
 		bool verbose;
+		
+		void forward(UPnPService* srv,const net::Port & port);
+		void undoForward(UPnPService* srv,const net::Port & port,bt::WaitJob* waitjob);
 	};
 
 }

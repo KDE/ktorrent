@@ -61,8 +61,8 @@ namespace bt
 		QString req = hdr + payload;
 		if (verbose)
 		{
-			Out() << "Sending " << endl;
-			Out() << hdr << payload << endl;
+			Out(SYS_PNP|LOG_DEBUG) << "Sending " << endl;
+			Out(SYS_PNP|LOG_DEBUG) << hdr << payload << endl;
 		}
 		sock->writeBlock(req.ascii(),req.length());
 	}
@@ -84,8 +84,8 @@ namespace bt
 		
 		if (verbose)
 		{
-			Out() << "Got reply : " << endl;
-			Out() << strdata << endl;
+			Out(SYS_PNP|LOG_DEBUG) << "Got reply : " << endl;
+			Out(SYS_PNP|LOG_DEBUG) << strdata << endl;
 		}
 		
 		if (sl.first().contains("HTTP") && sl.first().contains("200"))
