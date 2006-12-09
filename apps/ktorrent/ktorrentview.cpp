@@ -57,6 +57,7 @@ KTorrentView::KTorrentView(QWidget *parent)
 	addColumn(i18n("Time Left"));
 	addColumn(i18n("Peers"));
 	addColumn(i18n("% Complete"));
+	addColumn(i18n("Share ratio"));
 	
 	setColumnAlignment(2,Qt::AlignRight);
 	setColumnAlignment(3,Qt::AlignRight);
@@ -66,6 +67,7 @@ KTorrentView::KTorrentView(QWidget *parent)
 	setColumnAlignment(7,Qt::AlignCenter);
 	setColumnAlignment(8,Qt::AlignRight);
 	setColumnAlignment(9,Qt::AlignRight);
+	setColumnAlignment(10,Qt::AlignRight);
 
 	connect(this,SIGNAL(currentChanged(QListViewItem* )),
 			this,SLOT(onExecuted(QListViewItem* )));

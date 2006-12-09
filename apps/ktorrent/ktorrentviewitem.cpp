@@ -80,6 +80,12 @@ static QColor StatusToColor(TorrentStatus s,const QColorGroup & cg)
 	return cg.text();
 }
 
+static QColor ratioToColor(float ratio)
+{
+	QColor green(40,205,40);
+	return ratio > 0.8 ? green : Qt::red;
+}
+
 
 
 KTorrentViewItem::KTorrentViewItem(QListView* parent,TorrentInterface* tc)
@@ -173,6 +179,9 @@ void KTorrentViewItem::update()
 		}
 	}
 	setText(9,i18n("%1 %").arg(loc->formatNumber(perc,2)));
+	
+	float ratio = kt::ShareRatio(s);
+	setText(10,QString("%1").arg(KGlobal::locale()->formatNumber(ratio,2)));
 }
 
 
@@ -231,8 +240,13 @@ void KTorrentViewItem::paintCell(QPainter* p,const QColorGroup & cg,
 
 	if (column == 1)
 		_cg.setColor(QColorGroup::Text, StatusToColor(tc->getStats().status,cg));
+	
+	if (column == 10)
+		_cg.setColor(QColorGroup::Text, ratioToColor(kt::ShareRatio(tc->getStats())));
 
 
 	KListViewItem::paintCell(p,_cg,column,width,align);
 }
+
+
 
