@@ -190,7 +190,7 @@ namespace kt
 		{
 			UPnPService & s = *i;
 			if (s.servicetype == "urn:schemas-upnp-org:service:WANIPConnection:1" ||
-				s.servicetype == "urn:schemas-upnp-org:service:WANPPPConnection:1")
+						 s.servicetype == "urn:schemas-upnp-org:service:WANPPPConnection:1")
 				return i;
 			i++;
 		}

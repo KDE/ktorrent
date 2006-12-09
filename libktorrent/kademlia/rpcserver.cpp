@@ -25,6 +25,7 @@
 #include <torrent/bnode.h>
 #include <torrent/bdecoder.h>
 #include <torrent/bencoder.h>
+#include <ksocketdevice.h>
 #include "rpcserver.h"
 #include "rpccall.h"
 #include "rpcmsg.h"
@@ -96,6 +97,17 @@ namespace dht
 
 	void RPCServer::readPacket()
 	{
+		if (sock->bytesAvailable() == 0)
+		{
+			Out(SYS_DHT|LOG_NOTICE) << "0 byte UDP packet " << endl;
+			// KDatagramSocket wrongly handles UDP packets with no payload
+			// so we need to deal with it oursleves
+			int fd = sock->socketDevice()->socket();
+			char tmp;
+			read(fd,&tmp,1);
+			return;
+		}
+		
 		KDatagramPacket pck = sock->receive();
 		/*
 		Out() << "RPCServer::readPacket" << endl;
