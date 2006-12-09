@@ -165,6 +165,16 @@ namespace bt
 	void UDPTrackerSocket::dataRecieved(int)
 	{
 		Uint32 ba = sock->bytesAvailable();
+		if (ba == 0)
+		{
+			// just to be sure, don't know if Qt sockets suffer from the 
+			// same problems as KDatagramSocket
+			int fd = sock->socket();
+			char tmp;
+			read(fd,&tmp,1);
+			return;
+		}
+		
 		Array<Uint8> buf(ba);
 		sock->readBlock((char*)(Uint8*)buf,ba);
 		Uint32 type = ReadUint32(buf,0);

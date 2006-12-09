@@ -47,6 +47,7 @@ namespace bt
 	 * @author Joris Guisson
 	 *
 	 * Class which handles communication with one or more UDP trackers.
+	 * TODO: switch to KDatagramSocket 
 	*/
 	class UDPTrackerSocket : public QObject
 	{
