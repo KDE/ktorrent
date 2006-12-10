@@ -273,14 +273,14 @@ namespace kt
 	void UPnPMCastSocket::joinUPnPMCastGroup()
 	{
 		int fd = socketDevice()->socket();
-		struct ip_mreqn mreq;
+		struct ip_mreq mreq;
 		
-		memset(&mreq,0,sizeof(struct ip_mreqn));
+		memset(&mreq,0,sizeof(struct ip_mreq));
 		
 		inet_aton("239.255.255.250",&mreq.imr_multiaddr);
-		mreq.imr_address.s_addr = htonl(INADDR_ANY);
+		mreq.imr_interface.s_addr = htonl(INADDR_ANY);
 		
-		if (setsockopt(fd,IPPROTO_IP,IP_ADD_MEMBERSHIP,&mreq,sizeof(struct ip_mreqn)) < 0)
+		if (setsockopt(fd,IPPROTO_IP,IP_ADD_MEMBERSHIP,&mreq,sizeof(struct ip_mreq)) < 0)
 		{
 			Out(SYS_PNP|LOG_NOTICE) << "Failed to join multicast group 239.255.255.250" << endl; 
 		} 
@@ -289,14 +289,14 @@ namespace kt
 	void UPnPMCastSocket::leaveUPnPMCastGroup()
 	{
 		int fd = socketDevice()->socket();
-		struct ip_mreqn mreq;
+		struct ip_mreq mreq;
 		
-		memset(&mreq,0,sizeof(struct ip_mreqn));
+		memset(&mreq,0,sizeof(struct ip_mreq));
 		
 		inet_aton("239.255.255.250",&mreq.imr_multiaddr);
-		mreq.imr_address.s_addr = htonl(INADDR_ANY);
+		mreq.imr_interface.s_addr = htonl(INADDR_ANY);
 		
-		if (setsockopt(fd,IPPROTO_IP,IP_DROP_MEMBERSHIP,&mreq,sizeof(struct ip_mreqn)) < 0)
+		if (setsockopt(fd,IPPROTO_IP,IP_DROP_MEMBERSHIP,&mreq,sizeof(struct ip_mreq)) < 0)
 		{
 			Out(SYS_PNP|LOG_NOTICE) << "Failed to leave multicast group 239.255.255.250" << endl; 
 		} 

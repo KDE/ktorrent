@@ -12,6 +12,17 @@
             <height>206</height>
         </rect>
     </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>5</hsizetype>
+            <vsizetype>4</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="caption">
+        <string>TrackerViewBase</string>
+    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
