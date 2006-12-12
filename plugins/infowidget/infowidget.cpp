@@ -451,6 +451,8 @@ namespace kt
 		const TorrentStats & s = curr_tc->getStats();
 		// don't show a menu if item is 0 or if it is a directory
 		
+		
+		
 		QPtrList<QListViewItem> sel = m_file_view->selectedItems();
 		switch(sel.count())
 		{
@@ -535,14 +537,13 @@ namespace kt
 		}
 		else
 		{
-			if(item->childCount() != 0)
-			{
-				context_menu->setItemEnabled(first_id, true);
-				context_menu->setItemEnabled(normal_id, true);
-				context_menu->setItemEnabled(last_id, true);
-				context_menu->setItemEnabled(dnd_keep_id,true);
-				context_menu->setItemEnabled(dnd_throw_away_id,true);
-			}
+			bool val = item->childCount() != 0;
+			context_menu->setItemEnabled(first_id, val);
+			context_menu->setItemEnabled(normal_id, val);
+			context_menu->setItemEnabled(last_id, val);
+			context_menu->setItemEnabled(dnd_keep_id,val);
+			context_menu->setItemEnabled(dnd_throw_away_id,val);
+			
 			
 			if ( curr_tc->readyForPreview() && IsMultimediaFile(s.output_path))
 			{
