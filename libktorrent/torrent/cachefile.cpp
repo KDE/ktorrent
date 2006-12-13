@@ -68,6 +68,11 @@ namespace bt
 			close(false);
 	}
 	
+	void CacheFile::changePath(const QString & npath)
+	{
+		path = npath;
+	}
+	
 	void CacheFile::openFile()
 	{
 		fd = ::open(QFile::encodeName(path),O_RDWR | O_LARGEFILE);

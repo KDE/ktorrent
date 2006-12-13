@@ -476,8 +476,9 @@ bool KTorrentCore::changeDataDir(const QString & new_dir)
 			nd += DirSeparator();
 
 		Out() << "Switching to datadir " << nd << endl;
-		// keep track of all TorrentInterface's which have successfully
-		// moved to the new data dir
+		
+		qman->setPausedState(true);
+		
 		QPtrList<kt::TorrentInterface> succes;
 
 		QPtrList<kt::TorrentInterface>::iterator i = qman->begin();
@@ -491,6 +492,7 @@ bool KTorrentCore::changeDataDir(const QString & new_dir)
 				// set back the old data_dir in Settings
 				Settings::setTempDir(data_dir);
 				Settings::self()->writeConfig();
+				qman->setPausedState(false);
 				update_timer.start(CORE_UPDATE_INTERVAL);
 				return false;
 			}
@@ -501,6 +503,7 @@ bool KTorrentCore::changeDataDir(const QString & new_dir)
 			i++;
 		}
 		data_dir = nd;
+		qman->setPausedState(false);
 		update_timer.start(CORE_UPDATE_INTERVAL);
 		return true;
 	}

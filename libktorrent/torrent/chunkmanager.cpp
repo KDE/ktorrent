@@ -124,32 +124,10 @@ namespace bt
 
 	void ChunkManager::changeDataDir(const QString & data_dir)
 	{
-		QValueList<Uint32> mapped;
-		// save all buffered and mapped chunks
-		for (Uint32 i = 0;i < tor.getNumChunks();i++)
-		{
-			Chunk* c = getChunk(i);
-			if (c->getStatus() == Chunk::MMAPPED ||
-				c->getStatus() == Chunk::BUFFERED)
-			{
-				cache->save(c);
-				mapped.append(i);
-			}
-		}
-		cache->close();
 		cache->changeTmpDir(data_dir);
-		cache->open();
-		// reload the previously mapped and buffered chunks
-		for (Uint32 i = 0;i < mapped.count();i++)
-		{
-			Chunk* c = getChunk(mapped[i]);
-			cache->load(c);
-		}
-		
 		index_file = data_dir + "index";
 		file_info_file = data_dir + "file_info";
 		file_priority_file = data_dir + "file_priority";
-		savePriorityInfo();
 	}
 	
 	void ChunkManager::loadIndexFile()

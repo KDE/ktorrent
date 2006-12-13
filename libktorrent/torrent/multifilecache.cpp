@@ -139,10 +139,30 @@ namespace bt
 		}
 	}
 
-	void MultiFileCache::changeDataDir(const QString& ndir)
+	void MultiFileCache::changeTmpDir(const QString& ndir)
 	{
 		Cache::changeTmpDir(ndir);
 		cache_dir = tmpdir + "cache/";
+		QString dnd_dir = tmpdir + "dnd" + bt::DirSeparator();
+		
+		// change paths for individual files, it should not
+		// be a problem to move these files when they are open
+		for (Uint32 i = 0;i < tor.getNumFiles();i++)
+		{
+			TorrentFile & tf = tor.getFile(i);
+			if (tf.doNotDownload())
+			{
+				DNDFile* dfd = dnd_files.find(i);
+				if (dfd)
+					dfd->changePath(dnd_dir + tf.getPath() + ".dnd");
+			}
+			else
+			{
+				CacheFile* fd = files.find(i);
+				if (fd)
+					fd->changePath(cache_dir + tf.getPath());
+			}
+		}
 	}
 
 	void MultiFileCache::create()

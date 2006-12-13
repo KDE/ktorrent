@@ -45,7 +45,7 @@ namespace bt
 		MultiFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir,bool custom_output_name);
 		virtual ~MultiFileCache();
 
-		virtual void changeDataDir(const QString& ndir);
+		virtual void changeTmpDir(const QString& ndir);
 		virtual void create();
 		virtual void load(Chunk* c);
 		virtual void save(Chunk* c);

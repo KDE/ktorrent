@@ -39,6 +39,9 @@ namespace bt
 		DNDFile(const QString & path);
 		virtual ~DNDFile();
 		
+		/// Change the path of the file
+		void changePath(const QString & npath);
+		
 		/**
 		 * CHeck integrity of the file, create it if it doesn't exist.
 		 */

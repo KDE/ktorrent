@@ -46,7 +46,7 @@ namespace bt
 	SingleFileCache::~SingleFileCache()
 	{}
 
-	void SingleFileCache::changeDataDir(const QString & ndir)
+	void SingleFileCache::changeTmpDir(const QString & ndir)
 	{
 		Cache::changeTmpDir(ndir);
 		cache_file = tmpdir + "cache";

@@ -76,6 +76,9 @@ namespace bt
 		 */
 		void open(const QString & path,Uint64 size);
 		
+		/// Change the path of the file
+		void changePath(const QString & npath);
+		
 		/**
 		 * Map a part of the file into memory, will expand the file
 		 * if it is to small, but will not go past the limit set in open.

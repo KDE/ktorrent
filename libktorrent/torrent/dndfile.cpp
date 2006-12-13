@@ -43,6 +43,11 @@ namespace bt
 	DNDFile::~DNDFile()
 	{}
 	
+	void DNDFile::changePath(const QString & npath)
+	{
+		path = npath;
+	}
+	
 	void DNDFile::checkIntegrity()
 	{
 		File fptr;

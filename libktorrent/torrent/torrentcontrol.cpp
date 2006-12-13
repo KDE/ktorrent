@@ -760,82 +760,45 @@ namespace bt
 
 	bool TorrentControl::changeDataDir(const QString & new_dir)
 	{
-#warning "This code is broken at the moment, will fix later"
-		return false;
-		// new_dir doesn't contain the torX/ part
-		// so first get that and append it to new_dir
-		int dd = datadir.findRev(DirSeparator(),datadir.length() - 2,false);
-		QString tor = datadir.mid(dd + 1,datadir.length() - 2 - dd);
-
-
-		// make sure nd ends with a /
-		QString nd = new_dir + tor;
-		if (!nd.endsWith(DirSeparator()))
-			nd += DirSeparator();
-
-		Out() << datadir << " -> " << nd << endl;
-
-		int ok_calls = 0;
-		try
+		int pos = datadir.findRev(bt::DirSeparator(),-2);
+		if (pos == -1)
 		{
-			if (!bt::Exists(nd))
-				bt::MakeDir(nd);
-
-			// now try to move all the files :
-			// first the torrent
-			bt::Move(datadir + "torrent",nd);
-			ok_calls++;
-			// then the index
-			bt::Move(datadir + "index",nd);
-			ok_calls++;
-			// then the cache
-			bt::Move(datadir + "cache",nd);
-			ok_calls++;
-
-			// tell the chunkmanager that the datadir has changed
-			cman->changeDataDir(nd);
-		}
-		catch (...)
-		{
-			// move the torrent back
-			if (ok_calls >= 1)
-				bt::Move(nd + "torrent",datadir,true);
-			if (ok_calls >= 2)
-				bt::Move(nd + "index",datadir,true);
+			Out(SYS_GEN|LOG_DEBUG) << "Could not find torX part in " << datadir << endl;
 			return false;
 		}
-
-		// we don't move the current_chunks file
-		// it will be recreated anyway
-		// now delete the old directory
-		bt::Delete(datadir,true);
-
-		old_datadir = datadir;
-		datadir = nd;
+		
+		QString ndatadir = new_dir + datadir.mid(pos + 1);
+		
+		Out(SYS_GEN|LOG_DEBUG) << datadir << " -> " << ndatadir << endl;
+		try
+		{
+			bt::Move(datadir,ndatadir);
+			old_datadir = datadir;
+			datadir = ndatadir;
+		}
+		catch (Error & err)
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Could not move " << datadir << " to " << ndatadir << endl;
+			return false;
+		}
+		
+		cman->changeDataDir(datadir);
 		return true;
 	}
 
 
 	void TorrentControl::rollback()
 	{
-		if (old_datadir.isNull())
-			return;
-
-		// recreate it
-		if (!bt::Exists(old_datadir))
-			bt::MakeDir(old_datadir,true);
-
-		// move back files
-		bt::Move(datadir + "torrent",old_datadir,true);
-		bt::Move(datadir + "cache",old_datadir,true);
-		bt::Move(datadir + "index",old_datadir,true);
-		cman->changeDataDir(old_datadir);
-
-		// delete new
-		bt::Delete(datadir,true);
-
-		datadir = old_datadir;
-		old_datadir = QString::null;
+		try
+		{
+			bt::Move(datadir,old_datadir);
+			datadir = old_datadir;
+			cman->changeDataDir(datadir);
+		}
+		catch (Error & err)
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Could not move " << datadir << " to " << old_datadir << endl;
+		}
 	}
 
 	void TorrentControl::updateStatusMsg()
