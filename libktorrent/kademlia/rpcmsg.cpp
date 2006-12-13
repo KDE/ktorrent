@@ -157,7 +157,7 @@ namespace dht
 		const RPCCall* c = srv->findCall(mtid);
 		if (!c)
 		{
-			Out(SYS_DHT|LOG_NOTICE) << "Cannot find RPC call" << endl;
+			Out(SYS_DHT|LOG_DEBUG) << "Cannot find RPC call" << endl;
 			return 0;
 		}
 	

@@ -24,6 +24,7 @@
 #include <qpainter.h>
 #include <math.h>
 #include <interfaces/functions.h>
+#include "ktorrentview.h"
 #include "ktorrentviewitem.h"
 
 using namespace bt;
@@ -91,6 +92,7 @@ static QColor ratioToColor(float ratio)
 KTorrentViewItem::KTorrentViewItem(QListView* parent,TorrentInterface* tc)
 	: KListViewItem(parent),tc(tc)
 {
+	m_parent = (KTorrentView*) parent;
 	update();
 }
 
@@ -100,88 +102,101 @@ KTorrentViewItem::~KTorrentViewItem()
 
 void KTorrentViewItem::update()
 {
-	/*
-	addColumn(i18n("File"));
-	addColumn(i18n("Status"));
-	addColumn(i18n("Dowloaded"));
-	addColumn(i18n("Uploaded"));
-	addColumn(i18n("Down Speed"));
-	addColumn(i18n("Up Speed"));
-	addColumn(i18n("Time Left"));
-	addColumn(i18n("Peers"));
-	addColumn(i18n("% Complete"));
-	*/
-
 	const TorrentStats & s = tc->getStats();
-
-	setText(0,s.torrent_name);
-	setText(1,tc->statusToString());
-	Uint64 nb = /*s.bytes_downloaded > s.total_bytes ? s.total_bytes : */s.bytes_downloaded;
-	setText(2,BytesToString(nb));
-	setText(3,BytesToString(s.total_bytes_to_download));
-	setText(4,BytesToString(s.bytes_uploaded));
-	if (s.bytes_left_to_download == 0)
-		setText(5,KBytesPerSecToString(0));
-	else
-		setText(5,KBytesPerSecToString(s.download_rate / 1024.0));
-	setText(6,KBytesPerSecToString(s.upload_rate / 1024.0));
-  
-	KLocale* loc = KGlobal::locale();
-	if (s.bytes_left_to_download == 0)
+	
+	if(m_parent->columnVisible(0))
+		setText(0,s.torrent_name);
+				
+	if(m_parent->columnVisible(1))
+		setText(1,tc->statusToString());
+	
+	if(m_parent->columnVisible(2))
 	{
-		setText(7,QString::null);
-		eta = -1;
+		Uint64 nb = /*s.bytes_downloaded > s.total_bytes ? s.total_bytes : */s.bytes_downloaded;
+		setText(2,BytesToString(nb));
 	}
-	else if (s.running) 
+	
+	if(m_parent->columnVisible(3))
+		setText(3,BytesToString(s.total_bytes_to_download));
+	
+	if(m_parent->columnVisible(4))
+		setText(4,BytesToString(s.bytes_uploaded));
+	
+	if(m_parent->columnVisible(5))
 	{
-		Uint32 secs = tc->getETA();
-		if(secs == -1)
+		if (s.bytes_left_to_download == 0)
+			setText(5,KBytesPerSecToString(0));
+		else
+			setText(5,KBytesPerSecToString(s.download_rate / 1024.0));
+	}
+	
+	if(m_parent->columnVisible(6))
+		setText(6,KBytesPerSecToString(s.upload_rate / 1024.0));
+  
+	if(m_parent->columnVisible(7))
+	{
+		if (s.bytes_left_to_download == 0)
+		{
+			setText(7,QString::null);
+			eta = -1;
+		}
+		else if (s.running) 
+		{
+			Uint32 secs = tc->getETA();
+			if(secs == -1)
+			{
+				setText(7,QString("%1").arg(QChar(0x221E)));
+				eta = -2;
+			}
+			else
+			{
+				eta = secs;
+				setText(7,DurationToString(secs));
+			}			
+		}
+		else
 		{
 			setText(7,QString("%1").arg(QChar(0x221E)));
 			eta = -2;
 		}
-		else
-		{
-			eta = secs;
-			setText(7,DurationToString(secs));
-		}
-			
 	}
-	else
-	{
-		setText(7,QString("%1").arg(QChar(0x221E)));
-		eta = -2;
-	}
-	
-	setText(8,QString::number(s.num_peers));
+	if(m_parent->columnVisible(8))	
+		setText(8,QString::number(s.num_peers));
 
-	double perc = 0;
-	if (s.bytes_left_to_download == 0)
+	if(m_parent->columnVisible(9))
 	{
-		perc = 100.0;
-	}
-	else
-	{
-		if (s.total_bytes_to_download == 0)
+		double perc = 0;
+		if (s.bytes_left_to_download == 0)
 		{
 			perc = 100.0;
 		}
 		else
 		{
-			perc = 100.0 - ((double)s.bytes_left_to_download / s.total_bytes_to_download) * 100.0;
-			if (perc > 100.0)
+			if (s.total_bytes_to_download == 0)
+			{
 				perc = 100.0;
-			else if (perc > 99.9)
-				perc = 99.9;
-			else if (perc < 0.0)
-				perc = 0.0;
-				
+			}
+			else
+			{
+				perc = 100.0 - ((double)s.bytes_left_to_download / s.total_bytes_to_download) * 100.0;
+				if (perc > 100.0)
+					perc = 100.0;
+				else if (perc > 99.9)
+					perc = 99.9;
+				else if (perc < 0.0)
+					perc = 0.0;
+					
+			}
 		}
+		
+		setText(9,i18n("%1 %").arg(KGlobal::locale()->formatNumber(perc,2)));
 	}
-	setText(9,i18n("%1 %").arg(loc->formatNumber(perc,2)));
 	
-	float ratio = kt::ShareRatio(s);
-	setText(10,QString("%1").arg(KGlobal::locale()->formatNumber(ratio,2)));
+	if(m_parent->columnVisible(10))
+	{
+		float ratio = kt::ShareRatio(s);
+		setText(10,QString("%1").arg(KGlobal::locale()->formatNumber(ratio,2)));
+	}
 }
 
 

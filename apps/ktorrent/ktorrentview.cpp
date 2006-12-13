@@ -35,6 +35,10 @@
 #include <groups/group.h>
 #include <groups/torrentdrag.h>
 
+#include <qcursor.h>
+#include <qheader.h>
+#include <qvaluelist.h>
+		
 #include "ktorrentview.h"
 #include "ktorrentviewitem.h"
 #include "settings.h"
@@ -47,28 +51,9 @@ using namespace kt;
 KTorrentView::KTorrentView(QWidget *parent)
 	: KListView(parent),menu(0),current_group(0)
 {
-	addColumn(i18n("File"));
-	addColumn(i18n("Status"));
-	addColumn(i18n("Downloaded"));
-	addColumn(i18n("Size")); 
-	addColumn(i18n("Uploaded"));
-	addColumn(i18n("Down Speed"));
-	addColumn(i18n("Up Speed"));
-	addColumn(i18n("Time Left"));
-	addColumn(i18n("Peers"));
-	addColumn(i18n("% Complete"));
-	addColumn(i18n("Share ratio"));
-	
-	setColumnAlignment(2,Qt::AlignRight);
-	setColumnAlignment(3,Qt::AlignRight);
-	setColumnAlignment(4,Qt::AlignRight);
-	setColumnAlignment(5,Qt::AlignRight);
-	setColumnAlignment(6,Qt::AlignRight);
-	setColumnAlignment(7,Qt::AlignCenter);
-	setColumnAlignment(8,Qt::AlignRight);
-	setColumnAlignment(9,Qt::AlignRight);
-	setColumnAlignment(10,Qt::AlignRight);
 
+	setupColumns();
+	
 	connect(this,SIGNAL(currentChanged(QListViewItem* )),
 			this,SLOT(onExecuted(QListViewItem* )));
 	
@@ -78,25 +63,52 @@ KTorrentView::KTorrentView(QWidget *parent)
 	connect(this,SIGNAL(selectionChanged()),this,SLOT(onSelectionChanged()));
 
 	makeMenu();
+	
+	connect(m_headerMenu, SIGNAL(activated(int)), this, SLOT(onColumnVisibilityChange( int )));
 
-	setAllColumnsShowFocus(true);
-
-	setColumnWidth(0,200);
-	setColumnWidthMode(0,QListView::Manual);
-	setColumnWidth(1,100);
-	setColumnWidthMode(1,QListView::Manual);
-	setShowSortIndicator(true);
-	setAcceptDrops(true);
-	setSelectionMode(QListView::Extended);
-	for (Uint32 i = 2;i < (Uint32)columns();i++)
-		setColumnWidthMode(i,QListView::Manual);
-
-	restoreLayout(KGlobal::config(),"KTorrentView");
-	setDragEnabled(true);
+	loadSettings();
 }
 
 KTorrentView::~KTorrentView()
 {
+}
+
+void KTorrentView::insertColumn(QString label, Qt::AlignmentFlags align)
+{
+	m_headerMenu->insertItem(label);
+		
+	int ind = addColumn(label);
+	setColumnAlignment(ind, align);
+}
+
+void KTorrentView::setupColumns()
+{
+		//Header menu
+	m_headerMenu = new KPopupMenu(this);
+	m_headerMenu->setCheckable(true);
+	m_headerMenu->insertTitle(i18n("Visible columns"));
+	
+	insertColumn(i18n("File"), Qt::AlignLeft);
+	insertColumn(i18n("Status"), Qt::AlignRight);
+	insertColumn(i18n("Downloaded"), Qt::AlignRight);
+	insertColumn(i18n("Size"), Qt::AlignRight); 
+	insertColumn(i18n("Uploaded"), Qt::AlignRight);
+	insertColumn(i18n("Down Speed"), Qt::AlignRight);
+	insertColumn(i18n("Up Speed"), Qt::AlignRight);
+	insertColumn(i18n("Time Left"), Qt::AlignCenter);
+	insertColumn(i18n("Peers"), Qt::AlignRight);
+	insertColumn(i18n("% Complete"), Qt::AlignRight);
+	insertColumn(i18n("Share ratio"), Qt::AlignRight);
+	
+	setAllColumnsShowFocus(true);
+	setShowSortIndicator(true);
+	setAcceptDrops(true);
+	setSelectionMode(QListView::Extended);
+	for (Uint32 i = 0;i < (Uint32)columns();i++)
+	{
+		setColumnWidth(i, 100);
+		setColumnWidthMode(i,QListView::Manual);
+	}
 }
 
 void KTorrentView::setCurrentGroup(Group* group)
@@ -198,14 +210,28 @@ void KTorrentView::makeMenu()
 	add_to_group_id = menu->insertItem(i18n("Add to Group"),groups_sub_menu);
 	
 	menu->insertSeparator();
-	scan_id = menu->insertItem(i18n("Check Data Integrity"),this, SLOT(checkDataIntegrity()));
-	
+	scan_id = menu->insertItem(i18n("Check Data Integrity"),this, SLOT(checkDataIntegrity()));	
 }
 
 void KTorrentView::saveSettings()
 {
 	saveLayout(KGlobal::config(),"KTorrentView");
 	KGlobal::config()->sync();
+}
+
+
+void KTorrentView::loadSettings()
+{
+	restoreLayout(KGlobal::config(),"KTorrentView");
+	setDragEnabled(true);
+
+	for(int i=0; i<columns();++i)
+	{
+		bool visible = columnVisible(i);
+		
+		m_headerMenu->setItemChecked(m_headerMenu->idAt(i+1), visible);
+		header()->setResizeEnabled(visible, i);
+	}
 }
 
 
@@ -797,6 +823,61 @@ void KTorrentView::dhtSlot()
 				tc->startDHT();
 		}
 	}
+}
+
+void KTorrentView::columnHide(int index)
+{
+	hideColumn(index);
+	header()->setResizeEnabled(FALSE, index);
+}
+
+void KTorrentView::columnShow(int index)
+{
+	setColumnWidth(index, 100);
+	header()->setResizeEnabled(TRUE, index);
+}
+
+bool KTorrentView::columnVisible(int index)
+{
+	return columnWidth(index) != 0;
+}
+
+void KTorrentView::onColumnVisibilityChange(int id)
+{
+	int mid = m_headerMenu->indexOf(id) - 1;
+	if(mid == -1)
+		return;
+
+	bool visible = !columnVisible(mid);
+	
+	m_headerMenu->setItemChecked(id, visible);
+	
+	if(visible)
+		columnShow(mid);
+	else
+		columnHide(mid);
+}
+
+bool KTorrentView::eventFilter(QObject* watched, QEvent* e)
+{
+	if((QHeader*)watched == header())
+	{
+		switch(e->type())
+		{
+				case QEvent::MouseButtonPress:
+				{
+					if(static_cast<QMouseEvent *>(e)->
+					        button() == RightButton)
+						m_headerMenu->popup(QCursor::pos());
+
+					break;
+				}
+				default:
+				break;
+		}
+	}
+
+	return KListView::eventFilter(watched, e);
 }
 
 #include "ktorrentview.moc"

@@ -32,6 +32,7 @@ class KTorrentViewItem;
 class KPopupMenu;
 class KTorrentCore;
 class ScanDialog;
+class QString;
 
 namespace kt
 {
@@ -75,6 +76,9 @@ public:
 	/// Save the views settings
 	void saveSettings();
 	
+	/// Load the views settings
+	void loadSettings();
+	
 	/**
 	 * Put the current selection in a list.
 	 * @param sel The list to put it in
@@ -89,6 +93,16 @@ public:
 	 * @param g The group
 	 */
 	void addSelectionToGroup(kt::Group* g);
+	
+	/**
+	 * Reimplemented for header context menu
+	 */
+	bool eventFilter(QObject* watched, QEvent* e);
+	
+	/**
+	 * Is column visible?
+	 */
+	bool columnVisible(int index);
 	
 public slots:
 	void setCurrentGroup(kt::Group* group);
@@ -116,6 +130,7 @@ public slots:
 private slots:
 	void onExecuted(QListViewItem* item);
 	void showContextMenu(KListView* ,QListViewItem* item,const QPoint & p);
+	void onColumnVisibilityChange(int);
 	
 	
 signals:
@@ -137,6 +152,10 @@ private:
 	void stopDownload(kt::TorrentInterface* tc);
 	void showStartError();
 	virtual QDragObject* dragObject();
+	void setupColumns();
+	void insertColumn(QString label, Qt::AlignmentFlags);
+	void columnHide(int index);
+	void columnShow(int index);	
 		
 private:
 	QMap<kt::TorrentInterface*,KTorrentViewItem*> items;
@@ -144,6 +163,7 @@ private:
 	KPopupMenu* groups_sub_menu;
 	KPopupMenu* dirs_sub_menu;
 	KPopupMenu* peer_sources_menu;
+	KPopupMenu* m_headerMenu;
 	int stop_id;
 	int start_id;
 	int remove_id;

@@ -28,8 +28,10 @@ namespace kt
 	class TorrentInterface;
 }
 
+class KTorrentView;
+
 /**
-@author Joris Guisson
+ * @author Joris Guisson
 */
 class KTorrentViewItem : public KListViewItem
 {
@@ -45,6 +47,8 @@ public:
 private:
 	int compare(QListViewItem * i,int col,bool ascending) const;
 	void paintCell(QPainter* p,const QColorGroup & cg,int column,int width,int align);
+	
+	KTorrentView* m_parent;
 
 };
 

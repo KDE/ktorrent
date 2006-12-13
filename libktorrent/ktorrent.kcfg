@@ -153,5 +153,8 @@
 			<default>3</default>
 			<min>1</min>
 		</entry>
+		<entry name="shownColumns" type="IntList">
+			<label>Columns shown in KTorrentView</label>
+		</entry>
 	</group>
 </kcfg>
