@@ -755,9 +755,9 @@
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>ktabwidget.h</includehint>
-    <includehint>kt::downloadedchunkbar.h</includehint>
-    <includehint>kt::availabilitychunkbar.h</includehint>
-    <includehint>kt::floatspinbox.h</includehint>
+    <includehint>downloadedchunkbar.h</includehint>
+    <includehint>availabilitychunkbar.h</includehint>
+    <includehint>floatspinbox.h</includehint>
     <includehint>klistview.h</includehint>
 </includehints>
 </UI>

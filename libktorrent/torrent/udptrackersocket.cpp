@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <time.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <util/array.h>
 #include <qsocketdevice.h>
 #include <qsocketnotifier.h>
