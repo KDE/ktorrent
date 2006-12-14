@@ -156,5 +156,11 @@
 		<entry name="shownColumns" type="IntList">
 			<label>Columns shown in KTorrentView</label>
 		</entry>
+		<entry name="doNotUseKDEProxy" type="Bool">
+			<default>false</default>
+		</entry>
+		<entry name="httpTrackerProxy" type="String">
+			<default code="true">QString::null</default>
+		</entry>
 	</group>
 </kcfg>

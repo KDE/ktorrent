@@ -35,6 +35,7 @@
 #include "peermanager.h"
 #include "server.h"
 #include "globals.h"
+#include "settings.h"
 
 
 using namespace kt;
@@ -112,6 +113,13 @@ namespace bt
 		md["SendLanguageSettings"] = "false";
 		md["Cookies"] = "none";
 		md["accept"] = "text/plain";
+		if (Settings::doNotUseKDEProxy())
+		{
+			// set the proxy if the doNotUseKDEProxy ix enabled (URL must be valid to)
+			KURL url = KURL::fromPathOrURL(Settings::httpTrackerProxy());
+			if (url.isValid())
+				md["UseProxy"] = url.pathOrURL();
+		}
 		
 		KIO::StoredTransferJob* j = KIO::storedGet(scrape_url,false,false);
 		// set the meta data
@@ -220,6 +228,13 @@ namespace bt
 		md["SendLanguageSettings"] = "false";
 		md["Cookies"] = "none";
 		md["accept"] = "text/plain";
+		if (Settings::doNotUseKDEProxy())
+		{
+			// set the proxy if the doNotUseKDEProxy ix enabled (URL must be valid to)
+			KURL url = KURL::fromPathOrURL(Settings::httpTrackerProxy());
+			if (url.isValid())
+				md["UseProxy"] = url.pathOrURL();
+		}
 		
 		KIO::StoredTransferJob* j = KIO::storedGet(u,false,false);
 		// set the meta data

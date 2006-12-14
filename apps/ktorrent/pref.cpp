@@ -371,6 +371,8 @@ bool AdvancedPrefPage::apply()
 	Settings::setMaxSizeForUploadDataCheck(ap->recheck_size->value());
 	Settings::setAutoRecheck(ap->auto_recheck->isChecked());
 	Settings::setMaxCorruptedBeforeRecheck(ap->num_corrupted->value());
+	Settings::setDoNotUseKDEProxy(ap->do_not_use_kde_proxy->isChecked());
+	Settings::setHttpTrackerProxy(ap->http_proxy->text());
 	return true;
 }
 
@@ -385,6 +387,9 @@ void AdvancedPrefPage::updateData()
 	ap->auto_recheck->setChecked(Settings::autoRecheck());
 	ap->num_corrupted->setValue(Settings::maxCorruptedBeforeRecheck());
 	ap->num_corrupted->setEnabled(Settings::autoRecheck());
+	ap->do_not_use_kde_proxy->setChecked(Settings::doNotUseKDEProxy());
+	ap->http_proxy->setText(Settings::httpTrackerProxy());
+	ap->http_proxy->setEnabled(Settings::doNotUseKDEProxy());
 }
 			
 void AdvancedPrefPage::createWidget(QWidget* parent)
@@ -395,6 +400,8 @@ void AdvancedPrefPage::createWidget(QWidget* parent)
 			this,SLOT(noDataCheckChecked( bool )));
 	connect(ap->auto_recheck,SIGNAL(toggled(bool)),
 			this,SLOT(autoRecheckChecked( bool )));
+	connect(ap->do_not_use_kde_proxy,SIGNAL(toggled(bool)),
+			this,SLOT(doNotUseKDEProxyChecked(bool)));
 }
 
 void AdvancedPrefPage::deleteWidget()
@@ -411,6 +418,11 @@ void AdvancedPrefPage::noDataCheckChecked(bool on)
 void AdvancedPrefPage::autoRecheckChecked(bool on)
 {
 	ap->num_corrupted->setEnabled(on);
+}
+
+void AdvancedPrefPage::doNotUseKDEProxyChecked(bool on)
+{
+	ap->http_proxy->setEnabled(on);
 }
 
 #include "pref.moc"

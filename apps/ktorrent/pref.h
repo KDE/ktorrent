@@ -85,6 +85,7 @@ public:
 private slots:
 	void noDataCheckChecked(bool on);
 	void autoRecheckChecked(bool on);
+	void doNotUseKDEProxyChecked(bool on);
 };
 
  
