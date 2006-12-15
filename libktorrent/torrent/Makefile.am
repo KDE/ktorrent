@@ -1,4 +1,5 @@
-INCLUDES = -I.. -I$(srcdir)/.. $(all_includes)
+INCLUDES = -I$(top_builddir)/ktorrent/libktorrent -I$(top_builddir)/libktorrent \
+	-I$(srcdir)/.. $(all_includes)
 
 METASOURCES = AUTO
 
