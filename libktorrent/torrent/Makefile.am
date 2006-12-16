@@ -29,5 +29,4 @@ libtorrent_la_SOURCES = bencoder.cpp value.cpp bdecoder.cpp bnode.cpp \
 	advancedchokealgorithm.cpp cachefile.cpp dndfile.cpp authenticationmonitor.cpp \
 	peersourcemanager.cpp timeestimator.cpp
 
-libtorrent_la_DEPENDENCIES= ../settings.h
 KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)
