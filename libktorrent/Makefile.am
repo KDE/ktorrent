@@ -7,6 +7,9 @@ libktorrent_la_LDFLAGS = ${KDE_RPATH} $(all_libraries)
 
 kde_kcfg_DATA = ktorrent.kcfg
 
+# make sure settings.h is built before anything else
+BUILT_SOURCES=settings.h
+
 noinst_HEADERS = pluginmanager.h functions.h expandablewidget.h \
 		pluginmanagerprefpage.h ktversion.h
 libktorrent_la_SOURCES = pluginmanager.cpp functions.cpp expandablewidget.cpp \
