@@ -8,59 +8,192 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>335</width>
-            <height>552</height>
+            <width>864</width>
+            <height>247</height>
         </rect>
     </property>
     <property name="caption">
         <string>Search</string>
     </property>
-    <grid>
+    <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLayoutWidget" row="0" column="0">
+        <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>layout17</cstring>
+                <cstring>layout10</cstring>
             </property>
             <hbox>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="KPushButton">
+                <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>m_clear_button</cstring>
+                        <cstring>layout9</cstring>
                     </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>layout8</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="KPushButton">
+                                    <property name="name">
+                                        <cstring>m_clear_button</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string></string>
+                                    </property>
+                                </widget>
+                                <widget class="KComboBox">
+                                    <property name="name">
+                                        <cstring>m_search_text</cstring>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy>
+                                            <hsizetype>7</hsizetype>
+                                            <vsizetype>0</vsizetype>
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="editable">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                                <widget class="KPushButton">
+                                    <property name="name">
+                                        <cstring>m_search_new_tab</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Search</string>
+                                    </property>
+                                    <property name="accel">
+                                        <string></string>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                        <widget class="QGroupBox">
+                            <property name="name">
+                                <cstring>groupBox3</cstring>
+                            </property>
+                            <property name="title">
+                                <string>Options</string>
+                            </property>
+                            <vbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLayoutWidget">
+                                    <property name="name">
+                                        <cstring>layout6</cstring>
+                                    </property>
+                                    <hbox>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <widget class="QCheckBox">
+                                            <property name="name">
+                                                <cstring>externalBrowser</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Open search results in e&amp;xternal browser</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+X</string>
+                                            </property>
+                                        </widget>
+                                        <spacer>
+                                            <property name="name">
+                                                <cstring>spacer3_2</cstring>
+                                            </property>
+                                            <property name="orientation">
+                                                <enum>Horizontal</enum>
+                                            </property>
+                                            <property name="sizeType">
+                                                <enum>Expanding</enum>
+                                            </property>
+                                            <property name="sizeHint">
+                                                <size>
+                                                    <width>185</width>
+                                                    <height>20</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                        <widget class="QLayoutWidget">
+                                            <property name="name">
+                                                <cstring>layout15</cstring>
+                                            </property>
+                                            <hbox>
+                                                <property name="name">
+                                                    <cstring>unnamed</cstring>
+                                                </property>
+                                                <widget class="QLabel">
+                                                    <property name="name">
+                                                        <cstring>textLabel1</cstring>
+                                                    </property>
+                                                    <property name="text">
+                                                        <string>Search Engine:</string>
+                                                    </property>
+                                                </widget>
+                                                <widget class="KComboBox">
+                                                    <property name="name">
+                                                        <cstring>m_search_engine</cstring>
+                                                    </property>
+                                                </widget>
+                                            </hbox>
+                                        </widget>
+                                    </hbox>
+                                </widget>
+                                <widget class="QLayoutWidget">
+                                    <property name="name">
+                                        <cstring>layout7</cstring>
+                                    </property>
+                                    <hbox>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <widget class="KPushButton">
+                                            <property name="name">
+                                                <cstring>m_clear_history</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Clear Search Histor&amp;y</string>
+                                            </property>
+                                            <property name="accel">
+                                                <string>Alt+Y</string>
+                                            </property>
+                                        </widget>
+                                        <spacer>
+                                            <property name="name">
+                                                <cstring>spacer4</cstring>
+                                            </property>
+                                            <property name="orientation">
+                                                <enum>Horizontal</enum>
+                                            </property>
+                                            <property name="sizeType">
+                                                <enum>Expanding</enum>
+                                            </property>
+                                            <property name="sizeHint">
+                                                <size>
+                                                    <width>171</width>
+                                                    <height>21</height>
+                                                </size>
+                                            </property>
+                                        </spacer>
+                                    </hbox>
+                                </widget>
+                            </vbox>
+                        </widget>
+                    </vbox>
                 </widget>
-                <widget class="KComboBox">
-                    <property name="name">
-                        <cstring>m_search_text</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>7</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="editable">
-                        <bool>true</bool>
-                    </property>
-                </widget>
-            </hbox>
-        </widget>
-        <widget class="QLayoutWidget" row="1" column="0">
-            <property name="name">
-                <cstring>layout16</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
                 <spacer>
                     <property name="name">
                         <cstring>spacer3</cstring>
@@ -78,20 +211,9 @@
                         </size>
                     </property>
                 </spacer>
-                <widget class="KPushButton">
-                    <property name="name">
-                        <cstring>m_search_new_tab</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Search</string>
-                    </property>
-                    <property name="accel">
-                        <string></string>
-                    </property>
-                </widget>
             </hbox>
         </widget>
-        <spacer row="3" column="0">
+        <spacer>
             <property name="name">
                 <cstring>spacer11</cstring>
             </property>
@@ -104,64 +226,14 @@
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>320</height>
+                    <height>150</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QGroupBox" row="2" column="0">
-            <property name="name">
-                <cstring>groupBox3</cstring>
-            </property>
-            <property name="title">
-                <string>Options</string>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLayoutWidget" row="1" column="0">
-                    <property name="name">
-                        <cstring>layout15</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel">
-                            <property name="name">
-                                <cstring>textLabel1</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Search Engine:</string>
-                            </property>
-                        </widget>
-                        <widget class="KComboBox">
-                            <property name="name">
-                                <cstring>m_search_engine</cstring>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-                <widget class="QCheckBox" row="0" column="0">
-                    <property name="name">
-                        <cstring>externalBrowser</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Open search results in e&amp;xternal browser</string>
-                    </property>
-                </widget>
-                <widget class="KPushButton" row="2" column="0">
-                    <property name="name">
-                        <cstring>m_clear_history</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Clear Search Histor&amp;y</string>
-                    </property>
-                </widget>
-            </grid>
-        </widget>
-    </grid>
+    </vbox>
 </widget>
+<customwidgets>
+</customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kpushbutton.h</includehint>

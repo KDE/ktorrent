@@ -63,10 +63,10 @@ namespace kt
 	{
 		engines.load(KGlobal::dirs()->saveLocation("data","ktorrent") + "search_engines");
 		tab = new SearchTab();
-		connect(tab,SIGNAL(search( const QString&, int, bool, bool )),
-				this,SLOT(search( const QString&, int, bool, bool )));
+		connect(tab,SIGNAL(search( const QString&, int, bool )),
+				this,SLOT(search( const QString&, int, bool )));
 		
-		getGUI()->addToolWidget(tab,"viewmag",i18n("Search"),GUIInterface::DOCK_LEFT);
+		getGUI()->addToolWidget(tab,"viewmag",i18n("Search"),GUIInterface::DOCK_BOTTOM);
 		 
 		pref = new SearchPrefPage(this);
 		getGUI()->addPrefPage(pref);
@@ -91,7 +91,7 @@ namespace kt
 		tab = 0;
 	}
 	
-	void SearchPlugin::search(const QString & text,int engine,bool cur_tab, bool external)
+	void SearchPlugin::search(const QString & text,int engine,bool external)
 	{	
 		if(external)
 		{

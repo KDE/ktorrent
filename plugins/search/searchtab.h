@@ -47,7 +47,7 @@ namespace kt
 		void textChanged(const QString & str);
 		
 	signals:
-		void search(const QString & text,int engine,bool cur_tab, bool external);
+		void search(const QString & text,int engine,bool external);
 		
 	private:
 		void loadSearchHistory();

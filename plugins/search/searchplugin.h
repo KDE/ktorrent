@@ -48,7 +48,7 @@ namespace kt
 		
 		const SearchEngineList & getSearchEngineList() const {return engines;}
 	private slots:
-		void search(const QString & text,int engine,bool cur_tab, bool external);
+		void search(const QString & text,int engine,bool external);
 		
 	private:
 		virtual void tabCloseRequest(QWidget* tab);

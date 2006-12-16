@@ -20,6 +20,7 @@
 #include <qfile.h>
 #include <qtextstream.h>
 #include <qapplication.h>
+#include <qlistbox.h>
 #include <qcheckbox.h>
 #include <kglobal.h>
 #include <kpushbutton.h>
@@ -38,6 +39,7 @@ namespace kt
 
 	SearchTab::SearchTab(QWidget* parent, const char* name, WFlags fl) : SearchTabBase(parent,name,fl)
 	{
+		m_search_text->setTrapReturnKey(true);
 		m_clear_button->setIconSet(
 				KGlobal::iconLoader()->loadIconSet(QApplication::reverseLayout() 
 				? "clear_left" : "locationbar_erase",KIcon::Small));
@@ -47,9 +49,9 @@ namespace kt
 		connect(m_search_new_tab,SIGNAL(clicked()),this,SLOT(searchNewTabPressed()));
 		connect(m_search_text,SIGNAL(returnPressed(const QString&)),this,SLOT(searchBoxReturn( const QString& )));
 		connect(m_search_text,SIGNAL(textChanged(const QString &)),this,SLOT(textChanged( const QString& )));
-		m_search_text->setInsertionPolicy(QComboBox::AtTop);
 		m_search_text->setMaxCount(20);
 		m_search_new_tab->setEnabled(false);
+		m_search_text->setInsertionPolicy(QComboBox::NoInsertion);
 		loadSearchHistory();
 	}
 
@@ -78,11 +80,14 @@ namespace kt
 	void SearchTab::searchBoxReturn(const QString & str)
 	{
 		KCompletion *comp = m_search_text->completionObject();
-		comp->addItem(str);
-		m_search_text->insertItem(str);
+		if (!m_search_text->contains(str))
+		{
+			comp->addItem(str);
+			m_search_text->insertItem(str);
+		}
 		m_search_text->clearEdit();
 		saveSearchHistory();
-		search(str,m_search_engine->currentItem(),false, externalBrowser->isChecked());
+		search(str,m_search_engine->currentItem(),externalBrowser->isChecked());
 	}
 	
 	void SearchTab::clearButtonPressed()
@@ -124,8 +129,11 @@ namespace kt
 			if (line.isNull())
 				break; 
 			
-			comp->addItem(line);
-			m_search_text->insertItem(line);
+			if (!m_search_text->contains(line))
+			{
+				comp->addItem(line);
+				m_search_text->insertItem(line);
+			}
 			cnt++;
 		}
 		
