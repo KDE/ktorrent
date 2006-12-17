@@ -89,7 +89,7 @@ void KTorrentView::setupColumns()
 	m_headerMenu->insertTitle(i18n("Visible columns"));
 	
 	insertColumn(i18n("File"), Qt::AlignLeft);
-	insertColumn(i18n("Status"), Qt::AlignRight);
+	insertColumn(i18n("Status"), Qt::AlignLeft);
 	insertColumn(i18n("Downloaded"), Qt::AlignRight);
 	insertColumn(i18n("Size"), Qt::AlignRight); 
 	insertColumn(i18n("Uploaded"), Qt::AlignRight);

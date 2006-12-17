@@ -48,6 +48,7 @@ namespace kt
 		m_sysscd->setCurrentItem(getLevel(LogViewerPluginSettings::sysSCD()));
 		m_syssnf->setCurrentItem(getLevel(LogViewerPluginSettings::sysSNF()));
 		m_sysrss->setCurrentItem(getLevel(LogViewerPluginSettings::sysRSS()));
+		m_sysweb->setCurrentItem(getLevel(LogViewerPluginSettings::sysWEB()));
 		
 		m_useRich->setChecked(LogViewerPluginSettings::useRichText());
 	}
@@ -68,7 +69,8 @@ namespace kt
 		LogViewerPluginSettings::setSysSCD(getArg(m_sysscd->currentItem()));
 		LogViewerPluginSettings::setSysSNF(getArg(m_syssnf->currentItem()));
 		LogViewerPluginSettings::setSysRSS(getArg(m_sysrss->currentItem()));
-		
+		LogViewerPluginSettings::setSysWEB(getArg(m_sysweb->currentItem()));
+
 		LogViewerPluginSettings::setUseRichText(m_useRich->isChecked());
 		
 		

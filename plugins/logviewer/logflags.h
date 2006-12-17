@@ -39,6 +39,8 @@ namespace kt
 		unsigned int SYSSNF;
 		unsigned int SYSPFI;
 		unsigned int SYSSCD;
+		unsigned int SYSRSS;
+		unsigned int SYSWEB;
 	};
 	
 	class LogViewer;

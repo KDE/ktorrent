@@ -63,6 +63,9 @@
 			<label>RSS plugin messages flag</label>
 			<default>0</default>
 		</entry>
-		
+		<entry name="sysWEB" type="UInt">
+			<label>WebInterface plugin messages flag</label>
+			<default>0</default>
+		</entry>
 	</group>
 </kcfg>
