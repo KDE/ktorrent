@@ -338,9 +338,6 @@
                     <property name="text">
                         <string>Do not use the KDE pro&amp;xy for HTTP tracker connections</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+X</string>
-                    </property>
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
