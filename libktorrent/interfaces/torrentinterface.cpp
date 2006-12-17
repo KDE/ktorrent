@@ -24,7 +24,10 @@ namespace kt
 	
 	float ShareRatio(const TorrentStats & stats) 
 	{
-		return (float) stats.bytes_uploaded / (stats.bytes_downloaded /*+ stats.imported_bytes*/);
+		if (stats.bytes_downloaded == 0)
+			return 0.0f;
+		else
+			return (float) stats.bytes_uploaded / (stats.bytes_downloaded /*+ stats.imported_bytes*/);
 	}
 	
 

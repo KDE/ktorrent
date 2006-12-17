@@ -142,7 +142,19 @@ namespace bt
 			
 			}
 		}
-		else
+		
+		
+		if (comments.length() > 0)
+		{
+			enc.write("comments");
+			enc.write(comments);
+		}
+		enc.write("created by");enc.write(QString("KTorrent %1").arg(kt::VERSION_STRING));
+		enc.write("creation date");enc.write((Uint64)time(0));
+		enc.write("info");
+		saveInfo(enc);
+		// save the nodes list after the info hash, keys must be sorted !
+		if (decentralized)
 		{
 			//DHT torrent
 			enc.write("nodes");
@@ -159,15 +171,6 @@ namespace bt
 			enc.end();
 		}
 		
-		if (comments.length() > 0)
-		{
-			enc.write("comments");
-			enc.write(comments);
-		}
-		enc.write("created by");enc.write(QString("KTorrent %1").arg(kt::VERSION_STRING));
-		enc.write("creation date");enc.write((Uint64)time(0));
-		enc.write("info");
-		saveInfo(enc);
 		enc.end();
 	}
 
