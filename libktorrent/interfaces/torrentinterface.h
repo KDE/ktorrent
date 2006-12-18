@@ -31,6 +31,7 @@ namespace bt
 	class BitSet;
 	class DataCheckerListener;
 	class SHA1Hash;
+	class WaitJob;
 }
 
 namespace kt
@@ -171,8 +172,10 @@ namespace kt
 		/**
 		 * Stop the download, closes all connections.
 		 * @param user wether or not the user did this explicitly
+		 * @param wjob WaitJob, used when KT is shutting down, 
+		 * 	so that we can wait for all stopped events to reach the tracker
 		 */
-		virtual void stop(bool user) = 0;
+		virtual void stop(bool user,bt::WaitJob* wjob = 0) = 0;
 		
 		/**
 		 * Update the tracker, this should normally handled internally.

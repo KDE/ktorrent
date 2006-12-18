@@ -127,7 +127,7 @@ namespace bt
 		}
 	}
 		
-	void PeerSourceManager::stop()
+	void PeerSourceManager::stop(WaitJob* wjob)
 	{
 		if (!started)
 			return;
@@ -141,7 +141,7 @@ namespace bt
 		}
 		
 		if (curr)
-			curr->stop();
+			curr->stop(wjob);
 		
 		timer.stop();
 		statusChanged(i18n("Stopped"));

@@ -50,6 +50,7 @@ namespace bt
 		void initServer(Uint16 port);
 		void setDebugMode(bool on) {debug_mode = on;}
 		bool isDebugModeSet() const {return debug_mode;}
+		void shutdownServer();
 
 		Log & getLog(unsigned int arg);
 		Server & getServer() {return *server;}

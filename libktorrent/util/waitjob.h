@@ -57,6 +57,9 @@ namespace bt
 		 */
 		static void execute(WaitJob* job);
 		
+		/// Are there any ExitOperation's we need to wait for
+		bool needToWait() const {return exit_ops.count() > 0;}
+		
 	private slots:
 		void timerDone();
 		void operationFinished(kt::ExitOperation* op);

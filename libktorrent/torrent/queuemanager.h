@@ -36,6 +36,7 @@ namespace bt
 	class SHA1Hash;
 	class AnnounceList;
 	struct TrackerTier;
+	class WaitJob;
 
 	class QueuePtrList : public QPtrList<kt::TorrentInterface>
 	{
@@ -57,7 +58,7 @@ namespace bt
 				
 		public:
 			QueueManager();
-			~QueueManager();
+			virtual ~QueueManager();
 
 			void append(kt::TorrentInterface* tc);
 			void remove(kt::TorrentInterface* tc);
@@ -68,6 +69,12 @@ namespace bt
 
 			void stopall(int type);
 			void startall(int type);
+			
+			/**
+			 * Stop all running torrents
+			 * @param wjob WaitJob which waits for stopped events to reach the tracker
+			 */
+			void onExit(WaitJob* wjob);
 
 			/**
 			 * Enqueue/Dequeue function. Places a torrent in queue. 
@@ -137,7 +144,7 @@ namespace bt
 			void enqueue(kt::TorrentInterface* tc);
 			void dequeue(kt::TorrentInterface* tc);
 			void startSafely(kt::TorrentInterface* tc);
-			void stopSafely(kt::TorrentInterface* tc,bool user);
+			void stopSafely(kt::TorrentInterface* tc,bool user,WaitJob* wjob = 0);
 
 			bt::QueuePtrList downloads;
 			bt::QueuePtrList* paused_torrents;

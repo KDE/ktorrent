@@ -131,6 +131,12 @@ namespace bt
 			AuthenticationMonitor::instance().add(auth);
 		}
 	}
+	
+	void Server::close()
+	{
+		delete sock;
+		sock= 0;
+	}
 
 	Uint16 Server::getPortInUse() const
 	{

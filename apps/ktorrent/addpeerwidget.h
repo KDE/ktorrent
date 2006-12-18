@@ -30,6 +30,11 @@ namespace kt
 	class TorrentInterface;
 }
 
+namespace bt
+{
+	class WaitJob;
+}
+
 /**
  * @author Ivan Vasic <ivasic@gmail.com>
  * @brief PeerSource to allow peers to be added manually.
@@ -62,7 +67,7 @@ class ManualPeerSource: public kt::PeerSource
 	 * Stop gathering peers.
 	 * Had to be defined but won't be used here.
 	*/
-	void stop();
+	void stop(bt::WaitJob* wjob = 0);
 };
 
 

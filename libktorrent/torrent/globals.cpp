@@ -78,6 +78,14 @@ namespace bt
 		server = new Server(port);
 	}
 	
+	void Globals::shutdownServer()
+	{
+		if (server)
+		{
+			server->close();
+		}
+	}
+	
 	Log& Globals::getLog(unsigned int arg)
 	{
 		log->setFilter(arg);

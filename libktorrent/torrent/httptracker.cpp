@@ -25,6 +25,8 @@
 #include <util/log.h>
 #include <util/functions.h>
 #include <util/error.h>
+#include <util/waitjob.h>
+#include <interfaces/exitoperation.h>
 #include <kio/job.h>
 #include <kio/netaccess.h>
 #include <kio/scheduler.h>
@@ -64,13 +66,13 @@ namespace bt
 		doRequest();
 	}
 	
-	void HTTPTracker::stop()
+	void HTTPTracker::stop(WaitJob* wjob)
 	{
 		if (!started)
 			return;
 		
 		event = "stopped";
-		doRequest();
+		doRequest(wjob);
 		started = false;
 	}
 	
@@ -183,7 +185,7 @@ namespace bt
 		delete n;
 	}
 	
-	void HTTPTracker::doRequest()
+	void HTTPTracker::doRequest(WaitJob* wjob)
 	{	
 		const TorrentStats & s = tor->getStats();
 		
@@ -244,6 +246,9 @@ namespace bt
 		connect(j,SIGNAL(result(KIO::Job* )),this,SLOT(onAnnounceResult( KIO::Job* )));
 		
 		active_job = j;
+		// if there is a wait job, add this job to the waitjob 
+		if (wjob)
+			wjob->addExitOperation(new kt::ExitJobOperation(j));
 		requestPending();
 	}
 

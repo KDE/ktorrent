@@ -23,6 +23,11 @@
 #include <qobject.h>
 #include <qvaluelist.h>
 #include <util/constants.h>
+		
+namespace bt
+{
+	class WaitJob;
+}
 
 namespace kt
 {
@@ -72,7 +77,7 @@ namespace kt
 		/**
 		 * Stop gathering peers.
 		 */
-		virtual void stop() = 0;
+		virtual void stop(bt::WaitJob* wjob = 0) = 0;
 		
 		/**
 		 * The torrent has finished downloading.

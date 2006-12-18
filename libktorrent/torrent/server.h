@@ -109,6 +109,8 @@ namespace bt
 		
 		bool isEncryptionEnabled() const {return encryption;}
 		bool unencryptedConnectionsAllowed() const {return allow_unencrypted;}
+		
+		void close();
 
 	private slots:
 		void newConnection(int sock);

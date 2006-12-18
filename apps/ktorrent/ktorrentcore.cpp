@@ -36,6 +36,7 @@
 #include <torrent/globals.h>
 #include <util/error.h>
 #include <util/fileops.h>
+#include <util/waitjob.h>
 #include <torrent/torrentcreator.h>
 #include <torrent/server.h>
 #include <torrent/authenticationmonitor.h>
@@ -447,8 +448,19 @@ void KTorrentCore::onExit()
 	update_timer.stop();
 	// stop all authentications going on
 	AuthenticationMonitor::instance().clear();
-	//pman->saveConfigFile(KGlobal::dirs()->saveLocation("data","ktorrent") + "plugins");
-	// 	downloads.clear();
+	// shutdown the server
+	Globals::instance().shutdownServer();
+	
+	WaitJob* job = new WaitJob(5000);
+	qman->onExit(job);
+	// wait for completion of stopped events
+	if (job->needToWait())
+	{
+		WaitJob::execute(job);
+	}
+	else
+		delete job;
+	
 	qman->clear();
 	pman->unloadAll(false);
 }

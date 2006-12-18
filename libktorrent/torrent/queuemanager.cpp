@@ -70,6 +70,7 @@ namespace bt
 
 	void QueueManager::clear()
 	{
+		
 		Uint32 nd = downloads.count();
 		downloads.clear();
 		
@@ -181,6 +182,21 @@ namespace bt
 			else //if torrent is not running but it is queued we need to make it user controlled
 				if( (s.completed && type == 2) || (!s.completed && type == 1) || (type == 3) )
 					tc->setPriority(0); 
+			i++;
+		}
+	}
+	
+	void QueueManager::onExit(WaitJob* wjob)
+	{
+		QPtrList<kt::TorrentInterface>::iterator i = downloads.begin();
+		while (i != downloads.end())
+		{
+			kt::TorrentInterface* tc = *i;
+			const TorrentStats & s = tc->getStats();
+			if (tc->getStats().running)
+			{
+				stopSafely(tc,false,wjob);
+			}
 			i++;
 		}
 	}
@@ -604,11 +620,11 @@ namespace bt
 		}
 	}
 	
-	void QueueManager::stopSafely(kt::TorrentInterface* tc,bool user)
+	void QueueManager::stopSafely(kt::TorrentInterface* tc,bool user,WaitJob* wjob)
 	{
 		try
 		{
-			tc->stop(user);
+			tc->stop(user,wjob);
 		}
 		catch (bt::Error & err)
 		{

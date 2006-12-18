@@ -58,7 +58,7 @@ namespace bt
 		virtual ~UDPTracker();
 
 		virtual void start();
-		virtual void stop();
+		virtual void stop(WaitJob* wjob = 0);
 		virtual void completed();
 		virtual void manualUpdate();
 		virtual Uint32 failureCount() const {return n;}

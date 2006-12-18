@@ -44,7 +44,7 @@ ManualPeerSource::ManualPeerSource()
 void ManualPeerSource::start()
 {}
 
-void ManualPeerSource::stop()
+void ManualPeerSource::stop(bt::WaitJob* )
 {}
 
 ManualPeerSource::~ ManualPeerSource()

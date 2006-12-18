@@ -528,13 +528,14 @@ bool KTorrent::queryExit()
 	m_group_view->saveGroups();
 	// stop timers to prevent update
 	m_gui_update_timer.stop();
-	m_core->onExit();
-	if (Globals::instance().getDHT().isRunning())
-		Globals::instance().getDHT().stop();
 	
 	KGlobal::config()->setGroup("WindowStatus");
 	KGlobal::config()->writeEntry( "hidden_on_exit",this->isHidden());
 	m_view->saveSettings();
+	hide();
+	m_core->onExit();
+	if (Globals::instance().getDHT().isRunning())
+		Globals::instance().getDHT().stop();
 	return true;
 }
 

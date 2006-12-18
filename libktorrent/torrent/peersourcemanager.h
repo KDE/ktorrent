@@ -89,9 +89,10 @@ namespace bt
 		void start();
 		
 		/**
-		 * Stop gathering peers.
+		 * Stop gathering peers
+		 * @param wjob WaitJob to wait at exit for the completion of stopped events to the trackers
 		 */
-		void stop();
+		void stop(WaitJob* wjob = 0);
 		
 		/**
 		 * Notify peersources and trackrs that the download is complete.

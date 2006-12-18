@@ -57,7 +57,7 @@ namespace dht
 			doRequest();
 	}
 	
-	void DHTTrackerBackend::stop()
+	void DHTTrackerBackend::stop(bt::WaitJob*)
 	{
 		started = false;
 		if (curr_task)

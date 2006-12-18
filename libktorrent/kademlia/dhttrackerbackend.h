@@ -29,6 +29,11 @@ namespace kt
 	class TorrentInterface;
 }
 
+namespace bt
+{
+	class WaitJob;
+}
+
 
 namespace dht
 {
@@ -47,7 +52,7 @@ namespace dht
 		virtual ~DHTTrackerBackend();
 
 		virtual void start();
-		virtual void stop();
+		virtual void stop(bt::WaitJob* wjob = 0);
 		virtual void manualUpdate();
 	
 	private slots:

@@ -46,7 +46,7 @@ namespace bt
 		virtual ~HTTPTracker();
 		
 		virtual void start();
-		virtual void stop();
+		virtual void stop(WaitJob* wjob = 0);
 		virtual void completed();
 		virtual void manualUpdate();
 		virtual Uint32 failureCount() const {return failures;}
@@ -57,7 +57,7 @@ namespace bt
 		void onScrapeResult(KIO::Job* j);
 
 	private:
-		void doRequest();
+		void doRequest(WaitJob* wjob = 0);
 		bool updateData(const QByteArray & data);
 		
 	private:

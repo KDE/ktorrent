@@ -29,6 +29,7 @@
 #include <util/bitset.h>
 #include <util/functions.h>
 #include <util/fileops.h>
+#include <util/waitjob.h>
 #include <interfaces/functions.h>
 #include <interfaces/trackerslist.h>
 #include <datachecker/singledatachecker.h>
@@ -387,7 +388,7 @@ namespace bt
 	}
 		
 
-	void TorrentControl::stop(bool user)
+	void TorrentControl::stop(bool user,WaitJob* wjob)
 	{
 		QDateTime now = QDateTime::currentDateTime();
 		if(!stats.completed)
@@ -418,7 +419,7 @@ namespace bt
 	
 		if (stats.running)
 		{
-			psman->stop();
+			psman->stop(wjob);
 
 			if (tmon)
 				tmon->stopped();

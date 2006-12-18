@@ -78,7 +78,7 @@ namespace bt
 		doRequest();
 	}
 	
-	void UDPTracker::stop()
+	void UDPTracker::stop(WaitJob* )
 	{
 		if (!started)
 			return;
