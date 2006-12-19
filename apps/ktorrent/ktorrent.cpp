@@ -249,7 +249,7 @@ KTorrent::KTorrent()
 	{
 		show();
 	}
-	MaximizeFileLimit();
+	MaximizeLimits();
 }
 
 KTorrent::~KTorrent()

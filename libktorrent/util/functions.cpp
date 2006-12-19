@@ -182,19 +182,47 @@ namespace bt
 		return global_time_stamp;
 	}
 
-	bool MaximizeFileLimit()
+	bool MaximizeLimits()
 	{
 		// first get the current limits
 		struct rlimit lim;
 		getrlimit(RLIMIT_NOFILE,&lim);
 		
-		Out(SYS_GEN|LOG_DEBUG) << "Current limit for number of files : " << lim.rlim_cur << " (" << lim.rlim_max << " max)" << endl;
-		lim.rlim_cur = lim.rlim_max;
-		if (setrlimit(RLIMIT_NOFILE,&lim) < 0)
+		if (lim.rlim_cur != lim.rlim_max)
 		{
-			Out(SYS_GEN|LOG_DEBUG) << "Failed to maximize file limit : " << QString(strerror(errno)) << endl;
-			return false;
+			Out(SYS_GEN|LOG_DEBUG) << "Current limit for number of files : " << lim.rlim_cur 
+					<< " (" << lim.rlim_max << " max)" << endl;
+			lim.rlim_cur = lim.rlim_max;
+			if (setrlimit(RLIMIT_NOFILE,&lim) < 0)
+			{
+				Out(SYS_GEN|LOG_DEBUG) << "Failed to maximize file limit : " 
+						<< QString(strerror(errno)) << endl;
+				return false;
+			}
 		}
+		else
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "File limit allready at maximum " << endl;
+		}
+		
+		getrlimit(RLIMIT_DATA,&lim);
+		if (lim.rlim_cur != lim.rlim_max)
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "Current limit for data size : " << lim.rlim_cur 
+					<< " (" << 	lim.rlim_max << " max)" << endl;
+			lim.rlim_cur = lim.rlim_max;
+			if (setrlimit(RLIMIT_DATA,&lim) < 0)
+			{
+				Out(SYS_GEN|LOG_DEBUG) << "Failed to maximize data limit : " 
+						<< QString(strerror(errno)) << endl;
+				return false;
+			}
+		}
+		else
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "Data limit allready at maximum " << endl;
+		}
+		
 		return true;
 	}
 

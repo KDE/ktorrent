@@ -61,10 +61,9 @@ namespace bt
 	bool IsMultimediaFile(const QString & filename);
 
 	/**
-	 * Maximize the file limit using setrlimit.
-	 * @return The new limit 
+	 * Maximize the file and memory limits using setrlimit.
 	 */
-	bool MaximizeFileLimit();
+	bool MaximizeLimits();
 }
 
 #endif
