@@ -60,7 +60,6 @@ WebInterfacePrefWidget::WebInterfacePrefWidget(QWidget *parent, const char *name
    	interfaceSkinBox->setCurrentText (WebInterfacePluginSettings::skin());
 	phpExecutablePath->setURL (WebInterfacePluginSettings::phpExecutablePath());
 	username->setText(WebInterfacePluginSettings::username());
-	password->setText("_fakepass_");
 }
 
 bool WebInterfacePrefWidget::apply()
@@ -76,14 +75,24 @@ bool WebInterfacePrefWidget::apply()
 	WebInterfacePluginSettings::setSessionTTL(sessionTTL->value () );
 	WebInterfacePluginSettings::setSkin(interfaceSkinBox->currentText());
 	WebInterfacePluginSettings::setPhpExecutablePath(phpExecutablePath->url () );
-	if(!username->text().isEmpty() && !QString(password->password()).isEmpty() && QString(password->password())!="_fakepass_"){
+	if(!username->text().isEmpty() && !password.isEmpty()){
 		WebInterfacePluginSettings::setUsername(username->text() );
-		KMD5 context(password->password());
+		KMD5 context(password);
 		WebInterfacePluginSettings::setPassword(context.hexDigest().data());
 	}
 
 	WebInterfacePluginSettings::writeConfig();
 	return true;
 }
+
+void WebInterfacePrefWidget::btnUpdate_clicked()
+{
+	QCString passwd;
+ 	int result = KPasswordDialog::getNewPassword(passwd, i18n("Please enter a new password for the web interface."));
+ 	if (result == KPasswordDialog::Accepted)
+		password=passwd;
+
+}
+
 }
 #include "webinterfaceprefwidget.moc"

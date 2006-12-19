@@ -126,42 +126,6 @@
                         </widget>
                     </hbox>
                 </widget>
-                <widget class="QLayoutWidget" row="3" column="0">
-                    <property name="name">
-                        <cstring>layout13</cstring>
-                    </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QLabel" row="0" column="0">
-                            <property name="name">
-                                <cstring>textLabel5</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Username:</string>
-                            </property>
-                        </widget>
-                        <widget class="KPasswordEdit" row="1" column="1">
-                            <property name="name">
-                                <cstring>password</cstring>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="0">
-                            <property name="name">
-                                <cstring>textLabel6</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Password:</string>
-                            </property>
-                        </widget>
-                        <widget class="KLineEdit" row="0" column="1">
-                            <property name="name">
-                                <cstring>username</cstring>
-                            </property>
-                        </widget>
-                    </grid>
-                </widget>
                 <widget class="QLayoutWidget" row="2" column="0">
                     <property name="name">
                         <cstring>layout5</cstring>
@@ -208,12 +172,59 @@
                         </widget>
                     </hbox>
                 </widget>
+                <widget class="QLayoutWidget" row="3" column="0">
+                    <property name="name">
+                        <cstring>layout6</cstring>
+                    </property>
+                    <grid>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLayoutWidget" row="0" column="0">
+                            <property name="name">
+                                <cstring>layout5</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLabel">
+                                    <property name="name">
+                                        <cstring>textLabel5</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Username:</string>
+                                    </property>
+                                </widget>
+                                <widget class="KLineEdit">
+                                    <property name="name">
+                                        <cstring>username</cstring>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                        <widget class="QPushButton" row="0" column="1">
+                            <property name="name">
+                                <cstring>btnPassword</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Change password ...</string>
+                            </property>
+                        </widget>
+                    </grid>
+                </widget>
             </grid>
         </widget>
     </grid>
 </widget>
-<customwidgets>
-</customwidgets>
+<connections>
+    <connection>
+        <sender>btnPassword</sender>
+        <signal>clicked()</signal>
+        <receiver>WebInterfacePreference</receiver>
+        <slot>btnUpdate_clicked()</slot>
+    </connection>
+</connections>
 <slots>
     <slot>btnUpdate_clicked()</slot>
 </slots>
@@ -221,10 +232,9 @@
 <includehints>
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
-    <includehint>kpassdlg.h</includehint>
-    <includehint>klineedit.h</includehint>
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
+    <includehint>klineedit.h</includehint>
 </includehints>
 </UI>

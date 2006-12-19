@@ -38,6 +38,7 @@ PhpHandler::~PhpHandler()
 
 bool PhpHandler::executeScript(QString cmd, QString s, QMap<QString, QString> requestVars)
 {
+	int end;
 	if(locked)
 		return false;
 
@@ -55,7 +56,8 @@ bool PhpHandler::executeScript(QString cmd, QString s, QMap<QString, QString> re
 	while(proc->isRunning())
 		sleep(10);
 	
-	output.truncate(output.find("</html>"));
+	end=output.find("</html>");
+	output.truncate( end == -1 ? end : end + strlen("</html>"));
 
 	return proc->normalExit();
 }
@@ -65,6 +67,8 @@ void PhpHandler::preParse(QString *d, QMap<QString, QString> requestVars)
 {
 	int firstphptag;
 	firstphptag=d->find("<?php");
+	if(firstphptag==-1)
+		return;
 	d->insert(firstphptag+6,php_i->globalInfo());
 	d->insert(firstphptag+6,php_i->downloadStatus());
 	QValueList<QString> keys=requestVars.keys();

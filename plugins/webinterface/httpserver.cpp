@@ -168,7 +168,6 @@ namespace kt{
 						request.append(readPostData(socket, size, torrentUpload));
 
 				}
-				Out(SYS_WEB| LOG_DEBUG) << "request from "<< socket->peerAddress().toString() << endl;
 		
 				parseRequest(request);
 				
@@ -264,7 +263,6 @@ namespace kt{
 	{
 		QSocket* socket= (QSocket*)sender();
         	delete socket;
-		Out(SYS_WEB| LOG_DEBUG) << "connection_closed" << endl;
 	}
 
 
@@ -317,7 +315,6 @@ namespace kt{
 	void HttpServer::processRequest(QSocket* s)
 	{	
 		QFile f(rootDir+'/'+WebInterfacePluginSettings::skin()+'/'+requestedFile);
-		fprintf(stderr, "%s\n", QString(rootDir+'/'+WebInterfacePluginSettings::skin()+'/'+requestedFile).latin1());
 		QFileInfo finfo(f);
 
 		//Logout
@@ -326,11 +323,9 @@ namespace kt{
 
 		if(headerField.sessionId==session.sessionId){
 			if(session.last_access.secsTo(QTime::currentTime())<WebInterfacePluginSettings::sessionTTL()){
-				Out(SYS_WEB| LOG_DEBUG) << "Session valid" << endl;
 				session.last_access=QTime::currentTime();
 				}
 			else{
-				Out(SYS_WEB| LOG_DEBUG) << "Session expired" << endl;
 				session.logged=false;
 			}
 		}
@@ -355,7 +350,6 @@ namespace kt{
 		if(!session.logged){
 			if(finfo.extension()!="ico" && finfo.extension()!="png" && finfo.extension()!="css" && finfo.exists()){
 				requestedFile="login.html";
-				Out(SYS_WEB| LOG_DEBUG) << "gone wrong" << endl;
 				f.setName(rootDir+'/'+WebInterfacePluginSettings::skin()+'/'+requestedFile);
 				finfo.setFile(f);
 				session.sessionId=0;
@@ -367,7 +361,7 @@ namespace kt{
 			php_i->exec(requestParams);
 		QString header;
 		
-		if ( !f.open(IO_ReadOnly) || (finfo.extension()!="php" && finfo.extension()!="html" && finfo.extension()!="png" && finfo.extension()!="ico" && finfo.extension()!="css") ){
+		if ( !f.open(IO_ReadOnly) || (finfo.extension()!="php" && finfo.extension()!="html" && finfo.extension()!="png" && finfo.extension()!="ico" && finfo.extension()!="jpg" && finfo.extension()!="css") ){
 			QString data;
 			header="HTTP/1.1 404 Not Found\r\n";
 			header+="Server: ktorrent\r\n";
@@ -380,7 +374,7 @@ namespace kt{
 			return;
 		}
 		
-		if(finfo.extension()=="html"){
+		if(finfo.extension()=="html" || finfo.extension()=="css" ){
 			QString dataFile;
 			dataFile=QString(f.readAll().data());
 			header="HTTP/1.1 200 OK\r\n";
@@ -388,7 +382,10 @@ namespace kt{
 			header+="Cache-Control: private\r\n";
 			header+="Connection: close\r\n";
 			header+=QString("Date: ")+QDateTime::currentDateTime(Qt::UTC).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
-			header+="Content-Type: text/html\r\n";
+			if(finfo.extension()=="html")
+				header+="Content-Type: text/html\r\n";
+			else
+				header+="Content-Type: text/css\r\n";
 			header+=QString("Set-Cookie: SESSID=%1\r\n").arg(session.sessionId);
 			header+=QString("Content-Length: %1\r\n\r\n").arg(f.size());
 			sendHtmlPage(s, QString(header+dataFile).latin1());
@@ -423,7 +420,7 @@ namespace kt{
 
 			}
 		}
-		else if(finfo.extension()=="ico" || finfo.extension()=="png" || finfo.extension()=="css"){
+		else if(finfo.extension()=="ico" || finfo.extension()=="png" || finfo.extension()=="jpg"){
 			if(!headerField.ifModifiedSince){
 				header="HTTP/1.1 200 OK\r\n";
 				header+="Server: ktorrent\r\n";
@@ -478,13 +475,10 @@ namespace kt{
 		if(im==NULL){
 			Image *image= new Image();
 			image->data=mmap(0, file->size(), PROT_READ, MAP_PRIVATE, file->handle(), 0);
-			Out(SYS_WEB|LOG_DEBUG) << file->name() << " mmaped\n"  << endl;
 			if(imgCache.insert(file->name(), image)){
-				Out(SYS_WEB|LOG_DEBUG) << file->name() << " added in cache\n"  << endl;
 				im=imgCache.find(file->name(), true);
 			}
 			else{
-				Out(SYS_WEB|LOG_DEBUG) << file->name() << " not added in cache\n"  << endl;
 				void *data;
 				unsigned int count=0, r_size;
 				data=malloc(RAWREAD_BUFF_SIZE);
