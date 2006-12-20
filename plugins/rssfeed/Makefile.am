@@ -24,7 +24,7 @@ noinst_HEADERS = rssfeedplugin.h rssfeedmanager.h rssfeed.h rssfilter.h \
 ktrssfeedplugin_la_SOURCES = rssfeedplugin.cpp rssfeedmanager.cpp \
 			rssfeedwidget.ui rssfeed.cpp rssfilter.cpp rssarticle.cpp rsslinkdownloader.cpp
 ktrssfeedplugin_la_LIBADD = $(LIB_QT) rss/librsslocal.la \
-	../../libktorrent/libktorrent.la $(LIB_KHTML) $(LIB_KPARTS)
+	../../libktorrent/libktorrent.la $(LIB_KDECORE) $(LIB_KDEUI) $(LIB_KHTML) $(LIB_KPARTS)
 
 SUBDIRS = rss
 KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)
