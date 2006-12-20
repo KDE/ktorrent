@@ -39,6 +39,7 @@ namespace bt
 		const Torrent & tor;
 		QString dnddir;
 		bool running;
+		QString error;
 	public:
 		DataCheckerThread(DataChecker* dc,const QString & path,const Torrent & tor,const QString & dnddir);
 		virtual ~DataCheckerThread();
@@ -50,6 +51,9 @@ namespace bt
 		
 		/// Are we still running
 		bool isRunning() const {return running;}
+		
+		/// Get the error (if any occured)
+		QString getError() const {return error;}
 	};
 
 }

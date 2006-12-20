@@ -1244,6 +1244,14 @@ namespace bt
 		DataChecker* dc = dcheck_thread->getDataChecker();
 		DataCheckerListener* lst = dc->getListener();
 		
+		bool err = !dcheck_thread->getError().isNull();
+		if (err)
+		{
+			// show a queued error message when an error has occurred
+			KMessageBox::queuedMessageBox(0,KMessageBox::Error,dcheck_thread->getError());
+			lst->stop();
+		}
+		
 		if (lst && !lst->isStopped())
 		{
 			down->dataChecked(dc->getDownloaded());

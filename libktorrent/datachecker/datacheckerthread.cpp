@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <util/log.h>
+#include <util/error.h>
 #include <torrent/torrent.h>
 #include "datachecker.h"
 #include "datacheckerthread.h"
@@ -41,7 +43,15 @@ namespace bt
 
 	void DataCheckerThread::run()
 	{
-		dc->check(path,tor,dnddir);
+		try
+		{
+			dc->check(path,tor,dnddir);
+		}
+		catch (bt::Error & e)
+		{
+			error = e.toString();
+			Out(SYS_GEN|LOG_DEBUG) << error << endl;
+		}
 		running = false;
 	}
 
