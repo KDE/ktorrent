@@ -201,7 +201,7 @@ namespace kt
 		if (!g)
 			return;
 		
-		QString name = KInputDialog::getText(QString::null,i18n("Please enter the new group name."));
+		QString name = KInputDialog::getText(QString::null,i18n("Please enter the new group name."),g->groupName());
 		
 		if (name.isNull() || name.length() == 0)
 			return;
