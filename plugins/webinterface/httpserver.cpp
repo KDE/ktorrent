@@ -361,7 +361,7 @@ namespace kt{
 			php_i->exec(requestParams);
 		QString header;
 		
-		if ( !f.open(IO_ReadOnly) || (finfo.extension()!="php" && finfo.extension()!="html" && finfo.extension()!="png" && finfo.extension()!="ico" && finfo.extension()!="jpg" && finfo.extension()!="css") ){
+		if ( !f.open(IO_ReadOnly) || (finfo.extension()!="php" && finfo.extension()!="html" && finfo.extension()!="png" && finfo.extension()!="ico" && finfo.extension()!="jpg" && finfo.extension()!="css" && finfo.extension()!="js") ){
 			QString data;
 			header="HTTP/1.1 404 Not Found\r\n";
 			header+="Server: ktorrent\r\n";
@@ -374,7 +374,7 @@ namespace kt{
 			return;
 		}
 		
-		if(finfo.extension()=="html" || finfo.extension()=="css" ){
+		if(finfo.extension()=="html" || finfo.extension()=="css" || finfo.extension()=="js"){
 			QString dataFile;
 			dataFile=QString(f.readAll().data());
 			header="HTTP/1.1 200 OK\r\n";
@@ -384,6 +384,8 @@ namespace kt{
 			header+=QString("Date: ")+QDateTime::currentDateTime(Qt::UTC).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
 			if(finfo.extension()=="html")
 				header+="Content-Type: text/html\r\n";
+			else if(finfo.extension()=="js")
+				header+="Content-Type: text/javascript\r\n";
 			else
 				header+="Content-Type: text/css\r\n";
 			header+=QString("Set-Cookie: SESSID=%1\r\n").arg(session.sessionId);

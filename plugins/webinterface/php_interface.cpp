@@ -117,8 +117,8 @@ QString PhpCodeGenerator::globalInfo()
 	ret.append("array(");
 	CurrentStats stats=core->getStats();
 
-	ret.append(QString("\"download_speed\" => \"%1\",").arg(stats.download_speed));
-	ret.append(QString("\"upload_speed\" => \"%1\",").arg(stats.upload_speed));
+	ret.append(QString("\"download_speed\" => \"%1\",").arg(KIO::convertSize(stats.download_speed)));
+	ret.append(QString("\"upload_speed\" => \"%1\",").arg(KIO::convertSize(stats.upload_speed)));
 	ret.append(QString("\"bytes_downloaded\" => \"%1\",").arg(stats.bytes_downloaded));
 	ret.append(QString("\"bytes_uploaded\" => \"%1\",").arg(stats.bytes_uploaded));
 	ret.append(QString("\"max_download_speed\" => \"%1\",").arg(core->getMaxDownloadSpeed()));
