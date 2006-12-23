@@ -38,7 +38,7 @@
 #include <sys/filio.h>
 #endif
 
-#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020) || defined (Q_OS_SOLARIS)
+#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020) || defined (Q_OS_SOLARIS) || defined(Q_OS_NETBSD) 
 #define MSG_NOSIGNAL 0
 #endif
 
