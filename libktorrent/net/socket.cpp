@@ -258,7 +258,7 @@ namespace net
 	
 	bool Socket::setTOS(char type_of_service)
 	{
-#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020) || defined(Q_OS_NETBSD) 
+#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020) || defined(Q_OS_NETBSD) || defined(Q_OS_BSD4)
 		int c = type_of_service;
 #else
 		char c = type_of_service;
