@@ -42,7 +42,7 @@ int main(int argc,char** argv)
 	try
 	{
 		Torrent tor;
-		tor.load(argv[1],true);
+		tor.load(argv[1],false);
 		tor.debugPrintInfo();
 	}
 	catch (Error & e)

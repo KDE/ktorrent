@@ -145,10 +145,17 @@ namespace bt
 	Uint64 TorrentFile::fileOffset(Uint32 cindex,Uint64 chunk_size) const
 	{
 		Uint64 off = 0;
-		if (cindex - this->getFirstChunk() > 0)
-			off = (cindex - this->getFirstChunk() - 1) * chunk_size;
-		if (cindex > 0)
-			off += (chunk_size - this->getFirstChunkOffset());
+		if (getFirstChunkOffset() == 0)
+		{
+			off = (cindex - getFirstChunk()) * chunk_size;
+		}
+		else
+		{
+			if (cindex - this->getFirstChunk() > 0)
+				off = (cindex - this->getFirstChunk() - 1) * chunk_size;
+			if (cindex > 0)
+				off += (chunk_size - this->getFirstChunkOffset());
+		}
 		return off;
 	}
 	

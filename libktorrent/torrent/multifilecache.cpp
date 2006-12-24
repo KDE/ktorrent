@@ -712,12 +712,7 @@ namespace bt
 	
 	Uint64 FileOffset(Uint32 cindex,const TorrentFile & f,Uint64 chunk_size)
 	{
-		Uint64 off = 0;
-		if (cindex - f.getFirstChunk() > 0)
-			off = (cindex - f.getFirstChunk() - 1) * chunk_size;
-		if (cindex > 0)
-			off += (chunk_size - f.getFirstChunkOffset());
-		return off;
+		return f.fileOffset(cindex,chunk_size);
 	}
 	
 }

@@ -306,10 +306,10 @@ namespace bt
 
 	void Torrent::debugPrintInfo()
 	{
-	/*	Out() << "Name : " << name_suggestion << endl;
+		Out() << "Name : " << name_suggestion << endl;
 		
-		for (KURL::List::iterator i = tracker_urls.begin();i != tracker_urls.end();i++)
-			Out() << "Tracker URL : " << *i << endl;
+//		for (KURL::List::iterator i = tracker_urls.begin();i != tracker_urls.end();i++)
+//			Out() << "Tracker URL : " << *i << endl;
 		
 		Out() << "Piece Length : " << piece_length << endl;
 		if (this->isMultiFile())
@@ -333,7 +333,6 @@ namespace bt
 			Out() << "File Length : " << file_length << endl;
 		}
 		Out() << "Pieces : " << hash_pieces.size() << endl;
-	*/
 	}
 	
 	bool Torrent::verifyHash(const SHA1Hash & h,Uint32 index)
