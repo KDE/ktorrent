@@ -25,15 +25,17 @@
 namespace kt
 {
 
-class WebInterfacePrefWidget:public WebInterfacePreference{
-	Q_OBJECT
+	class WebInterfacePrefWidget:public WebInterfacePreference
+	{
+		Q_OBJECT
 	public:
 		WebInterfacePrefWidget(QWidget *parent = 0, const char *name = 0);
 		bool apply();
 		QCString password;
 	public slots:
 		void btnUpdate_clicked();
-};
+		void changeLedState();
+	};
 
 }
 #endif

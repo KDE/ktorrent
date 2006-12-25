@@ -35,6 +35,8 @@
 #include <klineedit.h>
 #include <kpassdlg.h>
 #include <kmdcodec.h>
+#include <kled.h>
+#include <qtooltip.h>
 
 #include <net/portlist.h>
 #include <torrent/globals.h>
@@ -94,5 +96,29 @@ void WebInterfacePrefWidget::btnUpdate_clicked()
 
 }
 
+void WebInterfacePrefWidget::changeLedState()
+{
+       QFileInfo fi(phpExecutablePath->url());
+       if(fi.isExecutable() && fi.isFile() && fi.isSymLink()){
+               QToolTip::add( kled, tr2i18n( QString("%1 exists and it is executable").arg(phpExecutablePath->url() ) ));
+               kled->setColor(green);
+       }
+       else if (!fi.exists()){
+               QToolTip::add( kled, tr2i18n( QString("%1 doesn't exist").arg(phpExecutablePath->url())) );
+               kled->setColor(red);
+       }
+       else if (!fi.isExecutable()){
+               QToolTip::add( kled, tr2i18n( QString("%1 isn't executable").arg(phpExecutablePath->url())) );
+               kled->setColor(red);
+       }
+       else if (fi.isDir()){
+               QToolTip::add( kled, tr2i18n( QString("%1 is a directory").arg(phpExecutablePath->url())) );
+               kled->setColor(red);
+       }
+       else{
+               QToolTip::add( kled, tr2i18n( QString("%1 isn't php executable path").arg(phpExecutablePath->url())) );
+               kled->setColor(red);
+       }
+}
 }
 #include "webinterfaceprefwidget.moc"
