@@ -81,13 +81,13 @@ QString PhpCodeGenerator::downloadStatus()
 		ret.append(QString("\"leechers_total\" => %1,").arg(stats.leechers_total));
 		ret.append(QString("\"leechers_connected_to\" => %1,").arg(stats.leechers_connected_to));
 		ret.append(QString("\"status\" => %1,").arg(stats.status));
-		ret.append(QString("\"trackerstatus\" => \"%1\",").arg(stats.trackerstatus));
+		ret.append(QString("\"trackerstatus\" => \"%1\",").arg(stats.trackerstatus.replace("\\", "\\\\").replace("\"", "\\\"").replace("$", "\\$")));
 		ret.append(QString("\"session_bytes_downloaded\" => %1,").arg(stats.session_bytes_downloaded));
 		ret.append(QString("\"session_bytes_uploaded\" => %1,").arg(stats.session_bytes_uploaded));
 		ret.append(QString("\"trk_bytes_downloaded\" => %1,").arg(stats.trk_bytes_downloaded));
 		ret.append(QString("\"trk_bytes_uploaded\" => %1,").arg(stats.trk_bytes_uploaded));
-		ret.append(QString("\"torrent_name\" => \"%1\",").arg(stats.torrent_name));
-		ret.append(QString("\"output_path\" => \"%1\",").arg(stats.output_path));
+		ret.append(QString("\"torrent_name\" => \"%1\",").arg(stats.torrent_name.replace("\\", "\\\\").replace("\"", "\\\"").replace("$", "\\$")));
+		ret.append(QString("\"output_path\" => \"%1\",").arg(stats.output_path.replace("\\", "\\\\").replace("\"", "\\\"").replace("$", "\\$")));
 		ret.append(QString("\"stopped_by_error\" => \"%1\",").arg(stats.stopped_by_error));
 		ret.append(QString("\"completed\" => \"%1\",").arg(stats.completed));
 		ret.append(QString("\"user_controlled\" => \"%1\",").arg(stats.user_controlled));
