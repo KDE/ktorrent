@@ -47,6 +47,9 @@ namespace kt
 	class ViewListener
 	{
 	public:
+		ViewListener() {}
+		virtual ~ViewListener() {}
+		
 		virtual void currentTorrentChanged(TorrentInterface* tc) = 0;
 	};
 	

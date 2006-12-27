@@ -75,6 +75,8 @@ namespace kt
 			bt::Uint32 num_down_requests;
 			/// Supports the fast extensions
 			bool fast_extensions;
+			/// Is this a peer on the local network
+			bool local;
 		};
 
 		virtual const Stats & getStats() const = 0;

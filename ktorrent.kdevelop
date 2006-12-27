@@ -20,7 +20,7 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>plugins/rssfeed/ktrssfeedplugin.la</activetarget>
+      <activetarget>plugins/zeroconf/ktzeroconfplugin.la</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>

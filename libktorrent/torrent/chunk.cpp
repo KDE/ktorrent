@@ -82,4 +82,5 @@ namespace bt
 			return SHA1Hash::generate(data,size) == h;
 		}
 	}
+						   
 }

@@ -76,12 +76,14 @@ namespace bt
 		 * @param num_chunks The number of chunks in the file
 		 * @param chunk_size Size of each chunk 
 		 * @param support Which extensions the peer supports
+		 * @param local Wether or not it is a local peer
 		 */
 		Peer(mse::StreamSocket* sock,
 			 const PeerID & peer_id,
 			 Uint32 num_chunks,
 			 Uint32 chunk_size,
-			 Uint32 support);
+			 Uint32 support,
+			 bool local);
 		
 		virtual ~Peer();
 

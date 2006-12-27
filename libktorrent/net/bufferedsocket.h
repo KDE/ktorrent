@@ -33,6 +33,9 @@ namespace net
 	class SocketReader
 	{
 	public:
+		SocketReader() {}
+		virtual ~SocketReader() {}
+		
 		/**
 		 * Function which will be called whenever data has been read from the socket.
 		 * This data should be dealt with, otherwise it will be discarded.
@@ -44,7 +47,10 @@ namespace net
 	
 	class SocketWriter
 	{
-	public:		
+	public:	
+		SocketWriter() {}
+		virtual ~SocketWriter() {}
+
 		/**
 		 * The socket is ready to write, the writer is asked to provide the data.
 		 * The data will be fully sent, before another request is done.

@@ -103,6 +103,8 @@ int main(int argc, char **argv)
 	about.addCredit("Adam Forsyth",I18N_NOOP("File prioritization"),"agforsyth@gmail.com");
 	about.addCredit("Thomas Bernard",I18N_NOOP("Miniupnp was used as an example for our own UPnP implementation"),0,"http://miniupnp.free.fr/");
 	about.addCredit("Diego Rosario Brogna",I18N_NOOP("Global max share ratio patch"),0,"dierbro@gmail.com");
+	about.addCredit("Lesly Weyts",I18N_NOOP("Zeroconf enhancements"),0,0);
+	about.addCredit("Kevin Andre",I18N_NOOP("Zeroconf enhancements"),0,"http://users.telenet.be/hyperquantum");
 
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);

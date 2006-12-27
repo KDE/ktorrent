@@ -30,7 +30,7 @@ namespace bt
 	
 	
 
-	AuthenticateBase::AuthenticateBase(mse::StreamSocket*  s) : sock(s),finished(false)
+	AuthenticateBase::AuthenticateBase(mse::StreamSocket*  s) : sock(s),finished(false),local(false)
 	{
 		connect(&timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 		timer.start(20000,true);

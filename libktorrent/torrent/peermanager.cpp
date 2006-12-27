@@ -144,11 +144,11 @@ namespace bt
 		std::pair<PPItr,PPItr> r = potential_peers.equal_range(pp.ip);
 		for (PPItr i = r.first;i != r.second;i++)
 		{
-			if (i->second == pp.port) // port and IP are the same so return
+			if (i->second.port == pp.port) // port and IP are the same so return
 				return;
 		}
 		
-		potential_peers.insert(std::make_pair(pp.ip,pp.port));
+		potential_peers.insert(std::make_pair(pp.ip,pp));
 	}
 
 	void PeerManager::killSeeders()
@@ -211,7 +211,7 @@ namespace bt
 			}
 		}
 
-		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),tor.getChunkSize(),support);
+		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),tor.getChunkSize(),support,false);
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));
@@ -241,6 +241,9 @@ namespace bt
 				QString ip = a->getIP();
 				Uint16 port = a->getPort();
 				Authenticate* st = new Authenticate(ip,port,tor.getInfoHash(),tor.getPeerID(),this);
+				if (auth->isLocal())
+					st->setLocal(true);
+				
 				connect(this,SIGNAL(stopped()),st,SLOT(onPeerManagerDestroyed()));
 				AuthenticationMonitor::instance().add(st);
 				num_pending++;
@@ -260,7 +263,7 @@ namespace bt
 		if (auth->supportsFastExtensions())
 			flags |= bt::FAST_EXT_SUPPORT;
 		
-		Peer* peer = new Peer(auth->takeSocket(),auth->getPeerID(),tor.getNumChunks(),tor.getChunkSize(),flags);
+		Peer* peer = new Peer(auth->takeSocket(),auth->getPeerID(),tor.getNumChunks(),tor.getChunkSize(),flags,auth->isLocal());
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));
@@ -331,13 +334,15 @@ namespace bt
 			{
 			//	Out() << "EncryptedAuthenticate : " << pp.ip << ":" << pp.port << endl;
 				Authenticate* auth = 0;
+				const PotentialPeer & pp = itr->second;
 				
 				if (Globals::instance().getServer().isEncryptionEnabled())
-					auth = new mse::EncryptedAuthenticate(itr->first,itr->second,
-						tor.getInfoHash(),tor.getPeerID(),this);
+					auth = new mse::EncryptedAuthenticate(pp.ip,pp.port,tor.getInfoHash(),tor.getPeerID(),this);
 				else
-					auth = new Authenticate(itr->first,itr->second,
-											tor.getInfoHash(),tor.getPeerID(),this);
+					auth = new Authenticate(pp.ip,pp.port,tor.getInfoHash(),tor.getPeerID(),this);
+				
+				if (pp.local)
+					auth->setLocal(true);
 				
 				connect(this,SIGNAL(stopped()),auth,SLOT(onPeerManagerDestroyed()));
 				
@@ -421,7 +426,7 @@ namespace bt
 			PPItr i = potential_peers.begin();
 			while (i != potential_peers.end())
 			{
-				net::Address addr(i->first,i->second);
+				net::Address addr(i->first,i->second.port);
 				PeerListEntry e;
 				e.ip = addr.ip();
 				e.port = addr.port();

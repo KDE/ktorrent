@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2006 by Lesly Weyts and Kevin Andre                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,48 +16,21 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include "peersource.h"
 
-namespace kt
-{
+/**
+ * @author Lesly Weyts and Kevin Andre
+ * @brief Keep track of local peers
+ */
 
-	PeerSource::PeerSource() 
-	{}
-
-
-	PeerSource::~PeerSource()
-	{}
-	
-	void PeerSource::completed()
-	{}
-	
-	void PeerSource::manualUpdate()
-	{}
-	
-	void PeerSource::aboutToBeDestroyed()
-	{}
-	
-	void PeerSource::addPeer(const QString & ip,bt::Uint16 port,bool local)
-	{
-		PotentialPeer pp;
-		pp.ip = ip;
-		pp.port = port;
-		pp.local = local;
-		peers.append(pp);
-	}
-		
-	bool PeerSource::takePotentialPeer(PotentialPeer & pp)
-	{
-		if (peers.count() > 0)
-		{
-			pp = peers.front();
-			peers.pop_front();
-			return true;
-		}
-		return false;
-	}
-
-	
-
+#include <list>
+ 
+namespace bt { class PeerID; }
+ 
+namespace LocalBrowser {
+ 
+	void remove(bt::PeerID);
+	void insert(bt::PeerID);
+	bool check (bt::PeerID);
+ 
+	static std::list<bt::PeerID> local_peers;
 }
-#include "peersource.moc"

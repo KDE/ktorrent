@@ -37,6 +37,8 @@ namespace bt
 	class MMappeable
 	{
 	public:
+		virtual ~MMappeable() {}
+
 		/**
 		 * When a CacheFile is closed, this will be called on all existing mappings.
 	 	 * @param remap_intended A remap will happen

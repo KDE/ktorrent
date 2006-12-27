@@ -36,6 +36,7 @@ namespace bt
 	class BEncoderOutput
 	{
 	public:
+		virtual ~BEncoderOutput() {}
 		/**
 		 * Write a string of characters.
 		 * @param str The string

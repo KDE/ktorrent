@@ -52,6 +52,12 @@ namespace bt
 		AuthenticateBase(mse::StreamSocket* s = 0);
 		virtual ~AuthenticateBase();
 
+		/// Set wether this is a local peer
+		void setLocal(bool loc) {local = loc;}
+		
+		/// Is this a local peer
+		bool isLocal() const {return local;}
+		
 		/// See if the authentication is finished
 		bool isFinished() const {return finished;}
 		
@@ -111,6 +117,7 @@ namespace bt
 		Uint32 bytes_of_handshake_recieved;
 		bool dht_support;
 		bool fast_extensions;
+		bool local;
 	};
 
 }

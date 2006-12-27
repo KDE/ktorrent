@@ -216,6 +216,7 @@ namespace bt
 		virtual const kt::DHTNode & getDHTNode(Uint32 i) const;
 		virtual void deleteDataFiles();
 		virtual const SHA1Hash & getInfoHash() const;
+		virtual const bt::PeerID & getOwnPeerID() const;
 		
 		/**
 		 * Called by the PeerSourceManager when it is going to start a new tracker.

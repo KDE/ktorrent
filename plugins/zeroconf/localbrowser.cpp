@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2006 by Lesly Weyts and Kevin Andre                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,48 +16,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include "peersource.h"
+#include <torrent/peerid.h>
+#include "localbrowser.h"
 
-namespace kt
-{
-
-	PeerSource::PeerSource() 
-	{}
-
-
-	PeerSource::~PeerSource()
-	{}
-	
-	void PeerSource::completed()
-	{}
-	
-	void PeerSource::manualUpdate()
-	{}
-	
-	void PeerSource::aboutToBeDestroyed()
-	{}
-	
-	void PeerSource::addPeer(const QString & ip,bt::Uint16 port,bool local)
+ 
+namespace LocalBrowser {
+ 
+	void remove(bt::PeerID id)
 	{
-		PotentialPeer pp;
-		pp.ip = ip;
-		pp.port = port;
-		pp.local = local;
-		peers.append(pp);
+		local_peers.remove(id);
 	}
-		
-	bool PeerSource::takePotentialPeer(PotentialPeer & pp)
+ 
+	void insert(bt::PeerID id)
 	{
-		if (peers.count() > 0)
-		{
-			pp = peers.front();
-			peers.pop_front();
-			return true;
+		if (!(check(id)))
+			local_peers.push_front(id);
+	}
+ 
+	bool check(bt::PeerID id)
+	{
+		for (std::list<bt::PeerID>::iterator i = local_peers.begin(); i != local_peers.end(); ++i) {
+			if (*i == id)
+				return true;
 		}
 		return false;
 	}
-
-	
-
 }
-#include "peersource.moc"

@@ -32,6 +32,7 @@ namespace bt
 	class DataCheckerListener;
 	class SHA1Hash;
 	class WaitJob;
+	class PeerID;
 }
 
 namespace kt
@@ -372,6 +373,9 @@ namespace kt
 		
 		///Checks if DHT was started
 		virtual bool dhtStarted() = 0;
+		
+		/// Get our PeerID
+		virtual const bt::PeerID & getOwnPeerID() const = 0;
 		
 	signals:
 		/**

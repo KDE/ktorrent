@@ -42,7 +42,8 @@ namespace bt
 	static Uint32 peer_id_counter = 1;
 	
 	
-	Peer::Peer(mse::StreamSocket* sock,const PeerID & peer_id,Uint32 num_chunks,Uint32 chunk_size,Uint32 support)
+	Peer::Peer(mse::StreamSocket* sock,const PeerID & peer_id,
+			   Uint32 num_chunks,Uint32 chunk_size,Uint32 support,bool local)
 	: sock(sock),pieces(num_chunks),peer_id(peer_id)
 	{
 		id = peer_id_counter;
@@ -77,6 +78,7 @@ namespace bt
 		stats.has_upload_slot = false;
 		stats.num_up_requests = stats.num_down_requests = 0;
 		stats.encrypted = sock->encrypted();
+		stats.local = local;
 		if (stats.ip_addresss == "0.0.0.0")
 		{
 			Out(SYS_CON|LOG_DEBUG) << "No more 0.0.0.0" << endl;

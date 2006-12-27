@@ -75,6 +75,14 @@ namespace bt
 	{
 		saveCustomURLs();
 		additional.setAutoDelete(true);
+		QPtrList<kt::PeerSource>::iterator itr = additional.begin();
+		while (itr != additional.end())
+		{
+			kt::PeerSource* ps = *itr;
+			ps->aboutToBeDestroyed();
+			itr++;
+		}
+		additional.clear();
 	}
 		
 	void PeerSourceManager::addTracker(Tracker* trk)

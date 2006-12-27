@@ -41,7 +41,7 @@ namespace bt
 		client_name = identifyClient();
 	}
 
-	PeerID::PeerID(char* pid)
+	PeerID::PeerID(const char* pid)
 	{
 		if (pid)
 			memcpy(id,pid,20);

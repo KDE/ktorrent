@@ -77,11 +77,6 @@ namespace bt
 				should_be_interested = true;
 				break;
 			}
-		//	else if (!ours.get(i) && theirs.get(i))
-			//	should_we_be_interested = true;
-			
-		//	if (should_be_interested && should_we_be_interested)
-		//		break;
 		}
 		
 		if (!should_be_interested || !p->isInterested())
@@ -90,12 +85,13 @@ namespace bt
 			p->setACAScore(-50.0);
 			return false;
 		}
-		
+
+				
 		
 		double nb = 0.0; // newbie bonus
 		double cp = 0.0; // choke penalty
 		double sp = 0.0; // snubbing penalty
-		//double ib = should_we_be_interested ? 1.0 : 0.0; // interested bonus, the peer has chunks we want
+		double lb = s.local ? 10.0 : 0.0; // local peers get a bonus of 10
 		double bd = s.bytes_downloaded; // bytes downloaded
 		double tbd = stats.trk_bytes_downloaded; // total bytes downloaded
 		double ds = s.download_rate; // current download rate
@@ -121,7 +117,7 @@ namespace bt
 		// NB + K * (BD/TBD) - CP - SP + L * (DS / TDS)
 		double K = 5.0;
 		double L = 5.0;
-		double aca = nb + (tbd > 0 ? K * (bd/tbd) : 0.0) + (tds > 0 ? L* (ds / tds) : 0.0) - cp - sp/* + ib*/;
+		double aca = lb + nb + (tbd > 0 ? K * (bd/tbd) : 0.0) + (tds > 0 ? L* (ds / tds) : 0.0) - cp - sp;
 		
 		p->setACAScore(aca);
 		return true;
@@ -148,10 +144,6 @@ namespace bt
 			Peer* p = pman.getPeer(i);
 			if (p)
 			{
-				
-			/*	if (p->getStats().evil)
-					p->getPacketWriter().sendEvilUnchoke(); // be very wicked with snubbers
-				else */
 				if (calcACAScore(p,cman,stats))
 					ppl.append(p);
 				else

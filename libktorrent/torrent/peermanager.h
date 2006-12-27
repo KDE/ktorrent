@@ -211,7 +211,6 @@ namespace bt
 		PtrMap<Uint32,Peer> peer_map;
 		QPtrList<Peer> peer_list;
 		QPtrList<Peer> killed;
-		std::multimap<QString,bt::Uint16> potential_peers;
 		Torrent & tor;
 		bool started;
 		BitSet available_chunks;
@@ -222,7 +221,9 @@ namespace bt
 		static Uint32 max_total_connections;
 		static Uint32 total_connections;
 		
-		typedef std::multimap<QString,bt::Uint16>::iterator PPItr;
+		std::multimap<QString,kt::PotentialPeer> potential_peers;
+		
+		typedef std::multimap<QString,kt::PotentialPeer>::iterator PPItr;
 	};
 
 }

@@ -35,6 +35,7 @@ namespace kt
 	{
 		QString ip;
 		bt::Uint16 port;
+		bool local;
 	};
 
 	/**
@@ -65,8 +66,9 @@ namespace kt
 		 * Add a peer to the list of peers.
 		 * @param ip The ip
 		 * @param port The port
+		 * @param local Wether or not the peer is on the local network
 		 */
-		void addPeer(const QString & ip,bt::Uint16 port);
+		void addPeer(const QString & ip,bt::Uint16 port,bool local = false);
 		
 	public slots:
 		/**
@@ -91,6 +93,11 @@ namespace kt
 		 */
 		virtual void manualUpdate();
 		
+		/**
+		 * The source is about to be destroyed. Subclasses can override this
+		 * to clean up some things.
+		 */
+		virtual void aboutToBeDestroyed();
 	signals:
 		/**
 		 * This signal should be emitted when a new batch of peers is ready.

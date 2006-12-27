@@ -1426,6 +1426,11 @@ namespace bt
 	{
 		return psman->dhtStarted();
 	}
+	
+	const bt::PeerID & TorrentControl::getOwnPeerID() const
+	{
+		return tor->getPeerID();
+	}
 }
 
 #include "torrentcontrol.moc"

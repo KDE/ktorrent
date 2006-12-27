@@ -17,48 +17,53 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include "peersource.h"
+#ifndef KTZEROCONFPLUGIN_H
+#define KTZEROCONFPLUGIN_H
+
+#include <util/ptrmap.h>
+#include <interfaces/plugin.h>
 
 namespace kt
 {
+	class TorrentInterface;
+	class AvahiService;
 
-	PeerSource::PeerSource() 
-	{}
-
-
-	PeerSource::~PeerSource()
-	{}
-	
-	void PeerSource::completed()
-	{}
-	
-	void PeerSource::manualUpdate()
-	{}
-	
-	void PeerSource::aboutToBeDestroyed()
-	{}
-	
-	void PeerSource::addPeer(const QString & ip,bt::Uint16 port,bool local)
+	/**
+	 * @author Joris Guisson <joris.guisson@gmail.com>
+	 * 
+	 * Plugin which handles the zeroconf service.
+	 */
+	class ZeroConfPlugin : public Plugin
 	{
-		PotentialPeer pp;
-		pp.ip = ip;
-		pp.port = port;
-		pp.local = local;
-		peers.append(pp);
-	}
+		Q_OBJECT
+	public:
+		ZeroConfPlugin(QObject* parent, const char* name, const QStringList& args);
+		virtual ~ZeroConfPlugin();
 		
-	bool PeerSource::takePotentialPeer(PotentialPeer & pp)
-	{
-		if (peers.count() > 0)
-		{
-			pp = peers.front();
-			peers.pop_front();
-			return true;
-		}
-		return false;
-	}
+		virtual void load();
+		virtual void unload();
+	private slots:
+		/**
+		 * A TorrentInterface was added
+		 * @param tc 
+		 */
+		void torrentAdded(kt::TorrentInterface* tc);
 
+		/**
+		 * A TorrentInterface was removed
+		 * @param tc
+		 */
+		void torrentRemoved(kt::TorrentInterface* tc);
 	
+		/**
+		 * An AvahiService has been destroyed by the psman
+		 */
+		void avahiServiceDestroyed(AvahiService* av);
+		
+	private:
+		bt::PtrMap<kt::TorrentInterface*,AvahiService> services;
+	};
 
 }
-#include "peersource.moc"
+
+#endif

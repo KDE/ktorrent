@@ -34,7 +34,7 @@ namespace bt
 		QString client_name;
 	public:
 		PeerID();
-		PeerID(char* pid);
+		PeerID(const char* pid);
 		PeerID(const PeerID & pid);
 		virtual ~PeerID();
 

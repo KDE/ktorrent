@@ -116,6 +116,7 @@ namespace bt
 		
 		virtual void unmapped(bool remap_intended);
 		virtual void remapped(void* ptr);
+		
 	private:
 		Status status;
 		Uint32 index;
