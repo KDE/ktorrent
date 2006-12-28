@@ -106,8 +106,8 @@ void ScanDialog::finished()
 {
 	QMutexLocker lock(&mutex);
 	timer.stop();
-	update();
 	progress(100,100);
+	update();
 	if (!isStopped())
 	{
 		m_ok->setEnabled(true);
