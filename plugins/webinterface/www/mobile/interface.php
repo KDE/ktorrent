@@ -77,10 +77,8 @@
     	<?php
 		$globalinfo=globalInfo();
 		echo "<td><strong>Speed</strong></td>";
-		$downspeed=$globalinfo[download_speed]/1024;
-		echo "<td>Down: $downspeed kb/s</td>";
-		$upspeed=$globalinfo[upload_speed]/1024;
-		echo "<td>Up: $upspeed kb/s</td>";
+		echo "<td>Down: $globalinfo[download_speed] kb/s</td>";
+		echo "<td>Up: $globalinfo[upload_speed] kb/s</td>";
 	?>
     </tr>
     <tr>

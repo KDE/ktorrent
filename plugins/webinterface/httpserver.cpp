@@ -374,7 +374,7 @@ namespace kt{
 			return;
 		}
 		
-		if(finfo.extension()=="html" || finfo.extension()=="css" || finfo.extension()=="js"){
+		if(finfo.extension()=="html"){
 			QString dataFile;
 			dataFile=QString(f.readAll().data());
 			header="HTTP/1.1 200 OK\r\n";
@@ -382,15 +382,41 @@ namespace kt{
 			header+="Cache-Control: private\r\n";
 			header+="Connection: close\r\n";
 			header+=QString("Date: ")+QDateTime::currentDateTime(Qt::UTC).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
-			if(finfo.extension()=="html")
-				header+="Content-Type: text/html\r\n";
-			else if(finfo.extension()=="js")
-				header+="Content-Type: text/javascript\r\n";
-			else
-				header+="Content-Type: text/css\r\n";
+			header+="Content-Type: text/html\r\n";
 			header+=QString("Set-Cookie: SESSID=%1\r\n").arg(session.sessionId);
 			header+=QString("Content-Length: %1\r\n\r\n").arg(f.size());
 			sendHtmlPage(s, QString(header+dataFile).latin1());
+		}
+		else if(finfo.extension()=="css" || finfo.extension()=="js"){
+			if(!headerField.ifModifiedSince){
+				QString dataFile;
+				dataFile=QString(f.readAll().data());
+				header="HTTP/1.1 200 OK\r\n";
+				header+="Server: ktorrent\r\n";
+				header+=QString("Set-Cookie: SESSID=%1\r\n").arg(session.sessionId);
+				header+=QString("Date: ")+QDateTime::currentDateTime(Qt::UTC).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
+				header+=QString("Last-Modified: ")+finfo.lastModified().toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
+				header+=QString("Expires: ")+QDateTime::currentDateTime(Qt::UTC).addSecs(3600).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
+				header+="Cache-Control: private\r\n";
+				if(finfo.extension()=="js")
+					header+="Content-Type: text/javascript\r\n";
+				else
+					header+="Content-Type: text/css\r\n";
+				header+=QString("Content-Length: %1\r\n\r\n").arg(f.size());
+				sendHtmlPage(s, QString(header+dataFile).latin1());
+			}
+			else{
+				header="HTTP/1.1 304 Not Modified\r\n";
+				header+="Server: ktorrent\r\n";
+				header+=QString("Set-Cookie: SESSID=%1\r\n").arg(session.sessionId);
+				header+=QString("Date: ")+QDateTime::currentDateTime(Qt::UTC).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
+				header+="Cache-Control: max-age=0\r\n";
+				header+=QString("If-Modified-Since: ")+finfo.lastModified().toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
+				header+=QString("Content-Type: text/html\r\n");
+				header+=QString("Content-Length: 0\r\n\r\n");
+				sendHtmlPage(s, QString(header).latin1());
+			}
+
 		}
 		else if(finfo.extension()=="php"){
 			QString dataFile;

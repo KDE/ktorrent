@@ -9,7 +9,7 @@
         <meta http-equiv="Content-Type" content="text/html"/>
         <link rel="icon" href="favicon.ico" type="image/x-icon"/>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
-	<script language="JavaScript" src="tooltip.js"></script>
+	
 	<script language="JavaScript">
 
 	function validate()
@@ -169,7 +169,7 @@
 					echo "<td><a href=\"interface.php?stop=$a\" title=\"STOP\"><img src=\"/stop.png\" name=\"stop\" width=\"16\" height=\"16\" border=\"0\"></a>";
 					echo "<a href=\"interface.php?start=$a\" title=\"START\"><img src=\"/start.png\" name=\"start\" width=\"16\" height=\"16\" border=\"0\"></a>";
 					echo "<a href=\"interface.php?remove=$a\" title=\"REMOVE\" onClick=\"return validate()\"><img src=\"/remove.png\" name=\"remove\" width=\"16\" height=\"16\" border=\"0\"></a></td>";
-					echo "<td>";
+					echo "<td onmouseover=\"this.T_TITLE='$torrent[torrent_name]';return escape('Download speed:<strong>$torrent[download_rate]</strong><br> Upload speed:<strong>$torrent[upload_rate]</strong></td>')\">";
 					if(strlen($torrent[torrent_name])>20)
 						echo substr($torrent[torrent_name], 0, 20) . " ...</td>";
 					else
@@ -237,5 +237,6 @@
 		</div>
 
 	</div>
+	<script type="text/javascript" src="wz_tooltip.js"></script>
 	</body>
 </html>
