@@ -100,7 +100,7 @@ void WebInterfacePrefWidget::changeLedState()
 {
        QFileInfo fi(phpExecutablePath->url());
        if(fi.isExecutable() && fi.isFile() && fi.isSymLink()){
-               QToolTip::add( kled, tr2i18n( QString("%1 exists and it is executable").arg(phpExecutablePath->url() ) ));
+               QToolTip::add( kled, i18n("%1 exists and it is executable").arg(phpExecutablePath->url()));
                kled->setColor(green);
        }
        else if (!fi.exists()){
