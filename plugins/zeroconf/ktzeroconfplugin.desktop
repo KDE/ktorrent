@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=ZeroConfPlugin
+Name[sv]=Zeroconf-insticksprogram
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktzeroconfplugin
