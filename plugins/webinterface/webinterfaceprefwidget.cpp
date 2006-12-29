@@ -104,19 +104,19 @@ void WebInterfacePrefWidget::changeLedState()
                kled->setColor(green);
        }
        else if (!fi.exists()){
-               QToolTip::add( kled, tr2i18n( QString("%1 doesn't exist").arg(phpExecutablePath->url())) );
+               QToolTip::add( kled, i18n("%1 doesn't exist").arg(phpExecutablePath->url()) );
                kled->setColor(red);
        }
        else if (!fi.isExecutable()){
-               QToolTip::add( kled, tr2i18n( QString("%1 isn't executable").arg(phpExecutablePath->url())) );
+               QToolTip::add( kled, i18n("%1 isn't executable").arg(phpExecutablePath->url()) );
                kled->setColor(red);
        }
        else if (fi.isDir()){
-               QToolTip::add( kled, tr2i18n( QString("%1 is a directory").arg(phpExecutablePath->url())) );
+               QToolTip::add( kled, i18n("%1 is a directory").arg(phpExecutablePath->url()) );
                kled->setColor(red);
        }
        else{
-               QToolTip::add( kled, tr2i18n( QString("%1 isn't php executable path").arg(phpExecutablePath->url())) );
+               QToolTip::add( kled, i18n("%1 isn't php executable path").arg(phpExecutablePath->url()) );
                kled->setColor(red);
        }
 }
