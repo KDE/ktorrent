@@ -90,6 +90,7 @@ if test x"$have_pkg_config" = "xno"; then
     AC_MSG_ERROR(pkg-config is required to install this program)
 fi
 
+m4_pattern_allow(PKG_CONFIG_MIN_VERSION)
 PKG_PROG_PKG_CONFIG
 
 PKG_CHECK_MODULES( AVAHI,  avahi-client >= 0.6.10, 
