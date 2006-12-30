@@ -69,13 +69,17 @@ namespace bt
 				Out() << "Encoding : " << encoding << endl;
 			}
 
-			if (dict->getValue("announce"))
-				loadTrackerURL(dict->getValue("announce"));
-			else if (dict->getList("nodes")) // DHT torrrents have a node key
-				loadNodes(dict->getList("nodes"));
-			else
+			BValueNode* announce = dict->getValue("announce");
+			BListNode* nodes = dict->getList("nodes");
+			if (!announce && !nodes)
 				throw Error(i18n("Torrent has no announce or nodes field"));
 				
+			if (announce)
+				loadTrackerURL(announce);
+			
+			if (nodes) // DHT torrrents have a node key
+				loadNodes(nodes);
+			
 			loadInfo(dict->getDict("info"));
 			loadAnnounceList(dict->getData("announce-list"));
 			BNode* n = dict->getData("info");
