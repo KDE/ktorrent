@@ -1,3 +1,12 @@
+Changes in 2.1rc1
+- Share ratio column added in main view
+- Added option to use a different proxy then the default KDE proxy for HTTP trackers
+- Added feature to show/hide columns in main view 
+- Moved search box to bottom, so that the window is not enlarged in 1024 x 768 resolutions, when you search for something
+- Made sure no duplicates get into search box history
+- Fixed 'Trackers' tab in InfoWidget to properly resize tracker URL label
+- Zeroconf plugin added
+
 
 Changes in 2.1beta1 
 - WebGUI plugin added
