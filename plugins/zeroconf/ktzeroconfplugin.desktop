@@ -1,5 +1,7 @@
 [Desktop Entry]
 Name=ZeroConfPlugin
+Name[pt]='Plugin' do ZeroConf
+Name[pt_BR]='Plugin' do ZeroConf
 Name[sv]=Zeroconf-insticksprogram
 ServiceTypes=KTorrent/Plugin
 Type=Service
