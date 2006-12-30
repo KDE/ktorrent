@@ -69,7 +69,7 @@ namespace kt
 			}
 		}
 	
-		const char* name    = avahi_strdup((service->id + QString("__") + ((rand() % 26) + 65) + ((rand() % 26) + 65) + ((rand() % 26) + 65)).ascii());
+		const char* name    = avahi_strdup((QString("%1__%2%3").arg(service->id).arg((rand() % 26) + 65).arg((rand() % 26) + 65).arg((rand() % 26) + 65)).ascii());
 		const char* type    = avahi_strdup("_bittorrent._tcp");
 		const char* subtype = avahi_strdup(QString("_" + service->infoHash + "._sub._bittorrent._tcp").ascii());
 	

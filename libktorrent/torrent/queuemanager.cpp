@@ -131,9 +131,10 @@ namespace bt
 		if (s.running)
 		{
 			stopSafely(tc,user);
-			if(user)
-				tc->setPriority(0);
 		}
+		
+		if(user) //dequeue it
+			tc->setPriority(0);
 		
 		orderQueue();
 	}
