@@ -16,13 +16,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#ifndef LOCAL_BROWSER_HHHH
+#define LOCAL_BROWSER_HHHH
 
 /**
  * @author Lesly Weyts and Kevin Andre
  * @brief Keep track of local peers
  */
 
-#include <list>
+
  
 namespace bt { class PeerID; }
  
@@ -32,5 +34,6 @@ namespace LocalBrowser {
 	void insert(bt::PeerID);
 	bool check (bt::PeerID);
  
-	static std::list<bt::PeerID> local_peers;
+	
 }
+#endif

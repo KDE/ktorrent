@@ -16,11 +16,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <list>
 #include <torrent/peerid.h>
 #include "localbrowser.h"
 
  
-namespace LocalBrowser {
+namespace LocalBrowser 
+{
+	static std::list<bt::PeerID> local_peers;
  
 	void remove(bt::PeerID id)
 	{
