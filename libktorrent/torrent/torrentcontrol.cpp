@@ -887,8 +887,9 @@ namespace bt
 		
 		if(!stats.priv_torrent)
 		{
-			//save dht
-			st.write("DHT", dhtStarted() ? "1" : "0");
+			//save dht and pex 
+			st.write("DHT", isFeatureEnabled(kt::DHT_FEATURE) ? "1" : "0");
+			st.write("UT_PEX", isFeatureEnabled(kt::UT_PEX_FEATURE) ? "1" : "0");
 		}
 		
 		st.writeSync();
@@ -923,18 +924,17 @@ namespace bt
 		if (st.hasKey("RESTART_DISK_PREALLOCATION"))
 			prealloc = st.readString("RESTART_DISK_PREALLOCATION") == "1";
 		
-		if(!stats.priv_torrent)
+		if (!stats.priv_torrent)
 		{
 			if(st.hasKey("DHT"))
 				istats.dht_on = st.readBoolean("DHT");
 			else
 				istats.dht_on = true;
+			
+			setFeatureEnabled(kt::DHT_FEATURE,istats.dht_on);
+			if (st.hasKey("UT_PEX"))
+				setFeatureEnabled(kt::UT_PEX_FEATURE,st.readBoolean("UT_PEX"));
 		}
-		
-		if(istats.dht_on)
-			startDHT();
-		
-		return;
 	}
 
 	void TorrentControl::loadOutputDir()
@@ -1405,32 +1405,64 @@ namespace bt
 		return m_eta->estimate();
 	}
 	
-	void TorrentControl::startDHT()
-	{
-		if(!stats.priv_torrent)
-		{
-			psman->addDHT();
-			istats.dht_on = dhtStarted();
-			saveStats();
-		}
-	}
-
-	void TorrentControl::stopDHT()
-	{
-		psman->removeDHT();
-		istats.dht_on = false;
-		saveStats();
-	}
 	
-	bool TorrentControl::dhtStarted()
-	{
-		return psman->dhtStarted();
-	}
 	
 	const bt::PeerID & TorrentControl::getOwnPeerID() const
 	{
 		return tor->getPeerID();
 	}
+	
+	
+	bool TorrentControl::isFeatureEnabled(TorrentFeature tf)
+	{
+		switch (tf)
+		{
+		case kt::DHT_FEATURE:
+			return psman->dhtStarted();
+		case kt::UT_PEX_FEATURE:
+			return pman->isPexEnabled();
+		default:
+			return false;
+		}
+	}
+		
+	void TorrentControl::setFeatureEnabled(TorrentFeature tf,bool on)
+	{
+		switch (tf)
+		{
+		case kt::DHT_FEATURE:
+			if (on)
+			{
+				if(!stats.priv_torrent)
+				{
+					psman->addDHT();
+					istats.dht_on = psman->dhtStarted();
+					saveStats();
+				}
+			}
+			else
+			{
+				psman->removeDHT();
+				istats.dht_on = false;
+				saveStats();
+			}
+			break;
+		case kt::UT_PEX_FEATURE:
+			if (on)
+			{
+				if (!stats.priv_torrent && !pman->isPexEnabled())
+				{
+					pman->setPexEnabled(true);
+				}
+			}
+			else
+			{
+				pman->setPexEnabled(false);
+			}
+			break;
+		}	
+	}
+	
 }
 
 #include "torrentcontrol.moc"

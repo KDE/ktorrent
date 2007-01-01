@@ -108,13 +108,7 @@ namespace bt
 			sendHandshake(rh,pman->getTorrent().getPeerID());
 			onFinish(true);
 			// hand over connection
-			Uint32 flags = 0;
-			if (supportsDHT())
-				flags |= bt::DHT_SUPPORT;
-			if (supportsFastExtensions())
-				flags |= bt::FAST_EXT_SUPPORT;
-			
-			pman->newConnection(sock,peer_id,flags);
+			pman->newConnection(sock,peer_id,supportedExtensions());
 			sock = 0;
 		}
 		else

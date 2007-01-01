@@ -56,6 +56,7 @@ namespace bt
 		
 		cnt = new ChunkCounter(tor.getNumChunks());
 		num_pending = 0;
+		pex_on = !tor.isPrivate();
 	}
 
 
@@ -97,7 +98,7 @@ namespace bt
 			}
 			else
 			{
-				p->update();
+				p->update(this);
 				i++;
 			}
 		}
@@ -211,16 +212,7 @@ namespace bt
 			}
 		}
 
-		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),tor.getChunkSize(),support,false);
-		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
-		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
-				this,SLOT(onBitSetRecieved(const BitSet& )));
-		connect(peer,SIGNAL(rerunChoker()),this,SLOT(onRerunChoker()));
-		
-		peer_list.append(peer);
-		peer_map.insert(peer->getID(),peer);
-		total_connections++;
-		newPeer(peer);
+		createPeer(sock,peer_id,support,false);
 	}
 	
 	void PeerManager::peerAuthenticated(Authenticate* auth,bool ok)
@@ -257,23 +249,24 @@ namespace bt
 			return;
 		}
 			
-		Uint32 flags = 0;
-		if (auth->supportsDHT())
-			flags |= bt::DHT_SUPPORT;
-		if (auth->supportsFastExtensions())
-			flags |= bt::FAST_EXT_SUPPORT;
+		createPeer(auth->takeSocket(),auth->getPeerID(),auth->supportedExtensions(),auth->isLocal());
+	}
+	
+	void PeerManager::createPeer(mse::StreamSocket* sock,const PeerID & peer_id,Uint32 support,bool local)
+	{
+		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),tor.getChunkSize(),support,local);
 		
-		Peer* peer = new Peer(auth->takeSocket(),auth->getPeerID(),tor.getNumChunks(),tor.getChunkSize(),flags,auth->isLocal());
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
 		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
 				this,SLOT(onBitSetRecieved(const BitSet& )));
 		connect(peer,SIGNAL(rerunChoker()),this,SLOT(onRerunChoker()));
+		connect(peer,SIGNAL(pex( const QByteArray& )),this,SLOT(pex( const QByteArray& )));
 		
 		peer_list.append(peer);
 		peer_map.insert(peer->getID(),peer);
 		total_connections++;
-		//	Out() << "New peer connected !" << endl;
 		newPeer(peer);
+		peer->setPexEnabled(pex_on);
 	}
 		
 	bool PeerManager::connectedTo(const PeerID & peer_id)
@@ -538,6 +531,49 @@ namespace bt
 		return false;
 	}
 	
+	void PeerManager::pex(const QByteArray & arr)
+	{
+		if (!pex_on)
+			return;
+		
+		Out(SYS_CON|LOG_NOTICE) << "PEX: found " << (arr.size() / 6) << " peers"  << endl;
+		for (Uint32 i = 0;i+6 <= arr.size();i+=6)
+		{
+			Uint8 tmp[6];
+			memcpy(tmp,arr.data() + i,6);
+			PotentialPeer pp;
+			pp.port = ReadUint16(tmp,4);
+			Uint32 ip = ReadUint32(tmp,0);
+			pp.ip = QString("%1.%2.%3.%4")
+						.arg((ip & 0xFF000000) >> 24)
+						.arg((ip & 0x00FF0000) >> 16)
+						.arg((ip & 0x0000FF00) >> 8)
+						.arg( ip & 0x000000FF);
+			pp.local = false;
+			
+			addPotentialPeer(pp);
+		}
+	}
+	
+	
+	void PeerManager::setPexEnabled(bool on)
+	{
+		if (on && tor.isPrivate())
+			return;
+		
+		if (pex_on == on)
+			return;
+		
+		QPtrList<Peer>::iterator i = peer_list.begin();
+		while (i != peer_list.end())
+		{
+			Peer* p = *i;
+			if (!p->isKilled())
+				p->setPexEnabled(on);
+			i++;
+		}
+		pex_on = on;
+	}
 }
 
 #include "peermanager.moc"

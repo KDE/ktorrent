@@ -36,6 +36,8 @@ namespace kt
 		QString ip;
 		bt::Uint16 port;
 		bool local;
+		
+		PotentialPeer() : port(0),local(false) {}
 	};
 
 	/**

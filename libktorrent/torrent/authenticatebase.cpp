@@ -36,8 +36,7 @@ namespace bt
 		timer.start(20000,true);
 		memset(handshake,0x00,68);
 		bytes_of_handshake_recieved = 0;
-		dht_support = false;
-		fast_extensions = false;
+		ext_support = 0;
 	}
 
 
@@ -62,17 +61,12 @@ namespace bt
 		const char* pstr = "BitTorrent protocol";
 		hs[0] = 19;
 		memcpy(hs+1,pstr,19);
+		memset(hs+20,0x00,8);
 		if (Globals::instance().getDHT().isRunning())
-		{
-			memset(hs+20,0x00,7);
-			memset(hs+27,0x04 | 0x01,1); 
-			// enable DHT support and fast extensions
-			// 0x01 for DHT and 0x04 for fast extensions
-		}
-		else
-		{
-			memset(hs+20,0x04,8);
-		}
+			hs[27] |= 0x01; // DHT support
+			 
+		hs[25] |= 0x10; // extension protocol
+		hs[27] |= 0x04; // fast extensions
 		memcpy(hs+28,info_hash.getData(),20);
 		memcpy(hs+48,our_peer_id.data(),20);
 	}
@@ -99,7 +93,7 @@ namespace bt
 				sock->readData(handshake,ba);
 				bytes_of_handshake_recieved += ba;
 				if (ba >= 27 && handshake[27] & 0x01)
-					dht_support = true;
+					ext_support |= bt::DHT_SUPPORT;
 				// tell subclasses of a partial handshake
 				handshakeRecieved(false);
 				return;
@@ -131,16 +125,13 @@ namespace bt
 		}
 		
 		if (Globals::instance().getDHT().isRunning() && (handshake[27] & 0x01))
-		{
-			Out(SYS_CON|LOG_NOTICE) << "Peer supports DHT" << endl;
-			dht_support = true;
-		}
+			ext_support |= bt::DHT_SUPPORT;
 		
 		if (handshake[27] & 0x04)
-		{
-			Out(SYS_CON|LOG_NOTICE) << "Peer supports Fast Extensions" << endl;
-			fast_extensions = true;
-		}
+			ext_support |= bt::FAST_EXT_SUPPORT;
+		
+		if (handshake[25] & 0x10)
+			ext_support |= bt::EXT_PROT_SUPPORT;
 		
 		handshakeRecieved(true);
 	}

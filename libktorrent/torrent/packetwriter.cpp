@@ -22,6 +22,7 @@
 #include <util/log.h>
 #include <util/file.h>
 #include <util/functions.h>
+#include <ktversion.h>
 #include "packetwriter.h"
 #include "peer.h"
 #include "request.h"
@@ -31,6 +32,7 @@
 #include "uploadcap.h"
 #include <util/log.h>
 #include "globals.h"
+#include "bencoder.h"
 
 
 namespace bt
@@ -184,6 +186,31 @@ namespace bt
 			queuePacket(new Packet(index,begin,len,ch));
 			return true;
 		}
+	}
+	
+	void PacketWriter::sendExtProtHandshake(Uint16 port,bool pex_on)
+	{
+		QByteArray arr;
+		BEncoder enc(new BEncoderBufferOutput(arr));
+		enc.beginDict();
+		enc.write("m"); 
+		// supported messages
+		enc.beginDict();
+		enc.write("ut_pex");enc.write((Uint32)(pex_on ? 1 : 0));
+		enc.end();
+		if (port > 0)
+		{
+			enc.write("p"); 
+			enc.write((Uint32)port);
+		}
+		enc.write("v"); enc.write(QString("KTorrent %1").arg(kt::VERSION_STRING));
+		enc.end();
+		sendExtProtMsg(0,arr);
+	}
+	
+	void PacketWriter::sendExtProtMsg(Uint8 id,const QByteArray & data)
+	{
+		queuePacket(new Packet(id,data));
 	}
 	
 	Packet* PacketWriter::selectPacket()

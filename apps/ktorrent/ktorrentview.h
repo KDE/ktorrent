@@ -126,6 +126,7 @@ public slots:
 	void openOutputDirectory();
 	void openTorXDirectory();
 	void dhtSlot();
+	void utPexSlot();
 
 private slots:
 	void onExecuted(QListViewItem* item);
@@ -180,6 +181,7 @@ private:
 	int torxdir_id;
 	int peer_sources_id;
 	int dht_id;
+	int ut_pex_id;
 	kt::Group* current_group;
 };
 

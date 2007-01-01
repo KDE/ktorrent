@@ -50,7 +50,8 @@ namespace bt
 	class PacketWriter;
 	class PeerDownloader;
 	class PeerUploader;
-	
+	class PeerManager;
+	class UTPex;
 	
 
 	
@@ -133,7 +134,7 @@ namespace bt
 		const PeerID & getPeerID() const {return peer_id;}
 
 		/// Update the up- and down- speed and handle incoming packets
-		void update();
+		void update(PeerManager* pman);
 
 		/// Get the PeerDownloader.
 		PeerDownloader* getPeerDownloader() {return downloader;}
@@ -220,6 +221,14 @@ namespace bt
 		 */
 		void emitPortPacket();
 		
+		/**
+		 * Emit the pex signal
+		 */
+		void emitPex(const QByteArray & data);
+		
+		/// Disable or enable pex
+		void setPexEnabled(bool on);
+		
 	private slots:
 		void dataWritten(int bytes);
 
@@ -267,8 +276,14 @@ namespace bt
 		 */
 		void gotPortPacket(const QString & ip,Uint16 port);
 		
+		/**
+		 * A Peer Exchange has been received, the QByteArray contains the data.
+		 */
+		void pex(const QByteArray & data);
+		
 	private:
 		void packetReady(const Uint8* packet,Uint32 size);
+		void handleExtendedPacket(const Uint8* packet,Uint32 size);
 
 	private:
 		mse::StreamSocket* sock;
@@ -289,6 +304,9 @@ namespace bt
 		PeerUploader* uploader;
 		mutable kt::PeerInterface::Stats stats;
 		QTime connect_time;
+		UTPex* ut_pex;
+		bool pex_allowed;
+		Uint32 utorrent_pex_id;
 
 		friend class PacketWriter;
 		friend class PacketReader;

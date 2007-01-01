@@ -228,15 +228,12 @@ namespace bt
 		 * Uses TimeEstimator class to calculate this value.
 		 */
 		Uint32 getETA();
+
+		/// Is a feature enabled
+		bool isFeatureEnabled(kt::TorrentFeature tf);
 		
-		///Starts DHT for this torrent (if allowed)
-		void startDHT();
-		
-		///Stops DHT for this torrent
-		void stopDHT();
-		
-		///Checks if DHT was started
-		bool dhtStarted();
+		/// Disable or enable a feature
+		void setFeatureEnabled(kt::TorrentFeature tf,bool on);
 		
 	public slots:
 		/**

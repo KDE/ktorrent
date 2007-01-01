@@ -77,6 +77,8 @@ namespace kt
 			bool fast_extensions;
 			/// Is this a peer on the local network
 			bool local;
+			/// Wether or not the peer supports the extension protocol
+			bool extension_protocol;
 		};
 
 		virtual const Stats & getStats() const = 0;

@@ -186,6 +186,7 @@ void KTorrentView::makeMenu()
 	peer_sources_menu->insertTitle(i18n("Torrent peer sources:"));
 	peer_sources_menu->setCheckable(true);
 	dht_id = peer_sources_menu->insertItem(i18n("DHT"), this, SLOT(dhtSlot()));
+	ut_pex_id = peer_sources_menu->insertItem(i18n("Peer Exchange"), this, SLOT(utPexSlot()));
 	
 	menu->insertSeparator();
 	
@@ -557,7 +558,10 @@ void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 		menu->setItemEnabled(peer_sources_id, en_peer_sources);
 		
 		if (en_peer_sources)
-			peer_sources_menu->setItemChecked(dht_id, tc->dhtStarted());
+		{
+			peer_sources_menu->setItemChecked(dht_id, tc->isFeatureEnabled(kt::DHT_FEATURE));
+			peer_sources_menu->setItemChecked(ut_pex_id, tc->isFeatureEnabled(kt::UT_PEX_FEATURE));
+		}
 	}
 	else
 	{
@@ -817,13 +821,28 @@ void KTorrentView::dhtSlot()
 		bool dummy;
 		if (tc && !tc->isCheckingData(dummy))
 		{
-			if(tc->dhtStarted())
-				tc->stopDHT();
-			else
-				tc->startDHT();
+			bool on = tc->isFeatureEnabled(kt::DHT_FEATURE);
+			tc->setFeatureEnabled(kt::DHT_FEATURE,!on);
 		}
 	}
 }
+
+void KTorrentView::utPexSlot()
+{
+	QPtrList<QListViewItem> sel = selectedItems();
+	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
+	{
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
+		TorrentInterface* tc = kvi->getTC();
+		bool dummy;
+		if (tc && !tc->isCheckingData(dummy))
+		{
+			bool on = tc->isFeatureEnabled(kt::UT_PEX_FEATURE);
+			tc->setFeatureEnabled(kt::UT_PEX_FEATURE,!on);
+		}
+	}
+}
+
 
 void KTorrentView::columnHide(int index)
 {

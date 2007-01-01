@@ -86,6 +86,13 @@ namespace bt
 		memcpy(data+13,ch->getData() + begin,len);
 	}
 
+	Packet::Packet(Uint8 ext_id,const QByteArray & ext_data) : data(0),size(0),written(0)
+	{
+		size = 6 + ext_data.size();
+		data = AllocPacket(size,EXTENDED);
+		data[5] = ext_id;
+		memcpy(data + 6,ext_data.data(),ext_data.size());
+	}
 
 	Packet::~Packet()
 	{

@@ -185,6 +185,17 @@ namespace bt
 		 */
 		void loadPeerList(const QString & file);
 		
+		typedef QPtrList<Peer>::const_iterator CItr;
+		
+		CItr beginPeerList() const {return peer_list.begin();}
+		CItr endPeerList() const {return peer_list.end();}
+		
+		/// Is PEX eanbled
+		bool isPexEnabled() const {return pex_on;}
+		
+		/// Enable or disable PEX
+		void setPexEnabled(bool on);
+		
 	public slots:
 		/**
 		 * A PeerSource, has new potential peers.
@@ -195,11 +206,13 @@ namespace bt
 	private:
 		void updateAvailableChunks();
 		bool killBadPeer();
+		void createPeer(mse::StreamSocket* sock,const PeerID & peer_id,Uint32 support,bool local);
 
 	private slots:
 		void onHave(Peer* p,Uint32 index);
 		void onBitSetRecieved(const BitSet & bs);
 		void onRerunChoker();
+		void pex(const QByteArray & arr);
 		
 		
 	signals:
@@ -216,6 +229,7 @@ namespace bt
 		BitSet available_chunks;
 		ChunkCounter* cnt;
 		Uint32 num_pending;
+		bool pex_on;
 		
 		static Uint32 max_connections;
 		static Uint32 max_total_connections;

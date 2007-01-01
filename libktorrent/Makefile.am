@@ -1,5 +1,5 @@
 INCLUDES = -I$(srcdir)/. $(all_includes)
-SUBDIRS = util torrent kademlia interfaces migrate mse datachecker net
+SUBDIRS = util torrent kademlia interfaces migrate mse datachecker net 
 METASOURCES = AUTO
 
 lib_LTLIBRARIES = libktorrent.la

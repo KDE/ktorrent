@@ -40,7 +40,7 @@ namespace bt
 	static QString custom_ip_resolved;
 	
 	Tracker::Tracker(const KURL & url,kt::TorrentInterface* tor,const PeerID & id,int tier) 
-	: url(url),peer_id(id),tor(tor),tier(tier)
+	: url(url),tier(tier),peer_id(id),tor(tor)
 	{
 		// default 5 minute interval
 		interval = 5 * 60 * 1000;

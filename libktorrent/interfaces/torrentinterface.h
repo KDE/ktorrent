@@ -144,6 +144,12 @@ namespace kt
 		bt::Uint16 port;
 	};
 	
+	enum TorrentFeature
+	{
+		DHT_FEATURE, 
+		UT_PEX_FEATURE // µTorrent peer exchange
+	};
+	
 
 	/**
 	 * @author Joris Guisson
@@ -365,14 +371,11 @@ namespace kt
 		 */
 		virtual void removePeerSource(PeerSource* ps) = 0;
 		
-		///Starts DHT for this torrent (if allowed)
-		virtual void startDHT() = 0;
+		/// Is a feature enabled
+		virtual bool isFeatureEnabled(TorrentFeature tf) = 0;
 		
-		///Stops DHT for this torrent
-		virtual void stopDHT() = 0;
-		
-		///Checks if DHT was started
-		virtual bool dhtStarted() = 0;
+		/// Disable or enable a feature
+		virtual void setFeatureEnabled(TorrentFeature tf,bool on) = 0;
 		
 		/// Get our PeerID
 		virtual const bt::PeerID & getOwnPeerID() const = 0;
