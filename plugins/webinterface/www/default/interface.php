@@ -1,16 +1,29 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php
+	$globalinfo=globalInfo();
+	$stats=downloadStatus(); 
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" 
+>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    <head>
-        <style type="text/css" media="all">@import "stylen.css";</style>
-	<?php
-		$globalinfo=globalInfo();
-        	echo "<title>(D:$globalinfo[download_speed]) (U:$globalinfo[upload_speed]) KTorrent</title>";
-	?>
-        <meta http-equiv="Content-Type" content="text/html"/>
-        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
-	
-	<script language="JavaScript">
+  <head>
+    <style type="text/css" media="all">@import "stylen.css";
+
+	.settingsInput
+	{
+		width:50px;
+	}
+
+	.buttons
+	{
+		 width:100px;
+	}
+    </style>
+    <meta http-equiv="Content-Type" content="text/html"/>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    <?php echo "<title>(D:$globalinfo[download_speed]) (U:$globalinfo[upload_speed]) KTorrent</title>"; 
+    ?>
+    <script language="JavaScript">
 
 	function validate()
 	{
@@ -19,145 +32,209 @@
 	}
 
 	</script>
-    </head>
-    <body>
-        <div id="page-container">
-            <div id="top_bar"><a href="interface.php" title="REFRESH"><strong>refresh</strong></a></b></div>
-         
-        <div id="icon">
-            <img src="icon.png" alt="KT Icon"/>
+  </head>
+  <body>
+    <div id="page-container">
+      <div id="top_bar">
+        WebInterface KTorrent plugin
+      </div>
+      <div id="icon">
+        <img src="icon.png" alt="KT Icon"/>
+      </div>
+      <div id="header">
+        <div id="head-content">			
+          <strong>KTorrent WebInterface</strong>
+          <br />
+          <font size="-1">BitTorrent client for KDE</font>
         </div>
-        
-        <div id="header">
-            <div id="head-content">
-                <strong>KTorrent WebInterface</strong><br />
-                <font size="-1">BitTorrent client for KDE</font>
+		<div id="menu">
+				<div style="padding-left:130px;">
+
+					<dl>
+							<dt><a href="interface.php" title="REFRESH">Refresh</a></b></dt>
+							<dt><a href="login.html" title="LOGOUT">Logout</a></dt>
+					</dl>
+				</div>
+			</div>
+      </div>
+      <div id="sidebar">
+        <div id="sidebar-content">
+			<!-- Control -->
+			<div align="center" style="padding-bottom: 10px;">
+			<table class="box" align="center" cellspacing="0" cellpadding="2">
+                          <tr>
+                            <td class="box-header">
+                               Torrent control 
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                          
+                          <tr align="center">
+                            <td>
+                              <form action="interface.php" method="get">
+                                <input type="submit" name="startall" value="Start All" class="buttons" />
+                              </form>
+                              <form action="interface.php" method="get">
+                                <input type="submit" name="stopall" value="Stop All" class="buttons" />
+                              </form>
+                            </td>
+                          </tr>
+                          </td>
+                        </table>
+			</div>
+          <!-- SETTINGS  -->
+          <div align="center" style="padding-bottom: 10px;">
+            <table cellspacing="0" cellpadding="2" class="box" style="width:250px;">
+              <tbody>
+                <tr>
+                  <td class="box-header">
+                     Settings 
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <form action="interface.php" method="get">
+                      <table class="box-settings" style="text-align:left;">
+                        <tr>
+                          <td>
+                             Upload speed 
+                          </td>
+                          <td>
+                            <input type="text" name="maximum_upload_rate" value="<?php echo $globalinfo[max_upload_speed]; ?>" class="settingsInput" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                             Download speed 
+                          </td>
+                          <td>
+                            <input type="text" name="maximum_download_rate" value="<?php echo $globalinfo[max_download_speed]; ?>" class="settingsInput" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                             Maximum downloads 
+                          </td>
+                          <td>
+                            <input type="text" name="maximum_downloads" value="<?php echo $globalinfo[max_downloads]; ?>" class="settingsInput" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                             MaximumSeeds 
+                          </td>
+                          <td>
+                            <input type="text" name="maximum_seeds" value="<?php echo $globalinfo[max_seeds]; ?>" class="settingsInput" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                          </td>
+                          <td>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" style="text-align:right;">
+                            <input type="submit" value="Submit settings" class="buttons"/>
+                          </td>
+                        </tr>
+                        </form>
+                      </table>
+                      </td>
+                      </tr>
+                      </tbody>
+                      </table>
             </div>
-            
-            
-        </div>
-        <div id="sidebar">
-            <div id="sidebar-content">
-                <!-- SETTINGS  -->
-                <div align="center" style="padding-bottom: 10px;">
-                    <table cellspacing="0" cellpadding="1" class="box">
-                        <tbody>
+          <!-- Torrent -->
+          <div align="center" style="padding-bottom: 10px;">
+                        <table cellspacing="0" cellpadding="2" class="box">
+                          <tbody>
                             <tr>
-                                <td class="box-header">Settings</td>
+                              <td class="box-header">
+                                 Load Torrents 
+                              </td>
                             </tr>
-                            <tr>
-                                <td>
-				    <table class="box-settings">
-                                        <?php
-					echo "<form action=\"interface.php\" method=\"get\">";
-					echo "<tr><td><input type=\"text\" name=\"maximum_upload_rate\" value=\"$globalinfo[max_upload_speed]\" /></td><td> UploadSpeed</td></tr>";
-					echo "<tr><td><input type=\"text\" name=\"maximum_download_rate\" value=\"$globalinfo[max_download_speed]\" /></td><td> DownloadSpeed</td></tr>";
-					echo "<tr><td><input type=\"text\" name=\"maximum_downloads\" value=\"$globalinfo[max_downloads]\" /></td><td> MaximumDownload</td></tr>";
-					echo "<tr><td><input type=\"text\" name=\"maximum_seeds\" value=\"$globalinfo[max_seeds]\" /></td><td> MaximumSeeds</td></tr>";
-					echo "<tr align=\"center\"><td><input type=\"submit\" value=\"Submit Settings\"/></td></tr>";
-					echo "</form>";
-					?>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <!-- Torrent -->
-                <div align="center" style="padding-bottom: 10px;">
-                    <table cellspacing="1" cellpadding="1" class="box">
-                        <tbody>
-                            <tr>
-                                <td class="box-header">Load Torrents</td>
-                                
-                            </tr>
-                            
                             <form action="interface.php" method="get">
-                                <tr>
-                                    <td><input type="text" name="load_torrent" />
-                                        <input type="submit" value="Load Torrent" />
-                                    </td>
-                                </tr>
+                              <tr>
+                                <td>
+                                   Torrent URL: <input type="text" name="load_torrent" style="width:240px;" />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="text-align:right;">
+                                  <input type="submit" value="Load Torrent" class="buttons" />
+                                </td>
+                              </tr>
                             </form>
                             <tr>
-                                <td>
-                                    <hr/>
-                                </td>
+                              <td>
+                                <hr/>
+                              </td>
                             </tr>
                             <form method="post" enctype="multipart/form-data" action="interface.php">
-                                <tr>
-                                    <td>
-                                        Local File:<input type="file" name="load_torrent"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="submit" name="Upload Torrent" value="Upload Torrent"></td>
-                                        </tr>
-                                    </form>
-                                    <tr>
-                                        <td>
-                                            <hr/>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr align="center">
-                                        <td><form action="interface.php" method="get">
-                                                <input type="submit" name="stopall" value="Stop All" />
-                                            </td>
-                                        </tr>
-                                    </form>
-                                    <form action="interface.php" method="get">
-                                        <tr align="center">
-                                            <td>
-                                                <input type="submit" name="startall" value="Start All" />
-                                            </td>
-                                        </tr>
-                                    </form>
-                                    
-                                </tbody>
-                            </table>
-                        </div>
-                        
-                    </div>
-                </div>
-                
-                <div id="content">
-                    <table>
-                        <tr>
-                            <td align="left">
-                                <strong>Actions</strong>
-                            </td>
-                            <td align="left">
-                                <strong>File</strong>
-                            </td>
-                            <td align="left">
-                                <strong>Status</strong>
-                            </td>
-                            <td align="left">
-                                <strong>Downloaded</strong>
-                            </td>
-                            <td align="left">
-                                <strong>Size</strong>
-                            </td>
-                            <td align="left">
-                                <strong>Uploaded</strong>
-                            </td>
-                            <td align="left">
-                                <strong>Down Speed</strong>
-                            </td>
-                            <td align="left">
-                                <strong>Up Speed</strong>
-                            </td>
-                            <td align="left">
-                                <strong>Peers</strong>
-                            </td>
-                            <td align="left">
-                                <strong>Complete</strong>
-                            </td>
-                        </tr>
-
-			<?php
+                              <tr>
+                                <td>
+                                   Local File:<input type="file" name="load_torrent" style="width:240px;">
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="text-align:right;">
+                                  <input type="submit" name="Upload Torrent" value="Upload Torrent" class="buttons">
+                                </td>
+                              </tr>
+                            </form>
+                            <tr>
+                              <td>
+                                <hr/>
+                              </td>
+                            </tr>
+                            <tr align="center">
+                              <td>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>                        
+                      </div>
+      
+</div>
+								  
+   </div>
+      <div id="content">
+        <table>
+          <tr>
+            <td align="left" style="padding:2px;">
+              <strong>Actions</strong>
+            </td>
+            <td align="left" style="padding:2px;">
+              <strong>File</strong>
+            </td>
+            <td align="left" style="padding:2px;">
+              <strong>Status</strong>
+            </td>
+            <td align="left" style="padding:2px;">
+              <strong>Downloaded</strong>
+            </td>
+            <td align="left" style="padding:2px;">
+              <strong>Size</strong>
+            </td>
+            <td align="left" style="padding:2px;">
+              <strong>Uploaded</strong>
+            </td>
+            <td align="left" style="padding:2px;">
+              <strong>Down Speed</strong>
+            </td>
+            <td align="left" style="padding:2px;">
+              <strong>Up Speed</strong>
+            </td>
+            <td align="left" style="padding:2px;">
+              <strong>Peers</strong>
+            </td>
+            <td align="left" style="padding:2px;">
+              <strong>Complete</strong>
+            </td>
+          </tr>
+          <?php
 				$stats=downloadStatus();
 				$a = 0;
 				foreach ($stats as $torrent) {
@@ -169,9 +246,9 @@
 					echo "<td><a href=\"interface.php?stop=$a\" title=\"STOP\"><img src=\"/stop.png\" name=\"stop\" width=\"16\" height=\"16\" border=\"0\" style=\"padding:2px;\"></a>";
 					echo "<a href=\"interface.php?start=$a\" title=\"START\"><img src=\"/start.png\" name=\"start\" width=\"16\" height=\"16\" border=\"0\" style=\"padding:2px;\"></a>";
 					echo "<a href=\"interface.php?remove=$a\" title=\"REMOVE\" onClick=\"return validate()\"><img src=\"/remove.png\" name=\"remove\" width=\"16\" height=\"16\" border=\"0\" style=\"padding:2px;\"></a></td>";
-					echo "<td onmouseover=\"this.T_TITLE='$torrent[torrent_name]';return escape('Download speed:<strong>$torrent[download_rate]</strong><br> Upload speed:<strong>$torrent[upload_rate]</strong></td>')\">";
-					if(strlen($torrent[torrent_name])>20)
-						echo substr($torrent[torrent_name], 0, 20) . " ...</td>";
+					echo "<td style=\"text-align:left;\" onmouseover=\"this.T_TITLE='$torrent[torrent_name]';return escape('Download speed:<strong>$torrent[download_rate]</strong><br> Upload speed:<strong>$torrent[upload_rate]</strong></td>')\">";
+					if(strlen($torrent[torrent_name])>30)
+						echo substr($torrent[torrent_name], 0, 30) . " ...</td>";
 					else
 						echo "$torrent[torrent_name]</td>";
 					switch ($torrent[status]) {
@@ -211,32 +288,34 @@
 						default:
 							echo "<td>Not supported Status</td>";
 					}
-					echo "<td>$torrent[bytes_downloaded]</td>";
-					echo "<td>$torrent[total_bytes]</td>";
-					echo "<td>$torrent[bytes_uploaded]</td>";
-					echo "<td>$torrent[download_rate]</td>";
-					echo "<td>$torrent[upload_rate]</td>";
+					echo "<td style=\"text-align:right;\">$torrent[bytes_downloaded]</td>";
+					echo "<td style=\"text-align:right; padding-left:8px;\">$torrent[total_bytes]</td>";
+					echo "<td style=\"text-align:right; padding-left:8px;\">$torrent[bytes_uploaded]</td>";
+					echo "<td style=\"text-align:right;\">$torrent[download_rate]</td>";
+					echo "<td style=\"text-align:right;\">$torrent[upload_rate]</td>";
 					echo "<td>$torrent[num_peers]</td>";
-					echo "<td>$perc %</td>";
+					echo "<td style=\"text-align:right;\">$perc %</td>";
 					echo "</tr>";
 				$a++;
 				}
-			?>
-			
-		</table>
-		</div>
-
-        	<div id="footer">
-			<table width="100%" align="center">
-			<tr>
-				<td></td>
-				<td>&#169; 2006 webinterface KTorrent plugin</td>
-				<td><a href="login.html" title="LOGOUT">logout</a></td>
-			</tr>
-			</table>
-		</div>
-
-	</div>
-	<script type="text/javascript" src="wz_tooltip.js"></script>
-	</body>
+          ?>
+        </table>
+      </div>
+      <div id="footer">
+        <table width="100%" align="center">
+          <tr>
+            <td>
+            </td>
+            <td>
+               &#169; 2006 WebInterface KTorrent plugin 
+            </td>
+            <td>
+              <a href="login.html" title="LOGOUT">Logout</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+ 
+    <script type="text/javascript" src="wz_tooltip.js"></script>
+  </body>
 </html>

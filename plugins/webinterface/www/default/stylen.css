@@ -124,7 +124,7 @@ a:hover {
 
 
 #sidebar-content {
-    padding-top: 120px;
+    padding-top: 10px;
     padding-bottom: 5px;
   }
 
@@ -168,13 +168,13 @@ a:hover {
 
 .box {
     border: 1px solid #000000;
-    width:270px;
+    width:250px;
     background-color: #D5D5D5;
     text-align: left;
   }
 
 .box-settings {
-    width:270px;
+    width:250px;
     background-color: #D5D5D5;
     text-align: left;
   }
