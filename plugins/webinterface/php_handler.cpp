@@ -87,16 +87,12 @@ void PhpHandler::preParse(QString *d, QMap<QString, QString> requestVars)
 
 void PhpHandler::readStdout()
 {
-	QByteArray ba=proc->readStdout();
-	int size=ba.size();
-	QString str=ba.data();
-	str.truncate(size);
-	output.append(str);
+ 	output.append(proc->readStdout());
 }
-
+  
 void PhpHandler::readStderr()
 {
-	error.append(proc->readStderr().data());
+ 	error.append(proc->readStderr());
 }
 
 void PhpHandler::processExitedSlot()
