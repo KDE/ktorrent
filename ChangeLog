@@ -6,6 +6,9 @@ Changes in 2.1rc1
 - Made sure no duplicates get into search box history
 - Fixed 'Trackers' tab in InfoWidget to properly resize tracker URL label
 - Zeroconf plugin added
+- Added µTorrent compatible PEX
+- Fixed a bug in WebInterface plugin causing JS tooltips not to show.
+- Fixed a bug with 'Stop All' not stopping queued torrents.
 
 
 Changes in 2.1beta1 
