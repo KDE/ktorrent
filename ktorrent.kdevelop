@@ -72,7 +72,7 @@
         <f77flags/>
       </optimized>
       <debug>
-        <configargs>--enable-debug=full --enable-torrent-mimetype --enable-final</configargs>
+        <configargs>--enable-debug=full --enable-torrent-mimetype</configargs>
         <builddir>debug</builddir>
         <ccompiler>kdevgccoptions</ccompiler>
         <cxxcompiler>kdevgppoptions</cxxcompiler>

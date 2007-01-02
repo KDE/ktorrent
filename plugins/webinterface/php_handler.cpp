@@ -53,8 +53,14 @@ bool PhpHandler::executeScript(QString cmd, QString s, QMap<QString, QString> re
 	proc->writeToStdin(s);
 	proc->flushStdin();
 	proc->closeStdin();
-	while(proc->isRunning())
-		sleep(10);
+	while(proc->isRunning()){
+		if(proc->canReadLineStdout())
+			readStdout();
+		struct timespec ts;
+		ts.tv_sec = 0;
+		ts.tv_nsec = 100 * 1000 * 1000;
+		nanosleep(&ts,NULL);
+	}
 	
 	end=output.find("</html>");
 	output.truncate( end == -1 ? end : end + strlen("</html>"));
@@ -81,7 +87,11 @@ void PhpHandler::preParse(QString *d, QMap<QString, QString> requestVars)
 
 void PhpHandler::readStdout()
 {
-	output.append(proc->readStdout().data());
+	QByteArray ba=proc->readStdout();
+	int size=ba.size();
+	QString str=ba.data();
+	str.truncate(size);
+	output.append(str);
 }
 
 void PhpHandler::readStderr()

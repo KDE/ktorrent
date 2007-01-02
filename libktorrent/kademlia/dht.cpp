@@ -61,6 +61,9 @@ namespace dht
 		if (running)
 			return;
 		
+		if (port == 0)
+			port = 6881; 
+		
 		table_file = table;
 		this->port = port;
 		Out(SYS_DHT|LOG_NOTICE) << "DHT: Starting on port " << port << endl;

@@ -9,8 +9,11 @@
             <x>0</x>
             <y>0</y>
             <width>575</width>
-            <height>568</height>
+            <height>586</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>DownloadPref</string>
     </property>
     <grid>
         <property name="name">
@@ -385,7 +388,7 @@
                                 <number>6881</number>
                             </property>
                             <property name="minValue">
-                                <number>0</number>
+                                <number>1</number>
                             </property>
                             <property name="maxValue">
                                 <number>65535</number>
@@ -399,7 +402,7 @@
                                 <number>4444</number>
                             </property>
                             <property name="minValue">
-                                <number>0</number>
+                                <number>1</number>
                             </property>
                             <property name="maxValue">
                                 <number>65535</number>

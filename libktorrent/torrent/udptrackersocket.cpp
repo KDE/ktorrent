@@ -39,6 +39,9 @@ namespace bt
 	{
 		sock = new QSocketDevice(QSocketDevice::Datagram);
 		int i = 0;
+		if (port == 0)
+			port = 4444;
+		
 		while (!sock->bind(QHostAddress("localhost"),port + i) && i < 10)
 		{
 			Out() << "Failed to bind socket to port " << (port+i) << endl;

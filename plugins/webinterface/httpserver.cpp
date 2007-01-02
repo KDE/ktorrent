@@ -377,6 +377,7 @@ namespace kt{
 		if(finfo.extension()=="html"){
 			QString dataFile;
 			dataFile=QString(f.readAll().data());
+			dataFile.truncate(f.size());
 			header="HTTP/1.1 200 OK\r\n";
 			header+="Server: ktorrent\r\n";
 			header+="Cache-Control: private\r\n";
@@ -391,6 +392,7 @@ namespace kt{
 			if(!headerField.ifModifiedSince){
 				QString dataFile;
 				dataFile=QString(f.readAll().data());
+				dataFile.truncate(f.size());
 				header="HTTP/1.1 200 OK\r\n";
 				header+="Server: ktorrent\r\n";
 				header+=QString("Set-Cookie: SESSID=%1\r\n").arg(session.sessionId);

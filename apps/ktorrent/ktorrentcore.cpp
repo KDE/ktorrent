@@ -91,6 +91,11 @@ KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seedin
 	update_timer.start(CORE_UPDATE_INTERVAL);
 	
 	Uint16 port = Settings::port();
+	if (port == 0)
+	{
+		port = 6881;
+		Settings::setPort(6881);
+	}
 	Uint16 i = 0;
 	do
 	{
