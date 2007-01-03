@@ -20,30 +20,20 @@
 #ifndef PHP_HANDLER_H
 #define PHP_HANDLER_H
 #include <qprocess.h>
+#include <qtimer.h>
 #include <torrent/queuemanager.h>
 #include <interfaces/torrentinterface.h>
 #include "php_interface.h"
 
-class PhpHandler: public QObject{
-	Q_OBJECT
-
+class PhpHandler{
 	public:
 		PhpHandler(PhpInterface *php);
 		~PhpHandler();
 		bool executeScript(QString, QString, QMap<QString, QString> );
 		QString getOutput(){return output;};
-		QString getError(){return error;};
 	private:
-		bool isInPhpTag(int);
 		void preParse(QString *d, QMap<QString, QString> requestVars);
-		QProcess *proc;
-		QString output, error;
+		QString output;
 		PhpInterface *php_i;
-		QString cmd;
-		bool locked; //lock handler until does not exit the process
-	private slots:
-		void readStdout();
-		void readStderr();
-		void processExitedSlot();
 };
 #endif

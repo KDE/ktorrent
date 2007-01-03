@@ -19,53 +19,82 @@
  ***************************************************************************/
 #include "php_handler.h"
 
-using namespace kt;
-PhpHandler::PhpHandler(PhpInterface *php):QObject()
-{
-	php_i=php;
-	locked=false;
-	proc=new QProcess();
-	connect(proc, SIGNAL(readyReadStdout()), this, SLOT(readStdout()));
-	connect(proc, SIGNAL(readyReadStderr()), this, SLOT(readStderr()));
-	connect(proc, SIGNAL(processExited()), this, SLOT(processExitedSlot()));
+#include <errno.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <util/log.h>
 
+
+using namespace kt;
+using namespace bt;
+
+PhpHandler::PhpHandler(PhpInterface *php):php_i(php)
+{
 }
 
 PhpHandler::~PhpHandler()
 {
-	delete proc;
 }
 
 bool PhpHandler::executeScript(QString cmd, QString s, QMap<QString, QString> requestVars)
 {
-	int end;
-	if(locked)
-		return false;
+	int fdsStdin[2], fdsStdout[2];
+	char buf[4096];
+	pid_t pid;
+
 
 	preParse(&s, requestVars);
 	output="";
-	error="";
-	proc->setArguments(cmd);
-	if(!proc->isRunning())
-		if(!proc->start())
-			return false;
-	locked=true;
-	proc->writeToStdin(s);
-	proc->flushStdin();
-	proc->closeStdin();
-	while(proc->isRunning()){
-		if(proc->canReadLineStdout())
-			readStdout();
-		struct timespec ts;
-		ts.tv_sec = 0;
-		ts.tv_nsec = 100 * 1000 * 1000;
-		nanosleep(&ts,NULL);
+
+	if (pipe (fdsStdin) == -1 || pipe (fdsStdout) == -1)
+	{
+		Out(SYS_WEB|LOG_DEBUG) << QString("pipe failed : %1").arg(strerror(errno)) << endl;
+		return false;
+	}
+
+	pid = fork ();
+	if (pid < 0)
+	{
+		Out(SYS_WEB|LOG_DEBUG) << QString("failed to fork PHP process : %1").arg(strerror(errno)) << endl;
+		return false;		
 	}
 	
-	end=output.find("</html>");
-	output.truncate( end == -1 ? end : end + strlen("</html>"));
+	if (pid == (pid_t) 0) {
+		close (fdsStdin[1]);
+		close (fdsStdout[0]);
+		
+		dup2 (fdsStdin[0], STDIN_FILENO);
+		dup2 (fdsStdout[1], STDOUT_FILENO);
+		execlp (cmd.latin1(), cmd.latin1(), 0);
+		exit(-1); // we are in the child so just exit the process
+	}
+	else {
 
-	return proc->normalExit();
+		FILE* streamStdin;
+		FILE* streamStdout;
+
+		close (fdsStdin[0]);
+		close (fdsStdout[1]);
+
+		streamStdin  = fdopen (fdsStdin[1], "w");
+		streamStdout = fdopen (fdsStdout[0], "r");
+
+		fprintf (streamStdin, "%s", s.latin1());
+		fflush (streamStdin);
+		close (fdsStdin[1]);
+
+
+		while(fgets(buf, 4096, streamStdout)){
+			output.append(buf);
+		}
+		close (fdsStdout[0]);
+		waitpid (pid, NULL, 0);
+	}
+
+
+	return true;
 }
 
 
@@ -81,23 +110,4 @@ void PhpHandler::preParse(QString *d, QMap<QString, QString> requestVars)
 	QValueList<QString>::iterator it;
     	for ( it = keys.begin(); it != keys.end(); ++it )
 		d->insert(firstphptag+6, QString("$_REQUEST[%1]=\"%2\";\n").arg(*it).arg(requestVars[*it]));
-	
-
 }
-
-void PhpHandler::readStdout()
-{
- 	output.append(proc->readStdout());
-}
-  
-void PhpHandler::readStderr()
-{
- 	error.append(proc->readStderr());
-}
-
-void PhpHandler::processExitedSlot()
-{
-	locked=false;
-}
-
-
