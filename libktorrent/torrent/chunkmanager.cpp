@@ -564,7 +564,8 @@ namespace bt
 			Chunk* c = chunks[i];
 			c->setExclude(false);
 			excluded_chunks.set(i,false);
-			todo.set(i,true);
+			if (!bitset.get(i))
+				todo.set(i,true);
 			i++;
 		}
 		recalc_chunks_left = true;

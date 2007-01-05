@@ -319,6 +319,10 @@ namespace bt
 		istats.io_error = false;
 		try
 		{
+			// pre allocation means first time start, so we need to create the files
+			if (prealloc)
+				cman->createFiles();
+			
 			bool ret = true;
 			aboutToBeStarted(this,ret);
 			if (!ret)
@@ -608,11 +612,6 @@ namespace bt
 		connect(cman,SIGNAL(updateStats()),this,SLOT(updateStats()));
 		if (bt::Exists(datadir + "index"))
 			cman->loadIndexFile();
-
-	
-		// as a sanity check make sure all files are created properly the first time we load this torrent
-		if (!stats.completed && !ddir.isNull())
-			cman->createFiles();
 
 		stats.completed = cman->completed();
 
