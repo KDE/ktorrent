@@ -61,7 +61,7 @@ namespace net
 		bool isRunning() const {return running;}
 	};
 
-	SocketMonitor::SocketMonitor() : mt(mt),prev_upload_time(0),prev_download_time(0)
+	SocketMonitor::SocketMonitor() : mt(0),prev_upload_time(0),prev_download_time(0)
 	{
 	}
 
@@ -92,12 +92,11 @@ namespace net
 	
 	void SocketMonitor::add(BufferedSocket* sock)
 	{
-		bool start_thread = false;
-		mutex.lock();
-		start_thread = smap.count() == 0 && (!mt || !mt->isRunning());
+		QMutexLocker lock(&mutex);
+		
+		bool start_thread = smap.count() == 0 && (!mt || !mt->isRunning());
 		smap.append(sock);
-		mutex.unlock();
-			
+		
 		if (start_thread)
 		{
 			Out(SYS_CON|LOG_DEBUG) << "Starting socketmonitor thread" << endl;
@@ -111,9 +110,9 @@ namespace net
 	
 	void SocketMonitor::remove(BufferedSocket* sock)
 	{
-		mutex.lock();
+		QMutexLocker lock(&mutex);
+		
 		smap.remove(sock);
-		mutex.unlock();
 		if (mt && smap.count() == 0 && mt->isRunning())
 		{
 			Out(SYS_CON|LOG_DEBUG) << "Stopping socketmonitor thread" << endl;
