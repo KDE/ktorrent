@@ -237,7 +237,7 @@ namespace kt
 		QString action = "AddPortMapping";
 		QString comm = SOAP::createCommand(action,srv->servicetype,args);
 		
-		Forwarding fw = {port,true,srv};
+		Forwarding fw = {port,0,srv};
 		// erase old forwarding if one exists
 		QValueList<Forwarding>::iterator itr = fwds.begin();
 		while (itr != fwds.end())
@@ -249,8 +249,8 @@ namespace kt
 				itr++;
 		}
 		
-		bt::HTTPRequest* r = sendSoapQuery(comm,srv->servicetype + "#" + action,srv->controlurl);
-		reqs[r] = fwds.append(fw);
+		fw.pending_req = sendSoapQuery(comm,srv->servicetype + "#" + action,srv->controlurl);
+		fwds.append(fw);
 	}
 
 	void UPnPRouter::forward(const net::Port & port)
@@ -351,45 +351,47 @@ namespace kt
 		return r;
 	}
 	
-
+	void UPnPRouter::httpRequestDone(bt::HTTPRequest* r,bool erase_fwd)
+	{
+		QValueList<Forwarding>::iterator i = fwds.begin();
+		while (i != fwds.end())
+		{
+			Forwarding & fw = *i;
+			if (fw.pending_req == r)
+			{
+				fw.pending_req = 0;
+				if (erase_fwd)
+					fwds.erase(i);
+				break;
+			}
+			i++;
+		}
+		
+		updateGUI();
+		active_reqs.remove(r);
+		r->deleteLater();
+	}
+	
 	void UPnPRouter::onReplyOK(bt::HTTPRequest* r,const QString &)
 	{
 		if (verbose)
 			Out(SYS_PNP|LOG_NOTICE) << "UPnPRouter : OK" << endl;
-		if (reqs.contains(r))
-		{
-			(*reqs[r]).pending = false;
-			reqs.erase(r);
-		}
-		updateGUI();
-		active_reqs.remove(r);
-		r->deleteLater();
+		
+		httpRequestDone(r,false);
 	}
 	
 	void UPnPRouter::onReplyError(bt::HTTPRequest* r,const QString &)
 	{
 		if (verbose)
 			Out(SYS_PNP|LOG_IMPORTANT) << "UPnPRouter : Error" << endl;
-		if (reqs.contains(r))
-		{
-			fwds.erase(reqs[r]);
-			reqs.erase(r);
-		}
-		updateGUI();
-		active_reqs.remove(r);
-		r->deleteLater();
+		
+		httpRequestDone(r,true);
+		
 	}
 	
 	void UPnPRouter::onError(bt::HTTPRequest* r,bool)
 	{
-		if (reqs.contains(r))
-		{
-			fwds.erase(reqs[r]);
-			reqs.erase(r);
-		}
-		updateGUI();
-		active_reqs.remove(r);
-		r->deleteLater();
+		httpRequestDone(r,true);
 	}
 	
 #if 0

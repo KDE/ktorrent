@@ -204,7 +204,7 @@ namespace kt
 			while (j != r->endPortMappings())
 			{
 				UPnPRouter::Forwarding & f = *j;
-				if (!f.pending)
+				if (!f.pending_req)
 				{
 					msg += QString::number(f.port.number) + " (";
 					QString prot = (f.port.proto == net::UDP ? "UDP" : "TCP");

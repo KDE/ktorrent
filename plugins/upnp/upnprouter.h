@@ -110,7 +110,7 @@ namespace kt
 		struct Forwarding 
 		{
 			net::Port port;
-			bool pending;
+			bt::HTTPRequest* pending_req;
 			UPnPService* service;
 		};
 	private:	
@@ -120,7 +120,6 @@ namespace kt
 		UPnPDeviceDescription desc;
 		QValueList<UPnPService> services;
 		QValueList<Forwarding> fwds;
-		QMap<bt::HTTPRequest*,QValueList<Forwarding>::iterator > reqs;
 		QValueList<bt::HTTPRequest*> active_reqs;
 	public:
 		/**
@@ -216,6 +215,7 @@ namespace kt
 		
 		void forward(UPnPService* srv,const net::Port & port);
 		void undoForward(UPnPService* srv,const net::Port & port,bt::WaitJob* waitjob);
+		void httpRequestDone(bt::HTTPRequest* r,bool erase_fwd);
 	};
 
 }
