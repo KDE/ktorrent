@@ -20,6 +20,7 @@
  ***************************************************************************/
 #include <algorithm>
 #include <util/file.h>
+#include <util/array.h>
 #include <qstringlist.h>
 #include "chunkmanager.h"
 #include "torrent.h"
@@ -48,6 +49,7 @@ namespace bt
 	: tor(tor),chunks(tor.getNumChunks()),
 	bitset(tor.getNumChunks()),excluded_chunks(tor.getNumChunks()),only_seed_chunks(tor.getNumChunks()),todo(tor.getNumChunks())
 	{
+		during_load = false;
 		only_seed_chunks.setAll(false);
 		todo.setAll(true);
 		if (tor.isMultiFile())
@@ -132,6 +134,7 @@ namespace bt
 	
 	void ChunkManager::loadIndexFile()
 	{
+		during_load = true;
 		loadPriorityInfo();
 		
 		File fptr;
@@ -140,6 +143,7 @@ namespace bt
 			// no index file, so assume it's empty
 			bt::Touch(index_file,true);
 			Out(SYS_DIO|LOG_IMPORTANT) << "Can't open index file : " << fptr.errorString() << endl;
+			during_load = false;
 			return;
 		}
 
@@ -162,6 +166,7 @@ namespace bt
 			}
 		}
 		tor.updateFilePercentage(bitset);
+		during_load = false;
 	}
 	
 	void ChunkManager::saveIndexFile()
@@ -607,6 +612,9 @@ namespace bt
 	
 	void ChunkManager::loadFileInfo()
 	{
+		if (during_load)
+			return;
+		
 		File fptr;
 		if (!fptr.open(file_info_file,"rb"))
 			return;
@@ -638,6 +646,9 @@ namespace bt
 
 	void ChunkManager::savePriorityInfo()
 	{
+		if (during_load)
+			return;
+		
 		//save priority info and call saveFileInfo
 		saveFileInfo();
 		File fptr;
@@ -688,36 +699,41 @@ namespace bt
 			return;
 		}
 
-		Uint32 num = 0,tmp = 0;
+		Uint32 num = 0;
 		// first read the number of lines
-		if (fptr.read(&num,sizeof(Uint32)) != sizeof(Uint32))
+		if (fptr.read(&num,sizeof(Uint32)) != sizeof(Uint32) || num > 2*tor.getNumFiles())
 		{
 			Out(SYS_DIO|LOG_IMPORTANT) << "Warning : error reading chunk_info file" << endl;
 			loadFileInfo();
 			return;
 		}
 
+		Array<Uint32> buf(num);
+		if (fptr.read(buf,sizeof(Uint32)*num) != sizeof(Uint32)*num)
+		{
+			Out(SYS_DIO|LOG_IMPORTANT) << "Warning : error reading chunk_info file" << endl;
+			loadFileInfo();
+			return;
+		}
+		
+		fptr.close();
+		
 		for (Uint32 i = 0;i < num;i += 2)
 		{
-			if (fptr.read(&tmp,sizeof(Uint32)) != sizeof(Uint32))
+			Uint32 idx = buf[i];
+			if (idx >= tor.getNumFiles())
 			{
 				Out(SYS_DIO|LOG_IMPORTANT) << "Warning : error reading chunk_info file" << endl;
 				loadFileInfo();
 				return;
 			}
 
-			bt::TorrentFile & tf = tor.getFile(tmp);
-			if (fptr.read(&tmp,sizeof(Uint32)) != sizeof(Uint32))
-			{
-				Out(SYS_DIO|LOG_IMPORTANT) << "Warning : error reading chunk_info file" << endl;
-				loadFileInfo();
-				return;
-			}
-
+			bt::TorrentFile & tf = tor.getFile(idx);
+			
 			if (!tf.isNull())
 			{
 				// numbers are to be compatible with old chunk info files
-				switch(tmp)
+				switch(buf[i+1])
 				{
 				case FIRST_PRIORITY:
 				case 3:
@@ -1054,7 +1070,7 @@ namespace bt
 			tf.setMissing(false);
 			tf.setDoNotDownload(true); // set do not download
 		}
-		saveFileInfo();
+		savePriorityInfo();
 		saveIndexFile();
 		recalc_chunks_left = true;
 		chunksLeft();

@@ -70,7 +70,7 @@ namespace bt
 		mutable bool recalc_chunks_left;
 		Uint32 corrupted_count;
 		Uint32 recheck_counter;
-	
+		bool during_load;	
 	public:
 		ChunkManager(Torrent & tor,
 					 const QString & tmpdir,
