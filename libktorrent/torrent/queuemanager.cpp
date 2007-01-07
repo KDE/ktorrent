@@ -529,7 +529,7 @@ namespace bt
 			for( ; it!=paused_torrents->end(); ++it)
 			{
 				TorrentInterface* tc = *it;
-				startSafely(tc);
+				startSafely(tc,false);
 			}
 			
 			delete paused_torrents;
