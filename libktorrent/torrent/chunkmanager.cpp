@@ -746,7 +746,6 @@ namespace bt
 
 	void ChunkManager::downloadStatusChanged(TorrentFile* tf,bool download)
 	{
-		savePriorityInfo();
 		Uint32 first = tf->getFirstChunk();
 		Uint32 last = tf->getLastChunk();
 		if (download)
@@ -776,6 +775,7 @@ namespace bt
 			if (first == last && files.count() > 1)
 			{
 				cache->downloadStatusChanged(tf,download);
+				savePriorityInfo();
 				return;
 			}
 			
@@ -859,6 +859,7 @@ namespace bt
 			if (last < first)
 			{
 				cache->downloadStatusChanged(tf,download);
+				savePriorityInfo();
 				return;
 			}
 			
@@ -867,6 +868,7 @@ namespace bt
 		}
 		// alert the cache but first put things in critical operation mode
 		cache->downloadStatusChanged(tf,download);
+		savePriorityInfo();
 	}
 
 	void ChunkManager::downloadPriorityChanged(TorrentFile* tf,Priority newpriority)
