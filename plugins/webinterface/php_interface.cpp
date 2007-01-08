@@ -26,6 +26,7 @@
 #include <kademlia/dhtbase.h>
 #include <torrent/server.h>
 #include <util/log.h>
+#include <kapplication.h>
 
 #include "php_interface.h"
 namespace kt{
@@ -261,6 +262,14 @@ QMap<QString, QString>::Iterator it;
 						Settings::setUdpTrackerPort(it.data().toInt());
 						UDPTrackerSocket::setPort(Settings::udpTrackerPort());
 						}
+					else
+						goto notsupported;
+					break;
+				case 'q':
+					if(it.key()=="quit"){
+						if(!it.data().isEmpty())
+							kapp->quit();
+					}
 					else
 						goto notsupported;
 					break;

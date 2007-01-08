@@ -313,7 +313,7 @@
                &#169; 2006 WebInterface KTorrent plugin 
             </td>
             <td>
-              <a href="login.html" title="LOGOUT">Logout</a>
+              <a href="login.html" title="LOGOUT">Logout</a> |  <a href="shutdown.php?quit=quit" title="Shutdown KTorrent">Shutdown KTorrent</a>
             </td>
           </tr>
         </table>
