@@ -193,7 +193,6 @@ namespace bt
 		while (i != downloads.end())
 		{
 			kt::TorrentInterface* tc = *i;
-			const TorrentStats & s = tc->getStats();
 			if (tc->getStats().running)
 			{
 				stopSafely(tc,false,wjob);
@@ -432,7 +431,7 @@ namespace bt
 				max_qm_seeds = seed_queue.count();
 			
 			int counter = 0;
-			for(int i=0; counter<max_qm_downloads && i<download_queue.count(); ++i)
+			for(Uint32 i=0; counter<max_qm_downloads && i<download_queue.count(); ++i)
 			{
 				TorrentInterface* tc = download_queue.at(i);
 				const TorrentStats & s = tc->getStats();
@@ -448,7 +447,7 @@ namespace bt
 			}
 			
 			counter = 0;
-			for(int i=0; counter<max_qm_seeds && i<seed_queue.count(); ++i)
+			for(Uint32 i=0; counter<max_qm_seeds && i<seed_queue.count(); ++i)
 			{
 				TorrentInterface* tc = seed_queue.at(i);
 				const TorrentStats & s = tc->getStats();
@@ -529,7 +528,7 @@ namespace bt
 			for( ; it!=paused_torrents->end(); ++it)
 			{
 				TorrentInterface* tc = *it;
-				startSafely(tc,false);
+				startSafely(tc);
 			}
 			
 			delete paused_torrents;

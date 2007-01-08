@@ -17,10 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #include <kurl.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <netinet/in_systm.h>		
+#include <netinet/ip.h>
 #include <arpa/inet.h>
 #include <netinet/ip.h>
 #include <qstringlist.h>
