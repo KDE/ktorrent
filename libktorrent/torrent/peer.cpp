@@ -69,7 +69,7 @@ namespace bt
 		connect_time = QTime::currentTime();
 		//sock->attachPeer(this);
 		stats.client = peer_id.identifyClient();
-		stats.ip_addresss = getIPAddresss();
+		stats.ip_address = getIPAddresss();
 		stats.choked = true;
 		stats.download_rate = 0;
 		stats.upload_rate = 0;
@@ -85,7 +85,7 @@ namespace bt
 		stats.num_up_requests = stats.num_down_requests = 0;
 		stats.encrypted = sock->encrypted();
 		stats.local = local;
-		if (stats.ip_addresss == "0.0.0.0")
+		if (stats.ip_address == "0.0.0.0")
 		{
 			Out(SYS_CON|LOG_DEBUG) << "No more 0.0.0.0" << endl;
 			kill();

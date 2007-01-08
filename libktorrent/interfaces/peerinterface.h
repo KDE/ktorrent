@@ -41,7 +41,7 @@ namespace kt
 		struct Stats
 		{
 			/// IP address of peer (dotted notation)
-			QString ip_addresss;
+			QString ip_address;
 			/// The client (Azureus, BitComet, ...)
 			QString client;
 			/// Download rate (bytes/s)

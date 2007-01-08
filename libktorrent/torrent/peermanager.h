@@ -207,6 +207,7 @@ namespace bt
 		void updateAvailableChunks();
 		bool killBadPeer();
 		void createPeer(mse::StreamSocket* sock,const PeerID & peer_id,Uint32 support,bool local);
+		bool connectedTo(const QString & ip,Uint16 port) const;
 
 	private slots:
 		void onHave(Peer* p,Uint32 index);

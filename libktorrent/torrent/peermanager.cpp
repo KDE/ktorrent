@@ -285,6 +285,19 @@ namespace bt
 		return false;
 	}
 	
+	bool PeerManager::connectedTo(const QString & ip,Uint16 port) const
+	{
+		PtrMap<Uint32,Peer>::const_iterator i = peer_map.begin();
+		while (i != peer_map.end())
+		{
+			const Peer* p = i->second;
+			if (p->getPort() == port && p->getStats().ip_address == ip)
+				return true;
+			i++;
+		}
+		return false;
+	}
+	
 	void PeerManager::connectToPeers()
 	{
 		if (potential_peers.size() == 0)
@@ -323,7 +336,7 @@ namespace bt
 			
 			IPBlocklist& ipfilter = IPBlocklist::instance();
 			
-			if (!ipfilter.isBlocked(itr->first))
+			if (!ipfilter.isBlocked(itr->first) && !connectedTo(itr->first,itr->second.port))
 			{
 			//	Out() << "EncryptedAuthenticate : " << pp.ip << ":" << pp.port << endl;
 				Authenticate* auth = 0;

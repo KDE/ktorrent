@@ -69,7 +69,7 @@ namespace kt
 		int country_id = 0;
 
 		const PeerInterface::Stats & s = peer->getStats();
-		hostname = s.ip_addresss.ascii();
+		hostname = s.ip_address.ascii();
 
 		// open GeoIP if necessary
 		if (!geo_ip && geoip_db_exists)
@@ -88,7 +88,7 @@ namespace kt
 			setText(1,"N/A");
 		}
 		
-		setText(0,s.ip_addresss);
+		setText(0,s.ip_address);
 		setText(2,s.client);
 		
 		if (country_code)
@@ -144,7 +144,7 @@ namespace kt
 		const PeerInterface::Stats & os = op->getStats();
 		switch (col)
 		{
-			case 0: return QString::compare(s.ip_addresss,os.ip_addresss);
+			case 0: return QString::compare(s.ip_address,os.ip_address);
 			case 1:	
 			{
 				int ret = QString::compare(m_country, pvi->m_country);
@@ -248,7 +248,7 @@ namespace kt
 		
 		IPBlocklist& filter = IPBlocklist::instance();
 		const PeerInterface::Stats & s = peer->getStats();
-		KNetwork::KIpAddress ip(s.ip_addresss);
+		KNetwork::KIpAddress ip(s.ip_address);
 		QString ips = ip.toString();
 		/**
 		 * @TODO Clean this up.
