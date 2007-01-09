@@ -392,7 +392,7 @@
         </widget>
         <widget class="QLayoutWidget" row="0" column="1">
             <property name="name">
-                <cstring>layout50</cstring>
+                <cstring>layout7</cstring>
             </property>
             <vbox>
                 <property name="name">
@@ -474,7 +474,7 @@
                     <property name="sizeHint">
                         <size>
                             <width>20</width>
-                            <height>81</height>
+                            <height>30</height>
                         </size>
                     </property>
                 </spacer>
@@ -496,6 +496,42 @@
                 </widget>
                 <spacer>
                     <property name="name">
+                        <cstring>spacer6</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>btnMoveTop</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Move to top</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>btnMoveBottom</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Move to &amp;bottom</string>
+                    </property>
+                </widget>
+                <spacer>
+                    <property name="name">
                         <cstring>spacer2</cstring>
                     </property>
                     <property name="orientation">
@@ -507,7 +543,7 @@
                     <property name="sizeHint">
                         <size>
                             <width>20</width>
-                            <height>40</height>
+                            <height>20</height>
                         </size>
                     </property>
                 </spacer>
@@ -540,7 +576,7 @@
                     <property name="sizeHint">
                         <size>
                             <width>20</width>
-                            <height>80</height>
+                            <height>20</height>
                         </size>
                     </property>
                 </spacer>
@@ -641,6 +677,18 @@
         <receiver>QueueDlg</receiver>
         <slot>reject()</slot>
     </connection>
+    <connection>
+        <sender>btnMoveTop</sender>
+        <signal>clicked()</signal>
+        <receiver>QueueDlg</receiver>
+        <slot>btnMoveTop_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnMoveBottom</sender>
+        <signal>clicked()</signal>
+        <receiver>QueueDlg</receiver>
+        <slot>btnMoveBottom_clicked()</slot>
+    </connection>
 </connections>
 <tabstops>
     <tabstop>btnOk</tabstop>
@@ -657,8 +705,6 @@
 <slots>
     <slot>btnMoveUp_clicked()</slot>
     <slot>btnMoveDown_clicked()</slot>
-    <slot>btnMoveTop_clicked()</slot>
-    <slot>btnMoveBottom_clicked()</slot>
     <slot>btnEnqueue_clicked()</slot>
     <slot>btnDequeue_clicked()</slot>
     <slot>downloadList_currentChanged(QListViewItem*)</slot>
@@ -666,6 +712,8 @@
     <slot>btnOk_clicked()</slot>
     <slot>btnApply_clicked()</slot>
     <slot>btnClose_clicked()</slot>
+    <slot>btnMoveTop_clicked()</slot>
+    <slot>btnMoveBottom_clicked()</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>

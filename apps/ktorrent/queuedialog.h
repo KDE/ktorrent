@@ -63,6 +63,8 @@ class QueueDialog: public QueueDlg
     	virtual void btnOk_clicked();
     	virtual void seedList_currentChanged(QListViewItem*);
     	virtual void downloadList_currentChanged(QListViewItem*);
+    virtual void btnMoveBottom_clicked();
+    virtual void btnMoveTop_clicked();
     	
 		
 	private:

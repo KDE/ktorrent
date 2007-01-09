@@ -326,5 +326,66 @@ void QueueDialog::seedList_currentChanged(QListViewItem* item)
 	ulDHT->setText(s.priv_torrent ? i18n("No (private torrent)") : i18n("Yes"));
 }
 
+void QueueDialog::btnMoveTop_clicked()
+{
+	QueueItem* current = (QueueItem*) getCurrentList()->selectedItem();
+	if(current == 0)
+		return;
+	
+	if(current->getPriority() == 0)
+		return;
+	
+	QueueItem* previous = (QueueItem*) current->itemAbove();
+	
+	if(previous == 0)
+		return;	
+	
+	int p = previous->getPriority();
+	
+	while(previous != 0)
+	{
+		p = previous->getPriority();
+		previous->setPriority(p - 1);
+		
+		previous = (QueueItem*) previous->itemAbove();
+	}
+	
+	current->setPriority(p);
+	getCurrentList()->sort();
+}
+
+void QueueDialog::btnMoveBottom_clicked()
+{
+	QueueItem* current = (QueueItem*) getCurrentList()->selectedItem();
+	if(current == 0)
+		return;
+	
+	if(current->getPriority() == 0)
+		return;
+	
+	QueueItem* previous = (QueueItem*) current->itemBelow();
+	
+	if(previous == 0)
+		return;	
+	
+	if(previous->getPriority() == 0)
+		return;
+	
+	int p = previous->getPriority();
+	
+	while(previous != 0 && previous->getPriority() != 0)
+	{
+		p = previous->getPriority();
+		previous->setPriority(p + 1);
+		
+		previous = (QueueItem*) previous->itemBelow();
+	}
+	
+	current->setPriority(p);
+	getCurrentList()->sort();
+}
+
+
+
 #include "queuedialog.moc"
 
