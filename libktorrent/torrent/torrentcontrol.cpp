@@ -477,7 +477,8 @@ namespace bt
 							  const QString & torrent,
 							  const QString & tmpdir,
 							  const QString & ddir,
-							  const QString & default_save_dir)
+							  const QString & default_save_dir,
+							  bool create_files)
 	{
 		// first load the torrent file
 		tor = new Torrent();
@@ -501,6 +502,8 @@ namespace bt
 		{
 			bt::CopyFile(torrent,tor_copy);
 		}
+		if (create_files)
+			cman->createFiles();
 	}
 	
 	

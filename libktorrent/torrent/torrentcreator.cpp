@@ -398,7 +398,8 @@ namespace bt
 			st.writeSync();
 			
 			// init will create symlinks and stuff
-			tc->init(0,dd + "torrent",dd,odir,QString::null);
+			
+			tc->init(0,dd + "torrent",dd,odir,QString::null,true);
 		}
 		catch (...)
 		{
