@@ -79,12 +79,12 @@ namespace bt
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
 			TorrentFile & tf = tor.getFile(i);
-			connect(&tf,SIGNAL(downloadPriorityChanged(TorrentFile*, Priority )),
-					 this,SLOT(downloadPriorityChanged(TorrentFile*, Priority )));
+			connect(&tf,SIGNAL(downloadPriorityChanged(TorrentFile*, Priority, Priority )),
+					 this,SLOT(downloadPriorityChanged(TorrentFile*, Priority, Priority )));
 			
 			if (tf.getPriority() != NORMAL_PRIORITY)
 			{
-				downloadPriorityChanged(&tf,tf.getPriority());
+				downloadPriorityChanged(&tf,tf.getPriority(),tf.getOldPriority());
 			}
 		}
 	
@@ -887,14 +887,14 @@ namespace bt
 		savePriorityInfo();
 	}
 
-	void ChunkManager::downloadPriorityChanged(TorrentFile* tf,Priority newpriority)
+	void ChunkManager::downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority)
 	{
-		if(newpriority == EXCLUDED)
+		if (newpriority == EXCLUDED)
 		{
 			downloadStatusChanged(tf, false);
 			return;
 		}
-		if(tf->getPriority() == EXCLUDED)
+		if (oldpriority == EXCLUDED)
 		{
 			downloadStatusChanged(tf, true);
 			return;

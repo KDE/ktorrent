@@ -44,6 +44,7 @@ namespace bt
 		Uint64 first_chunk_off;
 		Uint64 last_chunk_size;
 		Priority priority;
+		Priority old_priority;
 		bool missing;
 		enum FileType
 		{
@@ -104,6 +105,9 @@ namespace bt
 		/// Sets the priority of the file
 		void setPriority(Priority newpriority = NORMAL_PRIORITY);
 		
+		/// Get the previous priority value
+		Priority getOldPriority() const {return old_priority;}
+		
 		
 		/// emits signal.
 		void emitDownloadStatusChanged();
@@ -143,8 +147,10 @@ namespace bt
 		 * Signal emitted when the Priority variable changes.
 		 * @param tf The TorrentFile which emitted the signal
 		 * @param newpriority THe new priority of the file
+		 * @param oldpriority Previous priority
 		 */
-		void downloadPriorityChanged(TorrentFile* tf,Priority newpriority);
+		void downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority);
+	
 	};
 
 }

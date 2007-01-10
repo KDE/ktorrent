@@ -332,7 +332,7 @@ namespace bt
 
 	private slots:
 		void downloadStatusChanged(TorrentFile* tf,bool download);
-		void downloadPriorityChanged(TorrentFile* tf,Priority newpriority);
+		void downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority);
 		
 		static Uint32 max_chunk_size_for_data_check;
 	};

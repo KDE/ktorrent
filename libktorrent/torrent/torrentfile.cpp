@@ -42,7 +42,7 @@ namespace bt
 		else
 			last_chunk = first_chunk;
 		last_chunk_size = (off + size) - last_chunk * chunk_size;
-		priority = NORMAL_PRIORITY;
+		priority = old_priority = NORMAL_PRIORITY;
 	}
 	
 	TorrentFile::TorrentFile(const TorrentFile & tf)
@@ -56,7 +56,7 @@ namespace bt
 		first_chunk_off = tf.getFirstChunkOffset();
 		last_chunk = tf.getLastChunk();
 		last_chunk_size = tf.getLastChunkSize();
-		priority = tf.getPriority();
+		old_priority = priority = tf.getPriority();
 		missing = tf.isMissing();
 		filetype = UNKNOWN;
 	}
@@ -68,21 +68,23 @@ namespace bt
 	{
 		if (priority != EXCLUDED && dnd)
 		{
+			old_priority = priority;
 			priority = EXCLUDED;
 			if(m_emitDlStatusChanged)
-				emit downloadPriorityChanged(this,EXCLUDED);	
+				emit downloadPriorityChanged(this,priority,old_priority);	
 		}
 		if (priority == EXCLUDED && (!dnd))
 		{
+			old_priority = priority;
 			priority = NORMAL_PRIORITY;
 			if(m_emitDlStatusChanged)
-				emit downloadPriorityChanged(this,NORMAL_PRIORITY);
+				emit downloadPriorityChanged(this,priority,old_priority);
 		}
 	}
 	
 	void TorrentFile::emitDownloadStatusChanged()
 	{
-		emit downloadPriorityChanged(this,priority);
+		emit downloadPriorityChanged(this,priority,old_priority);
 	}
 
 
@@ -108,18 +110,19 @@ namespace bt
 	{
 		if(priority != newpriority)
 		{
-			if(priority == EXCLUDED)
+			if (priority == EXCLUDED)
 			{
 				setDoNotDownload(false);
 			}
-			if(newpriority == EXCLUDED)
+			if (newpriority == EXCLUDED)
 			{
 				setDoNotDownload(true);
 			}
 			else
 			{
+				old_priority = priority;
 				priority = newpriority;
-				emit downloadPriorityChanged(this,newpriority);
+				emit downloadPriorityChanged(this,newpriority,old_priority);
 			}
 		}
 	}
