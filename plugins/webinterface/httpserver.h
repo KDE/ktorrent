@@ -79,7 +79,7 @@ namespace kt {
 		void parseRequest(QString request);
 		void parseHeaderFields(QStringList headerLines);
 		void processRequest(QSocket* s);
-		void sendHtmlPage(QSocket* s, const char* data);
+		void sendHtmlPage(QSocket* s, QString data);
 		void sendRawData(QSocket* s,QString header, QFile *file);
 
 	protected slots:

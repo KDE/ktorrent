@@ -370,7 +370,7 @@ namespace kt{
 			header+=QString("Date: ")+QDateTime::currentDateTime(Qt::UTC).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");			
 			data=HTTP_404_ERROR;
 			header+=QString("Content-Length: %1\r\n\r\n").arg(data.length());
-			sendHtmlPage(s, QString(header+data).latin1());
+			sendHtmlPage(s, header+data);
 			return;
 		}
 		
@@ -386,7 +386,7 @@ namespace kt{
 			header+="Content-Type: text/html\r\n";
 			header+=QString("Set-Cookie: SESSID=%1\r\n").arg(session.sessionId);
 			header+=QString("Content-Length: %1\r\n\r\n").arg(f.size());
-			sendHtmlPage(s, QString(header+dataFile).latin1());
+			sendHtmlPage(s,header+dataFile);
 		}
 		else if(finfo.extension()=="css" || finfo.extension()=="js"){
 			if(!headerField.ifModifiedSince){
@@ -405,7 +405,7 @@ namespace kt{
 				else
 					header+="Content-Type: text/css\r\n";
 				header+=QString("Content-Length: %1\r\n\r\n").arg(f.size());
-				sendHtmlPage(s, QString(header+dataFile).latin1());
+				sendHtmlPage(s, header+dataFile);
 			}
 			else{
 				header="HTTP/1.1 304 Not Modified\r\n";
@@ -416,7 +416,7 @@ namespace kt{
 				header+=QString("If-Modified-Since: ")+finfo.lastModified().toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
 				header+=QString("Content-Type: text/html\r\n");
 				header+=QString("Content-Length: 0\r\n\r\n");
-				sendHtmlPage(s, QString(header).latin1());
+				sendHtmlPage(s, header);
 			}
 
 		}
@@ -433,7 +433,7 @@ namespace kt{
 				header+="Content-Type: text/html\r\n";
 				header+=QString("Set-Cookie: SESSID=%1\r\n").arg(session.sessionId);
 				header+=QString("Content-Length: %1\r\n\r\n").arg(php_h->getOutput().length());
-				sendHtmlPage(s, QString(header+php_h->getOutput()).latin1());
+				sendHtmlPage(s, header+php_h->getOutput());
 				}
 			else{
 				Out(SYS_WEB|LOG_DEBUG) << "PHP executable error" << endl;
@@ -445,7 +445,7 @@ namespace kt{
 				header+=QString("Date: ")+QDateTime::currentDateTime(Qt::UTC).toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
 				data=QString(HTTP_500_ERROR).arg("PHP executable error");
 				header+=QString("Content-Length: %1\r\n\r\n").arg(data.length());
-				sendHtmlPage(s, QString(header+data).latin1());
+				sendHtmlPage(s,header+data);
 				return;
 
 			}
@@ -472,7 +472,7 @@ namespace kt{
 				header+=QString("If-Modified-Since: ")+finfo.lastModified().toString("ddd, dd MMM yyyy hh:mm:ss UTC\r\n");
 				header+=QString("Content-Type: text/html\r\n");
 				header+=QString("Content-Length: 0\r\n\r\n");
-				sendHtmlPage(s, QString(header).latin1());
+				sendHtmlPage(s, header);
 			}
 			
 		}
@@ -480,7 +480,7 @@ namespace kt{
 		f.close();
 	}
 
-	void HttpServer::sendHtmlPage(QSocket* s, const char *data)
+	void HttpServer::sendHtmlPage(QSocket* s, QString data)
 	{
 		if(!s->isOpen()){
 			return;
@@ -499,7 +499,7 @@ namespace kt{
 
 		QTextStream os(s);
                 os.setEncoding( QTextStream::UnicodeUTF8 );
-		os << header.latin1();
+		os << header;
 		Image *im;
 		im=imgCache.find(file->name(), true);
 		if(im==NULL){

@@ -81,13 +81,13 @@ bool PhpHandler::executeScript(QString cmd, QString s, QMap<QString, QString> re
 		streamStdin  = fdopen (fdsStdin[1], "w");
 		streamStdout = fdopen (fdsStdout[0], "r");
 
-		fprintf (streamStdin, "%s", s.latin1());
+		fprintf (streamStdin, "%s",(const char * ) s.utf8());
 		fflush (streamStdin);
 		close (fdsStdin[1]);
 
 
 		while(fgets(buf, 4096, streamStdout)){
-			output.append(buf);
+			output.append(QString::fromUtf8(buf, strlen(buf)));
 		}
 		close (fdsStdout[0]);
 		waitpid (pid, NULL, 0);
