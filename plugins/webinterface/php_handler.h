@@ -35,5 +35,6 @@ class PhpHandler{
 		void preParse(QString *d, QMap<QString, QString> requestVars);
 		QString output;
 		PhpInterface *php_i;
+		QFileInfo fi;
 };
 #endif

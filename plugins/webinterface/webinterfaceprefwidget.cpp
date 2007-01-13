@@ -60,7 +60,20 @@ WebInterfacePrefWidget::WebInterfacePrefWidget(QWidget *parent, const char *name
 	}
 
    	interfaceSkinBox->setCurrentText (WebInterfacePluginSettings::skin());
+	
+	if(WebInterfacePluginSettings::phpExecutablePath().isEmpty()){
+		QString phpPath=KStandardDirs::findExe("php");
+		if(phpPath==QString::null)
+			phpPath=KStandardDirs::findExe("php-cli");
+		
+		if(phpPath==QString::null)
+			phpExecutablePath->setURL (i18n("Php executable isn't in default path, please enter the path manually"));
+		else
+			phpExecutablePath->setURL (phpPath);
+	}
+	else
 	phpExecutablePath->setURL (WebInterfacePluginSettings::phpExecutablePath());
+
 	username->setText(WebInterfacePluginSettings::username());
 }
 

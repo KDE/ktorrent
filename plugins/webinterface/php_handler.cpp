@@ -44,6 +44,10 @@ bool PhpHandler::executeScript(QString cmd, QString s, QMap<QString, QString> re
 	char buf[4096];
 	pid_t pid;
 
+	if(fi.filePath()!=cmd)
+		fi.setFile(cmd);
+	if(!fi.isExecutable())
+		return false;
 
 	preParse(&s, requestVars);
 	output="";

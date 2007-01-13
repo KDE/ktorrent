@@ -26,7 +26,7 @@
 		</entry>
 		<entry name="phpExecutablePath" type ="String">
 			<label>php executable path</label>
-			<default>/usr/bin/php</default>
+			<default></default>
 		</entry>
 
 		<entry name="username" type ="String">
