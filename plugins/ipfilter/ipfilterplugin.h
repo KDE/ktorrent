@@ -61,7 +61,8 @@ namespace kt
 		
 		///Checks if IP is listed in AntiP2P filter list.
 		bool isBlockedIP(const QString& ip);
-						
+		
+		bool versionCheck(const QString & version) const;
 	private:
 		IPBlockingPrefPage* pref;
 		AntiP2P* level1;

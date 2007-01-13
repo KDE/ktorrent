@@ -20,6 +20,7 @@
 #ifndef KTPLUGIN_H
 #define KTPLUGIN_H
 
+#include <ktversion.h>
 #include <kparts/plugin.h>
 
 namespace kt
@@ -111,6 +112,9 @@ namespace kt
 
 		/// See if the plugin is loaded
 		bool isLoaded() const {return loaded;}
+		
+		/// Check wether the plugin matches the version of KT
+		virtual bool versionCheck(const QString & version) const = 0;
 		
 	private:
 		QString name;

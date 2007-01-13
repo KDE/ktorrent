@@ -68,6 +68,11 @@ namespace kt
 		ImportDialog dlg(getCore(),0,0,true);
 		dlg.exec();
 	}
+	
+	bool PartFileImportPlugin::versionCheck(const QString & version) const
+	{
+		return version == KT_VERSION_MACRO;
+	}
 
 }
 #include "partfileimportplugin.moc"

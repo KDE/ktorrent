@@ -73,6 +73,11 @@ namespace kt
 		pref = 0;
 		LogFlags::finalize();
 	}
+	
+	bool LogViewerPlugin::versionCheck(const QString & version) const
+	{
+		return version == KT_VERSION_MACRO;
+	}
 
 }
 #include "logviewerplugin.moc"

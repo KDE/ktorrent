@@ -122,4 +122,8 @@ namespace kt
 		return level1->isBlockedIP(ip);
 	}
 
+	bool IPFilterPlugin::versionCheck(const QString & version) const
+	{
+		return version == KT_VERSION_MACRO;
+	}
 }

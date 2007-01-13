@@ -66,14 +66,26 @@ namespace kt
 			Plugin* plugin =
 					KParts::ComponentFactory::createInstanceFromService<kt::Plugin>
 					(service, 0, 0, QStringList(),&errCode);
-	        // here we ought to check the error code.
+	        
+			if (!plugin)
+				continue;
 			
-			if (plugin)
+			
+			if (!plugin->versionCheck(kt::VERSION_STRING))
 			{
-				unloaded.insert(plugin->getName(),plugin);
-				if (pltoload.contains(plugin->getName()))
-					load(plugin->getName());
+				Out(SYS_GEN|LOG_NOTICE) << 
+						QString("Plugin %1 version does not match KTorrent version, unloading it.")
+						.arg(service->library()) << endl;
+				
+				delete plugin;
+				// unload the library again, no need to have it loaded 
+				KLibLoader::self()->unloadLibrary(service->library());
+				continue;
 			}
+				
+			unloaded.insert(plugin->getName(),plugin);
+			if (pltoload.contains(plugin->getName()))
+				load(plugin->getName());
 		}
 	}
 
@@ -84,7 +96,7 @@ namespace kt
 		if (!p)
 			return;
 
-		Out() << "Loading plugin "<< p->getName() << endl;
+		Out(SYS_GEN|LOG_NOTICE) << "Loading plugin "<< p->getName() << endl;
 		p->setCore(core);
 		p->setGUI(gui);
 		p->load();
@@ -199,7 +211,7 @@ namespace kt
 		QFile f(file);
 		if (!f.open(IO_ReadOnly))
 		{
-			Out() << "Cannot open file " << file << " : " << f.errorString() << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Cannot open file " << file << " : " << f.errorString() << endl;
 			return;
 		}
 
@@ -222,7 +234,7 @@ namespace kt
 		QFile f(file);
 		if (!f.open(IO_WriteOnly))
 		{
-			Out() << "Cannot open file " << file << " : " << f.errorString() << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Cannot open file " << file << " : " << f.errorString() << endl;
 			return;
 		}
 
@@ -243,7 +255,7 @@ namespace kt
 		QFile f(file);
 		if (!f.open(IO_WriteOnly))
 		{
-			Out() << "Cannot open file " << file << " : " << f.errorString() << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Cannot open file " << file << " : " << f.errorString() << endl;
 			return;
 		}
 

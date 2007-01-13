@@ -31,6 +31,6 @@ namespace kt
 	const char PEER_ID[] = "-KT21DV-";
 }
 
-
+#define KT_VERSION_MACRO "2.1dev"
 
 #endif

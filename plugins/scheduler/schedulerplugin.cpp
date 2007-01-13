@@ -144,4 +144,9 @@ namespace kt
 			bws_action = 0;
 		}
 	}
+	
+	bool SchedulerPlugin::versionCheck(const QString & version) const
+	{
+		return version == KT_VERSION_MACRO;
+	}
 }

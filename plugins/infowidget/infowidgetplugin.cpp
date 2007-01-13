@@ -80,6 +80,11 @@ namespace kt
 	{
 		iw->changeTC(tc);
 	}
+	
+	bool InfoWidgetPlugin::versionCheck(const QString & version) const
+	{
+		return version == KT_VERSION_MACRO;
+	}
 }
 
 #include "infowidgetplugin.moc"

@@ -39,6 +39,7 @@ namespace kt
 
 		virtual void load();
 		virtual void unload();
+		virtual bool versionCheck(const QString& version) const;
 	private:
 		UPnPMCastSocket* sock;
 		UPnPPrefPage* pref;

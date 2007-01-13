@@ -148,5 +148,9 @@ namespace kt
 		}
 	}
 
+	bool SearchPlugin::versionCheck(const QString & version) const
+	{
+		return version == KT_VERSION_MACRO;
+	}
 }
 #include "searchplugin.moc"

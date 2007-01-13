@@ -81,6 +81,10 @@ namespace kt
 		delete sock;
 		sock = 0;
 	}
-
+	
+	bool UPnPPlugin::versionCheck(const QString & version) const
+	{
+		return version == KT_VERSION_MACRO;
+	}
 }
 #include "upnpplugin.moc"

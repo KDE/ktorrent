@@ -75,7 +75,11 @@ namespace kt
 		getGUI()->removeTabPage(m_rssFeedManager);
 		delete m_rssFeedManager;
 		m_rssFeedManager = 0;
-		
+	}
+	
+	bool RssFeedPlugin::versionCheck(const QString & version) const
+	{
+		return version == KT_VERSION_MACRO;
 	}
 	
 }

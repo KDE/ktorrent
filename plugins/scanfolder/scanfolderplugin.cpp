@@ -179,4 +179,9 @@ namespace kt
 		ScanFolderPluginSettings::writeConfig();
 			
 	}
+	
+	bool ScanFolderPlugin::versionCheck(const QString & version) const
+	{
+		return version == KT_VERSION_MACRO;
+	}
 }

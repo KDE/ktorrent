@@ -44,6 +44,7 @@ namespace kt
 		virtual void unload();
 		virtual void guiUpdate();
 		virtual void currentTorrentChanged(TorrentInterface* tc);
+		virtual bool versionCheck(const QString & version) const;
 		
 	private:
 		InfoWidget* iw;

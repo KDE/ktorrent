@@ -127,5 +127,9 @@ namespace kt
 		services.setAutoDelete(true);
 	}
 
+	bool ZeroConfPlugin::versionCheck(const QString & version) const
+	{
+		return version == KT_VERSION_MACRO;
+	}
 }
 #include "zeroconfplugin.moc"
