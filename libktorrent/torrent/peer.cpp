@@ -465,7 +465,7 @@ namespace bt
 	bool Peer::isSnubbed() const
 	{
 		// 4 minutes
-		return snub_timer.getElapsedSinceUpdate() >= 2*60*1000;
+		return snub_timer.getElapsedSinceUpdate() >= 2*60*1000 && stats.num_down_requests > 0;
 	}
 
 	bool Peer::isSeeder() const
