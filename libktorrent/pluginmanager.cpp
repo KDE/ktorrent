@@ -66,30 +66,30 @@ namespace kt
 			Plugin* plugin =
 					KParts::ComponentFactory::createInstanceFromService<kt::Plugin>
 					(service, 0, 0, QStringList(),&errCode);
-	        
+
 			if (!plugin)
 				continue;
-			
-			
+
+
 			if (!plugin->versionCheck(kt::VERSION_STRING))
 			{
-				Out(SYS_GEN|LOG_NOTICE) << 
+				Out(SYS_GEN|LOG_NOTICE) <<
 						QString("Plugin %1 version does not match KTorrent version, unloading it.")
 						.arg(service->library()) << endl;
-				
+
 				delete plugin;
-				// unload the library again, no need to have it loaded 
-				KLibLoader::self()->unloadLibrary(service->library());
+				// unload the library again, no need to have it loaded
+				KLibLoader::self()->unloadLibrary(service->library().local8Bit());
 				continue;
 			}
-				
+
 			unloaded.insert(plugin->getName(),plugin);
 			if (pltoload.contains(plugin->getName()))
 				load(plugin->getName());
 		}
 	}
 
-	
+
 	void PluginManager::load(const QString & name)
 	{
 		Plugin* p = unloaded.find(name);
@@ -104,11 +104,11 @@ namespace kt
 		unloaded.erase(name);
 		plugins.insert(p->getName(),p);
 		p->loaded = true;
-		
+
 		if (!cfg_file.isNull())
 			saveConfigFile(cfg_file);
 	}
-		
+
 	void PluginManager::unload(const QString & name)
 	{
 		Plugin* p = plugins.find(name);
@@ -120,11 +120,11 @@ namespace kt
 		plugins.erase(name);
 		unloaded.insert(p->getName(),p);
 		p->loaded = false;
-		
+
 		if (!cfg_file.isNull())
 			saveConfigFile(cfg_file);
 	}
-		
+
 	void PluginManager::loadAll()
 	{
 		bt::PtrMap<QString,Plugin>::iterator i = unloaded.begin();
@@ -182,7 +182,7 @@ namespace kt
 			i++;
 		}
 
-		
+
 		i = unloaded.begin();
 		while (i != unloaded.end())
 		{
@@ -216,7 +216,7 @@ namespace kt
 		}
 
 		pltoload.clear();
-		
+
 		QTextStream in(&f);
 		while (!in.atEnd())
 		{
@@ -247,7 +247,7 @@ namespace kt
 			i++;
 		}
 	}
-	
+
 
 	void PluginManager::writeDefaultConfigFile(const QString & file)
 	{
