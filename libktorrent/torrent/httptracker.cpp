@@ -92,6 +92,12 @@ namespace bt
 	
 	void HTTPTracker::scrape()
 	{
+		if (!url.isValid())
+		{
+			Out(SYS_TRK|LOG_NOTICE) << "Invalid tracker url, canceling scrape" << endl;
+			return;
+		}
+		
 		if (!url.fileName(false).startsWith("announce"))
 		{
 			Out(SYS_TRK|LOG_NOTICE) << "Tracker " << url << " does not support scraping" << endl;
@@ -190,6 +196,12 @@ namespace bt
 		const TorrentStats & s = tor->getStats();
 		
 		KURL u = url;
+		if (!url.isValid())
+		{
+			requestPending();
+			QTimer::singleShot(500,this,SLOT(emitInvalidURLFailure()));
+			return;
+		}
 
 		Uint16 port = Globals::instance().getServer().getPortInUse();;
 		
@@ -423,5 +435,10 @@ namespace bt
 		}
 	}
 
+	void HTTPTracker::emitInvalidURLFailure()
+	{
+		failures++;
+		requestFailed(i18n("Invalid tracker URL"));
+	}
 }
 #include "httptracker.moc"

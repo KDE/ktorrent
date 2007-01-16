@@ -55,6 +55,7 @@ namespace bt
 	private slots:
 		void onAnnounceResult(KIO::Job* j);
 		void onScrapeResult(KIO::Job* j);
+		void emitInvalidURLFailure();
 
 	private:
 		void doRequest(WaitJob* wjob = 0);
