@@ -193,8 +193,7 @@ namespace bt
 		}
 		else
 		{
-			enc.write("length"); enc.write((Uint64)fi.size());
-			
+			enc.write("length"); enc.write(bt::FileSize(target));
 		}
 		enc.write("name"); enc.write(name);
 		enc.write("piece length"); enc.write((Uint64)chunk_size);
