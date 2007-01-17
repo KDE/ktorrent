@@ -156,6 +156,8 @@ bool KTorrentCore::init(TorrentControl* tc,bool silently)
 			return false;
 		}
 	}
+	
+	tc->createFiles();
 		
 	if (tc->hasExistingFiles())
 	{

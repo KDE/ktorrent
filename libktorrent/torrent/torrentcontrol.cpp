@@ -318,11 +318,7 @@ namespace bt
 		stats.stopped_by_error = false;
 		istats.io_error = false;
 		try
-		{
-			// pre allocation means first time start, so we need to create the files
-			if (prealloc)
-				cman->createFiles();
-			
+		{	
 			bool ret = true;
 			aboutToBeStarted(this,ret);
 			if (!ret)
@@ -477,8 +473,7 @@ namespace bt
 							  const QString & torrent,
 							  const QString & tmpdir,
 							  const QString & ddir,
-							  const QString & default_save_dir,
-							  bool create_files)
+							  const QString & default_save_dir)
 	{
 		// first load the torrent file
 		tor = new Torrent();
@@ -502,8 +497,7 @@ namespace bt
 		{
 			bt::CopyFile(torrent,tor_copy);
 		}
-		if (create_files)
-			cman->createFiles();
+		
 	}
 	
 	
@@ -685,6 +679,11 @@ namespace bt
 		updateStats();
 		saveStats();
 		stats.output_path = cman->getOutputPath();
+		if (stats.output_path.isNull())
+		{
+			cman->createFiles();
+			stats.output_path = cman->getOutputPath();
+		}
 		Out() << "OutputPath = " << stats.output_path << endl;
 	}
 	
@@ -1465,6 +1464,11 @@ namespace bt
 		}	
 	}
 	
+	void TorrentControl::createFiles()
+	{
+		cman->createFiles();
+		stats.output_path = cman->getOutputPath();
+	}
 }
 
 #include "torrentcontrol.moc"

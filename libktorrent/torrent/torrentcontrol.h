@@ -95,15 +95,13 @@ namespace bt
 		 * @param datadir The directory to store the actual file(s)
 		 * 		(only used the first time we load a torrent)
 		 * @param default_save_dir Default save directory (null if not set)
-		 * @param create_files Wether or not to create symlinks and data files
 		 * @throw Error when something goes wrong
 		 */
 		void init(QueueManager* qman,
 				const QString & torrent,
 				const QString & tmpdir,
 				const QString & datadir,
-				const QString & default_save_dir,
-				bool create_files = false);
+				const QString & default_save_dir);
 		
 		/**
 		 * Initialize the TorrentControl. 
@@ -236,6 +234,9 @@ namespace bt
 		
 		/// Disable or enable a feature
 		void setFeatureEnabled(kt::TorrentFeature tf,bool on);
+		
+		/// Create all the necessary files
+		void createFiles();
 		
 	public slots:
 		/**
