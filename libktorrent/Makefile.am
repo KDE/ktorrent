@@ -3,7 +3,7 @@ SUBDIRS = util torrent kademlia interfaces migrate mse datachecker net
 METASOURCES = AUTO
 
 lib_LTLIBRARIES = libktorrent.la
-libktorrent_la_LDFLAGS = ${KDE_RPATH} $(all_libraries)
+libktorrent_la_LDFLAGS = ${KDE_RPATH} $(all_libraries) -release $(VERSION)
 
 kde_kcfg_DATA = ktorrent.kcfg
 
