@@ -4,8 +4,9 @@ INCLUDES = -I$(top_builddir)/libktorrent -I$(top_builddir)/ktorrent/libktorrent 
 METASOURCES = AUTO
 		
 if COMPILE_ZEROCONF
+kde_module_LTLIBRARIES = ktzeroconfplugin.la		
+endif
 		
-kde_module_LTLIBRARIES = ktzeroconfplugin.la
 ktzeroconfplugin_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries) $(AVAHI_LIBS)
 ktzeroconfplugin_la_SOURCES = localbrowser.cpp avahiservice.cpp \
 	zeroconfplugin.cpp
@@ -19,4 +20,4 @@ noinst_HEADERS = zeroconfplugin.h
 kde_services_DATA = ktzeroconfplugin.desktop
 KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)
 
-endif
+
