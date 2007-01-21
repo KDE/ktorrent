@@ -75,7 +75,7 @@ namespace kt
 		feedArticles->setLeftMargin(0);
 		feedArticles->verticalHeader()->hide();
 		feedArticles->setNumCols(3);
-		feedArticles->setColumnLabels(QStringList() << "Title" << "Description" << "Link");
+		feedArticles->setColumnLabels(QStringList() << i18n("Title") << i18n("Description") << i18n("Link"));
 		feedArticles->horizontalHeader()->setStretchEnabled(true, 0);
 		feedArticles->hideColumn(1);
 		feedArticles->hideColumn(2);
@@ -84,7 +84,7 @@ namespace kt
 		filterMatches->setLeftMargin(0);
 		filterMatches->verticalHeader()->hide();
 		filterMatches->setNumCols(4);
-		filterMatches->setColumnLabels(QStringList() << "Season" << "Episode" << "Time" << "Link");
+		filterMatches->setColumnLabels(QStringList() << i18n("Season") << i18n("Episode") << i18n("Time") << i18n("Link"));
 		filterMatches->setColumnWidth(0, 60);
 		filterMatches->setColumnWidth(1, 60);
 		filterMatches->setColumnWidth(2, 180);
