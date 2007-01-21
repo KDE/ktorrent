@@ -66,8 +66,14 @@ namespace kt
 			btnAdd->setEnabled(false);
 			btnRemove->setEnabled(false);
 			btnRestore->setEnabled(false);
+			btnChange->setEnabled(true);
 			txtTracker->setText(i18n("You cannot add trackers to a private torrent"));
 			txtTracker->setEnabled(false);
+		}
+		else if (!tc->getStats().running)
+		{
+			btnUpdate->setEnabled(false);
+			btnChange->setEnabled(false);
 		}
 	}
 
@@ -155,8 +161,8 @@ namespace kt
 		if(!tc)
 			return;
 		
-		TorrentStats s = tc->getStats();
-		if(s.running)
+		const TorrentStats & s = tc->getStats();
+		if (s.running)
 		{
 			QTime t;
 			t = t.addSecs(tc->getTimeToNextTrackerUpdate());
@@ -164,7 +170,9 @@ namespace kt
 		}
 		
 		//Update manual annunce button
-		btnUpdate->setEnabled(tc->announceAllowed());
+		btnUpdate->setEnabled(s.running && tc->announceAllowed());
+		// only enable change when we can actually change and the torrent is running
+		btnChange->setEnabled(s.running && listTrackers->childCount() > 1);
 
 		lblStatus->setText("<b>" + s.trackerstatus + "</b>");
 		if (tc->getTrackersList())
@@ -185,10 +193,18 @@ namespace kt
 			lblCurrent->clear();
 			lblUpdate->clear();
 			txtTracker->clear();
+			
+			btnAdd->setEnabled(false);
+			btnRemove->setEnabled(false);
+			btnRestore->setEnabled(false);
+			btnChange->setEnabled(false);
+			btnRestore->setEnabled(false);
 			return;
 		}
 		
-		if (tc->getStats().priv_torrent)
+		const TorrentStats & s = tc->getStats();
+		
+		if (s.priv_torrent)
 		{
 			btnAdd->setEnabled(false);
 			btnRemove->setEnabled(false);
@@ -205,18 +221,19 @@ namespace kt
 			txtTracker->setEnabled(true);
 		}
 		
-		
-// 		const KURL::List trackers = tc-> getTrackers();
 		const KURL::List trackers = tc->getTrackersList()->getTrackerURLs();
 		if(trackers.empty())
 		{
-// 			new QListViewItem(listTrackers, tc->getTrackerURL(true).prettyURL());
 			new QListViewItem(listTrackers, tc->getTrackersList()->getTrackerURL().prettyURL());
-			return;
+		}
+		else
+		{
+			for (KURL::List::const_iterator i = trackers.begin();i != trackers.end();i++)
+				new QListViewItem(listTrackers, (*i).prettyURL());
 		}
 		
-		for (KURL::List::const_iterator i = trackers.begin();i != trackers.end();i++)
-			new QListViewItem(listTrackers, (*i).prettyURL());
+		btnUpdate->setEnabled(s.running && tc->announceAllowed());
+		btnChange->setEnabled(s.running && listTrackers->childCount() > 1);
 	}
 }
 

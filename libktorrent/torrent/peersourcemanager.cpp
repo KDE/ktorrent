@@ -269,7 +269,8 @@ namespace bt
 		
 		if (curr != trk)
 		{
-			curr->stop();
+			if (curr)
+				curr->stop();
 			switchTracker(trk);
 			tor->resetTrackerStats();
 			trk->start();

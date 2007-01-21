@@ -7,7 +7,7 @@
     <property name="geometry">
         <rect>
             <x>0</x>
-            <y>19</y>
+            <y>0</y>
             <width>598</width>
             <height>251</height>
         </rect>
@@ -15,7 +15,7 @@
     <property name="sizePolicy">
         <sizepolicy>
             <hsizetype>5</hsizetype>
-            <vsizetype>4</vsizetype>
+            <vsizetype>5</vsizetype>
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
         </sizepolicy>
@@ -133,7 +133,7 @@
                             </property>
                             <property name="sizePolicy">
                                 <sizepolicy>
-                                    <hsizetype>4</hsizetype>
+                                    <hsizetype>7</hsizetype>
                                     <vsizetype>5</vsizetype>
                                     <horstretch>0</horstretch>
                                     <verstretch>0</verstretch>
@@ -186,23 +186,6 @@
                         </widget>
                     </hbox>
                 </widget>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer14</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Fixed</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>16</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
             </hbox>
         </widget>
         <widget class="QLineEdit" row="1" column="0">
@@ -215,10 +198,10 @@
                 <cstring>btnUpdate</cstring>
             </property>
             <property name="text">
-                <string>Upd&amp;ate Tracker</string>
+                <string>&amp;Update Tracker</string>
             </property>
             <property name="accel">
-                <string>Alt+A</string>
+                <string>Alt+U</string>
             </property>
             <property name="toolTip" stdset="0">
                 <string>Minimum update interval - 60 seconds</string>
@@ -291,6 +274,8 @@
         </widget>
     </grid>
 </widget>
+<customwidgets>
+</customwidgets>
 <connections>
     <connection>
         <sender>btnChange</sender>
