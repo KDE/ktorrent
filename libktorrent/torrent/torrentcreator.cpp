@@ -70,8 +70,6 @@ namespace bt
 				num_chunks++;
 			last_size = tot_size % chunk_size;
 			Out() << "Tot Size : " << tot_size << endl;
-			
-			tot_size = fi.size();
 		}
 
 		if (last_size == 0)
