@@ -6,6 +6,7 @@ Name[et]=Veebiliides
 Name[nl]=Webinterface
 Name[pt]=Interface Web
 Name[sv]=Webb-gränssnitt
+Name[tr]=AğArayüzü
 Name[uk]=Веб-інтерфейс
 ServiceTypes=KTorrent/Plugin
 Type=Service

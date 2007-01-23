@@ -13,6 +13,7 @@ Name[sk]=LogViewer Plugin
 Name[sr]=Прикључак приказа дневника
 Name[sr@Latn]=Priključak prikaza dnevnika
 Name[sv]=Loggvisningsinsticksprogram
+Name[tr]=GünlükGörüntüEklentisi
 Name[xx]=xxLogViewerPluginxx
 Name[zh_TW]=紀錄檢視器外掛程式
 ServiceTypes=KTorrent/Plugin

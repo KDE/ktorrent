@@ -10,6 +10,7 @@ Name[nl]=Mapscanplugin
 Name[pt_BR]=Plugins de Busca
 Name[sk]=ScanFolder Plugin
 Name[sv]=Insticksprogram för katalogsökning
+Name[tr]=DizinTaramaEklentisi
 Name[zh_TW]=掃描資料夾外掛程式
 ServiceTypes=KTorrent/Plugin
 Type=Service

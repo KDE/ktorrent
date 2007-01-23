@@ -12,6 +12,7 @@ Name[pt]='Plugin' UPnP
 Name[pt_BR]=Plugin UPnP
 Name[sk]=UPnP Plugin
 Name[sv]=UPnP-insticksprogram
+Name[tr]=UPnPEklentisi
 Name[xx]=xxUPnPPluginxx
 Name[zh_TW]=UPnP外掛程式
 ServiceTypes=KTorrent/Plugin

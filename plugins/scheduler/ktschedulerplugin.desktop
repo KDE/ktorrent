@@ -10,6 +10,7 @@ Name[nl]=Plannerplugin
 Name[pt_BR]=Plugin de agendamento
 Name[sk]=Scheduler Plugin
 Name[sv]=Insticksprogram för schemaläggning
+Name[tr]=ZamanlayıcıEklentisi
 Name[zh_TW]=排程器外掛程式
 ServiceTypes=KTorrent/Plugin
 Type=Service
