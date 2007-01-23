@@ -80,7 +80,8 @@ namespace bt
 				// read the chunk
 				Uint32 size = i == num_chunks - 1 && tor.getFileLength() % tor.getChunkSize() > 0 ?
 						tor.getFileLength() % tor.getChunkSize() : (Uint32)tor.getChunkSize();
-				fptr.seek(File::BEGIN,i*tor.getChunkSize());
+				
+				fptr.seek(File::BEGIN,(Int64)i*tor.getChunkSize());
 				fptr.read(buf,size);
 				// generate and test hash
 				SHA1Hash h = SHA1Hash::generate(buf,size);

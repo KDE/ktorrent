@@ -240,7 +240,7 @@ namespace bt
 					.arg(target).arg(fptr.errorString()));
 
 		Uint32 s = cur_chunk != num_chunks - 1 ? chunk_size : last_size;
-		fptr.seek(File::BEGIN,cur_chunk*chunk_size);
+		fptr.seek(File::BEGIN,(Int64)cur_chunk*chunk_size);
 			
 		fptr.read(buf,s);
 		SHA1Hash h = SHA1Hash::generate(buf,s);
