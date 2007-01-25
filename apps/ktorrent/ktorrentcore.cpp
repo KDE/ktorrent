@@ -258,7 +258,7 @@ void KTorrentCore::downloadFinished(KIO::Job *job)
 		QString dir = Settings::saveDir();
 		if (!Settings::useSaveDir())
 			dir = KFileDialog::getExistingDirectory(QString::null, 0,
-				i18n("Select Folder to Save To"));
+				i18n("Select folder for data of %1").arg(j->url().prettyURL()));
 	
 		if (dir != QString::null)
 			load(j->data(),dir,false, j->url());
