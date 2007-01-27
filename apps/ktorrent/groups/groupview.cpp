@@ -79,7 +79,7 @@ namespace kt
 	
 		current = gman->allGroup();
 		
-		connect(this,SIGNAL(executed(QListViewItem*)),this,SLOT(onExecuted( QListViewItem* )));
+		connect(this,SIGNAL(clicked(QListViewItem*)),this,SLOT(onExecuted( QListViewItem* )));
 		connect(this,SIGNAL(contextMenu(KListView*,QListViewItem*,const QPoint & )),
 				this,SLOT(showContextMenu( KListView*, QListViewItem*, const QPoint& )));
 		connect(this,SIGNAL(dropped(QDropEvent*,QListViewItem*)),
@@ -267,6 +267,8 @@ namespace kt
 	
 	void GroupView::onExecuted(QListViewItem* item)
 	{
+		if (!item) return;
+		
 		GroupViewItem* li = dynamic_cast<GroupViewItem*>(item);
 		if (!li)
 			return;
