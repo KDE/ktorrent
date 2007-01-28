@@ -126,6 +126,17 @@ namespace bt
 		n = dict->getValue("private");
 		if (n && n->data().toInt() == 1)
 			priv_torrent = true;
+		
+		// do a safety check to see if the number of hashes matches the file_length
+		Uint32 num_chunks = (file_length / this->piece_length);
+		if (file_length % piece_length > 0)
+			num_chunks++;
+		
+		if (num_chunks != hash_pieces.count())
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "File sizes and number of hashes do not match for " << name_suggestion << endl;
+			throw Error(i18n("Corrupted torrent!"));
+		}
 	}
 	
 	void Torrent::loadFiles(BListNode* node)
@@ -172,7 +183,6 @@ namespace bt
 
 				// update file_length
 				file_length += s;
-			
 				files.append(file);
 			}
 			else
@@ -226,7 +236,7 @@ namespace bt
 		if (!node || node->data().getType() != Value::STRING)
 			throw Error(i18n("Corrupted torrent!"));
 		
-
+		
 		QByteArray hash_string = node->data().toByteArray();
 		for (unsigned int i = 0;i < hash_string.size();i+=20)
 		{
