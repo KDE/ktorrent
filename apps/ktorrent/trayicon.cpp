@@ -72,6 +72,11 @@ void TrayIcon::updateStats(const CurrentStats stats, bool showBars,int downloadB
 void TrayIcon::drawSpeedBar(int downloadSpeed, int uploadSpeed, int downloadBandwidth, int uploadBandwidth )
 {
 	//check if need repaint
+	if (uploadBandwidth == 0)
+		 uploadBandwidth = 1;
+	if (downloadBandwidth == 0)
+		downloadBandwidth = 1;
+		
 	int DownloadHeight=((downloadSpeed*pixmap()->height())/downloadBandwidth);
 	int UploadHeight=((uploadSpeed*pixmap()->height())/uploadBandwidth);
 	if(previousDownloadHeight==DownloadHeight && previousUploadHeight==UploadHeight)
