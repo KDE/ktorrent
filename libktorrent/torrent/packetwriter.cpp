@@ -43,8 +43,6 @@ namespace bt
 	{
 		uploaded = 0;
 		uploaded_non_data = 0;
-		data_packets.setAutoDelete(true);
-		control_packets.setAutoDelete(true);
 		curr_packet = 0;
 		ctrl_packets_sent = 0;
 	}
@@ -52,16 +50,30 @@ namespace bt
 
 	PacketWriter::~PacketWriter()
 	{
+		std::list<Packet*>::iterator i = data_packets.begin();
+		while (i != data_packets.end())
+		{
+			Packet* p = *i;
+			delete p;
+			i++;
+		}
+		
+		i = control_packets.begin();
+		while (i != control_packets.end())
+		{
+			Packet* p = *i;
+			delete p;
+			i++;
+		}
 	}
 	
 	void PacketWriter::queuePacket(Packet* p)
 	{
-		mutex.lock();
+		QMutexLocker locker(&mutex);
 		if (p->getType() == PIECE)
-			data_packets.append(p);
+			data_packets.push_back(p);
 		else
-			control_packets.append(p);
-		mutex.unlock();
+			control_packets.push_back(p);
 	}
 	
 	
@@ -71,6 +83,7 @@ namespace bt
 		if (peer->am_choked == true)
 			return;
 		
+		Out(SYS_CON|LOG_NOTICE) << "Sending CHOKE" << endl;
 		queuePacket(new Packet(CHOKE));
 		peer->am_choked = true;
 		peer->stats.has_upload_slot = false;
@@ -82,6 +95,7 @@ namespace bt
 		if (peer->am_choked == false)
 			return;
 		
+		Out(SYS_CON|LOG_NOTICE) << "Sending UNCHOKE" << endl;
 		queuePacket(new Packet(UNCHOKE));
 		peer->am_choked = false;
 		peer->stats.has_upload_slot = true;
@@ -221,29 +235,31 @@ namespace bt
 		if (ctrl_packets_sent < 3)
 		{
 			// try to send another control packet
-			if (control_packets.count() > 0)
-				return control_packets.first();
-			else if (data_packets.count() > 0)
-				return data_packets.first(); 
+			if (control_packets.size() > 0)
+				return control_packets.front();
+			else if (data_packets.size() > 0)
+				return data_packets.front(); 
 		}
 		else
 		{
-			if (data_packets.count() > 0)
+			if (data_packets.size() > 0)
 			{
 				ctrl_packets_sent = 0;
-				return data_packets.first();
+				return data_packets.front();
 			}
-			else if (control_packets.count() > 0)
-				return control_packets.first();
+			else if (control_packets.size() > 0)
+				return control_packets.front();
 		}
 		return 0;
 	}
 	
 	Uint32 PacketWriter::onReadyToWrite(Uint8* data,Uint32 max_to_write)
 	{
-		mutex.lock();
+		QMutexLocker locker(&mutex);
+		
 		if (!curr_packet)
 			curr_packet = selectPacket();
+		
 		Uint32 written = 0;
 		while (curr_packet && written < max_to_write)
 		{
@@ -262,7 +278,8 @@ namespace bt
 				if (p->getType() == PIECE)
 				{
 					// remove data packet
-					data_packets.removeFirst();
+					data_packets.pop_front();
+					delete p;
 					// reset ctrl_packets_sent so the next packet should be a ctrl packet
 					ctrl_packets_sent = 0;  
 					curr_packet = selectPacket();
@@ -270,7 +287,8 @@ namespace bt
 				else
 				{
 					// remove control packet and select another one to send
-					control_packets.removeFirst();
+					control_packets.pop_front();
+					delete p;
 					ctrl_packets_sent++;
 					curr_packet = selectPacket();
 				}
@@ -281,7 +299,7 @@ namespace bt
 				break;
 			}
 		}
-		mutex.unlock();
+		
 		return written;
 	}
 	
@@ -292,58 +310,56 @@ namespace bt
 	
 	Uint32 PacketWriter::getUploadedDataBytes() const
 	{
-		mutex.lock();
+		QMutexLocker locker(&mutex);
 		Uint32 ret = uploaded;
 		uploaded = 0;
-		mutex.unlock();
 		return ret;
 	}
 	
 	Uint32 PacketWriter::getUploadedNonDataBytes() const
 	{
-		mutex.lock();
+		QMutexLocker locker(&mutex);
 		Uint32 ret = uploaded_non_data;
 		uploaded_non_data = 0;
-		mutex.unlock();
 		return ret;
 	}
 	
 	Uint32 PacketWriter::getNumPacketsToWrite() const
 	{
-		mutex.lock();
-		Uint32 ret = data_packets.count() + control_packets.count();
-		mutex.unlock();
-		return ret;
+		QMutexLocker locker(&mutex);
+		return data_packets.size() + control_packets.size();
 	}
 	
 	Uint32 PacketWriter::getNumDataPacketsToWrite() const
 	{
-		mutex.lock();
-		Uint32 ret = data_packets.count();
-		mutex.unlock();
-		return ret;
+		QMutexLocker locker(&mutex);
+		return data_packets.size();
 	}
 	
 	void PacketWriter::doNotSendPiece(const Request & req,bool reject)
 	{
 		QMutexLocker locker(&mutex);
-		Packet* p = data_packets.first();
-		while (p)
+		std::list<Packet*>::iterator i = data_packets.begin();
+		while (i != data_packets.end())
 		{
+			Packet* p = *i;
 			if (p->isPiece(req) && !p->sending())
 			{
 				// remove current item
-				data_packets.remove();
-				p = data_packets.current();
+				if (curr_packet == p)
+					curr_packet = 0;
+				
+				i = data_packets.erase(i);
 				if (reject)
 				{
 					// queue a reject packet
 					sendReject(req);
 				}
+				delete p;
 			}
 			else
 			{
-				p = data_packets.next();
+				i++;
 			}
 		}
 	}
@@ -351,18 +367,22 @@ namespace bt
 	void PacketWriter::clearPieces()
 	{
 		QMutexLocker locker(&mutex);
-		Packet* p = data_packets.first();
-		while (p)
+		
+		std::list<Packet*>::iterator i = data_packets.begin();
+		while (i != data_packets.end())
 		{
+			Packet* p = *i;
 			if (p->getType() == bt::PIECE && !p->sending())
 			{
 				// remove current item
-				data_packets.remove();
-				p = data_packets.current();
+				if (curr_packet == p)
+					curr_packet = 0;
+				i = data_packets.erase(i);
+				delete p;
 			}
 			else
 			{
-				p = data_packets.next();
+				i++;
 			}
 		}
 	}

@@ -20,8 +20,8 @@
 #ifndef BTPACKETWRITER_H
 #define BTPACKETWRITER_H
 
+#include <list>
 #include <qmutex.h>
-#include <qptrlist.h>
 #include <net/bufferedsocket.h>
 #include "globals.h"
 
@@ -39,8 +39,8 @@ namespace bt
 	class PacketWriter : public net::SocketWriter
 	{
 		Peer* peer;
-		QPtrList<Packet> control_packets;
-		QPtrList<Packet> data_packets;
+		std::list<Packet*> control_packets;
+		std::list<Packet*> data_packets;
 		Packet* curr_packet;
 		Uint32 ctrl_packets_sent;
 		mutable Uint32 uploaded;
