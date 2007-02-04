@@ -83,7 +83,6 @@ namespace bt
 		if (peer->am_choked == true)
 			return;
 		
-		Out(SYS_CON|LOG_NOTICE) << "Sending CHOKE" << endl;
 		queuePacket(new Packet(CHOKE));
 		peer->am_choked = true;
 		peer->stats.has_upload_slot = false;
@@ -91,11 +90,9 @@ namespace bt
 	
 	void PacketWriter::sendUnchoke()
 	{
-//		Out() << "UNCHOKE" << endl;
 		if (peer->am_choked == false)
 			return;
 		
-		Out(SYS_CON|LOG_NOTICE) << "Sending UNCHOKE" << endl;
 		queuePacket(new Packet(UNCHOKE));
 		peer->am_choked = false;
 		peer->stats.has_upload_slot = true;
