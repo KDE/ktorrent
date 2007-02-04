@@ -1,0 +1,417 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>AdvancedPref</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>AdvancedPref</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>743</width>
+            <height>496</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Advanced Preferences</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox1</cstring>
+            </property>
+            <property name="title">
+                <string>Performance</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout5</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_3</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Memory usage:</string>
+                            </property>
+                        </widget>
+                        <widget class="KComboBox">
+                            <item>
+                                <property name="text">
+                                    <string>Low</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Medium</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>High</string>
+                                </property>
+                            </item>
+                            <property name="name">
+                                <cstring>mem_usage</cstring>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer2_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>111</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout5_2</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_3_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>GUI update interval:</string>
+                            </property>
+                        </widget>
+                        <widget class="KComboBox">
+                            <item>
+                                <property name="text">
+                                    <string>500ms</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>1s</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>2s</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>5s</string>
+                                </property>
+                            </item>
+                            <property name="name">
+                                <cstring>gui_interval</cstring>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer2_2_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>111</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox3</cstring>
+            </property>
+            <property name="title">
+                <string>Data Checking</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout7</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>no_recheck</cstring>
+                            </property>
+                            <property name="text">
+                                <string>During uploading, do &amp;not recheck chunks bigger than</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntNumInput">
+                            <property name="name">
+                                <cstring>recheck_size</cstring>
+                            </property>
+                            <property name="value">
+                                <number>512</number>
+                            </property>
+                            <property name="minValue">
+                                <number>16</number>
+                            </property>
+                            <property name="maxValue">
+                                <number>8192</number>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>KB</string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer3</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout10</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>auto_recheck</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Do a data integrit&amp;y check after</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntNumInput">
+                            <property name="name">
+                                <cstring>num_corrupted</cstring>
+                            </property>
+                            <property name="value">
+                                <number>3</number>
+                            </property>
+                            <property name="minValue">
+                                <number>1</number>
+                            </property>
+                        </widget>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>corrupted chunks</string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer7</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>41</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>groupBox2</cstring>
+            </property>
+            <property name="title">
+                <string>Networking</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout6</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Type of service field of IP packets</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntNumInput">
+                            <property name="name">
+                                <cstring>tos_byte</cstring>
+                            </property>
+                            <property name="value">
+                                <number>8</number>
+                            </property>
+                            <property name="minValue">
+                                <number>0</number>
+                            </property>
+                            <property name="maxValue">
+                                <number>255</number>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer4</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>131</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>do_not_use_kde_proxy</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Do not use the KDE pro&amp;xy for HTTP tracker connections</string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout7</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_4</cstring>
+                            </property>
+                            <property name="text">
+                                <string>HTTP tracker proxy:</string>
+                            </property>
+                        </widget>
+                        <widget class="KLineEdit">
+                            <property name="name">
+                                <cstring>http_proxy</cstring>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer7_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>81</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer5</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>60</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
+</widget>
+<customwidgets>
+</customwidgets>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kcombobox.h</includehint>
+    <includehint>kcombobox.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>klineedit.h</includehint>
+</includehints>
+</UI>

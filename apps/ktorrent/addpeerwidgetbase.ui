@@ -1,0 +1,164 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>AddPeerWidgetBase</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>AddPeerWidgetBase</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>380</width>
+            <height>89</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Add potential peer</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget" row="0" column="0">
+            <property name="name">
+                <cstring>layout10</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Peer IP:</string>
+                    </property>
+                </widget>
+                <widget class="KLineEdit">
+                    <property name="name">
+                        <cstring>m_ip</cstring>
+                    </property>
+                    <property name="text">
+                        <string>127.0.0.1</string>
+                    </property>
+                </widget>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Port:</string>
+                    </property>
+                </widget>
+                <widget class="KIntNumInput">
+                    <property name="name">
+                        <cstring>m_port</cstring>
+                    </property>
+                    <property name="value">
+                        <number>6881</number>
+                    </property>
+                    <property name="minValue">
+                        <number>1</number>
+                    </property>
+                    <property name="maxValue">
+                        <number>65535</number>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <spacer row="1" column="0">
+            <property name="name">
+                <cstring>spacer3</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>16</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QLayoutWidget" row="2" column="0">
+            <property name="name">
+                <cstring>layout11</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KSqueezedTextLabel">
+                    <property name="name">
+                        <cstring>m_status</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Enter peer IP and port.</string>
+                    </property>
+                </widget>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>btnAdd</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Add</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>27</number>
+                    </property>
+                </widget>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>btnClose</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Close</string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>13</number>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>btnClose</sender>
+        <signal>clicked()</signal>
+        <receiver>AddPeerWidgetBase</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>btnAdd</sender>
+        <signal>clicked()</signal>
+        <receiver>AddPeerWidgetBase</receiver>
+        <slot>btnAdd_clicked()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>btnClose</tabstop>
+    <tabstop>m_ip</tabstop>
+    <tabstop>m_port</tabstop>
+    <tabstop>btnAdd</tabstop>
+</tabstops>
+<slots>
+    <slot>btnAdd_clicked()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>klineedit.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>ksqueezedtextlabel.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+</includehints>
+</UI>

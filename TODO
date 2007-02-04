@@ -1,0 +1,30 @@
+TODO LIST :
+-----------
+
+If something is done put # in front of it.
+
+2.1 :
+-----
+
+Stuff we should do :
+- IDEAl mode + grouping
+- Diskspace monitor
+- Move QM from dialog to panel in IDEAl interface
+- Make columns in view configurable and add more
+- Moving downloaded files somewhere else
+- Scrape
+- Per torrent speed limits
+
+Other stuff :
+- Make and show more statistics. (e.g. uptime, average transfer rates, connected peers, etc...) (UI clutter needs to be avoided)
+- Global share ratio limit
+- Add RSS plugin
+- Add scheduled download feature + allow KT to shutdown PC after a download is finished
+- Super Seeding
+- Allow searchplugin to open page in external browser (Konq, FF, Moz, ...)
+
+
+3.0 :
+-----
+1) Switch to KDE 4 and Qt 4
+

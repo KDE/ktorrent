@@ -1,0 +1,21 @@
+[Desktop Entry]
+Name=ScanFolderPlugin
+Name[bg]=Приставка за сканиране
+Name[cs]=Modul prohledávání složek
+Name[da]=Plugin for mappesøgning
+Name[de]=Ordner-Durchsuchen-Modul
+Name[el]=Πρόσθετο σάρωσης φακέλων
+Name[et]=Kataloogi uurimise plugin
+Name[hr]=Pretraživanje mape
+Name[it]=Plugin scansione cartella
+Name[nds]=Moduul för't Dörkieken vun Ornern
+Name[nl]=Mapscanplugin
+Name[pt_BR]=Plugins de Busca
+Name[sk]=ScanFolder Plugin
+Name[sr]=Прикључак за скенирање фасцикли
+Name[sr@Latn]=Priključak za skeniranje fascikli
+Name[sv]=Insticksprogram för katalogsökning
+Name[zh_TW]=掃描資料夾外掛程式
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktscanfolderplugin

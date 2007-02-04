@@ -1,0 +1,39 @@
+Changes in 2.1rc1
+- Share ratio column added in main view
+- Added option to use a different proxy then the default KDE proxy for HTTP trackers
+- Added feature to show/hide columns in main view 
+- Moved search box to bottom, so that the window is not enlarged in 1024 x 768 resolutions, when you search for something
+- Made sure no duplicates get into search box history
+- Fixed 'Trackers' tab in InfoWidget to properly resize tracker URL label
+- Zeroconf plugin added
+- Added µTorrent compatible PEX
+- Fixed a bug in WebInterface plugin causing JS tooltips not to show.
+- Fixed a bug with 'Stop All' not stopping queued torrents.
+
+
+Changes in 2.1beta1 
+- WebGUI plugin added
+- KTorrent can make trackerless torrents with DHT nodes.
+- Added feature which saves the list of peers when a torrent is stopped and when it is started again, the list is reloaded and the peers are added to the list of potential peers so that we can quickly make connections to peers.
+- Revamped data checker a bit, it now uses a separate thread.
+- Added an option to automatically do a recheck after X number of corrupted chunks are found (X being configurable)
+- Added 4 more default torrent groups (QM down/up, User down/up)
+- Changed default groups to tree structure.
+- Don't auto-dequeue torrents when not completed.
+- Fixed a bug causing weird values to show up for max share ratio in popups.
+- Show passive popups when enqueuing torrents is not possible (over max sr limit) so the user has an idea what's going on.
+- Maximum downloads/uploads limit does not apply on user controlled torrents anymore (!)
+- Fixed a bug in QM causing seeding completed torrents to stay queued forever
+- Max share ratio won't show value lower than current share ratio for a torrent which will prevent seeding torrents from stopping when this option is toggled.
+- Queued (not running) seeding torrents will dequeue when max share ratio spinbox gets below current share ratio.
+- Added advanced preference page
+- Moved GUI update interval and memory usage option to advanced pref page
+- TOS field of IP packets is now configurable
+- Hash checks during uploading of big chunks can now be turned off
+- Fixed crash due to uncaught exception in savePriorityFile.
+- New columns in PeerView of InfoWidget: Requests sent/received, Amount of data downloaded from a peer and Amount of data uploaded to a peer
+- We can now kick peers without banning them
+- When the maximum number of peers we are currently connected to (globally or locally) is reached, and a new peer connects to us, we will now get rid of a bad peer (low aca score), to see if this peer is any better.
+- Added tracker tiering properly, this means that KT will now take into account the priorities of the trackers in the announce-list, and so will first try the tier 1 tracker, then tier 2, ...
+- Added grouping feature
+- Switched to IDEAL style GUI (like KDevelop)

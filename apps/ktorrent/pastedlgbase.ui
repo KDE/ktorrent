@@ -1,0 +1,142 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>PasteDlgBase</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>PasteDlgBase</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>467</width>
+            <height>84</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>4</hsizetype>
+            <vsizetype>4</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>0</width>
+            <height>0</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Paste URL</string>
+    </property>
+    <property name="modal">
+        <bool>true</bool>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout2</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>URL:</string>
+                    </property>
+                </widget>
+                <widget class="KLineEdit">
+                    <property name="name">
+                        <cstring>m_url</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>400</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout4</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer1</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>297</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>btnOK</cstring>
+                    </property>
+                    <property name="text">
+                        <string>O&amp;K</string>
+                    </property>
+                </widget>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>btnCancel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>C&amp;ancel</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+<connections>
+    <connection>
+        <sender>btnOK</sender>
+        <signal>clicked()</signal>
+        <receiver>PasteDlgBase</receiver>
+        <slot>btnOK_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnCancel</sender>
+        <signal>clicked()</signal>
+        <receiver>PasteDlgBase</receiver>
+        <slot>reject()</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>btnOK_clicked()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>klineedit.h</includehint>
+</includehints>
+</UI>

@@ -1,0 +1,17 @@
+[Desktop Entry]
+Name=ZeroConfPlugin
+Name[bg]=Приставка ZeroConf
+Name[de]=ZeroConf-Modul
+Name[et]=ZeroConfi plugin
+Name[hr]=ZeroConf
+Name[it]=Plugin ZeroConf
+Name[km]=កម្មវិធី​ជំនួយ Zero
+Name[nds]=ZeroConf-Moduul
+Name[pt]='Plugin' do ZeroConf
+Name[pt_BR]=Plugin ZeroConf
+Name[sr]=Прикључак за ZeroConf
+Name[sr@Latn]=Priključak za ZeroConf
+Name[sv]=Zeroconf-insticksprogram
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktzeroconfplugin

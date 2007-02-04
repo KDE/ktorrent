@@ -1,0 +1,256 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>WebInterfacePreference</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>WebInterfacePreference</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>666</width>
+            <height>883</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>1</hsizetype>
+            <vsizetype>5</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>500</width>
+            <height>350</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Search Preferences</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QButtonGroup" row="0" column="0">
+            <property name="name">
+                <cstring>buttonGroup1</cstring>
+            </property>
+            <property name="title">
+                <string>Web Server</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget" row="0" column="0">
+                    <property name="name">
+                        <cstring>layout5</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Port:</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntSpinBox">
+                            <property name="name">
+                                <cstring>port</cstring>
+                            </property>
+                            <property name="maxValue">
+                                <number>65535</number>
+                            </property>
+                            <property name="minValue">
+                                <number>1</number>
+                            </property>
+                            <property name="value">
+                                <number>8080</number>
+                            </property>
+                        </widget>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>forward</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Forward port</string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer4</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>54</width>
+                                    <height>21</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel4</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Session TTL (in sec):</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntSpinBox">
+                            <property name="name">
+                                <cstring>sessionTTL</cstring>
+                            </property>
+                            <property name="maxValue">
+                                <number>100000</number>
+                            </property>
+                            <property name="minValue">
+                                <number>1</number>
+                            </property>
+                            <property name="lineStep">
+                                <number>100</number>
+                            </property>
+                            <property name="value">
+                                <number>3600</number>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QLayoutWidget" row="1" column="0">
+                    <property name="name">
+                        <cstring>layout4</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Select interface:</string>
+                            </property>
+                        </widget>
+                        <widget class="QComboBox">
+                            <property name="name">
+                                <cstring>interfaceSkinBox</cstring>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QLayoutWidget" row="3" column="0">
+                    <property name="name">
+                        <cstring>layout6</cstring>
+                    </property>
+                    <grid>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLayoutWidget" row="0" column="0">
+                            <property name="name">
+                                <cstring>layout5</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLabel">
+                                    <property name="name">
+                                        <cstring>textLabel5</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Username:</string>
+                                    </property>
+                                </widget>
+                                <widget class="KLineEdit">
+                                    <property name="name">
+                                        <cstring>username</cstring>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                        <widget class="QPushButton" row="0" column="1">
+                            <property name="name">
+                                <cstring>btnPassword</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Change password ...</string>
+                            </property>
+                        </widget>
+                    </grid>
+                </widget>
+                <widget class="QLayoutWidget" row="2" column="0">
+                    <property name="name">
+                        <cstring>layout7</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Php executable path:</string>
+                            </property>
+                        </widget>
+                        <widget class="KURLRequester">
+                            <property name="name">
+                                <cstring>phpExecutablePath</cstring>
+                            </property>
+                        </widget>
+                        <widget class="KLed">
+                            <property name="name">
+                                <cstring>kled</cstring>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string></string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+            </grid>
+        </widget>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>btnPassword</sender>
+        <signal>clicked()</signal>
+        <receiver>WebInterfacePreference</receiver>
+        <slot>btnUpdate_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>phpExecutablePath</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>WebInterfacePreference</receiver>
+        <slot>changeLedState()</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>btnUpdate_clicked()</slot>
+    <slot>changeLedState()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kled.h</includehint>
+</includehints>
+</UI>
