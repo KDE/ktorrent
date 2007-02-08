@@ -6,6 +6,7 @@ Name[pt]='Plugin' do ZeroConf
 Name[pt_BR]=Plugin ZeroConf
 Name[sv]=Zeroconf-insticksprogram
 Name[tr]=ZeroConfEklentisi
+Name[uk]=Втулок ZeroConf
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktzeroconfplugin
