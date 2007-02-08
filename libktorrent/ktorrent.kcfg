@@ -162,5 +162,9 @@
 		<entry name="httpTrackerProxy" type="String">
 			<default code="true">QString::null</default>
 		</entry>
+			<entry name="eta" type="Int">
+			<label>ET algorithm</label>
+			<default>0</default>
+		</entry>
 	</group>
 </kcfg>

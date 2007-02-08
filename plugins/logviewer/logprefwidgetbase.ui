@@ -639,9 +639,6 @@
                     <property name="text">
                         <string>Use rich te&amp;xt for log</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+X</string>
-                    </property>
                 </widget>
             </grid>
         </widget>

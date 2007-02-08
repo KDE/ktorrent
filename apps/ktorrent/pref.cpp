@@ -373,6 +373,7 @@ bool AdvancedPrefPage::apply()
 	Settings::setMaxCorruptedBeforeRecheck(ap->num_corrupted->value());
 	Settings::setDoNotUseKDEProxy(ap->do_not_use_kde_proxy->isChecked());
 	Settings::setHttpTrackerProxy(ap->http_proxy->text());
+	Settings::setEta(ap->eta->currentItem());	
 	return true;
 }
 
@@ -390,6 +391,7 @@ void AdvancedPrefPage::updateData()
 	ap->do_not_use_kde_proxy->setChecked(Settings::doNotUseKDEProxy());
 	ap->http_proxy->setText(Settings::httpTrackerProxy());
 	ap->http_proxy->setEnabled(Settings::doNotUseKDEProxy());
+	ap->eta->setCurrentItem(Settings::eta());
 }
 			
 void AdvancedPrefPage::createWidget(QWidget* parent)

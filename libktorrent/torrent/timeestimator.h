@@ -75,11 +75,24 @@ namespace bt
 	class TimeEstimator
 	{
 		public:
+			
+			enum ETAlgorithm
+			{
+				ETA_KT,		//ktorrent default algorithm - combination of the following according to our tests
+				ETA_CSA, 	//current speed algorithm
+				ETA_GASA,	//global average speed algorithm
+				ETA_WINX,	//window of X algorithm
+				ETA_MAVG	//moving average algorithm				
+			};
+			
 			TimeEstimator(TorrentControl* tc);
 			~TimeEstimator();
 			
 			///Returns ETA for m_tc torrent.
 			Uint32 estimate();
+
+			void setAlgorithm(const ETAlgorithm& theValue);	
+			ETAlgorithm algorithm() const { return m_algorithm; }
 			
 		private:
 			
@@ -87,6 +100,7 @@ namespace bt
 			Uint32 estimateGASA();
 			Uint32 estimateWINX();
 			Uint32 estimateMAVG();
+			Uint32 estimateKT();
 			
 			TorrentControl* m_tc;
 			SampleQueue* m_samples;
@@ -96,6 +110,8 @@ namespace bt
 			
 			//last percentage
 			double m_perc;
+			
+			ETAlgorithm m_algorithm;
 	};
 
 }

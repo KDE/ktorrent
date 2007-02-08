@@ -20,9 +20,6 @@
             <verstretch>0</verstretch>
         </sizepolicy>
     </property>
-    <property name="caption">
-        <string>TrackerViewBase</string>
-    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -199,9 +196,6 @@
             </property>
             <property name="text">
                 <string>&amp;Update Tracker</string>
-            </property>
-            <property name="accel">
-                <string>Alt+U</string>
             </property>
             <property name="toolTip" stdset="0">
                 <string>Minimum update interval - 60 seconds</string>
