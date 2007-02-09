@@ -20,7 +20,7 @@
 #ifndef BTAUTHENTICATIONMONITOR_H
 #define BTAUTHENTICATIONMONITOR_H
 
-#include <set>
+#include <list>
 
 namespace bt
 {
@@ -33,7 +33,7 @@ namespace bt
 	*/
 	class AuthenticationMonitor
 	{
-		std::set<AuthenticateBase*> auths;
+		std::list<AuthenticateBase*> auths;
 		
 		static AuthenticationMonitor self;
 		

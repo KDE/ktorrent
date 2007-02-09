@@ -44,7 +44,7 @@ namespace bt
 	
 	void AuthenticationMonitor::clear()
 	{
-		std::set<AuthenticateBase*>::iterator itr = auths.begin();
+		std::list<AuthenticateBase*>::iterator itr = auths.begin();
 		while (itr != auths.end())
 		{
 			AuthenticateBase* ab = *itr;
@@ -57,12 +57,12 @@ namespace bt
 
 	void AuthenticationMonitor::add(AuthenticateBase* s)
 	{
-		auths.insert(s);
+		auths.push_back(s);
 	}
 	
 	void AuthenticationMonitor::remove(AuthenticateBase* s)
 	{
-		auths.erase(s);
+		auths.remove(s);
 	}
 	
 	void AuthenticationMonitor::update()
@@ -77,7 +77,7 @@ namespace bt
 		FD_ZERO(&rfds);
 		FD_ZERO(&wfds);
 		
-		std::set<AuthenticateBase*>::iterator itr = auths.begin();
+		std::list<AuthenticateBase*>::iterator itr = auths.begin();
 		while (itr != auths.end())
 		{
 			AuthenticateBase* ab = *itr;
@@ -86,9 +86,7 @@ namespace bt
 				if (ab)
 					ab->deleteLater();
 				
-				std::set<AuthenticateBase*>::iterator j = itr;
-				itr++;
-				auths.erase(j);
+				itr = auths.erase(itr);
 			}
 			else
 			{
@@ -114,7 +112,7 @@ namespace bt
 			while (itr != auths.end())
 			{
 				AuthenticateBase* ab = *itr;
-				if (ab->getSocket() && ab->getSocket()->fd() >= 0)
+				if (ab && ab->getSocket() && ab->getSocket()->fd() >= 0)
 				{
 					int fd = ab->getSocket()->fd();
 					if (FD_ISSET(fd,&rfds))
@@ -127,12 +125,10 @@ namespace bt
 					}
 				}
 				
-				if (ab->isFinished())
+				if (!ab || ab->isFinished())
 				{
 					ab->deleteLater();
-					std::set<AuthenticateBase*>::iterator j = itr;
-					itr++;
-					auths.erase(j);
+					itr = auths.erase(itr);
 				}
 				else
 					itr++;
