@@ -19,103 +19,83 @@
  ***************************************************************************/
 #ifndef HTTPSERVER_H
 #define HTTPSERVER_H
-#include <kgenericfactory.h>
-#include <kglobal.h>
-
-#include <qstring.h>
-#include <qmap.h>
-#include <qregexp.h>
-#include <qserversocket.h>
-#include <qsocket.h>
-#include <qfile.h>
+		
 #include <qcache.h>
-#include <qthread.h>
-#include <qmutex.h>
-#include "php_handler.h"
-#include "php_interface.h"
-#include <torrent/peermanager.h>
-namespace kt {
+#include <qhttp.h>
+#include <qdatetime.h>
+#include <qserversocket.h>		
+#include <util/ptrmap.h>
+
+class QSocket;
+
+namespace bt
+{
+	class MMapFile;
+}
+
+namespace kt 
+{
+	class CoreInterface;
+	
 	/**
 	 * @author Diego R. Brogna
 	 */
-	
-	struct Session{
-	bool logged;
-	QTime last_access;
-	int sessionId;
+	struct Session
+	{
+		bool logged_in;
+		QTime last_access;
+		int sessionId;
 	};
 	
-	struct HeaderFiled{
-	bool gzip;
-	bool keepAlive;
-	int sessionId;
-	bool ifModifiedSince;
+	struct HeaderField
+	{
+		bool gzip;
+		bool keepAlive;
+		int sessionId;
+		bool ifModifiedSince;
 	};
+		
+	class PhpHandler;
+	class PhpInterface;
+	class HttpClientHandler;
+	class HttpResponseHeader;
 	
-	class Image{
-	public:
-		Image(){
-			data=0;
-		}
-		void setName(QString s){name=s;};
-		QString getName();
-		void *data;
-		void setTime(QTime);
-		QTime getTime();
-	private:
-		QString name;
-		QTime init_time;
-	};
+
 	
 	class HttpServer : public QServerSocket
 	{
 		Q_OBJECT
 	public:
 		HttpServer(CoreInterface *core, int port);
-		~HttpServer();
+		virtual ~HttpServer();
+		
 		void newConnection(int s);
-	private:
-		QString readPostData(QSocket* s, unsigned int size, bool up);
-		void parseRequest(QString request);
-		void parseHeaderFields(QStringList headerLines);
-		void processRequest(QSocket* s);
-		void sendHtmlPage(QSocket* s, QString data);
-		void sendRawData(QSocket* s,QString header, QFile *file);
+		
+		void handleGet(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,bool do_not_check_session = false);
+		void handlePost(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QByteArray & data);
+		void handleUnsupportedMethod(HttpClientHandler* hdlr);
+		bt::MMapFile* cacheLookup(const QString & name);
+		void insertIntoCache(const QString & name,bt::MMapFile* file);
 
 	protected slots:
 		void slotSocketReadyToRead();
 		void slotConnectionClosed();
+		
+	private:
+		bool checkSession(const QHttpRequestHeader & hdr);
+		bool checkLogin(const QHttpRequestHeader & hdr,const QByteArray & data);
+		void setDefaultResponseHeaders(HttpResponseHeader & hdr,const QString & content_type,bool with_session_info);
+		void handleTorrentPost(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QByteArray & data);
+		QDateTime parseDate(const QString & str);
+		
 	private:
 		QString rootDir;
 		int sessionTTL;
-		PhpHandler *php_h;
 		PhpInterface *php_i;
-		QCache<Image> imgCache;
-		QString requestedFile;
-		QMap<QString, QString> requestParams;
 		Session session;
-		HeaderFiled headerField;
-		bool locked;
-	};
-
-	class ServerThread : public QThread{
-	public:
-		ServerThread(CoreInterface *c)
-		{
-			core=c;
-			running=false;
-			p=0;
-		}
-		~ServerThread()
-		{		}
-		void stop();		
-		void run();
-		int port(){return p;}
-		QMutex mutex;
-	private:
-		bool running;
+		bt::PtrMap<QSocket*,HttpClientHandler> clients;
 		CoreInterface *core;
-		int p;
+		QCache<bt::MMapFile> cache;
 	};
 
 	

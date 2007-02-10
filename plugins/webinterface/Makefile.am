@@ -2,11 +2,13 @@ INCLUDES = -I$(top_builddir)/libktorrent -I$(top_builddir)/ktorrent/libktorrent 
 	-I$(srcdir)/../../libktorrent
 METASOURCES = AUTO
 kde_module_LTLIBRARIES = ktwebinterfaceplugin.la
-noinst_HEADERS = webinterfaceplugin.h httpserver.h php_handler.h php_interface.h webinterfaceprefwidget.h\
-		webinterfaceprefpage.h
-ktwebinterfaceplugin_la_SOURCES = webinterfaceplugin.cpp httpserver.cpp php_handler.cpp php_interface.cpp\
-				webinterfacepref.ui webinterfacepluginsettings.kcfgc webinterfaceprefwidget.cpp\
-				webinterfaceprefpage.cpp
+noinst_HEADERS = webinterfaceplugin.h httpserver.h php_handler.h \
+		php_interface.h webinterfaceprefwidget.h		webinterfaceprefpage.h httpclienthandler.h \
+	httpresponseheader.h
+ktwebinterfaceplugin_la_SOURCES = webinterfaceplugin.cpp httpserver.cpp \
+		php_handler.cpp php_interface.cpp				webinterfacepref.ui \
+		webinterfacepluginsettings.kcfgc webinterfaceprefwidget.cpp				webinterfaceprefpage.cpp \
+		httpclienthandler.cpp httpresponseheader.cpp
 # Libs needed by the plugin
 ktwebinterfaceplugin_la_LIBADD = ../../libktorrent/libktorrent.la \
 			   $(LIB_KHTML) $(LIB_KPARTS) $(LIB_QT) \

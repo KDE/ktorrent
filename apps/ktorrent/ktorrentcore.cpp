@@ -260,8 +260,8 @@ void KTorrentCore::downloadFinished(KIO::Job *job)
 			dir = KFileDialog::getExistingDirectory(QString::null, 0,
 				i18n("Select Folder to Save To"));
 	
-		if (dir != QString::null)
-			load(j->data(),dir,false, j->url());
+		if (dir != QString::null && load(j->data(),dir,false, j->url()))
+			loadingFinished(j->url(),true,false);
 		else
 			loadingFinished(j->url(),false,true);
 	}
@@ -269,8 +269,24 @@ void KTorrentCore::downloadFinished(KIO::Job *job)
 
 void KTorrentCore::load(const KURL& url)
 {
-	KIO::Job* j = KIO::storedGet(url,false,true);
-	connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadFinished( KIO::Job* )));
+	if (url.isLocalFile())
+	{
+		QString path = url.path(); 
+		QString dir = Settings::saveDir();
+		if (!Settings::useSaveDir())
+			dir = KFileDialog::getExistingDirectory(QString::null, 0,
+				i18n("Select folder for data of %1").arg(url.prettyURL()));
+	
+		if (dir != QString::null && load(path,dir,false))
+			loadingFinished(url,true,false);
+		else
+			loadingFinished(url,false,true);
+	}
+	else
+	{
+		KIO::Job* j = KIO::storedGet(url,false,true);
+		connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadFinished( KIO::Job* )));
+	}
 }
 
 void KTorrentCore::downloadFinishedSilently(KIO::Job *job)
@@ -286,7 +302,6 @@ void KTorrentCore::downloadFinishedSilently(KIO::Job *job)
 	if (err)
 	{
 		loadingFinished(j->url(),false,false);
-		j->showErrorDialog(0);
 	}
 	else
 	{
@@ -295,7 +310,6 @@ void KTorrentCore::downloadFinishedSilently(KIO::Job *job)
 		if (!Settings::useSaveDir())
 		{
 			loadingFinished(j->url(),false,false);
-			KMessageBox::error(0,i18n("You need to have default save directory selected to load torrents silently."),i18n("Error"));
 		}
 		else
 		{
@@ -309,9 +323,28 @@ void KTorrentCore::downloadFinishedSilently(KIO::Job *job)
 
 void KTorrentCore::loadSilently(const KURL& url)
 {
-	// download to a random file in tmp
-	KIO::Job* j = KIO::storedGet(url,false,true);
-	connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadFinishedSilently( KIO::Job* )));
+	if (url.isLocalFile())
+	{
+		QString path = url.path(); 
+		QString dir = Settings::saveDir();
+		if (!Settings::useSaveDir())
+		{
+			loadingFinished(url,false,false);
+		}
+		else
+		{
+			if (dir != QString::null && load(path,dir,true))
+				loadingFinished(url,true,false);
+			else
+				loadingFinished(url,false,true);
+		}
+	}
+	else
+	{
+		// download to a random file in tmp
+		KIO::Job* j = KIO::storedGet(url,false,true);
+		connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadFinishedSilently( KIO::Job* )));
+	}
 }
 
 void KTorrentCore::start(kt::TorrentInterface* tc)

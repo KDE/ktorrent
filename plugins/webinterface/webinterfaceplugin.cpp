@@ -24,6 +24,7 @@
 #include <interfaces/coreinterface.h>
 #include <interfaces/guiinterface.h>
 #include <interfaces/torrentinterface.h>
+#include <torrent/globals.h>
 #include <net/portlist.h>
 #include "webinterfaceprefpage.h"
 #include "webinterfaceplugin.h"
@@ -42,23 +43,19 @@ namespace kt
 	WebInterfacePlugin::WebInterfacePlugin(QObject* parent, const char* name, const QStringList& args)
 	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,i18n("Allow to control ktorrent through browser"))
 	{
-		httpThread=0;
+		http_server = 0;
 		pref=0;
 	}
+	
 	WebInterfacePlugin::~WebInterfacePlugin()
 	{ 
 	
 	}
+	
 	void WebInterfacePlugin::load()
 	{
-
-		if(!httpThread)
-				delete httpThread;
-
-		httpThread=new ServerThread(getCore());
+		initServer();
 		
-		httpThread->start();
-
 		pref = new WebInterfacePrefPage(this);
 		getGUI()->addPrefPage(pref);
 
@@ -66,29 +63,59 @@ namespace kt
 
 	void WebInterfacePlugin::unload()
 	{
-		bt::Globals::instance().getPortList().removePort(httpThread->port(),net::TCP);
-		httpThread->stop();
-		httpThread->wait();
-		delete httpThread;
-		httpThread=0;
+		if (http_server)
+		{
+			bt::Globals::instance().getPortList().removePort(http_server->port(),net::TCP);
+			delete http_server;
+			http_server = 0;
+		}
+		
 		getGUI()->removePrefPage(pref);
 		delete pref;
 		pref = 0;
+	}
+	
+	void WebInterfacePlugin::initServer()
+	{
+		bt::Uint16 port = WebInterfacePluginSettings::port();
+		bt::Uint16 i = 0;
+				
+		while (i < 10)
+		{
+			http_server = new HttpServer(getCore(),port + i);
+			if (!http_server->ok())
+			{
+				delete http_server;
+				http_server = 0;
+			}
+			else
+				break;
+			i++;
+		}
 
+		if (http_server)
+		{
+			if(WebInterfacePluginSettings::forward())
+				bt::Globals::instance().getPortList().addNewPort(http_server->port(),net::TCP,true);
+			Out(SYS_WEB|LOG_ALL) << "Web server listen on port "<< http_server->port() << endl;
+		}
+		else
+		{
+			Out(SYS_WEB|LOG_ALL) << "Cannot bind to port " << port <<" or the 10 following ports. WebInterface plugin cannot be loaded." << endl;
+			return;
+		}
 	}
 
 	void WebInterfacePlugin::preferencesUpdated()
 	{
-		if(httpThread->port()!=WebInterfacePluginSettings::port()){
-			//stop and delete http server thread
-			bt::Globals::instance().getPortList().removePort(httpThread->port(),net::TCP);
-			httpThread->stop();
-			httpThread->wait();
-			delete httpThread;
-			httpThread=0;
-			//restart http server thread
-			httpThread=new ServerThread(getCore());
-			httpThread->start();
+		if( http_server && http_server->port() != WebInterfacePluginSettings::port())
+		{
+			//stop and delete http server 
+			bt::Globals::instance().getPortList().removePort(http_server->port(),net::TCP);
+			delete http_server;
+			http_server = 0;
+			// reinitialize server
+			initServer();
 		}
 	}
 
