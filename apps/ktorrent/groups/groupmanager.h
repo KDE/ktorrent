@@ -43,6 +43,13 @@ namespace kt
 		Group* queuedUploads;
 		Group* userDownloads;
 		Group* userUploads;
+		Group* inactive;
+		Group* inactiveDownloads;
+		Group* inactiveUploads;
+		Group* active;
+		Group* activeDownloads;
+		Group* activeUploads;
+		
 		
 	public:
 		GroupManager();
@@ -75,6 +82,24 @@ namespace kt
 		
 		/// Get the group of user controlled seeds
 		Group* userUploadsGroup() { return userUploads; }
+		
+		/// Get the group of inactive torrents
+		Group* inactiveGroup() { return inactive; }
+		
+		/// Get the group of inactive downloads
+		Group* inactiveDownloadsGroup() { return inactiveDownloads; }
+		
+		/// Get the group of inactive uploads
+		Group* inactiveUploadsGroup() { return inactiveUploads; }
+		
+		/// Get the group of inactive torrents
+		Group* activeGroup() { return active; }
+		
+		/// Get the group of inactive downloads
+		Group* activeDownloadsGroup() { return activeDownloads; }
+		
+		/// Get the group of inactive uploads
+		Group* activeUploadsGroup() { return activeUploads; }
 		
 		/**
 		 * Save the groups to a file.

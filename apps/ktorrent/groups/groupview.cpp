@@ -97,10 +97,16 @@ namespace kt
 		GroupViewItem* all = addGroup(gman->allGroup(),0);
 		GroupViewItem* dwnld = addGroup(gman->downloadGroup(),all);
 		GroupViewItem* upld = addGroup(gman->uploadGroup(),all);
+		GroupViewItem* inactive = addGroup(gman->inactiveGroup(), all);
+		GroupViewItem* active = addGroup(gman->activeGroup(), all);
 		addGroup(gman->queuedDownloadsGroup(), dwnld);
 		addGroup(gman->queuedUploadsGroup(), upld);
 		addGroup(gman->userDownloadsGroup(), dwnld);
 		addGroup(gman->userUploadsGroup(), upld);
+		addGroup(gman->inactiveDownloadsGroup(), inactive);
+		addGroup(gman->inactiveUploadsGroup(), inactive);
+		addGroup(gman->activeDownloadsGroup(), active);
+		addGroup(gman->activeUploadsGroup(), active);
 		
 		custom_root = new KListViewItem(all,i18n("Custom Groups"));
 		custom_root->setPixmap(0,KGlobal::iconLoader()->loadIcon("folder",KIcon::Small));

@@ -34,6 +34,12 @@
 #include "queueduploadsgroup.h"
 #include "userdownloadsgroup.h"
 #include "useruploadsgroup.h"
+#include "inactivegroup.h"
+#include "inactivedownloadsgroup.h"
+#include "inactiveuploadsgroup.h"
+#include "activegroup.h"
+#include "activedownloadsgroup.h"
+#include "activeuploadsgroup.h"
 
 using namespace bt;
 
@@ -50,11 +56,23 @@ namespace kt
 		queuedUploads = new QueuedUploadsGroup();
 		userDownloads = new UserDownloadsGroup();
 		userUploads = new UserUploadsGroup();
+		active = new ActiveGroup();
+		activeUploads = new ActiveUploadsGroup();
+		activeDownloads = new ActiveDownloadsGroup();
+		inactive = new InactiveGroup();
+		inactiveUploads = new InactiveUploadsGroup();
+		inactiveDownloads = new InactiveDownloadsGroup();
 	}
 
 
 	GroupManager::~GroupManager()
 	{
+		delete inactiveDownloads;
+		delete inactiveUploads;
+		delete inactive;
+		delete activeDownloads;
+		delete activeUploads;
+		delete active;
 		delete userUploads;
 		delete userDownloads;
 		delete queuedDownloads;
@@ -77,7 +95,7 @@ namespace kt
 	
 	bool GroupManager::canRemove(const Group* g) const
 	{
-		return (g != all && g != downloads && g != uploads && g != queuedDownloads && g != queuedUploads && g != userDownloads && g != userUploads); 
+		return (g != all && g != downloads && g != uploads && g != queuedDownloads && g != queuedUploads && g != userDownloads && g != userUploads && g != inactiveDownloads && g != inactiveUploads); 
 	}
 	
 	
