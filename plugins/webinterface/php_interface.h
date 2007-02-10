@@ -20,6 +20,7 @@
 
 #ifndef PHP_INTERFACE_H
 #define PHP_INTERFACE_H
+		
 #include <qstring.h>
 #include <torrent/peermanager.h>
 #include <settings.h>
@@ -30,30 +31,37 @@
 	/**
 	 * @author Diego R. Brogna
 	 */
-using namespace kt;
-class PhpCodeGenerator{
-	public:
-		PhpCodeGenerator(CoreInterface *c);
-		~PhpCodeGenerator(){;};
-		QString downloadStatus();
-		QString globalInfo();
-	private:
-		CoreInterface *core;
-};
-
-class PhpActionExec{
-	public:
-		PhpActionExec(CoreInterface *c);
-		~PhpActionExec(){};
-		void exec(QMap<QString, QString> params);
-	private:	
-		CoreInterface *core;
-};
-
-class PhpInterface: public PhpCodeGenerator, public PhpActionExec{
-	public:
-		PhpInterface(CoreInterface *c);
-		//~PhpInterface{};
-};
+namespace kt
+{
+	class PhpCodeGenerator
+	{
+		public:
+			PhpCodeGenerator(CoreInterface *c);
+			virtual ~PhpCodeGenerator(){}
+			
+			QString downloadStatus();
+			QString globalInfo();
+		private:
+			CoreInterface *core;
+	};
+	
+	class PhpActionExec
+	{
+		public:
+			PhpActionExec(CoreInterface *c);
+			virtual ~PhpActionExec(){};
+			
+			void exec(const QMap<QString, QString> & params);
+		private:	
+			CoreInterface *core;
+	};
+	
+	class PhpInterface: public PhpCodeGenerator, public PhpActionExec
+	{
+		public:
+			PhpInterface(CoreInterface *c);
+			//~PhpInterface{};
+	};
+}
 
 #endif

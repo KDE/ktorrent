@@ -19,22 +19,39 @@
  ***************************************************************************/
 #ifndef PHP_HANDLER_H
 #define PHP_HANDLER_H
+		
+#include <qmap.h>
+#include <kurl.h>
 #include <qprocess.h>
-#include <qtimer.h>
-#include <torrent/queuemanager.h>
-#include <interfaces/torrentinterface.h>
-#include "php_interface.h"
 
-class PhpHandler{
+
+namespace kt
+{
+	class PhpInterface;
+	
+	class PhpHandler : public QProcess 
+	{
+		Q_OBJECT
 	public:
-		PhpHandler(PhpInterface *php);
-		~PhpHandler();
-		bool executeScript(QString, QString, QMap<QString, QString> );
-		QString getOutput(){return output;};
+		PhpHandler(const QString & php_exe,PhpInterface *php);
+		virtual ~PhpHandler();
+			
+		bool executeScript(const QString & path,const QMap<QString,QString> & args);
+		const QString & getOutput() const {return output;};
+		
+	public slots:
+		void onExited();
+		void onReadyReadStdout();
+		
+	signals:
+		void finished();
+		
 	private:
-		void preParse(QString *d, QMap<QString, QString> requestVars);
 		QString output;
 		PhpInterface *php_i;
-		QFileInfo fi;
-};
+		
+		static QMap<QString,QString> scripts;
+	};
+}
+
 #endif

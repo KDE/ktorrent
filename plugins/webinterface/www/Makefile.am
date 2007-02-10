@@ -1,5 +1,5 @@
 METASOURCES = AUTO
-SUBDIRS = default mobile
+SUBDIRS = default mobile coldmilk
 
 
 

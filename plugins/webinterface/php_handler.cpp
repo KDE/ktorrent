@@ -25,93 +25,81 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <util/log.h>
+#include "php_interface.h"
 
 
 using namespace kt;
 using namespace bt;
 
-PhpHandler::PhpHandler(PhpInterface *php):php_i(php)
+namespace kt
 {
-}
+	QMap<QString,QString> PhpHandler::scripts;
 
-PhpHandler::~PhpHandler()
-{
-}
-
-bool PhpHandler::executeScript(QString cmd, QString s, QMap<QString, QString> requestVars)
-{
-	int fdsStdin[2], fdsStdout[2];
-	char buf[4096];
-	pid_t pid;
-
-	if(fi.filePath()!=cmd)
-		fi.setFile(cmd);
-	if(!fi.isExecutable())
-		return false;
-
-	preParse(&s, requestVars);
-	output="";
-
-	if (pipe (fdsStdin) == -1 || pipe (fdsStdout) == -1)
+	PhpHandler::PhpHandler(const QString & php_exe,PhpInterface *php) : QProcess(php_exe),php_i(php)
 	{
-		Out(SYS_WEB|LOG_DEBUG) << QString("pipe failed : %1").arg(strerror(errno)) << endl;
-		return false;
-	}
-
-	pid = fork ();
-	if (pid < 0)
-	{
-		Out(SYS_WEB|LOG_DEBUG) << QString("failed to fork PHP process : %1").arg(strerror(errno)) << endl;
-		return false;		
+		connect(this,SIGNAL(readyReadStdout()),this,SLOT(onReadyReadStdout()));
+		connect(this,SIGNAL(processExited()),this,SLOT(onExited()));
 	}
 	
-	if (pid == (pid_t) 0) {
-		close (fdsStdin[1]);
-		close (fdsStdout[0]);
-		
-		dup2 (fdsStdin[0], STDIN_FILENO);
-		dup2 (fdsStdout[1], STDOUT_FILENO);
-		execlp (cmd.latin1(), cmd.latin1(), 0);
-		exit(-1); // we are in the child so just exit the process
+	PhpHandler::~PhpHandler()
+	{
 	}
-	else {
-
-		FILE* streamStdin;
-		FILE* streamStdout;
-
-		close (fdsStdin[0]);
-		close (fdsStdout[1]);
-
-		streamStdin  = fdopen (fdsStdin[1], "w");
-		streamStdout = fdopen (fdsStdout[0], "r");
-
-		fprintf (streamStdin, "%s",(const char * ) s.utf8());
-		fflush (streamStdin);
-		close (fdsStdin[1]);
-
-
-		while(fgets(buf, 4096, streamStdout)){
-			output.append(QString::fromUtf8(buf, strlen(buf)));
+	
+	bool PhpHandler::executeScript(const QString & path,const QMap<QString,QString> & args)
+	{
+		QString php_s;
+		if (!scripts.contains(path))
+		{
+			QFile fptr(path);
+			if (!fptr.open(IO_ReadOnly))
+			{
+				Out(SYS_WEB|LOG_DEBUG) << "Failed to open " << path << endl;
+				return false;
+			}
+			php_s = QString(fptr.readAll());
+			scripts.insert(path,php_s);
 		}
-		close (fdsStdout[0]);
-		waitpid (pid, NULL, 0);
+		else
+		{
+			php_s = scripts[path];
+		}
+		
+		output="";
+	
+		int firstphptag = php_s.find("<?php");
+		if ( firstphptag == -1)
+			return false;
+		
+		QString extra_data = php_i->globalInfo() + php_i->downloadStatus();
+		
+		QMap<QString,QString>::const_iterator it;
+			
+		for ( it = args.begin(); it != args.end(); ++it )
+		{
+			extra_data += QString("$_REQUEST[%1]=\"%2\";\n").arg(it.key()).arg(it.data());
+		}
+			
+		php_s.insert(firstphptag + 6, extra_data);
+		return launch(php_s);
+	}
+	
+	void PhpHandler::onExited()
+	{
+		// read remaining data
+		onReadyReadStdout();
+		finished();
+	}
+	
+	void PhpHandler::onReadyReadStdout()
+	{
+		while (canReadLineStdout())
+		{
+			QByteArray d = readStdout();
+			output += QString(d);
+		}
 	}
 
-
-	return true;
 }
 
-
-void PhpHandler::preParse(QString *d, QMap<QString, QString> requestVars)
-{
-	int firstphptag;
-	firstphptag=d->find("<?php");
-	if(firstphptag==-1)
-		return;
-	d->insert(firstphptag+6,php_i->globalInfo());
-	d->insert(firstphptag+6,php_i->downloadStatus());
-	QValueList<QString> keys=requestVars.keys();
-	QValueList<QString>::iterator it;
-    	for ( it = keys.begin(); it != keys.end(); ++it )
-		d->insert(firstphptag+6, QString("$_REQUEST[%1]=\"%2\";\n").arg(*it).arg(requestVars[*it]));
-}
+#include "php_handler.moc"
+				 

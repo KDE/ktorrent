@@ -13,10 +13,6 @@
 		width:50px;
 	}
 
-	.buttons
-	{
-		 width:100px;
-	}
     </style>
     <meta http-equiv="Content-Type" content="text/html"/>
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>

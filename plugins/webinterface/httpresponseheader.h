@@ -1,6 +1,6 @@
-  /***************************************************************************
- *   Copyright (C) 2006 by Diego R. Brogna                                 *
- *   dierbro@gmail.com                                               	   *
+/***************************************************************************
+ *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,39 +15,36 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#ifndef KTHTTPRESPONSEHEADER_H
+#define KTHTTPRESPONSEHEADER_H
+		
 
-#ifndef KTWEBINTERFACEPLUGIN_H
-#define KTWEBINTERFACEPLUGIN_H
-
-#include <interfaces/plugin.h>
+#include <qmap.h>
+#include <qstring.h>
 
 namespace kt
 {
-	/**
-	 * @author Diego R. Brogna
-	 */
-	class HttpServer;
 
-	class WebInterfacePlugin : public Plugin
+	/**
+		@author Joris Guisson <joris.guisson@gmail.com>
+	*/
+	class HttpResponseHeader
 	{
-		Q_OBJECT
+		int response_code;
+		QMap<QString,QString> fields;
 	public:
-		WebInterfacePlugin(QObject* parent, const char* name, const QStringList& args);
-		virtual ~WebInterfacePlugin();
+		HttpResponseHeader(int response_code);
+		HttpResponseHeader(const HttpResponseHeader & hdr);
+		virtual ~HttpResponseHeader();
 		
-		virtual void load();
-		virtual void unload();
-		virtual bool versionCheck(const QString& version) const;
+		void setResponseCode(int response_code);
+		void setValue(const QString & key,const QString & value);
 		
-		void preferencesUpdated();
-	private:
-		void initServer();
-		
-		WebInterfacePrefPage* pref;
-		HttpServer* http_server;
+		QString toString() const;
 	};
+
 
 }
 
