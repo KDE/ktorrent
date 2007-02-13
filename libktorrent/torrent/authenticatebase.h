@@ -73,6 +73,9 @@ namespace bt
 		/// We can write to the socket (used to detect a succesfull connection)
 		virtual void onReadyWrite();
 		
+		int getPollIndex() const {return poll_index;}
+		void setPollIndex(int pi) {poll_index = pi;}
+		
 	protected:
 		/**
 		 * Send a handshake
@@ -114,6 +117,7 @@ namespace bt
 		Uint32 bytes_of_handshake_recieved;
 		Uint32 ext_support;
 		bool local;
+		int poll_index;
 	};
 
 }

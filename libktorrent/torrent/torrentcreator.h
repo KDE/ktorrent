@@ -104,7 +104,7 @@ namespace bt
 		void saveInfo(BEncoder & enc);
 		void saveFile(BEncoder & enc,const TorrentFile & file);
 		void savePieces(BEncoder & enc);
-		void buildFileList(const QString & dir,Uint64 & tot_size);
+		void buildFileList(const QString & dir);
 		bool calcHashSingle();
 		bool calcHashMulti();
 	};

@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include <math.h>
 #include <unistd.h>
-#include <sys/select.h>
+#include <sys/poll.h>
 #include <util/functions.h>
 #include <util/log.h>
 #include <mse/streamsocket.h>
@@ -70,12 +70,7 @@ namespace bt
 		if (auths.size() == 0)
 			return;
 		
-		KT_PROF_START("auth");
-		
-		fd_set rfds,wfds;
-		int max_fd = 0;
-		FD_ZERO(&rfds);
-		FD_ZERO(&wfds);
+		int i = 0;
 		
 		std::list<AuthenticateBase*>::iterator itr = auths.begin();
 		while (itr != auths.end())
@@ -90,51 +85,63 @@ namespace bt
 			}
 			else
 			{
+				ab->setPollIndex(-1);
 				if (ab->getSocket() && ab->getSocket()->fd() >= 0)
 				{
 					int fd = ab->getSocket()->fd();
-					if (!ab->getSocket()->connecting())
-						FD_SET(fd,&rfds);
-					else
-						FD_SET(fd,&wfds);
+					if (i >= fd_vec.size())
+					{
+						struct pollfd pfd = {-1,0,0};
+						fd_vec.push_back(pfd);
+					}
 					
-					if (fd > max_fd)
-						max_fd = fd;
+					struct pollfd & pfd = fd_vec[i];
+					pfd.fd = fd;
+					pfd.revents = 0;
+					if (!ab->getSocket()->connecting())
+						pfd.events = POLLIN;
+					else
+						pfd.events = POLLOUT;
+					ab->setPollIndex(i);
+					i++;
 				}
 				itr++;
 			}
 		}
 		
-		struct timeval tv = {0,1000};
-		if (select(max_fd+1,&rfds,&wfds,NULL,&tv) > 0)
+		if (poll(&fd_vec[0],i,1) > 0)
 		{
-			itr = auths.begin();
-			while (itr != auths.end())
-			{
-				AuthenticateBase* ab = *itr;
-				if (ab && ab->getSocket() && ab->getSocket()->fd() >= 0)
-				{
-					int fd = ab->getSocket()->fd();
-					if (FD_ISSET(fd,&rfds))
-					{
-						ab->onReadyRead();
-					}
-					else if (FD_ISSET(fd,&wfds))
-					{
-						ab->onReadyWrite();
-					}
-				}
-				
-				if (!ab || ab->isFinished())
-				{
-					ab->deleteLater();
-					itr = auths.erase(itr);
-				}
-				else
-					itr++;
-			}
+			handleData();
 		}
-		KT_PROF_END();
+	}
+	
+	void AuthenticationMonitor::handleData()
+	{
+		std::list<AuthenticateBase*>::iterator itr = auths.begin();
+		while (itr != auths.end())
+		{
+			AuthenticateBase* ab = *itr;
+			if (ab && ab->getSocket() && ab->getSocket()->fd() >= 0 && ab->getPollIndex() >= 0)
+			{
+				int pi = ab->getPollIndex();
+				if (fd_vec[pi].revents & POLLIN)
+				{
+					ab->onReadyRead();
+				}
+				else if (fd_vec[pi].revents & POLLOUT)
+				{
+					ab->onReadyWrite();
+				}
+			}
+			
+			if (!ab || ab->isFinished())
+			{
+				ab->deleteLater();
+				itr = auths.erase(itr);
+			}
+			else
+				itr++;
+		}
 	}
 	
 }

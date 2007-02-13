@@ -159,9 +159,9 @@
   <kdevdebugger>
     <general>
       <dbgshell>libtool</dbgshell>
-      <programargs>--nofork --debug</programargs>
+      <programargs>--nofork</programargs>
       <gdbpath/>
-      <breakonloadinglibs>true</breakonloadinglibs>
+      <breakonloadinglibs>false</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>
       <runappinappdirectory>true</runappinappdirectory>
@@ -170,7 +170,7 @@
       <runGdbScript/>
     </general>
     <display>
-      <staticmembers>false</staticmembers>
+      <staticmembers>true</staticmembers>
       <demanglenames>true</demanglenames>
       <outputradix>10</outputradix>
     </display>

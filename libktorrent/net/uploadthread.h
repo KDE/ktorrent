@@ -17,62 +17,53 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTAUTHENTICATIONMONITOR_H
-#define BTAUTHENTICATIONMONITOR_H
+#ifndef NETUPLOADTHREAD_H
+#define NETUPLOADTHREAD_H
 
-#include <list>
+#include <qthread.h>
+#include <qwaitcondition.h> 
 #include <vector>
-		
-struct pollfd;
+#include <util/constants.h>
 
-namespace bt
+namespace net
 {
-	class AuthenticateBase;
+	class SocketMonitor;
+	class BufferedSocket;
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
-	
-		Monitors ongoing authentication attempts. This class is a singleton.
 	*/
-	class AuthenticationMonitor
+	class UploadThread : public QThread
 	{
-		std::list<AuthenticateBase*> auths;
-		std::vector<struct pollfd> fd_vec;
+		static bt::Uint32 ucap;
 		
-		static AuthenticationMonitor self;
-		
-		AuthenticationMonitor();
+		SocketMonitor* sm;
+		bool running;
+		bt::TimeStamp prev_upload_time;
+		std::vector<BufferedSocket*> wbs;
+	
+		QWaitCondition data_ready;
 	public:
+		UploadThread(SocketMonitor* sm);
+		virtual ~UploadThread();
+
+		/// run the thread
+		void run();
+
+		/// Stop before the next update
+		void stop() {running = false;}
 		
-		virtual ~AuthenticationMonitor();
+		/// Is the thread running
+		bool isRunning() const {return running;}
 		
+		/// Wake up thread, data is ready to be sent
+		void signalDataReady();
 		
-		/**
-		 * Add a new AuthenticateBase object.
-		 * @param s 
-		 */
-		void add(AuthenticateBase* s);
-		
-		/**
-		 * Remove an AuthenticateBase object
-		 * @param s 
-		 */
-		void remove(AuthenticateBase* s);
-		
-		/**
-		 * Check all AuthenticateBase objects.
-		 */
+		/// Set the upload cap
+		static void setCap(bt::Uint32 uc) {ucap = uc;}
+	private: 
 		void update();
-		
-		/**
-		 * Clear all AuthenticateBase objects, also delets them
-		 */
-		void clear();
-		
-		static AuthenticationMonitor & instance() {return self;}
-		
-	private:
-		void handleData();
+		void processOutgoingData(bt::TimeStamp now);
 	};
 
 }

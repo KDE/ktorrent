@@ -27,6 +27,7 @@ using namespace bt;
 
 namespace net
 {
+#define OUTPUT_BUFFER_SIZE 16393
 
 	BufferedSocket::BufferedSocket(int fd) : Socket(fd),rdr(0),wrt(0)
 	{
@@ -34,6 +35,8 @@ namespace net
 		bytes_sent = 0;
 		down_speed = new Speed();
 		up_speed = new Speed();
+		output_buffer = new Uint8[OUTPUT_BUFFER_SIZE];
+		poll_index = -1;
 	}
 	
 	BufferedSocket::BufferedSocket(bool tcp) : Socket(tcp),rdr(0),wrt(0)
@@ -42,11 +45,14 @@ namespace net
 		bytes_sent = 0;
 		down_speed = new Speed();
 		up_speed = new Speed();
+		output_buffer = new Uint8[OUTPUT_BUFFER_SIZE];
+		poll_index = -1;
 	}
 
 
 	BufferedSocket::~BufferedSocket()
 	{
+		delete [] output_buffer;
 		delete up_speed;
 		delete down_speed;
 	}
@@ -66,10 +72,11 @@ namespace net
 		mutex.unlock();
 		return ret;
 	}
+	
+	static Uint8 input_buffer[OUTPUT_BUFFER_SIZE];
 
 	Uint32 BufferedSocket::readBuffered(Uint32 max_bytes_to_read,bt::TimeStamp now)
 	{	
-		Uint8 tmp[4096];
 		Uint32 br = 0;
 		bool no_limit = (max_bytes_to_read == 0);
 		
@@ -82,19 +89,19 @@ namespace net
 		while ((br < max_bytes_to_read || no_limit)  && bytesAvailable() > 0)
 		{
 			Uint32 tr = bytesAvailable();
-			if (tr > 4096)
-				tr = 4096;
+			if (tr > OUTPUT_BUFFER_SIZE)
+				tr = OUTPUT_BUFFER_SIZE;
 			if (!no_limit && tr + br > max_bytes_to_read)
 				tr = max_bytes_to_read - br;
 			
-			int ret = Socket::recv(tmp,tr);
+			int ret = Socket::recv(input_buffer,tr);
 			if (ret != 0)
 			{
 				mutex.lock();
 				down_speed->onData(ret,now);
 				mutex.unlock();
 				if (rdr)
-					rdr->onDataReady(tmp,ret);
+					rdr->onDataReady(input_buffer,ret);
 				br += ret;
 			}
 			else
@@ -122,12 +129,16 @@ namespace net
 				mutex.lock();
 				up_speed->onData(ret,now);
 				mutex.unlock();
+				bytes_in_output_buffer -= ret;
+				bytes_sent += ret;
+				if (bytes_sent == bytes_in_output_buffer)
+					bytes_in_output_buffer = bytes_sent = 0;
+				return ret;
 			}
-			bytes_in_output_buffer -= ret;
-			bytes_sent += ret;
-			if (bytes_sent == bytes_in_output_buffer)
-				bytes_in_output_buffer = bytes_sent = 0;
-			return ret;
+			else
+			{
+				return 0;
+			}
 		}
 		else 
 		{
@@ -139,10 +150,14 @@ namespace net
 				mutex.lock();
 				up_speed->onData(ret,now);
 				mutex.unlock();
+				bytes_in_output_buffer -= ret;
+				bytes_sent += ret;
+				return ret;
 			}
-			bytes_in_output_buffer -= ret;
-			bytes_sent += ret;
-			return ret;
+			else
+			{
+				return 0;
+			}
 		}
 	}
 	
@@ -169,7 +184,7 @@ namespace net
 		while ((no_limit || bw < max) && bytes_in_output_buffer == 0)
 		{
 			// fill output buffer
-			bytes_in_output_buffer = wrt->onReadyToWrite(output_buffer,4096);
+			bytes_in_output_buffer = wrt->onReadyToWrite(output_buffer,OUTPUT_BUFFER_SIZE);
 			bytes_sent = 0;
 			if (bytes_in_output_buffer > 0)
 			{
