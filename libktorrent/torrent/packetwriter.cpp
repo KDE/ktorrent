@@ -22,6 +22,7 @@
 #include <util/log.h>
 #include <util/file.h>
 #include <util/functions.h>
+#include <net/socketmonitor.h>
 #include <ktversion.h>
 #include "packetwriter.h"
 #include "peer.h"
@@ -33,6 +34,7 @@
 #include <util/log.h>
 #include "globals.h"
 #include "bencoder.h"
+
 
 
 namespace bt
@@ -74,6 +76,8 @@ namespace bt
 			data_packets.push_back(p);
 		else
 			control_packets.push_back(p);
+		// tell upload thread we have data ready should it be sleeping
+		net::SocketMonitor::instance().signalPacketReady();
 	}
 	
 	
@@ -226,28 +230,31 @@ namespace bt
 	
 	Packet* PacketWriter::selectPacket()
 	{
+		Packet* ret = 0;
 		// this function should ensure that between
 		// each data packet at least 3 control packets are sent
 		// so requests can get through
+		
 		if (ctrl_packets_sent < 3)
 		{
 			// try to send another control packet
 			if (control_packets.size() > 0)
-				return control_packets.front();
+				ret = control_packets.front();
 			else if (data_packets.size() > 0)
-				return data_packets.front(); 
+				ret = data_packets.front(); 
 		}
 		else
 		{
 			if (data_packets.size() > 0)
 			{
 				ctrl_packets_sent = 0;
-				return data_packets.front();
+				ret = data_packets.front();
 			}
 			else if (control_packets.size() > 0)
-				return control_packets.front();
+				ret = control_packets.front();
 		}
-		return 0;
+
+		return ret;
 	}
 	
 	Uint32 PacketWriter::onReadyToWrite(Uint8* data,Uint32 max_to_write)
@@ -296,7 +303,7 @@ namespace bt
 				break;
 			}
 		}
-		
+	
 		return written;
 	}
 	

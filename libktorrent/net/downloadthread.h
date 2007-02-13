@@ -17,62 +17,53 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTAUTHENTICATIONMONITOR_H
-#define BTAUTHENTICATIONMONITOR_H
+#ifndef NETDOWNLOADTHREAD_H
+#define NETDOWNLOADTHREAD_H
 
-#include <list>
 #include <vector>
-		
+#include <qthread.h>
+#include <util/constants.h>
+
 struct pollfd;
 
-namespace bt
+namespace net
 {
-	class AuthenticateBase;
+	class SocketMonitor;
+	class BufferedSocket;
 
 	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	
-		Monitors ongoing authentication attempts. This class is a singleton.
-	*/
-	class AuthenticationMonitor
+	 * @author Joris Guisson <joris.guisson@gmail.com>
+	 * 
+	 * Thread which processes incoming data
+	 */
+	class DownloadThread : public QThread
 	{
-		std::list<AuthenticateBase*> auths;
+		static bt::Uint32 dcap;
+		
+		SocketMonitor* sm;
+		bool running;
+		bt::TimeStamp prev_download_time;
 		std::vector<struct pollfd> fd_vec;
-		
-		static AuthenticationMonitor self;
-		
-		AuthenticationMonitor();
+		std::vector<BufferedSocket*> rbs;
 	public:
+		DownloadThread(SocketMonitor* sm);
+		virtual ~DownloadThread();
+
+		/// run the thread
+		void run();
+
+		/// Stop before the next update
+		void stop() {running = false;}
 		
-		virtual ~AuthenticationMonitor();
+		/// Is the thread running
+		bool isRunning() const {return running;}
 		
-		
-		/**
-		 * Add a new AuthenticateBase object.
-		 * @param s 
-		 */
-		void add(AuthenticateBase* s);
-		
-		/**
-		 * Remove an AuthenticateBase object
-		 * @param s 
-		 */
-		void remove(AuthenticateBase* s);
-		
-		/**
-		 * Check all AuthenticateBase objects.
-		 */
-		void update();
-		
-		/**
-		 * Clear all AuthenticateBase objects, also delets them
-		 */
-		void clear();
-		
-		static AuthenticationMonitor & instance() {return self;}
-		
+		/// Set the download cap
+		static void setCap(bt::Uint32 cap) {dcap = cap;}
 	private:
-		void handleData();
+		int fillPollVector();
+		void update();
+		void processIncomingData(bt::TimeStamp now);
 	};
 
 }

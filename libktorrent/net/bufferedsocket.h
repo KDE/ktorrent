@@ -75,11 +75,13 @@ namespace net
 		mutable QMutex mutex;
 		SocketReader* rdr;
 		SocketWriter* wrt;
-		Uint8 output_buffer[4096];
+		Uint8* output_buffer;
 		Uint32 bytes_in_output_buffer; // bytes in the output buffer
 		Uint32 bytes_sent; // bytes written of the output buffer
 		Speed* down_speed;
 		Speed* up_speed;
+		int poll_index;
+		
 	public:
 		BufferedSocket(int fd);
 		BufferedSocket(bool tcp);
@@ -106,8 +108,11 @@ namespace net
 		Uint32 writeBuffered(Uint32 max,bt::TimeStamp now);
 		
 		/// See if the socket has something ready to write
-		bool bytesReadyToWrite() const {return !wrt ? false : wrt->hasBytesToWrite();}
-	
+		bool bytesReadyToWrite() const 
+		{
+			return bytes_in_output_buffer > 0 || (!wrt ? false : wrt->hasBytesToWrite());
+		}
+		
 		
 		/// Get the current download rate
 		float getDownloadRate() const;
@@ -117,6 +122,9 @@ namespace net
 		
 		/// Update up and down speed
 		void updateSpeeds(bt::TimeStamp now);
+		
+		int getPollIndex() const {return poll_index;}
+		void setPollIndex(int pi) {poll_index = pi;}
 		
 	private:
 		Uint32 sendOutputBuffer(Uint32 max,bt::TimeStamp now);

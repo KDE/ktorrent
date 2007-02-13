@@ -20,10 +20,9 @@
 #ifndef NETSOCKETMONITOR_H
 #define NETSOCKETMONITOR_H
 
-#include <qstring.h>
+
 #include <qmutex.h>
 #include <qptrlist.h>
-#include <qvaluelist.h>
 #include <util/constants.h>
 
 
@@ -32,35 +31,54 @@ namespace net
 	using bt::Uint32;
 	
 	class BufferedSocket;
-	class MonitorThread;
+	class UploadThread;
+	class DownloadThread;
 
 	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
+	 * @author Joris Guisson <joris.guisson@gmail.com>
+	 * 
+	 * Monitors all sockets for upload and download traffic.
+	 * It uses two threads to do this.
 	*/
 	class SocketMonitor 
 	{
 		static SocketMonitor self;
-		static Uint32 dcap,ucap;
+
 		QMutex mutex;
-		MonitorThread* mt;
+		UploadThread* ut;
+		DownloadThread* dt;
 		QPtrList<BufferedSocket> smap;
-		bt::TimeStamp prev_upload_time;
-		bt::TimeStamp prev_download_time;
-		
+				
 		SocketMonitor();	
 	public:
 		virtual ~SocketMonitor();
 		
+		/// Add a new socket, will start the threads if necessary
 		void add(BufferedSocket* sock);
+		
+		/// Remove a socket, will stop threads if no more sockets are left
 		void remove(BufferedSocket* sock);
-		void update();
+		
+		typedef QPtrList<BufferedSocket>::iterator Itr;
+		
+		/// Get the begin of the list of sockets
+		Itr begin() {return smap.begin();}
+		
+		/// Get the end of the list of sockets
+		Itr end() {return smap.end();}
+		
+		/// lock the monitor
+		void lock();
+		
+		/// unlock the monitor
+		void unlock();
+		
+		/// Tell upload thread a packet is ready
+		void signalPacketReady();
 		
 		static void setDownloadCap(Uint32 bytes_per_sec);
 		static void setUploadCap(Uint32 bytes_per_sec);
 		static SocketMonitor & instance() {return self;}
-	private:
-		void processOutgoingData(QValueList<BufferedSocket*> & wbs,bt::TimeStamp now);
-		void processIncomingData(QValueList<BufferedSocket*> & rbs,bt::TimeStamp now);
 	};
 
 }

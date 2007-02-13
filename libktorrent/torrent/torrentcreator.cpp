@@ -55,7 +55,7 @@ namespace bt
 				this->target += bt::DirSeparator();
 			
 			tot_size = 0;
-			buildFileList("",tot_size);
+			buildFileList("");
 			num_chunks = tot_size / chunk_size;
 			if (tot_size % chunk_size > 0)
 				num_chunks++;
@@ -84,7 +84,7 @@ namespace bt
 	TorrentCreator::~TorrentCreator()
 	{}
 
-	void TorrentCreator::buildFileList(const QString & dir,Uint64 & tot_size)
+	void TorrentCreator::buildFileList(const QString & dir)
 	{
 		QDir d(target + dir);
 		// first get all files (we ignore symlinks)
@@ -111,7 +111,7 @@ namespace bt
 			QString sd = dir + *i;
 			if (!sd.endsWith(bt::DirSeparator()))
 				sd += bt::DirSeparator();
-			buildFileList(sd,tot_size);
+			buildFileList(sd);
 		}
 	}
 
