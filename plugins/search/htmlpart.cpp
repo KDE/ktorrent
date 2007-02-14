@@ -28,6 +28,7 @@
 #include <kfiledialog.h>
 #include <kparts/browserextension.h>
 #include <util/constants.h>
+#include <khtmlview.h>
 #include "htmlpart.h"
 
 using namespace bt;
@@ -177,6 +178,7 @@ namespace kt
 				begin(curr_url);
 				write(curr_data.data(),curr_data.size());
 				end();
+				view()->ensureVisible(0,0);
 				searchFinished();
 			}
 		}
