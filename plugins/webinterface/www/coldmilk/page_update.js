@@ -35,7 +35,7 @@ function update_all() {
 function fetch_xml(url, callback_functions) {
 		var request = false;
 		
-		if (window.XMLHttpRequest) { //normal browsers
+		if (window.XMLHttpRequest) { // most browsers
 			request = new XMLHttpRequest();
 //			if (request.overrideMimeType) {
 //				request.overrideMimeType('text/xml');
@@ -52,8 +52,8 @@ function fetch_xml(url, callback_functions) {
 			}
 		}
 		
-		if (!request) { // browser doesn't support it
-			alert("Browser doesn't support XMLHttpRequest, sorry.");
+		if (!request) { 
+			// Browser doesn't support XMLHttpRequest
 			return false;
 		}
 		request.onreadystatechange = function() {
@@ -63,14 +63,24 @@ function fetch_xml(url, callback_functions) {
 					//so we'll have to parse the response into XML
 					//object ourselfs. responseXML won't work.
 					var xmlstring = request.responseText;
-					var xmldoc = (new DOMParser()).parseFromString(xmlstring, "text/xml");
+					var xmldoc;
+					if (window.DOMParser) {
+						xmldoc = (new DOMParser())
+								.parseFromString(xmlstring, "text/xml");
+					}
+					else if (window.ActiveXObject) { //ie
+						xmldoc = new ActiveXObject("Microsoft.XMLDOM");
+						xmldoc.async = false;
+						xmldoc.loadXML(xmlstring);
+					}
+
 					for (var i in callback_functions) {
 						eval(callback_functions[i] + "(xmldoc)");
 					}
 
 				}
 				else {
-					alert("problem with request, " + request.status);	
+					// could not fetch
 				}
 			}
 		}
@@ -82,7 +92,7 @@ function fetch_xml(url, callback_functions) {
 function update_title(xmldoc) {
 	var down = _get_text(xmldoc, 'download_speed').data;
 	var up   = _get_text(xmldoc, 'upload_speed').data;
-	var new_title = "(D: " + down + "/s) (U: " + up + "/s) - ktorrent web interface";
+	var new_title = "(D: " + down + ") (U: " + up + ") - ktorrent web interface";
 	document.title = new_title;
 }
 
@@ -114,7 +124,7 @@ function update_status_bar(xmldoc) {
 		var down = _get_text(xmldoc, 'download_speed').data;
 		var up   = _get_text(xmldoc, 'upload_speed').data;
 		cell.appendChild(
-			document.createTextNode("down: " + down + "/s / up: " + up + "/s"));
+			document.createTextNode("down: " + down + " / up: " + up));
 	}
 	//transferred
 	{
@@ -139,15 +149,11 @@ function update_torrent_table(xmldoc) {
 	var newtable = document.createElement('table');
 	newtable.setAttribute('id', 'torrent_list_table');
 
-	torrents = xmldoc.getElementsByTagName('torrent');
-	
-	for (var i in torrents) {
-		if (!(/^\d+/).test(i)) {
-			//ignore "lenght", "node"  etc
-			continue;
-		}
-
+	var torrents = xmldoc.getElementsByTagName('torrent');
+	var i = 0;
+	while (torrents[i]) {
 		_torrent_table_row(torrents[i], newtable, i);
+		i++;
 	}
 	_torrent_table_header(newtable.insertRow(0));
 

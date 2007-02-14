@@ -59,10 +59,8 @@ class RestInterface {
 		$info = globalinfo();
 		$common = new Common();
 
-		$down_speed 
-			= $common->kb_to_readable($info['download_speed']);
-		$up_speed   
-			= $common->kb_to_readable($info['upload_speed']  );
+		$down_speed = $info['download_speed'];
+		$up_speed = $info['upload_speed'];
 		
 		$down_total 
 			= $common->bytes_to_readable($info['bytes_downloaded']);
