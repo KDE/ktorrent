@@ -48,7 +48,8 @@ namespace bt
 		while (itr != auths.end())
 		{
 			AuthenticateBase* ab = *itr;
-			ab->deleteLater();
+			if (ab)
+				ab->deleteLater();
 			itr++;
 		}
 		auths.clear();
@@ -136,7 +137,8 @@ namespace bt
 			
 			if (!ab || ab->isFinished())
 			{
-				ab->deleteLater();
+				if (ab)
+					ab->deleteLater();
 				itr = auths.erase(itr);
 			}
 			else
