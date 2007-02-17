@@ -329,15 +329,15 @@ void KTorrentCore::loadSilently(const KURL& url)
 		QString dir = Settings::saveDir();
 		if (!Settings::useSaveDir())
 		{
-			loadingFinished(url,false,false);
+			Out(SYS_GEN|LOG_NOTICE) << "Cannot load " << path << " silently, default save location not set !" << endl;
+			Out(SYS_GEN|LOG_NOTICE) << "Using home directory instead !" << endl;
+			dir = QDir::homeDirPath();
 		}
+	
+		if (dir != QString::null && load(path,dir,true))
+			loadingFinished(url,true,false);
 		else
-		{
-			if (dir != QString::null && load(path,dir,true))
-				loadingFinished(url,true,false);
-			else
-				loadingFinished(url,false,true);
-		}
+			loadingFinished(url,false,true);
 	}
 	else
 	{

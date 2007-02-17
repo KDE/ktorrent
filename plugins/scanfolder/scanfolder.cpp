@@ -22,7 +22,7 @@
 #include <kdirlister.h>
 #include <kfileitem.h>
 #include <klocale.h>
-#include <kio/netaccess.h>
+#include <kio/job.h>
 
 #include <qstring.h>
 #include <qobject.h>
@@ -56,7 +56,6 @@ namespace kt
 		connect(m_dir, SIGNAL(newItems( const KFileItemList& )), this, SLOT(onNewItems( const KFileItemList& )));
 		connect(m_core, SIGNAL(loadingFinished( const KURL&, bool, bool )), this, SLOT(onLoadingFinished( const KURL&, bool, bool )));
 
-// 		Out() << "LOADING SCANFOLDER: " << m_dir->url().path() << endl;
 	}
 
 
@@ -75,7 +74,6 @@ namespace kt
 			QString name = file->name();
 			QString dirname = m_dir->url().path();
 			QString filename = dirname + "/" + name;
-
 
 			if(!name.endsWith(".torrent"))
 				continue;
@@ -144,7 +142,8 @@ namespace kt
 				if(QFile::exists(dirname + "/." + name))
 					QFile::remove(dirname + "/." + name);
 
-				KIO::NetAccess::move(url, destination);
+				// NetAccess considered harmfull !!!
+				KIO::file_move(url, destination);
 				break;
 			case defaultAction:
 				QFile f(dirname + "/." + name);
