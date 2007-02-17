@@ -374,9 +374,12 @@ namespace bt
 		}
 	}
 		
-	void ChunkDownload::load(File & file,ChunkDownloadHeader & hdr)
+	bool ChunkDownload::load(File & file,ChunkDownloadHeader & hdr)
 	{
 		// read pieces
+		if (hdr.num_bits == 0)
+			return false; 
+		
 		pieces = BitSet(hdr.num_bits);
 		Array<Uint8> data(pieces.getNumBytes());
 		file.read(data,pieces.getNumBytes());
@@ -385,7 +388,8 @@ namespace bt
 		if (hdr.buffered)
 		{
 			// if it's a buffered chunk, load the data to
-			file.read(chunk->getData(),chunk->getSize());
+			if (file.read(chunk->getData(),chunk->getSize()) != chunk->getSize())
+				return false;
 		}
 		
 		for (Uint32 i = 0;i < pieces.getNumBits();i++)
@@ -393,6 +397,7 @@ namespace bt
 				piece_queue.remove(i);
 		
 		updateHash();
+		return true;
 	}
 
 	Uint32 ChunkDownload::bytesDownloaded() const

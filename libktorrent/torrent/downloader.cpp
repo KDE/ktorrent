@@ -540,11 +540,27 @@ namespace bt
 			{
 				ChunkDownload* cd = new ChunkDownload(c);
 				current_chunks.insert(hdr.index,cd);
-				cd->load(fptr,hdr);
-				downloaded += cd->bytesDownloaded();
+				bool ret = false;
+				try
+				{
+					ret = cd->load(fptr,hdr);
+				}
+				catch (...)
+				{
+					ret = false;
+				}
+				
+				if (!ret)
+				{
+					delete cd;
+				}
+				else
+				{
+					downloaded += cd->bytesDownloaded();
 			
-				if (tmon)
-					tmon->downloadStarted(cd);
+					if (tmon)
+						tmon->downloadStarted(cd);
+				}
 			}
 		}
 		

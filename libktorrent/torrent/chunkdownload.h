@@ -135,7 +135,7 @@ namespace bt
 		 * Load from a File
 		 * @param file The File
 		 */
-		void load(File & file,ChunkDownloadHeader & hdr);
+		bool load(File & file,ChunkDownloadHeader & hdr);
 
 		/**
 		 * Cancel all requests.
