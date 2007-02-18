@@ -220,15 +220,18 @@ namespace bt
 			TimeStampedRequest & tr = *i;
 			if (now - tr.time_stamp > MAX_INTERVAL)
 			{
-			//	Out() << "Request " << tr.req.getIndex() << " " << tr.req.getOffset() << " timed out !" << endl;
 				// cancel it
-				Request r = tr.req;
-				peer->getPacketWriter().sendCancel(tr.req);
+				TimeStampedRequest r = tr;
+				peer->getPacketWriter().sendCancel(r.req);
+				
+				// retransmit it
+				peer->getPacketWriter().sendRequest(r.req);
+				r.time_stamp = now;
+				
+				// reappend it at the end of the list
 				i = reqs.erase(i);
-				timedout(r);
-				// we now have a timeout
-				if (!peer->isChoked() && peer->isSnubbed())
-					peer->stats.evil = true;
+				reqs.append(r);
+				Out(SYS_CON|LOG_DEBUG) << "Retransmitting " << r.req.getIndex() << ":" << r.req.getOffset() << endl;
 			}
 			else
 			{ 
