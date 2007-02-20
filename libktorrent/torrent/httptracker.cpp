@@ -120,7 +120,8 @@ namespace bt
 		md["UserAgent"] = "ktorrent/" VERSION;
 		md["SendLanguageSettings"] = "false";
 		md["Cookies"] = "none";
-		md["accept"] = "text/plain";
+	//	md["accept"] = "text/plain";
+		md["accept"] = "text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2";
 		if (Settings::doNotUseKDEProxy())
 		{
 			// set the proxy if the doNotUseKDEProxy ix enabled (URL must be valid to)
@@ -241,7 +242,8 @@ namespace bt
 		md["UserAgent"] = "ktorrent/" VERSION;
 		md["SendLanguageSettings"] = "false";
 		md["Cookies"] = "none";
-		md["accept"] = "text/plain";
+	//	md["accept"] = "text/plain";
+		md["accept"] = "text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2";
 		if (Settings::doNotUseKDEProxy())
 		{
 			// set the proxy if the doNotUseKDEProxy ix enabled (URL must be valid to)
