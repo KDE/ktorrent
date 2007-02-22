@@ -20,6 +20,7 @@
 
 #include <kurl.h>
 #include <klocale.h>
+#include <qdatetime.h>
 #include <qtextstream.h>
 #include <qfile.h>
 #include <qptrlist.h>
@@ -27,6 +28,7 @@
 #include <torrent/globals.h>
 #include <interfaces/logmonitorinterface.h>
 #include <qmutex.h> 
+#include <util/fileops.h>
 #include "log.h"
 #include "error.h"
 
@@ -54,16 +56,39 @@ namespace bt
 		{
 			delete out;
 		}
+
 		
 		void setFilter(unsigned int filter)
 		{
 			m_filter = filter;
+		}
+		
+		void rotateLogs(const QString & file)
+		{
+			if (bt::Exists(file + "-10.gz"))
+				bt::Delete(file + "-10.gz",true);
+			
+			// move all log files one up
+			for (Uint32 i = 10;i > 1;i--)
+			{
+				QString prev = QString("%1-%2.gz").arg(file).arg(i - 1);
+				QString curr = QString("%1-%2.gz").arg(file).arg(i);
+				if (bt::Exists(prev))
+					bt::Move(prev,curr,true);
+			}
+			
+			// move current log to 1 and zip it
+			bt::Move(file,file + "-1",true);
+			system(QString("gzip %1-1").arg(file).local8Bit());
 		}
 
 		void setOutputFile(const QString & file)
 		{
 			if (fptr.isOpen())
 				fptr.close();
+			
+			if (bt::Exists(file))
+				rotateLogs(file);
 
 			fptr.setName(file);
 			if (!fptr.open(IO_WriteOnly))
@@ -74,19 +99,15 @@ namespace bt
 
 		void write(const QString & line)
 		{
-			*out << line;
-			if (to_cout)
-				std::cout << line.local8Bit();
-
 			tmp += line;
 		}
 
 		void endline()
 		{
-			*out << ::endl;
+			*out << QDateTime::currentDateTime().toString() << ": " << tmp << ::endl;
 			fptr.flush();
 			if (to_cout)
-				std::cout << std::endl;;
+				std::cout << tmp << std::endl;;
 			
 			if (monitors.count() > 0)
 			{
