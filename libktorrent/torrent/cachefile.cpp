@@ -65,7 +65,7 @@ namespace bt
 	CacheFile::~CacheFile()
 	{
 		if (fd != -1)
-			close(false);
+			close();
 	}
 	
 	void CacheFile::changePath(const QString & npath)
@@ -83,20 +83,6 @@ namespace bt
 		}
 
 		file_size = FileSize(fd);
-
-	//	Out() << QString("CacheFile %1 = %2").arg(path).arg(file_size) << endl;
-		
-		// re do all mappings if there are any
-		QMap<void*,Entry>::iterator i = mappings.begin();
-		while (i != mappings.end())
-		{
-			CacheFile::Entry e = i.data();
-			i++;
-			mappings.erase(e.ptr);
-			e.ptr = map(e.thing,e.offset,e.size - e.diff,e.mode);
-			if (e.ptr)
-				e.thing->remapped(e.ptr);
-		}
 	}
 	
 	void CacheFile::open(const QString & path,Uint64 size)
@@ -105,9 +91,6 @@ namespace bt
 		// only set the path and the max size, we only open the file when it is needed
 		this->path = path;
 		max_size = size;
-		// if there are mappings we must reopen the file and restore them
-		if (mappings.count() > 0)
-			openFile();
 	}
 		
 	void* CacheFile::map(MMappeable* thing,Uint64 off,Uint32 size,Mode mode)
@@ -277,7 +260,7 @@ namespace bt
 		}
 	}
 		
-	void CacheFile::close(bool to_be_reopened)
+	void CacheFile::close()
 	{
 		QMutexLocker lock(&mutex);
 		
@@ -293,19 +276,11 @@ namespace bt
 				ret = munmap((char*)e.ptr - e.diff,e.size);
 			else
 				ret = munmap(e.ptr,e.size);
-			e.thing->unmapped(to_be_reopened);
-			// if it will be reopenend, we will not remove all mappings
-			// so that they will be redone on reopening
-			if (to_be_reopened)
-			{
-				i++;
-			}
-			else
-			{
-				i++;
-				mappings.erase(e.ptr);
-			}
+			e.thing->unmapped();
 			
+			i++;
+			mappings.erase(e.ptr);
+						
 			if (ret < 0)
 			{
 				Out(SYS_DIO|LOG_IMPORTANT) << QString("Munmap failed with error %1 : %2").arg(errno).arg(strerror(errno)) << endl;
@@ -380,9 +355,8 @@ namespace bt
 		if (fd == -1 || mappings.count() > 0)
 			return;
 			
-		close(fd);
+		::close(fd);
 		fd = -1;
-		//Out() << "Temporarely closed " << path << endl;
 	}
 	
 	

@@ -124,7 +124,7 @@ namespace bt
 	{
 		if (fd)
 		{
-			fd->close(false);
+			fd->close();
 			delete fd;
 			fd = 0;
 		}
@@ -142,7 +142,7 @@ namespace bt
 		}
 		catch (...)
 		{
-			fd->close(false);
+			fd->close();
 			delete fd;
 			fd = 0;
 			throw;

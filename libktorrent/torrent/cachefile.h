@@ -41,16 +41,8 @@ namespace bt
 
 		/**
 		 * When a CacheFile is closed, this will be called on all existing mappings.
-	 	 * @param remap_intended A remap will happen
 		 */
-		virtual void unmapped(bool remap_intended) = 0;
-		
-		/**
-		 * When a previously unmapped thing is remapped again. This happens
-		 * if the CacheFile is moved on disk.
-		 * @param ptr The new pointer to the mapping
-		 */
-		virtual void remapped(void* ptr) = 0;
+		virtual void unmapped() = 0;
 	};
 
 	/**
@@ -103,7 +95,7 @@ namespace bt
 		 * Close the file, everything will be unmapped.
 		 * @param to_be_reopened Indicates if the close is temporarely (i.e. it will be reopened)
 		 */
-		void close(bool to_be_reopened);
+		void close();
 		
 		/**
 		 * Read from the file.

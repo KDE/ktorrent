@@ -61,16 +61,11 @@ namespace bt
 		}
 	}
 	
-	void Chunk::unmapped(bool remap_intended)
+	void Chunk::unmapped()
 	{
-		setData(0,remap_intended ? Chunk::MMAPPED : Chunk::ON_DISK);
+		setData(0,Chunk::ON_DISK);
 	}
-			
-	void Chunk::remapped(void* ptr)
-	{
-		setData((Uint8*)ptr,Chunk::MMAPPED);
-	}
-	
+				
 	bool Chunk::checkHash(const SHA1Hash & h) const
 	{
 		if (status != BUFFERED && status != MMAPPED)
