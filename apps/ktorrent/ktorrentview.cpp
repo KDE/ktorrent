@@ -371,7 +371,9 @@ void KTorrentView::removeDownloads()
 			{
 				QString msg = i18n("The torrent %1 has not finished downloading, "
 						"do you want to delete the incomplete data, too?").arg(s.torrent_name);
-				int ret = KMessageBox::questionYesNoCancel(this,msg,i18n("Remove Download"));
+				int ret = KMessageBox::questionYesNoCancel(
+						this,msg,i18n("Remove Download"),
+						i18n("Delete Data"),i18n("Keep Data"));
 				if (ret == KMessageBox::Cancel)
 					return;
 				else if (ret == KMessageBox::Yes)
