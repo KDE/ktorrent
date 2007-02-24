@@ -140,6 +140,7 @@ namespace kt
 		if (tc == ti)
 			return;
 		
+		setEnabled(ti != 0);
 		torrentChanged(ti);
 		update();
 	}

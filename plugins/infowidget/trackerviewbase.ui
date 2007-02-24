@@ -27,45 +27,6 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QListView" row="2" column="0">
-            <column>
-                <property name="text">
-                    <string>Tracker</string>
-                </property>
-                <property name="clickable">
-                    <bool>true</bool>
-                </property>
-                <property name="resizable">
-                    <bool>false</bool>
-                </property>
-            </column>
-            <property name="name">
-                <cstring>listTrackers</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>7</hsizetype>
-                    <vsizetype>7</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="minimumSize">
-                <size>
-                    <width>0</width>
-                    <height>0</height>
-                </size>
-            </property>
-            <property name="maximumSize">
-                <size>
-                    <width>32767</width>
-                    <height>32767</height>
-                </size>
-            </property>
-            <property name="resizeMode">
-                <enum>LastColumn</enum>
-            </property>
-        </widget>
         <widget class="QLayoutWidget" row="0" column="0">
             <property name="name">
                 <cstring>layout14</cstring>
@@ -262,7 +223,7 @@
                         <cstring>btnChange</cstring>
                     </property>
                     <property name="text">
-                        <string>Cha&amp;nge Tracker</string>
+                        <string>Ch&amp;ange Tracker</string>
                     </property>
                 </widget>
                 <spacer>
@@ -295,6 +256,28 @@
                 </widget>
             </vbox>
         </widget>
+        <widget class="KListView" row="2" column="0">
+            <column>
+                <property name="text">
+                    <string>Trackers</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <property name="name">
+                <cstring>listTrackers</cstring>
+            </property>
+            <property name="resizeMode">
+                <enum>AllColumns</enum>
+            </property>
+            <property name="fullWidth">
+                <bool>true</bool>
+            </property>
+        </widget>
     </grid>
 </widget>
 <customwidgets>
@@ -305,12 +288,6 @@
         <signal>clicked()</signal>
         <receiver>TrackerViewBase</receiver>
         <slot>btnChange_clicked()</slot>
-    </connection>
-    <connection>
-        <sender>listTrackers</sender>
-        <signal>currentChanged(QListViewItem*)</signal>
-        <receiver>TrackerViewBase</receiver>
-        <slot>listTrackers_currentChanged(QListViewItem*)</slot>
     </connection>
     <connection>
         <sender>btnUpdate</sender>
@@ -352,5 +329,6 @@
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
+    <includehint>klistview.h</includehint>
 </includehints>
 </UI>

@@ -144,6 +144,9 @@ namespace kt
 		if (tracker_view)
 			tracker_view->changeTC(tc);
 		
+		if (peer_view)
+			peer_view->setEnabled(tc != 0);
+		
 		createMonitor(tc);
 	}
 	

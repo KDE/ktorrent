@@ -27,8 +27,7 @@
 #endif
 
 #include <kapplication.h>
-//#include <kmainwindow.h>
-#include <kmdimainfrm.h>
+#include <newui/dmainwindow.h>
 #include <qtimer.h>
 #include <interfaces/guiinterface.h>
 
@@ -53,7 +52,6 @@ class KPushButton;
 namespace kt
 {
 	class TorrentInterface;
-	class ExpandableWidget;
 	class Group;
 	class GroupView;
 }
@@ -66,7 +64,7 @@ namespace kt
  * @author Joris Guisson <joris.guisson@gmail.com>
  * @version 0.1
  */
-class KTorrent : public KMdiMainFrm, public kt::GUIInterface
+class KTorrent : public DMainWindow, public kt::GUIInterface
 {
 	Q_OBJECT
 public:
@@ -167,9 +165,10 @@ private:
 	void setupActions();
 	bool queryClose();
 	bool queryExit();
-	virtual void addWidgetInView(QWidget* w,kt::Position pos);
-	virtual void removeWidgetFromView(QWidget* w);
 	
+	virtual void addWidgetInView(QWidget* w,kt::Position pos);
+	virtual void removeWidgetFromView(QWidget* w);	
+	virtual void closeTab();
 	
 private:
 	kt::GroupView* m_group_view;
@@ -184,16 +183,8 @@ private:
 	KTorrentDCOP* m_dcop;
 	QTimer m_gui_update_timer;
 	KTorrentPreferences* m_pref;
-	
-	struct Tab
-	{
-		KMdiChildView* child;
-		kt::CloseTabListener* ctl;
-	};
-	
-	kt::ExpandableWidget* m_view_exp;
-	QMap<QWidget*,Tab> m_tab_map;
-	KPushButton* m_close_cur_tab;
+
+	QMap<QWidget*,kt::CloseTabListener*> m_tab_map;
 
 	QLabel* m_statusInfo;
 	QLabel* m_statusTransfer;

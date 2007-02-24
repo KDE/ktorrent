@@ -112,6 +112,7 @@ namespace kt
 	void ChunkDownloadView::changeTC(kt::TorrentInterface* tc)
 	{
 		curr_tc = tc;
+		setEnabled(curr_tc != 0);
 		update();
 	}
 	
