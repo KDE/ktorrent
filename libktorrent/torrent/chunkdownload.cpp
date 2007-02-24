@@ -377,7 +377,7 @@ namespace bt
 	bool ChunkDownload::load(File & file,ChunkDownloadHeader & hdr)
 	{
 		// read pieces
-		if (hdr.num_bits == 0)
+		if (hdr.num_bits != num)
 			return false; 
 		
 		pieces = BitSet(hdr.num_bits);
