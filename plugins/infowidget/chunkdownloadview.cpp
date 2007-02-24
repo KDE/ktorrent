@@ -74,12 +74,12 @@ namespace kt
 	{
 		m_list_view->setShowSortIndicator(true);
 		m_list_view->setAllColumnsShowFocus(true);
-		
-		
+	
 		m_list_view->setColumnAlignment(0,Qt::AlignLeft);
 		m_list_view->setColumnAlignment(1,Qt::AlignCenter);
 		m_list_view->setColumnAlignment(3,Qt::AlignRight);
 		m_list_view->setColumnAlignment(4,Qt::AlignRight);
+		curr_tc = 0;
 	}
 	
 	
@@ -109,8 +109,17 @@ namespace kt
 		items.clear();
 	}
 	
-	void ChunkDownloadView::update(kt::TorrentInterface* curr_tc)
+	void ChunkDownloadView::changeTC(kt::TorrentInterface* tc)
 	{
+		curr_tc = tc;
+		update();
+	}
+	
+	void ChunkDownloadView::update()
+	{
+		if (!curr_tc)
+			return;
+		
 		QMap<ChunkDownloadInterface*,ChunkDownloadViewItem*>::iterator i = items.begin();
 		while (i != items.end())
 		{

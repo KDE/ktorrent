@@ -21,7 +21,7 @@
 #include <qcheckbox.h>
 #include <kglobal.h>
 #include <kiconloader.h>
-#include "infowidget.h"
+#include "infowidgetplugin.h"
 #include "infowidgetprefpage.h"
 #include "infowidgetpluginsettings.h"
 #include "iwpref.h"
@@ -30,7 +30,7 @@
 namespace kt
 {
 
-	InfoWidgetPrefPage::InfoWidgetPrefPage(InfoWidget* iw)
+	InfoWidgetPrefPage::InfoWidgetPrefPage(InfoWidgetPlugin* iw)
 	: PrefPageInterface(i18n("Info Widget"),i18n("Information Widget Options"),KGlobal::iconLoader()->loadIcon("ktinfowidget",KIcon::NoGroup)),iw(iw)
 	{
 		pref = 0;

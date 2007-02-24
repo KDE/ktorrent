@@ -48,6 +48,7 @@ namespace kt
 		Q_OBJECT
 	
 		QMap<kt::ChunkDownloadInterface*,ChunkDownloadViewItem*> items;
+		kt::TorrentInterface* curr_tc;
 	public:
 		ChunkDownloadView(QWidget *parent = 0, const char *name = 0);
 		virtual ~ChunkDownloadView();
@@ -55,12 +56,13 @@ namespace kt
 		void saveLayout(KConfig* cfg,const QString & group_name);
 		void restoreLayout(KConfig* cfg,const QString & group_name);
 		void clear();
+		void update();
+		void changeTC(kt::TorrentInterface* tc);
 	
 	public slots:
 		void addDownload(kt::ChunkDownloadInterface* cd);
 		void removeDownload(kt::ChunkDownloadInterface* cd);
 		void removeAll();
-		void update(kt::TorrentInterface* curr_tc);
 	};
 }	
 

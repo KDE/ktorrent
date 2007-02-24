@@ -1,13 +1,13 @@
 INCLUDES = $(all_includes) -I$(srcdir)/../../libktorrent
 METASOURCES = AUTO
 kde_module_LTLIBRARIES = ktinfowidgetplugin.la
-noinst_HEADERS = infowidgetplugin.h infowidgetprefpage.h trackerview.h GeoIP.h
+noinst_HEADERS = infowidgetplugin.h infowidgetprefpage.h trackerview.h GeoIP.h \
+	statustab.h fileview.h
 ktinfowidgetplugin_la_SOURCES = infowidgetplugin.cpp availabilitychunkbar.cpp \
-		chunkbar.cpp chunkdownloadview.cpp downloadedchunkbar.cpp infowidget.cpp \
-		infowidgetbase.ui peerview.cpp ktorrentmonitor.cpp iwfiletreediritem.cpp \
-		iwfiletreeitem.cpp infowidgetprefpage.cpp infowidgetpluginsettings.kcfgc iwpref.ui \
-		trackerviewbase.ui trackerview.cpp GeoIP.c floatspinbox.cpp localefloatvalidator.cpp \
-	chunkdownloadviewbase.ui
+	chunkbar.cpp chunkdownloadview.cpp downloadedchunkbar.cpp peerview.cpp \
+	ktorrentmonitor.cpp iwfiletreediritem.cpp iwfiletreeitem.cpp infowidgetprefpage.cpp \
+	infowidgetpluginsettings.kcfgc iwpref.ui trackerviewbase.ui trackerview.cpp GeoIP.c floatspinbox.cpp \
+	localefloatvalidator.cpp chunkdownloadviewbase.ui statustabbase.ui statustab.cpp fileview.cpp
 
 # Libs needed by the plugin
 ktinfowidgetplugin_la_LIBADD = ../../libktorrent/libktorrent.la \

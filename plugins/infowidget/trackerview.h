@@ -35,9 +35,12 @@ namespace kt
 	{
 			Q_OBJECT
 		public:
-			TrackerView(TorrentInterface* ti, QWidget *parent = 0, const char *name = 0);
+			TrackerView(QWidget *parent = 0, const char *name = 0);
+			virtual ~TrackerView();
 			
-			void update(TorrentInterface* ti);
+			void update();
+			void changeTC(TorrentInterface* ti);
+			
 		public slots:
 			virtual void btnUpdate_clicked();
 			virtual void btnRestore_clicked();
@@ -46,6 +49,7 @@ namespace kt
 			virtual void btnAdd_clicked();
     		virtual void listTrackers_currentChanged(QListViewItem*);
 			
+		private:
 			void torrentChanged(TorrentInterface* ti);
 			
 		private:

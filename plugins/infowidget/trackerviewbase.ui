@@ -9,16 +9,19 @@
             <x>0</x>
             <y>0</y>
             <width>598</width>
-            <height>251</height>
+            <height>254</height>
         </rect>
     </property>
     <property name="sizePolicy">
         <sizepolicy>
-            <hsizetype>5</hsizetype>
-            <vsizetype>5</vsizetype>
+            <hsizetype>7</hsizetype>
+            <vsizetype>7</vsizetype>
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
         </sizepolicy>
+    </property>
+    <property name="caption">
+        <string>TrackerViewBase</string>
     </property>
     <grid>
         <property name="name">
@@ -38,6 +41,26 @@
             </column>
             <property name="name">
                 <cstring>listTrackers</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>7</hsizetype>
+                    <vsizetype>7</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="minimumSize">
+                <size>
+                    <width>0</width>
+                    <height>0</height>
+                </size>
+            </property>
+            <property name="maximumSize">
+                <size>
+                    <width>32767</width>
+                    <height>32767</height>
+                </size>
             </property>
             <property name="resizeMode">
                 <enum>LastColumn</enum>
@@ -197,6 +220,9 @@
             <property name="text">
                 <string>&amp;Update Tracker</string>
             </property>
+            <property name="accel">
+                <string>Alt+U</string>
+            </property>
             <property name="toolTip" stdset="0">
                 <string>Minimum update interval - 60 seconds</string>
             </property>
@@ -207,6 +233,9 @@
             </property>
             <property name="text">
                 <string>Add Trac&amp;ker</string>
+            </property>
+            <property name="accel">
+                <string>Alt+K</string>
             </property>
         </widget>
         <widget class="QLayoutWidget" row="2" column="1">

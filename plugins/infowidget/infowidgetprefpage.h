@@ -26,7 +26,7 @@ class IWPref;
 
 namespace kt
 {
-	class InfoWidget;
+	class InfoWidgetPlugin;
 	
 
 	/**
@@ -34,10 +34,10 @@ namespace kt
 	*/
 	class InfoWidgetPrefPage : public PrefPageInterface
 	{
-		InfoWidget* iw;
+		InfoWidgetPlugin* iw;
 		IWPref* pref;
 	public:
-		InfoWidgetPrefPage(InfoWidget* iw);
+		InfoWidgetPrefPage(InfoWidgetPlugin* iw);
 		virtual ~InfoWidgetPrefPage();
 
 		virtual bool apply();

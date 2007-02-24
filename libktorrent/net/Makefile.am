@@ -5,5 +5,5 @@ noinst_LTLIBRARIES = libnet.la
 noinst_HEADERS = socket.h address.h socketmonitor.h circularbuffer.h \
 			bufferedsocket.h speed.h portlist.h uploadthread.h downloadthread.h
 libnet_la_SOURCES = socket.cpp address.cpp socketmonitor.cpp circularbuffer.cpp \
-			bufferedsocket.cpp speed.cpp portlist.cpp uploadthread.cpp downloadthread.cpp
+	bufferedsocket.cpp speed.cpp portlist.cpp uploadthread.cpp downloadthread.cpp
 KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

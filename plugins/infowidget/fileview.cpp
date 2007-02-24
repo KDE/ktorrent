@@ -1,8 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by                                                 *
- *   Joris Guisson <joris.guisson@gmail.com>                               *
- *   Ivan Vasic <ivasic@gmail.com>                                         *
- *   Marcello Maggioni <marcello.maggioni@gmail.com>                       *
+ *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,58 +17,37 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <math.h>
-#include <klistview.h>
-#include <kglobal.h>
 #include <klocale.h>
 #include <kiconloader.h>
-#include <kmimetype.h>
+#include <kglobal.h>
 #include <kpopupmenu.h>
-#include <ktabwidget.h>
 #include <krun.h>
 #include <kmessagebox.h>
-#include <qlabel.h>
-#include <qstring.h>
-#include <qcheckbox.h>
-#include <qpainter.h>
-#include <qtabwidget.h>
-#include <qlayout.h>
-#include <qlineedit.h>
+#include <kmimetype.h>
+#include <util/bitset.h>
 #include <util/functions.h>
 #include <interfaces/functions.h>
-#include <util/log.h>
-#include <interfaces/torrentfileinterface.h>
 #include <interfaces/torrentinterface.h>
-#include <torrent/globals.h>
-#include "ktorrentmonitor.h"
-#include "infowidget.h"
-#include "peerview.h"
-#include "chunkdownloadview.h"
-#include "trackerview.h"
+#include <interfaces/torrentfileinterface.h>
 #include "functions.h"
-#include "downloadedchunkbar.h"
-#include "availabilitychunkbar.h"
-#include "floatspinbox.h"
 #include "iwfiletreeitem.h"
 #include "iwfiletreediritem.h"
-#include "infowidgetpluginsettings.h"
-
+#include "fileview.h"
+		
 using namespace bt;
-using namespace kt;
 
 namespace kt
 {
-	
-	InfoWidget::InfoWidget(QWidget* parent, const char* name, WFlags fl)
-		: InfoWidgetBase(parent,name,fl),peer_view(0),cd_view(0), tracker_view(0)
-	{
-		multi_root = 0;
-		monitor = 0;
-		curr_tc = 0;
 
-		m_tabs->addTab(m_status_tab,i18n("Status"));
-		m_tabs->addTab(m_files_tab,i18n("Files"));
-	
+	FileView::FileView(QWidget *parent, const char *name)
+			: KListView(parent, name),curr_tc(0),multi_root(0)
+	{
+		setFrameShape(QFrame::NoFrame);
+		addColumn( i18n( "File" ) );
+    	addColumn( i18n( "Size" ) );
+    	addColumn( i18n( "Download" ) );
+    	addColumn( i18n( "Preview" ) );
+    	addColumn( i18n( "% Complete" ) );
 		KIconLoader* iload = KGlobal::iconLoader();
 		context_menu = new KPopupMenu(this);
 		preview_id = context_menu->insertItem(iload->loadIconSet("frame_image",KIcon::Small),
@@ -91,137 +68,23 @@ namespace kt
 		context_menu->setItemEnabled(dnd_keep_id, false);
 		context_menu->setItemEnabled(dnd_throw_away_id, false);
 
-		connect(m_file_view,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )),
+		connect(this,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )),
 				this,SLOT(showContextMenu(KListView*, QListViewItem*, const QPoint& )));
 		connect(context_menu, SIGNAL ( activated ( int ) ), this, SLOT ( contextItem ( int ) ) );
 		
 		setEnabled(false);
-		showPeerView( InfoWidgetPluginSettings::showPeerView() );
-		showChunkView( InfoWidgetPluginSettings::showChunkView() );
-		showTrackerView(InfoWidgetPluginSettings::showTrackersView());
+		
+		setSelectionMode(QListView::Extended);
+	}
 
-		m_file_view->setSelectionMode(QListView::Extended);
-		
-		KGlobal::config()->setGroup("InfoWidget");
-		
-		if (KGlobal::config()->hasKey("InfoWidgetSize"))
-		{
-			QSize s = KGlobal::config()->readSizeEntry("InfoWidgetSize",0);
-			resize(s);
-		}
-		
-		maxRatio->setMinValue(0.0f);
-		maxRatio->setMaxValue(100.0f);
-		maxRatio->setStep(0.1f);
-		connect(maxRatio, SIGNAL(valueHasChanged()), this, SLOT(maxRatio_returnPressed()));
-		
-		int h = (int)ceil(fontMetrics().height()*1.25);
-		m_chunk_bar->setFixedHeight(h);
-		m_av_chunk_bar->setFixedHeight(h);
-	}
-	
-	InfoWidget::~InfoWidget()
-	{
-		KGlobal::config()->setGroup("InfoWidget");
-		
-		KGlobal::config()->writeEntry("InfoWidgetSize",size());
-		if (cd_view)
-			cd_view->saveLayout(KGlobal::config(),"ChunkDownloadView");
-		if (peer_view)
-			peer_view->saveLayout(KGlobal::config(),"PeerView");
-		KGlobal::config()->sync();
-		delete monitor;
-	}
-	
-	void InfoWidget::showPeerView( bool show )
-	{
-		if( peer_view == 0 && show)
-		{
-			peer_page = new QWidget();
-			QHBoxLayout* peer_page_layout = new QHBoxLayout(peer_page, 11, 6);
-	
-			peer_view = new PeerView(peer_page);
-			peer_page_layout->add(peer_view);
-	
-			m_tabs->addTab(peer_page,i18n("Peers"));;
-			peer_view->setEnabled(curr_tc != 0);
-			setEnabled(curr_tc != 0);
-			peer_view->restoreLayout(KGlobal::config(),"PeerView");
-		}
-		else if (!show && peer_view != 0)
-		{
-			peer_view->saveLayout(KGlobal::config(),"PeerView");
-			m_tabs->removePage( peer_page );
-			peer_page->reparent(0,QPoint(),false);
-			delete peer_page;
-			peer_view = 0;
-		}
-	
-		if (monitor)
-		{
-			delete monitor;
-			monitor = 0;
-			if (peer_view)
-				peer_view->removeAll();
-			if (cd_view)
-				cd_view->removeAll();
-			if (curr_tc)
-				monitor = new KTorrentMonitor(curr_tc,peer_view,cd_view);
-		}
-	}
-	
-	void InfoWidget::showChunkView( bool show )
-	{
-		if( cd_view == 0 && show)
-		{
-			cd_view = new ChunkDownloadView();
-			m_tabs->addTab(cd_view,i18n("Chunks"));
-			cd_view->setEnabled(curr_tc != 0);
-			setEnabled(curr_tc != 0);
-			cd_view->restoreLayout(KGlobal::config(),"ChunkDownloadView");
-		}
-		else if (!show && cd_view != 0)
-		{
-			cd_view->saveLayout(KGlobal::config(),"ChunkDownloadView");
-			m_tabs->removePage( cd_view );
-			delete cd_view;
-			cd_view = 0;
-		}
 
-		if (monitor)
-		{
-			delete monitor;
-			monitor = 0;
-			if (peer_view)
-				peer_view->removeAll();
-			if (cd_view)
-				cd_view->removeAll();
-			if (curr_tc)
-				monitor = new KTorrentMonitor(curr_tc,peer_view,cd_view);
-		}
-	}
+	FileView::~FileView()
+	{}
 	
-	void InfoWidget::showTrackerView(bool show)
-	{
-		if( tracker_view == 0 && show)
-		{
-			tracker_view = new TrackerView(curr_tc, m_tabs);
-			m_tabs->addTab(tracker_view,i18n("Trackers"));;
-			tracker_view->setEnabled(curr_tc != 0);
-			setEnabled(curr_tc != 0);
-		}
-		else if (!show && tracker_view != 0)
-		{
-			m_tabs->removePage( tracker_view );
-			delete tracker_view;
-			tracker_view = 0;
-		}
-	}
-	
-	void InfoWidget::fillFileTree()
+	void FileView::fillFileTree()
 	{
 		multi_root = 0;
-		m_file_view->clear();
+		clear();
 	
 		if (!curr_tc)
 			return;
@@ -229,7 +92,7 @@ namespace kt
 		if (curr_tc->getStats().multi_file_torrent)
 		{
 			IWFileTreeDirItem* root = new IWFileTreeDirItem(
-					m_file_view,curr_tc->getStats().torrent_name);
+					this,curr_tc->getStats().torrent_name);
 			
 			for (Uint32 i = 0;i < curr_tc->getNumFiles();i++)
 			{
@@ -237,7 +100,7 @@ namespace kt
 				root->insert(file.getPath(),file);
 			}
 			root->setOpen(true);
-			m_file_view->setRootIsDecorated(true);
+			setRootIsDecorated(true);
 			multi_root = root;
 			multi_root->updatePriorityInformation(curr_tc);
 			multi_root->updatePercentageInformation();
@@ -246,96 +109,46 @@ namespace kt
 		else
 		{
 			const TorrentStats & s = curr_tc->getStats();
-			m_file_view->setRootIsDecorated(false);
+			this->setRootIsDecorated(false);
 			KListViewItem* item = new KListViewItem(
-					m_file_view,
+					this,
 					s.torrent_name,
 					BytesToString(s.total_bytes));
 	
 			item->setPixmap(0,KMimeType::findByPath(s.torrent_name)->pixmap(KIcon::Small));
 		}
 	}
-	
-	void InfoWidget::changeTC(kt::TorrentInterface* tc)
+
+	void FileView::changeTC(kt::TorrentInterface* tc)
 	{
 		if (tc == curr_tc)
 			return;
 	
 		curr_tc = tc;
-		if (monitor)
-		{
-			delete monitor;
-			monitor = 0;
-			if (peer_view)
-				peer_view->removeAll();
-			if (cd_view)
-				cd_view->removeAll();
-		}
-	
+		fillFileTree();
+		setEnabled(tc != 0);
 		if (tc)
-		{
-			monitor = new KTorrentMonitor(curr_tc,peer_view,cd_view);
 			connect(tc,SIGNAL(missingFilesMarkedDND( kt::TorrentInterface* )),
 					this,SLOT(refreshFileTree( kt::TorrentInterface* )));
-		}
-	
-		fillFileTree();
-		m_chunk_bar->setTC(tc);
-		m_av_chunk_bar->setTC(tc);
-		setEnabled(tc != 0);
-		if (peer_view)
-		{
-			peer_page->setEnabled(tc != 0);
-			peer_view->setEnabled(tc != 0);
-		}
-		if (cd_view)
-		{
-			if (!tc)
-				cd_view->clear();
-			
-			cd_view->setEnabled(tc != 0);
-		}
-		if(tracker_view)
-		{
-			tracker_view->setEnabled(tc != 0);
-			tracker_view->torrentChanged(tc);
-		}
-		
-		if (curr_tc)
-		{
-			float ratio = curr_tc->getMaxShareRatio();
-			if(ratio > 0)
-			{
-				useLimit->setChecked(true);
-				maxRatio->setValue(ratio);
-			}
-			else
-			{
-				maxRatio->setValue(0.0);
-				useLimit->setChecked(false);
-				maxRatio->setEnabled(false);
-			}
-		}
-		else
-		{
-			maxRatio->setValue(0.00f);
-			m_share_ratio->clear();
-			m_tracker_status->clear();
-			m_seeders->clear();
-			m_leechers->clear();
-			m_tracker_update_time->clear();
-			m_avg_up->clear();
-			m_avg_down->clear();
-		}
-		
-		update();
 	}
 	
-	void InfoWidget::readyPercentage()
+	void FileView::update()
+	{
+		if (!curr_tc)
+			return;
+		
+		if (isVisible())
+		{
+			readyPreview();
+			readyPercentage();
+		}
+	}
+	
+	void FileView::readyPercentage()
 	{
 		if (curr_tc && !curr_tc->getStats().multi_file_torrent)
 		{
-			QListViewItemIterator it(m_file_view);
+			QListViewItemIterator it(this);
 			if (!it.current())
 				return;
 						
@@ -352,11 +165,11 @@ namespace kt
 		}
 	}
 
-	void InfoWidget::readyPreview()
+	void FileView::readyPreview()
 	{
 		if (curr_tc && !curr_tc->getStats().multi_file_torrent)
 		{
-			QListViewItemIterator it(m_file_view);
+			QListViewItemIterator it(this);
 			if (!it.current())
 				return;
 			
@@ -373,87 +186,14 @@ namespace kt
 		}
 	}
 	
-	void InfoWidget::update()
-	{
-		if (!curr_tc)
-			return;
-	
-		const TorrentStats & s = curr_tc->getStats();
-		
-		m_chunk_bar->updateBar();
-		m_av_chunk_bar->updateBar();
-		
-		
-		if (peer_view)
-			peer_view->update();
-		if (cd_view)
-			cd_view->update(curr_tc);
-		if(tracker_view)
-			tracker_view->update(curr_tc);
-		
-		if (s.running)
-		{
-			QTime t;
-			t = t.addSecs(curr_tc->getTimeToNextTrackerUpdate());
-			m_tracker_update_time->setText(t.toString("mm:ss"));
-		}
-		else
-		{
-			m_tracker_update_time->setText("");
-		}
-		
-		m_tracker_status->setText(s.trackerstatus);
-		
-		m_seeders->setText(QString("%1 (%2)")
-				.arg(s.seeders_connected_to).arg(s.seeders_total));
-	
-		m_leechers->setText(QString("%1 (%2)")
-				.arg(s.leechers_connected_to).arg(s.leechers_total));
-	
-		float ratio = kt::ShareRatio(s);
-		if(!maxRatio->hasFocus() && useLimit->isChecked())
-			maxRatioUpdate();
-		
-		m_share_ratio->setText(QString("<font color=\"%1\">%2</font>").arg(ratio <= 0.8 ? "#ff0000" : "#1c9a1c").arg(KGlobal::locale()->formatNumber(ratio,2)));
-	
-		Uint32 secs = curr_tc->getRunningTimeUL(); 
-		if (secs == 0)
-		{
-			m_avg_up->setText(KBytesPerSecToString(0));
-			
-		}
-		else
-		{
-			double r = (double)s.bytes_uploaded / 1024.0;
-			m_avg_up->setText(KBytesPerSecToString(r / secs));
-		}
-		
-		secs = curr_tc->getRunningTimeDL();
-		if (secs == 0)
-		{
-			m_avg_down->setText(KBytesPerSecToString(0));
-		}
-		else
-		{
-			double r = (double)(s.bytes_downloaded - s.imported_bytes)/ 1024.0;
-			m_avg_down->setText(KBytesPerSecToString(r / secs));
-		}
-		
-		if (m_tabs->currentPage() == m_files_tab)
-		{
-			readyPreview();
-			readyPercentage();
-		}
-	}
-	
-	void InfoWidget::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
+	void FileView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 	{
 		const TorrentStats & s = curr_tc->getStats();
 		// don't show a menu if item is 0 or if it is a directory
 		
 		
 		
-		QPtrList<QListViewItem> sel = m_file_view->selectedItems();
+		QPtrList<QListViewItem> sel = selectedItems();
 		switch(sel.count())
 		{
 		case 0:
@@ -557,9 +297,9 @@ namespace kt
 		context_menu->popup(p);
 	}
 	
-	void InfoWidget::contextItem(int id)
+	void FileView::contextItem(int id)
 	{
-		QPtrList<QListViewItem> sel = m_file_view->selectedItems();
+		QPtrList<QListViewItem> sel = selectedItems();
 		
 		Priority newpriority = NORMAL_PRIORITY;
 		if(id == this->preview_id)
@@ -612,8 +352,8 @@ namespace kt
 			i++;
 		}
 	}
-
-	void InfoWidget::changePriority(QListViewItem* item, Priority newpriority)
+	
+	void FileView::changePriority(QListViewItem* item, Priority newpriority)
 	{	
 		if(item->childCount() == 0)
 		{
@@ -641,66 +381,8 @@ namespace kt
 			myChild = myChild->nextSibling();
 		}
 	}
-
-	void InfoWidget::maxRatio_returnPressed()
-	{
-		if(!curr_tc)
-			return;
-		
-		curr_tc->setMaxShareRatio(maxRatio->value());
-	}
 	
-	void InfoWidget::useLimit_toggled(bool state)
-	{
-		if(!curr_tc)
-			return;
-		
-		maxRatio->setEnabled(state);
-		if(!state)
-		{
-			curr_tc->setMaxShareRatio(0.00f);
-			maxRatio->setValue(0.00f);
-		}
-		else
-		{
-			float msr = curr_tc->getMaxShareRatio();
-			if(msr == 0.00f)
-			{	
-				curr_tc->setMaxShareRatio(1.00f);
-				maxRatio->setValue(1.00f);
-			}
-			
-			float sr = kt::ShareRatio(curr_tc->getStats());
-			if(sr >= 1.00f)
-			{
-				//always add 1 to max share ratio to prevent stopping if torrent is running.
-				curr_tc->setMaxShareRatio(sr + 1.00f);
-				maxRatio->setValue(sr + 1.00f);
-			}
-		}
-	}
-	
-	void InfoWidget::maxRatioUpdate()
-	{
-		if(!curr_tc)
-			return;
-		
-		float ratio = curr_tc->getMaxShareRatio();
-		if(ratio > 0.00f)
-		{
-			maxRatio->setEnabled(true);
-			useLimit->setChecked(true);
-			maxRatio->setValue(ratio);
-		}
-		else
-		{
-			maxRatio->setEnabled(false);
-			useLimit->setChecked(false);
-			maxRatio->setValue(0.00f);
-		}
-	}
-	
-	void InfoWidget::refreshFileTree(kt::TorrentInterface* tc)
+	void FileView::refreshFileTree(kt::TorrentInterface* tc)
 	{
 		if (!tc || curr_tc != tc)
 			return;
@@ -710,4 +392,4 @@ namespace kt
 	}
 }
 
-#include "infowidget.moc"
+#include "fileview.moc"

@@ -1,7 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by                                                 *
- *   Joris Guisson <joris.guisson@gmail.com>                               *
- *   Ivan Vasic <ivasic@gmail.com>                                         *
+ *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,68 +17,41 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#ifndef KTFILEVIEW_H
+#define KTFILEVIEW_H
 
-#ifndef INFOWIDGET_H
-#define INFOWIDGET_H
-
-
-#include "infowidgetbase.h"
+#include <klistview.h>
 #include <util/constants.h>
-
-class KPopupMenu; 
-class QString;
-class QWidget;
-class QHBoxLayout;
-
 
 namespace kt
 {
 	class TorrentInterface;
-	class TorrentFileInterface;
-	class PeerView;
-	class ChunkDownloadView;
-	class TrackerView;
-	class KTorrentMonitor;
 	class IWFileTreeDirItem;
 
-	using bt::Priority;
-
-	class InfoWidget : public InfoWidgetBase
+	/**
+		@author Joris Guisson <joris.guisson@gmail.com>
+	*/
+	class FileView : public KListView
 	{
 		Q_OBJECT
-	
 	public:
-		InfoWidget(QWidget* parent = 0, const char* name = 0, WFlags fl = 0);
-		virtual ~InfoWidget();
-		
-		///Show PeerView in main window
-		void showPeerView(bool show);
-		///Show ChunkDownloadView in main window
-		void showChunkView(bool show);
-		///Show TrackerView in main window
-		void showTrackerView(bool show);
-		//change the priority of all children of a directory
-		void changePriority(QListViewItem* item, Priority newpriority);
+		FileView(QWidget *parent = 0, const char *name = 0);
+		virtual ~FileView();
 
-	public slots:
-		void changeTC(kt::TorrentInterface* tc);
 		void update();
+		void changeTC(kt::TorrentInterface* tc);
+	private slots:
+		void contextItem(int id);
 		void showContextMenu(KListView* ,QListViewItem* item,const QPoint & p);
 		void refreshFileTree(kt::TorrentInterface* tc);
-	
-		///preview slot
-		void contextItem(int id);
-    	virtual void maxRatio_returnPressed();
-    	virtual void useLimit_toggled(bool);
-	
+		
 	private:
 		void fillFileTree();
 		void readyPreview();
 		void readyPercentage();
-		void maxRatioUpdate();
+		void changePriority(QListViewItem* item, bt::Priority newpriority);
 		
 	private:
-		KTorrentMonitor* monitor;
 		kt::TorrentInterface* curr_tc;
 		IWFileTreeDirItem* multi_root;
 		KPopupMenu* context_menu;
@@ -90,13 +62,8 @@ namespace kt
 		int last_id;
 		int dnd_keep_id;
 		int dnd_throw_away_id;
-		
-		QWidget* peer_page;
-		PeerView* peer_view;
-		ChunkDownloadView* cd_view;
-		TrackerView* tracker_view;
-		bool m_seed;
 	};
+
 }
 
 #endif

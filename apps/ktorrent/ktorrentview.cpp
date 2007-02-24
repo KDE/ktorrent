@@ -67,6 +67,7 @@ KTorrentView::KTorrentView(QWidget *parent)
 	connect(m_headerMenu, SIGNAL(activated(int)), this, SLOT(onColumnVisibilityChange( int )));
 
 	loadSettings();
+	setFrameShape(QFrame::NoFrame);
 }
 
 KTorrentView::~KTorrentView()

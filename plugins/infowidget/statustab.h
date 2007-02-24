@@ -15,63 +15,40 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTINFOWIDGETPLUGIN_H
-#define KTINFOWIDGETPLUGIN_H
 
-#include <interfaces/plugin.h>
-#include <interfaces/guiinterface.h>
+#ifndef STATUSTAB_H
+#define STATUSTAB_H
 
-
-
+#include "statustabbase.h"
+		
 namespace kt
 {
-	class PeerView;
-	class TrackerView;
-	class StatusTab;
-	class FileView;
-	class ChunkDownloadView;
-	class InfoWidgetPrefPage;
-	class KTorrentMonitor;
+	class TorrentInterface;
 	
-
-	/**
-	@author Joris Guisson
-	*/
-	class InfoWidgetPlugin : public Plugin,public ViewListener
+	class StatusTab : public StatusTabBase
 	{
 		Q_OBJECT
+	
 	public:
-		InfoWidgetPlugin(QObject* parent, const char* name, const QStringList& args);
-		virtual ~InfoWidgetPlugin();
-
-		virtual void load();
-		virtual void unload();
-		virtual void guiUpdate();
-		virtual void currentTorrentChanged(TorrentInterface* tc);
-		virtual bool versionCheck(const QString & version) const;
+		StatusTab(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+		virtual ~StatusTab();
 		
-		///Show PeerView in main window
-		void showPeerView(bool show);
-		///Show ChunkDownloadView in main window
-		void showChunkView(bool show);
-		///Show TrackerView in main window
-		void showTrackerView(bool show);
+	
+	public slots:
+		void changeTC(kt::TorrentInterface* tc);
+		void update();
+		
+		virtual void maxRatioReturnPressed();
+    	virtual void useLimitToggled(bool);
 	private:
-		void createMonitor(TorrentInterface* tc);
-		
+		void maxRatioUpdate();
+	
 	private:
-		PeerView* peer_view;
-		ChunkDownloadView* cd_view;
-		TrackerView* tracker_view;
-		FileView* file_view;
-		StatusTab* status_tab;
-		KTorrentMonitor* monitor;
-		
-		InfoWidgetPrefPage* pref;
+		kt::TorrentInterface* curr_tc;
 	};
-
 }
 
 #endif
+

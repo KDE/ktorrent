@@ -212,6 +212,7 @@ namespace kt
 		connect(this,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )),
 				this,SLOT(showContextMenu(KListView*, QListViewItem*, const QPoint& )));
 		connect(menu, SIGNAL ( activated ( int ) ), this, SLOT ( contextItem ( int ) ) );
+		setFrameShape(QFrame::NoFrame);
 	}
 	
 	

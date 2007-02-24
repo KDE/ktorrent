@@ -36,45 +36,25 @@
 #include <ksqueezedtextlabel.h>
 #include <kglobal.h>
 #include <kiconloader.h>
+#include <klistview.h>
 
 #include <torrent/globals.h>
 #include <util/log.h>
 
 namespace kt
 {
-	TrackerView::TrackerView(TorrentInterface* ti, QWidget *parent, const char *name)
-		:TrackerViewBase(parent, name), tc(ti)
+	TrackerView::TrackerView(QWidget *parent, const char *name)
+		:TrackerViewBase(parent, name), tc(0)
 	{
 		KIconLoader* iload = KGlobal::iconLoader();
 		btnUpdate->setIconSet(iload->loadIconSet("apply", KIcon::Small));
 		btnAdd->setIconSet(iload->loadIconSet("add", KIcon::Small));
 		btnRemove->setIconSet(iload->loadIconSet("remove", KIcon::Small));
 		btnRestore->setIconSet(iload->loadIconSet("undo", KIcon::Small));
-		
-		if(!tc)
-			return;
-		
-		const KURL::List trackers = tc->getTrackersList()->getTrackerURLs();
-		if(trackers.empty())
-			return;
-		
-		for (KURL::List::const_iterator i = trackers.begin();i != trackers.end();i++)
-			new QListViewItem(listTrackers, (*i).prettyURL());
-		
-		if (tc->getStats().priv_torrent)
-		{
-			btnAdd->setEnabled(false);
-			btnRemove->setEnabled(false);
-			btnRestore->setEnabled(false);
-			btnChange->setEnabled(true);
-			txtTracker->setText(i18n("You cannot add trackers to a private torrent"));
-			txtTracker->setEnabled(false);
-		}
-		else if (!tc->getStats().running)
-		{
-			btnUpdate->setEnabled(false);
-			btnChange->setEnabled(false);
-		}
+	}
+	
+	TrackerView::~TrackerView()
+	{
 	}
 
 	void TrackerView::btnAdd_clicked()
@@ -155,9 +135,17 @@ namespace kt
 			txtTracker->setText(item->text(0));
 	}
 	
-	void TrackerView::update(TorrentInterface* ti)
+	void TrackerView::changeTC(TorrentInterface* ti)
 	{
-		tc = ti;
+		if (tc == ti)
+			return;
+		
+		torrentChanged(ti);
+		update();
+	}
+	
+	void TrackerView::update()
+	{
 		if(!tc)
 			return;
 		
