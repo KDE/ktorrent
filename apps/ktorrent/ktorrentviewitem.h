@@ -43,6 +43,8 @@ public:
 
 	kt::TorrentInterface* getTC() {return tc;}
 	void update();
+	
+	static QCStringList getTorrentInfo(kt::TorrentInterface* tc);
 
 private:
 	int compare(QListViewItem * i,int col,bool ascending) const;

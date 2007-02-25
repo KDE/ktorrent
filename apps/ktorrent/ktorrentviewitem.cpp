@@ -87,6 +87,33 @@ static QColor ratioToColor(float ratio)
 	return ratio > 0.8 ? green : Qt::red;
 }
 
+static double Percentage(const TorrentStats & s)
+{
+	if (s.bytes_left_to_download == 0)
+	{
+		return 100.0;
+	}
+	else
+	{
+		if (s.total_bytes_to_download == 0)
+		{
+			return 100.0;
+		}
+		else
+		{
+			double perc = 100.0 - ((double)s.bytes_left_to_download / s.total_bytes_to_download) * 100.0;
+			if (perc > 100.0)
+				perc = 100.0;
+			else if (perc > 99.9)
+				perc = 99.9;
+			else if (perc < 0.0)
+				perc = 0.0;
+			
+			return perc;
+		}
+	}
+}
+
 
 
 KTorrentViewItem::KTorrentViewItem(QListView* parent,TorrentInterface* tc)
@@ -99,6 +126,44 @@ KTorrentViewItem::KTorrentViewItem(QListView* parent,TorrentInterface* tc)
 
 KTorrentViewItem::~KTorrentViewItem()
 {}
+
+QCStringList KTorrentViewItem::getTorrentInfo(kt::TorrentInterface* tc)
+{
+	QCStringList info;
+	const TorrentStats & s = tc->getStats();
+	info.append(s.torrent_name.local8Bit());
+	info.append(tc->statusToString().local8Bit());
+	info.append(BytesToString(s.bytes_downloaded).local8Bit());
+	info.append(BytesToString(s.total_bytes_to_download).local8Bit());
+	info.append(BytesToString(s.bytes_uploaded).local8Bit());
+	if (s.bytes_left_to_download == 0)
+		info.append(KBytesPerSecToString(0).local8Bit());
+	else
+		info.append(KBytesPerSecToString(s.download_rate / 1024.0).local8Bit());
+	
+	info.append(KBytesPerSecToString(s.upload_rate / 1024.0).local8Bit());
+	if (s.bytes_left_to_download == 0)
+	{
+		info.append(QCString(""));
+	}
+	else if (s.running) 
+	{
+		Uint32 secs = tc->getETA();
+		if(secs == -1)
+			info.append(i18n("infinity").local8Bit());
+		else
+			info.append(DurationToString(secs).local8Bit());
+	}
+	else
+	{
+		info.append(i18n("infinity").local8Bit());
+	}
+	
+	info.append(QString::number(s.num_peers).local8Bit());
+	info.append(QString(KGlobal::locale()->formatNumber(Percentage(s),2) + " %").local8Bit());
+	info.append(KGlobal::locale()->formatNumber(kt::ShareRatio(s),2).local8Bit());
+	return info;
+}
 
 void KTorrentViewItem::update()
 {
@@ -165,31 +230,7 @@ void KTorrentViewItem::update()
 
 	if(m_parent->columnVisible(9))
 	{
-		double perc = 0;
-		if (s.bytes_left_to_download == 0)
-		{
-			perc = 100.0;
-		}
-		else
-		{
-			if (s.total_bytes_to_download == 0)
-			{
-				perc = 100.0;
-			}
-			else
-			{
-				perc = 100.0 - ((double)s.bytes_left_to_download / s.total_bytes_to_download) * 100.0;
-				if (perc > 100.0)
-					perc = 100.0;
-				else if (perc > 99.9)
-					perc = 99.9;
-				else if (perc < 0.0)
-					perc = 0.0;
-					
-			}
-		}
-		
-		setText(9,i18n("%1 %").arg(KGlobal::locale()->formatNumber(perc,2)));
+		setText(9,i18n("%1 %").arg(KGlobal::locale()->formatNumber(Percentage(s),2)));
 	}
 	
 	if(m_parent->columnVisible(10))

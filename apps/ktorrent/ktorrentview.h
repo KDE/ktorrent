@@ -71,7 +71,7 @@ public:
 	/// Get the current TorrentInterface object
 	kt::TorrentInterface* getCurrentTC();
 
-	QCStringList getTorrentInfo(kt::TorrentInterface* tc);
+	static QCStringList getTorrentInfo(kt::TorrentInterface* tc);
 	
 	/// Save the views settings
 	void saveSettings();

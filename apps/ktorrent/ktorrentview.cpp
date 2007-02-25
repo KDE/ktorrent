@@ -446,22 +446,7 @@ TorrentInterface* KTorrentView::getCurrentTC()
 
 QCStringList KTorrentView::getTorrentInfo(kt::TorrentInterface* tc)
 {
-	QCStringList torrentinfo;
-	KTorrentViewItem* tvi = 0;
-	QMap<TorrentInterface*,KTorrentViewItem*>::iterator i = items.begin();
-	while (i != items.end())
-	{
-		tvi = i.data();
-		TorrentInterface* cur = i.key();
-		if (tc == cur)
-			break;
-		i++;
-	}
-	
-	if (tvi)
-		for(int i = 0; i < 10; i++)
-			torrentinfo.append(tvi->text(i).ascii());
-	return torrentinfo;
+	return KTorrentViewItem::getTorrentInfo(tc);
 }
 
 void KTorrentView::onExecuted(QListViewItem* item)
