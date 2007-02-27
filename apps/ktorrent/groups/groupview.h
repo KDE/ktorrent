@@ -25,6 +25,7 @@
 
 class KPopupMenu;
 class KActionCollection;
+class ViewManager;
 class KTorrentView;
 
 namespace kt
@@ -53,16 +54,29 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		GroupView(KTorrentView* view,KActionCollection* col,QWidget *parent = 0, const char *name = 0);
+		GroupView(ViewManager* view,KActionCollection* col,QWidget *parent = 0, const char *name = 0);
 		virtual ~GroupView();
 		
-		
+		/// Get the current group
 		Group* currentGroup() {return current;} 
+		
+		/// Save all groups
 		void saveGroups();
+		
+		/// Load groups
 		void loadGroups();
+		
+		/// Find a group by its name
+		const Group* findGroup(const QString & name) const;
 		
 	public slots:
 		void onTorrentRemoved(kt::TorrentInterface* tc);
+		
+		/// Update a groups sub menu
+		void updateGroupsSubMenu(KPopupMenu* gsm);
+		
+		/// An item was activated in the groups sub menu of a KTorrentView
+		void onGroupsSubMenuItemActivated(KTorrentView* v,const QString & group);
 		
 	private slots:
 		void onExecuted(QListViewItem* item);
@@ -72,19 +86,20 @@ namespace kt
 		void editGroupName();
 		void onDropped(QDropEvent* e,QListViewItem *after);
 		virtual bool acceptDrag(QDropEvent* event) const;
-		void onGroupsSubMenuItemActivated(int id);
+		void openView();
+		
 		
 	signals:
 		void currentGroupChanged(kt::Group* g);
 		void groupRenamed(kt::Group* g);
+		void openNewTab(kt::Group* g);
 		
 	private:
 		void createMenu(KActionCollection* col);
 		GroupViewItem* addGroup(Group* g,KListViewItem* parent);
-		void updateGroupsSubMenu();
 		
 	private:
-		KTorrentView* view;
+		ViewManager* view;
 		KListViewItem* custom_root;
 		bt::PtrMap<GroupViewItem*,Group> groups;
 		GroupManager* gman;
@@ -97,6 +112,7 @@ namespace kt
 		KAction* new_group;
 		KAction* edit_group;
 		KAction* remove_group;
+		KAction* open_in_new_tab;
 		
 		friend class GroupViewItem;
 	};

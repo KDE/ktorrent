@@ -44,6 +44,7 @@
 #include "settings.h"
 #include "scandialog.h"
 #include "addpeerwidget.h"
+#include "ktorrentviewmenu.h"
 
 using namespace bt;
 using namespace kt;
@@ -54,6 +55,9 @@ KTorrentView::KTorrentView(QWidget *parent)
 
 	setupColumns();
 	
+	connect(this,SIGNAL(executed(QListViewItem* )),
+			this,SLOT(onExecuted(QListViewItem* )));
+	
 	connect(this,SIGNAL(currentChanged(QListViewItem* )),
 			this,SLOT(onExecuted(QListViewItem* )));
 	
@@ -62,11 +66,10 @@ KTorrentView::KTorrentView(QWidget *parent)
 	
 	connect(this,SIGNAL(selectionChanged()),this,SLOT(onSelectionChanged()));
 
-	makeMenu();
+	menu = new KTorrentViewMenu(this);
 	
 	connect(m_headerMenu, SIGNAL(activated(int)), this, SLOT(onColumnVisibilityChange( int )));
 
-	loadSettings();
 	setFrameShape(QFrame::NoFrame);
 }
 
@@ -151,80 +154,15 @@ void KTorrentView::setCurrentGroup(Group* group)
 	onExecuted(currentItem());
 }
 
-void KTorrentView::makeMenu()
+void KTorrentView::saveSettings(KConfig* cfg,int idx)
 {
-	KIconLoader* iload = KGlobal::iconLoader();
-	menu = new KPopupMenu(this);
-	
-	stop_id = menu->insertItem(
-			iload->loadIconSet("ktstop",KIcon::Small),i18n("to stop", "Stop"),
-			this,SLOT(stopDownloads()));
-
-	start_id = menu->insertItem(
-			iload->loadIconSet("ktstart",KIcon::Small),i18n("to start", "Start"),
-			this,SLOT(startDownloads()));
-
-	remove_id = menu->insertItem(
-			iload->loadIconSet("ktremove",KIcon::Small),i18n("Remove Torrent"),
-			this,SLOT(removeDownloads()));
-	
-	remove_all_id = menu->insertItem(
-			iload->loadIconSet("ktremove",KIcon::Small),i18n("Remove Torrent and Data"),
-			this,SLOT(removeDownloadsAndData()));
-	
-	queue_id = menu->insertItem(
-			iload->loadIconSet("player_playlist",KIcon::Small),i18n("Enqueue/Dequeue"),
-			this,SLOT(queueSlot()));
-	
-	menu->insertSeparator();
-	
-	add_peer_id = menu->insertItem(
-			iload->loadIconSet("add", KIcon::Small), i18n("Add Peers..."),
-			this, SLOT(showAddPeersWidget())); 
-	
-	peer_sources_menu = new KPopupMenu(menu);
-	peer_sources_id = menu->insertItem(i18n("Additional Peer Sources"), peer_sources_menu);
-	peer_sources_menu->insertTitle(i18n("Torrent peer sources:"));
-	peer_sources_menu->setCheckable(true);
-	dht_id = peer_sources_menu->insertItem(i18n("DHT"), this, SLOT(dhtSlot()));
-	ut_pex_id = peer_sources_menu->insertItem(i18n("Peer Exchange"), this, SLOT(utPexSlot()));
-	
-	menu->insertSeparator();
-	
-	announce_id = menu->insertItem(
-			iload->loadIconSet("apply",KIcon::Small),i18n("Manual Announce"),
-			this,SLOT(manualAnnounce())); 
-	
-	preview_id = menu->insertItem(
-			iload->loadIconSet("frame_image",KIcon::Small),i18n("Preview"), 
-			this, SLOT(previewFiles()));
-	
-	menu->insertSeparator();
-	dirs_sub_menu = new KPopupMenu(menu);
-	dirs_id = menu->insertItem(i18n("Open Directory..."), dirs_sub_menu);
-	outputdir_id = dirs_sub_menu->insertItem(iload->loadIconSet("folder",KIcon::Small), i18n("Data Directory"), this, SLOT(openOutputDirectory()));
-	torxdir_id = dirs_sub_menu->insertItem(iload->loadIconSet("folder",KIcon::Small), i18n("Temporary Directory"), this, SLOT(openTorXDirectory()));
-	
-	menu->insertSeparator();
-	remove_from_group_id =  menu->insertItem(i18n("Remove From Group"),this, SLOT(removeFromGroup()));
-	groups_sub_menu = new KPopupMenu(menu);
-	
-	add_to_group_id = menu->insertItem(i18n("Add to Group"),groups_sub_menu);
-	
-	menu->insertSeparator();
-	scan_id = menu->insertItem(i18n("Check Data Integrity"),this, SLOT(checkDataIntegrity()));	
-}
-
-void KTorrentView::saveSettings()
-{
-	saveLayout(KGlobal::config(),"KTorrentView");
-	KGlobal::config()->sync();
+	saveLayout(cfg,QString("KTorrentView-%1").arg(idx));
 }
 
 
-void KTorrentView::loadSettings()
+void KTorrentView::loadSettings(KConfig* cfg,int idx)
 {
-	restoreLayout(KGlobal::config(),"KTorrentView");
+	restoreLayout(cfg,QString("KTorrentView-%1").arg(idx));
 	setDragEnabled(true);
 
 	for(int i=0; i<columns();++i)
@@ -444,11 +382,6 @@ TorrentInterface* KTorrentView::getCurrentTC()
 		return 0;
 }
 
-QCStringList KTorrentView::getTorrentInfo(kt::TorrentInterface* tc)
-{
-	return KTorrentViewItem::getTorrentInfo(tc);
-}
-
 void KTorrentView::onExecuted(QListViewItem* item)
 {
 	KTorrentViewItem* tvi = dynamic_cast<KTorrentViewItem*>(item);
@@ -465,103 +398,8 @@ void KTorrentView::onExecuted(QListViewItem* item)
 
 void KTorrentView::showContextMenu(KListView* ,QListViewItem*,const QPoint & p)
 {
-	bool en_start = false;
-	bool en_stop = false;
-	bool en_remove = false;
-	bool en_prev = false;
-	bool en_announce = false;
-	bool en_add_peer = false;
-	bool en_dirs = false;
-	bool en_peer_sources = false;
-	bool dummy = false;
-	
-	QPtrList<QListViewItem> sel = selectedItems();
-	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
-	{
-		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
-		TorrentInterface* tc = kvi->getTC();
-		if (tc)
-		{
-			const TorrentStats & s = tc->getStats();
-			
-			if (tc->readyForPreview() && !s.multi_file_torrent)
-				en_prev = true;
-			
-			if (!tc->isCheckingData(dummy))
-				en_remove = true;
-			
-			if (!s.running)
-			{
-				if (!tc->isCheckingData(dummy))
-				{
-					en_start = true;
-				}
-			}
-			else
-			{
-				if (!tc->isCheckingData(dummy))
-				{
-					en_stop = true;
-					if (tc->announceAllowed())
-						en_announce = true;
-				}
-			}
-			
-			if (!s.priv_torrent && !tc->isCheckingData(dummy))
-			{
-				en_add_peer = true;
-				en_peer_sources = true;
-			}
-		}
-	}
-	
-	en_add_peer = en_add_peer && en_stop;
-	
-	menu->setItemEnabled(start_id,en_start);
-	menu->setItemEnabled(stop_id,en_stop);
-	menu->setItemEnabled(remove_id,en_remove);
-	menu->setItemEnabled(remove_all_id,en_remove);
-	menu->setItemEnabled(preview_id,en_prev);
-	menu->setItemEnabled(add_peer_id, en_add_peer);
-	menu->setItemEnabled(announce_id,en_announce);
-	menu->setItemEnabled(queue_id, en_remove);
-	
-	menu->setItemEnabled(remove_from_group_id,current_group && !current_group->isStandardGroup());
-	menu->setItemEnabled(add_to_group_id,groups_sub_menu->count() > 0);
-	
-	if (sel.count() == 1)
-	{
-		//enable directories
-		en_dirs = true;
-		
-		KTorrentViewItem* kvi = (KTorrentViewItem*)sel.getFirst();
-		TorrentInterface* tc = kvi->getTC();
-		// no data check when we are preallocating diskspace
-		if (tc->getStats().status == kt::ALLOCATING_DISKSPACE || tc->isCheckingData(dummy))
-			menu->setItemEnabled(scan_id, false);
-		else
-			menu->setItemEnabled(scan_id, true);
-		
-		//enable additional peer sources if torrent is not private
-		menu->setItemEnabled(peer_sources_id, en_peer_sources);
-		
-		if (en_peer_sources)
-		{
-			peer_sources_menu->setItemChecked(dht_id, tc->isFeatureEnabled(kt::DHT_FEATURE));
-			peer_sources_menu->setItemChecked(ut_pex_id, tc->isFeatureEnabled(kt::UT_PEX_FEATURE));
-		}
-	}
-	else
-	{
-		menu->setItemEnabled(scan_id,false);
-		
-		//disable peer source
-		menu->setItemEnabled(peer_sources_id, false);	
-	}
-	
-	menu->setItemEnabled(dirs_id, en_dirs);
-	
-	menu->popup(p);
+	updateGroupsSubMenu(menu->getGroupsSubMenu());
+	menu->show(p);
 }
 
 void KTorrentView::addTorrent(TorrentInterface* tc)
@@ -633,10 +471,6 @@ bool KTorrentView::acceptDrag(QDropEvent* event) const
 	return KURLDrag::canDecode(event);
 }
 
-void KTorrentView::torrentFinished(kt::TorrentInterface* tc)
-{
-}
-
 void KTorrentView::onSelectionChanged()
 {
 	bool en_start = false;
@@ -702,7 +536,7 @@ QDragObject* KTorrentView::dragObject()
 	return new TorrentDrag(this);
 }
 
-void KTorrentView::getSelection(QPtrList<kt::TorrentInterface> & sel)
+void KTorrentView::getSelection(QValueList<kt::TorrentInterface*> & sel)
 {
 	QPtrList<QListViewItem> s = selectedItems();
 	if (s.count() == 0)
@@ -885,6 +719,11 @@ bool KTorrentView::eventFilter(QObject* watched, QEvent* e)
 	}
 
 	return KListView::eventFilter(watched, e);
+}
+
+void KTorrentView::gsmItemActived(const QString & group)
+{
+	groupsSubMenuItemActivated(this,group);
 }
 
 #include "ktorrentview.moc"

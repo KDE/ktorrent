@@ -92,6 +92,8 @@
 #include <groups/group.h>
 #include <groups/groupview.h>
 #include <mse/streamsocket.h>
+#include "viewmanager.h"
+#include "ktorrentviewitem.h"
 
 
 
@@ -109,23 +111,22 @@ using namespace kt;
 
 KTorrent::KTorrent()
 	: DMainWindow(0,"KTorrent"),m_group_view(0),
-		m_view(0), m_systray_icon(0)
+		m_view_man(0), m_systray_icon(0)
 {
 	setHidden(true);
 	//setToolviewStyle(KMdi::TextAndIcon);
 	connect(this,SIGNAL(widgetChanged(QWidget*)),this,SLOT(currentTabChanged(QWidget*)));
 	
-	KIconLoader* iload = KGlobal::iconLoader();
-	
-	m_view = new KTorrentView(0);
-	addTabPage(m_view,iload->loadIconSet("folder", KIcon::Small),i18n("Torrents"));
-	
-	m_group_view = new kt::GroupView(m_view,actionCollection());
-	m_group_view->loadGroups();
+	m_view_man = new ViewManager(this);
+	m_group_view = new kt::GroupView(m_view_man,actionCollection());
+	connect(m_group_view,SIGNAL(openNewTab(kt::Group*)),this,SLOT(openView(kt::Group*)));
 
 	m_pref = new KTorrentPreferences(*this);
 	m_core = new KTorrentCore(this);
 	m_systray_icon = new TrayIcon(m_core, this);
+	
+	m_group_view->loadGroups();
+	m_view_man->restoreViewState(KGlobal::config(),this);
 	
 	connect(m_group_view,SIGNAL(currentGroupChanged( kt::Group* )),
 			this,SLOT(groupChanged(kt::Group*)));
@@ -133,57 +134,25 @@ KTorrent::KTorrent()
 	connect(m_group_view,SIGNAL(groupRenamed(kt::Group*)),
 			this,SLOT(groupChanged(kt::Group*)));
 	
-	connect(m_core, SIGNAL(finished( kt::TorrentInterface* )), 
-			m_view, SLOT(torrentFinished( kt::TorrentInterface* )));
-
 	connect(m_core,SIGNAL(torrentAdded(kt::TorrentInterface* )),
-			m_view,SLOT(addTorrent(kt::TorrentInterface* )));
+			m_view_man,SLOT(addTorrent(kt::TorrentInterface* )));
 
 	connect(m_core,SIGNAL(torrentRemoved(kt::TorrentInterface* )),
-			m_view,SLOT(removeTorrent(kt::TorrentInterface* )));
+			m_view_man,SLOT(removeTorrent(kt::TorrentInterface* )));
 
-	connect(m_view,SIGNAL(currentChanged(kt::TorrentInterface* )),
-			this,SLOT(currentTorrentChanged(kt::TorrentInterface* )));
-
-	connect(m_view,SIGNAL(wantToRemove(kt::TorrentInterface*,bool )),
-			m_core,SLOT(remove(kt::TorrentInterface*,bool )));
-
-	connect(m_view,SIGNAL(dropped(QDropEvent*,QListViewItem*)),
-			this,SLOT(urlDropped(QDropEvent*,QListViewItem*)));
-	
-	connect(m_view,SIGNAL(wantToStart( kt::TorrentInterface* )),
-			m_core,SLOT(start( kt::TorrentInterface* )));
-	
-	connect(m_view,SIGNAL(wantToStop( kt::TorrentInterface*, bool )),
-			m_core,SLOT(stop( kt::TorrentInterface*, bool )));
-	
-	connect(m_view,SIGNAL(needsDataCheck( kt::TorrentInterface* )),
-			m_core,SLOT(doDataCheck( kt::TorrentInterface* )));
-	
-	connect(m_view,SIGNAL(updateActions( bool, bool, bool, bool )),
-			this,SLOT(onUpdateActions( bool, bool, bool, bool )));
-	
-	//connect Core queue() with queue() from KTView.
-	connect(m_view, SIGNAL(queue( kt::TorrentInterface* )), 
-			m_core, SLOT(queue( kt::TorrentInterface* )));
-	
 	connect(m_core, SIGNAL(torrentRemoved( kt::TorrentInterface* )),
 			m_group_view, SLOT(onTorrentRemoved( kt::TorrentInterface* )));
 	
-
 	m_statusInfo = new KSqueezedTextLabel(this);
 	m_statusSpeed = new QLabel(this);
 	m_statusTransfer = new QLabel(this);
 	m_statusDHT = new QLabel(this);
 	
-
-
 	statusBar()->addWidget(m_statusInfo,1);
 	statusBar()->addWidget(m_statusDHT);
 	statusBar()->addWidget(m_statusSpeed);
 	statusBar()->addWidget(m_statusTransfer);
 
-	
 	setupActions();
 	currentTorrentChanged(0);
 	
@@ -220,8 +189,6 @@ KTorrent::KTorrent()
 	}
 	m_gui_update_timer.start(val);
 	
-	groupChanged(m_group_view->currentGroup());
-	
 	statusBar()->show();
 	
 	addToolWidget(m_group_view,"player_playlist",i18n("Groups"),DOCK_LEFT);
@@ -250,35 +217,102 @@ KTorrent::KTorrent()
 
 KTorrent::~KTorrent()
 {
-	while (m_tab_map.count() > 0)
-	{
-		QMap<QWidget*,CloseTabListener*>::iterator itr = m_tab_map.begin();
-		removeTabPage(itr.key());
-	}
 	delete m_dcop;
 	delete m_core;
 	delete m_pref;
 	delete m_statusInfo;
 	delete m_statusTransfer;
 	delete m_statusSpeed;
-	delete m_view;
+}
+
+void KTorrent::openView(kt::Group* g)
+{
+	if (!g)
+		return;
+	
+	KTorrentView* v = m_view_man->newView();
+	v->setCurrentGroup((Group*)g);
+	addTabPage(v,g->groupIcon(),g->groupName(),m_view_man);
+	
+	connect(v,SIGNAL(currentChanged(kt::TorrentInterface* )),
+			this,SLOT(currentTorrentChanged(kt::TorrentInterface* )));
+
+	connect(v,SIGNAL(wantToRemove(kt::TorrentInterface*,bool )),
+			m_core,SLOT(remove(kt::TorrentInterface*,bool )));
+
+	connect(v,SIGNAL(dropped(QDropEvent*,QListViewItem*)),
+			this,SLOT(urlDropped(QDropEvent*,QListViewItem*)));
+	
+	connect(v,SIGNAL(wantToStart( kt::TorrentInterface* )),
+			m_core,SLOT(start( kt::TorrentInterface* )));
+	
+	connect(v,SIGNAL(wantToStop( kt::TorrentInterface*, bool )),
+			m_core,SLOT(stop( kt::TorrentInterface*, bool )));
+	
+	connect(v,SIGNAL(needsDataCheck( kt::TorrentInterface* )),
+			m_core,SLOT(doDataCheck( kt::TorrentInterface* )));
+	
+	connect(v,SIGNAL(updateActions( bool, bool, bool, bool )),
+			this,SLOT(onUpdateActions( bool, bool, bool, bool )));
+	
+	//connect Core queue() with queue() from KTView.
+	connect(v, SIGNAL(queue( kt::TorrentInterface* )), 
+			m_core, SLOT(queue( kt::TorrentInterface* )));
+	
+	connect(v,SIGNAL(updateGroupsSubMenu(KPopupMenu*)),
+			m_group_view,SLOT(updateGroupsSubMenu(KPopupMenu*)));
+	
+	connect(v,SIGNAL(groupsSubMenuItemActivated(KTorrentView*, const QString&)),
+			m_group_view,SLOT(onGroupsSubMenuItemActivated(KTorrentView*, const QString&)));
+	
+	if (m_core)
+	{
+		QueueManager* qman = m_core->getQueueManager();
+		QueueManager::iterator i = qman->begin();
+		while (i != qman->end())
+		{
+			v->addTorrent(*i);
+			i++;
+		}
+	}
+}
+
+void KTorrent::openView(const QString & group_name)
+{
+	const kt::Group* g = m_group_view->findGroup(group_name);
+	if (g)
+		openView((kt::Group*)g);
 }
 
 void KTorrent::groupChanged(kt::Group* g)
 {
-	m_activeTabWidget->changeTab(m_view,g->groupName());
-	m_view->setIcon(g->groupIcon());
-	m_view->setCurrentGroup(g);
+	KTorrentView* v = m_view_man->getCurrentView();
+	if (v)
+	{
+		m_activeTabWidget->changeTab(v,g->groupName());
+		v->setIcon(g->groupIcon());
+		v->setCurrentGroup(g);
+	}
 }
 
 void KTorrent::addTabPage(QWidget* page,const QIconSet & icon,
 						  const QString & caption,kt::CloseTabListener* ctl)
 {
-	page->setIcon(icon.pixmap(QIconSet::Small,QIconSet::Active));
 	addWidget(page,caption);
+	page->setIcon(icon.pixmap(QIconSet::Small,QIconSet::Active));
 	m_tab_map[page] = ctl;
 	currentTabChanged(page);
 }
+
+void KTorrent::addTabPage(QWidget* page,const QPixmap & icon,
+						  const QString & caption,kt::CloseTabListener* ctl)
+{
+	addWidget(page,caption);
+	page->setIcon(icon);
+	m_tab_map[page] = ctl;
+	currentTabChanged(page);
+}
+
 
 void KTorrent::removeTabPage(QWidget* page)
 {
@@ -456,7 +490,7 @@ void KTorrent::setupActions()
 	
 	m_queueaction = new KAction(
 			i18n("Enqueue/Dequeue"),
-			"player_playlist", 0, this, SLOT(queueAction()),
+			"player_playlist", 0, m_view_man, SLOT(queueAction()),
 			actionCollection(), "queue_action");
 	
 	m_ipfilter = new KAction(
@@ -466,7 +500,7 @@ void KTorrent::setupActions()
 	
 	m_datacheck = new KAction(
 			i18n("Check Data Integrity"),
-	QString::null,0,this,SLOT(checkDataIntegrity()),actionCollection(),"check_data");
+	QString::null,0,m_view_man,SLOT(checkDataIntegrity()),actionCollection(),"check_data");
 	
 	//Plug actions to systemtray context menu
 	m_startall->plug(m_systray_icon->contextMenu());
@@ -509,7 +543,7 @@ bool KTorrent::queryExit()
 	
 	KGlobal::config()->setGroup("WindowStatus");
 	KGlobal::config()->writeEntry( "hidden_on_exit",this->isHidden());
-	m_view->saveSettings();
+	m_view_man->saveViewState(KGlobal::config());
 	saveSettings();
 	hide();
 	m_core->onExit();
@@ -550,42 +584,35 @@ void KTorrent::queueManagerShow()
 
 void KTorrent::startDownload()
 {
-	m_view->startDownloads();
-	TorrentInterface* tc = m_view->getCurrentTC();
-	
+	m_view_man->startDownloads();
+	TorrentInterface* tc = m_view_man->getCurrentTC();
 	currentTorrentChanged(tc);
-	m_view->onSelectionChanged(); // trigger an updateActions signal
 }
 
 void KTorrent::startAllDownloads()
 {
-	m_view->startAllDownloads();
-	m_view->onSelectionChanged(); // trigger an updateActions signal
+	m_view_man->startAllDownloads();
 }
 
 void KTorrent::stopDownload()
 {
-	m_view->stopDownloads();
-			
-	TorrentInterface* tc = m_view->getCurrentTC();	
+	m_view_man->stopDownloads();
+	TorrentInterface* tc = m_view_man->getCurrentTC();	
 	currentTorrentChanged(tc);
-	m_view->onSelectionChanged(); // trigger an updateActions signal
 }
 
 void KTorrent::stopAllDownloads()
 {
-	m_view->stopAllDownloads();
-	m_view->onSelectionChanged(); // trigger an updateActions signal
+	m_view_man->stopAllDownloads();
 }
 
 void KTorrent::removeDownload()
 {
-	m_view->removeDownloads();
+	m_view_man->removeDownloads();
 			
-	TorrentInterface* tc = m_view->getCurrentTC();
+	TorrentInterface* tc = m_view_man->getCurrentTC();
 	currentTorrentChanged(tc);
 	notifyViewListeners(tc);
-	m_view->onSelectionChanged(); // trigger an updateActions signal
 }
 
 void KTorrent::optionsShowStatusbar()
@@ -707,9 +734,7 @@ void KTorrent::updatedStats()
 			.arg(BytesToString(stats.bytes_uploaded));
 	m_statusTransfer->setText(tmp1);
 	
-	m_view->update();
-	
-	
+	m_view_man->update();
 	
 	m_systray_icon->updateStats(stats,Settings::showSpeedBarInTrayIcon(),Settings::downloadBandwidth(), Settings::uploadBandwidth());
 	
@@ -802,17 +827,7 @@ void KTorrent::removeToolWidget(QWidget* w)
 
 const TorrentInterface* KTorrent::getCurrentTorrent() const
 {
-	return m_view->getCurrentTC();
-}
-
-void KTorrent::queueAction()
-{
-	m_view->queueSlot();
-}
-
-void KTorrent::checkDataIntegrity()
-{
-	m_view->checkDataIntegrity();
+	return m_view_man->getCurrentTC();
 }
 
 QString KTorrent::getStatusInfo() 
@@ -837,7 +852,7 @@ QString KTorrent::getStatusDHT()
 
 QCStringList KTorrent::getTorrentInfo(kt::TorrentInterface* tc)
 {
-	return m_view->getTorrentInfo(tc);
+	return KTorrentViewItem::getTorrentInfo(tc);
 }
 
 void KTorrent::showIPFilter()
@@ -849,26 +864,30 @@ void KTorrent::showIPFilter()
 
 void KTorrent::closeTab()
 {
-	tabClosePressed();
-}
-
-void KTorrent::tabClosePressed()
-{
 	QWidget* w = m_currentWidget;
 	if (!w)
 		return;
 	
 	CloseTabListener* ctl = m_tab_map[w];
 	if (ctl)
-		ctl->tabCloseRequest(w);
+	{
+		ctl->tabCloseRequest(this,w);
+		currentTabChanged(m_activeTabWidget->currentPage());
+	}
 }
 
 void KTorrent::currentTabChanged(QWidget* w)
 {
+	m_view_man->onCurrentTabChanged(w);
 	if (!m_activeTabWidget || !w)
 		return;
 	
-	m_activeTabWidget->closeButton()->setEnabled(m_tab_map[w] != 0);
+	bool close_allowed = true;
+	CloseTabListener* ctl = m_tab_map[w];
+	if (ctl)
+		close_allowed = ctl->closeAllowed(w);
+	
+	m_activeTabWidget->closeButton()->setEnabled(close_allowed);
 }
 
 

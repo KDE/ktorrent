@@ -33,6 +33,7 @@
 #include "group.h"
 #include "groupmanager.h"
 #include "torrentgroup.h"
+#include "../viewmanager.h"
 #include "../ktorrentview.h"
 
 
@@ -64,7 +65,7 @@ namespace kt
 			return QString::compare(text(1),i->text(1));
 	}
 
-	GroupView::GroupView(KTorrentView* view,KActionCollection* col,QWidget *parent, const char *name)
+	GroupView::GroupView(ViewManager* view,KActionCollection* col,QWidget *parent, const char *name)
 	: KListView(parent, name),view(view),custom_root(0)
 	{
 		setFullWidth(true);
@@ -83,12 +84,7 @@ namespace kt
 		connect(this,SIGNAL(contextMenu(KListView*,QListViewItem*,const QPoint & )),
 				this,SLOT(showContextMenu( KListView*, QListViewItem*, const QPoint& )));
 		connect(this,SIGNAL(dropped(QDropEvent*,QListViewItem*)),
-				this,SLOT(onDropped( QDropEvent*, QListViewItem* )));
-		
-		KPopupMenu* p = view->getGroupsSubMenu();
-		connect(p,SIGNAL(activated(int)),this,SLOT(onGroupsSubMenuItemActivated( int )));
-		
-		
+				this,SLOT(onDropped( QDropEvent*, QListViewItem* )));	
 		
 		current_item = 0;
 		menu = 0;
@@ -111,8 +107,6 @@ namespace kt
 		custom_root = new KListViewItem(all,i18n("Custom Groups"));
 		custom_root->setPixmap(0,KGlobal::iconLoader()->loadIcon("folder",KIcon::Small));
 		setOpen(custom_root,true);
-		
-		updateGroupsSubMenu();
 	}
 
 
@@ -135,7 +129,6 @@ namespace kt
 			addGroup(i->second,custom_root);
 		}
 		sort();
-		updateGroupsSubMenu();
 	}
 	
 	void GroupView::createMenu(KActionCollection* col)
@@ -151,6 +144,11 @@ namespace kt
 		remove_group = new KAction(i18n("Remove Group"),"remove",0,
 							   this, SLOT(removeGroup()),col,"Remove Group");
 		
+		open_in_new_tab = new KAction(i18n("Open Tab"),"fileopen",0,
+							  this,SLOT(openView()),col,"Open Tab");
+		
+		open_in_new_tab->plug(menu);
+		menu->insertSeparator();
 		new_group->plug(menu);
 		edit_group->plug(menu);
 		remove_group->plug(menu);
@@ -172,7 +170,6 @@ namespace kt
 		addGroup(gman->newGroup(name),custom_root);
 		saveGroups();
 		sort();
-		updateGroupsSubMenu();
 	}
 	
 	void GroupView::removeGroup()
@@ -195,7 +192,6 @@ namespace kt
 		delete current_item;
 		current_item = 0;
 		saveGroups();
-		updateGroupsSubMenu();
 	}
 	
 	void GroupView::editGroupName()
@@ -225,7 +221,6 @@ namespace kt
 			current_item->setText(0,name);
 			groupRenamed(g);
 			sort();
-			updateGroupsSubMenu();
 		}
 	}
 
@@ -261,11 +256,13 @@ namespace kt
 		{
 			edit_group->setEnabled(false);
 			remove_group->setEnabled(false);
+			open_in_new_tab->setEnabled(false);
 		}
 		else
 		{
 			edit_group->setEnabled(true);
 			remove_group->setEnabled(true);
+			open_in_new_tab->setEnabled(true);
 		}
 		
 		menu->popup(p);
@@ -296,9 +293,9 @@ namespace kt
 		TorrentGroup* g = dynamic_cast<TorrentGroup*>(groups.find(li));
 		if (g)
 		{
-			QPtrList<TorrentInterface> sel;
+			QValueList<TorrentInterface*> sel;
 			view->getSelection(sel);
-			QPtrList<TorrentInterface>::iterator i = sel.begin();
+			QValueList<TorrentInterface*>::iterator i = sel.begin();
 			while (i != sel.end())
 			{
 				g->add(*i);
@@ -317,22 +314,39 @@ namespace kt
 		gman->torrentRemoved(tc);
 	}
 	
-	void GroupView::updateGroupsSubMenu()
+	void GroupView::updateGroupsSubMenu(KPopupMenu* gsm)
 	{
-		KPopupMenu* p = view->getGroupsSubMenu();
-		p->clear();
+		gsm->clear();
 		for (GroupManager::iterator i = gman->begin();i != gman->end();i++)
 		{
-			p->insertItem(i->first);
+			gsm->insertItem(i->first);
 		}
 	}
 	
-	void GroupView::onGroupsSubMenuItemActivated(int id)
+	void GroupView::onGroupsSubMenuItemActivated(KTorrentView* v,const QString & group)
 	{
-		KPopupMenu* p = view->getGroupsSubMenu();
-		Group* g = gman->find(p->text(id));
+		Group* g = gman->find(group);
 		if (g)
-			view->addSelectionToGroup(g);
+			v->addSelectionToGroup(g);
+	}
+	
+	const Group* GroupView::findGroup(const QString & name) const
+	{
+		Group* g = gman->find(name);
+		if (!g)
+			g = gman->findDefault(name);
+		
+		return g;
+	}
+	
+	void GroupView::openView()
+	{
+		if (!current_item)
+			return;
+		
+		Group* g = groups.find(current_item);
+		if (g)
+			openNewTab(g);
 	}
 }
 

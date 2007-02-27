@@ -52,7 +52,7 @@ namespace kt
 		void search(const QString & text,int engine,bool external);
 		
 	private:
-		virtual void tabCloseRequest(QWidget* tab);
+		virtual void tabCloseRequest(kt::GUIInterface* gui,QWidget* tab);
 		
 	private:
 		SearchPrefPage* pref;

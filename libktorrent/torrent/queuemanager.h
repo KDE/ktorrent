@@ -91,9 +91,11 @@ namespace bt
 			int getNumRunning(bool userControlled, bool onlyDownloads, bool onlySeeds);
 
 			void startNext();
+			
+			typedef QPtrList<kt::TorrentInterface>::iterator iterator;
 
-			QPtrList<kt::TorrentInterface>::iterator begin();
-			QPtrList<kt::TorrentInterface>::iterator end();
+			iterator begin();
+			iterator end();
 
 			/**
 			 * See if we already loaded a torrent.

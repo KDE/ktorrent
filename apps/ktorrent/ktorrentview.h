@@ -31,6 +31,7 @@ class KURL;
 class KTorrentViewItem;
 class KPopupMenu;
 class KTorrentCore;
+class KTorrentViewMenu;
 class ScanDialog;
 class QString;
 
@@ -39,7 +40,6 @@ namespace kt
 	class TorrentInterface;
 	class Group;
 }
-
 
 using namespace bt;
 
@@ -67,26 +67,24 @@ public:
 	 * Destructor
 	 */
 	virtual ~KTorrentView();
+	
+	/// Get the current group
+	const kt::Group* getCurrentGroup() const {return current_group;}
 
 	/// Get the current TorrentInterface object
 	kt::TorrentInterface* getCurrentTC();
-
-	static QCStringList getTorrentInfo(kt::TorrentInterface* tc);
 	
 	/// Save the views settings
-	void saveSettings();
+	void saveSettings(KConfig* cfg,int idx);
 	
 	/// Load the views settings
-	void loadSettings();
+	void loadSettings(KConfig* cfg,int idx);
 	
 	/**
 	 * Put the current selection in a list.
 	 * @param sel The list to put it in
 	 */
-	void getSelection(QPtrList<kt::TorrentInterface> & sel);
-	
-	/// Get the groups sub menu
-	KPopupMenu* getGroupsSubMenu() {return groups_sub_menu;}
+	void getSelection(QValueList<kt::TorrentInterface*> & sel);
 	
 	/**
 	 * Add the current selection to a group. 
@@ -109,7 +107,6 @@ public slots:
 	void addTorrent(kt::TorrentInterface* tc);
 	void removeTorrent(kt::TorrentInterface* tc);
 	void update();
-	void torrentFinished(kt::TorrentInterface* tc);
 	void startDownloads();
 	void stopDownloads();
 	void startAllDownloads();
@@ -132,6 +129,7 @@ private slots:
 	void onExecuted(QListViewItem* item);
 	void showContextMenu(KListView* ,QListViewItem* item,const QPoint & p);
 	void onColumnVisibilityChange(int);
+	void gsmItemActived(const QString & group);
 	
 	
 signals:
@@ -144,11 +142,12 @@ signals:
 	void updateActions(bool can_start,bool can_stop,bool can_remove,bool can_scan);
 	void queue(kt::TorrentInterface* tc);
 	void needsDataCheck(kt::TorrentInterface* tc);
+	void updateGroupsSubMenu(KPopupMenu* gsm);
+	void groupsSubMenuItemActivated(KTorrentView* v,const QString & group);
 
 private:
 	bool acceptDrag(QDropEvent* event) const;
 	int getNumRunning();
-	void makeMenu();
 	bool startDownload(kt::TorrentInterface* tc);
 	void stopDownload(kt::TorrentInterface* tc);
 	void showStartError();
@@ -160,28 +159,8 @@ private:
 		
 private:
 	QMap<kt::TorrentInterface*,KTorrentViewItem*> items;
-	KPopupMenu* menu;
-	KPopupMenu* groups_sub_menu;
-	KPopupMenu* dirs_sub_menu;
-	KPopupMenu* peer_sources_menu;
+	KTorrentViewMenu* menu;
 	KPopupMenu* m_headerMenu;
-	int stop_id;
-	int start_id;
-	int remove_id;
-	int remove_all_id;
-	int preview_id;
-	int announce_id;
-	int queue_id;
-	int scan_id;
-	int remove_from_group_id;
-	int add_to_group_id;
-	int add_peer_id;
-	int dirs_id;
-	int outputdir_id;
-	int torxdir_id;
-	int peer_sources_id;
-	int dht_id;
-	int ut_pex_id;
 	kt::Group* current_group;
 };
 

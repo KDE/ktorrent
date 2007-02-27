@@ -138,12 +138,12 @@ namespace kt
 		}
 	}
 	
-	void SearchPlugin::tabCloseRequest(QWidget* tab)
+	void SearchPlugin::tabCloseRequest(kt::GUIInterface* gui,QWidget* tab)
 	{
 		if (searches.contains((SearchWidget*)tab))
 		{
 			searches.remove((SearchWidget*)tab);
-			getGUI()->removeTabPage(tab);
+			gui->removeTabPage(tab);
 			tab->deleteLater();
 		}
 	}

@@ -15,44 +15,60 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTORRENTVIEWITEM_H
-#define KTORRENTVIEWITEM_H
+#ifndef KTORRENTVIEWMENU_H
+#define KTORRENTVIEWMENU_H
 
-#include <klistview.h>
-#include <dcopclient.h>
-#include <util/constants.h>
-
-namespace kt
-{
-	class TorrentInterface;
-}
-
+#include <kpopupmenu.h>
+		
 class KTorrentView;
 
 /**
- * @author Joris Guisson
+	@author Joris Guisson <joris.guisson@gmail.com>
 */
-class KTorrentViewItem : public KListViewItem
+class KTorrentViewMenu : public KPopupMenu
 {
-	kt::TorrentInterface* tc;
-	bt::Int64 eta;
+	Q_OBJECT
 public:
-	KTorrentViewItem(QListView* parent,kt::TorrentInterface* tc);
-	virtual ~KTorrentViewItem();
-
-	kt::TorrentInterface* getTC() {return tc;}
-	void update();
+	KTorrentViewMenu(KTorrentView *parent, const char *name = 0 );
+	virtual ~KTorrentViewMenu();
 	
-	static QCStringList getTorrentInfo(kt::TorrentInterface* tc);
+	/// Show the menu at the given point
+	void show(const QPoint & p);
+	
+	/// Get the group sub menu
+	KPopupMenu* getGroupsSubMenu() {return groups_sub_menu;}
+	
+public slots:
+	void gsmItemActived(int id);
+	
+signals:
+	/// A item in the groups sub menu has been activated
+	void groupItemActivated(const QString & group);
 
 private:
-	int compare(QListViewItem * i,int col,bool ascending) const;
-	void paintCell(QPainter* p,const QColorGroup & cg,int column,int width,int align);
-	
-	KTorrentView* m_parent;
-
+	KTorrentView* view;
+	KPopupMenu* groups_sub_menu;
+	KPopupMenu* dirs_sub_menu;
+	KPopupMenu* peer_sources_menu;
+	int stop_id;
+	int start_id;
+	int remove_id;
+	int remove_all_id;
+	int preview_id;
+	int announce_id;
+	int queue_id;
+	int scan_id;
+	int remove_from_group_id;
+	int add_to_group_id;
+	int add_peer_id;
+	int dirs_id;
+	int outputdir_id;
+	int torxdir_id;
+	int peer_sources_id;
+	int dht_id;
+	int ut_pex_id;
 };
 
 #endif

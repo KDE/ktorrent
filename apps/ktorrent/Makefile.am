@@ -19,21 +19,22 @@ ktorrent_LDADD = $(top_builddir)/apps/ktorrent/newui/libnewui.la $(LIB_KFILE) \
 	../../libktorrent/libktorrent.la
 
 # which sources should be compiled for ktorrent
-ktorrent_SOURCES = dcopinterface.skel main.cpp ktorrent.cpp \
-			ktorrentview.cpp pref.cpp ktorrentviewitem.cpp ktorrentcore.cpp downloadpref.ui \
-			trayicon.cpp ktorrentdcop.cpp ktorrentapp.cpp torrentcreatordlg.cpp \
-			torrentcreatordlg.h torrentcreatordlgbase.ui fileselectdlgbase.ui fileselectdlg.cpp \
-			generalpref.ui pastedlgbase.ui pastedialog.cpp leaktrace.cpp queuedlg.ui \
-			queuedialog.cpp queuedialog.h scandlgbase.ui scandialog.cpp ipfilterwidgetbase.ui \
-			ipfilterwidget.cpp addpeerwidgetbase.ui addpeerwidget.cpp addpeerwidget.h advancedpref.ui
+ktorrent_SOURCES = addpeerwidget.cpp addpeerwidget.h addpeerwidgetbase.ui \
+	advancedpref.ui dcopinterface.skel downloadpref.ui fileselectdlg.cpp \
+	fileselectdlgbase.ui generalpref.ui ipfilterwidget.cpp ipfilterwidgetbase.ui ktorrent.cpp \
+	ktorrentapp.cpp ktorrentcore.cpp ktorrentdcop.cpp ktorrentview.cpp ktorrentviewitem.cpp \
+	ktorrentviewmenu.cpp leaktrace.cpp main.cpp pastedialog.cpp pastedlgbase.ui pref.cpp \
+	queuedialog.cpp queuedialog.h queuedlg.ui scandialog.cpp scandlgbase.ui \
+	torrentcreatordlg.cpp torrentcreatordlg.h torrentcreatordlgbase.ui trayicon.cpp \
+	viewmanager.cpp
 
 xdg_apps_DATA = ktorrent.desktop
 
 
 # these are the headers for your project
-noinst_HEADERS = ktorrent.h ktorrentview.h pref.h ktorrentviewitem.h \
-			ktorrentcore.h trayicon.h dcopinterface.h ktorrentdcop.h fileselectdlg.h pastedialog.h \
-		scandialog.h ipfilterwidget.h
+noinst_HEADERS = dcopinterface.h fileselectdlg.h ipfilterwidget.h ktorrent.h \
+	ktorrentcore.h ktorrentdcop.h ktorrentview.h ktorrentviewitem.h ktorrentviewmenu.h \
+	pastedialog.h pref.h scandialog.h trayicon.h viewmanager.h
 
 # client stuff
 

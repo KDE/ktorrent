@@ -31,6 +31,7 @@ namespace kt
 	class PrefPageInterface;
 	class Plugin;
 	class TorrentInterface;
+	class GUIInterface;
 
 	enum Position
 	{
@@ -61,7 +62,11 @@ namespace kt
 	class CloseTabListener
 	{
 	public:
-		virtual void tabCloseRequest(QWidget* tab) = 0;
+		/// By default all tabs can be closed, but this can be overridden
+		virtual bool closeAllowed(QWidget* ) {return true;}
+		
+		/// THe close button was pressed for this tab, please remove it from the GUI
+		virtual void tabCloseRequest(kt::GUIInterface* gui,QWidget* tab) = 0;
 	};
 	
 	/**

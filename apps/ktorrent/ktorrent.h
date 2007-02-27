@@ -33,7 +33,6 @@
 
 typedef QValueList<QCString> QCStringList;
 
-class KPrinter;
 class KAction;
 class KToggleAction;
 class KURL;
@@ -41,12 +40,11 @@ class KTorrentCore;
 class KTorrentView;
 class TrayIcon;
 class SetMaxRate;
-class KTabWidget;
 class KTorrentDCOP;
 class QLabel;
 class QListViewItem;
 class KTorrentPreferences;
-class KPushButton;
+class ViewManager;
 
 
 namespace kt
@@ -78,7 +76,10 @@ public:
 	 */
 	virtual ~KTorrent();
 
+	/// Open a view with the given group
+	void openView(const QString & group_name);
 
+	/// Get the core
 	KTorrentCore & getCore() {return *m_core;}
 	
 	/**
@@ -88,6 +89,8 @@ public:
 	void applySettings(bool change_port = true);
 
 	virtual void addTabPage(QWidget* page,const QIconSet & icon,
+							const QString & caption,kt::CloseTabListener* ctl = 0);
+	virtual void addTabPage(QWidget* page,const QPixmap & icon,
 							const QString & caption,kt::CloseTabListener* ctl = 0);
 	virtual void removeTabPage(QWidget* page);
 	virtual void addPrefPage(kt::PrefPageInterface* page);
@@ -116,6 +119,9 @@ public slots:
 	 * Does the same as load, but doesn't ask any questions
 	*/
 	void loadSilently(const KURL& url);
+	
+	/// Open a view with the given group
+	void openView(kt::Group* g);
 
 protected:
 	/**
@@ -140,7 +146,6 @@ private slots:
 	void startAllDownloads();
 	void stopDownload();
 	void stopAllDownloads();
-	void queueAction();
 	void showIPFilter();
 	void removeDownload();
 	void queueManagerShow();
@@ -155,9 +160,7 @@ private slots:
 	void updatedStats();
 	void urlDropped(QDropEvent*,QListViewItem*);
 	void onUpdateActions(bool can_start,bool can_stop,bool can_remove,bool can_scan);
-	void checkDataIntegrity();
 	void groupChanged(kt::Group* g);
-	void tabClosePressed();
 	void currentTabChanged(QWidget* w);
 	
 private:
@@ -166,13 +169,14 @@ private:
 	bool queryClose();
 	bool queryExit();
 	
+	
 	virtual void addWidgetInView(QWidget* w,kt::Position pos);
 	virtual void removeWidgetFromView(QWidget* w);	
 	virtual void closeTab();
 	
 private:
 	kt::GroupView* m_group_view;
-	KTorrentView *m_view;
+	ViewManager* m_view_man;
 	KToggleAction *m_statusbarAction;
 	
 	KTorrentCore* m_core;
