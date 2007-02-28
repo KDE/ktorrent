@@ -55,12 +55,7 @@ namespace dht
 		NONE
 	};
 	
-	const QString TID = "t";
-	const QString REQ = "q";
-	const QString RSP = "r";
-	const QString TYP = "y";
-	const QString ARG = "a";
-	const QString ERR = "e";
+	
 	
 	/**
 	 * Base class for all RPC messages.
