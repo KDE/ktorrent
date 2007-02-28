@@ -175,9 +175,11 @@ namespace kt
 
 			Out(SYS_IPF|LOG_NOTICE) << "Loading finished. Starting conversion..." << endl;
 
-			for ( ulong i = 0; i < blocks; ++i )
+			QStringList::iterator iter;
+			int i = 0;
+			for (iter = list.begin(); iter != list.end(); ++iter, ++i)
 			{
-				ipblock block = toBlock( list[ i ] );
+				ipblock block = toBlock(*iter);
 				target.writeBlock( ( char* ) & block, sizeof( ipblock ) );
 				if ( i % 1000 == 0 )
 				{
