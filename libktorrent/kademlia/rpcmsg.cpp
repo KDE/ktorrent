@@ -30,6 +30,14 @@ using namespace bt;
 
 namespace dht
 {
+	const QString TID = "t";
+	const QString REQ = "q";
+	const QString RSP = "r";
+	const QString TYP = "y";
+	const QString ARG = "a";
+	// ERR apparently is defined as a macro on solaris in some header file, 
+	// which causes things not to compile on it, so we have changed it to ERR_DHT
+	const QString ERR_DHT = "e"; 
 
 	
 	MsgBase* MakeMsg(bt::BDictNode* dict);
@@ -194,7 +202,7 @@ namespace dht
 		{
 			return ParseRsp(dict,srv);
 		}
-		else if (vn->data().toString() == ERR)
+		else if (vn->data().toString() == ERR_DHT)
 		{
 			return ParseErr(dict);
 		}
@@ -216,7 +224,7 @@ namespace dht
 		{
 			return ParseRsp(dict,req_method,0);
 		}
-		else if (vn->data().toString() == ERR)
+		else if (vn->data().toString() == ERR_DHT)
 		{
 			return ParseErr(dict);
 		}
