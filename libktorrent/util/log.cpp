@@ -107,7 +107,7 @@ namespace bt
 			*out << QDateTime::currentDateTime().toString() << ": " << tmp << ::endl;
 			fptr.flush();
 			if (to_cout)
-				std::cout << tmp << std::endl;;
+				std::cout << tmp.local8Bit() << std::endl;;
 			
 			if (monitors.count() > 0)
 			{
