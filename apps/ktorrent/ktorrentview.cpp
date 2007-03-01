@@ -67,6 +67,7 @@ KTorrentView::KTorrentView(QWidget *parent)
 	connect(this,SIGNAL(selectionChanged()),this,SLOT(onSelectionChanged()));
 
 	menu = new KTorrentViewMenu(this);
+	connect(menu,SIGNAL(groupItemActivated(const QString&)),this,SLOT(gsmItemActived(const QString&)));
 	
 	connect(m_headerMenu, SIGNAL(activated(int)), this, SLOT(onColumnVisibilityChange( int )));
 
