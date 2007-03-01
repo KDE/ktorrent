@@ -128,6 +128,12 @@ KTorrent::KTorrent()
 	m_group_view->loadGroups();
 	m_view_man->restoreViewState(KGlobal::config(),this);
 	
+	QToolButton* tb = new QToolButton(m_activeTabWidget);
+	tb->setIconSet(SmallIcon("tab_new"));
+	tb->adjustSize();
+	connect(tb,SIGNAL(clicked()),this,SLOT(openDefaultView()));
+	m_activeTabWidget->setCornerWidget(tb, TopLeft);
+	
 	connect(m_group_view,SIGNAL(currentGroupChanged( kt::Group* )),
 			this,SLOT(groupChanged(kt::Group*)));
 	
@@ -888,6 +894,11 @@ void KTorrent::currentTabChanged(QWidget* w)
 		close_allowed = ctl->closeAllowed(w);
 	
 	m_activeTabWidget->closeButton()->setEnabled(close_allowed);
+}
+
+void KTorrent::openDefaultView()
+{
+	openView(i18n("All Torrents"));
 }
 
 

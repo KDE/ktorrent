@@ -256,14 +256,14 @@ namespace kt
 		{
 			edit_group->setEnabled(false);
 			remove_group->setEnabled(false);
-			open_in_new_tab->setEnabled(false);
 		}
 		else
 		{
 			edit_group->setEnabled(true);
 			remove_group->setEnabled(true);
-			open_in_new_tab->setEnabled(true);
 		}
+		
+		open_in_new_tab->setEnabled(g != 0);
 		
 		menu->popup(p);
 	}

@@ -162,6 +162,7 @@ private slots:
 	void onUpdateActions(bool can_start,bool can_stop,bool can_remove,bool can_scan);
 	void groupChanged(kt::Group* g);
 	void currentTabChanged(QWidget* w);
+	void openDefaultView();
 	
 private:
 	void setupAccel();
