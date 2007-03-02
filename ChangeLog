@@ -1,3 +1,9 @@
+Changes in 2.2dev
+- Ditch KMDI in favor of KDevelop IDEA code
+- Infowidget has been fully moved to the bottom tabbar
+- Possibility to open as many views as needed
+- By default a downloads and uploads tab is now shown
+
 Changes in 2.1.1
 - Rewrite of webserver
 - New webgui : coldmilk
