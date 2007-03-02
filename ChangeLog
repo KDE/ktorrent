@@ -1,3 +1,13 @@
+Changes in 2.1.1
+- Rewrite of webserver
+- New webgui : coldmilk
+- Networking thread has been split up in 2 threads, one for upload, one for
+download
+- Significant speed improvements when downloading over a LAN
+
+Changes in 2.1
+- Some minor bug fixes
+
 Changes in 2.1rc1
 - Share ratio column added in main view
 - Added option to use a different proxy then the default KDE proxy for HTTP trackers
