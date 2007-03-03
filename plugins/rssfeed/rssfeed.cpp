@@ -57,7 +57,7 @@ namespace kt
 	RssFeed::RssFeed(QObject * parent) : QObject(parent)
 	{
 		m_active = false;
-		m_articleAge = 30;
+		m_articleAge = 365;
 		m_ignoreTTL = false;
 		m_title = "New";
 		

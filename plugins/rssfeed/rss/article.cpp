@@ -57,23 +57,50 @@ Article::Article(const QDomNode &node, Format format) : d(new Private)
 	if (!(elemText = extractNode(node, QString::fromLatin1("title"))).isNull())
 		d->title = elemText;
    
-	if (format==AtomFeed)
-	{
-		QDomNode n;
-		for (n = node.firstChild(); !n.isNull(); n = n.nextSibling()) {
-			const QDomElement e = n.toElement();
-			if ( (e.tagName()==QString::fromLatin1("link")) &&
-				(e.attribute(QString::fromLatin1("rel"))==QString::fromLatin1("alternate")))
-				{   
-					d->link=n.toElement().attribute(QString::fromLatin1("href"));
-					break;
+
+	QDomNode n;
+	bool foundTorrentEnclosure = false;
+	for (n = node.firstChild(); !n.isNull(); n = n.nextSibling()) {
+		const QDomElement e = n.toElement();
+		if ( (e.tagName()==QString::fromLatin1("enclosure") ) )
+			{
+			QString enclosureAttr = e.attribute(QString::fromLatin1("type"));
+			if (!enclosureAttr.isNull() )
+				{
+				if (enclosureAttr == "application/x-bittorrent")
+					{
+					enclosureAttr = e.attribute(QString::fromLatin1("url"));
+					if (!enclosureAttr.isNull() )
+						{
+						d->link=enclosureAttr;
+						foundTorrentEnclosure = true;
+						break;
+						}
+					}
 				}
+			}
 		}
-	}
-	else
-	{
-		if (!(elemText = extractNode(node, QString::fromLatin1("link"))).isNull())
-			d->link = elemText;
+
+	if (!foundTorrentEnclosure)
+		{
+		if (format==AtomFeed)
+		{
+			QDomNode n;
+			for (n = node.firstChild(); !n.isNull(); n = n.nextSibling()) {
+				const QDomElement e = n.toElement();
+				if ( (e.tagName()==QString::fromLatin1("link")) &&
+					(e.attribute(QString::fromLatin1("rel"))==QString::fromLatin1("alternate")))
+					{   
+						d->link=n.toElement().attribute(QString::fromLatin1("href"));
+						break;
+					}
+			}
+		}
+		else
+		{
+			if (!(elemText = extractNode(node, QString::fromLatin1("link"))).isNull())
+				d->link = elemText;
+		}
 	}
 
 
@@ -132,7 +159,7 @@ Article::Article(const QDomNode &node, Format format) : d(new Private)
     }
 
     tagName=(format==AtomFeed)? QString::fromLatin1("id"): QString::fromLatin1("guid");
-    QDomNode n = node.namedItem(tagName);
+    n = node.namedItem(tagName);
 	if (!n.isNull()) {
 		d->guidIsPermaLink = (format==AtomFeed)? false : true;
 		if (n.toElement().attribute(QString::fromLatin1("isPermaLink"), "true") == "false") d->guidIsPermaLink = false;
