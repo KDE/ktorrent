@@ -324,6 +324,9 @@
                                             <property name="name">
                                                 <cstring>feedArticleAge</cstring>
                                             </property>
+                                            <property name="maxValue">
+                                                <number>3650</number>
+                                            </property>
                                         </widget>
                                         <widget class="QCheckBox">
                                             <property name="name">
