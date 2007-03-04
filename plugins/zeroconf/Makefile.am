@@ -11,7 +11,7 @@ ktzeroconfplugin_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries) $(AVAHI_LIB
 ktzeroconfplugin_la_SOURCES = localbrowser.cpp avahiservice.cpp \
 	zeroconfplugin.cpp
 
-ktzeroconfplugin_la_LIBADD = $(LIB_KDECORE) $(LIB_KFILE) $(LIB_KPARTS) \
+ktzeroconfplugin_la_LIBADD = $(LIB_KDECORE) $(LIB_KFILE) $(LIB_KPARTS) $(LIB_KDEUI)\
 	$(LIB_QT) ../../libktorrent/libktorrent.la
 
 noinst_HEADERS = zeroconfplugin.h
