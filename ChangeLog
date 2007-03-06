@@ -3,6 +3,8 @@ Changes in 2.2dev
 - Infowidget has been fully moved to the bottom tabbar
 - Possibility to open as many views as needed
 - By default a downloads and uploads tab is now shown
+- Immediatly hide system tray icon at exit
+- Make sure to many files open bug is very unlikely to happen
 
 Changes in 2.1.1
 - Rewrite of webserver
