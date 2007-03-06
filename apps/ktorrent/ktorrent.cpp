@@ -552,6 +552,7 @@ bool KTorrent::queryExit()
 	m_view_man->saveViewState(KGlobal::config());
 	saveSettings();
 	hide();
+	m_systray_icon->hide(); // hide system tray icon upon exit
 	m_core->onExit();
 	if (Globals::instance().getDHT().isRunning())
 		Globals::instance().getDHT().stop();
