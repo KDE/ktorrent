@@ -64,6 +64,9 @@ namespace bt
 	 * Maximize the file and memory limits using setrlimit.
 	 */
 	bool MaximizeLimits();
+	
+	/// Get the maximum number of open files
+	Uint32 MaxOpenFiles();
 }
 
 #endif

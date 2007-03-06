@@ -181,6 +181,13 @@ namespace bt
 		global_time_stamp = (Uint64)(tv.tv_sec * 1000 + tv.tv_usec * 0.001);
 		return global_time_stamp;
 	}
+	
+	Uint32 MaxOpenFiles()
+	{
+		struct rlimit lim;
+		getrlimit(RLIMIT_NOFILE,&lim);
+		return lim.rlim_cur;
+	}
 
 	bool MaximizeLimits()
 	{

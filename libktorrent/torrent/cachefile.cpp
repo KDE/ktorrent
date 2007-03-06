@@ -293,12 +293,14 @@ namespace bt
 	void CacheFile::read(Uint8* buf,Uint32 size,Uint64 off)
 	{
 		QMutexLocker lock(&mutex);
+		bool close_again = false;
 		
 		// reopen the file if necessary
 		if (fd == -1)
 		{
 		//	Out() << "Reopening " << path << endl;
 			openFile();
+			close_again = true;
 		}
 		
 		if (off >= file_size || off >= max_size)
@@ -309,18 +311,28 @@ namespace bt
 		// jump to right position
 		SeekFile(fd,off,SEEK_SET);
 		if ((Uint32)::read(fd,buf,size) != size)
+		{
+			if (close_again)
+				closeTemporary();
+			
 			throw Error(i18n("Error reading from %1").arg(path));
+		}
+		
+		if (close_again)
+			closeTemporary();
 	}
 	
 	void CacheFile::write(const Uint8* buf,Uint32 size,Uint64 off)
 	{
 		QMutexLocker lock(&mutex);
+		bool close_again = false;
 		
 		// reopen the file if necessary
 		if (fd == -1)
 		{
 		//	Out() << "Reopening " << path << endl;
 			openFile();
+			close_again = true;
 		}
 		
 		if (off + size > max_size)
@@ -338,6 +350,9 @@ namespace bt
 		// jump to right position
 		SeekFile(fd,off,SEEK_SET);
 		int ret = ::write(fd,buf,size);
+		if (close_again)
+			closeTemporary();
+		
 		if (ret == -1)
 			throw Error(i18n("Error writing to %1 : %2").arg(path).arg(strerror(errno)));
 		else if ((Uint32)ret != size)

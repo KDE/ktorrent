@@ -248,11 +248,18 @@ namespace bt
 			if (!fd)
 				return;
 			
-			Uint64 off = FileOffset(c,f,tor.getChunkSize());
-			Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::READ);
-			if (buf)
-				c->setData(buf,Chunk::MMAPPED);
-			return;
+			if (Cache::mappedModeAllowed())
+			{
+				Uint64 off = FileOffset(c,f,tor.getChunkSize());
+				Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::READ);
+				if (buf)
+				{
+					c->setData(buf,Chunk::MMAPPED);
+					// only return when the mapping is OK
+					// if mmap fails we will just load it buffered
+					return;
+				}
+			}
 		}
 		
 		Uint8* data = new Uint8[c->getSize()];
@@ -317,12 +324,12 @@ namespace bt
 			Uint64 off = FileOffset(c,tor.getFile(tflist.first()),tor.getChunkSize());
 			CacheFile* fd = files.find(tflist.first());
 			Uint8* buf = 0;
-			if (fd)
+			if (fd && Cache::mappedModeAllowed())
 				buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::RW);
+			
 			if (!buf)
 			{
-				// if mmap fails use buffered mode
-				Out() << "Warning : mmap failed, falling back to buffered mode" << endl;
+				// if mmap fails or is not possible use buffered mode
 				c->allocate();
 				c->setStatus(Chunk::BUFFERED);
 			}

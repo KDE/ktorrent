@@ -124,6 +124,12 @@ namespace bt
 		 * empty directories should also be deleted.
 		 */
 		virtual void deleteDataFiles() = 0;
+		
+		/** 
+		 * See if we are allowed to use mmap, when loading chunks.
+		 * This will return false if we are close to system limits.
+		 */
+		static bool mappedModeAllowed();
 	};
 
 }

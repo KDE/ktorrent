@@ -126,6 +126,8 @@ namespace bt
 		static void setMaxTotalConnections(Uint32 max);
 		static Uint32 getMaxTotalConnections() {return max_total_connections;}
 		
+		static Uint32 getTotalConnections() {return total_connections;}
+		
 		/// Is the peer manager started
 		bool isStarted() const {return started;}
 

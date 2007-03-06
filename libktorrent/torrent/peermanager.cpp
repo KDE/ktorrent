@@ -133,7 +133,10 @@ namespace bt
 	
 	void PeerManager::setMaxTotalConnections(Uint32 max)
 	{
+		Uint32 sys_max = bt::MaxOpenFiles() - 50; // leave about 50 free for regular files
 		max_total_connections = max;
+		if (max == 0 || max_total_connections > sys_max)
+			max_total_connections = sys_max;
 	}
 	
 	void PeerManager::addPotentialPeer(const PotentialPeer & pp)

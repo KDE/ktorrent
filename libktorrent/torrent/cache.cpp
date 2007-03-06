@@ -20,6 +20,7 @@
 #include "torrent.h"
 #include "chunk.h"
 #include "cache.h"
+#include "peermanager.h"
 #include <util/functions.h>
 
 namespace bt
@@ -45,5 +46,10 @@ namespace bt
 	void Cache::changeTmpDir(const QString & ndir)
 	{
 		tmpdir = ndir;
+	}
+	
+	bool Cache::mappedModeAllowed()
+	{
+		return MaxOpenFiles() - bt::PeerManager::getTotalConnections() < 100;
 	}
 }
