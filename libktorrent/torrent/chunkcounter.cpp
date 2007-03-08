@@ -59,12 +59,13 @@ namespace bt
 
 	void ChunkCounter::inc(Uint32 idx)
 	{
-		cnt[idx]++;
+		if (idx < cnt.size())
+			cnt[idx]++;
 	}
 		
 	void ChunkCounter::dec(Uint32 idx)
 	{
-		if (cnt[idx] > 0)
+		if (idx < cnt.size() && cnt[idx] > 0)
 			cnt[idx]--;
 	}
 		

@@ -163,9 +163,15 @@ namespace bt
 				if (!v || v->data().getType() != Value::STRING)
 					throw Error(i18n("Corrupted torrent!"));
 	
-				path += v->data().toString(encoding);
-				if (j + 1 < ln->getNumChildren())
-					path += bt::DirSeparator();
+				QString sd = v->data().toString(encoding);
+				// check for weirdness like .. ,
+				// we don't want to write outside the user specified directories
+				if (sd != "..") 
+				{
+					path += sd;
+					if (j + 1 < ln->getNumChildren())
+						path += bt::DirSeparator();
+				}
 			}
 
 			// we do not want empty dirs

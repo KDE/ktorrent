@@ -193,11 +193,21 @@ namespace bt
 				{
 					Out() << "len err HAVE" << endl;
 					kill();
-					return;
 				}
-				
-				haveChunk(this,ReadUint32(tmp_buf,1));
-				pieces.set(ReadUint32(tmp_buf,1),true);
+				else
+				{
+					Uint32 ch = ReadUint32(tmp_buf,1);
+					if (ch < pieces.getNumBits())
+					{
+						haveChunk(this,ch);
+						pieces.set(ch,true);
+					}
+					else
+					{
+						Out(SYS_CON|LOG_NOTICE) << "Received invalid have value, kicking peer" << endl;
+						kill();
+					}
+				}
 				break;
 			case BITFIELD:
 				if (len != 1 + pieces.getNumBytes())

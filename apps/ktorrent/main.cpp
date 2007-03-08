@@ -107,6 +107,7 @@ int main(int argc, char **argv)
 	about.addCredit("Kevin Andre",I18N_NOOP("Zeroconf enhancements"),0,"http://users.telenet.be/hyperquantum");
 	about.addCredit("Dagur Valberg Johannsson",I18N_NOOP("Coldmilk webgui"),"dagurval@pvv.ntnu.no");
 	about.addCredit("Scott Wolchok",I18N_NOOP("Conversion speed improvement in ipfilter plugin"),"swolchok@umich.edu");
+	about.addCredit("Bryan Burns of Juniper Networks",I18N_NOOP("Discovered 2 security vulnerabilities (both are fixed)"),0);
 
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);
