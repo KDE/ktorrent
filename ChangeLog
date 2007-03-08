@@ -1,3 +1,7 @@
+Changes in 2.1.2
+- Fix 2 security vulnerabilities (thanks to Bryan Burns from Juniper Networks
+for finding them)
+
 Changes in 2.1.1
 - Rewrite of webserver
 - New webgui : coldmilk
