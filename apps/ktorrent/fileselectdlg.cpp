@@ -22,11 +22,18 @@
 #include <klistview.h>
 #include <kstdguiitem.h>
 #include <kpushbutton.h>
+
+#include <qlabel.h>
+#include <qstring.h>
+
 #include <interfaces/torrentfileinterface.h>
 #include <interfaces/torrentinterface.h>
 #include "fileselectdlg.h"
 #include <interfaces/filetreediritem.h>
 #include <interfaces/filetreeitem.h>
+#include <interfaces/functions.h>
+
+#include <sys/vfs.h>
 
 FileSelectDlg::FileSelectDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
 		: FileSelectDlgBase(parent,name, modal,fl)
@@ -39,6 +46,8 @@ FileSelectDlg::FileSelectDlg(QWidget* parent, const char* name, bool modal, WFla
 	connect(m_cancel,SIGNAL(clicked()),this,SLOT(reject()));
 	m_ok->setGuiItem(KStdGuiItem::ok());
 	m_cancel->setGuiItem(KStdGuiItem::cancel());
+	
+	shortDiskSpace = false;
 }
 
 FileSelectDlg::~FileSelectDlg()
@@ -59,6 +68,23 @@ int FileSelectDlg::execute(kt::TorrentInterface* tc)
 		}
 		root->setOpen(true);
 		m_file_view->setRootIsDecorated(true);
+		
+		
+		//calculate free disk space
+		struct statfs stfs;		
+		statfs(tc->getDataDir().ascii(), &stfs);		
+		unsigned long long bytes_free = ((unsigned long long)stfs.f_bavail) * 
+                 ((unsigned long long)stfs.f_bsize);		
+		unsigned long long bytes_to_download = tc->getStats().total_bytes;		
+		
+		lblFree->setText(kt::BytesToString(bytes_free));		
+		lblRequired->setText(kt::BytesToString(bytes_to_download));
+				
+		if (shortDiskSpace = bytes_to_download > bytes_free)
+			lblStatus->setText("<font color=\"#ff0000\">" + kt::BytesToString(-1*(long long)(bytes_free - bytes_to_download)) + i18n(" short!"));
+		else
+			lblStatus->setText(kt::BytesToString(bytes_free - bytes_to_download));
+				
 		return exec();
 	}
 	return QDialog::Rejected;
@@ -71,6 +97,10 @@ void FileSelectDlg::reject()
 
 void FileSelectDlg::accept()
 {
+	if(shortDiskSpace && KMessageBox::questionYesNo(this, i18n("You don't have enough disk space to download this torrent. Are you sure you want to continue?"), i18n("Insufficient disk space")) == KMessageBox::No)
+		return;	
+
+			
 	QStringList pe_ex;
 	for (Uint32 i = 0;i < tc->getNumFiles();i++)
 	{

@@ -54,6 +54,9 @@ protected slots:
 	void selectAll();
 	void selectNone();
 	void invertSelection();
+	
+	private:
+		bool shortDiskSpace;
 
 };
 
