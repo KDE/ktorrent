@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=UPnPPlugin
+Name[el]=Πρόσθετο UPnP
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktupnpplugin

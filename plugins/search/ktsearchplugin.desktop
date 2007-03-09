@@ -1,6 +1,8 @@
 [Desktop Entry]
 Name=SearchPlugin
+Name[el]=Πρόσθετο αναζήτησης
 Comment=Search plugin for KTorrent
+Comment[el]=Πρόσθετο αναζήτησης για το KTorrent
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktsearchplugin

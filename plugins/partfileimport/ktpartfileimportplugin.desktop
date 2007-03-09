@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=PartialFileImportPlugin
+Name[el]=Πρόσθετο εισαγωγής μερικής λήψης
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktpartfileimportplugin

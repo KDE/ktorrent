@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=KTorrent
 GenericName=BitTorrent Client
+GenericName[el]=Πελάτης BitTorrent
 Exec=ktorrent %i %m -caption "%c" %u
 Icon=ktorrent
 Type=Application
@@ -9,5 +10,6 @@ DocPath=ktorrent/index.html
 MimeType=application/x-bittorrent;application/x-torrent
 X-DCOP-ServiceType=Unique
 Comment=A BitTorrent program for KDE
+Comment[el]=Μία εφαρμογή BitTorrent για το KDE
 Terminal=false
 Categories=Qt;KDE;Network;FileTransfer;

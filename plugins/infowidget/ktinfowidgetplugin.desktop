@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=SearchPlugin
+Name[el]=Πρόσθετο αναζήτησης
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktinfowidgetplugin

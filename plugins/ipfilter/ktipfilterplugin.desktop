@@ -1,6 +1,8 @@
 [Desktop Entry]
 Name=IPFilterPlugin
+Name[el]=Πρόσθετο φίλτρου IP
 Comment=IP filter plugin for KTorrent
+Comment[el]=Πρόσθετο φίλτρου IP για το KTorrent
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktipfilterplugin
