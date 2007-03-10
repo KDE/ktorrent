@@ -33,7 +33,12 @@
 #include <interfaces/filetreeitem.h>
 #include <interfaces/functions.h>
 
+#ifdef Q_OS_BSD4
+#include <sys/param.h>
+#include <sys/mount.h>
+#else
 #include <sys/vfs.h>
+#endif
 
 FileSelectDlg::FileSelectDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
 		: FileSelectDlgBase(parent,name, modal,fl)
