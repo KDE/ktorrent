@@ -19,12 +19,14 @@
  ***************************************************************************/
 
 #include <kurl.h>
+#include <kprocess.h>
 #include <klocale.h>
 #include <qdatetime.h>
 #include <qtextstream.h>
 #include <qfile.h>
 #include <qptrlist.h>
 #include <iostream>
+#include <stdlib.h>
 #include <torrent/globals.h>
 #include <interfaces/logmonitorinterface.h>
 #include <qmutex.h> 
@@ -79,7 +81,7 @@ namespace bt
 			
 			// move current log to 1 and zip it
 			bt::Move(file,file + "-1",true);
-			system(QString("gzip %1-1").arg(file).local8Bit());
+			system(QString("gzip " + KProcess::quote(file + "-1")).local8Bit());
 		}
 
 		void setOutputFile(const QString & file)

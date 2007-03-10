@@ -25,6 +25,7 @@
 #include "sha1hashgen.h"
 #include "urlencoder.h"
 
+#include <stdio.h>
 
 namespace bt
 {

@@ -179,6 +179,7 @@ namespace bt
 	{
 		Out() << "Growing file to " << new_size << " bytes " << endl;
 		Uint64 to_write = new_size - file_size;
+		ssize_t written;
 		// jump to the end of the file
 		lseek(fd,0,SEEK_END);
 		
@@ -187,16 +188,11 @@ namespace bt
 		// write data until to_write is 0
 		while (to_write > 0)
 		{
-			if (to_write < 1024)
-			{
-				::write(fd,buf,to_write);
-				to_write = 0;
-			}
-			else
-			{
-				::write(fd,buf,1024);
-				to_write -= 1024;
-			}
+			ssize_t w = ::write(fd,buf, to_write > 1024 ? 1024 : to_write);
+			if (w > 0)
+			    to_write -= w;
+			else if (w < 0)
+			    break;
 		}
 		file_size = new_size;
 	}
