@@ -25,6 +25,7 @@
 class QWidget;
 class QIconSet;
 class QString;
+class KToolBar;
 
 namespace kt
 {
@@ -191,6 +192,11 @@ namespace kt
 		/// Get the current torrent.
 		virtual const TorrentInterface* getCurrentTorrent() const = 0;
 		
+		/// Add a toolbar
+		virtual KToolBar* addToolBar(const char* name) = 0;
+		
+		/// Remove a toolbar
+		virtual void removeToolBar(KToolBar* tb) = 0;
 		
 	protected:
 		/**

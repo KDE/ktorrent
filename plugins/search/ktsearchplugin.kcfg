@@ -23,5 +23,8 @@
 			<label>Custom browser executable path</label>
 			<default>/usr/bin/firefox</default>
 		</entry>		
+		<entry name="openInExternal" type = "Bool">
+			<default>false</default>
+		</entry>
 	</group>
 </kcfg>

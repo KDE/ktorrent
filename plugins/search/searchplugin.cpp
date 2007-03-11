@@ -62,11 +62,10 @@ namespace kt
 	void SearchPlugin::load()
 	{
 		engines.load(KGlobal::dirs()->saveLocation("data","ktorrent") + "search_engines");
-		tab = new SearchTab();
+		KToolBar* tb = getGUI()->addToolBar("search");
+		tab = new SearchTab(tb);
 		connect(tab,SIGNAL(search( const QString&, int, bool )),
 				this,SLOT(search( const QString&, int, bool )));
-		
-		getGUI()->addToolWidget(tab,"viewmag",i18n("Search"),GUIInterface::DOCK_BOTTOM);
 		 
 		pref = new SearchPrefPage(this);
 		getGUI()->addPrefPage(pref);
@@ -76,6 +75,7 @@ namespace kt
 
 	void SearchPlugin::unload()
 	{
+		tab->saveSettings();
 		SearchWidget* s = 0;
 		while ((s = searches.first()) != 0)
 		{
@@ -83,7 +83,7 @@ namespace kt
 			searches.removeFirst();
 			delete s;
 		}
-		getGUI()->removeToolWidget(tab);
+		getGUI()->removeToolBar(tab->getToolBar());
 		getGUI()->removePrefPage(pref);
 		delete pref;
 		pref = 0;

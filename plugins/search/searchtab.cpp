@@ -27,6 +27,8 @@
 #include <kiconloader.h>
 #include <kcombobox.h>
 #include <kcompletion.h>
+#include <qlabel.h>
+#include <klocale.h>
 #include "searchtab.h"
 #include "searchenginelist.h"
 #include "searchpluginsettings.h"
@@ -37,25 +39,39 @@ using namespace bt;
 namespace kt
 {
 
-	SearchTab::SearchTab(QWidget* parent, const char* name, WFlags fl) : SearchTabBase(parent,name,fl)
+	SearchTab::SearchTab(KToolBar* tb) : m_tool_bar(tb)
 	{
-		m_search_text->setTrapReturnKey(true);
-		m_clear_button->setIconSet(
-				KGlobal::iconLoader()->loadIconSet(QApplication::reverseLayout() 
-				? "clear_left" : "locationbar_erase",KIcon::Small));
+		m_search_text = new KComboBox(tb);
+		m_search_text->setEditable(true);
 		
-		connect(m_clear_button,SIGNAL(clicked()),this,SLOT(clearButtonPressed()));
-		connect(m_clear_history,SIGNAL(clicked()),this,SLOT(clearHistoryPressed()));
+		m_clear_button = new KPushButton(tb);
+		m_search_new_tab = new KPushButton(i18n("Search"),tb);
+		m_search_engine = new KComboBox(tb);
+		
+		m_clear_button->setIconSet(SmallIconSet(QApplication::reverseLayout() ? "clear_left" : "locationbar_erase"));
+		m_clear_button->setEnabled(false);
+
 		connect(m_search_new_tab,SIGNAL(clicked()),this,SLOT(searchNewTabPressed()));
 		connect(m_search_text,SIGNAL(returnPressed(const QString&)),this,SLOT(searchBoxReturn( const QString& )));
 		connect(m_search_text,SIGNAL(textChanged(const QString &)),this,SLOT(textChanged( const QString& )));
+		connect(m_clear_button,SIGNAL(clicked()),this,SLOT(clearButtonPressed()));
 		m_search_text->setMaxCount(20);
 		m_search_new_tab->setEnabled(false);
 		m_search_text->setInsertionPolicy(QComboBox::NoInsertion);
+		
+		tb->insertWidget(1,-1,m_clear_button);
+		tb->insertWidget(2,-1,m_search_text);
+		tb->insertWidget(3,-1,m_search_new_tab);
+		tb->insertWidget(4,-1,new QLabel(i18n(" Engine: "),tb));
+		tb->insertWidget(5,-1,m_search_engine);
 		loadSearchHistory();
 	}
 
 	SearchTab::~SearchTab()
+	{
+	}
+	
+	void SearchTab::saveSettings()
 	{
 		SearchPluginSettings::setSearchEngine(m_search_engine->currentItem());
 		SearchPluginSettings::writeConfig();
@@ -87,7 +103,7 @@ namespace kt
 		}
 		m_search_text->clearEdit();
 		saveSearchHistory();
-		search(str,m_search_engine->currentItem(),externalBrowser->isChecked());
+		search(str,m_search_engine->currentItem(),SearchPluginSettings::openInExternal());
 	}
 	
 	void SearchTab::clearButtonPressed()
@@ -100,17 +116,10 @@ namespace kt
 		searchBoxReturn(m_search_text->currentText());
 	}
 	
-	void SearchTab::clearHistoryPressed()
-	{
-		KCompletion *comp = m_search_text->completionObject();
-		comp->clear();
-		m_search_text->clear();
-		saveSearchHistory();
-	}
-	
 	void SearchTab::textChanged(const QString & str)
 	{
 		m_search_new_tab->setEnabled(str.length() > 0);
+		m_clear_button->setEnabled(str.length() > 0);
 	}
 
 	void SearchTab::loadSearchHistory()

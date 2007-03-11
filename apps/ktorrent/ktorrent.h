@@ -102,6 +102,8 @@ public:
 	virtual void addToolWidget(QWidget* w,const QString & icon,const QString & caption,ToolDock dock);
 	virtual void removeToolWidget(QWidget* w);
 	virtual const kt::TorrentInterface* getCurrentTorrent() const;
+	virtual KToolBar* addToolBar(const char* name);
+	virtual void removeToolBar(KToolBar* tb);
 	
 	QString	getStatusInfo();
 	QString	getStatusTransfer();

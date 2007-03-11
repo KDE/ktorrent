@@ -19,6 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <kurl.h>
+#include <qtooltip.h>
 #include <qfile.h>
 #include <klocale.h>
 #include <kglobal.h>
@@ -33,6 +34,7 @@
 #include <klineedit.h>
 
 #include <qlabel.h>
+#include <qcheckbox.h>
 #include <qradiobutton.h>
 
 #include <util/constants.h>
@@ -48,9 +50,12 @@ namespace kt
 	SearchPrefPageWidget::SearchPrefPageWidget(QWidget *parent) : SEPreferences(parent)
 	{
 		QString info = i18n("Use your web browser to search for the string %1"
-				" (capital letters) on the search engine you want to add. Then copy the URL in the addressbar after the search is finished, and paste it here.<br>Searching for %2"
-				" on Google for example, will result in http://www.google.com/search?q=FOOBAR&ie=UTF-8&oe=UTF-8. If you add this URL here, ktorrent can search using Google.").arg("FOOBAR").arg("FOOBAR");
-		m_infoLabel->setText(info);
+				" (capital letters) on the search engine you want to add. <br> Then copy the URL in the addressbar after the search is finished, and paste it here.<br><br>Searching for %2"
+				" on Google for example, will result in http://www.google.com/search?q=FOOBAR&ie=UTF-8&oe=UTF-8. <br> If you add this URL here, ktorrent can search using Google.").arg("FOOBAR").arg("FOOBAR");
+		QString info_short = i18n("Use your web browser to search for the string %1 (capital letters) on the search engine you want to add. Use the resulting URL below.").arg("FOOBAR");
+		m_infoLabel->setText(info_short);
+		QToolTip::add(m_infoLabel,info);
+		QToolTip::add(m_engine_name,info);
 		
 		connect(btnAdd, SIGNAL(clicked()), this, SLOT(addClicked()));
 		connect(btnRemove, SIGNAL(clicked()), this, SLOT(removeClicked()));
@@ -64,6 +69,7 @@ namespace kt
 		customBrowser->setText(SearchPluginSettings::customBrowser());
 		
 		customBrowser->setEnabled(useCustomBrowser->isChecked());
+		openExternal->setChecked(SearchPluginSettings::openInExternal());
 	}
 	
 	void SearchPrefPageWidget::updateSearchEngines(const SearchEngineList & se)
@@ -83,7 +89,7 @@ namespace kt
 		SearchPluginSettings::setUseCustomBrowser(useCustomBrowser->isChecked());
 		SearchPluginSettings::setUseDefaultBrowser(useDefaultBrowser->isChecked());
 		SearchPluginSettings::setCustomBrowser(customBrowser->text());
-		
+		SearchPluginSettings::setOpenInExternal(openExternal->isChecked());
 		SearchPluginSettings::writeConfig();
 		return true;
 	}
@@ -268,6 +274,7 @@ namespace kt
 	void SearchPrefPage::updateData()
 	{
 		widget->updateSearchEngines(m_plugin->getSearchEngineList());
+		
 	}
 	
 	void SearchPrefPageWidget::customToggled(bool toggled)

@@ -902,6 +902,15 @@ void KTorrent::openDefaultView()
 	openView(i18n("All Torrents"));
 }
 
+KToolBar* KTorrent::addToolBar(const char* name)
+{
+	return toolBar(name);
+}
+
+void KTorrent::removeToolBar(KToolBar* tb)
+{
+	delete tb;
+}
 
 #include "ktorrent.moc"
 

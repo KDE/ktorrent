@@ -4,7 +4,7 @@ kde_module_LTLIBRARIES = ktsearchplugin.la
 noinst_HEADERS = searchplugin.h searchprefpage.h searchtab.h searchenginelist.h
 ktsearchplugin_la_SOURCES = searchplugin.cpp htmlpart.cpp searchbar.ui \
 	searchpref.ui searchwidget.cpp searchprefpage.cpp searchpluginsettings.kcfgc \
-	searchtabbase.ui searchtab.cpp searchenginelist.cpp
+	searchtab.cpp searchenginelist.cpp
 
 # Libs needed by the plugin
 ktsearchplugin_la_LIBADD = ../../libktorrent/libktorrent.la \
