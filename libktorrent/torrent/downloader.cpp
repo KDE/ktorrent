@@ -539,7 +539,6 @@ namespace bt
 			if (!c->isExcluded() && !c->isExcludedForDownloading() && cman.prepareChunk(c))
 			{
 				ChunkDownload* cd = new ChunkDownload(c);
-				current_chunks.insert(hdr.index,cd);
 				bool ret = false;
 				try
 				{
@@ -556,6 +555,7 @@ namespace bt
 				}
 				else
 				{
+					current_chunks.insert(hdr.index,cd);
 					downloaded += cd->bytesDownloaded();
 			
 					if (tmon)
