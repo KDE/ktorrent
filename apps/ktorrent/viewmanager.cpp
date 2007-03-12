@@ -157,12 +157,16 @@ void ViewManager::getSelection(QValueList<kt::TorrentInterface*> & sel)
 
 void ViewManager::onCurrentTabChanged(QWidget* w)
 {
+	KTorrentView* old = current;
 	current = 0;
 	for (ViewItr i = views.begin();i != views.end() && !current;i++)
 	{
 		if (w == *i)
 			current = *i;
 	}
+	
+	if (!current)
+		current = old;
 }
 
 bool ViewManager::closeAllowed(QWidget* )

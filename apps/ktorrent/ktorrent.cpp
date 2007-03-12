@@ -616,10 +616,7 @@ void KTorrent::stopAllDownloads()
 void KTorrent::removeDownload()
 {
 	m_view_man->removeDownloads();
-			
-	TorrentInterface* tc = m_view_man->getCurrentTC();
-	currentTorrentChanged(tc);
-	notifyViewListeners(tc);
+	currentTorrentChanged(m_view_man->getCurrentTC());
 }
 
 void KTorrent::optionsShowStatusbar()
@@ -886,6 +883,7 @@ void KTorrent::closeTab()
 void KTorrent::currentTabChanged(QWidget* w)
 {
 	m_view_man->onCurrentTabChanged(w);
+	currentTorrentChanged(m_view_man->getCurrentTC());
 	if (!m_activeTabWidget || !w)
 		return;
 	

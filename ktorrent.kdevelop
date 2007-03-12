@@ -113,8 +113,6 @@
       <subclass uifile="/plugins/partfileimport/importdlgbase.ui" sourcefile="/plugins/partfileimport/importdialog.h" />
       <subclass uifile="/apps/ktorrent/scandlgbase.ui" sourcefile="/apps/ktorrent/scandialog.cpp" />
       <subclass uifile="/apps/ktorrent/scandlgbase.ui" sourcefile="/apps/ktorrent/scandialog.h" />
-      <subclass uifile="/plugins/search/searchtabbase.ui" sourcefile="/plugins/search/searchtab.cpp" />
-      <subclass uifile="/plugins/search/searchtabbase.ui" sourcefile="/plugins/search/searchtab.h" />
       <subclass uifile="/plugins/infowidget/statustabbase.ui" sourcefile="/plugins/infowidget/statustab.cpp" />
       <subclass uifile="/plugins/infowidget/statustabbase.ui" sourcefile="/plugins/infowidget/statustab.h" />
     </subclassing>
