@@ -139,7 +139,11 @@ namespace bt
 			Uint32 diff = (off % page_size);
 			Uint64 noff = off - diff;
 		//	Out() << "Offsetted mmap : " << diff << endl;
+#if HAVE_MMAP64
+			char* ptr = (char*)mmap64(0, size + diff, mmap_flag, MAP_SHARED, fd, noff);
+#else
 			char* ptr = (char*)mmap(0, size + diff, mmap_flag, MAP_SHARED, fd, noff);
+#endif
 			if (ptr == MAP_FAILED) 
 			{
 				Out() << "mmap failed : " << QString(strerror(errno)) << endl;
@@ -160,7 +164,11 @@ namespace bt
 		}
 		else
 		{
+#if HAVE_MMAP64
+			void* ptr = mmap64(0, size, mmap_flag, MAP_SHARED, fd, off);
+#else
 			void* ptr = mmap(0, size, mmap_flag, MAP_SHARED, fd, off);
+#endif
 			if (ptr == MAP_FAILED) 
 			{
 				Out() << "mmap failed : " << QString(strerror(errno)) << endl;
@@ -239,11 +247,17 @@ namespace bt
 		if (mappings.contains(ptr))
 		{
 			CacheFile::Entry & e = mappings[ptr];
+#if HAVE_MUNMAP64
+			if (e.diff > 0)
+				ret = munmap64((char*)ptr - e.diff,e.size);
+			else
+				ret = munmap64(ptr,e.size);
+#else
 			if (e.diff > 0)
 				ret = munmap((char*)ptr - e.diff,e.size);
 			else
 				ret = munmap(ptr,e.size);
-			
+#endif
 			mappings.erase(ptr);
 			// no mappings, close temporary
 			if (mappings.count() == 0)
@@ -251,7 +265,11 @@ namespace bt
 		}
 		else
 		{
+#if HAVE_MUNMAP64
+			ret = munmap64(ptr,size);
+#else
 			ret = munmap(ptr,size);
+#endif
 		}
 		
 		if (ret < 0)
@@ -272,10 +290,17 @@ namespace bt
 		{
 			int ret = 0;
 			CacheFile::Entry & e = i.data();
+#if HAVE_MUNMAP64
+			if (e.diff > 0)
+				ret = munmap64((char*)e.ptr - e.diff,e.size);
+			else
+				ret = munmap64(e.ptr,e.size);
+#else
 			if (e.diff > 0)
 				ret = munmap((char*)e.ptr - e.diff,e.size);
 			else
 				ret = munmap(e.ptr,e.size);
+#endif
 			e.thing->unmapped();
 			
 			i++;

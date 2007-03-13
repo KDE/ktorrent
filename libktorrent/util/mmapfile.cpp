@@ -116,7 +116,11 @@ namespace bt
 		filename = file;
 		
 		// mmap the file
+#if HAVE_MMAP64
+		data = (Uint8*)mmap64(0, size, mmap_flag, MAP_SHARED, fd, 0);
+#else
 		data = (Uint8*)mmap(0, size, mmap_flag, MAP_SHARED, fd, 0);
+#endif
 		if (data == MAP_FAILED) 
 		{
 			::close(fd);
@@ -133,7 +137,11 @@ namespace bt
 	{
 		if (fd > 0)
 		{
+#if HAVE_MUNMAP64
+			munmap64(data,size);
+#else
 			munmap(data,size);
+#endif
 			::close(fd);
 			ptr = size = 0;
 			data = 0;
