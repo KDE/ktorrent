@@ -25,6 +25,7 @@
 #include <interfaces/guiinterface.h>
 
 class KConfig;
+class KTabWidget;
 class KTorrentView;
 class KTorrent;
 
@@ -79,6 +80,9 @@ public:
 	
 	virtual bool closeAllowed(QWidget* tab);
 	virtual void tabCloseRequest(kt::GUIInterface* gui,QWidget* tab);
+	
+	/// A group was renamed, modify all view which where showing this group
+	void groupRenamed(kt::Group* g,KTabWidget* mtw);
 	
 public slots:
 	/// Add a torrent to all views

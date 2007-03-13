@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <kconfig.h>
 #include <klocale.h>
+#include <ktabwidget.h>
 #include <interfaces/torrentinterface.h>
 #include <groups/group.h>
 #include "viewmanager.h"
@@ -184,6 +185,20 @@ void ViewManager::tabCloseRequest(kt::GUIInterface* gui,QWidget* tab)
 			delete tab;
 			views.erase(i);
 			break;
+		}
+	}
+}
+
+void ViewManager::groupRenamed(kt::Group* g,KTabWidget* mtw)
+{
+	for (ViewItr i = views.begin();i != views.end();i++)
+	{
+		KTorrentView* v = *i;
+		if (v->getCurrentGroup() == g)
+		{
+			mtw->changeTab(v,g->groupName());
+			v->setIcon(g->groupIcon());
+			v->setCurrentGroup(g);
 		}
 	}
 }
