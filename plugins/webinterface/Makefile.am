@@ -1,5 +1,5 @@
-INCLUDES = -I$(top_builddir)/libktorrent -I$(top_builddir)/ktorrent/libktorrent $(all_includes) \
-	-I$(srcdir)/../../libktorrent
+INCLUDES = -I$(top_builddir)/libktorrent -I$(top_builddir)/ktorrent/libktorrent \
+	-I$(srcdir)/../../libktorrent $(all_includes)
 METASOURCES = AUTO
 kde_module_LTLIBRARIES = ktwebinterfaceplugin.la
 noinst_HEADERS = webinterfaceplugin.h httpserver.h php_handler.h \

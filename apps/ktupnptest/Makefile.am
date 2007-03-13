@@ -1,4 +1,4 @@
-INCLUDES = -I$(srcdir)/../../libktorrent $(all_includes) -I$(srcdir)/../..
+INCLUDES = -I$(srcdir)/../../libktorrent -I$(srcdir)/../.. $(all_includes)
 METASOURCES = AUTO
 bin_PROGRAMS = ktupnptest
 
