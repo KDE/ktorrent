@@ -114,8 +114,7 @@ namespace bt
 		 */
 		bool checkHash(const SHA1Hash & h) const;
 		
-		virtual void unmapped(bool remap_intended);
-		virtual void remapped(void* ptr);
+		virtual void unmapped();
 		
 	private:
 		Status status;

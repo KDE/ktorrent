@@ -65,7 +65,7 @@ namespace bt
 	CacheFile::~CacheFile()
 	{
 		if (fd != -1)
-			close(false);
+			close();
 	}
 	
 	void CacheFile::changePath(const QString & npath)
@@ -83,20 +83,6 @@ namespace bt
 		}
 
 		file_size = FileSize(fd);
-
-	//	Out() << QString("CacheFile %1 = %2").arg(path).arg(file_size) << endl;
-		
-		// re do all mappings if there are any
-		QMap<void*,Entry>::iterator i = mappings.begin();
-		while (i != mappings.end())
-		{
-			CacheFile::Entry e = i.data();
-			i++;
-			mappings.erase(e.ptr);
-			e.ptr = map(e.thing,e.offset,e.size - e.diff,e.mode);
-			if (e.ptr)
-				e.thing->remapped(e.ptr);
-		}
 	}
 	
 	void CacheFile::open(const QString & path,Uint64 size)
@@ -105,9 +91,6 @@ namespace bt
 		// only set the path and the max size, we only open the file when it is needed
 		this->path = path;
 		max_size = size;
-		// if there are mappings we must reopen the file and restore them
-		if (mappings.count() > 0)
-			openFile();
 	}
 		
 	void* CacheFile::map(MMappeable* thing,Uint64 off,Uint32 size,Mode mode)
@@ -156,7 +139,11 @@ namespace bt
 			Uint32 diff = (off % page_size);
 			Uint64 noff = off - diff;
 		//	Out() << "Offsetted mmap : " << diff << endl;
+#if HAVE_MMAP64
+			char* ptr = (char*)mmap64(0, size + diff, mmap_flag, MAP_SHARED, fd, noff);
+#else
 			char* ptr = (char*)mmap(0, size + diff, mmap_flag, MAP_SHARED, fd, noff);
+#endif
 			if (ptr == MAP_FAILED) 
 			{
 				Out() << "mmap failed : " << QString(strerror(errno)) << endl;
@@ -177,7 +164,11 @@ namespace bt
 		}
 		else
 		{
+#if HAVE_MMAP64
+			void* ptr = mmap64(0, size, mmap_flag, MAP_SHARED, fd, off);
+#else
 			void* ptr = mmap(0, size, mmap_flag, MAP_SHARED, fd, off);
+#endif
 			if (ptr == MAP_FAILED) 
 			{
 				Out() << "mmap failed : " << QString(strerror(errno)) << endl;
@@ -256,11 +247,17 @@ namespace bt
 		if (mappings.contains(ptr))
 		{
 			CacheFile::Entry & e = mappings[ptr];
+#if HAVE_MUNMAP64
+			if (e.diff > 0)
+				ret = munmap64((char*)ptr - e.diff,e.size);
+			else
+				ret = munmap64(ptr,e.size);
+#else
 			if (e.diff > 0)
 				ret = munmap((char*)ptr - e.diff,e.size);
 			else
 				ret = munmap(ptr,e.size);
-			
+#endif
 			mappings.erase(ptr);
 			// no mappings, close temporary
 			if (mappings.count() == 0)
@@ -268,7 +265,11 @@ namespace bt
 		}
 		else
 		{
+#if HAVE_MUNMAP64
+			ret = munmap64(ptr,size);
+#else
 			ret = munmap(ptr,size);
+#endif
 		}
 		
 		if (ret < 0)
@@ -277,7 +278,7 @@ namespace bt
 		}
 	}
 		
-	void CacheFile::close(bool to_be_reopened)
+	void CacheFile::close()
 	{
 		QMutexLocker lock(&mutex);
 		
@@ -289,23 +290,22 @@ namespace bt
 		{
 			int ret = 0;
 			CacheFile::Entry & e = i.data();
+#if HAVE_MUNMAP64
+			if (e.diff > 0)
+				ret = munmap64((char*)e.ptr - e.diff,e.size);
+			else
+				ret = munmap64(e.ptr,e.size);
+#else
 			if (e.diff > 0)
 				ret = munmap((char*)e.ptr - e.diff,e.size);
 			else
 				ret = munmap(e.ptr,e.size);
-			e.thing->unmapped(to_be_reopened);
-			// if it will be reopenend, we will not remove all mappings
-			// so that they will be redone on reopening
-			if (to_be_reopened)
-			{
-				i++;
-			}
-			else
-			{
-				i++;
-				mappings.erase(e.ptr);
-			}
+#endif
+			e.thing->unmapped();
 			
+			i++;
+			mappings.erase(e.ptr);
+						
 			if (ret < 0)
 			{
 				Out(SYS_DIO|LOG_IMPORTANT) << QString("Munmap failed with error %1 : %2").arg(errno).arg(strerror(errno)) << endl;
@@ -318,12 +318,14 @@ namespace bt
 	void CacheFile::read(Uint8* buf,Uint32 size,Uint64 off)
 	{
 		QMutexLocker lock(&mutex);
+		bool close_again = false;
 		
 		// reopen the file if necessary
 		if (fd == -1)
 		{
 		//	Out() << "Reopening " << path << endl;
 			openFile();
+			close_again = true;
 		}
 		
 		if (off >= file_size || off >= max_size)
@@ -334,18 +336,28 @@ namespace bt
 		// jump to right position
 		SeekFile(fd,off,SEEK_SET);
 		if ((Uint32)::read(fd,buf,size) != size)
+		{
+			if (close_again)
+				closeTemporary();
+			
 			throw Error(i18n("Error reading from %1").arg(path));
+		}
+		
+		if (close_again)
+			closeTemporary();
 	}
 	
 	void CacheFile::write(const Uint8* buf,Uint32 size,Uint64 off)
 	{
 		QMutexLocker lock(&mutex);
+		bool close_again = false;
 		
 		// reopen the file if necessary
 		if (fd == -1)
 		{
 		//	Out() << "Reopening " << path << endl;
 			openFile();
+			close_again = true;
 		}
 		
 		if (off + size > max_size)
@@ -363,6 +375,9 @@ namespace bt
 		// jump to right position
 		SeekFile(fd,off,SEEK_SET);
 		int ret = ::write(fd,buf,size);
+		if (close_again)
+			closeTemporary();
+		
 		if (ret == -1)
 			throw Error(i18n("Error writing to %1 : %2").arg(path).arg(strerror(errno)));
 		else if ((Uint32)ret != size)
@@ -380,9 +395,8 @@ namespace bt
 		if (fd == -1 || mappings.count() > 0)
 			return;
 			
-		close(fd);
+		::close(fd);
 		fd = -1;
-		//Out() << "Temporarely closed " << path << endl;
 	}
 	
 	
