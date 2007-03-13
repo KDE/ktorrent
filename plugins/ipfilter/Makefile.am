@@ -1,4 +1,4 @@
-INCLUDES = $(all_includes) -I$(srcdir)/../../libktorrent
+INCLUDES = -I$(srcdir)/../../libktorrent $(all_includes)
 METASOURCES = AUTO
 kde_module_LTLIBRARIES = ktipfilterplugin.la
 noinst_HEADERS = ipfilterplugin.h ipblockingprefpage.h antip2p.h \

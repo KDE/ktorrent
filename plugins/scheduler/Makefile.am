@@ -1,4 +1,4 @@
-INCLUDES = $(all_includes) -I$(srcdir)/../../libktorrent
+INCLUDES = -I$(srcdir)/../../libktorrent $(all_includes)
 METASOURCES = AUTO
 kde_module_LTLIBRARIES = ktschedulerplugin.la
 noinst_HEADERS = schedulerplugin.h bwscheduler.h schedulerprefpagewidget.h \

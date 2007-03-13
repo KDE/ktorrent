@@ -1,4 +1,4 @@
-INCLUDES = $(all_includes) -I$(srcdir)/..
+INCLUDES = -I$(srcdir)/.. $(all_includes)
 METASOURCES = AUTO
 libinterfaces_la_LDFLAGS = $(all_libraries)
 noinst_LTLIBRARIES = libinterfaces.la

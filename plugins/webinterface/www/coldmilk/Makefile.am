@@ -1,4 +1,4 @@
-INCLUDES = $(all_includes) -I$(srcdir)/../../libktorrent
+INCLUDES = -I$(srcdir)/../../libktorrent $(all_includes)
 METASOURCES = AUTO
 
 ktdatadir = $(kde_datadir)/ktorrent/www/coldmilk
