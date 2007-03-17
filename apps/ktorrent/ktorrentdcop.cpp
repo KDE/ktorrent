@@ -246,4 +246,9 @@ bool KTorrentDCOP::isBlockedIP(QString ip)
 	return bt::IPBlocklist::instance().isBlocked(ip);	
 }
 
+void KTorrentDCOP::openTorrentSilentlyDir(const QString & file, const QString & savedir)
+{
+	app->loadSilentlyDir(KURL::fromPathOrURL(file), KURL::fromPathOrURL(savedir));
+}
+
 #include "ktorrentdcop.moc"

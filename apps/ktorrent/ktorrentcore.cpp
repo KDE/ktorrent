@@ -296,28 +296,37 @@ void KTorrentCore::downloadFinishedSilently(KIO::Job *job)
 	if (err == KIO::ERR_USER_CANCELED)
 	{
 		loadingFinished(j->url(),false,true);
-		return;
 	}
-	
-	if (err)
+	else if (err)
 	{
 		loadingFinished(j->url(),false,false);
 	}
 	else
 	{
-		// load in the file (target is always local)
-		QString dir = Settings::saveDir();
-		if (!Settings::useSaveDir())
+		QString dir;
+		if (custom_save_locations.contains(j))
 		{
-			loadingFinished(j->url(),false,false);
+			// we have a custom save location so save to that
+			dir = custom_save_locations[j].path();
+			custom_save_locations.erase(j);
+		}
+		else if (!Settings::useSaveDir())
+		{
+			// incase save dir is not set, use home director
+			Out(SYS_GEN|LOG_NOTICE) << "Cannot load " << j->url() << " silently, default save location not set !" << endl;
+			Out(SYS_GEN|LOG_NOTICE) << "Using home directory instead !" << endl;
+			dir = QDir::homeDirPath();
 		}
 		else
 		{
-			if (dir != QString::null && load(j->data(),dir,true,j->url()))
-				loadingFinished(j->url(),true,false);
-			else
-				loadingFinished(j->url(),false,false);
+			dir = Settings::saveDir();
 		}
+		
+		
+		if (dir != QString::null && load(j->data(),dir,true,j->url()))
+			loadingFinished(j->url(),true,false);
+		else
+			loadingFinished(j->url(),false,false);
 	}
 }
 
@@ -343,6 +352,38 @@ void KTorrentCore::loadSilently(const KURL& url)
 	{
 		// download to a random file in tmp
 		KIO::Job* j = KIO::storedGet(url,false,true);
+		connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadFinishedSilently( KIO::Job* )));
+	}
+}
+
+void KTorrentCore::loadSilentlyDir(const KURL& url, const KURL& savedir)
+{
+	if (url.isLocalFile())
+	{
+		QString path = url.path(); 
+		QString dir = savedir.path();
+		QFileInfo fi(dir);
+		if (!fi.exists() || !fi.isWritable() || !fi.isDir())
+		{
+			Out(SYS_GEN|LOG_NOTICE) << "Cannot load " << path << " silently, destination directory is not OK ! Using default save directory." << endl;
+			dir = Settings::saveDir();
+			if (!Settings::useSaveDir())
+			{
+				Out(SYS_GEN|LOG_NOTICE) << "Default save directory not set, using home directory !" << endl;
+				dir = QDir::homeDirPath();
+			}
+		}
+	 	
+		if (dir != QString::null && load(path,dir,true))
+			loadingFinished(url,true,false);
+		else
+			loadingFinished(url,false,true);
+	}
+	else
+	{
+		// download to a random file in tmp
+		KIO::Job* j = KIO::storedGet(url,false,true);
+		custom_save_locations.insert(j,savedir); // keep track of save location
 		connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadFinishedSilently( KIO::Job* )));
 	}
 }

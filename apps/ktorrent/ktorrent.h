@@ -122,6 +122,12 @@ public slots:
 	*/
 	void loadSilently(const KURL& url);
 	
+	/**
+	 * Does the same as loadSilently, except accepts a directory to
+	 * save to
+	 */
+	void loadSilentlyDir(const KURL& url, const KURL& savedir);
+	
 	/// Open a view with the given group
 	void openView(kt::Group* g);
 

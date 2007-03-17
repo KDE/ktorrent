@@ -109,6 +109,7 @@ int main(int argc, char **argv)
 	about.addCredit("Alexander Dymo",I18N_NOOP("IDEAl code from KDevelop"),"adymo@kdevelop.org");
 	about.addCredit("Scott Wolchok",I18N_NOOP("Conversion speed improvement in ipfilter plugin"),"swolchok@umich.edu");
 	about.addCredit("Bryan Burns of Juniper Networks",I18N_NOOP("Discovered 2 security vulnerabilities (both are fixed)"),0);
+	about.addCredit("Goten Xiao",I18N_NOOP("Patch to load silently with a save location"),0);
 
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);

@@ -915,5 +915,10 @@ void KTorrent::removeToolBar(KToolBar* tb)
 	delete tb;
 }
 
+void KTorrent::loadSilentlyDir(const KURL& url, const KURL& savedir)
+{
+	m_core->loadSilentlyDir(url, savedir);
+}
+
 #include "ktorrent.moc"
 

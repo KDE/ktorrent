@@ -62,6 +62,7 @@ k_dcop:
 	virtual bool showSystemTrayIcon() = 0;
 	virtual QValueList<int> intSettings() = 0;
 	virtual bool isBlockedIP(QString ip) = 0;
+	virtual void openTorrentSilentlyDir(const QString & file, const QString & savedir) = 0;
 };
 
 

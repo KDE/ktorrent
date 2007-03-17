@@ -68,6 +68,7 @@ public:
 	virtual bool showSystemTrayIcon();
 	virtual QValueList<int> intSettings();
 	virtual bool isBlockedIP(QString ip);
+	virtual void openTorrentSilentlyDir(const QString & file, const QString & savedir);
 
 };
 

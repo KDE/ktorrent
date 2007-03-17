@@ -20,6 +20,7 @@
 #ifndef KTORRENTCORE_H
 #define KTORRENTCORE_H
 
+#include <qmap.h>
 #include <qtimer.h>
 #include <qcstring.h>
 #include <util/constants.h>
@@ -176,6 +177,7 @@ public:
 	
 	virtual void load(const KURL& url);
 	virtual void loadSilently(const KURL& url);
+	virtual void loadSilentlyDir(const KURL& url, const KURL& savedir);
 	virtual float getGlobalMaxShareRatio() const;
 	
 	
@@ -321,6 +323,7 @@ private:
 	bt::Uint64 removed_bytes_up,removed_bytes_down;
 	kt::PluginManager* pman;
 	bt::QueueManager* qman;
+	QMap<KIO::Job*,KURL> custom_save_locations; // map to store save locations
 };
 
 #endif
