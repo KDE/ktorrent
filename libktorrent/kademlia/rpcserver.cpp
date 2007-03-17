@@ -151,6 +151,9 @@ namespace dht
 			Out(SYS_DHT|LOG_IMPORTANT) << "Error happened during parsing : " << err.toString() << endl;
 		}
 		delete n;
+		
+		if (sock->bytesAvailable() > 0)
+			readPacket();
 	}
 	
 	
