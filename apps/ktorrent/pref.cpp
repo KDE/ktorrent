@@ -374,6 +374,7 @@ bool AdvancedPrefPage::apply()
 	Settings::setDoNotUseKDEProxy(ap->do_not_use_kde_proxy->isChecked());
 	Settings::setHttpTrackerProxy(ap->http_proxy->text());
 	Settings::setEta(ap->eta->currentItem());	
+	Settings::setFullDiskPrealloc(ap->full_prealloc->isChecked());
 	return true;
 }
 
@@ -392,6 +393,7 @@ void AdvancedPrefPage::updateData()
 	ap->http_proxy->setText(Settings::httpTrackerProxy());
 	ap->http_proxy->setEnabled(Settings::doNotUseKDEProxy());
 	ap->eta->setCurrentItem(Settings::eta());
+	ap->full_prealloc->setChecked(Settings::fullDiskPrealloc());
 }
 			
 void AdvancedPrefPage::createWidget(QWidget* parent)

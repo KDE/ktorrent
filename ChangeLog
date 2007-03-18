@@ -6,6 +6,7 @@ Changes in 2.2dev
 - Immediatly hide system tray icon at exit
 - Make sure to many files open bug is very unlikely to happen
 - Search plugin tab has now become a toolbar
+- Added option to fully preallocate diskspace for torrents
 
 Changes in 2.1.2
 - Fix 2 security vulnerabilities (thanks to Bryan Burns from Juniper Networks

@@ -111,12 +111,13 @@ namespace bt
 	 * @param size The size to truncate to
 	 * @throw Error if the file doesn't exist, or something else goes wrong
 	 */
-	void TruncateFile(int fd,Uint64 size);
+	void TruncateFile(int fd,Uint64 size,bool quick);
 	
 	/**
 	 * Truncate a file (wrapper around ftruncate)
 	 * @param fd Path of the file
 	 * @param size The size to truncate to
+	 * @param quick Use the quick way (doesn't prevent fragmentationt)
 	 * @throw Error if the file doesn't exist, or something else goes wrong
 	 */
 	void TruncateFile(const QString & path,Uint64 size);

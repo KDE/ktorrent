@@ -37,6 +37,7 @@
 #include "log.h"
 #include <torrent/globals.h>
 #include "file.h"
+#include "array.h"
 
 #ifndef O_LARGEFILE
 #define O_LARGEFILE 0
@@ -265,7 +266,7 @@ namespace bt
 			if (write(fd, &zero, 1) == -1)
 				return false;
 				
-			TruncateFile(fd,size);
+			TruncateFile(fd,size,true);
 		}
 		catch (bt::Error & e)
 		{
@@ -287,17 +288,42 @@ namespace bt
 	}
 	
 
-	void TruncateFile(int fd,Uint64 size)
+	void TruncateFile(int fd,Uint64 size,bool quick)
 	{
 		if (FileSize(fd) == size)
 			return;
 		
+		if (quick)
+		{
 #if HAVE_FTRUNCATE64
-		if (ftruncate64(fd,size) == -1)
+			if (ftruncate64(fd,size) == -1)
 #else
-		if (ftruncate(fd,size) == -1)
-#endif
-			throw Error(i18n("Cannot expand file : %1").arg(strerror(errno)));
+			if (ftruncate(fd,size) == -1)
+#endif	
+				throw Error(i18n("Cannot expand file : %1").arg(strerror(errno)));
+		}
+		else
+		{
+			SeekFile(fd,0,SEEK_SET);
+			bt::Array<Uint8> buf(4096);
+			buf.fill(0);
+	
+			Uint64 written = 0;
+			while (written < size)
+			{
+				int to_write = size - written;
+				if (to_write > 4096)
+					to_write = 4096;
+				
+				int ret = write(fd,buf,to_write);
+				if (ret < 0)
+					throw Error(i18n("Cannot expand file : %1").arg(strerror(errno)));
+				else if (ret == 0 || ret != (int)to_write)
+					throw Error(i18n("Cannot expand file").arg(strerror(errno)));
+				else
+					written += to_write;
+			}
+		}
 	}
 	
 	void TruncateFile(const QString & path,Uint64 size)
@@ -308,7 +334,7 @@ namespace bt
 		
 		try
 		{
-			TruncateFile(fd,size);
+			TruncateFile(fd,size,true);
 			close(fd);
 		}
 		catch (...)

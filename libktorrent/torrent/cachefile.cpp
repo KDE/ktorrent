@@ -41,6 +41,7 @@
 #include <util/error.h>
 #include "cachefile.h"
 #include "preallocationthread.h"
+#include "settings.h"
 
 
 // Not all systems have an O_LARGEFILE - Solaris depending
@@ -415,7 +416,7 @@ namespace bt
 
 		try
 		{
-			bt::TruncateFile(fd,max_size);
+			bt::TruncateFile(fd,max_size,!Settings::fullDiskPrealloc());
 		}
 		catch (bt::Error & e)
 		{
