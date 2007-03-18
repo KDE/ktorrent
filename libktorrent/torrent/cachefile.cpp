@@ -334,7 +334,7 @@ namespace bt
 		}
 		
 		// jump to right position
-		SeekFile(fd,off,SEEK_SET);
+		SeekFile(fd,(Int64)off,SEEK_SET);
 		if ((Uint32)::read(fd,buf,size) != size)
 		{
 			if (close_again)
@@ -373,7 +373,7 @@ namespace bt
 		}
 		
 		// jump to right position
-		SeekFile(fd,off,SEEK_SET);
+		SeekFile(fd,(Int64)off,SEEK_SET);
 		int ret = ::write(fd,buf,size);
 		if (close_again)
 			closeTemporary();
