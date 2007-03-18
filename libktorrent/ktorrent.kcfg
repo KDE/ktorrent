@@ -16,6 +16,10 @@
 			<default>0</default>
 			<min>0</min>
 		</entry>
+		<entry name="startDownloadsOnLowDiskSpace" type="Int">
+			<label>Start downloads on low disk space?</label>
+			<default>0</default>
+		</entry>
 		<entry name="maxConnections" type="Int">
 			<label>Maximum number of connections per torrent (0 = no limit)</label>
 			<default>120</default>

@@ -150,7 +150,8 @@ void DownloadPrefPage::createWidget(QWidget* parent)
 bool DownloadPrefPage::apply()
 {
 	Settings::setMaxDownloads(dp->max_downloads->value());
-	Settings::setMaxSeeds(dp->max_seeds->value());
+	Settings::setMaxSeeds(dp->max_seeds->value());	
+	Settings::setStartDownloadsOnLowDiskSpace(dp->cmbDiskSpace->currentItem());
 	Settings::setMaxConnections(dp->max_conns->value());
 	Settings::setMaxTotalConnections(dp->max_total_conns->value());
 	Settings::setMaxUploadRate(dp->max_upload_rate->value());
@@ -174,6 +175,7 @@ void DownloadPrefPage::updateData()
 	//setMinimumSize(400,400);
 	dp->max_downloads->setValue(Settings::maxDownloads());
 	dp->max_seeds->setValue(Settings::maxSeeds());
+	dp->cmbDiskSpace->setCurrentItem(Settings::startDownloadsOnLowDiskSpace());
 	dp->max_conns->setValue(Settings::maxConnections());
 	dp->max_total_conns->setValue(Settings::maxTotalConnections());
 	dp->max_upload_rate->setValue(Settings::maxUploadRate());
