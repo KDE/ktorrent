@@ -66,6 +66,7 @@ private:
 	int dirs_id;
 	int outputdir_id;
 	int torxdir_id;
+	int downloaddir_id;
 	int peer_sources_id;
 	int dht_id;
 	int ut_pex_id;

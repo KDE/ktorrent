@@ -132,6 +132,11 @@ namespace bt
 		file_priority_file = data_dir + "file_priority";
 	}
 	
+	void ChunkManager::changeOutputPath(const QString & output_path)
+	{
+		cache->changeOutputPath(output_path);
+	}
+	
 	void ChunkManager::loadIndexFile()
 	{
 		during_load = true;

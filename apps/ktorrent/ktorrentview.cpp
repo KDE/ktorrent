@@ -27,6 +27,7 @@
 #include <kurldrag.h>
 #include <kmessagebox.h>
 #include <kstdguiitem.h>
+#include <kfiledialog.h>
 
 #include <interfaces/torrentinterface.h>
 #include <torrent/globals.h>
@@ -630,6 +631,38 @@ void KTorrentView::openTorXDirectory()
 		if (tc)
 		{
 			new KRun(KURL::fromPathOrURL(tc->getTorDir()), 0, true, true);
+		}
+	}
+}
+
+void KTorrentView::setDownloadLocationSlot()
+{
+	QPtrList<QListViewItem> sel = selectedItems();
+	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
+	{
+		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
+		TorrentInterface* tc = kvi->getTC();
+		if (tc)
+		{
+			QString dn;
+			TorrentStats s =  tc->getStats();
+			
+			if(s.multi_file_torrent)
+			{
+				dn = KFileDialog::getExistingDirectory(s.output_path, this, i18n("Choose download location for %1").arg(tc->getStats().torrent_name));
+								
+				if(!dn.endsWith("/"))
+					dn += "/";
+				
+				dn += s.torrent_name;
+			}
+			else
+			{
+				dn =  KFileDialog::getSaveFileName(s.output_path, QString::null, this, i18n("Choose download location for %1").arg(tc->getStats().torrent_name));
+			}
+						
+			if(!dn.isEmpty())
+				tc->changeOutputDir(dn);
 		}
 	}
 }

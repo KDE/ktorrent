@@ -84,6 +84,8 @@ KTorrentViewMenu::KTorrentViewMenu (KTorrentView *parent, const char *name )
 	torxdir_id = dirs_sub_menu->insertItem(iload->loadIconSet("folder",KIcon::Small), i18n("Temporary Directory"),
 										   parent, SLOT(openTorXDirectory()));
 	
+	downloaddir_id = insertItem(i18n("Set download location..."), parent, SLOT(setDownloadLocationSlot()));
+	
 	insertSeparator();
 	remove_from_group_id =  insertItem(i18n("Remove From Group"),parent, SLOT(removeFromGroup()));
 	groups_sub_menu = new KPopupMenu(this);

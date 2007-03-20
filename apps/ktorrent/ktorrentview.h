@@ -122,6 +122,7 @@ public slots:
 	void showAddPeersWidget();
 	void openOutputDirectory();
 	void openTorXDirectory();
+	void setDownloadLocationSlot();
 	void dhtSlot();
 	void utPexSlot();
 

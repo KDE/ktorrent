@@ -52,6 +52,15 @@ namespace bt
 		cache_file = tmpdir + "cache";
 	}
 	
+	void bt::SingleFileCache::changeOutputPath(const QString & outputpath)
+	{
+		bt::Delete(cache_file);
+		output_file = outputpath;
+		datadir = output_file.left(output_file.findRev(bt::DirSeparator()));
+		
+		bt::SymLink(output_file, cache_file);
+	}
+	
 	bool SingleFileCache::prep(Chunk* c)
 	{
 		Uint64 off = c->getIndex() * tor.getChunkSize();

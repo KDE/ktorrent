@@ -164,6 +164,20 @@ namespace bt
 			}
 		}
 	}
+	
+	void MultiFileCache::changeOutputPath(const QString & outputpath)
+	{
+		deleteDataFiles();
+				
+		this->output_dir = outputpath;
+		
+		if(!output_dir.endsWith("/"))
+			output_dir += "/";
+		
+		datadir = outputpath.left(outputpath.findRev(bt::DirSeparator()) + 1);
+		
+		create();
+	}
 
 	void MultiFileCache::create()
 	{
@@ -723,4 +737,3 @@ namespace bt
 	}
 	
 }
-

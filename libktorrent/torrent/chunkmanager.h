@@ -87,6 +87,8 @@ namespace bt
 		/// Get the actual output path
 		QString getOutputPath() const;
 		
+		void changeOutputPath(const QString& output_path);
+		
 		/// Remove obsolete chunks
 		void checkMemoryUsage();
 		

@@ -271,8 +271,7 @@ namespace bt
                  
 				stop(true); 
 				emit seedingAutoStopped(this);
-            } 
-
+            } 			
 		}
 		catch (Error & e)
 		{
@@ -767,6 +766,41 @@ namespace bt
 		cman->changeDataDir(datadir);
 		return true;
 	}
+	
+	bool TorrentControl::changeOutputDir(const QString & new_dir)
+	{
+		bool start = false;
+		
+		//check if torrent is running and stop it before moving data
+		if(stats.running)
+		{
+			start = true;
+			this->stop(false);
+		}
+		
+		try
+		{
+			bt::Move(stats.output_path, new_dir);
+			cman->changeOutputPath(new_dir);	
+			outputdir = new_dir.left(new_dir.findRev(bt::DirSeparator()) + 1);		
+			stats.output_path = outputdir;
+			istats.custom_output_name = true;
+			
+			saveStats();
+			
+			Out(SYS_GEN|LOG_NOTICE) << "Data directory changed for torrent " << "'" << stats.torrent_name << "' to: " << new_dir << endl;
+		}
+		catch (Error& err)
+		{			
+			Out(SYS_GEN|LOG_IMPORTANT) << "Could not move " << stats.output_path << " to " << new_dir << ". Exception: " << endl;
+			return false;
+		}
+		
+		if(start)
+			this->start();
+		
+		return true;
+	}
 
 
 	void TorrentControl::rollback()
@@ -841,7 +875,7 @@ namespace bt
 	{
 		StatsFile st(datadir + "stats");
 
-		st.write("OUTPUTDIR", cman->getDataDir());
+		st.write("OUTPUTDIR", cman->getDataDir());			
 		
 		if (cman->getDataDir() != outputdir)
 			outputdir = cman->getDataDir();
