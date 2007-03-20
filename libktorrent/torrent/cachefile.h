@@ -121,10 +121,11 @@ namespace bt
 	private:
 		void growFile(Uint64 to_write);
 		void closeTemporary();
-		void openFile();
+		void openFile(Mode mode);
 		
 	private:
 		int fd;
+		bool read_only;
 		Uint64 max_size,file_size;
 		QString path;
 		struct Entry

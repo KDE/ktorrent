@@ -60,7 +60,9 @@ namespace bt
 {
 
 	CacheFile::CacheFile() : fd(-1),max_size(0),file_size(0),mutex(true)
-	{}
+	{
+		read_only = false;
+	}
 
 
 	CacheFile::~CacheFile()
@@ -74,15 +76,25 @@ namespace bt
 		path = npath;
 	}
 	
-	void CacheFile::openFile()
+	void CacheFile::openFile(Mode mode)
 	{
-		fd = ::open(QFile::encodeName(path),O_RDWR | O_LARGEFILE);
+		int flags = O_LARGEFILE;
+		
+		// by default allways try read write
+		fd = ::open(QFile::encodeName(path),flags | O_RDWR);
+		if (fd < 0 && mode == READ)
+		{
+			// in case RDWR fails, try readonly if possible
+			fd = ::open(QFile::encodeName(path),flags | O_RDONLY);
+			if (fd >= 0)
+				read_only = true;
+		}
 		
 		if (fd < 0)
 		{
 			throw Error(i18n("Cannot open %1 : %2").arg(path).arg(strerror(errno)));
 		}
-
+		
 		file_size = FileSize(fd);
 	}
 	
@@ -101,7 +113,12 @@ namespace bt
 		if (fd == -1)
 		{
 		//	Out() << "Reopening " << path << endl;
-			openFile();
+			openFile(mode);
+		}
+		
+		if (read_only && mode != READ)
+		{
+			throw Error(i18n("Cannot open %1 for writing : readonly filesystem").arg(path));
 		}
 		
 		if (off + size > max_size)
@@ -196,8 +213,11 @@ namespace bt
 		if (fd == -1)
 		{
 		//	Out() << "Reopening " << path << endl;
-			openFile();
+			openFile(RW);
 		}
+		
+		if (read_only)
+			throw Error(i18n("Cannot open %1 for writing : readonly filesystem").arg(path));
 		
 		// jump to the end of the file
 		SeekFile(fd,0,SEEK_END);
@@ -325,7 +345,7 @@ namespace bt
 		if (fd == -1)
 		{
 		//	Out() << "Reopening " << path << endl;
-			openFile();
+			openFile(READ);
 			close_again = true;
 		}
 		
@@ -357,9 +377,12 @@ namespace bt
 		if (fd == -1)
 		{
 		//	Out() << "Reopening " << path << endl;
-			openFile();
+			openFile(RW);
 			close_again = true;
 		}
+		
+		if (read_only)
+			throw Error(i18n("Cannot open %1 for writing : readonly filesystem").arg(path));
 		
 		if (off + size > max_size)
 		{
@@ -410,8 +433,16 @@ namespace bt
 		bool close_again = false;
 		if (fd == -1)
 		{
-			openFile();
+			openFile(RW);
 			close_again = true;
+		}
+		
+		if (read_only)
+		{
+			if (close_again)
+				closeTemporary();
+			
+			throw Error(i18n("Cannot open %1 for writing : readonly filesystem").arg(path));
 		}
 
 		try

@@ -7,6 +7,7 @@ Changes in 2.2dev
 - Make sure to many files open bug is very unlikely to happen
 - Search plugin tab has now become a toolbar
 - Added option to fully preallocate diskspace for torrents
+- Added support for seeding from readonly filesystems
 
 Changes in 2.1.2
 - Fix 2 security vulnerabilities (thanks to Bryan Burns from Juniper Networks
