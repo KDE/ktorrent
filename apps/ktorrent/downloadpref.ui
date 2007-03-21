@@ -383,7 +383,7 @@
                                 <cstring>num_max_ratio</cstring>
                             </property>
                             <property name="maxValue">
-                                <number>1</number>
+                                <number>999</number>
                             </property>
                             <property name="precision">
                                 <number>2</number>
