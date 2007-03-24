@@ -36,6 +36,7 @@ namespace net
 	class UploadThread : public QThread
 	{
 		static bt::Uint32 ucap;
+		static bt::Uint32 sleep_time;
 		
 		SocketMonitor* sm;
 		bool running;
@@ -61,6 +62,9 @@ namespace net
 		
 		/// Set the upload cap
 		static void setCap(bt::Uint32 uc) {ucap = uc;}
+		
+		/// Set the sleep time when using upload caps
+		static void setSleepTime(bt::Uint32 stime);
 	private: 
 		void update();
 		void processOutgoingData(bt::TimeStamp now);

@@ -78,6 +78,7 @@ namespace net
 		
 		static void setDownloadCap(Uint32 bytes_per_sec);
 		static void setUploadCap(Uint32 bytes_per_sec);
+		static void setSleepTime(Uint32 sleep_time);
 		static SocketMonitor & instance() {return self;}
 	};
 

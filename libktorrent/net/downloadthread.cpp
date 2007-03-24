@@ -29,6 +29,7 @@ using namespace bt;
 namespace net
 {
 	Uint32 DownloadThread::dcap = 0;
+	Uint32 DownloadThread::sleep_time = 3;
 
 	DownloadThread::DownloadThread(SocketMonitor* sm)
 			: sm(sm),running(false)
@@ -88,7 +89,7 @@ namespace net
 		}
 		
 		if (dcap > 0)
-			msleep(1);
+			msleep(sleep_time);
 	}
 
 	int DownloadThread::fillPollVector()
@@ -174,4 +175,9 @@ namespace net
 		}
 	}
 
+	void DownloadThread::setSleepTime(Uint32 stime)
+	{
+		if (stime >= 1 && stime <= 10)
+			sleep_time = stime;
+	}
 }

@@ -37,6 +37,7 @@
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <qdir.h>
+#include <qslider.h>
 #include <kresolver.h>
 
 #include "downloadpref.h"
@@ -377,6 +378,7 @@ bool AdvancedPrefPage::apply()
 	Settings::setHttpTrackerProxy(ap->http_proxy->text());
 	Settings::setEta(ap->eta->currentItem());	
 	Settings::setFullDiskPrealloc(ap->full_prealloc->isChecked());
+	Settings::setCpuUsage(ap->cpu_usage->value());
 	return true;
 }
 
@@ -396,6 +398,7 @@ void AdvancedPrefPage::updateData()
 	ap->http_proxy->setEnabled(Settings::doNotUseKDEProxy());
 	ap->eta->setCurrentItem(Settings::eta());
 	ap->full_prealloc->setChecked(Settings::fullDiskPrealloc());
+	ap->cpu_usage->setValue(Settings::cpuUsage());
 }
 			
 void AdvancedPrefPage::createWidget(QWidget* parent)

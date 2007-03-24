@@ -28,7 +28,8 @@ using namespace bt;
 namespace net
 {
 	Uint32 UploadThread::ucap = 0;
-
+	Uint32 UploadThread::sleep_time = 3;
+	
 	UploadThread::UploadThread(SocketMonitor* sm) : sm(sm),running(false)
 	{}
 
@@ -81,7 +82,7 @@ namespace net
 		if (num_ready == 0) // nobody was ready so go to sleep
 			data_ready.wait(); 
 		else
-			msleep(1);
+			msleep(sleep_time);
 	}
 	
 	void UploadThread::signalDataReady()
@@ -124,5 +125,11 @@ namespace net
 			}
 			i = (i + 1) % wbs.size();
 		}
+	}
+	
+	void UploadThread::setSleepTime(Uint32 stime)
+	{
+		if (stime >= 1 && stime <= 10)
+			sleep_time = stime;
 	}
 }

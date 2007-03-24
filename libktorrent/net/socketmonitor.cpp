@@ -86,6 +86,12 @@ namespace net
 		UploadThread::setCap(bytes_per_sec);
 	}
 	
+	void SocketMonitor::setSleepTime(Uint32 sleep_time)
+	{
+		DownloadThread::setSleepTime(sleep_time);
+		UploadThread::setSleepTime(sleep_time);
+	}
+	
 	void SocketMonitor::add(BufferedSocket* sock)
 	{
 		QMutexLocker lock(&mutex);

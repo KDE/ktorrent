@@ -39,6 +39,7 @@ namespace net
 	class DownloadThread : public QThread
 	{
 		static bt::Uint32 dcap;
+		static bt::Uint32 sleep_time;
 		
 		SocketMonitor* sm;
 		bool running;
@@ -60,6 +61,9 @@ namespace net
 		
 		/// Set the download cap
 		static void setCap(bt::Uint32 cap) {dcap = cap;}
+		
+		/// Set the sleep time when using download caps
+		static void setSleepTime(bt::Uint32 stime);
 	private:
 		int fillPollVector();
 		void update();

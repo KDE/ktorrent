@@ -353,6 +353,7 @@ void KTorrent::applySettings(bool change_port)
 	PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
 	net::SocketMonitor::setDownloadCap(Settings::maxDownloadRate()*1024);
 	net::SocketMonitor::setUploadCap(Settings::maxUploadRate()*1024);
+	net::SocketMonitor::setSleepTime(Settings::cpuUsage());
 	m_core->setKeepSeeding(Settings::keepSeeding());
 	mse::StreamSocket::setTOS(Settings::typeOfService());
 	if (Settings::allwaysDoUploadDataCheck())
