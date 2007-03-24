@@ -102,6 +102,10 @@ namespace dht
 		if (!running)
 			return;
 		
+		// ignore requests we get from ourself
+		if (r->getID() == node->getOurID())
+			return;
+		
 		Out(SYS_DHT|LOG_NOTICE) << "DHT: Sending ping response" << endl;
 		PingRsp rsp(r->getMTID(),node->getOurID());
 		rsp.setOrigin(r->getOrigin());
@@ -114,6 +118,10 @@ namespace dht
 	void DHT::findNode(FindNodeReq* r)
 	{
 		if (!running)
+			return;
+		
+		// ignore requests we get from ourself
+		if (r->getID() == node->getOurID())
 			return;
 		
 		Out(SYS_DHT|LOG_DEBUG) << "DHT: got findNode request" << endl;
@@ -141,6 +149,10 @@ namespace dht
 		if (!running)
 			return;
 		
+		// ignore requests we get from ourself
+		if (r->getID() == node->getOurID())
+			return;
+		
 		Out(SYS_DHT|LOG_DEBUG) << "DHT: got announce request" << endl;
 		node->recieved(this,r);
 		// first check if the token is OK
@@ -163,6 +175,10 @@ namespace dht
 	void DHT::getPeers(GetPeersReq* r)
 	{
 		if (!running)
+			return;
+		
+		// ignore requests we get from ourself
+		if (r->getID() == node->getOurID())
 			return;
 		
 		Out(SYS_DHT|LOG_DEBUG) << "DHT: got getPeers request" << endl;
