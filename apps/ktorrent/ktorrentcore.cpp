@@ -634,7 +634,6 @@ void KTorrentCore::stopAll(int type)
 void KTorrentCore::update()
 {
 	bt::UpdateCurrentTime();
-	KT_PROF_START("core");
 	AuthenticationMonitor::instance().update();
 	
 	QPtrList<kt::TorrentInterface>::iterator i = qman->begin();
@@ -667,7 +666,6 @@ void KTorrentCore::update()
 		}
 		i++;
 	}
-	KT_PROF_END();
 }
 
 void KTorrentCore::makeTorrent(const QString & file,const QStringList & trackers,
