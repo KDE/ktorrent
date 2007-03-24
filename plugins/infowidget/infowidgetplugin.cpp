@@ -79,6 +79,8 @@ namespace kt
 		
 		getGUI()->addPrefPage(pref);
 		currentTorrentChanged(const_cast<kt::TorrentInterface*>(getGUI()->getCurrentTorrent()));
+		
+		file_view->restoreLayout(KGlobal::config(),"FileView");
 	}
 
 	void InfoWidgetPlugin::unload()
@@ -87,6 +89,8 @@ namespace kt
 			cd_view->saveLayout(KGlobal::config(),"ChunkDownloadView");
 		if (peer_view)
 			peer_view->saveLayout(KGlobal::config(),"PeerView");
+		if (file_view)
+			file_view->saveLayout(KGlobal::config(),"FileView");
 		
 		getGUI()->removeViewListener(this);
 		getGUI()->removePrefPage(pref);

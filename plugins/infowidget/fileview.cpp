@@ -48,6 +48,8 @@ namespace kt
     	addColumn( i18n( "Download" ) );
     	addColumn( i18n( "Preview" ) );
     	addColumn( i18n( "% Complete" ) );
+		setShowSortIndicator(true);
+		
 		KIconLoader* iload = KGlobal::iconLoader();
 		context_menu = new KPopupMenu(this);
 		preview_id = context_menu->insertItem(iload->loadIconSet("frame_image",KIcon::Small),
