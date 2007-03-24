@@ -27,11 +27,11 @@
 #include <qcheckbox.h>
 #include <knuminput.h>
 #include <kurlrequester.h>
-#include <kurl.h> 
+#include <kurl.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
-#include <klineedit.h> 
-#include <qlistview.h> 
+#include <klineedit.h>
+#include <qlistview.h>
 #include <torrent/globals.h>
 #include <util/functions.h>
 #include <kglobal.h>
@@ -50,15 +50,16 @@
 
 
 using namespace bt;
+
 using namespace KNetwork;
 
 
 KTorrentPreferences::KTorrentPreferences(KTorrent & ktor)
-	: KDialogBase(IconList, i18n("Preferences"),Ok|Apply|Cancel, Ok),ktor(ktor)
+		: KDialogBase(IconList, i18n("Preferences"), Ok | Apply | Cancel, Ok), ktor(ktor)
 {
 	validation_err = false;
 	enableButtonSeparator(true);
-		
+
 	page_one = new DownloadPrefPage();
 	page_two = new GeneralPrefPage();
 	page_three = new AdvancedPrefPage();
@@ -77,6 +78,7 @@ KTorrentPreferences::~KTorrentPreferences()
 void KTorrentPreferences::slotOk()
 {
 	slotApply();
+
 	if (!validation_err)
 		accept();
 }
@@ -84,24 +86,30 @@ void KTorrentPreferences::slotOk()
 void KTorrentPreferences::slotApply()
 {
 	validation_err = false;
-	QMap<kt::PrefPageInterface*,QFrame*>::iterator i = pages.begin();
+	QMap<kt::PrefPageInterface*, QFrame*>::iterator i = pages.begin();
+
 	while (i != pages.end())
 	{
 		kt::PrefPageInterface* p = i.key();
+
 		if (!p->apply())
 		{
 			validation_err = true;
 			return;
 		}
+
 		i++;
 	}
+
 	Settings::writeConfig();
+
 	ktor.applySettings();
 }
 
 void KTorrentPreferences::updateData()
 {
-	QMap<kt::PrefPageInterface*,QFrame*>::iterator i = pages.begin();
+	QMap<kt::PrefPageInterface*, QFrame*>::iterator i = pages.begin();
+
 	while (i != pages.end())
 	{
 		kt::PrefPageInterface* p = i.key();
@@ -117,25 +125,27 @@ void KTorrentPreferences::addPrefPage(kt::PrefPageInterface* prefInterface)
 	vbox->setAutoAdd(true);
 	prefInterface->createWidget(frame);
 
-	pages.insert(prefInterface,frame);
+	pages.insert(prefInterface, frame);
 }
 
 void KTorrentPreferences::removePrefPage(kt::PrefPageInterface* pp)
 {
 	if (!pages.contains(pp))
 		return;
-	
+
 	QFrame* fr = pages[pp];
+
 	pages.remove(pp);
+
 	pp->deleteWidget();
+
 	delete fr;
 }
 
 ///////////////////////////////////////////////////////
 
-DownloadPrefPage::DownloadPrefPage() : kt::PrefPageInterface(i18n("Downloads"), i18n("Download Options"),KGlobal::iconLoader()->loadIcon("down",KIcon::NoGroup)),dp(0)
-{
-}
+DownloadPrefPage::DownloadPrefPage() : kt::PrefPageInterface(i18n("Downloads"), i18n("Download Options"), KGlobal::iconLoader()->loadIcon("down", KIcon::NoGroup)), dp(0)
+{}
 
 DownloadPrefPage::~ DownloadPrefPage()
 {
@@ -151,7 +161,7 @@ void DownloadPrefPage::createWidget(QWidget* parent)
 bool DownloadPrefPage::apply()
 {
 	Settings::setMaxDownloads(dp->max_downloads->value());
-	Settings::setMaxSeeds(dp->max_seeds->value());	
+	Settings::setMaxSeeds(dp->max_seeds->value());
 	Settings::setStartDownloadsOnLowDiskSpace(dp->cmbDiskSpace->currentItem());
 	Settings::setMaxConnections(dp->max_conns->value());
 	Settings::setMaxTotalConnections(dp->max_total_conns->value());
@@ -161,13 +171,16 @@ bool DownloadPrefPage::apply()
 	Settings::setKeepSeeding(dp->keep_seeding->isChecked());
 	Settings::setPort(dp->port->value());
 	Settings::setNumUploadSlots(dp->num_upload_slots->value());
+
 	if (Settings::dhtSupport() && dp->udp_tracker_port->value() == Settings::dhtPort())
 	{
 		QString msg = i18n("The DHT port needs to be different from the UDP tracker port!");
-		KMessageBox::error(0,msg,i18n("Error"));
+		KMessageBox::error(0, msg, i18n("Error"));
 		return false;
 	}
+
 	Settings::setUdpTrackerPort(dp->udp_tracker_port->value());
+
 	return true;
 }
 
@@ -197,9 +210,8 @@ void DownloadPrefPage::deleteWidget()
 //////////////////////////////////////
 GeneralPrefPage::GeneralPrefPage() :
 		kt::PrefPageInterface(i18n("General"), i18n("General Options"),
-							  KGlobal::iconLoader()->loadIcon("package_settings",KIcon::NoGroup)),gp(0)
-{
-}
+							  KGlobal::iconLoader()->loadIcon("package_settings", KIcon::NoGroup)), gp(0)
+{}
 
 GeneralPrefPage::~GeneralPrefPage()
 {
@@ -210,14 +222,12 @@ void GeneralPrefPage::createWidget(QWidget* parent)
 {
 	gp = new GeneralPref(parent);
 	updateData();
-	connect(gp->autosave_downloads_check,SIGNAL(toggled(bool)),
-			this,SLOT(autosaveChecked(bool )));
-	connect(gp->custom_ip_check,SIGNAL(toggled(bool)),
-			this,SLOT(customIPChecked(bool )));
-	connect(gp->use_dht,SIGNAL(toggled(bool)),
-			this,SLOT(dhtChecked( bool )));
-	connect(gp->use_encryption,SIGNAL(toggled(bool)),
-			this,SLOT(useEncryptionChecked( bool )));
+	connect(gp->custom_ip_check, SIGNAL(toggled(bool)),
+			this, SLOT(customIPChecked(bool)));
+	connect(gp->use_dht, SIGNAL(toggled(bool)),
+			this, SLOT(dhtChecked(bool)));
+	connect(gp->use_encryption, SIGNAL(toggled(bool)),
+			this, SLOT(useEncryptionChecked(bool)));
 }
 
 bool GeneralPrefPage::apply()
@@ -228,47 +238,57 @@ bool GeneralPrefPage::apply()
 	Settings::setUploadBandwidth(gp->uploadBandwidth->value());
 	Settings::setShowPopups(gp->show_popups->isChecked());
 	QString ourl = Settings::tempDir();
-	
+
 	KURLRequester* u = gp->temp_dir;
+
 	if (ourl != u->url())
 	{
 		Settings::setTempDir(u->url());
 	}
 
 	Settings::setSaveDir(gp->autosave_location->url());
+
 	bool useSaveDir = gp->autosave_downloads_check->isChecked();
 	Settings::setUseSaveDir(useSaveDir);
 
-        bool useExternalIP = gp->custom_ip_check->isChecked();
-	
+	//check completed dir
+	Settings::setCompletedDir(gp->urlCompletedDir->url());
+
+	bool useCompletedDir = gp->checkCompletedDir->isChecked();
+	Settings::setUseCompletedDir(useCompletedDir);
+
+	bool useExternalIP = gp->custom_ip_check->isChecked();
+
 	Settings::setUseExternalIP(useExternalIP);
 	QString externalIP = gp->custom_ip->text();
 	Settings::setExternalIP(externalIP);
-			
+
 	if (useExternalIP)
 	{
 
 		KResolverResults res = KResolver::resolve(externalIP, QString::null);
+
 		if (res.error())
 		{
 			QString err = KResolver::errorString(res.error());
 			QString msg = i18n("Cannot lookup %1: %2\n"
-					"Please provide a valid IP address or hostname.").arg(externalIP).arg(err);
-			KMessageBox::error(0,msg,i18n("Error"));
+							   "Please provide a valid IP address or hostname.").arg(externalIP).arg(err);
+			KMessageBox::error(0, msg, i18n("Error"));
 			return false;
 		}
 	}
-	
-	
-	
+
+
+
 	if (gp->use_dht->isChecked() && gp->dht_port->value() == Settings::udpTrackerPort())
 	{
 		QString msg = i18n("The DHT port needs to be different from the UDP tracker port!");
-		KMessageBox::error(0,msg,i18n("Error"));
+		KMessageBox::error(0, msg, i18n("Error"));
 		return false;
 	}
-	
+
 	Settings::setDhtSupport(gp->use_dht->isChecked());
+
 	Settings::setDhtPort(gp->dht_port->value());
 	Settings::setUseEncryption(gp->use_encryption->isChecked());
 	Settings::setAllowUnencryptedConnections(gp->allow_unencrypted->isChecked());
@@ -306,11 +326,14 @@ void GeneralPrefPage::updateData()
 	gp->show_popups->setChecked(Settings::showPopups());
 	KURLRequester* u = gp->temp_dir;
 	u->fileDialog()->setMode(KFile::Directory);
+
 	if (Settings::tempDir() == QString::null)
 	{
-		QString data_dir = KGlobal::dirs()->saveLocation("data","ktorrent");
+		QString data_dir = KGlobal::dirs()->saveLocation("data", "ktorrent");
+
 		if (!data_dir.endsWith(bt::DirSeparator()))
 			data_dir += bt::DirSeparator();
+
 		u->setURL(data_dir);
 	}
 	else
@@ -319,23 +342,36 @@ void GeneralPrefPage::updateData()
 	}
 
 	u = gp->autosave_location;
+
 	u->fileDialog()->setMode(KFile::Directory);
-	
+
 	bool useSaveDir = Settings::useSaveDir();
-        QString saveDir = Settings::saveDir();
+	QString saveDir = Settings::saveDir();
 
 	gp->autosave_downloads_check->setChecked(useSaveDir);
 	u->setEnabled(useSaveDir);
 
 	u->setURL(!saveDir.isEmpty() ? saveDir : QDir::homeDirPath());
 
-	gp->custom_ip->setText(Settings::externalIP());	
+	
+	
+	u = gp->urlCompletedDir;
+	u->fileDialog()->setMode(KFile::Directory);
+	bool useCompletedDir = Settings::useCompletedDir();
+	QString completedDir = Settings::completedDir();
+	gp->checkCompletedDir->setChecked(useCompletedDir);
+	u->setEnabled(useCompletedDir);	
+	u->setURL(!completedDir.isEmpty() ? completedDir : QDir::homeDirPath());
+	
+	
+
+	gp->custom_ip->setText(Settings::externalIP());
 
 	bool useExternalIP = Settings::useExternalIP();
 	gp->custom_ip_check->setChecked(useExternalIP);
 	gp->custom_ip->setEnabled(useExternalIP);
 	gp->custom_ip_label->setEnabled(useExternalIP);
-		
+
 	gp->use_dht->setChecked(Settings::dhtSupport());
 	gp->dht_port->setValue(Settings::dhtPort());
 	gp->dht_port->setEnabled(Settings::dhtSupport());
@@ -354,17 +390,16 @@ void GeneralPrefPage::deleteWidget()
 
 /////////////////////////////////
 
-AdvancedPrefPage::AdvancedPrefPage() : 
+AdvancedPrefPage::AdvancedPrefPage() :
 		kt::PrefPageInterface(i18n("Advanced"), i18n("Advanced Options"),
-		KGlobal::iconLoader()->loadIcon("package_settings",KIcon::NoGroup)),ap(0)
-{
-}
+							  KGlobal::iconLoader()->loadIcon("package_settings", KIcon::NoGroup)), ap(0)
+{}
 
 AdvancedPrefPage::~AdvancedPrefPage()
 {
 	delete ap;
 }
-	
+
 bool AdvancedPrefPage::apply()
 {
 	Settings::setMemoryUsage(ap->mem_usage->currentItem());
@@ -376,7 +411,7 @@ bool AdvancedPrefPage::apply()
 	Settings::setMaxCorruptedBeforeRecheck(ap->num_corrupted->value());
 	Settings::setDoNotUseKDEProxy(ap->do_not_use_kde_proxy->isChecked());
 	Settings::setHttpTrackerProxy(ap->http_proxy->text());
-	Settings::setEta(ap->eta->currentItem());	
+	Settings::setEta(ap->eta->currentItem());
 	Settings::setFullDiskPrealloc(ap->full_prealloc->isChecked());
 	Settings::setCpuUsage(ap->cpu_usage->value());
 	return true;
@@ -400,17 +435,17 @@ void AdvancedPrefPage::updateData()
 	ap->full_prealloc->setChecked(Settings::fullDiskPrealloc());
 	ap->cpu_usage->setValue(Settings::cpuUsage());
 }
-			
+
 void AdvancedPrefPage::createWidget(QWidget* parent)
 {
 	ap = new AdvancedPref(parent);
 	updateData();
-	connect(ap->no_recheck,SIGNAL(toggled(bool)),
-			this,SLOT(noDataCheckChecked( bool )));
-	connect(ap->auto_recheck,SIGNAL(toggled(bool)),
-			this,SLOT(autoRecheckChecked( bool )));
-	connect(ap->do_not_use_kde_proxy,SIGNAL(toggled(bool)),
-			this,SLOT(doNotUseKDEProxyChecked(bool)));
+	connect(ap->no_recheck, SIGNAL(toggled(bool)),
+			this, SLOT(noDataCheckChecked(bool)));
+	connect(ap->auto_recheck, SIGNAL(toggled(bool)),
+			this, SLOT(autoRecheckChecked(bool)));
+	connect(ap->do_not_use_kde_proxy, SIGNAL(toggled(bool)),
+			this, SLOT(doNotUseKDEProxyChecked(bool)));
 }
 
 void AdvancedPrefPage::deleteWidget()
@@ -418,7 +453,7 @@ void AdvancedPrefPage::deleteWidget()
 	delete ap;
 	ap = 0;
 }
-	
+
 void AdvancedPrefPage::noDataCheckChecked(bool on)
 {
 	ap->recheck_size->setEnabled(on);

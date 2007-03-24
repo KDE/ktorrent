@@ -97,6 +97,14 @@
 			<label>Folder to store downloaded files</label>
 			<default code="true">QString::null</default>
 		</entry>
+		<entry name="useCompletedDir" type="Bool">
+			<label>Whether to automatically move completed downloads to completedDir</label>
+			<default>false</default>
+		</entry>
+		<entry name="completedDir" type="String">
+			<label>Folder to move completed downloaded files to</label>
+			<default code="true">QString::null</default>
+		</entry>
 		<entry name="useExternalIP" type="Bool">
 			<label>Whether to use a custom IP to pass to the tracker</label>
 			<default>false</default>

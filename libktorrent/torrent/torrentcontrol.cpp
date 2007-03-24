@@ -65,6 +65,7 @@
 #include "announcelist.h"
 #include "preallocationthread.h"
 #include "timeestimator.h"
+#include "settings.h"
 
 #include <util/profiler.h>
 
@@ -181,6 +182,9 @@ namespace bt
 			// first update peermanager
 			pman->update();
 			bool comp = stats.completed;
+			
+			//helper var, check if needed to move completed files somewhere
+			bool moveCompleted = false;
 
 			// then the downloader and uploader
 			up->update(choke->getOptimisticlyUnchokedPeerID());			
@@ -202,6 +206,12 @@ namespace bt
 					psman->completed();
 				
 				finished(this);
+				
+				//Move completed download to specified directory if needed
+				if(Settings::useCompletedDir())
+				{
+					moveCompleted = true;
+				}
 			}
 			else if (!stats.completed && comp)
 			{
@@ -271,7 +281,13 @@ namespace bt
                  
 				stop(true); 
 				emit seedingAutoStopped(this);
-            } 			
+            }
+			
+			//Move completed files if needed:
+			if(moveCompleted)
+			{
+				changeOutputDir(Settings::completedDir());
+			}
 		}
 		catch (Error & e)
 		{
@@ -769,6 +785,8 @@ namespace bt
 	
 	bool TorrentControl::changeOutputDir(const QString & new_dir)
 	{
+		Out(SYS_GEN|LOG_NOTICE) << "Moving data for torrent " << stats.torrent_name << " to " << new_dir << endl;
+		
 		bool start = false;
 		
 		//check if torrent is running and stop it before moving data
@@ -792,7 +810,7 @@ namespace bt
 		}
 		catch (Error& err)
 		{			
-			Out(SYS_GEN|LOG_IMPORTANT) << "Could not move " << stats.output_path << " to " << new_dir << ". Exception: " << endl;
+			Out(SYS_GEN|LOG_IMPORTANT) << "Could not move " << stats.output_path << " to " << new_dir << ". Exception: " << err.toString() << endl;
 			return false;
 		}
 		
