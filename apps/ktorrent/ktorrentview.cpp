@@ -651,6 +651,9 @@ void KTorrentView::setDownloadLocationSlot()
 			{
 				dn = KFileDialog::getExistingDirectory(s.output_path, this, i18n("Choose download location for %1").arg(tc->getStats().torrent_name));
 								
+				if(dn.isNull() || dn.isEmpty())
+					continue;
+								
 				if(!dn.endsWith("/"))
 					dn += "/";
 				

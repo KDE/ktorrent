@@ -286,7 +286,12 @@ namespace bt
 			//Move completed files if needed:
 			if(moveCompleted)
 			{
-				changeOutputDir(Settings::completedDir());
+				QString outdir = Settings::completedDir();
+				if(!outdir.endsWith(bt::DirSeparator()))
+					outdir += bt::DirSeparator();
+				
+				outdir += stats.output_path.mid(stats.output_path.findRev(bt::DirSeparator()) + 1);
+				changeOutputDir(outdir);
 			}
 		}
 		catch (Error & e)
