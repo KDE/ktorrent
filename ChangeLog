@@ -11,6 +11,7 @@ Changes in 2.2dev
 - Make sure FileView remembers it's state
 - Sleep time of upload and download is now configurable through a CPU usage
 slider in the settings
+- Added option to move finished downloads to a different directory
 
 Changes in 2.1.2
 - Fix 2 security vulnerabilities (thanks to Bryan Burns from Juniper Networks

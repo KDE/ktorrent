@@ -32,7 +32,8 @@
 #include <interfaces/torrentinterface.h>
 #include <torrent/globals.h>
 #include <util/log.h>
-
+#include <util/functions.h>
+		
 #include <groups/group.h>
 #include <groups/torrentdrag.h>
 
@@ -614,7 +615,7 @@ void KTorrentView::openOutputDirectory()
 		if (tc)
 		{
 			if(tc->getStats().multi_file_torrent)
-				new KRun(KURL::fromPathOrURL(tc->getDataDir() + tc->getStats().torrent_name), 0, true, true);
+				new KRun(KURL::fromPathOrURL(tc->getStats().output_path), 0, true, true);
 			else
 				new KRun(KURL::fromPathOrURL(tc->getDataDir()), 0, true, true);
 		}
@@ -645,25 +646,14 @@ void KTorrentView::setDownloadLocationSlot()
 		if (tc)
 		{
 			QString dn;
-			TorrentStats s =  tc->getStats();
+			dn = KFileDialog::getExistingDirectory(QString::null, this, i18n("Choose download location for %1").arg(tc->getStats().torrent_name));
+								
+			if(dn.isNull() || dn.isEmpty())
+				continue;
+								
+			if(!dn.endsWith(bt::DirSeparator()))
+				dn += bt::DirSeparator();
 			
-			if(s.multi_file_torrent)
-			{
-				dn = KFileDialog::getExistingDirectory(s.output_path, this, i18n("Choose download location for %1").arg(tc->getStats().torrent_name));
-								
-				if(dn.isNull() || dn.isEmpty())
-					continue;
-								
-				if(!dn.endsWith("/"))
-					dn += "/";
-				
-				dn += s.torrent_name;
-			}
-			else
-			{
-				dn =  KFileDialog::getSaveFileName(s.output_path, QString::null, this, i18n("Choose download location for %1").arg(tc->getStats().torrent_name));
-			}
-						
 			if(!dn.isEmpty())
 				tc->changeOutputDir(dn);
 		}

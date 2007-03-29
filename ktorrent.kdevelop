@@ -49,7 +49,7 @@
         <ktorrent>/home/joris/ktorrent/newstuff/debug/./plugins/infowidget</ktorrent>
       </cwd>
       <globaldebugarguments>--nofork</globaldebugarguments>
-      <globalcwd>/home/ivan/working/ktorrent/debug</globalcwd>
+      <globalcwd>/home/joris</globalcwd>
       <useglobalprogram>true</useglobalprogram>
       <autoinstall>false</autoinstall>
       <autokdesu>false</autokdesu>

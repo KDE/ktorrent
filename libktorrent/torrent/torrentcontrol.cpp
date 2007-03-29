@@ -290,7 +290,6 @@ namespace bt
 				if(!outdir.endsWith(bt::DirSeparator()))
 					outdir += bt::DirSeparator();
 				
-				outdir += stats.output_path.mid(stats.output_path.findRev(bt::DirSeparator()) + 1);
 				changeOutputDir(outdir);
 			}
 		}
@@ -804,10 +803,21 @@ namespace bt
 		try
 		{
 			bt::Move(stats.output_path, new_dir);
-			cman->changeOutputPath(new_dir);	
-			outputdir = new_dir.left(new_dir.findRev(bt::DirSeparator()) + 1);		
-			stats.output_path = outputdir;
-			istats.custom_output_name = true;
+			if (istats.custom_output_name)
+			{
+				int slash_pos = stats.output_path.findRev(bt::DirSeparator(),-2);
+				QString ldir = stats.output_path.mid(slash_pos + 1);
+				cman->changeOutputPath(new_dir + ldir);	
+				outputdir = stats.output_path = new_dir + ldir;
+				istats.custom_output_name = true;
+			}
+			else
+			{
+				QString nd = new_dir + tor->getNameSuggestion();
+				cman->changeOutputPath(nd);
+				outputdir = stats.output_path = nd;
+				istats.custom_output_name = true;
+			}
 			
 			saveStats();
 			

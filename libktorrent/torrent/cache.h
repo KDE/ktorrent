@@ -67,9 +67,9 @@ namespace bt
 		/**
 		 * Changes output path. All data files should already been moved.
 		 * This just modifies the datadir variable.
-		 * @param outputpath The output file/directory path.
+		 * @param outputpath New output path
 		 */
-		virtual void changeOutputPath(const QString& outputpath) = 0;
+		virtual void changeOutputPath(const QString & outputpath) = 0;
 		
 		/**
 		 * Load a chunk into memory. If something goes wrong,

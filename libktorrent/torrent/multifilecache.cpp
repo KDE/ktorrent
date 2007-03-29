@@ -168,13 +168,12 @@ namespace bt
 	void MultiFileCache::changeOutputPath(const QString & outputpath)
 	{
 		deleteDataFiles();
-				
-		this->output_dir = outputpath;
 		
-		if(!output_dir.endsWith("/"))
-			output_dir += "/";
+		output_dir = outputpath;
+		if (!output_dir.endsWith(bt::DirSeparator()))
+			output_dir += bt::DirSeparator();
 		
-		datadir = outputpath.left(outputpath.findRev(bt::DirSeparator()) + 1);
+		datadir = output_dir;
 		
 		create();
 	}
