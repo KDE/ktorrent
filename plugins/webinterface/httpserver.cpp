@@ -138,7 +138,7 @@ namespace kt
 		if (hdr.hasKey("Cookie"))
 		{
 			QStringList tokens = QStringList::split('=',hdr.value("Cookie"));
-			if (tokens.count() == 2 && tokens[0]=="SESSID")
+			if (tokens.count() == 2 && tokens[0]=="KT_SESSID")
 				session_id = tokens[1].toInt();
 			else
 				return false;
@@ -185,7 +185,7 @@ namespace kt
 		hdr.setValue("Connection","keep-alive");
 		if (with_session_info && session.sessionId && session.logged_in)
 		{
-			hdr.setValue("Set-Cookie",QString("SESSID=%1").arg(session.sessionId));
+			hdr.setValue("Set-Cookie",QString("KT_SESSID=%1").arg(session.sessionId));
 		}
 	}
 	
