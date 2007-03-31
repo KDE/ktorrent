@@ -164,9 +164,9 @@ namespace bt
 					throw Error(i18n("Corrupted torrent!"));
 	
 				QString sd = v->data().toString(encoding);
-				// check for weirdness like .. ,
+				// check for weirdness like .. and / ,
 				// we don't want to write outside the user specified directories
-				if (sd != "..") 
+				if (!sd.contains("/") && !sd.contains("..")) 
 				{
 					path += sd;
 					if (j + 1 < ln->getNumChildren())
