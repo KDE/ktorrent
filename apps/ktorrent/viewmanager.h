@@ -99,6 +99,9 @@ public slots:
 	
 	/// The current tab has changed
 	void onCurrentTabChanged(QWidget* w);
+	
+	/// The caption of a view is changed
+	void onViewCaptionChanged(KTorrentView* v);
 
 private:
 	QValueList<KTorrentView*> views;

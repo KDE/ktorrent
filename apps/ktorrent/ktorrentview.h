@@ -68,6 +68,9 @@ public:
 	 */
 	virtual ~KTorrentView();
 	
+	/// Update the caption, so the correct number of running torrents is shown in the tab
+	void updateCaption();
+	
 	/// Get the current group
 	const kt::Group* getCurrentGroup() const {return current_group;}
 
@@ -145,6 +148,7 @@ signals:
 	void needsDataCheck(kt::TorrentInterface* tc);
 	void updateGroupsSubMenu(KPopupMenu* gsm);
 	void groupsSubMenuItemActivated(KTorrentView* v,const QString & group);
+	void captionChanged(KTorrentView* v);
 
 private:
 	bool acceptDrag(QDropEvent* event) const;
@@ -163,6 +167,8 @@ private:
 	KTorrentViewMenu* menu;
 	KPopupMenu* m_headerMenu;
 	kt::Group* current_group;
+	Uint32 running;
+	Uint32 total;
 };
 
 #endif // _KTORRENTVIEW_H_

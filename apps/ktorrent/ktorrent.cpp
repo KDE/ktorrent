@@ -238,7 +238,7 @@ void KTorrent::openView(kt::Group* g)
 	
 	KTorrentView* v = m_view_man->newView();
 	v->setCurrentGroup((Group*)g);
-	addTabPage(v,g->groupIcon(),g->groupName(),m_view_man);
+	addTabPage(v,g->groupIcon(),v->caption(),m_view_man);
 	
 	connect(v,SIGNAL(currentChanged(kt::TorrentInterface* )),
 			this,SLOT(currentTorrentChanged(kt::TorrentInterface* )));
@@ -750,18 +750,7 @@ void KTorrent::updatedStats()
 	
 	m_core->getPluginManager().updateGuiPlugins();
 	
-#if 0
 
-	//update tab labels
-	QString tabText = i18n("Downloads %1/%2").arg(m_core->getNumRunning(true)).arg(m_core->countDownloads());
-	//kdDebug() << "tabtext: " << tabText << " " << m_tabs->tabLabel(m_view_exp) << endl;
-	if (tabText != tabWidget()->tabLabel(m_view_exp).replace('&', ""))
-		tabWidget()->setTabLabel(m_view_exp, tabText);
-		
-	tabText = i18n("Uploads %1/%2").arg(m_core->getNumRunning(false,true)).arg(m_core->countSeeds());
-	if (tabText != m_tabs->tabLabel(m_seedView_exp).replace('&', ""))
-		m_tabs->setTabLabel(m_seedView_exp, tabText);
-#endif
 	if (Globals::instance().getDHT().isRunning())
 	{
 		const dht::Stats & s = Globals::instance().getDHT().getStats();

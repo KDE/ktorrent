@@ -40,6 +40,7 @@ KTorrentView* ViewManager::newView()
 {
 	KTorrentView* v = new KTorrentView(0);
 	views.append(v);
+	connect(v,SIGNAL(captionChanged(KTorrentView*)),this,SLOT(onViewCaptionChanged(KTorrentView*)));
 	return v;
 }
 	
@@ -199,6 +200,20 @@ void ViewManager::groupRenamed(kt::Group* g,KTabWidget* mtw)
 			mtw->changeTab(v,g->groupName());
 			v->setIcon(g->groupIcon());
 			v->setCurrentGroup(g);
+		}
+	}
+}
+
+void ViewManager::onViewCaptionChanged(KTorrentView* v)
+{
+	// caption on a view has changed, so the number of running torrents has changed
+	// so it is possible we need to update other views to
+	for (ViewItr i = views.begin();i != views.end();i++)
+	{
+		if (*i != v)
+		{
+			KTorrentView* w = *i;
+			w->updateCaption();
 		}
 	}
 }

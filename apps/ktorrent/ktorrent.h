@@ -54,6 +54,7 @@ namespace kt
 	class GroupView;
 }
 
+
 /**
  * This class serves as the main window for KTorrent.  It handles the
  * menus, toolbars, and status bars.

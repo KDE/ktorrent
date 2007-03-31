@@ -52,7 +52,7 @@ using namespace bt;
 using namespace kt;
 
 KTorrentView::KTorrentView(QWidget *parent)
-	: KListView(parent),menu(0),current_group(0)
+	: KListView(parent),menu(0),current_group(0),running(0),total(0)
 {
 
 	setupColumns();
@@ -125,11 +125,8 @@ void KTorrentView::setCurrentGroup(Group* group)
 	
 	current_group = group;
 	
-	if (current_group)
-		setCaption(current_group->groupName());
-	else
-		setCaption(i18n("All Torrents"));
-	
+	running = 0; 
+	total = 0;
 	// go over the current items, if they still match keep them, else remove them
 	// add new itesm if necessary
 	QMap<TorrentInterface*,KTorrentViewItem*>::iterator i = items.begin();
@@ -150,9 +147,21 @@ void KTorrentView::setCurrentGroup(Group* group)
 			tvi = new KTorrentViewItem(this,tc);
 			i.data() = tvi;
 		}
+		
+		if (i.data())
+		{
+			total++;
+			if (tc->getStats().running)
+				running++;
+		}
 
 		i++;
 	}
+	
+	if (current_group)
+		setCaption(QString("%1 %2/%3").arg(current_group->groupName()).arg(running).arg(total));
+	else
+		setCaption(i18n("All Torrents %1/%2").arg(running).arg(total));
 	
 	onExecuted(currentItem());
 }
@@ -440,9 +449,13 @@ void KTorrentView::removeTorrent(TorrentInterface* tc)
 
 void KTorrentView::update()
 {	
+	Uint32 r = 0;
+	Uint32 t = 0;
+	
 	QMap<kt::TorrentInterface*,KTorrentViewItem*>::iterator i = items.begin();
 	while (i != items.end())
 	{
+		bool count = true;
 		KTorrentViewItem* tvi = i.data();
 		if (tvi)
 			tvi->update();
@@ -455,6 +468,7 @@ void KTorrentView::update()
 			// torrent is no longer a member of this group so remove it from the view
 			delete tvi;
 			i.data() = 0;
+			count = false;
 		}
 		else if (!tvi && (!current_group || current_group->isMember(ti)))
 		{
@@ -462,7 +476,27 @@ void KTorrentView::update()
 			i.data() = tvi;
 		}
 		
+		if (i.data())
+		{
+			t++;
+			if (ti->getStats().running)
+				r++;
+		}
+		
 		i++;
+	}
+	
+	if (running != r || total != t)
+	{
+		running = r;
+		total = t;
+		
+		if (current_group)
+			setCaption(QString("%1 %2/%3").arg(current_group->groupName()).arg(running).arg(total));
+		else
+			setCaption(i18n("All Torrents %1/%2").arg(running).arg(total));
+		
+		captionChanged(this);
 	}
 	
 	sort();
@@ -751,6 +785,35 @@ bool KTorrentView::eventFilter(QObject* watched, QEvent* e)
 void KTorrentView::gsmItemActived(const QString & group)
 {
 	groupsSubMenuItemActivated(this,group);
+}
+
+void KTorrentView::updateCaption()
+{
+	Uint32 r = 0;
+	Uint32 t = 0;
+	QMap<kt::TorrentInterface*,KTorrentViewItem*>::iterator i = items.begin();
+	while (i != items.end())
+	{
+		if (i.data())
+		{
+			t++;
+			if (i.key()->getStats().running)
+				r++;
+		}
+		
+		i++;
+	}
+	
+	if (running != r || total != t)
+	{
+		running = r;
+		total = t;
+		
+		if (current_group)
+			setCaption(QString("%1 %2/%3").arg(current_group->groupName()).arg(running).arg(total));
+		else
+			setCaption(i18n("All Torrents %1/%2").arg(running).arg(total));
+	}
 }
 
 #include "ktorrentview.moc"
