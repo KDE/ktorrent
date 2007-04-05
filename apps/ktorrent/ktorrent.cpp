@@ -820,8 +820,8 @@ void KTorrent::removeToolWidget(QWidget* w)
 {
 	if (!w) return;
 	
-	w->reparent(0,QPoint());
 	removeDockWidget(w);
+	w->reparent(0,QPoint());
 }
 
 const TorrentInterface* KTorrent::getCurrentTorrent() const
