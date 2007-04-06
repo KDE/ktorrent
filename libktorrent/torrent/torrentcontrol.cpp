@@ -802,26 +802,31 @@ namespace bt
 		
 		try
 		{
-			bt::Move(stats.output_path, new_dir);
+			QString nd;
 			if (istats.custom_output_name)
 			{
 				int slash_pos = stats.output_path.findRev(bt::DirSeparator(),-2);
-				QString ldir = stats.output_path.mid(slash_pos + 1);
-				cman->changeOutputPath(new_dir + ldir);	
-				outputdir = stats.output_path = new_dir + ldir;
-				istats.custom_output_name = true;
+				nd = new_dir + stats.output_path.mid(slash_pos + 1);
 			}
 			else
 			{
-				QString nd = new_dir + tor->getNameSuggestion();
+				nd = new_dir + tor->getNameSuggestion();
+			}
+			
+			if (stats.output_path != nd)
+			{
+				bt::Move(stats.output_path, new_dir);
 				cman->changeOutputPath(nd);
 				outputdir = stats.output_path = nd;
 				istats.custom_output_name = true;
+				
+				saveStats();
+				Out(SYS_GEN|LOG_NOTICE) << "Data directory changed for torrent " << "'" << stats.torrent_name << "' to: " << new_dir << endl;
 			}
-			
-			saveStats();
-			
-			Out(SYS_GEN|LOG_NOTICE) << "Data directory changed for torrent " << "'" << stats.torrent_name << "' to: " << new_dir << endl;
+			else
+			{
+				Out(SYS_GEN|LOG_NOTICE) << "Source is the same as destination, so doing nothing" << endl;
+			}
 		}
 		catch (Error& err)
 		{			

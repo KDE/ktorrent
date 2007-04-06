@@ -21,6 +21,7 @@
 #ifndef FILESELECTDLG_H
 #define FILESELECTDLG_H
 
+#include <interfaces/filetreediritem.h>
 #include "fileselectdlgbase.h"
 
 
@@ -35,7 +36,7 @@ namespace kt
  *
  * Dialog to select which files to download from a multifile torrent.
  */
-class FileSelectDlg : public FileSelectDlgBase
+class FileSelectDlg : public FileSelectDlgBase,public kt::FileTreeRootListener
 {
 	Q_OBJECT
 
@@ -54,6 +55,10 @@ protected slots:
 	void selectAll();
 	void selectNone();
 	void invertSelection();
+	
+private:
+	virtual void treeItemChanged();
+	void updateSizeLabels();
 };
 
 #endif

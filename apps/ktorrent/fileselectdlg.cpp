@@ -62,7 +62,7 @@ int FileSelectDlg::execute(kt::TorrentInterface* tc)
 	if (tc)
 	{
 		m_file_view->clear();
-		root = new kt::FileTreeDirItem(m_file_view,tc->getStats().torrent_name);
+		root = new kt::FileTreeDirItem(m_file_view,tc->getStats().torrent_name,this);
 		for (Uint32 i = 0;i < tc->getNumFiles();i++)
 		{
 			kt::TorrentFileInterface & file = tc->getTorrentFile(i);
@@ -72,22 +72,7 @@ int FileSelectDlg::execute(kt::TorrentInterface* tc)
 		root->setOpen(true);
 		m_file_view->setRootIsDecorated(true);
 		
-		
-		//calculate free disk space
-		struct statfs stfs;		
-		statfs(tc->getDataDir().ascii(), &stfs);		
-		unsigned long long bytes_free = ((unsigned long long)stfs.f_bavail) * 
-                 ((unsigned long long)stfs.f_bsize);		
-		unsigned long long bytes_to_download = tc->getStats().total_bytes;		
-		
-		lblFree->setText(kt::BytesToString(bytes_free));		
-		lblRequired->setText(kt::BytesToString(bytes_to_download));
-				
-		if (bytes_to_download > bytes_free)
-			lblStatus->setText("<font color=\"#ff0000\">" + kt::BytesToString(-1*(long long)(bytes_free - bytes_to_download)) + i18n(" short!"));
-		else
-			lblStatus->setText(kt::BytesToString(bytes_free - bytes_to_download));
-				
+		updateSizeLabels();
 		return exec();
 	}
 	return QDialog::Rejected;
@@ -158,6 +143,30 @@ void FileSelectDlg::invertSelection()
 		root->invertChecked();
 }
 
+void FileSelectDlg::updateSizeLabels()
+{
+	//calculate free disk space
+	struct statfs stfs;		
+	statfs(tc->getDataDir().ascii(), &stfs);		
+	unsigned long long bytes_free = ((unsigned long long)stfs.f_bavail) * 
+			((unsigned long long)stfs.f_bsize);
+	
+	unsigned long long bytes_to_download = 0;
+	bytes_to_download = root->bytesToDownload();
+		
+	lblFree->setText(kt::BytesToString(bytes_free));		
+	lblRequired->setText(kt::BytesToString(bytes_to_download));
+				
+	if (bytes_to_download > bytes_free)
+		lblStatus->setText("<font color=\"#ff0000\">" + kt::BytesToString(-1*(long long)(bytes_free - bytes_to_download)) + i18n(" short!"));
+	else
+		lblStatus->setText(kt::BytesToString(bytes_free - bytes_to_download));
+}
+
+void FileSelectDlg::treeItemChanged()
+{
+	updateSizeLabels();
+}
 
 #include "fileselectdlg.moc"
 

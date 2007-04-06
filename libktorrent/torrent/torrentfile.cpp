@@ -68,15 +68,21 @@ namespace bt
 	{
 		if (priority != EXCLUDED && dnd)
 		{
-			old_priority = priority;
+			if(m_emitDlStatusChanged)
+				old_priority = priority;
+			
 			priority = EXCLUDED;
+			
 			if(m_emitDlStatusChanged)
 				emit downloadPriorityChanged(this,priority,old_priority);	
 		}
 		if (priority == EXCLUDED && (!dnd))
 		{
-			old_priority = priority;
+			if(m_emitDlStatusChanged)
+				old_priority = priority;
+			
 			priority = NORMAL_PRIORITY;
+			
 			if(m_emitDlStatusChanged)
 				emit downloadPriorityChanged(this,priority,old_priority);
 		}
@@ -84,7 +90,9 @@ namespace bt
 	
 	void TorrentFile::emitDownloadStatusChanged()
 	{
-		emit downloadPriorityChanged(this,priority,old_priority);
+		// only emit when old_priority is not equal to the new priority
+		if (priority != old_priority)
+			emit downloadPriorityChanged(this,priority,old_priority);
 	}
 
 

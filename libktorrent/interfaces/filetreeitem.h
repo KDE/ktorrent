@@ -44,7 +44,6 @@ namespace kt
 	{
 	protected:
 		QString name;
-		Uint32 size;
 		TorrentFileInterface & file;
 		FileTreeDirItem* parent;
 		bool manual_change;
@@ -68,6 +67,9 @@ namespace kt
 		 * @param keep_data In case of unchecking keep the data or not
 		 */
 		void setChecked(bool on,bool keep_data = false);
+		
+		/// Get the number of bytes to download in this file
+		Uint64 bytesToDownload() const;
 		
 	
 	private:

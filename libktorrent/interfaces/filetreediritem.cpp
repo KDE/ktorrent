@@ -34,8 +34,8 @@ using namespace bt;
 namespace kt
 {
 
-	FileTreeDirItem::FileTreeDirItem(KListView* klv,const QString & name)
-	: QCheckListItem(klv,QString::null,QCheckListItem::CheckBox),name(name)
+	FileTreeDirItem::FileTreeDirItem(KListView* klv,const QString & name,FileTreeRootListener* rl)
+	: QCheckListItem(klv,QString::null,QCheckListItem::CheckBox),name(name),root_listener(rl)
 	{
 		parent = 0;
 		size = 0;
@@ -166,10 +166,32 @@ namespace kt
 		}
 		setText(2,on ? i18n("Yes") : i18n("No"));
 	}
+	
+	Uint64 FileTreeDirItem::bytesToDownload() const
+	{
+		Uint64 tot = 0;
+		// first check all the child items
+		bt::PtrMap<QString,FileTreeItem>::const_iterator i = children.begin();
+		while (i != children.end())
+		{
+			const FileTreeItem* item = i->second;
+			tot += item->bytesToDownload();
+			i++;
+		}
+
+		// then recursivly move on to subdirs
+		bt::PtrMap<QString,FileTreeDirItem>::const_iterator j = subdirs.begin();
+		while (j != subdirs.end())
+		{
+			tot += i->second->bytesToDownload();
+			j++;
+		}
+		return tot;
+	}
 
 	bool FileTreeDirItem::allChildrenOn()
 	{
-	// first check all the child items
+		// first check all the child items
 		bt::PtrMap<QString,FileTreeItem>::iterator i = children.begin();
 		while (i != children.end())
 		{
@@ -179,7 +201,7 @@ namespace kt
 			i++;
 		}
 
-	// then recursivly move on to subdirs
+		// then recursivly move on to subdirs
 		bt::PtrMap<QString,FileTreeDirItem>::iterator j = subdirs.begin();
 		while (j != subdirs.end())
 		{
@@ -199,6 +221,9 @@ namespace kt
 	
 		if (parent)
 			parent->childStateChange();
+		else if (root_listener)
+			root_listener->treeItemChanged();
+			
 	}
 
 	int FileTreeDirItem::compare(QListViewItem* i, int col, bool ascending) const

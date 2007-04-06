@@ -31,6 +31,13 @@ namespace kt
 	class FileTreeItem;
 	class TorrentFileInterface;
 	class TorrentInterface;
+	
+	class FileTreeRootListener 
+	{
+	public: 
+		/// An item in the file tree has changed his state
+		virtual void treeItemChanged() = 0;
+	};
 
 	/**
 	 * @author Joris Guisson
@@ -46,8 +53,9 @@ namespace kt
 		bt::PtrMap<QString,FileTreeDirItem> subdirs;
 		FileTreeDirItem* parent;
 		bool manual_change;
+		FileTreeRootListener* root_listener;
 	public:
-		FileTreeDirItem(KListView* klv,const QString & name);
+		FileTreeDirItem(KListView* klv,const QString & name,FileTreeRootListener* rl = 0);
 		FileTreeDirItem(FileTreeDirItem* parent,const QString & name);
 		virtual ~FileTreeDirItem();
 
@@ -87,6 +95,9 @@ namespace kt
 		void childStateChange();
 
 		FileTreeDirItem* getParent() {return parent;}
+		
+		/// Recusively get the total number of bytes to download
+		Uint64 bytesToDownload() const;
 
 	protected:
 		/**

@@ -168,5 +168,13 @@ namespace kt
 		else
 			return THROW_AWAY_DATA; 
 	}
+	
+	Uint64 FileTreeItem::bytesToDownload() const
+	{
+		if (file.doNotDownload())
+			return 0;
+		else
+			return file.getSize();
+	}
 
 }
