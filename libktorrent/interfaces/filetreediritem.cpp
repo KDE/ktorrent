@@ -183,7 +183,7 @@ namespace kt
 		bt::PtrMap<QString,FileTreeDirItem>::const_iterator j = subdirs.begin();
 		while (j != subdirs.end())
 		{
-			tot += i->second->bytesToDownload();
+			tot += j->second->bytesToDownload();
 			j++;
 		}
 		return tot;
