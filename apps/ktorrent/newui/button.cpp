@@ -301,7 +301,7 @@ void Button::enableText()
 
 void Button::contextMenuEvent(QContextMenuEvent *e)
 {
-    QPopupMenu menu;
+/*    QPopupMenu menu;
 
     m_assignAccelAction->plug(&menu);
     if (m_realText.contains(QRegExp("^&[0-9]\\s")))
@@ -310,6 +310,7 @@ void Button::contextMenuEvent(QContextMenuEvent *e)
     emit contextMenu( &menu );
 
     menu.exec(e->globalPos());
+	*/
 }
 
 void Button::assignAccel()

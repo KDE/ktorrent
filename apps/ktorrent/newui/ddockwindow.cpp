@@ -382,7 +382,7 @@ void DDockWindow::contextMenu(QPopupMenu * menu)
     if ( position() != DDockWindow::Left )
         m_moveToDockLeft->plug( menu );
     if ( position()!= DDockWindow::Right )
-        m_moveToDockRight->plug( menu );
+        m_moveToDockRight->plug( menu ); 
     if ( position() != DDockWindow::Bottom )
         m_moveToDockBottom->plug( menu );
 }
