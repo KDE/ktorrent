@@ -125,7 +125,7 @@ namespace bt
 				statfs(tc->getDataDir().ascii(), &stfs);
 				unsigned long long bytes_free = ((unsigned long long)stfs.f_bavail) *
 												((unsigned long long)stfs.f_bsize);
-				unsigned long long bytes_to_download = tc->getStats().total_bytes;
+				unsigned long long bytes_to_download = tc->getStats().total_bytes_to_download;
 
 				int shortDiskSpace;
 
