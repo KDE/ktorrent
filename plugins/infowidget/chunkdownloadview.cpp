@@ -135,6 +135,7 @@ namespace kt
 		m_chunks_downloaded->setText(QString::number(s.num_chunks_downloaded));
 		m_total_chunks->setText(QString::number(s.total_chunks));
 		m_excluded_chunks->setText(QString::number(s.num_chunks_excluded));
+		m_chunks_left->setText(QString::number(s.total_chunks - s.num_chunks_downloaded - s.num_chunks_excluded));
 		
 		if( s.chunk_size / 1024 < 1024 )
 			m_size_chunks->setText(QString::number(s.chunk_size / 1024) + "." + QString::number((s.chunk_size % 1024) / 100) + " KB");
