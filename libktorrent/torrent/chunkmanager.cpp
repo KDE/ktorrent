@@ -1019,7 +1019,18 @@ namespace bt
 			}
 		}
 		recalc_chunks_left = true;
-		saveIndexFile();
+		try
+		{
+			saveIndexFile();
+		}
+		catch (bt::Error & err)
+		{
+			Out(SYS_DIO|LOG_DEBUG) << "Failed to save index file : " << err.toString() << endl;
+		}
+		catch (...)
+		{
+			Out(SYS_DIO|LOG_DEBUG) << "Failed to save index file : unkown exception" << endl;
+		}
 		chunksLeft();
 		corrupted_count = 0;
 	}
