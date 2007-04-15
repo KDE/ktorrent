@@ -122,7 +122,10 @@ KTorrent::KTorrent()
 	connect(m_group_view,SIGNAL(openNewTab(kt::Group*)),this,SLOT(openView(kt::Group*)));
 
 	m_pref = new KTorrentPreferences(*this);
+	
 	m_core = new KTorrentCore(this);
+	m_core->setGroupManager(m_group_view->groupManager());
+	
 	m_systray_icon = new TrayIcon(m_core, this);
 	
 	m_group_view->loadGroups();

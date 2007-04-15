@@ -787,7 +787,7 @@ namespace bt
 		return true;
 	}
 	
-	bool TorrentControl::changeOutputDir(const QString & new_dir)
+	bool TorrentControl::changeOutputDir(const QString & new_dir, bool moveFiles)
 	{
 		Out(SYS_GEN|LOG_NOTICE) << "Moving data for torrent " << stats.torrent_name << " to " << new_dir << endl;
 		
@@ -815,7 +815,9 @@ namespace bt
 			
 			if (stats.output_path != nd)
 			{
-				bt::Move(stats.output_path, new_dir);
+				if(moveFiles)
+					bt::Move(stats.output_path, new_dir);
+				
 				cman->changeOutputPath(nd);
 				outputdir = stats.output_path = nd;
 				istats.custom_output_name = true;

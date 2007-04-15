@@ -69,6 +69,8 @@ namespace kt
 		/// Find a group by its name
 		const Group* findGroup(const QString & name) const;
 		
+		GroupManager* groupManager() const { return gman; }
+		
 	public slots:
 		void onTorrentRemoved(kt::TorrentInterface* tc);
 		
@@ -97,7 +99,7 @@ namespace kt
 	private:
 		void createMenu(KActionCollection* col);
 		GroupViewItem* addGroup(Group* g,KListViewItem* parent);
-		
+			
 	private:
 		ViewManager* view;
 		KListViewItem* custom_root;

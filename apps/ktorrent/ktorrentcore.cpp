@@ -143,9 +143,13 @@ bool KTorrentCore::init(TorrentControl* tc,bool silently)
 {
 	connectSignals(tc);
 	qman->append(tc);
-	if (tc->getStats().multi_file_torrent && !silently)
+	
+	bool user = false;
+	bool start_torrent = false;
+	
+	if (!silently)
 	{
-		FileSelectDlg dlg;
+		FileSelectDlg dlg(gman, &user, &start_torrent);
 
 		if (dlg.execute(tc) != QDialog::Accepted)
 		{
@@ -153,9 +157,10 @@ bool KTorrentCore::init(TorrentControl* tc,bool silently)
 				remove(tc,true);
 			else
 				remove(tc,false);
+			
 			return false;
 		}
-	}
+	}	
 	
 	tc->createFiles();
 		
@@ -173,7 +178,7 @@ bool KTorrentCore::init(TorrentControl* tc,bool silently)
         	tc->setMaxShareRatio(Settings::maxRatio()); 
 	
 	torrentAdded(tc);
-	qman->torrentAdded(tc);
+	qman->torrentAdded(tc, user, start_torrent);
 		
 	return true;
 }

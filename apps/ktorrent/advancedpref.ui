@@ -124,9 +124,6 @@
                     <property name="text">
                         <string>Fully preallocate dis&amp;kspace (slow, but avoids fragmentation)</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+K</string>
-                    </property>
                 </widget>
             </vbox>
         </widget>
@@ -500,9 +497,6 @@
                     </property>
                     <property name="text">
                         <string>Do not use the KDE pro&amp;xy settings for HTTP tracker connections</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+X</string>
                     </property>
                 </widget>
                 <widget class="QLayoutWidget">

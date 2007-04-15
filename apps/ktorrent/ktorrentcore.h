@@ -46,6 +46,7 @@ namespace kt
 	class PluginManager;
 	class GUIInterface;
 	class TorrentInterface;
+	class GroupManager;
 }
 
 
@@ -182,6 +183,9 @@ public:
 	
 	
 	bt::QueueManager* getQueueManager();
+	
+	kt::GroupManager* getGroupManager() const { return gman; }
+	void setGroupManager(kt::GroupManager* g) { gman = g; }
 	
 	///Gets the number of torrents running
 	int getNumRunning(bool onlyDownloads = true, bool onlySeeds = false) const;
@@ -323,6 +327,7 @@ private:
 	bt::Uint64 removed_bytes_up,removed_bytes_down;
 	kt::PluginManager* pman;
 	bt::QueueManager* qman;
+	kt::GroupManager* gman;
 	QMap<KIO::Job*,KURL> custom_save_locations; // map to store save locations
 };
 

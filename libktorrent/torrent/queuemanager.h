@@ -139,7 +139,7 @@ namespace bt
 
 		public slots:
 			void torrentFinished(kt::TorrentInterface* tc);
-			void torrentAdded(kt::TorrentInterface* tc);
+			void torrentAdded(kt::TorrentInterface* tc, bool user, bool start_torrent);
 			void torrentRemoved(kt::TorrentInterface* tc);
 
 		private:

@@ -234,12 +234,12 @@ namespace kt
 		virtual bool changeDataDir(const QString & new_dir) = 0;
 		
 		/**
-		 * Change to a new data dir. If this fails
-		 * we will fall back on the old directory.
+		 * Change torrents output directory. If this fails we will fall back on the old directory.
 		 * @param new_dir The new directory
-		 * @return true upon succes
+		 * @param moveFiles Wheather to actually move the files or just change the directory without moving them.
+		 * @return true upon success.
 		 */
-		virtual bool changeOutputDir(const QString& new_dir) = 0;
+		virtual bool changeOutputDir(const QString& new_dir, bool moveFiles = true) = 0;
 
 		/**
 		 * Roll back the previous changeDataDir call.

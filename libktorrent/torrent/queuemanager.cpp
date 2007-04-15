@@ -127,9 +127,9 @@ namespace bt
 												((unsigned long long)stfs.f_bsize);
 				unsigned long long bytes_to_download = tc->getStats().total_bytes_to_download;
 
-				int shortDiskSpace;
+				bool shortDiskSpace = bytes_to_download > bytes_free;
 
-				if (shortDiskSpace = bytes_to_download > bytes_free)
+				if (shortDiskSpace)
 				{
 					//we're short!
 
@@ -595,29 +595,38 @@ namespace bt
 		if (!keep_seeding)
 			return;
 
-		torrentAdded(tc);
+		torrentAdded(tc, false, false);
 
 		orderQueue();
 	}
 
-	void QueueManager::torrentAdded(kt::TorrentInterface* tc)
+	void QueueManager::torrentAdded(kt::TorrentInterface* tc, bool user, bool start_torrent)
 	{
-		QPtrList<TorrentInterface>::const_iterator it = downloads.begin();
-
-		while (it != downloads.end())
+		if (!user)
 		{
-			TorrentInterface* _tc = *it;
-			int p = _tc->getPriority();
+			QPtrList<TorrentInterface>::const_iterator it = downloads.begin();
 
-			if (p == 0)
-				break;
-			else
-				_tc->setPriority(++p);
+			while (it != downloads.end())
+			{
+				TorrentInterface* _tc = *it;
+				int p = _tc->getPriority();
 
-			++it;
+				if (p == 0)
+					break;
+				else
+					_tc->setPriority(++p);
+
+				++it;
+			}
+
+			tc->setPriority(1);
 		}
-
-		tc->setPriority(1);
+		else
+		{
+			tc->setPriority(0);
+			if(start_torrent)
+				start(tc, true);
+		}
 
 		orderQueue();
 	}
@@ -681,7 +690,7 @@ namespace bt
 			return;
 		}
 
-		torrentAdded(tc);
+		torrentAdded(tc, false, false);
 	}
 
 	void QueueManager::dequeue(kt::TorrentInterface* tc)

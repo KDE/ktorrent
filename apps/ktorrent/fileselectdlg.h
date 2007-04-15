@@ -28,37 +28,54 @@
 
 namespace kt
 {
+
 	class TorrentInterface;
 	class FileTreeDirItem;
+	class GroupManager;
 }
+
 /**
  * @author Joris Guisson
  *
  * Dialog to select which files to download from a multifile torrent.
  */
-class FileSelectDlg : public FileSelectDlgBase,public kt::FileTreeRootListener
-{
-	Q_OBJECT
 
-	kt::TorrentInterface* tc;
-	kt::FileTreeDirItem* root;
-public:
-	FileSelectDlg(QWidget* parent = 0, const char* name = 0,
-				  bool modal = true, WFlags fl = 0 );
-	virtual ~FileSelectDlg();
-	
-	int execute(kt::TorrentInterface* tc);
-	
-protected slots:
-	virtual void reject();
-	virtual void accept();
-	void selectAll();
-	void selectNone();
-	void invertSelection();
-	
-private:
-	virtual void treeItemChanged();
-	void updateSizeLabels();
+class FileSelectDlg : public FileSelectDlgBase, public kt::FileTreeRootListener
+{
+		Q_OBJECT
+
+		kt::TorrentInterface* tc;
+		kt::FileTreeDirItem* root;
+		
+		kt::GroupManager* m_gman;
+		
+		bool* m_user;
+		bool* m_start;
+
+	public:
+		FileSelectDlg(kt::GroupManager* gm, bool* user, bool* start, QWidget* parent = 0, const char* name = 0,
+					  bool modal = true, WFlags fl = 0);
+
+		virtual ~FileSelectDlg();
+		int execute(kt::TorrentInterface* tc);
+		
+		void loadGroups();
+		
+		void populateFields();
+
+		void setupMultifileTorrent();
+		void setupSinglefileTorrent();
+
+	protected slots:
+		virtual void reject();
+		virtual void accept();
+		void selectAll();
+		void selectNone();
+		void invertSelection();
+
+	private:
+		virtual void treeItemChanged();
+		void updateSizeLabels();
 };
 
 #endif
