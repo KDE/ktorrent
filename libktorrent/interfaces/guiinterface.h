@@ -26,6 +26,7 @@ class QWidget;
 class QIconSet;
 class QString;
 class KToolBar;
+class KProgress;
 
 namespace kt
 {
@@ -89,6 +90,12 @@ namespace kt
 
 		/// Remove a view listener
 		void removeViewListener(ViewListener* vl);
+		
+		/// Add a progress bar tot the status bar, if one is already present this will fail and return 0
+		virtual KProgress* addProgressBarToStatusBar() = 0;
+		
+		/// Remove the progress bar from the status bar
+		virtual void removeProgressBarFromStatusBar(KProgress* p) = 0;
 		
 		/**
 		 * Add a new tab page to the GUI

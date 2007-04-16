@@ -25,7 +25,7 @@
 #include <kurl.h>
 
 class SearchBar;
-
+class KProgress;
 class KPopupMenu;
 
 namespace KParts
@@ -41,7 +41,9 @@ namespace kt
 	
 	
 	/**
-	@author Joris Guisson
+		@author Joris Guisson
+		
+		Widget which shows a KHTML window with the users search in it
 	*/
 	class SearchWidget : public QWidget
 	{
@@ -71,7 +73,7 @@ namespace kt
 		void onFrameAdded(KParts::Part* p);
 		void statusBarMsg(const QString & url);
 		void openTorrent(const KURL & url);
-	
+		void loadingProgress(int perc);
 		
 	private:
 		HTMLPart* html_part;
@@ -79,6 +81,7 @@ namespace kt
 		KPopupMenu* right_click_menu;
 		int back_id;
 		SearchPlugin* sp;
+		KProgress* prog;
 	};
 
 }

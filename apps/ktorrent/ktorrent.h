@@ -105,6 +105,8 @@ public:
 	virtual const kt::TorrentInterface* getCurrentTorrent() const;
 	virtual KToolBar* addToolBar(const char* name);
 	virtual void removeToolBar(KToolBar* tb);
+	virtual KProgress* addProgressBarToStatusBar();
+	virtual void removeProgressBarFromStatusBar(KProgress* p);
 	
 	QString	getStatusInfo();
 	QString	getStatusTransfer();
@@ -216,6 +218,8 @@ private:
 	KAction* m_queueaction;
 	KAction* m_datacheck;
 	KAction* m_ipfilter;
+	
+	KProgress* m_status_prog;
 };
 
 #endif // _KTORRENT_H_

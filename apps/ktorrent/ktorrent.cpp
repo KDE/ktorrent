@@ -111,7 +111,7 @@ using namespace kt;
 
 KTorrent::KTorrent()
 	: DMainWindow(0,"KTorrent"),m_group_view(0),
-		m_view_man(0), m_systray_icon(0)
+		m_view_man(0), m_systray_icon(0),m_status_prog(0)
 {
 	setHidden(true);
 	//setToolviewStyle(KMdi::TextAndIcon);
@@ -911,6 +911,30 @@ void KTorrent::removeToolBar(KToolBar* tb)
 void KTorrent::loadSilentlyDir(const KURL& url, const KURL& savedir)
 {
 	m_core->loadSilentlyDir(url, savedir);
+}
+
+KProgress* KTorrent::addProgressBarToStatusBar()
+{
+	if (m_status_prog)
+		return 0;
+	
+	KStatusBar* sb = statusBar();
+	m_status_prog = new KProgress(100,sb);
+	m_status_prog->setValue(0);
+	sb->addWidget(m_status_prog);
+	m_status_prog->show();
+	return m_status_prog;
+}
+
+void KTorrent::removeProgressBarFromStatusBar(KProgress* p)
+{
+	if (m_status_prog != p)
+		return;
+	
+	KStatusBar* sb = statusBar();
+	sb->removeWidget(p);
+	delete p;
+	m_status_prog = 0;
 }
 
 #include "ktorrent.moc"

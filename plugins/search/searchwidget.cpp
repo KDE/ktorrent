@@ -38,6 +38,7 @@
 #include <kio/job.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
+#include <kprogress.h>
 #include <util/log.h>
 #include <torrent/globals.h>
 #include <interfaces/guiinterface.h>
@@ -105,12 +106,19 @@ namespace kt
 	
 		KParts::PartManager* pman = html_part->partManager();
 		connect(pman,SIGNAL(partAdded(KParts::Part*)),this,SLOT(onFrameAdded(KParts::Part* )));
+		
+		connect(html_part->browserExtension(),SIGNAL(loadingProgress(int)),this,SLOT(loadingProgress(int)));
+		prog = 0;
 	}
 	
 	
 	SearchWidget::~SearchWidget()
 	{
-
+		if (prog)
+		{
+			sp->getGUI()->removeProgressBarFromStatusBar(prog);
+			prog = 0;
+		}
 	}
 	
 	void SearchWidget::updateSearchEngines(const SearchEngineList & sl)
@@ -189,7 +197,6 @@ namespace kt
 	
 	void SearchWidget::onFinished()
 	{
-		statusBarMsg(i18n("Search finished"));
 	}
 	
 	void SearchWidget::onOpenTorrent(const KURL & url)
@@ -236,6 +243,29 @@ namespace kt
 	void SearchWidget::openTorrent(const KURL & url)
 	{
 		sp->getCore()->load(url);
+	}
+	
+	void SearchWidget::loadingProgress(int perc)
+	{
+		if (perc < 100 && !prog)
+		{
+			prog = sp->getGUI()->addProgressBarToStatusBar();
+			if (prog)
+				prog->setValue(perc);
+		}
+		else if (prog && perc < 100)
+		{
+			prog->setValue(perc);
+		}
+		else if (perc == 100) 
+		{
+			if (prog)
+			{
+				sp->getGUI()->removeProgressBarFromStatusBar(prog);
+				prog = 0;
+			}
+			statusBarMsg(i18n("Search finished"));
+		}
 	}
 }
 
