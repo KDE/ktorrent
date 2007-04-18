@@ -14,11 +14,11 @@
     </keywords>
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
-    <description/>
+    <description></description>
     <ignoreparts/>
     <versioncontrol>kdevsubversion</versioncontrol>
     <projectname>ktorrent</projectname>
-    <defaultencoding/>
+    <defaultencoding></defaultencoding>
   </general>
   <kdevautoproject>
     <general>
@@ -27,7 +27,7 @@
       <useactivetarget>true</useactivetarget>
     </general>
     <run>
-      <mainprogram>/home/joris/ktorrent/newstuff/debug/apps/ktorrent/ktorrent</mainprogram>
+      <mainprogram>/home/joris/ktorrent/trunk/debug/apps/ktorrent/ktorrent</mainprogram>
       <terminal>false</terminal>
       <directoryradio>executable</directoryradio>
       <customdirectory>/</customdirectory>
@@ -173,14 +173,14 @@
     <general>
       <dbgshell>libtool</dbgshell>
       <programargs>--nofork</programargs>
-      <gdbpath/>
+      <gdbpath></gdbpath>
       <breakonloadinglibs>false</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>
       <runappinappdirectory>true</runappinappdirectory>
-      <configGdbScript/>
-      <runShellScript/>
-      <runGdbScript/>
+      <configGdbScript></configGdbScript>
+      <runShellScript></runShellScript>
+      <runGdbScript></runGdbScript>
     </general>
     <display>
       <staticmembers>true</staticmembers>
@@ -274,7 +274,7 @@
       <includePaths>.;</includePaths>
     </codecompletion>
     <creategettersetter>
-      <prefixGet/>
+      <prefixGet></prefixGet>
       <prefixSet>set</prefixSet>
       <prefixVariable>m_,_</prefixVariable>
       <parameterName>theValue</parameterName>

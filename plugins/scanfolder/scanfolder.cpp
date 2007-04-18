@@ -31,7 +31,12 @@
 
 #include <torrent/globals.h>
 #include <util/log.h>
+#include <util/fileops.h>
+#include <util/functions.h>
 #include <util/constants.h>
+		
+#include <torrent/bnode.h>
+#include <torrent/bdecoder.h>
 
 #include <interfaces/coreinterface.h>
 
@@ -55,7 +60,7 @@ namespace kt
 
 		connect(m_dir, SIGNAL(newItems( const KFileItemList& )), this, SLOT(onNewItems( const KFileItemList& )));
 		connect(m_core, SIGNAL(loadingFinished( const KURL&, bool, bool )), this, SLOT(onLoadingFinished( const KURL&, bool, bool )));
-
+		connect(&m_incomplePollingTimer,SIGNAL(timeout()),this,SLOT(onIncompletePollingTimeout()));
 	}
 
 
@@ -73,7 +78,7 @@ namespace kt
 		{
 			QString name = file->name();
 			QString dirname = m_dir->url().path();
-			QString filename = dirname + "/" + name;
+			QString filename = dirname + bt::DirSeparator() + name;
 
 			if(!name.endsWith(".torrent"))
 				continue;
@@ -81,7 +86,7 @@ namespace kt
 			if(name.startsWith(".")) 
 			{
 				//Check if corresponding torrent exists
-				if(!QFile::exists(m_dir->url().path() + "/" + name.right(name.length() - 1)) && (m_loadedAction == defaultAction))
+				if(!QFile::exists(m_dir->url().path() + bt::DirSeparator() + name.right(name.length() - 1)) && (m_loadedAction == defaultAction))
 					QFile::remove(filename);
 
 				continue;
@@ -94,14 +99,30 @@ namespace kt
 			if(QFile::exists(dirname + "/." + name))
 				continue;
 			
-			//Add pending entry...
-			m_pendingURLs.push_back(source);
-			
-			//Load torrent
-			if(m_openSilently)
-				m_core->loadSilently(source);
+			if (incomplete(source))
+			{
+				// incomplete file, try this again in 10 seconds
+				bt::Out(SYS_SNF|LOG_NOTICE) << "ScanFolder : incomplete file " << source << endl;
+				m_incompleteURLs.append(source);
+				if (m_incompleteURLs.count() == 1)
+				{
+					// first URL so start the poll timer
+					// lets poll every 10 seconds
+					m_incomplePollingTimer.start(10000,false);
+				}
+			}
 			else
-				m_core->load(source);
+			{
+				bt::Out(SYS_SNF|LOG_NOTICE) << "ScanFolder : found " << source << endl;
+				//Add pending entry...
+				m_pendingURLs.push_back(source);
+				
+				//Load torrent
+				if(m_openSilently)
+					m_core->loadSilently(source);
+				else
+					m_core->load(source);
+			}
 		}
 	}
 	
@@ -176,5 +197,77 @@ namespace kt
 		} else
 			m_valid = true;
 	}
+	
+	bool ScanFolder::incomplete(const KURL & src)
+	{
+		// try to decode file, if it is syntactically correct, we can try to load it
+		QFile fptr(src.path());
+		if (!fptr.open(IO_ReadOnly))
+			return false;
+		
+		try
+		{
+			QByteArray data(fptr.size());
+			fptr.readBlock(data.data(),fptr.size());
+			bt::BDecoder dec(data,false);
+			bt::BNode* n = dec.decode();
+			if (n)
+			{
+				// valid node, so file is complete
+				delete n;
+				return false;
+			}
+			else
+			{
+				// decoding failed so incomplete
+				return true;
+			}
+		}
+		catch (...)
+		{
+			// any error means shit happened and the file is incomplete
+			return true;
+		}
+		return false;
+	}
+	
+	void ScanFolder::onIncompletePollingTimeout()
+	{
+		bt::Out(SYS_SNF|LOG_NOTICE) << "ScanFolder : checking incomplete files" << endl; 
+		for (QValueList<KURL>::iterator i = m_incompleteURLs.begin(); i != m_incompleteURLs.end();)
+		{
+			KURL source = *i;
+			if (!bt::Exists(source.path()))
+			{
+				// doesn't exist anymore, so throw out of list
+				i = m_incompleteURLs.erase(i);
+			}
+			else if (!incomplete(source))
+			{
+				bt::Out(SYS_SNF|LOG_NOTICE) << "ScanFolder : incomplete file " << source << " appears to be completed " << endl;
+				//Add pending entry...
+				m_pendingURLs.push_back(source);
+				
+				//Load torrent
+				if(m_openSilently)
+					m_core->loadSilently(source);
+				else
+					m_core->load(source);
+				
+				// remove from incomplete list
+				i = m_incompleteURLs.erase(i);
+			}
+			else
+			{
+				bt::Out(SYS_SNF|LOG_NOTICE) << "ScanFolder : still incomplete : " << source << endl;
+				i++;
+			}
+		}
+		
+		// stop timer when no incomple URL's are left
+		if (m_incompleteURLs.count() == 0)
+			m_incomplePollingTimer.stop();
+	}
 }
 
+#include "scanfolder.moc"
