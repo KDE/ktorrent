@@ -160,7 +160,12 @@ namespace dht
 		}
 			
 		
-		Uint8 mtid = (Uint8)dict->getValue(TID)->data().toByteArray().at(0);
+		QByteArray ba = dict->getValue(TID)->data().toByteArray();
+		// check for empty byte arrays should prevent 144416
+		if (ba.size() == 0)
+			return 0;
+		
+		Uint8 mtid = (Uint8)ba.at(0);
 		// find the call
 		const RPCCall* c = srv->findCall(mtid);
 		if (!c)
