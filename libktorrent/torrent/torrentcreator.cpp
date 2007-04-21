@@ -250,10 +250,7 @@ namespace bt
 	}
 	
 	bool TorrentCreator::calcHashMulti()
-	{
-	//	Out() << "=============================================" << endl;
-	//	Out() << "Calculating hash for " << cur_chunk << endl;
-		
+	{	
 		Uint32 s = cur_chunk != num_chunks - 1 ? chunk_size : last_size;
 		// first find the file(s) the chunk lies in
 		Array<Uint8> buf(s);
@@ -264,9 +261,6 @@ namespace bt
 			const TorrentFile & tf = files[i];
 			if (cur_chunk >= tf.getFirstChunk() && cur_chunk <= tf.getLastChunk())
 			{
-			/*	Out() << "Chunk lies in " << tf.getPath() << endl;
-				Out() << tf.getFirstChunk() << " " << tf.getLastChunk() << endl;
-				Out() << tf.getFirstChunkOffset() << " " << tf.getLastChunkSize() << endl;*/
 				file_list.append(tf);
 			}
 				
@@ -276,7 +270,6 @@ namespace bt
 		Uint32 read = 0;
 		for (i = 0;i < file_list.count();i++)
 		{
-		//	Out() << "Reading from file " << i << endl;
 			const TorrentFile & f = file_list[i];
 			File fptr;
 			if (!fptr.open(target + f.getPath(),"rb"))
@@ -290,18 +283,7 @@ namespace bt
 			// the following files will start at the beginning
 			Uint64 off = 0;
 			if (i == 0)
-			{
-			/*	Out() << "cur_chunk = " << cur_chunk << endl;
-				Out() << "f.getFirstChunk() = " << f.getFirstChunk() << endl;
-				Out() << "s = " << s << endl;
-				Out() << "f.getFirstChunkOffset() = " << f.getFirstChunkOffset() << endl;*/
-				if (cur_chunk - f.getFirstChunk() > 0)
-					off = (cur_chunk - f.getFirstChunk() - 1) * chunk_size;
-			//	Out() << "off2 = " << off << endl;
-				if (cur_chunk > 0)
-					off += (chunk_size - f.getFirstChunkOffset());
-			}
-		//	Out() << "off = " << off << endl;
+				off = f.fileOffset(cur_chunk,chunk_size);
 			
 			Uint32 to_read = 0;
 			// then the amount of data we can read from this file
@@ -313,16 +295,14 @@ namespace bt
 				to_read = s - read;
 			else
 				to_read = f.getSize();
-			
-		//	Out() << "to_read = " << to_read << endl;
 						
 			// read part of data
-			fptr.seek(File::BEGIN,off);
+			fptr.seek(File::BEGIN,(Int64)off);
 			fptr.read(buf + read,to_read);
 			read += to_read;
 		}
 
-			// generate hash
+		// generate hash
 		SHA1Hash h = SHA1Hash::generate(buf,s);
 		hashes.append(h);
 
