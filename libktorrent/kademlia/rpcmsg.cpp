@@ -57,7 +57,10 @@ namespace dht
 			return 0;
 			
 		Key id = Key(args->getValue("id")->data().toByteArray());
-		Uint8 mtid = (Uint8)dict->getValue(TID)->data().toByteArray().at(0);
+		QByteArray mtid_d = dict->getValue(TID)->data().toByteArray();
+		if (mtid_d.size() == 0)
+			return 0;
+		Uint8 mtid = (Uint8)mtid_d.at(0);
 		MsgBase* msg = 0;
 		
 		QString str = vn->data().toString();
@@ -186,6 +189,9 @@ namespace dht
 			
 		Key id = Key(args->getValue("id")->data().toByteArray());
 		QString mt_id = dict->getValue(TID)->data().toString();
+		if (mt_id.length() == 0)
+			return 0;
+		
 		Uint8 mtid = (char)mt_id.at(0).latin1();
 		QString str = vn->data().toString();
 		
