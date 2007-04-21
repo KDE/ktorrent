@@ -20,6 +20,7 @@
  ***************************************************************************/
 #include <qfile.h>
 #include <qdatastream.h>
+#include <qstringlist.h>
 #include <util/log.h>
 #include <util/functions.h>
 #include <util/error.h>
@@ -164,19 +165,17 @@ namespace bt
 					throw Error(i18n("Corrupted torrent!"));
 	
 				QString sd = v->data().toString(encoding);
-				// check for weirdness like .. and / ,
-				// we don't want to write outside the user specified directories
-				if (!sd.contains("/") && !sd.contains("..")) 
-				{
-					path += sd;
-					if (j + 1 < ln->getNumChildren())
-						path += bt::DirSeparator();
-				}
+				path += sd;
+				if (j + 1 < ln->getNumChildren())
+					path += bt::DirSeparator();
 			}
 
 			// we do not want empty dirs
 			if (path.endsWith(bt::DirSeparator()))
 				continue;
+			
+			if (!checkPathForDirectoryTraversal(path))
+				throw Error(i18n("Corrupted torrent!"));
 
 			BValueNode* v = d->getValue("length");
 			if (!v)
@@ -440,5 +439,11 @@ namespace bt
 			f.updateNumDownloadedChunks(bs);
 			i++;
 		}
+	}
+	
+	bool Torrent::checkPathForDirectoryTraversal(const QString & p)
+	{
+		QStringList sl = QStringList::split(bt::DirSeparator(),p);
+		return !sl.contains("..");
 	}
 }

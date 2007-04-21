@@ -197,6 +197,7 @@ namespace bt
 		void loadFiles(BListNode* node);
 		void loadNodes(BListNode* node);
 		void loadAnnounceList(BNode* node);
+		bool checkPathForDirectoryTraversal(const QString & p);
 		
 	private:
 		TrackerTier* trackers;
