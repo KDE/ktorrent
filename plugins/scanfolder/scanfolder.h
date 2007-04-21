@@ -26,6 +26,7 @@
 #include <qobject.h>
 #include <qdir.h>
 #include <qvaluelist.h>
+#include <qtimer.h>
 #include <kurl.h>
 
 namespace kt
@@ -86,6 +87,11 @@ namespace kt
 		public slots:
 			void onNewItems(const KFileItemList &items);
 			void onLoadingFinished(const KURL & url,bool success,bool canceled);
+			void onIncompletePollingTimeout();
+			
+		private:
+			/// Check if the URL is a complete file
+			bool incomplete(const KURL & src);
 
 		private:
 			CoreInterface* m_core;
@@ -97,7 +103,9 @@ namespace kt
 			bool m_openSilently;
 			
 			QValueList<KURL> m_pendingURLs;
+			QValueList<KURL> m_incompleteURLs;
 
+			QTimer m_incomplePollingTimer;
 	};
 }
 #endif
