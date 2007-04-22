@@ -23,6 +23,9 @@
 #include <kstdguiitem.h>
 #include <kpushbutton.h>
 #include <kurlrequester.h>
+#include <kiconloader.h>
+#include <kmimetype.h>
+
 
 #include <qlabel.h>
 #include <qstring.h>
@@ -190,7 +193,10 @@ void FileSelectDlg::updateSizeLabels()
 									((unsigned long long)stfs.f_bsize);
 
 	unsigned long long bytes_to_download = 0;
-	bytes_to_download = root->bytesToDownload();
+	if (root)
+		bytes_to_download = root->bytesToDownload();
+	else
+		bytes_to_download = tc->getStats().total_bytes;
 
 	lblFree->setText(kt::BytesToString(bytes_free));
 	lblRequired->setText(kt::BytesToString(bytes_to_download));
@@ -227,22 +233,16 @@ void FileSelectDlg::setupMultifileTorrent()
 void FileSelectDlg::setupSinglefileTorrent()
 {
 	m_file_view->clear();
-	root = new kt::FileTreeDirItem(m_file_view, tc->getStats().torrent_name, this);
-
-	for (Uint32 i = 0;i < tc->getNumFiles();i++)
-	{
-		kt::TorrentFileInterface & file = tc->getTorrentFile(i);
-		file.setEmitDownloadStatusChanged(false);
-		root->insert(file.getPath(), file);
-	}
-
-	root->setOpen(true);
-
-	//m_file_view->setRootIsDecorated(true);
-
+	KListViewItem* single_root = new KListViewItem(m_file_view);
+	single_root->setText(0,tc->getStats().torrent_name);
+	single_root->setText(1,BytesToString(tc->getStats().total_bytes));
+	single_root->setText(2,i18n("Yes"));
+	single_root->setPixmap(0,KMimeType::findByPath(tc->getStats().torrent_name)->pixmap(KIcon::Small));
+	root = 0;
 	updateSizeLabels();
-	
-	pnlFiles->setEnabled(FALSE);
+	m_select_all->setEnabled(false);
+	m_select_none->setEnabled(false);
+	m_invert_selection->setEnabled(false);
 }
 
 void FileSelectDlg::populateFields()
