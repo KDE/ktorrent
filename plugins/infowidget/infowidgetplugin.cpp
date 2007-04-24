@@ -167,7 +167,7 @@ namespace kt
 		if (show && !peer_view)
 		{
 			peer_view = new PeerView(0);
-			getGUI()->addToolWidget(peer_view,QString::null,i18n("Peers"),GUIInterface::DOCK_BOTTOM);
+			getGUI()->addToolWidget(peer_view,"kdmconfig",i18n("Peers"),GUIInterface::DOCK_BOTTOM);
 			
 			peer_view->restoreLayout(KGlobal::config(),"PeerView");
 			createMonitor(tc);
@@ -188,7 +188,7 @@ namespace kt
 		if (show && !cd_view)
 		{
 			cd_view = new ChunkDownloadView(0);
-			getGUI()->addToolWidget(cd_view,QString::null,i18n("Chunks"),GUIInterface::DOCK_BOTTOM);
+			getGUI()->addToolWidget(cd_view,"fifteenpieces",i18n("Chunks"),GUIInterface::DOCK_BOTTOM);
 			
 			cd_view->restoreLayout(KGlobal::config(),"ChunkDownloadView");
 			cd_view->changeTC(tc);
@@ -208,7 +208,7 @@ namespace kt
 		if (show && !tracker_view)
 		{
 			tracker_view = new TrackerView(0);
-			getGUI()->addToolWidget(tracker_view,QString::null,i18n("Trackers"),
+			getGUI()->addToolWidget(tracker_view,"network",i18n("Trackers"),
 					GUIInterface::DOCK_BOTTOM);
 			tracker_view->changeTC(const_cast<kt::TorrentInterface*>(getGUI()->getCurrentTorrent()));
 		}
