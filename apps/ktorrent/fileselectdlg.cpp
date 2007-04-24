@@ -140,11 +140,13 @@ void FileSelectDlg::accept()
 	
 	//Setup custom download location
 	QString dn = m_downloadLocation->url();
+	if (dn != Settings::saveDir())
+	{
+		if(!dn.endsWith(bt::DirSeparator()))
+			dn += bt::DirSeparator();
 	
-	if(!dn.endsWith(bt::DirSeparator()))
-		dn += bt::DirSeparator();
-	
-	tc->changeOutputDir(dn, false);
+		tc->changeOutputDir(dn, false);
+	}
 	
 	//Make it user controlled if needed
 	*m_user = m_chkUserControlled->isChecked();
