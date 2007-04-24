@@ -261,9 +261,8 @@ void KTorrentCore::downloadFinished(KIO::Job *job)
 	{
 		// load in the file (target is always local)
 		QString dir = Settings::saveDir();
-		if (!Settings::useSaveDir())
-			dir = KFileDialog::getExistingDirectory(QString::null, 0,
-				i18n("Select folder for data of %1").arg(j->url().prettyURL()));
+		if (!Settings::useSaveDir() || dir.isNull())
+			dir = QDir::homeDirPath();
 	
 		if (dir != QString::null && load(j->data(),dir,false, j->url()))
 			loadingFinished(j->url(),true,false);
@@ -278,9 +277,8 @@ void KTorrentCore::load(const KURL& url)
 	{
 		QString path = url.path(); 
 		QString dir = Settings::saveDir();
-		if (!Settings::useSaveDir())
-			dir = KFileDialog::getExistingDirectory(QString::null, 0,
-				i18n("Select folder for data of %1").arg(url.prettyURL()));
+		if (!Settings::useSaveDir() || dir.isNull())
+			dir = QDir::homeDirPath();
 	
 		if (dir != QString::null && load(path,dir,false))
 			loadingFinished(url,true,false);
@@ -341,7 +339,7 @@ void KTorrentCore::loadSilently(const KURL& url)
 	{
 		QString path = url.path(); 
 		QString dir = Settings::saveDir();
-		if (!Settings::useSaveDir())
+		if (!Settings::useSaveDir() || dir.isNull())
 		{
 			Out(SYS_GEN|LOG_NOTICE) << "Cannot load " << path << " silently, default save location not set !" << endl;
 			Out(SYS_GEN|LOG_NOTICE) << "Using home directory instead !" << endl;

@@ -249,7 +249,11 @@ void FileSelectDlg::setupSinglefileTorrent()
 
 void FileSelectDlg::populateFields()
 {
-	m_downloadLocation->setURL(Settings::saveDir());
+	QString dir = Settings::saveDir();
+	if (!Settings::useSaveDir() || dir.isNull())
+		dir = QDir::homeDirPath();
+	
+	m_downloadLocation->setURL(dir);
 	loadGroups();
 }
 
