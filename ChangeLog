@@ -15,6 +15,10 @@ slider in the settings
 - Readded feature to show the total and the number of running torrents in the
 tab of each view
 - Added progress bar in status bar when searching
+- Redesigned FileSelectDlg
+- Added option to add torrent to group when loading
+- Added option to choose download directory for torrent when loading
+- Added option to copy .torrent files to user specified directory
 
 Changes in 2.1.4
 - Fixed crash in parsing of DHT messages
