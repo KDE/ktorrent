@@ -32,7 +32,7 @@
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>30</height>
+                    <height>50</height>
                 </size>
             </property>
         </spacer>
@@ -353,9 +353,9 @@
                         <string>&amp;Automatically save downloads to:</string>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget" row="1" column="1" rowspan="2" colspan="1">
+                <widget class="QLayoutWidget" row="1" column="1" rowspan="3" colspan="1">
                     <property name="name">
-                        <cstring>layout27</cstring>
+                        <cstring>layout14</cstring>
                     </property>
                     <vbox>
                         <property name="name">
@@ -377,7 +377,26 @@
                                 <bool>false</bool>
                             </property>
                         </widget>
+                        <widget class="KURLRequester">
+                            <property name="name">
+                                <cstring>urlTorrentDir</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                        </widget>
                     </vbox>
+                </widget>
+                <widget class="QCheckBox" row="3" column="0">
+                    <property name="name">
+                        <cstring>checkTorrentDir</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Copy .torrent files to:</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
                 </widget>
             </grid>
         </widget>
@@ -420,6 +439,12 @@
         <receiver>autosave_location</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
+    <connection>
+        <sender>checkTorrentDir</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>urlTorrentDir</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
 </connections>
 <tabstops>
     <tabstop>autosave_downloads_check</tabstop>
@@ -432,6 +457,9 @@
     <includehint>klineedit.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>

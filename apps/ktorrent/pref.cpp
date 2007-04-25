@@ -256,6 +256,11 @@ bool GeneralPrefPage::apply()
 
 	bool useCompletedDir = gp->checkCompletedDir->isChecked();
 	Settings::setUseCompletedDir(useCompletedDir);
+	
+	//.torrent copy dir
+	bool useTorrentCopyDir = gp->checkTorrentDir->isChecked();
+	Settings::setUseTorrentCopyDir(useTorrentCopyDir);
+	Settings::setTorrentCopyDir(gp->urlTorrentDir->url());
 
 	bool useExternalIP = gp->custom_ip_check->isChecked();
 
@@ -346,15 +351,15 @@ void GeneralPrefPage::updateData()
 	u->fileDialog()->setMode(KFile::Directory);
 
 	bool useSaveDir = Settings::useSaveDir();
-	QString saveDir = Settings::saveDir();
+	QString saveDir = Settings::saveDir();	
 
 	gp->autosave_downloads_check->setChecked(useSaveDir);
-	u->setEnabled(useSaveDir);
+	u->setEnabled(useSaveDir);	
 
 	u->setURL(!saveDir.isEmpty() ? saveDir : QDir::homeDirPath());
 
 	
-	
+	//completed dir
 	u = gp->urlCompletedDir;
 	u->fileDialog()->setMode(KFile::Directory);
 	bool useCompletedDir = Settings::useCompletedDir();
@@ -363,6 +368,14 @@ void GeneralPrefPage::updateData()
 	u->setEnabled(useCompletedDir);	
 	u->setURL(!completedDir.isEmpty() ? completedDir : QDir::homeDirPath());
 	
+	//copy .torrent dir
+	u = gp->urlTorrentDir;
+	u->fileDialog()->setMode(KFile::Directory);
+	bool useTorrentDir = Settings::useTorrentCopyDir();
+	QString torrentDir = Settings::torrentCopyDir();	
+	gp->checkTorrentDir->setChecked(useTorrentDir);
+	u->setEnabled(useTorrentDir);
+	u->setURL(!torrentDir.isEmpty() ? torrentDir : QDir::homeDirPath());
 	
 
 	gp->custom_ip->setText(Settings::externalIP());

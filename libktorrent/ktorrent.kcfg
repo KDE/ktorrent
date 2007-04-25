@@ -105,6 +105,14 @@
 			<label>Folder to move completed downloaded files to</label>
 			<default code="true">QString::null</default>
 		</entry>
+		<entry name="useTorrentCopyDir" type="Bool">
+			<label>Whether to automatically copy .torrent files to torrentCopyDir</label>
+			<default>false</default>
+		</entry>
+		<entry name="torrentCopyDir" type="String">
+			<label>Folder to copy .torrent files to</label>
+			<default code="true">QString::null</default>
+		</entry>
 		<entry name="useExternalIP" type="Bool">
 			<label>Whether to use a custom IP to pass to the tracker</label>
 			<default>false</default>

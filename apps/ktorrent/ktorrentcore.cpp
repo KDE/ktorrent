@@ -180,6 +180,34 @@ bool KTorrentCore::init(TorrentControl* tc,bool silently)
 	torrentAdded(tc);
 	qman->torrentAdded(tc, user, start_torrent);
 		
+	
+	//now copy torrent file to user specified dir if needed
+	if(Settings::useTorrentCopyDir())
+	{
+		QString torFile = tc->getTorDir();
+		
+		if(!torFile.endsWith("/"))
+			torFile += "/";
+		
+		torFile += "torrent";
+		
+		QString destination = Settings::torrentCopyDir();
+		
+		if(!destination.endsWith("/"))
+			destination += "/";
+		
+		destination += tc->getStats().torrent_name + ".torrent";
+		
+		try
+		{
+			bt::CopyFile(torFile, destination, TRUE);
+		}
+		catch(bt::Error& err)
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Could not copy torrent file to " << destination << endl;
+		}
+	}
+	
 	return true;
 }
 
