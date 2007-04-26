@@ -124,6 +124,7 @@ namespace kt
 				session.sessionId=rand();
 				session.last_access=QTime::currentTime();
 				Out(SYS_WEB|LOG_NOTICE) << "Webgui login succesfull !" << endl;
+			//	Out(SYS_WEB|LOG_NOTICE) << "sessionId = " << session.sessionId << endl;
 				return true;
 			}
 		}
@@ -137,12 +138,21 @@ namespace kt
 		int session_id = 0;
 		if (hdr.hasKey("Cookie"))
 		{
+		//	Out(SYS_WEB|LOG_DEBUG) << "checkSession " << hdr.value("Cookie") << endl;
 			QStringList tokens = QStringList::split('=',hdr.value("Cookie"));
-			if (tokens.count() == 2 && tokens[0]=="KT_SESSID")
-				session_id = tokens[1].toInt();
-			else
+			for (int i = 0;i < tokens.count() - 1;i+= 2)
+			{
+				if (tokens[i]=="KT_SESSID")
+				{
+					session_id = tokens[i+1].toInt();
+					break;
+				}
+			}
+			if (session_id == 0)
 				return false;
 		}
+		
+	//	Out(SYS_WEB|LOG_DEBUG) << "checkSession " << session_id << " " << session.sessionId << endl;
 
 
 		if (session_id == session.sessionId)
@@ -154,6 +164,7 @@ namespace kt
 			}
 			else
 			{
+	//			Out(SYS_WEB|LOG_DEBUG) << "checkSession expired" << endl;
 				return false;
 			}
 		}
@@ -195,6 +206,8 @@ namespace kt
 		QString file = hdr.path();
 		if (file == "/")
 			file = "/login.html";
+		
+	//	Out(SYS_WEB|LOG_DEBUG) << "GET " << hdr.path() << endl;
 		
 		KURL url;
 		url.setEncodedPathAndQuery(file);
@@ -239,6 +252,14 @@ namespace kt
 		{
 			HttpResponseHeader rhdr(200);
 			setDefaultResponseHeaders(rhdr,"text/html",true);
+			if (path.endsWith("login.html"))
+			{
+				// clear cookie in case of login page
+				QDateTime dt = QDateTime::currentDateTime().addDays(-1);
+				QString cookie = QString("KT_SESSID=666; expires=%1 +0000").arg(dt.toString("ddd, dd MMM yyyy hh:mm:ss"));
+				rhdr.setValue("Set-Cookie",cookie);
+			}
+			
 			if (!hdlr->sendFile(rhdr,path))
 			{
 				HttpResponseHeader nhdr(404);
@@ -286,6 +307,7 @@ namespace kt
 			
 			HttpResponseHeader rhdr(200);
 			setDefaultResponseHeaders(rhdr,"text/html",true);
+			
 			hdlr->executePHPScript(php_i,rhdr,WebInterfacePluginSettings::phpExecutablePath(),
 								   path,url.queryItems());
 		}
