@@ -59,7 +59,7 @@
 		</entry>
 		<entry name="showSystemTrayIcon" type="Bool">
 			<label>Show a system tray icon</label>
-			<default>false</default>
+			<default>true</default>
 		</entry>
 		<entry name="showSpeedBarInTrayIcon" type="Bool">
 			<label>Show speed bar in tray icon</label>
