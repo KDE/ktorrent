@@ -485,7 +485,7 @@ namespace bt
 			delete tor;
 			tor = 0;
 			throw Error(i18n("An error occurred while loading the torrent."
-					" The torrent is probably corrupt or is not a torrent file."));
+					" The torrent is probably corrupt or is not a torrent file.\n%1").arg(torrent));
 		}
 		
 		initInternal(qman,tmpdir,ddir,default_save_dir,torrent.startsWith(tmpdir));
