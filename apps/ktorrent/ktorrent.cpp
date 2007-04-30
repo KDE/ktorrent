@@ -885,7 +885,7 @@ void KTorrent::currentTabChanged(QWidget* w)
 	if (!m_activeTabWidget || !w)
 		return;
 	
-	bool close_allowed = true;
+	bool close_allowed = false;
 	CloseTabListener* ctl = m_tab_map[w];
 	if (ctl)
 		close_allowed = ctl->closeAllowed(w);
