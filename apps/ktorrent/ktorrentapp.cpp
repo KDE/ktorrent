@@ -45,40 +45,31 @@ int KTorrentApp::newInstance()
 	if (!dcopClient()->isRegistered() )
 		dcopClient()->registerAs(name(), false);
 
-	// see if we are starting with session management
-/*	if (restoringSession())
+	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+	bt::Globals::instance().setDebugMode(args->isSet("debug"));
+
+	QString data_dir = KGlobal::dirs()->saveLocation("data","ktorrent");
+	if (!data_dir.endsWith(bt::DirSeparator()))
+		data_dir += bt::DirSeparator();
+	bt::Globals::instance().initLog(data_dir + "log");
+
+	if (!mainWidget())
 	{
-		RESTORE(KTorrent);
+		KTorrent *widget = new KTorrent();
+		setMainWidget(widget);
 	}
-	else*/
+	else
+		KStartupInfo::setNewStartupId( mainWidget(), kapp->startupId());
+
+
+	KTorrent *widget = ::qt_cast<KTorrent*>( mainWidget() );
+
+	for (int i = 0; i < args->count(); i++)
 	{
-		// no session.. just start up normally
-		KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-		bt::Globals::instance().setDebugMode(args->isSet("debug"));
-
-		QString data_dir = KGlobal::dirs()->saveLocation("data","ktorrent");
-		if (!data_dir.endsWith(bt::DirSeparator()))
-			data_dir += bt::DirSeparator();
-		bt::Globals::instance().initLog(data_dir + "log");
-
-		if (!mainWidget())
-		{
-			KTorrent *widget = new KTorrent();
-			setMainWidget(widget);
-		}
-		else
-			KStartupInfo::setNewStartupId( mainWidget(), kapp->startupId());
-
-
-		KTorrent *widget = ::qt_cast<KTorrent*>( mainWidget() );
-
-		for (int i = 0; i < args->count(); i++)
-		{
-			widget->load(args->url(i));
-		}
-
-		args->clear();
+		widget->load(args->url(i));
 	}
+
+	args->clear();
 	return 0;
 }
 

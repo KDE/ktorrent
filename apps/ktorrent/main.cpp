@@ -34,12 +34,23 @@
 #include <qapplication.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/file.h>
+#include <errno.h>
+#include <fcntl.h>
 #include <util/error.h>
 #include <util/log.h>
 #include <torrent/globals.h>
+#include <util/fileops.h>
 #include <ktversion.h>
+#include <functions.h>
+#include <qfile.h>
+#include <qdir.h>
 
 using namespace bt;
+
 
 
 void StupidWarningMessagesFromQt( QtMsgType type, const char *msg )
@@ -60,9 +71,36 @@ void StupidWarningMessagesFromQt( QtMsgType type, const char *msg )
 }
 
 
+
 static const char description[] =
     I18N_NOOP("A BitTorrent program for KDE");
 
+
+bool GrabPIDLock()
+{
+	// open the PID file in the users ktorrent directory and attempt to lock it
+	QString pid_file = QDir::homeDirPath() + "/.ktorrent.lock";
+		
+	int fd = open(QFile::encodeName(pid_file),O_RDWR|O_CREAT,0640);
+	if (fd < 0)
+	{
+		fprintf(stderr,"Failed to open KT lock file %s : %s\n",pid_file.ascii(),strerror(errno));
+		return false;
+	}
+
+	if (lockf(fd,F_TLOCK,0)<0) 
+	{
+		fprintf(stderr,"Failed to get lock on %s : %s\n",pid_file.ascii(),strerror(errno));
+		return false;
+	}
+		
+	char str[20];
+	sprintf(str,"%d\n",getpid());
+	write(fd,str,strlen(str)); /* record pid to lockfile */
+
+	// leave file open, so nobody else can lock it until KT exists
+	return true;
+}
 
 
 static KCmdLineOptions options[] =
@@ -116,6 +154,13 @@ int main(int argc, char **argv)
 	
 	KTorrentApp::addCmdLineOptions();
 	if (!KTorrentApp::start())
+	{
+		fprintf(stderr, "ktorrent is already running!\n");
+		return 0;
+	}
+
+	// need to grab lock after the fork call in start, otherwise this will not work properly
+	if (!GrabPIDLock())
 	{
 		fprintf(stderr, "ktorrent is already running!\n");
 		return 0;
