@@ -162,7 +162,17 @@ bool KTorrentCore::init(TorrentControl* tc,bool silently)
 		}
 	}	
 	
-	tc->createFiles();
+	try
+	{
+		tc->createFiles();
+	}
+	catch (bt::Error & err)
+	{
+		// if we can't create files, just remove the torrent
+		KMessageBox::error(0,err.toString());
+		remove(tc,false);
+		return false;
+	}
 		
 	if (tc->hasExistingFiles())
 	{
