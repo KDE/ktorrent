@@ -9,9 +9,9 @@
       <td align="center"><IMG src="ktorrentwebinterfacelogo.png" width="340" height="150" align="top" border="0"></td>
       <?php
       	$stats=downloadStatus();
-      	$t=$stats[$_REQUEST[id]];
-      	echo "<td><strong>ktorrent-><a href=\"interface.php\">transfers</a></strong>->$t[torrent_name]</td>";
-      	echo "<td><a href=\"torrent.php?id=$_REQUEST[id]\" >refresh</a></td>";
+      	$t=$stats[$_REQUEST['id']];
+      	echo "<td><strong>ktorrent-><a href=\"interface.php\">transfers</a></strong>->{$t['torrent_name']}</td>";
+      	echo "<td><a href=\"torrent.php?id={$_REQUEST['id']}\" >refresh</a></td>";
       ?>
     </tr>
   </tbody>
@@ -20,9 +20,9 @@
   <tbody>
     <tr>
       <?php
-       	echo "<td><a href=\"torrent.php?stop=$_REQUEST[id]&id=$_REQUEST[id]\" title=\"STOP\"><img src=\"/stop.png\" name=\"stop\" width=\"16\" height=\"16\" border=\"0\"></a></td>";
-      	echo "<td><a href=\"torrent.php?start=$_REQUEST[id]&id=$_REQUEST[id]\" title=\"START\"><img src=\"/start.png\" name=\"start\" width=\"16\" height=\"16\" border=\"0\"></a></td>";
-	echo "<td><a href=\"interface.php?remove=$_REQUEST[id]\" title=\"REMOVE\"><img src=\"/remove.png\" name=\"remove\" width=\"16\" height=\"16\" border=\"0\"></a></td>";
+		echo "<td><a href=\"torrent.php?stop={$_REQUEST['id']}&id={$_REQUEST['id']}\" title=\"STOP\"><img src=\"/stop.png\" name=\"stop\" width=\"16\" height=\"16\" border=\"0\"></a></td>";
+		echo "<td><a href=\"torrent.php?start={$_REQUEST['id']}&id={$_REQUEST['id']}\" title=\"START\"><img src=\"/start.png\" name=\"start\" width=\"16\" height=\"16\" border=\"0\"></a></td>";
+		echo "<td><a href=\"interface.php?remove={$_REQUEST['id']}\" title=\"REMOVE\"><img src=\"/remove.png\" name=\"remove\" width=\"16\" height=\"16\" border=\"0\"></a></td>";
       ?>
     </tr>
   </tbody>
@@ -32,7 +32,7 @@
       <?php
       	echo "<tr>";
        	echo "<td><strong>Status: </strong></td>";
-      	switch ($t[status]) {
+      	switch ($t['status']) {
 		case 0:
    			echo "<td>NOT_STARTED</td>";
 			break;
@@ -72,15 +72,15 @@
 	echo "</tr>";
 	echo "<tr>";
 	echo "<td><strong>Down speed: </strong></td>";
-	echo "<td>$t[download_rate]</td>";
+	echo "<td>{$t['download_rate']}</td>";
 	echo "</tr>";
 	echo "<tr>";
 	echo "<td><strong>Up speed: </strong></td>";
-	echo "<td>$t[upload_rate]</td>";
+	echo "<td>{$t['upload_rate']}</td>";
 	echo "</tr>";
 	echo "<tr>";
 	echo "<td><strong>Complete: </strong></td>";
-	$perc = round(100.0 - ($t[bytes_left_to_download] / $t[total_bytes_to_download]) * 100.0, 2);
+	$perc = round(100.0 - ($t['bytes_left_to_download'] / $t['total_bytes_to_download']) * 100.0, 2);
 	echo "<td>$perc %</td>";
 	echo "</tr>";
       ?>

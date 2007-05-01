@@ -17,8 +17,7 @@
     <meta http-equiv="Content-Type" content="text/html"/>
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
-    <?php echo "<title>(D:$globalinfo[download_speed]) (U:$globalinfo[upload_speed]) KTorrent</title>"; 
-    ?>
+    <title><?php echo '(D:'.$globalinfo['download_speed'].') (U:'.$globalinfo['upload_speed'].') KTorrent'; ?></title>
     <script language="JavaScript">
 
 	function validate()
@@ -97,7 +96,7 @@
                              Upload speed 
                           </td>
                           <td>
-                            <input type="text" name="maximum_upload_rate" value="<?php echo $globalinfo[max_upload_speed]; ?>" class="settingsInput" />
+                            <input type="text" name="maximum_upload_rate" value="<?php echo $globalinfo['max_upload_speed']; ?>" class="settingsInput" />
                           </td>
                         </tr>
                         <tr>
@@ -105,7 +104,7 @@
                              Download speed 
                           </td>
                           <td>
-                            <input type="text" name="maximum_download_rate" value="<?php echo $globalinfo[max_download_speed]; ?>" class="settingsInput" />
+                            <input type="text" name="maximum_download_rate" value="<?php echo $globalinfo['max_download_speed']; ?>" class="settingsInput" />
                           </td>
                         </tr>
                         <tr>
@@ -113,7 +112,7 @@
                              Maximum downloads 
                           </td>
                           <td>
-                            <input type="text" name="maximum_downloads" value="<?php echo $globalinfo[max_downloads]; ?>" class="settingsInput" />
+                            <input type="text" name="maximum_downloads" value="<?php echo $globalinfo['max_downloads']; ?>" class="settingsInput" />
                           </td>
                         </tr>
                         <tr>
@@ -121,7 +120,7 @@
                              MaximumSeeds 
                           </td>
                           <td>
-                            <input type="text" name="maximum_seeds" value="<?php echo $globalinfo[max_seeds]; ?>" class="settingsInput" />
+                            <input type="text" name="maximum_seeds" value="<?php echo $globalinfo['max_seeds']; ?>" class="settingsInput" />
                           </td>
                         </tr>
                         <tr>
@@ -236,21 +235,21 @@
 				foreach ($stats as $torrent) {
 					echo "<tr>";
 					
-					$torrent_name = str_replace("'", "\'", $torrent[torrent_name]);
+					$torrent_name = str_replace("'", "\'", $torrent['torrent_name']);
 					
-					if($torrent[total_bytes_to_download]!=0)
-						$perc = round(100.0 - ($torrent[bytes_left_to_download] / $torrent[total_bytes_to_download]) * 100.0, 2);
+					if($torrent['total_bytes_to_download']!=0)
+						$perc = round(100.0 - ($torrent['bytes_left_to_download'] / $torrent['total_bytes_to_download']) * 100.0, 2);
 					else
 						$perc = 0;
 					echo "<td><a href=\"interface.php?stop=$a\" title=\"STOP\"><img src=\"/stop.png\" name=\"stop\" width=\"16\" height=\"16\" border=\"0\" style=\"padding:2px;\"></a>";
 					echo "<a href=\"interface.php?start=$a\" title=\"START\"><img src=\"/start.png\" name=\"start\" width=\"16\" height=\"16\" border=\"0\" style=\"padding:2px;\"></a>";
 					echo "<a href=\"interface.php?remove=$a\" title=\"REMOVE\" onClick=\"return validate()\"><img src=\"/remove.png\" name=\"remove\" width=\"16\" height=\"16\" border=\"0\" style=\"padding:2px;\"></a></td>";
-					echo "<td style=\"text-align:left;\" onmouseover=\"this.T_TITLE='$torrent_name';return escape('Download speed:<strong>$torrent[download_rate]</strong><br> Upload speed:<strong>$torrent[upload_rate]</strong></td>')\">";
-					if(strlen($torrent[torrent_name])>30)
-						echo substr($torrent[torrent_name], 0, 30) . " ...</td>";
+					echo "<td style=\"text-align:left;\" onmouseover=\"this.T_TITLE='$torrent_name';return escape('Download speed:<strong>{$torrent['download_rate']}</strong><br> Upload speed:<strong>{$torrent['upload_rate']}</strong></td>')\">";
+					if(strlen($torrent['torrent_name'])>30)
+						echo substr($torrent['torrent_name'], 0, 30) . " ...</td>";
 					else
-						echo "$torrent[torrent_name]</td>";
-					switch ($torrent[status]) {
+						echo $torrent['torrent_name']."</td>";
+					switch ($torrent['status']) {
 						case 0:
    							echo "<td>Not Started</td>";
 							break;
@@ -287,12 +286,12 @@
 						default:
 							echo "<td>Not supported Status</td>";
 					}
-					echo "<td style=\"text-align:right;\">$torrent[bytes_downloaded]</td>";
-					echo "<td style=\"text-align:right; padding-left:8px;\">$torrent[total_bytes]</td>";
-					echo "<td style=\"text-align:right; padding-left:8px;\">$torrent[bytes_uploaded]</td>";
-					echo "<td style=\"text-align:right;\">$torrent[download_rate]</td>";
-					echo "<td style=\"text-align:right;\">$torrent[upload_rate]</td>";
-					echo "<td>$torrent[num_peers]</td>";
+					echo "<td style=\"text-align:right;\">{$torrent['bytes_downloaded']}</td>";
+					echo "<td style=\"text-align:right; padding-left:8px;\">{$torrent['total_bytes']}</td>";
+					echo "<td style=\"text-align:right; padding-left:8px;\">{$torrent['bytes_uploaded']}</td>";
+					echo "<td style=\"text-align:right;\">{$torrent['download_rate']}</td>";
+					echo "<td style=\"text-align:right;\">{$torrent['upload_rate']}</td>";
+					echo "<td>{$torrent['num_peers']}</td>";
 					echo "<td style=\"text-align:right;\">$perc %</td>";
 					echo "</tr>";
 				$a++;

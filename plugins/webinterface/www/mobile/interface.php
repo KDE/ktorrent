@@ -22,9 +22,9 @@
 		$a = 0;
 		foreach ($stats as $torrent) {
 			echo "<tr>";
-			$perc = round(100.0 - ($torrent[bytes_left_to_download] / $torrent[total_bytes_to_download]) * 100.0, 2);
-			echo "<td><a href=\"torrent.php?id=$a\" >$torrent[torrent_name]</a></td>";
-				switch ($torrent[status]) {
+			$perc = round(100.0 - ($torrent['bytes_left_to_download'] / $torrent['total_bytes_to_download']) * 100.0, 2);
+			echo "<td><a href=\"torrent.php?id=$a\" >{$torrent['torrent_name']}</a></td>";
+				switch ($torrent['status']) {
 						case 0:
    							echo "<td>Not Started</td>";
 							break;
@@ -77,8 +77,8 @@
     	<?php
 		$globalinfo=globalInfo();
 		echo "<td><strong>Speed</strong></td>";
-		echo "<td>Down: $globalinfo[download_speed]</td>";
-		echo "<td>Up: $globalinfo[upload_speed]</td>";
+		echo "<td>Down: {$globalinfo['download_speed']}</td>";
+		echo "<td>Up: {$globalinfo['upload_speed']}</td>";
 	?>
     </tr>
     <tr>
