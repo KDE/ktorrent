@@ -89,6 +89,9 @@ private slots:
 	 * Show passive popup message.
 	 */
 	void queuedTorrentOverMaxRatio(kt::TorrentInterface* tc);
+	
+	///Shows passive popup message
+	void lowDiskSpace(kt::TorrentInterface* tc, bool stopped);
 
 private:
 	KTorrentCore* m_core;

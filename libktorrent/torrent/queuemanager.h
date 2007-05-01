@@ -136,11 +136,19 @@ namespace bt
 			* @param tc The torrent in question.
 			*/
 			void queuingNotPossible(kt::TorrentInterface* tc);
+			
+			/**
+			 * Diskspace is running low.
+			 * Signal should be connected to SysTray slot which shows appropriate KPassivePopup info. 
+			 * @param tc The torrent in question.
+			*/
+			void lowDiskSpace(kt::TorrentInterface* tc, bool stopped);
 
 		public slots:
 			void torrentFinished(kt::TorrentInterface* tc);
 			void torrentAdded(kt::TorrentInterface* tc, bool user, bool start_torrent);
 			void torrentRemoved(kt::TorrentInterface* tc);
+			void onLowDiskSpace(kt::TorrentInterface* tc, bool toStop);
 
 		private:
 			void enqueue(kt::TorrentInterface* tc);

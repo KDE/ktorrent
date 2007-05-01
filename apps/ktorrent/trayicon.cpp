@@ -55,6 +55,8 @@ TrayIcon::TrayIcon( KTorrentCore* tc, QWidget *parent, const char *name)
 			this,SLOT(corruptedData( kt::TorrentInterface* )));
 	connect(m_core, SIGNAL(queuingNotPossible( kt::TorrentInterface* )),
 			this, SLOT(queuedTorrentOverMaxRatio( kt::TorrentInterface* )));
+	connect(m_core, SIGNAL(lowDiskSpace(kt::TorrentInterface*, bool)),
+			this, SLOT(lowDiskSpace(kt::TorrentInterface*, bool)));
 }
 
 TrayIcon::~TrayIcon()
@@ -166,6 +168,22 @@ void TrayIcon::queuedTorrentOverMaxRatio(kt::TorrentInterface* tc)
 	QString msg = i18n("<b>%1</b> has reached its maximum share ratio of %2 and cannot be enqueued. Remove the limit manually if you want to continue seeding.").arg(s.torrent_name).arg(s.max_share_ratio);
 	
 	KPassivePopup::message(i18n("Torrent cannot be enqueued."),
+						   msg,loadIcon("ktorrent"), this);
+}
+
+void TrayIcon::lowDiskSpace(kt::TorrentInterface * tc, bool stopped)
+{
+	if (!Settings::showPopups())
+		return;
+	
+	const TorrentStats & s = tc->getStats();
+	
+	QString msg = i18n("Your disk is running out of space.<br /><b>%1</b> is being downloaded to '%2'.").arg(s.torrent_name).arg(tc->getDataDir());
+	
+	if(stopped)
+		msg.prepend(i18n("Torrent has been stopped.<br />"));
+	
+	KPassivePopup::message(i18n("Device running out of space"),
 						   msg,loadIcon("ktorrent"), this);
 }
 

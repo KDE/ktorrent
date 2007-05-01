@@ -68,7 +68,11 @@ const Uint32 CORE_UPDATE_INTERVAL = 250;
 KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seeding(true),pman(0)
 {
 	UpdateCurrentTime();
+	
 	qman = new QueueManager();
+	connect(qman, SIGNAL(lowDiskSpace(kt::TorrentInterface*)), this, SLOT(onLowDiskSpace(kt::TorrentInterface*)));
+	
+	
 	data_dir = Settings::tempDir();
 	bool dd_not_exist = !bt::Exists(data_dir);
 	if (data_dir == QString::null || dd_not_exist)
@@ -1091,8 +1095,11 @@ void KTorrentCore::connectSignals(kt::TorrentInterface* tc)
 			this, SLOT(aboutToBeStarted( kt::TorrentInterface*,bool & )));
 	connect(tc,SIGNAL(corruptedDataFound( kt::TorrentInterface* )),
 			this, SLOT(emitCorruptedData( kt::TorrentInterface* )));
-	connect(qman, SIGNAL(queuingNotPossible( kt::TorrentInterface* )),
+	connect(qman, SIGNAL(( kt::TorrentInterface* )),
 			this, SLOT(enqueueTorrentOverMaxRatio( kt::TorrentInterface* )));
+	connect(qman, SIGNAL(lowDiskSpace(kt::TorrentInterface*, bool)),
+			this, SLOT(onLowDiskSpace(kt::TorrentInterface*, bool)));
+	
 }
 
 float KTorrentCore::getGlobalMaxShareRatio() const
@@ -1116,6 +1123,11 @@ void KTorrentCore::doDataCheck(kt::TorrentInterface* tc)
 	scan_dlg->setCaption(i18n("Checking Data Integrity"));
 	scan_dlg->show();
 	scan_dlg->execute(tc,false);
+}
+
+void KTorrentCore::onLowDiskSpace(kt::TorrentInterface * tc, bool stopped)
+{
+	emit lowDiskSpace(tc, stopped);
 }
 
 #include "ktorrentcore.moc"

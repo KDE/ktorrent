@@ -199,5 +199,12 @@
 			<min>1</min>
 			<max>10</max>
 		</entry>
+		
+		<entry name="minDiskSpace" type="Int">
+			<label>When there's no space left to complete download and free diskspace is less than minDiskSpace, torrent will be stopped.</label>
+			<default>100</default>
+			<min>10</min>
+			<max>10000</max>
+		</entry>
 	</group>
 </kcfg>

@@ -70,6 +70,13 @@
 #include <net/socketmonitor.h>
 		
 
+#ifdef Q_OS_BSD4
+#include <sys/param.h>
+#include <sys/mount.h>
+#else
+#include <sys/vfs.h>
+#endif
+
 
 using namespace kt;
 
@@ -295,6 +302,12 @@ namespace bt
 					outdir += bt::DirSeparator();
 				
 				changeOutputDir(outdir);
+			}
+			
+			//Update diskspace if needed (every 1 min)			
+			if(!stats.completed && stats.running && bt::Now() - last_diskspace_check >= 60 * 1000)
+			{
+				checkDiskSpace();
 			}
 		}
 		catch (Error & e)
@@ -1301,6 +1314,8 @@ namespace bt
 				return i18n("Queued");
 			case kt::CHECKING_DATA:
 				return i18n("Checking data");
+			case kt::NO_SPACE_LEFT:
+				return i18n("Stopped. No space left on device.");
 		}
 		return QString::null;
 	}
@@ -1571,6 +1586,35 @@ namespace bt
 	{
 		cman->createFiles();
 		stats.output_path = cman->getOutputPath();
+	}
+	
+	bool TorrentControl::checkDiskSpace()
+	{	
+		last_diskspace_check = bt::Now();
+		
+		//calculate free disk space
+		struct statfs stfs;
+		statfs(getDataDir().ascii(), &stfs);
+		unsigned long long bytes_free = ((unsigned long long)stfs.f_bavail) *
+				((unsigned long long)stfs.f_bsize);
+
+		unsigned long long bytes_to_download = stats.total_bytes_to_download;
+						
+		if(bytes_to_download > bytes_free)
+		{
+			bool toStop = bytes_free < (unsigned long long) Settings::minDiskSpace() * 1024 * 1024;						
+			
+			emit diskSpaceLow(this, toStop);
+			
+			if(!stats.running)
+			{
+				stats.status = NO_SPACE_LEFT;
+			}
+			
+			return false;
+		}
+		
+		return true;
 	}
 	
 	void TorrentControl::setTrafficLimits(Uint32 up,Uint32 down)

@@ -281,6 +281,9 @@ public slots:
 	 */
 	void doDataCheck(kt::TorrentInterface* tc);
 	
+	///Fires when disk space is running low
+	void onLowDiskSpace(kt::TorrentInterface* tc, bool stopped);
+	
 signals:
 	/**
 	* TorrentCore torrents have beed updated. Stats are changed.
@@ -305,6 +308,13 @@ signals:
 	 * @param tc The torrent in question.
 	 */
 	void queuingNotPossible(kt::TorrentInterface* tc);
+	
+	/**
+	 * Diskspace is running low.
+	 * Signal should be connected to SysTray slot which shows appropriate KPassivePopup info. 
+	 * @param tc The torrent in question.
+	 */
+	void lowDiskSpace(kt::TorrentInterface* tc, bool stopped);
 
 private:
 	void rollback(const QPtrList<kt::TorrentInterface> & success);

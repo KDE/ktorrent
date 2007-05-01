@@ -247,6 +247,9 @@ namespace bt
 		/// Create all the necessary files
 		void createFiles();
 		
+		///Checks if diskspace is low
+		bool checkDiskSpace();
+		
 		virtual void setTrafficLimits(Uint32 up,Uint32 down);
 		virtual void getTrafficLimits(Uint32 & up,Uint32 & down);
 		
@@ -336,6 +339,8 @@ namespace bt
 		PreallocationThread* prealoc_thread;
 		
 		DataCheckerThread* dcheck_thread;
+		
+		TimeStamp last_diskspace_check;
 		
 		struct InternalStats
 		{

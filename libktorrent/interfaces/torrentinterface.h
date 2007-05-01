@@ -56,7 +56,8 @@ namespace kt
 		ALLOCATING_DISKSPACE,
 		ERROR,
 		QUEUED,
-		CHECKING_DATA
+		CHECKING_DATA,
+  		NO_SPACE_LEFT
 	};
 
 	struct TorrentStats
@@ -441,6 +442,13 @@ namespace kt
 		 * @param me The torrent which emitted the signal
 		 */
 		void corruptedDataFound(kt::TorrentInterface* me);
+		
+		/**
+		 * Disk is running out of space.
+		 * @param me The torrent which emitted the signal
+		 * @param toStop should this torrent be stopped or not
+		 */
+		void diskSpaceLow(kt::TorrentInterface* me, bool toStop);
 
 	protected:
 		TorrentStats stats;

@@ -171,6 +171,7 @@ bool DownloadPrefPage::apply()
 	Settings::setKeepSeeding(dp->keep_seeding->isChecked());
 	Settings::setPort(dp->port->value());
 	Settings::setNumUploadSlots(dp->num_upload_slots->value());
+	Settings::setMinDiskSpace(dp->intMinDiskSpace->value());
 
 	if (Settings::dhtSupport() && dp->udp_tracker_port->value() == Settings::dhtPort())
 	{
@@ -199,6 +200,7 @@ void DownloadPrefPage::updateData()
 	dp->udp_tracker_port->setValue(Settings::udpTrackerPort());
 	dp->port->setValue(Settings::port());
 	dp->num_upload_slots->setValue(Settings::numUploadSlots());
+	dp->intMinDiskSpace->setValue(Settings::minDiskSpace());
 }
 
 void DownloadPrefPage::deleteWidget()

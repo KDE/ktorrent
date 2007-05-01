@@ -21,6 +21,7 @@ tab of each view
 - Added option to copy .torrent files to user specified directory
 - Show torrent path when trying to load a corrupt torrent from torX/ directory
 - Added speed limits for individual torrents
+- Added dynamic diskspace checking.
 
 Changes in 2.1.4
 - Fixed crash in parsing of DHT messages

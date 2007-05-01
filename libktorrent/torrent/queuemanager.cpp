@@ -65,6 +65,8 @@ namespace bt
 	{
 		downloads.append(tc);
 		downloads.sort();
+		
+		connect(tc, SIGNAL(diskSpaceLow(kt::TorrentInterface*, bool)), this, SLOT(onLowDiskSpace(kt::TorrentInterface*, bool)));
 	}
 
 	void QueueManager::remove(kt::TorrentInterface* tc)
@@ -768,6 +770,17 @@ namespace bt
 			KMessageBox::error(0, msg, i18n("Error"));
 		}
 	}
+	
+	void QueueManager::onLowDiskSpace(kt::TorrentInterface* tc, bool toStop)
+	{
+		if(toStop)
+		{
+			stop(tc, false);
+		}
+		
+		//then emit the signal to inform trayicon to show passive popup
+		emit lowDiskSpace(tc, toStop);
+	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -794,7 +807,7 @@ namespace bt
 		return tc1->getPriority() > tc2->getPriority() ? -1 : 1;
 
 		return 0;
-	}
+	}	
 }
 
 #include "queuemanager.moc"

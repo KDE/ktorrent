@@ -132,9 +132,6 @@
                             <property name="text">
                                 <string>Fully preallocate dis&amp;kspace (avoids fragmentation)</string>
                             </property>
-                            <property name="accel">
-                                <string>Alt+K</string>
-                            </property>
                         </widget>
                         <widget class="QComboBox">
                             <item>
