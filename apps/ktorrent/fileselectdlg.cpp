@@ -25,13 +25,14 @@
 #include <kurlrequester.h>
 #include <kiconloader.h>
 #include <kmimetype.h>
-
+#include <kurl.h>
 
 #include <qlabel.h>
 #include <qstring.h>
 #include <qbuttongroup.h>
 #include <qcombobox.h>
 #include <qcheckbox.h>
+#include <qdir.h>
 
 #include <interfaces/torrentfileinterface.h>
 #include <interfaces/torrentinterface.h>
@@ -63,6 +64,7 @@ FileSelectDlg::FileSelectDlg(GroupManager* gm, bool* user, bool* start, QWidget*
 	connect(m_invert_selection, SIGNAL(clicked()), this, SLOT(invertSelection()));
 	connect(m_ok, SIGNAL(clicked()), this, SLOT(accept()));
 	connect(m_cancel, SIGNAL(clicked()), this, SLOT(reject()));
+	connect(m_downloadLocation, SIGNAL(textChanged (const QString &)), this, SLOT(updateSizeLabels()));
 	
 	m_downloadLocation->setMode(KFile::Directory);
 }
@@ -189,8 +191,18 @@ void FileSelectDlg::updateSizeLabels()
 {
 	//calculate free disk space
 
+	KURL sdir = KURL(m_downloadLocation -> url());
+	while( sdir.isValid() && sdir.isLocalFile() && (!sdir.isEmpty())  && (! QDir(sdir.path()).exists()) ) 
+	{
+		sdir = sdir.upURL();
+	}
+	
 	struct statfs stfs;
-	statfs(tc->getDataDir().ascii(), &stfs);
+	if(statfs(sdir.path().ascii(), &stfs))
+	{
+		statfs(tc->getDataDir().ascii(), &stfs);
+	}
+	
 	unsigned long long bytes_free = ((unsigned long long)stfs.f_bavail) *
 									((unsigned long long)stfs.f_bsize);
 

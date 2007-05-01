@@ -75,6 +75,8 @@ class FileSelectDlg : public FileSelectDlgBase, public kt::FileTreeRootListener
 
 	private:
 		virtual void treeItemChanged();
+	
+	private slots:
 		void updateSizeLabels();
 };
 
