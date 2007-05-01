@@ -117,13 +117,47 @@
                         </spacer>
                     </hbox>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>full_prealloc</cstring>
+                        <cstring>layout25</cstring>
                     </property>
-                    <property name="text">
-                        <string>Fully preallocate dis&amp;kspace (slow, but avoids fragmentation)</string>
-                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>full_prealloc</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Fully preallocate dis&amp;kspace (avoids fragmentation)</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+K</string>
+                            </property>
+                        </widget>
+                        <widget class="QComboBox">
+                            <item>
+                                <property name="text">
+                                    <string>Basic (slow)</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Filesystem specific</string>
+                                </property>
+                            </item>
+                            <property name="name">
+                                <cstring>full_prealloc_method</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                            <property name="duplicatesEnabled">
+                                <bool>false</bool>
+                            </property>
+                        </widget>
+                    </hbox>
                 </widget>
             </vbox>
         </widget>
@@ -562,6 +596,14 @@
 </widget>
 <customwidgets>
 </customwidgets>
+<connections>
+    <connection>
+        <sender>full_prealloc</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>full_prealloc_method</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+</connections>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kcombobox.h</includehint>

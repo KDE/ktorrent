@@ -554,7 +554,19 @@ namespace bt
 		// truncate it
 		try
 		{
-			bt::TruncateFile(output_file,tf->getSize());
+			bool res = false;
+			
+			#ifdef HAVE_XFS_XFS_H
+				if( (! res) && (Settings::fullDiskPreallocMethod() == 1) )
+				{
+					res = XfsPreallocate(output_file, tf->getSize()) );
+				}
+			#endif
+			
+			if(! res)
+			{
+				bt::TruncateFile(output_file,tf->getSize());
+			}
 		}
 		catch (bt::Error & e)
 		{

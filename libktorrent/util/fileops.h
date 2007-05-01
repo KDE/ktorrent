@@ -131,7 +131,20 @@ namespace bt
 	 * Special truncate for FAT file systems.
 	 */
 	bool FatPreallocate(const QString & path,Uint64 size);
+
+#ifdef HAVE_XFS_XFS_H
+	/**
+	 * Special truncate for XFS file systems.
+	*/
+	bool XfsPreallocate(int fd,Uint64 size);
 	
+	/**
+	 * Special truncate for XFS file systems.
+	 */
+	bool XfsPreallocate(const QString & path,Uint64 size);
+
+#endif
+
 	/**
 	 * Seek in a file, wrapper around lseek
 	 * @param fd The file descriptor

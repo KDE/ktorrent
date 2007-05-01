@@ -426,6 +426,7 @@ bool AdvancedPrefPage::apply()
 	Settings::setHttpTrackerProxy(ap->http_proxy->text());
 	Settings::setEta(ap->eta->currentItem());
 	Settings::setFullDiskPrealloc(ap->full_prealloc->isChecked());
+	Settings::setFullDiskPreallocMethod(ap->full_prealloc_method->currentItem());
 	Settings::setCpuUsage(ap->cpu_usage->value());
 	return true;
 }
@@ -446,6 +447,7 @@ void AdvancedPrefPage::updateData()
 	ap->http_proxy->setEnabled(Settings::doNotUseKDEProxy());
 	ap->eta->setCurrentItem(Settings::eta());
 	ap->full_prealloc->setChecked(Settings::fullDiskPrealloc());
+	ap->full_prealloc_method->setCurrentItem(Settings::fullDiskPreallocMethod());
 	ap->cpu_usage->setValue(Settings::cpuUsage());
 }
 

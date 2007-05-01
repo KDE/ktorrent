@@ -39,6 +39,10 @@
 #include "file.h"
 #include "array.h"
 
+#ifdef HAVE_XFS_XFS_H
+#include <xfs/xfs.h>
+#endif
+
 #ifndef O_LARGEFILE
 #define O_LARGEFILE 0
 #endif
@@ -256,7 +260,7 @@ namespace bt
 		
 		return (Uint64)sb.st_size;
 	}
-	
+
 	bool FatPreallocate(int fd,Uint64 size)
 	{
 		try
@@ -286,7 +290,37 @@ namespace bt
 		close(fd);
 		return ret;
 	}
+
+#ifdef HAVE_XFS_XFS_H
 	
+	bool XfsPreallocate(int fd, Uint64 size)
+	{
+		if( ! platform_test_xfs_fd(fd) )
+		{
+			return false;
+		}
+		
+		xfs_flock64_t allocopt;
+		allocopt.l_whence = 0;
+		allocopt.l_start = 0;
+		allocopt.l_len  = size;
+		
+		return (! static_cast<bool>(xfsctl(0, fd, XFS_IOC_RESVSP64, &allocopt)) );
+		
+	}
+	
+	bool XfsPreallocate(const QString & path, Uint64 size)
+	{
+		int fd = ::open(QFile::encodeName(path), O_RDWR | O_LARGEFILE);
+		if (fd < 0)
+			throw Error(i18n("Cannot open %1 : %2").arg(path).arg(strerror(errno)));
+		
+		bool ret = XfsPreallocate(fd,size);
+		close(fd);
+		return ret;
+	}
+
+#endif
 
 	void TruncateFile(int fd,Uint64 size,bool quick)
 	{

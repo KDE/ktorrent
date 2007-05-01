@@ -447,7 +447,19 @@ namespace bt
 
 		try
 		{
-			bt::TruncateFile(fd,max_size,!Settings::fullDiskPrealloc());
+			bool res = false;
+			
+			#ifdef HAVE_XFS_XFS_H
+				if( (! res) && Settings::fullDiskPrealloc() && (Settings::fullDiskPreallocMethod() == 1) )
+				{
+					res = XfsPreallocate(fd, max_size);
+				}
+			#endif
+			
+			if(! res)
+			{
+				bt::TruncateFile(fd,max_size,!Settings::fullDiskPrealloc());
+			}
 		}
 		catch (bt::Error & e)
 		{
