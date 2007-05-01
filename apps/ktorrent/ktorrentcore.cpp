@@ -772,7 +772,7 @@ CurrentStats KTorrentCore::getStats()
 
 bool KTorrentCore::changePort(Uint16 port)
 {
-	if (qman->count() == 0)
+	if (getNumTorrentsRunning() == 0)
 	{
 		Globals::instance().getServer().changePort(port);
 		return true;

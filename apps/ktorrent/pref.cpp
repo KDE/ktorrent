@@ -103,7 +103,7 @@ void KTorrentPreferences::slotApply()
 
 	Settings::writeConfig();
 
-	ktor.applySettings();
+	ktor.applySettings(true);
 }
 
 void KTorrentPreferences::updateData()
