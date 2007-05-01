@@ -22,12 +22,12 @@
   </general>
   <kdevautoproject>
     <general>
-      <activetarget>libktorrent/libktorrent.la</activetarget>
+      <activetarget>apps/ktorrent/ktorrent</activetarget>
       <useconfiguration>debug</useconfiguration>
       <useactivetarget>true</useactivetarget>
     </general>
     <run>
-      <mainprogram>/home/joris/ktorrent/trunk/debug/apps/ktorrent/ktorrent</mainprogram>
+      <mainprogram>/home/joris/ktorrent/newstuff/debug/apps/ktorrent/ktorrent</mainprogram>
       <terminal>false</terminal>
       <directoryradio>executable</directoryradio>
       <customdirectory>/</customdirectory>
@@ -115,6 +115,8 @@
       <subclass uifile="/apps/ktorrent/scandlgbase.ui" sourcefile="/apps/ktorrent/scandialog.h" />
       <subclass uifile="/plugins/infowidget/statustabbase.ui" sourcefile="/plugins/infowidget/statustab.cpp" />
       <subclass uifile="/plugins/infowidget/statustabbase.ui" sourcefile="/plugins/infowidget/statustab.h" />
+      <subclass uifile="/apps/ktorrent/speedlimitsdlgbase.ui" sourcefile="/apps/ktorrent/speedlimitsdlg.cpp" />
+      <subclass uifile="/apps/ktorrent/speedlimitsdlgbase.ui" sourcefile="/apps/ktorrent/speedlimitsdlg.h" />
     </subclassing>
   </kdevautoproject>
   <kdevfileview>

@@ -48,6 +48,7 @@ namespace net
 		UploadThread* ut;
 		DownloadThread* dt;
 		QPtrList<BufferedSocket> smap;
+		Uint32 next_group_id;
 				
 		SocketMonitor();	
 	public:
@@ -58,6 +59,36 @@ namespace net
 		
 		/// Remove a socket, will stop threads if no more sockets are left
 		void remove(BufferedSocket* sock);
+		
+		enum GroupType
+		{
+			UPLOAD_GROUP,
+			DOWNLOAD_GROUP
+		};
+		
+
+		/**
+		 * Creata a new upload or download group
+		 * @param type Wether it is an upload or download group
+		 * @param limit Limit of group in bytes/s
+		 * @return The group ID
+		 */
+		Uint32 newGroup(GroupType type,Uint32 limit);
+		
+		/**
+		 * Change the group limit
+		 * @param type The group type
+		 * @param gid The group id
+		 * @param limit The limit
+		 */
+		void setGroupLimit(GroupType type,Uint32 gid,Uint32 limit);
+		
+		/**
+		 * Remove a group
+		 * @param type The group type
+		 * @param gid The group id
+		 */
+		void removeGroup(GroupType type,Uint32 gid);
 		
 		typedef QPtrList<BufferedSocket>::iterator Itr;
 		

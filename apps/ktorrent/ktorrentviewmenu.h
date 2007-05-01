@@ -70,6 +70,7 @@ private:
 	int peer_sources_id;
 	int dht_id;
 	int ut_pex_id;
+	int traffic_lim_id;
 };
 
 #endif

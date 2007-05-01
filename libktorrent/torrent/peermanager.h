@@ -198,6 +198,9 @@ namespace bt
 		/// Enable or disable PEX
 		void setPexEnabled(bool on);
 		
+		/// Set the group IDs of each peer
+		void setGroupIDs(Uint32 up,Uint32 down);
+		
 	public slots:
 		/**
 		 * A PeerSource, has new potential peers.

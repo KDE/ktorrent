@@ -128,6 +128,7 @@ public slots:
 	void setDownloadLocationSlot();
 	void dhtSlot();
 	void utPexSlot();
+	void speedLimits();
 
 private slots:
 	void onExecuted(QListViewItem* item);

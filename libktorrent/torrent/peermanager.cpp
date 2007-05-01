@@ -590,6 +590,15 @@ namespace bt
 		}
 		pex_on = on;
 	}
+	
+	void PeerManager::setGroupIDs(Uint32 up,Uint32 down)
+	{
+		for (PtrMap<Uint32,Peer>::iterator i = peer_map.begin();i != peer_map.end();i++)
+		{
+			Peer* p = i->second;
+			p->setGroupIDs(up,down);
+		}
+	}
 }
 
 #include "peermanager.moc"

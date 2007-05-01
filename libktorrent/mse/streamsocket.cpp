@@ -301,6 +301,12 @@ namespace mse
 		
 		return ret;
 	}
+	
+	void StreamSocket::setGroupIDs(Uint32 up,Uint32 down)
+	{
+		sock->setGroupID(up,true);
+		sock->setGroupID(down,false);
+	}
 }
 
 #include "streamsocket.moc"

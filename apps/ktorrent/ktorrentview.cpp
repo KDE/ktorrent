@@ -47,6 +47,7 @@
 #include "scandialog.h"
 #include "addpeerwidget.h"
 #include "ktorrentviewmenu.h"
+#include "speedlimitsdlg.h"
 
 using namespace bt;
 using namespace kt;
@@ -726,6 +727,19 @@ void KTorrentView::utPexSlot()
 	}
 }
 
+void KTorrentView::speedLimits()
+{
+	QPtrList<QListViewItem> sel = selectedItems();
+	if (sel.count() != 1)
+		return;
+	
+	KTorrentViewItem* kvi = (KTorrentViewItem*)sel.first();
+	TorrentInterface* tc = kvi->getTC();
+	SpeedLimitsDlg dlg(tc,0);
+	dlg.show();
+	dlg.exec();
+}
+
 
 void KTorrentView::columnHide(int index)
 {
@@ -815,5 +829,7 @@ void KTorrentView::updateCaption()
 			setCaption(i18n("All Torrents %1/%2").arg(running).arg(total));
 	}
 }
+
+
 
 #include "ktorrentview.moc"

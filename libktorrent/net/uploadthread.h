@@ -20,10 +20,10 @@
 #ifndef NETUPLOADTHREAD_H
 #define NETUPLOADTHREAD_H
 
-#include <qthread.h>
+
+
 #include <qwaitcondition.h> 
-#include <vector>
-#include <util/constants.h>
+#include "networkthread.h"
 
 namespace net
 {
@@ -33,29 +33,15 @@ namespace net
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class UploadThread : public QThread
+	class UploadThread : public NetworkThread
 	{
 		static bt::Uint32 ucap;
 		static bt::Uint32 sleep_time;
-		
-		SocketMonitor* sm;
-		bool running;
-		bt::TimeStamp prev_upload_time;
-		std::vector<BufferedSocket*> wbs;
 	
 		QWaitCondition data_ready;
 	public:
 		UploadThread(SocketMonitor* sm);
-		virtual ~UploadThread();
-
-		/// run the thread
-		void run();
-
-		/// Stop before the next update
-		void stop() {running = false;}
-		
-		/// Is the thread running
-		bool isRunning() const {return running;}
+		virtual ~UploadThread();	
 		
 		/// Wake up thread, data is ready to be sent
 		void signalDataReady();
@@ -66,8 +52,8 @@ namespace net
 		/// Set the sleep time when using upload caps
 		static void setSleepTime(bt::Uint32 stime);
 	private: 
-		void update();
-		void processOutgoingData(bt::TimeStamp now);
+		virtual void update();
+		virtual bool doGroup(SocketGroup* g,Uint32 & allowance,bt::TimeStamp now);
 	};
 
 }

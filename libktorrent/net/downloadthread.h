@@ -21,44 +21,30 @@
 #define NETDOWNLOADTHREAD_H
 
 #include <vector>
-#include <qthread.h>
-#include <util/constants.h>
+#include "networkthread.h"
 
 struct pollfd;
 
 namespace net
 {
-	class SocketMonitor;
-	class BufferedSocket;
 
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
 	 * 
 	 * Thread which processes incoming data
 	 */
-	class DownloadThread : public QThread
+	class DownloadThread : public NetworkThread
 	{
 		static bt::Uint32 dcap;
 		static bt::Uint32 sleep_time;
 		
-		SocketMonitor* sm;
-		bool running;
-		bt::TimeStamp prev_download_time;
 		std::vector<struct pollfd> fd_vec;
-		std::vector<BufferedSocket*> rbs;
+	
 	public:
 		DownloadThread(SocketMonitor* sm);
 		virtual ~DownloadThread();
-
-		/// run the thread
-		void run();
-
-		/// Stop before the next update
-		void stop() {running = false;}
-		
-		/// Is the thread running
-		bool isRunning() const {return running;}
-		
+						  
+	
 		/// Set the download cap
 		static void setCap(bt::Uint32 cap) {dcap = cap;}
 		
@@ -66,8 +52,11 @@ namespace net
 		static void setSleepTime(bt::Uint32 stime);
 	private:
 		int fillPollVector();
-		void update();
-		void processIncomingData(bt::TimeStamp now);
+		
+		virtual void update();
+		virtual bool doGroup(SocketGroup* g,Uint32 & allowance,bt::TimeStamp now);
+
+//		void processIncomingData(bt::TimeStamp now);
 	};
 
 }

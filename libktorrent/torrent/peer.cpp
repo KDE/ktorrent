@@ -577,6 +577,11 @@ namespace bt
 		
 		pex_allowed = on;
 	}
+	
+	void Peer::setGroupIDs(Uint32 up_gid,Uint32 down_gid)
+	{
+		sock->setGroupIDs(up_gid,down_gid);
+	}
 }
 
 #include "peer.moc"

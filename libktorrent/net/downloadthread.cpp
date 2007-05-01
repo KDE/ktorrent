@@ -20,6 +20,7 @@
 #include <math.h>
 #include <sys/poll.h>
 #include <util/functions.h>
+#include "socketgroup.h"
 #include "downloadthread.h"
 #include "socketmonitor.h"
 #include "bufferedsocket.h"
@@ -31,21 +32,13 @@ namespace net
 	Uint32 DownloadThread::dcap = 0;
 	Uint32 DownloadThread::sleep_time = 3;
 
-	DownloadThread::DownloadThread(SocketMonitor* sm)
-			: sm(sm),running(false)
-	{}
+	DownloadThread::DownloadThread(SocketMonitor* sm) : NetworkThread(sm)
+	{
+	}
 
 
 	DownloadThread::~DownloadThread()
 	{}
-	
-	void DownloadThread::run()
-	{
-		running = true;
-		prev_download_time = bt::Now();
-		while (running)
-			update();
-	}
 	
 	void DownloadThread::update()
 	{
@@ -56,10 +49,9 @@ namespace net
 		int timeout = 10;	
 		if (poll(&fd_vec[0],num,timeout) > 0)
 		{
-			rbs.clear();
 			sm->lock();
 			TimeStamp now = bt::Now();
-		
+			Uint32 num_ready = 0;
 			SocketMonitor::Itr itr = sm->begin();
 			while (itr != sm->end())
 			{
@@ -67,28 +59,25 @@ namespace net
 				int pi = s->getPollIndex();
 				if (pi >= 0 && s->ok() && fd_vec[pi].revents & POLLIN)
 				{
-					// data ready 
-					if (dcap == 0)
-					{
-						s->readBuffered(0,now);
-					}
-					else
-					{
-						rbs.push_back(s);
-					}
+					// add to the correct group
+					Uint32 gid = s->downloadGroupID();
+					SocketGroup* g = groups.find(gid);
+					if (!g)
+						g = groups.find(0);
+					
+					g->add(s);
+					num_ready++;
 				}
-				
 				itr++;
 			}
 		
-			if (dcap > 0 && rbs.size() > 0)
-				processIncomingData(now);
-			else
-				prev_download_time = now;
+			if (num_ready > 0)
+				doGroups(num_ready,now,dcap);
+			prev_run_time = now;
 			sm->unlock();
 		}
 		
-		if (dcap > 0)
+		if (dcap > 0 || groups.count() > 0)
 			msleep(sleep_time);
 	}
 
@@ -135,49 +124,14 @@ namespace net
 		return i;
 	}
 	
-	void DownloadThread::processIncomingData(bt::TimeStamp now)
-	{
-		Uint32 allowance = (Uint32)ceil(1.02 * dcap * (now - prev_download_time) * 0.001);
-		prev_download_time = now;
-		
-		Uint32 bslot = allowance / rbs.size() + 1;
-		Uint32 i = 0;
-		Uint32 ns = rbs.size(); // num sockets
-	
-		// while we can send and there are sockets left to send
-		while (ns > 0 && allowance > 0)
-		{
-			Uint32 as = bslot;
-			if (as > allowance)
-				as = allowance;
-			
-			BufferedSocket* s = rbs[i];
-			if (s)
-			{
-				Uint32 ret = s->readBuffered(as,now);
-				// if this socket did what it was supposed to do, 
-				// it can have another go if stuff is leftover
-				// if it doesn't, we set it to NULL, so that it will not 
-				// get it's turn again
-				if (ret != as) 
-				{
-					rbs[i] = NULL;
-					ns--;
-				}
-			
-				if (ret > allowance)
-					allowance = 0;
-				else
-					allowance -= ret;
-			}
-
-			i = (i + 1) % rbs.size();
-		}
-	}
-
 	void DownloadThread::setSleepTime(Uint32 stime)
 	{
 		if (stime >= 1 && stime <= 10)
 			sleep_time = stime;
+	}
+	
+	bool DownloadThread::doGroup(SocketGroup* g,Uint32 & allowance,bt::TimeStamp now)
+	{
+		return g->download(allowance,now);
 	}
 }

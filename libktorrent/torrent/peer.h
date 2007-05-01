@@ -229,6 +229,13 @@ namespace bt
 		/// Disable or enable pex
 		void setPexEnabled(bool on);
 		
+		/**
+		 * Set the peer's group IDs for traffic 
+		 * @param up_gid The upload gid
+		 * @param down_gid The download gid
+		 */
+		void setGroupIDs(Uint32 up_gid,Uint32 down_gid);
+		
 	private slots:
 		void dataWritten(int bytes);
 

@@ -82,11 +82,26 @@ namespace net
 		Speed* up_speed;
 		int poll_index;
 		
+		Uint32 up_gid;
+		Uint32 down_gid; // group id which this torrent belongs to, group 0 means the default group
+		
 	public:
 		BufferedSocket(int fd);
 		BufferedSocket(bool tcp);
 		virtual ~BufferedSocket();
 
+		/**
+		 * Set the group ID of the socket
+		 * @param gid THe ID (0 is default group)
+		 * @param upload Wether this is an upload group or a download group
+		 */
+		void setGroupID(Uint32 gid,bool upload);
+		
+		/// Get the download group ID
+		Uint32 downloadGroupID() const {return down_gid;}
+		
+		/// Get the upload group ID
+		Uint32 uploadGroupID() const {return up_gid;}
 		
 		void setReader(SocketReader* r) {rdr = r;}
 		void setWriter(SocketWriter* r) {wrt = r;}

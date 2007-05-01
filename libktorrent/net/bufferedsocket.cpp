@@ -29,7 +29,7 @@ namespace net
 {
 #define OUTPUT_BUFFER_SIZE 16393
 
-	BufferedSocket::BufferedSocket(int fd) : Socket(fd),rdr(0),wrt(0)
+	BufferedSocket::BufferedSocket(int fd) : Socket(fd),rdr(0),wrt(0),up_gid(0),down_gid(0)
 	{
 		bytes_in_output_buffer = 0;
 		bytes_sent = 0;
@@ -39,7 +39,7 @@ namespace net
 		poll_index = -1;
 	}
 	
-	BufferedSocket::BufferedSocket(bool tcp) : Socket(tcp),rdr(0),wrt(0)
+	BufferedSocket::BufferedSocket(bool tcp) : Socket(tcp),rdr(0),wrt(0),up_gid(0),down_gid(0)
 	{
 		bytes_in_output_buffer = 0;
 		bytes_sent = 0;
@@ -55,6 +55,14 @@ namespace net
 		delete [] output_buffer;
 		delete up_speed;
 		delete down_speed;
+	}
+	
+	void BufferedSocket::setGroupID(Uint32 gid,bool upload)
+	{
+		if (upload)
+			up_gid = gid;
+		else
+			down_gid = gid;
 	}
 	
 	float BufferedSocket::getDownloadRate() const

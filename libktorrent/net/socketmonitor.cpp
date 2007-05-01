@@ -33,8 +33,10 @@ namespace net
 {
 	SocketMonitor SocketMonitor::self;
 
-	SocketMonitor::SocketMonitor() : ut(0),dt(0)
+	SocketMonitor::SocketMonitor() : ut(0),dt(0),next_group_id(1)
 	{
+		dt = new DownloadThread(this);
+		ut = new UploadThread(this);
 	}
 
 
@@ -102,13 +104,7 @@ namespace net
 		if (start_threads)
 		{
 			Out(SYS_CON|LOG_DEBUG) << "Starting socketmonitor threads" << endl;
-			
-			if (!dt)
-				dt = new DownloadThread(this);
-			
-			if (!ut)
-				ut = new UploadThread(this);
-			
+				
 			if (!dt->isRunning())
 				dt->start(QThread::IdlePriority);
 			if (!ut->isRunning())
@@ -140,6 +136,38 @@ namespace net
 	{
 		if (ut)
 			ut->signalDataReady();
+	}
+	
+	Uint32 SocketMonitor::newGroup(GroupType type,Uint32 limit)
+	{
+		lock();
+		Uint32 gid = next_group_id++;
+		if (type == UPLOAD_GROUP)
+			ut->addGroup(gid,limit);
+		else
+			dt->addGroup(gid,limit);
+		unlock();
+		return gid;
+	}
+		
+	void SocketMonitor::setGroupLimit(GroupType type,Uint32 gid,Uint32 limit)
+	{
+		lock();
+		if (type == UPLOAD_GROUP)
+			ut->setGroupLimit(gid,limit);
+		else
+			dt->setGroupLimit(gid,limit);
+		unlock();
+	}
+		
+	void SocketMonitor::removeGroup(GroupType type,Uint32 gid)
+	{
+		lock();
+		if (type == UPLOAD_GROUP)
+			ut->removeGroup(gid);
+		else
+			dt->removeGroup(gid);
+		unlock();
 	}
 
 }

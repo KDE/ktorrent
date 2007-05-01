@@ -67,7 +67,8 @@
 #include "timeestimator.h"
 #include "settings.h"
 
-#include <util/profiler.h>
+#include <net/socketmonitor.h>
+		
 
 
 using namespace kt;
@@ -112,6 +113,9 @@ namespace bt
 		stats.num_corrupted_chunks = 0;
 		
 		m_eta = new TimeEstimator(this);
+		// by default no torrent limits
+		upload_gid = download_gid = 0;
+		upload_limit = download_limit = 0;
 	}
 
 
@@ -742,6 +746,9 @@ namespace bt
 				p->emitPortPacket();
 		}
 		
+		// set group ID's for traffic shaping
+		p->setGroupIDs(upload_gid,download_gid);
+		
 		if (tmon)
 			tmon->peerAdded(p);
 	}
@@ -948,6 +955,9 @@ namespace bt
 			st.write("UT_PEX", isFeatureEnabled(kt::UT_PEX_FEATURE) ? "1" : "0");
 		}
 		
+		st.write("UPLOAD_LIMIT",QString::number(upload_limit));
+		st.write("DOWNLOAD_LIMIT",QString::number(download_limit));
+		
 		st.writeSync();
 	}
 
@@ -991,6 +1001,44 @@ namespace bt
 			if (st.hasKey("UT_PEX"))
 				setFeatureEnabled(kt::UT_PEX_FEATURE,st.readBoolean("UT_PEX"));
 		}
+		
+		net::SocketMonitor & smon = net::SocketMonitor::instance();
+		
+		Uint32 nl = st.readInt("UPLOAD_LIMIT");
+		if (nl != upload_limit)
+		{
+			if (nl > 0)
+			{
+				if (upload_gid)
+					smon.setGroupLimit(net::SocketMonitor::UPLOAD_GROUP,upload_gid,nl);
+				else
+					upload_gid = smon.newGroup(net::SocketMonitor::UPLOAD_GROUP,nl);
+			}
+			else
+			{
+				smon.removeGroup(net::SocketMonitor::UPLOAD_GROUP,upload_gid);
+				upload_gid = 0;
+			}
+		}
+		upload_limit = nl;
+		
+		nl = st.readInt("DOWNLOAD_LIMIT");
+		if (nl != download_limit)
+		{
+			if (nl > 0)
+			{
+				if (download_gid)
+					smon.setGroupLimit(net::SocketMonitor::DOWNLOAD_GROUP,download_gid,nl);
+				else
+					download_gid = smon.newGroup(net::SocketMonitor::DOWNLOAD_GROUP,nl);
+			}
+			else
+			{
+				smon.removeGroup(net::SocketMonitor::DOWNLOAD_GROUP,download_gid);
+				download_gid = 0;
+			}
+		}
+		download_limit = nl;
 	}
 
 	void TorrentControl::loadOutputDir()
@@ -1523,6 +1571,65 @@ namespace bt
 	{
 		cman->createFiles();
 		stats.output_path = cman->getOutputPath();
+	}
+	
+	void TorrentControl::setTrafficLimits(Uint32 up,Uint32 down)
+	{
+		net::SocketMonitor & smon = net::SocketMonitor::instance();
+		if (up && !upload_gid)
+		{
+			// create upload group
+			upload_gid = smon.newGroup(net::SocketMonitor::UPLOAD_GROUP,up);
+			upload_limit = up;
+		}
+		else if (up && upload_gid)
+		{
+			// change existing group limit
+			smon.setGroupLimit(net::SocketMonitor::UPLOAD_GROUP,upload_gid,up);
+			upload_limit = up;
+		}
+		else if (!up && !upload_gid)
+		{
+			upload_limit = up;
+		}
+		else // !up && upload_gid
+		{
+			// remove existing group
+			smon.removeGroup(net::SocketMonitor::UPLOAD_GROUP,upload_gid);
+			upload_gid = upload_limit = 0;
+		}
+		
+		if (down && !download_gid)
+		{
+			// create download grodown
+			download_gid = smon.newGroup(net::SocketMonitor::DOWNLOAD_GROUP,down);
+			download_limit = down;
+		}
+		else if (down && download_gid)
+		{
+			// change existing grodown limit
+			smon.setGroupLimit(net::SocketMonitor::DOWNLOAD_GROUP,download_gid,down);
+			download_limit = down;
+		}
+		else if (!down && !download_gid)
+		{
+			download_limit = down;
+		}
+		else // !down && download_gid
+		{
+			// remove existing grodown
+			smon.removeGroup(net::SocketMonitor::DOWNLOAD_GROUP,download_gid);
+			download_gid = download_limit = 0;
+		}
+		
+		saveStats();
+		pman->setGroupIDs(upload_gid,download_gid);
+	}
+	
+	void TorrentControl::getTrafficLimits(Uint32 & up,Uint32 & down)
+	{
+		up = upload_limit;
+		down = download_limit;
 	}
 }
 

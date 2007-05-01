@@ -388,6 +388,12 @@ namespace kt
 		/// Get our PeerID
 		virtual const bt::PeerID & getOwnPeerID() const = 0;
 		
+		/// Set the traffic limits for this torrent
+		virtual void setTrafficLimits(Uint32 up,Uint32 down) = 0;
+		
+		/// Get the traffic limits
+		virtual void getTrafficLimits(Uint32 & up,Uint32 & down) = 0;
+		
 	signals:
 		/**
 		 * Emited when we have finished downloading.

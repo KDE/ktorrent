@@ -96,6 +96,8 @@ KTorrentViewMenu::KTorrentViewMenu (KTorrentView *parent, const char *name )
 	scan_id = insertItem(i18n("Check Data Integrity"),parent, SLOT(checkDataIntegrity()));	
 	
 	connect(groups_sub_menu,SIGNAL(activated(int)),this,SLOT(gsmItemActived(int)));
+	
+	traffic_lim_id = insertItem(i18n("Speed Limits"),parent,SLOT(speedLimits()));
 }
 
 
@@ -205,6 +207,7 @@ void KTorrentViewMenu::show(const QPoint & p)
 	}
 	
 	setItemEnabled(dirs_id, en_dirs);
+	setItemEnabled(traffic_lim_id,sel.count() == 1);
 	
 	popup(p);
 }

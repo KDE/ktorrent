@@ -25,8 +25,8 @@ ktorrent_SOURCES = addpeerwidget.cpp addpeerwidget.h addpeerwidgetbase.ui \
 	ktorrentapp.cpp ktorrentcore.cpp ktorrentdcop.cpp ktorrentview.cpp ktorrentviewitem.cpp \
 	ktorrentviewmenu.cpp leaktrace.cpp main.cpp pastedialog.cpp pastedlgbase.ui pref.cpp \
 	queuedialog.cpp queuedialog.h queuedlg.ui scandialog.cpp scandlgbase.ui \
-	torrentcreatordlg.cpp torrentcreatordlg.h torrentcreatordlgbase.ui trayicon.cpp \
-	viewmanager.cpp
+	speedlimitsdlg.cpp speedlimitsdlgbase.ui torrentcreatordlg.cpp torrentcreatordlg.h \
+	torrentcreatordlgbase.ui trayicon.cpp viewmanager.cpp
 
 xdg_apps_DATA = ktorrent.desktop
 
@@ -34,7 +34,7 @@ xdg_apps_DATA = ktorrent.desktop
 # these are the headers for your project
 noinst_HEADERS = dcopinterface.h fileselectdlg.h ipfilterwidget.h ktorrent.h \
 	ktorrentcore.h ktorrentdcop.h ktorrentview.h ktorrentviewitem.h ktorrentviewmenu.h \
-	pastedialog.h pref.h scandialog.h trayicon.h viewmanager.h
+	pastedialog.h pref.h scandialog.h speedlimitsdlg.h trayicon.h viewmanager.h
 
 # client stuff
 

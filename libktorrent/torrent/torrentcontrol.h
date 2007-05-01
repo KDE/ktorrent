@@ -247,6 +247,9 @@ namespace bt
 		/// Create all the necessary files
 		void createFiles();
 		
+		virtual void setTrafficLimits(Uint32 up,Uint32 down);
+		virtual void getTrafficLimits(Uint32 & up,Uint32 & down);
+		
 	public slots:
 		/**
 		 * Update the object, should be called periodically.
@@ -353,6 +356,11 @@ namespace bt
 			bool dht_on;
 			TimeStamp last_announce;
 		};
+		
+		Uint32 upload_gid; // group ID for upload
+		Uint32 upload_limit; 
+		Uint32 download_gid; // group ID for download
+		Uint32 download_limit; 
 		
 		InternalStats istats;
 	};

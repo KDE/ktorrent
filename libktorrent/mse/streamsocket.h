@@ -143,6 +143,13 @@ namespace mse
 		 * @param t TOS value
 		 */
 		static void setTOS(Uint8 t) {tos = t;}
+		
+		/**
+		 * Set the download and upload group ID's
+		 * @param up Upload group ID
+		 * @param down Download group ID
+		 */
+		void setGroupIDs(Uint32 up,Uint32 down);
 	private:
 		virtual void onDataReady(Uint8* buf,Uint32 size);
 		virtual Uint32 onReadyToWrite(Uint8* data,Uint32 max_to_write);
