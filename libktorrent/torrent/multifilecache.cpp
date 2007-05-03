@@ -175,7 +175,16 @@ namespace bt
 		
 		datadir = output_dir;
 		
-		create();
+		for (Uint32 i = 0;i < tor.getNumFiles();i++)
+		{
+			TorrentFile & tf = tor.getFile(i);
+			if (!tf.doNotDownload())
+			{
+				QString fpath = tf.getPath();
+				bt::Delete(cache_dir + fpath,true); // delete any existing symlinks
+				bt::SymLink(output_dir + fpath,cache_dir + fpath); // create new one
+			}
+		}
 	}
 
 	void MultiFileCache::create()
@@ -187,8 +196,9 @@ namespace bt
 		if (!bt::Exists(tmpdir + "dnd"))
 			bt::MakeDir(tmpdir + "dnd");
 
+		// update symlinks
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
-		{
+		{			
 			TorrentFile & tf = tor.getFile(i);
 			touch(tf);
 		}

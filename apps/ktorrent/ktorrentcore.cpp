@@ -157,11 +157,7 @@ bool KTorrentCore::init(TorrentControl* tc,bool silently)
 
 		if (dlg.execute(tc) != QDialog::Accepted)
 		{
-			if (!tc->hasExistingFiles())
-				remove(tc,true);
-			else
-				remove(tc,false);
-			
+			remove(tc,false);
 			return false;
 		}
 	}	
