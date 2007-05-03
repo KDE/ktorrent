@@ -90,6 +90,13 @@ private slots:
 	 */
 	void queuedTorrentOverMaxRatio(kt::TorrentInterface* tc);
 	
+	/**
+	 * We failed to start a torrent
+	 * @param tc The torrent
+	 * @param reason The reason it failed
+	 */
+	void canNotStart(kt::TorrentInterface* tc,kt::TorrentStartResponse reason);
+	
 	///Shows passive popup message
 	void lowDiskSpace(kt::TorrentInterface* tc, bool stopped);
 

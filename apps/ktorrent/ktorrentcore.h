@@ -310,6 +310,13 @@ signals:
 	void queuingNotPossible(kt::TorrentInterface* tc);
 	
 	/**
+	 * Emitted when a torrent cannot be started
+	 * @param tc The torrent
+	 * @param reason The reason
+	 */
+	void canNotStart(kt::TorrentInterface* tc,kt::TorrentStartResponse reason);
+	
+	/**
 	 * Diskspace is running low.
 	 * Signal should be connected to SysTray slot which shows appropriate KPassivePopup info. 
 	 * @param tc The torrent in question.

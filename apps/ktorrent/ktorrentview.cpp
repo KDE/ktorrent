@@ -253,11 +253,12 @@ void KTorrentView::startDownloads()
 			err = true;;
 	}
 
+	/*
 	if (err)
 	{
 		showStartError();
 	}
-	
+	*/
 	// make sure toolbuttons get updated
 	onSelectionChanged();
 }
@@ -287,11 +288,12 @@ void KTorrentView::startAllDownloads()
 			
 		i++;
 	}
-	
+	/*
 	if (err)
 	{
 		showStartError();
 	}
+	*/
 }
 
 void KTorrentView::stopAllDownloads()

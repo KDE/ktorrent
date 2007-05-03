@@ -55,6 +55,8 @@ TrayIcon::TrayIcon( KTorrentCore* tc, QWidget *parent, const char *name)
 			this,SLOT(corruptedData( kt::TorrentInterface* )));
 	connect(m_core, SIGNAL(queuingNotPossible( kt::TorrentInterface* )),
 			this, SLOT(queuedTorrentOverMaxRatio( kt::TorrentInterface* )));
+	connect(m_core,SIGNAL(canNotStart(kt::TorrentInterface*, kt::TorrentStartResponse)),
+			this,SLOT(canNotStart(kt::TorrentInterface*, kt::TorrentStartResponse)));
 	connect(m_core, SIGNAL(lowDiskSpace(kt::TorrentInterface*, bool)),
 			this, SLOT(lowDiskSpace(kt::TorrentInterface*, bool)));
 }
@@ -171,6 +173,40 @@ void TrayIcon::queuedTorrentOverMaxRatio(kt::TorrentInterface* tc)
 						   msg,loadIcon("ktorrent"), this);
 }
 
+void TrayIcon::canNotStart(kt::TorrentInterface* tc,kt::TorrentStartResponse reason)
+{
+	if (!Settings::showPopups())
+		return;
+	
+	QString msg = i18n("Cannot start <b>%1</b> : <br>").arg(tc->getStats().torrent_name);
+	switch (reason)
+	{
+	case kt::QM_LIMITS_REACHED:
+		if (tc->getStats().bytes_left_to_download == 0)
+		{
+			// is a seeder
+			msg += i18n("Cannot seed more than 1 torrent. <br>",
+						"Cannot seed more than %n torrents. <br>",Settings::maxSeeds());
+		}
+		else
+		{
+			msg += i18n("Cannot download more than 1 torrent. <br>",
+						"Cannot download more than %n torrents. <br>",Settings::maxDownloads());
+		}
+		msg += i18n("Go to Settings -> Configure KTorrent, if you want to change the limits.");
+		KPassivePopup::message(i18n("Torrent cannot be started"),
+							   msg,loadIcon("ktorrent"), this);
+		break;
+	case kt::NOT_ENOUGH_DISKSPACE:
+		msg += i18n("There is not enough diskspace available.");
+		KPassivePopup::message(i18n("Torrent cannot be started"),
+							   msg,loadIcon("ktorrent"), this);
+		break;
+	default:
+		break;
+	}
+}
+
 void TrayIcon::lowDiskSpace(kt::TorrentInterface * tc, bool stopped)
 {
 	if (!Settings::showPopups())
@@ -278,5 +314,6 @@ void SetMaxRate::rateSelected(int id)
 
 	update();
 }
+
 
 #include "trayicon.moc"

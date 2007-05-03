@@ -92,7 +92,7 @@ namespace bt
 			SynchronousWait(1000);
 	}
 
-	void QueueManager::start(kt::TorrentInterface* tc, bool user)
+	kt::TorrentStartResponse QueueManager::start(kt::TorrentInterface* tc, bool user)
 	{
 		const TorrentStats & s = tc->getStats();
 
@@ -101,7 +101,7 @@ namespace bt
 		bool check_done = false;
 
 		if (tc->isCheckingData(check_done) && !check_done)
-			return;
+			return kt::BUSY_WITH_DATA_CHECK;
 
 		if (!user)
 		{
@@ -140,14 +140,13 @@ namespace bt
 
 						case 0: //don't start!
 							tc->setPriority(0);
-
-							return;
+							return kt::NOT_ENOUGH_DISKSPACE;
 
 						case 1: //ask user
 							if (KMessageBox::questionYesNo(0, i18n("You don't have enough disk space to download this torrent. Are you sure you want to continue?"), i18n("Insufficient disk space for %1").arg(s.torrent_name)) == KMessageBox::No)
 							{
 								tc->setPriority(0);
-								return;
+								return kt::USER_CANCELED;
 							}
 							else
 								break;
@@ -172,11 +171,17 @@ namespace bt
 					startSafely(tc);
 				}
 				else
-					return;
+					return kt::USER_CANCELED;
 			}
 			else
 				startSafely(tc);
 		}
+		else
+		{
+			return kt::QM_LIMITS_REACHED;
+		}
+		
+		return kt::START_OK;
 	}
 
 	void QueueManager::stop(kt::TorrentInterface* tc, bool user)

@@ -59,6 +59,16 @@ namespace kt
 		CHECKING_DATA,
   		NO_SPACE_LEFT
 	};
+	
+	enum TorrentStartResponse
+	{
+		START_OK,
+		USER_CANCELED,
+		NOT_ENOUGH_DISKSPACE, 
+		MAX_SHARE_RATIO_REACHED, 
+		BUSY_WITH_DATA_CHECK, 
+		QM_LIMITS_REACHED // Max seeds or downloads reached
+	};
 
 	struct TorrentStats
 	{

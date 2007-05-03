@@ -70,7 +70,7 @@ KTorrentCore::KTorrentCore(kt::GUIInterface* gui) : max_downloads(0),keep_seedin
 	UpdateCurrentTime();
 	
 	qman = new QueueManager();
-	connect(qman, SIGNAL(lowDiskSpace(kt::TorrentInterface*)), this, SLOT(onLowDiskSpace(kt::TorrentInterface*)));
+	connect(qman, SIGNAL(lowDiskSpace(kt::TorrentInterface*,bool)), this, SLOT(onLowDiskSpace(kt::TorrentInterface*,bool)));
 	
 	
 	data_dir = Settings::tempDir();
@@ -435,7 +435,20 @@ void KTorrentCore::loadSilentlyDir(const KURL& url, const KURL& savedir)
 
 void KTorrentCore::start(kt::TorrentInterface* tc)
 {
-	qman->start(tc);
+	kt::TorrentStartResponse reason = qman->start(tc);
+	switch (reason)
+	{
+		// we can return, the question to ignore the limits will have informed the user
+		case MAX_SHARE_RATIO_REACHED: 
+		case START_OK:  // start OK is normal 
+		case BUSY_WITH_DATA_CHECK: // checking data, so let the torrent be
+		case USER_CANCELED:
+			return;
+		case NOT_ENOUGH_DISKSPACE:
+		case QM_LIMITS_REACHED:
+			canNotStart(tc,reason);
+			break;
+	}
 }
 
 void KTorrentCore::stop(TorrentInterface* tc, bool user)
@@ -1095,7 +1108,7 @@ void KTorrentCore::connectSignals(kt::TorrentInterface* tc)
 			this, SLOT(aboutToBeStarted( kt::TorrentInterface*,bool & )));
 	connect(tc,SIGNAL(corruptedDataFound( kt::TorrentInterface* )),
 			this, SLOT(emitCorruptedData( kt::TorrentInterface* )));
-	connect(qman, SIGNAL(( kt::TorrentInterface* )),
+	connect(qman, SIGNAL(queuingNotPossible(kt::TorrentInterface*)),
 			this, SLOT(enqueueTorrentOverMaxRatio( kt::TorrentInterface* )));
 	connect(qman, SIGNAL(lowDiskSpace(kt::TorrentInterface*, bool)),
 			this, SLOT(onLowDiskSpace(kt::TorrentInterface*, bool)));

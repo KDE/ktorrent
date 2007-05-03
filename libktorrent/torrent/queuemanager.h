@@ -63,8 +63,8 @@ namespace bt
 			void append(kt::TorrentInterface* tc);
 			void remove(kt::TorrentInterface* tc);
 			void clear();
-
-			void start(kt::TorrentInterface* tc, bool user = true);
+			
+			kt::TorrentStartResponse start(kt::TorrentInterface* tc, bool user = true);
 			void stop(kt::TorrentInterface* tc, bool user = false);
 
 			void stopall(int type);
