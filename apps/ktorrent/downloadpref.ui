@@ -25,7 +25,7 @@
         <property name="sizeHint">
             <size>
                 <width>20</width>
-                <height>20</height>
+                <height>41</height>
             </size>
         </property>
         <property name="geometry">
@@ -405,7 +405,7 @@
                             <cstring>num_max_ratio</cstring>
                         </property>
                         <property name="maxValue">
-                            <number>9.99</number>
+                            <number>99</number>
                         </property>
                         <property name="precision">
                             <number>2</number>
