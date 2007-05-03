@@ -86,6 +86,7 @@ private slots:
 	void noDataCheckChecked(bool on);
 	void autoRecheckChecked(bool on);
 	void doNotUseKDEProxyChecked(bool on);
+	void preallocDisabledChecked(bool on);
 };
 
  
@@ -102,7 +103,6 @@ public:
 private:
 	virtual void slotOk();
 	virtual void slotApply();
-	
 	
 	
 private:

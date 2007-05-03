@@ -22,6 +22,7 @@ tab of each view
 - Show torrent path when trying to load a corrupt torrent from torX/ directory
 - Added speed limits for individual torrents
 - Added dynamic diskspace checking.
+- Added option to disable diskspace preallocation
 
 Changes in 2.1.4
 - Fixed crash in parsing of DHT messages

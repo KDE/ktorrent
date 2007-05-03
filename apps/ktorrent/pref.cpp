@@ -430,6 +430,7 @@ bool AdvancedPrefPage::apply()
 	Settings::setFullDiskPrealloc(ap->full_prealloc->isChecked());
 	Settings::setFullDiskPreallocMethod(ap->full_prealloc_method->currentItem());
 	Settings::setCpuUsage(ap->cpu_usage->value());
+	Settings::setDiskPrealloc(!ap->prealloc_disabled->isChecked());
 	return true;
 }
 
@@ -451,6 +452,7 @@ void AdvancedPrefPage::updateData()
 	ap->full_prealloc->setChecked(Settings::fullDiskPrealloc());
 	ap->full_prealloc_method->setCurrentItem(Settings::fullDiskPreallocMethod());
 	ap->cpu_usage->setValue(Settings::cpuUsage());
+	ap->prealloc_disabled->setChecked(!Settings::diskPrealloc());
 }
 
 void AdvancedPrefPage::createWidget(QWidget* parent)
@@ -463,6 +465,10 @@ void AdvancedPrefPage::createWidget(QWidget* parent)
 			this, SLOT(autoRecheckChecked(bool)));
 	connect(ap->do_not_use_kde_proxy, SIGNAL(toggled(bool)),
 			this, SLOT(doNotUseKDEProxyChecked(bool)));
+	connect(ap->prealloc_disabled,SIGNAL(toggled(bool)),
+			this,SLOT(preallocDisabledChecked(bool)));
+	
+	preallocDisabledChecked(ap->prealloc_disabled->isChecked());
 }
 
 void AdvancedPrefPage::deleteWidget()
@@ -484,6 +490,15 @@ void AdvancedPrefPage::autoRecheckChecked(bool on)
 void AdvancedPrefPage::doNotUseKDEProxyChecked(bool on)
 {
 	ap->http_proxy->setEnabled(on);
+}
+
+void AdvancedPrefPage::preallocDisabledChecked(bool on)
+{
+	ap->full_prealloc->setEnabled(!on);
+	if (!on && ap->full_prealloc->isChecked())
+		ap->full_prealloc_method->setEnabled(true);
+	else
+		ap->full_prealloc_method->setEnabled(false);
 }
 
 #include "pref.moc"

@@ -362,12 +362,20 @@ namespace bt
 		
 		if (prealloc)
 		{
-			Out(SYS_GEN|LOG_NOTICE) << "Pre-allocating diskspace" << endl;
-			prealoc_thread = new PreallocationThread(cman);
-			stats.running = true;
-			stats.status = kt::ALLOCATING_DISKSPACE;
-			prealoc_thread->start();
-			return;
+			// only start preallocation if we are allowed by the settings
+			if (Settings::diskPrealloc())
+			{
+				Out(SYS_GEN|LOG_NOTICE) << "Pre-allocating diskspace" << endl;
+				prealoc_thread = new PreallocationThread(cman);
+				stats.running = true;
+				stats.status = kt::ALLOCATING_DISKSPACE;
+				prealoc_thread->start();
+				return;
+			}
+			else
+			{
+				prealloc = false;
+			}
 		}
 		
 		continueStart();

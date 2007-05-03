@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>743</width>
-            <height>538</height>
+            <height>683</height>
         </rect>
     </property>
     <property name="caption">
@@ -117,6 +117,17 @@
                         </spacer>
                     </hbox>
                 </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>prealloc_disabled</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Disa&amp;ble diskspace preallocation</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+B</string>
+                    </property>
+                </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
                         <cstring>layout25</cstring>
@@ -130,7 +141,10 @@
                                 <cstring>full_prealloc</cstring>
                             </property>
                             <property name="text">
-                                <string>Fully preallocate dis&amp;kspace (avoids fragmentation)</string>
+                                <string>F&amp;ully preallocate diskspace (avoids fragmentation)</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+U</string>
                             </property>
                         </widget>
                         <widget class="QComboBox">
