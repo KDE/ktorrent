@@ -166,6 +166,8 @@ void FileSelectDlg::accept()
 		}
 	}
 	
+	// update the last save directory
+	Settings::setLastSaveDir(dn);
 	QDialog::accept();
 }
 
@@ -263,7 +265,11 @@ void FileSelectDlg::populateFields()
 {
 	QString dir = Settings::saveDir();
 	if (!Settings::useSaveDir() || dir.isNull())
-		dir = QDir::homeDirPath();
+	{
+		dir = Settings::lastSaveDir();
+		if (dir.isNull())
+			dir = QDir::homeDirPath();
+	}
 	
 	m_downloadLocation->setURL(dir);
 	loadGroups();

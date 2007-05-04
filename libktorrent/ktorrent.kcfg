@@ -117,6 +117,10 @@
 			<label>Whether to use a custom IP to pass to the tracker</label>
 			<default>false</default>
 		</entry>
+		<entry name="lastSaveDir" type="String">
+			<label>Directory which was used as the last save directory</label>
+			<default code="true">QString::null</default>
+		</entry>
 		<entry name="externalIP" type="String">
 			<label>IP to pass to the tracker</label>
 			<default code="true">QString::null</default>
