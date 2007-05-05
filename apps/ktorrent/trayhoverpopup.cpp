@@ -20,17 +20,20 @@
 #include <qvbox.h>
 #include <qhbox.h>
 #include <qlabel.h>
+#include <qtooltip.h>
 #include <qpixmap.h>
 #include <kdialog.h>
 #include "trayhoverpopup.h"
 
 TrayHoverPopup::TrayHoverPopup(const QPixmap & pix,QWidget *parent, const char *name )
-	: KPassivePopup(KPassivePopup::Balloon,parent,name),pix(pix)
+	: KPassivePopup(KPassivePopup::Boxed,parent,name),pix(pix)
 {
 	setTimeout(0);
 	setAutoDelete(false);
 	connect(&hover_timer,SIGNAL(timeout()),this,SLOT(onHoverTimeout()));
 	create();
+	setPalette(QToolTip::palette());
+	setLineWidth(1);
 }
 
 
@@ -95,6 +98,5 @@ void TrayHoverPopup::create()
 	setView(vb);
 }
 	
-
 
 #include "trayhoverpopup.moc"

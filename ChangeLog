@@ -23,8 +23,7 @@ tab of each view
 - Added speed limits for individual torrents
 - Added dynamic diskspace checking.
 - Added option to disable diskspace preallocation
-- Improved system tray popup icon : we now use balloon style and use
-KPassivePopup instead of Qt tooltips, it also only disappears when the cursor
+- Improved system tray popup icon : we now use boxed style KPassivePopup instead of Qt tooltips, it also only disappears when the cursor
 is moved away from the tray icon and the text can be updated
 
 Changes in 2.1.4

@@ -119,7 +119,9 @@ void TrayIcon::drawSpeedBar(int downloadSpeed, int uploadSpeed, int downloadBand
 
 void TrayIcon::showPassivePopup(const QString & msg,const QString & title)
 {
-	KPassivePopup::message(KPassivePopup::Balloon,title,msg,m_kt_pix, this);
+	KPassivePopup* p = KPassivePopup::message(KPassivePopup::Boxed,title,msg,m_kt_pix, this);
+	p->setPalette(QToolTip::palette());
+	p->setLineWidth(1);
 }
 
 
