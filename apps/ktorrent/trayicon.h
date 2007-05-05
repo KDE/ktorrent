@@ -21,6 +21,7 @@
 #ifndef TRAYICON_H
 #define TRAYICON_H
 
+
 #include <ksystemtray.h>
 #include <kpopupmenu.h>
 #include <qpainter.h>
@@ -32,6 +33,7 @@
 
 using namespace bt;
 class QString;
+class TrayHoverPopup;
 
 struct TrayStats
 {
@@ -39,8 +41,6 @@ struct TrayStats
 	bt::Uint32 upload_speed;
 	bt::Uint64 bytes_downloaded;
 	bt::Uint64 bytes_uploaded;
-
-
 };
 
 /**
@@ -54,9 +54,14 @@ public:
 	TrayIcon(KTorrentCore* tc, QWidget *parent = 0, const char *name = 0);
 	virtual ~TrayIcon();
 
+	/// Update stats for system tray icon
 	void updateStats(const CurrentStats stats, bool showBars=false, int downloadBandwidth=0, int uploadBandwidth=0);
+	
 private:
 	void drawSpeedBar(int downloadSpeed, int uploadSpeed, int downloadBandwidth, int uploadBandwidth);
+	void showPassivePopup(const QString & msg,const QString & titile);
+	virtual void enterEvent(QEvent* ev);
+	virtual void leaveEvent(QEvent* ev);
 
 private slots:
 	/**
@@ -99,12 +104,14 @@ private slots:
 	
 	///Shows passive popup message
 	void lowDiskSpace(kt::TorrentInterface* tc, bool stopped);
-
+	
 private:
 	KTorrentCore* m_core;
 	QPainter *paint;
 	int previousDownloadHeight;
 	int previousUploadHeight;
+	TrayHoverPopup* m_hover_popup;
+	QPixmap m_kt_pix;
 };
 
 class SetMaxRate : public KPopupMenu

@@ -29,6 +29,8 @@
 #include "ktorrentcore.h"
 #include <interfaces/functions.h>
 #include <net/socketmonitor.h>
+#include <util/log.h>
+#include "trayhoverpopup.h"
 
 
 using namespace bt;
@@ -38,11 +40,14 @@ TrayIcon::TrayIcon( KTorrentCore* tc, QWidget *parent, const char *name)
 		: KSystemTray(parent, name)
 {
 	m_core = tc;
-	setPixmap(loadIcon("ktorrent"));
+	m_kt_pix = loadIcon("ktorrent");
+	setPixmap(m_kt_pix);
 	paint=new QPainter( this );
 	drawContents ( paint );
 	previousDownloadHeight=0;
 	previousUploadHeight=0;
+	
+	m_hover_popup = new TrayHoverPopup(m_kt_pix,this);
 
 	connect(this,SIGNAL(quitSelected()),kapp,SLOT(quit()));
 	connect(m_core, SIGNAL(finished(kt::TorrentInterface* )),
@@ -64,11 +69,26 @@ TrayIcon::TrayIcon( KTorrentCore* tc, QWidget *parent, const char *name)
 TrayIcon::~TrayIcon()
 {}
 
+void TrayIcon::enterEvent(QEvent* ev)
+{
+	KSystemTray::enterEvent(ev);
+	m_hover_popup->enterEvent();
+}
+
+void TrayIcon::leaveEvent(QEvent* )
+{
+	m_hover_popup->leaveEvent();
+}
+
 void TrayIcon::updateStats(const CurrentStats stats, bool showBars,int downloadBandwidth, int uploadBandwidth )
 {
-	QString tip = i18n("<center><b>KTorrent</b></center><table cellpadding='2' cellspacing='2' align='center'><tr><td><b>Speed:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%1</font></td><td>Upload: <font color='#990000'>%2</font></td></tr><tr><td><b>Transfer:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%3</font></td><td>Upload: <font color='#990000'>%4</font></td></tr></table>").arg(KBytesPerSecToString((double)stats.download_speed/1024.0)).arg(KBytesPerSecToString((double)stats.upload_speed/1024.0)).arg(BytesToString(stats.bytes_downloaded)).arg(BytesToString(stats.bytes_uploaded));
-	QToolTip::add
-		(this, tip);
+	QString tip = i18n("<table cellpadding='2' cellspacing='2' align='center'><tr><td><b>Speed:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%1</font></td><td>Upload: <font color='#990000'>%2</font></td></tr><tr><td><b>Transfer:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%3</font></td><td>Upload: <font color='#990000'>%4</font></td></tr></table>")
+			.arg(KBytesPerSecToString((double)stats.download_speed/1024.0))
+			.arg(KBytesPerSecToString((double)stats.upload_speed/1024.0))
+			.arg(BytesToString(stats.bytes_downloaded))
+			.arg(BytesToString(stats.bytes_uploaded));
+	m_hover_popup->updateText(tip);
+	
 	if(showBars)
 		drawSpeedBar(stats.download_speed/1024,stats.upload_speed/1024, downloadBandwidth, uploadBandwidth);
 }
@@ -97,6 +117,12 @@ void TrayIcon::drawSpeedBar(int downloadSpeed, int uploadSpeed, int downloadBand
 	previousUploadHeight=UploadHeight;	
 }
 
+void TrayIcon::showPassivePopup(const QString & msg,const QString & title)
+{
+	KPassivePopup::message(KPassivePopup::Balloon,title,msg,m_kt_pix, this);
+}
+
+
 void TrayIcon::finished(TorrentInterface* tc)
 {
 	if (!Settings::showPopups())
@@ -112,7 +138,7 @@ void TrayIcon::finished(TorrentInterface* tc)
 						.arg(KBytesPerSecToString(speed_down / tc->getRunningTimeDL()))
 						.arg(KBytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
-	KPassivePopup::message(i18n("Download completed"),msg,loadIcon("ktorrent"), this);
+	showPassivePopup(msg,i18n("Download completed"));
 }
 
 void TrayIcon::maxShareRatioReached(kt::TorrentInterface* tc)
@@ -131,8 +157,7 @@ void TrayIcon::maxShareRatioReached(kt::TorrentInterface* tc)
 			.arg(BytesToString(s.bytes_uploaded))
 			.arg(KBytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 	
-	KPassivePopup::message(i18n("Seeding completed"),
-						   msg,loadIcon("ktorrent"), this);
+	showPassivePopup(msg,i18n("Seeding completed"));
 }
 
 void TrayIcon::torrentStoppedByError(kt::TorrentInterface* tc, QString msg)
@@ -143,7 +168,8 @@ void TrayIcon::torrentStoppedByError(kt::TorrentInterface* tc, QString msg)
 	const TorrentStats & s = tc->getStats();
 	QString err_msg = i18n("<b>%1</b> has been stopped with the following error: <br>%2")
 				.arg(s.torrent_name).arg(msg);
-	KPassivePopup::message(i18n("Error"),err_msg,loadIcon("ktorrent"),this);
+	
+	showPassivePopup(err_msg,i18n("Error"));
 }
 
 void TrayIcon::corruptedData(kt::TorrentInterface* tc)
@@ -155,7 +181,7 @@ void TrayIcon::corruptedData(kt::TorrentInterface* tc)
 	QString err_msg = i18n("Corrupted data has been found in the torrent <b>%1</b>"
 			"<br>It would be a good idea to do a data integrity check on the torrent.")
 			.arg(s.torrent_name);
-	KPassivePopup::message(i18n("Error"),err_msg,loadIcon("ktorrent"),this);
+	showPassivePopup(err_msg,i18n("Error"));
 }
 
 void TrayIcon::queuedTorrentOverMaxRatio(kt::TorrentInterface* tc)
@@ -169,8 +195,7 @@ void TrayIcon::queuedTorrentOverMaxRatio(kt::TorrentInterface* tc)
 	
 	QString msg = i18n("<b>%1</b> has reached its maximum share ratio of %2 and cannot be enqueued. Remove the limit manually if you want to continue seeding.").arg(s.torrent_name).arg(s.max_share_ratio);
 	
-	KPassivePopup::message(i18n("Torrent cannot be enqueued."),
-						   msg,loadIcon("ktorrent"), this);
+	showPassivePopup(msg,i18n("Torrent cannot be enqueued."));
 }
 
 void TrayIcon::canNotStart(kt::TorrentInterface* tc,kt::TorrentStartResponse reason)
@@ -194,13 +219,11 @@ void TrayIcon::canNotStart(kt::TorrentInterface* tc,kt::TorrentStartResponse rea
 						"Cannot download more than %n torrents. <br>",Settings::maxDownloads());
 		}
 		msg += i18n("Go to Settings -> Configure KTorrent, if you want to change the limits.");
-		KPassivePopup::message(i18n("Torrent cannot be started"),
-							   msg,loadIcon("ktorrent"), this);
+		showPassivePopup(msg,i18n("Torrent cannot be started"));
 		break;
 	case kt::NOT_ENOUGH_DISKSPACE:
 		msg += i18n("There is not enough diskspace available.");
-		KPassivePopup::message(i18n("Torrent cannot be started"),
-							   msg,loadIcon("ktorrent"), this);
+		showPassivePopup(msg,i18n("Torrent cannot be started"));
 		break;
 	default:
 		break;
@@ -219,8 +242,7 @@ void TrayIcon::lowDiskSpace(kt::TorrentInterface * tc, bool stopped)
 	if(stopped)
 		msg.prepend(i18n("Torrent has been stopped.<br />"));
 	
-	KPassivePopup::message(i18n("Device running out of space"),
-						   msg,loadIcon("ktorrent"), this);
+	showPassivePopup(msg,i18n("Device running out of space"));
 }
 
 SetMaxRate::SetMaxRate( KTorrentCore* tc, int t, QWidget *parent, const char *name):KPopupMenu(parent, name)

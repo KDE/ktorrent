@@ -1,0 +1,100 @@
+/***************************************************************************
+ *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ ***************************************************************************/
+#include <qvbox.h>
+#include <qhbox.h>
+#include <qlabel.h>
+#include <qpixmap.h>
+#include <kdialog.h>
+#include "trayhoverpopup.h"
+
+TrayHoverPopup::TrayHoverPopup(const QPixmap & pix,QWidget *parent, const char *name )
+	: KPassivePopup(KPassivePopup::Balloon,parent,name),pix(pix)
+{
+	setTimeout(0);
+	setAutoDelete(false);
+	connect(&hover_timer,SIGNAL(timeout()),this,SLOT(onHoverTimeout()));
+	create();
+}
+
+
+TrayHoverPopup::~TrayHoverPopup()
+{}
+
+
+void TrayHoverPopup::enterEvent()
+{
+	if (isHidden())
+		show();
+	else
+		hover_timer.stop(); // stop timeout
+}
+
+void TrayHoverPopup::leaveEvent()
+{
+	// to avoid problems with a quick succession of enter and leave events, because the cursor
+	// is on the edge, use a timer to expire the popup
+	// in enterEvent we will stop the timer
+	hover_timer.start(2000,true);
+}
+
+void TrayHoverPopup::onHoverTimeout()
+{
+	hide();
+}
+
+void TrayHoverPopup::updateText(const QString & msg)
+{
+	text->setText(msg);
+}
+
+void TrayHoverPopup::create()
+{
+	QVBox *vb = new QVBox(this);
+	vb->setSpacing(KDialog::spacingHint());
+	 
+	QHBox *hb=0;
+	if (!pix.isNull()) 
+	{
+		hb = new QHBox(vb);
+		hb->setMargin(0);
+		hb->setSpacing(KDialog::spacingHint());
+		QLabel* pix_lbl = new QLabel(hb,"title_icon");
+		pix_lbl->setPixmap(pix);
+		pix_lbl->setAlignment(AlignLeft);
+	}
+	 
+	
+	QLabel* title = new QLabel("KTorrent", hb ? hb : vb, "title_label" );
+	QFont fnt = title->font();
+	fnt.setBold( true );
+	title->setFont( fnt );
+	title->setAlignment( Qt::AlignHCenter );
+	if ( hb )
+		hb->setStretchFactor(title, 10 ); // enforce centering
+
+	// text will be filled later
+	text = new QLabel( "Dummy", vb, "msg_label" );
+				text->setAlignment( AlignLeft );
+	setView(vb);
+}
+	
+
+
+#include "trayhoverpopup.moc"
