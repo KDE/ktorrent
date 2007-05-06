@@ -238,7 +238,9 @@ namespace kt
 		}
 		else
 		{
-			return QCheckListItem::compare(i, col, ascending);
+			//return QCheckListItem::compare(i, col, ascending);
+			// case insensitive comparison
+			return QString::compare(text(col).lower(),i->text(col).lower());
 		}
 	}
 

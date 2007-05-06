@@ -156,7 +156,9 @@ namespace kt
 		}
 		else
 		{
-			return QCheckListItem::compare(i, col, ascending);
+			// lets sort case insensitive
+			return QString::compare(text(col).lower(),i->text(col).lower());
+			//		QCheckListItem::compare(i, col, ascending);
 		}
 	}
 
