@@ -162,6 +162,8 @@ QCStringList KTorrentViewItem::getTorrentInfo(kt::TorrentInterface* tc)
 	info.append(QString::number(s.num_peers).local8Bit());
 	info.append(QString(KGlobal::locale()->formatNumber(Percentage(s),2) + " %").local8Bit());
 	info.append(KGlobal::locale()->formatNumber(kt::ShareRatio(s),2).local8Bit());
+	info.append(QString::number(s.seeders_connected_to).local8Bit());
+	info.append(QString::number(s.leechers_connected_to).local8Bit());
 	return info;
 }
 
@@ -237,6 +239,16 @@ void KTorrentViewItem::update()
 	{
 		float ratio = kt::ShareRatio(s);
 		setText(10,QString("%1").arg(KGlobal::locale()->formatNumber(ratio,2)));
+	}
+
+	if(m_parent->columnVisible(11))
+	{
+		setText(11,QString("%1 (%2)").arg(QString::number(s.seeders_connected_to)).arg(QString::number(s.seeders_total)));	
+	}
+
+	if(m_parent->columnVisible(12))
+	{
+		setText(12,QString("%1 (%2)").arg(QString::number(s.leechers_connected_to)).arg(QString::number(s.leechers_total)));
 	}
 }
 
