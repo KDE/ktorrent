@@ -14,7 +14,10 @@ AC_CHECK_FUNCS(lseek64, ktorrent_cv_func_lseek64=yes, ktorrent_cv_func_lseek64=n
 AC_CHECK_FUNCS(mmap64, ktorrent_cv_func_mmap64=yes, ktorrent_cv_func_mmap64=no)
 AC_CHECK_FUNCS(munmap64, ktorrent_cv_func_munmap64=yes, ktorrent_cv_func_munmap64=no)
 
+AC_LANG_PUSH([C++])
 AC_CHECK_HEADERS([xfs/xfs.h])
+AC_CHECK_TYPES([__u64, __s64], [], [], [#include <xfs/xfs.h>])
+AC_LANG_POP
 
 if test "$ktorrent_cv_func_fseek64" = yes -a "$ktorrent_cv_func_ftell64" = yes; then
     AC_DEFINE(HAVE_FSEEKO64, 1)

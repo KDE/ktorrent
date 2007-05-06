@@ -40,6 +40,19 @@
 #include "array.h"
 
 #ifdef HAVE_XFS_XFS_H
+
+#if !defined(HAVE___S64) || !defined(HAVE___U64)
+#include <stdint.h>
+#endif
+
+#ifndef HAVE___U64
+typedef	uint64_t	__u64;
+#endif
+
+#ifndef HAVE___S64
+typedef	int64_t		__s64;
+#endif
+
 #include <xfs/xfs.h>
 #endif
 
