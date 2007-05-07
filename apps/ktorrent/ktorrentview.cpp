@@ -104,11 +104,10 @@ void KTorrentView::setupColumns()
 	insertColumn(i18n("Down Speed"), Qt::AlignRight);
 	insertColumn(i18n("Up Speed"), Qt::AlignRight);
 	insertColumn(i18n("Time Left"), Qt::AlignCenter);
-	insertColumn(i18n("Peers"), Qt::AlignRight);
-	insertColumn(i18n("% Complete"), Qt::AlignRight);
-	insertColumn(i18n("Share ratio"), Qt::AlignRight);
 	insertColumn(i18n("Seeders"), Qt::AlignRight);
 	insertColumn(i18n("Leechers"), Qt::AlignRight);
+	insertColumn(i18n("% Complete"), Qt::AlignRight);
+	insertColumn(i18n("Share ratio"), Qt::AlignRight);	
 	
 	setAllColumnsShowFocus(true);
 	setShowSortIndicator(true);

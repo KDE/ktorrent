@@ -229,26 +229,26 @@ void KTorrentViewItem::update()
 	}
 	if(m_parent->columnVisible(8))	
 		setText(8,QString::number(s.num_peers));
+	
+	if(m_parent->columnVisible(8))
+	{
+		setText(8,QString("%1 (%2)").arg(QString::number(s.seeders_connected_to)).arg(QString::number(s.seeders_total)));	
+	}
 
 	if(m_parent->columnVisible(9))
 	{
-		setText(9,i18n("%1 %").arg(KGlobal::locale()->formatNumber(Percentage(s),2)));
+		setText(9,QString("%1 (%2)").arg(QString::number(s.leechers_connected_to)).arg(QString::number(s.leechers_total)));
 	}
-	
+
 	if(m_parent->columnVisible(10))
 	{
-		float ratio = kt::ShareRatio(s);
-		setText(10,QString("%1").arg(KGlobal::locale()->formatNumber(ratio,2)));
+		setText(10,i18n("%1 %").arg(KGlobal::locale()->formatNumber(Percentage(s),2)));
 	}
-
+	
 	if(m_parent->columnVisible(11))
 	{
-		setText(11,QString("%1 (%2)").arg(QString::number(s.seeders_connected_to)).arg(QString::number(s.seeders_total)));	
-	}
-
-	if(m_parent->columnVisible(12))
-	{
-		setText(12,QString("%1 (%2)").arg(QString::number(s.leechers_connected_to)).arg(QString::number(s.leechers_total)));
+		float ratio = kt::ShareRatio(s);
+		setText(11,QString("%1").arg(KGlobal::locale()->formatNumber(ratio,2)));
 	}
 }
 
@@ -315,7 +315,7 @@ void KTorrentViewItem::paintCell(QPainter* p,const QColorGroup & cg,
 	if (column == 1)
 		_cg.setColor(QColorGroup::Text, StatusToColor(tc->getStats().status,cg));
 	
-	if (column == 10)
+	if (column == 11)
 		_cg.setColor(QColorGroup::Text, ratioToColor(kt::ShareRatio(tc->getStats())));
 
 
