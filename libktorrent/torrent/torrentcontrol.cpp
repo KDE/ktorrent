@@ -703,11 +703,11 @@ namespace bt
 		updateStats();
 		saveStats();
 		stats.output_path = cman->getOutputPath();
-		if (stats.output_path.isNull())
+	/*	if (stats.output_path.isNull())
 		{
 			cman->createFiles();
 			stats.output_path = cman->getOutputPath();
-		}
+		}*/
 		Out() << "OutputPath = " << stats.output_path << endl;
 	}
 	
