@@ -31,6 +31,7 @@ TrayHoverPopup::TrayHoverPopup(const QPixmap & pix,QWidget *parent, const char *
 	setTimeout(0);
 	setAutoDelete(false);
 	connect(&hover_timer,SIGNAL(timeout()),this,SLOT(onHoverTimeout()));
+	connect(&show_timer,SIGNAL(timeout()),this,SLOT(onShowTimeout()));
 	create();
 	setPalette(QToolTip::palette());
 	setLineWidth(1);
@@ -44,7 +45,10 @@ TrayHoverPopup::~TrayHoverPopup()
 void TrayHoverPopup::enterEvent()
 {
 	if (isHidden())
-		show();
+	{
+		// start the show timer
+		show_timer.start(5000,true);
+	}
 	else
 		hover_timer.stop(); // stop timeout
 }
@@ -60,6 +64,12 @@ void TrayHoverPopup::leaveEvent()
 void TrayHoverPopup::onHoverTimeout()
 {
 	hide();
+	show_timer.stop();
+}
+
+void TrayHoverPopup::onShowTimeout()
+{
+	show();
 }
 
 void TrayHoverPopup::updateText(const QString & msg)

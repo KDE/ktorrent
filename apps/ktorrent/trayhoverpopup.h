@@ -52,10 +52,12 @@ private:
 	
 private slots:
 	void onHoverTimeout();
+	void onShowTimeout();
 	
 private:
 	const QPixmap & pix;
 	QTimer hover_timer;
+	QTimer show_timer;
 	QLabel* text;
 };
 
