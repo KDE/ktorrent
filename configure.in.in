@@ -13,11 +13,25 @@ AC_CHECK_FUNCS(ftruncate64, ktorrent_cv_func_ftruncate64=yes, ktorrent_cv_func_f
 AC_CHECK_FUNCS(lseek64, ktorrent_cv_func_lseek64=yes, ktorrent_cv_func_lseek64=no)
 AC_CHECK_FUNCS(mmap64, ktorrent_cv_func_mmap64=yes, ktorrent_cv_func_mmap64=no)
 AC_CHECK_FUNCS(munmap64, ktorrent_cv_func_munmap64=yes, ktorrent_cv_func_munmap64=no)
+AC_CHECK_FUNCS(posix_fallocate, ktorrent_cv_func_posix_fallocate=yes,ktorrent_cv_func_posix_fallocate=no)
+AC_CHECK_FUNCS(posix_fallocate64, ktorrent_cv_func_posix_fallocate64=yes,ktorrent_cv_func_posix_fallocate64=no)
 
 AC_LANG_PUSH([C++])
 AC_CHECK_HEADERS([xfs/xfs.h])
 AC_CHECK_TYPES([__u64, __s64], [], [], [#include <xfs/xfs.h>])
 AC_LANG_POP
+
+if test "$ktorrent_cv_func_posix_fallocate" = yes ; then
+    AC_DEFINE(HAVE_POSIX_FALLOCATE, 1)
+else
+    AC_DEFINE(HAVE_POSIX_FALLOCATE, 0)
+fi
+
+if test "$ktorrent_cv_func_posix_fallocate64" = yes ; then
+    AC_DEFINE(HAVE_POSIX_FALLOCATE64, 1)
+else
+    AC_DEFINE(HAVE_POSIX_FALLOCATE64, 0)
+fi
 
 if test "$ktorrent_cv_func_fseek64" = yes -a "$ktorrent_cv_func_ftell64" = yes; then
     AC_DEFINE(HAVE_FSEEKO64, 1)

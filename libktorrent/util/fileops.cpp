@@ -22,6 +22,7 @@
 #endif
 
 #include <string.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
 #include <klocale.h>
@@ -278,7 +279,7 @@ namespace bt
 	{
 		try
 		{
-			SeekFile(fd, size, SEEK_SET);
+			SeekFile(fd, size - 1, SEEK_SET);
 			char zero = 0;		
 			if (write(fd, &zero, 1) == -1)
 				return false;
@@ -351,6 +352,13 @@ namespace bt
 		}
 		else
 		{
+#if HAVE_POSIX_FALLOCATE64
+			if (posix_fallocate64(fd,0,size) != 0)
+				throw Error(i18n("Cannot expand file : %1").arg(strerror(errno)));
+#elif HAVE_POSIX_FALLOCATE
+			if (posix_fallocate(fd,0,size) != 0)
+				throw Error(i18n("Cannot expand file : %1").arg(strerror(errno)));
+#else
 			SeekFile(fd,0,SEEK_SET);
 			bt::Array<Uint8> buf(4096);
 			buf.fill(0);
@@ -370,6 +378,7 @@ namespace bt
 				else
 					written += to_write;
 			}
+#endif
 		}
 	}
 	
