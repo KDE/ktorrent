@@ -47,7 +47,7 @@ void TrayHoverPopup::enterEvent()
 	if (isHidden())
 	{
 		// start the show timer
-		show_timer.start(5000,true);
+		show_timer.start(2000,true);
 	}
 	else
 		hover_timer.stop(); // stop timeout
