@@ -21,17 +21,26 @@
 #define BTUDPTRACKER_H
 
 #include <kurl.h>
-#include <qhostaddress.h>
 #include <qvaluelist.h>
+#include <qcstring.h>
 #include <qtimer.h>
-#include <util/array.h>
+#include <ksocketaddress.h>
 #include "tracker.h"
 #include "globals.h"
 #include "peermanager.h"
+		
+
+		
+namespace KNetwork
+{
+	class KResolverResults;
+}
 
 
 namespace bt
 {
+	using KNetwork::KResolverResults;
+	
 	enum Event
 	{
 		NONE = 0,
@@ -67,8 +76,9 @@ namespace bt
 	private slots:
 		void onConnTimeout();
 		void connectRecieved(Int32 tid,Int64 connection_id);
-		void announceRecieved(Int32 tid,const Array<Uint8> & buf);
+		void announceRecieved(Int32 tid,const QByteArray & buf);
 		void onError(Int32 tid,const QString & error_string);
+		void onResolverResults(KResolverResults res);
 
 	private:
 		void sendConnect();
@@ -76,8 +86,8 @@ namespace bt
 		bool doRequest();
 
 	private:
-		QHostAddress addr;
-		Uint16 udp_port;
+		KNetwork::KSocketAddress address;
+		
 		Int32 transaction_id;
 		Int64 connection_id;
 

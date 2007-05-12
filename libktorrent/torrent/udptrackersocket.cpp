@@ -21,8 +21,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <util/array.h>
-#include <qsocketdevice.h>
-#include <qsocketnotifier.h>
+#include <ksocketaddress.h>
+#include <kdatagramsocket.h>
+#include <ksocketdevice.h>
 #include <net/portlist.h>
 #include <util/log.h>
 #include <util/functions.h>
@@ -30,6 +31,8 @@
 #include <kmessagebox.h>
 #include "globals.h"
 #include "udptrackersocket.h"
+		
+using namespace KNetwork;
 
 namespace bt
 {
@@ -37,47 +40,42 @@ namespace bt
 
 	UDPTrackerSocket::UDPTrackerSocket() 
 	{
-		sock = new QSocketDevice(QSocketDevice::Datagram);
+		sock = new KNetwork::KDatagramSocket(this);
+		sock->setAddressReuseable(true);
+		connect(sock,SIGNAL(readyRead()),this,SLOT(dataReceived()));
 		int i = 0;
 		if (port == 0)
 			port = 4444;
 		
-		while (!sock->bind(QHostAddress("localhost"),port + i) && i < 10)
+		bool bound = false;
+		
+		while (!(bound = sock->bind(QString::null,QString::number(port + i))) && i < 10)
 		{
 			Out() << "Failed to bind socket to port " << (port+i) << endl;
 			i++;
 		}
 		
 
-		if (i > 0 && sock->isValid())
-			KMessageBox::information(0,
-				i18n("Specified udp port (%1) is unavailable or in"
-					" use by another application. KTorrent is bound to port %2.")
-					.arg(port).arg(port + i));
-		else if (i > 0 && !sock->isValid())
+		if (!bound)
+		{
 			KMessageBox::error(0,
 				i18n("Cannot bind to udp port %1 or the 10 following ports.").arg(port));
-
-		port = port + i;
-		sn = new QSocketNotifier(sock->socket(),QSocketNotifier::Read);
-		
-		if (sock->isValid())
+		}
+		else
+		{
+			port = port + i;
 			Globals::instance().getPortList().addNewPort(port,net::UDP,true);
-		
-		connect(sn,SIGNAL(activated(int)),this,SLOT(dataRecieved(int )));
+		}
 	}
 	
 	
 	UDPTrackerSocket::~UDPTrackerSocket()
 	{
-		if (sock->isValid())
-			Globals::instance().getPortList().removePort(port,net::UDP);
-		
+		Globals::instance().getPortList().removePort(port,net::UDP);
 		delete sock;
-		delete sn;
 	}
 
-	void UDPTrackerSocket::sendConnect(Int32 tid,const QHostAddress & addr,Uint16 udp_port)
+	void UDPTrackerSocket::sendConnect(Int32 tid,const KNetwork::KSocketAddress & addr)
 	{
 		Int64 cid = 0x41727101980LL;
 		Uint8 buf[16];
@@ -85,15 +83,15 @@ namespace bt
 		WriteInt64(buf,0,cid);
 		WriteInt32(buf,8,CONNECT);
 		WriteInt32(buf,12,tid);
-		sock->writeBlock((const char*)buf,16,addr,udp_port);
+		
+		sock->send(KDatagramPacket((char*)buf,16,addr));
 		transactions.insert(tid,CONNECT);
 	}
 
-	void UDPTrackerSocket::sendAnnounce(Int32 tid,const Uint8* data,
-										const QHostAddress & addr,Uint16 udp_port)
+	void UDPTrackerSocket::sendAnnounce(Int32 tid,const Uint8* data,const KNetwork::KSocketAddress & addr)
 	{
 		transactions.insert(tid,ANNOUNCE);
-		sock->writeBlock((const char*)data,98,addr,udp_port);
+		sock->send(KDatagramPacket((char*)data,98,addr));
 	}
 
 	void UDPTrackerSocket::cancelTransaction(Int32 tid)
@@ -101,8 +99,10 @@ namespace bt
 		transactions.remove(tid);
 	}
 
-	void UDPTrackerSocket::handleConnect(const Array<Uint8> & buf)
+	void UDPTrackerSocket::handleConnect(const QByteArray & data)
 	{	
+		const Uint8* buf = (const Uint8*)data.data();
+		
 		// Read the transaction_id and check it
 		Int32 tid = ReadInt32(buf,4);
 		QMap<Int32,Action>::iterator i = transactions.find(tid);
@@ -125,8 +125,10 @@ namespace bt
 		connectRecieved(tid,ReadInt64(buf,8));
 	}
 
-	void UDPTrackerSocket::handleAnnounce(const Array<Uint8> & buf)
+	void UDPTrackerSocket::handleAnnounce(const QByteArray & data)
 	{
+		const Uint8* buf = (const Uint8*)data.data();
+		
 		// Read the transaction_id and check it
 		Int32 tid = ReadInt32(buf,4);
 		QMap<Int32,Action>::iterator i = transactions.find(tid);
@@ -144,11 +146,12 @@ namespace bt
 
 		// everything ok, emit signal
 		transactions.erase(i);
-		announceRecieved(tid,buf);
+		announceRecieved(tid,data);
 	}
 	
-	void UDPTrackerSocket::handleError(const Array<Uint8> & buf)
+	void UDPTrackerSocket::handleError(const QByteArray & data)
 	{
+		const Uint8* buf = (const Uint8*)data.data();
 		// Read the transaction_id and check it
 		Int32 tid = ReadInt32(buf,4);
 		QMap<Int32,Action>::iterator it = transactions.find(tid);
@@ -159,39 +162,40 @@ namespace bt
 		// extract error message
 		transactions.erase(it);
 		QString msg;
-		for (Uint32 i = 8;i < buf.size();i++)
+		for (Uint32 i = 8;i < data.size();i++)
 			msg += (char)buf[i];
 
 		// emit signal
 		error(tid,msg);
 	}
 
-	void UDPTrackerSocket::dataRecieved(int)
+	void UDPTrackerSocket::dataReceived()
 	{
-		Uint32 ba = sock->bytesAvailable();
-		if (ba == 0)
+		if (sock->bytesAvailable() == 0)
 		{
-			// just to be sure, don't know if Qt sockets suffer from the 
-			// same problems as KDatagramSocket
-			int fd = sock->socket();
+			Out(SYS_TRK|LOG_NOTICE) << "0 byte UDP packet " << endl;
+			// KDatagramSocket wrongly handles UDP packets with no payload
+			// so we need to deal with it oursleves
+			int fd = sock->socketDevice()->socket();
 			char tmp;
 			read(fd,&tmp,1);
 			return;
 		}
 		
-		Array<Uint8> buf(ba);
-		sock->readBlock((char*)(Uint8*)buf,ba);
+		KDatagramPacket pck = sock->receive();
+		const QByteArray & data = pck.data();
+		const Uint8* buf = (const Uint8*)data.data();
 		Uint32 type = ReadUint32(buf,0);
 		switch (type)
 		{
 			case CONNECT:
-				handleConnect(buf);
+				handleConnect(data);
 				break;
 			case ANNOUNCE:
-				handleAnnounce(buf);
+				handleAnnounce(data);
 				break;
 			case ERROR:
-				handleError(buf);
+				handleError(data);
 				break;
 		}
 	}

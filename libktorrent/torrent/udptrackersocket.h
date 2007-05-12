@@ -22,12 +22,15 @@
 
 #include <qobject.h>
 #include <qmap.h>
+#include <qcstring.h>
 #include <util/constants.h>
-#include <util/array.h>
 
-class QHostAddress;
-class QSocketDevice;
-class QSocketNotifier;
+
+namespace KNetwork
+{
+	class KDatagramSocket;
+	class KSocketAddress;
+}
 
 namespace bt
 {
@@ -47,7 +50,6 @@ namespace bt
 	 * @author Joris Guisson
 	 *
 	 * Class which handles communication with one or more UDP trackers.
-	 * TODO: switch to KDatagramSocket 
 	*/
 	class UDPTrackerSocket : public QObject
 	{
@@ -62,9 +64,8 @@ namespace bt
 		 * the transaction_id is the same.
 		 * @param tid The transaction_id 
 		 * @param addr The address to send to
-		 * @param udp_port The port to send to
 		 */
-		void sendConnect(Int32 tid,const QHostAddress & addr,Uint16 udp_port);
+		void sendConnect(Int32 tid,const KNetwork::KSocketAddress & addr);
 
 		/**
 		 * Send an announce message. As a response to this, the announceRecieved
@@ -73,9 +74,8 @@ namespace bt
 		 * @param tid The transaction_id
 		 * @param data The data to send (connect input structure, in UDP Tracker specifaction)
 		 * @param addr The address to send to
-		 * @param udp_port The port to send to
 		 */
-		void sendAnnounce(Int32 tid,const Uint8* data,const QHostAddress & addr,Uint16 udp_port);
+		void sendAnnounce(Int32 tid,const Uint8* data,const KNetwork::KSocketAddress & addr);
 
 		/**
 		 * If a transaction times out, this should be used to cancel it.
@@ -99,7 +99,7 @@ namespace bt
 		/// Get the port in use.
 		static Uint16 getPort();
 	private slots:
-		void dataRecieved(int s);
+		void dataReceived();
 
 	signals:
 		/**
@@ -114,7 +114,7 @@ namespace bt
 		 * @param tid The transaction_id
 		 * @param buf The data
 		 */
-		void announceRecieved(Int32 tid,const Array<Uint8> & buf);
+		void announceRecieved(Int32 tid,const QByteArray & buf);
 
 		/**
 		 * Signal emitted, when an error occurs during a transaction.
@@ -124,14 +124,13 @@ namespace bt
 		void error(Int32 tid,const QString & error_string);
 
 	private:
-		void handleConnect(const Array<Uint8> & buf);
-		void handleAnnounce(const Array<Uint8> & buf);
-		void handleError(const Array<Uint8> & buf);
+		void handleConnect(const QByteArray & buf);
+		void handleAnnounce(const QByteArray & buf);
+		void handleError(const QByteArray & buf);
 		
 	private:
 		Uint16 udp_port;
-		QSocketDevice* sock;
-		QSocketNotifier* sn;
+		KNetwork::KDatagramSocket* sock;
 		QMap<Int32,Action> transactions;
 		static Uint16 port;
 	};

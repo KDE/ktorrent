@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <stdlib.h>
+#include <kresolver.h>
 #include <util/functions.h>
 #include <util/log.h>
 #include <ksocketaddress.h>
@@ -28,7 +29,9 @@
 #include "server.h"
 #include "udptrackersocket.h"
 
+
 using namespace kt;
+using namespace KNetwork;
 
 namespace bt
 {
@@ -49,15 +52,15 @@ namespace bt
 		interval = 0;
 		
 		connect(&conn_timer,SIGNAL(timeout()),this,SLOT(onConnTimeout()));
-		connect(socket,SIGNAL(announceRecieved(Int32, const Array< Uint8 >& )),
-				this,SLOT(announceRecieved(Int32, const Array< Uint8 >& )));
+		connect(socket,SIGNAL(announceRecieved(Int32, const QByteArray &)),
+				this,SLOT(announceRecieved(Int32, const QByteArray& )));
 		connect(socket,SIGNAL(connectRecieved(Int32, Int64 )),
 				this,SLOT(connectRecieved(Int32, Int64 )));
 		connect(socket,SIGNAL(error(Int32, const QString& )),
 				this,SLOT(onError(Int32, const QString& )));
 		
-		addr = LookUpHost(url.host());
-		udp_port = url.port();
+		KResolver::resolveAsync(this,SLOT(onResolverResults(KResolverResults )),
+									   url.host(),QString::number(url.port()));
 	}
 
 
@@ -114,10 +117,12 @@ namespace bt
 		sendAnnounce();
 	}
 	
-	void UDPTracker::announceRecieved(Int32 tid,const Array<Uint8> & buf)
+	void UDPTracker::announceRecieved(Int32 tid,const QByteArray & data)
 	{
 		if (tid != transaction_id)
 			return;
+		
+		const Uint8* buf = (const Uint8*)data.data();
 
 		/*
 		0  32-bit integer  action  1
@@ -135,9 +140,15 @@ namespace bt
 
 		Uint32 nip = leechers + seeders;
 		Uint32 j = 0;
-		for (Uint32 i = 20;i < buf.size() && j < nip;i+=6,j++)
+		for (Uint32 i = 20;i < data.size() && j < nip;i+=6,j++)
 		{
-			addPeer(QHostAddress(ReadUint32(buf,i)).toString(),ReadUint16(buf,i+4));
+			Uint32 ip = ReadUint32(buf,i);
+			addPeer(QString("%1.%2.%3.%4")
+					.arg((ip & (0xFF000000)) >> 24)
+					.arg((ip & (0x00FF0000)) >> 16)
+					.arg((ip & (0x0000FF00)) >> 8)
+					.arg(ip & 0x000000FF),
+					ReadUint16(buf,i+4));
 		}
 		
 		peersReady(this);
@@ -189,7 +200,7 @@ namespace bt
 	void UDPTracker::sendConnect()
 	{
 		transaction_id = socket->newTransactionID();
-		socket->sendConnect(transaction_id,addr,udp_port);
+		socket->sendConnect(transaction_id,address);
 		int tn = 1;
 		for (int i = 0;i < n;i++)
 			tn *= 2;
@@ -251,7 +262,7 @@ namespace bt
 			WriteInt32(buf,92,0);
 		WriteUint16(buf,96,port);
 
-		socket->sendAnnounce(transaction_id,buf,addr,udp_port);
+		socket->sendAnnounce(transaction_id,buf,address);
 	}
 
 	void UDPTracker::onConnTimeout()
@@ -271,6 +282,10 @@ namespace bt
 		}
 	}
 
+	void UDPTracker::onResolverResults(KResolverResults res)
+	{
+		address = res.front().address();
+	}
 	
 }
 #include "udptracker.moc"
