@@ -284,8 +284,9 @@ int KTorrentViewItem::compare(QListViewItem * i,int col,bool) const
 				return -1;
 			else
 				return CompareVal(eta,other->eta);
-		case 8: return CompareVal(s.num_peers,os.num_peers);
-		case 9:
+		case 8: return CompareVal(s.seeders_total,os.seeders_total);
+		case 9: return CompareVal(s.leechers_total,os.leechers_total);
+		case 10:
 		{
 			double perc = s.total_bytes_to_download == 0 ? 100.0 : ((double)s.bytes_downloaded / s.total_bytes_to_download) * 100.0;
 			if (perc > 100.0)
@@ -295,7 +296,7 @@ int KTorrentViewItem::compare(QListViewItem * i,int col,bool) const
 				operc = 100.0;
 			return CompareVal(perc,operc);
 		}
-		case 10:
+		case 11:
 		{
 			float r1 = kt::ShareRatio(s);
 			float r2 = kt::ShareRatio(os);
