@@ -182,6 +182,9 @@ void ViewManager::tabCloseRequest(kt::GUIInterface* gui,QWidget* tab)
 	{
 		if (tab == *i)
 		{
+			if (current == *i)
+				current = 0;
+			
 			gui->removeTabPage(tab);
 			delete tab;
 			views.erase(i);
