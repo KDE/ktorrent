@@ -407,6 +407,8 @@ namespace kt
 		/// Get the traffic limits
 		virtual void getTrafficLimits(Uint32 & up,Uint32 & down) = 0;
 		
+		/// Check if there is enough diskspace available for this torrent
+		virtual bool checkDiskSpace(bool emit_sig = true) = 0;
 	signals:
 		/**
 		 * Emited when we have finished downloading.

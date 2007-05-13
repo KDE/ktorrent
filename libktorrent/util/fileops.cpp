@@ -61,6 +61,14 @@ typedef	int64_t		__s64;
 #define O_LARGEFILE 0
 #endif
 
+#ifdef Q_OS_BSD4
+#include <sys/param.h>
+#include <sys/mount.h>
+#else
+#include <sys/vfs.h>
+#endif
+
+
 namespace bt
 {
 	void MakeDir(const QString & dir,bool nothrow)
@@ -410,4 +418,20 @@ namespace bt
 			throw Error(i18n("Cannot seek in file : %1").arg(strerror(errno)));
 	}
 	
+	bool FreeDiskSpace(const QString & path,Uint64 & bytes_free)
+	{
+		struct statfs stfs;
+		if (statfs(path.local8Bit(), &stfs) == 0)
+		{
+			bytes_free = ((Uint64)stfs.f_bavail) * ((Uint64)stfs.f_bsize);
+			return true;
+		}
+		else
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "Error : statfs for " << path << " failed :  "
+						<< QString(strerror(errno)) << endl;
+
+			return false;
+		}
+	}
 }

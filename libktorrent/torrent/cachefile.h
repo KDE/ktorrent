@@ -117,6 +117,9 @@ namespace bt
 		 * Preallocate disk space
 		 */
 		void preallocate(PreallocationThread* prealloc);
+
+		/// Get the number of bytes this cache file is taking up
+		Uint64 diskUsage();
 		
 	private:
 		void growFile(Uint64 to_write);

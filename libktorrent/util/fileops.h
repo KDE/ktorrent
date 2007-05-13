@@ -153,6 +153,9 @@ namespace bt
 	 * @throw Error if something else goes wrong
 	 */
 	void SeekFile(int fd,Int64 off,int whence);
+
+	/// Calculate the number of bytes free on the filesystem path is located
+	bool FreeDiskSpace(const QString & path,Uint64 & bytes_free);
 }
 
 #endif

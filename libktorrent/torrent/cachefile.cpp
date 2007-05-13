@@ -479,5 +479,26 @@ namespace bt
 			closeTemporary();
 	}
 
-	
+	Uint64 CacheFile::diskUsage()
+	{
+		Uint64 ret = 0;
+		bool close_again = false;
+		if (fd == -1)
+		{
+			openFile(READ);
+			close_again = true;
+		}
+
+		struct stat sb;
+		if (fstat(fd,&sb) == 0)
+		{
+			ret = (Uint64)sb.st_blocks * 512;
+		}
+		
+	//	Out(SYS_GEN|LOG_NOTICE) << "CF: " << path << " is taking up " << ret << " bytes" << endl;
+		if (close_again)
+			closeTemporary();
+
+		return ret;
+	}
 }

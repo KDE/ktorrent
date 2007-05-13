@@ -137,6 +137,11 @@ namespace bt
 		 * This will return false if we are close to system limits.
 		 */
 		static bool mappedModeAllowed();
+		
+		/**
+		 * Get the number of bytes all the files of this torrent are currently using on disk.
+		 * */
+		virtual Uint64 diskUsage() = 0;
 	};
 
 }

@@ -744,6 +744,42 @@ namespace bt
 			DeleteEmptyDirs(output_dir,fpath);
 		}
 	}
+	
+	Uint64 MultiFileCache::diskUsage()
+	{
+		Uint64 sum = 0;
+
+		for (Uint32 i = 0;i < tor.getNumFiles();i++)
+		{
+			TorrentFile & tf = tor.getFile(i);
+			if (tf.doNotDownload())
+				continue;
+
+			try
+			{
+				CacheFile* cf = files.find(i);
+				if (cf)
+				{
+					sum += cf->diskUsage();
+				}
+				else
+				{
+					// doesn't exist yet, must be before open is called
+					// so create one and delete it right after
+					cf = new CacheFile();
+					cf->open(cache_dir + tf.getPath(),tf.getSize());
+					sum += cf->diskUsage();
+					delete cf;
+				}
+			}
+			catch (bt::Error & err) // make sure we catch any exceptions
+			{
+				Out(SYS_DIO|LOG_DEBUG) << "Error: " << err.toString() << endl;
+			}
+		}
+
+		return sum;
+	}
 
 	///////////////////////////////
 

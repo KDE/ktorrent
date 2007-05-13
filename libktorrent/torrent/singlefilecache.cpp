@@ -185,4 +185,12 @@ namespace bt
 	{
 		bt::Delete(output_file);
 	}
+
+	Uint64 SingleFileCache::diskUsage()
+	{
+		if (!fd)
+			open();
+
+		return fd->diskUsage();
+	}
 }

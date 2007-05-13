@@ -297,6 +297,9 @@ namespace bt
 		
 		/// Set the maximum chunk size for a data check, 0 means alllways check
 		static void setMaxChunkSizeForDataCheck(Uint32 mcs) {max_chunk_size_for_data_check = mcs;}
+
+		/// Get the current disk usage of all the files in this torrent
+		Uint64 diskUsage();
 	signals:
 		/**
 		 * Emitted when a range of chunks has been excluded

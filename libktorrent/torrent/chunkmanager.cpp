@@ -1096,6 +1096,12 @@ namespace bt
 	{
 		cache->deleteDataFiles();
 	}
+
+	Uint64 ChunkManager::diskUsage()
+	{
+		return cache->diskUsage();
+	}
+
 }
 
 #include "chunkmanager.moc"

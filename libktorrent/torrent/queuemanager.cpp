@@ -27,6 +27,7 @@
 #include <util/error.h>
 #include <util/sha1hash.h>
 #include <util/waitjob.h>
+#include <util/fileops.h>
 #include <torrent/globals.h>
 #include <torrent/torrent.h>
 #include <torrent/torrentcontrol.h>
@@ -34,12 +35,6 @@
 #include <interfaces/trackerslist.h>
 #include <settings.h>
 
-#ifdef Q_OS_BSD4
-#include <sys/param.h>
-#include <sys/mount.h>
-#else
-#include <sys/vfs.h>
-#endif
 
 using namespace kt;
 
@@ -122,14 +117,7 @@ namespace bt
 			if (!s.completed) //no need to check diskspace for seeding torrents
 			{
 				//check diskspace
-
-				struct statfs stfs;
-				statfs(tc->getDataDir().ascii(), &stfs);
-				unsigned long long bytes_free = ((unsigned long long)stfs.f_bavail) *
-												((unsigned long long)stfs.f_bsize);
-				unsigned long long bytes_to_download = tc->getStats().total_bytes_to_download;
-
-				bool shortDiskSpace = bytes_to_download > bytes_free;
+				bool shortDiskSpace = !tc->checkDiskSpace(false);
 
 				if (shortDiskSpace)
 				{

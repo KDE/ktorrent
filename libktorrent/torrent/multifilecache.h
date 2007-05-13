@@ -57,6 +57,7 @@ namespace bt
 		virtual void preallocateDiskSpace(PreallocationThread* prealloc);
 		virtual bool hasMissingFiles(QStringList & sl);
 		virtual void deleteDataFiles();
+		virtual Uint64 diskUsage();
 	private:
 		void touch(TorrentFile & tf);
 		virtual void downloadStatusChanged(TorrentFile*, bool);

@@ -70,14 +70,6 @@
 #include <net/socketmonitor.h>
 		
 
-#ifdef Q_OS_BSD4
-#include <sys/param.h>
-#include <sys/mount.h>
-#else
-#include <sys/vfs.h>
-#endif
-
-
 using namespace kt;
 
 namespace bt
@@ -307,7 +299,7 @@ namespace bt
 			//Update diskspace if needed (every 1 min)			
 			if(!stats.completed && stats.running && bt::Now() - last_diskspace_check >= 60 * 1000)
 			{
-				checkDiskSpace();
+				checkDiskSpace(true);
 			}
 		}
 		catch (Error & e)
@@ -1597,30 +1589,34 @@ namespace bt
 		stats.output_path = cman->getOutputPath();
 	}
 	
-	bool TorrentControl::checkDiskSpace()
+	bool TorrentControl::checkDiskSpace(bool emit_sig)
 	{	
 		last_diskspace_check = bt::Now();
 		
 		//calculate free disk space
-		struct statfs stfs;
-		statfs(getDataDir().ascii(), &stfs);
-		unsigned long long bytes_free = ((unsigned long long)stfs.f_bavail) *
-				((unsigned long long)stfs.f_bsize);
-
-		unsigned long long bytes_to_download = stats.total_bytes_to_download;
-						
-		if(bytes_to_download > bytes_free)
+		Uint64 bytes_free = 0;
+		if (FreeDiskSpace(getDataDir(),bytes_free))
 		{
-			bool toStop = bytes_free < (unsigned long long) Settings::minDiskSpace() * 1024 * 1024;						
-			
-			emit diskSpaceLow(this, toStop);
-			
-			if(!stats.running)
+			Uint64 bytes_to_download = stats.total_bytes_to_download;
+			Uint64 downloaded = cman->diskUsage();
+			Uint64 remaining = 0;
+			if (downloaded <= bytes_to_download)
+				remaining = bytes_to_download - downloaded;
+
+			if (remaining > bytes_free)
 			{
-				stats.status = NO_SPACE_LEFT;
+				bool toStop = bytes_free < (Uint64) Settings::minDiskSpace() * 1024 * 1024;						
+				
+				if (emit_sig)
+					emit diskSpaceLow(this, toStop);
+				
+				if (!stats.running)
+				{
+					stats.status = NO_SPACE_LEFT;
+				}
+				
+				return false;
 			}
-			
-			return false;
 		}
 		
 		return true;

@@ -248,7 +248,7 @@ namespace bt
 		void createFiles();
 		
 		///Checks if diskspace is low
-		bool checkDiskSpace();
+		bool checkDiskSpace(bool emit_sig = true);
 		
 		virtual void setTrafficLimits(Uint32 up,Uint32 down);
 		virtual void getTrafficLimits(Uint32 & up,Uint32 & down);

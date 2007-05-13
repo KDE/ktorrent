@@ -54,6 +54,7 @@ namespace bt
 		virtual void preallocateDiskSpace(PreallocationThread* prealloc);
 		virtual bool hasMissingFiles(QStringList & sl);
 		virtual void deleteDataFiles();
+		virtual Uint64 diskUsage();
 	};
 
 }

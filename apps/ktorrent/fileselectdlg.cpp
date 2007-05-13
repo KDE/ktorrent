@@ -42,16 +42,10 @@
 #include <interfaces/functions.h>
 #include <settings.h>
 #include <util/functions.h>
+#include <util/fileops.h>
 
 #include <groups/group.h>
 #include <groups/groupmanager.h>
-
-#ifdef Q_OS_BSD4
-#include <sys/param.h>
-#include <sys/mount.h>
-#else
-#include <sys/vfs.h>
-#endif
 
 using namespace kt;
 
@@ -199,16 +193,13 @@ void FileSelectDlg::updateSizeLabels()
 		sdir = sdir.upURL();
 	}
 	
-	struct statfs stfs;
-	if(statfs(sdir.path().ascii(), &stfs))
+	Uint64 bytes_free = 0;
+	if (!FreeDiskSpace(sdir.path(),bytes_free))
 	{
-		statfs(tc->getDataDir().ascii(), &stfs);
+		FreeDiskSpace(tc->getDataDir(),bytes_free);
 	}
 	
-	unsigned long long bytes_free = ((unsigned long long)stfs.f_bavail) *
-									((unsigned long long)stfs.f_bsize);
-
-	unsigned long long bytes_to_download = 0;
+	Uint64 bytes_to_download = 0;
 	if (root)
 		bytes_to_download = root->bytesToDownload();
 	else
