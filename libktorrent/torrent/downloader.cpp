@@ -111,6 +111,7 @@ namespace bt
 					downloaded -= cd->getChunk()->getSize();
 			}
 			current_chunks.erase(p.getIndex());
+			update(); // run an update to assign new pieces
 		}
 		else
 		{
