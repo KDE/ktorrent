@@ -120,9 +120,15 @@ namespace kt
 	{
 		KLocale* loc = KGlobal::locale();
 		const PeerInterface::Stats & s = peer->getStats();
-		
-		setText(3,KBytesPerSecToString(s.download_rate / 1024.0));
-		setText(4,KBytesPerSecToString(s.upload_rate / 1024.0));
+
+		if (s.download_rate >= 103) // lowest "visible" speed, all below will be 0,0 Kb/s
+			setText(3,KBytesPerSecToString(s.download_rate / 1024.0));
+		else
+			setText(3, "");
+		if (s.upload_rate >= 103) // lowest "visible" speed, all below will be 0,0 Kb/s
+			setText(4,KBytesPerSecToString(s.upload_rate / 1024.0));
+		else
+			setText(4, "");
 		//setPixmap(5,!s.choked ? yes_pix : no_pix);
 		setText(5,s.choked ? i18n("Yes") : i18n("No"));
 		//setPixmap(6,!s.snubbed ? yes_pix : no_pix);

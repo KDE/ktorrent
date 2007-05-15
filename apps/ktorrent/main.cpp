@@ -150,6 +150,7 @@ int main(int argc, char **argv)
 	about.addCredit("Goten Xiao",I18N_NOOP("Patch to load silently with a save location"),0);
 	about.addCredit("Rapsys",I18N_NOOP("Fixes in PHP code of webinterface"),0);
 	about.addCredit("Athantor",I18N_NOOP("XFS specific disk preallocation"),0);
+	about.addCredit("twisted_fall",I18N_NOOP("Patch to not show very low speeds"),"twisted.fall@gmail.com");
 
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);

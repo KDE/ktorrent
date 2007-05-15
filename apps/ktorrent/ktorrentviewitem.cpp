@@ -191,15 +191,25 @@ void KTorrentViewItem::update()
 	
 	if(m_parent->columnVisible(5))
 	{
-		if (s.bytes_left_to_download == 0)
-			setText(5,KBytesPerSecToString(0));
+		if (s.download_rate >= 103) // lowest "visible" speed, all below will be 0,0 Kb/s
+		{
+			if (s.bytes_left_to_download == 0)
+				setText(5,KBytesPerSecToString(0));
+			else
+				setText(5,KBytesPerSecToString(s.download_rate / 1024.0));
+		}
 		else
-			setText(5,KBytesPerSecToString(s.download_rate / 1024.0));
+			setText(5, "");
 	}
-	
+
 	if(m_parent->columnVisible(6))
-		setText(6,KBytesPerSecToString(s.upload_rate / 1024.0));
-  
+	{
+		if (s.upload_rate >= 103) // lowest "visible" speed, all below will be 0,0 Kb/s
+			setText(6,KBytesPerSecToString(s.upload_rate / 1024.0));
+		else
+			setText(6, "");
+	}
+
 	if(m_parent->columnVisible(7))
 	{
 		if (s.bytes_left_to_download == 0)
