@@ -64,6 +64,9 @@ TrayIcon::TrayIcon( KTorrentCore* tc, QWidget *parent, const char *name)
 			this,SLOT(canNotStart(kt::TorrentInterface*, kt::TorrentStartResponse)));
 	connect(m_core, SIGNAL(lowDiskSpace(kt::TorrentInterface*, bool)),
 			this, SLOT(lowDiskSpace(kt::TorrentInterface*, bool)));
+	
+	connect(this->contextMenu(),SIGNAL(aboutToShow()),m_hover_popup,SLOT(contextMenuAboutToShow()));
+	connect(this->contextMenu(),SIGNAL(aboutToHide()),m_hover_popup,SLOT(contextMenuAboutToHide()));
 }
 
 TrayIcon::~TrayIcon()

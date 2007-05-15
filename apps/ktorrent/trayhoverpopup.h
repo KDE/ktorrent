@@ -46,6 +46,10 @@ public:
 	
 	/// Update the text which is shown
 	void updateText(const QString & msg);
+	
+public slots:
+	void contextMenuAboutToShow();
+	void contextMenuAboutToHide();
 
 private:
 	void create();
@@ -54,11 +58,13 @@ private slots:
 	void onHoverTimeout();
 	void onShowTimeout();
 	
+	
 private:
 	const QPixmap & pix;
 	QTimer hover_timer;
 	QTimer show_timer;
 	QLabel* text;
+	bool context_menu_shown;
 };
 
 #endif

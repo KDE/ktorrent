@@ -35,16 +35,32 @@ TrayHoverPopup::TrayHoverPopup(const QPixmap & pix,QWidget *parent, const char *
 	create();
 	setPalette(QToolTip::palette());
 	setLineWidth(1);
+	context_menu_shown = false;
 }
 
 
 TrayHoverPopup::~TrayHoverPopup()
 {}
 
+void TrayHoverPopup::contextMenuAboutToShow()
+{
+	context_menu_shown = true;
+	if (isShown())
+	{
+		hide();
+		hover_timer.stop();
+	}
+}
+
+void TrayHoverPopup::contextMenuAboutToHide()
+{
+	context_menu_shown = false;
+}
+			
 
 void TrayHoverPopup::enterEvent()
 {
-	if (isHidden())
+	if (isHidden() && !context_menu_shown)
 	{
 		// start the show timer
 		show_timer.start(2000,true);
@@ -69,7 +85,8 @@ void TrayHoverPopup::onHoverTimeout()
 
 void TrayHoverPopup::onShowTimeout()
 {
-	show();
+	if (!context_menu_shown)
+		show();
 }
 
 void TrayHoverPopup::updateText(const QString & msg)
