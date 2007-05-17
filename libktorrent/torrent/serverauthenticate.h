@@ -42,14 +42,31 @@ namespace bt
 		ServerAuthenticate(mse::StreamSocket* sock,Server* server);
 		virtual ~ServerAuthenticate();
 
+		static bool isFirewalled();
+		static void setFirewalled(bool Firewalled);
+
 	protected:
 		void onFinish(bool succes);
 		void handshakeRecieved(bool full);
-
+		
 	protected:
 		Server* server;
+		
+	private:
+        	static bool s_firewalled;
 	};
 
 }
+
+inline bool bt::ServerAuthenticate::isFirewalled()
+{
+	return s_firewalled;
+}
+
+inline void bt::ServerAuthenticate::setFirewalled(bool Firewalled)
+{
+	s_firewalled = Firewalled;
+}
+
 
 #endif

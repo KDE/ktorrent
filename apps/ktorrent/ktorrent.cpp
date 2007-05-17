@@ -60,6 +60,7 @@
 #include <torrent/uploadcap.h>
 #include <torrent/downloadcap.h>
 #include <util/error.h>
+#include <torrent/serverauthenticate.h>
 #include <torrent/globals.h>
 #include <torrent/tracker.h>
 #include <torrent/downloader.h>
@@ -156,11 +157,16 @@ KTorrent::KTorrent()
 	m_statusSpeed = new QLabel(this);
 	m_statusTransfer = new QLabel(this);
 	m_statusDHT = new QLabel(this);
-	
+	m_statusFirewall = new QLabel(this);
+	m_statusFirewall->setText(i18n("No incoming connections (possibly firewalled)")); // this will be hidden when we see an incoming connection
+
+	statusBar()->addWidget(m_statusFirewall);
 	statusBar()->addWidget(m_statusInfo,1);
 	statusBar()->addWidget(m_statusDHT);
 	statusBar()->addWidget(m_statusSpeed);
 	statusBar()->addWidget(m_statusTransfer);
+
+	m_statusFirewall->hide(); 
 
 	setupActions();
 	currentTorrentChanged(0);
@@ -232,6 +238,7 @@ KTorrent::~KTorrent()
 	delete m_statusInfo;
 	delete m_statusTransfer;
 	delete m_statusSpeed;
+	delete m_statusFirewall;
 }
 
 void KTorrent::openView(kt::Group* g)
@@ -747,6 +754,11 @@ void KTorrent::updatedStats()
 			.arg(BytesToString(stats.bytes_uploaded));
 	m_statusTransfer->setText(tmp1);
 	
+	if (ServerAuthenticate::isFirewalled() && m_core->getNumTorrentsRunning() > 0) 
+		m_statusFirewall->show();
+	else
+		m_statusFirewall->hide();
+
 	m_view_man->update();
 	
 	m_systray_icon->updateStats(stats,Settings::showSpeedBarInTrayIcon(),Settings::downloadBandwidth(), Settings::uploadBandwidth());
@@ -850,6 +862,11 @@ QString KTorrent::getStatusSpeed()
 QString KTorrent::getStatusDHT() 
 {
 	return m_statusDHT->text();
+}
+
+QString KTorrent::getStatusFirewall()
+{
+	return m_statusFirewall->text();
 }
 
 QCStringList KTorrent::getTorrentInfo(kt::TorrentInterface* tc)

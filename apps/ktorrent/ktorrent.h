@@ -112,6 +112,7 @@ public:
 	QString	getStatusTransfer();
 	QString	getStatusSpeed();
 	QString	getStatusDHT();
+	QString getStatusFirewall();
 	QCStringList getTorrentInfo(kt::TorrentInterface* tc);
 
 public slots:
@@ -207,6 +208,7 @@ private:
 	QLabel* m_statusTransfer;
 	QLabel* m_statusSpeed;
 	QLabel* m_statusDHT;
+	QLabel* m_statusFirewall;
 	
 	KAction* m_start;
 	KAction* m_stop;

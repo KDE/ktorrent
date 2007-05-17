@@ -32,6 +32,7 @@
 
 namespace bt
 {
+	bool ServerAuthenticate::s_firewalled = true;
 
 
 	ServerAuthenticate::ServerAuthenticate(mse::StreamSocket* sock,Server* server)
@@ -41,13 +42,16 @@ namespace bt
 
 
 	ServerAuthenticate::~ServerAuthenticate()
-	{}
+	{
+	}
+	
 	
 	void ServerAuthenticate::onFinish(bool succes)
 	{		
 		Out(SYS_CON|LOG_NOTICE) << "Authentication(S) to " << sock->getRemoteIPAddress() 
 				<< " : " << (succes ? "ok" : "failure") << endl;
 		finished = true;
+		setFirewalled(false);
 		
 		if (!succes)
 		{

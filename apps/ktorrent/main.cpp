@@ -151,6 +151,7 @@ int main(int argc, char **argv)
 	about.addCredit("Rapsys",I18N_NOOP("Fixes in PHP code of webinterface"),0);
 	about.addCredit("Athantor",I18N_NOOP("XFS specific disk preallocation"),0);
 	about.addCredit("twisted_fall",I18N_NOOP("Patch to not show very low speeds"),"twisted.fall@gmail.com");
+	about.addCredit("Lucke",I18N_NOOP("Patch to show potentially firewalled status"),0);
 
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);
