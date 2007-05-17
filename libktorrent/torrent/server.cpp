@@ -149,7 +149,7 @@ namespace bt
 		while (i != peer_managers.end())
 		{
 			PeerManager* pm = *i;
-			if (pm->getTorrent().getInfoHash() == hash)
+			if (pm && pm->getTorrent().getInfoHash() == hash)
 			{
 				if (!pm->isStarted())
 					return 0;
