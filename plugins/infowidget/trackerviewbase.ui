@@ -20,6 +20,9 @@
             <verstretch>0</verstretch>
         </sizepolicy>
     </property>
+    <property name="caption">
+        <string>TrackerViewBase</string>
+    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -53,7 +56,7 @@
                                 </sizepolicy>
                             </property>
                             <property name="text">
-                                <string>Tracker URL:</string>
+                                <string>URL:</string>
                             </property>
                         </widget>
                         <widget class="KSqueezedTextLabel">
@@ -102,7 +105,7 @@
                                 </sizepolicy>
                             </property>
                             <property name="text">
-                                <string>Tracker status:</string>
+                                <string>Status:</string>
                             </property>
                         </widget>
                         <widget class="QLabel">
