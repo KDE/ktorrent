@@ -38,6 +38,8 @@ using namespace kt;
 
 namespace bt
 {
+	const Uint32 MAX_LOG_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
+	
 	class Log::Private
 	{
 	public:
@@ -103,8 +105,8 @@ namespace bt
 		{
 			tmp += line;
 		}
-
-		void endline()
+		
+		void finishLine()
 		{
 			*out << QDateTime::currentDateTime().toString() << ": " << tmp << ::endl;
 			fptr.flush();
@@ -122,6 +124,19 @@ namespace bt
 				}
 			}
 			tmp = "";
+		}
+
+		void endline()
+		{
+			finishLine();
+			if (fptr.size() > MAX_LOG_FILE_SIZE)
+			{
+				// calling setOutputFile will rotate the logs
+				tmp = "Log larger then 10 MB, rotating";
+				finishLine();
+				QString file = fptr.name();
+				setOutputFile(file);
+			}
 		}
 	};
 	
