@@ -300,16 +300,29 @@ namespace kt
 		else if (ext == "php")
 		{
 			const QMap<QString,QString> & args = url.queryItems();
+			bool redirect = false;
 			if (args.count() > 0 && session.logged_in)
 			{
-				php_i->exec(args);
+				redirect = php_i->exec(args);
 			}
 			
-			HttpResponseHeader rhdr(200);
-			setDefaultResponseHeaders(rhdr,"text/html",true);
+			if (redirect)
+			{
+				HttpResponseHeader rhdr(301);
+				setDefaultResponseHeaders(rhdr,"text/html",true);
+				rhdr.setValue("Location",url.path());
+				
+				hdlr->executePHPScript(php_i,rhdr,WebInterfacePluginSettings::phpExecutablePath(),
+									   path,url.queryItems());
+			}
+			else
+			{
+				HttpResponseHeader rhdr(200);
+				setDefaultResponseHeaders(rhdr,"text/html",true);
 			
-			hdlr->executePHPScript(php_i,rhdr,WebInterfacePluginSettings::phpExecutablePath(),
+				hdlr->executePHPScript(php_i,rhdr,WebInterfacePluginSettings::phpExecutablePath(),
 								   path,url.queryItems());
+			}
 		}
 		else
 		{

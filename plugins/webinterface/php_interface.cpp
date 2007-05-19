@@ -146,8 +146,9 @@ namespace kt
 		core=c;
 	}
 	
-	void PhpActionExec::exec(const QMap<QString, QString> & params)
+	bool PhpActionExec::exec(const QMap<QString, QString> & params)
 	{
+		bool ret = false;
 		QMap<QString, QString>::ConstIterator it;
 		for ( it = params.begin(); it != params.end(); ++it ) 
 		{
@@ -170,15 +171,18 @@ namespace kt
 						if (Settings::dhtSupport() && !ht.isRunning())
 						{
 							ht.start(kt::DataDir() + "dht_table",Settings::dhtPort());
+							ret = true;
 						}
 						else if (!Settings::dhtSupport() && ht.isRunning())
 						{
 							ht.stop();
+							ret = true;
 						}
 						else if (Settings::dhtSupport() && ht.getPort() != Settings::dhtPort())
 						{
 							ht.stop();
 							ht.start(kt::DataDir() + "dht_table",Settings::dhtPort());
+							ret = true;
 						}
 					}	
 					break;
@@ -202,6 +206,7 @@ namespace kt
 						{
 							Globals::instance().getServer().disableEncryption();
 						}
+						ret = true;
 					}
 					break;
 				case 'g':
@@ -209,12 +214,14 @@ namespace kt
 					{
 						Settings::setMaxTotalConnections(it.data().toInt());
 						PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
+						ret = true;
 					}
 					break;
 				case 'l':
 					if(it.key()=="load_torrent" && it.data().length() > 0)
 					{
 						core->loadSilently(KURL::decode_string(it.data()));
+						ret = true;
 					}
 					break;
 				case 'm':
@@ -222,32 +229,38 @@ namespace kt
 					{
 						core->setMaxDownloads(it.data().toInt());
 						Settings::setMaxDownloads(it.data().toInt());
+						ret = true;
 					}
 					else if(it.key()=="maximum_seeds")
 					{
 						core->setMaxSeeds(it.data().toInt());
 						Settings::setMaxSeeds(it.data().toInt());	
+						ret = true;
 					}
 					else if(it.key()=="maximum_connection_per_torrent")
 					{
 						PeerManager::setMaxConnections(it.data().toInt());
 						Settings::setMaxConnections(it.data().toInt());
+						ret = true;
 					}
 					else if(it.key()=="maximum_upload_rate")
 					{
 						Settings::setMaxUploadRate(it.data().toInt());
 						core->setMaxUploadSpeed(Settings::maxUploadRate());
 						net::SocketMonitor::setUploadCap( Settings::maxUploadRate() * 1024);
+						ret = true;
 					}
 					else if(it.key()=="maximum_download_rate")
 					{
 						Settings::setMaxDownloadRate(it.data().toInt());
 						core->setMaxDownloadSpeed(Settings::maxDownloadRate());
 						net::SocketMonitor::setDownloadCap(Settings::maxDownloadRate()*1024);
+						ret = true;
 					}
 					else if(it.key()=="maximum_share_ratio")
 					{
 						Settings::setMaxRatio(it.data().toInt());
+						ret = true;
 					}
 					break;
 				case 'n':
@@ -255,6 +268,7 @@ namespace kt
 					{
 						Settings::setNumUploadSlots(it.data().toInt());
 						Choker::setNumUploadSlots(Settings::numUploadSlots());
+						ret = true;
 					}
 					break;
 				case 'p':
@@ -267,12 +281,14 @@ namespace kt
 					{
 						Settings::setUdpTrackerPort(it.data().toInt());
 						UDPTrackerSocket::setPort(Settings::udpTrackerPort());
+						ret = true;
 					}
 					break;
 				case 'q':
 					if(it.key()=="quit" && !it.data().isEmpty())
 					{
 						kapp->quit();
+						ret = true;
 					}
 					break;
 				case 'r':
@@ -284,6 +300,7 @@ namespace kt
 							if(it.data().toInt()==k)
 							{
 								core->remove((*i), false);
+								ret = true;
 								break;
 							}
 						}
@@ -306,6 +323,7 @@ namespace kt
 							if(it.data().toInt()==k)
 							{
 								(*i)->stop(true);
+								ret = true;
 								break;
 							}
 						}
@@ -318,6 +336,7 @@ namespace kt
 							if(it.data().toInt()==k)
 							{
 								(*i)->start();
+								ret = true;
 								break;
 							}
 						}
@@ -329,6 +348,7 @@ namespace kt
 			}
 			Settings::writeConfig();	
 		}
+		return ret;
 	}
 	
 	/************************

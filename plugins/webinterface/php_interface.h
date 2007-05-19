@@ -51,7 +51,7 @@ namespace kt
 			PhpActionExec(CoreInterface *c);
 			virtual ~PhpActionExec(){};
 			
-			void exec(const QMap<QString, QString> & params);
+			bool exec(const QMap<QString, QString> & params);
 		private:	
 			CoreInterface *core;
 	};

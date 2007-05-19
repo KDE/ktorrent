@@ -26,6 +26,7 @@ namespace kt
 		switch (r)
 		{
 			case 200: return "OK";
+			case 301: return "Moved Permanently";
 			case 304: return "Not Modified";
 			case 404: return "Not Found";
 		}
