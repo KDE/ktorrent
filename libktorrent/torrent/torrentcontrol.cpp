@@ -1598,7 +1598,15 @@ namespace bt
 		if (FreeDiskSpace(getDataDir(),bytes_free))
 		{
 			Uint64 bytes_to_download = stats.total_bytes_to_download;
-			Uint64 downloaded = cman->diskUsage();
+			Uint64 downloaded = 0;
+			try
+			{
+				downloaded = cman->diskUsage();
+			}
+			catch (bt::Error & err)
+			{
+				Out(SYS_GEN|LOG_DEBUG) << "Error : " << err.toString() << endl;
+			}
 			Uint64 remaining = 0;
 			if (downloaded <= bytes_to_download)
 				remaining = bytes_to_download - downloaded;
