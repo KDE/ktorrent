@@ -23,6 +23,8 @@
 #include <kurlrequester.h>
 #include <kpushbutton.h>
 #include <kmessagebox.h>
+#include <kio/job.h>
+#include <kio/jobclasses.h>
 #include <util/log.h>
 #include <util/error.h>
 #include <util/file.h>
@@ -74,31 +76,11 @@ namespace kt
 		// only used for check in separate thread, so does not apply for the import plugin
 	}
 	
-	void ImportDialog::onImport()
+	void ImportDialog::import(Torrent & tor)
 	{
-		m_progress->setEnabled(true);
-		m_import_btn->setEnabled(false);
-		m_cancel_btn->setEnabled(false);
-		m_torrent_url->setEnabled(false);
-		m_data_url->setEnabled(false);
-		
 		// get the urls
 		KURL tor_url = KURL::fromPathOrURL(m_torrent_url->url());
 		KURL data_url = KURL::fromPathOrURL(m_data_url->url());
-		Torrent tor;
-		
-		// try to load the torrent
-		try
-		{
-			tor.load(tor_url.path(),false);
-		}
-		catch (Error & e)
-		{
-			KMessageBox::error(this,i18n("Cannot load the torrent file : %1").arg(e.toString()),
-							   i18n("Error"));
-			reject();
-			return;
-		}
 		
 		// now we need to check the data
 		DataChecker* dc = 0;
@@ -201,6 +183,70 @@ namespace kt
 		
 		delete dc;
 		accept();
+	}
+	
+	void ImportDialog::onTorrentGetReult(KIO::Job* j)
+	{
+		if (j->error())
+		{
+			j->showErrorDialog(this);
+			reject();
+		}
+		else
+		{
+			KIO::StoredTransferJob* stj = (KIO::StoredTransferJob*)j;
+			Torrent tor;
+		
+			// try to load the torrent
+			try
+			{
+				tor.load(stj->data(),false);
+			}
+			catch (Error & e)
+			{
+				KMessageBox::error(this,i18n("Cannot load the torrent file : %1").arg(e.toString()),
+								   i18n("Error"));
+				reject();
+				return;
+			}
+			import(tor);
+		}
+	}
+	
+	void ImportDialog::onImport()
+	{
+		m_progress->setEnabled(true);
+		m_import_btn->setEnabled(false);
+		m_cancel_btn->setEnabled(false);
+		m_torrent_url->setEnabled(false);
+		m_data_url->setEnabled(false);
+		
+		KURL tor_url = KURL::fromPathOrURL(m_torrent_url->url());
+		if (!tor_url.isLocalFile())
+		{
+			// download the torrent file
+			KIO::StoredTransferJob* j = KIO::storedGet(tor_url);
+			connect(j,SIGNAL(result(KIO::Job* )),this,SLOT(onTorrentGetReult(KIO::Job*)));
+		}
+		else
+		{
+			KURL tor_url = KURL::fromPathOrURL(m_torrent_url->url());
+			Torrent tor;
+		
+			// try to load the torrent
+			try
+			{
+				tor.load(tor_url.path(),false);
+			}
+			catch (Error & e)
+			{
+				KMessageBox::error(this,i18n("Cannot load the torrent file : %1").arg(e.toString()),
+								   i18n("Error"));
+				reject();
+				return;
+			}
+			import(tor);
+		}
 	}
 	
 	void ImportDialog::writeIndex(const QString & file,const BitSet & chunks)

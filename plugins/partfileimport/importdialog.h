@@ -33,6 +33,11 @@ namespace bt
 	class Torrent;
 }
 
+namespace KIO
+{
+	class Job;
+}
+
 
 namespace kt
 {
@@ -48,6 +53,7 @@ namespace kt
 		
 	public slots:
 		void onImport();
+		void onTorrentGetReult(KIO::Job* j);
 	
 	private:
 		void writeIndex(const QString & file,const bt::BitSet & chunks);
@@ -60,6 +66,8 @@ namespace kt
 		virtual void progress(bt::Uint32 num,bt::Uint32 total);
 		virtual void status(bt::Uint32 num_failed,bt::Uint32 num_downloaded);
 		virtual void finished();
+		
+		void import(bt::Torrent & tor);
 		
 	private:
 		CoreInterface* core;
