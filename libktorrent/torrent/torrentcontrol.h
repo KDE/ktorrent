@@ -253,6 +253,9 @@ namespace bt
 		virtual void setTrafficLimits(Uint32 up,Uint32 down);
 		virtual void getTrafficLimits(Uint32 & up,Uint32 & down);
 		
+		///Get the PeerManager
+		const PeerManager * getPeerMgr() const;
+		
 	public slots:
 		/**
 		 * Update the object, should be called periodically.

@@ -27,6 +27,7 @@ tab of each view
 is moved away from the tray icon and the text can be updated
 - The log now gets autorotated when it gets larger then 10 MB
 - Import dialog is now network transparent for the torrent file 
+- Added statistics plugin which was developed by Krzysztof Kundzicz
 
 Changes in 2.1.4
 - Fixed crash in parsing of DHT messages

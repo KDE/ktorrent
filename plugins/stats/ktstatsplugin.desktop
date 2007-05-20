@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Service
+Name=StatsPlugin
+Comment=
+ServiceTypes=KTorrent/Plugin
+X-KDE-Library=ktstatsplugin

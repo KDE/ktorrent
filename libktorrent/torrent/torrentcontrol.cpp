@@ -1688,6 +1688,11 @@ namespace bt
 		up = upload_limit;
 		down = download_limit;
 	}
+	
+	const PeerManager * TorrentControl::getPeerMgr() const
+	{
+		return pman;
+	}
 }
 
 #include "torrentcontrol.moc"
