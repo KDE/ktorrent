@@ -11,19 +11,22 @@
             <x>0</x>
             <y>0</y>
             <width>798</width>
-            <height>623</height>
+            <height>524</height>
         </rect>
     </property>
     <property name="caption">
         <string>Rss Feeds</string>
     </property>
-    <vbox>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QTabWidget">
+        <widget class="QTabWidget" row="0" column="0">
             <property name="name">
                 <cstring>tabs</cstring>
+            </property>
+            <property name="margin">
+                <number>2</number>
             </property>
             <widget class="QWidget">
                 <property name="name">
@@ -358,582 +361,529 @@
                 <attribute name="title">
                     <string>Filters</string>
                 </attribute>
-                <vbox>
+                <grid>
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QSplitter">
+                    <widget class="QLayoutWidget" row="0" column="0" rowspan="5" colspan="1">
                         <property name="name">
-                            <cstring>splitter7</cstring>
+                            <cstring>layout28</cstring>
                         </property>
-                        <property name="enabled">
-                            <bool>true</bool>
-                        </property>
-                        <property name="orientation">
-                            <enum>Horizontal</enum>
-                        </property>
-                        <widget class="QLayoutWidget">
+                        <vbox>
                             <property name="name">
-                                <cstring>layout28</cstring>
+                                <cstring>unnamed</cstring>
                             </property>
-                            <vbox>
+                            <widget class="QGroupBox">
                                 <property name="name">
-                                    <cstring>unnamed</cstring>
+                                    <cstring>groupBox12</cstring>
                                 </property>
-                                <widget class="QGroupBox">
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>5</hsizetype>
+                                        <vsizetype>5</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>3</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="title">
+                                    <string>Accept Filters</string>
+                                </property>
+                                <grid>
                                     <property name="name">
-                                        <cstring>groupBox12</cstring>
+                                        <cstring>unnamed</cstring>
                                     </property>
-                                    <property name="sizePolicy">
-                                        <sizepolicy>
-                                            <hsizetype>5</hsizetype>
-                                            <vsizetype>5</vsizetype>
-                                            <horstretch>0</horstretch>
-                                            <verstretch>3</verstretch>
-                                        </sizepolicy>
-                                    </property>
-                                    <property name="title">
-                                        <string>Accept Filters</string>
-                                    </property>
-                                    <grid>
+                                    <widget class="QListBox" row="0" column="0" rowspan="1" colspan="2">
                                         <property name="name">
-                                            <cstring>unnamed</cstring>
+                                            <cstring>acceptFilterList</cstring>
                                         </property>
-                                        <widget class="QListBox" row="0" column="0" rowspan="1" colspan="2">
-                                            <property name="name">
-                                                <cstring>acceptFilterList</cstring>
-                                            </property>
-                                        </widget>
-                                        <widget class="QPushButton" row="1" column="1">
-                                            <property name="name">
-                                                <cstring>deleteAcceptFilter</cstring>
-                                            </property>
-                                            <property name="enabled">
-                                                <bool>false</bool>
-                                            </property>
-                                            <property name="text">
-                                                <string>Delete</string>
-                                            </property>
-                                            <property name="accel">
-                                                <string></string>
-                                            </property>
-                                        </widget>
-                                        <widget class="QPushButton" row="1" column="0">
-                                            <property name="name">
-                                                <cstring>newAcceptFilter</cstring>
-                                            </property>
-                                            <property name="text">
-                                                <string>&amp;New</string>
-                                            </property>
-                                        </widget>
-                                    </grid>
-                                </widget>
-                                <widget class="QGroupBox">
-                                    <property name="name">
-                                        <cstring>groupBox13</cstring>
-                                    </property>
-                                    <property name="enabled">
-                                        <bool>true</bool>
-                                    </property>
-                                    <property name="sizePolicy">
-                                        <sizepolicy>
-                                            <hsizetype>5</hsizetype>
-                                            <vsizetype>5</vsizetype>
-                                            <horstretch>0</horstretch>
-                                            <verstretch>1</verstretch>
-                                        </sizepolicy>
-                                    </property>
-                                    <property name="title">
-                                        <string>Reject Filters</string>
-                                    </property>
-                                    <grid>
+                                    </widget>
+                                    <widget class="QPushButton" row="1" column="1">
                                         <property name="name">
-                                            <cstring>unnamed</cstring>
+                                            <cstring>deleteAcceptFilter</cstring>
                                         </property>
-                                        <widget class="QListBox" row="0" column="0" rowspan="1" colspan="2">
-                                            <property name="name">
-                                                <cstring>rejectFilterList</cstring>
-                                            </property>
-                                        </widget>
-                                        <widget class="QPushButton" row="1" column="1">
-                                            <property name="name">
-                                                <cstring>deleteRejectFilter</cstring>
-                                            </property>
-                                            <property name="enabled">
-                                                <bool>false</bool>
-                                            </property>
-                                            <property name="text">
-                                                <string>Delete</string>
-                                            </property>
-                                            <property name="accel">
-                                                <string></string>
-                                            </property>
-                                        </widget>
-                                        <widget class="QPushButton" row="1" column="0">
-                                            <property name="name">
-                                                <cstring>newRejectFilter</cstring>
-                                            </property>
-                                            <property name="text">
-                                                <string>&amp;New</string>
-                                            </property>
-                                        </widget>
-                                    </grid>
-                                </widget>
-                            </vbox>
-                        </widget>
-                        <widget class="QLayoutWidget">
-                            <property name="name">
-                                <cstring>filterLayout</cstring>
-                            </property>
-                            <vbox>
+                                        <property name="enabled">
+                                            <bool>false</bool>
+                                        </property>
+                                        <property name="text">
+                                            <string>Delete</string>
+                                        </property>
+                                        <property name="accel">
+                                            <string></string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QPushButton" row="1" column="0">
+                                        <property name="name">
+                                            <cstring>newAcceptFilter</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>&amp;New</string>
+                                        </property>
+                                    </widget>
+                                </grid>
+                            </widget>
+                            <widget class="QGroupBox">
                                 <property name="name">
-                                    <cstring>unnamed</cstring>
+                                    <cstring>groupBox13</cstring>
                                 </property>
-                                <widget class="QLayoutWidget">
+                                <property name="enabled">
+                                    <bool>true</bool>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>5</hsizetype>
+                                        <vsizetype>5</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>1</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="title">
+                                    <string>Reject Filters</string>
+                                </property>
+                                <grid>
                                     <property name="name">
-                                        <cstring>layout9</cstring>
+                                        <cstring>unnamed</cstring>
                                     </property>
-                                    <hbox>
+                                    <widget class="QListBox" row="0" column="0" rowspan="1" colspan="2">
                                         <property name="name">
-                                            <cstring>unnamed</cstring>
+                                            <cstring>rejectFilterList</cstring>
                                         </property>
-                                        <widget class="QLabel">
-                                            <property name="name">
-                                                <cstring>filterTitleLabel</cstring>
-                                            </property>
-                                            <property name="sizePolicy">
-                                                <sizepolicy>
-                                                    <hsizetype>0</hsizetype>
-                                                    <vsizetype>5</vsizetype>
-                                                    <horstretch>0</horstretch>
-                                                    <verstretch>0</verstretch>
-                                                </sizepolicy>
-                                            </property>
-                                            <property name="text">
-                                                <string>&amp;Title</string>
-                                            </property>
-                                            <property name="buddy" stdset="0">
-                                                <cstring>filterTitle</cstring>
-                                            </property>
-                                        </widget>
-                                        <widget class="QLineEdit">
-                                            <property name="name">
-                                                <cstring>filterTitle</cstring>
-                                            </property>
-                                        </widget>
-                                        <widget class="QCheckBox">
-                                            <property name="name">
-                                                <cstring>filterActive</cstring>
-                                            </property>
-                                            <property name="text">
-                                                <string>&amp;Active</string>
-                                            </property>
-                                        </widget>
-                                    </hbox>
-                                </widget>
-                                <widget class="KEditListBox">
-                                    <property name="name">
-                                        <cstring>filterRegExps</cstring>
-                                    </property>
-                                    <property name="frameShape">
-                                        <enum>GroupBoxPanel</enum>
-                                    </property>
-                                    <property name="frameShadow">
-                                        <enum>Sunken</enum>
-                                    </property>
-                                    <property name="margin">
-                                        <number>0</number>
-                                    </property>
-                                    <property name="title">
-                                        <string>Regular Expressions</string>
-                                    </property>
-                                    <property name="flat">
-                                        <bool>false</bool>
-                                    </property>
-                                    <property name="buttons">
-                                        <set>Remove|Add</set>
-                                    </property>
-                                </widget>
-                                <widget class="QLayoutWidget">
-                                    <property name="name">
-                                        <cstring>layout28</cstring>
-                                    </property>
-                                    <hbox>
+                                    </widget>
+                                    <widget class="QPushButton" row="1" column="1">
                                         <property name="name">
-                                            <cstring>unnamed</cstring>
+                                            <cstring>deleteRejectFilter</cstring>
                                         </property>
-                                        <widget class="QCheckBox">
-                                            <property name="name">
-                                                <cstring>filterSeries</cstring>
-                                            </property>
-                                            <property name="text">
-                                                <string>Treat as &amp;Series</string>
-                                            </property>
-                                            <property name="checked">
-                                                <bool>true</bool>
-                                            </property>
-                                        </widget>
-                                        <spacer>
-                                            <property name="name">
-                                                <cstring>spacer20</cstring>
-                                            </property>
-                                            <property name="orientation">
-                                                <enum>Horizontal</enum>
-                                            </property>
-                                            <property name="sizeType">
-                                                <enum>Expanding</enum>
-                                            </property>
-                                            <property name="sizeHint">
-                                                <size>
-                                                    <width>350</width>
-                                                    <height>21</height>
-                                                </size>
-                                            </property>
-                                        </spacer>
-                                        <widget class="QPushButton">
-                                            <property name="name">
-                                                <cstring>processFilter</cstring>
-                                            </property>
-                                            <property name="enabled">
-                                                <bool>true</bool>
-                                            </property>
-                                            <property name="text">
-                                                <string>Process</string>
-                                            </property>
-                                            <property name="accel">
-                                                <string></string>
-                                            </property>
-                                        </widget>
-                                    </hbox>
-                                </widget>
-                                <widget class="QGroupBox">
-                                    <property name="name">
-                                        <cstring>seriesBox</cstring>
-                                    </property>
-                                    <property name="title">
-                                        <string>Series Criteria</string>
-                                    </property>
-                                    <grid>
+                                        <property name="enabled">
+                                            <bool>false</bool>
+                                        </property>
+                                        <property name="text">
+                                            <string>Delete</string>
+                                        </property>
+                                        <property name="accel">
+                                            <string></string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QPushButton" row="1" column="0">
                                         <property name="name">
-                                            <cstring>unnamed</cstring>
+                                            <cstring>newRejectFilter</cstring>
                                         </property>
-                                        <widget class="Line" row="1" column="0" rowspan="1" colspan="3">
-                                            <property name="name">
-                                                <cstring>line1</cstring>
-                                            </property>
-                                            <property name="enabled">
-                                                <bool>false</bool>
-                                            </property>
-                                            <property name="frameShape">
-                                                <enum>HLine</enum>
-                                            </property>
-                                            <property name="frameShadow">
-                                                <enum>Sunken</enum>
-                                            </property>
-                                            <property name="orientation">
-                                                <enum>Horizontal</enum>
-                                            </property>
-                                        </widget>
-                                        <widget class="QLayoutWidget" row="2" column="0" rowspan="1" colspan="3">
-                                            <property name="name">
-                                                <cstring>layout30</cstring>
-                                            </property>
-                                            <hbox>
-                                                <property name="name">
-                                                    <cstring>unnamed</cstring>
-                                                </property>
-                                                <widget class="QLabel">
-                                                    <property name="name">
-                                                        <cstring>filterMinSeasonLabel</cstring>
-                                                    </property>
-                                                    <property name="sizePolicy">
-                                                        <sizepolicy>
-                                                            <hsizetype>0</hsizetype>
-                                                            <vsizetype>5</vsizetype>
-                                                            <horstretch>0</horstretch>
-                                                            <verstretch>0</verstretch>
-                                                        </sizepolicy>
-                                                    </property>
-                                                    <property name="text">
-                                                        <string>Min Season</string>
-                                                    </property>
-                                                    <property name="buddy" stdset="0">
-                                                        <cstring>filterMinSeason</cstring>
-                                                    </property>
-                                                </widget>
-                                                <widget class="QSpinBox">
-                                                    <property name="name">
-                                                        <cstring>filterMinSeason</cstring>
-                                                    </property>
-                                                </widget>
-                                                <widget class="QLabel">
-                                                    <property name="name">
-                                                        <cstring>filterMinEpisodeLabel</cstring>
-                                                    </property>
-                                                    <property name="sizePolicy">
-                                                        <sizepolicy>
-                                                            <hsizetype>0</hsizetype>
-                                                            <vsizetype>5</vsizetype>
-                                                            <horstretch>0</horstretch>
-                                                            <verstretch>0</verstretch>
-                                                        </sizepolicy>
-                                                    </property>
-                                                    <property name="text">
-                                                        <string>Min Episode</string>
-                                                    </property>
-                                                </widget>
-                                                <widget class="QSpinBox">
-                                                    <property name="name">
-                                                        <cstring>filterMinEpisode</cstring>
-                                                    </property>
-                                                </widget>
-                                                <spacer>
-                                                    <property name="name">
-                                                        <cstring>spacer4_2</cstring>
-                                                    </property>
-                                                    <property name="orientation">
-                                                        <enum>Horizontal</enum>
-                                                    </property>
-                                                    <property name="sizeType">
-                                                        <enum>Expanding</enum>
-                                                    </property>
-                                                    <property name="sizeHint">
-                                                        <size>
-                                                            <width>16</width>
-                                                            <height>21</height>
-                                                        </size>
-                                                    </property>
-                                                </spacer>
-                                                <widget class="QLabel">
-                                                    <property name="name">
-                                                        <cstring>filterMaxSeasonLabel</cstring>
-                                                    </property>
-                                                    <property name="sizePolicy">
-                                                        <sizepolicy>
-                                                            <hsizetype>0</hsizetype>
-                                                            <vsizetype>5</vsizetype>
-                                                            <horstretch>0</horstretch>
-                                                            <verstretch>0</verstretch>
-                                                        </sizepolicy>
-                                                    </property>
-                                                    <property name="text">
-                                                        <string>Max Season</string>
-                                                    </property>
-                                                    <property name="buddy" stdset="0">
-                                                        <cstring>filterMinSeason</cstring>
-                                                    </property>
-                                                </widget>
-                                                <widget class="QSpinBox">
-                                                    <property name="name">
-                                                        <cstring>filterMaxSeason</cstring>
-                                                    </property>
-                                                </widget>
-                                                <widget class="QLabel">
-                                                    <property name="name">
-                                                        <cstring>filterMaxEpisodeLabel</cstring>
-                                                    </property>
-                                                    <property name="sizePolicy">
-                                                        <sizepolicy>
-                                                            <hsizetype>0</hsizetype>
-                                                            <vsizetype>5</vsizetype>
-                                                            <horstretch>0</horstretch>
-                                                            <verstretch>0</verstretch>
-                                                        </sizepolicy>
-                                                    </property>
-                                                    <property name="text">
-                                                        <string>Max Episode</string>
-                                                    </property>
-                                                </widget>
-                                                <widget class="QSpinBox">
-                                                    <property name="name">
-                                                        <cstring>filterMaxEpisode</cstring>
-                                                    </property>
-                                                </widget>
-                                            </hbox>
-                                        </widget>
-                                        <widget class="QCheckBox" row="0" column="1">
-                                            <property name="name">
-                                                <cstring>downloadProper</cstring>
-                                            </property>
-                                            <property name="text">
-                                                <string>Download "Proper" ReReleases</string>
-                                            </property>
-                                            <property name="accel">
-                                                <string></string>
-                                            </property>
-                                        </widget>
-                                        <widget class="QCheckBox" row="0" column="2">
-                                            <property name="name">
-                                                <cstring>filterSansEpisode</cstring>
-                                            </property>
-                                            <property name="text">
-                                                <string>Download Matches Without Episode</string>
-                                            </property>
-                                            <property name="accel">
-                                                <string></string>
-                                            </property>
-                                        </widget>
-                                        <spacer row="0" column="0">
-                                            <property name="name">
-                                                <cstring>spacer7</cstring>
-                                            </property>
-                                            <property name="orientation">
-                                                <enum>Horizontal</enum>
-                                            </property>
-                                            <property name="sizeType">
-                                                <enum>Expanding</enum>
-                                            </property>
-                                            <property name="sizeHint">
-                                                <size>
-                                                    <width>300</width>
-                                                    <height>21</height>
-                                                </size>
-                                            </property>
-                                        </spacer>
-                                    </grid>
-                                </widget>
-                                <widget class="QLayoutWidget">
-                                    <property name="name">
-                                        <cstring>layout33</cstring>
-                                    </property>
-                                    <hbox>
-                                        <property name="name">
-                                            <cstring>unnamed</cstring>
+                                        <property name="text">
+                                            <string>&amp;New</string>
                                         </property>
-                                        <widget class="QLabel">
-                                            <property name="name">
-                                                <cstring>testTextLabel</cstring>
-                                            </property>
-                                            <property name="sizePolicy">
-                                                <sizepolicy>
-                                                    <hsizetype>0</hsizetype>
-                                                    <vsizetype>5</vsizetype>
-                                                    <horstretch>0</horstretch>
-                                                    <verstretch>0</verstretch>
-                                                </sizepolicy>
-                                            </property>
-                                            <property name="text">
-                                                <string>Test te&amp;xt</string>
-                                            </property>
-                                            <property name="buddy" stdset="0">
-                                                <cstring>testText</cstring>
-                                            </property>
-                                        </widget>
-                                        <widget class="QLineEdit">
-                                            <property name="name">
-                                                <cstring>testText</cstring>
-                                            </property>
-                                            <property name="paletteBackgroundColor">
-                                                <color>
-                                                    <red>255</red>
-                                                    <green>255</green>
-                                                    <blue>255</blue>
-                                                </color>
-                                            </property>
-                                        </widget>
-                                        <widget class="QPushButton">
-                                            <property name="name">
-                                                <cstring>testTestText</cstring>
-                                            </property>
-                                            <property name="enabled">
-                                                <bool>false</bool>
-                                            </property>
-                                            <property name="text">
-                                                <string>Te&amp;st</string>
-                                            </property>
-                                        </widget>
-                                    </hbox>
-                                </widget>
-                                <widget class="QGroupBox">
-                                    <property name="name">
-                                        <cstring>filterMatchesBox</cstring>
-                                    </property>
-                                    <property name="sizePolicy">
-                                        <sizepolicy>
-                                            <hsizetype>5</hsizetype>
-                                            <vsizetype>5</vsizetype>
-                                            <horstretch>0</horstretch>
-                                            <verstretch>1</verstretch>
-                                        </sizepolicy>
-                                    </property>
-                                    <property name="title">
-                                        <string>Filter Matches</string>
-                                    </property>
-                                    <grid>
-                                        <property name="name">
-                                            <cstring>unnamed</cstring>
-                                        </property>
-                                        <spacer row="1" column="1">
-                                            <property name="name">
-                                                <cstring>spacer6</cstring>
-                                            </property>
-                                            <property name="orientation">
-                                                <enum>Horizontal</enum>
-                                            </property>
-                                            <property name="sizeType">
-                                                <enum>Expanding</enum>
-                                            </property>
-                                            <property name="sizeHint">
-                                                <size>
-                                                    <width>170</width>
-                                                    <height>21</height>
-                                                </size>
-                                            </property>
-                                        </spacer>
-                                        <widget class="QPushButton" row="1" column="0">
-                                            <property name="name">
-                                                <cstring>downloadFilterMatch</cstring>
-                                            </property>
-                                            <property name="enabled">
-                                                <bool>false</bool>
-                                            </property>
-                                            <property name="text">
-                                                <string>Download</string>
-                                            </property>
-                                            <property name="accel">
-                                                <string></string>
-                                            </property>
-                                        </widget>
-                                        <widget class="QPushButton" row="1" column="3">
-                                            <property name="name">
-                                                <cstring>deleteFilterMatch</cstring>
-                                            </property>
-                                            <property name="enabled">
-                                                <bool>false</bool>
-                                            </property>
-                                            <property name="text">
-                                                <string>Delete</string>
-                                            </property>
-                                            <property name="accel">
-                                                <string></string>
-                                            </property>
-                                        </widget>
-                                        <widget class="QTable" row="0" column="0" rowspan="1" colspan="4">
-                                            <property name="name">
-                                                <cstring>filterMatches</cstring>
-                                            </property>
-                                            <property name="numRows">
-                                                <number>0</number>
-                                            </property>
-                                            <property name="numCols">
-                                                <number>0</number>
-                                            </property>
-                                            <property name="readOnly">
-                                                <bool>true</bool>
-                                            </property>
-                                            <property name="selectionMode">
-                                                <enum>MultiRow</enum>
-                                            </property>
-                                        </widget>
-                                    </grid>
-                                </widget>
-                            </vbox>
-                        </widget>
+                                    </widget>
+                                </grid>
+                            </widget>
+                        </vbox>
                     </widget>
-                </vbox>
+                    <widget class="QLayoutWidget" row="0" column="1" rowspan="1" colspan="2">
+                        <property name="name">
+                            <cstring>layout9</cstring>
+                        </property>
+                        <hbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QLabel">
+                                <property name="name">
+                                    <cstring>filterTitleLabel</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>0</hsizetype>
+                                        <vsizetype>5</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="text">
+                                    <string>&amp;Title</string>
+                                </property>
+                                <property name="buddy" stdset="0">
+                                    <cstring>filterTitle</cstring>
+                                </property>
+                            </widget>
+                            <widget class="QLineEdit">
+                                <property name="name">
+                                    <cstring>filterTitle</cstring>
+                                </property>
+                            </widget>
+                            <widget class="QCheckBox">
+                                <property name="name">
+                                    <cstring>filterActive</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>&amp;Active</string>
+                                </property>
+                            </widget>
+                        </hbox>
+                    </widget>
+                    <widget class="KEditListBox" row="1" column="1" rowspan="2" colspan="1">
+                        <property name="name">
+                            <cstring>filterRegExps</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>7</hsizetype>
+                                <vsizetype>7</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="frameShape">
+                            <enum>GroupBoxPanel</enum>
+                        </property>
+                        <property name="frameShadow">
+                            <enum>Sunken</enum>
+                        </property>
+                        <property name="margin">
+                            <number>0</number>
+                        </property>
+                        <property name="title">
+                            <string>Regular Expressions</string>
+                        </property>
+                        <property name="flat">
+                            <bool>false</bool>
+                        </property>
+                        <property name="buttons">
+                            <set>Remove|Add</set>
+                        </property>
+                    </widget>
+                    <widget class="QLayoutWidget" row="1" column="2">
+                        <property name="name">
+                            <cstring>layout28</cstring>
+                        </property>
+                        <hbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QCheckBox">
+                                <property name="name">
+                                    <cstring>filterSeries</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Treat as &amp;Series</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+S</string>
+                                </property>
+                                <property name="checked">
+                                    <bool>true</bool>
+                                </property>
+                            </widget>
+                            <spacer>
+                                <property name="name">
+                                    <cstring>spacer20</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Preferred</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>50</width>
+                                        <height>21</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                            <widget class="QPushButton">
+                                <property name="name">
+                                    <cstring>processFilter</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>true</bool>
+                                </property>
+                                <property name="maximumSize">
+                                    <size>
+                                        <width>60</width>
+                                        <height>32767</height>
+                                    </size>
+                                </property>
+                                <property name="text">
+                                    <string>Process</string>
+                                </property>
+                                <property name="accel">
+                                    <string></string>
+                                </property>
+                            </widget>
+                        </hbox>
+                    </widget>
+                    <widget class="QGroupBox" row="2" column="2">
+                        <property name="name">
+                            <cstring>seriesBox</cstring>
+                        </property>
+                        <property name="maximumSize">
+                            <size>
+                                <width>275</width>
+                                <height>90</height>
+                            </size>
+                        </property>
+                        <property name="title">
+                            <string>Series Criteria</string>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QLabel" row="1" column="0" rowspan="1" colspan="2">
+                                <property name="name">
+                                    <cstring>filterMinSeasonLabel</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>0</hsizetype>
+                                        <vsizetype>5</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="text">
+                                    <string>Min Season</string>
+                                </property>
+                                <property name="buddy" stdset="0">
+                                    <cstring>filterMinSeason</cstring>
+                                </property>
+                            </widget>
+                            <widget class="QSpinBox" row="1" column="2">
+                                <property name="name">
+                                    <cstring>filterMinSeason</cstring>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="1" column="3">
+                                <property name="name">
+                                    <cstring>filterMinEpisodeLabel</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>0</hsizetype>
+                                        <vsizetype>5</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="text">
+                                    <string>Min Episode</string>
+                                </property>
+                            </widget>
+                            <widget class="QSpinBox" row="1" column="4">
+                                <property name="name">
+                                    <cstring>filterMinEpisode</cstring>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="2" column="0" rowspan="1" colspan="2">
+                                <property name="name">
+                                    <cstring>filterMaxSeasonLabel</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>0</hsizetype>
+                                        <vsizetype>5</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="text">
+                                    <string>Max Season</string>
+                                </property>
+                                <property name="buddy" stdset="0">
+                                    <cstring>filterMinSeason</cstring>
+                                </property>
+                            </widget>
+                            <widget class="QSpinBox" row="2" column="2">
+                                <property name="name">
+                                    <cstring>filterMaxSeason</cstring>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="2" column="3">
+                                <property name="name">
+                                    <cstring>filterMaxEpisodeLabel</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>0</hsizetype>
+                                        <vsizetype>5</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="text">
+                                    <string>Max Episode</string>
+                                </property>
+                            </widget>
+                            <widget class="QSpinBox" row="2" column="4">
+                                <property name="name">
+                                    <cstring>filterMaxEpisode</cstring>
+                                </property>
+                            </widget>
+                            <widget class="QCheckBox" row="0" column="1" rowspan="1" colspan="4">
+                                <property name="name">
+                                    <cstring>filterSansEpisode</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Match Without Episode</string>
+                                </property>
+                                <property name="accel">
+                                    <string></string>
+                                </property>
+                            </widget>
+                            <spacer row="0" column="0">
+                                <property name="name">
+                                    <cstring>spacer7</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>20</width>
+                                        <height>21</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                        </grid>
+                    </widget>
+                    <widget class="QLayoutWidget" row="3" column="1" rowspan="1" colspan="2">
+                        <property name="name">
+                            <cstring>layout33</cstring>
+                        </property>
+                        <hbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QLabel">
+                                <property name="name">
+                                    <cstring>testTextLabel</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>0</hsizetype>
+                                        <vsizetype>5</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="text">
+                                    <string>Test te&amp;xt</string>
+                                </property>
+                                <property name="buddy" stdset="0">
+                                    <cstring>testText</cstring>
+                                </property>
+                            </widget>
+                            <widget class="QLineEdit">
+                                <property name="name">
+                                    <cstring>testText</cstring>
+                                </property>
+                                <property name="paletteBackgroundColor">
+                                    <color>
+                                        <red>255</red>
+                                        <green>255</green>
+                                        <blue>255</blue>
+                                    </color>
+                                </property>
+                            </widget>
+                            <widget class="QPushButton">
+                                <property name="name">
+                                    <cstring>testTestText</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>false</bool>
+                                </property>
+                                <property name="text">
+                                    <string>Te&amp;st</string>
+                                </property>
+                            </widget>
+                        </hbox>
+                    </widget>
+                    <widget class="QGroupBox" row="4" column="1" rowspan="1" colspan="2">
+                        <property name="name">
+                            <cstring>filterMatchesBox</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>5</hsizetype>
+                                <vsizetype>5</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>1</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="title">
+                            <string>Filter Matches</string>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <spacer row="1" column="1">
+                                <property name="name">
+                                    <cstring>spacer6</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>170</width>
+                                        <height>21</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                            <widget class="QPushButton" row="1" column="0">
+                                <property name="name">
+                                    <cstring>downloadFilterMatch</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>false</bool>
+                                </property>
+                                <property name="text">
+                                    <string>Download</string>
+                                </property>
+                                <property name="accel">
+                                    <string></string>
+                                </property>
+                            </widget>
+                            <widget class="QPushButton" row="1" column="3">
+                                <property name="name">
+                                    <cstring>deleteFilterMatch</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>false</bool>
+                                </property>
+                                <property name="text">
+                                    <string>Delete</string>
+                                </property>
+                                <property name="accel">
+                                    <string></string>
+                                </property>
+                            </widget>
+                            <widget class="QTable" row="0" column="0" rowspan="1" colspan="4">
+                                <property name="name">
+                                    <cstring>filterMatches</cstring>
+                                </property>
+                                <property name="numRows">
+                                    <number>0</number>
+                                </property>
+                                <property name="numCols">
+                                    <number>0</number>
+                                </property>
+                                <property name="readOnly">
+                                    <bool>true</bool>
+                                </property>
+                                <property name="selectionMode">
+                                    <enum>MultiRow</enum>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                </grid>
             </widget>
         </widget>
-    </vbox>
+    </grid>
 </widget>
 <connections>
     <connection>

@@ -90,9 +90,6 @@ namespace kt
 		filterMatches->setColumnWidth(2, 180);
 		filterMatches->horizontalHeader()->setStretchEnabled(true, 3);
 		
-		//hide the proper rerelease download for now
-		downloadProper->hide();
-		
 		loadFeedList();
 		loadFilterList();
 		
