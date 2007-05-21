@@ -129,6 +129,8 @@ namespace bt
 		void endline()
 		{
 			finishLine();
+#warning "Auto log rotate disabled temporarely, causes deadlocks, will find solution tomorrow"
+#if 0
 			if (fptr.size() > MAX_LOG_FILE_SIZE)
 			{
 				// calling setOutputFile will rotate the logs
@@ -137,6 +139,7 @@ namespace bt
 				QString file = fptr.name();
 				setOutputFile(file);
 			}
+#endif
 		}
 	};
 	
