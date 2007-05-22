@@ -1,6 +1,10 @@
 [Desktop Entry]
 Type=Service
 Name=StatsPlugin
+Name[bg]=Приставка за статистика
+Name[et]=Statistikaplugin
+Name[pt]='Plugin' de Estatísticas
+Name[pt_BR]='Plugin' de Estatísticas
 Comment=
 ServiceTypes=KTorrent/Plugin
 X-KDE-Library=ktstatsplugin
