@@ -22,7 +22,7 @@
 
 namespace kt {
 
-StatsPluginPrefs::StatsPluginPrefs() : PrefPageInterface(i18n("Statistics"), i18n("Statistics options"), KGlobal::iconLoader()->loadIcon("utilities-system-monitor",KIcon::NoGroup)), pmUi(0)
+StatsPluginPrefs::StatsPluginPrefs() : PrefPageInterface(i18n("Statistics"), i18n("Statistics options"), KGlobal::iconLoader()->loadIcon("ktimemon",KIcon::NoGroup)), pmUi(0)
 {	
 }
 

@@ -19,7 +19,7 @@
  ***************************************************************************/
 
 #include "statsplugin.h"
-#include <iostream>
+
 K_EXPORT_COMPONENT_FACTORY(ktstatsplugin, KGenericFactory<kt::StatsPlugin>("ktstatsplugin"))
 
 namespace kt
@@ -62,8 +62,8 @@ void StatsPlugin::load()
 	
 	pmUpdTmr -> start(StatsPluginSettings::gatherDataEveryMs());
 
-	getGUI() -> addToolWidget(pmUiSpd,"utilities-system-monitor" ,i18n("Speed statistics"), GUIInterface::DOCK_BOTTOM);
-	getGUI() -> addToolWidget(pmUiCon,"utilities-system-monitor" ,i18n("Connection statistics"), GUIInterface::DOCK_BOTTOM);
+	getGUI() -> addToolWidget(pmUiSpd,"ktimemon" ,i18n("Speed statistics"), GUIInterface::DOCK_BOTTOM);
+	getGUI() -> addToolWidget(pmUiCon,"ktimemon" ,i18n("Connection statistics"), GUIInterface::DOCK_BOTTOM);
 	getGUI() -> addPrefPage (pmPrefsUi);
 	
 }
