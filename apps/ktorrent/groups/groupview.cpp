@@ -181,6 +181,7 @@ namespace kt
 		if (!g)
 			return;
 		
+		groupRemoved(g);
 		if (g == current)
 		{
 			current = gman->allGroup();

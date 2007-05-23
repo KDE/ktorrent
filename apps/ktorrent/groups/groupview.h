@@ -95,6 +95,7 @@ namespace kt
 		void currentGroupChanged(kt::Group* g);
 		void groupRenamed(kt::Group* g);
 		void openNewTab(kt::Group* g);
+		void groupRemoved(kt::Group* g);
 		
 	private:
 		void createMenu(KActionCollection* col);

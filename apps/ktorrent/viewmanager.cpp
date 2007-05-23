@@ -207,6 +207,33 @@ void ViewManager::groupRenamed(kt::Group* g,KTabWidget* mtw)
 	}
 }
 
+void ViewManager::groupRemoved(kt::Group* g,KTabWidget* mtw,kt::GUIInterface* gui,kt::Group* all_group)
+{
+	for (ViewItr i = views.begin();i != views.end();)
+	{
+		KTorrentView* v = *i;
+		if (v->getCurrentGroup() == g)
+		{
+			if (views.count() > 1)
+			{
+				// close the tab
+				gui->removeTabPage(v);
+				delete v;
+				i = views.erase(i);
+			}
+			else
+			{
+				mtw->changeTab(v,all_group->groupName());
+				v->setIcon(all_group->groupIcon());
+				v->setCurrentGroup(all_group);
+				i++;
+			}
+		}
+		else
+			i++;
+	}
+}
+
 void ViewManager::onViewCaptionChanged(KTorrentView* v)
 {
 	// caption on a view has changed, so the number of running torrents has changed

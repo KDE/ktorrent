@@ -92,6 +92,7 @@
 #include <pluginmanager.h>
 #include <groups/group.h>
 #include <groups/groupview.h>
+#include <groups/groupmanager.h>
 #include <mse/streamsocket.h>
 #include "viewmanager.h"
 #include "ktorrentviewitem.h"
@@ -143,6 +144,9 @@ KTorrent::KTorrent()
 	
 	connect(m_group_view,SIGNAL(groupRenamed(kt::Group*)),
 			this,SLOT(groupRenamed(kt::Group*)));
+	
+	connect(m_group_view,SIGNAL(groupRemoved(kt::Group*)),
+			this,SLOT(groupRemoved(kt::Group*)));
 	
 	connect(m_core,SIGNAL(torrentAdded(kt::TorrentInterface* )),
 			m_view_man,SLOT(addTorrent(kt::TorrentInterface* )));
@@ -314,6 +318,12 @@ void KTorrent::groupChanged(kt::Group* g)
 void KTorrent::groupRenamed(kt::Group* g)
 {
 	m_view_man->groupRenamed(g,m_activeTabWidget);
+}
+
+void KTorrent::groupRemoved(kt::Group* g)
+{
+	kt::Group* allg = m_group_view->groupManager()->allGroup();
+	m_view_man->groupRemoved(g,m_activeTabWidget,this,allg);
 }
 
 void KTorrent::addTabPage(QWidget* page,const QIconSet & icon,
