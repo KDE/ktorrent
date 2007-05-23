@@ -1,4 +1,4 @@
-Changes in 2.2dev
+Changes in 2.2
 - Ditch KMDI in favor of KDevelop IDEA code
 - Infowidget has been fully moved to the bottom tabbar
 - Possibility to open as many views as needed
