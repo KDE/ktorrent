@@ -5,6 +5,7 @@ Name[bg]=Приставка за статистика
 Name[et]=Statistikaplugin
 Name[pt]='Plugin' de Estatísticas
 Name[pt_BR]='Plugin' de Estatísticas
+Name[sv]=Statistikinsticksprogram
 Comment=
 ServiceTypes=KTorrent/Plugin
 X-KDE-Library=ktstatsplugin
