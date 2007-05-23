@@ -33,6 +33,7 @@
 #include <util/fileops.h>
 #include "log.h"
 #include "error.h"
+#include "autorotatelogjob.h"
 
 using namespace kt;
 
@@ -43,6 +44,7 @@ namespace bt
 	class Log::Private
 	{
 	public:
+		Log* parent;
 		QTextStream* out;
 		QFile fptr;
 		bool to_cout;
@@ -50,8 +52,9 @@ namespace bt
 		QString tmp;
 		QMutex mutex;
 		unsigned int m_filter;
+		AutoRotateLogJob* rotate_job;
 	public:
-		Private() : out(0),to_cout(false)
+		Private(Log* parent) : parent(parent),out(0),to_cout(false),rotate_job(0)
 		{
 			out = new QTextStream();
 		}
@@ -108,19 +111,24 @@ namespace bt
 		
 		void finishLine()
 		{
-			*out << QDateTime::currentDateTime().toString() << ": " << tmp << ::endl;
-			fptr.flush();
-			if (to_cout)
-				std::cout << tmp.local8Bit() << std::endl;;
-			
-			if (monitors.count() > 0)
+			// only add stuff when we are not rotating the logs
+			// this could result in the loss of some messages
+			if (!rotate_job) 
 			{
-				QPtrList<LogMonitorInterface>::iterator i = monitors.begin();
-				while (i != monitors.end())
+				*out << QDateTime::currentDateTime().toString() << ": " << tmp << ::endl;
+				fptr.flush();
+				if (to_cout)
+					std::cout << tmp.local8Bit() << std::endl;
+				
+				if (monitors.count() > 0)
 				{
-					kt::LogMonitorInterface* lmi = *i;
-					lmi->message(tmp,m_filter);
-					i++;
+					QPtrList<LogMonitorInterface>::iterator i = monitors.begin();
+					while (i != monitors.end())
+					{
+						kt::LogMonitorInterface* lmi = *i;
+						lmi->message(tmp,m_filter);
+						i++;
+					}
 				}
 			}
 			tmp = "";
@@ -129,23 +137,29 @@ namespace bt
 		void endline()
 		{
 			finishLine();
-#warning "Auto log rotate disabled temporarely, causes deadlocks, will find solution tomorrow"
-#if 0
-			if (fptr.size() > MAX_LOG_FILE_SIZE)
+			if (fptr.size() > MAX_LOG_FILE_SIZE && !rotate_job)
 			{
-				// calling setOutputFile will rotate the logs
 				tmp = "Log larger then 10 MB, rotating";
 				finishLine();
 				QString file = fptr.name();
-				setOutputFile(file);
+				fptr.close(); // close the log file
+				out->setDevice(0);		
+				// start the rotate job
+				rotate_job = new AutoRotateLogJob(file,parent); 
 			}
-#endif
+		}
+		
+		void logRotateDone()
+		{
+			fptr.open(IO_WriteOnly);
+			out->setDevice(&fptr);
+			rotate_job = 0;
 		}
 	};
 	
 	Log::Log() 
 	{
-		priv = new Private();
+		priv = new Private(this);
 	}
 	
 	
@@ -220,11 +234,15 @@ namespace bt
 		priv->mutex.lock();
 	}
 	
+	void Log::logRotateDone()
+	{
+		priv->logRotateDone();
+	}
+	
 	Log & Out(unsigned int arg)
 	{
 		Log & lg = Globals::instance().getLog(arg);
 		lg.lock();
-//		lg.setOutputToConsole(Globals::instance().isDebugModeSet());
 		return lg;
 	}
 }

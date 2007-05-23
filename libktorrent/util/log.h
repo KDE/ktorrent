@@ -190,6 +190,9 @@ namespace bt
 		
 		/// Lock the mutex of the log, should be called in Out()
 		void lock();
+	
+		/// Called by the auto log rotate job when it has finished
+		void logRotateDone();
 	};
 
 	Log & endl(Log & lg);

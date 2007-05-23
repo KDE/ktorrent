@@ -6,12 +6,13 @@ noinst_LTLIBRARIES = libutil.la
 libutil_la_LDFLAGS = $(all_libraries)
 
 
-libutil_la_SOURCES = array.cpp file.cpp functions.cpp ptrmap.cpp \
-	sha1hashgen.cpp urlencoder.cpp error.cpp fileops.cpp log.cpp sha1hash.cpp timer.cpp \
-	bitset.cpp mmapfile.cpp httprequest.cpp waitjob.cpp profiler.cpp
+libutil_la_SOURCES = array.cpp autorotatelogjob.cpp bitset.cpp error.cpp \
+	file.cpp fileops.cpp functions.cpp httprequest.cpp log.cpp mmapfile.cpp \
+	profiler.cpp ptrmap.cpp sha1hash.cpp sha1hashgen.cpp timer.cpp urlencoder.cpp \
+	waitjob.cpp
 
 
 
 
 KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)
-noinst_HEADERS = profiler.h
+noinst_HEADERS = autorotatelogjob.h profiler.h
