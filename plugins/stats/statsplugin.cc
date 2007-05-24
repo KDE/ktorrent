@@ -151,9 +151,7 @@ void StatsPlugin::UpdateData()
 	bt::QueueManager::iterator tor = getCore() -> getQueueManager () -> begin();
 	
 	while(tor != getCore() -> getQueueManager () -> end())
-	{
-		(*tor) -> update();
-		
+	{	
 		lcon += (*tor) -> getStats().leechers_connected_to;
 		lswa += (*tor) -> getStats().leechers_total;
 		scon += (*tor) -> getStats().seeders_connected_to;
@@ -173,7 +171,7 @@ void StatsPlugin::UpdateData()
 				for(bt::PeerManager::CItr it = pm -> beginPeerList(); it != pm -> endPeerList (); ++it)
 				{
 					if(it && (*it) )
-					{	tc -> update();
+					{	
 						if(!(*it) -> isSeeder())
 						{
 							ld += (*it) -> getDownloadRate();
