@@ -1,4 +1,4 @@
-Changes in 2.2dev
+Changes in 2.2rc1
 - Revamped plugin settings page, looks much nicer now.
 - Scan dialog now has only one button cancel, which becomes close when the
 scan is finished
