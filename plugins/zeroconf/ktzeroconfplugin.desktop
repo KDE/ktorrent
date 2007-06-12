@@ -1,0 +1,16 @@
+[Desktop Entry]
+Name=ZeroConfPlugin
+Name[bg]=Приставка ZeroConf
+Name[de]=ZeroConf-Modul
+Name[es]=Complemento de ZeroConf
+Name[et]=ZeroConfi plugin
+Name[nds]=ZeroConf-Moduul
+Name[pt]='Plugin' do ZeroConf
+Name[pt_BR]=Plugin ZeroConf
+Name[sv]=Zeroconf-insticksprogram
+Name[tr]=ZeroConfEklentisi
+Name[uk]=Втулок ZeroConf
+Name[xx]=xxZeroConfPluginxx
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktzeroconfplugin

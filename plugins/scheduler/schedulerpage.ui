@@ -1,0 +1,146 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>SchedulerPage</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>SchedulerPage</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>570</width>
+            <height>401</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Scheduler Plugin Pref Page</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QCheckBox" row="0" column="0">
+            <property name="name">
+                <cstring>useBS</cstring>
+            </property>
+            <property name="text">
+                <string>Use &amp;bandwidth scheduler?</string>
+            </property>
+        </widget>
+        <widget class="QGroupBox" row="1" column="0">
+            <property name="name">
+                <cstring>groupBWS</cstring>
+            </property>
+            <property name="title">
+                <string>Bandwidth Scheduler</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>useColors</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use colors instead of pi&amp;xmaps?</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="2">
+                    <property name="name">
+                        <cstring>textLabel1_2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>(Recommended for slower systems)</string>
+                    </property>
+                </widget>
+                <widget class="QPushButton" row="2" column="0">
+                    <property name="name">
+                        <cstring>btnEditBWS</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Edit s&amp;chedule</string>
+                    </property>
+                </widget>
+                <spacer row="2" column="1" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>spacer22</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>40</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <spacer row="1" column="1">
+                    <property name="name">
+                        <cstring>spacer18</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>80</height>
+                        </size>
+                    </property>
+                </spacer>
+            </grid>
+        </widget>
+        <spacer row="2" column="0">
+            <property name="name">
+                <cstring>spacer8</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>40</height>
+                </size>
+            </property>
+        </spacer>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>useBS</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>groupBWS</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>btnEditBWS</sender>
+        <signal>clicked()</signal>
+        <receiver>SchedulerPage</receiver>
+        <slot>btnEditBWS_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>useColors</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>SchedulerPage</receiver>
+        <slot>useColors_toggled(bool)</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>btnEditBWS_toggled(bool)</slot>
+    <slot>btnEditBWS_clicked()</slot>
+    <slot>useColors_toggled(bool)</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

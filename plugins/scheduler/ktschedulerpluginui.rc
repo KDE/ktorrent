@@ -1,0 +1,12 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<kpartgui name="ktorrent" version="1">
+	<MenuBar>
+		<Menu name="file">
+			<Action name="bwscheduler"/>
+		</Menu>
+	</MenuBar>
+	
+	<ToolBar name="SchedulerToolbar" noMerge="1">
+		<Action name="bwscheduler"/>
+	</ToolBar>
+</kpartgui>

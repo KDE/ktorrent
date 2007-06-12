@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+		http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+		
+	<kcfgfile name="ktinfowidgetpluginrc"/>
+	<group name="general">
+		<entry name="UpdateChartsEveryGuiUpdates" type="UInt">
+			<label>Update charts every</label>
+			<default>4</default>
+		</entry>
+		<entry name="GatherDataEveryMs" type="UInt">
+			<label>Gather data every</label>
+			<default>1000</default>
+		</entry>
+		<entry name="PeersSpeed" type="Bool">
+			<label>Toggle peers speed charts</label>
+			<default>true</default>
+		</entry>
+		<entry name="PeersSpeedDataIval" type="UInt">
+			<label>Interval between getting data about peers speed</label>
+			<default>4</default>
+		</entry>
+		<entry name="DrawLeechersInSwarms" type="Bool">
+			<label>Toggle drawing of leechers in swarms</label>
+			<default>false</default>
+		</entry>
+		<entry name="DrawSeedersInSwarms" type="Bool">
+			<label>Toggle drawing of seeders in swarms</label>
+			<default>false</default>
+		</entry>
+		
+		<entry name="DownloadMeasurements" type="UInt">
+			<label>Download mesurments count</label>
+			<default>256</default>
+		</entry>
+		<entry name="PeersSpeedMeasurements" type="UInt">
+			<label>Peers speed mesurments count</label>
+			<default>256</default>
+		</entry>
+		<entry name="UploadMeasurements" type="UInt">
+			<label>Upload mesurments count</label>
+			<default>256</default>
+		</entry>
+		<entry name="ConnectionsMeasurements" type="UInt">
+			<label>Connections mesurments count</label>
+			<default>512</default>
+		</entry>
+		<entry name="DHTMeasurements" type="UInt">
+			<label>DHT mesurments count</label>
+			<default>512</default>
+		</entry>
+		
+		<entry name="MaxSpdMode" type="UInt">
+			<label>OY axis max mode</label>
+			<default>1</default>
+		</entry>
+	</group>
+</kcfg>

@@ -1,0 +1,193 @@
+
+
+html, body {
+    background-color : #a2d2b1;
+    font-family : sans-serif;
+	font-size:12px;
+    margin-bottom : 0;
+    margin-left : 0;
+    margin-right : 0;
+    margin-top : 0;
+    padding-bottom : 0;
+    padding-left : 0;
+    padding-right : 0;
+    padding-top : 0;
+  }
+
+
+h1,h2,h3,h4 {
+    margin: 0;
+    padding: 0;
+  }
+
+
+a {
+    color: #0C45FF;
+    text-decoration : none;
+  }
+
+
+a:visited {
+    color: #0C45FF;
+  }
+
+
+a:hover {
+    color: #FFFFFF;
+    text-decoration : none;
+  }
+
+
+#page-container {
+    background-color: #a2d2b1;
+    margin: auto;
+  }
+
+
+#top_bar {
+    background: #b72916;
+    border: 1px solid #868686;
+    text-align:right;
+    vertical-align:middle;
+  }
+
+
+#icon {
+    position: absolute;
+    left:5px;
+    top:2px;
+    float:none;
+  }
+
+
+#perspective {
+    position: absolute;
+    right: 8px;
+    top: 25px;
+    float:none;
+  }
+
+
+#header {
+    background: #42AC64;
+    /*236437;
+    */background-image: url(header_tile.png);
+    height: 120px;
+    padding-bottom:0;
+  }
+
+
+#head-content {
+    margin-left: 140px;
+    font-size: 45px;
+    padding-top:15px;
+    padding-bottom:0;
+  }
+
+
+#menu {
+    background-image: url(grad2.jpg);
+	height:20px;
+    padding-bottom:0;
+  }
+
+
+#menu dt {
+    float: left;
+    padding:0;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left:10px;
+    margin-right:10px;
+  }
+
+
+#menu a {
+    color: #FFFFFF;
+    font-size:16px;
+  }
+
+
+#menu a:hover {
+    color: #000000;
+    text-decoration : none;
+  }
+
+
+#sidebar {
+    background: #42AC64;
+    float: right;
+    width: 280px;
+    border-left:1px solid #000000;
+	border-bottom:1px solid #000000;
+  }
+
+
+#sidebar-content {
+    padding-top: 10px;
+    padding-bottom: 5px;
+  }
+
+
+#sidebar a:hover {
+    color: #000000;
+  }
+
+
+#content {
+    background: #a2d2b1;
+    text-align: left;
+    margin-right: 280px;
+    padding:10px;
+  }
+
+
+#footer {
+    clear: both;
+    background: #b72916;
+    height: 25px;
+	text-align:center;
+	font-size:14px;
+  	vertical-align:middle;
+	padding-top:5px;
+  }
+
+
+#baner {
+    border-bottom:1px solid #000000;
+    background-color: #FFFFFF;
+  }
+
+
+#whatsnew dt {
+    font-family : monospace;
+    text-align:left;
+	padding-left: 20px;
+  }
+
+
+.box {
+    border: 1px solid #000000;
+    width:250px;
+    background-color: #D5D5D5;
+    text-align: left;
+  }
+
+.box-settings {
+    width:250px;
+    background-color: #D5D5D5;
+    text-align: left;
+  }
+
+.box-header {
+    background-image: url(grad1.jpg);
+    font-weight: bold;
+    border-bottom: 1px solid #000000;
+    text-align: center;
+  }
+
+#sstable td {
+ 	text-align:center;
+	padding: 5px;
+}
+
