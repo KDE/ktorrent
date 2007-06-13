@@ -20,6 +20,12 @@
 
 #include "ChartDrawer.h"
 
+#ifdef USE_SOLARIS
+#include <ieeefp.h>
+int isinf(double x) { return !finite(x) && x==x; }
+#endif
+
+
 namespace kt {
 
 ChartDrawer::ChartDrawer(QWidget *p, wgtsize_t x_max, wgtsize_t y_max, bool autom, const QString & uname) : QWidget(p), mXMax(x_max), mYMax(y_max), mAutoMax(autom),
@@ -264,7 +270,11 @@ void ChartDrawer::AddValue(const size_t idx, const double val, bool u )
 		it++;
 	}
 	
-	if(std::isnan(val) || (std::isinf(val)))
+#ifdef USE_SOLARIS
+	if(isnand(val) || (isinf(val)))
+#else
+ 	if(std::isnan(val) || (std::isinf(val)))
+#endif
 	{
 		*(mEls[idx].pmVals -> end() -1) = 0.0;
 	} else {
