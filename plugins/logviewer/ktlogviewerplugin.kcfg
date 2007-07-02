@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+		http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+	
+	<group name="general">
+	
+		<entry name = "useRichText" type ="Bool">
+			<label>Use rich log text</label>
+			<default>false</default>
+		</entry>
+		
+		<entry name="sysGEN" type="UInt">
+			<label>General info messages flag</label>
+			<default>0</default>
+		</entry>
+		<entry name="sysCON" type="UInt">
+			<label>Connections messages flag</label>
+			<default>0</default>
+		</entry>
+		<entry name="sysDHT" type="UInt">
+			<label>DHT messages flag</label>
+			<default>0</default>
+		</entry>
+		<entry name="sysTRK" type="UInt">
+			<label>Tracker info messages flag</label>
+			<default>0</default>
+		</entry>
+		<entry name="sysDIO" type="UInt">
+			<label>Disk IO info messages flag</label>
+			<default>0</default>
+		</entry>
+		<entry name="sysIPF" type="UInt">
+			<label>IPFilter plugin messages flag</label>
+			<default>0</default>
+		</entry>
+		<entry name="sysSRC" type="UInt">
+			<label>Search plugin messages flag</label>
+			<default>0</default>
+		</entry>
+		<entry name="sysPFI" type="UInt">
+			<label>PartFileImport plugin messages flag</label>
+			<default>0</default>
+		</entry>
+		<entry name="sysINW" type="UInt">
+			<label>InfoWidget plugin messages flag</label>
+			<default>0</default>
+		</entry>
+		<entry name="sysPNP" type="UInt">
+			<label>UPnP plugin messages flag</label>
+			<default>0</default>
+		</entry>
+		<entry name="sysSNF" type="UInt">
+			<label>ScanFolder plugin messages flag</label>
+			<default>0</default>
+		</entry>
+		<entry name="sysSCD" type="UInt">
+			<label>Scheduler plugin messages flag</label>
+			<default>0</default>
+		</entry>
+		<entry name="sysRSS" type="UInt">
+			<label>RSS plugin messages flag</label>
+			<default>0</default>
+		</entry>
+		<entry name="sysWEB" type="UInt">
+			<label>WebInterface plugin messages flag</label>
+			<default>0</default>
+		</entry>
+	</group>
+</kcfg>

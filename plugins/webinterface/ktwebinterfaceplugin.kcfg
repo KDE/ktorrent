@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+		http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+		
+	<kcfgfile name="ktwebinterfacepluginrc"/>
+	<group name="general">
+		<entry name="port" type="Int">
+			<label>Port number</label>
+			<default>8080</default>
+		</entry>
+	
+		<entry name="forward" type="Bool">
+			<label>forward Port</label>
+			<default>false</default>
+		</entry>
+
+		<entry name="sessionTTL" type ="Int">
+			<label>Session time to live</label>
+			<default>3600</default>
+		</entry>
+		<entry name="skin" type ="String">
+			<label>interface skin</label>
+			<default>default</default>
+		</entry>
+		<entry name="phpExecutablePath" type ="String">
+			<label>php executable path</label>
+			<default></default>
+		</entry>
+
+		<entry name="username" type ="String">
+			<label>username</label>
+			<default></default>
+		</entry>
+		<entry name="password" type ="String">
+			<label>password</label>
+			<default></default>
+		</entry>
+	</group>
+</kcfg>

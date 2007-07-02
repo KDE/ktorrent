@@ -1,0 +1,44 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<kpartgui name="ktorrent" version="1">
+<MenuBar>
+  <Menu name="file"><text>&amp;File</text>
+	  <Action name="paste_url"/>
+	  <Action name="ipfilter_action"/>
+	  <Merge/>
+  </Menu>
+  <Menu name="Downloads"><text>Downloads</text>
+	<Action name="Start" />
+	<Action name="Stop" />
+	<Action name="Remove" />
+	<Separator/>
+	<Action name="Start all"/>
+	<Action name="Stop all"/>
+	<Separator/>
+	<Action name="check_data"/>
+	<Separator/>
+	<Action name="queue_action"/>
+	<Action name="Queue manager"/>
+  </Menu>
+</MenuBar>
+
+<ToolBar name="mainToolBar" noMerge="1"><text>Main Toolbar</text>
+    <Action name="file_new"/>
+    <Action name="file_open"/>
+    <Action name="file_save"/>
+    <Separator/>
+    <Action name="edit_copy"/>
+    <Action name="edit_paste"/>
+	<Separator/>
+	<Action name="ipfilter_action"/>
+</ToolBar>
+<ToolBar name="DownloadToolBar" noMerge="1"><text>Download Toolbar</text>
+	<Action name="Start"/>
+	<Action name="Stop"/>
+	<Action name="Remove"/>
+	<Action name="Start all"/>
+	<Action name="Stop all"/>
+	<Action name="queue_action"/>
+	<Separator/>
+	<Action name="Queue manager"/>
+</ToolBar>
+</kpartgui>

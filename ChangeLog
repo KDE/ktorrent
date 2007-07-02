@@ -1,0 +1,103 @@
+Changes in 2.2 :
+- Allow user to create torrents without tracker 
+- Double clicking on files in files tab opens them
+
+Changes in 2.2rc1
+- Revamped plugin settings page, looks much nicer now.
+- Scan dialog now has only one button cancel, which becomes close when the
+scan is finished
+- Add max seed time feature
+- Add download and seed time columns in view
+
+Changes in 2.2beta1
+- Ditch KMDI in favor of KDevelop IDEA code
+- Infowidget has been fully moved to the bottom tabbar
+- Possibility to open as many views as needed
+- By default a downloads and uploads tab is now shown
+- Immediatly hide system tray icon at exit
+- Make sure to many files open bug is very unlikely to happen
+- Search plugin tab has now become a toolbar
+- Added option to fully preallocate diskspace for torrents
+- Added support for seeding from readonly filesystems
+- Make sure FileView remembers it's state
+- Sleep time of upload and download is now configurable through a CPU usage
+slider in the settings
+- Added option to move finished downloads to a different directory
+- Readded feature to show the total and the number of running torrents in the
+tab of each view
+- Added progress bar in status bar when searching
+- Redesigned FileSelectDlg
+- Added option to add torrent to group when loading
+- Added option to choose download directory for torrent when loading
+- Added option to copy .torrent files to user specified directory
+- Show torrent path when trying to load a corrupt torrent from torX/ directory
+- Added speed limits for individual torrents
+- Added dynamic diskspace checking.
+- Added option to disable diskspace preallocation
+- Improved system tray popup icon : we now use boxed style KPassivePopup instead of Qt tooltips, it also only disappears when the cursor
+is moved away from the tray icon and the text can be updated
+- The log now gets autorotated when it gets larger then 10 MB
+- Import dialog is now network transparent for the torrent file 
+- Added statistics plugin which was developed by Krzysztof Kundzicz
+
+Changes in 2.1.4
+- Fixed crash in parsing of DHT messages
+- Fixed problem with files with .. in their name
+- ScanFolder can now handle incomplete torrent files properly
+
+Changes in 2.1.3
+- Fixed crash in torrent parsing
+
+Changes in 2.1.2
+- Fix 2 security vulnerabilities (thanks to Bryan Burns from Juniper Networks
+for finding them)
+
+Changes in 2.1.1
+- Rewrite of webserver
+- New webgui : coldmilk
+- Networking thread has been split up in 2 threads, one for upload, one for
+download
+- Significant speed improvements when downloading over a LAN
+
+Changes in 2.1
+- Some minor bug fixes
+
+Changes in 2.1rc1
+- Share ratio column added in main view
+- Added option to use a different proxy then the default KDE proxy for HTTP trackers
+- Added feature to show/hide columns in main view 
+- Moved search box to bottom, so that the window is not enlarged in 1024 x 768 resolutions, when you search for something
+- Made sure no duplicates get into search box history
+- Fixed 'Trackers' tab in InfoWidget to properly resize tracker URL label
+- Zeroconf plugin added
+- Added µTorrent compatible PEX
+- Fixed a bug in WebInterface plugin causing JS tooltips not to show.
+- Fixed a bug with 'Stop All' not stopping queued torrents.
+
+
+Changes in 2.1beta1 
+- WebGUI plugin added
+- KTorrent can make trackerless torrents with DHT nodes.
+- Added feature which saves the list of peers when a torrent is stopped and when it is started again, the list is reloaded and the peers are added to the list of potential peers so that we can quickly make connections to peers.
+- Revamped data checker a bit, it now uses a separate thread.
+- Added an option to automatically do a recheck after X number of corrupted chunks are found (X being configurable)
+- Added 4 more default torrent groups (QM down/up, User down/up)
+- Changed default groups to tree structure.
+- Don't auto-dequeue torrents when not completed.
+- Fixed a bug causing weird values to show up for max share ratio in popups.
+- Show passive popups when enqueuing torrents is not possible (over max sr limit) so the user has an idea what's going on.
+- Maximum downloads/uploads limit does not apply on user controlled torrents anymore (!)
+- Fixed a bug in QM causing seeding completed torrents to stay queued forever
+- Max share ratio won't show value lower than current share ratio for a torrent which will prevent seeding torrents from stopping when this option is toggled.
+- Queued (not running) seeding torrents will dequeue when max share ratio spinbox gets below current share ratio.
+- Added advanced preference page
+- Moved GUI update interval and memory usage option to advanced pref page
+- TOS field of IP packets is now configurable
+- Hash checks during uploading of big chunks can now be turned off
+- Fixed crash due to uncaught exception in savePriorityFile.
+- New columns in PeerView of InfoWidget: Requests sent/received, Amount of data downloaded from a peer and Amount of data uploaded to a peer
+- We can now kick peers without banning them
+- When the maximum number of peers we are currently connected to (globally or locally) is reached, and a new peer connects to us, we will now get rid of a bad peer (low aca score), to see if this peer is any better.
+- Added tracker tiering properly, this means that KT will now take into account the priorities of the trackers in the announce-list, and so will first try the tier 1 tracker, then tier 2, ...
+- Added grouping feature
+- Switched to IDEAL style GUI (like KDevelop)

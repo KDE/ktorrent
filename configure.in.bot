@@ -1,0 +1,20 @@
+if test x$have_gmp = xno; then
+        echo ""
+        echo "----------------------------------------------------------"
+        echo "KTorrent ERROR:"
+        echo "KTorrent requires gmp (http://www.swox.com/gmp)"
+        echo "----------------------------------------------------------"
+        echo ""
+fi
+
+
+if test x$missing_avahi_warning = xyes; then
+        echo ""
+        echo "----------------------------------------------------------"
+        echo "KTorrent WARNING:"
+        echo "Cannot find avahi-client with version 0.6.10 or later."
+		echo "The zeroconf plugin will not be installed because of this."
+        echo "----------------------------------------------------------"
+        echo ""
+fi
+

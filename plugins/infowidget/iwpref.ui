@@ -1,0 +1,69 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>IWPref</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>IWPref</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>600</width>
+            <height>138</height>
+        </rect>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QCheckBox" row="0" column="0">
+            <property name="name">
+                <cstring>m_show_pv</cstring>
+            </property>
+            <property name="text">
+                <string>Show list of peers</string>
+            </property>
+            <property name="accel">
+                <string></string>
+            </property>
+        </widget>
+        <widget class="QCheckBox" row="1" column="0">
+            <property name="name">
+                <cstring>m_show_cdv</cstring>
+            </property>
+            <property name="text">
+                <string>Show list of chunks currentl&amp;y downloading</string>
+            </property>
+        </widget>
+        <spacer row="3" column="0">
+            <property name="name">
+                <cstring>spacer2</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>21</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QCheckBox" row="2" column="0">
+            <property name="name">
+                <cstring>m_show_tv</cstring>
+            </property>
+            <property name="text">
+                <string>Show list of trackers</string>
+            </property>
+            <property name="accel">
+                <string></string>
+            </property>
+        </widget>
+    </grid>
+</widget>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+<head>
+    <title>KTorrent  WebInterface - Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body style="background-image:url(ktorrentwebinterfacelogo.png); background-repeat:no-repeat; background-position:120px 120px;">
+
+<form id="loginForm" action="interface.php" method="post">
+    <table style="padding-left:100px; padding-top: 350px;">
+        <tr><td>Username:</td><td><input type="text" name="username" /></td></tr>
+        <tr><td>Password:</td><td><input type="password" name="password" /></td></tr>
+        <tr><td></td><td><input type="submit" value="Login" /></td></tr>
+    </table>
+</form>
+
+<script type="text/javascript">
+    document.forms["loginForm"].elements["username"].focus();
+</script>
+
+</body>
+</html>

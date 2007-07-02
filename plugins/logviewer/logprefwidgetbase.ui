@@ -1,0 +1,648 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>LogPrefWidgetBase</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>LogPrefWidgetBase</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>600</width>
+            <height>480</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>LogViewer Options</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <spacer row="2" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>spacer1</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>110</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QButtonGroup" row="0" column="1">
+            <property name="name">
+                <cstring>buttonGroup2</cstring>
+            </property>
+            <property name="title">
+                <string>Plugins</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QComboBox" row="0" column="1">
+                    <item>
+                        <property name="text">
+                            <string>All</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Debug</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Notice</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Important</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>None</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>m_sysipf</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>textLabel2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>IPFilter:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>comboBox1_5</cstring>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="1" column="1">
+                    <item>
+                        <property name="text">
+                            <string>All</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Debug</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Notice</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Important</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>None</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>m_syssrc</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="1" column="0">
+                    <property name="name">
+                        <cstring>textLabel2_2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Search:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>comboBox1_6</cstring>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="2" column="1">
+                    <item>
+                        <property name="text">
+                            <string>All</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Debug</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Notice</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Important</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>None</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>m_syspnp</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="2" column="0">
+                    <property name="name">
+                        <cstring>textLabel2_3</cstring>
+                    </property>
+                    <property name="text">
+                        <string>UPnP:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>comboBox1_7</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="3" column="0">
+                    <property name="name">
+                        <cstring>textLabel2_4</cstring>
+                    </property>
+                    <property name="text">
+                        <string>ScanFolder:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>comboBox1_8</cstring>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="3" column="1">
+                    <item>
+                        <property name="text">
+                            <string>All</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Debug</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Notice</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Important</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>None</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>m_syssnf</cstring>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="4" column="1">
+                    <item>
+                        <property name="text">
+                            <string>All</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Debug</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Notice</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Important</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>None</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>m_sysscd</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="4" column="0">
+                    <property name="name">
+                        <cstring>textLabel2_5</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Scheduler:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>comboBox1_9</cstring>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="5" column="1">
+                    <item>
+                        <property name="text">
+                            <string>All</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Debug</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Notice</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Important</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>None</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>m_syspfi</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="5" column="0">
+                    <property name="name">
+                        <cstring>textLabel2_6</cstring>
+                    </property>
+                    <property name="text">
+                        <string>PartFileImport:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>comboBox1_10</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="6" column="0">
+                    <property name="name">
+                        <cstring>textLabel2_7</cstring>
+                    </property>
+                    <property name="text">
+                        <string>InfoWidget:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>comboBox1_11</cstring>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="6" column="1">
+                    <item>
+                        <property name="text">
+                            <string>All</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Debug</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Notice</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Important</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>None</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>m_sysinw</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="7" column="0">
+                    <property name="name">
+                        <cstring>textLabel2_7_2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>RSS plugin:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>comboBox1_11</cstring>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="7" column="1">
+                    <item>
+                        <property name="text">
+                            <string>All</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Debug</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Notice</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Important</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>None</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>m_sysrss</cstring>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="8" column="1">
+                    <item>
+                        <property name="text">
+                            <string>All</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Debug</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Notice</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Important</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>None</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>m_sysweb</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="8" column="0">
+                    <property name="name">
+                        <cstring>textLabel2_7_2_2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>WebInterface plugin:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>comboBox1_11</cstring>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QButtonGroup" row="0" column="0">
+            <property name="name">
+                <cstring>buttonGroup3</cstring>
+            </property>
+            <property name="title">
+                <string>System</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>General:</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="1" column="0">
+                    <property name="name">
+                        <cstring>textLabel2_8</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Connections:</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="2" column="0">
+                    <property name="name">
+                        <cstring>textLabel2_9</cstring>
+                    </property>
+                    <property name="text">
+                        <string>DHT:</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="3" column="0">
+                    <property name="name">
+                        <cstring>textLabel2_10</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Tracker:</string>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="0" column="1">
+                    <item>
+                        <property name="text">
+                            <string>All</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Debug</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Notice</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Important</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>None</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>m_sysgen</cstring>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="1" column="1">
+                    <item>
+                        <property name="text">
+                            <string>All</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Debug</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Notice</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Important</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>None</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>m_syscon</cstring>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="2" column="1">
+                    <item>
+                        <property name="text">
+                            <string>All</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Debug</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Notice</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Important</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>None</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>m_sysdht</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="4" column="0">
+                    <property name="name">
+                        <cstring>textLabel1_2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Disk I/O:</string>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="3" column="1">
+                    <item>
+                        <property name="text">
+                            <string>All</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Debug</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Notice</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Important</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>None</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>m_systrk</cstring>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="4" column="1">
+                    <item>
+                        <property name="text">
+                            <string>All</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Debug</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Notice</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Important</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>None</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>m_sysdio</cstring>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QButtonGroup" row="1" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>buttonGroup3_2</cstring>
+            </property>
+            <property name="title">
+                <string>Options</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="0" column="0">
+                    <property name="name">
+                        <cstring>m_useRich</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use rich te&amp;xt for log</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+    </grid>
+</widget>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>
