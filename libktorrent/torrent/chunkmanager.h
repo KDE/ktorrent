@@ -106,9 +106,10 @@ namespace bt
 		
 		/**
 		 * Create the cache file, and index files.
+		 * @param check_priority Make sure chunk priorities and dnd status of files match
 		 * @throw Error When it can be created
 		 */
-		void createFiles();
+		void createFiles(bool check_priority = false);
 		
 		/**
 		 * Test all files and see if they are not missing.
@@ -272,7 +273,7 @@ namespace bt
 		 */
 		void include(Uint32 from,Uint32 to);
 		
-		
+				
 		/**
 		 * Data has been checked, and these chunks are OK.
 		 * The ChunkManager will update it's internal structures

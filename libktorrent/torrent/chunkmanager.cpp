@@ -193,7 +193,7 @@ namespace bt
 		savePriorityInfo();
 	}
 
-	void ChunkManager::createFiles()
+	void ChunkManager::createFiles(bool check_priority)
 	{
 		if (!bt::Exists(index_file))
 		{
@@ -201,6 +201,20 @@ namespace bt
 			fptr.open(index_file,"wb");
 		}
 		cache->create();
+		if (check_priority)
+		{
+			for (Uint32 i = 0;i < tor.getNumFiles();i++)
+			{
+				TorrentFile & tf = tor.getFile(i);
+				connect(&tf,SIGNAL(downloadPriorityChanged(TorrentFile*, Priority, Priority )),
+						this,SLOT(downloadPriorityChanged(TorrentFile*, Priority, Priority )));
+				
+				if (tf.getPriority() != NORMAL_PRIORITY)
+				{
+					downloadPriorityChanged(&tf,tf.getPriority(),tf.getOldPriority());
+				}
+			}
+		}
 	}
 	
 	bool ChunkManager::hasMissingFiles(QStringList & sl)

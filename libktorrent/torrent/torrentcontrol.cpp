@@ -1614,7 +1614,7 @@ namespace bt
 	
 	void TorrentControl::createFiles()
 	{
-		cman->createFiles();
+		cman->createFiles(true);
 		stats.output_path = cman->getOutputPath();
 	}
 	

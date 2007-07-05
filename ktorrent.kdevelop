@@ -85,7 +85,7 @@
         <f77flags/>
       </optimized>
       <debug>
-        <configargs>--enable-debug=full --disable-builtin-country-flags</configargs>
+        <configargs>--enable-debug=full</configargs>
         <builddir>debug</builddir>
         <ccompiler>kdevgccoptions</ccompiler>
         <cxxcompiler>kdevgppoptions</cxxcompiler>
