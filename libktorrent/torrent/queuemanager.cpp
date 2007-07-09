@@ -598,6 +598,8 @@ namespace bt
 
 		if (keep_seeding)
 		    torrentAdded(tc, false, false);
+		else
+			stop(tc,true);
 
 		orderQueue();
 	}

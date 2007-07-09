@@ -163,7 +163,8 @@ KTorrent::KTorrent()
 	m_statusTransfer = new QLabel(this);
 	m_statusDHT = new QLabel(this);
 	m_statusFirewall = new QLabel(this);
-	m_statusFirewall->setText(i18n("No incoming connections (possibly firewalled)")); // this will be hidden when we see an incoming connection
+	m_statusFirewall->setPixmap(SmallIcon("messagebox_warning"));
+	QToolTip::add(m_statusFirewall,i18n("No incoming connections (possibly firewalled)"));
 
 	statusBar()->addWidget(m_statusFirewall);
 	statusBar()->addWidget(m_statusInfo,1);
