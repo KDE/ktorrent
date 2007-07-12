@@ -133,22 +133,24 @@ $A"
 '
 		torinfo=( `for A in $torns; do
 		echo $A
-		done|$ktorrentp getTorrentInfo %1` )
+		done|$ktorrentp getTorrentInfo %1|sed s/^$/-/` )
 		filecounts=( `for A in $torns; do
 		echo $A
 		done|$ktorrentp getFileCount %1` )
 		unset IFS
 		i=0
 		for A in $tornums; do
-			let tors[$A]=$i/10
+			let tors[$A]=$i/13
 			echo "$A. ${torinfo[$i]:0:40}  (${torinfo[$i+1]:0:32})"
 			echo -n "Size:${torinfo[$i+3]}  (Have ${torinfo[$i+9]})  "
 			echo -n "Time Left:${torinfo[$i+7]}  "
 			echo "Peers: ${torinfo[$i+8]}"
+			echo -n "Seeders: ${torinfo[$i+11]}  Leechers: ${torinfo[$i+12]}  "
+			echo "Share Ratio: ${torinfo[$i+10]}  "
 			echo -n "DL:${torinfo[$i+2]}  DL Rate:${torinfo[$i+5]}  "
 			echo "UL:${torinfo[$i+4]}  UL Rate:${torinfo[$i+6]}  "
 			echo
-			let i=$i+10
+			let i=$i+13
 		done
 		echo -n "Type a torrent's number or press enter to go back to the main menu:"
 		read -p " " command
