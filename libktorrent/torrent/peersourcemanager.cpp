@@ -62,12 +62,9 @@ namespace bt
 			t = t->next;
 		}
 		
-		if(!tor->getStats().priv_torrent)
-		{
-			//load custom trackers
-			loadCustomURLs();
-		}
-		
+		//load custom trackers
+		loadCustomURLs();
+				
 		connect(&timer,SIGNAL(timeout()),this,SLOT(updateCurrentManually()));
 	}
 	

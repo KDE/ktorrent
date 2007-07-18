@@ -39,8 +39,8 @@ namespace kt
 		unloaded.setAutoDelete(false);
 		plugins.setAutoDelete(false);
 		prefpage = 0;
-		pltoload.append("infowidgetplugin");
-		pltoload.append("searchplugin");
+		pltoload.append("Info Widget");
+		pltoload.append("Search");
 	}
 
 	PluginManager::~PluginManager()
@@ -298,10 +298,11 @@ namespace kt
 		}
 
 		QTextStream out(&f);
-		out << "infowidgetplugin" << endl << "searchplugin" << endl;
+		
+		out << "Info Widget" << endl << "Search" << endl;
 
 		pltoload.clear();
-		pltoload.append("infowidgetplugin");
-		pltoload.append("searchplugin");
+		pltoload.append("Info Widget");
+		pltoload.append("Search");
 	}
 }

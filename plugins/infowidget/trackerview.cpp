@@ -172,6 +172,11 @@ namespace kt
 		btnAdd->setEnabled(txtTracker->text() != QString::null && !tc->getStats().priv_torrent);
 	}
 	
+	void TrackerView::onLoadingFinished(const KURL & ,bool,bool)
+	{
+		torrentChanged(tc);
+	}
+	
 	void TrackerView::torrentChanged(TorrentInterface* ti)
 	{
 		tc = ti;

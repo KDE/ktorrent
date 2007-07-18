@@ -21,6 +21,7 @@
 #ifndef TRACKERVIEW_H
 #define TRACKERVIEW_H
 
+#include <kurl.h>
 #include "trackerviewbase.h"
 
 namespace kt
@@ -48,6 +49,7 @@ namespace kt
 			virtual void btnRemove_clicked();
 			virtual void btnAdd_clicked();
     		virtual void listTrackers_currentChanged(QListViewItem*);
+			void onLoadingFinished(const KURL & ,bool,bool);
 			
 		private:
 			void torrentChanged(TorrentInterface* ti);

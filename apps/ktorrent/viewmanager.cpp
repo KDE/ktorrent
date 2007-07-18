@@ -73,6 +73,13 @@ void ViewManager::restoreViewState(KConfig* cfg,KTorrent* ktor)
 		ktor->openView(*i);
 	}
 	
+	if (views.count() == 0)
+	{
+		// no view open, so open default ones
+		for (QStringList::iterator i = def.begin();i != def.end();i++)
+			ktor->openView(*i);
+	}
+	
 	// load status for each view
 	int idx = 0;
 	for (ViewItr i = views.begin();i != views.end();i++)
