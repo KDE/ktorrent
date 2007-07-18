@@ -200,11 +200,11 @@ namespace bt
 			kt::TorrentInterface* tc = *i;
 
 			if (type >= 3)
-				start(tc, false);
+				start(tc, true);
 			else
 			{
 				if ((tc->getStats().completed && type == 2) || (!tc->getStats().completed && type == 1) || (type == 3))
-					start(tc, false);
+					start(tc, true);
 			}
 
 			i++;
