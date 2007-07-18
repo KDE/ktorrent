@@ -21,6 +21,7 @@
 #ifndef QUEUEMANAGER_H
 #define QUEUEMANAGER_H
 
+#include <set>
 #include <qobject.h>
 #include <qptrlist.h>
 
@@ -158,7 +159,7 @@ namespace bt
 			void stopSafely(kt::TorrentInterface* tc,bool user,WaitJob* wjob = 0);
 
 			bt::QueuePtrList downloads;
-			bt::QueuePtrList* paused_torrents;
+			std::set<kt::TorrentInterface*> paused_torrents;
 
 			int max_downloads;
 			int max_seeds;

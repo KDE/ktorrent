@@ -46,7 +46,6 @@ namespace bt
 		downloads.setAutoDelete(true);
 		max_downloads = 0;
 		max_seeds = 0; //for testing. Needs to be added to Settings::
-		paused_torrents = 0;
 
 		keep_seeding = true; //test. Will be passed from Core
 		paused_state = false;
@@ -67,6 +66,8 @@ namespace bt
 
 	void QueueManager::remove(kt::TorrentInterface* tc)
 	{
+		paused_torrents.erase(tc);
+					
 		int index = downloads.findRef(tc);
 
 		if (index != -1)
@@ -76,14 +77,13 @@ namespace bt
 	}
 
 	void QueueManager::clear()
-
 	{
-
 		Uint32 nd = downloads.count();
+		
+		paused_torrents.clear();
 		downloads.clear();
 
 		// wait for a second to allow all http jobs to send the stopped event
-
 		if (nd > 0)
 			SynchronousWait(1000);
 	}
@@ -437,7 +437,6 @@ namespace bt
 	}
 
 	void QueueManager::orderQueue()
-
 	{
 		if (!downloads.count())
 			return;
@@ -448,7 +447,6 @@ namespace bt
 		downloads.sort();
 
 		QPtrList<TorrentInterface>::const_iterator it = downloads.begin();
-
 		QPtrList<TorrentInterface>::const_iterator its = downloads.end();
 
 
@@ -644,29 +642,24 @@ namespace bt
 
 	void QueueManager::setPausedState(bool pause)
 	{
-		if (paused_state && pause || !paused_state && !pause)
-			return;
-
+		paused_state = pause;
 		if (!pause)
 		{
-			QPtrList<TorrentInterface>::const_iterator it = paused_torrents->begin();
-
-			for (; it != paused_torrents->end(); ++it)
+			std::set<kt::TorrentInterface*>::iterator it = paused_torrents.begin();
+			while (it != paused_torrents.end())
 			{
 				TorrentInterface* tc = *it;
 				startSafely(tc);
+				it++;
 			}
-
-			delete paused_torrents;
-
-			paused_torrents = 0;
+	
+			paused_torrents.clear();
+			orderQueue();
 		}
 		else
-		{
-			paused_torrents = new QueuePtrList();
+		{	
 			QPtrList<TorrentInterface>::const_iterator it = downloads.begin();
-
-			for (; it != downloads.end(); ++it)
+			for (; it != downloads.end(); it++)
 			{
 				TorrentInterface* tc = *it;
 
@@ -674,13 +667,11 @@ namespace bt
 
 				if (s.running)
 				{
-					paused_torrents->append(tc);
+					paused_torrents.insert(tc);
 					stopSafely(tc, false);
 				}
 			}
 		}
-
-		paused_state = pause;
 	}
 
 	void QueueManager::enqueue(kt::TorrentInterface* tc)
