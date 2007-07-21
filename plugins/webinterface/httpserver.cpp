@@ -17,8 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <qtimer.h>
 #include <qcstring.h>
 #include <qdatetime.h>
+#include <kapplication.h>
 #include <kgenericfactory.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
@@ -79,7 +81,7 @@ namespace kt
 	
 		HttpClientHandler* handler = new HttpClientHandler(this,socket);
 		clients.insert(socket,handler);
-		Out(SYS_WEB|LOG_DEBUG) << "connection from "<< socket->peerAddress().toString()  << endl;
+		Out(SYS_WEB|LOG_NOTICE) << "connection from "<< socket->peerAddress().toString()  << endl;
 	}
 	
 
@@ -154,7 +156,6 @@ namespace kt
 				session.sessionId=rand();
 				session.last_access=QTime::currentTime();
 				Out(SYS_WEB|LOG_NOTICE) << "Webgui login succesfull !" << endl;
-			//	Out(SYS_WEB|LOG_NOTICE) << "sessionId = " << session.sessionId << endl;
 				return true;
 			}
 		}
@@ -168,7 +169,6 @@ namespace kt
 		int session_id = 0;
 		if (hdr.hasKey("Cookie"))
 		{
-		//	Out(SYS_WEB|LOG_DEBUG) << "checkSession " << hdr.value("Cookie") << endl;
 			QStringList tokens = QStringList::split('=',hdr.value("Cookie"));
 			for (int i = 0;i < tokens.count() - 1;i+= 2)
 			{
@@ -182,9 +182,7 @@ namespace kt
 				return false;
 		}
 		
-	//	Out(SYS_WEB|LOG_DEBUG) << "checkSession " << session_id << " " << session.sessionId << endl;
-
-
+	
 		if (session_id == session.sessionId)
 		{
 			// check if the session hasn't expired yet
@@ -194,7 +192,6 @@ namespace kt
 			}
 			else
 			{
-	//			Out(SYS_WEB|LOG_DEBUG) << "checkSession expired" << endl;
 				return false;
 			}
 		}
@@ -230,38 +227,34 @@ namespace kt
 		}
 	}
 	
+	void HttpServer::redirectToLoginPage(HttpClientHandler* hdlr)
+	{
+		HttpResponseHeader rhdr(301);
+		setDefaultResponseHeaders(rhdr,"text/html",false);
+		rhdr.setValue("Location","/login.html");
+		QString path = rootDir + bt::DirSeparator() + WebInterfacePluginSettings::skin() + "/login.html";
+		if (!hdlr->sendFile(rhdr,path))
+		{
+			HttpResponseHeader nhdr(404);
+			setDefaultResponseHeaders(nhdr,"text/html",false);
+			hdlr->send404(nhdr,path);
+		}
+		Out(SYS_WEB|LOG_NOTICE) << "Redirecting to /login.html" << endl;
+	}
+	
 	void HttpServer::handleGet(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,bool do_not_check_session)
 	{
-		bool send_login_page = false;
 		QString file = hdr.path();
 		if (file == "/")
 			file = "/login.html";
 		
-	//	Out(SYS_WEB|LOG_DEBUG) << "GET " << hdr.path() << endl;
+		//Out(SYS_WEB|LOG_DEBUG) << "GET " << hdr.path() << endl;
 		
 		KURL url;
 		url.setEncodedPathAndQuery(file);
 		
 		QString path = rootDir + bt::DirSeparator() + WebInterfacePluginSettings::skin() + url.path();
-		
-		if (!session.logged_in)
-		{
-			send_login_page = true;
-		}
-		else if (file == "/login.html" || file == "/")
-		{
-			session.logged_in = false;
-		}
-		
-		if (session.logged_in && !do_not_check_session)
-		{
-			if (!checkSession(hdr))
-			{
-				session.logged_in = false;
-				send_login_page = true;
-			}
-		}
-		
+		// first check if the file exists (if not send 404)
 		if (!bt::Exists(path))
 		{
 			HttpResponseHeader rhdr(404);
@@ -272,10 +265,30 @@ namespace kt
 		
 		QFileInfo fi(path);
 		QString ext = fi.extension();
-		if (send_login_page && ext == "php")
+		
+		// if it is the login page send that
+		if (file == "/login.html" || file == "/")
 		{
-			path = rootDir + bt::DirSeparator() + WebInterfacePluginSettings::skin() + "/login.html";
+			session.logged_in = false;
 			ext = "html";
+			path = rootDir + bt::DirSeparator() + WebInterfacePluginSettings::skin() + "/login.html"; 
+		}
+		else if (!session.logged_in && (ext == "html" || ext == "php"))
+		{
+			// for any html or php page, a login is necessary
+			redirectToLoginPage(hdlr);
+			return;
+		}
+		else if (session.logged_in && !do_not_check_session && (ext == "html" || ext == "php"))
+		{
+			// if we are logged in and it's a html or php page, check the session id
+			if (!checkSession(hdr))
+			{
+				session.logged_in = false;
+				// redirect to login page
+				redirectToLoginPage(hdlr);
+				return;
+			}
 		}
 		
 		if (ext == "html")
@@ -331,12 +344,17 @@ namespace kt
 		{
 			const QMap<QString,QString> & args = url.queryItems();
 			bool redirect = false;
+			bool shutdown = false;
 			if (args.count() > 0 && session.logged_in)
-			{
-				redirect = php_i->exec(args);
-			}
+				redirect = php_i->exec(args,shutdown);
 			
-			if (redirect)
+			if (shutdown)
+			{
+				// first send back login page
+				redirectToLoginPage(hdlr);
+				QTimer::singleShot(1000,kapp,SLOT(quit()));
+			}
+			else if (redirect)
 			{
 				HttpResponseHeader rhdr(301);
 				setDefaultResponseHeaders(rhdr,"text/html",true);
@@ -383,12 +401,9 @@ namespace kt
 	
 	void HttpServer::handleTorrentPost(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QByteArray & data)
 	{
-		Out(SYS_WEB|LOG_DEBUG) << "Loading torrent " << QString(data) << endl;
-		handleGet(hdlr,hdr,true);
 		const char* ptr = data.data();
 		Uint32 len = data.size();
 		int pos = QString(data).find("\r\n\r\n");
-		Out(SYS_WEB|LOG_DEBUG) << QString("ptr[pos + 4] = %1").arg(QChar(ptr[pos + 4])) << endl;
 		
 		if (pos == -1 || pos + 4 >= len || ptr[pos + 4] != 'd')
 		{
@@ -413,7 +428,7 @@ namespace kt
 		tmp_file.sync();
 		tmp_file.setAutoDelete(true);
 		
-		Out(SYS_WEB|LOG_DEBUG) << "Loading file " << tmp_file.name() << endl;
+		Out(SYS_WEB|LOG_NOTICE) << "Loading file " << tmp_file.name() << endl;
 		core->loadSilently(KURL::fromPathOrURL(tmp_file.name()));
 		
 		handleGet(hdlr,hdr);

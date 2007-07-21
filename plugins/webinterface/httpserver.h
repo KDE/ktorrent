@@ -87,6 +87,7 @@ namespace kt
 		void setDefaultResponseHeaders(HttpResponseHeader & hdr,const QString & content_type,bool with_session_info);
 		void handleTorrentPost(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QByteArray & data);
 		QDateTime parseDate(const QString & str);
+		void redirectToLoginPage(HttpClientHandler* hdlr);
 		
 	private:
 		QString rootDir;

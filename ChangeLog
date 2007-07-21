@@ -1,3 +1,7 @@
+Changes in 2.2.1 :
+- Fix file selection bug
+- Fix several webgui bugs
+
 Changes in 2.2 :
 - Allow user to create torrents without tracker 
 - Double clicking on files in files tab opens them

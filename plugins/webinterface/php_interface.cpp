@@ -26,7 +26,7 @@
 #include <kademlia/dhtbase.h>
 #include <torrent/server.h>
 #include <util/log.h>
-#include <kapplication.h>
+
 
 #include "php_interface.h"
 		
@@ -146,9 +146,10 @@ namespace kt
 		core=c;
 	}
 	
-	bool PhpActionExec::exec(const QMap<QString, QString> & params)
+	bool PhpActionExec::exec(const QMap<QString, QString> & params,bool & shutdown)
 	{
 		bool ret = false;
+		shutdown = false;
 		QMap<QString, QString>::ConstIterator it;
 		for ( it = params.begin(); it != params.end(); ++it ) 
 		{
@@ -287,7 +288,7 @@ namespace kt
 				case 'q':
 					if(it.key()=="quit" && !it.data().isEmpty())
 					{
-						kapp->quit();
+						shutdown = true;
 						ret = true;
 					}
 					break;
