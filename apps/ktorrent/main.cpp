@@ -138,7 +138,8 @@ int main(int argc, char **argv)
 					"bflat1@gmx.net");
 	about.addCredit("Andreas Kling",0,"kling@impul.se");
 	about.addCredit("Felipe Sateler",0,"fsateler@gmail.com");
-	about.addCredit("Maxmind", I18N_NOOP("Country locator for InfoWidget plugin. Flags are taken from http://flags.blogpotato.de/ so thanks to them too."),0, "http://www.maxmind.com/");
+	about.addCredit("Maxmind", I18N_NOOP("Country locator for InfoWidget plugin (This product includes GeoLite data created by MaxMind, available from http://www.maxmind.com/). "),0, "http://www.maxmind.com/");
+	about.addCredit("http://flags.blogpotato.de/",I18N_NOOP("Country flags"),0);
 	about.addCredit("Adam Forsyth",I18N_NOOP("File prioritization"),"agforsyth@gmail.com");
 	about.addCredit("Thomas Bernard",I18N_NOOP("Miniupnp was used as an example for our own UPnP implementation"),0,"http://miniupnp.free.fr/");
 	about.addCredit("Diego Rosario Brogna",I18N_NOOP("Global max share ratio patch"),0,"dierbro@gmail.com");
