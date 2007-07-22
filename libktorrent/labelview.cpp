@@ -189,7 +189,7 @@ namespace kt
 	
 	void LabelView::updateOddStatus()
 	{
-		bool odd = false;
+		bool odd = true;
 		LabelViewItr i = items.begin();
 		while (i != items.end())
 		{
