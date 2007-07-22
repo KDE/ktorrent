@@ -83,6 +83,11 @@ namespace kt
 		}
 	}
 	
+	bool LabelViewItem::operator < (const LabelViewItem & item)
+	{
+		return title_lbl->text() < item.title_lbl->text();
+	}
+	
 	void LabelViewItem::mousePressEvent(QMouseEvent *e)
 	{
 		if (e->button() == QMouseEvent::LeftButton)
@@ -93,6 +98,9 @@ namespace kt
 		setFocus();
 		QWidget::mousePressEvent(e);
 	}
+	
+	typedef std::list<LabelViewItem*>::iterator LabelViewItr;
+	typedef std::list<LabelViewItem*>::const_iterator LabelViewCItr;
 	
 	class LabelViewBox : public QWidget
 	{
@@ -122,7 +130,14 @@ namespace kt
 			item->reparent(0,QPoint(0,0));
 		}
 		
-		
+		void sorted(const std::list<LabelViewItem*> items)
+		{
+			for (LabelViewCItr i = items.begin();i != items.end();i++)
+				layout->remove(*i);
+			
+			for (LabelViewCItr i = items.begin();i != items.end();i++)
+				layout->add(*i);
+		}
 	};
 	
 
@@ -146,8 +161,8 @@ namespace kt
 	void LabelView::addItem(LabelViewItem* item)
 	{
 		item_box->add(item);
-		items.append(item);
-		item->setOdd(items.count() % 2 == 1);
+		items.push_back(item);
+		item->setOdd(items.size() % 2 == 1);
 		
 		connect(item, SIGNAL(clicked(LabelViewItem*)),
 				this, SLOT(onItemClicked(LabelViewItem*)));
@@ -155,10 +170,11 @@ namespace kt
 	
 	void LabelView::removeItem(LabelViewItem* item)
 	{
-		if (items.contains(item))
+		LabelViewItr i = std::find(items.begin(),items.end(),item);
+		if (i != items.end())
 		{
 			item_box->remove(item);
-			items.remove(item);
+			items.erase(i);
 			disconnect(item, SIGNAL(clicked(LabelViewItem*)),
 					this, SLOT(onItemClicked(LabelViewItem*)));
 			
@@ -167,15 +183,20 @@ namespace kt
 				selected = 0;
 			
 			// update odd status of each item
-			bool odd = false;
-			QValueList<LabelViewItem*>::iterator i = items.begin();
-			while (i != items.end())
-			{
-				LabelViewItem* item = *i;
-				item->setOdd(odd);
-				odd = !odd;
-				i++;
-			}
+			updateOddStatus();	
+		}
+	}
+	
+	void LabelView::updateOddStatus()
+	{
+		bool odd = false;
+		LabelViewItr i = items.begin();
+		while (i != items.end())
+		{
+			LabelViewItem* item = *i;
+			item->setOdd(odd);
+			odd = !odd;
+			i++;
 		}
 	}
 	
@@ -194,7 +215,7 @@ namespace kt
 	
 	void LabelView::clear()
 	{
-		QValueList<LabelViewItem*>::iterator i = items.begin();
+		LabelViewItr i = items.begin();
 		while (i != items.end())
 		{
 			LabelViewItem* item = *i;
@@ -207,13 +228,28 @@ namespace kt
 	
 	void LabelView::update()
 	{
-		QValueList<LabelViewItem*>::iterator i = items.begin();
+		LabelViewItr i = items.begin();
 		while (i != items.end())
 		{
 			LabelViewItem* item = *i;
 			item->update();
 			i++;
 		}
+	}
+	
+	struct LabelViewItemCmp
+	{
+		bool operator() (LabelViewItem* a,LabelViewItem* b)
+		{
+			return *a < *b;
+		}
+	};
+	
+	void LabelView::sort()
+	{
+		items.sort(LabelViewItemCmp());
+		item_box->sorted(items);
+		updateOddStatus();
 	}
 
 }

@@ -20,7 +20,7 @@
 #ifndef KTLABELVIEW_H
 #define KTLABELVIEW_H
 
-
+#include <list>
 #include <qscrollview.h>
 #include "labelviewitembase.h"
 
@@ -60,6 +60,9 @@ namespace kt
 		/// Can be reimplemented to update the GUI of the item by base classes
 		virtual void update() {}
 		
+		/// Smaller then operator for sorting (by default we sort on title)
+		virtual bool operator < (const LabelViewItem & item);
+		
 	private:
 		virtual void mousePressEvent(QMouseEvent *e);
 		
@@ -97,9 +100,15 @@ namespace kt
 		
 		/// Update all items in the view
 		void update();
+		
+		/// Sort the items using the operator < 
+		void sort();
 	
 	private slots:
 		void onItemClicked(LabelViewItem* it);
+		
+	private:
+		void updateOddStatus();
 		
 	signals:
 		/// The current item has changed
@@ -107,7 +116,7 @@ namespace kt
 		
 	private:
 		LabelViewBox* item_box;
-		QValueList<LabelViewItem*> items;
+		std::list<LabelViewItem*> items;
 		LabelViewItem* selected;
 	};
 

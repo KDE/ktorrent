@@ -102,6 +102,7 @@ namespace kt
 			lv->addItem(new PluginViewItem(p,lv));
 			i++;
 		}
+		lv->sort();
 	}
 	
 	void PluginManagerPrefPage::updateData()
