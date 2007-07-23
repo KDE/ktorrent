@@ -62,5 +62,6 @@ namespace kt
 	
 	void UPnPPrefPage::shutdown(bt::WaitJob* job)
 	{
+		widget->shutdown(job);
 	}
 }
