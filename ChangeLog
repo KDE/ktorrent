@@ -1,6 +1,7 @@
 Changes in 2.2.1 :
 - Fix file selection bug
 - Fix several webgui bugs
+- Make sure plugin list is sorted on the plugin name
 
 Changes in 2.2 :
 - Allow user to create torrents without tracker 
