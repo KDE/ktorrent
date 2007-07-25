@@ -125,12 +125,14 @@ namespace kt
 			p->shutdown(wjob);
 			if (wjob->needToWait())
 				bt::WaitJob::execute(wjob);
+			else
+				delete wjob;
 		}
 		catch (Error & err)
 		{
 			Out(SYS_GEN|LOG_NOTICE) << "Error when unloading plugin: " << err.toString() << endl;
 		}
-		delete wjob;
+		
 
 		gui->removePluginGui(p);
 		p->unload();
@@ -174,14 +176,16 @@ namespace kt
 				p->shutdown(wjob);
 				i++;
 			}
+			
 			if (wjob->needToWait())
 				bt::WaitJob::execute(wjob);
+			else
+				delete wjob;
 		}
 		catch (Error & err)
 		{
 			Out(SYS_GEN|LOG_NOTICE) << "Error when unloading all plugins: " << err.toString() << endl;
 		}
-		delete wjob;
 		
 		// then unload them
 		bt::PtrMap<QString,Plugin>::iterator i = plugins.begin();

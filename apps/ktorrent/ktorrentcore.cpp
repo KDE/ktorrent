@@ -593,9 +593,7 @@ void KTorrentCore::onExit()
 	qman->onExit(job);
 	// wait for completion of stopped events
 	if (job->needToWait())
-	{
 		WaitJob::execute(job);
-	}
 	else
 		delete job;
 	
