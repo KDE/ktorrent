@@ -59,8 +59,8 @@ namespace kt
 		void serviceDestroyed(AvahiService* av);
 	
 	private:
-		void startPublishing();
-		void startBrowsing();
+		bool startPublishing();
+		bool startBrowsing();
 		
 		friend void group_callback(AvahiEntryGroup*, AvahiEntryGroupState, void*);
 		friend void publish_service(AvahiService*, AvahiClient*);

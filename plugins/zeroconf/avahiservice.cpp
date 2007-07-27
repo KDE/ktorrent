@@ -271,13 +271,10 @@ namespace kt
 	
 	void AvahiService::start()
 	{
-		startPublishing();
-		startBrowsing();
-	
-		started = true;
+		started = startPublishing() && startBrowsing();
 	}
 	
-	void AvahiService::startPublishing()
+	bool AvahiService::startPublishing()
 	{
 		this->group = NULL;
 		this->publisher_poll = NULL;
@@ -287,7 +284,7 @@ namespace kt
 		{
 			Out(SYS_ZCO|LOG_DEBUG) << "ZC: Failed to create a poll for publishing." << endl;
 			stop(); 
-			return;
+			return false;
 		}
 	
 		this->publisher = avahi_client_new(avahi_threaded_poll_get(publisher_poll), AVAHI_CLIENT_NO_FAIL, publisher_callback, this, NULL);
@@ -296,13 +293,14 @@ namespace kt
 		{
 			Out(SYS_ZCO|LOG_DEBUG) << "ZC: Failed to create a client for publishing." << endl;
 			stop(); 
-			return;
+			return false;
 		}
 	
 		avahi_threaded_poll_start(publisher_poll);
+		return true;
 	}
 	
-	void AvahiService::startBrowsing()
+	bool AvahiService::startBrowsing()
 	{
 		this->listener_poll = NULL;
 		this->listener = NULL;
@@ -312,7 +310,7 @@ namespace kt
 		{
 			Out(SYS_ZCO|LOG_DEBUG) << "ZC: Failed to create a poll for browsing." << endl;
 			stop(); 
-			return;
+			return false;
 		}
 		
 		this->listener = avahi_client_new(avahi_threaded_poll_get(this->listener_poll), AVAHI_CLIENT_NO_FAIL, listener_callback, this, NULL);
@@ -321,17 +319,18 @@ namespace kt
 		{
 			Out(SYS_ZCO|LOG_DEBUG) << "ZC: Failed to create a client for browsing." << endl;
 			stop(); 
-			return;
+			return false;
 		}
 		
 		if (!(this->browser = avahi_service_browser_new(this->listener, AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC, avahi_strdup(QString("_" + this->infoHash + "._sub._bittorrent._tcp").ascii()), NULL, (AvahiLookupFlags)0, browser_callback, this))) 
 		{
 			Out(SYS_ZCO|LOG_DEBUG) << "ZC: Failed to create a service browser." << endl;
 			stop(); 
-			return;
+			return false;
 		}
 	
 		avahi_threaded_poll_start(listener_poll);
+		return true;
 	}
 	
 	void AvahiService::emitPeersReady()
