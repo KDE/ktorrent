@@ -56,12 +56,12 @@ KTorrentViewMenu::KTorrentViewMenu (KTorrentView *parent, const char *name )
 	insertSeparator();
 	
 	add_peer_id = insertItem(
-			iload->loadIconSet("add", KIcon::Small), i18n("Add Peers..."),
+			iload->loadIconSet("add", KIcon::Small), i18n("Add Peers"),
 			parent, SLOT(showAddPeersWidget())); 
 	
 	peer_sources_menu = new KPopupMenu(this);
 	peer_sources_id = insertItem(i18n("Additional Peer Sources"), peer_sources_menu);
-	peer_sources_menu->insertTitle(i18n("Torrent peer sources:"));
+	peer_sources_menu->insertTitle(i18n("Torrent Peer Sources:"));
 	peer_sources_menu->setCheckable(true);
 	dht_id = peer_sources_menu->insertItem(i18n("DHT"), parent, SLOT(dhtSlot()));
 	ut_pex_id = peer_sources_menu->insertItem(i18n("Peer Exchange"), parent, SLOT(utPexSlot()));
@@ -78,13 +78,13 @@ KTorrentViewMenu::KTorrentViewMenu (KTorrentView *parent, const char *name )
 	
 	insertSeparator();
 	dirs_sub_menu = new KPopupMenu(this);
-	dirs_id = insertItem(i18n("Open Directory..."), dirs_sub_menu);
+	dirs_id = insertItem(i18n("Open Directory"), dirs_sub_menu);
 	outputdir_id = dirs_sub_menu->insertItem(iload->loadIconSet("folder",KIcon::Small), i18n("Data Directory"), 
 											 parent, SLOT(openOutputDirectory()));
 	torxdir_id = dirs_sub_menu->insertItem(iload->loadIconSet("folder",KIcon::Small), i18n("Temporary Directory"),
 										   parent, SLOT(openTorXDirectory()));
 	
-	downloaddir_id = insertItem(i18n("Set download location..."), parent, SLOT(setDownloadLocationSlot()));
+	downloaddir_id = insertItem(i18n("Set Download Location"), parent, SLOT(setDownloadLocationSlot()));
 	
 	insertSeparator();
 	remove_from_group_id =  insertItem(i18n("Remove From Group"),parent, SLOT(removeFromGroup()));
