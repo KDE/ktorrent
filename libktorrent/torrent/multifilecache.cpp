@@ -734,12 +734,12 @@ namespace bt
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
 			TorrentFile & tf = tor.getFile(i);
-			if (tf.doNotDownload())
-				continue;
-			
 			QString fpath = tf.getPath();
-			// first delete the file
-			bt::Delete(output_dir + fpath);
+			if (!tf.doNotDownload())
+			{
+				// first delete the file
+				bt::Delete(output_dir + fpath);
+			}
 			
 			// check for subdirectories
 			DeleteEmptyDirs(output_dir,fpath);
