@@ -1,0 +1,363 @@
+/***************************************************************************
+ *   Copyright (C) 2007 by Joris Guisson                                   *
+ *   joris.guisson@gmail.com                                               *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ ***************************************************************************/
+#include <QDropEvent>
+#include <QDragEnterEvent>
+#include <QTreeWidgetItemIterator>
+#include <klocale.h>
+#include <kglobal.h>
+#include <kiconloader.h>
+#include <kmenu.h>
+#include <kaction.h>
+#include <kmessagebox.h>
+#include <kinputdialog.h>
+#include <kactioncollection.h>
+#include <util/log.h>
+#include <interfaces/torrentinterface.h>
+#include <groups/group.h>
+#include <groups/groupmanager.h>
+#include <groups/torrentgroup.h>
+#include "viewmanager.h"
+#include "view.h"
+#include "groupview.h"
+
+
+using namespace bt;
+
+namespace kt
+{
+
+	GroupViewItem::GroupViewItem(GroupView* parent,Group* g) : QTreeWidgetItem(parent),g(g)
+	{
+		setText(0,g->groupName());
+		setIcon(0,g->groupIcon());
+	}
+	
+	GroupViewItem::GroupViewItem(QTreeWidgetItem* parent,Group* g) : QTreeWidgetItem(parent),g(g)
+	{
+		setText(0,g->groupName());
+		setIcon(0,g->groupIcon());
+	}
+	
+	GroupViewItem::~GroupViewItem()
+	{
+	}
+	
+	/*
+	int GroupViewItem::compare(QListViewItem* i,int ,bool ) const
+	{
+		if (text(1).isNull() && i->text(1).isNull())
+			return QString::compare(text(0),i->text(0));
+		else
+			return QString::compare(text(1),i->text(1));
+	}
+	*/
+
+	GroupView::GroupView(GroupManager* gman,ViewManager* view,KActionCollection* col,QWidget *parent)
+	: QTreeWidget(parent),view(view),custom_root(0),gman(gman)
+	{
+		setColumnCount(1);
+		setContextMenuPolicy(Qt::CustomContextMenu);
+		headerItem()->setHidden(true);
+	
+		current = gman->allGroup();
+		
+		connect(this,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(onItemActivated(QTreeWidgetItem*,int)));
+		connect(this,SIGNAL(customContextMenuRequested(const QPoint & ) ),this,SLOT(showContextMenu( const QPoint& )));
+		connect(this,SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(onItemChanged(QTreeWidgetItem*,int)));
+		connect(this,SIGNAL(currentGroupChanged(kt::Group*)),view,SLOT(onCurrentGroupChanged(kt::Group*)));
+		connect(this,SIGNAL(groupRenamed(kt::Group*)),view,SLOT(onGroupRenamed(kt::Group*)));
+		connect(this,SIGNAL(groupRemoved(kt::Group*)),view,SLOT(onGroupRemoved(kt::Group*))),
+
+		editing_item = false;
+		current_item = 0;
+		menu = 0;
+		createMenu(col);
+		GroupViewItem* all = addGroup(gman->allGroup(),0);
+		GroupViewItem* dwnld = addGroup(gman->downloadGroup(),all);
+		GroupViewItem* upld = addGroup(gman->uploadGroup(),all);
+		GroupViewItem* inactive = addGroup(gman->inactiveGroup(), all);
+		GroupViewItem* active = addGroup(gman->activeGroup(), all);
+		addGroup(gman->queuedDownloadsGroup(), dwnld);
+		addGroup(gman->queuedUploadsGroup(), upld);
+		addGroup(gman->userDownloadsGroup(), dwnld);
+		addGroup(gman->userUploadsGroup(), upld);
+		addGroup(gman->inactiveDownloadsGroup(), inactive);
+		addGroup(gman->inactiveUploadsGroup(), inactive);
+		addGroup(gman->activeDownloadsGroup(), active);
+		addGroup(gman->activeUploadsGroup(), active);
+		
+		custom_root = new QTreeWidgetItem(all);
+		custom_root->setText(0,i18n("Custom Groups"));
+		custom_root->setIcon(0,SmallIcon("folder"));
+		custom_root->setExpanded(true);
+		
+		for (GroupManager::iterator i = gman->begin();i != gman->end();i++)
+		{
+			GroupViewItem* gvi = addGroup(i->second,custom_root);
+			gvi->setFlags(gvi->flags() | Qt::ItemIsEditable);
+		}
+
+		setAcceptDrops(true);
+	}
+
+
+	GroupView::~GroupView()
+	{	
+	}
+	
+	void GroupView::createMenu(KActionCollection* col)
+	{
+		menu = new KMenu(this);
+		
+		new_group = new KAction(KIcon("document-new"),i18n("New Group"),this);
+		connect(new_group,SIGNAL(triggered()),this,SLOT(addGroup()));
+		col->addAction("new_group",new_group);
+
+		edit_group = new KAction(KIcon("insert-text"),i18n("Edit Name"),this);
+		connect(edit_group,SIGNAL(triggered()),this,SLOT(editGroupName()));
+		col->addAction("edit_group_name",edit_group);
+		
+		remove_group = new KAction(KIcon("edit-delete"),i18n("Remove Group"),this);
+		connect(remove_group,SIGNAL(triggered()),this,SLOT(removeGroup()));
+		col->addAction("remove_group",remove_group);
+		
+		open_in_new_tab = new KAction(KIcon("tab-new"),i18n("Open Tab"),this);
+		connect(open_in_new_tab,SIGNAL(triggered()),this,SLOT(openView()));
+		col->addAction("open_tab",open_in_new_tab);
+		
+		menu->addAction(open_in_new_tab);
+		menu->addAction(new_group);
+		menu->addAction(edit_group);
+		menu->addAction(remove_group);
+		menu->insertSeparator(new_group);
+	}
+	
+	void GroupView::addGroup()
+	{
+		QString name = KInputDialog::getText(QString::null,i18n("Please enter the group name."));
+		
+		if (name.isNull() || name.length() == 0)
+			return;
+		
+		if (gman->find(name))
+		{
+			KMessageBox::error(this,i18n("The group %1 already exists.").arg(name));
+			return;
+		}
+		
+		GroupViewItem* gvi = addGroup(gman->newGroup(name),custom_root);
+		gvi->setFlags(gvi->flags() | Qt::ItemIsEditable);
+		gman->saveGroups();
+	}
+	
+	void GroupView::removeGroup()
+	{
+		if (!current_item)
+			return;
+		
+		Group* g = current_item->group();
+		if (!g)
+			return;
+		
+		groupRemoved(g);
+		if (g == current)
+		{
+			current = gman->allGroup();
+			currentGroupChanged(current);
+		}
+		
+		gman->erase(g->groupName());
+		delete current_item;
+		current_item = 0;
+		gman->saveGroups();
+	}
+	
+	void GroupView::editGroupName()
+	{
+		if (!current_item)
+			return;
+		
+		editItem(current_item);
+		editing_item = true;
+	}
+
+	GroupViewItem* GroupView::addGroup(Group* g,QTreeWidgetItem* parent)
+	{
+		GroupViewItem* li = 0;
+		if (parent)
+		{
+			li = new GroupViewItem(parent,g);
+		}
+		else
+		{
+			li = new GroupViewItem(this,g);
+			li->setText(1,g->groupName());
+			addTopLevelItem(li);
+		}
+		
+		if (custom_root && custom_root->childCount() == 1 && custom_root == parent)
+			custom_root->setExpanded(true);
+		
+		return li;
+	}
+	
+	void GroupView::showContextMenu(const QPoint & p)
+	{
+		current_item = dynamic_cast<GroupViewItem*>(itemAt(p));
+		
+		Group* g = 0;
+		if (current_item)
+			g = current_item->group();
+		
+		if (!g || !gman->canRemove(g))
+		{
+			edit_group->setEnabled(false);
+			remove_group->setEnabled(false);
+		}
+		else
+		{
+			edit_group->setEnabled(true);
+			remove_group->setEnabled(true);
+		}
+		
+		open_in_new_tab->setEnabled(g != 0);
+		
+		menu->popup(mapToGlobal(p));
+	}
+	
+	void GroupView::onItemActivated(QTreeWidgetItem* item,int)
+	{
+		if (!item) return;
+		
+		GroupViewItem* li = dynamic_cast<GroupViewItem*>(item);
+		if (!li)
+			return;
+		
+		Group* g = li->group();
+		if (g)
+		{
+			current = g;
+			currentGroupChanged(g);
+		}
+	}
+
+	void GroupView::onItemChanged(QTreeWidgetItem* item,int )
+	{
+		if (!item || !editing_item) 
+			return;
+		editing_item = false;
+
+		GroupViewItem* li = dynamic_cast<GroupViewItem*>(item);
+		if (!li)
+			return;
+		
+		Group* g = li->group();
+		if (g)
+		{
+			QString name = item->text(0);
+			if (name.isNull() || name.length() == 0)
+			{
+				item->setText(0,g->groupName());
+				return;
+			}
+		
+			if (g->groupName() == name)
+				return;
+		
+			if (gman->find(name)) 
+			{
+				KMessageBox::error(this,i18n("The group %1 already exists.",name));
+				item->setText(0,g->groupName());
+			}
+			else
+			{
+				gman->renameGroup(g->groupName(),name);
+				current_item->setText(0,name);
+				groupRenamed(g);
+			//	sort();
+			}
+		}
+	}
+
+
+	
+	void GroupView::dropEvent(QDropEvent *event)
+	{
+		GroupViewItem* li = dynamic_cast<GroupViewItem*>(itemAt(event->pos()));
+		if (li)
+		{	
+			TorrentGroup* g = dynamic_cast<TorrentGroup*>(li->group());
+			if (g)
+			{
+				QList<TorrentInterface*> sel;
+				view->getSelection(sel);
+				foreach (TorrentInterface* ti,sel)
+					g->add(ti);
+			}
+		}
+		event->acceptProposedAction();
+	}
+	
+	void GroupView::dragEnterEvent(QDragEnterEvent *event)
+	{
+		if (event->mimeData()->hasFormat("application/x-ktorrent-drag-object"))
+			event->acceptProposedAction();
+	}
+
+	void GroupView::openView()
+	{
+		if (!current_item)
+			return;
+		
+		Group* g = current_item->group();
+		if (g)
+			openNewTab(g);
+	}
+	
+	void GroupView::saveState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("GroupView");
+		QTreeWidgetItemIterator it(this);
+		while (*it) 
+		{
+			if ((*it)->childCount() > 0)
+				g.writeEntry((*it)->text(0),(*it)->isExpanded());
+				
+			++it;
+		}
+	}
+
+
+	void GroupView::loadState(KSharedConfigPtr cfg)
+	{
+		KConfigGroup g = cfg->group("GroupView");
+		QTreeWidgetItemIterator it(this);
+		while (*it) 
+		{
+			if ((*it)->childCount() > 0)
+				(*it)->setExpanded(g.readEntry((*it)->text(0),true));
+				
+			++it;
+		}
+	}
+
+}
+
+#include "groupview.moc"

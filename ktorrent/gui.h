@@ -1,0 +1,145 @@
+/***************************************************************************
+ *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
+ *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ ***************************************************************************/
+#ifndef KT_GUI_HH
+#define KT_GUI_HH
+
+#include <QTimer>
+#include <ideal/mainwindow.h>
+#include <interfaces/guiinterface.h>
+
+class KAction;
+class KToggleAction;
+
+namespace kt
+{
+	class Core;
+	class Group;
+	class ViewManager;
+	class PrefDialog;
+	class StatusBar;
+	class GroupView;
+	class TrayIcon;
+	class DBus;
+
+	class GUI : public ideal::MainWindow,public GUIInterface
+	{
+		Q_OBJECT
+	public:
+		GUI();
+		virtual ~GUI();
+
+		// Stuff implemented from GUIInterface
+		virtual void addTabPage(QWidget* page,const QString & icon,const QString & caption,CloseTabListener* ctl);
+		virtual void removeTabPage(QWidget* page);
+		virtual void addPrefPage(PrefPageInterface* page);
+		virtual void removePrefPage(PrefPageInterface* page);
+		virtual void mergePluginGui(Plugin* p);
+		virtual void removePluginGui(Plugin* p);
+		virtual void addToolWidget(QWidget* w,const QString & icon,const QString & caption,ToolDock dock);
+		virtual void removeToolWidget(QWidget* w);
+		virtual const TorrentInterface* getCurrentTorrent() const;
+		virtual void dataScan(kt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption);
+		virtual bool selectFiles(kt::TorrentInterface* tc,bool* user,bool* start_torrent);
+		virtual void errorMsg(const QString & err);
+		virtual void errorMsg(KIO::Job* j);
+		virtual void infoMsg(const QString & info);
+		virtual void currentTabPageChanged(QWidget* page);
+		virtual StatusBarInterface* getStatusBar();
+
+		/// load a torrent
+		void load(const KUrl & url);
+
+		/**
+		 * Open a view
+		 * @param group_name Name of group to show in view
+		 */
+		void openView(const QString & group_name);
+
+		/**
+		 * Called by the ViewManager when the current torrent has changed
+		 * @param tc The torrent 
+		 * */
+		void currentTorrentChanged(kt::TorrentInterface* tc);
+	public slots:
+		/**
+		 * Open a view
+		 * @param g The group to show in the view
+		 * */
+		void openView(kt::Group* g);
+
+	private slots:
+		void createTorrent();
+		void openTorrent();
+		void startTorrent();
+		void stopTorrent();
+		void removeTorrent();
+		void queueTorrent();
+		void startAllTorrents();
+		void stopAllTorrents();
+		void pasteURL();
+		void checkData();
+		void showPrefDialog();
+		void showStatusBar();
+		void showQM();
+		void showIPFilter();
+		void configureKeys();
+		void configureToolBars();
+		void newToolBarConfig();
+		void update();
+		/// apply gui specific settings
+		void applySettings();
+		void closeTab();
+		void newView();
+		
+
+	private:
+		void setupActions();
+		virtual void loadState(KSharedConfigPtr cfg);
+		virtual void saveState(KSharedConfigPtr cfg);
+		virtual bool queryExit();
+
+	private:
+		Core* core;
+		ViewManager* view_man; 
+		QTimer timer;
+		kt::StatusBar* status_bar;
+		GroupView* group_view;
+		TrayIcon* tray_icon;
+		DBus* dbus_iface;
+
+		KToggleAction* show_status_bar_action;
+		KAction* start_action;
+		KAction* stop_action;
+		KAction* remove_action;
+		KAction* start_all_action;
+		KAction* stop_all_action;
+		KAction* paste_url_action;
+		KAction* show_qm_action;
+		KAction* queue_action;
+		KAction* ipfilter_action;
+		KAction* data_check_action;
+
+		PrefDialog* pref_dlg;
+		QMap<QWidget*,CloseTabListener*> close_tab_map;
+	};
+}
+
+#endif

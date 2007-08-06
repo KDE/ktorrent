@@ -1,0 +1,6 @@
+# Should only contain new features not ports from features we already had in the KDE 3 version
+
+Changes in 3.0dev :
+- Added option to select the network interface to use
+- Added option to disable data checking during uploading
+

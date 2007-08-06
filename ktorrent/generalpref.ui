@@ -1,0 +1,468 @@
+<ui version="4.0" >
+ <class>GeneralPref</class>
+ <widget class="QWidget" name="GeneralPref" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>633</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" >
+   <item>
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="title" >
+      <string>Folders</string>
+     </property>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" >
+       <widget class="QLabel" name="label" >
+        <property name="text" >
+         <string>Folder to store torrent information:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" >
+       <widget class="KUrlRequester" native="1" name="kcfg_tempDir" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Directory to store information about all torrents currently opened in KTorrent.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" >
+       <widget class="QCheckBox" name="kcfg_useSaveDir" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Directory to use as a default save location for all data.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="text" >
+         <string>Default save location:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" >
+       <widget class="KUrlRequester" native="1" name="kcfg_saveDir" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Directory to use as a default save location for all data.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" >
+       <widget class="QCheckBox" name="kcfg_useCompletedDir" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Directory to move data to when a torrent has finished downloading.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="text" >
+         <string>Move completed downloads to:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" >
+       <widget class="KUrlRequester" native="1" name="kcfg_completedDir" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Directory to move data to when a torrent has finished downloading.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" >
+       <widget class="QCheckBox" name="kcfg_useTorrentCopyDir" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Directory to copy all torrent files in, which are opened by KTorrent.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="text" >
+         <string>Copy torrent files to:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1" >
+       <widget class="KUrlRequester" native="1" name="kcfg_torrentCopyDir" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Directory to copy all torrent files in, which are opened by KTorrent.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2" >
+     <property name="title" >
+      <string>System Tray Icon</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <item>
+       <widget class="QCheckBox" name="kcfg_showSystemTrayIcon" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Wether or not to show an icon in the system tray.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="text" >
+         <string>Show system tray icon</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_showPopups" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Wether or not to show system tray popup messages.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="text" >
+         <string>Show system tray popup messages</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_showSpeedBarInTrayIcon" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Wether or not to draw 2 speedbars in the system tray icon. These speedbars show how fast you are currently downloading and uploading.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="text" >
+         <string>Show speedbar in tray icon</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <layout class="QGridLayout" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label_2" >
+            <property name="text" >
+             <string>Download bandwidth:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QSpinBox" name="kcfg_downloadBandwidth" >
+            <property name="toolTip" >
+             <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">The amount of download bandwith at your disposal. This is used as a maximum for the speedbars.&lt;/p>&lt;/body>&lt;/html></string>
+            </property>
+            <property name="suffix" >
+             <string> KB/s</string>
+            </property>
+            <property name="prefix" >
+             <string/>
+            </property>
+            <property name="minimum" >
+             <number>1</number>
+            </property>
+            <property name="maximum" >
+             <number>100000000</number>
+            </property>
+            <property name="value" >
+             <number>500</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_3" >
+            <property name="text" >
+             <string>Upload bandwidth:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QSpinBox" name="kcfg_uploadBandwidth" >
+            <property name="toolTip" >
+             <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">The amount of upload bandwith at your disposal. This is used as a maximum for the speedbars.&lt;/p>&lt;/body>&lt;/html></string>
+            </property>
+            <property name="suffix" >
+             <string> KB/s</string>
+            </property>
+            <property name="prefix" >
+             <string/>
+            </property>
+            <property name="minimum" >
+             <number>1</number>
+            </property>
+            <property name="maximum" >
+             <number>100000000</number>
+            </property>
+            <property name="value" >
+             <number>500</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_3" >
+     <property name="title" >
+      <string>DHT</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <item>
+       <widget class="QCheckBox" name="kcfg_dhtSupport" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">DHT is a trackerless protocol to find peers sharing the same torrents as you do.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="text" >
+         <string>Use DHT to get additional peers</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QLabel" name="label_4" >
+          <property name="text" >
+           <string>UDP port for DHT communications:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="kcfg_dhtPort" >
+          <property name="toolTip" >
+           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">UDP port to use for the DHT protocol.&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Attention:&lt;/span> If you are behind a router, this port needs to be forwarded to accept incoming DHT requests. The UPnP plugin can do this for you.&lt;/p>&lt;/body>&lt;/html></string>
+          </property>
+          <property name="minimum" >
+           <number>1</number>
+          </property>
+          <property name="maximum" >
+           <number>65535</number>
+          </property>
+          <property name="value" >
+           <number>4444</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_4" >
+     <property name="title" >
+      <string>Encryption</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <item>
+       <widget class="QCheckBox" name="kcfg_useEncryption" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Protocol encryption is usefull when your ISP is slowing down bittorrent connections. The encryption will prevent your bittorrent traffic to be flagged as bittorrent traffic, and so the ISP will not slow it down.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="text" >
+         <string>Use protocol encryption</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_allowUnencryptedConnections" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Not all clients support encryption, and some people have encryption disabled. If you want to connect to those peers, you need to have this option enabled.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="text" >
+         <string>Allow unencrypted connections</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" >
+      <size>
+       <width>20</width>
+       <height>31</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KUrlRequester</class>
+   <extends>QWidget</extends>
+   <header location="global" >kurlrequester.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>kcfg_useCompletedDir</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_completedDir</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>160</x>
+     <y>100</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>318</x>
+     <y>100</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_useSaveDir</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_saveDir</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>160</x>
+     <y>72</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>318</x>
+     <y>72</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_useTorrentCopyDir</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_torrentCopyDir</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>160</x>
+     <y>128</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>318</x>
+     <y>128</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_showSpeedBarInTrayIcon</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_downloadBandwidth</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>199</x>
+     <y>243</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>222</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_showSpeedBarInTrayIcon</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_uploadBandwidth</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>199</x>
+     <y>243</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>222</x>
+     <y>304</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_dhtSupport</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_dhtPort</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>199</x>
+     <y>376</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>310</x>
+     <y>406</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_useEncryption</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_allowUnencryptedConnections</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>199</x>
+     <y>477</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>199</x>
+     <y>501</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
