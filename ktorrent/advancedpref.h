@@ -38,6 +38,7 @@ namespace kt
 
 	public slots:
 		void onUploadDataCheckToggled(bool on);
+		void onDiskPreallocToggled(bool on);
 	};
 }
 

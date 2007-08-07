@@ -30,6 +30,7 @@ namespace kt
 	{
 		setupUi(this);
 		connect(kcfg_doUploadDataCheck,SIGNAL(toggled(bool)),this,SLOT(onUploadDataCheckToggled(bool)));
+		connect(kcfg_diskPrealloc,SIGNAL(toggled(bool)),this,SLOT(onDiskPreallocToggled(bool)));
 	}
 
 	AdvancedPref::~AdvancedPref()
@@ -56,6 +57,9 @@ namespace kt
 		kcfg_maxCorruptedBeforeRecheck->setEnabled(Settings::autoRecheck());
 		kcfg_useMaxSizeForUploadDataCheck->setEnabled(Settings::doUploadDataCheck());
 		kcfg_maxSizeForUploadDataCheck->setEnabled(Settings::doUploadDataCheck() && Settings::useMaxSizeForUploadDataCheck());
+
+		kcfg_fullDiskPreallocMethod->setEnabled(Settings::diskPrealloc() && Settings::fullDiskPrealloc());
+		kcfg_fullDiskPrealloc->setEnabled(Settings::diskPrealloc());
 	}
 
 	void AdvancedPref::loadDefaults()
@@ -76,6 +80,21 @@ namespace kt
 			kcfg_maxSizeForUploadDataCheck->setEnabled(kcfg_useMaxSizeForUploadDataCheck->isChecked());
 		}
 	}
+	
+	void AdvancedPref::onDiskPreallocToggled(bool on)
+	{
+		if (!on)
+		{
+			kcfg_fullDiskPreallocMethod->setEnabled(false);
+			kcfg_fullDiskPrealloc->setEnabled(false);
+		}
+		else
+		{
+			kcfg_fullDiskPreallocMethod->setEnabled(kcfg_fullDiskPrealloc->isChecked());
+			kcfg_fullDiskPrealloc->setEnabled(true);
+		}
+	}
+
 }
 
 #include "advancedpref.moc"
