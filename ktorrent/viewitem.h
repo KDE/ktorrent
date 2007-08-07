@@ -38,9 +38,29 @@ namespace kt
 		virtual ~ViewItem();
 
 		/// Update all fields
-		void update();
+		void update(bool init = false);
+
+		/// Comparison operator for sorting
+		bool operator < (const QTreeWidgetItem & other) const;
 
 		kt::TorrentInterface* tc;
+	private:
+		// cached values to avoid unneeded updates
+		TorrentStatus status;
+		Uint64 bytes_downloaded; 
+		Uint64 bytes_uploaded;
+		Uint64 total_bytes_to_download;
+		Uint32 download_rate;
+		Uint32 upload_rate;
+		Uint32 seeders_total;
+		Uint32 seeders_connected_to;
+		Uint32 leechers_total;
+		Uint32 leechers_connected_to;
+		double percentage;
+		float share_ratio;
+		Uint32 runtime_dl;
+		Uint32 runtime_ul;
+		int eta;
 	};
 }
 

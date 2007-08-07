@@ -54,8 +54,29 @@ namespace kt
 		}
 	}
 
+	int ETA(const TorrentStats & s,TorrentInterface* tc)
+	{
+		if (s.bytes_left_to_download == 0)
+		{
+			return -1;
+		}
+		else if (s.running) 
+		{
+			Uint32 secs = tc->getETA();
+			if (secs == -1)
+				return -2;
+			else
+				return secs;
+		}
+		else
+			return -2;
+	}
+
 	ViewItem::ViewItem(kt::TorrentInterface* tc,View* parent) : QTreeWidgetItem(parent),tc(tc)
 	{
+		const TorrentStats & s = tc->getStats();
+		// stuff that doesn't change
+		setText(0,s.torrent_name);
 		update();
 	}
 
@@ -63,65 +84,137 @@ namespace kt
 	{
 	}
 
-	void ViewItem::update()
+	void ViewItem::update(bool init)
 	{
 		const TorrentStats & s = tc->getStats();
-		setText(0,s.torrent_name);
-		setText(1,tc->statusToString());
-		setText(2,BytesToString(s.bytes_downloaded));
-		setText(3,BytesToString(s.total_bytes_to_download));
-		setText(4,BytesToString(s.bytes_uploaded));
-
-		if (s.download_rate >= 103) // lowest "visible" speed, all below will be 0,0 Kb/s
+	
+		if (init || status != s.status)
 		{
-			if (s.bytes_left_to_download == 0)
-				setText(5,KBytesPerSecToString(0));
-			else
-				setText(5,KBytesPerSecToString(s.download_rate / 1024.0));
+			setText(1,tc->statusToString());
+			status = s.status;
 		}
-		else
-			setText(5, "");
 
-		if (s.upload_rate >= 103) // lowest "visible" speed, all below will be 0,0 Kb/s
-			setText(6,KBytesPerSecToString(s.upload_rate / 1024.0));
-		else
-			setText(6, "");
-
-		if (s.bytes_left_to_download == 0)
+		if (init || bytes_downloaded != s.bytes_downloaded)
 		{
-			setText(7,QString::null);
-		//	eta = -1;
+			setText(2,BytesToString(s.bytes_downloaded));
+			bytes_downloaded = s.bytes_downloaded;
 		}
-		else if (s.running) 
+
+		if (init || total_bytes_to_download != s.total_bytes_to_download)
 		{
-			Uint32 secs = tc->getETA();
-			if(secs == -1)
+			setText(3,BytesToString(s.total_bytes_to_download));
+			total_bytes_to_download = s.total_bytes_to_download;
+		}
+
+		if (init || bytes_uploaded != s.bytes_uploaded)
+		{
+			setText(4,BytesToString(s.bytes_uploaded));
+			bytes_uploaded = s.bytes_uploaded;
+		}
+
+		if (init || download_rate != s.download_rate)
+		{
+			if (s.download_rate >= 103) // lowest "visible" speed, all below will be 0,0 Kb/s
 			{
-				setText(7,QString("%1").arg(QChar(0x221E)));
-			//	eta = -2;
+				if (s.bytes_left_to_download == 0)
+					setText(5,KBytesPerSecToString(0));
+				else
+					setText(5,KBytesPerSecToString(s.download_rate / 1024.0));
 			}
 			else
-			{
-			//	eta = secs;
-				setText(7,DurationToString(secs));
-			}			
-		}
-		else
-		{
-			setText(7,QString("%1").arg(QChar(0x221E)));
-		//	eta = -2;
+				setText(5, "");
+			download_rate = s.download_rate;
 		}
 
-		setText(8,QString("%1 (%2)").arg(QString::number(s.seeders_connected_to)).arg(QString::number(s.seeders_total)));	
-		setText(9,QString("%1 (%2)").arg(QString::number(s.leechers_connected_to)).arg(QString::number(s.leechers_total)));
-		setText(10,i18n("%1 %",KGlobal::locale()->formatNumber(Percentage(s),2)));
+		if (init || upload_rate != s.upload_rate)
+		{
+			if (s.upload_rate >= 103) // lowest "visible" speed, all below will be 0,0 Kb/s
+				setText(6,KBytesPerSecToString(s.upload_rate / 1024.0));
+			else
+				setText(6, "");
+			upload_rate = s.upload_rate;
+		}
+		
+		int neta = ETA(s,tc);
+		if (init || eta != neta)
+		{
+			if (neta == -2)
+				setText(7,QString("%1").arg(QChar(0x221E)));
+			else if (neta > 0)
+				setText(7,DurationToString(tc->getETA()));
+			else
+				setText(7,QString::null);
+			eta = neta;
+		}
+
+		if (init || seeders_total != s.seeders_total || seeders_connected_to != s.seeders_connected_to)
+		{
+			setText(8,QString("%1 (%2)").arg(QString::number(s.seeders_connected_to)).arg(QString::number(s.seeders_total)));	
+			seeders_connected_to = s.seeders_connected_to;
+			seeders_total = s.seeders_total;
+		}
+
+		if (init || leechers_total != s.leechers_total || leechers_connected_to != s.leechers_connected_to)
+		{
+			setText(9,QString("%1 (%2)").arg(QString::number(s.leechers_connected_to)).arg(QString::number(s.leechers_total)));
+			leechers_total = s.leechers_total;
+			leechers_connected_to = s.leechers_connected_to;
+		}
+
+		double perc = Percentage(s);
+		if (init || perc != percentage)
+		{
+			setText(10,i18n("%1 %",KGlobal::locale()->formatNumber(perc,2)));
+			percentage = perc;
+		}
+
 		float ratio = kt::ShareRatio(s);
-		setText(11,QString("%1").arg(KGlobal::locale()->formatNumber(ratio,2)));
+		if (init || ratio != share_ratio)
+		{
+			setText(11,QString("%1").arg(KGlobal::locale()->formatNumber(ratio,2)));
+			share_ratio = ratio;
+		}
+
 		Uint32 secs = tc->getRunningTimeDL();
-		setText(12,secs > 0 ? DurationToString(secs) : "");
+		if (init || runtime_dl != secs)
+		{
+			setText(12,secs > 0 ? DurationToString(secs) : "");
+			runtime_dl = secs;
+		}
+
 		secs = tc->getRunningTimeUL() - tc->getRunningTimeDL();
-		setText(13,secs > 0 ? DurationToString(secs) : "");
+		if (init || secs != runtime_ul)
+		{
+			setText(13,secs > 0 ? DurationToString(secs) : "");
+			runtime_ul = secs;
+		}
 	}
+	
+	bool ViewItem::operator < (const QTreeWidgetItem & other) const
+	{
+		const ViewItem & vi = (const ViewItem &) other;
+		switch (treeWidget()->sortColumn())
+		{
+		case 0:
+		case 1:
+			return QTreeWidgetItem::operator < (other);
+		case 2: return bytes_downloaded < vi.bytes_downloaded;
+		case 3: return total_bytes_to_download < vi.total_bytes_to_download;
+		case 4: return bytes_uploaded < vi.bytes_uploaded;
+		case 5: return download_rate < vi.download_rate;
+		case 6: return upload_rate < vi.upload_rate;
+		case 7: return eta < vi.eta;
+		case 8: return seeders_connected_to < vi.seeders_connected_to; 
+		case 9: return leechers_connected_to < vi.leechers_connected_to;
+		case 10: return percentage < vi.percentage;
+		case 11: return share_ratio < vi.share_ratio;
+		case 12: return runtime_dl < vi.runtime_dl;
+		case 13: return runtime_ul < vi.runtime_ul;
+		default:
+			return false;
+		}
+	}
+
 
 #if 0
 	static QColor StatusToColor(TorrentStatus s,const QColorGroup & cg)
