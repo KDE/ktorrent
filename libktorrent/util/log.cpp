@@ -128,10 +128,11 @@ namespace bt
 			// this could result in the loss of some messages
 			if (!rotate_job)
 			{
-				*out << QDateTime::currentDateTime().toString() << ": " << tmp << ::endl;
+				QString final = QDateTime::currentDateTime().toString() + ": " + tmp;
+				*out << final << ::endl;
 				fptr->flush();
 				if (to_cout)
-					std::cout << tmp.toLocal8Bit().constData() << std::endl;;
+					std::cout << final.toLocal8Bit().constData() << std::endl;;
 				
 				if (monitors.count() > 0)
 				{
@@ -139,7 +140,7 @@ namespace bt
 					while (i != monitors.end())
 					{
 						kt::LogMonitorInterface* lmi = *i;
-						lmi->message(tmp,m_filter);
+						lmi->message(final,m_filter);
 						i++;
 					}
 				}
