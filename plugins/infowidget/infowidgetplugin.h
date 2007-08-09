@@ -28,7 +28,7 @@
 namespace kt
 {
 	class PeerView;
-//	class TrackerView;
+	class TrackerView;
 	class StatusTab;
 	class FileView;
 	class ChunkDownloadView;
@@ -67,7 +67,7 @@ namespace kt
 	private:
 		PeerView* peer_view;
 		ChunkDownloadView* cd_view;
-//		TrackerView* tracker_view;
+		TrackerView* tracker_view;
 		FileView* file_view;
 		StatusTab* status_tab;
 		Monitor* monitor; 

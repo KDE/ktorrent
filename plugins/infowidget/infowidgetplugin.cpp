@@ -30,7 +30,7 @@
 #include "fileview.h"
 #include "chunkdownloadview.h"
 #include "peerview.h"
-//#include "trackerview.h"		
+#include "trackerview.h"		
 #include "infowidgetpluginsettings.h"
 #include "monitor.h"
 
@@ -54,7 +54,7 @@ namespace kt
 		pref = 0;
 		peer_view = 0;
 		cd_view = 0;
-//		tracker_view = 0;
+		tracker_view = 0;
 		file_view = 0;
 		status_tab = 0;
 
@@ -101,8 +101,8 @@ namespace kt
 		getGUI()->removeToolWidget(file_view);
 		if (cd_view)
 			getGUI()->removeToolWidget(cd_view);
-/*		if (tracker_view)
-			getGUI()->removeToolWidget(tracker_view); */
+		if (tracker_view)
+			getGUI()->removeToolWidget(tracker_view); 
 		if (peer_view)
 			getGUI()->removeToolWidget(peer_view);
 
@@ -116,8 +116,8 @@ namespace kt
 		cd_view = 0;
 		delete peer_view;
 		peer_view = 0;
-/*		delete tracker_view;
-		tracker_view = 0;*/
+		delete tracker_view;
+		tracker_view = 0;
 		pref->deleteLater();
 		pref = 0;
 	}
@@ -135,10 +135,9 @@ namespace kt
 		
 		if (cd_view && cd_view->isVisible())
 			cd_view->update();
-/*		
+		
 		if (tracker_view && tracker_view->isVisible())
 			tracker_view->update();
-			*/
 	}
 
 	void InfoWidgetPlugin::currentTorrentChanged(TorrentInterface* tc)
@@ -149,9 +148,9 @@ namespace kt
 			file_view->changeTC(tc);
 		if (cd_view)
 			cd_view->changeTC(tc);
-/*		if (tracker_view)
+		if (tracker_view)
 			tracker_view->changeTC(tc);
-*/		
+		
 		if (peer_view)
 			peer_view->setEnabled(tc != 0);
 
@@ -214,11 +213,10 @@ namespace kt
 	
 	void InfoWidgetPlugin::showTrackerView(bool show)
 	{
-		/*
 		if (show && !tracker_view)
 		{
 			tracker_view = new TrackerView(0);
-			getGUI()->addToolWidget(tracker_view,"network",i18n("Trackers"),
+			getGUI()->addToolWidget(tracker_view,"network-server",i18n("Trackers"),
 					GUIInterface::DOCK_BOTTOM);
 			tracker_view->changeTC(const_cast<kt::TorrentInterface*>(getGUI()->getCurrentTorrent()));
 		}
@@ -227,7 +225,6 @@ namespace kt
 			getGUI()->removeToolWidget(tracker_view);
 			delete tracker_view; tracker_view = 0;
 		}
-		*/
 	}
 	
 	void InfoWidgetPlugin::createMonitor(TorrentInterface* tc)

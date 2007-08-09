@@ -14,9 +14,10 @@ set(ktinfowidgetplugin_SRC
 	iwfiletreediritem.cpp
 	fileview.cpp
 	peerview.cpp
-	chunkdownloadview.cpp)
+	chunkdownloadview.cpp
+	trackerview.cpp)
 
-kde4_add_ui_files(ktinfowidgetplugin_SRC iwprefpage.ui statustab.ui chunkdownloadview.ui)
+kde4_add_ui_files(ktinfowidgetplugin_SRC iwprefpage.ui statustab.ui chunkdownloadview.ui trackerview.ui)
 kde4_add_kcfg_files(ktinfowidgetplugin_SRC infowidgetpluginsettings.kcfgc)
 kde4_add_plugin(ktinfowidgetplugin ${ktinfowidgetplugin_SRC})
 
