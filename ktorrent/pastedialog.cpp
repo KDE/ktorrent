@@ -43,10 +43,11 @@ namespace kt
 		if ( url.isValid() )
 			m_url->setText ( text );
 
-		connect(buttonBox, SIGNAL(accepted()), this, SLOT(btnOK_clicked()));
+		m_ok->setGuiItem(KStandardGuiItem::ok());
+		m_cancel->setGuiItem(KStandardGuiItem::cancel());
 	}
 
-	void PasteDialog::btnOK_clicked()
+	void PasteDialog::accept()
 	{
 		KUrl url = KUrl::fromPath ( m_url->text() );
 		if ( url.isValid() )

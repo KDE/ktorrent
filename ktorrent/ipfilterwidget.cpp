@@ -44,6 +44,14 @@ IPFilterWidget::IPFilterWidget ( QWidget* parent, Qt::WFlags fl )
 		:QDialog ( parent, fl )
 {
 	setupUi ( this );
+	btnAdd->setGuiItem(KStandardGuiItem::add());
+	btnOk->setGuiItem(KStandardGuiItem::ok());
+	btnApply->setGuiItem(KStandardGuiItem::apply());
+	btnClear->setGuiItem(KStandardGuiItem::clear());
+	btnSave->setGuiItem(KStandardGuiItem::saveAs());
+	btnOpen->setGuiItem(KStandardGuiItem::open());
+	btnRemove->setGuiItem(KStandardGuiItem::remove());
+	btnCancel->setGuiItem(KStandardGuiItem::cancel());
 
 	IPBlocklist& ipfilter = IPBlocklist::instance();
 	QStringList* blocklist = ipfilter.getBlocklist();

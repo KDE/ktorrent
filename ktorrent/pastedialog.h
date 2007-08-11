@@ -37,7 +37,7 @@ namespace kt
 	{
 			Q_OBJECT
 		public slots:
-			virtual void btnOK_clicked();
+			virtual void accept();
 
 		public:
 			PasteDialog ( Core* core, QWidget* parent = 0, Qt::WFlags fl = 0 );
