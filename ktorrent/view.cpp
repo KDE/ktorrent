@@ -34,6 +34,7 @@
 #include "viewitem.h"
 #include "viewmenu.h"
 #include "scandlg.h"
+#include "speedlimitsdlg.h"
 
 namespace kt
 {
@@ -294,7 +295,14 @@ namespace kt
 	
 	void View::speedLimitsDlg()
 	{
-		KMessageBox::error(this,i18n("Not Yet Implemented"));
+		QList<kt::TorrentInterface*> sel;
+		getSelection(sel);
+
+		if (sel.count() > 0)
+		{
+			SpeedLimitsDlg dlg(sel.front(),this);
+			dlg.exec();
+		}
 	}
 
 	void View::toggleDHT()
