@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2005-2007 by Joris Guisson                              *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,52 +17,33 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTEXITOPERATION_H
-#define KTEXITOPERATION_H
-
-#include <qobject.h>
-#include <kio/job.h>
-#include <ktorrent_export.h>
+#ifndef KTUPNPDESCRIPTIONPARSER_H
+#define KTUPNPDESCRIPTIONPARSER_H
 
 namespace kt
 {
+	class UPnPRouter;
 
 	/**
-	 * @author Joris Guisson <joris.guisson@gmail.com>
+	 * @author Joris Guisson
 	 * 
-	 * Object to derive from for operations which need to be performed at exit.
-	 * The operation should emit the operationFinished signal when they are done.
-	 * 
-	 * ExitOperation's can be used in combination with a WaitJob, to wait for a certain amount of time
-	 * to give serveral ExitOperation's the time time to finish up.
+	 * Parses the xml description of a router.
 	*/
-	class KTORRENT_EXPORT ExitOperation : public QObject
+	class UPnPDescriptionParser
 	{
-		Q_OBJECT
 	public:
-		ExitOperation();
-		virtual ~ExitOperation();
+		UPnPDescriptionParser();
+		virtual ~UPnPDescriptionParser();
 
-		/// wether or not we can do a deleteLater on the job after it has finished.
-		virtual bool deleteAllowed() const {return true;}
-	signals:
-		void operationFinished(kt::ExitOperation* opt);
+		/**
+		 * Parse the xml description. 
+		 * @param file File it is located in 
+		 * @param router The router off the xml description
+		 * @return true upon success
+		 */
+		bool parse(const QString & file,UPnPRouter* router);
 	};
 
-	/**
-	 * Exit operation which waits for a KIO::Job
-	 */
-	class ExitJobOperation : public ExitOperation
-	{
-		Q_OBJECT
-	public:
-		ExitJobOperation(KJob* j);
-		virtual ~ExitJobOperation();
-		
-		virtual bool deleteAllowed() const {return false;}
-	private slots:
-		virtual void onResult(KJob* j);
-	};
 }
 
 #endif

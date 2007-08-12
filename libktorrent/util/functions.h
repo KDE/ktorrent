@@ -48,7 +48,7 @@ namespace bt
 	
 	KTORRENT_EXPORT void UpdateCurrentTime();
 	
-	extern TimeStamp global_time_stamp;
+	KTORRENT_EXPORT extern TimeStamp global_time_stamp;
 	
 	inline TimeStamp GetCurrentTime() {return global_time_stamp;}
 	

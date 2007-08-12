@@ -38,9 +38,10 @@ add_definitions( ${KDE4_DEFINITIONS})
 
 
 add_subdirectory(libktorrent)
+add_subdirectory(libktupnp)
 add_subdirectory(plugins)
 add_subdirectory(ideal)
 add_subdirectory(ktorrent)
-# add_subdirectory(ktupnptest)
+add_subdirectory(ktupnptest)
 # add_subdirectory(kttorinfo)
 

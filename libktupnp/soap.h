@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2005-2007 by Joris Guisson                              *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,52 +17,46 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTEXITOPERATION_H
-#define KTEXITOPERATION_H
+#ifndef KTSOAP_H
+#define KTSOAP_H
 
-#include <qobject.h>
-#include <kio/job.h>
-#include <ktorrent_export.h>
+#include <QList>
+#include <QString>
 
 namespace kt
 {
 
 	/**
-	 * @author Joris Guisson <joris.guisson@gmail.com>
-	 * 
-	 * Object to derive from for operations which need to be performed at exit.
-	 * The operation should emit the operationFinished signal when they are done.
-	 * 
-	 * ExitOperation's can be used in combination with a WaitJob, to wait for a certain amount of time
-	 * to give serveral ExitOperation's the time time to finish up.
+	@author Joris Guisson
 	*/
-	class KTORRENT_EXPORT ExitOperation : public QObject
+	class SOAP
 	{
-		Q_OBJECT
 	public:
-		ExitOperation();
-		virtual ~ExitOperation();
-
-		/// wether or not we can do a deleteLater on the job after it has finished.
-		virtual bool deleteAllowed() const {return true;}
-	signals:
-		void operationFinished(kt::ExitOperation* opt);
-	};
-
-	/**
-	 * Exit operation which waits for a KIO::Job
-	 */
-	class ExitJobOperation : public ExitOperation
-	{
-		Q_OBJECT
-	public:
-		ExitJobOperation(KJob* j);
-		virtual ~ExitJobOperation();
 		
-		virtual bool deleteAllowed() const {return false;}
-	private slots:
-		virtual void onResult(KJob* j);
+		/**
+		 * Create a simple UPnP SOAP command without parameters.
+		 * @param action The name of the action
+		 * @param service The name of the service
+		 * @return The command
+		 */
+		static QString createCommand(const QString & action,const QString & service);
+		
+		struct Arg
+		{
+			QString element;
+			QString value;
+		};
+
+		/**
+		 * Create a UPnP SOAP command with parameters.
+		 * @param action The name of the action
+		 * @param service The name of the service
+		 * @param args Arguments for command
+		 * @return The command
+		 */
+		static QString createCommand(const QString & action,const QString & service,const QList<Arg> & args);
 	};
+
 }
 
 #endif
