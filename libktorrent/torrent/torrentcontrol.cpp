@@ -719,6 +719,11 @@ namespace bt
 			istats.last_announce = bt::GetCurrentTime();
 		}
 	}
+	
+	void TorrentControl::scrapeTracker()
+	{
+		psman->scrape();
+	}
 
 	void TorrentControl::onNewPeer(Peer* p)
 	{
@@ -1131,6 +1136,12 @@ namespace bt
 		
 		getSeederInfo(stats.seeders_total,stats.seeders_connected_to);
 		getLeecherInfo(stats.leechers_total,stats.leechers_connected_to);
+	}
+
+	void TorrentControl::trackerScrapeDone()
+	{
+		stats.seeders_total = psman->getNumSeeders();
+		stats.leechers_total = psman->getNumLeechers();
 	}
 
 	void TorrentControl::getSeederInfo(Uint32 & total,Uint32 & connected_to) const

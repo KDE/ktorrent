@@ -103,6 +103,11 @@ namespace bt
 		 * Do a manual update on all peer sources and trackers.
 		 */
 		void manualUpdate();
+
+		/**
+		 * Do a scrape on the current tracker
+		 * */
+		void scrape();
 		
 		/**
 		 * Remove a Tracker or PeerSource.

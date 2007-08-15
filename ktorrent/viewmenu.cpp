@@ -48,6 +48,7 @@ namespace kt
 		pex_enabled->setCheckable(true);
 		addSeparator();
 		manual_announce = addAction(i18n("Manual Announce"),parent,SLOT(manualAnnounce()));
+		scrape = addAction(i18n("Scrape"),parent,SLOT(scrape()));
 		preview  = addAction(KIcon("document-open"),i18n("Preview"),parent,SLOT(previewTorrents()));
 		addSeparator();
 		dirs_menu = addMenu(KIcon("folder-open"),i18n("Open Directory"));
@@ -124,6 +125,7 @@ namespace kt
 		preview->setEnabled(en_prev);
 		add_peers->setEnabled(en_add_peer);
 		manual_announce->setEnabled(en_announce);
+		scrape->setEnabled(sel.count() > 0);
 		queue_torrent->setEnabled(en_remove);
 
 		const kt::Group* current_group = view->getGroup();

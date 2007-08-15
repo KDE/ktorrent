@@ -60,6 +60,7 @@ namespace kt
 		QAction* dht_enabled;
 		QAction* pex_enabled;
 		QAction* manual_announce;
+		QAction* scrape;
 		QAction* preview;
 		QMenu* dirs_menu;
 		QAction* data_dir;

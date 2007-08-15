@@ -174,6 +174,7 @@ namespace bt
 					
 					Out(SYS_TRK|LOG_DEBUG) << "Scrape : leechers = " << leechers 
 							<< ", seeders = " << seeders << endl;
+					scrapeDone();
 				}
 			}
 		}

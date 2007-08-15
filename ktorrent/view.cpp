@@ -289,6 +289,16 @@ namespace kt
 		}
 	}
 
+	void View::scrape()
+	{
+		QList<kt::TorrentInterface*> sel;
+		getSelection(sel);
+		foreach (kt::TorrentInterface* tc,sel)
+		{
+			tc->scrapeTracker();
+		}
+	}
+
 	void View::previewTorrents()
 	{
 		QList<kt::TorrentInterface*> sel;

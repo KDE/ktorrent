@@ -291,10 +291,20 @@ namespace bt
 		void updateTracker();
 
 		/**
+		 * Scrape the tracker.
+		 * */
+		void scrapeTracker();
+
+		/**
 		 * The tracker status has changed.
 		 * @param ns New status
 		 */
 		void trackerStatusChanged(const QString & ns);
+
+		/**
+		 * A scrape has finished on the tracker.
+		 * */
+		void trackerScrapeDone();
 		
 	private slots:
 		void onNewPeer(Peer* p);

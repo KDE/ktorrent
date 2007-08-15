@@ -210,6 +210,10 @@ namespace kt
 		 * We leave it public so that the user can do a manual announce.
 		 */
 		virtual void updateTracker() = 0;
+		/**
+		 * Scrape the tracker
+		 */
+		virtual void scrapeTracker() = 0;
 
 		/// Get the torrent's statistics
 		const TorrentStats & getStats() const {return stats;}

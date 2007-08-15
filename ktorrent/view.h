@@ -99,6 +99,7 @@ namespace kt
 		void speedLimitsDlg();
 		void toggleDHT();
 		void togglePEX();
+		void scrape();
 		void showMenu(const QPoint & pos);
 		void onCurrentItemChanged(QTreeWidgetItem * current,QTreeWidgetItem * previous);
 

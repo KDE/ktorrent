@@ -118,6 +118,11 @@ namespace bt
 		 * A request to the tracker has been started.
 		 */
 		void requestPending();
+
+		/**
+		 * Emitted when a scrape has finished
+		 * */
+		void scrapeDone();
 		
 	protected:
 		KUrl url;

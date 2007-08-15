@@ -69,6 +69,7 @@ namespace bt
 		
 		connect(&timer,SIGNAL(timeout()),this,SLOT(updateCurrentManually()));
 		timer.setSingleShot(true);
+		switchTracker(selectTracker());
 	}
 	
 	PeerSourceManager::~PeerSourceManager()
@@ -91,6 +92,7 @@ namespace bt
 		trackers.insert(trk->trackerURL(),trk);
 		connect(trk,SIGNAL(peersReady( kt::PeerSource* )),
 				 pman,SLOT(peerSourceReady( kt::PeerSource* )));
+		connect(trk,SIGNAL(scrapeDone()),tor,SLOT(trackerScrapeDone()));
 	}
 		
 	void PeerSourceManager::addPeerSource(kt::PeerSource* ps)
@@ -167,6 +169,12 @@ namespace bt
 		
 		if (curr)
 			curr->completed();
+	}
+
+	void PeerSourceManager::scrape()
+	{
+		if (curr)
+			curr->scrape();
 	}
 		
 	void PeerSourceManager::manualUpdate()
