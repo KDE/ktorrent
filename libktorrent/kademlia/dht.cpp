@@ -167,6 +167,7 @@ namespace dht
 		db->store(r->getInfoHash(),DBItem(tdata));
 		// send a proper response to indicate everything is OK
 		AnnounceRsp rsp(r->getMTID(),node->getOurID());
+		rsp.setOrigin(r->getOrigin());
 		srv->sendMsg(&rsp);
 	}
 	
