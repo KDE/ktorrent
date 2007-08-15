@@ -430,7 +430,7 @@ namespace kt
 	{
 		View* view = view_man->newView(core,this);
 		view->setGroup(g);
-		addTabPage(view,g->groupIconName(),g->groupName(),view_man);
+		addTabPage(view,g->groupIconName(),view->caption(),view_man);
 	}
 	
 	void GUI::openView(const QString & group_name)
@@ -475,7 +475,7 @@ namespace kt
 		notifyViewListeners(tc);
 	}
 
-	
+		
 	bool GUI::queryExit()
 	{
 		timer.stop();

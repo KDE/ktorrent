@@ -126,11 +126,18 @@ namespace kt
 			current->checkData();
 	}
 
-	/// Update the current view
 	void ViewManager::update()
 	{
-		if (current)
-			current->update();
+		// check for all views if the caption needs to be updated
+		// and update the current view when we come accross it
+		foreach (View* v,views)
+		{
+			if (v == current && v->update())
+				gui->changeTabText(v,v->caption());
+			else if (v != current && v->needToUpdateCaption())
+				gui->changeTabText(v,v->caption());
+		}
+
 	}
 	
 	const kt::TorrentInterface* ViewManager::getCurrentTorrent() const
@@ -190,7 +197,7 @@ namespace kt
 		{
 			current->setGroup(g);
 			gui->changeTabIcon(current,g->groupIconName());
-			gui->changeTabText(current,g->groupName());
+			gui->changeTabText(current,current->caption());
 		}
 	}
 
@@ -201,7 +208,7 @@ namespace kt
 			if (v->getGroup() == g)
 			{
 				gui->changeTabIcon(v,g->groupIconName());
-				gui->changeTabText(v,g->groupName());
+				gui->changeTabText(v,v->caption());
 			}
 		}
 	}
@@ -228,7 +235,7 @@ namespace kt
 					// change the current view to the all group
 					v->setGroup(all_group);
 					gui->changeTabIcon(v,all_group->groupIconName());
-					gui->changeTabText(v,all_group->groupName());
+					gui->changeTabText(v,v->caption());
 					i++;
 				}
 			}

@@ -39,7 +39,7 @@
 namespace kt
 {
 	
-	View::View(Core* core,QWidget* parent) : QTreeWidget(parent),core(core),group(0)
+	View::View(Core* core,QWidget* parent) : QTreeWidget(parent),core(core),group(0),num_torrents(0),num_running(0)
 	{
 		menu = new ViewMenu(core->getGroupManager(),this);
 		setContextMenuPolicy(Qt::CustomContextMenu);
@@ -90,8 +90,10 @@ namespace kt
 		update();
 	}
 
-	void View::update()
+	bool View::update()
 	{
+		Uint32 torrents = 0;
+		Uint32 running = 0;
 		// update items which are part of the current group
 		// if they are not part of the current group, just hide them
 		for (QMap<kt::TorrentInterface*,ViewItem*>::iterator i = items.begin();i != items.end();i++)
@@ -102,12 +104,56 @@ namespace kt
 			{
 				if (v->isHidden())
 					v->setHidden(false);
+
 				v->update();
+				torrents++;
+				if (ti->getStats().running)
+					running++;
 			}
 			else if (!v->isHidden())
 				v->setHidden(true);
 		}
+
+		// update the caption
+		if (num_running != running || num_torrents != torrents)
+		{
+			num_running = running;
+			num_torrents = torrents;
+			return true;
+		}
+		return false;
 	}
+
+	bool View::needToUpdateCaption()
+	{
+		Uint32 torrents = 0;
+		Uint32 running = 0;
+		for (QMap<kt::TorrentInterface*,ViewItem*>::iterator i = items.begin();i != items.end();i++)
+		{
+			ViewItem* v = i.value();
+			kt::TorrentInterface* ti = i.key();
+			if (!group || (group && group->isMember(ti)))
+			{
+				torrents++;
+				if (ti->getStats().running)
+					running++;
+			}
+		}
+
+		if (num_running != running || num_torrents != torrents)
+		{
+			num_running = running;
+			num_torrents = torrents;
+			return true;
+		}
+		return false;
+	}
+	
+	QString View::caption() const
+	{
+		return QString("%1 %2/%3").arg(group->groupName()).arg(num_running).arg(num_torrents);
+	}
+
 
 	void View::addTorrent(kt::TorrentInterface* ti)
 	{

@@ -23,6 +23,7 @@
 
 #include <QTimer>
 #include <ideal/mainwindow.h>
+#include <util/constants.h>
 #include <interfaces/guiinterface.h>
 
 class KAction;
@@ -38,6 +39,7 @@ namespace kt
 	class GroupView;
 	class TrayIcon;
 	class DBus;
+	class View;
 
 	class GUI : public ideal::MainWindow,public GUIInterface
 	{
@@ -109,7 +111,6 @@ namespace kt
 		void closeTab();
 		void newView();
 		
-
 	private:
 		void setupActions();
 		virtual void loadState(KSharedConfigPtr cfg);

@@ -23,6 +23,7 @@
 
 #include <QMap>
 #include <QTreeWidget>
+#include <util/constants.h>
 
 class KSharedConfigPtr;
 
@@ -67,8 +68,18 @@ namespace kt
 		/// Get the current torrent
 		kt::TorrentInterface* getCurrentTorrent();
 
+		/// Get the view's caption
+		QString caption() const;
+
+		/// Check if we need to update the caption
+		bool needToUpdateCaption();
+
 	public slots:
-		void update();
+		/**
+		 * Update all items in the view
+		 * @return true If the view caption nees to be updated
+		 * */
+		bool update();
 		void addTorrent(kt::TorrentInterface* ti);
 		void removeTorrent(kt::TorrentInterface* ti);
 		void startTorrents();
@@ -102,6 +113,8 @@ namespace kt
 		Group* group;
 		QMap<kt::TorrentInterface*,ViewItem*> items;
 		ViewMenu* menu;
+		bt::Uint32 num_torrents;
+		bt::Uint32 num_running;
 	};
 }
 

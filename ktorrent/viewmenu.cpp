@@ -23,8 +23,12 @@
 #include <groups/group.h>
 #include <groups/groupmanager.h>
 #include <interfaces/torrentinterface.h>
+#include <util/log.h>
 #include "viewmenu.h"
 #include "view.h"
+
+
+using namespace bt;
 
 namespace kt
 {
@@ -167,7 +171,8 @@ namespace kt
 	void ViewMenu::groupsMenuItemTriggered(QAction* act)
 	{
 		QList<kt::TorrentInterface*> sel;
-		Group* g = gman->find(act->text());
+		Group* g = gman->find(act->text().remove('&')); // remove the ampersands added by Qt
+	//	Out(SYS_GEN|LOG_DEBUG) << "groupsMenuItemTriggered " << act->text() << endl;
 		if (!g)
 			return;
 

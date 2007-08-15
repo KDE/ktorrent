@@ -72,6 +72,31 @@ namespace kt
 			return -2;
 	}
 
+	static QBrush StatusToBrush(TorrentStatus s,const QPalette & pal)
+	{
+		QColor green(40,205,40);
+		QColor yellow(255,174,0);
+		switch (s)
+		{
+			case kt::SEEDING :
+			case kt::DOWNLOADING:
+			case kt::ALLOCATING_DISKSPACE :
+				return QBrush(green);
+			case kt::STALLED:
+			case kt::CHECKING_DATA:
+				return QBrush(yellow);
+			case kt::ERROR :
+				return QBrush(Qt::red);
+			case kt::NOT_STARTED :
+			case kt::STOPPED:
+			case kt::QUEUED:
+			case kt::DOWNLOAD_COMPLETE :
+			case kt::SEEDING_COMPLETE :
+			default:
+				return pal.brush(QPalette::Text);
+		}
+	}
+
 	ViewItem::ViewItem(kt::TorrentInterface* tc,View* parent) : QTreeWidgetItem(parent),tc(tc)
 	{
 		const TorrentStats & s = tc->getStats();
@@ -90,7 +115,8 @@ namespace kt
 	
 		if (init || status != s.status)
 		{
-			setText(1,tc->statusToString());
+			setText(1,tc->statusToString());	
+			setForeground(1,StatusToBrush(s.status,treeWidget()->palette()));
 			status = s.status;
 		}
 
@@ -171,7 +197,9 @@ namespace kt
 		float ratio = kt::ShareRatio(s);
 		if (init || ratio != share_ratio)
 		{
-			setText(11,QString("%1").arg(KGlobal::locale()->formatNumber(ratio,2)));
+			QColor green(40,205,40);
+			setForeground(11,QBrush(ratio > 0.8 ? green : Qt::red));
+			setText(11,KGlobal::locale()->formatNumber(ratio,2));
 			share_ratio = ratio;
 		}
 
@@ -216,39 +244,9 @@ namespace kt
 	}
 
 
-#if 0
-	static QColor StatusToColor(TorrentStatus s,const QColorGroup & cg)
-	{
-		QColor green(40,205,40);
-		QColor yellow(255,174,0);
-		switch (s)
-		{
-			case kt::SEEDING :
-			case kt::DOWNLOADING:
-			case kt::ALLOCATING_DISKSPACE :
-				return green;
-			case kt::STALLED:
-			case kt::CHECKING_DATA:
-				return yellow;
-			case kt::ERROR :
-				return Qt::red;
-			case kt::NOT_STARTED :
-			case kt::STOPPED:
-			case kt::QUEUED:
-			case kt::DOWNLOAD_COMPLETE :
-			case kt::SEEDING_COMPLETE :
-			default:
-				return cg.text();
-		}
-		return cg.text();
-	}
+	
 
-	static QColor ratioToColor(float ratio)
-	{
-		QColor green(40,205,40);
-		return ratio > 0.8 ? green : Qt::red;
-	}
-#endif
+	
 
 }
 
