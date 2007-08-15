@@ -38,7 +38,7 @@
                 <cstring>textLabel1</cstring>
             </property>
             <property name="text">
-                <string>Click on the 'convert' button to start converting antip2p file. NOTE: This process could take a while even on fast machines and during that time you won't be able to use KTorrent.</string>
+                <string>Click on the 'convert' button to start converting antip2p file. NOTE: This process could take a while even on fast machines and during that time you will not be able to use KTorrent.</string>
             </property>
             <property name="textFormat">
                 <enum>AutoText</enum>

@@ -67,7 +67,7 @@ WebInterfacePrefWidget::WebInterfacePrefWidget(QWidget *parent, const char *name
 			phpPath=KStandardDirs::findExe("php-cli");
 		
 		if(phpPath==QString::null)
-			phpExecutablePath->setURL (i18n("Php executable isn't in default path, please enter the path manually"));
+			phpExecutablePath->setURL (i18n("Php executable is not in default path, please enter the path manually"));
 		else
 			phpExecutablePath->setURL (phpPath);
 	}
@@ -117,11 +117,11 @@ void WebInterfacePrefWidget::changeLedState()
                kled->setColor(green);
        }
        else if (!fi.exists()){
-               QToolTip::add( kled, i18n("%1 doesn't exist").arg(phpExecutablePath->url()) );
+               QToolTip::add( kled, i18n("%1 does not exist").arg(phpExecutablePath->url()) );
                kled->setColor(red);
        }
        else if (!fi.isExecutable()){
-               QToolTip::add( kled, i18n("%1 isn't executable").arg(phpExecutablePath->url()) );
+               QToolTip::add( kled, i18n("%1 is not executable").arg(phpExecutablePath->url()) );
                kled->setColor(red);
        }
        else if (fi.isDir()){
@@ -129,7 +129,7 @@ void WebInterfacePrefWidget::changeLedState()
                kled->setColor(red);
        }
        else{
-               QToolTip::add( kled, i18n("%1 isn't php executable path").arg(phpExecutablePath->url()) );
+               QToolTip::add( kled, i18n("%1 is not php executable path").arg(phpExecutablePath->url()) );
                kled->setColor(red);
        }
 }

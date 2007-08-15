@@ -92,7 +92,7 @@
                         <string>Open torrents silentl&amp;y</string>
                     </property>
                     <property name="toolTip" stdset="0">
-                        <string>Don't show 'Select files to download' dialog</string>
+                        <string>Do not show 'Select files to download' dialog</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="1" column="0">

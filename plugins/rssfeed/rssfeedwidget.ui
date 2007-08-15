@@ -586,9 +586,6 @@
                                                         <property name="text">
                                                             <string>Treat as &amp;Series</string>
                                                         </property>
-                                                        <property name="accel">
-                                                            <string>Alt+S</string>
-                                                        </property>
                                                         <property name="checked">
                                                             <bool>true</bool>
                                                         </property>

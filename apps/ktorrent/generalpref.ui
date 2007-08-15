@@ -171,9 +171,6 @@
                     <property name="text">
                         <string>Se&amp;nd the tracker a custom IP address or hostname</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+N</string>
-                    </property>
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">
