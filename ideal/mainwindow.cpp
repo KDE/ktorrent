@@ -148,6 +148,7 @@ namespace ideal
 				t->addTab(widget,KIcon(icon),text);
 			else
 				t->addTab(widget,text);
+			t->setCurrentWidget(widget);
 		}
 		else
 		{

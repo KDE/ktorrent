@@ -26,6 +26,7 @@
 class QWidget;
 class QString;
 class QProgressBar;
+class KMainWindow;
 
 namespace KIO
 {
@@ -110,6 +111,8 @@ namespace kt
 		GUIInterface();
 		virtual ~GUIInterface();
 
+		/// Get a pointer to the main window
+		virtual KMainWindow* getMainWindow() = 0;
 
 		/// Add a view listener.
 		void addViewListener(ViewListener* vl);

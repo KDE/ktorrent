@@ -49,6 +49,7 @@ namespace kt
 		virtual ~GUI();
 
 		// Stuff implemented from GUIInterface
+		virtual KMainWindow* getMainWindow() {return this;}
 		virtual void addTabPage(QWidget* page,const QString & icon,const QString & caption,CloseTabListener* ctl);
 		virtual void removeTabPage(QWidget* page);
 		virtual void addPrefPage(PrefPageInterface* page);
