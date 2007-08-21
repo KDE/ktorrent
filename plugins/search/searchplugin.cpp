@@ -26,6 +26,7 @@
 #include <kstandarddirs.h>
 #include <krun.h>
 #include <kmenu.h>
+#include <kshell.h>
 #include <interfaces/guiinterface.h>
 #include <interfaces/coreinterface.h>
 #include <interfaces/functions.h>
@@ -110,7 +111,8 @@ namespace kt
 			if(SearchPluginSettings::useDefaultBrowser())
 				KRun::runUrl(url,"text/html",0);
 			else
-				KRun::runCommand(QString("%1 \"%2\"").arg(SearchPluginSettings::customBrowser()).arg(url.url()),0);
+				KRun::runCommand(QString("%1 %2")
+                                        .arg(SearchPluginSettings::customBrowser()).arg(KShell::quoteArg(url.url())),0);
 			
 			return;
 		}
