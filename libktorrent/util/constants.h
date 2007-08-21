@@ -51,7 +51,7 @@ namespace bt
 		NORMAL_PRIORITY = 40,
 		LAST_PRIORITY = 30,
 		ONLY_SEED_PRIORITY = 20,
-		EXCLUDED = 10,
+		EXCLUDED = 10
 	}Priority;
 	
 	enum ConfirmationResult
