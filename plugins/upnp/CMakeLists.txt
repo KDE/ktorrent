@@ -1,7 +1,4 @@
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-include_directories(${CMAKE_SOURCE_DIR}/libktorrent)
-include_directories(${CMAKE_SOURCE_DIR}/libktupnp)
+include_directories(${KTORRENT_SOURCE_DIR}/libktupnp)
 
 set(ktupnpplugin_SRC upnpplugin.cpp upnpprefpage.cpp)
 

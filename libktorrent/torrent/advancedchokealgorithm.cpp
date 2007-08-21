@@ -23,6 +23,7 @@
 #include <peer/peer.h>
 #include <peer/peermanager.h>
 #include <peer/packetwriter.h>
+#include <krandom.h>
 #include "advancedchokealgorithm.h"
 
 using namespace kt;
@@ -228,7 +229,7 @@ namespace bt
 			return UNDEFINED_ID;
 			
 		// find a random peer that is choked and interested
-		Uint32 start = rand() % num_peers;
+		Uint32 start = KRandom::random() % num_peers;
 		Uint32 i = (start + 1) % num_peers;
 		while (i != start)
 		{

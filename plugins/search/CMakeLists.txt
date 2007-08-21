@@ -1,7 +1,3 @@
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-include_directories(${CMAKE_SOURCE_DIR}/libktorrent)
-
 set(ktsearchplugin_SRC searchenginelist.cpp htmlpart.cpp searchprefpage.cpp searchwidget.cpp searchtoolbar.cpp searchplugin.cpp)
 
 kde4_add_ui_files(ktsearchplugin_SRC searchpref.ui searchbar.ui)

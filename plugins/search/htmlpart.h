@@ -23,6 +23,7 @@
 #include <khtml_part.h>
 
 class KJob;
+class KUrl;
 
 namespace KIO
 {
@@ -47,7 +48,7 @@ namespace kt
 		void back();
 		void reload();
 		void copy();
-		void openUrlRequest(const KUrl &url, const KParts::URLArgs &args);
+		void openUrlRequest(const KUrl &url, const KParts::OpenUrlArguments &args);
 	
 	private slots:
 		void addToHistory(const KUrl & url);

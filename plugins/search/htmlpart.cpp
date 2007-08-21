@@ -65,7 +65,7 @@ namespace kt
 			cb->setText(txt,QClipboard::Clipboard);
 	}
 	
-	void HTMLPart::openUrlRequest(const KUrl &u,const KParts::URLArgs &)
+	void HTMLPart::openUrlRequest(const KUrl &u,const KParts::OpenUrlArguments &)
 	{
 		if (active_job)
 		{

@@ -1,4 +1,4 @@
-project(kt4)
+project(KTORRENT)
 find_package(KDE4 REQUIRED)
 find_package(KDE4Internal REQUIRED)
 
@@ -31,7 +31,12 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-ktorrent.h.cmake ${CMAKE_CURRE
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}") 
 set(CMAKE_SKIP_RPATH)
-include_directories( ${KDE4_INCLUDES} ${CMAKE_BINARY_DIR})
+include_directories( ${KDE4_INCLUDES} 
+   ${KTORRENT_BINARY_DIR}
+   ${KTORRENT_BINARY_DIR}/libktorrent
+   ${KTORRENT_SOURCE_DIR}/libktorrent
+   ${KTORRENT_SOURCE_DIR}
+   )
 
 add_definitions( ${KDE4_DEFINITIONS})
 # link_directories( ${CMAKE_BINARY_DIR}/lib)
