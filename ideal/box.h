@@ -45,6 +45,6 @@ namespace ideal
 	private:
 		QBoxLayout* box_layout;
 	};
-};
+}
 
 #endif
