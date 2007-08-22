@@ -58,6 +58,11 @@ namespace ideal
 		if (bottom)
 			bottom->loadState(cfg);
 		loadSplitterState(cfg);
+		
+		KConfigGroup g = cfg->group("MainTabWidget");
+		int ct = g.readEntry("current_tab",0);
+		if (ct >= 0 && ct < tabs->count())
+			tabs->setCurrentIndex(ct);
 	}
 
 	void MainWindow::saveState(KSharedConfigPtr cfg)
@@ -70,6 +75,9 @@ namespace ideal
 			bottom->saveState(cfg);
 		
 		saveSplitterState(cfg);
+		// save the current tab
+		KConfigGroup g = cfg->group("MainTabWidget");
+		g.writeEntry("current_tab",tabs->currentIndex());
 		cfg->sync();
 	}
 
