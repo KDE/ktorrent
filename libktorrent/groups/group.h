@@ -54,7 +54,7 @@ namespace kt
 			UPLOADS_ONLY_GROUP = 1,
 			DOWNLOADS_ONLY_GROUP = 2,
 			MIXED_GROUP = 3,
-			CUSTOM_GROUP = 4,
+			CUSTOM_GROUP = 4
 		};
 		/**
 		 * Create a new group.
