@@ -50,7 +50,7 @@ namespace kt
 {
 
 	SearchPlugin::SearchPlugin(QObject* parent, const QStringList& args)
-	: Plugin(parent,NAME,AUTHOR,EMAIL, i18n("Search for torrents on several popular torrent search engines"),"edit-find")
+	: Plugin(parent,NAME,i18n("Search"),AUTHOR,EMAIL, i18n("Search for torrents on several popular torrent search engines"),"edit-find")
 	{
 		pref = 0;
 		toolbar = 0;

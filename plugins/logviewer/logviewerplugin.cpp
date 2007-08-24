@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2005-2007 by Joris Guisson                              *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -15,7 +15,7 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <kgenericfactory.h>
 #include <kglobal.h>
@@ -41,7 +41,8 @@ K_EXPORT_COMPONENT_FACTORY(ktlogviewerplugin,KGenericFactory<kt::LogViewerPlugin
 namespace kt
 {
 
-	LogViewerPlugin::LogViewerPlugin(QObject* parent,const QStringList & ) : Plugin(parent,NAME, AUTHOR, EMAIL, i18n("Displays ktorrent logging output"),"log")
+	LogViewerPlugin::LogViewerPlugin(QObject* parent,const QStringList & ) 
+		: Plugin(parent,NAME, i18n("Log Viewer"),AUTHOR, EMAIL, i18n("Displays ktorrent logging output"),"log")
 	{
 		lv = 0;
 	}

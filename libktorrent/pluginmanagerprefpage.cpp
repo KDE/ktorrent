@@ -48,7 +48,7 @@ namespace kt
 		
 		virtual void update()
 		{
-			setTitle("<h3>" + p->getName() + "</h3>");
+			setTitle("<h3>" + p->getGuiName() + "</h3>");
 			setDescription(i18n("%1<br>Status: <b>%2</b><br>Author: %3",
 						p->getDescription(),p->isLoaded() ? i18n("Loaded") : i18n("Not loaded"),p->getAuthor()));
 		}
