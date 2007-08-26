@@ -168,6 +168,9 @@
 		<entry name="autoRecheck" type="Bool">
 			<default>true</default>
 		</entry>
+		<entry name="checkWhenFinished" type="Bool">
+			<default>false</default>
+		</entry>
 		<entry name="maxCorruptedBeforeRecheck" type="Int">
 			<default>3</default>
 			<min>1</min>

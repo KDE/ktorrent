@@ -257,6 +257,7 @@ namespace kt
 		void downloadFinished(KIO::Job *job);
 		void downloadFinishedSilently(KIO::Job *job);
 		void emitCorruptedData(kt::TorrentInterface* tc);
+		void autoCheckData(kt::TorrentInterface* tc);
 
 	private:
 		GUIInterface* gui;

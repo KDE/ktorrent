@@ -190,6 +190,7 @@ namespace bt
 
 			//helper var, check if needed to move completed files somewhere
 			bool moveCompleted = false;
+			bool checkOnCompletion = false;
 
 			stats.completed = cman->completed();
 			if (stats.completed && !comp)
@@ -208,10 +209,12 @@ namespace bt
 				finished(this);
 
 				//Move completed download to specified directory if needed
-				if(Settings::useCompletedDir())
-				{
+				if (Settings::useCompletedDir())
 					moveCompleted = true;
-				}
+				
+				// See if we need to do a data check
+				if (Settings::checkWhenFinished())
+					checkOnCompletion = true;
 			}
 			else if (!stats.completed && comp)
 			{
@@ -297,6 +300,10 @@ namespace bt
 			{
 				checkDiskSpace(true);
 			}
+
+			// Emit the needDataCheck signal if needed
+			if (checkOnCompletion || (Settings::autoRecheck() && stats.num_corrupted_chunks >= Settings::maxCorruptedBeforeRecheck()))
+				needDataCheck(this);
 		}
 		catch (Error & e)
 		{

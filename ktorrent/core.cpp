@@ -675,18 +675,7 @@ namespace kt
 			}
 			else if (tc->getStats().running)
 			{
-				// see if we need to do a auto data check
-				if (Settings::autoRecheck() && tc->getStats().num_corrupted_chunks >= Settings::maxCorruptedBeforeRecheck())
-				{
-					Out(SYS_GEN|LOG_IMPORTANT) << "Doing an automatic data check on " 
-							<< tc->getStats().torrent_name << endl;
-		
-					gui->dataScan(tc,false,true,QString::null);
-				}
-				else
-				{
-					tc->update();
-				}
+				tc->update();
 			}
 			i++;
 		}
@@ -912,6 +901,8 @@ namespace kt
 				this, SLOT(enqueueTorrentOverMaxRatio( kt::TorrentInterface* )));
 		connect(qman, SIGNAL(lowDiskSpace(kt::TorrentInterface*, bool)),
 				this, SLOT(onLowDiskSpace(kt::TorrentInterface*, bool)));
+		connect(tc, SIGNAL(needDataCheck(kt::TorrentInterface*)),
+				this, SLOT(autoCheckData(kt::TorrentInterface*)));
 	}
 
 	float Core::getGlobalMaxShareRatio() const
@@ -924,6 +915,13 @@ namespace kt
 		emit queuingNotPossible(tc);
 	}
 
+	void Core::autoCheckData(kt::TorrentInterface* tc)
+	{
+		Out(SYS_GEN|LOG_IMPORTANT) << "Doing an automatic data check on " 
+					<< tc->getStats().torrent_name << endl;
+		
+		gui->dataScan(tc,false,true,QString::null);
+	}
 
 	void Core::doDataCheck(kt::TorrentInterface* tc)
 	{

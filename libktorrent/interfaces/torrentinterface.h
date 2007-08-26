@@ -496,6 +496,12 @@ namespace kt
 		 * @param me The torrent which emitted the signal
 		 */
 		void torrentStopped(kt::TorrentInterface* me);
+
+		/**
+		 * Signal emitted when the torrent needs a data check
+		 * @param me The torrent
+		 * */
+		void needDataCheck(kt::TorrentInterface* me);
 	protected:
 		TorrentStats stats;
 	};
