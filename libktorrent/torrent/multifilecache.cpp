@@ -182,8 +182,12 @@ namespace bt
 			if (!tf.doNotDownload())
 			{
 				QString fpath = tf.getPath();
-				bt::Delete(cache_dir + fpath,true); // delete any existing symlinks
-				bt::SymLink(output_dir + fpath,cache_dir + fpath,true); // create new one
+				if (bt::Exists(output_dir + fpath))
+				{
+					bt::Delete(cache_dir + fpath,true); // delete any existing symlinks
+					// create new one
+					bt::SymLink(output_dir + fpath,cache_dir + fpath,true); 
+				}
 			}
 		}
 	}
