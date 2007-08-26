@@ -221,6 +221,7 @@ namespace kt
 			gman->renameGroup(g->groupName(),name);
 			current_item->setText(0,name);
 			groupRenamed(g);
+			saveGroups();
 			sort();
 		}
 	}
@@ -302,6 +303,7 @@ namespace kt
 				g->add(*i);
 				i++;
 			}
+			saveGroups();
 		}
 	}
 	
@@ -313,6 +315,7 @@ namespace kt
 	void GroupView::onTorrentRemoved(kt::TorrentInterface* tc)
 	{
 		gman->torrentRemoved(tc);
+		saveGroups();
 	}
 	
 	void GroupView::updateGroupsSubMenu(KPopupMenu* gsm)
@@ -328,7 +331,10 @@ namespace kt
 	{
 		Group* g = gman->find(group);
 		if (g)
+		{
 			v->addSelectionToGroup(g);
+			saveGroups();
+		}
 	}
 	
 	const Group* GroupView::findGroup(const QString & name) const
