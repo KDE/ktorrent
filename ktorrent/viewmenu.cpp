@@ -183,6 +183,7 @@ namespace kt
 		{
 			g->addTorrent(tc);
 		}
+		gman->saveGroups();
 	}
 
 }

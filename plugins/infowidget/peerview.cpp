@@ -1,14 +1,28 @@
 #include <QHeaderView>
 #include <klocale.h>
 #include <kicon.h>
+#include <kstandarddirs.h>
 #include <interfaces/peerinterface.h>
 #include <interfaces/functions.h>
 #include "peerview.h"
+#include "flagdb.h"
+
+#ifdef USE_SYSTEM_GEOIP
+#include <GeoIP.h>
+#else
+#include "GeoIP.h"
+#endif
+
+
 
 namespace kt
 {
 	static KIcon yes,no;
 	static bool icons_loaded = false;
+	static GeoIP* geo_ip = 0;
+	static FlagDB flagDB(22, 18);
+	static bool geoip_db_exists = true;
+	static QString geoip_data_file;
 	
 	PeerViewItem::PeerViewItem(PeerView* pv,PeerInterface* peer) : QTreeWidgetItem(pv,QTreeWidgetItem::UserType),peer(peer)
 	{
@@ -17,12 +31,50 @@ namespace kt
 			yes = KIcon("dialog-ok");
 			no = KIcon("dialog-cancel");
 			icons_loaded = true;
+			flagDB.addFlagSource("data",  QString("ktorrent/%1.png"));
+			flagDB.addFlagSource("locale", QString("l10n/%1/flag.png"));
+#ifdef USE_SYSTEM_GEOIP
+			geo_ip = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
+			geoip_db_exists = (geo_ip != NULL);
+#else
+			geoip_db_exists = !KStandardDirs::locate("data", "ktorrent/geoip.dat").isNull();
+			if(geoip_db_exists) 
+			{
+				geoip_data_file = "ktorrent/geoip.dat";
+			} 
+			else 
+			{
+				geoip_db_exists = !KStandardDirs::locate("data", "ktorrent/GeoIP.dat").isNull();
+				if (geoip_db_exists)
+					geoip_data_file = "ktorrent/GeoIP.dat";
+			}
+#endif
 		}
 		const PeerInterface::Stats & s = peer->getStats();
 		
+		// open GeoIP if necessaryt
+		if (!geo_ip && geoip_db_exists) 
+		{
+#ifdef USE_SYSTEM_GEOIP
+			geo_ip = GeoIP_open_type(GEOIP_COUNTRY_EDITION, GEOIP_STANDARD);
+#else
+			geo_ip = GeoIP_open(KStandardDirs::locate("data", geoip_data_file).toLocal8Bit(),0);
+#endif
+		}
+		
+		if (geo_ip)
+		{
+			int country_id = GeoIP_id_by_name(geo_ip, s.ip_address.toAscii());
+			setText(1, GeoIP_country_name[country_id]);
+			setIcon(1, flagDB.getFlag(GeoIP_country_code[country_id]));
+		} 
+		else
+		{
+			setText(1,"N/A");
+		}	
+		
 		// stuff that doesn't change
 		setText(0,s.ip_address);
-		setText(1,QString("N/A"));
 		setText(2,s.client);
 		setIcon(8,s.dht_support ? yes : no);
 

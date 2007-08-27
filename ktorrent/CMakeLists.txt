@@ -31,6 +31,6 @@ target_link_libraries(ktorrent ktideal ktcore ${KDE4_KDEUI_LIBS})
 install(TARGETS ktorrent DESTINATION ${BIN_INSTALL_DIR})
 install(FILES ktorrent.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 install(FILES ktorrentplugin.desktop  DESTINATION  ${SERVICETYPES_INSTALL_DIR} )
-install(FILES ktorrentui.rc DESTINATION ${DATA_INSTALL_DIR} )
+install(FILES ktorrentui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
 
 add_subdirectory(icons)

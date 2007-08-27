@@ -291,6 +291,7 @@ namespace kt
 				gman->renameGroup(g->groupName(),name);
 				current_item->setText(0,name);
 				groupRenamed(g);
+				gman->saveGroups();
 			//	sort();
 			}
 		}
@@ -310,6 +311,7 @@ namespace kt
 				view->getSelection(sel);
 				foreach (TorrentInterface* ti,sel)
 					g->add(ti);
+				gman->saveGroups();
 			}
 		}
 		event->acceptProposedAction();
