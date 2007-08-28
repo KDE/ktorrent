@@ -226,10 +226,25 @@ namespace kt
 	void GUI::openTorrent()
 	{
 		QString filter = "*.torrent|" + i18n("Torrent Files") + "\n*|" + i18n("All Files");
-		KUrl url = KFileDialog::getOpenUrl(KUrl(), filter, this, i18n("Open Location"));
+		KUrl::List urls = KFileDialog::getOpenUrls(KUrl(), filter, this, i18n("Open Location"));
 
-		if (url.isValid())
-			load(url);
+		if (urls.count() == 0)
+			return;
+		else if (urls.count() == 1)
+		{
+			KUrl url = urls.front();
+			if (url.isValid())
+				load(url);
+		}
+		else 
+		{
+			// load multiple torrents silently
+			foreach (KUrl url,urls)
+			{
+				if (url.isValid())
+					core->loadSilently(url);
+			}
+		}
 	}
 
 	void GUI::startTorrent()

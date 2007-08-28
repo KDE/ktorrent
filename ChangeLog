@@ -3,4 +3,7 @@
 Changes in 3.0dev :
 - Added option to select the network interface to use
 - Added option to disable data checking during uploading
+- Added possibility to open multiple torrents in one go (they will be opened
+silently)
+- Added option to do a data check when a torrent is finished
 
