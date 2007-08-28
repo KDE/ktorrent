@@ -50,8 +50,11 @@ namespace bt
 		this->file = file;
 		if (fptr)
 			close();
-
+#if HAVE_FOPEN64
+		fptr = fopen64(QFile::encodeName(file),mode.ascii());
+#else
 		fptr = fopen(QFile::encodeName(file),mode.ascii());
+#endif
 		return fptr != 0;
 	}
 		

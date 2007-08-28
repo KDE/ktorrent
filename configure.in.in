@@ -5,6 +5,7 @@ AM_INIT_AUTOMAKE(ktorrent,2.2.2)
 dnl #### Check for FSEEK variants
 AC_SYS_LARGEFILE
 AC_FUNC_FSEEKO
+AC_CHECK_FUNCS(fopen64, ktorrent_cv_func_fopen64=yes, ktorrent_cv_func_fopen64=no)
 AC_CHECK_FUNCS(fseeko64, ktorrent_cv_func_fseek64=yes, ktorrent_cv_func_fseek64=no)
 AC_CHECK_FUNCS(ftello64, ktorrent_cv_func_ftell64=yes, ktorrent_cv_func_ftell64=no)
 AC_CHECK_FUNCS(fstat64, ktorrent_cv_func_fstat64=yes, ktorrent_cv_func_fstat64=no)
@@ -33,6 +34,12 @@ if test "$ktorrent_cv_func_posix_fallocate64" = yes ; then
     AC_DEFINE(HAVE_POSIX_FALLOCATE64, 1)
 else
     AC_DEFINE(HAVE_POSIX_FALLOCATE64, 0)
+fi
+
+if test "$ktorrent_cv_func_fopen64" = yes ; then
+    AC_DEFINE(HAVE_FOPEN64, 1)
+else
+    AC_DEFINE(HAVE_FOPEN64, 0)
 fi
 
 if test "$ktorrent_cv_func_fseek64" = yes -a "$ktorrent_cv_func_ftell64" = yes; then
