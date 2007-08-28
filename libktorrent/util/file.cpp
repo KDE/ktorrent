@@ -47,8 +47,11 @@ namespace bt
 		this->file = file;
 		if (fptr)
 			close();
-
+#ifdef HAVE_FOPEN64
+		fptr = fopen64(QFile::encodeName(file),mode.toAscii().constData());
+#else
 		fptr = fopen(QFile::encodeName(file),mode.toAscii().constData());
+#endif
 		return fptr != 0;
 	}
 		

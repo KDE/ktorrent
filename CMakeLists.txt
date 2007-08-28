@@ -14,6 +14,7 @@ include(CheckIncludeFiles)
 include(CheckFunctionExists)
 
 # check for 64 bit file I/O functions
+check_function_exists(fopen64 HAVE_FOPEN64)
 check_function_exists(fseeko64 HAVE_FSEEKO64)
 check_function_exists(ftello64 HAVE_FTELLO64)
 check_function_exists(fstat64 HAVE_FSTAT64)

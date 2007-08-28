@@ -1,6 +1,7 @@
 #ifndef CONFIG_KTORRENT_H
 #define CONFIG_KTORRENT_H
 
+#cmakedefine HAVE_FOPEN64 1
 #cmakedefine HAVE_FSEEKO64 1
 #cmakedefine HAVE_FTELLO64 1
 #cmakedefine HAVE_FSTAT64 1
