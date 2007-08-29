@@ -54,7 +54,7 @@ int main(int argc, char **argv)
 	about.addCredit(ki18n("Thomas Bernard"),ki18n("Miniupnp was used as an example for our own UPnP implementation"),0,"http://miniupnp.free.fr/");
 	about.addCredit(ki18n("Diego Rosario Brogna"),ki18n("Global max share ratio patch"),0,"dierbro@gmail.com");
 	about.addCredit(ki18n("Lesly Weyts"),ki18n("Zeroconf enhancements"),0,0);
-	about.addCredit(ki18n("Kevin Andre"),ki18n("Zeroconf enhancements"),0,"http://users.edpnet.be/hyperquantum");
+	about.addCredit(ki18n("Kevin Andre"),ki18n("Zeroconf enhancements"),0,"http://users.edpnet.be/hyperquantum/");
 	about.addCredit(ki18n("Dagur Valberg Johannsson"),ki18n("Coldmilk webgui"),"dagurval@pvv.ntnu.no");
 	about.addCredit(ki18n("Alexander Dymo"),ki18n("IDEAl code from KDevelop"),"adymo@kdevelop.org");
 	about.addCredit(ki18n("Scott Wolchok"),ki18n("Conversion speed improvement in ipfilter plugin"),"swolchok@umich.edu");
