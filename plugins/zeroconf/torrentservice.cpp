@@ -55,6 +55,12 @@ namespace kt
 			srv->deleteLater();
 			srv = 0;
 		}
+
+		if (browser)
+		{
+			browser->deleteLater();
+			browser = 0;
+		}
 	}
 	
 	void TorrentService::start()
