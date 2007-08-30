@@ -21,6 +21,7 @@
 #define BTSHA1HASH_H
 
 #include <QByteArray> 
+#include <ktorrent_export.h>
 #include "constants.h"
 
 class QString;
@@ -36,7 +37,7 @@ namespace bt
 	 * This class keeps track of a SHA1 hash. A SHA1 hash is a 20 byte
 	 * array of bytes.
 	*/
-	class SHA1Hash
+	class KTORRENT_EXPORT SHA1Hash
 	{
 	protected:
 		Uint8 hash[20];

@@ -23,6 +23,7 @@
 #include <qobject.h>
 #include <qlist.h>
 #include <util/constants.h>
+#include <ktorrent_export.h>
 		
 namespace bt
 {
@@ -31,7 +32,7 @@ namespace bt
 
 namespace kt
 {
-	struct PotentialPeer
+	struct KTORRENT_EXPORT PotentialPeer
 	{
 		QString ip;
 		bt::Uint16 port;
@@ -47,7 +48,7 @@ namespace kt
 	 * for torrents. PeerSources should work independently and should emit a signal when they
 	 * have peers ready.
 	*/
-	class PeerSource : public QObject
+	class KTORRENT_EXPORT PeerSource : public QObject
 	{
 		Q_OBJECT
 	public:

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2005-2007 by Joris Guisson                              *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -15,46 +15,55 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTPEERID_H
-#define BTPEERID_H
+#ifndef KTZEROCONFPLUGIN_H
+#define KTZEROCONFPLUGIN_H
 
-#include <qstring.h>
-#include <ktorrent_export.h>
+#include <util/ptrmap.h>
+#include <interfaces/plugin.h>
 
-namespace bt
+namespace kt
 {
+	class TorrentInterface;
+	class TorrentService;
 
 	/**
-	@author Joris Guisson
-	*/
-	class KTORRENT_EXPORT PeerID
+	 * @author Joris Guisson <joris.guisson@gmail.com>
+	 * 
+	 * Plugin which handles the zeroconf service.
+	 */
+	class ZeroConfPlugin : public Plugin
 	{
-		char id[20];
-		QString client_name;
+		Q_OBJECT
 	public:
-		PeerID();
-		PeerID(const char* pid);
-		PeerID(const PeerID & pid);
-		virtual ~PeerID();
-
-		PeerID & operator = (const PeerID & pid);
+		ZeroConfPlugin(QObject* parent, const QStringList& args);
+		virtual ~ZeroConfPlugin();
 		
-		const char* data() const {return id;}
+		virtual void load();
+		virtual void unload();
+		virtual bool versionCheck(const QString& version) const;
 		
-		QString toString() const;
+	private slots:
+		/**
+		 * A TorrentInterface was added
+		 * @param tc 
+		 */
+		void torrentAdded(kt::TorrentInterface* tc);
 
 		/**
-		 * Interprets the PeerID to figure out which client it is.
-		 * @author Ivan + Joris
-		 * @return The name of the client
+		 * A TorrentInterface was removed
+		 * @param tc
 		 */
-		QString identifyClient() const;
+		void torrentRemoved(kt::TorrentInterface* tc);
+	
+		/**
+		 * An AvahiService has been destroyed by the psman
+		 */
+		void avahiServiceDestroyed(TorrentService* av);
 		
-		friend bool operator == (const PeerID & a,const PeerID & b);
-		friend bool operator != (const PeerID & a,const PeerID & b);
-		friend bool operator < (const PeerID & a,const PeerID & b);
+	private:
+		bt::PtrMap<kt::TorrentInterface*,TorrentService> services;
 	};
 
 }

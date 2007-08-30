@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2005-2007 by Joris Guisson                              *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -15,48 +15,47 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTPEERID_H
-#define BTPEERID_H
+#ifndef KT_TORRENTSERVICE_HH
+#define KT_TORRENTSERVICE_HH
 
-#include <qstring.h>
-#include <ktorrent_export.h>
+#include <dnssd/publicservice.h>
+#include <dnssd/servicebrowser.h>
+#include <interfaces/peersource.h>
+#include <k3resolver.h>
 
-namespace bt
+namespace kt
 {
-
+	class TorrentInterface;
+	
 	/**
-	@author Joris Guisson
-	*/
-	class KTORRENT_EXPORT PeerID
+	 * Zeroconf service which publishes a torrent
+	 * */
+	class TorrentService : public PeerSource
 	{
-		char id[20];
-		QString client_name;
+		Q_OBJECT
 	public:
-		PeerID();
-		PeerID(const char* pid);
-		PeerID(const PeerID & pid);
-		virtual ~PeerID();
-
-		PeerID & operator = (const PeerID & pid);
+		TorrentService(TorrentInterface* tc);
+		virtual ~TorrentService();
 		
-		const char* data() const {return id;}
+		virtual void stop(bt::WaitJob* wjob = 0);
+		virtual void start();
+		virtual void aboutToBeDestroyed();
 		
-		QString toString() const;
-
-		/**
-		 * Interprets the PeerID to figure out which client it is.
-		 * @author Ivan + Joris
-		 * @return The name of the client
-		 */
-		QString identifyClient() const;
+	signals:
+		void serviceDestroyed(TorrentService* av);
 		
-		friend bool operator == (const PeerID & a,const PeerID & b);
-		friend bool operator != (const PeerID & a,const PeerID & b);
-		friend bool operator < (const PeerID & a,const PeerID & b);
+	public slots:
+		void onPublished(bool ok);
+		void onServiceAdded(DNSSD::RemoteService::Ptr ptr);
+		void hostResolved(KNetwork::KResolverResults res);
+		
+	private:
+		TorrentInterface* tc;
+		DNSSD::PublicService* srv;
+		DNSSD::ServiceBrowser* browser;
 	};
-
 }
 
 #endif

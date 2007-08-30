@@ -25,6 +25,11 @@
 #include <util/constants.h>
 #include <ktorrent_export.h>
 
+namespace bt
+{
+	class QueueManager;
+}
+
 namespace kt
 {
 	///Stats struct
@@ -175,6 +180,9 @@ namespace kt
 		 * No torrents will be automatically started/stopped.
 		 */
 		virtual void setPausedState(bool pause) = 0;
+		
+		/// Get the QueueManager
+		virtual bt::QueueManager* getQueueManager() = 0;
 		
 	signals:
 		/**
