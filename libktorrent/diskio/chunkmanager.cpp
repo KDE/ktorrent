@@ -93,11 +93,23 @@ namespace bt
 			for(Uint32 i=0; i<tor.getNumFiles(); ++i)
 			{
 				bt::TorrentFile & file = tor.getFile(i);
-				if (file.isMultimedia() && file.getPriority() != bt::ONLY_SEED_PRIORITY) 
+				if (!file.isMultimedia() || file.getPriority() == bt::ONLY_SEED_PRIORITY) 
+					continue;
+				
+				if (file.getFirstChunk() == file.getLastChunk())
 				{
-					prioritise(file.getFirstChunk(), file.getFirstChunk()+1, PREVIEW_PRIORITY);
-					if (file.getLastChunk() - file.getFirstChunk() > 2)
-						prioritise(file.getLastChunk() -1,file.getLastChunk(), PREVIEW_PRIORITY);
+					// prioritise whole file 
+					prioritise(file.getFirstChunk(),file.getLastChunk(),PREVIEW_PRIORITY);
+				}
+				else
+				{
+					Uint32 chunkOffset;
+					chunkOffset = ((file.getLastChunk() - file.getFirstChunk()) / 100) + 1;
+					prioritise(file.getFirstChunk(), file.getFirstChunk()+chunkOffset, PREVIEW_PRIORITY);
+					if (file.getLastChunk() - file.getFirstChunk() > chunkOffset)
+					{
+						prioritise(file.getLastChunk() - chunkOffset, file.getLastChunk(), PREVIEW_PRIORITY);
+					}
 				}
 			}
 		}
@@ -105,10 +117,14 @@ namespace bt
 		{
 			if(tor.isMultimedia())
 			{
-				prioritise(0,1,PREVIEW_PRIORITY);
-				if (tor.getNumChunks() > 2)
-					prioritise(tor.getNumChunks() - 2,tor.getNumChunks() - 1,PREVIEW_PRIORITY);
-				//this->prioritise(getNumChunks()-2, getNumChunks()-1);
+				Uint32 chunkOffset;
+				chunkOffset = (tor.getNumChunks() / 100) + 1;
+
+				prioritise(0,chunkOffset,PREVIEW_PRIORITY);
+				if (tor.getNumChunks() > chunkOffset)
+				{
+					prioritise(tor.getNumChunks() - chunkOffset, tor.getNumChunks() - 1,PREVIEW_PRIORITY);
+				}
 			}
 		}
 	}
