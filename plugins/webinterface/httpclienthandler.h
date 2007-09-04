@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2005-2007 by Joris Guisson                              *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,66 +17,76 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef NETSOCKET_H
-#define NETSOCKET_H
+#ifndef KTHTTPCLIENTHANDLER_H
+#define KTHTTPCLIENTHANDLER_H
+		
 
-#include <ktorrent_export.h>
+#include <qhttp.h>
+#include <net/socket.h>
 #include <util/constants.h>
-#include "address.h"
+#include "httpresponseheader.h"
+		
+class QSocketNotifier;
 
-namespace net
+namespace kt
 {
+	class HttpServer;
+	class PhpHandler;
+	class PhpCodeGenerator;
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class KTORRENT_EXPORT Socket
+	class HttpClientHandler : public QObject
 	{
-	public:
+		Q_OBJECT
 		enum State
 		{
-			IDLE,
-			CONNECTING,
-			CONNECTED,
-			BOUND,
-			CLOSED
+			WAITING_FOR_REQUEST,
+			WAITING_FOR_CONTENT,
+			PROCESSING_PHP
 		};
+	public:
+		HttpClientHandler(HttpServer* srv,int sock);
+		virtual ~HttpClientHandler();
 		
-		Socket(int fd);
-		Socket(bool tcp);
-		virtual ~Socket();
 		
-		void setNonBlocking();
-		bool connectTo(const Address & addr);
-		/// See if a connectTo was succesfull in non blocking mode
-		bool connectSuccesFull();
-		bool bind(const QString & ip,Uint16 port,bool also_listen);
-		int send(const bt::Uint8* buf,int len);
-		int recv(bt::Uint8* buf,int max_len);
-		int sendTo(const bt::Uint8* buf,int size,const Address & addr);
-		int recvFrom(bt::Uint8* buf,int max_size,Address & addr);
-		int accept(Address & a);
-		bool ok() const {return m_fd >= 0;}
-		int fd() const {return m_fd;}
-		bool setTOS(char type_of_service);
-		const Address & getPeerName() const {return addr;}
-		void close();
-		State state() const {return m_state;}
+		bool sendFile(HttpResponseHeader & hdr,const QString & full_path);
+		void sendResponse(const HttpResponseHeader & hdr);
+		void send404(HttpResponseHeader & hdr,const QString & path);
+		void send500(HttpResponseHeader & hdr);
 		
-		/**
-		 * Set the size of the TCP read buffer.
-		 * @param rbs 
-		 */
-//		void setReadBufferSize(Uint32 rbs);
-		
-		Uint32 bytesAvailable() const;
-	private:
-		void cacheAddress();
+		void executePHPScript(PhpCodeGenerator* php_gen,
+							HttpResponseHeader & hdr,
+							const QString & php_exe,
+							const QString & php_file,
+							const QMap<QString,QString> & args);
 		
 	private:
-		int m_fd;
-		State m_state;
-		Address addr;
+		void handleRequest(int header_len);
+			
+
+	private slots:
+		void onPHPFinished();
+		void readyToRead(int);
+		void sendOutputBuffer(int fd = 0);
+
+	signals:
+		void closed();
+		
+	private:
+		HttpServer* srv;
+		net::Socket* client;
+		QSocketNotifier* read_notifier;
+		QSocketNotifier* write_notifier;
+		State state;
+		QHttpRequestHeader header;
+		QByteArray data;
+		bt::Uint32 bytes_read;
+		PhpHandler* php;
+		HttpResponseHeader php_response_hdr;
+		QByteArray output_buffer;
+		bt::Uint32 written;
 	};
 
 }

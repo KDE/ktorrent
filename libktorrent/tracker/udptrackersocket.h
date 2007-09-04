@@ -24,6 +24,7 @@
 #include <qmap.h>
 #include <qbytearray.h>
 #include <util/constants.h>
+#include <ktorrent_export.h>
 
 namespace KNetwork
 {
@@ -50,7 +51,7 @@ namespace bt
 	 *
 	 * Class which handles communication with one or more UDP trackers.
 	*/
-	class UDPTrackerSocket : public QObject
+	class KTORRENT_EXPORT UDPTrackerSocket : public QObject
 	{
 		Q_OBJECT
 	public:

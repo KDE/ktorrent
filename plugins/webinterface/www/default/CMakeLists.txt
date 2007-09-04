@@ -1,0 +1,18 @@
+set(default_data 
+	favicon.ico  
+	grad2.jpg        
+	icon.png       
+	ktorrentwebinterfacelogo.png  
+	shutdown.php  
+	stop.png   
+	stylen.css
+	grad1.jpg    
+	header_tile.png  
+	interface.php  
+	login.html                    
+	remove.png   
+	start.png     
+	style.css  
+	wz_tooltip.js)
+
+install(FILES ${default_data} DESTINATION ${DATA_INSTALL_DIR}/ktorrent/www/default)

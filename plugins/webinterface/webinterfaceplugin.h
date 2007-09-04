@@ -1,6 +1,6 @@
-/***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+  /***************************************************************************
+ *   Copyright (C) 2006 by Diego R. Brogna                                 *
+ *   dierbro@gmail.com                                               	   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,45 +15,41 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef NETADDRESS_H
-#define NETADDRESS_H
 
-#include <qstring.h>
-#include <util/constants.h>
-#include <ktorrent_export.h>
+#ifndef KTWEBINTERFACEPLUGIN_H
+#define KTWEBINTERFACEPLUGIN_H
 
-namespace net
+#include <interfaces/plugin.h>
+
+namespace kt
 {
-	using bt::Uint32;
-	using bt::Uint16;
-
 	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	*/
-	class KTORRENT_EXPORT Address
+	 * @author Diego R. Brogna
+	 */
+	class WebInterfacePrefWidget;
+	class HttpServer;
+
+	class WebInterfacePlugin : public Plugin
 	{
-		Uint32 m_ip;
-		Uint16 m_port;
+		Q_OBJECT
 	public:
-		Address();
-		Address(const QString & host,Uint16 port);
-		Address(const Address & addr);
-		virtual ~Address();
-
+		WebInterfacePlugin(QObject* parent, const QStringList& args);
+		virtual ~WebInterfacePlugin();
+		
+		virtual void load();
+		virtual void unload();
+		virtual bool versionCheck(const QString& version) const;
 	
-		Address & operator = (const Address & a);
-		bool operator == (const Address & a);
-		
-		Uint32 ip() const {return m_ip;}
-		void setIP(Uint32 ip) {m_ip = ip;}
-		
-		Uint16 port() const {return m_port;}
-		void setPort(Uint16 p) {m_port = p;}
+	private slots:
+		void preferencesUpdated();
 
-		QString toString() const;
-
+	private:
+		void initServer();
+		
+		WebInterfacePrefWidget* pref;
+		HttpServer* http_server;
 	};
 
 }

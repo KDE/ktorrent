@@ -352,7 +352,7 @@ namespace bt
 		}
 		else
 		{
-#if HAVE_POSIX_FALLOCATE64
+#ifdef HAVE_POSIX_FALLOCATE64
 			if (posix_fallocate64(fd,0,size) != 0)
 				throw Error(i18n("Cannot expand file : %1").arg(strerror(errno)));
 #elif HAVE_POSIX_FALLOCATE
@@ -412,8 +412,8 @@ namespace bt
 	
 	bool FreeDiskSpace(const QString & path,Uint64 & bytes_free)
 	{
-#if HAVE_STATVFS
-#if HAVE_STATVFS64
+#ifdef HAVE_STATVFS
+#ifdef HAVE_STATVFS64
 		struct statvfs64 stfs;
 		if (statvfs64(QFile::encodeName(path), &stfs) == 0)
 #else

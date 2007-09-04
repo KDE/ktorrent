@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2007 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,68 +17,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef NETSOCKET_H
-#define NETSOCKET_H
+#ifndef KT_PHPCOMMANDHANDLER_HH
+#define KT_PHPCOMMANDHANDLER_HH
 
-#include <ktorrent_export.h>
-#include <util/constants.h>
-#include "address.h"
+#include <QMap>
+#include <QString>
 
-namespace net
+namespace kt
 {
-
+	class CoreInterface;
+	class PhpCommand;
+	
+	
 	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	*/
-	class KTORRENT_EXPORT Socket
+	 * Class which handles PHP commands provided by the URL arguments
+	 */
+	class PhpCommandHandler
 	{
 	public:
-		enum State
-		{
-			IDLE,
-			CONNECTING,
-			CONNECTED,
-			BOUND,
-			CLOSED
-		};
-		
-		Socket(int fd);
-		Socket(bool tcp);
-		virtual ~Socket();
-		
-		void setNonBlocking();
-		bool connectTo(const Address & addr);
-		/// See if a connectTo was succesfull in non blocking mode
-		bool connectSuccesFull();
-		bool bind(const QString & ip,Uint16 port,bool also_listen);
-		int send(const bt::Uint8* buf,int len);
-		int recv(bt::Uint8* buf,int max_len);
-		int sendTo(const bt::Uint8* buf,int size,const Address & addr);
-		int recvFrom(bt::Uint8* buf,int max_size,Address & addr);
-		int accept(Address & a);
-		bool ok() const {return m_fd >= 0;}
-		int fd() const {return m_fd;}
-		bool setTOS(char type_of_service);
-		const Address & getPeerName() const {return addr;}
-		void close();
-		State state() const {return m_state;}
+		PhpCommandHandler(CoreInterface *c);
+		virtual ~PhpCommandHandler();
 		
 		/**
-		 * Set the size of the TCP read buffer.
-		 * @param rbs 
+		 * Execute the URL arguments provided to the PHP script
+		 * @param url The request url, used keys are erased from it
+		 * @param shutdown Set to true if we need to shutdown KT
 		 */
-//		void setReadBufferSize(Uint32 rbs);
-		
-		Uint32 bytesAvailable() const;
+		bool exec(KUrl & url,bool & shutdown);
 	private:
-		void cacheAddress();
-		
-	private:
-		int m_fd;
-		State m_state;
-		Address addr;
+		CoreInterface* core;
 	};
-
 }
 
 #endif

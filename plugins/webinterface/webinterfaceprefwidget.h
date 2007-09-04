@@ -1,6 +1,6 @@
-/***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ /***************************************************************************
+ *   Copyright (C) 2006 by Diego R. Brogna                                 *
+ *   dierbro@gmail.com                                               	   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,45 +17,28 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef NETADDRESS_H
-#define NETADDRESS_H
 
-#include <qstring.h>
-#include <util/constants.h>
-#include <ktorrent_export.h>
+#ifndef WEBINTERFACEPREFWIDGET_H
+#define WEBINTERFACEPREFWIDGET_H
 
-namespace net
+#include <interfaces/prefpageinterface.h>
+#include "ui_webinterfaceprefwidget.h"
+
+
+namespace kt
 {
-	using bt::Uint32;
-	using bt::Uint16;
 
-	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	*/
-	class KTORRENT_EXPORT Address
+	class WebInterfacePrefWidget :public PrefPageInterface,public Ui_WebInterfacePrefWidget
 	{
-		Uint32 m_ip;
-		Uint16 m_port;
+		Q_OBJECT
 	public:
-		Address();
-		Address(const QString & host,Uint16 port);
-		Address(const Address & addr);
-		virtual ~Address();
-
-	
-		Address & operator = (const Address & a);
-		bool operator == (const Address & a);
+		WebInterfacePrefWidget(QWidget *parent = 0);
+		virtual ~WebInterfacePrefWidget();
 		
-		Uint32 ip() const {return m_ip;}
-		void setIP(Uint32 ip) {m_ip = ip;}
 		
-		Uint16 port() const {return m_port;}
-		void setPort(Uint16 p) {m_port = p;}
-
-		QString toString() const;
-
+	public slots:
+		void textChanged(const QString & path);
 	};
 
 }
-
 #endif

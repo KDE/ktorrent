@@ -27,6 +27,7 @@
 #include <peer/peerid.h>
 #include <util/bitset.h>
 #include <interfaces/peersource.h>
+#include <ktorrent_export.h>
 
 namespace mse
 {
@@ -51,7 +52,7 @@ namespace bt
 	 * This class manages all Peer objects.
 	 * It can also open connections to other peers.
 	 */
-	class PeerManager : public QObject
+	class KTORRENT_EXPORT PeerManager : public QObject
 	{
 		Q_OBJECT
 	public:

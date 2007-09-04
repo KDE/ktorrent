@@ -67,6 +67,7 @@ set(libktorrent_SRC
 	util/log.cpp
 	util/waitjob.cpp
 	util/autorotatelogjob.cpp
+	util/mmapfile.cpp
 
 	tracker/httptracker.cpp  
 	tracker/tracker.cpp  

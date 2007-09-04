@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2006 by Diego R. Brogna and Joris Guisson               *
+ *   dierbro@gmail.com                                               	   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,68 +18,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef NETSOCKET_H
-#define NETSOCKET_H
+#ifndef KT_PHPCODEGENERATOR_HH
+#define KT_PHPCODEGENERATOR_HH
 
-#include <ktorrent_export.h>
-#include <util/constants.h>
-#include "address.h"
+#include <QString>
 
-namespace net
+namespace kt
 {
-
+	class CoreInterface;
+	
 	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	*/
-	class KTORRENT_EXPORT Socket
+	 * Class to generate PHP code containing all information about the current torrents
+	 */
+	class PhpCodeGenerator
 	{
 	public:
-		enum State
-		{
-			IDLE,
-			CONNECTING,
-			CONNECTED,
-			BOUND,
-			CLOSED
-		};
+		PhpCodeGenerator(CoreInterface *c);
+		virtual ~PhpCodeGenerator();
 		
-		Socket(int fd);
-		Socket(bool tcp);
-		virtual ~Socket();
-		
-		void setNonBlocking();
-		bool connectTo(const Address & addr);
-		/// See if a connectTo was succesfull in non blocking mode
-		bool connectSuccesFull();
-		bool bind(const QString & ip,Uint16 port,bool also_listen);
-		int send(const bt::Uint8* buf,int len);
-		int recv(bt::Uint8* buf,int max_len);
-		int sendTo(const bt::Uint8* buf,int size,const Address & addr);
-		int recvFrom(bt::Uint8* buf,int max_size,Address & addr);
-		int accept(Address & a);
-		bool ok() const {return m_fd >= 0;}
-		int fd() const {return m_fd;}
-		bool setTOS(char type_of_service);
-		const Address & getPeerName() const {return addr;}
-		void close();
-		State state() const {return m_state;}
-		
-		/**
-		 * Set the size of the TCP read buffer.
-		 * @param rbs 
-		 */
-//		void setReadBufferSize(Uint32 rbs);
-		
-		Uint32 bytesAvailable() const;
+		QString downloadStatus();
+		QString globalInfo();
 	private:
-		void cacheAddress();
-		
-	private:
-		int m_fd;
-		State m_state;
-		Address addr;
+		CoreInterface *core;
 	};
-
 }
 
 #endif

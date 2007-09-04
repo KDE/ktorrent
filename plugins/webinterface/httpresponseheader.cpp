@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2005-2007 by Joris Guisson                              *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,68 +17,62 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef NETSOCKET_H
-#define NETSOCKET_H
+#include "httpresponseheader.h"
 
-#include <ktorrent_export.h>
-#include <util/constants.h>
-#include "address.h"
-
-namespace net
+namespace kt
 {
-
-	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	*/
-	class KTORRENT_EXPORT Socket
+	static QString ResponseCodeToString(int r)
 	{
-	public:
-		enum State
+		switch (r)
 		{
-			IDLE,
-			CONNECTING,
-			CONNECTED,
-			BOUND,
-			CLOSED
-		};
+			case 200: return "OK";
+			case 301: return "Moved Permanently";
+			case 304: return "Not Modified";
+			case 404: return "Not Found";
+		}
+		return QString::null;
+	}
+	
+	HttpResponseHeader::HttpResponseHeader(int response_code) 
+		: response_code(response_code)
+	{
+	}
+	
+	HttpResponseHeader::HttpResponseHeader(const HttpResponseHeader & hdr)
+	{
+		response_code = hdr.response_code;
+		fields = hdr.fields;
+	}
+	
+	HttpResponseHeader::~HttpResponseHeader()
+	{
+	}
+	
+	void HttpResponseHeader::setResponseCode(int rc)
+	{
+		response_code = rc;
+	}
+	
+	void HttpResponseHeader::setValue(const QString & key,const QString & value)
+	{
+		fields[key] = value;
+	}
 		
-		Socket(int fd);
-		Socket(bool tcp);
-		virtual ~Socket();
+	QString HttpResponseHeader::toString() const
+	{
+		QString str;
+		str += QString("HTTP/1.1 %1 %2\r\n").arg(response_code).arg(ResponseCodeToString(response_code));
 		
-		void setNonBlocking();
-		bool connectTo(const Address & addr);
-		/// See if a connectTo was succesfull in non blocking mode
-		bool connectSuccesFull();
-		bool bind(const QString & ip,Uint16 port,bool also_listen);
-		int send(const bt::Uint8* buf,int len);
-		int recv(bt::Uint8* buf,int max_len);
-		int sendTo(const bt::Uint8* buf,int size,const Address & addr);
-		int recvFrom(bt::Uint8* buf,int max_size,Address & addr);
-		int accept(Address & a);
-		bool ok() const {return m_fd >= 0;}
-		int fd() const {return m_fd;}
-		bool setTOS(char type_of_service);
-		const Address & getPeerName() const {return addr;}
-		void close();
-		State state() const {return m_state;}
-		
-		/**
-		 * Set the size of the TCP read buffer.
-		 * @param rbs 
-		 */
-//		void setReadBufferSize(Uint32 rbs);
-		
-		Uint32 bytesAvailable() const;
-	private:
-		void cacheAddress();
-		
-	private:
-		int m_fd;
-		State m_state;
-		Address addr;
-	};
+		QMap<QString,QString>::const_iterator itr = fields.begin();
+		while (itr != fields.end())
+		{
+			str += QString("%1: %2\r\n").arg(itr.key()).arg(itr.value());
+			itr++;
+		}
+		str += "\r\n";
+		return str;
+	}
+	
+
 
 }
-
-#endif

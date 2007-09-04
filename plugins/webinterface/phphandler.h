@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2006 by Diego R. Brogna                                 *
+ *   dierbro@gmail.com                                               	   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,45 +17,44 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef NETADDRESS_H
-#define NETADDRESS_H
+#ifndef PHP_HANDLER_H
+#define PHP_HANDLER_H
+		
+#include <QMap>
+#include <kurl.h>
+#include <QByteArray>
+#include <QProcess>
 
-#include <qstring.h>
-#include <util/constants.h>
-#include <ktorrent_export.h>
 
-namespace net
+namespace kt
 {
-	using bt::Uint32;
-	using bt::Uint16;
-
-	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	*/
-	class KTORRENT_EXPORT Address
-	{
-		Uint32 m_ip;
-		Uint16 m_port;
-	public:
-		Address();
-		Address(const QString & host,Uint16 port);
-		Address(const Address & addr);
-		virtual ~Address();
-
+	class PhpCodeGenerator;
 	
-		Address & operator = (const Address & a);
-		bool operator == (const Address & a);
+	class PhpHandler : public QProcess 
+	{
+		Q_OBJECT
+	public:
+		PhpHandler(const QString & php_exe,PhpCodeGenerator* gen);
+		virtual ~PhpHandler();
+			
+		bool executeScript(const QString & path,const QMap<QString,QString> & args);
+		const QByteArray & getOutput() const {return output;};
 		
-		Uint32 ip() const {return m_ip;}
-		void setIP(Uint32 ip) {m_ip = ip;}
+	public slots:
+		void onFinished(int exitCode,QProcess::ExitStatus exitStatus);
+		void onReadyReadStdout();
 		
-		Uint16 port() const {return m_port;}
-		void setPort(Uint16 p) {m_port = p;}
+	signals:
+		void finished();
+		
+	private:
+		QByteArray output;
+		QString php_exe;
+		PhpCodeGenerator* gen;
 
-		QString toString() const;
-
+		
+		static QMap<QString,QByteArray> scripts;
 	};
-
 }
 
 #endif
