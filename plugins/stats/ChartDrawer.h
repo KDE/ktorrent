@@ -30,7 +30,6 @@
 
 #include <klocale.h>
 
-#include <stdint.h>
 #include <vector>
 #include <cmath>
 #include <algorithm> //fill

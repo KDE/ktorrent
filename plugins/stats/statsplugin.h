@@ -41,7 +41,6 @@
 #include "StatsPluginPrefs.h"
 #include "statspluginsettings.h"
 #include <map> // std::pair
-#include <stdint.h>
 
 namespace kt {
 
