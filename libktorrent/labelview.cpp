@@ -21,7 +21,7 @@
 #include <qlabel.h>
 #include <QMouseEvent>
 #include <kiconloader.h>
-#include <kglobalsettings.h>
+#include <kcolorscheme.h>
 #include <util/log.h>
 #include "labelview.h"
 
@@ -78,18 +78,18 @@ namespace kt
 			
 		if (selected)
 		{
-			p.setColor(QPalette::Active,QPalette::Window,KGlobalSettings::highlightColor());
-			p.setColor(QPalette::Active,QPalette::WindowText,KGlobalSettings::highlightedTextColor());
+			p.setColor(QPalette::Active,QPalette::Window, KColorScheme(QPalette::Active, KColorScheme::Selection).background().color());
+			p.setColor(QPalette::Active,QPalette::WindowText, KColorScheme(QPalette::Active, KColorScheme::Selection).foreground().color());
 		}
 		else if (odd)
 		{
-			p.setColor(QPalette::Active,QPalette::Window,KGlobalSettings::baseColor());
-			p.setColor(QPalette::Active,QPalette::WindowText,KGlobalSettings::textColor());
+			p.setColor(QPalette::Active,QPalette::Window, KColorScheme(QPalette::Active, KColorScheme::View).background().color());
+			p.setColor(QPalette::Active,QPalette::WindowText, KColorScheme(QPalette::Active, KColorScheme::View).foreground().color());
 		}
 		else
 		{
-			p.setColor(QPalette::Active,QPalette::Window,KGlobalSettings::alternateBackgroundColor());
-			p.setColor(QPalette::Active,QPalette::WindowText,KGlobalSettings::textColor());
+			p.setColor(QPalette::Active,QPalette::Window, KColorScheme(QPalette::Active, KColorScheme::View).background(KColorScheme::AlternateBackground).color());
+			p.setColor(QPalette::Active,QPalette::WindowText, KColorScheme(QPalette::Active, KColorScheme::View).foreground().color());
 		}
 		setPalette(p);
 	}
@@ -113,7 +113,7 @@ namespace kt
 		LabelViewBox(QWidget* parent) : QWidget(parent),cnt(0)
 		{
 			QPalette p = palette();
-			p.setColor(QPalette::Active,QPalette::Window,KGlobalSettings::baseColor());
+			p.setColor(QPalette::Active,QPalette::Window, KColorScheme(QPalette::Active, KColorScheme::View).background().color());
 			setPalette(p);
 			layout = new QVBoxLayout(this);
 			layout->setMargin(0);
