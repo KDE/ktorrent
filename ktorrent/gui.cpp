@@ -59,6 +59,7 @@
 #include "dbus.h"
 #include "pastedialog.h"
 #include "ipfilterwidget.h"
+#include "torrentcreatordlg.h"
 
 namespace kt
 {
@@ -221,6 +222,8 @@ namespace kt
 
 	void GUI::createTorrent()
 	{
+		TorrentCreatorDlg dlg(core,this);
+		dlg.exec();
 	}
 
 	void GUI::openTorrent()
