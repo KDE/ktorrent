@@ -73,25 +73,22 @@ namespace kt
 	void LabelViewItem::setSelected(bool sel)
 	{
 		selected = sel;
-
-		QPalette p = palette();
 			
 		if (selected)
 		{
-			p.setColor(QPalette::Active,QPalette::Window, KColorScheme(QPalette::Active, KColorScheme::Selection).background().color());
-			p.setColor(QPalette::Active,QPalette::WindowText, KColorScheme(QPalette::Active, KColorScheme::Selection).foreground().color());
+			setForegroundRole(QPalette::HighlightedText);
+			setBackgroundRole(QPalette::Highlight);
 		}
 		else if (odd)
 		{
-			p.setColor(QPalette::Active,QPalette::Window, KColorScheme(QPalette::Active, KColorScheme::View).background().color());
-			p.setColor(QPalette::Active,QPalette::WindowText, KColorScheme(QPalette::Active, KColorScheme::View).foreground().color());
+			setForegroundRole(QPalette::WindowText);
+			setBackgroundRole(QPalette::Base);
 		}
 		else
 		{
-			p.setColor(QPalette::Active,QPalette::Window, KColorScheme(QPalette::Active, KColorScheme::View).background(KColorScheme::AlternateBackground).color());
-			p.setColor(QPalette::Active,QPalette::WindowText, KColorScheme(QPalette::Active, KColorScheme::View).foreground().color());
+			setForegroundRole(QPalette::WindowText);
+			setBackgroundRole(QPalette::AlternateBase);
 		}
-		setPalette(p);
 	}
 	
 	void LabelViewItem::mousePressEvent(QMouseEvent *e)
