@@ -29,6 +29,10 @@
 #include <interfaces/chunkdownloadinterface.h>
 #include <util/bitset.h>
 
+namespace kt
+{
+	class PieceDownloader;
+}
 
 namespace bt
 {
@@ -38,7 +42,6 @@ namespace bt
 	class Piece;
 	class Peer;
 	class Request;
-	class PeerDownloader;
 	class DownloadStatus;
 	
 	struct ChunkDownloadHeader
@@ -84,11 +87,8 @@ namespace bt
 		/// Get the index of the chunk
 		Uint32 getChunkIndex() const;
 		
-		/// Get the current peer
-		const Peer* getCurrentPeer() const;
-		
 		/// Get the PeerID of the current peer
-		QString getCurrentPeerID() const;
+		QString getPieceDownloaderName() const;
 		
 		/// Get the download speed
 		Uint32 getDownloadSpeed() const;
@@ -112,16 +112,15 @@ namespace bt
 		 * @param pd The downloader
 		 * @return true if the peer was asigned, false if not
 		 */
-		bool assignPeer(PeerDownloader* pd);
+		bool assign(kt::PieceDownloader* pd);
 		
 		Uint32 getNumDownloaders() const {return pdown.count();}
 
 		/**
-		 * A Peer has been killed. We need to remove it's
-		 * PeerDownloader.
-		 * @param pd The PeerDownloader
+		 * A PieceDownloader has been killed. We need to remove it.
+		 * @param pd The kt::PieceDownloader
 		 */
-		void peerKilled(PeerDownloader* pd);
+		void killed(kt::PieceDownloader* pd);
 
 		/**
 		 * Save to a File
@@ -142,15 +141,13 @@ namespace bt
 
 		/**
 		 * When a Chunk is downloaded, this function checks if all
-		 * pieces are delivered by the same peer and if so sets
-		 * that peers' ID.
-		 * @param pid The peers' ID (!= PeerID)
-		 * @return true if there is only one downloader
+		 * pieces are delivered by the same peer and if so returns it.
+		 * @return The PieceDownloader or 0 if there is no only peer
 		 */
-		bool getOnlyDownloader(Uint32 & pid);
+		kt::PieceDownloader* getOnlyDownloader();
 		
-		/// See if a PeerDownloader is assigned to this chunk
-		bool containsPeer(PeerDownloader *pd) {return pdown.contains(pd);} 
+		/// See if a kt::PieceDownloader is assigned to this chunk
+		bool containsPeer(kt::PieceDownloader *pd) {return pdown.contains(pd);} 
 		
 		/// See if the download is choked (i.e. all downloaders are choked)
 		bool isChoked() const;
@@ -171,11 +168,11 @@ namespace bt
 		bool usingContinuousHashing() const;
 
 	private slots:
-		void sendRequests(PeerDownloader* pd);
-		void sendCancels(PeerDownloader* pd);
+		void sendRequests(kt::PieceDownloader* pd);
+		void sendCancels(kt::PieceDownloader* pd);
 		void endgameCancel(const Piece & p);
-		void onTimeout(const Request & r);
-		void onRejected(const Request & r);
+		void onTimeout(const bt::Request & r);
+		void onRejected(const bt::Request & r);
 		
 	private:
 		void notDownloaded(const Request & r,bool reject);
@@ -189,9 +186,9 @@ namespace bt
 		Uint32 num_downloaded;
 		Uint32 last_size;
 		Timer timer;
-		QList<PeerDownloader*> pdown;
-		PtrMap<Uint32,DownloadStatus> dstatus;
-		std::set<Uint32> piece_providers;
+		QList<kt::PieceDownloader*> pdown;
+		PtrMap<kt::PieceDownloader*,DownloadStatus> dstatus;
+		std::set<kt::PieceDownloader*> piece_providers;
 		
 
 		SHA1HashGen hash_gen;

@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,28 +16,41 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTPIECE_H
-#define BTPIECE_H
+#ifndef BTHTTPDOWNLOADER_H
+#define BTHTTPDOWNLOADER_H
 
-#include "request.h"
+#include <kurl.h>
+#include <util/ptrmap.h>
+#include <interfaces/piecedownloader.h>
+
+class KJob;
 
 namespace bt
 {
 
 	/**
-	@author Joris Guisson
+	 * HTTP Web Seed downloader.
 	*/
-	class Piece : public Request
+	class HttpDownloader : public kt::PieceDownloader
 	{
+		Q_OBJECT
 	public:
-		Piece(Uint32 index, Uint32 off, Uint32 len, kt::PieceDownloader* pd,const Uint8* data);
-		virtual ~Piece();
-
-		const Uint8* getData() const {return data;}
+		HttpDownloader(const KUrl & url);
+		virtual ~HttpDownloader();
+		
+		virtual void download(const bt::Request & req);
+		virtual void cancel(const bt::Request & req);
+		virtual void cancelAll();
+		virtual QString getName() const;
+		virtual bt::Uint32 getDownloadRate() const;
+		virtual bool canAddRequest() const;
+	private slots:
+		void downloadJobFinished(KJob* job);
+		
 	private:
-		const Uint8* data;
+		KUrl url;
 	};
 
 }

@@ -82,6 +82,15 @@ namespace bt
 			
 			loadInfo(dict->getDict(QString("info")));
 			loadAnnounceList(dict->getData("announce-list"));
+			
+			// see if the torrent contains webseeds
+			BListNode* urls = dict->getList("url-list");
+			BValueNode* url = dict->getValue("url-list");
+			if (urls)
+				loadWebSeeds(urls);
+			else if (url)
+				loadWebSeed(url);
+			
 			BNode* n = dict->getData("info");
 			SHA1HashGen hg;
 			Uint8* info = (Uint8*)data.data();
@@ -316,6 +325,19 @@ namespace bt
 			n.port = port->data().toInt();
 			nodes.append(n);
 		}
+	}
+	
+	void Torrent::loadWebSeeds(BListNode* node)
+	{
+		for (Uint32 i = 0;i < node->getNumChildren();i++)
+		{
+			loadWebSeed(node->getValue(i));
+		}
+	}
+	
+	void Torrent::loadWebSeed(BValueNode* node)
+	{
+		web_seeds.append(node->data().toString(encoding));
 	}
 
 	void Torrent::debugPrintInfo()

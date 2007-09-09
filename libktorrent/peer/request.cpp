@@ -17,19 +17,20 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <interfaces/piecedownloader.h>
 #include "request.h"
 
 namespace bt
 {
-	Request::Request() : index(0),off(0),len(0),peer(0)
+	Request::Request() : index(0),off(0),len(0),pd(0)
 	{}
 
-	Request::Request(Uint32 index,Uint32 off,Uint32 len,Uint32 peer)
-	: index(index),off(off),len(len),peer(peer)
+	Request::Request(Uint32 index,Uint32 off,Uint32 len,kt::PieceDownloader* pd)
+	: index(index),off(off),len(len),pd(pd)
 	{}
 
 	Request::Request(const Request & r)
-	: index(r.index),off(r.off),len(r.len),peer(r.peer)
+	: index(r.index),off(r.off),len(r.len),pd(r.pd)
 	{}
 
 	Request::~Request()
@@ -41,7 +42,7 @@ namespace bt
 		index = r.index;
 		off = r.off;
 		len = r.len;
-		peer = r.peer;
+		pd = r.pd;
 		return *this;
 	}
 	

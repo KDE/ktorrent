@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,30 +16,33 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTPIECE_H
-#define BTPIECE_H
+#include "piecedownloader.h"
 
-#include "request.h"
-
-namespace bt
+namespace kt
 {
 
-	/**
-	@author Joris Guisson
-	*/
-	class Piece : public Request
-	{
-	public:
-		Piece(Uint32 index, Uint32 off, Uint32 len, kt::PieceDownloader* pd,const Uint8* data);
-		virtual ~Piece();
+	PieceDownloader::PieceDownloader() : grabbed(0),nearly_done(false)
+	{}
 
-		const Uint8* getData() const {return data;}
-	private:
-		const Uint8* data;
-	};
+
+	PieceDownloader::~PieceDownloader()
+	{}
+
+	int PieceDownloader::grab()
+	{
+		grabbed++;
+		return grabbed;
+	}
+	
+	void PieceDownloader::release()
+	{
+		grabbed--;
+		if (grabbed < 0)
+			grabbed = 0;
+	}
 
 }
 
-#endif
+#include "piecedownloader.moc"

@@ -22,8 +22,8 @@
 namespace bt
 {
 
-	Piece::Piece(Uint32 index, Uint32 off, Uint32 len, Uint32 peer,const Uint8* data)
-	: Request(index, off, len, peer),data(data)
+	Piece::Piece(Uint32 index, Uint32 off, Uint32 len, kt::PieceDownloader* pd,const Uint8* data)
+	: Request(index, off, len, pd),data(data)
 	{}
 
 

@@ -70,11 +70,10 @@ namespace bt
 		return *this;
 	}
 
-	PeerDownloader::PeerDownloader(Peer* peer,Uint32 chunk_size) : peer(peer),grabbed(0),chunk_size(chunk_size / MAX_PIECE_LEN)
+	PeerDownloader::PeerDownloader(Peer* peer,Uint32 chunk_size) : peer(peer),chunk_size(chunk_size / MAX_PIECE_LEN)
 	{
 		connect(peer,SIGNAL(piece(const Piece& )),this,SLOT(piece(const Piece& )));
 		connect(peer,SIGNAL(destroyed()),this,SLOT(peerDestroyed()));
-		nearly_done = false;
 		max_wait_queue_size = 25;
 	}
 
@@ -90,6 +89,11 @@ namespace bt
 			
 	}
 #endif
+	
+	QString PeerDownloader::getName() const
+	{
+		return peer->getPeerID().identifyClient();
+	}
 
 	bool PeerDownloader::canAddRequest() const
 	{
@@ -101,19 +105,6 @@ namespace bt
 		return reqs.count() /*+ wait_queue.count() */;
 	}
 	
-	int PeerDownloader::grab()
-	{
-		grabbed++;
-		return grabbed;
-	}
-	
-	void PeerDownloader::release()
-	{
-		grabbed--;
-		if (grabbed < 0)
-			grabbed = 0;
-	}
-
 	void PeerDownloader::download(const Request & req)
 	{
 		if (!peer)

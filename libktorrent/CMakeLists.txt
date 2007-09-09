@@ -48,6 +48,7 @@ set(libktorrent_SRC
 	interfaces/prefpageinterface.cpp
 	interfaces/filetreeitem.cpp
 	interfaces/filetreediritem.cpp
+	interfaces/piecedownloader.cpp
 
 	migrate/cachemigrate.cpp  
 	migrate/ccmigrate.cpp  
@@ -152,6 +153,8 @@ set(libktorrent_SRC
 	groups/userdownloadsgroup.cpp  
 	groups/useruploadsgroup.cpp
 	groups/groupmanager.cpp
+	
+	download/httpdownloader.cpp
 
 	ktorrent.kcfg
 	labelviewitem.ui

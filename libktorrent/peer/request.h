@@ -22,6 +22,10 @@
 
 #include <util/constants.h>
 
+namespace kt
+{
+	class PieceDownloader;
+}
 
 namespace bt
 {
@@ -49,9 +53,9 @@ namespace bt
 		 * @param index The index of the chunk 
 		 * @param off The offset into the chunk
 		 * @param len The length of the piece
-		 * @param peer The ID of the Peer who sent the request
+		 * @param pd Pointer to PieceDownloader of the request
 		 */
-		Request(Uint32 index,Uint32 off,Uint32 len,Uint32 peer);
+		Request(Uint32 index,Uint32 off,Uint32 len,kt::PieceDownloader* pd);
 		
 		/**
 		 * Copy constructor.
@@ -70,7 +74,7 @@ namespace bt
 		Uint32 getLength() const {return len;}
 
 		/// Get the sending Peer
-		Uint32 getPeer() const {return peer;}
+		kt::PieceDownloader* getPieceDownloader() const {return pd;}
 		
 		/**
 		 * Assignmenth operator.
@@ -88,7 +92,7 @@ namespace bt
 		friend bool operator == (const Request & a,const Request & b);
 	private:
 		Uint32 index,off,len;
-		Uint32 peer;
+		kt::PieceDownloader* pd;
 	};
 
 }

@@ -22,6 +22,7 @@
 
 #include <qlist.h>
 #include <qobject.h>
+#include <interfaces/piecedownloader.h>
 #include "request.h"
 
 namespace bt
@@ -91,7 +92,7 @@ namespace bt
 	 *
 	 * This class downloads Piece's from a Peer.
 	*/
-	class PeerDownloader : public QObject
+	class PeerDownloader : public kt::PieceDownloader
 	{
 		Q_OBJECT	
 	public:
@@ -104,13 +105,13 @@ namespace bt
 		virtual ~PeerDownloader();
 
 		/// See if we can add a request to the wait_queue
-		bool canAddRequest() const;
+		virtual bool canAddRequest() const;
 		
 		/// Get the number of active requests
 		Uint32 getNumRequests() const;
 
 		/// Is the Peer choked.
-		bool isChoked() const;
+		virtual bool isChoked() const;
 
 		/// Is NULL (is the Peer set)
 		bool isNull() const {return peer == 0;}
@@ -121,34 +122,9 @@ namespace bt
 		 */
 		bool hasChunk(Uint32 idx) const;
 		
-		/// See if this PeerDownloader has nearly finished a chunk
-		bool isNearlyDone() const {return grabbed == 1 && nearly_done;}
-		
-		/// Set the nearly done status of the PeerDownloader
-		void setNearlyDone(bool nd) {nearly_done = nd;}
-		
-		/**
-		 * Grab the Peer, indicates how many ChunkDownload's
-		 * are using this PeerDownloader.
-		 * @return The number of times this PeerDownloader was grabbed
-		 */
-		int grab();
-		
-		/**
-		 * When a ChunkDownload is ready with this PeerDownloader,
-		 * it will release it, so that others can use it.
-		 */
-		void release();
-
-		/// Get the number of times this PeerDownloader was grabbed.
-		int getNumGrabbed() const {return grabbed;}
-
 		/// Get the Peer
 		const Peer* getPeer() const {return peer;}
 
-		/// Get the current download rate
-		Uint32 getDownloadRate() const;
-		
 		/**
 		 * Check for timed out requests.
 		 */
@@ -163,6 +139,9 @@ namespace bt
 		 */
 		void choked();
 		
+		virtual QString getName() const;
+		virtual Uint32 getDownloadRate() const;
+		
 	public slots:
 		/**
 		 * Send a Request. Note that the DownloadCap
@@ -170,18 +149,18 @@ namespace bt
 		 * be stored temporarely in the unsent_reqs list)
 		 * @param req The Request
 		 */
-		void download(const Request & req);
+		virtual void download(const Request & req);
 
 		/**
 		 * Cancel a Request.
 		 * @param req The Request
 		 */
-		void cancel(const Request & req);
+		virtual void cancel(const Request & req);
 
 		/**
 		 * Cancel all Requests
 		 */
-		void cancelAll();
+		virtual void cancelAll();
 		
 		/**
 		 * Handles a rejected request.
@@ -194,36 +173,12 @@ namespace bt
 		void peerDestroyed();
 		void update();
 		
-	signals:
-		/**
-		 * Emited when a Piece has been downloaded.
-		 * @param p The Piece
-		 */
-		void downloaded(const Piece & p);
-		
-		/**
-		 * Emitted when a request takes longer then 60 seconds to download.
-		 * The sender of the request will have to request it again. This does not apply for
-		 * unsent requests. Their timestamps will be updated when they get transmitted.
-		 * @param r The request
-		 */
-		void timedout(const Request & r);
-		
-		/**
-		 * A request was rejected.
-		 * @param req The Request
-		 */
-		void rejected(const Request & req);
-
-		
 	private:
 		Peer* peer;
 		QList<TimeStampedRequest> reqs;
 		QList<Request> wait_queue;
 		Uint32 max_wait_queue_size;
-		int grabbed;
 		Uint32 chunk_size;
-		bool nearly_done;
 	};
 
 }

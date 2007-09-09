@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,30 +16,50 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTPIECE_H
-#define BTPIECE_H
-
-#include "request.h"
+#include "httpdownloader.h"
 
 namespace bt
 {
 
-	/**
-	@author Joris Guisson
-	*/
-	class Piece : public Request
+	HttpDownloader::HttpDownloader(const KUrl & url) : url(url)
+	{}
+
+
+	HttpDownloader::~HttpDownloader()
+	{}
+
+	void HttpDownloader::download(const bt::Request & req)
 	{
-	public:
-		Piece(Uint32 index, Uint32 off, Uint32 len, kt::PieceDownloader* pd,const Uint8* data);
-		virtual ~Piece();
-
-		const Uint8* getData() const {return data;}
-	private:
-		const Uint8* data;
-	};
-
+	}
+	
+	void HttpDownloader::cancel(const bt::Request & req)
+	{
+	}
+	
+	void HttpDownloader::cancelAll()
+	{
+	}
+	
+	QString HttpDownloader::getName() const
+	{
+		return url.url();
+	}
+	
+	bt::Uint32 HttpDownloader::getDownloadRate() const
+	{
+		return 0;
+	}
+	
+	bool HttpDownloader::canAddRequest() const
+	{
+		return false;
+	}
+	
+	void HttpDownloader::downloadJobFinished(KJob* job)
+	{
+	}
 }
 
-#endif
+#include "httpdownloader.moc"

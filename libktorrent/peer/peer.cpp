@@ -233,7 +233,7 @@ namespace bt
 							ReadUint32(tmp_buf,1),
 							ReadUint32(tmp_buf,5),
 							ReadUint32(tmp_buf,9),
-							id);
+							downloader);
 					
 					if (!am_choked)
 						uploader->addRequest(r);
@@ -259,7 +259,7 @@ namespace bt
 						stats.evil = false;
 					Piece p(ReadUint32(tmp_buf,1),
 							ReadUint32(tmp_buf,5),
-							len - 9,id,tmp_buf+9);
+							len - 9,downloader,tmp_buf+9);
 					piece(p);
 				}
 				break;
@@ -275,7 +275,7 @@ namespace bt
 					Request r(ReadUint32(tmp_buf,1),
 							  ReadUint32(tmp_buf,5),
 							  ReadUint32(tmp_buf,9),
-							  id);
+							  downloader);
 					uploader->removeRequest(r);
 				}
 				break;
@@ -291,7 +291,7 @@ namespace bt
 					Request r(ReadUint32(tmp_buf,1),
 							  ReadUint32(tmp_buf,5),
 							  ReadUint32(tmp_buf,9),
-							  id);
+							  downloader);
 					downloader->onRejected(r);
 				}
 				break;

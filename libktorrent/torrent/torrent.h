@@ -186,6 +186,10 @@ namespace bt
 		 */
 		void updateFilePercentage(Uint32 chunk,const BitSet & bs);
 		
+		/**
+		 * Get the list with web seed URL's
+		 */
+		const KUrl::List & getWebSeeds() const {return web_seeds;}
 
 	private:
 		void loadInfo(BDictNode* node);
@@ -197,6 +201,9 @@ namespace bt
 		void loadFiles(BListNode* node);
 		void loadNodes(BListNode* node);
 		void loadAnnounceList(BNode* node);
+		void loadWebSeeds(BListNode* node);
+		void loadWebSeed(BValueNode* node);
+
 		bool checkPathForDirectoryTraversal(const QString & p);
 		
 	private:
@@ -211,6 +218,7 @@ namespace bt
 		QVector<kt::DHTNode> nodes;
 		QString encoding;
 		bool priv_torrent;
+		KUrl::List web_seeds;
 	};
 
 }

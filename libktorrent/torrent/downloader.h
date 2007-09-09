@@ -166,7 +166,7 @@ namespace bt
 		void recalcDownloaded();
 		
 	private slots:
-		void pieceRecieved(const Piece & p);
+		void pieceRecieved(const bt::Piece & p);
 		bool finished(ChunkDownload* c);
 		
 		/**

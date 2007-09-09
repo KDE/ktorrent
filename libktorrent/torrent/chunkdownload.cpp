@@ -23,10 +23,8 @@
 #include <util/log.h>
 #include <util/array.h>
 #include <diskio/chunk.h>
-#include <peer/peer.h>
-#include <peer/peermanager.h>
 #include <peer/piece.h>
-#include <peer/peerdownloader.h>
+#include <interfaces/piecedownloader.h>
 
 #include "chunkdownload.h"
 #include "downloader.h"
@@ -110,7 +108,7 @@ namespace bt
 			return false;
 
 	
-		DownloadStatus* ds = dstatus.find(p.getPeer());
+		DownloadStatus* ds = dstatus.find(p.getPieceDownloader());
 		if (ds)
 			ds->remove(pp);
 		
@@ -121,7 +119,7 @@ namespace bt
 			memcpy(buf + p.getOffset(),p.getData(),p.getLength());	
 			pieces.set(pp,true);
 			piece_queue.removeAll(pp);
-			piece_providers.insert(p.getPeer());
+			piece_providers.insert(p.getPieceDownloader());
 			num_downloaded++;
 			if (pdown.count() > 1)
 			{
@@ -142,43 +140,42 @@ namespace bt
 			}
 		}
 		
-		for (QList<PeerDownloader*>::iterator i = pdown.begin();i != pdown.end();++i)
-			sendRequests(*i);
+		foreach (kt::PieceDownloader* pd,pdown)
+			sendRequests(pd);
 
 		return false;
 	}
 	
 	void ChunkDownload::releaseAllPDs()
 	{
-		for (Uint32 i = 0;i < pdown.count();i++)
+		foreach (kt::PieceDownloader* pd,pdown)
 		{
-			PeerDownloader* pd = pdown.at(i);
 			pd->release();
-			disconnect(pd,SIGNAL(timedout(const Request& )),this,SLOT(onTimeout(const Request& )));
-			disconnect(pd,SIGNAL(rejected( const Request& )),this,SLOT(onRejected( const Request& )));
+			disconnect(pd,SIGNAL(timedout(const bt::Request& )),this,SLOT(onTimeout(const bt::Request& )));
+			disconnect(pd,SIGNAL(rejected( const bt::Request& )),this,SLOT(onRejected( const bt::Request& )));
 		}
 		dstatus.clear();
 		pdown.clear();
 	}
 	
-	bool ChunkDownload::assignPeer(PeerDownloader* pd)
+	bool ChunkDownload::assign(kt::PieceDownloader* pd)
 	{
 		if (!pd || pdown.contains(pd))
 			return false;
 			
 		pd->grab();
 		pdown.append(pd);
-		dstatus.insert(pd->getPeer()->getID(),new DownloadStatus());
+		dstatus.insert(pd,new DownloadStatus());
 		sendRequests(pd);
-		connect(pd,SIGNAL(timedout(const Request& )),this,SLOT(onTimeout(const Request& )));
-		connect(pd,SIGNAL(rejected( const Request& )),this,SLOT(onRejected( const Request& )));
+		connect(pd,SIGNAL(timedout(const bt::Request& )),this,SLOT(onTimeout(const bt::Request& )));
+		connect(pd,SIGNAL(rejected( const bt::Request& )),this,SLOT(onRejected( const bt::Request& )));
 		return true;
 	}
 	
 	void ChunkDownload::notDownloaded(const Request & r,bool reject)
 	{
 		// find the peer 
-		DownloadStatus* ds = dstatus.find(r.getPeer());
+		DownloadStatus* ds = dstatus.find(r.getPieceDownloader());
 		if (ds)
 		{
 			//	Out() << "ds != 0"  << endl;
@@ -187,16 +184,14 @@ namespace bt
 		}
 			
 			// go over all PD's and do requets again
-		for (QList<PeerDownloader*>::iterator i = pdown.begin();i != pdown.end();++i)
-			sendRequests(*i);
+		foreach (kt::PieceDownloader* pd,pdown)
+			sendRequests(pd);
 	}
 	
 	void ChunkDownload::onRejected(const Request & r)
 	{
 		if (chunk->getIndex() == r.getIndex())
 		{
-//			Out(SYS_CON|LOG_DEBUG) << QString("Request rejected %1 %2 %3 %4").arg(r.getIndex()).arg(r.getOffset()).arg(r.getLength()).arg(r.getPeer()) << endl;
-		
 			notDownloaded(r,true);
 		}
 	}
@@ -206,16 +201,16 @@ namespace bt
 		// see if we are dealing with a piece of ours
 		if (chunk->getIndex() == r.getIndex())
 		{
-			Out(SYS_CON|LOG_DEBUG) << QString("Request timed out %1 %2 %3 %4").arg(r.getIndex()).arg(r.getOffset()).arg(r.getLength()).arg(r.getPeer()) << endl;
+			Out(SYS_CON|LOG_DEBUG) << QString("Request timed out %1 %2 %3 %4").arg(r.getIndex()).arg(r.getOffset()).arg(r.getLength()).arg(r.getPieceDownloader()->getName()) << endl;
 		
 			notDownloaded(r,false);
 		}
 	}
 	
-	void ChunkDownload::sendRequests(PeerDownloader* pd)
+	void ChunkDownload::sendRequests(kt::PieceDownloader* pd)
 	{
 		timer.update();
-		DownloadStatus* ds = dstatus.find(pd->getPeer()->getID());
+		DownloadStatus* ds = dstatus.find(pd);
 		if (!ds)
 			return;
 			
@@ -236,7 +231,7 @@ namespace bt
 							chunk->getIndex(),
 							i*MAX_PIECE_LEN,
 							i+1<num ? MAX_PIECE_LEN : last_size,
-							pd->getPeer()->getID()));
+							pd));
 				ds->add(i);
 			}
 			// move to the back so that it will take a while before it's turn is up
@@ -254,14 +249,14 @@ namespace bt
 	void ChunkDownload::update()
 	{
 		// go over all PD's and do requets again
-		for (QList<PeerDownloader*>::iterator i = pdown.begin();i != pdown.end();++i)
-			sendRequests(*i);
+		foreach (kt::PieceDownloader* pd,pdown)
+			sendRequests(pd);
 	}
 	
 	
-	void ChunkDownload::sendCancels(PeerDownloader* pd)
+	void ChunkDownload::sendCancels(kt::PieceDownloader* pd)
 	{
-		DownloadStatus* ds = dstatus.find(pd->getPeer()->getID());
+		DownloadStatus* ds = dstatus.find(pd);
 		if (!ds)
 			return;
 		
@@ -282,11 +277,11 @@ namespace bt
 	
 	void ChunkDownload::endgameCancel(const Piece & p)
 	{
-		QList<PeerDownloader*>::iterator i = pdown.begin();
+		QList<kt::PieceDownloader*>::iterator i = pdown.begin();
 		while (i != pdown.end())
 		{
-			PeerDownloader* pd = *i;
-			DownloadStatus* ds = dstatus.find(pd->getPeer()->getID());
+			kt::PieceDownloader* pd = *i;
+			DownloadStatus* ds = dstatus.find(pd);
 			Uint32 pp = p.getOffset() / MAX_PIECE_LEN;
 			if (ds && ds->contains(pp))
 			{
@@ -297,24 +292,15 @@ namespace bt
 		}
 	}
 
-	void ChunkDownload::peerKilled(PeerDownloader* pd)
+	void ChunkDownload::killed(kt::PieceDownloader* pd)
 	{
 		if (!pdown.contains(pd))
 			return;
 
-		dstatus.erase(pd->getPeer()->getID());
+		dstatus.erase(pd);
 		pdown.removeAll(pd);
-		disconnect(pd,SIGNAL(timedout(const Request& )),this,SLOT(onTimeout(const Request& )));
-		disconnect(pd,SIGNAL(rejected( const Request& )),this,SLOT(onRejected( const Request& )));
-	}
-	
-	
-	const Peer* ChunkDownload::getCurrentPeer() const
-	{
-		if (pdown.count() == 0)
-			return 0;
-		else
-			return pdown.first()->getPeer();
+		disconnect(pd,SIGNAL(timedout(const bt::Request& )),this,SLOT(onTimeout(const bt::Request& )));
+		disconnect(pd,SIGNAL(rejected( const bt::Request& )),this,SLOT(onRejected( const bt::Request& )));
 	}
 	
 	Uint32 ChunkDownload::getChunkIndex() const
@@ -322,7 +308,7 @@ namespace bt
 		return chunk->getIndex();
 	}
 
-	QString ChunkDownload::getCurrentPeerID() const
+	QString ChunkDownload::getPieceDownloaderName() const
 	{
 		if (pdown.count() == 0)
 		{
@@ -330,25 +316,20 @@ namespace bt
 		}
 		else if (pdown.count() == 1)
 		{
-			const Peer* p = pdown.first()->getPeer();
-			return p->getPeerID().identifyClient();
+			return pdown.first()->getName();
 		}
 		else
 		{
-			return i18np("1 peer","%n peers",pdown.count());
+			return i18n("%n peers",pdown.count());
 		}
 	}
 
 	Uint32 ChunkDownload::getDownloadSpeed() const
 	{
 		Uint32 r = 0;
-		QList<PeerDownloader*>::const_iterator i = pdown.begin();
-		while (i != pdown.end())
-		{
-			const PeerDownloader* pd = *i;
-			r += pd->getPeer()->getDownloadRate();
-			i++;
-		}
+		foreach (kt::PieceDownloader* pd,pdown)
+			r += pd->getDownloadRate();
+		
 		return r;
 	}
 	
@@ -414,7 +395,7 @@ namespace bt
 
 	void ChunkDownload::cancelAll()
 	{
-		QList<PeerDownloader*>::iterator i = pdown.begin();
+		QList<kt::PieceDownloader*>::iterator i = pdown.begin();
 		while (i != pdown.end())
 		{
 			sendCancels(*i);
@@ -422,23 +403,22 @@ namespace bt
 		}
 	}
 
-	bool ChunkDownload::getOnlyDownloader(Uint32 & pid)
+	kt::PieceDownloader* ChunkDownload::getOnlyDownloader()
 	{
 		if (piece_providers.size() == 1)
 		{
-			pid = *piece_providers.begin();
-			return true;
+			return *piece_providers.begin();
 		}
 		else
 		{
-			return false;
+			return 0;
 		}
 	}
 
 	void ChunkDownload::getStats(Stats & s)
 	{
 		s.chunk_index = chunk->getIndex();
-		s.current_peer_id = getCurrentPeerID();
+		s.current_peer_id = getPieceDownloaderName();
 		s.download_speed = getDownloadSpeed();
 		s.num_downloaders = getNumDownloaders();
 		s.pieces_downloaded = num_downloaded;
@@ -447,10 +427,10 @@ namespace bt
 	
 	bool ChunkDownload::isChoked() const
 	{
-		QList<PeerDownloader*>::const_iterator i = pdown.begin();
+		QList<kt::PieceDownloader*>::const_iterator i = pdown.begin();
 		while (i != pdown.end())
 		{
-			const PeerDownloader* pd = *i;
+			const kt::PieceDownloader* pd = *i;
 			// if there is one which isn't choked 
 			if (!pd->isChoked())
 				return false;

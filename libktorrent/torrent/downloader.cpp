@@ -280,7 +280,7 @@ namespace bt
 			if (sel->getChunk()->getStatus() == Chunk::ON_DISK)
 				cman.prepareChunk(sel->getChunk(),true);
 			
-			sel->assignPeer(pd);
+			sel->assign(pd);
 			return true;
 		}
 		
@@ -328,7 +328,7 @@ namespace bt
 			{
 				ChunkDownload* cd = new ChunkDownload(c);
 				current_chunks.insert(chunk,cd);
-				cd->assignPeer(pd);
+				cd->assign(pd);
 				if (tmon)
 					tmon->downloadStarted(cd);
 			}
@@ -346,7 +346,7 @@ namespace bt
 					cman.prepareChunk(cdmin->getChunk(),true);
 				}
 				
-				cdmin->assignPeer(pd); 
+				cdmin->assign(pd); 
 			}
 		} 
 	}
@@ -360,8 +360,8 @@ namespace bt
 	void Downloader::onNewPeer(Peer* peer)
 	{		
 		PeerDownloader* pd = peer->getPeerDownloader();
-		connect(pd,SIGNAL(downloaded(const Piece& )),
-				this,SLOT(pieceRecieved(const Piece& )));
+		connect(pd,SIGNAL(downloaded(const bt::Piece& )),
+				this,SLOT(pieceRecieved(const bt::Piece& )));
 	}
 
 	void Downloader::onPeerKilled(Peer* peer)
@@ -372,7 +372,7 @@ namespace bt
 			for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();++i)
 			{
 				ChunkDownload* cd = i->second;
-				cd->peerKilled(pd);
+				cd->killed(pd);
 			}
 		}
 	}
@@ -415,7 +415,8 @@ namespace bt
 			
 			cman.resetChunk(c->getIndex());
 			chunk_selector->reinsert(c->getIndex());
-			Uint32 pid;
+#warning TODO
+			/*Uint32 pid;
 			if (cd->getOnlyDownloader(pid))
 			{
 				Peer* p = pman.findPeer(pid);
@@ -426,7 +427,7 @@ namespace bt
 				IPBlocklist & ipfilter = IPBlocklist::instance();
 				ipfilter.insert( IP );
 				p->kill(); 
-			}
+			}*/
 			return false;
 		}
 		return true;
