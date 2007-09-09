@@ -236,7 +236,7 @@ namespace kt
 			s += ".torrent";
 
 		KProgressDialog* dlg = new KProgressDialog(this,0);
-		dlg->setLabelText(i18n("Creating %1...").arg(s));
+		dlg->setLabelText(i18n("Creating %1...",s));
 		dlg->setModal(true);
 		dlg->setAllowCancel(false);
 		dlg->show();
