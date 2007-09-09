@@ -22,7 +22,6 @@
 
 #include <qobject.h>
 #include <util/ptrmap.h>
-#include "globals.h"
 
 namespace kt
 {

@@ -107,10 +107,7 @@ set(libktorrent_SRC
 	torrent/globals.cpp
 	torrent/server.cpp
 	torrent/peersourcemanager.cpp
-	torrent/downloader.cpp
 	torrent/uploader.cpp
-	torrent/chunkdownload.cpp
-	torrent/chunkselector.cpp
 	torrent/timeestimator.cpp
 	torrent/queuemanager.cpp
 	torrent/statsfile.cpp
@@ -155,6 +152,9 @@ set(libktorrent_SRC
 	groups/groupmanager.cpp
 	
 	download/httpdownloader.cpp
+	download/chunkdownload.cpp
+	download/chunkselector.cpp
+	download/downloader.cpp
 
 	ktorrent.kcfg
 	labelviewitem.ui

@@ -25,7 +25,7 @@
 #include <solid/device.h>
 #include <solid/networkinterface.h>
 #include <util/functions.h>
-#include <torrent/downloader.h>
+#include <download/downloader.h>
 #include <torrent/choker.h>
 #include <peer/authenticationmonitor.h>
 #include <peer/peermanager.h>

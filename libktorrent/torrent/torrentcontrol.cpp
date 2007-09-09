@@ -41,7 +41,7 @@
 #include <migrate/cachemigrate.h>
 #include <dht/dhtbase.h>
 
-#include "downloader.h"
+#include <download/downloader.h>
 #include "uploader.h"
 #include "peersourcemanager.h"
 #include <diskio/chunkmanager.h>

@@ -24,10 +24,10 @@
 #include <util/array.h>
 #include <util/bitset.h>
 #include <util/fileops.h>
-#include <torrent/downloader.h>
+#include <download/downloader.h>
 #include <torrent/torrent.h>
 #include <torrent/globals.h>
-#include <torrent/chunkdownload.h>
+#include <download/chunkdownload.h>
 #include <ktversion.h>
 #include "ccmigrate.h"
 

@@ -32,8 +32,8 @@
 #include <interfaces/functions.h>
 #include <interfaces/monitorinterface.h>
 #include <peer/packetwriter.h>
+#include <torrent/ipblocklist.h>
 #include "chunkselector.h"
-#include "ipblocklist.h"
 #include "ktversion.h"
 #include "downloader.h"
 
