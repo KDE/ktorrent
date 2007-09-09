@@ -222,7 +222,7 @@ namespace kt
 
 	void GUI::createTorrent()
 	{
-		TorrentCreatorDlg dlg(core,this);
+		TorrentCreatorDlg dlg(core,this,this);
 		dlg.exec();
 	}
 

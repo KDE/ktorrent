@@ -18,12 +18,18 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <kfiledialog.h>
+#include <kmessagebox.h>
+#include <kprogressdialog.h>
+#include <dht/dht.h>
+#include <torrent/globals.h>
 #include "core.h"
+#include "gui.h"
 #include "torrentcreatordlg.h"
 
 namespace kt
 {
-	TorrentCreatorDlg::TorrentCreatorDlg(Core* core,QWidget* parent) : QDialog(parent),core(core)
+	TorrentCreatorDlg::TorrentCreatorDlg(Core* core,GUI* gui,QWidget* parent) : QDialog(parent),core(core),gui(gui)
 	{
 		setupUi(this);
 		
@@ -56,6 +62,17 @@ namespace kt
 		connect(m_node_list,SIGNAL(itemSelectionChanged()),this,SLOT(nodeSelectionChanged()));
 		m_add_node->setEnabled(false);
 		m_remove_node->setEnabled(false);
+		
+		// populate dht box with some nodes from our own table
+		QMap<QString, int> n = bt::Globals::instance().getDHT().getClosestGoodNodes(10);
+
+		for(QMap<QString, int>::iterator it = n.begin(); it!=n.end(); ++it)
+		{
+			QTreeWidgetItem* twi = new QTreeWidgetItem(m_node_list);
+			twi->setText(0,it.key());
+			twi->setText(1,QString::number(it.value()));
+			m_node_list->addTopLevelItem(twi);
+		}
 	}
 	
 	TorrentCreatorDlg::~TorrentCreatorDlg()
@@ -86,7 +103,12 @@ namespace kt
 		QList<QListWidgetItem*> sel = m_tracker_list->selectedItems();
 		foreach (QListWidgetItem* s,sel)
 		{
-			
+			int r = m_tracker_list->row(s);
+			if (r > 0)
+			{
+				m_tracker_list->insertItem(r - 1,m_tracker_list->takeItem(r));
+				m_tracker_list->setCurrentRow(r - 1);
+			}
 		}
 	}
 	
@@ -95,6 +117,12 @@ namespace kt
 		QList<QListWidgetItem*> sel = m_tracker_list->selectedItems();
 		foreach (QListWidgetItem* s,sel)
 		{
+			int r = m_tracker_list->row(s);
+			if (r + 1 < m_tracker_list->count())
+			{
+				m_tracker_list->insertItem(r + 1,m_tracker_list->takeItem(r));
+				m_tracker_list->setCurrentRow(r + 1);
+			}
 		}
 	}
 		
@@ -149,6 +177,75 @@ namespace kt
 		
 	void TorrentCreatorDlg::accept()
 	{
+		if (!m_url->url().isValid())
+		{
+			gui->errorMsg(i18n("You must select a file or a folder."));
+			return;
+		}
+
+		if (m_tracker_list->count() == 0 && !m_dht->isChecked())
+		{
+			QString msg = i18n("You have not added a tracker, "
+					"are you sure you want to create this torrent ?");
+			if (KMessageBox::warningYesNo(gui,msg) == KMessageBox::No)
+				return;
+		}
+	
+		if (m_node_list->topLevelItemCount() == 0 && m_dht->isChecked())
+		{
+			gui->errorMsg(i18n("You must add at least one node."));
+			return;
+		}
+
+		KUrl url = m_url->url();
+		Uint32 chunk_size_table[] = 
+		{
+			32,64,128,256,512,1024,2048,4096,8192
+		};
+		
+		int chunk_size = chunk_size_table[m_chunk_size->currentIndex()];
+		QString name = url.fileName();
+	
+		QStringList trackers; 
+	
+		if (m_dht->isChecked())
+		{
+			for (int i = 0;i < m_node_list->topLevelItemCount(); ++i)
+			{
+				QTreeWidgetItem* item = m_node_list->topLevelItem(i);
+				trackers.append(item->text(0) + "," +  item->text(1));
+			}
+		}
+		else
+		{
+			for (int i = 0;i < m_tracker_list->count(); ++i)
+			{
+				QListWidgetItem* item = m_tracker_list->item(i);
+				trackers.append(item->text());
+			}
+		}
+
+		QString s = KFileDialog::getSaveFileName(
+				KUrl(),"*.torrent|" + i18n("Torrent Files (*.torrent)"),
+				this,i18n("Choose a file to save the torrent"));
+
+		if (s.isNull())
+			return;
+	
+		if (!s.endsWith(".torrent"))
+			s += ".torrent";
+
+		KProgressDialog* dlg = new KProgressDialog(this,0);
+		dlg->setLabelText(i18n("Creating %1...").arg(s));
+		dlg->setModal(true);
+		dlg->setAllowCancel(false);
+		dlg->show();
+		core->makeTorrent(
+			url.path(),trackers,chunk_size,name,m_comments->text(),
+			m_start_seeding->isChecked(),s,m_private->isChecked(),
+			dlg->progressBar(),
+			m_dht->isChecked());
+		delete dlg;
 		QDialog::accept();
 	}
 	

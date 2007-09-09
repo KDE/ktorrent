@@ -116,6 +116,8 @@ set(libktorrent_SRC
 	torrent/choker.cpp
 	torrent/advancedchokealgorithm.cpp
 	torrent/torrentcontrol.cpp
+	torrent/torrentcreator.cpp
+
 	
 	peer/piece.cpp
 	peer/request.cpp

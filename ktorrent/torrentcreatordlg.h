@@ -35,7 +35,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		TorrentCreatorDlg(Core* core,QWidget* parent);
+		TorrentCreatorDlg(Core* core,GUI* gui,QWidget* parent);
 		virtual ~TorrentCreatorDlg();
 		
 	private slots:
@@ -60,6 +60,7 @@ namespace kt
 		
 	private:
 		Core* core;
+		GUI* gui;
 	};
 }
 

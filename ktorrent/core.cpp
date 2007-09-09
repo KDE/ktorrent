@@ -23,6 +23,7 @@
 #include <kmessagebox.h>
 #include <kstandardguiitem.h>
 #include <kfiledialog.h>
+#include <kapplication.h>
 #include <qprogressbar.h>
 #include <qdir.h>
 
@@ -38,6 +39,7 @@
 #include <interfaces/torrentfileinterface.h>
 #include <torrent/queuemanager.h>
 #include <torrent/torrentcontrol.h>
+#include <torrent/torrentcreator.h>
 #include <torrent/server.h>
 #include <peer/authenticationmonitor.h>
 #include <groups/groupmanager.h>
@@ -686,7 +688,6 @@ namespace kt
 				const QString & comments,bool seed,
 				const QString & output_file,bool priv_tor,QProgressBar* prog, bool decentralized)
 	{
-#if 0
 		QString tdir;
 		try
 		{
@@ -694,11 +695,11 @@ namespace kt
 				chunk_size = 256;
 
 			bt::TorrentCreator mktor(file,trackers,chunk_size,name,comments,priv_tor, decentralized);
-			prog->setTotalSteps(mktor.getNumChunks());
+			prog->setMaximum(mktor.getNumChunks());
 			Uint32 ns = 0;
 			while (!mktor.calculateHash())
 			{
-				prog->setProgress(ns);
+				prog->setValue(ns);
 				ns++;
 				if (ns % 10 == 0)
 					KApplication::kApplication()->processEvents();
@@ -725,7 +726,6 @@ namespace kt
 			// Show error message
 			gui->errorMsg(i18n("Cannot create torrent: %1").arg(e.toString()));
 		}
-#endif
 	}
 
 	CurrentStats Core::getStats()

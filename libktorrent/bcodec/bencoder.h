@@ -124,6 +124,12 @@ namespace bt
 		 * Write a string
 		 * @param str 
 		 */
+		void write(const char* str);
+		
+		/**
+		 * Write a string
+		 * @param str 
+		 */
 		void write(const QString & str);
 		
 		/**
