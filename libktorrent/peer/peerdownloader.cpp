@@ -99,6 +99,11 @@ namespace bt
 	{
 		return wait_queue.count() < max_wait_queue_size;
 	}
+	
+	bool PeerDownloader::canDownloadChunk() const
+	{
+		return !isNull() && (getNumGrabbed() < getMaxChunkDownloads() || isNearlyDone()) && canAddRequest();
+	}
 
 	Uint32 PeerDownloader::getNumRequests() const 
 	{

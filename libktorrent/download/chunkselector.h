@@ -23,10 +23,14 @@
 #include <list>
 #include <util/timer.h>
 
+namespace kt
+{
+	class PieceDownloader;
+}
+
 namespace bt
 {
 	class BitSet;
-	class PeerDownloader;
 	class ChunkManager;
 	class Downloader;
 	class PeerManager;
@@ -47,12 +51,12 @@ namespace bt
 		virtual ~ChunkSelector();
 
 		/**
-		 * Select which chunk to download for a PeerDownloader.
-		 * @param pd The PeerDownloader
+		 * Select which chunk to download for a PieceDownloader.
+		 * @param pd The PieceDownloader
 		 * @param chunk Index of chunk gets stored here
 		 * @return true upon succes, false otherwise
 		 */
-		bool select(PeerDownloader* pd,Uint32 & chunk);
+		bool select(kt::PieceDownloader* pd,Uint32 & chunk);
 		
 		/**
 		 * Data has been checked, and these chunks are OK.

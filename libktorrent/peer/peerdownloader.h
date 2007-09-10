@@ -106,6 +106,7 @@ namespace bt
 
 		/// See if we can add a request to the wait_queue
 		virtual bool canAddRequest() const;
+		virtual bool canDownloadChunk() const;
 		
 		/// Get the number of active requests
 		Uint32 getNumRequests() const;
@@ -120,7 +121,7 @@ namespace bt
 		 * See if the Peer has a Chunk
 		 * @param idx The Chunk's index
 		 */
-		bool hasChunk(Uint32 idx) const;
+		virtual bool hasChunk(Uint32 idx) const;
 		
 		/// Get the Peer
 		const Peer* getPeer() const {return peer;}

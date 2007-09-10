@@ -506,6 +506,16 @@ namespace bt
 		return peer_map.find(peer_id);
 	}
 	
+	Peer* PeerManager::findPeer(kt::PieceDownloader* pd)
+	{
+		foreach (Peer* p,peer_list)
+		{
+			if ((kt::PieceDownloader*)p->getPeerDownloader() == pd)
+				return p;
+		}
+		return 0;
+	}
+	
 	void PeerManager::onRerunChoker()
 	{
 		// append a 0 ptr to killed

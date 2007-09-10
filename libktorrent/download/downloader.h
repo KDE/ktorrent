@@ -26,6 +26,7 @@
 namespace kt
 {
        class MonitorInterface;
+       class PieceDownloader;
 }
 
 
@@ -38,7 +39,6 @@ namespace bt
 	class Peer;
 	class Chunk;
 	class ChunkDownload;
-	class PeerDownloader;
 	class Piece;
 	class ChunkSelector;
 
@@ -190,13 +190,13 @@ namespace bt
 		void ioError(const QString & msg);
 		
 	private:
-		void downloadFrom(PeerDownloader* pd);
+		void downloadFrom(kt::PieceDownloader* pd);
 		void normalUpdate();
 		Uint32 maxMemoryUsage();
 		Uint32 numNonIdle();
-		bool findDownloadForPD(PeerDownloader* pd,bool warmup);
-		ChunkDownload* selectCD(PeerDownloader* pd,Uint32 num);
-		ChunkDownload* selectWorst(PeerDownloader* pd);
+		bool findDownloadForPD(kt::PieceDownloader* pd,bool warmup);
+		ChunkDownload* selectCD(kt::PieceDownloader* pd,Uint32 num);
+		ChunkDownload* selectWorst(kt::PieceDownloader* pd);
 		
 	private:
 		Torrent & tor;
@@ -206,6 +206,7 @@ namespace bt
 		Uint64 curr_chunks_downloaded;
 		Uint64 unnecessary_data;
 		PtrMap<Uint32,ChunkDownload> current_chunks;
+		QList<kt::PieceDownloader*> piece_downloaders;
 		ChunkSelector* chunk_selector;
 		
 		kt::MonitorInterface* tmon;

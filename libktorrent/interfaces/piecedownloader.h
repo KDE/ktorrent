@@ -102,11 +102,29 @@ namespace kt
 		 */
 		virtual bool canAddRequest() const = 0;
 		
+		/**
+		 * Wether or not we can download another chunk from this.
+		 */
+		virtual bool canDownloadChunk() const = 0;
+		
 		/// See if this PieceDownloader has nearly finished a chunk
 		bool isNearlyDone() const {return getNumGrabbed() == 1 && nearly_done;}
 		
 		/// Set the nearly done status of the PeerDownloader
 		void setNearlyDone(bool nd) {nearly_done = nd;}
+		
+		/**
+		 * See if the PieceDownloader has a Chunk.
+		 * By default this returns true, but it can be
+		 * overridden by subclasses.
+		 * @param idx The Chunk's index
+		 */
+		virtual bool hasChunk(bt::Uint32 idx) const {return true;}
+		
+		/**
+		 * Check if requests have timedout
+		 */
+		virtual void checkTimeouts() = 0;
 		
 	signals:
 		/**

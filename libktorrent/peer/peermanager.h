@@ -34,6 +34,11 @@ namespace mse
 	class StreamSocket;
 }
 
+namespace kt
+{
+	class PieceDownloader;
+}
+
 namespace bt
 {
 	class Peer;
@@ -89,6 +94,13 @@ namespace bt
 		 * @return A Peer or 0, if nothing could be found
 		 */
 		Peer* findPeer(Uint32 peer_id);
+		
+		/**
+		 * Find a Peer based on it's PieceDownloader
+		 * @param pd The PieceDownloader
+		 * @return The matching Peer or 0 if none can be found
+		 */
+		Peer* findPeer(kt::PieceDownloader* pd);
 		
 		/**
 		 * Try to connect to some peers

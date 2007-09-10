@@ -24,7 +24,7 @@
 #include <util/bitset.h>
 #include <peer/chunkcounter.h>
 #include <diskio/chunkmanager.h>
-#include <peer/peerdownloader.h>
+#include <interfaces/piecedownloader.h>
 #include <peer/peer.h>
 #include <peer/peermanager.h>
 #include "chunkselector.h"
@@ -88,7 +88,7 @@ namespace bt
 	{}
 
 
-	bool ChunkSelector::select(PeerDownloader* pd,Uint32 & chunk)
+	bool ChunkSelector::select(kt::PieceDownloader* pd,Uint32 & chunk)
 	{		
 		const BitSet & bs = cman.getBitSet();
 		

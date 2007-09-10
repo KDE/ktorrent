@@ -144,10 +144,9 @@ namespace bt
 		normalUpdate();
 		
 		// now see if there aren't any timed out pieces
-		for (Uint32 i = 0;i < pman.getNumConnectedPeers();i++)
+		foreach (kt::PieceDownloader* pd,piece_downloaders)
 		{
-			Peer* p = pman.getPeer(i);
-			p->getPeerDownloader()->checkTimeouts();
+			pd->checkTimeouts();
 		}
 	}
 
@@ -180,20 +179,9 @@ namespace bt
 			}
 		}
 		
-		for (Uint32 i = 0; i < pman.getNumConnectedPeers();++i)
+		foreach (kt::PieceDownloader* pd,piece_downloaders)
 		{
-			PeerDownloader* pd = pman.getPeer(i)->getPeerDownloader();
-			
-			if (pd->isNull())
-				continue;
-	
-			bool ok = 
-					(pd->getNumGrabbed() < pd->getMaxChunkDownloads() ||
-						pd->isNearlyDone()) && 
-					pd->canAddRequest();
-			
-			
-			if (ok)
+			if (pd->canDownloadChunk())
 			{
 				if (!pd->isChoked())
 					downloadFrom(pd);
@@ -234,7 +222,7 @@ namespace bt
 		return num_non_idle;
 	}
 	
-	ChunkDownload* Downloader::selectCD(PeerDownloader* pd,Uint32 num)
+	ChunkDownload* Downloader::selectCD(kt::PieceDownloader* pd,Uint32 num)
 	{
 		ChunkDownload* sel = 0;
 		Uint32 sel_left = 0xFFFFFFFF;
@@ -258,11 +246,11 @@ namespace bt
 		return sel;
 	}
 	
-	bool Downloader::findDownloadForPD(PeerDownloader* pd,bool warmup)
+	bool Downloader::findDownloadForPD(kt::PieceDownloader* pd,bool warmup)
 	{
 		ChunkDownload* sel = 0;
 		
-		// first see if there are ChunkDownload's which need a PeerDownloader
+		// first see if there are ChunkDownload's which need a kt::PieceDownloader
 		sel = selectCD(pd,0);
 		
 		if (!sel && warmup)
@@ -287,7 +275,7 @@ namespace bt
 		return false;
 	}
 	
-	ChunkDownload* Downloader::selectWorst(PeerDownloader* pd)
+	ChunkDownload* Downloader::selectWorst(kt::PieceDownloader* pd)
 	{
 		ChunkDownload* cdmin = NULL;
 		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j) 
@@ -307,7 +295,7 @@ namespace bt
 		return cdmin;
 	}
 
-	void Downloader::downloadFrom(PeerDownloader* pd)
+	void Downloader::downloadFrom(kt::PieceDownloader* pd)
 	{
 		// calculate the max memory usage
 		Uint32 max = maxMemoryUsage();
@@ -359,14 +347,15 @@ namespace bt
 	
 	void Downloader::onNewPeer(Peer* peer)
 	{		
-		PeerDownloader* pd = peer->getPeerDownloader();
+		kt::PieceDownloader* pd = peer->getPeerDownloader();
 		connect(pd,SIGNAL(downloaded(const bt::Piece& )),
 				this,SLOT(pieceRecieved(const bt::Piece& )));
+		piece_downloaders.append(pd);
 	}
 
 	void Downloader::onPeerKilled(Peer* peer)
 	{
-		PeerDownloader* pd = peer->getPeerDownloader();
+		kt::PieceDownloader* pd = peer->getPeerDownloader();
 		if (pd)
 		{
 			for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();++i)
@@ -374,6 +363,7 @@ namespace bt
 				ChunkDownload* cd = i->second;
 				cd->killed(pd);
 			}
+			piece_downloaders.removeAll(pd);
 		}
 	}
 	
@@ -415,11 +405,11 @@ namespace bt
 			
 			cman.resetChunk(c->getIndex());
 			chunk_selector->reinsert(c->getIndex());
-#warning TODO
-			/*Uint32 pid;
-			if (cd->getOnlyDownloader(pid))
+
+			kt::PieceDownloader* only = cd->getOnlyDownloader();
+			if (only)
 			{
-				Peer* p = pman.findPeer(pid);
+				Peer* p = pman.findPeer(only);
 				if (!p)
 					return false;
 				QString IP(p->getIPAddresss());
@@ -427,7 +417,7 @@ namespace bt
 				IPBlocklist & ipfilter = IPBlocklist::instance();
 				ipfilter.insert( IP );
 				p->kill(); 
-			}*/
+			}
 			return false;
 		}
 		return true;
@@ -451,11 +441,9 @@ namespace bt
 	{
 		// sum of the download rate of each peer
 		Uint32 rate = 0;
-		for (Uint32 i = 0;i < pman.getNumConnectedPeers();i++)
-		{
-			Peer* p = pman.getPeer(i);
-			rate += p->getDownloadRate();
-		}
+		foreach (kt::PieceDownloader* pd,piece_downloaders)
+			rate += pd->getDownloadRate();
+			
 		return rate;
 	}
 	
@@ -657,7 +645,6 @@ namespace bt
 	void Downloader::setMemoryUsage(Uint32 m)
 	{
 		mem_usage = m;
-//		PeerDownloader::setMemoryUsage(m);
 	}
 	
 	void Downloader::dataChecked(const BitSet & ok_chunks)

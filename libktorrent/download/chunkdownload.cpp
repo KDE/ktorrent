@@ -377,6 +377,11 @@ namespace bt
 				piece_queue.removeAll(i);
 		
 		updateHash();
+		// add a 0 downloader, so that pieces downloaded
+		// in a previous session cannot get a peer banned in this session
+		if (num_downloaded) 
+			piece_providers.insert(0);
+		
 		return true;
 	}
 
