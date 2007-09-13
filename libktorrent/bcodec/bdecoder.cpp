@@ -58,7 +58,7 @@ namespace bt
 		}
 		else
 		{
-			throw Error(i18n("Illegal token: %1").arg(data[pos]));
+			throw Error(i18n("Illegal token: %1",data[pos]));
 		}
 	}
 
@@ -160,7 +160,7 @@ namespace bt
 			Int64 bi = 0LL;
 			bi = n.toLongLong(&ok);
 			if (!ok)
-				throw Error(i18n("Cannot convert %1 to an int").arg(n));
+				throw Error(i18n("Cannot convert %1 to an int",n));
 
 			pos++;
 			if (verbose) Out() << "INT64 = " << n << endl;
@@ -194,7 +194,7 @@ namespace bt
 		len = n.toInt(&ok);
 		if (!ok)
 		{
-			throw Error(i18n("Cannot convert %1 to an int").arg(n));
+			throw Error(i18n("Cannot convert %1 to an int",n));
 		}
 		// move pos to the first part of the string
 		pos++;

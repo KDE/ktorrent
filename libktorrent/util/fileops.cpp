@@ -68,8 +68,8 @@ namespace bt
 		if (mkdir(QFile::encodeName(dir),0777) < -1)
 		{
 			if (!nothrow)
-				throw Error(i18n("Cannot create directory %1: %2")
-					.arg(dir).arg(strerror(errno)));
+				throw Error(i18n("Cannot create directory %1: %2"
+					,dir,strerror(errno)));
 			else
 			{
 				Out() << QString("Error : Cannot create directory %1 : %2").arg(dir).arg(strerror(errno))<< endl;
@@ -82,9 +82,9 @@ namespace bt
 		if (symlink(QFile::encodeName(link_to),QFile::encodeName(link_url)) != 0)
 		{
 			if (!nothrow)
-				throw Error(i18n("Cannot symlink %1 to %2: %3")
-					.arg(link_url).arg(link_to)
-					.arg(strerror(errno)));
+				throw Error(i18n("Cannot symlink %1 to %2: %3"
+					,link_url,link_to
+					,strerror(errno)));
 			else
 				Out() << QString("Error : Cannot symlink %1 to %2: %3")
 						.arg(link_url).arg(link_to)
@@ -98,9 +98,9 @@ namespace bt
 		if (!KIO::NetAccess::move(KUrl(src),KUrl(dst),0))
 		{
 			if (!nothrow)
-				throw Error(i18n("Cannot move %1 to %2: %3")
-					.arg(src).arg(dst)
-						.arg(KIO::NetAccess::lastErrorString()));
+				throw Error(i18n("Cannot move %1 to %2: %3",
+					src,dst,
+						KIO::NetAccess::lastErrorString()));
 			else
 				Out() << QString("Error : Cannot move %1 to %2: %3")
 						.arg(src).arg(dst)
@@ -114,9 +114,9 @@ namespace bt
 		if (!KIO::NetAccess::file_copy(KUrl(src),KUrl(dst)))
 		{
 			if (!nothrow)
-				throw Error(i18n("Cannot copy %1 to %2: %3")
-						.arg(src).arg(dst)
-						.arg(KIO::NetAccess::lastErrorString()));
+				throw Error(i18n("Cannot copy %1 to %2: %3",
+						src,dst,
+						KIO::NetAccess::lastErrorString()));
 			else
 				Out() << QString("Error : Cannot copy %1 to %2: %3")
 						.arg(src).arg(dst)
@@ -130,9 +130,9 @@ namespace bt
 		if (!KIO::NetAccess::dircopy(KUrl(src),KUrl(dst),0))
 		{
 			if (!nothrow)
-				throw Error(i18n("Cannot copy %1 to %2: %3")
-						.arg(src).arg(dst)
-						.arg(KIO::NetAccess::lastErrorString()));
+				throw Error(i18n("Cannot copy %1 to %2: %3",
+						src,dst,
+						KIO::NetAccess::lastErrorString()));
 			else
 				Out() << QString("Error : Cannot copy %1 to %2: %3")
 						.arg(src).arg(dst)
@@ -213,9 +213,9 @@ namespace bt
 		
 		if (!ok)
 		{
-			QString err = i18n("Cannot delete %1: %2")
-					.arg(url)
-					.arg(strerror(errno));
+			QString err = i18n("Cannot delete %1: %2",
+					url,
+				        strerror(errno));
 			if (!nothrow)
 				throw Error(err);
 			else
@@ -232,9 +232,9 @@ namespace bt
 		if (!fptr.open(url,"wb"))
 		{
 			if (!nothrow)
-				throw Error(i18n("Cannot create %1: %2")
-						.arg(url)
-						.arg(fptr.errorString()));
+				throw Error(i18n("Cannot create %1: %2",
+						,url,
+						,fptr.errorString()));
 			else
 				Out() << "Error : Cannot create " << url << " : "
 						<< fptr.errorString() << endl;
@@ -253,8 +253,8 @@ namespace bt
 		ret = stat(QFile::encodeName(url),&sb);
 #endif
 		if (ret < 0)
-			throw Error(i18n("Cannot calculate the filesize of %1: %2")
-					.arg(url).arg(strerror(errno)));
+			throw Error(i18n("Cannot calculate the filesize of %1: %2",
+					,url,strerror(errno)));
 		
 		return (Uint64)sb.st_size;
 	}
@@ -270,7 +270,7 @@ namespace bt
 		ret = fstat(fd,&sb);
 #endif
 		if (ret < 0)
-			throw Error(i18n("Cannot calculate the filesize : %2").arg(strerror(errno)));
+			throw Error(i18n("Cannot calculate the filesize : %1",strerror(errno)));
 		
 		return (Uint64)sb.st_size;
 	}
@@ -298,7 +298,7 @@ namespace bt
 	{
 		int fd = ::open(QFile::encodeName(path),O_RDWR | O_LARGEFILE);
 		if (fd < 0)
-			throw Error(i18n("Cannot open %1 : %2").arg(path).arg(strerror(errno)));
+			throw Error(i18n("Cannot open %1 : %2",path,strerror(errno)));
 		
 		bool ret = FatPreallocate(fd,size);
 		close(fd);
@@ -327,7 +327,7 @@ namespace bt
 	{
 		int fd = ::open(QFile::encodeName(path), O_RDWR | O_LARGEFILE);
 		if (fd < 0)
-			throw Error(i18n("Cannot open %1 : %2").arg(path).arg(strerror(errno)));
+			throw Error(i18n("Cannot open %1 : %2",path,strerror(errno)));
 		
 		bool ret = XfsPreallocate(fd,size);
 		close(fd);
@@ -348,16 +348,16 @@ namespace bt
 #else
 			if (ftruncate(fd,size) == -1)
 #endif
-				throw Error(i18n("Cannot expand file : %1").arg(strerror(errno)));
+				throw Error(i18n("Cannot expand file : %1",strerror(errno)));
 		}
 		else
 		{
 #ifdef HAVE_POSIX_FALLOCATE64
 			if (posix_fallocate64(fd,0,size) != 0)
-				throw Error(i18n("Cannot expand file : %1").arg(strerror(errno)));
+				throw Error(i18n("Cannot expand file : %1",strerror(errno)));
 #elif HAVE_POSIX_FALLOCATE
 			if (posix_fallocate(fd,0,size) != 0)
-				throw Error(i18n("Cannot expand file : %1").arg(strerror(errno)));
+				throw Error(i18n("Cannot expand file : %1",strerror(errno)));
 #else
 			SeekFile(fd,0,SEEK_SET);
 			bt::Array<Uint8> buf(4096);
@@ -372,9 +372,9 @@ namespace bt
 				
 				int ret = write(fd,buf,to_write);
 				if (ret < 0)
-					throw Error(i18n("Cannot expand file : %1").arg(strerror(errno)));
+					throw Error(i18n("Cannot expand file : %1",strerror(errno)));
 				else if (ret == 0 || ret != (int)to_write)
-					throw Error(i18n("Cannot expand file").arg(strerror(errno)));
+					throw Error(i18n("Cannot expand file",strerror(errno)));
 				else
 					written += to_write;
 			}
@@ -386,7 +386,7 @@ namespace bt
 	{
 		int fd = ::open(QFile::encodeName(path),O_RDWR | O_LARGEFILE);
 		if (fd < 0)
-			throw Error(i18n("Cannot open %1 : %2").arg(path).arg(strerror(errno)));
+			throw Error(i18n("Cannot open %1 : %2",path,strerror(errno)));
 		
 		try
 		{
@@ -407,7 +407,7 @@ namespace bt
 #else
 		if (lseek(fd,off,whence) == -1)
 #endif
-			throw Error(i18n("Cannot seek in file : %1").arg(strerror(errno)));
+			throw Error(i18n("Cannot seek in file : %1",strerror(errno)));
 	}
 	
 	bool FreeDiskSpace(const QString & path,Uint64 & bytes_free)
