@@ -83,7 +83,7 @@ namespace bt
 		Uint64 off = c->getIndex() * tor.getChunkSize();
 		Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::READ);
 		if (!buf)
-			throw Error(i18n("Cannot load chunk %1").arg(c->getIndex()));
+			throw Error(i18n("Cannot load chunk %1",c->getIndex()));
 		c->setData(buf,Chunk::MMAPPED);
 	}
 

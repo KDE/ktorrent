@@ -120,7 +120,7 @@ namespace bt
 	{
 		File fptr;
 		if (!fptr.open(url,"wb"))
-			throw Error(i18n("Cannot open file %1: %2").arg(url).arg(fptr.errorString()));
+			throw Error(i18n("Cannot open file %1: %2",url,fptr.errorString()));
 
 		BEncoder enc(&fptr);
 		enc.beginDict(); // top dict
@@ -232,8 +232,8 @@ namespace bt
 		Array<Uint8> buf(chunk_size);
 		File fptr;
 		if (!fptr.open(target,"rb"))
-			throw Error(i18n("Cannot open file %1: %2")
-					.arg(target).arg(fptr.errorString()));
+			throw Error(i18n("Cannot open file %1: %2",
+					target,fptr.errorString()));
 
 		Uint32 s = cur_chunk != num_chunks - 1 ? chunk_size : last_size;
 		fptr.seek(File::BEGIN,(Int64)cur_chunk*chunk_size);
@@ -270,8 +270,8 @@ namespace bt
 			File fptr;
 			if (!fptr.open(target + f.getPath(),"rb"))
 			{
-				throw Error(i18n("Cannot open file %1: %2")
-						.arg(f.getPath()).arg(fptr.errorString()));
+				throw Error(i18n("Cannot open file %1: %2"
+						,f.getPath(),fptr.errorString()));
 			}
 
 			// first calculate offset into file
@@ -332,7 +332,7 @@ namespace bt
 		// write full index file
 		File fptr;
 		if (!fptr.open(dd + "index","wb"))
-			throw Error(i18n("Cannot create index file: %1").arg(fptr.errorString()));
+			throw Error(i18n("Cannot create index file: %1",fptr.errorString()));
 
 		for (Uint32 i = 0;i < num_chunks;i++)
 		{

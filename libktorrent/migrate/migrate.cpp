@@ -42,7 +42,7 @@ namespace bt
 	{
 		// check if directory exists
 		if (!bt::Exists(tor_dir))
-			throw Error(i18n("The directory %1 does not exist").arg(tor_dir));
+			throw Error(i18n("The directory %1 does not exist",tor_dir));
 		
 		// make sure it ends with a /
 		QString tdir = tor_dir;

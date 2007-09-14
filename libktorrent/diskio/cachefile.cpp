@@ -88,7 +88,7 @@ namespace bt
 		
 		if (fd < 0)
 		{
-			throw Error(i18n("Cannot open %1 : %2").arg(path).arg(strerror(errno)));
+			throw Error(i18n("Cannot open %1 : %2",path,strerror(errno)));
 		}
 		
 		file_size = FileSize(fd);
@@ -114,7 +114,7 @@ namespace bt
 		
 		if (read_only && mode != READ)
 		{
-			throw Error(i18n("Cannot open %1 for writing : readonly filesystem").arg(path));
+			throw Error(i18n("Cannot open %1 for writing : readonly filesystem",path));
 		}
 		
 		if (off + size > max_size)
@@ -213,7 +213,7 @@ namespace bt
 		}
 		
 		if (read_only)
-			throw Error(i18n("Cannot open %1 for writing : readonly filesystem").arg(path));
+			throw Error(i18n("Cannot open %1 for writing : readonly filesystem",path));
 		
 		// jump to the end of the file
 		SeekFile(fd,0,SEEK_END);
@@ -251,7 +251,7 @@ namespace bt
 			fsync(fd);
 			if (file_size != FileSize(fd))
 			{
-				throw Error(i18n("Cannot expand file %1").arg(path));
+				throw Error(i18n("Cannot expand file %1",path));
 			}
 		}
 	}
@@ -348,7 +348,7 @@ namespace bt
 		
 		if (off >= file_size || off >= max_size)
 		{
-			throw Error(i18n("Error : Reading past the end of the file %1").arg(path));
+			throw Error(i18n("Error : Reading past the end of the file %1",path));
 		}
 		
 		// jump to right position
@@ -358,7 +358,7 @@ namespace bt
 			if (close_again)
 				closeTemporary();
 			
-			throw Error(i18n("Error reading from %1").arg(path));
+			throw Error(i18n("Error reading from %1",path));
 		}
 		
 		if (close_again)
@@ -379,7 +379,7 @@ namespace bt
 		}
 		
 		if (read_only)
-			throw Error(i18n("Cannot open %1 for writing : readonly filesystem").arg(path));
+			throw Error(i18n("Cannot open %1 for writing : readonly filesystem",path));
 		
 		if (off + size > max_size)
 		{
@@ -400,11 +400,11 @@ namespace bt
 			closeTemporary();
 		
 		if (ret == -1)
-			throw Error(i18n("Error writing to %1 : %2").arg(path).arg(strerror(errno)));
+			throw Error(i18n("Error writing to %1 : %2",path,strerror(errno)));
 		else if ((Uint32)ret != size)
 		{
 			Out() << QString("Incomplete write of %1 bytes, should be %2").arg(ret).arg(size) << endl;
-			throw Error(i18n("Error writing to %1").arg(path));
+			throw Error(i18n("Error writing to %1",path));
 		}
 		
 		if (off + size > file_size)
@@ -439,7 +439,7 @@ namespace bt
 			if (close_again)
 				closeTemporary();
 			
-			throw Error(i18n("Cannot open %1 for writing : readonly filesystem").arg(path));
+			throw Error(i18n("Cannot open %1 for writing : readonly filesystem",path));
 		}
 
 		try
@@ -466,7 +466,7 @@ namespace bt
 				if (close_again)
 					closeTemporary();
 				
-				throw Error(i18n("Cannot preallocate diskspace : %1").arg(strerror(errno)));
+				throw Error(i18n("Cannot preallocate diskspace : %1",strerror(errno)));
 			}
 		}
 

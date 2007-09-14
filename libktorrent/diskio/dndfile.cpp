@@ -105,7 +105,7 @@ namespace bt
 		
 		File fptr;
 		if (!fptr.open(path,"wb"))
-			throw Error(i18n("Cannot create file %1 : %2").arg(path).arg(fptr.errorString()));
+			throw Error(i18n("Cannot create file %1 : %2",path,fptr.errorString()));
 		
 		fptr.write(&hdr,sizeof(DNDFileHeader));
 		fptr.close();
@@ -172,7 +172,7 @@ namespace bt
 			create();
 			if (!fptr.open(path,"r+b"))
 			{
-				throw Error(i18n("Failed to write first chunk to DND file : %1").arg(fptr.errorString()));
+				throw Error(i18n("Failed to write first chunk to DND file : %1",fptr.errorString()));
 			}
 		}
 		
@@ -230,7 +230,7 @@ namespace bt
 			create();
 			if (!fptr.open(path,"r+b"))
 			{
-				throw Error(i18n("Failed to write last chunk to DND file : %1").arg(fptr.errorString()));
+				throw Error(i18n("Failed to write last chunk to DND file : %1",fptr.errorString()));
 			}
 		}
 		

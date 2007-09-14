@@ -124,7 +124,7 @@ namespace bt
 							return kt::NOT_ENOUGH_DISKSPACE;
 
 						case 1: //ask user
-							if (KMessageBox::questionYesNo(0, i18n("You don't have enough disk space to download this torrent. Are you sure you want to continue?"), i18n("Insufficient disk space for %1").arg(s.torrent_name)) == KMessageBox::No)
+							if (KMessageBox::questionYesNo(0, i18n("You don't have enough disk space to download this torrent. Are you sure you want to continue?"), i18n("Insufficient disk space for %1",s.torrent_name)) == KMessageBox::No)
 							{
 								tc->setPriority(0);
 								return kt::USER_CANCELED;
@@ -146,7 +146,7 @@ namespace bt
 
 			if (s.completed && max_ratio > 0 && ratio >= max_ratio)
 			{
-				if (KMessageBox::questionYesNo(0, i18n("Torrent \"%1\" has reached its maximum share ratio. Ignore the limit and start seeding anyway?").arg(s.torrent_name), i18n("Maximum share ratio limit reached.")) == KMessageBox::Yes)
+				if (KMessageBox::questionYesNo(0, i18n("Torrent \"%1\" has reached its maximum share ratio. Ignore the limit and start seeding anyway?",s.torrent_name), i18n("Maximum share ratio limit reached.")) == KMessageBox::Yes)
 				{
 					tc->setMaxShareRatio(0.00f);
 					startSafely(tc);
@@ -217,8 +217,8 @@ namespace bt
 				catch (bt::Error & err)
 				{
 					QString msg =
-							i18n("Error stopping torrent %1 : %2")
-							.arg(s.torrent_name).arg(err.toString());
+							i18n("Error stopping torrent %1 : %2",
+							s.torrent_name,err.toString());
 					KMessageBox::error(0,msg,i18n("Error"));
 				}
 			}
@@ -676,8 +676,8 @@ namespace bt
 		{
 			const TorrentStats & s = tc->getStats();
 			QString msg =
-					i18n("Error starting torrent %1 : %2")
-					.arg(s.torrent_name).arg(err.toString());
+					i18n("Error starting torrent %1 : %2",
+					s.torrent_name,err.toString());
 			KMessageBox::error(0,msg,i18n("Error"));
 		}
 	}
@@ -692,8 +692,8 @@ namespace bt
 		{
 			const TorrentStats & s = tc->getStats();
 			QString msg =
-					i18n("Error stopping torrent %1 : %2")
-					.arg(s.torrent_name).arg(err.toString());
+					i18n("Error stopping torrent %1 : %2",
+					s.torrent_name,err.toString());
 			KMessageBox::error(0,msg,i18n("Error"));
 		}
 	}

@@ -111,7 +111,7 @@ namespace bt
 			{
 				QString err = fptr->errorString();
 				cleanup();
-				throw Error(i18n("Cannot open log file %1 : %2").arg(file).arg(err));
+				throw Error(i18n("Cannot open log file %1 : %2",file,err));
 			}
 
 			out = new QTextStream(fptr);

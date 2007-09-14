@@ -81,7 +81,7 @@ namespace bt
 			if (errno == ENOSPC)
 				Out() << "Disk full !" << endl;
 			
-			throw Error(i18n("Cannot write to %1 : %2").arg(file).arg(strerror(errno)));
+			throw Error(i18n("Cannot write to %1 : %2",file,strerror(errno)));
 		}
 		return ret;
 	}
@@ -95,7 +95,7 @@ namespace bt
 		if (ferror(fptr))
 		{
 			clearerr(fptr);
-			throw Error(i18n("Cannot read from %1").arg(file));
+			throw Error(i18n("Cannot read from %1",file));
 		}
 		return ret;
 	}
