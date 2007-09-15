@@ -48,6 +48,7 @@
 #include "pluginmanager.h"
 #include "core.h"
 #include "fileselectdlg.h"
+#include "missingfilesdlg.h"
 
 using namespace bt;
 
@@ -815,65 +816,83 @@ namespace kt
 		
 		if (tc->getStats().multi_file_torrent)
 		{
-			QString msg = i18n("Several data files of the torrent \"%1\" are missing, do you want to recreate them, or do you want to not download them?").arg(tc->getStats().torrent_name);
+			
+			QString msg = i18n(
+					"Several data files of the torrent \"%1\" are missing. \n"
+					"Do you want to recreate them, or do you want to not download them?",
+					tc->getStats().torrent_name);
+			
+			MissingFilesDlg dlg(msg,missing,true,0);
 						
-			int ret = KMessageBox::warningYesNoCancelList(0,msg,missing,QString::null,
-					KGuiItem(i18n("Recreate")),KGuiItem(i18n("Do Not Download")));
-			if (ret == KMessageBox::Yes)
+			switch (dlg.execute())
 			{
-				try
-				{
-					// recreate them
-					tc->recreateMissingFiles();
-				}
-				catch (bt::Error & e)
-				{
-					KMessageBox::error(0,i18n("Cannot recreate missing files: %1").arg(e.toString()));
+				case MissingFilesDlg::CANCEL:
 					tc->handleError(i18n("Data files are missing"));
 					ret = false;
-				}
-			}
-			else if (ret == KMessageBox::No)
-			{
-				try
-				{
+					break;
+				case MissingFilesDlg::DO_NOT_DOWNLOAD:
+					try
+					{
 					// mark them as do not download
-					tc->dndMissingFiles();
-				}
-				catch (bt::Error & e)
-				{
-					gui->errorMsg(i18n("Cannot deselect missing files: %1").arg(e.toString()));
-					tc->handleError(i18n("Data files are missing"));
+						tc->dndMissingFiles();
+					}
+					catch (bt::Error & e)
+					{
+						gui->errorMsg(i18n("Cannot deselect missing files: %1").arg(e.toString()));
+						tc->handleError(i18n("Data files are missing"));
+						ret = false;
+					}
+					break;
+				case MissingFilesDlg::RECREATE:
+					try
+					{
+					// recreate them
+						tc->recreateMissingFiles();
+					}
+					catch (bt::Error & e)
+					{
+						KMessageBox::error(0,i18n("Cannot recreate missing files: %1",e.toString()));
+						tc->handleError(i18n("Data files are missing"));
+						ret = false;
+					}
+					break;
+				case MissingFilesDlg::QUIT:
 					ret = false;
-				}
-			}
-			else
-			{
-				tc->handleError(i18n("Data files are missing"));
-				ret = false;
+					QTimer::singleShot(500,kapp,SLOT(quit()));
+					break;
 			}
 		}
 		else
 		{
-			QString msg = i18n("The file where the data is saved of the torrent \"%1\" is missing, do you want to recreate it?").arg(tc->getStats().torrent_name);
-			int ret = KMessageBox::warningYesNo(0,msg, i18n("Recreate"), KStandardGuiItem::cancel());
-			if (ret == KMessageBox::Yes)
+			QString msg = i18n("The file where the data is saved of the torrent \"%1\" is missing. \n"
+					"Do you want to recreate it?",tc->getStats().torrent_name);
+			MissingFilesDlg dlg(msg,missing,false,0);
+						
+			switch (dlg.execute())
 			{
-				try
-				{
-					tc->recreateMissingFiles();
-				}
-				catch (bt::Error & e)
-				{
-					gui->errorMsg(i18n("Cannot recreate data file: %1").arg(e.toString()));
+				case MissingFilesDlg::CANCEL:
 					tc->handleError(i18n("Data file is missing"));
 					ret = false;
-				}
-			}
-			else
-			{
-				tc->handleError(i18n("Data file is missing"));
-				ret = false;
+					break;
+				case MissingFilesDlg::RECREATE:
+					try
+					{
+						tc->recreateMissingFiles();
+					}
+					catch (bt::Error & e)
+					{
+						gui->errorMsg(i18n("Cannot recreate data file: %1",e.toString()));
+						tc->handleError(i18n("Data file is missing"));
+						ret = false;
+					}
+					break;
+				case MissingFilesDlg::QUIT:
+					ret = false;
+					QTimer::singleShot(500,kapp,SLOT(quit()));
+					break;
+				case MissingFilesDlg::DO_NOT_DOWNLOAD:
+					ret = false;
+					break;
 			}
 		}
 		

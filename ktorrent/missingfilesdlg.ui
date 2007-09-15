@@ -1,0 +1,89 @@
+<ui version="4.0" >
+ <class>MissingFilesDlg</class>
+ <widget class="QDialog" name="MissingFilesDlg" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>515</width>
+    <height>356</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Files are missing</string>
+  </property>
+  <layout class="QVBoxLayout" >
+   <item>
+    <widget class="QLabel" name="m_text" >
+     <property name="text" >
+      <string>The following files are missing:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QListWidget" name="m_file_list" />
+   </item>
+   <item>
+    <widget class="Line" name="line" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="KPushButton" name="m_quit" >
+       <property name="text" >
+        <string>Quit</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" >
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="KPushButton" name="m_recreate" >
+       <property name="text" >
+        <string>Recreate</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KPushButton" name="m_dnd" >
+       <property name="text" >
+        <string>Do Not Download</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KPushButton" name="m_cancel" >
+       <property name="text" >
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header location="global" >kpushbutton.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

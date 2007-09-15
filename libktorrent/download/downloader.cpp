@@ -435,6 +435,7 @@ namespace bt
 			c->setStatus(Chunk::NOT_DOWNLOADED);
 		}
 		current_chunks.clear();
+		piece_downloaders.clear();
 	}
 	
 	Uint32 Downloader::downloadRate() const
@@ -442,7 +443,8 @@ namespace bt
 		// sum of the download rate of each peer
 		Uint32 rate = 0;
 		foreach (kt::PieceDownloader* pd,piece_downloaders)
-			rate += pd->getDownloadRate();
+			if (pd)
+				rate += pd->getDownloadRate();
 			
 		return rate;
 	}

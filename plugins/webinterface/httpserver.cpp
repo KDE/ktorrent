@@ -62,7 +62,6 @@ namespace kt
 
 		php_cmd = new PhpCommandHandler(core);
 		php_gen = new PhpCodeGenerator(core);
-		connect(this, SIGNAL(readyAccept()), this, SLOT(slotAccept()));
 
 		
 		QStringList dirList = KGlobal::dirs()->findDirs("data", "ktorrent/www");
