@@ -30,18 +30,14 @@ check_function_exists(statvfs64 HAVE_STATVFS64)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-ktorrent.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-ktorrent.h)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}") 
-set(CMAKE_SKIP_RPATH)
+add_definitions(${KDE4_ENABLE_EXCEPTIONS} ${KDE4_DEFINITIONS} )
+
 include_directories( ${KDE4_INCLUDES} 
    ${KTORRENT_BINARY_DIR}
    ${KTORRENT_BINARY_DIR}/libktorrent
    ${KTORRENT_SOURCE_DIR}/libktorrent
    ${KTORRENT_SOURCE_DIR}
    )
-
-add_definitions( ${KDE4_DEFINITIONS})
-# link_directories( ${CMAKE_BINARY_DIR}/lib)
-
 
 add_subdirectory(libktorrent)
 add_subdirectory(libktupnp)
