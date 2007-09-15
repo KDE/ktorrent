@@ -232,9 +232,7 @@ namespace bt
 		if (!fptr.open(url,"wb"))
 		{
 			if (!nothrow)
-				throw Error(i18n("Cannot create %1: %2",
-						,url,
-						,fptr.errorString()));
+				throw Error(i18n("Cannot create %1: %2",url,fptr.errorString()));
 			else
 				Out() << "Error : Cannot create " << url << " : "
 						<< fptr.errorString() << endl;
@@ -253,8 +251,7 @@ namespace bt
 		ret = stat(QFile::encodeName(url),&sb);
 #endif
 		if (ret < 0)
-			throw Error(i18n("Cannot calculate the filesize of %1: %2",
-					,url,strerror(errno)));
+			throw Error(i18n("Cannot calculate the filesize of %1: %2",url,strerror(errno)));
 		
 		return (Uint64)sb.st_size;
 	}
