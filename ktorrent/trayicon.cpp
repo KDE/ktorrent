@@ -269,7 +269,7 @@ namespace kt
 		
 		const TorrentStats & s = tc->getStats();
 		
-		QString msg = i18n("Your disk is running out of space.<br /><b>%1</b> is being downloaded to '%2'.").arg(s.torrent_name).arg(tc->getDataDir());
+		QString msg = i18n("Your disk is running out of space.<br /><b>%1</b> is being downloaded to '%2'.",s.torrent_name,tc->getDataDir());
 		
 		if(stopped)
 			msg.prepend(i18n("Torrent has been stopped.<br />"));

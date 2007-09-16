@@ -100,15 +100,15 @@ namespace kt
 		{
 			if (port != port + i - 1)
 				gui->infoMsg(i18n("Specified port (%1) is unavailable or in"
-						" use by another application. KTorrent is now using port %2.")
-						 .arg(port).arg(port + i - 1));
+						" use by another application. KTorrent is now using port %2.",
+						 port,QString::number(port + i - 1)));
 
 			Out(SYS_GEN|LOG_NOTICE) << "Bound to port " << (port + i - 1) << endl;
 		}
 		else
 		{
 			gui->errorMsg(i18n("KTorrent is unable to accept connections because the ports %1 to %2 are "
-				   "already in use by another program.").arg(port).arg(port + i - 1));
+				   "already in use by another program.",port,QString::number(port + i - 1)));
 			Out(SYS_GEN|LOG_IMPORTANT) << "Cannot find free port" << endl;
 		}
 
@@ -725,7 +725,7 @@ namespace kt
 				bt::Delete(tdir,true);
 
 			// Show error message
-			gui->errorMsg(i18n("Cannot create torrent: %1").arg(e.toString()));
+			gui->errorMsg(i18n("Cannot create torrent: %1",e.toString()));
 		}
 	}
 
@@ -838,7 +838,7 @@ namespace kt
 					}
 					catch (bt::Error & e)
 					{
-						gui->errorMsg(i18n("Cannot deselect missing files: %1").arg(e.toString()));
+						gui->errorMsg(i18n("Cannot deselect missing files: %1",e.toString()));
 						tc->handleError(i18n("Data files are missing"));
 						ret = false;
 					}
