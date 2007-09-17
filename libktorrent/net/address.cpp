@@ -17,30 +17,33 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <netinet/in.h>
-#include <arpa/inet.h>
+
 #include "address.h"
+
+using namespace KNetwork;
 
 namespace net
 {
 
-	Address::Address() : m_ip(0),m_port(0) {}
-	
-	Address::Address(const QString & host,Uint16 port) : m_ip(0),m_port(port)
-	{
-		struct in_addr a;
-		if (inet_aton(host.toAscii(),&a))
-			m_ip = ntohl(a.s_addr);
-	}
-	
-	Address::Address(const Address & addr) : m_ip(addr.ip()),m_port(addr.port())
+	Address::Address()
 	{
 	}
+	
+	Address::Address(const QString & host,Uint16 port) : KInetSocketAddress(KIpAddress(host),port)
+	{
+	}
+	
+	Address::Address(const Address & addr) : KInetSocketAddress(addr)
+	{
+	}
+	
+	Address::Address(const KNetwork::KInetSocketAddress & addr) : KInetSocketAddress(addr)
+	{}
 	
 	Address:: ~Address()
 	{}
 
-	
+/*	
 	Address & Address::operator = (const Address & a)
 	{
 		m_ip = a.ip();
@@ -62,5 +65,5 @@ namespace net
 				.arg((m_ip & 0x0000FF00) >> 8)
 				.arg(m_ip & 0x000000FF);
 	}
-
+*/
 }

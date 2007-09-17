@@ -22,6 +22,7 @@
 
 #include <qstring.h>
 #include <util/constants.h>
+#include <k3socketaddress.h>
 #include <ktorrent_export.h>
 
 namespace net
@@ -30,29 +31,19 @@ namespace net
 	using bt::Uint16;
 
 	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
+	 * @author Joris Guisson <joris.guisson@gmail.com>
+	 * 
+	 * Network address, contains an IP address and a port number. 
+	 * This supports both IPv4 and IPv6 addresses.
 	*/
-	class KTORRENT_EXPORT Address
+	class KTORRENT_EXPORT Address : public KNetwork::KInetSocketAddress
 	{
-		Uint32 m_ip;
-		Uint16 m_port;
 	public:
-		Address();
+		Address();	
 		Address(const QString & host,Uint16 port);
+		Address(const KNetwork::KInetSocketAddress & addr);
 		Address(const Address & addr);
 		virtual ~Address();
-
-	
-		Address & operator = (const Address & a);
-		bool operator == (const Address & a);
-		
-		Uint32 ip() const {return m_ip;}
-		void setIP(Uint32 ip) {m_ip = ip;}
-		
-		Uint16 port() const {return m_port;}
-		void setPort(Uint16 p) {m_port = p;}
-
-		QString toString() const;
 
 	};
 

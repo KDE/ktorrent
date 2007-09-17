@@ -141,8 +141,11 @@ namespace bt
 		while (i != ps.end())
 		{
 			const net::Address & addr = i->second;
-			WriteUint32(buf,size,addr.ip());
-			WriteUint16(buf,size + 4,addr.port());
+			if (addr.ipVersion() == 4)
+			{
+				WriteUint32(buf,size,addr.ipAddress().IPv4Addr());
+				WriteUint16(buf,size + 4,addr.port());
+			}
 			size += 6;
 			i++;
 		}

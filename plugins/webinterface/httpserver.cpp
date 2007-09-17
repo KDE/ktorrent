@@ -58,7 +58,7 @@ namespace kt
 
 	HttpServer::HttpServer(CoreInterface *core, bt::Uint16 port) : sock(0),notifier(0),core(core),cache(10),port(port)
 	{
-		sock = new net::Socket(true);
+		sock = new net::Socket(true,4);
 
 		php_cmd = new PhpCommandHandler(core);
 		php_gen = new PhpCodeGenerator(core);

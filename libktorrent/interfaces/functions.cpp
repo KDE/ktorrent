@@ -143,16 +143,12 @@ namespace kt
 		if (Settings::networkInterface() == 0)
 			return QString::null;
 
-		QList<Solid::Device> netlist = Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface);
-		if (Settings::networkInterface() - 1 > netlist.count())
-			return QString::null;
-		
-
-		Solid::NetworkInterface* netdev = netlist[Settings::networkInterface() - 1].as<Solid::NetworkInterface>();
-		if (!netdev)
+		QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
+		int iface = Settings::networkInterface();
+		if (iface > iface_list.count())
 			return QString::null;
 
-		return netdev->ifaceName();
+		return iface_list[iface - 1].name();
 	}
 	
 	QString NetworkInterfaceIPAddress(const QString & iface)

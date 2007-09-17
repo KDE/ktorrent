@@ -34,7 +34,7 @@ namespace kt
 
 	HttpClientHandler::HttpClientHandler(HttpServer* srv,int sock) : srv(srv),client(0),read_notifier(0),write_notifier(0),php_response_hdr(200)
 	{
-		client = new net::Socket(sock);
+		client = new net::Socket(sock,4);
 		client->setNonBlocking();
 		read_notifier = new QSocketNotifier(sock,QSocketNotifier::Read,this);
 		connect(read_notifier,SIGNAL(activated(int)),this,SLOT(readyToRead(int)));

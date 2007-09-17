@@ -31,13 +31,14 @@ namespace bt
 	: info_hash(info_hash),our_peer_id(peer_id),pman(pman)
 	{
 		finished = succes = false;
-		sock = new mse::StreamSocket();
+		net::Address addr(ip,port);
+		sock = new mse::StreamSocket(addr.ipVersion());
 		host = ip;
 		this->port = port;
 
 		Out(SYS_CON|LOG_NOTICE) << "Initiating connection to " << host << endl;
 
-		if (sock->connectTo(host,port))
+		if (sock->connectTo(addr))
 		{
 			connected();
 		}

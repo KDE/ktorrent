@@ -72,8 +72,14 @@ namespace bt
 		sock = 0;
 		delete sn; 
 		sn = 0;
-		sock = new net::Socket(true);
-		QString ip = kt::NetworkInterfaceIPAddress(kt::NetworkInterface());	
+		
+		QString iface = kt::NetworkInterface();
+		QString ip = kt::NetworkInterfaceIPAddress(iface);	
+		if (ip.contains(":")) // IPv6
+			sock = new net::Socket(true,6);
+		else
+			sock = new net::Socket(true,4);
+		
 		if (sock->bind(ip,port,true))
 		{
 			sock->setNonBlocking();

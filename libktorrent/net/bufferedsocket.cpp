@@ -27,7 +27,7 @@ namespace net
 {
 #define OUTPUT_BUFFER_SIZE 16393
 
-	BufferedSocket::BufferedSocket(int fd) : Socket(fd),rdr(0),wrt(0),up_gid(0),down_gid(0)
+	BufferedSocket::BufferedSocket(int fd,int ip_version) : Socket(fd,ip_version),rdr(0),wrt(0),up_gid(0),down_gid(0)
 	{
 		bytes_in_output_buffer = 0;
 		bytes_sent = 0;
@@ -37,7 +37,7 @@ namespace net
 		poll_index = -1;
 	}
 	
-	BufferedSocket::BufferedSocket(bool tcp) : Socket(tcp),rdr(0),wrt(0),up_gid(0),down_gid(0)
+	BufferedSocket::BufferedSocket(bool tcp,int ip_version) : Socket(tcp,ip_version),rdr(0),wrt(0),up_gid(0),down_gid(0)
 	{
 		bytes_in_output_buffer = 0;
 		bytes_sent = 0;

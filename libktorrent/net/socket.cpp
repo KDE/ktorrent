@@ -29,6 +29,7 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
+#include <netdb.h>
 
 #if defined(Q_OS_LINUX) && !defined(__FreeBSD_kernel__)
 #include <asm/ioctls.h>
@@ -53,8 +54,12 @@ using namespace bt;
 namespace net
 {
 
-	Socket::Socket(int fd) : m_fd(fd),m_state(IDLE)
+	Socket::Socket(int fd,int ip_version) : m_fd(fd),m_ip_version(ip_version),m_state(IDLE)
 	{
+		// check if the IP version is 4 or 6
+		if (m_ip_version != 4 && m_ip_version != 6)
+			m_ip_version = 4;
+		
 #if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020)
 		int val = 1; 
 		if (setsockopt(m_fd,SOL_SOCKET,SO_NOSIGPIPE,&val,sizeof(int)) < 0)
@@ -65,14 +70,17 @@ namespace net
 		cacheAddress();
 	}
 	
-	Socket::Socket(bool tcp) : m_fd(-1),m_state(IDLE)
+	Socket::Socket(bool tcp,int ip_version) : m_fd(-1),m_ip_version(ip_version),m_state(IDLE)
 	{
-		int fd = socket(PF_INET,tcp ? SOCK_STREAM : SOCK_DGRAM,0);
+		// check if the IP version is 4 or 6
+		if (m_ip_version != 4 && m_ip_version != 6)
+			m_ip_version = 4;
+		
+		int fd = socket(m_ip_version == 4 ? PF_INET : PF_INET6,tcp ? SOCK_STREAM : SOCK_DGRAM,0);
 		if (fd < 0)
-		{
 			Out(SYS_GEN|LOG_IMPORTANT) << QString("Cannot create socket : %1").arg(strerror(errno)) << endl;
-		}
 		m_fd = fd;
+		
 #if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020)
 		int val = 1;
 		if (setsockopt(m_fd,SOL_SOCKET,SO_NOSIGPIPE,&val,sizeof(int)) < 0)
@@ -105,13 +113,7 @@ namespace net
 		
 	bool Socket::connectTo(const Address & a)
 	{
-		struct sockaddr_in addr;
-		memset(&addr,0,sizeof(struct sockaddr_in));
-		addr.sin_family = AF_INET;
-		addr.sin_port = htons(a.port());
-		addr.sin_addr.s_addr = htonl(a.ip());
-
-		if (::connect(m_fd,(struct sockaddr*)&addr,sizeof(struct sockaddr)) < 0)
+		if (::connect(m_fd,a.address(),a.length()) < 0)
 		{
 			if (errno == EINPROGRESS)
 			{
@@ -121,8 +123,8 @@ namespace net
 			}
 			else
 			{
-				Out(SYS_CON|LOG_NOTICE) << QString("Cannot connect to host %1:%2 : %3")
-					.arg(a.toString()).arg(a.port()).arg(strerror(errno)) << endl;
+				Out(SYS_CON|LOG_NOTICE) << QString("Cannot connect to host %1 : %2")
+					.arg(a.toString()).arg(strerror(errno)) << endl;
 				return false;
 			}
 		}
@@ -130,17 +132,43 @@ namespace net
 		cacheAddress();
 		return true;
 	}
+	/*
+	static bool bind_addrinfo(int fd,const QString & ip,Uint16 port)
+	{
+		struct addrinfo hints;
+		struct addrinfo* addresses = NULL;
+
+		memset(&hints, 0, sizeof(hints));
+		
+		hints.ai_family = ip.contains(":") ? AF_INET6 : AF_INET;
+		hints.ai_socktype = SOCK_STREAM;
+		hints.ai_flags = AI_PASSIVE;
+		
+		if (getaddrinfo(ip.toAscii(),QString::number(port).toAscii(), &hints, &addresses) != 0) 
+		{
+			Out(SYS_CON|LOG_NOTICE) << "getaddrinfo failed : " << gai_strerror(errno) << endl;
+			return false;
+		}
+		
+		bool ret = false;
+		for (struct addrinfo* r = addresses; r; r = r->ai_next) 
+		{
+			char addrstr[101];
+			if (::bind(fd,r->ai_addr,r->ai_addrlen) == 0)
+			{
+				ret = true;
+				break;
+			}
+		}
+		
+		freeaddrinfo(addresses);
+		return ret;
+	}*/
 	
 	bool Socket::bind(const QString & ip,Uint16 port,bool also_listen)
 	{
-		struct sockaddr_in addr;
-		memset(&addr,0,sizeof(struct sockaddr_in));
-		addr.sin_family = AF_INET;
-		addr.sin_port = htons(port);
-		if (!ip.isNull())
-			inet_aton(ip.toAscii(),&addr.sin_addr);
-	
-		if (::bind(m_fd,(struct sockaddr*)&addr,sizeof(struct sockaddr)) < 0)
+		net::Address addr(ip,port);
+		if (::bind(m_fd,addr.address(),addr.length()) != 0)
 		{
 			Out(SYS_CON|LOG_IMPORTANT) << QString("Cannot bind to port %1:%2 : %3").arg(ip).arg(port).arg(strerror(errno)) << endl;
 			return false;
@@ -200,17 +228,11 @@ namespace net
 	
 	int Socket::sendTo(const bt::Uint8* buf,int len,const Address & a)
 	{
-		struct sockaddr_in addr;
-		memset(&addr,0,sizeof(struct sockaddr_in));
-		addr.sin_family = AF_INET;
-		addr.sin_port = htons(a.port());
-		addr.sin_addr.s_addr = htonl(a.ip());
-
 		int ns = 0;
 		while (ns < len)
 		{
 			int left = len - ns;
-			int ret = ::sendto(m_fd,(char*)buf + ns,left,0,(struct sockaddr*)&addr,sizeof(struct sockaddr));
+			int ret = ::sendto(m_fd,(char*)buf + ns,left,0,a.address(),a.length());
 			if (ret < 0)
 			{
 				Out(SYS_CON|LOG_DEBUG) << "Send error : " << QString(strerror(errno)) << endl;
@@ -224,54 +246,56 @@ namespace net
 	
 	int Socket::recvFrom(bt::Uint8* buf,int max_len,Address & a)
 	{
-		struct sockaddr_in addr;
-		memset(&addr,0,sizeof(struct sockaddr_in));
-		socklen_t sl = sizeof(struct sockaddr);
+		struct sockaddr_storage ss;
+		socklen_t slen = sizeof(ss);
+		int ret = ::recvfrom(m_fd,buf,max_len,0,(struct sockaddr*)&ss,&slen);
 		
-		int ret = ::recvfrom(m_fd,buf,max_len,0,(struct sockaddr*)&addr,&sl);
 		if (ret < 0)
 		{
 			Out(SYS_CON|LOG_DEBUG) << "Receive error : " << QString(strerror(errno)) << endl;
 			return 0;
 		}
-
-		a.setPort(ntohs(addr.sin_port));
-		a.setIP(ntohl(addr.sin_addr.s_addr));
+		a = KNetwork::KInetSocketAddress((const struct sockaddr*) &ss,slen);
 		return ret;
 	}
 	
 	int Socket::accept(Address & a)
 	{
-		struct sockaddr_in addr;
-		memset(&addr,0,sizeof(struct sockaddr_in));
-		socklen_t slen = sizeof(struct sockaddr_in);
-
-		int sfd = ::accept(m_fd,(struct sockaddr*)&addr,&slen);
+		struct sockaddr_storage ss;
+		socklen_t slen = sizeof(ss);
+		int sfd = ::accept(m_fd,(struct sockaddr*)&ss,&slen);
+			
 		if (sfd < 0)
 		{
 			Out(SYS_CON|LOG_DEBUG) << "Accept error : " << QString(strerror(errno)) << endl;
 			return -1;
 		}
+		a = KNetwork::KInetSocketAddress((const struct sockaddr*) &ss,slen);
 		
-		a.setPort(ntohs(addr.sin_port));
-		a.setIP(ntohl(addr.sin_addr.s_addr));
-
-		Out(SYS_CON|LOG_DEBUG) << "Accepted connection from " << QString(inet_ntoa(addr.sin_addr)) << endl;
+		Out(SYS_CON|LOG_DEBUG) << "Accepted connection from " << a.toString() << endl;
 		return sfd;
 	}
 	
 	bool Socket::setTOS(char type_of_service)
 	{
-#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020) || defined(Q_OS_NETBSD) || defined(Q_OS_BSD4)
-		int c = type_of_service;
-#else
-		char c = type_of_service;
-#endif
-		if (setsockopt(m_fd,IPPROTO_IP,IP_TOS,&c,sizeof(c)) < 0)
+		if (m_ip_version == 4)
 		{
-			Out(SYS_CON|LOG_NOTICE) << QString("Failed to set TOS to %1 : %2")
-					.arg((int)type_of_service).arg(strerror(errno)) << endl;
-			return false;
+#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020) || defined(Q_OS_NETBSD) || defined(Q_OS_BSD4)
+			int c = type_of_service;
+#else
+			char c = type_of_service;
+#endif
+			if (setsockopt(m_fd,IPPROTO_IP,IP_TOS,&c,sizeof(c)) < 0)
+			{
+				Out(SYS_CON|LOG_NOTICE) << QString("Failed to set TOS to %1 : %2")
+						.arg((int)type_of_service).arg(strerror(errno)) << endl;
+				return false;
+			}
+		}
+		else
+		{
+#warning "Find way to set IPv6 traffic class"
+			return true;
 		}
 		return true;
 	}
@@ -306,19 +330,11 @@ namespace net
 	
 	void Socket::cacheAddress()
 	{
-		struct sockaddr_in raddr;
-		socklen_t slen = sizeof(struct sockaddr_in);
-		if (getpeername(m_fd,(struct sockaddr*)&raddr,&slen) == 0)
-			addr = Address(inet_ntoa(raddr.sin_addr),ntohs(raddr.sin_port));
+		struct sockaddr_storage ss;           /* Where the peer adr goes. */
+		socklen_t sslen = sizeof(ss);
+		
+		if (getpeername(m_fd,(struct sockaddr*)&ss,&sslen) == 0)
+			addr = KNetwork::KInetSocketAddress((struct sockaddr*)&ss,sslen);
 	}
 
-	/*
-	void Socket::setReadBufferSize(int rbs)
-	{
-		if (setsockopt(m_fd, SOL_SOCKET, SO_RCVBUF, (char *)&rbs,sizeof(int)) < 0)
-		{
-			Out(SYS_CON|LOG_DEBUG) << "Failed to set read buffer size " << endl;
-		}
-	}
-	*/
 }

@@ -18,6 +18,9 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <QtAlgorithms>
+#include <QFile>
+#include <QTextStream>
+#include <k3resolver.h>
 #include <util/log.h>
 #include <util/file.h>
 #include <util/error.h>
@@ -38,6 +41,7 @@
 #include "authenticate.h"
 
 using namespace kt;
+using namespace KNetwork;
 
 namespace bt
 {
@@ -139,6 +143,36 @@ namespace bt
 	{
 		if (potential_peers.size() > 150)
 			return;
+		
+		KIpAddress addr;
+		if (addr.setAddress(pp.ip))
+		{
+			// avoid duplicates in the potential_peers map
+			std::pair<PPItr,PPItr> r = potential_peers.equal_range(pp.ip);
+			for (PPItr i = r.first;i != r.second;i++)
+			{
+				if (i->second.port == pp.port) // port and IP are the same so return
+					return;
+			}
+		
+			potential_peers.insert(std::make_pair(pp.ip,pp));
+		}
+		else
+		{
+			// must be a hostname, so resolve it
+			KResolver::resolveAsync(this,SLOT(onResolverResults(KResolverResults )),
+					pp.ip,QString::number(pp.port));
+		}
+	}
+	
+	void PeerManager::onResolverResults(KResolverResults res)
+	{
+		net::Address addr = res.front().address().asInet();
+		
+		PotentialPeer pp;
+		pp.ip = addr.ipAddress().toString();
+		pp.port = addr.port();
+		pp.local = false;
 		
 		// avoid duplicates in the potential_peers map
 		std::pair<PPItr,PPItr> r = potential_peers.equal_range(pp.ip);
@@ -384,59 +418,33 @@ namespace bt
 		peer_list.clear();
 	}
 	
-	// pick a random magic number
-	const Uint32 PEER_LIST_HDR_MAGIC = 0xEF12AB34;
-	
-	struct PeerListHeader
-	{
-		Uint32 magic;
-		Uint32 num_peers;
-		Uint32 ip_version; // 4 or 6, 6 is for future purposes only (when we support IPv6)
-	};
-	
-	struct PeerListEntry
-	{
-		Uint32 ip;
-		Uint16 port;
-	};
+	;
 	
 	void PeerManager::savePeerList(const QString & file)
 	{
-		bt::File fptr;
-		if (!fptr.open(file,"wb"))
+		// Lets save the entries line based
+		QFile fptr(file);
+		if (!fptr.open(QIODevice::WriteOnly))
 			return;
+		
 		
 		try
 		{
-			PeerListHeader hdr;
-			hdr.magic = PEER_LIST_HDR_MAGIC;
-			// we will save both the active and potential peers
-			hdr.num_peers = peer_list.count() + potential_peers.size();
-			hdr.ip_version = 4;
-			
-			fptr.write(&hdr,sizeof(PeerListHeader));
-			
 			Out(SYS_GEN|LOG_DEBUG) << "Saving list of peers to " << file << endl;
+			
+			QTextStream out(&fptr);
 			// first the active peers
-			for (QList<Peer*>::iterator itr = peer_list.begin(); itr != peer_list.end();itr++)
+			foreach(Peer* p,peer_list)
 			{
-				Peer* p = *itr;
-				PeerListEntry e;
-				net::Address addr = p->getAddress();
-				e.ip = addr.ip();
-				e.port = addr.port();
-				fptr.write(&e,sizeof(PeerListEntry));
+				const net::Address & addr = p->getAddress();
+				out << addr.ipAddress().toString() << " " << (unsigned short)addr.port() << ::endl;
 			}
 			
 			// now the potential_peers
 			PPItr i = potential_peers.begin();
 			while (i != potential_peers.end())
 			{
-				net::Address addr(i->first,i->second.port);
-				PeerListEntry e;
-				e.ip = addr.ip();
-				e.port = addr.port();
-				fptr.write(&e,sizeof(PeerListEntry));
+				out << i->first << " " <<  i->second.port << ::endl;
 				i++;
 			}
 		}
@@ -448,35 +456,28 @@ namespace bt
 	
 	void PeerManager::loadPeerList(const QString & file)
 	{
-		bt::File fptr;
-		if (!fptr.open(file,"rb"))
+		QFile fptr(file);
+		if (!fptr.open(QIODevice::ReadOnly))
 			return;
 		
 		try
 		{
-			PeerListHeader hdr;
-			fptr.read(&hdr,sizeof(PeerListHeader));
-			if (hdr.magic != PEER_LIST_HDR_MAGIC || hdr.ip_version != 4)
-				throw Error("Peer list file corrupted");
 			
-			Out(SYS_GEN|LOG_DEBUG) << "Loading list of peers from " << file << " (num_peers =  " << hdr.num_peers << ")" << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Loading list of peers from " << file  << endl;
 			
-			for (Uint32 i = 0;i < hdr.num_peers && !fptr.eof();i++)
+			while (!fptr.atEnd())
 			{
-				PeerListEntry e;
-				fptr.read(&e,sizeof(PeerListEntry));
-				PotentialPeer pp;
+				QStringList sl = QString(fptr.readLine()).split(" ");
+				if (sl.count() != 2)
+					continue;
 				
-				// convert IP address to string 
-				pp.ip = QString("%1.%2.%3.%4")
-						.arg((e.ip & 0xFF000000) >> 24)
-						.arg((e.ip & 0x00FF0000) >> 16)
-						.arg((e.ip & 0x0000FF00) >> 8)
-						.arg( e.ip & 0x000000FF);
-				pp.port = e.port;
-				addPotentialPeer(pp);
+				bool ok = false;
+				PotentialPeer pp;
+				pp.ip = sl[0];
+				pp.port = sl[1].toInt(&ok);
+				if (ok)
+					addPotentialPeer(pp);
 			}
-			
 		}
 		catch (bt::Error & err)
 		{

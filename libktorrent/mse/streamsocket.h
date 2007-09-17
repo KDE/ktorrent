@@ -54,8 +54,8 @@ namespace mse
 	{
 		Q_OBJECT
 	public:
-		StreamSocket();
-		StreamSocket(int fd);
+		StreamSocket(int ip_version);
+		StreamSocket(int fd,int ip_version);
 		virtual ~StreamSocket();
 		
 		/**
@@ -98,6 +98,9 @@ namespace mse
 		
 		/// Connect the socket to a remote host
 		bool connectTo(const QString & ip,Uint16 port);
+		
+		/// Connect the socket to a remote host
+		bool connectTo(const net::Address & addr);
 		
 		/// Get the IP address of the remote peer
 		QString getRemoteIPAddress() const;

@@ -6,4 +6,7 @@ Changes in 3.0dev :
 - Added possibility to open multiple torrents in one go (they will be opened
 silently)
 - Added option to do a data check when a torrent is finished
+- Added new missing files dialog with quit button
+- Added support for hostnames in PeerManager::addPotentialPeer
+- Added IPv6 support
 

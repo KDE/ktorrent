@@ -39,12 +39,20 @@ namespace kt
 	class PieceDownloader;
 }
 
+namespace KNetwork
+{
+	class KResolverResults;
+}
+
+
 namespace bt
 {
 	class Peer;
 	class Torrent;
 	class Authenticate;
 	class ChunkCounter;
+	
+	using KNetwork::KResolverResults;
 
 
 	
@@ -230,6 +238,7 @@ namespace bt
 		void onBitSetRecieved(const BitSet & bs);
 		void onRerunChoker();
 		void pex(const QByteArray & arr);
+		void onResolverResults(KResolverResults res);
 		
 		
 	signals:

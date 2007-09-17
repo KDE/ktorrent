@@ -85,8 +85,8 @@ namespace net
  		Uint32 down_gid; // group id which this torrent belongs to, group 0 means the default group
 
 	public:
-		BufferedSocket(int fd);
-		BufferedSocket(bool tcp);
+		BufferedSocket(int fd,int ip_version);
+		BufferedSocket(bool tcp,int ip_version);
 		virtual ~BufferedSocket();
 
 		

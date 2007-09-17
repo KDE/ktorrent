@@ -19,6 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <klocale.h>
+#include <QNetworkInterface>
 #include <solid/device.h>
 #include <solid/networkinterface.h>
 #include "advancedpref.h"
@@ -44,14 +45,26 @@ namespace kt
 		kcfg_networkInterface->addItem(KIcon("network-wired"),i18n("All interfaces"));
 
 		// get all the network devices and add them to the combo box
+		QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
+		
 		QList<Solid::Device> netlist = Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface);
-		foreach (Solid::Device device,netlist)
+		
+		
+		foreach(QNetworkInterface iface,iface_list)
 		{
-			Solid::NetworkInterface* netdev = device.as<Solid::NetworkInterface>();
-			if (netdev)
-				kcfg_networkInterface->addItem(
-						KIcon(netdev->isWireless() ? "network-wireless" : "network-wired"),
-						netdev->ifaceName());
+			KIcon icon("network-wired");
+			foreach (Solid::Device device,netlist)
+			{
+				Solid::NetworkInterface* netdev = device.as<Solid::NetworkInterface>();
+				if (netdev->ifaceName() == iface.name() && netdev->isWireless())
+				{
+					icon = KIcon("network-wireless");
+					break;
+				}
+					
+			}
+			
+			kcfg_networkInterface->addItem(icon,iface.name());
 		}
 
 		kcfg_maxCorruptedBeforeRecheck->setEnabled(Settings::autoRecheck());

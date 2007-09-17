@@ -39,9 +39,9 @@ namespace mse
 	
 	Uint8 StreamSocket::tos = IPTOS_THROUGHPUT;
 
-	StreamSocket::StreamSocket() : sock(0),enc(0),monitored(false)
+	StreamSocket::StreamSocket(int ip_version) : sock(0),enc(0),monitored(false)
 	{
-		sock = new BufferedSocket(true);
+		sock = new BufferedSocket(true,ip_version);
 		sock->setNonBlocking();
 		reinserted_data = 0;
 		reinserted_data_size = 0;
@@ -49,9 +49,9 @@ namespace mse
 		
 	}
 
-	StreamSocket::StreamSocket(int fd) : sock(0),enc(0),monitored(false)
+	StreamSocket::StreamSocket(int fd,int ip_version) : sock(0),enc(0),monitored(false)
 	{
-		sock = new BufferedSocket(fd);
+		sock = new BufferedSocket(fd,ip_version);
 		sock->setNonBlocking();
 		reinserted_data = 0;
 		reinserted_data_size = 0;
@@ -176,9 +176,14 @@ namespace mse
 		if (ip.isNull() || ip.length() == 0)
 			return false;
 		
+		return connectTo(net::Address(ip,port));
+	}
+	
+	bool StreamSocket::connectTo(const net::Address & addr)
+	{
 		// we don't wanna block the current thread so set non blocking
 		sock->setNonBlocking();
-		if (sock->connectTo(Address(ip,port)))
+		if (sock->connectTo(addr))
 		{
 			sock->setTOS(tos);
 			return true;
@@ -207,7 +212,7 @@ namespace mse
 
 	QString StreamSocket::getRemoteIPAddress() const
 	{
-		return sock->getPeerName().toString();
+		return sock->getPeerName().ipAddress().toString();
 	}
 	
 	bt::Uint16 StreamSocket::getRemotePort() const

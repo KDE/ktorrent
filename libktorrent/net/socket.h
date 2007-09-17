@@ -42,8 +42,9 @@ namespace net
 			CLOSED
 		};
 		
-		Socket(int fd);
-		Socket(bool tcp);
+	
+		explicit Socket(int fd,int ip_version);
+		explicit Socket(bool tcp,int ip_version);
 		virtual ~Socket();
 		
 		void setNonBlocking();
@@ -62,12 +63,9 @@ namespace net
 		const Address & getPeerName() const {return addr;}
 		void close();
 		State state() const {return m_state;}
+		bool isIPv4() const {return m_ip_version == 4;}
+		bool isIPv6() const {return m_ip_version == 6;}
 		
-		/**
-		 * Set the size of the TCP read buffer.
-		 * @param rbs 
-		 */
-//		void setReadBufferSize(Uint32 rbs);
 		
 		Uint32 bytesAvailable() const;
 	private:
@@ -75,6 +73,7 @@ namespace net
 		
 	private:
 		int m_fd;
+		int m_ip_version;
 		State m_state;
 		Address addr;
 	};
