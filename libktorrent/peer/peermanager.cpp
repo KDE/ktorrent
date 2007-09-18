@@ -418,7 +418,6 @@ namespace bt
 		peer_list.clear();
 	}
 	
-	;
 	
 	void PeerManager::savePeerList(const QString & file)
 	{
