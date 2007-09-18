@@ -28,6 +28,7 @@
 #include <util/constants.h>
 #include <interfaces/torrentinterface.h>
 #include <peer/peerid.h>
+#include <ktorrent_export.h>
 #include "torrentfile.h"
 
 
@@ -62,7 +63,7 @@ namespace bt
 	 * Loads a torrent file and calculates some miscelanious other data,
 	 * like the info_hash and the peer_id.
 	 */
-	class Torrent
+	class KTORRENT_EXPORT Torrent
 	{
 	public:
 		Torrent();

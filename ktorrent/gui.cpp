@@ -60,6 +60,7 @@
 #include "pastedialog.h"
 #include "ipfilterwidget.h"
 #include "torrentcreatordlg.h"
+#include "importdialog.h"
 
 namespace kt
 {
@@ -335,6 +336,12 @@ namespace kt
 		createGUI("ktorrentui.rc");
 		applyMainWindowSettings( KGlobal::config()->group("MainWindow") );
 	}
+	
+	void GUI::import()
+	{
+		ImportDialog dlg(core,this);
+		dlg.exec();
+	}
 
 	void GUI::setupActions()
 	{
@@ -386,6 +393,10 @@ namespace kt
 		data_check_action = new KAction(i18n("Check Data"),this);
 		connect(data_check_action,SIGNAL(triggered()),this,SLOT(checkData()));
 		ac->addAction("check_data",data_check_action);
+		
+		import_action = new KAction(i18n("Import Torrent"),this);
+		connect(import_action,SIGNAL(triggered()),this,SLOT(import()));
+		ac->addAction("import",import_action);
 
 				
 		QMenu* m = tray_icon->contextMenu();

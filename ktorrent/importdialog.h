@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2005-2007 by Joris Guisson                              *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -15,36 +15,61 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTMULTIDATACHECKER_H
-#define BTMULTIDATACHECKER_H
 
+#ifndef IMPORTDIALOG_H
+#define IMPORTDIALOG_H
 
-#include "datachecker.h"
+#include <QDialog>
+#include <util/constants.h>
+#include <datachecker/datacheckerlistener.h>
+#include "ui_importdialog.h"
+
+class KUrl;
+class KJob;
 
 namespace bt
 {
+	class BitSet;
+	class Torrent;
+}
 
-	/**
-	@author Joris Guisson
-	*/
-	class KTORRENT_EXPORT MultiDataChecker : public DataChecker
+
+namespace kt
+{
+	class CoreInterface;
+	
+	class ImportDialog : public QDialog, public Ui_ImportDialog, public bt::DataCheckerListener
 	{
+		Q_OBJECT
+	
 	public:
-		MultiDataChecker();
-		virtual ~MultiDataChecker();
-
-		virtual void check(const QString& path, const Torrent& tor,const QString & dnddir);
+		ImportDialog(CoreInterface* core,QWidget* parent = 0);
+		virtual ~ImportDialog();
+		
+	public slots:
+		void onImport();
+		void onTorrentGetReult(KJob* j);
+	
 	private:
-		bool loadChunk(Uint32 ci,Uint32 cs,const Torrent & to);
+		void writeIndex(const QString & file,const bt::BitSet & chunks);
+		void linkTorFile(const QString & cache_dir,const QString & dnd_dir,
+						 const KUrl & data_url,const QString & fpath,bool & dnd);
+		void saveStats(const QString & stats_file,const KUrl & data_url,bt::Uint64 imported,bool custom_output_name);
+		bt::Uint64 calcImportedBytes(const bt::BitSet & chunks,const bt::Torrent & tor);
+		void saveFileInfo(const QString & file_info_file,QList<bt::Uint32> & dnd);
+		
+		virtual void progress(bt::Uint32 num,bt::Uint32 total);
+		virtual void status(bt::Uint32 num_failed,bt::Uint32 num_downloaded);
+		virtual void finished();
+		
+		void import(bt::Torrent & tor);
 		
 	private:
-		QString cache;
-		QString dnd_dir;
-		Uint8* buf;
+		CoreInterface* core;
 	};
-
 }
 
 #endif
+

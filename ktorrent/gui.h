@@ -106,11 +106,13 @@ namespace kt
 		void configureKeys();
 		void configureToolBars();
 		void newToolBarConfig();
+		void import();
 		void update();
 		/// apply gui specific settings
 		void applySettings();
 		void closeTab();
 		void newView();
+		
 		
 	private:
 		void setupActions();
@@ -138,6 +140,7 @@ namespace kt
 		KAction* queue_action;
 		KAction* ipfilter_action;
 		KAction* data_check_action;
+		KAction* import_action;
 
 		PrefDialog* pref_dlg;
 		QMap<QWidget*,CloseTabListener*> close_tab_map;

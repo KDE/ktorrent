@@ -3,6 +3,7 @@
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
 	  <Action name="paste_url"/>
+	  <Action name="import" />
 	  <Action name="ipfilter_action"/>
 	  <Merge/>
   </Menu>

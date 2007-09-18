@@ -23,10 +23,24 @@ set(ktorrent_SRC
 	speedlimitsdlg.cpp
 	torrentcreatordlg.cpp
 	missingfilesdlg.cpp
+	importdialog.cpp
 )
 	
 
-kde4_add_ui_files(ktorrent_SRC fileselectdlg.ui globalpref.ui scandlg.ui generalpref.ui advancedpref.ui pastedlgbase.ui ipfilterwidget.ui speedlimitsdlg.ui torrentcreatordlg.ui missingfilesdlg.ui)
+kde4_add_ui_files(ktorrent_SRC 
+	fileselectdlg.ui 
+	globalpref.ui 
+	scandlg.ui 
+	generalpref.ui 
+	advancedpref.ui 
+	pastedlgbase.ui 
+	ipfilterwidget.ui 
+	speedlimitsdlg.ui 
+	torrentcreatordlg.ui 
+	missingfilesdlg.ui
+	importdialog.ui
+)
+
 kde4_add_executable(ktorrent ${ktorrent_SRC})
 
 target_link_libraries(ktorrent ktideal ktcore ${KDE4_KDEUI_LIBS})
