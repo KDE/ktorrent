@@ -234,16 +234,13 @@ namespace bt
 		// write data until to_write is 0
 		while (to_write > 0)
 		{
-			if (to_write < 1024)
-			{
-				::write(fd,buf,to_write);
-				to_write = 0;
-			}
-			else
-			{
-				::write(fd,buf,1024);
-				to_write -= 1024;
-			}
+			int nb = to_write > 1024 ? 1024 : to_write;
+			int ret = ::write(fd,buf,nb);
+			if (ret < 0)
+				throw Error(i18n("Cannot expand file %1 : %2").arg(path).arg(strerror(errno)));
+			else if (ret != nb)
+				throw Error(i18n("Cannot expand file %1 : incomplete write").arg(path));
+			to_write -= nb;
 		}
 		file_size += num;
 //		

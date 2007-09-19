@@ -114,6 +114,7 @@ int main(int argc, char **argv)
 {
 	// ignore SIGPIPE's
 	signal(SIGPIPE,SIG_IGN);
+	signal(SIGXFSZ,SIG_IGN);
 	qInstallMsgHandler( StupidWarningMessagesFromQt );
 	KAboutData about("ktorrent", I18N_NOOP("KTorrent"), kt::VERSION_STRING, description,
 					 KAboutData::License_GPL, "(C) 2005 -2006 Joris Guisson and Ivan Vasic", 0,
