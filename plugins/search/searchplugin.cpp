@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <QFile>
 #include <kgenericfactory.h>
 #include <kglobal.h>
 #include <klocale.h>
@@ -74,10 +75,12 @@ namespace kt
 		connect(getCore(),SIGNAL(settingsChanged()),this,SLOT(preferencesUpdated()));
 		connect(pref,SIGNAL(clearSearchHistory()),toolbar,SLOT(clearHistory()));
 		connect(pref,SIGNAL(engineListUpdated()),this,SLOT(preferencesUpdated()));
+		loadCurrentSearches();
 	}
 
 	void SearchPlugin::unload()
 	{
+		saveCurrentSearches();
 		toolbar->saveSettings();
 		toolbar->deleteLater();
 
@@ -152,6 +155,73 @@ namespace kt
 	bool SearchPlugin::versionCheck(const QString & version) const
 	{
 		return version == KT_VERSION_MACRO;
+	}
+	
+	void SearchPlugin::saveCurrentSearches()
+	{
+		QFile fptr(kt::DataDir() + "current_searches");
+		if (!fptr.open(QIODevice::WriteOnly))
+			return;
+		
+		QTextStream out(&fptr);
+		foreach (SearchWidget* w,searches)
+		{
+			out << "TEXT: " << w->getSearchText() << ::endl;
+			out << "URL: " << w->getCurrentUrl().prettyUrl() << ::endl;
+			out << "SBTEXT: " << w->getSearchBarText() << ::endl;
+			out << "ENGINE:" << w->getSearchBarEngine() << ::endl;
+		}
+	}
+	
+	void SearchPlugin::loadCurrentSearches()
+	{
+		QFile fptr(kt::DataDir() + "current_searches");
+		if (!fptr.open(QIODevice::ReadOnly))
+			return;
+		
+		while (!fptr.atEnd())
+		{
+			QString s = QString(fptr.readLine());
+			QString text,sbtext;
+			int engine = 0;
+			KUrl url;
+			if (s.startsWith("TEXT:"))
+				text = s.mid(5).trimmed();
+			else
+				continue;
+			
+			s = QString(fptr.readLine());
+			if (!s.startsWith("URL:"))
+				continue;
+				
+			url = KUrl(s.mid(4).trimmed());
+			
+			s = QString(fptr.readLine());
+			if (!s.startsWith("SBTEXT:"))
+				continue;
+			
+			sbtext = s.mid(7).trimmed();
+			
+			s = QString(fptr.readLine());
+			if (!s.startsWith("ENGINE:"))
+				continue;
+			
+			bool ok = false;
+			engine = s.mid(7).trimmed().toInt(&ok);
+			
+			if (url.isValid() && ok)
+			{
+				SearchWidget* search = new SearchWidget(this);
+				getGUI()->addTabPage(search,"edit-find",text,this);
+		
+				KAction* copy_act = KStandardAction::copy(search,SLOT(copy()),this);
+				search->rightClickMenu()->addAction(copy_act);
+				searches.append(search);
+		
+				search->updateSearchEngines(engines);
+				search->restore(url,text,sbtext,engine);
+			}
+		}
 	}
 }
 #include "searchplugin.moc"

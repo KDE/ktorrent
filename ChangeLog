@@ -9,4 +9,5 @@ silently)
 - Added new missing files dialog with quit button
 - Added support for hostnames in PeerManager::addPotentialPeer
 - Added IPv6 support
+- Remember current searches in searchplugin and restore them on restart
 

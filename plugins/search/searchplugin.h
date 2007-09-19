@@ -44,9 +44,7 @@ namespace kt
 		virtual void load();
 		virtual void unload();
 		virtual bool versionCheck(const QString& version) const;
-		
-		
-		
+				
 		const SearchEngineList & getSearchEngineList() const {return engines;}
 	private slots:
 		void search(const QString & text,int engine,bool external);
@@ -54,6 +52,8 @@ namespace kt
 
 	private:
 		virtual void tabCloseRequest(kt::GUIInterface* gui,QWidget* tab);
+		void saveCurrentSearches();
+		void loadCurrentSearches();
 		
 	private:
 		SearchPrefPage* pref;

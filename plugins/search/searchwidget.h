@@ -62,12 +62,19 @@ namespace kt
 	
 		KMenu* rightClickMenu();
 		
+		
 		void updateSearchEngines(const SearchEngineList & sl);
+		
+		QString getSearchText() const {return search_text;}
+		KUrl getCurrentUrl() const;
+		QString getSearchBarText() const;
+		int getSearchBarEngine() const;
 	
 	public slots:
 		void search(const QString & text,int engine = 0);
 		void copy();
 		void onShutDown();
+		void restore(const KUrl & url,const QString & text,const QString & sb_text,int engine);
 	
 	private slots:
 		void searchPressed();
@@ -90,6 +97,7 @@ namespace kt
 		QAction* back_action;
 		SearchPlugin* sp;
 		QProgressBar* prog;
+		QString search_text;
 	};
 
 }

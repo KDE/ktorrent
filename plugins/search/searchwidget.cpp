@@ -154,10 +154,38 @@ namespace kt
 		html_part->copy();
 	}
 	
+	KUrl SearchWidget::getCurrentUrl() const
+	{
+		if (!html_part)
+			return KUrl();
+		return html_part->toplevelURL();
+	}
+	
+	QString SearchWidget::getSearchBarText() const
+	{
+		return sbar->m_search_text->text();
+	}
+	
+	int SearchWidget::getSearchBarEngine() const
+	{
+		return sbar->m_search_engine->currentIndex();
+	}
+	
+	void SearchWidget::restore(const KUrl & url,const QString & text,const QString & sb_text,int engine)
+	{
+		if (html_part)
+			html_part->openUrl(url);
+		search_text = text;
+		sbar->m_search_text->setText(sb_text);
+		sbar->m_search_engine->setCurrentIndex(engine);
+	}
+	
 	void SearchWidget::search(const QString & text,int engine)
 	{
 		if (!html_part)
 			return;
+		
+		search_text = text;
 		
 		if (sbar->m_search_text->text() != text)
 			sbar->m_search_text->setText(text);
