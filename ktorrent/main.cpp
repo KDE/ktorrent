@@ -19,6 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <stdio.h>
+#include <signal.h>
 #include <klocale.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
@@ -27,6 +28,10 @@
 
 int main(int argc, char **argv)
 {
+	// ignore SIGPIPE and SIGXFSZ
+	signal(SIGPIPE,SIG_IGN);
+	signal(SIGXFSZ,SIG_IGN);
+	
 	KAboutData about(
 		"ktorrent", 0, ki18n("KTorrent"),
 		"3.0dev", ki18n("Bittorrent client for KDE"),

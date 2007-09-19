@@ -230,24 +230,18 @@ namespace bt
 		// write data until to_write is 0
 		while (to_write > 0)
 		{
-			if (to_write < 1024)
-			{
-				::write(fd,buf,to_write);
-				to_write = 0;
-			}
-			else
-			{
-				::write(fd,buf,1024);
-				to_write -= 1024;
-			}
+			int nb = to_write > 1024 ? 1024 : to_write;
+			int ret = ::write(fd,buf,nb);
+			if (ret < 0)
+				throw Error(i18n("Cannot expand file %1 : %2",path,strerror(errno)));
+			else if (ret != nb)
+				throw Error(i18n("Cannot expand file %1 : incomplete write",path));
+			to_write -= nb;
 		}
 		file_size += num;
-//		
-	//	Out() << QString("growing %1 = %2").arg(path).arg(kt::BytesToString(file_size)) << endl;
 
 		if (file_size != FileSize(fd))
 		{
-//			Out() << QString("Homer Simpson %1 %2").arg(file_size).arg(sb.st_size) << endl;
 			fsync(fd);
 			if (file_size != FileSize(fd))
 			{
