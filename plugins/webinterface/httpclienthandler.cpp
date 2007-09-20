@@ -182,15 +182,14 @@ namespace kt
 		return true;
 	}
 	
-#define HTTP_404_ERROR "<html><head><title>404 Not Found</title></head><body>The requested file $FILE was not found !</body</html>"
-#define HTTP_500_ERROR "<html><head><title>HTTP/1.1 500 Internal Server Error</title></head><body>HTTP/1.1 Internal Server Error<br>%1</body</html>"
+#define HTTP_404_ERROR "<html><head><title>404 Not Found</title></head><body>The requested file was not found !</body></html>"
+#define HTTP_500_ERROR "<html><head><title>HTTP/1.1 500 Internal Server Error</title></head><body>HTTP/1.1 Internal Server Error<br>%1</body></html>"
 
 	
 	void HttpClientHandler::send404(HttpResponseHeader & hdr,const QString & path)
 	{
 	//	Out(SYS_WEB|LOG_DEBUG) << "Sending 404 " << path << endl;
 		QString data = HTTP_404_ERROR;
-		data = data.replace("$FILE",path);
 		hdr.setValue("Content-Length",QString::number(data.length()));
 
 		output_buffer.append(hdr.toString().toUtf8());
