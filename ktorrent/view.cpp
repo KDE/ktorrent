@@ -60,6 +60,7 @@ namespace kt
 			<< i18n("Time Left")
 			<< i18n("Seeders")
 			<< i18n("Leechers")
+			// xgettext: no-c-format
 			<< i18n("% Complete") 
 			<< i18n("Share Ratio")
 			<< i18n("Time Downloaded")
