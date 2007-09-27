@@ -26,7 +26,9 @@
 #include <interfaces/chunkdownloadinterface.h>
 #include "ui_chunkdownloadview.h"
 
-class KSharedConfigPtr;
+class KSharedConfig;
+template<class T> class KSharedPtr;
+typedef KSharedPtr<KSharedConfig> KSharedConfigPtr;
 
 namespace kt
 {

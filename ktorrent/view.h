@@ -25,7 +25,9 @@
 #include <QTreeWidget>
 #include <util/constants.h>
 
-class KSharedConfigPtr;
+class KSharedConfig;
+template<class T> class KSharedPtr;
+typedef KSharedPtr<KSharedConfig> KSharedConfigPtr;
 
 namespace kt
 {

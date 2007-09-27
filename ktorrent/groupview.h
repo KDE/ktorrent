@@ -24,7 +24,9 @@
 
 class KMenu;
 class KActionCollection;
-class KSharedConfigPtr;
+class KSharedConfig;
+template<class T> class KSharedPtr;
+typedef KSharedPtr<KSharedConfig> KSharedConfigPtr;
 
 namespace kt
 {

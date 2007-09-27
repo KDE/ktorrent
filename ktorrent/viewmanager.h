@@ -25,7 +25,9 @@
 #include <interfaces/guiinterface.h>
 
 class QWidget;
-class KSharedConfigPtr;
+class KSharedConfig;
+template<class T> class KSharedPtr;
+typedef KSharedPtr<KSharedConfig> KSharedConfigPtr;
 
 namespace kt
 {

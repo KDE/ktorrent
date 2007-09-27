@@ -25,7 +25,9 @@
 #include <util/ptrmap.h>
 #include <interfaces/peerinterface.h>
 
-class KSharedConfigPtr;
+class KSharedConfig;
+template<class T> class KSharedPtr;
+typedef KSharedPtr<KSharedConfig> KSharedConfigPtr;
 
 namespace kt
 {
