@@ -57,6 +57,7 @@ namespace kt
 	protected:
 		virtual void updateWidgets();
 		virtual void updateWidgetsDefault();
+		virtual void updateSettings();
 
 	private:
 		QMap<PrefPageInterface*,KPageWidgetItem*> pages;

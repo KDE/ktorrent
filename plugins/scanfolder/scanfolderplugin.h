@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2006 by Ivan Vasić                                      *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,57 +15,46 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.           *
  ***************************************************************************/
-#ifndef PREFPAGEINTERFACE_H
-#define PREFPAGEINTERFACE_H
+#ifndef KTSCANFOLDERPLUGIN_H
+#define KTSCANFOLDERPLUGIN_H
 
-#include <QWidget>
-#include <ktorrent_export.h>
+#include <util/ptrmap.h>
+#include <interfaces/plugin.h>
 
-class KConfigSkeleton;
+class QString;
+
 
 namespace kt
-{
+{	
+	class ScanFolder;
+	class ScanFolderPrefPage;
+	
 	/**
-	 * @author Ivan Vasic
-	 * @brief Interface to add configuration dialog page.
-	 * 
-	 * This interface allows plugins and others to add their own pages in Configuration dialog.
+	 * @author Ivan Vasic <ivasic@gmail.com>
+	 * @brief KTorrent ScanFolder plugin
+	 * Automatically scans selected folder for torrent files and loads them.
 	 */
-	class KTORRENT_EXPORT PrefPageInterface : public QWidget
+	class ScanFolderPlugin : public Plugin
 	{
 		Q_OBJECT
 	public:
-		PrefPageInterface(KConfigSkeleton* cfg,const QString & name,const QString & icon,QWidget* parent);
-		virtual ~PrefPageInterface();
+		ScanFolderPlugin(QObject* parent, const QStringList& args);
+		virtual ~ScanFolderPlugin();
 
-		/**
-		 * Initialize the settings.
-		 * Called by the settings dialog when it is created.
-		 */
-		virtual void loadSettings();
+		virtual void load();
+		virtual void unload();
+		virtual bool versionCheck(const QString& version) const;
 		
-		/**
-		 * Load default settings.
-		 * Called when the defaults button is pressed in the settings dialog.
-		 */
-		virtual void loadDefaults();
+	public slots:
+		void updateScanFolders();
 		
-		/**
-		 * Called when user presses OK or apply.
-		 */
-		virtual void updateSettings();
-
-		KConfigSkeleton* config() {return cfg;}
-		const QString & pageName() {return name;}
-		const QString & pageIcon() {return icon;}
-
 	private:
-		KConfigSkeleton* cfg;
-		QString name;
-		QString icon;
+		bt::PtrMap<QString,ScanFolder> m_sf_map;
+		ScanFolderPrefPage* pref;
 	};
-}
-#endif
 
+}
+
+#endif

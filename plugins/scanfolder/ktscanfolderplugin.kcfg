@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+		http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+
+	<group name="general">
+		<entry name="folders" type="StringList">
+			<label>Enable scanning of folder1?</label>
+		</entry>
+
+		<entry name="openSilently" type="Bool">
+			<label>Whether to open torrent silently or not.</label>
+			<default>FALSE</default>
+		</entry>
+
+		<entry name="actionDelete" type="Bool">
+			<label>Delete action checked.</label>
+			<default>FALSE</default>
+		</entry>
+
+		<entry name="actionMove" type="Bool">
+			<label>Move action checked.</label>
+			<default>FALSE</default>
+		</entry>
+		
+		<entry name="recursive" type="Bool">
+			<label>Scan directories recursively.</label>
+			<default>FALSE</default>
+		</entry>
+	</group>
+</kcfg>

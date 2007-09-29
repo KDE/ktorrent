@@ -4,4 +4,5 @@ add_subdirectory(upnp)
 add_subdirectory(search)
 add_subdirectory(zeroconf)
 add_subdirectory(webinterface)
+add_subdirectory(scanfolder)
 

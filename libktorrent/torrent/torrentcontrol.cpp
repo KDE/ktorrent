@@ -144,7 +144,10 @@ namespace bt
 		if (dcheck_thread)
 		{
 			if (!dcheck_thread->isRunning())
+			{
+				dcheck_thread->wait();
 				afterDataCheck();
+			}
 			else
 				return;
 		}
@@ -159,7 +162,10 @@ namespace bt
 		if (prealloc_thread)
 		{
 			if (prealloc_thread->isDone())
+			{
+				prealloc_thread->wait();
 				preallocThreadDone();
+			}
 			else
 				return; // preallocation still going on, so just return
 		}

@@ -36,6 +36,9 @@ namespace kt
 	void PrefPageInterface::loadDefaults()
 	{}
 
+	void PrefPageInterface::updateSettings()
+	{
+	}
 }
 
 #include "prefpageinterface.moc"

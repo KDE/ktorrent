@@ -134,16 +134,20 @@ namespace kt
 
 	void PrefDialog::updateWidgets()
 	{
-		KConfigDialog::updateWidgets();
 		foreach (PrefPageInterface* p,pages.keys())
 			p->loadSettings();
 	}
 
 	void PrefDialog::updateWidgetsDefault()
 	{
-		KConfigDialog::updateWidgetsDefault();
 		foreach (PrefPageInterface* p,pages.keys())
 			p->loadDefaults();
+	}
+	
+	void PrefDialog::updateSettings()
+	{
+		foreach (PrefPageInterface* p,pages.keys())
+			p->updateSettings();
 	}
 
 }
