@@ -24,10 +24,9 @@
 #include <QTreeWidget>
 #include <util/ptrmap.h>
 #include <interfaces/peerinterface.h>
+#include <ksharedconfig.h>
 
-class KSharedConfig;
-template<class T> class KSharedPtr;
-typedef KSharedPtr<KSharedConfig> KSharedConfigPtr;
+
 
 namespace kt
 {

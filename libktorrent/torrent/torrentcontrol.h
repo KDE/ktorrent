@@ -335,7 +335,8 @@ namespace bt
 		void setupDirs(const QString & tmpdir,const QString & ddir);
 		void setupStats();
 		void setupData(const QString & ddir);
-		virtual void afterDataCheck();
+		void afterDataCheck();
+		void preallocThreadDone();
 		virtual bool isCheckingData(bool & finished) const;
 		
 	private:
@@ -359,7 +360,7 @@ namespace bt
 		QString error_msg;
 		
 		bool prealloc;
-		PreallocationThread* prealoc_thread;
+		PreallocationThread* prealloc_thread;
 		DataCheckerThread* dcheck_thread;
 		TimeStamp last_diskspace_check;
 		bool moving_files;

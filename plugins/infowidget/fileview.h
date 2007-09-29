@@ -22,11 +22,10 @@
 
 #include <QTreeWidget>
 #include <util/constants.h>
+#include <ksharedconfig.h>
 
 class KMenu;
-class KSharedConfig;
-template<class T> class KSharedPtr;
-typedef KSharedPtr<KSharedConfig> KSharedConfigPtr;
+
 
 namespace kt
 {

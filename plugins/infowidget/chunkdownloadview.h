@@ -22,13 +22,11 @@
 
 
 #include <QTreeWidget>
+#include <ksharedconfig.h>
 #include <util/ptrmap.h>
 #include <interfaces/chunkdownloadinterface.h>
 #include "ui_chunkdownloadview.h"
 
-class KSharedConfig;
-template<class T> class KSharedPtr;
-typedef KSharedPtr<KSharedConfig> KSharedConfigPtr;
 
 namespace kt
 {

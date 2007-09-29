@@ -24,10 +24,9 @@
 #include <QList>
 #include <QStackedWidget>
 #include <kmultitabbar.h>
+#include <ksharedconfig.h>
 
-class KSharedConfig;
-template<class T> class KSharedPtr;
-typedef KSharedPtr<KSharedConfig> KSharedConfigPtr;
+
 class QSplitter;
 
 namespace ideal

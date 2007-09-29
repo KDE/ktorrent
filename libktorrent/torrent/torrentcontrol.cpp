@@ -103,7 +103,7 @@ namespace bt
 		istats.custom_output_name = false;
 		istats.diskspace_warning_emitted = false;
 		updateStats();
-		prealoc_thread = 0;
+		prealloc_thread = 0;
 		dcheck_thread = 0;
 		istats.dht_on = false;
 		stats.num_corrupted_chunks = 0;
@@ -138,8 +138,16 @@ namespace bt
 	void TorrentControl::update()
 	{
 		UpdateCurrentTime();
-		if (stats.status == kt::CHECKING_DATA || moving_files)
+		if (moving_files)
 			return;
+
+		if (dcheck_thread)
+		{
+			if (!dcheck_thread->isRunning())
+				afterDataCheck();
+			else
+				return;
+		}
 		
 		if (istats.io_error)
 		{
@@ -148,31 +156,10 @@ namespace bt
 			return;
 		}
 		
-		if (prealoc_thread)
+		if (prealloc_thread)
 		{
-			if (prealoc_thread->isDone())
-			{
-				// thread done
-				if (prealoc_thread->errorHappened())
-				{
-					// upon error just call onIOError and return
-					onIOError(prealoc_thread->errorMessage());
-					delete prealoc_thread;
-					prealoc_thread = 0;
-					prealloc = true; // still need to do preallocation
-					return;
-				}
-				else
-				{
-					// continue the startup of the torrent
-					delete prealoc_thread;
-					prealoc_thread = 0;
-					prealloc = false;
-					stats.status = kt::NOT_STARTED;
-					saveStats();
-					continueStart();
-				}
-			}
+			if (prealloc_thread->isDone())
+				preallocThreadDone();
 			else
 				return; // preallocation still going on, so just return
 		}
@@ -362,10 +349,10 @@ namespace bt
 			if (Settings::diskPrealloc())
 			{
 				Out(SYS_GEN|LOG_NOTICE) << "Pre-allocating diskspace" << endl;
-				prealoc_thread = new PreallocationThread(cman);
+				prealloc_thread = new PreallocationThread(cman);
 				stats.running = true;
 				stats.status = kt::ALLOCATING_DISKSPACE;
-				prealoc_thread->start();
+				prealloc_thread->start();
 				return;
 			}
 			else
@@ -379,7 +366,7 @@ namespace bt
 	
 	void TorrentControl::continueStart()
 	{
-		// continues start after the prealoc_thread has finished preallocation	
+		// continues start after the prealloc_thread has finished preallocation	
 		pman->start();
 		pman->loadPeerList(datadir + "peer_list");
 		try
@@ -417,22 +404,22 @@ namespace bt
 		istats.time_started_ul = istats.time_started_dl = now;
 		
 		// stop preallocation thread if necesarry
-		if (prealoc_thread)
+		if (prealloc_thread)
 		{
-			prealoc_thread->stop();
-			prealoc_thread->wait();
+			prealloc_thread->stop();
+			prealloc_thread->wait();
 			
-			if (prealoc_thread->errorHappened() || prealoc_thread->isNotFinished())
+			if (prealloc_thread->errorHappened() || prealloc_thread->isNotFinished())
 			{
-				delete prealoc_thread;
-				prealoc_thread = 0;
+				delete prealloc_thread;
+				prealloc_thread = 0;
 				prealloc = true;
 				saveStats(); // save stats, so that we will start preallocating the next time
 			}
 			else
 			{
-				delete prealoc_thread;
-				prealoc_thread = 0;
+				delete prealloc_thread;
+				prealloc_thread = 0;
 				prealloc = false;
 			}
 		}
@@ -1732,6 +1719,31 @@ namespace bt
 	{
 		return pman;
 	}
+	
+	void TorrentControl::preallocThreadDone()
+	{
+		// thread done
+		if (prealloc_thread->errorHappened())
+		{
+			// upon error just call onIOError and return
+			onIOError(prealloc_thread->errorMessage());
+			delete prealloc_thread;
+			prealloc_thread = 0;
+			prealloc = true; // still need to do preallocation
+			return;
+		}
+		else
+		{
+			// continue the startup of the torrent
+			delete prealloc_thread;
+			prealloc_thread = 0;
+			prealloc = false;
+			stats.status = kt::NOT_STARTED;
+			saveStats();
+			continueStart();
+		}
+	}
+
 }
 
 #include "torrentcontrol.moc"

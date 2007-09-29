@@ -21,12 +21,11 @@
 #define KTGROUPVIEW_H
 
 #include <QTreeWidget>
+#include <ksharedconfig.h>
 
 class KMenu;
 class KActionCollection;
-class KSharedConfig;
-template<class T> class KSharedPtr;
-typedef KSharedPtr<KSharedConfig> KSharedConfigPtr;
+
 
 namespace kt
 {

@@ -671,12 +671,8 @@ namespace kt
 		{
 			bool finished = false;
 			kt::TorrentInterface* tc = *i;
-			if (tc->isCheckingData(finished))
-			{
-				if (finished)
-					tc->afterDataCheck();
-			}
-			else if (tc->getStats().running)
+			bool dummy = false;
+			if (tc->getStats().running || tc->isCheckingData(dummy))
 			{
 				tc->update();
 			}

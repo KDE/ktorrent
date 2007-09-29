@@ -24,10 +24,8 @@
 #include <QMap>
 #include <QTreeWidget>
 #include <util/constants.h>
+#include <ksharedconfig.h>
 
-class KSharedConfig;
-template<class T> class KSharedPtr;
-typedef KSharedPtr<KSharedConfig> KSharedConfigPtr;
 
 namespace kt
 {

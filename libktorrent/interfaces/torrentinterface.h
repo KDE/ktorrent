@@ -353,11 +353,6 @@ namespace kt
 		virtual void startDataCheck(bt::DataCheckerListener* lst) = 0;
 		
 		/**
-		 * Data check has been finished, this should be called.
-		 */
-		virtual void afterDataCheck() = 0;
-		
-		/**
 		 * Are we doing a data check on this torrent.
 		 * @param finished This will be set to true if the data check is finished
 		 */
