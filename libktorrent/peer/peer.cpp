@@ -369,15 +369,22 @@ namespace bt
 				if (dict && (val = dict->getValue("ut_pex")))
 				{
 					utorrent_pex_id = val->data().toInt();
-					if (ut_pex && utorrent_pex_id == 0)
+					if (ut_pex)
 					{
-						delete ut_pex;
-						ut_pex = 0;
+						if (utorrent_pex_id > 0)
+							ut_pex->changeID(utorrent_pex_id);
+						else
+						{
+							// id 0 means disabled
+							delete ut_pex;
+							ut_pex = 0;
+						}
 					}
-					else if (!ut_pex)
+					else if (!ut_pex && utorrent_pex_id != 0 && pex_allowed) 
+					{
+						// Don't create  it when the id is 0
 						ut_pex = new UTPex(this,utorrent_pex_id);
-					else
-						ut_pex->changeID(utorrent_pex_id);
+					}
 				}
 			}
 		}
