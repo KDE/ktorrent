@@ -82,16 +82,16 @@ namespace kt
 	void ScanFolder::onNewItems(const KFileItemList& items)
 	{
 		bool rec = ScanFolderPluginSettings::recursive();
-		foreach (KFileItem* file, items)
+		foreach (KFileItem file, items)
 		{
-			QString name = file->name();
-			QString filename = file->url().path();
+			QString name = file.name();
+			QString filename = file.url().path();
 			
-			if (file->isDir() && name != i18n("loaded"))
+			if (file.isDir() && name != i18n("loaded"))
 			{
 				// watch subdirectories, but not the loaded directory
-				m_dir->openUrl(file->url(),true); 
-				m_dir->updateDirectory(file->url());
+				m_dir->openUrl(file.url(),true); 
+				m_dir->updateDirectory(file.url());
 				continue;
 			}
 
