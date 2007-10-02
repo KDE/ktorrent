@@ -33,7 +33,7 @@ namespace ideal
 {
 
 	SideBar::SideBar(Box* parent,QSplitter* split,Position pos) 
-		: KMultiTabBar(pos == Bottom ? KMultiTabBar::Horizontal : KMultiTabBar::Vertical,parent),
+		: KMultiTabBar(pos == Bottom ? KMultiTabBar::Bottom : KMultiTabBar::Left,parent),
 		split(split),widget_stack(0),next_id(1),pos(pos),shrunken(false)
 	{
 		setStyle(KMultiTabBar::KDEV3ICON);
