@@ -149,7 +149,7 @@ namespace kt
 		{
 			Out(SYS_PNP|LOG_IMPORTANT) << "Error parsing router description !" << endl;
 			QString dest = KGlobal::dirs()->saveLocation("data","ktorrent") + "upnp_failure";
-			KIO::file_copy(target,dest,-1,true,false,false);
+			KIO::file_copy(target,dest,-1, KIO::Overwrite | KIO::HideProgressInfo);
 		}
 		else
 		{
@@ -163,7 +163,7 @@ namespace kt
 	void UPnPRouter::downloadXMLFile()
 	{
 		// downlaod XML description into a temporary file in /tmp
-		KIO::Job* job = KIO::file_copy(location,tmp_file,-1,true,false,false);
+		KIO::Job* job = KIO::file_copy(location,tmp_file,-1, KIO::Overwrite | KIO::HideProgressInfo);
 		connect(job,SIGNAL(result(KJob *)),this,SLOT(downloadFinished( KJob* )));
 	}
 	

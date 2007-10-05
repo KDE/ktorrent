@@ -120,7 +120,7 @@ namespace bt
 		KIO::MetaData md;
 		setupMetaData(md);
 		
-		KIO::StoredTransferJob* j = KIO::storedGet(scrape_url,false,false);
+		KIO::StoredTransferJob* j = KIO::storedGet(scrape_url, KIO::NoReload, KIO::HideProgressInfo);
 		// set the meta data
 		j->setMetaData(md);
 		KIO::Scheduler::scheduleJob(j);
@@ -457,7 +457,7 @@ namespace bt
 		Out(SYS_TRK|LOG_NOTICE) << "Doing tracker request to url : " << u.prettyUrl() << endl;
 		KIO::MetaData md;
 		setupMetaData(md);
-		KIO::StoredTransferJob* j = KIO::storedGet(u,false,false);
+		KIO::StoredTransferJob* j = KIO::storedGet(u, KIO::NoReload, KIO::HideProgressInfo);
 		// set the meta data
 		j->setMetaData(md);
 		KIO::Scheduler::scheduleJob(j);

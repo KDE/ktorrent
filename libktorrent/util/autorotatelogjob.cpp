@@ -49,7 +49,7 @@ namespace bt
 			QString curr = QString("%1-%2.gz").arg(file).arg(cnt);
 			if (bt::Exists(prev)) // if file exists start the move job
 			{
-				KIO::Job* sj = KIO::file_move(KUrl(prev),KUrl(curr),-1,true,false,false);
+				KIO::Job* sj = KIO::file_move(KUrl(prev),KUrl(curr),-1, KIO::Overwrite | KIO::HideProgressInfo);
 				connect(sj,SIGNAL(result(KIO::Job*)),this,SLOT(moveJobDone(KIO::Job* )));	
 				return;
 			}
@@ -63,7 +63,7 @@ namespace bt
 		{
 				// move current log to 1 and zip it
 			bt::Move(file,file + "-1",true);
-			KIO::Job* sj = KIO::file_move(KUrl(file),KUrl(file + "-1"),-1,true,false,false);
+			KIO::Job* sj = KIO::file_move(KUrl(file),KUrl(file + "-1"),-1, KIO::Overwrite | KIO::HideProgressInfo);
 			connect(sj,SIGNAL(result(KIO::Job*)),this,SLOT(moveJobDone(KIO::Job* )));
 		}
 		else

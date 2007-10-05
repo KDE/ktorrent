@@ -73,7 +73,7 @@ namespace kt
 			active_job = 0;
 		}
 		
-		KIO::TransferJob* j = KIO::get(u,false,false);
+		KIO::TransferJob* j = KIO::get(u, KIO::NoReload, KIO::HideProgressInfo);
 		connect(j,SIGNAL(data(KIO::Job*,const QByteArray &)),
 				this,SLOT(dataRecieved(KIO::Job*, const QByteArray& )));
 		connect(j,SIGNAL(result(KJob*)),this,SLOT(jobDone(KJob* )));

@@ -205,7 +205,7 @@ namespace kt
 				destination += bt::DirSeparator();
 			
 			destination += tc->getStats().torrent_name + ".torrent";
-			KIO::file_copy(torFile,destination,-1,false,false,false);
+			KIO::file_copy(torFile,destination,-1, KIO::HideProgressInfo);
 		}
 		return true;
 	}
@@ -314,7 +314,7 @@ namespace kt
 		}
 		else
 		{
-			KIO::Job* j = KIO::storedGet(url,false,true);
+			KIO::Job* j = KIO::storedGet(url);
 			connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadFinished( KIO::Job* )));
 		}
 	}
@@ -381,7 +381,7 @@ namespace kt
 		else
 		{
 			// download to a random file in tmp
-			KIO::Job* j = KIO::storedGet(url,false,true);
+			KIO::Job* j = KIO::storedGet(url);
 			connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadFinishedSilently( KIO::Job* )));
 		}
 	}
@@ -412,7 +412,7 @@ namespace kt
 		else
 		{
 			// download to a random file in tmp
-			KIO::Job* j = KIO::storedGet(url,false,true);
+			KIO::Job* j = KIO::storedGet(url);
 			custom_save_locations.insert(j,savedir); // keep track of save location
 			connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadFinishedSilently( KIO::Job* )));
 		}
