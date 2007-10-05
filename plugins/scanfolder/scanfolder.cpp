@@ -51,7 +51,7 @@ namespace kt
 		bt::Out(SYS_SNF|LOG_NOTICE) << "ScanFolder : scanning " << dir << endl;
 		m_dir = new KDirLister();
 
-		if(!m_dir->openUrl(dir,true)) 
+		if(!m_dir->openUrl(dir,KDirLister::Keep)) 
 		{
 			m_valid = false;
 			bt::Out(SYS_SNF|LOG_NOTICE) << "ScanFolder : m_dir->openUrl failed " << endl;
@@ -90,7 +90,7 @@ namespace kt
 			if (file.isDir() && name != i18n("loaded"))
 			{
 				// watch subdirectories, but not the loaded directory
-				m_dir->openUrl(file.url(),true); 
+				m_dir->openUrl(file.url(),KDirLister::Keep);
 				m_dir->updateDirectory(file.url());
 				continue;
 			}
