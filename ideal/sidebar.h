@@ -40,11 +40,6 @@ namespace ideal
 	{
 		Q_OBJECT
 	public:
-		enum Position
-		{
-			Left,Right,Bottom
-		};
-		
 		struct Tab
 		{
 			QWidget* widget;
@@ -55,7 +50,7 @@ namespace ideal
 
 		typedef QList<Tab>::iterator TabItr;
 
-		SideBar(Box* box,QSplitter* split,Position pos);
+		SideBar(Box* box,QSplitter* split,KMultiTabBarPosition pos);
 		virtual ~SideBar();
 
 		/// Add a tab to the SideBar
@@ -91,7 +86,6 @@ namespace ideal
 		QStackedWidget* widget_stack;
 		QList<Tab> tabs;
 		int next_id;
-		Position pos;
 		bool shrunken;
 	};
 }

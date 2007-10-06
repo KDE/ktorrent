@@ -34,9 +34,9 @@
 namespace ideal
 {
 
-	SideBar::SideBar(Box* parent,QSplitter* split,Position pos) 
-		: KMultiTabBar(pos == Bottom ? KMultiTabBar::Bottom : KMultiTabBar::Left,parent),
-		split(split),widget_stack(0),next_id(1),pos(pos),shrunken(false)
+	SideBar::SideBar(Box* parent,QSplitter* split,KMultiTabBarPosition pos) 
+		: KMultiTabBar(pos,parent),
+		split(split),widget_stack(0),next_id(1),shrunken(false)
 	{
 		setStyle(KMultiTabBar::KDEV3ICON);
 		widget_stack = new QStackedWidget(split);
@@ -53,19 +53,6 @@ namespace ideal
 		}
 		
 		
-		switch (pos)
-		{
-		case Bottom:
-			setPosition(KMultiTabBar::Bottom);
-			break;
-		case Left:
-			setPosition(KMultiTabBar::Left);
-			break;
-		case Right:
-			setPosition(KMultiTabBar::Right);
-			break;
-		}
-
 		QSizePolicy tsp = sizePolicy();
 		QSizePolicy wsp = widget_stack->sizePolicy();
 		
@@ -77,6 +64,7 @@ namespace ideal
 			wsp.setHorizontalPolicy(QSizePolicy::Expanding);
 			break;
 		case Bottom:
+		case Top:
 			tsp.setVerticalPolicy(QSizePolicy::Fixed);
 			wsp.setVerticalPolicy(QSizePolicy::Expanding);
 			break;
@@ -208,7 +196,7 @@ namespace ideal
 		}
 	}
 
-	QString SideBarGroupName(SideBar::Position pos)
+	QString SideBarGroupName(KMultiTabBar::KMultiTabBarPosition pos)
 	{
 		if (pos == SideBar::Left)
 			return "LeftSideBar";
@@ -223,7 +211,7 @@ namespace ideal
 	{
 		QWidget* current = widget_stack->currentWidget();
 
-		KConfigGroup g = cfg->group(SideBarGroupName(pos));
+		KConfigGroup g = cfg->group(SideBarGroupName(position()));
 		g.writeEntry("shrunken",shrunken);
 		if (current)
 			g.writeEntry("current_tab",findByWidget(current)->text);
@@ -231,7 +219,7 @@ namespace ideal
 
 	void SideBar::loadState(KSharedConfigPtr cfg)
 	{
-		KConfigGroup g = cfg->group(SideBarGroupName(pos));
+		KConfigGroup g = cfg->group(SideBarGroupName(position()));
 
 		bool tmp = g.readEntry("shrunken",true);
 		if (tmp != shrunken)

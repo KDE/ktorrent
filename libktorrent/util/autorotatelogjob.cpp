@@ -61,8 +61,7 @@ namespace bt
 			
 		if (cnt == 1)
 		{
-				// move current log to 1 and zip it
-			bt::Move(file,file + "-1",true);
+			// move current log to 1 and zip it
 			KIO::Job* sj = KIO::file_move(KUrl(file),KUrl(file + "-1"),-1, KIO::Overwrite | KIO::HideProgressInfo);
 			connect(sj,SIGNAL(result(KIO::Job*)),this,SLOT(moveJobDone(KIO::Job* )));
 		}
