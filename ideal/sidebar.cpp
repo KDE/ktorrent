@@ -25,6 +25,7 @@
 #include <kconfig.h>
 #include <ksharedconfig.h>
 #include <kiconloader.h>
+#include <kconfiggroup.h>
 #include "sidebar.h"
 #include "mainwindow.h"
 #include "box.h"

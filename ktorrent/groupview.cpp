@@ -28,6 +28,7 @@
 #include <kmessagebox.h>
 #include <kinputdialog.h>
 #include <kactioncollection.h>
+#include <kconfiggroup.h>
 #include <util/log.h>
 #include <interfaces/torrentinterface.h>
 #include <groups/group.h>

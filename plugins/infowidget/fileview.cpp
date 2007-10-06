@@ -26,6 +26,7 @@
 #include <kmessagebox.h>
 #include <kmimetype.h>
 #include <ksharedconfig.h>
+#include <kconfiggroup.h>
 #include <util/bitset.h>
 #include <util/functions.h>
 #include <interfaces/functions.h>

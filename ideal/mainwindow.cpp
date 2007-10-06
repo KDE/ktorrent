@@ -26,6 +26,7 @@
 #include <kconfig.h>
 #include <ksharedconfig.h>
 #include <kpushbutton.h>
+#include <kconfiggroup.h>
 #include "mainwindow.h"
 #include "sidebar.h"
 #include "box.h"

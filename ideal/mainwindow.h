@@ -22,6 +22,7 @@
 #define IDEAL_MAINWINDOW_HH
 
 #include <kxmlguiwindow.h>
+#include <ksharedconfig.h>
 
 class QSplitter;
 class KTabWidget;

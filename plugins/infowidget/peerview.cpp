@@ -2,6 +2,7 @@
 #include <klocale.h>
 #include <kicon.h>
 #include <kstandarddirs.h>
+#include <kconfiggroup.h>
 #include <interfaces/peerinterface.h>
 #include <interfaces/functions.h>
 #include "peerview.h"

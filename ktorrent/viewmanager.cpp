@@ -20,6 +20,7 @@
  ***************************************************************************/
 #include <QWidget>
 #include <ksharedconfig.h>
+#include <kconfiggroup.h>
 #include <groups/group.h>
 #include "gui.h"
 #include "view.h"

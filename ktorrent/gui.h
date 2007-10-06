@@ -28,6 +28,7 @@
 
 class KAction;
 class KToggleAction;
+class KUrl;
 
 namespace kt
 {
