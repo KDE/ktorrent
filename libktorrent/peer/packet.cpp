@@ -116,17 +116,17 @@ namespace bt
 		return false;
 	}
 	
-	void Packet::makeRejectOfPiece()
+	Packet* Packet::makeRejectOfPiece()
 	{
 		if (getType() != PIECE)
-			return;
+			return 0;
 		
-		// change type
-		data[4] = bt::REJECT_REQUEST;
-		// fill in length of piece
-		WriteUint32(data,13,size - 13);
-		// size of packet is now 17
-		size = 17;
+		Uint32 idx = bt::ReadUint32(data,5);
+		Uint32 off = bt::ReadUint32(data,9);
+		Uint32 len = size - 13;
+		
+	//	Out(SYS_CON|LOG_DEBUG) << "Packet::makeRejectOfPiece " << idx << " " << off << " " << len << endl;
+		return new Packet(Request(idx,off,len,0),bt::REJECT_REQUEST);
 	}
 	
 	/*

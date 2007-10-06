@@ -25,6 +25,7 @@
 #include <kmultitabbar.h>
 #include <kconfig.h>
 #include <ksharedconfig.h>
+#include <kconfiggroup.h>
 #include <kpushbutton.h>
 #include <kconfiggroup.h>
 #include "mainwindow.h"

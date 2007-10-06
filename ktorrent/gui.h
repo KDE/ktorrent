@@ -26,6 +26,7 @@
 #include <util/constants.h>
 #include <interfaces/guiinterface.h>
 
+class KUrl;
 class KAction;
 class KToggleAction;
 class KUrl;

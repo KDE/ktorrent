@@ -24,6 +24,7 @@
 #include <QBoxLayout>
 #include <kconfig.h>
 #include <ksharedconfig.h>
+#include <kconfiggroup.h>
 #include <kiconloader.h>
 #include <kconfiggroup.h>
 #include "sidebar.h"

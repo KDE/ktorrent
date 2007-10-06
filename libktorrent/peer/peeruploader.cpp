@@ -102,8 +102,18 @@ namespace bt
 	
 	void PeerUploader::clearAllRequests()
 	{
+		bool fast_ext = peer->getStats().fast_extensions;
 		PacketWriter & pw = peer->getPacketWriter();
-		pw.clearPieces();
+		pw.clearPieces(fast_ext);
+
+		if (fast_ext)
+		{
+			// reject all requests 
+			// if the peer supports fast extensions, 
+			// choke doesn't mean reject all
+			foreach (const Request & r,requests)
+				pw.sendReject(r);
+		}
 		requests.clear();
 	}
 		
