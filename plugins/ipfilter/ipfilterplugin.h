@@ -1,6 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,43 +16,58 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTAUTOROTATELOGJOB_H
-#define BTAUTOROTATELOGJOB_H
+#ifndef KTIPFILTERPLUGIN_H
+#define KTIPFILTERPLUGIN_H
 
-#include <kio/job.h>
-#include <cstdlib>
+#include <interfaces/plugin.h>
+#include <interfaces/ipblockinginterface.h>
 
-namespace bt
-{
-	class Log;
+#include "ipblockingprefpage.h"
+#include "antip2p.h"
 
+class QString;
+
+namespace kt
+{	
+	class IPBlockingPrefPage;
+	
 	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-		
-		Job which handles the rotation of the log file. 
-		This Job must do several move jobs which must be done sequentially.
-	*/
-	class AutoRotateLogJob : public KIO::Job
+	 * @author Ivan Vasic <ivasic@gmail.com>
+	 * @brief IP filter plugin
+	 * 
+	 * This plugin will load IP ranges from specific files into KT IPBlocklist.
+	 */
+	class IPFilterPlugin : public Plugin, public kt::IPBlockingInterface
 	{
 		Q_OBJECT
 	public:
-		AutoRotateLogJob(const QString & file,Log* lg);
-		virtual ~AutoRotateLogJob();
+		IPFilterPlugin(QObject* parent, const QStringList& args);
+		virtual ~IPFilterPlugin();
+
+		virtual void load();
+		virtual void unload();
 		
-		virtual void kill(bool quietly=true);
+		///Loads the KT format list filter
+		void loadFilters();
 		
-	private slots:
-		void moveJobDone(KJob*);
+		///Loads the anti-p2p filter list
+		bool loadAntiP2P();
 		
+		///Unloads the anti-p2p filter list
+		bool unloadAntiP2P();
+		
+		/// Wether or not the IP filter is loaded and running
+		bool loadedAndRunning(); 
+		
+		///Checks if IP is listed in AntiP2P filter list.
+		bool isBlockedIP(const QString& ip);
+		
+		bool versionCheck(const QString & version) const;
 	private:
-		void update();
-		
-	private:
-		QString file;
-		int cnt;
-		Log* lg;
+		IPBlockingPrefPage* pref;
+		AntiP2P* level1;
 	};
 
 }

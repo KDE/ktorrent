@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,41 +18,47 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTAUTOROTATELOGJOB_H
-#define BTAUTOROTATELOGJOB_H
+#ifndef KTCONVERTTHREAD_H
+#define KTCONVERTTHREAD_H
 
-#include <kio/job.h>
-#include <cstdlib>
+#include <QThread>
 
-namespace bt
+class KJob;
+
+namespace kt
 {
-	class Log;
+	class ConvertDialog;
 
 	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-		
-		Job which handles the rotation of the log file. 
-		This Job must do several move jobs which must be done sequentially.
+	 * Thread which does the converting of the text filter file to our own format.
+	 * @author Joris Guisson
 	*/
-	class AutoRotateLogJob : public KIO::Job
+	class ConvertThread : public QThread
 	{
 		Q_OBJECT
 	public:
-		AutoRotateLogJob(const QString & file,Log* lg);
-		virtual ~AutoRotateLogJob();
+		ConvertThread(ConvertDialog* dlg);
+		virtual ~ConvertThread();
 		
-		virtual void kill(bool quietly=true);
+		virtual void run();
 		
-	private slots:
-		void moveJobDone(KJob*);
+		QString getFailureReason() const {return failure_reason;}
+		
+		void stop() {abort = true;}
+	
+	private:
+		void readInput();
+		void writeOutput();
+		void cleanUp(bool failed);
 		
 	private:
-		void update();
-		
-	private:
-		QString file;
-		int cnt;
-		Log* lg;
+		ConvertDialog* dlg;
+		bool abort;
+		QString txt_file;
+		QString dat_file;
+		QString tmp_file;
+		QStringList input;
+		QString failure_reason;
 	};
 
 }

@@ -22,7 +22,10 @@
 #ifndef IPBLOCKINGINTERFACE_H
 #define IPBLOCKINGINTERFACE_H
 
+#include <ktorrent_export.h>
+
 class QString;
+
 
 namespace kt
 {
@@ -30,7 +33,7 @@ namespace kt
 	 * @author Ivan Vasic
 	 * @brief Interface for IPBlocklist to communicate with IPBlockingPlugin
 	*/
-	class IPBlockingInterface
+	class KTORRENT_EXPORT IPBlockingInterface 
 	{	
 		public:
     		IPBlockingInterface();

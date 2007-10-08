@@ -1,0 +1,149 @@
+<ui version="4.0" >
+ <class>IPBlockingPrefPage</class>
+ <widget class="QWidget" name="IPBlockingPrefPage" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>564</width>
+    <height>444</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>IPBlocking Preferences</string>
+  </property>
+  <layout class="QGridLayout" >
+   <item row="2" column="0" >
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType" >
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" >
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="0" >
+    <widget class="Q3GroupBox" name="groupBox1" >
+     <property name="enabled" >
+      <bool>true</bool>
+     </property>
+     <property name="title" >
+      <string>Select PeerGuardian filter file </string>
+     </property>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" >
+       <widget class="QCheckBox" name="kcfg_useLevel1" >
+        <property name="text" >
+         <string>Use PeerGuardian filter</string>
+        </property>
+        <property name="shortcut" >
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" >
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QLabel" name="textLabel1_3" >
+          <property name="text" >
+           <string>IP filter file:</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="KUrlRequester" native="1" name="kcfg_filterURL" >
+          <property name="url" stdset="0" >
+           <string>http://www.bluetack.co.uk/modules.php?name=Downloads&amp;d_op=getit&amp;lid=8</string>
+          </property>
+          <property name="showLocalProtocol" stdset="0" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="0" >
+       <layout class="QHBoxLayout" >
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType" >
+           <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>361</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="m_download" >
+          <property name="text" >
+           <string>Dow&amp;nload/Convert</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="0" >
+       <widget class="QLabel" name="textLabel1_2" >
+        <property name="text" >
+         <string>Download PeerGuardian filter from bluetack.co.uk or blocklist.org.
+NOTE: ZIP file from bluetack.co.uk is supported.</string>
+        </property>
+        <property name="wordWrap" >
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0" >
+       <widget class="QLabel" name="m_status" >
+        <property name="text" >
+         <string/>
+        </property>
+        <property name="wordWrap" >
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>Q3GroupBox</class>
+   <extends>QGroupBox</extends>
+   <header>Qt3Support/Q3GroupBox</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KUrlRequester</class>
+   <extends>QWidget</extends>
+   <header>kurlrequester.h</header>
+  </customwidget>
+ </customwidgets>
+ <includes>
+  <include location="local" >kurlrequester.h</include>
+  <include location="local" >kpushbutton.h</include>
+ </includes>
+ <resources/>
+ <connections/>
+</ui>

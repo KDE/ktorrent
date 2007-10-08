@@ -1,6 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,45 +16,59 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTAUTOROTATELOGJOB_H
-#define BTAUTOROTATELOGJOB_H
+#ifndef IPBLOCKINGPREFPAGE_H
+#define IPBLOCKINGPREFPAGE_H
 
-#include <kio/job.h>
-#include <cstdlib>
+#include <interfaces/prefpageinterface.h>
+#include <interfaces/coreinterface.h>
+#include <qthread.h>
+#include "ui_ipblockingprefpage.h"
+#include "ipfilterplugin.h"
 
-namespace bt
+class KProgress;
+class KJob;
+
+namespace kt
 {
-	class Log;
-
+	class IPFilterPlugin;
+	
 	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-		
-		Job which handles the rotation of the log file. 
-		This Job must do several move jobs which must be done sequentially.
-	*/
-	class AutoRotateLogJob : public KIO::Job
+	 * @author Ivan Vasic
+	 * @brief IPBlocking plugin interface page
+	 **/
+	class IPBlockingPrefPage : public PrefPageInterface,public Ui_IPBlockingPrefPage
 	{
 		Q_OBJECT
 	public:
-		AutoRotateLogJob(const QString & file,Log* lg);
-		virtual ~AutoRotateLogJob();
+		IPBlockingPrefPage(CoreInterface* core, IPFilterPlugin* p);
+		virtual ~IPBlockingPrefPage();
 		
-		virtual void kill(bool quietly=true);
-		
+	
+		virtual void loadSettings();
+		virtual void loadDefaults();
+		virtual void updateSettings();
+			
 	private slots:
-		void moveJobDone(KJob*);
+		void btnDownloadClicked();
+		void checkUseLevel1Toggled(bool);
+		void downloadFileFinished(KJob*);
+		void convert(KJob*);
+		void extract(KJob*);
+		void makeBackupFinished(KJob* );
+		void revertBackupFinished(KJob*);
+		
 		
 	private:
-		void update();
-		
+		void convert();
+		void cleanUp(const QString & path);
+		void cleanUpFiles();
+		void restoreGUI();
+
 	private:
-		QString file;
-		int cnt;
-		Log* lg;
+		CoreInterface* m_core;
+		IPFilterPlugin* m_plugin;
 	};
-
 }
-
 #endif

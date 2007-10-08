@@ -90,7 +90,7 @@ namespace kt
 			if (file.isDir() && name != i18n("loaded"))
 			{
 				// watch subdirectories, but not the loaded directory
-				m_dir->openUrl(file.url(),KDirLister::Keep);
+				m_dir->openUrl(file.url(),KDirLister::Keep); 
 				m_dir->updateDirectory(file.url());
 				continue;
 			}

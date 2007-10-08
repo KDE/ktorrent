@@ -50,7 +50,7 @@ namespace bt
 			if (bt::Exists(prev)) // if file exists start the move job
 			{
 				KIO::Job* sj = KIO::file_move(KUrl(prev),KUrl(curr),-1, KIO::Overwrite | KIO::HideProgressInfo);
-				connect(sj,SIGNAL(result(KIO::Job*)),this,SLOT(moveJobDone(KIO::Job* )));	
+				connect(sj,SIGNAL(result(KJob*)),this,SLOT(moveJobDone(KJob* )));	
 				return;
 			}
 			else
@@ -63,7 +63,7 @@ namespace bt
 		{
 			// move current log to 1 and zip it
 			KIO::Job* sj = KIO::file_move(KUrl(file),KUrl(file + "-1"),-1, KIO::Overwrite | KIO::HideProgressInfo);
-			connect(sj,SIGNAL(result(KIO::Job*)),this,SLOT(moveJobDone(KIO::Job* )));
+			connect(sj,SIGNAL(result(KJob*)),this,SLOT(moveJobDone(KJob* )));
 		}
 		else
 		{
@@ -75,7 +75,7 @@ namespace bt
 	}
 		
 	
-	void AutoRotateLogJob::moveJobDone(KIO::Job*)
+	void AutoRotateLogJob::moveJobDone(KJob*)
 	{
 		cnt--; // decrease counter so the newt file will be moved in update
 		update(); // don't care about result of job
