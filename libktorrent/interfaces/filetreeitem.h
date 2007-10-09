@@ -31,7 +31,11 @@ namespace kt
 	class TorrentFileInterface;
 	class FileTreeDirItem;
 	
-	
+	enum DeselectOptions
+	{
+		DELETE_FILES,
+		KEEP_FILES
+	};
 
 	/**
 	 * @author Joris Guisson
@@ -42,20 +46,19 @@ namespace kt
 	 */
 	class KTORRENT_EXPORT FileTreeItem : public QTreeWidgetItem
 	{
-	protected:
-		QString name;
-		TorrentFileInterface & file;
-		FileTreeDirItem* parent;
-		bool manual_change;
+	
 	public:
+		
+		
 		/**
 		 * Constructor, set the parent, name and file
 		 * @param item Parent item
 		 * @param name Name of file
 		 * @param file THe TorrentFileInterface
+		 * @param options What to do when the user deselects a file (ie delete it or set it to only seed priority)
 		 * @return 
 		 */
-		FileTreeItem(FileTreeDirItem* item,const QString & name,TorrentFileInterface & file);
+		FileTreeItem(FileTreeDirItem* item,const QString & name,TorrentFileInterface & file,DeselectOptions options);
 		virtual ~FileTreeItem();
 
 		/// Get a reference to the TorrentFileInterface
@@ -85,7 +88,13 @@ namespace kt
 	protected:
 	//	virtual int compare(QListViewItem* i, int col, bool ascending) const;
 		virtual void setData(int column, int role, const QVariant& value);
-
+	
+	protected:
+		QString name;
+		TorrentFileInterface & file;
+		FileTreeDirItem* parent;
+		bool manual_change;
+		DeselectOptions options;
 	};
 }
 

@@ -10,4 +10,5 @@ silently)
 - Added support for hostnames in PeerManager::addPotentialPeer
 - Added IPv6 support
 - Remember current searches in searchplugin and restore them on restart
+- Make tracker url and status selectable in tracker tab
 

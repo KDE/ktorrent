@@ -22,7 +22,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="m_url" >
+        <widget class="KSqueezedTextLabel" name="m_url" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
            <horstretch>0</horstretch>
@@ -40,6 +40,9 @@
       <spacer>
        <property name="orientation" >
         <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType" >
+        <enum>QSizePolicy::Minimum</enum>
        </property>
        <property name="sizeHint" >
         <size>
@@ -59,7 +62,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="m_status" >
+        <widget class="KSqueezedTextLabel" name="m_status" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
            <horstretch>0</horstretch>
@@ -77,6 +80,9 @@
       <spacer>
        <property name="orientation" >
         <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType" >
+        <enum>QSizePolicy::Minimum</enum>
        </property>
        <property name="sizeHint" >
         <size>
@@ -171,6 +177,11 @@
    <class>KPushButton</class>
    <extends>QPushButton</extends>
    <header location="global" >kpushbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KSqueezedTextLabel</class>
+   <extends>QLabel</extends>
+   <header location="global" >ksqueezedtextlabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

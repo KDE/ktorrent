@@ -42,7 +42,7 @@ namespace kt
 				
 		double perc_complete;
 	public:
-		IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file);
+		IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file,kt::DeselectOptions options);
 		virtual ~IWFileTreeItem();
 	
 		void updatePreviewInformation(kt::TorrentInterface* tc);

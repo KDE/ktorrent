@@ -32,8 +32,9 @@ using namespace bt;
 namespace kt
 {
 
-	FileTreeItem::FileTreeItem(FileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file)
-	: QTreeWidgetItem(item),name(name),file(file)
+	FileTreeItem::FileTreeItem(FileTreeDirItem* item,const QString & name,
+				   kt::TorrentFileInterface & file,DeselectOptions options)
+	: QTreeWidgetItem(item),name(name),file(file),options(options)
 	{
 		parent = item;
 		manual_change = false;
@@ -115,7 +116,10 @@ namespace kt
 		
 		if (!on)
 		{
-			file.setPriority(ONLY_SEED_PRIORITY);
+			if (options == KEEP_FILES)
+				file.setPriority(ONLY_SEED_PRIORITY);
+			else
+				file.setDoNotDownload(true);
 		}
 		else
 		{

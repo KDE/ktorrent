@@ -76,7 +76,7 @@ namespace kt
 				{
 					kt::TorrentFileInterface & file = tc->getTorrentFile(i);
 					file.setEmitDownloadStatusChanged(false);
-					root->insert(file.getPath(),file);
+					root->insert(file.getPath(),file,kt::DELETE_FILES);
 				}
 				root->setExpanded(true);
 			}

@@ -33,8 +33,8 @@ using namespace kt;
 namespace kt
 {
 				
-	IWFileTreeItem::IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file)
-		: FileTreeItem(item,name,file)
+	IWFileTreeItem::IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file,kt::DeselectOptions options)
+		: FileTreeItem(item,name,file,options)
 	{
 		perc_complete = 0.0;
 		connect(&file,SIGNAL(downloadPercentageChanged( float )),this,SLOT(onPercentageUpdated( float )));

@@ -24,12 +24,12 @@
 #include <util/constants.h>
 #include <util/ptrmap.h>
 #include <ktorrent_export.h>
+#include "filetreeitem.h"
 
 namespace kt
 {
 	using namespace bt;
 	
-	class FileTreeItem;
 	class TorrentFileInterface;
 		
 	class FileTreeRootListener 
@@ -67,8 +67,9 @@ namespace kt
 		 * Recursively insert a TorrentFileInterface.
 		 * @param path Path of file
 		 * @param file File itself
+		 * @param options What to do when the file is deselected
 		 */
-		void insert(const QString & path,kt::TorrentFileInterface & file);
+		void insert(const QString & path,kt::TorrentFileInterface & file,DeselectOptions options);
 
 		/**
 		 * Recursivly walk the tree to find the TorrentFile which
@@ -112,10 +113,10 @@ namespace kt
 		 * custom FileTreeItem's. Will be called in insert.
 		 * @param name Name of the file
 		 * @param file The TorrentFileInterface
+		 * @param options What to when a file gets deselected by the user
 		 * @return A newly created FileTreeItem
 		 */
-		virtual FileTreeItem* newFileTreeItem(const QString & name,
-											  TorrentFileInterface & file);
+		virtual FileTreeItem* newFileTreeItem(const QString & name,TorrentFileInterface & file,DeselectOptions options);
 
 
 		/**

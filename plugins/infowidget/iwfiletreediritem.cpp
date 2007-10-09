@@ -175,9 +175,9 @@ namespace kt
 		return PREVIEW_PRIORITY;
 	}
 
-	FileTreeItem* IWFileTreeDirItem::newFileTreeItem(const QString & name,TorrentFileInterface & file)
+	FileTreeItem* IWFileTreeDirItem::newFileTreeItem(const QString & name,TorrentFileInterface & file,kt::DeselectOptions options)
 	{
-		return new IWFileTreeItem(this,name,file);
+		return new IWFileTreeItem(this,name,file,options);
 	}
 	
 	FileTreeDirItem* IWFileTreeDirItem::newFileTreeDirItem(const QString & subdir)

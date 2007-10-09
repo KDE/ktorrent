@@ -48,7 +48,9 @@ namespace kt
 			this,SLOT(currentTrackerChanged(QListWidgetItem*,QListWidgetItem*)));
 
 		m_url->setTextFormat(Qt::RichText);
+		m_url->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
 		m_status->setTextFormat(Qt::RichText);
+		m_status->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
 		m_next_update->setTextFormat(Qt::RichText);
 
 		setEnabled(false);

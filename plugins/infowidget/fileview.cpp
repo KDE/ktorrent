@@ -94,7 +94,7 @@ namespace kt
 			for (Uint32 i = 0;i < curr_tc->getNumFiles();i++)
 			{
 				TorrentFileInterface & file = curr_tc->getTorrentFile(i);
-				root->insert(file.getPath(),file);
+				root->insert(file.getPath(),file,kt::KEEP_FILES);
 			}
 			root->setExpanded(true);
 			setRootIsDecorated(true);

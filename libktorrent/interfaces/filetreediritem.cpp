@@ -65,14 +65,14 @@ namespace kt
 	{
 	}
 
-	void FileTreeDirItem::insert(const QString & path,kt::TorrentFileInterface & file)
+	void FileTreeDirItem::insert(const QString & path,kt::TorrentFileInterface & file,DeselectOptions options)
 	{
 		size += file.getSize();
 		setText(1,BytesToString(size));
 		int p = path.indexOf(bt::DirSeparator());
 		if (p == -1)
 		{
-			children.insert(path,newFileTreeItem(path,file));
+			children.insert(path,newFileTreeItem(path,file,options));
 		}
 		else
 		{
@@ -84,7 +84,7 @@ namespace kt
 				subdirs.insert(subdir,sd);
 			}
 			
-			sd->insert(path.mid(p+1),file);
+			sd->insert(path.mid(p+1),file,options);
 		}
 	}
 	
@@ -255,9 +255,9 @@ namespace kt
 		return nullfile;
 	}
 
-	FileTreeItem* FileTreeDirItem::newFileTreeItem(const QString & name,TorrentFileInterface & file)
+	FileTreeItem* FileTreeDirItem::newFileTreeItem(const QString & name,TorrentFileInterface & file,DeselectOptions options)
 	{
-		return new FileTreeItem(this,name,file);
+		return new FileTreeItem(this,name,file,options);
 	}
 
 	FileTreeDirItem* FileTreeDirItem::newFileTreeDirItem(const QString & subdir)
