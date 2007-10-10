@@ -72,7 +72,7 @@ namespace bt
 		void connectRecieved(Int32 tid,Int64 connection_id);
 		void announceRecieved(Int32 tid,const QByteArray & buf);
 		void onError(Int32 tid,const QString & error_string);
-		void onResolverResults(KResolverResults res);
+		void onResolverResults(KNetwork::KResolverResults res);
 
 	private:
 		void sendConnect();

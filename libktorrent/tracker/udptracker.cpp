@@ -59,7 +59,7 @@ namespace bt
 		connect(socket,SIGNAL(error(Int32, const QString& )),
 				this,SLOT(onError(Int32, const QString& )));
 	
-		KResolver::resolveAsync(this,SLOT(onResolverResults(KResolverResults )),
+		KResolver::resolveAsync(this,SLOT(onResolverResults(KNetwork::KResolverResults )),
  						   url.host(),QString::number(url.port()));
 	}
 

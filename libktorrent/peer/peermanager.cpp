@@ -160,7 +160,7 @@ namespace bt
 		else
 		{
 			// must be a hostname, so resolve it
-			KResolver::resolveAsync(this,SLOT(onResolverResults(KResolverResults )),
+			KResolver::resolveAsync(this,SLOT(onResolverResults(KNetwork::KResolverResults )),
 					pp.ip,QString::number(pp.port));
 		}
 	}

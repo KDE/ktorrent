@@ -35,6 +35,7 @@
 #include "viewmenu.h"
 #include "scandlg.h"
 #include "speedlimitsdlg.h"
+#include "addpeersdlg.h"
 
 namespace kt
 {
@@ -276,7 +277,13 @@ namespace kt
 
 	void View::addPeers()
 	{
-		KMessageBox::error(this,i18n("Not Yet Implemented"));
+		QList<kt::TorrentInterface*> sel;
+		getSelection(sel);
+		if (sel.count() > 0)
+		{
+			AddPeersDlg dlg(sel[0],this);
+			dlg.exec();
+		}
 	}
 
 	void View::manualAnnounce()

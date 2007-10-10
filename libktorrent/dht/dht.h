@@ -33,6 +33,11 @@ namespace bt
 	class SHA1Hash;
 }
 
+namespace KNetwork
+{
+	class KResolverResults;
+}
+
 namespace dht
 {
 	class Node;
@@ -113,6 +118,7 @@ namespace dht
 		
 	private slots:
 		void update();
+		void onResolverResults(KNetwork::KResolverResults res);
 		
 	private:
 		Node* node;

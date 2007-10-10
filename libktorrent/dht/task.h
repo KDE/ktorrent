@@ -153,7 +153,7 @@ namespace dht
 		void done();
 		
 	protected slots:
-		void onResolverResults(KResolverResults res);
+		void onResolverResults(KNetwork::KResolverResults res);
 				
 	protected:	
 		QList<KBucketEntry> visited; // nodes visited

@@ -337,7 +337,14 @@ namespace dht
 		if (!running)
 			return;
 		
-		KResolverResults res = KResolver::resolve(host,QString::number(hport));
+		KResolver::resolveAsync(this,SLOT(onResolverResults(KNetwork::KResolverResults)),host,QString::number(port));
+	}
+	
+	void DHT::onResolverResults(KNetwork::KResolverResults res)
+	{
+		if (!running)
+			return;
+		
 		if (res.count() > 0)
 		{
 			srv->ping(node->getOurID(),res.front().address());

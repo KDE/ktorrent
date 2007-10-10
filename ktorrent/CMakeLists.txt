@@ -24,6 +24,7 @@ set(ktorrent_SRC
 	torrentcreatordlg.cpp
 	missingfilesdlg.cpp
 	importdialog.cpp
+	addpeersdlg.cpp
 )
 	
 
@@ -39,6 +40,7 @@ kde4_add_ui_files(ktorrent_SRC
 	torrentcreatordlg.ui 
 	missingfilesdlg.ui
 	importdialog.ui
+	addpeersdlg.ui
 )
 
 kde4_add_executable(ktorrent ${ktorrent_SRC})

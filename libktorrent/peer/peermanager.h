@@ -238,7 +238,7 @@ namespace bt
 		void onBitSetRecieved(const BitSet & bs);
 		void onRerunChoker();
 		void pex(const QByteArray & arr);
-		void onResolverResults(KResolverResults res);
+		void onResolverResults(KNetwork::KResolverResults res);
 		
 		
 	signals:
