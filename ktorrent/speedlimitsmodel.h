@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson                                   *
+ *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,40 +18,61 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#ifndef KTSPEEDLIMITSMODEL_H
+#define KTSPEEDLIMITSMODEL_H
 
-#ifndef SPEEDLIMITSDLG_H
-#define SPEEDLIMITSDLG_H
+#include <QAbstractTableModel>
 
-#include <QDialog>
-#include "ui_speedlimitsdlg.h"
-		
 namespace kt
 {
 	class Core;
-	class SpeedLimitsModel;
+	class TorrentInterface;
+	
+	
+	
 
-	/// Dialog to modify the speed limits of a torrent
-	class SpeedLimitsDlg : public QDialog,public Ui_SpeedLimitsDlg
+	/**
+	 * Model for the SpeedLimitsDlg main list view
+	*/
+	class SpeedLimitsModel : public QAbstractTableModel
 	{
 		Q_OBJECT
-
 	public:
-		SpeedLimitsDlg(Core* core,QWidget* parent);
-		virtual ~SpeedLimitsDlg();
-			
-
-	protected slots:
-		virtual void accept();
+		SpeedLimitsModel(Core* core,QObject* parent);
+		virtual ~SpeedLimitsModel();
+		
+		virtual int rowCount(const QModelIndex & parent) const;
+		virtual int columnCount(const QModelIndex & parent) const;
+		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
+		virtual QVariant data(const QModelIndex & index, int role) const;
+		virtual bool setData(const QModelIndex & index,const QVariant & value,int role);
+		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
+		
 		void apply();
-		void spinBoxValueChanged(int);
-		void saveState();
-		void loadState();
-
+		
+	signals:
+		void enableApply(bool on);
+		
 	private:
+		kt::TorrentInterface* torrentForIndex(const QModelIndex & index) const;
+		
+	private slots:
+		void onTorrentAdded(kt::TorrentInterface* tc);
+		void onTorrentRemoved(kt::TorrentInterface* tc);
+	
+	private:
+		struct Limits
+		{
+			bt::Uint32 up;
+			bt::Uint32 up_original;
+			bt::Uint32 down;
+			bt::Uint32 down_original;
+		};
+		
 		Core* core;
-		SpeedLimitsModel* model;
+		QMap<kt::TorrentInterface*,Limits> limits;
 	};
+
 }
 
 #endif
-

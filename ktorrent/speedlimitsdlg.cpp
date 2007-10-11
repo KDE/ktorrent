@@ -17,46 +17,110 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <QHeaderView>
 #include <klocale.h>
 #include <kstandardguiitem.h>
 #include <util/constants.h>
 #include <util/log.h>
+#include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>
-
+#include <settings.h>
+#include "core.h"
+#include "speedlimitsmodel.h"
 #include "speedlimitsdlg.h"
+#include "spinboxdelegate.h"
+
 		
 using namespace bt;
 
 namespace kt
 {
 
-	SpeedLimitsDlg::SpeedLimitsDlg(kt::TorrentInterface* ti,QWidget* parent)
-			: QDialog(parent),tor(ti)
+	
+	
+	
+	SpeedLimitsDlg::SpeedLimitsDlg(Core* core,QWidget* parent)
+			: QDialog(parent),core(core)
 	{
 		setupUi(this);
-		m_main_caption->setTextFormat(Qt::RichText);
-		m_main_caption->setText(i18n("Speed limits for <b>%1</b>:",tor->getStats().torrent_name));
-		Uint32 up,down;
-		tor->getTrafficLimits(up,down);
-		m_upload_rate->setValue(up / 1024);
-		m_download_rate->setValue(down / 1024);
+		
+		model = new SpeedLimitsModel(core,this);
+		m_speed_limits_view->setModel(model);
+		m_speed_limits_view->setItemDelegate(new SpinBoxDelegate(this));
+		
+		
 		m_ok->setGuiItem(KStandardGuiItem::ok());
+		m_apply->setGuiItem(KStandardGuiItem::apply());
 		m_cancel->setGuiItem(KStandardGuiItem::cancel());
+		
 		connect(m_ok,SIGNAL(clicked()),this,SLOT(accept()));
+		connect(m_apply,SIGNAL(clicked()),this,SLOT(apply()));
 		connect(m_cancel,SIGNAL(clicked()),this,SLOT(reject()));
-		adjustSize();
+		
+		m_apply->setEnabled(false);
+		connect(model,SIGNAL(enableApply(bool)),m_apply,SLOT(setEnabled(bool)));
+		
+		m_upload_rate->setValue(Settings::maxUploadRate());
+		m_download_rate->setValue(Settings::maxDownloadRate());
+		connect(m_upload_rate,SIGNAL(valueChanged(int)),this,SLOT(spinBoxValueChanged(int)));
+		connect(m_download_rate,SIGNAL(valueChanged(int)),this,SLOT(spinBoxValueChanged(int)));
+		
+		loadState();
 	}
 
 	SpeedLimitsDlg::~SpeedLimitsDlg()
 	{}
-
+	
+	void SpeedLimitsDlg::saveState()
+	{
+		KConfigGroup g = KGlobal::config()->group("SpeedLimitsDlg");
+		QByteArray s = m_speed_limits_view->header()->saveState();
+		g.writeEntry("view_state",s.toBase64());
+	}
+	
+	void SpeedLimitsDlg::loadState()
+	{
+		KConfigGroup g = KGlobal::config()->group("SpeedLimitsDlg");
+		QByteArray s = QByteArray::fromBase64(g.readEntry("view_state",QByteArray()));
+		if (!s.isNull())
+			m_speed_limits_view->header()->restoreState(s);
+	}
 
 	void SpeedLimitsDlg::accept()
 	{
-		Uint32 up = m_upload_rate->value() * 1024;
-		Uint32 down = m_download_rate->value() * 1024;
-		tor->setTrafficLimits(up,down);
+		apply();
+		saveState();
 		QDialog::accept();
+	}
+	
+	void SpeedLimitsDlg::apply()
+	{
+		model->apply();
+		m_apply->setEnabled(false);
+		
+		bool apply = false;
+		if (Settings::maxUploadRate() != m_upload_rate->value())
+		{
+			Settings::setMaxUploadRate(m_upload_rate->value());
+			apply = true;
+		}
+		
+		if (Settings::maxDownloadRate() != m_download_rate->value())
+		{
+			Settings::setMaxDownloadRate(m_download_rate->value());
+			apply = true;
+		}
+		
+		if (apply)
+		{
+			kt::ApplySettings();
+			Settings::self()->writeConfig();
+		}
+	}
+	
+	void SpeedLimitsDlg::spinBoxValueChanged(int)
+	{
+		m_apply->setEnabled(true);
 	}
 
 }

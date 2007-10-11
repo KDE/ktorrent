@@ -21,6 +21,8 @@ set(ktorrent_SRC
 	dbus.cpp
 	ipfilterwidget.cpp
 	speedlimitsdlg.cpp
+	speedlimitsmodel.cpp
+	spinboxdelegate.cpp
 	torrentcreatordlg.cpp
 	missingfilesdlg.cpp
 	importdialog.cpp

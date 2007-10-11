@@ -64,6 +64,12 @@ p, li { white-space: pre-wrap; }
         </item>
         <item>
          <widget class="QComboBox" name="kcfg_networkInterface" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="toolTip" >
            <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
@@ -78,6 +84,9 @@ p, li { white-space: pre-wrap; }
          <spacer>
           <property name="orientation" >
            <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType" >
+           <enum>QSizePolicy::Expanding</enum>
           </property>
           <property name="sizeHint" >
            <size>

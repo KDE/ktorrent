@@ -359,14 +359,8 @@ namespace kt
 	
 	void View::speedLimitsDlg()
 	{
-		QList<kt::TorrentInterface*> sel;
-		getSelection(sel);
-
-		if (sel.count() > 0)
-		{
-			SpeedLimitsDlg dlg(sel.front(),this);
-			dlg.exec();
-		}
+		SpeedLimitsDlg dlg(core,this);
+		dlg.exec();
 	}
 
 	void View::toggleDHT()

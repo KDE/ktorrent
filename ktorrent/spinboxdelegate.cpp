@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson                                   *
+ *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,40 +18,52 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <QSpinBox>
+#include <QModelIndex>
+#include <klocale.h>
+#include "spinboxdelegate.h"
 
-#ifndef SPEEDLIMITSDLG_H
-#define SPEEDLIMITSDLG_H
-
-#include <QDialog>
-#include "ui_speedlimitsdlg.h"
-		
 namespace kt
 {
-	class Core;
-	class SpeedLimitsModel;
 
-	/// Dialog to modify the speed limits of a torrent
-	class SpeedLimitsDlg : public QDialog,public Ui_SpeedLimitsDlg
+	SpinBoxDelegate::SpinBoxDelegate(QObject *parent) : QItemDelegate(parent)
+	{}
+
+
+	SpinBoxDelegate::~SpinBoxDelegate()
+	{}
+	
+	QWidget *SpinBoxDelegate::createEditor(QWidget *parent,const QStyleOptionViewItem &, const QModelIndex &) const
 	{
-		Q_OBJECT
+		QSpinBox *editor = new QSpinBox(parent);
+		editor->setSuffix(i18n(" KB/s"));
+		editor->setSpecialValueText(i18n("No limit"));
+		editor->setMinimum(0);
+		editor->setMaximum(10000000);
+		return editor;
+	}
 
-	public:
-		SpeedLimitsDlg(Core* core,QWidget* parent);
-		virtual ~SpeedLimitsDlg();
-			
+	void SpinBoxDelegate::setEditorData(QWidget *editor,const QModelIndex &index) const
+	{
+		int value = index.model()->data(index, Qt::EditRole).toInt();
 
-	protected slots:
-		virtual void accept();
-		void apply();
-		void spinBoxValueChanged(int);
-		void saveState();
-		void loadState();
+		QSpinBox *spinBox = static_cast<QSpinBox*>(editor);
+		spinBox->setValue(value);
+	}
+	
+	void SpinBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,const QModelIndex &index) const
+	{
+		QSpinBox *spinBox = static_cast<QSpinBox*>(editor);
+		spinBox->interpretText();
+		int value = spinBox->value();
 
-	private:
-		Core* core;
-		SpeedLimitsModel* model;
-	};
+		model->setData(index, value, Qt::EditRole);
+	}
+	
+	void SpinBoxDelegate::updateEditorGeometry(QWidget *editor,const QStyleOptionViewItem &option, const QModelIndex &) const
+	{
+		editor->setGeometry(option.rect);
+	}
 }
 
-#endif
-
+#include "spinboxdelegate.moc"
