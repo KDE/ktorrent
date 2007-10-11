@@ -93,6 +93,12 @@ namespace kt
 		QDialog::accept();
 	}
 	
+	void SpeedLimitsDlg::reject()
+	{
+		saveState();
+		QDialog::reject();
+	}
+	
 	void SpeedLimitsDlg::apply()
 	{
 		model->apply();

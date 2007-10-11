@@ -41,6 +41,7 @@ namespace kt
 
 	protected slots:
 		virtual void accept();
+		virtual void reject();
 		void apply();
 		void spinBoxValueChanged(int);
 		void saveState();
