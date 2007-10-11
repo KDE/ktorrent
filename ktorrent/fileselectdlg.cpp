@@ -106,9 +106,20 @@ namespace kt
 	void FileSelectDlg::accept()
 	{
 		QStringList pe_ex;
+		
+		QString dn = m_downloadLocation->url().path();
+		if (!dn.endsWith(bt::DirSeparator()))
+			dn += bt::DirSeparator();
+
 		for (Uint32 i = 0;i < tc->getNumFiles();i++)
 		{
 			kt::TorrentFileInterface & file = tc->getTorrentFile(i);
+
+			// check for preexisting files
+			QString path = dn + tc->getStats().torrent_name + bt::DirSeparator() + file.getPath();
+			if (bt::Exists(path))
+				file.setPreExisting(true);
+
 			if (file.doNotDownload() && file.isPreExistingFile())
 			{
 				// we have excluded a preexsting file
@@ -142,10 +153,7 @@ namespace kt
 		}
 
 		//Setup custom download location
-		QString dn = m_downloadLocation->url().path();
 		QString ddir = tc->getDataDir();
-		if (!dn.endsWith(bt::DirSeparator()))
-			dn += bt::DirSeparator();
 		if (!ddir.endsWith(bt::DirSeparator()))
 			ddir += bt::DirSeparator();
 
