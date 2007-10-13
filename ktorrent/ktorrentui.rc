@@ -19,6 +19,8 @@
 	<Separator/>
 	<Action name="queue_action"/>
 	<Action name="queue_manager"/>
+	<Separator/>
+	<Action name="speed_limits"/>
   </Menu>
 </MenuBar>
 
@@ -38,8 +40,8 @@
 	<Action name="remove"/>
 	<Action name="start_all"/>
 	<Action name="stop_all"/>
-	<Action name="queue_action"/>
 	<Separator/>
+	<Action name="queue_action"/>
 	<Action name="queue_manager"/>
 </ToolBar>
 </kpartgui>

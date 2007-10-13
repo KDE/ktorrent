@@ -61,6 +61,7 @@
 #include "ipfilterwidget.h"
 #include "torrentcreatordlg.h"
 #include "importdialog.h"
+#include "speedlimitsdlg.h"
 
 namespace kt
 {
@@ -397,6 +398,10 @@ namespace kt
 		import_action = new KAction(i18n("Import Torrent"),this);
 		connect(import_action,SIGNAL(triggered()),this,SLOT(import()));
 		ac->addAction("import",import_action);
+		
+		speed_limits_action = new KAction(i18n("Speed Limits"),this);
+		connect(speed_limits_action,SIGNAL(triggered()),this,SLOT(speedLimits()));
+		ac->addAction("speed_limits",speed_limits_action);
 
 				
 		QMenu* m = tray_icon->contextMenu();
@@ -475,7 +480,6 @@ namespace kt
 		openView(g);
 	}
 
-
 	void GUI::currentTabPageChanged(QWidget* page)
 	{
 		view_man->onCurrentTabChanged(page);
@@ -483,6 +487,12 @@ namespace kt
 		rightCornerButton()->setEnabled(ctl != 0 && ctl->closeAllowed(page));
 
 		notifyViewListeners(view_man->getCurrentTorrent());
+	}
+	
+	void GUI::speedLimits()
+	{
+		SpeedLimitsDlg dlg(core,this);
+		dlg.exec();
 	}
 	
 	void GUI::loadState(KSharedConfigPtr cfg)
