@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+		http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+		
+	<kcfgfile name="ktstatspluginrc"/>
+	<group name="general">
+		<entry name="UpdateEveryGuiUpdates" type="UInt">
+			<label>Update charts every n gui updates</label>
+			<default>2</default>
+		</entry>
+		
+		<entry name="DataGatherIval" type="UInt">
+			<label>Interval in miliseconds between data gathering</label>
+			<default>750</default>
+		</entry>
+		
+		<entry name="MaxMode" type="UInt">
+			<label>Method of determining maximum value of the scale</label>
+			<default>1</default>
+		</entry>
+		
+		<entry name="ShowSeedsInSwarms" type="Bool">
+			<label>Whether to show seeds in swarms</label>
+			<default>false</default>
+		</entry>
+		
+		<entry name="ShowLeechersInSwarms" type="Bool">
+			<label>Whether to show leachers in swarms</label>
+			<default>false</default>
+		</entry>
+		
+		<entry name="DlSpdSamples" type="UInt">
+			<label>Samples to show on download chart</label>
+			<default>192</default>
+		</entry>
+		
+		<entry name="PeersSpdSamples" type="UInt">
+			<label>Samples to show on peers chart</label>
+			<default>192</default>
+		</entry>
+		
+		<entry name="UlSpdSamples" type="UInt">
+			<label>Samples to show on upload chart</label>
+			<default>192</default>
+		</entry>
+		
+		<entry name="ConnsSamples" type="UInt">
+			<label>Samples to show on connections chart</label>
+			<default>384</default>
+		</entry>
+		
+		<entry name="DhtSpdSamples" type="UInt">
+			<label>Samples to show on DHT chart</label>
+			<default>384</default>
+		</entry>
+		
+		<entry name="DlSpdColor" type="Color">
+			<label>Color of the speed on dl chart</label>
+			<default>#f00</default>
+		</entry>
+		
+		<entry name="DlAvgColor" type="Color">
+			<label>Color of the average on dl chart</label>
+			<default>#00f</default>
+		</entry>
+		
+		<entry name="DlLimitColor" type="Color">
+			<label>Color of the limit on dl chart</label>
+			<default>#000</default>
+		</entry>
+		
+		<entry name="PrAvgFromLColor" type="Color">
+			<label>Color of the avg from leecher on peers chart</label>
+			<default>#f00</default>
+		</entry>
+		
+		<entry name="PrAvgToLColor" type="Color">
+			<label>Color of the avg to leecher on peers chart</label>
+			<default>#0f0</default>
+		</entry>
+		
+		<entry name="PrAvgFromSColor" type="Color">
+			<label>Color of the avg from seeds on peers chart</label>
+			<default>#00f</default>
+		</entry>
+		
+		<entry name="PrFromLColor" type="Color">
+			<label>Color of the leechers on peers chart</label>
+			<default>#f0f</default>
+		</entry>
+		
+		<entry name="PrFromSColor" type="Color">
+			<label>Color of the seeds on peers chart</label>
+			<default>#FFA200</default>
+		</entry>
+		
+		<entry name="UlSpdColor" type="Color">
+			<label>Color of the speed on upload chart</label>
+			<default>#f00</default>
+		</entry>
+		
+		<entry name="UlAvgColor" type="Color">
+			<label>Color of the avg on upload chart</label>
+			<default>#00f</default>
+		</entry>
+		
+		<entry name="UlLimitColor" type="Color">
+			<label>Color of the limit on upload chart</label>
+			<default>#000</default>
+		</entry>
+		
+		<entry name="CnLConnColor" type="Color">
+			<label>Color of the connected leechers on connections chart</label>
+			<default>#f00</default>
+		</entry>
+		
+		<entry name="CnLSwarmsColor" type="Color">
+			<label>Color of the leechers in swarms on connections chart</label>
+			<default>#700</default>
+		</entry>
+		
+		<entry name="CnSConnColor" type="Color">
+			<label>Color of the connected seeds on connections chart</label>
+			<default>#0f0</default>
+		</entry>
+		
+		<entry name="CnSSwarmsColor" type="Color">
+			<label>Color of the seeds in swarms on connections chart</label>
+			<default>#070</default>
+		</entry>
+		
+		<entry name="CnAvgLConnPerTorrColor" type="Color">
+			<label>Color of the avg connected leecher per torrent on connections chart</label>
+			<default>#00f</default>
+		</entry>
+		
+		<entry name="CnAvgSConnPerTorrColor" type="Color">
+			<label>Color of the avg connected seeds per torrent on connections chart</label>
+			<default>#007</default>
+		</entry>
+		
+		<entry name="CnAvgLConnPerRunTorrColor" type="Color">
+			<label>Color of the avg connected leechers per running torrent on connections chart</label>
+			<default>#f0f</default>
+		</entry>
+		
+		<entry name="CnAvgSConnPerRunTorrColor" type="Color">
+			<label>Color of the avg connected seeds per running torrent on connections chart</label>
+			<default>#707</default>
+		</entry>
+		
+		<entry name="DhtNodesColor" type="Color">
+			<label>Color of the nodes on DHT chart</label>
+			<default>#f00</default>
+		</entry>
+		
+		<entry name="DhtTasksColor" type="Color">
+			<label>Color of the tasks on DHT chart</label>
+			<default>#00f</default>
+		</entry>
+		
+		<entry name="AntiAliasing" type="Bool">
+			<label>Use anti aliasing on charts?</label>
+			<default>true</default>
+		</entry>
+		
+		<entry name="DrawBgdGrid" type="Bool">
+			<label>Draw ugly grey background grid?</label>
+			<default>false</default>
+		</entry>
+		
+		<entry name="WidgetType" type="UInt">
+			<label>Type of widget used for chart drawing</label>
+			<default>0</default>
+		</entry>
+		
+	</group>
+</kcfg>

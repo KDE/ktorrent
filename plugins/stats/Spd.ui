@@ -1,0 +1,56 @@
+<ui version="4.0" >
+ <class>SpdWgt</class>
+ <widget class="QWidget" name="SpdWgt" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>555</width>
+    <height>221</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Speed</string>
+  </property>
+  <layout class="QHBoxLayout" >
+   <item>
+    <widget class="QGroupBox" name="DlSpdGbw" >
+     <property name="title" >
+      <string>Download</string>
+     </property>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" >
+       <layout class="QGridLayout" />
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="PeersSpdGbw" >
+     <property name="title" >
+      <string>Peers</string>
+     </property>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" >
+       <layout class="QGridLayout" />
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="UlSpdGbw" >
+     <property name="title" >
+      <string>Upload</string>
+     </property>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" >
+       <layout class="QGridLayout" />
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
