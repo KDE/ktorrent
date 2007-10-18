@@ -183,7 +183,7 @@ namespace kt
 		newItem( "isohunt.com", KUrl("http://isohunt.com/torrents.php?ihq=FOOBAR&op=and"));
 		newItem( "mininova.org", KUrl("http://www.mininova.org/search.php?search=FOOBAR"));
 		newItem( "thepiratebay.org", KUrl("http://thepiratebay.org/search.php?q=FOOBAR"));
-		newItem( "bitoogle.com", KUrl("http://search.bitoogle.com/search.php?q=FOOBAR&st=t"));
+		newItem( "bitoogle.com", KUrl("http://bitoogle.com/search.php?q=FOOBAR"));
 		newItem( "bytenova.org", KUrl("http://www.bitenova.org/search.php?search=FOOBAR&start=0&start=0&ie=utf-8&oe=utf-8"));
 		newItem( "torrentspy.com", KUrl("http://torrentspy.com/search.asp?query=FOOBAR"));
 		newItem( "torrentz.com", KUrl("http://www.torrentz.com/search_FOOBAR"));
