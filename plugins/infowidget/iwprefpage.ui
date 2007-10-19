@@ -13,10 +13,7 @@
    <item>
     <widget class="QCheckBox" name="kcfg_showPeerView" >
      <property name="toolTip" >
-      <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Wether or not to show the peers tab in the bottom of the window.&lt;/p>&lt;/body>&lt;/html></string>
+      <string>Wether or not to show the peers tab in the bottom of the window.</string>
      </property>
      <property name="text" >
       <string>Show list of peers</string>
@@ -26,10 +23,7 @@ p, li { white-space: pre-wrap; }
    <item>
     <widget class="QCheckBox" name="kcfg_showChunkView" >
      <property name="toolTip" >
-      <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Wether or not to show the chunks tab in the bottom of the window.&lt;/p>&lt;/body>&lt;/html></string>
+      <string>Wether or not to show the chunks tab in the bottom of the window.</string>
      </property>
      <property name="text" >
       <string>Show list of chunks currently downloading</string>
@@ -39,10 +33,7 @@ p, li { white-space: pre-wrap; }
    <item>
     <widget class="QCheckBox" name="kcfg_showTrackersView" >
      <property name="toolTip" >
-      <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Wether or not to show the trackers tab in the bottom of the window.&lt;/p>&lt;/body>&lt;/html></string>
+      <string>Wether or not to show the trackers tab in the bottom of the window.</string>
      </property>
      <property name="text" >
       <string>Show list of trackers</string>
