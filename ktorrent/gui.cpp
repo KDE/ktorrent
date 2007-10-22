@@ -89,7 +89,7 @@ namespace kt
 
 		lc->setIcon(KIcon("tab-new"));
 		connect(lc,SIGNAL(clicked()),this,SLOT(newView()));
-		rc->setIcon(KIcon("tab-remove"));
+		rc->setIcon(KIcon("tab-close"));
 		connect(rc,SIGNAL(clicked()),this,SLOT(closeTab()));
 
 		applySettings();
