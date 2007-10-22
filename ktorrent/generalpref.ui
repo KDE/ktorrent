@@ -93,7 +93,7 @@
       <item>
        <widget class="QCheckBox" name="kcfg_showSystemTrayIcon" >
         <property name="toolTip" >
-         <string>Wether or not to show an icon in the system tray.</string>
+         <string>Whether or not to show an icon in the system tray.</string>
         </property>
         <property name="text" >
          <string>Show system tray icon</string>
@@ -103,7 +103,7 @@
       <item>
        <widget class="QCheckBox" name="kcfg_showPopups" >
         <property name="toolTip" >
-         <string>Wether or not to show system tray popup messages.</string>
+         <string>Whether or not to show system tray popup messages.</string>
         </property>
         <property name="text" >
          <string>Show system tray popup messages</string>
@@ -113,7 +113,7 @@
       <item>
        <widget class="QCheckBox" name="kcfg_showSpeedBarInTrayIcon" >
         <property name="toolTip" >
-         <string>Wether or not to draw 2 speedbars in the system tray icon. These speedbars show how fast you are currently downloading and uploading.</string>
+         <string>Whether or not to draw 2 speedbars in the system tray icon. These speedbars show how fast you are currently downloading and uploading.</string>
         </property>
         <property name="text" >
          <string>Show speedbar in tray icon</string>

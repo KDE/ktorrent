@@ -13,7 +13,7 @@
    <item>
     <widget class="QCheckBox" name="kcfg_showPeerView" >
      <property name="toolTip" >
-      <string>Wether or not to show the peers tab in the bottom of the window.</string>
+      <string>Whether or not to show the peers tab in the bottom of the window.</string>
      </property>
      <property name="text" >
       <string>Show list of peers</string>
@@ -23,7 +23,7 @@
    <item>
     <widget class="QCheckBox" name="kcfg_showChunkView" >
      <property name="toolTip" >
-      <string>Wether or not to show the chunks tab in the bottom of the window.</string>
+      <string>Whether or not to show the chunks tab in the bottom of the window.</string>
      </property>
      <property name="text" >
       <string>Show list of chunks currently downloading</string>
@@ -33,7 +33,7 @@
    <item>
     <widget class="QCheckBox" name="kcfg_showTrackersView" >
      <property name="toolTip" >
-      <string>Wether or not to show the trackers tab in the bottom of the window.</string>
+      <string>Whether or not to show the trackers tab in the bottom of the window.</string>
      </property>
      <property name="text" >
       <string>Show list of trackers</string>
