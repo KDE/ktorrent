@@ -100,7 +100,7 @@ namespace kt
 		void onExit();
 
 		/**
-		 * Set the maximum number of simultanious downloads.
+		 * Set the maximum number of simultaneous downloads.
 		 * @param max The max num (0 == no limit)
 		 */
 		void setMaxDownloads(int max);
