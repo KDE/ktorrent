@@ -26,7 +26,10 @@
 
 namespace kt
 {
-
+	const double TO_KB = 1024.0;
+	const double TO_MEG = (1024.0 * 1024.0);
+	const double TO_GIG = (1024.0 * 1024.0 * 1024.0);
+	
 	KTORRENT_EXPORT QString BytesToString(bt::Uint64 bytes,int precision = -1);
 	KTORRENT_EXPORT QString KBytesPerSecToString(double speed,int precision = 1);
 	KTORRENT_EXPORT QString DurationToString(bt::Uint32 nsecs);

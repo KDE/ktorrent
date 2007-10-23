@@ -18,6 +18,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <klocale.h>
+#include <kglobal.h>
 #include <kio/global.h>
 #include <settings.h>
 #include <peer/peermanager.h>
@@ -30,6 +32,24 @@
 
 namespace kt
 {
+	QString BytesToString2(Uint64 bytes,int precision = 2)
+	{
+		KLocale* loc = KGlobal::locale();
+		if (bytes >= 1024 * 1024 * 1024)
+			return QString("%1 GB").arg(loc->formatNumber(bytes / TO_GIG,precision < 0 ? 2 : precision));
+		else if (bytes >= 1024*1024)
+			return QString("%1 MB").arg(loc->formatNumber(bytes / TO_MEG,precision < 0 ? 1 : precision));
+		else if (bytes >= 1024)
+			return QString("%1 KB").arg(loc->formatNumber(bytes / TO_KB,precision < 0 ? 1 : precision));
+		else
+			return QString("%1 B").arg(bytes);
+	}
+
+	QString KBytesPerSecToString2(double speed,int precision = 2)
+	{
+		KLocale* loc = KGlobal::locale();
+		return QString("%1 KB/s").arg(loc->formatNumber(speed,precision));
+	}
 
 	PhpCodeGenerator::PhpCodeGenerator(CoreInterface *c)
 	{
@@ -52,14 +72,14 @@ namespace kt
 			ret.append(QString("%1 => array(").arg(k));
 			
 			ret.append(QString("\"imported_bytes\" => %1,").arg(stats.imported_bytes));
-			ret.append(QString("\"bytes_downloaded\" => \"%1\",").arg(KIO::convertSize(stats.bytes_downloaded)));
-			ret.append(QString("\"bytes_uploaded\" => \"%1\",").arg(KIO::convertSize(stats.bytes_uploaded)));
+			ret.append(QString("\"bytes_downloaded\" => \"%1\",").arg(BytesToString2(stats.bytes_downloaded)));
+			ret.append(QString("\"bytes_uploaded\" => \"%1\",").arg(BytesToString2(stats.bytes_uploaded)));
 			ret.append(QString("\"bytes_left\" => %1,").arg(stats.bytes_left));
 			ret.append(QString("\"bytes_left_to_download\" => %1,").arg(stats.bytes_left_to_download));
-			ret.append(QString("\"total_bytes\" => \"%1\",").arg(KIO::convertSize(stats.total_bytes)));
+			ret.append(QString("\"total_bytes\" => \"%1\",").arg(BytesToString2(stats.total_bytes)));
 			ret.append(QString("\"total_bytes_to_download\" => %1,").arg(stats.total_bytes_to_download));
-			ret.append(QString("\"download_rate\" => \"%1/s\",").arg(KIO::convertSize(stats.download_rate)));
-			ret.append(QString("\"upload_rate\" => \"%1/s\",").arg(KIO::convertSize(stats.upload_rate)));
+			ret.append(QString("\"download_rate\" => \"%1\",").arg(KBytesPerSecToString2(stats.download_rate / 1024.0)));
+			ret.append(QString("\"upload_rate\" => \"%1\",").arg(KBytesPerSecToString2(stats.upload_rate / 1024.0)));
 			ret.append(QString("\"num_peers\" => %1,").arg(stats.num_peers));
 			ret.append(QString("\"num_chunks_downloading\" => %1,").arg(stats.num_chunks_downloading));
 			ret.append(QString("\"total_chunks\" => %1,").arg(stats.total_chunks));
@@ -105,8 +125,8 @@ namespace kt
 		ret.append("array(");
 		CurrentStats stats=core->getStats();
 	
-		ret.append(QString("\"download_speed\" => \"%1/s\",").arg(KIO::convertSize(stats.download_speed)));
-		ret.append(QString("\"upload_speed\" => \"%1/s\",").arg(KIO::convertSize(stats.upload_speed)));
+		ret.append(QString("\"download_speed\" => \"%1\",").arg(KBytesPerSecToString2(stats.download_speed / 1024.0)));
+		ret.append(QString("\"upload_speed\" => \"%1\",").arg(KBytesPerSecToString2(stats.upload_speed / 1024.0)));
 		ret.append(QString("\"bytes_downloaded\" => \"%1\",").arg(stats.bytes_downloaded));
 		ret.append(QString("\"bytes_uploaded\" => \"%1\",").arg(stats.bytes_uploaded));
 		ret.append(QString("\"max_download_speed\" => \"%1\",").arg(Settings::maxDownloadRate()));

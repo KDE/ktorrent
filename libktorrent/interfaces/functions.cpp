@@ -44,9 +44,6 @@ using namespace bt;
 
 namespace kt
 {
-	const double TO_KB = 1024.0;
-	const double TO_MEG = (1024.0 * 1024.0);
-	const double TO_GIG = (1024.0 * 1024.0 * 1024.0);
 	
 	QString BytesToString(Uint64 bytes,int precision)
 	{
