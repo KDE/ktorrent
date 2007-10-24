@@ -230,7 +230,7 @@ namespace ideal
 				unshrink();
 		}
 
-		QString ctab = g.readPathEntry("current_tab");
+		QString ctab = g.readPathEntry("current_tab", QString());
 		TabItr i = findByText(ctab);
 		if (i == tabs.end())
 			return;
