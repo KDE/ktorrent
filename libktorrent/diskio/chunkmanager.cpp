@@ -159,6 +159,11 @@ namespace bt
 		cache->changeOutputPath(output_path);
 	}
 	
+	void ChunkManager::moveDataFiles(const QString & ndir)
+	{
+		cache->moveDataFiles(ndir);
+	}
+	
 	void ChunkManager::loadIndexFile()
 	{
 		during_load = true;

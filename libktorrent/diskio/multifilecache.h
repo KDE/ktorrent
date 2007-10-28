@@ -52,6 +52,7 @@ namespace bt
 		virtual bool prep(Chunk* c);
 		virtual void close();
 		virtual void open();
+		virtual void moveDataFiles(const QString & ndir);
 		virtual QString getOutputPath() const;
 		virtual void changeOutputPath(const QString & outputpath);
 		virtual void preallocateDiskSpace(PreallocationThread* prealloc);

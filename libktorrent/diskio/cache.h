@@ -72,6 +72,12 @@ namespace bt
 		virtual void changeOutputPath(const QString & outputpath) = 0;
 		
 		/**
+		 * Move the data files to a new directory.
+		 * @param ndir The directory
+		 */
+		virtual void moveDataFiles(const QString & ndir) = 0;
+		
+		/**
 		 * Load a chunk into memory. If something goes wrong,
 		 * an Error should be thrown.
 		 * @param c The Chunk

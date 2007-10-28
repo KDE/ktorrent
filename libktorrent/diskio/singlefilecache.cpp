@@ -60,6 +60,11 @@ namespace bt
 		bt::SymLink(output_file, cache_file);
 	}
 	
+	void SingleFileCache::moveDataFiles(const QString & ndir)
+	{
+		bt::Move(output_file,ndir);
+	}
+	
 	bool SingleFileCache::prep(Chunk* c)
 	{
 		Uint64 off = c->getIndex() * tor.getChunkSize();
