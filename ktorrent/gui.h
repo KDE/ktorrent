@@ -103,6 +103,7 @@ namespace kt
 		void checkData();
 		void showPrefDialog();
 		void showStatusBar();
+		void showMenuBar();
 		void showQM();
 		void showIPFilter();
 		void configureKeys();
@@ -133,6 +134,7 @@ namespace kt
 		DBus* dbus_iface;
 
 		KToggleAction* show_status_bar_action;
+		KToggleAction* show_menu_bar_action;
 		KAction* start_action;
 		KAction* stop_action;
 		KAction* remove_action;

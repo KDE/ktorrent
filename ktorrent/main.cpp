@@ -70,6 +70,7 @@ int main(int argc, char **argv)
 	about.addCredit(ki18n("twisted_fall"),ki18n("Patch to not show very low speeds"),"twisted.fall@gmail.com");
 	about.addCredit(ki18n("Lucke"),ki18n("Patch to show potentially firewalled status"),0);
 	about.addCredit(ki18n("Modestas Vainius"),ki18n("Several patches"),"modestas@vainius.eu");
+	about.addCredit(ki18n("Stefan Monov"),ki18n("Patch to hide menu bar"),"logixoul@gmail.com");
 
 	KCmdLineArgs::init(argc, argv, &about);
 

@@ -24,6 +24,7 @@
 #include <klocale.h>
 #include <kaction.h>
 #include <kmenu.h>
+#include <kmenubar.h>
 #include <ktoggleaction.h>
 #include <kactioncollection.h>
 #include <kmessagebox.h>
@@ -309,6 +310,14 @@ namespace kt
 			status_bar->hide();
 	}
 
+	void GUI::showMenuBar()
+	{
+		if (show_menu_bar_action->isChecked())
+			menuBar()->show();
+		else
+			menuBar()->hide();
+	}
+
 	void GUI::showQM()
 	{
 	}
@@ -351,6 +360,7 @@ namespace kt
 		KAction* open_action = KStandardAction::open(this, SLOT(openTorrent()),ac);
 		KAction* quit_action = KStandardAction::quit(kapp, SLOT(quit()), ac);
 		show_status_bar_action = KStandardAction::showStatusbar(this, SLOT(showStatusBar()),ac);
+		show_menu_bar_action = KStandardAction::showMenubar(this, SLOT(showMenuBar()),ac);
 		KAction* pref_action = KStandardAction::preferences(this, SLOT(showPrefDialog()),ac);
 		KStandardAction::keyBindings(this, SLOT(configureKeys()),ac);
 		KStandardAction::configureToolbars(this,SLOT(configureToolBars()),ac);
@@ -500,10 +510,22 @@ namespace kt
 		view_man->loadState(cfg);
 		group_view->loadState(cfg);
 		ideal::MainWindow::loadState(cfg);
+		
+		KConfigGroup g = cfg->group("MainWindow");
+		bool statusbar_hidden = g.readEntry("statusbar_hidden",false);
+		status_bar->setHidden(statusbar_hidden);
+		show_status_bar_action->setChecked(!statusbar_hidden);
+
+		bool menubar_hidden = g.readEntry("menubar_hidden",false);
+		menuBar()->setHidden(menubar_hidden);
+		show_menu_bar_action->setChecked(!menubar_hidden);
 	}
 
 	void GUI::saveState(KSharedConfigPtr cfg)
 	{
+		KConfigGroup g = cfg->group("MainWindow");
+		g.writeEntry("statusbar_hidden",status_bar->isHidden());
+		g.writeEntry("menubar_hidden",menuBar()->isHidden());
 		view_man->saveState(cfg);
 		group_view->saveState(cfg);
 		ideal::MainWindow::saveState(cfg);

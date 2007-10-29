@@ -47,6 +47,7 @@ namespace bt
 		
 		keep_seeding = true; //test. Will be passed from Core
 		paused_state = false;
+		exiting = false;
 	}
 
 
@@ -231,6 +232,7 @@ namespace bt
 	
 	void QueueManager::onExit(WaitJob* wjob)
 	{
+		exiting = true;
 		QList<kt::TorrentInterface *>::iterator i = downloads.begin();
 		while (i != downloads.end())
 		{
@@ -408,7 +410,7 @@ namespace bt
 		if(!downloads.count())
 			return;
 		
-		if(paused_state)
+		if(paused_state || exiting)
 			return;
 		
 		qSort(downloads.begin(), downloads.end());

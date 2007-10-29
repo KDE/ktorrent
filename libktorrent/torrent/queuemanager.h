@@ -160,6 +160,7 @@ namespace bt
 
 			bool paused_state;
 			bool keep_seeding;
+			bool exiting;
 	};
 }
 #endif
