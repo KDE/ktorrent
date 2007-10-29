@@ -180,17 +180,24 @@ namespace kt
 		int session_id = 0;
 		if (hdr.hasKey("Cookie"))
 		{
-			QStringList tokens = hdr.value("Cookie").split('=');
-			for (int i = 0;i < tokens.count() - 1;i+= 2)
-			{
-				if (tokens[i]=="KT_SESSID")
-				{
-					session_id = tokens[i+1].toInt();
-					break;
-				}
-			}
-			if (session_id == 0)
+			QString cookie = hdr.value("Cookie");
+			int idx = cookie.indexOf("KT_SESSID=");
+			if (idx == -1)
 				return false;
+			
+			QString number;
+			idx += QString("KT_SESSID=").length();
+			while (idx < cookie.length())
+			{
+				if (cookie[idx] >= '0' && cookie[idx] <= '9')
+					number += cookie[idx];
+				else
+					break;
+				
+				idx++;
+			}
+					
+			session_id = number.toInt();
 		}
 		
 	
