@@ -27,11 +27,18 @@
 #include <interfaces/coreinterface.h>
 #include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>
+#include <interfaces/torrentfileinterface.h>
 #include "phpcodegenerator.h"
 
 
 namespace kt
 {
+	using bt::FIRST_PRIORITY;
+	using bt::NORMAL_PRIORITY;
+	using bt::LAST_PRIORITY;
+	using bt::EXCLUDED;
+	using bt::ONLY_SEED_PRIORITY;
+	
 	QString BytesToString2(Uint64 bytes,int precision = 2)
 	{
 		KLocale* loc = KGlobal::locale();
@@ -106,9 +113,38 @@ namespace kt
 			ret.append(QString("\"completed\" => \"%1\",").arg(stats.completed));
 			ret.append(QString("\"user_controlled\" => \"%1\",").arg(stats.user_controlled));
 			ret.append(QString("\"max_share_ratio\" => %1,").arg(stats.max_share_ratio));
-			ret.append(QString("\"priv_torrent\" => \"%1\"").arg(stats.priv_torrent));
-	
-	
+			ret.append(QString("\"priv_torrent\" => \"%1\",").arg(stats.priv_torrent));
+			ret.append(QString("\"num_files\" => \"%1\",").arg((*i)->getNumFiles()));			
+			ret.append(QString("\"files\" => array("));
+			if (stats.multi_file_torrent)
+			{
+				//for loop to add each file+status to "files" array			
+				for (Uint32 j = 0;j < (*i)->getNumFiles();j++)
+				{
+					Priority file_priority;
+					QString status;
+					
+					TorrentFileInterface & file = (*i)->getTorrentFile(j);
+					ret.append(QString("\"file_%1\" => \"%2\",").arg(j).arg(file.getPath()));
+					ret.append(QString("\"size_%1\" => \"%2\",").arg(j).arg(KIO::convertSize(file.getSize())));
+					ret.append(QString("\"perc_done_%1\" => \"%2\",").arg(j).arg(file.getDownloadPercentage()));
+					file_priority=file.getPriority();
+					if (file_priority==EXCLUDED)
+						status="Do Not Download";
+					else if (file_priority==LAST_PRIORITY)
+						status="Download Last";
+					else if (file_priority==NORMAL_PRIORITY)
+						status="Download Normally";
+					else if (file_priority==FIRST_PRIORITY)
+						status="Download First";
+					else if (file_priority == ONLY_SEED_PRIORITY)
+						status="Only Seed";
+					
+					ret.append(QString("\"status_%1\" => \"%2\",").arg(j).arg(status));	
+				}
+			}
+			
+			ret.append("),");
 			ret.append("),");
 		}
 		if(ret.endsWith(","))

@@ -28,6 +28,7 @@
 #include <util/log.h>
 #include <tracker/udptrackersocket.h>
 #include <interfaces/coreinterface.h>
+#include <interfaces/torrentfileinterface.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/functions.h>
 #include "phpcommandhandler.h"
@@ -236,6 +237,77 @@ namespace kt
 					}
 				}
 			}
+			else if (it.key().startsWith("file_"))
+			{
+				QString torrent_num;
+				QString file_num;
+				//parse argument into torrent number and file number
+				int separator_loc=it.value().indexOf('-');
+				QString parse = it.value();
+				
+				torrent_num.append(parse.left(separator_loc));
+				file_num.append(parse.right(parse.length()-(separator_loc+1)));
+
+				if(it.key()=="file_lp")
+				{
+					QList<TorrentInterface*>::iterator i= core->getQueueManager()->begin();
+					for(int k=0; i != core->getQueueManager()->end(); i++, k++)
+					{
+						if(torrent_num.toInt()==k)
+						{
+							TorrentFileInterface & file = (*i)->getTorrentFile(file_num.toInt());
+							file.setPriority(LAST_PRIORITY);
+							break;
+						}
+					}
+				}
+				else if(it.key()=="file_np")
+				{
+					QList<TorrentInterface*>::iterator i= core->getQueueManager()->begin();
+					for(int k=0; i != core->getQueueManager()->end(); i++, k++)
+					{
+						if(torrent_num.toInt()==k)
+						{
+							TorrentFileInterface & file = (*i)->getTorrentFile(file_num.toInt());
+							file.setPriority(NORMAL_PRIORITY);
+							break;
+						}
+					}
+				}
+				else if(it.key()=="file_hp")
+				{
+					QList<TorrentInterface*>::iterator i= core->getQueueManager()->begin();
+					for(int k=0; i != core->getQueueManager()->end(); i++, k++)
+					{
+						if(torrent_num.toInt()==k)
+						{
+							TorrentFileInterface & file = (*i)->getTorrentFile(file_num.toInt());
+							file.setPriority(FIRST_PRIORITY);
+							break;
+						}
+					}
+				}
+				else if(it.key()=="file_dnd")
+				{
+					QList<TorrentInterface*>::iterator i= core->getQueueManager()->begin();
+					for(int k=0; i != core->getQueueManager()->end(); i++, k++)
+					{
+						if(torrent_num.toInt()==k)
+						{
+							TorrentFileInterface & file = (*i)->getTorrentFile(file_num.toInt());
+							file.setPriority(ONLY_SEED_PRIORITY);
+							break;
+						}
+					}
+				}
+				else
+				{
+				// add unknown query items to the redirected url
+				// we don't add the keys above, because if the user presses refresh 
+				// the same action will be taken again
+					redirected_url.addQueryItem(it.key(),it.value());
+				}
+			}
 			else
 			{
 				// add unknown query items to the redirected url
@@ -243,7 +315,6 @@ namespace kt
 				// the same action will be taken again
 				redirected_url.addQueryItem(it.key(),it.value());
 			}
-			
 		}
 		
 		if (ret)

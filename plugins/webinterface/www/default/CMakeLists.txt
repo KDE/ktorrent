@@ -13,6 +13,11 @@ set(default_data
 	remove.png   
 	start.png     
 	style.css  
-	wz_tooltip.js)
+	wz_tooltip.js
+	details.php
+	normal_priority.png
+	high_priority.png
+	low_priority.png
+	dnd.png)
 
 install(FILES ${default_data} DESTINATION ${DATA_INSTALL_DIR}/ktorrent/www/default)

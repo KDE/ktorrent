@@ -244,11 +244,17 @@
 					echo "<td><a href=\"interface.php?stop=$a\" title=\"STOP\"><img src=\"/stop.png\" name=\"stop\" width=\"16\" height=\"16\" border=\"0\" style=\"padding:2px;\"></a>";
 					echo "<a href=\"interface.php?start=$a\" title=\"START\"><img src=\"/start.png\" name=\"start\" width=\"16\" height=\"16\" border=\"0\" style=\"padding:2px;\"></a>";
 					echo "<a href=\"interface.php?remove=$a\" title=\"REMOVE\" onClick=\"return validate()\"><img src=\"/remove.png\" name=\"remove\" width=\"16\" height=\"16\" border=\"0\" style=\"padding:2px;\"></a></td>";
-					echo "<td style=\"text-align:left;\" onmouseover=\"this.T_TITLE='$torrent_name';return escape('Download speed:<strong>{$torrent['download_rate']}</strong><br> Upload speed:<strong>{$torrent['upload_rate']}</strong></td>')\">";
+
 					if(strlen($torrent['torrent_name'])>30)
-						echo substr($torrent['torrent_name'], 0, 30) . " ...</td>";
+						$display_name=substr($torrent['torrent_name'], 0, 30)." ...";
 					else
-						echo $torrent['torrent_name']."</td>";
+						$display_name=$torrent['torrent_name'];
+					
+					if ($torrent['num_files']>1)
+						echo "<td style=\"text-align:left;\" onmouseover=\"this.T_TITLE='$torrent_name';return escape('Download speed:<strong>{$torrent['download_rate']}</strong><br> Upload speed:<strong>{$torrent['upload_rate']}</strong></td>')\"><a href=\"details.php?torrent=$a\">$display_name</a></td>";
+					else
+						echo "<td style=\"text-align:left;\" onmouseover=\"this.T_TITLE='$torrent_name';return escape('Download speed:<strong>{$torrent['download_rate']}</strong><br> Upload speed:<strong>{$torrent['upload_rate']}</strong></td>')\">$display_name</td>";
+
 					switch ($torrent['status']) {
 						case 0:
    							echo "<td>Not Started</td>";
