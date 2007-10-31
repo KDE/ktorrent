@@ -345,6 +345,9 @@ namespace bt
 		if (num_pending > MAX_SIMULTANIOUS_AUTHS)
 			return;
 		
+		if (!mse::StreamSocket::canInitiateNewConnection())
+			return; // to many sockets in SYN_SENT state
+		
 		Uint32 num = 0;
 		if (max_connections > 0)
 		{
