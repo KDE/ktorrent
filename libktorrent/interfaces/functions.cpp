@@ -93,7 +93,7 @@ namespace kt
 		net::SocketMonitor::setDownloadCap(Settings::maxDownloadRate()*1024);
 		net::SocketMonitor::setUploadCap(Settings::maxUploadRate()*1024);
 		net::SocketMonitor::setSleepTime(Settings::cpuUsage());
-		mse::StreamSocket::setTOS(Settings::typeOfService());
+		mse::StreamSocket::setTOS(Settings::dscp() << 2);
 		mse::StreamSocket::setMaxConnecting(Settings::maxConnectingSockets());
 		ChunkManager::setUploadDataCheckingEnabled(Settings::doUploadDataCheck());
 		if (!Settings::useMaxSizeForUploadDataCheck())
