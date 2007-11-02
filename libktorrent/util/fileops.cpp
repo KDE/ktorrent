@@ -25,6 +25,7 @@
 #include <errno.h>
 #include <klocale.h>
 #include <kio/netaccess.h>
+#include <kio/copyjob.h> 
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
@@ -95,7 +96,8 @@ namespace bt
 	void Move(const QString & src,const QString & dst,bool nothrow)
 	{
 	//	Out() << "Moving " << src << " -> " << dst << endl;
-		if (!KIO::NetAccess::move(KUrl(src),KUrl(dst),0))
+		KIO::CopyJob *mv = KIO::move(KUrl(src),KUrl(dst)); 
+		if (!KIO::NetAccess::synchronousRun(mv , 0)) 
 		{
 			if (!nothrow)
 				throw Error(i18n("Cannot move %1 to %2: %3",

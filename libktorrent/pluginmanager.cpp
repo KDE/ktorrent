@@ -60,20 +60,11 @@ namespace kt
 		for(iter = offers.begin(); iter != offers.end(); ++iter)
 		{
 			KService::Ptr service = *iter;
-			Plugin* plugin = 0;
 			
-			KLibrary *library = KLibLoader::self()->library(service->library().toLocal8Bit());
-			if (!library)
+			Plugin* plugin = service->createInstance<kt::Plugin>(); 
+			if (!plugin) 
 				continue;
-
-			KLibFactory *factory = library->factory();
-			if (!factory)
-				continue;
-
-			plugin = dynamic_cast<kt::Plugin*>(factory->create(0,"kt::Plugin"));
-			if (!plugin)
-				continue;
-
+			
 			if (!plugin->versionCheck(kt::VERSION_STRING))
 			{
 				Out(SYS_GEN|LOG_NOTICE) <<
@@ -81,8 +72,6 @@ namespace kt
 						.arg(service->library()) << endl;
 
 				delete plugin;
-				// unload the library again, no need to have it loaded
-				KLibLoader::self()->unloadLibrary(service->library().toLocal8Bit());
 				continue;
 			}
 			unloaded.insert(plugin->getName(),plugin);
