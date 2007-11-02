@@ -96,7 +96,6 @@ class RestInterface {
 		foreach($download_status as $torrent) {
 			$torrent_xml = $xml->new_element('torrent');
 			$xml->append_to_root($torrent_xml);
-			
 
 //			foreach(array_keys($torrent) as $key) {
 //				$torrent_xml->appendChild(
@@ -115,7 +114,7 @@ class RestInterface {
 				$xml->new_element('status',
 					$this->_torrent_status($status), array('id' => $status)),
 
-				
+				$xml->new_element('running', $torrent['running']),
 				$xml->new_element('download_rate', $torrent['download_rate']." down"),
 				$xml->new_element('upload_rate', $torrent['upload_rate']." up"),
 				$xml->new_element('size', $torrent['total_bytes']),

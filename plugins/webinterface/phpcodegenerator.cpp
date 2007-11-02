@@ -98,6 +98,7 @@ namespace kt
 			ret.append(QString("\"leechers_total\" => %1,").arg(stats.leechers_total));
 			ret.append(QString("\"leechers_connected_to\" => %1,").arg(stats.leechers_connected_to));
 			ret.append(QString("\"status\" => %1,").arg(stats.status));
+			ret.append(QString("\"running\" => %1,").arg(stats.running));
 			QString tmp = stats.trackerstatus;
 			ret.append(QString("\"trackerstatus\" => \"%1\",").arg(tmp.replace("\\", "\\\\").replace("\"", "\\\"").replace("$", "\\$")));
 			ret.append(QString("\"session_bytes_downloaded\" => %1,").arg(stats.session_bytes_downloaded));

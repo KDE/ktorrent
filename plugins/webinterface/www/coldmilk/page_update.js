@@ -29,65 +29,64 @@ function update_interval(time) {
 function update_all() {
 	fetch_xml("rest.php?global_status", new Array("update_status_bar", "update_title"));
 	fetch_xml("rest.php?download_status", new Array("update_torrent_table"));
-
-};
+}
 
 function fetch_xml(url, callback_functions) {
-		var request = false;
-		
-		if (window.XMLHttpRequest) { // most browsers
-			request = new XMLHttpRequest();
-//			if (request.overrideMimeType) {
-//				request.overrideMimeType('text/xml');
-//			}
+	var request = false;
+	
+	if (window.XMLHttpRequest) { // most browsers
+		request = new XMLHttpRequest();
+//		if (request.overrideMimeType) {
+//			request.overrideMimeType('text/xml');
+//		}
+	}
+	
+	else if (window.ActiveXObject) { //ie
+		try {
+			request = new ActiveXObject("Msxml2.XMLHTTP");
 		}
-		
-		else if (window.ActiveXObject) { //ie
-			try {
-				request = new ActiveXObject("Msxml2.XMLHTTP");
-			}
-			catch(e) {
-				try { request = new ActiveXObject("Microsoft.XMLHTTP"); }
-				catch(e) { }
-			}
+		catch(e) {
+			try { request = new ActiveXObject("Microsoft.XMLHTTP"); }
+			catch(e) { }
 		}
-		
-		if (!request) { 
-			// Browser doesn't support XMLHttpRequest
-			return false;
-		}
-		request.onreadystatechange = function() {
-			if (request.readyState == 4) {
-				if (request.status == 200) {
-					//overrideMimeType didn't work in Konqueror,
-					//so we'll have to parse the response into XML
-					//object ourselfs. responseXML won't work.
-					var xmlstring = request.responseText;
-					var xmldoc;
-					if (window.DOMParser) {
-						xmldoc = (new DOMParser())
-								.parseFromString(xmlstring, "text/xml");
-					}
-					else if (window.ActiveXObject) { //ie
-						xmldoc = new ActiveXObject("Microsoft.XMLDOM");
-						xmldoc.async = false;
-						xmldoc.loadXML(xmlstring);
-					}
-
-					for (var i in callback_functions) {
-						eval(callback_functions[i] + "(xmldoc)");
-					}
-
+	}
+	
+	if (!request) { 
+		// Browser doesn't support XMLHttpRequest
+		return false;
+	}
+	request.onreadystatechange = function() {
+		if (request.readyState == 4) {
+			if (request.status == 200) {
+				//overrideMimeType didn't work in Konqueror,
+				//so we'll have to parse the response into XML
+				//object ourselfs. responseXML won't work.
+				var xmlstring = request.responseText;
+				var xmldoc;
+				if (window.DOMParser) {
+					xmldoc = (new DOMParser())
+							.parseFromString(xmlstring, "text/xml");
 				}
-				else {
-					// could not fetch
+				else if (window.ActiveXObject) { //ie
+					xmldoc = new ActiveXObject("Microsoft.XMLDOM");
+					xmldoc.async = false;
+					xmldoc.loadXML(xmlstring);
 				}
+
+				for (var i in callback_functions) {
+					eval(callback_functions[i] + "(xmldoc)");
+				}
+
+			}
+			else {
+				// could not fetch
 			}
 		}
-		
-		request.open('GET', url, true);
-		request.send(null);
-};
+	}
+	
+	request.open('GET', url, true);
+	request.send(null);
+}
 
 function update_title(xmldoc) {
 	var down = _get_text(xmldoc, 'download_speed').data;
@@ -101,7 +100,7 @@ function update_status_bar(xmldoc) {
 	newtable.setAttribute('id', 'status_bar_table');
 
 	
-	//dth and encryption
+	//dht and encryption
 	{
 		var row = newtable.insertRow(0);
 		var cell = row.insertCell(0);
@@ -113,7 +112,7 @@ function update_status_bar(xmldoc) {
 		cell.appendChild(
 			document.createTextNode("Encryption : " + encryption));
 	}	
-	//speed up/down 
+	//speed down/up
 	{
 		var row = newtable.insertRow(1);
 		var cell = row.insertCell(0);
@@ -143,7 +142,6 @@ function update_status_bar(xmldoc) {
 	oldtable.parentNode.replaceChild(newtable, oldtable);
 }
 
-
 function update_torrent_table(xmldoc) {
 	
 	var newtable = document.createElement('table');
@@ -159,8 +157,7 @@ function update_torrent_table(xmldoc) {
 
 	var oldtable = document.getElementById('torrent_list_table');
 	oldtable.parentNode.replaceChild(newtable, oldtable);
-	
-};
+}
 
 function _torrent_table_row(torrent, table, i) {
 	var row = table.insertRow(i);
@@ -171,31 +168,32 @@ function _torrent_table_row(torrent, table, i) {
 	//actions
 	{
 		var cell = row.insertCell(0);
-		var start_button  = _create_action_button('Start', 'start.png', 'start='+i);
-		var stop_button   = _create_action_button('Stop', 'stop.png', 'stop='+i);
+		var can_start = (_get_text(torrent, 'running').data) ? 0 : 1; //if torrent is running we can't start it
+		var can_stop = (can_start==1) ? 0 : 1; //opposite of can_start
+		var start_button  = _create_action_button('Start', 'start.png', (can_start==1) ? 'start='+i : '');
+		var stop_button   = _create_action_button('Stop', 'stop.png', (can_stop==1) ? 'stop='+i : '');
 		var remove_button = _create_action_button('Remove', 'remove.png', 'remove='+i);
-		remove_button.setAttribute("onClick", "return validate('remove_torrent')");
+		remove_button.setAttribute("onclick", "return validate('remove_torrent')");
 		
 		cell.appendChild(start_button);
 		cell.appendChild(stop_button);
-		cell.appendChild(remove_button)
+		cell.appendChild(remove_button);
 	}
-		
-		
+
 	//file
 	{
 		var cell = row.insertCell(1);
 		cell.appendChild(
 			_get_text(torrent, 'name'));
 	}
-	
+
 	//status
 	{
 		var cell = row.insertCell(2);
 		cell.appendChild(
 			_get_text(torrent, 'status'));
 	}
-	
+
 	//speed
 	{
 		var cell = row.insertCell(3);
@@ -206,19 +204,21 @@ function _torrent_table_row(torrent, table, i) {
 		cell.appendChild(
 			_get_text(torrent, 'upload_rate'));
 	}
+
 	//size
 	{
 		var cell = row.insertCell(4);
 		cell.appendChild(
 			_get_text(torrent, 'size'));
 	}
+
 	//peers
 	{
 		var cell = row.insertCell(5);
 		cell.appendChild(
 			_get_text(torrent, 'peers'));
 	}
-	
+
 	//transferred
 	{
 		var cell = row.insertCell(6);
@@ -228,8 +228,8 @@ function _torrent_table_row(torrent, table, i) {
 		cell.appendChild(document.createElement('br'));
 		cell.appendChild(
 			_get_text(torrent, 'uploaded'));	
-		
 	}
+
 	//done
 	{
 		var cell = row.insertCell(7);
@@ -248,22 +248,25 @@ function _torrent_table_row(torrent, table, i) {
 			document.createTextNode(percent_done + "%"));
 
 		bar.appendChild(bar_text);
-		
-		
 	}
-	
-};
+}
 
 function _create_action_button(button_name, image_src, command) {
-	var a = document.createElement("a");
-	a.setAttribute("href", "interface.php?" + command);
 	var image = document.createElement("img");
 	image.setAttribute("src", image_src);
 	image.setAttribute("alt", button_name);
 	image.setAttribute("title", button_name);
-	a.appendChild(image);
-	return a;
-};
+
+	if (command != '')
+	{
+		var a = document.createElement("a");
+		a.setAttribute("href", "interface.php?" + command);
+		a.appendChild(image);
+		return a;
+	}
+	else
+		return image;
+}
 
 // gets element with given tag and crates text node from it
 function _get_text(element, tag) {
@@ -275,7 +278,6 @@ function _get_text(element, tag) {
 	catch (e) {
 		text_node = document.createTextNode('');
 	}
-		
 	return text_node;
 }
 
@@ -285,9 +287,9 @@ function _get_text_from_attribute(element, tag, attribute) {
 		text_node = document.createTextNode(
 			element.getElementsByTagName(tag)[0].getAttribute(attribute));
 	}
-	catch (e) { 
+	catch (e) {
 		text_node = document.createTextNode('');
-	 }
+	}
 	return text_node;
 }
 
