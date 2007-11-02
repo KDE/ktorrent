@@ -26,6 +26,7 @@
 #include <util/constants.h>
 #include <ksharedconfig.h>
 
+class KMenu;
 
 namespace kt
 {
@@ -101,6 +102,8 @@ namespace kt
 		void togglePEX();
 		void scrape();
 		void showMenu(const QPoint & pos);
+		void showHeaderMenu(const QPoint& pos);
+		void onHeaderMenuItemTriggered(QAction* act);
 		void onCurrentItemChanged(QTreeWidgetItem * current,QTreeWidgetItem * previous);
 
 	signals:
@@ -114,6 +117,8 @@ namespace kt
 		Group* group;
 		QMap<kt::TorrentInterface*,ViewItem*> items;
 		ViewMenu* menu;
+		KMenu* header_menu;
+		QMap<QAction*,int> column_idx_map;
 		bt::Uint32 num_torrents;
 		bt::Uint32 num_running;
 	};

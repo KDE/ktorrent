@@ -80,6 +80,22 @@ namespace kt
 		bt::QueueManager* qman = core->getQueueManager();
 		for (QList<kt::TorrentInterface*>::iterator i = qman->begin();i != qman->end();i++)
 			addTorrent(*i);
+		
+		header()->setContextMenuPolicy(Qt::CustomContextMenu);
+		connect(header(),SIGNAL(customContextMenuRequested(const QPoint & ) ),this,SLOT(showHeaderMenu( const QPoint& )));
+		header_menu = new KMenu(this);
+		header_menu->addTitle(i18n("Columns"));
+		
+		int idx = 0;
+		foreach (QString col,columns)
+		{
+			QAction* act = header_menu->addAction(col);
+			act->setCheckable(true);
+			act->setChecked(true);
+			column_idx_map[act] = idx++;
+		}
+		
+		connect(header_menu,SIGNAL(triggered(QAction* )),this,SLOT(onHeaderMenuItemTriggered(QAction*)));
 	}
 
 	View::~View()
@@ -409,6 +425,11 @@ namespace kt
 	{
 		menu->show(mapToGlobal(pos));
 	}
+	
+	void View::showHeaderMenu(const QPoint& pos)
+	{
+		header_menu->popup(header()->mapToGlobal(pos));
+	}
 
 	void View::getSelection(QList<kt::TorrentInterface*> & sel)
 	{
@@ -434,6 +455,14 @@ namespace kt
 		QByteArray s = QByteArray::fromBase64(g.readEntry("state",QByteArray()));
 		if (!s.isNull())
 			header()->restoreState(s);
+		
+		QMap<QAction*,int>::iterator i = column_idx_map.begin();
+		while (i != column_idx_map.end())
+		{
+			QAction* act = i.key();
+			act->setChecked(!header()->isSectionHidden(i.value()));
+			i++;
+		}
 	}
 
 	kt::TorrentInterface* View::getCurrentTorrent()
@@ -448,6 +477,14 @@ namespace kt
 		currentTorrentChanged(this,vi ? vi->tc : 0);
 	}
 
+	void View::onHeaderMenuItemTriggered(QAction* act)
+	{
+		int idx = column_idx_map[act];
+		if (act->isChecked())
+			header()->showSection(idx);
+		else
+			header()->hideSection(idx);
+	}
 }
 
 #include "view.moc"
