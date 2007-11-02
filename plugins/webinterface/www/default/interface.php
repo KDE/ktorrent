@@ -2,8 +2,8 @@
 	$globalinfo=globalInfo();
 	$stats=downloadStatus(); 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" 
->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <style type="text/css" media="all">@import "stylen.css";
@@ -18,12 +18,12 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
     <title><?php echo '(D:'.$globalinfo['download_speed'].') (U:'.$globalinfo['upload_speed'].') KTorrent'; ?></title>
-    <script language="JavaScript">
+    <script type="text/javascript">
 
 	function validate()
 	{
 		msg = "Are you absolutely sure that you want remove this torrent?";
-    		return confirm(msg);
+		return confirm(msg);
 	}
 
 	</script>
@@ -37,7 +37,7 @@
         <img src="icon.png" alt="KT Icon"/>
       </div>
       <div id="header">
-        <div id="head-content">			
+        <div id="head-content">
           <strong>KTorrent WebInterface</strong>
           <br />
           <font size="-1">BitTorrent client for KDE</font>
@@ -46,7 +46,7 @@
 				<div style="padding-left:130px;">
 
 					<dl>
-							<dt><a href="interface.php" title="REFRESH">Refresh</a></b></dt>
+							<dt><a href="interface.php" title="REFRESH">Refresh</a></dt>
 							<dt><a href="login.html" title="LOGOUT">Logout</a></dt>
 					</dl>
 				</div>
@@ -59,12 +59,9 @@
 			<table class="box" align="center" cellspacing="0" cellpadding="2">
                           <tr>
                             <td class="box-header">
-                               Torrent control 
+                               Torrent control
                             </td>
                           </tr>
-                          <tr>
-                            <td>
-                          
                           <tr align="center">
                             <td>
                               <form action="interface.php" method="get">
@@ -75,7 +72,6 @@
                               </form>
                             </td>
                           </tr>
-                          </td>
                         </table>
 			</div>
           <!-- SETTINGS  -->
@@ -84,7 +80,7 @@
               <tbody>
                 <tr>
                   <td class="box-header">
-                     Settings 
+                     Settings
                   </td>
                 </tr>
                 <tr>
@@ -93,7 +89,7 @@
                       <table class="box-settings" style="text-align:left;">
                         <tr>
                           <td>
-                             Upload speed 
+                             Upload speed
                           </td>
                           <td>
                             <input type="text" name="maximum_upload_rate" value="<?php echo $globalinfo['max_upload_speed']; ?>" class="settingsInput" />
@@ -101,7 +97,7 @@
                         </tr>
                         <tr>
                           <td>
-                             Download speed 
+                             Download speed
                           </td>
                           <td>
                             <input type="text" name="maximum_download_rate" value="<?php echo $globalinfo['max_download_speed']; ?>" class="settingsInput" />
@@ -109,7 +105,7 @@
                         </tr>
                         <tr>
                           <td>
-                             Maximum downloads 
+                             Maximum downloads
                           </td>
                           <td>
                             <input type="text" name="maximum_downloads" value="<?php echo $globalinfo['max_downloads']; ?>" class="settingsInput" />
@@ -117,7 +113,7 @@
                         </tr>
                         <tr>
                           <td>
-                             MaximumSeeds 
+                             MaximumSeeds
                           </td>
                           <td>
                             <input type="text" name="maximum_seeds" value="<?php echo $globalinfo['max_seeds']; ?>" class="settingsInput" />
@@ -134,20 +130,20 @@
                             <input type="submit" value="Submit settings" class="buttons"/>
                           </td>
                         </tr>
-                        </form>
                       </table>
-                      </td>
-                      </tr>
-                      </tbody>
-                      </table>
-            </div>
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <!-- Torrent -->
           <div align="center" style="padding-bottom: 10px;">
                         <table cellspacing="0" cellpadding="2" class="box">
                           <tbody>
                             <tr>
                               <td class="box-header">
-                                 Load Torrents 
+                                 Load Torrents
                               </td>
                             </tr>
                             <form action="interface.php" method="get">
@@ -170,12 +166,12 @@
                             <form method="post" enctype="multipart/form-data" action="interface.php">
                               <tr>
                                 <td>
-                                   Local File:<input type="file" name="load_torrent" style="width:240px;">
+                                   Local File:<input type="file" name="load_torrent" style="width:240px;" />
                                 </td>
                               </tr>
                               <tr>
                                 <td style="text-align:right;">
-                                  <input type="submit" name="Upload Torrent" value="Upload Torrent" class="buttons">
+                                  <input type="submit" name="Upload Torrent" value="Upload Torrent" class="buttons" />
                                 </td>
                               </tr>
                             </form>
@@ -189,11 +185,11 @@
                               </td>
                             </tr>
                           </tbody>
-                        </table>                        
+                        </table>
                       </div>
       
 </div>
-								  
+
    </div>
       <div id="content">
         <table>
@@ -241,9 +237,9 @@
 						$perc = round(100.0 - ($torrent['bytes_left_to_download'] / $torrent['total_bytes_to_download']) * 100.0, 2);
 					else
 						$perc = 0;
-					echo "<td><a href=\"interface.php?stop=$a\" title=\"STOP\"><img src=\"/stop.png\" name=\"stop\" width=\"16\" height=\"16\" border=\"0\" style=\"padding:2px;\"></a>";
-					echo "<a href=\"interface.php?start=$a\" title=\"START\"><img src=\"/start.png\" name=\"start\" width=\"16\" height=\"16\" border=\"0\" style=\"padding:2px;\"></a>";
-					echo "<a href=\"interface.php?remove=$a\" title=\"REMOVE\" onClick=\"return validate()\"><img src=\"/remove.png\" name=\"remove\" width=\"16\" height=\"16\" border=\"0\" style=\"padding:2px;\"></a></td>";
+					echo "<td><a href=\"interface.php?stop=$a\" title=\"STOP\"><img src=\"/stop.png\" name=\"stop\" width=\"16\" height=\"16\" border=\"0\" style=\"padding:2px;\" alt=\"\" /></a>";
+					echo "<a href=\"interface.php?start=$a\" title=\"START\"><img src=\"/start.png\" name=\"start\" width=\"16\" height=\"16\" border=\"0\" style=\"padding:2px;\" alt=\"\" /></a>";
+					echo "<a href=\"interface.php?remove=$a\" title=\"REMOVE\" onclick=\"return validate()\"><img src=\"/remove.png\" name=\"remove\" width=\"16\" height=\"16\" border=\"0\" style=\"padding:2px;\" alt=\"\" /></a></td>";
 
 					if(strlen($torrent['torrent_name'])>30)
 						$display_name=substr($torrent['torrent_name'], 0, 30)." ...";
@@ -251,9 +247,9 @@
 						$display_name=$torrent['torrent_name'];
 					
 					if ($torrent['num_files']>1)
-						echo "<td style=\"text-align:left;\" onmouseover=\"this.T_TITLE='$torrent_name';return escape('Download speed:<strong>{$torrent['download_rate']}</strong><br> Upload speed:<strong>{$torrent['upload_rate']}</strong></td>')\"><a href=\"details.php?torrent=$a\">$display_name</a></td>";
+						echo "<td style=\"text-align:left;\" onmouseover=\"this.T_TITLE='$torrent_name';return escape('Download speed:&lt;strong&gt;{$torrent['download_rate']}&lt;/strong&gt;&lt;br /&gt; Upload speed:&lt;strong&gt;{$torrent['upload_rate']}&lt;/strong&gt;&lt;/td&gt;')\"><a href=\"details.php?torrent=$a\">$display_name</a></td>";
 					else
-						echo "<td style=\"text-align:left;\" onmouseover=\"this.T_TITLE='$torrent_name';return escape('Download speed:<strong>{$torrent['download_rate']}</strong><br> Upload speed:<strong>{$torrent['upload_rate']}</strong></td>')\">$display_name</td>";
+						echo "<td style=\"text-align:left;\" onmouseover=\"this.T_TITLE='$torrent_name';return escape('Download speed:&lt;strong&gt;{$torrent['download_rate']}&lt;/strong&gt;&lt;br /&gt; Upload speed:&lt;strong&gt;{$torrent['upload_rate']}&lt;/strong&gt;&lt;/td&gt;')\">$display_name</td>";
 
 					switch ($torrent['status']) {
 						case 0:
@@ -311,7 +307,7 @@
             <td>
             </td>
             <td>
-               &#169; 2006 WebInterface KTorrent plugin 
+               &#169; 2006 WebInterface KTorrent plugin
             </td>
             <td>
               <a href="login.html" title="LOGOUT">Logout</a> |  <a href="shutdown.php?quit=quit" title="Shutdown KTorrent">Shutdown KTorrent</a>
@@ -319,7 +315,7 @@
           </tr>
         </table>
       </div>
- 
+    </div>
     <script type="text/javascript" src="wz_tooltip.js"></script>
   </body>
 </html>

@@ -72,6 +72,7 @@ int main(int argc, char **argv)
 	about.addCredit(ki18n("Modestas Vainius"),ki18n("Several patches"),"modestas@vainius.eu");
 	about.addCredit(ki18n("Stefan Monov"),ki18n("Patch to hide menu bar"),"logixoul@gmail.com");
 	about.addCredit(ki18n("The_Kernel"),ki18n("Patch to change file priorities in the webgui"),"kernja@cs.earlham.edu");
+	about.addCredit(ki18n("Rafał Miłecki"),ki18n("Several webgui patches"),"zajec5@gmail.com");
 
 	KCmdLineArgs::init(argc, argv, &about);
 
