@@ -7,4 +7,4 @@ add_subdirectory(webinterface)
 add_subdirectory(scanfolder)
 add_subdirectory(ipfilter)
 add_subdirectory(stats)
-
+add_subdirectory(bwscheduler)

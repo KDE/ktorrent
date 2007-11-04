@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=BandwidthSchedulerPlugin
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktbwschedulerplugin
