@@ -18,6 +18,7 @@ set(default_data
 	normal_priority.png
 	high_priority.png
 	low_priority.png
-	dnd.png)
+	dnd.png
+	menu_bg.png)
 
 install(FILES ${default_data} DESTINATION ${DATA_INSTALL_DIR}/ktorrent/www/default)
