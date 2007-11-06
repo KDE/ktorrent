@@ -48,7 +48,7 @@ namespace kt
 	const QString DESCRIPTION = i18n("Automatically scans RSS feeds for torrent matching regular expressions and loads them.");
 
 	RssFeedPlugin::RssFeedPlugin(QObject* parent, const char* name, const QStringList& args)
-	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,DESCRIPTION,"player_playlist")
+	: Plugin(parent, name, args,NAME,i18n("RSS Feeds"),AUTHOR,EMAIL,DESCRIPTION,"player_playlist")
 	{
 		m_rssFeedManager = 0;
 	}

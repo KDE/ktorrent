@@ -169,8 +169,9 @@ namespace bt
 		
 		/**
 		 * Clear all pieces we are not in the progress of sending.
+		 * @param reject Send a reject packet
 		 */
-		void clearPieces();
+		void clearPieces(bool reject);
 	
 	private:
 		void queuePacket(Packet* p);

@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
- *   joris.guisson@gmail.com                                               *
+ *   Copyright (C) 2007 by Jaak Ristioja                                   *
+ *   Ristioja@gmail.com                                                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,31 +17,41 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef FUNCTIONS_H
-#define FUNCTIONS_H
+#ifndef KTFILEVIEWUPDATETHREAD_H
+#define KTFILEVIEWUPDATETHREAD_H
 
-#include <qstring.h>
-#include <util/constants.h>
+#include <qthread.h>
 
 namespace kt
 {
-	const double TO_KB = 1024.0;
-	const double TO_MEG = (1024.0 * 1024.0);
-	const double TO_GIG = (1024.0 * 1024.0 * 1024.0);
-
-	QString BytesToString(bt::Uint64 bytes,int precision = -1);
-	QString KBytesPerSecToString(double speed,int precision = 1);
-	QString DurationToString(bt::Uint32 nsecs);
-			
-	template<class T> int CompareVal(T a,T b)
+	class FileView;
+	class TorrentInterface;
+	
+	class FileViewUpdateThread : public QThread
 	{
-		if (a < b)
-			return -1;
-		else if (a > b)
-			return 1;
-		else
-			return 0;
-	}
-}
+		public:
+			FileViewUpdateThread(FileView* fileview);
+			~FileViewUpdateThread();
+			
+			void start(kt::TorrentInterface* new_tc, QThread::Priority priority);
+			void run();
+			
+			/**
+				Stops the running thread. It will do this in the background so when
+				returning from this function, the thread might not be completely
+				stopped yet. This is done as a safety measure to prevent failure in
+				arbitrary thread termination.
+			*/
+			void stop();
+		
+		private:
+			bool fillFileTree();
+		
+		private:
+			FileView* fileview;
+			kt::TorrentInterface* new_tc;
+			bool stopThread;
+	};
+};
 
 #endif

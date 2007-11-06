@@ -56,7 +56,7 @@ namespace kt
 	const QString DESCRIPTION = i18n("Bandwidth scheduling plugin");
 
 	SchedulerPlugin::SchedulerPlugin(QObject* parent, const char* name, const QStringList& args)
-	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,DESCRIPTION, "clock")
+	: Plugin(parent, name, args,NAME,i18n("Bandwidth Scheduler"),AUTHOR,EMAIL,DESCRIPTION, "clock")
 	{
 		setXMLFile("ktschedulerpluginui.rc");
 		bws_action = 0;

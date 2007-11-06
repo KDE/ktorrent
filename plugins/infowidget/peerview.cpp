@@ -17,6 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <kiconloader.h>
@@ -29,6 +32,7 @@
 #include <interfaces/peerinterface.h>
 #include <interfaces/functions.h>
 #include <torrent/ipblocklist.h>
+#include <util/log.h>
 #include "config.h"
 
 #ifdef USE_SYSTEM_GEOIP
@@ -113,7 +117,15 @@ namespace kt
 			setText(1,"N/A");
 		}
 		
-		setText(0,s.ip_address);
+	/*	if (s.fast_extensions)
+			setText(0,s.ip_address + " (F)");
+		else*/
+			setText(0,s.ip_address);
+			
+		struct in_addr addr = {0};
+		inet_aton(s.ip_address.ascii(),&addr);
+		ip = ntohl(addr.s_addr);
+			
 		setText(2,s.client);
 		
 		if (country_code)
@@ -174,12 +186,9 @@ namespace kt
 		const PeerInterface::Stats & os = op->getStats();
 		switch (col)
 		{
-			case 0: return QString::compare(s.ip_address,os.ip_address);
-			case 1:	
-			{
-				int ret = QString::compare(m_country, pvi->m_country);
-				return ret;
-			}	
+			case 0: return CompareVal(ip,pvi->ip); // use numeric representation to sort
+			//return QString::compare(s.ip_address,os.ip_address);
+			case 1:	return QString::compare(m_country, pvi->m_country);
 			case 2: return QString::compare(s.client,os.client);
 			case 3: return CompareVal(s.download_rate,os.download_rate);
 			case 4: return CompareVal(s.upload_rate,os.upload_rate);

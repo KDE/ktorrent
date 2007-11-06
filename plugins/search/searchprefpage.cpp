@@ -50,9 +50,12 @@ namespace kt
 	SearchPrefPageWidget::SearchPrefPageWidget(QWidget *parent) : SEPreferences(parent)
 	{
 		QString info = i18n("Use your web browser to search for the string %1"
-				" (capital letters) on the search engine you want to add. <br> Then copy the URL in the addressbar after the search is finished, and paste it here.<br><br>Searching for %2"
-				" on Google for example, will result in http://www.google.com/search?q=FOOBAR&ie=UTF-8&oe=UTF-8. <br> If you add this URL here, ktorrent can search using Google.").arg("FOOBAR").arg("FOOBAR");
-		QString info_short = i18n("Use your web browser to search for the string %1 (capital letters) on the search engine you want to add. Use the resulting URL below.").arg("FOOBAR");
+				" (capital letters) on the search engine you want to add. <br> "
+				"Then copy the URL in the addressbar after the search is finished, and paste it here.<br><br>Searching for %1"
+				" on Google for example, will result in http://www.google.com/search?q=FOOBAR&ie=UTF-8&oe=UTF-8. <br> "
+				"If you add this URL here, ktorrent can search using Google.").arg("FOOBAR").arg("FOOBAR");
+		QString info_short = i18n("Use your web browser to search for the string %1 (capital letters) "
+				"on the search engine you want to add. Use the resulting URL below.").arg("FOOBAR");
 		m_infoLabel->setText(info_short);
 		QToolTip::add(m_infoLabel,info);
 		QToolTip::add(m_engine_name,info);
@@ -166,7 +169,7 @@ namespace kt
      
 		se = new QListViewItem(m_engines, "thepiratebay.org", "http://thepiratebay.org/search.php?q=FOOBAR");
      
-		se = new QListViewItem(m_engines, "bitoogle.com", "http://search.bitoogle.com/search.php?q=FOOBAR&st=t");
+		se = new QListViewItem(m_engines, "bitoogle.com", "http://bitoogle.com/search.php?q=FOOBAR");
      
 		se = new QListViewItem(m_engines, "bytenova.org", "http://www.bitenova.org/search.php?search=FOOBAR&start=0&start=0&ie=utf-8&oe=utf-8");
      

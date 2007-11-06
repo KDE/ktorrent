@@ -40,7 +40,7 @@ namespace kt
 {
 
 	PartFileImportPlugin::PartFileImportPlugin(QObject* parent, const char* name, const QStringList& args)
-	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,i18n("Imports partially or fully downloaded torrents from other clients"),"ktplugins")
+	: Plugin(parent, name, args,NAME,i18n("Import"),AUTHOR,EMAIL,i18n("Imports partially or fully downloaded torrents from other clients"),"ktplugins")
 	{
 		setXMLFile("ktpartfileimportpluginui.rc");
 		import_action = 0;

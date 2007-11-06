@@ -51,6 +51,10 @@ namespace kt
 		btnAdd->setIconSet(iload->loadIconSet("add", KIcon::Small));
 		btnRemove->setIconSet(iload->loadIconSet("remove", KIcon::Small));
 		btnRestore->setIconSet(iload->loadIconSet("undo", KIcon::Small));
+		
+		QPalette p = lblCurrent->palette();
+		p.setColor(QPalette::Active,QColorGroup::Base,p.color(QPalette::Active,QColorGroup::Background));
+		lblCurrent->setPalette(p);
 	}
 	
 	TrackerView::~TrackerView()
@@ -165,7 +169,11 @@ namespace kt
 
 		lblStatus->setText("<b>" + s.trackerstatus + "</b>");
 		if (tc->getTrackersList())
-			lblCurrent->setText("<b>" + tc->getTrackersList()->getTrackerURL().prettyURL() + "</b>");
+		{
+			QString t = tc->getTrackersList()->getTrackerURL().prettyURL();
+			if (lblCurrent->text() != t )
+				lblCurrent->setText(t);
+		}
 		else
 			lblCurrent->clear();
 		

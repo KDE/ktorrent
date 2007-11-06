@@ -27,6 +27,7 @@
 #include <torrent/queuemanager.h>
 #include <interfaces/coreinterface.h>
 #include <interfaces/torrentinterface.h>
+#include <interfaces/torrentfileinterface.h>
 
 	/**
 	 * @author Diego R. Brogna
@@ -51,7 +52,7 @@ namespace kt
 			PhpActionExec(CoreInterface *c);
 			virtual ~PhpActionExec(){};
 			
-			bool exec(const QMap<QString, QString> & params,bool & shutdown);
+			bool exec(KURL & url,bool & shutdown);
 		private:	
 			CoreInterface *core;
 	};

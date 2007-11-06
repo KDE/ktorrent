@@ -41,7 +41,7 @@ using namespace kt;
 namespace bt
 {
 
-	QueueManager::QueueManager() : QObject()
+	QueueManager::QueueManager() : QObject(),exiting(false)
 	{
 		downloads.setAutoDelete(true);
 		max_downloads = 0;
@@ -248,6 +248,7 @@ namespace bt
 
 	void QueueManager::onExit(WaitJob* wjob)
 	{
+		exiting = true;
 		QPtrList<kt::TorrentInterface>::iterator i = downloads.begin();
 
 		while (i != downloads.end())
@@ -441,7 +442,7 @@ namespace bt
 		if (!downloads.count())
 			return;
 
-		if (paused_state)
+		if (paused_state || exiting)
 			return;
 
 		downloads.sort();

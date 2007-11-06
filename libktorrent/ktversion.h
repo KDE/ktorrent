@@ -27,10 +27,10 @@ namespace kt
 {
 	const bt::Uint32 MAJOR = 2;
 	const bt::Uint32 MINOR = 2;
-	const char VERSION_STRING[] = "2.2.2";
-	const char PEER_ID[] = "-KT2220-";
+	const char VERSION_STRING[] = "2.2.3";
+	const char PEER_ID[] = "-KT2230-";
 }
 
-#define KT_VERSION_MACRO "2.2.2"
+#define KT_VERSION_MACRO "2.2.3"
 
 #endif

@@ -47,7 +47,7 @@ namespace net
 		while (i != dlrate.end())
 		{
 			QPair<Uint32,TimeStamp> & p = *i;
-			if (now - p.second > SPEED_INTERVAL)
+			if (now - p.second > SPEED_INTERVAL || now < p.second)
 			{
 				if (bytes >= p.first) // make sure we don't wrap around
 					bytes -= p.first; // subtract bytes

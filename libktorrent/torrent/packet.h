@@ -61,9 +61,10 @@ namespace bt
 		Uint32 isSent() const {return written == size;}
 		
 		/**
-		 * If this packet is a piece, make a reject of it.
+		 * If this packet is a piece, make a reject for it.
+		 * @return The newly created Packet, 0 if this is not a piece
 		 */
-		void makeRejectOfPiece();
+		Packet* makeRejectOfPiece();
 		
 		/// Are we sending this packet ?
 		bool sending() const {return written > 0;}

@@ -148,6 +148,11 @@ namespace bt
 		file_priority_file = data_dir + "file_priority";
 	}
 	
+	void ChunkManager::moveDataFiles(const QString & ndir)
+	{
+		cache->moveDataFiles(ndir);
+	}
+	
 	void ChunkManager::changeOutputPath(const QString & output_path)
 	{
 		cache->changeOutputPath(output_path);

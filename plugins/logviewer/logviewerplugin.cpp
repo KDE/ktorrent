@@ -41,7 +41,7 @@ namespace kt
 {
 
 	LogViewerPlugin::LogViewerPlugin(QObject* parent, const char* qt_name, const QStringList& args)
-	: Plugin(parent, qt_name, args, NAME, AUTHOR, EMAIL,
+	: Plugin(parent, qt_name, args, NAME,i18n("Log Viewer"), AUTHOR, EMAIL,
 			 i18n("Displays ktorrent logging output"),"log")
 	{
 		lv = 0;

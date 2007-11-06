@@ -75,6 +75,14 @@ A:active { color : blue; }
 	color : inherit;
 }
 
+#torrent_list_table img {
+	opacity: 0.4;
+}
+
+#torrent_list_table a img {
+	opacity: 1.0;
+}
+
 #bottom-menu {
     margin-top : 1em;
   }

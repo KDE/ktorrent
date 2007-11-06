@@ -39,7 +39,7 @@ class KTorrentViewItem : public KListViewItem
 	kt::TorrentInterface* tc;
 	bt::Int64 eta;
 public:
-	KTorrentViewItem(QListView* parent,kt::TorrentInterface* tc);
+	KTorrentViewItem(KTorrentView* parent,kt::TorrentInterface* tc);
 	virtual ~KTorrentViewItem();
 
 	kt::TorrentInterface* getTC() {return tc;}

@@ -262,6 +262,10 @@ namespace bt
 	
 	void PeerDownloader::choked()
 	{
+		// choke doesn't mean reject when fast extensions are enabled
+		if (peer->getStats().fast_extensions)
+			return;
+		
 		QValueList<TimeStampedRequest>::iterator i = reqs.begin();
 		while (i != reqs.end())
 		{

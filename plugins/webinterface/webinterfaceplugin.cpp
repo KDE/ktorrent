@@ -41,7 +41,7 @@ using namespace bt;
 namespace kt
 {
 	WebInterfacePlugin::WebInterfacePlugin(QObject* parent, const char* name, const QStringList& args)
-	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,i18n("Allow to control ktorrent through browser"),"toggle_log")
+	: Plugin(parent, name, args,NAME,i18n("Web Interface"),AUTHOR,EMAIL,i18n("Allow to control ktorrent through browser"),"toggle_log")
 	{
 		http_server = 0;
 		pref=0;

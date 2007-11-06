@@ -233,6 +233,15 @@ KTorrent::KTorrent()
 	{
 		show();
 	}
+
+	bool menubar_hidden = KGlobal::config()->readBoolEntry("menubar_hidden",false);
+	menuBar()->setHidden(menubar_hidden);
+	m_menubarAction->setChecked(!menubar_hidden);
+
+	bool statusbar_hidden = KGlobal::config()->readBoolEntry("statusbar_hidden",false);
+	statusBar()->setHidden(statusbar_hidden);
+	m_statusbarAction->setChecked(!statusbar_hidden);
+
 	MaximizeLimits();
 	connect(&m_status_msg_expire,SIGNAL(timeout()),this,SLOT(statusBarMsgExpired()));
 }
@@ -265,7 +274,7 @@ void KTorrent::openView(kt::Group* g)
 	connect(v,SIGNAL(wantToRemove(kt::TorrentInterface*,bool )),
 			m_core,SLOT(remove(kt::TorrentInterface*,bool )));
 
-	connect(v,SIGNAL(dropped(QDropEvent*,QListViewItem*)),
+	connect(v->listView(),SIGNAL(dropped(QDropEvent*,QListViewItem*)),
 			this,SLOT(urlDropped(QDropEvent*,QListViewItem*)));
 	
 	connect(v,SIGNAL(wantToStart( kt::TorrentInterface* )),
@@ -380,7 +389,8 @@ void KTorrent::applySettings(bool change_port)
 	net::SocketMonitor::setUploadCap(Settings::maxUploadRate()*1024);
 	net::SocketMonitor::setSleepTime(Settings::cpuUsage());
 	m_core->setKeepSeeding(Settings::keepSeeding());
-	mse::StreamSocket::setTOS(Settings::typeOfService());
+	mse::StreamSocket::setTOS(Settings::dSCP() << 2);
+	mse::StreamSocket::setMaxConnecting(Settings::maxConnectingSockets());
 	if (Settings::allwaysDoUploadDataCheck())
 		ChunkManager::setMaxChunkSizeForDataCheck(0);
 	else
@@ -490,6 +500,7 @@ void KTorrent::setupActions()
 	KStdAction::paste(kapp,SLOT(paste()),actionCollection());
 
 	m_statusbarAction = KStdAction::showStatusbar(this, SLOT(optionsShowStatusbar()), actionCollection());
+	m_menubarAction = KStdAction::showMenubar(this, SLOT(optionsShowMenubar()), actionCollection()); 
 
 	KStdAction::keyBindings(this, SLOT(optionsConfigureKeys()), actionCollection());
 	KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
@@ -539,6 +550,8 @@ void KTorrent::setupActions()
 			i18n("Check Data Integrity"),
 	QString::null,0,m_view_man,SLOT(checkDataIntegrity()),actionCollection(),"check_data");
 	
+	m_find = KStdAction::find(this,SLOT(find()),actionCollection());
+	
 	//Plug actions to systemtray context menu
 	m_startall->plug(m_systray_icon->contextMenu());
 	m_stopall->plug(m_systray_icon->contextMenu());
@@ -579,7 +592,9 @@ bool KTorrent::queryExit()
 	m_gui_update_timer.stop();
 	
 	KGlobal::config()->setGroup("WindowStatus");
-	KGlobal::config()->writeEntry( "hidden_on_exit",this->isHidden());
+	KGlobal::config()->writeEntry("hidden_on_exit",this->isHidden());
+	KGlobal::config()->writeEntry("menubar_hidden",menuBar()->isHidden());
+	KGlobal::config()->writeEntry("statusbar_hidden",statusBar()->isHidden());
 	m_view_man->saveViewState(KGlobal::config());
 	saveSettings();
 	hide();
@@ -660,6 +675,16 @@ void KTorrent::optionsShowStatusbar()
 		statusBar()->hide();
 }
 
+void KTorrent::optionsShowMenubar()
+{
+	// this is all very cut and paste code for showing/hiding the
+	// menubar
+	if (m_menubarAction->isChecked())
+		menuBar()->show();
+	else
+		menuBar()->hide();
+}
+
 void KTorrent::optionsConfigureKeys()
 {
 	KKeyDialog::configure(actionCollection());
@@ -723,22 +748,10 @@ void KTorrent::changeCaption(const QString& text)
 
 void KTorrent::saveProperties(KConfig* )
 {
-	KGlobal::config()->writeEntry( "hidden_on_exit",this->isHidden());
-	KGlobal::config()->sync();
 }
 
 void KTorrent::readProperties(KConfig*)
 {
-	bool hidden_on_exit = KGlobal::config()->readBoolEntry("hidden_on_exit",false);
-	if (!(Settings::showSystemTrayIcon() && hidden_on_exit))
-	{
-		Out(SYS_GEN|LOG_DEBUG) << "Showing KT" << endl;
-		show();
-	}
-	else
-	{
-		hide();
-	}
 }
 
 void KTorrent::urlDropped(QDropEvent* event,QListViewItem*)
@@ -974,6 +987,13 @@ void KTorrent::removeProgressBarFromStatusBar(KProgress* p)
 void KTorrent::statusBarMsgExpired()
 {
 	m_statusInfo->clear();
+}
+
+void KTorrent::find()
+{
+	KTorrentView* v = m_view_man->getCurrentView();
+	if (v)
+		v->showFilterBar();
 }
 
 #include "ktorrent.moc"

@@ -81,7 +81,7 @@ void TrayHoverPopup::leaveEvent()
 	// is on the edge, use a timer to expire the popup
 	// in enterEvent we will stop the timer
 	if (isShown())
-		hover_timer.start(2000,true);
+		hover_timer.start(200,true);
 }
 
 void TrayHoverPopup::onHoverTimeout()

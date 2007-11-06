@@ -43,7 +43,7 @@ namespace kt
 	const QString DESCRIPTION = i18n("Filters out unwanted peers based on their IP address");
 
 	IPFilterPlugin::IPFilterPlugin(QObject* parent, const char* name, const QStringList& args)
-	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,DESCRIPTION,"filter")
+	: Plugin(parent, name, args,NAME,i18n("IP Filter"),AUTHOR,EMAIL,DESCRIPTION,"filter")
 	{
 		// setXMLFile("ktpluginui.rc");
 		level1 = 0;

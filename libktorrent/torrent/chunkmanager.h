@@ -99,6 +99,12 @@ namespace bt
 		void changeDataDir(const QString & data_dir);
 		
 		/**
+		 * Move the data files of the torrent.
+		 * @param ndir The new directory
+		 */
+		void moveDataFiles(const QString & ndir);
+		
+		/**
 		 * Loads the index file.
 		 * @throw Error When it can be loaded
 		 */

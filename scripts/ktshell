@@ -234,7 +234,7 @@ settings () {
 			;;
 		"8")
 			read -p "Enter full path to new temp data directory: " ddpath
-			$ktorrent changeDataDir \"$ddpath\"
+			$ktorrent changeDataDir "$ddpath"
 			break
 			;;
 		"9")
@@ -295,7 +295,7 @@ mainmenu () {
 			;;
 		"6")
 			read -p "Enter full path to the torrent: " tpath
-			$ktorrent openTorrentSilently \"$tpath\"
+			$ktorrent openTorrentSilently "$tpath"
 			echo "$tpath added"
 			;;
 		"7")

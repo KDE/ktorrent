@@ -145,7 +145,7 @@ int main(int argc, char **argv)
 	about.addCredit("Thomas Bernard",I18N_NOOP("Miniupnp was used as an example for our own UPnP implementation"),0,"http://miniupnp.free.fr/");
 	about.addCredit("Diego Rosario Brogna",I18N_NOOP("Global max share ratio patch"),0,"dierbro@gmail.com");
 	about.addCredit("Lesly Weyts",I18N_NOOP("Zeroconf enhancements"),0,0);
-	about.addCredit("Kevin Andre",I18N_NOOP("Zeroconf enhancements"),0,"http://users.telenet.be/hyperquantum");
+	about.addCredit("Kevin Andre",I18N_NOOP("Zeroconf enhancements"),0,"http://users.edpnet.be/hyperquantum/");
 	about.addCredit("Dagur Valberg Johannsson",I18N_NOOP("Coldmilk webgui"),"dagurval@pvv.ntnu.no");
 	about.addCredit("Alexander Dymo",I18N_NOOP("IDEAl code from KDevelop"),"adymo@kdevelop.org");
 	about.addCredit("Scott Wolchok",I18N_NOOP("Conversion speed improvement in ipfilter plugin"),"swolchok@umich.edu");
@@ -156,6 +156,11 @@ int main(int argc, char **argv)
 	about.addCredit("twisted_fall",I18N_NOOP("Patch to not show very low speeds"),"twisted.fall@gmail.com");
 	about.addCredit("Lucke",I18N_NOOP("Patch to show potentially firewalled status"),0);
 	about.addCredit("Modestas Vainius",I18N_NOOP("Several patches"),"modestas@vainius.eu");
+	about.addCredit("Jaak Ristioja",I18N_NOOP("Patch to update the FileView in a separate thread"),"Ristioja@gmail.com");
+	about.addCredit("Stefan Monov",I18N_NOOP("Patch to hide the menubar"),"logixoul@gmail.com");
+	about.addCredit("The_Kernel",I18N_NOOP("Patch to modify file priorities in the webgui"),"kernja@cs.earlham.edu");
+	about.addCredit("Rafał Miłecki",I18N_NOOP("Several webgui patches"),"zajec5@gmail.com");
+	about.addCredit("Lukasz Fibinger",I18N_NOOP("Filterbar patch"),"lucke@o2.pl");
 
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);

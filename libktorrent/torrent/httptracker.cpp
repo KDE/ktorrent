@@ -428,6 +428,8 @@ namespace bt
 			KURL url = KURL::fromPathOrURL(Settings::httpTrackerProxy());
 			if (url.isValid())
 				md["UseProxy"] = url.pathOrURL();
+			else
+				md["UseProxy"] = QString::null;
 		}
 	}
 	

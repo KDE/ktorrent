@@ -162,6 +162,7 @@ private slots:
 	void removeDownload();
 	void queueManagerShow();
 	void optionsShowStatusbar();
+	void optionsShowMenubar();
 	void optionsConfigureKeys();
 	void optionsConfigureToolbars();
 	void optionsPreferences();
@@ -178,6 +179,7 @@ private slots:
 	void currentTabChanged(QWidget* w);
 	void openDefaultView();
 	void statusBarMsgExpired();
+	void find();
 	
 private:
 	void setupAccel();
@@ -194,6 +196,7 @@ private:
 	kt::GroupView* m_group_view;
 	ViewManager* m_view_man;
 	KToggleAction *m_statusbarAction;
+	KToggleAction* m_menubarAction;
 	
 	KTorrentCore* m_core;
 	TrayIcon* m_systray_icon;
@@ -223,6 +226,7 @@ private:
 	KAction* m_queueaction;
 	KAction* m_datacheck;
 	KAction* m_ipfilter;
+	KAction* m_find;
 	
 	KProgress* m_status_prog;
 };

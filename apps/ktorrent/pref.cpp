@@ -421,7 +421,7 @@ bool AdvancedPrefPage::apply()
 {
 	Settings::setMemoryUsage(ap->mem_usage->currentItem());
 	Settings::setGuiUpdateInterval(ap->gui_interval->currentItem());
-	Settings::setTypeOfService(ap->tos_byte->value());
+	Settings::setDSCP(ap->dscp->value());
 	Settings::setAllwaysDoUploadDataCheck(!ap->no_recheck->isChecked());
 	Settings::setMaxSizeForUploadDataCheck(ap->recheck_size->value());
 	Settings::setAutoRecheck(ap->auto_recheck->isChecked());
@@ -433,6 +433,7 @@ bool AdvancedPrefPage::apply()
 	Settings::setFullDiskPreallocMethod(ap->full_prealloc_method->currentItem());
 	Settings::setCpuUsage(ap->cpu_usage->value());
 	Settings::setDiskPrealloc(!ap->prealloc_disabled->isChecked());
+	Settings::setMaxConnectingSockets(ap->max_con_setups->value());
 	return true;
 }
 
@@ -440,7 +441,7 @@ void AdvancedPrefPage::updateData()
 {
 	ap->mem_usage->setCurrentItem(Settings::memoryUsage());
 	ap->gui_interval->setCurrentItem(Settings::guiUpdateInterval());
-	ap->tos_byte->setValue(Settings::typeOfService());
+	ap->dscp->setValue(Settings::dSCP());
 	ap->no_recheck->setChecked(!Settings::allwaysDoUploadDataCheck());
 	ap->recheck_size->setEnabled(!Settings::allwaysDoUploadDataCheck());
 	ap->recheck_size->setValue(Settings::maxSizeForUploadDataCheck());
@@ -455,6 +456,7 @@ void AdvancedPrefPage::updateData()
 	ap->full_prealloc_method->setCurrentItem(Settings::fullDiskPreallocMethod());
 	ap->cpu_usage->setValue(Settings::cpuUsage());
 	ap->prealloc_disabled->setChecked(!Settings::diskPrealloc());
+	ap->max_con_setups->setValue(Settings::maxConnectingSockets());
 }
 
 void AdvancedPrefPage::createWidget(QWidget* parent)

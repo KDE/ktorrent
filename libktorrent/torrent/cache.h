@@ -65,6 +65,12 @@ namespace bt
 		virtual void changeTmpDir(const QString & ndir);
 		
 		/**
+		 * Move the data files to a new directory.
+		 * @param ndir The directory
+		 */
+		virtual void moveDataFiles(const QString & ndir) = 0;
+		
+		/**
 		 * Changes output path. All data files should already been moved.
 		 * This just modifies the datadir variable.
 		 * @param outputpath New output path

@@ -57,7 +57,7 @@ namespace net
 		int accept(Address & a);
 		bool ok() const {return m_fd >= 0;}
 		int fd() const {return m_fd;}
-		bool setTOS(char type_of_service);
+		bool setTOS(unsigned char type_of_service);
 		const Address & getPeerName() const {return addr;}
 		void close();
 		State state() const {return m_state;}

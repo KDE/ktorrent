@@ -26,7 +26,7 @@ namespace kt
 {
 
 StatsPlugin::StatsPlugin(QObject* parent, const char* qt_name, const QStringList& args):
-		Plugin(parent, qt_name, args, "Statistics", "Krzysztof Kundzicz", "athantor@gmail.com", i18n("Shows transfers statistics"),"ktimemon"), pmUiSpd(0), pmUiCon(0), pmPrefsUi(0), pmUpdTmr(0)
+		Plugin(parent, qt_name, args, "Statistics", i18n("Statistics"),"Krzysztof Kundzicz", "athantor@gmail.com", i18n("Shows transfers statistics"),"ktimemon"), pmUiSpd(0), pmUiCon(0), pmPrefsUi(0), pmUpdTmr(0)
 { 
 	mUpAvg = std::make_pair(0.0, 0.0);
 	mDownAvg = std::make_pair(0.0, 0.0);

@@ -59,6 +59,7 @@ namespace kt
 
 		public slots:
 			void processLink(KIO::Job* jobStatus);
+			void suicide();
 			
 		signals:
 			void linkDownloaded( QString link, int downloaded );

@@ -52,6 +52,11 @@ namespace bt
 		cache_file = tmpdir + "cache";
 	}
 	
+	void SingleFileCache::moveDataFiles(const QString & ndir)
+	{
+		bt::Move(output_file,ndir);
+	}
+	
 	void bt::SingleFileCache::changeOutputPath(const QString & outputpath)
 	{
 		bt::Delete(cache_file);

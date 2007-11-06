@@ -150,6 +150,16 @@ namespace mse
 		 * @param down Download group ID
 		 */
 		void setGroupIDs(Uint32 up,Uint32 down);
+		
+		/**
+		 * Check if we are allowed to initiate another outgoing connection.
+		 */
+		static bool canInitiateNewConnection() {return num_connecting < max_connecting;}
+		
+		/**
+		 * Set the maximum number of connecting sockets we are allowed to have.
+		 */
+		static void setMaxConnecting(Uint32 mc) {max_connecting = mc;}
 	private:
 		virtual void onDataReady(Uint8* buf,Uint32 size);
 		virtual Uint32 onReadyToWrite(Uint8* data,Uint32 max_to_write);
@@ -166,6 +176,8 @@ namespace mse
 		net::SocketWriter* wrt;
 		
 		static Uint8 tos;
+		static Uint32 num_connecting; // the number of connections we have in SYN_SENT state
+		static Uint32 max_connecting;
 	};
 
 }

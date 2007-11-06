@@ -63,6 +63,6 @@ namespace kt
 		QValueList<FlagDBSource> sources;
 		QMap<QString,QPixmap> db;
 	};
-};
+}
 
  #endif

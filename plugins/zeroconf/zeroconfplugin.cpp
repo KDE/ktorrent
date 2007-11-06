@@ -38,7 +38,7 @@ namespace kt
 {
 
 	ZeroConfPlugin::ZeroConfPlugin(QObject* parent, const char* name, const QStringList& args)
-	: Plugin(parent, name,args,NAME,AUTHOR,QString::null,i18n("Finds peers running ktorrent on the local network to share torrents with"),"ktplugins")
+	: Plugin(parent, name,args,NAME,i18n("Zeroconf"),AUTHOR,QString::null,i18n("Finds peers running ktorrent on the local network to share torrents with"),"ktplugins")
 	{
 		services.setAutoDelete(true);
 	}

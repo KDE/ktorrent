@@ -43,6 +43,8 @@ namespace mse
 {
 	
 	Uint8 StreamSocket::tos = IPTOS_THROUGHPUT;
+	Uint32 StreamSocket::num_connecting = 0;
+	Uint32 StreamSocket::max_connecting = 50;
 
 	StreamSocket::StreamSocket() : sock(0),enc(0),monitored(false)
 	{
@@ -66,6 +68,10 @@ namespace mse
 
 	StreamSocket::~StreamSocket()
 	{
+		// make sure the number of connecting sockets is updated
+		if (connecting() && num_connecting > 0)
+			num_connecting--;
+		
 		SocketMonitor::instance().remove(sock);
 		delete [] reinserted_data;
 		delete enc;
@@ -188,6 +194,11 @@ namespace mse
 			sock->setTOS(tos);
 			return true;
 		}
+		else if (connecting())
+		{
+			num_connecting++;
+		}
+		
 		return false;
 	}
 			
@@ -298,6 +309,9 @@ namespace mse
 		bool ret = sock->connectSuccesFull();
 		if (ret)
 			sock->setTOS(tos);
+		
+		if (num_connecting > 0)
+			num_connecting--;
 		
 		return ret;
 	}

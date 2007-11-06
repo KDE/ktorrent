@@ -39,7 +39,7 @@ namespace kt
 		Plugin* p;
 	public:
 		PluginViewItem(Plugin* p,LabelView* parent) 
-			: LabelViewItem(p->getIcon(),p->getName(),p->getDescription(),parent),p(p)
+			: LabelViewItem(p->getIcon(),p->getGuiName(),p->getDescription(),parent),p(p)
 		{
 			update();
 		}
@@ -49,7 +49,7 @@ namespace kt
 		
 		virtual void update()
 		{
-			setTitle("<h3>" + p->getName() + "</h3>");
+			setTitle("<h3>" + p->getGuiName() + "</h3>");
 			setDescription(
 				i18n("%1<br>Status: <b>%2</b><br>Author: %3").arg(p->getDescription())
 					.arg(p->isLoaded() ? i18n("Loaded") : i18n("Not loaded"))

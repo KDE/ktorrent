@@ -597,8 +597,8 @@ void KTorrentCore::onExit()
 	else
 		delete job;
 	
-	qman->clear();
 	pman->unloadAll(false);
+	qman->clear();
 }
 
 bool KTorrentCore::changeDataDir(const QString & new_dir)
@@ -1067,7 +1067,7 @@ void KTorrentCore::aboutToBeStarted(kt::TorrentInterface* tc,bool & ret)
 	else
 	{
 		QString msg = i18n("The file where the data is saved of the torrent \"%1\" is missing, do you want to recreate it?").arg(tc->getStats().torrent_name);
-		int ret = KMessageBox::warningYesNo(0,msg, i18n("Recreate"), KStdGuiItem::yes(), KStdGuiItem::cancel());
+		int ret = KMessageBox::warningYesNo(0,msg, i18n("Recreate"),KGuiItem(i18n("Recreate")),KGuiItem(i18n("Do Not Recreate")));
 		if (ret == KMessageBox::Yes)
 		{
 			try

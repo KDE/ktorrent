@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "rsslinkdownloader.h"
 
+#include <klocale.h>
 #include <kmimetype.h>
 #include <kmessagebox.h>
 
@@ -38,10 +39,19 @@ namespace kt
 			m_core = core;
 			firstLink = true;
 			curFilter = filter;
-			//first let's download the link so we can process it to check for the actual torrent
-			curLink = curSubLink = link;
-			curFile = KIO::storedGet(link,false,false);
-			connect(curFile, SIGNAL(result(KIO::Job*)),this,SLOT(processLink( KIO::Job* )));
+			if (!KURL(link).isValid())
+			{
+				// no valid URL, so just display an error message
+				KMessageBox::error(0,i18n("Failed to find and download a valid torrent for %1").arg(curLink));
+				QTimer::singleShot(50,this,SLOT(suicide()));
+			}
+			else
+			{
+				//first let's download the link so we can process it to check for the actual torrent
+				curLink = curSubLink = link;
+				curFile = KIO::storedGet(link,false,false);
+				connect(curFile, SIGNAL(result(KIO::Job*)),this,SLOT(processLink( KIO::Job* )));
+			}
 		}
 	
 	RssLinkDownloader::~RssLinkDownloader()
@@ -170,10 +180,9 @@ namespace kt
 			else
 				{
 				//failed to download a selected article from a feed
-				KMessageBox::error(0,"Failed to find and download a valid torrent for " + curLink);
-				return;
+				KMessageBox::error(0,i18n("Failed to find and download a valid torrent for %1").arg(curLink));
 				}
-			deleteLater();
+				deleteLater();
 			}
 		else
 			{
@@ -183,5 +192,11 @@ namespace kt
 			connect(curFile, SIGNAL(result(KIO::Job*)),this,SLOT(processLink( KIO::Job* )));
 			}
 		}
+	
+	
+	void RssLinkDownloader::suicide()
+	{
+		deleteLater();
 	}
 
+}

@@ -842,7 +842,13 @@ namespace bt
 			if (stats.output_path != nd)
 			{
 				if(moveFiles)
-					bt::Move(stats.output_path, new_dir);
+				{
+					if (stats.multi_file_torrent)
+						cman->moveDataFiles(nd);
+					else
+						cman->moveDataFiles(new_dir);
+					// bt::Move(stats.output_path, new_dir);
+				}
 				
 				cman->changeOutputPath(nd);
 				outputdir = stats.output_path = nd;

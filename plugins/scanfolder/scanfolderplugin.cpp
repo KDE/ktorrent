@@ -49,7 +49,7 @@ namespace kt
 	const QString DESCRIPTION = i18n("Automatically scans directories for torrent files and loads them.");
 
 	ScanFolderPlugin::ScanFolderPlugin(QObject* parent, const char* name, const QStringList& args)
-	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,DESCRIPTION,"view_sidetree")
+	: Plugin(parent, name, args,NAME,i18n("Scan Folder"),AUTHOR,EMAIL,DESCRIPTION,"view_sidetree")
 	{
 // 		setXMLFile("ktscanfolderpluginui.rc");
 		m_sf1 = 0;

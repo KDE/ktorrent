@@ -258,17 +258,17 @@ namespace net
 		return sfd;
 	}
 	
-	bool Socket::setTOS(char type_of_service)
+	bool Socket::setTOS(unsigned char type_of_service)
 	{
 #if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020) || defined(Q_OS_NETBSD) || defined(Q_OS_BSD4)
-		int c = type_of_service;
+		unsigned int c = type_of_service;
 #else
-		char c = type_of_service;
+		unsigned char c = type_of_service;
 #endif
 		if (setsockopt(m_fd,IPPROTO_IP,IP_TOS,&c,sizeof(c)) < 0)
 		{
 			Out(SYS_CON|LOG_NOTICE) << QString("Failed to set TOS to %1 : %2")
-					.arg((int)type_of_service).arg(strerror(errno)) << endl;
+					.arg(type_of_service).arg(strerror(errno)) << endl;
 			return false;
 		}
 		return true;

@@ -175,6 +175,16 @@
 			<min>0</min>
 			<max>255</max>
 		</entry>
+		<entry name="DSCP" type="Int">
+			<default>0</default>
+			<min>0</min>
+			<max>63</max>
+		</entry>
+		<entry name="maxConnectingSockets" type="Int">
+			<default>50</default>
+			<min>10</min>
+			<max>500</max>
+		</entry>
 		<entry name="autoRecheck" type="Bool">
 			<default>true</default>
 		</entry>

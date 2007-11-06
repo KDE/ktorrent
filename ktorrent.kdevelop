@@ -27,7 +27,7 @@
       <useactivetarget>true</useactivetarget>
     </general>
     <run>
-      <mainprogram>/home/joris/ktorrent/trunk/debug/apps/ktorrent/ktorrent</mainprogram>
+      <mainprogram>/home/joris/ktorrent/bf/debug/apps/ktorrent/ktorrent</mainprogram>
       <terminal>false</terminal>
       <directoryradio>executable</directoryradio>
       <customdirectory>/</customdirectory>
@@ -244,10 +244,7 @@
     <dest>/home/joris/ktorrent/code</dest>
   </substmap>
   <kdevcppsupport>
-    <references>
-      <pcs>Qt</pcs>
-      <pcs>KDElibs</pcs>
-    </references>
+    <references/>
     <codecompletion>
       <includeGlobalFunctions>true</includeGlobalFunctions>
       <includeTypes>true</includeTypes>

@@ -48,7 +48,7 @@ namespace kt
 	
 
 	InfoWidgetPlugin::InfoWidgetPlugin(QObject* parent, const char* name, const QStringList& args)
-	: Plugin(parent, name, args,NAME,AUTHOR,EMAIL,
+	: Plugin(parent, name, args,NAME,i18n("Info Widget"),AUTHOR,EMAIL,
 			 i18n("Shows additional information about a download. Like which chunks have been downloaded, how many seeders and leechers ..."),
 			 "ktinfowidget")
 	{

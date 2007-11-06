@@ -17,13 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <klocale.h>
 #include <kiconloader.h>
+#include <klocale.h>
 #include <kglobal.h>
 #include <kpopupmenu.h>
 #include <krun.h>
 #include <kmessagebox.h>
-#include <kmimetype.h>
 #include <util/bitset.h>
 #include <util/functions.h>
 #include <interfaces/functions.h>
@@ -33,6 +32,7 @@
 #include "functions.h"
 #include "iwfiletreeitem.h"
 #include "iwfiletreediritem.h"
+#include "fileviewupdatethread.h"
 #include "fileview.h"
 		
 using namespace bt;
@@ -43,6 +43,8 @@ namespace kt
 	FileView::FileView(QWidget *parent, const char *name)
 			: KListView(parent, name),curr_tc(0),multi_root(0)
 	{
+		update_thread = new FileViewUpdateThread(this);
+		
 		setFrameShape(QFrame::NoFrame);
 		addColumn( i18n( "File" ) );
     	addColumn( i18n( "Size" ) );
@@ -83,57 +85,25 @@ namespace kt
 
 
 	FileView::~FileView()
-	{}
-	
-	void FileView::fillFileTree()
 	{
-		multi_root = 0;
-		clear();
-	
-		if (!curr_tc)
-			return;
-	
-		if (curr_tc->getStats().multi_file_torrent)
-		{
-			IWFileTreeDirItem* root = new IWFileTreeDirItem(
-					this,curr_tc->getStats().torrent_name);
-			
-			for (Uint32 i = 0;i < curr_tc->getNumFiles();i++)
-			{
-				TorrentFileInterface & file = curr_tc->getTorrentFile(i);
-				root->insert(file.getPath(),file);
-			}
-			root->setOpen(true);
-			setRootIsDecorated(true);
-			multi_root = root;
-			multi_root->updatePriorityInformation(curr_tc);
-			multi_root->updatePercentageInformation();
-			multi_root->updatePreviewInformation(curr_tc);
+		if (update_thread) {
+			update_thread->stop();
+			update_thread->wait();
 		}
-		else
-		{
-			const TorrentStats & s = curr_tc->getStats();
-			this->setRootIsDecorated(false);
-			KListViewItem* item = new KListViewItem(
-					this,
-					s.torrent_name,
-					BytesToString(s.total_bytes));
-	
-			item->setPixmap(0,KMimeType::findByPath(s.torrent_name)->pixmap(KIcon::Small));
-		}
+		delete update_thread;
 	}
 
 	void FileView::changeTC(kt::TorrentInterface* tc)
 	{
 		if (tc == curr_tc)
 			return;
-	
-		curr_tc = tc;
-		fillFileTree();
-		setEnabled(tc != 0);
-		if (tc)
-			connect(tc,SIGNAL(missingFilesMarkedDND( kt::TorrentInterface* )),
-					this,SLOT(refreshFileTree( kt::TorrentInterface* )));
+		
+		if (update_thread) {
+			update_thread->stop();
+			update_thread->wait();
+		}
+		
+		update_thread->start(tc, QThread::LowPriority);
 	}
 	
 	void FileView::update()
@@ -146,6 +116,12 @@ namespace kt
 			readyPreview();
 			readyPercentage();
 		}
+	}
+	
+	void FileView::viewportPaintEvent(QPaintEvent* pe) {
+		eventlock.lock();
+		KListView::viewportPaintEvent(pe);
+		eventlock.unlock();
 	}
 	
 	void FileView::readyPercentage()

@@ -23,11 +23,11 @@ namespace kt
 {
 
 	Plugin::Plugin(QObject *parent, const char* qt_name,const QStringList & /*args*/,
-				   const QString & name,const QString & author,
+				   const QString & name,const QString & gui_name,const QString & author,
 				   const QString & email,const QString & description,
 				   const QString & icon)
 	: KParts::Plugin(parent,qt_name),
-	name(name),author(author),email(email),description(description),icon(icon)
+	name(name),author(author),email(email),description(description),icon(icon),gui_name(gui_name)
 	{
 		core = 0;
 		gui = 0;

@@ -32,8 +32,10 @@ class KTorrentViewItem;
 class KPopupMenu;
 class KTorrentCore;
 class KTorrentViewMenu;
+class KTorrentView;
 class ScanDialog;
 class QString;
+class FilterBar;
 
 namespace kt
 {
@@ -43,10 +45,22 @@ namespace kt
 
 using namespace bt;
 
+class TorrentView : public KListView
+{
+public:
+	TorrentView(KTorrentView* parent);
+	virtual ~TorrentView();
+	
+	virtual bool eventFilter(QObject* watched, QEvent* e);
+		
+private:
+	KTorrentView* ktview;
+};
+
 /**
  * List view which shows information about torrents.
  */
-class KTorrentView : public KListView
+class KTorrentView : public QWidget
 {
 	Q_OBJECT
 public:
@@ -88,11 +102,6 @@ public:
 	void addSelectionToGroup(kt::Group* g);
 	
 	/**
-	 * Reimplemented for header context menu
-	 */
-	bool eventFilter(QObject* watched, QEvent* e);
-	
-	/**
 	 * Is column visible?
 	 */
 	bool columnVisible(int index);
@@ -102,6 +111,15 @@ public:
 	 * This will hide some columns for uploads only groups.
 	 */
 	void setupViewColumns();
+	
+	QPtrList<QListViewItem> selectedItems() {return view->selectedItems();}
+		
+	KListView* listView() {return view;}
+	
+	/**
+	 * Show the filter bar
+	 */
+	void showFilterBar();
 	
 public slots:
 	void setCurrentGroup(kt::Group* group);
@@ -159,7 +177,9 @@ private:
 	void insertColumn(QString label, Qt::AlignmentFlags);
 	void columnHide(int index);
 	void columnShow(int index);	
-		
+	virtual void keyReleaseEvent(QKeyEvent* event);
+	
+	
 private:
 	QMap<kt::TorrentInterface*,KTorrentViewItem*> items;
 	KTorrentViewMenu* menu;
@@ -167,6 +187,10 @@ private:
 	kt::Group* current_group;
 	Uint32 running;
 	Uint32 total;
+	TorrentView* view;
+	FilterBar* filter_bar;
+	
+	friend class TorrentView;
 };
 
 #endif // _KTORRENTVIEW_H_

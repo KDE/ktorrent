@@ -169,17 +169,24 @@ namespace kt
 		int session_id = 0;
 		if (hdr.hasKey("Cookie"))
 		{
-			QStringList tokens = QStringList::split('=',hdr.value("Cookie"));
-			for (int i = 0;i < tokens.count() - 1;i+= 2)
-			{
-				if (tokens[i]=="KT_SESSID")
-				{
-					session_id = tokens[i+1].toInt();
-					break;
-				}
-			}
-			if (session_id == 0)
+			QString cookie = hdr.value("Cookie");
+			int idx = cookie.find("KT_SESSID=");
+			if (idx == -1)
 				return false;
+			
+			QString number;
+			idx += QString("KT_SESSID=").length();
+			while (idx < cookie.length())
+			{
+				if (cookie[idx] >= '0' && cookie[idx] <= '9')
+					number += cookie[idx];
+				else
+					break;
+				
+				idx++;
+			}
+					
+			session_id = number.toInt();
 		}
 		
 	
@@ -214,11 +221,34 @@ namespace kt
 		else
 			return QString::null;
 	}
+	
+	// HTTP needs non translated dates
+	static QString days[] = {
+		"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
+	};
+	
+	static QString months[] = {
+		"Jan","Feb","Mar","Apr",
+		"May","Jun","Jul","Aug",
+		"Sep","Oct","Nov","Dec"
+	};
+	
+	static QString DateTimeToString(const QDateTime & now,bool cookie)
+	{
+		if (!cookie)
+			return now.toString("%1, dd %2 yyyy hh:mm:ss UTC")
+				.arg(days[now.date().dayOfWeek() - 1])
+				.arg(months[now.date().month() - 1]);
+		else
+			return now.toString("%1, dd-%2-yyyy hh:mm:ss GMT")
+				.arg(days[now.date().dayOfWeek() - 1])
+				.arg(months[now.date().month() - 1]);
+	}
 		
 	void HttpServer::setDefaultResponseHeaders(HttpResponseHeader & hdr,const QString & content_type,bool with_session_info)
 	{
 		hdr.setValue("Server","KTorrent/" KT_VERSION_MACRO);
-		hdr.setValue("Date",QDateTime::currentDateTime(Qt::UTC).toString("ddd, dd MMM yyyy hh:mm:ss UTC"));
+		hdr.setValue("Date",DateTimeToString(QDateTime::currentDateTime(Qt::UTC),false));
 		hdr.setValue("Content-Type",content_type);
 		hdr.setValue("Connection","keep-alive");
 		if (with_session_info && session.sessionId && session.logged_in)
@@ -299,7 +329,7 @@ namespace kt
 			{
 				// clear cookie in case of login page
 				QDateTime dt = QDateTime::currentDateTime().addDays(-1);
-				QString cookie = QString("KT_SESSID=666; expires=%1 +0000").arg(dt.toString("ddd, dd MMM yyyy hh:mm:ss"));
+				QString cookie = QString("KT_SESSID=666; expires=%1 +0000").arg(DateTimeToString(dt,true));
 				rhdr.setValue("Set-Cookie",cookie);
 			}
 			
@@ -320,8 +350,8 @@ namespace kt
 					HttpResponseHeader rhdr(304);
 					setDefaultResponseHeaders(rhdr,"text/html",true);
 					rhdr.setValue("Cache-Control","max-age=0");
-					rhdr.setValue("Last-Modified",fi.lastModified().toString("ddd, dd MMM yyyy hh:mm:ss UTC"));
-					rhdr.setValue("Expires",QDateTime::currentDateTime(Qt::UTC).addSecs(3600).toString("ddd, dd MMM yyyy hh:mm:ss UTC"));
+					rhdr.setValue("Last-Modified",DateTimeToString(fi.lastModified(),false));
+					rhdr.setValue("Expires",DateTimeToString(QDateTime::currentDateTime(Qt::UTC).addSecs(3600),false));
 					hdlr->sendResponse(rhdr);
 					return;
 				}
@@ -330,8 +360,8 @@ namespace kt
 			
 			HttpResponseHeader rhdr(200);
 			setDefaultResponseHeaders(rhdr,ExtensionToContentType(ext),true);
-			rhdr.setValue("Last-Modified",fi.lastModified().toString("ddd, dd MMM yyyy hh:mm:ss UTC"));
-			rhdr.setValue("Expires",QDateTime::currentDateTime(Qt::UTC).addSecs(3600).toString("ddd, dd MMM yyyy hh:mm:ss UTC"));
+			rhdr.setValue("Last-Modified",DateTimeToString(fi.lastModified(),false));
+			rhdr.setValue("Expires",DateTimeToString(QDateTime::currentDateTime(Qt::UTC).addSecs(3600),false));
 			rhdr.setValue("Cache-Control","private");
 			if (!hdlr->sendFile(rhdr,path))
 			{
@@ -342,11 +372,10 @@ namespace kt
 		}
 		else if (ext == "php")
 		{
-			const QMap<QString,QString> & args = url.queryItems();
 			bool redirect = false;
 			bool shutdown = false;
-			if (args.count() > 0 && session.logged_in)
-				redirect = php_i->exec(args,shutdown);
+			if (url.queryItems().count() > 0 && session.logged_in)
+				redirect = php_i->exec(url,shutdown);
 			
 			if (shutdown)
 			{

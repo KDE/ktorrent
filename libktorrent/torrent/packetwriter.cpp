@@ -368,7 +368,7 @@ namespace bt
 		}
 	}
 	
-	void PacketWriter::clearPieces()
+	void PacketWriter::clearPieces(bool reject)
 	{
 		QMutexLocker locker(&mutex);
 		
@@ -381,6 +381,12 @@ namespace bt
 				// remove current item
 				if (curr_packet == p)
 					curr_packet = 0;
+				
+				if (reject)
+				{
+					queuePacket(p->makeRejectOfPiece());
+				}
+					
 				i = data_packets.erase(i);
 				delete p;
 			}

@@ -40,6 +40,7 @@
 #include <qcursor.h>
 #include <qheader.h>
 #include <qvaluelist.h>
+#include <qlayout.h>
 		
 #include "ktorrentview.h"
 #include "ktorrentviewitem.h"
@@ -48,33 +49,67 @@
 #include "addpeerwidget.h"
 #include "ktorrentviewmenu.h"
 #include "speedlimitsdlg.h"
+#include "filterbar.h"
 
 using namespace bt;
 using namespace kt;
 
-KTorrentView::KTorrentView(QWidget *parent)
-	: KListView(parent),menu(0),current_group(0),running(0),total(0)
-{
 
+TorrentView::TorrentView(KTorrentView* parent) : KListView(parent),ktview(parent)
+{}
+	
+TorrentView::~TorrentView() 
+{}
+	
+bool TorrentView::eventFilter(QObject* watched, QEvent* e)
+{
+	if((QHeader*)watched == header())
+	{
+		switch(e->type())
+		{
+			case QEvent::MouseButtonPress:
+			{
+				if(static_cast<QMouseEvent *>(e)->button() == RightButton)
+					ktview->m_headerMenu->popup(QCursor::pos());
+
+				break;
+			}
+			default:
+				break;
+		}
+	}
+
+	return KListView::eventFilter(watched, e);
+}
+
+KTorrentView::KTorrentView(QWidget *parent)
+	: QWidget(parent),menu(0),current_group(0),running(0),total(0),view(0),filter_bar(0)
+{
+	QVBoxLayout* layout = new QVBoxLayout(this);
+	layout->setAutoAdd(true);
+	view = new TorrentView(this);
+	filter_bar = new FilterBar(this);
+	filter_bar->setHidden(true);
+	
 	setupColumns();
 	
-	connect(this,SIGNAL(executed(QListViewItem* )),
+	connect(view,SIGNAL(executed(QListViewItem* )),
 			this,SLOT(onExecuted(QListViewItem* )));
 	
-	connect(this,SIGNAL(currentChanged(QListViewItem* )),
+	connect(view,SIGNAL(currentChanged(QListViewItem* )),
 			this,SLOT(onExecuted(QListViewItem* )));
 	
-	connect(this,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )),
+	connect(view,SIGNAL(contextMenu(KListView*, QListViewItem*, const QPoint& )),
 			this,SLOT(showContextMenu(KListView*, QListViewItem*, const QPoint& )));
 	
-	connect(this,SIGNAL(selectionChanged()),this,SLOT(onSelectionChanged()));
+	connect(view,SIGNAL(selectionChanged()),this,SLOT(onSelectionChanged()));
 
 	menu = new KTorrentViewMenu(this);
 	connect(menu,SIGNAL(groupItemActivated(const QString&)),this,SLOT(gsmItemActived(const QString&)));
 	
 	connect(m_headerMenu, SIGNAL(activated(int)), this, SLOT(onColumnVisibilityChange( int )));
 
-	setFrameShape(QFrame::NoFrame);
+	view->setFrameShape(QFrame::NoFrame);
 }
 
 KTorrentView::~KTorrentView()
@@ -85,14 +120,14 @@ void KTorrentView::insertColumn(QString label, Qt::AlignmentFlags align)
 {
 	m_headerMenu->insertItem(label);
 		
-	int ind = addColumn(label);
-	setColumnAlignment(ind, align);
+	int ind = view->addColumn(label);
+	view->setColumnAlignment(ind, align);
 }
 
 void KTorrentView::setupColumns()
 {
 		//Header menu
-	m_headerMenu = new KPopupMenu(this);
+	m_headerMenu = new KPopupMenu(view);
 	m_headerMenu->setCheckable(true);
 	m_headerMenu->insertTitle(i18n("Visible columns"));
 	
@@ -111,14 +146,14 @@ void KTorrentView::setupColumns()
 	insertColumn(i18n("Time Downloaded"), Qt::AlignRight);	
 	insertColumn(i18n("Time Seeded"), Qt::AlignRight);
 	
-	setAllColumnsShowFocus(true);
-	setShowSortIndicator(true);
-	setAcceptDrops(true);
-	setSelectionMode(QListView::Extended);
-	for (Uint32 i = 0;i < (Uint32)columns();i++)
+	view->setAllColumnsShowFocus(true);
+	view->setShowSortIndicator(true);
+	view->setAcceptDrops(true);
+	view->setSelectionMode(QListView::Extended);
+	for (Uint32 i = 0;i < (Uint32)view->columns();i++)
 	{
-		setColumnWidth(i, 100);
-		setColumnWidthMode(i,QListView::Manual);
+		view->setColumnWidth(i, 100);
+		view->setColumnWidthMode(i,QListView::Manual);
 	}
 }
 
@@ -167,27 +202,33 @@ void KTorrentView::setCurrentGroup(Group* group)
 	else
 		setCaption(i18n("All Torrents %1/%2").arg(running).arg(total));
 	
-	onExecuted(currentItem());
+	onExecuted(view->currentItem());
 }
 
 void KTorrentView::saveSettings(KConfig* cfg,int idx)
 {
-	saveLayout(cfg,QString("KTorrentView-%1").arg(idx));
+	QString group = QString("KTorrentView-%1").arg(idx);
+	view->saveLayout(cfg,group);
+	cfg->setGroup(group);
+	filter_bar->saveSettings(cfg);
 }
 
 
 void KTorrentView::loadSettings(KConfig* cfg,int idx)
 {
-	restoreLayout(cfg,QString("KTorrentView-%1").arg(idx));
-	setDragEnabled(true);
+	QString group = QString("KTorrentView-%1").arg(idx);
+	view->restoreLayout(cfg,group);
+	view->setDragEnabled(true);
 
-	for(int i=0; i<columns();++i)
+	for(int i=0; i < view->columns();++i)
 	{
 		bool visible = columnVisible(i);
 		
 		m_headerMenu->setItemChecked(m_headerMenu->idAt(i+1), visible);
-		header()->setResizeEnabled(visible, i);
+		view->header()->setResizeEnabled(visible, i);
 	}
+	cfg->setGroup(group);
+	filter_bar->loadSettings(cfg);
 }
 
 
@@ -230,7 +271,9 @@ bool KTorrentView::startDownload(kt::TorrentInterface* tc)
 void KTorrentView::stopDownload(kt::TorrentInterface* tc)
 {
 	if (tc && tc->getStats().running)
+	{
 		wantToStop(tc,true);
+	}
 }
 
 void KTorrentView::showStartError()
@@ -247,7 +290,7 @@ void KTorrentView::startDownloads()
 {
 	bool err = false;
 	
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
@@ -268,7 +311,7 @@ void KTorrentView::startDownloads()
 	
 void KTorrentView::stopDownloads()
 {
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
@@ -297,6 +340,7 @@ void KTorrentView::startAllDownloads()
 		showStartError();
 	}
 	*/
+	onSelectionChanged();
 }
 
 void KTorrentView::stopAllDownloads()
@@ -310,11 +354,12 @@ void KTorrentView::stopAllDownloads()
 	
 		i++;
 	}
+	onSelectionChanged();
 }
 	
 void KTorrentView::removeDownloads()
 {
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
@@ -352,7 +397,7 @@ void KTorrentView::removeDownloadsAndData()
             KStdGuiItem::cancel()) == KMessageBox::No)
 		return;
 	
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
@@ -367,7 +412,7 @@ void KTorrentView::removeDownloadsAndData()
 
 void KTorrentView::manualAnnounce()
 {
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
@@ -379,7 +424,7 @@ void KTorrentView::manualAnnounce()
 
 void KTorrentView::previewFiles() 
 {
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
@@ -394,7 +439,7 @@ void KTorrentView::previewFiles()
 
 TorrentInterface* KTorrentView::getCurrentTC()
 {
-	KTorrentViewItem* tvi = dynamic_cast<KTorrentViewItem*>(currentItem());
+	KTorrentViewItem* tvi = dynamic_cast<KTorrentViewItem*>(view->currentItem());
 	if (tvi)
 		return tvi->getTC();
 	else
@@ -445,7 +490,7 @@ void KTorrentView::removeTorrent(TorrentInterface* tc)
 		KTorrentViewItem* tvi = i.data();
 		items.erase(i);
 		delete tvi;
-		tvi = dynamic_cast<KTorrentViewItem*>(currentItem());
+		tvi = dynamic_cast<KTorrentViewItem*>(view->currentItem());
 		if (tvi)
 			currentChanged(tvi->getTC());
 		else
@@ -466,18 +511,19 @@ void KTorrentView::update()
 		KTorrentViewItem* tvi = i.data();
 		if (tvi)
 			tvi->update();
-		
-		
 		// check if the torrent still is part of the group
 		kt::TorrentInterface* ti = i.key();
-		if (tvi && current_group && !current_group->isMember(ti))
+		
+		bool member = (current_group->isMember(ti) && filter_bar->matchesFilter(ti));
+		
+		if (tvi && current_group && !member)
 		{
 			// torrent is no longer a member of this group so remove it from the view
 			delete tvi;
 			i.data() = 0;
 			count = false;
 		}
-		else if (!tvi && (!current_group || current_group->isMember(ti)))
+		else if (!tvi && (!current_group || member))
 		{
 			tvi = new KTorrentViewItem(this,ti);
 			i.data() = tvi;
@@ -504,7 +550,7 @@ void KTorrentView::update()
 			setCaption(i18n("All Torrents %1/%2").arg(running).arg(total));
 	}
 	
-	sort();
+	view->sort();
 }
 
 bool KTorrentView::acceptDrag(QDropEvent* event) const
@@ -517,7 +563,7 @@ void KTorrentView::onSelectionChanged()
 {
 	bool en_start = false;
 	bool en_stop = false;
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
@@ -538,7 +584,7 @@ void KTorrentView::onSelectionChanged()
 
 void KTorrentView::queueSlot()
 {
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
@@ -552,7 +598,7 @@ void KTorrentView::queueSlot()
 
 void KTorrentView::checkDataIntegrity()
 {	
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	if (sel.count() == 0)
 		return;
 	
@@ -571,7 +617,7 @@ void KTorrentView::checkDataIntegrity()
 
 QDragObject* KTorrentView::dragObject()
 {
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	if (sel.count() == 0)
 		return 0;
 	 
@@ -580,7 +626,7 @@ QDragObject* KTorrentView::dragObject()
 
 void KTorrentView::getSelection(QValueList<kt::TorrentInterface*> & sel)
 {
-	QPtrList<QListViewItem> s = selectedItems();
+	QPtrList<QListViewItem> s = view->selectedItems();
 	if (s.count() == 0)
 		return;
 	
@@ -596,7 +642,7 @@ void KTorrentView::getSelection(QValueList<kt::TorrentInterface*> & sel)
 
 void KTorrentView::removeFromGroup()
 {
-	QPtrList<QListViewItem> s = selectedItems();
+	QPtrList<QListViewItem> s = view->selectedItems();
 	if (s.count() == 0 || !current_group || current_group->isStandardGroup())
 		return;
 	
@@ -614,7 +660,7 @@ void KTorrentView::removeFromGroup()
 
 void KTorrentView::addSelectionToGroup(kt::Group* g)
 {
-	QPtrList<QListViewItem> s = selectedItems();
+	QPtrList<QListViewItem> s = view->selectedItems();
 	if (s.count() == 0 || !g)
 		return;
 	
@@ -630,7 +676,7 @@ void KTorrentView::addSelectionToGroup(kt::Group* g)
 
 void KTorrentView::showAddPeersWidget()
 {
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
@@ -646,7 +692,7 @@ void KTorrentView::showAddPeersWidget()
 
 void KTorrentView::openOutputDirectory()
 {
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
@@ -663,7 +709,7 @@ void KTorrentView::openOutputDirectory()
 
 void KTorrentView::openTorXDirectory()
 {
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
@@ -677,7 +723,7 @@ void KTorrentView::openTorXDirectory()
 
 void KTorrentView::setDownloadLocationSlot()
 {
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
@@ -701,7 +747,7 @@ void KTorrentView::setDownloadLocationSlot()
 
 void KTorrentView::dhtSlot()
 {
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
@@ -717,7 +763,7 @@ void KTorrentView::dhtSlot()
 
 void KTorrentView::utPexSlot()
 {
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
 		KTorrentViewItem* kvi = (KTorrentViewItem*)*itr;
@@ -733,7 +779,7 @@ void KTorrentView::utPexSlot()
 
 void KTorrentView::speedLimits()
 {
-	QPtrList<QListViewItem> sel = selectedItems();
+	QPtrList<QListViewItem> sel = view->selectedItems();
 	if (sel.count() != 1)
 		return;
 	
@@ -747,19 +793,22 @@ void KTorrentView::speedLimits()
 
 void KTorrentView::columnHide(int index)
 {
-	hideColumn(index);
-	header()->setResizeEnabled(FALSE, index);
+	view->hideColumn(index);
+	view->header()->setResizeEnabled(FALSE, index);
 }
 
 void KTorrentView::columnShow(int index)
 {
-	setColumnWidth(index, 100);
-	header()->setResizeEnabled(TRUE, index);
+	view->setColumnWidth(index, 100);
+	view->header()->setResizeEnabled(TRUE, index);
 }
 
 bool KTorrentView::columnVisible(int index)
 {
-	return columnWidth(index) != 0;
+	if (index < view->columns() && index >= 0) 
+		return view->columnWidth(index) != 0;
+	else
+		return true;
 }
 
 void KTorrentView::onColumnVisibilityChange(int id)
@@ -776,28 +825,6 @@ void KTorrentView::onColumnVisibilityChange(int id)
 		columnShow(mid);
 	else
 		columnHide(mid);
-}
-
-bool KTorrentView::eventFilter(QObject* watched, QEvent* e)
-{
-	if((QHeader*)watched == header())
-	{
-		switch(e->type())
-		{
-				case QEvent::MouseButtonPress:
-				{
-					if(static_cast<QMouseEvent *>(e)->
-					        button() == RightButton)
-						m_headerMenu->popup(QCursor::pos());
-
-					break;
-				}
-				default:
-				break;
-		}
-	}
-
-	return KListView::eventFilter(watched, e);
 }
 
 void KTorrentView::gsmItemActived(const QString & group)
@@ -850,14 +877,26 @@ void KTorrentView::setupViewColumns()
 	}
 	
 	// make sure menu is OK
-	for(int i=0; i<columns();++i)
+	for(int i=0; i< view->columns();++i)
 	{
 		bool visible = columnVisible(i);
 		m_headerMenu->setItemChecked(m_headerMenu->idAt(i+1), visible);
-		header()->setResizeEnabled(visible, i);
+		view->header()->setResizeEnabled(visible, i);
 	}
 }
 
+void KTorrentView::keyReleaseEvent(QKeyEvent* event)
+{
+	QWidget::keyReleaseEvent(event);
+	if (event->key() == Qt::Key_Escape)
+	{
+		filter_bar->setHidden(true);
+	}
+}
 
+void KTorrentView::showFilterBar()
+{
+	filter_bar->setHidden(false);
+}
 
 #include "ktorrentview.moc"
