@@ -232,11 +232,34 @@ namespace kt
 		else
 			return QString::null;
 	}
+	
+		// HTTP needs non translated dates
+	static QString days[] = {
+		"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
+	};
+		
+	static QString months[] = {
+		"Jan","Feb","Mar","Apr",
+		"May","Jun","Jul","Aug",
+		"Sep","Oct","Nov","Dec"
+	};
+		
+	static QString DateTimeToString(const QDateTime & now,bool cookie)
+	{
+		if (!cookie)
+			return now.toString("%1, dd %2 yyyy hh:mm:ss UTC")
+					.arg(days[now.date().dayOfWeek() - 1])
+					.arg(months[now.date().month() - 1]);
+		else
+			return now.toString("%1, dd-%2-yyyy hh:mm:ss GMT")
+					.arg(days[now.date().dayOfWeek() - 1])
+					.arg(months[now.date().month() - 1]);
+	}
 		
 	void HttpServer::setDefaultResponseHeaders(HttpResponseHeader & hdr,const QString & content_type,bool with_session_info)
 	{
 		hdr.setValue("Server","KTorrent/" KT_VERSION_MACRO);
-		hdr.setValue("Date",QDateTime::currentDateTime().toUTC().toString("ddd, dd MMM yyyy hh:mm:ss UTC"));
+		hdr.setValue("Date",DateTimeToString(QDateTime::currentDateTime().toUTC(),false));
 		hdr.setValue("Content-Type",content_type);
 		hdr.setValue("Connection","keep-alive");
 		if (with_session_info && session.sessionId && session.logged_in)
@@ -317,7 +340,7 @@ namespace kt
 			{
 				// clear cookie in case of login page
 				QDateTime dt = QDateTime::currentDateTime().addDays(-1);
-				QString cookie = QString("KT_SESSID=666; expires=%1 +0000").arg(dt.toString("ddd, dd MMM yyyy hh:mm:ss"));
+				QString cookie = QString("KT_SESSID=666; expires=%1 +0000").arg(DateTimeToString(dt,true));
 				rhdr.setValue("Set-Cookie",cookie);
 			}
 			
@@ -338,8 +361,8 @@ namespace kt
 					HttpResponseHeader rhdr(304);
 					setDefaultResponseHeaders(rhdr,"text/html",true);
 					rhdr.setValue("Cache-Control","max-age=0");
-					rhdr.setValue("Last-Modified",fi.lastModified().toString("ddd, dd MMM yyyy hh:mm:ss UTC"));
-					rhdr.setValue("Expires",QDateTime::currentDateTime().toUTC().addSecs(3600).toString("ddd, dd MMM yyyy hh:mm:ss UTC"));
+					rhdr.setValue("Last-Modified",DateTimeToString(fi.lastModified(),false));
+					rhdr.setValue("Expires",DateTimeToString(QDateTime::currentDateTime().toUTC().addSecs(3600),false));
 					hdlr->sendResponse(rhdr);
 					return;
 				}
@@ -348,8 +371,8 @@ namespace kt
 			
 			HttpResponseHeader rhdr(200);
 			setDefaultResponseHeaders(rhdr,ExtensionToContentType(ext),true);
-			rhdr.setValue("Last-Modified",fi.lastModified().toString("ddd, dd MMM yyyy hh:mm:ss UTC"));
-			rhdr.setValue("Expires",QDateTime::currentDateTime().toUTC().addSecs(3600).toString("ddd, dd MMM yyyy hh:mm:ss UTC"));
+			rhdr.setValue("Last-Modified",DateTimeToString(fi.lastModified(),false));
+			rhdr.setValue("Expires",DateTimeToString(QDateTime::currentDateTime().toUTC().addSecs(3600),false));
 			rhdr.setValue("Cache-Control","private");
 			if (!hdlr->sendFile(rhdr,path))
 			{
