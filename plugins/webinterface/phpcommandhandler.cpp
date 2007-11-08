@@ -257,6 +257,7 @@ namespace kt
 						{
 							TorrentFileInterface & file = (*i)->getTorrentFile(file_num.toInt());
 							file.setPriority(LAST_PRIORITY);
+							ret = true;
 							break;
 						}
 					}
@@ -270,6 +271,7 @@ namespace kt
 						{
 							TorrentFileInterface & file = (*i)->getTorrentFile(file_num.toInt());
 							file.setPriority(NORMAL_PRIORITY);
+							ret = true;
 							break;
 						}
 					}
@@ -283,11 +285,12 @@ namespace kt
 						{
 							TorrentFileInterface & file = (*i)->getTorrentFile(file_num.toInt());
 							file.setPriority(FIRST_PRIORITY);
+							ret = true;
 							break;
 						}
 					}
 				}
-				else if(it.key()=="file_dnd")
+				else if(it.key()=="file_stop")
 				{
 					QList<TorrentInterface*>::iterator i= core->getQueueManager()->begin();
 					for(int k=0; i != core->getQueueManager()->end(); i++, k++)
@@ -296,15 +299,16 @@ namespace kt
 						{
 							TorrentFileInterface & file = (*i)->getTorrentFile(file_num.toInt());
 							file.setPriority(ONLY_SEED_PRIORITY);
+							ret = true;
 							break;
 						}
 					}
 				}
 				else
 				{
-				// add unknown query items to the redirected url
-				// we don't add the keys above, because if the user presses refresh 
-				// the same action will be taken again
+					// add unknown query items to the redirected url
+					// we don't add the keys above, because if the user presses refresh 
+					// the same action will be taken again
 					redirected_url.addQueryItem(it.key(),it.value());
 				}
 			}

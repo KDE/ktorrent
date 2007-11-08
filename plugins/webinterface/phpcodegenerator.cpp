@@ -122,27 +122,16 @@ namespace kt
 				//for loop to add each file+status to "files" array			
 				for (Uint32 j = 0;j < (*i)->getNumFiles();j++)
 				{
-					Priority file_priority;
-					QString status;
-					
 					TorrentFileInterface & file = (*i)->getTorrentFile(j);
-					ret.append(QString("\"file_%1\" => \"%2\",").arg(j).arg(file.getPath()));
-					ret.append(QString("\"size_%1\" => \"%2\",").arg(j).arg(KIO::convertSize(file.getSize())));
-					ret.append(QString("\"perc_done_%1\" => \"%2\",").arg(j).arg(file.getDownloadPercentage()));
-					file_priority=file.getPriority();
-					if (file_priority==EXCLUDED)
-						status="Do Not Download";
-					else if (file_priority==LAST_PRIORITY)
-						status="Download Last";
-					else if (file_priority==NORMAL_PRIORITY)
-						status="Download Normally";
-					else if (file_priority==FIRST_PRIORITY)
-						status="Download First";
-					else if (file_priority == ONLY_SEED_PRIORITY)
-						status="Only Seed";
-					
-					ret.append(QString("\"status_%1\" => \"%2\",").arg(j).arg(status));	
+					ret.append(QString("\"%1\" => array(").arg(j));
+					ret.append(QString("\"name\" => \"%1\",").arg(file.getPath()));
+					ret.append(QString("\"size\" => \"%1\",").arg(KIO::convertSize(file.getSize())));
+					ret.append(QString("\"perc_done\" => \"%1\",").arg(file.getDownloadPercentage()));
+					ret.append(QString("\"status\" => \"%1\"").arg(file.getPriority()));
+					ret.append(QString("),"));	
 				}
+				if(ret.endsWith(","))
+					ret.truncate(ret.length()-1);
 			}
 			
 			ret.append("),");
