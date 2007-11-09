@@ -21,7 +21,7 @@ kde4_add_ui_files(ktinfowidgetplugin_SRC iwprefpage.ui statustab.ui chunkdownloa
 kde4_add_kcfg_files(ktinfowidgetplugin_SRC infowidgetpluginsettings.kcfgc)
 kde4_add_plugin(ktinfowidgetplugin ${ktinfowidgetplugin_SRC})
 
-target_link_libraries(ktinfowidgetplugin ${QT_QT3SUPPORT_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDE4_KPARTS_LIBS} ktcore )
+target_link_libraries(ktinfowidgetplugin ${QT_QT3SUPPORT_LIBRARY} ${KDE4_KPARTS_LIBS} ktcore )
 install(TARGETS ktinfowidgetplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktinfowidgetplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 

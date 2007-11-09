@@ -4,7 +4,7 @@ kde4_add_ui_files(ktsearchplugin_SRC searchpref.ui searchbar.ui)
 kde4_add_kcfg_files(ktsearchplugin_SRC searchpluginsettings.kcfgc)
 kde4_add_plugin(ktsearchplugin ${ktsearchplugin_SRC})
 
-target_link_libraries(ktsearchplugin ${QT_QT3SUPPORT_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KHTML_LIBS} ktcore )
+target_link_libraries(ktsearchplugin ${QT_QT3SUPPORT_LIBRARY} ${KDE4_KHTML_LIBS} ktcore )
 install(TARGETS ktsearchplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktsearchplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 
