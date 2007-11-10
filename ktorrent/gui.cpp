@@ -81,7 +81,6 @@ namespace kt
 		setStatusBar(status_bar);
 
 		core->loadTorrents();
-		core->loadPlugins();
 		connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
 		timer.start(Settings::guiUpdateInterval());
 		
@@ -109,6 +108,7 @@ namespace kt
 		dbus_iface = new DBus(this,core);
 		
 		loadState(KGlobal::config());
+		core->loadPlugins();
 		notifyViewListeners(view_man->getCurrentTorrent());
 	}
 
