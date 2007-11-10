@@ -18,14 +18,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kglobal.h>
-#include <klocale.h>
-#include <kcalendarsystem.h>
-#include <QGraphicsRectItem>
-#include <QGraphicsLineItem>
-#include <QGraphicsTextItem>
+
 #include <util/log.h>
+#include <QGraphicsItem>
 #include "weekview.h"
+#include "weekscene.h"
 #include "schedule.h"
 
 using namespace bt;
@@ -35,10 +32,16 @@ namespace kt
 
 	WeekView::WeekView(QWidget* parent) : QGraphicsView(parent),schedule(0)
 	{
-		addCalendar();
-		setScene(&scene);
-		scene.setBackgroundBrush(Qt::white);
-		connect(&scene,SIGNAL(selectionChanged()),this,SLOT(onSelectionChanged()));
+		scene = new WeekScene(this);
+		setScene(scene);
+		
+		connect(scene,SIGNAL(selectionChanged()),this,SLOT(onSelectionChanged()));
+		connect(scene,SIGNAL(itemDoubleClicked(QGraphicsItem*)),this,SLOT(onDoubleClicked(QGraphicsItem*)));
+		
+		menu = new KMenu(this);
+		setContextMenuPolicy(Qt::CustomContextMenu);
+		connect(this,SIGNAL(customContextMenuRequested(const QPoint & )),
+				this,SLOT(showContextMenu(const QPoint& )));
 	}
 
 
@@ -50,7 +53,7 @@ namespace kt
 	{
 		selection.clear();
 		
-		QList<QGraphicsItem*> sel = scene.selectedItems();
+		QList<QGraphicsItem*> sel = scene->selectedItems();
 		foreach (QGraphicsItem* s,sel)
 		{
 			QMap<QGraphicsItem*,ScheduleItem>::iterator i = item_map.find(s);
@@ -79,7 +82,7 @@ namespace kt
 		while (i != item_map.end())
 		{
 			QGraphicsItem* item = i.key();
-			scene.removeItem(item);
+			scene->removeItem(item);
 			delete item;
 			i++;
 		}
@@ -90,7 +93,7 @@ namespace kt
 	
 	void WeekView::removeSelectedItems()
 	{
-		QList<QGraphicsItem*> sel = scene.selectedItems();
+		QList<QGraphicsItem*> sel = scene->selectedItems();
 		foreach (QGraphicsItem* s,sel)
 		{
 			QMap<QGraphicsItem*,ScheduleItem>::iterator i = item_map.find(s);
@@ -98,7 +101,7 @@ namespace kt
 			{
 				const ScheduleItem & si = i.value();
 				schedule->removeAll(si);
-				scene.removeItem(s);
+				scene->removeItem(s);
 				item_map.erase(i);
 				delete s;
 			}
@@ -107,92 +110,24 @@ namespace kt
 	
 	void WeekView::addScheduleItem(const ScheduleItem & item)
 	{
-		Out(SYS_SCD|LOG_DEBUG) << "WeekView::addScheduleItem" << endl;
-		Out(SYS_SCD|LOG_DEBUG) << "day = " << item.day << endl;
-		Out(SYS_SCD|LOG_DEBUG) << "start = " << item.start.toString() << endl;
-		Out(SYS_SCD|LOG_DEBUG) << "end = " << item.end.toString() << endl;
-		Out(SYS_SCD|LOG_DEBUG) << "upload_limit = " << item.upload_limit << endl;
-		Out(SYS_SCD|LOG_DEBUG) << "download_limit = " << item.download_limit << endl;
-		Out(SYS_SCD|LOG_DEBUG) << "paused = " << item.paused << endl;
+		QGraphicsItem* gi = scene->addScheduleItem(item);
 		
-		QTime midnight(0,0,0,0);
-		qreal x = xoff + (item.day - 1) * day_width;
-		qreal min_h = hour_height / 60.0;
-		qreal y = yoff + (midnight.secsTo(item.start) / 60.0) * min_h;
-		qreal ye = yoff + (midnight.secsTo(item.end) / 60.0) * min_h;
-		
-		Out(SYS_SCD|LOG_DEBUG) << "Pos: " << x << " " << y << " " << ye << " " << min_h << endl;
-		
-		QGraphicsRectItem* gi = scene.addRect(x,y,day_width,ye - y);
-		gi->setPen(QPen(Qt::black));
-		gi->setZValue(3);
-		QBrush brush(QColor(0,255,0,125));
-		gi->setBrush(brush);
-		gi->setFlag(QGraphicsItem::ItemIsSelectable,true);
-		
-		item_map[gi] = item;
+		if (gi)
+			item_map[gi] = item;
 	}
 	
-	qreal LongestDayWidth(const QFontMetricsF & fm)
+	void WeekView::onDoubleClicked(QGraphicsItem* i)
 	{
-		const KCalendarSystem* cal = KGlobal::locale()->calendar();
-		qreal wd = 0;
-		for (int i = 1;i <= 7;i++)
-		{
-			qreal w = fm.width(cal->weekDayName(i));
-			if (w > wd)
-				wd = w;
-		}
-		return wd;
+		QMap<QGraphicsItem*,ScheduleItem>::iterator itr = item_map.find(i);
+		if (itr != item_map.end())
+			editItem(itr.value());
 	}
-
-	void WeekView::addCalendar()
+	
+	void WeekView::showContextMenu(const QPoint& pos)
 	{
-		const KCalendarSystem* cal = KGlobal::locale()->calendar();
-		
-		QGraphicsTextItem* tmp = scene.addText("Dinges");
-		QFontMetricsF fm(tmp->font());
-		scene.removeItem(tmp);
-		delete tmp;
-		
-		// first add 7 rectangles for each day of the week
-		xoff = fm.width("00:00") + 10;
-		yoff = fm.height() + 5;
-		day_width = LongestDayWidth(fm) * 1.5;
-		hour_height = fm.height() * 1.5;
-		
-		for (int i = 0;i < 7;i++)
-		{
-			QGraphicsRectItem* item = scene.addRect(xoff + day_width * i,yoff,day_width,24 * hour_height,QPen(Qt::blue),QBrush(Qt::yellow));
-			item->setZValue(1);
-			
-			QString day = cal->weekDayName(i+1);
-			
-			// make sure day is centered in the middle of the column 
-			qreal dlen = fm.width(day);
-			qreal mid = xoff + day_width * (i + 0.5);
-			qreal start = mid - dlen * 0.5;
-			
-			QGraphicsTextItem* t = scene.addText(day);
-			t->setPos(QPointF(start, 0));
-			t->setZValue(2);
-		}
-		
-		// draw hour lines
-		for (int i = 0;i <= 24;i++)
-		{
-			QGraphicsLineItem* item = scene.addLine(0, yoff + i*hour_height,xoff + 7*day_width, yoff + i*hour_height,QPen(Qt::blue));
-			item->setZValue(2);
-			
-			if (i < 24)
-			{
-				QGraphicsTextItem* t = scene.addText(QString("%1:00").arg(i));
-				t->setPos(QPointF(0, yoff + i * hour_height));
-				t->setZValue(2);
-			}
-		}
+		Out(SYS_SCD|LOG_IMPORTANT) << "selection count = " << selection.count() << endl;
+		menu->popup(mapToGlobal(pos));
 	}
-
 }
 
 #include "weekview.moc"

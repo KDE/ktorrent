@@ -18,63 +18,49 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTSCHEDULEEDITOR_H
-#define KTSCHEDULEEDITOR_H
+#ifndef KTWEEKSCENE_H
+#define KTWEEKSCENE_H
 
-#include <QWidget>
-
-class KToolBar;
+#include <QGraphicsScene>
 
 namespace kt
 {
-	class WeekView;
-	class Schedule;
 	struct ScheduleItem;
 
 	/**
 		@author
 	*/
-	class ScheduleEditor : public QWidget
+	class WeekScene : public QGraphicsScene
 	{
 		Q_OBJECT
 	public:
-		ScheduleEditor(QWidget* parent);
-		virtual ~ScheduleEditor();
+		WeekScene(QObject* parent);
+		virtual ~WeekScene();
 		
 		/**
-		 * Set the current Schedule
-		 * @param s The current schedule
+		 * Add an item to the schedule.
+		 * @param item The item to add
 		 */
-		void setSchedule(Schedule* s);
-		
-	private slots:
-		void clear();
-		void save();
-		void load();
-		void addItem();
-		void removeItem();
-		void editItem();
-		void onSelectionChanged();
-		void editItem(const ScheduleItem & item);
+		QGraphicsItem* addScheduleItem(const ScheduleItem & item);
 		
 	signals:
 		/**
-		 * Emitted when the user loads a new schedule.
-		 * @param ns The new schedule
+		 * Emitted when an item has been double clicked.
+		 * @param gi Item double clicked
 		 */
-		void loaded(Schedule* ns);
+		void itemDoubleClicked(QGraphicsItem* gi);
 
 	private:
-		WeekView* view;
-		Schedule* schedule;
-		KToolBar* tool_bar;
+		void addCalendar();
+		virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* ev);
+	//	virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* ev);
+		virtual void mousePressEvent(QGraphicsSceneMouseEvent* ev);
 		
-		QAction* load_action;
-		QAction* save_action;
-		QAction* new_item_action;
-		QAction* remove_item_action;
-		QAction* edit_item_action;
-		QAction* clear_action;
+	private:
+		qreal xoff;
+		qreal yoff;
+		qreal day_width;
+		qreal hour_height;
 	};
 
 }

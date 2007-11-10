@@ -57,7 +57,15 @@ namespace kt
 		edit_item_action->setEnabled(false);
 		remove_item_action->setEnabled(false);
 		
+		KMenu* menu = view->rightClickMenu();
+		menu->addAction(new_item_action);
+		menu->addAction(edit_item_action);
+		menu->addAction(remove_item_action);
+		menu->addSeparator();
+		menu->addAction(clear_action);
+		
 		connect(view,SIGNAL(selectionChanged()),this,SLOT(onSelectionChanged()));
+		connect(view,SIGNAL(editItem(const ScheduleItem&)),this,SLOT(editItem(const ScheduleItem&)));
 	}
 
 
@@ -142,9 +150,9 @@ namespace kt
 		clear_action->setEnabled(schedule->count() > 0);
 	}
 	
-	void ScheduleEditor::editItem()
+	void ScheduleEditor::editItem(const ScheduleItem & item)
 	{
-		ScheduleItem old_item = view->selectedItems().front();
+		ScheduleItem old_item = item;
 		ScheduleItem new_item = old_item;
 		
 		AddItemDlg dlg(AddItemDlg::EDIT_ITEM,this);
@@ -163,6 +171,12 @@ namespace kt
 			}
 			clear_action->setEnabled(schedule->count() > 0);
 		}
+	}
+	
+	void ScheduleEditor::editItem()
+	{
+		editItem(view->selectedItems().front());
+		
 	}
 	
 	void ScheduleEditor::onSelectionChanged()

@@ -23,7 +23,7 @@
 
 #include <QMap>
 #include <QGraphicsView>
-#include <QGraphicsScene>
+#include <kmenu.h>
 #include <util/constants.h>
 
 
@@ -31,6 +31,7 @@ namespace kt
 {
 	struct ScheduleItem;
 	class Schedule;
+	class WeekScene;
 
 	/**
 		Displays the schedule of one week.
@@ -68,25 +69,26 @@ namespace kt
 		 */
 		void removeSelectedItems();
 		
+		/// Get the right click menu
+		KMenu* rightClickMenu() {return menu;}
+		
 		
 	signals:
 		void selectionChanged();
+		void editItem(const ScheduleItem & item);
 		
 	private slots:
 		void onSelectionChanged();
+		void showContextMenu(const QPoint& pos);
+		void onDoubleClicked(QGraphicsItem* i);
 		
 	private:
-		void addCalendar();
+		WeekScene* scene;
 		
-	private:
-		QGraphicsScene scene;
-		qreal xoff;
-		qreal yoff;
-		qreal day_width;
-		qreal hour_height;
 		Schedule* schedule;
 		QMap<QGraphicsItem*,ScheduleItem>  item_map;
 		QList<ScheduleItem> selection;
+		KMenu* menu;
 	};
 
 }

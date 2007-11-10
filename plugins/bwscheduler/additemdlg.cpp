@@ -75,6 +75,7 @@ namespace kt
 			item->day = m_day->currentIndex() + 1;
 			item->upload_limit = m_upload_limit->value();
 			item->download_limit = m_download_limit->value();
+			item->paused = m_paused->isChecked();
 			return true;
 		}
 		return false;
