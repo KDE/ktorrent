@@ -94,6 +94,7 @@ namespace kt
 			peer_view->saveState(KGlobal::config());
 		if (file_view)
 			file_view->saveState(KGlobal::config());
+		KGlobal::config()->sync();
 		
 		getGUI()->removeViewListener(this);
 		getGUI()->removePrefPage(pref);

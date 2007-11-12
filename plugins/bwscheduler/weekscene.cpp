@@ -60,6 +60,20 @@ namespace kt
 		}
 		return wd;
 	}
+	
+	void WeekScene::updateStatusText(int up,int down,bool paused)
+	{
+		if (paused)
+			status->setPlainText(i18n("Current schedule: paused"));
+		else if (up > 0 && down > 0)
+			status->setPlainText(i18n("Current schedule: %1 KB/s download, %2 KB/s upload",down,up));
+		else if (up > 0)
+			status->setPlainText(i18n("Current schedule: unlimited download, %1 KB/s upload",up));
+		else if (down > 0)
+			status->setPlainText(i18n("Current schedule: %1 KB/s download, unlimited upload",down));
+		else
+			status->setPlainText(i18n("Current schedule: unlimited upload and download"));
+	}
 
 	void WeekScene::addCalendar()
 	{
@@ -70,11 +84,16 @@ namespace kt
 		removeItem(tmp);
 		delete tmp;
 		
+		
 		// first add 7 rectangles for each day of the week
 		xoff = fm.width("00:00") + 10;
-		yoff = fm.height() + 5;
+		yoff = 2*fm.height() + 10;
 		day_width = LongestDayWidth(fm) * 1.5;
 		hour_height = fm.height() * 1.5;
+		
+		status = addText(i18n("Current schedule:"));
+		status->setPos(QPointF(0,0));
+		status->setZValue(2);
 		
 		for (int i = 0;i < 7;i++)
 		{
@@ -89,7 +108,7 @@ namespace kt
 			qreal start = mid - dlen * 0.5;
 			
 			QGraphicsTextItem* t = addText(day);
-			t->setPos(QPointF(start, 0));
+			t->setPos(QPointF(start, fm.height() + 5));
 			t->setZValue(2);
 		}
 		
@@ -148,7 +167,7 @@ namespace kt
 		if (t->boundingRect().height() > gi->rect().height())
 		{
 			// Text is to big for rect
-			t->setPlainText("...");
+			delete t;
 		}
 		return gi;
 	}

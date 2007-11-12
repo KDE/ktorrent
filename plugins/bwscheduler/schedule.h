@@ -68,6 +68,9 @@ namespace kt
 		 * @return true if the items are the same
 		 */
 		bool operator == (const ScheduleItem & item) const; 
+		
+		/// Wether or not a QDateTime is falls within this item
+		bool contains(const QDateTime & dt) const;
 	};
 
 	/**
@@ -101,6 +104,17 @@ namespace kt
 		 * @return true upon succes, false otherwise (probably conflicts with other items)
 		 */
 		bool addItem(const ScheduleItem & item);
+		
+		/**
+		 * Get the current schedule item we should be setting.
+		 * @return false If the current time doesn't fall into any item, true otherwise
+		 */
+		bool getCurrentItem(const QDateTime & now,ScheduleItem & item);
+		
+		/**
+		 * Get the time in seconds to the next time we need to update the schedule.
+		 */
+		int getTimeToNextScheduleEvent(const QDateTime & now);
 	
 	private:
 		bool parseItem(ScheduleItem* item,bt::BDictNode* dict);

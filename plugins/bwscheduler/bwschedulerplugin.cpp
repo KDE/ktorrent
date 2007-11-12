@@ -18,13 +18,20 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.           *
  ***************************************************************************/
 #include <kgenericfactory.h>
+#include <ktoolbar.h>
+#include <kglobal.h>
+#include <kconfig.h>
+#include <kmainwindow.h>
+#include <ktoggleaction.h>
 
 #include <interfaces/coreinterface.h>
 #include <interfaces/guiinterface.h>
 #include <util/constants.h>
 #include <util/log.h>
 #include <util/error.h>
+#include <net/socketmonitor.h>
 #include <interfaces/functions.h>
+#include <settings.h>
 
 #include <qstring.h>
 #include <qtimer.h>
@@ -57,7 +64,7 @@ namespace kt
 	BWSchedulerPlugin::BWSchedulerPlugin(QObject* parent, const QStringList& args)
 	: Plugin(parent, NAME,i18n("Bandwidth Scheduler"),AUTHOR,EMAIL,DESCRIPTION, "clock")
 	{
-		setXMLFile("ktbwschedulerpluginui.rc");
+	//	setXMLFile("ktbwschedulerpluginui.rc");
 		m_bws_action = 0;
 		connect(&m_timer, SIGNAL(timeout()), this, SLOT(timerTriggered()));
 		m_editor = 0;
@@ -71,6 +78,10 @@ namespace kt
 	void BWSchedulerPlugin::load()
 	{
 		m_schedule = new Schedule();
+		m_tool_bar = new KToolBar("scheduler",getGUI()->getMainWindow(),Qt::TopToolBarArea,false,true,true);
+		m_bws_action = new KToggleAction(KIcon("clock"),i18n("Bandwidth Scheduler"), this);
+		connect(m_bws_action,SIGNAL(toggled(bool)),this,SLOT(onToggled(bool)));
+		m_tool_bar->addAction(m_bws_action);
 		
 		try
 		{
@@ -82,46 +93,32 @@ namespace kt
 			m_schedule->clear();
 		}
 		
-		m_editor = new ScheduleEditor(0);
-		connect(m_editor,SIGNAL(loaded(Schedule*)),this,SLOT(onLoaded(Schedule*)));
-		getGUI()->addTabPage(m_editor,"clock",i18n("Bandwidth Schedule"),0);
-		m_editor->setSchedule(m_schedule);
+		KConfigGroup g = KGlobal::config()->group("BWScheduler");
+		bool on = g.readEntry("show_scheduler",true);
+		onToggled(on);
+		m_bws_action->setChecked(on);
 		
-#if 0
-		Pref = new SchedulerPrefPage(this);
-		getGUI()->addPrefPage(Pref);
-		BWScheduler::instance().setCoreInterface(getCore());
-		
-		QDateTime now = QDateTime::currentDateTime();
-		
-		//each hour
-		QDateTime hour = now.addSecs(3600);
-		QTime t(hour.time().hour(), 0);
-		
-		//each minute
-// 		QDateTime hour = now.addSecs(60);
-// 		QTime t(hour.time().hour(), hour.time().minute());
-		
-		QDateTime round(hour.date(), t);
-		
-		// add a 5 second safety margin (BUG: 131246)
-		int secs_to = now.secsTo(round) + 5;
-		
-		m_timer.start(secs_to*1000);
-
-		BWScheduler::instance().trigger();
-		
-// 		updateEnabledBWS();
-		bws_action = new KAction(i18n("Open Bandwidth Scheduler" ), "clock", 0, this,
-								 SLOT(openBWS()), actionCollection(), "bwscheduler" );
-#endif
+		// make sure that schedule gets applied again if the settings change
+		connect(getCore(),SIGNAL(settingsChanged()),this,SLOT(timerTriggered()));
+		timerTriggered();
 	}
 
 	void BWSchedulerPlugin::unload()
 	{
-		getGUI()->removeTabPage(m_editor);
-		m_editor->deleteLater();
-		m_editor = 0;
+		KConfigGroup g = KGlobal::config()->group("BWScheduler");
+		g.writeEntry("show_scheduler",m_editor != 0);
+		KGlobal::config()->sync();
+		
+		m_timer.stop();
+		delete m_tool_bar;
+		m_tool_bar = 0;
+		
+		if (m_editor)
+		{
+			getGUI()->removeTabPage(m_editor);
+			m_editor->deleteLater();
+			m_editor = 0;
+		}
 		
 		try
 		{
@@ -134,55 +131,87 @@ namespace kt
 		
 		delete m_schedule;
 		m_schedule = 0;
-#if 0
-		getGUI()->removePrefPage(Pref);
-		if(Pref)
-			delete Pref;
-		Pref = 0;
-		
-		if(bws_action)
-			delete bws_action;
-		bws_action = 0;
-		
-		m_timer.stop();
-#endif
+		delete m_bws_action;
+		m_bws_action = 0;
 	}
 	
 	void BWSchedulerPlugin::timerTriggered()
 	{
-		/*m_timer.changeInterval(3600*1000);
 		QDateTime now = QDateTime::currentDateTime();
-		BWScheduler::instance().trigger();*/
-	}
-	
-	void BWSchedulerPlugin::openBWS()
-	{
-#if 0
-		if(BWSchedulerPluginSettings::enableBWS())
+		ScheduleItem item;
+		if (!m_schedule->getCurrentItem(now,item))
 		{
-			BWSPrefPageWidget dlg;
-			dlg.exec();
+			Out(SYS_SCD|LOG_NOTICE) << QString("Changing schedule to normal values : %1 down, %2 up")
+					.arg(Settings::maxDownloadRate()).arg(Settings::maxUploadRate()) << endl;
+			// set normal limits
+			getCore()->setPausedState(false);
+			net::SocketMonitor::setDownloadCap(1024 * Settings::maxDownloadRate());
+			net::SocketMonitor::setUploadCap(1024 * Settings::maxUploadRate());
+			if (m_editor)
+				m_editor->updateStatusText(Settings::maxUploadRate(),Settings::maxDownloadRate(),false);
 		}
-		else
-			KMessageBox::sorry(0, i18n("Bandwidth scheduler is disabled. Go to Preferences->Scheduler to enable it."));
-#endif
-	}
-	
-	void BWSchedulerPlugin::updateEnabledBWS()
-	{
-#if 0
-		if(BWSchedulerPluginSettings::enableBWS())
+		else if (item.paused)
 		{
-			bws_action = new KAction(i18n("Open Bandwidth Scheduler" ), "clock", 0, this,
-									 SLOT(openBWS()), actionCollection(), "bwscheduler" );
+			Out(SYS_SCD|LOG_NOTICE) << QString("Changing schedule to : PAUSED") << endl;
+			getCore()->setPausedState(true);
+			net::SocketMonitor::setDownloadCap(1024 * Settings::maxDownloadRate());
+			net::SocketMonitor::setUploadCap(1024 * Settings::maxUploadRate());
+			if (m_editor)
+				m_editor->updateStatusText(Settings::maxUploadRate(),Settings::maxDownloadRate(),true);
 		}
 		else
 		{
-			if(bws_action)
-				delete bws_action;
-			bws_action = 0;
+			Out(SYS_SCD|LOG_NOTICE) << QString("Changing schedule to : %1 down, %2 up")
+					.arg(item.download_limit).arg(item.upload_limit) << endl;
+			getCore()->setPausedState(false);
+			net::SocketMonitor::setDownloadCap(1024 * item.download_limit);
+			net::SocketMonitor::setUploadCap(1024 * item.upload_limit);
+			if (m_editor)
+				m_editor->updateStatusText(item.upload_limit,item.download_limit,false);
 		}
-#endif
+		
+		// now calculate the new interval
+		int wait_time = m_schedule->getTimeToNextScheduleEvent(now) * 1000;
+		if (wait_time < 1000)
+			wait_time = 1000;
+		m_timer.stop();
+		m_timer.start(wait_time);
+	}
+	
+	void BWSchedulerPlugin::onToggled(bool on)
+	{
+		if (on)
+		{
+			if (!m_editor)
+			{
+				m_editor = new ScheduleEditor(0);
+				connect(m_editor,SIGNAL(loaded(Schedule*)),this,SLOT(onLoaded(Schedule*)));
+				connect(m_editor,SIGNAL(scheduleChanged()),this,SLOT(timerTriggered()));
+				getGUI()->addTabPage(m_editor,"clock",i18n("Bandwidth Schedule"),this);
+				m_editor->setSchedule(m_schedule);
+				timerTriggered(); // trigger timer so that status text is updated
+			}
+		}
+		else
+		{
+			if (m_editor)
+			{
+				getGUI()->removeTabPage(m_editor);
+				m_editor->deleteLater();
+				m_editor = 0;
+			}
+		}
+	}
+	
+	void BWSchedulerPlugin::tabCloseRequest(kt::GUIInterface* gui,QWidget* tab)
+	{
+		if (tab != m_editor)
+			return;
+		
+		getGUI()->removeTabPage(m_editor);
+		m_editor->deleteLater();
+		m_editor = 0;
+		m_bws_action->setChecked(false);
 	}
 	
 	void BWSchedulerPlugin::onLoaded(Schedule* ns)
@@ -190,6 +219,7 @@ namespace kt
 		delete m_schedule;
 		m_schedule = ns;
 		m_editor->setSchedule(ns);
+		timerTriggered();
 	}
 		
 	

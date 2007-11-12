@@ -49,6 +49,11 @@ namespace kt
 	{
 	}
 	
+	void WeekView::updateStatusText(int up,int down,bool paused)
+	{
+		scene->updateStatusText(up,down,paused);
+	}
+	
 	void WeekView::onSelectionChanged()
 	{
 		selection.clear();
@@ -125,7 +130,6 @@ namespace kt
 	
 	void WeekView::showContextMenu(const QPoint& pos)
 	{
-		Out(SYS_SCD|LOG_IMPORTANT) << "selection count = " << selection.count() << endl;
 		menu->popup(mapToGlobal(pos));
 	}
 }

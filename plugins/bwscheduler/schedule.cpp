@@ -59,6 +59,14 @@ namespace kt
 			return false;
 	}
 	
+	bool ScheduleItem::contains(const QDateTime & dt) const
+	{
+		if (dt.date().dayOfWeek() != day)
+			return false;
+		else
+			return start <= dt.time() && dt.time() <= end;
+	}
+	
 	ScheduleItem & ScheduleItem::operator = (const ScheduleItem & item)
 	{
 		day = item.day;
@@ -79,6 +87,7 @@ namespace kt
 				download_limit == item.download_limit &&
 				paused == item.paused;
 	}
+	
 	
 	/////////////////////////////////////////
 
@@ -197,5 +206,43 @@ namespace kt
 		
 		append(item);
 		return true;
+	}
+	
+	bool Schedule::getCurrentItem(const QDateTime & now,ScheduleItem & item)
+	{
+		foreach (ScheduleItem i,*this)
+		{
+			if (i.contains(now))
+			{
+				item = i;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	int Schedule::getTimeToNextScheduleEvent(const QDateTime & now)
+	{
+		ScheduleItem item;
+		// when we are in the middle of a ScheduleItem, we need to trigger again at the end of it
+		if (getCurrentItem(now,item)) 
+			return now.time().secsTo(item.end) + 1; // change the schedule one second after it expires
+		
+		// lets look at all schedule items on the same day
+		// and find the next one
+		foreach (ScheduleItem i,*this)
+		{
+			if (i.day == now.date().dayOfWeek())
+			{
+				if (!item.isValid() || (i.start < item.start && i.start > now.time()))
+					item = i;
+			}
+		}
+		
+		if (item.isValid())
+			return now.time().secsTo(item.start);
+		
+		QTime end_of_day(23,59,59);
+		return now.time().secsTo(end_of_day) + 1;
 	}
 }

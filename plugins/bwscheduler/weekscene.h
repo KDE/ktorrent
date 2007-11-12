@@ -43,6 +43,14 @@ namespace kt
 		 */
 		QGraphicsItem* addScheduleItem(const ScheduleItem & item);
 		
+		/**
+		 * Update the text of the status line
+		 * @param up Up speed
+		 * @param down Down speed
+		 * @param paused Paused or not
+		 */
+		void updateStatusText(int up,int down,bool paused);
+		
 	signals:
 		/**
 		 * Emitted when an item has been double clicked.
@@ -61,6 +69,7 @@ namespace kt
 		qreal yoff;
 		qreal day_width;
 		qreal hour_height;
+		QGraphicsTextItem* status;
 	};
 
 }

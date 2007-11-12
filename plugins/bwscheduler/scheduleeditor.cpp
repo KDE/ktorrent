@@ -88,6 +88,7 @@ namespace kt
 		clear_action->setEnabled(false);
 		edit_item_action->setEnabled(false);
 		remove_item_action->setEnabled(false);
+		scheduleChanged();
 	}
 	
 	void ScheduleEditor::save()
@@ -141,6 +142,7 @@ namespace kt
 				view->addScheduleItem(item); 
 			
 			clear_action->setEnabled(true);
+			scheduleChanged();
 		}
 	}
 
@@ -148,6 +150,7 @@ namespace kt
 	{
 		view->removeSelectedItems();
 		clear_action->setEnabled(schedule->count() > 0);
+		scheduleChanged();
 	}
 	
 	void ScheduleEditor::editItem(const ScheduleItem & item)
@@ -170,13 +173,13 @@ namespace kt
 				view->setSchedule(schedule);
 			}
 			clear_action->setEnabled(schedule->count() > 0);
+			scheduleChanged();
 		}
 	}
 	
 	void ScheduleEditor::editItem()
 	{
 		editItem(view->selectedItems().front());
-		
 	}
 	
 	void ScheduleEditor::onSelectionChanged()
@@ -184,6 +187,11 @@ namespace kt
 		bool on = view->selectedItems().count() > 0;
 		edit_item_action->setEnabled(on);
 		remove_item_action->setEnabled(on);
+	}
+	
+	void ScheduleEditor::updateStatusText(int up,int down,bool paused)
+	{
+		view->updateStatusText(up,down,paused);
 	}
 }
 

@@ -72,6 +72,14 @@ namespace kt
 		/// Get the right click menu
 		KMenu* rightClickMenu() {return menu;}
 		
+		/**
+		 * Update the text of the status line
+		 * @param up Up speed
+		 * @param down Down speed
+		 * @param paused Paused or not
+		 */
+		void updateStatusText(int up,int down,bool paused);
+		
 		
 	signals:
 		void selectionChanged();

@@ -46,6 +46,14 @@ namespace kt
 		 * @param s The current schedule
 		 */
 		void setSchedule(Schedule* s);
+			
+		/**
+		 * Update the text of the status line
+		 * @param up Up speed
+		 * @param down Down speed
+		 * @param paused Paused or not
+		 */
+		void updateStatusText(int up,int down,bool paused);
 		
 	private slots:
 		void clear();
@@ -63,6 +71,11 @@ namespace kt
 		 * @param ns The new schedule
 		 */
 		void loaded(Schedule* ns);
+		
+		/**
+		 * Emitted when something changes in the schedule.
+		 */
+		void scheduleChanged();
 
 	private:
 		WeekView* view;

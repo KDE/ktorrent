@@ -23,8 +23,10 @@
 #include <QTimer>
 #include <KAction>
 #include <interfaces/plugin.h>
+#include <interfaces/guiinterface.h>
 
 class QString;
+class KToolBar;
 
 
 namespace kt
@@ -37,7 +39,7 @@ namespace kt
 	 * @brief KTorrent scheduler plugin.
 	 *
 	 */
-	class BWSchedulerPlugin : public Plugin
+	class BWSchedulerPlugin : public Plugin,public CloseTabListener
 	{
 		Q_OBJECT
 	public:
@@ -47,17 +49,18 @@ namespace kt
 		virtual void load();
 		virtual void unload();
 		virtual bool versionCheck(const QString& version) const;
+		virtual void tabCloseRequest(kt::GUIInterface* gui,QWidget* tab);
 		
-		void updateEnabledBWS();
 		
 	public slots:
 		void timerTriggered();
-		void openBWS();
 		void onLoaded(Schedule* ns);
+		void onToggled(bool on);
 	
 	private:
 		QTimer m_timer;
 		KAction* m_bws_action;
+		KToolBar* m_tool_bar;
 		ScheduleEditor* m_editor;
 		Schedule* m_schedule;
 	};
