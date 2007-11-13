@@ -885,18 +885,11 @@ void KTorrentView::setupViewColumns()
 	}
 }
 
-void KTorrentView::keyReleaseEvent(QKeyEvent* event)
-{
-	QWidget::keyReleaseEvent(event);
-	if (event->key() == Qt::Key_Escape)
-	{
-		filter_bar->setHidden(true);
-	}
-}
 
-void KTorrentView::showFilterBar()
+
+void KTorrentView::toggleFilterBar()
 {
-	filter_bar->setHidden(false);
+	filter_bar->setHidden(!filter_bar->isHidden());
 }
 
 #include "ktorrentview.moc"

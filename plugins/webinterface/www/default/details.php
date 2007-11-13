@@ -1,10 +1,36 @@
 <?php
-	$stats=downloadStatus();
-	$num_torrent=$_REQUEST['torrent'];
-	if(strlen($stats[$num_torrent]['torrent_name'])>30)
-		$display_name=substr($stats[$num_torrent]['torrent_name'], 0, 30)."...";
-	else
-		$display_name=$stats[$num_torrent]['torrent_name'];
+$stats=downloadStatus();
+$num_torrent=$_REQUEST['torrent'];
+
+function cut_name_if_long($string)
+{
+	if(strlen($string)>30) return substr($string, 0, 30).'...';
+	else return $string;
+}
+
+function get_file_status_name($status_id)
+{
+	$table = array(
+	60 => 'PREVIEW_PRIORITY',
+	50 => 'Download First',
+	40 => 'Download Normally',
+	30 => 'Download Last',
+	20 => 'Only Seed',
+	10 => 'Do Not Download'
+	);
+	if (array_key_exists($status_id, $table)) return $table[$status_id];
+	else return 'Not supported file status';
+}
+
+function generate_file_prior_button_code($img, $alt, $href='')
+{
+	$img = '<img src="'.htmlspecialchars($img).'" alt="'.htmlspecialchars($alt).'" />';
+	if (empty($href)) return $img;
+	else return '<a href="'.htmlspecialchars($href).'">'.$img.'</a>';
+}
+
+$display_name=cut_name_if_long($stats[$num_torrent]['torrent_name']);
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -17,13 +43,6 @@
 <link rel="icon" href="favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <title><?php echo 'KTorrent: Details for '.$display_name; ?></title>
-<script type="text/javascript">
-	function validate()
-	{
-		msg = "Are you absolutely sure that you want remove this torrent?";
-		return confirm(msg);
-	}
-</script>
 </head>
 <body>
 	<div id="top_bar">WebInterface KTorrent plugin</div>
@@ -46,40 +65,25 @@
 			<th>Size</th>
 			<th>Complete</th>
 		</tr>
-		<?php
-		$files_to_display=$stats[$num_torrent]['num_files'];
-		$display_files = $stats[$num_torrent]['files'];
-
-		for ($i = 0; $i < $files_to_display; $i++)
+<?php
+		foreach($stats[$num_torrent]['files'] as $id => $file)
 		{
-			$file_pos='file_'.$i;
-			$size_pos='size_'.$i;
-			$perc_pos='perc_done_'.$i;
-			$status_pos='status_'.$i;
-
-			echo '<tr>';
-			echo "<td class=\"actions\"><a href=\"details.php?file_hp=$num_torrent-$i&amp;torrent=$num_torrent\" title=\"High Priority\"><img src=\"/high_priority.png\" name=\"stop\" alt=\"/\\\" /></a>";
-			echo "<a href=\"details.php?file_np=$num_torrent-$i&amp;torrent=$num_torrent\" title=\"Normal Priority\"><img src=\"/normal_priority.png\" name=\"start\" alt=\"-\" /></a>";
-			echo "<a href=\"details.php?file_lp=$num_torrent-$i&amp;torrent=$num_torrent\" title=\"Low Priority\"><img src=\"/low_priority.png\" name=\"start\" alt=\"\\/\" /></a>";
-			echo "<a href=\"details.php?file_dnd=$num_torrent-$i&amp;torrent=$num_torrent\" title=\"Only Seed Priority\"><img src=\"/dnd.png\" name=\"remove\" alt=\"X\" /></a></td>";
-
-			if(strlen($display_files[$file_pos])>30)
-				$file_display=substr($display_files[$file_pos], 0, 30)."...";
-			else
-				$file_display=$display_files[$file_pos];
-					
-			$perc_display=round($display_files[$perc_pos], 2);
-
-			echo '<td>'.$file_display.'</td>';
-			echo '<td>'.$display_files[$status_pos].'</td>';
-			echo '<td style="text-align:right;">'.$display_files[$size_pos].'</td>';
-			echo '<td style="text-align:right;">'.$perc_display.' %</td>';
-			echo '</tr>';
+			echo "\t\t".'<tr>'."\n\t\t\t";
+			echo '<td class="actions">';
+			echo generate_file_prior_button_code('/high_priority.png', 'High Priority', $file['status']==50?'':"details.php?file_hp=$num_torrent-$id&torrent=$num_torrent");
+			echo generate_file_prior_button_code('/normal_priority.png', 'Normal Priority', $file['status']==40?'':"details.php?file_np=$num_torrent-$id&torrent=$num_torrent");
+			echo generate_file_prior_button_code('/low_priority.png', 'Low Priority', $file['status']==30?'':"details.php?file_lp=$num_torrent-$id&torrent=$num_torrent");
+			echo generate_file_prior_button_code('/only_seed.png', 'Stop downloading (Only Seed Priority)', ($file['status']==20||$file['status']==10)?'':"details.php?file_stop=$num_torrent-$id&torrent=$num_torrent");
+			echo '</td>';
+			echo '<td>'.htmlspecialchars(cut_name_if_long($file['name'])).'</td>';
+			echo '<td>'.get_file_status_name($file['status']).'</td>';
+			echo '<td style="text-align:right;">'.$file['size'].'</td>';
+			echo '<td style="text-align:right;">'.round($file['perc_done'], 2).' %</td>';
+			echo "\n\t\t".'</tr>'."\n";
 		}
 		?>
 		</table>
 	</div>
 	<div id="footer">&#169; 2006 WebInterface KTorrent plugin</div>
-	<script type="text/javascript" src="wz_tooltip.js"></script>
 </body>
 </html>

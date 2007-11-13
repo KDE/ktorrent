@@ -117,9 +117,9 @@ public:
 	KListView* listView() {return view;}
 	
 	/**
-	 * Show the filter bar
+	 * Toggle the visibility of the filter bar
 	 */
-	void showFilterBar();
+	void toggleFilterBar();
 	
 public slots:
 	void setCurrentGroup(kt::Group* group);
@@ -177,7 +177,6 @@ private:
 	void insertColumn(QString label, Qt::AlignmentFlags);
 	void columnHide(int index);
 	void columnShow(int index);	
-	virtual void keyReleaseEvent(QKeyEvent* event);
 	
 	
 private:

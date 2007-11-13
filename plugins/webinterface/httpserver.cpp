@@ -387,7 +387,7 @@ namespace kt
 			{
 				HttpResponseHeader rhdr(301);
 				setDefaultResponseHeaders(rhdr,"text/html",true);
-				rhdr.setValue("Location",url.path());
+				rhdr.setValue("Location",url.encodedPathAndQuery());
 				
 				hdlr->executePHPScript(php_i,rhdr,WebInterfacePluginSettings::phpExecutablePath(),
 									   path,url.queryItems());

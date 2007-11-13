@@ -993,7 +993,7 @@ void KTorrent::find()
 {
 	KTorrentView* v = m_view_man->getCurrentView();
 	if (v)
-		v->showFilterBar();
+		v->toggleFilterBar();
 }
 
 #include "ktorrent.moc"

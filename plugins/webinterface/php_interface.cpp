@@ -81,7 +81,7 @@ namespace kt
 	{
 		QString ret;
 		TorrentStats stats;
-		Priority file_priority;
+		//Priority file_priority;
 		QString status;
 		ret.append("function downloadStatus()\n{\nreturn ");
 		ret.append("array(");
@@ -133,11 +133,14 @@ namespace kt
 				for (Uint32 j = 0;j < (*i)->getNumFiles();j++)
 				{
 					TorrentFileInterface & file = (*i)->getTorrentFile(j);
-					ret.append(QString("\"file_%1\" => \"%2\",").arg(j).arg(file.getPath()));
-					ret.append(QString("\"size_%1\" => \"%2\",").arg(j).arg(KIO::convertSize(file.getSize())));
-					ret.append(QString("\"perc_done_%1\" => \"%2\",").arg(j).arg(file.getDownloadPercentage()));
+					ret.append(QString("\"%1\" => array(").arg(j));
+					ret.append(QString("\"name\" => \"%1\",").arg(file.getPath()));
+					ret.append(QString("\"size\" => \"%1\",").arg(KIO::convertSize(file.getSize())));
+					ret.append(QString("\"perc_done\" => \"%1\",").arg(file.getDownloadPercentage()));
+					ret.append(QString("\"status\" => \"%1\"").arg(file.getPriority()));
+					ret.append(QString("),"));
 
-					file_priority=file.getPriority();
+					/*file_priority=file.getPriority();
 					if (file_priority==EXCLUDED)
 						status="Do Not Download";
 					else if (file_priority==LAST_PRIORITY)
@@ -149,8 +152,10 @@ namespace kt
 					else if (file_priority == ONLY_SEED_PRIORITY)
 						status="Only Seed";
 
-					ret.append(QString("\"status_%1\" => \"%2\",").arg(j).arg(status));	
+					ret.append(QString("\"status_%1\" => \"%2\",").arg(j).arg(status));	*/
 				}
+				if(ret.endsWith(","))
+					ret.truncate(ret.length()-1);
 				
 			}
 
@@ -290,6 +295,7 @@ namespace kt
 							{
 								TorrentFileInterface & file = (*i)->getTorrentFile(file_num.toInt());
 								file.setPriority(LAST_PRIORITY);
+								ret = true;
 								break;
 							}
 						}
@@ -303,6 +309,7 @@ namespace kt
 							{
 								TorrentFileInterface & file = (*i)->getTorrentFile(file_num.toInt());
 								file.setPriority(NORMAL_PRIORITY);
+								ret = true;
 								break;
 							}
 						}
@@ -316,11 +323,12 @@ namespace kt
 							{
 								TorrentFileInterface & file = (*i)->getTorrentFile(file_num.toInt());
 								file.setPriority(FIRST_PRIORITY);
+								ret = true;
 								break;
 							}
 						}
 					}
-					else if(it.key()=="file_dnd")
+					else if(it.key()=="file_stop")
 					{
 						QPtrList<TorrentInterface>::iterator i= core->getQueueManager()->begin();
 						for(int k=0; i != core->getQueueManager()->end(); i++, k++)
@@ -329,6 +337,7 @@ namespace kt
 							{
 								TorrentFileInterface & file = (*i)->getTorrentFile(file_num.toInt());
 								file.setPriority(ONLY_SEED_PRIORITY);
+								ret = true;
 								break;
 							}
 						}
@@ -480,6 +489,7 @@ namespace kt
 		
 		if (ret)
 			url = redirected_url; 
+		
 		return ret;
 	}
 	

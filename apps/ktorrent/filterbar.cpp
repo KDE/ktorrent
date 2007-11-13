@@ -111,7 +111,7 @@ void FilterBar::keyPressEvent(QKeyEvent* event)
 	{
         m_filterInput->clear();
 		m_name_filter = QString::null;
-		hide();
+		//hide();
     }
 	else 
 		QWidget::keyPressEvent(event);
