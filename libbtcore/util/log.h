@@ -24,7 +24,7 @@
 
 #include "constants.h"
 #include <qstring.h>
-#include <ktorrent_export.h>
+#include <btcore_export.h>
 
 // LOG MESSAGES CONSTANTS
 #define LOG_NONE 0x00
@@ -76,7 +76,7 @@ namespace bt
 	* There is also the possibility to monitor what is written to the log using
 	* the LogMonitorInterface class.
 	*/
-	class KTORRENT_EXPORT Log 
+	class BTCORE_EXPORT Log 
 	{
 		class Private;
 		
@@ -196,10 +196,10 @@ namespace bt
 		void logRotateDone();
 	};
 
-	KTORRENT_EXPORT Log & endl(Log & lg);
+	BTCORE_EXPORT Log & endl(Log & lg);
 	
 	
-	KTORRENT_EXPORT Log & Out(unsigned int arg = 0x00);
+	BTCORE_EXPORT Log & Out(unsigned int arg = 0x00);
 	inline Log & GenOut(unsigned int arg) {return Out(SYS_GEN|arg);}
 	inline Log & DHTOut(unsigned int arg) {return Out(SYS_DHT|arg);}
 	inline Log & ConOut(unsigned int arg) {return Out(SYS_CON|arg);}
@@ -208,13 +208,13 @@ namespace bt
 	/**
 	 * Initialize the global log.
 	 * */
-	KTORRENT_EXPORT void InitLog(const QString & file);
+	BTCORE_EXPORT void InitLog(const QString & file);
 
 	/// Add a monitor to the global log
-	KTORRENT_EXPORT void AddLogMonitor(kt::LogMonitorInterface* m);
+	BTCORE_EXPORT void AddLogMonitor(kt::LogMonitorInterface* m);
 
 	/// Remove a monitor from the global log
-	KTORRENT_EXPORT void RemoveLogMonitor(kt::LogMonitorInterface* m);
+	BTCORE_EXPORT void RemoveLogMonitor(kt::LogMonitorInterface* m);
 }
 
 #endif

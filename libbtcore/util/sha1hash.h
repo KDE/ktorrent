@@ -21,7 +21,7 @@
 #define BTSHA1HASH_H
 
 #include <QByteArray> 
-#include <ktorrent_export.h>
+#include <btcore_export.h>
 #include "constants.h"
 
 class QString;
@@ -37,7 +37,7 @@ namespace bt
 	 * This class keeps track of a SHA1 hash. A SHA1 hash is a 20 byte
 	 * array of bytes.
 	*/
-	class KTORRENT_EXPORT SHA1Hash
+	class BTCORE_EXPORT SHA1Hash
 	{
 	protected:
 		Uint8 hash[20];
@@ -119,7 +119,7 @@ namespace bt
 		 * @param h The hash
 		 * @return out
 		 */
-		friend Log & operator << (Log & out,const SHA1Hash & h);
+		BTCORE_EXPORT friend Log & operator << (Log & out,const SHA1Hash & h);
 		
 		
 		/**
@@ -128,7 +128,7 @@ namespace bt
 		 * @param b The second
 		 * @return a xor b
 		 */
-		friend SHA1Hash operator ^ (const SHA1Hash & a,const SHA1Hash & b);
+		BTCORE_EXPORT friend SHA1Hash operator ^ (const SHA1Hash & a,const SHA1Hash & b);
 		
 		/**
 		 * Function to compare 2 hashes
@@ -136,7 +136,7 @@ namespace bt
 		 * @param h The second hash
 		 * @return wether a is smaller then b
 		 */
-		friend bool operator < (const SHA1Hash & a,const SHA1Hash & b);
+		BTCORE_EXPORT friend bool operator < (const SHA1Hash & a,const SHA1Hash & b);
 		
 		/**
 		 * Convert the hash to a byte array.

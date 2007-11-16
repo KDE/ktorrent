@@ -17,26 +17,53 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTERROR_H
-#define BTERROR_H
+#ifndef BTBDECODER_H
+#define BTBDECODER_H
 
 #include <qstring.h>
-#include <ktorrent_export.h>
+#include <util/constants.h>
+#include <btcore_export.h>
+
 namespace bt
 {
 
+	class BNode;
+	class BListNode;
+	class BDictNode;
+	class BValueNode;
+	
 	/**
-	@author Joris Guisson
-	*/
-	class KTORRENT_EXPORT Error
+	 * @author Joris Guisson
+	 * @brief Decodes b-encoded data
+	 *
+	 * Class to decode b-encoded data.
+	 */
+	class BTCORE_EXPORT BDecoder
 	{
-		QString msg;
+		const QByteArray & data;
+		Uint32 pos;
+		bool verbose;
 	public:
-		Error(const QString & msg);
-		virtual ~Error();
-		
-		QString toString() const {return msg;}
+		/**
+		 * Constructor, passes in the data to decode.
+		 * @param data The data
+		 * @param verbose Verbose output to the log
+		 * @param off Offset to start parsing
+		 */
+		BDecoder(const QByteArray & data,bool verbose,Uint32 off = 0);
+		virtual ~BDecoder();
 
+		/**
+		 * Decode the data, the root node gets
+		 * returned. (Note that the caller must delete this node)
+		 * @return The root node
+		 */
+		BNode* decode();
+	private:
+		BDictNode* parseDict();
+		BListNode* parseList();
+		BValueNode* parseInt();
+		BValueNode* parseString();
 	};
 
 }

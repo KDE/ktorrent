@@ -17,53 +17,52 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTFUNCTIONS_H
-#define BTFUNCTIONS_H
+#ifndef BTVALUE_H
+#define BTVALUE_H
 
-#include "constants.h"
-#include <ktorrent_export.h>
-class QString;
+#include <qstring.h>
+#include <util/constants.h>
+#include <btcore_export.h>
 
 namespace bt
 {
 
-	void WriteUint64(Uint8* buf,Uint32 off,Uint64 val);
-	Uint64 ReadUint64(const Uint8* buf,Uint64 off);
-	
-	void WriteUint32(Uint8* buf,Uint32 off,Uint32 val);
-	Uint32 ReadUint32(const Uint8* buf,Uint32 off);
-	
-	void WriteUint16(Uint8* buf,Uint32 off,Uint16 val);
-	Uint16 ReadUint16(const Uint8* buf,Uint32 off);
-
-	
-	void WriteInt64(Uint8* buf,Uint32 off,Int64 val);
-	Int64 ReadInt64(const Uint8* buf,Uint32 off);
-	
-	void WriteInt32(Uint8* buf,Uint32 off,Int32 val);
-	Int32 ReadInt32(const Uint8* buf,Uint32 off);
-	
-	void WriteInt16(Uint8* buf,Uint32 off,Int16 val);
-	Int16 ReadInt16(const Uint8* buf,Uint32 off);
-	
-	KTORRENT_EXPORT void UpdateCurrentTime();
-	
-	KTORRENT_EXPORT extern TimeStamp global_time_stamp;
-	
-	inline TimeStamp GetCurrentTime() {return global_time_stamp;}
-	
-	TimeStamp Now();
-	
-	KTORRENT_EXPORT QString DirSeparator();
-	KTORRENT_EXPORT bool IsMultimediaFile(const QString & filename);
-
 	/**
-	 * Maximize the file and memory limits using setrlimit.
-	 */
-	bool MaximizeLimits();
+	@author Joris Guisson
+	*/
+	class BTCORE_EXPORT Value
+	{
+	public:
+		enum Type
+		{
+			STRING,INT,INT64
+		};
+		
 	
-	/// Get the maximum number of open files
-	Uint32 MaxOpenFiles();
+		Value();
+		Value(int val);
+		Value(Int64 val);
+		Value(const QByteArray & val);
+		Value(const Value & val);
+		~Value();
+
+		Value & operator = (const Value & val);
+		Value & operator = (Int32 val);
+		Value & operator = (Int64 val);
+		Value & operator = (const QByteArray & val);
+		
+		Type getType() const {return type;}
+		Int32 toInt() const {return ival;}
+		Int64 toInt64() const {return big_ival;}
+		QString toString() const {return QString(strval);}
+		QString toString(const QString & encoding) const;
+		QByteArray toByteArray() const {return strval;}
+	private:
+		Type type;
+		Int32 ival;
+		QByteArray strval;
+		Int64 big_ival;
+	};
 }
 
 #endif

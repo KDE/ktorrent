@@ -21,7 +21,7 @@
 #define BTFILEOPS_H
 
 #include <util/constants.h>
-#include <ktorrent_export.h>
+#include <btcore_export.h>
 class QString;
 
 namespace bt
@@ -34,7 +34,7 @@ namespace bt
 	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 * @throw Error upon error
 	 */
-	KTORRENT_EXPORT void MakeDir(const QString & dir,bool nothrow = false);
+	BTCORE_EXPORT void MakeDir(const QString & dir,bool nothrow = false);
 
 	/**
 	* Create a symbolic link @a link_url which links to @a link_to 
@@ -42,7 +42,7 @@ namespace bt
 	 * @param link_url The link url
 	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 */
-	KTORRENT_EXPORT void SymLink(const QString & link_to,const QString & link_url,bool nothrow = false);
+	BTCORE_EXPORT void SymLink(const QString & link_to,const QString & link_url,bool nothrow = false);
 
 	/**
 	 * Move a file/dir from one location to another
@@ -50,7 +50,7 @@ namespace bt
 	 * @param dst The destination file / directory
 	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 */
-	KTORRENT_EXPORT void Move(const QString & src,const QString & dst,bool nothrow = false);
+	BTCORE_EXPORT void Move(const QString & src,const QString & dst,bool nothrow = false);
 
 	/**
 	 * Copy a file.
@@ -58,7 +58,7 @@ namespace bt
 	 * @param dst The destination dir/file
 	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 */
-	KTORRENT_EXPORT void CopyFile(const QString & src,const QString & dst,bool nothrow = false);
+	BTCORE_EXPORT void CopyFile(const QString & src,const QString & dst,bool nothrow = false);
 	
 	/**
 	 * Copy a file or directory
@@ -66,21 +66,21 @@ namespace bt
 	 * @param dst The destination dir/file
 	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 */
-	KTORRENT_EXPORT void CopyDir(const QString & src,const QString & dst,bool nothrow = false);
+	BTCORE_EXPORT void CopyDir(const QString & src,const QString & dst,bool nothrow = false);
 	
 	/**
 	 * Check wether a file/dir exists
 	 * @param url The file/dir
 	 * @return true if it exits
 	 */
-	KTORRENT_EXPORT bool Exists(const QString & url);
+	BTCORE_EXPORT bool Exists(const QString & url);
 
 	/**
 	 * Delete a file or directory.
 	 * @param url The url of the file/dir
 	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 */
-	KTORRENT_EXPORT void Delete(const QString & url,bool nothrow = false);
+	BTCORE_EXPORT void Delete(const QString & url,bool nothrow = false);
 
 	/**
 	 * Try to create a file. Doesn't do anything if the file
@@ -88,7 +88,7 @@ namespace bt
 	 * @param url The url of the file
 	 * @param nothrow wether or not we shouldn't throw an Error upon failure
 	 */
-	KTORRENT_EXPORT void Touch(const QString & url,bool nothrow = false);
+	BTCORE_EXPORT void Touch(const QString & url,bool nothrow = false);
 	
 	/**
 	 * Calculates the size of a file
@@ -96,7 +96,7 @@ namespace bt
 	 * @return The size of the file
 	 * @throw Error if the file doesn't exist, or something else goes wrong
 	 */
-	KTORRENT_EXPORT Uint64 FileSize(const QString & url);
+	BTCORE_EXPORT Uint64 FileSize(const QString & url);
 	
 	/**
 	 * Get the size of a file.
@@ -104,7 +104,7 @@ namespace bt
 	 * @return The size
 	 * @throw Error if the file doesn't exist, or something else goes wrong
 	 */
-	KTORRENT_EXPORT Uint64 FileSize(int fd);
+	BTCORE_EXPORT Uint64 FileSize(int fd);
 	
 	/**
 	 * Truncate a file (wrapper around ftruncate)
@@ -113,7 +113,7 @@ namespace bt
 	 * @param quick Use the quick way (doesn't prevent fragmentationt)
 	 * @throw Error if the file doesn't exist, or something else goes wrong
 	 */
-	KTORRENT_EXPORT void TruncateFile(int fd,Uint64 size,bool quick);
+	BTCORE_EXPORT void TruncateFile(int fd,Uint64 size,bool quick);
 	
 	/**
 	 * Truncate a file (wrapper around ftruncate)
@@ -121,28 +121,28 @@ namespace bt
 	 * @param size The size to truncate to
 	 * @throw Error if the file doesn't exist, or something else goes wrong
 	 */
-	KTORRENT_EXPORT void TruncateFile(const QString & path,Uint64 size);
+	BTCORE_EXPORT void TruncateFile(const QString & path,Uint64 size);
 	
 	/**
 	 * Special truncate for FAT file systems.
 	*/
-	KTORRENT_EXPORT bool FatPreallocate(int fd,Uint64 size);
+	BTCORE_EXPORT bool FatPreallocate(int fd,Uint64 size);
 	
 	/**
 	 * Special truncate for FAT file systems.
 	 */
-	KTORRENT_EXPORT bool FatPreallocate(const QString & path,Uint64 size);
+	BTCORE_EXPORT bool FatPreallocate(const QString & path,Uint64 size);
 
 #ifdef HAVE_XFS_XFS_H
 	/**
 	 * Special truncate for XFS file systems.
 	*/
-	KTORRENT_EXPORT bool XfsPreallocate(int fd,Uint64 size);
+	BTCORE_EXPORT bool XfsPreallocate(int fd,Uint64 size);
 	
 	/**
 	 * Special truncate for XFS file systems.
 	 */
-	KTORRENT_EXPORT bool XfsPreallocate(const QString & path,Uint64 size);
+	BTCORE_EXPORT bool XfsPreallocate(const QString & path,Uint64 size);
 
 #endif
 
@@ -153,10 +153,10 @@ namespace bt
 	 * @param whence Position to seek from
 	 * @throw Error if something else goes wrong
 	 */
-	KTORRENT_EXPORT void SeekFile(int fd,Int64 off,int whence);
+	BTCORE_EXPORT void SeekFile(int fd,Int64 off,int whence);
 
 	/// Calculate the number of bytes free on the filesystem path is located
-	KTORRENT_EXPORT bool FreeDiskSpace(const QString & path,Uint64 & bytes_free);
+	BTCORE_EXPORT bool FreeDiskSpace(const QString & path,Uint64 & bytes_free);
 }
 
 #endif

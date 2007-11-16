@@ -17,33 +17,53 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTTIMER_H
-#define BTTIMER_H
+#ifndef BTFUNCTIONS_H
+#define BTFUNCTIONS_H
 
-#include <qdatetime.h>
 #include "constants.h"
+#include <btcore_export.h>
+class QString;
 
 namespace bt
 {
 
+	BTCORE_EXPORT void WriteUint64(Uint8* buf,Uint32 off,Uint64 val);
+	BTCORE_EXPORT Uint64 ReadUint64(const Uint8* buf,Uint64 off);
+	
+	BTCORE_EXPORT void WriteUint32(Uint8* buf,Uint32 off,Uint32 val);
+	BTCORE_EXPORT Uint32 ReadUint32(const Uint8* buf,Uint32 off);
+	
+	BTCORE_EXPORT void WriteUint16(Uint8* buf,Uint32 off,Uint16 val);
+	BTCORE_EXPORT Uint16 ReadUint16(const Uint8* buf,Uint32 off);
+
+	
+	BTCORE_EXPORT void WriteInt64(Uint8* buf,Uint32 off,Int64 val);
+	BTCORE_EXPORT Int64 ReadInt64(const Uint8* buf,Uint32 off);
+	
+	BTCORE_EXPORT void WriteInt32(Uint8* buf,Uint32 off,Int32 val);
+	BTCORE_EXPORT Int32 ReadInt32(const Uint8* buf,Uint32 off);
+	
+	BTCORE_EXPORT void WriteInt16(Uint8* buf,Uint32 off,Int16 val);
+	BTCORE_EXPORT Int16 ReadInt16(const Uint8* buf,Uint32 off);
+	
+	BTCORE_EXPORT void UpdateCurrentTime();
+	
+	BTCORE_EXPORT extern TimeStamp global_time_stamp;
+	
+	inline TimeStamp GetCurrentTime() {return global_time_stamp;}
+	
+	BTCORE_EXPORT TimeStamp Now();
+	
+	BTCORE_EXPORT QString DirSeparator();
+	BTCORE_EXPORT bool IsMultimediaFile(const QString & filename);
+
 	/**
-	@author Joris Guisson
-	*/
-	class Timer
-	{
-		QTime last;
-		Uint32 elapsed;
-	public:
-		Timer();
-		Timer(const Timer & t);
-		virtual ~Timer();
-
-		void update();
-		Uint32 getElapsed() const {return elapsed;}
-		Uint32 getElapsedSinceUpdate() const;
-		Timer & operator = (const Timer & t);
-	};
-
+	 * Maximize the file and memory limits using setrlimit.
+	 */
+	BTCORE_EXPORT bool MaximizeLimits();
+	
+	/// Get the maximum number of open files
+	BTCORE_EXPORT Uint32 MaxOpenFiles();
 }
 
 #endif

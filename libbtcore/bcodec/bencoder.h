@@ -20,7 +20,7 @@
 #ifndef BTBENCODER_H
 #define BTBENCODER_H
 
-#include <ktorrent_export.h>
+#include <btcore_export.h>
 #include <util/file.h>
 
 
@@ -33,7 +33,7 @@ namespace bt
 	 *
 	 * Interface for classes which wish to receive the output from a BEncoder.
 	 */
-	class KTORRENT_EXPORT BEncoderOutput
+	class BTCORE_EXPORT BEncoderOutput
 	{
 	public:
 		virtual ~BEncoderOutput() {}
@@ -48,7 +48,7 @@ namespace bt
 	/**
 	 * Writes the output of a bencoder to a file
 	 */
-	class KTORRENT_EXPORT BEncoderFileOutput : public BEncoderOutput
+	class BTCORE_EXPORT BEncoderFileOutput : public BEncoderOutput
 	{
 		File* fptr;
 	public:
@@ -60,7 +60,7 @@ namespace bt
 	/**
 	 * Write the output of a BEncoder to a QByteArray
 	 */
-	class KTORRENT_EXPORT BEncoderBufferOutput : public BEncoderOutput
+	class BTCORE_EXPORT BEncoderBufferOutput : public BEncoderOutput
 	{
 		QByteArray & data;
 		Uint32 ptr;
@@ -79,7 +79,7 @@ namespace bt
 	 * the BitTorrent protocol docs. The data gets written to a BEncoderOutput
 	 * thing.
 	 */
-	class KTORRENT_EXPORT BEncoder 
+	class BTCORE_EXPORT BEncoder 
 	{
 		BEncoderOutput* out;
 		bool del;

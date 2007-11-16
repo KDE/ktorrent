@@ -36,9 +36,12 @@ include_directories( ${KDE4_INCLUDES}
    ${KTORRENT_BINARY_DIR}
    ${KTORRENT_BINARY_DIR}/libktorrent
    ${KTORRENT_SOURCE_DIR}/libktorrent
+   ${KTORRENT_BINARY_DIR}/libbtcore
+   ${KTORRENT_SOURCE_DIR}/libbtcore
    ${KTORRENT_SOURCE_DIR}
    )
 
+add_subdirectory(libbtcore)
 add_subdirectory(libktorrent)
 add_subdirectory(libktupnp)
 add_subdirectory(plugins)

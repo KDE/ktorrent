@@ -17,12 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTFILE_H
-#define BTFILE_H
+#ifndef BTARRAY_H
+#define BTARRAY_H
 
-#include <stdio.h>
-#include <qstring.h>
-#include <ktorrent_export.h>
+#include <btcore_export.h>
 #include "constants.h"
 
 namespace bt
@@ -30,84 +28,45 @@ namespace bt
 
 	/**
 	 * @author Joris Guisson
-	 * @brief Wrapper class for stdio's FILE
 	 *
-	 * Wrapper class for stdio's FILE.
+	 * Template array classes, makes creating dynamic buffers easier
+	 * and safer.
 	 */
-	class KTORRENT_EXPORT File
+	template<class T>
+	class BTCORE_EXPORT Array
 	{
-		FILE* fptr;
-		QString file;
+		Uint32 num;
+		T* data;
 	public:
-		/**
-		 * Constructor.
-		 */
-		File();
-		
-		/**
-		 * Destructor, closes the file.
-		 */
-		virtual ~File();
-
-		/**
-		 * Open the file similar to fopen
-		 * @param file Filename
-		 * @param mode Mode
-		 * @return true upon succes
-		 */
-		bool open(const QString & file,const QString & mode);
-		
-		/**
-		 * Close the file.
-		 */
-		void close();
-		
-		/**
-		 * Flush the file.
-		 */
-		void flush();
-		
-		/**
-		 * Write a bunch of data. If anything goes wrong
-		 * an Error will be thrown.
-		 * @param buf The data
-		 * @param size Size of the data
-		 * @return The number of bytes written
-		 */
-		Uint32 write(const void* buf,Uint32 size);
-		
-		/**
-		 * Read a bunch of data. If anything goes wrong
-		 * an Error will be thrown.
-		 * @param buf The buffer to store the data
-		 * @param size Size of the buffer
-		 * @return The number of bytes read
-		 */
-		Uint32 read(void* buf,Uint32 size);
-
-		enum SeekPos
+		Array(Uint32 num = 0) : num(num),data(0)
 		{
-			BEGIN,
-			END,
-			CURRENT
-		};
-		
+			if (num > 0)
+				data = new T[num];
+		}
+
+		~Array()
+		{
+			delete [] data;
+		}
+
+		T & operator [] (Uint32 i) {return data[i];}
+		const T & operator [] (Uint32 i) const {return data[i];}
+
+		operator const T* () const {return data;}
+		operator T* () {return data;}
+
+		/// Get the number of elements in the array
+		Uint32 size() const {return num;}
+
 		/**
-		 * Seek in the file.
-		 * @param from Position to seek from
-		 * @param num Number of bytes to move
-		 * @return New position
+		 * Fill the array with a value
+		 * @param val The value
 		 */
-		Uint64 seek(SeekPos from,Int64 num);
-
-		/// Check to see if we are at the end of the file.
-		bool eof() const;
-
-		/// Get the current position in the file.
-		Uint64 tell() const;
-
-		/// Get the error string.
-		QString errorString() const;
+		void fill(T val)
+		{
+			for (Uint32 i = 0;i < num;i++)
+				data[i] = val;
+		}
 	};
 
 }

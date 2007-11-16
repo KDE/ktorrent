@@ -17,55 +17,32 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTARRAY_H
-#define BTARRAY_H
+#ifndef BTTIMER_H
+#define BTTIMER_H
 
+#include <qdatetime.h>
+#include <btcore_export.h>
 #include "constants.h"
 
 namespace bt
 {
 
 	/**
-	 * @author Joris Guisson
-	 *
-	 * Template array classes, makes creating dynamic buffers easier
-	 * and safer.
-	 */
-	template<class T>
-	class Array
+	@author Joris Guisson
+	*/
+	class BTCORE_EXPORT Timer
 	{
-		Uint32 num;
-		T* data;
+		QTime last;
+		Uint32 elapsed;
 	public:
-		Array(Uint32 num = 0) : num(num),data(0)
-		{
-			if (num > 0)
-				data = new T[num];
-		}
+		Timer();
+		Timer(const Timer & t);
+		virtual ~Timer();
 
-		~Array()
-		{
-			delete [] data;
-		}
-
-		T & operator [] (Uint32 i) {return data[i];}
-		const T & operator [] (Uint32 i) const {return data[i];}
-
-		operator const T* () const {return data;}
-		operator T* () {return data;}
-
-		/// Get the number of elements in the array
-		Uint32 size() const {return num;}
-
-		/**
-		 * Fill the array with a value
-		 * @param val The value
-		 */
-		void fill(T val)
-		{
-			for (Uint32 i = 0;i < num;i++)
-				data[i] = val;
-		}
+		void update();
+		Uint32 getElapsed() const {return elapsed;}
+		Uint32 getElapsedSinceUpdate() const;
+		Timer & operator = (const Timer & t);
 	};
 
 }

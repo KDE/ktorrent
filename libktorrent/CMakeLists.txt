@@ -2,10 +2,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 set(libktorrent_SRC 
-	bcodec/bdecoder.cpp  
-	bcodec/bencoder.cpp  
-	bcodec/bnode.cpp  
-	bcodec/value.cpp
+	util/mmapfile.cpp
 
 	net/address.cpp  
 	net/bufferedsocket.cpp  
@@ -54,22 +51,7 @@ set(libktorrent_SRC
 	migrate/ccmigrate.cpp  
 	migrate/migrate.cpp
 
-	util/timer.cpp
-	util/urlencoder.cpp
-	util/sha1hashgen.cpp
-	util/sha1hash.cpp
-	util/functions.cpp
-	util/ptrmap.cpp
-	util/array.cpp
-	util/bitset.cpp
-	util/error.cpp
-	util/file.cpp
-	util/fileops.cpp
-	util/log.cpp
-	util/waitjob.cpp
-	util/autorotatelogjob.cpp
-	util/mmapfile.cpp
-
+	
 	tracker/httptracker.cpp  
 	tracker/tracker.cpp  
 	tracker/udptracker.cpp  
@@ -170,7 +152,7 @@ kde4_add_kcfg_files(libktorrent_SRC settings.kcfgc)
 kde4_add_library(ktcore SHARED ${libktorrent_SRC})
 
 # target_link_libraries(ktorrent ${KDE4_KPARTS_LIBS} -lgmp)
-target_link_libraries(ktcore ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KPARTS_LIBS} -lsolid -lgmp)
+target_link_libraries(ktcore ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KPARTS_LIBS} btcore -lsolid -lgmp)
 set_target_properties(ktcore PROPERTIES VERSION 1.0.0 SOVERSION 1 )
 install(TARGETS ktcore  DESTINATION ${LIB_INSTALL_DIR} )
 

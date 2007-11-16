@@ -21,6 +21,7 @@
 #define BTPTRMAP_H
 
 #include <map>
+#include <btcore_export.h>
 
 namespace bt
 {
@@ -33,7 +34,7 @@ namespace bt
 	* will be deleted.
 	*/
 	template <class Key,class Data>
-	class PtrMap
+	class BTCORE_EXPORT PtrMap
 	{
 		bool autodel;
 		std::map<Key,Data*> pmap;

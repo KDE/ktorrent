@@ -17,51 +17,61 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTVALUE_H
-#define BTVALUE_H
+#ifndef BTWAITJOB_H
+#define BTWAITJOB_H
 
-#include <qstring.h>
-#include <util/constants.h>
+#include <kio/job.h>
+#include <qlist.h>
+#include <interfaces/exitoperation.h>
+#include "constants.h"
+#include <btcore_export.h>
 
 namespace bt
 {
 
 	/**
-	@author Joris Guisson
-	*/
-	class Value
+	 * @author Joris Guisson <joris.guisson@gmail.com>
+	 * 
+	 * Job to wait for a certain amount of time or until one or more ExitOperation's have
+	 * finished.
+	 */
+	class BTCORE_EXPORT WaitJob : public KIO::Job
 	{
+		Q_OBJECT
 	public:
-		enum Type
-		{
-			STRING,INT,INT64
-		};
-		
-	
-		Value();
-		Value(int val);
-		Value(Int64 val);
-		Value(const QByteArray & val);
-		Value(const Value & val);
-		~Value();
+		WaitJob(Uint32 millis);
+		virtual ~WaitJob();
 
-		Value & operator = (const Value & val);
-		Value & operator = (Int32 val);
-		Value & operator = (Int64 val);
-		Value & operator = (const QByteArray & val);
+		virtual void kill(bool quietly=true);
 		
-		Type getType() const {return type;}
-		Int32 toInt() const {return ival;}
-		Int64 toInt64() const {return big_ival;}
-		QString toString() const {return QString(strval);}
-		QString toString(const QString & encoding) const;
-		QByteArray toByteArray() const {return strval;}
+		/**
+		 * Add an ExitOperation;
+		 * @param op The operation
+		 */
+		void addExitOperation(kt::ExitOperation* op);
+		
+		
+		/**
+		 * Execute a WaitJob
+		 * @param job The Job
+		 */
+		static void execute(WaitJob* job);
+		
+		/// Are there any ExitOperation's we need to wait for
+		bool needToWait() const {return exit_ops.count() > 0;}
+		
+	private slots:
+		void timerDone();
+		void operationFinished(kt::ExitOperation* op);
+		
 	private:
-		Type type;
-		Int32 ival;
-		QByteArray strval;
-		Int64 big_ival;
+		QList<kt::ExitOperation*> exit_ops;
 	};
+	
+	BTCORE_EXPORT void SynchronousWait(Uint32 millis);
+	
+	
+
 }
 
 #endif

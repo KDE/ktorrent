@@ -17,60 +17,98 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef BTWAITJOB_H
-#define BTWAITJOB_H
+#ifndef BTFILE_H
+#define BTFILE_H
 
-#include <kio/job.h>
-#include <qlist.h>
-#include <interfaces/exitoperation.h>
+#include <stdio.h>
+#include <qstring.h>
+#include <btcore_export.h>
 #include "constants.h"
-#include <ktorrent_export.h>
 
 namespace bt
 {
 
 	/**
-	 * @author Joris Guisson <joris.guisson@gmail.com>
-	 * 
-	 * Job to wait for a certain amount of time or until one or more ExitOperation's have
-	 * finished.
-	*/
-	class KTORRENT_EXPORT WaitJob : public KIO::Job
+	 * @author Joris Guisson
+	 * @brief Wrapper class for stdio's FILE
+	 *
+	 * Wrapper class for stdio's FILE.
+	 */
+	class BTCORE_EXPORT File
 	{
-		Q_OBJECT
+		FILE* fptr;
+		QString file;
 	public:
-		WaitJob(Uint32 millis);
-		virtual ~WaitJob();
+		/**
+		 * Constructor.
+		 */
+		File();
+		
+		/**
+		 * Destructor, closes the file.
+		 */
+		virtual ~File();
 
-		virtual void kill(bool quietly=true);
+		/**
+		 * Open the file similar to fopen
+		 * @param file Filename
+		 * @param mode Mode
+		 * @return true upon succes
+		 */
+		bool open(const QString & file,const QString & mode);
 		
 		/**
-		 * Add an ExitOperation;
-		 * @param op The operation
+		 * Close the file.
 		 */
-		void addExitOperation(kt::ExitOperation* op);
-		
+		void close();
 		
 		/**
-		 * Execute a WaitJob
-		 * @param job The Job
+		 * Flush the file.
 		 */
-		static void execute(WaitJob* job);
+		void flush();
 		
-		/// Are there any ExitOperation's we need to wait for
-		bool needToWait() const {return exit_ops.count() > 0;}
+		/**
+		 * Write a bunch of data. If anything goes wrong
+		 * an Error will be thrown.
+		 * @param buf The data
+		 * @param size Size of the data
+		 * @return The number of bytes written
+		 */
+		Uint32 write(const void* buf,Uint32 size);
 		
-	private slots:
-		void timerDone();
-		void operationFinished(kt::ExitOperation* op);
+		/**
+		 * Read a bunch of data. If anything goes wrong
+		 * an Error will be thrown.
+		 * @param buf The buffer to store the data
+		 * @param size Size of the buffer
+		 * @return The number of bytes read
+		 */
+		Uint32 read(void* buf,Uint32 size);
+
+		enum SeekPos
+		{
+			BEGIN,
+			END,
+			CURRENT
+		};
 		
-	private:
-		QList<kt::ExitOperation*> exit_ops;
+		/**
+		 * Seek in the file.
+		 * @param from Position to seek from
+		 * @param num Number of bytes to move
+		 * @return New position
+		 */
+		Uint64 seek(SeekPos from,Int64 num);
+
+		/// Check to see if we are at the end of the file.
+		bool eof() const;
+
+		/// Get the current position in the file.
+		Uint64 tell() const;
+
+		/// Get the error string.
+		QString errorString() const;
 	};
-	
-	void SynchronousWait(Uint32 millis);
-	
-	
 
 }
 

@@ -20,7 +20,7 @@
 #ifndef BTBITSET_H
 #define BTBITSET_H
 
-#include <ktorrent_export.h>
+#include <btcore_export.h>
 #include "constants.h"
 
 namespace bt
@@ -33,7 +33,7 @@ namespace bt
 	 * Simple implementation of a BitSet, can only turn on and off bits.
 	 * BitSet's are used to indicate which chunks we have or not.
 	 */
-	class KTORRENT_EXPORT BitSet
+	class BTCORE_EXPORT BitSet
 	{
 		Uint32 num_bits,num_bytes;
 		Uint8* data;
