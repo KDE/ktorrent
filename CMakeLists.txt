@@ -34,15 +34,15 @@ add_definitions(${KDE4_ENABLE_EXCEPTIONS} ${KDE4_DEFINITIONS} )
 
 include_directories( ${KDE4_INCLUDES} 
    ${KTORRENT_BINARY_DIR}
-   ${KTORRENT_BINARY_DIR}/libktorrent
-   ${KTORRENT_SOURCE_DIR}/libktorrent
+   ${KTORRENT_BINARY_DIR}/libktcore
+   ${KTORRENT_SOURCE_DIR}/libktcore
    ${KTORRENT_BINARY_DIR}/libbtcore
    ${KTORRENT_SOURCE_DIR}/libbtcore
    ${KTORRENT_SOURCE_DIR}
    )
 
 add_subdirectory(libbtcore)
-add_subdirectory(libktorrent)
+add_subdirectory(libktcore)
 add_subdirectory(libktupnp)
 add_subdirectory(plugins)
 add_subdirectory(ideal)
