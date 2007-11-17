@@ -131,7 +131,57 @@ set(libbtcore_SRC
 	migrate/migrate.cpp
 )
 
-# set(libbtcore_UI )
+set(libbtcore_HDR  
+	./net/address.h
+	./net/portlist.h
+	./net/socketmonitor.h
+	./net/socket.h
+	./mse/streamsocket.h
+	./interfaces/queuemanagerinterface.h
+	./interfaces/ipblockinginterface.h
+	./interfaces/exitoperation.h
+	./interfaces/trackerslist.h
+	./interfaces/logmonitorinterface.h
+	./interfaces/torrentfileinterface.h
+	./interfaces/peersource.h
+	./interfaces/peersource.h
+	./interfaces/monitorinterface.h
+	./interfaces/torrentinterface.h
+	./interfaces/torrentinterface.h
+	./peer/authenticationmonitor.h
+	./peer/peermanager.h
+	./peer/peerid.h
+	./util/sha1hash.h
+	./util/fileops.h
+	./util/bitset.h
+	./util/ptrmap.h
+	./util/log.h
+	./util/functions.h
+	./util/error.h
+	./util/timer.h
+	./util/file.h
+	./util/waitjob.h
+	./util/array.h
+	./util/sha1hashgen.h
+	./download/downloader.h
+	./btcore_export.h
+	./bcodec/bencoder.h
+	./bcodec/value.h
+	./bcodec/bnode.h
+	./diskio/chunkmanager.h
+	./diskio/cache.h
+	./torrent/torrentfile.h
+	./torrent/torrentcontrol.h
+	./torrent/choker.h
+	./torrent/ipblocklist.h
+	./torrent/torrent.h
+	./torrent/server.h
+	./torrent/globals.h
+	./torrent/torrentcreator.h
+	./tracker/httptracker.h
+	./tracker/udptrackersocket.h
+	./tracker/tracker.h
+)
 
 # kde4_add_ui_files(libbtcore_SRC ${libbtcore_UI})
 # kde4_add_kcfg_files(libbtcore_SRC settings.kcfgc)
@@ -141,4 +191,5 @@ kde4_add_library(btcore SHARED ${libbtcore_SRC})
 target_link_libraries(btcore ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KPARTS_LIBS} -lsolid -lgmp)
 set_target_properties(btcore PROPERTIES VERSION 1.0.0 SOVERSION 1 )
 install(TARGETS btcore  DESTINATION ${LIB_INSTALL_DIR} )
+install(FILES ${libbtcore_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore )
 
