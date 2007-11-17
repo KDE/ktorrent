@@ -41,6 +41,7 @@ include_directories( ${KDE4_INCLUDES}
    ${KTORRENT_SOURCE_DIR}
    )
 
+add_subdirectory(cmake)
 add_subdirectory(libbtcore)
 add_subdirectory(libktcore)
 add_subdirectory(libktupnp)

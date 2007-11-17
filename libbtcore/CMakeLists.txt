@@ -131,12 +131,26 @@ set(libbtcore_SRC
 	migrate/migrate.cpp
 )
 
-set(libbtcore_HDR  
+
+# kde4_add_ui_files(libbtcore_SRC ${libbtcore_UI})
+# kde4_add_kcfg_files(libbtcore_SRC settings.kcfgc)
+kde4_add_library(btcore SHARED ${libbtcore_SRC})
+
+# target_link_libraries(btcore ${KDE4_KPARTS_LIBS} -lgmp)
+target_link_libraries(btcore ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KPARTS_LIBS} -lsolid -lgmp)
+set_target_properties(btcore PROPERTIES VERSION 1.0.0 SOVERSION 1 )
+install(TARGETS btcore  DESTINATION ${LIB_INSTALL_DIR} )
+
+set(net_HDR  
 	./net/address.h
 	./net/portlist.h
 	./net/socketmonitor.h
 	./net/socket.h
-	./mse/streamsocket.h
+)
+
+set (mse_HDR ./mse/streamsocket.h)
+
+set (interfaces_HDR
 	./interfaces/queuemanagerinterface.h
 	./interfaces/ipblockinginterface.h
 	./interfaces/exitoperation.h
@@ -148,9 +162,15 @@ set(libbtcore_HDR
 	./interfaces/monitorinterface.h
 	./interfaces/torrentinterface.h
 	./interfaces/torrentinterface.h
+)
+
+set (peer_HDR
 	./peer/authenticationmonitor.h
 	./peer/peermanager.h
 	./peer/peerid.h
+)
+	
+set (util_HDR
 	./util/sha1hash.h
 	./util/fileops.h
 	./util/bitset.h
@@ -163,13 +183,29 @@ set(libbtcore_HDR
 	./util/waitjob.h
 	./util/array.h
 	./util/sha1hashgen.h
+	./util/constants.h
+)
+	
+set (download_HDR
 	./download/downloader.h
-	./btcore_export.h
+)
+
+set (btcore_HDR 
+	btcore_export.h
+)
+	
+set (bcodec_HDR
 	./bcodec/bencoder.h
 	./bcodec/value.h
 	./bcodec/bnode.h
+)
+	
+set (diskio_HDR  
 	./diskio/chunkmanager.h
 	./diskio/cache.h
+)
+	
+set (torrent_HDR
 	./torrent/torrentfile.h
 	./torrent/torrentcontrol.h
 	./torrent/choker.h
@@ -178,18 +214,21 @@ set(libbtcore_HDR
 	./torrent/server.h
 	./torrent/globals.h
 	./torrent/torrentcreator.h
+)
+	
+set (tracker_HDR
 	./tracker/httptracker.h
 	./tracker/udptrackersocket.h
 	./tracker/tracker.h
 )
 
-# kde4_add_ui_files(libbtcore_SRC ${libbtcore_UI})
-# kde4_add_kcfg_files(libbtcore_SRC settings.kcfgc)
-kde4_add_library(btcore SHARED ${libbtcore_SRC})
-
-# target_link_libraries(btcore ${KDE4_KPARTS_LIBS} -lgmp)
-target_link_libraries(btcore ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KPARTS_LIBS} -lsolid -lgmp)
-set_target_properties(btcore PROPERTIES VERSION 1.0.0 SOVERSION 1 )
-install(TARGETS btcore  DESTINATION ${LIB_INSTALL_DIR} )
-install(FILES ${libbtcore_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore )
-
+install(FILES ${tracker_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/tracker )
+install(FILES ${torrent_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/torrent )
+install(FILES ${diskio_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/diskio )
+install(FILES ${bcodec_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/bcodec )
+install(FILES ${net_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/net )
+install(FILES ${mse_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/mse )
+install(FILES ${interfaces_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/interfaces )
+install(FILES ${util_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/util )
+install(FILES ${peer_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/peer )
+install(FILES ${btcore_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore )
