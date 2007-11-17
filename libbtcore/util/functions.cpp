@@ -27,6 +27,9 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+
+#include <qdatetime.h>
+#include <QNetworkInterface>
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmimetype.h>
@@ -221,7 +224,62 @@ namespace bt
 		return true;
 	}
 
-
+	static QString net_iface = QString::null;
 	
+	void SetNetworkInterface(const QString & iface)
+	{
+		net_iface = iface;
+	}
 
+	QString NetworkInterface()
+	{
+		return net_iface;
+		
+	}
+	
+	QString NetworkInterfaceIPAddress(const QString & iface)
+	{
+		QNetworkInterface ni = QNetworkInterface::interfaceFromName(iface);
+		if (!ni.isValid())
+			return QString::null;
+
+		QList<QNetworkAddressEntry> addr_list = ni.addressEntries();
+		if (addr_list.count() == 0)
+			return QString::null;
+		else
+			return addr_list.front().ip().toString();
+	}	
+
+		
+	QString BytesToString(Uint64 bytes,int precision)
+	{
+		KLocale* loc = KGlobal::locale();
+		if (bytes >= 1024 * 1024 * 1024)
+			return i18n("%1 GB",loc->formatNumber(bytes / TO_GIG,precision < 0 ? 2 : precision));
+		else if (bytes >= 1024*1024)
+			return i18n("%1 MB",loc->formatNumber(bytes / TO_MEG,precision < 0 ? 1 : precision));
+		else if (bytes >= 1024)
+			return i18n("%1 KB",loc->formatNumber(bytes / TO_KB,precision < 0 ? 1 : precision));
+		else
+			return i18n("%1 B",bytes);
+	}
+
+	QString KBytesPerSecToString(double speed,int precision)
+	{
+		KLocale* loc = KGlobal::locale();
+		return i18n("%1 KB/s",loc->formatNumber(speed,precision));
+	}
+
+	QString DurationToString(Uint32 nsecs)
+	{
+		KLocale* loc = KGlobal::locale();
+		QTime t;
+		int ndays = nsecs / 86400;
+		t = t.addSecs(nsecs % 86400);
+		QString s = loc->formatTime(t,true,true);
+		if (ndays > 0)
+			s = i18np("1 day ","%1 days ",ndays) + s;
+
+		return s;
+	}
 }

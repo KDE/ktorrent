@@ -23,10 +23,14 @@
 
 #include "ui_trackerview.h"
 
-namespace kt
+namespace bt
 {
 	class TorrentInterface;
 	class TorrentFileInterface;
+}
+
+namespace kt
+{
 	
 	/**
 	 * @author Ivan Vasic <ivan@ktorrent.org>
@@ -39,7 +43,7 @@ namespace kt
 		virtual ~TrackerView();
 			
 		void update();
-		void changeTC(TorrentInterface* ti);
+		void changeTC(bt::TorrentInterface* ti);
 			
 	public slots:
 		virtual void btnUpdateClicked();
@@ -47,13 +51,13 @@ namespace kt
 		virtual void btnChangeClicked();
 		virtual void btnRemoveClicked();
 		virtual void btnAddClicked();
-    		virtual void currentTrackerChanged(QListWidgetItem*,QListWidgetItem*);
+		virtual void currentTrackerChanged(QListWidgetItem*,QListWidgetItem*);
 			
 	private:
-		void torrentChanged(TorrentInterface* ti);
+		void torrentChanged(bt::TorrentInterface* ti);
 			
 	private:
-		TorrentInterface* tc;
+		bt::TorrentInterface* tc;
 	};
 }
 #endif

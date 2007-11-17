@@ -28,12 +28,13 @@ namespace bt
 {
 	class BEncoder;
 	class BDictNode;
+	class TorrentInterface;
 }
 
 namespace kt
 {
-	class TorrentInterface;
-
+	using bt::TorrentInterface;
+	
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
 	 * 

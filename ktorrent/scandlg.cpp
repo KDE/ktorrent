@@ -68,7 +68,7 @@ namespace kt
 		}
 	}
 
-	void ScanDlg::execute(kt::TorrentInterface* tc,bool silently)
+	void ScanDlg::execute(bt::TorrentInterface* tc,bool silently)
 	{
 		m_torrent_label->setText(i18n("Scanning data of <b>%1</b> :",tc->getStats().torrent_name));
 		adjustSize();

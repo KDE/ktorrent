@@ -29,7 +29,7 @@ namespace kt
 	/**
 	 * @author Joris Guisson
 	*/
-	class LogViewer : public Q3TextBrowser, public LogMonitorInterface
+	class LogViewer : public Q3TextBrowser, public bt::LogMonitorInterface
 	{
 		Q_OBJECT
 	public:

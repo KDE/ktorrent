@@ -35,9 +35,9 @@
 #include <interfaces/trackerslist.h>
 #include <settings.h>
 
-using namespace kt;
+using namespace bt;
 
-namespace bt
+namespace kt
 {
 
 	QueueManager::QueueManager() : QObject()
@@ -54,15 +54,15 @@ namespace bt
 	QueueManager::~QueueManager()
 	{}
 
-	void QueueManager::append(kt::TorrentInterface* tc)
+	void QueueManager::append(bt::TorrentInterface* tc)
 	{
 		downloads.append(tc);
 		qSort(downloads.begin(), downloads.end());
-		connect(tc, SIGNAL(diskSpaceLow(kt::TorrentInterface*, bool)), this, SLOT(onLowDiskSpace(kt::TorrentInterface*, bool)));	
-		connect(tc, SIGNAL(torrentStopped(kt::TorrentInterface*)), this, SLOT(torrentStopped(kt::TorrentInterface*)));
+		connect(tc, SIGNAL(diskSpaceLow(bt::TorrentInterface*, bool)), this, SLOT(onLowDiskSpace(bt::TorrentInterface*, bool)));	
+		connect(tc, SIGNAL(torrentStopped(bt::TorrentInterface*)), this, SLOT(torrentStopped(bt::TorrentInterface*)));
 	}
 
-	void QueueManager::remove(kt::TorrentInterface* tc)
+	void QueueManager::remove(bt::TorrentInterface* tc)
 	{
 		paused_torrents.erase(tc);
 		int index = downloads.indexOf(tc);
@@ -81,7 +81,7 @@ namespace bt
 			SynchronousWait(1000);
 	}
 
-	kt::TorrentStartResponse QueueManager::start(kt::TorrentInterface* tc, bool user)
+	TorrentStartResponse QueueManager::start(bt::TorrentInterface* tc, bool user)
 	{
 		const TorrentStats & s = tc->getStats();
 
@@ -90,7 +90,7 @@ namespace bt
 		bool check_done = false;
 
 		if (tc->isCheckingData(check_done) && !check_done)
-			return kt::BUSY_WITH_DATA_CHECK;
+			return BUSY_WITH_DATA_CHECK;
 
 		if (!user)
 		{
@@ -122,13 +122,13 @@ namespace bt
 
 						case 0: //don't start!
 							tc->setPriority(0);
-							return kt::NOT_ENOUGH_DISKSPACE;
+							return bt::NOT_ENOUGH_DISKSPACE;
 
 						case 1: //ask user
 							if (KMessageBox::questionYesNo(0, i18n("You don't have enough disk space to download this torrent. Are you sure you want to continue?"), i18n("Insufficient disk space for %1",s.torrent_name)) == KMessageBox::No)
 							{
 								tc->setPriority(0);
-								return kt::USER_CANCELED;
+								return bt::USER_CANCELED;
 							}
 							else
 								break;
@@ -141,7 +141,7 @@ namespace bt
 
 			Out(SYS_GEN | LOG_NOTICE) << "Starting download" << endl;
 
-			float ratio = kt::ShareRatio(s);
+			float ratio = ShareRatio(s);
 
 			float max_ratio = tc->getMaxShareRatio();
 
@@ -153,20 +153,20 @@ namespace bt
 					startSafely(tc);
 				}
 				else
-					return kt::USER_CANCELED;
+					return USER_CANCELED;
 			}
 			else
 				startSafely(tc);
 		}
 		else
 		{
-			return kt::QM_LIMITS_REACHED;
+			return QM_LIMITS_REACHED;
 		}
 		
-		return kt::START_OK;
+		return START_OK;
 	}
 
-	void QueueManager::stop(kt::TorrentInterface* tc, bool user)
+	void QueueManager::stop(bt::TorrentInterface* tc, bool user)
 	{
 		bool check_done = false;
 		if (tc->isCheckingData(check_done) && !check_done)
@@ -184,10 +184,10 @@ namespace bt
 	
 	void QueueManager::startall(int type)
 	{
-		QList<kt::TorrentInterface *>::iterator i = downloads.begin();
+		QList<bt::TorrentInterface *>::iterator i = downloads.begin();
 		while (i != downloads.end())
 		{
-			kt::TorrentInterface* tc = *i;
+			bt::TorrentInterface* tc = *i;
 			if(type >= 3)
 				start(tc, true);
 			else
@@ -201,10 +201,10 @@ namespace bt
 
 	void QueueManager::stopall(int type)
 	{
-		QList<kt::TorrentInterface *>::iterator i = downloads.begin();
+		QList<bt::TorrentInterface *>::iterator i = downloads.begin();
 		while (i != downloads.end())
 		{
-			kt::TorrentInterface* tc = *i;
+			bt::TorrentInterface* tc = *i;
 			const TorrentStats & s = tc->getStats();
 			if (tc->getStats().running)
 			{
@@ -233,10 +233,10 @@ namespace bt
 	void QueueManager::onExit(WaitJob* wjob)
 	{
 		exiting = true;
-		QList<kt::TorrentInterface *>::iterator i = downloads.begin();
+		QList<bt::TorrentInterface *>::iterator i = downloads.begin();
 		while (i != downloads.end())
 		{
-			kt::TorrentInterface* tc = *i;
+			bt::TorrentInterface* tc = *i;
 			if (tc->getStats().running)
 			{
 				stopSafely(tc,false,wjob);
@@ -340,12 +340,12 @@ namespace bt
 		return nr;
 	}
 
-	QList<kt::TorrentInterface *>::iterator QueueManager::begin()
+	QList<bt::TorrentInterface *>::iterator QueueManager::begin()
 	{
 		return downloads.begin();
 	}
 
-	QList<kt::TorrentInterface *>::iterator QueueManager::end()
+	QList<bt::TorrentInterface *>::iterator QueueManager::end()
 	{
 		return downloads.end();
 	}
@@ -355,7 +355,7 @@ namespace bt
 		max_downloads = m;
 	}
 	
-	void QueueManager::onLowDiskSpace(kt::TorrentInterface* tc, bool toStop)
+	void QueueManager::onLowDiskSpace(bt::TorrentInterface* tc, bool toStop)
 	{
 		if(toStop)
 		{
@@ -376,32 +376,26 @@ namespace bt
 		keep_seeding = ks;
 	}
 	
-	bool QueueManager::allreadyLoaded(const SHA1Hash & ih) const
+	bool QueueManager::allreadyLoaded(const bt::SHA1Hash & ih) const
 	{
-		QList<kt::TorrentInterface *>::const_iterator itr = downloads.begin();
-		while (itr != downloads.end())
+		foreach (const bt::TorrentInterface* tor,downloads)
 		{
-			const TorrentControl* tor = (const TorrentControl*)(*itr);
-			if (tor->getTorrent().getInfoHash() == ih)
+			if (tor->getInfoHash() == ih)
 				return true;
-			itr++;
 		}
 		return false;
 	}
 	
-	void QueueManager::mergeAnnounceList(const SHA1Hash & ih,const TrackerTier* trk)
+	void QueueManager::mergeAnnounceList(const bt::SHA1Hash & ih,const TrackerTier* trk)
 	{
-		QList<kt::TorrentInterface *>::iterator itr = downloads.begin();
-		while (itr != downloads.end())
+		foreach (bt::TorrentInterface* tor,downloads)
 		{
-			TorrentControl* tor = (TorrentControl*)(*itr);
-			if (tor->getTorrent().getInfoHash() == ih)
+			if (tor->getInfoHash() == ih)
 			{
 				TrackersList* ta = tor->getTrackersList(); 
 				ta->merge(trk);
 				return;
 			}
-			itr++;
 		}
 	}
 	
@@ -421,8 +415,8 @@ namespace bt
                 
 		if(max_downloads != 0 || max_seeds != 0)
 		{	
-			bt::QueuePtrList download_queue;
-			bt::QueuePtrList seed_queue;
+			QueuePtrList download_queue;
+			QueuePtrList seed_queue;
 			
 			int user_downloading = 0;
 			int user_seeding = 0;
@@ -542,7 +536,7 @@ namespace bt
                 
 	}
 	
-	void QueueManager::torrentFinished(kt::TorrentInterface* tc)
+	void QueueManager::torrentFinished(bt::TorrentInterface* tc)
 	{
 		//dequeue this tc
 		tc->setPriority(0);
@@ -556,7 +550,7 @@ namespace bt
 		orderQueue();
 	}
 	
-	void QueueManager::torrentAdded(kt::TorrentInterface* tc,bool user, bool start_torrent)
+	void QueueManager::torrentAdded(bt::TorrentInterface* tc,bool user, bool start_torrent)
 	{
 		if (!user)
 		{
@@ -583,7 +577,7 @@ namespace bt
 		orderQueue();
 	}
 	
-	void QueueManager::torrentRemoved(kt::TorrentInterface* tc)
+	void QueueManager::torrentRemoved(bt::TorrentInterface* tc)
 	{
 		remove(tc);
 		orderQueue();
@@ -594,7 +588,7 @@ namespace bt
 		paused_state = pause;	
 		if(!pause)
 		{
-			std::set<kt::TorrentInterface*>::iterator it = paused_torrents.begin();
+			std::set<bt::TorrentInterface*>::iterator it = paused_torrents.begin();
 			while (it != paused_torrents.end())
 			{
 				TorrentInterface* tc = *it;
@@ -619,7 +613,7 @@ namespace bt
 		}
 	}
 	
-	void QueueManager::enqueue(kt::TorrentInterface* tc)
+	void QueueManager::enqueue(bt::TorrentInterface* tc)
 	{
 		//if a seeding torrent reached its maximum share ratio or maximum seed time don't enqueue it...
 		if (tc->getStats().completed && (tc->overMaxRatio() || tc->overMaxSeedTime()))
@@ -632,7 +626,7 @@ namespace bt
 		torrentAdded(tc,false,false);
 	}
 	
-	void QueueManager::dequeue(kt::TorrentInterface* tc)
+	void QueueManager::dequeue(bt::TorrentInterface* tc)
 	{
 		int tp = tc->getPriority();
 		bool completed = tc->getStats().completed;
@@ -660,7 +654,7 @@ namespace bt
 		orderQueue();
 	}
 	
-	void QueueManager::queue(kt::TorrentInterface* tc)
+	void QueueManager::queue(bt::TorrentInterface* tc)
 	{
 		if(tc->getPriority() == 0)
 			enqueue(tc);
@@ -668,7 +662,7 @@ namespace bt
 			dequeue(tc);
 	}
 	
-	void QueueManager::startSafely(kt::TorrentInterface* tc)
+	void QueueManager::startSafely(bt::TorrentInterface* tc)
 	{
 		try
 		{
@@ -684,7 +678,7 @@ namespace bt
 		}
 	}
 	
-	void QueueManager::stopSafely(kt::TorrentInterface* tc,bool user,WaitJob* wjob)
+	void QueueManager::stopSafely(bt::TorrentInterface* tc,bool user,WaitJob* wjob)
 	{
 		try
 		{
@@ -700,20 +694,20 @@ namespace bt
 		}
 	}
 	
-	void QueueManager::torrentStopped(kt::TorrentInterface* )
+	void QueueManager::torrentStopped(bt::TorrentInterface* )
 	{
 		orderQueue();
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
 	
-	QueuePtrList::QueuePtrList() : QList<kt::TorrentInterface *>()
+	QueuePtrList::QueuePtrList() : QList<bt::TorrentInterface *>()
 	{}
 	
 	QueuePtrList::~QueuePtrList()
 	{}
 	
-	int QueuePtrList::compareItems(kt::TorrentInterface* tc1, kt::TorrentInterface* tc2)
+	int QueuePtrList::compareItems(bt::TorrentInterface* tc1, bt::TorrentInterface* tc2)
 	{
 		
 		if(tc1->getPriority() == tc2->getPriority())

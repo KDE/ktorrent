@@ -26,9 +26,13 @@
 
 using namespace bt;
 
-namespace kt
+namespace bt
 {
 	class TorrentFileInterface;
+}
+
+namespace kt
+{
 	class FileTreeDirItem;
 	
 	enum DeselectOptions

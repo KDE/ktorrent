@@ -21,11 +21,12 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kmimetype.h>
-#include <interfaces/functions.h>
+#include <util/functions.h>
 #include <torrent/globals.h>
+#include <interfaces/torrentfileinterface.h>
 #include "filetreeitem.h"
 #include "filetreediritem.h"
-#include "torrentfileinterface.h"
+
 
 using namespace bt;
 
@@ -33,7 +34,7 @@ namespace kt
 {
 
 	FileTreeItem::FileTreeItem(FileTreeDirItem* item,const QString & name,
-				   kt::TorrentFileInterface & file,DeselectOptions options)
+				   bt::TorrentFileInterface & file,DeselectOptions options)
 	: QTreeWidgetItem(item),name(name),file(file),options(options)
 	{
 		parent = item;

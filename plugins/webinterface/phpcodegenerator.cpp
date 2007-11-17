@@ -26,10 +26,12 @@
 #include <torrent/queuemanager.h>
 #include <interfaces/coreinterface.h>
 #include <interfaces/functions.h>
+#include <util/functions.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include "phpcodegenerator.h"
 
+using namespace bt;
 
 namespace kt
 {
@@ -72,7 +74,7 @@ namespace kt
 		ret.append("function downloadStatus()\n{\nreturn ");
 		ret.append("array(");
 	
-		QList<TorrentInterface*>::iterator i= core->getQueueManager()->begin();
+		QList<bt::TorrentInterface*>::iterator i= core->getQueueManager()->begin();
 		for(int k=0; i != core->getQueueManager()->end(); i++, k++)
 		{
 			const TorrentStats & stats = (*i)->getStats();

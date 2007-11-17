@@ -25,18 +25,21 @@
 #include <interfaces/peersource.h>
 #include <k3resolver.h>
 
-namespace kt
+namespace bt
 {
 	class TorrentInterface;
-	
+}
+
+namespace kt
+{	
 	/**
 	 * Zeroconf service which publishes a torrent
 	 * */
-	class TorrentService : public PeerSource
+	class TorrentService : public bt::PeerSource
 	{
 		Q_OBJECT
 	public:
-		TorrentService(TorrentInterface* tc);
+		TorrentService(bt::TorrentInterface* tc);
 		virtual ~TorrentService();
 		
 		virtual void stop(bt::WaitJob* wjob = 0);
@@ -52,7 +55,7 @@ namespace kt
 		void hostResolved(KNetwork::KResolverResults res);
 		
 	private:
-		TorrentInterface* tc;
+		bt::TorrentInterface* tc;
 		DNSSD::PublicService* srv;
 		DNSSD::ServiceBrowser* browser;
 	};

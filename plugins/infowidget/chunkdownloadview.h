@@ -27,11 +27,14 @@
 #include <interfaces/chunkdownloadinterface.h>
 #include "ui_chunkdownloadview.h"
 
+namespace bt
+{
+	class TorrentInterface;
+}
 
 namespace kt
 {
 	class ChunkDownloadView;
-	class TorrentInterface;
 
 	/**
 	 * Item for the ChunkDownloadView
@@ -39,15 +42,15 @@ namespace kt
 	class ChunkDownloadViewItem : public QTreeWidgetItem
 	{
 	public:
-		ChunkDownloadViewItem(QTreeWidget* cdv,ChunkDownloadInterface* cd);
+		ChunkDownloadViewItem(QTreeWidget* cdv,bt::ChunkDownloadInterface* cd);
 		virtual ~ChunkDownloadViewItem();
 
 		void update(bool init = false);
 
 		bool operator < (const QTreeWidgetItem & other) const;
 	private:
-		ChunkDownloadInterface* cd;
-		ChunkDownloadInterface::Stats stats;
+		bt::ChunkDownloadInterface* cd;
+		bt::ChunkDownloadInterface::Stats stats;
 	};
 
 
@@ -62,16 +65,16 @@ namespace kt
 		virtual ~ChunkDownloadView();
 
 		/// A peer has been added
-		void downloadAdded(ChunkDownloadInterface* cd);
+		void downloadAdded(bt::ChunkDownloadInterface* cd);
 
 		/// A download has been removed
-		void downloadRemoved(ChunkDownloadInterface* cd);
+		void downloadRemoved(bt::ChunkDownloadInterface* cd);
 
 		/// Check to see if the GUI needs to be updated
 		void update();
 
 		/// Change the torrent to display
-		void changeTC(TorrentInterface* tc);
+		void changeTC(bt::TorrentInterface* tc);
 
 		/// Remove all items
 		void removeAll();
@@ -79,8 +82,8 @@ namespace kt
 		void saveState(KSharedConfigPtr cfg);
 		void loadState(KSharedConfigPtr cfg);
 	private:
-		bt::PtrMap<ChunkDownloadInterface*,ChunkDownloadViewItem> items;
-		kt::TorrentInterface* curr_tc;
+		bt::PtrMap<bt::ChunkDownloadInterface*,ChunkDownloadViewItem> items;
+		bt::TorrentInterface* curr_tc;
 	};
 }
 

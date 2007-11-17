@@ -38,7 +38,7 @@ namespace kt
 		
 	
 	public slots:
-		void changeTC(kt::TorrentInterface* tc);
+		void changeTC(bt::TorrentInterface* tc);
 		void update();
 		void maxRatioChanged(double v);
 		void useRatioLimitToggled(bool on);
@@ -49,7 +49,7 @@ namespace kt
 		void maxRatioUpdate();
 	
 	private:
-		kt::TorrentInterface* curr_tc;
+		bt::TorrentInterface* curr_tc;
 	};
 }
 

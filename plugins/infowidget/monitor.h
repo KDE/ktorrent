@@ -22,29 +22,32 @@
 
 #include <interfaces/monitorinterface.h>
 
+namespace bt
+{
+	class TorrentInterface;
+}
 
 namespace kt
 {
-	class TorrentInterface;
 	class PeerView;
 	class ChunkDownloadView;
 	
 	/**
 	@author Joris Guisson
 	*/
-	class Monitor : public kt::MonitorInterface
+	class Monitor : public bt::MonitorInterface
 	{
-		kt::TorrentInterface* tc;
+		bt::TorrentInterface* tc;
 		PeerView* pv;
 		ChunkDownloadView* cdv;
 	public:
-		Monitor(kt::TorrentInterface* tc,PeerView* pv ,ChunkDownloadView* cdv);
+		Monitor(bt::TorrentInterface* tc,PeerView* pv ,ChunkDownloadView* cdv);
 		virtual ~Monitor();
 	
-		virtual void downloadRemoved(kt::ChunkDownloadInterface* cd);
-		virtual void downloadStarted(kt::ChunkDownloadInterface* cd);
-		virtual void peerAdded(kt::PeerInterface* peer);
-		virtual void peerRemoved(kt::PeerInterface* peer);
+		virtual void downloadRemoved(bt::ChunkDownloadInterface* cd);
+		virtual void downloadStarted(bt::ChunkDownloadInterface* cd);
+		virtual void peerAdded(bt::PeerInterface* peer);
+		virtual void peerRemoved(bt::PeerInterface* peer);
 		virtual void stopped();
 		virtual void destroyed();
 	};

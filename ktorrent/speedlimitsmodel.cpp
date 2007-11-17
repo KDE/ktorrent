@@ -24,16 +24,18 @@
 #include "core.h"
 #include "speedlimitsmodel.h"
 
+using namespace bt;
+
 namespace kt
 {
 	SpeedLimitsModel::SpeedLimitsModel(Core* core,QObject* parent) : QAbstractTableModel(parent),core(core)
 	{
-		bt::QueueManager* qman = core->getQueueManager();
-		QList<kt::TorrentInterface*>::iterator itr = qman->begin();
+		kt::QueueManager* qman = core->getQueueManager();
+		QList<bt::TorrentInterface*>::iterator itr = qman->begin();
 		while (itr != qman->end())
 		{
 			Limits lim;
-			TorrentInterface* tc = *itr;
+			bt::TorrentInterface* tc = *itr;
 			tc->getTrafficLimits(lim.up_original,lim.down_original);
 			lim.down = lim.down_original;
 			lim.up = lim.up_original;
@@ -41,14 +43,14 @@ namespace kt
 			itr++;
 		}
 		
-		connect(core,SIGNAL(torrentAdded(kt::TorrentInterface*)),this,SLOT(onTorrentAdded(kt::TorrentInterface*)));
-		connect(core,SIGNAL(torrentRemoved(kt::TorrentInterface*)),this,SLOT(onTorrentRemoved(kt::TorrentInterface*)));
+		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),this,SLOT(onTorrentAdded(bt::TorrentInterface*)));
+		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
 	}
 		
 	SpeedLimitsModel::~SpeedLimitsModel() 
 	{}
 	
-	void SpeedLimitsModel::onTorrentAdded(kt::TorrentInterface* tc)
+	void SpeedLimitsModel::onTorrentAdded(bt::TorrentInterface* tc)
 	{
 		Limits lim;
 		tc->getTrafficLimits(lim.up_original,lim.down_original);
@@ -58,11 +60,11 @@ namespace kt
 		insertRow(limits.count() - 1);
 	}
 	
-	void SpeedLimitsModel::onTorrentRemoved(kt::TorrentInterface* tc)
+	void SpeedLimitsModel::onTorrentRemoved(bt::TorrentInterface* tc)
 	{
-		bt::QueueManager* qman = core->getQueueManager();
+		kt::QueueManager* qman = core->getQueueManager();
 		int idx = 0;
-		QList<kt::TorrentInterface*>::iterator itr = qman->begin();
+		QList<bt::TorrentInterface*>::iterator itr = qman->begin();
 		while (itr != qman->end())
 		{
 			if (*itr == tc)
@@ -111,7 +113,7 @@ namespace kt
 		if (role != Qt::DisplayRole && role != Qt::EditRole)
 			return QVariant();
 			
-		kt::TorrentInterface* tc = torrentForIndex(index);
+		bt::TorrentInterface* tc = torrentForIndex(index);
 		if (!tc)
 			return QVariant();
 		
@@ -139,7 +141,7 @@ namespace kt
 		if (role != Qt::EditRole)
 			return false;
 			
-		kt::TorrentInterface* tc = torrentForIndex(index);
+		bt::TorrentInterface* tc = torrentForIndex(index);
 		if (!tc || !limits.contains(tc))
 			return false;
 			
@@ -176,11 +178,11 @@ namespace kt
 			return QAbstractItemModel::flags(index);
 	}
 		
-	kt::TorrentInterface* SpeedLimitsModel::torrentForIndex(const QModelIndex & index) const
+	bt::TorrentInterface* SpeedLimitsModel::torrentForIndex(const QModelIndex & index) const
 	{
-		bt::QueueManager* qman = core->getQueueManager();
+		kt::QueueManager* qman = core->getQueueManager();
 		int r = index.row();			
-		QList<kt::TorrentInterface*>::iterator itr = qman->begin();
+		QList<bt::TorrentInterface*>::iterator itr = qman->begin();
 		itr += r;
 		
 		if (itr == qman->end())
@@ -191,10 +193,10 @@ namespace kt
 	
 	void SpeedLimitsModel::apply()
 	{
-		QMap<kt::TorrentInterface*,Limits>::iterator itr = limits.begin();
+		QMap<bt::TorrentInterface*,Limits>::iterator itr = limits.begin();
 		while (itr != limits.end())
 		{
-			TorrentInterface* tc = itr.key();
+			bt::TorrentInterface* tc = itr.key();
 			Limits & lim = itr.value();
 			if (lim.up != lim.up_original || lim.down != lim.down_original)
 			{

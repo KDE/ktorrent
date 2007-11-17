@@ -55,7 +55,7 @@ namespace kt
 		 * Put the current selection in a list.
 		 * @param sel The list to put it in
 		 */
-		void getSelection(QList<kt::TorrentInterface*> & sel);
+		void getSelection(QList<bt::TorrentInterface*> & sel);
 
 		/// Get the current group
 		const Group* getGroup() const {return group;}
@@ -67,7 +67,7 @@ namespace kt
 		void loadState(KSharedConfigPtr cfg,int idx);
 
 		/// Get the current torrent
-		kt::TorrentInterface* getCurrentTorrent();
+		bt::TorrentInterface* getCurrentTorrent();
 
 		/// Get the view's caption
 		QString caption() const;
@@ -81,8 +81,8 @@ namespace kt
 		 * @return true If the view caption nees to be updated
 		 * */
 		bool update();
-		void addTorrent(kt::TorrentInterface* ti);
-		void removeTorrent(kt::TorrentInterface* ti);
+		void addTorrent(bt::TorrentInterface* ti);
+		void removeTorrent(bt::TorrentInterface* ti);
 		void startTorrents();
 		void stopTorrents();
 		void removeTorrents();
@@ -107,15 +107,15 @@ namespace kt
 		void onCurrentItemChanged(QTreeWidgetItem * current,QTreeWidgetItem * previous);
 
 	signals:
-		void wantToRemove(kt::TorrentInterface* tc,bool data_to);
-		void wantToStop(kt::TorrentInterface* tc,bool user);
-		void wantToStart(kt::TorrentInterface* tc);
-		void currentTorrentChanged(View* v,kt::TorrentInterface* tc);
+		void wantToRemove(bt::TorrentInterface* tc,bool data_to);
+		void wantToStop(bt::TorrentInterface* tc,bool user);
+		void wantToStart(bt::TorrentInterface* tc);
+		void currentTorrentChanged(View* v,bt::TorrentInterface* tc);
 
 	private:
 		Core* core;
 		Group* group;
-		QMap<kt::TorrentInterface*,ViewItem*> items;
+		QMap<bt::TorrentInterface*,ViewItem*> items;
 		ViewMenu* menu;
 		KMenu* header_menu;
 		QMap<QAction*,int> column_idx_map;

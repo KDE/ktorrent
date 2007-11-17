@@ -23,6 +23,10 @@
 #include <interfaces/plugin.h>
 #include <interfaces/guiinterface.h>
 
+namespace bt
+{
+	class TorrentInterface;
+}
 
 
 namespace kt
@@ -49,7 +53,7 @@ namespace kt
 		virtual void load();
 		virtual void unload();
 		virtual void guiUpdate();
-		virtual void currentTorrentChanged(TorrentInterface* tc);
+		virtual void currentTorrentChanged(bt::TorrentInterface* tc);
 		virtual bool versionCheck(const QString & version) const;
 		
 		///Show PeerView in main window
@@ -59,7 +63,7 @@ namespace kt
 		///Show TrackerView in main window
 		void showTrackerView(bool show);
 	private:
-		void createMonitor(TorrentInterface* tc);
+		void createMonitor(bt::TorrentInterface* tc);
 
 	private slots:
 		void applySettings();

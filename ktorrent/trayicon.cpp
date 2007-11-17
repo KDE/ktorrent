@@ -25,7 +25,7 @@
 #include <qtooltip.h>
 #include <kpassivepopup.h>
 #include <interfaces/torrentinterface.h>
-#include <interfaces/functions.h>
+#include <util/functions.h>
 #include <net/socketmonitor.h>
 #include <util/log.h>
 #include <settings.h>
@@ -50,22 +50,22 @@ namespace kt
 		
 
 		connect(this,SIGNAL(quitSelected()),kapp,SLOT(quit()));
-		connect(m_core, SIGNAL(finished(kt::TorrentInterface* )),
-			this, SLOT(finished(kt::TorrentInterface* )));
-		connect(m_core,SIGNAL(torrentStoppedByError(kt::TorrentInterface*, QString )),
-			this,SLOT(torrentStoppedByError(kt::TorrentInterface*, QString )));
-		connect(m_core,SIGNAL(maxShareRatioReached( kt::TorrentInterface* )),
-				this,SLOT(maxShareRatioReached( kt::TorrentInterface* )));
-		connect(m_core,SIGNAL(maxSeedTimeReached(kt::TorrentInterface*)),
-				this, SLOT(maxSeedTimeReached(kt::TorrentInterface*)));
-		connect(m_core,SIGNAL(corruptedData( kt::TorrentInterface* )),
-				this,SLOT(corruptedData( kt::TorrentInterface* )));
-		connect(m_core, SIGNAL(queuingNotPossible( kt::TorrentInterface* )),
-				this, SLOT(queuingNotPossible( kt::TorrentInterface* )));
-		connect(m_core,SIGNAL(canNotStart(kt::TorrentInterface*, kt::TorrentStartResponse)),
-				this,SLOT(canNotStart(kt::TorrentInterface*, kt::TorrentStartResponse)));
-		connect(m_core, SIGNAL(lowDiskSpace(kt::TorrentInterface*, bool)),
-				this, SLOT(lowDiskSpace(kt::TorrentInterface*, bool)));
+		connect(m_core, SIGNAL(finished(bt::TorrentInterface* )),
+			this, SLOT(finished(bt::TorrentInterface* )));
+		connect(m_core,SIGNAL(torrentStoppedByError(bt::TorrentInterface*, QString )),
+			this,SLOT(torrentStoppedByError(bt::TorrentInterface*, QString )));
+		connect(m_core,SIGNAL(maxShareRatioReached( bt::TorrentInterface* )),
+				this,SLOT(maxShareRatioReached( bt::TorrentInterface* )));
+		connect(m_core,SIGNAL(maxSeedTimeReached(bt::TorrentInterface*)),
+				this, SLOT(maxSeedTimeReached(bt::TorrentInterface*)));
+		connect(m_core,SIGNAL(corruptedData( bt::TorrentInterface* )),
+				this,SLOT(corruptedData( bt::TorrentInterface* )));
+		connect(m_core, SIGNAL(queuingNotPossible( bt::TorrentInterface* )),
+				this, SLOT(queuingNotPossible( bt::TorrentInterface* )));
+		connect(m_core,SIGNAL(canNotStart(bt::TorrentInterface*, bt::TorrentStartResponse)),
+				this,SLOT(canNotStart(bt::TorrentInterface*, bt::TorrentStartResponse)));
+		connect(m_core, SIGNAL(lowDiskSpace(bt::TorrentInterface*, bool)),
+				this, SLOT(lowDiskSpace(bt::TorrentInterface*, bool)));
 		
 		KMenu* m = new KMenu(0);
 		setContextMenu(m);
@@ -129,7 +129,7 @@ namespace kt
 	}
 
 
-	void TrayIcon::finished(TorrentInterface* tc)
+	void TrayIcon::finished(bt::TorrentInterface* tc)
 	{
 		if (!Settings::showPopups())
 			return;
@@ -147,7 +147,7 @@ namespace kt
 		showPassivePopup(msg,i18n("Download completed"));
 	}
 
-	void TrayIcon::maxShareRatioReached(kt::TorrentInterface* tc)
+	void TrayIcon::maxShareRatioReached(bt::TorrentInterface* tc)
 	{
 		if (!Settings::showPopups())
 			return;
@@ -166,7 +166,7 @@ namespace kt
 		showPassivePopup(msg,i18n("Seeding completed"));
 	}
 
-	void TrayIcon::maxSeedTimeReached(kt::TorrentInterface* tc)
+	void TrayIcon::maxSeedTimeReached(bt::TorrentInterface* tc)
 	{
 		if (!Settings::showPopups())
 			return;
@@ -185,7 +185,7 @@ namespace kt
 		showPassivePopup(msg,i18n("Seeding completed"));
 	}
 
-	void TrayIcon::torrentStoppedByError(kt::TorrentInterface* tc, QString msg)
+	void TrayIcon::torrentStoppedByError(bt::TorrentInterface* tc, QString msg)
 	{
 		if (!Settings::showPopups())
 			return;
@@ -197,7 +197,7 @@ namespace kt
 		showPassivePopup(err_msg,i18n("Error"));
 	}
 
-	void TrayIcon::corruptedData(kt::TorrentInterface* tc)
+	void TrayIcon::corruptedData(bt::TorrentInterface* tc)
 	{
 		if (!Settings::showPopups())
 			return;
@@ -208,7 +208,7 @@ namespace kt
 		showPassivePopup(err_msg,i18n("Error"));
 	}
 
-	void TrayIcon::queuingNotPossible(kt::TorrentInterface* tc)
+	void TrayIcon::queuingNotPossible(bt::TorrentInterface* tc)
 	{
 		if (!Settings::showPopups())
 			return;
@@ -230,7 +230,7 @@ namespace kt
 		showPassivePopup(msg,i18n("Torrent cannot be enqueued."));
 	}
 
-	void TrayIcon::canNotStart(kt::TorrentInterface* tc,kt::TorrentStartResponse reason)
+	void TrayIcon::canNotStart(bt::TorrentInterface* tc,bt::TorrentStartResponse reason)
 	{
 		if (!Settings::showPopups())
 			return;
@@ -238,7 +238,7 @@ namespace kt
 		QString msg = i18n("Cannot start <b>%1</b> : <br>",tc->getStats().torrent_name);
 		switch (reason)
 		{
-		case kt::QM_LIMITS_REACHED:
+		case bt::QM_LIMITS_REACHED:
 			if (tc->getStats().bytes_left_to_download == 0)
 			{
 				// is a seeder
@@ -253,7 +253,7 @@ namespace kt
 			msg += i18n("Go to Settings -> Configure KTorrent, if you want to change the limits.");
 			showPassivePopup(msg,i18n("Torrent cannot be started"));
 			break;
-		case kt::NOT_ENOUGH_DISKSPACE:
+		case bt::NOT_ENOUGH_DISKSPACE:
 			msg += i18n("There is not enough diskspace available.");
 			showPassivePopup(msg,i18n("Torrent cannot be started"));
 			break;
@@ -262,7 +262,7 @@ namespace kt
 		}
 	}
 
-	void TrayIcon::lowDiskSpace(kt::TorrentInterface * tc, bool stopped)
+	void TrayIcon::lowDiskSpace(bt::TorrentInterface * tc, bool stopped)
 	{
 		if (!Settings::showPopups())
 			return;

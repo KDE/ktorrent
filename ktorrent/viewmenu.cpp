@@ -80,9 +80,9 @@ namespace kt
 		bool en_peer_sources = false;
 		bool dummy = false;
 
-		QList<kt::TorrentInterface*> sel;
+		QList<bt::TorrentInterface*> sel;
 		view->getSelection(sel);
-		foreach (kt::TorrentInterface* tc,sel)
+		foreach (bt::TorrentInterface* tc,sel)
 		{
 			const TorrentStats & s = tc->getStats();
 			
@@ -140,15 +140,15 @@ namespace kt
 			
 			TorrentInterface* tc = sel.front();
 			// no data check when we are preallocating diskspace
-			check_data->setEnabled(tc->getStats().status != kt::ALLOCATING_DISKSPACE && !tc->isCheckingData(dummy));
+			check_data->setEnabled(tc->getStats().status != bt::ALLOCATING_DISKSPACE && !tc->isCheckingData(dummy));
 			
 			//enable additional peer sources if torrent is not private
 			peer_sources_menu->setEnabled(en_peer_sources);
 			
 			if (en_peer_sources)
 			{
-				dht_enabled->setChecked(tc->isFeatureEnabled(kt::DHT_FEATURE));
-				pex_enabled->setChecked(tc->isFeatureEnabled(kt::UT_PEX_FEATURE));
+				dht_enabled->setChecked(tc->isFeatureEnabled(bt::DHT_FEATURE));
+				pex_enabled->setChecked(tc->isFeatureEnabled(bt::UT_PEX_FEATURE));
 			}
 		}
 		else
@@ -172,14 +172,14 @@ namespace kt
 
 	void ViewMenu::groupsMenuItemTriggered(QAction* act)
 	{
-		QList<kt::TorrentInterface*> sel;
+		QList<bt::TorrentInterface*> sel;
 		Group* g = gman->find(act->text().remove('&')); // remove the ampersands added by Qt
 	//	Out(SYS_GEN|LOG_DEBUG) << "groupsMenuItemTriggered " << act->text() << endl;
 		if (!g)
 			return;
 
 		view->getSelection(sel);
-		foreach (kt::TorrentInterface* tc,sel)
+		foreach (bt::TorrentInterface* tc,sel)
 		{
 			g->addTorrent(tc);
 		}

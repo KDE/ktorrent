@@ -24,11 +24,13 @@
 #include <interfaces/filetreediritem.h>
 #include "ui_fileselectdlg.h"
 
-
+namespace bt
+{
+	class TorrentInterface;
+}
 
 namespace kt
 {
-	class TorrentInterface;
 	class FileTreeDirItem;
 	class GroupManager;
 
@@ -41,7 +43,7 @@ namespace kt
 	{
 		Q_OBJECT
 
-		kt::TorrentInterface* tc;
+		bt::TorrentInterface* tc;
 		kt::FileTreeDirItem* root;
 		kt::GroupManager* gman;
 		bool* user;
@@ -50,7 +52,7 @@ namespace kt
 		FileSelectDlg(kt::GroupManager* gman,QWidget* parent);
 		virtual ~FileSelectDlg();
 		
-		int execute(kt::TorrentInterface* tc,bool* user, bool* start);
+		int execute(bt::TorrentInterface* tc,bool* user, bool* start);
 		
 	protected slots:
 		virtual void reject();

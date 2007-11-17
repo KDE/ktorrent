@@ -221,7 +221,7 @@ void ConnsTabPage::GatherDhtStats()
 
 void ConnsTabPage::GatherConnStats(Plugin * pPlug)
 {
-	bt::QueueManager * qm_iface = pPlug -> getCore() -> getQueueManager();
+	QueueManager * qm_iface = pPlug -> getCore() -> getQueueManager();
 	
 	if(qm_iface == 0)
 	{
@@ -231,9 +231,9 @@ void ConnsTabPage::GatherConnStats(Plugin * pPlug)
 	uint_least32_t lc, ls, sc, ss, tc, rtc;
 	lc = ls = sc = ss = tc = rtc = 0;
 	
-	for(QList< kt::TorrentInterface *>::iterator it = qm_iface -> begin(); it != qm_iface -> end(); it++)
+	for(QList< bt::TorrentInterface *>::iterator it = qm_iface -> begin(); it != qm_iface -> end(); it++)
 	{
-		const TorrentStats tstat = (*it) -> getStats();
+		const bt::TorrentStats tstat = (*it) -> getStats();
 		
 		lc = tstat.leechers_connected_to;
 		ls = tstat.leechers_total;

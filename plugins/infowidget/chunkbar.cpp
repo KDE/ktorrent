@@ -148,7 +148,7 @@ namespace kt
 			p->drawPixmap(contentsRect(),pixmap);
 	}
 	
-	void ChunkBar::setTC(kt::TorrentInterface* tc)
+	void ChunkBar::setTC(bt::TorrentInterface* tc)
 	{
 		curr_tc = tc;
 		QSize s = contentsRect().size();

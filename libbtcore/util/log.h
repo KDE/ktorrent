@@ -54,14 +54,9 @@
 class KUrl;
 
 
-namespace kt
-{
-	class LogMonitorInterface;
-}
-
 namespace bt
 {
-	
+	class LogMonitorInterface;
 	
 	/**
 	* @author Joris Guisson
@@ -103,20 +98,21 @@ namespace bt
 		 * Add a log monitor.
 		 * @param m The log monitor
 		 */
-		void addMonitor(kt::LogMonitorInterface* m);
+		void addMonitor(LogMonitorInterface* m);
 
 		/**
 		 * Remove a log monitor.
 		 * @param m The log monitor
 		 */
-		void removeMonitor(kt::LogMonitorInterface* m);
+		void removeMonitor(LogMonitorInterface* m);
 		
 		/**
 		* Set the output logfile.
 		* @param file The name of the file
+		* @param rotate Wether or not to rotate the logs
 		* @throw Exception if the file can't be opened
 		*/
-		void setOutputFile(const QString & file);
+		void setOutputFile(const QString & file,bool rotate);
 		
 		/**
 		* Write a number to the log file.
@@ -208,13 +204,13 @@ namespace bt
 	/**
 	 * Initialize the global log.
 	 * */
-	BTCORE_EXPORT void InitLog(const QString & file);
+	BTCORE_EXPORT void InitLog(const QString & file,bool rotate_logs = false);
 
 	/// Add a monitor to the global log
-	BTCORE_EXPORT void AddLogMonitor(kt::LogMonitorInterface* m);
+	BTCORE_EXPORT void AddLogMonitor(LogMonitorInterface* m);
 
 	/// Remove a monitor from the global log
-	BTCORE_EXPORT void RemoveLogMonitor(kt::LogMonitorInterface* m);
+	BTCORE_EXPORT void RemoveLogMonitor(LogMonitorInterface* m);
 }
 
 #endif

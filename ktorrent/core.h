@@ -35,8 +35,8 @@ namespace KIO
 
 namespace bt
 {
-	class QueueManager;
 	class TorrentControl;
+	class TorrentInterface;
 }
 
 namespace kt
@@ -73,7 +73,7 @@ namespace kt
 		virtual float getGlobalMaxShareRatio() const;
 
 		/// Get the queue manager
-		bt::QueueManager* getQueueManager();
+		kt::QueueManager* getQueueManager();
 
 		/// Get the group manager
 		kt::GroupManager* getGroupManager() {return gman;}
@@ -143,7 +143,7 @@ namespace kt
 		 * @param tc
 		 * @param data_to 
 		 */
-		virtual void remove(kt::TorrentInterface* tc,bool data_to);
+		virtual void remove(bt::TorrentInterface* tc,bool data_to);
 
 		/**
 		 * Update all torrents.
@@ -154,41 +154,41 @@ namespace kt
 		 * Start a torrent, takes into account the maximum number of downloads.
 		 * @param tc The TorrentInterface
 		 */
-		virtual void start(kt::TorrentInterface* tc);
+		virtual void start(bt::TorrentInterface* tc);
 
 		/**
 		 * Stop a torrent, may start another download if it hasn't been started.
 		 * @param tc The TorrentInterface
 		 */
-		virtual void stop(kt::TorrentInterface* tc, bool user = false);
+		virtual void stop(bt::TorrentInterface* tc, bool user = false);
 		
 		/**
 		 * Enqueue/Dequeue function. Places a torrent in queue. 
 		 * If the torrent is already in queue this will remove it from queue.
 		 * @param tc TorrentControl pointer.
 		 */
-		virtual void queue(kt::TorrentInterface* tc);
+		virtual void queue(bt::TorrentInterface* tc);
 		
 		/**
 		 * A torrent is about to be started. We will do some file checks upon this signal.
 		 * @param tc The TorrentInterface
 		*/
-		void aboutToBeStarted(kt::TorrentInterface* tc,bool & ret);
+		void aboutToBeStarted(bt::TorrentInterface* tc,bool & ret);
 		
 		/**
 		 * User tried to enqueue a torrent that has reached max share ratio.
 		 * Emits appropriate signal.
 		 */
-		void enqueueTorrentOverMaxRatio(kt::TorrentInterface* tc);
+		void enqueueTorrentOverMaxRatio(bt::TorrentInterface* tc);
 		
 		/**
 		 * Do a data check on a torrent
 		 * @param tc 
 		 */
-		void doDataCheck(kt::TorrentInterface* tc);
+		void doDataCheck(bt::TorrentInterface* tc);
 		
 		///Fires when disk space is running low
-		void onLowDiskSpace(kt::TorrentInterface* tc, bool stopped);
+		void onLowDiskSpace(bt::TorrentInterface* tc, bool stopped);
 
 		/// Apply all the settings
 		void applySettings();
@@ -206,44 +206,44 @@ namespace kt
 		 * Emitted when a torrent has reached it's max share ratio.
 		 * @param tc The torrent
 		 */
-		void maxShareRatioReached(kt::TorrentInterface* tc);
+		void maxShareRatioReached(bt::TorrentInterface* tc);
 
 		/**
 		 * Emitted when a torrent has reached it's max seed time
 		 * @param tc The torrent
 		 */
-		void maxSeedTimeReached(kt::TorrentInterface* tc);
+		void maxSeedTimeReached(bt::TorrentInterface* tc);
 		
 		/**
 		 * Corrupted data has been detected.
 		 * @param tc The torrent with the corrupted data
 		 */
-		void corruptedData(kt::TorrentInterface* tc);
+		void corruptedData(bt::TorrentInterface* tc);
 		
 		/**
 		 * User tried to enqueue a torrent that has reached max share ratio. It's not possible.
 		 * Signal should be connected to SysTray slot which shows appropriate KPassivePopup info.
 		 * @param tc The torrent in question.
 		 */
-		void queuingNotPossible(kt::TorrentInterface* tc);
+		void queuingNotPossible(bt::TorrentInterface* tc);
 
 		/**
 		 * Emitted when a torrent cannot be started
 		 * @param tc The torrent
 		 * @param reason The reason
 		 */
-		void canNotStart(kt::TorrentInterface* tc,kt::TorrentStartResponse reason);
+		void canNotStart(bt::TorrentInterface* tc,bt::TorrentStartResponse reason);
 
 		/**
 		 * Diskspace is running low.
 		 * Signal should be connected to SysTray slot which shows appropriate KPassivePopup info. 
 		 * @param tc The torrent in question.
 		 */
-		void lowDiskSpace(kt::TorrentInterface* tc, bool stopped);
+		void lowDiskSpace(bt::TorrentInterface* tc, bool stopped);
 
 	private:
-		void rollback(const QList<kt::TorrentInterface*> & success);
-		void connectSignals(kt::TorrentInterface* tc);
+		void rollback(const QList<bt::TorrentInterface*> & success);
+		void connectSignals(bt::TorrentInterface* tc);
 		bool init(bt::TorrentControl* tc,bool silently);
 		void applySettings(bool change_port);
 
@@ -251,13 +251,13 @@ namespace kt
 		void loadTorrents();
 		
 	private slots:
-		void torrentFinished(kt::TorrentInterface* tc);
-		void slotStoppedByError(kt::TorrentInterface* tc, QString msg);
-		void torrentSeedAutoStopped(kt::TorrentInterface* tc,kt::AutoStopReason reason);
+		void torrentFinished(bt::TorrentInterface* tc);
+		void slotStoppedByError(bt::TorrentInterface* tc, QString msg);
+		void torrentSeedAutoStopped(bt::TorrentInterface* tc,bt::AutoStopReason reason);
 		void downloadFinished(KIO::Job *job);
 		void downloadFinishedSilently(KIO::Job *job);
-		void emitCorruptedData(kt::TorrentInterface* tc);
-		void autoCheckData(kt::TorrentInterface* tc);
+		void emitCorruptedData(bt::TorrentInterface* tc);
+		void autoCheckData(bt::TorrentInterface* tc);
 
 	private:
 		GUIInterface* gui;
@@ -266,7 +266,7 @@ namespace kt
 		QTimer update_timer;
 		bt::Uint64 removed_bytes_up,removed_bytes_down;
 		kt::PluginManager* pman;
-		bt::QueueManager* qman;
+		kt::QueueManager* qman;
 		kt::GroupManager* gman;
 		QMap<KIO::Job*,KUrl> custom_save_locations; // map to store save locations
 	};

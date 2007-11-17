@@ -63,8 +63,8 @@ namespace kt
 		/// Get the upload speed of a torrent
 		Q_SCRIPTABLE int uploadSpeed(const QString & torrent);
 
-		void torrentAdded(kt::TorrentInterface* tc);
-		void torrentRemoved(kt::TorrentInterface* tc);
+		void torrentAdded(bt::TorrentInterface* tc);
+		void torrentRemoved(bt::TorrentInterface* tc);
 
 	 Q_SIGNALS: 
 		/// DBus signal emitted when a torrent has been added
@@ -76,7 +76,7 @@ namespace kt
 	private:
 		GUI* gui;
 		Core* core;
-		bt::PtrMap<QString,kt::TorrentInterface> torrent_map;
+		bt::PtrMap<QString,bt::TorrentInterface> torrent_map;
 	};
 
 }

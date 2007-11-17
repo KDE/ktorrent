@@ -32,9 +32,11 @@
 #include <net/socketmonitor.h>
 #include <dht/dhtbase.h>
 #include <mse/streamsocket.h>
-#include <tracker/tracker.h>
+#include <tracker/httptracker.h>
 #include <tracker/udptrackersocket.h>
 #include <diskio/chunkmanager.h>
+#include <diskio/cache.h>
+#include <torrent/torrentcontrol.h>
 #include <util/log.h>
 #include <torrent/server.h>
 #include "settings.h"
@@ -44,38 +46,7 @@ using namespace bt;
 
 namespace kt
 {
-	
-	QString BytesToString(Uint64 bytes,int precision)
-	{
-		KLocale* loc = KGlobal::locale();
-		if (bytes >= 1024 * 1024 * 1024)
-			return i18n("%1 GB",loc->formatNumber(bytes / TO_GIG,precision < 0 ? 2 : precision));
-		else if (bytes >= 1024*1024)
-			return i18n("%1 MB",loc->formatNumber(bytes / TO_MEG,precision < 0 ? 1 : precision));
-		else if (bytes >= 1024)
-			return i18n("%1 KB",loc->formatNumber(bytes / TO_KB,precision < 0 ? 1 : precision));
-		else
-			return i18n("%1 B",bytes);
-	}
 
-	QString KBytesPerSecToString(double speed,int precision)
-	{
-		KLocale* loc = KGlobal::locale();
-		return i18n("%1 KB/s",loc->formatNumber(speed,precision));
-	}
-
-	QString DurationToString(Uint32 nsecs)
-	{
-		KLocale* loc = KGlobal::locale();
-		QTime t;
-		int ndays = nsecs / 86400;
-		t = t.addSecs(nsecs % 86400);
-		QString s = loc->formatTime(t,true,true);
-		if (ndays > 0)
-			s = i18np("1 day ","%1 days ",ndays) + s;
-
-		return s;
-	}
 	
 	QString DataDir()
 	{
@@ -134,32 +105,38 @@ namespace kt
 			Tracker::setCustomIP(Settings::externalIP());
 		else
 			Tracker::setCustomIP(QString::null);
-	}
-
-	QString NetworkInterface()
-	{
-		if (Settings::networkInterface() == 0)
-			return QString::null;
-
-		QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
-		int iface = Settings::networkInterface();
-		if (iface > iface_list.count())
-			return QString::null;
-
-		return iface_list[iface - 1].name();
-	}
-	
-	QString NetworkInterfaceIPAddress(const QString & iface)
-	{
-		QNetworkInterface ni = QNetworkInterface::interfaceFromName(iface);
-		if (!ni.isValid())
-			return QString::null;
-
-		QList<QNetworkAddressEntry> addr_list = ni.addressEntries();
-		if (addr_list.count() == 0)
-			return QString::null;
+		
+		bt::HTTPTracker::setProxyEnabled(Settings::doNotUseKDEProxy());
+		bt::HTTPTracker::setProxy(Settings::httpTrackerProxy());
+		bt::Cache::setPreallocationEnabled(Settings::diskPrealloc());
+		bt::Cache::setPreallocateFully(Settings::fullDiskPrealloc());
+		bt::Cache::setUseFSSpecificPreallocMethod(Settings::fullDiskPreallocMethod() == 1);
+		
+		if (Settings::useCompletedDir())
+			bt::TorrentControl::setMoveWhenCompletedDir(Settings::completedDir());
 		else
-			return addr_list.front().ip().toString();
+			bt::TorrentControl::setMoveWhenCompletedDir(KUrl());
+		
+		bt::TorrentControl::setDataCheckWhenCompleted(Settings::checkWhenFinished());
+		bt::TorrentControl::setMinimumDiskSpace(Settings::minDiskSpace());
+		bt::TorrentControl::setAutoRecheck(Settings::autoRecheck());
+		bt::TorrentControl::setNumCorruptedForRecheck(Settings::maxCorruptedBeforeRecheck());
+		
+		
+		if (Settings::networkInterface() == 0)
+		{
+			SetNetworkInterface(QString::null);
+		}
+		else
+		{
+			QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
+			int iface = Settings::networkInterface();
+			if (iface > iface_list.count())
+				SetNetworkInterface(QString::null);
+			else
+				SetNetworkInterface(iface_list[iface - 1].name());
+		}
 	}
+
 
 }

@@ -68,48 +68,48 @@ namespace kt
 		 * Show a passive popup, that the torrent has stopped downloading.
 		 * @param tc The torrent
 		 */
-		void finished(kt::TorrentInterface* tc);
+		void finished(bt::TorrentInterface* tc);
 		
 		/**
 		 * Show a passive popup that a torrent has reached it's max share ratio. 
 		 * @param tc The torrent
 		 */
-		void maxShareRatioReached(kt::TorrentInterface* tc);
+		void maxShareRatioReached(bt::TorrentInterface* tc);
 		
 		/**
 		 * Show a passive popup that a torrent has reached it's max seed time
 		 * @param tc The torrent
 		 */
-		void maxSeedTimeReached(kt::TorrentInterface* tc);
+		void maxSeedTimeReached(bt::TorrentInterface* tc);
 		
 		/**
 		 * Show a passive popup when a torrent has been stopped by an error.
 		 * @param tc The torrent 
 		 * @param msg Error message
 		 */
-		void torrentStoppedByError(kt::TorrentInterface* tc, QString msg);
+		void torrentStoppedByError(bt::TorrentInterface* tc, QString msg);
 		
 		/**
 		 * Corrupted data has been found.
 		 * @param tc The torrent
 		 */
-		void corruptedData(kt::TorrentInterface* tc);
+		void corruptedData(bt::TorrentInterface* tc);
 		
 		/**
 		 * User tried to enqueue a torrent that has reached max share ratio or max seed time
 		 * Show passive popup message.
 		 */
-		void queuingNotPossible(kt::TorrentInterface* tc);
+		void queuingNotPossible(bt::TorrentInterface* tc);
 		
 		/**
 		 * We failed to start a torrent
 		 * @param tc The torrent
 		 * @param reason The reason it failed
 		 */
-		void canNotStart(kt::TorrentInterface* tc,kt::TorrentStartResponse reason);
+		void canNotStart(bt::TorrentInterface* tc,bt::TorrentStartResponse reason);
 		
 		///Shows passive popup message
-		void lowDiskSpace(kt::TorrentInterface* tc, bool stopped);
+		void lowDiskSpace(bt::TorrentInterface* tc, bool stopped);
 		
 	private:
 		Core* m_core;

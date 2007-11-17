@@ -27,6 +27,8 @@
 #include "gui.h"
 #include "torrentcreatordlg.h"
 
+using namespace bt;
+
 namespace kt
 {
 	TorrentCreatorDlg::TorrentCreatorDlg(Core* core,GUI* gui,QWidget* parent) : QDialog(parent),core(core),gui(gui)

@@ -37,6 +37,8 @@
 #include "speedlimitsdlg.h"
 #include "addpeersdlg.h"
 
+using namespace bt;
+
 namespace kt
 {
 	
@@ -67,18 +69,18 @@ namespace kt
 			<< i18n("Time Downloaded")
 			<< i18n("Time Seeded");
 		setHeaderLabels(columns);
-		connect(core,SIGNAL(torrentAdded(kt::TorrentInterface*)),this,SLOT(addTorrent(kt::TorrentInterface*)));
-		connect(core,SIGNAL(torrentRemoved(kt::TorrentInterface*)),this,SLOT(removeTorrent(kt::TorrentInterface*)));
-		connect(this,SIGNAL(wantToRemove(kt::TorrentInterface*,bool )),core,SLOT(remove(kt::TorrentInterface*,bool )));
-		connect(this,SIGNAL(wantToStart( kt::TorrentInterface* )),core,SLOT(start( kt::TorrentInterface* )));
-		connect(this,SIGNAL(wantToStop( kt::TorrentInterface*, bool )),core,SLOT(stop( kt::TorrentInterface*, bool )));
+		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),this,SLOT(addTorrent(bt::TorrentInterface*)));
+		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(removeTorrent(bt::TorrentInterface*)));
+		connect(this,SIGNAL(wantToRemove(bt::TorrentInterface*,bool )),core,SLOT(remove(bt::TorrentInterface*,bool )));
+		connect(this,SIGNAL(wantToStart( bt::TorrentInterface* )),core,SLOT(start( bt::TorrentInterface* )));
+		connect(this,SIGNAL(wantToStop( bt::TorrentInterface*, bool )),core,SLOT(stop( bt::TorrentInterface*, bool )));
 		connect(this,SIGNAL(customContextMenuRequested(const QPoint & ) ),this,SLOT(showMenu( const QPoint& )));
 		connect(this,SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
 			this,SLOT(onCurrentItemChanged(QTreeWidgetItem * ,QTreeWidgetItem *)));
 
 
-		bt::QueueManager* qman = core->getQueueManager();
-		for (QList<kt::TorrentInterface*>::iterator i = qman->begin();i != qman->end();i++)
+		kt::QueueManager* qman = core->getQueueManager();
+		for (QList<bt::TorrentInterface*>::iterator i = qman->begin();i != qman->end();i++)
 			addTorrent(*i);
 		
 		header()->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -114,10 +116,10 @@ namespace kt
 		Uint32 running = 0;
 		// update items which are part of the current group
 		// if they are not part of the current group, just hide them
-		for (QMap<kt::TorrentInterface*,ViewItem*>::iterator i = items.begin();i != items.end();i++)
+		for (QMap<bt::TorrentInterface*,ViewItem*>::iterator i = items.begin();i != items.end();i++)
 		{
 			ViewItem* v = i.value();
-			kt::TorrentInterface* ti = i.key();
+			bt::TorrentInterface* ti = i.key();
 			if (!group || (group && group->isMember(ti)))
 			{
 				if (v->isHidden())
@@ -146,10 +148,10 @@ namespace kt
 	{
 		Uint32 torrents = 0;
 		Uint32 running = 0;
-		for (QMap<kt::TorrentInterface*,ViewItem*>::iterator i = items.begin();i != items.end();i++)
+		for (QMap<bt::TorrentInterface*,ViewItem*>::iterator i = items.begin();i != items.end();i++)
 		{
 			ViewItem* v = i.value();
-			kt::TorrentInterface* ti = i.key();
+			bt::TorrentInterface* ti = i.key();
 			if (!group || (group && group->isMember(ti)))
 			{
 				torrents++;
@@ -173,13 +175,13 @@ namespace kt
 	}
 
 
-	void View::addTorrent(kt::TorrentInterface* ti)
+	void View::addTorrent(bt::TorrentInterface* ti)
 	{
 		ViewItem* v = new ViewItem(ti,this);
 		items.insert(ti,v);
 	}
 
-	void View::removeTorrent(kt::TorrentInterface* ti)
+	void View::removeTorrent(bt::TorrentInterface* ti)
 	{
 		ViewItem* v = items.value(ti);
 		if (!v)
@@ -265,7 +267,7 @@ namespace kt
 
 	void View::startAllTorrents()
 	{
-		foreach (kt::TorrentInterface* tc,items.keys())
+		foreach (bt::TorrentInterface* tc,items.keys())
 		{
 			wantToStart(tc);
 		}
@@ -273,7 +275,7 @@ namespace kt
 
 	void View::stopAllTorrents()
 	{
-		foreach (kt::TorrentInterface* tc,items.keys())
+		foreach (bt::TorrentInterface* tc,items.keys())
 		{
 			wantToStop(tc,true);
 		}
@@ -281,9 +283,9 @@ namespace kt
 
 	void View::queueTorrents()
 	{
-		QList<kt::TorrentInterface*> sel;
+		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (kt::TorrentInterface* tc,sel)
+		foreach (bt::TorrentInterface* tc,sel)
 		{
 			bool dummy;
 			if (tc && !tc->isCheckingData(dummy))
@@ -293,7 +295,7 @@ namespace kt
 
 	void View::addPeers()
 	{
-		QList<kt::TorrentInterface*> sel;
+		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
 		if (sel.count() > 0)
 		{
@@ -304,9 +306,9 @@ namespace kt
 
 	void View::manualAnnounce()
 	{
-		QList<kt::TorrentInterface*> sel;
+		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (kt::TorrentInterface* tc,sel)
+		foreach (bt::TorrentInterface* tc,sel)
 		{
 			if (tc->getStats().running) 
 				tc->updateTracker();
@@ -315,9 +317,9 @@ namespace kt
 
 	void View::scrape()
 	{
-		QList<kt::TorrentInterface*> sel;
+		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (kt::TorrentInterface* tc,sel)
+		foreach (bt::TorrentInterface* tc,sel)
 		{
 			tc->scrapeTracker();
 		}
@@ -325,9 +327,9 @@ namespace kt
 
 	void View::previewTorrents()
 	{
-		QList<kt::TorrentInterface*> sel;
+		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (kt::TorrentInterface* tc,sel)
+		foreach (bt::TorrentInterface* tc,sel)
 		{
 			if (tc->readyForPreview() && !tc->getStats().multi_file_torrent)
 			{
@@ -339,9 +341,9 @@ namespace kt
 
 	void View::openDataDir()
 	{
-		QList<kt::TorrentInterface*> sel;
+		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (kt::TorrentInterface* tc,sel)
+		foreach (bt::TorrentInterface* tc,sel)
 		{
 			if (tc->getStats().multi_file_torrent)
 				new KRun(KUrl(tc->getStats().output_path), 0, true, true);
@@ -352,9 +354,9 @@ namespace kt
 	
 	void View::openTorDir()
 	{
-		QList<kt::TorrentInterface*> sel;
+		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (kt::TorrentInterface* tc,sel)
+		foreach (bt::TorrentInterface* tc,sel)
 		{
 			new KRun(KUrl(tc->getTorDir()), 0, true, true);
 		}
@@ -365,9 +367,9 @@ namespace kt
 		if (!group || group->isStandardGroup())
 			return;
 
-		QList<kt::TorrentInterface*> sel;
+		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (kt::TorrentInterface* tc,sel)
+		foreach (bt::TorrentInterface* tc,sel)
 			group->removeTorrent(tc);
 
 		update();
@@ -381,37 +383,37 @@ namespace kt
 
 	void View::toggleDHT()
 	{
-		QList<kt::TorrentInterface*> sel;
+		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (kt::TorrentInterface* tc,sel)
+		foreach (bt::TorrentInterface* tc,sel)
 		{
 			bool dummy;
 			if (tc && !tc->isCheckingData(dummy))
 			{
-				bool on = tc->isFeatureEnabled(kt::DHT_FEATURE);
-				tc->setFeatureEnabled(kt::DHT_FEATURE,!on);
+				bool on = tc->isFeatureEnabled(bt::DHT_FEATURE);
+				tc->setFeatureEnabled(bt::DHT_FEATURE,!on);
 			}
 		}							
 	}
 
 	void View::togglePEX()
 	{
-		QList<kt::TorrentInterface*> sel;
+		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (kt::TorrentInterface* tc,sel)
+		foreach (bt::TorrentInterface* tc,sel)
 		{
 			bool dummy;
 			if (tc && !tc->isCheckingData(dummy))
 			{
-				bool on = tc->isFeatureEnabled(kt::UT_PEX_FEATURE);
-				tc->setFeatureEnabled(kt::UT_PEX_FEATURE,!on);
+				bool on = tc->isFeatureEnabled(bt::UT_PEX_FEATURE);
+				tc->setFeatureEnabled(bt::UT_PEX_FEATURE,!on);
 			}
 		}
 	}
 
 	void View::checkData()
 	{
-		QList<kt::TorrentInterface*> sel;
+		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
 		if (sel.count() == 0)
 			return;
@@ -431,7 +433,7 @@ namespace kt
 		header_menu->popup(header()->mapToGlobal(pos));
 	}
 
-	void View::getSelection(QList<kt::TorrentInterface*> & sel)
+	void View::getSelection(QList<bt::TorrentInterface*> & sel)
 	{
 		QList<QTreeWidgetItem *> cur_sel =  selectedItems();
 		foreach (QTreeWidgetItem* wi,cur_sel)
@@ -465,7 +467,7 @@ namespace kt
 		}
 	}
 
-	kt::TorrentInterface* View::getCurrentTorrent()
+	bt::TorrentInterface* View::getCurrentTorrent()
 	{
 		ViewItem* vi = (ViewItem*)currentItem();
 		return vi ? vi->tc : 0;

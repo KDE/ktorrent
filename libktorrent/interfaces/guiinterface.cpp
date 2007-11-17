@@ -17,8 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <interfaces/torrentinterface.h>
 #include "guiinterface.h"
-#include "torrentinterface.h"
+
 
 namespace kt
 {
@@ -31,7 +32,7 @@ namespace kt
 	{}
 
 
-	void GUIInterface::notifyViewListeners(TorrentInterface* tc)
+	void GUIInterface::notifyViewListeners(bt::TorrentInterface* tc)
 	{
 		QList<ViewListener*>::iterator i = listeners.begin();
 		while (i != listeners.end())

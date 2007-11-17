@@ -33,7 +33,7 @@ using namespace kt;
 namespace kt
 {
 				
-	IWFileTreeItem::IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file,kt::DeselectOptions options)
+	IWFileTreeItem::IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,bt::TorrentFileInterface & file,kt::DeselectOptions options)
 		: FileTreeItem(item,name,file,options)
 	{
 		perc_complete = 0.0;
@@ -63,7 +63,7 @@ namespace kt
 	*/
 
 	
-	void IWFileTreeItem::updatePreviewInformation(kt::TorrentInterface* tc)
+	void IWFileTreeItem::updatePreviewInformation(bt::TorrentInterface* tc)
 	{
 		if (file.isMultimedia())
 		{
@@ -113,7 +113,7 @@ namespace kt
 		}
 	}
 
-	void IWFileTreeItem::updatePriorityInformation(kt::TorrentInterface* tc)
+	void IWFileTreeItem::updatePriorityInformation(bt::TorrentInterface* tc)
 	{
 		switch(file.getPriority())
 		{

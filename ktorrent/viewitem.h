@@ -22,11 +22,17 @@
 #define KTVIEWITEM_HH
 
 #include <QTreeWidgetItem>
+#include <util/constants.h>
+
+namespace bt
+{
+	class TorrentInterface;
+}
 
 namespace kt
 {
 	class View;
-	class TorrentInterface;
+	
 
 	/**
 	 * An item in the View
@@ -34,7 +40,7 @@ namespace kt
 	class ViewItem : public QTreeWidgetItem
 	{
 	public:
-		ViewItem(kt::TorrentInterface* tc,View* parent);
+		ViewItem(bt::TorrentInterface* tc,View* parent);
 		virtual ~ViewItem();
 
 		/// Update all fields
@@ -43,23 +49,23 @@ namespace kt
 		/// Comparison operator for sorting
 		bool operator < (const QTreeWidgetItem & other) const;
 
-		kt::TorrentInterface* tc;
+		bt::TorrentInterface* tc;
 	private:
 		// cached values to avoid unneeded updates
-		TorrentStatus status;
-		Uint64 bytes_downloaded; 
-		Uint64 bytes_uploaded;
-		Uint64 total_bytes_to_download;
-		Uint32 download_rate;
-		Uint32 upload_rate;
-		Uint32 seeders_total;
-		Uint32 seeders_connected_to;
-		Uint32 leechers_total;
-		Uint32 leechers_connected_to;
+		bt::TorrentStatus status;
+		bt::Uint64 bytes_downloaded; 
+		bt::Uint64 bytes_uploaded;
+		bt::Uint64 total_bytes_to_download;
+		bt::Uint32 download_rate;
+		bt::Uint32 upload_rate;
+		bt::Uint32 seeders_total;
+		bt::Uint32 seeders_connected_to;
+		bt::Uint32 leechers_total;
+		bt::Uint32 leechers_connected_to;
 		double percentage;
 		float share_ratio;
-		Uint32 runtime_dl;
-		Uint32 runtime_ul;
+		bt::Uint32 runtime_dl;
+		bt::Uint32 runtime_ul;
 		int eta;
 	};
 }

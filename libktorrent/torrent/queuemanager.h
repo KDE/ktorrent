@@ -18,37 +18,41 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#ifndef QUEUEMANAGER_H
-#define QUEUEMANAGER_H
+#ifndef KTQUEUEMANAGER_H
+#define KTQUEUEMANAGER_H
 
 #include <set>
 #include <qobject.h>
 #include <qlinkedlist.h>
 #include <interfaces/torrentinterface.h>
+#include <interfaces/queuemanagerinterface.h>
 #include <ktorrent_export.h>
 
 namespace bt
 {
 	class SHA1Hash;
-	class AnnounceList;
 	struct TrackerTier;
 	class WaitJob;
+}
 
-	class QueuePtrList : public QList<kt::TorrentInterface *>
+namespace kt
+{
+
+	class QueuePtrList : public QList<bt::TorrentInterface *>
 	{
 		public:
 			QueuePtrList();
 			virtual ~QueuePtrList();
 
 		protected:
-			int compareItems(kt::TorrentInterface* tc1, kt::TorrentInterface* tc2);
+			int compareItems(bt::TorrentInterface* tc1, bt::TorrentInterface* tc2);
 	};
 
 	/**
 	 * @author Ivan Vasic
 	 * @brief This class contains list of all TorrentControls and is responsible for starting/stopping them
 	 */
-	class KTORRENT_EXPORT QueueManager : public QObject
+	class KTORRENT_EXPORT QueueManager : public QObject,public bt::QueueManagerInterface
 	{
 		Q_OBJECT
 				
@@ -56,12 +60,12 @@ namespace bt
 			QueueManager();
 			virtual ~QueueManager();
 
-			void append(kt::TorrentInterface* tc);
-			void remove(kt::TorrentInterface* tc);
+			void append(bt::TorrentInterface* tc);
+			void remove(bt::TorrentInterface* tc);
 			void clear();
 			
-			kt::TorrentStartResponse start(kt::TorrentInterface* tc, bool user = true);
-			void stop(kt::TorrentInterface* tc, bool user = false);
+			bt::TorrentStartResponse start(bt::TorrentInterface* tc, bool user = true);
+			void stop(bt::TorrentInterface* tc, bool user = false);
 
 			void stopall(int type);
 			void startall(int type);
@@ -70,14 +74,14 @@ namespace bt
 			 * Stop all running torrents
 			 * @param wjob WaitJob which waits for stopped events to reach the tracker
 			 */
-			void onExit(WaitJob* wjob);
+			void onExit(bt::WaitJob* wjob);
 
 			/**
 			 * Enqueue/Dequeue function. Places a torrent in queue. 
 			 * If the torrent is already in queue this will remove it from queue.
 			 * @param tc TorrentControl pointer.
 			 */
-			void queue(kt::TorrentInterface* tc);
+			void queue(bt::TorrentInterface* tc);
 
 			int count() { return downloads.count(); }
 			int countDownloads();
@@ -88,15 +92,15 @@ namespace bt
 
 			void startNext();
 
-			QList<kt::TorrentInterface *>::iterator begin();
-			QList<kt::TorrentInterface *>::iterator end();
+			QList<bt::TorrentInterface *>::iterator begin();
+			QList<bt::TorrentInterface *>::iterator end();
 
 			/**
 			 * See if we already loaded a torrent.
 			 * @param ih The info hash of a torrent
 			 * @return true if we do, false if we don't
 			 */
-			bool allreadyLoaded(const SHA1Hash & ih) const;
+			bool allreadyLoaded(const bt::SHA1Hash & ih) const;
 
 
 			/**
@@ -104,7 +108,7 @@ namespace bt
 			 * @param ih The info_hash of the torrent to merge to
 			 * @param trk First tier of trackers
 			 */
-			void mergeAnnounceList(const SHA1Hash & ih,const TrackerTier* trk);
+			void mergeAnnounceList(const bt::SHA1Hash & ih,const bt::TrackerTier* trk);
 
 			void setMaxDownloads(int m);
 			void setMaxSeeds(int m);
@@ -129,30 +133,30 @@ namespace bt
 			* Signal should be connected to SysTray slot which shows appropriate KPassivePopup info.
 			* @param tc The torrent in question.
 			*/
-			void queuingNotPossible(kt::TorrentInterface* tc);
+			void queuingNotPossible(bt::TorrentInterface* tc);
 
 			/**
  			 * Diskspace is running low.
  			 * Signal should be connected to SysTray slot which shows appropriate KPassivePopup info. 
  			 * @param tc The torrent in question.
  			*/
- 			void lowDiskSpace(kt::TorrentInterface* tc, bool stopped);
+ 			void lowDiskSpace(bt::TorrentInterface* tc, bool stopped);
 
 		public slots:
-			void torrentFinished(kt::TorrentInterface* tc);
-			void torrentAdded(kt::TorrentInterface* tc,bool user, bool start_torrent);
-			void torrentRemoved(kt::TorrentInterface* tc);
-			void torrentStopped(kt::TorrentInterface* tc);
-			void onLowDiskSpace(kt::TorrentInterface* tc, bool toStop);
+			void torrentFinished(bt::TorrentInterface* tc);
+			void torrentAdded(bt::TorrentInterface* tc,bool user, bool start_torrent);
+			void torrentRemoved(bt::TorrentInterface* tc);
+			void torrentStopped(bt::TorrentInterface* tc);
+			void onLowDiskSpace(bt::TorrentInterface* tc, bool toStop);
 
 		private:
-			void enqueue(kt::TorrentInterface* tc);
-			void dequeue(kt::TorrentInterface* tc);
-			void startSafely(kt::TorrentInterface* tc);
-			void stopSafely(kt::TorrentInterface* tc,bool user,WaitJob* wjob = 0);
+			void enqueue(bt::TorrentInterface* tc);
+			void dequeue(bt::TorrentInterface* tc);
+			void startSafely(bt::TorrentInterface* tc);
+			void stopSafely(bt::TorrentInterface* tc,bool user,bt::WaitJob* wjob = 0);
 
-			bt::QueuePtrList downloads;
-			std::set<kt::TorrentInterface*> paused_torrents;
+			QueuePtrList downloads;
+			std::set<bt::TorrentInterface*> paused_torrents;
 
 			int max_downloads;
 			int max_seeds;

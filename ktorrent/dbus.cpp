@@ -36,8 +36,8 @@ namespace kt
 		QDBusConnection::sessionBus().registerObject("/KTorrent", this,
 				QDBusConnection::ExportScriptableSlots|QDBusConnection::ExportScriptableSignals);
 
-		connect(core,SIGNAL(torrentAdded(kt::TorrentInterface*)),this,SLOT(torrentAdded(kt::TorrentInterface*)));
-		connect(core,SIGNAL(torrentRemoved(kt::TorrentInterface*)),this,SLOT(torrentAdded(kt::TorrentInterface*)));
+		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),this,SLOT(torrentAdded(bt::TorrentInterface*)));
+		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(torrentAdded(bt::TorrentInterface*)));
 		// fill the map with torrents
 		torrents();
 	}
@@ -48,11 +48,11 @@ namespace kt
 
 	QStringList DBus::torrents()
 	{
-		bt::QueueManager* qm = core->getQueueManager();
+		kt::QueueManager* qm = core->getQueueManager();
 		QStringList tors;
-		for (QList<kt::TorrentInterface *>::iterator i = qm->begin();i != qm->end();i++)
+		for (QList<bt::TorrentInterface *>::iterator i = qm->begin();i != qm->end();i++)
 		{
-			kt::TorrentInterface* tc = *i;
+			bt::TorrentInterface* tc = *i;
 			tors.append(tc->getStats().torrent_name);
 			if (!torrent_map.contains(tc->getStats().torrent_name))
 				torrent_map.insert(tc->getStats().torrent_name,tc);
@@ -63,7 +63,7 @@ namespace kt
 	
 	void DBus::start(const QString & torrent)
 	{
-		kt::TorrentInterface* tc = torrent_map.find(torrent);
+		bt::TorrentInterface* tc = torrent_map.find(torrent);
 		if (!tc)
 			return;
 
@@ -72,7 +72,7 @@ namespace kt
 
 	void DBus::stop(const QString & torrent)
 	{
-		kt::TorrentInterface* tc = torrent_map.find(torrent);
+		bt::TorrentInterface* tc = torrent_map.find(torrent);
 		if (!tc)
 			return;
 
@@ -91,7 +91,7 @@ namespace kt
 
 	int DBus::downloadSpeed(const QString & torrent)
 	{
-		kt::TorrentInterface* tc = torrent_map.find(torrent);
+		bt::TorrentInterface* tc = torrent_map.find(torrent);
 		if (!tc)
 			return -1;
 
@@ -100,20 +100,20 @@ namespace kt
 
 	int DBus::uploadSpeed(const QString & torrent)
 	{
-		kt::TorrentInterface* tc = torrent_map.find(torrent);
+		bt::TorrentInterface* tc = torrent_map.find(torrent);
 		if (!tc)
 			return -1;
 
 		return tc->getStats().upload_rate;
 	}
 	
-	void DBus::torrentAdded(kt::TorrentInterface* tc)
+	void DBus::torrentAdded(bt::TorrentInterface* tc)
 	{
 		torrent_map.insert(tc->getStats().torrent_name,tc);
 		torrentAdded(tc->getStats().torrent_name);
 	}
 
-	void DBus::torrentRemoved(kt::TorrentInterface* tc)
+	void DBus::torrentRemoved(bt::TorrentInterface* tc)
 	{
 		torrent_map.erase(tc->getStats().torrent_name);
 		torrentRemoved(tc->getStats().torrent_name);

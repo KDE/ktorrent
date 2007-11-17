@@ -67,7 +67,7 @@ namespace kt
 		}
 	}
 	
-	void IWFileTreeDirItem::updatePreviewInformation(kt::TorrentInterface* tc)
+	void IWFileTreeDirItem::updatePreviewInformation(bt::TorrentInterface* tc)
 	{
 		// first set all the child items
 		bt::PtrMap<QString,FileTreeItem>::iterator i = children.begin();
@@ -87,7 +87,7 @@ namespace kt
 		}
 	}
 	
-	Priority IWFileTreeDirItem::updatePriorityInformation(kt::TorrentInterface* tc)
+	Priority IWFileTreeDirItem::updatePriorityInformation(bt::TorrentInterface* tc)
 	{
                 // first set all the child items
 		bt::PtrMap<QString,FileTreeItem>::iterator i = children.begin();
@@ -175,7 +175,7 @@ namespace kt
 		return PREVIEW_PRIORITY;
 	}
 
-	FileTreeItem* IWFileTreeDirItem::newFileTreeItem(const QString & name,TorrentFileInterface & file,kt::DeselectOptions options)
+	FileTreeItem* IWFileTreeDirItem::newFileTreeItem(const QString & name,bt::TorrentFileInterface & file,kt::DeselectOptions options)
 	{
 		return new IWFileTreeItem(this,name,file,options);
 	}

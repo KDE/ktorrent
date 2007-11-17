@@ -187,14 +187,14 @@ namespace kt
 		return view_man->getCurrentTorrent();
 	}
 	
-	void GUI::dataScan(kt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption)
+	void GUI::dataScan(bt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption)
 	{
 		ScanDlg* dlg = new ScanDlg(core,auto_import,this);
 		dlg->show();
 		dlg->execute(tc,silently);
 	}
 
-	bool GUI::selectFiles(kt::TorrentInterface* tc,bool* user,bool* start_torrent)
+	bool GUI::selectFiles(bt::TorrentInterface* tc,bool* user,bool* start_torrent)
 	{
 		FileSelectDlg dlg(core->getGroupManager(),this);
 
@@ -531,7 +531,7 @@ namespace kt
 		ideal::MainWindow::saveState(cfg);
 	}
 
-	void GUI::currentTorrentChanged(kt::TorrentInterface* tc)
+	void GUI::currentTorrentChanged(bt::TorrentInterface* tc)
 	{
 		notifyViewListeners(tc);
 	}

@@ -45,14 +45,14 @@ namespace bt
 		emitResult();
 	}
 	
-	void WaitJob::addExitOperation(kt::ExitOperation* op)
+	void WaitJob::addExitOperation(ExitOperation* op)
 	{
 		exit_ops.append(op);
-		connect(op,SIGNAL(operationFinished( kt::ExitOperation* )),
-				this,SLOT(operationFinished( kt::ExitOperation* )));
+		connect(op,SIGNAL(operationFinished( ExitOperation* )),
+				this,SLOT(operationFinished( ExitOperation* )));
 	}
 	
-	void WaitJob::operationFinished(kt::ExitOperation* op)
+	void WaitJob::operationFinished(ExitOperation* op)
 	{
 		if (exit_ops.count() > 0)
 		{

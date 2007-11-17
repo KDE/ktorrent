@@ -29,7 +29,7 @@ using namespace bt;
 namespace kt
 {
 	
-	Monitor::Monitor(kt::TorrentInterface* tc,PeerView* pv,ChunkDownloadView* cdv) 
+	Monitor::Monitor(bt::TorrentInterface* tc,PeerView* pv,ChunkDownloadView* cdv) 
 		: tc(tc),pv(pv),cdv(cdv)
 	{
 		if (tc)
@@ -44,25 +44,25 @@ namespace kt
 	}
 	
 	
-	void Monitor::downloadRemoved(kt::ChunkDownloadInterface* cd)
+	void Monitor::downloadRemoved(bt::ChunkDownloadInterface* cd)
 	{
 		if (cdv)
 			cdv->downloadRemoved(cd);
 	}
 	
-	void Monitor::downloadStarted(kt::ChunkDownloadInterface* cd)
+	void Monitor::downloadStarted(bt::ChunkDownloadInterface* cd)
 	{
 		if (cdv)
 			cdv->downloadAdded(cd);
 	}
 	
-	void Monitor::peerAdded(kt::PeerInterface* peer)
+	void Monitor::peerAdded(bt::PeerInterface* peer)
 	{
 		if (pv)
 			pv->peerAdded(peer);
 	}
 	
-	void Monitor::peerRemoved(kt::PeerInterface* peer)
+	void Monitor::peerRemoved(bt::PeerInterface* peer)
 	{
 		if (pv)
 			pv->peerRemoved(peer);

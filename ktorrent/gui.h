@@ -60,9 +60,9 @@ namespace kt
 		virtual void removePluginGui(Plugin* p);
 		virtual void addToolWidget(QWidget* w,const QString & icon,const QString & caption,ToolDock dock);
 		virtual void removeToolWidget(QWidget* w);
-		virtual const TorrentInterface* getCurrentTorrent() const;
-		virtual void dataScan(kt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption);
-		virtual bool selectFiles(kt::TorrentInterface* tc,bool* user,bool* start_torrent);
+		virtual const bt::TorrentInterface* getCurrentTorrent() const;
+		virtual void dataScan(bt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption);
+		virtual bool selectFiles(bt::TorrentInterface* tc,bool* user,bool* start_torrent);
 		virtual void errorMsg(const QString & err);
 		virtual void errorMsg(KIO::Job* j);
 		virtual void infoMsg(const QString & info);
@@ -82,7 +82,7 @@ namespace kt
 		 * Called by the ViewManager when the current torrent has changed
 		 * @param tc The torrent 
 		 * */
-		void currentTorrentChanged(kt::TorrentInterface* tc);
+		void currentTorrentChanged(bt::TorrentInterface* tc);
 	public slots:
 		/**
 		 * Open a view

@@ -23,12 +23,14 @@
 #include <qobject.h>
 #include <interfaces/filetreeitem.h>
 
-using namespace bt;
-
-namespace kt
+namespace bt
 {
 	class TorrentFileInterface;
 	class TorrentInterface;
+}
+
+namespace kt
+{
 	class IWFileTreeDirItem;
 
 	/**
@@ -42,12 +44,12 @@ namespace kt
 				
 		double perc_complete;
 	public:
-		IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,kt::TorrentFileInterface & file,kt::DeselectOptions options);
+		IWFileTreeItem(IWFileTreeDirItem* item,const QString & name,bt::TorrentFileInterface & file,kt::DeselectOptions options);
 		virtual ~IWFileTreeItem();
 	
-		void updatePreviewInformation(kt::TorrentInterface* tc);
+		void updatePreviewInformation(bt::TorrentInterface* tc);
 		void updatePercentageInformation();
-		void updatePriorityInformation(kt::TorrentInterface* tc);
+		void updatePriorityInformation(bt::TorrentInterface* tc);
 		void updateDNDInformation();
 	protected:
 	//	virtual int compare(QListViewItem* i, int col, bool ascending) const;

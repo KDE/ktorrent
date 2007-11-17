@@ -4,7 +4,7 @@
 #include <kstandarddirs.h>
 #include <kconfiggroup.h>
 #include <interfaces/peerinterface.h>
-#include <interfaces/functions.h>
+#include <util/functions.h>
 #include "peerview.h"
 #include "flagdb.h"
 
@@ -14,7 +14,7 @@
 #include "GeoIP.h"
 #endif
 
-
+using namespace bt;
 
 namespace kt
 {

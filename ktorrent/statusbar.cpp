@@ -21,9 +21,11 @@
 #include <QLabel>
 #include <QProgressBar>
 #include <klocale.h>
-#include <interfaces/functions.h>
+#include <util/functions.h>
 #include <dht/dhtbase.h>
 #include "statusbar.h"
+
+using namespace bt;
 
 namespace kt
 {

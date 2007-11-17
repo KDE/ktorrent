@@ -59,7 +59,7 @@ namespace kt
 	FileSelectDlg::~FileSelectDlg()
 	{}
 
-	int FileSelectDlg::execute(kt::TorrentInterface* tc,bool* user, bool* start)
+	int FileSelectDlg::execute(bt::TorrentInterface* tc,bool* user, bool* start)
 	{
 		this->tc = tc;
 		this->user = user;
@@ -74,7 +74,7 @@ namespace kt
 				root = new kt::FileTreeDirItem(m_file_view,tc->getStats().torrent_name,this);
 				for (Uint32 i = 0;i < tc->getNumFiles();i++)
 				{
-					kt::TorrentFileInterface & file = tc->getTorrentFile(i);
+					bt::TorrentFileInterface & file = tc->getTorrentFile(i);
 					file.setEmitDownloadStatusChanged(false);
 					root->insert(file.getPath(),file,kt::DELETE_FILES);
 				}
@@ -113,7 +113,7 @@ namespace kt
 
 		for (Uint32 i = 0;i < tc->getNumFiles();i++)
 		{
-			kt::TorrentFileInterface & file = tc->getTorrentFile(i);
+			bt::TorrentFileInterface & file = tc->getTorrentFile(i);
 
 			// check for preexisting files
 			QString path = dn + tc->getStats().torrent_name + bt::DirSeparator() + file.getPath();
@@ -139,7 +139,7 @@ namespace kt
 			{
 				for (Uint32 i = 0;i < tc->getNumFiles();i++)
 				{
-					kt::TorrentFileInterface & file = tc->getTorrentFile(i);
+					bt::TorrentFileInterface & file = tc->getTorrentFile(i);
 					if (file.doNotDownload() && file.isPreExistingFile())
 						file.setDoNotDownload(false);
 				}
@@ -148,7 +148,7 @@ namespace kt
 		
 		for (Uint32 i = 0;i < tc->getNumFiles();i++)
 		{
-			kt::TorrentFileInterface & file = tc->getTorrentFile(i);
+			bt::TorrentFileInterface & file = tc->getTorrentFile(i);
 			file.setEmitDownloadStatusChanged(true);
 		}
 
@@ -260,13 +260,13 @@ namespace kt
 		else
 			bytes_to_download = tc->getStats().total_bytes;
 
-		lblFree->setText(kt::BytesToString(bytes_free));
-		lblRequired->setText(kt::BytesToString(bytes_to_download));
+		lblFree->setText(bt::BytesToString(bytes_free));
+		lblRequired->setText(bt::BytesToString(bytes_to_download));
 
 		if (bytes_to_download > bytes_free)
-			lblStatus->setText("<font color=\"#ff0000\">" + i18n("%1 short!", kt::BytesToString(-1*(long long)(bytes_free - bytes_to_download))));
+			lblStatus->setText("<font color=\"#ff0000\">" + i18n("%1 short!", bt::BytesToString(-1*(long long)(bytes_free - bytes_to_download))));
 		else
-			lblStatus->setText(kt::BytesToString(bytes_free - bytes_to_download));
+			lblStatus->setText(bt::BytesToString(bytes_free - bytes_to_download));
 	}
 }
 

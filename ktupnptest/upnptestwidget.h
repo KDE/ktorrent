@@ -30,7 +30,7 @@ namespace kt
 	class UPnPRouter;
 }
 
-class UPnPTestWidget : public QWidget,public Ui_UPnPTestWidget,public kt::LogMonitorInterface
+class UPnPTestWidget : public QWidget,public Ui_UPnPTestWidget,public bt::LogMonitorInterface
 {
 	Q_OBJECT
 public:

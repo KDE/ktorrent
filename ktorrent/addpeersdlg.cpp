@@ -24,7 +24,7 @@
 
 namespace kt
 {
-	class ManualPeerSource : public kt::PeerSource
+	class ManualPeerSource : public bt::PeerSource
 	{
 	public:
 		ManualPeerSource() {}
@@ -40,7 +40,7 @@ namespace kt
 		}
 	};
 
-	AddPeersDlg::AddPeersDlg(TorrentInterface* tc,QWidget* parent)
+	AddPeersDlg::AddPeersDlg(bt::TorrentInterface* tc,QWidget* parent)
 			: QDialog(parent),tc(tc),mps(0)
 	{
 		setupUi(this);

@@ -64,6 +64,33 @@ namespace bt
 	
 	/// Get the maximum number of open files
 	BTCORE_EXPORT Uint32 MaxOpenFiles();
+	
+	/// Set the network interface to use (null means all interfaces)
+	BTCORE_EXPORT void SetNetworkInterface(const QString & iface);
+	
+	/// Get the network interface which needs to be used (this will return the name e.g. eth0, wlan0 ...)
+	BTCORE_EXPORT QString NetworkInterface(); 
+
+	/// Get the IP address of the network interface
+	BTCORE_EXPORT QString NetworkInterfaceIPAddress(const QString & iface);
+	
+	const double TO_KB = 1024.0;
+	const double TO_MEG = (1024.0 * 1024.0);
+	const double TO_GIG = (1024.0 * 1024.0 * 1024.0);
+	
+	BTCORE_EXPORT QString BytesToString(bt::Uint64 bytes,int precision = -1);
+	BTCORE_EXPORT QString KBytesPerSecToString(double speed,int precision = 1);
+	BTCORE_EXPORT QString DurationToString(bt::Uint32 nsecs);
+	
+	template<class T> int CompareVal(T a,T b)
+	{
+		if (a < b)
+			return -1;
+		else if (a > b)
+			return 1;
+		else
+			return 0;
+	}
 }
 
 #endif

@@ -23,13 +23,14 @@
 
 #include <QAbstractTableModel>
 
+namespace bt
+{
+	class TorrentInterface;
+}
+
 namespace kt
 {
 	class Core;
-	class TorrentInterface;
-	
-	
-	
 
 	/**
 	 * Model for the SpeedLimitsDlg main list view
@@ -54,11 +55,11 @@ namespace kt
 		void enableApply(bool on);
 		
 	private:
-		kt::TorrentInterface* torrentForIndex(const QModelIndex & index) const;
+		bt::TorrentInterface* torrentForIndex(const QModelIndex & index) const;
 		
 	private slots:
-		void onTorrentAdded(kt::TorrentInterface* tc);
-		void onTorrentRemoved(kt::TorrentInterface* tc);
+		void onTorrentAdded(bt::TorrentInterface* tc);
+		void onTorrentRemoved(bt::TorrentInterface* tc);
 	
 	private:
 		struct Limits
@@ -70,7 +71,7 @@ namespace kt
 		};
 		
 		Core* core;
-		QMap<kt::TorrentInterface*,Limits> limits;
+		QMap<bt::TorrentInterface*,Limits> limits;
 	};
 
 }

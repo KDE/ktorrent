@@ -26,31 +26,10 @@
 
 namespace kt
 {
-	const double TO_KB = 1024.0;
-	const double TO_MEG = (1024.0 * 1024.0);
-	const double TO_GIG = (1024.0 * 1024.0 * 1024.0);
 	
-	KTORRENT_EXPORT QString BytesToString(bt::Uint64 bytes,int precision = -1);
-	KTORRENT_EXPORT QString KBytesPerSecToString(double speed,int precision = 1);
-	KTORRENT_EXPORT QString DurationToString(bt::Uint32 nsecs);
 	KTORRENT_EXPORT QString DataDir();
 	KTORRENT_EXPORT void ApplySettings();
 
-	/// Get the network interface which needs to be used (this will return the name e.g. eth0, wlan0 ...)
-	KTORRENT_EXPORT QString NetworkInterface(); 
-
-	/// Get the IP address of the network interface
-	KTORRENT_EXPORT QString NetworkInterfaceIPAddress(const QString & iface);
-			
-	template<class T> int CompareVal(T a,T b)
-	{
-		if (a < b)
-			return -1;
-		else if (a > b)
-			return 1;
-		else
-			return 0;
-	}
 }
 
 #endif

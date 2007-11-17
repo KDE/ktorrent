@@ -37,7 +37,7 @@ namespace kt
 	 * connect to the right signals and forget about it. After the reply has been received or
 	 * an error occurred, the appropriate signal will be emitted.
 	*/
-	class HTTPRequest : public kt::ExitOperation
+	class HTTPRequest : public bt::ExitOperation
 	{
 		Q_OBJECT
 	public:

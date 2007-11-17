@@ -114,7 +114,7 @@ namespace kt
 		}
 	}
 
-	void FileView::changeTC(kt::TorrentInterface* tc)
+	void FileView::changeTC(bt::TorrentInterface* tc)
 	{
 		if (tc == curr_tc)
 			return;
@@ -123,8 +123,8 @@ namespace kt
 		fillFileTree();
 		setEnabled(tc != 0);
 		if (tc)
-			connect(tc,SIGNAL(missingFilesMarkedDND( kt::TorrentInterface* )),
-					this,SLOT(refreshFileTree( kt::TorrentInterface* )));
+			connect(tc,SIGNAL(missingFilesMarkedDND( bt::TorrentInterface* )),
+					this,SLOT(refreshFileTree( bt::TorrentInterface* )));
 	}
 	
 	void FileView::update()
@@ -210,7 +210,7 @@ namespace kt
 
 		if (s.multi_file_torrent && item->childCount() == 0)
 		{
-			kt::TorrentFileInterface & file = ((FileTreeItem*)item)->getTorrentFile();
+			bt::TorrentFileInterface & file = ((FileTreeItem*)item)->getTorrentFile();
 			if (!file.isNull())
 			{
 				open_action->setEnabled(true);
@@ -328,7 +328,7 @@ namespace kt
 			changePriority(item->child(i), newpriority);
 	}
 	
-	void FileView::refreshFileTree(kt::TorrentInterface* tc)
+	void FileView::refreshFileTree(bt::TorrentInterface* tc)
 	{
 		if (!tc || curr_tc != tc)
 			return;

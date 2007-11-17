@@ -26,10 +26,14 @@
 
 class KMenu;
 
+namespace bt
+{
+	class TorrentInterface;
+}
 
 namespace kt
 {
-	class TorrentInterface;
+	
 	class IWFileTreeDirItem;
 
 	/**
@@ -43,14 +47,14 @@ namespace kt
 		virtual ~FileView();
 
 		void update();
-		void changeTC(kt::TorrentInterface* tc);
+		void changeTC(bt::TorrentInterface* tc);
 
 		void saveState(KSharedConfigPtr cfg);
 		void loadState(KSharedConfigPtr cfg);
 
 	private slots:
 		void showContextMenu(const QPoint & p);
-		void refreshFileTree(kt::TorrentInterface* tc);
+		void refreshFileTree(bt::TorrentInterface* tc);
 		void onDoubleClicked(QTreeWidgetItem* item,int column);
 		
 	private:
@@ -69,7 +73,7 @@ namespace kt
 		void deleteFiles();
 
 	private:
-		kt::TorrentInterface* curr_tc;
+		bt::TorrentInterface* curr_tc;
 		IWFileTreeDirItem* multi_root;
 
 		KMenu* context_menu;

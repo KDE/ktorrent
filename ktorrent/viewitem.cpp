@@ -20,10 +20,12 @@
  ***************************************************************************/
 #include <klocale.h>
 #include <kglobal.h>
-#include <interfaces/functions.h>
+#include <util/functions.h>
 #include <interfaces/torrentinterface.h>
 #include "viewitem.h"
 #include "view.h"
+
+using namespace bt;
 
 namespace kt
 {
@@ -54,7 +56,7 @@ namespace kt
 		}
 	}
 
-	int ETA(const TorrentStats & s,TorrentInterface* tc)
+	int ETA(const TorrentStats & s,bt::TorrentInterface* tc)
 	{
 		if (s.bytes_left_to_download == 0)
 		{
@@ -78,26 +80,26 @@ namespace kt
 		QColor yellow(255,174,0);
 		switch (s)
 		{
-			case kt::SEEDING :
-			case kt::DOWNLOADING:
-			case kt::ALLOCATING_DISKSPACE :
+			case bt::SEEDING :
+			case bt::DOWNLOADING:
+			case bt::ALLOCATING_DISKSPACE :
 				return QBrush(green);
-			case kt::STALLED:
-			case kt::CHECKING_DATA:
+			case bt::STALLED:
+			case bt::CHECKING_DATA:
 				return QBrush(yellow);
-			case kt::ERROR :
+			case bt::ERROR :
 				return QBrush(Qt::red);
-			case kt::NOT_STARTED :
-			case kt::STOPPED:
-			case kt::QUEUED:
-			case kt::DOWNLOAD_COMPLETE :
-			case kt::SEEDING_COMPLETE :
+			case bt::NOT_STARTED :
+			case bt::STOPPED:
+			case bt::QUEUED:
+			case bt::DOWNLOAD_COMPLETE :
+			case bt::SEEDING_COMPLETE :
 			default:
 				return pal.brush(QPalette::Text);
 		}
 	}
 
-	ViewItem::ViewItem(kt::TorrentInterface* tc,View* parent) : QTreeWidgetItem(parent),tc(tc)
+	ViewItem::ViewItem(bt::TorrentInterface* tc,View* parent) : QTreeWidgetItem(parent),tc(tc)
 	{
 		const TorrentStats & s = tc->getStats();
 		// stuff that doesn't change
@@ -194,7 +196,7 @@ namespace kt
 			percentage = perc;
 		}
 
-		float ratio = kt::ShareRatio(s);
+		float ratio = ShareRatio(s);
 		if (init || ratio != share_ratio)
 		{
 			QColor green(40,205,40);

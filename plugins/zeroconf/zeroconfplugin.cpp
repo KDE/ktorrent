@@ -19,11 +19,12 @@
  ***************************************************************************/
 #include <kgenericfactory.h>
 #include <util/log.h>
-#include <torrent/queuemanager.h>
 #include <interfaces/coreinterface.h>
 #include <interfaces/torrentinterface.h>
+#include <torrent/queuemanager.h>
 #include "zeroconfplugin.h"
 #include "torrentservice.h"
+
 		
 		
 #define NAME "Zeroconf"
@@ -50,14 +51,14 @@ namespace kt
 	void ZeroConfPlugin::load()
 	{
 		CoreInterface* core = getCore();
-		connect(core,SIGNAL(torrentAdded( kt::TorrentInterface* )),
-				this,SLOT(torrentAdded( kt::TorrentInterface* )));
-		connect(core,SIGNAL(torrentRemoved( kt::TorrentInterface* )),
-				this,SLOT(torrentRemoved( kt::TorrentInterface* )));
+		connect(core,SIGNAL(torrentAdded( bt::TorrentInterface* )),
+				this,SLOT(torrentAdded( bt::TorrentInterface* )));
+		connect(core,SIGNAL(torrentRemoved( bt::TorrentInterface* )),
+				this,SLOT(torrentRemoved( bt::TorrentInterface* )));
 		
 		// go over existing torrents and add them
-		bt::QueueManager* qman = core->getQueueManager();
-		for (QList<kt::TorrentInterface*>::iterator i = qman->begin();i != qman->end();i++)
+		kt::QueueManager* qman = core->getQueueManager();
+		for (QList<bt::TorrentInterface*>::iterator i = qman->begin();i != qman->end();i++)
 		{
 			torrentAdded(*i);
 		}
@@ -66,23 +67,23 @@ namespace kt
 	void ZeroConfPlugin::unload()
 	{
 		CoreInterface* core = getCore();
-		disconnect(core,SIGNAL(torrentAdded( kt::TorrentInterface* )),
-				   this,SLOT(torrentAdded( kt::TorrentInterface* )));
-		disconnect(core,SIGNAL(torrentRemoved( kt::TorrentInterface* )),
-				   this,SLOT(torrentRemoved( kt::TorrentInterface*)));
+		disconnect(core,SIGNAL(torrentAdded( bt::TorrentInterface* )),
+				   this,SLOT(torrentAdded( bt::TorrentInterface* )));
+		disconnect(core,SIGNAL(torrentRemoved( bt::TorrentInterface* )),
+				   this,SLOT(torrentRemoved( bt::TorrentInterface*)));
 		
-		bt::PtrMap<kt::TorrentInterface*,TorrentService>::iterator i = services.begin();
+		bt::PtrMap<bt::TorrentInterface*,TorrentService>::iterator i = services.begin();
 		while (i != services.end())
 		{
 			TorrentService* av = i->second;
-			kt::TorrentInterface* ti = i->first;
+			bt::TorrentInterface* ti = i->first;
 			ti->removePeerSource(av);
 			i++;
 		}
 		services.clear();
 	}
 	
-	void ZeroConfPlugin::torrentAdded(kt::TorrentInterface* tc)
+	void ZeroConfPlugin::torrentAdded(bt::TorrentInterface* tc)
 	{
 		if (services.contains(tc))
 			return;
@@ -97,7 +98,7 @@ namespace kt
 	}
 
 		
-	void ZeroConfPlugin::torrentRemoved(kt::TorrentInterface* tc)
+	void ZeroConfPlugin::torrentRemoved(bt::TorrentInterface* tc)
 	{
 		TorrentService* av = services.find(tc);
 		if (!av)
@@ -113,7 +114,7 @@ namespace kt
 		services.setAutoDelete(false);
 		
 		Out(SYS_ZCO|LOG_NOTICE) << "ZeroConf service destroyed " << endl;
-		bt::PtrMap<kt::TorrentInterface*,TorrentService>::iterator i = services.begin();
+		bt::PtrMap<bt::TorrentInterface*,TorrentService>::iterator i = services.begin();
 		while (i != services.end())
 		{
 			if (i->second == av)

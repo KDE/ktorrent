@@ -54,7 +54,7 @@ namespace kt
 		ChunkBar(QWidget *parent);
 		virtual ~ChunkBar();
 	
-		void setTC(kt::TorrentInterface* tc);
+		void setTC(bt::TorrentInterface* tc);
 		
 		virtual const bt::BitSet & getBitSet() const = 0;
 		virtual void drawContents(QPainter *p);
@@ -68,7 +68,7 @@ namespace kt
 		virtual void paintEvent(QPaintEvent* ev);
 		
 	protected:
-		kt::TorrentInterface* curr_tc;
+		bt::TorrentInterface* curr_tc;
 		bool show_excluded;
 		bt::BitSet curr,curr_ebs;
 		QPixmap pixmap;

@@ -49,13 +49,13 @@ namespace kt
 		 * A TorrentInterface was added
 		 * @param tc 
 		 */
-		void torrentAdded(kt::TorrentInterface* tc);
+		void torrentAdded(bt::TorrentInterface* tc);
 
 		/**
 		 * A TorrentInterface was removed
 		 * @param tc
 		 */
-		void torrentRemoved(kt::TorrentInterface* tc);
+		void torrentRemoved(bt::TorrentInterface* tc);
 	
 		/**
 		 * An AvahiService has been destroyed by the psman
@@ -63,7 +63,7 @@ namespace kt
 		void avahiServiceDestroyed(TorrentService* av);
 		
 	private:
-		bt::PtrMap<kt::TorrentInterface*,TorrentService> services;
+		bt::PtrMap<bt::TorrentInterface*,TorrentService> services;
 	};
 
 }

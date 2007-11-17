@@ -25,10 +25,14 @@
 #include <util/ptrmap.h>
 #include <ktorrent_export.h>
 
+namespace bt
+{
+	class TorrentInterface;
+}
+
 namespace kt
 {
 	class Group;
-	class TorrentInterface;
 
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
@@ -114,7 +118,7 @@ namespace kt
 		 * removes the torrent from it.
 		 * @param ti The torrent
 		 */
-		void torrentRemoved(TorrentInterface* ti);
+		void torrentRemoved(bt::TorrentInterface* ti);
 		
 		/**
 		 * Rename a group.

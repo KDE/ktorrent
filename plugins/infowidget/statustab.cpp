@@ -23,13 +23,15 @@
 #include <qcheckbox.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <interfaces/functions.h>
+#include <util/functions.h>
 #include <interfaces/torrentinterface.h>
 
 #include "downloadedchunkbar.h"
 #include "availabilitychunkbar.h"
 #include "statustab.h"
 		
+using namespace bt;
+
 namespace kt
 {
 
@@ -73,7 +75,7 @@ namespace kt
 	StatusTab::~StatusTab()
 	{}
 
-	void StatusTab::changeTC(kt::TorrentInterface* tc)
+	void StatusTab::changeTC(bt::TorrentInterface* tc)
 	{
 		if (tc == curr_tc)
 			return;
@@ -135,7 +137,7 @@ namespace kt
 		if (!curr_tc)
 			return;
 	
-		const TorrentStats & s = curr_tc->getStats();
+		const bt::TorrentStats & s = curr_tc->getStats();
 		
 		downloaded_bar->updateBar();
 		availability_bar->updateBar();
@@ -159,7 +161,7 @@ namespace kt
 		leechers->setText(QString("%1 (%2)")
 				.arg(s.leechers_connected_to).arg(s.leechers_total));
 	
-		float ratio = kt::ShareRatio(s);
+		float ratio = bt::ShareRatio(s);
 		if(!ratio_limit->hasFocus() && use_ratio_limit->isChecked())
 			maxRatioUpdate();
 		
@@ -216,7 +218,7 @@ namespace kt
 				ratio_limit->setValue(1.00f);
 			}
 			
-			float sr = kt::ShareRatio(curr_tc->getStats());
+			float sr = bt::ShareRatio(curr_tc->getStats());
 			if(sr >= 1.00f)
 			{
 				//always add 1 to max share ratio to prevent stopping if torrent is running.

@@ -27,7 +27,7 @@
 
 namespace bt
 {
-	class QueueManager;
+	class TorrentInterface;
 }
 
 namespace kt
@@ -40,8 +40,9 @@ namespace kt
 		bt::Uint64 bytes_downloaded;
 		bt::Uint64 bytes_uploaded;
 	};
-
-	class TorrentInterface;
+	
+	class QueueManager;
+	
 
 	/**
 	 * @author Joris Guisson
@@ -91,21 +92,21 @@ namespace kt
 		 * Start a torrent, takes into account the maximum number of downloads.
 		 * @param tc The TorrentControl
 	 	 */
-		virtual void start(TorrentInterface* tc) = 0;
+		virtual void start(bt::TorrentInterface* tc) = 0;
 
 		/**
 		 * Stop a torrent, may start another download if it hasn't been started.
 		 * @param tc The TorrentControl
 		 * @param user true if user stopped the torrent, false otherwise
 		 */
-		virtual void stop(TorrentInterface* tc, bool user = false) = 0;
+		virtual void stop(bt::TorrentInterface* tc, bool user = false) = 0;
 		
 		/**
 		 * Enqueue/Dequeue function. Places a torrent in queue. 
 		 * If the torrent is already in queue this will remove it from queue.
 		 * @param tc TorrentControl pointer.
 		 */
-		virtual void queue(kt::TorrentInterface* tc) = 0;
+		virtual void queue(bt::TorrentInterface* tc) = 0;
 
 		/// Get CurrentStats structure
 		virtual CurrentStats getStats() = 0;
@@ -161,7 +162,7 @@ namespace kt
 		 * @param tc The torrent
 		 * @param data_to Wether or not to delete the file data to
 		 */
-		virtual void remove(TorrentInterface* tc,bool data_to) = 0;
+		virtual void remove(bt::TorrentInterface* tc,bool data_to) = 0;
 		
 		/**
 		 * Find the next free torX dir.
@@ -182,7 +183,7 @@ namespace kt
 		virtual void setPausedState(bool pause) = 0;
 		
 		/// Get the QueueManager
-		virtual bt::QueueManager* getQueueManager() = 0;
+		virtual kt::QueueManager* getQueueManager() = 0;
 		
 	signals:
 		/**
@@ -195,30 +196,30 @@ namespace kt
 		void loadingFinished(const KUrl & url,bool success,bool canceled);
 		
 		/**
-		 * A TorrentInterface was added
+		 * A bt::TorrentInterface was added
 		 * @param tc 
 		 */
-		void torrentAdded(kt::TorrentInterface* tc);
+		void torrentAdded(bt::TorrentInterface* tc);
 
 	
 		/**
 		 * A TorrentInterface was removed
 		 * @param tc
 		 */
-		void torrentRemoved(kt::TorrentInterface* tc);
+		void torrentRemoved(bt::TorrentInterface* tc);
 		
 		/**
 		 * A TorrentInterface has finished downloading.
 		 * @param tc
 		 */
-		void finished(kt::TorrentInterface* tc);
+		void finished(bt::TorrentInterface* tc);
 
 	    	/**
 		 * Torrent download is stopped by error
 		 * @param tc TorrentInterface
 		 * @param msg Error message
 		 */
-		void torrentStoppedByError(kt::TorrentInterface* tc, QString msg);
+		void torrentStoppedByError(bt::TorrentInterface* tc, QString msg);
 
 		/**
 		 * Signal emmitted when the settings have been changed in the settings dialog.

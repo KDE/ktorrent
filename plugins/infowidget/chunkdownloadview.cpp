@@ -2,8 +2,10 @@
 #include <klocale.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/chunkdownloadinterface.h>
-#include <interfaces/functions.h>
+#include <util/functions.h>
 #include "chunkdownloadview.h"
+
+using namespace bt;
 
 namespace kt
 {

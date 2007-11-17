@@ -27,7 +27,7 @@
 #include <QGraphicsTextItem>
 #include <QGraphicsSceneMouseEvent>
 
-#include <interfaces/functions.h>
+#include <util/functions.h>
 #include <util/log.h>
 #include "weekscene.h"
 #include "schedule.h"

@@ -34,14 +34,16 @@ namespace kt
 
 	UserDownloadsGroup::~UserDownloadsGroup()
 	{}
+	
+	bool UserDownloadsGroup::isMember(TorrentInterface* tor)
+	{
+		if(!tor)
+			return false;
+	
+		const bt::TorrentStats& s = tor->getStats();
+	
+		return s.user_controlled && !s.completed;
+	}
 }
 
-bool kt::UserDownloadsGroup::isMember(TorrentInterface* tor)
-{
-	if(!tor)
-		return false;
-	
-	const kt::TorrentStats& s = tor->getStats();
-	
-	return s.user_controlled && !s.completed;
-}
+

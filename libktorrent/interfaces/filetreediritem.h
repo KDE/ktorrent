@@ -26,11 +26,13 @@
 #include <ktorrent_export.h>
 #include "filetreeitem.h"
 
-namespace kt
+namespace bt
 {
-	using namespace bt;
-	
 	class TorrentFileInterface;
+}
+
+namespace kt
+{	
 		
 	class FileTreeRootListener 
 	{
@@ -69,7 +71,7 @@ namespace kt
 		 * @param file File itself
 		 * @param options What to do when the file is deselected
 		 */
-		void insert(const QString & path,kt::TorrentFileInterface & file,DeselectOptions options);
+		void insert(const QString & path,bt::TorrentFileInterface & file,DeselectOptions options);
 
 		/**
 		 * Recursivly walk the tree to find the TorrentFile which
@@ -80,7 +82,7 @@ namespace kt
 		 * @param item Pointer to the QListViewItem
 		 * @return A reference to the TorrentFile
 		 */
-		kt::TorrentFileInterface & findTorrentFile(QTreeWidgetItem* item);
+		bt::TorrentFileInterface & findTorrentFile(QTreeWidgetItem* item);
 
 		/**
 		 * Set all items checked or not.
@@ -116,7 +118,7 @@ namespace kt
 		 * @param options What to when a file gets deselected by the user
 		 * @return A newly created FileTreeItem
 		 */
-		virtual FileTreeItem* newFileTreeItem(const QString & name,TorrentFileInterface & file,DeselectOptions options);
+		virtual FileTreeItem* newFileTreeItem(const QString & name,bt::TorrentFileInterface & file,DeselectOptions options);
 
 
 		/**

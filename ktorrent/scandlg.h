@@ -40,7 +40,7 @@ namespace kt
 		virtual ~ScanDlg();
 
 		/// Starts the scan threadvent(QC
-		void execute(kt::TorrentInterface* tc,bool silently);
+		void execute(bt::TorrentInterface* tc,bool silently);
 
 	protected:
 		/// Update progress info, runs in scan threadnted"))
@@ -64,7 +64,7 @@ namespace kt
 		void scan();
 
 	private:
-		kt::TorrentInterface* tc;
+		bt::TorrentInterface* tc;
 		QMutex mutex;
 		QTimer timer;
 		bt::Uint32 num_chunks;

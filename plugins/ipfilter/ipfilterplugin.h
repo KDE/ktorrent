@@ -39,7 +39,7 @@ namespace kt
 	 * 
 	 * This plugin will load IP ranges from specific files into KT IPBlocklist.
 	 */
-	class IPFilterPlugin : public Plugin, public kt::IPBlockingInterface
+	class IPFilterPlugin : public Plugin, public bt::IPBlockingInterface
 	{
 		Q_OBJECT
 	public:

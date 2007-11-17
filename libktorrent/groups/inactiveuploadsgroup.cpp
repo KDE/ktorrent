@@ -42,7 +42,7 @@ bool kt::InactiveUploadsGroup::isMember(TorrentInterface * tor)
 	if (!tor)
 		return false;
 
-	const kt::TorrentStats& s = tor->getStats();
+	const bt::TorrentStats& s = tor->getStats();
 
 	return !s.running && s.completed;
 }

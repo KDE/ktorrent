@@ -41,6 +41,8 @@
 
 
 K_EXPORT_COMPONENT_FACTORY(ktinfowidgetplugin,KGenericFactory<kt::InfoWidgetPlugin>("ktinfowidgetplugin"))
+		
+using namespace bt;
 
 namespace kt
 {
@@ -80,7 +82,7 @@ namespace kt
 		applySettings();
 				
 		getGUI()->addPrefPage(pref);
-		currentTorrentChanged(const_cast<kt::TorrentInterface*>(getGUI()->getCurrentTorrent()));
+		currentTorrentChanged(const_cast<bt::TorrentInterface*>(getGUI()->getCurrentTorrent()));
 		
 		file_view->loadState(KGlobal::config());
 	}
@@ -141,7 +143,7 @@ namespace kt
 			tracker_view->update();
 	}
 
-	void InfoWidgetPlugin::currentTorrentChanged(TorrentInterface* tc)
+	void InfoWidgetPlugin::currentTorrentChanged(bt::TorrentInterface* tc)
 	{
 		if (status_tab)
 			status_tab->changeTC(tc);
@@ -172,7 +174,7 @@ namespace kt
 	
 	void InfoWidgetPlugin::showPeerView(bool show)
 	{
-		kt::TorrentInterface* tc = const_cast<kt::TorrentInterface*>(getGUI()->getCurrentTorrent());
+		bt::TorrentInterface* tc = const_cast<bt::TorrentInterface*>(getGUI()->getCurrentTorrent());
 		
 		if (show && !peer_view)
 		{
@@ -192,7 +194,7 @@ namespace kt
 	
 	void InfoWidgetPlugin::showChunkView(bool show)
 	{
-		kt::TorrentInterface* tc = const_cast<kt::TorrentInterface*>(getGUI()->getCurrentTorrent());
+		bt::TorrentInterface* tc = const_cast<bt::TorrentInterface*>(getGUI()->getCurrentTorrent());
 		
 		if (show && !cd_view)
 		{
@@ -219,7 +221,7 @@ namespace kt
 			tracker_view = new TrackerView(0);
 			getGUI()->addToolWidget(tracker_view,"network-server",i18n("Trackers"),
 					GUIInterface::DOCK_BOTTOM);
-			tracker_view->changeTC(const_cast<kt::TorrentInterface*>(getGUI()->getCurrentTorrent()));
+			tracker_view->changeTC(const_cast<bt::TorrentInterface*>(getGUI()->getCurrentTorrent()));
 		}
 		else if (!show && tracker_view)
 		{
@@ -228,7 +230,7 @@ namespace kt
 		}
 	}
 	
-	void InfoWidgetPlugin::createMonitor(TorrentInterface* tc)
+	void InfoWidgetPlugin::createMonitor(bt::TorrentInterface* tc)
 	{	
 		if (monitor)
 		{

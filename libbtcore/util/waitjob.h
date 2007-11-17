@@ -48,7 +48,7 @@ namespace bt
 		 * Add an ExitOperation;
 		 * @param op The operation
 		 */
-		void addExitOperation(kt::ExitOperation* op);
+		void addExitOperation(ExitOperation* op);
 		
 		
 		/**
@@ -62,10 +62,10 @@ namespace bt
 		
 	private slots:
 		void timerDone();
-		void operationFinished(kt::ExitOperation* op);
+		void operationFinished(ExitOperation* op);
 		
 	private:
-		QList<kt::ExitOperation*> exit_ops;
+		QList<ExitOperation*> exit_ops;
 	};
 	
 	BTCORE_EXPORT void SynchronousWait(Uint32 millis);

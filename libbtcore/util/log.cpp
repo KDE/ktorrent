@@ -32,7 +32,6 @@
 #include "error.h"
 #include "autorotatelogjob.h"
 
-using namespace kt;
 
 namespace bt
 {
@@ -99,11 +98,11 @@ namespace bt
 			system(QString("gzip %1-1").arg(file).toLocal8Bit());
 		}
 
-		void setOutputFile(const QString & file)
+		void setOutputFile(const QString & file,bool rotate)
 		{
 			cleanup();
 			
-			if (bt::Exists(file))
+			if (bt::Exists(file) && rotate)
 				rotateLogs(file);
 
 			fptr = new QFile(file);
@@ -139,7 +138,7 @@ namespace bt
 					QList<LogMonitorInterface *>::iterator i = monitors.begin();
 					while (i != monitors.end())
 					{
-						kt::LogMonitorInterface* lmi = *i;
+						LogMonitorInterface* lmi = *i;
 						lmi->message(final,m_filter);
 						i++;
 					}
@@ -183,17 +182,17 @@ namespace bt
 	}
 	
 	
-	void Log::setOutputFile(const QString & file)
+	void Log::setOutputFile(const QString & file,bool rotate)
 	{
-		priv->setOutputFile(file);
+		priv->setOutputFile(file,rotate);
 	}
 
-	void Log::addMonitor(kt::LogMonitorInterface* m)
+	void Log::addMonitor(LogMonitorInterface* m)
 	{
 		priv->monitors.append(m);
 	}
 
-	void Log::removeMonitor(kt::LogMonitorInterface* m)
+	void Log::removeMonitor(LogMonitorInterface* m)
 	{
 		int index = priv->monitors.indexOf(m);
     		if (index != -1)
@@ -264,17 +263,17 @@ namespace bt
 		return global_log;
 	}
 
-	void InitLog(const QString & file)
+	void InitLog(const QString & file,bool rotate)
 	{
-		global_log.setOutputFile(file);
+		global_log.setOutputFile(file,rotate);
 	}
 
-	void AddLogMonitor(kt::LogMonitorInterface* m)
+	void AddLogMonitor(LogMonitorInterface* m)
 	{
 		global_log.addMonitor(m);
 	}
 
-	void RemoveLogMonitor(kt::LogMonitorInterface* m)
+	void RemoveLogMonitor(LogMonitorInterface* m)
 	{
 		global_log.removeMonitor(m);
 	}

@@ -33,6 +33,8 @@
 #include <torrent/globals.h>
 #include <util/log.h>
 
+using namespace bt;
+
 namespace kt
 {
 	TrackerView::TrackerView(QWidget *parent)

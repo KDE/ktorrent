@@ -38,15 +38,15 @@ namespace kt
 	class PeerViewItem : public QTreeWidgetItem
 	{
 	public:
-		PeerViewItem(PeerView* pv,PeerInterface* peer);
+		PeerViewItem(PeerView* pv,bt::PeerInterface* peer);
 		virtual ~PeerViewItem();
 
 		void update(bool init = false);
 
 		bool operator < (const QTreeWidgetItem & other) const;
 	private:
-		PeerInterface* peer;
-		PeerInterface::Stats stats;
+		bt::PeerInterface* peer;
+		bt::PeerInterface::Stats stats;
 	};
 
 
@@ -61,10 +61,10 @@ namespace kt
 		virtual ~PeerView();
 
 		/// A peer has been added
-		void peerAdded(PeerInterface* peer);
+		void peerAdded(bt::PeerInterface* peer);
 
 		/// A peer has been removed
-		void peerRemoved(PeerInterface* peer);
+		void peerRemoved(bt::PeerInterface* peer);
 
 		/// Check to see if the GUI needs to be updated
 		void update();
@@ -75,7 +75,7 @@ namespace kt
 		void saveState(KSharedConfigPtr cfg);
 		void loadState(KSharedConfigPtr cfg);
 	private:
-		bt::PtrMap<PeerInterface*,PeerViewItem> items;
+		bt::PtrMap<bt::PeerInterface*,PeerViewItem> items;
 	};
 }
 

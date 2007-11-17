@@ -22,6 +22,113 @@ set(libbtcore_SRC
 	bcodec/bnode.cpp  
 	bcodec/value.cpp
 
+	net/address.cpp  
+	net/bufferedsocket.cpp  
+	net/portlist.cpp  
+	net/socket.cpp  
+	net/socketmonitor.cpp  
+	net/speed.cpp
+	net/uploadthread.cpp
+	net/downloadthread.cpp
+	net/networkthread.cpp
+	net/socketgroup.cpp
+	
+	mse/bigint.cpp  
+	mse/functions.cpp  
+	mse/rc4encryptor.cpp  
+	mse/streamsocket.cpp
+	mse/encryptedauthenticate.cpp
+	mse/encryptedserverauthenticate.cpp
+	
+	peer/authenticatebase.cpp
+	peer/authenticate.cpp
+	peer/serverauthenticate.cpp
+	peer/authenticationmonitor.cpp
+	peer/chunkcounter.cpp
+	peer/peerid.cpp
+	peer/peer.cpp
+	peer/peermanager.cpp
+	peer/peerdownloader.cpp
+	peer/peeruploader.cpp
+	peer/packetwriter.cpp
+	peer/packetreader.cpp
+	peer/utpex.cpp
+
+	download/piece.cpp
+	download/request.cpp
+	download/packet.cpp
+	download/httpdownloader.cpp
+	download/chunkdownload.cpp
+	download/chunkselector.cpp
+	download/downloader.cpp
+
+	interfaces/piecedownloader.cpp
+	interfaces/peerinterface.cpp
+	interfaces/peersource.cpp
+	interfaces/torrentinterface.cpp
+	interfaces/torrentfileinterface.cpp
+	interfaces/trackerslist.cpp
+	interfaces/logmonitorinterface.cpp
+	interfaces/ipblockinginterface.cpp
+	interfaces/exitoperation.cpp
+	interfaces/chunkdownloadinterface.cpp
+	interfaces/monitorinterface.cpp
+	interfaces/queuemanagerinterface.cpp
+
+	torrent/globals.cpp
+	torrent/server.cpp
+	torrent/torrent.cpp
+	torrent/torrentfile.cpp
+	torrent/ipblocklist.cpp
+	torrent/peersourcemanager.cpp
+	torrent/uploader.cpp
+	torrent/timeestimator.cpp
+	torrent/statsfile.cpp
+	torrent/choker.cpp
+	torrent/advancedchokealgorithm.cpp
+	torrent/torrentcontrol.cpp
+	torrent/torrentcreator.cpp
+
+	dht/announcetask.cpp  
+	dht/dht.cpp                
+	dht/kclosestnodessearch.cpp  
+	dht/nodelookup.cpp  
+	dht/rpcmsg.cpp     
+	dht/taskmanager.cpp
+	dht/database.cpp      
+	dht/dhttrackerbackend.cpp  
+	dht/key.cpp                  
+	dht/pack.cpp        
+	dht/rpcserver.cpp
+	dht/dhtbase.cpp       
+	dht/kbucket.cpp            
+	dht/node.cpp                 
+	dht/rpccall.cpp     
+	dht/task.cpp
+
+	diskio/cache.cpp      
+	diskio/chunk.cpp         
+	diskio/dndfile.cpp         
+	diskio/singlefilecache.cpp
+	diskio/cachefile.cpp  
+	diskio/chunkmanager.cpp  
+	diskio/multifilecache.cpp
+	diskio/preallocationthread.cpp
+
+	tracker/httptracker.cpp  
+	tracker/tracker.cpp  
+	tracker/udptracker.cpp  
+	tracker/udptrackersocket.cpp
+	
+	datachecker/datachecker.cpp          
+	datachecker/datacheckerthread.cpp  
+	datachecker/singledatachecker.cpp
+	datachecker/datacheckerlistener.cpp  
+	datachecker/multidatachecker.cpp
+	
+	migrate/cachemigrate.cpp  
+	migrate/ccmigrate.cpp  
+	migrate/migrate.cpp
 )
 
 # set(libbtcore_UI )

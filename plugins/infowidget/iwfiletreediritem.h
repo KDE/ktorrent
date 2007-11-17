@@ -56,21 +56,21 @@ namespace kt
 		* Update the preview information.
 		* @param tc The TorrentInterface object
 		*/
-		void updatePreviewInformation(kt::TorrentInterface* tc);
+		void updatePreviewInformation(bt::TorrentInterface* tc);
 
 		/**
 		 * Update the downloaded percentage information.
 		 */
 		void updatePercentageInformation();
 
-		Priority updatePriorityInformation(kt::TorrentInterface* tc);
+		Priority updatePriorityInformation(bt::TorrentInterface* tc);
 		
 		/**
 		 * Update the DND information of each file item.
 		*/
 		void updateDNDInformation();
 
-		virtual kt::FileTreeItem* newFileTreeItem(const QString & name, kt::TorrentFileInterface & file,kt::DeselectOptions options);
+		virtual kt::FileTreeItem* newFileTreeItem(const QString & name, bt::TorrentFileInterface & file,kt::DeselectOptions options);
 		virtual kt::FileTreeDirItem* newFileTreeDirItem(const QString & subdir);
 	};
 }

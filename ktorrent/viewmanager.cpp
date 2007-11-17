@@ -41,8 +41,8 @@ namespace kt
 	{
 		View* v = new View(core,parent);
 		views.append(v);
-		connect(v,SIGNAL(currentTorrentChanged(View* ,kt::TorrentInterface* )),
-			this,SLOT(onCurrentTorrentChanged(View* ,kt::TorrentInterface* )));
+		connect(v,SIGNAL(currentTorrentChanged(View* ,bt::TorrentInterface* )),
+			this,SLOT(onCurrentTorrentChanged(View* ,bt::TorrentInterface* )));
 		return v;
 	}
 		
@@ -141,18 +141,18 @@ namespace kt
 
 	}
 	
-	const kt::TorrentInterface* ViewManager::getCurrentTorrent() const
+	const bt::TorrentInterface* ViewManager::getCurrentTorrent() const
 	{
 		return current ? current->getCurrentTorrent() : 0;
 	}
 	
-	kt::TorrentInterface* ViewManager::getCurrentTorrent()
+	bt::TorrentInterface* ViewManager::getCurrentTorrent()
 	{
 		return current ? current->getCurrentTorrent() : 0;
 	}
 
 		
-	void ViewManager::getSelection(QList<kt::TorrentInterface*> & sel)
+	void ViewManager::getSelection(QList<bt::TorrentInterface*> & sel)
 	{
 		if (current)
 			current->getSelection(sel);
@@ -245,7 +245,7 @@ namespace kt
 		}
 	}
 
-	void ViewManager::onCurrentTorrentChanged(View* v,kt::TorrentInterface* tc)
+	void ViewManager::onCurrentTorrentChanged(View* v,bt::TorrentInterface* tc)
 	{
 		if (v == current)
 			gui->currentTorrentChanged(tc);

@@ -80,23 +80,23 @@ namespace kt
 		 * Put the current selection of the current view in a list.
 		 * @param sel The list to put it in
 		 */
-		void getSelection(QList<kt::TorrentInterface*> & sel);
+		void getSelection(QList<bt::TorrentInterface*> & sel);
 		
 		/// Get the current view
 		View* getCurrentView() {return current;}
 
 		/// Get the current torrent
-		const kt::TorrentInterface* getCurrentTorrent() const;
+		const bt::TorrentInterface* getCurrentTorrent() const;
 		
 		/// Get the current torrent (non const version)
-		kt::TorrentInterface* getCurrentTorrent();
+		bt::TorrentInterface* getCurrentTorrent();
 
 	public slots:
 		void onCurrentTabChanged(QWidget* tab);
 		void onCurrentGroupChanged(kt::Group* g);
 		void onGroupRenamed(kt::Group* g);
 		void onGroupRemoved(kt::Group* g);
-		void onCurrentTorrentChanged(View* v,kt::TorrentInterface* tc);
+		void onCurrentTorrentChanged(View* v,bt::TorrentInterface* tc);
 
 	private:
 		virtual bool closeAllowed(QWidget* w);

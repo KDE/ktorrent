@@ -127,7 +127,7 @@ void SpdTabPage::GatherDlSpeed(Plugin * pPlug)
 
 void SpdTabPage::GatherPeersSpeed(Plugin * pPlug)
 {
-	bt::QueueManager * qm_iface = pPlug -> getCore() -> getQueueManager();
+	kt::QueueManager * qm_iface = pPlug -> getCore() -> getQueueManager();
 	
 	if(qm_iface == 0)
 	{
@@ -139,7 +139,7 @@ void SpdTabPage::GatherPeersSpeed(Plugin * pPlug)
 	
 	l_up_spd = l_dn_spd = s_dn_spd = l_cnt = s_cnt = 0;
 	
-	for(QList< kt::TorrentInterface *>::iterator it = qm_iface -> begin(); it != qm_iface -> end(); it++)
+	for(QList< bt::TorrentInterface *>::iterator it = qm_iface -> begin(); it != qm_iface -> end(); it++)
 	{	
 		bt::TorrentControl * tctl = dynamic_cast<bt::TorrentControl *>(*it);
 		if(!tctl)
@@ -156,7 +156,7 @@ void SpdTabPage::GatherPeersSpeed(Plugin * pPlug)
 				continue;
 			}
 			
-			const kt::PeerInterface::Stats p_stats = (*p_it) -> getStats();
+			const bt::PeerInterface::Stats p_stats = (*p_it) -> getStats();
 			
 			if(p_stats.perc_of_file >= 100)
 			{

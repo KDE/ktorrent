@@ -25,9 +25,13 @@
 #include <interfaces/peersource.h>
 #include "ui_addpeersdlg.h"
 
-namespace kt
+namespace bt
 {
 	class TorrentInterface;
+}
+
+namespace kt
+{
 	class ManualPeerSource;
 
 	/**
@@ -37,14 +41,14 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		AddPeersDlg(TorrentInterface* tc,QWidget* parent);
+		AddPeersDlg(bt::TorrentInterface* tc,QWidget* parent);
 		virtual ~AddPeersDlg();
 
 	private slots:
 		void addPressed();
 		
 	private:
-		TorrentInterface* tc;
+		bt::TorrentInterface* tc;
 		ManualPeerSource* mps;
 	};
 

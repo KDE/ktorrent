@@ -33,11 +33,15 @@ namespace KIO
 	class Job;
 }
 
+namespace bt
+{
+	class TorrentInterface;
+}
+
 namespace kt
 {
 	class PrefPageInterface;
 	class Plugin;
-	class TorrentInterface;
 	class GUIInterface;
 
 	enum Position
@@ -58,7 +62,7 @@ namespace kt
 		ViewListener() {}
 		virtual ~ViewListener() {}
 		
-		virtual void currentTorrentChanged(TorrentInterface* tc) = 0;
+		virtual void currentTorrentChanged(bt::TorrentInterface* tc) = 0;
 	};
 	
 	/**
@@ -184,13 +188,13 @@ namespace kt
 		virtual void removeToolWidget(QWidget* w) = 0;
 
 		/// Get the current torrent.
-		virtual const TorrentInterface* getCurrentTorrent() const = 0;
+		virtual const bt::TorrentInterface* getCurrentTorrent() const = 0;
 	
 		/// Show a scan dialog, and start the data scan
-		virtual void dataScan(kt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption) = 0;
+		virtual void dataScan(bt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption) = 0;
 
 		/// Select the files to download, return false if users cancels
-		virtual bool selectFiles(kt::TorrentInterface* tc,bool* user,bool* start_torrent) = 0;
+		virtual bool selectFiles(bt::TorrentInterface* tc,bool* user,bool* start_torrent) = 0;
 
 		/// Show an error message box
 		virtual void errorMsg(const QString & err) = 0;
@@ -209,7 +213,7 @@ namespace kt
 		 * Notifies all view listeners of the change in the current downloading TorrentInterface
 		 * @param tc Pointer to current TorrentInterface
 		 */
-		void notifyViewListeners(TorrentInterface* tc);
+		void notifyViewListeners(bt::TorrentInterface* tc);
 	};
 
 }

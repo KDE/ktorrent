@@ -26,7 +26,7 @@
 #include <torrent/globals.h>
 #include "filetreediritem.h"
 #include "filetreeitem.h"
-#include "torrentfileinterface.h"
+#include <interfaces/torrentfileinterface.h>
 #include <torrent/torrentfile.h>
 
 using namespace bt;
@@ -65,7 +65,7 @@ namespace kt
 	{
 	}
 
-	void FileTreeDirItem::insert(const QString & path,kt::TorrentFileInterface & file,DeselectOptions options)
+	void FileTreeDirItem::insert(const QString & path,bt::TorrentFileInterface & file,DeselectOptions options)
 	{
 		size += file.getSize();
 		setText(1,BytesToString(size));

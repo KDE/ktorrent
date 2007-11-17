@@ -60,7 +60,7 @@ namespace kt
 	{
 		UpdateCurrentTime();
 		qman = new QueueManager();
-		connect(qman, SIGNAL(lowDiskSpace(kt::TorrentInterface*,bool)), this, SLOT(onLowDiskSpace(kt::TorrentInterface*,bool)));
+		connect(qman, SIGNAL(lowDiskSpace(bt::TorrentInterface*,bool)), this, SLOT(onLowDiskSpace(bt::TorrentInterface*,bool)));
 
 		data_dir = Settings::tempDir().path();
 		bool dd_not_exist = !bt::Exists(data_dir);
@@ -418,14 +418,14 @@ namespace kt
 		}
 	}
 
-	void Core::start(kt::TorrentInterface* tc)
+	void Core::start(bt::TorrentInterface* tc)
 	{
-		kt::TorrentStartResponse reason = qman->start(tc);
+		TorrentStartResponse reason = qman->start(tc);
 		if (reason == NOT_ENOUGH_DISKSPACE || reason == QM_LIMITS_REACHED)
 			canNotStart(tc,reason);
 	}
 
-	void Core::stop(TorrentInterface* tc, bool user)
+	void Core::stop(bt::TorrentInterface* tc, bool user)
 	{
 		qman->stop(tc, user);
 	}
@@ -494,11 +494,11 @@ namespace kt
 		qman->orderQueue();
 	}
 
-	void Core::remove(TorrentInterface* tc,bool data_to)
+	void Core::remove(bt::TorrentInterface* tc,bool data_to)
 	{
 		try
 		{
-			const TorrentStats & s = tc->getStats();
+			const bt::TorrentStats & s = tc->getStats();
 			removed_bytes_up += s.session_bytes_uploaded;
 			removed_bytes_down += s.session_bytes_downloaded;
 			stop(tc);
@@ -537,7 +537,7 @@ namespace kt
 		qman->setMaxSeeds(max);
 	}
 
-	void Core::torrentFinished(kt::TorrentInterface* tc)
+	void Core::torrentFinished(bt::TorrentInterface* tc)
 	{
 		if (!keep_seeding)
 			tc->stop(false);
@@ -601,12 +601,12 @@ namespace kt
 			
 			qman->setPausedState(true);
 			
-			QList<kt::TorrentInterface*> succes;
+			QList<bt::TorrentInterface*> succes;
 
-			QList<kt::TorrentInterface *>::iterator i = qman->begin();
+			QList<bt::TorrentInterface *>::iterator i = qman->begin();
 			while (i != qman->end())
 			{
-				kt::TorrentInterface* tc = *i;
+				bt::TorrentInterface* tc = *i;
 				if (!tc->changeDataDir(nd))
 				{
 					// failure time to roll back all the succesfull tc's
@@ -637,11 +637,11 @@ namespace kt
 		}
 	}
 
-	void Core::rollback(const QList<kt::TorrentInterface*> & succes)
+	void Core::rollback(const QList<bt::TorrentInterface*> & succes)
 	{
 		Out() << "Error, rolling back" << endl;
 		update_timer.stop();
-		QList<kt::TorrentInterface*>::const_iterator i = succes.begin();
+		QList<bt::TorrentInterface*>::const_iterator i = succes.begin();
 		while (i != succes.end())
 		{
 			(*i)->rollback();
@@ -665,12 +665,12 @@ namespace kt
 		bt::UpdateCurrentTime();
 		AuthenticationMonitor::instance().update();
 		
-		QList<kt::TorrentInterface *>::iterator i = qman->begin();
+		QList<bt::TorrentInterface *>::iterator i = qman->begin();
 		//Uint32 down_speed = 0;
 		while (i != qman->end())
 		{
 			bool finished = false;
-			kt::TorrentInterface* tc = *i;
+			bt::TorrentInterface* tc = *i;
 			bool dummy = false;
 			if (tc->getStats().running || tc->isCheckingData(dummy))
 			{
@@ -704,7 +704,7 @@ namespace kt
 
 			mktor.saveTorrent(output_file);
 			tdir = findNewTorrentDir();
-			kt::TorrentInterface* tc = mktor.makeTC(tdir);
+			bt::TorrentInterface* tc = mktor.makeTC(tdir);
 			if (tc)
 			{
 				connectSignals(tc);
@@ -732,9 +732,9 @@ namespace kt
 		Uint32 speed_dl = 0, speed_ul = 0;
 
 
-		for ( QList<kt::TorrentInterface *>::iterator i = qman->begin(); i != qman->end(); ++i )
+		for ( QList<bt::TorrentInterface *>::iterator i = qman->begin(); i != qman->end(); ++i )
 		{
-			kt::TorrentInterface* tc = *i;
+			bt::TorrentInterface* tc = *i;
 			const TorrentStats & s = tc->getStats();
 			speed_dl += s.download_rate;
 			speed_ul += s.upload_rate;
@@ -762,7 +762,7 @@ namespace kt
 		}
 	}
 
-	void Core::slotStoppedByError(kt::TorrentInterface* tc, QString msg)
+	void Core::slotStoppedByError(bt::TorrentInterface* tc, QString msg)
 	{
 		emit torrentStoppedByError(tc, msg);
 	}
@@ -777,15 +777,15 @@ namespace kt
 		return qman->count() - qman->getNumRunning();
 	}
 
-	bt::QueueManager* Core::getQueueManager()
+	kt::QueueManager* Core::getQueueManager()
 	{
 		return this->qman;
 	}
 
-	void Core::torrentSeedAutoStopped( kt::TorrentInterface * tc, kt::AutoStopReason reason)
+	void Core::torrentSeedAutoStopped( bt::TorrentInterface * tc, AutoStopReason reason)
 	{
 		qman->startNext();
-		if (reason ==  kt::MAX_RATIO_REACHED)
+		if (reason ==  MAX_RATIO_REACHED)
 			maxShareRatioReached(tc);
 		else
 			maxSeedTimeReached(tc);
@@ -796,12 +796,12 @@ namespace kt
 		qman->setPausedState(pause);
 	}
 
-	void Core::queue(kt::TorrentInterface* tc)
+	void Core::queue(bt::TorrentInterface* tc)
 	{
 		qman->queue(tc);
 	}
 
-	void Core::aboutToBeStarted(kt::TorrentInterface* tc,bool & ret)
+	void Core::aboutToBeStarted(bt::TorrentInterface* tc,bool & ret)
 	{
 		ret = true;
 		
@@ -894,30 +894,30 @@ namespace kt
 		
 	}
 
-	void Core::emitCorruptedData(kt::TorrentInterface* tc)
+	void Core::emitCorruptedData(bt::TorrentInterface* tc)
 	{
 		corruptedData(tc);
 		
 	}
 
-	void Core::connectSignals(kt::TorrentInterface* tc)
+	void Core::connectSignals(bt::TorrentInterface* tc)
 	{
-		connect(tc,SIGNAL(finished(kt::TorrentInterface*)),
-				this,SLOT(torrentFinished(kt::TorrentInterface* )));
-		connect(tc, SIGNAL(stoppedByError(kt::TorrentInterface*, QString )),
-				this, SLOT(slotStoppedByError(kt::TorrentInterface*, QString )));
-		connect(tc, SIGNAL(seedingAutoStopped( kt::TorrentInterface*,kt::AutoStopReason )),
-				this, SLOT(torrentSeedAutoStopped( kt::TorrentInterface*,kt::AutoStopReason )));
-		connect(tc,SIGNAL(aboutToBeStarted( kt::TorrentInterface*,bool & )),
-				this, SLOT(aboutToBeStarted( kt::TorrentInterface*,bool & )));
-		connect(tc,SIGNAL(corruptedDataFound( kt::TorrentInterface* )),
-				this, SLOT(emitCorruptedData( kt::TorrentInterface* )));
-		connect(qman, SIGNAL(queuingNotPossible( kt::TorrentInterface* )),
-				this, SLOT(enqueueTorrentOverMaxRatio( kt::TorrentInterface* )));
-		connect(qman, SIGNAL(lowDiskSpace(kt::TorrentInterface*, bool)),
-				this, SLOT(onLowDiskSpace(kt::TorrentInterface*, bool)));
-		connect(tc, SIGNAL(needDataCheck(kt::TorrentInterface*)),
-				this, SLOT(autoCheckData(kt::TorrentInterface*)));
+		connect(tc,SIGNAL(finished(bt::TorrentInterface*)),
+				this,SLOT(torrentFinished(bt::TorrentInterface* )));
+		connect(tc, SIGNAL(stoppedByError(bt::TorrentInterface*, QString )),
+				this, SLOT(slotStoppedByError(bt::TorrentInterface*, QString )));
+		connect(tc, SIGNAL(seedingAutoStopped( bt::TorrentInterface*,bt::AutoStopReason )),
+				this, SLOT(torrentSeedAutoStopped( bt::TorrentInterface*,bt::AutoStopReason )));
+		connect(tc,SIGNAL(aboutToBeStarted( bt::TorrentInterface*,bool & )),
+				this, SLOT(aboutToBeStarted( bt::TorrentInterface*,bool & )));
+		connect(tc,SIGNAL(corruptedDataFound( bt::TorrentInterface* )),
+				this, SLOT(emitCorruptedData( bt::TorrentInterface* )));
+		connect(qman, SIGNAL(queuingNotPossible( bt::TorrentInterface* )),
+				this, SLOT(enqueueTorrentOverMaxRatio( bt::TorrentInterface* )));
+		connect(qman, SIGNAL(lowDiskSpace(bt::TorrentInterface*, bool)),
+				this, SLOT(onLowDiskSpace(bt::TorrentInterface*, bool)));
+		connect(tc, SIGNAL(needDataCheck(bt::TorrentInterface*)),
+				this, SLOT(autoCheckData(bt::TorrentInterface*)));
 	}
 
 	float Core::getGlobalMaxShareRatio() const
@@ -925,12 +925,12 @@ namespace kt
 		return Settings::maxRatio();
 	}
 
-	void Core::enqueueTorrentOverMaxRatio(kt::TorrentInterface* tc)
+	void Core::enqueueTorrentOverMaxRatio(bt::TorrentInterface* tc)
 	{
 		emit queuingNotPossible(tc);
 	}
 
-	void Core::autoCheckData(kt::TorrentInterface* tc)
+	void Core::autoCheckData(bt::TorrentInterface* tc)
 	{
 		Out(SYS_GEN|LOG_IMPORTANT) << "Doing an automatic data check on " 
 					<< tc->getStats().torrent_name << endl;
@@ -938,7 +938,7 @@ namespace kt
 		gui->dataScan(tc,false,true,QString::null);
 	}
 
-	void Core::doDataCheck(kt::TorrentInterface* tc)
+	void Core::doDataCheck(bt::TorrentInterface* tc)
 	{
 		bool dummy = false;
 		if (tc->isCheckingData(dummy))
@@ -947,7 +947,7 @@ namespace kt
 		gui->dataScan(tc,false,false,i18n("Checking Data Integrity"));
 	}
 
-	void Core::onLowDiskSpace(kt::TorrentInterface * tc, bool stopped)
+	void Core::onLowDiskSpace(bt::TorrentInterface * tc, bool stopped)
 	{
 		emit lowDiskSpace(tc, stopped);
 	}
