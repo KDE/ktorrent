@@ -2,9 +2,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 set(libktorrent_SRC 
-	util/mmapfile.cpp
-
-	
+	util/mmapfile.cpp	
 	
 	interfaces/functions.cpp
 	interfaces/plugin.cpp
@@ -14,22 +12,8 @@ set(libktorrent_SRC
 	interfaces/filetreeitem.cpp
 	interfaces/filetreediritem.cpp
 	
-	
-
-	
-	
-
-	
-
-
-
-	
-	
 	torrent/queuemanager.cpp
 	
-
-	
-		
 	groups/group.cpp
 	groups/torrentgroup.cpp
 	groups/allgroup.cpp
@@ -46,8 +30,6 @@ set(libktorrent_SRC
 	groups/userdownloadsgroup.cpp  
 	groups/useruploadsgroup.cpp
 	groups/groupmanager.cpp
-	
-	
 
 	ktorrent.kcfg
 	labelviewitem.ui
