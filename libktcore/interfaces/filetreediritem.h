@@ -23,7 +23,7 @@
 #include <qtreewidget.h>
 #include <util/constants.h>
 #include <util/ptrmap.h>
-#include <ktorrent_export.h>
+#include <ktcore_export.h>
 #include "filetreeitem.h"
 
 namespace bt
@@ -47,7 +47,7 @@ namespace kt
 	 *
 	 * Directory item the file tree showing the files in a multifile torrent
 	 */
-	class KTORRENT_EXPORT FileTreeDirItem : public QTreeWidgetItem
+	class KTCORE_EXPORT FileTreeDirItem : public QTreeWidgetItem
 	{
 	protected:
 		QString name;

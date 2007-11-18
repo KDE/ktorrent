@@ -22,7 +22,7 @@
 
 #include <qstring.h>
 #include <qicon.h>
-#include <ktorrent_export.h>
+#include <ktcore_export.h>
 
 namespace bt
 {
@@ -42,7 +42,7 @@ namespace kt
 	 * isMember function, but can also provide save and load
 	 * functionality.
 	 */
-	class KTORRENT_EXPORT Group
+	class KTCORE_EXPORT Group
 	{
 	protected:
 		QString name;

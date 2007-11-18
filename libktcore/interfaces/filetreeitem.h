@@ -21,7 +21,7 @@
 #define KTFILETREEITEM_H
 
 #include <qtreewidget.h>
-#include <ktorrent_export.h>
+#include <ktcore_export.h>
 #include <util/constants.h>
 
 using namespace bt;
@@ -48,7 +48,7 @@ namespace kt
 	 * This is derived from QCheckListItem, if the user checks or unchecks the box,
 	 * wether or not to download a file will be changed.
 	 */
-	class KTORRENT_EXPORT FileTreeItem : public QTreeWidgetItem
+	class KTCORE_EXPORT FileTreeItem : public QTreeWidgetItem
 	{
 	
 	public:

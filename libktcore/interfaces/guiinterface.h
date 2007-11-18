@@ -21,7 +21,7 @@
 #define KTGUIINTERFACE_H
 
 #include <qlist.h>
-#include <ktorrent_export.h>
+#include <ktcore_export.h>
 
 class QWidget;
 class QString;
@@ -56,7 +56,7 @@ namespace kt
 	 * Small interface for classes who want to know when
 	 * current torrent in the gui changes.
 	 */
-	class KTORRENT_EXPORT ViewListener
+	class KTCORE_EXPORT ViewListener
 	{
 	public:
 		ViewListener() {}
@@ -70,7 +70,7 @@ namespace kt
 	 * That way they can be notified of close requests.
 	 * Not providing this interface in addTabPage means the tab cannot be closed.
 	*/
-	class KTORRENT_EXPORT CloseTabListener
+	class KTCORE_EXPORT CloseTabListener
 	{
 	public:
 		CloseTabListener() {}
@@ -86,7 +86,7 @@ namespace kt
 	/**
 	 * Base class for the status bar
 	 * */
-	class KTORRENT_EXPORT StatusBarInterface
+	class KTCORE_EXPORT StatusBarInterface
 	{
 	public:
 		virtual ~StatusBarInterface() {}
@@ -108,7 +108,7 @@ namespace kt
 	 *
 	 * This interface allows plugins and others to modify the GUI.
 	*/
-	class KTORRENT_EXPORT GUIInterface
+	class KTCORE_EXPORT GUIInterface
 	{
 		QList<ViewListener*> listeners;
 	public:

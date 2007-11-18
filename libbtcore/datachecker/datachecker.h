@@ -21,7 +21,7 @@
 #define BTDATACHECKER_H
 
 #include <util/bitset.h>
-#include <ktorrent_export.h>
+#include <btcore_export.h>
 #include "datacheckerlistener.h"
 
 class QString;
@@ -38,7 +38,7 @@ namespace bt
 	 * Checks which data is downloaded, given a torrent and a file or directory containing
 	 * files of the torrent.
 	*/
-	class KTORRENT_EXPORT DataChecker
+	class BTCORE_EXPORT DataChecker
 	{
 	public:
 		DataChecker();	

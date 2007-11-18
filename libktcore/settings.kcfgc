@@ -3,6 +3,6 @@ File=ktorrent.kcfg
 ClassName=Settings
 Singleton=true
 Mutators=true
-Visibility=KTORRENT_EXPORT
-IncludeFiles=ktorrent_export.h
+Visibility=KTCORE_EXPORT
+IncludeFiles=ktcore_export.h
 # will create the necessary code for setting those variables

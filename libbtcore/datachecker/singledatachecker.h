@@ -30,7 +30,7 @@ namespace bt
 	 * 
 	 * Data checker for single file torrents.
 	 */
-	class KTORRENT_EXPORT SingleDataChecker : public DataChecker
+	class BTCORE_EXPORT SingleDataChecker : public DataChecker
 	{
 	public:
 		SingleDataChecker();

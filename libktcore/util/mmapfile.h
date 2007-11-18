@@ -23,7 +23,7 @@
 
 #include <qstring.h>
 #include <util/constants.h>
-#include <ktorrent_export.h>
+#include <ktcore_export.h>
 
 namespace bt
 {
@@ -35,7 +35,7 @@ namespace bt
 	 * This class allows to access memory mapped files. It's pretty similar to
 	 * File.
 	*/
-	class KTORRENT_EXPORT MMapFile
+	class KTCORE_EXPORT MMapFile
 	{
 	public:
 		MMapFile();

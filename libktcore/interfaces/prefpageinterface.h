@@ -21,7 +21,7 @@
 #define PREFPAGEINTERFACE_H
 
 #include <QWidget>
-#include <ktorrent_export.h>
+#include <ktcore_export.h>
 
 class KConfigSkeleton;
 
@@ -33,7 +33,7 @@ namespace kt
 	 * 
 	 * This interface allows plugins and others to add their own pages in Configuration dialog.
 	 */
-	class KTORRENT_EXPORT PrefPageInterface : public QWidget
+	class KTCORE_EXPORT PrefPageInterface : public QWidget
 	{
 		Q_OBJECT
 	public:

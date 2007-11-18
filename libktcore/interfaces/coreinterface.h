@@ -23,7 +23,7 @@
 #include <kurl.h>
 #include <qobject.h>
 #include <util/constants.h>
-#include <ktorrent_export.h>
+#include <ktcore_export.h>
 
 namespace bt
 {
@@ -52,7 +52,7 @@ namespace kt
 	 * the applications core, the core is responsible for managing all
 	 * TorrentControl objects.
 	*/
-	class KTORRENT_EXPORT CoreInterface : public QObject
+	class KTCORE_EXPORT CoreInterface : public QObject
 	{
 		Q_OBJECT
 	public:

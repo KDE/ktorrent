@@ -29,7 +29,7 @@ namespace bt
 	/**
 	@author Joris Guisson
 	*/
-	class KTORRENT_EXPORT MultiDataChecker : public DataChecker
+	class BTCORE_EXPORT MultiDataChecker : public DataChecker
 	{
 	public:
 		MultiDataChecker();

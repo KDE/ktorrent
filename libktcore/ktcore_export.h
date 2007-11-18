@@ -24,19 +24,17 @@
 #include <kdemacros.h>
 
 #ifndef KTCORE_EXPORT
-# if defined(MAKE_KTORRENT_LIB)
+# if defined(MAKE_KTCORE_LIB)
    /* We are building this library */ 
 #  define KTCORE_EXPORT KDE_EXPORT
 # else
    /* We are using this library */ 
 #  define KTCORE_EXPORT KDE_IMPORT
 # endif
+#endif
 
 # ifndef KTCORE_EXPORT_DEPRECATED
 #  define KTCORE_EXPORT_DEPRECATED KDE_DEPRECATED KTCORE_EXPORT
 # endif
-#endif
-
-//#define KTCORE_EXPORT KDE_EXPORT
 
 #endif

@@ -26,7 +26,7 @@
 #include <qlinkedlist.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/queuemanagerinterface.h>
-#include <ktorrent_export.h>
+#include <ktcore_export.h>
 
 namespace bt
 {
@@ -52,7 +52,7 @@ namespace kt
 	 * @author Ivan Vasic
 	 * @brief This class contains list of all TorrentControls and is responsible for starting/stopping them
 	 */
-	class KTORRENT_EXPORT QueueManager : public QObject,public bt::QueueManagerInterface
+	class KTCORE_EXPORT QueueManager : public QObject,public bt::QueueManagerInterface
 	{
 		Q_OBJECT
 				

@@ -23,7 +23,7 @@
 #include <qstring.h>
 #include <klocale.h>
 #include <util/ptrmap.h>
-#include <ktorrent_export.h>
+#include <ktcore_export.h>
 
 namespace bt
 {
@@ -39,7 +39,7 @@ namespace kt
 	 * 
 	 * Manages all user created groups and the standard groups.
 	*/
-	class KTORRENT_EXPORT GroupManager : public bt::PtrMap<QString,Group> 
+	class KTCORE_EXPORT GroupManager : public bt::PtrMap<QString,Group> 
 	{
 		bt::PtrMap<QString,Group> default_groups;
 		

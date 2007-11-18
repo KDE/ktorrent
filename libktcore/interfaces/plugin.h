@@ -21,7 +21,7 @@
 #define KTPLUGIN_H
 
 #include <ktversion.h>
-#include <ktorrent_export.h>
+#include <ktcore_export.h>
 #include <kparts/plugin.h>
 
 namespace bt
@@ -46,7 +46,7 @@ namespace kt
 	 * (setting an int to 0 is ok, creating widgets isn't).
 	 * Only the name, author and description may be set in the constructor.
 	 */
-	class KTORRENT_EXPORT Plugin : public KParts::Plugin
+	class KTCORE_EXPORT Plugin : public KParts::Plugin
 	{
 		Q_OBJECT
 	public:

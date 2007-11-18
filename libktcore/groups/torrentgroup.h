@@ -32,7 +32,7 @@ namespace kt
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class KTORRENT_EXPORT TorrentGroup : public Group
+	class KTCORE_EXPORT TorrentGroup : public Group
 	{
 		std::set<TorrentInterface*> torrents;
 		std::set<bt::SHA1Hash> hashes;

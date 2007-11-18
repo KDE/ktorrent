@@ -22,13 +22,13 @@
 
 #include <qstring.h>
 #include <util/constants.h>
-#include <ktorrent_export.h>
+#include <ktcore_export.h>
 
 namespace kt
 {
 	
-	KTORRENT_EXPORT QString DataDir();
-	KTORRENT_EXPORT void ApplySettings();
+	KTCORE_EXPORT QString DataDir();
+	KTCORE_EXPORT void ApplySettings();
 
 }
 

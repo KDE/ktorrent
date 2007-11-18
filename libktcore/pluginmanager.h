@@ -24,7 +24,7 @@
 #include <util/ptrmap.h>
 #include <interfaces/plugin.h>
 #include <qstringlist.h>
-#include <ktorrent_export.h>
+#include <ktcore_export.h>
 
 namespace kt
 {
@@ -38,7 +38,7 @@ namespace kt
 	 *
 	 * This class manages all plugins. Plugins are stored in a map
 	 */
-	class KTORRENT_EXPORT PluginManager
+	class KTCORE_EXPORT PluginManager
 	{
 		bt::PtrMap<QString,Plugin> plugins,unloaded;
 		CoreInterface* core;
