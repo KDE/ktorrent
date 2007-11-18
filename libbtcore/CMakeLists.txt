@@ -137,7 +137,8 @@ set(libbtcore_SRC
 kde4_add_library(btcore SHARED ${libbtcore_SRC})
 
 # target_link_libraries(btcore ${KDE4_KPARTS_LIBS} -lgmp)
-target_link_libraries(btcore ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KPARTS_LIBS} -lsolid -lgmp)
+target_link_libraries(btcore ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KPARTS_LIBS}
+${KDE4_SOLID_LIBS} -lgmp)
 set_target_properties(btcore PROPERTIES VERSION 1.0.0 SOVERSION 1 )
 install(TARGETS btcore  DESTINATION ${LIB_INSTALL_DIR} )
 
