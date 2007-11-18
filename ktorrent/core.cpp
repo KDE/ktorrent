@@ -149,7 +149,6 @@ namespace kt
 
 	void Core::loadPlugins()
 	{
-		pman->loadConfigFile(kt::DataDir() + "plugins");
 		pman->loadPluginList();
 	}
 
@@ -572,7 +571,7 @@ namespace kt
 			delete job;
 		
 		qman->clear();
-		pman->unloadAll(false);
+		pman->unloadAll();
 	}
 
 	bool Core::changeDataDir(const QString & new_dir)

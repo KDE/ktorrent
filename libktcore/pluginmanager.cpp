@@ -38,45 +38,27 @@ namespace kt
 
 	PluginManager::PluginManager(CoreInterface* core,GUIInterface* gui) : core(core),gui(gui)
 	{
-		unloaded.setAutoDelete(false);
-		plugins.setAutoDelete(false);
 		prefpage = 0;
-		pltoload.append("infowidgetplugin");
-		pltoload.append("searchplugin");
+		loaded.setAutoDelete(true);
+//		pltoload.append("infowidgetplugin");
+//		pltoload.append("searchplugin");
 	}
 
 	PluginManager::~PluginManager()
 	{
 		delete prefpage;
-		unloaded.setAutoDelete(true);
-		plugins.setAutoDelete(true);
 	}
 
 	void PluginManager::loadPluginList()
 	{
 		KService::List offers = KServiceTypeTrader::self()->query("KTorrent/Plugin");
+		plugins = KPluginInfo::fromServices(offers);
 
-		KService::List::ConstIterator iter;
-		for(iter = offers.begin(); iter != offers.end(); ++iter)
+		for (KPluginInfo::List::iterator i = plugins.begin();i != plugins.end();i++)
 		{
-			KService::Ptr service = *iter;
-			
-			Plugin* plugin = service->createInstance<kt::Plugin>(); 
-			if (!plugin) 
-				continue;
-			
-			if (!plugin->versionCheck(kt::VERSION_STRING))
-			{
-				Out(SYS_GEN|LOG_NOTICE) <<
-						QString("Plugin %1 version does not match KTorrent version, unloading it.")
-						.arg(service->library()) << endl;
-
-				delete plugin;
-				continue;
-			}
-			unloaded.insert(plugin->getName(),plugin);
-			if (pltoload.contains(plugin->getName()))
-				load(plugin->getName());
+			KPluginInfo & pi = *i;
+			pi.setConfig(KGlobal::config()->group(pi.name()));
+			pi.load();
 		}
 		
 		if (!prefpage)
@@ -85,33 +67,65 @@ namespace kt
 			gui->addPrefPage(prefpage);
 		}
 		prefpage->updatePluginList();
+		
+		loadPlugins();		
 	}
-
-
-	void PluginManager::load(const QString & name)
+	
+	void PluginManager::loadPlugins()
 	{
-		Plugin* p = unloaded.find(name);
+		int idx = 0;
+		for (KPluginInfo::List::iterator i = plugins.begin();i != plugins.end();i++)
+		{
+			KPluginInfo & pi = *i;
+			if (loaded.contains(idx) & !pi.isPluginEnabled())
+			{
+				// unload it
+				unload(pi,idx);
+				pi.save();
+			}
+			else if (!loaded.contains(idx) && pi.isPluginEnabled())
+			{
+				// load it
+				load(pi,idx);
+				pi.save();
+			}
+			idx++;
+		}
+	}
+	
+	void PluginManager::load(const KPluginInfo & pi,int idx)
+	{
+		KService::Ptr service = pi.service();
+			
+		Plugin* p = service->createInstance<kt::Plugin>(); 
+		if (!p) 
+			return;
+			
+		if (!p->versionCheck(kt::VERSION_STRING))
+		{
+			Out(SYS_GEN|LOG_NOTICE) <<
+					QString("Plugin %1 version does not match KTorrent version, unloading it.")
+					.arg(service->library()) << endl;
+
+			delete p;
+		}
+		else
+		{
+			p->setCore(core);
+			p->setGUI(gui);
+			p->load();
+			gui->mergePluginGui(p);
+			p->loaded = true;
+			loaded.insert(idx,p,true);
+		}
+	}
+	
+	void PluginManager::unload(const KPluginInfo & pi,int idx)
+	{
+		Plugin* p = loaded.find(idx);
 		if (!p)
 			return;
-
-		Out(SYS_GEN|LOG_NOTICE) << "Loading plugin "<< p->getName() << endl;
-		p->setCore(core);
-		p->setGUI(gui);
-		p->load();
-		gui->mergePluginGui(p);
-		unloaded.erase(name);
-		plugins.insert(p->getName(),p);
-		p->loaded = true;
-
-		if (!cfg_file.isNull())
-			saveConfigFile(cfg_file);
-	}
-
-	void PluginManager::unload(const QString & name)
-	{
-		Plugin* p = plugins.find(name);
-		if (!p)
-			return;
+		
 		// first shut it down properly
 		bt::WaitJob* wjob = new WaitJob(2000);
 		try
@@ -129,41 +143,20 @@ namespace kt
 
 		gui->removePluginGui(p);
 		p->unload();
-		plugins.erase(name);
-		unloaded.insert(p->getName(),p);
 		p->loaded = false;
-
-		if (!cfg_file.isNull())
-			saveConfigFile(cfg_file);
+		loaded.erase(idx);
 	}
 
-	void PluginManager::loadAll()
-	{
-		bt::PtrMap<QString,Plugin>::iterator i = unloaded.begin();
-		while (i != unloaded.end())
-		{
-			Plugin* p = i->second;
-			p->setCore(core);
-			p->setGUI(gui);
-			p->load();
-			gui->mergePluginGui(p);
-			plugins.insert(p->getName(),p);
-			p->loaded = true;
-			i++;
-		}
-		unloaded.clear();
-		if (!cfg_file.isNull())
-			saveConfigFile(cfg_file);
-	}
 
-	void PluginManager::unloadAll(bool save)
+	
+	void PluginManager::unloadAll()
 	{
 		// first properly shutdown all plugins
 		bt::WaitJob* wjob = new WaitJob(2000);
 		try
 		{
-			bt::PtrMap<QString,Plugin>::iterator i = plugins.begin();
-			while (i != plugins.end())
+			bt::PtrMap<int,Plugin>::iterator i = loaded.begin();
+			while (i != loaded.end())
 			{
 				Plugin* p = i->second;
 				p->shutdown(wjob);
@@ -180,25 +173,22 @@ namespace kt
 		}
 		
 		// then unload them
-		bt::PtrMap<QString,Plugin>::iterator i = plugins.begin();
-		while (i != plugins.end())
+		bt::PtrMap<int,Plugin>::iterator i = loaded.begin();
+		while (i != loaded.end())
 		{
 			Plugin* p = i->second;
 			gui->removePluginGui(p);
 			p->unload();
-			unloaded.insert(p->getName(),p);
 			p->loaded = false;
 			i++;
 		}
-		plugins.clear();
-		if (save && !cfg_file.isNull())
-			saveConfigFile(cfg_file);
+		loaded.clear();
 	}
 
 	void PluginManager::updateGuiPlugins()
 	{
-		bt::PtrMap<QString,Plugin>::iterator i = plugins.begin();
-		while (i != plugins.end())
+		bt::PtrMap<int,Plugin>::iterator i = loaded.begin();
+		while (i != loaded.end())
 		{
 			Plugin* p = i->second;
 			p->guiUpdate();
@@ -206,98 +196,4 @@ namespace kt
 		}
 	}
 
-	void PluginManager::fillPluginList(QList<Plugin*> & plist)
-	{
-		bt::PtrMap<QString,Plugin>::iterator i = plugins.begin();
-		while (i != plugins.end())
-		{
-			Plugin* p = i->second;
-			plist.append(p);
-			i++;
-		}
-
-
-		i = unloaded.begin();
-		while (i != unloaded.end())
-		{
-			Plugin* p = i->second;
-			plist.append(p);
-			i++;
-		}
-	}
-
-	bool PluginManager::isLoaded(const QString & name) const
-	{
-		const Plugin* p = plugins.find(name);
-		return p != 0;
-	}
-
-	void PluginManager::loadConfigFile(const QString & file)
-	{
-		cfg_file = file;
-		// make a default config file if doesn't exist
-		if (!bt::Exists(file))
-		{
-			writeDefaultConfigFile(file);
-			return;
-		}
-
-		QFile f(file);
-		if (!f.open(QIODevice::ReadOnly))
-		{
-			Out(SYS_GEN|LOG_DEBUG) << "Cannot open file " << file << " : " << f.errorString() << endl;
-			return;
-		}
-
-		pltoload.clear();
-
-		QTextStream in(&f);
-		while (!in.atEnd())
-		{
-			QString l = in.readLine();
-			if (l.isNull())
-				break;
-
-			pltoload.append(l);
-		}
-	}
-
-	void PluginManager::saveConfigFile(const QString & file)
-	{
-		cfg_file = file;
-		QFile f(file);
-		if (!f.open(QIODevice::WriteOnly))
-		{
-			Out(SYS_GEN|LOG_DEBUG) << "Cannot open file " << file << " : " << f.errorString() << endl;
-			return;
-		}
-
-		QTextStream out(&f);
-		bt::PtrMap<QString,Plugin>::iterator i = plugins.begin();
-		while (i != plugins.end())
-		{
-			Plugin* p = i->second;
-			out << p->getName() << endl;
-			i++;
-		}
-	}
-
-
-	void PluginManager::writeDefaultConfigFile(const QString & file)
-	{
-		// by default we will load the infowidget and searchplugin
-		QFile f(file);
-		if (!f.open(QIODevice::WriteOnly))
-		{
-			Out(SYS_GEN|LOG_DEBUG) << "Cannot open file " << file << " : " << f.errorString() << endl;
-			return;
-		}
-
-		QTextStream out(&f);
-		out << "infowidgetplugin" << endl << "searchplugin" << endl;
-
-		pltoload.clear();
-		pltoload.append("infowidgetplugin");
-		pltoload.append("searchplugin");
-	}
 }

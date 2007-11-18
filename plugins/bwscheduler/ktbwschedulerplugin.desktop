@@ -1,5 +1,13 @@
 [Desktop Entry]
 Name=BandwidthSchedulerPlugin
+Comment=Plugin to schedule upload and download limits over a period of a week
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktbwschedulerplugin
+X-KDE-PluginInfo-Author=Joris Guisson, Ivan Vasic
+X-KDE-PluginInfo-Email=joris.guisson@gmail.com, ivasic@gmail.com
+X-KDE-PluginInfo-Name=BandwidthSchedulerPlugin
+X-KDE-PluginInfo-Website=http://ktorrent.org/
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=false
+Icon=clock

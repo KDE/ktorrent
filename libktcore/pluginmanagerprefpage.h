@@ -23,7 +23,7 @@
 #include <qwidget.h>
 #include <interfaces/prefpageinterface.h>
 
-class Ui_PluginManagerWidget;
+class KPluginSelector;
 
 namespace kt
 {
@@ -43,20 +43,13 @@ namespace kt
 		virtual ~PluginManagerPrefPage();
 
 		void updatePluginList();
-
+		virtual void updateSettings();
 	private slots:
-		void onLoad();
-		void onUnload();
-		void onLoadAll();
-		void onUnloadAll();
-		void onCurrentChanged(LabelViewItem* item);
-		
-	private:
-		void updateAllButtons();
+		void changed();
 		
 	private:
 		PluginManager* pman;
-		Ui_PluginManagerWidget* pmw;
+		KPluginSelector* pmw;
 	};
 
 }

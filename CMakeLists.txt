@@ -32,7 +32,6 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-ktorrent.h.cmake ${CMAKE_CURRE
 
 add_definitions(${KDE4_ENABLE_EXCEPTIONS} ${KDE4_DEFINITIONS} )
 
-find_package(GMP REQUIRED)
 
 include_directories( ${KDE4_INCLUDES} 
    ${KTORRENT_BINARY_DIR}
@@ -41,7 +40,6 @@ include_directories( ${KDE4_INCLUDES}
    ${KTORRENT_BINARY_DIR}/libbtcore
    ${KTORRENT_SOURCE_DIR}/libbtcore
    ${KTORRENT_SOURCE_DIR}
-   ${GMP_INCLUDE_DIR}
    )
 
 add_subdirectory(cmake)

@@ -22,7 +22,7 @@
 
 namespace kt
 {
-	LogPrefPage::LogPrefPage(QWidget* parent) : PrefPageInterface(LogViewerPluginSettings::self(),i18n("Log Viewer"),"log",parent)
+	LogPrefPage::LogPrefPage(QWidget* parent) : PrefPageInterface(LogViewerPluginSettings::self(),i18n("Log Viewer"),"ksystemlog",parent)
 	{
 		setupUi(this);
 	}

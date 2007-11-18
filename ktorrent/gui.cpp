@@ -107,8 +107,8 @@ namespace kt
 
 		dbus_iface = new DBus(this,core);
 		
-		loadState(KGlobal::config());
 		core->loadPlugins();
+		loadState(KGlobal::config());
 		notifyViewListeners(view_man->getCurrentTorrent());
 	}
 
