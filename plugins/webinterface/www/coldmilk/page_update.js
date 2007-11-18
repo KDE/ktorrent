@@ -17,6 +17,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+var details_of_torrent = null;
+
 function update_interval(time) {
 	update_all();
 	if (!time) {
@@ -146,6 +148,7 @@ function update_torrent_table(xmldoc) {
 	
 	var newtable = document.createElement('table');
 	newtable.setAttribute('id', 'torrent_list_table');
+	newtable.className='list_table';
 
 	var torrents = xmldoc.getElementsByTagName('torrent');
 	var i = 0;
@@ -183,8 +186,16 @@ function _torrent_table_row(torrent, table, i) {
 	//file
 	{
 		var cell = row.insertCell(1);
-		cell.appendChild(
-			_get_text(torrent, 'name'));
+		var file = document.createElement('a');
+		file.setAttribute('href', '#');
+		file.appendChild(_get_text(torrent, 'name'));
+		file.onclick = function()
+		{
+			show('torrents_details');
+			fetch_xml("rest.php?torrents_details="+i, new Array("get_torrents_details"));
+			details_of_torrent = i;
+		};
+		cell.appendChild(file);
 	}
 
 	//status
@@ -236,7 +247,7 @@ function _torrent_table_row(torrent, table, i) {
 		cell.setAttribute("style", "padding-right : 2px;");
 
 		var percent_done
-			= _get_text_from_attribute(torrent, 'downloaded', 'percent').data;	
+			= _get_text_from_attribute(torrent, 'downloaded', 'percent').data;
 
 		var bar = document.createElement('div');
 		bar.setAttribute("class", "percent_bar");
@@ -251,6 +262,72 @@ function _torrent_table_row(torrent, table, i) {
 	}
 }
 
+function just_refresh_details(xmldoc) {
+	fetch_xml("rest.php?torrents_details="+details_of_torrent, new Array("get_torrents_details"));
+}
+
+function get_torrents_details(xmldoc) {
+	var newtable = document.createElement('table');
+	newtable.setAttribute('id', 'torrents_details_files');
+	newtable.className='list_table';
+
+	var id = xmldoc.getElementsByTagName('torrents_details')[0].getAttribute('id');
+	var files = xmldoc.getElementsByTagName('file');
+	for(var i=0; i<files.length; i++)
+	{
+		var row = newtable.insertRow(i);
+		row.style.backgroundColor=(i % 2) ? '#ffffff' : '#dce4f9';
+		var cell = row.insertCell(-1);
+
+		var file_status = _get_text(files[i], 'status').data;
+		var command;
+
+		command = (file_status==50)?'':'rest.php?file_hp='+id+'-'+i;
+		var high_prior = _create_file_action_button('/icons/16x16/high_priority.png', 'High Priority', command);
+		cell.appendChild(high_prior);
+
+		command = (file_status==40)?'':'rest.php?file_np='+id+'-'+i;
+		var normal_prior = _create_file_action_button('/icons/16x16/normal_priority.png', 'Normal Priority', command);
+		cell.appendChild(normal_prior);
+
+		command = (file_status==30)?'':'rest.php?file_lp='+id+'-'+i;
+		var low_prior = _create_file_action_button('/icons/16x16/low_priority.png', 'Low Priority', command);
+		cell.appendChild(low_prior);
+
+		command = (file_status==20 || file_status==10)?'':'rest.php?file_stop='+id+'-'+i;
+		var dnd = _create_file_action_button('/icons/16x16/only_seed.png', 'Stop downloading (Only Seed Priority)', command);
+		cell.appendChild(dnd);
+
+		var cell = row.insertCell(-1);
+		cell.appendChild(_get_text(files[i], 'name'));
+		var cell = row.insertCell(-1);
+		cell.appendChild(_get_text(files[i], 'size'));
+		var cell = row.insertCell(-1);
+
+		if (_get_text(files[i], 'perc_done').data!='')
+		cell.appendChild(_get_text(files[i], 'perc_done'));
+		else
+		cell.appendChild(document.createTextNode("0"));
+		cell.appendChild(document.createTextNode("%"));
+		var cell = row.insertCell(-1);
+
+		cell.appendChild(document.createTextNode(_get_file_status_name(file_status)));
+	}
+
+	_torrents_details_header(newtable.insertRow(0));
+
+	/*var torrents = xmldoc.getElementsByTagName('torrent');
+	var i = 0;
+	while (torrents[i]) {
+		_torrent_table_row(torrents[i], newtable, i);
+		i++;
+	}
+	_torrent_table_header(newtable.insertRow(0));*/
+
+	var oldtable = document.getElementById('torrents_details_files');
+	oldtable.parentNode.replaceChild(newtable, oldtable);
+}
+
 function _create_action_button(button_name, image_src, command) {
 	var image = document.createElement("img");
 	image.setAttribute("src", "icons/22x22/" + image_src);
@@ -260,6 +337,26 @@ function _create_action_button(button_name, image_src, command) {
 	{
 		var a = document.createElement("a");
 		a.setAttribute("href", "interface.php?" + command);
+		a.appendChild(image);
+		return a;
+	}
+	else
+	return image;
+}
+
+function _create_file_action_button(img_src, img_alt, command) {
+	var image = document.createElement("img");
+	image.setAttribute("src", img_src);
+	image.setAttribute("alt", img_alt);
+	image.setAttribute("title", img_alt);
+	if (command != '')
+	{
+		var a = document.createElement("a");
+		a.setAttribute("href", "#");
+		a.onclick = function()
+		{
+			fetch_xml(command, new Array("just_refresh_details"));
+		};
 		a.appendChild(image);
 		return a;
 	}
@@ -290,6 +387,27 @@ function _get_text_from_attribute(element, tag, attribute) {
 		text_node = document.createTextNode('');
 	}
 	return text_node;
+}
+
+function _get_file_status_name(status_id)
+{
+	if (status_id==60) return 'PREVIEW_PRIORITY';
+	else if (status_id==50) return 'Download First';
+	else if (status_id==40) return 'Download Normally';
+	else if (status_id==30) return 'Download Last';
+	else if (status_id==20) return 'Only Seed';
+	else if (status_id==10) return 'Do Not Download';
+	else return 'Not supported file status';
+}
+
+function _torrents_details_header(row) {
+	headers = new Array("Actions", "File", "Size", "Perc done", "Status");
+	for (var i in headers) {
+		var header =  document.createElement("th");
+		header.appendChild(document.createTextNode(headers[i]));
+		row.appendChild(header);
+	}
+	return row;
 }
 
 function _torrent_table_header(row) {

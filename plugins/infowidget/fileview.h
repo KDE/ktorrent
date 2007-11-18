@@ -21,16 +21,13 @@
 #define KTFILEVIEW_H
 
 #include <klistview.h>
-#include <qmutex.h>
 #include <util/constants.h>
-
-class KPopupMenu;
+#include <qtimer.h>
 
 namespace kt
 {
 	class TorrentInterface;
 	class IWFileTreeDirItem;
-	class FileViewUpdateThread;
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
@@ -39,24 +36,20 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		friend class FileViewUpdateThread;
-		
 		FileView(QWidget *parent = 0, const char *name = 0);
 		virtual ~FileView();
 
 		void update();
 		void changeTC(kt::TorrentInterface* tc);
-	
-	protected:
-		virtual void viewportPaintEvent(QPaintEvent* pe);
-	
 	private slots:
 		void contextItem(int id);
 		void showContextMenu(KListView* ,QListViewItem* item,const QPoint & p);
 		void refreshFileTree(kt::TorrentInterface* tc);
 		void onDoubleClicked(QListViewItem* item,const QPoint & ,int );
+		void fillTreePartial();
 		
 	private:
+		void fillFileTree();
 		void readyPreview();
 		void readyPercentage();
 		void changePriority(QListViewItem* item, bt::Priority newpriority);
@@ -64,16 +57,18 @@ namespace kt
 	private:
 		kt::TorrentInterface* curr_tc;
 		IWFileTreeDirItem* multi_root;
+		bool pending_fill;
 		KPopupMenu* context_menu;
-		FileViewUpdateThread* update_thread;
 		QString preview_path;
-		QMutex eventlock;	// To avoid segfaults when events reach the listview while updating in background
+		QTimer fill_timer;
 		int preview_id;
 		int first_id;
 		int normal_id;
 		int last_id;
 		int dnd_keep_id;
 		int dnd_throw_away_id;
+
+		int next_fill_item;
 	};
 
 }

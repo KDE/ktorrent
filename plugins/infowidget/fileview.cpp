@@ -17,12 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kiconloader.h>
 #include <klocale.h>
+#include <kiconloader.h>
 #include <kglobal.h>
 #include <kpopupmenu.h>
 #include <krun.h>
 #include <kmessagebox.h>
+#include <kmimetype.h>
 #include <util/bitset.h>
 #include <util/functions.h>
 #include <interfaces/functions.h>
@@ -32,7 +33,6 @@
 #include "functions.h"
 #include "iwfiletreeitem.h"
 #include "iwfiletreediritem.h"
-#include "fileviewupdatethread.h"
 #include "fileview.h"
 		
 using namespace bt;
@@ -41,10 +41,8 @@ namespace kt
 {
 
 	FileView::FileView(QWidget *parent, const char *name)
-			: KListView(parent, name),curr_tc(0),multi_root(0)
+	    : KListView(parent, name),curr_tc(0),multi_root(0),pending_fill(0),next_fill_item(0)
 	{
-		update_thread = new FileViewUpdateThread(this);
-		
 		setFrameShape(QFrame::NoFrame);
 		addColumn( i18n( "File" ) );
     	addColumn( i18n( "Size" ) );
@@ -53,7 +51,6 @@ namespace kt
     	addColumn( i18n( "% Complete" ) );
 		setShowSortIndicator(true);
 		
-		KIconLoader* iload = KGlobal::iconLoader();
 		context_menu = new KPopupMenu(this);
 		preview_id = context_menu->insertItem(SmallIcon("fileopen"),i18n("Open"));
 	    context_menu->insertSeparator();
@@ -78,6 +75,8 @@ namespace kt
 		connect(this,SIGNAL(doubleClicked( QListViewItem*, const QPoint&, int )),
 				this,SLOT(onDoubleClicked(QListViewItem*, const QPoint&, int)));
 		
+		connect(&fill_timer, SIGNAL(timeout()), this, SLOT( fillTreePartial() ) );
+
 		setEnabled(false);
 		
 		setSelectionMode(QListView::Extended);
@@ -85,25 +84,77 @@ namespace kt
 
 
 	FileView::~FileView()
+	{}
+	
+#define ITEMS_PER_TICK 100
+	
+	void FileView::fillTreePartial()
 	{
-		if (update_thread) {
-			update_thread->stop();
-			update_thread->wait();
+		int cnt = 0;
+		while (next_fill_item < curr_tc->getNumFiles() && cnt < ITEMS_PER_TICK)
+		{
+			TorrentFileInterface & file = curr_tc->getTorrentFile(next_fill_item);
+			multi_root->insert(file.getPath(),file);
+			cnt++;
+			next_fill_item++;
 		}
-		delete update_thread;
+		
+		if (next_fill_item >= curr_tc->getNumFiles()) 
+		{
+			multi_root->setOpen(true);
+			setRootIsDecorated(true);
+			setEnabled(true);
+			multi_root->updatePriorityInformation(curr_tc);
+			multi_root->updatePercentageInformation();
+			multi_root->updatePreviewInformation(curr_tc);
+			fill_timer.stop();
+			connect(curr_tc,SIGNAL(missingFilesMarkedDND( kt::TorrentInterface* )),
+				this,SLOT(refreshFileTree( kt::TorrentInterface* )));
+		}
+		else
+			fill_timer.start(0,true);
+	}
+    
+	void FileView::fillFileTree()
+	{
+		multi_root = 0;
+		clear();
+	
+		if (!curr_tc)
+			return;
+	
+		if (curr_tc->getStats().multi_file_torrent)
+		{
+			setEnabled(false);
+			multi_root = new IWFileTreeDirItem(this,curr_tc->getStats().torrent_name);
+			next_fill_item = 0;
+			fillTreePartial();
+		}
+		else
+		{
+			const TorrentStats & s = curr_tc->getStats();
+			this->setRootIsDecorated(false);
+			KListViewItem* item = new KListViewItem(
+					this,
+					s.torrent_name,
+					BytesToString(s.total_bytes));
+	
+			item->setPixmap(0,KMimeType::findByPath(s.torrent_name)->pixmap(KIcon::Small));
+			setEnabled(true);
+			connect(curr_tc,SIGNAL(missingFilesMarkedDND( kt::TorrentInterface* )),
+				this,SLOT(refreshFileTree( kt::TorrentInterface* )));
+		}
 	}
 
 	void FileView::changeTC(kt::TorrentInterface* tc)
 	{
 		if (tc == curr_tc)
 			return;
-		
-		if (update_thread) {
-			update_thread->stop();
-			update_thread->wait();
-		}
-		
-		update_thread->start(tc, QThread::LowPriority);
+	
+		curr_tc = tc;
+		pending_fill = true;
+		fill_timer.stop();
+		fillFileTree();
 	}
 	
 	void FileView::update()
@@ -111,17 +162,11 @@ namespace kt
 		if (!curr_tc)
 			return;
 		
-		if (isVisible())
+		if (isVisible() && !pending_fill)
 		{
 			readyPreview();
 			readyPercentage();
 		}
-	}
-	
-	void FileView::viewportPaintEvent(QPaintEvent* pe) {
-		eventlock.lock();
-		KListView::viewportPaintEvent(pe);
-		eventlock.unlock();
 	}
 	
 	void FileView::readyPercentage()

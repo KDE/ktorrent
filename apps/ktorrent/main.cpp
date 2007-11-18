@@ -156,11 +156,11 @@ int main(int argc, char **argv)
 	about.addCredit("twisted_fall",I18N_NOOP("Patch to not show very low speeds"),"twisted.fall@gmail.com");
 	about.addCredit("Lucke",I18N_NOOP("Patch to show potentially firewalled status"),0);
 	about.addCredit("Modestas Vainius",I18N_NOOP("Several patches"),"modestas@vainius.eu");
-	about.addCredit("Jaak Ristioja",I18N_NOOP("Patch to update the FileView in a separate thread"),"Ristioja@gmail.com");
 	about.addCredit("Stefan Monov",I18N_NOOP("Patch to hide the menubar"),"logixoul@gmail.com");
 	about.addCredit("The_Kernel",I18N_NOOP("Patch to modify file priorities in the webgui"),"kernja@cs.earlham.edu");
 	about.addCredit("Rafał Miłecki",I18N_NOOP("Several webgui patches"),"zajec5@gmail.com");
 	about.addCredit("Lukasz Fibinger",I18N_NOOP("Filterbar patch"),"lucke@o2.pl");
+	about.addCredit("Jindrich Makovicka",I18N_NOOP("Non threaded fileview update patch"),"makovick@gmail.com");
 
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);

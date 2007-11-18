@@ -17,9 +17,10 @@
 	{
 		var items = new Array();
 		items[0] = "torrent_list";
-		items[1] = "preferences";
-		items[2] = "torrent_add";
-		items[3] = "action";
+		items[1] = "torrents_details";
+		items[2] = "preferences";
+		items[3] = "torrent_add";
+		items[4] = "action";
 		
 		hide_divs(items);
 
