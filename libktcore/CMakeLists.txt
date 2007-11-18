@@ -46,7 +46,7 @@ kde4_add_library(ktcore SHARED ${libktorrent_SRC})
 
 # target_link_libraries(ktorrent ${KDE4_KPARTS_LIBS} -lgmp)
 target_link_libraries(ktcore ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KPARTS_LIBS}
-btcore ${KDE4_SOLID_LIBS} -lgmp)
+btcore ${KDE4_SOLID_LIBS} ${GMP_LIBRARIES})
 set_target_properties(ktcore PROPERTIES VERSION 1.0.0 SOVERSION 1 )
 install(TARGETS ktcore  DESTINATION ${LIB_INSTALL_DIR} )
 
