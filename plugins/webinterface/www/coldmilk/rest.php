@@ -25,7 +25,8 @@
 
 $rest_commands = array(
 	"global_status",
-	"download_status"
+	"download_status",
+	"torrents_details"
 );
 
 if (!array_keys($_REQUEST)) {
@@ -42,12 +43,12 @@ if (!array_keys($_REQUEST)) {
 else {
 	header("Content-Type: text/xml");
 	$rest = new RestInterface();
-	foreach(array_keys($_REQUEST) as $command) {
+	foreach($_REQUEST as $command=>$arg)
+	{
 		if (in_array($command, $rest_commands))
-			print $rest->$command();
-		
+		print $rest->$command($arg);
 		else
-			print "Unknown command " . htmlentities($command) . "<br />";	
+		print "Unknown command " . htmlentities($command) . "<br />";	
 		
 	}
 }
@@ -135,7 +136,21 @@ class RestInterface {
 		return $xml->saveXML();
 	
 	}
-	
+
+	public function torrents_details($torrent_id) {
+		$xml = new KTorrentXML('torrents_details', null, array('id'=>$torrent_id));
+		$download_status = downloadstatus();
+		if (isset($download_status[$torrent_id]))
+		foreach($download_status[$torrent_id]['files'] as $id=>$info)
+		{
+			$file_xml = $xml->new_element('file', '', array('id'=>$id));
+			$xml->append_to_root($file_xml);
+			foreach($info as $key=>$val)
+			$file_xml->appendChild($xml->new_element($key, $val));
+		}
+		return $xml->saveXML();
+	}
+
 	// Helper function for download_status
 	private function _torrent_status($status_id) {
 		$status = array(
@@ -187,11 +202,15 @@ class RestInterface {
   */
 class KTorrentXML extends DomDocument { 
 	private $root_element;
-	public function __construct($root) {
+	public function __construct($root, $value = null, $attributes = null) {
 		parent::__construct('1.0');
 		$this->root_element = $this->createElement($root);
 		$this->appendChild($this->root_element);
 		$this->formatOutput = true;
+
+		if ($attributes)
+		foreach($attributes as $key=>$val)
+		$this->root_element->setAttribute($key, $val);
 	}
 	
 	// Creates an element, and returns it.

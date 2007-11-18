@@ -51,35 +51,35 @@ A:active { color : blue; }
   }
 
 
-#torrent_list table {
+.list_table {
     border-collapse : collapse;
     width : 100%;
   }
 
 
-#torrent_list table th {
+.list_table th {
     text-align : left;
   }
 
 
-#torrent_list img {
+.list_table img {
     border : 0px solid;
     padding : 2px;
   }
 
 
-#torrent_list .percent_bar {
+.list_table .percent_bar {
     background-color : #a5d3b4;
     float : left;
     position : relative;
 	color : inherit;
 }
 
-#torrent_list_table img {
+.list_table img {
 	opacity: 0.4;
 }
 
-#torrent_list_table a img {
+.list_table a img {
 	opacity: 1.0;
 }
 

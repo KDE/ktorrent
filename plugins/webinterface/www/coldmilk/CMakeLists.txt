@@ -22,6 +22,10 @@ set(coldmilk_data
 	ktstop_all.png   
 	page_update.js  
 	shutdown.php  
-	style.css)
+	style.css
+	high_priority.png
+	low_priority.png
+	normal_priority.png
+	only_seed.png)
 
 install(FILES ${coldmilk_data} DESTINATION ${DATA_INSTALL_DIR}/ktorrent/www/coldmilk)
