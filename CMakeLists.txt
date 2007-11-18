@@ -1,6 +1,7 @@
 project(KTORRENT)
 find_package(KDE4 REQUIRED)
 find_package(KDE4Internal REQUIRED)
+find_package(GMP REQUIRED)
 
 # set some default settings
 include(KDE4Defaults)
@@ -40,6 +41,7 @@ include_directories( ${KDE4_INCLUDES}
    ${KTORRENT_BINARY_DIR}/libbtcore
    ${KTORRENT_SOURCE_DIR}/libbtcore
    ${KTORRENT_SOURCE_DIR}
+   ${GMP_INCLUDE_DIR}
    )
 
 add_subdirectory(cmake)
