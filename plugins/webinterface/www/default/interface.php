@@ -42,7 +42,12 @@ function generate_button_code($img, $alt, $href='')
 <script type="text/javascript">
 	function validate()
 	{
-		msg = "Are you absolutely sure that you want remove this torrent?";
+		msg = "Are you absolutely sure that you want to remove this torrent?";
+		return confirm(msg);
+	}
+	function validate_shutdown()
+	{
+		msg = "Are you absolutely sure that you want to shutdown KTorrent?";
 		return confirm(msg);
 	}
 </script>
@@ -56,8 +61,8 @@ function generate_button_code($img, $alt, $href='')
         	<small>BitTorrent client for KDE</small>
 	</div>
 	<ul id="menu">
+		<li><a href="shutdown.php?quit=quit" class="shutdown" title="Shutdown KTorrent" onclick="return validate_shutdown()">Shutdown</a></li>
 		<li><a href="interface.php" title="REFRESH">Refresh</a></li>
-		<li><a href="shutdown.php?quit=quit" title="Shutdown KTorrent">Shutdown</a></li>
 		<li><a href="login.html" title="LOGOUT">Logout</a></li>
 	</ul>
 	<div id="sidebar">

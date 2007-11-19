@@ -359,7 +359,7 @@ namespace kt
 		if(act == unlimited)
 			rate=0;
 		else
-			rate=act->text().toInt();
+			rate=act->text().remove("&").toInt(); // remove ampersands
 
 		if(type==0)
 		{

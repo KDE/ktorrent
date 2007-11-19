@@ -17,7 +17,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-var details_of_torrent = null;
+var details_of_torrent = null; //id of torrent which details are displayed
 
 function update_interval(time) {
 	update_all();
@@ -262,7 +262,9 @@ function _torrent_table_row(torrent, table, i) {
 	}
 }
 
+//function called after changing file priority to refresh list of files (and priorities)
 function just_refresh_details(xmldoc) {
+	if (details_of_torrent!=null)
 	fetch_xml("rest.php?torrents_details="+details_of_torrent, new Array("get_torrents_details"));
 }
 
@@ -280,7 +282,7 @@ function get_torrents_details(xmldoc) {
 		var cell = row.insertCell(-1);
 
 		var file_status = _get_text(files[i], 'status').data;
-		var command;
+		var command; //we call ?file_xx - this call is detected by server and priority is being changed
 
 		command = (file_status==50)?'':'rest.php?file_hp='+id+'-'+i;
 		var high_prior = _create_file_action_button('/high_priority.png', 'High Priority', command);
