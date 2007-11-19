@@ -126,6 +126,10 @@ a:hover {
 	color: #000;
 	text-decoration: none;
 }
+#menu .shutdown {
+	float: right;
+	margin-right: 290px;
+}
 
 
 #sidebar {
