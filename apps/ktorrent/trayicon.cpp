@@ -350,10 +350,12 @@ void SetMaxRate::update()
 void SetMaxRate::rateSelected(int id)
 {
 	int rate;
-	if(text(id).contains(i18n("Unlimited")))
-		rate=0;
+	QString ratestr = text(id).remove('&');
+	if (ratestr.contains(i18n("Unlimited")))
+		rate = 0;
 	else
-		rate=text(id).toInt();
+		rate = ratestr.toInt();
+
 	if(type==0)
 	{
 		m_core->setMaxUploadSpeed(rate);
