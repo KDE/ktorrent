@@ -161,6 +161,7 @@ int main(int argc, char **argv)
 	about.addCredit("Rafał Miłecki",I18N_NOOP("Several webgui patches"),"zajec5@gmail.com");
 	about.addCredit("Lukasz Fibinger",I18N_NOOP("Filterbar patch"),"lucke@o2.pl");
 	about.addCredit("Jindrich Makovicka",I18N_NOOP("Non threaded fileview update patch"),"makovick@gmail.com");
+	about.addCredit("swolchok",I18N_NOOP("Optimization to SHA1 hash generation"),"evilsporkman@gmail.com");
 
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);

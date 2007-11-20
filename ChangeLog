@@ -3,6 +3,8 @@ Changes in 2.2.4 :
 - Added patch from Rafel Milecki to add file selection in the coldmilk webgui
 - Added patch from Rafel Milecki to add a confirmation dialog when the user shutsdown KT in the default webgui
 - Fixed bug which caused the set max rate menu in the system tray icon menu to fail in recent KDE versions
+- Optimized SHA1HashGen a bit
+- Use Qt int types to be sure size is correct
 
 Changes in 2.2.3 :
 - Fix datacheck of 4GB+ files on 32 bit systems

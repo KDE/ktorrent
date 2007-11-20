@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <string.h>
+#include <arpa/inet.h>
 #include "sha1hashgen.h"
 #include "functions.h"
 
@@ -138,10 +139,12 @@ namespace bt
 		{
 			if (i < 16)
 			{
-				w[i] = (chunk[4*i] << 24) | 
+				w[i] = ntohl(*(const Uint32*)(chunk + (4*i)));
+			/*	w[i] = (chunk[4*i] << 24) | 
 						(chunk[4*i + 1] << 16) | 
 						(chunk[4*i + 2] << 8) | 
 						chunk[4*i + 3];
+				*/
 			}
 			else
 			{

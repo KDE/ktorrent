@@ -20,17 +20,19 @@
 #ifndef BTCONSTANTS_H
 #define BTCONSTANTS_H
 
+#include <qglobal.h>
+
 namespace bt
 {
-	typedef unsigned long long Uint64;
-	typedef unsigned int Uint32;
-	typedef unsigned short Uint16;
-	typedef unsigned char Uint8;
+	typedef Q_UINT64 Uint64;
+	typedef Q_UINT32 Uint32;
+	typedef Q_UINT16 Uint16;
+	typedef Q_UINT8 Uint8;
 
-	typedef long long Int64;
-	typedef int Int32;
-	typedef short Int16;
-	typedef char Int8;
+	typedef Q_INT64 Int64;
+	typedef Q_INT32 Int32;
+	typedef Q_INT16 Int16;
+	typedef Q_INT8 Int8;
 	
 	typedef Uint64 TimeStamp;
 	
