@@ -5,6 +5,7 @@ Changes in 2.2.4 :
 - Fixed bug which caused the set max rate menu in the system tray icon menu to fail in recent KDE versions
 - Optimized SHA1HashGen a bit
 - Use Qt int types to be sure size is correct
+- Do not stop ONLY_SEED chunks, but let them finish
 
 Changes in 2.2.3 :
 - Fix datacheck of 4GB+ files on 32 bit systems

@@ -537,7 +537,7 @@ namespace bt
 				return;
 			}
 			Chunk* c = cman.getChunk(hdr.index);
-			if (!c->isExcluded() && !c->isExcludedForDownloading() && cman.prepareChunk(c))
+			if (!c->isExcluded() && cman.prepareChunk(c))
 			{
 				ChunkDownload* cd = new ChunkDownload(c);
 				bool ret = false;
@@ -629,7 +629,8 @@ namespace bt
 		for (Uint32 i = from;i <= to;i++)
 		{
 			ChunkDownload* cd = current_chunks.find(i);
-			if (!cd)
+			// let only seed chunks finish
+			if (!cd || cman.getChunk(i)->getPriority() == ONLY_SEED_PRIORITY)
 				continue;
 			
 			cd->cancelAll();
