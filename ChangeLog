@@ -11,4 +11,4 @@ silently)
 - Added IPv6 support
 - Remember current searches in searchplugin and restore them on restart
 - Make tracker url and status selectable in tracker tab
-
+- Switch to QCA2 for SHA1 hash generation (old code is still there in case QCA::isSupported("sha1") fails)

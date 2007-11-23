@@ -1,5 +1,6 @@
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${QCA2_INCLUDE_DIR})
 
 set(libbtcore_SRC 
 	util/bitset.cpp
@@ -138,7 +139,7 @@ kde4_add_library(btcore SHARED ${libbtcore_SRC})
 
 # target_link_libraries(btcore ${KDE4_KPARTS_LIBS} -lgmp)
 target_link_libraries(btcore ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KPARTS_LIBS}
-${KDE4_SOLID_LIBS} ${GMP_LIBRARIES})
+${KDE4_SOLID_LIBS} ${GMP_LIBRARIES} ${QCA2_LIBRARIES})
 set_target_properties(btcore PROPERTIES VERSION 1.0.0 SOVERSION 1 )
 install(TARGETS btcore  DESTINATION ${LIB_INSTALL_DIR} )
 

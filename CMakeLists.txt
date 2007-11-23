@@ -2,6 +2,7 @@ project(KTORRENT)
 find_package(KDE4 REQUIRED)
 find_package(KDE4Internal REQUIRED)
 find_package(GMP REQUIRED)
+find_package(QCA2 REQUIRED)
 
 # set some default settings
 include(KDE4Defaults)
@@ -52,5 +53,4 @@ add_subdirectory(plugins)
 add_subdirectory(ideal)
 add_subdirectory(ktorrent)
 add_subdirectory(ktupnptest)
-# add_subdirectory(kttorinfo)
-
+# add_subdirectory(test)

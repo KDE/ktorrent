@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <QtCrypto>
 #include <string.h>
 #include <arpa/inet.h>
 #include "sha1hashgen.h"
@@ -31,19 +32,32 @@ namespace bt
 		return ((x << n) | ((x & 0xFFFFFFFF) >> (32 - n)));
 	}
 	
-	
+	static int qca_supports_sha1 = -1;
+	static QCA::Initializer init; // to iniliaze QCA2 library
 
-	SHA1HashGen::SHA1HashGen() : tmp_len(0),total_len(0)
+	SHA1HashGen::SHA1HashGen() : tmp_len(0),total_len(0),hash(0)
 	{
+		if (qca_supports_sha1 < -1)
+			qca_supports_sha1 = QCA::isSupported("sha1") ? 1 : 0;
 		
+		if (qca_supports_sha1)
+			hash = new QCA::Hash("sha1");
 	}
 
 
 	SHA1HashGen::~SHA1HashGen()
-	{}
+	{
+		delete hash;
+	}
 
 	SHA1Hash SHA1HashGen::generate(const Uint8* data,Uint32 len)
 	{
+		if (hash)
+		{
+			hash->update((const char*)data,len);
+			return SHA1Hash((const Uint8*)hash->final().constData());
+		}
+		
 		h0 = 0x67452301;
 		h1 = 0xEFCDAB89;
 		h2 = 0x98BADCFE;
@@ -205,6 +219,12 @@ namespace bt
 		
 	void SHA1HashGen::update(const Uint8* data,Uint32 len)
 	{
+		if (hash)
+		{
+			hash->update((const char*)data,len);
+			return;
+		}
+		
 		if (tmp_len == 0)
 		{
 			Uint32 num_64_byte_chunks = len / 64;
@@ -263,6 +283,9 @@ namespace bt
 	 
 	void SHA1HashGen::end()
 	{
+		if (hash)
+			return;
+		
 		// calculate the low and high byte of the data length
 		Uint32 total[2] = {0,0};
 		total[0] += total_len;
@@ -322,14 +345,21 @@ namespace bt
 
 	SHA1Hash SHA1HashGen::get() const
 	{
-		// construct final message
-		Uint8 hash[20];
-		WriteUint32(hash,0,h0);
-		WriteUint32(hash,4,h1);
-		WriteUint32(hash,8,h2);
-		WriteUint32(hash,12,h3);
-		WriteUint32(hash,16,h4);
-		
-		return SHA1Hash(hash);
+		if (!hash)
+		{
+			// construct final message
+			Uint8 h[20];
+			WriteUint32(h,0,h0);
+			WriteUint32(h,4,h1);
+			WriteUint32(h,8,h2);
+			WriteUint32(h,12,h3);
+			WriteUint32(h,16,h4);
+			
+			return SHA1Hash(h);
+		}
+		else
+		{
+			return SHA1Hash((const Uint8*)hash->final().constData());
+		}
 	}
 }

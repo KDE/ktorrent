@@ -24,6 +24,11 @@
 #include "constants.h"
 #include "sha1hash.h"
 
+namespace QCA
+{
+	class Hash;
+}
+
 namespace bt
 {
 	
@@ -47,6 +52,7 @@ namespace bt
 		Uint8 tmp[64];
 		Uint32 tmp_len;
 		Uint32 total_len;
+		QCA::Hash* hash;
 	public:
 		SHA1HashGen();
 		~SHA1HashGen();
