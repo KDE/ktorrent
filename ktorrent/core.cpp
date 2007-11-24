@@ -419,6 +419,7 @@ namespace kt
 
 	void Core::start(bt::TorrentInterface* tc)
 	{
+		startUpdateTimer(); // restart update timer
 		TorrentStartResponse reason = qman->start(tc);
 		if (reason == NOT_ENOUGH_DISKSPACE || reason == QM_LIMITS_REACHED)
 			canNotStart(tc,reason);
@@ -658,6 +659,12 @@ namespace kt
 	{
 		qman->stopall(type);
 	}
+	
+	void Core::startUpdateTimer()
+	{
+		if (!update_timer.isActive())
+			update_timer.start(CORE_UPDATE_INTERVAL);
+	}
 
 	void Core::update()
 	{
@@ -665,18 +672,21 @@ namespace kt
 		AuthenticationMonitor::instance().update();
 		
 		QList<bt::TorrentInterface *>::iterator i = qman->begin();
-		//Uint32 down_speed = 0;
+		bool updated = false;
 		while (i != qman->end())
 		{
-			bool finished = false;
 			bt::TorrentInterface* tc = *i;
 			bool dummy = false;
 			if (tc->getStats().running || tc->isCheckingData(dummy))
 			{
 				tc->update();
+				updated = true;
 			}
 			i++;
 		}
+		
+		if (!updated)
+			update_timer.stop(); // stop timer when not necessary
 	}
 
 	void Core::makeTorrent(const QString & file,const QStringList & trackers,

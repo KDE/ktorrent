@@ -115,6 +115,11 @@ namespace kt
 		 * Load plugins. 
 		 */
 		void loadPlugins();
+		
+		/**
+		 * Start the update timer 
+		 */
+		void startUpdateTimer();
 
 	public slots:
 		/**

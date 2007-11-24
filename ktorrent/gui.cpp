@@ -192,6 +192,7 @@ namespace kt
 		ScanDlg* dlg = new ScanDlg(core,auto_import,this);
 		dlg->show();
 		dlg->execute(tc,silently);
+		core->startUpdateTimer(); // make sure update timer is running
 	}
 
 	bool GUI::selectFiles(bt::TorrentInterface* tc,bool* user,bool* start_torrent)

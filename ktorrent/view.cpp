@@ -405,6 +405,7 @@ namespace kt
 		ScanDlg* dlg = new ScanDlg(core,false,this);
 		dlg->show();
 		dlg->execute(sel.front(),false);
+		core->startUpdateTimer(); // make sure update timer of core is running
 	}
 
 	void View::showMenu(const QPoint & pos)
