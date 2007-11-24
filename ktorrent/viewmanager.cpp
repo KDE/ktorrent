@@ -24,12 +24,14 @@
 #include <groups/group.h>
 #include "gui.h"
 #include "view.h"
+#include "viewmodel.h"
 #include "viewmanager.h"
 
 namespace kt
 {
-	ViewManager::ViewManager(Group* all_group,GUI* gui) : QObject(gui),gui(gui),current(0),all_group(all_group)
+	ViewManager::ViewManager(Group* all_group,GUI* gui,Core* core) : QObject(gui),gui(gui),current(0),all_group(all_group)
 	{
+		model = new ViewModel(core,this);
 	}
 
 	ViewManager::~ViewManager()
@@ -39,7 +41,7 @@ namespace kt
 	/// Create a new view
 	View* ViewManager::newView(Core* core,QWidget* parent)
 	{
-		View* v = new View(core,parent);
+		View* v = new View(model,core,parent);
 		views.append(v);
 		connect(v,SIGNAL(currentTorrentChanged(View* ,bt::TorrentInterface* )),
 			this,SLOT(onCurrentTorrentChanged(View* ,bt::TorrentInterface* )));
@@ -129,6 +131,7 @@ namespace kt
 
 	void ViewManager::update()
 	{
+		model->update();
 		// check for all views if the caption needs to be updated
 		// and update the current view when we come accross it
 		foreach (View* v,views)

@@ -31,7 +31,7 @@
 #include <groups/group.h>
 #include "view.h"
 #include "core.h"
-#include "viewitem.h"
+#include "viewmodel.h"
 #include "viewmenu.h"
 #include "scandlg.h"
 #include "speedlimitsdlg.h"
@@ -42,7 +42,8 @@ using namespace bt;
 namespace kt
 {
 	
-	View::View(Core* core,QWidget* parent) : QTreeWidget(parent),core(core),group(0),num_torrents(0),num_running(0)
+	View::View(ViewModel* model,Core* core,QWidget* parent) 
+		: QTreeView(parent),core(core),group(0),num_torrents(0),num_running(0),model(model)
 	{
 		menu = new ViewMenu(core->getGroupManager(),this);
 		setContextMenuPolicy(Qt::CustomContextMenu);
@@ -51,42 +52,34 @@ namespace kt
 		setAlternatingRowColors(true);
 		setSelectionMode(QAbstractItemView::ExtendedSelection);
 		setSelectionBehavior(QAbstractItemView::SelectRows);
-
-		QStringList columns;
-		columns << i18n("Name") 
-			<< i18n("Status") 
-			<< i18n("Downloaded")
-			<< i18n("Size")
-			<< i18n("Uploaded") 
-			<< i18n("Down Speed")
-			<< i18n("Up Speed")
-			<< i18n("Time Left")
-			<< i18n("Seeders")
-			<< i18n("Leechers")
-			// xgettext: no-c-format
-			<< i18n("% Complete") 
-			<< i18n("Share Ratio")
-			<< i18n("Time Downloaded")
-			<< i18n("Time Seeded");
-		setHeaderLabels(columns);
-		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),this,SLOT(addTorrent(bt::TorrentInterface*)));
-		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(removeTorrent(bt::TorrentInterface*)));
+		
 		connect(this,SIGNAL(wantToRemove(bt::TorrentInterface*,bool )),core,SLOT(remove(bt::TorrentInterface*,bool )));
 		connect(this,SIGNAL(wantToStart( bt::TorrentInterface* )),core,SLOT(start( bt::TorrentInterface* )));
 		connect(this,SIGNAL(wantToStop( bt::TorrentInterface*, bool )),core,SLOT(stop( bt::TorrentInterface*, bool )));
 		connect(this,SIGNAL(customContextMenuRequested(const QPoint & ) ),this,SLOT(showMenu( const QPoint& )));
-		connect(this,SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
-			this,SLOT(onCurrentItemChanged(QTreeWidgetItem * ,QTreeWidgetItem *)));
-
-
-		kt::QueueManager* qman = core->getQueueManager();
-		for (QList<bt::TorrentInterface*>::iterator i = qman->begin();i != qman->end();i++)
-			addTorrent(*i);
 		
+
+
 		header()->setContextMenuPolicy(Qt::CustomContextMenu);
 		connect(header(),SIGNAL(customContextMenuRequested(const QPoint & ) ),this,SLOT(showHeaderMenu( const QPoint& )));
 		header_menu = new KMenu(this);
 		header_menu->addTitle(i18n("Columns"));
+		
+		QStringList columns;
+		columns << i18n("Name")
+				<< i18n("Status")
+				<< i18n("Downloaded")
+				<< i18n("Size")
+				<< i18n("Uploaded")
+				<< i18n("Down Speed")
+				<< i18n("Up Speed")
+				<< i18n("Time Left")
+				<< i18n("Seeders")
+				<< i18n("Leechers")
+				<< i18n("% Complete")
+				<< i18n("Share Ratio")
+				<< i18n("Time Downloaded")
+				<< i18n("Time Seeded");
 		
 		int idx = 0;
 		foreach (QString col,columns)
@@ -98,6 +91,9 @@ namespace kt
 		}
 		
 		connect(header_menu,SIGNAL(triggered(QAction* )),this,SLOT(onHeaderMenuItemTriggered(QAction*)));
+		setModel(model);
+		connect(selectionModel(),SIGNAL(currentChanged(const QModelIndex &,const QModelIndex &)),
+				this,SLOT(onCurrentItemChanged(const QModelIndex&, const QModelIndex&)));
 	}
 
 	View::~View()
@@ -114,24 +110,26 @@ namespace kt
 	{
 		Uint32 torrents = 0;
 		Uint32 running = 0;
+		Uint32 idx = 0;
+		QList<bt::TorrentInterface*> all;
+		model->allTorrents(all);
 		// update items which are part of the current group
 		// if they are not part of the current group, just hide them
-		for (QMap<bt::TorrentInterface*,ViewItem*>::iterator i = items.begin();i != items.end();i++)
+		foreach (bt::TorrentInterface* ti,all)
 		{
-			ViewItem* v = i.value();
-			bt::TorrentInterface* ti = i.key();
 			if (!group || (group && group->isMember(ti)))
 			{
-				if (v->isHidden())
-					v->setHidden(false);
+				if (isRowHidden(idx,QModelIndex()))
+					setRowHidden(idx,QModelIndex(),false);
 
-				v->update();
 				torrents++;
 				if (ti->getStats().running)
 					running++;
 			}
-			else if (!v->isHidden())
-				v->setHidden(true);
+			else if (!isRowHidden(idx,QModelIndex()))
+				setRowHidden(idx,QModelIndex(),true);
+			
+			idx++;
 		}
 
 		// update the caption
@@ -141,6 +139,7 @@ namespace kt
 			num_torrents = torrents;
 			return true;
 		}
+		
 		return false;
 	}
 
@@ -148,10 +147,10 @@ namespace kt
 	{
 		Uint32 torrents = 0;
 		Uint32 running = 0;
-		for (QMap<bt::TorrentInterface*,ViewItem*>::iterator i = items.begin();i != items.end();i++)
+		QList<bt::TorrentInterface*> all;
+		model->allTorrents(all);
+		foreach (bt::TorrentInterface* ti,all)
 		{
-			ViewItem* v = i.value();
-			bt::TorrentInterface* ti = i.key();
 			if (!group || (group && group->isMember(ti)))
 			{
 				torrents++;
@@ -166,6 +165,7 @@ namespace kt
 			num_torrents = torrents;
 			return true;
 		}
+		
 		return false;
 	}
 	
@@ -174,52 +174,33 @@ namespace kt
 		return QString("%1 %2/%3").arg(group->groupName()).arg(num_running).arg(num_torrents);
 	}
 
-
-	void View::addTorrent(bt::TorrentInterface* ti)
-	{
-		ViewItem* v = new ViewItem(ti,this);
-		items.insert(ti,v);
-	}
-
-	void View::removeTorrent(bt::TorrentInterface* ti)
-	{
-		ViewItem* v = items.value(ti);
-		if (!v)
-			return;
-
-		items.remove(ti);
-		delete v;
-	}
-
-
 	void View::startTorrents()
 	{
-		QList<QTreeWidgetItem *>  sel = selectedItems();
-		foreach(QTreeWidgetItem* i,sel)
+		QList<bt::TorrentInterface*> sel;
+		getSelection(sel);
+		foreach(bt::TorrentInterface* tc,sel)
 		{
-			ViewItem* v = (ViewItem*)i;
-			wantToStart(v->tc);
+			wantToStart(tc);
 		}
 	}
 
 	void View::stopTorrents()
 	{
-		QList<QTreeWidgetItem *>  sel = selectedItems();
-		foreach(QTreeWidgetItem* i,sel)
+		QList<bt::TorrentInterface*> sel;
+		getSelection(sel);
+		foreach(bt::TorrentInterface* tc,sel)
 		{
-			ViewItem* v = (ViewItem*)i;
-			wantToStop(v->tc,true);
+			wantToStop(tc,true);
 		}
 	}
 
 	void View::removeTorrents()
 	{
-		QList<QTreeWidgetItem *>  sel = selectedItems();
-		foreach(QTreeWidgetItem* i,sel)
+		QList<bt::TorrentInterface*> sel;
+		getSelection(sel);
+		foreach(bt::TorrentInterface* tc,sel)
 		{
-			bool dummy = false;
-			ViewItem* v = (ViewItem*)i;
-			TorrentInterface* tc = v->tc;
+			bool dummy;
 			if (tc && !tc->isCheckingData(dummy))
 			{	
 				const TorrentStats & s = tc->getStats();
@@ -247,7 +228,8 @@ namespace kt
 
 	void View::removeTorrentsAndData()
 	{
-		QList<QTreeWidgetItem *>  sel = selectedItems();
+		QList<bt::TorrentInterface*> sel;
+		getSelection(sel);
 		if (sel.count() == 0)
 			return;
 
@@ -255,11 +237,9 @@ namespace kt
 		if (KMessageBox::warningYesNo(this,msg, i18n("Remove Torrent"), KStandardGuiItem::remove(),KStandardGuiItem::cancel()) == KMessageBox::No)
 			return;
 
-		foreach(QTreeWidgetItem* i,sel)
+		foreach(bt::TorrentInterface* tc,sel)
 		{
 			bool dummy = false;
-			ViewItem* v = (ViewItem*)i;
-			TorrentInterface* tc = v->tc;
 			if (tc && !tc->isCheckingData(dummy))
 				wantToRemove(tc,true);
 		}
@@ -267,7 +247,9 @@ namespace kt
 
 	void View::startAllTorrents()
 	{
-		foreach (bt::TorrentInterface* tc,items.keys())
+		QList<bt::TorrentInterface*> all;
+		model->allTorrents(all);
+		foreach (bt::TorrentInterface* tc,all)
 		{
 			wantToStart(tc);
 		}
@@ -275,7 +257,9 @@ namespace kt
 
 	void View::stopAllTorrents()
 	{
-		foreach (bt::TorrentInterface* tc,items.keys())
+		QList<bt::TorrentInterface*> all;
+		model->allTorrents(all);
+		foreach (bt::TorrentInterface* tc,all)
 		{
 			wantToStop(tc,true);
 		}
@@ -285,7 +269,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (bt::TorrentInterface* tc,sel)
+		foreach(bt::TorrentInterface* tc,sel)
 		{
 			bool dummy;
 			if (tc && !tc->isCheckingData(dummy))
@@ -308,7 +292,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (bt::TorrentInterface* tc,sel)
+		foreach(bt::TorrentInterface* tc,sel)
 		{
 			if (tc->getStats().running) 
 				tc->updateTracker();
@@ -319,7 +303,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (bt::TorrentInterface* tc,sel)
+		foreach(bt::TorrentInterface* tc,sel)
 		{
 			tc->scrapeTracker();
 		}
@@ -329,7 +313,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (bt::TorrentInterface* tc,sel)
+		foreach(bt::TorrentInterface* tc,sel)
 		{
 			if (tc->readyForPreview() && !tc->getStats().multi_file_torrent)
 			{
@@ -343,7 +327,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (bt::TorrentInterface* tc,sel)
+		foreach(bt::TorrentInterface* tc,sel)
 		{
 			if (tc->getStats().multi_file_torrent)
 				new KRun(KUrl(tc->getStats().output_path), 0, true, true);
@@ -356,7 +340,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (bt::TorrentInterface* tc,sel)
+		foreach(bt::TorrentInterface* tc,sel)
 		{
 			new KRun(KUrl(tc->getTorDir()), 0, true, true);
 		}
@@ -369,7 +353,7 @@ namespace kt
 
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (bt::TorrentInterface* tc,sel)
+		foreach(bt::TorrentInterface* tc,sel)
 			group->removeTorrent(tc);
 
 		update();
@@ -385,7 +369,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (bt::TorrentInterface* tc,sel)
+		foreach(bt::TorrentInterface* tc,sel)
 		{
 			bool dummy;
 			if (tc && !tc->isCheckingData(dummy))
@@ -400,7 +384,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach (bt::TorrentInterface* tc,sel)
+		foreach(bt::TorrentInterface* tc,sel)
 		{
 			bool dummy;
 			if (tc && !tc->isCheckingData(dummy))
@@ -435,12 +419,7 @@ namespace kt
 
 	void View::getSelection(QList<bt::TorrentInterface*> & sel)
 	{
-		QList<QTreeWidgetItem *> cur_sel =  selectedItems();
-		foreach (QTreeWidgetItem* wi,cur_sel)
-		{
-			ViewItem* vi = (ViewItem*)wi;
-			sel.append(vi->tc);
-		}
+		model->torrentsFromIndexList(selectionModel()->selectedRows(),sel);
 	}
 
 	void View::saveState(KSharedConfigPtr cfg,int idx)
@@ -469,14 +448,13 @@ namespace kt
 
 	bt::TorrentInterface* View::getCurrentTorrent()
 	{
-		ViewItem* vi = (ViewItem*)currentItem();
-		return vi ? vi->tc : 0;
+		return model->torrentFromIndex(selectionModel()->currentIndex());
 	}
 
-	void View::onCurrentItemChanged(QTreeWidgetItem * current,QTreeWidgetItem * /*previous*/)
+	void View::onCurrentItemChanged(const QModelIndex & current,const QModelIndex & /*previous*/)
 	{
-		ViewItem* vi = (ViewItem*)current;
-		currentTorrentChanged(this,vi ? vi->tc : 0);
+		bt::TorrentInterface* tc = model->torrentFromIndex(current);
+		currentTorrentChanged(this,tc);
 	}
 
 	void View::onHeaderMenuItemTriggered(QAction* act)

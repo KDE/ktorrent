@@ -32,6 +32,7 @@ class QWidget;
 namespace kt
 {
 	class View;
+	class ViewModel;
 	class Core;
 	class GUI;
 	class Group;
@@ -40,7 +41,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		ViewManager(Group* all_group,GUI* gui);
+		ViewManager(Group* all_group,GUI* gui,Core* core);
 		virtual ~ViewManager();
 		
 		/// Create a new view
@@ -107,6 +108,7 @@ namespace kt
 		View* current;
 		QList<View*> views;
 		Group* all_group; 
+		ViewModel* model;
 	};
 }
 

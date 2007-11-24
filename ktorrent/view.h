@@ -31,18 +31,18 @@ class KMenu;
 namespace kt
 {
 	class Core;
-	class ViewItem;
 	class ViewMenu;
+	class ViewModel;
 	class Group;
 	class TorrentInterface;
 
 	
 	
-	class View : public QTreeWidget
+	class View : public QTreeView
 	{
 		Q_OBJECT
 	public:
-		View(Core* core,QWidget* parent);
+		View(ViewModel* model,Core* core,QWidget* parent);
 		virtual ~View();
 
 		/**
@@ -81,8 +81,6 @@ namespace kt
 		 * @return true If the view caption nees to be updated
 		 * */
 		bool update();
-		void addTorrent(bt::TorrentInterface* ti);
-		void removeTorrent(bt::TorrentInterface* ti);
 		void startTorrents();
 		void stopTorrents();
 		void removeTorrents();
@@ -104,7 +102,7 @@ namespace kt
 		void showMenu(const QPoint & pos);
 		void showHeaderMenu(const QPoint& pos);
 		void onHeaderMenuItemTriggered(QAction* act);
-		void onCurrentItemChanged(QTreeWidgetItem * current,QTreeWidgetItem * previous);
+		void onCurrentItemChanged(const QModelIndex & current,const QModelIndex & previous);
 
 	signals:
 		void wantToRemove(bt::TorrentInterface* tc,bool data_to);
@@ -115,12 +113,12 @@ namespace kt
 	private:
 		Core* core;
 		Group* group;
-		QMap<bt::TorrentInterface*,ViewItem*> items;
 		ViewMenu* menu;
 		KMenu* header_menu;
 		QMap<QAction*,int> column_idx_map;
 		bt::Uint32 num_torrents;
 		bt::Uint32 num_running;
+		ViewModel* model;
 	};
 }
 

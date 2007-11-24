@@ -71,7 +71,7 @@ namespace kt
 		core = new Core(this);
 		tray_icon = new TrayIcon(core,this);
 		setupActions();
-		view_man = new ViewManager(core->getGroupManager()->allGroup(),this);
+		view_man = new ViewManager(core->getGroupManager()->allGroup(),this,core);
 		group_view = new GroupView(core->getGroupManager(),view_man,actionCollection(),this);
 #warning "Find proper groups icon"
 		addToolWidget(group_view,"weather-clear",i18n("Groups"),DOCK_LEFT);

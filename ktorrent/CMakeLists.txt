@@ -8,7 +8,7 @@ set(ktorrent_SRC
 	gui.cpp 
 	app.cpp 
 	view.cpp 
-	viewitem.cpp 
+	viewmodel.cpp
 	viewmenu.cpp
 	viewmanager.cpp 
 	prefdialog.cpp 
