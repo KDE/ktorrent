@@ -99,6 +99,7 @@ namespace kt
 		void toggleDHT();
 		void togglePEX();
 		void scrape();
+		void moveData();
 		void showMenu(const QPoint & pos);
 		void showHeaderMenu(const QPoint& pos);
 		void onHeaderMenuItemTriggered(QAction* act);

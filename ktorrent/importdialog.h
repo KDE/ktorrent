@@ -54,11 +54,12 @@ namespace kt
 	
 	private:
 		void writeIndex(const QString & file,const bt::BitSet & chunks);
-		void linkTorFile(const QString & cache_dir,const QString & dnd_dir,
-						 const KUrl & data_url,const QString & fpath,bool & dnd);
+		void makeDirs(const QString & dnd_dir,const KUrl & data_url,const QString & fpath);
 		void saveStats(const QString & stats_file,const KUrl & data_url,bt::Uint64 imported,bool custom_output_name);
 		bt::Uint64 calcImportedBytes(const bt::BitSet & chunks,const bt::Torrent & tor);
 		void saveFileInfo(const QString & file_info_file,QList<bt::Uint32> & dnd);
+		void saveFileMap(const bt::Torrent & tor,const QString & tor_dir);
+		void saveFileMap(const QString & tor_dir,const QString & ddir);
 		
 		virtual void progress(bt::Uint32 num,bt::Uint32 total);
 		virtual void status(bt::Uint32 num_failed,bt::Uint32 num_downloaded);

@@ -48,6 +48,16 @@ namespace bt
 
 		/// Get the path of the file
 		QString getPath() const {return path;}
+		
+		/// Get the path of a file on disk
+		QString getPathOnDisk() const {return path_on_disk;}
+		
+		
+		/**
+		 * Set the actual path of the file on disk. 
+		 * @param p The path
+		 */
+		void setPathOnDisk(const QString & p) {path_on_disk = p;}
 
 		/// Get the size of the file
 		Uint64 getSize() const {return size;}
@@ -109,6 +119,7 @@ namespace bt
 		
 	protected:
 		QString path;
+		QString path_on_disk;
 		Uint64 size;
 		Uint32 first_chunk;
 		Uint32 last_chunk;

@@ -13,3 +13,4 @@ silently)
 - Make tracker url and status selectable in tracker tab
 - Switch to QCA2 for SHA1 hash generation (old code is still there in case QCA::isSupported("sha1") fails)
 - Shutdown update timer when not necessary
+- Stop using symlinks and use a file which contains the location of each file of a torrent

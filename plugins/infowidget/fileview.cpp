@@ -214,7 +214,7 @@ namespace kt
 			if (!file.isNull())
 			{
 				open_action->setEnabled(true);
-				preview_path = "cache" + bt::DirSeparator() + file.getPath();
+				preview_path = file.getPathOnDisk();
 				
 				download_first_action->setEnabled(file.getPriority() != FIRST_PRIORITY);
 				download_normal_action->setEnabled(file.getPriority() != NORMAL_PRIORITY);
@@ -240,11 +240,11 @@ namespace kt
 			if (s.multi_file_torrent)
 			{
 				FileTreeDirItem* dir = ((FileTreeDirItem*)item);
-				preview_path = "cache" + dir->getPath();
+				preview_path = curr_tc->getDataDir() + dir->getPath();
 			}
 			else
 			{
-				preview_path = "cache";
+				preview_path = curr_tc->getStats().output_path;
 			}
 		}
 
@@ -253,7 +253,7 @@ namespace kt
 	
 	void FileView::open()
 	{
-		new KRun(KUrl(curr_tc->getTorDir() + preview_path), 0, true, true);
+		new KRun(KUrl(preview_path), 0, true, true);
 	}
 	
 	void FileView::changePriority(bt::Priority newpriority)

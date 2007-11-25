@@ -21,6 +21,7 @@
 #include <qdir.h>
 #include <qstringlist.h>
 #include <qfileinfo.h>
+#include <QTextStream>
 #include <klocale.h>
 #include <util/file.h>
 #include <util/fileops.h>
@@ -42,12 +43,27 @@ namespace bt
 	static Uint64 FileOffset(Chunk* c,const TorrentFile & f,Uint64 chunk_size);
 	static Uint64 FileOffset(Uint32 cindex,const TorrentFile & f,Uint64 chunk_size);
 	static void DeleteEmptyDirs(const QString & output_dir,const QString & fpath);
+	
+	static void MakeFilePath(const QString & file)
+	{
+		QStringList sl = file.split(bt::DirSeparator());
+		QString ctmp = bt::DirSeparator();
+		
+		for (Uint32 i = 0;i < sl.count() - 1;i++)
+		{
+			ctmp += sl[i];
+			if (!bt::Exists(ctmp))
+				MakeDir(ctmp);
+			
+			ctmp += bt::DirSeparator();
+		}
+	}
+	
 
 	MultiFileCache::MultiFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir,bool custom_output_name) : Cache(tor, tmpdir,datadir)
 	{
 		cache_dir = tmpdir + "cache" + bt::DirSeparator();
-		if (datadir.length() == 0)
-			this->datadir = guessDataDir();
+		
 		if (!custom_output_name)
 			output_dir = this->datadir + tor.getNameSuggestion() + bt::DirSeparator();
 		else
@@ -59,6 +75,58 @@ namespace bt
 	MultiFileCache::~MultiFileCache()
 	{}
 	
+	void MultiFileCache::loadFileMap()
+	{
+		QString file_map = tmpdir + "file_map";
+		if (!bt::Exists(file_map))
+		{
+			QFile fptr(file_map);
+			if (!fptr.open(QIODevice::WriteOnly))
+				throw Error(i18n("Failed to create %1 : %2",file_map,fptr.errorString()));
+			
+			QTextStream out(&fptr);
+			// file map doesn't exist, so create it based upon the output_dir
+			Uint32 num = tor.getNumFiles();
+			for (Uint32 i = 0;i < num;i++)
+			{
+				TorrentFile & tf = tor.getFile(i);
+				tf.setPathOnDisk(output_dir + tf.getPath());
+				out << tf.getPathOnDisk() << ::endl;
+			}
+		}
+		else
+		{
+			QFile fptr(tmpdir + "file_map");
+			if (!fptr.open(QIODevice::ReadOnly))
+				throw Error(i18n("Failed to open %1 : %2",file_map,fptr.errorString()));
+			
+			Uint32 idx = 0;
+			while (!fptr.atEnd() && idx < tor.getNumFiles())
+			{
+				QString path = fptr.readLine().trimmed();
+				tor.getFile(idx).setPathOnDisk(path);
+				idx++;
+			}
+		}
+	}
+	
+	void MultiFileCache::saveFileMap()
+	{
+		QString file_map = tmpdir + "file_map";
+		QFile fptr(file_map);
+		if (!fptr.open(QIODevice::WriteOnly))
+			throw Error(i18n("Failed to create %1 : %2",file_map,fptr.errorString()));
+			
+		QTextStream out(&fptr);
+			// file map doesn't exist, so create it based upon the output_dir
+		Uint32 num = tor.getNumFiles();
+		for (Uint32 i = 0;i < num;i++)
+		{
+			TorrentFile & tf = tor.getFile(i);
+			out << tf.getPathOnDisk() << ::endl;
+		}
+	}
+	/*
 	QString MultiFileCache::guessDataDir()
 	{
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
@@ -86,6 +154,7 @@ namespace bt
 		
 		return QString::null;
 	}
+	*/
 	
 	QString MultiFileCache::getOutputPath() const
 	{
@@ -114,7 +183,7 @@ namespace bt
 						files.erase(i);
 					
 					fd = new CacheFile();
-					fd->open(cache_dir + tf.getPath(),tf.getSize());
+					fd->open(tf.getPathOnDisk(),tf.getSize());
 					files.insert(i,fd);
 				}
 				else
@@ -141,7 +210,6 @@ namespace bt
 	void MultiFileCache::changeTmpDir(const QString& ndir)
 	{
 		Cache::changeTmpDir(ndir);
-		cache_dir = tmpdir + "cache/";
 		QString dnd_dir = tmpdir + "dnd" + bt::DirSeparator();
 		
 		// change paths for individual files, it should not
@@ -155,12 +223,6 @@ namespace bt
 				if (dfd)
 					dfd->changePath(dnd_dir + tf.getPath() + ".dnd");
 			}
-			else
-			{
-				CacheFile* fd = files.find(i);
-				if (fd)
-					fd->changePath(cache_dir + tf.getPath());
-			}
 		}
 	}
 	
@@ -171,23 +233,7 @@ namespace bt
 			output_dir += bt::DirSeparator();
 		
 		datadir = output_dir;
-
-		if (!bt::Exists(cache_dir))
-			MakeDir(cache_dir);
-		
-		for (Uint32 i = 0;i < tor.getNumFiles();i++)
-		{
-			TorrentFile & tf = tor.getFile(i);
-			if (!tf.doNotDownload())
-			{
-				QString fpath = tf.getPath();
-				if (bt::Exists(output_dir + fpath))
-				{
-					bt::Delete(cache_dir + fpath,true); // delete any existing symlinks
-					bt::SymLink(output_dir + fpath,cache_dir + fpath,true); // create new one
-				}
-			}
-		}
+		saveFileMap();
 	}
 	
 	void MultiFileCache::moveDataFiles(const QString & ndir)
@@ -211,23 +257,17 @@ namespace bt
 
 				// check if every directory along the path exists, and if it doesn't
 				// create it
-				QStringList sl = ( nd + tf.getPath() ).split ( bt::DirSeparator() );
-				QString odir = bt::DirSeparator();
-				for ( Uint32 i = 0;i < sl.count() - 1;i++ )
-				{
-					odir += sl[i] + bt::DirSeparator();
-					if ( !bt::Exists ( odir ) )
-						bt::MakeDir ( odir );
-				}
-
-				bt::Move ( output_dir + tf.getPath(),nd + tf.getPath() );
-				success[output_dir + tf.getPath() ] = nd + tf.getPath();
+				MakeFilePath(nd + tf.getPath());
+				
+				bt::Move ( tf.getPathOnDisk(),nd + tf.getPath() );
+				success[tf.getPathOnDisk() ] = nd + tf.getPath();
 			}
 
 			for ( Uint32 i = 0;i < tor.getNumFiles();i++ )
 			{
 				TorrentFile & tf = tor.getFile ( i );
-			// check for empty directories and delete them
+				tf.setPathOnDisk(nd + tf.getPath());
+				// check for empty directories and delete them
 				DeleteEmptyDirs ( output_dir,tf.getPath() );
 			}
 		}
@@ -247,8 +287,6 @@ namespace bt
 
 	void MultiFileCache::create()
 	{
-		if (!bt::Exists(cache_dir))
-			MakeDir(cache_dir);
 		if (!bt::Exists(output_dir))
 			MakeDir(output_dir);
 		if (!bt::Exists(tmpdir + "dnd"))
@@ -261,6 +299,8 @@ namespace bt
 			touch(tf);
 		}
 	}
+	
+	
 
 	void MultiFileCache::touch(TorrentFile & tf)
 	{
@@ -268,51 +308,26 @@ namespace bt
 		bool dnd = tf.doNotDownload();
 		// first split fpath by / separator 
 		QStringList sl = fpath.split(bt::DirSeparator());
-		// create all necessary subdirs
-		QString ctmp = cache_dir;
-		QString otmp = output_dir;
 		QString dtmp = tmpdir + "dnd" + bt::DirSeparator();
-		for (int i = 0;i < sl.count() - 1;i++)
-		{
-			otmp += sl[i];
-			ctmp += sl[i];
-			dtmp += sl[i];
-			// we need to make the same directory structure in the cache,
-			// the output_dir and the dnd directory
-			if (!bt::Exists(ctmp))
-				MakeDir(ctmp);
-			if (!bt::Exists(otmp))
-				MakeDir(otmp);
-			if (!bt::Exists(dtmp))
-				MakeDir(dtmp);
-			otmp += bt::DirSeparator();
-			ctmp += bt::DirSeparator();
-			dtmp += bt::DirSeparator();
-		}
+		MakeFilePath(dtmp + fpath); // make DND dir
 		
-		
-		bt::Delete(cache_dir + fpath,true); // delete any existing symlinks
-
 		// then make the file
-		QString tmp = dnd ? tmpdir + "dnd" + bt::DirSeparator() : output_dir;
 		if (dnd)
 		{
-			// only symlink, when we open the files a default dnd file will be made if the file is corrupt or doesn't exist
-			bt::SymLink(tmp + fpath + ".dnd",cache_dir + fpath);
+			bt::Touch(tmpdir + "dnd" + bt::DirSeparator() + fpath);
 		}
 		else
 		{
-			if (!bt::Exists(tmp + fpath))
+			MakeFilePath(tf.getPathOnDisk());
+			if (!bt::Exists(tf.getPathOnDisk()))
 			{
-				bt::Touch(tmp + fpath);
+				bt::Touch(tf.getPathOnDisk());
 			}
 			else
 			{
 				preexisting_files = true;
 				tf.setPreExisting(true); // mark the file as preexisting
 			}
-			
-			bt::SymLink(tmp + fpath,cache_dir + fpath);
 		}
 	}
 
@@ -505,7 +520,7 @@ namespace bt
 			return;
 		
 		// if it is !dnd and it is already in the output_dir tree do nothing
-		if (!dnd && bt::Exists(output_dir + tf->getPath()))
+		if (!dnd && bt::Exists(tf->getPathOnDisk()))
 			return;
 		
 		
@@ -520,10 +535,8 @@ namespace bt
 				// save first and last chunk of the file
 				saveFirstAndLastChunk(tf,dnd_dir + tf->getPath(),dnd_dir + tf->getPath() + ".dnd");
 				// delete symlink
-				bt::Delete(cache_dir + tf->getPath());
+				bt::Delete(cache_dir + tf->getPath(),true);
 				bt::Delete(dnd_dir + tf->getPath()); // delete old dnd file
-				// recreate it
-				bt::SymLink(dnd_dir + tf->getPath() + ".dnd",cache_dir + tf->getPath());
 				
 				files.erase(tf->getIndex());
 				dfd = new DNDFile(dnd_dir + tf->getPath() + ".dnd");
@@ -532,35 +545,27 @@ namespace bt
 			}
 			else if (dnd)
 			{
+				QString dnd_file = dnd_dir + tf->getPath() + ".dnd";
 				// save first and last chunk of the file
-				if (bt::Exists(output_dir + tf->getPath()))
-					saveFirstAndLastChunk(tf,output_dir + tf->getPath(),dnd_dir + tf->getPath() + ".dnd");
+				if (bt::Exists(tf->getPathOnDisk()))
+					saveFirstAndLastChunk(tf,tf->getPathOnDisk(),dnd_file);
 				
-				// delete symlink
-				bt::Delete(cache_dir + tf->getPath());
 				// delete data file
-				bt::Delete(output_dir + tf->getPath(),true);
-				// recreate it
-				bt::SymLink(dnd_dir + tf->getPath() + ".dnd",cache_dir + tf->getPath());
+				bt::Delete(tf->getPathOnDisk(),true);
 				
 				files.erase(tf->getIndex());
-				dfd = new DNDFile(dnd_dir + tf->getPath() + ".dnd");
+				dfd = new DNDFile(dnd_file);
 				dfd->checkIntegrity();
 				dnd_files.insert(tf->getIndex(),dfd);
 			}
 			else
 			{
 				// recreate the file
-				recreateFile(tf,dnd_dir + tf->getPath() + ".dnd",output_dir + tf->getPath());
-				// delete symlink and dnd file
-				bt::Delete(cache_dir + tf->getPath());
+				recreateFile(tf,dnd_dir + tf->getPath() + ".dnd",tf->getPathOnDisk());
 				bt::Delete(dnd_dir + tf->getPath() + ".dnd");
-				// recreate it
-				bt::SymLink(output_dir + tf->getPath(),cache_dir + tf->getPath());
 				dnd_files.erase(tf->getIndex());
-				
 				fd = new CacheFile();
-				fd->open(output_dir + tf->getPath(),tf->getSize());
+				fd->open(tf->getPathOnDisk(),tf->getSize());
 				files.insert(tf->getIndex(),fd);
 			}
 		}
@@ -715,28 +720,12 @@ namespace bt
 			if (tf.doNotDownload())
 				continue;
 			
-			QString p = cache_dir + tf.getPath();
-			QFileInfo fi(p);
-			// always use symlink first, file might have been moved
-			if (!fi.exists())
+			QString p = tf.getPathOnDisk();
+			if (!bt::Exists(p))
 			{
 				ret = true;
-				p = fi.readLink();
-				if (p.isNull())
-					p = output_dir + tf.getPath();
-				sl.append(p);
 				tf.setMissing(true);
-			}
-			else
-			{
-				p = output_dir + tf.getPath();
-				// no symlink so try the actual file
-				if (!bt::Exists(p))
-				{
-					ret = true;
-					sl.append(p);
-					tf.setMissing(true);
-				}
+				sl.append(p);
 			}
 		}
 		return ret;
@@ -791,15 +780,15 @@ namespace bt
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
 			TorrentFile & tf = tor.getFile(i);
-			QString fpath = tf.getPath();
+			QString fpath = tf.getPathOnDisk();
 			if (!tf.doNotDownload())
 			{
 				// first delete the file
-				bt::Delete(output_dir + fpath);
+				bt::Delete(fpath);
 			}
 			
 			// check for subdirectories
-			DeleteEmptyDirs(output_dir,fpath);
+			DeleteEmptyDirs(output_dir,tf.getPath());
 		}
 	}
 	
@@ -825,7 +814,7 @@ namespace bt
 					// doesn't exist yet, must be before open is called
 					// so create one and delete it right after
 					cf = new CacheFile();
-					cf->open(cache_dir + tf.getPath(),tf.getSize());
+					cf->open(tf.getPathOnDisk(),tf.getSize());
 					sum += cf->diskUsage();
 					delete cf;
 				}

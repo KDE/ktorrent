@@ -85,7 +85,7 @@ namespace bt
 		stats.session_bytes_downloaded = 0;
 		stats.session_bytes_uploaded = 0;
 		istats.session_bytes_uploaded = 0;
-		old_datadir = QString::null;
+		old_tordir = QString::null;
 		stats.status = NOT_STARTED;
 		stats.autostart = true;
 		stats.user_controlled = false;
@@ -133,6 +133,11 @@ namespace bt
 		delete psman;
 		delete tor;
 		delete m_eta;
+	}
+	
+	bool TorrentControl::updateNeeded() const
+	{
+		return stats.running || moving_files || prealloc_thread;
 	}
 
 	void TorrentControl::update()
@@ -374,10 +379,10 @@ namespace bt
 	{
 		// continues start after the prealloc_thread has finished preallocation	
 		pman->start();
-		pman->loadPeerList(datadir + "peer_list");
+		pman->loadPeerList(tordir + "peer_list");
 		try
 		{
-			down->loadDownloads(datadir + "current_chunks");
+			down->loadDownloads(tordir + "current_chunks");
 		}
 		catch (Error & e)
 		{
@@ -439,7 +444,7 @@ namespace bt
 
 			try
 			{
-				down->saveDownloads(datadir + "current_chunks");
+				down->saveDownloads(tordir + "current_chunks");
 			}
 			catch (Error & e)
 			{
@@ -456,7 +461,7 @@ namespace bt
 				stats.autostart = false;
 			}
 		}
-		pman->savePeerList(datadir + "peer_list");
+		pman->savePeerList(tordir + "peer_list");
 		pman->stop();
 		pman->closeAllConnections();
 		pman->clearDeadPeers();
@@ -507,7 +512,7 @@ namespace bt
 		initInternal(qman,tmpdir,ddir,default_save_dir,torrent.startsWith(tmpdir));
 		
 		// copy torrent in tor dir
-		QString tor_copy = datadir + "torrent";
+		QString tor_copy = tordir + "torrent";
 		if (tor_copy != torrent)
 		{
 			bt::CopyFile(torrent,tor_copy);
@@ -535,7 +540,7 @@ namespace bt
 		
 		initInternal(qman,tmpdir,ddir,default_save_dir,true);
 		// copy data into torrent file
-		QString tor_copy = datadir + "torrent";
+		QString tor_copy = tordir + "torrent";
 		QFile fptr(tor_copy);
 		if (!fptr.open(QIODevice::WriteOnly))
 			throw Error(i18n("Unable to create %1 : %2",tor_copy,fptr.errorString()));
@@ -564,18 +569,18 @@ namespace bt
 	
 	void TorrentControl::setupDirs(const QString & tmpdir,const QString & ddir)
 	{
-		datadir = tmpdir;
+		tordir = tmpdir;
 		
-		if (!datadir.endsWith(DirSeparator()))
-			datadir += DirSeparator();
+		if (!tordir.endsWith(DirSeparator()))
+			tordir += DirSeparator();
 
 		outputdir = ddir.trimmed();
 		if (outputdir.length() > 0 && !outputdir.endsWith(DirSeparator()))
 			outputdir += DirSeparator();
 		
-		if (!bt::Exists(datadir))
+		if (!bt::Exists(tordir))
 		{
-			bt::MakeDir(datadir);
+			bt::MakeDir(tordir);
 		}
 	}
 	
@@ -589,7 +594,7 @@ namespace bt
 		stats.priv_torrent = tor->isPrivate();
 		
 		// check the stats file for the custom_output_name variable
-		StatsFile st(datadir + "stats");
+		StatsFile st(tordir + "stats");
 		if (st.hasKey("CUSTOM_OUTPUT_NAME") && st.readULong("CUSTOM_OUTPUT_NAME") == 1)
 		{
 			istats.custom_output_name = true;
@@ -612,15 +617,10 @@ namespace bt
 
 		// Create chunkmanager, load the index file if it exists
 		// else create all the necesarry files
-		cman = new ChunkManager(*tor,datadir,outputdir,istats.custom_output_name);
-		// outputdir is null, see if the cache has figured out what it is
-		if (outputdir.length() == 0)
-			outputdir = cman->getDataDir();
-		
-		// store the outputdir into the output_path variable, so others can access it	
+		cman = new ChunkManager(*tor,tordir,outputdir,istats.custom_output_name);
 		
 		connect(cman,SIGNAL(updateStats()),this,SLOT(updateStats()));
-		if (bt::Exists(datadir + "index"))
+		if (bt::Exists(tordir + "index"))
 			cman->loadIndexFile();
 
 		stats.completed = cman->completed();
@@ -673,7 +673,7 @@ namespace bt
 		try
 		{
 			Uint64 db = down->bytesDownloaded();
-			Uint64 cb = down->getDownloadedBytesOfCurrentChunksFile(datadir + "current_chunks");
+			Uint64 cb = down->getDownloadedBytesOfCurrentChunksFile(tordir + "current_chunks");
 			istats.prev_bytes_dl = db + cb;
 				
 		//	Out() << "Downloaded : " << BytesToString(db) << endl;
@@ -779,35 +779,35 @@ namespace bt
 		choke->update(stats.completed,stats);
 	}
 
-	bool TorrentControl::changeDataDir(const QString & new_dir)
+	bool TorrentControl::changeTorDir(const QString & new_dir)
 	{
-		int pos = datadir.lastIndexOf(bt::DirSeparator(),-2);
+		int pos = tordir.lastIndexOf(bt::DirSeparator(),-2);
 		if (pos == -1)
 		{
-			Out(SYS_GEN|LOG_DEBUG) << "Could not find torX part in " << datadir << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Could not find torX part in " << tordir << endl;
 			return false;
 		}
 		
-		QString ndatadir = new_dir + datadir.mid(pos + 1);
+		QString ntordir = new_dir + tordir.mid(pos + 1);
 		
-		Out(SYS_GEN|LOG_DEBUG) << datadir << " -> " << ndatadir << endl;
+		Out(SYS_GEN|LOG_DEBUG) << tordir << " -> " << ntordir << endl;
 		try
 		{
-			bt::Move(datadir,ndatadir);
-			old_datadir = datadir;
-			datadir = ndatadir;
+			bt::Move(tordir,ntordir);
+			old_tordir = tordir;
+			tordir = ntordir;
 		}
 		catch (Error & err)
 		{
-			Out(SYS_GEN|LOG_IMPORTANT) << "Could not move " << datadir << " to " << ndatadir << endl;
+			Out(SYS_GEN|LOG_IMPORTANT) << "Could not move " << tordir << " to " << ntordir << endl;
 			return false;
 		}
 		
-		cman->changeDataDir(datadir);
+		cman->changeDataDir(tordir);
 		return true;
 	}
 	
-	bool TorrentControl::changeOutputDir(const QString & new_dir,bool move_files)
+	bool TorrentControl::changeOutputDir(const QString & ndir,bool move_files)
 	{
 		bool start = false;
 		int old_prio = getPriority();
@@ -818,6 +818,9 @@ namespace bt
 			start = true;
 			this->stop(false);
 		}
+		QString new_dir = ndir;
+		if (!new_dir.endsWith(bt::DirSeparator()))
+			new_dir += bt::DirSeparator();
 		
 		moving_files = true;
 		try
@@ -875,13 +878,13 @@ namespace bt
 	{
 		try
 		{
-			bt::Move(datadir,old_datadir);
-			datadir = old_datadir;
-			cman->changeDataDir(datadir);
+			bt::Move(tordir,old_tordir);
+			tordir = old_tordir;
+			cman->changeDataDir(tordir);
 		}
 		catch (Error & err)
 		{
-			Out(SYS_GEN|LOG_IMPORTANT) << "Could not move " << datadir << " to " << old_datadir << endl;
+			Out(SYS_GEN|LOG_IMPORTANT) << "Could not move " << tordir << " to " << old_tordir << endl;
 		}
 	}
 
@@ -941,7 +944,7 @@ namespace bt
 
 	void TorrentControl::saveStats()
 	{
-		StatsFile st(datadir + "stats");
+		StatsFile st(tordir + "stats");
 
 		st.write("OUTPUTDIR", cman->getDataDir());			
 		
@@ -985,7 +988,7 @@ namespace bt
 
 	void TorrentControl::loadStats()
 	{
-		StatsFile st(datadir + "stats");
+		StatsFile st(tordir + "stats");
 		
 		Uint64 val = st.readUint64("UPLOADED");
 		// stats.session_bytes_uploaded will be calculated based upon prev_bytes_ul
@@ -1067,7 +1070,7 @@ namespace bt
 
 	void TorrentControl::loadOutputDir()
 	{
-		StatsFile st(datadir + "stats");
+		StatsFile st(tordir + "stats");
 		if (!st.hasKey("OUTPUTDIR"))
 			return;
 		
@@ -1219,20 +1222,20 @@ namespace bt
 
 	void TorrentControl::migrateTorrent(const QString & default_save_dir)
 	{
-		if (bt::Exists(datadir + "current_chunks") && bt::IsPreMMap(datadir + "current_chunks"))
+		if (bt::Exists(tordir + "current_chunks") && bt::IsPreMMap(tordir + "current_chunks"))
 		{
 			// in case of error copy torX dir to migrate-failed-tor
-			QString dd = datadir;
+			QString dd = tordir;
 			int pos = dd.lastIndexOf("tor");
 			if (pos != - 1)
 			{
 				dd = dd.replace(pos,3,"migrate-failed-tor");
-				Out() << "Copying " << datadir << " to " << dd << endl;
-				bt::CopyDir(datadir,dd,true);
+				Out() << "Copying " << tordir << " to " << dd << endl;
+				bt::CopyDir(tordir,dd,true);
 			}
 				
-			bt::MigrateCurrentChunks(*tor,datadir + "current_chunks");
-			if (outputdir.isNull() && bt::IsCacheMigrateNeeded(*tor,datadir + "cache"))
+			bt::MigrateCurrentChunks(*tor,tordir + "current_chunks");
+			if (outputdir.isNull() && bt::IsCacheMigrateNeeded(*tor,tordir + "cache"))
 			{
 				// if the output dir is NULL
 				if (default_save_dir.isNull())
@@ -1255,7 +1258,7 @@ namespace bt
 				if (!outputdir.endsWith(bt::DirSeparator()))
 					outputdir += bt::DirSeparator();
 				
-				bt::MigrateCache(*tor,datadir + "cache",outputdir);
+				bt::MigrateCache(*tor,tordir + "cache",outputdir);
 			}
 			
 			// delete backup
@@ -1387,9 +1390,9 @@ namespace bt
 	
 		dc->setListener(lst);
 		
-		dcheck_thread = new DataCheckerThread(dc,stats.output_path,*tor,datadir + "dnd" + bt::DirSeparator());
+		dcheck_thread = new DataCheckerThread(dc,stats.output_path,*tor,tordir + "dnd" + bt::DirSeparator());
 		
-		// dc->check(stats.output_path,*tor,datadir + "dnd" + bt::DirSeparator());
+		// dc->check(stats.output_path,*tor,tordir + "dnd" + bt::DirSeparator());
 		dcheck_thread->start();
 	}
 	
@@ -1743,7 +1746,6 @@ namespace bt
 			delete prealloc_thread;
 			prealloc_thread = 0;
 			prealloc = true; // still need to do preallocation
-			return;
 		}
 		else
 		{
@@ -1757,6 +1759,7 @@ namespace bt
 		}
 	}
 
+	
 }
 
 #include "torrentcontrol.moc"

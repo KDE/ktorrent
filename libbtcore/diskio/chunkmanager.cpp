@@ -58,6 +58,8 @@ namespace bt
 		else
 			cache = new SingleFileCache(tor,tmpdir,datadir);
 		
+		cache->loadFileMap();
+		
 		index_file = tmpdir + "index";
 		file_info_file = tmpdir + "file_info";
 		file_priority_file = tmpdir + "file_priority";

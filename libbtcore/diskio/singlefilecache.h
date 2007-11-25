@@ -56,6 +56,8 @@ namespace bt
 		virtual bool hasMissingFiles(QStringList & sl);
 		virtual void deleteDataFiles();
 		virtual Uint64 diskUsage();
+		virtual void loadFileMap();
+		virtual void saveFileMap();
 	};
 
 }

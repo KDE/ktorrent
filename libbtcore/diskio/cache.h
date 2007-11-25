@@ -50,6 +50,17 @@ namespace bt
 		Cache(Torrent & tor,const QString & tmpdir,const QString & datadir);
 		virtual ~Cache();
 
+		/**
+		 * Load the file map of a torrent.
+		 * If it doesn't exist, it needs to be created.
+		 */
+		virtual void loadFileMap() = 0;
+		
+		/**
+		 * Save the file map of a torrent
+		 */
+		virtual void saveFileMap() = 0;
+		
 		/// Get the datadir
 		QString getDataDir() const {return datadir;}
 		

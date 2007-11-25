@@ -54,6 +54,8 @@ namespace kt
 
 		m_ok->setGuiItem(KStandardGuiItem::ok());
 		m_cancel->setGuiItem(KStandardGuiItem::cancel());
+		
+		m_downloadLocation->setMode(KFile::File|KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
 	}
 
 	FileSelectDlg::~FileSelectDlg()
@@ -125,6 +127,7 @@ namespace kt
 				// we have excluded a preexsting file
 				pe_ex.append(file.getPath());
 			}
+			file.setPathOnDisk(path);
 		}
 		
 		if (pe_ex.count() > 0)

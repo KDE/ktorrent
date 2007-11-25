@@ -269,6 +269,7 @@ namespace kt
 
 	ViewModel::ViewModel(Core* core,QObject* parent) : QAbstractTableModel(parent),core(core)
 	{
+		
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),this,SLOT(addTorrent(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(removeTorrent(bt::TorrentInterface*)));
 		
@@ -414,6 +415,20 @@ namespace kt
 			const Item & item = *i;
 			tlist.append(item.tc);
 		}
+	}
+	
+	bool ViewModel::insertRows(int row,int count,const QModelIndex & parent)
+	{
+		beginInsertRows(QModelIndex(),row,row + count - 1);
+		endInsertRows();
+		return true;
+	}
+	
+	bool ViewModel::removeRows(int row,int count,const QModelIndex & parent) 
+	{
+		beginRemoveRows(QModelIndex(),row,row + count - 1);
+		endRemoveRows();
+		return true;
 	}
 }
 

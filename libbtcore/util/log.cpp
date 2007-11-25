@@ -128,7 +128,9 @@ namespace bt
 			if (!rotate_job)
 			{
 				QString final = QDateTime::currentDateTime().toString() + ": " + tmp;
-				*out << final << ::endl;
+				if (out)
+					*out << final << ::endl;
+				
 				fptr->flush();
 				if (to_cout)
 					std::cout << final.toLocal8Bit().constData() << std::endl;;

@@ -51,6 +51,8 @@ namespace kt
 		virtual int columnCount(const QModelIndex & parent) const;
 		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
 		virtual QVariant data(const QModelIndex & index, int role) const;
+		virtual bool removeRows(int row,int count,const QModelIndex & parent);
+		virtual bool insertRows(int row,int count,const QModelIndex & parent);
 		
 		/**
 		 * Emit the data changed signal

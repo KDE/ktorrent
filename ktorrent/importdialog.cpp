@@ -128,24 +128,24 @@ namespace kt
 			if (tor.isMultiFile())
 			{
 				QList<Uint32> dnd_files;
-				bool dnd = false;
-				// first make tor_dir/cache/
-				QString cache_dir = tor_dir + "cache" + bt::DirSeparator();
+				
+				// first make tor_dir/dnd
 				QString dnd_dir = tor_dir + "dnd" + bt::DirSeparator();
-				if (!bt::Exists(cache_dir))
-					MakeDir(cache_dir);
 				if (!bt::Exists(dnd_dir))
 					MakeDir(dnd_dir);
 				
+				QString ddir = data_url.path();
+				if (!ddir.endsWith(bt::DirSeparator()))
+					ddir += bt::DirSeparator();
 				
-				// make all sub symlinks
 				for (Uint32 i = 0;i < tor.getNumFiles();i++)
 				{
-					linkTorFile(cache_dir,dnd_dir,data_url,tor.getFile(i).getPath(),dnd);
-					if (dnd)
-						dnd_files.append(i);
-					dnd = false;
+					TorrentFile & tf = tor.getFile(i);
+					makeDirs(dnd_dir,data_url,tf.getPath());
+					tf.setPathOnDisk(ddir + tf.getPath());
 				}
+				
+				saveFileMap(tor,tor_dir);
 				
 				QString durl = data_url.path();
 				if (durl.endsWith(bt::DirSeparator()))
@@ -165,11 +165,11 @@ namespace kt
 			else
 			{
 				// single file, just symlink the data_url to tor_dir/cache
-				bt::SymLink(data_url.path(),tor_dir + "cache");
 				QString durl = data_url.path();
 				int ds = durl.lastIndexOf(bt::DirSeparator());
 				durl = durl.left(ds);
 				saveStats(tor_dir + "stats",durl,imported,false);
+				saveFileMap(tor_dir,data_url.path());
 			}
 			
 			// everything went OK, so load the whole shabang and start downloading
@@ -271,13 +271,11 @@ namespace kt
 		}
 	}
 	
-	void ImportDialog::linkTorFile(const QString & cache_dir,const QString & dnd_dir,
-								   const KUrl & data_url,const QString & fpath,bool & dnd)
+	void ImportDialog::makeDirs(const QString & dnd_dir,const KUrl & data_url,const QString & fpath)
 	{
 		QStringList sl = fpath.split(bt::DirSeparator());
 
 		// create all necessary subdirs
-		QString ctmp = cache_dir;
 		QString otmp = data_url.path();
 		if (!otmp.endsWith(bt::DirSeparator()))
 			otmp += bt::DirSeparator();
@@ -286,33 +284,13 @@ namespace kt
 		for (Uint32 i = 0;i < sl.count() - 1;i++)
 		{
 			otmp += sl[i];
-			ctmp += sl[i];
 			dtmp += sl[i];
-			// we need to make the same directory structure in the cache
-			// as the output dir
-			if (!bt::Exists(ctmp))
-				MakeDir(ctmp);
 			if (!bt::Exists(otmp))
 				MakeDir(otmp);
 			if (!bt::Exists(dtmp))
 				MakeDir(dtmp);
 			otmp += bt::DirSeparator();
-			ctmp += bt::DirSeparator();
 			dtmp += bt::DirSeparator();
-		}
-
-		QString dfile = otmp + sl.last();
-		if (!bt::Exists(dfile))
-		{
-			// when we start the torrent the user will be asked what to do
-		//	bt::SymLink(dfile,cache_dir + fpath);
-			dnd = false;
-		}
-		else
-		{
-			// just symlink the existing file
-			bt::SymLink(dfile,cache_dir + fpath);
-			dnd = false;
 		}
 	}
 	
@@ -381,6 +359,34 @@ namespace kt
 			fptr.write(&tmp,sizeof(Uint32));
 		}
 		fptr.flush();
+	}
+	
+	void ImportDialog::saveFileMap(const Torrent & tor,const QString & tor_dir)
+	{
+		QString file_map = tor_dir + "file_map";
+		QFile fptr(file_map);
+		if (!fptr.open(QIODevice::WriteOnly))
+			throw Error(i18n("Failed to create %1 : %2",file_map,fptr.errorString()));
+			
+		QTextStream out(&fptr);
+		
+		Uint32 num = tor.getNumFiles();
+		for (Uint32 i = 0;i < num;i++)
+		{
+			const TorrentFile & tf = tor.getFile(i);
+			out << tf.getPathOnDisk() << ::endl;
+		}
+	}
+	
+	void ImportDialog::saveFileMap(const QString & tor_dir,const QString & ddir)
+	{
+		QString file_map = tor_dir + "file_map";
+		QFile fptr(file_map);
+		if (!fptr.open(QIODevice::WriteOnly))
+			throw Error(i18n("Failed to create %1 : %2",file_map,fptr.errorString()));
+			
+		QTextStream out(&fptr);
+		out << ddir << ::endl;
 	}
 }
 

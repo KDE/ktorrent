@@ -65,6 +65,7 @@ namespace kt
 		QMenu* dirs_menu;
 		QAction* data_dir;
 		QAction* tor_dir;
+		QAction* move_data;
 		QAction* remove_from_group;
 		QMenu* add_to_group;
 		QAction* check_data;

@@ -246,12 +246,12 @@ namespace bt
 		virtual Uint32 getRunningTimeUL() const = 0;
 
 		/**
-		 * Change to a new data dir. If this fails
+		 * Change to a new torX dir. If this fails
 		 * we will fall back on the old directory.
 		 * @param new_dir The new directory
 		 * @return true upon succes
 		 */
-		virtual bool changeDataDir(const QString & new_dir) = 0;
+		virtual bool changeTorDir(const QString & new_dir) = 0;
 		
 		/**
 		 * Change to a new data dir. If this fails
@@ -426,6 +426,8 @@ namespace bt
 		/// Are we in the process of moving files
 		virtual bool isMovingFiles() const = 0;
 	
+		/// Do we need to update this torrent ?
+		virtual bool updateNeeded() const = 0;
 	signals:
 		/**
 		 * Emited when we have finished downloading.

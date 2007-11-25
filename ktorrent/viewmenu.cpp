@@ -54,6 +54,7 @@ namespace kt
 		dirs_menu = addMenu(KIcon("folder-open"),i18n("Open Directory"));
 		data_dir = dirs_menu->addAction(i18n("Data Directory"),parent,SLOT(openDataDir()));
 		tor_dir = dirs_menu->addAction(i18n("Temporary Directory"),parent,SLOT(openTorDir()));
+		move_data = addAction(i18n("Move Data"),parent,SLOT(moveData()));
 		addSeparator();
 		remove_from_group = addAction(i18n("Remove from Group"),parent,SLOT(removeFromGroup()));
 		add_to_group = addMenu(i18n("Add to Group"));
@@ -126,6 +127,7 @@ namespace kt
 		add_peers->setEnabled(en_add_peer);
 		manual_announce->setEnabled(en_announce);
 		scrape->setEnabled(sel.count() > 0);
+		move_data->setEnabled(sel.count() > 0);
 		queue_torrent->setEnabled(en_remove);
 
 		const kt::Group* current_group = view->getGroup();

@@ -126,7 +126,7 @@ namespace bt
 		 * @param new_dir The new directory
 		 * @return true upon succes
 		 */
-		bool changeDataDir(const QString & new_dir);
+		bool changeTorDir(const QString & new_dir);
 		
 		
 		/**
@@ -153,7 +153,7 @@ namespace bt
 		QString getDataDir() const {return outputdir;}
 
 		/// Get the torX dir.
-		QString getTorDir() const {return datadir;}
+		QString getTorDir() const {return tordir;}
 
 		/// Set the monitor
 		void setMonitor(MonitorInterface* tmo);
@@ -230,6 +230,7 @@ namespace bt
 		virtual const DHTNode & getDHTNode(Uint32 i) const;
 		virtual void deleteDataFiles();
 		virtual const bt::PeerID & getOwnPeerID() const;
+		virtual bool updateNeeded() const;
 		
 		/**
 		 * Called by the PeerSourceManager when it is going to start a new tracker.
@@ -263,6 +264,7 @@ namespace bt
 
 		/// Are we in the process of moving files
 		bool isMovingFiles() const {return moving_files;}
+		
 	public slots:
 		/**
 		 * Update the object, should be called periodically.
@@ -381,8 +383,8 @@ namespace bt
 		Timer stats_save_timer;
 		Timer stalled_timer;
 		
-		QString datadir;
-		QString old_datadir;
+		QString tordir;
+		QString old_tordir;
 		QString outputdir;
 		QString error_msg;
 		

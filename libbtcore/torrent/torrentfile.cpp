@@ -195,5 +195,6 @@ namespace bt
 		if (prev != preview)
 			previewAvailable(preview);
 	}
+	
 }
 #include "torrentfile.moc"

@@ -59,10 +59,12 @@ namespace bt
 		virtual bool hasMissingFiles(QStringList & sl);
 		virtual void deleteDataFiles();
 		virtual Uint64 diskUsage();
+		virtual void loadFileMap();
+		virtual void saveFileMap();
 	private:
 		void touch(TorrentFile & tf);
 		virtual void downloadStatusChanged(TorrentFile*, bool);
-		QString guessDataDir();
+	//	QString guessDataDir();
 		void saveFirstAndLastChunk(TorrentFile* tf,const QString & src_file,const QString & dst_file);
 		void recreateFile(TorrentFile* tf,const QString & dnd_file,const QString & output_file);
 	};

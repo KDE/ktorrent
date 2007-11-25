@@ -225,6 +225,7 @@ namespace kt
 			else
 				loadingFinished(url, true, false);
 			
+			startUpdateTimer();
 			return true;
 		}
 		catch (bt::Error & err)
@@ -254,6 +255,7 @@ namespace kt
 				 Settings::useSaveDir() ? Settings::saveDir().path() : QString());
 			
 			init(tc,silently);
+			startUpdateTimer();
 			return true;
 		}
 		catch (bt::Error & err)
@@ -419,10 +421,10 @@ namespace kt
 
 	void Core::start(bt::TorrentInterface* tc)
 	{
-		startUpdateTimer(); // restart update timer
 		TorrentStartResponse reason = qman->start(tc);
 		if (reason == NOT_ENOUGH_DISKSPACE || reason == QM_LIMITS_REACHED)
 			canNotStart(tc,reason);
+		startUpdateTimer(); // restart update timer
 	}
 
 	void Core::stop(bt::TorrentInterface* tc, bool user)
@@ -607,7 +609,7 @@ namespace kt
 			while (i != qman->end())
 			{
 				bt::TorrentInterface* tc = *i;
-				if (!tc->changeDataDir(nd))
+				if (!tc->changeTorDir(nd))
 				{
 					// failure time to roll back all the succesfull tc's
 					rollback(succes);
@@ -653,6 +655,7 @@ namespace kt
 	void Core::startAll(int type)
 	{
 		qman->startall(type);
+		startUpdateTimer();
 	}
 
 	void Core::stopAll(int type)
@@ -663,7 +666,10 @@ namespace kt
 	void Core::startUpdateTimer()
 	{
 		if (!update_timer.isActive())
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "Started update timer" << endl;
 			update_timer.start(CORE_UPDATE_INTERVAL);
+		}
 	}
 
 	void Core::update()
@@ -677,7 +683,7 @@ namespace kt
 		{
 			bt::TorrentInterface* tc = *i;
 			bool dummy = false;
-			if (tc->getStats().running || tc->isCheckingData(dummy))
+			if (tc->updateNeeded())
 			{
 				tc->update();
 				updated = true;
@@ -686,7 +692,10 @@ namespace kt
 		}
 		
 		if (!updated)
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "Stopped update timer" << endl;
 			update_timer.stop(); // stop timer when not necessary
+		}
 	}
 
 	void Core::makeTorrent(const QString & file,const QStringList & trackers,
@@ -798,6 +807,7 @@ namespace kt
 			maxShareRatioReached(tc);
 		else
 			maxSeedTimeReached(tc);
+		startUpdateTimer();
 	}
 
 	void Core::setPausedState(bool pause)

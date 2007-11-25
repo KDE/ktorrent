@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <QTextStream>
 #include <klocale.h>
 #include <qfileinfo.h>
 #include <qstringlist.h> 
@@ -38,26 +39,55 @@ namespace bt
 	: Cache(tor,tmpdir,datadir),fd(0)
 	{
 		cache_file = tmpdir + "cache";
-		output_file = QFileInfo(cache_file).readLink();
+		QFileInfo fi(cache_file);
+		if (fi.isSymLink()) // old style symlink
+			output_file = fi.readLink();
+		else
+			output_file = datadir + tor.getNameSuggestion();
 	}
 
 
 	SingleFileCache::~SingleFileCache()
 	{}
+	
+	void SingleFileCache::loadFileMap()
+	{
+		QString file_map = tmpdir + "file_map";
+		if (!bt::Exists(file_map))
+		{
+			saveFileMap();
+			return;
+		}
+		
+		QFile fptr(file_map);
+		if (!fptr.open(QIODevice::ReadOnly))
+			throw Error(i18n("Failed to open %1 : %2",file_map,fptr.errorString()));
+		
+		output_file = fptr.readLine().trimmed();
+	}
 
+	void SingleFileCache::saveFileMap()
+	{
+		QString file_map = tmpdir + "file_map";
+		QFile fptr(file_map);
+		if (!fptr.open(QIODevice::WriteOnly))
+			throw Error(i18n("Failed to create %1 : %2",file_map,fptr.errorString()));
+		
+		QTextStream out(&fptr);
+		out << output_file << ::endl;
+	}
+	
 	void SingleFileCache::changeTmpDir(const QString & ndir)
 	{
 		Cache::changeTmpDir(ndir);
 		cache_file = tmpdir + "cache";
 	}
 	
-	void bt::SingleFileCache::changeOutputPath(const QString & outputpath)
+	void SingleFileCache::changeOutputPath(const QString & outputpath)
 	{
-		bt::Delete(cache_file);
 		output_file = outputpath;
 		datadir = output_file.left(output_file.lastIndexOf(bt::DirSeparator()));
-		
-		bt::SymLink(output_file, cache_file);
+		saveFileMap();
 	}
 	
 	void SingleFileCache::moveDataFiles(const QString & ndir)
@@ -112,33 +142,8 @@ namespace bt
 
 	void SingleFileCache::create()
 	{
-		QFileInfo fi(cache_file);
-		if (!fi.exists())
-		{
-			QString out_file = fi.readLink();
-					
-			if (out_file.isNull())
-					out_file = datadir + tor.getNameSuggestion();
-			
-			if (!bt::Exists(out_file))
-				bt::Touch(out_file);
-			else
-				preexisting_files = true;
-
-			if (bt::Exists(cache_file))
-				bt::Delete(cache_file);
-			
-			bt::SymLink(out_file,cache_file);
-			output_file = out_file;
-		}
-		else
-		{
-			QString out_file = fi.readLink();
-			if (!bt::Exists(out_file))
-				bt::Touch(out_file);
-			else
-				preexisting_files = true;
-		}
+		if (!bt::Exists(output_file))
+			bt::Touch(output_file);
 	}
 	
 	void SingleFileCache::close()
@@ -159,7 +164,7 @@ namespace bt
 		try
 		{
 			fd = new CacheFile();
-			fd->open(cache_file,tor.getFileLength());
+			fd->open(output_file,tor.getFileLength());
 		}
 		catch (...)
 		{
@@ -183,11 +188,9 @@ namespace bt
 	
 	bool SingleFileCache::hasMissingFiles(QStringList & sl)
 	{
-		QFileInfo fi(cache_file);
-		if (!fi.exists())
+		if (!bt::Exists(output_file))
 		{
-			QString out_file = fi.readLink();
-			sl.append(fi.readLink());
+			sl.append(output_file);
 			return true;
 		}
 		return false;

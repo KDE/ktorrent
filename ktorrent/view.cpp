@@ -24,6 +24,7 @@
 #include <klocale.h>
 #include <ksharedconfig.h>
 #include <kmessagebox.h>
+#include <kfiledialog.h>
 #include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>
 #include <util/functions.h>
@@ -343,6 +344,23 @@ namespace kt
 		foreach(bt::TorrentInterface* tc,sel)
 		{
 			new KRun(KUrl(tc->getTorDir()), 0, true, true);
+		}
+	}
+	
+	void View::moveData()
+	{
+		QList<bt::TorrentInterface*> sel;
+		getSelection(sel);
+		if (sel.count() == 0)
+			return;
+		
+		QString dir = KFileDialog::getExistingDirectory(KUrl(),this,i18n("Select a directory to move the data to."));
+		if (dir.isNull())
+			return;
+		
+		foreach(bt::TorrentInterface* tc,sel)
+		{
+			tc->changeOutputDir(dir);
 		}
 	}
 	
