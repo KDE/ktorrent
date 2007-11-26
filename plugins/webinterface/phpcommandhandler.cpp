@@ -39,6 +39,7 @@ namespace kt
 {
 	bool dht_cmd(const QString & arg)
 	{
+#ifdef ENABLE_DHT_SUPPORT
 		if (arg =="start")
 		{
 			Settings::setDhtSupport(true);
@@ -65,6 +66,7 @@ namespace kt
 			ht.start(kt::DataDir() + "dht_table",Settings::dhtPort());
 			return true;
 		}
+#endif
 		return false;
 	}
 	
@@ -109,12 +111,15 @@ namespace kt
 		for ( it = params.begin(); it != params.end(); ++it ) 
 		{
 		//	Out(SYS_WEB| LOG_DEBUG) << "exec " << it.key().latin1() << endl;
+#ifdef ENABLE_DHT_SUPPORT
 			if(it.key()=="dht")
 			{
 				if (dht_cmd(it.value()))
 					ret = true;
 			}
-			else if(it.key()=="encription")
+			else
+#endif
+                             if(it.key()=="encription")
 			{
 				if (encryption_cmd(it.value()))
 					ret = true;

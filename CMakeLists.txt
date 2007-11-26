@@ -34,6 +34,11 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-ktorrent.h.cmake ${CMAKE_CURRE
 
 add_definitions(${KDE4_ENABLE_EXCEPTIONS} ${KDE4_DEFINITIONS} )
 
+option(ENABLE_DHT_SUPPORT "Whether to build KTorrent with DHT support or not" true)
+if (ENABLE_DHT_SUPPORT)
+  message(STATUS "Building KTorrent with DHT support (-DENABLE_DHT_SUPPORT=false to disable)")
+  add_definitions(-DENABLE_DHT_SUPPORT)
+endif (ENABLE_DHT_SUPPORT)
 
 include_directories( ${KDE4_INCLUDES} 
    ${KTORRENT_BINARY_DIR}

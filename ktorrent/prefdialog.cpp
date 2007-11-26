@@ -88,7 +88,11 @@ namespace kt
 			kcfg_downloadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());
 			kcfg_uploadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());
 			kcfg_allowUnencryptedConnections->setEnabled(Settings::useEncryption());
+#ifdef ENABLE_DHT_SUPPORT
 			kcfg_dhtPort->setEnabled(Settings::dhtSupport());
+#else
+			dhtGroupBox->setShown(false);
+#endif
 		}
 
 		void loadDefaults()

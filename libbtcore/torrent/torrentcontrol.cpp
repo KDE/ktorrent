@@ -750,9 +750,11 @@ namespace bt
 		
 		if (!stats.priv_torrent)
 		{
+#ifdef ENABLE_DHT_SUPPORT
 			if (p->isDHTSupported())
 				p->getPacketWriter().sendPort(Globals::instance().getDHT().getPort());
 			else
+#endif
 				// WORKAROUND so we can contact µTorrent's DHT
 				// They do not properly support the standard and do not turn on
 				// the DHT bit in the handshake, so we just ping each peer by default.

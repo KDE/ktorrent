@@ -161,7 +161,11 @@ namespace kt
 		ret.append(QString("\"max_upload_speed\" => \"%1\",").arg(Settings::maxUploadRate()));
 		ret.append(QString("\"max_downloads\" => \"%1\",").arg(Settings::maxDownloads()));
 		ret.append(QString("\"max_seeds\"=> \"%1\",").arg(Settings::maxSeeds()));
+#ifdef ENABLE_DHT_SUPPORT
 		ret.append(QString("\"dht_support\" => \"%1\",").arg(Settings::dhtSupport()));
+#else
+		ret.append(QString("\"dht_support\" => \"%1\",").arg(false));
+#endif
 		ret.append(QString("\"use_encryption\" => \"%1\"").arg(Settings::useEncryption()));
 		ret.append(");\n}\n");
 	
