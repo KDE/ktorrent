@@ -38,14 +38,19 @@ namespace bt
 namespace kt
 {
 
-	class QueuePtrList : public QList<bt::TorrentInterface *>
+	class KTCORE_EXPORT QueuePtrList : public QList<bt::TorrentInterface *>
 	{
-		public:
-			QueuePtrList();
-			virtual ~QueuePtrList();
+	public:
+		QueuePtrList();
+		virtual ~QueuePtrList();
 
-		protected:
-			int compareItems(bt::TorrentInterface* tc1, bt::TorrentInterface* tc2);
+		/**
+		 * Sort based upon priority
+		 */
+		void sort();
+			
+	protected:
+		static bool biggerThan(bt::TorrentInterface* tc1, bt::TorrentInterface* tc2);
 	};
 
 	/**
@@ -141,6 +146,11 @@ namespace kt
  			 * @param tc The torrent in question.
  			*/
  			void lowDiskSpace(bt::TorrentInterface* tc, bool stopped);
+			
+			/**
+			 * Emitted when the QM reorders it's queue
+			 */
+			void queueOrdered();
 
 		public slots:
 			void torrentFinished(bt::TorrentInterface* tc);

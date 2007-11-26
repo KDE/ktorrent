@@ -42,6 +42,7 @@ namespace kt
 	class TrayIcon;
 	class DBus;
 	class View;
+	class QueueManagerWidget;
 
 	class GUI : public ideal::MainWindow,public GUIInterface
 	{
@@ -132,6 +133,7 @@ namespace kt
 		GroupView* group_view;
 		TrayIcon* tray_icon;
 		DBus* dbus_iface;
+		QueueManagerWidget* qm;
 
 		KToggleAction* show_status_bar_action;
 		KToggleAction* show_menu_bar_action;

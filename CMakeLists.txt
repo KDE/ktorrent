@@ -40,6 +40,13 @@ if (ENABLE_DHT_SUPPORT)
   add_definitions(-DENABLE_DHT_SUPPORT)
 endif (ENABLE_DHT_SUPPORT)
 
+# option(ENABLE_GEOIP "Wether or not to enable support for the GeoIP library" true)
+#if (ENABLE_GEOIP)
+#  message(STATUS "Building KTorrent with GeoIP support")
+#endif (ENABLE_GEOIP)
+
+
+
 include_directories( ${KDE4_INCLUDES} 
    ${KTORRENT_BINARY_DIR}
    ${KTORRENT_BINARY_DIR}/libktcore

@@ -27,6 +27,8 @@ set(ktorrent_SRC
 	missingfilesdlg.cpp
 	importdialog.cpp
 	addpeersdlg.cpp
+	queuemanagerwidget.cpp
+	queuemanagermodel.cpp
 )
 	
 
@@ -43,6 +45,7 @@ kde4_add_ui_files(ktorrent_SRC
 	missingfilesdlg.ui
 	importdialog.ui
 	addpeersdlg.ui
+	queuemanagerwidget.ui
 )
 
 kde4_add_executable(ktorrent ${ktorrent_SRC})

@@ -137,7 +137,7 @@ namespace bt
 	
 	bool TorrentControl::updateNeeded() const
 	{
-		return stats.running || moving_files || prealloc_thread;
+		return stats.running || moving_files || prealloc_thread || dcheck_thread;
 	}
 
 	void TorrentControl::update()
@@ -316,6 +316,7 @@ namespace bt
 		stats.status = ERROR;
 		error_msg = msg;
 		istats.io_error = true;
+		statusChanged(this);
 	}
 
 	void TorrentControl::start()
@@ -364,6 +365,7 @@ namespace bt
 				stats.running = true;
 				stats.status = ALLOCATING_DISKSPACE;
 				prealloc_thread->start();
+				statusChanged(this);
 				return;
 			}
 			else
@@ -892,6 +894,7 @@ namespace bt
 
 	void TorrentControl::updateStatusMsg()
 	{
+		TorrentStatus old = stats.status;
 		if (stats.stopped_by_error)
 			stats.status = ERROR;
 		else if (!stats.started)
@@ -910,6 +913,9 @@ namespace bt
 			// protocol messages are also included in speed calculation, so lets not compare with 0
 			stats.status = down->downloadRate() > 100 ?
 					DOWNLOADING : STALLED;
+		
+		if (old != stats.status)
+			statusChanged(this);
 	}
 
 	const BitSet & TorrentControl::downloadedChunksBitSet() const
@@ -1274,7 +1280,10 @@ namespace bt
 		istats.priority = p;
 		stats.user_controlled = p == 0 ? true : false;
 		if(p)
+		{
 			stats.status = QUEUED;
+			statusChanged(this);
+		}
 		else
 			updateStatusMsg();
 		
@@ -1396,6 +1405,7 @@ namespace bt
 		
 		// dc->check(stats.output_path,*tor,tordir + "dnd" + bt::DirSeparator());
 		dcheck_thread->start();
+		statusChanged(this);
 	}
 	
 	void TorrentControl::afterDataCheck()
@@ -1665,6 +1675,7 @@ namespace bt
 				if (!stats.running)
 				{
 					stats.status = NO_SPACE_LEFT;
+					statusChanged(this);
 				}
 				
 				return false;
@@ -1758,6 +1769,7 @@ namespace bt
 			stats.status = NOT_STARTED;
 			saveStats();
 			continueStart();
+			statusChanged(this);
 		}
 	}
 

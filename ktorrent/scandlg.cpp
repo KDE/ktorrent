@@ -23,10 +23,13 @@
 #include <kmessagebox.h>
 #include <kstandardguiitem.h>
 #include <util/error.h>
+#include <util/log.h>
 #include <torrent/queuemanager.h>
 #include <interfaces/torrentinterface.h>
 #include "scandlg.h"
 #include "core.h"
+
+using namespace bt;
 
 namespace kt
 {

@@ -57,7 +57,7 @@ namespace kt
 	void QueueManager::append(bt::TorrentInterface* tc)
 	{
 		downloads.append(tc);
-		qSort(downloads.begin(), downloads.end());
+		downloads.sort();
 		connect(tc, SIGNAL(diskSpaceLow(bt::TorrentInterface*, bool)), this, SLOT(onLowDiskSpace(bt::TorrentInterface*, bool)));	
 		connect(tc, SIGNAL(torrentStopped(bt::TorrentInterface*)), this, SLOT(torrentStopped(bt::TorrentInterface*)));
 	}
@@ -407,7 +407,7 @@ namespace kt
 		if(paused_state || exiting)
 			return;
 		
-		qSort(downloads.begin(), downloads.end());
+		downloads.sort();
                 
 		QList<TorrentInterface *>::const_iterator it = downloads.begin();
 		QList<TorrentInterface *>::const_iterator its = downloads.end();
@@ -533,7 +533,7 @@ namespace kt
 				}
 			}
 		}
-                
+		emit queueOrdered();
 	}
 	
 	void QueueManager::torrentFinished(bt::TorrentInterface* tc)
@@ -707,20 +707,16 @@ namespace kt
 	QueuePtrList::~QueuePtrList()
 	{}
 	
-	int QueuePtrList::compareItems(bt::TorrentInterface* tc1, bt::TorrentInterface* tc2)
+	void QueuePtrList::sort()
 	{
-		
-		if(tc1->getPriority() == tc2->getPriority())
-			return 0;
-		
-		if(tc1->getPriority() == 0 && tc2->getPriority() != 0)
-			return 1;
-		else if(tc1->getPriority() != 0 && tc2->getPriority() == 0)
-			return -1;
-		
-		return tc1->getPriority() > tc2->getPriority() ? -1 : 1;
-		return 0;
-	}	
+		qSort(begin(),end(),QueuePtrList::biggerThan);
+	}
+	
+	bool QueuePtrList::biggerThan(bt::TorrentInterface* tc1, bt::TorrentInterface* tc2)
+	{
+		return tc1->getPriority() > tc2->getPriority();
+	}
+	
 }
 
 #include "queuemanager.moc"

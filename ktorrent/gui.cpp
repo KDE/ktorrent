@@ -63,6 +63,7 @@
 #include "torrentcreatordlg.h"
 #include "importdialog.h"
 #include "speedlimitsdlg.h"
+#include "queuemanagerwidget.h"
 
 namespace kt
 {
@@ -77,6 +78,11 @@ namespace kt
 		addToolWidget(group_view,"weather-clear",i18n("Groups"),DOCK_LEFT);
 		connect(group_view,SIGNAL(openNewTab(kt::Group*)),this,SLOT(openView(kt::Group*)));
 
+		qm = new QueueManagerWidget(core->getQueueManager(),this);
+		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),qm,SLOT(onTorrentAdded(bt::TorrentInterface*)));
+		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),qm,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
+		addToolWidget(qm,"ktqueuemanager",i18n("Queue Manager"),DOCK_BOTTOM);
+		
 		status_bar = new kt::StatusBar(this);
 		setStatusBar(status_bar);
 
@@ -510,6 +516,7 @@ namespace kt
 	{
 		view_man->loadState(cfg);
 		group_view->loadState(cfg);
+		qm->loadState(cfg);
 		ideal::MainWindow::loadState(cfg);
 		
 		KConfigGroup g = cfg->group("MainWindow");
@@ -529,6 +536,7 @@ namespace kt
 		g.writeEntry("menubar_hidden",menuBar()->isHidden());
 		view_man->saveState(cfg);
 		group_view->saveState(cfg);
+		qm->saveState(cfg);
 		ideal::MainWindow::saveState(cfg);
 	}
 

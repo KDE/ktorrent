@@ -51,7 +51,7 @@ IPFilterWidget::IPFilterWidget ( QWidget* parent, Qt::WFlags fl )
 	btnSave->setGuiItem(KStandardGuiItem::saveAs());
 	btnOpen->setGuiItem(KStandardGuiItem::open());
 	btnRemove->setGuiItem(KStandardGuiItem::remove());
-	btnCancel->setGuiItem(KStandardGuiItem::cancel());
+	btnCancel->setGuiItem(KStandardGuiItem::close());
 
 	IPBlocklist& ipfilter = IPBlocklist::instance();
 	QStringList* blocklist = ipfilter.getBlocklist();
@@ -75,6 +75,7 @@ void IPFilterWidget::setupConnections()
 	connect(btnSave, SIGNAL(clicked()), this, SLOT(btnSave_clicked()));
 	connect(btnOpen, SIGNAL(clicked()), this, SLOT(btnOpen_clicked()));
 	connect(btnRemove, SIGNAL(clicked()), this, SLOT(btnRemove_clicked()));	
+	connect(btnCancel, SIGNAL(clicked()), this, SLOT(reject()));
 }
 
 void IPFilterWidget::btnAdd_clicked()

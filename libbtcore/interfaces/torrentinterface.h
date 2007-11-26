@@ -495,6 +495,12 @@ namespace bt
 		 * @param me The torrent
 		 * */
 		void needDataCheck(bt::TorrentInterface* me);
+		
+		/**
+		 * Emitted whenever the status of the torrent changes.
+		 * @param me the torrent
+		 */
+		void statusChanged(bt::TorrentInterface* me);
 	protected:
 		TorrentStats stats;
 	};
