@@ -44,7 +44,7 @@
 namespace bt
 {
 	bool HTTPTracker::proxy_on = false;
-	QString HTTPTracker::proxy = QString::null;;
+	QString HTTPTracker::proxy = QString::null;
 
 	HTTPTracker::HTTPTracker(const KUrl & url,TorrentInterface* tor,const PeerID & id,int tier)
 		: Tracker(url,tor,id,tier)
