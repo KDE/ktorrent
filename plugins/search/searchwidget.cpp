@@ -59,12 +59,10 @@ namespace kt
 		setupUi(this);
 		m_back->setEnabled(false);
 		connect(m_search_button,SIGNAL(clicked()),parent,SLOT(searchPressed()));
-		connect(m_clear_button,SIGNAL(clicked()),parent,SLOT(clearPressed()));
 		connect(m_search_text,SIGNAL(returnPressed()),parent,SLOT(searchPressed()));
 		connect(m_back,SIGNAL(clicked()),html_part,SLOT(back()));
 		connect(m_reload,SIGNAL(clicked()),html_part,SLOT(reload()));
 
-		m_clear_button->setIcon(KStandardGuiItem::clear().icon());
 		m_back->setIcon(KStandardGuiItem::back(KStandardGuiItem::UseRTL).icon());
 		m_reload->setIcon(KIcon("view-refresh"));
 
@@ -90,7 +88,9 @@ namespace kt
 		back_action = right_click_menu->addAction(KIcon("back"),i18n("Back"),html_part,SLOT(back()));
 		right_click_menu->addAction(KIcon("view-refresh"),i18n("Reload"),html_part,SLOT(reload()));
 		back_action->setEnabled(false);
-		
+
+		sbar->m_search_text->setClearButtonShown(true);
+
 		connect(html_part,SIGNAL(backAvailable(bool )),
 				this,SLOT(onBackAvailable(bool )));
 		connect(html_part,SIGNAL(onURL(const QString& )),
@@ -210,11 +210,6 @@ namespace kt
 	void SearchWidget::searchPressed()
 	{
 		search(sbar->m_search_text->text(),sbar->m_search_engine->currentIndex());
-	}
-	
-	void SearchWidget::clearPressed()
-	{
-		sbar->m_search_text->clear();
 	}
 	
 	void SearchWidget::onUrlHover(const QString & url)

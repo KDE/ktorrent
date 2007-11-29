@@ -53,7 +53,6 @@ namespace kt
 		void clearHistory();
 			
 	protected slots:
-		void clearButtonPressed();
 		void searchNewTabPressed();
 		void searchBoxReturn();
 		void textChanged(const QString & str);
@@ -69,7 +68,6 @@ namespace kt
 	private:
 		KComboBox* m_search_text;
 		KComboBox* m_search_engine;
-		QAction* m_clear_button;
 		QAction* m_search_new_tab;
 	};
 }

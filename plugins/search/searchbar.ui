@@ -25,13 +25,6 @@
     </widget>
    </item>
    <item>
-    <widget class="KPushButton" name="m_clear_button" >
-     <property name="text" >
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="KLineEdit" name="m_search_text" />
    </item>
    <item>

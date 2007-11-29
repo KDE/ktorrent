@@ -78,7 +78,6 @@ namespace kt
 	
 	private slots:
 		void searchPressed();
-		void clearPressed();
 		void onUrlHover(const QString & url);
 		void onFinished();
 		void onOpenTorrent(const KUrl & url);

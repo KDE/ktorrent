@@ -22,7 +22,7 @@
 #include <qtextstream.h>
 #include <qapplication.h>
 #include <qcheckbox.h>
-#include <QLineEdit>
+#include <KLineEdit>
 #include <kicon.h>
 #include <kglobal.h>
 #include <kguiitem.h>
@@ -52,11 +52,13 @@ namespace kt
 		m_search_text->setMaxCount(20);
 		m_search_text->setInsertPolicy(QComboBox::NoInsert);
 		m_search_text->setMinimumWidth(150);
+
+		KLineEdit *search_text_lineedit = new KLineEdit(this);
+		search_text_lineedit->setClearButtonShown(true);
+		m_search_text->setLineEdit(search_text_lineedit);
+
 		connect(m_search_text->lineEdit(),SIGNAL(returnPressed()),this,SLOT(searchBoxReturn()));
 		connect(m_search_text,SIGNAL(textChanged(const QString &)),this,SLOT(textChanged( const QString& )));
-
-		m_clear_button = addAction(KIcon("locationbar-erase"),i18n("Clear"),this,SLOT(clearButtonPressed()));
-		m_clear_button->setEnabled(false);
 
 		addWidget(m_search_text);
 
@@ -112,11 +114,6 @@ namespace kt
 		search(str,m_search_engine->currentIndex(),SearchPluginSettings::openInExternal());
 	}
 	
-	void SearchToolBar::clearButtonPressed()
-	{
-		m_search_text->lineEdit()->clear();
-	}
-	
 	void SearchToolBar::searchNewTabPressed()
 	{
 		searchBoxReturn();
@@ -125,7 +122,6 @@ namespace kt
 	void SearchToolBar::textChanged(const QString & str)
 	{
 		m_search_new_tab->setEnabled(str.length() > 0);
-		m_clear_button->setEnabled(str.length() > 0);
 	}
 
 	void SearchToolBar::loadSearchHistory()

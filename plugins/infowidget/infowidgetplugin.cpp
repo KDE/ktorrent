@@ -199,7 +199,7 @@ namespace kt
 		if (show && !cd_view)
 		{
 			cd_view = new ChunkDownloadView(0);
-			getGUI()->addToolWidget(cd_view,"fifteenpieces",i18n("Chunks"),GUIInterface::DOCK_BOTTOM);
+			getGUI()->addToolWidget(cd_view,"ktplugins",i18n("Chunks"),GUIInterface::DOCK_BOTTOM);
 			
 			cd_view->loadState(KGlobal::config());
 			cd_view->changeTC(tc);

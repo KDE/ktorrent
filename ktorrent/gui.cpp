@@ -74,8 +74,7 @@ namespace kt
 		setupActions();
 		view_man = new ViewManager(core->getGroupManager()->allGroup(),this,core);
 		group_view = new GroupView(core->getGroupManager(),view_man,actionCollection(),this);
-#warning "Find proper groups icon"
-		addToolWidget(group_view,"weather-clear",i18n("Groups"),DOCK_LEFT);
+		addToolWidget(group_view,"view-choose",i18n("Groups"),DOCK_LEFT);
 		connect(group_view,SIGNAL(openNewTab(kt::Group*)),this,SLOT(openView(kt::Group*)));
 
 		qm = new QueueManagerWidget(core->getQueueManager(),this);
@@ -400,11 +399,11 @@ namespace kt
 		connect(show_qm_action,SIGNAL(triggered()),this,SLOT(showQM()));
 		ac->addAction("queue_manager",show_qm_action);
 
-		queue_action = new KAction(KIcon("player_playlist"),i18n("Enqueue/Dequeue"),this);
+		queue_action = new KAction(KIcon("view-choose"),i18n("Enqueue/Dequeue"),this);
 		connect(queue_action,SIGNAL(triggered()),this,SLOT(queueTorrent()));
 		ac->addAction("queue_action",queue_action);
 
-		ipfilter_action = new KAction(KIcon("filter"),i18n("IP Filter"),this);
+		ipfilter_action = new KAction(KIcon("view-filter"),i18n("IP Filter"),this);
 		connect(ipfilter_action,SIGNAL(triggered()),this,SLOT(showIPFilter()));
 		ac->addAction("ipfilter_action",ipfilter_action);
 
@@ -412,7 +411,7 @@ namespace kt
 		connect(data_check_action,SIGNAL(triggered()),this,SLOT(checkData()));
 		ac->addAction("check_data",data_check_action);
 		
-		import_action = new KAction(i18n("Import Torrent"),this);
+		import_action = new KAction(KIcon("document-import"),i18n("Import Torrent"),this);
 		connect(import_action,SIGNAL(triggered()),this,SLOT(import()));
 		ac->addAction("import",import_action);
 		

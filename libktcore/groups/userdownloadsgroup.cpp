@@ -28,7 +28,7 @@ namespace kt
 	UserDownloadsGroup::UserDownloadsGroup()
 			: Group(i18n("User downloads"),DOWNLOADS_ONLY_GROUP)
 	{
-		setIconByName("userconfig");
+		setIconByName("user");
 	}
 
 
