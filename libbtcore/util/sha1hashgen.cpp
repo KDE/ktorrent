@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <stdio.h>
 #include <QtCrypto>
 #include <string.h>
 #include <arpa/inet.h>
@@ -33,15 +34,24 @@ namespace bt
 	}
 	
 	static int qca_supports_sha1 = -1;
+	static bool qca_ossl_supported = false;
 	static QCA::Initializer init; // to iniliaze QCA2 library
 
 	SHA1HashGen::SHA1HashGen() : tmp_len(0),total_len(0),hash(0)
 	{
 		if (qca_supports_sha1 < -1)
+		{
 			qca_supports_sha1 = QCA::isSupported("sha1") ? 1 : 0;
+			qca_ossl_supported = QCA::isSupported("sha1","qca-ossl");
+		}
 		
 		if (qca_supports_sha1)
-			hash = new QCA::Hash("sha1");
+		{
+			if (qca_ossl_supported)
+				hash = new QCA::Hash("sha1","qca-ossl");
+			else
+				hash = new QCA::Hash("sha1");
+		}
 	}
 
 

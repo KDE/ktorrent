@@ -110,7 +110,7 @@ namespace kt
 		if (res.count() > 0)
 		{
 			KNetwork::KInetSocketAddress addr = res.front().address();
-			QString ip = addr.makeIPv4().ipAddress().toString();
+			QString ip = addr.ipAddress().toString();
 			addPeer(ip,addr.port(),true);
 			peersReady(this); 
 		}
