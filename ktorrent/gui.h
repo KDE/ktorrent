@@ -105,7 +105,6 @@ namespace kt
 		void showPrefDialog();
 		void showStatusBar();
 		void showMenuBar();
-		void showQM();
 		void showIPFilter();
 		void configureKeys();
 		void configureToolBars();
@@ -143,7 +142,6 @@ namespace kt
 		KAction* start_all_action;
 		KAction* stop_all_action;
 		KAction* paste_url_action;
-		KAction* show_qm_action;
 		KAction* queue_action;
 		KAction* ipfilter_action;
 		KAction* data_check_action;

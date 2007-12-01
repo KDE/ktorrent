@@ -18,7 +18,6 @@
 	<Action name="check_data"/>
 	<Separator/>
 	<Action name="queue_action"/>
-	<Action name="queue_manager"/>
 	<Separator/>
 	<Action name="speed_limits"/>
   </Menu>
@@ -42,6 +41,5 @@
 	<Action name="stop_all"/>
 	<Separator/>
 	<Action name="queue_action"/>
-	<Action name="queue_manager"/>
 </ToolBar>
 </kpartgui>

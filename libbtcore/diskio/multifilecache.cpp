@@ -35,6 +35,7 @@
 #include "cachefile.h"
 #include "dndfile.h"
 #include "preallocationthread.h"
+#include "movedatafilesjob.h"
 
 
 
@@ -241,46 +242,35 @@ namespace bt
 		if ( !bt::Exists ( ndir ) )
 			bt::MakeDir ( ndir );
 
-		QMap<QString,QString> success; // map to store succesfull moves
-
 		QString nd = ndir;
 		if ( !nd.endsWith ( bt::DirSeparator() ) )
 			nd += bt::DirSeparator();
 
-		try
+		
+		MoveDataFilesJob* job = new MoveDataFilesJob();
+		
+		for ( Uint32 i = 0;i < tor.getNumFiles();i++ )
 		{
-			for ( Uint32 i = 0;i < tor.getNumFiles();i++ )
-			{
-				TorrentFile & tf = tor.getFile ( i );
-				if ( tf.doNotDownload() )
-					continue;
+			TorrentFile & tf = tor.getFile ( i );
+			if ( tf.doNotDownload() )
+				continue;
 
 				// check if every directory along the path exists, and if it doesn't
 				// create it
-				MakeFilePath(nd + tf.getPath());
+			MakeFilePath(nd + tf.getPath());
 				
-				bt::Move ( tf.getPathOnDisk(),nd + tf.getPath() );
-				success[tf.getPathOnDisk() ] = nd + tf.getPath();
-			}
-
-			for ( Uint32 i = 0;i < tor.getNumFiles();i++ )
-			{
-				TorrentFile & tf = tor.getFile ( i );
-				tf.setPathOnDisk(nd + tf.getPath());
-				// check for empty directories and delete them
-				DeleteEmptyDirs ( output_dir,tf.getPath() );
-			}
+			job->addMove(tf.getPathOnDisk(),nd + tf.getPath());
 		}
-		catch ( bt::Error & err )
+
+		if (!job->exec())
+			throw Error("Move failed");
+			
+		for ( Uint32 i = 0;i < tor.getNumFiles();i++ )
 		{
-		// now we need to rollback the success map
-			QMap<QString,QString>::iterator i = success.begin();
-			while ( i != success.end() )
-			{
-				bt::Move ( i.value(),i.key(),true );
-				i++;
-			}
-			throw; // rethrow error
+			TorrentFile & tf = tor.getFile ( i );
+			tf.setPathOnDisk(nd + tf.getPath());
+				// check for empty directories and delete them
+			DeleteEmptyDirs ( output_dir,tf.getPath() );
 		}
 	}
 
@@ -751,7 +741,7 @@ namespace bt
 			if (el.count() == 0)
 			{
 				// no childern so delete the directory
-				Out(SYS_GEN|LOG_IMPORTANT) << "Deleting empty directory : " << path << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "Deleting empty directory : " << path << endl;
 				bt::Delete(path,true);
 				sl.pop_back(); // remove the last so we can go one higher
 			}
@@ -770,7 +760,7 @@ namespace bt
 		el.removeAll("..");
 		if (el.count() == 0)
 		{
-			Out(SYS_GEN|LOG_IMPORTANT) << "Deleting empty directory : " << output_dir << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Deleting empty directory : " << output_dir << endl;
 			bt::Delete(output_dir,true);
 		}
 	}

@@ -130,7 +130,7 @@ namespace kt
 		if (parent.isValid())
 			return 0;
 		else
-			return 3;
+			return 2;
 	}
 	
 	QVariant QueueManagerModel::headerData(int section, Qt::Orientation orientation,int role) const

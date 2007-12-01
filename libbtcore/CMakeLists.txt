@@ -115,6 +115,7 @@ set(libbtcore_SRC
 	diskio/chunkmanager.cpp  
 	diskio/multifilecache.cpp
 	diskio/preallocationthread.cpp
+	diskio/movedatafilesjob.cpp
 
 	tracker/httptracker.cpp  
 	tracker/tracker.cpp  

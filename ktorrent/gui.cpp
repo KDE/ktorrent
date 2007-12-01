@@ -324,10 +324,6 @@ namespace kt
 			menuBar()->hide();
 	}
 
-	void GUI::showQM()
-	{
-	}
-
 	void GUI::showIPFilter()
 	{
 		IPFilterWidget dlg(this);
@@ -394,10 +390,6 @@ namespace kt
 		paste_url_action = new KAction(KIcon("edit-paste"),i18n("Paste Torrent URL"),this);
 		connect(paste_url_action,SIGNAL(triggered()),this,SLOT(pasteURL()));
 		ac->addAction("paste_url",paste_url_action);
-
-		show_qm_action = new KAction(KIcon("ktqueuemanager"),i18n("Open Queue Manager..."),this);
-		connect(show_qm_action,SIGNAL(triggered()),this,SLOT(showQM()));
-		ac->addAction("queue_manager",show_qm_action);
 
 		queue_action = new KAction(KIcon("view-choose"),i18n("Enqueue/Dequeue"),this);
 		connect(queue_action,SIGNAL(triggered()),this,SLOT(queueTorrent()));
