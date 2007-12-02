@@ -57,14 +57,12 @@ namespace kt
 		void onTorrentRemoved(bt::TorrentInterface* tc);
 		
 	private slots:
-		void moveDownloadUpClicked();
-		void moveDownloadDownClicked();
-		void moveUploadUpClicked();
-		void moveUploadDownClicked();
+		void moveUpClicked();
+		void moveDownClicked();
+		void queueClicked();
 
 	private:
-		QueueManagerModel* uploads;
-		QueueManagerModel* downloads;
+		QueueManagerModel* model;
 		QueueManager* qman;
 	};
 }

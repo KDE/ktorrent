@@ -19,6 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QHeaderView>
+#include <klocale.h>
 #include <kstandardguiitem.h>
 #include <torrent/queuemanager.h>
 #include "queuemanagerwidget.h"
@@ -31,29 +32,26 @@ namespace kt
 	{
 		setupUi(this);
 		
-		connect(m_downloads_move_up,SIGNAL(clicked()),this,SLOT(moveDownloadUpClicked()));
-		connect(m_downloads_move_down,SIGNAL(clicked()),this,SLOT(moveDownloadDownClicked()));
-		connect(m_uploads_move_up,SIGNAL(clicked()),this,SLOT(moveUploadUpClicked()));
-		connect(m_uploads_move_down,SIGNAL(clicked()),this,SLOT(moveUploadDownClicked()));
+		connect(m_move_up,SIGNAL(clicked()),this,SLOT(moveUpClicked()));
+		connect(m_move_down,SIGNAL(clicked()),this,SLOT(moveDownClicked()));
+		connect(m_queue,SIGNAL(clicked()),this,SLOT(queueClicked()));
 		
-		m_downloads_move_up->setIcon(KIcon("go-up"));
-		m_downloads_move_down->setIcon(KIcon("go-down"));
-		m_uploads_move_up->setIcon(KIcon("go-up"));
-		m_uploads_move_down->setIcon(KIcon("go-down"));
 		
-		downloads = new QueueManagerModel(QueueManagerModel::DOWNLOADS,qman,this);
-		m_downloads->setModel(downloads);
-		m_downloads->setRootIsDecorated(false);
-		m_downloads->setAlternatingRowColors(true);
-		m_downloads->setSelectionBehavior(QAbstractItemView::SelectRows);
-		m_downloads->setSortingEnabled(false);
+		m_move_up->setIcon(KIcon("go-up"));
+		m_move_down->setIcon(KIcon("go-down"));
+		m_queue->setIcon(KIcon("view-choose"));
+		m_queue->setToolTip(i18n("Enqueue or dequeue a torrent"));
 		
-		uploads = new QueueManagerModel(QueueManagerModel::UPLOADS,qman,this);
-		m_uploads->setModel(uploads);
-		m_uploads->setRootIsDecorated(false);
-		m_uploads->setAlternatingRowColors(true);
-		m_uploads->setSelectionBehavior(QAbstractItemView::SelectRows);
-		m_uploads->setSortingEnabled(false);
+		model = new QueueManagerModel(qman,this);
+		m_torrents->setModel(model);
+		m_torrents->setRootIsDecorated(false);
+		m_torrents->setAlternatingRowColors(true);
+		m_torrents->setSelectionBehavior(QAbstractItemView::SelectRows);
+		m_torrents->setSortingEnabled(false);
+		m_torrents->setDragDropMode(QAbstractItemView::InternalMove);
+		m_torrents->setDragEnabled(true);
+		m_torrents->setAcceptDrops(true);
+		m_torrents->setDropIndicatorShown(true);
 	}
 
 
@@ -62,63 +60,63 @@ namespace kt
 	
 	void QueueManagerWidget::onTorrentAdded(bt::TorrentInterface* tc)
 	{
-		downloads->onTorrentAdded(tc);
-		uploads->onTorrentAdded(tc);
+		model->onTorrentAdded(tc);
 	}
 	
 	void QueueManagerWidget::onTorrentRemoved(bt::TorrentInterface* tc)
 	{
-		downloads->onTorrentRemoved(tc);
-		uploads->onTorrentRemoved(tc);
+		model->onTorrentRemoved(tc);
 	}
 
-	void QueueManagerWidget::moveDownloadUpClicked()
+	void QueueManagerWidget::moveUpClicked()
 	{
-		QModelIndex cur = m_downloads->selectionModel()->currentIndex();
+		QModelIndex cur = m_torrents->selectionModel()->currentIndex();
 		if (cur.isValid())
-			downloads->moveUp(cur.row());
+		{
+			int r = cur.row();
+			model->moveUp(r);
+			if (r > 0)
+				r--;
+			m_torrents->selectionModel()->setCurrentIndex(model->index(r,0),QItemSelectionModel::Select|QItemSelectionModel::Rows);
+		}
 	}
 	
-	void QueueManagerWidget::moveDownloadDownClicked()
+	void QueueManagerWidget::moveDownClicked()
 	{
-		QModelIndex cur = m_downloads->selectionModel()->currentIndex();
+		QModelIndex cur = m_torrents->selectionModel()->currentIndex();
 		if (cur.isValid())
-			downloads->moveDown(cur.row());
+		{
+			int r = cur.row();
+			model->moveDown(r);
+			if (r < model->rowCount(QModelIndex()) - 1)
+				r++;
+			m_torrents->selectionModel()->setCurrentIndex(model->index(r,0),QItemSelectionModel::Select|QItemSelectionModel::Rows);
+		}
 	}
 	
-	void QueueManagerWidget::moveUploadUpClicked()
+	void QueueManagerWidget::queueClicked()
 	{
-		QModelIndex cur = m_uploads->selectionModel()->currentIndex();
+		QModelIndex cur = m_torrents->selectionModel()->currentIndex();
 		if (cur.isValid())
-			uploads->moveUp(cur.row());
-	}
-	
-	void QueueManagerWidget::moveUploadDownClicked()
-	{
-		QModelIndex cur = m_uploads->selectionModel()->currentIndex();
-		if (cur.isValid())
-			uploads->moveDown(cur.row());
+		{
+			model->queue(cur.row());
+			m_torrents->selectionModel()->setCurrentIndex(cur,QItemSelectionModel::Select|QItemSelectionModel::Rows);
+		}
 	}
 	
 	void QueueManagerWidget::saveState(KSharedConfigPtr cfg)
 	{
 		KConfigGroup g = cfg->group("QueueManagerWidget");
-		QByteArray s = m_downloads->header()->saveState();
-		g.writeEntry("downloads_state",s.toBase64());
-		s = m_uploads->header()->saveState();
-		g.writeEntry("uploads_state",s.toBase64());
+		QByteArray s = m_torrents->header()->saveState();
+		g.writeEntry("view_state",s.toBase64());
 	}
 	
 	void QueueManagerWidget::loadState(KSharedConfigPtr cfg)
 	{
 		KConfigGroup g = cfg->group("QueueManagerWidget");
-		QByteArray s = QByteArray::fromBase64(g.readEntry("downloads_state",QByteArray()));
+		QByteArray s = QByteArray::fromBase64(g.readEntry("view_state",QByteArray()));
 		if (!s.isNull())
-			m_downloads->header()->restoreState(s);
-		
-		s = QByteArray::fromBase64(g.readEntry("uploads_state",QByteArray()));
-		if (!s.isNull())
-			m_uploads->header()->restoreState(s);
+			m_torrents->header()->restoreState(s);
 	}
 }
 

@@ -25,6 +25,8 @@
 #include <QAbstractTableModel>
 #include <torrent/queuemanager.h>
 
+class QMimeData;
+
 namespace bt
 {
 	class TorrentInterface;
@@ -43,12 +45,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		enum Filter
-		{
-			UPLOADS,DOWNLOADS
-		};
-		
-		QueueManagerModel(Filter filter,QueueManager* qman,QObject* parent);
+		QueueManagerModel(QueueManager* qman,QObject* parent);
 		virtual ~QueueManagerModel();
 		
 		virtual int rowCount(const QModelIndex & parent) const;
@@ -57,6 +54,11 @@ namespace kt
 		virtual QVariant data(const QModelIndex & index, int role) const;
 		virtual bool removeRows(int row,int count,const QModelIndex & parent);
 		virtual bool insertRows(int row,int count,const QModelIndex & parent);
+		virtual Qt::ItemFlags flags(const QModelIndex &index) const;
+		virtual Qt::DropActions supportedDropActions() const;
+		virtual QStringList mimeTypes() const;
+		virtual QMimeData* mimeData(const QModelIndexList &indexes) const;
+		virtual bool dropMimeData(const QMimeData *data,Qt::DropAction action, int row, int column, const QModelIndex &parent);
 		
 		/**
 		 * Move an item one row up
@@ -70,20 +72,21 @@ namespace kt
 		 */
 		void moveDown(int row);
 		
+		/**
+		 * Enqueue or dequeue an item
+		 * @param row The row of the item
+		 */
+		void queue(int row);
+		
 	public slots:
 		void onTorrentAdded(bt::TorrentInterface* tc);
 		void onTorrentRemoved(bt::TorrentInterface* tc);
 		void onQueueOrdered();
-		void onStatusChanged(bt::TorrentInterface* tc);
-		void onTorrentFinished(bt::TorrentInterface* tc);
-	
-	private:
-		void checkTorrentMemberShip();
 
 	private:
 		QueueManager* qman;
-		Filter filter;
 		QueuePtrList torrents;
+		mutable QList<int> dragged_items;
 	};
 
 }
