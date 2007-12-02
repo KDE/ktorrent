@@ -1,9 +1,11 @@
 #include <QHeaderView>
 #include <klocale.h>
 #include <kicon.h>
+#include <kmenu.h>
 #include <kstandarddirs.h>
 #include <kconfiggroup.h>
 #include <interfaces/peerinterface.h>
+#include <torrent/ipblocklist.h>
 #include <util/functions.h>
 #include "peerview.h"
 #include "flagdb.h"
@@ -166,6 +168,7 @@ namespace kt
 
 	PeerView::PeerView(QWidget* parent) : QTreeWidget(parent)
 	{
+		setContextMenuPolicy(Qt::CustomContextMenu);
 		setRootIsDecorated(false);
 		setSortingEnabled(true);
 		setAlternatingRowColors(true);
@@ -187,10 +190,46 @@ namespace kt
 			<< i18n("Uploaded");
 
 		setHeaderLabels(columns);
+		
+		context_menu = new KMenu(this);
+		context_menu->addAction(KIcon("user-remove"),i18n("Kick Peer"),this,SLOT(kickPeer()));
+		context_menu->addAction(KIcon("view-filter"),i18n("Ban Peer"),this,SLOT(banPeer()));
+		connect(this,SIGNAL(customContextMenuRequested(const QPoint & )),
+				this,SLOT(showContextMenu(const QPoint& )));
 	}
 
 	PeerView::~PeerView()
 	{
+	}
+	
+	void PeerView::showContextMenu(const QPoint& pos)
+	{
+		if (!currentItem())
+			return;
+		
+		context_menu->popup(mapToGlobal(pos));
+	}
+	
+	void PeerView::banPeer()
+	{
+		QTreeWidgetItem* cur = currentItem();
+		if (cur)
+		{
+			PeerViewItem* pv = (PeerViewItem*)cur;
+			pv->peer->kill();
+		}
+	}
+	
+	void PeerView::kickPeer()
+	{
+		QTreeWidgetItem* cur = currentItem();
+		if (cur)
+		{
+			PeerViewItem* pv = (PeerViewItem*)cur;
+			pv->peer->kill();
+			IPBlocklist& filter = IPBlocklist::instance();
+			filter.insert(pv->stats.ip_address,3);
+		}
 	}
 
 	void PeerView::peerAdded(PeerInterface* peer)

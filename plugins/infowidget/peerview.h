@@ -26,7 +26,7 @@
 #include <interfaces/peerinterface.h>
 #include <ksharedconfig.h>
 
-
+class KMenu;
 
 namespace kt
 {
@@ -44,7 +44,7 @@ namespace kt
 		void update(bool init = false);
 
 		bool operator < (const QTreeWidgetItem & other) const;
-	private:
+		
 		bt::PeerInterface* peer;
 		bt::PeerInterface::Stats stats;
 	};
@@ -74,8 +74,15 @@ namespace kt
 		
 		void saveState(KSharedConfigPtr cfg);
 		void loadState(KSharedConfigPtr cfg);
+		
+	private slots: 
+		void showContextMenu(const QPoint& pos);
+		void banPeer();
+		void kickPeer();
+				
 	private:
 		bt::PtrMap<bt::PeerInterface*,PeerViewItem> items;
+		KMenu* context_menu;
 	};
 }
 
