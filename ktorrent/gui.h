@@ -123,6 +123,7 @@ namespace kt
 		virtual void loadState(KSharedConfigPtr cfg);
 		virtual void saveState(KSharedConfigPtr cfg);
 		virtual bool queryExit();
+		virtual bool queryClose();
 
 	private:
 		Core* core;

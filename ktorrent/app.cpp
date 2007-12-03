@@ -18,7 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 
-
+#include <kurl.h>
 #include <kglobal.h>
 #include <kstartupinfo.h>
 #include <kcmdlineargs.h>
@@ -26,40 +26,46 @@
 #include <util/log.h>
 #include <torrent/globals.h>
 #include <util/functions.h>
+#include <interfaces/functions.h>
 #include "app.h"
 #include "gui.h"
 
 namespace kt
 {
+	GUI* App::main_widget = 0;
 	
 	App::App() : KUniqueApplication()
 	{}
 
 	App::~App()
 	{}
+	
 
 	int App::newInstance()
 	{
-		KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-
-		QString data_dir = KGlobal::dirs()->saveLocation("data","ktorrent");
-		if (!data_dir.endsWith(bt::DirSeparator()))
-			data_dir += bt::DirSeparator();
-
-		bt::InitLog(data_dir + "log");
-
-		kt::GUI *widget = new GUI();
-		setTopWidget(widget);
-		widget->show();
-
-/*
-		GUI *widget = ::qt_cast<GUI*>( mainWidget() );
-
-		for (int i = 0; i < args->count(); i++)
+		KCmdLineArgs *args = KCmdLineArgs::parsedArgs();		
+		kt::GUI *widget = 0;
+		if (!main_widget)
 		{
-			widget->load(args->url(i));
+			bt::InitLog(kt::DataDir() + "log");
+			
+			widget = new kt::GUI();
+			setTopWidget(widget);
+			widget->show();
+			main_widget = widget;
 		}
-*/
+		else
+		{
+			widget = main_widget;
+		}
+		
+		if (widget)
+		{
+			for (int i = 0; i < args->count(); i++)
+			{
+				widget->load(args->url(i));
+			}
+		}
 		args->clear();
 		return 0;
 	}

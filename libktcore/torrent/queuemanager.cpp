@@ -372,7 +372,7 @@ namespace kt
 			{
 				TorrentInterface* tc = *it;
 				const TorrentStats & s = tc->getStats();
-                        
+
 				if(s.running && s.user_controlled)
 				{
 					if(!s.completed)
@@ -389,7 +389,7 @@ namespace kt
 						download_queue.append(tc);
 				}
 			}
-                        
+
 			int max_qm_downloads = max_downloads - user_downloading;
 			int max_qm_seeds = max_seeds - user_seeding;
 			

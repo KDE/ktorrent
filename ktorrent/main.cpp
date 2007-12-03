@@ -20,10 +20,46 @@
  ***************************************************************************/
 #include <stdio.h>
 #include <signal.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/file.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <QDir>
+#include <QFile>
+#include <kurl.h>
 #include <klocale.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
 #include "app.h"
+
+bool GrabPIDLock()
+{
+	// open the PID file in the users ktorrent directory and attempt to lock it
+	QString pid_file = QDir::homePath() + "/.ktorrent.lock";
+		
+	int fd = open(QFile::encodeName(pid_file),O_RDWR|O_CREAT,0640);
+	if (fd < 0)
+	{
+		fprintf(stderr,"Failed to open KT lock file %s : %s\n",pid_file.toAscii().constData(),strerror(errno));
+		return false;
+	}
+
+	if (lockf(fd,F_TLOCK,0)<0) 
+	{
+		fprintf(stderr,"Failed to get lock on %s : %s\n",pid_file.toAscii().constData(),strerror(errno));
+		return false;
+	}
+		
+	char str[20];
+	sprintf(str,"%d\n",getpid());
+	write(fd,str,strlen(str)); /* record pid to lockfile */
+
+	// leave file open, so nobody else can lock it until KT exists
+	return true;
+}
 
 
 int main(int argc, char **argv)
@@ -84,7 +120,14 @@ int main(int argc, char **argv)
 	kt::App::addCmdLineOptions();
 	if (!kt::App::start())
 	{
-		fprintf(stderr, "ktorrent is already running!\n");
+		fprintf(stderr, "ktorrent is already running !\n");
+		return 0;
+	}
+	
+	// need to grab lock after the fork call in start, otherwise this will not work properly
+	if (!GrabPIDLock())
+	{
+		fprintf(stderr, "ktorrent is already running !\n");
 		return 0;
 	}
 	

@@ -60,7 +60,7 @@ namespace kt
 	void QueueManagerModel::onTorrentRemoved(bt::TorrentInterface* tc)
 	{
 		int r = torrents.indexOf(tc);
-		if (r > 0)
+		if (r >= 0)
 			removeRow(r);
 	}
 

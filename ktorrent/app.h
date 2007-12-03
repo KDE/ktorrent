@@ -25,6 +25,7 @@
 
 namespace kt
 {
+	class GUI;
 
 	class App : public KUniqueApplication
 	{
@@ -34,6 +35,8 @@ namespace kt
 		virtual ~App();
 
 		virtual int newInstance();
+	private:
+		static GUI* main_widget;
 	};
 }
 

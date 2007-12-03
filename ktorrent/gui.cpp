@@ -536,6 +536,18 @@ namespace kt
 		notifyViewListeners(tc);
 	}
 
+	bool GUI::queryClose()
+	{
+		if (Settings::showSystemTrayIcon() && !KApplication::kApplication()->sessionSaving())
+		{
+			hide();
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
 		
 	bool GUI::queryExit()
 	{
