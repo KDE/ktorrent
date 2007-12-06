@@ -28,7 +28,6 @@ class KPluginSelector;
 namespace kt
 {
 	class PluginManager;
-	class LabelViewItem;
 
 	/**
 	 * @author Joris Guisson

@@ -80,6 +80,8 @@ namespace kt
 		setText(0,s.ip_address);
 		setText(2,s.client);
 		setIcon(8,s.dht_support ? yes : no);
+		if (s.encrypted)
+			setIcon(0,KIcon("ktencrypted"));
 
 		// initialize the stats
 		stats = s;

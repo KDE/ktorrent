@@ -32,13 +32,11 @@ set(libktorrent_SRC
 	groups/groupmanager.cpp
 
 	ktorrent.kcfg
-	labelviewitem.ui
-	labelview.cpp
 	pluginmanager.cpp
 	pluginmanagerprefpage.cpp
 )
 
-set(libktorrent_UI pluginmanagerwidget.ui labelviewitem.ui)
+# set(libktorrent_UI pluginmanagerwidget.ui )
 
 kde4_add_ui_files(libktorrent_SRC ${libktorrent_UI})
 kde4_add_kcfg_files(libktorrent_SRC settings.kcfgc)
