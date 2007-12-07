@@ -304,6 +304,13 @@ namespace bt
 		 */
 		virtual TorrentFileInterface & getTorrentFile(Uint32 index) = 0;
 		
+		/**
+		 * Const version of the previous one.
+		 * @param index The index of the file
+		 * @return The TorrentFileInterface (isNull() will be true in case of error)
+		 */
+		virtual const TorrentFileInterface & getTorrentFile(Uint32 index) const = 0;
+		
 		///Get a pointer to TrackersList object
 		virtual TrackersList* getTrackersList() = 0;
 		

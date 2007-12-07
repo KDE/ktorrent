@@ -13,6 +13,7 @@ set(libktorrent_SRC
 	interfaces/filetreediritem.cpp
 	
 	torrent/queuemanager.cpp
+	torrent/torrentfiletreemodel.cpp
 	
 	groups/group.cpp
 	groups/torrentgroup.cpp
@@ -42,7 +43,6 @@ kde4_add_ui_files(libktorrent_SRC ${libktorrent_UI})
 kde4_add_kcfg_files(libktorrent_SRC settings.kcfgc)
 kde4_add_library(ktcore SHARED ${libktorrent_SRC})
 
-# target_link_libraries(ktorrent ${KDE4_KPARTS_LIBS} -lgmp)
 target_link_libraries(ktcore ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KUTILS_LIBS} btcore ${KDE4_SOLID_LIBS} ${GMP_LIBRARIES})
 set_target_properties(ktcore PROPERTIES VERSION 1.0.0 SOVERSION 1 )
 install(TARGETS ktcore  DESTINATION ${LIB_INSTALL_DIR} )

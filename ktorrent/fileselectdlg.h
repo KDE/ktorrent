@@ -21,7 +21,6 @@
 #ifndef FILESELECTDLG_H
 #define FILESELECTDLG_H
 
-#include <interfaces/filetreediritem.h>
 #include "ui_fileselectdlg.h"
 
 namespace bt
@@ -33,18 +32,19 @@ namespace kt
 {
 	class FileTreeDirItem;
 	class GroupManager;
+	class TorrentFileTreeModel;
 
 	/**
 	 * @author Joris Guisson
 	 *
 	 * Dialog to select which files to download from a multifile torrent.
 	 */
-	class FileSelectDlg : public QDialog,public Ui_FileSelectDlg,public kt::FileTreeRootListener
+	class FileSelectDlg : public QDialog,public Ui_FileSelectDlg
 	{
 		Q_OBJECT
 
 		bt::TorrentInterface* tc;
-		kt::FileTreeDirItem* root;
+		TorrentFileTreeModel* ftree_model;
 		kt::GroupManager* gman;
 		bool* user;
 		bool* start;
@@ -65,7 +65,6 @@ namespace kt
 	private:
 		void populateFields();
 		void loadGroups();
-		virtual void treeItemChanged();
 	};
 }
 

@@ -26,7 +26,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KUrlRequester" native="1" name="m_downloadLocation" />
+      <widget class="KUrlRequester" name="m_downloadLocation" />
      </item>
     </layout>
    </item>
@@ -92,21 +92,7 @@
    <item>
     <layout class="QHBoxLayout" >
      <item>
-      <widget class="QTreeWidget" name="m_file_view" >
-       <property name="fullWidth" stdset="0" >
-        <bool>true</bool>
-       </property>
-       <column>
-        <property name="text" >
-         <string>File</string>
-        </property>
-       </column>
-       <column>
-        <property name="text" >
-         <string>Size</string>
-        </property>
-       </column>
-      </widget>
+      <widget class="QTreeView" name="m_file_view" />
      </item>
      <item>
       <layout class="QVBoxLayout" >
@@ -275,14 +261,14 @@
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
   <customwidget>
-   <class>KUrlRequester</class>
-   <extends>QWidget</extends>
-   <header>kurlrequester.h</header>
-  </customwidget>
-  <customwidget>
    <class>KPushButton</class>
    <extends>QPushButton</extends>
    <header>kpushbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KUrlRequester</class>
+   <extends>QFrame</extends>
+   <header>kurlrequester.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
@@ -292,7 +278,6 @@
   <tabstop>m_cmbGroups</tabstop>
   <tabstop>m_chkUserControlled</tabstop>
   <tabstop>m_chkStartTorrent</tabstop>
-  <tabstop>m_file_view</tabstop>
   <tabstop>m_select_all</tabstop>
   <tabstop>m_select_none</tabstop>
   <tabstop>m_invert_selection</tabstop>

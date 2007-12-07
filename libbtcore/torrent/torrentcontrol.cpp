@@ -1227,6 +1227,14 @@ namespace bt
 		else
 			return TorrentFile::null;
 	}
+	
+	const TorrentFileInterface & TorrentControl::getTorrentFile(Uint32 index) const
+	{
+		if (tor)
+			return tor->getFile(index);
+		else
+			return TorrentFile::null;
+	}
 
 	void TorrentControl::migrateTorrent(const QString & default_save_dir)
 	{

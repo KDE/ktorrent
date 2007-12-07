@@ -238,7 +238,7 @@ namespace kt
 	void GUI::openTorrent()
 	{
 		QString filter = "*.torrent|" + i18n("Torrent Files") + "\n*|" + i18n("All Files");
-		KUrl::List urls = KFileDialog::getOpenUrls(KUrl(), filter, this, i18n("Open Location"));
+		KUrl::List urls = KFileDialog::getOpenUrls(KUrl("kfiledialog:///openTorrent"), filter, this, i18n("Open Location"));
 
 		if (urls.count() == 0)
 			return;

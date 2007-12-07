@@ -30,9 +30,11 @@
 #include <interfaces/filetreeitem.h>
 #include <util/functions.h>
 #include <util/fileops.h>
+#include <util/log.h>
 #include <interfaces/functions.h>
 #include <groups/group.h>
 #include <groups/groupmanager.h>
+#include <torrent/torrentfiletreemodel.h>
 #include "fileselectdlg.h"
 #include "settings.h"
 
@@ -44,13 +46,13 @@ namespace kt
 	FileSelectDlg::FileSelectDlg(kt::GroupManager* gman,QWidget* parent) : QDialog(parent,Qt::Dialog),gman(gman)
 	{
 		setupUi(this);
-		root = 0;
+		ftree_model = 0;
+		//root = 0;
 		connect(m_select_all,SIGNAL(clicked()),this,SLOT(selectAll()));
 		connect(m_select_none,SIGNAL(clicked()),this,SLOT(selectNone()));
 		connect(m_invert_selection,SIGNAL(clicked()),this,SLOT(invertSelection()));
 		connect(m_ok,SIGNAL(clicked()),this,SLOT(accept()));
 		connect(m_cancel,SIGNAL(clicked()),this,SLOT(reject()));
-		connect(m_downloadLocation, SIGNAL(textChanged (const QString &)), this, SLOT(updateSizeLabels()));
 
 		m_ok->setGuiItem(KStandardGuiItem::ok());
 		m_cancel->setGuiItem(KStandardGuiItem::cancel());
@@ -68,31 +70,29 @@ namespace kt
 		this->start = start;
 		if (tc)
 		{
-			populateFields();
-			m_file_view->clear();
-
-			if (tc->getStats().multi_file_torrent)
+			for (Uint32 i = 0;i < tc->getNumFiles();i++)
 			{
-				root = new kt::FileTreeDirItem(m_file_view,tc->getStats().torrent_name,this);
-				for (Uint32 i = 0;i < tc->getNumFiles();i++)
-				{
-					bt::TorrentFileInterface & file = tc->getTorrentFile(i);
-					file.setEmitDownloadStatusChanged(false);
-					root->insert(file.getPath(),file,kt::DELETE_FILES);
-				}
-				root->setExpanded(true);
+				bt::TorrentFileInterface & file = tc->getTorrentFile(i);
+				file.setEmitDownloadStatusChanged(false);
 			}
-			else
+			populateFields();
+			ftree_model = new TorrentFileTreeModel(tc,TorrentFileTreeModel::DELETE_FILES,this);
+			connect(ftree_model,SIGNAL(checkStateChanged()),this,SLOT(updateSizeLabels()));
+			connect(m_downloadLocation, SIGNAL(textChanged (const QString &)), this, SLOT(updateSizeLabels()));
+			m_file_view->setModel(ftree_model);
+			m_file_view->expandAll();
+			
+			updateSizeLabels();
+
+			if (!tc->getStats().multi_file_torrent)
 			{
-				QTreeWidgetItem* twi = new QTreeWidgetItem(m_file_view);
-				twi->setText(0,tc->getStats().torrent_name);
-				twi->setText(1,BytesToString(tc->getStats().total_bytes));
-				twi->setIcon(0,SmallIcon(KMimeType::findByPath(tc->getStats().torrent_name)->iconName()));
 				m_select_all->setEnabled(false);
 				m_select_none->setEnabled(false);
 				m_invert_selection->setEnabled(false);
 			}
-			m_file_view->setRootIsDecorated(true);
+
+			m_file_view->setAlternatingRowColors(false);
+			m_file_view->setRootIsDecorated(false);
 			m_file_view->resizeColumnToContents(0);
 			m_file_view->resizeColumnToContents(1);
 			return exec();
@@ -128,6 +128,7 @@ namespace kt
 				pe_ex.append(file.getPath());
 			}
 			file.setPathOnDisk(path);
+			file.setEmitDownloadStatusChanged(true);
 		}
 		
 		if (pe_ex.count() > 0)
@@ -186,20 +187,17 @@ namespace kt
 
 	void FileSelectDlg::selectAll()
 	{
-		if (root)
-			root->setAllChecked(true);
+		ftree_model->checkAll();
 	}
 
 	void FileSelectDlg::selectNone()
 	{
-		if (root)
-			root->setAllChecked(false);
+		ftree_model->uncheckAll();
 	}
 
 	void FileSelectDlg::invertSelection()
 	{
-		if (root)
-			root->invertChecked();
+		ftree_model->invertCheck();
 	}
 
 	void FileSelectDlg::populateFields()
@@ -213,7 +211,6 @@ namespace kt
 		}
 		
 		m_downloadLocation->setUrl(dir);
-		updateSizeLabels();
 		loadGroups();
 	}
 
@@ -236,15 +233,12 @@ namespace kt
 		m_cmbGroups->addItems(grps);
 	}
 
-	void FileSelectDlg::treeItemChanged()
-	{
-		updateSizeLabels();
-	}
-
 	void FileSelectDlg::updateSizeLabels()
 	{
+		if (!ftree_model)
+			return;
+		
 		//calculate free disk space
-
 		KUrl sdir = KUrl(m_downloadLocation -> url());
 		while( sdir.isValid() && sdir.isLocalFile() && (!sdir.isEmpty())  && (! QDir(sdir.path()).exists()) ) 
 		{
@@ -257,11 +251,7 @@ namespace kt
 			FreeDiskSpace(tc->getDataDir(),bytes_free);
 		}
 		
-		Uint64 bytes_to_download = 0;
-		if (root)
-			bytes_to_download = root->bytesToDownload();
-		else
-			bytes_to_download = tc->getStats().total_bytes;
+		Uint64 bytes_to_download = ftree_model->bytesToDownload();
 
 		lblFree->setText(bt::BytesToString(bytes_free));
 		lblRequired->setText(bt::BytesToString(bytes_to_download));
