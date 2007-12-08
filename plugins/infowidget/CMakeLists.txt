@@ -8,8 +8,6 @@ set(ktinfowidgetplugin_SRC
 	availabilitychunkbar.cpp 
 	downloadedchunkbar.cpp 
 	statustab.cpp
-	iwfiletreeitem.cpp
-	iwfiletreediritem.cpp
 	fileview.cpp
 	peerview.cpp
 	chunkdownloadview.cpp

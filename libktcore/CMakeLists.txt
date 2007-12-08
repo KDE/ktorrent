@@ -9,8 +9,6 @@ set(libktorrent_SRC
 	interfaces/guiinterface.cpp
 	interfaces/coreinterface.cpp
 	interfaces/prefpageinterface.cpp
-	interfaces/filetreeitem.cpp
-	interfaces/filetreediritem.cpp
 	
 	torrent/queuemanager.cpp
 	torrent/torrentfiletreemodel.cpp

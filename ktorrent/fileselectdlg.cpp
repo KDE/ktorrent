@@ -26,8 +26,6 @@
 #include <kpushbutton.h>
 #include <interfaces/torrentfileinterface.h>
 #include <interfaces/torrentinterface.h>
-#include <interfaces/filetreediritem.h>
-#include <interfaces/filetreeitem.h>
 #include <util/functions.h>
 #include <util/fileops.h>
 #include <util/log.h>
