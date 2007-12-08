@@ -20,7 +20,7 @@
 #ifndef KTFILEVIEW_H
 #define KTFILEVIEW_H
 
-#include <QTreeWidget>
+#include <QTreeView>
 #include <util/constants.h>
 #include <ksharedconfig.h>
 
@@ -33,35 +33,33 @@ namespace bt
 
 namespace kt
 {
-	
-	class IWFileTreeDirItem;
+	class IWFileTreeModel;
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class FileView : public QTreeWidget
+	class FileView : public QTreeView
 	{
 		Q_OBJECT
 	public:
 		FileView(QWidget *parent);
 		virtual ~FileView();
 
-		void update();
 		void changeTC(bt::TorrentInterface* tc);
 
 		void saveState(KSharedConfigPtr cfg);
 		void loadState(KSharedConfigPtr cfg);
+		void update();
+		
+	public slots:
+		void onTorrentRemoved(bt::TorrentInterface* tc);
 
 	private slots:
 		void showContextMenu(const QPoint & p);
-		void refreshFileTree(bt::TorrentInterface* tc);
-		void onDoubleClicked(QTreeWidgetItem* item,int column);
+		void onDoubleClicked(const QModelIndex & index);
+		void onMissingFileMarkedDND(bt::TorrentInterface* tc);
 		
 	private:
-		void fillFileTree();
-		void readyPreview();
-		void readyPercentage();
-		void changePriority(QTreeWidgetItem* item, bt::Priority newpriority);
 		void changePriority(bt::Priority newpriority);
 
 	private slots:
@@ -74,7 +72,7 @@ namespace kt
 
 	private:
 		bt::TorrentInterface* curr_tc;
-		IWFileTreeDirItem* multi_root;
+		IWFileTreeModel* model;
 
 		KMenu* context_menu;
 		QAction* open_action;
@@ -85,6 +83,7 @@ namespace kt
 		QAction* delete_action;
 
 		QString preview_path;
+		QMap<bt::TorrentInterface*,IWFileTreeModel*> model_cache;
 	};
 
 }

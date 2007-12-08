@@ -22,11 +22,15 @@
 #define KTTORRENTFILETREEMODEL_H
 
 #include <QAbstractItemModel>
+#include <util/constants.h>
 #include <ktcore_export.h>
+
+class QTreeView;
 
 namespace bt
 {
 	class TorrentInterface;
+	class TorrentFileInterface;
 }
 
 namespace kt
@@ -78,6 +82,18 @@ namespace kt
 		 */
 		bt::Uint64 bytesToDownload();
 		
+		/**
+		 * Save which items are expanded.
+		 * @param tv The QTreeView
+		 */
+		void saveExpandedState(QTreeView* tv);
+		
+		/**
+		 * Retore the expaned state of the tree.in a QTreeView
+		 * @param tv The QTreeView
+		 */
+		void loadExpandedState(QTreeView* tv);
+		
 	signals:
 		/**
 		 * Emitted whenever one or more items changes check state
@@ -88,8 +104,29 @@ namespace kt
 		void constructTree();
 		void invertCheck(const QModelIndex & idx);
 
-	private:
-		struct Node;
+	protected:
+		struct KTCORE_EXPORT Node
+		{
+			Node* parent;
+			bt::TorrentFileInterface* file; // file (0 if this is a directory)
+			QString name; // name or directory
+			QList<Node*> children; // child dirs
+			bt::Uint64 size;
+			bool expanded;
+			
+			Node(Node* parent,bt::TorrentFileInterface* file,const QString & name);
+			Node(Node* parent,const QString & name);
+			~Node();
+			
+			void insert(const QString & path,bt::TorrentFileInterface* file);
+			int row();
+			bt::Uint64 fileSize(const bt::TorrentInterface* tc);
+			bt::Uint64 bytesToDownload(const bt::TorrentInterface* tc);
+			Qt::CheckState checkState(const bt::TorrentInterface* tc) const;
+			
+			void saveExpandedState(const QModelIndex & index,QTreeView* tv);
+			void loadExpandedState(const QModelIndex & index,QTreeView* tv);
+		};
 		
 		bt::TorrentInterface* tc;
 		Node* root;

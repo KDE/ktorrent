@@ -15,7 +15,8 @@ set(ktinfowidgetplugin_SRC
 	chunkdownloadview.cpp
 	trackerview.cpp
 	GeoIP.c
-	flagdb.cpp)
+	flagdb.cpp
+	iwfiletreemodel.cpp)
 
 kde4_add_ui_files(ktinfowidgetplugin_SRC iwprefpage.ui statustab.ui chunkdownloadview.ui trackerview.ui)
 kde4_add_kcfg_files(ktinfowidgetplugin_SRC infowidgetpluginsettings.kcfgc)

@@ -204,7 +204,7 @@ namespace kt
 	
 		statusBarMsg(i18n("Searching for %1...",text));
 		//html_part->openURL(url);
- 		html_part->openUrlRequest(url,KParts::OpenUrlArguments());
+ 		html_part->openUrlRequest(url,KParts::OpenUrlArguments(),KParts::BrowserArguments());
 	}	
 	
 	void SearchWidget::searchPressed()
@@ -260,6 +260,7 @@ namespace kt
 	
 	void SearchWidget::openTorrent(const KUrl & url)
 	{
+		Out(SYS_GEN|LOG_DEBUG) << "SearchWidget::openTorrent " << url.prettyUrl() << endl;
 		sp->getCore()->load(url);
 	}
 	

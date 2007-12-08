@@ -28,10 +28,7 @@
 
 class QProgressBar;
 
-namespace KIO
-{
-	class Job;
-}
+class KJob;
 
 namespace bt
 {
@@ -259,8 +256,8 @@ namespace kt
 		void torrentFinished(bt::TorrentInterface* tc);
 		void slotStoppedByError(bt::TorrentInterface* tc, QString msg);
 		void torrentSeedAutoStopped(bt::TorrentInterface* tc,bt::AutoStopReason reason);
-		void downloadFinished(KIO::Job *job);
-		void downloadFinishedSilently(KIO::Job *job);
+		void downloadFinished(KJob *job);
+		void downloadFinishedSilently(KJob *job);
 		void emitCorruptedData(bt::TorrentInterface* tc);
 		void autoCheckData(bt::TorrentInterface* tc);
 
@@ -273,7 +270,7 @@ namespace kt
 		kt::PluginManager* pman;
 		kt::QueueManager* qman;
 		kt::GroupManager* gman;
-		QMap<KIO::Job*,KUrl> custom_save_locations; // map to store save locations
+		QMap<KJob*,KUrl> custom_save_locations; // map to store save locations
 	};
 }
 

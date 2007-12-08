@@ -1,0 +1,93 @@
+/***************************************************************************
+ *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
+ *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ ***************************************************************************/
+#ifndef KTIWFILETREEMODEL_H
+#define KTIWFILETREEMODEL_H
+
+#include <torrent/torrentfiletreemodel.h>
+
+namespace kt
+{
+
+	/**
+	 * 
+	 * @author Joris Guisson
+	 * 
+	 * Expands the standard TorrentFileTreeModel to show more information.
+	*/
+	class IWFileTreeModel : public TorrentFileTreeModel
+	{
+		Q_OBJECT
+	public:
+		IWFileTreeModel(bt::TorrentInterface* tc,QObject* parent);
+		virtual ~IWFileTreeModel();
+
+		virtual int columnCount(const QModelIndex & parent) const;
+		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
+		virtual QVariant data(const QModelIndex & index, int role) const;
+		virtual bool setData(const QModelIndex & index, const QVariant & value, int role); 
+
+		/**
+		 * Convert a model index to a file index.
+		 * @param idx The model index
+		 * @return The file index or 0 for a directory
+		 */
+		bt::TorrentFileInterface* indexToFile(const QModelIndex & idx);
+		
+		/**
+		 * Get the path of a directory (root directory not included)
+		 * @param idx The model index
+		 * @return The path
+		 */
+		QString dirPath(const QModelIndex & idx);
+		
+		/**
+		 * Change the priority of a bunch of items. 
+		 * @param indexes The list of items
+		 * @param newpriority The new priority
+		 */
+		void changePriority(const QModelIndexList & indexes,bt::Priority newpriority);
+		
+		/**
+		 * Missing files have been marked DND, update the preview and selection information. 
+		 */
+		void missingFilesMarkedDND();
+		
+		/**
+		 * Update gui if necessary
+		 */
+		void update();
+		
+	private slots:
+		void onPercentageUpdated(float p);
+		void onPreviewAvailable(bool av);
+		
+	private:
+		void update(const QModelIndex & index,bt::TorrentFileInterface* file,int col);
+		
+	private:
+		bool preview;
+		bool mmfile;
+		double percentage;
+	};
+
+}
+
+#endif

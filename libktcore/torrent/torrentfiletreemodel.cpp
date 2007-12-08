@@ -21,6 +21,7 @@
 #include <klocale.h>
 #include <kicon.h>
 #include <kmimetype.h>
+#include <QTreeView>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include <util/functions.h>
@@ -30,128 +31,151 @@ using namespace bt;
 
 namespace kt
 {
-	struct TorrentFileTreeModel::Node
+	
+	TorrentFileTreeModel::Node::Node(Node* parent,bt::TorrentFileInterface* file,const QString & name) 
+		: parent(parent),file(file),name(name),size(0),expanded(true)
+	{}
+			
+	TorrentFileTreeModel::Node::Node(Node* parent,const QString & name) 
+		: parent(parent),file(0),name(name),size(0),expanded(true)
 	{
-		Node* parent;
-		int idx; // index of file (if this is a file, -1 otherwise)
-		QString name; // name or directory
-		QList<Node*> children; // child dirs
-		bt::Uint64 size;
+	}
 		
-		Node(Node* parent,int idx,const QString & name) : parent(parent),idx(idx),name(name),size(0)
-		{}
-			
-		Node(Node* parent,const QString & name) : parent(parent),idx(-1),name(name),size(0)
-		{
-		}
+	TorrentFileTreeModel::Node::~Node()
+	{
+		qDeleteAll(children);
+	}
 		
-		~Node()
+	void TorrentFileTreeModel::Node::insert(const QString & path,bt::TorrentFileInterface* file)
+	{
+		int p = path.indexOf(bt::DirSeparator());
+		if (p == -1)
 		{
-			qDeleteAll(children);
-		}
-		
-		void insert(const QString & path,bt::Uint32 idx)
-		{
-			int p = path.indexOf(bt::DirSeparator());
-			if (p == -1)
-			{
 				// the file is part of this directory
-				children.append(new Node(this,idx,path));
-			}
-			else
+			children.append(new Node(this,file,path));
+		}
+		else
+		{
+			QString subdir = path.left(p);
+			foreach (Node* n,children)
 			{
-				QString subdir = path.left(p);
-				foreach (Node* n,children)
+				if (n->name == subdir)
 				{
-					if (n->name == subdir)
-					{
-						n->insert(path.mid(p+1),idx);
-						return;
-					}
+					n->insert(path.mid(p+1),file);
+					return;
 				}
+			}
 						
-				Node* n = new Node(this,subdir);
-				children.append(n);
-				n->insert(path.mid(p+1),idx);
-			}
+			Node* n = new Node(this,subdir);
+			children.append(n);
+			n->insert(path.mid(p+1),file);
 		}
+	}
 		
-		int row()
-		{
-			if (parent)
-				return parent->children.indexOf(this);
-			else
-				return 0;
-		}
+	int TorrentFileTreeModel::Node::row()
+	{
+		if (parent)
+			return parent->children.indexOf(this);
+		else
+			return 0;
+	}
 		
-		bt::Uint64 fileSize(const bt::TorrentInterface* tc)
-		{
-			if (size > 0)
-				return size;
-			
-			if (idx == -1)
-			{
-				// directory
-				foreach (Node* n,children)
-					size += n->fileSize(tc);
-			}
-			else
-			{
-				const bt::TorrentFileInterface & tf = tc->getTorrentFile(idx);
-				size = tf.getSize();
-			}
+	bt::Uint64 TorrentFileTreeModel::Node::fileSize(const bt::TorrentInterface* tc)
+	{
+		if (size > 0)
 			return size;
-		}
-		
-		bt::Uint64 bytesToDownload(const bt::TorrentInterface* tc)
-		{
-			bt::Uint64 s = 0;
 			
-			if (idx == -1)
-			{
-				// directory
-				foreach (Node* n,children)
-					s += n->bytesToDownload(tc);
-			}
-			else
-			{
-				const bt::TorrentFileInterface & tf = tc->getTorrentFile(idx);
-				if (!tf.doNotDownload())
-					s = tf.getSize();
-			}
-			return s;
-		}
-		
-		Qt::CheckState checkState(const bt::TorrentInterface* tc) const
+		if (!file)
 		{
-			if (idx == -1)
-			{
-				bool found_checked = false;
-				bool found_unchecked = false;
-				// directory
-				foreach (Node* n,children)
-				{
-					Qt::CheckState s = n->checkState(tc);
-					if (s == Qt::PartiallyChecked)
-						return s;
-					else if (s == Qt::Checked)
-						found_checked = true;
-					else
-						found_unchecked = true;
-					
-					if (found_checked && found_unchecked)
-						return Qt::PartiallyChecked;
-				}
-				
-				return found_checked ? Qt::Checked : Qt::Unchecked;
-			}
-			else
-			{
-				const bt::TorrentFileInterface & tf = tc->getTorrentFile(idx);
-				return tf.doNotDownload() ? Qt::Unchecked : Qt::Checked;
-			}
+			// directory
+			foreach (Node* n,children)
+				size += n->fileSize(tc);
 		}
-	};
+		else
+		{
+			size = file->getSize();
+		}
+		return size;
+	}
+		
+	bt::Uint64 TorrentFileTreeModel::Node::bytesToDownload(const bt::TorrentInterface* tc)
+	{
+		bt::Uint64 s = 0;
+			
+		if (!file)
+		{
+				// directory
+			foreach (Node* n,children)
+				s += n->bytesToDownload(tc);
+		}
+		else
+		{
+			if (!file->doNotDownload())
+				s = file->getSize();
+		}
+		return s;
+	}
+		
+	Qt::CheckState TorrentFileTreeModel::Node::checkState(const bt::TorrentInterface* tc) const
+	{
+		if (!file)
+		{
+			bool found_checked = false;
+			bool found_unchecked = false;
+				// directory
+			foreach (Node* n,children)
+			{
+				Qt::CheckState s = n->checkState(tc);
+				if (s == Qt::PartiallyChecked)
+					return s;
+				else if (s == Qt::Checked)
+					found_checked = true;
+				else
+					found_unchecked = true;
+					
+				if (found_checked && found_unchecked)
+					return Qt::PartiallyChecked;
+			}
+				
+			return found_checked ? Qt::Checked : Qt::Unchecked;
+		}
+		else
+		{
+			return file->doNotDownload() || file->getPriority() == ONLY_SEED_PRIORITY ? Qt::Unchecked : Qt::Checked;
+		}
+	}
+	
+	void TorrentFileTreeModel::Node::saveExpandedState(const QModelIndex & index,QTreeView* tv)
+	{
+		if (file)
+			return;
+		
+		expanded = tv->isExpanded(index);
+		
+		int idx = 0;
+		foreach (Node* n,children)
+		{
+			if (!n->file)
+				n->saveExpandedState(index.child(idx,0),tv);
+			idx++;
+		}
+	}
+	
+	void TorrentFileTreeModel::Node::loadExpandedState(const QModelIndex & index,QTreeView* tv)
+	{
+		if (file)
+			return;
+		
+		tv->setExpanded(index,expanded);
+		
+		int idx = 0;
+		foreach (Node* n,children)
+		{
+			if (!n->file)
+				n->loadExpandedState(index.child(idx,0),tv);
+			idx++;
+		}
+	}
 
 	TorrentFileTreeModel::TorrentFileTreeModel(bt::TorrentInterface* tc,DeselectMode mode,QObject* parent) 
 	: QAbstractItemModel(parent),tc(tc),root(0),mode(mode),emit_check_state_change(true)
@@ -174,7 +198,7 @@ namespace kt
 		for (Uint32 i = 0;i < tc->getNumFiles();i++)
 		{
 			bt::TorrentFileInterface & tf = tc->getTorrentFile(i);
-			root->insert(tf.getPath(),i);
+			root->insert(tf.getPath(),&tf);
 		}
 	}
 
@@ -227,18 +251,22 @@ namespace kt
 			switch (index.column())
 			{
 				case 0: return n->name;
-				case 1: return BytesToString(n->fileSize(tc));
+				case 1: 
+					if (tc->getStats().multi_file_torrent)
+						return BytesToString(n->fileSize(tc));
+					else
+						return BytesToString(tc->getStats().total_bytes);
 				default: return QVariant();
 			}
 		}
 		else if (role == Qt::DecorationRole && index.column() == 0)
 		{
 			// if this is an empty folder then we are in the single file case
-			if (n->idx == -1)
+			if (!n->file)
 				return n->children.count() > 0 ? 
 						KIcon("folder") : KIcon(KMimeType::findByPath(tc->getStats().torrent_name)->iconName());
 			else
-				return KIcon(KMimeType::findByPath(tc->getTorrentFile(n->idx).getPath())->iconName());
+				return KIcon(KMimeType::findByPath(n->file->getPath())->iconName());
 		}
 		else if (role == Qt::CheckStateRole && index.column() == 0)
 		{
@@ -305,7 +333,7 @@ namespace kt
 			return false;
 		
 		Qt::CheckState newState = static_cast<Qt::CheckState>(value.toInt());
-		if (n->idx == -1)
+		if (!n->file)
 		{
 			bool reenable = false;
 			if (emit_check_state_change)
@@ -325,22 +353,22 @@ namespace kt
 		}
 		else
 		{
-			bt::TorrentFileInterface & file = tc->getTorrentFile(n->idx);
+			bt::TorrentFileInterface* file = n->file;
 			if (newState == Qt::Checked)
 			{
-				if (file.getPriority() == ONLY_SEED_PRIORITY)
-					file.setPriority(NORMAL_PRIORITY);
+				if (file->getPriority() == ONLY_SEED_PRIORITY)
+					file->setPriority(NORMAL_PRIORITY);
 				else
-					file.setDoNotDownload(false);
+					file->setDoNotDownload(false);
 			}
 			else
 			{
 				if (mode == KEEP_FILES)
-					file.setPriority(ONLY_SEED_PRIORITY);
+					file->setPriority(ONLY_SEED_PRIORITY);
 				else
-					file.setDoNotDownload(true);
+					file->setDoNotDownload(true);
 			}
-			dataChanged(index,index);
+			dataChanged(createIndex(index.row(),0),createIndex(index.row(),columnCount(index) - 1));
 			
 			QModelIndex parent = index.parent();
 			if (parent.isValid())
@@ -378,7 +406,7 @@ namespace kt
 		if (!n)
 			return;
 		
-		if (n->idx == -1)
+		if (!n->file)
 		{
 			for (Uint32 i = 0;i < n->children.count();i++)
 			{
@@ -388,8 +416,7 @@ namespace kt
 		}
 		else
 		{
-			bt::TorrentFileInterface & file = tc->getTorrentFile(n->idx);
-			if (file.doNotDownload())
+			if (n->file->doNotDownload())
 				setData(idx,Qt::Checked,Qt::CheckStateRole);
 			else
 				setData(idx,Qt::Unchecked,Qt::CheckStateRole);
@@ -402,6 +429,19 @@ namespace kt
 			return root->bytesToDownload(tc);
 		else
 			return tc->getStats().total_bytes;
+	}
+	
+	void TorrentFileTreeModel::saveExpandedState(QTreeView* tv)
+	{
+		if (tc->getStats().multi_file_torrent)
+			root->saveExpandedState(index(0,0,QModelIndex()),tv);
+	}
+		
+		
+	void TorrentFileTreeModel::loadExpandedState(QTreeView* tv)
+	{
+		if (tc->getStats().multi_file_torrent)
+			root->loadExpandedState(index(0,0,QModelIndex()),tv);
 	}
 }
 

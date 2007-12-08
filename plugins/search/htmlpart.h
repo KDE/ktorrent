@@ -48,7 +48,7 @@ namespace kt
 		void back();
 		void reload();
 		void copy();
-		void openUrlRequest(const KUrl &url, const KParts::OpenUrlArguments &args);
+		void openUrlRequest(const KUrl &url, const KParts::OpenUrlArguments & arg, const KParts::BrowserArguments & barg);
 	
 	private slots:
 		void addToHistory(const KUrl & url);

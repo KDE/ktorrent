@@ -26,6 +26,9 @@ class QString;
 
 namespace bt
 {
+	struct TorrentStats;
+	
+	BTCORE_EXPORT double Percentage(const TorrentStats & s);
 
 	BTCORE_EXPORT void WriteUint64(Uint8* buf,Uint32 off,Uint64 val);
 	BTCORE_EXPORT Uint64 ReadUint64(const Uint8* buf,Uint64 off);

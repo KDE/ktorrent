@@ -44,8 +44,8 @@ namespace kt
 		setPluginsEnabled(false);
 		setStatusMessagesEnabled(false);
 		KParts::BrowserExtension* ext = this->browserExtension();
-		connect(ext,SIGNAL(openUrlRequest(const KUrl&,const KParts::URLArgs&)),
-				this,SLOT(openUrlRequest(const KUrl&, const KParts::URLArgs& )));
+		connect(ext,SIGNAL(openUrlRequest(const KUrl &, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &)),
+				this,SLOT(openUrlRequest(const KUrl&,const KParts::OpenUrlArguments & , const KParts::BrowserArguments &)));
 	
 		ext->enableAction("copy",true);
 		ext->enableAction("paste",true);
@@ -65,7 +65,7 @@ namespace kt
 			cb->setText(txt,QClipboard::Clipboard);
 	}
 	
-	void HTMLPart::openUrlRequest(const KUrl &u,const KParts::OpenUrlArguments &)
+	void HTMLPart::openUrlRequest(const KUrl &u, const KParts::OpenUrlArguments & arg, const KParts::BrowserArguments & barg)
 	{
 		if (active_job)
 		{
@@ -163,7 +163,7 @@ namespace kt
 				int ret = KMessageBox::questionYesNoCancel(0,
 						i18n("Do you want to download or save the torrent?"),
 						i18n("Download Torrent"),
-						KGuiItem(i18n("Download"),"down"),
+						KGuiItem(i18n("Download"),"ktorrent"),
 						KStandardGuiItem::save());
 			
 				if (ret == KMessageBox::Yes)

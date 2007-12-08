@@ -270,7 +270,7 @@ namespace kt
 		}
 	}
 
-	void Core::downloadFinished(KIO::Job *job)
+	void Core::downloadFinished(KJob *job)
 	{
 		KIO::StoredTransferJob* j = (KIO::StoredTransferJob*)job;
 		int err = j->error();
@@ -316,11 +316,11 @@ namespace kt
 		else
 		{
 			KIO::Job* j = KIO::storedGet(url);
-			connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadFinished( KIO::Job* )));
+			connect(j,SIGNAL(result(KJob*)),this,SLOT(downloadFinished( KJob* )));
 		}
 	}
 
-	void Core::downloadFinishedSilently(KIO::Job *job)
+	void Core::downloadFinishedSilently(KJob *job)
 	{
 		KIO::StoredTransferJob* j = (KIO::StoredTransferJob*)job;
 		int err = j->error();
@@ -383,7 +383,7 @@ namespace kt
 		{
 			// download to a random file in tmp
 			KIO::Job* j = KIO::storedGet(url);
-			connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadFinishedSilently( KIO::Job* )));
+			connect(j,SIGNAL(result(KJob*)),this,SLOT(downloadFinishedSilently( KJob* )));
 		}
 	}
 
@@ -415,7 +415,7 @@ namespace kt
 			// download to a random file in tmp
 			KIO::Job* j = KIO::storedGet(url);
 			custom_save_locations.insert(j,savedir); // keep track of save location
-			connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(downloadFinishedSilently( KIO::Job* )));
+			connect(j,SIGNAL(result(KJob*)),this,SLOT(downloadFinishedSilently( KJob* )));
 		}
 	}
 

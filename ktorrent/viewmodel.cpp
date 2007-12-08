@@ -35,32 +35,7 @@ using namespace bt;
 
 namespace kt
 {
-	static double Percentage(const TorrentStats & s)
-	{
-		if (s.bytes_left_to_download == 0)
-		{
-			return 100.0;
-		}
-		else
-		{
-			if (s.total_bytes_to_download == 0)
-			{
-				return 100.0;
-			}
-			else
-			{
-				double perc = 100.0 - ((double)s.bytes_left_to_download / s.total_bytes_to_download) * 100.0;
-				if (perc > 100.0)
-					perc = 100.0;
-				else if (perc > 99.9)
-					perc = 99.9;
-				else if (perc < 0.0)
-					perc = 0.0;
-				
-				return perc;
-			}
-		}
-	}
+	
 
 	static int ETA(const TorrentStats & s,bt::TorrentInterface* tc)
 	{
