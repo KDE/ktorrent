@@ -28,4 +28,4 @@ X-KDE-PluginInfo-Name=LogViewerPlugin
 X-KDE-PluginInfo-Website=http://ktorrent.org/
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=false
-Icon=ksystemlog
+Icon=utilities-log-viewer

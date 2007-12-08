@@ -194,7 +194,7 @@ namespace kt
 		setHeaderLabels(columns);
 		
 		context_menu = new KMenu(this);
-		context_menu->addAction(KIcon("user-remove"),i18n("Kick Peer"),this,SLOT(kickPeer()));
+		context_menu->addAction(KIcon("list-remove-user"),i18n("Kick Peer"),this,SLOT(kickPeer()));
 		context_menu->addAction(KIcon("view-filter"),i18n("Ban Peer"),this,SLOT(banPeer()));
 		connect(this,SIGNAL(customContextMenuRequested(const QPoint & )),
 				this,SLOT(showContextMenu(const QPoint& )));

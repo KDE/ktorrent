@@ -51,7 +51,7 @@ namespace kt
 		remove_item_action = tool_bar->addAction(KIcon("list-remove"),i18n("Remove Item"),this,SLOT(removeItem()));
 		edit_item_action = tool_bar->addAction(KIcon("edit-select-all"),i18n("Edit Item"),this,SLOT(editItem()));
 		tool_bar->addSeparator();
-		clear_action = tool_bar->addAction(KIcon("edit-delete"),i18n("Clear Schedule"),this,SLOT(clear()));
+		clear_action = tool_bar->addAction(KIcon("edit-clear"),i18n("Clear Schedule"),this,SLOT(clear()));
 		
 		clear_action->setEnabled(false);
 		edit_item_action->setEnabled(false);

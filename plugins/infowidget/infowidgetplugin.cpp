@@ -188,7 +188,7 @@ namespace kt
 		if (show && !peer_view)
 		{
 			peer_view = new PeerView(0);
-			getGUI()->addToolWidget(peer_view,"users",i18n("Peers"),GUIInterface::DOCK_BOTTOM);
+			getGUI()->addToolWidget(peer_view,"system-users",i18n("Peers"),GUIInterface::DOCK_BOTTOM);
 			peer_view->loadState(KGlobal::config());
 			createMonitor(tc);
 		}

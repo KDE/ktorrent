@@ -85,7 +85,7 @@ namespace kt
 		html_part->view()->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
 		right_click_menu = new KMenu(this);
-		back_action = right_click_menu->addAction(KIcon("back"),i18n("Back"),html_part,SLOT(back()));
+		back_action = right_click_menu->addAction(KIcon("go-back"),i18n("Back"),html_part,SLOT(back()));
 		right_click_menu->addAction(KIcon("view-refresh"),i18n("Reload"),html_part,SLOT(reload()));
 		back_action->setEnabled(false);
 

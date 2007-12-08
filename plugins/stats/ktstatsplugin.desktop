@@ -27,4 +27,4 @@ X-KDE-PluginInfo-Name=StatsPlugin
 X-KDE-PluginInfo-Website=http://ktorrent.org/
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=false
-Icon=utilities-system-monitor
+Icon=view-statistics
