@@ -162,9 +162,11 @@ set (interfaces_HDR
 	./interfaces/torrentfileinterface.h
 	./interfaces/peersource.h
 	./interfaces/peersource.h
+        ./interfaces/peerinterface.h
 	./interfaces/monitorinterface.h
 	./interfaces/torrentinterface.h
 	./interfaces/torrentinterface.h
+    ./interfaces/chunkdownloadinterface.h
 )
 
 set (peer_HDR
