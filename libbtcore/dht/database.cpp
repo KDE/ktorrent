@@ -152,12 +152,12 @@ namespace dht
 		
 		// in the map so now get the timestamp and regenerate the token
 		// using the IP and port of the sender
-		Uint32 ts = tokens[token];
-		Uint8 tdata[10];
+		TimeStamp ts = tokens[token];
+		Uint8 tdata[14];
 		bt::WriteUint32(tdata,0,ip);
 		bt::WriteUint16(tdata,4,port);
-		bt::WriteUint32(tdata,6,ts);
-		dht::Key ct = SHA1Hash::generate(tdata,10);
+		bt::WriteUint64(tdata,6,ts);
+		dht::Key ct = SHA1Hash::generate(tdata,14);
 		// compare the generated token to the one received
 		if (token != ct)  // not good, this peer didn't went through the proper channels
 		{
