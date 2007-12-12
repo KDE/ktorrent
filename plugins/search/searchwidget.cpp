@@ -18,7 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-
+#include <QLabel>
 #include <kapplication.h>
 #include <khtmlview.h>
 #include <qlayout.h>
@@ -34,6 +34,7 @@
 #include <kiconloader.h>
 #include <kcombobox.h>
 #include <kmenu.h>
+#include <kstandardaction.h>
 #include <kparts/partmanager.h>
 #include <kio/job.h>
 #include <kmessagebox.h>
@@ -54,18 +55,27 @@ using namespace bt;
 
 namespace kt
 {
-	SearchBar::SearchBar(HTMLPart* html_part,SearchWidget* parent) : QWidget(parent)
+	SearchBar::SearchBar(HTMLPart* html_part,SearchWidget* parent) : KToolBar(parent)
 	{
-		setupUi(this);
+		m_back = KStandardAction::back(html_part,SLOT(back()),this);
 		m_back->setEnabled(false);
-		connect(m_search_button,SIGNAL(clicked()),parent,SLOT(searchPressed()));
+		addAction(m_back);
+		m_reload = KStandardAction::redisplay(html_part,SLOT(reload()),this);
+		m_reload->setText(i18n("Reload"));
+		addAction(m_reload);
+		m_search_text = new KLineEdit(this);
+		addWidget(m_search_text);
+		m_search = KStandardAction::find(parent,SLOT(searchPressed()),this);
+		addAction(m_search);
+		addWidget(new QLabel(i18n(" Engine:")));
+		m_search_engine = new KComboBox(this);
+		addWidget(m_search_engine);
+		
 		connect(m_search_text,SIGNAL(returnPressed()),parent,SLOT(searchPressed()));
-		connect(m_back,SIGNAL(clicked()),html_part,SLOT(back()));
-		connect(m_reload,SIGNAL(clicked()),html_part,SLOT(reload()));
-
-		m_back->setIcon(KStandardGuiItem::back(KStandardGuiItem::UseRTL).icon());
-		m_reload->setIcon(KIcon("view-refresh"));
-
+		
+		//m_back->setIcon(KStandardGuiItem::back(KStandardGuiItem::UseRTL).icon());
+		//m_reload->setIcon(KIcon("view-refresh"));
+		//m_back->setGuiItem(KStandardGuiItem::back());
 	}
 
 	SearchBar::~SearchBar()

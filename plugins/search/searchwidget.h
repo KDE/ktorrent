@@ -22,10 +22,12 @@
 
 #include <qwidget.h>
 #include <kurl.h>
-#include "ui_searchbar.h"
+#include <ktoolbar.h>
 
 class QProgressBar;
 class KMenu;
+class KLineEdit;
+class KComboBox;
 
 namespace KParts
 {
@@ -39,12 +41,18 @@ namespace kt
 	class SearchPlugin;
 	class SearchEngineList;
 
-	class SearchBar : public QWidget,public Ui_SearchBar
+	class SearchBar : public KToolBar
 	{
 		Q_OBJECT
 	public:
 		SearchBar(HTMLPart* html_part,SearchWidget* parent);
 		virtual ~SearchBar();
+		
+		KComboBox* m_search_engine;
+		KLineEdit* m_search_text;
+		QAction* m_back;
+		QAction* m_reload;
+		QAction* m_search;
 	};
 	
 	
