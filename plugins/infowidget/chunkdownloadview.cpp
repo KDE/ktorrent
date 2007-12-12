@@ -1,6 +1,7 @@
 #include <QHeaderView>
 #include <klocale.h>
 #include <interfaces/torrentinterface.h>
+#include <interfaces/torrentfileinterface.h>
 #include <interfaces/chunkdownloadinterface.h>
 #include <util/functions.h>
 #include "chunkdownloadview.h"
@@ -9,12 +10,30 @@ using namespace bt;
 
 namespace kt
 {
-	ChunkDownloadViewItem::ChunkDownloadViewItem(QTreeWidget* cdv,ChunkDownloadInterface* cd) 
+	ChunkDownloadViewItem::ChunkDownloadViewItem(QTreeWidget* cdv,ChunkDownloadInterface* cd,bt::TorrentInterface* tc) 
 		: QTreeWidgetItem(cdv,QTreeWidgetItem::UserType),cd(cd)
 	{
 		cd->getStats(stats);
 		setText(0,QString::number(stats.chunk_index));
 		update(true);
+		QString files;
+		if (tc->getStats().multi_file_torrent)
+		{
+			int n = 0;
+			for (Uint32 i = 0;i < tc->getNumFiles();i++)
+			{
+				const bt::TorrentFileInterface & tf = tc->getTorrentFile(i);
+				if (stats.chunk_index >= tf.getFirstChunk() && stats.chunk_index <= tf.getLastChunk())
+				{
+					if (n > 0)
+						files += "\n";
+					
+					files += tf.getPath();
+					n++;
+				}
+			}
+			setText(5,files);
+		}
 	}
 
 	ChunkDownloadViewItem::~ChunkDownloadViewItem()
@@ -33,6 +52,7 @@ namespace kt
 		case 2: return s.current_peer_id < os.current_peer_id;
 		case 3: return s.download_speed < os.download_speed;
 		case 4: return s.num_downloaders < os.num_downloaders;
+		case 5: return text(5) < other.text(5);
 		default:
 			 return false;
 		}
@@ -73,7 +93,7 @@ namespace kt
 
 	void ChunkDownloadView::downloadAdded(ChunkDownloadInterface* cd)
 	{
-		items.insert(cd, new ChunkDownloadViewItem(m_chunk_view,cd));
+		items.insert(cd, new ChunkDownloadViewItem(m_chunk_view,cd,curr_tc));
 	}
 
 	void ChunkDownloadView::downloadRemoved(ChunkDownloadInterface* cd)

@@ -42,7 +42,7 @@ namespace kt
 	class ChunkDownloadViewItem : public QTreeWidgetItem
 	{
 	public:
-		ChunkDownloadViewItem(QTreeWidget* cdv,bt::ChunkDownloadInterface* cd);
+		ChunkDownloadViewItem(QTreeWidget* cdv,bt::ChunkDownloadInterface* cd,bt::TorrentInterface* tc);
 		virtual ~ChunkDownloadViewItem();
 
 		void update(bool init = false);

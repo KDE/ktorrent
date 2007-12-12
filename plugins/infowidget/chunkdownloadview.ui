@@ -276,6 +276,11 @@
        <string>Assigned Peers</string>
       </property>
      </column>
+     <column>
+      <property name="text" >
+       <string>Files</string>
+      </property>
+     </column>
     </widget>
    </item>
   </layout>

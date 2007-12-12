@@ -16,3 +16,4 @@ silently)
 - Stop using symlinks and use a file which contains the location of each file of a torrent
 - Use a toolbar in the search plugin instead of a widget
 - Added global shortcut to show or hide ktorrent
+- Show files which a chunk belongs to in chunks tab
