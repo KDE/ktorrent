@@ -365,6 +365,7 @@ namespace kt
 		show_menu_bar_action = KStandardAction::showMenubar(this, SLOT(showMenuBar()),ac);
 		KAction* pref_action = KStandardAction::preferences(this, SLOT(showPrefDialog()),ac);
 		KStandardAction::keyBindings(this, SLOT(configureKeys()),ac);
+		
 		KStandardAction::configureToolbars(this,SLOT(configureToolBars()),ac);
 
 		start_action = new KAction(KIcon("ktstart"),i18n("Start"), this);
@@ -410,6 +411,13 @@ namespace kt
 		speed_limits_action = new KAction(i18n("Speed Limits"),this);
 		connect(speed_limits_action,SIGNAL(triggered()),this,SLOT(speedLimits()));
 		ac->addAction("speed_limits",speed_limits_action);
+		
+		show_kt_action = new KAction(i18n("Show/Hide KTorrent"),this);
+		connect(show_kt_action,SIGNAL(triggered()),this,SLOT(showOrHide()));
+		show_kt_action->setGlobalShortcut(KShortcut(Qt::ALT+ Qt::CTRL + Qt::Key_T), 
+										  KAction::ActiveShortcut | KAction::DefaultShortcut,KAction::Autoloading);
+		show_kt_action->setShortcut(show_kt_action->globalShortcut());
+		ac->addAction("show_kt",show_kt_action);
 
 				
 		QMenu* m = tray_icon->contextMenu();
@@ -421,6 +429,7 @@ namespace kt
 		m->addAction(new_action);
 		m->addSeparator();
 		m->addAction(pref_action);
+		m->addAction(show_kt_action);
 		m->addSeparator();
 		m->addAction(quit_action);
 		createGUI("ktorrentui.rc");
@@ -557,6 +566,12 @@ namespace kt
 		tray_icon->hide();
 		core->onExit();
 		return true;
+	}
+	
+	
+	void GUI::showOrHide()
+	{
+		setVisible(!isVisible());
 	}
 }
 

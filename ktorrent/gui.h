@@ -116,6 +116,7 @@ namespace kt
 		void closeTab();
 		void newView();
 		void speedLimits();
+		void showOrHide();
 		
 		
 	private:
@@ -148,6 +149,7 @@ namespace kt
 		KAction* data_check_action;
 		KAction* import_action;
 		KAction* speed_limits_action;
+		KAction* show_kt_action;
 
 		PrefDialog* pref_dlg;
 		QMap<QWidget*,CloseTabListener*> close_tab_map;
