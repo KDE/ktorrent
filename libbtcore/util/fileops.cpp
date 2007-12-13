@@ -420,7 +420,7 @@ namespace bt
 		if (statvfs(QFile::encodeName(path), &stfs) == 0)
 #endif
 		{
-			bytes_free = ((Uint64)stfs.f_bavail) * ((Uint64)stfs.f_bsize);
+			bytes_free = ((Uint64)stfs.f_bavail) * ((Uint64)stfs.f_frsize);
 			return true;
 		}
 		else

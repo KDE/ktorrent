@@ -110,7 +110,7 @@ int main(int argc, char **argv)
 	about.addCredit(ki18n("The_Kernel"),ki18n("Patch to change file priorities in the webgui"),"kernja@cs.earlham.edu");
 	about.addCredit(ki18n("Rafał Miłecki"),ki18n("Several webgui patches"),"zajec5@gmail.com");
 	about.addCredit(ki18n("Ozzi"),ki18n("Fixes for several warnings"),"ossi@masiina.no-ip.info");
-
+	about.addCredit(ki18n("Markus Brueffer"),ki18n("Patch to fix free diskspace calculation on FreeBSD"),"markus@brueffer.de");
 	KCmdLineArgs::init(argc, argv, &about);
 
 	KCmdLineOptions options;
