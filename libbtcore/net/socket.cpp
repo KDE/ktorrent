@@ -132,38 +132,6 @@ namespace net
 		cacheAddress();
 		return true;
 	}
-	/*
-	static bool bind_addrinfo(int fd,const QString & ip,Uint16 port)
-	{
-		struct addrinfo hints;
-		struct addrinfo* addresses = NULL;
-
-		memset(&hints, 0, sizeof(hints));
-		
-		hints.ai_family = ip.contains(":") ? AF_INET6 : AF_INET;
-		hints.ai_socktype = SOCK_STREAM;
-		hints.ai_flags = AI_PASSIVE;
-		
-		if (getaddrinfo(ip.toAscii(),QString::number(port).toAscii(), &hints, &addresses) != 0) 
-		{
-			Out(SYS_CON|LOG_NOTICE) << "getaddrinfo failed : " << gai_strerror(errno) << endl;
-			return false;
-		}
-		
-		bool ret = false;
-		for (struct addrinfo* r = addresses; r; r = r->ai_next) 
-		{
-			char addrstr[101];
-			if (::bind(fd,r->ai_addr,r->ai_addrlen) == 0)
-			{
-				ret = true;
-				break;
-			}
-		}
-		
-		freeaddrinfo(addresses);
-		return ret;
-	}*/
 	
 	bool Socket::bind(const QString & ip,Uint16 port,bool also_listen)
 	{

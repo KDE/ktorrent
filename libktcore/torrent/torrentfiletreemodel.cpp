@@ -474,7 +474,6 @@ namespace kt
 		BNode* n = dec.decode();
 		if (n && n->getType() == BNode::DICT)
 		{
-			n->printDebugInfo();
 			root->loadExpandedState(index(0,0,QModelIndex()),tv,n);
 		}
 		delete n;

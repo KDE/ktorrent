@@ -56,38 +56,6 @@ using namespace bt;
 
 namespace kt
 {
-	
-/*
-	void IPBlockingPrefPageWidget::apply()
-	{
-		IPBlockingPluginSettings::setFilterURL(kcfg_filterURL->url());
-		IPBlockingPluginSettings::setUseLevel1(checkUseLevel1->isChecked());
-		IPBlockingPluginSettings::writeConfig();
-		
-		if(checkUseLevel1->isChecked())
-		{
-			QFile target(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat");
-			if(target.exists())
-				m_status->setText(i18n("Status: Loaded and running."));
-			else
-				m_status->setText(i18n("Status: <font color=\"#ff0000\">Filter file not found.</font> Download and convert filter file."));
-		}
-		else
-			m_status->setText(i18n("Status: Not loaded."));
-	}
-
-	
-
-	
-	
-	void IPBlockingPrefPageWidget::setConverting(bool enable)
-	{
-		m_download->setEnabled(enable);
-		m_status->setText("");
-	}
-*/	
-	
-	////////////////////////////////////////////////////////////////////////////////////
 
 	IPBlockingPrefPage::IPBlockingPrefPage(CoreInterface* core, IPFilterPlugin* p)
 	: PrefPageInterface(IPBlockingPluginSettings::self(),i18n("IP Filter"), "view-filter",0), m_core(core), m_plugin(p)

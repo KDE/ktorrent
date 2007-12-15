@@ -43,6 +43,8 @@ namespace kt
 	class DBus;
 	class View;
 	class QueueManagerWidget;
+	
+	
 
 	class GUI : public ideal::MainWindow,public GUIInterface
 	{
@@ -90,6 +92,12 @@ namespace kt
 		 * @param g The group to show in the view
 		 * */
 		void openView(kt::Group* g);
+		
+		/**
+		 * Enable or disable some actions in the GUI
+		 * @param flags Which actions to enable and disable
+		 */
+		void setActionsEnabled(ActionEnableFlags flags);
 
 	private slots:
 		void createTorrent();
@@ -117,6 +125,7 @@ namespace kt
 		void newView();
 		void speedLimits();
 		void showOrHide();
+		
 		
 		
 	private:

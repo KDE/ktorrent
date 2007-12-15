@@ -24,6 +24,7 @@
 #include <QMap>
 #include <QTreeWidget>
 #include <util/constants.h>
+#include <interfaces/guiinterface.h>
 #include <ksharedconfig.h>
 
 class KMenu;
@@ -35,7 +36,7 @@ namespace kt
 	class ViewModel;
 	class Group;
 	class TorrentInterface;
-
+	
 	
 	
 	class View : public QTreeView
@@ -75,6 +76,16 @@ namespace kt
 		/// Check if we need to update the caption
 		bool needToUpdateCaption();
 
+		/**
+		 * Update the ActionFlags
+		 */
+		void updateFlags();
+		
+		/**
+		 * Get the flags indicating which actions can be enabled.
+		 */
+		int actionFlags() const {return flags;}
+		
 	public slots:
 		/**
 		 * Update all items in the view
@@ -104,12 +115,14 @@ namespace kt
 		void showHeaderMenu(const QPoint& pos);
 		void onHeaderMenuItemTriggered(QAction* act);
 		void onCurrentItemChanged(const QModelIndex & current,const QModelIndex & previous);
+		void onSelectionChanged(const QItemSelection & selected,const QItemSelection & deselected);
 
 	signals:
 		void wantToRemove(bt::TorrentInterface* tc,bool data_to);
 		void wantToStop(bt::TorrentInterface* tc,bool user);
 		void wantToStart(bt::TorrentInterface* tc);
 		void currentTorrentChanged(View* v,bt::TorrentInterface* tc);
+		void enableActions(View* v,ActionEnableFlags flags);
 
 	private:
 		Core* core;
@@ -120,6 +133,7 @@ namespace kt
 		bt::Uint32 num_torrents;
 		bt::Uint32 num_running;
 		ViewModel* model;
+		int flags;
 	};
 }
 

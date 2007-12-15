@@ -44,7 +44,7 @@ namespace kt
 {
 	
 	View::View(ViewModel* model,Core* core,QWidget* parent) 
-		: QTreeView(parent),core(core),group(0),num_torrents(0),num_running(0),model(model)
+		: QTreeView(parent),core(core),group(0),num_torrents(0),num_running(0),model(model),flags(0)
 	{
 		menu = new ViewMenu(core->getGroupManager(),this);
 		setContextMenuPolicy(Qt::CustomContextMenu);
@@ -58,43 +58,27 @@ namespace kt
 		connect(this,SIGNAL(wantToStart( bt::TorrentInterface* )),core,SLOT(start( bt::TorrentInterface* )));
 		connect(this,SIGNAL(wantToStop( bt::TorrentInterface*, bool )),core,SLOT(stop( bt::TorrentInterface*, bool )));
 		connect(this,SIGNAL(customContextMenuRequested(const QPoint & ) ),this,SLOT(showMenu( const QPoint& )));
-		
-
-
+	
 		header()->setContextMenuPolicy(Qt::CustomContextMenu);
 		connect(header(),SIGNAL(customContextMenuRequested(const QPoint & ) ),this,SLOT(showHeaderMenu( const QPoint& )));
 		header_menu = new KMenu(this);
 		header_menu->addTitle(i18n("Columns"));
-		
-		QStringList columns;
-		columns << i18n("Name")
-				<< i18n("Status")
-				<< i18n("Downloaded")
-				<< i18n("Size")
-				<< i18n("Uploaded")
-				<< i18n("Down Speed")
-				<< i18n("Up Speed")
-				<< i18n("Time Left")
-				<< i18n("Seeders")
-				<< i18n("Leechers")
-				<< i18n("% Complete")
-				<< i18n("Share Ratio")
-				<< i18n("Time Downloaded")
-				<< i18n("Time Seeded");
-		
-		int idx = 0;
-		foreach (QString col,columns)
+	
+		for (int i = 0;i < model->columnCount(QModelIndex());i++)
 		{
+			QString col = model->headerData(i,Qt::Horizontal,Qt::DisplayRole).toString();
 			QAction* act = header_menu->addAction(col);
 			act->setCheckable(true);
 			act->setChecked(true);
-			column_idx_map[act] = idx++;
+			column_idx_map[act] = i;
 		}
 		
 		connect(header_menu,SIGNAL(triggered(QAction* )),this,SLOT(onHeaderMenuItemTriggered(QAction*)));
 		setModel(model);
 		connect(selectionModel(),SIGNAL(currentChanged(const QModelIndex &,const QModelIndex &)),
 				this,SLOT(onCurrentItemChanged(const QModelIndex&, const QModelIndex&)));
+		connect(selectionModel(),SIGNAL(selectionChanged(const QItemSelection &,const QItemSelection)),
+				this,SLOT(onSelectionChanged(const QItemSelection &,const QItemSelection)));
 	}
 
 	View::~View()
@@ -114,6 +98,7 @@ namespace kt
 		Uint32 idx = 0;
 		QList<bt::TorrentInterface*> all;
 		model->allTorrents(all);
+		
 		// update items which are part of the current group
 		// if they are not part of the current group, just hide them
 		foreach (bt::TorrentInterface* ti,all)
@@ -133,6 +118,20 @@ namespace kt
 			idx++;
 		}
 
+		int nflags = flags & (kt::START | kt::STOP | kt::REMOVE);
+		if (running == torrents && torrents > 0)
+			nflags |= kt::STOP_ALL;
+		else if (running == 0 && torrents > 0)
+			nflags |= kt::START_ALL;
+		else if (torrents > 0)
+			nflags |= kt::START_ALL | kt::STOP_ALL;
+			
+		if (flags != nflags)
+		{
+			flags = nflags;
+			enableActions(this,(ActionEnableFlags)flags);
+		}
+			 
 		// update the caption
 		if (num_running != running || num_torrents != torrents)
 		{
@@ -483,6 +482,57 @@ namespace kt
 			header()->showSection(idx);
 		else
 			header()->hideSection(idx);
+	}
+	
+	void View::onSelectionChanged(const QItemSelection & selected,const QItemSelection & deselected)
+	{
+		int nflags = flags & (kt::START_ALL | kt::STOP_ALL);
+		QModelIndexList sel = selected.indexes();
+		foreach (QModelIndex idx,sel)
+		{
+			if (isRowHidden(idx.row(),QModelIndex()))
+				continue;
+			
+			bt::TorrentInterface* tc = model->torrentFromIndex(idx);
+			if (!tc)
+				continue;
+			
+			if (!tc->getStats().running)
+				nflags |= kt::START | kt::START_ALL;
+			else
+				nflags |= kt::STOP | kt::STOP_ALL;
+		}
+		
+		if (sel.count() > 0)
+			nflags |= kt::REMOVE;
+		
+		if (flags != nflags)
+		{
+			flags = nflags;
+			enableActions(this,(kt::ActionEnableFlags)flags);
+		}
+	}
+	
+	void View::updateFlags()
+	{
+		int nflags = flags & (kt::START_ALL | kt::STOP_ALL);
+		QList<bt::TorrentInterface*> sel;
+		getSelection(sel);
+		
+		foreach (bt::TorrentInterface* tc,sel)
+		{
+			if (!tc->getStats().running)
+				nflags |= kt::START | kt::START_ALL;
+			else
+				nflags |= kt::STOP | kt::STOP_ALL;
+		}
+		
+		if (sel.count() > 0)
+			nflags |= kt::REMOVE;
+		
+		
+		flags = nflags;
+		enableActions(this,(kt::ActionEnableFlags)flags);
 	}
 }
 

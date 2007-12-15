@@ -36,6 +36,7 @@ namespace kt
 	class Core;
 	class GUI;
 	class Group;
+	enum ActionEnableFlags;
 
 	class ViewManager : public QObject,public CloseTabListener
 	{
@@ -98,10 +99,14 @@ namespace kt
 		void onGroupRenamed(kt::Group* g);
 		void onGroupRemoved(kt::Group* g);
 		void onCurrentTorrentChanged(View* v,bt::TorrentInterface* tc);
+		void onEnableActions(View* v,ActionEnableFlags flags);
 
 	private:
 		virtual bool closeAllowed(QWidget* w);
 		virtual void tabCloseRequest(kt::GUIInterface* gui,QWidget* tab);
+		
+	signals:
+		void enableActions(ActionEnableFlags flags);
 
 	private:
 		GUI* gui;

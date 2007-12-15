@@ -45,6 +45,8 @@ namespace kt
 		views.append(v);
 		connect(v,SIGNAL(currentTorrentChanged(View* ,bt::TorrentInterface* )),
 			this,SLOT(onCurrentTorrentChanged(View* ,bt::TorrentInterface* )));
+		connect(v,SIGNAL(enableActions(View*, ActionEnableFlags)),
+				this,SLOT(onEnableActions(View*, ActionEnableFlags)));
 		return v;
 	}
 		
@@ -86,35 +88,50 @@ namespace kt
 	void ViewManager::startTorrents()
 	{
 		if (current)
+		{
 			current->startTorrents();
+			current->updateFlags();
+		}
 	}
 		
 	/// Stop all selected downloads in the current view
 	void ViewManager::stopTorrents()
 	{
 		if (current)
+		{
 			current->stopTorrents();
+			current->updateFlags();
+		}
 	}
 		
 	/// Start all downloads in the current view
 	void ViewManager::startAllTorrents()
 	{
 		if (current)
+		{
 			current->startAllTorrents();
+			current->updateFlags();
+		}
 	}
 		
 	/// Stop all downloads in the current view
 	void ViewManager::stopAllTorrents()
 	{
 		if (current)
+		{
 			current->stopAllTorrents();
+			current->updateFlags();
+		}
 	}
 		
 	/// Remove selected downloads in the current view
 	void ViewManager::removeTorrents()
 	{
 		if (current)
+		{
 			current->removeTorrents();
+			current->updateFlags();
+		}
 	}
 
 	void ViewManager::queueTorrents()
@@ -168,6 +185,7 @@ namespace kt
 			if (v == tab)
 			{
 				current = v;
+				current->updateFlags();
 				break;
 			}
 		}
@@ -254,6 +272,11 @@ namespace kt
 			gui->currentTorrentChanged(tc);
 	}
 
+	void ViewManager::onEnableActions(View* v,ActionEnableFlags flags)
+	{
+		if (v == current)
+			enableActions(flags);
+	}
 }
 
 #include "viewmanager.moc"

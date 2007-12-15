@@ -41,7 +41,6 @@ namespace net
 			BOUND,
 			CLOSED
 		};
-		
 	
 		explicit Socket(int fd,int ip_version);
 		explicit Socket(bool tcp,int ip_version);

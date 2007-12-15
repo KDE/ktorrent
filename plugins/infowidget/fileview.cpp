@@ -267,6 +267,9 @@ namespace kt
 	
 	void FileView::saveState(KSharedConfigPtr cfg)
 	{
+		if (!model)
+			return;
+		
 		KConfigGroup g = cfg->group("FileView");
 		QByteArray s = header()->saveState();
 		g.writeEntry("state",s.toBase64());

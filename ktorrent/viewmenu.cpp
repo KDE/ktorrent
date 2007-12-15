@@ -38,7 +38,7 @@ namespace kt
 		stop_torrent = addAction(KIcon("ktstop"),i18n("Stop"),parent,SLOT(stopTorrents()));
 		remove_torrent = addAction(KIcon("ktremove"),i18n("Remove Torrent"),parent,SLOT(removeTorrents()));
 		remove_torrent_and_data = addAction(KIcon("ktremove"),i18n("Remove Torrent and Data"),parent,SLOT(removeTorrentsAndData()));
-		queue_torrent = addAction(i18n("Enqueue/Dequeue"),parent,SLOT(queueTorrents()));
+		queue_torrent = addAction(KIcon("view-choose"),i18n("Enqueue/Dequeue"),parent,SLOT(queueTorrents()));
 		addSeparator();
 		add_peers = addAction(KIcon("list-add"),i18n("Add Peers"),parent,SLOT(addPeers()));
 		peer_sources_menu = addMenu(i18n("Additional Peer Sources"));

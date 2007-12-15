@@ -52,6 +52,16 @@ namespace kt
 		BELOW  ///< New widgets will be added below the old
 	};
 	
+	enum ActionEnableFlags
+	{
+		NONE = 0,
+		START = 1,
+		STOP = 2,
+		REMOVE = 4,
+		START_ALL = 8,
+		STOP_ALL = 16
+	};
+	
 	/**
 	 * Small interface for classes who want to know when
 	 * current torrent in the gui changes.

@@ -72,7 +72,10 @@ namespace kt
 		core = new Core(this);
 		tray_icon = new TrayIcon(core,this);
 		setupActions();
+		setActionsEnabled((ActionEnableFlags)0);
 		view_man = new ViewManager(core->getGroupManager()->allGroup(),this,core);
+		connect(view_man,SIGNAL(enableActions(ActionEnableFlags)),this,SLOT(setActionsEnabled(ActionEnableFlags)));
+		
 		group_view = new GroupView(core->getGroupManager(),view_man,actionCollection(),this);
 		addToolWidget(group_view,"view-choose",i18n("Groups"),DOCK_LEFT);
 		connect(group_view,SIGNAL(openNewTab(kt::Group*)),this,SLOT(openView(kt::Group*)));
@@ -567,7 +570,15 @@ namespace kt
 		core->onExit();
 		return true;
 	}
-	
+
+	void GUI::setActionsEnabled(ActionEnableFlags flags)
+	{
+		start_action->setEnabled(flags & START);
+		stop_action->setEnabled(flags & STOP);
+		remove_action->setEnabled(flags & REMOVE);
+		start_all_action->setEnabled(flags & START_ALL);
+		stop_all_action->setEnabled(flags & STOP_ALL);
+	}
 	
 	void GUI::showOrHide()
 	{
