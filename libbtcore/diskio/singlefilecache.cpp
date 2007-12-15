@@ -97,18 +97,28 @@ namespace bt
 	
 	bool SingleFileCache::prep(Chunk* c)
 	{
-		Uint64 off = c->getIndex() * tor.getChunkSize();
-		Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::RW);
-		if (!buf)
+		if (mmap_failures >= 3)
 		{
-			// buffer it if mmapping fails
-			Out(SYS_GEN|LOG_IMPORTANT) << "Warning : mmap failure, falling back to buffered mode" << endl;
+			// mmap continuously fails, so stop using it
 			c->allocate();
 			c->setStatus(Chunk::BUFFERED);
 		}
 		else
 		{
-			c->setData(buf,Chunk::MMAPPED);
+			Uint64 off = c->getIndex() * tor.getChunkSize();
+			Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::RW);
+			if (!buf)
+			{
+				mmap_failures++;
+				// buffer it if mmapping fails
+				Out(SYS_GEN|LOG_IMPORTANT) << "Warning : mmap failure, falling back to buffered mode" << endl;
+				c->allocate();
+				c->setStatus(Chunk::BUFFERED);
+			}
+			else
+			{
+				c->setData(buf,Chunk::MMAPPED);
+			}
 		}
 		return true;
 	}
@@ -116,10 +126,19 @@ namespace bt
 	void SingleFileCache::load(Chunk* c)
 	{
 		Uint64 off = c->getIndex() * tor.getChunkSize();
-		Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::READ);
-		if (!buf)
-			throw Error(i18n("Cannot load chunk %1",c->getIndex()));
-		c->setData(buf,Chunk::MMAPPED);
+		Uint8* buf = 0;
+		if (mmap_failures >= 3 || !(buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::READ)))
+		{
+			c->allocate();
+			c->setStatus(Chunk::BUFFERED);
+			fd->read(c->getData(),c->getSize(),off);
+			if (mmap_failures < 3)
+				mmap_failures++;
+		}
+		else
+		{
+			c->setData(buf,Chunk::MMAPPED);
+		}
 	}
 
 	void SingleFileCache::save(Chunk* c)

@@ -30,7 +30,7 @@ namespace bt
 	bool Cache::preallocate_fs_specific = true;
 
 	Cache::Cache(Torrent & tor,const QString & tmpdir,const QString & datadir)
-	: tor(tor),tmpdir(tmpdir),datadir(datadir)
+	: tor(tor),tmpdir(tmpdir),datadir(datadir),mmap_failures(0)
 	{
 		if (!datadir.endsWith(bt::DirSeparator()))
 			this->datadir += bt::DirSeparator();

@@ -46,6 +46,7 @@ namespace bt
 		QString tmpdir;
 		QString datadir;
 		bool preexisting_files;
+		Uint32 mmap_failures;
 	public:
 		Cache(Torrent & tor,const QString & tmpdir,const QString & datadir);
 		virtual ~Cache();
