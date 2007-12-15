@@ -27,27 +27,28 @@
 #include "settings.h"
 #include "prefdialog.h"
 #include "core.h"
-#include "ui_globalpref.h"
+#include "ui_qmpref.h"
 #include "ui_generalpref.h"
 #include "advancedpref.h"
+#include "networkpref.h"
 
 namespace kt
 {
-	class GlobalPref : public PrefPageInterface,public Ui_GlobalPref
+	class QMPref : public PrefPageInterface,public Ui_QMPref
 	{
 	public:
-		GlobalPref(QWidget* parent) : PrefPageInterface(Settings::self(),i18n("Downloads"),"ktorrent",parent)
+		QMPref(QWidget* parent) : PrefPageInterface(Settings::self(),i18n("Queue Manager"),"ktqueuemanager",parent)
 		{
 			setupUi(this);
 		}
 
-		virtual ~GlobalPref() {}
+		virtual ~QMPref() {}
 	};
 
 	class GeneralPref : public PrefPageInterface,public Ui_GeneralPref
 	{
 	public:
-		GeneralPref(QWidget* parent) : PrefPageInterface(Settings::self(),i18n("General"),"configure",parent)
+		GeneralPref(QWidget* parent) : PrefPageInterface(Settings::self(),i18n("Application"),"configure",parent)
 		{
 			setupUi(this);
 			kcfg_tempDir->setMode(KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
@@ -109,8 +110,9 @@ namespace kt
 		KConfigDialogManager::propertyMap()->insert("KUrlRequester","url");
 		setFaceType(KPageDialog::List);
 		connect(this,SIGNAL(settingsChanged(const QString &)),core,SLOT(applySettings()));
-		addPrefPage(new GlobalPref(this));
 		addPrefPage(new GeneralPref(this));
+		addPrefPage(new NetworkPref(this));
+		addPrefPage(new QMPref(this));
 		addPrefPage(new AdvancedPref(this));
 	}
 
