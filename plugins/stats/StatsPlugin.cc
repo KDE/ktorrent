@@ -31,7 +31,7 @@ StatsPlugin::StatsPlugin(QObject * p, const QStringList&) : Plugin(
 								"Krzysztof Kundzicz", 
 								"athantor@gmail.com",
 								i18n("Shows transfers statistics"), 
-								"utilities-system-monitor"), 
+								"view-statistics"), 
 								mUpdCtr(1)
 {
 	pmUiSett = 0;
@@ -52,8 +52,8 @@ void StatsPlugin::load()
 	pmUiSett = new SettingsPage(0);
 	pmTmr.reset(new QTimer(this));
 	
-	getGUI() -> addToolWidget(pmUiSpd.get(), "utilities-system-monitor", i18n("Speed charts"), GUIInterface::DOCK_BOTTOM);
-	getGUI() -> addToolWidget(pmUiConns.get(), "utilities-system-monitor", i18n("Connections charts"), GUIInterface::DOCK_BOTTOM);
+	getGUI() -> addToolWidget(pmUiSpd.get(), "view-statistics", i18n("Speed charts"), GUIInterface::DOCK_BOTTOM);
+	getGUI() -> addToolWidget(pmUiConns.get(), "view-statistics", i18n("Connections charts"), GUIInterface::DOCK_BOTTOM);
 	
 	getGUI() -> addPrefPage(pmUiSett);
 	

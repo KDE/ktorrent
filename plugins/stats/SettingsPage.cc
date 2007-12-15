@@ -24,7 +24,7 @@ namespace kt {
 
 SettingsPage::SettingsPage(QWidget * p) : 	PrefPageInterface(StatsPluginSettings::self(), 
 						i18n("Statistics"), 
-						"utilities-system-monitor", 
+						"view-statistics", 
 						p)
 {
 	setupUi(this);

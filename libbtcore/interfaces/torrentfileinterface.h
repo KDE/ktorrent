@@ -40,11 +40,15 @@ namespace bt
 	public:
 		/**
 		 * Constructor, set the path and size.
+		 * @param index The index of the file in the torrent
 		 * @param path The path 
 		 * @param size The size
 		 */
-		TorrentFileInterface(const QString & path,Uint64 size);
+		TorrentFileInterface(Uint32 index,const QString & path,Uint64 size);
 		virtual ~TorrentFileInterface();
+
+		/// Get the index of the file
+		Uint32 getIndex() const {return index;}
 
 		/// Get the path of the file
 		QString getPath() const {return path;}
@@ -118,6 +122,7 @@ namespace bt
 		void previewAvailable(bool available);
 		
 	protected:
+		Uint32 index;
 		QString path;
 		QString path_on_disk;
 		Uint64 size;

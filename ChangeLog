@@ -17,3 +17,4 @@ silently)
 - Use a toolbar in the search plugin instead of a widget
 - Added global shortcut to show or hide ktorrent
 - Show files which a chunk belongs to in chunks tab
+- Add alternative fileview mode (flat list)

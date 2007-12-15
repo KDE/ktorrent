@@ -11,7 +11,9 @@ set(libktorrent_SRC
 	interfaces/prefpageinterface.cpp
 	
 	torrent/queuemanager.cpp
+	torrent/torrentfilemodel.cpp
 	torrent/torrentfiletreemodel.cpp
+	torrent/torrentfilelistmodel.cpp
 	
 	groups/group.cpp
 	groups/torrentgroup.cpp

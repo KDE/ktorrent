@@ -42,7 +42,7 @@ namespace kt
 {
 
 	LogViewerPlugin::LogViewerPlugin(QObject* parent,const QStringList & ) 
-		: Plugin(parent,NAME, i18n("Log Viewer"),AUTHOR, EMAIL, i18n("Displays ktorrent logging output"),"ksystemlog")
+	: Plugin(parent,NAME, i18n("Log Viewer"),AUTHOR, EMAIL, i18n("Displays ktorrent logging output"),"utilities-log-viewer")
 	{
 		lv = 0;
 	}
@@ -57,7 +57,7 @@ namespace kt
 		connect(getCore(),SIGNAL(settingsChanged()),this,SLOT(applySettings()));
 		lv = new LogViewer();
 		pref = new LogPrefPage(0);
-		getGUI()->addToolWidget(lv,"ksystemlog",i18n("Log Viewer"),GUIInterface::DOCK_BOTTOM);
+		getGUI()->addToolWidget(lv,"utilities-log-viewer",i18n("Log Viewer"),GUIInterface::DOCK_BOTTOM);
 		getGUI()->addPrefPage(pref);
 		AddLogMonitor(lv);
 	}

@@ -75,7 +75,6 @@ namespace kt
 		FileView* file_view;
 		StatusTab* status_tab;
 		Monitor* monitor; 
-		bool file_view_state_loaded;
 		
 		IWPrefPage* pref;
 	};

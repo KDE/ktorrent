@@ -22,8 +22,8 @@
 namespace bt
 {
 
-	TorrentFileInterface::TorrentFileInterface(const QString & path,Uint64 size)
-	: path(path),size(size),first_chunk(0),last_chunk(0),num_chunks_downloaded(0),
+	TorrentFileInterface::TorrentFileInterface(Uint32 index,const QString & path,Uint64 size)
+	: index(index),path(path),size(size),first_chunk(0),last_chunk(0),num_chunks_downloaded(0),
 	priority(NORMAL_PRIORITY),m_emitDlStatusChanged(true),preview(false)
 	{
 		preexisting = false;

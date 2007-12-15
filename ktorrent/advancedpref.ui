@@ -361,7 +361,7 @@ p, li { white-space: pre-wrap; }
    <item>
     <widget class="QGroupBox" name="groupBox_4" >
      <property name="title" >
-      <string>Diskspace</string>
+      <string>Disk Space</string>
      </property>
      <layout class="QVBoxLayout" >
       <item>
@@ -370,7 +370,7 @@ p, li { white-space: pre-wrap; }
          <string>Whether or not diskspace should be reserved before starting to download a torrent.</string>
         </property>
         <property name="text" >
-         <string>Reserve diskspace before starting a torrent</string>
+         <string>Reserve disk space before starting a torrent</string>
         </property>
        </widget>
       </item>
@@ -380,7 +380,7 @@ p, li { white-space: pre-wrap; }
          <string>Instead of doing a quick reservation, do a full reservation. This is slower then the quick way, but avoids fragmentation on the disk.</string>
         </property>
         <property name="text" >
-         <string>Fully reserve diskspace (avoids fragmentation)</string>
+         <string>Fully reserve disk space (avoids fragmentation)</string>
         </property>
        </widget>
       </item>
@@ -389,7 +389,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QLabel" name="label_7" >
           <property name="text" >
-           <string>Diskspace reservation method:</string>
+           <string>Disk space reservation method:</string>
           </property>
          </widget>
         </item>

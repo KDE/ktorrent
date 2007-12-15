@@ -18,46 +18,35 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTIWFILETREEMODEL_H
-#define KTIWFILETREEMODEL_H
-
-#include <torrent/torrentfiletreemodel.h>
+#include <interfaces/torrentinterface.h>
+#include <interfaces/torrentfileinterface.h>
+#include "torrentfilemodel.h"
 
 namespace kt
 {
+	TorrentFileModel::TorrentFileModel(bt::TorrentInterface* tc,DeselectMode mode,QObject* parent)
+		: QAbstractItemModel(parent),tc(tc),mode(mode)
+	{}
 
-	/**
-	 * 
-	 * @author Joris Guisson
-	 * 
-	 * Expands the standard TorrentFileTreeModel to show more information.
-	*/
-	class IWFileTreeModel : public TorrentFileTreeModel
+	TorrentFileModel::~TorrentFileModel()
+	{}
+	
+	QByteArray TorrentFileModel::saveExpandedState(QTreeView* )
 	{
-		Q_OBJECT
-	public:
-		IWFileTreeModel(bt::TorrentInterface* tc,QObject* parent);
-		virtual ~IWFileTreeModel();
+		return QByteArray();
+	}
+		
+	void TorrentFileModel::loadExpandedState(QTreeView* ,const QByteArray &)
+	{}
 
-		virtual int columnCount(const QModelIndex & parent) const;
-		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
-		virtual QVariant data(const QModelIndex & index, int role) const;
-		virtual bool setData(const QModelIndex & index, const QVariant & value, int role); 
-		virtual void update();
-		
-	private slots:
-		void onPercentageUpdated(float p);
-		void onPreviewAvailable(bool av);
-		
-	private:
-		void update(const QModelIndex & index,bt::TorrentFileInterface* file,int col);
-		
-	private:
-		bool preview;
-		bool mmfile;
-		double percentage;
-	};
+	void TorrentFileModel::missingFilesMarkedDND()
+	{
+		reset();
+	}
+
+	void TorrentFileModel::update()
+	{}
 
 }
 
-#endif
+#include "torrentfilemodel.moc"

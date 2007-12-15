@@ -25,15 +25,15 @@
 #include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
-#include "iwfiletreemodel.h"
+#include "iwfilelistmodel.h"
 
 using namespace bt;
 
 namespace kt
 {
 
-	IWFileTreeModel::IWFileTreeModel(bt::TorrentInterface* tc,QObject* parent)
-			: TorrentFileTreeModel(tc,KEEP_FILES,parent)
+	IWFileListModel::IWFileListModel(bt::TorrentInterface* tc,QObject* parent)
+			: TorrentFileListModel(tc,KEEP_FILES,parent)
 	{
 		mmfile = IsMultimediaFile(tc->getStats().output_path);
 		preview = false;
@@ -47,22 +47,25 @@ namespace kt
 	}
 
 
-	IWFileTreeModel::~IWFileTreeModel()
+	IWFileListModel::~IWFileListModel()
 	{
 	}
 
-	int IWFileTreeModel::columnCount(const QModelIndex & /*parent*/) const
+	int IWFileListModel::columnCount(const QModelIndex & parent) const
 	{
-		return 5;
+		if (!parent.isValid())
+			return 5;
+		else
+			return 0;
 	}
 	
-	QVariant IWFileTreeModel::headerData(int section, Qt::Orientation orientation,int role) const
+	QVariant IWFileListModel::headerData(int section, Qt::Orientation orientation,int role) const
 	{
 		if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
 			return QVariant();
 		
 		if (section < 2)
-			return TorrentFileTreeModel::headerData(section,orientation,role);
+			return TorrentFileListModel::headerData(section,orientation,role);
 		
 		switch (section)
 		{
@@ -87,21 +90,20 @@ namespace kt
 		}
 	}
 	
-	QVariant IWFileTreeModel::data(const QModelIndex & index, int role) const
+	QVariant IWFileListModel::data(const QModelIndex & index, int role) const
 	{
-		Node* n = 0;
 		if (index.column() < 2)
-			return TorrentFileTreeModel::data(index,role);
+			return TorrentFileListModel::data(index,role);
 		
-		if (!index.isValid() || !(n = (Node*)index.internalPointer()))
+		if (!index.isValid() || index.row() < 0 || index.row() >= rowCount(QModelIndex()))
 			return QVariant();
 		
 		if (role != Qt::DisplayRole)
 			return QVariant();
 		
-		if (tc->getStats().multi_file_torrent && n->file)
+		if (tc->getStats().multi_file_torrent)
 		{
-			const bt::TorrentFileInterface* file = n->file;
+			const bt::TorrentFileInterface* file = &tc->getTorrentFile(index.row());
 			switch (index.column())
 			{
 				case 2: return PriorityString(file);
@@ -124,7 +126,7 @@ namespace kt
 				default: return QVariant();
 			}	
 		}
-		else if (!tc->getStats().multi_file_torrent)
+		else 
 		{
 			switch (index.column())
 			{
@@ -154,78 +156,46 @@ namespace kt
 
 	
 	
-	bool IWFileTreeModel::setData(const QModelIndex & index, const QVariant & value, int role)
+	bool IWFileListModel::setData(const QModelIndex & index, const QVariant & value, int role)
 	{
 		if (role == Qt::CheckStateRole)
-			return TorrentFileTreeModel::setData(index,value,role);
+			return TorrentFileListModel::setData(index,value,role);
 		
 		if (!index.isValid() || role != Qt::UserRole)
 			return false;
 	
-		Node* n = static_cast<Node*>(index.internalPointer());
-		if (!n)
+		int r = index.row();
+		if (r < 0 || r >= rowCount(QModelIndex()))
 			return false;
-		
-		if (!n->file)
+
+		bt::TorrentFileInterface & file = tc->getTorrentFile(r);;
+		Priority prio = (bt::Priority)value.toInt();
+		Priority old = file.getPriority();
+
+		if (prio != old)
 		{
-			for (Uint32 i = 0;i < n->children.count();i++)
-			{
-				// recurse down the tree
-				setData(index.child(i,0),value,role);
-			}
+			file.setPriority(prio);
+			dataChanged(createIndex(index.row(),0),createIndex(index.row(),4));
 		}
-		else
-		{
-			bt::TorrentFileInterface* file = n->file;
-			Priority prio = (bt::Priority)value.toInt();
-			Priority old = file->getPriority();
-			
-			if (prio != old)
-			{
-				file->setPriority(prio);
-				dataChanged(createIndex(index.row(),0),createIndex(index.row(),4));
-				QModelIndex parent = index.parent();
-				if (parent.isValid())
-					dataChanged(parent,parent); // parent needs to be updated to 
-			}
-		}
-		
+
 		return true;
 	}
-	
-	
-	
-	void IWFileTreeModel::onPercentageUpdated(float /*p*/)
+
+	void IWFileListModel::onPercentageUpdated(float /*p*/)
 	{
 		bt::TorrentFileInterface* file = (bt::TorrentFileInterface*)sender();
-		update(index(0,0,QModelIndex()),file,4);
+		QModelIndex idx = createIndex(file->getIndex(),4,file);
+		emit dataChanged(idx,idx);
 	}
-	
-	void IWFileTreeModel::onPreviewAvailable(bool /*av*/)
+
+	void IWFileListModel::onPreviewAvailable(bool /*av*/)
 	{
 		bt::TorrentFileInterface* file = (bt::TorrentFileInterface*)sender();
-		update(index(0,0,QModelIndex()),file,3);
+		QModelIndex idx = createIndex(file->getIndex(),3,file);
+		emit dataChanged(idx,idx);
 	}
-	
-	void IWFileTreeModel::update(const QModelIndex & idx,bt::TorrentFileInterface* file,int col)
-	{
-		Node* n = (Node*)idx.internalPointer();
-		if (n->file && n->file == file)
-		{
-			QModelIndex i = createIndex(idx.row(),col,n);
-			emit dataChanged(i,i);
-		}
-		else
-		{
-			for (Uint32 i = 0;i < n->children.count();i++)
-			{
-				// recurse down the tree
-				update(idx.child(i,0),file,col);
-			}
-		}
-	}
-	
-	void IWFileTreeModel::update()
+
+	void IWFileListModel::update()
 	{
 		if (!tc->getStats().multi_file_torrent)
 		{
@@ -236,18 +206,18 @@ namespace kt
 				preview = np;
 				changed = true;
 			}
-			
+
 			double perc = bt::Percentage(tc->getStats());
 			if (fabs(perc - percentage) > 0.01)
 			{
 				percentage = perc;
 				changed = true;
 			}
-			
+
 			if (changed)
 				dataChanged(createIndex(0,0),createIndex(0,4));
 		}
 	}
 }
 
-#include "iwfiletreemodel.moc"
+#include "iwfilelistmodel.moc"

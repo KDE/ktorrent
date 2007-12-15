@@ -33,6 +33,7 @@
 #include <groups/group.h>
 #include <groups/groupmanager.h>
 #include <torrent/torrentfiletreemodel.h>
+#include <torrent/torrentfilelistmodel.h>
 #include "fileselectdlg.h"
 #include "settings.h"
 
@@ -44,7 +45,7 @@ namespace kt
 	FileSelectDlg::FileSelectDlg(kt::GroupManager* gman,QWidget* parent) : QDialog(parent,Qt::Dialog),gman(gman)
 	{
 		setupUi(this);
-		ftree_model = 0;
+		model = 0;
 		//root = 0;
 		connect(m_select_all,SIGNAL(clicked()),this,SLOT(selectAll()));
 		connect(m_select_none,SIGNAL(clicked()),this,SLOT(selectNone()));
@@ -74,10 +75,14 @@ namespace kt
 				file.setEmitDownloadStatusChanged(false);
 			}
 			populateFields();
-			ftree_model = new TorrentFileTreeModel(tc,TorrentFileTreeModel::DELETE_FILES,this);
-			connect(ftree_model,SIGNAL(checkStateChanged()),this,SLOT(updateSizeLabels()));
+			if (Settings::useFileList())
+				model = new TorrentFileListModel(tc,TorrentFileTreeModel::DELETE_FILES,this);
+			else
+				model = new TorrentFileTreeModel(tc,TorrentFileTreeModel::DELETE_FILES,this);
+			
+			connect(model,SIGNAL(checkStateChanged()),this,SLOT(updateSizeLabels()));
 			connect(m_downloadLocation, SIGNAL(textChanged (const QString &)), this, SLOT(updateSizeLabels()));
-			m_file_view->setModel(ftree_model);
+			m_file_view->setModel(model);
 			m_file_view->expandAll();
 			
 			updateSizeLabels();
@@ -90,7 +95,7 @@ namespace kt
 			}
 
 			m_file_view->setAlternatingRowColors(false);
-			m_file_view->setRootIsDecorated(false);
+			m_file_view->setRootIsDecorated(tc->getStats().multi_file_torrent);
 			m_file_view->resizeColumnToContents(0);
 			m_file_view->resizeColumnToContents(1);
 			return exec();
@@ -185,17 +190,17 @@ namespace kt
 
 	void FileSelectDlg::selectAll()
 	{
-		ftree_model->checkAll();
+		model->checkAll();
 	}
 
 	void FileSelectDlg::selectNone()
 	{
-		ftree_model->uncheckAll();
+		model->uncheckAll();
 	}
 
 	void FileSelectDlg::invertSelection()
 	{
-		ftree_model->invertCheck();
+		model->invertCheck();
 	}
 
 	void FileSelectDlg::populateFields()
@@ -233,7 +238,7 @@ namespace kt
 
 	void FileSelectDlg::updateSizeLabels()
 	{
-		if (!ftree_model)
+		if (!model)
 			return;
 		
 		//calculate free disk space
@@ -249,7 +254,7 @@ namespace kt
 			FreeDiskSpace(tc->getDataDir(),bytes_free);
 		}
 		
-		Uint64 bytes_to_download = ftree_model->bytesToDownload();
+		Uint64 bytes_to_download = model->bytesToDownload();
 
 		lblFree->setText(bt::BytesToString(bytes_free));
 		lblRequired->setText(bt::BytesToString(bytes_to_download));

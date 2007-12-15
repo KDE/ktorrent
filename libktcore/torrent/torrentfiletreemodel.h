@@ -21,16 +21,12 @@
 #ifndef KTTORRENTFILETREEMODEL_H
 #define KTTORRENTFILETREEMODEL_H
 
-#include <QAbstractItemModel>
-#include <util/constants.h>
-#include <ktcore_export.h>
-
-class QTreeView;
+#include "torrentfilemodel.h"
 
 namespace bt
 {
-	class TorrentInterface;
-	class TorrentFileInterface;
+	class BEncoder;
+	class BNode;
 }
 
 namespace kt
@@ -40,15 +36,10 @@ namespace kt
 	 * Model for displaying file trees of a torrent
 	 * @author Joris Guisson
 	*/
-	class KTCORE_EXPORT TorrentFileTreeModel : public QAbstractItemModel
+	class KTCORE_EXPORT TorrentFileTreeModel : public TorrentFileModel
 	{
 		Q_OBJECT
 	public:
-		enum DeselectMode
-		{
-			KEEP_FILES,DELETE_FILES
-		};
-		
 		TorrentFileTreeModel(bt::TorrentInterface* tc,DeselectMode mode,QObject* parent);
 		virtual ~TorrentFileTreeModel();
 		
@@ -60,46 +51,15 @@ namespace kt
 		virtual QModelIndex index(int row,int column,const QModelIndex & parent) const;
 		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
 		virtual bool setData(const QModelIndex & index, const QVariant & value, int role);
-		
-		/**
-		 * Check all the files in the torrent.
-		 */
-		void checkAll();
-		
-		/**
-		 * Uncheck all files in the torrent.
-		 */
-		void uncheckAll();
-		
-		/**
-		 * Invert the check of each file of the torrent
-		 */
-		void invertCheck();
-		
-		/**
-		 * Calculate the number of bytes to download
-		 * @return Bytes to download
-		 */
-		bt::Uint64 bytesToDownload();
-		
-		/**
-		 * Save which items are expanded.
-		 * @param tv The QTreeView
-		 */
-		void saveExpandedState(QTreeView* tv);
-		
-		/**
-		 * Retore the expaned state of the tree.in a QTreeView
-		 * @param tv The QTreeView
-		 */
-		void loadExpandedState(QTreeView* tv);
-		
-	signals:
-		/**
-		 * Emitted whenever one or more items changes check state
-		 */
-		void checkStateChanged();
-		
+		virtual void checkAll();
+		virtual void uncheckAll();
+		virtual void invertCheck();
+		virtual bt::Uint64 bytesToDownload();
+		virtual QByteArray saveExpandedState(QTreeView* tv);
+		virtual void loadExpandedState(QTreeView* tv,const QByteArray & state);
+		virtual bt::TorrentFileInterface* indexToFile(const QModelIndex & idx);
+		virtual QString dirPath(const QModelIndex & idx);
+		virtual void changePriority(const QModelIndexList & indexes,bt::Priority newpriority);
 	private: 
 		void constructTree();
 		void invertCheck(const QModelIndex & idx);
@@ -112,7 +72,6 @@ namespace kt
 			QString name; // name or directory
 			QList<Node*> children; // child dirs
 			bt::Uint64 size;
-			bool expanded;
 			
 			Node(Node* parent,bt::TorrentFileInterface* file,const QString & name);
 			Node(Node* parent,const QString & name);
@@ -124,13 +83,11 @@ namespace kt
 			bt::Uint64 bytesToDownload(const bt::TorrentInterface* tc);
 			Qt::CheckState checkState(const bt::TorrentInterface* tc) const;
 			
-			void saveExpandedState(const QModelIndex & index,QTreeView* tv);
-			void loadExpandedState(const QModelIndex & index,QTreeView* tv);
+			void saveExpandedState(const QModelIndex & index,QTreeView* tv,bt::BEncoder* enc);
+			void loadExpandedState(const QModelIndex & index,QTreeView* tv,bt::BNode* node);
 		};
 		
-		bt::TorrentInterface* tc;
 		Node* root;
-		DeselectMode mode;
 		bool emit_check_state_change;
 	};
 

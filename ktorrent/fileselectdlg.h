@@ -32,7 +32,7 @@ namespace kt
 {
 	class FileTreeDirItem;
 	class GroupManager;
-	class TorrentFileTreeModel;
+	class TorrentFileModel;
 
 	/**
 	 * @author Joris Guisson
@@ -44,7 +44,7 @@ namespace kt
 		Q_OBJECT
 
 		bt::TorrentInterface* tc;
-		TorrentFileTreeModel* ftree_model;
+		TorrentFileModel* model;
 		kt::GroupManager* gman;
 		bool* user;
 		bool* start;

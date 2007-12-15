@@ -39,7 +39,6 @@ namespace bt
 	{
 		Q_OBJECT
 
-		Uint32 index;
 		Uint64 cache_offset;
 		Uint64 first_chunk_off;
 		Uint64 last_chunk_size;
@@ -77,9 +76,6 @@ namespace bt
 		TorrentFile(const TorrentFile & tf);
 		virtual ~TorrentFile();
 
-		/// Get the index of the file
-		Uint32 getIndex() const {return index;}
-		
 		/// Get the offset into the torrent
 		Uint64 getCacheOffset() const {return cache_offset;}
 

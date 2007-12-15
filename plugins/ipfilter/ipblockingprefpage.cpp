@@ -90,7 +90,7 @@ namespace kt
 	////////////////////////////////////////////////////////////////////////////////////
 
 	IPBlockingPrefPage::IPBlockingPrefPage(CoreInterface* core, IPFilterPlugin* p)
-	: PrefPageInterface(IPBlockingPluginSettings::self(),i18n("IP Filter"), "filter",0), m_core(core), m_plugin(p)
+	: PrefPageInterface(IPBlockingPluginSettings::self(),i18n("IP Filter"), "view-filter",0), m_core(core), m_plugin(p)
 	{
 		setupUi(this);
 		connect(kcfg_useLevel1,SIGNAL(toggled(bool)),this,SLOT(checkUseLevel1Toggled(bool)));

@@ -34,9 +34,11 @@
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include <qfileinfo.h>
+#include <util/log.h>
 #include "fileview.h"
 #include "iwfiletreemodel.h"
-		
+#include "iwfilelistmodel.h"
+	
 using namespace bt;
 
 namespace kt
@@ -67,20 +69,27 @@ namespace kt
 				this,SLOT(onDoubleClicked(const QModelIndex & )));
 		
 		setEnabled(false);
+		show_list_of_files = false;
 	}
 
 
 	FileView::~FileView()
 	{}
 
-	void FileView::changeTC(bt::TorrentInterface* tc)
+	void FileView::changeTC(bt::TorrentInterface* tc,KSharedConfigPtr cfg)
 	{
 		if (tc == curr_tc)
 			return;
 	
 		if (model)
-			model->saveExpandedState(this);
-		
+		{
+			saveState(cfg);
+			if (curr_tc)
+				expanded_state_map[curr_tc] = model->saveExpandedState(this);
+		}
+		setModel(0);
+		delete model;
+		model = 0;
 		curr_tc = tc;
 		setEnabled(tc != 0);
 		if (tc)
@@ -88,18 +97,19 @@ namespace kt
 			connect(tc,SIGNAL(missingFilesMarkedDND( bt::TorrentInterface* )),
 					this,SLOT(onMissingFileMarkedDND(bt::TorrentInterface*)));
 			
-			// try to find a cached model
-			QMap<bt::TorrentInterface*,IWFileTreeModel*>::iterator i = model_cache.find(tc);
-			IWFileTreeModel* mdl = i != model_cache.end() ? i.value() : 0;
-			if (!mdl)
-			{
-				mdl = new IWFileTreeModel(tc,this);
-				model_cache.insert(tc,mdl);	
-			}
+			if (show_list_of_files)
+				model = new IWFileListModel(tc,this);
+			else 
+				model = new IWFileTreeModel(tc,this);
 			
-			setModel(mdl);
-			mdl->loadExpandedState(this);
-			model = mdl;
+			setModel(model);
+			setRootIsDecorated(tc->getStats().multi_file_torrent);
+			loadState(cfg);
+			QMap<bt::TorrentInterface*,QByteArray>::iterator i = expanded_state_map.find(tc);
+			if (i != expanded_state_map.end())
+				model->loadExpandedState(this,i.value());
+			else
+				expandAll();
 		}
 		else
 		{
@@ -270,23 +280,46 @@ namespace kt
 			header()->restoreState(s);
 	}
 
-	void FileView::onTorrentRemoved(bt::TorrentInterface* tc)
-	{
-		if (curr_tc == tc)
-			changeTC(0);
-		
-		QMap<bt::TorrentInterface*,IWFileTreeModel*>::iterator i = model_cache.find(tc);
-		if (i != model_cache.end())
-		{
-			delete i.value();
-			model_cache.erase(i);
-		}
-	}
-
 	void FileView::update()
 	{
 		if (model)
 			model->update();
+	}
+	
+	void FileView::onTorrentRemoved(bt::TorrentInterface* tc)
+	{
+		expanded_state_map.remove(tc);
+	}
+	
+	void FileView::setShowListOfFiles(bool on,KSharedConfigPtr cfg)
+	{
+		if (show_list_of_files == on)
+			return;
+		
+		show_list_of_files = on;
+		if (!model || !curr_tc)
+			return;
+		
+		saveState(cfg);
+		expanded_state_map[curr_tc] = model->saveExpandedState(this);
+		
+		setModel(0);
+		delete model;
+		model = 0;
+			
+		if (show_list_of_files)
+			model = new IWFileListModel(curr_tc,this);
+		else 
+			model = new IWFileTreeModel(curr_tc,this);
+			
+		setModel(model);
+		setRootIsDecorated(curr_tc->getStats().multi_file_torrent);
+		loadState(cfg);
+		QMap<bt::TorrentInterface*,QByteArray>::iterator i = expanded_state_map.find(curr_tc);
+		if (i != expanded_state_map.end())
+			model->loadExpandedState(this,i.value());
+		else
+			expandAll();
 	}
 }
 

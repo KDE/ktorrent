@@ -22,9 +22,13 @@
 #include <kicon.h>
 #include <kmimetype.h>
 #include <QTreeView>
+#include <bcodec/bdecoder.h>
+#include <bcodec/bencoder.h>
+#include <bcodec/bnode.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include <util/functions.h>
+#include <util/log.h>
 #include "torrentfiletreemodel.h"
 
 using namespace bt;
@@ -33,11 +37,11 @@ namespace kt
 {
 	
 	TorrentFileTreeModel::Node::Node(Node* parent,bt::TorrentFileInterface* file,const QString & name) 
-		: parent(parent),file(file),name(name),size(0),expanded(true)
+		: parent(parent),file(file),name(name),size(0)
 	{}
 			
 	TorrentFileTreeModel::Node::Node(Node* parent,const QString & name) 
-		: parent(parent),file(0),name(name),size(0),expanded(true)
+		: parent(parent),file(0),name(name),size(0)
 	{
 	}
 		
@@ -145,40 +149,56 @@ namespace kt
 		}
 	}
 	
-	void TorrentFileTreeModel::Node::saveExpandedState(const QModelIndex & index,QTreeView* tv)
+	void TorrentFileTreeModel::Node::saveExpandedState(const QModelIndex & index,QTreeView* tv,BEncoder* enc)
 	{
 		if (file)
 			return;
 		
-		expanded = tv->isExpanded(index);
+		enc->write("expanded");
+		enc->write((Uint32)(tv->isExpanded(index) ? 1 : 0));
 		
 		int idx = 0;
 		foreach (Node* n,children)
 		{
 			if (!n->file)
-				n->saveExpandedState(index.child(idx,0),tv);
+			{
+				enc->write(n->name);
+				enc->beginDict();
+				n->saveExpandedState(index.child(idx,0),tv,enc);
+				enc->end();
+			}
 			idx++;
 		}
 	}
 	
-	void TorrentFileTreeModel::Node::loadExpandedState(const QModelIndex & index,QTreeView* tv)
+	void TorrentFileTreeModel::Node::loadExpandedState(const QModelIndex & index,QTreeView* tv,BNode* n)
 	{
 		if (file)
 			return;
 		
-		tv->setExpanded(index,expanded);
+		BDictNode* dict = dynamic_cast<BDictNode*>(n);
+		if (!dict)
+			return;
+		
+		BValueNode* v = dict->getValue("expanded");
+		if (v)
+			tv->setExpanded(index,v->data().toInt() == 1);
 		
 		int idx = 0;
 		foreach (Node* n,children)
 		{
 			if (!n->file)
-				n->loadExpandedState(index.child(idx,0),tv);
+			{
+				BDictNode* d = dict->getDict(n->name);
+				if (d)
+					n->loadExpandedState(index.child(idx,0),tv,d);
+			}
 			idx++;
 		}
 	}
 
 	TorrentFileTreeModel::TorrentFileTreeModel(bt::TorrentInterface* tc,DeselectMode mode,QObject* parent) 
-	: QAbstractItemModel(parent),tc(tc),root(0),mode(mode),emit_check_state_change(true)
+	: TorrentFileModel(tc,mode,parent),root(0),emit_check_state_change(true)
 	{
 		if (tc->getStats().multi_file_torrent)
 			constructTree();
@@ -431,17 +451,77 @@ namespace kt
 			return tc->getStats().total_bytes;
 	}
 	
-	void TorrentFileTreeModel::saveExpandedState(QTreeView* tv)
+	QByteArray TorrentFileTreeModel::saveExpandedState(QTreeView* tv)
 	{
-		if (tc->getStats().multi_file_torrent)
-			root->saveExpandedState(index(0,0,QModelIndex()),tv);
+		if (!tc->getStats().multi_file_torrent)
+			return QByteArray();
+		
+		QByteArray data;
+		BEncoder enc(new BEncoderBufferOutput(data));
+		enc.beginDict();
+		root->saveExpandedState(index(0,0,QModelIndex()),tv,&enc);
+		enc.end();
+		return data;
 	}
 		
 		
-	void TorrentFileTreeModel::loadExpandedState(QTreeView* tv)
+	void TorrentFileTreeModel::loadExpandedState(QTreeView* tv,const QByteArray & state)
 	{
-		if (tc->getStats().multi_file_torrent)
-			root->loadExpandedState(index(0,0,QModelIndex()),tv);
+		if (!tc->getStats().multi_file_torrent)
+			return;
+		
+		BDecoder dec(state,false,0);
+		BNode* n = dec.decode();
+		if (n && n->getType() == BNode::DICT)
+		{
+			n->printDebugInfo();
+			root->loadExpandedState(index(0,0,QModelIndex()),tv,n);
+		}
+		delete n;
+	}
+	
+	bt::TorrentFileInterface* TorrentFileTreeModel::indexToFile(const QModelIndex & idx)
+	{
+		if (!idx.isValid())
+			return 0;
+		
+		Node* n = (Node*)idx.internalPointer();
+		if (!n)
+			return 0;
+		
+		return n->file;
+	}
+	
+	QString TorrentFileTreeModel::dirPath(const QModelIndex & idx)
+	{
+		if (!idx.isValid())
+			return QString::null;
+		
+		Node* n = (Node*)idx.internalPointer();
+		if (!n || n == root)
+			return QString::null;
+		
+		QString ret = n->name;
+		do 
+		{
+			n = n->parent;
+			if (n && n->parent)
+				ret = n->name + bt::DirSeparator() + ret;
+		}while (n);
+		
+		return ret;
+	}
+	
+	void TorrentFileTreeModel::changePriority(const QModelIndexList & indexes,bt::Priority newpriority)
+	{
+		foreach (QModelIndex idx,indexes)
+		{
+			Node* n = (Node*)idx.internalPointer();
+			if (!n)
+				continue;
+			
+			setData(idx,newpriority,Qt::UserRole);
+		}
 	}
 }
 
