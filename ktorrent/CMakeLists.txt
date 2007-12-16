@@ -36,6 +36,7 @@ set(ktorrent_SRC
 kde4_add_ui_files(ktorrent_SRC 
 	fileselectdlg.ui 
 	qmpref.ui 
+	btpref.ui
 	scandlg.ui 
 	generalpref.ui 
 	advancedpref.ui 

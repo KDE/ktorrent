@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright © 2007 by Krzysztof Kundzicz                                *
- *   athantor@gmail.com                                                    *
+ *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
+ *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,28 +16,29 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#ifndef KTDISPLAYSETTINGSPAGE_H
+#define KTDISPLAYSETTINGSPAGE_H
 
-#include <SettingsPage.h>
+#include <interfaces/prefpageinterface.h>
+#include "ui_DisplaySettings.h"
 
 namespace kt 
 {
+	
+	/**
+		@author 
+	*/
+	class DisplaySettingsPage : public PrefPageInterface,public Ui_DisplaySettingsWgt
+	{
+	public:
+		DisplaySettingsPage(QWidget* parent);	
+		virtual ~DisplaySettingsPage();
+	
+		
+	};
 
-	SettingsPage::SettingsPage(QWidget * p) : 	PrefPageInterface(StatsPluginSettings::self(), 
-							i18n("Statistics"), 
-							"view-statistics", 
-							p)
-	{
-		setupUi(this);
-	}
-	
-	SettingsPage::~SettingsPage()
-	{
-	}
-	
-	void SettingsPage::updateSettings()
-	{
-		emit Applied();
-	}
-} //ns end
+}
+
+#endif

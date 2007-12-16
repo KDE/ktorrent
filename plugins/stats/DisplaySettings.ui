@@ -1,0 +1,988 @@
+<ui version="4.0" >
+ <class>DisplaySettingsWgt</class>
+ <widget class="QWidget" name="DisplaySettingsWgt" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>432</width>
+    <height>574</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" >
+   <item>
+    <widget class="QGroupBox" name="ColorsGbw" >
+     <property name="title" >
+      <string>Colors</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <item>
+       <widget class="QTabWidget" name="ColorsTbw" >
+        <property name="currentIndex" >
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab" >
+         <attribute name="title" >
+          <string>Download</string>
+         </attribute>
+         <layout class="QVBoxLayout" >
+          <item>
+           <layout class="QVBoxLayout" >
+            <item>
+             <layout class="QHBoxLayout" >
+              <item>
+               <widget class="QLabel" name="label_8" >
+                <property name="text" >
+                 <string>Download</string>
+                </property>
+                <property name="buddy" >
+                 <cstring>kcfg_DlSpdColor</cstring>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="KColorButton" name="kcfg_DlSpdColor" >
+                <property name="sizePolicy" >
+                 <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize" >
+                 <size>
+                  <width>64</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="autoFillBackground" >
+                 <bool>true</bool>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" >
+              <item>
+               <widget class="QLabel" name="label_9" >
+                <property name="text" >
+                 <string>Average</string>
+                </property>
+                <property name="buddy" >
+                 <cstring>kcfg_DlAvgColor</cstring>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="KColorButton" name="kcfg_DlAvgColor" >
+                <property name="sizePolicy" >
+                 <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize" >
+                 <size>
+                  <width>64</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="autoFillBackground" >
+                 <bool>true</bool>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="flat" >
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" >
+              <item>
+               <widget class="QLabel" name="label_13" >
+                <property name="text" >
+                 <string>Limit</string>
+                </property>
+                <property name="buddy" >
+                 <cstring>kcfg_DlLimitColor</cstring>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="KColorButton" name="kcfg_DlLimitColor" >
+                <property name="sizePolicy" >
+                 <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize" >
+                 <size>
+                  <width>64</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="autoFillBackground" >
+                 <bool>true</bool>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="flat" >
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_2" >
+         <attribute name="title" >
+          <string>Peers</string>
+         </attribute>
+         <layout class="QVBoxLayout" >
+          <item>
+           <layout class="QGridLayout" >
+            <item row="0" column="0" >
+             <widget class="QLabel" name="label_14" >
+              <property name="text" >
+               <string>Average from leechers</string>
+              </property>
+              <property name="buddy" >
+               <cstring>kcfg_PrAvgFromLColor</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1" >
+             <widget class="KColorButton" name="kcfg_PrAvgFromLColor" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize" >
+               <size>
+                <width>64</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="autoFillBackground" >
+               <bool>true</bool>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="flat" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" >
+             <widget class="QLabel" name="label_19" >
+              <property name="text" >
+               <string>Average to leechers</string>
+              </property>
+              <property name="buddy" >
+               <cstring>kcfg_PrAvgToLColor</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1" >
+             <widget class="KColorButton" name="kcfg_PrAvgToLColor" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize" >
+               <size>
+                <width>64</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="autoFillBackground" >
+               <bool>true</bool>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="flat" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0" >
+             <widget class="QLabel" name="label_20" >
+              <property name="text" >
+               <string>Average from seeds</string>
+              </property>
+              <property name="buddy" >
+               <cstring>kcfg_PrAvgFromSColor</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1" >
+             <widget class="KColorButton" name="kcfg_PrAvgFromSColor" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize" >
+               <size>
+                <width>64</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="autoFillBackground" >
+               <bool>true</bool>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="flat" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0" >
+             <widget class="QLabel" name="label_21" >
+              <property name="text" >
+               <string>From leechers</string>
+              </property>
+              <property name="buddy" >
+               <cstring>kcfg_PrFromLColor</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1" >
+             <widget class="KColorButton" name="kcfg_PrFromLColor" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize" >
+               <size>
+                <width>64</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="autoFillBackground" >
+               <bool>true</bool>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="flat" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0" >
+             <widget class="QLabel" name="label_22" >
+              <property name="text" >
+               <string>From seeds</string>
+              </property>
+              <property name="buddy" >
+               <cstring>kcfg_PrFromSColor</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1" >
+             <widget class="KColorButton" name="kcfg_PrFromSColor" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize" >
+               <size>
+                <width>64</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="autoFillBackground" >
+               <bool>true</bool>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="flat" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_3" >
+         <attribute name="title" >
+          <string>Upload</string>
+         </attribute>
+         <layout class="QVBoxLayout" >
+          <item>
+           <layout class="QVBoxLayout" >
+            <item>
+             <layout class="QHBoxLayout" >
+              <item>
+               <widget class="QLabel" name="label_15" >
+                <property name="text" >
+                 <string>Upload</string>
+                </property>
+                <property name="buddy" >
+                 <cstring>kcfg_UlSpdColor</cstring>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="KColorButton" name="kcfg_UlSpdColor" >
+                <property name="sizePolicy" >
+                 <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize" >
+                 <size>
+                  <width>64</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="autoFillBackground" >
+                 <bool>true</bool>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="flat" >
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" >
+              <item>
+               <widget class="QLabel" name="label_16" >
+                <property name="text" >
+                 <string>Average</string>
+                </property>
+                <property name="buddy" >
+                 <cstring>kcfg_UlAvgColor</cstring>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="KColorButton" name="kcfg_UlAvgColor" >
+                <property name="sizePolicy" >
+                 <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize" >
+                 <size>
+                  <width>64</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="autoFillBackground" >
+                 <bool>true</bool>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="flat" >
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" >
+              <item>
+               <widget class="QLabel" name="label_17" >
+                <property name="text" >
+                 <string>Limit</string>
+                </property>
+                <property name="buddy" >
+                 <cstring>kcfg_UlLimitColor</cstring>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="KColorButton" name="kcfg_UlLimitColor" >
+                <property name="sizePolicy" >
+                 <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize" >
+                 <size>
+                  <width>64</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="autoFillBackground" >
+                 <bool>true</bool>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="flat" >
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_4" >
+         <attribute name="title" >
+          <string>Connections</string>
+         </attribute>
+         <layout class="QVBoxLayout" >
+          <item>
+           <layout class="QGridLayout" >
+            <item row="0" column="0" >
+             <widget class="QLabel" name="label_23" >
+              <property name="text" >
+               <string>Leechers connected</string>
+              </property>
+              <property name="buddy" >
+               <cstring>kcfg_CnLConnColor</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1" >
+             <widget class="KColorButton" name="kcfg_CnLConnColor" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize" >
+               <size>
+                <width>64</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="autoFillBackground" >
+               <bool>true</bool>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="flat" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" >
+             <widget class="QLabel" name="label_24" >
+              <property name="text" >
+               <string>Leechers in swarms</string>
+              </property>
+              <property name="buddy" >
+               <cstring>kcfg_CnLSwarmsColor</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1" >
+             <widget class="KColorButton" name="kcfg_CnLSwarmsColor" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize" >
+               <size>
+                <width>64</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="autoFillBackground" >
+               <bool>true</bool>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="flat" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0" >
+             <widget class="QLabel" name="label_25" >
+              <property name="text" >
+               <string>Seeds connected</string>
+              </property>
+              <property name="buddy" >
+               <cstring>kcfg_CnSConnColor</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1" >
+             <widget class="KColorButton" name="kcfg_CnSConnColor" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize" >
+               <size>
+                <width>64</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="autoFillBackground" >
+               <bool>true</bool>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="flat" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0" >
+             <widget class="QLabel" name="label_26" >
+              <property name="text" >
+               <string>Seeds  in swarms</string>
+              </property>
+              <property name="buddy" >
+               <cstring>kcfg_CnSSwarmsColor</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1" >
+             <widget class="KColorButton" name="kcfg_CnSSwarmsColor" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize" >
+               <size>
+                <width>64</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="autoFillBackground" >
+               <bool>true</bool>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="flat" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0" >
+             <widget class="QLabel" name="label_27" >
+              <property name="text" >
+               <string>Average leechers connected per torrent</string>
+              </property>
+              <property name="buddy" >
+               <cstring>kcfg_CnAvgLConnPerTorrColor</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1" >
+             <widget class="KColorButton" name="kcfg_CnAvgLConnPerTorrColor" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize" >
+               <size>
+                <width>64</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="autoFillBackground" >
+               <bool>true</bool>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="flat" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0" >
+             <widget class="QLabel" name="label_28" >
+              <property name="text" >
+               <string>Average seeds connected per torrent</string>
+              </property>
+              <property name="buddy" >
+               <cstring>kcfg_CnAvgSConnPerTorrColor</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1" >
+             <widget class="KColorButton" name="kcfg_CnAvgSConnPerTorrColor" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize" >
+               <size>
+                <width>64</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="autoFillBackground" >
+               <bool>true</bool>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="flat" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0" >
+             <widget class="QLabel" name="label_29" >
+              <property name="text" >
+               <string>Avg. leechers connected per running torr.</string>
+              </property>
+              <property name="buddy" >
+               <cstring>kcfg_CnAvgLConnPerRunTorrColor</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1" >
+             <widget class="KColorButton" name="kcfg_CnAvgLConnPerRunTorrColor" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize" >
+               <size>
+                <width>64</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="autoFillBackground" >
+               <bool>true</bool>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="flat" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="0" >
+             <widget class="QLabel" name="label_30" >
+              <property name="text" >
+               <string>Avg. seeds connected per running torrent</string>
+              </property>
+              <property name="buddy" >
+               <cstring>kcfg_CnAvgSConnPerRunTorrColor</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="1" >
+             <widget class="KColorButton" name="kcfg_CnAvgSConnPerRunTorrColor" >
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize" >
+               <size>
+                <width>64</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="autoFillBackground" >
+               <bool>true</bool>
+              </property>
+              <property name="text" >
+               <string/>
+              </property>
+              <property name="flat" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_5" >
+         <attribute name="title" >
+          <string>DHT</string>
+         </attribute>
+         <layout class="QGridLayout" >
+          <item row="0" column="0" >
+           <layout class="QVBoxLayout" >
+            <item>
+             <layout class="QHBoxLayout" >
+              <item>
+               <widget class="QLabel" name="label_31" >
+                <property name="text" >
+                 <string>Nodes</string>
+                </property>
+                <property name="buddy" >
+                 <cstring>kcfg_DhtNodesColor</cstring>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="KColorButton" name="kcfg_DhtNodesColor" >
+                <property name="sizePolicy" >
+                 <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize" >
+                 <size>
+                  <width>64</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="autoFillBackground" >
+                 <bool>true</bool>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="flat" >
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" >
+              <item>
+               <widget class="QLabel" name="label_32" >
+                <property name="text" >
+                 <string>Tasks</string>
+                </property>
+                <property name="buddy" >
+                 <cstring>kcfg_DhtTasksColor</cstring>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="KColorButton" name="kcfg_DhtTasksColor" >
+                <property name="sizePolicy" >
+                 <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize" >
+                 <size>
+                  <width>64</width>
+                  <height>32</height>
+                 </size>
+                </property>
+                <property name="autoFillBackground" >
+                 <bool>true</bool>
+                </property>
+                <property name="text" >
+                 <string/>
+                </property>
+                <property name="flat" >
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0" >
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_3" >
+     <property name="title" >
+      <string>Display</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <item>
+       <widget class="QCheckBox" name="kcfg_AntiAliasing" >
+        <property name="text" >
+         <string>Use anti-aliasing</string>
+        </property>
+        <property name="checked" >
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_DrawBgdGrid" >
+        <property name="text" >
+         <string>Draw background grid</string>
+        </property>
+        <property name="checked" >
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QLabel" name="label_18" >
+          <property name="text" >
+           <string>Widget type:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="kcfg_WidgetType" >
+          <item>
+           <property name="text" >
+            <string>Native</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>KDE</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_33" >
+          <property name="text" >
+           <string>(plugin reload is needed after change)</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" >
+      <size>
+       <width>20</width>
+       <height>141</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KColorButton</class>
+   <extends>QPushButton</extends>
+   <header>kcolorbutton.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

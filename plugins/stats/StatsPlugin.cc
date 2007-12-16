@@ -35,6 +35,7 @@ StatsPlugin::StatsPlugin(QObject * p, const QStringList&) : Plugin(
 								mUpdCtr(1)
 {
 	pmUiSett = 0;
+	pmDispSett = 0;
 }
 
 StatsPlugin::~StatsPlugin()
@@ -50,12 +51,14 @@ void StatsPlugin::load()
 	pmUiSpd.reset(new SpdTabPage(0));
 	pmUiConns.reset(new ConnsTabPage(0));
 	pmUiSett = new SettingsPage(0);
+	pmDispSett = new DisplaySettingsPage(0);
 	pmTmr.reset(new QTimer(this));
 	
 	getGUI() -> addToolWidget(pmUiSpd.get(), "view-statistics", i18n("Speed charts"), GUIInterface::DOCK_BOTTOM);
 	getGUI() -> addToolWidget(pmUiConns.get(), "view-statistics", i18n("Connections charts"), GUIInterface::DOCK_BOTTOM);
 	
 	getGUI() -> addPrefPage(pmUiSett);
+	getGUI() -> addPrefPage(pmDispSett);
 	
 	connect(pmTmr.get(), SIGNAL(timeout()), dynamic_cast<StatsPlugin*>(this), SLOT(DispatchDataGathering()));
 	connect(getCore(), SIGNAL(settingsChanged()), this, SLOT(SettingsChanged()));
@@ -70,6 +73,7 @@ void StatsPlugin::unload()
 	getGUI() -> removeToolWidget(pmUiConns.get());
 	
 	getGUI() -> removePrefPage(pmUiSett);
+	getGUI() -> removePrefPage(pmDispSett);
 	
 	pmTmr -> stop();
 	
@@ -81,6 +85,9 @@ void StatsPlugin::unload()
  	
  	pmUiSett -> deleteLater();
  	pmUiSett = 0;
+	
+	pmDispSett -> deleteLater();
+	pmDispSett = 0;
  	
  	pmTmr.reset();
 	

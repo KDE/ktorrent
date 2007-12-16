@@ -37,6 +37,7 @@
 #include <SpdTabPage.h>
 #include <ConnsTabPage.h>
 #include <SettingsPage.h>
+#include <DisplaySettingsPage.h>
 #include <statspluginsettings.h>
 
 namespace kt {
@@ -57,6 +58,8 @@ class StatsPlugin : public Plugin
 		std::auto_ptr<ConnsTabPage> pmUiConns;
 		///Settings Page
 		SettingsPage* pmUiSett;
+		/// Display settings page
+		DisplaySettingsPage* pmDispSett;
 		///Timer
 		std::auto_ptr<QTimer> pmTmr;
 		

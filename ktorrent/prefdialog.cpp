@@ -29,6 +29,7 @@
 #include "core.h"
 #include "ui_qmpref.h"
 #include "ui_generalpref.h"
+#include "ui_btpref.h"
 #include "advancedpref.h"
 #include "networkpref.h"
 
@@ -48,7 +49,7 @@ namespace kt
 	class GeneralPref : public PrefPageInterface,public Ui_GeneralPref
 	{
 	public:
-		GeneralPref(QWidget* parent) : PrefPageInterface(Settings::self(),i18n("Application"),"configure",parent)
+		GeneralPref(QWidget* parent) : PrefPageInterface(Settings::self(),i18n("Application"),"ktorrent",parent)
 		{
 			setupUi(this);
 			kcfg_tempDir->setMode(KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
@@ -87,18 +88,33 @@ namespace kt
 				kcfg_completedDir->setUrl(Settings::completedDir());
 
 			kcfg_downloadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());
-			kcfg_uploadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());
+			kcfg_uploadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());	
+		}
+
+		void loadDefaults()
+		{
+			loadSettings();
+		}
+	};
+	
+	class BTPref : public PrefPageInterface,public Ui_BTPref
+	{
+	public:
+		BTPref(QWidget* parent) : PrefPageInterface(Settings::self(),i18n("BitTorrent"),"application-x-bittorrent",parent)
+		{
+			setupUi(this);
+		}
+		
+		virtual ~BTPref() {}
+		
+		void loadSettings()
+		{
 			kcfg_allowUnencryptedConnections->setEnabled(Settings::useEncryption());
 #ifdef ENABLE_DHT_SUPPORT
 			kcfg_dhtPort->setEnabled(Settings::dhtSupport());
 #else
 			dhtGroupBox->setShown(false);
 #endif
-		}
-
-		void loadDefaults()
-		{
-			loadSettings();
 		}
 	};
 
@@ -112,6 +128,7 @@ namespace kt
 		connect(this,SIGNAL(settingsChanged(const QString &)),core,SLOT(applySettings()));
 		addPrefPage(new GeneralPref(this));
 		addPrefPage(new NetworkPref(this));
+		addPrefPage(new BTPref(this));
 		addPrefPage(new QMPref(this));
 		addPrefPage(new AdvancedPref(this));
 	}

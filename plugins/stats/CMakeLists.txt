@@ -17,18 +17,14 @@ set(Drawer_SRC
 set(ktstatsplugin_SRC 
 	${Drawer_SRC} 
 	StatsPlugin.cc 
-	StatsPlugin.h 
 	PluginPage.cc 
-	PluginPage.h 
 	SpdTabPage.cc 
-	SpdTabPage.h
 	ConnsTabPage.cc
-	ConnsTabPage.h
 	SettingsPage.cc
-	SettingsPage.h
+	DisplaySettingsPage.cc
 )
 
-kde4_add_ui_files(ktstatsplugin_SRC Spd.ui Conns.ui Settings.ui )
+kde4_add_ui_files(ktstatsplugin_SRC Spd.ui Conns.ui Settings.ui DisplaySettings.ui)
 kde4_add_kcfg_files(ktstatsplugin_SRC statspluginsettings.kcfgc)
 kde4_add_plugin(ktstatsplugin ${ktstatsplugin_SRC})
 
