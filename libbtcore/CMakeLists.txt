@@ -33,6 +33,7 @@ set(libbtcore_SRC
 	net/downloadthread.cpp
 	net/networkthread.cpp
 	net/socketgroup.cpp
+	net/socks.cpp
 	
 	mse/bigint.cpp  
 	mse/functions.cpp  

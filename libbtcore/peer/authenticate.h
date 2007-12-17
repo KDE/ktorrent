@@ -25,6 +25,10 @@
 #include <peer/peerid.h>
 #include "authenticatebase.h"
 
+namespace net
+{
+	class Socks;
+}
 
 namespace bt
 {
@@ -76,7 +80,8 @@ namespace bt
 		Uint16 getPort() const {return port;}
 		
 	protected slots:
-		void onReadyWrite();
+		virtual void onReadyWrite();
+		virtual void onReadyRead();
 		void onPeerManagerDestroyed();
 		
 	protected:
@@ -91,6 +96,7 @@ namespace bt
 		Uint16 port;
 		bool succes;
 		PeerManager* pman;
+		net::Socks* socks;
 	};
 }
 

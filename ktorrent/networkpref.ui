@@ -6,11 +6,17 @@
     <x>0</x>
     <y>0</y>
     <width>631</width>
-    <height>483</height>
+    <height>559</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>Form</string>
+  </property>
+  <property name="toolTip" >
+   <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Which SOCKS protocol version to use&lt;/p>&lt;/body>&lt;/html></string>
   </property>
   <layout class="QVBoxLayout" >
    <item>
@@ -298,6 +304,69 @@ p, li { white-space: pre-wrap; }
         </item>
        </layout>
       </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_socksEnabled" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Use a SOCKS proxy server for bittorrent connections.&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Note: &lt;/span>This is not used for tracker connections&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="text" >
+         <string>Use a SOCKS proxy server:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QLabel" name="label_12" >
+          <property name="text" >
+           <string>Server:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="kcfg_socksProxy" >
+          <property name="toolTip" >
+           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">IP address or hostname of the SOCKS server&lt;/p>&lt;/body>&lt;/html></string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_11" >
+          <property name="text" >
+           <string>Port:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="kcfg_socksPort" >
+          <property name="toolTip" >
+           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Port used by the SOCKS server&lt;/p>&lt;/body>&lt;/html></string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_13" >
+          <property name="text" >
+           <string>Version:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="kcfg_socksVersion" />
+        </item>
+       </layout>
+      </item>
      </layout>
     </widget>
    </item>
@@ -317,5 +386,54 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>kcfg_socksEnabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_socksProxy</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>149</x>
+     <y>453</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>181</x>
+     <y>481</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_socksEnabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_socksPort</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>436</x>
+     <y>446</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>449</x>
+     <y>475</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_socksEnabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_socksVersion</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>571</x>
+     <y>457</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>584</x>
+     <y>480</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

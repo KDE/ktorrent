@@ -19,8 +19,9 @@
  ***************************************************************************/
 #include <util/log.h>
 #include <mse/streamsocket.h>
-#include "authenticate.h"
 #include <torrent/ipblocklist.h>
+#include <net/socks.h>
+#include "authenticate.h"
 #include "peermanager.h"
 
 namespace bt
@@ -28,7 +29,7 @@ namespace bt
 
 	Authenticate::Authenticate(const QString & ip,Uint16 port,
 							   const SHA1Hash & info_hash,const PeerID & peer_id,PeerManager* pman) 
-	: info_hash(info_hash),our_peer_id(peer_id),pman(pman)
+	: info_hash(info_hash),our_peer_id(peer_id),pman(pman),socks(0)
 	{
 		finished = succes = false;
 		net::Address addr(ip,port);
@@ -37,35 +38,99 @@ namespace bt
 		this->port = port;
 
 		Out(SYS_CON|LOG_NOTICE) << "Initiating connection to " << host << endl;
-
-		if (sock->connectTo(addr))
+		if (net::Socks::enabled())
 		{
-			connected();
-		}
-		else if (sock->connecting())
-		{
-			// do nothing the monitor will notify us when we are connected
+			socks = new net::Socks(sock,addr);
+			switch (socks->setup())
+			{
+				case net::Socks::FAILED:
+					Out(SYS_CON|LOG_NOTICE) << "Failed to connect to " << host << " via socks server " << endl;
+					onFinish(false);
+					break;
+				case net::Socks::CONNECTED:
+					delete socks;
+					socks = 0; 
+					connected();
+					break;
+				default:
+					break;
+			}
 		}
 		else
 		{
-			onFinish(false);
+			if (sock->connectTo(addr))
+			{
+				connected();
+			}
+			else if (sock->connecting())
+			{
+				// do nothing the monitor will notify us when we are connected
+			}
+			else
+			{
+				onFinish(false);
+			}
 		}
 	}
 
 	Authenticate::~Authenticate()
 	{
+		delete socks;
 	}
 	
 	void Authenticate::onReadyWrite()
 	{
 //		Out() << "Authenticate::onReadyWrite()" << endl;
-		if (sock->connectSuccesFull())
+		if (socks)
+		{
+			switch (socks->onReadyToWrite())
+			{
+				case net::Socks::FAILED:
+					Out(SYS_CON|LOG_NOTICE) << "Failed to connect to socks server " << endl;
+					onFinish(false);
+					break;
+				case net::Socks::CONNECTED:
+					delete socks;
+					socks = 0; 
+					connected();
+					break;
+				default:
+					break;
+			}
+		}
+		else if (sock->connectSuccesFull())
 		{
 			connected();
 		}
 		else
 		{
 			onFinish(false);
+		}
+	}
+	
+	void Authenticate::onReadyRead()
+	{
+		if (!socks)
+		{
+			AuthenticateBase::onReadyRead();
+		}
+		else
+		{
+			switch (socks->onReadyToRead())
+			{
+				case net::Socks::FAILED:
+					Out(SYS_CON|LOG_NOTICE) << "Failed to connect to host via socks server " << endl;
+					onFinish(false);
+					break;
+				case net::Socks::CONNECTED:
+					// connection established, so get rid of socks shit
+					delete socks;
+					socks = 0; 
+					connected();
+					if (sock->bytesAvailable() > 0)
+						AuthenticateBase::onReadyRead();
+					break;
+			}
 		}
 	}
 

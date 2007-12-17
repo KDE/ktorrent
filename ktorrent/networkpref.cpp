@@ -67,9 +67,17 @@ namespace kt
 			
 			kcfg_networkInterface->addItem(icon,iface.name());
 		}
+		
+		kcfg_socksProxy->setEnabled(Settings::socksEnabled());
+		kcfg_socksVersion->setEnabled(Settings::socksEnabled());
+		kcfg_socksPort->setEnabled(Settings::socksEnabled());
 	}
 
 	void NetworkPref::loadDefaults()
 	{
+		kcfg_socksProxy->setEnabled(Settings::socksEnabled());
+		kcfg_socksVersion->setEnabled(Settings::socksEnabled());
+		kcfg_socksPort->setEnabled(Settings::socksEnabled());
 	}
+	
 }

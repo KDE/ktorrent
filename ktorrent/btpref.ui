@@ -113,5 +113,38 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>kcfg_dhtSupport</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_dhtPort</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>355</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>370</x>
+     <y>75</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_useEncryption</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_allowUnencryptedConnections</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>113</x>
+     <y>151</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>116</x>
+     <y>169</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

@@ -23,6 +23,7 @@
 #include <util/log.h>
 #include <torrent/globals.h>
 #include <torrent/server.h>
+#include <net/socks.h>
 #include "encryptedauthenticate.h"
 #include "rc4encryptor.h"
 #include "streamsocket.h"
@@ -247,6 +248,25 @@ namespace mse
 		if (finished)
 			return;
 		
+		if (socks)
+		{
+			switch (socks->onReadyToRead())
+			{
+				case net::Socks::FAILED:
+					Out(SYS_CON|LOG_NOTICE) << "Failed to connect to host via socks server " << endl;
+					onFinish(false);
+					break;
+				case net::Socks::CONNECTED:
+					// connection established, so get rid of socks shit
+					delete socks;
+					socks = 0; 
+					connected();
+					if (sock->bytesAvailable() > 0)
+						onReadyRead();
+					break;
+			}
+			return;
+		}
 	
 		Uint32 ba = sock->bytesAvailable();
 		if (ba == 0)

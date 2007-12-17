@@ -30,6 +30,7 @@
 #include <peer/authenticationmonitor.h>
 #include <peer/peermanager.h>
 #include <net/socketmonitor.h>
+#include <net/socks.h>
 #include <dht/dhtbase.h>
 #include <mse/streamsocket.h>
 #include <tracker/httptracker.h>
@@ -138,6 +139,10 @@ namespace kt
 			else
 				SetNetworkInterface(iface_list[iface - 1].name());
 		}
+		
+		net::Socks::setSocksEnabled(Settings::socksEnabled());
+		net::Socks::setSocksVersion(Settings::socksVersion());
+		net::Socks::setSocksServerAddress(Settings::socksProxy(),Settings::socksPort());
 	}
 
 
