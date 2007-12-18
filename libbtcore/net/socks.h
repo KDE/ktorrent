@@ -68,6 +68,7 @@ namespace net
 		{
 			NONE,
 			AUTH_REQUEST_SENT,
+			USERNAME_AND_PASSWORD_SENT,
 			CONNECT_REQUEST_SENT
 		};
 		Socks(mse::StreamSocket* sock,const Address & dest);
@@ -99,10 +100,19 @@ namespace net
 
 		/// Set the socks version (4 or 5)
 		static void setSocksVersion(int version) {socks_version = version;}
+		
+		/**
+		 * Set the SOCKSv5 Username and password
+		 * @param username The username
+		 * @param password The password
+		 */
+		static void setSocksAuthentication(const QString & username,const QString & password);
 	private:
 		State sendAuthRequest();
 		void sendConnectRequest();
+		void sendUsernamePassword();
 		State handleAuthReply();
+		State handleUsernamePasswordReply();
 		State handleConnectReply();
 			
 	private:
@@ -116,6 +126,8 @@ namespace net
 		static bt::Uint16 socks_server_port;
 		static bool socks_enabled;
 		static int socks_version;
+		static QString socks_username;
+		static QString socks_password;
 	};
 
 }

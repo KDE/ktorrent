@@ -210,6 +210,15 @@
 			<max>5</max>
 			<default>5</default>
 		</entry>
+		<entry name="socksUsePassword" type="Bool">
+			<default>false</default>
+		</entry>
+		<entry name="socksUsername" type="String">
+			<default code="true">QString::null</default>
+		</entry>
+		<entry name="socksPassword" type="String">
+			<default code="true">QString::null</default>
+		</entry>
 		<entry name="eta" type="Int">
 			<label>Algorithm to estimate the time when a torrent is finished</label>
 			<default>0</default>

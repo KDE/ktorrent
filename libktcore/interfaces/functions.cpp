@@ -143,6 +143,10 @@ namespace kt
 		net::Socks::setSocksEnabled(Settings::socksEnabled());
 		net::Socks::setSocksVersion(Settings::socksVersion());
 		net::Socks::setSocksServerAddress(Settings::socksProxy(),Settings::socksPort());
+		if (Settings::socksUsePassword())
+			net::Socks::setSocksAuthentication(Settings::socksUsername(),Settings::socksPassword());
+		else
+			net::Socks::setSocksAuthentication(QString::null,QString::null);
 	}
 
 

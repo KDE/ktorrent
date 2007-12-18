@@ -19,3 +19,4 @@ silently)
 - Show files which a chunk belongs to in chunks tab
 - Add alternative fileview mode (flat list)
 - After tree succesive mmap failures, switch to buffered mode permanently
+- Added SOCKSv4 and v5 support

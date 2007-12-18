@@ -71,6 +71,9 @@ namespace kt
 		kcfg_socksProxy->setEnabled(Settings::socksEnabled());
 		kcfg_socksVersion->setEnabled(Settings::socksEnabled());
 		kcfg_socksPort->setEnabled(Settings::socksEnabled());
+		
+		kcfg_socksPassword->setEnabled(Settings::socksUsePassword());
+		kcfg_socksUsername->setEnabled(Settings::socksUsePassword());
 	}
 
 	void NetworkPref::loadDefaults()
@@ -78,6 +81,9 @@ namespace kt
 		kcfg_socksProxy->setEnabled(Settings::socksEnabled());
 		kcfg_socksVersion->setEnabled(Settings::socksEnabled());
 		kcfg_socksPort->setEnabled(Settings::socksEnabled());
+		
+		kcfg_socksPassword->setEnabled(Settings::socksUsePassword());
+		kcfg_socksUsername->setEnabled(Settings::socksUsePassword());
 	}
 	
 }
