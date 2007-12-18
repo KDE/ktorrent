@@ -78,6 +78,7 @@ namespace dht
 				{
 					// we have found the bit
 					bit_on = (19 - i)*8 + (7 - j);
+					return bit_on;
 				}
 			}
 		}
