@@ -119,7 +119,7 @@ namespace bt
 			throw Error(i18n("Failed to create %1 : %2",file_map,fptr.errorString()));
 			
 		QTextStream out(&fptr);
-			// file map doesn't exist, so create it based upon the output_dir
+		// file map doesn't exist, so create it based upon the output_dir
 		Uint32 num = tor.getNumFiles();
 		for (Uint32 i = 0;i < num;i++)
 		{
@@ -273,7 +273,56 @@ namespace bt
 			DeleteEmptyDirs ( output_dir,tf.getPath() );
 		}
 	}
-
+	
+	void MultiFileCache::moveDataFiles(const QMap<TorrentFileInterface*,QString> & files)
+	{
+		if (files.count() == 0)
+			return;
+		
+		MoveDataFilesJob* job = new MoveDataFilesJob();
+		QMap<TorrentFileInterface*,QString>::const_iterator i = files.begin();
+		while (i != files.end())
+		{
+			TorrentFileInterface* tf = i.key();
+			QString dest = i.value();
+			if (QFileInfo(dest).isDir())
+			{
+				QString path = tf->getPath();
+				if (!dest.endsWith(bt::DirSeparator()))
+					dest += bt::DirSeparator();
+			
+				int last = path.lastIndexOf(bt::DirSeparator());
+				job->addMove(tf->getPathOnDisk(),dest + path.mid(last+1));
+			}
+			else
+				job->addMove(tf->getPathOnDisk(),i.value());
+			i++;
+		}
+		
+		if (!job->exec())
+			throw Error("Move failed");
+		
+		i = files.begin();
+		while (i != files.end())
+		{
+			TorrentFileInterface* tf = i.key();
+			QString path = tf->getPathOnDisk();
+			QString dest = i.value();
+			if (QFileInfo(dest).isDir())
+			{
+				QString path = tf->getPath();
+				if (!dest.endsWith(bt::DirSeparator()))
+					dest += bt::DirSeparator();
+			
+				int last = path.lastIndexOf(bt::DirSeparator());
+				tf->setPathOnDisk(dest + path.mid(last+1));
+			}
+			else
+				tf->setPathOnDisk(i.value());
+			i++;
+		}
+		saveFileMap();
+	}
 
 	void MultiFileCache::create()
 	{
@@ -823,7 +872,8 @@ namespace bt
 
 		return sum;
 	}
-
+	
+	
 	///////////////////////////////
 
 	Uint64 FileOffset(Chunk* c,const TorrentFile & f,Uint64 chunk_size)

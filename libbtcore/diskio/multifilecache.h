@@ -53,6 +53,7 @@ namespace bt
 		virtual void close();
 		virtual void open();
 		virtual void moveDataFiles(const QString & ndir);
+		virtual void moveDataFiles(const QMap<TorrentFileInterface*,QString> & files);
 		virtual QString getOutputPath() const;
 		virtual void changeOutputPath(const QString & outputpath);
 		virtual void preallocateDiskSpace(PreallocationThread* prealloc);

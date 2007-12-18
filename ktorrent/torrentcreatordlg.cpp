@@ -228,7 +228,7 @@ namespace kt
 		}
 
 		QString s = KFileDialog::getSaveFileName(
-				KUrl(),"*.torrent|" + i18n("Torrent Files (*.torrent)"),
+				KUrl("kfiledialog:///openTorrent"),"*.torrent|" + i18n("Torrent Files (*.torrent)"),
 				this,i18n("Choose a file to save the torrent"));
 
 		if (s.isNull())

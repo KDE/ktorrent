@@ -877,6 +877,35 @@ namespace bt
 		return true;
 	}
 
+	bool TorrentControl::moveTorrentFiles(const QMap<TorrentFileInterface*,QString> & files)
+	{
+		bool start = false;
+		
+		// check if torrent is running and stop it before moving data
+		if(stats.running)
+		{
+			start = true;
+			this->stop(false);
+		}
+	
+		moving_files = true;
+		try
+		{
+			cman->moveDataFiles(files);
+			Out(SYS_GEN|LOG_NOTICE) << "Move of data files completed " << endl;
+		}
+		catch (Error& err)
+		{			
+			moving_files = false;
+			return false;
+		}
+	
+		moving_files = false;
+		if(start)
+			this->start();
+		
+		return true;
+	}
 
 	void TorrentControl::rollback()
 	{
@@ -1262,7 +1291,7 @@ namespace bt
 							"we will migrate this torrent. You will be asked for a location to save "
 							"the torrent to. If you press cancel, we will select your home directory.",
 							tor->getNameSuggestion()));
-					outputdir = KFileDialog::getExistingDirectory(KUrl(), 0,i18n("Select Folder to Save To"));
+					outputdir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///openTorrent"), 0,i18n("Select Folder to Save To"));
 					if (outputdir.isNull())
 						outputdir = QDir::homePath();
 				}
@@ -1780,6 +1809,7 @@ namespace bt
 			statusChanged(this);
 		}
 	}
+
 
 	
 }

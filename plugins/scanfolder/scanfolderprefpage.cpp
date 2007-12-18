@@ -73,7 +73,7 @@ namespace kt
 	
 	void ScanFolderPrefPage::addPressed()
 	{
-		KUrl dir = KFileDialog::getExistingDirectoryUrl(KUrl(),this);
+		KUrl dir = KFileDialog::getExistingDirectoryUrl(KUrl("kfiledialog:///openTorrent"),this);
 		if (dir.isValid())
 		{
 			QString p = dir.path();

@@ -20,3 +20,5 @@ silently)
 - Add alternative fileview mode (flat list)
 - After tree succesive mmap failures, switch to buffered mode permanently
 - Added SOCKSv4 and v5 support
+- Added feature to move inidividual files of a torrent
+

@@ -190,6 +190,7 @@ namespace bt
 		virtual Uint32 getNumFiles() const;
 		virtual TorrentFileInterface & getTorrentFile(Uint32 index);
 		virtual const TorrentFileInterface & getTorrentFile(Uint32 index) const;
+		virtual bool moveTorrentFiles(const QMap<TorrentFileInterface*,QString> & files);
 		virtual void recreateMissingFiles();
 		virtual void dndMissingFiles();
 		virtual void addPeerSource(PeerSource* ps);

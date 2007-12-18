@@ -28,7 +28,9 @@
 #include <kmimetype.h>
 #include <ksharedconfig.h>
 #include <kconfiggroup.h>
+#include <kfiledialog.h>
 #include <util/bitset.h>
+#include <util/error.h>
 #include <util/functions.h>
 #include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>
@@ -62,6 +64,8 @@ namespace kt
 		context_menu->addSeparator();
 		dnd_action = context_menu->addAction(i18n("Do Not Download"),this,SLOT(doNotDownload()));
 		delete_action = context_menu->addAction(i18n("Delete File(s)"),this,SLOT(deleteFiles()));
+		context_menu->addSeparator();
+		move_files_action = context_menu->addAction(i18n("Move File"),this,SLOT(moveFiles()));
 		
 		connect(this,SIGNAL(customContextMenuRequested(const QPoint & )),
 				this,SLOT(showContextMenu(const QPoint& )));
@@ -141,6 +145,7 @@ namespace kt
 			dnd_action->setEnabled(true);
 			delete_action->setEnabled(true);
 			context_menu->popup(mapToGlobal(p));
+			move_files_action->setEnabled(true);
 			return;
 		}
 	
@@ -156,10 +161,12 @@ namespace kt
 		if (!s.multi_file_torrent)
 		{
 			open_action->setEnabled(true);
+			move_files_action->setEnabled(true);
 			preview_path = curr_tc->getStats().output_path;
 		}
 		else if (file)
 		{
+			move_files_action->setEnabled(true);
 			if (!file->isNull())
 			{
 				open_action->setEnabled(true);
@@ -178,6 +185,7 @@ namespace kt
 		}
 		else
 		{
+			move_files_action->setEnabled(false);
 			download_first_action->setEnabled(true);
 			download_normal_action->setEnabled(true);
 			download_last_action->setEnabled(true);
@@ -236,6 +244,43 @@ namespace kt
 					
 		if (KMessageBox::warningYesNo(0,msg) == KMessageBox::Yes)
 			changePriority(EXCLUDED);
+	}
+	
+	void FileView::moveFiles()
+	{
+		if (curr_tc->getStats().multi_file_torrent)
+		{
+			QModelIndexList sel = selectionModel()->selectedRows();
+			QMap<bt::TorrentFileInterface*,QString> moves;
+			
+			QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///openTorrent"),
+					this,i18n("Select a directory to move the data to."));
+			if (dir.isNull())
+				return;
+			
+			foreach (QModelIndex idx,sel)
+			{
+				bt::TorrentFileInterface* tfi = model->indexToFile(idx);
+				if (!tfi)
+					continue;
+			
+				moves.insert(tfi,dir);
+			}
+			
+			if (moves.count() > 0)
+			{
+				curr_tc->moveTorrentFiles(moves);
+			}
+		}
+		else
+		{
+			QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///openTorrent"),
+					this,i18n("Select a directory to move the data to."));
+			if (dir.isNull())
+				return;
+		
+			curr_tc->changeOutputDir(dir);
+		}
 	}
 	
 	void FileView::onDoubleClicked(const QModelIndex & index)

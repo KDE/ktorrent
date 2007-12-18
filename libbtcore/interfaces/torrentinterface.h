@@ -311,6 +311,13 @@ namespace bt
 		 */
 		virtual const TorrentFileInterface & getTorrentFile(Uint32 index) const = 0;
 		
+		/**
+		 * Move a torrent file to a new location.
+		 * @param files Map of files and their new location
+		 * @return true upon success
+		 */
+		virtual bool moveTorrentFiles(const QMap<TorrentFileInterface*,QString> & files) = 0;
+		
 		///Get a pointer to TrackersList object
 		virtual TrackersList* getTrackersList() = 0;
 		
@@ -435,6 +442,8 @@ namespace bt
 	
 		/// Do we need to update this torrent ?
 		virtual bool updateNeeded() const = 0;
+		
+		//virtual void moveFiles(
 	signals:
 		/**
 		 * Emited when we have finished downloading.

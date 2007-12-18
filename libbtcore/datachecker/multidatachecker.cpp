@@ -106,10 +106,9 @@ namespace bt
 								const QString & cache)
 	{
 		File fptr;
-		if (!fptr.open(cache + tf.getPath(), "rb"))
+		if (!fptr.open(tf.getPathOnDisk(), "rb"))
 		{
-			Out() << QString("Warning : Cannot open %1 : %2").arg(cache + 
-					tf.getPath()).arg(fptr.errorString()) << endl;
+			Out() << QString("Warning : Cannot open %1 : %2").arg(tf.getPathOnDisk()).arg(fptr.errorString()) << endl;
 			return 0;
 		}
 		
@@ -176,14 +175,13 @@ namespace bt
 			}
 			else
 			{
-				if (!bt::Exists(cache + f.getPath()) || bt::FileSize(cache + f.getPath()) < off)
+				if (!bt::Exists(f.getPathOnDisk()) || bt::FileSize(f.getPathOnDisk()) < off)
 					return false;
 				
 				File fptr;
-				if (!fptr.open(cache + f.getPath(), "rb"))
+				if (!fptr.open(f.getPathOnDisk(), "rb"))
 				{
-					Out() << QString("Warning : Cannot open %1 : %2").arg(cache + 
-							f.getPath()).arg(fptr.errorString()) << endl;
+					Out() << QString("Warning : Cannot open %1 : %2").arg(f.getPathOnDisk()).arg(fptr.errorString()) << endl;
 					return false;
 				}
 				else

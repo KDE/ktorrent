@@ -36,6 +36,7 @@ namespace bt
 	class Cache;
 	class TorrentFile;
 	class PreallocationThread;
+	class TorrentFileInterface;
 
 	struct NewChunkHeader
 	{
@@ -103,6 +104,13 @@ namespace bt
 		 * @param ndir The new directory
 		 */
 		void moveDataFiles(const QString & ndir);
+		
+		
+		/**
+		 * Move some data files to a new location
+		 * @param files Map of files and their new location
+		 */
+		void moveDataFiles(const QMap<TorrentFileInterface*,QString> & files);
 		
 		/**
 		 * Loads the index file.
