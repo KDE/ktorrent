@@ -202,6 +202,7 @@ set (btcore_HDR
 	
 set (bcodec_HDR
 	./bcodec/bencoder.h
+        ./bcodec/bdecoder.h
 	./bcodec/value.h
 	./bcodec/bnode.h
 )
