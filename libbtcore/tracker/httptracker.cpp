@@ -36,7 +36,7 @@
 #include <peer/peermanager.h>
 #include <torrent/server.h>
 #include <torrent/globals.h>
-#include "ktversion.h"
+#include "btversion.h"
 #include "httptracker.h"
 
 
@@ -426,7 +426,7 @@ namespace bt
 	
 	void HTTPTracker::setupMetaData(KIO::MetaData & md)
 	{
-		md["UserAgent"] = "ktorrent/" KT_VERSION_MACRO;
+		md["UserAgent"] = bt::GetVersionString();
 		md["SendLanguageSettings"] = "false";
 		md["Cookies"] = "none";
 	//	md["accept"] = "text/plain";

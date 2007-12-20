@@ -28,7 +28,7 @@
 #include <torrent/torrent.h>
 #include <torrent/globals.h>
 #include <download/chunkdownload.h>
-#include <ktversion.h>
+#include "btversion.h"
 #include "ccmigrate.h"
 
 namespace bt
@@ -132,8 +132,8 @@ namespace bt
 		// write the new current_chunks header
 		CurrentChunksHeader hdr;
 		hdr.magic = CURRENT_CHUNK_MAGIC;
-		hdr.major = kt::MAJOR;
-		hdr.minor = kt::MINOR;
+		hdr.major = bt::MAJOR;
+		hdr.minor = bt::MINOR;
 		hdr.num_chunks = num;
 		new_cc.write(&hdr,sizeof(CurrentChunksHeader));
 

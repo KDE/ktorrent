@@ -132,6 +132,8 @@ set(libbtcore_SRC
 	migrate/cachemigrate.cpp  
 	migrate/ccmigrate.cpp  
 	migrate/migrate.cpp
+	
+	btversion.cpp
 )
 
 
@@ -198,11 +200,12 @@ set (download_HDR
 
 set (btcore_HDR 
 	btcore_export.h
+	btversion.h
 )
 	
 set (bcodec_HDR
 	./bcodec/bencoder.h
-        ./bcodec/bdecoder.h
+	./bcodec/bdecoder.h
 	./bcodec/value.h
 	./bcodec/bnode.h
 )

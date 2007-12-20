@@ -34,6 +34,8 @@
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
 #include "app.h"
+#include "btversion.h"
+#include "ktversion.h"
 
 bool GrabPIDLock()
 {
@@ -68,9 +70,11 @@ int main(int argc, char **argv)
 	signal(SIGPIPE,SIG_IGN);
 	signal(SIGXFSZ,SIG_IGN);
 	
+	bt::SetClientInfo("KTorrent",kt::MAJOR,kt::MINOR,kt::RELEASE,bt::BETA,"KT");
+	
 	KAboutData about(
 		"ktorrent", 0, ki18n("KTorrent"),
-		"3.0dev", ki18n("Bittorrent client for KDE"),
+		kt::VERSION_STRING, ki18n("Bittorrent client for KDE"),
 		KAboutData::License_GPL, 
 		ki18n("(C) 2005 - 2007 Joris Guisson and Ivan Vasic"), 
 		KLocalizedString(),

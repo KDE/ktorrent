@@ -34,8 +34,8 @@
 #include <peer/packetwriter.h>
 #include <torrent/ipblocklist.h>
 #include "chunkselector.h"
-#include "ktversion.h"
 #include "downloader.h"
+#include "btversion.h"
 
 namespace bt
 {
@@ -473,8 +473,8 @@ namespace bt
 		// Save all the current downloads to a file
 		CurrentChunksHeader hdr;
 		hdr.magic = CURRENT_CHUNK_MAGIC;
-		hdr.major = kt::MAJOR;
-		hdr.minor = kt::MINOR;
+		hdr.major = bt::MAJOR;
+		hdr.minor = bt::MINOR;
 		hdr.num_chunks = current_chunks.count();
 		fptr.write(&hdr,sizeof(CurrentChunksHeader));
 

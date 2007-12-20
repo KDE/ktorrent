@@ -22,7 +22,7 @@
 #include <qmap.h>
 #include <klocale.h>
 #include "peerid.h"
-#include "ktversion.h"
+#include "btversion.h"
 
 namespace bt
 {
@@ -41,7 +41,7 @@ namespace bt
 	PeerID::PeerID()
 	{
 		srand(time(0));
-		memcpy(id,kt::PEER_ID,8);
+		memcpy(id,bt::PeerIDPrefix().toAscii(),8);
 		for (int i = 8;i < 20;i++)
 			id[i] = RandomLetterOrNumber(); 
 		client_name = identifyClient();
