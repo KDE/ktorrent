@@ -21,4 +21,4 @@ silently)
 - After tree succesive mmap failures, switch to buffered mode permanently
 - Added SOCKSv4 and v5 support
 - Added feature to move inidividual files of a torrent
-
+- When files are missing allow user to select another location

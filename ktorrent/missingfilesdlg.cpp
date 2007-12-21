@@ -22,12 +22,15 @@
 #include <kiconloader.h>
 #include <kmimetype.h>
 #include <kstandardguiitem.h>
+#include <kfiledialog.h>
+#include <kmessagebox.h>
+#include <interfaces/torrentinterface.h>
 #include "missingfilesdlg.h"
 
 namespace kt
 {
 
-	MissingFilesDlg::MissingFilesDlg(const QString & text,const QStringList & missing,bool multifile,QWidget* parent) : QDialog(parent),ret(CANCEL)
+	MissingFilesDlg::MissingFilesDlg(const QString & text,const QStringList & missing,bt::TorrentInterface* tc,QWidget* parent) : QDialog(parent),ret(CANCEL),tc(tc)
 	{
 		setupUi(this);
 		
@@ -36,6 +39,7 @@ namespace kt
 		connect(m_quit,SIGNAL(clicked()),this,SLOT(quitPressed()));
 		connect(m_recreate,SIGNAL(clicked()),this,SLOT(recreatePressed()));
 		connect(m_dnd,SIGNAL(clicked()),this,SLOT(dndPressed()));
+		connect(m_select_new,SIGNAL(clicked()),this,SLOT(selectNewPressed()));
 		
 		m_quit->setGuiItem(KStandardGuiItem::quit());
 		m_cancel->setGuiItem(KStandardGuiItem::cancel());
@@ -47,7 +51,9 @@ namespace kt
 			lwi->setIcon(SmallIcon(KMimeType::findByPath(s)->iconName()));
 		}
 		
-		m_dnd->setEnabled(multifile);
+		m_dnd->setEnabled(tc->getStats().multi_file_torrent);
+		// select new is only possible if all files are missing 
+		m_select_new->setEnabled(!tc->getStats().multi_file_torrent || missing.count() == tc->getNumFiles());
 	}
 
 
@@ -64,6 +70,56 @@ namespace kt
 	{
 		ret = DO_NOT_DOWNLOAD;
 		accept();
+	}
+	
+	void MissingFilesDlg::selectNewPressed()
+	{
+		if (tc->getStats().multi_file_torrent)
+		{
+			QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///openTorrent"),
+					this,i18n("Select the directory where the data now is."));
+			if (dir.isNull())
+				return;
+			
+			QString old = tc->getStats().output_path;
+			tc->changeOutputDir(dir,bt::TorrentInterface::FULL_PATH);
+			QStringList dummy;
+			if (tc->hasMissingFiles(dummy))
+			{
+				if (dummy.count() == tc->getNumFiles())
+					KMessageBox::error(this,i18n("The data files are not present in the location you selected !"));
+				else
+					KMessageBox::error(this,i18n("Not all files where found in the new location, some are still missing !"));
+				
+				tc->changeOutputDir(old,bt::TorrentInterface::FULL_PATH);
+			}
+			else
+			{
+				ret = NEW_LOCATION_SELECTED;
+				accept();
+			}
+		}
+		else
+		{
+			QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///openTorrent"),
+					this,i18n("Select the directory where the data now is."));
+			if (dir.isNull())
+				return;
+			
+			QString old = tc->getDataDir();
+			tc->changeOutputDir(dir,0);
+			QStringList dummy;
+			if (tc->hasMissingFiles(dummy))
+			{
+				KMessageBox::error(this,i18n("The data file is not present in the location you selected !"));
+				tc->changeOutputDir(old,0);
+			}
+			else
+			{
+				ret = NEW_LOCATION_SELECTED;
+				accept();
+			}
+		}
 	}
 	
 	void MissingFilesDlg::recreatePressed()

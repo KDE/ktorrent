@@ -290,7 +290,7 @@ namespace bt
 				if(!outdir.endsWith(bt::DirSeparator()))
 					outdir += bt::DirSeparator();
 				
-				changeOutputDir(outdir);
+				changeOutputDir(outdir,bt::TorrentInterface::MOVE_FILES);
 			}
 			
 			//Update diskspace if needed (every 1 min)			
@@ -811,7 +811,7 @@ namespace bt
 		return true;
 	}
 	
-	bool TorrentControl::changeOutputDir(const QString & ndir,bool move_files)
+	bool TorrentControl::changeOutputDir(const QString & ndir,int flags)
 	{
 		bool start = false;
 		int old_prio = getPriority();
@@ -830,19 +830,26 @@ namespace bt
 		try
 		{
 			QString nd;
-			if (istats.custom_output_name)
+			if (! (flags & bt::TorrentInterface::FULL_PATH))
 			{
-				int slash_pos = stats.output_path.lastIndexOf(bt::DirSeparator(),-2);
-				nd = new_dir + stats.output_path.mid(slash_pos + 1);
+				if (istats.custom_output_name)
+				{
+					int slash_pos = stats.output_path.lastIndexOf(bt::DirSeparator(),-2);
+					nd = new_dir + stats.output_path.mid(slash_pos + 1);
+				}
+				else
+				{
+					nd = new_dir + tor->getNameSuggestion();
+				}
 			}
 			else
 			{
-				nd = new_dir + tor->getNameSuggestion();
+				nd = new_dir;
 			}
 			
 			if (stats.output_path != nd)
 			{
-				if (move_files)
+				if (flags & bt::TorrentInterface::MOVE_FILES)
 				{
 					if (stats.multi_file_torrent)
 						cman->moveDataFiles(nd);

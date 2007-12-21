@@ -359,7 +359,7 @@ namespace kt
 		
 		foreach(bt::TorrentInterface* tc,sel)
 		{
-			tc->changeOutputDir(dir);
+			tc->changeOutputDir(dir,bt::TorrentInterface::MOVE_FILES);
 		}
 	}
 	

@@ -132,10 +132,10 @@ namespace bt
 		/**
 		 * Change torrents output directory. If this fails we will fall back on the old directory.
 		 * @param new_dir The new directory
-		 * @param move_files Wether or not to move the files
+		 * @param flags 
 		 * @return true upon success.
 		 */
-		bool changeOutputDir(const QString& new_dir,bool move_files = true);
+		bool changeOutputDir(const QString& new_dir,int flags);
 
 		/**
 		 * Roll back the previous changeDataDir call.

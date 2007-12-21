@@ -127,35 +127,7 @@ namespace bt
 			out << tf.getPathOnDisk() << ::endl;
 		}
 	}
-	/*
-	QString MultiFileCache::guessDataDir()
-	{
-		for (Uint32 i = 0;i < tor.getNumFiles();i++)
-		{
-			TorrentFile & tf = tor.getFile(i);
-			if (tf.doNotDownload())
-				continue;
-			
-			QString p = cache_dir + tf.getPath();
-			QFileInfo fi(p);
-			if (!fi.isSymLink())
-				continue;
-			
-			QString dst = fi.readLink();
-			QString tmp = tor.getNameSuggestion() + bt::DirSeparator() + tf.getPath();
-			dst = dst.left(dst.length() - tmp.length());
-			if (dst.length() == 0)
-				continue;
-			
-			if (!dst.endsWith(bt::DirSeparator()))
-				dst += bt::DirSeparator();
-			Out() << "Guessed outputdir to be " << dst << endl;
-			return dst;
-		}
-		
-		return QString::null;
-	}
-	*/
+
 	
 	QString MultiFileCache::getOutputPath() const
 	{
@@ -234,6 +206,13 @@ namespace bt
 			output_dir += bt::DirSeparator();
 		
 		datadir = output_dir;
+		
+		Uint32 num = tor.getNumFiles();
+		for (Uint32 i = 0;i < num;i++)
+		{
+			TorrentFile & tf = tor.getFile(i);
+			tf.setPathOnDisk(output_dir + tf.getPath());
+		}
 		saveFileMap();
 	}
 	
@@ -772,6 +751,8 @@ namespace bt
 				tf.setMissing(true);
 				sl.append(p);
 			}
+			else
+				tf.setMissing(false);
 		}
 		return ret;
 	}

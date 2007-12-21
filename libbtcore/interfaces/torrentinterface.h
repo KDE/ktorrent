@@ -253,14 +253,19 @@ namespace bt
 		 */
 		virtual bool changeTorDir(const QString & new_dir) = 0;
 		
+		enum ChangeOutputFlags
+		{
+			MOVE_FILES = 1,FULL_PATH = 2
+		};
+		
 		/**
 		 * Change to a new data dir. If this fails
 		 * we will fall back on the old directory.
 		 * @param new_dir The new directory
-		 * @param move_files Wether or not to move the actual files
+		 * @param flags The OR of ChangeOutputFlags
 		 * @return true upon succes
 		 */
-		virtual bool changeOutputDir(const QString& new_dir,bool move_files = true) = 0;
+		virtual bool changeOutputDir(const QString& new_dir,int flags) = 0;
 
 		/**
 		 * Roll back the previous changeDataDir call.

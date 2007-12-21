@@ -279,7 +279,7 @@ namespace kt
 			if (dir.isNull())
 				return;
 		
-			curr_tc->changeOutputDir(dir);
+			curr_tc->changeOutputDir(dir,bt::TorrentInterface::MOVE_FILES);
 		}
 	}
 	

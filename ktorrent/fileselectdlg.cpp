@@ -165,7 +165,7 @@ namespace kt
 			ddir += bt::DirSeparator();
 
 		if (dn != ddir)
-			tc->changeOutputDir(dn, false);
+			tc->changeOutputDir(dn, 0);
 
 		//Make it user controlled if needed
 		*user = m_chkUserControlled->isChecked();

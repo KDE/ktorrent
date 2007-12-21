@@ -24,6 +24,11 @@
 #include <QDialog>
 #include "ui_missingfilesdlg.h"
 
+namespace bt
+{
+	class TorrentInterface;
+}
+
 namespace kt
 {
 
@@ -39,15 +44,15 @@ namespace kt
 		 * Constructor
 		 * @param text Text to show above file list 
 		 * @param missing The list of missing files
-		 * @param multifile Wether or not it is a multifile torrent
+		 * @param tc The torrent
 		 * @param parent The parent widget
 		 */
-		MissingFilesDlg(const QString & text,const QStringList & missing,bool multifile,QWidget* parent);
+		MissingFilesDlg(const QString & text,const QStringList & missing,bt::TorrentInterface* tc,QWidget* parent);
 		virtual ~MissingFilesDlg();
 		
 		enum ReturnCode 
 		{
-			QUIT,RECREATE,DO_NOT_DOWNLOAD,CANCEL
+			QUIT,RECREATE,DO_NOT_DOWNLOAD,CANCEL,NEW_LOCATION_SELECTED
 		};
 		
 		/**
@@ -61,9 +66,11 @@ namespace kt
 		void dndPressed();
 		void recreatePressed();
 		void cancelPressed();
+		void selectNewPressed();
 		
 	private:
 		ReturnCode ret;
+		bt::TorrentInterface* tc;
 	};
 
 }
