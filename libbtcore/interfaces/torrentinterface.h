@@ -253,14 +253,19 @@ namespace bt
 		 */
 		virtual bool changeTorDir(const QString & new_dir) = 0;
 		
+		enum ChangeOutputFlags
+		{
+			MOVE_FILES = 1,FULL_PATH = 2
+		};
+		
 		/**
 		 * Change to a new data dir. If this fails
 		 * we will fall back on the old directory.
 		 * @param new_dir The new directory
-		 * @param move_files Wether or not to move the actual files
+		 * @param flags The OR of ChangeOutputFlags
 		 * @return true upon succes
 		 */
-		virtual bool changeOutputDir(const QString& new_dir,bool move_files = true) = 0;
+		virtual bool changeOutputDir(const QString& new_dir,int flags) = 0;
 
 		/**
 		 * Roll back the previous changeDataDir call.
@@ -310,6 +315,13 @@ namespace bt
 		 * @return The TorrentFileInterface (isNull() will be true in case of error)
 		 */
 		virtual const TorrentFileInterface & getTorrentFile(Uint32 index) const = 0;
+		
+		/**
+		 * Move a torrent file to a new location.
+		 * @param files Map of files and their new location
+		 * @return true upon success
+		 */
+		virtual bool moveTorrentFiles(const QMap<TorrentFileInterface*,QString> & files) = 0;
 		
 		///Get a pointer to TrackersList object
 		virtual TrackersList* getTrackersList() = 0;
@@ -435,6 +447,8 @@ namespace bt
 	
 		/// Do we need to update this torrent ?
 		virtual bool updateNeeded() const = 0;
+		
+		//virtual void moveFiles(
 	signals:
 		/**
 		 * Emited when we have finished downloading.

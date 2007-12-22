@@ -238,7 +238,7 @@ namespace kt
 	
 	void SearchWidget::onSaveTorrent(const KUrl & url)
 	{
-		QString fn = KFileDialog::getSaveFileName(KUrl(),"*.torrent | " + i18n("torrent files"),this);
+		QString fn = KFileDialog::getSaveFileName(KUrl("kfiledialog:///openTorrent"),"*.torrent | " + i18n("torrent files"),this);
 		if (!fn.isNull())
 		{
 			KUrl save_url = KUrl(fn);

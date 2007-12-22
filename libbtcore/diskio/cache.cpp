@@ -55,4 +55,7 @@ namespace bt
 	{
 		return MaxOpenFiles() - bt::PeerManager::getTotalConnections() < 100;
 	}
+	
+	void Cache::moveDataFiles(const QMap<TorrentFileInterface*,QString> & /*files*/)
+	{}
 }

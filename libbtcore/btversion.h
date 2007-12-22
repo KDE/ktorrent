@@ -18,61 +18,53 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTMISSINGFILESDLG_H
-#define KTMISSINGFILESDLG_H
+#ifndef BTVERSION_H
+#define BTVERSION_H
 
-#include <QDialog>
-#include "ui_missingfilesdlg.h"
+#include <btcore_export.h>
+#include <util/constants.h>
 
-namespace bt
+class QString;
+
+namespace bt 
 {
-	class TorrentInterface;
-}
-
-namespace kt
-{
+	enum VersionType
+	{
+		NORMAL,ALPHA,BETA,RELEASE_CANDIDATE,DEVEL
+	};
+	
+	/**
+	 * Set the client info. This information is used to create
+	 * the PeerID and the version string (used in HTTP announces for example).
+	 * @param name Name of the client
+	 * @param major Major version
+	 * @param minor Minor version
+	 * @param release Release version
+	 * @param type Which version 
+	 * @param peer_id_code Peer ID code (2 letters identifying the client, KT for KTorrent)
+	 */
+	BTCORE_EXPORT void SetClientInfo(const QString & name,int major,int minor,int release,VersionType type,const QString & peer_id_code);
 
 	/**
-		Dialog to show when files are missing.
-	*/
-	class MissingFilesDlg : public QDialog,public Ui_MissingFilesDlg
-	{
-		Q_OBJECT
-	public:
-		
-		/**
-		 * Constructor
-		 * @param text Text to show above file list 
-		 * @param missing The list of missing files
-		 * @param tc The torrent
-		 * @param parent The parent widget
-		 */
-		MissingFilesDlg(const QString & text,const QStringList & missing,bt::TorrentInterface* tc,QWidget* parent);
-		virtual ~MissingFilesDlg();
-		
-		enum ReturnCode 
-		{
-			QUIT,RECREATE,DO_NOT_DOWNLOAD,CANCEL,NEW_LOCATION_SELECTED
-		};
-		
-		/**
-		 * Execute the dialog
-		 * @return What to do
-		 */
-		ReturnCode execute();
-		
-	private slots:
-		void quitPressed();
-		void dndPressed();
-		void recreatePressed();
-		void cancelPressed();
-		void selectNewPressed();
-		
-	private:
-		ReturnCode ret;
-		bt::TorrentInterface* tc;
-	};
-
+	 * Get the PeerID prefix set by SetClientInfo
+	 * @return The PeerID prefix
+	 */
+	BTCORE_EXPORT QString PeerIDPrefix();
+	
+	/**
+	 * Get the current client version string
+	 */
+	BTCORE_EXPORT QString GetVersionString();
+	
+	
+	/// Major version number of the BTCore library
+	const Uint32 MAJOR = 3;
+	/// Minor version number of the BTCore library
+	const Uint32 MINOR = 0;
+	/// Version type of the BTCore library
+	const VersionType VERSION_TYPE = BETA;
+	/// Release version number of the BTCore library
+	const Uint32 RELEASE = 1;
 }
 
 #endif

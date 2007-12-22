@@ -68,6 +68,7 @@ namespace kt
 		void downloadNormal();
 		void doNotDownload();
 		void deleteFiles();
+		void moveFiles();
 
 	private:
 		bt::TorrentInterface* curr_tc;
@@ -80,6 +81,7 @@ namespace kt
 		QAction* download_last_action;
 		QAction* dnd_action;
 		QAction* delete_action;
+		QAction* move_files_action;
 
 		QString preview_path;
 		bool show_list_of_files;

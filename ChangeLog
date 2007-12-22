@@ -1,6 +1,6 @@
 # Should only contain new features not ports from features we already had in the KDE 3 version
 
-Changes in 3.0dev :
+Changes in 3.0beta1 :
 - Added option to select the network interface to use
 - Added option to disable data checking during uploading
 - Added possibility to open multiple torrents in one go (they will be opened
@@ -20,3 +20,5 @@ silently)
 - Add alternative fileview mode (flat list)
 - After tree succesive mmap failures, switch to buffered mode permanently
 - Added SOCKSv4 and v5 support
+- Added feature to move inidividual files of a torrent
+- When files are missing allow user to select another location

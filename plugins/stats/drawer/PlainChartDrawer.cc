@@ -344,7 +344,7 @@ void PlainChartDrawer::ShowCtxMenu(const QPoint & pos)
 
 void PlainChartDrawer::RenderToImage()
 {
-	QString saveloc = KFileDialog::	getSaveFileName (KUrl(), "image/png", this, i18n("Select path to save image…"));
+	QString saveloc = KFileDialog::	getSaveFileName (KUrl("kfiledialog:///openTorrent"), "image/png", this, i18n("Select path to save image…"));
 	if(!saveloc.length())
 	{
 		return;

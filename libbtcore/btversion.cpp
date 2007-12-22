@@ -18,61 +18,72 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTMISSINGFILESDLG_H
-#define KTMISSINGFILESDLG_H
+#include <QString>
+#include "btversion.h"
 
-#include <QDialog>
-#include "ui_missingfilesdlg.h"
-
-namespace bt
+namespace bt 
 {
-	class TorrentInterface;
-}
-
-namespace kt
-{
-
-	/**
-		Dialog to show when files are missing.
-	*/
-	class MissingFilesDlg : public QDialog,public Ui_MissingFilesDlg
+	static QString g_name = "KTorrent";
+	static int g_major = 0;
+	static int g_minor = 0;
+	static int g_release = 0;
+	static VersionType g_vtype = NORMAL;
+	static QString g_peer_id = "KT";
+	
+	void SetClientInfo(const QString & name,int major,int minor,int release,VersionType type,const QString & peer_id)
 	{
-		Q_OBJECT
-	public:
-		
-		/**
-		 * Constructor
-		 * @param text Text to show above file list 
-		 * @param missing The list of missing files
-		 * @param tc The torrent
-		 * @param parent The parent widget
-		 */
-		MissingFilesDlg(const QString & text,const QStringList & missing,bt::TorrentInterface* tc,QWidget* parent);
-		virtual ~MissingFilesDlg();
-		
-		enum ReturnCode 
+		g_name = name;
+		g_major = major;
+		g_minor = minor;
+		g_release = release;
+		g_vtype = type;
+		g_peer_id = peer_id;
+	}
+	
+	QString PeerIDPrefix()
+	{
+		QString str = QString("-%1%2%3").arg(g_peer_id).arg(g_major).arg(g_minor);
+		switch (g_vtype)
 		{
-			QUIT,RECREATE,DO_NOT_DOWNLOAD,CANCEL,NEW_LOCATION_SELECTED
-		};
-		
-		/**
-		 * Execute the dialog
-		 * @return What to do
-		 */
-		ReturnCode execute();
-		
-	private slots:
-		void quitPressed();
-		void dndPressed();
-		void recreatePressed();
-		void cancelPressed();
-		void selectNewPressed();
-		
-	private:
-		ReturnCode ret;
-		bt::TorrentInterface* tc;
-	};
+			case bt::NORMAL:
+				str += QString("%10-").arg(g_release);
+				break;
+			case bt::ALPHA:
+				str += QString("A%1-").arg(g_release);
+				break;
+			case bt::BETA:
+				str += QString("B%1-").arg(g_release);
+				break;
+			case bt::RELEASE_CANDIDATE:
+				str += QString("R%1-").arg(g_release);
+				break;
+			case DEVEL:
+				str += QString("DV-");
+		}
+		return str;
+	}
 
+	QString GetVersionString()
+	{
+		QString str = g_name + QString("/%1.%2").arg(g_major).arg(g_minor);
+		switch (g_vtype)
+		{
+			case bt::NORMAL:
+				str += QString(".%1").arg(g_release);
+				break;
+			case bt::ALPHA:
+				str += QString("alpha%1").arg(g_release);
+				break;
+			case bt::BETA:
+				str += QString("beta%1").arg(g_release);
+				break;
+			case bt::RELEASE_CANDIDATE:
+				str += QString("rc%1").arg(g_release);
+				break;
+			case DEVEL:
+				str += "dev";
+				break;
+		}
+		return str;
+	}
 }
-
-#endif

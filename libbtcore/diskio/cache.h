@@ -30,6 +30,7 @@ namespace bt
 	class TorrentFile;
 	class Chunk;
 	class PreallocationThread;
+	class TorrentFileInterface;
 
 
 	/**
@@ -151,6 +152,12 @@ namespace bt
 		 * empty directories should also be deleted.
 		 */
 		virtual void deleteDataFiles() = 0;
+		
+		/**
+		 * Move some files to a new location
+		 * @param files Map of files to move and their new location
+		 */
+		virtual void moveDataFiles(const QMap<TorrentFileInterface*,QString> & files);
 		
 		/** 
 		 * See if we are allowed to use mmap, when loading chunks.

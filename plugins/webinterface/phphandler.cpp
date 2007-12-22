@@ -84,7 +84,7 @@ namespace kt
 			
 		for ( it = args.begin(); it != args.end(); ++it )
 		{
-			QString s = QString("$_REQUEST[%1]=\"%2\";\n").arg(it.key()).arg(it.value());
+			QString s = QString("$_REQUEST['%1']=\"%2\";\n").arg(it.key()).arg(it.value());
 			extra_data.append(s.toLocal8Bit());
 		}
 			

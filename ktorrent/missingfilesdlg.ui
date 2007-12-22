@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>515</width>
-    <height>356</height>
+    <height>268</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -21,57 +21,91 @@
     </widget>
    </item>
    <item>
-    <widget class="QListWidget" name="m_file_list" />
-   </item>
-   <item>
-    <widget class="Line" name="line" >
-     <property name="orientation" >
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
     <layout class="QHBoxLayout" >
      <item>
-      <widget class="KPushButton" name="m_quit" >
-       <property name="text" >
-        <string>Quit</string>
-       </property>
-      </widget>
+      <widget class="QListWidget" name="m_file_list" />
      </item>
      <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="KPushButton" name="m_recreate" >
-       <property name="text" >
-        <string>Recreate</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="KPushButton" name="m_dnd" >
-       <property name="text" >
-        <string>Do Not Download</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="KPushButton" name="m_cancel" >
-       <property name="text" >
-        <string>Cancel</string>
-       </property>
-      </widget>
+      <layout class="QVBoxLayout" >
+       <item>
+        <widget class="KPushButton" name="m_recreate" >
+         <property name="toolTip" >
+          <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">They are no longer there, recreate them.&lt;/p>&lt;/body>&lt;/html></string>
+         </property>
+         <property name="text" >
+          <string>Recreate</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="KPushButton" name="m_dnd" >
+         <property name="toolTip" >
+          <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Do not download the missing files.&lt;/p>&lt;/body>&lt;/html></string>
+         </property>
+         <property name="text" >
+          <string>Do Not Download</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="KPushButton" name="m_select_new" >
+         <property name="toolTip" >
+          <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">The files have been moved to another location, select the new location.&lt;/p>&lt;/body>&lt;/html></string>
+         </property>
+         <property name="text" >
+          <string>Select New Location</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="KPushButton" name="m_cancel" >
+         <property name="toolTip" >
+          <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Cancel, do not start the torrent.&lt;/p>&lt;/body>&lt;/html></string>
+         </property>
+         <property name="text" >
+          <string>Cancel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="KPushButton" name="m_quit" >
+         <property name="toolTip" >
+          <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Quit KTorrent&lt;/p>&lt;/body>&lt;/html></string>
+         </property>
+         <property name="text" >
+          <string>Quit</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
@@ -81,7 +115,7 @@
   <customwidget>
    <class>KPushButton</class>
    <extends>QPushButton</extends>
-   <header location="global" >kpushbutton.h</header>
+   <header>kpushbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

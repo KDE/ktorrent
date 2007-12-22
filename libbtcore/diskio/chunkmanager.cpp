@@ -166,6 +166,11 @@ namespace bt
 		cache->moveDataFiles(ndir);
 	}
 	
+	void ChunkManager::moveDataFiles(const QMap<TorrentFileInterface*,QString> & files)
+	{
+		cache->moveDataFiles(files);
+	}
+	
 	void ChunkManager::loadIndexFile()
 	{
 		during_load = true;
@@ -1145,6 +1150,8 @@ namespace bt
 	{
 		return cache->diskUsage();
 	}
+	
+	
 
 }
 

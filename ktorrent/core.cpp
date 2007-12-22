@@ -830,14 +830,13 @@ namespace kt
 		
 		
 		if (tc->getStats().multi_file_torrent)
-		{
-			
+		{	
 			QString msg = i18n(
 					"Several data files of the torrent \"%1\" are missing. \n"
 					"Do you want to recreate them, or do you want to not download them?",
 					tc->getStats().torrent_name);
 			
-			MissingFilesDlg dlg(msg,missing,true,0);
+			MissingFilesDlg dlg(msg,missing,tc,0);
 						
 			switch (dlg.execute())
 			{
@@ -875,13 +874,16 @@ namespace kt
 					ret = false;
 					QTimer::singleShot(500,kapp,SLOT(quit()));
 					break;
+				case MissingFilesDlg::NEW_LOCATION_SELECTED:
+					ret = true;
+					break;
 			}
 		}
 		else
 		{
 			QString msg = i18n("The file where the data is saved of the torrent \"%1\" is missing. \n"
 					"Do you want to recreate it?",tc->getStats().torrent_name);
-			MissingFilesDlg dlg(msg,missing,false,0);
+			MissingFilesDlg dlg(msg,missing,tc,0);
 						
 			switch (dlg.execute())
 			{
@@ -907,6 +909,9 @@ namespace kt
 					break;
 				case MissingFilesDlg::DO_NOT_DOWNLOAD:
 					ret = false;
+					break;
+				case MissingFilesDlg::NEW_LOCATION_SELECTED:
+					ret = true;
 					break;
 			}
 		}

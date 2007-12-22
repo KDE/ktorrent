@@ -23,7 +23,7 @@
 #include <util/file.h>
 #include <util/functions.h>
 #include <net/socketmonitor.h>
-#include <ktversion.h>
+#include "btversion.h"
 #include "packetwriter.h"
 #include "peer.h"
 #include <download/request.h>
@@ -216,7 +216,7 @@ namespace bt
 			enc.write(QString("p")); 
 			enc.write((Uint32)port);
 		}
-		enc.write(QString("v")); enc.write(QString("KTorrent %1").arg(kt::VERSION_STRING));
+		enc.write(QString("v")); enc.write(bt::GetVersionString());
 		enc.end();
 		sendExtProtMsg(0,arr);
 	}

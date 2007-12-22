@@ -109,7 +109,7 @@ void IPFilterWidget::btnClear_clicked()
 
 void IPFilterWidget::btnOpen_clicked()
 {
-	QString lf = KFileDialog::getOpenFileName ( KUrl(), "*.txt|",this,i18n ( "Choose a file" ) );
+	QString lf = KFileDialog::getOpenFileName ( KUrl("kfiledialog:///openTorrent"), "*.txt|",this,i18n ( "Choose a file" ) );
 
 	if ( lf.isEmpty() )
 		return;
@@ -121,7 +121,7 @@ void IPFilterWidget::btnOpen_clicked()
 
 void IPFilterWidget::btnSave_clicked()
 {
-	QString sf = KFileDialog::getSaveFileName ( KUrl(),"*.txt|",this,i18n ( "Choose a filename to save under" ) );
+	QString sf = KFileDialog::getSaveFileName ( KUrl("kfiledialog:///openTorrent"),"*.txt|",this,i18n ( "Choose a filename to save under" ) );
 
 	if ( sf.isEmpty() )
 		return;

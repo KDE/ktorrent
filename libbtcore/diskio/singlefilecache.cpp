@@ -85,6 +85,7 @@ namespace bt
 	
 	void SingleFileCache::changeOutputPath(const QString & outputpath)
 	{
+		close();
 		output_file = outputpath;
 		datadir = output_file.left(output_file.lastIndexOf(bt::DirSeparator()));
 		saveFileMap();
@@ -105,6 +106,9 @@ namespace bt
 		}
 		else
 		{
+			if (!fd)
+				open();
+			
 			Uint64 off = c->getIndex() * tor.getChunkSize();
 			Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::RW);
 			if (!buf)
@@ -125,6 +129,9 @@ namespace bt
 
 	void SingleFileCache::load(Chunk* c)
 	{
+		if (!fd)
+			open();
+		
 		Uint64 off = c->getIndex() * tor.getChunkSize();
 		Uint8* buf = 0;
 		if (mmap_failures >= 3 || !(buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::READ)))
@@ -143,6 +150,9 @@ namespace bt
 
 	void SingleFileCache::save(Chunk* c)
 	{
+		if (!fd)
+			open();
+		
 		// unmap the chunk if it is mapped
 		if (c->getStatus() == Chunk::MMAPPED)
 		{
