@@ -22,7 +22,7 @@
 
 #include <qstring.h>
 #include <util/constants.h>
-#include <stdio.h>
+#include <cstdio>
 #include <gmp.h>
 
 using bt::Uint8;
