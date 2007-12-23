@@ -17,7 +17,6 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-
 #include <kurl.h>
 #include <kglobal.h>
 #include <kstartupinfo.h>
@@ -57,6 +56,7 @@ namespace kt
 		else
 		{
 			widget = main_widget;
+			widget->show();
 		}
 		
 		if (widget)
