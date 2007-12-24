@@ -102,6 +102,7 @@ namespace kt
 	private slots:
 		void createTorrent();
 		void openTorrent();
+		void openTorrentSilently();
 		void startTorrent();
 		void stopTorrent();
 		void removeTorrent();
@@ -147,6 +148,7 @@ namespace kt
 
 		KToggleAction* show_status_bar_action;
 		KToggleAction* show_menu_bar_action;
+		KAction* open_silently_action;
 		KAction* start_action;
 		KAction* stop_action;
 		KAction* remove_action;

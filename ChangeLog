@@ -3,6 +3,7 @@
 Changes in 3.0dev :
 - Fix typo in tooltip of network sleep interval (154481)
 - Fix KT closing when window is hidden and a torrent is opened via commandline (154488)
+- Added open silently action to file menu (154484)
 
 Changes in 3.0beta1 :
 - Added option to select the network interface to use

@@ -237,6 +237,21 @@ namespace kt
 		TorrentCreatorDlg dlg(core,this,this);
 		dlg.exec();
 	}
+	
+	void GUI::openTorrentSilently()
+	{
+		QString filter = "*.torrent|" + i18n("Torrent Files") + "\n*|" + i18n("All Files");
+		KUrl::List urls = KFileDialog::getOpenUrls(KUrl("kfiledialog:///openTorrent"), filter, this, i18n("Open Location"));
+
+		if (urls.count() == 0)
+			return;
+		
+		foreach (KUrl url,urls)
+		{
+			if (url.isValid())
+				core->loadSilently(url);
+		}
+	}
 
 	void GUI::openTorrent()
 	{
@@ -363,6 +378,11 @@ namespace kt
 		KActionCollection* ac = actionCollection();
 		KAction* new_action = KStandardAction::openNew(this,SLOT(createTorrent()),ac);
 		KAction* open_action = KStandardAction::open(this, SLOT(openTorrent()),ac);
+		
+		open_silently_action = new KAction(KIcon(open_action->icon()),i18n("Open Silently"),this);
+		connect(open_silently_action,SIGNAL(triggered()),this,SLOT(openTorrentSilently()));
+		ac->addAction("file_open_silently",open_silently_action);
+				
 		KAction* quit_action = KStandardAction::quit(kapp, SLOT(quit()), ac);
 		show_status_bar_action = KStandardAction::showStatusbar(this, SLOT(showStatusBar()),ac);
 		show_menu_bar_action = KStandardAction::showMenubar(this, SLOT(showMenuBar()),ac);
