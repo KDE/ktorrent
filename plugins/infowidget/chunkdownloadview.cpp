@@ -114,7 +114,10 @@ namespace kt
 
 	void ChunkDownloadView::downloadAdded(ChunkDownloadInterface* cd)
 	{
-		items.insert(cd, new ChunkDownloadViewItem(m_chunk_view,cd,curr_tc));
+		if (items.contains(cd))
+			items.find(cd)->update(false);
+		else
+			items.insert(cd, new ChunkDownloadViewItem(m_chunk_view,cd,curr_tc));
 	}
 
 	void ChunkDownloadView::downloadRemoved(ChunkDownloadInterface* cd)
