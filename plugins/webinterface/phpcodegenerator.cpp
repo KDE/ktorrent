@@ -68,108 +68,104 @@ namespace kt
 	PhpCodeGenerator::~PhpCodeGenerator()
 	{}
 	
-	QString PhpCodeGenerator::downloadStatus()
+	void PhpCodeGenerator::downloadStatus(QTextStream & out)
 	{
 		QString ret;
-		ret.append("function downloadStatus()\n{\nreturn ");
-		ret.append("array(");
+		out << "function downloadStatus()\n{\nreturn ";
+		out << "array(";
 	
 		QList<bt::TorrentInterface*>::iterator i= core->getQueueManager()->begin();
 		for(int k=0; i != core->getQueueManager()->end(); i++, k++)
 		{
+			if (k > 0)
+				out << ",\n";
 			const TorrentStats & stats = (*i)->getStats();
-			ret.append(QString("%1 => array(").arg(k));
+			out << QString("%1 => array(").arg(k);
 			
-			ret.append(QString("\"imported_bytes\" => %1,").arg(stats.imported_bytes));
-			ret.append(QString("\"bytes_downloaded\" => \"%1\",").arg(BytesToString2(stats.bytes_downloaded)));
-			ret.append(QString("\"bytes_uploaded\" => \"%1\",").arg(BytesToString2(stats.bytes_uploaded)));
-			ret.append(QString("\"bytes_left\" => %1,").arg(stats.bytes_left));
-			ret.append(QString("\"bytes_left_to_download\" => %1,").arg(stats.bytes_left_to_download));
-			ret.append(QString("\"total_bytes\" => \"%1\",").arg(BytesToString2(stats.total_bytes)));
-			ret.append(QString("\"total_bytes_to_download\" => %1,").arg(stats.total_bytes_to_download));
-			ret.append(QString("\"download_rate\" => \"%1\",").arg(KBytesPerSecToString2(stats.download_rate / 1024.0)));
-			ret.append(QString("\"upload_rate\" => \"%1\",").arg(KBytesPerSecToString2(stats.upload_rate / 1024.0)));
-			ret.append(QString("\"num_peers\" => %1,").arg(stats.num_peers));
-			ret.append(QString("\"num_chunks_downloading\" => %1,").arg(stats.num_chunks_downloading));
-			ret.append(QString("\"total_chunks\" => %1,").arg(stats.total_chunks));
-			ret.append(QString("\"num_chunks_downloaded\" => %1,").arg(stats.num_chunks_downloaded));
-			ret.append(QString("\"num_chunks_excluded\" => %1,").arg(stats.num_chunks_excluded));
-			ret.append(QString("\"chunk_size\" => %1,").arg(stats.chunk_size));
-			ret.append(QString("\"seeders_total\" => %1,").arg(stats.seeders_total));
-			ret.append(QString("\"seeders_connected_to\" => %1,").arg(stats.seeders_connected_to));
-			ret.append(QString("\"leechers_total\" => %1,").arg(stats.leechers_total));
-			ret.append(QString("\"leechers_connected_to\" => %1,").arg(stats.leechers_connected_to));
-			ret.append(QString("\"status\" => %1,").arg(stats.status));
-			ret.append(QString("\"running\" => %1,").arg(stats.running));
+			out << QString("\"imported_bytes\" => %1,").arg(stats.imported_bytes);
+			out << QString("\"bytes_downloaded\" => \"%1\",").arg(BytesToString2(stats.bytes_downloaded));
+			out << QString("\"bytes_uploaded\" => \"%1\",").arg(BytesToString2(stats.bytes_uploaded));
+			out << QString("\"bytes_left\" => %1,").arg(stats.bytes_left);
+			out << QString("\"bytes_left_to_download\" => %1,").arg(stats.bytes_left_to_download);
+			out << QString("\"total_bytes\" => \"%1\",").arg(BytesToString2(stats.total_bytes));
+			out << QString("\"total_bytes_to_download\" => %1,").arg(stats.total_bytes_to_download);
+			out << QString("\"download_rate\" => \"%1\",").arg(KBytesPerSecToString2(stats.download_rate / 1024.0));
+			out << QString("\"upload_rate\" => \"%1\",").arg(KBytesPerSecToString2(stats.upload_rate / 1024.0));
+			out << QString("\"num_peers\" => %1,").arg(stats.num_peers);
+			out << QString("\"num_chunks_downloading\" => %1,").arg(stats.num_chunks_downloading);
+			out << QString("\"total_chunks\" => %1,").arg(stats.total_chunks);
+			out << QString("\"num_chunks_downloaded\" => %1,").arg(stats.num_chunks_downloaded);
+			out << QString("\"num_chunks_excluded\" => %1,").arg(stats.num_chunks_excluded);
+			out << QString("\"chunk_size\" => %1,").arg(stats.chunk_size);
+			out << QString("\"seeders_total\" => %1,").arg(stats.seeders_total);
+			out << QString("\"seeders_connected_to\" => %1,").arg(stats.seeders_connected_to);
+			out << QString("\"leechers_total\" => %1,").arg(stats.leechers_total);
+			out << QString("\"leechers_connected_to\" => %1,").arg(stats.leechers_connected_to);
+			out << QString("\"status\" => %1,").arg(stats.status);
+			out << QString("\"running\" => %1,").arg(stats.running);
 			QString tmp = stats.trackerstatus;
-			ret.append(QString("\"trackerstatus\" => \"%1\",").arg(tmp.replace("\\", "\\\\").replace("\"", "\\\"").replace("$", "\\$")));
-			ret.append(QString("\"session_bytes_downloaded\" => %1,").arg(stats.session_bytes_downloaded));
-			ret.append(QString("\"session_bytes_uploaded\" => %1,").arg(stats.session_bytes_uploaded));
-			ret.append(QString("\"trk_bytes_downloaded\" => %1,").arg(stats.trk_bytes_downloaded));
-			ret.append(QString("\"trk_bytes_uploaded\" => %1,").arg(stats.trk_bytes_uploaded));
+			out << QString("\"trackerstatus\" => \"%1\",").arg(tmp.replace("\\", "\\\\").replace("\"", "\\\"").replace("$", "\\$"));
+			out << QString("\"session_bytes_downloaded\" => %1,").arg(stats.session_bytes_downloaded);
+			out << QString("\"session_bytes_uploaded\" => %1,").arg(stats.session_bytes_uploaded);
+			out << QString("\"trk_bytes_downloaded\" => %1,").arg(stats.trk_bytes_downloaded);
+			out << QString("\"trk_bytes_uploaded\" => %1,").arg(stats.trk_bytes_uploaded);
 			
 			tmp = stats.torrent_name;
-			ret.append(QString("\"torrent_name\" => \"%1\",").arg(tmp.replace("\\", "\\\\").replace("\"", "\\\"").replace("$", "\\$")));
+			out << QString("\"torrent_name\" => \"%1\",").arg(tmp.replace("\\", "\\\\").replace("\"", "\\\"").replace("$", "\\$"));
 			tmp = stats.output_path;
-			ret.append(QString("\"output_path\" => \"%1\",").arg(tmp.replace("\\", "\\\\").replace("\"", "\\\"").replace("$", "\\$")));
-			ret.append(QString("\"stopped_by_error\" => \"%1\",").arg(stats.stopped_by_error));
-			ret.append(QString("\"completed\" => \"%1\",").arg(stats.completed));
-			ret.append(QString("\"user_controlled\" => \"%1\",").arg(stats.user_controlled));
-			ret.append(QString("\"max_share_ratio\" => %1,").arg(stats.max_share_ratio));
-			ret.append(QString("\"priv_torrent\" => \"%1\",").arg(stats.priv_torrent));
-			ret.append(QString("\"num_files\" => \"%1\",").arg((*i)->getNumFiles()));			
-			ret.append(QString("\"files\" => array("));
+			out << QString("\"output_path\" => \"%1\",").arg(tmp.replace("\\", "\\\\").replace("\"", "\\\"").replace("$", "\\$"));
+			out << QString("\"stopped_by_error\" => \"%1\",").arg(stats.stopped_by_error);
+			out << QString("\"completed\" => \"%1\",").arg(stats.completed);
+			out << QString("\"user_controlled\" => \"%1\",").arg(stats.user_controlled);
+			out << QString("\"max_share_ratio\" => %1,").arg(stats.max_share_ratio);
+			out << QString("\"priv_torrent\" => \"%1\",").arg(stats.priv_torrent);
+			out << QString("\"num_files\" => \"%1\",").arg((*i)->getNumFiles());			
+			out << QString("\"files\" => array(");
 			if (stats.multi_file_torrent)
 			{
 				//for loop to add each file+status to "files" array			
 				for (Uint32 j = 0;j < (*i)->getNumFiles();j++)
 				{
+					if (j > 0)
+						out << ",\n";
 					TorrentFileInterface & file = (*i)->getTorrentFile(j);
-					ret.append(QString("\"%1\" => array(").arg(j));
-					ret.append(QString("\"name\" => \"%1\",").arg(file.getPath()));
-					ret.append(QString("\"size\" => \"%1\",").arg(KIO::convertSize(file.getSize())));
-					ret.append(QString("\"perc_done\" => \"%1\",").arg(file.getDownloadPercentage()));
-					ret.append(QString("\"status\" => \"%1\"").arg(file.getPriority()));
-					ret.append(QString("),"));	
+					out << QString("\"%1\" => array(").arg(j);
+					out << QString("\"name\" => \"%1\",").arg(file.getPath());
+					out << QString("\"size\" => \"%1\",").arg(KIO::convertSize(file.getSize()));
+					out << QString("\"perc_done\" => \"%1\",").arg(file.getDownloadPercentage());
+					out << QString("\"status\" => \"%1\"").arg(file.getPriority());
+					out << QString(")");	
 				}
-				if(ret.endsWith(","))
-					ret.truncate(ret.length()-1);
 			}
 			
-			ret.append("),");
-			ret.append("),");
+			out << ")";
+			out << ")";
 		}
-		if(ret.endsWith(","))
-			ret.truncate(ret.length()-1);
-		ret.append(");\n}\n");
-		return ret;
 		
+		out << ");\n}\n";		
 	}
 	
-	QString PhpCodeGenerator::globalInfo()
+	void PhpCodeGenerator::globalInfo(QTextStream & out)
 	{
-		QString ret;
-		ret.append("function globalInfo()\n{\nreturn ");
-		ret.append("array(");
+		out << "function globalInfo()\n{\nreturn ";
+		out << "array(";
 		CurrentStats stats=core->getStats();
 	
-		ret.append(QString("\"download_speed\" => \"%1\",").arg(KBytesPerSecToString2(stats.download_speed / 1024.0)));
-		ret.append(QString("\"upload_speed\" => \"%1\",").arg(KBytesPerSecToString2(stats.upload_speed / 1024.0)));
-		ret.append(QString("\"bytes_downloaded\" => \"%1\",").arg(stats.bytes_downloaded));
-		ret.append(QString("\"bytes_uploaded\" => \"%1\",").arg(stats.bytes_uploaded));
-		ret.append(QString("\"max_download_speed\" => \"%1\",").arg(Settings::maxDownloadRate()));
-		ret.append(QString("\"max_upload_speed\" => \"%1\",").arg(Settings::maxUploadRate()));
-		ret.append(QString("\"max_downloads\" => \"%1\",").arg(Settings::maxDownloads()));
-		ret.append(QString("\"max_seeds\"=> \"%1\",").arg(Settings::maxSeeds()));
+		out << QString("\"download_speed\" => \"%1\",").arg(KBytesPerSecToString2(stats.download_speed / 1024.0));
+		out << QString("\"upload_speed\" => \"%1\",").arg(KBytesPerSecToString2(stats.upload_speed / 1024.0));
+		out << QString("\"bytes_downloaded\" => \"%1\",").arg(stats.bytes_downloaded);
+		out << QString("\"bytes_uploaded\" => \"%1\",").arg(stats.bytes_uploaded);
+		out << QString("\"max_download_speed\" => \"%1\",").arg(Settings::maxDownloadRate());
+		out << QString("\"max_upload_speed\" => \"%1\",").arg(Settings::maxUploadRate());
+		out << QString("\"max_downloads\" => \"%1\",").arg(Settings::maxDownloads());
+		out << QString("\"max_seeds\"=> \"%1\",").arg(Settings::maxSeeds());
 #ifdef ENABLE_DHT_SUPPORT
-		ret.append(QString("\"dht_support\" => \"%1\",").arg(Settings::dhtSupport()));
+		out << QString("\"dht_support\" => \"%1\",").arg(Settings::dhtSupport());
 #else
-		ret.append(QString("\"dht_support\" => \"%1\",").arg(false));
+		out << QString("\"dht_support\" => \"%1\",").arg(false);
 #endif
-		ret.append(QString("\"use_encryption\" => \"%1\"").arg(Settings::useEncryption()));
-		ret.append(");\n}\n");
-	
-		return ret;
+		out << QString("\"use_encryption\" => \"%1\"").arg(Settings::useEncryption());
+		out << ");\n}\n";
 	}
 	
 }

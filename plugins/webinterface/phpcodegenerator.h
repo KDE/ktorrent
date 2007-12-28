@@ -23,6 +23,8 @@
 
 #include <QString>
 
+class QTextStream;
+
 namespace kt
 {
 	class CoreInterface;
@@ -36,8 +38,8 @@ namespace kt
 		PhpCodeGenerator(CoreInterface *c);
 		virtual ~PhpCodeGenerator();
 		
-		QString downloadStatus();
-		QString globalInfo();
+		void downloadStatus(QTextStream & out);
+		void globalInfo(QTextStream & out);
 	private:
 		CoreInterface *core;
 	};

@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <QFile>
 #include <QFileInfo>
+#include <QTextStream>
 #include <util/log.h>
 #include "phpcodegenerator.h"
 #include "phphandler.h"
@@ -78,23 +79,19 @@ namespace kt
 		if ( firstphptag == -1)
 			return false;
 		
-		QByteArray extra_data = (gen->globalInfo() + gen->downloadStatus()).toLocal8Bit();
+		start(php_exe);
+		QTextStream out(this);
+		out << php_s.mid(0,firstphptag + 6);
+		gen->globalInfo(out);
+		gen->downloadStatus(out);
 		
-		QMap<QString,QString>::const_iterator it;
-			
+		QMap<QString,QString>::const_iterator it;	
 		for ( it = args.begin(); it != args.end(); ++it )
 		{
-			QString s = QString("$_REQUEST['%1']=\"%2\";\n").arg(it.key()).arg(it.value());
-			extra_data.append(s.toLocal8Bit());
+			out << QString("$_REQUEST['%1']=\"%2\";\n").arg(it.key()).arg(it.value());
 		}
 			
-		php_s.insert(firstphptag + 6, extra_data);
-		start(php_exe);
-		if (write(php_s) != php_s.length())
-		{
-			Out(SYS_WEB|LOG_DEBUG) << "WebGUI: failed to write data to PHP process " << path << endl;
-			return false;
-		}
+		out << php_s.mid(firstphptag + 6) << flush;
 		closeWriteChannel();
 		return true;
 	}
