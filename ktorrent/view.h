@@ -28,6 +28,7 @@
 #include <ksharedconfig.h>
 
 class KMenu;
+class QSortFilterProxyModel;
 
 namespace kt
 {
@@ -133,6 +134,7 @@ namespace kt
 		bt::Uint32 num_torrents;
 		bt::Uint32 num_running;
 		ViewModel* model;
+		QSortFilterProxyModel* proxy_model;
 		int flags;
 	};
 }

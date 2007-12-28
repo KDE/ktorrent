@@ -206,6 +206,40 @@ namespace kt
 		}
 	}
 	
+	QVariant ViewModel::Item::dataForSorting(int col) const
+	{
+		const TorrentStats & s = tc->getStats();
+		switch (col)
+		{
+			case 0: return tc->getStats().torrent_name;
+			case 1: return tc->statusToString();
+			case 2: return bytes_downloaded;
+			case 3: return total_bytes_to_download;
+			case 4: return bytes_uploaded;
+			case 5: 
+				if (download_rate >= 103 && s.bytes_left_to_download > 0) // lowest "visible" speed, all below will be 0,0 Kb/s
+					return 0;
+				else
+					return download_rate;
+				break;
+			case 6: 
+				if (upload_rate >= 103) // lowest "visible" speed, all below will be 0,0 Kb/s
+					return 0;
+				else
+					return upload_rate;
+				break;
+			case 7: return eta;	
+			case 8: return seeders_connected_to;
+			case 9: return leechers_connected_to;
+			// xgettext: no-c-format
+			case 10: return percentage;
+			case 11: return share_ratio;
+			case 12: return runtime_dl;
+			case 13: return runtime_ul;
+			default: return QVariant();
+		}
+	}
+	
 	QVariant ViewModel::Item::color(int col) const
 	{
 		if (col == 1)
@@ -352,6 +386,8 @@ namespace kt
 			return torrents[index.row()].color(index.column());
 		else if (role == Qt::DisplayRole)
 			return torrents[index.row()].data(index.column());
+		else if (role == Qt::UserRole) // UserRole is for sorting
+			return torrents[index.row()].dataForSorting(index.column());
 		
 		return QVariant();
 	}

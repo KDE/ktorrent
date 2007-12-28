@@ -20,6 +20,7 @@
  ***************************************************************************/
 #include <QHeaderView>
 #include <QFileInfo>
+#include <QSortFilterProxyModel>
 #include <krun.h>
 #include <klocale.h>
 #include <ksharedconfig.h>
@@ -74,7 +75,12 @@ namespace kt
 		}
 		
 		connect(header_menu,SIGNAL(triggered(QAction* )),this,SLOT(onHeaderMenuItemTriggered(QAction*)));
-		setModel(model);
+		
+		proxy_model = new QSortFilterProxyModel(this);
+		proxy_model->setSourceModel(model);
+		proxy_model->setSortRole(Qt::UserRole);
+		setModel(proxy_model);
+		//setModel(model);
 		connect(selectionModel(),SIGNAL(currentChanged(const QModelIndex &,const QModelIndex &)),
 				this,SLOT(onCurrentItemChanged(const QModelIndex&, const QModelIndex&)));
 		connect(selectionModel(),SIGNAL(selectionChanged(const QItemSelection &,const QItemSelection)),
@@ -437,7 +443,10 @@ namespace kt
 
 	void View::getSelection(QList<bt::TorrentInterface*> & sel)
 	{
-		model->torrentsFromIndexList(selectionModel()->selectedRows(),sel);
+		QModelIndexList indices = selectionModel()->selectedRows();
+		for (QModelIndexList::iterator i = indices.begin();i != indices.end();i++)
+			*i = proxy_model->mapToSource(*i);
+		model->torrentsFromIndexList(indices,sel);
 	}
 
 	void View::saveState(KSharedConfigPtr cfg,int idx)
@@ -466,7 +475,7 @@ namespace kt
 
 	bt::TorrentInterface* View::getCurrentTorrent()
 	{
-		return model->torrentFromIndex(selectionModel()->currentIndex());
+		return model->torrentFromIndex(proxy_model->mapToSource(selectionModel()->currentIndex()));
 	}
 
 	void View::onCurrentItemChanged(const QModelIndex & current,const QModelIndex & /*previous*/)

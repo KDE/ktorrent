@@ -118,6 +118,7 @@ namespace kt
 			void update(int idx,ViewModel* mdl);
 			QVariant data(int col) const;
 			QVariant color(int col) const;
+			QVariant dataForSorting(int col) const;
 		};
 		
 		Core* core;
