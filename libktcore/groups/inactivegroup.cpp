@@ -28,7 +28,7 @@ namespace kt
 InactiveGroup::InactiveGroup()
 		: Group(i18n("Inactive torrents"),MIXED_GROUP)
 {
-	setIconByName("connect-no");
+	setIconByName("network-disconnect");
 }
 
 
