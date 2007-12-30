@@ -30,16 +30,17 @@ class KPushButton;
 namespace kt
 {
 	class SearchEngineList;
+	class SearchPlugin;
 
 	/**
 		Holds all widgets of the toolbar of the search plugin.
 	*/
-	class SearchToolBar : public KToolBar
+	class SearchToolBar : public QObject
 	{
 		Q_OBJECT
 	
 	public:
-		SearchToolBar(KMainWindow* parent);
+		SearchToolBar(SearchPlugin* plugin);
 		virtual ~SearchToolBar();
 		
 		/// Update the search engine list

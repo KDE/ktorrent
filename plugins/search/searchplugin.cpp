@@ -55,6 +55,7 @@ namespace kt
 	{
 		pref = 0;
 		toolbar = 0;
+		setXMLFile("ktsearchpluginui.rc");
 	}
 
 
@@ -65,7 +66,8 @@ namespace kt
 	void SearchPlugin::load()
 	{
 		engines.load(kt::DataDir() + "search_engines");
-		toolbar = new SearchToolBar(getGUI()->getMainWindow());
+		toolbar = new SearchToolBar(this);
+		
 		connect(toolbar,SIGNAL(search( const QString&, int, bool )),
 				this,SLOT(search( const QString&, int, bool )));
 		 

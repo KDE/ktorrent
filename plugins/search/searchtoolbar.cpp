@@ -34,43 +34,57 @@
 #include <qlabel.h>
 #include <klocale.h>
 #include <kstandardguiitem.h>
+#include <kactioncollection.h>
+#include <ktoolbarlabelaction.h>
 #include <interfaces/functions.h>
 #include <util/fileops.h>
 #include "searchtoolbar.h"
 #include "searchenginelist.h"
 #include "searchpluginsettings.h"
+#include "searchplugin.h"
 
 using namespace bt;
 
 namespace kt
 {
 
-	SearchToolBar::SearchToolBar(KMainWindow* parent) : KToolBar("search",parent,Qt::TopToolBarArea,false,true,true)
+	SearchToolBar::SearchToolBar(SearchPlugin* plugin) : QObject(plugin)
 	{
-		m_search_text = new KComboBox(this);
+		KActionCollection* ac = plugin->actionCollection();
+		
+		m_search_text = new KComboBox((QWidget*)0);
 		m_search_text->setEditable(true);
 		m_search_text->setMaxCount(20);
 		m_search_text->setInsertPolicy(QComboBox::NoInsert);
 		m_search_text->setMinimumWidth(150);
 
-		KLineEdit *search_text_lineedit = new KLineEdit(this);
+		KLineEdit *search_text_lineedit = new KLineEdit(m_search_text);
 		search_text_lineedit->setClearButtonShown(true);
 		m_search_text->setLineEdit(search_text_lineedit);
 
 		connect(m_search_text->lineEdit(),SIGNAL(returnPressed()),this,SLOT(searchBoxReturn()));
 		connect(m_search_text,SIGNAL(textChanged(const QString &)),this,SLOT(textChanged( const QString& )));
 
-		addWidget(m_search_text);
+		KAction* search_text_action = new KAction(i18n("Search Text"),this);
+		search_text_action->setDefaultWidget(m_search_text);
+		ac->addAction("search_text",search_text_action);
 
-		m_search_new_tab = addAction(KIcon("edit-find"),i18n("Search"),this,SLOT(searchNewTabPressed()));
+		m_search_new_tab = new KAction(KIcon("edit-find"),i18n("Search"),this);
+		connect(m_search_new_tab,SIGNAL(triggered()),this,SLOT(searchNewTabPressed()));
 		m_search_new_tab->setEnabled(false);
-
-		m_search_engine = new KComboBox(this);
-
-		addWidget(new QLabel(i18n(" Engine: "),this));
-		addWidget(m_search_engine);
+		ac->addAction("search",m_search_new_tab);
+		
+		KAction* search_engine_action = new KAction(i18n("Search Engine"),this);
+		m_search_engine = new KComboBox((QWidget*)0);
+		search_engine_action->setDefaultWidget(m_search_engine);
+		ac->addAction("search_engine",search_engine_action);
+		
+		KAction* search_engine_label_action = new KAction(i18n("Search Engine Label"),this);
+		QLabel* l = new QLabel(i18n(" Engine: "),(QWidget*)0);
+		search_engine_label_action->setDefaultWidget(l);
+		ac->addAction("search_engine_label",search_engine_label_action);
+		
 		loadSearchHistory();
-
 		m_search_engine->setCurrentIndex(SearchPluginSettings::searchEngine());
 	}
 

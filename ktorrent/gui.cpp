@@ -35,6 +35,7 @@
 #include <kstandardaction.h>
 #include <kfiledialog.h>
 #include <kpushbutton.h>
+#include <kxmlguifactory.h>
 #include <kio/jobclasses.h>
 #include <kio/jobuidelegate.h>
 
@@ -159,10 +160,12 @@ namespace kt
 
 	void GUI::mergePluginGui(Plugin* p)
 	{
+		guiFactory()->addClient(p);
 	}
 
 	void GUI::removePluginGui(Plugin* p)
 	{
+		guiFactory()->removeClient(p);
 	}
 
 	void GUI::addToolWidget(QWidget* w,const QString & icon,const QString & caption,ToolDock dock)
@@ -356,14 +359,13 @@ namespace kt
 	void GUI::configureToolBars()
 	{
 		saveMainWindowSettings( KGlobal::config()->group("MainWindow"));
-		KEditToolBar dlg(actionCollection());
+		KEditToolBar dlg(factory());
 		connect(&dlg,SIGNAL(newToolBarConfig()),this,SLOT(newToolBarConfig()));
 		dlg.exec();
 	}
 
 	void GUI::newToolBarConfig() // This is called when OK, Apply or Defaults is clicked
 	{
-		createGUI("ktorrentui.rc");
 		applyMainWindowSettings( KGlobal::config()->group("MainWindow") );
 	}
 	
