@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson                                   *
+ *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,14 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KT_CHUNKDOWNLOADVIEW_HH
-#define KT_CHUNKDOWNLOADVIEW_HH
+#ifndef KTCHUNKDOWNLOADMODEL_H
+#define KTCHUNKDOWNLOADMODEL_H
 
-
-#include <QTreeWidget>
-#include <ksharedconfig.h>
+#include <QAbstractTableModel>
 #include <interfaces/chunkdownloadinterface.h>
-#include "ui_chunkdownloadview.h"
+
 
 namespace bt
 {
@@ -33,40 +32,54 @@ namespace bt
 
 namespace kt
 {
-	class ChunkDownloadModel;
-
 
 	/**
-	 * View which shows a list of downloading chunks, of a torrent.
-	 * */
-	class ChunkDownloadView : public QWidget,public Ui_ChunkDownloadView
-	{
+		@author
+	*/
+	class ChunkDownloadModel : public QAbstractTableModel
+	{			
 		Q_OBJECT
 	public:
-		ChunkDownloadView(QWidget* parent);
-		virtual ~ChunkDownloadView();
+		ChunkDownloadModel(QObject* parent);
+		virtual ~ChunkDownloadModel();
 
 		/// A peer has been added
 		void downloadAdded(bt::ChunkDownloadInterface* cd);
 
 		/// A download has been removed
 		void downloadRemoved(bt::ChunkDownloadInterface* cd);
-
-		/// Check to see if the GUI needs to be updated
-		void update();
-
-		/// Change the torrent to display
-		void changeTC(bt::TorrentInterface* tc);
-
-		/// Remove all items
-		void removeAll();
 		
-		void saveState(KSharedConfigPtr cfg);
-		void loadState(KSharedConfigPtr cfg);
+		/// change the current torrent
+		void changeTC(bt::TorrentInterface* tc);
+		
+		void update();
+		
+		void clear();
+
+		virtual int rowCount(const QModelIndex & parent) const;
+		virtual int columnCount(const QModelIndex & parent) const;
+		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
+		virtual QVariant data(const QModelIndex & index,int role) const;
+		virtual bool removeRows(int row,int count,const QModelIndex & parent);
+		virtual bool insertRows(int row,int count,const QModelIndex & parent);
 	private:
-		bt::TorrentInterface* curr_tc;
-		ChunkDownloadModel* model;
+		struct Item
+		{
+			mutable bt::ChunkDownloadInterface::Stats stats;
+			bt::ChunkDownloadInterface* cd;
+			QString files;
+			
+			Item(bt::ChunkDownloadInterface* cd,const QString & files);
+			
+			bool changed() const;
+			QVariant data(int col) const;
+			QVariant dataForSorting(int col) const;
+		};
+		
+		QList<Item> items;
+		bt::TorrentInterface* tc;
 	};
+
 }
 
 #endif

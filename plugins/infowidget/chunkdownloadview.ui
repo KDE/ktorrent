@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>830</width>
-    <height>534</height>
+    <height>203</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -250,37 +250,16 @@
     </layout>
    </item>
    <item>
-    <widget class="QTreeWidget" name="m_chunk_view" >
-     <column>
-      <property name="text" >
-       <string>Chunk</string>
-      </property>
-     </column>
-     <column>
-      <property name="text" >
-       <string>Progress</string>
-      </property>
-     </column>
-     <column>
-      <property name="text" >
-       <string>Peer</string>
-      </property>
-     </column>
-     <column>
-      <property name="text" >
-       <string>Down Speed</string>
-      </property>
-     </column>
-     <column>
-      <property name="text" >
-       <string>Assigned Peers</string>
-      </property>
-     </column>
-     <column>
-      <property name="text" >
-       <string>Files</string>
-      </property>
-     </column>
+    <widget class="QTreeView" name="m_chunk_view" >
+     <property name="alternatingRowColors" >
+      <bool>true</bool>
+     </property>
+     <property name="rootIsDecorated" >
+      <bool>false</bool>
+     </property>
+     <property name="sortingEnabled" >
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
   </layout>

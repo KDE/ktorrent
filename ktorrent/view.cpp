@@ -480,7 +480,7 @@ namespace kt
 
 	void View::onCurrentItemChanged(const QModelIndex & current,const QModelIndex & /*previous*/)
 	{
-		bt::TorrentInterface* tc = model->torrentFromIndex(current);
+		bt::TorrentInterface* tc = model->torrentFromIndex(proxy_model->mapToSource(current));
 		currentTorrentChanged(this,tc);
 	}
 

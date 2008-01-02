@@ -11,6 +11,7 @@ set(ktinfowidgetplugin_SRC
 	fileview.cpp
 	peerview.cpp
 	chunkdownloadview.cpp
+	chunkdownloadmodel.cpp
 	trackerview.cpp
 	GeoIP.c
 	flagdb.cpp

@@ -20,6 +20,7 @@
 #include <kgenericfactory.h>
 #include <kglobal.h>
 #include <klocale.h>
+#include <util/log.h>
 #include <interfaces/guiinterface.h>
 #include <interfaces/coreinterface.h>
 #include <interfaces/torrentinterface.h>
