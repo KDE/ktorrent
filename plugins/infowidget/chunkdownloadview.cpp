@@ -42,6 +42,7 @@ namespace kt
 		model = new ChunkDownloadModel(this);
 		QSortFilterProxyModel* pm = new QSortFilterProxyModel(this);
 		pm->setSourceModel(model);
+		pm->setSortRole(Qt::UserRole);
 		m_chunk_view->setModel(pm);
 		m_chunk_view->setRootIsDecorated(false);
 		m_chunk_view->setSortingEnabled(true);
