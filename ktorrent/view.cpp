@@ -29,6 +29,7 @@
 #include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>
 #include <util/functions.h>
+#include <util/log.h>
 #include <interfaces/functions.h>
 #include <groups/group.h>
 #include "view.h"
@@ -480,6 +481,7 @@ namespace kt
 
 	void View::onCurrentItemChanged(const QModelIndex & current,const QModelIndex & /*previous*/)
 	{
+		//Out(SYS_GEN|LOG_DEBUG) << "onCurrentItemChanged " << current.row() << endl;
 		bt::TorrentInterface* tc = model->torrentFromIndex(proxy_model->mapToSource(current));
 		currentTorrentChanged(this,tc);
 	}

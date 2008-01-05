@@ -49,6 +49,7 @@
 #include "core.h"
 #include "fileselectdlg.h"
 #include "missingfilesdlg.h"
+#include "gui.h"
 
 using namespace bt;
 
@@ -56,7 +57,7 @@ namespace kt
 {
 	const Uint32 CORE_UPDATE_INTERVAL = 250;
 
-	Core::Core(kt::GUIInterface* gui) : gui(gui),keep_seeding(true)
+	Core::Core(kt::GUI* gui) : gui(gui),keep_seeding(true)
 	{
 		UpdateCurrentTime();
 		qman = new QueueManager();
@@ -117,6 +118,8 @@ namespace kt
 		gman = new kt::GroupManager();
 		applySettings(true);
 		gman->loadGroups();
+		connect(qman,SIGNAL(queueOrdered()),this,SLOT(startUpdateTimer()));
+		connect(qman,SIGNAL(pauseStateChanged(bool)),gui,SLOT(onPausedStateChanged(bool)));
 	}
 	
 	Core::~Core()
@@ -813,6 +816,13 @@ namespace kt
 	void Core::setPausedState(bool pause)
 	{
 		qman->setPausedState(pause);
+		if (!pause)
+			startUpdateTimer();
+	}
+	
+	bool Core::getPausedState()
+	{
+		return qman->getPausedState();
 	}
 
 	void Core::queue(bt::TorrentInterface* tc)

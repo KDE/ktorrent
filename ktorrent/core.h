@@ -38,7 +38,7 @@ namespace bt
 
 namespace kt
 {
-	class GUIInterface;
+	class GUI;
 	class PluginManager;
 	class GroupManager;
 
@@ -49,7 +49,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		Core(GUIInterface* gui);
+		Core(GUI* gui);
 		virtual ~Core();
 		
 		// implemented from CoreInterface
@@ -67,6 +67,7 @@ namespace kt
 		virtual QString findNewTorrentDir() const;
 		virtual void loadExistingTorrent(const QString & tor_dir);
 		virtual void setPausedState(bool pause);
+		virtual bool getPausedState();
 		virtual float getGlobalMaxShareRatio() const;
 
 		/// Get the queue manager
@@ -112,13 +113,13 @@ namespace kt
 		 * Load plugins. 
 		 */
 		void loadPlugins();
-		
+
+	public slots:
 		/**
 		 * Start the update timer 
 		 */
 		void startUpdateTimer();
-
-	public slots:
+		
 		/**
 		 * Load a torrent file. Pops up an error dialog
 		 * if something goes wrong.
@@ -262,7 +263,7 @@ namespace kt
 		void autoCheckData(bt::TorrentInterface* tc);
 
 	private:
-		GUIInterface* gui;
+		GUI* gui;
 		bool keep_seeding;
 		QString data_dir;
 		QTimer update_timer;

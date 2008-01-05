@@ -558,6 +558,7 @@ namespace kt
 				}
 			}
 		}
+		emit pauseStateChanged(paused_state);
 	}
 	
 	void QueueManager::enqueue(bt::TorrentInterface* tc)

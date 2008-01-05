@@ -182,6 +182,9 @@ namespace kt
 		 */
 		virtual void setPausedState(bool pause) = 0;
 		
+		/// Gets the globla paused state
+		virtual bool getPausedState() = 0;
+		
 		/// Get the QueueManager
 		virtual kt::QueueManager* getQueueManager() = 0;
 		

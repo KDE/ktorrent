@@ -299,6 +299,17 @@ namespace kt
 	{
 		view_man->queueTorrents();
 	}
+	
+	void GUI::pauseQueue(bool pause)
+	{
+		Out(SYS_GEN|LOG_DEBUG) << "pauseQUeue " << pause << endl;
+		core->setPausedState(pause);
+	}
+	
+	void GUI::onPausedStateChanged(bool paused)
+	{
+		queue_pause_action->setChecked(paused);
+	}
 
 	void GUI::startAllTorrents()
 	{
@@ -420,6 +431,12 @@ namespace kt
 		queue_action = new KAction(KIcon("view-choose"),i18n("Enqueue/Dequeue"),this);
 		connect(queue_action,SIGNAL(triggered()),this,SLOT(queueTorrent()));
 		ac->addAction("queue_action",queue_action);
+		
+		queue_pause_action = new KToggleAction(KIcon("media-playback-pause"),i18n("Pause"),this);
+		queue_pause_action->setToolTip(i18n("Pause all running torrents"));
+		connect(queue_pause_action,SIGNAL(toggled(bool)),this,SLOT(pauseQueue(bool)));
+		queue_pause_action->setCheckedState(KGuiItem(i18n("Resume"),"media-playback-start",i18n("Resume paused torrents")));
+		ac->addAction("queue_pause",queue_pause_action);
 
 		ipfilter_action = new KAction(KIcon("view-filter"),i18n("IP Filter"),this);
 		connect(ipfilter_action,SIGNAL(triggered()),this,SLOT(showIPFilter()));
@@ -600,6 +617,7 @@ namespace kt
 		remove_action->setEnabled(flags & REMOVE);
 		start_all_action->setEnabled(flags & START_ALL);
 		stop_all_action->setEnabled(flags & STOP_ALL);
+		queue_pause_action->setEnabled(core->getPausedState() || flags & STOP_ALL);
 	}
 	
 	void GUI::showOrHide()

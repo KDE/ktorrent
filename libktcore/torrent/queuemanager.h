@@ -178,6 +178,9 @@ namespace kt
 		 */
 		void setPausedState(bool pause);
 
+		/// Get the paused state
+		bool getPausedState() const {return paused_state;}
+		
 		/**
 		 * Places all torrents from downloads in the right order in queue.
 		 * Use this when torrent priorities get changed
@@ -203,6 +206,12 @@ namespace kt
 		* Emitted when the QM reorders it's queue
 		*/
 		void queueOrdered();
+		
+		/**
+		 * Emitted when the paused state changes.
+		 * @param paused The paused state
+		 */
+		void pauseStateChanged(bool paused);
 
 	public slots:
 		void torrentFinished(bt::TorrentInterface* tc);

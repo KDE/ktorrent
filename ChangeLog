@@ -6,6 +6,8 @@ Changes in 3.0dev :
 - Added open silently action to file menu (154484)
 - Fix crash in ChunkDownloadView by using a model instead of an item based
 approach
+- Added action to pause and resume all torrents
+- Fix some problems with the update timer not getting started when the QM ran 
 
 Changes in 3.0beta1 :
 - Added option to select the network interface to use

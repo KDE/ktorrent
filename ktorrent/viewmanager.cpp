@@ -22,10 +22,13 @@
 #include <ksharedconfig.h>
 #include <kconfiggroup.h>
 #include <groups/group.h>
+#include <util/log.h>
 #include "gui.h"
 #include "view.h"
 #include "viewmodel.h"
 #include "viewmanager.h"
+
+using namespace bt;
 
 namespace kt
 {
@@ -186,6 +189,7 @@ namespace kt
 			{
 				current = v;
 				current->updateFlags();
+				//Out(SYS_GEN|LOG_DEBUG) << "onCurrentTabChanged " << current->caption() << endl;
 				break;
 			}
 		}

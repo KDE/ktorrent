@@ -98,6 +98,12 @@ namespace kt
 		 * @param flags Which actions to enable and disable
 		 */
 		void setActionsEnabled(ActionEnableFlags flags);
+		
+		/**
+		 * The paused state has changed
+		 * @param paused 
+		 */
+		void onPausedStateChanged(bool paused);
 
 	private slots:
 		void createTorrent();
@@ -107,6 +113,7 @@ namespace kt
 		void stopTorrent();
 		void removeTorrent();
 		void queueTorrent();
+		void pauseQueue(bool pause);
 		void startAllTorrents();
 		void stopAllTorrents();
 		void pasteURL();
@@ -156,6 +163,7 @@ namespace kt
 		KAction* stop_all_action;
 		KAction* paste_url_action;
 		KAction* queue_action;
+		KToggleAction* queue_pause_action;
 		KAction* ipfilter_action;
 		KAction* data_check_action;
 		KAction* import_action;
