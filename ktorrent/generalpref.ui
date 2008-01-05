@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>733</height>
+    <width>409</width>
+    <height>385</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" >
@@ -110,95 +110,6 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QCheckBox" name="kcfg_showSpeedBarInTrayIcon" >
-        <property name="toolTip" >
-         <string>Whether or not to draw 2 speedbars in the system tray icon. These speedbars show how fast you are currently downloading and uploading.</string>
-        </property>
-        <property name="text" >
-         <string>Show speedbar in tray icon</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" >
-        <item>
-         <layout class="QGridLayout" >
-          <item row="0" column="0" >
-           <widget class="QLabel" name="label_2" >
-            <property name="text" >
-             <string>Download bandwidth:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" >
-           <widget class="QSpinBox" name="kcfg_downloadBandwidth" >
-            <property name="toolTip" >
-             <string>The amount of download bandwith at your disposal. This is used as a maximum for the speedbars.</string>
-            </property>
-            <property name="suffix" >
-             <string> KB/s</string>
-            </property>
-            <property name="prefix" >
-             <string/>
-            </property>
-            <property name="minimum" >
-             <number>1</number>
-            </property>
-            <property name="maximum" >
-             <number>100000000</number>
-            </property>
-            <property name="value" >
-             <number>500</number>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" >
-           <widget class="QLabel" name="label_3" >
-            <property name="text" >
-             <string>Upload bandwidth:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1" >
-           <widget class="QSpinBox" name="kcfg_uploadBandwidth" >
-            <property name="toolTip" >
-             <string>The amount of upload bandwith at your disposal. This is used as a maximum for the speedbars.</string>
-            </property>
-            <property name="suffix" >
-             <string> KB/s</string>
-            </property>
-            <property name="prefix" >
-             <string/>
-            </property>
-            <property name="minimum" >
-             <number>1</number>
-            </property>
-            <property name="maximum" >
-             <number>100000000</number>
-            </property>
-            <property name="value" >
-             <number>500</number>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" >
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
      </layout>
     </widget>
    </item>
@@ -294,38 +205,6 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel" >
      <x>318</x>
      <y>128</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>kcfg_showSpeedBarInTrayIcon</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>kcfg_downloadBandwidth</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>199</x>
-     <y>243</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>222</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>kcfg_showSpeedBarInTrayIcon</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>kcfg_uploadBandwidth</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>199</x>
-     <y>243</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>222</x>
-     <y>304</y>
     </hint>
    </hints>
   </connection>

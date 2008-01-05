@@ -87,8 +87,8 @@ namespace kt
 			else
 				kcfg_completedDir->setUrl(Settings::completedDir());
 
-			kcfg_downloadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());
-			kcfg_uploadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());	
+//			kcfg_downloadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());
+//			kcfg_uploadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());	
 		}
 
 		void loadDefaults()
