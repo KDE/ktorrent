@@ -17,10 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "monitor.h"
+
 #include <interfaces/peerinterface.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/chunkdownloadinterface.h>
-#include "monitor.h"
 #include "peerview.h"
 #include "chunkdownloadview.h"
 

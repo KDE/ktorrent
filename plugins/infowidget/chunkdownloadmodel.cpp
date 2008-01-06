@@ -18,12 +18,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "chunkdownloadmodel.h"
+
 #include <klocale.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include <interfaces/chunkdownloadinterface.h>
 #include <util/functions.h>
-#include "chunkdownloadmodel.h"
 
 using namespace bt;
 
@@ -108,7 +109,7 @@ namespace kt
 				if (stats.chunk_index >= tf.getFirstChunk() && stats.chunk_index <= tf.getLastChunk())
 				{
 					if (n > 0)
-						files += "\n";
+						files += '\n';
 						
 					files += tf.getPath();
 					n++;

@@ -18,6 +18,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "peerview.h"
+
 #include <QHeaderView>
 #include <klocale.h>
 #include <kicon.h>
@@ -27,7 +29,6 @@
 #include <interfaces/peerinterface.h>
 #include <torrent/ipblocklist.h>
 #include <util/functions.h>
-#include "peerview.h"
 #include "flagdb.h"
 
 #ifdef USE_SYSTEM_GEOIP
@@ -162,10 +163,10 @@ namespace kt
 		}
 
 		if (init || s.choked != stats.choked)
-			setText(5,s.choked ? i18n("Yes") : i18n("No"));
+			setText(4,s.choked ? i18nc("Choked", "Yes") : i18nc("Not choked", "No"));
 
 		if (init || s.snubbed != stats.snubbed)
-			setText(6,s.snubbed ? i18n("Yes") : i18n("No"));
+			setText(5,s.snubbed ? i18nc("Snubbed", "Yes") : i18nc("Not snubbed", "No"));
 
 		if (init || s.perc_of_file != stats.perc_of_file)
 			setText(7,QString("%1 %").arg(loc->formatNumber(s.perc_of_file,2)));

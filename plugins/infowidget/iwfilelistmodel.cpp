@@ -18,6 +18,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "iwfilelistmodel.h"
+
 #include <math.h>
 #include <klocale.h>
 #include <kglobal.h>
@@ -25,7 +27,6 @@
 #include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
-#include "iwfilelistmodel.h"
 
 using namespace bt;
 
@@ -71,7 +72,7 @@ namespace kt
 		{
 			case 2: return i18n("Priority");
 			case 3: return i18n("Preview");
-			case 4: return i18n("% Complete");
+			case 4: return i18nc("Percent of File Downloaded", "% Complete");
 			default: return QVariant();
 		}
 	}
@@ -80,13 +81,13 @@ namespace kt
 	{
 		switch(file->getPriority())
 		{
-			case FIRST_PRIORITY: return i18n("First");
-			case LAST_PRIORITY:	return i18n("Last");
+			case FIRST_PRIORITY: return i18nc("Download first", "First");
+			case LAST_PRIORITY:	return i18nc("Download last", "Last");
 			case ONLY_SEED_PRIORITY: 
 			case EXCLUDED: 
 			case PREVIEW_PRIORITY: 
-				return QString::null;
-			default:return i18n("Normal");
+				return QString();
+			default:return i18nc("Download Normal (not as first or last)", "Normal");
 		}
 	}
 	
@@ -111,17 +112,16 @@ namespace kt
 					if (file->isMultimedia())
 					{
 						if (tc->readyForPreview(file->getFirstChunk(), file->getFirstChunk()+1) )
-							return i18n("Available");
+							return i18nc("Preview available", "Available");
 						else
-							return i18n("Pending");
+							return i18nc("Preview pending", "Pending");
 					}
 					else
-						return i18n("No");
+						return i18nc("No preview available", "No");
 				case 4: 
 				{
 					float percent = file->getDownloadPercentage();
-					KLocale* loc = KGlobal::locale();
-					return i18n("%1 %",loc->formatNumber(percent,2));
+					return ki18n("%1 %").subs(percent, 0, 'g', 2).toString();
 				}
 				default: return QVariant();
 			}	
@@ -135,17 +135,16 @@ namespace kt
 					if (mmfile)
 					{
 						if (tc->readyForPreview(0,1))
-							return i18n("Available");
+							return i18nc("Preview available", "Available");
 						else
-							return i18n("Pending");
+							return i18nc("Preview pending", "Pending");
 					}
 					else
-						return i18n("No");
+						return i18nc("No preview available", "No");
 				case 4: 
 				{
 					double percent = bt::Percentage(tc->getStats());
-					KLocale* loc = KGlobal::locale();
-					return i18n("%1 %",loc->formatNumber(percent,2));
+					return ki18n("%1 %").subs(percent, 0, 'g', 2).toString();
 				}
 				default: return QVariant();
 			}

@@ -18,6 +18,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "torrentfilelistmodel.h"
+
 #include <klocale.h>
 #include <kicon.h>
 #include <kmimetype.h>
@@ -25,7 +27,6 @@
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
 #include <util/functions.h>
-#include "torrentfilelistmodel.h"
 
 using namespace bt;
 
@@ -117,6 +118,7 @@ namespace kt
 	
 	QModelIndex TorrentFileListModel::parent(const QModelIndex & index) const
 	{
+                Q_UNUSED(index);
 		return QModelIndex();
 	}
 	
@@ -234,11 +236,11 @@ namespace kt
 	QString TorrentFileListModel::dirPath(const QModelIndex & idx)
 	{
 		if (!idx.isValid())
-			return QString::null;
+			return QString();
 		
 		int r = idx.row();
 		if (r < 0 || r >= rowCount(QModelIndex()))
-			return QString::null;
+			return QString();
 		else
 			return tc->getTorrentFile(r).getPath();
 	}

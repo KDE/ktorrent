@@ -17,9 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "downloadedchunkbar.h"
+
 #include <util/bitset.h>
 #include <interfaces/torrentinterface.h>
-#include "downloadedchunkbar.h"
 
 namespace kt
 {

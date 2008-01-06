@@ -27,14 +27,11 @@
 
 class QPainter;
 
-namespace kt
-{
-	class TorrentInterface;
-}
 
 namespace bt
 {
 	class BitSet;
+	class TorrentInterface;
 }
 
 namespace kt

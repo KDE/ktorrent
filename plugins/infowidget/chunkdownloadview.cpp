@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "chunkdownloadview.h"
 
 #include <QHeaderView>
 #include <QSortFilterProxyModel>
@@ -27,7 +28,6 @@
 #include <interfaces/chunkdownloadinterface.h>
 #include <util/functions.h>
 #include <util/log.h>
-#include "chunkdownloadview.h"
 #include "chunkdownloadmodel.h"
 
 using namespace bt;
