@@ -447,6 +447,7 @@ namespace kt
 		QModelIndexList indices = selectionModel()->selectedRows();
 		for (QModelIndexList::iterator i = indices.begin();i != indices.end();i++)
 			*i = proxy_model->mapToSource(*i);
+			
 		model->torrentsFromIndexList(indices,sel);
 	}
 
@@ -501,6 +502,7 @@ namespace kt
 		QModelIndexList sel = selected.indexes();
 		foreach (QModelIndex idx,sel)
 		{
+			idx = proxy_model->mapToSource(idx);
 			if (isRowHidden(idx.row(),QModelIndex()))
 				continue;
 			
