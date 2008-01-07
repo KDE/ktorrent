@@ -83,13 +83,20 @@ namespace kt
 
 	void TrayIcon::updateStats(const CurrentStats stats, bool showBars,int downloadBandwidth, int uploadBandwidth )
 	{
-		QString tip = i18n("<table cellpadding='2' cellspacing='2' align='center'><tr><td><b>Speed:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%1</font></td><td>Upload: <font color='#990000'>%2</font></td></tr><tr><td><b>Transfer:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%3</font></td><td>Upload: <font color='#990000'>%4</font></td></tr></table>",
+		if (!Settings::showPopups())
+		{
+			setToolTip(QString());
+		}
+		else
+		{
+			QString tip = i18n("<table cellpadding='2' cellspacing='2' align='center'><tr><td><b>Speed:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%1</font></td><td>Upload: <font color='#990000'>%2</font></td></tr><tr><td><b>Transfer:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%3</font></td><td>Upload: <font color='#990000'>%4</font></td></tr></table>",
 				KBytesPerSecToString((double)stats.download_speed/1024.0),
 				KBytesPerSecToString((double)stats.upload_speed/1024.0),
 				BytesToString(stats.bytes_downloaded),
 				BytesToString(stats.bytes_uploaded));
 		
-		setToolTip(tip);	
+			setToolTip(tip);
+		}	
 		if(showBars)
 			drawSpeedBar(stats.download_speed/1024,stats.upload_speed/1024, downloadBandwidth, uploadBandwidth);
 	}

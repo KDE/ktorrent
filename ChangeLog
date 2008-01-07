@@ -9,6 +9,7 @@ approach
 - Added action to pause and resume all torrents
 - Fix some problems with the update timer not getting started when the QM ran 
 - Estimate time left in seeding mode when there is a max share ratio
+- Disable system tray icon tooltips when show popups is disabled
 
 Changes in 3.0beta1 :
 - Added option to select the network interface to use
