@@ -102,6 +102,9 @@ namespace bt
 			int estimateMAVG();
 			int estimateKT();
 			
+			Uint32 sample() const;
+			Uint32 bytesLeft() const;
+			
 			TorrentControl* m_tc;
 			SampleQueue* m_samples;
 

@@ -39,20 +39,7 @@ namespace kt
 
 	static int ETA(const TorrentStats & s,bt::TorrentInterface* tc)
 	{
-		if (s.bytes_left_to_download == 0)
-		{
-			return -1;
-		}
-		else if (s.running) 
-		{
-			Uint32 secs = tc->getETA();
-			if (secs == -1)
-				return -2;
-			else
-				return secs;
-		}
-		else
-			return -2;
+		return tc->getETA();
 	}
 	
 	ViewModel::Item::Item(bt::TorrentInterface* tc) : tc(tc)
@@ -188,7 +175,7 @@ namespace kt
 					return QVariant();
 				break;
 			case 7: 
-				if (eta == -2)
+				if (eta == 0)
 					return QString("%1").arg(QChar(0x221E)); // infinity
 				else if (eta > 0)
 					return DurationToString(eta);

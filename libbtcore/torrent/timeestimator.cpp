@@ -42,14 +42,57 @@ namespace bt
 	{
 		delete m_samples;
 	}
+	
+	Uint32 TimeEstimator::sample() const
+	{
+		const TorrentStats& s = m_tc->getStats();
+		if (s.completed)
+		{
+			return s.upload_rate;
+		}
+		else
+		{
+			return s.download_rate;
+		}
+	}
+	Uint32 TimeEstimator::bytesLeft() const
+	{
+		const TorrentStats& s = m_tc->getStats();
+		if (s.completed)
+		{
+			if (s.max_share_ratio >= 0.01f)
+			{
+				float ratio = bt::ShareRatio(s);
+				float delta = s.max_share_ratio - ratio;
+				if (delta <= 0.0f)
+					return -1;
+				else
+					return s.bytes_downloaded * delta - s.bytes_uploaded;
+			}
+			else
+				return -1;
+		}
+		else
+		{
+			return s.bytes_left_to_download;
+		}
+	}
 
 	int TimeEstimator::estimate()
 	{
 		const TorrentStats& s = m_tc->getStats();
 
-		// only estimate when we are downloading or stalled
-		if (!(s.status == DOWNLOADING || s.status == STALLED))
-			return (Uint32) - 1;
+		// only estimate when we are running
+		if (!s.running)
+			return -1;
+		
+		// in seeding mode check if we still need to seed
+		if (s.completed)
+		{
+			if (bytesLeft() == 0 || s.max_share_ratio < 0.01f)
+				return -1;
+		}
+		
 
 		//ones without pre-calculations
 		switch (m_algorithm)
@@ -65,11 +108,11 @@ namespace bt
 				return estimateKT();
 				
 			case ETA_MAVG:
-				m_samples->push((Uint32) s.download_rate);
+				m_samples->push(sample());
 				return estimateMAVG();
 
 			case ETA_WINX:
-				m_samples->push((Uint32) s.download_rate);
+				m_samples->push(sample());
 				return estimateWINX();
 			default:
 				return -1;
@@ -81,9 +124,9 @@ namespace bt
 		const TorrentStats& s = m_tc->getStats();
 
 		if (s.download_rate == 0)
-			return (Uint32) - 1;
+			return 0;
 
-		return (int)floor((float)s.bytes_left_to_download / (float)s.download_rate);
+		return (int)floor((float)bytesLeft() / (float)s.download_rate);
 	}
 
 	int TimeEstimator::estimateGASA()
@@ -93,10 +136,10 @@ namespace bt
 		if (m_tc->getRunningTimeDL() > 0 && s.bytes_downloaded > 0)
 		{
 			double avg_speed = (double) s.bytes_downloaded / (double) m_tc->getRunningTimeDL();
-			return (Uint32) floor((double) s.bytes_left_to_download / avg_speed);
+			return (Uint32) floor((double) bytesLeft() / avg_speed);
 		}
 
-		return (Uint32) - 1;
+		return 0;
 	}
 
 	int TimeEstimator::estimateWINX()
@@ -104,9 +147,9 @@ namespace bt
 		const TorrentStats& s = m_tc->getStats();
 
 		if (m_samples->sum() > 0 && m_samples->count() > 0)
-			return (Uint32) floor((double) s.bytes_left_to_download / ((double) m_samples->sum() / (double) m_samples->count()));
+			return (Uint32) floor((double) bytesLeft() / ((double) m_samples->sum() / (double) m_samples->count()));
 
-		return (Uint32) - 1;
+		return 0;
 	}
 
 	int TimeEstimator::estimateMAVG()
@@ -125,12 +168,12 @@ namespace bt
 			m_lastAvg = (Uint32) floor(lavg);
 
 			if (lavg > 0)
-				return (Uint32) floor((double) s.bytes_left_to_download / ((lavg + (m_samples->sum() / m_samples->count())) / 2));
+				return (Uint32) floor((double) bytesLeft() / ((lavg + (m_samples->sum() / m_samples->count())) / 2));
 
-			return (Uint32) - 1;
+			return 0;
 		}
 
-		return (Uint32) - 1;
+		return 0;
 	}
 
 	SampleQueue::SampleQueue(int max)
@@ -209,10 +252,12 @@ namespace bt
 	{
 		const TorrentStats& s = m_tc->getStats();
 
-		Uint32 sample = (Uint32) s.download_rate;
 
 	//push new sample
-		m_samples->push(sample);
+		m_samples->push(sample());
+		
+		if (s.completed)
+			return estimateWINX();
 
 		double perc = (double) s.bytes_downloaded / (double) s.total_bytes;
 
@@ -225,32 +270,32 @@ namespace bt
 		m_perc = perc;
 
 
-		if (s.bytes_downloaded < 1024*1024*100 && sample > 0) // < 100KB
+		if (s.bytes_downloaded < 1024*1024*100 && m_samples->last() > 0) // < 100KB
 		{
 			m_lastETA = estimateGASA();
 			return m_lastETA;
 		}
 
-		if (percentage >= 99 && sample > 0 && s.bytes_left_to_download <= 10*1024*1024*1024) //1% of a very large torrent could be hundreds of MB so limit it to 10MB
+		if (percentage >= 99 && m_samples->last() > 0 && bytesLeft() <= 10*1024*1024*1024) //1% of a very large torrent could be hundreds of MB so limit it to 10MB
 		{
 
 			if (!m_samples->isFull())
 			{
 				m_lastETA = estimateWINX();
 
-				if (m_lastETA == -1)
+				if (m_lastETA == 0)
 					m_lastETA = estimateGASA();
 
 				return m_lastETA;
 			}
 			else
 			{
-				m_lastETA = -1;
+				m_lastETA = 0;
 
 				if (delta > 0.0001)
 					m_lastETA = estimateMAVG();
 
-				if (m_lastETA == -1)
+				if (m_lastETA == 0)
 					m_lastETA = estimateGASA();
 			}
 

@@ -1613,7 +1613,7 @@ namespace bt
 		corruptedDataFound(this);
 	}
 	
-	Uint32 TorrentControl::getETA()
+	int TorrentControl::getETA()
 	{
 		return m_eta->estimate();
 	}

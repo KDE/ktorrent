@@ -243,7 +243,7 @@ namespace bt
 		 * Returns estimated time left for finishing download. Returned value is in seconds.
 		 * Uses TimeEstimator class to calculate this value.
 		 */
-		Uint32 getETA();
+		int getETA();
 
 		/// Is a feature enabled
 		bool isFeatureEnabled(TorrentFeature tf);

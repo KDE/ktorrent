@@ -358,7 +358,7 @@ namespace bt
 		 * Returns estimated time left for finishing download. Returned value is in seconds.
 		 * Uses TimeEstimator class to calculate this value.
 		 */
-		virtual Uint32 getETA() = 0;
+		virtual int getETA() = 0;
 		
 		/**
 		 * Verify the correctness of all data.
