@@ -27,15 +27,14 @@
 
 namespace bt
 {
+	TimeEstimator::ETAlgorithm TimeEstimator::m_algorithm = ETA_KT;
+			
 	TimeEstimator::TimeEstimator(TorrentControl* tc)
 			: m_tc(tc)
 	{
 		m_samples = new SampleQueue(20);
 		m_lastAvg = 0;
 		m_perc = -1;
-
-		//default is KT algorithm
-		m_algorithm =  ETA_WINX;//  (ETAlgorithm) Settings::eta();
 	}
 
 
@@ -44,7 +43,7 @@ namespace bt
 		delete m_samples;
 	}
 
-	Uint32 TimeEstimator::estimate()
+	int TimeEstimator::estimate()
 	{
 		const TorrentStats& s = m_tc->getStats();
 
@@ -64,29 +63,20 @@ namespace bt
 				
 			case ETA_KT:
 				return estimateKT();
-		}
-
-		//complicated ones :)
-		
-		Uint32 sample = (Uint32) s.download_rate;
-		//push new sample
-		m_samples->push(sample);
-		
-
-		switch (m_algorithm)
-		{
+				
 			case ETA_MAVG:
+				m_samples->push((Uint32) s.download_rate);
 				return estimateMAVG();
 
 			case ETA_WINX:
+				m_samples->push((Uint32) s.download_rate);
 				return estimateWINX();
-
 			default:
 				return -1;
 		}
 	}
 
-	Uint32 TimeEstimator::estimateCSA()
+	int TimeEstimator::estimateCSA()
 	{
 		const TorrentStats& s = m_tc->getStats();
 
@@ -96,7 +86,7 @@ namespace bt
 		return (int)floor((float)s.bytes_left_to_download / (float)s.download_rate);
 	}
 
-	Uint32 TimeEstimator::estimateGASA()
+	int TimeEstimator::estimateGASA()
 	{
 		const TorrentStats& s = m_tc->getStats();
 
@@ -109,7 +99,7 @@ namespace bt
 		return (Uint32) - 1;
 	}
 
-	Uint32 TimeEstimator::estimateWINX()
+	int TimeEstimator::estimateWINX()
 	{
 		const TorrentStats& s = m_tc->getStats();
 
@@ -119,7 +109,7 @@ namespace bt
 		return (Uint32) - 1;
 	}
 
-	Uint32 TimeEstimator::estimateMAVG()
+	int TimeEstimator::estimateMAVG()
 	{
 		const TorrentStats& s = m_tc->getStats();
 
@@ -210,12 +200,12 @@ namespace bt
 		return s;
 	}
 
-	void TimeEstimator::setAlgorithm(const ETAlgorithm& theValue)
+	void TimeEstimator::setAlgorithm(ETAlgorithm theValue)
 	{
 		m_algorithm = theValue;
 	}
 
-	Uint32 TimeEstimator::estimateKT()
+	int TimeEstimator::estimateKT()
 	{
 		const TorrentStats& s = m_tc->getStats();
 
@@ -241,26 +231,26 @@ namespace bt
 			return m_lastETA;
 		}
 
-		if (percentage >= 99 && sample > 0 && s.bytes_left_to_download <= 10*1024 ^ 3) //1% of a very large torrent could be hundreds of MB so limit it to 10MB
+		if (percentage >= 99 && sample > 0 && s.bytes_left_to_download <= 10*1024*1024*1024) //1% of a very large torrent could be hundreds of MB so limit it to 10MB
 		{
 
 			if (!m_samples->isFull())
 			{
 				m_lastETA = estimateWINX();
 
-				if (m_lastETA == (Uint32) - 1)
+				if (m_lastETA == -1)
 					m_lastETA = estimateGASA();
 
 				return m_lastETA;
 			}
 			else
 			{
-				m_lastETA = (Uint32) - 1;
+				m_lastETA = -1;
 
 				if (delta > 0.0001)
 					m_lastETA = estimateMAVG();
 
-				if (m_lastETA == (Uint32) - 1)
+				if (m_lastETA == -1)
 					m_lastETA = estimateGASA();
 			}
 

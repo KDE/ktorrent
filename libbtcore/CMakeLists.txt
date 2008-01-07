@@ -222,6 +222,7 @@ set (torrent_HDR
 	./torrent/server.h
 	./torrent/globals.h
 	./torrent/torrentcreator.h
+	./torrent/timeestimator.h
 )
 	
 set (tracker_HDR

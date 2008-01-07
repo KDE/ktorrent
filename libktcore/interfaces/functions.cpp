@@ -40,6 +40,7 @@
 #include <torrent/torrentcontrol.h>
 #include <util/log.h>
 #include <torrent/server.h>
+#include <torrent/timeestimator.h>
 #include "settings.h"
 #include "functions.h"
 
@@ -147,6 +148,8 @@ namespace kt
 			net::Socks::setSocksAuthentication(Settings::socksUsername(),Settings::socksPassword());
 		else
 			net::Socks::setSocksAuthentication(QString::null,QString::null);
+		
+		bt::TimeEstimator::setAlgorithm((bt::TimeEstimator::ETAlgorithm)Settings::eta());
 	}
 
 

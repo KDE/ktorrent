@@ -72,7 +72,7 @@ namespace bt
 	 * ETA estimator class. It will use different algorithms for different download phases.	
 	 * @author Ivan Vasic <ivasic@gmail.com>
 	*/
-	class TimeEstimator
+	class BTCORE_EXPORT TimeEstimator
 	{
 		public:
 			
@@ -89,29 +89,29 @@ namespace bt
 			~TimeEstimator();
 			
 			///Returns ETA for m_tc torrent.
-			Uint32 estimate();
+			int estimate();
 
-			void setAlgorithm(const ETAlgorithm& theValue);	
-			ETAlgorithm algorithm() const { return m_algorithm; }
+			static void setAlgorithm(ETAlgorithm theValue);	
+			static ETAlgorithm algorithm() { return m_algorithm; }
 			
 		private:
 			
-			Uint32 estimateCSA();
-			Uint32 estimateGASA();
-			Uint32 estimateWINX();
-			Uint32 estimateMAVG();
-			Uint32 estimateKT();
+			int estimateCSA();
+			int estimateGASA();
+			int estimateWINX();
+			int estimateMAVG();
+			int estimateKT();
 			
 			TorrentControl* m_tc;
 			SampleQueue* m_samples;
 
 			Uint32 m_lastAvg;
-			Uint32 m_lastETA;
+			int m_lastETA;
 			
 			//last percentage
 			double m_perc;
 			
-			ETAlgorithm m_algorithm;
+			static ETAlgorithm m_algorithm;
 	};
 
 }

@@ -222,6 +222,8 @@
 		<entry name="eta" type="Int">
 			<label>Algorithm to estimate the time when a torrent is finished</label>
 			<default>0</default>
+			<min>0</min>
+			<max>4</max>
 		</entry>
 		<entry name="diskPrealloc" type="Bool">
  			<default>true</default>
