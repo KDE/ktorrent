@@ -174,7 +174,7 @@ namespace bt
 				return false;	
 		}
 		
-		QStringList files = d.entryList(QDir::Files | QDir::System);
+		QStringList files = d.entryList(QDir::Files | QDir::System | QDir::Hidden);
 		for (QStringList::iterator i = files.begin(); i != files.end();i++)
 		{
 			QString entry = *i;

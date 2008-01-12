@@ -69,9 +69,9 @@ namespace kt
 		
 		KMenu* m = new KMenu(0);
 		setContextMenu(m);
-		max_upload_rate = new SetMaxRate(core,0,m);
+		max_upload_rate = new SetMaxRate(core,SetMaxRate::UPLOAD,m);
 		max_upload_rate->setTitle(i18n("Set max upload speed"));
-		max_download_rate = new SetMaxRate(core,1,m);
+		max_download_rate = new SetMaxRate(core,SetMaxRate::DOWNLOAD,m);
 		max_download_rate->setTitle(i18n("Set max download speed"));
 		m->addMenu(max_download_rate);
 		m->addMenu(max_upload_rate);
@@ -292,7 +292,7 @@ namespace kt
 
 
 
-	SetMaxRate::SetMaxRate(Core* core, int t, QWidget *parent) : KMenu(parent)
+	SetMaxRate::SetMaxRate(Core* core, Type t, QWidget *parent) : KMenu(parent)
 	{
 		m_core = core;
 		type=t;
@@ -304,8 +304,8 @@ namespace kt
 
 	void SetMaxRate::makeMenu()
 	{
-		int rate=(type==0) ? Settings::maxUploadRate() : Settings::maxDownloadRate();
-		int maxBandwidth=(rate > 0) ? rate : (type==0) ? 0 : 20 ;
+		int rate=(type==UPLOAD) ? Settings::maxUploadRate() : Settings::maxDownloadRate();
+		int maxBandwidth=(rate > 0) ? rate : (type==UPLOAD) ? 0 : 20 ;
 		int delta = 0;
 		int maxBandwidthRounded;
 
@@ -368,7 +368,7 @@ namespace kt
 		else
 			rate=act->text().remove("&").toInt(); // remove ampersands
 
-		if(type==0)
+		if(type == UPLOAD)
 		{
 			Settings::setMaxUploadRate(rate);
 			net::SocketMonitor::setUploadCap( Settings::maxUploadRate() * 1024);

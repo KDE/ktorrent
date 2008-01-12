@@ -124,7 +124,11 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		SetMaxRate(Core* tc, int t, QWidget *parent); // type: 0 Upload; 1 Download
+		enum Type
+		{
+			UPLOAD,DOWNLOAD
+		};
+		SetMaxRate(Core* tc, Type t, QWidget *parent); 
 		virtual ~SetMaxRate();
 	
 		void update();
@@ -136,7 +140,7 @@ namespace kt
 	
 	private:
 		Core* m_core;
-		int type;
+		Type type;
 		QAction* unlimited;
 	};
 }

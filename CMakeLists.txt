@@ -1,6 +1,6 @@
 project(KTORRENT)
 find_package(KDE4 REQUIRED)
-#find_package(KDE4Internal REQUIRED)
+find_package(KDE4Internal REQUIRED)
 find_package(GMP REQUIRED)
 find_package(QCA2 REQUIRED)
 find_package(Strigi REQUIRED)

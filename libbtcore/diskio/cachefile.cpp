@@ -419,6 +419,12 @@ namespace bt
 	{
 		QMutexLocker lock(&mutex);
 		
+		if (FileSize(path) == max_size)
+		{
+			Out(SYS_GEN|LOG_NOTICE) << "File " << path << " already big enough" << endl;
+			return;
+		}
+
 		Out(SYS_GEN|LOG_NOTICE) << "Preallocating file " << path << " (" << max_size << " bytes)" << endl;
 		bool close_again = false;
 		if (fd == -1)

@@ -358,7 +358,7 @@ namespace bt
 		if (prealloc)
 		{
 			// only start preallocation if we are allowed by the settings
-			if (Cache::preallocationEnabled())
+			if (Cache::preallocationEnabled() && !cman->haveAllChunks())
 			{
 				Out(SYS_GEN|LOG_NOTICE) << "Pre-allocating diskspace" << endl;
 				prealloc_thread = new PreallocationThread(cman);
