@@ -69,6 +69,7 @@ namespace kt
 		{
 			case 2: return i18n("Priority");
 			case 3: return i18n("Preview");
+			// xgettext: no-c-format
 			case 4: return i18nc("Percent of File Downloaded", "% Complete");
 			default: return QVariant();
 		}
