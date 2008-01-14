@@ -27,9 +27,13 @@
 #include <datachecker/datacheckerlistener.h>
 #include "ui_scandlg.h"
 
-namespace kt
+namespace bt
 {
 	class TorrentInterface;
+}
+
+namespace kt
+{
 	class Core;
 
 	class ScanDlg : public QDialog,public Ui_ScanDlg,public bt::DataCheckerListener

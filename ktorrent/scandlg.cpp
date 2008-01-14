@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "scandlg.h"
 #include <QCloseEvent>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -26,7 +27,6 @@
 #include <util/log.h>
 #include <torrent/queuemanager.h>
 #include <interfaces/torrentinterface.h>
-#include "scandlg.h"
 #include "core.h"
 
 using namespace bt;
