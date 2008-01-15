@@ -163,10 +163,10 @@ namespace kt
 		}
 
 		if (init || s.choked != stats.choked)
-			setText(4,s.choked ? i18nc("Choked", "Yes") : i18nc("Not choked", "No"));
+			setText(5,s.choked ? i18nc("Choked", "Yes") : i18nc("Not choked", "No"));
 
 		if (init || s.snubbed != stats.snubbed)
-			setText(5,s.snubbed ? i18nc("Snubbed", "Yes") : i18nc("Not snubbed", "No"));
+			setText(6,s.snubbed ? i18nc("Snubbed", "Yes") : i18nc("Not snubbed", "No"));
 
 		if (init || s.perc_of_file != stats.perc_of_file)
 			setText(7,QString("%1 %").arg(loc->formatNumber(s.perc_of_file,2)));
