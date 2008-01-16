@@ -71,7 +71,7 @@ namespace bt
 		if (verbose) Out() << "DICT" << endl;
 		try
 		{
-			while (data[pos] != 'e' && pos < (Uint32)data.size())
+			while (pos < (Uint32)data.size() && data[pos] != 'e')
 			{
 				if (verbose) Out() << "Key : " << endl;
 				BNode* kn = decode(); 
@@ -108,7 +108,7 @@ namespace bt
 		pos++;
 		try
 		{
-			while (data[pos] != 'e' && pos < (Uint32)data.size())
+			while (pos < (Uint32)data.size() && data[pos] != 'e')
 			{
 				BNode* n = decode();
 				curr->append(n);
