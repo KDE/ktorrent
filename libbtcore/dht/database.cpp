@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <k3socketaddress.h>
 #include <util/functions.h>
 #include <util/log.h>
 #include <torrent/globals.h>
@@ -28,19 +29,17 @@ namespace dht
 {
 	DBItem::DBItem()
 	{
-		memset(item,0,9);
 		time_stamp = bt::GetCurrentTime();
 	}
 	
-	DBItem::DBItem(const bt::Uint8* ip_port)
+	DBItem::DBItem(const KNetwork::KInetSocketAddress & addr) : addr(addr)
 	{
-		memcpy(item,ip_port,6);
 		time_stamp = bt::GetCurrentTime();
 	}
 	
 	DBItem::DBItem(const DBItem & it)
 	{
-		memcpy(item,it.item,6);
+		addr = it.addr;
 		time_stamp = it.time_stamp;	
 	}
 	
@@ -54,11 +53,27 @@ namespace dht
 	
 	DBItem & DBItem::operator = (const DBItem & it)
 	{
-		memcpy(item,it.item,6);
+		addr = it.addr;
 		time_stamp = it.time_stamp;	
 		return *this;
 	}
 
+	Uint32 DBItem::pack(Uint8* buf) const
+	{
+		if (addr.ipVersion() == 4)
+		{
+			memcpy(buf,addr.ipAddress().addr(),4);
+			WriteUint16(buf,4,addr.port());
+			return 6;
+		}
+		else
+		{
+			memcpy(buf,addr.ipAddress().addr(),16);
+			WriteUint16(buf,16,addr.port());
+			return 18;
+		}
+	}
+	
 	///////////////////////////////////////////////
 	
 	Database::Database()
@@ -125,23 +140,41 @@ namespace dht
 		}
 	}
 	
-	dht::Key Database::genToken(Uint32 ip,Uint16 port)
+	dht::Key Database::genToken(const KNetwork::KInetSocketAddress & addr)
 	{
-		Uint8 tdata[14];
-		TimeStamp now = bt::GetCurrentTime();
-		// generate a hash of the ip port and the current time
-		// should prevent anybody from crapping things up
-		bt::WriteUint32(tdata,0,ip);
-		bt::WriteUint16(tdata,4,port);
-		bt::WriteUint64(tdata,6,now);
-			
-		dht::Key token = SHA1Hash::generate(tdata,14);
-		// keep track of the token, tokens will expire after a while
-		tokens.insert(token,now);
-		return token;
+		if (addr.ipVersion() == 4)
+		{
+			Uint8 tdata[14];
+			TimeStamp now = bt::GetCurrentTime();
+			// generate a hash of the ip port and the current time
+			// should prevent anybody from crapping things up
+			bt::WriteUint32(tdata,0,addr.ipAddress().IPv4Addr());
+			bt::WriteUint16(tdata,4,addr.port());
+			bt::WriteUint64(tdata,6,now);
+				
+			dht::Key token = SHA1Hash::generate(tdata,14);
+			// keep track of the token, tokens will expire after a while
+			tokens.insert(token,now);
+			return token;
+		}
+		else
+		{
+			Uint8 tdata[26];
+			TimeStamp now = bt::GetCurrentTime();
+			// generate a hash of the ip port and the current time
+			// should prevent anybody from crapping things up
+			memcpy(tdata,addr.ipAddress().addr(),16);
+			bt::WriteUint16(tdata,16,addr.port());
+			bt::WriteUint64(tdata,18,now);
+				
+			dht::Key token = SHA1Hash::generate(tdata,26);
+			// keep track of the token, tokens will expire after a while
+			tokens.insert(token,now);
+			return token;
+		}
 	}
 	
-	bool Database::checkToken(const dht::Key & token,Uint32 ip,Uint16 port)
+	bool Database::checkToken(const dht::Key & token,const KNetwork::KInetSocketAddress & addr)
 	{
 		// the token must be in the map
 		if (!tokens.contains(token))
@@ -153,17 +186,39 @@ namespace dht
 		// in the map so now get the timestamp and regenerate the token
 		// using the IP and port of the sender
 		TimeStamp ts = tokens[token];
-		Uint8 tdata[14];
-		bt::WriteUint32(tdata,0,ip);
-		bt::WriteUint16(tdata,4,port);
-		bt::WriteUint64(tdata,6,ts);
-		dht::Key ct = SHA1Hash::generate(tdata,14);
-		// compare the generated token to the one received
-		if (token != ct)  // not good, this peer didn't went through the proper channels
+		
+		if (addr.ipVersion() == 4)
 		{
-			Out(SYS_DHT|LOG_DEBUG) << "Invalid token" << endl;
-			return false;
+			Uint8 tdata[14];
+			bt::WriteUint32(tdata,0,addr.ipAddress().IPv4Addr());
+			bt::WriteUint16(tdata,4,addr.port());
+			bt::WriteUint64(tdata,6,ts);
+			dht::Key ct = SHA1Hash::generate(tdata,14);
+		
+			// compare the generated token to the one received
+			if (token != ct)  // not good, this peer didn't went through the proper channels
+			{
+				Out(SYS_DHT|LOG_DEBUG) << "Invalid token" << endl;
+				return false;
+			}
 		}
+		else
+		{
+			Uint8 tdata[26];
+		
+			memcpy(tdata,addr.ipAddress().addr(),16);
+			bt::WriteUint16(tdata,16,addr.port());
+			bt::WriteUint64(tdata,18,ts);
+				
+			dht::Key ct = SHA1Hash::generate(tdata,26);
+			// compare the generated token to the one received
+			if (token != ct)  // not good, this peer didn't went through the proper channels
+			{
+				Out(SYS_DHT|LOG_DEBUG) << "Invalid token" << endl;
+				return false;
+			}
+		}
+		
 		// expire the token
 		tokens.remove(token);
 		return true;

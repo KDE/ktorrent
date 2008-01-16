@@ -29,34 +29,66 @@ namespace dht
 
 	void PackBucketEntry(const KBucketEntry & e,QByteArray & ba,Uint32 off)
 	{
-		// first check size
-		if (off + 26 > ba.size())
-			throw bt::Error("Not enough room in buffer");
-		
+		const KInetSocketAddress & addr = e.getAddress();
 		Uint8* data = (Uint8*)ba.data();
 		Uint8* ptr = data + off;
 		
-		const KInetSocketAddress & addr = e.getAddress();
-		// copy ID, IP address and port into the buffer
-		memcpy(ptr,e.getID().getData(),20);
-		bt::WriteUint32(ptr,20,addr.ipAddress().IPv4Addr());
-		bt::WriteUint16(ptr,24,addr.port());
+		if (addr.ipVersion() == 4)
+		{
+			// first check size
+			if (off + 26 > ba.size())
+				throw bt::Error("Not enough room in buffer");
+			
+			// copy ID, IP address and port into the buffer
+			memcpy(ptr,e.getID().getData(),20);
+			bt::WriteUint32(ptr,20,addr.ipAddress().IPv4Addr());
+			bt::WriteUint16(ptr,24,addr.port());
+		}
+		else
+		{
+			// first check size
+			if (off + 38 > ba.size())
+				throw bt::Error("Not enough room in buffer");
+			
+			// copy ID, IP address and port into the buffer
+			memcpy(ptr,e.getID().getData(),20);
+			memcpy(ptr + 20,addr.ipAddress().addr(),16);
+			bt::WriteUint16(ptr,36,addr.port());
+		}
 	}
 	
-	KBucketEntry UnpackBucketEntry(const QByteArray & ba,Uint32 off)
+	KBucketEntry UnpackBucketEntry(const QByteArray & ba,Uint32 off,int ip_version)
 	{
-		if (off + 26 > ba.size())
-			throw bt::Error("Not enough room in buffer");
-		
-		const Uint8* data = (Uint8*)ba.data();
-		const Uint8* ptr = data + off;
-		
-		// get the port, ip and key);
-		Uint16 port = bt::ReadUint16(ptr,24);
-		Uint8 key[20];
-		memcpy(key,ptr,20);
-		
-		return KBucketEntry(KInetSocketAddress(KIpAddress(ptr+20,4),port),dht::Key(key));
+		if (ip_version == 4)
+		{
+			if (off + 26 > ba.size())
+				throw bt::Error("Not enough room in buffer");
+			
+			const Uint8* data = (Uint8*)ba.data();
+			const Uint8* ptr = data + off;
+			
+			// get the port, ip and key);
+			Uint16 port = bt::ReadUint16(ptr,24);
+			Uint8 key[20];
+			memcpy(key,ptr,20);
+			
+			return KBucketEntry(KInetSocketAddress(KIpAddress(ptr+20,4),port),dht::Key(key));
+		}
+		else
+		{
+			if (off + 38 > ba.size())
+				throw bt::Error("Not enough room in buffer");
+			
+			const Uint8* data = (Uint8*)ba.data();
+			const Uint8* ptr = data + off;
+			
+			// get the port, ip and key);
+			Uint16 port = bt::ReadUint16(ptr,36);
+			Uint8 key[20];
+			memcpy(key,ptr,20);
+			
+			return KBucketEntry(KInetSocketAddress(KIpAddress(ptr+20,6),port),dht::Key(key));
+		}
 	}
 
 }

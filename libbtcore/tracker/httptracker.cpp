@@ -21,6 +21,7 @@
  
 #include <kurl.h>
 #include <klocale.h>
+#include <k3socketaddress.h>
 #include <qhostaddress.h>
 #include <util/log.h>
 #include <util/functions.h>
@@ -356,6 +357,23 @@ namespace bt
 					continue;
 				
 				addPeer(ip_node->data().toString(),port_node->data().toInt());
+			}
+		}
+		
+		// Check for IPv6 compact peers
+		vn = dict->getValue("peers6");
+		if (vn && vn->data().getType() == Value::STRING)
+		{
+			QByteArray arr = vn->data().toByteArray();
+			for (Uint32 i = 0;i < arr.size();i+=18)
+			{
+				Uint8 buf[18];
+				for (int j = 0;j < 18;j++)
+					buf[j] = arr[i + j];
+
+				KNetwork::KIpAddress ip(buf,6);
+
+				addPeer(ip.toString(),ReadUint16(buf,16));
 			}
 		}
 		

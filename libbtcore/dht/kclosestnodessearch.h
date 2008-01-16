@@ -70,19 +70,10 @@ namespace dht
 		void tryInsert(const KBucketEntry & e);
 		
 		/**
-		 * Gets the required space in bytes to pack the nodes.
-		 * This should be used to determin the size of the buffer
-		 * passed to pack.
-		 * @return 26 * number of entries
+		 * Pack the search results in a PackedNodeContainer.
+		 * @param cnt Place to store IPv6 nodes
 		 */
-		Uint32 requiredSpace() const {return emap.size()* 26;}
-		
-		/**
-		 * Pack the search results in a buffer, the buffer should have
-		 * enough space to store requiredSpace() bytes.
-		 * @param ba The buffer
-		 */
-		void pack(QByteArray & ba);
+		void pack(PackedNodeContainer* cnt);
 	};
 
 }

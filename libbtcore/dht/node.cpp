@@ -220,7 +220,8 @@ namespace dht
 			if (fptr.read(&hdr,sizeof(BucketHeader)) != sizeof(BucketHeader))
 				return;
 			
-			if (hdr.magic != dht::BUCKET_MAGIC_NUMBER || hdr.num_entries > dht::K || hdr.index > 160)
+			// new IPv6 capable format uses the old magic number + 1
+			if (hdr.magic != dht::BUCKET_MAGIC_NUMBER+1 || hdr.num_entries > dht::K || hdr.index > 160)
 				return;
 			
 			if (hdr.num_entries == 0)

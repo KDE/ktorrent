@@ -65,16 +65,26 @@ namespace dht
 		
 	}
 	
-	void KClosestNodesSearch::pack(QByteArray & ba)
+	void KClosestNodesSearch::pack(PackedNodeContainer* cnt)
 	{
-		// make sure we do not writ to much
-		Uint32 max_items = ba.size() / 26;
 		Uint32 j = 0;
 		
 		KNSitr i = emap.begin();
-		while (i != emap.end() && j < max_items)
+		while (i != emap.end())
 		{
-			PackBucketEntry(i->second,ba,j*26);
+			const KBucketEntry & e = i->second;
+			if (e.getAddress().ipVersion() == 4)
+			{
+				QByteArray d(26,0);
+				PackBucketEntry(i->second,d,0);
+				cnt->addNode(d);
+			}
+			else
+			{
+				QByteArray d(38,0);
+				PackBucketEntry(i->second,d,0);
+				cnt->addNode(d);
+			}
 			j++;
 		}
 	}

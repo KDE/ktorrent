@@ -39,9 +39,10 @@ namespace dht
 	 * If a full entry cannot be read an error will be thrown.
 	 * @param ba The byte array
 	 * @param off The offset
+	 * @param ip_version The ip version (4 or 6)
 	 * @return The entry
 	 */
-	KBucketEntry UnpackBucketEntry(const QByteArray & ba,Uint32 off);
+	KBucketEntry UnpackBucketEntry(const QByteArray & ba,Uint32 off,int ip_version);
 
 }
 

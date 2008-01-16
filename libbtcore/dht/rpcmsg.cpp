@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <util/log.h>
+#include <util/functions.h>
 #include <bcodec/bnode.h>
 #include <bcodec/bencoder.h>
 #include "rpcmsg.h"
@@ -26,6 +27,7 @@
 #include "dht.h"
 
 using namespace bt;
+using namespace KNetwork;
 
 namespace dht
 {
@@ -105,10 +107,30 @@ namespace dht
 			case PING : 
 				return new PingRsp(mtid,id);
 			case FIND_NODE :
-				if (!args->getValue("nodes"))
+				if (!args->getValue("nodes") && !args->getList("nodes2"))
 					return 0;
 				else
-					return new FindNodeRsp(mtid,id,args->getValue("nodes")->data().toByteArray());
+				{
+					QByteArray nodes;
+					BValueNode* v = args->getValue("nodes");
+					if (v)
+						nodes = v->data().toByteArray();
+					
+					FindNodeRsp* rsp = new FindNodeRsp(mtid,id);
+					rsp->setNodes(nodes);
+					
+					BListNode* l = args->getList("nodes2");
+					if (l)
+					{
+						for (Uint32 i = 0;i < l->getNumChildren();i++)
+						{
+							v = l->getValue(i);
+							if (v && v->data().getType() == Value::STRING)
+								rsp->addNode(v->data().toByteArray());
+						}
+					}
+					return rsp;
+				}
 			case GET_PEERS :
 				if (args->getValue("token"))
 				{
@@ -123,14 +145,43 @@ namespace dht
 							BValueNode* vn = dynamic_cast<BValueNode*>(vals->getChild(i));
 							if (!vn)
 								continue;
-							dbl.append(DBItem((Uint8*)vn->data().toByteArray().data()));
+							
+							QByteArray d = vn->data().toByteArray();
+							if (d.length() == 6) // IPv4
+							{
+								Uint16 port = bt::ReadUint16((const Uint8*)d.data(),4);
+								KNetwork::KInetSocketAddress addr(KIpAddress(d.data(),4),port);
+								dbl.append(DBItem(addr));
+							}
+							else if (d.length() == 18)// IPv6
+							{
+								Uint16 port = bt::ReadUint16((const Uint8*)d.data(),16);
+								KNetwork::KInetSocketAddress addr(KIpAddress(d.data(),6),port);
+								dbl.append(DBItem(addr));
+							}
 						}
 						return new GetPeersRsp(mtid,id,dbl,token);
 					}
-					else if (args->getValue("nodes"))
+					else if (args->getValue("nodes") || args->getList("nodes2"))
 					{
-						data = args->getValue("nodes")->data().toByteArray();
-						return new GetPeersRsp(mtid,id,data,token);
+						BValueNode* v = args->getValue("nodes");
+						if (v && v->data().getType() == Value::STRING)
+							data = v->data().toByteArray();
+						
+						GetPeersRsp* rsp = new GetPeersRsp(mtid,id,token);
+						rsp->setNodes(data);
+						BListNode* l = args->getList("nodes2");
+						if (l)
+						{
+							for (Uint32 i = 0;i < l->getNumChildren();i++)
+							{
+								v = l->getValue(i);
+								if (v && v->data().getType() == Value::STRING)
+									rsp->addNode(v->data().toByteArray());
+							}
+						}
+						
+						return rsp;
 					}
 					else
 					{
@@ -142,6 +193,7 @@ namespace dht
 				{
 					Out(SYS_DHT|LOG_DEBUG) << "No token in get_peers response" << endl;
 				}
+				break;
 			case ANNOUNCE_PEER :
 				return new AnnounceRsp(mtid,id);
 			default:
@@ -439,8 +491,21 @@ namespace dht
 	
 	////////////////////////////////
 	
-	FindNodeRsp::FindNodeRsp(Uint8 mtid,const Key & id,const QByteArray & nodes)
-	: MsgBase(mtid,FIND_NODE,RSP_MSG,id),nodes(nodes)
+	PackedNodeContainer::PackedNodeContainer() {}
+	PackedNodeContainer::~PackedNodeContainer() {}
+	
+	void PackedNodeContainer::addNode(const QByteArray & a)
+	{
+		if (a.size() == 26)
+			nodes.append(a);
+		else
+			nodes2.append(a);
+	}
+	
+	////////////////////////////////
+	
+	FindNodeRsp::FindNodeRsp(Uint8 mtid,const Key & id)
+	: MsgBase(mtid,FIND_NODE,RSP_MSG,id)
 	{}
 	
 	FindNodeRsp::~FindNodeRsp() {}
@@ -465,6 +530,17 @@ namespace dht
 			{
 				enc.write(QString("id")); enc.write(id.getData(),20);
 				enc.write(QString("nodes")); enc.write(nodes);
+				
+				if (nodes2.count() > 0)
+				{
+					enc.write(QString("nodes2"));
+					enc.beginList();
+					foreach (const QByteArray & item,nodes2)
+					{
+						enc.write(item);
+					}
+					enc.end();
+				}
 			}
 			enc.end();
 			enc.write(TID); enc.write(&mtid,1);
@@ -475,10 +551,9 @@ namespace dht
 	
 	////////////////////////////////
 	
-	GetPeersRsp::GetPeersRsp(Uint8 mtid,const Key & id,const QByteArray & data,const Key & token)
-	: MsgBase(mtid,dht::GET_PEERS,dht::RSP_MSG,id),token(token),data(data)
+	GetPeersRsp::GetPeersRsp(Uint8 mtid,const Key & id,const Key & token)
+	: MsgBase(mtid,dht::GET_PEERS,dht::RSP_MSG,id),token(token)
 	{
-		this->data.detach();
 	}
 	
 	GetPeersRsp::GetPeersRsp(Uint8 mtid,const Key & id,const DBItemList & values,const Key & token)
@@ -495,7 +570,7 @@ namespace dht
 	void GetPeersRsp::print()
 	{
 		Out() << QString("RSP: %1 %2 : get_peers(%3)")
-				.arg(mtid).arg(id.toString()).arg(data.size() > 0 ? "nodes" : "values") << endl;
+				.arg(mtid).arg(id.toString()).arg(nodes.size() > 0 ? "nodes" : "values") << endl;
 	}
 
 	void GetPeersRsp::encode(QByteArray & arr)
@@ -506,9 +581,20 @@ namespace dht
 			enc.write(RSP); enc.beginDict();
 			{
 				enc.write(QString("id")); enc.write(id.getData(),20);
-				if (data.size() > 0)
+				if (nodes.size() > 0 || nodes2.count() > 0)
 				{
-					enc.write(QString("nodes")); enc.write(data);
+					enc.write(QString("nodes")); enc.write(nodes);
+					if (nodes2.count() > 0)
+					{
+						enc.write(QString("nodes2"));
+						enc.beginList();
+						foreach (const QByteArray & item,nodes2)
+						{
+							enc.write(item);
+						}
+						enc.end();
+					}
+				
 					enc.write(QString("token")); enc.write(token.getData(),20);
 				}
 				else
@@ -519,7 +605,9 @@ namespace dht
 					while (i != items.end())
 					{
 						const DBItem & item = *i;
-						enc.write(item.getData(),6);
+						Uint8 tmp[18];
+						Uint32 b = item.pack(tmp);
+						enc.write(tmp,b);
 						i++;
 					}
 					enc.end();

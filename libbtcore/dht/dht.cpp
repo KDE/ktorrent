@@ -129,15 +129,10 @@ namespace dht
 		KClosestNodesSearch kns(r->getTarget(),K);
 		
 		node->findKClosestNodes(kns);
-		
-		Uint32 rs = kns.requiredSpace();
-		// create the data
-		QByteArray nodes(rs,0);
+	
+		FindNodeRsp fnr(r->getMTID(),node->getOurID());
 		// pack the found nodes in a byte array
-		if (rs > 0)
-			kns.pack(nodes);
-		
-		FindNodeRsp fnr(r->getMTID(),node->getOurID(),nodes);
+		kns.pack(&fnr);
 		fnr.setOrigin(r->getOrigin());
 		srv->sendMsg(&fnr);
 	}
@@ -156,14 +151,11 @@ namespace dht
 		node->recieved(this,r);
 		// first check if the token is OK
 		dht::Key token = r->getToken();
-		if (!db->checkToken(token,r->getOrigin().ipAddress().IPv4Addr(),r->getOrigin().port()))
+		if (!db->checkToken(token,r->getOrigin()))
 			return;
 		
 		// everything OK, so store the value
-		Uint8 tdata[6];
-		bt::WriteUint32(tdata,0,r->getOrigin().ipAddress().IPv4Addr());
-		bt::WriteUint16(tdata,4,r->getPort());
-		db->store(r->getInfoHash(),DBItem(tdata));
+		db->store(r->getInfoHash(),DBItem(r->getOrigin()));
 		// send a proper response to indicate everything is OK
 		AnnounceRsp rsp(r->getMTID(),node->getOurID());
 		rsp.setOrigin(r->getOrigin());
@@ -187,7 +179,7 @@ namespace dht
 		db->sample(r->getInfoHash(),dbl,50);
 		
 		// generate a token
-		dht::Key token = db->genToken(r->getOrigin().ipAddress().IPv4Addr(),r->getOrigin().port());
+		dht::Key token = db->genToken(r->getOrigin());
 		
 		if (dbl.count() == 0)
 		{
@@ -195,14 +187,10 @@ namespace dht
 			// find the K closest nodes and pack them
 			KClosestNodesSearch kns(r->getInfoHash(),K);
 			node->findKClosestNodes(kns);
-			Uint32 rs = kns.requiredSpace();
-			// create the data
-			QByteArray nodes(rs,0);
-			// pack the found nodes in a byte array
-			if (rs > 0)
-				kns.pack(nodes);
+			
 		
-			GetPeersRsp fnr(r->getMTID(),node->getOurID(),nodes,token);
+			GetPeersRsp fnr(r->getMTID(),node->getOurID(),token);
+			kns.pack(&fnr);
 			fnr.setOrigin(r->getOrigin());
 			srv->sendMsg(&fnr);
 		}

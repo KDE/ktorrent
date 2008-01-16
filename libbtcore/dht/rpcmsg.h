@@ -211,27 +211,42 @@ namespace dht
 		virtual void encode(QByteArray & arr);
 	};
 	
-	
-
-	class FindNodeRsp : public MsgBase
+	class PackedNodeContainer
 	{
 	public:
-		FindNodeRsp(Uint8 mtid,const Key & id,const QByteArray & nodes);
+		PackedNodeContainer();
+		virtual ~PackedNodeContainer();
+		
+		typedef QList<QByteArray>::const_iterator CItr;
+		
+		CItr begin() const {return nodes2.begin();}
+		CItr end() const {return nodes2.end();}
+		
+		void addNode(const QByteArray & a);
+		
+		void setNodes(const QByteArray & n) {nodes = n;}
+		
+		const QByteArray & getNodes() const {return nodes;}
+	protected:
+		QByteArray nodes;
+		QList<QByteArray> nodes2;
+	};
+
+	class FindNodeRsp : public MsgBase,public PackedNodeContainer
+	{
+	public:
+		FindNodeRsp(Uint8 mtid,const Key & id);
 		virtual ~FindNodeRsp();
 		
 		virtual void apply(DHT* dh_table);
 		virtual void print();
 		virtual void encode(QByteArray & arr);
-		
-		const QByteArray & getNodes() const {return nodes;}
-	protected:
-		QByteArray nodes;
 	};
 	
-	class GetPeersRsp : public MsgBase
+	class GetPeersRsp : public MsgBase,public PackedNodeContainer
 	{
 	public:
-		GetPeersRsp(Uint8 mtid,const Key & id,const QByteArray & data,const Key & token);
+		GetPeersRsp(Uint8 mtid,const Key & id,const Key & token);
 		GetPeersRsp(Uint8 mtid,const Key & id,const DBItemList & values,const Key & token);
 		virtual ~GetPeersRsp();
 		
@@ -239,14 +254,12 @@ namespace dht
 		virtual void print();
 		virtual void encode(QByteArray & arr);
 		
-		const QByteArray & getData() const {return data;}
 		const DBItemList & getItemList() const {return items;}
 		const Key & getToken() const {return token;}
-		bool containsNodes() const {return data.size() > 0;}
-		bool containsValues() const {return data.size() == 0;}
+		bool containsNodes() const {return nodes.size() > 0 || nodes2.count() > 0;}
+		bool containsValues() const {return nodes.size() == 0;}
 	private:
 		Key token;
-		QByteArray data;
 		DBItemList items;
 	};
 	

@@ -251,7 +251,7 @@ namespace bt
 		// get the download rate in KB/sec
 		Uint32 rate_kbs = peer->getDownloadRate();
 		rate_kbs = rate_kbs / 1024;
-		Uint32 num_extra = rate_kbs / 50;
+		Uint32 num_extra = rate_kbs / 25;
 		
 		if (chunk_size >= 16)
 		{

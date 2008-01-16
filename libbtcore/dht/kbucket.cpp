@@ -290,7 +290,7 @@ namespace dht
 	void KBucket::save(bt::File & fptr)
 	{
 		BucketHeader hdr;
-		hdr.magic = BUCKET_MAGIC_NUMBER;
+		hdr.magic = BUCKET_MAGIC_NUMBER + 1;
 		hdr.index = idx;
 		hdr.num_entries = entries.count();
 		
@@ -300,11 +300,25 @@ namespace dht
 		{
 			KBucketEntry & e = *i;
 			const KIpAddress & ip = e.getAddress().ipAddress();
-			Uint8 tmp[26];
-			bt::WriteUint32(tmp,0,ip.IPv4Addr());
-			bt::WriteUint16(tmp,4,e.getAddress().port());
-			memcpy(tmp+6,e.getID().getData(),20);
-			fptr.write(tmp,26);
+			
+			if (ip.version() == 4)
+			{
+				Uint8 tmp[27];
+				tmp[0] = 0x04;
+				bt::WriteUint32(tmp,1,ip.IPv4Addr());
+				bt::WriteUint16(tmp,5,e.getAddress().port());
+				memcpy(tmp+7,e.getID().getData(),20);
+				fptr.write(tmp,27);
+			}
+			else
+			{
+				Uint8 tmp[39];
+				tmp[0] = 0x06;
+				memcpy(tmp+1,ip.addr(),16);
+				bt::WriteUint16(tmp,17,e.getAddress().port());
+				memcpy(tmp+19,e.getID().getData(),20);
+				fptr.write(tmp,39);
+			}
 		}
 	}
 	
@@ -315,15 +329,30 @@ namespace dht
 		
 		for (Uint32 i = 0;i < hdr.num_entries;i++)
 		{
-			Uint8 tmp[26];
-			if (fptr.read(tmp,26) != 26)
+			Uint8 tmp[39];
+			if (fptr.read(tmp,27) != 27)
 				return;
 			
-			entries.append(KBucketEntry(
-				KInetSocketAddress(
-					KIpAddress(bt::ReadUint32(tmp,0)),
-					bt::ReadUint16(tmp,4)),
-				dht::Key(tmp+6)));
+			if (tmp[0] == 0x06) // IPv6, so read more
+				if (fptr.read(tmp+27,12) != 12)
+					return;
+			
+			if (tmp[0] == 0x06)
+			{
+				entries.append(KBucketEntry(
+					KInetSocketAddress(
+						KIpAddress(tmp+1,6),
+						bt::ReadUint16(tmp,17)),
+					dht::Key(tmp+19)));
+			}
+			else
+			{
+				entries.append(KBucketEntry(
+					KInetSocketAddress(
+						KIpAddress(bt::ReadUint32(tmp,1)),
+						bt::ReadUint16(tmp,5)),
+					dht::Key(tmp+7)));
+			}
 		}
 	}
 	

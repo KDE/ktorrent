@@ -52,14 +52,23 @@ namespace dht
 		
 		if (gpr->containsNodes())
 		{
-			const QByteArray & n = gpr->getData();
+			const QByteArray & n = gpr->getNodes();
 			Uint32 nval = n.size() / 26;
 			for (Uint32 i = 0;i < nval;i++)
 			{
 				// add node to todo list
-				KBucketEntry e = UnpackBucketEntry(n,i*26);
-				if (!todo.contains(e) && !visited.contains(e) && 
-					todo.count() < 100)
+				KBucketEntry e = UnpackBucketEntry(n,i*26,4);
+				if (!todo.contains(e) && !visited.contains(e) && todo.count() < 100)
+				{
+					todo.append(e);
+				}
+			}
+			
+			for (PackedNodeContainer::CItr itr = gpr->begin();itr != gpr->end();itr++)
+			{
+				const QByteArray & ba = *itr;
+				KBucketEntry e = UnpackBucketEntry(ba,0,6);
+				if (!todo.contains(e) && !visited.contains(e) && todo.count() < 100)
 				{
 					todo.append(e);
 				}

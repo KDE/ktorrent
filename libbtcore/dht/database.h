@@ -22,6 +22,7 @@
 
 #include <qmap.h>
 #include <qlist.h>
+#include <k3socketaddress.h>
 #include <util/ptrmap.h>
 #include <util/constants.h>
 #include <util/array.h>
@@ -41,19 +42,26 @@ namespace dht
 	 */
 	class DBItem
 	{
-		bt::Uint8 item[6];
+		KNetwork::KInetSocketAddress addr;
 		bt::TimeStamp time_stamp;
 	public:
 		DBItem();
-		DBItem(const bt::Uint8* ip_port);
+		DBItem(const KNetwork::KInetSocketAddress & addr);
 		DBItem(const DBItem & item);
 		virtual ~DBItem();
 		
 		/// See if the item is expired
 		bool expired(bt::TimeStamp now) const;
 		
-		/// Get the data of an item
-		const bt::Uint8* getData() const {return item;}
+		/// Get the address of an item
+		const KNetwork::KInetSocketAddress & getAddress() const {return addr;}
+		
+		/**
+		 * Pack this item into a buffer, the buffer needs to big enough to handle IPv6 addresses (so 16 + 2 (for the port))
+		 * @param buf The buffer
+		 * @return The number of bytes used
+		 */
+		bt::Uint32 pack(bt::Uint8* buf) const;
 		
 		DBItem & operator = (const DBItem & item);
 	};
@@ -102,20 +110,18 @@ namespace dht
 		/**
 		 * Generate a write token, which will give peers write access to
 		 * the DB.
-		 * @param ip The IP of the peer
-		 * @param port The port of the peer
+		 * @param addr The address of the peer
 		 * @return A Key
 		 */
-		dht::Key genToken(bt::Uint32 ip,bt::Uint16 port);
+		dht::Key genToken(const KNetwork::KInetSocketAddress & addr);
 		
 		/**
 		 * Check if a received token is OK.
 		 * @param token The token received
-		 * @param ip The ip of the sender
-		 * @param port The port of the sender
+		 * @param addr The address of the peer
 		 * @return true if the token was given to this peer, false other wise
 		 */
-		bool checkToken(const dht::Key & token,bt::Uint32 ip,bt::Uint16 port);
+		bool checkToken(const dht::Key & token,const KNetwork::KInetSocketAddress & addr);
 		
 		/// Test wether or not the DB contains a key
 		bool contains(const dht::Key & key) const;

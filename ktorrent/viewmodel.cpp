@@ -116,7 +116,7 @@ namespace kt
 			mdl->emitDataChanged(row,8);
 		}
 		
-		if (leechers_total != s.leechers_total || leechers_connected_to != leechers_connected_to)
+		if (leechers_total != s.leechers_total || leechers_connected_to != s.leechers_connected_to)
 		{
 			leechers_total = s.leechers_total;
 			leechers_connected_to = s.leechers_connected_to;
