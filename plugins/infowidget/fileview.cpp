@@ -70,7 +70,7 @@ namespace kt
 		
 		connect(this,SIGNAL(customContextMenuRequested(const QPoint & )),
 				this,SLOT(showContextMenu(const QPoint& )));
-		connect(this,SIGNAL(itemDoubleClicked(const QModelIndex & )),
+		connect(this,SIGNAL(doubleClicked(const QModelIndex & )),
 				this,SLOT(onDoubleClicked(const QModelIndex & )));
 		
 		setEnabled(false);
