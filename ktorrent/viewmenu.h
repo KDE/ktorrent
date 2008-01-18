@@ -70,6 +70,7 @@ namespace kt
 		QMenu* add_to_group;
 		QAction* check_data;
 		QAction* speed_limits;
+		QMap<QAction*,QString> groups_map;
 	};
 }
 

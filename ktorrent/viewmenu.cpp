@@ -168,14 +168,17 @@ namespace kt
 	void ViewMenu::updateGroupsMenu()
 	{
 		add_to_group->clear();
+		groups_map.clear();
 		for (GroupManager::iterator i = gman->begin();i != gman->end();i++)
-			add_to_group->addAction(i->first);
+		{
+			groups_map[add_to_group->addAction(i->first)] = i->first;
+		}
 	}
 
 	void ViewMenu::groupsMenuItemTriggered(QAction* act)
 	{
 		QList<bt::TorrentInterface*> sel;
-		Group* g = gman->find(act->text().remove('&')); // remove the ampersands added by Qt
+		Group* g = gman->find(groups_map[act]); // remove the ampersands added by Qt
 	//	Out(SYS_GEN|LOG_DEBUG) << "groupsMenuItemTriggered " << act->text() << endl;
 		if (!g)
 			return;
