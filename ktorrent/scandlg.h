@@ -23,7 +23,7 @@
 
 #include <QTimer>
 #include <QMutex>
-#include <QDialog>
+#include <KDialog>
 #include <datachecker/datacheckerlistener.h>
 #include "ui_scandlg.h"
 
@@ -36,7 +36,7 @@ namespace kt
 {
 	class Core;
 
-	class ScanDlg : public QDialog,public Ui_ScanDlg,public bt::DataCheckerListener
+	class ScanDlg : public KDialog,public bt::DataCheckerListener
 	{
 		Q_OBJECT
 	public:
@@ -81,6 +81,11 @@ namespace kt
 		int qm_priority;
 		bool scanning;
 		Core* core;
+                QProgressBar *m_progress;
+                KPushButton *m_cancel;
+                QLabel *m_torrent_label;
+                QLabel *m_chunks_failed;
+                QLabel *m_chunks_found;
 	};
 }
 
