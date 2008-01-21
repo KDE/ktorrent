@@ -41,7 +41,7 @@ namespace kt
 
 
 	bool TorrentGroup::isMember(TorrentInterface* tor)
-	{
+	{	
 		if (torrents.count(tor) > 0)
 			return true;
 		

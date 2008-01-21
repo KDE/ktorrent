@@ -22,6 +22,7 @@
 #include <QBrush>
 #include <QColor>
 #include <QPalette>
+#include <QMimeData>
 #include <klocale.h>
 #include <kglobal.h>
 #include <util/log.h>
@@ -377,6 +378,41 @@ namespace kt
 			return torrents[index.row()].dataForSorting(index.column());
 		
 		return QVariant();
+	}
+	
+	Qt::ItemFlags ViewModel::flags(const QModelIndex & index) const
+	{
+		if (!index.isValid() || index.row() >= torrents.count())
+			return QAbstractTableModel::flags(index);
+		else
+			return QAbstractTableModel::flags(index) | Qt::ItemIsDragEnabled;
+	}
+	
+	QStringList ViewModel::mimeTypes() const
+	{
+		QStringList types;
+		types << "application/x-ktorrent-drag-object";
+		return types;
+	}
+	
+	QMimeData* ViewModel::mimeData(const QModelIndexList &indexes) const
+	{
+		QMimeData* mime_data = new QMimeData();
+		QByteArray encoded_data;
+
+		QDataStream stream(&encoded_data, QIODevice::WriteOnly);
+
+		foreach (QModelIndex index, indexes) 
+		{
+			if (index.isValid()) 
+			{
+				QString text = data(createIndex(index.row(),0), Qt::DisplayRole).toString();
+				stream << text;
+			}
+		}
+
+		mime_data->setData( "application/x-ktorrent-drag-object", encoded_data);
+		return mime_data;
 	}
 	
 	void ViewModel::torrentsFromIndexList(const QModelIndexList & idx,QList<bt::TorrentInterface*> & tlist)

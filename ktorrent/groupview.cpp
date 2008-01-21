@@ -112,10 +112,12 @@ namespace kt
 		for (GroupManager::iterator i = gman->begin();i != gman->end();i++)
 		{
 			GroupViewItem* gvi = addGroup(i->second,custom_root);
-			gvi->setFlags(gvi->flags() | Qt::ItemIsEditable);
+			gvi->setFlags(gvi->flags() | Qt::ItemIsEditable | Qt::ItemIsDropEnabled);
 		}
 
 		setAcceptDrops(true);
+		setDropIndicatorShown(true);
+		setDragDropMode(QAbstractItemView::DropOnly);
 	}
 
 
@@ -164,7 +166,7 @@ namespace kt
 		}
 		
 		GroupViewItem* gvi = addGroup(gman->newGroup(name),custom_root);
-		gvi->setFlags(gvi->flags() | Qt::ItemIsEditable);
+		gvi->setFlags(gvi->flags() | Qt::ItemIsEditable | Qt::ItemIsDropEnabled);
 		gman->saveGroups();
 	}
 	
@@ -205,11 +207,13 @@ namespace kt
 		if (parent)
 		{
 			li = new GroupViewItem(parent,g);
+			li->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		}
 		else
 		{
 			li = new GroupViewItem(this,g);
 			li->setText(1,g->groupName());
+			li->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 			addTopLevelItem(li);
 		}
 		
@@ -297,31 +301,37 @@ namespace kt
 			}
 		}
 	}
-
-
 	
-	void GroupView::dropEvent(QDropEvent *event)
+	bool GroupView::dropMimeData(QTreeWidgetItem *parent, int index,const QMimeData *data,Qt::DropAction action)			  
 	{
-		GroupViewItem* li = dynamic_cast<GroupViewItem*>(itemAt(event->pos()));
-		if (li)
-		{	
-			TorrentGroup* g = dynamic_cast<TorrentGroup*>(li->group());
-			if (g)
-			{
-				QList<TorrentInterface*> sel;
-				view->getSelection(sel);
-				foreach (TorrentInterface* ti,sel)
-					g->add(ti);
-				gman->saveGroups();
-			}
+		GroupViewItem* li = dynamic_cast<GroupViewItem*>(parent);
+		if (!li)
+			return false;
+		
+		TorrentGroup* g = dynamic_cast<TorrentGroup*>(li->group());
+		if (!g)
+			return false;
+		
+		QList<TorrentInterface*> sel;
+		view->getSelection(sel);
+		foreach (TorrentInterface* ti,sel)
+		{
+			g->add(ti);
 		}
-		event->acceptProposedAction();
+		gman->saveGroups();
+		return true;
 	}
 	
-	void GroupView::dragEnterEvent(QDragEnterEvent *event)
+	QStringList GroupView::mimeTypes() const
 	{
-		if (event->mimeData()->hasFormat("application/x-ktorrent-drag-object"))
-			event->acceptProposedAction();
+		QStringList sl;
+		sl << "application/x-ktorrent-drag-object";
+		return sl;
+	}
+	
+	Qt::DropActions GroupView::supportedDropActions () const
+	{
+		return Qt::CopyAction;
 	}
 
 	void GroupView::openView()

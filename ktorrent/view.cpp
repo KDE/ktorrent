@@ -53,6 +53,7 @@ namespace kt
 		setRootIsDecorated(false);
 		setSortingEnabled(true);
 		setAlternatingRowColors(true);
+		setDragEnabled(true);
 		setSelectionMode(QAbstractItemView::ExtendedSelection);
 		setSelectionBehavior(QAbstractItemView::SelectRows);
 		
@@ -110,17 +111,19 @@ namespace kt
 		// if they are not part of the current group, just hide them
 		foreach (bt::TorrentInterface* ti,all)
 		{
+			QModelIndex midx = model->index(idx,0,QModelIndex());
+			midx = proxy_model->mapFromSource(midx);
 			if (!group || (group && group->isMember(ti)))
 			{
-				if (isRowHidden(idx,QModelIndex()))
-					setRowHidden(idx,QModelIndex(),false);
+				if (isRowHidden(midx.row(),QModelIndex()))
+					setRowHidden(midx.row(),QModelIndex(),false);
 
 				torrents++;
 				if (ti->getStats().running)
 					running++;
 			}
-			else if (!isRowHidden(idx,QModelIndex()))
-				setRowHidden(idx,QModelIndex(),true);
+			else if (!isRowHidden(midx.row(),QModelIndex()))
+				setRowHidden(midx.row(),QModelIndex(),true);
 			
 			idx++;
 		}

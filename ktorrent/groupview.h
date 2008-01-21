@@ -85,8 +85,10 @@ namespace kt
 	private:
 		void createMenu(KActionCollection* col);
 		GroupViewItem* addGroup(Group* g,QTreeWidgetItem* parent);
-		virtual void dragEnterEvent(QDragEnterEvent *event);
-		virtual void dropEvent(QDropEvent* event);
+		virtual bool dropMimeData(QTreeWidgetItem *parent, int index, 
+					  const QMimeData *data,Qt::DropAction action);    
+		virtual QStringList mimeTypes() const;
+		virtual Qt::DropActions supportedDropActions () const;
 
 	private:
 		ViewManager* view;
