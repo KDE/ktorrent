@@ -93,13 +93,17 @@ namespace net
 	Socket::~Socket()
 	{
 		if (m_fd >= 0)
+		{
+			shutdown(m_fd, SHUT_RDWR);
 			::close(m_fd);
+		}
 	}
 	
 	void Socket::close()
 	{
 		if (m_fd >= 0)
 		{
+			shutdown(m_fd, SHUT_RDWR);
 			::close(m_fd);
 			m_fd = -1;
 			m_state = CLOSED;
