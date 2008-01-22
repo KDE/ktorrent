@@ -43,6 +43,9 @@
 #include <torrent/server.h>
 #include <peer/authenticationmonitor.h>
 #include <groups/groupmanager.h>
+#ifdef ENABLE_DHT_SUPPORT
+#include <dht/dht.h>
+#endif
 
 #include "settings.h"
 #include "pluginmanager.h"
@@ -559,6 +562,10 @@ namespace kt
 
 	void Core::onExit()
 	{
+#ifdef ENABLE_DHT_SUPPORT
+		// make sure DHT is stopped
+		Globals::instance().getDHT().stop();
+#endif
 		// stop timer to prevent updates during wait
 		update_timer.stop();
 		// stop all authentications going on

@@ -52,7 +52,7 @@ namespace kt
 		dht::DHTBase & ht = Globals::instance().getDHT();
 		if (Settings::dhtSupport() && !ht.isRunning())
 		{
-			ht.start(kt::DataDir() + "dht_table",Settings::dhtPort());
+			ht.start(kt::DataDir() + "dht_table",kt::DataDir() + "dht_key",Settings::dhtPort());
 			return true;
 		}
 		else if (!Settings::dhtSupport() && ht.isRunning())
@@ -63,7 +63,7 @@ namespace kt
 		else if (Settings::dhtSupport() && ht.getPort() != Settings::dhtPort())
 		{
 			ht.stop();
-			ht.start(kt::DataDir() + "dht_table",Settings::dhtPort());
+			ht.start(kt::DataDir() + "dht_table",kt::DataDir() + "dht_key",Settings::dhtPort());
 			return true;
 		}
 #endif

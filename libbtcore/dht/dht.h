@@ -105,7 +105,7 @@ namespace dht
 		/// See if it is possible to start a task
 		bool canStartTask() const;
 		
-		void start(const QString & table,bt::Uint16 port);
+		void start(const QString & table,const QString & key_file,bt::Uint16 port);
 		void stop();
 		void addDHTNode(const QString & host,bt::Uint16 hport);
 		

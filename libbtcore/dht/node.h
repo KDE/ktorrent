@@ -46,7 +46,7 @@ namespace dht
 	{
 		Q_OBJECT
 	public:
-		Node(RPCServer* srv);
+		Node(RPCServer* srv,const QString & key_file);
 		virtual ~Node();
 
 		/**

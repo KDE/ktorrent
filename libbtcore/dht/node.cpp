@@ -36,12 +36,49 @@ using namespace KNetwork;
 
 namespace dht
 {
+	static void SaveKey(const dht::Key & key,const QString & key_file)
+	{
+		bt::File fptr;
+		if (!fptr.open(key_file,"wb"))
+		{
+			Out(SYS_DHT|LOG_IMPORTANT) << "DHT: Cannot open file " << key_file << " : " << fptr.errorString() << endl;
+			return;
+		}
+		
+		fptr.write(key.getData(),20);
+		fptr.close();
+	}
+	
+	static dht::Key LoadKey(const QString & key_file)
+	{
+		bt::File fptr;
+		if (!fptr.open(key_file,"rb"))
+		{
+			Out(SYS_DHT|LOG_IMPORTANT) << "DHT: Cannot open file " << key_file << " : " << fptr.errorString() << endl;
+			dht::Key r = dht::Key::random();
+			SaveKey(r,key_file);
+			return r;
+		}
+		
+		Uint8 data[20];
+		if (!fptr.read(data,20) != 20)
+		{
+			dht::Key r = dht::Key::random();
+			SaveKey(r,key_file);
+			return r;
+		}
+		
+		return dht::Key(data);
+	}
+	
+	
 
-	Node::Node(RPCServer* srv) : srv(srv)
+	Node::Node(RPCServer* srv,const QString & key_file) : srv(srv)
 	{
 		num_receives = 0;
 		num_entries = 0;
-		our_id = dht::Key::random();
+		
+		our_id = LoadKey(key_file);
 		for (int i = 0;i < 160;i++)
 			bucket[i] = 0;
 	}

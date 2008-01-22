@@ -82,7 +82,7 @@ namespace kt
 		dht::DHTBase & ht = Globals::instance().getDHT();
 		if (Settings::dhtSupport() && !ht.isRunning())
 		{
-			ht.start(kt::DataDir() + "dht_table",Settings::dhtPort());
+			ht.start(kt::DataDir() + "dht_table",kt::DataDir() + "dht_key",Settings::dhtPort());
 		}
 		else if (!Settings::dhtSupport() && ht.isRunning())
 		{
@@ -92,7 +92,7 @@ namespace kt
 		{
 			Out(SYS_GEN|LOG_NOTICE) << "Restarting DHT with new port " << Settings::dhtPort() << endl;
 			ht.stop();
-			ht.start(kt::DataDir() + "dht_table",Settings::dhtPort());
+			ht.start(kt::DataDir() + "dht_table",kt::DataDir() + "dht_key",Settings::dhtPort());
 		}
 #endif
 		
