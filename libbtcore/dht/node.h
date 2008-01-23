@@ -95,6 +95,7 @@ namespace dht
 		RPCServer* srv;
 		Uint32 num_receives;
 		Uint32 num_entries;
+		bool delete_table;
 	};
 
 }

@@ -20,6 +20,7 @@
 #include <QtAlgorithms>
 #include <k3socketaddress.h>
 #include <util/file.h>
+#include <util/log.h>
 #include <util/functions.h>
 #include <netinet/in.h>
 #include "kbucket.h"
@@ -28,6 +29,7 @@
 #include "node.h"
 
 using namespace KNetwork;
+using namespace bt;
 
 namespace dht
 {
@@ -205,6 +207,7 @@ namespace dht
 			KBucketEntry & e = *i;
 			if (e.isQuestionable())
 			{
+				Out(SYS_DHT|LOG_DEBUG) << "Pinging questionable node : " << e.getAddress().toString() << endl;
 				PingReq* p = new PingReq(node->getOurID());
 				p->setDestination(e.getAddress());
 				RPCCall* c = srv->doCall(p);

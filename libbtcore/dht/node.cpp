@@ -21,6 +21,7 @@
 #include <util/log.h>
 #include <util/file.h>
 #include <util/functions.h>
+#include <util/fileops.h>
 #include <torrent/globals.h>
 #include "node.h"
 #include "rpcmsg.h"
@@ -49,7 +50,7 @@ namespace dht
 		fptr.close();
 	}
 	
-	static dht::Key LoadKey(const QString & key_file)
+	static dht::Key LoadKey(const QString & key_file,bool & new_key)
 	{
 		bt::File fptr;
 		if (!fptr.open(key_file,"rb"))
@@ -57,17 +58,20 @@ namespace dht
 			Out(SYS_DHT|LOG_IMPORTANT) << "DHT: Cannot open file " << key_file << " : " << fptr.errorString() << endl;
 			dht::Key r = dht::Key::random();
 			SaveKey(r,key_file);
+			new_key = true;
 			return r;
 		}
 		
 		Uint8 data[20];
-		if (!fptr.read(data,20) != 20)
+		if (fptr.read(data,20) != 20)
 		{
 			dht::Key r = dht::Key::random();
 			SaveKey(r,key_file);
+			new_key = true;
 			return r;
 		}
 		
+		new_key = false;
 		return dht::Key(data);
 	}
 	
@@ -78,7 +82,8 @@ namespace dht
 		num_receives = 0;
 		num_entries = 0;
 		
-		our_id = LoadKey(key_file);
+		delete_table = false;
+		our_id = LoadKey(key_file,delete_table);
 		for (int i = 0;i < 160;i++)
 			bucket[i] = 0;
 	}
@@ -243,6 +248,14 @@ namespace dht
 		
 	void Node::loadTable(const QString & file)
 	{
+		if (delete_table)
+		{
+			delete_table = false;
+			bt::Delete(file,true);
+			Out(SYS_DHT|LOG_IMPORTANT) << "DHT: new key, so removing table" << endl;
+			return;
+		}
+		
 		bt::File fptr;
 		if (!fptr.open(file,"rb"))
 		{
