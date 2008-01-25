@@ -55,7 +55,7 @@ namespace bt
 		Int32 toInt() const {return ival;}
 		Int64 toInt64() const {return big_ival;}
 		QString toString() const {return QString(strval);}
-		QString toString(const QString & encoding) const;
+		QString toString(QTextCodec* tc) const;
 		QByteArray toByteArray() const {return strval;}
 	private:
 		Type type;

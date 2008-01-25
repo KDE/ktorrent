@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <QTextCodec>
+#include <util/functions.h>
 #include "torrentfileinterface.h"
 
 namespace bt
@@ -37,6 +39,24 @@ namespace bt
 	{
 		Uint32 num = last_chunk - first_chunk + 1;
 		return 100.0f * (float)num_chunks_downloaded / num;
+	}
+	
+	void TorrentFileInterface::setUnencodedPath(const QList<QByteArray> up)
+	{
+		unencoded_path = up;
+	}
+	
+	void TorrentFileInterface::changeTextCodec(QTextCodec* codec)
+	{
+		path = "";
+		int idx = 0;
+		foreach(const QByteArray & b,unencoded_path)
+		{
+			path += codec->toUnicode(b);
+			if (idx < unencoded_path.size() - 1)
+				path += bt::DirSeparator();
+			idx++;
+		}
 	}
 }
 

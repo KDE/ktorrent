@@ -21,6 +21,7 @@
 #include <qfile.h>
 #include <qdatastream.h>
 #include <qstringlist.h>
+#include <QTextCodec>
 #include <util/log.h>
 #include <util/functions.h>
 #include <util/error.h>
@@ -38,7 +39,7 @@ namespace bt
 
 	Torrent::Torrent() : piece_length(0),file_length(0),priv_torrent(false)
 	{
-		encoding = "utf8";
+		text_codec = QTextCodec::codecForName("utf-8");
 		trackers = 0;
 	}
 
@@ -65,8 +66,12 @@ namespace bt
 			BValueNode* enc = dict->getValue("encoding");
 			if (enc)
 			{
-				encoding = enc->data().toString();
-				Out() << "Encoding : " << encoding << endl;
+				QTextCodec* tc = QTextCodec::codecForName(enc->data().toByteArray());
+				if (tc)
+				{
+					Out(SYS_GEN|LOG_DEBUG) << "Encoding : " << QString(tc->name()) << endl;
+					text_codec = tc;
+				}
 			}
 
 			BValueNode* announce = dict->getValue("announce");
@@ -163,13 +168,15 @@ namespace bt
 				throw Error(i18n("Corrupted torrent!"));
 
 			QString path;
+			QList<QByteArray> unencoded_path;
 			for (Uint32 j = 0;j < ln->getNumChildren();j++)
 			{
 				BValueNode* v = ln->getValue(j);
 				if (!v || v->data().getType() != Value::STRING)
 					throw Error(i18n("Corrupted torrent!"));
 	
-				QString sd = v->data().toString(encoding);
+				unencoded_path.append(v->data().toByteArray());
+				QString sd = v->data().toString(text_codec);
 				path += sd;
 				if (j + 1 < ln->getNumChildren())
 					path += bt::DirSeparator();
@@ -190,6 +197,7 @@ namespace bt
 			{
 				Uint64 s = v->data().toInt64();
 				TorrentFile file(idx,path,file_length,s,piece_length);
+				file.setUnencodedPath(unencoded_path);
 
 				// update file_length
 				file_length += s;
@@ -211,7 +219,7 @@ namespace bt
 		if (!trackers)
 			trackers = new TrackerTier();
 		
-		trackers->urls.append(KUrl(node->data().toString(encoding).trimmed()));
+		trackers->urls.append(KUrl(node->data().toString(text_codec).trimmed()));
 	}
 	
 	void Torrent::loadPieceLength(BValueNode* node)
@@ -261,7 +269,8 @@ namespace bt
 		if (!node || node->data().getType() != Value::STRING)
 			throw Error(i18n("Corrupted torrent!"));
 		
-		name_suggestion = node->data().toString(encoding);
+		unencoded_name = node->data().toByteArray();
+		name_suggestion = text_codec->toUnicode(unencoded_name);
 	}
 	
 	void Torrent::loadAnnounceList(BNode* node)
@@ -337,7 +346,7 @@ namespace bt
 	
 	void Torrent::loadWebSeed(BValueNode* node)
 	{
-		web_seeds.append(node->data().toString(encoding));
+		web_seeds.append(node->data().toString(text_codec));
 	}
 
 	void Torrent::debugPrintInfo()
@@ -462,5 +471,20 @@ namespace bt
 	{
 		QStringList sl = p.split(bt::DirSeparator());
 		return !sl.contains("..");
+	}
+	
+	void Torrent::changeTextCodec(QTextCodec* codec)
+	{
+		if (text_codec == codec)
+			return;
+		
+		Out(SYS_GEN|LOG_DEBUG) << "Change Codec: " << QString(codec->name()) << endl;
+		text_codec = codec;
+		for (int i = 0;i < files.count();i++)
+		{
+			TorrentFile & f = files[i];
+			f.changeTextCodec(codec);
+		}
+		name_suggestion = text_codec->toUnicode(unencoded_name);
 	}
 }

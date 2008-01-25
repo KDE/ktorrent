@@ -48,6 +48,10 @@ namespace kt
 	void TorrentFileModel::update()
 	{}
 
+	void TorrentFileModel::onCodecChange()
+	{
+		reset();
+	}
 }
 
 #include "torrentfilemodel.moc"

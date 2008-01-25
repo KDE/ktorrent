@@ -222,6 +222,14 @@ namespace kt
 			root->insert(tf.getPath(),&tf);
 		}
 	}
+	
+	void TorrentFileTreeModel::onCodecChange()
+	{
+		delete root;
+		root = 0;
+		constructTree();
+		reset();
+	}
 
 	int TorrentFileTreeModel::rowCount(const QModelIndex & parent) const
 	{	

@@ -195,6 +195,8 @@ namespace bt
 		virtual void dndMissingFiles();
 		virtual void addPeerSource(PeerSource* ps);
 		virtual void removePeerSource(PeerSource* ps);
+		virtual const QTextCodec* getTextCodec() const;
+		virtual void changeTextCodec(QTextCodec* tc);
 		
 		int getPriority() const { return istats.priority; }
 		void setPriority(int p);

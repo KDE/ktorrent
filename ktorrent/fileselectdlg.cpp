@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <QTextCodec>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
@@ -52,11 +53,18 @@ namespace kt
 		connect(m_invert_selection,SIGNAL(clicked()),this,SLOT(invertSelection()));
 		connect(m_ok,SIGNAL(clicked()),this,SLOT(accept()));
 		connect(m_cancel,SIGNAL(clicked()),this,SLOT(reject()));
+		
 
 		m_ok->setGuiItem(KStandardGuiItem::ok());
 		m_cancel->setGuiItem(KStandardGuiItem::cancel());
 		
 		m_downloadLocation->setMode(KFile::File|KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
+		
+		encodings = QTextCodec::availableMibs();
+		foreach (int mib,encodings)
+		{
+			m_encoding->addItem(QTextCodec::codecForMib(mib)->name());
+		}
 	}
 
 	FileSelectDlg::~FileSelectDlg()
@@ -69,11 +77,17 @@ namespace kt
 		this->start = start;
 		if (tc)
 		{
+			int idx = encodings.indexOf(tc->getTextCodec()->mibEnum());
+			Out(SYS_GEN|LOG_DEBUG) << "Codec: " << QString(tc->getTextCodec()->name()) << " " << idx << endl;
+			m_encoding->setCurrentIndex(idx);
+			connect(m_encoding,SIGNAL(currentIndexChanged(const QString &)),this,SLOT(onCodecChanged(const QString&)));
+			
 			for (Uint32 i = 0;i < tc->getNumFiles();i++)
 			{
 				bt::TorrentFileInterface & file = tc->getTorrentFile(i);
 				file.setEmitDownloadStatusChanged(false);
 			}
+			
 			populateFields();
 			if (Settings::useFileList())
 				model = new TorrentFileListModel(tc,TorrentFileTreeModel::DELETE_FILES,this);
@@ -263,6 +277,16 @@ namespace kt
 			lblStatus->setText("<font color=\"#ff0000\">" + i18n("%1 short!", bt::BytesToString(-1*(long long)(bytes_free - bytes_to_download))));
 		else
 			lblStatus->setText(bt::BytesToString(bytes_free - bytes_to_download));
+	}
+	
+	void FileSelectDlg::onCodecChanged(const QString & text)
+	{
+		QTextCodec* codec = QTextCodec::codecForName(text.toLocal8Bit());
+		if (codec)
+		{
+			tc->changeTextCodec(codec);
+			model->onCodecChange();
+		}
 	}
 }
 

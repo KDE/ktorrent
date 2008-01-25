@@ -113,6 +113,11 @@ namespace kt
 		 * Update gui if necessary
 		 */
 		virtual void update();
+		
+		/**
+		 * Codec has changed, so update the model.
+		 */
+		virtual void onCodecChange();
 signals:
 		/**
 		 * Emitted whenever one or more items changes check state

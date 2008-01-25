@@ -448,7 +448,11 @@ namespace bt
 		/// Do we need to update this torrent ?
 		virtual bool updateNeeded() const = 0;
 		
-		//virtual void moveFiles(
+		/// Get the text codec used in the torrent
+		virtual const QTextCodec* getTextCodec() const = 0;
+		
+		/// Set the text codec
+		virtual void changeTextCodec(QTextCodec* tc) = 0;
 	signals:
 		/**
 		 * Emited when we have finished downloading.

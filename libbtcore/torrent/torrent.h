@@ -31,6 +31,7 @@
 #include <btcore_export.h>
 #include "torrentfile.h"
 
+class QTextCodec;
 
 
 namespace bt
@@ -191,6 +192,12 @@ namespace bt
 		 * Get the list with web seed URL's
 		 */
 		const KUrl::List & getWebSeeds() const {return web_seeds;}
+		
+		/// Change the text codec
+		void changeTextCodec(QTextCodec* codec);
+		
+		/// Get the text codec
+		const QTextCodec* getTextCodec() {return text_codec;}
 
 	private:
 		void loadInfo(BDictNode* node);
@@ -210,6 +217,7 @@ namespace bt
 	private:
 		TrackerTier* trackers;
 		QString name_suggestion;
+		QByteArray unencoded_name;
 		Uint64 piece_length;
 		Uint64 file_length;
 		SHA1Hash info_hash;
@@ -217,7 +225,7 @@ namespace bt
 		QVector<SHA1Hash> hash_pieces;
 		QVector<TorrentFile> files;
 		QVector<DHTNode> nodes;
-		QString encoding;
+		QTextCodec* text_codec;
 		bool priv_torrent;
 		KUrl::List web_seeds;
 	};

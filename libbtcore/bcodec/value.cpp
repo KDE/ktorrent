@@ -43,16 +43,12 @@ namespace bt
 	{}
 
 
-	QString Value::toString(const QString & encoding) const
+	QString Value::toString(QTextCodec* tc) const
 	{
-		if (encoding.isNull() || encoding.isEmpty())
-			return toString();
-
-		QTextCodec* tc = QTextCodec::codecForName(encoding.toAscii());
 		if (!tc)
 			return toString();
-
-		return tc->toUnicode(strval);
+		else
+			return tc->toUnicode(strval);
 	}
 	
 

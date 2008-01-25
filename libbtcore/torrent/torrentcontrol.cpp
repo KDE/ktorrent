@@ -20,6 +20,7 @@
  ***************************************************************************/
 #include <qdir.h>
 #include <qfile.h>
+#include <QTextCodec>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
@@ -1026,7 +1027,7 @@ namespace bt
 		
 		st.write("UPLOAD_LIMIT",QString::number(upload_limit));
 		st.write("DOWNLOAD_LIMIT",QString::number(download_limit));
-		
+		st.write("ENCODING",QString(tor->getTextCodec()->name()));
 		st.writeSync();
 	}
 
@@ -1110,6 +1111,14 @@ namespace bt
 			}
 		}
 		download_limit = nl;
+		
+		QString codec = st.readString("ENCODING");
+		if (codec.length() > 0)
+		{
+			QTextCodec* cod = QTextCodec::codecForName(codec.toLocal8Bit());
+			if (cod)
+				changeTextCodec(cod);
+		}
 	}
 
 	void TorrentControl::loadOutputDir()
@@ -1817,7 +1826,22 @@ namespace bt
 		}
 	}
 
-
+	const QTextCodec* TorrentControl::getTextCodec() const
+	{
+		if (!tor)
+			return 0;
+		else
+			return tor->getTextCodec();
+	}
+	
+	void TorrentControl::changeTextCodec(QTextCodec* tc)
+	{
+		if (tor)
+		{
+			tor->changeTextCodec(tc);
+			stats.torrent_name = tor->getNameSuggestion();
+		}
+	}
 	
 }
 

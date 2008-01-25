@@ -48,6 +48,7 @@ namespace kt
 		kt::GroupManager* gman;
 		bool* user;
 		bool* start;
+		QList<int> encodings;
 	public:
 		FileSelectDlg(kt::GroupManager* gman,QWidget* parent);
 		virtual ~FileSelectDlg();
@@ -61,6 +62,7 @@ namespace kt
 		void selectNone();
 		void invertSelection();
 		void updateSizeLabels();
+		void onCodecChanged(const QString & text);
 
 	private:
 		void populateFields();

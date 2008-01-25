@@ -60,6 +60,7 @@ namespace kt
 		virtual bt::TorrentFileInterface* indexToFile(const QModelIndex & idx);
 		virtual QString dirPath(const QModelIndex & idx);
 		virtual void changePriority(const QModelIndexList & indexes,bt::Priority newpriority);
+		virtual void onCodecChange();
 	private: 
 		void constructTree();
 		void invertCheck(const QModelIndex & idx);

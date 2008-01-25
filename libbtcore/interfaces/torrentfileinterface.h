@@ -25,6 +25,8 @@
 #include <btcore_export.h>
 #include <util/constants.h>
 
+class QTextCodec;
+
 namespace bt
 {
 
@@ -108,6 +110,12 @@ namespace bt
 		/// See if preview is available
 		bool isPreviewAvailable() const {return preview;}
 		
+		/// Set the unencoded path
+		void setUnencodedPath(const QList<QByteArray> up);
+		
+		/// Change the text codec
+		void changeTextCodec(QTextCodec* codec);
+		
 	signals:
 		/**
 		 * Emitted when the download percentage has been changed.
@@ -133,6 +141,7 @@ namespace bt
 		bool preexisting;
 		bool m_emitDlStatusChanged;
 		bool preview;
+		QList<QByteArray> unencoded_path;
 	};
 
 }

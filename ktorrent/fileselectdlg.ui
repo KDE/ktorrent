@@ -130,6 +130,16 @@
          </property>
         </spacer>
        </item>
+       <item>
+        <widget class="QLabel" name="label" >
+         <property name="text" >
+          <string>Text encoding:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="KComboBox" name="m_encoding" />
+       </item>
       </layout>
      </item>
     </layout>
@@ -260,6 +270,11 @@
  <layoutdefault spacing="6" margin="11" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
   <customwidget>
    <class>KPushButton</class>
    <extends>QPushButton</extends>
