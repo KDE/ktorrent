@@ -201,7 +201,7 @@ namespace kt
 	
 	void FileView::open()
 	{
-		new KRun(KUrl(preview_path), 0, true, true);
+		new KRun(KUrl(preview_path), 0, 0, true, true);
 	}
 	
 	void FileView::changePriority(bt::Priority newpriority)
@@ -297,17 +297,17 @@ namespace kt
 			if (!file)
 			{
 				// directory
-				new KRun(KUrl(curr_tc->getDataDir() + model->dirPath(index)), 0, true, true);
+				new KRun(KUrl(curr_tc->getDataDir() + model->dirPath(index)), 0, 0, true, true);
 			}
 			else
 			{
 				// file
-				new KRun(KUrl(file->getPathOnDisk()), 0, true, true);
+				new KRun(KUrl(file->getPathOnDisk()), 0, 0, true, true);
 			}
 		}
 		else
 		{
-			new KRun(KUrl(curr_tc->getStats().output_path), 0, true, true);
+			new KRun(KUrl(curr_tc->getStats().output_path), 0, 0, true, true);
 		}
 	}
 	
