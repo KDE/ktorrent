@@ -70,13 +70,13 @@ int main(int argc, char **argv)
 	signal(SIGPIPE,SIG_IGN);
 	signal(SIGXFSZ,SIG_IGN);
 	
-	bt::SetClientInfo("KTorrent",kt::MAJOR,kt::MINOR,kt::RELEASE,bt::BETA,"KT");
+	bt::SetClientInfo("KTorrent",kt::MAJOR,kt::MINOR,kt::RELEASE,bt::RELEASE_CANDIDATE,"KT");
 	
 	KAboutData about(
 		"ktorrent", 0, ki18n("KTorrent"),
 		kt::VERSION_STRING, ki18n("Bittorrent client for KDE"),
 		KAboutData::License_GPL, 
-		ki18n("(C) 2005 - 2007 Joris Guisson and Ivan Vasic"), 
+		ki18n("(C) 2005 - 2008 Joris Guisson and Ivan Vasic"), 
 		KLocalizedString(),
 		"http://www.ktorrent.org/");
 
