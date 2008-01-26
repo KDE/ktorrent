@@ -33,7 +33,7 @@ using namespace bt;
 
 namespace kt
 {
-	QMap<QString,QString> PhpHandler::scripts;
+	QMap<QString,QByteArray> PhpHandler::scripts;
 
 	PhpHandler::PhpHandler(const QString & php_exe,PhpInterface *php) : QProcess(php_exe),php_i(php)
 	{
@@ -47,7 +47,7 @@ namespace kt
 	
 	bool PhpHandler::executeScript(const QString & path,const QMap<QString,QString> & args)
 	{
-		QString php_s;
+		QByteArray php_s;
 		if (!scripts.contains(path))
 		{
 			QFile fptr(path);
@@ -56,7 +56,7 @@ namespace kt
 				Out(SYS_WEB|LOG_DEBUG) << "Failed to open " << path << endl;
 				return false;
 			}
-			php_s = QString(fptr.readAll());
+			php_s = fptr.readAll();
 			scripts.insert(path,php_s);
 		}
 		else
@@ -64,23 +64,39 @@ namespace kt
 			php_s = scripts[path];
 		}
 		
-		output="";
+		output.resize(0);
 	
-		int firstphptag = php_s.find("<?php");
-		if ( firstphptag == -1)
+		int firstphptag = QCString(php_s).find("<?php");
+		if (firstphptag == -1)
 			return false;
 		
-		QString extra_data = php_i->globalInfo() + php_i->downloadStatus();
+		int off = firstphptag + 6;
+		QByteArray data;
+		QTextStream ts(data,IO_WriteOnly);
+		ts.setEncoding( QTextStream::UnicodeUTF8 );
+		ts.writeRawBytes(php_s.data(),off); // first write the opening tag from the script
+		php_i->globalInfo(ts);
+		php_i->downloadStatus(ts);
 		
 		QMap<QString,QString>::const_iterator it;
 			
 		for ( it = args.begin(); it != args.end(); ++it )
 		{
-			extra_data += QString("$_REQUEST[%1]=\"%2\";\n").arg(it.key()).arg(it.data());
+			ts << QString("$_REQUEST['%1']=\"%2\";\n").arg(it.key()).arg(it.data());
 		}
-			
-		php_s.insert(firstphptag + 6, extra_data);
-		return launch(php_s);
+		ts.writeRawBytes(php_s.data() + off,php_s.size() - off); // the rest of the script
+		ts << flush;
+		
+#if 0
+		QFile dinges("output.php");
+		if (dinges.open(IO_WriteOnly))
+		{
+			QTextStream out(&dinges);
+			out.writeRawBytes(data.data(),data.size());
+			dinges.close();
+		}
+#endif
+		return launch(data);
 	}
 	
 	void PhpHandler::onExited()
@@ -92,10 +108,11 @@ namespace kt
 	
 	void PhpHandler::onReadyReadStdout()
 	{
+		QTextStream out(output,IO_WriteOnly|IO_Append);
 		while (canReadLineStdout())
 		{
 			QByteArray d = readStdout();
-			output += QString(d);
+			out.writeRawBytes(d.data(),d.size());
 		}
 	}
 

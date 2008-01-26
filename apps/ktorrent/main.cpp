@@ -117,7 +117,7 @@ int main(int argc, char **argv)
 	signal(SIGXFSZ,SIG_IGN);
 	qInstallMsgHandler( StupidWarningMessagesFromQt );
 	KAboutData about("ktorrent", I18N_NOOP("KTorrent"), kt::VERSION_STRING, description,
-					 KAboutData::License_GPL, "(C) 2005 -2006 Joris Guisson and Ivan Vasic", 0,
+					 KAboutData::License_GPL, "(C) 2005 -2008 Joris Guisson and Ivan Vasic", 0,
 					 "http://www.ktorrent.org/");
 	about.addAuthor("Joris Guisson", 0, "joris.guisson@gmail.com" );
 	about.addAuthor("Ivan Vasic",0,"ivasic@gmail.com");
@@ -162,6 +162,7 @@ int main(int argc, char **argv)
 	about.addCredit("Lukasz Fibinger",I18N_NOOP("Filterbar patch"),"lucke@o2.pl");
 	about.addCredit("Jindrich Makovicka",I18N_NOOP("Non threaded fileview update patch"),"makovick@gmail.com");
 	about.addCredit("swolchok",I18N_NOOP("Optimization to SHA1 hash generation"),"evilsporkman@gmail.com");
+	about.addCredit("Markus Brueffer",I18N_NOOP("Patch to fix free diskspace calculation on FreeBSD"),"markus@brueffer.de");
 
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);

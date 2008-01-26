@@ -18,6 +18,7 @@ Name[sr@Latn]=Priključak za uvoz nedovršenih fajlova
 Name[sv]=Insticksprogram för partiell filimport
 Name[tr]=Tamamlanmamış Dosya Alma Eklentisi
 Name[xx]=xxPartialFileImportPluginxx
+Name[zh_CN]=部分文件导入插件
 Name[zh_TW]=PartialFileImport外掛程式
 ServiceTypes=KTorrent/Plugin
 Type=Service

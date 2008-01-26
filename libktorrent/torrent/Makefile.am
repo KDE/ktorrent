@@ -5,29 +5,29 @@ METASOURCES = AUTO
 
 noinst_LTLIBRARIES = libtorrent.la
 libtorrent_la_LDFLAGS = $(all_libraries)
-noinst_HEADERS = bencoder.h value.h bdecoder.h bnode.h torrent.h chunkmanager.h \
-		chunk.h peer.h globals.h peermanager.h tracker.h downloader.h authenticate.h \
-		uploader.h torrentcontrol.h choker.h chunkdownload.h speedestimater.h \
-		peerdownloader.h request.h piece.h peerid.h announcelist.h peeruploader.h uploadcap.h \
-		packetreader.h packetwriter.h packet.h httptracker.h udptracker.h cache.h \
-		singlefilecache.h multifilecache.h torrentcreator.h downloadcap.h torrentfile.h \
-		chunkselector.h server.h serverauthenticate.h authenticatebase.h udptrackersocket.h \
-		upspeedestimater.h ipblocklist.h queuemanager.h chunkcounter.h oldchokealgorithm.h \
-		newchokealgorithm.h statsfile.h preallocationthread.h cap.h advancedchokealgorithm.h \
-		cachefile.h dndfile.h authenticationmonitor.h peersourcemanager.h timeestimator.h \
-	utpex.h
+noinst_HEADERS = advancedchokealgorithm.h announcelist.h authenticate.h \
+	authenticatebase.h authenticationmonitor.h bdecoder.h bencoder.h bnode.h cache.h \
+	cachefile.h cap.h choker.h chunk.h chunkcounter.h chunkdownload.h chunkmanager.h \
+	chunkselector.h dndfile.h downloadcap.h downloader.h globals.h httptracker.h \
+	ipblocklist.h movedatafilesjob.h multifilecache.h newchokealgorithm.h \
+	oldchokealgorithm.h packet.h packetreader.h packetwriter.h peer.h peerdownloader.h peerid.h \
+	peermanager.h peersourcemanager.h peeruploader.h piece.h preallocationthread.h \
+	queuemanager.h request.h server.h serverauthenticate.h singlefilecache.h \
+	speedestimater.h statsfile.h timeestimator.h torrent.h torrentcontrol.h torrentcreator.h \
+	torrentfile.h tracker.h udptracker.h udptrackersocket.h uploadcap.h uploader.h \
+	upspeedestimater.h utpex.h value.h
 
-libtorrent_la_SOURCES = bencoder.cpp value.cpp bdecoder.cpp bnode.cpp \
-		torrent.cpp chunkmanager.cpp chunk.cpp peer.cpp globals.cpp peermanager.cpp \
-		tracker.cpp downloader.cpp authenticate.cpp uploader.cpp torrentcontrol.cpp \
-		choker.cpp chunkdownload.cpp speedestimater.cpp peerdownloader.cpp request.cpp \
-		piece.cpp peerid.cpp announcelist.cpp peeruploader.cpp uploadcap.cpp \
-		packetreader.cpp packetwriter.cpp packet.cpp httptracker.cpp udptracker.cpp cache.cpp \
-		singlefilecache.cpp multifilecache.cpp torrentcreator.cpp downloadcap.cpp torrentfile.cpp \
-		chunkselector.cpp server.cpp serverauthenticate.cpp authenticatebase.cpp \
-		udptrackersocket.cpp upspeedestimater.cpp ipblocklist.cpp queuemanager.cpp chunkcounter.cpp \
-		newchokealgorithm.cpp statsfile.cpp preallocationthread.cpp cap.cpp \
-		advancedchokealgorithm.cpp cachefile.cpp dndfile.cpp authenticationmonitor.cpp \
-		peersourcemanager.cpp timeestimator.cpp utpex.cpp
+libtorrent_la_SOURCES = advancedchokealgorithm.cpp announcelist.cpp \
+	authenticate.cpp authenticatebase.cpp authenticationmonitor.cpp bdecoder.cpp \
+	bencoder.cpp bnode.cpp cache.cpp cachefile.cpp cap.cpp choker.cpp chunk.cpp \
+	chunkcounter.cpp chunkdownload.cpp chunkmanager.cpp chunkselector.cpp dndfile.cpp \
+	downloadcap.cpp downloader.cpp globals.cpp httptracker.cpp ipblocklist.cpp \
+	movedatafilesjob.cpp multifilecache.cpp newchokealgorithm.cpp packet.cpp packetreader.cpp \
+	packetwriter.cpp peer.cpp peerdownloader.cpp peerid.cpp peermanager.cpp \
+	peersourcemanager.cpp peeruploader.cpp piece.cpp preallocationthread.cpp queuemanager.cpp \
+	request.cpp server.cpp serverauthenticate.cpp singlefilecache.cpp \
+	speedestimater.cpp statsfile.cpp timeestimator.cpp torrent.cpp torrentcontrol.cpp \
+	torrentcreator.cpp torrentfile.cpp tracker.cpp udptracker.cpp udptrackersocket.cpp \
+	uploadcap.cpp uploader.cpp upspeedestimater.cpp utpex.cpp value.cpp
 
 KDE_CXXFLAGS = $(USE_EXCEPTIONS) $(USE_RTTI)

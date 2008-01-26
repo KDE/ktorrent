@@ -46,7 +46,7 @@ namespace dht
 	{
 		Q_OBJECT
 	public:
-		Node(RPCServer* srv);
+		Node(RPCServer* srv,const QString & key_file);
 		virtual ~Node();
 
 		/**
@@ -95,6 +95,7 @@ namespace dht
 		RPCServer* srv;
 		Uint32 num_receives;
 		Uint32 num_entries;
+		bool delete_table;
 	};
 
 }

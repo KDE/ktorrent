@@ -17,6 +17,7 @@ Name[sv]=Statistikinsticksprogram
 Name[tr]=Arama Eklentisi
 Name[uk]=Втулок статистики
 Name[xx]=xxStatsPluginxx
+Name[zh_CN]=统计插件
 Comment=
 Comment[xx]=xxxx
 ServiceTypes=KTorrent/Plugin

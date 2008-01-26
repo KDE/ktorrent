@@ -18,6 +18,8 @@
  ***************************************************************************/
 #include <util/log.h>
 #include <torrent/peerid.h>
+#include <avahi-common/watch.h>
+#include <avahi-qt3/qt-watch.h>
 #include "localbrowser.h"
 #include "avahiservice.h"
 		
@@ -30,27 +32,21 @@ namespace kt
 	{
 		AvahiService* service = reinterpret_cast<AvahiService*>(userdata);
 	
-		if (g == service->group) {
-			switch (state) {
+		if (g == service->group) 
+		{
+			switch (state) 
+			{
 			case AVAHI_ENTRY_GROUP_ESTABLISHED:
 				break;
 			case AVAHI_ENTRY_GROUP_COLLISION:
-				{
-					Out(SYS_ZCO|LOG_DEBUG) << "ZC: Entry group collision." << endl;
-					avahi_threaded_poll_stop(service->publisher_poll);
-					break;
-				}
+				Out(SYS_ZCO|LOG_DEBUG) << "ZC: Entry group collision." << endl;
+				break;
 			case AVAHI_ENTRY_GROUP_FAILURE:
-				{
-					Out(SYS_ZCO|LOG_DEBUG) <<  "ZC: Entry group failure." << endl;
-					avahi_threaded_poll_stop(service->publisher_poll);
-					break;
-				}
+				Out(SYS_ZCO|LOG_DEBUG) <<  "ZC: Entry group failure." << endl;
+				break;
 			case AVAHI_ENTRY_GROUP_UNCOMMITED:
-				{
-					Out(SYS_ZCO|LOG_DEBUG) <<  "ZC: Entry group uncommited." << endl;
-					break;
-				}
+				Out(SYS_ZCO|LOG_DEBUG) <<  "ZC: Entry group uncommited." << endl;
+				break;
 			case AVAHI_ENTRY_GROUP_REGISTERING:
 				;
 			}
@@ -61,10 +57,11 @@ namespace kt
 	{
 		assert(c);
 	
-		if (!(service->group)) {
-			if (!(service->group = avahi_entry_group_new(c, group_callback, service))) {
+		if (!service->group) 
+		{
+			if (!(service->group = avahi_entry_group_new(c, group_callback, service))) 
+			{
 				Out(SYS_ZCO|LOG_DEBUG) << "ZC: avahi_entry_group_new failed." << endl;
-				avahi_threaded_poll_stop(service->publisher_poll);
 				return;
 			}
 		}
@@ -75,26 +72,26 @@ namespace kt
 	
 		if (avahi_entry_group_add_service(
 				service->group, AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC,
-				(AvahiPublishFlags)0, name, type, NULL, NULL, service->port, NULL)) {
-			if (avahi_client_errno(c) != -8) {
+				(AvahiPublishFlags)0, name, type, NULL, NULL, service->port, NULL)) 
+		{
+			if (avahi_client_errno(c) != -8) 
 				Out(SYS_ZCO|LOG_DEBUG) << QString("ZC: Failed to add the service (%i).").arg(avahi_client_errno(c)) << endl;
-				avahi_threaded_poll_stop(service->publisher_poll);
-			} else
+			else
 				publish_service(service, c);
 			return;
 		}
 	
 		if (avahi_entry_group_add_service_subtype(
 				service->group, AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC,
-				(AvahiPublishFlags)0, name, type, NULL, subtype)) {
+				(AvahiPublishFlags)0, name, type, NULL, subtype)) 
+		{
 			Out(SYS_ZCO|LOG_DEBUG) << QString("ZC: Failed to add the service subtype (%i).").arg( avahi_client_errno(c)) << endl;
-			avahi_threaded_poll_stop(service->publisher_poll);
 			return;
 		}
 	
-		if (avahi_entry_group_commit(service->group)) {
+		if (avahi_entry_group_commit(service->group)) 
+		{
 			Out(SYS_ZCO|LOG_DEBUG) << "ZC: Failed to commit the entry group." << endl;
-			avahi_threaded_poll_stop(service->publisher_poll);
 			return;
 		}
 	}
@@ -116,7 +113,6 @@ namespace kt
 		case AVAHI_CLIENT_FAILURE:
 			{
 				Out(SYS_ZCO|LOG_DEBUG) << "Failure when publishing." << endl;
-				avahi_threaded_poll_stop(service->publisher_poll);
 				break;
 			}
 		case AVAHI_CLIENT_S_COLLISION:
@@ -137,9 +133,9 @@ namespace kt
 	
 		AvahiService* service = reinterpret_cast<AvahiService*>(userdata);
 		
-		if (state == AVAHI_CLIENT_FAILURE) {
+		if (state == AVAHI_CLIENT_FAILURE) 
+		{
 			Out(SYS_ZCO|LOG_DEBUG) <<  "ZC: Server connection failure." << endl;
-			avahi_threaded_poll_stop(service->listener_poll);
 		}
 	}
 	
@@ -208,7 +204,6 @@ namespace kt
 		case AVAHI_BROWSER_FAILURE:
 			{
 				Out(SYS_ZCO|LOG_DEBUG) << "ZC: Browser failure." << endl;
-				avahi_threaded_poll_stop(service->listener_poll);
 				break;
 			}
 		case AVAHI_BROWSER_NEW:
@@ -234,14 +229,13 @@ namespace kt
 	}
 	
 	AvahiService::AvahiService(const bt::PeerID& id,bt::Uint16 port, const bt::SHA1Hash & infoHash)
-		: group(0), publisher_poll(0), listener_poll(0), 
-		publisher(0), listener(0), browser(0)
+		: group(0), publisher_poll(0), listener_poll(0),publisher(0), listener(0), browser(0)
 	{ 
 		started = false; 
 	
-		this->id = QString(id.toString());
+		this->id = id.toString();
 		this->port = port;
-		this->infoHash = QString(infoHash.toString());
+		this->infoHash = infoHash.toString();
 	}
 	
 	AvahiService::~AvahiService() 
@@ -255,17 +249,19 @@ namespace kt
 		{
 			started = false;
 	
-			if (this->publisher_poll)
-				avahi_threaded_poll_stop(this->publisher_poll);
+			publisher_poll = 0;
+			if (publisher)
+			{
+				avahi_client_free(publisher);
+				publisher = 0;
+			}
 	
-			if (this->publisher)
-				avahi_client_free(this->publisher);
-	
-			if (this->listener_poll)
-				avahi_threaded_poll_stop(this->listener_poll);
-	
-			if (this->listener)
-				avahi_client_free(this->listener);
+			listener_poll = 0;
+			if (listener)
+			{
+				avahi_client_free(listener);
+				listener = 0;
+			}
 		}
 	}
 	
@@ -276,60 +272,58 @@ namespace kt
 	
 	bool AvahiService::startPublishing()
 	{
-		this->group = NULL;
-		this->publisher_poll = NULL;
-		this->publisher = NULL;
+		group = NULL;
+		publisher_poll = NULL;
+		publisher = NULL;
 	
-		if (!(this->publisher_poll = avahi_threaded_poll_new())) 
+		if (!(publisher_poll = avahi_qt_poll_get())) 
 		{
 			Out(SYS_ZCO|LOG_DEBUG) << "ZC: Failed to create a poll for publishing." << endl;
 			stop(); 
 			return false;
 		}
 	
-		this->publisher = avahi_client_new(avahi_threaded_poll_get(publisher_poll), AVAHI_CLIENT_NO_FAIL, publisher_callback, this, NULL);
+		publisher = avahi_client_new(publisher_poll, AVAHI_CLIENT_NO_FAIL, publisher_callback, this, NULL);
 	
-		if (!(this->publisher)) 
+		if (!(publisher)) 
 		{
 			Out(SYS_ZCO|LOG_DEBUG) << "ZC: Failed to create a client for publishing." << endl;
 			stop(); 
 			return false;
 		}
 	
-		avahi_threaded_poll_start(publisher_poll);
 		return true;
 	}
 	
 	bool AvahiService::startBrowsing()
 	{
-		this->listener_poll = NULL;
-		this->listener = NULL;
-		this->browser = NULL;
+		listener_poll = NULL;
+		listener = NULL;
+		browser = NULL;
 		
-		if (!(this->listener_poll = avahi_threaded_poll_new())) 
+		if (!(listener_poll = avahi_qt_poll_get())) 
 		{
 			Out(SYS_ZCO|LOG_DEBUG) << "ZC: Failed to create a poll for browsing." << endl;
 			stop(); 
 			return false;
 		}
 		
-		this->listener = avahi_client_new(avahi_threaded_poll_get(this->listener_poll), AVAHI_CLIENT_NO_FAIL, listener_callback, this, NULL);
+		listener = avahi_client_new(listener_poll,AVAHI_CLIENT_NO_FAIL, listener_callback, this, NULL);
 		
-		if (!(this->listener)) 
+		if (!listener) 
 		{
 			Out(SYS_ZCO|LOG_DEBUG) << "ZC: Failed to create a client for browsing." << endl;
 			stop(); 
 			return false;
 		}
 		
-		if (!(this->browser = avahi_service_browser_new(this->listener, AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC, avahi_strdup(QString("_" + this->infoHash + "._sub._bittorrent._tcp").ascii()), NULL, (AvahiLookupFlags)0, browser_callback, this))) 
+		if (!(browser = avahi_service_browser_new(listener, AVAHI_IF_UNSPEC, AVAHI_PROTO_UNSPEC, avahi_strdup(QString("_" + infoHash + "._sub._bittorrent._tcp").ascii()), NULL, (AvahiLookupFlags)0, browser_callback, this))) 
 		{
 			Out(SYS_ZCO|LOG_DEBUG) << "ZC: Failed to create a service browser." << endl;
 			stop(); 
 			return false;
 		}
 	
-		avahi_threaded_poll_start(listener_poll);
 		return true;
 	}
 	

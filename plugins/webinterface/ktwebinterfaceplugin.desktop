@@ -16,6 +16,7 @@ Name[sv]=Webb-gränssnitt
 Name[tr]=Ağ Arayüzü
 Name[uk]=Веб-інтерфейс
 Name[xx]=xxWebInterfacexx
+Name[zh_CN]=Web 界面
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktwebinterfaceplugin

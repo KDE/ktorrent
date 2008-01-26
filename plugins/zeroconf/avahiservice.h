@@ -102,8 +102,10 @@ namespace kt
 		bool started;
 	
 		AvahiEntryGroup *group;
-		AvahiThreadedPoll *publisher_poll, *listener_poll;
-		AvahiClient *publisher, *listener;
+		const AvahiPoll* publisher_poll;
+		const AvahiPoll* listener_poll;
+		AvahiClient* publisher;
+		AvahiClient* listener;
 		AvahiServiceBrowser *browser;
 	};
 }

@@ -38,7 +38,7 @@
 #include <sys/filio.h>
 #endif
 
-#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020) || defined (Q_OS_SOLARIS) || defined(Q_OS_NETBSD) 
+#ifndef MSG_NOSIGNAL
 #define MSG_NOSIGNAL 0
 #endif
 
@@ -56,7 +56,7 @@ namespace net
 
 	Socket::Socket(int fd) : m_fd(fd),m_state(IDLE)
 	{
-#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020)
+#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && !defined(__DragonFly__) && __FreeBSD_version < 600020)
 		int val = 1; 
 		if (setsockopt(m_fd,SOL_SOCKET,SO_NOSIGPIPE,&val,sizeof(int)) < 0)
 		{
@@ -74,7 +74,7 @@ namespace net
 			Out(SYS_GEN|LOG_IMPORTANT) << QString("Cannot create socket : %1").arg(strerror(errno)) << endl;
 		}
 		m_fd = fd;
-#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020)
+#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && !defined(__DragonFly__) && __FreeBSD_version < 600020)
 		int val = 1;
 		if (setsockopt(m_fd,SOL_SOCKET,SO_NOSIGPIPE,&val,sizeof(int)) < 0)
 		{
@@ -86,13 +86,17 @@ namespace net
 	Socket::~Socket()
 	{
 		if (m_fd >= 0)
+		{
+			shutdown(m_fd, SHUT_RDWR);
 			::close(m_fd);
+		}
 	}
 	
 	void Socket::close()
 	{
 		if (m_fd >= 0)
 		{
+			shutdown(m_fd, SHUT_RDWR);
 			::close(m_fd);
 			m_fd = -1;
 			m_state = CLOSED;

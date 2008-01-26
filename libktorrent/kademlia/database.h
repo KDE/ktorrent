@@ -68,7 +68,7 @@ namespace dht
 	class Database
 	{		
 		bt::PtrMap<dht::Key,DBItemList> items;
-		QMap<dht::Key,bt::Uint32> tokens;
+		QMap<dht::Key,bt::TimeStamp> tokens;
 	public:
 		Database();
 		virtual ~Database();

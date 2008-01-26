@@ -15,22 +15,54 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTVERSION_HH
-#define KTVERSION_HH
+#ifndef BTMOVEDATAFILESJOB_H
+#define BTMOVEDATAFILESJOB_H
 
+#include <kio/job.h>
 
-#include "util/constants.h"
-
-namespace kt
+namespace bt
 {
-	const bt::Uint32 MAJOR = 2;
-	const bt::Uint32 MINOR = 2;
-	const char VERSION_STRING[] = "2.2.5";
-	const char PEER_ID[] = "-KT2250-";
-}
 
-#define KT_VERSION_MACRO "2.2.5"
+	/**
+	 * @author Joris Guisson <joris.guisson@gmail.com>
+	 * KIO::Job to move all the files of a torrent.
+	*/
+	class MoveDataFilesJob : public KIO::Job
+	{
+		Q_OBJECT
+	public:
+		MoveDataFilesJob();
+		virtual ~MoveDataFilesJob();
+		
+		/**
+		 * Add a move to the todo list.
+		 * @param src File to move
+		 * @param dst Where to move it to
+		 */
+		void addMove(const QString & src,const QString & dst);
+		
+		/**
+		 * Start moving the files.
+		 */
+		void startMoving();
+		
+	private slots:
+		void onJobDone(KIO::Job* j);
+		void onCanceled(KIO::Job* j);
+		
+	private:
+		void recover();
+
+	private:
+		bool err;
+		KIO::Job* active_job;
+		QString active_src,active_dst;
+		QMap<QString,QString> todo;
+		QMap<QString,QString> success;		
+	};
+
+}
 
 #endif

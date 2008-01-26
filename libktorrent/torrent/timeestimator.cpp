@@ -246,7 +246,7 @@ Uint32 bt::TimeEstimator::estimateKT()
 		return m_lastETA;
 	}
 
-	if (percentage >= 99 && sample > 0 && s.bytes_left_to_download <= 10*1024 ^ 3) //1% of a very large torrent could be hundreds of MB so limit it to 10MB
+	if (percentage >= 99 && sample > 0 && s.bytes_left_to_download <= 10*1024*1024*1024) //1% of a very large torrent could be hundreds of MB so limit it to 10MB
 	{
 
 		if (!m_samples->isFull())

@@ -56,7 +56,7 @@ namespace dht
 			stop();
 	}
 	
-	void DHT::start(const QString & table,bt::Uint16 port)
+	void DHT::start(const QString & table,const QString & key_file,bt::Uint16 port)
 	{
 		if (running)
 			return;
@@ -68,7 +68,7 @@ namespace dht
 		this->port = port;
 		Out(SYS_DHT|LOG_NOTICE) << "DHT: Starting on port " << port << endl;
 		srv = new RPCServer(this,port);
-		node = new Node(srv);
+		node = new Node(srv,key_file);
 		db = new Database();
 		tman = new TaskManager();
 		expire_timer.update();

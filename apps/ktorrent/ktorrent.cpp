@@ -443,7 +443,7 @@ void KTorrent::applySettings(bool change_port)
 	dht::DHTBase & ht = Globals::instance().getDHT();
 	if (Settings::dhtSupport() && !ht.isRunning())
 	{
-		ht.start(kt::DataDir() + "dht_table",Settings::dhtPort());
+		ht.start(kt::DataDir() + "dht_table",kt::DataDir() + "dht_key",Settings::dhtPort());
 	}
 	else if (!Settings::dhtSupport() && ht.isRunning())
 	{
@@ -453,7 +453,7 @@ void KTorrent::applySettings(bool change_port)
 	{
 		Out(SYS_GEN|LOG_NOTICE) << "Restarting DHT with new port " << Settings::dhtPort() << endl;
 		ht.stop();
-		ht.start(kt::DataDir() + "dht_table",Settings::dhtPort());
+		ht.start(kt::DataDir() + "dht_table",kt::DataDir() + "dht_key",Settings::dhtPort());
 	}
 	
 	if (Settings::useEncryption())
@@ -587,7 +587,6 @@ bool KTorrent::queryClose()
 
 bool KTorrent::queryExit()
 {
-	m_group_view->saveGroups();
 	// stop timers to prevent update
 	m_gui_update_timer.stop();
 	

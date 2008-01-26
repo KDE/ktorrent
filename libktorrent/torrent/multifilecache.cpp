@@ -22,6 +22,7 @@
 #include <qstringlist.h>
 #include <qfileinfo.h>
 #include <klocale.h>
+#include <kio/netaccess.h>
 #include <util/file.h>
 #include <util/fileops.h>
 #include <util/functions.h>
@@ -35,6 +36,7 @@
 #include "cachefile.h"
 #include "dndfile.h"
 #include "preallocationthread.h"
+#include "movedatafilesjob.h"
 
 
 
@@ -198,14 +200,13 @@ namespace bt
 		if (!bt::Exists(ndir))
 			bt::MakeDir(ndir);
 		
-		QMap<QString,QString> success; // map to store succesfull moves
-		
 		QString nd = ndir;
 		if (!nd.endsWith(bt::DirSeparator()))
 			nd += bt::DirSeparator();
 		
 		try
 		{
+			MoveDataFilesJob* mvd = new MoveDataFilesJob();
 			for (Uint32 i = 0;i < tor.getNumFiles();i++)
 			{			
 				TorrentFile & tf = tor.getFile(i);
@@ -220,31 +221,29 @@ namespace bt
 				{
 					odir += sl[i] + bt::DirSeparator();
 					if (!bt::Exists(odir))
+					{
 						bt::MakeDir(odir);
+					}
 				}
 				
-				bt::Move(output_dir + tf.getPath(),nd + tf.getPath());
-				success[output_dir + tf.getPath()] = nd + tf.getPath();
-				
-				
+				mvd->addMove(output_dir + tf.getPath(),nd + tf.getPath());
 			}
 			
-			for (Uint32 i = 0;i < tor.getNumFiles();i++)
+			mvd->startMoving();
+			if (KIO::NetAccess::synchronousRun(mvd,0))
 			{
-				TorrentFile & tf = tor.getFile(i);
-				// check for empty directories and delete them 
-				DeleteEmptyDirs(output_dir,tf.getPath());
+				for (Uint32 i = 0;i < tor.getNumFiles();i++)
+				{
+					TorrentFile & tf = tor.getFile(i);
+					// check for empty directories and delete them 
+					DeleteEmptyDirs(output_dir,tf.getPath());
+				}
 			}
+			else
+				throw bt::Error("Move failed");
 		}
 		catch (bt::Error & err)
 		{
-			// now we need to rollback the success map
-			QMap<QString,QString>::iterator i = success.begin();
-			while (i != success.end())
-			{
-				bt::Move(i.data(),i.key(),true);
-				i++;
-			}
 			throw; // rethrow error
 		}
 	}
@@ -333,7 +332,7 @@ namespace bt
 			if (!fd)
 				return;
 			
-			if (Cache::mappedModeAllowed())
+			if (Cache::mappedModeAllowed() && mmap_failures < 3)
 			{
 				Uint64 off = FileOffset(c,f,tor.getChunkSize());
 				Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::READ);
@@ -344,6 +343,8 @@ namespace bt
 					// if mmap fails we will just load it buffered
 					return;
 				}
+				else
+					mmap_failures++;
 			}
 		}
 		
@@ -409,8 +410,12 @@ namespace bt
 			Uint64 off = FileOffset(c,tor.getFile(tflist.first()),tor.getChunkSize());
 			CacheFile* fd = files.find(tflist.first());
 			Uint8* buf = 0;
-			if (fd && Cache::mappedModeAllowed())
+			if (fd && Cache::mappedModeAllowed() && mmap_failures < 3)
+			{
 				buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::RW);
+				if (!buf)
+					mmap_failures++;
+			}
 			
 			if (!buf)
 			{

@@ -179,9 +179,8 @@ bool KTorrentCore::init(TorrentControl* tc,bool silently)
 		ScanDialog* scan_dlg = new ScanDialog(this,true);
 		scan_dlg->show();
 		scan_dlg->execute(tc,true);
-	//	scan_dlg->deleteLater();
 	}
-		
+	
 	tc->setPreallocateDiskSpace(true);
 
 	if(Settings::maxRatio()>0)

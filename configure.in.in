@@ -1,6 +1,6 @@
 #MIN_CONFIG(3.3)
 
-AM_INIT_AUTOMAKE(ktorrent,2.2.4)
+AM_INIT_AUTOMAKE(ktorrent,2.2.5)
 
 dnl #### Check for FSEEK variants
 AC_SYS_LARGEFILE
@@ -93,13 +93,13 @@ fi
 KDE_CHECK_LIB(gmp, __gmpz_init,	[have_gmp=yes],
 	[
 		have_gmp=no
-		DO_NOT_COMPILE="$DO_NOT_COMPILE ktorrent"
+		AC_MSG_ERROR(libgmp is required to install this program)
 	])
 
 KDE_CHECK_HEADER(gmp.h, [have_gmp=yes], 
 	[
 		have_gmp=no
-		DO_NOT_COMPILE="$DO_NOT_COMPILE ktorrent"
+		AC_MSG_ERROR(libgmp is required to install this program)
 	])
 
 KDE_CHECK_HEADER(GeoIP.h, [have_system_geoip=yes], [have_system_geoip=no])
@@ -183,6 +183,17 @@ PKG_CHECK_MODULES( AVAHI,  avahi-client >= 0.6.10,
 [ 
 	AC_SUBST(AVAHI_CFLAGS)
 	AC_SUBST(AVAHI_LIBS)
+	avahi=true
+],
+[
+	missing_avahi_warning=yes
+	avahi=false
+])
+
+PKG_CHECK_MODULES( AVAHI_QT3,  avahi-qt3 >= 0.6.10, 
+[ 
+	AC_SUBST(AVAHI_QT3_CFLAGS)
+	AC_SUBST(AVAHI_QT3_LIBS)
 	avahi=true
 ],
 [

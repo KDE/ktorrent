@@ -59,9 +59,10 @@ namespace dht
 		/**
 		 * Start the DHT
 		 * @param table File where the save table is located
+		 * @param key_file The file where the key is stored
 		 * @param port The port to use
 		 */
-		virtual void start(const QString & table,bt::Uint16 port) = 0;
+		virtual void start(const QString & table,const QString & key_file,bt::Uint16 port) = 0;
 		
 		/**
 		 * Stop the DHT

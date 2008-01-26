@@ -628,25 +628,26 @@ namespace bt
 			return;
 		}
 
-		QValueList<Uint32> dnd;
+		// first write the number of excluded ones
+		// don't know this yet, so write 0 for the time being
+		Uint32 tmp = 0;
+		fptr.write(&tmp,sizeof(Uint32));
 		
 		Uint32 i = 0;
+		Uint32 cnt = 0;
 		while (i < tor.getNumFiles())
 		{
 			if (tor.getFile(i).doNotDownload())
-				dnd.append(i);
+			{
+				fptr.write(&i,sizeof(Uint32));
+				cnt++;
+			}
 			i++;
 		}
 
-		// first write the number of excluded ones
-		Uint32 tmp = dnd.count();
-		fptr.write(&tmp,sizeof(Uint32));
-		// then all the excluded ones
-		for (i = 0;i < dnd.count();i++)
-		{
-			tmp = dnd[i];
-			fptr.write(&tmp,sizeof(Uint32));
-		}
+		// go back to the beginning and write the number of files
+		fptr.seek(File::BEGIN,0);
+		fptr.write(&cnt,sizeof(Uint32));
 		fptr.flush();
 	}
 	
@@ -700,26 +701,29 @@ namespace bt
 
 		try
 		{
-			QValueList<Uint32> dnd;
-			
-			Uint32 i = 0;
-			for ( ; i < tor.getNumFiles(); i++)
-			{
-				if(tor.getFile(i).getPriority() != NORMAL_PRIORITY)
-				{
-					dnd.append(i);
-					dnd.append(tor.getFile(i).getPriority());
-				}
-			}
-	
-			Uint32 tmp = dnd.count();
+			// first write the number of excluded ones
+			// don't know this yet, so write 0 for the time being
+			Uint32 tmp = 0;
 			fptr.write(&tmp,sizeof(Uint32));
-			// write all the non-default priority ones
-			for (i = 0;i < dnd.count();i++)
+		
+			Uint32 i = 0;
+			Uint32 cnt = 0;
+			while (i < tor.getNumFiles())
 			{
-				tmp = dnd[i];
-				fptr.write(&tmp,sizeof(Uint32));
+				const TorrentFile & tf = tor.getFile(i);
+				if (tf.getPriority() != NORMAL_PRIORITY)
+				{
+					tmp = tf.getPriority();
+					fptr.write(&i,sizeof(Uint32));
+					fptr.write(&tmp,sizeof(Uint32));
+					cnt+=2;
+				}
+				i++;
 			}
+
+			// go back to the beginning and write the number of items
+			fptr.seek(File::BEGIN,0);
+			fptr.write(&cnt,sizeof(Uint32));
 			fptr.flush();
 		}
 		catch (bt::Error & err)

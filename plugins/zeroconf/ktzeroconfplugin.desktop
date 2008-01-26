@@ -16,6 +16,7 @@ Name[sv]=Zeroconf-insticksprogram
 Name[tr]=ZeroConf Eklentisi
 Name[uk]=Втулок ZeroConf
 Name[xx]=xxZeroConfPluginxx
+Name[zh_CN]=ZeroConf 插件
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktzeroconfplugin

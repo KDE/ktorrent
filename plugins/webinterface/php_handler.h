@@ -37,7 +37,7 @@ namespace kt
 		virtual ~PhpHandler();
 			
 		bool executeScript(const QString & path,const QMap<QString,QString> & args);
-		const QString & getOutput() const {return output;};
+		const QByteArray & getOutput() const {return output;};
 		
 	public slots:
 		void onExited();
@@ -47,10 +47,10 @@ namespace kt
 		void finished();
 		
 	private:
-		QString output;
+		QByteArray output;
 		PhpInterface *php_i;
 		
-		static QMap<QString,QString> scripts;
+		static QMap<QString,QByteArray> scripts;
 	};
 }
 

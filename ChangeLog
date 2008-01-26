@@ -1,3 +1,8 @@
+Changes in 2.2.5 :
+- Fix moving of files slowing things down under certain circumstances 
+- Use avahi_qt_poll_get instead of the threaded stuff, should get rid of the zeroconf crashes
+- After 3 mmap failures, allways use buffered mode
+
 Changes in 2.2.4 :
 - Fix crash in fileview 
 - Added patch from Rafel Milecki to add file selection in the coldmilk webgui

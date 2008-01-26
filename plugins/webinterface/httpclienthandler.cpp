@@ -219,13 +219,13 @@ namespace kt
 	
 	void HttpClientHandler::onPHPFinished()
 	{
-		const QString & output = php->getOutput();
-		php_response_hdr.setValue("Content-Length",QString::number(output.utf8().length()));
+		const QByteArray & output = php->getOutput();
+		php_response_hdr.setValue("Content-Length",QString::number(output.size()));
 		
 		QTextStream os(client);
 		os.setEncoding( QTextStream::UnicodeUTF8 );
 		os << php_response_hdr.toString();
-		os << output;
+		os.writeRawBytes(output.data(),output.size());
 		
 		php->deleteLater();
 		php = 0;

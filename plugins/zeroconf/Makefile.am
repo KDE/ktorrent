@@ -7,7 +7,7 @@ if COMPILE_ZEROCONF
 kde_module_LTLIBRARIES = ktzeroconfplugin.la		
 endif
 		
-ktzeroconfplugin_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries) $(AVAHI_LIBS)
+ktzeroconfplugin_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries) $(AVAHI_LIBS) $(AVAHI_QT3_LIBS)
 ktzeroconfplugin_la_SOURCES = localbrowser.cpp avahiservice.cpp \
 	zeroconfplugin.cpp
 

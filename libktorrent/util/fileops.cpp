@@ -173,20 +173,29 @@ namespace bt
 				continue;
 			
 			if (!DelDir(d.absFilePath(entry)))
+			{
+				Out(SYS_GEN|LOG_DEBUG) << "Delete of " << fn << "/" << entry << " failed !" << endl;
 				return false;	
+			}
 		}
 		
-		QStringList files = d.entryList(QDir::Files | QDir::System);
+		QStringList files = d.entryList(QDir::Files | QDir::System | QDir::Hidden);
 		for (QStringList::iterator i = files.begin(); i != files.end();i++)
 		{
 			QString entry = *i;
 
 			if (remove(QFile::encodeName(d.absFilePath(entry))) < 0)
+			{
+				Out(SYS_GEN|LOG_DEBUG) << "Delete of " << fn << "/" << entry << " failed !" << endl;
 				return false;	
+			}
 		}
 		
 		if (!d.rmdir(d.absPath()))
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "Failed to remove " << d.absPath() << endl;
 			return false;
+		}
 		
 		return true;
 	}
@@ -425,7 +434,7 @@ namespace bt
 		if (statvfs(path.local8Bit(), &stfs) == 0)
 #endif
 		{
-			bytes_free = ((Uint64)stfs.f_bavail) * ((Uint64)stfs.f_bsize);
+			bytes_free = ((Uint64)stfs.f_bavail) * ((Uint64)stfs.f_frsize);
 			return true;
 		}
 		else

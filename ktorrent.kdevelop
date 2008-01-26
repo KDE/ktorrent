@@ -27,7 +27,7 @@
       <useactivetarget>true</useactivetarget>
     </general>
     <run>
-      <mainprogram>/home/joris/ktorrent/bf/debug/apps/ktorrent/ktorrent</mainprogram>
+      <mainprogram>/home/joris/ktorrent/trunk-kde3/debug/apps/ktorrent/ktorrent</mainprogram>
       <terminal>false</terminal>
       <directoryradio>executable</directoryradio>
       <customdirectory>/</customdirectory>
@@ -50,7 +50,7 @@
       </cwd>
       <globaldebugarguments>--nofork</globaldebugarguments>
       <globalcwd>/home/joris</globalcwd>
-      <useglobalprogram>false</useglobalprogram>
+      <useglobalprogram>true</useglobalprogram>
       <autoinstall>false</autoinstall>
       <autokdesu>false</autokdesu>
     </run>
@@ -183,6 +183,7 @@
       <configGdbScript/>
       <runShellScript/>
       <runGdbScript/>
+      <raiseGDBOnStart>false</raiseGDBOnStart>
     </general>
     <display>
       <staticmembers>true</staticmembers>
@@ -291,8 +292,8 @@
       <root>/usr/share/qt3</root>
       <includestyle>3</includestyle>
       <designerintegration>EmbeddedKDevDesigner</designerintegration>
-      <qmake>/usr/bin/qmake-qt3</qmake>
-      <designer>/usr/bin/designer-qt3</designer>
+      <qmake>/usr/bin/qmake</qmake>
+      <designer>/usr/bin/designer</designer>
       <designerpluginpaths/>
     </qt>
     <splitheadersource>

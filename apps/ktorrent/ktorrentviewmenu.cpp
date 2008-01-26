@@ -106,7 +106,7 @@ KTorrentViewMenu::~KTorrentViewMenu()
 
 void KTorrentViewMenu::gsmItemActived(int id)
 {
-	groupItemActivated(groups_sub_menu->text(id));
+	groupItemActivated(groups_sub_menu->text(id).remove('&'));
 }
 
 void KTorrentViewMenu::show(const QPoint & p)

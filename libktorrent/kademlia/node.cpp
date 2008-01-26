@@ -20,6 +20,7 @@
 
 #include <util/log.h>
 #include <util/file.h>
+#include <util/fileops.h>
 #include <util/functions.h>
 #include <torrent/globals.h>
 #include "node.h"
@@ -36,12 +37,50 @@ using namespace KNetwork;
 
 namespace dht
 {
+	static void SaveKey(const dht::Key & key,const QString & key_file)
+	{
+		bt::File fptr;
+		if (!fptr.open(key_file,"wb"))
+		{
+			Out(SYS_DHT|LOG_IMPORTANT) << "DHT: Cannot open file " << key_file << " : " << fptr.errorString() << endl;
+			return;
+		}
+		
+		fptr.write(key.getData(),20);
+		fptr.close();
+	}
+	
+	static dht::Key LoadKey(const QString & key_file,bool & new_key)
+	{
+		bt::File fptr;
+		if (!fptr.open(key_file,"rb"))
+		{
+			Out(SYS_DHT|LOG_IMPORTANT) << "DHT: Cannot open file " << key_file << " : " << fptr.errorString() << endl;
+			dht::Key r = dht::Key::random();
+			SaveKey(r,key_file);
+			new_key = true;
+			return r;
+		}
+		
+		Uint8 data[20];
+		if (fptr.read(data,20) != 20)
+		{
+			dht::Key r = dht::Key::random();
+			SaveKey(r,key_file);
+			new_key = true;
+			return r;
+		}
+		
+		new_key = false;
+		return dht::Key(data);
+	}
 
-	Node::Node(RPCServer* srv) : srv(srv)
+	Node::Node(RPCServer* srv,const QString & key_file) : srv(srv)
 	{
 		num_receives = 0;
 		num_entries = 0;
-		our_id = dht::Key::random();
+		delete_table = false;
+		our_id = LoadKey(key_file,delete_table);
 		for (int i = 0;i < 160;i++)
 			bucket[i] = 0;
 	}
@@ -78,6 +117,7 @@ namespace dht
 				{
 					// we have found the bit
 					bit_on = (19 - i)*8 + (7 - j);
+					return bit_on;
 				}
 			}
 		}
@@ -205,6 +245,14 @@ namespace dht
 		
 	void Node::loadTable(const QString & file)
 	{
+		if (delete_table)
+		{
+			delete_table = false;
+			bt::Delete(file,true);
+			Out(SYS_DHT|LOG_IMPORTANT) << "DHT: new key, so removing table" << endl;
+			return;
+		}
+		
 		bt::File fptr;
 		if (!fptr.open(file,"rb"))
 		{
