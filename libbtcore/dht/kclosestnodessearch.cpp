@@ -86,6 +86,7 @@ namespace dht
 				cnt->addNode(d);
 			}
 			j++;
+			i++;
 		}
 	}
 
