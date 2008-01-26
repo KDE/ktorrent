@@ -1,6 +1,7 @@
-# Should only contain new features not ports from features we already had in the KDE 3 version
 
-Changes in 3.0dev :
+Changes in 3.Odev :
+
+Changes in 3.0rc1 :
 - Fix typo in tooltip of network sleep interval (154481)
 - Fix KT closing when window is hidden and a torrent is opened via commandline (154488)
 - Added open silently action to file menu (154484)
@@ -9,8 +10,30 @@ approach
 - Added action to pause and resume all torrents
 - Fix some problems with the update timer not getting started when the QM ran 
 - Estimate time left in seeding mode when there is a max share ratio
-- Disable system tray icon tooltips when show popups is disabled
+- Disable system tray icon tooltips when show popups is disabled (BUG: 151019)
 - Added option to change text encoding of a torrent when opening it
+- Fix sorting in main view using a SortFilterProxyModel
+- Use XMLGUI stuff for SearchToolBar (BUG: 154838)
+- Make it possible to disable plugins at compile time (BUG: 154906)
+- Fix sorting in ChunkDownloadView 
+- Added action to pause and resume all torrents
+- Added time estimation algorithm selection
+- Fixed bug in KTorrent time estimation algorithm (150866)
+- Estimate time left when seeding when there is a max share ratio set (BUG: 142990)
+- Ported don't preallocate fix for readonly files
+- Make sure toplevel CMakeLists.txt check for KDE4Internal package 
+- Fix bug in PeerView which displayed the content of choked and snubbed in the wrong column
+- Made DHT IPv6 ready
+- Add support for peers6 field in tracker announce responses (so we are IPv6 ready there to)
+- Fix bug displaying the wrong number of leechers
+- Fix bdecoder bug causing an assert in Qt (BUG: 155712)
+- Properly fix add to group stuff (remove of ampersand is very hackish)
+- Drag drop of torrents upon custom groups now works perfectly
+- Fix problem with connections staying in close_wait state (BUG: 156163)
+- Save own DHT key in a file and reuse that
+- Fix DHT problem causing a DHT ping storm
+- Fix opening of directories 
+
 
 Changes in 3.0beta1 :
 - Added option to select the network interface to use
