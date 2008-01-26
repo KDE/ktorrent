@@ -2,6 +2,20 @@ Changes in 2.2.5 :
 - Fix moving of files slowing things down under certain circumstances 
 - Use avahi_qt_poll_get instead of the threaded stuff, should get rid of the zeroconf crashes
 - After 3 mmap failures, allways use buffered mode
+- Fix bug in DHT token storage and checking
+- Fix free diskspace calculation on FreeBSD
+- Fix a problem with the PHP code
+- Use QTextStream in webgui instead of creating very big strings
+- Backported KT ETA algorithm fix from KDE4 trunk
+- Fix socket code for Dragonfly BSD (139081 and 139110)
+- Make sure hidden files also get deleted when deleting directory (155414)
+- Make sure that preallocate does not interfere with read only files (155437)
+- Fix slow saving of file_info and chunk_info files (155447)
+- Ported bdecoder fix from KDE4 version
+- Fix adding to groups (& added by Qt screwed things up)
+- Don't save groups at exit anymore (149212)
+- Ported close_wait bugfix from KDE4 version
+- Ported recent DHT fixes from KDE4 version
 
 Changes in 2.2.4 :
 - Fix crash in fileview 
