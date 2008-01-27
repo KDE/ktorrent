@@ -76,6 +76,7 @@ namespace dht
 		{
 			PackBucketEntry(i->second,ba,j*26);
 			j++;
+			i++;
 		}
 	}
 
