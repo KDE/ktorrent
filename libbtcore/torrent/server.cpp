@@ -113,7 +113,7 @@ namespace bt
 	
 	void Server::newConnection(int socket)
 	{
-		mse::StreamSocket* s = new mse::StreamSocket(socket);
+		mse::StreamSocket* s = new mse::StreamSocket(socket,sock->isIPv4() ? 4 : 6);
 		if (peer_managers.count() == 0)
 		{
 			s->close();

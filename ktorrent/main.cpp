@@ -116,6 +116,7 @@ int main(int argc, char **argv)
 	about.addCredit(ki18n("Ozzi"),ki18n("Fixes for several warnings"),"ossi@masiina.no-ip.info");
 	about.addCredit(ki18n("Markus Brueffer"),ki18n("Patch to fix free diskspace calculation on FreeBSD"),"markus@brueffer.de");
 	about.addCredit(ki18n("Lukas Appelhans"),ki18n("Patch to fix a crash in ChunkDownloadView"),"l.appelhans@gmx.de");
+	about.addCredit(ki18n("Richard Närström"),ki18n("A couple of bugfixes"),"rickard.narstrom@gmail.com");
 	KCmdLineArgs::init(argc, argv, &about);
 
 	KCmdLineOptions options;
