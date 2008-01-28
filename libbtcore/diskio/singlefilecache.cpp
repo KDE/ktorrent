@@ -63,7 +63,7 @@ namespace bt
 		if (!fptr.open(QIODevice::ReadOnly))
 			throw Error(i18n("Failed to open %1 : %2",file_map,fptr.errorString()));
 		
-		output_file = fptr.readLine().trimmed();
+		output_file = QString::fromLocal8Bit(fptr.readLine().trimmed());
 	}
 
 	void SingleFileCache::saveFileMap()

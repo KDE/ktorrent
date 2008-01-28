@@ -104,7 +104,7 @@ namespace bt
 			Uint32 idx = 0;
 			while (!fptr.atEnd() && idx < tor.getNumFiles())
 			{
-				QString path = fptr.readLine().trimmed();
+				QString path = QString::fromLocal8Bit(fptr.readLine().trimmed()); 
 				tor.getFile(idx).setPathOnDisk(path);
 				idx++;
 			}

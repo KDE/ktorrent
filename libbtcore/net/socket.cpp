@@ -128,7 +128,7 @@ namespace net
 			else
 			{
 				Out(SYS_CON|LOG_NOTICE) << QString("Cannot connect to host %1 : %2")
-					.arg(a.toString()).arg(strerror(errno)) << endl;
+					.arg(a.toString()).arg(QString::fromLocal8Bit(strerror(errno))) << endl;
 				return false;
 			}
 		}
