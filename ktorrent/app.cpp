@@ -46,7 +46,7 @@ namespace kt
 		kt::GUI *widget = 0;
 		if (!main_widget)
 		{
-			bt::InitLog(kt::DataDir() + "log");
+			bt::InitLog(kt::DataDir() + "log",true);
 			
 			widget = new kt::GUI();
 			setTopWidget(widget);
@@ -63,7 +63,10 @@ namespace kt
 		{
 			for (int i = 0; i < args->count(); i++)
 			{
-				widget->load(args->url(i));
+				if (args->isSet("silent"))
+					widget->loadSilently(args->url(i));
+				else
+					widget->load(args->url(i));
 			}
 		}
 		args->clear();

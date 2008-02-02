@@ -74,6 +74,9 @@ namespace kt
 
 		/// load a torrent
 		void load(const KUrl & url);
+		
+		/// load a torrent silently
+		void loadSilently(const KUrl & url);
 
 		/**
 		 * Open a view

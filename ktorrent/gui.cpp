@@ -234,6 +234,11 @@ namespace kt
 	{
 		core->load(url);
 	}
+	
+	void GUI::loadSilently(const KUrl & url)
+	{
+		core->loadSilently(url);
+	}
 
 	void GUI::createTorrent()
 	{

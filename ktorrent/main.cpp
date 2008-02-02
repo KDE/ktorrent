@@ -117,10 +117,12 @@ int main(int argc, char **argv)
 	about.addCredit(ki18n("Markus Brueffer"),ki18n("Patch to fix free diskspace calculation on FreeBSD"),"markus@brueffer.de");
 	about.addCredit(ki18n("Lukas Appelhans"),ki18n("Patch to fix a crash in ChunkDownloadView"),"l.appelhans@gmx.de");
 	about.addCredit(ki18n("Richard Närström"),ki18n("A couple of bugfixes"),"rickard.narstrom@gmail.com");
+	about.addCredit(ki18n("caruccio"),ki18n("Patch to load torrents silently from the command line"),"mateus@caruccio.com");
 	KCmdLineArgs::init(argc, argv, &about);
 
 	KCmdLineOptions options;
 	options.add("+[Url]", ki18n("Document to open"));
+	options.add("silent", ki18n("Silently open torrent given on URL"));
 	KCmdLineArgs::addCmdLineOptions(options);
 	
 	kt::App::addCmdLineOptions();
