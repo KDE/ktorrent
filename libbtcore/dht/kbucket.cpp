@@ -37,6 +37,7 @@ namespace dht
 	{
 		last_responded = bt::GetCurrentTime();
 		failed_queries = 0;
+		questionable_pings = 0;
 	}
 	
 	KBucketEntry::KBucketEntry(const KInetSocketAddress & addr,const Key & id)
@@ -44,11 +45,12 @@ namespace dht
 	{
 		last_responded = bt::GetCurrentTime();
 		failed_queries = 0;
+		questionable_pings = 0;
 	}
 		
 	KBucketEntry::KBucketEntry(const KBucketEntry & other)
 	: addr(other.addr),node_id(other.node_id),
-	last_responded(other.last_responded),failed_queries(other.failed_queries)
+	last_responded(other.last_responded),failed_queries(other.failed_queries),questionable_pings(other.questionable_pings)
 	{}
 
 		
@@ -61,6 +63,7 @@ namespace dht
 		node_id = other.node_id;
 		last_responded = other.last_responded;
 		failed_queries = other.failed_queries;
+		questionable_pings = other.questionable_pings;
 		return *this;
 	}
 	
@@ -91,13 +94,14 @@ namespace dht
 		if (isGood())
 			return false;
 		
-		return failed_queries > 2;
+		return failed_queries > 2 || questionable_pings > 2;
 	}
 	
 	void KBucketEntry::hasResponded()
 	{
 		last_responded = bt::GetCurrentTime();
 		failed_queries = 0; // reset failed queries
+		questionable_pings = 0;
 	}
 	
 
@@ -213,6 +217,7 @@ namespace dht
 				RPCCall* c = srv->doCall(p);
 				if (c)
 				{
+					e.onPingQuestionable();
 					c->addListener(this);
 					// add the pending entry
 					pending_entries_busy_pinging.insert(c,replacement_entry);
