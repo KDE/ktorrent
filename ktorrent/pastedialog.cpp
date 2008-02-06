@@ -38,7 +38,7 @@ namespace kt
 		QClipboard *cb = QApplication::clipboard();
 		QString text = cb->text ( QClipboard::Clipboard );
 
-		KUrl url = KUrl::fromPath ( text );
+		KUrl url = KUrl(text);
 
 		if ( url.isValid() )
 			m_url->setText ( text );
@@ -49,7 +49,7 @@ namespace kt
 
 	void PasteDialog::accept()
 	{
-		KUrl url = KUrl::fromPath ( m_url->text() );
+		KUrl url = KUrl( m_url->text() );
 		if ( url.isValid() )
 		{
 			m_core->load ( url );

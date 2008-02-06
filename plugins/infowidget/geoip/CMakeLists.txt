@@ -1,9 +1,17 @@
+# Do not install GeoIP specific data files if infowidget is being
+# compiled against system GeoIP
+if (NOT WITH_SYSTEM_GEOIP)
+	set(geoip_data geoip.dat GeoIP-LICENSE.txt)
+	install(FILES ${geoip_data} DESTINATION ${DATA_INSTALL_DIR}/ktorrent)
+endif(NOT WITH_SYSTEM_GEOIP)    
 
-set(geoip_data geoip.dat GeoIP-LICENSE.txt)
+# Allow to disable instalation of built-in country flags
+option (WITH_BUILTIN_COUNTRY_FLAGS
+	"Install and prefer builtin country flags to the ones provided by KDE"
+	ON)
 
-install(FILES ${geoip_data} DESTINATION ${DATA_INSTALL_DIR}/ktorrent)
-
-set(flags ad.png ae.png af.png ag.png ai.png al.png am.png an.png ao.png 
+if (WITH_BUILTIN_COUNTRY_FLAGS)
+	set(flags ad.png ae.png af.png ag.png ai.png al.png am.png an.png ao.png 
 		aq.png ar.png as.png at.png au.png aw.png az.png ba.png bb.png bd.png be.png 
 		bf.png bg.png bh.png bi.png bj.png bm.png bn.png bo.png br.png bs.png bt.png 
 		bv.png bw.png by.png bz.png ca.png cc.png cd.png cf.png cg.png ch.png ci.png 
@@ -27,4 +35,5 @@ set(flags ad.png ae.png af.png ag.png ai.png al.png am.png an.png ao.png
 		ve.png vg.png vi.png vn.png vu.png wf.png ws.png ye.png yt.png yu.png za.png 
 		zm.png zw.png FLAGS_LICENCE)
 
-install(FILES ${flags} DESTINATION ${DATA_INSTALL_DIR}/ktorrent)
+	install(FILES ${flags} DESTINATION ${DATA_INSTALL_DIR}/ktorrent)
+endif(WITH_BUILTIN_COUNTRY_FLAGS)
