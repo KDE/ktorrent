@@ -146,54 +146,85 @@ set_target_properties(btcore PROPERTIES VERSION 2.0.0 SOVERSION 2 )
 install(TARGETS btcore  DESTINATION ${LIB_INSTALL_DIR} )
 
 set(net_HDR  
+	./net/socks.h
+	./net/bufferedsocket.h
+	./net/downloadthread.h
 	./net/address.h
+	./net/socketgroup.h
 	./net/portlist.h
-	./net/socketmonitor.h
+	./net/networkthread.h
 	./net/socket.h
+	./net/speed.h
+	./net/uploadthread.h
+	./net/socketmonitor.h
 )
 
-set (mse_HDR ./mse/streamsocket.h)
+set (mse_HDR 
+	./mse/encryptedserverauthenticate.h
+	./mse/functions.h
+	./mse/rc4encryptor.h
+	./mse/encryptedauthenticate.h
+	./mse/bigint.h
+	./mse/streamsocket.h
+)
 
 set (interfaces_HDR
+	./interfaces/peerinterface.h
 	./interfaces/queuemanagerinterface.h
-	./interfaces/ipblockinginterface.h
 	./interfaces/exitoperation.h
+	./interfaces/chunkdownloadinterface.h
 	./interfaces/trackerslist.h
+	./interfaces/torrentinterface.h
 	./interfaces/logmonitorinterface.h
+	./interfaces/piecedownloader.h
+	./interfaces/monitorinterface.h
+	./interfaces/ipblockinginterface.h
 	./interfaces/torrentfileinterface.h
 	./interfaces/peersource.h
-	./interfaces/peersource.h
-        ./interfaces/peerinterface.h
-	./interfaces/monitorinterface.h
-	./interfaces/torrentinterface.h
-	./interfaces/torrentinterface.h
-    ./interfaces/chunkdownloadinterface.h
 )
 
 set (peer_HDR
-	./peer/authenticationmonitor.h
+	./peer/peeruploader.h
+	./peer/packetwriter.h
+	./peer/peer.h
 	./peer/peermanager.h
+	./peer/authenticatebase.h
+	./peer/authenticate.h
+	./peer/utpex.h
+	./peer/packetreader.h
+	./peer/authenticationmonitor.h
 	./peer/peerid.h
+	./peer/peerdownloader.h
+	./peer/chunkcounter.h
+	./peer/serverauthenticate.h
 )
 	
 set (util_HDR
-	./util/sha1hash.h
+	./util/autorotatelogjob.h
 	./util/fileops.h
-	./util/bitset.h
+	./util/timer.h
 	./util/ptrmap.h
 	./util/log.h
-	./util/functions.h
-	./util/error.h
-	./util/timer.h
-	./util/file.h
 	./util/waitjob.h
+	./util/urlencoder.h
 	./util/array.h
-	./util/sha1hashgen.h
+	./util/functions.h
+	./util/file.h
 	./util/constants.h
+	./util/bitset.h
+	./util/sha1hash.h
+	./util/sha1hashgen.h
+	./util/error.h
 )
 	
 set (download_HDR
+	./download/chunkdownload.h
 	./download/downloader.h
+	./download/httpdownloader.h
+	./download/request.h
+	./download/piece.h
+	./download/packet.h
+	./download/chunkselector.h
 )
 
 set (btcore_HDR 
@@ -203,36 +234,77 @@ set (btcore_HDR
 	
 set (bcodec_HDR
 	./bcodec/bencoder.h
+	./bcodec/bnode.h
 	./bcodec/bdecoder.h
 	./bcodec/value.h
-	./bcodec/bnode.h
 )
 	
 set (diskio_HDR  
-	./diskio/chunkmanager.h
 	./diskio/cache.h
+	./diskio/cachefile.h
+	./diskio/singlefilecache.h
+	./diskio/preallocationthread.h
+	./diskio/movedatafilesjob.h
+	./diskio/chunkmanager.h
+	./diskio/dndfile.h
+	./diskio/chunk.h
+	./diskio/multifilecache.h
 )
 	
 set (torrent_HDR
-	./torrent/torrentfile.h
-	./torrent/torrentcontrol.h
-	./torrent/choker.h
-	./torrent/ipblocklist.h
 	./torrent/torrent.h
+	./torrent/advancedchokealgorithm.h
+	./torrent/peersourcemanager.h
+	./torrent/ipblocklist.h
+	./torrent/choker.h
 	./torrent/server.h
-	./torrent/globals.h
+	./torrent/torrentcontrol.h
+	./torrent/uploader.h
 	./torrent/torrentcreator.h
 	./torrent/timeestimator.h
+	./torrent/torrentfile.h
+	./torrent/statsfile.h
+	./torrent/globals.h
 )
 	
 set (tracker_HDR
-	./tracker/httptracker.h
-	./tracker/udptrackersocket.h
 	./tracker/tracker.h
+	./tracker/udptracker.h
+	./tracker/udptrackersocket.h
+	./tracker/httptracker.h
 )
 
 set (datachecker_HDR
+	./datachecker/datacheckerthread.h
+	./datachecker/datachecker.h
+	./datachecker/singledatachecker.h
 	./datachecker/datacheckerlistener.h
+	./datachecker/multidatachecker.h
+)
+
+set (dht_HDR
+	./dht/dhtbase.h
+	./dht/rpcserver.h
+	./dht/key.h
+	./dht/pack.h
+	./dht/rpcmsg.h
+	./dht/dhttrackerbackend.h
+	./dht/announcetask.h
+	./dht/rpccall.h
+	./dht/kclosestnodessearch.h
+	./dht/dht.h
+	./dht/node.h
+	./dht/task.h
+	./dht/nodelookup.h
+	./dht/taskmanager.h
+	./dht/kbucket.h
+	./dht/database.h
+)
+
+set (migrate_HDR
+	./migrate/ccmigrate.h
+	./migrate/migrate.h
+	./migrate/cachemigrate.h
 )
 
 install(FILES ${tracker_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/tracker )
@@ -245,4 +317,6 @@ install(FILES ${interfaces_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/int
 install(FILES ${util_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/util )
 install(FILES ${peer_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/peer )
 install(FILES ${datachecker_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/datachecker )
+install(FILES ${dht_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/dht )
+install(FILES ${migrate_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore/migrate )
 install(FILES ${btcore_HDR} DESTINATION ${INCLUDE_INSTALL_DIR}/libbtcore )
