@@ -513,15 +513,15 @@ namespace kt
 				
 				++it;
 			}
+			tc->setPriority(1);
+			orderQueue();
 		}
 		else
 		{
 			 tc->setPriority(0);
 			 if(start_torrent)
 				 start(tc, true);
-		}
-		tc->setPriority(1);
-		orderQueue();
+		}	
 	}
 	
 	void QueueManager::torrentRemoved(bt::TorrentInterface* tc)
