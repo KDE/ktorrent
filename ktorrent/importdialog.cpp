@@ -89,7 +89,18 @@ namespace kt
 		// now we need to check the data
 		DataChecker* dc = 0;
 		if (tor.isMultiFile())
+		{
 			dc = new MultiDataChecker();
+			QString path = data_url.path();
+			if (!path.endsWith(bt::DirSeparator()))
+				path += bt::DirSeparator();
+			
+			for (Uint32 i = 0;i < tor.getNumFiles();i++)
+			{
+				bt::TorrentFile & tf = tor.getFile(i);
+				tf.setPathOnDisk(path + tf.getPath());
+			}
+		}
 		else
 			dc = new SingleDataChecker();
 		
