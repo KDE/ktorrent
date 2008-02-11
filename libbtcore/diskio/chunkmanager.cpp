@@ -455,7 +455,7 @@ namespace bt
 	
 	bool ChunkManager::completed() const
 	{
-		return todo.numOnBits() == 0;
+		return todo.numOnBits() == 0 && bitset.numOnBits() > 0;
 	}
 	
 	Uint64 ChunkManager::bytesLeft() const

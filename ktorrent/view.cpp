@@ -215,7 +215,7 @@ namespace kt
 			{	
 				const TorrentStats & s = tc->getStats();
 				bool data_to = false;
-				if (s.bytes_left_to_download > 0)
+				if (!s.completed)
 				{
 					QString msg = i18n("The torrent <b>%1</b> has not finished downloading, "
 							"do you want to delete the incomplete data, too?",s.torrent_name);
