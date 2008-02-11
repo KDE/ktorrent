@@ -47,7 +47,7 @@ namespace kt
 		if (!main_widget)
 		{
 			bt::InitLog(kt::DataDir() + "log",true);
-			
+			setQuitOnLastWindowClosed(false);
 			widget = new kt::GUI();
 			setTopWidget(widget);
 			widget->show();
