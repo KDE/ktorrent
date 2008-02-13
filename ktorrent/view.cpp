@@ -501,20 +501,14 @@ namespace kt
 			header()->hideSection(idx);
 	}
 	
-	void View::onSelectionChanged(const QItemSelection & selected,const QItemSelection & deselected)
+	void View::onSelectionChanged(const QItemSelection & /*selected*/,const QItemSelection & /*deselected*/)
 	{
 		int nflags = flags & (kt::START_ALL | kt::STOP_ALL);
-		QModelIndexList sel = selected.indexes();
-		foreach (QModelIndex idx,sel)
+		QList<bt::TorrentInterface*> sel;
+		getSelection(sel);
+		
+		foreach (bt::TorrentInterface* tc,sel)
 		{
-			idx = proxy_model->mapToSource(idx);
-			if (isRowHidden(idx.row(),QModelIndex()))
-				continue;
-			
-			bt::TorrentInterface* tc = model->torrentFromIndex(idx);
-			if (!tc)
-				continue;
-			
 			if (!tc->getStats().running)
 				nflags |= kt::START | kt::START_ALL;
 			else
