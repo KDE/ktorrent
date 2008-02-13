@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QHeaderView>
+#include <QSortFilterProxyModel>
 #include <klocale.h>
 #include <kstandardguiitem.h>
 #include <util/constants.h>
@@ -45,8 +46,17 @@ namespace kt
 		setupUi(this);
 		
 		model = new SpeedLimitsModel(core,this);
-		m_speed_limits_view->setModel(model);
+		QSortFilterProxyModel* pm = new QSortFilterProxyModel(this);
+		pm->setSourceModel(model);
+		pm->setSortRole(Qt::UserRole);
+		
+		m_speed_limits_view->setModel(pm);
 		m_speed_limits_view->setItemDelegate(new SpinBoxDelegate(this));
+		m_speed_limits_view->setSortingEnabled(true);
+		m_speed_limits_view->sortByColumn(0,Qt::AscendingOrder);
+		m_speed_limits_view->header()->setSortIndicatorShown(true);
+		m_speed_limits_view->header()->setClickable(true);
+		m_speed_limits_view->setAlternatingRowColors(true);
 		
 		
 		m_ok->setGuiItem(KStandardGuiItem::ok());
@@ -83,7 +93,11 @@ namespace kt
 		KConfigGroup g = KGlobal::config()->group("SpeedLimitsDlg");
 		QByteArray s = QByteArray::fromBase64(g.readEntry("view_state",QByteArray()));
 		if (!s.isNull())
+		{
 			m_speed_limits_view->header()->restoreState(s);
+			m_speed_limits_view->header()->setSortIndicatorShown(true);
+			m_speed_limits_view->header()->setClickable(true);
+		}
 	}
 
 	void SpeedLimitsDlg::accept()

@@ -110,7 +110,7 @@ namespace kt
 		
 	QVariant SpeedLimitsModel::data(const QModelIndex & index, int role) const
 	{
-		if (role != Qt::DisplayRole && role != Qt::EditRole)
+		if (role != Qt::DisplayRole && role != Qt::EditRole && role != Qt::UserRole)
 			return QVariant();
 			
 		bt::TorrentInterface* tc = torrentForIndex(index);
@@ -123,12 +123,12 @@ namespace kt
 		{
 			case 0: return tc->getStats().torrent_name;
 			case 1: 
-				if (role == Qt::EditRole)
+				if (role == Qt::EditRole || role == Qt::UserRole)
 					return lim.down / 1024;
 				else
 					return lim.down == 0 ? i18n("No limit") : i18n("%1 KB/s",lim.down / 1024);
 			case 2: 
-				if (role == Qt::EditRole)
+				if (role == Qt::EditRole || role == Qt::UserRole)
 					return lim.up / 1024;
 				else 
 					return lim.up == 0 ? i18n("No limit") : i18n("%1 KB/s",lim.up / 1024);
