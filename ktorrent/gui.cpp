@@ -555,7 +555,7 @@ namespace kt
 	
 	void GUI::speedLimits()
 	{
-		SpeedLimitsDlg dlg(core,this);
+		SpeedLimitsDlg dlg(0,core,this);
 		dlg.exec();
 	}
 	

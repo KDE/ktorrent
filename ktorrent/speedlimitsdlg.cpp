@@ -30,6 +30,7 @@
 #include "speedlimitsmodel.h"
 #include "speedlimitsdlg.h"
 #include "spinboxdelegate.h"
+#include <torrent/queuemanager.h>
 
 		
 using namespace bt;
@@ -40,8 +41,8 @@ namespace kt
 	
 	
 	
-	SpeedLimitsDlg::SpeedLimitsDlg(Core* core,QWidget* parent)
-			: QDialog(parent),core(core)
+	SpeedLimitsDlg::SpeedLimitsDlg(bt::TorrentInterface* current,Core* core,QWidget* parent)
+			: QDialog(parent),core(core),current(current)
 	{
 		setupUi(this);
 		
@@ -76,6 +77,31 @@ namespace kt
 		connect(m_download_rate,SIGNAL(valueChanged(int)),this,SLOT(spinBoxValueChanged(int)));
 		
 		loadState();
+		
+		// if current is specified, select it and scroll to it
+		if (current)
+		{
+			kt::QueueManager* qman = core->getQueueManager();
+			int idx = 0;
+			QList<bt::TorrentInterface*>::iterator itr = qman->begin();
+			while (itr != qman->end())
+			{
+				if (*itr == current)
+					break;
+				
+				idx++;
+				itr++;
+			}
+			
+			if (itr != qman->end())
+			{
+				QItemSelectionModel* sel = m_speed_limits_view->selectionModel();
+				QModelIndex midx = pm->mapFromSource(model->index(idx,0));
+				QModelIndex midx2 = pm->mapFromSource(model->index(idx,2));
+				sel->select(QItemSelection(midx,midx2),QItemSelectionModel::Select);
+				m_speed_limits_view->scrollTo(midx);
+			}
+		}
 	}
 
 	SpeedLimitsDlg::~SpeedLimitsDlg()

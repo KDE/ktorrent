@@ -23,6 +23,11 @@
 
 #include <QDialog>
 #include "ui_speedlimitsdlg.h"
+
+namespace bt
+{
+	class TorrentInterface;
+}
 		
 namespace kt
 {
@@ -35,7 +40,7 @@ namespace kt
 		Q_OBJECT
 
 	public:
-		SpeedLimitsDlg(Core* core,QWidget* parent);
+		SpeedLimitsDlg(bt::TorrentInterface* current,Core* core,QWidget* parent);
 		virtual ~SpeedLimitsDlg();
 			
 
@@ -50,6 +55,7 @@ namespace kt
 	private:
 		Core* core;
 		SpeedLimitsModel* model;
+		bt::TorrentInterface* current;
 	};
 }
 

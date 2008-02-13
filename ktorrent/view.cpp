@@ -388,7 +388,9 @@ namespace kt
 	
 	void View::speedLimitsDlg()
 	{
-		SpeedLimitsDlg dlg(core,this);
+		QList<bt::TorrentInterface*> sel;
+		getSelection(sel);
+		SpeedLimitsDlg dlg(sel.count() > 0 ? sel.front() : 0,core,this);
 		dlg.exec();
 	}
 
