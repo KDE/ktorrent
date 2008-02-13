@@ -328,7 +328,7 @@ namespace kt
 			if (tc->readyForPreview() && !tc->getStats().multi_file_torrent)
 			{
 				QFileInfo fi(tc->getTorDir()+"cache");                          
-				new KRun(KUrl(fi.symLinkTarget()), 0, true, true);
+				new KRun(KUrl(fi.symLinkTarget()), 0, 0, true, true);
 			}
 		}
 	}
@@ -340,9 +340,9 @@ namespace kt
 		foreach(bt::TorrentInterface* tc,sel)
 		{
 			if (tc->getStats().multi_file_torrent)
-				new KRun(KUrl(tc->getStats().output_path), 0, true, true);
+				new KRun(KUrl(tc->getStats().output_path), 0, 0, true, true);
 			else
-				new KRun(KUrl(tc->getDataDir()), 0, true, true);
+				new KRun(KUrl(tc->getDataDir()), 0, 0, true, true);
 		}
 	}
 	
@@ -352,7 +352,7 @@ namespace kt
 		getSelection(sel);
 		foreach(bt::TorrentInterface* tc,sel)
 		{
-			new KRun(KUrl(tc->getTorDir()), 0, true, true);
+			new KRun(KUrl(tc->getTorDir()), 0, 0, true, true);
 		}
 	}
 	
