@@ -61,7 +61,7 @@ namespace net
 			CONNECTING_TO_SERVER,
 			CONNECTING_TO_HOST,
 			CONNECTED,
-			FAILED,
+			FAILED
 		};
 		
 		enum SetupState
