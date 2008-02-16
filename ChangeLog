@@ -1,5 +1,24 @@
 
-Changes in 3.Odev :
+Changes in 3.O :
+- Fix infinite loop in DHT code
+- Fix socket descriptor leak (thanks to Richard Narstrom)
+- Patch from Richard Narstrom to fix a problem with character encodings causing KT not to find files anymore after a restart
+- Fix issue with encoding of group names when saving and loading them
+- Fix DHT ping storm bug
+- Ported open silently from commandline patch from KDE3 version
+- Reenabled log rotation
+- Added option to use system geoip 
+- Fix pastedialog (proper usage of KUrl)
+- Fix wrong display of percentages in file view
+- Fix broken start torrent checkbox in fileselectdlg
+- Fix broken import of multifile torrent
+- Make sure that KT is not closed when another window is closed and the main window is hidden
+- Ported behavioral change from KDE3 version: torrents with no selected files are downloads
+- Added sorting in speedlimits dialog
+- When the speed limits dialog is opened via the context menu of a torrent, select that torrent in the list and scroll to it.
+- Fix broken open data dir and open tor dir in viewmenu (wrong usage of KRun)
+- Fix enabling actions bug in view
+- Made file priorities more strict
 
 Changes in 3.0rc1 :
 - Fix typo in tooltip of network sleep interval (154481)
