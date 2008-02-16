@@ -79,7 +79,7 @@ namespace kt
 
 		pref = new IWPrefPage(0);
 		getGUI()->addViewListener(this);
-		getGUI()->addToolWidget(status_tab,"info",i18n("Status"),GUIInterface::DOCK_BOTTOM);
+		getGUI()->addToolWidget(status_tab,"dialog-information",i18n("Status"),GUIInterface::DOCK_BOTTOM);
 		getGUI()->addToolWidget(file_view,"folder",i18n("Files"),GUIInterface::DOCK_BOTTOM);
 	
 		applySettings();
