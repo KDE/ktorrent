@@ -101,6 +101,13 @@ namespace bt
 		bool areWeDownloading(Uint32 chunk) const;
 
 		/**
+		 * Get the number of downloaders assigned to a chunk
+		 * @param chunk ID of Chunk
+		 * @return the number of downloaders for that chunk
+		 */
+		Uint32 numDownloadersForChunk(Uint32 chunk) const;
+		
+		/**
 		 * Save the current downloads.
 		 * @param file The file to save to
 		 */

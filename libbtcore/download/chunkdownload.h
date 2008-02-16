@@ -110,8 +110,6 @@ namespace bt
 		 * @return true if the peer was asigned, false if not
 		 */
 		bool assign(PieceDownloader* pd);
-		
-		Uint32 getNumDownloaders() const {return pdown.count();}
 
 		/**
 		 * A PieceDownloader has been killed. We need to remove it.
@@ -163,6 +161,9 @@ namespace bt
 		
 		/// Are we using the continous hashing feature for this chunk
 		bool usingContinuousHashing() const;
+		
+		/// Get the number of downloaders
+		Uint32 getNumDownloaders() const {return pdown.count();}
 
 	private slots:
 		void sendRequests(PieceDownloader* pd);

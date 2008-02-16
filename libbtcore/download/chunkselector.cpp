@@ -86,18 +86,36 @@ namespace bt
 
 	ChunkSelector::~ChunkSelector()
 	{}
-
+	
+	Uint32 ChunkSelector::leastPeers(const std::list<Uint32> & lp)
+	{
+		Uint32 sel = lp.front();
+		Uint32 cnt = downer.numDownloadersForChunk(sel);
+		for (std::list<Uint32>::const_iterator i = lp.begin();i != lp.end();i++)
+		{
+			Uint32 cnt_i = downer.numDownloadersForChunk(*i);
+			if (cnt_i < cnt)
+			{
+				sel = *i;
+				cnt = cnt_i;
+			}
+		}
+		return sel;
+	}
 
 	bool ChunkSelector::select(PieceDownloader* pd,Uint32 & chunk)
 	{		
 		const BitSet & bs = cman.getBitSet();
 		
+		std::list<Uint32> preview;
+		std::list<Uint32> normal;
+		std::list<Uint32> first;
+		Uint32 sel = cman.getNumChunks() + 1;
 		
 		// sort the chunks every 2 seconds
 		if (sort_timer.getElapsedSinceUpdate() > 2000)
 		{
 			bool warmup = cman.getNumChunks() - cman.chunksLeft() <= 4;
-//			dataChecked(bs);
 			chunks.sort(RareCmp(cman,pman.getChunkCounter(),warmup));
 			sort_timer.update();
 		}
@@ -118,17 +136,100 @@ namespace bt
 			else
 			{
 				// pd has to have the selected chunk and it needs to be not excluded
-				if (pd->hasChunk(i) && !downer.areWeDownloading(i) && 
-					!c->isExcluded() && !c->isExcludedForDownloading())
+				if (pd->hasChunk(i) && !c->isExcluded() && !c->isExcludedForDownloading())
 				{
-					// we have a chunk
-					chunk = i;
-					return true;
+					if (!downer.areWeDownloading(i))
+					{ 
+						// we have a chunk
+						sel = i;
+						break;
+					}
+					
+					switch (cman.getChunk(i)->getPriority())
+					{
+						case PREVIEW_PRIORITY:
+							preview.push_back(i);
+							break;
+						case FIRST_PRIORITY:
+							first.push_back(i);
+							break;
+						case NORMAL_PRIORITY:
+							normal.push_back(i);
+							break;
+						default:
+							break;
+					}
+					
 				}
 				itr++;
 			}
 		}
 		
+		if (sel >= cman.getNumChunks())
+			return false;
+		
+		// we have found one, now try to see if we cannot assign this PieceDownloader to a higher priority chunk
+		switch (cman.getChunk(sel)->getPriority())
+		{
+			case PREVIEW_PRIORITY:
+				chunk = sel;
+				return true;
+			case FIRST_PRIORITY:
+				if (preview.size() > 0)
+				{
+					chunk = leastPeers(preview);
+					return true;
+				}
+				else
+				{
+					chunk = sel;
+					return true;
+				}
+				break;
+			case NORMAL_PRIORITY:
+				if (preview.size() > 0)
+				{
+					chunk = leastPeers(preview);
+					return true;
+				}
+				else if (first.size() > 0)
+				{
+					chunk = leastPeers(first);
+					return true;
+				}
+				else
+				{
+					chunk = sel;
+					return true;
+				}
+				break;
+			case LAST_PRIORITY:
+				if (preview.size() > 0)
+				{
+					chunk = leastPeers(preview);
+					return true;
+				}
+				else if (first.size() > 0)
+				{
+					chunk = leastPeers(first);
+					return true;
+				}
+				else if (normal.size() > 0)
+				{
+					chunk = leastPeers(normal);
+					return true;
+				}
+				else
+				{
+					chunk = sel;
+					return true;
+				}
+				break;
+			default:
+				chunk = sel;
+				return true;
+		}
+			
 		return false;
 	}
 

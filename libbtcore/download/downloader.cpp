@@ -246,6 +246,7 @@ namespace bt
 		return sel;
 	}
 	
+
 	bool Downloader::findDownloadForPD(PieceDownloader* pd,bool warmup)
 	{
 		ChunkDownload* sel = 0;
@@ -312,7 +313,14 @@ namespace bt
 		if (!limit_exceeded && chunk_selector->select(pd,chunk))
 		{
 			Chunk* c = cman.getChunk(chunk);
-			if (cman.prepareChunk(c))
+			if (current_chunks.contains(chunk))
+			{
+				if (c->getStatus() == Chunk::ON_DISK)
+					cman.prepareChunk(c,true);
+			
+				current_chunks.find(chunk)->assign(pd);
+			}
+			else if (cman.prepareChunk(c))
 			{
 				ChunkDownload* cd = new ChunkDownload(c);
 				current_chunks.insert(chunk,cd);
@@ -343,6 +351,15 @@ namespace bt
 	bool Downloader::areWeDownloading(Uint32 chunk) const
 	{
 		return current_chunks.find(chunk) != 0;
+	}
+	
+	Uint32 Downloader::numDownloadersForChunk(Uint32 chunk) const
+	{
+		const ChunkDownload* cd = current_chunks.find(chunk);
+		if (!cd)
+			return 0;
+		
+		return cd->getNumDownloaders();
 	}
 	
 	void Downloader::onNewPeer(Peer* peer)

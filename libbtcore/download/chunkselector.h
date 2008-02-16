@@ -75,6 +75,8 @@ namespace bt
 		 * @param chunk The chunk
 		 */
 		void reinsert(Uint32 chunk);
+	private:
+		Uint32 leastPeers(const std::list<Uint32> & lp);
 	};
 
 }
