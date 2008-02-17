@@ -1,8 +1,9 @@
 
 Changes in 3.O :
+- Fix sorting of upload and download rate (157939)
 - Fix infinite loop in DHT code
-- Fix socket descriptor leak (thanks to Richard Narstrom)
-- Patch from Richard Narstrom to fix a problem with character encodings causing KT not to find files anymore after a restart
+- Fix socket descriptor leak (thanks to Richard Narstrom) (156163)
+- Patch from Richard Narstrom to fix a problem with character encodings causing KT not to find files anymore after a restart (156838)
 - Fix issue with encoding of group names when saving and loading them
 - Fix DHT ping storm bug
 - Ported open silently from commandline patch from KDE3 version
@@ -11,14 +12,14 @@ Changes in 3.O :
 - Fix pastedialog (proper usage of KUrl)
 - Fix wrong display of percentages in file view
 - Fix broken start torrent checkbox in fileselectdlg
-- Fix broken import of multifile torrent
-- Make sure that KT is not closed when another window is closed and the main window is hidden
+- Fix broken import of multifile torrent (157582)
+- Make sure that KT is not closed when another window is closed and the main window is hidden (157656)
 - Ported behavioral change from KDE3 version: torrents with no selected files are downloads
 - Added sorting in speedlimits dialog
-- When the speed limits dialog is opened via the context menu of a torrent, select that torrent in the list and scroll to it.
+- When the speed limits dialog is opened via the context menu of a torrent, select that torrent in the list and scroll to it. (157711)
 - Fix broken open data dir and open tor dir in viewmenu (wrong usage of KRun)
 - Fix enabling actions bug in view
-- Made file priorities more strict
+- Made file priorities more strict (153105)
 
 Changes in 3.0rc1 :
 - Fix typo in tooltip of network sleep interval (154481)
