@@ -206,15 +206,15 @@ namespace kt
 			case 4: return bytes_uploaded;
 			case 5: 
 				if (download_rate >= 103 && s.bytes_left_to_download > 0) // lowest "visible" speed, all below will be 0,0 Kb/s
-					return 0;
-				else
 					return download_rate;
+				else
+					return 0;
 				break;
 			case 6: 
 				if (upload_rate >= 103) // lowest "visible" speed, all below will be 0,0 Kb/s
-					return 0;
-				else
 					return upload_rate;
+				else
+					return 0;
 				break;
 			case 7: return eta;	
 			case 8: return seeders_connected_to;
