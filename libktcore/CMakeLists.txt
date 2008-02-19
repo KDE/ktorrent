@@ -30,6 +30,7 @@ set(libktorrent_SRC
 	groups/queueduploadsgroup.cpp  
 	groups/userdownloadsgroup.cpp  
 	groups/useruploadsgroup.cpp
+	groups/ungroupedgroup.cpp
 	groups/groupmanager.cpp
 
 	ktorrent.kcfg

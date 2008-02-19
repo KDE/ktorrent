@@ -95,6 +95,7 @@ namespace kt
 		GroupViewItem* upld = addGroup(gman->uploadGroup(),all);
 		GroupViewItem* inactive = addGroup(gman->inactiveGroup(), all);
 		GroupViewItem* active = addGroup(gman->activeGroup(), all);
+		addGroup(gman->ungroupedGroup(),all);
 		addGroup(gman->queuedDownloadsGroup(), dwnld);
 		addGroup(gman->queuedUploadsGroup(), upld);
 		addGroup(gman->userDownloadsGroup(), dwnld);

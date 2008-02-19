@@ -41,6 +41,7 @@
 #include "activegroup.h"
 #include "activedownloadsgroup.h"
 #include "activeuploadsgroup.h"
+#include "ungroupedgroup.h"
 
 using namespace bt;
 
@@ -89,6 +90,9 @@ namespace kt
 		default_groups.insert(g->groupName(),g);
 		
 		g = new InactiveDownloadsGroup();
+		default_groups.insert(g->groupName(),g);
+		
+		g = new UngroupedGroup(this);
 		default_groups.insert(g->groupName(),g);
 	}
 

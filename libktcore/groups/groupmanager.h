@@ -93,6 +93,9 @@ namespace kt
 		/// Get the group of inactive uploads
 		Group* activeUploadsGroup() { return findDefault(i18n("Active uploads")); }
 		
+		/// Get the ungrouped Group
+		Group* ungroupedGroup() { return findDefault(i18n("Ungrouped Torrents"));}
+		
 		/// Find a default group by the given name
 		Group* findDefault(const QString & name);
 		
