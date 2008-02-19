@@ -122,6 +122,7 @@ namespace kt
 		void stopAllTorrents();
 		void stopAllTorrentsCV();
 		void pasteURL();
+		void paste();
 		void checkData();
 		void showPrefDialog();
 		void showStatusBar();

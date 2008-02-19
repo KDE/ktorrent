@@ -19,7 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <qtimer.h>
-
+#include <QClipboard>
 #include <kconfig.h>
 #include <klocale.h>
 #include <kaction.h>
@@ -346,6 +346,21 @@ namespace kt
 		PasteDialog dlg(core, this);
 		dlg.exec();
 	}
+	
+	void GUI::paste()
+	{
+		QClipboard *cb = QApplication::clipboard();
+		QString text = cb->text(QClipboard::Clipboard);
+		if (text.length() == 0)
+			return;
+		
+		KUrl url = KUrl(text);
+
+		if (url.isValid())
+			load(url);
+		else
+			KMessageBox::error(this,i18n("Invalid URL: %1",url.prettyUrl()));
+	}
 
 	void GUI::showPrefDialog()
 	{
@@ -406,6 +421,7 @@ namespace kt
 		KActionCollection* ac = actionCollection();
 		KAction* new_action = KStandardAction::openNew(this,SLOT(createTorrent()),ac);
 		KAction* open_action = KStandardAction::open(this, SLOT(openTorrent()),ac);
+		KStandardAction::paste(this,SLOT(paste()),ac);
 		
 		open_silently_action = new KAction(KIcon(open_action->icon()),i18n("Open Silently"),this);
 		connect(open_silently_action,SIGNAL(triggered()),this,SLOT(openTorrentSilently()));
