@@ -190,6 +190,7 @@ namespace kt
 			case 11: return KGlobal::locale()->formatNumber(share_ratio,2);
 			case 12: return DurationToString(runtime_dl);
 			case 13: return DurationToString(runtime_ul);
+			case 14: return tc->getStats().output_path;
 			default: return QVariant();
 		}
 	}
@@ -224,6 +225,7 @@ namespace kt
 			case 11: return share_ratio;
 			case 12: return runtime_dl;
 			case 13: return runtime_ul;
+			case 14: return tc->getStats().output_path;
 			default: return QVariant();
 		}
 	}
@@ -336,7 +338,7 @@ namespace kt
 		if (parent.isValid())
 			return 0;
 		else
-			return 14;
+			return 15;
 	}
 	
 	QVariant ViewModel::headerData(int section, Qt::Orientation orientation,int role) const
@@ -361,6 +363,7 @@ namespace kt
 			case 11: return i18n("Share Ratio");
 			case 12: return i18n("Time Downloaded");
 			case 13: return i18n("Time Seeded");
+			case 14: return i18n("Location");
 			default: return QVariant();
 		}
 	}
