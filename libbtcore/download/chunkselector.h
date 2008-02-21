@@ -22,6 +22,7 @@
 
 #include <list>
 #include <util/timer.h>
+#include <interfaces/chunkselectorinterface.h>
 
 
 
@@ -38,15 +39,12 @@ namespace bt
 	 *
 	 * Selects which Chunks to download. 
 	*/
-	class ChunkSelector
+	class ChunkSelector : public ChunkSelectorInterface
 	{
-		ChunkManager & cman;
-		Downloader & downer;
-		PeerManager & pman;
 		std::list<Uint32> chunks;
 		Timer sort_timer;
 	public:
-		ChunkSelector(ChunkManager & cman,Downloader & downer,PeerManager &pman);
+		ChunkSelector(ChunkManager & cman,Downloader & downer,PeerManager & pman);
 		virtual ~ChunkSelector();
 
 		/**

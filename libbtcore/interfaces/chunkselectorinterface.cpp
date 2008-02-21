@@ -18,3 +18,20 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "chunkselectorinterface.h"
+
+namespace bt
+{
+
+	ChunkSelectorInterface::ChunkSelectorInterface(ChunkManager & cman,Downloader & downer,PeerManager & pman)
+	: cman(cman),downer(downer),pman(pman)
+	{
+	}
+
+
+	ChunkSelectorInterface::~ChunkSelectorInterface()
+	{
+	}
+
+
+}

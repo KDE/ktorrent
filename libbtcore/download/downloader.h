@@ -35,7 +35,7 @@ namespace bt
 	class Chunk;
 	class ChunkDownload;
 	class Piece;
-	class ChunkSelector;
+	class ChunkSelectorInterface;
 	class PieceDownloader;
 	class MonitorInterface;
 
@@ -69,8 +69,10 @@ namespace bt
 		 * @param tor The Torrent
 		 * @param pman The PeerManager
 		 * @param cman The ChunkManager
+		 * @param sel The ChunkSelector, if this is 0, a default one will be created 
+		 *            (note: Downloader will take control of this and delete it when it gets deleted)
 		 */
-		Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman);
+		Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman,ChunkSelectorInterface* sel);
 		virtual ~Downloader();
 
 		/// Get the number of bytes we have downloaded
@@ -211,9 +213,9 @@ namespace bt
 		Uint64 unnecessary_data;
 		PtrMap<Uint32,ChunkDownload> current_chunks;
 		QList<PieceDownloader*> piece_downloaders;
-		ChunkSelector* chunk_selector;
-		
 		MonitorInterface* tmon;
+		ChunkSelectorInterface* chunk_selector;
+		
 		static Uint32 mem_usage;
 	};
 	

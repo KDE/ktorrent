@@ -52,6 +52,7 @@ namespace bt
 	class DataCheckerThread;
 	class WaitJob;
 	class MonitorInterface;
+	class ChunkSelectorInterface;
 	
 	/**
 	 * @author Joris Guisson
@@ -269,6 +270,9 @@ namespace bt
 		/// Are we in the process of moving files
 		bool isMovingFiles() const {return moving_files;}
 		
+		/// Set a custom chunk selector (needs to be done for init is called)
+		void setCustomChunkSelector(ChunkSelectorInterface* csi);
+		
 	public slots:
 		/**
 		 * Update the object, should be called periodically.
@@ -382,6 +386,7 @@ namespace bt
 		Choker* choke;
 		TimeEstimator* m_eta;
 		MonitorInterface* tmon;
+		ChunkSelectorInterface* custom_selector;
 		
 		Timer choker_update_timer;
 		Timer stats_save_timer;

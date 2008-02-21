@@ -66,7 +66,7 @@ namespace bt
 	};
 
 	ChunkSelector::ChunkSelector(ChunkManager & cman,Downloader & downer,PeerManager & pman)
-	: cman(cman),downer(downer),pman(pman)
+	: ChunkSelectorInterface(cman,downer,pman)
 	{	
 		std::vector<Uint32> tmp;
 		for (Uint32 i = 0;i < cman.getNumChunks();i++)

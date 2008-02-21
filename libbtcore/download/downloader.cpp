@@ -42,10 +42,12 @@ namespace bt
 	
 	
 
-	Downloader::Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman) 
-	: tor(tor),pman(pman),cman(cman),downloaded(0),tmon(0)
+	Downloader::Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman,ChunkSelectorInterface* sel) 
+	: tor(tor),pman(pman),cman(cman),downloaded(0),tmon(0),chunk_selector(sel)
 	{
-		chunk_selector = new ChunkSelector(cman,*this,pman);
+		if (!chunk_selector) // check if a custom one was provided, if not create a default one
+			chunk_selector = new ChunkSelector(cman,*this,pman);
+		
 		Uint64 total = tor.getFileLength();
 		downloaded = (total - cman.bytesLeft());
 		curr_chunks_downloaded = 0;
