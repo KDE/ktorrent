@@ -78,6 +78,24 @@ namespace bt
 		virtual void reinsert(Uint32 chunk) = 0;
 	};
 
+	/**
+	 * Factory to create ChunkSelector's
+	*/
+	class BTCORE_EXPORT ChunkSelectorFactoryInterface
+	{
+	public:
+		ChunkSelectorFactoryInterface();
+		virtual ~ChunkSelectorFactoryInterface();
+		
+		/**
+		 * Create a ChunkSelector
+		 * @param cman The ChunkManager
+		 * @param downer The Downloader
+		 * @param pman The PeerManager
+		 * @return A newly created ChunkSelector
+		 */
+		virtual ChunkSelectorInterface* createChunkSelector(ChunkManager & cman,Downloader & downer,PeerManager & pman) = 0;
+	};
 }
 
 #endif

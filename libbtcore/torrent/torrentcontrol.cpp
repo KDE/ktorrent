@@ -59,6 +59,7 @@
 #include "server.h"
 #include <peer/packetwriter.h>
 #include <interfaces/queuemanagerinterface.h>
+#include <interfaces/chunkselectorinterface.h>
 #include "statsfile.h"
 #include <diskio/preallocationthread.h>
 #include "timeestimator.h"
@@ -76,7 +77,7 @@ namespace bt
 	TorrentControl::TorrentControl()
 	: tor(0),psman(0),cman(0),pman(0),down(0),up(0),choke(0),tmon(0),prealloc(false)
 	{
-		custom_selector = 0;
+		custom_selector_factory = 0;
 		istats.last_announce = 0;
 		stats.imported_bytes = 0;
 		stats.trk_bytes_downloaded = 0;
@@ -135,6 +136,7 @@ namespace bt
 		delete psman;
 		delete tor;
 		delete m_eta;
+		delete custom_selector_factory;
 	}
 	
 	bool TorrentControl::updateNeeded() const
@@ -630,7 +632,7 @@ namespace bt
 		stats.completed = cman->completed();
 
 		// create downloader,uploader and choker
-		down = new Downloader(*tor,*pman,*cman,custom_selector);
+		down = new Downloader(*tor,*pman,*cman,custom_selector_factory);
 		connect(down,SIGNAL(ioError(const QString& )),
 				this,SLOT(onIOError(const QString& )));
 		up = new Uploader(*cman,*pman);
@@ -1844,9 +1846,9 @@ namespace bt
 		}
 	}
 	
-	void TorrentControl::setCustomChunkSelector(ChunkSelectorInterface* csi)
+	void TorrentControl::setChunkSelectorFactory(ChunkSelectorFactoryInterface* csfi)
 	{
-		custom_selector = csi;
+		custom_selector_factory = csfi;
 	}
 }
 
