@@ -32,7 +32,7 @@ namespace bt
 	 * 
 	 * Class to keep track of how many peers have a chunk.
 	*/
-	class ChunkCounter 
+	class BTCORE_EXPORT ChunkCounter 
 	{
 		Array<Uint32> cnt;
 	public:
