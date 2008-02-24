@@ -50,7 +50,6 @@ namespace kt
 			setQuitOnLastWindowClosed(false);
 			widget = new kt::GUI();
 			setTopWidget(widget);
-			widget->show();
 			main_widget = widget;
 		}
 		else
