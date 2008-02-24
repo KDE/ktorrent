@@ -33,5 +33,13 @@ namespace bt
 	{
 	}
 
+	ChunkSelectorFactoryInterface::ChunkSelectorFactoryInterface()
+	{
+	}
+
+	ChunkSelectorFactoryInterface::~ChunkSelectorFactoryInterface()
+	{
+	}
+
 
 }
