@@ -502,6 +502,7 @@ namespace kt
 		QMenu* m = tray_icon->contextMenu();
 		m->addAction(start_all_action);
 		m->addAction(stop_all_action);
+		m->addAction(queue_pause_action);
 		m->addSeparator();
 		m->addAction(paste_url_action);
 		m->addAction(open_action);
