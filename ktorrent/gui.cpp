@@ -36,6 +36,7 @@
 #include <kfiledialog.h>
 #include <kpushbutton.h>
 #include <kxmlguifactory.h>
+#include <KNotifyConfigWidget>
 #include <kio/jobclasses.h>
 #include <kio/jobuidelegate.h>
 
@@ -434,6 +435,7 @@ namespace kt
 		KStandardAction::keyBindings(this, SLOT(configureKeys()),ac);
 		
 		KStandardAction::configureToolbars(this,SLOT(configureToolBars()),ac);
+		KStandardAction::configureNotifications(this,SLOT(configureNotifications()),ac);
 
 		start_action = new KAction(KIcon("ktstart"),i18n("Start"), this);
 		connect(start_action,SIGNAL(triggered()),this,SLOT(startTorrent()));
@@ -683,6 +685,11 @@ namespace kt
 	void GUI::showOrHide()
 	{
 		setVisible(!isVisible());
+	}
+
+	void GUI::configureNotifications()
+	{
+		KNotifyConfigWidget::configure( this );
 	}
 }
 

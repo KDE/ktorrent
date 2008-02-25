@@ -118,6 +118,7 @@ namespace kt
 		KIcon m_kt_pix;
 		SetMaxRate* max_upload_rate;
 		SetMaxRate* max_download_rate;
+		QWidget* mwnd;
 	};
 
 	class SetMaxRate : public KMenu

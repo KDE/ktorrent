@@ -139,7 +139,7 @@ namespace kt
 		void newView();
 		void speedLimits();
 		void showOrHide();
-		
+		void configureNotifications();		
 		
 		
 	private:

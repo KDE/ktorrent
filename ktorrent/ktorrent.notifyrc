@@ -1,0 +1,36 @@
+[Global]
+IconName=ktorrent
+Comment=KTorrent
+
+[Event/TorrentStoppedByError]
+Name=Torrent stopped by error
+Action=Sound|Popup
+
+[Event/TorrentFinished]
+Name=Torrent has finished downloading
+Action=Sound|Popup
+
+[Event/MaxShareRatioReached]
+Name=Maximum share ratio reached
+Action=Sound|Popup
+
+[Event/MaxSeedTimeReached]
+Name=Maximum seed time reached
+Action=Sound|Popup
+
+[Event/LowDiskSpace]
+Name=Disk space is running low
+Action=Sound|Popup
+
+[Event/CorruptedData]
+Name=Corrupted data has been found
+Action=Sound|Popup
+
+[Event/QueueNotPossible]
+Name=Torrent cannot be enqueued
+Action=Sound|Popup
+
+[Event/CannotStart]
+Name=Torrent cannot be started
+Action=Sound|Popup
+

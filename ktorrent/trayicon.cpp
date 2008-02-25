@@ -24,6 +24,7 @@
 #include <kapplication.h>
 #include <qtooltip.h>
 #include <kpassivepopup.h>
+#include <knotification.h>
 #include <interfaces/torrentinterface.h>
 #include <util/functions.h>
 #include <net/socketmonitor.h>
@@ -40,7 +41,7 @@ using namespace bt;
 namespace kt
 {
 
-	TrayIcon::TrayIcon(Core* core, QWidget *parent)	: KSystemTrayIcon(parent),m_kt_pix("ktorrent")
+	TrayIcon::TrayIcon(Core* core, QWidget *parent)	: KSystemTrayIcon(parent),m_kt_pix("ktorrent"),mwnd(parent)
 	{
 		m_core = core;
 		setIcon(m_kt_pix);
@@ -151,7 +152,7 @@ namespace kt
 					KBytesPerSecToString(speed_down / tc->getRunningTimeDL()),
 					KBytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
-		showPassivePopup(msg,i18n("Download completed"));
+		KNotification::event("TorrentFinished",msg,QPixmap(),mwnd);
 	}
 
 	void TrayIcon::maxShareRatioReached(bt::TorrentInterface* tc)
@@ -169,8 +170,8 @@ namespace kt
 				loc->formatNumber(s.max_share_ratio,2),
 				BytesToString(s.bytes_uploaded),
 				KBytesPerSecToString(speed_up / tc->getRunningTimeUL()));
-		
-		showPassivePopup(msg,i18n("Seeding completed"));
+
+		KNotification::event("MaxShareRatioReached",msg,QPixmap(),mwnd);
 	}
 
 	void TrayIcon::maxSeedTimeReached(bt::TorrentInterface* tc)
@@ -188,8 +189,8 @@ namespace kt
 				loc->formatNumber(s.max_seed_time,2),
 				BytesToString(s.bytes_uploaded),
 				KBytesPerSecToString(speed_up / tc->getRunningTimeUL()));
-		
-		showPassivePopup(msg,i18n("Seeding completed"));
+
+		KNotification::event("MaxSeedTimeReached",msg,QPixmap(),mwnd);
 	}
 
 	void TrayIcon::torrentStoppedByError(bt::TorrentInterface* tc, QString msg)
@@ -200,19 +201,20 @@ namespace kt
 		const TorrentStats & s = tc->getStats();
 		QString err_msg = i18n("<b>%1</b> has been stopped with the following error: <br>%2",
 					s.torrent_name,msg);
-		
-		showPassivePopup(err_msg,i18n("Error"));
+
+		KNotification::event("TorrentStoppedByError",err_msg,QPixmap(),mwnd);
 	}
 
 	void TrayIcon::corruptedData(bt::TorrentInterface* tc)
-	{
+	{	
 		if (!Settings::showPopups())
 			return;
 		
 		const TorrentStats & s = tc->getStats();
 		QString err_msg = i18n("Corrupted data has been found in the torrent <b>%1</b>"
 				"<br>It would be a good idea to do a data integrity check on the torrent.",s.torrent_name);
-		showPassivePopup(err_msg,i18n("Error"));
+				
+		KNotification::event("CorruptedData",err_msg,QPixmap(),mwnd);
 	}
 
 	void TrayIcon::queuingNotPossible(bt::TorrentInterface* tc)
@@ -234,7 +236,7 @@ namespace kt
 				"Remove the limit manually if you want to continue seeding.",
 				s.torrent_name,loc->formatNumber(s.max_seed_time,2));
 		
-		showPassivePopup(msg,i18n("Torrent cannot be enqueued."));
+		KNotification::event("QueueNotPossible",msg,QPixmap(),mwnd);
 	}
 
 	void TrayIcon::canNotStart(bt::TorrentInterface* tc,bt::TorrentStartResponse reason)
@@ -258,11 +260,11 @@ namespace kt
 							"Cannot download more than %1 torrents. <br>",Settings::maxDownloads());
 			}
 			msg += i18n("Go to Settings -> Configure KTorrent, if you want to change the limits.");
-			showPassivePopup(msg,i18n("Torrent cannot be started"));
+			KNotification::event("CannotStart",msg,QPixmap(),mwnd);
 			break;
 		case bt::NOT_ENOUGH_DISKSPACE:
 			msg += i18n("There is not enough diskspace available.");
-			showPassivePopup(msg,i18n("Torrent cannot be started"));
+			KNotification::event("CannotStart",msg,QPixmap(),mwnd);
 			break;
 		default:
 			break;
@@ -280,8 +282,8 @@ namespace kt
 		
 		if(stopped)
 			msg.prepend(i18n("Torrent has been stopped.<br />"));
-		
-		showPassivePopup(msg,i18n("Device running out of space"));
+
+		KNotification::event("LowDiskSpace",msg);
 	}
 	
 	void TrayIcon::updateMaxRateMenus()
