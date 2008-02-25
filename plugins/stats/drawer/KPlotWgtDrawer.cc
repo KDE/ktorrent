@@ -189,7 +189,29 @@ void KPlotWgtDrawer::Zero (const size_t idx)
 		return;
 	}
 	
+	std::list<buff_t::iterator> lb;
+	
+	//iteration through elements to-be-removed is EVIL
+	for(buff_t::iterator it = pmBuff -> begin();
+		it != pmBuff -> end();
+		it++)
+	{
+		if( it -> first == idx) 
+		{
+			lb.push_back(it);
+		}
+	}
+	
+	//EVIL I SAY!
+	for(std::list<buff_t::iterator>::iterator it = lb.begin();
+		it != lb.end();
+		it++)
+	{
+		pmBuff -> erase(*it);
+	}
+	
 	kpol[idx] -> clearPoints();
+	FindSetMax();
 }
 
 void KPlotWgtDrawer::ZeroAll()
@@ -199,7 +221,6 @@ void KPlotWgtDrawer::ZeroAll()
 		Zero(i);
 	}
 	
-	pmBuff -> clear();
 	emit Zeroed(this);
 }
 
