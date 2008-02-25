@@ -146,7 +146,9 @@ class PlainChartDrawer : public QFrame, public ChartDrawer
 
 		void EnableAntiAlias (const bool aa);
 		void EnableBgdGrid(bool bg);
-		
+	
+	signals:
+		void Zeroed(ChartDrawer *);
 		
 
 };

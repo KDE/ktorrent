@@ -331,10 +331,6 @@ void PlainChartDrawer::MakeCtxMenu()
 	QAction * rst = pmCtxMenu -> addAction(i18n("Reset"));
 	
 	connect(rst, SIGNAL(triggered ( bool )), this, SLOT(ZeroAll()));
-	if(parent() != 0)
-	{
-		connect(rst, SIGNAL(triggered ( bool )), parent(), SLOT(ResetAvg()));
-	}
 }
 
 void PlainChartDrawer::ShowCtxMenu(const QPoint & pos)
@@ -431,6 +427,7 @@ void PlainChartDrawer::ZeroAll ()
 	} 
 	
 	FindSetMax();
+	emit Zeroed(this);
 }
 
 void PlainChartDrawer::SetMaxMode (const MaxMode mm)

@@ -120,7 +120,8 @@ class KPlotWgtDrawer : public KPlotWidget, public ChartDrawer
 		void ShowCtxMenu(const QPoint & rP);
 		void RenderToImage();
 		
-		
+	signals:
+		void Zeroed(ChartDrawer *);
 		
 };
 

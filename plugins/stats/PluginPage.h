@@ -24,6 +24,7 @@
 #include <utility>
 
 #include <interfaces/plugin.h>
+#include <drawer/ChartDrawer.h>
 
 namespace kt {
 
@@ -64,7 +65,7 @@ class PluginPage : public QWidget
 		*/
 		virtual void GatherData(Plugin * pP) = 0;
 		///Resets average
-		virtual void ResetAvg() = 0;
+		virtual void ResetAvg(ChartDrawer *) = 0;
 };
 
 } // ns end

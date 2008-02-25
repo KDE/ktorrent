@@ -200,6 +200,7 @@ void KPlotWgtDrawer::ZeroAll()
 	}
 	
 	pmBuff -> clear();
+	emit Zeroed(this);
 }
 
 void KPlotWgtDrawer::SetUnitName(const QString & rN)
@@ -369,10 +370,6 @@ void KPlotWgtDrawer::MakeCtxMenu()
 	QAction * rst = pmCtxMenu -> addAction(i18n("Reset"));
 	
 	connect(rst, SIGNAL(triggered ( bool )), this, SLOT(ZeroAll()));
-	if(parent() != 0)
-	{
-		connect(rst, SIGNAL(triggered ( bool )), parent(), SLOT(ResetAvg()));
-	}
 }
 
 void KPlotWgtDrawer::ShowCtxMenu(const QPoint & pos)
