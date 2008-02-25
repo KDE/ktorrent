@@ -15,6 +15,16 @@ include (MacroLibrary)
 #
 include(CheckIncludeFiles)
 include(CheckFunctionExists)
+include(CheckTypeSize) #XFS
+
+#XFS prealloc
+CHECK_INCLUDE_FILES(xfs/xfs.h HAVE_XFS_XFS_H)
+IF(HAVE_XFS_XFS_H)
+	SET(CMAKE_EXTRA_INCLUDE_FILES xfs/xfs.h)
+	CHECK_TYPE_SIZE(__u64 HAVE___U64)
+	CHECK_TYPE_SIZE(__s64 HAVE___S64)
+	SET(CMAKE_EXTRA_INCLUDE_FILES)
+ENDIF(HAVE_XFS_XFS_H)
 
 # check for 64 bit file I/O functions
 check_function_exists(fopen64 HAVE_FOPEN64)
