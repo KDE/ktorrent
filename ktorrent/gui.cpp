@@ -593,6 +593,24 @@ namespace kt
 		bool menubar_hidden = g.readEntry("menubar_hidden",false);
 		menuBar()->setHidden(menubar_hidden);
 		show_menu_bar_action->setChecked(!menubar_hidden);
+		
+		bool hidden_on_exit = g.readEntry("hidden_on_exit",false);
+		if (Settings::showSystemTrayIcon())
+		{
+			if (hidden_on_exit)
+			{
+				Out(SYS_GEN|LOG_DEBUG) << "Starting minimized" << endl;
+				hide();
+			}
+			else
+			{
+				show();
+			}
+		}
+		else
+		{
+			show();
+		}
 	}
 
 	void GUI::saveState(KSharedConfigPtr cfg)
@@ -600,6 +618,7 @@ namespace kt
 		KConfigGroup g = cfg->group("MainWindow");
 		g.writeEntry("statusbar_hidden",status_bar->isHidden());
 		g.writeEntry("menubar_hidden",menuBar()->isHidden());
+		g.writeEntry("hidden_on_exit",isHidden());
 		view_man->saveState(cfg);
 		group_view->saveState(cfg);
 		qm->saveState(cfg);
