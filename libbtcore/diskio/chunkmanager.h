@@ -28,6 +28,7 @@
 #include <btcore_export.h>
 #include "chunk.h"
 
+class KJob;
 class QStringList;
 
 namespace bt
@@ -37,6 +38,7 @@ namespace bt
 	class TorrentFile;
 	class PreallocationThread;
 	class TorrentFileInterface;
+	class CacheFactory;
 
 	struct NewChunkHeader
 	{
@@ -76,7 +78,8 @@ namespace bt
 		ChunkManager(Torrent & tor,
 					 const QString & tmpdir,
 					 const QString & datadir,
-					 bool custom_output_name);
+					 bool custom_output_name,
+					 CacheFactory* fac);
 		virtual ~ChunkManager();
 
 		/// Get the torrent
@@ -103,14 +106,27 @@ namespace bt
 		 * Move the data files of the torrent.
 		 * @param ndir The new directory
 		 */
-		void moveDataFiles(const QString & ndir);
+		KJob* moveDataFiles(const QString & ndir);
 		
+		/**
+		 * A move of data files has finished
+		 * @param job The job doing the move
+		 */
+		void moveDataFilesFinished(KJob* job);
 		
 		/**
 		 * Move some data files to a new location
 		 * @param files Map of files and their new location
 		 */
-		void moveDataFiles(const QMap<TorrentFileInterface*,QString> & files);
+		KJob* moveDataFiles(const QMap<TorrentFileInterface*,QString> & files);
+		
+		
+		/**
+		 * A move of data files with the map has finished
+		 * @param files Map of files and their new location
+		 * @param job The job doing the move
+		 */
+		void moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & files,KJob* job);
 		
 		/**
 		 * Loads the index file.

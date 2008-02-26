@@ -21,6 +21,7 @@
 #include <klocale.h>
 #include <qfileinfo.h>
 #include <qstringlist.h> 
+#include <kio/copyjob.h>
 #include <util/fileops.h>
 #include <util/error.h>
 #include <util/functions.h>
@@ -91,9 +92,14 @@ namespace bt
 		saveFileMap();
 	}
 	
-	void SingleFileCache::moveDataFiles(const QString & ndir)
+	KJob* SingleFileCache::moveDataFiles(const QString & ndir)
 	{
-		bt::Move(output_file,ndir);
+		return KIO::move(output_file,ndir);
+	}
+	
+	void SingleFileCache::moveDataFilesFinished(KJob* job)
+	{
+		Q_UNUSED(job);
 	}
 	
 	bool SingleFileCache::prep(Chunk* c)

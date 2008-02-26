@@ -77,6 +77,7 @@ set(libbtcore_SRC
 	interfaces/monitorinterface.cpp
 	interfaces/queuemanagerinterface.cpp
 	interfaces/chunkselectorinterface.cpp
+	interfaces/cachefactory.cpp
 
 	torrent/globals.cpp
 	torrent/server.cpp
@@ -183,6 +184,7 @@ set (interfaces_HDR
 	./interfaces/torrentfileinterface.h
 	./interfaces/peersource.h
 	./interfaces/chunkselectorinterface.h
+	./interfaces/cachefactory.h
 )
 
 set (peer_HDR

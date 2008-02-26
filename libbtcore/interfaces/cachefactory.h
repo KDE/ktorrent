@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,56 +16,40 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <util/functions.h>
-#include <torrent/torrent.h>
-#include "chunk.h"
-#include "cache.h"
-#include <peer/peermanager.h>
+#ifndef BTCACHEFACTORY_H
+#define BTCACHEFACTORY_H
+
+#include <QString>
+#include <btcore_export.h>
 
 namespace bt
 {
-	bool Cache::preallocate_files = true;
-	bool Cache::preallocate_fully = false;
-	bool Cache::preallocate_fs_specific = true;
+	class Cache;
+	class Torrent;
 
-	Cache::Cache(Torrent & tor,const QString & tmpdir,const QString & datadir)
-	: tor(tor),tmpdir(tmpdir),datadir(datadir),mmap_failures(0)
+	/**
+	 * Factory to create Cache objects. If you want a custom Cache you need to derive from this class
+	 * and implement the create method to create your own custom Caches.
+	 * @author Joris Guisson
+	*/
+	class BTCORE_EXPORT CacheFactory
 	{
-		if (!datadir.endsWith(bt::DirSeparator()))
-			this->datadir += bt::DirSeparator();
+	public:
+		CacheFactory();
+		virtual ~CacheFactory();
 
-		if (!tmpdir.endsWith(bt::DirSeparator()))
-			this->tmpdir += bt::DirSeparator();
-		
-		preexisting_files = false;
-	}
+		/**
+		 * Create a custom Cache
+		 * @param tor The Torrent
+		 * @param tmpdir The temporary directory (should be used to store information about the torrent)
+		 * @param datadir The data directory, where to store the data
+		 * @return 
+		 */
+		virtual Cache* create(Torrent & tor,const QString & tmpdir,const QString & datadir) = 0;
+	};
 
-
-	Cache::~Cache()
-	{}
-
-
-	void Cache::changeTmpDir(const QString & ndir)
-	{
-		tmpdir = ndir;
-	}
-	
-	bool Cache::mappedModeAllowed()
-	{
-		return MaxOpenFiles() - bt::PeerManager::getTotalConnections() < 100;
-	}
-	
-	KJob* Cache::moveDataFiles(const QMap<TorrentFileInterface*,QString> & files)
-	{
-		Q_UNUSED(files);
-		return 0;
-	}
-	
-	void Cache::moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & files,KJob* job)
-	{
-		Q_UNUSED(files);
-		Q_UNUSED(job);
-	}
 }
+
+#endif

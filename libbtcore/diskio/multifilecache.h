@@ -41,6 +41,7 @@ namespace bt
 		QString cache_dir,output_dir;
 		PtrMap<Uint32,CacheFile> files;
 		PtrMap<Uint32,DNDFile> dnd_files;
+		QString new_output_dir;
 	public:
 		MultiFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir,bool custom_output_name);
 		virtual ~MultiFileCache();
@@ -52,8 +53,10 @@ namespace bt
 		virtual bool prep(Chunk* c);
 		virtual void close();
 		virtual void open();
-		virtual void moveDataFiles(const QString & ndir);
-		virtual void moveDataFiles(const QMap<TorrentFileInterface*,QString> & files);
+		virtual KJob* moveDataFiles(const QString & ndir);
+		virtual void moveDataFilesFinished(KJob* job);
+		virtual KJob* moveDataFiles(const QMap<TorrentFileInterface*,QString> & files);
+		virtual void moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & files,KJob* job);
 		virtual QString getOutputPath() const;
 		virtual void changeOutputPath(const QString & outputpath);
 		virtual void preallocateDiskSpace(PreallocationThread* prealloc);

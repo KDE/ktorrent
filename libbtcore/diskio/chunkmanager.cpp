@@ -31,6 +31,7 @@
 #include "multifilecache.h"
 #include <util/log.h>
 #include <util/functions.h>
+#include <interfaces/cachefactory.h>
 
 #include <klocale.h>
 
@@ -46,17 +47,24 @@ namespace bt
 			Torrent & tor,
 			const QString & tmpdir,
 			const QString & datadir,
-			bool custom_output_name)
+			bool custom_output_name,
+			CacheFactory* fac)
 	: tor(tor),chunks(tor.getNumChunks()),
 	bitset(tor.getNumChunks()),excluded_chunks(tor.getNumChunks()),only_seed_chunks(tor.getNumChunks()),todo(tor.getNumChunks())
 	{
 		during_load = false;
 		only_seed_chunks.setAll(false);
 		todo.setAll(true);
-		if (tor.isMultiFile())
-			cache = new MultiFileCache(tor,tmpdir,datadir,custom_output_name);
+		
+		if (!fac)
+		{
+			if (tor.isMultiFile())
+				cache = new MultiFileCache(tor,tmpdir,datadir,custom_output_name);
+			else
+				cache = new SingleFileCache(tor,tmpdir,datadir);
+		}
 		else
-			cache = new SingleFileCache(tor,tmpdir,datadir);
+			cache = fac->create(tor,tmpdir,datadir);
 		
 		cache->loadFileMap();
 		
@@ -161,14 +169,24 @@ namespace bt
 		cache->changeOutputPath(output_path);
 	}
 	
-	void ChunkManager::moveDataFiles(const QString & ndir)
+	KJob* ChunkManager::moveDataFiles(const QString & ndir)
 	{
-		cache->moveDataFiles(ndir);
+		return cache->moveDataFiles(ndir);
 	}
 	
-	void ChunkManager::moveDataFiles(const QMap<TorrentFileInterface*,QString> & files)
+	void ChunkManager::moveDataFilesFinished(KJob* job)
 	{
-		cache->moveDataFiles(files);
+		cache->moveDataFilesFinished(job);
+	}
+	
+	KJob* ChunkManager::moveDataFiles(const QMap<TorrentFileInterface*,QString> & files)
+	{
+		return cache->moveDataFiles(files);
+	}
+	
+	void ChunkManager::moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & files,KJob* job)
+	{
+		cache->moveDataFilesFinished(files,job);
 	}
 	
 	void ChunkManager::loadIndexFile()

@@ -23,6 +23,7 @@
 #include <btcore_export.h>
 
 class QStringList;
+class KJob;
 
 namespace bt
 {
@@ -89,8 +90,15 @@ namespace bt
 		/**
 		 * Move the data files to a new directory.
 		 * @param ndir The directory
+		 * @return The job doing the move
 		 */
-		virtual void moveDataFiles(const QString & ndir) = 0;
+		virtual KJob* moveDataFiles(const QString & ndir) = 0;
+		
+		/**
+		 * A move of a bunch of data files has finished
+		 * @param job The job doing the move
+		 */
+		virtual void moveDataFilesFinished(KJob* job) = 0;
 		
 		/**
 		 * Load a chunk into memory. If something goes wrong,
@@ -156,8 +164,16 @@ namespace bt
 		/**
 		 * Move some files to a new location
 		 * @param files Map of files to move and their new location
+		 * @return KJob The job doing the move
 		 */
-		virtual void moveDataFiles(const QMap<TorrentFileInterface*,QString> & files);
+		virtual KJob* moveDataFiles(const QMap<TorrentFileInterface*,QString> & files);
+		
+		/**
+		 * The job doing moveDataFiles (with the map parameter) has finished
+		 * @param files The files map with all the moves
+		 * @param job The job doing the move
+		 */
+		virtual void moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & files,KJob* job);
 		
 		/** 
 		 * See if we are allowed to use mmap, when loading chunks.

@@ -33,6 +33,7 @@
 #include <util/waitjob.h>
 #include <interfaces/trackerslist.h>
 #include <interfaces/monitorinterface.h>
+#include <interfaces/cachefactory.h>
 #include <datachecker/singledatachecker.h>
 #include <datachecker/multidatachecker.h>
 #include <datachecker/datacheckerlistener.h>
@@ -78,6 +79,7 @@ namespace bt
 	: tor(0),psman(0),cman(0),pman(0),down(0),up(0),choke(0),tmon(0),prealloc(false)
 	{
 		custom_selector_factory = 0;
+		cache_factory = 0;
 		istats.last_announce = 0;
 		stats.imported_bytes = 0;
 		stats.trk_bytes_downloaded = 0;
@@ -137,6 +139,7 @@ namespace bt
 		delete tor;
 		delete m_eta;
 		delete custom_selector_factory;
+		delete cache_factory;
 	}
 	
 	bool TorrentControl::updateNeeded() const
@@ -287,16 +290,6 @@ namespace bt
 				emit seedingAutoStopped(this, overMaxRatio() ? MAX_RATIO_REACHED : MAX_SEED_TIME_REACHED);
 			} 			
 
-			//Move completed files if needed:
-			if(moveCompleted)
-			{
-				QString outdir = completed_dir.path();
-				if(!outdir.endsWith(bt::DirSeparator()))
-					outdir += bt::DirSeparator();
-				
-				changeOutputDir(outdir,bt::TorrentInterface::MOVE_FILES);
-			}
-			
 			//Update diskspace if needed (every 1 min)			
 			if(!stats.completed && stats.running && bt::GetCurrentTime() - last_diskspace_check >= 60 * 1000)
 			{
@@ -306,6 +299,16 @@ namespace bt
 			// Emit the needDataCheck signal if needed
 			if (checkOnCompletion || (auto_recheck && stats.num_corrupted_chunks >= num_corrupted_for_recheck))
 				needDataCheck(this);
+			
+			//Move completed files if needed:
+			if(moveCompleted)
+			{
+				QString outdir = completed_dir.path();
+				if(!outdir.endsWith(bt::DirSeparator()))
+					outdir += bt::DirSeparator();
+				
+				changeOutputDir(outdir,bt::TorrentInterface::MOVE_FILES);
+			}
 		}
 		catch (Error & e)
 		{
@@ -623,7 +626,7 @@ namespace bt
 
 		// Create chunkmanager, load the index file if it exists
 		// else create all the necesarry files
-		cman = new ChunkManager(*tor,tordir,outputdir,istats.custom_output_name);
+		cman = new ChunkManager(*tor,tordir,outputdir,istats.custom_output_name,cache_factory);
 		
 		connect(cman,SIGNAL(updateStats()),this,SLOT(updateStats()));
 		if (bt::Exists(tordir + "index"))
@@ -817,15 +820,14 @@ namespace bt
 	
 	bool TorrentControl::changeOutputDir(const QString & ndir,int flags)
 	{
-		bool start = false;
-		int old_prio = getPriority();
-		
 		//check if torrent is running and stop it before moving data
+		restart_torrent_after_move_data_files = false;
 		if(stats.running)
 		{
-			start = true;
+			restart_torrent_after_move_data_files = true;
 			this->stop(false);
 		}
+		
 		QString new_dir = ndir;
 		if (!new_dir.endsWith(bt::DirSeparator()))
 			new_dir += bt::DirSeparator();
@@ -853,21 +855,25 @@ namespace bt
 			
 			if (stats.output_path != nd)
 			{
+				move_data_files_destination_path = nd;
+				KJob* j = 0;
 				if (flags & bt::TorrentInterface::MOVE_FILES)
 				{
 					if (stats.multi_file_torrent)
-						cman->moveDataFiles(nd);
+						j = cman->moveDataFiles(nd);
 					else
-						cman->moveDataFiles(new_dir);
-					// bt::Move(stats.output_path, new_dir);
+						j = cman->moveDataFiles(new_dir);
 				}
 				
-				cman->changeOutputPath(nd);
-				outputdir = stats.output_path = nd;
-				istats.custom_output_name = true;
-				
-				saveStats();
-				Out(SYS_GEN|LOG_NOTICE) << "Data directory changed for torrent " << "'" << stats.torrent_name << "' to: " << new_dir << endl;
+				if (j)
+				{
+					connect(j,SIGNAL(result(KJob*)),this,SLOT(moveDataFilesFinished(KJob*)));
+					return true;
+				}
+				else
+				{
+					moveDataFilesFinished(0);
+				}
 			}
 			else
 			{
@@ -882,10 +888,36 @@ namespace bt
 		}
 		
 		moving_files = false;
-		if(start)
+		if(restart_torrent_after_move_data_files)
 			this->start();
 		
 		return true;
+	}
+	
+	void TorrentControl::moveDataFilesFinished(KJob* job)
+	{
+		if (job)
+			cman->moveDataFilesFinished(job);
+		
+		if (!job || (job && !job->error()))
+		{
+			cman->changeOutputPath(move_data_files_destination_path);
+			outputdir = stats.output_path = move_data_files_destination_path;
+			istats.custom_output_name = true;
+
+			saveStats();
+			Out(SYS_GEN|LOG_NOTICE) << "Data directory changed for torrent " << "'" << stats.torrent_name << "' to: " << move_data_files_destination_path << endl;
+		}
+		else if (job->error())
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Could not move " << stats.output_path << " to " << move_data_files_destination_path << endl;
+		}
+
+		moving_files = false;
+		if (restart_torrent_after_move_data_files)
+		{
+			this->start();
+		}
 	}
 
 	bool TorrentControl::moveTorrentFiles(const QMap<TorrentFileInterface*,QString> & files)
@@ -902,7 +934,9 @@ namespace bt
 		moving_files = true;
 		try
 		{
-			cman->moveDataFiles(files);
+			KJob* j = cman->moveDataFiles(files);
+			if (j && j->exec())
+				cman->moveDataFilesFinished(files,j);
 			Out(SYS_GEN|LOG_NOTICE) << "Move of data files completed " << endl;
 		}
 		catch (Error& err)
@@ -1849,6 +1883,11 @@ namespace bt
 	void TorrentControl::setChunkSelectorFactory(ChunkSelectorFactoryInterface* csfi)
 	{
 		custom_selector_factory = csfi;
+	}
+	
+	void TorrentControl::setCacheFactory(CacheFactory* cf)
+	{
+		cache_factory = cf;
 	}
 }
 

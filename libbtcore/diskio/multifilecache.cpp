@@ -216,7 +216,7 @@ namespace bt
 		saveFileMap();
 	}
 	
-	void MultiFileCache::moveDataFiles(const QString & ndir)
+	KJob* MultiFileCache::moveDataFiles(const QString & ndir)
 	{
 		if ( !bt::Exists ( ndir ) )
 			bt::MakeDir ( ndir );
@@ -225,6 +225,7 @@ namespace bt
 		if ( !nd.endsWith ( bt::DirSeparator() ) )
 			nd += bt::DirSeparator();
 
+		new_output_dir = nd;
 		
 		MoveDataFilesJob* job = new MoveDataFilesJob();
 		
@@ -241,22 +242,28 @@ namespace bt
 			job->addMove(tf.getPathOnDisk(),nd + tf.getPath());
 		}
 
-		if (!job->exec())
-			throw Error("Move failed");
-			
+		job->startMoving();
+		return job;
+	}
+	
+	void MultiFileCache::moveDataFilesFinished(KJob* job)
+	{
+		if (job->error())
+			return;
+		
 		for ( Uint32 i = 0;i < tor.getNumFiles();i++ )
 		{
-			TorrentFile & tf = tor.getFile ( i );
-			tf.setPathOnDisk(nd + tf.getPath());
-				// check for empty directories and delete them
-			DeleteEmptyDirs ( output_dir,tf.getPath() );
+			TorrentFile & tf = tor.getFile(i);
+			tf.setPathOnDisk(new_output_dir + tf.getPath());
+			// check for empty directories and delete them
+			DeleteEmptyDirs(output_dir,tf.getPath());
 		}
 	}
 	
-	void MultiFileCache::moveDataFiles(const QMap<TorrentFileInterface*,QString> & files)
+	KJob* MultiFileCache::moveDataFiles(const QMap<TorrentFileInterface*,QString> & files)
 	{
 		if (files.count() == 0)
-			return;
+			return 0;
 		
 		MoveDataFilesJob* job = new MoveDataFilesJob();
 		QMap<TorrentFileInterface*,QString>::const_iterator i = files.begin();
@@ -278,10 +285,16 @@ namespace bt
 			i++;
 		}
 		
-		if (!job->exec())
-			throw Error("Move failed");
+		job->startMoving();
+		return job;
+	}
 		
-		i = files.begin();
+	void MultiFileCache::moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & files,KJob* job)
+	{
+		if (job->error())
+			return;
+		
+		QMap<TorrentFileInterface*,QString>::const_iterator i = files.begin();
 		while (i != files.end())
 		{
 			TorrentFileInterface* tf = i.key();

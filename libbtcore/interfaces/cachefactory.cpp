@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,56 +16,21 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <util/functions.h>
-#include <torrent/torrent.h>
-#include "chunk.h"
-#include "cache.h"
-#include <peer/peermanager.h>
+#include "cachefactory.h"
 
 namespace bt
 {
-	bool Cache::preallocate_files = true;
-	bool Cache::preallocate_fully = false;
-	bool Cache::preallocate_fs_specific = true;
 
-	Cache::Cache(Torrent & tor,const QString & tmpdir,const QString & datadir)
-	: tor(tor),tmpdir(tmpdir),datadir(datadir),mmap_failures(0)
+	CacheFactory::CacheFactory()
 	{
-		if (!datadir.endsWith(bt::DirSeparator()))
-			this->datadir += bt::DirSeparator();
-
-		if (!tmpdir.endsWith(bt::DirSeparator()))
-			this->tmpdir += bt::DirSeparator();
-		
-		preexisting_files = false;
 	}
 
 
-	Cache::~Cache()
-	{}
+	CacheFactory::~CacheFactory()
+	{
+	}
 
 
-	void Cache::changeTmpDir(const QString & ndir)
-	{
-		tmpdir = ndir;
-	}
-	
-	bool Cache::mappedModeAllowed()
-	{
-		return MaxOpenFiles() - bt::PeerManager::getTotalConnections() < 100;
-	}
-	
-	KJob* Cache::moveDataFiles(const QMap<TorrentFileInterface*,QString> & files)
-	{
-		Q_UNUSED(files);
-		return 0;
-	}
-	
-	void Cache::moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & files,KJob* job)
-	{
-		Q_UNUSED(files);
-		Q_UNUSED(job);
-	}
 }

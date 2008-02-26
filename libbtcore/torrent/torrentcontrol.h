@@ -32,7 +32,7 @@
 
 class QStringList;
 class QString;
-
+class KJob;
 
 
 namespace bt
@@ -53,6 +53,7 @@ namespace bt
 	class WaitJob;
 	class MonitorInterface;
 	class ChunkSelectorFactoryInterface;
+	class CacheFactory;
 	
 	/**
 	 * @author Joris Guisson
@@ -273,6 +274,9 @@ namespace bt
 		/// Set a custom chunk selector factory (needs to be done for init is called)
 		void setChunkSelectorFactory(ChunkSelectorFactoryInterface* csfi);
 		
+		/// Set a custom Cache factory
+		void setCacheFactory(CacheFactory* cf);
+		
 	public slots:
 		/**
 		 * Update the object, should be called periodically.
@@ -352,6 +356,7 @@ namespace bt
 		/// Update the stats of the torrent.
 		void updateStats();
 		void corrupted(Uint32 chunk);
+		void moveDataFilesFinished(KJob* j);
 		
 	private:	
 		void updateTracker(const QString & ev,bool last_succes = true);
@@ -387,6 +392,10 @@ namespace bt
 		TimeEstimator* m_eta;
 		MonitorInterface* tmon;
 		ChunkSelectorFactoryInterface* custom_selector_factory;
+		CacheFactory* cache_factory;
+		
+		QString move_data_files_destination_path;
+		bool restart_torrent_after_move_data_files;
 		
 		Timer choker_update_timer;
 		Timer stats_save_timer;
