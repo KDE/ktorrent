@@ -95,7 +95,7 @@ class ConnsTabPage : public PluginPage
 		void ApplySettings();
 		void UpdateAllCharts();
 		void GatherData(Plugin *);
-		void ResetAvg();
+		void ResetAvg(ChartDrawer *);
 };
 
 } // ns end

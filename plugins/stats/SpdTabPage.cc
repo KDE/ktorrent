@@ -30,11 +30,20 @@ SpdTabPage::SpdTabPage(QWidget *p) : PluginPage(p), pmUiSpd(new Ui::SpdWgt), mDl
 		pmDlChtWgt.reset(new PlainChartDrawer(this));
 		pmPeersChtWgt.reset(new PlainChartDrawer(this));
 		pmUlChtWgt.reset(new PlainChartDrawer(this));
+		
+		connect( dynamic_cast<PlainChartDrawer *>(pmDlChtWgt.get()), SIGNAL(Zeroed(ChartDrawer *)), this, SLOT(ResetAvg(ChartDrawer *)));
+		connect( dynamic_cast<PlainChartDrawer *>(pmUlChtWgt.get()), SIGNAL(Zeroed(ChartDrawer *)), this, SLOT(ResetAvg(ChartDrawer *)));
+		
 	} else if(StatsPluginSettings::widgetType() == 1) {
 		pmDlChtWgt.reset(new KPlotWgtDrawer(this));
 		pmPeersChtWgt.reset(new KPlotWgtDrawer(this));
 		pmUlChtWgt.reset(new KPlotWgtDrawer(this));
-	}	
+		
+		connect( dynamic_cast<KPlotWgtDrawer *>(pmDlChtWgt.get()), SIGNAL(Zeroed(ChartDrawer *)), this, SLOT(ResetAvg(ChartDrawer *)));
+		connect( dynamic_cast<KPlotWgtDrawer *>(pmUlChtWgt.get()), SIGNAL(Zeroed(ChartDrawer *)), this, SLOT(ResetAvg(ChartDrawer *)));
+	}
+	
+	
 
 	SetupUi();
 }
@@ -212,10 +221,24 @@ void SpdTabPage::GatherData(Plugin * pPlug)
 	GatherUlSpeed(pPlug);
 }
 
-void SpdTabPage::ResetAvg()
+void SpdTabPage::ResetAvg(ChartDrawer * c)
 {
-	mDlAvg = std::make_pair(0,0);
-	mUlAvg = std::make_pair(0,0);
+	if(!c)
+	{
+		return;
+	}
+	else if(c == pmDlChtWgt.get())
+	{
+		mDlAvg = std::make_pair(0,0);
+	}
+	else if(c == pmUlChtWgt.get())
+	{
+		mUlAvg = std::make_pair(0,0);
+	}
+	else 
+	{
+		qDebug("Got unreckognized widget!");
+	}
 }
 
 } //ns e

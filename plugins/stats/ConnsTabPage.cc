@@ -207,7 +207,7 @@ void ConnsTabPage::GatherData(Plugin * pPlug)
 	}
 }
 
-void ConnsTabPage::ResetAvg()
+void ConnsTabPage::ResetAvg(ChartDrawer *)
 {
 }
 
