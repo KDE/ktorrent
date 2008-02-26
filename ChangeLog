@@ -1,3 +1,12 @@
+Changes in 3.0.1 :
+- Ported stop all and start all in system tray menu fix from KDE3 version
+- Fix bug which caused KT not to check preexisting single file torrents (158167)
+- Added PeerViewModel for PeerView, also fixes crash (158243)
+- Fix hidden_on_exit (158273)
+- Add pause resume option to system tray icon (158278)
+- Added XFS cmake checks for XFS delayed allocation
+- Fix zeroing average speeds on BOTH charts after choosing to reset ONLY one
+in stats plugin
 
 Changes in 3.O :
 - Fix sorting of upload and download rate (157939)
