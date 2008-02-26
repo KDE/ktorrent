@@ -316,14 +316,24 @@ namespace kt
 		queue_pause_action->setChecked(paused);
 	}
 
-	void GUI::startAllTorrents()
+	void GUI::startAllTorrentsCV()
 	{
 		view_man->startAllTorrents();
 	}
 
-	void GUI::stopAllTorrents()
+	void GUI::stopAllTorrentsCV()
 	{
 		view_man->stopAllTorrents();
+	}
+	
+	void GUI::startAllTorrents()
+	{
+		core->startAll(3);
+	}
+
+	void GUI::stopAllTorrents()
+	{
+		core->stopAll(3);
 	}
 
 	void GUI::checkData()
@@ -421,13 +431,19 @@ namespace kt
 		connect(remove_action,SIGNAL(triggered()),this,SLOT(removeTorrent()));
 		ac->addAction("remove",remove_action);
 
+		start_all_cv_action = new KAction(KIcon("ktstart_all"),i18n("Start All"),this);
+		connect(start_all_cv_action,SIGNAL(triggered()),this,SLOT(startAllTorrentsCV()));
+		ac->addAction("start_all",start_all_cv_action);
+		
 		start_all_action = new KAction(KIcon("ktstart_all"),i18n("Start All"),this);
 		connect(start_all_action,SIGNAL(triggered()),this,SLOT(startAllTorrents()));
-		ac->addAction("start_all",start_all_action);
-
+		
+		stop_all_cv_action = new KAction(KIcon("ktstop_all"),i18n("Stop All"),this);
+		connect(stop_all_cv_action,SIGNAL(triggered()),this,SLOT(stopAllTorrentsCV()));
+		ac->addAction("stop_all",stop_all_cv_action);
+		
 		stop_all_action = new KAction(KIcon("ktstop_all"),i18n("Stop All"),this);
 		connect(stop_all_action,SIGNAL(triggered()),this,SLOT(stopAllTorrents()));
-		ac->addAction("stop_all",stop_all_action);
 		
 		paste_url_action = new KAction(KIcon("edit-paste"),i18n("Paste Torrent URL"),this);
 		connect(paste_url_action,SIGNAL(triggered()),this,SLOT(pasteURL()));
@@ -493,6 +509,9 @@ namespace kt
 
 		tray_icon->updateStats(stats,Settings::showSpeedBarInTrayIcon(),Settings::downloadBandwidth(), Settings::uploadBandwidth());
 		core->updateGuiPlugins();
+		
+		start_all_action->setEnabled(core->getNumTorrentsNotRunning() > 0);
+		stop_all_action->setEnabled(core->getNumTorrentsRunning() > 0);
 	}
 
 	void GUI::applySettings()
@@ -620,8 +639,8 @@ namespace kt
 		start_action->setEnabled(flags & START);
 		stop_action->setEnabled(flags & STOP);
 		remove_action->setEnabled(flags & REMOVE);
-		start_all_action->setEnabled(flags & START_ALL);
-		stop_all_action->setEnabled(flags & STOP_ALL);
+		start_all_cv_action->setEnabled(flags & START_ALL);
+		stop_all_cv_action->setEnabled(flags & STOP_ALL);
 		queue_pause_action->setEnabled(core->getPausedState() || flags & STOP_ALL);
 	}
 	

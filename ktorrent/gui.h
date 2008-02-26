@@ -118,7 +118,9 @@ namespace kt
 		void queueTorrent();
 		void pauseQueue(bool pause);
 		void startAllTorrents();
+		void startAllTorrentsCV();
 		void stopAllTorrents();
+		void stopAllTorrentsCV();
 		void pasteURL();
 		void checkData();
 		void showPrefDialog();
@@ -163,7 +165,9 @@ namespace kt
 		KAction* stop_action;
 		KAction* remove_action;
 		KAction* start_all_action;
+		KAction* start_all_cv_action;
 		KAction* stop_all_action;
+		KAction* stop_all_cv_action;
 		KAction* paste_url_action;
 		KAction* queue_action;
 		KToggleAction* queue_pause_action;
