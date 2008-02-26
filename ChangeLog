@@ -3,6 +3,7 @@ Changes in 3.0.1 :
 - Fix bug which caused KT not to check preexisting single file torrents (158167)
 - Added PeerViewModel for PeerView, also fixes crash (158243)
 - Fix hidden_on_exit (158273)
+- Add pause resume option to system tray icon (158278)
 
 Changes in 3.O :
 - Fix sorting of upload and download rate (157939)
