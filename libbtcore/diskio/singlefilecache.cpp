@@ -173,6 +173,8 @@ namespace bt
 	{
 		if (!bt::Exists(output_file))
 			bt::Touch(output_file);
+		else
+			preexisting_files = true;
 	}
 	
 	void SingleFileCache::close()

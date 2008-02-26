@@ -1,5 +1,7 @@
 Changes in 3.0.1 :
 - Ported stop all and start all in system tray menu fix from KDE3 version
+- Fix bug which caused KT not to check preexisting single file torrents (158167)
+
 
 Changes in 3.O :
 - Fix sorting of upload and download rate (157939)
