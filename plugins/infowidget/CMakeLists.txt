@@ -37,6 +37,7 @@ set(ktinfowidgetplugin_SRC
 	statustab.cpp
 	fileview.cpp
 	peerview.cpp
+	peerviewmodel.cpp
 	chunkdownloadview.cpp
 	chunkdownloadmodel.cpp
 	trackerview.cpp

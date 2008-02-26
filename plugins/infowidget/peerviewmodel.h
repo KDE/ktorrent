@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson                                   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,57 +18,65 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KT_PEERVIEW_HH
-#define KT_PEERVIEW_HH
+#ifndef KTPEERVIEWMODEL_H
+#define KTPEERVIEWMODEL_H
 
-
-#include <QTreeWidget>
-#include <util/ptrmap.h>
+#include <kicon.h>
+#include <QAbstractTableModel>
 #include <interfaces/peerinterface.h>
-#include <ksharedconfig.h>
-
-class KMenu;
-class QSortFilterProxyModel;
 
 namespace kt
 {
-	class PeerViewModel;
-	
+
 	/**
-	 * View which shows a list of peers, of a torrent.
-	 * */
-	class PeerView : public QTreeView
+		@author Joris Guisson
+		Model for the PeerView
+	*/
+	class PeerViewModel : public QAbstractTableModel
 	{
 		Q_OBJECT
 	public:
-		PeerView(QWidget* parent);
-		virtual ~PeerView();
-
+		PeerViewModel(QObject* parent);
+		virtual ~PeerViewModel();
+		
 		/// A peer has been added
 		void peerAdded(bt::PeerInterface* peer);
 
 		/// A peer has been removed
 		void peerRemoved(bt::PeerInterface* peer);
-
-		/// Check to see if the GUI needs to be updated
+		
 		void update();
+		
+		void clear();
 
-		/// Remove all items
-		void removeAll();
+		virtual int rowCount(const QModelIndex & parent) const;
+		virtual int columnCount(const QModelIndex & parent) const;
+		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
+		virtual QVariant data(const QModelIndex & index,int role) const;
+		virtual bool removeRows(int row,int count,const QModelIndex & parent);
+		virtual bool insertRows(int row,int count,const QModelIndex & parent);
 		
-		void saveState(KSharedConfigPtr cfg);
-		void loadState(KSharedConfigPtr cfg);
-		
-	private slots: 
-		void showContextMenu(const QPoint& pos);
-		void banPeer();
-		void kickPeer();
-				
+		bt::PeerInterface* indexToPeer(const QModelIndex & idx);
 	private:
-		KMenu* context_menu;
-		PeerViewModel* model;
-		QSortFilterProxyModel* pm;
+		
+		struct Item
+		{
+			bt::PeerInterface* peer;
+			mutable bt::PeerInterface::Stats stats;
+			QString country;
+			KIcon flag;
+			
+			Item(bt::PeerInterface* peer);
+			
+			bool changed() const;
+			QVariant data(int col) const;
+			QVariant decoration(int col) const;
+			QVariant dataForSorting(int col) const;
+		};
+		
+		QList<Item> items;
 	};
+
 }
 
 #endif
