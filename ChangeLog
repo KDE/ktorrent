@@ -7,6 +7,8 @@ Changes in 3.0.1 :
 - Added XFS cmake checks for XFS delayed allocation
 - Fix zeroing average speeds on BOTH charts after choosing to reset ONLY one
 in stats plugin
+- Remove minimum vertical size of URL requester in torrent creation dialog,
+this makes sure that it is sized properly when you open the dialog
 
 Changes in 3.O :
 - Fix sorting of upload and download rate (157939)
