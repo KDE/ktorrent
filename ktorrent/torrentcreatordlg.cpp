@@ -34,12 +34,11 @@ namespace kt
 	TorrentCreatorDlg::TorrentCreatorDlg(Core* core,GUI* gui,QWidget* parent) : QDialog(parent),core(core),gui(gui)
 	{
 		setupUi(this);
+		adjustSize();
 		
 		m_url->setMode(KFile::File | KFile::ExistingOnly | KFile::LocalOnly | KFile::Directory);
+		m_dht_tab->setEnabled(false);
 		
-		// hide DHT box until m_dht is checked
-		m_dht_box->hide();
-		adjustSize();
 		connect(m_dht,SIGNAL(toggled(bool)),this,SLOT(dhtToggled(bool)));
 		
 		// tracker box stuff
@@ -75,6 +74,14 @@ namespace kt
 			twi->setText(1,QString::number(it.value()));
 			m_node_list->addTopLevelItem(twi);
 		}
+		
+		// webseed stuff
+		connect(m_add_webseed,SIGNAL(clicked()),this,SLOT(addWebSeedPressed()));
+		connect(m_remove_webseed,SIGNAL(clicked()),this,SLOT(removeWebSeedPressed()));
+		connect(m_webseed,SIGNAL(textChanged(const QString&)),this,SLOT(webSeedTextChanged(const QString &)));
+		connect(m_webseed_list,SIGNAL(itemSelectionChanged()),this,SLOT(webSeedSelectionChanged()));
+		m_add_webseed->setEnabled(false);
+		m_remove_webseed->setEnabled(false);
 	}
 	
 	TorrentCreatorDlg::~TorrentCreatorDlg()
@@ -149,9 +156,9 @@ namespace kt
 		
 	void TorrentCreatorDlg::dhtToggled(bool on)
 	{
-		m_dht_box->setShown(on);
-		m_trackers_box->setShown(!on);
 		m_private->setEnabled(!on);
+		m_dht_tab->setEnabled(on);
+		m_tracker_tab->setEnabled(!on);
 	}
 		
 	void TorrentCreatorDlg::nodeTextChanged(const QString & str)
@@ -175,6 +182,44 @@ namespace kt
 		m_remove_tracker->setEnabled(enable_buttons);
 		m_move_up->setEnabled(enable_buttons);
 		m_move_down->setEnabled(enable_buttons);
+	}
+	
+	void TorrentCreatorDlg::addWebSeedPressed()
+	{
+		KUrl url(m_webseed->text());
+		if (!url.isValid())
+		{
+			KMessageBox::error(this,i18n("Invalid url %1",url.prettyUrl()));
+			return;
+		}
+		
+		if (url.protocol() != "http")
+		{
+			KMessageBox::error(this,i18n("Only HTTP is supported for webseeding !"));
+			return;
+		}
+		
+		m_webseed_list->addItem(m_webseed->text());
+		m_webseed->clear();
+	}
+	
+	void TorrentCreatorDlg::removeWebSeedPressed()
+	{
+		QList<QListWidgetItem*> sel = m_webseed_list->selectedItems();
+		foreach (QListWidgetItem* s,sel)
+		{
+			delete s;
+		}
+	}
+	
+	void TorrentCreatorDlg::webSeedTextChanged(const QString & str)
+	{
+		m_add_webseed->setEnabled(str.length() > 0);
+	}
+	
+	void TorrentCreatorDlg::webSeedSelectionChanged()
+	{
+		m_remove_webseed->setEnabled(m_webseed_list->selectedItems().count() > 0);
 	}
 		
 	void TorrentCreatorDlg::accept()
@@ -226,6 +271,13 @@ namespace kt
 				trackers.append(item->text());
 			}
 		}
+		
+		KUrl::List webseeds;
+		for (int i = 0;i < m_webseed_list->count(); ++i)
+		{
+			QListWidgetItem* item = m_webseed_list->item(i);
+			webseeds.append(KUrl(item->text()));
+		}
 
 		QString s = KFileDialog::getSaveFileName(
 				KUrl("kfiledialog:///openTorrent"),"*.torrent|" + i18n("Torrent Files (*.torrent)"),
@@ -243,7 +295,7 @@ namespace kt
 		dlg->setAllowCancel(false);
 		dlg->show();
 		core->makeTorrent(
-			url.path(),trackers,chunk_size,name,m_comments->text(),
+			url.path(),trackers,webseeds,chunk_size,name,m_comments->text(),
 			m_start_seeding->isChecked(),s,m_private->isChecked(),
 			dlg->progressBar(),
 			m_dht->isChecked());

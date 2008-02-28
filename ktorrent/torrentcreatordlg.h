@@ -44,6 +44,9 @@ namespace kt
 		void moveUpPressed();
 		void moveDownPressed();
 		
+		void addWebSeedPressed();
+		void removeWebSeedPressed();
+		
 		void addNodePressed();
 		void removeNodePressed();
 		
@@ -54,6 +57,9 @@ namespace kt
 		
 		void trackerTextChanged(const QString & str);
 		void trackerSelectionChanged();
+		
+		void webSeedTextChanged(const QString & str);
+		void webSeedSelectionChanged();
 		
 		virtual void accept();
 		virtual void reject();

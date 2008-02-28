@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>429</width>
-    <height>803</height>
+    <width>474</width>
+    <height>565</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -21,7 +21,7 @@
     </widget>
    </item>
    <item>
-    <widget class="KUrlRequester" native="1" name="m_url" >
+    <widget class="KUrlRequester" name="m_url" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
        <horstretch>0</horstretch>
@@ -31,7 +31,7 @@
      <property name="minimumSize" >
       <size>
        <width>0</width>
-       <height>10</height>
+       <height>0</height>
       </size>
      </property>
     </widget>
@@ -133,157 +133,204 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="m_trackers_box" >
-     <property name="title" >
-      <string>Trackers</string>
+    <widget class="QTabWidget" name="tabWidget" >
+     <property name="currentIndex" >
+      <number>2</number>
      </property>
-     <layout class="QGridLayout" >
-      <item row="0" column="0" >
-       <widget class="QLineEdit" name="m_tracker" />
-      </item>
-      <item row="0" column="1" >
-       <widget class="KPushButton" name="m_add_tracker" >
-        <property name="text" >
-         <string>Add</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" >
-       <widget class="QListWidget" name="m_tracker_list" />
-      </item>
-      <item row="1" column="1" >
-       <layout class="QVBoxLayout" >
-        <item>
-         <widget class="KPushButton" name="m_remove_tracker" >
-          <property name="text" >
-           <string>Remove</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="KPushButton" name="m_move_up" >
-          <property name="text" >
-           <string>Move Up</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="KPushButton" name="m_move_down" >
-          <property name="text" >
-           <string>Move Down</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" >
-           <size>
-            <width>20</width>
-            <height>91</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="m_dht_box" >
-     <property name="title" >
-      <string>DHT Nodes</string>
-     </property>
-     <layout class="QGridLayout" >
-      <item row="0" column="0" >
-       <layout class="QHBoxLayout" >
-        <item>
-         <widget class="QLabel" name="label_3" >
-          <property name="text" >
-           <string>Node:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="m_node" />
-        </item>
-        <item>
-         <widget class="QLabel" name="label_4" >
-          <property name="text" >
-           <string>Port:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="m_port" >
-          <property name="minimum" >
-           <number>1</number>
-          </property>
-          <property name="maximum" >
-           <number>65535</number>
-          </property>
-          <property name="value" >
-           <number>6881</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="1" >
-       <widget class="KPushButton" name="m_add_node" >
-        <property name="text" >
-         <string>Add</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" >
-       <widget class="QTreeWidget" name="m_node_list" >
-        <property name="rootIsDecorated" >
-         <bool>false</bool>
-        </property>
-        <property name="allColumnsShowFocus" >
-         <bool>true</bool>
-        </property>
-        <column>
+     <widget class="QWidget" name="m_tracker_tab" >
+      <attribute name="title" >
+       <string>Trackers</string>
+      </attribute>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <widget class="QLineEdit" name="m_tracker" />
+       </item>
+       <item row="0" column="1" >
+        <widget class="KPushButton" name="m_add_tracker" >
          <property name="text" >
-          <string>IP or Hostname</string>
+          <string>Add</string>
          </property>
-        </column>
-        <column>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QListWidget" name="m_tracker_list" />
+       </item>
+       <item row="1" column="1" >
+        <layout class="QVBoxLayout" >
+         <item>
+          <widget class="KPushButton" name="m_remove_tracker" >
+           <property name="text" >
+            <string>Remove</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KPushButton" name="m_move_up" >
+           <property name="text" >
+            <string>Move Up</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KPushButton" name="m_move_down" >
+           <property name="text" >
+            <string>Move Down</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>20</width>
+             <height>91</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="m_dht_tab" >
+      <attribute name="title" >
+       <string>DHT Nodes</string>
+      </attribute>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <layout class="QHBoxLayout" >
+         <item>
+          <widget class="QLabel" name="label_3" >
+           <property name="text" >
+            <string>Node:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="m_node" />
+         </item>
+         <item>
+          <widget class="QLabel" name="label_4" >
+           <property name="text" >
+            <string>Port:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="m_port" >
+           <property name="minimum" >
+            <number>1</number>
+           </property>
+           <property name="maximum" >
+            <number>65535</number>
+           </property>
+           <property name="value" >
+            <number>6881</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="1" >
+        <widget class="KPushButton" name="m_add_node" >
          <property name="text" >
-          <string>Port</string>
+          <string>Add</string>
          </property>
-        </column>
-       </widget>
-      </item>
-      <item row="1" column="1" >
-       <layout class="QVBoxLayout" >
-        <item>
-         <widget class="KPushButton" name="m_remove_node" >
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QTreeWidget" name="m_node_list" >
+         <property name="rootIsDecorated" >
+          <bool>false</bool>
+         </property>
+         <property name="allColumnsShowFocus" >
+          <bool>true</bool>
+         </property>
+         <column>
           <property name="text" >
-           <string>Remove</string>
+           <string>IP or Hostname</string>
           </property>
-         </widget>
-        </item>
-        <item>
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Vertical</enum>
+         </column>
+         <column>
+          <property name="text" >
+           <string>Port</string>
           </property>
-          <property name="sizeHint" >
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-     </layout>
+         </column>
+        </widget>
+       </item>
+       <item row="1" column="1" >
+        <layout class="QVBoxLayout" >
+         <item>
+          <widget class="KPushButton" name="m_remove_node" >
+           <property name="text" >
+            <string>Remove</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2" >
+      <attribute name="title" >
+       <string>Web Seeds</string>
+      </attribute>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <widget class="QLineEdit" name="m_webseed" />
+       </item>
+       <item row="0" column="1" >
+        <widget class="KPushButton" name="m_add_webseed" >
+         <property name="text" >
+          <string>Add</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QListWidget" name="m_webseed_list" />
+       </item>
+       <item row="1" column="1" >
+        <layout class="QVBoxLayout" >
+         <item>
+          <widget class="KPushButton" name="m_remove_webseed" >
+           <property name="text" >
+            <string>Remove</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>
@@ -321,15 +368,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KUrlRequester</class>
-   <extends>QWidget</extends>
-   <header location="global" >kurlrequester.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>KPushButton</class>
    <extends>QPushButton</extends>
-   <header location="global" >kpushbutton.h</header>
+   <header>kpushbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KUrlRequester</class>
+   <extends>QFrame</extends>
+   <header>kurlrequester.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

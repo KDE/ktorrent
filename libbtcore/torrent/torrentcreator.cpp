@@ -41,10 +41,11 @@ namespace bt
 
 	TorrentCreator::TorrentCreator(const QString & tar,
 								   const QStringList & track,
+								   const KUrl::List & webseeds,
 								   Uint32 cs,
 								   const QString & name,
 								   const QString & comments,bool priv, bool decentralized)
-	: target(tar),trackers(track),chunk_size(cs),
+	: target(tar),trackers(track),webseeds(webseeds),chunk_size(cs),
 	name(name),comments(comments),cur_chunk(0),priv(priv),tot_size(0), decentralized(decentralized)
 	{
 		this->chunk_size *= 1024;
@@ -164,6 +165,22 @@ namespace bt
 				enc.write(t.section(',',0,0));
 				enc.write((Uint32)t.section(',',1,1).toInt());
 				enc.end();
+			}
+			enc.end();
+		}
+		
+		if (webseeds.count() == 1)
+		{
+			enc.write("url-list");
+			enc.write(webseeds[0].prettyUrl());
+		}
+		else if (webseeds.count() > 0)
+		{
+			enc.write("url-list");
+			enc.beginList();
+			foreach (KUrl u,webseeds)
+			{
+				enc.write(u.prettyUrl());
 			}
 			enc.end();
 		}

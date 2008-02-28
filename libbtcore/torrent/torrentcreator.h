@@ -43,6 +43,7 @@ namespace bt
 		// input values
 		QString target;
 		QStringList trackers;
+		KUrl::List webseeds;
 		int chunk_size;
 		QString name,comments;
 		// calculated values
@@ -60,12 +61,13 @@ namespace bt
 		 * Constructor.
 		 * @param target The file or directory to make a torrent of
 		 * @param trackers A list of tracker urls
+		 * @param webseeds A list of webseed urls
 		 * @param chunk_size The size of each chunk
 		 * @param name The name suggestion
 		 * @param comments The comments field of the torrent
 		 * @param priv Private torrent or not
 		 */
-		TorrentCreator(const QString & target,const QStringList & trackers,
+		TorrentCreator(const QString & target,const QStringList & trackers,const KUrl::List & webseeds,
 					   Uint32 chunk_size,const QString & name,
 					   const QString & comments,bool priv,bool decentralized);
 		virtual ~TorrentCreator();

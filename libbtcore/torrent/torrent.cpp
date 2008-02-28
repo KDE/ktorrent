@@ -346,7 +346,9 @@ namespace bt
 	
 	void Torrent::loadWebSeed(BValueNode* node)
 	{
-		web_seeds.append(node->data().toString(text_codec));
+		KUrl url = KUrl(node->data().toString(text_codec));
+		if (url.isValid())
+			web_seeds.append(url);
 	}
 
 	void Torrent::debugPrintInfo()

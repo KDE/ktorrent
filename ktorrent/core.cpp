@@ -708,7 +708,7 @@ namespace kt
 		}
 	}
 
-	void Core::makeTorrent(const QString & file,const QStringList & trackers,
+	void Core::makeTorrent(const QString & file,const QStringList & trackers,const KUrl::List & webseeds,
 				int chunk_size,const QString & name,
 				const QString & comments,bool seed,
 				const QString & output_file,bool priv_tor,QProgressBar* prog, bool decentralized)
@@ -719,7 +719,7 @@ namespace kt
 			if (chunk_size < 0)
 				chunk_size = 256;
 
-			bt::TorrentCreator mktor(file,trackers,chunk_size,name,comments,priv_tor, decentralized);
+			bt::TorrentCreator mktor(file,trackers,webseeds,chunk_size,name,comments,priv_tor, decentralized);
 			prog->setMaximum(mktor.getNumChunks());
 			Uint32 ns = 0;
 			while (!mktor.calculateHash())

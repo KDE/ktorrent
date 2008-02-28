@@ -80,6 +80,7 @@ namespace kt
 		 * Make a torrent file
 		 * @param file The file or dir to make a torrent of
 		 * @param trackers A list of trackers
+		 * @param webseeds List of webseed URL's
 		 * @param chunk_size The size of each chunk (in KB)
 		 * @param name The torrents name (usually filename)
 		 * @param comments The comments
@@ -88,7 +89,7 @@ namespace kt
 		 * @param priv_tor Is this a private torrent
 		 * @param prog Progress bar to update
 		 */
-		void makeTorrent(const QString & file,const QStringList & trackers,
+		void makeTorrent(const QString & file,const QStringList & trackers,const KUrl::List & webseeds,
 				int chunk_size,const QString & name,const QString & comments,
 				bool seed,const QString & output_file,bool priv_tor,QProgressBar* prog, bool decentralized);
 
