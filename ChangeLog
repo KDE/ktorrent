@@ -1,4 +1,5 @@
 Changes in 3.0.1 :
+- Fix sessionTTL not being able to be bigger then 99
 - Ported stop all and start all in system tray menu fix from KDE3 version
 - Fix bug which caused KT not to check preexisting single file torrents (158167)
 - Added PeerViewModel for PeerView, also fixes crash (158243)
