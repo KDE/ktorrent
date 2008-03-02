@@ -18,6 +18,8 @@
 
 		<entry name="sessionTTL" type ="Int">
 			<label>Session time to live</label>
+			<min>1</min>
+			<max>100000</max>
 			<default>3600</default>
 		</entry>
 		<entry name="skin" type ="Int">
