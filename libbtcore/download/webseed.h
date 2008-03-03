@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
  *   ivasic@gmail.com                                                      *
  *                                                                         *
@@ -18,54 +18,74 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <math.h>
-#include <torrent/torrent.h>
-#include "httpdownloader.h"
-#include "httpconnection.h"
+#ifndef BTWEBSEED_H
+#define BTWEBSEED_H
+
+#include <QObject>
+#include <kurl.h>
 
 namespace bt
 {
+	class Torrent;
+	class HttpConnection;
+	class ChunkManager;
+	class Chunk;
 
-	HttpDownloader::HttpDownloader(const KUrl & url,const Torrent & tor) : url(url),tor(tor),conn(0)
-	{}
-
-
-	HttpDownloader::~HttpDownloader()
+	/**
+		@author Joris Guisson
+		Class which handles downloading from a webseed
+	*/
+	class WebSeed : public QObject
 	{
-		delete conn;
-	}
-
-	void HttpDownloader::download(const bt::Request & req)
-	{
-	}
-	
-	void HttpDownloader::cancel(const bt::Request & req)
-	{
-	}
-	
-	void HttpDownloader::cancelAll()
-	{
-		if (conn)
+		Q_OBJECT
+	public:
+		WebSeed(const KUrl & url,const Torrent & tor,ChunkManager & cman);
+		virtual ~WebSeed();
+		
+		/// Is this webseed busy ?
+		bool busy() const;
+		
+		/**
+		 * Download a range of chunks
+		 * @param first The first chunk
+		 * @param last The last chunk
+		 */
+		void download(Uint32 first,Uint32 last);
+		
+		/**
+		 * Check if the connection has received some data and handle it.
+		 */
+		void update();
+		
+	signals:
+		/**
+		 * Emitted when a chunk is downloaded
+		 * @param c The chunk
+		 */
+		void chunkReady(Chunk* c);
+		
+	private:
+		struct Range
 		{
-			delete conn;
-			conn = 0;
-		}
-	}
-	
-	QString HttpDownloader::getName() const
-	{
-		return url.url();
-	}
-	
-	bt::Uint32 HttpDownloader::getDownloadRate() const
-	{
-		return (Uint32)ceil(conn->getDownloadRate());
-	}
-	
-	bool HttpDownloader::canAddRequest() const
-	{
-		return false;
-	}
+			Uint32 file;
+			Uint64 off;
+			Uint64 len;
+		};
+		
+		void doChunk(Uint32 chunk,QList<Range> & ranges);
+		
+	private:
+		KUrl url;
+		const Torrent & tor;
+		ChunkManager & cman;
+		HttpConnection* conn;
+		QList<QByteArray> chunks;
+		Uint32 first_chunk;
+		Uint32 last_chunk;
+		Uint32 cur_chunk;
+		Uint32 bytes_of_cur_chunk;
+	};
+
 }
 
-#include "httpdownloader.moc"
+#endif

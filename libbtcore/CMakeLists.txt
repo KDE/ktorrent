@@ -59,7 +59,7 @@ set(libbtcore_SRC
 	download/piece.cpp
 	download/request.cpp
 	download/packet.cpp
-	download/httpdownloader.cpp
+	download/webseed.cpp
 	download/chunkdownload.cpp
 	download/chunkselector.cpp
 	download/downloader.cpp

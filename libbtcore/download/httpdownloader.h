@@ -28,6 +28,8 @@
 
 namespace bt
 {
+	class Torrent;
+	class HttpConnection;
 
 	/**
 	 * HTTP Web Seed downloader.
@@ -36,7 +38,7 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-		HttpDownloader(const KUrl & url);
+		HttpDownloader(const KUrl & url,const Torrent & tor);
 		virtual ~HttpDownloader();
 		
 		virtual void download(const bt::Request & req);
@@ -48,6 +50,8 @@ namespace bt
 		
 	private:
 		KUrl url;
+		const Torrent & tor;
+		HttpConnection* conn;
 	};
 
 }

@@ -183,6 +183,15 @@ namespace bt
 		return true;
 	}
 	
+	float HttpConnection::getDownloadRate() const
+	{
+		QMutexLocker locker(&mutex);
+		if (sock)
+			return sock->getDownloadRate();
+		else
+			return 0;
+	}
+	
 	////////////////////////////////////////////
 	
 	HttpConnection::HttpGet::HttpGet(const QString & path,bt::Uint64 start,bt::Uint64 len) : path(path),start(start),len(len),data_received(0),bytes_sent(0),response_header_received(false),request_sent(false)

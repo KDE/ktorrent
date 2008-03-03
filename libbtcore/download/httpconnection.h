@@ -103,6 +103,9 @@ namespace bt
 		 */
 		bool getData(QByteArray & data);
 		
+		/// Get the current download rate
+		float getDownloadRate() const;
+		
 	private slots:
 		void hostResolved(KNetwork::KResolverResults res);
 
