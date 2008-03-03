@@ -63,6 +63,7 @@ set(libbtcore_SRC
 	download/chunkdownload.cpp
 	download/chunkselector.cpp
 	download/downloader.cpp
+	download/httpconnection.cpp
 
 	interfaces/piecedownloader.cpp
 	interfaces/peerinterface.cpp

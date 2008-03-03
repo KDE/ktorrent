@@ -56,10 +56,6 @@ namespace bt
 	{
 		return false;
 	}
-	
-	void HttpDownloader::downloadJobFinished(KJob* job)
-	{
-	}
 }
 
 #include "httpdownloader.moc"

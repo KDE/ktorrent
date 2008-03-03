@@ -25,7 +25,6 @@
 #include <util/ptrmap.h>
 #include <interfaces/piecedownloader.h>
 
-class KJob;
 
 namespace bt
 {
@@ -46,8 +45,6 @@ namespace bt
 		virtual QString getName() const;
 		virtual bt::Uint32 getDownloadRate() const;
 		virtual bool canAddRequest() const;
-	private slots:
-		void downloadJobFinished(KJob* job);
 		
 	private:
 		KUrl url;
