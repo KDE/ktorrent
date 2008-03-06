@@ -47,6 +47,7 @@ namespace bt
 	TorrentFile::TorrentFile(const TorrentFile & tf)
 		: TorrentFileInterface(tf.getIndex(),QString::null,0)
 	{
+		setUnencodedPath(tf.unencoded_path); 
 		index = tf.getIndex();
 		path = tf.getPath();
 		size = tf.getSize();
