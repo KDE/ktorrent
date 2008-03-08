@@ -282,7 +282,11 @@ namespace bt
 
 	void UDPTracker::onResolverResults(KResolverResults res)
 	{
-		address = res.front().address();
+		if (res.count() > 0)
+			address = res.front().address();
+		else
+			KResolver::resolveAsync(this,SLOT(onResolverResults(KNetwork::KResolverResults )),
+									url.host(),QString::number(url.port()));
 	}
 	
 }
