@@ -166,6 +166,9 @@ namespace bt
 	
 	void PeerManager::onResolverResults(KResolverResults res)
 	{
+		if (res.count() == 0)
+			return;
+		
 		net::Address addr = res.front().address().asInet();
 		
 		PotentialPeer pp;
