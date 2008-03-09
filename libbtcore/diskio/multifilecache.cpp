@@ -212,6 +212,9 @@ namespace bt
 		{
 			TorrentFile & tf = tor.getFile(i);
 			tf.setPathOnDisk(output_dir + tf.getPath());
+			CacheFile* cf = files.find(tf.getIndex());
+			if (cf)
+				cf->changePath(tf.getPathOnDisk());
 		}
 		saveFileMap();
 	}
@@ -248,19 +251,23 @@ namespace bt
 		{
 			TorrentFile & tf = tor.getFile ( i );
 			tf.setPathOnDisk(nd + tf.getPath());
-				// check for empty directories and delete them
+			CacheFile* cf = files.find(tf.getIndex());
+			if (cf)
+				cf->changePath(tf.getPathOnDisk());
+
+			// check for empty directories and delete them
 			DeleteEmptyDirs ( output_dir,tf.getPath() );
 		}
 	}
 	
-	void MultiFileCache::moveDataFiles(const QMap<TorrentFileInterface*,QString> & files)
+	void MultiFileCache::moveDataFiles(const QMap<TorrentFileInterface*,QString> & fmap)
 	{
 		if (files.count() == 0)
 			return;
 		
 		MoveDataFilesJob* job = new MoveDataFilesJob();
-		QMap<TorrentFileInterface*,QString>::const_iterator i = files.begin();
-		while (i != files.end())
+		QMap<TorrentFileInterface*,QString>::const_iterator i = fmap.begin();
+		while (i != fmap.end())
 		{
 			TorrentFileInterface* tf = i.key();
 			QString dest = i.value();
@@ -281,8 +288,8 @@ namespace bt
 		if (!job->exec())
 			throw Error("Move failed");
 		
-		i = files.begin();
-		while (i != files.end())
+		i = fmap.begin();
+		while (i != fmap.end())
 		{
 			TorrentFileInterface* tf = i.key();
 			QString path = tf->getPathOnDisk();
@@ -298,6 +305,10 @@ namespace bt
 			}
 			else
 				tf->setPathOnDisk(i.value());
+
+			CacheFile* cf = files.find(tf->getIndex());
+			if (cf)
+				cf->changePath(tf->getPathOnDisk());
 			i++;
 		}
 		saveFileMap();
