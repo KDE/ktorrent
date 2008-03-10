@@ -14,6 +14,7 @@ this makes sure that it is sized properly when you open the dialog
 - Fix crash in handling of KResolverResults (158940)
 - Fix bug causing KT to stop seeding after data was moved to the completed dir
 (158813)
+- Fix keep seeding (159040)
 
 Changes in 3.O :
 - Fix sorting of upload and download rate (157939)
