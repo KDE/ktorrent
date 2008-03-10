@@ -491,8 +491,10 @@ namespace kt
 // 		if(max_seeds !=0 && max_seeds < getNumRunning(false,true))
 // 			tc->stop(true);
 		
-		if(keep_seeding)
+		if (keep_seeding)
 			torrentAdded(tc,false,false);
+		else
+			stopSafely(tc,true);
 		
 		orderQueue();
 	}
