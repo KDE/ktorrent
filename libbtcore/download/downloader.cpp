@@ -36,6 +36,7 @@
 #include "chunkselector.h"
 #include "downloader.h"
 #include "btversion.h"
+#include "webseed.h"
 
 namespace bt
 {
@@ -58,12 +59,24 @@ namespace bt
 		current_chunks.setAutoDelete(true);
 		connect(&pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
 		connect(&pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerKilled(Peer*)));
+		
+		const KUrl::List & urls = tor.getWebSeeds();
+		foreach (KUrl u,urls)
+		{
+			if (u.protocol() == "http")
+			{
+				WebSeed* ws = new WebSeed(u,tor,cman);
+				webseeds.append(ws);
+				connect(ws,SIGNAL(chunkReady(Chunk*)),this,SLOT(onChunkReady(Chunk*)));
+			}
+		}
 	}
 
 
 	Downloader::~Downloader()
 	{
 		delete chunk_selector;
+		qDeleteAll(webseeds);
 	}
 	
 	void Downloader::pieceRecieved(const Piece & p)
@@ -152,6 +165,12 @@ namespace bt
 		{
 			pd->checkTimeouts();
 		}
+		
+		
+		foreach (WebSeed* ws,webseeds)
+		{
+			downloaded += ws->update();
+		}
 	}
 
 	
@@ -163,18 +182,18 @@ namespace bt
 			if (cd->isIdle()) // idle chunks do not need to be in memory
 			{
 				Chunk* c = cd->getChunk();
-				if (c->getStatus() == Chunk::MMAPPED)
+				if (c->getStatus() == Chunk::MMAPPED && !webseeds_chunks.find(c->getIndex()))
 				{
-					cman.saveChunk(cd->getChunk()->getIndex(),false);
+					cman.saveChunk(c->getIndex(),false);
 				}
 			} 
 			else if (cd->isChoked())
 			{
 				cd->releaseAllPDs();
 				Chunk* c = cd->getChunk();
-				if (c->getStatus() == Chunk::MMAPPED)
+				if (c->getStatus() == Chunk::MMAPPED && !webseeds_chunks.find(c->getIndex()))
 				{
-					cman.saveChunk(cd->getChunk()->getIndex(),false);
+					cman.saveChunk(c->getIndex(),false);
 				}
 			}
 			else if (cd->needsToBeUpdated())
@@ -191,6 +210,14 @@ namespace bt
 					downloadFrom(pd);
 				
 				pd->setNearlyDone(false);
+			}
+		}
+		
+		foreach (WebSeed* ws,webseeds)
+		{
+			if (!ws->busy())
+			{
+				downloadFrom(ws);
 			}
 		}
 	}
@@ -351,10 +378,25 @@ namespace bt
 		} 
 	}
 	
+	void Downloader::downloadFrom(WebSeed* ws)
+	{
+		Uint32 first = 0;
+		Uint32 last = 0;
+		if (chunk_selector->selectRange(first,last))
+		{
+			for (Uint32 i = first;i <= last;i++)
+			{
+				cman.prepareChunk(cman.getChunk(i),true);
+				webseeds_chunks.insert(i,ws);
+			}
+			ws->download(first,last);
+		}
+	}
+	
 
 	bool Downloader::areWeDownloading(Uint32 chunk) const
 	{
-		return current_chunks.find(chunk) != 0;
+		return current_chunks.find(chunk) != 0 && webseeds_chunks.find(chunk) != 0;
 	}
 	
 	Uint32 Downloader::numDownloadersForChunk(Uint32 chunk) const
@@ -424,7 +466,10 @@ namespace bt
 			Out(SYS_GEN|LOG_IMPORTANT) << "Is        : " << h << endl;
 			Out(SYS_GEN|LOG_IMPORTANT) << "Should be : " << tor.getHash(c->getIndex()) << endl;
 			
-			cman.resetChunk(c->getIndex());
+			// reset chunk but only when no webseeder is downloading it
+			if (!webseeds_chunks.find(c->getIndex()))
+				cman.resetChunk(c->getIndex());
+			
 			chunk_selector->reinsert(c->getIndex());
 
 			PieceDownloader* only = cd->getOnlyDownloader();
@@ -457,6 +502,9 @@ namespace bt
 		}
 		current_chunks.clear();
 		piece_downloaders.clear();
+		
+		foreach (WebSeed* ws,webseeds)
+			ws->reset();
 	}
 	
 	Uint32 Downloader::downloadRate() const
@@ -466,6 +514,12 @@ namespace bt
 		foreach (PieceDownloader* pd,piece_downloaders)
 			if (pd)
 				rate += pd->getDownloadRate();
+		
+		
+		foreach (WebSeed* ws,webseeds)
+		{
+			rate += ws->getDownloadRate();
+		}
 			
 		return rate;
 	}
@@ -652,6 +706,11 @@ namespace bt
 			current_chunks.erase(i);
 			cman.resetChunk(i); // reset chunk it is not fully downloaded yet
 		}
+		
+		foreach (WebSeed* ws,webseeds)
+		{
+			ws->onExcluded(from,to);
+		}
 	}
 	
 	void Downloader::onIncluded(Uint32 from,Uint32 to)
@@ -693,6 +752,53 @@ namespace bt
 	{
 		Uint64 total = tor.getFileLength();
 		downloaded = (total - cman.bytesLeft());
+	}
+	
+	void Downloader::onChunkReady(Chunk* c)
+	{
+		SHA1Hash h = SHA1Hash::generate(c->getData(),c->getSize());
+		webseeds_chunks.erase(c->getIndex());
+		
+		if (tor.verifyHash(h,c->getIndex()))
+		{
+			// hash ok so save it
+			try
+			{
+				ChunkDownload* cd = current_chunks.find(c->getIndex());
+				if (cd)
+				{
+					// A ChunkDownload is ongoing for this chunk so kill it, we have the chunk
+					cd->cancelAll();
+					current_chunks.erase(c->getIndex());
+				}
+				
+				cman.saveChunk(c->getIndex());
+			
+				Out(SYS_GEN|LOG_IMPORTANT) << "Chunk " << c->getIndex() << " downloaded via webseed ! " << endl;
+				// tell everybody we have the Chunk
+				for (Uint32 i = 0;i < pman.getNumConnectedPeers();i++)
+				{
+					pman.getPeer(i)->getPacketWriter().sendHave(c->getIndex());
+				}
+			}
+			catch (Error & e)
+			{
+				Out(SYS_DIO|LOG_IMPORTANT) << "Error " << e.toString() << endl;
+				emit ioError(e.toString());
+			}
+		}
+		else
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Hash verification error on chunk "  << c->getIndex() << endl;
+			Out(SYS_GEN|LOG_IMPORTANT) << "Is        : " << h << endl;
+			Out(SYS_GEN|LOG_IMPORTANT) << "Should be : " << tor.getHash(c->getIndex()) << endl;
+		
+			// reset chunk but only when no other peer is downloading it
+			if (!current_chunks.find(c->getIndex()))
+				cman.resetChunk(c->getIndex());
+			
+			chunk_selector->reinsert(c->getIndex());
+		}
 	}
 }
 

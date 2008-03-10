@@ -73,6 +73,8 @@ namespace bt
 		 * @param chunk The chunk
 		 */
 		void reinsert(Uint32 chunk);
+		
+		virtual bool selectRange(Uint32 & from,Uint32 & to);
 	private:
 		Uint32 leastPeers(const std::list<Uint32> & lp);
 	};

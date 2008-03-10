@@ -57,6 +57,14 @@ namespace bt
 		virtual bool select(PieceDownloader* pd,Uint32 & chunk) = 0;
 		
 		/**
+		 * Select a range of chunks to download from a webseeder.
+		 * @param from First chunk of the range
+		 * @param to Last chunk of the range
+		 * @return true if everything is OK
+		 */
+		virtual bool selectRange(Uint32 & from,Uint32 & to);
+		
+		/**
 		 * Data has been checked, and these chunks are OK.
 		 * @param ok_chunks The ok_chunks
 		 */

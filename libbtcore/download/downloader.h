@@ -39,6 +39,7 @@ namespace bt
 	class ChunkSelectorFactoryInterface;
 	class PieceDownloader;
 	class MonitorInterface;
+	class WebSeed;
 
 	typedef PtrMap<Uint32,ChunkDownload>::iterator CurChunkItr;
 	typedef PtrMap<Uint32,ChunkDownload>::const_iterator CurChunkCItr;
@@ -189,6 +190,12 @@ namespace bt
 		 */
 		void onIncluded(Uint32 from,Uint32 to);
 		
+		/**
+		 * A WebSeed has finished a Chunk
+		 * @param c The chunk
+		 */
+		void onChunkReady(Chunk* c);
+		
 	signals:
 		/**
 		 * An error occurred while we we're writing or reading from disk.
@@ -198,6 +205,7 @@ namespace bt
 		
 	private:
 		void downloadFrom(PieceDownloader* pd);
+		void downloadFrom(WebSeed* ws);
 		void normalUpdate();
 		Uint32 maxMemoryUsage();
 		Uint32 numNonIdle();
@@ -216,6 +224,8 @@ namespace bt
 		QList<PieceDownloader*> piece_downloaders;
 		MonitorInterface* tmon;
 		ChunkSelectorInterface* chunk_selector;
+		QList<WebSeed*> webseeds;
+		PtrMap<Uint32,WebSeed> webseeds_chunks;
 		
 		static Uint32 mem_usage;
 	};

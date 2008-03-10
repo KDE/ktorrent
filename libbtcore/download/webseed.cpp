@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <util/log.h>
 #include <torrent/torrent.h>
 #include <diskio/chunkmanager.h>
 #include "webseed.h"
@@ -29,20 +30,45 @@ namespace bt
 	WebSeed::WebSeed(const KUrl & url,const Torrent & tor,ChunkManager & cman) : url(url),tor(tor),cman(cman)
 	{
 		first_chunk = last_chunk = tor.getNumChunks() + 1;
+		num_failures = 0;
+		conn = 0;
+		downloaded = 0;
 	}
 
 
 	WebSeed::~WebSeed()
 	{
+		delete conn;
+	}
+	
+	void WebSeed::reset()
+	{
+		if (conn)
+		{
+			delete conn;
+			conn = 0;
+		}
+		
+		first_chunk = last_chunk = tor.getNumChunks() + 1;
+		num_failures = 0;
 	}
 
 	bool WebSeed::busy() const
 	{
 		return first_chunk < tor.getNumChunks();
 	}
+	
+	Uint32 WebSeed::getDownloadRate() const
+	{
+		if (conn)
+			return (Uint32)conn->getDownloadRate();
+		else
+			return 0;
+	}
 		
 	void WebSeed::download(Uint32 first,Uint32 last)
 	{
+		Out(SYS_DIO|LOG_DEBUG) << "WebSeed::download " << first << "-" << last << endl;
 		first_chunk = first;
 		last_chunk = last;
 		cur_chunk = first;
@@ -55,6 +81,7 @@ namespace bt
 		// open connection and connect if needed
 		if (!conn)
 			conn = new HttpConnection();
+		
 		if (!conn->connected())
 			conn->connectTo(url);
 		
@@ -71,7 +98,8 @@ namespace bt
 			foreach (const Range & r,ranges)
 			{
 				const TorrentFile & tf = tor.getFile(r.file);
-				conn->get(path + "/" + tf.getPath(),r.off,r.len);
+				Out(SYS_DIO|LOG_DEBUG) << "WebSeed: get " << r.file << " " << r.off << " " << r.len << endl;
+				conn->get(url.host(),path + "/" + tf.getPath(),r.off,r.len);
 			}
 		}
 		else
@@ -82,12 +110,92 @@ namespace bt
 				len += tor.getFileLength() % tor.getChunkSize();
 			else
 				len += tor.getChunkSize(); 
-			conn->get(path,first_chunk * tor.getChunkSize(),len);
+			Out(SYS_DIO|LOG_DEBUG) << "WebSeed: get " << path << " " << first_chunk * tor.getChunkSize() << " " << len << endl;
+			conn->get(url.host(),path,first_chunk * tor.getChunkSize(),len);
 		}
 	}
 		
-	void WebSeed::update()
+	Uint32 WebSeed::update()
 	{
+		if (!conn || !busy())
+			return 0;
+		
+		if (!conn->ok())
+		{
+			Out(SYS_DIO|LOG_DEBUG) << "WebSeed: !conn->ok()" << endl;
+			// shit happened delete connection
+			delete conn;
+			conn = 0;
+			num_failures++;
+			if (num_failures < 3)
+			{
+				// lets try this again
+				download(cur_chunk,last_chunk);
+			}
+			return 0;
+		}
+		else if (conn->closed())
+		{
+			Out(SYS_DIO|LOG_DEBUG) << "WebSeed: connection closed" << endl;
+			delete conn;
+			conn = 0;
+			// lets try this again
+			download(cur_chunk,last_chunk);
+		}
+		else
+		{
+			QByteArray tmp;
+			while (conn->getData(tmp) && cur_chunk <= last_chunk)
+			{
+				//Out(SYS_DIO|LOG_DEBUG) << "WebSeed: handleData " << tmp.size() << endl;
+				handleData(tmp);
+				tmp.clear();
+			}
+			
+			if (cur_chunk > last_chunk)
+			{
+				// if the current chunk moves past the last chunk, we are done
+				first_chunk = last_chunk = tor.getNumChunks() + 1;
+				num_failures = 0;
+				Out(SYS_DIO|LOG_DEBUG) << "WebSeed: finished " << endl;
+				finished();
+			}
+			
+			Uint32 ret = downloaded;
+			downloaded = 0;
+			return ret;
+		}
+	}
+	
+	void WebSeed::handleData(const QByteArray & tmp)
+	{
+		Uint32 off = 0;
+		while (off < (Uint32)tmp.size() && cur_chunk <= last_chunk)
+		{
+			Chunk* c = cman.getChunk(cur_chunk);
+			Uint32 bl = c->getSize() - bytes_of_cur_chunk;
+			if (bl > tmp.size() - off)
+				bl = tmp.size() - off;
+					
+			if (c->getStatus() == Chunk::BUFFERED || c->getStatus() == Chunk::MMAPPED)
+			{
+				// only write when we have the chunk in memory
+				// if we already have the chunk we will then just ignore the data
+				memcpy(c->getData() + bytes_of_cur_chunk,tmp.data() + off,bl);
+				downloaded += bl;
+			}
+			off += bl;
+			bytes_of_cur_chunk += bl;
+			if (bytes_of_cur_chunk == c->getSize())
+			{
+				// we have one ready
+				bytes_of_cur_chunk = 0;
+				cur_chunk++;
+				Out(SYS_DIO|LOG_DEBUG) << "WebSeed: cur_chunk++ " << cur_chunk << endl;
+				if (c->getStatus() == Chunk::BUFFERED || c->getStatus() == Chunk::MMAPPED)
+					chunkReady(c);
+			}
+		}
 	}
 
 	void WebSeed::doChunk(Uint32 chunk,QList<Range> & ranges)
@@ -130,5 +238,10 @@ namespace bt
 		}
 	}
 
+	void WebSeed::onExcluded(Uint32 from,Uint32 to)
+	{
+		if (from <= first_chunk <= to && from <= last_chunk <= to)
+			reset();
+	}
 }
 #include "webseed.moc"

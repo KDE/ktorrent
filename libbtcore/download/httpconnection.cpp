@@ -57,10 +57,17 @@ namespace bt
 		return state == ACTIVE;
 	}
 	
+	bool HttpConnection::closed() const
+	{
+		QMutexLocker locker(&mutex);
+		return state == CLOSED || (sock && !sock->ok());
+	}
+	
 	void HttpConnection::connectTo(const KUrl & url)
 	{
+		Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: resolve " << url.host() << ":" << url.port() << endl;
 		KNetwork::KResolver::resolveAsync(this, SLOT(hostResolved(KNetwork::KResolverResults)), 
-										  url.host(), QString::number(url.port()));
+										  url.host(), QString::number(url.port() <= 0 ? 80 : url.port()));
 		state = RESOLVING;
 	}
 
@@ -70,10 +77,18 @@ namespace bt
 		
 		if (state != ERROR && requests.count() > 0)
 		{
-			HttpGet* g = requests.front();
-			if (!g->onDataReady(buf,size))
+			if (size == 0)
 			{
-				state = ERROR;
+				 // connection closed
+				state = CLOSED;
+			}
+			else
+			{
+				HttpGet* g = requests.front();
+				if (!g->onDataReady(buf,size))
+				{
+					state = ERROR;
+				}
 			}
 		}
 	}
@@ -83,10 +98,17 @@ namespace bt
 		QMutexLocker locker(&mutex);
 		if (state == CONNECTING)
 		{
+			Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: connected "  << endl;
 			if (sock->connectSuccesFull())
+			{
+				Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: connected "  << endl;
 				state = ACTIVE;
+			}
 			else
+			{
+				Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: connection error "  << endl;
 				state = ERROR;
+			}
 		}
 		else if (state == ACTIVE)
 		{
@@ -98,6 +120,7 @@ namespace bt
 			if (len > max_to_write)
 				len = max_to_write;
 			
+			Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: writing " << len << " bytes" << endl;
 			memcpy(data,g->buffer.data() + g->bytes_sent,len);
 			g->bytes_sent += len;
 			if (len == g->buffer.size())
@@ -114,6 +137,9 @@ namespace bt
 	bool HttpConnection::hasBytesToWrite() const
 	{
 		QMutexLocker locker(&mutex);
+		if (state == CONNECTING)
+			return true;
+		
 		if (state == ERROR || requests.count() == 0)
 			return false;
 		
@@ -125,37 +151,45 @@ namespace bt
 	{
 		if (res.count() > 0)
 		{
+			Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: hostResolved" << endl;
 			KNetwork::KInetSocketAddress addr = res.front().address();
 			sock = new net::BufferedSocket(true,addr.ipVersion());
+			sock->setNonBlocking();
 			sock->setReader(this);
 			sock->setWriter(this);
 			
 			if (sock->connectTo(addr))
 			{
+				Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: connected" << endl;
 				state = ACTIVE;
 				net::SocketMonitor::instance().add(sock);
 			}
 			else if (sock->state() == net::Socket::CONNECTING)
 			{
+				Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: connecting" << endl;
 				state = CONNECTING;
 				net::SocketMonitor::instance().add(sock);
 			}
 			else 
 			{
+				Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: failed to connect" << endl;
 				state = ERROR;
 			}
 		}
 		else
+		{
+			Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: hostResolved ERROR" << endl;
 			state = ERROR;
+		}
 	}
 	
-	bool HttpConnection::get(const QString & path,bt::Uint64 start,bt::Uint64 len)
+	bool HttpConnection::get(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len)
 	{
 		QMutexLocker locker(&mutex);
-		if (state != ACTIVE)
+		if (state == ERROR)
 			return false;
-		
-		HttpGet* g = new HttpGet(path,start,len);
+			
+		HttpGet* g = new HttpGet(host,path,start,len);
 		requests.append(g);
 		return true;
 	}
@@ -174,10 +208,14 @@ namespace bt
 		
 		// if all the data has been received and passed on to something else
 		// remove the current request from the queue
-		if (g->piece_data.count() == 0 && g->data_received == g->len)
+		if (g->piece_data.count() == 0)
 		{
-			delete g;
-			requests.pop_front();
+			if (g->finished())
+			{
+				Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: " << g->data_received << " " << g->len << endl;
+				delete g;
+				requests.pop_front();
+			}
 		}
 		
 		return true;
@@ -194,12 +232,13 @@ namespace bt
 	
 	////////////////////////////////////////////
 	
-	HttpConnection::HttpGet::HttpGet(const QString & path,bt::Uint64 start,bt::Uint64 len) : path(path),start(start),len(len),data_received(0),bytes_sent(0),response_header_received(false),request_sent(false)
+	HttpConnection::HttpGet::HttpGet(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len) : path(path),start(start),len(len),data_received(0),bytes_sent(0),response_header_received(false),request_sent(false)
 	{
 		QHttpRequestHeader request("GET",path);
 		request.setValue("Connection","Keep-Alive");
 		request.setValue("Range",QString("bytes=%1-%2").arg(start).arg(start + len - 1));
 		request.setValue("User-Agent",bt::GetVersionString());
+		request.setValue("Host",host);
 		buffer = request.toString().toLocal8Bit();
 		Out(SYS_GEN|LOG_DEBUG) << "HttpConnection: " << endl;
 		Out(SYS_GEN|LOG_DEBUG) << request.toString() << endl;
@@ -231,6 +270,7 @@ namespace bt
 			
 			if (buffer.size() - (idx + 4) > 0)
 			{
+				//Out(SYS_GEN|LOG_DEBUG) << "HttpConnection: data received " << endl;
 				// more data then the header has arrived so append it to piece_data
 				data_received += buffer.size() - (idx + 4);
 				piece_data.append(buffer.mid(idx + 4));
@@ -238,6 +278,7 @@ namespace bt
 		}
 		else
 		{
+			//Out(SYS_GEN|LOG_DEBUG) << "HttpConnection: data received " << size << " bytes" << endl;
 			// append the data to the list
 			data_received += size;
 			piece_data.append(QByteArray((char*)buf,size));

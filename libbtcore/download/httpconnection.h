@@ -43,7 +43,7 @@ namespace bt
 	private:
 		enum State
 		{
-			IDLE,RESOLVING,CONNECTING,ACTIVE,ERROR
+			IDLE,RESOLVING,CONNECTING,ACTIVE,ERROR,CLOSED
 		};
 		
 		struct HttpGet
@@ -58,10 +58,11 @@ namespace bt
 			bool response_header_received;
 			bool request_sent;
 			
-			HttpGet(const QString & path,bt::Uint64 start,bt::Uint64 len);
+			HttpGet(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len);
 			virtual ~HttpGet();
 			
 			bool onDataReady(Uint8* buf,Uint32 size);
+			bool finished() const {return data_received >= len;}
 		};
 		
 		net::BufferedSocket* sock;
@@ -84,13 +85,16 @@ namespace bt
 		/// See if we are connected
 		bool connected() const;
 		
+		/// Has the connection been closed
+		bool closed() const;
+		
 		/**
 		 * Do a HTTP GET request
 		 * @param path The path of the file
 		 * @param start Offset into file
 		 * @param len Length of data to download
 		 */
-		bool get(const QString & path,bt::Uint64 start,bt::Uint64 len);
+		bool get(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len);
 
 		virtual void onDataReady(Uint8* buf,Uint32 size);
 		virtual Uint32 onReadyToWrite(Uint8* data,Uint32 max_to_write);	

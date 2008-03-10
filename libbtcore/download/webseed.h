@@ -53,9 +53,26 @@ namespace bt
 		void download(Uint32 first,Uint32 last);
 		
 		/**
-		 * Check if the connection has received some data and handle it.
+		 * A range has been excluded, if we are fully
+		 * downloading in this range, reset.
+		 * @param from Start of range
+		 * @param to End of range
 		 */
-		void update();
+		void onExcluded(Uint32 from,Uint32 to);
+		
+		/**
+		 * Check if the connection has received some data and handle it.
+		 * @return The number of bytes downloaded
+		 */
+		Uint32 update();
+		
+		/**
+		 * Reset the webseed (kills the connection)
+		 */
+		void reset();
+		
+		/// Get the current download rate
+		Uint32 getDownloadRate() const;
 		
 	signals:
 		/**
@@ -63,6 +80,11 @@ namespace bt
 		 * @param c The chunk
 		 */
 		void chunkReady(Chunk* c);
+		
+		/**
+		 * Emitted when a range has been fully downloaded
+		 */
+		void finished();
 		
 	private:
 		struct Range
@@ -73,7 +95,7 @@ namespace bt
 		};
 		
 		void doChunk(Uint32 chunk,QList<Range> & ranges);
-		
+		void handleData(const QByteArray & data);
 	private:
 		KUrl url;
 		const Torrent & tor;
@@ -84,6 +106,8 @@ namespace bt
 		Uint32 last_chunk;
 		Uint32 cur_chunk;
 		Uint32 bytes_of_cur_chunk;
+		Uint32 num_failures;
+		Uint32 downloaded;
 	};
 
 }

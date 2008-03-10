@@ -32,6 +32,11 @@ namespace bt
 	ChunkSelectorInterface::~ChunkSelectorInterface()
 	{
 	}
+	
+	bool ChunkSelectorInterface::selectRange(Uint32 & from,Uint32 & to)
+	{
+		return false;
+	}
 
 	ChunkSelectorFactoryInterface::ChunkSelectorFactoryInterface()
 	{
@@ -41,5 +46,5 @@ namespace bt
 	{
 	}
 
-
+	
 }

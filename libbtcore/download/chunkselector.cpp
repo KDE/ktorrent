@@ -27,6 +27,7 @@
 #include <interfaces/piecedownloader.h>
 #include <peer/peer.h>
 #include <peer/peermanager.h>
+#include <torrent/torrent.h>
 #include "chunkselector.h"
 #include "downloader.h"
 
@@ -278,6 +279,62 @@ namespace bt
 			chunks.push_back(chunk);
 	}
 
-
+	const Uint32 MAX_RANGE_SIZE = 10 * 1024 * 1024; // lets take 10 MB for the max range to download in one go 
+	
+	struct ChunkRange
+	{
+		Uint32 start;
+		Uint32 len;
+	};
+	
+	bool ChunkSelector::selectRange(Uint32 & from,Uint32 & to)
+	{
+		Uint32 max_range_len = MAX_RANGE_SIZE / pman.getTorrent().getChunkSize();
+		
+		const BitSet & bs = cman.getBitSet();
+		Uint32 num_chunks = cman.getNumChunks();
+		ChunkRange curr = {0,0};
+		ChunkRange best = {0,0};
+		
+		for (Uint32 i = 0;i < num_chunks;i++)
+		{
+			if (!bs.get(i) && !downer.areWeDownloading(i))
+			{
+				if (curr.start == 0 && curr.len == 0) // we have a new current range
+				{
+					curr.start = i;
+					curr.len = 1;
+				}
+				else
+					curr.len++; // expand the current range
+				
+				if (curr.len > max_range_len)
+				{
+					// current range is bigger then the maximum range length, select it
+					from = curr.start;
+					to = curr.start + curr.len - 1;
+					return true;
+				}
+			}
+			else
+			{
+				// see if the current range has ended
+				// and if it is better then the best range
+				if (curr.start > 0 && curr.len > best.len)
+					best = curr; // we have a new best range
+				
+				curr.start = curr.len = 0; // reset the current range
+			}
+		}
+		
+		// end of the list, so select the best
+		if (best.len)
+		{
+			from = best.start;
+			to = best.start + best.len - 1;
+			return true;
+		}
+		return false;
+	}
 }
 
