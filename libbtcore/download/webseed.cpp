@@ -68,7 +68,7 @@ namespace bt
 		
 	void WebSeed::download(Uint32 first,Uint32 last)
 	{
-		Out(SYS_DIO|LOG_DEBUG) << "WebSeed::download " << first << "-" << last << endl;
+		Out(SYS_CON|LOG_DEBUG) << "WebSeed::download " << first << "-" << last << endl;
 		first_chunk = first;
 		last_chunk = last;
 		cur_chunk = first;
@@ -98,7 +98,6 @@ namespace bt
 			foreach (const Range & r,ranges)
 			{
 				const TorrentFile & tf = tor.getFile(r.file);
-				Out(SYS_DIO|LOG_DEBUG) << "WebSeed: get " << r.file << " " << r.off << " " << r.len << endl;
 				conn->get(url.host(),path + "/" + tf.getPath(),r.off,r.len);
 			}
 		}
@@ -110,7 +109,7 @@ namespace bt
 				len += tor.getFileLength() % tor.getChunkSize();
 			else
 				len += tor.getChunkSize(); 
-			Out(SYS_DIO|LOG_DEBUG) << "WebSeed: get " << path << " " << first_chunk * tor.getChunkSize() << " " << len << endl;
+			
 			conn->get(url.host(),path,first_chunk * tor.getChunkSize(),len);
 		}
 	}
@@ -122,7 +121,7 @@ namespace bt
 		
 		if (!conn->ok())
 		{
-			Out(SYS_DIO|LOG_DEBUG) << "WebSeed: !conn->ok()" << endl;
+			Out(SYS_CON|LOG_DEBUG) << "WebSeed: connection not OK" << endl;
 			// shit happened delete connection
 			delete conn;
 			conn = 0;
@@ -136,7 +135,7 @@ namespace bt
 		}
 		else if (conn->closed())
 		{
-			Out(SYS_DIO|LOG_DEBUG) << "WebSeed: connection closed" << endl;
+			Out(SYS_CON|LOG_DEBUG) << "WebSeed: connection closed" << endl;
 			delete conn;
 			conn = 0;
 			// lets try this again
@@ -147,7 +146,7 @@ namespace bt
 			QByteArray tmp;
 			while (conn->getData(tmp) && cur_chunk <= last_chunk)
 			{
-				//Out(SYS_DIO|LOG_DEBUG) << "WebSeed: handleData " << tmp.size() << endl;
+				//Out(SYS_CON|LOG_DEBUG) << "WebSeed: handleData " << tmp.size() << endl;
 				handleData(tmp);
 				tmp.clear();
 			}
@@ -157,7 +156,6 @@ namespace bt
 				// if the current chunk moves past the last chunk, we are done
 				first_chunk = last_chunk = tor.getNumChunks() + 1;
 				num_failures = 0;
-				Out(SYS_DIO|LOG_DEBUG) << "WebSeed: finished " << endl;
 				finished();
 			}
 			
@@ -191,7 +189,6 @@ namespace bt
 				// we have one ready
 				bytes_of_cur_chunk = 0;
 				cur_chunk++;
-				Out(SYS_DIO|LOG_DEBUG) << "WebSeed: cur_chunk++ " << cur_chunk << endl;
 				if (c->getStatus() == Chunk::BUFFERED || c->getStatus() == Chunk::MMAPPED)
 					chunkReady(c);
 			}

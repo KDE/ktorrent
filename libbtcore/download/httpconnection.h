@@ -54,7 +54,7 @@ namespace bt
 			bt::Uint64 data_received;
 			QByteArray buffer;
 			bt::Uint32 bytes_sent;
-			QList<QByteArray> piece_data;
+			QByteArray piece_data;
 			bool response_header_received;
 			bool request_sent;
 			

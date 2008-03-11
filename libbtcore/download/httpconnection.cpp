@@ -65,7 +65,6 @@ namespace bt
 	
 	void HttpConnection::connectTo(const KUrl & url)
 	{
-		Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: resolve " << url.host() << ":" << url.port() << endl;
 		KNetwork::KResolver::resolveAsync(this, SLOT(hostResolved(KNetwork::KResolverResults)), 
 										  url.host(), QString::number(url.port() <= 0 ? 80 : url.port()));
 		state = RESOLVING;
@@ -98,15 +97,14 @@ namespace bt
 		QMutexLocker locker(&mutex);
 		if (state == CONNECTING)
 		{
-			Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: connected "  << endl;
 			if (sock->connectSuccesFull())
 			{
-				Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: connected "  << endl;
+				Out(SYS_CON|LOG_DEBUG) << "HttpConnection: connected "  << endl;
 				state = ACTIVE;
 			}
 			else
 			{
-				Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: connection error "  << endl;
+				Out(SYS_CON|LOG_DEBUG) << "HttpConnection: failed to connect to webseed "  << endl;
 				state = ERROR;
 			}
 		}
@@ -120,7 +118,7 @@ namespace bt
 			if (len > max_to_write)
 				len = max_to_write;
 			
-			Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: writing " << len << " bytes" << endl;
+			Out(SYS_CON|LOG_DEBUG) << "HttpConnection: writing " << len << " bytes" << endl;
 			memcpy(data,g->buffer.data() + g->bytes_sent,len);
 			g->bytes_sent += len;
 			if (len == g->buffer.size())
@@ -151,7 +149,6 @@ namespace bt
 	{
 		if (res.count() > 0)
 		{
-			Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: hostResolved" << endl;
 			KNetwork::KInetSocketAddress addr = res.front().address();
 			sock = new net::BufferedSocket(true,addr.ipVersion());
 			sock->setNonBlocking();
@@ -160,25 +157,27 @@ namespace bt
 			
 			if (sock->connectTo(addr))
 			{
-				Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: connected" << endl;
+				Out(SYS_CON|LOG_DEBUG) << "HttpConnection: connected to webseed" << endl;
 				state = ACTIVE;
 				net::SocketMonitor::instance().add(sock);
+				net::SocketMonitor::instance().signalPacketReady();
 			}
 			else if (sock->state() == net::Socket::CONNECTING)
 			{
-				Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: connecting" << endl;
+				Out(SYS_CON|LOG_DEBUG) << "HttpConnection: connecting to webseed ..." << endl;
 				state = CONNECTING;
 				net::SocketMonitor::instance().add(sock);
+				net::SocketMonitor::instance().signalPacketReady();
 			}
 			else 
 			{
-				Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: failed to connect" << endl;
+				Out(SYS_CON|LOG_DEBUG) << "HttpConnection: failed to connect" << endl;
 				state = ERROR;
 			}
 		}
 		else
 		{
-			Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: hostResolved ERROR" << endl;
+			Out(SYS_CON|LOG_DEBUG) << "HttpConnection: failed to resolve hostname of webseed" << endl;
 			state = ERROR;
 		}
 	}
@@ -191,6 +190,7 @@ namespace bt
 			
 		HttpGet* g = new HttpGet(host,path,start,len);
 		requests.append(g);
+		net::SocketMonitor::instance().signalPacketReady();
 		return true;
 	}
 	
@@ -201,21 +201,24 @@ namespace bt
 			return false;
 		
 		HttpGet* g = requests.front();
-		if (g->piece_data.count() == 0)
+		if (g->piece_data.size() == 0)
+		{
+			if (!g->request_sent)
+				net::SocketMonitor::instance().signalPacketReady();
 			return false;
-		data = g->piece_data.front();
-		g->piece_data.pop_front();
+		}
+		
+		data = g->piece_data;
+		g->piece_data.clear();
 		
 		// if all the data has been received and passed on to something else
 		// remove the current request from the queue
-		if (g->piece_data.count() == 0)
+		if (g->piece_data.size() == 0 && g->finished())
 		{
-			if (g->finished())
-			{
-				Out(SYS_DIO|LOG_DEBUG) << "HttpConnection: " << g->data_received << " " << g->len << endl;
-				delete g;
-				requests.pop_front();
-			}
+			delete g;
+			requests.pop_front();
+			if (requests.size() > 0)
+				net::SocketMonitor::instance().signalPacketReady();
 		}
 		
 		return true;
@@ -240,8 +243,8 @@ namespace bt
 		request.setValue("User-Agent",bt::GetVersionString());
 		request.setValue("Host",host);
 		buffer = request.toString().toLocal8Bit();
-		Out(SYS_GEN|LOG_DEBUG) << "HttpConnection: " << endl;
-		Out(SYS_GEN|LOG_DEBUG) << request.toString() << endl;
+		Out(SYS_CON|LOG_DEBUG) << "HttpConnection: sending http request:" << endl;
+		Out(SYS_CON|LOG_DEBUG) << request.toString() << endl;
 	}
 	
 	HttpConnection::HttpGet::~HttpGet()
@@ -261,8 +264,8 @@ namespace bt
 			response_header_received = true;
 			QHttpResponseHeader hdr(QString::fromLocal8Bit(buffer.mid(0,idx + 4)));
 			
-			Out(SYS_GEN|LOG_DEBUG) << "HttpConnection: reply header received" << endl;
-			Out(SYS_GEN|LOG_DEBUG) << hdr.toString() << endl;
+			Out(SYS_CON|LOG_DEBUG) << "HttpConnection: http reply header received" << endl;
+			Out(SYS_CON|LOG_DEBUG) << hdr.toString() << endl;
 			if (! (hdr.statusCode() == 200 || hdr.statusCode() == 206))
 			{
 				return false;
@@ -270,7 +273,6 @@ namespace bt
 			
 			if (buffer.size() - (idx + 4) > 0)
 			{
-				//Out(SYS_GEN|LOG_DEBUG) << "HttpConnection: data received " << endl;
 				// more data then the header has arrived so append it to piece_data
 				data_received += buffer.size() - (idx + 4);
 				piece_data.append(buffer.mid(idx + 4));
@@ -278,7 +280,6 @@ namespace bt
 		}
 		else
 		{
-			//Out(SYS_GEN|LOG_DEBUG) << "HttpConnection: data received " << size << " bytes" << endl;
 			// append the data to the list
 			data_received += size;
 			piece_data.append(QByteArray((char*)buf,size));
