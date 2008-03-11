@@ -60,6 +60,7 @@ namespace kt
 		getGUI()->addToolWidget(lv,"utilities-log-viewer",i18n("Log Viewer"),GUIInterface::DOCK_BOTTOM);
 		getGUI()->addPrefPage(pref);
 		AddLogMonitor(lv);
+		applySettings();
 	}
 
 	void LogViewerPlugin::unload()
