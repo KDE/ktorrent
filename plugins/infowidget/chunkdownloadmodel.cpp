@@ -150,15 +150,20 @@ namespace kt
 		reset();
 	}
 	
-	void ChunkDownloadModel::update()
+	bool ChunkDownloadModel::update()
 	{
+		bool ret = false;
 		Uint32 idx=0;
 		foreach (const Item & i,items)
 		{
 			if (i.changed())
+			{
+				ret = true;
 				emit dataChanged(createIndex(idx,1),createIndex(idx,4));
+			}
 			idx++;
 		}
+		return false;
 	}
 
 	int ChunkDownloadModel::rowCount ( const QModelIndex & parent ) const

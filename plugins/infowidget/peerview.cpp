@@ -109,7 +109,8 @@ namespace kt
 
 	void PeerView::update()
 	{
-		 model->update();
+		 if (model->update())
+			 pm->invalidate();
 	}
 
 	void PeerView::removeAll()

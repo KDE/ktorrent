@@ -64,41 +64,48 @@ namespace kt
 	}
 			
 	
-	void ViewModel::Item::update(int row,ViewModel* mdl)
+	bool ViewModel::Item::update(int row,ViewModel* mdl)
 	{
+		bool ret = false;
 		const TorrentStats & s = tc->getStats();
 		if (status != s.status)
 		{
+			ret = true;
 			status = s.status;
 			mdl->emitDataChanged(row,1);
 		}
 			
 		if (bytes_downloaded != s.bytes_downloaded)
 		{
+			ret = true;
 			bytes_downloaded = s.bytes_downloaded;
 			mdl->emitDataChanged(row,2);
 		}
 		
 		if (total_bytes_to_download != s.total_bytes_to_download)
 		{
+			ret = true;
 			total_bytes_to_download = s.total_bytes_to_download;
 			mdl->emitDataChanged(row,3);
 		}
 		
 		if (bytes_uploaded != s.bytes_uploaded)
 		{
+			ret = true;
 			bytes_uploaded = s.bytes_uploaded;
 			mdl->emitDataChanged(row,4);
 		}
 		
 		if (download_rate != s.download_rate)
 		{
+			ret = true;
 			download_rate = s.download_rate;
 			mdl->emitDataChanged(row,5);
 		}
 		
 		if (upload_rate != s.upload_rate)
 		{
+			ret = true;
 			upload_rate = s.upload_rate;
 			mdl->emitDataChanged(row,6);
 		}
@@ -106,12 +113,14 @@ namespace kt
 		int neta = ETA(s,tc);
 		if (eta != neta)
 		{
+			ret = true;
 			eta = neta;
 			mdl->emitDataChanged(row,7);
 		}
 		
 		if (seeders_connected_to != s.seeders_connected_to || seeders_total != s.seeders_total)
 		{
+			ret = true;
 			seeders_connected_to = s.seeders_connected_to;
 			seeders_total = s.seeders_total;
 			mdl->emitDataChanged(row,8);
@@ -119,6 +128,7 @@ namespace kt
 		
 		if (leechers_total != s.leechers_total || leechers_connected_to != s.leechers_connected_to)
 		{
+			ret = true;
 			leechers_total = s.leechers_total;
 			leechers_connected_to = s.leechers_connected_to;
 			mdl->emitDataChanged(row,9);
@@ -127,6 +137,7 @@ namespace kt
 		double perc = Percentage(s); 
 		if (fabs(percentage - perc) > 0.01)
 		{
+			ret = true;
 			percentage = perc;
 			mdl->emitDataChanged(row,10);
 		}
@@ -134,6 +145,7 @@ namespace kt
 		float ratio = ShareRatio(s);
 		if (fabsf(share_ratio - ratio) > 0.01)
 		{
+			ret = true;
 			share_ratio = ratio;
 			mdl->emitDataChanged(row,11);
 		}
@@ -141,6 +153,7 @@ namespace kt
 		Uint32 rdl = tc->getRunningTimeDL();
 		if (runtime_dl != rdl)
 		{
+			ret = true;
 			runtime_dl = rdl;
 			mdl->emitDataChanged(row,12);
 		}
@@ -148,9 +161,11 @@ namespace kt
 		Uint32 rul = tc->getRunningTimeUL();
 		if (runtime_ul != rul - rdl)
 		{
+			ret = true;
 			runtime_ul = rul - rdl;
 			mdl->emitDataChanged(row,13);
 		}
+		return ret;
 	}
 	
 	QVariant ViewModel::Item::data(int col) const
@@ -264,9 +279,8 @@ namespace kt
 			return QVariant();
 	}
 
-	ViewModel::ViewModel(Core* core,QObject* parent) : QAbstractTableModel(parent),core(core)
+	ViewModel::ViewModel(Core* core,QObject* parent) : QAbstractTableModel(parent),core(core),changed_values(false)
 	{
-		
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),this,SLOT(addTorrent(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(removeTorrent(bt::TorrentInterface*)));
 		
@@ -314,11 +328,13 @@ namespace kt
 
 	void ViewModel::update()
 	{
+		changed_values = false;
 		int row = 0;
 		for (QList<Item>::iterator i = torrents.begin();i != torrents.end();i++)
 		{
 			Item & item = *i;
-			item.update(row,this);
+			if (item.update(row,this))
+				changed_values = true;
 			row++;
 		}
 	}

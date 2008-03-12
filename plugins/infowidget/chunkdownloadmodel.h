@@ -52,7 +52,11 @@ namespace kt
 		/// change the current torrent
 		void changeTC(bt::TorrentInterface* tc);
 		
-		void update();
+		/**
+		 * Update the model
+		 * @return true if the view needs to be sorted again
+		 */
+		bool update();
 		
 		void clear();
 
