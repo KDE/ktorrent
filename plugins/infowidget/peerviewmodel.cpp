@@ -228,7 +228,7 @@ namespace kt
 			}
 			idx++;
 		}
-		return true;
+		return ret;
 	}
 
 	int PeerViewModel::rowCount( const QModelIndex & parent) const

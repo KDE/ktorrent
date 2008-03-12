@@ -163,7 +163,7 @@ namespace kt
 			}
 			idx++;
 		}
-		return false;
+		return ret;
 	}
 
 	int ChunkDownloadModel::rowCount ( const QModelIndex & parent ) const
