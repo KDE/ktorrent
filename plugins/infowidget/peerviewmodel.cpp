@@ -215,15 +215,20 @@ namespace kt
 		reset();
 	}
 	
-	void PeerViewModel::update()
+	bool PeerViewModel::update()
 	{
+		bool ret = false;
 		Uint32 idx=0;
 		foreach (const Item & i,items)
 		{
 			if (i.changed())
+			{
+				ret = true;
 				emit dataChanged(createIndex(idx,3),createIndex(idx,13));
+			}
 			idx++;
 		}
+		return true;
 	}
 
 	int PeerViewModel::rowCount( const QModelIndex & parent) const

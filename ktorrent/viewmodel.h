@@ -47,6 +47,9 @@ namespace kt
 		 */
 		void update();
 		
+		/// Check if something has changed in the last update
+		bool updated() const {return changed_values;}
+		
 		virtual int rowCount(const QModelIndex & parent) const;
 		virtual int columnCount(const QModelIndex & parent) const;
 		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
@@ -118,7 +121,7 @@ namespace kt
 			
 			Item(bt::TorrentInterface* tc);
 
-			void update(int idx,ViewModel* mdl);
+			bool update(int idx,ViewModel* mdl);
 			QVariant data(int col) const;
 			QVariant color(int col) const;
 			QVariant dataForSorting(int col) const;
@@ -126,6 +129,7 @@ namespace kt
 		
 		Core* core;
 		QList<Item> torrents;
+		bool changed_values;
 	};
 
 }

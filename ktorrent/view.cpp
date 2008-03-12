@@ -141,7 +141,11 @@ namespace kt
 			flags = nflags;
 			enableActions(this,(ActionEnableFlags)flags);
 		}
-			 
+		
+		
+		if (model->updated())
+			proxy_model->invalidate();
+		
 		// update the caption
 		if (num_running != running || num_torrents != torrents)
 		{
