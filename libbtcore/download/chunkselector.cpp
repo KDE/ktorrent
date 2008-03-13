@@ -308,7 +308,7 @@ namespace bt
 				else
 					curr.len++; // expand the current range
 				
-				if (curr.len > max_range_len)
+				if (curr.len >= max_range_len)
 				{
 					// current range is bigger then the maximum range length, select it
 					from = curr.start;

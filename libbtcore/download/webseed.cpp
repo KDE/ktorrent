@@ -21,11 +21,39 @@
 #include <util/log.h>
 #include <torrent/torrent.h>
 #include <diskio/chunkmanager.h>
+#include <interfaces/chunkdownloadinterface.h>
 #include "webseed.h"
 #include "httpconnection.h"
 
 namespace bt
 {
+	class WebSeedChunkDownload : public ChunkDownloadInterface
+	{
+	public:
+		WebSeedChunkDownload(WebSeed* ws,const QString & url,Uint32 index,Uint32 total) 
+			: ws(ws),url(url),chunk(index),total_pieces(total),pieces_downloaded(0)
+		{}
+		 
+		virtual ~WebSeedChunkDownload()
+		{
+		}
+		
+		void getStats(Stats & s)
+		{
+			s.current_peer_id = url;
+			s.chunk_index = chunk;
+			s.num_downloaders = 1;
+			s.download_speed = ws->getDownloadRate();
+			s.pieces_downloaded = pieces_downloaded;
+			s.total_pieces = total_pieces;
+		}
+		
+		WebSeed* ws;
+		QString url;
+		Uint32 chunk;
+		Uint32 total_pieces;
+		Uint32 pieces_downloaded;
+	};
 
 	WebSeed::WebSeed(const KUrl & url,const Torrent & tor,ChunkManager & cman) : url(url),tor(tor),cman(cman)
 	{
@@ -33,12 +61,14 @@ namespace bt
 		num_failures = 0;
 		conn = 0;
 		downloaded = 0;
+		current = 0;
 	}
 
 
 	WebSeed::~WebSeed()
 	{
 		delete conn;
+		delete current;
 	}
 	
 	void WebSeed::reset()
@@ -51,6 +81,7 @@ namespace bt
 		
 		first_chunk = last_chunk = tor.getNumChunks() + 1;
 		num_failures = 0;
+		
 	}
 
 	bool WebSeed::busy() const
@@ -112,6 +143,28 @@ namespace bt
 			
 			conn->get(url.host(),path,first_chunk * tor.getChunkSize(),len);
 		}
+		
+		chunkStarted(cur_chunk);
+	}
+	
+	void WebSeed::chunkStarted(Uint32 chunk)
+	{
+		Uint32 csize = cman.getChunk(chunk)->getSize();
+		Uint32 pieces_count = csize / MAX_PIECE_LEN;
+		if (csize % MAX_PIECE_LEN > 0)
+			pieces_count++;
+		current = new WebSeedChunkDownload(this,url.prettyUrl(),chunk,pieces_count);
+		chunkDownloadStarted(current);
+	}
+	
+	void WebSeed::chunkStopped()
+	{
+		if (current)
+		{
+			chunkDownloadFinished(current);
+			delete current;
+			current = 0;
+		}
 	}
 		
 	Uint32 WebSeed::update()
@@ -125,6 +178,9 @@ namespace bt
 			// shit happened delete connection
 			delete conn;
 			conn = 0;
+			
+			chunkStopped();
+			
 			num_failures++;
 			if (num_failures < 3)
 			{
@@ -138,6 +194,8 @@ namespace bt
 			Out(SYS_CON|LOG_DEBUG) << "WebSeed: connection closed" << endl;
 			delete conn;
 			conn = 0;
+			
+			chunkStopped();
 			// lets try this again
 			download(cur_chunk,last_chunk);
 		}
@@ -184,6 +242,7 @@ namespace bt
 			}
 			off += bl;
 			bytes_of_cur_chunk += bl;
+			current->pieces_downloaded = bytes_of_cur_chunk / MAX_PIECE_LEN;
 			if (bytes_of_cur_chunk == c->getSize())
 			{
 				// we have one ready
@@ -191,6 +250,10 @@ namespace bt
 				cur_chunk++;
 				if (c->getStatus() == Chunk::BUFFERED || c->getStatus() == Chunk::MMAPPED)
 					chunkReady(c);
+				
+				chunkStopped();
+				if (cur_chunk <= last_chunk)
+					chunkStarted(cur_chunk);
 			}
 		}
 	}

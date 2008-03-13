@@ -40,6 +40,7 @@ namespace bt
 	class PieceDownloader;
 	class MonitorInterface;
 	class WebSeed;
+	class ChunkDownloadInterface;
 
 	typedef PtrMap<Uint32,ChunkDownload>::iterator CurChunkItr;
 	typedef PtrMap<Uint32,ChunkDownload>::const_iterator CurChunkCItr;
@@ -84,7 +85,7 @@ namespace bt
 		Uint32 downloadRate() const;
 
 		/// Get the number of chunks we are dowloading
-		Uint32 numActiveDownloads() const {return current_chunks.count();}
+		Uint32 numActiveDownloads() const {return current_chunks.count() + active_webseed_downloads;}
 
 		/// See if the download is finished.
 		bool isFinished() const;
@@ -196,6 +197,9 @@ namespace bt
 		 */
 		void onChunkReady(Chunk* c);
 		
+		void chunkDownloadStarted(ChunkDownloadInterface* cd);
+		void chunkDownloadFinished(ChunkDownloadInterface* cd);
+		
 	signals:
 		/**
 		 * An error occurred while we we're writing or reading from disk.
@@ -226,6 +230,7 @@ namespace bt
 		ChunkSelectorInterface* chunk_selector;
 		QList<WebSeed*> webseeds;
 		PtrMap<Uint32,WebSeed> webseeds_chunks;
+		Uint32 active_webseed_downloads;
 		
 		static Uint32 mem_usage;
 	};

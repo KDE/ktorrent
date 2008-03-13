@@ -60,6 +60,7 @@ namespace bt
 		connect(&pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
 		connect(&pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerKilled(Peer*)));
 		
+		active_webseed_downloads = 0;
 		const KUrl::List & urls = tor.getWebSeeds();
 		foreach (KUrl u,urls)
 		{
@@ -68,6 +69,10 @@ namespace bt
 				WebSeed* ws = new WebSeed(u,tor,cman);
 				webseeds.append(ws);
 				connect(ws,SIGNAL(chunkReady(Chunk*)),this,SLOT(onChunkReady(Chunk*)));
+				connect(ws,SIGNAL(chunkDownloadStarted(ChunkDownloadInterface*)),
+						this,SLOT(chunkDownloadStarted(ChunkDownloadInterface*)));
+				connect(ws,SIGNAL(chunkDownloadFinished(ChunkDownloadInterface*)),
+						this,SLOT(chunkDownloadFinished(ChunkDownloadInterface*)));
 			}
 		}
 	}
@@ -799,6 +804,22 @@ namespace bt
 			
 			chunk_selector->reinsert(c->getIndex());
 		}
+	}
+	
+	void Downloader::chunkDownloadStarted(ChunkDownloadInterface* cd)
+	{
+		active_webseed_downloads++;
+		if (tmon)
+			tmon->downloadStarted(cd);
+	}
+	
+	void Downloader::chunkDownloadFinished(ChunkDownloadInterface* cd)
+	{
+		if (active_webseed_downloads > 0)
+			active_webseed_downloads--;
+		
+		if (tmon)
+			tmon->downloadRemoved(cd);
 	}
 }
 

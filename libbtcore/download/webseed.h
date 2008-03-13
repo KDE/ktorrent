@@ -30,6 +30,8 @@ namespace bt
 	class HttpConnection;
 	class ChunkManager;
 	class Chunk;
+	class ChunkDownloadInterface;
+	class WebSeedChunkDownload;
 
 	/**
 		@author Joris Guisson
@@ -86,6 +88,18 @@ namespace bt
 		 */
 		void finished();
 		
+		/**
+		 * A ChunkDownload was started
+		 * @param cd The ChunkDownloadInterface
+		 */
+		void chunkDownloadStarted(ChunkDownloadInterface* cd);
+		
+		/**
+		 * A ChunkDownload was finished
+		 * @param cd The ChunkDownloadInterface
+		 */
+		void chunkDownloadFinished(ChunkDownloadInterface* cd);
+		
 	private:
 		struct Range
 		{
@@ -96,6 +110,9 @@ namespace bt
 		
 		void doChunk(Uint32 chunk,QList<Range> & ranges);
 		void handleData(const QByteArray & data);
+		void chunkStarted(Uint32 chunk);
+		void chunkStopped();
+		
 	private:
 		KUrl url;
 		const Torrent & tor;
@@ -108,6 +125,7 @@ namespace bt
 		Uint32 bytes_of_cur_chunk;
 		Uint32 num_failures;
 		Uint32 downloaded;
+		WebSeedChunkDownload* current;
 	};
 
 }
