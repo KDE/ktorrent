@@ -17,6 +17,8 @@ this makes sure that it is sized properly when you open the dialog
 - Fix keep seeding (159040)
 - Make sure settings of logviewer plugin are applied at startup
 - Make sure that views stay sorted (158975)
+- Make sure speed settings are kept in sync between all the places where you
+can change them (159039)
 
 Changes in 3.O :
 - Fix sorting of upload and download rate (157939)
