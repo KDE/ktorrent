@@ -300,7 +300,9 @@ namespace kt
 		type=t;
 		makeMenu();
 		connect(this,SIGNAL(triggered(QAction*)),this,SLOT(onTriggered(QAction* )));
+		connect(this,SIGNAL(aboutToShow()),this,SLOT(update()));
 	}
+	
 	SetMaxRate::~SetMaxRate()
 	{}
 

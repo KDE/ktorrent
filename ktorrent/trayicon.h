@@ -132,7 +132,9 @@ namespace kt
 		SetMaxRate(Core* tc, Type t, QWidget *parent); 
 		virtual ~SetMaxRate();
 	
+	public slots:
 		void update();
+		
 	private:
 		void makeMenu();
 

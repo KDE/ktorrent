@@ -53,6 +53,11 @@ namespace kt
 		 * @param page The page
 		 * */
 		void removePrefPage(PrefPageInterface* page);
+		
+		/**
+		 * Update the widgets and show
+		 */
+		void updateWidgetsAndShow();
 
 	protected:
 		virtual void updateWidgets();
