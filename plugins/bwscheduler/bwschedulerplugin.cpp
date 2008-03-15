@@ -153,11 +153,14 @@ namespace kt
 		else if (item.paused)
 		{
 			Out(SYS_SCD|LOG_NOTICE) << QString("Changing schedule to : PAUSED") << endl;
-			getCore()->setPausedState(true);
-			net::SocketMonitor::setDownloadCap(1024 * Settings::maxDownloadRate());
-			net::SocketMonitor::setUploadCap(1024 * Settings::maxUploadRate());
-			if (m_editor)
-				m_editor->updateStatusText(Settings::maxUploadRate(),Settings::maxDownloadRate(),true);
+			if (!getCore()->getPausedState())
+			{
+				getCore()->setPausedState(true);
+				net::SocketMonitor::setDownloadCap(1024 * Settings::maxDownloadRate());
+				net::SocketMonitor::setUploadCap(1024 * Settings::maxUploadRate());
+				if (m_editor)
+					m_editor->updateStatusText(Settings::maxUploadRate(),Settings::maxDownloadRate(),true);
+			}
 		}
 		else
 		{
