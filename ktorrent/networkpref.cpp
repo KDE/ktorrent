@@ -22,8 +22,11 @@
 #include <QNetworkInterface>
 #include <solid/device.h>
 #include <solid/networkinterface.h>
+#include <util/log.h>
 #include "networkpref.h"
 #include "settings.h"
+
+using namespace bt;
 
 namespace kt
 {
@@ -41,6 +44,9 @@ namespace kt
 
 	void NetworkPref::loadSettings()
 	{
+		kcfg_maxDownloadRate->setValue(Settings::maxDownloadRate());
+		kcfg_maxUploadRate->setValue(Settings::maxUploadRate());
+		
 		kcfg_httpTrackerProxy->setEnabled(Settings::doNotUseKDEProxy());
 
 		kcfg_networkInterface->addItem(KIcon("network-wired"),i18n("All interfaces"));

@@ -352,7 +352,7 @@ namespace kt
 		if (!pref_dlg)
 			pref_dlg = new PrefDialog(this,core);
 
-		pref_dlg->show();
+		pref_dlg->updateWidgetsAndShow();
 	}
 
 	void GUI::showStatusBar()

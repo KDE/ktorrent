@@ -154,6 +154,12 @@ namespace kt
 			pages.remove(page);
 		}
 	}
+	
+	void PrefDialog::updateWidgetsAndShow()
+	{
+		updateWidgets();
+		show();
+	}
 
 	void PrefDialog::updateWidgets()
 	{
