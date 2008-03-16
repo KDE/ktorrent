@@ -401,7 +401,7 @@ namespace bt
 
 	bool Downloader::areWeDownloading(Uint32 chunk) const
 	{
-		return current_chunks.find(chunk) != 0 && webseeds_chunks.find(chunk) != 0;
+		return current_chunks.find(chunk) != 0 || webseeds_chunks.find(chunk) != 0;
 	}
 	
 	bool Downloader::canDownloadFromWebSeed(Uint32 chunk) const
