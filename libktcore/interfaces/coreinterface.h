@@ -93,6 +93,12 @@ namespace kt
 		 * @param tc The TorrentControl
 	 	 */
 		virtual void start(bt::TorrentInterface* tc) = 0;
+		
+		/**
+		 * Start a list of torrents.
+		 * @param todo The list of torrents
+		 */
+		virtual void start(QList<bt::TorrentInterface*> & todo) = 0;
 
 		/**
 		 * Stop a torrent, may start another download if it hasn't been started.

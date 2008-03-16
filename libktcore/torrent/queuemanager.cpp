@@ -84,9 +84,7 @@ namespace kt
 	TorrentStartResponse QueueManager::start(bt::TorrentInterface* tc, bool user)
 	{
 		const TorrentStats & s = tc->getStats();
-
 		bool start_tc = user;
-
 		bool check_done = false;
 
 		if (tc->isCheckingData(check_done) && !check_done)
@@ -107,23 +105,17 @@ namespace kt
 
 		if (start_tc)
 		{
-
 			if (!s.completed) //no need to check diskspace for seeding torrents
 			{
 				//check diskspace
-				bool shortDiskSpace = !tc->checkDiskSpace(false);
-
-				if (shortDiskSpace)
+				if (!tc->checkDiskSpace(false))
 				{
 					//we're short!
-
 					switch (Settings::startDownloadsOnLowDiskSpace())
 					{
-
 						case 0: //don't start!
 							tc->setPriority(0);
 							return bt::NOT_ENOUGH_DISKSPACE;
-
 						case 1: //ask user
 							if (KMessageBox::questionYesNo(0, i18n("You don't have enough disk space to download this torrent. Are you sure you want to continue?"), i18n("Insufficient disk space for %1",s.torrent_name)) == KMessageBox::No)
 							{
@@ -132,7 +124,6 @@ namespace kt
 							}
 							else
 								break;
-
 						case 2: //force start
 							break;
 					}
@@ -140,16 +131,25 @@ namespace kt
 			}
 
 			Out(SYS_GEN | LOG_NOTICE) << "Starting download" << endl;
+			bool max_ratio_reached = tc->overMaxRatio();
+			bool max_seed_time_reached = tc->overMaxSeedTime();
 
-			float ratio = ShareRatio(s);
-
-			float max_ratio = tc->getMaxShareRatio();
-
-			if (s.completed && max_ratio > 0 && ratio >= max_ratio)
+			if (s.completed && (max_ratio_reached || max_seed_time_reached))
 			{
-				if (KMessageBox::questionYesNo(0, i18n("Torrent \"%1\" has reached its maximum share ratio. Ignore the limit and start seeding anyway?",s.torrent_name), i18n("Maximum share ratio limit reached.")) == KMessageBox::Yes)
+				QString msg; 
+				if (max_ratio_reached && max_seed_time_reached)
+					msg = msg = i18n("The torrent \"%1\" has reached it's maximum share ratio and it's maximum seed time. Ignore the limit and start seeding anyway?",s.torrent_name);
+				else if (max_ratio_reached && !max_seed_time_reached)
+					msg = i18n("The torrent \"%1\" has reached it's maximum share ratio. Ignore the limit and start seeding anyway?",s.torrent_name);
+				else if (max_seed_time_reached && !max_ratio_reached)
+					msg = msg = i18n("The torrent \"%1\" has reached it's maximum seed time. Ignore the limit and start seeding anyway?",s.torrent_name);
+				
+				if (KMessageBox::questionYesNo(0, msg, i18n("Maximum share ratio limit reached.")) == KMessageBox::Yes)
 				{
-					tc->setMaxShareRatio(0.00f);
+					if (max_ratio_reached)
+						tc->setMaxShareRatio(0.00f);
+					if (max_seed_time_reached)
+						tc->setMaxSeedTime(0.0f);
 					startSafely(tc);
 				}
 				else
@@ -182,21 +182,161 @@ namespace kt
 			tc->setPriority(0);
 	}
 	
-	void QueueManager::startall(int type)
+	void QueueManager::checkDiskSpace(QList<bt::TorrentInterface*> & todo)
 	{
-		QList<bt::TorrentInterface *>::iterator i = downloads.begin();
-		while (i != downloads.end())
+		// first see if we need to ask the user to start torrents when diskspace is low
+		if (Settings::startDownloadsOnLowDiskSpace() == 2)
 		{
-			bt::TorrentInterface* tc = *i;
-			if(type >= 3)
-				start(tc, true);
+			QStringList names;
+			QList<bt::TorrentInterface*> tmp;
+			foreach (bt::TorrentInterface* tc,todo)
+			{
+				const TorrentStats & s = tc->getStats();
+				if (!s.completed && !tc->checkDiskSpace(false))
+				{
+					names.append(s.torrent_name);
+					tmp.append(tc);
+				}
+			}
+			
+			if (tmp.count() > 0)
+			{
+				if (KMessageBox::questionYesNoList(0,i18n("Not enough disk space for the following torrents. Do you want to start them anyway ?"),names) == KMessageBox::No)
+				{
+					foreach (bt::TorrentInterface* tc,tmp)
+						todo.removeAll(tc);
+				}
+			}
+		}
+		// if the policy is to not start, remove torrents from todo list if diskspace is low
+		else if (Settings::startDownloadsOnLowDiskSpace() == 0) 
+		{
+			QList<bt::TorrentInterface *>::iterator i = todo.begin();
+			while (i != todo.end())		
+			{
+				bt::TorrentInterface* tc = *i;
+				const TorrentStats & s = tc->getStats();
+				if (!s.completed && !tc->checkDiskSpace(false))
+					i = todo.erase(i);
+				else
+					i++;
+			}
+		}
+	}
+	
+	void QueueManager::checkMaxSeedTime(QList<bt::TorrentInterface*> & todo)
+	{
+		QStringList names;
+		QList<bt::TorrentInterface*> tmp;
+		foreach (bt::TorrentInterface* tc,todo)
+		{
+			const TorrentStats & s = tc->getStats();
+			if (tc->overMaxSeedTime())
+			{
+				names.append(s.torrent_name);
+				tmp.append(tc);
+			}
+		}
+			
+		if (tmp.count() > 0)
+		{
+			if (KMessageBox::questionYesNoList(0,i18n("The following torrents have reached their maximum seed time. Do you want to start them anyway ?"),names) == KMessageBox::No)
+			{
+				foreach (bt::TorrentInterface* tc,tmp)
+					todo.removeAll(tc);
+			}
 			else
 			{
-				if( (tc->getStats().completed && type == 2) || (!tc->getStats().completed && type == 1) || (type == 3) )
-					start(tc, true);
+				foreach (bt::TorrentInterface* tc,tmp)
+					tc->setMaxSeedTime(0.0f);
 			}
-			i++;
 		}
+	}
+	
+	void QueueManager::checkMaxRatio(QList<bt::TorrentInterface*> & todo)
+	{
+		QStringList names;
+		QList<bt::TorrentInterface*> tmp;
+		foreach (bt::TorrentInterface* tc,todo)
+		{
+			const TorrentStats & s = tc->getStats();
+			if (tc->overMaxRatio())
+			{
+				names.append(s.torrent_name);
+				tmp.append(tc);
+			}
+		}
+			
+		if (tmp.count() > 0)
+		{
+			if (KMessageBox::questionYesNoList(0,i18n("The following torrents have reached their maximum share ratio. Do you want to start them anyway ?"),names) == KMessageBox::No)
+			{
+				foreach (bt::TorrentInterface* tc,tmp)
+					todo.removeAll(tc);
+			}
+			else
+			{
+				foreach (bt::TorrentInterface* tc,tmp)
+					tc->setMaxShareRatio(0.0f);
+			}
+		}
+	}
+	
+	void QueueManager::start(QList<bt::TorrentInterface*> & todo)
+	{
+		if (todo.count() == 0)
+			return;
+		
+		// check dispace stuff
+		checkDiskSpace(todo);
+		if (todo.count() == 0)
+			return;
+		
+		checkMaxSeedTime(todo);
+		if (todo.count() == 0)
+			return;
+		
+		checkMaxRatio(todo);
+		if (todo.count() == 0)
+			return;
+		
+		// start what is left
+		foreach (bt::TorrentInterface* tc,todo)
+		{
+			const TorrentStats & s = tc->getStats();
+			if (s.running)
+				continue;
+			
+			bool check_done = false;
+			if (tc->isCheckingData(check_done) && !check_done)
+				continue;
+			
+			tc->setPriority(0);
+			startSafely(tc);
+		}
+	}
+	
+	void QueueManager::startall(int type)
+	{
+		// first get the list of torrents which need to be started
+		QList<bt::TorrentInterface*> todo;
+		foreach (bt::TorrentInterface* tc,downloads)
+		{
+			const TorrentStats & s = tc->getStats();
+			if (s.running)
+				continue;
+			
+			bool check_done = false;
+			if (tc->isCheckingData(check_done) && !check_done)
+				continue;
+			
+			if ((s.completed && type == 2) || (!s.completed && type == 1) || (type == 3))
+			{
+				todo.append(tc);
+			}
+		}
+		
+		start(todo);
 	}
 
 	void QueueManager::stopall(int type)
@@ -281,7 +421,7 @@ namespace kt
 	
 	const bt::TorrentInterface* QueueManager::getTorrent(Uint32 idx) const
 	{
-		if (idx >= downloads.count())
+		if (idx >= (Uint32)downloads.count())
 			return 0;
 		else
 			return downloads[idx];
@@ -390,11 +530,11 @@ namespace kt
 				}
 			}
 
-			int max_qm_downloads = max_downloads - user_downloading;
-			int max_qm_seeds = max_seeds - user_seeding;
+			Uint32 max_qm_downloads = max_downloads > user_downloading ? max_downloads - user_downloading : 0;
+			Uint32 max_qm_seeds = max_seeds > user_seeding ? max_seeds - user_seeding : 0;
 			
 			//stop all QM started torrents
-			for(Uint32 i=max_qm_downloads; i<download_queue.count() && max_downloads; ++i)
+			for(Uint32 i=max_qm_downloads; i < (Uint32)download_queue.count() && max_downloads; ++i)
 			{
 				TorrentInterface* tc = download_queue.at(i);
 				const TorrentStats & s = tc->getStats();
@@ -407,7 +547,7 @@ namespace kt
 			}
 			
 			//stop all QM started torrents
-			for(Uint32 i=max_qm_seeds; i<seed_queue.count() && max_seeds; ++i)
+			for(Uint32 i=max_qm_seeds; i < (Uint32)seed_queue.count() && max_seeds; ++i)
 			{
 				TorrentInterface* tc = seed_queue.at(i);
 				const TorrentStats & s = tc->getStats();
@@ -426,8 +566,8 @@ namespace kt
 			if(max_seeds == 0) 
 				max_qm_seeds = seed_queue.count();
 			
-			int counter = 0;
-			for(Uint32 i=0; counter<max_qm_downloads && i<download_queue.count(); ++i)
+			Uint32 counter = 0;
+			for (Uint32 i=0; counter < max_qm_downloads && i < (Uint32)download_queue.count(); ++i)
 			{
 				TorrentInterface* tc = download_queue.at(i);
 				const TorrentStats & s = tc->getStats();
@@ -446,7 +586,7 @@ namespace kt
 			}
 			
 			counter = 0;
-			for(Uint32 i=0; counter<max_qm_seeds && i<seed_queue.count(); ++i)
+			for(Uint32 i=0; counter < max_qm_seeds && i < (Uint32)seed_queue.count(); ++i)
 			{
 				TorrentInterface* tc = seed_queue.at(i);
 				const TorrentStats & s = tc->getStats();

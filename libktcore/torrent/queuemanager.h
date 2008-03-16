@@ -83,6 +83,12 @@ namespace kt
 		 * @param user Wether or not the user does this
 		 */
 		void stop(bt::TorrentInterface* tc, bool user = false);
+		
+		/**
+		 * Start a list of torrents. The torrents will become user controlled.
+		 * @param todo The list of torrents 
+		 */
+		void start(QList<bt::TorrentInterface*> & todo);
 
 		void stopall(int type);
 		void startall(int type);
@@ -225,6 +231,9 @@ namespace kt
 		void dequeue(bt::TorrentInterface* tc);
 		void startSafely(bt::TorrentInterface* tc);
 		void stopSafely(bt::TorrentInterface* tc,bool user,bt::WaitJob* wjob = 0);
+		void checkDiskSpace(QList<bt::TorrentInterface*> & todo);
+		void checkMaxSeedTime(QList<bt::TorrentInterface*> & todo);
+		void checkMaxRatio(QList<bt::TorrentInterface*> & todo);
 
 	private:
 		QueuePtrList downloads;

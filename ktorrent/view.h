@@ -121,7 +121,7 @@ namespace kt
 	signals:
 		void wantToRemove(bt::TorrentInterface* tc,bool data_to);
 		void wantToStop(bt::TorrentInterface* tc,bool user);
-		void wantToStart(bt::TorrentInterface* tc);
+		void wantToStart(QList<bt::TorrentInterface*> & todo);
 		void currentTorrentChanged(View* v,bt::TorrentInterface* tc);
 		void enableActions(View* v,ActionEnableFlags flags);
 

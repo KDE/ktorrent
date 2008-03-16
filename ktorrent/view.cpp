@@ -58,7 +58,7 @@ namespace kt
 		setSelectionBehavior(QAbstractItemView::SelectRows);
 		
 		connect(this,SIGNAL(wantToRemove(bt::TorrentInterface*,bool )),core,SLOT(remove(bt::TorrentInterface*,bool )));
-		connect(this,SIGNAL(wantToStart( bt::TorrentInterface* )),core,SLOT(start( bt::TorrentInterface* )));
+		connect(this,SIGNAL(wantToStart( QList<bt::TorrentInterface*> & )),core,SLOT(start( QList<bt::TorrentInterface*> & )));
 		connect(this,SIGNAL(wantToStop( bt::TorrentInterface*, bool )),core,SLOT(stop( bt::TorrentInterface*, bool )));
 		connect(this,SIGNAL(customContextMenuRequested(const QPoint & ) ),this,SLOT(showMenu( const QPoint& )));
 	
@@ -192,10 +192,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> sel;
 		getSelection(sel);
-		foreach(bt::TorrentInterface* tc,sel)
-		{
-			wantToStart(tc);
-		}
+		wantToStart(sel);
 	}
 
 	void View::stopTorrents()
@@ -263,10 +260,7 @@ namespace kt
 	{
 		QList<bt::TorrentInterface*> all;
 		model->allTorrents(all);
-		foreach (bt::TorrentInterface* tc,all)
-		{
-			wantToStart(tc);
-		}
+		wantToStart(all);
 	}
 
 	void View::stopAllTorrents()

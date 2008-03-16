@@ -432,6 +432,19 @@ namespace kt
 			canNotStart(tc,reason);
 		startUpdateTimer(); // restart update timer
 	}
+	
+	void Core::start(QList<bt::TorrentInterface*> & todo)
+	{
+		if (todo.count() == 0)
+		{
+			start(todo.front());
+		}
+		else
+		{
+			qman->start(todo);
+			startUpdateTimer(); // restart update timer
+		}
+	}
 
 	void Core::stop(bt::TorrentInterface* tc, bool user)
 	{

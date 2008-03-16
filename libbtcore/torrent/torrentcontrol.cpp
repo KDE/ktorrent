@@ -1405,7 +1405,7 @@ namespace bt
 
 	bool TorrentControl::overMaxRatio()
 	{
-		if(stats.completed && stats.bytes_uploaded != 0 && stats.bytes_downloaded != 0 && stats.max_share_ratio > 0)
+		if(stats.completed && stats.max_share_ratio > 0)
 		{
 			if(ShareRatio(stats) >= stats.max_share_ratio)
 				return true;
@@ -1416,7 +1416,7 @@ namespace bt
 
 	bool TorrentControl::overMaxSeedTime()
 	{
-		if(stats.completed && stats.bytes_uploaded != 0 && stats.bytes_downloaded != 0 && stats.max_seed_time > 0)
+		if(stats.completed && stats.max_seed_time > 0)
 		{
 			Uint32 dl = getRunningTimeDL();
 			Uint32 ul = getRunningTimeUL();
