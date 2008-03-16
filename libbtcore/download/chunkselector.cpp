@@ -315,6 +315,11 @@ namespace bt
 					to = curr.start + curr.len - 1;
 					return true;
 				}
+				else if (i == num_chunks - 1)
+				{
+					if (curr.start > 0 && curr.len > best.len)
+						best = curr;
+				}
 			}
 			else
 			{
