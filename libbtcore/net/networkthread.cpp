@@ -144,7 +144,7 @@ namespace net
 				itr++;
 			}
 			
-			Uint32 allowance = (Uint32)ceil(limit * (now - prev_run_time) * 0.001);
+			Uint32 allowance = (Uint32)ceil(1.0 * limit * (now - prev_run_time) * 0.001);
 			
 			while (allowance > 0 && num_ready > 0)
 			{

@@ -117,7 +117,7 @@ namespace net
 	void SocketGroup::calcAllowance(bt::TimeStamp now)
 	{
 		if (limit > 0)
-			group_allowance = (Uint32)ceil(1.02 * limit * (now - prev_run_time) * 0.001);
+			group_allowance = (Uint32)ceil(1.0 * limit * (now - prev_run_time) * 0.001);
 		else
 			group_allowance = 0;
 		prev_run_time = now;

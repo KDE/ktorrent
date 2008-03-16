@@ -298,7 +298,7 @@ namespace bt
 		
 		for (Uint32 i = 0;i < num_chunks;i++)
 		{
-			if (!bs.get(i) && !downer.areWeDownloading(i))
+			if (!bs.get(i) && downer.canDownloadFromWebSeed(i))
 			{
 				if (curr.start == 0 && curr.len == 0) // we have a new current range
 				{

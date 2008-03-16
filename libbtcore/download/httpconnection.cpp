@@ -99,12 +99,12 @@ namespace bt
 		{
 			if (sock->connectSuccesFull())
 			{
-				Out(SYS_CON|LOG_DEBUG) << "HttpConnection: connected "  << endl;
+				//Out(SYS_CON|LOG_DEBUG) << "HttpConnection: connected "  << endl;
 				state = ACTIVE;
 			}
 			else
 			{
-				Out(SYS_CON|LOG_DEBUG) << "HttpConnection: failed to connect to webseed "  << endl;
+				Out(SYS_CON|LOG_IMPORTANT) << "HttpConnection: failed to connect to webseed "  << endl;
 				state = ERROR;
 			}
 		}
@@ -118,7 +118,6 @@ namespace bt
 			if (len > max_to_write)
 				len = max_to_write;
 			
-			Out(SYS_CON|LOG_DEBUG) << "HttpConnection: writing " << len << " bytes" << endl;
 			memcpy(data,g->buffer.data() + g->bytes_sent,len);
 			g->bytes_sent += len;
 			if (len == g->buffer.size())
@@ -157,27 +156,25 @@ namespace bt
 			
 			if (sock->connectTo(addr))
 			{
-				Out(SYS_CON|LOG_DEBUG) << "HttpConnection: connected to webseed" << endl;
 				state = ACTIVE;
 				net::SocketMonitor::instance().add(sock);
 				net::SocketMonitor::instance().signalPacketReady();
 			}
 			else if (sock->state() == net::Socket::CONNECTING)
 			{
-				Out(SYS_CON|LOG_DEBUG) << "HttpConnection: connecting to webseed ..." << endl;
 				state = CONNECTING;
 				net::SocketMonitor::instance().add(sock);
 				net::SocketMonitor::instance().signalPacketReady();
 			}
 			else 
 			{
-				Out(SYS_CON|LOG_DEBUG) << "HttpConnection: failed to connect" << endl;
+				Out(SYS_CON|LOG_IMPORTANT) << "HttpConnection: failed to connect to webseed" << endl;
 				state = ERROR;
 			}
 		}
 		else
 		{
-			Out(SYS_CON|LOG_DEBUG) << "HttpConnection: failed to resolve hostname of webseed" << endl;
+			Out(SYS_CON|LOG_IMPORTANT) << "HttpConnection: failed to resolve hostname of webseed" << endl;
 			state = ERROR;
 		}
 	}
@@ -243,8 +240,8 @@ namespace bt
 		request.setValue("User-Agent",bt::GetVersionString());
 		request.setValue("Host",host);
 		buffer = request.toString().toLocal8Bit();
-		Out(SYS_CON|LOG_DEBUG) << "HttpConnection: sending http request:" << endl;
-		Out(SYS_CON|LOG_DEBUG) << request.toString() << endl;
+	//	Out(SYS_CON|LOG_DEBUG) << "HttpConnection: sending http request:" << endl;
+	//	Out(SYS_CON|LOG_DEBUG) << request.toString() << endl;
 	}
 	
 	HttpConnection::HttpGet::~HttpGet()
@@ -264,8 +261,8 @@ namespace bt
 			response_header_received = true;
 			QHttpResponseHeader hdr(QString::fromLocal8Bit(buffer.mid(0,idx + 4)));
 			
-			Out(SYS_CON|LOG_DEBUG) << "HttpConnection: http reply header received" << endl;
-			Out(SYS_CON|LOG_DEBUG) << hdr.toString() << endl;
+		//	Out(SYS_CON|LOG_DEBUG) << "HttpConnection: http reply header received" << endl;
+		//	Out(SYS_CON|LOG_DEBUG) << hdr.toString() << endl;
 			if (! (hdr.statusCode() == 200 || hdr.statusCode() == 206))
 			{
 				return false;

@@ -404,6 +404,14 @@ namespace bt
 		return current_chunks.find(chunk) != 0 && webseeds_chunks.find(chunk) != 0;
 	}
 	
+	bool Downloader::canDownloadFromWebSeed(Uint32 chunk) const
+	{
+		if (cman.chunksLeft() <= current_chunks.count() + webseeds_chunks.count())
+			return true;
+		else
+			return !areWeDownloading(chunk);
+	}
+	
 	Uint32 Downloader::numDownloadersForChunk(Uint32 chunk) const
 	{
 		const ChunkDownload* cd = current_chunks.find(chunk);

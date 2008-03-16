@@ -104,6 +104,13 @@ namespace bt
 		 * @return true if we are, false if not
 		 */
 		bool areWeDownloading(Uint32 chunk) const;
+		
+		/**
+		 * Can we download a chunk from a webseed.
+		 * @param chunk ID of Chunk
+		 * @return true if we can
+		*/
+		bool canDownloadFromWebSeed(Uint32 chunk) const;
 
 		/**
 		 * Get the number of downloaders assigned to a chunk
