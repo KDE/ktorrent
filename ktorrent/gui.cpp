@@ -491,6 +491,7 @@ namespace kt
 		
 		speed_limits_action = new KAction(i18n("Speed Limits"),this);
 		connect(speed_limits_action,SIGNAL(triggered()),this,SLOT(speedLimits()));
+		speed_limits_action->setShortcut(KShortcut(Qt::CTRL + Qt::Key_L));
 		ac->addAction("speed_limits",speed_limits_action);
 		
 		show_kt_action = new KAction(i18n("Show/Hide KTorrent"),this);
