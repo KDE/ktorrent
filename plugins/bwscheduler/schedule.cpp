@@ -33,7 +33,8 @@ using namespace bt;
 namespace kt
 {
 	
-	ScheduleItem::ScheduleItem() : day(0),upload_limit(0),download_limit(0),paused(false)
+	ScheduleItem::ScheduleItem() 
+		: day(0),upload_limit(0),download_limit(0),paused(false),set_conn_limits(false),global_conn_limit(0),torrent_conn_limit(0)
 	{
 	}
 	
@@ -42,8 +43,8 @@ namespace kt
 		operator = (item);
 	}
 	
-	ScheduleItem::ScheduleItem(int day,const QTime & start,const QTime & end,bt::Uint32 upload_limit,bt::Uint32 download_limit,	bool paused)
-		: day(day),start(start),end(end),upload_limit(upload_limit),download_limit(download_limit),paused(paused)
+	ScheduleItem::ScheduleItem(int day,const QTime & start,const QTime & end,bt::Uint32 upload_limit,bt::Uint32 download_limit,	bool paused,bool set_conn_limits,bt::Uint32 global_conn_limit, bt::Uint32 torrent_conn_limit)
+	: day(day),start(start),end(end),upload_limit(upload_limit),download_limit(download_limit),paused(paused),set_conn_limits(set_conn_limits),global_conn_limit(global_conn_limit),torrent_conn_limit(torrent_conn_limit)
 	{
 	}
 		
@@ -75,6 +76,9 @@ namespace kt
 		upload_limit = item.upload_limit;
 		download_limit = item.download_limit;
 		paused = item.paused;
+		set_conn_limits = item.set_conn_limits;
+		global_conn_limit = item.global_conn_limit;
+		torrent_conn_limit = item.torrent_conn_limit;
 		return *this;
 	}
 	
@@ -85,7 +89,10 @@ namespace kt
 				end == item.end &&
 				upload_limit == item.upload_limit &&
 				download_limit == item.download_limit &&
-				paused == item.paused;
+				paused == item.paused && 
+				set_conn_limits == item.set_conn_limits &&
+				global_conn_limit == item.global_conn_limit &&
+				torrent_conn_limit == item.torrent_conn_limit;
 	}
 	
 	
@@ -164,6 +171,20 @@ namespace kt
 		item->upload_limit = upload_limit->data().toInt();
 		item->download_limit = download_limit->data().toInt();
 		item->paused = paused->data().toInt() == 1;
+		item->set_conn_limits = false;
+		
+		BDictNode* conn_limits = dict->getDict(QString("conn_limits"));
+		if (conn_limits)
+		{
+			BValueNode* glob = conn_limits->getValue("global");
+			BValueNode* per_torrent = conn_limits->getValue("per_torrent");
+			if (glob && per_torrent)
+			{
+				item->global_conn_limit = glob->data().toInt();
+				item->torrent_conn_limit = per_torrent->data().toInt();
+				item->set_conn_limits = true;
+			}
+		}
 		return true;
 	}
 		
@@ -188,6 +209,14 @@ namespace kt
 			enc.write("upload_limit"); enc.write(i.upload_limit);
 			enc.write("download_limit"); enc.write(i.download_limit);
 			enc.write("paused"); enc.write((Uint32) (i.paused ? 1 : 0));
+			if (i.set_conn_limits)
+			{
+				enc.write("conn_limits"); 
+				enc.beginDict();
+				enc.write("global"); enc.write((Uint32)i.global_conn_limit);
+				enc.write("per_torrent"); enc.write((Uint32)i.torrent_conn_limit);
+				enc.end();
+			}
 			enc.end();
 		}
 		enc.end();

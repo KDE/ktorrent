@@ -68,6 +68,11 @@ namespace kt
 		m_paused->setChecked(item->paused);
 		m_upload_limit->setValue(item->upload_limit);
 		m_download_limit->setValue(item->download_limit);
+		m_set_connection_limits->setChecked(item->set_conn_limits);
+		m_max_conn_per_torrent->setEnabled(item->set_conn_limits);
+		m_max_conn_per_torrent->setValue(item->torrent_conn_limit);
+		m_max_conn_global->setValue(item->global_conn_limit);
+		m_max_conn_global->setEnabled(item->set_conn_limits);
 		if (exec() == QDialog::Accepted)
 		{
 			item->start = m_from->time();
@@ -78,6 +83,9 @@ namespace kt
 			item->upload_limit = m_upload_limit->value();
 			item->download_limit = m_download_limit->value();
 			item->paused = m_paused->isChecked();
+			item->global_conn_limit = m_max_conn_global->value();
+			item->torrent_conn_limit = m_max_conn_per_torrent->value();
+			item->set_conn_limits = m_set_connection_limits->isChecked();
 			return true;
 		}
 		return false;

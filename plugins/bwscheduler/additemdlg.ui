@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>266</width>
-    <height>305</height>
+    <width>321</width>
+    <height>374</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -125,6 +125,54 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="m_set_connection_limits" >
+        <property name="text" >
+         <string>Set connection limits</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QGridLayout" >
+        <item row="0" column="0" >
+         <widget class="QLabel" name="label_7" >
+          <property name="text" >
+           <string>Maximum connections per torrent:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" >
+         <widget class="QSpinBox" name="m_max_conn_per_torrent" >
+          <property name="specialValueText" >
+           <string>No limit</string>
+          </property>
+          <property name="maximum" >
+           <number>99999</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" >
+         <widget class="QLabel" name="label_6" >
+          <property name="text" >
+           <string>Global connection limit:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="QSpinBox" name="m_max_conn_global" >
+          <property name="specialValueText" >
+           <string>No limit</string>
+          </property>
+          <property name="maximum" >
+           <number>99999</number>
+          </property>
+          <property name="value" >
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
      </layout>
     </widget>
    </item>
@@ -156,8 +204,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>248</x>
-     <y>254</y>
+     <x>252</x>
+     <y>369</y>
     </hint>
     <hint type="destinationlabel" >
      <x>157</x>
@@ -172,12 +220,44 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>316</x>
-     <y>260</y>
+     <x>281</x>
+     <y>369</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>286</x>
+     <x>285</x>
      <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_set_connection_limits</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>m_max_conn_per_torrent</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>134</x>
+     <y>242</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>235</x>
+     <y>277</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_set_connection_limits</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>m_max_conn_global</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>80</x>
+     <y>247</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>249</x>
+     <y>315</y>
     </hint>
    </hints>
   </connection>

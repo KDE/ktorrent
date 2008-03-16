@@ -49,6 +49,7 @@
 
 
 #include <torrent/globals.h>
+#include <peer/peermanager.h>
 
 using namespace bt;
 
@@ -149,6 +150,9 @@ namespace kt
 			net::SocketMonitor::setUploadCap(1024 * Settings::maxUploadRate());
 			if (m_editor)
 				m_editor->updateStatusText(Settings::maxUploadRate(),Settings::maxDownloadRate(),false);
+			
+			PeerManager::setMaxConnections(Settings::maxConnections());
+			PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
 		}
 		else if (item.paused)
 		{
@@ -161,6 +165,19 @@ namespace kt
 				if (m_editor)
 					m_editor->updateStatusText(Settings::maxUploadRate(),Settings::maxDownloadRate(),true);
 			}
+			
+			if (item.set_conn_limits)
+			{
+				Out(SYS_SCD|LOG_NOTICE) << QString("Setting connection limits to : %1 per torrent, %2 global")
+						.arg(item.torrent_conn_limit).arg(item.global_conn_limit) << endl;
+				PeerManager::setMaxConnections(item.torrent_conn_limit);
+				PeerManager::setMaxTotalConnections(item.global_conn_limit);
+			}
+			else
+			{
+				PeerManager::setMaxConnections(Settings::maxConnections());
+				PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
+			}
 		}
 		else
 		{
@@ -171,6 +188,19 @@ namespace kt
 			net::SocketMonitor::setUploadCap(1024 * item.upload_limit);
 			if (m_editor)
 				m_editor->updateStatusText(item.upload_limit,item.download_limit,false);
+			
+			if (item.set_conn_limits)
+			{
+				Out(SYS_SCD|LOG_NOTICE) << QString("Setting connection limits to : %1 per torrent, %2 global")
+						.arg(item.torrent_conn_limit).arg(item.global_conn_limit) << endl;
+				PeerManager::setMaxConnections(item.torrent_conn_limit);
+				PeerManager::setMaxTotalConnections(item.global_conn_limit);
+			}
+			else
+			{
+				PeerManager::setMaxConnections(Settings::maxConnections());
+				PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
+			}
 		}
 		
 		// now calculate the new interval

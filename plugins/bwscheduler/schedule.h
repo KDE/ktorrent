@@ -40,11 +40,14 @@ namespace kt
 		bt::Uint32 upload_limit;
 		bt::Uint32 download_limit;
 		bool paused;
+		bool set_conn_limits;
+		bt::Uint32 global_conn_limit;
+		bt::Uint32 torrent_conn_limit;
 		
 		ScheduleItem();
 		ScheduleItem(const ScheduleItem & item);
 		ScheduleItem(int day,const QTime & start,const QTime & end,bt::Uint32 upload_limit,
-					 bt::Uint32 download_limit,	bool paused);
+					 bt::Uint32 download_limit,bool paused,bool set_conn_limits,bt::Uint32 global_conn_limit,bt::Uint32 torrent_conn_limit);
 		
 		bool isValid() const {return day >= 1 && day <= 7;}
 		
