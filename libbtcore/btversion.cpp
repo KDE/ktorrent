@@ -46,7 +46,7 @@ namespace bt
 		switch (g_vtype)
 		{
 			case bt::NORMAL:
-				str += QString("%10-").arg(g_release);
+				str += QString::number(g_release) + "0-";
 				break;
 			case bt::ALPHA:
 				str += QString("A%1-").arg(g_release);
