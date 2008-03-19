@@ -90,16 +90,18 @@ namespace kt
 	
 	void ConvertDialog::threadFinished()
 	{
-		convert_thread->wait();
-		if (convert_thread->getFailureReason() != QString::null)
+		QString failure = convert_thread->getFailureReason();
+		if (failure != QString::null)
 		{
+			convert_thread->wait();
 			convert_thread->deleteLater();
 			convert_thread = 0;
-			KMessageBox::error(this,convert_thread->getFailureReason());
+			KMessageBox::error(this,failure);
 			reject();
 		}
 		else
 		{
+			convert_thread->wait();
 			convert_thread->deleteLater();
 			convert_thread = 0;
 			if (canceled)
