@@ -32,6 +32,7 @@
 #include "ui_btpref.h"
 #include "advancedpref.h"
 #include "networkpref.h"
+#include "proxypref.h"
 
 namespace kt
 {
@@ -128,6 +129,7 @@ namespace kt
 		connect(this,SIGNAL(settingsChanged(const QString &)),core,SLOT(applySettings()));
 		addPrefPage(new GeneralPref(this));
 		addPrefPage(new NetworkPref(this));
+		addPrefPage(new ProxyPref(this));
 		addPrefPage(new BTPref(this));
 		addPrefPage(new QMPref(this));
 		addPrefPage(new AdvancedPref(this));

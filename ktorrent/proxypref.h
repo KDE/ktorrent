@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
  *   ivasic@gmail.com                                                      *
  *                                                                         *
@@ -18,65 +18,33 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <klocale.h>
-#include <QNetworkInterface>
-#include <solid/device.h>
-#include <solid/networkinterface.h>
-#include <util/log.h>
-#include "networkpref.h"
-#include "settings.h"
+#ifndef KTPROXYPREF_H
+#define KTPROXYPREF_H
 
-using namespace bt;
+#include <interfaces/prefpageinterface.h>
+#include "ui_proxypref.h"
 
 namespace kt
 {
 
-	NetworkPref::NetworkPref(QWidget* parent)
-	: PrefPageInterface(Settings::self(),i18n("Network"),"preferences-system-network",parent)
+	/**
+		@author
+	*/
+	class ProxyPref : public PrefPageInterface,public Ui_ProxyPref
 	{
-		setupUi(this);
-	}
+		Q_OBJECT
+	public:
+		ProxyPref(QWidget* parent);
+		virtual ~ProxyPref();
 
+		virtual void loadDefaults();
+		virtual void loadSettings();
+		virtual void updateSettings();	
+	private slots:
+		void socksEnabledToggled(bool on);
+		void usernamePasswordToggled(bool on);
+	};
 
-	NetworkPref::~NetworkPref()
-	{
-	}
-
-	void NetworkPref::loadSettings()
-	{
-		kcfg_maxDownloadRate->setValue(Settings::maxDownloadRate());
-		kcfg_maxUploadRate->setValue(Settings::maxUploadRate());
-		
-		
-
-		kcfg_networkInterface->addItem(KIcon("network-wired"),i18n("All interfaces"));
-
-		// get all the network devices and add them to the combo box
-		QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
-		
-		QList<Solid::Device> netlist = Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface);
-		
-		
-		foreach(QNetworkInterface iface,iface_list)
-		{
-			KIcon icon("network-wired");
-			foreach (Solid::Device device,netlist)
-			{
-				Solid::NetworkInterface* netdev = device.as<Solid::NetworkInterface>();
-				if (netdev->ifaceName() == iface.name() && netdev->isWireless())
-				{
-					icon = KIcon("network-wireless");
-					break;
-				}
-					
-			}
-			
-			kcfg_networkInterface->addItem(icon,iface.name());
-		}
-	}
-
-	void NetworkPref::loadDefaults()
-	{
-	}
-	
 }
+
+#endif

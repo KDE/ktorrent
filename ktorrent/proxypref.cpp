@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
  *   ivasic@gmail.com                                                      *
  *                                                                         *
@@ -18,65 +18,59 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <klocale.h>
-#include <QNetworkInterface>
-#include <solid/device.h>
-#include <solid/networkinterface.h>
-#include <util/log.h>
-#include "networkpref.h"
+#include "proxypref.h"
 #include "settings.h"
-
-using namespace bt;
 
 namespace kt
 {
 
-	NetworkPref::NetworkPref(QWidget* parent)
-	: PrefPageInterface(Settings::self(),i18n("Network"),"preferences-system-network",parent)
+	ProxyPref::ProxyPref(QWidget* parent) : PrefPageInterface(Settings::self(),i18n("Proxy"),"preferences-system-network",parent)
 	{
 		setupUi(this);
+		connect(kcfg_socksEnabled,SIGNAL(toggled(bool)),this,SLOT(socksEnabledToggled(bool)));
+		connect(kcfg_socksUsePassword,SIGNAL(toggled(bool)),this,SLOT(usernamePasswordToggled(bool)));
 	}
 
 
-	NetworkPref::~NetworkPref()
+	ProxyPref::~ProxyPref()
 	{
 	}
 
-	void NetworkPref::loadSettings()
+
+	void ProxyPref::loadDefaults()
 	{
-		kcfg_maxDownloadRate->setValue(Settings::maxDownloadRate());
-		kcfg_maxUploadRate->setValue(Settings::maxUploadRate());
-		
-		
-
-		kcfg_networkInterface->addItem(KIcon("network-wired"),i18n("All interfaces"));
-
-		// get all the network devices and add them to the combo box
-		QList<QNetworkInterface> iface_list = QNetworkInterface::allInterfaces();
-		
-		QList<Solid::Device> netlist = Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface);
-		
-		
-		foreach(QNetworkInterface iface,iface_list)
-		{
-			KIcon icon("network-wired");
-			foreach (Solid::Device device,netlist)
-			{
-				Solid::NetworkInterface* netdev = device.as<Solid::NetworkInterface>();
-				if (netdev->ifaceName() == iface.name() && netdev->isWireless())
-				{
-					icon = KIcon("network-wireless");
-					break;
-				}
-					
-			}
-			
-			kcfg_networkInterface->addItem(icon,iface.name());
-		}
+		loadSettings();
 	}
 
-	void NetworkPref::loadDefaults()
+	void ProxyPref::loadSettings()
+	{
+		kcfg_httpTrackerProxy->setEnabled(Settings::doNotUseKDEProxy());
+		
+		kcfg_socksProxy->setEnabled(Settings::socksEnabled());
+		kcfg_socksVersion->setEnabled(Settings::socksEnabled());
+		kcfg_socksPort->setEnabled(Settings::socksEnabled());
+		
+		kcfg_socksUsePassword->setEnabled(Settings::socksEnabled());
+		kcfg_socksPassword->setEnabled(Settings::socksUsePassword() && Settings::socksEnabled());
+		kcfg_socksUsername->setEnabled(Settings::socksUsePassword() && Settings::socksEnabled());
+	}
+
+	void ProxyPref::updateSettings()
 	{
 	}
 	
+	void ProxyPref::socksEnabledToggled(bool on)
+	{
+		kcfg_socksUsePassword->setEnabled(on);
+		kcfg_socksPassword->setEnabled(on && kcfg_socksUsePassword->isChecked());
+		kcfg_socksUsername->setEnabled(on && kcfg_socksUsePassword->isChecked());
+	}
+	
+	void ProxyPref::usernamePasswordToggled(bool on)
+	{
+		kcfg_socksPassword->setEnabled(on && kcfg_socksEnabled->isChecked());
+		kcfg_socksUsername->setEnabled(on && kcfg_socksEnabled->isChecked());
+	}
 }
+
+#include "proxypref.moc"

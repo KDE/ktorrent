@@ -14,6 +14,7 @@ set(ktorrent_SRC
 	prefdialog.cpp 
 	advancedpref.cpp
 	networkpref.cpp
+	proxypref.cpp
 	statusbar.cpp 
 	groupview.cpp
 	scandlg.cpp
@@ -41,6 +42,7 @@ kde4_add_ui_files(ktorrent_SRC
 	generalpref.ui 
 	advancedpref.ui 
 	networkpref.ui
+	proxypref.ui
 	pastedlgbase.ui 
 	ipfilterwidget.ui 
 	speedlimitsdlg.ui 
