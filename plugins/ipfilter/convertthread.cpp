@@ -130,6 +130,12 @@ namespace kt
 	
 	void ConvertThread::writeOutput()
 	{
+		if (input.count() == 0)
+		{
+			failure_reason = i18n("There are no IP addresses to convert in %1",txt_file);
+			return;
+		}
+		
 		QFile target(dat_file);
 		if (!target.open(QIODevice::WriteOnly))
 		{
@@ -137,6 +143,8 @@ namespace kt
 			failure_reason = i18n("Cannot open %1 : %2",dat_file,strerror(errno));
 			return;
 		}
+		
+	
 		
 		Out(SYS_IPF|LOG_NOTICE) << "Loading finished, starting conversion..." << endl;
 		dlg->message(i18n( "Converting..." ));
