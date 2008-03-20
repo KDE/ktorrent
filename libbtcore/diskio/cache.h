@@ -21,13 +21,16 @@
 #define BTCACHE_H
 
 #include <btcore_export.h>
+#include <util/constants.h>
+#include <torrent/torrent.h>
+#include <QString>
+#include <QMap>
 
 class QStringList;
 class KJob;
 
 namespace bt
 {
-	class Torrent;
 	class TorrentFile;
 	class Chunk;
 	class PreallocationThread;

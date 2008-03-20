@@ -20,6 +20,8 @@
 #ifndef BTCHUNK_H
 #define BTCHUNK_H
 
+#include <btcore_export.h>
+
 #include <util/constants.h>
 #include "cachefile.h"
 
@@ -39,7 +41,7 @@ namespace bt
 	 * - ON_DISK : On disk
 	 * - NOT_DOWNLOADED : It hasn't been dowloaded yet, and there is no buffer allocated
 	 */
-	class Chunk : public MMappeable
+	class BTCORE_EXPORT Chunk : public MMappeable
 	{
 	public:
 		Chunk(unsigned int index,Uint32 size);
