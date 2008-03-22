@@ -22,7 +22,7 @@
 #include <klocale.h>
 #include <time.h>
 #include <util/error.h>
-#include <ktversion.h>
+#include <btversion.h>
 #include <bcodec/bencoder.h>
 #include <util/file.h>
 #include <util/sha1hash.h>
@@ -148,7 +148,7 @@ namespace bt
 			enc.write("comments");
 			enc.write(comments);
 		}
-		enc.write("created by");enc.write(QString("KTorrent %1").arg(kt::VERSION_STRING));
+		enc.write("created by");enc.write(bt::GetVersionString());
 		enc.write("creation date");enc.write((Uint64)time(0));
 		enc.write("info");
 		saveInfo(enc);
