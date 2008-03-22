@@ -194,6 +194,7 @@ namespace kt
 			if (group)
 			{
 				group->addTorrent(tc);	
+				gman->saveGroups();
 			}
 		}
 

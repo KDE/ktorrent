@@ -21,6 +21,7 @@ this makes sure that it is sized properly when you open the dialog
 can change them (159039)
 - Make sure that scheduler plugin does not set stuff in paused state twice (152445) 
 - Fix crash in ConvertDialog of ipfilter plugin
+- Fix adding torrent to group in fileselectdlg (159684)
 
 Changes in 3.O :
 - Fix sorting of upload and download rate (157939)
