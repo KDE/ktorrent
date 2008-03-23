@@ -51,13 +51,13 @@ namespace bt
 			 * @return QString value that correspodents to key.
 			 * @param key - QString stats key.
 			 */
-			QString readString(QString key);
+			QString readString(const QString &key);
 			
-			Uint64 readUint64(QString key);
-			bool readBoolean(QString key);
-			int readInt(QString key);
-			unsigned long readULong(QString key);
-			float readFloat(QString key);
+			Uint64 readUint64(const QString &key);
+			bool readBoolean(const QString &key);
+			int readInt(const QString &key);
+			unsigned long readULong(const QString &key);
+			float readFloat(const QString &key);
 		
 			/**
 			 * @brief Writes key and value.
@@ -65,7 +65,7 @@ namespace bt
 			 * @param key - QString key
 			 * @param value - QString value.
 			 */
-			void write(QString key, QString value);
+			void write(const QString &key, const QString &value);
 			
 			///Reads data from stats file to m_values.
 			void readSync();

@@ -90,7 +90,7 @@ namespace bt
 		stats.session_bytes_downloaded = 0;
 		stats.session_bytes_uploaded = 0;
 		istats.session_bytes_uploaded = 0;
-		old_tordir = QString::null;
+		old_tordir = QString();
 		stats.status = NOT_STARTED;
 		stats.autostart = true;
 		stats.user_controlled = false;
@@ -1456,7 +1456,7 @@ namespace bt
 			case NO_SPACE_LEFT:
 				return i18n("Stopped. No space left on device.");
 		}
-		return QString::null;
+		return QString();
 	}
 
 	TrackersList* TorrentControl::getTrackersList()

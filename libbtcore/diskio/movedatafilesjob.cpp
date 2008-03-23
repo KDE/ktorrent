@@ -54,7 +54,7 @@ namespace bt
 		else
 		{
 			success.insert(active_src,active_dst);
-			active_src = active_dst = QString::null;
+			active_src = active_dst = QString();
 			active_job = 0;
 			startMoving();
 		}

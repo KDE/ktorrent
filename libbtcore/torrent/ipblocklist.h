@@ -81,14 +81,14 @@ namespace bt
 			 * @param state int number of bad chunks client from ip sent. Basically this parameter
 			 * is used only to permanently block some IP (by setting this param to 3)
 			 */
-			void insert(QString ip, int state=1);
+			void insert(const QString &ip, int state=1);
 
 			/**
 			* @brief Adds IP range to the list
 			* It is used  for blocking plugin. For single IP use insert() instead.
 			* @param ip QString peer IP address. Uses ''*" for ranges.
 			 **/
-			void addRange(QString ip);
+			void addRange(const QString &ip);
 			
 			
 			/**
@@ -96,7 +96,7 @@ namespace bt
 			 * It is used  for blocking plugin.
 			 * @param ip QString peer IP address. Uses ''*" for ranges.
 			 **/
-			void removeRange(QString ip);
+			void removeRange(const QString &ip);
 
 			/**
 			 * Checks if IP is in the blocking list

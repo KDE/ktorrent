@@ -45,7 +45,7 @@
 namespace bt
 {
 	bool HTTPTracker::proxy_on = false;
-	QString HTTPTracker::proxy = QString::null;
+	QString HTTPTracker::proxy = QString();
 
 	HTTPTracker::HTTPTracker(const KUrl & url,TorrentInterface* tor,const PeerID & id,int tier)
 		: Tracker(url,tor,id,tier)
@@ -82,7 +82,7 @@ namespace bt
 	{
 		event = "completed";
 		doRequest();
-		event = QString::null;
+		event = QString();
 	}
 	
 	void HTTPTracker::manualUpdate()
@@ -218,7 +218,7 @@ namespace bt
 		if (!cip.isNull())
 			u.addQueryItem("ip",cip);
 
-		if (event != QString::null)
+		if (event != QString())
 			u.addQueryItem("event",event);
 		QString epq = u.encodedPathAndQuery();
 		const SHA1Hash & info_hash = tor->getInfoHash();
@@ -425,7 +425,7 @@ namespace bt
 					failures++;
 					requestFailed(i18n("Invalid response from tracker"));
 				}
-				event = QString::null;
+				event = QString();
 			}
 			else
 			{
@@ -456,7 +456,7 @@ namespace bt
 			if (url.isValid())
 				md["UseProxy"] = url.pathOrUrl();
 			else
-				md["UseProxy"] = QString::null;
+				md["UseProxy"] = QString();
 		}
 	}
 	

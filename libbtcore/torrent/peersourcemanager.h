@@ -117,9 +117,9 @@ namespace bt
 		
 		virtual KUrl getTrackerURL() const;
 		virtual KUrl::List getTrackerURLs();
-		virtual void addTracker(KUrl url, bool custom = true,int tier = 1);
-		virtual bool removeTracker(KUrl url);
-		virtual void setTracker(KUrl url);
+		virtual void addTracker(const KUrl &url, bool custom = true,int tier = 1);
+		virtual bool removeTracker(const KUrl &url);
+		virtual void setTracker(const KUrl &url);
 		virtual void restoreDefault();
 		
 		/**

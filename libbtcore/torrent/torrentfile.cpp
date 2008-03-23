@@ -27,7 +27,7 @@
 namespace bt
 {
 
-	TorrentFile::TorrentFile() : TorrentFileInterface(0,QString::null,0),missing(false),filetype(UNKNOWN)
+	TorrentFile::TorrentFile() : TorrentFileInterface(0,QString(),0),missing(false),filetype(UNKNOWN)
 	{}
 
 	TorrentFile::TorrentFile(Uint32 index,const QString & path,
@@ -45,7 +45,7 @@ namespace bt
 	}
 	
 	TorrentFile::TorrentFile(const TorrentFile & tf)
-		: TorrentFileInterface(tf.getIndex(),QString::null,0)
+		: TorrentFileInterface(tf.getIndex(),QString(),0)
 	{
 		setUnencodedPath(tf.unencoded_path); 
 		index = tf.getIndex();

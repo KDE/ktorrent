@@ -312,7 +312,7 @@ namespace bt
 	{
 		if (pdown.count() == 0)
 		{
-			return QString::null;
+			return QString();
 		}
 		else if (pdown.count() == 1)
 		{

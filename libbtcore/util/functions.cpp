@@ -225,7 +225,7 @@ namespace bt
 		return true;
 	}
 
-	static QString net_iface = QString::null;
+	static QString net_iface = QString();
 	
 	void SetNetworkInterface(const QString & iface)
 	{
@@ -242,11 +242,11 @@ namespace bt
 	{
 		QNetworkInterface ni = QNetworkInterface::interfaceFromName(iface);
 		if (!ni.isValid())
-			return QString::null;
+			return QString();
 
 		QList<QNetworkAddressEntry> addr_list = ni.addressEntries();
 		if (addr_list.count() == 0)
-			return QString::null;
+			return QString();
 		else
 			return addr_list.front().ip().toString();
 	}	

@@ -59,14 +59,14 @@ namespace bt
 		
 		Out(SYS_TRK|LOG_NOTICE) << "Setting custom ip to " << ip << endl;
 		custom_ip = ip;
-		custom_ip_resolved = QString::null;
+		custom_ip_resolved = QString();
 		if (ip.isNull())
 			return;
 		
-		KResolverResults res = KResolver::resolve(ip,QString::null);
+		KResolverResults res = KResolver::resolve(ip,QString());
 		if (res.error() || res.empty())
 		{
-			custom_ip = custom_ip_resolved = QString::null;
+			custom_ip = custom_ip_resolved = QString();
 		}
 		else
 		{

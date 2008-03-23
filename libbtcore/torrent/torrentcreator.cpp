@@ -387,7 +387,7 @@ namespace bt
 			st.write("IMPORTED", QString::number(tot_size));
 			st.writeSync();
 			
-			tc->init(0,dd + "torrent",dd,odir,QString::null);
+			tc->init(0,dd + "torrent",dd,odir,QString());
 			tc->createFiles();
 		}
 		catch (...)

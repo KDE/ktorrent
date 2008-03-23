@@ -46,42 +46,42 @@ namespace bt
 		m_file.close();
 	}
 	
-	void StatsFile::write(QString key, QString value)
+	void StatsFile::write(const QString &key, const QString &value)
 	{
 		m_values.insert(key.trimmed(), value.trimmed());
 	}
 	
-	QString StatsFile::readString(QString key)
+	QString StatsFile::readString(const QString &key)
 	{
 		return m_values[key].trimmed();
 	}
 	
-	Uint64 StatsFile::readUint64(QString key)
+	Uint64 StatsFile::readUint64(const QString &key)
 	{
 		bool ok = true;
 		Uint64 val = readString(key).toULongLong(&ok);
 		return val;
 	}
 	
-	int StatsFile::readInt(QString key)
+	int StatsFile::readInt(const QString &key)
 	{
 		bool ok = true;
 		int val = readString(key).toInt(&ok);
 		return val;
 	}
 	
-	bool StatsFile::readBoolean(QString key)
+	bool StatsFile::readBoolean(const QString &key)
 	{
 		return (bool) readInt(key);
 	}
 	
-	unsigned long StatsFile::readULong(QString key)
+	unsigned long StatsFile::readULong(const QString &key)
 	{
 		bool ok = true;
 		return readString(key).toULong(&ok);
 	}
 	
-	float bt::StatsFile::readFloat( QString key )
+	float bt::StatsFile::readFloat(const QString &key)
 	{
 		bool ok = true;
 		return readString(key).toFloat(&ok);

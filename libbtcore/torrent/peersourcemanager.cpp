@@ -217,7 +217,7 @@ namespace bt
 		return urls; 
 	}
 	
-	void PeerSourceManager::addTracker(KUrl url, bool custom,int tier)
+	void PeerSourceManager::addTracker(const KUrl &url, bool custom,int tier)
 	{
 		if (trackers.contains(url))
 			return;
@@ -237,7 +237,7 @@ namespace bt
 		}
 	}
 	
-	bool PeerSourceManager::removeTracker(KUrl url)
+	bool PeerSourceManager::removeTracker(const KUrl &url)
 	{
 		if (!custom_trackers.contains(url))
 			return false;
@@ -270,7 +270,7 @@ namespace bt
 		return true;
 	}
 	
-	void PeerSourceManager::setTracker(KUrl url)
+	void PeerSourceManager::setTracker(const KUrl &url)
 	{
 		Tracker* trk = trackers.find(url);
 		if (!trk)

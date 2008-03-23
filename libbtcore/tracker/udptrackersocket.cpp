@@ -50,7 +50,7 @@ namespace bt
 			port = 4444;
 		
 		bool bound = false;
-		while (!(bound = sock->bind(QString::null,QString::number(port + i))) && i < 10)
+		while (!(bound = sock->bind(QString(),QString::number(port + i))) && i < 10)
 		{
 			Out() << "Failed to bind socket to port " << (port+i) << endl;
 			i++;
@@ -115,7 +115,7 @@ namespace bt
 		if (i.value() != CONNECT)
 		{
 			transactions.erase(i);
-			error(tid,QString::null);
+			error(tid,QString());
 			return;
 		}
 
@@ -137,7 +137,7 @@ namespace bt
 		if (i.value() != ANNOUNCE)
 		{
 			transactions.erase(i);
-			error(tid,QString::null);
+			error(tid,QString());
 			return;
 		}
 

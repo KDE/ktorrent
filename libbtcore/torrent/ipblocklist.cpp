@@ -75,7 +75,7 @@ namespace bt
 
 	IPBlocklist::IPBlocklist(const IPBlocklist & ) {}
 
-	void IPBlocklist::insert( QString ip, int state )
+	void IPBlocklist::insert(const QString &ip, int state)
 	{
 		bool ok;
 		Uint32 ipi = toUint32(ip, &ok);
@@ -86,7 +86,7 @@ namespace bt
 		Out(SYS_IPF|LOG_NOTICE) << "IP " << ip << " banned." << endl;
 	}
 
-	void IPBlocklist::addRange(QString ip)
+	void IPBlocklist::addRange(const QString &ip)
 	{
 		bool ok; 
 		int tmp = 0; 
@@ -169,7 +169,7 @@ namespace bt
 			m_peers.insert(key,state);
 	}
 	
-	void IPBlocklist::removeRange(QString ip)
+	void IPBlocklist::removeRange(const QString &ip)
 	{
 		bool ok; 
 		int tmp = 0; 

@@ -494,7 +494,7 @@ namespace bt
 		if (sock)
 			return sock->getRemoteIPAddress();
 		else
-			return QString::null;
+			return QString();
 	}
 	
 	Uint16 Peer::getPort() const

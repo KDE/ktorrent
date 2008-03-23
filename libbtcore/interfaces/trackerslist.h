@@ -55,19 +55,19 @@ namespace bt
 			 * @param tier Which tier (or priority) the tracker has, tier 1 are 
 			 * the main trackers, tier 2 are backups ...
 			 */
-			virtual void addTracker(KUrl url, bool custom = true,int tier = 1) = 0;
+			virtual void addTracker(const KUrl &url, bool custom = true,int tier = 1) = 0;
 		
 			/**
 			 * Removes the tracker from the list.
 			 * @param url - Tracker url.
 			 */
-			virtual bool removeTracker(KUrl url) = 0;
+			virtual bool removeTracker(const KUrl &url) = 0;
 		
 			/**
 			 * Sets the current tracker and does the announce.
 			 * @param url - Tracker url.
 			 */
-			virtual void setTracker(KUrl url) = 0;
+			virtual void setTracker(const KUrl &url) = 0;
 			
 			/**
 			 * Restores the default tracker and does the announce.
