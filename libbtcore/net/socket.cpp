@@ -43,7 +43,6 @@
 #define MSG_NOSIGNAL 0
 #endif
 
-#include <unistd.h>
 #include <fcntl.h>
 
 #include <util/log.h>

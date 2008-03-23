@@ -19,7 +19,6 @@
  ***************************************************************************/
 #include "uploader.h"
 #include <util/log.h>
-#include "uploader.h"
 #include <peer/peer.h>
 #include <diskio/chunkmanager.h>
 #include <download/request.h>

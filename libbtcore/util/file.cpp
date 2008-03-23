@@ -22,7 +22,6 @@
 #include <config-ktorrent.h>
 
 #include <qfile.h>
-#include "config-ktorrent.h"
 #include <klocale.h>
 #include <string.h>
 #include <errno.h>

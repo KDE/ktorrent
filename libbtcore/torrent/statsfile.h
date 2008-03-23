@@ -40,7 +40,7 @@ namespace bt
 			 * @brief A constructor.
 			 * Constructs StatsFile object and calls readSync().
 			 */
-			StatsFile(QString filename);
+			StatsFile(const QString &filename);
 			~StatsFile();
 			
 			///Closes QFile

@@ -37,7 +37,7 @@ namespace bt
 		public:
 			explicit IPKey();
 			explicit IPKey(QString& ip, Uint32 mask = 0xFFFFFFFF);
-			IPKey(Uint32 ip, Uint32 mask = 0xFFFFFFFF);
+			explicit IPKey(Uint32 ip, Uint32 mask = 0xFFFFFFFF);
 			IPKey(const IPKey& ip);
 			~IPKey();
 

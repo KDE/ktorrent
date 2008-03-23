@@ -21,7 +21,6 @@
 #include <mse/streamsocket.h>
 #include <util/sha1hash.h>
 #include <util/log.h>
-#include <util/log.h>
 #include <torrent/globals.h>
 #include <torrent/server.h>
 #include "peermanager.h"

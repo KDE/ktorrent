@@ -30,7 +30,6 @@
 #include <diskio/chunk.h>
 #include <util/bitset.h>
 #include <download/packet.h>
-#include <util/log.h>
 #include <bcodec/bencoder.h>
 
 

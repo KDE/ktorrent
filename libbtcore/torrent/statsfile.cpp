@@ -30,7 +30,7 @@
 namespace bt
 {
 
-	StatsFile::StatsFile(QString filename)
+	StatsFile::StatsFile(const QString &filename)
 	:m_filename(filename),m_file(filename)
 	{
 		readSync();

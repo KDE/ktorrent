@@ -17,12 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "choker.h"
 #include "advancedchokealgorithm.h"
 #include <util/functions.h>
 #include <peer/peermanager.h>
-#include "choker.h"
-
-
 
 namespace bt
 {
