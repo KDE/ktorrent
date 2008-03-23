@@ -142,7 +142,7 @@ set(libbtcore_SRC
 kde4_add_library(btcore SHARED ${libbtcore_SRC})
 
 target_link_libraries(btcore ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KDE3SUPPORT_LIBS} ${GMP_LIBRARIES} ${QCA2_LIBRARIES})
-set_target_properties(btcore PROPERTIES VERSION 3.0.0 SOVERSION 3 )
+set_target_properties(btcore PROPERTIES VERSION 3.1.0 SOVERSION 3 )
 install(TARGETS btcore  DESTINATION ${LIB_INSTALL_DIR} )
 
 set(net_HDR  
