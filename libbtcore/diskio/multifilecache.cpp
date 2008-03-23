@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "multifilecache.h"
 #include <errno.h>
 #include <qdir.h>
 #include <qstringlist.h>
@@ -30,7 +31,6 @@
 #include <util/log.h>
 #include <torrent/torrent.h>
 #include "cache.h"
-#include "multifilecache.h"
 #include "chunk.h"
 #include "cachefile.h"
 #include "dndfile.h"

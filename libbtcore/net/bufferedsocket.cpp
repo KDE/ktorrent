@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <util/log.h>
 #include "bufferedsocket.h"
+#include <util/log.h>
 #include "speed.h"
 
 using namespace bt;

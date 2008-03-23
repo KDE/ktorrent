@@ -17,11 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "peerid.h"
 #include <time.h>
 #include <stdlib.h>
 #include <qmap.h>
 #include <klocale.h>
-#include "peerid.h"
 #include "btversion.h"
 
 namespace bt
@@ -205,8 +205,8 @@ namespace bt
 		{
 			QString ID(peer_id.mid(1,2));
 			if (Map.contains(ID))
-				name = Map[ID] + " " + peer_id.at(3) + "." + peer_id.at(4) + "."
-					+ peer_id.at(5) + "." + peer_id.at(6);
+				name = Map[ID] + ' ' + peer_id.at(3) + '.' + peer_id.at(4) + '.'
+					+ peer_id.at(5) + '.' + peer_id.at(6);
 		}
 		else if (peer_id.at(0).isLetter() &&
 				peer_id.at(1).isDigit() &&
@@ -214,12 +214,12 @@ namespace bt
 		{
 			QString ID = QString(peer_id.at(0));
 			if (Map.contains(ID))
-				name = Map[ID] + " " + peer_id.at(1) + "." +
-						peer_id.at(2) + "." + peer_id.at(3);
+				name = Map[ID] + ' ' + peer_id.at(1) + '.' +
+						peer_id.at(2) + '.' + peer_id.at(3);
 		}
 		else if (peer_id.at(0) == 'M' && peer_id.at(2) == '-' && (peer_id.at(4) == '-' || peer_id.at(5) == '-'))
 		{
-			name = Map["M"] + " " + peer_id.at(1) + "." + peer_id.at(3);
+			name = Map["M"] + ' ' + peer_id.at(1) + '.' + peer_id.at(3);
 			if(peer_id.at(4) == '-')
 				name += QString(".%1").arg(peer_id.at(5));
 			else
@@ -243,7 +243,7 @@ namespace bt
 		}
 		else if ( peer_id.startsWith("Mbrst"))
 		{
-			name = Map["Mbrst"] + " " + peer_id.at(5) + "." + peer_id.at(7);
+			name = Map["Mbrst"] + ' ' + peer_id.at(5) + '.' + peer_id.at(7);
 		}
 			
 		return name;

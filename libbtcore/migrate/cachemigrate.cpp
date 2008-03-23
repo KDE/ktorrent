@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "cachemigrate.h"
 #include <qstringlist.h>
 #include <qfileinfo.h>
 #include <util/log.h>
@@ -24,7 +25,6 @@
 #include <util/functions.h>
 #include <torrent/torrent.h>
 #include <torrent/globals.h>
-#include "cachemigrate.h"
 
 
 namespace bt

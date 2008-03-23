@@ -18,11 +18,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "webseed.h"
 #include <util/log.h>
 #include <torrent/torrent.h>
 #include <diskio/chunkmanager.h>
 #include <interfaces/chunkdownloadinterface.h>
-#include "webseed.h"
 #include "httpconnection.h"
 
 namespace bt
@@ -106,7 +106,7 @@ namespace bt
 		bytes_of_cur_chunk = 0;
 		
 		QString path = url.path();
-		if (path.endsWith("/"))
+		if (path.endsWith('/'))
 			path += tor.getNameSuggestion();
 		
 		// open connection and connect if needed
@@ -129,7 +129,7 @@ namespace bt
 			foreach (const Range & r,ranges)
 			{
 				const TorrentFile & tf = tor.getFile(r.file);
-				conn->get(url.host(),path + "/" + tf.getPath(),r.off,r.len);
+				conn->get(url.host(),path + '/' + tf.getPath(),r.off,r.len);
 			}
 		}
 		else

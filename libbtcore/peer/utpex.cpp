@@ -17,10 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "utpex.h"
 #include <net/address.h>
 #include <util/functions.h>
 #include <util/log.h>
-#include "utpex.h"
 #include "peer.h"
 #include "packetwriter.h"
 #include <bcodec/bdecoder.h>

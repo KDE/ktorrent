@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "functions.h"
 #include <qdir.h>
 #include <errno.h>
 #include <sys/time.h>
@@ -35,7 +36,6 @@
 #include <kmimetype.h>
 #include <kglobal.h>
 #include <interfaces/torrentinterface.h>
-#include "functions.h"
 #include "error.h"
 #include "log.h"
 

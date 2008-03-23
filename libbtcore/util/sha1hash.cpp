@@ -17,11 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "sha1hash.h"
 #include <string.h>
 #include <stdio.h>
 #include <algorithm>
 #include "log.h"
-#include "sha1hash.h"
 #include "sha1hashgen.h"
 #include "urlencoder.h"
 

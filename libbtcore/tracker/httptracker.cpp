@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "httptracker.h"
 #include <config-ktorrent.h>
  
 #include <kurl.h>
@@ -38,7 +39,6 @@
 #include <torrent/server.h>
 #include <torrent/globals.h>
 #include "btversion.h"
-#include "httptracker.h"
 
 
 

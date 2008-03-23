@@ -17,12 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "packet.h"
 #include <qstring.h>
 #include <string.h>
 #include <util/log.h>
 #include <util/bitset.h>
 #include <util/functions.h>
-#include "packet.h"
 #include "request.h"
 #include <diskio/chunk.h>
 #include <peer/peer.h>

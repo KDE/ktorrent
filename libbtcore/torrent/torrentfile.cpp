@@ -18,11 +18,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "torrentfile.h"
 #include <math.h>
 #include <util/log.h>
 #include <util/bitset.h>
 #include <util/functions.h>
-#include "torrentfile.h"
 
 namespace bt
 {

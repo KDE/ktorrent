@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "file.h"
 
 #include <config-ktorrent.h>
 
@@ -26,7 +27,6 @@
 #include <string.h>
 #include <errno.h>
 #include <stdio.h>
-#include "file.h"
 #include "error.h"
 #include "log.h"
 

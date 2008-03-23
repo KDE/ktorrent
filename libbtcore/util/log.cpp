@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "log.h"
 #include <stdlib.h>
 #include <kurl.h>
 #include <klocale.h>
@@ -28,7 +29,6 @@
 #include <util/fileops.h>
 #include <qdatetime.h>
 #include <qmutex.h> 
-#include "log.h"
 #include "error.h"
 #include "autorotatelogjob.h"
 

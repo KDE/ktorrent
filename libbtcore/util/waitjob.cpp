@@ -17,10 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "waitjob.h"
 #include <qtimer.h>
 #include <torrent/globals.h>
 #include <kio/netaccess.h>
-#include "waitjob.h"
 #include "log.h"
 
 namespace bt

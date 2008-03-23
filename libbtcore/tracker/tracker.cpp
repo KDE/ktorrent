@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "tracker.h"
 #include <stdlib.h>
 #include <time.h>
 #include <kurl.h>
@@ -26,7 +27,6 @@
 #include <torrent/globals.h>
 #include <interfaces/torrentinterface.h>
 #include <torrent/server.h>
-#include "tracker.h"
 #include "udptracker.h"
 #include "httptracker.h"
 

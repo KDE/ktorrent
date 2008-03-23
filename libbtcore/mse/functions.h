@@ -20,6 +20,8 @@
 #ifndef MSEFUNCTIONS_H
 #define MSEFUNCTIONS_H
 
+#include <QString>
+
 namespace bt
 {
 	class SHA1Hash;

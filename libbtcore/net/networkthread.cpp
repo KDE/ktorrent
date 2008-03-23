@@ -17,12 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "networkthread.h"
 #include <math.h>
 #include <util/functions.h>
 #include <util/log.h>
 #include "socketgroup.h"
 #include "socketmonitor.h"
-#include "networkthread.h"
 		
 using namespace bt;
 

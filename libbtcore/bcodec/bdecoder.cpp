@@ -17,10 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "bdecoder.h"
 #include <util/log.h>
 #include <util/error.h>
 #include <klocale.h>
-#include "bdecoder.h"
 #include "bnode.h"
 
 namespace bt

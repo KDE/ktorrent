@@ -17,12 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "encryptedserverauthenticate.h"
 #include <stdlib.h>
 #include <util/functions.h>
 #include <util/log.h>
 #include <torrent/server.h>
 #include <torrent/globals.h>
-#include "encryptedserverauthenticate.h"
 #include "functions.h"
 #include "streamsocket.h"
 #include "rc4encryptor.h"

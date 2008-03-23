@@ -17,10 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "autorotatelogjob.h"
 #include <kurl.h>
 #include <k3process.h>
 #include <util/fileops.h>
-#include "autorotatelogjob.h"
 #include "log.h"
 
 namespace bt

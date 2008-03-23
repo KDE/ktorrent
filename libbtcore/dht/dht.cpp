@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "dht.h"
 #include <qmap.h>
 #include <k3resolver.h>
 #include <util/log.h>
@@ -25,7 +26,6 @@
 #include <bcodec/bnode.h>
 #include <k3socketaddress.h>
 #include "announcetask.h"
-#include "dht.h"
 #include "node.h"
 #include "rpcserver.h"
 #include "rpcmsg.h"

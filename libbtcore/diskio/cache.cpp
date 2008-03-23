@@ -17,10 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "cache.h"
 #include <util/functions.h>
 #include <torrent/torrent.h>
 #include "chunk.h"
-#include "cache.h"
 #include <peer/peermanager.h>
 
 namespace bt

@@ -17,6 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "peer.h"
+
 #include <math.h>
 #include <util/log.h>
 #include <util/functions.h>
@@ -29,7 +31,6 @@
 #include <bcodec/bnode.h>
 #include <torrent/server.h>
 
-#include "peer.h"
 #include "packetreader.h"
 #include "packetwriter.h"
 #include "peerdownloader.h"

@@ -17,13 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "kbucket.h"
 #include <QtAlgorithms>
 #include <k3socketaddress.h>
 #include <util/file.h>
 #include <util/log.h>
 #include <util/functions.h>
 #include <netinet/in.h>
-#include "kbucket.h"
 #include "kclosestnodessearch.h"
 #include "rpcserver.h"
 #include "node.h"

@@ -17,9 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "uploadthread.h"
 #include <math.h>
 #include <util/functions.h>
-#include "uploadthread.h"
 #include "socketmonitor.h"
 #include "bufferedsocket.h"
 #include "socketgroup.h"

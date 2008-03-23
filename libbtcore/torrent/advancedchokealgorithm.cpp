@@ -15,8 +15,9 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "advancedchokealgorithm.h"
 #include <util/functions.h>
 #include <interfaces/torrentinterface.h>
 #include <diskio/chunkmanager.h>
@@ -24,7 +25,6 @@
 #include <peer/peermanager.h>
 #include <peer/packetwriter.h>
 #include <krandom.h>
-#include "advancedchokealgorithm.h"
 
 
 namespace bt

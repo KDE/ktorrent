@@ -17,12 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "dndfile.h"
 #include <klocale.h>
 #include <util/file.h>
 #include <util/error.h>
 #include <util/fileops.h>
 #include <util/sha1hash.h>
-#include "dndfile.h"
 
 namespace bt
 {

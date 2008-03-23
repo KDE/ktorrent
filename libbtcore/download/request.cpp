@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <interfaces/piecedownloader.h>
 #include "request.h"
+#include <interfaces/piecedownloader.h>
 
 namespace bt
 {

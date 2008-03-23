@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "rpcserver.h"
 #include <unistd.h>
 #include <string.h>
 #include <net/portlist.h>
@@ -28,7 +29,6 @@
 #include <bcodec/bencoder.h>
 #include <util/functions.h>
 #include <k3socketdevice.h>
-#include "rpcserver.h"
 #include "rpccall.h"
 #include "rpcmsg.h"
 #include "kbucket.h"

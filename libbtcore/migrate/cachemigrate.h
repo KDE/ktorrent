@@ -20,6 +20,9 @@
 #ifndef BTCACHEMIGRATE_H
 #define BTCACHEMIGRATE_H
 
+#include <QString>
+#include <torrent/torrent.h>
+
 namespace bt
 {
 	class Torrent;

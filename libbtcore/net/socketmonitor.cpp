@@ -17,12 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "socketmonitor.h"
 #include <math.h>
 #include <unistd.h>
 #include <util/functions.h>
 #include <util/log.h>
 #include <torrent/globals.h>
-#include "socketmonitor.h"
 #include "bufferedsocket.h"
 #include "uploadthread.h"
 #include "downloadthread.h"

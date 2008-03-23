@@ -18,12 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-
+#include "httpconnection.h"
 #include <QtAlgorithms>
 #include <kurl.h>
 #include <net/socketmonitor.h>
 #include <util/log.h>
-#include "httpconnection.h"
+
 #include "btversion.h"
 
 namespace bt

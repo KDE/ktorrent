@@ -17,9 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "functions.h"
 #include <util/log.h>
 #include <util/sha1hash.h>
-#include "functions.h"
 #include "bigint.h"
 
 using namespace bt;

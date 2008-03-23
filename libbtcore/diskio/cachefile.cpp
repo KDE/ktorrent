@@ -17,8 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <config-ktorrent.h>
+#include "cachefile.h"
 
+#include <config-ktorrent.h>
 
 #include <fcntl.h>
 #include <sys/types.h>
@@ -34,7 +35,6 @@
 #include <util/fileops.h>
 #include <util/log.h>
 #include <util/error.h>
-#include "cachefile.h"
 #include "preallocationthread.h"
 #include "cache.h"
 

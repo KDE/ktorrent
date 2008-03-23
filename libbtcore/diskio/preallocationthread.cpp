@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "preallocationthread.h"
 #include <errno.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -27,7 +28,6 @@
 #include <util/error.h>
 #include <qfile.h>
 #include <klocale.h>
-#include "preallocationthread.h"
 #include "chunkmanager.h"
 
 #ifndef O_LARGEFILE

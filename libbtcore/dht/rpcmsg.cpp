@@ -17,11 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "rpcmsg.h"
 #include <util/log.h>
 #include <util/functions.h>
 #include <bcodec/bnode.h>
 #include <bcodec/bencoder.h>
-#include "rpcmsg.h"
 #include "rpccall.h"
 #include "rpcserver.h"
 #include "dht.h"

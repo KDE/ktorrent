@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <k3resolver.h>
 #include "task.h"
+#include <k3resolver.h>
 #include "kclosestnodessearch.h"
 #include "rpcserver.h"
 #include "kbucket.h"

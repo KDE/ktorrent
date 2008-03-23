@@ -17,9 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "rpccall.h"
 #include "dht.h"
 #include "rpcmsg.h"
-#include "rpccall.h"
 #include "rpcserver.h"
 
 namespace dht

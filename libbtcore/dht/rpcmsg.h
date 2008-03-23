@@ -21,6 +21,7 @@
 #define DHTRPCMSG_H
 
 #include <k3socketaddress.h>
+#include <QString>
 #include <util/constants.h>
 #include "key.h"
 #include "database.h"

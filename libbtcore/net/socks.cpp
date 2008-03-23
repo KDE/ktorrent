@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "socks.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -25,7 +26,6 @@
 #include <util/log.h>
 #include <util/constants.h>
 #include <mse/streamsocket.h>
-#include "socks.h"
 
 using namespace bt;
 

@@ -17,11 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "authenticate.h"
 #include <util/log.h>
 #include <mse/streamsocket.h>
 #include <torrent/ipblocklist.h>
 #include <net/socks.h>
-#include "authenticate.h"
 #include "peermanager.h"
 
 namespace bt

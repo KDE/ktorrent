@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "chunkselector.h"
 #include <stdlib.h>
 #include <vector>
 #include <algorithm>
@@ -28,7 +29,6 @@
 #include <peer/peer.h>
 #include <peer/peermanager.h>
 #include <torrent/torrent.h>
-#include "chunkselector.h"
 #include "downloader.h"
 
 namespace bt

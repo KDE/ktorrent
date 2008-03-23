@@ -18,13 +18,13 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 //#define LOG_PACKET
+#include "packetwriter.h"
 
 #include <util/log.h>
 #include <util/file.h>
 #include <util/functions.h>
 #include <net/socketmonitor.h>
 #include "btversion.h"
-#include "packetwriter.h"
 #include "peer.h"
 #include <download/request.h>
 #include <diskio/chunk.h>

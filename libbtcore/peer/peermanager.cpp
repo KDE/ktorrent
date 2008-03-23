@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "peermanager.h"
 #include <QtAlgorithms>
 #include <QFile>
 #include <QTextStream>
@@ -34,7 +35,6 @@
 #include "chunkcounter.h"
 #include "authenticationmonitor.h"
 #include <qdatetime.h>
-#include "peermanager.h"
 #include "peer.h"
 #include <torrent/globals.h>
 #include <torrent/server.h>

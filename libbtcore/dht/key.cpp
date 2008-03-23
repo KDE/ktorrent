@@ -17,10 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "key.h"
 #include <time.h>
 #include <stdlib.h>
 #include <util/constants.h>
-#include "key.h"
 
 using namespace bt;
 

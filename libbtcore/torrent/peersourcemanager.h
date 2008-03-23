@@ -24,6 +24,8 @@
 #include <qdatetime.h>
 #include <qlist.h>
 #include <util/ptrmap.h>
+#include <util/constants.h>
+#include <util/waitjob.h>
 #include <interfaces/trackerslist.h>
 
 

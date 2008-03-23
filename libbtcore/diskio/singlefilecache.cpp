@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "singlefilecache.h"
 #include <QTextStream>
 #include <klocale.h>
 #include <qfileinfo.h>
@@ -29,7 +30,6 @@
 #include <torrent/torrent.h>
 #include "chunk.h"
 #include "cachefile.h"
-#include "singlefilecache.h"
 #include "preallocationthread.h"
 
 

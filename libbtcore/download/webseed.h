@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include <kurl.h>
+#include <util/constants.h>
 
 namespace bt
 {

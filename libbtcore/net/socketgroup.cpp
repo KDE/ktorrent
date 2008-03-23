@@ -17,10 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "socketgroup.h"
 #include <math.h>
 #include <util/log.h>
 #include <util/functions.h>
-#include "socketgroup.h"
 #include "bufferedsocket.h"
 		
 using namespace bt;

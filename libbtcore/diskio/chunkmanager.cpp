@@ -18,11 +18,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "chunkmanager.h"
 #include <algorithm>
 #include <util/file.h>
 #include <util/array.h>
 #include <qstringlist.h>
-#include "chunkmanager.h"
 #include <torrent/torrent.h>
 #include <util/error.h>
 #include <util/bitset.h>
@@ -199,7 +199,7 @@ namespace bt
 		{
 			// no index file, so assume it's empty
 			bt::Touch(index_file,true);
-			Out(SYS_DIO|LOG_IMPORTANT) << "Can't open index file : " << fptr.errorString() << endl;
+			Out(SYS_DIO|LOG_IMPORTANT) << "Can not open index file : " << fptr.errorString() << endl;
 			during_load = false;
 			return;
 		}
@@ -452,7 +452,7 @@ namespace bt
 		{
 			// no index file, so assume it's empty
 			bt::Touch(index_file,true);
-			Out(SYS_DIO|LOG_IMPORTANT) << "Can't open index file : " << fptr.errorString() << endl;
+			Out(SYS_DIO|LOG_IMPORTANT) << "Can not open index file : " << fptr.errorString() << endl;
 			// try again
 			if (!fptr.open(index_file,"r+b"))
 				// panick if it failes
@@ -656,7 +656,7 @@ namespace bt
 		File fptr;
 		if (!fptr.open(file_info_file,"wb"))
 		{
-			Out(SYS_DIO|LOG_IMPORTANT) << "Warning : Can't save chunk_info file : " << fptr.errorString() << endl;
+			Out(SYS_DIO|LOG_IMPORTANT) << "Warning : Can not save chunk_info file : " << fptr.errorString() << endl;
 			return;
 		}
 
@@ -726,7 +726,7 @@ namespace bt
 		File fptr;
 		if (!fptr.open(file_priority_file,"wb"))
 		{
-			Out(SYS_DIO|LOG_IMPORTANT) << "Warning : Can't save chunk_info file : " << fptr.errorString() << endl;
+			Out(SYS_DIO|LOG_IMPORTANT) << "Warning : Can not save chunk_info file : " << fptr.errorString() << endl;
 			return;
 		}
 
@@ -853,7 +853,7 @@ namespace bt
 		{
 		//	Out(SYS_DIO|LOG_DEBUG) << "Excluding chunks " << first << " to " << last << endl;
 			// first and last chunk may be part of multiple files
-			// so we can't just exclude them
+			// so we can not just exclude them
 			QList<Uint32> files,last_files;
 
 			// get list of files where first chunk lies in
@@ -978,7 +978,7 @@ namespace bt
 		Uint32 last = tf->getLastChunk();
 		
 		// first and last chunk may be part of multiple files
-		// so we can't just exclude them
+		// so we can not just exclude them
 		QList<Uint32> files;
 
 		// get list of files where first chunk lies in

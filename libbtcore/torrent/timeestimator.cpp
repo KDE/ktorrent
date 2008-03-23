@@ -17,11 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "timeestimator.h"
 #include <math.h>
 #include <torrent/globals.h>
 #include <util/log.h>
 #include <util/constants.h>
-#include "timeestimator.h"
 #include "torrentcontrol.h"
 //#include "settings.h"
 

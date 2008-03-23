@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "fileops.h"
 #include <config-ktorrent.h>
 
 #include <string.h>
@@ -32,7 +33,6 @@
 #include <qdir.h>
 #include <qfile.h>
 #include <qstringlist.h>
-#include "fileops.h"
 #include "error.h"
 #include "log.h"
 #include "file.h"

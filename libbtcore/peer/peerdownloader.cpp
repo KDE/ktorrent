@@ -17,10 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "peerdownloader.h"
+
 #include <math.h>
 #include <util/functions.h>
 #include <util/log.h>
-#include "peerdownloader.h"
 #include "peer.h"
 #include <download/piece.h>
 #include "packetwriter.h"

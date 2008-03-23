@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "downloader.h"
 #include <util/file.h>
 #include <util/log.h>
 #include <diskio/chunkmanager.h>
@@ -34,7 +35,6 @@
 #include <peer/packetwriter.h>
 #include <torrent/ipblocklist.h>
 #include "chunkselector.h"
-#include "downloader.h"
 #include "btversion.h"
 #include "webseed.h"
 

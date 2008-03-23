@@ -22,6 +22,7 @@
 
 #include <qobject.h>
 #include <util/ptrmap.h>
+#include <util/constants.h>
 #include <btcore_export.h>
 
 

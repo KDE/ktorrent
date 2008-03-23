@@ -20,7 +20,7 @@
 #ifndef BTMULTIDATACHECKER_H
 #define BTMULTIDATACHECKER_H
 
-
+#include <QString>
 #include "datachecker.h"
 
 namespace bt

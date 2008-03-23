@@ -17,11 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "sha1hashgen.h"
 #include <stdio.h>
 #include <QtCrypto>
 #include <string.h>
 #include <arpa/inet.h>
-#include "sha1hashgen.h"
 #include "functions.h"
 
 

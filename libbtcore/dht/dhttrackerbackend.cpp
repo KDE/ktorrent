@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "dhttrackerbackend.h"
 #include <kurl.h>
 #include <qhostaddress.h>
 #include <util/log.h>
@@ -24,7 +25,6 @@
 #include <torrent/globals.h>
 #include <torrent/server.h>
 #include <interfaces/torrentinterface.h>
-#include "dhttrackerbackend.h"
 #include "dht.h"
 #include "announcetask.h"
 

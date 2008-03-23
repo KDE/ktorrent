@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "serverauthenticate.h"
 #include <mse/streamsocket.h>
 #include <util/sha1hash.h>
 #include <util/log.h>
@@ -24,7 +25,6 @@
 #include <torrent/globals.h>
 #include <torrent/server.h>
 #include "peermanager.h"
-#include "serverauthenticate.h"
 #include "peerid.h"
 #include <torrent/torrent.h>
 #include <torrent/ipblocklist.h>

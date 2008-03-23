@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "torrentcreator.h"
 #include <qdir.h>
 #include <qfileinfo.h>
 #include <klocale.h>
@@ -34,7 +35,6 @@
 #include "globals.h"
 #include "statsfile.h"
 #include "torrentcontrol.h"
-#include "torrentcreator.h"
 
 namespace bt
 {

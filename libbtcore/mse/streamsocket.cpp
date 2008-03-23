@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "streamsocket.h"
 #include <errno.h>
 #include <util/sha1hash.h>
 #include <util/log.h>
@@ -28,7 +29,6 @@
 #include <netinet/ip.h> 
 #include <netinet/tcp.h>
 #include <net/socketmonitor.h>
-#include "streamsocket.h"
 #include "rc4encryptor.h"
 
 using namespace bt;

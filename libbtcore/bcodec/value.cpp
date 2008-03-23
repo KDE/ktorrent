@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <qtextcodec.h>
 #include "value.h"
+#include <qtextcodec.h>
 
 namespace bt
 {

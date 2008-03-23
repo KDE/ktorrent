@@ -16,8 +16,9 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "torrent.h"
 #include <qfile.h>
 #include <qdatastream.h>
 #include <qstringlist.h>
@@ -28,7 +29,6 @@
 #include <util/sha1hashgen.h>
 #include <time.h>
 #include <stdlib.h>
-#include "torrent.h"
 #include <bcodec/bdecoder.h>
 #include <bcodec/bnode.h>
 

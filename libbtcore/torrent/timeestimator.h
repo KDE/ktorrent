@@ -20,6 +20,7 @@
 #ifndef BTTIMEESTIMATOR_H
 #define BTTIMEESTIMATOR_H
 
+#include <btcore_export.h>
 #include <util/constants.h>
 
 namespace bt

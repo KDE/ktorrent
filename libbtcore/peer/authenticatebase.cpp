@@ -17,13 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "authenticatebase.h"
 #include <mse/streamsocket.h>
 #include <util/sha1hash.h>
 #include <util/log.h>
 #include <dht/dhtbase.h>
 #include <torrent/globals.h>
 #include <peer/peerid.h>
-#include "authenticatebase.h"
 
 namespace bt
 {

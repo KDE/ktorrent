@@ -17,13 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "authenticationmonitor.h"
 #include <math.h>
 #include <unistd.h>
 #include <sys/poll.h>
 #include <util/functions.h>
 #include <util/log.h>
 #include <mse/streamsocket.h>
-#include "authenticationmonitor.h"
 #include "authenticatebase.h"
 
 

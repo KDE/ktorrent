@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "udptracker.h"
 #include <stdlib.h>
 #include <util/functions.h>
 #include <util/log.h>
@@ -27,7 +28,6 @@
 #include <torrent/globals.h>
 #include <torrent/server.h>
 #include "udptrackersocket.h"
-#include "udptracker.h"
 
 using namespace KNetwork;
 

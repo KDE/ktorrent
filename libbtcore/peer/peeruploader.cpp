@@ -17,11 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include "peeruploader.h"
 #include <set>
 #include <util/log.h>
 #include <util/functions.h>
 #include <util/sha1hash.h>
-#include "peeruploader.h"
 #include "peer.h"
 #include <diskio/chunkmanager.h>
 #include "packetwriter.h"

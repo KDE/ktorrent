@@ -17,10 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "speed.h"
 #include <util/log.h>
 #include <util/timer.h>
 #include <util/functions.h>
-#include "speed.h"
 
 using namespace bt;
 
