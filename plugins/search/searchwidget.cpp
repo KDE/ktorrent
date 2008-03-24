@@ -66,6 +66,7 @@ namespace kt
 		m_search_text = new KLineEdit(this);
 		addWidget(m_search_text);
 		m_search = KStandardAction::find(parent,SLOT(searchPressed()),this);
+		m_search->setText(i18n("Search"));
 		addAction(m_search);
 		addWidget(new QLabel(i18n(" Engine:")));
 		m_search_engine = new KComboBox(this);
