@@ -1079,8 +1079,13 @@ namespace bt
 		istats.prev_bytes_ul = val;
 		up->setBytesUploaded(val);
 		
-		this->istats.running_time_dl = st.readULong("RUNNING_TIME_DL");
-		this->istats.running_time_ul = st.readULong("RUNNING_TIME_UL");
+		istats.running_time_dl = st.readULong("RUNNING_TIME_DL");
+		istats.running_time_ul = st.readULong("RUNNING_TIME_UL");
+		// make sure runtime ul is allways equal or largen then running time dl
+		// in case something got corrupted
+		if (istats.running_time_ul < istats.running_time_dl)
+			istats.running_time_ul = istats.running_time_dl; 
+		
 		outputdir = st.readString("OUTPUTDIR").trimmed();
 		if (st.hasKey("CUSTOM_OUTPUT_NAME") && st.readULong("CUSTOM_OUTPUT_NAME") == 1)
 		{
