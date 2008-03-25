@@ -35,6 +35,7 @@
 #include "trackerview.h"		
 #include "infowidgetpluginsettings.h"
 #include "monitor.h"
+#include "webseedstab.h"
 
 
 #define NAME "Info Widget"
@@ -62,6 +63,7 @@ namespace kt
 		file_view = 0;
 		status_tab = 0;
 		monitor = 0;
+		webseeds_tab = 0;
 	}
 
 
@@ -75,6 +77,7 @@ namespace kt
 		
 		status_tab = new StatusTab(0);
 		file_view = new FileView(0);
+		
 		connect(getCore(),SIGNAL(torrentRemoved(bt::TorrentInterface*)),file_view,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
 
 		pref = new IWPrefPage(0);
@@ -98,6 +101,8 @@ namespace kt
 			peer_view->saveState(KGlobal::config());
 		if (file_view)
 			file_view->saveState(KGlobal::config());
+		if (webseeds_tab)
+			webseeds_tab->saveState(KGlobal::config());
 		KGlobal::config()->sync();
 		
 		getGUI()->removeViewListener(this);
@@ -110,6 +115,8 @@ namespace kt
 			getGUI()->removeToolWidget(tracker_view); 
 		if (peer_view)
 			getGUI()->removeToolWidget(peer_view);
+		if (webseeds_tab)
+			getGUI()->removeToolWidget(webseeds_tab);
 
 		delete monitor;
 		monitor = 0;
@@ -123,6 +130,8 @@ namespace kt
 		peer_view = 0;
 		delete tracker_view;
 		tracker_view = 0;
+		delete webseeds_tab;
+		webseeds_tab = 0;
 		pref->deleteLater();
 		pref = 0;
 	}
@@ -143,6 +152,9 @@ namespace kt
 		
 		if (tracker_view && tracker_view->isVisible())
 			tracker_view->update();
+		
+		if (webseeds_tab && webseeds_tab->isVisible())
+			webseeds_tab->update();
 	}
 
 	void InfoWidgetPlugin::currentTorrentChanged(bt::TorrentInterface* tc)
@@ -155,6 +167,8 @@ namespace kt
 			cd_view->changeTC(tc);
 		if (tracker_view)
 			tracker_view->changeTC(tc);
+		if (webseeds_tab)
+			webseeds_tab->changeTC(tc);
 		
 		if (peer_view)
 			peer_view->setEnabled(tc != 0);
@@ -169,6 +183,7 @@ namespace kt
 
 	void InfoWidgetPlugin::applySettings()
 	{
+		showWebSeedsTab( InfoWidgetPluginSettings::showWebSeedsTab());
 		showPeerView( InfoWidgetPluginSettings::showPeerView() );
 		showChunkView( InfoWidgetPluginSettings::showChunkView() );
 		showTrackerView( InfoWidgetPluginSettings::showTrackersView() );
@@ -230,6 +245,22 @@ namespace kt
 		{
 			getGUI()->removeToolWidget(tracker_view);
 			delete tracker_view; tracker_view = 0;
+		}
+	}
+	
+	void InfoWidgetPlugin::showWebSeedsTab(bool show)
+	{
+		if (show && !webseeds_tab)
+		{
+			webseeds_tab = new WebSeedsTab(0);
+			getGUI()->addToolWidget(webseeds_tab,"network-server",i18n("Webseeds"),GUIInterface::DOCK_BOTTOM);
+			webseeds_tab->loadState(KGlobal::config());
+			webseeds_tab->changeTC(const_cast<bt::TorrentInterface*>(getGUI()->getCurrentTorrent()));
+		}
+		else if (!show && webseeds_tab)
+		{
+			getGUI()->removeToolWidget(webseeds_tab);
+			delete webseeds_tab; webseeds_tab = 0;
 		}
 	}
 	

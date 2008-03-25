@@ -38,6 +38,7 @@ namespace bt
 	class PeerSource;
 	class TrackersList;
 	class SHA1Hash;
+	class WebSeedInterface;
 	
 	enum TorrentStatus
 	{
@@ -453,6 +454,12 @@ namespace bt
 		
 		/// Set the text codec
 		virtual void changeTextCodec(QTextCodec* tc) = 0;
+		
+		/// Get the number of webseeds
+		virtual Uint32 getNumWebSeeds() const = 0;
+		
+		/// Get a webseed (returns 0 if index is invalid)
+		virtual const WebSeedInterface* getWebSeed(Uint32 i) const = 0; 
 	signals:
 		/**
 		 * Emited when we have finished downloading.

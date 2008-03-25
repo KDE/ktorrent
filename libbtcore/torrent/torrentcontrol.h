@@ -199,6 +199,8 @@ namespace bt
 		virtual void removePeerSource(PeerSource* ps);
 		virtual const QTextCodec* getTextCodec() const;
 		virtual void changeTextCodec(QTextCodec* tc);
+		virtual Uint32 getNumWebSeeds() const;
+		virtual const WebSeedInterface* getWebSeed(Uint32 i) const;
 		
 		int getPriority() const { return istats.priority; }
 		void setPriority(int p);

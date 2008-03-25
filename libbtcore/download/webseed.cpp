@@ -18,7 +18,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include "webseed.h"
+
+#include <kprotocolmanager.h>
 #include <util/log.h>
 #include <torrent/torrent.h>
 #include <diskio/chunkmanager.h>
@@ -54,8 +57,12 @@ namespace bt
 		Uint32 total_pieces;
 		Uint32 pieces_downloaded;
 	};
+	
+	QString WebSeed::proxy_host;
+	Uint16 WebSeed::proxy_port = 8080;
+	bool WebSeed::proxy_enabled = false;
 
-	WebSeed::WebSeed(const KUrl & url,const Torrent & tor,ChunkManager & cman) : url(url),tor(tor),cman(cman)
+	WebSeed::WebSeed(const KUrl & url,const Torrent & tor,ChunkManager & cman) : WebSeedInterface(url),tor(tor),cman(cman)
 	{
 		first_chunk = last_chunk = tor.getNumChunks() + 1;
 		num_failures = 0;
@@ -69,6 +76,17 @@ namespace bt
 	{
 		delete conn;
 		delete current;
+	}
+	
+	void WebSeed::setProxy(const QString & host,bt::Uint16 port)
+	{
+		proxy_port = port;
+		proxy_host = host;
+	}
+	
+	void WebSeed::setProxyEnabled(bool on)
+	{
+		proxy_enabled = on;
 	}
 	
 	void WebSeed::reset()
@@ -114,7 +132,26 @@ namespace bt
 			conn = new HttpConnection();
 		
 		if (!conn->connected())
-			conn->connectTo(url);
+		{
+			if (!proxy_enabled)
+			{
+				QString proxy = KProtocolManager::proxyForUrl(url); // Use KDE settings
+				if (proxy.isNull() || proxy == "DIRECT")
+					conn->connectTo(url); // direct connection 
+				else
+				{
+					KUrl proxy_url(proxy);
+					conn->connectToProxy(proxy_url.host(),proxy_url.port() <= 0 ? 80 : proxy_url.port());
+				}
+			}
+			else 
+			{
+				if (proxy_host.isNull())
+					conn->connectTo(url); // direct connection 
+				else
+					conn->connectToProxy(proxy_host,proxy_port); // via a proxy
+			}
+		}
 		
 		if (tor.isMultiFile())
 		{
@@ -216,11 +253,12 @@ namespace bt
 				num_failures = 0;
 				finished();
 			}
-			
-			Uint32 ret = downloaded;
-			downloaded = 0;
-			return ret;
 		}
+		
+		Uint32 ret = downloaded;
+		downloaded = 0;
+		total_downloaded += ret;
+		return ret;
 	}
 	
 	void WebSeed::handleData(const QByteArray & tmp)

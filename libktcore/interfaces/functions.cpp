@@ -26,6 +26,7 @@
 #include <solid/networkinterface.h>
 #include <util/functions.h>
 #include <download/downloader.h>
+#include <download/webseed.h>
 #include <torrent/choker.h>
 #include <peer/authenticationmonitor.h>
 #include <peer/peermanager.h>
@@ -110,8 +111,13 @@ namespace kt
 		else
 			Tracker::setCustomIP(QString::null);
 		
-		bt::HTTPTracker::setProxyEnabled(Settings::doNotUseKDEProxy());
-		bt::HTTPTracker::setProxy(Settings::httpTrackerProxy());
+		
+		QString proxy = KUrl(Settings::httpProxy()).host();
+	;
+		bt::HTTPTracker::setProxyEnabled(!Settings::useKDEProxySettings() && Settings::useProxyForTracker());
+		bt::HTTPTracker::setProxy(proxy + ":" + Settings::httpProxyPort());
+		bt::WebSeed::setProxy(proxy,Settings::httpProxyPort());
+		bt::WebSeed::setProxyEnabled(!Settings::useKDEProxySettings() && Settings::useProxyForWebSeeds());
 		bt::Cache::setPreallocationEnabled(Settings::diskPrealloc());
 		bt::Cache::setPreallocateFully(Settings::fullDiskPrealloc());
 		bt::Cache::setUseFSSpecificPreallocMethod(Settings::fullDiskPreallocMethod() == 1);

@@ -23,7 +23,10 @@
 
 #include <QObject>
 #include <kurl.h>
+#include <btcore_export.h>
 #include <util/constants.h>
+#include <interfaces/webseedinterface.h>
+
 
 namespace bt
 {
@@ -38,7 +41,7 @@ namespace bt
 		@author Joris Guisson
 		Class which handles downloading from a webseed
 	*/
-	class WebSeed : public QObject
+	class BTCORE_EXPORT WebSeed : public QObject,public WebSeedInterface
 	{
 		Q_OBJECT
 	public:
@@ -76,6 +79,20 @@ namespace bt
 		
 		/// Get the current download rate
 		Uint32 getDownloadRate() const;
+		
+		/**
+		 * Set the proxy to use for all WebSeeds
+		 * @param host Hostname or IP address of the proxy
+		 * @param port Port number of the proxy
+		 */
+		static void setProxy(const QString & host,bt::Uint16 port);
+		
+		/**
+		 * Wether or not to enable or disable the use of a proxy.
+		 * When the proxy is disabled, we will use the KDE proxy settings.
+		 * @param on On or not
+		 */
+		static void setProxyEnabled(bool on);
 		
 	signals:
 		/**
@@ -115,7 +132,6 @@ namespace bt
 		void chunkStopped();
 		
 	private:
-		KUrl url;
 		const Torrent & tor;
 		ChunkManager & cman;
 		HttpConnection* conn;
@@ -127,6 +143,10 @@ namespace bt
 		Uint32 num_failures;
 		Uint32 downloaded;
 		WebSeedChunkDownload* current;
+		
+		static QString proxy_host;
+		static Uint16 proxy_port;
+		static bool proxy_enabled;
 	};
 
 }

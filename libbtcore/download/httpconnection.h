@@ -58,7 +58,7 @@ namespace bt
 			bool response_header_received;
 			bool request_sent;
 			
-			HttpGet(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len);
+			HttpGet(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len,bool using_proxy);
 			virtual ~HttpGet();
 			
 			bool onDataReady(Uint8* buf,Uint32 size);
@@ -69,6 +69,7 @@ namespace bt
 		State state;
 		mutable QMutex mutex;
 		QList<HttpGet*> requests;
+		bool using_proxy;
 	public:
 		HttpConnection();
 		virtual ~HttpConnection();
@@ -78,6 +79,13 @@ namespace bt
 		 * @param url Url of the webseeder
 		 */
 		void connectTo(const KUrl & url);
+		
+		/**
+		 * Connect to a proxy.
+		 * @param proxy The HTTP proxy to use (null means don't use any)
+		 * @param proxy_port The port of the HTTP proxy
+		 */
+		void connectToProxy(const QString & proxy,Uint16 proxy_port);
 		
 		/// Check if the connection is OK
 		bool ok() const;
@@ -112,7 +120,6 @@ namespace bt
 		
 	private slots:
 		void hostResolved(KNetwork::KResolverResults res);
-
 	};
 }
 

@@ -44,9 +44,11 @@ set(ktinfowidgetplugin_SRC
 	${geoip_src}
 	flagdb.cpp
 	iwfiletreemodel.cpp
-	iwfilelistmodel.cpp)
+	iwfilelistmodel.cpp
+	webseedstab.cpp
+	webseedsmodel.cpp)
 
-kde4_add_ui_files(ktinfowidgetplugin_SRC iwprefpage.ui statustab.ui chunkdownloadview.ui trackerview.ui)
+kde4_add_ui_files(ktinfowidgetplugin_SRC iwprefpage.ui statustab.ui chunkdownloadview.ui trackerview.ui webseedstab.ui)
 kde4_add_kcfg_files(ktinfowidgetplugin_SRC infowidgetpluginsettings.kcfgc)
 kde4_add_plugin(ktinfowidgetplugin ${ktinfowidgetplugin_SRC})
 

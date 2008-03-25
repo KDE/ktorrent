@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,72 +16,61 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTINFOWIDGETPLUGIN_H
-#define KTINFOWIDGETPLUGIN_H
+#ifndef KTWEBSEEDSMODEL_H
+#define KTWEBSEEDSMODEL_H
 
-#include <interfaces/plugin.h>
-#include <interfaces/guiinterface.h>
+#include <QAbstractTableModel>
+#include <util/constants.h>
 
 namespace bt
 {
 	class TorrentInterface;
 }
 
-
 namespace kt
 {
-	class PeerView;
-	class TrackerView;
-	class StatusTab;
-	class FileView;
-	class ChunkDownloadView;
-	class IWPrefPage;
-	class Monitor;
-	class WebSeedsTab;
-	
 
 	/**
-	@author Joris Guisson
+		@author
 	*/
-	class InfoWidgetPlugin : public Plugin,public ViewListener
+	class WebSeedsModel : public QAbstractTableModel
 	{
 		Q_OBJECT
+	
 	public:
-		InfoWidgetPlugin(QObject* parent,const QStringList& args);
-		virtual ~InfoWidgetPlugin();
-
-		virtual void load();
-		virtual void unload();
-		virtual void guiUpdate();
-		virtual void currentTorrentChanged(bt::TorrentInterface* tc);
-		virtual bool versionCheck(const QString & version) const;
+		WebSeedsModel(QObject* parent);
+		virtual ~WebSeedsModel();
 		
-		///Show PeerView in main window
-		void showPeerView(bool show);
-		///Show ChunkDownloadView in main window
-		void showChunkView(bool show);
-		///Show TrackerView in main window
-		void showTrackerView(bool show);
-		///Show WebSeedsTab in main window
-		void showWebSeedsTab(bool show);
+		
+		/**
+		 * Change the current torrent.
+		 * @param tc 
+		 */
+		void changeTC(bt::TorrentInterface* tc);
+		
+		/**
+		 *  See if we need to update the model
+		 */
+		bool update();
+		
+		virtual int rowCount(const QModelIndex & parent) const;
+		virtual int columnCount(const QModelIndex & parent) const;
+		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
+		virtual QVariant data(const QModelIndex & index, int role) const;
+		virtual bool removeRows(int row,int count,const QModelIndex & parent);
+		virtual bool insertRows(int row,int count,const QModelIndex & parent);
+		
 	private:
-		void createMonitor(bt::TorrentInterface* tc);
-
-	private slots:
-		void applySettings();
-		
-	private:
-		PeerView* peer_view;
-		ChunkDownloadView* cd_view;
-		TrackerView* tracker_view;
-		FileView* file_view;
-		StatusTab* status_tab;
-		WebSeedsTab* webseeds_tab;
-		Monitor* monitor; 
-		
-		IWPrefPage* pref;
+		struct Item
+		{
+			QString status;
+			bt::Uint64 downloaded;
+			bt::Uint32 speed;
+		};
+		bt::TorrentInterface* curr_tc;
+		QList<Item> items;
 	};
 
 }

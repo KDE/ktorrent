@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,72 +16,54 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTINFOWIDGETPLUGIN_H
-#define KTINFOWIDGETPLUGIN_H
+#ifndef KTWEBSEEDSTAB_H
+#define KTWEBSEEDSTAB_H
 
-#include <interfaces/plugin.h>
-#include <interfaces/guiinterface.h>
+#include <QWidget>
+#include <QSortFilterProxyModel>
+#include "ui_webseedstab.h"
 
 namespace bt
 {
 	class TorrentInterface;
 }
 
-
 namespace kt
 {
-	class PeerView;
-	class TrackerView;
-	class StatusTab;
-	class FileView;
-	class ChunkDownloadView;
-	class IWPrefPage;
-	class Monitor;
-	class WebSeedsTab;
-	
+	class WebSeedsModel;
 
 	/**
-	@author Joris Guisson
+		Tab which displays the list of webseeds of a torrent, and allows you to add or remove them.
 	*/
-	class InfoWidgetPlugin : public Plugin,public ViewListener
+	class WebSeedsTab : public QWidget,public Ui_WebSeedsTab
 	{
 		Q_OBJECT
 	public:
-		InfoWidgetPlugin(QObject* parent,const QStringList& args);
-		virtual ~InfoWidgetPlugin();
-
-		virtual void load();
-		virtual void unload();
-		virtual void guiUpdate();
-		virtual void currentTorrentChanged(bt::TorrentInterface* tc);
-		virtual bool versionCheck(const QString & version) const;
+		WebSeedsTab(QWidget* parent);
+		virtual ~WebSeedsTab();
 		
-		///Show PeerView in main window
-		void showPeerView(bool show);
-		///Show ChunkDownloadView in main window
-		void showChunkView(bool show);
-		///Show TrackerView in main window
-		void showTrackerView(bool show);
-		///Show WebSeedsTab in main window
-		void showWebSeedsTab(bool show);
-	private:
-		void createMonitor(bt::TorrentInterface* tc);
+		/**
+		 * Switch to a different torrent.
+		 * @param tc The torrent
+		 */
+		void changeTC(bt::TorrentInterface* tc);
 
+		/// Check to see if the GUI needs to be updated
+		void update();
+		
+		void saveState(KSharedConfigPtr cfg);
+		void loadState(KSharedConfigPtr cfg);
+		
 	private slots:
-		void applySettings();
-		
+		void addWebSeed();
+		void removeWebSeed();
+
 	private:
-		PeerView* peer_view;
-		ChunkDownloadView* cd_view;
-		TrackerView* tracker_view;
-		FileView* file_view;
-		StatusTab* status_tab;
-		WebSeedsTab* webseeds_tab;
-		Monitor* monitor; 
-		
-		IWPrefPage* pref;
+		bt::TorrentInterface* curr_tc;
+		WebSeedsModel* model;
+		QSortFilterProxyModel* proxy_model;
 	};
 
 }

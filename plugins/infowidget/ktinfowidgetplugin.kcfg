@@ -18,5 +18,8 @@
 			<label>Show trackers view tab in main window</label>
 			<default>true</default>
 		</entry>
+		<entry name="showWebSeedsTab" type="Bool">
+			<default>true</default>
+		</entry>
 	</group>
 </kcfg>

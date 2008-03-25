@@ -67,6 +67,7 @@
 #include "speedlimitsdlg.h"
 #include "queuemanagerwidget.h"
 
+
 namespace kt
 {
 	GUI::GUI() : core(0),pref_dlg(0)

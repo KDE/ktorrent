@@ -44,7 +44,10 @@ namespace kt
 
 	void ProxyPref::loadSettings()
 	{
-		kcfg_httpTrackerProxy->setEnabled(Settings::doNotUseKDEProxy());
+		kcfg_httpProxy->setEnabled(!Settings::useKDEProxySettings());
+		kcfg_httpProxyPort->setEnabled(!Settings::useKDEProxySettings());
+		kcfg_useProxyForWebSeeds->setEnabled(!Settings::useKDEProxySettings());
+		kcfg_useProxyForTracker->setEnabled(!Settings::useKDEProxySettings());
 		
 		kcfg_socksProxy->setEnabled(Settings::socksEnabled());
 		kcfg_socksVersion->setEnabled(Settings::socksEnabled());

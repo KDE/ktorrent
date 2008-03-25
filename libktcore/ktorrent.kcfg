@@ -188,11 +188,22 @@
 		<entry name="shownColumns" type="IntList">
 			<label>Columns shown in KTorrentView</label>
 		</entry>
-		<entry name="doNotUseKDEProxy" type="Bool">
-			<default>false</default>
+		<entry name="useKDEProxySettings" type="Bool">
+			<default>true</default>
 		</entry>
-		<entry name="httpTrackerProxy" type="String">
+		<entry name="httpProxy" type="String">
 			<default code="true">QString::null</default>
+		</entry>
+		<entry name="httpProxyPort" type="Int">
+			<default>8080</default>
+			<min>1</min>
+			<max>65535</max>
+		</entry>
+		<entry name="useProxyForWebSeeds" type="Bool">
+			<default>true</default>
+		</entry>
+		<entry name="useProxyForTracker" type="Bool">
+			<default>true</default>
 		</entry>
 		<entry name="socksEnabled" type="Bool">
 			<default>false</default>

@@ -29,7 +29,7 @@
 namespace bt
 {
 
-	HttpConnection::HttpConnection() : sock(0),state(IDLE),mutex(QMutex::Recursive)
+	HttpConnection::HttpConnection() : sock(0),state(IDLE),mutex(QMutex::Recursive),using_proxy(false)
 	{
 	}
 
@@ -63,10 +63,19 @@ namespace bt
 		return state == CLOSED || (sock && !sock->ok());
 	}
 	
+	void HttpConnection::connectToProxy(const QString & proxy,Uint16 proxy_port)
+	{
+		using_proxy = true;
+		KNetwork::KResolver::resolveAsync(this, SLOT(hostResolved(KNetwork::KResolverResults)), 
+										  proxy, QString::number(proxy_port == 0 ? 8080 : proxy_port));
+		state = RESOLVING;
+	}
+	
 	void HttpConnection::connectTo(const KUrl & url)
 	{
+		using_proxy = false;
 		KNetwork::KResolver::resolveAsync(this, SLOT(hostResolved(KNetwork::KResolverResults)), 
-										  url.host(), QString::number(url.port() <= 0 ? 80 : url.port()));
+										url.host(), QString::number(url.port() <= 0 ? 80 : url.port()));
 		state = RESOLVING;
 	}
 
@@ -185,7 +194,7 @@ namespace bt
 		if (state == ERROR)
 			return false;
 			
-		HttpGet* g = new HttpGet(host,path,start,len);
+		HttpGet* g = new HttpGet(host,path,start,len,using_proxy);
 		requests.append(g);
 		net::SocketMonitor::instance().signalPacketReady();
 		return true;
@@ -232,13 +241,16 @@ namespace bt
 	
 	////////////////////////////////////////////
 	
-	HttpConnection::HttpGet::HttpGet(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len) : path(path),start(start),len(len),data_received(0),bytes_sent(0),response_header_received(false),request_sent(false)
+	HttpConnection::HttpGet::HttpGet(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len,bool using_proxy) : path(path),start(start),len(len),data_received(0),bytes_sent(0),response_header_received(false),request_sent(false)
 	{
 		QHttpRequestHeader request("GET",path);
-		request.setValue("Connection","Keep-Alive");
 		request.setValue("Range",QString("bytes=%1-%2").arg(start).arg(start + len - 1));
 		request.setValue("User-Agent",bt::GetVersionString());
 		request.setValue("Host",host);
+		if (using_proxy)
+			request.setValue("Proxy-Connection","Keep-Alive");
+		else
+			request.setValue("Connection","Keep-Alive");
 		buffer = request.toString().toLocal8Bit();
 	//	Out(SYS_CON|LOG_DEBUG) << "HttpConnection: sending http request:" << endl;
 	//	Out(SYS_CON|LOG_DEBUG) << request.toString() << endl;

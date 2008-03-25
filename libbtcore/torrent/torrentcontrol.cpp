@@ -44,6 +44,7 @@
 #include <dht/dhtbase.h>
 
 #include <download/downloader.h>
+#include <download/webseed.h>
 #include "uploader.h"
 #include "peersourcemanager.h"
 #include <diskio/cache.h>
@@ -1893,6 +1894,16 @@ namespace bt
 	void TorrentControl::setCacheFactory(CacheFactory* cf)
 	{
 		cache_factory = cf;
+	}
+	
+	Uint32 TorrentControl::getNumWebSeeds() const
+	{
+		return down->getNumWebSeeds();
+	}
+	
+	const WebSeedInterface* TorrentControl::getWebSeed(Uint32 i) const
+	{
+		return down->getWebSeed(i);
 	}
 }
 

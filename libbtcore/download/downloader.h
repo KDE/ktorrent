@@ -79,6 +79,12 @@ namespace bt
 		Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman,ChunkSelectorFactoryInterface* fac);
 		virtual ~Downloader();
 
+		/// Get the number of webseeds
+		Uint32 getNumWebSeeds() const {return webseeds.count();}
+		
+		/// Get a webseed
+		const WebSeed* getWebSeed(Uint32 i) const {return i < webseeds.count() ? webseeds[i] : 0;}
+		
 		/// Get the number of bytes we have downloaded
 		Uint64 bytesDownloaded() const {return downloaded + curr_chunks_downloaded;}
 
