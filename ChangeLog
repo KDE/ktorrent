@@ -1,3 +1,6 @@
+Changes in 3.0.2 :
+- Make sure seed time cannot wrap around (159756)
+
 Changes in 3.0.1 :
 - Fix sessionTTL not being able to be bigger then 99
 - Ported stop all and start all in system tray menu fix from KDE3 version

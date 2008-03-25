@@ -159,10 +159,11 @@ namespace kt
 		}
 		
 		Uint32 rul = tc->getRunningTimeUL();
-		if (runtime_ul != rul - rdl)
+		rul = rul >= rdl ? rul - rdl : 0; // make sure rul cannot go negative
+		if (runtime_ul != rul)
 		{
 			ret = true;
-			runtime_ul = rul - rdl;
+			runtime_ul = rul;
 			mdl->emitDataChanged(row,13);
 		}
 		return ret;
