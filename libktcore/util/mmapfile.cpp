@@ -18,7 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 
-#include <config-ktorrent.h>
+#include <config-btcore.h>
 
 
 #include <stdio.h>

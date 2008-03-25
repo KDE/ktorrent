@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "file.h"
 
-#include <config-ktorrent.h>
+#include <config-btcore.h>
 
 #include <qfile.h>
 #include <klocale.h>
