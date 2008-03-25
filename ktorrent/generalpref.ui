@@ -132,6 +132,19 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_openMultipleTorrentsSilently" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">When you select multiple torrents to be opened at the same time, open them silently.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="text" >
+         <string>Open multiple torrents silently</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

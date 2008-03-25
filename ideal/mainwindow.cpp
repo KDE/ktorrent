@@ -251,6 +251,9 @@ namespace ideal
 		if (!left_corner)
 		{
 			left_corner = new KPushButton(this);
+			int bs = left_corner->sizeHint().height();
+			left_corner->setFixedSize(bs, bs);
+			left_corner->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
 			tabs->setCornerWidget(left_corner,Qt::TopLeftCorner);
 		}
 		return left_corner;
@@ -261,6 +264,9 @@ namespace ideal
 		if (!right_corner)
 		{
 			right_corner = new KPushButton(this);
+			int bs = right_corner->sizeHint().height();
+			right_corner->setFixedSize(bs, bs);
+			right_corner->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
 			tabs->setCornerWidget(right_corner,Qt::TopRightCorner);
 		}
 		return right_corner;

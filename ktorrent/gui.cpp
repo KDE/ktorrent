@@ -281,7 +281,12 @@ namespace kt
 			foreach (KUrl url,urls)
 			{
 				if (url.isValid())
-					core->loadSilently(url);
+				{
+					if (Settings::openMultipleTorrentsSilently())
+						loadSilently(url);
+					else
+						load(url);
+				}
 			}
 		}
 	}
@@ -463,7 +468,7 @@ namespace kt
 		stop_all_action = new KAction(KIcon("ktstop_all"),i18n("Stop All"),this);
 		connect(stop_all_action,SIGNAL(triggered()),this,SLOT(stopAllTorrents()));
 		
-		paste_url_action = new KAction(KIcon("edit-paste"),i18n("Paste Torrent URL"),this);
+		paste_url_action = new KAction(KIcon(open_action->icon()),i18n("Open URL"),this);
 		connect(paste_url_action,SIGNAL(triggered()),this,SLOT(pasteURL()));
 		ac->addAction("paste_url",paste_url_action);
 
