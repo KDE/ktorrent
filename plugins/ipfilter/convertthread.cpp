@@ -106,7 +106,7 @@ namespace kt
 		QTextStream stream( &source );
 				
 		int i = 0;
-		QRegExp rx( "[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}-[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}" );
+		QRegExp rx( "([0-9]{1,3}\\.){3}[0-9]{1,3}-([0-9]{1,3}\\.){3}[0-9]{1,3}" );
 		QRegExpValidator v( rx, 0 );
 		int poz = 0;
 
@@ -117,7 +117,7 @@ namespace kt
 			dlg->progress(i,source_size);
 			++i;
 			
-			QString ip_part = line.section( ':' , -1 );
+			QString ip_part = line.section( ':' , -1 ).trimmed();
 			if ( v.validate( ip_part, poz ) != QValidator::Acceptable )
 				continue;
 			else
