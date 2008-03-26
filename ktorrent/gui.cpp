@@ -20,6 +20,7 @@
  ***************************************************************************/
 #include <qtimer.h>
 #include <QClipboard>
+#include <QToolButton>
 #include <kconfig.h>
 #include <klocale.h>
 #include <kaction.h>
@@ -95,8 +96,8 @@ namespace kt
 		connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
 		timer.start(Settings::guiUpdateInterval());
 		
-		KPushButton* lc = leftCornerButton();
-		KPushButton* rc = rightCornerButton();
+		QToolButton* lc = leftCornerButton();
+		QToolButton* rc = rightCornerButton();
 
 		lc->setIcon(KIcon("tab-new"));
 		connect(lc,SIGNAL(clicked()),this,SLOT(newView()));

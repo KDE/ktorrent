@@ -20,6 +20,7 @@
  ***************************************************************************/
 #include <stdio.h>
 #include <QSplitter>
+#include <QToolButton>
 #include <ktabwidget.h>
 #include <kicon.h>
 #include <kmultitabbar.h>
@@ -246,27 +247,21 @@ namespace ideal
 	}
 
 
-	KPushButton* MainWindow::leftCornerButton()
+	QToolButton* MainWindow::leftCornerButton()
 	{
 		if (!left_corner)
 		{
-			left_corner = new KPushButton(this);
-			int bs = left_corner->sizeHint().height();
-			left_corner->setFixedSize(bs, bs);
-			left_corner->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+			left_corner = new QToolButton(this);
 			tabs->setCornerWidget(left_corner,Qt::TopLeftCorner);
 		}
 		return left_corner;
 	}	
 
-	KPushButton* MainWindow::rightCornerButton()
+	QToolButton* MainWindow::rightCornerButton()
 	{
 		if (!right_corner)
 		{
-			right_corner = new KPushButton(this);
-			int bs = right_corner->sizeHint().height();
-			right_corner->setFixedSize(bs, bs);
-			right_corner->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+			right_corner = new QToolButton(this);
 			tabs->setCornerWidget(right_corner,Qt::TopRightCorner);
 		}
 		return right_corner;

@@ -26,7 +26,7 @@
 
 class QSplitter;
 class KTabWidget;
-class KPushButton;
+class QToolButton;
 
 namespace ideal
 {
@@ -71,10 +71,10 @@ namespace ideal
 		void changeTabText(QWidget* ti,const QString & text);
 
 		/// Get the left corner button of the tabwidget (if it doesn't exist it will be created)
-		KPushButton* leftCornerButton();	
+		QToolButton* leftCornerButton();	
 
 		/// Get the right corner button of the tabwidget (if it doesn't exist it will be created)
-		KPushButton* rightCornerButton();
+		QToolButton* rightCornerButton();
 
 		/// Get the current tab page of the tab widget
 		QWidget* currentTabPage();
@@ -104,8 +104,8 @@ namespace ideal
 		Box* hbox;
 		QSplitter* vsplit;
 		Box* vbox;
-		KPushButton* left_corner;
-		KPushButton* right_corner;
+		QToolButton* left_corner;
+		QToolButton* right_corner;
 	};
 }
 
