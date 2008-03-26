@@ -201,6 +201,8 @@ namespace bt
 		virtual void changeTextCodec(QTextCodec* tc);
 		virtual Uint32 getNumWebSeeds() const;
 		virtual const WebSeedInterface* getWebSeed(Uint32 i) const;
+		virtual bool addWebSeed(const KUrl & url);
+		virtual bool removeWebSeed(const KUrl & url);
 		
 		int getPriority() const { return istats.priority; }
 		void setPriority(int p);

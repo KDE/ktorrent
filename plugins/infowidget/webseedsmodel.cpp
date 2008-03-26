@@ -150,19 +150,5 @@ namespace kt
 		}
 		return QVariant();
 	}
-	
-	bool WebSeedsModel::removeRows(int row,int count,const QModelIndex & parent)
-	{
-		beginInsertRows(QModelIndex(),row,row + count - 1);
-		endInsertRows();
-		return true;
-	}
-	
-	bool WebSeedsModel::insertRows(int row,int count,const QModelIndex & parent)
-	{
-		beginInsertRows(QModelIndex(),row,row + count - 1);
-		endInsertRows();
-		return true;
-	}
 
 }

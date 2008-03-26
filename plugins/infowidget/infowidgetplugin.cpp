@@ -259,6 +259,7 @@ namespace kt
 		}
 		else if (!show && webseeds_tab)
 		{
+			webseeds_tab->saveState(KGlobal::config());
 			getGUI()->removeToolWidget(webseeds_tab);
 			delete webseeds_tab; webseeds_tab = 0;
 		}

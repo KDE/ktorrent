@@ -25,6 +25,7 @@
 #include <util/constants.h>
 #include <btcore_export.h>
 
+class KUrl;
 
 namespace bt
 {
@@ -84,6 +85,18 @@ namespace bt
 		
 		/// Get a webseed
 		const WebSeed* getWebSeed(Uint32 i) const {return i < webseeds.count() ? webseeds[i] : 0;}
+		
+		/// Add a webseed
+		bool addWebSeed(const KUrl & url);
+		
+		/// Remove a webseed
+		bool removeWebSeed(const KUrl & url);
+		
+		/// Save the user created webseeds
+		void saveWebSeeds(const QString & file);
+		
+		/// Add the user created webseeds
+		void loadWebSeeds(const QString & file);
 		
 		/// Get the number of bytes we have downloaded
 		Uint64 bytesDownloaded() const {return downloaded + curr_chunks_downloaded;}

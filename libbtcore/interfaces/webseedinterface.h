@@ -34,7 +34,7 @@ namespace bt
 	class BTCORE_EXPORT WebSeedInterface 
 	{
 	public:
-		WebSeedInterface(const KUrl & url);
+		WebSeedInterface(const KUrl & url,bool user);
 		virtual ~WebSeedInterface();
 		
 		/// Get the URL of the webseed
@@ -48,11 +48,15 @@ namespace bt
 		
 		/// Get the current download rate in bytes per sec
 		virtual Uint32 getDownloadRate() const = 0;
+		
+		/// Wether or not this webseed was user created
+		bool isUserCreated() const {return user;}
 
 	protected:
 		KUrl url;
 		Uint64 total_downloaded;
 		QString status;
+		bool user;
 	};
 
 }

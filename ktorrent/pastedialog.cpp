@@ -42,9 +42,6 @@ namespace kt
 
 		if ( url.isValid() )
 			m_url->setText ( text );
-
-		m_ok->setGuiItem(KStandardGuiItem::ok());
-		m_cancel->setGuiItem(KStandardGuiItem::cancel());
 	}
 
 	void PasteDialog::accept()
@@ -57,7 +54,7 @@ namespace kt
 		}
 		else
 		{
-			KMessageBox::error ( this,i18n ( "Malformed URL." ) );
+			KMessageBox::error(this,i18n("Invalid URL: ",m_url->text()) );
 		}
 	}
 }

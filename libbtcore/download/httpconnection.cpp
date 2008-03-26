@@ -21,6 +21,7 @@
 #include "httpconnection.h"
 #include <QtAlgorithms>
 #include <kurl.h>
+#include <klocale.h>
 #include <net/socketmonitor.h>
 #include <util/log.h>
 
@@ -31,6 +32,7 @@ namespace bt
 
 	HttpConnection::HttpConnection() : sock(0),state(IDLE),mutex(QMutex::Recursive),using_proxy(false)
 	{
+		status = i18n("Not connected");
 	}
 
 
@@ -43,6 +45,12 @@ namespace bt
 		}
 		
 		qDeleteAll(requests);
+	}
+	
+	const QString HttpConnection::getStatusString() const
+	{
+		QMutexLocker locker(&mutex);
+		return status;
 	}
 	
 	bool HttpConnection::ok() const 
@@ -89,6 +97,7 @@ namespace bt
 			{
 				 // connection closed
 				state = CLOSED;
+				status = i18n("Connection closed");
 			}
 			else
 			{
@@ -96,6 +105,7 @@ namespace bt
 				if (!g->onDataReady(buf,size))
 				{
 					state = ERROR;
+					status = i18n("Error: request failed");
 				}
 			}
 		}
@@ -110,11 +120,13 @@ namespace bt
 			{
 				//Out(SYS_CON|LOG_DEBUG) << "HttpConnection: connected "  << endl;
 				state = ACTIVE;
+				status = i18n("Connected");
 			}
 			else
 			{
 				Out(SYS_CON|LOG_IMPORTANT) << "HttpConnection: failed to connect to webseed "  << endl;
 				state = ERROR;
+				status = i18n("Failed to connect to webseed");
 			}
 		}
 		else if (state == ACTIVE)
@@ -165,12 +177,14 @@ namespace bt
 			
 			if (sock->connectTo(addr))
 			{
+				status = i18n("Connected");
 				state = ACTIVE;
 				net::SocketMonitor::instance().add(sock);
 				net::SocketMonitor::instance().signalPacketReady();
 			}
 			else if (sock->state() == net::Socket::CONNECTING)
 			{
+				status = i18n("Connecting");
 				state = CONNECTING;
 				net::SocketMonitor::instance().add(sock);
 				net::SocketMonitor::instance().signalPacketReady();
@@ -179,12 +193,14 @@ namespace bt
 			{
 				Out(SYS_CON|LOG_IMPORTANT) << "HttpConnection: failed to connect to webseed" << endl;
 				state = ERROR;
+				status = i18n("Failed to connect to webseed");
 			}
 		}
 		else
 		{
 			Out(SYS_CON|LOG_IMPORTANT) << "HttpConnection: failed to resolve hostname of webseed" << endl;
 			state = ERROR;
+			status = i18n("Failed to resolve hostname of webseed");
 		}
 	}
 	

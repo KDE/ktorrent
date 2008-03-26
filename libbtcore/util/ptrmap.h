@@ -175,6 +175,17 @@ namespace bt
 			pmap.erase(i);
 			return true;
 		}
+		
+		/**
+			Erase an iterator from the map.
+		*/
+		iterator erase(iterator i)
+		{
+			iterator j = i;
+			j++;
+			pmap.erase(i);
+			return j;
+		}
 	};
 
 }

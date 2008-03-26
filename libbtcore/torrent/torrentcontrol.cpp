@@ -637,6 +637,7 @@ namespace bt
 
 		// create downloader,uploader and choker
 		down = new Downloader(*tor,*pman,*cman,custom_selector_factory);
+		down->loadWebSeeds(tordir + "webseeds");
 		connect(down,SIGNAL(ioError(const QString& )),
 				this,SLOT(onIOError(const QString& )));
 		up = new Uploader(*cman,*pman);
@@ -1904,6 +1905,22 @@ namespace bt
 	const WebSeedInterface* TorrentControl::getWebSeed(Uint32 i) const
 	{
 		return down->getWebSeed(i);
+	}
+	
+	bool TorrentControl::addWebSeed(const KUrl & url)
+	{
+		bool ret = down->addWebSeed(url);
+		if (ret)
+			down->saveWebSeeds(tordir + "webseeds");
+		return ret;
+	}
+	
+	bool TorrentControl::removeWebSeed(const KUrl & url)
+	{
+		bool ret = down->removeWebSeed(url);
+		if (ret)
+			down->saveWebSeeds(tordir + "webseeds");
+		return ret;
 	}
 }
 

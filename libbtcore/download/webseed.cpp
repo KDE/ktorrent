@@ -21,6 +21,7 @@
 
 #include "webseed.h"
 
+#include <klocale.h>
 #include <kprotocolmanager.h>
 #include <util/log.h>
 #include <torrent/torrent.h>
@@ -62,13 +63,14 @@ namespace bt
 	Uint16 WebSeed::proxy_port = 8080;
 	bool WebSeed::proxy_enabled = false;
 
-	WebSeed::WebSeed(const KUrl & url,const Torrent & tor,ChunkManager & cman) : WebSeedInterface(url),tor(tor),cman(cman)
+	WebSeed::WebSeed(const KUrl & url,bool user,const Torrent & tor,ChunkManager & cman) : WebSeedInterface(url,user),tor(tor),cman(cman)
 	{
 		first_chunk = last_chunk = tor.getNumChunks() + 1;
 		num_failures = 0;
 		conn = 0;
 		downloaded = 0;
 		current = 0;
+		status = i18n("Not connected");
 	}
 
 
@@ -99,7 +101,7 @@ namespace bt
 		
 		first_chunk = last_chunk = tor.getNumChunks() + 1;
 		num_failures = 0;
-		
+		status = i18n("Not connected");
 	}
 
 	bool WebSeed::busy() const
@@ -151,6 +153,7 @@ namespace bt
 				else
 					conn->connectToProxy(proxy_host,proxy_port); // via a proxy
 			}
+			status = conn->getStatusString();
 		}
 		
 		if (tor.isMultiFile())
@@ -223,7 +226,10 @@ namespace bt
 			{
 				// lets try this again
 				download(cur_chunk,last_chunk);
+				status = conn->getStatusString();
 			}
+			else
+				status = i18n("Error, failed to connect");
 			return 0;
 		}
 		else if (conn->closed())
@@ -232,9 +238,11 @@ namespace bt
 			delete conn;
 			conn = 0;
 			
+			status = i18n("Connection closed");
 			chunkStopped();
 			// lets try this again
 			download(cur_chunk,last_chunk);
+			status = conn->getStatusString();
 		}
 		else
 		{
@@ -253,6 +261,7 @@ namespace bt
 				num_failures = 0;
 				finished();
 			}
+			status = conn->getStatusString();
 		}
 		
 		Uint32 ret = downloaded;

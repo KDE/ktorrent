@@ -45,7 +45,7 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-		WebSeed(const KUrl & url,const Torrent & tor,ChunkManager & cman);
+		WebSeed(const KUrl & url,bool user,const Torrent & tor,ChunkManager & cman);
 		virtual ~WebSeed();
 		
 		/// Is this webseed busy ?

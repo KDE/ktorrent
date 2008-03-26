@@ -70,6 +70,7 @@ namespace bt
 		mutable QMutex mutex;
 		QList<HttpGet*> requests;
 		bool using_proxy;
+		QString status;
 	public:
 		HttpConnection();
 		virtual ~HttpConnection();
@@ -117,6 +118,9 @@ namespace bt
 		
 		/// Get the current download rate
 		float getDownloadRate() const;
+		
+		/// Get the status string
+		const QString getStatusString() const;
 		
 	private slots:
 		void hostResolved(KNetwork::KResolverResults res);

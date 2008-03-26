@@ -18,6 +18,9 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include "downloader.h"
+
+#include <QFile>
+#include <QTextStream>
 #include <util/file.h>
 #include <util/log.h>
 #include <diskio/chunkmanager.h>
@@ -66,7 +69,7 @@ namespace bt
 		{
 			if (u.protocol() == "http")
 			{
-				WebSeed* ws = new WebSeed(u,tor,cman);
+				WebSeed* ws = new WebSeed(u,false,tor,cman);
 				webseeds.append(ws);
 				connect(ws,SIGNAL(chunkReady(Chunk*)),this,SLOT(onChunkReady(Chunk*)));
 				connect(ws,SIGNAL(chunkDownloadStarted(ChunkDownloadInterface*)),
@@ -828,6 +831,90 @@ namespace bt
 		
 		if (tmon)
 			tmon->downloadRemoved(cd);
+	}
+	
+	bool Downloader::addWebSeed(const KUrl & url)
+	{
+		// Check for dupes
+		foreach (WebSeed* ws,webseeds)
+		{
+			if (ws->getUrl() == url)
+				return false;
+		}
+		
+		WebSeed* ws = new WebSeed(url,true,tor,cman);
+		webseeds.append(ws);
+		connect(ws,SIGNAL(chunkReady(Chunk*)),this,SLOT(onChunkReady(Chunk*)));
+		connect(ws,SIGNAL(chunkDownloadStarted(ChunkDownloadInterface*)),
+				this,SLOT(chunkDownloadStarted(ChunkDownloadInterface*)));
+		connect(ws,SIGNAL(chunkDownloadFinished(ChunkDownloadInterface*)),
+				this,SLOT(chunkDownloadFinished(ChunkDownloadInterface*)));
+		return true;
+	}
+		
+	bool Downloader::removeWebSeed(const KUrl & url)
+	{
+		foreach (WebSeed* ws,webseeds)
+		{
+			if (ws->getUrl() == url && ws->isUserCreated())
+			{
+				PtrMap<Uint32,WebSeed>::iterator i = webseeds_chunks.begin();
+				while (i != webseeds_chunks.end())
+				{
+					if (i->second == ws)
+						i = webseeds_chunks.erase(i);
+					else
+						i++;
+				}
+				webseeds.removeAll(ws);
+				delete ws;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	void Downloader::saveWebSeeds(const QString & file)
+	{
+		QFile fptr(file);
+		if (!fptr.open(QIODevice::WriteOnly))
+		{
+			Out(SYS_GEN|LOG_NOTICE) << "Cannot open " << file << " to save webseeds" << endl;
+			return;
+		}
+		
+		QTextStream out(&fptr); 
+		foreach (WebSeed* ws,webseeds)
+		{
+			if (ws->isUserCreated())
+				out << ws->getUrl().prettyUrl() << ::endl;
+		}
+	}
+	
+	void Downloader::loadWebSeeds(const QString & file)
+	{
+		QFile fptr(file);
+		if (!fptr.open(QIODevice::ReadOnly))
+		{
+			Out(SYS_GEN|LOG_NOTICE) << "Cannot open " << file << " to load webseeds" << endl;
+			return;
+		}
+		
+		QTextStream in(&fptr); 
+		while (!in.atEnd())
+		{
+			KUrl url(in.readLine());
+			if (url.isValid() && url.protocol() == "http")
+			{
+				WebSeed* ws = new WebSeed(url,true,tor,cman);
+				webseeds.append(ws);
+				connect(ws,SIGNAL(chunkReady(Chunk*)),this,SLOT(onChunkReady(Chunk*)));
+				connect(ws,SIGNAL(chunkDownloadStarted(ChunkDownloadInterface*)),
+						this,SLOT(chunkDownloadStarted(ChunkDownloadInterface*)));
+				connect(ws,SIGNAL(chunkDownloadFinished(ChunkDownloadInterface*)),
+						this,SLOT(chunkDownloadFinished(ChunkDownloadInterface*)));
+			}
+		}
 	}
 }
 
