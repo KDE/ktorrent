@@ -162,7 +162,7 @@ namespace kt
 		
 		//now determine if it's ZIP or TXT file
 		KMimeType::Ptr ptr = KMimeType::findByPath(temp);
-		if (ptr->name() == "application/x-zip")
+		if (ptr->name() == "application/zip")
 		{
 			KJob* j2 = KIO::file_move(temp,kt::DataDir() + "level1.zip",-1,KIO::HideProgressInfo|KIO::Overwrite);
 			connect(j2,SIGNAL(result(KJob*)),this,SLOT(extract(KJob*)));

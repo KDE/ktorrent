@@ -1,5 +1,6 @@
 Changes in 3.0.2 :
 - Make sure seed time cannot wrap around (159756)
+- Fix broken convert of blocklists
 
 Changes in 3.0.1 :
 - Fix sessionTTL not being able to be bigger then 99
