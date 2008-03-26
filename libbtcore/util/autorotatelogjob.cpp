@@ -19,9 +19,9 @@
  ***************************************************************************/
 #include "autorotatelogjob.h"
 #include <kurl.h>
-#include <k3process.h>
 #include <util/fileops.h>
 #include "log.h"
+#include "compressfilejob.h"
 
 namespace bt
 {
@@ -67,18 +67,24 @@ namespace bt
 		}
 		else
 		{
-				// final log file is moved, now zip it and end the job
-			std::system(QString("gzip " + K3Process::quote(file + "-1")).toLocal8Bit());
-			lg->logRotateDone();
-			emitResult();
+			// final log file is moved, now zip it and end the job
+			CompressFileJob* gzip = new CompressFileJob(file + "-1");
+			connect(gzip,SIGNAL(result(KJob*)),this,SLOT(compressJobDone(KJob*)));
+			gzip->start();
 		}
 	}
 		
 	
 	void AutoRotateLogJob::moveJobDone(KJob*)
 	{
-		cnt--; // decrease counter so the newt file will be moved in update
+		cnt--; // decrease counter so the new file will be moved in update
 		update(); // don't care about result of job
+	}
+	
+	void AutoRotateLogJob::compressJobDone(KJob*)
+	{
+		lg->logRotateDone();
+		emitResult();
 	}
 
 }

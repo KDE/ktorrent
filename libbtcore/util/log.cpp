@@ -31,6 +31,7 @@
 #include <qmutex.h> 
 #include "error.h"
 #include "autorotatelogjob.h"
+#include "compressfilejob.h"
 
 
 namespace bt
@@ -95,7 +96,9 @@ namespace bt
 			
 			// move current log to 1 and zip it
 			bt::Move(file,file + "-1",true);
-			system(QString("gzip %1-1").arg(file).toLocal8Bit());
+			CompressFileJob* gzip = new CompressFileJob(file + "-1");
+			gzip->exec();
+			delete gzip;
 		}
 
 		void setOutputFile(const QString & file,bool rotate)

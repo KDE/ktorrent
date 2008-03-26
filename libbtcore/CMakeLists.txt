@@ -43,6 +43,7 @@ set(libbtcore_SRC
 	util/log.cpp
 	util/waitjob.cpp
 	util/autorotatelogjob.cpp
+	util/compressfilejob.cpp
 	
 	bcodec/bdecoder.cpp  
 	bcodec/bencoder.cpp  

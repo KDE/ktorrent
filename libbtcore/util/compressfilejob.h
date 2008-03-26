@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,42 +18,54 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef BTAUTOROTATELOGJOB_H
-#define BTAUTOROTATELOGJOB_H
+#ifndef BTCOMPRESSFILEJOB_H
+#define BTCOMPRESSFILEJOB_H
 
+#include <QThread>
 #include <kio/job.h>
-#include <cstdlib>
 
 namespace bt
 {
-	class Log;
-
-	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-		
-		Job which handles the rotation of the log file. 
-		This Job must do several move jobs which must be done sequentially.
-	*/
-	class AutoRotateLogJob : public KIO::Job
+	class CompressThread : public QThread
 	{
-		Q_OBJECT
 	public:
-		AutoRotateLogJob(const QString & file,Log* lg);
-		virtual ~AutoRotateLogJob();
+		CompressThread(const QString & file);
+		virtual ~CompressThread();
 		
-		virtual void kill(bool quietly=true);
+		/// Run the compression thread
+		virtual void run();
 		
-	private slots:
-		void moveJobDone(KJob*);
-		void compressJobDone(KJob*);
+		/// Cancel the thread, things should be cleaned up properly
+		void cancel();
 		
-	private:
-		void update();
+		/// Get the error which happened (0 means no error)
+		int error() const {return err;}
 		
 	private:
 		QString file;
-		int cnt;
-		Log* lg;
+		bool canceled;
+		int err;
+	};
+
+	/**
+		Compress a file using gzip and remove it when completed succesfully.
+	*/
+	class CompressFileJob : public KIO::Job
+	{
+		Q_OBJECT
+	public:
+		CompressFileJob(const QString & file);
+		virtual ~CompressFileJob();
+		
+		virtual void start();
+		virtual void kill(bool quietly=true);
+
+	private slots:
+		void compressThreadFinished();
+		
+	private:
+		QString file;
+		CompressThread* compress_thread;
 	};
 
 }
