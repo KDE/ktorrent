@@ -61,6 +61,9 @@ namespace kt
 		void removeWebSeed();
 		void onWebSeedTextChanged(const QString & ws);
 		void selectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
+		
+	private:
+		void selectionChanged(const QModelIndexList & indexes);
 
 	private:
 		bt::TorrentInterface* curr_tc;

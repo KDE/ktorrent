@@ -68,6 +68,10 @@ namespace kt
 		m_webseed_list->setEnabled(curr_tc != 0);
 		m_webseed->setEnabled(curr_tc != 0);
 		onWebSeedTextChanged(m_webseed->text());
+		
+		// see if we need to enable or disable the remove button
+		if (curr_tc)
+			selectionChanged(m_webseed_list->selectionModel()->selectedRows());
 	}
 		
 	void WebSeedsTab::addWebSeed()
@@ -110,13 +114,9 @@ namespace kt
 		model->changeTC(curr_tc);
 	}
 	
-	void WebSeedsTab::selectionChanged(const QItemSelection & selected, const QItemSelection & deselected)
+	void WebSeedsTab::selectionChanged(const QModelIndexList & indexes)
 	{
-		Q_UNUSED(deselected);
-		if (!curr_tc)
-			return;
-		
-		foreach (QModelIndex idx,selected.indexes())
+		foreach (QModelIndex idx,indexes)
 		{
 			idx = proxy_model->mapToSource(idx);
 			const WebSeedInterface* ws = curr_tc->getWebSeed(idx.row());
@@ -128,6 +128,15 @@ namespace kt
 		}
 		
 		m_remove->setEnabled(false);
+	}
+	
+	void WebSeedsTab::selectionChanged(const QItemSelection & selected, const QItemSelection & deselected)
+	{
+		Q_UNUSED(deselected);
+		if (!curr_tc)
+			return;
+		
+		selectionChanged(selected.indexes());
 	}
 	
 	void WebSeedsTab::onWebSeedTextChanged(const QString & ws)
