@@ -107,7 +107,7 @@ namespace bt
 		QString getNameSuggestion() const {return name_suggestion;}
 		
 		/**
-		 * Verify wether a hash matches the hash
+		 * Verify whether a hash matches the hash
 		 * of a Chunk
 		 * @param h The hash
 		 * @param index The index of the chunk

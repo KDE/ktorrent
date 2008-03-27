@@ -89,7 +89,7 @@ namespace bt
 		bool doNotDownload() const 
 			{if(priority == EXCLUDED) return true; else return false;}
 
-		/// Set wether we have to not download this file
+		/// Set whether we have to not download this file
 		void setDoNotDownload(bool dnd);
 		
 		/// Checks if this file is multimedial

@@ -294,7 +294,7 @@ namespace bt
 		
 		/**
 		 * Stop the download, closes all connections.
-		 * @param user wether or not the user did this explicitly
+		 * @param user whether or not the user did this explicitly
 		 * @param wjob WaitJob to wait at exit for the completion of stopped requests
 		 */
 		void stop(bool user,WaitJob* wjob = 0);

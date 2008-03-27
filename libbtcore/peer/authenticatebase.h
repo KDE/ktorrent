@@ -51,7 +51,7 @@ namespace bt
 		AuthenticateBase(mse::StreamSocket* s = 0);
 		virtual ~AuthenticateBase();
 
-		/// Set wether this is a local peer
+		/// Set whether this is a local peer
 		void setLocal(bool loc) {local = loc;}
 		
 		/// Is this a local peer
@@ -92,7 +92,7 @@ namespace bt
 		/**
 		 * The other side send a handshake. The first 20 bytes
 		 * of the handshake will already have been checked.
-		 * @param full Indicates wether we have a full handshake
+		 * @param full Indicates whether we have a full handshake
 		 *  if this is not full, we should just send our own
 		 */
 		virtual void handshakeRecieved(bool full) = 0;
@@ -113,7 +113,7 @@ namespace bt
 		QTimer timer;
 		bool finished;
 		Uint8 handshake[68];
-		Uint32 bytes_of_handshake_recieved;
+		Uint32 bytes_of_handshake_received;
 		Uint32 ext_support;
 		bool local;
 		int poll_index;

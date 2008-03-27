@@ -56,7 +56,7 @@ namespace dht
 		 * @param msg The message
 		 * @param srv The RPCServer to send a ping if necessary
 		 */
-		void recieved(DHT* dh_table,const MsgBase* msg);
+		void received(DHT* dh_table,const MsgBase* msg);
 		
 		/// Get our own ID
 		const dht::Key & getOurID() const {return our_id;}

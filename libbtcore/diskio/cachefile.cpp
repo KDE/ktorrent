@@ -75,7 +75,7 @@ namespace bt
 	{
 		int flags = O_LARGEFILE;
 		
-		// by default allways try read write
+		// by default always try read write
 		fd = ::open(QFile::encodeName(path),flags | O_RDWR);
 		if (fd < 0 && mode == READ)
 		{

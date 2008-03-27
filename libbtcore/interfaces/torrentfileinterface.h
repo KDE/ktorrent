@@ -77,7 +77,7 @@ namespace bt
 		/// See if the TorrentFile is null.
 		bool isNull() const {return path.isNull();}
 
-		/// Set wether we have to not download this file
+		/// Set whether we have to not download this file
 		virtual void setDoNotDownload(bool dnd) = 0;
 
 		/// Wether or not we have to not download this file
@@ -101,7 +101,7 @@ namespace bt
 		/// Did this file exist before the torrent was loaded by KT
 		bool isPreExistingFile() const {return preexisting;}
 		
-		/// Set wether this file is preexisting
+		/// Set whether this file is preexisting
 		void setPreExisting(bool pe) {preexisting = pe;}
 		
 		/// Get the % of the file which is downloaded

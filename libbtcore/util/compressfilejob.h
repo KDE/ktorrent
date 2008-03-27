@@ -48,7 +48,7 @@ namespace bt
 	};
 
 	/**
-		Compress a file using gzip and remove it when completed succesfully.
+		Compress a file using gzip and remove it when completed successfully.
 	*/
 	class CompressFileJob : public KIO::Job
 	{

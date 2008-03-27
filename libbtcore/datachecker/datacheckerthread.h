@@ -52,7 +52,7 @@ namespace bt
 		/// Are we still running
 		bool isRunning() const {return running;}
 		
-		/// Get the error (if any occured)
+		/// Get the error (if any occurred)
 		QString getError() const {return error;}
 	};
 

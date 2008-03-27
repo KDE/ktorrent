@@ -38,7 +38,7 @@ namespace bt
 	
 	typedef enum 
 	{
-		/* These are the old values, for compatability reasons with old chunk_info files we leave them here :
+		/* These are the old values, for compatibility reasons with old chunk_info files we leave them here :
 		PREVIEW_PRIORITY = 4,
 		FIRST_PRIORITY = 3,
 		NORMAL_PRIORITY = 2,

@@ -50,13 +50,13 @@ namespace kt
 
 	void AddItemDlg::fromChanged(const QTime & time)
 	{
-		// ensure that from is allways smaller then to
+		// ensure that from is always smaller then to
 		m_to->setMinimumTime(time.addSecs(60));
 	}
 	
 	void AddItemDlg::toChanged(const QTime & time)
 	{
-		// ensure that from is allways smaller then to
+		// ensure that from is always smaller then to
 		m_from->setMaximumTime(time.addSecs(-60));
 	}
 

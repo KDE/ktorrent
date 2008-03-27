@@ -101,7 +101,7 @@ namespace bt
 
 		/**
 		 * Update which peers are choked or not.
-		 * @param have_all Indicates wether we have the entire file
+		 * @param have_all Indicates whether we have the entire file
 		 * @param stats Statistic of the torrent
 		 */
 		void update(bool have_all,const TorrentStats & stats);

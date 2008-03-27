@@ -1083,7 +1083,7 @@ namespace bt
 		
 		istats.running_time_dl = st.readULong("RUNNING_TIME_DL");
 		istats.running_time_ul = st.readULong("RUNNING_TIME_UL");
-		// make sure runtime ul is allways equal or largen then running time dl
+		// make sure runtime ul is always equal or largen then running time dl
 		// in case something got corrupted
 		if (istats.running_time_ul < istats.running_time_dl)
 			istats.running_time_ul = istats.running_time_dl; 
@@ -1762,7 +1762,7 @@ namespace bt
 				bool toStop = bytes_free < (Uint64) min_diskspace * 1024 * 1024;						
 				
 				// if we don't need to stop the torrent, only emit the signal once
-				// so that we do bother the user continously
+				// so that we do bother the user continuously
 				if (emit_sig && (toStop || !istats.diskspace_warning_emitted))
 				{
  					emit diskSpaceLow(this, toStop);

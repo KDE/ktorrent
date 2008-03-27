@@ -34,7 +34,7 @@ namespace bt
 	 * The operation should emit the operationFinished signal when they are done.
 	 * 
 	 * ExitOperation's can be used in combination with a WaitJob, to wait for a certain amount of time
-	 * to give serveral ExitOperation's the time time to finish up.
+	 * to give several ExitOperation's the time time to finish up.
 	*/
 	class BTCORE_EXPORT ExitOperation : public QObject
 	{
@@ -43,7 +43,7 @@ namespace bt
 		ExitOperation();
 		virtual ~ExitOperation();
 
-		/// wether or not we can do a deleteLater on the job after it has finished.
+		/// whether or not we can do a deleteLater on the job after it has finished.
 		virtual bool deleteAllowed() const {return true;}
 	signals:
 		void operationFinished(ExitOperation* opt);

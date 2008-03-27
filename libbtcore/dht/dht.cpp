@@ -109,7 +109,7 @@ namespace dht
 		PingRsp rsp(r->getMTID(),node->getOurID());
 		rsp.setOrigin(r->getOrigin());
 		srv->sendMsg(&rsp);
-		node->recieved(this,r);
+		node->received(this,r);
 	}
 	
 	
@@ -124,7 +124,7 @@ namespace dht
 			return;
 		
 		Out(SYS_DHT|LOG_DEBUG) << "DHT: got findNode request" << endl;
-		node->recieved(this,r);
+		node->received(this,r);
 		// find the K closest nodes and pack them
 		KClosestNodesSearch kns(r->getTarget(),K);
 		
@@ -148,7 +148,7 @@ namespace dht
 			return;
 		
 		Out(SYS_DHT|LOG_DEBUG) << "DHT: got announce request" << endl;
-		node->recieved(this,r);
+		node->received(this,r);
 		// first check if the token is OK
 		dht::Key token = r->getToken();
 		if (!db->checkToken(token,r->getOrigin()))
@@ -174,7 +174,7 @@ namespace dht
 			return;
 		
 		Out(SYS_DHT|LOG_DEBUG) << "DHT: got getPeers request" << endl;
-		node->recieved(this,r);
+		node->received(this,r);
 		DBItemList dbl;
 		db->sample(r->getInfoHash(),dbl,50);
 		
@@ -208,7 +208,7 @@ namespace dht
 		if (!running)
 			return;
 		
-		node->recieved(this,r);
+		node->received(this,r);
 	}
 	
 	void DHT::error(ErrMsg* )

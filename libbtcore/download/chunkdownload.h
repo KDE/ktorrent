@@ -159,7 +159,7 @@ namespace bt
 		/// Get the SHA1 hash of the downloaded chunk
 		SHA1Hash getHash() const {return hash_gen.get();}
 		
-		/// Are we using the continous hashing feature for this chunk
+		/// Are we using the continuous hashing feature for this chunk
 		bool usingContinuousHashing() const;
 		
 		/// Get the number of downloaders

@@ -195,7 +195,7 @@ namespace bt
 		
 		/**
 		 * Stop the download, closes all connections.
-		 * @param user wether or not the user did this explicitly
+		 * @param user whether or not the user did this explicitly
 		 * @param wjob WaitJob, used when KT is shutting down, 
 		 * 	so that we can wait for all stopped events to reach the tracker
 		 */

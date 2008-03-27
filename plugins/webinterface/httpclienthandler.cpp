@@ -200,7 +200,7 @@ namespace kt
 	void HttpClientHandler::send500(HttpResponseHeader & hdr)
 	{
 	//	Out(SYS_WEB|LOG_DEBUG) << "Sending 500 " << endl;
-		QString data = QString(HTTP_500_ERROR).arg("An internal server error occured !");
+		QString data = QString(HTTP_500_ERROR).arg("An internal server error occurred !");
 		hdr.setValue("Content-Length",QString::number(data.length()));
 
 		output_buffer.append(hdr.toString().toUtf8());

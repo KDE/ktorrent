@@ -36,7 +36,7 @@ namespace bt
 		timer.setSingleShot(true);
 		timer.start(20000);
 		memset(handshake,0x00,68);
-		bytes_of_handshake_recieved = 0;
+		bytes_of_handshake_received = 0;
 		ext_support = 0;
 		poll_index = -1;
 	}
@@ -86,13 +86,13 @@ namespace bt
 			return;
 		
 		// first see if we already have some bytes from the handshake
-		if (bytes_of_handshake_recieved == 0)
+		if (bytes_of_handshake_received == 0)
 		{
 			if (ba < 68)
 			{
 				// read partial
 				sock->readData(handshake,ba);
-				bytes_of_handshake_recieved += ba;
+				bytes_of_handshake_received += ba;
 				if (ba >= 27 && handshake[27] & 0x01)
 					ext_support |= bt::DHT_SUPPORT;
 				// tell subclasses of a partial handshake
@@ -108,8 +108,8 @@ namespace bt
 		else
 		{
 			// read remaining part
-			Uint32 to_read = 68 - bytes_of_handshake_recieved;
-			sock->readData(handshake + bytes_of_handshake_recieved,to_read);
+			Uint32 to_read = 68 - bytes_of_handshake_received;
+			sock->readData(handshake + bytes_of_handshake_received,to_read);
 		}
 	
 		if (handshake[0] != 19)

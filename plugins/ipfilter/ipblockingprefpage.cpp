@@ -212,7 +212,7 @@ namespace kt
 			if (dlg.exec() == QDialog::Rejected)
 			{
 				// shit happened move back
-				// make backup of data file, if stuff fails we can allways go back
+				// make backup of data file, if stuff fails we can always go back
 				QString dat_file = kt::DataDir() + "level1.dat";
 				QString tmp_file = kt::DataDir() + "level1.dat.tmp";
 		
@@ -247,7 +247,7 @@ namespace kt
 				return;
 			}
 			
-			// make backup of data file, if stuff fails we can allways go back
+			// make backup of data file, if stuff fails we can always go back
 			QString dat_file = kt::DataDir() + "level1.dat";
 			QString tmp_file = kt::DataDir() + "level1.dat.tmp";
 		

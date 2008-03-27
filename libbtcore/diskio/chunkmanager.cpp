@@ -1031,9 +1031,9 @@ namespace bt
 			excluded(first,last);
 	}
 	
-	bool ChunkManager::prepareChunk(Chunk* c,bool allways)
+	bool ChunkManager::prepareChunk(Chunk* c,bool always)
 	{
-		if (!allways && c->getStatus() != Chunk::NOT_DOWNLOADED)
+		if (!always && c->getStatus() != Chunk::NOT_DOWNLOADED)
 			return false;
 		
 		return cache->prep(c);
@@ -1096,7 +1096,7 @@ namespace bt
 		}
 		catch (...)
 		{
-			Out(SYS_DIO|LOG_DEBUG) << "Failed to save index file : unkown exception" << endl;
+			Out(SYS_DIO|LOG_DEBUG) << "Failed to save index file : unknown exception" << endl;
 		}
 		chunksLeft();
 		corrupted_count = 0;

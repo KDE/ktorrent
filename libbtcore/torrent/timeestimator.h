@@ -29,7 +29,7 @@ namespace bt
 	
 	/**
 	 * Simple queue class for samples. Optimized for speed and size
-	 * without posibility to dynamically resize itself.
+	 * without possibility to dynamically resize itself.
 	 * @author Ivan Vasic <ivasic@gmail.com>
 	 */
 	class SampleQueue

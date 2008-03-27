@@ -183,10 +183,10 @@ namespace bt
 		/**
 		 * Prepare a chunk for downloading
 		 * @param c The Chunk
-		 * @param allways Always do this, even if the chunk is not NOT_DOWNLOADED
+		 * @param always Always do this, even if the chunk is not NOT_DOWNLOADED
 		 * @return true if ok, false if the chunk is not NOT_DOWNLOADED
 		 */
-		bool prepareChunk(Chunk* c,bool allways = false);
+		bool prepareChunk(Chunk* c,bool always = false);
 		
 		/**
 		 * The upload is done, and the Chunk is no longer needed.
