@@ -76,6 +76,10 @@ namespace kt
 			column_idx_map[act] = i;
 		}
 		
+		// also add header_menu to the right click menu
+		menu->addSeparator();
+		menu->addMenu(header_menu)->setText(i18n("Configure Columns"));
+		
 		connect(header_menu,SIGNAL(triggered(QAction* )),this,SLOT(onHeaderMenuItemTriggered(QAction*)));
 		
 		proxy_model = new QSortFilterProxyModel(this);
