@@ -1498,7 +1498,7 @@ namespace bt
 	
 		dc->setListener(lst);
 		
-		dcheck_thread = new DataCheckerThread(dc,stats.output_path,*tor,tordir + "dnd" + bt::DirSeparator());
+		dcheck_thread = new DataCheckerThread(dc,cman->getBitSet(),stats.output_path,*tor,tordir + "dnd" + bt::DirSeparator());
 		
 		// dc->check(stats.output_path,*tor,tordir + "dnd" + bt::DirSeparator());
 		dcheck_thread->start();
@@ -1520,9 +1520,9 @@ namespace bt
 		
 		if (lst && !lst->isStopped())
 		{
-			down->dataChecked(dc->getDownloaded());
-				// update chunk manager
-			cman->dataChecked(dc->getDownloaded());
+			down->dataChecked(dc->getResult());
+			// update chunk manager
+			cman->dataChecked(dc->getResult());
 			if (lst->isAutoImport())
 			{
 				down->recalcDownloaded();

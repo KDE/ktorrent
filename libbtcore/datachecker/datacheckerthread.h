@@ -21,6 +21,7 @@
 #define BTDATACHECKERTHREAD_H
 
 #include <qthread.h>
+#include <util/bitset.h>
 
 namespace bt
 {
@@ -40,8 +41,9 @@ namespace bt
 		QString dnddir;
 		bool running;
 		QString error;
+		BitSet status;
 	public:
-		DataCheckerThread(DataChecker* dc,const QString & path,const Torrent & tor,const QString & dnddir);
+		DataCheckerThread(DataChecker* dc,const BitSet & status,const QString & path,const Torrent & tor,const QString & dnddir);
 		virtual ~DataCheckerThread();
 
 		virtual void run();

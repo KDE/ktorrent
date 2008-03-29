@@ -23,6 +23,7 @@ namespace bt {
 	
 	DataChecker::DataChecker() : listener(0)
 	{
+		failed = found = downloaded = not_downloaded = 0;
 	}
 	
 	

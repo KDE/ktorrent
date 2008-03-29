@@ -54,23 +54,20 @@ namespace bt
 		 * @param path path to the file or dir (this needs to end with the name suggestion of the torrent)
 		 * @param tor The torrent
 		 * @param dnddir DND dir, optional argument if we know this
+		 * @param status Current status of the torrent
 		 */
-		virtual void check(const QString & path,const Torrent & tor,const QString & dnddir) = 0;
+		virtual void check(const QString & path,const Torrent & tor,const QString & dnddir,const BitSet & status) = 0;
 		
 		/**
-		 * Get the BitSet representing all the downloaded chunks.
+		 * Get the BitSet representing all the downloaded chunks and which is the result of the data check.
 		 */
-		const BitSet & getDownloaded() const {return downloaded;}
-		
-		/**
-		 * Get the BitSet representing all the failed chunks.
-		 */
-		const BitSet & getFailed() const {return failed;}
+		const BitSet & getResult() const {return result;}
 		
 		/// Get the listener
 		DataCheckerListener* getListener() {return listener;}
 	protected:
-		BitSet failed,downloaded;
+		BitSet result;
+		Uint32 failed,found,downloaded,not_downloaded;
 		DataCheckerListener* listener;
 	};
 

@@ -43,12 +43,11 @@ namespace bt
 		delete [] buf;
 	}
 	
-	void MultiDataChecker::check(const QString& path, const Torrent& tor,const QString & dnddir)
+	void MultiDataChecker::check(const QString& path, const Torrent& tor,const QString & dnddir,const BitSet & status)
 	{
 		Uint32 num_chunks = tor.getNumChunks();
-		// initialize the bitsets
-		downloaded = BitSet(num_chunks);
-		failed = BitSet(num_chunks);
+		// initialize the bitset
+		result = BitSet(num_chunks);
 		
 		cache = path;
 		if (!cache.endsWith(bt::DirSeparator()))
@@ -71,18 +70,27 @@ namespace bt
 				cs = chunk_size;
 			if (!loadChunk(cur_chunk,cs,tor))
 			{
-				downloaded.set(cur_chunk,false);
-				failed.set(cur_chunk,true);
+				if (status.get(cur_chunk))
+					failed++;
+				else
+					not_downloaded++;
 				continue;
 			}
 			
 			bool ok = (SHA1Hash::generate(buf,cs) == tor.getHash(cur_chunk));
-			downloaded.set(cur_chunk,ok);
-			failed.set(cur_chunk,!ok);
+			result.set(cur_chunk,ok);
+			if (ok && status.get(cur_chunk))
+				downloaded++;
+			else if (!ok && status.get(cur_chunk))
+				failed++;
+			else if (!ok && !status.get(cur_chunk))
+				not_downloaded++;
+			else if (ok && !status.get(cur_chunk))
+				found++;
 			
 			if (listener)
 			{
-				listener->status(failed.numOnBits(),downloaded.numOnBits());
+				listener->status(failed,found,downloaded,not_downloaded);
 				listener->progress(cur_chunk,num_chunks);
 				if (listener->needToStop())
 					return;

@@ -36,16 +36,18 @@ namespace kt
 	ScanDlg::ScanDlg(Core* core,bool auto_import,QWidget* parent) 
 		: KDialog(parent),bt::DataCheckerListener(auto_import),mutex(QMutex::Recursive),core(core)
 	{
-                setButtons(KDialog::None);
-                Ui::ScanDlgBase ui;
-                QWidget *widget = new QWidget(this);
-                ui.setupUi(widget);
-                setMainWidget(widget);
-                m_torrent_label = ui.torrent_label;
-                m_chunks_found = ui.chunks_found;
-                m_chunks_failed = ui.chunks_failed;
-                m_progress = ui.progress;
-                m_cancel = ui.cancel;
+		setButtons(KDialog::None);
+		Ui::ScanDlgBase ui;
+		QWidget *widget = new QWidget(this);
+		ui.setupUi(widget);
+		setMainWidget(widget);
+		m_torrent_label = ui.torrent_label;
+		m_chunks_found = ui.chunks_found;
+		m_chunks_failed = ui.chunks_failed;
+		m_chunks_not_downloaded = ui.chunks_not_downloaded;
+		m_chunks_downloaded = ui.chunks_downloaded;
+		m_progress = ui.progress;
+		m_cancel = ui.cancel;
 		m_cancel->setGuiItem(KStandardGuiItem::cancel());
 		connect(m_cancel,SIGNAL(clicked()),this,SLOT(onCancelPressed()));
 		connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
@@ -57,6 +59,7 @@ namespace kt
 		num_chunks = 0;
 		total_chunks = 0;
 		num_downloaded = 0;
+		num_not_downloaded = 0;
 		num_failed = 0;
 		m_progress->setMaximum(100);
 		m_progress->setValue(0);
@@ -115,11 +118,13 @@ namespace kt
 		total_chunks = total;
 	}
 		 
-	void ScanDlg::status(bt::Uint32 failed,bt::Uint32 downloaded)
+	void ScanDlg::status(bt::Uint32 failed,bt::Uint32 found,bt::Uint32 downloaded,bt::Uint32 not_downloaded)
 	{
 		QMutexLocker lock(&mutex);
 		num_failed = failed;
 		num_downloaded = downloaded;
+		num_not_downloaded = not_downloaded;
+		num_found = found;
 	}
 		
 	void ScanDlg::finished()
@@ -204,8 +209,10 @@ namespace kt
 		QMutexLocker lock(&mutex);
 		m_progress->setMaximum(total_chunks);
 		m_progress->setValue(num_chunks);
-		m_chunks_found->setText(QString::number(num_downloaded));
+		m_chunks_found->setText(QString::number(num_found));
 		m_chunks_failed->setText(QString::number(num_failed));
+		m_chunks_downloaded->setText(QString::number(num_downloaded));
+		m_chunks_not_downloaded->setText(QString::number(num_not_downloaded));
 	}
 		
 }

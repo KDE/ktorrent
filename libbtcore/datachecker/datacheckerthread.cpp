@@ -27,10 +27,11 @@ namespace bt
 {
 
 	DataCheckerThread::DataCheckerThread(DataChecker* dc,
+										 const BitSet & status,
 										 const QString & path,
 										 const Torrent & tor,
 										 const QString & dnddir)
-		: dc(dc),path(path),tor(tor),dnddir(dnddir)
+		: dc(dc),path(path),tor(tor),dnddir(dnddir),status(status)
 	{
 		running = true;
 	}
@@ -45,7 +46,7 @@ namespace bt
 	{
 		try
 		{
-			dc->check(path,tor,dnddir);
+			dc->check(path,tor,dnddir,status);
 		}
 		catch (bt::Error & e)
 		{

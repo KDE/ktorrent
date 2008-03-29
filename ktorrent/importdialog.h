@@ -62,7 +62,7 @@ namespace kt
 		void saveFileMap(const QString & tor_dir,const QString & ddir);
 		
 		virtual void progress(bt::Uint32 num,bt::Uint32 total);
-		virtual void status(bt::Uint32 num_failed,bt::Uint32 num_downloaded);
+		virtual void status(bt::Uint32 num_failed,bt::Uint32 num_found,bt::Uint32 num_downloaded,bt::Uint32 num_not_downloaded);
 		virtual void finished();
 		
 		void import(bt::Torrent & tor);

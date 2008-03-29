@@ -45,9 +45,11 @@ namespace bt
 		/**
 		 * Called when a failed or dowloaded chunk is found.
 		 * @param num_failed The number of failed chunks
+		 * @param num_found The number of found chunks
 		 * @param num_downloaded Number of downloaded chunks
+		 * @param num_not_downloaded Number of not downloaded chunks
 		 */
-		virtual void status(Uint32 num_failed,Uint32 num_downloaded) = 0;
+		virtual void status(Uint32 num_failed,Uint32 num_found,Uint32 num_downloaded,Uint32 num_not_downloaded) = 0;
 		
 		/**
 		 * Data check has been finished.

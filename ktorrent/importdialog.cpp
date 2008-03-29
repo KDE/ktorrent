@@ -70,9 +70,13 @@ namespace kt
 		m_progress->setValue(num);
 	}
 	
-	void ImportDialog::status(Uint32 ,Uint32 )
+	void ImportDialog::status(bt::Uint32 num_failed,bt::Uint32 num_found,bt::Uint32 num_downloaded,bt::Uint32 num_not_downloaded )
 	{
 		// don't care
+		Q_UNUSED(num_failed);
+		Q_UNUSED(num_found);
+		Q_UNUSED(num_downloaded);
+		Q_UNUSED(num_not_downloaded);
 	}
 	
 	void ImportDialog::finished()
@@ -106,8 +110,10 @@ namespace kt
 		
 		try
 		{
+			BitSet bs(tor.getNumChunks());
+			bs.setAll(false);
 			dc->setListener(this);
-			dc->check(data_url.path(),tor,QString::null);
+			dc->check(data_url.path(),tor,QString::null,bs);
 		}
 		catch (Error & e)
 		{
@@ -128,12 +134,12 @@ namespace kt
 				bt::MakeDir(tor_dir);
 			
 			// write the index file
-			writeIndex(tor_dir + "index",dc->getDownloaded());
+			writeIndex(tor_dir + "index",dc->getResult());
 			
 			// copy the torrent file
 			bt::CopyFile(tor_url.prettyUrl(),tor_dir + "torrent");
 			
-			Uint64 imported = calcImportedBytes(dc->getDownloaded(),tor);
+			Uint64 imported = calcImportedBytes(dc->getResult(),tor);
 			
 			// make the cache
 			if (tor.isMultiFile())

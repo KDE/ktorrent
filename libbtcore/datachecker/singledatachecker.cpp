@@ -38,7 +38,7 @@ namespace bt
 	{}
 
 
-	void SingleDataChecker::check(const QString& path, const Torrent& tor,const QString &)
+	void SingleDataChecker::check(const QString& path, const Torrent& tor,const QString &,const BitSet & status)
 	{
 		// open the file
 		Uint32 num_chunks = tor.getNumChunks();
@@ -50,9 +50,8 @@ namespace bt
 					.arg(path).arg( fptr.errorString()));
 		}
 
-		// initialize the bitsets
-		downloaded = BitSet(num_chunks);
-		failed = BitSet(num_chunks);
+		// initialize the bitset
+		result = BitSet(num_chunks);
 		
 		TimeStamp last_update_time = bt::GetCurrentTime();
 		
@@ -85,17 +84,27 @@ namespace bt
 				// generate and test hash
 				SHA1Hash h = SHA1Hash::generate(buf,size);
 				bool ok = (h == tor.getHash(i));
-				downloaded.set(i,ok);
-				failed.set(i,!ok);
+				result.set(i,ok);
+				if (ok && status.get(i))
+					downloaded++;
+				else if (!ok && status.get(i))
+					failed++;
+				else if (!ok && !status.get(i))
+					not_downloaded++;
+				else if (ok && !status.get(i))
+					found++;
 			}
 			else
 			{
 				// at end of file so set to default values for a failed chunk
-				downloaded.set(i,false);
-				failed.set(i,true);
+				result.set(i,false);
+				if (!status.get(i))
+					not_downloaded++;
+				else
+					failed++;
 			}
 			if (listener)
-				listener->status(failed.numOnBits(),downloaded.numOnBits());
+				listener->status(failed,found,downloaded,not_downloaded);
 		}
 	}
 
