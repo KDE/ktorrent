@@ -118,6 +118,9 @@ namespace bt
 		 */
 		void chunkDownloadFinished(ChunkDownloadInterface* cd);
 		
+	private slots:
+		void retry();
+		
 	private:
 		struct Range
 		{

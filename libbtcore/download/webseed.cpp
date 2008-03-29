@@ -21,6 +21,7 @@
 
 #include "webseed.h"
 
+#include <QTimer>
 #include <klocale.h>
 #include <kprotocolmanager.h>
 #include <util/log.h>
@@ -206,6 +207,15 @@ namespace bt
 			current = 0;
 		}
 	}
+	
+	void WebSeed::retry()
+	{
+		if (!busy())
+			return;
+		
+		// lets try this again
+		download(cur_chunk,last_chunk);
+	}
 		
 	Uint32 WebSeed::update()
 	{
@@ -216,20 +226,17 @@ namespace bt
 		{
 			Out(SYS_CON|LOG_DEBUG) << "WebSeed: connection not OK" << endl;
 			// shit happened delete connection
+			status = conn->getStatusString();
 			delete conn;
 			conn = 0;
+			
 			
 			chunkStopped();
 			
 			num_failures++;
-			if (num_failures < 3)
-			{
-				// lets try this again
-				download(cur_chunk,last_chunk);
-				status = conn->getStatusString();
-			}
-			else
-				status = i18n("Error, failed to connect");
+			if (num_failures < 3) // try again in 10 seconds
+				QTimer::singleShot(10*1000,this,SLOT(retry()));
+	
 			return 0;
 		}
 		else if (conn->closed())

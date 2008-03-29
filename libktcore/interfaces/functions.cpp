@@ -112,7 +112,7 @@ namespace kt
 			Tracker::setCustomIP(QString::null);
 		
 		
-		QString proxy = KUrl(Settings::httpProxy()).host();
+		QString proxy = Settings::httpProxy();
 	;
 		bt::HTTPTracker::setProxyEnabled(!Settings::useKDEProxySettings() && Settings::useProxyForTracker());
 		bt::HTTPTracker::setProxy(proxy + ":" + Settings::httpProxyPort());

@@ -19,6 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include "httpconnection.h"
+#include <QTimer>
 #include <QtAlgorithms>
 #include <kurl.h>
 #include <klocale.h>
@@ -33,6 +34,8 @@ namespace bt
 	HttpConnection::HttpConnection() : sock(0),state(IDLE),mutex(QMutex::Recursive),using_proxy(false)
 	{
 		status = i18n("Not connected");
+		connect(&reply_timer,SIGNAL(timeout()),this,SLOT(replyTimeout()));
+		connect(&connect_timer,SIGNAL(timeout()),this,SLOT(connectTimeout()));
 	}
 
 
@@ -77,6 +80,7 @@ namespace bt
 		KNetwork::KResolver::resolveAsync(this, SLOT(hostResolved(KNetwork::KResolverResults)), 
 										  proxy, QString::number(proxy_port == 0 ? 8080 : proxy_port));
 		state = RESOLVING;
+		status = i18n("Resolving proxy %1:%2",proxy,proxy_port);
 	}
 	
 	void HttpConnection::connectTo(const KUrl & url)
@@ -85,6 +89,7 @@ namespace bt
 		KNetwork::KResolver::resolveAsync(this, SLOT(hostResolved(KNetwork::KResolverResults)), 
 										url.host(), QString::number(url.port() <= 0 ? 80 : url.port()));
 		state = RESOLVING;
+		status = i18n("Resolving hostname %1",url.host());
 	}
 
 	void HttpConnection::onDataReady(Uint8* buf,Uint32 size)
@@ -105,8 +110,10 @@ namespace bt
 				if (!g->onDataReady(buf,size))
 				{
 					state = ERROR;
-					status = i18n("Error: request failed");
+					status = i18n("Error: request failed: %1",g->failure_reason);
 				}
+				else if (g->response_header_received)
+					reply_timer.stop();
 			}
 		}
 	}
@@ -126,8 +133,9 @@ namespace bt
 			{
 				Out(SYS_CON|LOG_IMPORTANT) << "HttpConnection: failed to connect to webseed "  << endl;
 				state = ERROR;
-				status = i18n("Failed to connect to webseed");
+				status = i18n("Error: Failed to connect to webseed");
 			}
+			connect_timer.stop();
 		}
 		else if (state == ACTIVE)
 		{
@@ -145,6 +153,8 @@ namespace bt
 			{
 				g->buffer.clear();
 				g->request_sent = true;
+				// wait 60 seconds for a reply
+				reply_timer.start(60 * 1000);
 			}
 			return len;
 		}
@@ -188,6 +198,8 @@ namespace bt
 				state = CONNECTING;
 				net::SocketMonitor::instance().add(sock);
 				net::SocketMonitor::instance().signalPacketReady();
+				// 60 second connect timeout
+				connect_timer.start(60000);
 			}
 			else 
 			{
@@ -255,16 +267,41 @@ namespace bt
 			return 0;
 	}
 	
+	void HttpConnection::connectTimeout()
+	{
+		QMutexLocker locker(&mutex);
+		if (state == CONNECTING)
+		{
+			status = i18n("Error: failed to connect, server not responding");
+			state = ERROR;
+		}
+		connect_timer.stop();
+	}
+	
+	void HttpConnection::replyTimeout()
+	{
+		QMutexLocker locker(&mutex);
+		status = i18n("Error: request timed out");
+		state = ERROR;
+		reply_timer.stop();
+	}
+	
 	////////////////////////////////////////////
 	
 	HttpConnection::HttpGet::HttpGet(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len,bool using_proxy) : path(path),start(start),len(len),data_received(0),bytes_sent(0),response_header_received(false),request_sent(false)
 	{
-		QHttpRequestHeader request("GET",path);
+		QHttpRequestHeader request("GET",!using_proxy ? path : QString("http://%1/%2").arg(host).arg(path));
+		request.setValue("Host",host);
 		request.setValue("Range",QString("bytes=%1-%2").arg(start).arg(start + len - 1));
 		request.setValue("User-Agent",bt::GetVersionString());
-		request.setValue("Host",host);
+		request.setValue("Accept"," text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5");
+		request.setValue("Accept-Language", "en-us,en;q=0.5");
+		request.setValue("Accept-Charset","ISO-8859-1,utf-8;q=0.7,*;q=0.7");
 		if (using_proxy)
-			request.setValue("Proxy-Connection","Keep-Alive");
+		{
+			request.setValue("Keep-Alive","300");
+			request.setValue("Proxy-Connection","keep-alive");
+		}
 		else
 			request.setValue("Connection","Keep-Alive");
 		buffer = request.toString().toLocal8Bit();
@@ -293,6 +330,7 @@ namespace bt
 		//	Out(SYS_CON|LOG_DEBUG) << hdr.toString() << endl;
 			if (! (hdr.statusCode() == 200 || hdr.statusCode() == 206))
 			{
+				failure_reason = hdr.reasonPhrase();
 				return false;
 			}
 			

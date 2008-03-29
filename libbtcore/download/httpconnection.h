@@ -22,6 +22,7 @@
 #define BTHTTPCONNECTION_H
 
 #include <QMutex>
+#include <QTimer>
 #include <QHttpRequestHeader>
 #include <k3resolver.h>
 #include <net/bufferedsocket.h>
@@ -57,6 +58,7 @@ namespace bt
 			QByteArray piece_data;
 			bool response_header_received;
 			bool request_sent;
+			QString failure_reason;
 			
 			HttpGet(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len,bool using_proxy);
 			virtual ~HttpGet();
@@ -71,6 +73,8 @@ namespace bt
 		QList<HttpGet*> requests;
 		bool using_proxy;
 		QString status;
+		QTimer connect_timer;
+		QTimer reply_timer;
 	public:
 		HttpConnection();
 		virtual ~HttpConnection();
@@ -124,6 +128,8 @@ namespace bt
 		
 	private slots:
 		void hostResolved(KNetwork::KResolverResults res);
+		void connectTimeout();
+		void replyTimeout();
 	};
 }
 
