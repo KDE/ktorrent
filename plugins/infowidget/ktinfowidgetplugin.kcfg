@@ -21,5 +21,14 @@
 		<entry name="showWebSeedsTab" type="Bool">
 			<default>true</default>
 		</entry>
+		<entry name="firstColor" type="Color">
+			<default code="true">QColor()</default>
+		</entry>
+		<entry name="lastColor" type="Color">
+			<default code="true">QColor()</default>
+		</entry>
+		<entry name="normalColor" type="Color">
+			<default code="true">QColor()</default>
+		</entry>
 	</group>
 </kcfg>

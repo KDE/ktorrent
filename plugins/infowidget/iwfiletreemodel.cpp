@@ -27,6 +27,7 @@
 #include <interfaces/functions.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
+#include "infowidgetpluginsettings.h"
 
 using namespace bt;
 
@@ -92,12 +93,31 @@ namespace kt
 	QVariant IWFileTreeModel::data(const QModelIndex & index, int role) const
 	{
 		Node* n = 0;
-		if (index.column() < 2)
+		if (index.column() < 2 && role != Qt::ForegroundRole)
 			return TorrentFileTreeModel::data(index,role);
 		
 		if (!index.isValid() || !(n = (Node*)index.internalPointer()))
 			return QVariant();
 		
+		if (role == Qt::ForegroundRole && index.column() == 2 && tc->getStats().multi_file_torrent && n->file)
+		{
+			const bt::TorrentFileInterface* file = n->file;
+			switch (file->getPriority())
+			{
+				case FIRST_PRIORITY:
+					return InfoWidgetPluginSettings::firstColor();
+				case LAST_PRIORITY:	
+					return InfoWidgetPluginSettings::lastColor();
+				case NORMAL_PRIORITY:
+					return InfoWidgetPluginSettings::normalColor();
+				case ONLY_SEED_PRIORITY: 
+				case EXCLUDED: 
+				case PREVIEW_PRIORITY: 
+				default:
+					return QVariant();
+			}
+		}
+			
 		if (role != Qt::DisplayRole)
 			return QVariant();
 		

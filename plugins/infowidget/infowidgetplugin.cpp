@@ -183,6 +183,29 @@ namespace kt
 
 	void InfoWidgetPlugin::applySettings()
 	{
+		// if the colors are invalid, set the default colors
+		bool save = false;
+		if (!InfoWidgetPluginSettings::firstColor().isValid())
+		{
+			save = true;
+			InfoWidgetPluginSettings::setFirstColor(Qt::green);
+		}
+		
+		if (!InfoWidgetPluginSettings::normalColor().isValid())
+		{
+			save = true;
+			InfoWidgetPluginSettings::setNormalColor(QPalette().color(QPalette::Text));
+		}
+		
+		if (!InfoWidgetPluginSettings::lastColor().isValid())
+		{
+			save = true;
+			InfoWidgetPluginSettings::setLastColor(Qt::red);
+		}
+		
+		if (save)
+			InfoWidgetPluginSettings::self()->writeConfig();
+		
 		showWebSeedsTab( InfoWidgetPluginSettings::showWebSeedsTab());
 		showPeerView( InfoWidgetPluginSettings::showPeerView() );
 		showChunkView( InfoWidgetPluginSettings::showChunkView() );
