@@ -23,6 +23,8 @@
 #include <kprogressdialog.h>
 #include <dht/dht.h>
 #include <torrent/globals.h>
+#include <groups/group.h>
+#include <groups/groupmanager.h>
 #include "core.h"
 #include "gui.h"
 #include "torrentcreatordlg.h"
@@ -35,6 +37,7 @@ namespace kt
 	{
 		setupUi(this);
 		adjustSize();
+		loadGroups();
 		
 		m_url->setMode(KFile::File | KFile::ExistingOnly | KFile::LocalOnly | KFile::Directory);
 		m_dht_tab->setEnabled(false);
@@ -86,6 +89,26 @@ namespace kt
 	
 	TorrentCreatorDlg::~TorrentCreatorDlg()
 	{
+	}
+	
+	void TorrentCreatorDlg::loadGroups()
+	{
+		GroupManager* gman = core->getGroupManager();
+		GroupManager::iterator it = gman->begin();
+		
+		QStringList grps;
+		
+		//First default group
+		grps << i18n("All Torrents");
+		
+		//now custom ones
+		while(it != gman->end())
+		{
+			grps << it->first;		
+			++it;
+		}
+		
+		m_group->addItems(grps);
 	}
 		
 	
@@ -294,11 +317,25 @@ namespace kt
 		dlg->setModal(true);
 		dlg->setAllowCancel(false);
 		dlg->show();
-		core->makeTorrent(
+		bt::TorrentInterface* tc = core->makeTorrent(
 			url.path(),trackers,webseeds,chunk_size,name,m_comments->text(),
 			m_start_seeding->isChecked(),s,m_private->isChecked(),
 			dlg->progressBar(),
 			m_dht->isChecked());
+		
+		if (m_group->currentIndex() > 0 && tc)
+		{
+			QString groupName = m_group->currentText();
+			
+			GroupManager* gman = core->getGroupManager();
+			Group* group = gman->find(groupName);
+			if (group)
+			{
+				group->addTorrent(tc);	
+				gman->saveGroups();
+			}
+		}
+		
 		delete dlg;
 		QDialog::accept();
 	}

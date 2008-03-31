@@ -65,6 +65,9 @@ namespace kt
 		virtual void reject();
 		
 	private:
+		void loadGroups();
+		
+	private:
 		Core* core;
 		GUI* gui;
 	};

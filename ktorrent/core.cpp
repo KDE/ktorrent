@@ -721,7 +721,7 @@ namespace kt
 		}
 	}
 
-	void Core::makeTorrent(const QString & file,const QStringList & trackers,const KUrl::List & webseeds,
+	bt::TorrentInterface* Core::makeTorrent(const QString & file,const QStringList & trackers,const KUrl::List & webseeds,
 				int chunk_size,const QString & name,
 				const QString & comments,bool seed,
 				const QString & output_file,bool priv_tor,QProgressBar* prog, bool decentralized)
@@ -753,6 +753,7 @@ namespace kt
 				if (seed)
 					start(tc);
 				torrentAdded(tc);
+				return tc;
 			}
 		}
 		catch (bt::Error & e)
@@ -764,6 +765,7 @@ namespace kt
 			// Show error message
 			gui->errorMsg(i18n("Cannot create torrent: %1",e.toString()));
 		}
+		return 0;
 	}
 
 	CurrentStats Core::getStats()

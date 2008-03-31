@@ -129,13 +129,27 @@
         </property>
        </widget>
       </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QLabel" name="label_6" >
+          <property name="text" >
+           <string>Add torrent to group:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="m_group" />
+        </item>
+       </layout>
+      </item>
      </layout>
     </widget>
    </item>
    <item>
     <widget class="QTabWidget" name="tabWidget" >
      <property name="currentIndex" >
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="m_tracker_tab" >
       <attribute name="title" >

@@ -88,8 +88,9 @@ namespace kt
 		 * @param output_file File to store the torrent file
 		 * @param priv_tor Is this a private torrent
 		 * @param prog Progress bar to update
+		 * @return The created torrent
 		 */
-		void makeTorrent(const QString & file,const QStringList & trackers,const KUrl::List & webseeds,
+		bt::TorrentInterface* makeTorrent(const QString & file,const QStringList & trackers,const KUrl::List & webseeds,
 				int chunk_size,const QString & name,const QString & comments,
 				bool seed,const QString & output_file,bool priv_tor,QProgressBar* prog, bool decentralized);
 
