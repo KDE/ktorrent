@@ -8,12 +8,12 @@
 	<group name="downloads">
 		<entry name="maxDownloads" type="Int">
 			<label>Maximum number of downloads (0 = no limit)</label>
-			<default>0</default>
+			<default>3</default>
 			<min>0</min>
 		</entry>
 		<entry name="maxSeeds" type="Int">
 			<label>Maximum number of seeds (0 = no limit)</label>
-			<default>0</default>
+			<default>5</default>
 			<min>0</min>
 		</entry>
 		<entry name="startDownloadsOnLowDiskSpace" type="Int">
