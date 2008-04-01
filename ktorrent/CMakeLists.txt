@@ -31,6 +31,7 @@ set(ktorrent_SRC
 	addpeersdlg.cpp
 	queuemanagerwidget.cpp
 	queuemanagermodel.cpp
+	grouppolicydlg.cpp
 )
 	
 
@@ -51,6 +52,7 @@ kde4_add_ui_files(ktorrent_SRC
 	importdialog.ui
 	addpeersdlg.ui
 	queuemanagerwidget.ui
+	grouppolicydlg.ui
 )
 
 kde4_add_executable(ktorrent ${ktorrent_SRC})

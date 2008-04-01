@@ -18,30 +18,49 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include "ungroupedgroup.h"
-#include "groupmanager.h"
+#include <groups/group.h>
+#include "grouppolicydlg.h"
 
 namespace kt
 {
 
-	UngroupedGroup::UngroupedGroup(GroupManager* gman) : Group(i18n("Ungrouped Torrents"), MIXED_GROUP),gman(gman)
+	GroupPolicyDlg::GroupPolicyDlg(Group* group,QWidget* parent)
+			: QDialog(parent),group(group)
 	{
-		setIconByName("application-x-bittorrent");
-	}
-
-
-	UngroupedGroup::~UngroupedGroup()
-	{
-	}
-
-
-	bool UngroupedGroup::isMember(TorrentInterface* tor)
-	{
-		for (GroupManager::iterator i = gman->begin();i != gman->end();i++)
-			if (i->second->isMember(tor))
-				return false;
+		setupUi(this);
+		setWindowTitle(i18n("Policy for the %1 group",group->groupName()));
 		
-		return true;
+		const Group::Policy & p = group->groupPolicy();
+		m_default_location_enabled->setChecked(!p.default_save_location.isNull());
+		m_default_location->setEnabled(!p.default_save_location.isNull());
+		m_default_location->setUrl(p.default_save_location);
+		m_default_location->setMode(KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
+		
+		m_only_new->setChecked(p.only_apply_on_new_torrents);
+		m_max_share_ratio->setValue(p.max_share_ratio);
+		m_max_seed_time->setValue(p.max_seed_time);
+		m_max_upload_rate->setValue(p.max_upload_rate);
+		m_max_download_rate->setValue(p.max_download_rate);
+	}
+
+
+	GroupPolicyDlg::~GroupPolicyDlg()
+	{
+	}
+
+	void GroupPolicyDlg::accept()
+	{
+		Group::Policy p;
+		if (m_default_location_enabled->isChecked() && m_default_location->url().isValid())
+			p.default_save_location = m_default_location->url().pathOrUrl();
+
+		p.only_apply_on_new_torrents = m_only_new->isChecked();
+		p.max_share_ratio = m_max_share_ratio->value();
+		p.max_seed_time = m_max_seed_time->value();
+		p.max_upload_rate = m_max_upload_rate->value();
+		p.max_download_rate = m_max_download_rate->value();
+		group->setGroupPolicy(p);
+		QDialog::accept();
 	}
 
 }

@@ -74,6 +74,7 @@ namespace kt
 		void removeGroup();
 		void editGroupName();
 		void openView();
+		void editGroupPolicy();
 		
 		
 	signals:
@@ -103,6 +104,7 @@ namespace kt
 		KAction* edit_group;
 		KAction* remove_group;
 		KAction* open_in_new_tab;
+		KAction* edit_group_policy;
 		
 		bool editing_item;
 		

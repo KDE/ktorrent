@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Joris Guisson                              *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,61 +16,32 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#ifndef KTGROUPPOLICYDLG_H
+#define KTGROUPPOLICYDLG_H
 
-#ifndef FILESELECTDLG_H
-#define FILESELECTDLG_H
-
-#include "ui_fileselectdlg.h"
-
-namespace bt
-{
-	class TorrentInterface;
-}
+#include <QDialog>
+#include "ui_grouppolicydlg.h"
 
 namespace kt
 {
-	class FileTreeDirItem;
-	class GroupManager;
-	class TorrentFileModel;
+	class Group;
 
 	/**
-	 * @author Joris Guisson
-	 *
-	 * Dialog to select which files to download from a multifile torrent.
-	 */
-	class FileSelectDlg : public QDialog,public Ui_FileSelectDlg
+		@author
+	*/
+	class GroupPolicyDlg : public QDialog,public Ui_GroupPolicyDlg
 	{
-		Q_OBJECT
-
-		bt::TorrentInterface* tc;
-		TorrentFileModel* model;
-		kt::GroupManager* gman;
-		bool* user;
-		bool* start;
-		QList<int> encodings;
 	public:
-		FileSelectDlg(kt::GroupManager* gman,QWidget* parent);
-		virtual ~FileSelectDlg();
-		
-		int execute(bt::TorrentInterface* tc,bool* user, bool* start);
-		
-	protected slots:
-		virtual void reject();
-		virtual void accept();
-		void selectAll();
-		void selectNone();
-		void invertSelection();
-		void updateSizeLabels();
-		void onCodecChanged(const QString & text);
-		void groupActivated(int idx);
+		GroupPolicyDlg(Group* group,QWidget* parent);
+		virtual ~GroupPolicyDlg();
 
+		virtual void accept();
 	private:
-		void populateFields();
-		void loadGroups();
+		Group* group;
 	};
+
 }
 
 #endif
-

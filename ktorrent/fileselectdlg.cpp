@@ -193,7 +193,7 @@ namespace kt
 			Group* group = gman->find(groupName);
 			if (group)
 			{
-				group->addTorrent(tc);	
+				group->addTorrent(tc,true);	
 				gman->saveGroups();
 			}
 		}
@@ -249,6 +249,22 @@ namespace kt
 		}
 		
 		m_cmbGroups->addItems(grps);
+		connect(m_cmbGroups,SIGNAL(activated(int)),this,SLOT(groupActivated(int)));
+	}
+	
+	void FileSelectDlg::groupActivated(int idx)
+	{
+		if (idx == 0)
+			return; // No group selected
+		
+		// find the selected group	
+		Group* g = gman->find(m_cmbGroups->itemText(idx));
+		if (!g)
+			return;
+			
+		QString dir = g->groupPolicy().default_save_location;
+		if (!dir.isNull() && bt::Exists(dir))
+			m_downloadLocation->setUrl(KUrl(dir));
 	}
 
 	void FileSelectDlg::updateSizeLabels()

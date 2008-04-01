@@ -331,7 +331,7 @@ namespace kt
 			Group* group = gman->find(groupName);
 			if (group)
 			{
-				group->addTorrent(tc);	
+				group->addTorrent(tc,true);	
 				gman->saveGroups();
 			}
 		}

@@ -37,6 +37,7 @@
 #include "viewmanager.h"
 #include "view.h"
 #include "groupview.h"
+#include "grouppolicydlg.h"
 
 
 using namespace bt;
@@ -146,11 +147,17 @@ namespace kt
 		connect(open_in_new_tab,SIGNAL(triggered()),this,SLOT(openView()));
 		col->addAction("open_tab",open_in_new_tab);
 		
+		edit_group_policy = new KAction(KIcon("preferences-other"),i18n("Group Policy"),this);
+		connect(edit_group_policy,SIGNAL(triggered()),this,SLOT(editGroupPolicy()));
+		col->addAction("edit_group_policy",edit_group_policy);
+		
 		menu->addAction(open_in_new_tab);
 		menu->addAction(new_group);
 		menu->addAction(edit_group);
 		menu->addAction(remove_group);
+		menu->addAction(edit_group_policy);
 		menu->insertSeparator(new_group);
+		menu->insertSeparator(edit_group_policy);
 	}
 	
 	void GroupView::addGroup()
@@ -236,11 +243,13 @@ namespace kt
 		{
 			edit_group->setEnabled(false);
 			remove_group->setEnabled(false);
+			edit_group_policy->setEnabled(false);
 		}
 		else
 		{
 			edit_group->setEnabled(true);
 			remove_group->setEnabled(true);
+			edit_group_policy->setEnabled(true);
 		}
 		
 		open_in_new_tab->setEnabled(g != 0);
@@ -343,6 +352,17 @@ namespace kt
 		Group* g = current_item->group();
 		if (g)
 			openNewTab(g);
+	}
+	
+	void GroupView::editGroupPolicy()
+	{
+		Group* g = current_item->group();
+		if (g)
+		{
+			GroupPolicyDlg dlg(g,this);
+			if (dlg.exec() == QDialog::Accepted)
+				gman->saveGroups();
+		}
 	}
 	
 	void GroupView::saveState(KSharedConfigPtr cfg)

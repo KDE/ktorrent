@@ -47,6 +47,7 @@ namespace kt
 
 	private:
 		void maxRatioUpdate();
+		void maxSeedTimeUpdate();
 	
 	private:
 		bt::TorrentInterface* curr_tc;

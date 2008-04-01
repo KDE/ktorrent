@@ -81,7 +81,7 @@ namespace kt
 		connect(view_man,SIGNAL(enableActions(ActionEnableFlags)),this,SLOT(setActionsEnabled(ActionEnableFlags)));
 		
 		group_view = new GroupView(core->getGroupManager(),view_man,actionCollection(),this);
-		addToolWidget(group_view,"view-choose",i18n("Groups"),DOCK_LEFT);
+		addToolWidget(group_view,"application-x-bittorrent",i18n("Groups"),DOCK_LEFT);
 		connect(group_view,SIGNAL(openNewTab(kt::Group*)),this,SLOT(openView(kt::Group*)));
 
 		qm = new QueueManagerWidget(core->getQueueManager(),this);

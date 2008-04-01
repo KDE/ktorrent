@@ -23,6 +23,12 @@
 
 namespace kt
 {
+	Group::Policy::Policy()
+	{
+		max_share_ratio = max_seed_time = 0.0f;
+		max_download_rate = max_upload_rate = 0;
+		only_apply_on_new_torrents = false;
+	}
 
 	Group::Group(const QString & name,int flags) : name(name),flags(flags)
 	{}
@@ -56,6 +62,16 @@ namespace kt
 	void Group::removeTorrent(TorrentInterface* )
 	{}
 	
-	void Group::addTorrent(TorrentInterface* )
+	void Group::addTorrent(TorrentInterface* ,bool )
 	{}
+	
+	void Group::setGroupPolicy(const Policy & p)
+	{
+		policy = p;
+		policyChanged();
+	}
+	
+	void Group::policyChanged()
+	{
+	}
 }

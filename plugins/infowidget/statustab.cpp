@@ -162,8 +162,11 @@ namespace kt
 				.arg(s.leechers_connected_to).arg(s.leechers_total));
 	
 		float ratio = bt::ShareRatio(s);
-		if(!ratio_limit->hasFocus() && use_ratio_limit->isChecked())
+		if(!ratio_limit->hasFocus())
 			maxRatioUpdate();
+		
+		if (!time_limit->hasFocus())
+			maxSeedTimeUpdate();
 		
 		share_ratio->setText(QString("<font color=\"%1\">%2</font>").arg(ratio <= 0.8 ? "#ff0000" : "#1c9a1c").arg(KGlobal::locale()->formatNumber(ratio,2)));
 	
@@ -234,17 +237,53 @@ namespace kt
 			return;
 		
 		float ratio = curr_tc->getMaxShareRatio();
-		if(ratio > 0.00f)
+		if (ratio > 0.00f)
 		{
+			// only update when needed
+			if (ratio_limit->isEnabled() && use_ratio_limit->isChecked() && ratio_limit->value() == ratio)
+				return;
+			
 			ratio_limit->setEnabled(true);
 			use_ratio_limit->setChecked(true);
 			ratio_limit->setValue(ratio);
 		}
 		else
 		{
+			// only update when needed
+			if (!ratio_limit->isEnabled() && !use_ratio_limit->isChecked() && ratio_limit->value() != 0.00f)
+				return;
+			
 			ratio_limit->setEnabled(false);
 			use_ratio_limit->setChecked(false);
 			ratio_limit->setValue(0.00f);
+		}
+	}
+	
+	void StatusTab::maxSeedTimeUpdate()
+	{
+		if(!curr_tc)
+			return;
+		
+		float time = curr_tc->getMaxSeedTime();
+		if (time > 0.00f)
+		{
+			// only update when needed
+			if (time_limit->isEnabled() && use_time_limit->isChecked() && time_limit->value() == time)
+				return;
+			
+			time_limit->setEnabled(true);
+			use_time_limit->setChecked(true);
+			time_limit->setValue(time);
+		}
+		else
+		{
+			// only update when needed
+			if (!time_limit->isEnabled() && !use_time_limit->isChecked() && time_limit->value() != 0.00f)
+				return;
+			
+			time_limit->setEnabled(false);
+			use_time_limit->setChecked(false);
+			time_limit->setValue(0.00f);
 		}
 	}
 	

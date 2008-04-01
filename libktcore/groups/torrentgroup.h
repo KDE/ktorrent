@@ -45,7 +45,8 @@ namespace kt
 		virtual void load(bt::BDictNode* n);
 		virtual void torrentRemoved(TorrentInterface* tor);
 		virtual void removeTorrent(TorrentInterface* tor);
-		virtual void addTorrent(TorrentInterface* tor);
+		virtual void addTorrent(TorrentInterface* tor,bool new_torrent);
+		virtual void policyChanged();
 
 		void add(TorrentInterface* tor);
 		void remove(TorrentInterface* tor);

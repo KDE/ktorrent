@@ -32,7 +32,7 @@ namespace kt
 
 	TorrentGroup::TorrentGroup(const QString& name): Group(name,MIXED_GROUP|CUSTOM_GROUP)
 	{
-		setIconByName("player_playlist");
+		setIconByName("application-x-bittorrent");
 	}
 
 
@@ -93,6 +93,15 @@ namespace kt
 			j++;
 		}
 		enc->end();
+		enc->write(QString("policy")); enc->beginDict();
+		enc->write(QString("default_save_location")); enc->write(policy.default_save_location);
+		enc->write(QString("max_share_ratio")); enc->write(QString::number(policy.max_share_ratio));
+		enc->write(QString("max_seed_time")); enc->write(QString::number(policy.max_seed_time));
+		enc->write(QString("max_upload_rate")); enc->write(policy.max_upload_rate);
+		enc->write(QString("max_download_rate")); enc->write(policy.max_download_rate);
+		enc->write(QString("only_apply_on_new_torrents")); 
+		enc->write((bt::Uint32) (policy.only_apply_on_new_torrents ? 1 : 0));
+		enc->end();
 		enc->end();
 	}
 	
@@ -108,7 +117,7 @@ namespace kt
 		if (!vn || vn->data().getType() != bt::Value::STRING)
 			throw bt::Error("invalid or missing icon");
 		
-		setIconByName(QString::fromLocal8Bit(vn->data().toByteArray()));
+		//setIconByName(QString::fromLocal8Bit(vn->data().toByteArray()));
 		
 		BListNode* ln = dn->getList("hashes");
 		if (!ln)
@@ -126,6 +135,39 @@ namespace kt
 			
 			hashes.insert(SHA1Hash((const Uint8*)ba.data()));
 		}
+		
+		BDictNode* gp = dn->getDict(QString("policy"));
+		if (gp)
+		{
+			// load the group policy
+			vn = gp->getValue("default_save_location");
+			if (vn && vn->data().getType() == bt::Value::STRING)
+			{
+				policy.default_save_location = vn->data().toString();
+				if (policy.default_save_location.length() == 0)
+					policy.default_save_location = QString(); // make sure that 0 length strings are loaded as null strings
+			}
+			
+			vn = gp->getValue("max_share_ratio");
+			if (vn && vn->data().getType() == bt::Value::STRING)
+				policy.max_share_ratio = vn->data().toString().toFloat();
+			
+			vn = gp->getValue("max_seed_time");
+			if (vn && vn->data().getType() == bt::Value::STRING)
+				policy.max_seed_time = vn->data().toString().toFloat();
+			
+			vn = gp->getValue("max_upload_rate");
+			if (vn && vn->data().getType() == bt::Value::INT)
+				policy.max_upload_rate = vn->data().toInt();
+			
+			vn = gp->getValue("max_download_rate");
+			if (vn && vn->data().getType() == bt::Value::INT)
+				policy.max_download_rate = vn->data().toInt();
+			
+			vn = gp->getValue("only_apply_on_new_torrents");
+			if (vn && vn->data().getType() == bt::Value::INT)
+				policy.only_apply_on_new_torrents = vn->data().toInt();
+		}
 	}
 	
 	void TorrentGroup::torrentRemoved(TorrentInterface* tor)
@@ -138,8 +180,31 @@ namespace kt
 		torrents.erase(tor);
 	}
 	
-	void TorrentGroup::addTorrent(TorrentInterface* tor)
+	void TorrentGroup::addTorrent(TorrentInterface* tor,bool new_torrent)
 	{
 		torrents.insert(tor);
+		// apply group policy if needed
+		if (policy.only_apply_on_new_torrents && !new_torrent)
+			return;
+		
+		tor->setMaxShareRatio(policy.max_share_ratio);
+		tor->setMaxSeedTime(policy.max_seed_time);
+		tor->setTrafficLimits(policy.max_upload_rate * 1024,policy.max_download_rate * 1024);
+	}
+	
+	void TorrentGroup::policyChanged()
+	{
+		if (policy.only_apply_on_new_torrents)
+			return;
+		
+		std::set<TorrentInterface*>::iterator i = torrents.begin();
+		while (i != torrents.end())
+		{
+			TorrentInterface* tor = *i;
+			tor->setMaxShareRatio(policy.max_share_ratio);
+			tor->setMaxSeedTime(policy.max_seed_time);
+			tor->setTrafficLimits(policy.max_upload_rate * 1024,policy.max_download_rate * 1024);
+			i++;
+		}
 	}
 }

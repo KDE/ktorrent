@@ -23,6 +23,7 @@
 #include <qstring.h>
 #include <qicon.h>
 #include <ktcore_export.h>
+#include <util/constants.h>
 
 namespace bt
 {
@@ -44,11 +45,6 @@ namespace kt
 	 */
 	class KTCORE_EXPORT Group
 	{
-	protected:
-		QString name;
-		QIcon icon;
-		QString icon_name;
-		int flags;
 	public:
 		enum Properties
 		{
@@ -57,6 +53,19 @@ namespace kt
 			MIXED_GROUP = 3,
 			CUSTOM_GROUP = 4
 		};
+		
+		struct KTCORE_EXPORT Policy
+		{
+			QString default_save_location;
+			float max_share_ratio;
+			float max_seed_time;
+			bt::Uint32 max_upload_rate;
+			bt::Uint32 max_download_rate;
+			bool only_apply_on_new_torrents;
+			
+			Policy();
+		};
+		
 		/**
 		 * Create a new group.
 		 * @param name The name of the group
@@ -92,6 +101,12 @@ namespace kt
 		/// Name of the group icon
 		const QString & groupIconName() const {return icon_name;}
 		
+		/// Get the group policy
+		const Policy & groupPolicy() const {return policy;}
+		
+		/// Set the group policy
+		void setGroupPolicy(const Policy & p);
+		
 		/**
 		 * Save the torrents.The torrents should be save in a bencoded file.
 		 * @param enc The BEncoder
@@ -123,14 +138,26 @@ namespace kt
 		/**
 		 * Subclasses should implement this, if they want to have torrents added to them.
 		 * @param tor The torrent
+		 * @param new_torrent Indicates whether this is a newly created or opened torrent
 		 */
-		virtual void addTorrent(TorrentInterface* tor);
+		virtual void addTorrent(TorrentInterface* tor,bool new_torrent);
 		
 		/**
 		 * Subclasses should implement this, if they want to have torrents removed from them.
 		 * @param tor The torrent
 		 */
 		virtual void removeTorrent(TorrentInterface* tor);
+		
+		/**
+		 * Called when the policy has been changed.
+		 */
+		virtual void policyChanged();
+	protected:
+		QString name;
+		QIcon icon;
+		QString icon_name;
+		int flags;
+		Policy policy;
 	};
 
 }
