@@ -209,9 +209,9 @@ namespace kt
 		core->startUpdateTimer(); // make sure update timer is running
 	}
 
-	bool GUI::selectFiles(bt::TorrentInterface* tc,bool* user,bool* start_torrent)
+	bool GUI::selectFiles(bt::TorrentInterface* tc,bool* user,bool* start_torrent,const QString & group_hint)
 	{
-		FileSelectDlg dlg(core->getGroupManager(),this);
+		FileSelectDlg dlg(core->getGroupManager(),group_hint,this);
 
 		return dlg.execute(tc,user,start_torrent) == QDialog::Accepted;
 	}
@@ -235,12 +235,12 @@ namespace kt
 	
 	void GUI::load(const KUrl & url)
 	{
-		core->load(url);
+		core->load(url,QString());
 	}
 	
 	void GUI::loadSilently(const KUrl & url)
 	{
-		core->loadSilently(url);
+		core->loadSilently(url,QString());
 	}
 
 	void GUI::createTorrent()
@@ -260,7 +260,7 @@ namespace kt
 		foreach (KUrl url,urls)
 		{
 			if (url.isValid())
-				core->loadSilently(url);
+				core->loadSilently(url,QString());
 		}
 	}
 

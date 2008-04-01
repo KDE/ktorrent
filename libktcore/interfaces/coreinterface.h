@@ -42,6 +42,7 @@ namespace kt
 	};
 	
 	class QueueManager;
+	class GroupManager;
 	
 
 	/**
@@ -135,25 +136,28 @@ namespace kt
 		 * if something goes wrong.
 		 * @param file The torrent file
 		 * @param savedir Dir to save the data
+		 * @param group Group to add torrent to
 		 * @param silently Wether or not to do this silently
 		 */
-		virtual bool load(const QString & file,const QString & savedir,bool silently) = 0;
+		virtual bool load(const QString & file,const QString & savedir,const QString & group,bool silently) = 0;
 
 		/**
 		 * Load a torrent file. Pops up an error dialog
 		 * if something goes wrong. Will ask the user for a save location, or use
 		 * the default.
 		 * @param url The torrent file
+		 * @param group Group to add torrent to
 		 */
-		virtual void load(const KUrl& url) = 0;
+		virtual void load(const KUrl& url,const QString & group) = 0;
 		
 		/**
 		 * Load a torrent file. Pops up an error dialog
 		 * if something goes wrong. Will ask the user for a save location, or use
 		 * the default. This will not popup a file selection dialog for multi file torrents.
 		 * @param url The torrent file
+		 * @param group Group to add torrent to
 		 */
-		virtual void loadSilently(const KUrl& url) = 0;
+		virtual void loadSilently(const KUrl& url,const QString & group) = 0;
 
 		/**
 		 * Same as loadSilently but also set a destination directory
@@ -193,6 +197,9 @@ namespace kt
 		
 		/// Get the QueueManager
 		virtual kt::QueueManager* getQueueManager() = 0;
+		
+		/// Get the GroupManager
+		virtual kt::GroupManager* getGroupManager() = 0;
 		
 	signals:
 		/**

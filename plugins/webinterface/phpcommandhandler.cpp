@@ -132,7 +132,7 @@ namespace kt
 			}
 			else if(it.key()=="load_torrent" && it.value().length() > 0)
 			{
-				core->loadSilently(QUrl::fromPercentEncoding(it.value().toLocal8Bit()));
+				core->loadSilently(QUrl::fromPercentEncoding(it.value().toLocal8Bit()),QString());
 				ret = true;
 			}
 			if(it.key()=="maximum_downloads")

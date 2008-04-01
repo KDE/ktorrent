@@ -24,6 +24,8 @@
 #include <kglobal.h>
 #include <kfiledialog.h>
 #include <util/functions.h>
+#include <groups/groupmanager.h>
+#include <interfaces/coreinterface.h>
 #include "scanfolderpluginsettings.h"
 
 
@@ -48,6 +50,27 @@ namespace kt
 	{
 		kcfg_actionMove->setEnabled(!ScanFolderPluginSettings::actionDelete());
 		
+		m_group->clear();
+		
+		GroupManager* gman = m_plugin->getCore()->getGroupManager();
+		QStringList grps;
+		GroupManager::iterator it = gman->begin();
+		int current = 0;
+		int cnt = 0;
+		//now custom ones
+		while(it != gman->end())
+		{
+			grps << it->first;
+			if (it->first == ScanFolderPluginSettings::group())
+				current = cnt;
+			cnt++;
+			++it;
+		}
+		m_group->addItems(grps);
+		m_group->setEnabled(ScanFolderPluginSettings::addToGroup() && grps.count() > 0);
+		m_group->setCurrentIndex(current);
+		kcfg_addToGroup->setEnabled(grps.count() > 0);
+		
 		m_folders->clear();
 		folders = ScanFolderPluginSettings::folders();
 		foreach (QString f,folders)
@@ -66,6 +89,11 @@ namespace kt
 	
 	void ScanFolderPrefPage::updateSettings()
 	{
+		if (kcfg_addToGroup->isChecked() && kcfg_addToGroup->isEnabled())
+			ScanFolderPluginSettings::setGroup(m_group->currentText());
+		else
+			ScanFolderPluginSettings::setGroup(QString());
+		
 		ScanFolderPluginSettings::setFolders(folders);
 		ScanFolderPluginSettings::self()->writeConfig();
 		m_plugin->updateScanFolders();

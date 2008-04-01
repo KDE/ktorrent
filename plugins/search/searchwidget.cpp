@@ -272,7 +272,7 @@ namespace kt
 	void SearchWidget::openTorrent(const KUrl & url)
 	{
 		Out(SYS_GEN|LOG_DEBUG) << "SearchWidget::openTorrent " << url.prettyUrl() << endl;
-		sp->getCore()->load(url);
+		sp->getCore()->load(url,QString());
 	}
 	
 	void SearchWidget::loadingProgress(int perc)

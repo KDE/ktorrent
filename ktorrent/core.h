@@ -61,8 +61,8 @@ namespace kt
 		virtual bool changePort(bt::Uint16 port);
 		virtual bt::Uint32 getNumTorrentsRunning() const;
 		virtual bt::Uint32 getNumTorrentsNotRunning() const;
-		virtual void load(const KUrl& url);
-		virtual void loadSilently(const KUrl& url);
+		virtual void load(const KUrl& url,const QString & group);
+		virtual void loadSilently(const KUrl& url,const QString & group);
 		virtual void loadSilentlyDir(const KUrl& url,const KUrl & savedir);
 		virtual QString findNewTorrentDir() const;
 		virtual void loadExistingTorrent(const QString & tor_dir);
@@ -127,9 +127,10 @@ namespace kt
 		 * if something goes wrong.
 		 * @param file The torrent file (always a local file)
 		 * @param dir Directory to save the data
+		 * @param group Group to add torrent to
 		 * @param silently Wether or not to do this silently
 		 */
-		bool load(const QString & file,const QString & dir,bool silently);
+		bool load(const QString & file,const QString & dir,const QString & group,bool silently);
 		
 		/**
 		 * Load a torrent file. Pops up an error dialog
@@ -138,7 +139,7 @@ namespace kt
 		 * @param dir Directory to save the data
 		 * @param silently Wether or not to do this silently
 		 */
-		bool load(const QByteArray & data,const QString & dir,bool silently, const KUrl& url);
+		bool load(const QByteArray & data,const QString & dir,const QString & group,bool silently, const KUrl& url);
 		
 		/**
 		 * Remove a download.This will delete all temp
@@ -255,7 +256,7 @@ namespace kt
 	private:
 		void rollback(const QList<bt::TorrentInterface*> & success);
 		void connectSignals(bt::TorrentInterface* tc);
-		bool init(bt::TorrentControl* tc,bool silently);
+		bool init(bt::TorrentControl* tc,const QString & group,bool silently);
 		void applySettings(bool change_port);
 
 	public:
@@ -280,6 +281,7 @@ namespace kt
 		kt::QueueManager* qman;
 		kt::GroupManager* gman;
 		QMap<KJob*,KUrl> custom_save_locations; // map to store save locations
+		QMap<KJob*,QString> add_to_groups; // Map to keep track of which group to add a torrent to
 	};
 }
 

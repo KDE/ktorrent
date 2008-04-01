@@ -204,7 +204,7 @@ namespace kt
 		virtual void dataScan(bt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption) = 0;
 
 		/// Select the files to download, return false if users cancels
-		virtual bool selectFiles(bt::TorrentInterface* tc,bool* user,bool* start_torrent) = 0;
+		virtual bool selectFiles(bt::TorrentInterface* tc,bool* user,bool* start_torrent,const QString & group_hint) = 0;
 
 		/// Show an error message box
 		virtual void errorMsg(const QString & err) = 0;

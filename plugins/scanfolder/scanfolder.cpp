@@ -142,11 +142,14 @@ namespace kt
 				//Add pending entry...
 				m_pendingURLs.push_back(source);
 				
+				QString group;
+				if (ScanFolderPluginSettings::addToGroup())
+					group = ScanFolderPluginSettings::group();
 				//Load torrent
 				if (ScanFolderPluginSettings::openSilently())
-					m_core->loadSilently(source);
+					m_core->loadSilently(source,group);
 				else
-					m_core->load(source);
+					m_core->load(source,group);
 			}
 		}
 	}
@@ -271,11 +274,15 @@ namespace kt
 				//Add pending entry...
 				m_pendingURLs.push_back(source);
 				
+				QString group;
+				if (ScanFolderPluginSettings::addToGroup())
+					group = ScanFolderPluginSettings::group();
+				
 				//Load torrent
 				if (ScanFolderPluginSettings::openSilently())
-					m_core->loadSilently(source);
+					m_core->loadSilently(source,group);
 				else
-					m_core->load(source);
+					m_core->load(source,group);
 				
 				// remove from incomplete list
 				i = m_incompleteURLs.erase(i);

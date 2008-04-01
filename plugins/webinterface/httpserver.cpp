@@ -469,7 +469,7 @@ namespace kt
 		out.writeRawData(ptr + (pos + 4),len - (pos + 4));
 		
 		Out(SYS_WEB|LOG_NOTICE) << "Loading file " << tmp_file.fileName() << endl;
-		core->loadSilently(KUrl(tmp_file.fileName()));
+		core->loadSilently(KUrl(tmp_file.fileName()),QString());
 		
 		handleGet(hdlr,hdr);
 		tmp_file.close();

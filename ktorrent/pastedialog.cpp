@@ -49,7 +49,7 @@ namespace kt
 		KUrl url = KUrl( m_url->text() );
 		if ( url.isValid() )
 		{
-			m_core->load ( url );
+			m_core->load(url,QString());
 			QDialog::accept();
 		}
 		else

@@ -43,7 +43,7 @@ using namespace bt;
 namespace kt
 {
 
-	FileSelectDlg::FileSelectDlg(kt::GroupManager* gman,QWidget* parent) : QDialog(parent,Qt::Dialog),gman(gman)
+	FileSelectDlg::FileSelectDlg(kt::GroupManager* gman,const QString & group_hint,QWidget* parent) : QDialog(parent,Qt::Dialog),gman(gman),initial_group(0)
 	{
 		setupUi(this);
 		model = 0;
@@ -65,6 +65,9 @@ namespace kt
 		{
 			m_encoding->addItem(QTextCodec::codecForMib(mib)->name());
 		}
+		
+		if (!group_hint.isNull())
+			initial_group = gman->find(group_hint);
 	}
 
 	FileSelectDlg::~FileSelectDlg()
@@ -241,15 +244,28 @@ namespace kt
 		//First default group
 		grps << i18n("All Torrents");
 		
+		int cnt = 0;
+		int selected = 0;
 		//now custom ones
 		while(it != gman->end())
 		{
 			grps << it->first;		
+			if (it->second == initial_group)
+				selected = cnt + 1;
 			++it;
+			cnt++;
 		}
 		
 		m_cmbGroups->addItems(grps);
 		connect(m_cmbGroups,SIGNAL(activated(int)),this,SLOT(groupActivated(int)));
+		
+		if (selected > 0 && initial_group)
+		{
+			m_cmbGroups->setCurrentIndex(selected);
+			QString dir = initial_group->groupPolicy().default_save_location;
+			if (!dir.isNull() && bt::Exists(dir))
+				m_downloadLocation->setUrl(KUrl(dir));
+		}
 	}
 	
 	void FileSelectDlg::groupActivated(int idx)

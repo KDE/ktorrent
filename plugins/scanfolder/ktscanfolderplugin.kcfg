@@ -7,7 +7,6 @@
 	<kcfgfile name="ktscanfolderpluginrc"/>
 	<group name="general">
 		<entry name="folders" type="StringList">
-			<label>Enable scanning of folder1?</label>
 		</entry>
 
 		<entry name="openSilently" type="Bool">
@@ -28,6 +27,13 @@
 		<entry name="recursive" type="Bool">
 			<label>Scan directories recursively.</label>
 			<default>FALSE</default>
+		</entry>
+		
+		<entry name="addToGroup" type="Bool">
+			<default>false</default>
+		</entry>
+		
+		<entry name="group" type="String">
 		</entry>
 	</group>
 </kcfg>

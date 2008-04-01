@@ -49,8 +49,9 @@ namespace kt
 		bool* user;
 		bool* start;
 		QList<int> encodings;
+		kt::Group* initial_group;
 	public:
-		FileSelectDlg(kt::GroupManager* gman,QWidget* parent);
+		FileSelectDlg(kt::GroupManager* gman,const QString & group_hint,QWidget* parent);
 		virtual ~FileSelectDlg();
 		
 		int execute(bt::TorrentInterface* tc,bool* user, bool* start);
