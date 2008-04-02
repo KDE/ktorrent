@@ -68,6 +68,13 @@ namespace kt
 		void append(bt::TorrentInterface* tc);
 		void remove(bt::TorrentInterface* tc);
 		void clear();
+		
+		/**
+		 * Check if we need to decrease the priority of stalled torrents
+		 * @param min_stall_time Stall time in minutes
+		 * @param now The current time
+ 		 */
+		void checkStalledTorrents(bt::TimeStamp now,bt::Uint32 min_stall_time);
 			
 		/**
 		 * Start a torrent
@@ -241,6 +248,8 @@ namespace kt
 		void checkDiskSpace(QList<bt::TorrentInterface*> & todo);
 		void checkMaxSeedTime(QList<bt::TorrentInterface*> & todo);
 		void checkMaxRatio(QList<bt::TorrentInterface*> & todo);
+		void rearrangeQueue();
+		bt::TorrentStartResponse startInternal(bt::TorrentInterface* tc);
 
 	private:
 		QueuePtrList downloads;

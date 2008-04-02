@@ -26,6 +26,7 @@
 #include <torrent/queuemanager.h>
 #include <interfaces/torrentinterface.h>
 #include "queuemanagermodel.h"
+#include "settings.h"
 
 using namespace bt;
 
@@ -96,6 +97,7 @@ namespace kt
 			case 0: return i18n("Name");
 			case 1: return i18n("Status");
 			case 2: return i18n("Time Stalled");
+			case 3: return i18n("Priority");
 			default: return QVariant();
 		}
 	}
@@ -134,17 +136,20 @@ namespace kt
 						return i18n("Queued");
 					break;
 				case 2: 
-				{
-					if (!tc->getStats().running)
-						return QVariant();
-					
-					
-					Int64 stalled_time = stalled_times.value(tc);
-					if (stalled_time >= 1)
-						return i18n("%1",DurationToString(stalled_time));
-					else
-						return QVariant();
-				}
+					{
+						if (!tc->getStats().running)
+							return QVariant();
+						
+						
+						Int64 stalled_time = stalled_times.value(tc);
+						if (stalled_time >= 1)
+							return i18n("%1",DurationToString(stalled_time));
+						else
+							return QVariant();
+					}
+					break;
+				case 3:
+					return tc->getPriority();
 				default: return QVariant();
 			}
 		}
@@ -353,6 +358,7 @@ namespace kt
 	
 	void QueueManagerModel::update()
 	{
+		TimeStamp now = bt::GetCurrentTime();
 		int r = 0;
 		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
 		{
@@ -367,8 +373,6 @@ namespace kt
 			}
 			else
 			{
-				TimeStamp now = bt::GetCurrentTime();
-						
 				Int64 stalled_time = 0;
 				if (tc->getStats().completed)
 					stalled_time = (now - tc->getStats().last_upload_activity_time) / 1000;

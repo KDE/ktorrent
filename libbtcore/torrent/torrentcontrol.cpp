@@ -267,13 +267,13 @@ namespace bt
 			// Update DownloadCap
 			updateStats();
 
-			if (stats.download_rate > 0)
+			if (stats.download_rate > 100)
 			{
 				stalled_timer.update();
 				stats.last_download_activity_time = GetCurrentTime();
 			}
 			
-			if (stats.upload_rate > 0)
+			if (stats.upload_rate > 100)
 				stats.last_upload_activity_time = GetCurrentTime();
 			
 			// do a manual update if we are stalled for more then 2 minutes
@@ -1391,7 +1391,7 @@ namespace bt
 		}
 		else
 			updateStatusMsg();
-		
+	
 		saveStats();
 	}
 	

@@ -45,6 +45,16 @@ namespace kt
 		}
 
 		virtual ~QMPref() {}
+		
+		void loadSettings()
+		{
+			kcfg_stallTimer->setEnabled(Settings::decreasePriorityOfStalledTorrents());
+		}
+		
+		void loadDefaults()
+		{
+			loadSettings();
+		}
 	};
 
 	class GeneralPref : public PrefPageInterface,public Ui_GeneralPref

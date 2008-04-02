@@ -764,6 +764,12 @@ namespace kt
 			Out(SYS_GEN|LOG_DEBUG) << "Stopped update timer" << endl;
 			update_timer.stop(); // stop timer when not necessary
 		}
+		else
+		{
+			// check if the priority of stalled torrents must be decreased
+			if (Settings::decreasePriorityOfStalledTorrents())
+				qman->checkStalledTorrents(bt::GetCurrentTime(),Settings::stallTimer());
+		}
 	}
 
 	bt::TorrentInterface* Core::makeTorrent(const QString & file,const QStringList & trackers,const KUrl::List & webseeds,

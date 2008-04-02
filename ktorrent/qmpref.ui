@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>565</width>
-    <height>388</height>
+    <height>476</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" >
@@ -15,101 +15,163 @@
      <property name="title" >
       <string>Queue Manager</string>
      </property>
-     <layout class="QGridLayout" >
-      <item row="0" column="0" >
-       <widget class="QLabel" name="label_11" >
-        <property name="text" >
-         <string>Maximum downloads:</string>
-        </property>
-       </widget>
+     <layout class="QVBoxLayout" >
+      <item>
+       <layout class="QGridLayout" >
+        <item row="0" column="0" >
+         <widget class="QLabel" name="label_11" >
+          <property name="text" >
+           <string>Maximum downloads:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" >
+         <widget class="QSpinBox" name="kcfg_maxDownloads" >
+          <property name="toolTip" >
+           <string>The maximum number of simultaneous downloads the queue manager will run.</string>
+          </property>
+          <property name="specialValueText" >
+           <string>No limit</string>
+          </property>
+          <property name="maximum" >
+           <number>99999</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" >
+         <widget class="QLabel" name="label_10" >
+          <property name="text" >
+           <string>Maximum seeds:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="QSpinBox" name="kcfg_maxSeeds" >
+          <property name="toolTip" >
+           <string>The maximum number of simultaneous seeds the queue manager will run.</string>
+          </property>
+          <property name="specialValueText" >
+           <string>No limit</string>
+          </property>
+          <property name="maximum" >
+           <number>99999</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" >
+         <widget class="QLabel" name="label_12" >
+          <property name="text" >
+           <string>When diskspace is running low:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1" >
+         <widget class="QComboBox" name="kcfg_startDownloadsOnLowDiskSpace" >
+          <property name="toolTip" >
+           <string>What to do when the diskspace is running low and the queue manager wants to start a torrent.</string>
+          </property>
+          <item>
+           <property name="text" >
+            <string>Don't start torrents</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Ask if torrents can be started</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Start torrents</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="3" column="0" >
+         <widget class="QLabel" name="label_13" >
+          <property name="text" >
+           <string>Stop torrents when free disk space is lower then:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1" >
+         <widget class="QSpinBox" name="kcfg_minDiskSpace" >
+          <property name="toolTip" >
+           <string>When the free diskspace drops below this value, stop all torrents downloading.</string>
+          </property>
+          <property name="suffix" >
+           <string> MB</string>
+          </property>
+          <property name="minimum" >
+           <number>1</number>
+          </property>
+          <property name="maximum" >
+           <number>999999999</number>
+          </property>
+          <property name="value" >
+           <number>100</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
-      <item row="0" column="1" >
-       <widget class="QSpinBox" name="kcfg_maxDownloads" >
+      <item>
+       <widget class="QCheckBox" name="kcfg_decreasePriorityOfStalledTorrents" >
         <property name="toolTip" >
-         <string>The maximum number of simultaneous downloads the queue manager will run.</string>
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">With this enabled, the queue manager will decrease the priority of a torrent which has been stalled for to long. &lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">This will allow the queue manager to run other torrents, when a torrent is doing nothing.&lt;/p>&lt;/body>&lt;/html></string>
         </property>
-        <property name="specialValueText" >
-         <string>No limit</string>
-        </property>
-        <property name="maximum" >
-         <number>99999</number>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" >
-       <widget class="QLabel" name="label_10" >
         <property name="text" >
-         <string>Maximum seeds:</string>
+         <string>Decrease priority of torrents which are stalled for to long</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1" >
-       <widget class="QSpinBox" name="kcfg_maxSeeds" >
-        <property name="toolTip" >
-         <string>The maximum number of simultaneous seeds the queue manager will run.</string>
-        </property>
-        <property name="specialValueText" >
-         <string>No limit</string>
-        </property>
-        <property name="maximum" >
-         <number>99999</number>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0" >
-       <widget class="QLabel" name="label_12" >
-        <property name="text" >
-         <string>When diskspace is running low:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1" >
-       <widget class="QComboBox" name="kcfg_startDownloadsOnLowDiskSpace" >
-        <property name="toolTip" >
-         <string>What to do when the diskspace is running low and the queue manager wants to start a torrent.</string>
-        </property>
+      <item>
+       <layout class="QHBoxLayout" >
         <item>
-         <property name="text" >
-          <string>Don't start torrents</string>
-         </property>
+         <widget class="QLabel" name="label" >
+          <property name="text" >
+           <string>Stalled timer:</string>
+          </property>
+         </widget>
         </item>
         <item>
-         <property name="text" >
-          <string>Ask if torrents can be started</string>
-         </property>
+         <widget class="QSpinBox" name="kcfg_stallTimer" >
+          <property name="toolTip" >
+           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Time used for the stall timer. When a torrent is stalled longer then this, it's priority will be decreased.&lt;/p>&lt;/body>&lt;/html></string>
+          </property>
+          <property name="suffix" >
+           <string> Minutes</string>
+          </property>
+          <property name="minimum" >
+           <number>1</number>
+          </property>
+          <property name="maximum" >
+           <number>1000000</number>
+          </property>
+         </widget>
         </item>
         <item>
-         <property name="text" >
-          <string>Start torrents</string>
-         </property>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
-       </widget>
-      </item>
-      <item row="3" column="0" >
-       <widget class="QLabel" name="label_13" >
-        <property name="text" >
-         <string>Stop torrents when free disk space is lower then:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1" >
-       <widget class="QSpinBox" name="kcfg_minDiskSpace" >
-        <property name="toolTip" >
-         <string>When the free diskspace drops below this value, stop all torrents downloading.</string>
-        </property>
-        <property name="suffix" >
-         <string> MB</string>
-        </property>
-        <property name="minimum" >
-         <number>1</number>
-        </property>
-        <property name="maximum" >
-         <number>999999999</number>
-        </property>
-        <property name="value" >
-         <number>100</number>
-        </property>
-       </widget>
+       </layout>
       </item>
      </layout>
     </widget>
@@ -223,5 +285,22 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>kcfg_decreasePriorityOfStalledTorrents</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_stallTimer</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>119</x>
+     <y>173</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>143</x>
+     <y>197</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
