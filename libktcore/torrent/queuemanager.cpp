@@ -35,6 +35,8 @@
 #include <interfaces/trackerslist.h>
 #include <settings.h>
 
+#include <climits>
+
 using namespace bt;
 
 namespace kt
