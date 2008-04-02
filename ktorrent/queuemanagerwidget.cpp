@@ -118,6 +118,11 @@ namespace kt
 		if (!s.isNull())
 			m_torrents->header()->restoreState(s);
 	}
+	
+	void QueueManagerWidget::update()
+	{
+		model->update();
+	}
 }
 
 #include "queuemanagerwidget.moc"

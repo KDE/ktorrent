@@ -173,8 +173,14 @@ namespace bt
 						leechers = vn->data().toInt();
 					}
 					
+					vn = d->getValue("downloaded");
+					if (vn && vn->data().getType() == Value::INT)
+					{
+						total_downloaded = vn->data().toInt();
+					}
+					
 					Out(SYS_TRK|LOG_DEBUG) << "Scrape : leechers = " << leechers 
-							<< ", seeders = " << seeders << endl;
+							<< ", seeders = " << seeders << ", downloaded = " << total_downloaded << endl;
 					scrapeDone();
 				}
 			}

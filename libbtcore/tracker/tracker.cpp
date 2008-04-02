@@ -42,7 +42,7 @@ namespace bt
 	{
 		// default 5 minute interval
 		interval = 5 * 60 * 1000;
-		seeders = leechers = 0;
+		seeders = leechers = total_downloaded = 0;
 		srand(time(0));
 		key = rand();
 		started = false;

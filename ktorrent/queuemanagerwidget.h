@@ -51,6 +51,8 @@ namespace kt
 		void saveState(KSharedConfigPtr cfg);
 		/// Load the widget state
 		void loadState(KSharedConfigPtr cfg);
+		/// Update the widget
+		void update();
 		
 	public slots:
 		void onTorrentAdded(bt::TorrentInterface* tc);

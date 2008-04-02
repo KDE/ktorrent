@@ -78,6 +78,11 @@ namespace kt
 		 */
 		void queue(int row);
 		
+		/**
+		 * Update the model
+		 */
+		void update();
+		
 	public slots:
 		void onTorrentAdded(bt::TorrentInterface* tc);
 		void onTorrentRemoved(bt::TorrentInterface* tc);
@@ -85,7 +90,7 @@ namespace kt
 
 	private:
 		QueueManager* qman;
-		QueuePtrList torrents;
+		QMap<const bt::TorrentInterface*,bt::Int64> stalled_times;
 		mutable QList<int> dragged_items;
 	};
 

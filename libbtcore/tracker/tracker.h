@@ -124,7 +124,7 @@ namespace bt
 		int tier;
 		PeerID peer_id;
 		TorrentInterface* tor;
-		Uint32 interval,seeders,leechers,key;
+		Uint32 interval,seeders,leechers,key,total_downloaded;
 		bool started;
 	};
 	

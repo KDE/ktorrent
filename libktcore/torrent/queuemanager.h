@@ -144,6 +144,13 @@ namespace kt
 		 * @return The torrent or 0 if the index is out of bounds
 		 */
 		const bt::TorrentInterface* getTorrent(bt::Uint32 idx) const;
+		
+		/**
+		 * Get the torrent at index idx in the list.
+		 * @param idx Index of the torrent
+		 * @return The torrent or 0 if the index is out of bounds
+		 */
+		bt::TorrentInterface* getTorrent(bt::Uint32 idx);
 
 		/**
 		 * See if we already loaded a torrent.

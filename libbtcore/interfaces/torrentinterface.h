@@ -152,6 +152,10 @@ namespace bt
 		bool priv_torrent;
 		/// Number of corrupted chunks found since the last check
 		Uint32 num_corrupted_chunks;
+		/// TimeStamp when we last saw download activity
+		TimeStamp last_download_activity_time;
+		/// TimeStamp when we last saw upload activity
+		TimeStamp last_upload_activity_time;
 	};
 	
 		

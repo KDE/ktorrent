@@ -539,6 +539,8 @@ namespace kt
 		
 		start_all_action->setEnabled(core->getNumTorrentsNotRunning() > 0);
 		stop_all_action->setEnabled(core->getNumTorrentsRunning() > 0);
+		if (qm->isVisible())
+			qm->update();
 	}
 
 	void GUI::applySettings()

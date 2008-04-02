@@ -100,6 +100,7 @@ namespace bt
 		stats.leechers_connected_to = stats.leechers_total = 0;
 		stats.max_share_ratio = 0.00f;
 		stats.max_seed_time = 0;
+		stats.last_download_activity_time = stats.last_upload_activity_time = 0;
 		istats.running_time_dl = istats.running_time_ul = 0;
 		istats.prev_bytes_dl = 0;
 		istats.prev_bytes_ul = 0;
@@ -267,7 +268,13 @@ namespace bt
 			updateStats();
 
 			if (stats.download_rate > 0)
+			{
 				stalled_timer.update();
+				stats.last_download_activity_time = GetCurrentTime();
+			}
+			
+			if (stats.upload_rate > 0)
+				stats.last_upload_activity_time = GetCurrentTime();
 			
 			// do a manual update if we are stalled for more then 2 minutes
 			// we do not do this for private torrents
@@ -279,7 +286,7 @@ namespace bt
 				stalled_timer.update();
 			}
 			
-			if(overMaxRatio() || overMaxSeedTime()) 
+			if (overMaxRatio() || overMaxSeedTime()) 
 			{ 
 				if(istats.priority!=0) //if it's queued make sure to dequeue it 
 				{
@@ -405,6 +412,7 @@ namespace bt
 		stats.running = true;
 		stats.started = true;
 		stats.autostart = true;
+		stats.last_download_activity_time = stats.last_upload_activity_time = GetCurrentTime();
 		choker_update_timer.update();
 		stats_save_timer.update();
 		

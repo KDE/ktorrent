@@ -426,6 +426,14 @@ namespace kt
 		else
 			return downloads[idx];
 	}
+	
+	bt::TorrentInterface* QueueManager::getTorrent(bt::Uint32 idx)
+	{
+		if (idx >= (Uint32)downloads.count())
+			return 0;
+		else
+			return downloads[idx];
+	}
 
 	QList<bt::TorrentInterface *>::iterator QueueManager::begin()
 	{
