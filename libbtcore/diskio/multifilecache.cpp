@@ -657,6 +657,8 @@ namespace bt
 	{
 		DNDFile dnd(dnd_file);
 		
+		// make sure path exists
+		MakeFilePath(output_file);
 		// create the output file
 		bt::Touch(output_file);
 		// truncate it
