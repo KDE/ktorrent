@@ -736,6 +736,17 @@ namespace kt
 		orderQueue();
 	}
 	
+	static bool IsStalled(bt::TorrentInterface* tc,bt::TimeStamp now,bt::Uint32 min_stall_time)
+	{
+		bt::Int64 stalled_time = 0;
+		if (tc->getStats().completed)
+			stalled_time = (now - tc->getStats().last_upload_activity_time) / 1000;
+		else
+			stalled_time = (now - tc->getStats().last_download_activity_time) / 1000;
+				
+		return stalled_time > min_stall_time * 60 && tc->getStats().running;
+	}
+	
 	void QueueManager::checkStalledTorrents(bt::TimeStamp now,bt::Uint32 min_stall_time)
 	{
 		const int MAX_PRIO = INT_MAX;
@@ -743,36 +754,27 @@ namespace kt
 		// set the priority of all stalled ones to -1
 		foreach (bt::TorrentInterface* tc,downloads)
 		{
-			if (tc->getStats().running && tc->getPriority() > 0)
+			if (tc->getPriority() > 1 && IsStalled(tc,now,min_stall_time))
 			{
-				bt::Int64 stalled_time = 0;
-				if (tc->getStats().completed)
-					stalled_time = (now - tc->getStats().last_upload_activity_time) / 1000;
-				else
-					stalled_time = (now - tc->getStats().last_download_activity_time) / 1000;
-				
-				if (stalled_time > min_stall_time * 60)
-				{
-					tc->setPriority(MAX_PRIO);
-					found_stalled = true;
-					Out(SYS_GEN | LOG_NOTICE) << "The torrent " << tc->getStats().torrent_name << " has stalled longer then " << min_stall_time << " minutes, decreasing it's priority" << endl;
-				}
+				tc->setPriority(MAX_PRIO);
+				found_stalled = true;
+				Out(SYS_GEN | LOG_NOTICE) << "The torrent " << tc->getStats().torrent_name << " has stalled longer then " << min_stall_time << " minutes, decreasing it's priority" << endl;
 			}
 		}
 	
 		if (found_stalled)
 		{
-			// redo the priority, stalled ones now get 1, the other ones get an increase if they are not user controlled
+			// redo the priority, stalled ones now get 1, 
+			// the other ones get an increase if they are not user controlled
 			foreach (bt::TorrentInterface* tc,downloads)
 			{
 				int prio = tc->getPriority();
 				if (prio == MAX_PRIO)
 					tc->setPriority(1);
-				else if (prio >= 1)
+				else if (prio > 1 || (prio == 1 && !IsStalled(tc,now,min_stall_time)))
 					tc->setPriority(prio + 1);
 			}
 			
-			rearrangeQueue();
 			orderQueue();
 		}
 	}
