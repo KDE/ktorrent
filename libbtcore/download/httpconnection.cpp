@@ -36,6 +36,7 @@ namespace bt
 		status = i18n("Not connected");
 		connect(&reply_timer,SIGNAL(timeout()),this,SLOT(replyTimeout()));
 		connect(&connect_timer,SIGNAL(timeout()),this,SLOT(connectTimeout()));
+		up_gid = down_gid = 0;
 	}
 
 
@@ -48,6 +49,17 @@ namespace bt
 		}
 		
 		qDeleteAll(requests);
+	}
+	
+	void HttpConnection::setGroupIDs(Uint32 up,Uint32 down)
+	{
+		up_gid = up;
+		down_gid = down;
+		if (sock)
+		{
+			sock->setGroupID(up_gid,true);
+			sock->setGroupID(down_gid,false);
+		}
 	}
 	
 	const QString HttpConnection::getStatusString() const
@@ -184,6 +196,8 @@ namespace bt
 			sock->setNonBlocking();
 			sock->setReader(this);
 			sock->setWriter(this);
+			sock->setGroupID(up_gid,true);
+			sock->setGroupID(down_gid,false);
 			
 			if (sock->connectTo(addr))
 			{

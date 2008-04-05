@@ -35,11 +35,13 @@ namespace net
 	class SocketGroup
 	{
 		Uint32 limit;
+		Uint32 assured_rate;
 		std::list<BufferedSocket*> sockets;
 		bt::TimeStamp prev_run_time;
 		Uint32 group_allowance;
+		Uint32 group_assured;
 	public:
-		SocketGroup(Uint32 limit);
+		SocketGroup(Uint32 limit,Uint32 assured_rate);
 		virtual ~SocketGroup();
 		
 		/// Clear the lists of sockets
@@ -70,6 +72,12 @@ namespace net
 		 */
 		void setLimit(Uint32 lim) {limit = lim;}
 		
+		/**
+		 * Set the assured rate for the gorup in bytes per sec
+		 * @param as The assured rate
+		 */
+		void setAssuredRate(Uint32 as) {assured_rate = as;}
+		
 		/// Get the number of sockets 
 		Uint32 numSockets() const {return sockets.size();}
 		
@@ -78,6 +86,11 @@ namespace net
 		 * @param now Current timestamp
 		 */
 		void calcAllowance(bt::TimeStamp now);
+		
+		/**
+		 * Get the assured allowance .
+		 */
+		Uint32 getAssuredAllowance() const {return group_assured;}
 	private:
 		void processUnlimited(bool up,bt::TimeStamp now);
 		bool processLimited(bool up,bt::TimeStamp now,Uint32 & allowance);

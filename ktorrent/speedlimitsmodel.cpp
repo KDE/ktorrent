@@ -39,6 +39,9 @@ namespace kt
 			tc->getTrafficLimits(lim.up_original,lim.down_original);
 			lim.down = lim.down_original;
 			lim.up = lim.up_original;
+			tc->getAssuredSpeeds(lim.assured_up_original,lim.assured_down_original);
+			lim.assured_down = lim.assured_down_original;
+			lim.assured_up = lim.assured_up_original;
 			limits.insert(tc,lim);
 			itr++;
 		}
@@ -57,6 +60,9 @@ namespace kt
 		lim.down = lim.down_original;
 		lim.up = lim.up_original;
 		limits.insert(tc,lim);
+		tc->getAssuredSpeeds(lim.assured_up_original,lim.assured_down_original);
+		lim.assured_down = lim.assured_down_original;
+		lim.assured_up = lim.assured_up_original;
 		insertRow(limits.count() - 1);
 	}
 	
@@ -90,7 +96,7 @@ namespace kt
 		if (parent.isValid())
 			return 0;
 		else
-			return 3;
+			return 5;
 	}
 		
 	QVariant SpeedLimitsModel::headerData(int section, Qt::Orientation orientation,int role) const
@@ -103,6 +109,8 @@ namespace kt
 			case 0: return i18n("Torrent");
 			case 1: return i18n("Download Limit");
 			case 2: return i18n("Upload Limit");
+			case 3: return i18n("Assured Download Speed");
+			case 4: return i18n("Assured Upload Speed");
 			default:
 				return QVariant();
 		}
@@ -132,6 +140,16 @@ namespace kt
 					return lim.up / 1024;
 				else 
 					return lim.up == 0 ? i18n("No limit") : i18n("%1 KB/s",lim.up / 1024);
+			case 3:
+				if (role == Qt::EditRole || role == Qt::UserRole)
+					return lim.assured_down / 1024;
+				else
+					return lim.assured_down == 0 ? i18n("No assured speed") : i18n("%1 KB/s",lim.assured_down / 1024);
+			case 4:
+				if (role == Qt::EditRole || role == Qt::UserRole)
+					return lim.assured_up / 1024;
+				else 
+					return lim.assured_up == 0 ? i18n("No assured speed") : i18n("%1 KB/s",lim.assured_up / 1024);
 			default: return QVariant();
 		}
 	}
@@ -147,21 +165,39 @@ namespace kt
 			
 		bool ok = false;
 		Uint32 up,down;
+		Uint32 aup,adown;
 		tc->getTrafficLimits(up,down);
-		if (index.column() == 1)
-			down = value.toInt(&ok) * 1024;
-		else
-			up = value.toInt(&ok) * 1024;
+		tc->getAssuredSpeeds(aup,adown);
+		switch (index.column())
+		{
+			case 1:
+				down = value.toInt(&ok) * 1024;
+				break;
+			case 2:
+				up = value.toInt(&ok) * 1024;
+				break;
+			case 3:
+				adown = value.toInt(&ok) * 1024;
+				break;
+			case 4:
+				aup = value.toInt(&ok) * 1024;
+				break;
+		}
 			
 		if (ok)
 		{
 			Limits & lim = limits[tc];
 			lim.up = up;
 			lim.down = down;
+			lim.assured_down = adown;
+			lim.assured_up = aup;
 			
 			emit dataChanged(index, index);
-			if (lim.up != lim.up_original || lim.down != lim.down_original)
+			if (lim.up != lim.up_original || lim.down != lim.down_original || 
+				lim.assured_down != lim.assured_down_original || lim.up_original != lim.assured_up_original)
+			{
 				enableApply(true);
+			}
 		}
 			
 		return ok;
@@ -203,6 +239,13 @@ namespace kt
 				tc->setTrafficLimits(lim.up,lim.down);
 				lim.up_original = lim.up;
 				lim.down_original = lim.down;
+			}
+			
+			if (lim.assured_up != lim.assured_up_original || lim.assured_down != lim.assured_down_original)
+			{
+				tc->setAssuredSpeeds(lim.assured_up,lim.assured_down);
+				lim.assured_up_original = lim.assured_up;
+				lim.assured_down_original = lim.assured_down;
 			}
 			itr++;
 		}

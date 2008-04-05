@@ -97,7 +97,7 @@ namespace kt
 			{
 				QItemSelectionModel* sel = m_speed_limits_view->selectionModel();
 				QModelIndex midx = pm->mapFromSource(model->index(idx,0));
-				QModelIndex midx2 = pm->mapFromSource(model->index(idx,2));
+				QModelIndex midx2 = pm->mapFromSource(model->index(idx,4));
 				sel->select(QItemSelection(midx,midx2),QItemSelectionModel::Select);
 				m_speed_limits_view->scrollTo(midx);
 			}

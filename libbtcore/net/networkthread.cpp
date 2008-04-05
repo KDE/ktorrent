@@ -33,7 +33,7 @@ namespace net
 		: sm(sm),running(false)
 	{
 		groups.setAutoDelete(true);
-		groups.insert(0,new SocketGroup(0));
+		groups.insert(0,new SocketGroup(0,0));
 	}
 
 
@@ -48,17 +48,18 @@ namespace net
 			update();
 	}
 
-	void NetworkThread::addGroup(Uint32 gid,Uint32 limit)
+	void NetworkThread::addGroup(Uint32 gid,Uint32 limit,Uint32 assured_rate)
 	{
 		// if group already exists, just change the limit
 		SocketGroup* g = groups.find(gid);
 		if (g)
 		{
 			g->setLimit(limit);
+			g->setAssuredRate(assured_rate);
 		}
 		else
 		{
-			g = new SocketGroup(limit);
+			g = new SocketGroup(limit,assured_rate);
 			groups.insert(gid,g);
 		}
 	}
@@ -76,6 +77,15 @@ namespace net
 		if (g)
 		{
 			g->setLimit(limit);
+		}
+	}
+	
+	void NetworkThread::setGroupAssuredRate(Uint32 gid,Uint32 as)
+	{
+		SocketGroup* g = groups.find(gid);
+		if (g)
+		{
+			g->setAssuredRate(as);
 		}
 	}
 	
@@ -119,14 +129,29 @@ namespace net
 	{
 		if (limit == 0)
 		{
-			Uint32 allowance = 0;
+			// calculate group allowance for each group and check for assured rate groups
 			bt::PtrMap<Uint32,SocketGroup>::iterator itr = groups.begin();
+			while (itr != groups.end())
+			{
+				SocketGroup* g = itr->second;
+				g->calcAllowance(now);
+				if (g->numSockets() > 0 && g->getAssuredAllowance() > 0)
+				{
+					// lets make sure that the assured rate is done first
+					Uint32 as = g->getAssuredAllowance();
+					doGroup(g,as,now);
+				}
+				itr++;
+			}
+			
+			Uint32 allowance = 0;
+			// do the rest
+			itr = groups.begin();
 			while (itr != groups.end())
 			{
 				SocketGroup* g = itr->second;
 				if (g->numSockets() > 0)
 				{
-					g->calcAllowance(now);
 					doGroup(g,allowance,now);
 					g->clear();
 				}
@@ -135,16 +160,29 @@ namespace net
 		}
 		else
 		{
+			Uint32 allowance = (Uint32)ceil(1.0 * limit * (now - prev_run_time) * 0.001);
+			
 			// calculate group allowance for each group
 			bt::PtrMap<Uint32,SocketGroup>::iterator itr = groups.begin();
 			while (itr != groups.end())
 			{
 				SocketGroup* g = itr->second;
 				g->calcAllowance(now);
+				if (g->numSockets() > 0 && g->getAssuredAllowance() > 0)
+				{
+					// do assured stuff
+					Uint32 as = g->getAssuredAllowance();
+					if (as > allowance)
+						as = allowance; // make sure we do not do to much
+					
+					Uint32 tmp = as;
+					doGroup(g,as,now);
+					allowance -= (tmp - as); // subtract from allowance
+				}
 				itr++;
 			}
 			
-			Uint32 allowance = (Uint32)ceil(1.0 * limit * (now - prev_run_time) * 0.001);
+			
 			
 			while (allowance > 0 && num_ready > 0)
 			{

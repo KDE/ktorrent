@@ -75,9 +75,17 @@ namespace bt
 		QString status;
 		QTimer connect_timer;
 		QTimer reply_timer;
+		Uint32 up_gid,down_gid;
 	public:
 		HttpConnection();
 		virtual ~HttpConnection();
+		
+		/**
+		 * Set the group ID's of the socket
+		 * @param up Upload group id
+		 * @param down Download group id
+		 */
+		void setGroupIDs(Uint32 up,Uint32 down);
 		
 		/**
 		 * Connect to a webseed

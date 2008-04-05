@@ -68,6 +68,10 @@ namespace kt
 			bt::Uint32 up_original;
 			bt::Uint32 down;
 			bt::Uint32 down_original;
+			bt::Uint32 assured_up;
+			bt::Uint32 assured_up_original;
+			bt::Uint32 assured_down;
+			bt::Uint32 assured_down_original;
 		};
 		
 		Core* core;

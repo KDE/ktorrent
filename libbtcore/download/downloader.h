@@ -79,6 +79,13 @@ namespace bt
 		 */
 		Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman,ChunkSelectorFactoryInterface* fac);
 		virtual ~Downloader();
+		
+		/**
+		 * Set the group ID's of the webseed (for speed limits)
+		 * @param up Upload group id
+		 * @param down Download group id
+		 */
+		void setGroupIDs(Uint32 up,Uint32 down);
 
 		/// Get the number of webseeds
 		Uint32 getNumWebSeeds() const {return webseeds.count();}
@@ -87,7 +94,7 @@ namespace bt
 		const WebSeed* getWebSeed(Uint32 i) const {return i < webseeds.count() ? webseeds[i] : 0;}
 		
 		/// Add a webseed
-		bool addWebSeed(const KUrl & url);
+		WebSeed* addWebSeed(const KUrl & url);
 		
 		/// Remove a webseed
 		bool removeWebSeed(const KUrl & url);

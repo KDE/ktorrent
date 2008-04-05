@@ -28,10 +28,11 @@ using namespace bt;
 namespace net
 {
 
-	SocketGroup::SocketGroup(Uint32 limit) : limit(limit)
+	SocketGroup::SocketGroup(Uint32 limit,Uint32 assured_rate) : limit(limit),assured_rate(assured_rate)
 	{
 		prev_run_time = bt::GetCurrentTime();
 		group_allowance = 0;
+		group_assured = 0;
 	}
 
 
@@ -120,6 +121,12 @@ namespace net
 			group_allowance = (Uint32)ceil(1.0 * limit * (now - prev_run_time) * 0.001);
 		else
 			group_allowance = 0;
+		
+		if (assured_rate > 0)
+			group_assured = (Uint32)ceil(1.0 * assured_rate * (now - prev_run_time) * 0.001);
+		else
+			group_assured = 0;
+		
 		prev_run_time = now;
 	}
 	
@@ -127,6 +134,12 @@ namespace net
 	{
 		if (limit > 0)
 		{	
+			if (group_allowance == 0)
+			{
+				clear();
+				return false;
+			}
+			
 			bool ret = false;
 			if (global_allowance == 0)
 			{

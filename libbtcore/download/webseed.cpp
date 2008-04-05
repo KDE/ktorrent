@@ -72,6 +72,7 @@ namespace bt
 		downloaded = 0;
 		current = 0;
 		status = i18n("Not connected");
+		up_gid = down_gid = 0;
 	}
 
 
@@ -79,6 +80,14 @@ namespace bt
 	{
 		delete conn;
 		delete current;
+	}
+	
+	void WebSeed::setGroupIDs(Uint32 up,Uint32 down)
+	{
+		up_gid = up;
+		down_gid = down;
+		if (conn)
+			conn->setGroupIDs(up,down);
 	}
 	
 	void WebSeed::setProxy(const QString & host,bt::Uint16 port)
@@ -132,7 +141,10 @@ namespace bt
 		
 		// open connection and connect if needed
 		if (!conn)
+		{
 			conn = new HttpConnection();
+			conn->setGroupIDs(up_gid,down_gid);
+		}
 		
 		if (!conn->connected())
 		{

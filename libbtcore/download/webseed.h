@@ -80,6 +80,15 @@ namespace bt
 		/// Get the current download rate
 		Uint32 getDownloadRate() const;
 		
+			
+		/**
+		 * Set the group ID's of the http connection (for speed limits)
+		 * @param up Upload group id
+		 * @param down Download group id
+		 */
+		void setGroupIDs(Uint32 up,Uint32 down);
+		
+		
 		/**
 		 * Set the proxy to use for all WebSeeds
 		 * @param host Hostname or IP address of the proxy
@@ -146,6 +155,7 @@ namespace bt
 		Uint32 num_failures;
 		Uint32 downloaded;
 		WebSeedChunkDownload* current;
+		Uint32 up_gid,down_gid;
 		
 		static QString proxy_host;
 		static Uint16 proxy_port;

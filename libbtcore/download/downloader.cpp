@@ -833,13 +833,13 @@ namespace bt
 			tmon->downloadRemoved(cd);
 	}
 	
-	bool Downloader::addWebSeed(const KUrl & url)
+	WebSeed* Downloader::addWebSeed(const KUrl & url)
 	{
 		// Check for dupes
 		foreach (WebSeed* ws,webseeds)
 		{
 			if (ws->getUrl() == url)
-				return false;
+				return 0;
 		}
 		
 		WebSeed* ws = new WebSeed(url,true,tor,cman);
@@ -849,7 +849,7 @@ namespace bt
 				this,SLOT(chunkDownloadStarted(ChunkDownloadInterface*)));
 		connect(ws,SIGNAL(chunkDownloadFinished(ChunkDownloadInterface*)),
 				this,SLOT(chunkDownloadFinished(ChunkDownloadInterface*)));
-		return true;
+		return ws;
 	}
 		
 	bool Downloader::removeWebSeed(const KUrl & url)
@@ -914,6 +914,14 @@ namespace bt
 				connect(ws,SIGNAL(chunkDownloadFinished(ChunkDownloadInterface*)),
 						this,SLOT(chunkDownloadFinished(ChunkDownloadInterface*)));
 			}
+		}
+	}
+	
+	void Downloader::setGroupIDs(Uint32 up,Uint32 down)
+	{
+		foreach (WebSeed* ws,webseeds)
+		{
+			ws->setGroupIDs(up,down);
 		}
 	}
 }

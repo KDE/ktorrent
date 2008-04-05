@@ -444,6 +444,14 @@ namespace bt
 		/// Get the traffic limits
 		virtual void getTrafficLimits(Uint32 & up,Uint32 & down) = 0;
 		
+		/// Set the assured speeds
+		virtual void setAssuredSpeeds(Uint32 up,Uint32 down) = 0;
+		
+		/// Get the assured speeds
+		virtual void getAssuredSpeeds(Uint32 & up,Uint32 & down) = 0;
+		
+		
+		
 		/// Check if there is enough diskspace available for this torrent
 		virtual bool checkDiskSpace(bool emit_sig = true) = 0;
 		

@@ -267,6 +267,8 @@ namespace bt
 		
 		virtual void setTrafficLimits(Uint32 up,Uint32 down);
 		virtual void getTrafficLimits(Uint32 & up,Uint32 & down);
+		virtual void setAssuredSpeeds(Uint32 up,Uint32 down);
+		virtual void getAssuredSpeeds(Uint32 & up,Uint32 & down);
 		virtual const SHA1Hash & getInfoHash() const;
 	
 		/// Get the PeerManager
@@ -385,13 +387,16 @@ namespace bt
 		void preallocThreadDone();
 		virtual bool isCheckingData(bool & finished) const;
 		
+		void setUploadProps(Uint32 limit,Uint32 rate);
+		void setDownloadProps(Uint32 limit,Uint32 rate);
+		
 	private:
 		Torrent* tor;
 		PeerSourceManager* psman;
 		ChunkManager* cman;
 		PeerManager* pman;
-		Downloader* down;
-		Uploader* up;
+		Downloader* downloader;
+		Uploader* uploader;
 		Choker* choke;
 		TimeEstimator* m_eta;
 		MonitorInterface* tmon;
@@ -440,6 +445,9 @@ namespace bt
 		Uint32 upload_limit; 
 		Uint32 download_gid; // group ID for download
 		Uint32 download_limit; 
+		
+		Uint32 assured_download_speed;
+		Uint32 assured_upload_speed;
 		
 		InternalStats istats;
 		

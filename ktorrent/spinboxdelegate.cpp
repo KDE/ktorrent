@@ -33,11 +33,14 @@ namespace kt
 	SpinBoxDelegate::~SpinBoxDelegate()
 	{}
 	
-	QWidget *SpinBoxDelegate::createEditor(QWidget *parent,const QStyleOptionViewItem &, const QModelIndex &) const
+	QWidget *SpinBoxDelegate::createEditor(QWidget *parent,const QStyleOptionViewItem &, const QModelIndex & index) const
 	{
 		QSpinBox *editor = new QSpinBox(parent);
 		editor->setSuffix(i18n(" KB/s"));
-		editor->setSpecialValueText(i18n("No limit"));
+		if (index.column() < 3)
+			editor->setSpecialValueText(i18n("No limit"));
+		else
+			editor->setSpecialValueText(i18n("No assured speed"));
 		editor->setMinimum(0);
 		editor->setMaximum(10000000);
 		return editor;
@@ -46,7 +49,6 @@ namespace kt
 	void SpinBoxDelegate::setEditorData(QWidget *editor,const QModelIndex &index) const
 	{
 		int value = index.model()->data(index, Qt::EditRole).toInt();
-
 		QSpinBox *spinBox = static_cast<QSpinBox*>(editor);
 		spinBox->setValue(value);
 	}

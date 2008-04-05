@@ -89,9 +89,10 @@ namespace net
  		 * Creata a new upload or download group
  		 * @param type Wether it is an upload or download group
  		 * @param limit Limit of group in bytes/s
+		 * @param assured_rate The assured rate in bytes/s
  		 * @return The group ID
  		 */
- 		Uint32 newGroup(GroupType type,Uint32 limit);
+ 		Uint32 newGroup(GroupType type,Uint32 limit,Uint32 assured_rate);
  		
  		/**
  		 * Change the group limit
@@ -100,6 +101,14 @@ namespace net
  		 * @param limit The limit
  		 */
  		void setGroupLimit(GroupType type,Uint32 gid,Uint32 limit);
+		
+		/**
+		 * Change the group assured rate
+		 * @param type The group type
+		 * @param gid The group id
+		 * @param limit The limit
+		 */
+		void setGroupAssuredRate(GroupType type,Uint32 gid,Uint32 as);
  		
  		/**
  		 * Remove a group

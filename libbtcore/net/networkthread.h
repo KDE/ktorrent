@@ -53,8 +53,9 @@ namespace net
 		 * Add a new group with a given limit
 		 * @param gid The group ID (cannot be 0, 0 is the default group)
 		 * @param limit The limit in bytes per sec
-		 */
-		void addGroup(Uint32 gid,Uint32 limit);
+		 * @param assured_rate The assured rate for this group in bytes per second
+ 		 */
+		void addGroup(Uint32 gid,Uint32 limit,Uint32 assured_rate);
 		
 		/**
 		 * Remove a group 
@@ -68,6 +69,13 @@ namespace net
 		 * @param limit The limit 
 		 */
 		void setGroupLimit(Uint32 gid,Uint32 limit);
+		
+		/**
+		 * Set the assured rate for a group
+		 * @param gid The group ID 
+		 * @param as The assured rate
+		 */
+		void setGroupAssuredRate(Uint32 gid,Uint32 as);
 		
 		/**
 		 * The main function of the thread

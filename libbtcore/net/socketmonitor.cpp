@@ -138,14 +138,14 @@ namespace net
 			ut->signalDataReady();
 	}
 	
-	Uint32 SocketMonitor::newGroup(GroupType type,Uint32 limit)
+	Uint32 SocketMonitor::newGroup(GroupType type,Uint32 limit,Uint32 assured_rate)
 	{
 		lock();
 		Uint32 gid = next_group_id++;
 		if (type == UPLOAD_GROUP)
-			ut->addGroup(gid,limit);
+			ut->addGroup(gid,limit,assured_rate);
 		else
-			dt->addGroup(gid,limit);
+			dt->addGroup(gid,limit,assured_rate);
 		unlock();
 		return gid;
 	}
@@ -157,6 +157,16 @@ namespace net
 			ut->setGroupLimit(gid,limit);
 		else
 			dt->setGroupLimit(gid,limit);
+		unlock();
+	}
+	
+	void SocketMonitor::setGroupAssuredRate(GroupType type,Uint32 gid,Uint32 as)
+	{
+		lock();
+		if (type == UPLOAD_GROUP)
+			ut->setGroupAssuredRate(gid,as);
+		else
+			dt->setGroupAssuredRate(gid,as);
 		unlock();
 	}
 		

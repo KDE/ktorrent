@@ -77,7 +77,7 @@ namespace bt
 	Uint32 TorrentControl::num_corrupted_for_recheck = 3;
 
 	TorrentControl::TorrentControl()
-	: tor(0),psman(0),cman(0),pman(0),down(0),up(0),choke(0),tmon(0),prealloc(false)
+	: tor(0),psman(0),cman(0),pman(0),downloader(0),uploader(0),choke(0),tmon(0),prealloc(false)
 	{
 		custom_selector_factory = 0;
 		cache_factory = 0;
@@ -119,6 +119,7 @@ namespace bt
 		// by default no torrent limits
 		upload_gid = download_gid = 0;
 		upload_limit = download_limit = 0;
+		assured_upload_speed = assured_download_speed = 0;
 		moving_files = false;
 	}
 
@@ -133,8 +134,8 @@ namespace bt
 		if (tmon)
 			tmon->destroyed();
 		delete choke;
-		delete down;
-		delete up;
+		delete downloader;
+		delete uploader;
 		delete cman;
 		delete pman;
 		delete psman;
@@ -192,8 +193,8 @@ namespace bt
 			bool comp = stats.completed;
 
 			// then the downloader and uploader
-			up->update(choke->getOptimisticlyUnchokedPeerID());			
-			down->update();
+			uploader->update(choke->getOptimisticlyUnchokedPeerID());			
+			downloader->update();
 
 			//helper var, check if needed to move completed files somewhere
 			bool moveCompleted = false;
@@ -399,7 +400,7 @@ namespace bt
 		pman->loadPeerList(tordir + "peer_list");
 		try
 		{
-			down->loadDownloads(tordir + "current_chunks");
+			downloader->loadDownloads(tordir + "current_chunks");
 		}
 		catch (Error & e)
 		{
@@ -462,7 +463,7 @@ namespace bt
 
 			try
 			{
-				down->saveDownloads(tordir + "current_chunks");
+				downloader->saveDownloads(tordir + "current_chunks");
 			}
 			catch (Error & e)
 			{
@@ -471,7 +472,7 @@ namespace bt
 				Out(SYS_GEN|LOG_NOTICE) << "Warning : " << e.toString() << endl;
 			}
 			
-			down->clearDownloads();
+			downloader->clearDownloads();
 			if (user)
 			{
 				//make this torrent user controlled
@@ -498,7 +499,7 @@ namespace bt
 	void TorrentControl::setMonitor(MonitorInterface* tmo)
 	{
 		tmon = tmo;
-		down->setMonitor(tmon);
+		downloader->setMonitor(tmon);
 		if (tmon)
 		{
 			for (Uint32 i = 0;i < pman->getNumConnectedPeers();i++)
@@ -644,18 +645,18 @@ namespace bt
 		stats.completed = cman->completed();
 
 		// create downloader,uploader and choker
-		down = new Downloader(*tor,*pman,*cman,custom_selector_factory);
-		down->loadWebSeeds(tordir + "webseeds");
-		connect(down,SIGNAL(ioError(const QString& )),
+		downloader = new Downloader(*tor,*pman,*cman,custom_selector_factory);
+		downloader->loadWebSeeds(tordir + "webseeds");
+		connect(downloader,SIGNAL(ioError(const QString& )),
 				this,SLOT(onIOError(const QString& )));
-		up = new Uploader(*cman,*pman);
+		uploader = new Uploader(*cman,*pman);
 		choke = new Choker(*pman,*cman);
 
 
 		connect(pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
 		connect(pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerRemoved(Peer* )));
-		connect(cman,SIGNAL(excluded(Uint32, Uint32 )),down,SLOT(onExcluded(Uint32, Uint32 )));
-		connect(cman,SIGNAL(included( Uint32, Uint32 )),down,SLOT(onIncluded( Uint32, Uint32 )));
+		connect(cman,SIGNAL(excluded(Uint32, Uint32 )),downloader,SLOT(onExcluded(Uint32, Uint32 )));
+		connect(cman,SIGNAL(included( Uint32, Uint32 )),downloader,SLOT(onIncluded( Uint32, Uint32 )));
 		connect(cman,SIGNAL(corrupted( Uint32 )),this,SLOT(corrupted( Uint32 )));
 	}
 	
@@ -691,8 +692,8 @@ namespace bt
 		// the data from downloads already in progress
 		try
 		{
-			Uint64 db = down->bytesDownloaded();
-			Uint64 cb = down->getDownloadedBytesOfCurrentChunksFile(tordir + "current_chunks");
+			Uint64 db = downloader->bytesDownloaded();
+			Uint64 cb = downloader->getDownloadedBytesOfCurrentChunksFile(tordir + "current_chunks");
 			istats.prev_bytes_dl = db + cb;
 				
 		//	Out() << "Downloaded : " << BytesToString(db) << endl;
@@ -702,7 +703,7 @@ namespace bt
 		{
 			// print out warning in case of failure
 			Out() << "Warning : " << e.toString() << endl;
-			istats.prev_bytes_dl = down->bytesDownloaded();
+			istats.prev_bytes_dl = downloader->bytesDownloaded();
 		}
 		
 		loadStats();
@@ -995,7 +996,7 @@ namespace bt
 			stats.status = SEEDING;
 		else if (stats.running) 
 			// protocol messages are also included in speed calculation, so lets not compare with 0
-			stats.status = down->downloadRate() > 100 ?
+			stats.status = downloader->downloadRate() > 100 ?
 					DOWNLOADING : STALLED;
 		
 		if (old != stats.status)
@@ -1043,7 +1044,7 @@ namespace bt
 		if (cman->getDataDir() != outputdir)
 			outputdir = cman->getDataDir();
 		
-		st.write("UPLOADED", QString::number(up->bytesUploaded()));
+		st.write("UPLOADED", QString::number(uploader->bytesUploaded()));
 		
 		if (stats.running)
 		{
@@ -1075,6 +1076,8 @@ namespace bt
 		st.write("UPLOAD_LIMIT",QString::number(upload_limit));
 		st.write("DOWNLOAD_LIMIT",QString::number(download_limit));
 		st.write("ENCODING",QString(tor->getTextCodec()->name()));
+		st.write("ASSURED_UPLOAD_SPEED",QString::number(assured_upload_speed));
+		st.write("ASSURED_DOWNLOAD_SPEED",QString::number(assured_download_speed));
 		st.writeSync();
 	}
 
@@ -1087,7 +1090,7 @@ namespace bt
 		// seeing that this will change here, we need to save it 
 		istats.session_bytes_uploaded = stats.session_bytes_uploaded; 
 		istats.prev_bytes_ul = val;
-		up->setBytesUploaded(val);
+		uploader->setBytesUploaded(val);
 		
 		istats.running_time_dl = st.readULong("RUNNING_TIME_DL");
 		istats.running_time_ul = st.readULong("RUNNING_TIME_UL");
@@ -1126,44 +1129,6 @@ namespace bt
 				setFeatureEnabled(UT_PEX_FEATURE,st.readBoolean("UT_PEX"));
 		}
 		
-		net::SocketMonitor & smon = net::SocketMonitor::instance();
-		
-		Uint32 nl = st.readInt("UPLOAD_LIMIT");
-		if (nl != upload_limit)
-		{
-			if (nl > 0)
-			{
-				if (upload_gid)
-					smon.setGroupLimit(net::SocketMonitor::UPLOAD_GROUP,upload_gid,nl);
-				else
-					upload_gid = smon.newGroup(net::SocketMonitor::UPLOAD_GROUP,nl);
-			}
-			else
-			{
-				smon.removeGroup(net::SocketMonitor::UPLOAD_GROUP,upload_gid);
-				upload_gid = 0;
-			}
-		}
-		upload_limit = nl;
-		
-		nl = st.readInt("DOWNLOAD_LIMIT");
-		if (nl != download_limit)
-		{
-			if (nl > 0)
-			{
-				if (download_gid)
-					smon.setGroupLimit(net::SocketMonitor::DOWNLOAD_GROUP,download_gid,nl);
-				else
-					download_gid = smon.newGroup(net::SocketMonitor::DOWNLOAD_GROUP,nl);
-			}
-			else
-			{
-				smon.removeGroup(net::SocketMonitor::DOWNLOAD_GROUP,download_gid);
-				download_gid = 0;
-			}
-		}
-		download_limit = nl;
-		
 		QString codec = st.readString("ENCODING");
 		if (codec.length() > 0)
 		{
@@ -1171,6 +1136,14 @@ namespace bt
 			if (cod)
 				changeTextCodec(cod);
 		}
+		
+		Uint32 aup = st.readInt("ASSURED_UPLOAD_SPEED");
+		Uint32 adown = st.readInt("ASSURED_DOWNLOAD_SPEED");
+		Uint32 up = st.readInt("UPLOAD_LIMIT");
+		Uint32 down = st.readInt("DOWNLOAD_LIMIT");
+		setDownloadProps(down,adown);
+		setUploadProps(up,aup);
+		pman->setGroupIDs(upload_gid,download_gid);
 	}
 
 	void TorrentControl::loadOutputDir()
@@ -1208,14 +1181,14 @@ namespace bt
 
 	void TorrentControl::updateStats()
 	{
-		stats.num_chunks_downloading = down ? down->numActiveDownloads() : 0;
+		stats.num_chunks_downloading = downloader ? downloader->numActiveDownloads() : 0;
 		stats.num_peers = pman ? pman->getNumConnectedPeers() : 0;
-		stats.upload_rate = up && stats.running ? up->uploadRate() : 0;
-		stats.download_rate = down && stats.running ? down->downloadRate() : 0;
+		stats.upload_rate = uploader && stats.running ? uploader->uploadRate() : 0;
+		stats.download_rate = downloader && stats.running ? downloader->downloadRate() : 0;
 		stats.bytes_left = cman ? cman->bytesLeft() : 0;
 		stats.bytes_left_to_download = cman ? cman->bytesLeftToDownload() : 0;
-		stats.bytes_uploaded = up ? up->bytesUploaded() : 0;
-		stats.bytes_downloaded = down ? down->bytesDownloaded() : 0;
+		stats.bytes_uploaded = uploader ? uploader->bytesUploaded() : 0;
+		stats.bytes_downloaded = downloader ? downloader->bytesDownloaded() : 0;
 		stats.total_chunks = tor ? tor->getNumChunks() : 0;
 		stats.num_chunks_downloaded = cman ? cman->chunksDownloaded() : 0;
 		stats.num_chunks_excluded = cman ? cman->chunksExcluded() : 0;
@@ -1528,20 +1501,20 @@ namespace bt
 		
 		if (lst && !lst->isStopped())
 		{
-			down->dataChecked(dc->getResult());
+			downloader->dataChecked(dc->getResult());
 			// update chunk manager
 			cman->dataChecked(dc->getResult());
 			if (lst->isAutoImport())
 			{
-				down->recalcDownloaded();
-				stats.imported_bytes = down->bytesDownloaded();
+				downloader->recalcDownloaded();
+				stats.imported_bytes = downloader->bytesDownloaded();
 				if (cman->haveAllChunks())
 					stats.completed = true;
 			}
 			else
 			{
 				Uint64 downloaded = stats.bytes_downloaded;
-				down->recalcDownloaded();
+				downloader->recalcDownloaded();
 				updateStats();
 				if (stats.bytes_downloaded > downloaded)
 					stats.imported_bytes = stats.bytes_downloaded - downloaded;
@@ -1587,7 +1560,7 @@ namespace bt
 		{
 			cman->recreateMissingFiles();
 			prealloc = true; // set prealloc to true so files will be truncated again
-			down->dataChecked(cman->getBitSet()); // update chunk selector
+			downloader->dataChecked(cman->getBitSet()); // update chunk selector
 		}
 		catch (Error & err)
 		{
@@ -1603,7 +1576,7 @@ namespace bt
 			cman->dndMissingFiles();
 			prealloc = true; // set prealloc to true so files will be truncated again
 			missingFilesMarkedDND(this);
-			down->dataChecked(cman->getBitSet()); // update chunk selector
+			downloader->dataChecked(cman->getBitSet()); // update chunk selector
 		}
 		catch (Error & err)
 		{
@@ -1665,7 +1638,7 @@ namespace bt
 	void TorrentControl::corrupted(Uint32 chunk)
 	{
 		// make sure we will redownload the chunk
-		down->corrupted(chunk);
+		downloader->corrupted(chunk);
 		if (stats.completed)
 			stats.completed = false;
 		
@@ -1790,63 +1763,90 @@ namespace bt
 		return true;
 	}
 	
+	void TorrentControl::setUploadProps(Uint32 limit,Uint32 rate)
+	{
+		net::SocketMonitor & smon = net::SocketMonitor::instance();	
+		if (upload_gid)
+		{
+			if (!limit && !rate)
+			{
+				smon.removeGroup(net::SocketMonitor::UPLOAD_GROUP,upload_gid);
+				upload_gid = 0;
+			}
+			else 
+			{
+				smon.setGroupLimit(net::SocketMonitor::UPLOAD_GROUP,upload_gid,limit);
+				smon.setGroupAssuredRate(net::SocketMonitor::UPLOAD_GROUP,upload_gid,rate);
+			}	
+		}
+		else
+		{
+			if (limit || rate)
+			{
+				upload_gid = smon.newGroup(net::SocketMonitor::UPLOAD_GROUP,limit,rate);
+			}
+		}
+		
+		upload_limit = limit;
+		assured_upload_speed = rate;
+	}
+			
+	void TorrentControl::setDownloadProps(Uint32 limit,Uint32 rate)
+	{
+		net::SocketMonitor & smon = net::SocketMonitor::instance();	
+		if (download_gid)
+		{
+			if (!limit && !rate)
+			{
+				smon.removeGroup(net::SocketMonitor::DOWNLOAD_GROUP,download_gid);
+				download_gid = 0;
+			}
+			else 
+			{
+				smon.setGroupLimit(net::SocketMonitor::DOWNLOAD_GROUP,download_gid,limit);
+				smon.setGroupAssuredRate(net::SocketMonitor::DOWNLOAD_GROUP,download_gid,rate);
+			}	
+		}
+		else
+		{
+			if (limit || rate)
+			{
+				download_gid = smon.newGroup(net::SocketMonitor::DOWNLOAD_GROUP,limit,rate);
+			}
+		}
+		
+		download_limit = limit;
+		assured_download_speed = rate;
+	}
+	
 	void TorrentControl::setTrafficLimits(Uint32 up,Uint32 down)
 	{
-		net::SocketMonitor & smon = net::SocketMonitor::instance();
-		if (up && !upload_gid)
-		{
-			// create upload group
-			upload_gid = smon.newGroup(net::SocketMonitor::UPLOAD_GROUP,up);
-			upload_limit = up;
-		}
-		else if (up && upload_gid)
-		{
-			// change existing group limit
-			smon.setGroupLimit(net::SocketMonitor::UPLOAD_GROUP,upload_gid,up);
-			upload_limit = up;
-		}
-		else if (!up && !upload_gid)
-		{
-			upload_limit = up;
-		}
-		else // !up && upload_gid
-		{
-			// remove existing group
-			smon.removeGroup(net::SocketMonitor::UPLOAD_GROUP,upload_gid);
-			upload_gid = upload_limit = 0;
-		}
-		
-		if (down && !download_gid)
-		{
-			// create download grodown
-			download_gid = smon.newGroup(net::SocketMonitor::DOWNLOAD_GROUP,down);
-			download_limit = down;
-		}
-		else if (down && download_gid)
-		{
-			// change existing grodown limit
-			smon.setGroupLimit(net::SocketMonitor::DOWNLOAD_GROUP,download_gid,down);
-			download_limit = down;
-		}
-		else if (!down && !download_gid)
-		{
-			download_limit = down;
-		}
-		else // !down && download_gid
-		{
-			// remove existing grodown
-			smon.removeGroup(net::SocketMonitor::DOWNLOAD_GROUP,download_gid);
-			download_gid = download_limit = 0;
-		}
-		
+		setDownloadProps(down,assured_download_speed);
+		setUploadProps(up,assured_upload_speed);
 		saveStats();
 		pman->setGroupIDs(upload_gid,download_gid);
+		downloader->setGroupIDs(upload_gid,download_gid);
 	}
 	
 	void TorrentControl::getTrafficLimits(Uint32 & up,Uint32 & down)
 	{
 		up = upload_limit;
 		down = download_limit;
+	}
+	
+	void TorrentControl::setAssuredSpeeds(Uint32 up,Uint32 down)
+	{
+		setDownloadProps(download_limit,down);
+		setUploadProps(upload_limit,up);
+		saveStats();
+		pman->setGroupIDs(upload_gid,download_gid);
+		downloader->setGroupIDs(upload_gid,download_gid);
+	}
+	
+	void TorrentControl::getAssuredSpeeds(Uint32 & up,Uint32 & down)
+	{
+		up = assured_upload_speed;
+		down = assured_download_speed;
 	}
 	
 	const PeerManager * TorrentControl::getPeerMgr() const
@@ -1907,27 +1907,30 @@ namespace bt
 	
 	Uint32 TorrentControl::getNumWebSeeds() const
 	{
-		return down->getNumWebSeeds();
+		return downloader->getNumWebSeeds();
 	}
 	
 	const WebSeedInterface* TorrentControl::getWebSeed(Uint32 i) const
 	{
-		return down->getWebSeed(i);
+		return downloader->getWebSeed(i);
 	}
 	
 	bool TorrentControl::addWebSeed(const KUrl & url)
 	{
-		bool ret = down->addWebSeed(url);
-		if (ret)
-			down->saveWebSeeds(tordir + "webseeds");
-		return ret;
+		WebSeed* ws = downloader->addWebSeed(url);
+		if (ws)
+		{
+			downloader->saveWebSeeds(tordir + "webseeds");
+			ws->setGroupIDs(upload_gid,download_gid); // make sure webseed has proper group ID
+		}
+		return ws != 0;
 	}
 	
 	bool TorrentControl::removeWebSeed(const KUrl & url)
 	{
-		bool ret = down->removeWebSeed(url);
+		bool ret = downloader->removeWebSeed(url);
 		if (ret)
-			down->saveWebSeeds(tordir + "webseeds");
+			downloader->saveWebSeeds(tordir + "webseeds");
 		return ret;
 	}
 }
