@@ -113,8 +113,7 @@ namespace bt
 	{
 		QFile fptr(file);
 		if (!fptr.open(QIODevice::ReadOnly))
-			throw Error(i18n(" Unable to open torrent file %1 : %2")
-					.arg(file).arg(fptr.errorString()));
+			throw Error(i18n(" Unable to open torrent file %1 : %2", file, fptr.errorString()));
 		
 		QByteArray data = fptr.readAll();
 		load(data,verbose);

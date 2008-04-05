@@ -95,7 +95,7 @@ namespace bt
 		 * @param full Indicates whether we have a full handshake
 		 *  if this is not full, we should just send our own
 		 */
-		virtual void handshakeRecieved(bool full) = 0;
+		virtual void handshakeReceived(bool full) = 0;
 		
 		/**
 		 * Fill in the handshake in a buffer.

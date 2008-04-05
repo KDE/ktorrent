@@ -74,7 +74,7 @@ namespace bt
 		 * @param num_chunks The number of chunks in the file
 		 * @param chunk_size Size of each chunk 
 		 * @param support Which extensions the peer supports
-		 * @param local Wether or not it is a local peer
+		 * @param local Whether or not it is a local peer
 		 */
 		Peer(mse::StreamSocket* sock,
 			 const PeerID & peer_id,
@@ -143,7 +143,7 @@ namespace bt
 		 * Send a chunk of data.
 		 * @param data The data
 		 * @param len The length
-		 * @param proto Indicates wether the packed is data or a protocol message
+		 * @param proto Indicates whether the packed is data or a protocol message
 		 * @return Number of bytes written
 		 */
 		Uint32 sendData(const Uint8* data,Uint32 len);
@@ -263,10 +263,10 @@ namespace bt
 		void piece(const Piece & p);
 
 		/**
-		 * Recieved a BitSet
+		 * Received a BitSet
 		 * @param bs The BitSet
 		 */
-		void bitSetRecieved(const BitSet & bs);
+		void bitSetReceived(const BitSet & bs);
 
 		/**
 		 * Emitted when the peer is unchoked and interested changes value.

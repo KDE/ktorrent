@@ -87,7 +87,7 @@ namespace net
  
  		/**
  		 * Creata a new upload or download group
- 		 * @param type Wether it is an upload or download group
+ 		 * @param type Whether it is an upload or download group
  		 * @param limit Limit of group in bytes/s
 		 * @param assured_rate The assured rate in bytes/s
  		 * @return The group ID

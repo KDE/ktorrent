@@ -477,7 +477,7 @@ namespace kt
 		keep_seeding = ks;
 	}
 	
-	bool QueueManager::allreadyLoaded(const bt::SHA1Hash & ih) const
+	bool QueueManager::alreadyLoaded(const bt::SHA1Hash & ih) const
 	{
 		foreach (const bt::TorrentInterface* tor,downloads)
 		{

@@ -111,7 +111,7 @@ namespace bt
 			return;
 		}
 
-		// check wether the transaction is a CONNECT
+		// check whether the transaction is a CONNECT
 		if (i.value() != CONNECT)
 		{
 			transactions.erase(i);
@@ -121,7 +121,7 @@ namespace bt
 
 		// everything ok, emit signal
 		transactions.erase(i);
-		connectRecieved(tid,ReadInt64((Uint8*)buf.data(),8));
+		connectReceived(tid,ReadInt64((Uint8*)buf.data(),8));
 	}
 
 	void UDPTrackerSocket::handleAnnounce(const QByteArray & buf)
@@ -133,7 +133,7 @@ namespace bt
 		if (i == transactions.end())
 			return;
 
-		// check wether the transaction is a ANNOUNCE
+		// check whether the transaction is a ANNOUNCE
 		if (i.value() != ANNOUNCE)
 		{
 			transactions.erase(i);
@@ -143,7 +143,7 @@ namespace bt
 
 		// everything ok, emit signal
 		transactions.erase(i);
-		announceRecieved(tid,buf);
+		announceReceived(tid,buf);
 	}
 	
 	void UDPTrackerSocket::handleError(const QByteArray & buf)

@@ -80,7 +80,7 @@ namespace dht
 		 * @param ip The IP of the peer
 		 * @param port The port in the PORT message
 		 */
-		virtual void portRecieved(const QString & ip,bt::Uint16 port) = 0;
+		virtual void portReceived(const QString & ip,bt::Uint16 port) = 0;
 		
 		/**
 		 * Do an announce on the DHT network

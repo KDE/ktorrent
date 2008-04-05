@@ -87,7 +87,7 @@ namespace bt
 		qDeleteAll(webseeds);
 	}
 	
-	void Downloader::pieceRecieved(const Piece & p)
+	void Downloader::pieceReceived(const Piece & p)
 	{
 		if (cman.completed())
 			return;
@@ -428,7 +428,7 @@ namespace bt
 	{		
 		PieceDownloader* pd = peer->getPeerDownloader();
 		connect(pd,SIGNAL(downloaded(const bt::Piece& )),
-				this,SLOT(pieceRecieved(const bt::Piece& )));
+				this,SLOT(pieceReceived(const bt::Piece& )));
 		piece_downloaders.append(pd);
 	}
 

@@ -76,7 +76,7 @@ namespace kt
 		/**
 		 * No reply was sent and an error or timeout occurred.
 		 * @param r The sender of the request
-		 * @param timeout Wether or not a timeout occurred
+		 * @param timeout Whether or not a timeout occurred
 		 */
 		void error(HTTPRequest* r,bool timeout);
 		

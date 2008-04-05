@@ -371,9 +371,9 @@ namespace bt
 				
 				int ret = write(fd,buf,to_write);
 				if (ret < 0)
-					throw Error(i18n("Cannot expand file : %1",strerror(errno)));
+					throw Error(i18n("Cannot expand file: %1",strerror(errno)));
 				else if (ret == 0 || ret != (int)to_write)
-					throw Error(i18n("Cannot expand file",strerror(errno)));
+					throw Error(i18n("Cannot expand file: %1",strerror(errno)));
 				else
 					written += to_write;
 			}

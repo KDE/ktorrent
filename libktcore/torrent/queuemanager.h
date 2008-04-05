@@ -79,7 +79,7 @@ namespace kt
 		/**
 		 * Start a torrent
 		 * @param tc The torrent
-		 * @param user Wether or not the user does this
+		 * @param user Whether or not the user does this
 		 * @return What happened
 		 */
 		bt::TorrentStartResponse start(bt::TorrentInterface* tc, bool user = true);
@@ -87,7 +87,7 @@ namespace kt
 		/**
 		 * Stop a torrent
 		 * @param tc The torrent
-		 * @param user Wether or not the user does this
+		 * @param user Whether or not the user does this
 		 */
 		void stop(bt::TorrentInterface* tc, bool user = false);
 		
@@ -164,7 +164,7 @@ namespace kt
 		 * @param ih The info hash of a torrent
 		 * @return true if we do, false if we don't
 		 */
-		bool allreadyLoaded(const bt::SHA1Hash & ih) const;
+		bool alreadyLoaded(const bt::SHA1Hash & ih) const;
 
 
 		/**

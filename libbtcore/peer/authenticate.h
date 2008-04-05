@@ -86,7 +86,7 @@ namespace bt
 		
 	protected:
 		void onFinish(bool succes);
-		void handshakeRecieved(bool full);
+		void handshakeReceived(bool full);
 		virtual void connected();
 		
 	protected:

@@ -80,7 +80,7 @@ namespace bt
 		/// Set whether we have to not download this file
 		virtual void setDoNotDownload(bool dnd) = 0;
 
-		/// Wether or not we have to not download this file
+		/// Whether or not we have to not download this file
 		virtual bool doNotDownload() const = 0;
 
 		/// Checks if this file is multimedial

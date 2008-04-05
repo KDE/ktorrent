@@ -66,7 +66,7 @@ namespace bt
 		 * Add a peer to the list of peers.
 		 * @param ip The ip
 		 * @param port The port
-		 * @param local Wether or not the peer is on the local network
+		 * @param local Whether or not the peer is on the local network
 		 */
 		void addPeer(const QString & ip,bt::Uint16 port,bool local = false);
 		

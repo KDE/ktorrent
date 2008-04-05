@@ -58,7 +58,7 @@ namespace kt
 		///Unloads the anti-p2p filter list
 		bool unloadAntiP2P();
 		
-		/// Wether or not the IP filter is loaded and running
+		/// Whether or not the IP filter is loaded and running
 		bool loadedAndRunning(); 
 		
 		///Checks if IP is listed in AntiP2P filter list.

@@ -72,7 +72,7 @@ namespace kt
 		 */
 		bool operator == (const ScheduleItem & item) const; 
 		
-		/// Wether or not a QDateTime is falls within this item
+		/// Whether or not a QDateTime is falls within this item
 		bool contains(const QDateTime & dt) const;
 	};
 

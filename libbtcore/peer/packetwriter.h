@@ -160,15 +160,15 @@ namespace bt
 
 		/**
 		 * Do not send a piece which matches this request.
-		 * But only if we are not allready sending the piece.
+		 * But only if we are not already sending the piece.
 		 * @param req The request
-		 * @param reject Wether we can send a reject instead
+		 * @param reject Whether we can send a reject instead
 		 */
 		void doNotSendPiece(const Request & req,bool reject);
 		
 		/**
 		 * Clear all pieces we are not in the progress of sending.
-		 * @param reject Wether or not to send a reject
+		 * @param reject Whether or not to send a reject
 		 */
 		void clearPieces(bool reject);
 	

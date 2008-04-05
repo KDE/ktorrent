@@ -205,7 +205,7 @@ namespace kt
 		/**
 		 * Signal which indicates that the XML was downloaded successfully or not.
 		 * @param r The router which emitted the signal
-		 * @param success Wether or not it succeeded
+		 * @param success Whether or not it succeeded
 		 */
 		void xmlFileDownloaded(UPnPRouter* r,bool success);
 		

@@ -89,17 +89,17 @@ namespace bt
 		
 		/**
 		 * See if the PieceDownloader is choked, can be overwritten by subclasses.
-		 * @return Wether or not the PieceDownloader is choked
+		 * @return Whether or not the PieceDownloader is choked
 		 */
 		virtual bool isChoked() const {return false;}
 		
 		/**
-		 * Wether or not we can add another request.
+		 * Whether or not we can add another request.
 		 */
 		virtual bool canAddRequest() const = 0;
 		
 		/**
-		 * Wether or not we can download another chunk from this.
+		 * Whether or not we can download another chunk from this.
 		 */
 		virtual bool canDownloadChunk() const = 0;
 		
@@ -124,7 +124,7 @@ namespace bt
 		
 	signals:
 		/**
-		 * Emited when a Piece has been downloaded.
+		 * Emitted when a Piece has been downloaded.
 		 * @param p The Piece
 		 */
 		void downloaded(const bt::Piece & p);

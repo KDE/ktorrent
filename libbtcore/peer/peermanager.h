@@ -189,7 +189,7 @@ namespace bt
 		/**
 		 * A peer has authenticated.
 		 * @param auth The Authenticate object
-		 * @param ok Wether or not the attempt was succesfull
+		 * @param ok Whether or not the attempt was succesfull
 		 */
 		void peerAuthenticated(Authenticate* auth,bool ok);
 		
@@ -232,7 +232,7 @@ namespace bt
 
 	private slots:
 		void onHave(Peer* p,Uint32 index);
-		void onBitSetRecieved(const BitSet & bs);
+		void onBitSetReceived(const BitSet & bs);
 		void onRerunChoker();
 		void pex(const QByteArray & arr);
 		void onResolverResults(KNetwork::KResolverResults res);

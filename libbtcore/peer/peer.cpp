@@ -219,7 +219,7 @@ namespace bt
 				}
 				
 				pieces = BitSet(tmp_buf+1,pieces.getNumBits());
-				bitSetRecieved(pieces);
+				bitSetReceived(pieces);
 				break;
 			case REQUEST:
 				if (len != 13)
@@ -318,7 +318,7 @@ namespace bt
 					return;
 				}
 				pieces.setAll(true);
-				bitSetRecieved(pieces);
+				bitSetReceived(pieces);
 				break;
 			case HAVE_NONE:
 				if (len != 1)
@@ -328,7 +328,7 @@ namespace bt
 					return;
 				}
 				pieces.setAll(false);
-				bitSetRecieved(pieces);
+				bitSetReceived(pieces);
 				break;
 			case SUGGEST_PIECE:
 				// ignore suggestions for the moment

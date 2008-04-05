@@ -96,7 +96,7 @@ namespace bt
 				if (ba >= 27 && handshake[27] & 0x01)
 					ext_support |= bt::DHT_SUPPORT;
 				// tell subclasses of a partial handshake
-				handshakeRecieved(false);
+				handshakeReceived(false);
 				return;
 			}
 			else
@@ -134,7 +134,7 @@ namespace bt
 		if (handshake[25] & 0x10)
 			ext_support |= bt::EXT_PROT_SUPPORT;
 		
-		handshakeRecieved(true);
+		handshakeReceived(true);
 	}
 
 	void AuthenticateBase::onError(int)

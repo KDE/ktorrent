@@ -51,10 +51,10 @@ namespace bt
 		
 		conn_timer.setSingleShot(true);
 		connect(&conn_timer,SIGNAL(timeout()),this,SLOT(onConnTimeout()));
-		connect(socket,SIGNAL(announceRecieved(Int32, const QByteArray & )),
-				this,SLOT(announceRecieved(Int32, const QByteArray & )));
-		connect(socket,SIGNAL(connectRecieved(Int32, Int64 )),
-				this,SLOT(connectRecieved(Int32, Int64 )));
+		connect(socket,SIGNAL(announceReceived(Int32, const QByteArray & )),
+				this,SLOT(announceReceived(Int32, const QByteArray & )));
+		connect(socket,SIGNAL(connectReceived(Int32, Int64 )),
+				this,SLOT(connectReceived(Int32, Int64 )));
 		connect(socket,SIGNAL(error(Int32, const QString& )),
 				this,SLOT(onError(Int32, const QString& )));
 	
@@ -106,7 +106,7 @@ namespace bt
 		doRequest();
 	}
 
-	void UDPTracker::connectRecieved(Int32 tid,Int64 cid)
+	void UDPTracker::connectReceived(Int32 tid,Int64 cid)
 	{
 		if (tid != transaction_id)
 			return;
@@ -116,7 +116,7 @@ namespace bt
 		sendAnnounce();
 	}
 	
-	void UDPTracker::announceRecieved(Int32 tid,const QByteArray & b)
+	void UDPTracker::announceReceived(Int32 tid,const QByteArray & b)
 	{
 		if (tid != transaction_id)
 			return;

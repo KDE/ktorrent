@@ -217,7 +217,7 @@ namespace bt
 		cnt->inc(index);
 	}
 
-	void PeerManager::onBitSetRecieved(const BitSet & bs)
+	void PeerManager::onBitSetReceived(const BitSet & bs)
 	{
 		for (Uint32 i = 0;i < bs.getNumBits();i++)
 		{
@@ -292,8 +292,8 @@ namespace bt
 		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),tor.getChunkSize(),support,local);
 		
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
-		connect(peer,SIGNAL(bitSetRecieved(const BitSet& )),
-				this,SLOT(onBitSetRecieved(const BitSet& )));
+		connect(peer,SIGNAL(bitSetReceived(const BitSet& )),
+				this,SLOT(onBitSetReceived(const BitSet& )));
 		connect(peer,SIGNAL(rerunChoker()),this,SLOT(onRerunChoker()));
 		connect(peer,SIGNAL(pex( const QByteArray& )),this,SLOT(pex( const QByteArray& )));
 		

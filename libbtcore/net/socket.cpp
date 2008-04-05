@@ -264,7 +264,9 @@ namespace net
 		}
 		else
 		{
+#ifdef __GNUC__
 #warning "Find way to set IPv6 traffic class"
+#endif
 			return true;
 		}
 		return true;

@@ -63,8 +63,8 @@ namespace bt
 
 	private slots:
 		void onConnTimeout();
-		void connectRecieved(Int32 tid,Int64 connection_id);
-		void announceRecieved(Int32 tid,const QByteArray & buf);
+		void connectReceived(Int32 tid,Int64 connection_id);
+		void announceReceived(Int32 tid,const QByteArray & buf);
 		void onError(Int32 tid,const QString & error_string);
 		void onResolverResults(KNetwork::KResolverResults res);
 

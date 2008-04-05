@@ -571,7 +571,7 @@ namespace bt
 	{
 		// check if we haven't already loaded the torrent
 		// only do this when qman isn't 0
-		if (qman && qman->allreadyLoaded(tor->getInfoHash()))
+		if (qman && qman->alreadyLoaded(tor->getInfoHash()))
 		{
 			if (!stats.priv_torrent)
 			{
@@ -1460,7 +1460,7 @@ namespace bt
 	void TorrentControl::onPortPacket(const QString & ip,Uint16 port)
 	{
 		if (Globals::instance().getDHT().isRunning() && !stats.priv_torrent)
-			Globals::instance().getDHT().portRecieved(ip,port);
+			Globals::instance().getDHT().portReceived(ip,port);
 	}
 	
 	void TorrentControl::startDataCheck(bt::DataCheckerListener* lst)

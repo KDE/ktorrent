@@ -75,7 +75,7 @@ namespace kt
 		
 		KIO::TransferJob* j = KIO::get(u, KIO::NoReload, KIO::HideProgressInfo);
 		connect(j,SIGNAL(data(KIO::Job*,const QByteArray &)),
-				this,SLOT(dataRecieved(KIO::Job*, const QByteArray& )));
+				this,SLOT(dataReceived(KIO::Job*, const QByteArray& )));
 		connect(j,SIGNAL(result(KJob*)),this,SLOT(jobDone(KJob* )));
 		connect(j,SIGNAL(mimetype(KIO::Job*, const QString &)),
 				this,SLOT(mimetype(KIO::Job*, const QString& )));
@@ -114,7 +114,7 @@ namespace kt
 		openUrl(url());
 	}
 	
-	void HTMLPart::dataRecieved(KIO::Job* job,const QByteArray & data)
+	void HTMLPart::dataReceived(KIO::Job* job,const QByteArray & data)
 	{
 		if (job != active_job)
 		{

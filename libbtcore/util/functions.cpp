@@ -200,7 +200,7 @@ namespace bt
 		}
 		else
 		{
-			Out(SYS_GEN|LOG_DEBUG) << "File limit allready at maximum " << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "File limit already at maximum " << endl;
 		}
 		
 		getrlimit(RLIMIT_DATA,&lim);
@@ -218,7 +218,7 @@ namespace bt
 		}
 		else
 		{
-			Out(SYS_GEN|LOG_DEBUG) << "Data limit allready at maximum " << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Data limit already at maximum " << endl;
 		}
 		
 		return true;

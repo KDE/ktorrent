@@ -68,7 +68,7 @@ namespace bt
 			bool evil;
 			/// Flag to indicate if this peer has an upload slot
 			bool has_upload_slot;
-			/// Wether or not this connection is encrypted
+			/// Whether or not this connection is encrypted
 			bool encrypted;
 			/// Number of upload requests queued
 			bt::Uint32 num_up_requests;
@@ -78,7 +78,7 @@ namespace bt
 			bool fast_extensions;
 			/// Is this a peer on the local network
 			bool local;
-			/// Wether or not the peer supports the extension protocol
+			/// Whether or not the peer supports the extension protocol
 			bool extension_protocol;
 		};
 

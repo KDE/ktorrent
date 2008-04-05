@@ -73,7 +73,7 @@ namespace bt
 		/**
 		 * Load a .torrent file.
 		 * @param file The file
-		 * @param verbose Wether to print information to the log
+		 * @param verbose Whether to print information to the log
 		 * @throw Error if something goes wrong
 		 */
 		void load(const QString & file,bool verbose);
@@ -81,7 +81,7 @@ namespace bt
 		/**
 		 * Load a .torrent file.
 		 * @param data The data
-		 * @param verbose Wether to print information to the log
+		 * @param verbose Whether to print information to the log
 		 * @throw Error if something goes wrong
 		 */
 		void load(const QByteArray & data,bool verbose);

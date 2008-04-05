@@ -61,7 +61,7 @@ namespace kt
 		virtual ~CoreInterface();
 
 		/**
-		 * Set wether or not we should keep seeding after
+		 * Set whether or not we should keep seeding after
 		 * a download has finished.
 		 * @param ks Keep seeding yes or no
 		 */
@@ -137,7 +137,7 @@ namespace kt
 		 * @param file The torrent file
 		 * @param savedir Dir to save the data
 		 * @param group Group to add torrent to
-		 * @param silently Wether or not to do this silently
+		 * @param silently Whether or not to do this silently
 		 */
 		virtual bool load(const QString & file,const QString & savedir,const QString & group,bool silently) = 0;
 
@@ -170,7 +170,7 @@ namespace kt
 		 * TorrentControl itself. It can also potentially
 		 * start a new download (when one is waiting to be downloaded).
 		 * @param tc The torrent
-		 * @param data_to Wether or not to delete the file data to
+		 * @param data_to Whether or not to delete the file data to
 		 */
 		virtual void remove(bt::TorrentInterface* tc,bool data_to) = 0;
 		
@@ -206,8 +206,8 @@ namespace kt
 		 * Seeing that when load returns the loading process may not have finished yet,
 		 * and some code expects this. We emit this signal to notify that code of it.
 		 * @param url The url which has been loaded
-		 * @param success Wether or not it succeeded
-		 * @param canceled Wether or not it was canceled by the user
+		 * @param success Whether or not it succeeded
+		 * @param canceled Whether or not it was canceled by the user
 		 */
 		void loadingFinished(const KUrl & url,bool success,bool canceled);
 		

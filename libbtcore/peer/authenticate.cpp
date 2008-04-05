@@ -155,10 +155,10 @@ namespace bt
 			pman->peerAuthenticated(this,succes);
 	}
 	
-	void Authenticate::handshakeRecieved(bool full)
+	void Authenticate::handshakeReceived(bool full)
 	{
 		const Uint8* hs = handshake;
-	//	Out() << "Authenticate::handshakeRecieved" << endl;
+	//	Out() << "Authenticate::handshakeReceived" << endl;
 		IPBlocklist& ipfilter = IPBlocklist::instance();
 			//Out() << "Dodo " << pp.ip << endl;
 		if (ipfilter.isBlocked(host))

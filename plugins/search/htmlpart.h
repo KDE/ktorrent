@@ -52,7 +52,7 @@ namespace kt
 	
 	private slots:
 		void addToHistory(const KUrl & url);
-		void dataRecieved(KIO::Job* job,const QByteArray & data);
+		void dataReceived(KIO::Job* job,const QByteArray & data);
 		void mimetype(KIO::Job* job,const QString & mt);
 		void jobDone(KJob* job);
 		

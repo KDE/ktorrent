@@ -215,7 +215,7 @@ namespace dht
 	{}
 	
 
-	void DHT::portRecieved(const QString & ip,bt::Uint16 port)
+	void DHT::portReceived(const QString & ip,bt::Uint16 port)
 	{
 		if (!running)
 			return;

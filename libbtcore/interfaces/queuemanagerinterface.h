@@ -42,7 +42,7 @@ namespace bt
 			 * @param ih The info hash of a torrent
 			 * @return true if we do, false if we don't
 			 */
-			virtual bool allreadyLoaded(const SHA1Hash & ih) const = 0;
+			virtual bool alreadyLoaded(const SHA1Hash & ih) const = 0;
 
 
 			/**

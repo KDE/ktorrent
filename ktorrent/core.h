@@ -84,7 +84,7 @@ namespace kt
 		 * @param chunk_size The size of each chunk (in KB)
 		 * @param name The torrents name (usually filename)
 		 * @param comments The comments
-		 * @param seed Wether or not to start seeding or not
+		 * @param seed Whether or not to start seeding or not
 		 * @param output_file File to store the torrent file
 		 * @param priv_tor Is this a private torrent
 		 * @param prog Progress bar to update
@@ -128,7 +128,7 @@ namespace kt
 		 * @param file The torrent file (always a local file)
 		 * @param dir Directory to save the data
 		 * @param group Group to add torrent to
-		 * @param silently Wether or not to do this silently
+		 * @param silently Whether or not to do this silently
 		 */
 		bool load(const QString & file,const QString & dir,const QString & group,bool silently);
 		
@@ -137,7 +137,7 @@ namespace kt
 		 * if something goes wrong.
 		 * @param data Byte array of the torrent file
 		 * @param dir Directory to save the data
-		 * @param silently Wether or not to do this silently
+		 * @param silently Whether or not to do this silently
 		 */
 		bool load(const QByteArray & data,const QString & dir,const QString & group,bool silently, const KUrl& url);
 		

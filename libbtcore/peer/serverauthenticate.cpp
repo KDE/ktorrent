@@ -61,7 +61,7 @@ namespace bt
 		timer.stop();
 	}
 
-	void ServerAuthenticate::handshakeRecieved(bool full)
+	void ServerAuthenticate::handshakeReceived(bool full)
 	{
 		Uint8* hs = handshake;
 		IPBlocklist& ipfilter = IPBlocklist::instance();

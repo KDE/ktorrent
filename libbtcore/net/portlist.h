@@ -83,7 +83,7 @@ namespace net
 		 * When a port is in use, this function needs to be called.
 		 * @param number Port number
 		 * @param proto Protocol
-		 * @param forward Wether or not it needs to be forwarded
+		 * @param forward Whether or not it needs to be forwarded
 		 */
 		void addNewPort(bt::Uint16 number,Protocol proto,bool forward);
 		

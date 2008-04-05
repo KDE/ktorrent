@@ -480,26 +480,26 @@ namespace bt
 		virtual bool removeWebSeed(const KUrl & url) = 0;
 	signals:
 		/**
-		 * Emited when we have finished downloading.
+		 * Emitted when we have finished downloading.
 		 * @param me The object who emitted the signal
 		 */
 		void finished(bt::TorrentInterface* me);
 
 		/**
-		 * Emited when a Torrent download is stopped by error
+		 * Emitted when a Torrent download is stopped by error
 		 * @param me The object who emitted the signal
 		 * @param msg Error message
 		 */
 		void stoppedByError(bt::TorrentInterface* me, QString msg);
 		
 		/**
-		 * Emited when maximum share ratio for this torrent is changed
+		 * Emitted when maximum share ratio for this torrent is changed
 		 * @param me The object which emitted the signal.
 		 */
 		void maxRatioChanged(bt::TorrentInterface* me);
 		
 		/**
-		 * Emited then torrent is stopped from seeding by KTorrent. 
+		 * Emitted then torrent is stopped from seeding by KTorrent. 
 		 * Happens when torrent has reached maximum share ratio and maybe we'll add something more...
 		 * @param me The object which emitted the signal.
 		 * @param reason The reason why it was aut stopped

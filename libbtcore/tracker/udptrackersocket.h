@@ -56,7 +56,7 @@ namespace bt
 		};
 
 		/**
-		 * Send a connect message. As a response to this, the connectRecieved
+		 * Send a connect message. As a response to this, the connectReceived
 		 * signal will be emitted, classes recieving this signal should check if
 		 * the transaction_id is the same.
 		 * @param tid The transaction_id 
@@ -65,7 +65,7 @@ namespace bt
 		void sendConnect(Int32 tid,const KNetwork::KSocketAddress & addr);
 
 		/**
-		 * Send an announce message. As a response to this, the announceRecieved
+		 * Send an announce message. As a response to this, the announceReceived
 		 * signal will be emitted, classes recieving this signal should check if
 		 * the transaction_id is the same.
 		 * @param tid The transaction_id
@@ -104,14 +104,14 @@ namespace bt
 		 * @param tid The transaction_id
 		 * @param connection_id The connection_id returned
 		 */
-		void connectRecieved(Int32 tid,Int64 connection_id);
+		void connectReceived(Int32 tid,Int64 connection_id);
 		
 		/**
 		 * Emitted when an announce message is received.
 		 * @param tid The transaction_id
 		 * @param buf The data
 		 */
-		void announceRecieved(Int32 tid,const QByteArray & buf);
+		void announceReceived(Int32 tid,const QByteArray & buf);
 
 		/**
 		 * Signal emitted, when an error occurs during a transaction.

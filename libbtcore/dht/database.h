@@ -123,7 +123,7 @@ namespace dht
 		 */
 		bool checkToken(const dht::Key & token,const KNetwork::KInetSocketAddress & addr);
 		
-		/// Test wether or not the DB contains a key
+		/// Test whether or not the DB contains a key
 		bool contains(const dht::Key & key) const;
 		
 		/// Insert an empty item (only if it isn't already in the DB)

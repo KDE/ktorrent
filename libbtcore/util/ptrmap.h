@@ -41,7 +41,7 @@ namespace bt
 	public:
 		/**
 		* Constructor.
-		* @param auto_del Wether or not to enable auto deletion
+		* @param auto_del Whether or not to enable auto deletion
 		*/
 		PtrMap(bool autodel = false) : autodel(autodel)
 		{}
@@ -98,7 +98,7 @@ namespace bt
 		* Insert a key data pair.
 		* @param k The key
 		* @param d The data
-		* @param overwrite Wether or not to overwrite
+		* @param overwrite Whether or not to overwrite
 		* @return true if the insertion took place
 		*/
 		bool insert(const Key & k,Data* d,bool overwrite = true)

@@ -31,7 +31,7 @@ namespace bt
 	 * Creates a directory. Convenience function around
 	 * KIO::NetAccess::mkdir .
 	 * @param dir The url of the dir
-	 * @param nothrow wether or not we shouldn't throw an Error upon failure
+	 * @param nothrow whether or not we shouldn't throw an Error upon failure
 	 * @throw Error upon error
 	 */
 	BTCORE_EXPORT void MakeDir(const QString & dir,bool nothrow = false);
@@ -40,7 +40,7 @@ namespace bt
 	* Create a symbolic link @a link_url which links to @a link_to 
 	 * @param link_to The file to link to
 	 * @param link_url The link url
-	 * @param nothrow wether or not we shouldn't throw an Error upon failure
+	 * @param nothrow whether or not we shouldn't throw an Error upon failure
 	 */
 	BTCORE_EXPORT void SymLink(const QString & link_to,const QString & link_url,bool nothrow = false);
 
@@ -48,7 +48,7 @@ namespace bt
 	 * Move a file/dir from one location to another
 	 * @param src The source file
 	 * @param dst The destination file / directory
-	 * @param nothrow wether or not we shouldn't throw an Error upon failure
+	 * @param nothrow whether or not we shouldn't throw an Error upon failure
 	 */
 	BTCORE_EXPORT void Move(const QString & src,const QString & dst,bool nothrow = false);
 
@@ -56,7 +56,7 @@ namespace bt
 	 * Copy a file.
 	 * @param src The source file
 	 * @param dst The destination dir/file
-	 * @param nothrow wether or not we shouldn't throw an Error upon failure
+	 * @param nothrow whether or not we shouldn't throw an Error upon failure
 	 */
 	BTCORE_EXPORT void CopyFile(const QString & src,const QString & dst,bool nothrow = false);
 	
@@ -64,12 +64,12 @@ namespace bt
 	 * Copy a file or directory
 	 * @param src The source file
 	 * @param dst The destination dir/file
-	 * @param nothrow wether or not we shouldn't throw an Error upon failure
+	 * @param nothrow whether or not we shouldn't throw an Error upon failure
 	 */
 	BTCORE_EXPORT void CopyDir(const QString & src,const QString & dst,bool nothrow = false);
 	
 	/**
-	 * Check wether a file/dir exists
+	 * Check whether a file/dir exists
 	 * @param url The file/dir
 	 * @return true if it exits
 	 */
@@ -78,7 +78,7 @@ namespace bt
 	/**
 	 * Delete a file or directory.
 	 * @param url The url of the file/dir
-	 * @param nothrow wether or not we shouldn't throw an Error upon failure
+	 * @param nothrow whether or not we shouldn't throw an Error upon failure
 	 */
 	BTCORE_EXPORT void Delete(const QString & url,bool nothrow = false);
 
@@ -86,7 +86,7 @@ namespace bt
 	 * Try to create a file. Doesn't do anything if the file
 	 * already exists.
 	 * @param url The url of the file
-	 * @param nothrow wether or not we shouldn't throw an Error upon failure
+	 * @param nothrow whether or not we shouldn't throw an Error upon failure
 	 */
 	BTCORE_EXPORT void Touch(const QString & url,bool nothrow = false);
 	

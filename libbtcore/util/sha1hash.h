@@ -74,14 +74,14 @@ namespace bt
 		SHA1Hash & operator = (const SHA1Hash & other);
 
 		/**
-		 * Test wether another hash is equal to this one.
+		 * Test whether another hash is equal to this one.
 		 * @param other The other hash
 		 * @return true if equal, false otherwise
 		 */
 		bool operator == (const SHA1Hash & other) const;
 
 		/**
-		 * Test wether another hash is not equal to this one.
+		 * Test whether another hash is not equal to this one.
 		 * @param other The other hash
 		 * @return true if not equal, false otherwise
 		 */
@@ -134,7 +134,7 @@ namespace bt
 		 * Function to compare 2 hashes
 		 * @param a The first hash
 		 * @param h The second hash
-		 * @return wether a is smaller then b
+		 * @return whether a is smaller then b
 		 */
 		BTCORE_EXPORT friend bool operator < (const SHA1Hash & a,const SHA1Hash & b);
 		

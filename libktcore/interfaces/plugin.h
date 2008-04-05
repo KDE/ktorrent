@@ -128,7 +128,7 @@ namespace kt
 		/// See if the plugin is loaded
 		bool isLoaded() const {return loaded;}
 		
-		/// Check wether the plugin matches the version of KT
+		/// Check whether the plugin matches the version of KT
 		virtual bool versionCheck(const QString & version) const = 0;
 		
 	private:

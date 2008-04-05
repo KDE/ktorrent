@@ -97,7 +97,7 @@ namespace bt
 		static void setProxy(const QString & host,bt::Uint16 port);
 		
 		/**
-		 * Wether or not to enable or disable the use of a proxy.
+		 * Whether or not to enable or disable the use of a proxy.
 		 * When the proxy is disabled, we will use the KDE proxy settings.
 		 * @param on On or not
 		 */

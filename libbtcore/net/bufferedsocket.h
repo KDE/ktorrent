@@ -128,7 +128,7 @@ namespace net
 		/**
  		 * Set the group ID of the socket
  		 * @param gid THe ID (0 is default group)
- 		 * @param upload Wether this is an upload group or a download group
+ 		 * @param upload Whether this is an upload group or a download group
  		 */
  		void setGroupID(Uint32 gid,bool upload);
   		

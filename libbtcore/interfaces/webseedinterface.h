@@ -49,7 +49,7 @@ namespace bt
 		/// Get the current download rate in bytes per sec
 		virtual Uint32 getDownloadRate() const = 0;
 		
-		/// Wether or not this webseed was user created
+		/// Whether or not this webseed was user created
 		bool isUserCreated() const {return user;}
 
 	protected:

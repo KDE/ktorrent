@@ -109,7 +109,7 @@ namespace bt
 		/**
 		* Set the output logfile.
 		* @param file The name of the file
-		* @param rotate Wether or not to rotate the logs
+		* @param rotate Whether or not to rotate the logs
 		* @throw Exception if the file can't be opened
 		*/
 		void setOutputFile(const QString & file,bool rotate);
