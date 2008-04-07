@@ -32,6 +32,7 @@
 #include <util/log.h>
 #include <interfaces/functions.h>
 #include <groups/group.h>
+#include <groups/groupmanager.h>
 #include "view.h"
 #include "core.h"
 #include "viewmodel.h"
@@ -386,8 +387,10 @@ namespace kt
 		getSelection(sel);
 		foreach(bt::TorrentInterface* tc,sel)
 			group->removeTorrent(tc);
-
+		core->getGroupManager()->saveGroups();
 		update();
+		num_running++; // set these wrong so that the caption is updated on the next update
+		num_torrents++;
 	}
 	
 	void View::speedLimitsDlg()

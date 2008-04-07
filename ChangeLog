@@ -3,6 +3,7 @@ Changes in 3.0.2 :
 - Fix broken convert of blocklists
 - Ported lock file fix for NFS home directories from KDE3 version
 - When recreating files, make sure directory they are in, exists
+- Fix remove from group not working (160499)
 
 Changes in 3.0.1 :
 - Fix sessionTTL not being able to be bigger then 99
