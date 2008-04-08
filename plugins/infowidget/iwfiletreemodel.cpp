@@ -118,9 +118,16 @@ namespace kt
 			}
 		}
 			
-		if (role != Qt::DisplayRole)
-			return QVariant();
+		if (role == Qt::DisplayRole)
+			return displayData(n,index);
+		else if (role == Qt::UserRole)
+			return sortData(n,index);
 		
+		return QVariant();
+	}
+
+	QVariant IWFileTreeModel::displayData(Node* n,const QModelIndex & index) const
+	{
 		if (tc->getStats().multi_file_torrent && n->file)
 		{
 			const bt::TorrentFileInterface* file = n->file;
@@ -168,10 +175,52 @@ namespace kt
 				default: return QVariant();
 			}
 		}
-		
 		return QVariant();
 	}
-
+	
+	QVariant IWFileTreeModel::sortData(Node* n,const QModelIndex & index) const
+	{
+		if (tc->getStats().multi_file_torrent && n->file)
+		{
+			const bt::TorrentFileInterface* file = n->file;
+			switch (index.column())
+			{
+				case 2: return (int)file->getPriority();
+				case 3: 
+					if (file->isMultimedia())
+					{
+						if (tc->readyForPreview(file->getFirstChunk(), file->getFirstChunk()+1) )
+							return 3;
+						else
+							return 2;
+					}
+					else
+						return 1;
+				case 4: 
+					return file->getDownloadPercentage();
+			}	
+		}
+		else if (!tc->getStats().multi_file_torrent)
+		{
+			switch (index.column())
+			{
+				case 2: return QVariant();
+				case 3: 
+					if (mmfile)
+					{
+						if (tc->readyForPreview(0,1))
+							return 3;
+						else
+							return 2;
+					}
+					else
+						return 1;
+				case 4: 
+					return bt::Percentage(tc->getStats());
+			}
+		}
+		return QVariant();
+	}
 	
 	
 	bool IWFileTreeModel::setData(const QModelIndex & index, const QVariant & value, int role)

@@ -288,6 +288,19 @@ namespace kt
 				default: return QVariant();
 			}
 		}
+		else if (role == Qt::UserRole) // sorting
+		{
+			switch (index.column())
+			{
+				case 0: return n->name;
+				case 1: 
+					if (tc->getStats().multi_file_torrent)
+						return n->fileSize(tc);
+					else
+						return tc->getStats().total_bytes;
+				default: return QVariant();
+			}
+		}
 		else if (role == Qt::DecorationRole && index.column() == 0)
 		{
 			// if this is an empty folder then we are in the single file case
