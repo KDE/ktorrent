@@ -130,7 +130,11 @@ namespace kt
 		KConfigGroup g = cfg->group("PeerView");
 		QByteArray s = QByteArray::fromBase64(g.readEntry("state",QByteArray()));
 		if (!s.isNull())
-			header()->restoreState(s);
+		{
+			QHeaderView* v = header();
+			v->restoreState(s);
+			sortByColumn(v->sortIndicatorSection(),v->sortIndicatorOrder());
+		}
 	}
 }
 

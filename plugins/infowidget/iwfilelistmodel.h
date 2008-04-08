@@ -50,6 +50,10 @@ namespace kt
 		void onPreviewAvailable(bool av);
 		
 	private:
+		QVariant displayData(const QModelIndex & index) const;
+		QVariant sortData(const QModelIndex & index) const;
+		
+	private:
 		bool preview;
 		bool mmfile;
 		double percentage;

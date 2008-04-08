@@ -25,6 +25,7 @@
 #include <ksharedconfig.h>
 
 class KMenu;
+class QSortFilterProxyModel;
 
 namespace bt
 {
@@ -86,6 +87,7 @@ namespace kt
 		QString preview_path;
 		bool show_list_of_files;
 		QMap<bt::TorrentInterface*,QByteArray> expanded_state_map;
+		QSortFilterProxyModel* proxy_model;
 	};
 
 }

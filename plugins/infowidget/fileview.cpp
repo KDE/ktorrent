@@ -21,6 +21,7 @@
 
 #include <QHeaderView>
 #include <QItemSelectionModel>
+#include <QSortFilterProxyModel>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kglobal.h>
@@ -55,6 +56,10 @@ namespace kt
 		setAlternatingRowColors(true);
 		setSelectionMode(QAbstractItemView::ExtendedSelection);
 		setSelectionBehavior(QAbstractItemView::SelectRows);
+		
+		proxy_model = new QSortFilterProxyModel(this);
+		proxy_model->setSortRole(Qt::UserRole);
+		setModel(proxy_model);
 		
 		context_menu = new KMenu(this);
 		open_action = context_menu->addAction(KIcon("document-open"),i18nc("Open file", "Open"),this,SLOT(open()));
@@ -92,7 +97,7 @@ namespace kt
 			if (curr_tc)
 				expanded_state_map[curr_tc] = model->saveExpandedState(this);
 		}
-		setModel(0);
+		proxy_model->setSourceModel(0);
 		delete model;
 		model = 0;
 		curr_tc = tc;
@@ -107,7 +112,7 @@ namespace kt
 			else 
 				model = new IWFileTreeModel(tc,this);
 			
-			setModel(model);
+			proxy_model->setSourceModel(model);
 			setRootIsDecorated(tc->getStats().multi_file_torrent);
 			loadState(cfg);
 			QMap<bt::TorrentInterface*,QByteArray>::iterator i = expanded_state_map.find(tc);
@@ -118,7 +123,7 @@ namespace kt
 		}
 		else
 		{
-			setModel(0);
+			proxy_model->setSourceModel(0);
 			model = 0;
 		}
 	}
@@ -151,7 +156,7 @@ namespace kt
 		}
 	
 		QModelIndex item = sel.front();
-		bt::TorrentFileInterface* file = model->indexToFile(item);
+		bt::TorrentFileInterface* file = model->indexToFile(proxy_model->mapToSource(item));
 
 		download_first_action->setEnabled(false);
 		download_last_action->setEnabled(false);
@@ -206,7 +211,12 @@ namespace kt
 	
 	void FileView::changePriority(bt::Priority newpriority)
 	{
-		model->changePriority(selectionModel()->selectedRows(2),newpriority);
+		QModelIndexList sel = selectionModel()->selectedRows(2);
+		for (QModelIndexList::iterator i = sel.begin();i != sel.end();i++)
+			*i = proxy_model->mapToSource(*i);
+		
+		model->changePriority(sel,newpriority);
+		proxy_model->invalidate();
 	}
 
 
@@ -236,7 +246,7 @@ namespace kt
 		Uint32 n = sel.count();
 		if (n == 1) // single item can be a directory
 		{
-			if (!model->indexToFile(sel.front()))
+			if (!model->indexToFile(proxy_model->mapToSource(sel.front())))
 				n++;
 		} 
 			
@@ -261,7 +271,7 @@ namespace kt
 			
 			foreach (QModelIndex idx,sel)
 			{
-				bt::TorrentFileInterface* tfi = model->indexToFile(idx);
+				bt::TorrentFileInterface* tfi = model->indexToFile(proxy_model->mapToSource(idx));
 				if (!tfi)
 					continue;
 			
@@ -293,7 +303,7 @@ namespace kt
 		
 		if (s.multi_file_torrent)
 		{
-			bt::TorrentFileInterface* file = model->indexToFile(index);
+			bt::TorrentFileInterface* file = model->indexToFile(proxy_model->mapToSource(index));
 			if (!file)
 			{
 				// directory
@@ -326,7 +336,11 @@ namespace kt
 		KConfigGroup g = cfg->group("FileView");
 		QByteArray s = QByteArray::fromBase64(g.readEntry("state",QByteArray()));
 		if (!s.isNull())
-			header()->restoreState(s);
+		{
+			QHeaderView* v = header();
+			v->restoreState(s);
+			sortByColumn(v->sortIndicatorSection(),v->sortIndicatorOrder());
+		}
 	}
 
 	void FileView::update()
@@ -352,7 +366,7 @@ namespace kt
 		saveState(cfg);
 		expanded_state_map[curr_tc] = model->saveExpandedState(this);
 		
-		setModel(0);
+		proxy_model->setSourceModel(0);
 		delete model;
 		model = 0;
 			
@@ -361,7 +375,7 @@ namespace kt
 		else 
 			model = new IWFileTreeModel(curr_tc,this);
 			
-		setModel(model);
+		proxy_model->setSourceModel(model);
 		setRootIsDecorated(curr_tc->getStats().multi_file_torrent);
 		loadState(cfg);
 		QMap<bt::TorrentInterface*,QByteArray>::iterator i = expanded_state_map.find(curr_tc);

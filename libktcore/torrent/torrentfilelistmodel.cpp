@@ -99,6 +99,19 @@ namespace kt
 				default: return QVariant();
 			}
 		}
+		else if (role == Qt::UserRole) // sorting
+		{
+			switch (index.column())
+			{
+				case 0: return multi ? tc->getTorrentFile(r).getPath() : s.torrent_name;
+				case 1: 
+					if (multi)
+						return tc->getTorrentFile(r).getSize();
+					else
+						return s.total_bytes;
+				default: return QVariant();
+			}
+		}
 		else if (role == Qt::DecorationRole && index.column() == 0)
 		{
 			// if this is an empty folder then we are in the single file case

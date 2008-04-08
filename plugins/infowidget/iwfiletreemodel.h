@@ -51,6 +51,8 @@ namespace kt
 		
 	private:
 		void update(const QModelIndex & index,bt::TorrentFileInterface* file,int col);
+		QVariant displayData(Node* n,const QModelIndex & index) const;
+		QVariant sortData(Node* n,const QModelIndex & index) const;
 		
 	private:
 		bool preview;

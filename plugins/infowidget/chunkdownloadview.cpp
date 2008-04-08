@@ -112,7 +112,11 @@ namespace kt
 		KConfigGroup g = cfg->group("ChunkDownloadView");
 		QByteArray s = QByteArray::fromBase64(g.readEntry("state",QByteArray()));
 		if (!s.isNull())
-			m_chunk_view->header()->restoreState(s);
+		{
+			QHeaderView* v = m_chunk_view->header();
+			v->restoreState(s);
+			m_chunk_view->sortByColumn(v->sortIndicatorSection(),v->sortIndicatorOrder());
+		}
 	}
 }
 

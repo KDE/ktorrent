@@ -476,7 +476,11 @@ namespace kt
 		KConfigGroup g = cfg->group(QString("View%1").arg(idx));
 		QByteArray s = QByteArray::fromBase64(g.readEntry("state",QByteArray()));
 		if (!s.isNull())
-			header()->restoreState(s);
+		{
+			QHeaderView* v = header();
+			v->restoreState(s);
+			sortByColumn(v->sortIndicatorSection(),v->sortIndicatorOrder());
+		}
 		
 		QMap<QAction*,int>::iterator i = column_idx_map.begin();
 		while (i != column_idx_map.end())
