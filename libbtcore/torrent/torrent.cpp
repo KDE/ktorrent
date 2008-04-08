@@ -218,7 +218,10 @@ namespace bt
 		if (!trackers)
 			trackers = new TrackerTier();
 		
-		trackers->urls.append(KUrl(node->data().toString(text_codec).trimmed()));
+		QString s = node->data().toString(text_codec).trimmed();
+		KUrl url(s);
+		if (s.length() > 0 && url.isValid())
+			trackers->urls.append(url);
 	}
 	
 	void Torrent::loadPieceLength(BValueNode* node)

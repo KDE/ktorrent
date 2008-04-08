@@ -128,7 +128,12 @@ namespace bt
 		
 		if(!decentralized)
 		{
-			enc.write("announce"); enc.write(trackers[0]);
+			enc.write("announce"); 
+			if (trackers.count() > 0)
+				enc.write(trackers[0]);
+			else
+				enc.write("");
+			
 			if (trackers.count() > 1)
 			{
 				enc.write("announce-list");
