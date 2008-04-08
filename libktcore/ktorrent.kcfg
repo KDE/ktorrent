@@ -286,5 +286,13 @@
 			<min>1</min>
 			<default>15</default>
 		</entry>
+		<entry name="previewSizeAudio" type="Int">
+			<min>16</min>
+			<default>256</default>
+		</entry>
+		<entry name="previewSizeVideo" type="Int">
+			<min>16</min>
+			<default>2048</default>
+		</entry>
 	</group>
 </kcfg>

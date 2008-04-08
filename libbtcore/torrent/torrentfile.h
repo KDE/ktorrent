@@ -48,7 +48,8 @@ namespace bt
 		enum FileType
 		{
 			UNKNOWN,
-			MULTIMEDIA,
+			AUDIO,
+			VIDEO,
 			NORMAL
 		};
 		mutable FileType filetype;
@@ -94,6 +95,12 @@ namespace bt
 		
 		/// Checks if this file is multimedial
 		bool isMultimedia() const;
+		
+		/// Is this a video
+		bool isVideo() const {return filetype == VIDEO;}
+		
+		/// Is this an audio file
+		bool isAudio() const {return filetype == AUDIO;}
 
 		/// Gets the priority of the file
 		Priority getPriority() const {return priority;}

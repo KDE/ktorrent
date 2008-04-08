@@ -20,6 +20,7 @@
  ***************************************************************************/
 #include "chunkmanager.h"
 #include <algorithm>
+#include <kmimetype.h>
 #include <util/file.h>
 #include <util/array.h>
 #include <qstringlist.h>
@@ -40,7 +41,8 @@ namespace bt
 	
 	Uint32 ChunkManager::max_chunk_size_for_data_check = 512 * 1024;
 	bool ChunkManager::do_data_check = true;
-	
+	Uint32 ChunkManager::preview_size_audio = 256 * 1024; // 256 KB for audio files
+	Uint32 ChunkManager::preview_size_video = 2048 * 1024; // 2 MB for videos
 	
 
 	ChunkManager::ChunkManager(
@@ -98,7 +100,7 @@ namespace bt
 			}
 		}
 	
-		if(tor.isMultiFile())
+		if (tor.isMultiFile())
 		{
 			for(Uint32 i=0; i<tor.getNumFiles(); ++i)
 			{
@@ -106,35 +108,27 @@ namespace bt
 				if (!file.isMultimedia() || file.getPriority() == bt::ONLY_SEED_PRIORITY) 
 					continue;
 				
-				if (file.getFirstChunk() == file.getLastChunk())
-				{
-					// prioritise whole file 
-					prioritise(file.getFirstChunk(),file.getLastChunk(),PREVIEW_PRIORITY);
-				}
-				else
-				{
-					Uint32 chunkOffset;
-					chunkOffset = ((file.getLastChunk() - file.getFirstChunk()) / 100) + 1;
-					prioritise(file.getFirstChunk(), file.getFirstChunk()+chunkOffset, PREVIEW_PRIORITY);
-					if (file.getLastChunk() - file.getFirstChunk() > chunkOffset)
-					{
-						prioritise(file.getLastChunk() - chunkOffset, file.getLastChunk(), PREVIEW_PRIORITY);
-					}
-				}
+				doPreviewPriority(file);
+			
 			}
 		}
-		else
+		else if (tor.isMultimedia())
 		{
-			if(tor.isMultimedia())
-			{
-				Uint32 chunkOffset;
-				chunkOffset = (tor.getNumChunks() / 100) + 1;
+			KMimeType::Ptr ptr = KMimeType::findByPath(tor.getNameSuggestion());
+			Uint32 preview_size = 0;
+			if (ptr->name().startsWith("video"))
+				preview_size = preview_size_video;
+			else
+				preview_size = preview_size_audio;
+				
+			Uint32 nchunks = preview_size / tor.getChunkSize();
+			if (nchunks == 0)
+				nchunks = 1;
 
-				prioritise(0,chunkOffset,PREVIEW_PRIORITY);
-				if (tor.getNumChunks() > chunkOffset)
-				{
-					prioritise(tor.getNumChunks() - chunkOffset, tor.getNumChunks() - 1,PREVIEW_PRIORITY);
-				}
+			prioritise(0,nchunks,PREVIEW_PRIORITY);
+			if (tor.getNumChunks() > nchunks)
+			{
+				prioritise(tor.getNumChunks() - nchunks, tor.getNumChunks() - 1,PREVIEW_PRIORITY);
 			}
 		}
 	}
@@ -844,9 +838,7 @@ namespace bt
 			// if it is a multimedia file, prioritise first and last chunks of file
 			if (tf->isMultimedia())
 			{
-				prioritise(first,first+1,PREVIEW_PRIORITY);
-				if (last - first > 2)
-					prioritise(last -1,last, PREVIEW_PRIORITY);
+				doPreviewPriority(*tf);
 			}
 		}
 		else
@@ -1169,8 +1161,37 @@ namespace bt
 		return cache->diskUsage();
 	}
 	
+	void ChunkManager::doPreviewPriority(TorrentFile & file)
+	{
+		if (file.getFirstChunk() == file.getLastChunk())
+		{
+			// prioritise whole file 
+			prioritise(file.getFirstChunk(),file.getLastChunk(),PREVIEW_PRIORITY);
+			return;
+		}
+		
+		Uint32 preview_size = 0;
+		if (file.isVideo())
+			preview_size = preview_size_video;
+		else
+			preview_size = preview_size_audio;
+			
+		Uint32 nchunks = preview_size / tor.getChunkSize();
+		if (nchunks == 0)
+			nchunks = 1;
+			
+		prioritise(file.getFirstChunk(), file.getFirstChunk()+nchunks, PREVIEW_PRIORITY);
+		if (file.getLastChunk() - file.getFirstChunk() > nchunks)
+		{
+			prioritise(file.getLastChunk() - nchunks, file.getLastChunk(), PREVIEW_PRIORITY);
+		}	
+	}
 	
-
+	void ChunkManager::setPreviewSizes(Uint32 audio,Uint32 video)
+	{
+		preview_size_audio = audio;
+		preview_size_video = video;
+	}
 }
 
 #include "chunkmanager.moc"

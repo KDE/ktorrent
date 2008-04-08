@@ -331,6 +331,9 @@ namespace bt
 
 		/// Enabled or disable data checking during upload
 		static void setUploadDataCheckingEnabled(bool on) {do_data_check = on;}
+		
+		/// Set the preview sizes for audio and video files
+		static void setPreviewSizes(Uint32 audio,Uint32 video);
 
 		/// Get the current disk usage of all the files in this torrent
 		Uint64 diskUsage();
@@ -368,6 +371,7 @@ namespace bt
 		void loadFileInfo();
 		void savePriorityInfo();
 		void loadPriorityInfo();
+		void doPreviewPriority(TorrentFile & tf);
 
 	private slots:
 		void downloadStatusChanged(TorrentFile* tf,bool download);
@@ -376,6 +380,8 @@ namespace bt
 	private:
 		static bool do_data_check;
 		static Uint32 max_chunk_size_for_data_check;
+		static Uint32 preview_size_audio;
+		static Uint32 preview_size_video;
 	};
 
 }

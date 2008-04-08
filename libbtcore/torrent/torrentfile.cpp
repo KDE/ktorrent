@@ -19,6 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include "torrentfile.h"
+#include <kmimetype.h>
 #include <math.h>
 #include <util/log.h>
 #include <util/bitset.h>
@@ -100,18 +101,16 @@ namespace bt
 	{
 		if (filetype == UNKNOWN)
 		{
-			if (IsMultimediaFile(getPath()))
-			{
-				filetype = MULTIMEDIA;
-				return true;
-			}
+			KMimeType::Ptr ptr = KMimeType::findByPath(getPath());
+			QString name = ptr->name();
+			if (name.startsWith("audio") ||  name == "application/ogg")
+				filetype = AUDIO;
+			else if (name.startsWith("video"))
+				filetype = VIDEO;
 			else
-			{
 				filetype = NORMAL;
-				return false;
-			}
 		}
-		return filetype == MULTIMEDIA;
+		return filetype == AUDIO || filetype == VIDEO;
 	}
 
 	void TorrentFile::setPriority(Priority newpriority)
