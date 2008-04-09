@@ -25,10 +25,21 @@
 using namespace bt;
 
 namespace kt
-{
+{ 
+
 
 	SearchEngineList::SearchEngineList()
-	{}
+	{
+		m_default_list.append(SearchEngine("KTorrents",KUrl("http://www.ktorrents.com/search.php?lg=0&sourceid=ktorrent&q=FOOBAR&f=0")));
+		m_default_list.append(SearchEngine("bittorrent.com",KUrl("http://www.bittorrent.com/search_result.myt?search=FOOBAR")));
+		m_default_list.append(SearchEngine("mininova.org",KUrl("http://www.mininova.org/search.php?search=FOOBAR")));
+		m_default_list.append(SearchEngine("isohunt.com",KUrl("http://isohunt.com/torrents.php?ihq=FOOBAR&op=and")));
+		m_default_list.append(SearchEngine("thepiratebay.org",KUrl("http://thepiratebay.org/search/FOOBAR")));
+		m_default_list.append(SearchEngine("bitoogle.com",KUrl("http://bitoogle.com/search.php?q=FOOBAR")));
+		m_default_list.append(SearchEngine("bytenova.org",KUrl("http://www.bitenova.org/search.php?search=FOOBAR&start=0&start=0&ie=utf-8&oe=utf-8")));
+		m_default_list.append(SearchEngine("torrentz.com",KUrl("http://www.torrentz.com/search_FOOBAR")));
+		m_default_list.append(SearchEngine("btjunkie.org",KUrl("http://btjunkie.org/search?q=FOOBAR")));
+	}
 
 
 	SearchEngineList::~SearchEngineList()
@@ -85,6 +96,17 @@ namespace kt
 			for (Uint32 i=2; i < (Uint32)tokens.count(); ++i)
 				se.url.addQueryItem(tokens[i].section("=",0,0), tokens[i].section("=", 1, 1));
 		
+			// check if we need to update the URL of a default item
+			foreach (const SearchEngine & e,m_default_list)
+			{
+				if (e.name == se.name)
+				{
+					if (e.url != se.url)
+						se.url = e.url;
+					break;
+				}
+			}
+			
 			m_search_engines.append(se);
 		}
 	}
@@ -98,15 +120,10 @@ namespace kt
 		QTextStream out(&fptr);
 		out << "# PLEASE DO NOT MODIFY THIS FILE. Use KTorrent configuration dialog for adding new search engines." << ::endl;
 		out << "# SEARCH ENGINES list" << ::endl;
-		out << "KTorrents http://www.ktorrents.com/search.php?lg=0&sourceid=ktorrent&q=FOOBAR&f=0" << ::endl;
-		out << "bittorrent.com http://www.bittorrent.com/search_result.myt?search=FOOBAR" << ::endl; 
-		out << "isohunt.com http://isohunt.com/torrents.php?ihq=FOOBAR&op=and" << ::endl; 
-		out << "mininova.org http://www.mininova.org/search.php?search=FOOBAR" << ::endl; 
-		out << "thepiratebay.org http://thepiratebay.org/search.php?q=FOOBAR" << ::endl; 
-		out << "bitoogle.com http://bitoogle.com/search.php?q=FOOBAR" << ::endl; 
-		out << "bytenova.org http://www.bitenova.org/search.php?search=FOOBAR&start=0&start=0&ie=utf-8&oe=utf-8" << ::endl; 
-		out << "torrentspy.com http://torrentspy.com/search.asp?query=FOOBAR" << ::endl; 
-		out << "torrentz.com http://www.torrentz.com/search_FOOBAR" << ::endl; 
+		foreach (const SearchEngine & e,m_default_list)
+		{
+			out << e.name << " " << e.url.prettyUrl() << endl;
+		}
 	}
 		
 	KUrl SearchEngineList::getSearchURL(bt::Uint32 engine) const

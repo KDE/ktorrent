@@ -37,6 +37,7 @@
 #include <qcheckbox.h>
 #include <qradiobutton.h>
 
+#include <util/log.h>
 #include <util/constants.h>
 #include <util/functions.h>
 #include <util/fileops.h>
@@ -59,7 +60,7 @@ namespace kt
 				" (capital letters) on the search engine you want to add. <br> "
 				"Then copy the URL in the addressbar after the search is finished, and paste it here.<br><br>Searching for %1"
 				" on Google for example, will result in http://www.google.com/search?q=FOOBAR&ie=UTF-8&oe=UTF-8. <br> "
-				"If you add this URL here, ktorrent can search using Google.",foobar);
+				"If you add this URL here, ktorrent can search using ,SGoogle.",foobar);
 		QString info_short = i18n("Use your web browser to search for the string %1 (capital letters) "
 				"on the search engine you want to add. Use the resulting URL below.",foobar);
 		m_info_label->setText(info_short);
@@ -70,6 +71,7 @@ namespace kt
 		connect(m_add_default, SIGNAL(clicked()), this, SLOT(addDefaultClicked()));
 		connect(m_remove_all, SIGNAL(clicked()), this, SLOT(removeAllClicked()));
 		connect(m_clear_history,SIGNAL(clicked()),this,SLOT(clearHistory()));
+		connect(m_update,SIGNAL(clicked()),this,SLOT(updateClicked()));
 		
 		connect(kcfg_useCustomBrowser, SIGNAL(toggled(bool)), this, SLOT(customToggled( bool )));
 		connect(kcfg_openInExternal,SIGNAL(toggled(bool)),this, SLOT(openInExternalToggled(bool)));
@@ -178,15 +180,12 @@ namespace kt
 
 	void SearchPrefPage::addDefaultClicked()
 	{
-		newItem( "KTorrents", KUrl("http://www.ktorrents.com/search.php?lg=0&sourceid=ktorrent&q=FOOBAR&f=0"));
-		newItem( "bittorrent.com", KUrl("http://search.bittorrent.com/search.jsp?query=FOOBAR"));
-		newItem( "isohunt.com", KUrl("http://isohunt.com/torrents.php?ihq=FOOBAR&op=and"));
-		newItem( "mininova.org", KUrl("http://www.mininova.org/search.php?search=FOOBAR"));
-		newItem( "thepiratebay.org", KUrl("http://thepiratebay.org/search.php?q=FOOBAR"));
-		newItem( "bitoogle.com", KUrl("http://bitoogle.com/search.php?q=FOOBAR"));
-		newItem( "bytenova.org", KUrl("http://www.bitenova.org/search.php?search=FOOBAR&start=0&start=0&ie=utf-8&oe=utf-8"));
-		newItem( "torrentspy.com", KUrl("http://torrentspy.com/search.asp?query=FOOBAR"));
-		newItem( "torrentz.com", KUrl("http://www.torrentz.com/search_FOOBAR"));
+		const SearchEngineList & se = m_plugin->getSearchEngineList();
+		foreach (const SearchEngine & e,se.defaultList())
+		{
+			newItem(e.name,e.url);
+		}
+
 		saveSearchEngines();
 	}
  
@@ -203,7 +202,7 @@ namespace kt
 			((KIO::Job*)j)->ui()->showErrorMessage();
 			return;
 		}
-
+		Out(SYS_SRC|LOG_DEBUG) << "Downloaded search_engines file" << endl;
 		QString fn = kt::DataDir() + "search_engines.tmp";
 		updateList(fn);
 		saveSearchEngines();
@@ -223,7 +222,10 @@ namespace kt
 		QFile fptr(source);
      
 		if (!fptr.open(QIODevice::ReadOnly))
+		{
+			Out(SYS_SRC|LOG_DEBUG) << "Failed to open " << source << endl;
 			return;
+		}
  
 		QTextStream in(&fptr);
 		
