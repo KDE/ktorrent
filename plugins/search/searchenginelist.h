@@ -26,23 +26,27 @@
 
 namespace kt
 {
-	
+	struct SearchEngine
+	{
+		QString name;
+		KUrl url;
+		
+		SearchEngine() {}
+		SearchEngine(const QString & name,const KUrl & url) : name(name),url(url) {}
+	};
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
 	class SearchEngineList
 	{
-		struct SearchEngine
-		{
-			QString name;
-			KUrl url;
-		};
-		
 		QList<SearchEngine> m_search_engines;
+		QList<SearchEngine> m_default_list;
 	public:
 		SearchEngineList();
 		virtual ~SearchEngineList();
+		
+		const QList<SearchEngine> & defaultList() const {return m_default_list;}
 
 		void save(const QString& file);
 		void load(const QString& file);
