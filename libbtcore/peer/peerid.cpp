@@ -131,6 +131,7 @@ namespace bt
 			Map["BF"] = "Bitflu";
 			Map["BG"] = "BTGetit";
 			Map["BM"] = "BitMagnet";
+			Map["BO"] = "BitsOnWheels";
 			Map["BR"] = "BitRocket";
 			Map["BS"] = "BTSlave"; 
 			Map["BX"] = "BitTorrent X";
@@ -145,6 +146,7 @@ namespace bt
 			Map["G3"] = "G3 Torrent";
 			Map["HL"] = "Halite";
 			Map["HN"] = "Hydranode";
+			Map["KG"] = "KGet";
 			Map["KT"] = "KTorrent"; // lets not forget our own client
 			Map["LH"] = "LH-ABC";
 			Map["lt"] = "libTorrent";
