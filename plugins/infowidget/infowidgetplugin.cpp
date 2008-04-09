@@ -123,7 +123,6 @@ namespace kt
 		peer_view = 0;
 		delete tracker_view;
 		tracker_view = 0;
-		pref->deleteLater();
 		pref = 0;
 	}
 

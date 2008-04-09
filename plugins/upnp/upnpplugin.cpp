@@ -73,7 +73,6 @@ namespace kt
 		sock->saveRouters(routers_file);
 		this->getGUI()->removePrefPage(pref);
 		sock->close();
-		pref->deleteLater();
 		pref = 0;
 		delete sock;
 		sock = 0;

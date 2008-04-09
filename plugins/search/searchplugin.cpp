@@ -94,7 +94,6 @@ namespace kt
 		searches.clear();
 		
 		getGUI()->removePrefPage(pref);
-		pref->deleteLater();
 		pref = 0;
 		toolbar = 0;
 		disconnect(getCore(),SIGNAL(settingsChanged()),this,SLOT(preferencesUpdated()));

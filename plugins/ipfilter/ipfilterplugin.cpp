@@ -77,7 +77,6 @@ namespace kt
 		ipblist.unsetPluginInterfacePtr();
 		
 		getGUI()->removePrefPage(pref);
-		pref->deleteLater();
 		pref = 0;
 		if(level1)
 		{
