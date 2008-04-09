@@ -117,7 +117,6 @@ namespace kt
 		if (m_editor)
 		{
 			getGUI()->removeTabPage(m_editor);
-			m_editor->deleteLater();
 			m_editor = 0;
 		}
 		
@@ -230,7 +229,6 @@ namespace kt
 			if (m_editor)
 			{
 				getGUI()->removeTabPage(m_editor);
-				m_editor->deleteLater();
 				m_editor = 0;
 			}
 		}
@@ -242,7 +240,6 @@ namespace kt
 			return;
 		
 		getGUI()->removeTabPage(m_editor);
-		m_editor->deleteLater();
 		m_editor = 0;
 		m_bws_action->setChecked(false);
 	}

@@ -71,7 +71,6 @@ namespace kt
 	void ScanFolderPlugin::unload()
 	{
 		getGUI()->removePrefPage(pref);
-		pref->deleteLater();
 		pref = 0;
 		
 		m_sf_map.clear();

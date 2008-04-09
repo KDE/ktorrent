@@ -132,7 +132,6 @@ namespace kt
 		tracker_view = 0;
 		delete webseeds_tab;
 		webseeds_tab = 0;
-		pref->deleteLater();
 		pref = 0;
 	}
 

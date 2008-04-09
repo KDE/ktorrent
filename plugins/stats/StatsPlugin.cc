@@ -83,10 +83,7 @@ void StatsPlugin::unload()
  	pmUiSpd.reset();
  	pmUiConns.reset();
  	
- 	pmUiSett -> deleteLater();
  	pmUiSett = 0;
-	
-	pmDispSett -> deleteLater();
 	pmDispSett = 0;
  	
  	pmTmr.reset();

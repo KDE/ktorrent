@@ -69,9 +69,7 @@ namespace kt
 		getGUI()->removeToolWidget(lv);
 		getGUI()->removePrefPage(pref);
 		RemoveLogMonitor(lv);
-		lv->deleteLater();
 		lv = 0;
-		pref->deleteLater();
 		pref = 0;
 		LogFlags::finalize();
 	}
