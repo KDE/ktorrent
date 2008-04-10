@@ -82,6 +82,13 @@ namespace ideal
 		/// The current tab page has changed
 		virtual void currentTabPageChanged(QWidget* page) {}
 		
+		/**
+		 * Create a XML GUI container (menu or toolbar)
+		 * @param name The name of the item
+		 * @return The widget
+		 */
+		QWidget* container(const QString & name);
+		
 	protected:
 		virtual bool queryExit();
 

@@ -80,7 +80,7 @@ namespace kt
 		view_man = new ViewManager(core->getGroupManager()->allGroup(),this,core);
 		connect(view_man,SIGNAL(enableActions(ActionEnableFlags)),this,SLOT(setActionsEnabled(ActionEnableFlags)));
 		
-		group_view = new GroupView(core->getGroupManager(),view_man,actionCollection(),this);
+		group_view = new GroupView(core->getGroupManager(),view_man,this);
 		addToolWidget(group_view,"application-x-bittorrent",i18n("Groups"),DOCK_LEFT);
 		connect(group_view,SIGNAL(openNewTab(kt::Group*)),this,SLOT(openView(kt::Group*)));
 
@@ -88,6 +88,8 @@ namespace kt
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),qm,SLOT(onTorrentAdded(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),qm,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
 		addToolWidget(qm,"ktqueuemanager",i18n("Queue Manager"),DOCK_BOTTOM);
+		
+		createGUI("ktorrentui.rc");
 		
 		status_bar = new kt::StatusBar(this);
 		setStatusBar(status_bar);
@@ -522,7 +524,6 @@ namespace kt
 		m->addAction(show_kt_action);
 		m->addSeparator();
 		m->addAction(quit_action);
-		createGUI("ktorrentui.rc");
 	}
 
 	void GUI::update()

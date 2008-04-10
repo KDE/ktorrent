@@ -24,7 +24,6 @@
 #include <ksharedconfig.h>
 
 class KMenu;
-class KActionCollection;
 
 
 namespace kt
@@ -54,7 +53,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		GroupView(GroupManager* gman,ViewManager* view,KActionCollection* col,QWidget *parent);
+		GroupView(GroupManager* gman,ViewManager* view,GUI* gui);
 		virtual ~GroupView();
 		
 		/// Get the current group
@@ -84,7 +83,7 @@ namespace kt
 		void groupRemoved(kt::Group* g);
 		
 	private:
-		void createMenu(KActionCollection* col);
+		void setupActions(KActionCollection* col);
 		GroupViewItem* addGroup(Group* g,QTreeWidgetItem* parent);
 		virtual bool dropMimeData(QTreeWidgetItem *parent, int index, 
 					  const QMimeData *data,Qt::DropAction action);    
@@ -92,6 +91,7 @@ namespace kt
 		virtual Qt::DropActions supportedDropActions () const;
 
 	private:
+		GUI* gui;
 		ViewManager* view;
 		QTreeWidgetItem* custom_root;
 		GroupManager* gman;

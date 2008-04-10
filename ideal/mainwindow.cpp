@@ -29,6 +29,7 @@
 #include <kconfiggroup.h>
 #include <kpushbutton.h>
 #include <kconfiggroup.h>
+#include <kxmlguifactory.h>
 #include "mainwindow.h"
 #include "sidebar.h"
 #include "box.h"
@@ -276,6 +277,11 @@ namespace ideal
 	{
 		QWidget* page = tabs->widget(idx);
 		currentTabPageChanged(page);
+	}
+	
+	QWidget* MainWindow::container(const QString & name)
+	{
+		return guiFactory()->container(name, this);
 	}
 }
 

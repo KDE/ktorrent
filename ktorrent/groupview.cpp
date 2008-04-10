@@ -38,6 +38,7 @@
 #include "view.h"
 #include "groupview.h"
 #include "grouppolicydlg.h"
+#include "gui.h"
 
 
 using namespace bt;
@@ -71,8 +72,8 @@ namespace kt
 	}
 	*/
 
-	GroupView::GroupView(GroupManager* gman,ViewManager* view,KActionCollection* col,QWidget *parent)
-	: QTreeWidget(parent),view(view),custom_root(0),gman(gman)
+	GroupView::GroupView(GroupManager* gman,ViewManager* view,GUI* gui)
+	: QTreeWidget(gui),gui(gui),view(view),custom_root(0),gman(gman)
 	{
 		setColumnCount(1);
 		setContextMenuPolicy(Qt::CustomContextMenu);
@@ -90,7 +91,8 @@ namespace kt
 		editing_item = false;
 		current_item = 0;
 		menu = 0;
-		createMenu(col);
+		setupActions(gui->actionCollection());
+		
 		GroupViewItem* all = addGroup(gman->allGroup(),0);
 		GroupViewItem* dwnld = addGroup(gman->downloadGroup(),all);
 		GroupViewItem* upld = addGroup(gman->uploadGroup(),all);
@@ -127,10 +129,8 @@ namespace kt
 	{	
 	}
 	
-	void GroupView::createMenu(KActionCollection* col)
+	void GroupView::setupActions(KActionCollection* col)
 	{
-		menu = new KMenu(this);
-		
 		new_group = new KAction(KIcon("document-new"),i18n("New Group"),this);
 		connect(new_group,SIGNAL(triggered()),this,SLOT(addGroup()));
 		col->addAction("new_group",new_group);
@@ -150,14 +150,6 @@ namespace kt
 		edit_group_policy = new KAction(KIcon("preferences-other"),i18n("Group Policy"),this);
 		connect(edit_group_policy,SIGNAL(triggered()),this,SLOT(editGroupPolicy()));
 		col->addAction("edit_group_policy",edit_group_policy);
-		
-		menu->addAction(open_in_new_tab);
-		menu->addAction(new_group);
-		menu->addAction(edit_group);
-		menu->addAction(remove_group);
-		menu->addAction(edit_group_policy);
-		menu->insertSeparator(new_group);
-		menu->insertSeparator(edit_group_policy);
 	}
 	
 	void GroupView::addGroup()
@@ -253,6 +245,9 @@ namespace kt
 		}
 		
 		open_in_new_tab->setEnabled(g != 0);
+		
+		if (!menu)
+			menu = (KMenu*)gui->container("Groups");
 		
 		menu->popup(mapToGlobal(p));
 	}
