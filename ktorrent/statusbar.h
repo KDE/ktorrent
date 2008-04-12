@@ -49,7 +49,7 @@ namespace kt
 		void updateSpeed(bt::Uint32 up,bt::Uint32 down);
 
 		/// Update the number of bytes tranfered
-		void updateTransfer(bt::Uint32 up,bt::Uint32 down);
+		void updateTransfer(bt::Uint64 up,bt::Uint64 down);
 
 		/// Update the DHT stats
 		void updateDHTStatus(bool on,const dht::Stats & s);
@@ -69,8 +69,8 @@ namespace kt
 		bt::Uint32 down_speed;
 
 		QLabel* transfer;
-		bt::Uint32 up_transfer;
-		bt::Uint32 down_transfer;
+		bt::Uint64 up_transfer;
+		bt::Uint64 down_transfer;
 		
 		QLabel* dht_status;
 		bt::Uint32 dht_peers;
