@@ -89,6 +89,7 @@ namespace ideal
 		 */
 		QWidget* container(const QString & name);
 		
+		
 	protected:
 		virtual bool queryExit();
 

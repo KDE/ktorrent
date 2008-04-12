@@ -86,7 +86,8 @@ namespace kt
 		connect(this,SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(onItemChanged(QTreeWidgetItem*,int)));
 		connect(this,SIGNAL(currentGroupChanged(kt::Group*)),view,SLOT(onCurrentGroupChanged(kt::Group*)));
 		connect(this,SIGNAL(groupRenamed(kt::Group*)),view,SLOT(onGroupRenamed(kt::Group*)));
-		connect(this,SIGNAL(groupRemoved(kt::Group*)),view,SLOT(onGroupRemoved(kt::Group*))),
+		connect(this,SIGNAL(groupRemoved(kt::Group*)),view,SLOT(onGroupRemoved(kt::Group*)));
+		connect(this,SIGNAL(groupAdded(kt::Group*)),view,SLOT(onGroupAdded(kt::Group*)));
 
 		editing_item = false;
 		current_item = 0;
@@ -154,20 +155,29 @@ namespace kt
 	
 	void GroupView::addGroup()
 	{
-		QString name = KInputDialog::getText(QString::null,i18n("Please enter the group name."));
+		addNewGroup();
+	}
+	
+	Group* GroupView::addNewGroup()
+	{
+		bool ok = false;
+		QString name = KInputDialog::getText(QString(),i18n("Please enter the group name."),QString(),&ok,this);
 		
-		if (name.isNull() || name.length() == 0)
-			return;
+		if (name.isNull() || name.length() == 0 || !ok)
+			return 0;
 		
 		if (gman->find(name))
 		{
 			KMessageBox::error(this,i18n("The group %1 already exists.",name));
-			return;
+			return 0;
 		}
 		
-		GroupViewItem* gvi = addGroup(gman->newGroup(name),custom_root);
+		Group* g = gman->newGroup(name);
+		GroupViewItem* gvi = addGroup(g,custom_root);
 		gvi->setFlags(gvi->flags() | Qt::ItemIsEditable | Qt::ItemIsDropEnabled);
 		gman->saveGroups();
+		groupAdded(g);
+		return g;
 	}
 	
 	void GroupView::removeGroup()
@@ -247,7 +257,7 @@ namespace kt
 		open_in_new_tab->setEnabled(g != 0);
 		
 		if (!menu)
-			menu = (KMenu*)gui->container("Groups");
+			menu = (KMenu*)gui->container("GroupsMenu");
 		
 		menu->popup(mapToGlobal(p));
 	}

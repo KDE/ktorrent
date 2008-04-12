@@ -89,6 +89,9 @@ namespace kt
 		 * @param tc The torrent 
 		 * */
 		void currentTorrentChanged(bt::TorrentInterface* tc);
+		
+		/// Get the group view
+		GroupView* getGroupView() {return group_view;}
 	public slots:
 		/**
 		 * Open a view

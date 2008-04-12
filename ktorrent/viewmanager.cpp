@@ -21,20 +21,29 @@
 #include <QWidget>
 #include <ksharedconfig.h>
 #include <kconfiggroup.h>
+#include <kaction.h>
+#include <kactioncollection.h>
+#include <klocale.h>
+#include <kmenu.h>
 #include <groups/group.h>
 #include <util/log.h>
+#include <groups/groupmanager.h>
 #include "gui.h"
 #include "view.h"
 #include "viewmodel.h"
 #include "viewmanager.h"
+#include "core.h"
+#include "groupview.h"
 
 using namespace bt;
 
 namespace kt
 {
-	ViewManager::ViewManager(Group* all_group,GUI* gui,Core* core) : QObject(gui),gui(gui),current(0),all_group(all_group)
+	ViewManager::ViewManager(Group* all_group,GUI* gui,Core* core) : QObject(gui),gui(gui),core(core),current(0),all_group(all_group)
 	{
+		view_menu = 0;
 		model = new ViewModel(core,this);
+		setupActions();
 	}
 
 	ViewManager::~ViewManager()
@@ -50,6 +59,7 @@ namespace kt
 			this,SLOT(onCurrentTorrentChanged(View* ,bt::TorrentInterface* )));
 		connect(v,SIGNAL(enableActions(View*, ActionEnableFlags)),
 				this,SLOT(onEnableActions(View*, ActionEnableFlags)));
+		connect(v,SIGNAL(showMenu(View*, const QPoint&)),this,SLOT(showViewMenu(View*, const QPoint&)));
 		return v;
 	}
 		
@@ -87,7 +97,6 @@ namespace kt
 			v->loadState(cfg,idx++);
 	}
 		
-	/// Start all selected downloads in the current view
 	void ViewManager::startTorrents()
 	{
 		if (current)
@@ -97,7 +106,6 @@ namespace kt
 		}
 	}
 		
-	/// Stop all selected downloads in the current view
 	void ViewManager::stopTorrents()
 	{
 		if (current)
@@ -107,7 +115,6 @@ namespace kt
 		}
 	}
 		
-	/// Start all downloads in the current view
 	void ViewManager::startAllTorrents()
 	{
 		if (current)
@@ -117,7 +124,6 @@ namespace kt
 		}
 	}
 		
-	/// Stop all downloads in the current view
 	void ViewManager::stopAllTorrents()
 	{
 		if (current)
@@ -127,7 +133,6 @@ namespace kt
 		}
 	}
 		
-	/// Remove selected downloads in the current view
 	void ViewManager::removeTorrents()
 	{
 		if (current)
@@ -136,17 +141,92 @@ namespace kt
 			current->updateFlags();
 		}
 	}
+	void ViewManager::removeTorrentsAndData()
+	{
+		if (current)
+		{
+			current->removeTorrentsAndData();
+			current->updateFlags();
+		}
+	}
+		
+	void ViewManager::addPeers()
+	{
+		if (current)
+			current->addPeers();
+	}
+
+	void ViewManager::toggleDHT()
+	{
+		if (current)
+			current->toggleDHT();
+	}
+		
+	void ViewManager::togglePEX()
+	{
+		if (current)
+			current->togglePEX();
+	}
+		
+	void ViewManager::manualAnnounce()
+	{
+		if (current)
+			current->manualAnnounce();
+	}
+		
+	void ViewManager::scrape()
+	{
+		if (current)
+			current->scrape();
+	}
+		
+	void ViewManager::previewTorrents()
+	{
+		if (current)
+			current->previewTorrents();
+	}
+		
+	void ViewManager::openDataDir()
+	{
+		if (current)
+			current->openDataDir();
+	}
+		
+	void ViewManager::openTorDir()
+	{
+		if (current)
+			current->openTorDir();
+	}
+		
+	void ViewManager::moveData()
+	{
+		if (current)
+			current->moveData();
+	}
+		
+	void ViewManager::removeFromGroup()
+	{
+		if (current)
+			current->removeFromGroup();
+	}
+		
+	void ViewManager::checkData()
+	{
+		if (current)
+			current->checkData();
+	}
+		
+	void ViewManager::speedLimitsDlg()
+	{
+		if (current)
+			current->speedLimitsDlg();
+	}
+		
 
 	void ViewManager::queueTorrents()
 	{
 		if (current)
 			current->queueTorrents();
-	}
-
-	void ViewManager::checkData()
-	{
-		if (current)
-			current->checkData();
 	}
 
 	void ViewManager::update()
@@ -237,6 +317,10 @@ namespace kt
 				gui->changeTabText(v,v->caption());
 			}
 		}
+		
+		QMap<Group*,QAction*>::iterator j = group_actions.find(g);
+		if (j != group_actions.end())
+			j.value()->setText(g->groupName());
 	}
 
 	void ViewManager::onGroupRemoved(kt::Group* g)
@@ -268,6 +352,24 @@ namespace kt
 			else
 				i++;
 		}
+		
+		gui->unplugActionList("view_groups_list");
+		QMap<Group*,QAction*>::iterator j = group_actions.find(g);
+		if (j != group_actions.end())
+		{
+			delete j.value();
+			group_actions.erase(j);
+		}
+		gui->plugActionList("view_groups_list",group_actions.values());
+	}
+	
+	void ViewManager::onGroupAdded(kt::Group* g)
+	{
+		gui->unplugActionList("view_groups_list");
+		KAction* act = new KAction(KIcon("application-x-bittorrent"),g->groupName(),this);
+		connect(act,SIGNAL(triggered()),this,SLOT(addToGroupItemTriggered()));
+		group_actions.insert(g,act);
+		gui->plugActionList("view_groups_list",group_actions.values());
 	}
 
 	void ViewManager::onCurrentTorrentChanged(View* v,bt::TorrentInterface* tc)
@@ -280,6 +382,258 @@ namespace kt
 	{
 		if (v == current)
 			enableActions(flags);
+	}
+	
+	void ViewManager::setupActions()
+	{
+		KActionCollection* ac = gui->actionCollection();
+		
+		start_torrent = new KAction(KIcon("ktstart"),i18n("Start"),this);
+		connect(start_torrent,SIGNAL(triggered()),this,SLOT(startTorrents()));
+		ac->addAction("view_start",start_torrent);
+		
+		stop_torrent = new KAction(KIcon("ktstop"),i18n("Stop"),this);
+		connect(stop_torrent,SIGNAL(triggered()),this,SLOT(stopTorrents()));
+		ac->addAction("view_stop",stop_torrent);
+		
+		remove_torrent = new KAction(KIcon("ktremove"),i18n("Remove Torrent"),this);
+		connect(remove_torrent,SIGNAL(triggered()),this,SLOT(removeTorrents()));
+		ac->addAction("view_remove_torrent",remove_torrent);
+		
+		remove_torrent_and_data = new KAction(KIcon("ktremove"),i18n("Remove Torrent and Data"),this);
+		connect(remove_torrent_and_data,SIGNAL(triggered()),this,SLOT(removeTorrentsAndData()));
+		ac->addAction("view_remove_torrent_and_data",remove_torrent_and_data);
+		
+		queue_torrent = new KAction(KIcon("view-choose"),i18n("Enqueue/Dequeue"),this);
+		connect(queue_torrent,SIGNAL(triggered()),this,SLOT(queueTorrents()));
+		ac->addAction("view_queue",queue_torrent);
+		
+		add_peers = new KAction(KIcon("list-add"),i18n("Add Peers"),this);
+		connect(add_peers,SIGNAL(triggered()),this,SLOT(addPeers()));
+		ac->addAction("view_add_peers",add_peers);
+		
+		dht_enabled = new KAction(i18n("DHT"),this);
+		connect(dht_enabled,SIGNAL(triggered()),this,SLOT(toggleDHT()));
+		dht_enabled->setCheckable(true);
+		ac->addAction("view_dht_enabled",dht_enabled);
+		
+		
+		pex_enabled = new KAction(i18n("Peer Exchange"),this);
+		connect(pex_enabled,SIGNAL(triggered()),this,SLOT(togglePEX()));
+		pex_enabled->setCheckable(true);
+		ac->addAction("view_pex_enabled",pex_enabled);
+	
+		manual_announce = new KAction(i18n("Manual Announce"),this);
+		connect(manual_announce,SIGNAL(triggered()),this,SLOT(manualAnnounce()));
+		ac->addAction("view_announce",manual_announce);
+		
+		do_scrape = new KAction(i18n("Scrape"),this);
+		connect(do_scrape,SIGNAL(triggered()),this,SLOT(scrape()));
+		ac->addAction("view_scrape",do_scrape);
+		
+		preview = new KAction(KIcon("document-open"),i18n("Preview"),this);
+		connect(preview,SIGNAL(triggered()),this,SLOT(previewTorrents()));
+		ac->addAction("view_preview",preview);
+		
+		data_dir = new KAction(KIcon("folder-open"),i18n("Data Directory"),this);
+		connect(data_dir,SIGNAL(triggered()),this,SLOT(openDataDir()));
+		ac->addAction("view_open_data_dir",data_dir);
+		
+		tor_dir = new KAction(KIcon("folder-open"),i18n("Temporary Directory"),this);
+		connect(tor_dir,SIGNAL(triggered()),this,SLOT(openTorDir()));
+		ac->addAction("view_open_tmp_dir",tor_dir);
+		
+		move_data = new KAction(i18n("Move Data"),this);
+		connect(move_data,SIGNAL(triggered()),this,SLOT(moveData()));
+		ac->addAction("view_move_data",move_data);
+		
+		
+		remove_from_group = new KAction(i18n("Remove from Group"),this);
+		connect(remove_from_group,SIGNAL(triggered()),this,SLOT(removeFromGroup()));
+		ac->addAction("view_remove_from_group",remove_from_group);
+		
+		add_to_new_group = new KAction(KIcon("document-new"),i18n("New Group"),this);
+		connect(add_to_new_group,SIGNAL(triggered()),this,SLOT(addToNewGroup()));
+		ac->addAction("view_add_to_new_group",add_to_new_group);
+		
+		check_data = new KAction(i18n("Check Data"),this);
+		connect(check_data,SIGNAL(triggered()),this,SLOT(checkData()));
+		ac->addAction("view_check_data",check_data);
+		
+		speed_limits = new KAction(i18n("Speed Limits"),this);
+		connect(speed_limits,SIGNAL(triggered()),this,SLOT(speedLimitsDlg()));
+		ac->addAction("view_speed_limits",speed_limits);
+		
+		GroupManager* gman = core->getGroupManager();
+		for (GroupManager::iterator i = gman->begin();i != gman->end();i++)
+		{
+			KAction* act = new KAction(KIcon("application-x-bittorrent"),i->first,this);
+			connect(act,SIGNAL(triggered()),this,SLOT(addToGroupItemTriggered()));
+			group_actions.insert(i->second,act);
+		}
+		
+		open_dir_menu = new KAction(KIcon("folder-open"),i18n("Open Directory"),this);
+		ac->addAction("OpenDirMenu",open_dir_menu);
+		
+		groups_menu = new KAction(KIcon("application-x-bittorrent"),i18n("Add to Group"),this);
+		ac->addAction("GroupsSubMenu",groups_menu);
+	}
+	
+	void ViewManager::addToGroupItemTriggered()
+	{
+		if (!current)
+			return;
+		
+		QAction* s = (QAction*)sender();
+		Group* g = 0;
+		QMap<Group*,QAction*>::iterator j = group_actions.begin();
+		while (j != group_actions.end() && !g)
+		{
+			if (j.value() == s)
+				g = j.key();
+			
+		}
+		
+		if (!g)
+			return;
+		
+		
+		QList<bt::TorrentInterface*> sel;
+		current->getSelection(sel);
+		foreach (bt::TorrentInterface* tc,sel)
+		{
+			g->addTorrent(tc,false);
+		}
+		core->getGroupManager()->saveGroups();
+	}
+	
+	void ViewManager::addToNewGroup()
+	{
+		GroupView* gv = gui->getGroupView();
+		Group* g = gv->addNewGroup();
+		if (g && current)
+		{
+			QList<bt::TorrentInterface*> sel;
+			current->getSelection(sel);
+			foreach (bt::TorrentInterface* tc,sel)
+			{
+				g->addTorrent(tc,false);
+			}
+			core->getGroupManager()->saveGroups();
+		}
+	}
+	
+	void ViewManager::showViewMenu(View* v,const QPoint & pos)
+	{
+		if (!v)
+			return;
+		
+		if (!view_menu)
+		{
+			view_menu = (KMenu*)gui->container("ViewMenu");
+			gui->plugActionList("view_groups_list",group_actions.values());
+		}
+		
+		bool en_start = false;
+		bool en_stop = false;
+		bool en_remove = false;
+		bool en_prev = false;
+		bool en_announce = false;
+		bool en_add_peer = false;
+		bool en_dirs = false;
+		bool en_peer_sources = false;
+		bool dummy = false;
+
+		QList<bt::TorrentInterface*> sel;
+		v->getSelection(sel);
+		foreach (bt::TorrentInterface* tc,sel)
+		{
+			const TorrentStats & s = tc->getStats();
+			
+			if (tc->readyForPreview() && !s.multi_file_torrent)
+				en_prev = true;
+			
+			if (!tc->isCheckingData(dummy))
+				en_remove = true;
+			
+			if (!s.running)
+			{
+				if (!tc->isCheckingData(dummy))
+				{
+					en_start = true;
+				}
+			}
+			else
+			{
+				if (!tc->isCheckingData(dummy))
+				{
+					en_stop = true;
+					if (tc->announceAllowed())
+						en_announce = true;
+				}
+			}
+			
+			if (!s.priv_torrent && !tc->isCheckingData(dummy))
+			{
+				en_add_peer = true;
+				en_peer_sources = true;
+			}
+		}
+
+		en_add_peer = en_add_peer && en_stop;
+
+		start_torrent->setEnabled(en_start);
+		stop_torrent->setEnabled(en_stop);
+		remove_torrent->setEnabled(en_remove);
+		remove_torrent_and_data->setEnabled(en_remove);
+		preview->setEnabled(en_prev);
+		add_peers->setEnabled(en_add_peer);
+		manual_announce->setEnabled(en_announce);
+		do_scrape->setEnabled(sel.count() > 0);
+		move_data->setEnabled(sel.count() > 0);
+		queue_torrent->setEnabled(en_remove);
+
+		const kt::Group* current_group = v->getGroup();
+		remove_from_group->setEnabled(current_group && !current_group->isStandardGroup());
+	
+		groups_menu->setEnabled(group_actions.count() > 0);
+
+		if (sel.count() == 1)
+		{
+			//enable directories
+			en_dirs = true;
+			
+			TorrentInterface* tc = sel.front();
+			// no data check when we are preallocating diskspace
+			check_data->setEnabled(tc->getStats().status != bt::ALLOCATING_DISKSPACE && !tc->isCheckingData(dummy));
+			
+			//enable additional peer sources if torrent is not private
+			dht_enabled->setEnabled(en_peer_sources);
+			pex_enabled->setEnabled(en_peer_sources);
+			
+			if (en_peer_sources)
+			{
+				dht_enabled->setChecked(tc->isFeatureEnabled(bt::DHT_FEATURE));
+				pex_enabled->setChecked(tc->isFeatureEnabled(bt::UT_PEX_FEATURE));
+			}
+		}
+		else
+		{
+			check_data->setEnabled(false);
+			dht_enabled->setEnabled(false);	
+			pex_enabled->setEnabled(false);	
+		}
+		
+		data_dir->setEnabled(en_dirs);
+		tor_dir->setEnabled(en_dirs);
+		open_dir_menu->setEnabled(en_dirs);
+		speed_limits->setEnabled(sel.count() == 1);
+		add_to_new_group->setEnabled(sel.count() > 0);
+		
+		gui->unplugActionList("view_columns_list");
+		gui->plugActionList("view_columns_list",v->columnActionList());
+
+		view_menu->popup(pos);
 	}
 }
 

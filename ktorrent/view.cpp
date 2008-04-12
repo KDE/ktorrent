@@ -22,6 +22,7 @@
 #include <QFileInfo>
 #include <QSortFilterProxyModel>
 #include <krun.h>
+#include <kmenu.h>
 #include <klocale.h>
 #include <ksharedconfig.h>
 #include <kmessagebox.h>
@@ -36,7 +37,6 @@
 #include "view.h"
 #include "core.h"
 #include "viewmodel.h"
-#include "viewmenu.h"
 #include "scandlg.h"
 #include "speedlimitsdlg.h"
 #include "addpeersdlg.h"
@@ -49,7 +49,6 @@ namespace kt
 	View::View(ViewModel* model,Core* core,QWidget* parent) 
 		: QTreeView(parent),core(core),group(0),num_torrents(0),num_running(0),model(model),flags(0)
 	{
-		menu = new ViewMenu(core->getGroupManager(),this);
 		setContextMenuPolicy(Qt::CustomContextMenu);
 		setRootIsDecorated(false);
 		setSortingEnabled(true);
@@ -75,11 +74,12 @@ namespace kt
 			act->setCheckable(true);
 			act->setChecked(true);
 			column_idx_map[act] = i;
+			column_action_list.append(act);
 		}
 		
 		// also add header_menu to the right click menu
-		menu->addSeparator();
-		menu->addMenu(header_menu)->setText(i18n("Configure Columns"));
+	//	menu->addSeparator();
+	//	menu->addMenu(header_menu)->setText(i18n("Configure Columns"));
 		
 		connect(header_menu,SIGNAL(triggered(QAction* )),this,SLOT(onHeaderMenuItemTriggered(QAction*)));
 		
@@ -444,7 +444,7 @@ namespace kt
 
 	void View::showMenu(const QPoint & pos)
 	{
-		menu->show(mapToGlobal(pos));
+		showMenu(this,mapToGlobal(pos));
 	}
 	
 	void View::showHeaderMenu(const QPoint& pos)
@@ -554,6 +554,11 @@ namespace kt
 		
 		flags = nflags;
 		enableActions(this,(kt::ActionEnableFlags)flags);
+	}
+	
+	QList<QAction*> View::columnActionList() const
+	{
+		return column_action_list;
 	}
 }
 

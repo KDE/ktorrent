@@ -87,6 +87,9 @@ namespace kt
 		 */
 		int actionFlags() const {return flags;}
 		
+		/// Get a list of column actions to plugin in the right click menu of a view
+		QList<QAction*> columnActionList() const;
+		
 	public slots:
 		/**
 		 * Update all items in the view
@@ -124,13 +127,14 @@ namespace kt
 		void wantToStart(QList<bt::TorrentInterface*> & todo);
 		void currentTorrentChanged(View* v,bt::TorrentInterface* tc);
 		void enableActions(View* v,ActionEnableFlags flags);
+		void showMenu(View* v,const QPoint & pos);
 
 	private:
 		Core* core;
 		Group* group;
-		ViewMenu* menu;
 		KMenu* header_menu;
 		QMap<QAction*,int> column_idx_map;
+		QList<QAction*> column_action_list;
 		bt::Uint32 num_torrents;
 		bt::Uint32 num_running;
 		ViewModel* model;

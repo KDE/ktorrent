@@ -65,6 +65,9 @@ namespace kt
 		/// Load status from config
 		void loadState(KSharedConfigPtr cfg);
 		
+		/// Create a new group
+		Group* addNewGroup();
+		
 	private slots:
 		void onItemActivated(QTreeWidgetItem* item,int col);
 		void onItemChanged(QTreeWidgetItem* item,int col);
@@ -81,6 +84,7 @@ namespace kt
 		void groupRenamed(kt::Group* g);
 		void openNewTab(kt::Group* g);
 		void groupRemoved(kt::Group* g);
+		void groupAdded(kt::Group* g);
 		
 	private:
 		void setupActions(KActionCollection* col);

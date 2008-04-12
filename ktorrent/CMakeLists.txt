@@ -9,7 +9,6 @@ set(ktorrent_SRC
 	app.cpp 
 	view.cpp 
 	viewmodel.cpp
-	viewmenu.cpp
 	viewmanager.cpp 
 	prefdialog.cpp 
 	advancedpref.cpp
