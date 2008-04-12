@@ -69,7 +69,7 @@ namespace kt
 		speed->setText(s);
 	}
 
-	void StatusBar::updateTransfer(bt::Uint32 up,bt::Uint32 down)
+	void StatusBar::updateTransfer(bt::Uint64 up,bt::Uint64 down)
 	{
 		if (up == up_transfer && down == down_transfer)
 			return;
