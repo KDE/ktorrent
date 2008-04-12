@@ -37,7 +37,7 @@ namespace kt
 				QDBusConnection::ExportScriptableSlots|QDBusConnection::ExportScriptableSignals);
 
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),this,SLOT(torrentAdded(bt::TorrentInterface*)));
-		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(torrentAdded(bt::TorrentInterface*)));
+		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(torrentRemoved(bt::TorrentInterface*)));
 		// fill the map with torrents
 		torrents();
 	}

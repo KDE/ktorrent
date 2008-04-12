@@ -384,7 +384,7 @@ namespace kt
 	
 	QVariant ViewModel::data(const QModelIndex & index, int role) const
 	{
-		if (!index.isValid() || index.row() >= torrents.count())
+		if (!index.isValid() || index.row() >= torrents.count() || index.row() < 0)
 			return QVariant(); 
 		
 		if (role == Qt::ForegroundRole)
@@ -399,7 +399,7 @@ namespace kt
 	
 	Qt::ItemFlags ViewModel::flags(const QModelIndex & index) const
 	{
-		if (!index.isValid() || index.row() >= torrents.count())
+		if (!index.isValid() || index.row() >= torrents.count() || index.row() < 0)
 			return QAbstractTableModel::flags(index);
 		else
 			return QAbstractTableModel::flags(index) | Qt::ItemIsDragEnabled;
@@ -436,7 +436,7 @@ namespace kt
 	{
 		foreach (QModelIndex i,idx)
 		{
-			if (i.row() < torrents.count())
+			if (i.isValid())
 			{
 				tlist.append(torrents[i.row()].tc);
 			}
@@ -445,7 +445,7 @@ namespace kt
 	
 	const bt::TorrentInterface* ViewModel::torrentFromIndex(const QModelIndex & index) const
 	{
-		if (index.isValid() && index.row() < torrents.count())
+		if (index.isValid() && index.row() < torrents.count() && index.row() >= 0)
 			return torrents[index.row()].tc;
 		else
 			return 0;
@@ -453,7 +453,7 @@ namespace kt
 	
 	bt::TorrentInterface* ViewModel::torrentFromIndex(const QModelIndex & index)
 	{
-		if (index.isValid() && index.row() < torrents.count())
+		if (index.isValid() && index.row() < torrents.count() && index.row() >= 0)
 			return torrents[index.row()].tc;
 		else
 			return 0;

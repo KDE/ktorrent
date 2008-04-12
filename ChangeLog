@@ -10,6 +10,7 @@ Changes in 3.0.2 :
 - Fix update search engines from internet
 - Remove torrentspy and update piratebay URL
 - Fix 4 GB limit in transfer of statusbar (160711)
+- Fix crash when removing 2 torrents at the same time
 
 Changes in 3.0.1 :
 - Fix sessionTTL not being able to be bigger then 99
