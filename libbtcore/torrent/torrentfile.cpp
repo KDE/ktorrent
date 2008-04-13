@@ -24,6 +24,7 @@
 #include <util/log.h>
 #include <util/bitset.h>
 #include <util/functions.h>
+#include <diskio/chunkmanager.h>
 
 namespace bt
 {
@@ -169,10 +170,13 @@ namespace bt
 		return off;
 	}
 	
-	void TorrentFile::updateNumDownloadedChunks(const BitSet & bs)
+	void TorrentFile::updateNumDownloadedChunks(ChunkManager & cman)
 	{
+		const BitSet & bs = cman.getBitSet();
 		float p = getDownloadPercentage();
 		num_chunks_downloaded = 0;
+		
+		Uint32 preview_range = cman.previewChunkRangeSize(*this);
 		bool prev = preview;
 		preview = true;
 		for (Uint32 i = first_chunk;i <= last_chunk;i++)
@@ -181,7 +185,7 @@ namespace bt
 			{
 				num_chunks_downloaded++;
 			}
-			else if (i == first_chunk || i == first_chunk + 1)
+			else if (preview_range > 0 && i >= first_chunk && i < first_chunk + preview_range)
 			{
 				preview = false;
 			}

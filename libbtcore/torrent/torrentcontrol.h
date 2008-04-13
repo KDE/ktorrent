@@ -175,14 +175,6 @@ namespace bt
 		 */
 		Uint32 getRunningTimeUL() const;
 
-		/**
-		* Checks if torrent is multimedial and chunks needed for preview are downloaded
-		* @param start_chunk The index of starting chunk to check
-		* @param end_chunk The index of the last chunk to check
-		* In case of single torrent file defaults can be used (0,1)
-		**/
-		bool readyForPreview(int start_chunk = 0, int end_chunk = 1);
-
 		/// Get the time to the next tracker update in seconds.
 		Uint32 getTimeToNextTrackerUpdate() const;
 
@@ -203,6 +195,7 @@ namespace bt
 		virtual const WebSeedInterface* getWebSeed(Uint32 i) const;
 		virtual bool addWebSeed(const KUrl & url);
 		virtual bool removeWebSeed(const KUrl & url);
+		virtual bool readyForPreview() const;
 		
 		int getPriority() const { return istats.priority; }
 		void setPriority(int p);

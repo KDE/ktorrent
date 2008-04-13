@@ -139,7 +139,7 @@ namespace kt
 				case 3: 
 					if (file->isMultimedia())
 					{
-						if (tc->readyForPreview(file->getFirstChunk(), file->getFirstChunk()+1) )
+						if (file->isPreviewAvailable())
 							return i18nc("Preview available", "Available");
 						else
 							return i18nc("Preview pending", "Pending");
@@ -162,7 +162,7 @@ namespace kt
 				case 3: 
 					if (mmfile)
 					{
-						if (tc->readyForPreview(0,1))
+						if (tc->readyForPreview())
 							return i18nc("Preview available", "Available");
 						else
 							return i18nc("Preview pending", "Pending");
@@ -191,7 +191,7 @@ namespace kt
 				case 3: 
 					if (file->isMultimedia())
 					{
-						if (tc->readyForPreview(file->getFirstChunk(), file->getFirstChunk()+1) )
+						if (file->isPreviewAvailable())
 							return 3;
 						else
 							return 2;
@@ -210,7 +210,7 @@ namespace kt
 				case 3: 
 					if (mmfile)
 					{
-						if (tc->readyForPreview(0,1))
+						if (tc->readyForPreview())
 							return 3;
 						else
 							return 2;
@@ -269,7 +269,7 @@ namespace kt
 		if (!tc->getStats().multi_file_torrent)
 		{
 			bool changed = false;
-			bool np = mmfile && tc->readyForPreview(0,1);
+			bool np = mmfile && tc->readyForPreview();
 			if (preview != np)
 			{
 				preview = np;

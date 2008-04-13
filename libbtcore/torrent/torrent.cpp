@@ -448,16 +448,16 @@ namespace bt
 		return IsMultimediaFile(this->getNameSuggestion());
 	}
 	
-	void Torrent::updateFilePercentage(const BitSet & bs)
+	void Torrent::updateFilePercentage(ChunkManager & cman)
 	{
 		for (int i = 0;i < files.count();i++)
 		{
 			TorrentFile & f = files[i];
-			f.updateNumDownloadedChunks(bs);
+			f.updateNumDownloadedChunks(cman);
 		}
 	}
 	
-	void Torrent::updateFilePercentage(Uint32 chunk,const BitSet & bs)
+	void Torrent::updateFilePercentage(Uint32 chunk,ChunkManager & cman)
 	{
 		QList<Uint32> cfiles;
 		calcChunkPos(chunk,cfiles);
@@ -466,7 +466,7 @@ namespace bt
 		while (i != cfiles.end())
 		{
 			TorrentFile & f = getFile(*i);
-			f.updateNumDownloadedChunks(bs);
+			f.updateNumDownloadedChunks(cman);
 			i++;
 		}
 	}

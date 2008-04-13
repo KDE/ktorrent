@@ -178,15 +178,15 @@ namespace bt
 		
 		/**
 		 * Update the percentage of all files.
-		 * @param bs The BitSet with all downloaded chunks
+		 * @param cman The ChunkManager
 		 */
-		void updateFilePercentage(const BitSet & bs);
+		void updateFilePercentage(ChunkManager & cman);
 		
 		/**
 		 * Update the percentage of a all files which have a particular chunk.
-		 * @param bs The BitSet with all downloaded chunks
+		 * @param cman The ChunkManager
 		 */
-		void updateFilePercentage(Uint32 chunk,const BitSet & bs);
+		void updateFilePercentage(Uint32 chunk,ChunkManager & cman);
 		
 		/**
 		 * Get the list with web seed URL's

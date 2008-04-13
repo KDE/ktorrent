@@ -28,6 +28,7 @@
 namespace bt
 {
 	class BitSet;
+	class ChunkManager;
 
 	/**
 	 * @author Joris Guisson
@@ -141,9 +142,9 @@ namespace bt
 		
 		/**
 		 * Update the number of downloaded chunks for this file.
-		 * @param bs The current bitset of all chunks
+		 * @param cman The ChunkManager
 		 */
-		void updateNumDownloadedChunks(const BitSet & bs);
+		void updateNumDownloadedChunks(ChunkManager & cman);
 		
 	signals:
 		/**

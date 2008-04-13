@@ -220,11 +220,10 @@ namespace bt
 
 		/**
 		 * Checks if torrent is multimedial and chunks needed for preview are downloaded
-		 * @param start_chunk The index of starting chunk to check
-		 * @param end_chunk The index of the last chunk to check
-		 * In case of single torrent file defaults can be used (0,1)
+		 * This only works for single file torrents
+		 * @return true if it is
 		 **/
-		virtual bool readyForPreview(int start_chunk = 0, int end_chunk = 1) = 0;
+		virtual bool readyForPreview() const = 0;
 
 		/**
 		 * Get the torX directory of this torrent. Temporary stuff like the index

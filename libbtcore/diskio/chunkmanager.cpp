@@ -114,16 +114,7 @@ namespace bt
 		}
 		else if (tor.isMultimedia())
 		{
-			KMimeType::Ptr ptr = KMimeType::findByPath(tor.getNameSuggestion());
-			Uint32 preview_size = 0;
-			if (ptr->name().startsWith("video"))
-				preview_size = preview_size_video;
-			else
-				preview_size = preview_size_audio;
-				
-			Uint32 nchunks = preview_size / tor.getChunkSize();
-			if (nchunks == 0)
-				nchunks = 1;
+			Uint32 nchunks = previewChunkRangeSize();
 
 			prioritise(0,nchunks,PREVIEW_PRIORITY);
 			if (tor.getNumChunks() > nchunks)
@@ -216,7 +207,7 @@ namespace bt
 				}
 			}
 		}
-		tor.updateFilePercentage(bitset);
+		tor.updateFilePercentage(*this);
 		during_load = false;
 	}
 	
@@ -333,7 +324,7 @@ namespace bt
 							<< " has been found invalid, redownloading" << endl;
 				
 					resetChunk(i);
-					tor.updateFilePercentage(i,bitset);
+					tor.updateFilePercentage(i,*this);
 					saveIndexFile();
 					recalc_chunks_left = true;
 					corrupted_count++;
@@ -380,7 +371,7 @@ namespace bt
 		bitset.set(i,false);
 		todo.set(i,!excluded_chunks.get(i) && !only_seed_chunks.get(i));
 		loaded.remove(i);
-		tor.updateFilePercentage(i,bitset);
+		tor.updateFilePercentage(i,*this);
 	}
 	
 	void ChunkManager::checkMemoryUsage()
@@ -428,7 +419,7 @@ namespace bt
 				todo.set(i,false);
 				recalc_chunks_left = true;
 				writeIndexFileEntry(c);
-				tor.updateFilePercentage(i,bitset);
+				tor.updateFilePercentage(i,*this);
 			}
 		}
 		else
@@ -1054,7 +1045,7 @@ namespace bt
 				todo.set(i,false);
 				// the chunk must be on disk
 				c->setStatus(Chunk::ON_DISK);
-				tor.updateFilePercentage(i,bitset); 
+				tor.updateFilePercentage(i,*this); 
 			}
 			else if (!ok_chunks.get(i) && bitset.get(i))
 			{
@@ -1065,7 +1056,7 @@ namespace bt
 				if (c->getStatus() == Chunk::ON_DISK)
 				{
 					c->setStatus(Chunk::NOT_DOWNLOADED);
-					tor.updateFilePercentage(i,bitset);
+					tor.updateFilePercentage(i,*this);
 				}
 				else if (c->getStatus() == Chunk::MMAPPED || c->getStatus() == Chunk::BUFFERED)
 				{
@@ -1073,7 +1064,7 @@ namespace bt
 				}
 				else
 				{
-					tor.updateFilePercentage(i,bitset);
+					tor.updateFilePercentage(i,*this);
 				}
 			}
 		}
@@ -1161,14 +1152,13 @@ namespace bt
 		return cache->diskUsage();
 	}
 	
-	void ChunkManager::doPreviewPriority(TorrentFile & file)
+	Uint32 ChunkManager::previewChunkRangeSize(const TorrentFile & file) const
 	{
+		if (!file.isMultimedia())
+			return 0;
+		
 		if (file.getFirstChunk() == file.getLastChunk())
-		{
-			// prioritise whole file 
-			prioritise(file.getFirstChunk(),file.getLastChunk(),PREVIEW_PRIORITY);
-			return;
-		}
+			return 1;
 		
 		Uint32 preview_size = 0;
 		if (file.isVideo())
@@ -1179,7 +1169,39 @@ namespace bt
 		Uint32 nchunks = preview_size / tor.getChunkSize();
 		if (nchunks == 0)
 			nchunks = 1;
-			
+		
+		return nchunks;
+	}
+		
+	
+	Uint32 ChunkManager::previewChunkRangeSize() const
+	{
+		KMimeType::Ptr ptr = KMimeType::findByPath(tor.getNameSuggestion());
+		Uint32 preview_size = 0;
+		if (ptr->name().startsWith("video"))
+			preview_size = preview_size_video;
+		else
+			preview_size = preview_size_audio;
+				
+		Uint32 nchunks = preview_size / tor.getChunkSize();
+		if (nchunks == 0)
+			nchunks = 1;
+		return nchunks;
+	}
+	
+	void ChunkManager::doPreviewPriority(TorrentFile & file)
+	{
+		if (file.getFirstChunk() == file.getLastChunk())
+		{
+			// prioritise whole file 
+			prioritise(file.getFirstChunk(),file.getLastChunk(),PREVIEW_PRIORITY);
+			return;
+		}
+		
+		Uint32 nchunks = previewChunkRangeSize(file);
+		if (!nchunks)
+			return;
+		
 		prioritise(file.getFirstChunk(), file.getFirstChunk()+nchunks, PREVIEW_PRIORITY);
 		if (file.getLastChunk() - file.getFirstChunk() > nchunks)
 		{

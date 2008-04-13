@@ -337,6 +337,12 @@ namespace bt
 
 		/// Get the current disk usage of all the files in this torrent
 		Uint64 diskUsage();
+		
+		/// Get the size in chunks of the preview range of a file of the torrent
+		Uint32 previewChunkRangeSize(const TorrentFile & tf) const;
+		
+		/// Get the size in chunks of the preview range for a single file torrent
+		Uint32 previewChunkRangeSize() const;
 	signals:
 		/**
 		 * Emitted when a range of chunks has been excluded

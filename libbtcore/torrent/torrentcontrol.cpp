@@ -1159,14 +1159,18 @@ namespace bt
 		}
 	}
 
-	bool TorrentControl::readyForPreview(int start_chunk, int end_chunk)
+	bool TorrentControl::readyForPreview() const
 	{
-		if ( !tor->isMultimedia() && !tor->isMultiFile()) return false;
+		if (tor->isMultiFile() || !tor->isMultimedia()) 
+			return false;
 
+		Uint32 preview_range = cman->previewChunkRangeSize();
+		
 		const BitSet & bs = downloadedChunksBitSet();
-		for(int i = start_chunk; i<end_chunk; ++i)
+		for (Uint32 i = 0; i < preview_range; i++)
 		{
-			if ( !bs.get(i) ) return false;
+			if ( !bs.get(i) ) 
+				return false;
 		}
 		return true;
 	}
