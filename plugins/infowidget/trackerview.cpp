@@ -85,6 +85,15 @@ namespace kt
 			return;
 		}
 			
+		// check for dupes
+		for (int i = 0;i < m_tracker_list->count();i++)
+		{
+			if (m_tracker_list->item(i)->text() == m_tracker_to_add->text())
+			{
+				KMessageBox::sorry(0,i18n("There already is a tracker named <b>%1</b> !",m_tracker_to_add->text()));
+				return;
+			}
+		}
 		m_tracker_list->addItem(m_tracker_to_add->text());
 		tc->getTrackersList()->addTracker(url,true);
 		m_tracker_to_add->clear();
