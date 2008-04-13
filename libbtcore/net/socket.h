@@ -67,6 +67,12 @@ namespace net
 		
 		
 		Uint32 bytesAvailable() const;
+		
+		/**
+		 * Set the remote address, used by Socks to set the actual address.
+		 * @param addr The address
+		 */
+		void setRemoteAddress(const Address & a) {addr = a;}
 	private:
 		void cacheAddress();
 		

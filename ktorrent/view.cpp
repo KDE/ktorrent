@@ -98,6 +98,7 @@ namespace kt
 	{
 		group = g;
 		update();
+		selectionModel()->clear();
 	}
 
 	bool View::update()

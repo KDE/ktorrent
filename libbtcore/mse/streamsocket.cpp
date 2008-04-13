@@ -321,6 +321,11 @@ namespace mse
 		sock->setGroupID(up,true);
 		sock->setGroupID(down,false);
 	}
+	
+	void StreamSocket::setRemoteAddress(const net::Address & addr)
+	{
+		sock->setRemoteAddress(addr);
+	}
 }
 
 #include "streamsocket.moc"
