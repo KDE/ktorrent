@@ -401,7 +401,7 @@ namespace kt
 				setDefaultResponseHeaders(rhdr,"text/html",true);
 				rhdr.setValue("Location",url.encodedPathAndQuery());
 				
-				hdlr->executePHPScript(php_gen,rhdr,WebInterfacePluginSettings::phpExecutablePath(),
+				hdlr->executePHPScript(php_gen,rhdr,WebInterfacePluginSettings::phpExecutablePath().path(),
 									   path,url.queryItems());
 			}
 			else
@@ -409,7 +409,7 @@ namespace kt
 				HttpResponseHeader rhdr(200);
 				setDefaultResponseHeaders(rhdr,"text/html",true);
 			
-				hdlr->executePHPScript(php_gen,rhdr,WebInterfacePluginSettings::phpExecutablePath(),
+				hdlr->executePHPScript(php_gen,rhdr,WebInterfacePluginSettings::phpExecutablePath().path(),
 								   path,url.queryItems());
 			}
 		}
