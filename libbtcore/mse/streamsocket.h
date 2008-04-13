@@ -162,6 +162,13 @@ namespace mse
 		 * Set the maximum number of connecting sockets we are allowed to have.
 		 */
 		static void setMaxConnecting(Uint32 mc) {max_connecting = mc;}
+		
+		/**
+		 * Set the remote address of the socket. Used by Socks to set the actual
+		 * address of the connection.
+		 * @param addr The address
+		 */
+		void setRemoteAddress(const net::Address & addr);
 	private:
 		virtual void onDataReady(Uint8* buf,Uint32 size);
 		virtual Uint32 onReadyToWrite(Uint8* data,Uint32 max_to_write);

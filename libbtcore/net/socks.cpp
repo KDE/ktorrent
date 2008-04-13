@@ -106,6 +106,7 @@ namespace net
 		else if (sock->connectTo(dest.ipVersion() == 4 ? socks_server_addr_v4 : socks_server_addr_v6))
 		{
 			state = CONNECTING_TO_HOST;
+			sock->setRemoteAddress(dest);
 			return sendAuthRequest();
 		}
 		else if (sock->connecting())
@@ -124,6 +125,7 @@ namespace net
 		if (sock->connectSuccesFull())
 		{
 			state = CONNECTING_TO_HOST;
+			sock->setRemoteAddress(dest);
 			return sendAuthRequest();
 		}
 		else

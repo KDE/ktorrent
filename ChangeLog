@@ -11,6 +11,8 @@ Changes in 3.0.2 :
 - Remove torrentspy and update piratebay URL
 - Fix 4 GB limit in transfer of statusbar (160711)
 - Fix crash when removing 2 torrents at the same time
+- Show real IP address of peers when using socks proxies
+- Make sure that the current torrent changes when the group is changed of a view
 
 Changes in 3.0.1 :
 - Fix sessionTTL not being able to be bigger then 99
