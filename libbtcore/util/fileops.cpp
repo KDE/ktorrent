@@ -145,17 +145,7 @@ namespace bt
 
 	bool Exists(const QString & url)
 	{
-	//	Out() << "Testing if " << url << " exists " << endl;
-		if (access(QFile::encodeName(url),F_OK) < 0)
-		{
-	//		Out() << "No " << endl;
-			return false;
-		}
-		else
-		{
-	//		Out() << "Yes " << endl;
-			return true;
-		}
+		return QFile::exists(url);
 	}
 	
 	static bool DelDir(const QString & fn)

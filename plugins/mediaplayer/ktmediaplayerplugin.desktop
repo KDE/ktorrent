@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=MediaPlayerPlugin
+Comment=Phonon based media player plugin for KTorrent
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktmediaplayerplugin
+X-KDE-PluginInfo-Author=Joris Guisson
+X-KDE-PluginInfo-Email=joris.guisson@gmail.com
+X-KDE-PluginInfo-Name=MediaPlayerPlugin
+X-KDE-PluginInfo-Website=http://ktorrent.org/
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=false
+Icon=applications-multimedia

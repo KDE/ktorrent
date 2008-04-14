@@ -17,4 +17,5 @@ macro_kt_plugin(ENABLE_SCANFOLDER_PLUGIN scanfolder scanfolder)
 macro_kt_plugin(ENABLE_IPFILTER_PLUGIN ipfilter ipfilter)
 macro_kt_plugin(ENABLE_STATS_PLUGIN stats stats)
 macro_kt_plugin(ENABLE_BWSCHEDULER_PLUGIN bwscheduler bwscheduler)
+macro_kt_plugin(ENABLE_MEDIAPLAYER_PLUGIN mediaplayer mediaplayer)
 

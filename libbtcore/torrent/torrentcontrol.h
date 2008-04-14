@@ -196,6 +196,7 @@ namespace bt
 		virtual bool addWebSeed(const KUrl & url);
 		virtual bool removeWebSeed(const KUrl & url);
 		virtual bool readyForPreview() const;
+		virtual bool isMultimedia() const;
 		
 		int getPriority() const { return istats.priority; }
 		void setPriority(int p);

@@ -1,0 +1,18 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<kpartgui library="libktmediaplayerplugin" name="mediaplayerplugin" version="1">
+<Menu name="MediaPlayerMenu"><text>Media Player Menu</text>
+	<Action name="media_play"/>
+	<Action name="media_pause"/>
+	<Action name="media_stop"/>
+	<Action name="media_next"/>
+	<Action name="media_prev"/>
+</Menu>
+
+<!--<ToolBar name="MediaPlayerToolBar"><text>Media Player Toolbar</text>
+	<Action name="media_play"/>
+	<Action name="media_pause"/>
+	<Action name="media_stop"/>
+	<Action name="media_next"/>
+	<Action name="media_prev"/>
+</ToolBar> -->
+</kpartgui>

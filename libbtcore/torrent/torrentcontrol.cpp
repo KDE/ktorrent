@@ -1174,6 +1174,11 @@ namespace bt
 		}
 		return true;
 	}
+	
+	bool TorrentControl::isMultimedia() const
+	{
+		return !tor->isMultiFile() && tor->isMultimedia();
+	}
 
 	Uint32 TorrentControl::getTimeToNextTrackerUpdate() const
 	{

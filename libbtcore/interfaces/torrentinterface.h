@@ -224,6 +224,9 @@ namespace bt
 		 * @return true if it is
 		 **/
 		virtual bool readyForPreview() const = 0;
+		
+		/// See if this is a single file torrent and a multimedia files
+		virtual bool isMultimedia() const = 0;
 
 		/**
 		 * Get the torX directory of this torrent. Temporary stuff like the index
