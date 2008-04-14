@@ -151,5 +151,10 @@ namespace kt
 		
 		media->seek(val);
 	}
+	
+	QString AudioPlayer::getCurrentSource() const
+	{
+		return media->currentSource().fileName();
+	}
 
 }

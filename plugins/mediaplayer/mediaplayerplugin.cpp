@@ -166,15 +166,13 @@ namespace kt
 		stop_action->setEnabled(flags & kt::MEDIA_STOP);
 		
 		play_action->setEnabled(false);
-		if (flags & kt::MEDIA_PLAY)
+		
+		QModelIndex idx = media_view->selectedItem();
+		if (idx.isValid())
 		{
-			QModelIndex idx = media_view->selectedItem();
-			if (idx.isValid())
-			{
-				QString path = media_model->pathForIndex(idx);
-				if (bt::Exists(path))
-					play_action->setEnabled(true);
-			}
+			QString path = media_model->pathForIndex(idx);
+			if (bt::Exists(path))
+				play_action->setEnabled((flags & kt::MEDIA_PLAY) || path != audio_player->getCurrentSource());
 		}
 		
 		action_flags = flags;
@@ -182,11 +180,11 @@ namespace kt
 	
 	void MediaPlayerPlugin::onSelectionChanged(const QModelIndex & idx)
 	{
-		if ((action_flags & kt::MEDIA_PLAY) && idx.isValid())
+		if (idx.isValid())
 		{
 			QString path = media_model->pathForIndex(idx);
 			if (bt::Exists(path))
-				play_action->setEnabled(true);
+				play_action->setEnabled((action_flags & kt::MEDIA_PLAY) || path != audio_player->getCurrentSource());
 			
 		}
 	}

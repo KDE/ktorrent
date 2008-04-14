@@ -60,6 +60,9 @@ namespace kt
 		
 		/// Stop playing
 		void stop();
+		
+		/// Get the current file we are playing
+		QString getCurrentSource() const;
 	private slots:
 		void onStateChanged(Phonon::State cur,Phonon::State old);
 		void onTimerTick(qint64 t);
