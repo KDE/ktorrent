@@ -102,7 +102,7 @@ namespace kt
 		
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),media_model,SLOT(onTorrentAdded(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),media_model,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
-		connect(audio_player,SIGNAL(enableActions(int)),this,SLOT(enableActions(int)));
+		connect(audio_player,SIGNAL(enableActions(unsigned int)),this,SLOT(enableActions(unsigned int)));
 		connect(media_view,SIGNAL(selectionChanged(const QModelIndex &)),this,SLOT(onSelectionChanged(const QModelIndex&)));
 	
 		setupActions();
@@ -154,13 +154,14 @@ namespace kt
 	
 	void MediaPlayerPlugin::prev()
 	{
+		audio_player->prev();
 	}
 	
 	void MediaPlayerPlugin::next()
 	{
 	}
 	
-	void MediaPlayerPlugin::enableActions(int flags)
+	void MediaPlayerPlugin::enableActions(unsigned int flags)
 	{
 		pause_action->setEnabled(flags & kt::MEDIA_PAUSE);
 		stop_action->setEnabled(flags & kt::MEDIA_STOP);
@@ -174,6 +175,7 @@ namespace kt
 			if (bt::Exists(path))
 				play_action->setEnabled((flags & kt::MEDIA_PLAY) || path != audio_player->getCurrentSource());
 		}
+		prev_action->setEnabled(flags & kt::MEDIA_PREV);
 		
 		action_flags = flags;
 	}

@@ -59,6 +59,7 @@ namespace kt
 		{
 			media->setCurrentSource(file);
 			media->play();
+			history.append(file);
 		}
 	}
 		
@@ -77,8 +78,29 @@ namespace kt
 		}
 	}
 	
+	void AudioPlayer::prev()
+	{
+		if (media->state() == Phonon::PausedState || media->state() == Phonon::PlayingState)
+		{
+			if (history.count() >= 2)
+			{
+				history.pop_back(); // remove the currently playing file
+				QString file = history.back();
+				media->setCurrentSource(file);
+				media->play();
+			}
+		}
+		else if (history.count() > 0)
+		{
+			QString file = history.back();
+			media->setCurrentSource(file);
+			media->play();
+		}
+	}
+	
 	void AudioPlayer::onStateChanged(Phonon::State cur, Phonon::State)
 	{
+		unsigned int flags = 0;
 		switch (cur)
 		{
 			case Phonon::LoadingState:
@@ -86,37 +108,58 @@ namespace kt
 				break;
 			case Phonon::StoppedState:
 				Out(SYS_GEN|LOG_DEBUG) << "AudioPlayer: stopped" << endl;
-				enableActions(MEDIA_PLAY);
+				flags = MEDIA_PLAY;
+				if (history.count() > 0)
+					flags |= MEDIA_PREV;
+				
 				if (slider)
 				{
 					slider->setDisabled(true);
 					slider->setValue(0);
 				}
+				
+				enableActions(flags);
 				break;
 			case Phonon::PlayingState:
 				Out(SYS_GEN|LOG_DEBUG) << "AudioPlayer: playing" << endl;
-				enableActions(MEDIA_PAUSE|MEDIA_STOP);
+				flags = MEDIA_PAUSE|MEDIA_STOP;
+				if (history.count() > 1)
+					flags |= MEDIA_PREV;
+				
 				if (slider)
 				{
 					slider->setEnabled(true);
 					slider->setRange(0,media->totalTime());
 					slider->setValue(media->currentTime());
 				}
+				
+				enableActions(flags);
 				break;
 			case Phonon::BufferingState:
 				Out(SYS_GEN|LOG_DEBUG) << "AudioPlayer: buffering" << endl;
 				break; 
 			case Phonon::PausedState:
 				Out(SYS_GEN|LOG_DEBUG) << "AudioPlayer: paused" << endl;
-				enableActions(MEDIA_PLAY|MEDIA_STOP);
+				flags = MEDIA_PLAY|MEDIA_STOP;
+				if (history.count() > 1)
+					flags |= MEDIA_PREV;
+				
+				enableActions(flags);
 				break;
 			case Phonon::ErrorState:
 				Out(SYS_GEN|LOG_DEBUG) << "AudioPlayer: error " << media->errorString() << endl;
-				enableActions(MEDIA_PLAY);
+				flags = MEDIA_PLAY;
+				if (history.count() > 0)
+					flags |= MEDIA_PREV;
+				
 				if (slider)
 					slider->setDisabled(true);
+				
+				enableActions(flags);
 				break;
 		}
+		
+		
 	}
 	
 	void AudioPlayer::onTimerTick(qint64 t)

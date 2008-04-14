@@ -54,7 +54,7 @@ namespace kt
 		void stop();
 		void prev();
 		void next();
-		void enableActions(int flags);
+		void enableActions(unsigned int flags);
 		void onSelectionChanged(const QModelIndex & idx);
 		
 	private:

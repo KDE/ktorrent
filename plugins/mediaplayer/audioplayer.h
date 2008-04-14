@@ -35,7 +35,7 @@ namespace kt
 {
 	enum ActionFlags
 	{
-		MEDIA_PLAY = 1,MEDIA_PAUSE = 2,MEDIA_STOP = 4
+		MEDIA_PLAY = 1,MEDIA_PAUSE = 2,MEDIA_STOP = 4,MEDIA_PREV = 8,MEDIA_NEXT = 16
 	};
 
 	/**
@@ -63,18 +63,22 @@ namespace kt
 		
 		/// Get the current file we are playing
 		QString getCurrentSource() const;
+		
+		/// Play the previous song
+		void prev();
 	private slots:
 		void onStateChanged(Phonon::State cur,Phonon::State old);
 		void onTimerTick(qint64 t);
 		void seek(int val);
 		
 	signals:
-		void enableActions(int flags);
+		void enableActions(unsigned int flags);
 
 	private:
 		Phonon::MediaObject* media;
 		Phonon::AudioOutput* audio;
 		QSlider* slider;
+		QStringList history;
 	};
 
 }
