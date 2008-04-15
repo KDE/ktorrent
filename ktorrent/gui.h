@@ -71,6 +71,8 @@ namespace kt
 		virtual void infoMsg(const QString & info);
 		virtual void currentTabPageChanged(QWidget* page);
 		virtual StatusBarInterface* getStatusBar();
+		virtual void setTabIcon(QWidget* tab,const QString & icon);
+		virtual void setTabText(QWidget* tab,const QString & text);
 
 		/// load a torrent
 		void load(const KUrl & url);

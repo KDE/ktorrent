@@ -18,51 +18,47 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTMEDIAVIEW_H
-#define KTMEDIAVIEW_H
-
-#include <QTreeView>
-#include <QToolBar>
+#include <QHBoxLayout>
+#include <Phonon/Path>
+#include <Phonon/AudioOutput>
+#include <Phonon/Global>
 #include <Phonon/SeekSlider>
 #include <Phonon/VolumeSlider>
-
-class QItemSelection;
+#include "videowidget.h"
 
 namespace kt
 {
-	class MediaModel;
-	class AudioPlayer;
 
-	/**
-		@author
-	*/
-	class MediaView : public QWidget
+	VideoWidget::VideoWidget(Phonon::MediaObject* media,QWidget* parent)
+			: QWidget(parent),media(media)
 	{
-		Q_OBJECT
-	public:
-		MediaView(AudioPlayer* player,MediaModel* model,QWidget* parent);
-		virtual ~MediaView();
-		
-		/// Get the media tool bar
-		QToolBar* mediaToolBar() {return tool_bar;}
-		
-		/// Get the current selected item
-		QModelIndex selectedItem() const;
-		
-	private slots:
-		void onSelectionChanged(const QItemSelection & s, const QItemSelection & d);
-		
-	signals:
-		void selectionChanged(const QModelIndex & idx);
+		QHBoxLayout* layout = new QHBoxLayout(this);
+		layout->setMargin(0);
+		layout->setSpacing(0);
+		video = new Phonon::VideoWidget(this);
+		layout->addWidget(video);
+	
+		Phonon::createPath(media,video);
+	}
 
-	private:
-		AudioPlayer* player;
-		QToolBar* tool_bar;
-		QTreeView* media_tree;
-		Phonon::VolumeSlider* volume;
-		Phonon::SeekSlider* play_slider;
-	};
+
+	VideoWidget::~VideoWidget()
+	{
+	}
+
+	void VideoWidget::play()
+	{
+		media->play();
+	}
+	
+	void VideoWidget::pause()
+	{
+		media->pause();
+	}
+	
+	void VideoWidget::stop()
+	{
+		media->stop();
+	}
 
 }
-
-#endif

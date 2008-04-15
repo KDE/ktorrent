@@ -240,7 +240,7 @@ namespace kt
 				return QString();
 			
 			bt::TorrentInterface* tc = items.at(r)->tc;
-			if (tc->getStats().multi_file_torrent)
+			if (!tc->getStats().multi_file_torrent)
 				return tc->getStats().output_path;
 			else
 				return QString(); // we can't play directories

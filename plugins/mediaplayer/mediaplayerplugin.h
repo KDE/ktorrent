@@ -22,20 +22,27 @@
 #define KTMEDIAPLAYERPLUGIN_H
 
 #include <interfaces/plugin.h>
+#include <interfaces/guiinterface.h>
 
 class KAction;
 class QModelIndex;
+
+namespace Phonon
+{
+	class MediaObject;
+}
 
 namespace kt
 {
 	class MediaView;
 	class MediaModel;
 	class AudioPlayer;
+	class VideoWidget;
 
 	/**
 		@author
 	*/
-	class MediaPlayerPlugin : public Plugin
+	class MediaPlayerPlugin : public Plugin,public CloseTabListener
 	{
 		Q_OBJECT
 	public:
@@ -47,6 +54,7 @@ namespace kt
 		virtual bool versionCheck(const QString& version) const;
 	private:
 		void setupActions();
+		virtual void tabCloseRequest(kt::GUIInterface* gui,QWidget* tab);
 		
 	private slots:
 		void play();
@@ -56,6 +64,8 @@ namespace kt
 		void next();
 		void enableActions(unsigned int flags);
 		void onSelectionChanged(const QModelIndex & idx);
+		void openVideo(Phonon::MediaObject* obj);
+		void closeVideo();
 		
 	private:
 		MediaView* media_view;
@@ -67,6 +77,7 @@ namespace kt
 		KAction* prev_action;
 		KAction* next_action;
 		int action_flags;
+		VideoWidget* video;
 	};
 
 }

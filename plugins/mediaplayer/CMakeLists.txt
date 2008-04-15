@@ -1,4 +1,4 @@
-set(ktmediaplayerplugin_SRC mediaplayerplugin.cpp mediaview.cpp mediamodel.cpp audioplayer.cpp)
+set(ktmediaplayerplugin_SRC mediaplayerplugin.cpp mediaview.cpp mediamodel.cpp audioplayer.cpp videowidget.cpp)
 
 #kde4_add_ui_files(ktmediaplayerplugin_SRC mediaplayerpref.ui)
 #kde4_add_kcfg_files(ktmediaplayerplugin_SRC mediaplayerpluginsettings.kcfgc)

@@ -217,6 +217,20 @@ namespace kt
 
 		/// Get the status bar
 		virtual StatusBarInterface* getStatusBar() = 0;
+		
+		/**
+		 * Set the icon of a tab
+		 * @param tab 
+		 * @param icon 
+		 */
+		virtual void setTabIcon(QWidget* tab,const QString & icon) = 0;
+		
+		/**
+		 * Set the text of a tab
+		 * @param tab 
+		 * @param icon 
+		 */
+		virtual void setTabText(QWidget* tab,const QString & text) = 0;
 
 	protected:
 		/**

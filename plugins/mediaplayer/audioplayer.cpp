@@ -32,7 +32,7 @@ namespace kt
 {
 
 	AudioPlayer::AudioPlayer(QObject* parent)
-			: QObject(parent),slider(0)
+			: QObject(parent)
 	{
 		media = new Phonon::MediaObject(this);
 		audio = new Phonon::AudioOutput(Phonon::MusicCategory, this);
@@ -40,7 +40,7 @@ namespace kt
 		
 		connect(media,SIGNAL(stateChanged(Phonon::State,Phonon::State)),
 				this,SLOT(onStateChanged(Phonon::State, Phonon::State)));
-		connect(media,SIGNAL(tick(qint64)),this,SLOT(onTimerTick(qint64)));
+		connect(media,SIGNAL(hasVideoChanged(bool)),this,SLOT(hasVideoChanged(bool)));
 		media->setTickInterval(1000);
 	}
 
@@ -71,11 +71,6 @@ namespace kt
 	void AudioPlayer::stop()
 	{
 		media->stop();
-		if (slider)
-		{
-			slider->setValue(0);
-			slider->setDisabled(true);
-		}
 	}
 	
 	void AudioPlayer::prev()
@@ -111,13 +106,7 @@ namespace kt
 				flags = MEDIA_PLAY;
 				if (history.count() > 0)
 					flags |= MEDIA_PREV;
-				
-				if (slider)
-				{
-					slider->setDisabled(true);
-					slider->setValue(0);
-				}
-				
+			
 				enableActions(flags);
 				break;
 			case Phonon::PlayingState:
@@ -125,13 +114,6 @@ namespace kt
 				flags = MEDIA_PAUSE|MEDIA_STOP;
 				if (history.count() > 1)
 					flags |= MEDIA_PREV;
-				
-				if (slider)
-				{
-					slider->setEnabled(true);
-					slider->setRange(0,media->totalTime());
-					slider->setValue(media->currentTime());
-				}
 				
 				enableActions(flags);
 				break;
@@ -151,10 +133,7 @@ namespace kt
 				flags = MEDIA_PLAY;
 				if (history.count() > 0)
 					flags |= MEDIA_PREV;
-				
-				if (slider)
-					slider->setDisabled(true);
-				
+		
 				enableActions(flags);
 				break;
 		}
@@ -162,42 +141,16 @@ namespace kt
 		
 	}
 	
-	void AudioPlayer::onTimerTick(qint64 t)
-	{
-		if (slider)
-			slider->setValue(t);
-	}
-	
-	void AudioPlayer::setSlider(QSlider* s)
-	{
-		if (slider)
-			disconnect(slider,SIGNAL(sliderMoved(int)),this,SLOT(seek(int)));
-		
-		slider = s;
-		if (slider)
-		{
-			connect(slider,SIGNAL(sliderMoved(int)),this,SLOT(seek(int)));
-			slider->setDisabled(true);
-			if (media->state() == Phonon::PlayingState)
-			{
-				slider->setEnabled(true);
-				slider->setRange(0,media->totalTime());
-				slider->setValue(media->currentTime());
-			}
-		}
-	}
-	
-	void AudioPlayer::seek(int val)
-	{
-		if (media->state() != Phonon::PlayingState || !media->isSeekable())
-			return;
-		
-		media->seek(val);
-	}
-	
 	QString AudioPlayer::getCurrentSource() const
 	{
 		return media->currentSource().fileName();
 	}
 
+	void AudioPlayer::hasVideoChanged(bool hasVideo)
+	{
+		if (hasVideo)
+			openVideo(media);
+		else
+			closeVideo();
+	}
 }

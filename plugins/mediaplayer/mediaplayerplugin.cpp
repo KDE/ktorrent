@@ -26,12 +26,14 @@
 
 #include <util/log.h>
 #include <util/fileops.h>
+#include <util/functions.h>
 #include <interfaces/guiinterface.h>
 #include <interfaces/coreinterface.h>
 #include "mediaplayerplugin.h"
 #include "mediaview.h"
 #include "mediamodel.h"
 #include "audioplayer.h"
+#include "videowidget.h"
 
 #define NAME "MediaPlayer"
 #define AUTHOR "Joris Guisson"
@@ -52,6 +54,7 @@ namespace kt
 		audio_player = 0;
 		action_flags = 0;
 		play_action = pause_action = stop_action = prev_action = next_action = 0;
+		video = 0;
 	}
 
 
@@ -103,15 +106,19 @@ namespace kt
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),media_model,SLOT(onTorrentAdded(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),media_model,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
 		connect(audio_player,SIGNAL(enableActions(unsigned int)),this,SLOT(enableActions(unsigned int)));
+		connect(audio_player,SIGNAL(openVideo(Phonon::MediaObject*)),this,SLOT(openVideo(Phonon::MediaObject*)));
+		connect(audio_player,SIGNAL(closeVideo()),this,SLOT(closeVideo()));
 		connect(media_view,SIGNAL(selectionChanged(const QModelIndex &)),this,SLOT(onSelectionChanged(const QModelIndex&)));
 	
 		setupActions();
 		setXMLFile("ktmediaplayerpluginui.rc");
-		enableActions(kt::MEDIA_PLAY);
+		enableActions(0);
 	}
 	
 	void MediaPlayerPlugin::unload()
 	{
+		closeVideo();
+		
 		getGUI()->removeToolWidget(media_view);
 		delete media_view;
 		media_view = 0;
@@ -126,13 +133,39 @@ namespace kt
 		return version == KT_VERSION_MACRO;
 	}
 	
+	void MediaPlayerPlugin::openVideo(Phonon::MediaObject* obj)
+	{
+		QString path = obj->currentSource().fileName();
+		int idx = path.lastIndexOf(bt::DirSeparator());
+		if (idx >= 0)
+			path = path.mid(idx+1);
+		
+		if (video)
+		{
+			getGUI()->setTabText(video,path);
+		}
+		else
+		{
+			video = new VideoWidget(obj,0);
+			getGUI()->addTabPage(video,"video-x-generic",path,this);
+		}
+	}
+	
+	void MediaPlayerPlugin::closeVideo()
+	{
+		if (video)
+		{
+			getGUI()->removeTabPage(video);
+			delete video;
+			video = 0;
+		}
+	}
+	
 	void MediaPlayerPlugin::play()
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "MediaPlayerPlugin::play " << endl;
 		QModelIndex idx = media_view->selectedItem();
 		if (idx.isValid())
 		{
-			Out(SYS_GEN|LOG_DEBUG) << "MediaPlayerPlugin::play " << idx.row() << endl;
 			QString path = media_model->pathForIndex(idx);
 			if (bt::Exists(path))
 			{
@@ -174,7 +207,12 @@ namespace kt
 			QString path = media_model->pathForIndex(idx);
 			if (bt::Exists(path))
 				play_action->setEnabled((flags & kt::MEDIA_PLAY) || path != audio_player->getCurrentSource());
+			else
+				play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
 		}
+		else
+			play_action->setEnabled(flags & kt::MEDIA_PLAY);
+		
 		prev_action->setEnabled(flags & kt::MEDIA_PREV);
 		
 		action_flags = flags;
@@ -187,7 +225,20 @@ namespace kt
 			QString path = media_model->pathForIndex(idx);
 			if (bt::Exists(path))
 				play_action->setEnabled((action_flags & kt::MEDIA_PLAY) || path != audio_player->getCurrentSource());
-			
+			else
+				play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
 		}
+		else
+			play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
+	}
+	
+	void MediaPlayerPlugin::tabCloseRequest(kt::GUIInterface* gui,QWidget* tab)
+	{
+		if (video != tab)
+			return;
+		
+		gui->removeTabPage(video);
+		delete video;
+		video = 0;
 	}
 }

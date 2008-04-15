@@ -18,49 +18,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTMEDIAVIEW_H
-#define KTMEDIAVIEW_H
+#ifndef KTVIDEOWIDGET_H
+#define KTVIDEOWIDGET_H
 
-#include <QTreeView>
-#include <QToolBar>
-#include <Phonon/SeekSlider>
-#include <Phonon/VolumeSlider>
+#include <QWidget>
+#include <Phonon/VideoWidget>
+#include <Phonon/MediaObject>
 
-class QItemSelection;
+
 
 namespace kt
 {
-	class MediaModel;
-	class AudioPlayer;
 
 	/**
 		@author
 	*/
-	class MediaView : public QWidget
+	class VideoWidget : public QWidget
 	{
 		Q_OBJECT
 	public:
-		MediaView(AudioPlayer* player,MediaModel* model,QWidget* parent);
-		virtual ~MediaView();
+		VideoWidget(Phonon::MediaObject* media,QWidget* parent);
+		virtual ~VideoWidget();
 		
-		/// Get the media tool bar
-		QToolBar* mediaToolBar() {return tool_bar;}
-		
-		/// Get the current selected item
-		QModelIndex selectedItem() const;
-		
-	private slots:
-		void onSelectionChanged(const QItemSelection & s, const QItemSelection & d);
-		
-	signals:
-		void selectionChanged(const QModelIndex & idx);
+	public slots:
+		void play();
+		void pause();
+		void stop();
 
 	private:
-		AudioPlayer* player;
-		QToolBar* tool_bar;
-		QTreeView* media_tree;
-		Phonon::VolumeSlider* volume;
-		Phonon::SeekSlider* play_slider;
+		Phonon::VideoWidget* video;
+		Phonon::MediaObject* media;
 	};
 
 }

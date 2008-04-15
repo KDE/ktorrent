@@ -20,6 +20,7 @@
  ***************************************************************************/
 #include <QHeaderView>
 #include <QVBoxLayout>
+#include <ktoolbar.h>
 #include "mediaview.h"
 #include "mediamodel.h"
 #include "audioplayer.h"
@@ -34,10 +35,12 @@ namespace kt
 		layout->setSpacing(0);
 		layout->setMargin(0);
 		
-		tool_bar = new QToolBar(this);
+		tool_bar = new KToolBar(this);
+		tool_bar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		layout->addWidget(tool_bar);
 		
-		play_slider = new QSlider(Qt::Horizontal,this);
+		play_slider = new Phonon::SeekSlider(this);
+		play_slider->setMediaObject(player->media0bject());
 		layout->addWidget(play_slider);
 		
 		media_tree = new QTreeView(this);
@@ -51,8 +54,6 @@ namespace kt
 		
 		connect(media_tree->selectionModel(),SIGNAL(selectionChanged(const QItemSelection & , const QItemSelection & )),
 				this,SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection&)));
-		
-		player->setSlider(play_slider);
 	}
 
 

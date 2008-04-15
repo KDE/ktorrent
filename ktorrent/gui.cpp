@@ -702,6 +702,16 @@ namespace kt
 	{
 		KNotifyConfigWidget::configure( this );
 	}
+	
+	void GUI::setTabIcon(QWidget* tab,const QString & icon)
+	{
+		changeTabIcon(tab,icon);
+	}
+	
+	void GUI::setTabText(QWidget* tab,const QString & text)
+	{
+		changeTabText(tab,text);
+	}
 }
 
 #include "gui.moc"

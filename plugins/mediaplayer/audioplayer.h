@@ -22,12 +22,12 @@
 #define KTAUDIOPLAYER_H
 
 #include <QObject>
-#include <QSlider>
+#include <QStringList>
 #include <Phonon/MediaObject>
 
 namespace Phonon
 {
-	class AudioOutput;;
+	class AudioOutput;
 }
 
 
@@ -49,8 +49,7 @@ namespace kt
 		virtual ~AudioPlayer();
 		
 		Phonon::AudioOutput* output() {return audio;}
-		
-		void setSlider(QSlider* s);
+		Phonon::MediaObject* media0bject() {return media;}
 		
 		/// Play a file
 		void play(const QString & file);
@@ -68,17 +67,31 @@ namespace kt
 		void prev();
 	private slots:
 		void onStateChanged(Phonon::State cur,Phonon::State old);
-		void onTimerTick(qint64 t);
-		void seek(int val);
+		void hasVideoChanged(bool hasVideo);
 		
 	signals:
+		/**
+		 * Emitted to enable or disable the play buttons.
+		 * @param flags Flags indicating which buttons to enable
+		 */
 		void enableActions(unsigned int flags);
+		
+		/**
+		 * A video has been detected, create the video player window.
+		 * @param media 
+		 */
+		void openVideo(Phonon::MediaObject* media);
+		
+		/**
+		 * Emitted when the video widget needs to be closed.
+		 */
+		void closeVideo();
 
 	private:
 		Phonon::MediaObject* media;
 		Phonon::AudioOutput* audio;
-		QSlider* slider;
 		QStringList history;
+		
 	};
 
 }
