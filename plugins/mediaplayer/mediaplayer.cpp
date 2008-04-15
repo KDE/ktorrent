@@ -24,14 +24,14 @@
 #include <Phonon/Global>
 
 #include <util/log.h>
-#include "audioplayer.h"
+#include "mediaplayer.h"
 
 using namespace bt;
 
 namespace kt
 {
 
-	AudioPlayer::AudioPlayer(QObject* parent)
+	MediaPlayer::MediaPlayer(QObject* parent)
 			: QObject(parent)
 	{
 		media = new Phonon::MediaObject(this);
@@ -45,11 +45,12 @@ namespace kt
 	}
 
 
-	AudioPlayer::~AudioPlayer()
+	MediaPlayer::~MediaPlayer()
 	{
+		media->stop();
 	}
 
-	void AudioPlayer::play(const QString & file)
+	void MediaPlayer::play(const QString & file)
 	{
 		if (media->state() == Phonon::PausedState)
 		{
@@ -63,17 +64,17 @@ namespace kt
 		}
 	}
 		
-	void AudioPlayer::pause()
+	void MediaPlayer::pause()
 	{
 		media->pause();
 	}
 		
-	void AudioPlayer::stop()
+	void MediaPlayer::stop()
 	{
 		media->stop();
 	}
 	
-	void AudioPlayer::prev()
+	void MediaPlayer::prev()
 	{
 		if (media->state() == Phonon::PausedState || media->state() == Phonon::PlayingState)
 		{
@@ -93,16 +94,16 @@ namespace kt
 		}
 	}
 	
-	void AudioPlayer::onStateChanged(Phonon::State cur, Phonon::State)
+	void MediaPlayer::onStateChanged(Phonon::State cur, Phonon::State)
 	{
 		unsigned int flags = 0;
 		switch (cur)
 		{
 			case Phonon::LoadingState:
-				Out(SYS_GEN|LOG_DEBUG) << "AudioPlayer: loading" << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: loading" << endl;
 				break;
 			case Phonon::StoppedState:
-				Out(SYS_GEN|LOG_DEBUG) << "AudioPlayer: stopped" << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: stopped" << endl;
 				flags = MEDIA_PLAY;
 				if (history.count() > 0)
 					flags |= MEDIA_PREV;
@@ -110,7 +111,7 @@ namespace kt
 				enableActions(flags);
 				break;
 			case Phonon::PlayingState:
-				Out(SYS_GEN|LOG_DEBUG) << "AudioPlayer: playing" << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: playing" << endl;
 				flags = MEDIA_PAUSE|MEDIA_STOP;
 				if (history.count() > 1)
 					flags |= MEDIA_PREV;
@@ -118,10 +119,10 @@ namespace kt
 				enableActions(flags);
 				break;
 			case Phonon::BufferingState:
-				Out(SYS_GEN|LOG_DEBUG) << "AudioPlayer: buffering" << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: buffering" << endl;
 				break; 
 			case Phonon::PausedState:
-				Out(SYS_GEN|LOG_DEBUG) << "AudioPlayer: paused" << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: paused" << endl;
 				flags = MEDIA_PLAY|MEDIA_STOP;
 				if (history.count() > 1)
 					flags |= MEDIA_PREV;
@@ -129,7 +130,7 @@ namespace kt
 				enableActions(flags);
 				break;
 			case Phonon::ErrorState:
-				Out(SYS_GEN|LOG_DEBUG) << "AudioPlayer: error " << media->errorString() << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: error " << media->errorString() << endl;
 				flags = MEDIA_PLAY;
 				if (history.count() > 0)
 					flags |= MEDIA_PREV;
@@ -141,15 +142,15 @@ namespace kt
 		
 	}
 	
-	QString AudioPlayer::getCurrentSource() const
+	QString MediaPlayer::getCurrentSource() const
 	{
 		return media->currentSource().fileName();
 	}
 
-	void AudioPlayer::hasVideoChanged(bool hasVideo)
+	void MediaPlayer::hasVideoChanged(bool hasVideo)
 	{
 		if (hasVideo)
-			openVideo(media);
+			openVideo();
 		else
 			closeVideo();
 	}

@@ -36,7 +36,7 @@ namespace kt
 {
 	class MediaView;
 	class MediaModel;
-	class AudioPlayer;
+	class MediaPlayer;
 	class VideoWidget;
 
 	/**
@@ -64,13 +64,13 @@ namespace kt
 		void next();
 		void enableActions(unsigned int flags);
 		void onSelectionChanged(const QModelIndex & idx);
-		void openVideo(Phonon::MediaObject* obj);
+		void openVideo();
 		void closeVideo();
 		
 	private:
 		MediaView* media_view;
 		MediaModel* media_model;
-		AudioPlayer* audio_player;
+		MediaPlayer* media_player;
 		KAction* play_action;
 		KAction* pause_action;
 		KAction* stop_action;

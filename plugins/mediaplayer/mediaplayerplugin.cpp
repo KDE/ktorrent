@@ -32,7 +32,7 @@
 #include "mediaplayerplugin.h"
 #include "mediaview.h"
 #include "mediamodel.h"
-#include "audioplayer.h"
+#include "mediaplayer.h"
 #include "videowidget.h"
 
 #define NAME "MediaPlayer"
@@ -51,7 +51,7 @@ namespace kt
 	{
 		media_view = 0;
 		media_model = 0;
-		audio_player = 0;
+		media_player = 0;
 		action_flags = 0;
 		play_action = pause_action = stop_action = prev_action = next_action = 0;
 		video = 0;
@@ -98,16 +98,16 @@ namespace kt
 	{
 		CoreInterface* core = getCore();
 		media_model = new MediaModel(getCore(),this);
-		audio_player = new AudioPlayer(this);
-		media_view = new MediaView(audio_player,media_model,0);
+		media_player = new MediaPlayer(this);
+		media_view = new MediaView(media_player,media_model,0);
 	
 		getGUI()->addToolWidget(media_view,"applications-multimedia",i18n("Media Player"),GUIInterface::DOCK_LEFT);
 		
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),media_model,SLOT(onTorrentAdded(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),media_model,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
-		connect(audio_player,SIGNAL(enableActions(unsigned int)),this,SLOT(enableActions(unsigned int)));
-		connect(audio_player,SIGNAL(openVideo(Phonon::MediaObject*)),this,SLOT(openVideo(Phonon::MediaObject*)));
-		connect(audio_player,SIGNAL(closeVideo()),this,SLOT(closeVideo()));
+		connect(media_player,SIGNAL(enableActions(unsigned int)),this,SLOT(enableActions(unsigned int)));
+		connect(media_player,SIGNAL(openVideo()),this,SLOT(openVideo()));
+		connect(media_player,SIGNAL(closeVideo()),this,SLOT(closeVideo()));
 		connect(media_view,SIGNAL(selectionChanged(const QModelIndex &)),this,SLOT(onSelectionChanged(const QModelIndex&)));
 	
 		setupActions();
@@ -124,8 +124,8 @@ namespace kt
 		media_view = 0;
 		delete media_model;
 		media_model = 0;
-		delete audio_player;
-		audio_player = 0;
+		delete media_player;
+		media_player = 0;
 	}
 	
 	bool MediaPlayerPlugin::versionCheck(const QString& version) const
@@ -133,9 +133,9 @@ namespace kt
 		return version == KT_VERSION_MACRO;
 	}
 	
-	void MediaPlayerPlugin::openVideo(Phonon::MediaObject* obj)
+	void MediaPlayerPlugin::openVideo()
 	{
-		QString path = obj->currentSource().fileName();
+		QString path = media_player->media0bject()->currentSource().fileName();
 		int idx = path.lastIndexOf(bt::DirSeparator());
 		if (idx >= 0)
 			path = path.mid(idx+1);
@@ -146,7 +146,7 @@ namespace kt
 		}
 		else
 		{
-			video = new VideoWidget(obj,0);
+			video = new VideoWidget(media_player,0);
 			getGUI()->addTabPage(video,"video-x-generic",path,this);
 		}
 	}
@@ -170,24 +170,24 @@ namespace kt
 			if (bt::Exists(path))
 			{
 				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayerPlugin::play " << path << endl;
-				audio_player->play(path);
+				media_player->play(path);
 			}
 		}
 	}
 	
 	void MediaPlayerPlugin::pause()
 	{
-		audio_player->pause();
+		media_player->pause();
 	}
 	
 	void MediaPlayerPlugin::stop()
 	{
-		audio_player->stop();
+		media_player->stop();
 	}
 	
 	void MediaPlayerPlugin::prev()
 	{
-		audio_player->prev();
+		media_player->prev();
 	}
 	
 	void MediaPlayerPlugin::next()
@@ -206,7 +206,7 @@ namespace kt
 		{
 			QString path = media_model->pathForIndex(idx);
 			if (bt::Exists(path))
-				play_action->setEnabled((flags & kt::MEDIA_PLAY) || path != audio_player->getCurrentSource());
+				play_action->setEnabled((flags & kt::MEDIA_PLAY) || path != media_player->getCurrentSource());
 			else
 				play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
 		}
@@ -224,7 +224,7 @@ namespace kt
 		{
 			QString path = media_model->pathForIndex(idx);
 			if (bt::Exists(path))
-				play_action->setEnabled((action_flags & kt::MEDIA_PLAY) || path != audio_player->getCurrentSource());
+				play_action->setEnabled((action_flags & kt::MEDIA_PLAY) || path != media_player->getCurrentSource());
 			else
 				play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
 		}
@@ -237,6 +237,7 @@ namespace kt
 		if (video != tab)
 			return;
 		
+		stop();
 		gui->removeTabPage(video);
 		delete video;
 		video = 0;

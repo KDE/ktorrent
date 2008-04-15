@@ -18,27 +18,60 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <QAction>
+#include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <KToolBar>
+#include <KIcon>
+#include <KLocale>
 #include <Phonon/Path>
 #include <Phonon/AudioOutput>
 #include <Phonon/Global>
 #include <Phonon/SeekSlider>
 #include <Phonon/VolumeSlider>
 #include "videowidget.h"
+#include "mediaplayer.h"
 
 namespace kt
 {
 
-	VideoWidget::VideoWidget(Phonon::MediaObject* media,QWidget* parent)
-			: QWidget(parent),media(media)
+	VideoWidget::VideoWidget(MediaPlayer* player,QWidget* parent)
+			: QWidget(parent),player(player)
 	{
-		QHBoxLayout* layout = new QHBoxLayout(this);
-		layout->setMargin(0);
-		layout->setSpacing(0);
+		QVBoxLayout* vlayout = new QVBoxLayout(this);
+		vlayout->setMargin(0);
+		vlayout->setSpacing(0);
 		video = new Phonon::VideoWidget(this);
-		layout->addWidget(video);
+		vlayout->addWidget(video);
+		
+		QHBoxLayout* hlayout = new QHBoxLayout(0);
+		
+		tb = new KToolBar(this);
+		tb->setToolButtonStyle(Qt::ToolButtonIconOnly);
+		play_act = tb->addAction(KIcon("media-playback-start"),i18n("Play"),this,SLOT(play()));
+		pause_act = tb->addAction(KIcon("media-playback-pause"),i18n("Pause"),this,SLOT(pause()));
+		stop_act = tb->addAction(KIcon("media-playback-stop"),i18n("Stop"),this,SLOT(stop()));
+		QAction* tfs = tb->addAction(KIcon("view-fullscreen"),i18n("Toggle Fullscreen"));
+		tfs->setCheckable(true);
+		connect(tfs,SIGNAL(toggled(bool)),this,SLOT(toggleFullScreen(bool)));
+		hlayout->addWidget(tb);
+		
+		
+		slider = new Phonon::SeekSlider(this);
+		slider->setMediaObject(player->media0bject());
+		slider->setMaximumHeight(tb->iconSize().height());
+		hlayout->addWidget(slider);
+		
+		
+		volume = new Phonon::VolumeSlider(this);
+		volume->setAudioOutput(player->output());
+		volume->setMaximumHeight(tb->iconSize().height());
+		volume->setMaximumWidth(5*tb->iconSize().width());
+		hlayout->addWidget(volume);
+		
+		vlayout->addLayout(hlayout);
 	
-		Phonon::createPath(media,video);
+		Phonon::createPath(player->media0bject(),video);
 	}
 
 
@@ -48,17 +81,23 @@ namespace kt
 
 	void VideoWidget::play()
 	{
-		media->play();
+		player->media0bject()->play();
 	}
 	
 	void VideoWidget::pause()
 	{
-		media->pause();
+		player->media0bject()->pause();
 	}
 	
 	void VideoWidget::stop()
 	{
-		media->stop();
+		player->media0bject()->stop();
+	}
+	
+	void VideoWidget::toggleFullScreen(bool on)
+	{
+		Q_UNUSED(on);
+		setWindowState(windowState() ^ Qt::WindowFullScreen);
 	}
 
 }

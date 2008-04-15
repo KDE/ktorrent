@@ -41,12 +41,12 @@ namespace kt
 	/**
 		@author
 	*/
-	class AudioPlayer : public QObject
+	class MediaPlayer : public QObject
 	{
 		Q_OBJECT
 	public:
-		AudioPlayer(QObject* parent);
-		virtual ~AudioPlayer();
+		MediaPlayer(QObject* parent);
+		virtual ~MediaPlayer();
 		
 		Phonon::AudioOutput* output() {return audio;}
 		Phonon::MediaObject* media0bject() {return media;}
@@ -77,10 +77,9 @@ namespace kt
 		void enableActions(unsigned int flags);
 		
 		/**
-		 * A video has been detected, create the video player window.
-		 * @param media 
+		 * A video has been detected, create the video player window. 
 		 */
-		void openVideo(Phonon::MediaObject* media);
+		void openVideo();
 		
 		/**
 		 * Emitted when the video widget needs to be closed.

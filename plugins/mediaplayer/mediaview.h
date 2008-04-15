@@ -31,7 +31,7 @@ class QItemSelection;
 namespace kt
 {
 	class MediaModel;
-	class AudioPlayer;
+	class MediaPlayer;
 
 	/**
 		@author
@@ -40,7 +40,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		MediaView(AudioPlayer* player,MediaModel* model,QWidget* parent);
+		MediaView(MediaPlayer* player,MediaModel* model,QWidget* parent);
 		virtual ~MediaView();
 		
 		/// Get the media tool bar
@@ -56,7 +56,7 @@ namespace kt
 		void selectionChanged(const QModelIndex & idx);
 
 	private:
-		AudioPlayer* player;
+		MediaPlayer* player;
 		QToolBar* tool_bar;
 		QTreeView* media_tree;
 		Phonon::VolumeSlider* volume;

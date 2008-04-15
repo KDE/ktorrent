@@ -23,12 +23,12 @@
 #include <ktoolbar.h>
 #include "mediaview.h"
 #include "mediamodel.h"
-#include "audioplayer.h"
+#include "mediaplayer.h"
 
 namespace kt
 {
 
-	MediaView::MediaView(AudioPlayer* player,MediaModel* model,QWidget* parent)
+	MediaView::MediaView(MediaPlayer* player,MediaModel* model,QWidget* parent)
 			: QWidget(parent)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);

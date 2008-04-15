@@ -24,11 +24,15 @@
 #include <QWidget>
 #include <Phonon/VideoWidget>
 #include <Phonon/MediaObject>
+#include <Phonon/SeekSlider>
+#include <Phonon/VolumeSlider>
 
-
+class QAction;
+class KToolBar;
 
 namespace kt
 {
+	class MediaPlayer;
 
 	/**
 		@author
@@ -37,17 +41,24 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		VideoWidget(Phonon::MediaObject* media,QWidget* parent);
+		VideoWidget(MediaPlayer* player,QWidget* parent);
 		virtual ~VideoWidget();
 		
 	public slots:
 		void play();
 		void pause();
 		void stop();
+		void toggleFullScreen(bool on);
 
 	private:
 		Phonon::VideoWidget* video;
-		Phonon::MediaObject* media;
+		MediaPlayer* player;
+		Phonon::SeekSlider* slider;
+		KToolBar* tb;
+		QAction* play_act;
+		QAction* pause_act;
+		QAction* stop_act;
+		Phonon::VolumeSlider* volume;
 	};
 
 }
