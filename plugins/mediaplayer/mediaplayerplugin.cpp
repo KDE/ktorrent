@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
 #include <kgenericfactory.h>
 #include <kicon.h>
 #include <klocale.h>
@@ -55,6 +56,9 @@ namespace kt
 		action_flags = 0;
 		play_action = pause_action = stop_action = prev_action = next_action = 0;
 		video = 0;
+		video_shown = false;
+		fullscreen_mode = false;
+		fs_dialog = 0;
 	}
 
 
@@ -117,7 +121,12 @@ namespace kt
 	
 	void MediaPlayerPlugin::unload()
 	{
+		if (fullscreen_mode)
+			setVideoFullScreen(false);
+		
 		closeVideo();
+		delete video;
+		video = 0;
 		
 		getGUI()->removeToolWidget(media_view);
 		delete media_view;
@@ -126,6 +135,7 @@ namespace kt
 		media_model = 0;
 		delete media_player;
 		media_player = 0;
+		video_shown = false;
 	}
 	
 	bool MediaPlayerPlugin::versionCheck(const QString& version) const
@@ -142,13 +152,18 @@ namespace kt
 		
 		if (video)
 		{
-			getGUI()->setTabText(video,path);
+			if (video_shown)
+				getGUI()->setTabText(video,path);
+			else
+				getGUI()->addTabPage(video,"video-x-generic",path,this);
 		}
 		else
 		{
 			video = new VideoWidget(media_player,0);
+			connect(video,SIGNAL(toggleFullScreen(bool)),this,SLOT(setVideoFullScreen(bool)));
 			getGUI()->addTabPage(video,"video-x-generic",path,this);
 		}
+		video_shown = true;
 	}
 	
 	void MediaPlayerPlugin::closeVideo()
@@ -156,8 +171,7 @@ namespace kt
 		if (video)
 		{
 			getGUI()->removeTabPage(video);
-			delete video;
-			video = 0;
+			video_shown = false;
 		}
 	}
 	
@@ -239,7 +253,34 @@ namespace kt
 		
 		stop();
 		gui->removeTabPage(video);
-		delete video;
-		video = 0;
+		video_shown = false;
+	}
+	
+	void MediaPlayerPlugin::setVideoFullScreen(bool on)
+	{
+		if (!video)
+			return;
+		
+		if (on && !fullscreen_mode)
+		{
+			getGUI()->removeTabPage(video);
+			video->setParent(0);
+			video->setFullScreen(true);
+			video->show();
+			fullscreen_mode = true;
+		}
+		else if (!on && fullscreen_mode)
+		{
+			video->hide();
+			video->setFullScreen(false);
+			
+			QString path = media_player->media0bject()->currentSource().fileName();
+			int idx = path.lastIndexOf(bt::DirSeparator());
+			if (idx >= 0)
+				path = path.mid(idx+1);
+			
+			getGUI()->addTabPage(video,"video-x-generic",path,this);
+			fullscreen_mode = false;
+		}
 	}
 }

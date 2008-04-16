@@ -66,6 +66,7 @@ namespace kt
 		void onSelectionChanged(const QModelIndex & idx);
 		void openVideo();
 		void closeVideo();
+		void setVideoFullScreen(bool on);
 		
 	private:
 		MediaView* media_view;
@@ -78,6 +79,9 @@ namespace kt
 		KAction* next_action;
 		int action_flags;
 		VideoWidget* video;
+		bool video_shown;
+		bool fullscreen_mode;
+		QDialog* fs_dialog;
 	};
 
 }

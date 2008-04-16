@@ -35,7 +35,8 @@ namespace kt
 	class MediaPlayer;
 
 	/**
-		@author
+	 * Widget to display a video
+	 * @author Joris Guisson
 	*/
 	class VideoWidget : public QWidget
 	{
@@ -44,10 +45,22 @@ namespace kt
 		VideoWidget(MediaPlayer* player,QWidget* parent);
 		virtual ~VideoWidget();
 		
-	public slots:
+		virtual void mouseMoveEvent(QMouseEvent* event);
+		
+		/**
+		 * Make the widget full screen or not.
+		 * @param on 
+		 */
+		void setFullScreen(bool on);
+		
+	private slots:
 		void play();
 		void pause();
 		void stop();
+		void setControlsVisible(bool on);
+		void onStateChanged(Phonon::State cur,Phonon::State old);
+		
+	signals:
 		void toggleFullScreen(bool on);
 
 	private:
@@ -59,6 +72,7 @@ namespace kt
 		QAction* pause_act;
 		QAction* stop_act;
 		Phonon::VolumeSlider* volume;
+		bool fullscreen;
 	};
 
 }

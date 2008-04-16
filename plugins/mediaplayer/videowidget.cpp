@@ -21,9 +21,11 @@
 #include <QAction>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QMouseEvent>
 #include <KToolBar>
 #include <KIcon>
 #include <KLocale>
+#include <KToggleFullScreenAction>
 #include <Phonon/Path>
 #include <Phonon/AudioOutput>
 #include <Phonon/Global>
@@ -36,7 +38,7 @@ namespace kt
 {
 
 	VideoWidget::VideoWidget(MediaPlayer* player,QWidget* parent)
-			: QWidget(parent),player(player)
+		: QWidget(parent),player(player),fullscreen(false)
 	{
 		QVBoxLayout* vlayout = new QVBoxLayout(this);
 		vlayout->setMargin(0);
@@ -53,7 +55,7 @@ namespace kt
 		stop_act = tb->addAction(KIcon("media-playback-stop"),i18n("Stop"),this,SLOT(stop()));
 		QAction* tfs = tb->addAction(KIcon("view-fullscreen"),i18n("Toggle Fullscreen"));
 		tfs->setCheckable(true);
-		connect(tfs,SIGNAL(toggled(bool)),this,SLOT(toggleFullScreen(bool)));
+		connect(tfs,SIGNAL(toggled(bool)),this,SIGNAL(toggleFullScreen(bool)));
 		hlayout->addWidget(tb);
 		
 		
@@ -72,6 +74,10 @@ namespace kt
 		vlayout->addLayout(hlayout);
 	
 		Phonon::createPath(player->media0bject(),video);
+		
+		connect(player->media0bject(),SIGNAL(stateChanged(Phonon::State,Phonon::State)),
+				this,SLOT(onStateChanged(Phonon::State, Phonon::State)));
+		onStateChanged(player->media0bject()->state(),Phonon::StoppedState);
 	}
 
 
@@ -94,10 +100,83 @@ namespace kt
 		player->media0bject()->stop();
 	}
 	
-	void VideoWidget::toggleFullScreen(bool on)
+	void VideoWidget::setControlsVisible(bool on)
 	{
-		Q_UNUSED(on);
-		setWindowState(windowState() ^ Qt::WindowFullScreen);
+		if (on)
+		{
+			slider->show();
+			volume->show();
+			tb->show();
+		}
+		else
+		{
+			slider->hide();
+			volume->hide();
+			tb->hide();
+		}
+	}
+	
+	void VideoWidget::mouseMoveEvent(QMouseEvent* event)
+	{
+		if (!fullscreen)
+			return;
+			
+		if (slider->isVisible())
+		{
+			int h = height() - slider->height();
+			if (event->y() < h - 10) // use a 10 pixel safety buffer to avoid fibrilation
+				setControlsVisible(false);
+		}
+		else
+		{
+			int h = height() - slider->height();
+			if (event->y() >= h)
+				setControlsVisible(true);
+		}
+	}
+	
+	void VideoWidget::setFullScreen(bool on)
+	{
+		if (on)
+		{
+			setWindowState(windowState() | Qt::WindowFullScreen);
+			setControlsVisible(false);
+		}
+		else
+		{
+			setWindowState(windowState() & ~Qt::WindowFullScreen);
+			setControlsVisible(true);
+		}
+		fullscreen = on;
+		setMouseTracking(fullscreen);
 	}
 
+	void VideoWidget::onStateChanged(Phonon::State cur,Phonon::State old)
+	{
+		Q_UNUSED(old);
+		
+		switch (cur)
+		{
+			case Phonon::LoadingState:
+				break;
+			case Phonon::ErrorState:
+			case Phonon::StoppedState:
+				play_act->setEnabled(true);
+				pause_act->setEnabled(false);
+				stop_act->setEnabled(false);
+				break;
+			case Phonon::PlayingState:
+				play_act->setEnabled(false);
+				pause_act->setEnabled(true);
+				stop_act->setEnabled(true);
+				break;
+			case Phonon::BufferingState:
+				break; 
+			case Phonon::PausedState:
+				play_act->setEnabled(true);
+				pause_act->setEnabled(false);
+				stop_act->setEnabled(true);
+				break;
+		}
+	}
 }

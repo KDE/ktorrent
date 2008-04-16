@@ -138,8 +138,6 @@ namespace kt
 				enableActions(flags);
 				break;
 		}
-		
-		
 	}
 	
 	QString MediaPlayer::getCurrentSource() const
