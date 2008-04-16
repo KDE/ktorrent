@@ -74,7 +74,7 @@ namespace kt
 		media->stop();
 	}
 	
-	void MediaPlayer::prev()
+	QString MediaPlayer::prev()
 	{
 		if (media->state() == Phonon::PausedState || media->state() == Phonon::PlayingState)
 		{
@@ -84,6 +84,8 @@ namespace kt
 				QString file = history.back();
 				media->setCurrentSource(file);
 				media->play();
+				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: playing previous file " << file << endl;
+				return file;
 			}
 		}
 		else if (history.count() > 0)
@@ -91,7 +93,11 @@ namespace kt
 			QString file = history.back();
 			media->setCurrentSource(file);
 			media->play();
+			Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: playing previous file " << file << endl;
+			return file;
 		}
+		
+		return QString();
 	}
 	
 	void MediaPlayer::onStateChanged(Phonon::State cur, Phonon::State)

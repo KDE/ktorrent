@@ -246,4 +246,58 @@ namespace kt
 				return QString(); // we can't play directories
 		}
 	}
+	
+	QModelIndex MediaModel::indexForPath(const QString & path) const
+	{
+		Uint32 idx = 0;
+		foreach (Item* i,items)
+		{
+			bt::TorrentInterface* tc = i->tc;
+			if (!tc->getStats().multi_file_torrent)
+			{
+				if (path == tc->getStats().output_path)
+					return index(idx,0,QModelIndex());
+			}
+			else
+			{
+				foreach (int j,i->multimedia_files)
+				{
+					if (tc->getTorrentFile(j).getPathOnDisk() == path)
+						return index(j,0,index(idx,0,QModelIndex()));
+				}
+			}
+			idx++;
+		}
+		
+		return QModelIndex();
+	}
+	
+	QModelIndex MediaModel::next(const QModelIndex & idx) const
+	{
+		if (!idx.isValid())
+		{
+			if (items.count() == 0)
+				return QModelIndex();
+			
+			Item* f = items.at(0);
+			if (!f->tc->getStats().multi_file_torrent)
+				return index(0,0,QModelIndex());
+			else
+				return index(0,0,index(0,0,QModelIndex()));
+		}
+		else
+		{
+			QModelIndex	n = idx.sibling(idx.row()+1,0); // take a look at the next sibling
+			if (!n.isValid())
+			{
+				n = parent(idx);
+				n = n.sibling(n.row()+1,0);
+				if (n.isValid() && n.child(0,0).isValid())
+					n = n.child(0,0);
+			}
+			
+			return n;
+		}
+	}
+			
 }

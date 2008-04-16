@@ -64,7 +64,7 @@ namespace kt
 		QString getCurrentSource() const;
 		
 		/// Play the previous song
-		void prev();
+		QString prev();
 	private slots:
 		void onStateChanged(Phonon::State cur,Phonon::State old);
 		void hasVideoChanged(bool hasVideo);

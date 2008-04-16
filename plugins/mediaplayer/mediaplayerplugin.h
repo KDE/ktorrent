@@ -21,11 +21,11 @@
 #ifndef KTMEDIAPLAYERPLUGIN_H
 #define KTMEDIAPLAYERPLUGIN_H
 
+#include <QModelIndex>
 #include <interfaces/plugin.h>
 #include <interfaces/guiinterface.h>
 
 class KAction;
-class QModelIndex;
 
 namespace Phonon
 {
@@ -82,6 +82,7 @@ namespace kt
 		bool video_shown;
 		bool fullscreen_mode;
 		QDialog* fs_dialog;
+		QModelIndex curr_item;
 	};
 
 }

@@ -183,8 +183,10 @@ namespace kt
 			QString path = media_model->pathForIndex(idx);
 			if (bt::Exists(path))
 			{
-				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayerPlugin::play " << path << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: playing " << path << endl;
 				media_player->play(path);
+				curr_item = idx;
+				next_action->setEnabled(media_model->next(curr_item).isValid());
 			}
 		}
 	}
@@ -201,11 +203,27 @@ namespace kt
 	
 	void MediaPlayerPlugin::prev()
 	{
-		media_player->prev();
+		QString s = media_player->prev();
+		if (s.isNull())
+			return;
+		
+		curr_item = media_model->indexForPath(s);
 	}
 	
 	void MediaPlayerPlugin::next()
 	{
+		QModelIndex n = media_model->next(curr_item);
+		if (!n.isValid())
+			return;
+		
+		QString path = media_model->pathForIndex(n);
+		if (bt::Exists(path))
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: playing " << path << endl;
+			media_player->play(path);
+			curr_item = n;
+			next_action->setEnabled(media_model->next(curr_item).isValid());
+		}
 	}
 	
 	void MediaPlayerPlugin::enableActions(unsigned int flags)
