@@ -113,6 +113,7 @@ namespace kt
 		connect(media_player,SIGNAL(openVideo()),this,SLOT(openVideo()));
 		connect(media_player,SIGNAL(closeVideo()),this,SLOT(closeVideo()));
 		connect(media_view,SIGNAL(selectionChanged(const QModelIndex &)),this,SLOT(onSelectionChanged(const QModelIndex&)));
+		connect(media_view,SIGNAL(doubleClicked(const QModelIndex&)),this,SLOT(onDoubleClicked(const QModelIndex&)));
 	
 		setupActions();
 		setXMLFile("ktmediaplayerpluginui.rc");
@@ -177,7 +178,11 @@ namespace kt
 	
 	void MediaPlayerPlugin::play()
 	{
-		QModelIndex idx = media_view->selectedItem();
+		onDoubleClicked(media_view->selectedItem());
+	}
+	
+	void MediaPlayerPlugin::onDoubleClicked(const QModelIndex & idx)
+	{
 		if (idx.isValid())
 		{
 			QString path = media_model->pathForIndex(idx);

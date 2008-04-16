@@ -54,6 +54,7 @@ namespace kt
 		
 	signals:
 		void selectionChanged(const QModelIndex & idx);
+		void doubleClicked(const QModelIndex & idx);
 
 	private:
 		MediaPlayer* player;

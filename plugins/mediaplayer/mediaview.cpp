@@ -54,6 +54,7 @@ namespace kt
 		
 		connect(media_tree->selectionModel(),SIGNAL(selectionChanged(const QItemSelection & , const QItemSelection & )),
 				this,SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection&)));
+		connect(media_tree,SIGNAL(doubleClicked(const QModelIndex &)),this,SIGNAL(doubleClicked(const QModelIndex&)));
 	}
 
 

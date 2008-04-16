@@ -67,6 +67,7 @@ namespace kt
 		void openVideo();
 		void closeVideo();
 		void setVideoFullScreen(bool on);
+		void onDoubleClicked(const QModelIndex & idx);
 		
 	private:
 		MediaView* media_view;
