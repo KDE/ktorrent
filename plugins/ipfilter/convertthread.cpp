@@ -38,14 +38,9 @@ using namespace bt;
 
 namespace kt
 {
-	typedef struct
-	{
-		bt::Uint32 ip1;
-		bt::Uint32 ip2;
-	} ipblock;
 
 
-	Uint32 toUint32(QString& ip)
+	Uint32 toUint32(const QString& ip)
 	{
 		bool test;
 		Uint32 ret = ip.section('.',0,0).toULongLong(&test);
@@ -59,9 +54,9 @@ namespace kt
 		return ret;
 	}
 
-	ipblock toBlock(QString& range)
+	IPBlock IPRangeToBlock(const QString & range)
 	{
-		ipblock block;
+		IPBlock block;
 		QStringList ls = range.split('-');
 		block.ip1 = toUint32(ls[0]);
 		block.ip2 = toUint32(ls[1]);
@@ -121,11 +116,67 @@ namespace kt
 			if ( v.validate( ip_part, poz ) != QValidator::Acceptable )
 				continue;
 			else
-				input += ip_part;
+				input += IPRangeToBlock(ip_part);
 		}
 		source.close();
 		Out(SYS_IPF|LOG_NOTICE) << "Loaded " << input.count() << " lines"  << endl;
 		dlg->progress(100,100);
+	}
+	
+	static bool LessThan(const IPBlock & a,const IPBlock & b)
+	{
+		if (a.ip2 < b.ip1) // a range is before b range
+			return true;
+		else if (b.ip2 < a.ip1) // b range is before a range 
+			return false;
+		else
+			return a.ip1 < b.ip1;// a and b intersect 
+	}
+	
+		
+	static QString IPToString(Uint32 ip)
+	{
+		return QString("%1.%2.%3.%4")
+				.arg((ip & 0xFF000000) >> 24)
+				.arg((ip & 0x00FF0000) >> 16)
+				.arg((ip & 0x0000FF00) >> 8)
+				.arg((ip & 0x000000FF));
+	}
+	
+	void ConvertThread::sort()
+	{
+		qSort(input.begin(),input.end(),LessThan);
+	}
+	
+	void ConvertThread::merge()
+	{
+		if (input.count() < 2) // noting to merge
+			return;
+		
+		QList<IPBlock>::iterator i = input.begin();
+		QList<IPBlock>::iterator j = i;
+		j++;
+		while (j != input.end() && i != input.end())
+		{
+			IPBlock & a = *i;
+			IPBlock & b = *j;
+			if (a.ip2 < b.ip1 || b.ip2 < a.ip1) 
+			{
+				// separate ranges, so go to the next pair
+				i = j;
+				j++;
+			}
+			else
+			{
+				
+				// merge b into a
+				a.ip1 = (a.ip1 < b.ip1) ? a.ip1 : b.ip1;
+				a.ip2 = (a.ip2 > b.ip2) ? a.ip2 : b.ip2;
+				
+				// remove b
+				j = input.erase(j);
+			}
+		}
 	}
 	
 	void ConvertThread::writeOutput()
@@ -135,6 +186,9 @@ namespace kt
 			failure_reason = i18n("There are no IP addresses to convert in %1",txt_file);
 			return;
 		}
+		
+		sort(); // sort the block
+		merge(); // merge neigbhouring blocks
 		
 		QFile target(dat_file);
 		if (!target.open(QIODevice::WriteOnly))
@@ -149,14 +203,13 @@ namespace kt
 		Out(SYS_IPF|LOG_NOTICE) << "Loading finished, starting conversion..." << endl;
 		dlg->message(i18n( "Converting..." ));
 		
-		QStringList::iterator iter;
 		int i = 0;
 		int tot = input.count();
-		foreach (QString line,input)
+		foreach (IPBlock block,input)
 		{
 			dlg->progress(i,tot);
-			ipblock block = toBlock(line);
-			target.write( ( char* ) & block, sizeof( ipblock ) );
+			
+			target.write( ( char* ) & block, sizeof( IPBlock ) );
 
 			if (abort)
 			{
