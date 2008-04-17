@@ -44,14 +44,10 @@ K_EXPORT_COMPONENT_FACTORY(ktscanfolderplugin,KGenericFactory<kt::ScanFolderPlug
 
 namespace kt
 {	
-	const QString NAME = "Scan Folder";
-	const QString AUTHOR = "Ivan Vasic";
-	const QString EMAIL = "ivasic@gmail.com";
-	const QString DESCRIPTION = i18n("Automatically scans directories for torrent files and loads them.");
 
-	ScanFolderPlugin::ScanFolderPlugin(QObject* parent, const QStringList& args)
-	: Plugin(parent,NAME,i18n("Scan Folder"),AUTHOR,EMAIL,DESCRIPTION,"folder-open")
+	ScanFolderPlugin::ScanFolderPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
 	{
+		Q_UNUSED(args);
 		m_sf_map.setAutoDelete(true);
 	}
 

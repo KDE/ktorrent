@@ -31,18 +31,15 @@
 #include "httpserver.h"
 #include "webinterfacepluginsettings.h"
 
-#define NAME "Web Interface"
-#define AUTHOR "Diego R. Brogna"
-#define EMAIL "dierbro@gmail.com"
 
 K_EXPORT_COMPONENT_FACTORY(ktwebinterfaceplugin,KGenericFactory<kt::WebInterfacePlugin>("ktwebinterfaceplugin"))
 
 using namespace bt;
 namespace kt
 {
-	WebInterfacePlugin::WebInterfacePlugin(QObject* parent, const QStringList& args)
-	: Plugin(parent, NAME,i18n("Web Interface"),AUTHOR,EMAIL,i18n("Allow to control ktorrent through browser"),"network-server")
+	WebInterfacePlugin::WebInterfacePlugin(QObject* parent, const QStringList& args) : Plugin(parent)
 	{
+		Q_UNUSED(args);
 		http_server = 0;
 		pref=0;
 	}

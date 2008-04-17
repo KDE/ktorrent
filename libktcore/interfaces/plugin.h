@@ -50,17 +50,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		/**
-		 * Constructor, set the name of the plugin, the name and e-mail of the author and
-		 * a short description of the plugin.
-		 * @param name Name of plugin
-		 * @param gui_name Name shown in the gui (this should be an i18n string)
-		 * @param author Author of plugin
-		 * @param mail E-mail address of author
-		 * @param description What does the plugin do
-		 * @param icon Name of the plugin's icon
-		 */
-		Plugin(QObject *parent,const QString & name,const QString & gui_name,const QString & author,const QString & email,const QString & description,const QString & icon);
+		Plugin(QObject *parent);
 		virtual ~Plugin();
 
 		/**
@@ -91,13 +81,6 @@ namespace kt
 		 * @param job The WaitJob which monitors the plugin
 		 */
 		virtual void shutdown(bt::WaitJob* job);
-
-		const QString & getName() const {return name;}
-		const QString & getGuiName() const {return gui_name;}
-		const QString & getAuthor() const {return author;}
-		const QString & getEMailAddress() const {return email;}
-		const QString & getDescription() const {return description;}
-		const QString & getIcon() const {return icon;}
 
 		/// Get a pointer to the CoreInterface
 		CoreInterface* getCore() {return core;}
@@ -132,12 +115,6 @@ namespace kt
 		virtual bool versionCheck(const QString & version) const = 0;
 		
 	private:
-		QString name;
-		QString gui_name;
-		QString author;
-		QString email;
-		QString description;
-		QString icon;
 		CoreInterface* core;
 		GUIInterface* gui;
 		bool loaded;

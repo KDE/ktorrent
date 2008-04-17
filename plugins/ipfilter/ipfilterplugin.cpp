@@ -37,14 +37,10 @@ K_EXPORT_COMPONENT_FACTORY(ktipfilterplugin,KGenericFactory<kt::IPFilterPlugin>(
 
 namespace kt
 {	
-	const QString NAME = "IP Filter";
-	const QString AUTHOR = "Ivan Vasic";
-	const QString EMAIL = "ivasic@gmail.com";
-	const QString DESCRIPTION = i18n("Filters out unwanted peers based on their IP address");
 
-	IPFilterPlugin::IPFilterPlugin(QObject* parent, const QStringList& args)
-	: Plugin(parent,NAME,i18n("IP Filter"),AUTHOR,EMAIL,DESCRIPTION,"filter")
+	IPFilterPlugin::IPFilterPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
 	{
+		Q_UNUSED(args);
 		// setXMLFile("ktpluginui.rc");
 		level1 = 0;
 	}

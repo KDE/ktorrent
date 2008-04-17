@@ -36,9 +36,6 @@
 #include "mediaplayer.h"
 #include "videowidget.h"
 
-#define NAME "MediaPlayer"
-#define AUTHOR "Joris Guisson"
-#define EMAIL "joris.guisson@gmail.com"
 
 K_EXPORT_COMPONENT_FACTORY(ktmediaplayerplugin,KGenericFactory<kt::MediaPlayerPlugin>("ktmediaplayerplugin"))
 		
@@ -47,9 +44,9 @@ using namespace bt;
 namespace kt
 {
 
-	MediaPlayerPlugin::MediaPlayerPlugin(QObject* parent, const QStringList& args)
-	: Plugin(parent,NAME,i18n("MediaPlayer"),AUTHOR,EMAIL, i18n("Phonon based media player plugin for KTorrent"),"applications-multimedia")
+	MediaPlayerPlugin::MediaPlayerPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
 	{
+		Q_UNUSED(args);
 		media_view = 0;
 		media_model = 0;
 		media_player = 0;

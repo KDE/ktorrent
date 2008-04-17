@@ -30,9 +30,6 @@
 #include "logprefpage.h"
 #include "logflags.h"
 
-#define NAME "Log Viewer"
-#define AUTHOR "Joris Guisson"
-#define EMAIL "joris.guisson@gmail.com"
 
 using namespace bt;
 
@@ -41,8 +38,7 @@ K_EXPORT_COMPONENT_FACTORY(ktlogviewerplugin,KGenericFactory<kt::LogViewerPlugin
 namespace kt
 {
 
-	LogViewerPlugin::LogViewerPlugin(QObject* parent,const QStringList & ) 
-	: Plugin(parent,NAME, i18n("Log Viewer"),AUTHOR, EMAIL, i18n("Displays ktorrent logging output"),"utilities-log-viewer")
+	LogViewerPlugin::LogViewerPlugin(QObject* parent,const QStringList & ) : Plugin(parent)
 	{
 		lv = 0;
 	}

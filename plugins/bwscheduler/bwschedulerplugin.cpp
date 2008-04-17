@@ -57,14 +57,10 @@ K_EXPORT_COMPONENT_FACTORY(ktbwschedulerplugin,KGenericFactory<kt::BWSchedulerPl
 
 namespace kt
 {	
-	const QString NAME = "Bandwidth Scheduler";
-	const QString AUTHOR = "Ivan Vasic";
-	const QString EMAIL = "ivasic@gmail.com";
-	const QString DESCRIPTION = i18n("Bandwidth scheduling plugin");
 
-	BWSchedulerPlugin::BWSchedulerPlugin(QObject* parent, const QStringList& args)
-	: Plugin(parent, NAME,i18n("Bandwidth Scheduler"),AUTHOR,EMAIL,DESCRIPTION, "clock")
+	BWSchedulerPlugin::BWSchedulerPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
 	{
+		Q_UNUSED(args);
 	//	setXMLFile("ktbwschedulerpluginui.rc");
 		m_bws_action = 0;
 		connect(&m_timer, SIGNAL(timeout()), this, SLOT(timerTriggered()));

@@ -24,15 +24,7 @@ K_EXPORT_COMPONENT_FACTORY(ktstatsplugin,KGenericFactory<kt::StatsPlugin>("ktsta
 
 namespace kt {
 
-StatsPlugin::StatsPlugin(QObject * p, const QStringList&) : Plugin(
-								p, 
-								i18n("Statistics"), 
-								i18n("Statistics"), 
-								"Krzysztof Kundzicz", 
-								"athantor@gmail.com",
-								i18n("Shows transfers statistics"), 
-								"view-statistics"), 
-								mUpdCtr(1)
+StatsPlugin::StatsPlugin(QObject * p, const QStringList&) : Plugin(p),mUpdCtr(1)
 {
 	pmUiSett = 0;
 	pmDispSett = 0;

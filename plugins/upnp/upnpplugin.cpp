@@ -29,19 +29,12 @@
 #include "upnpprefpage.h"
 
 
-#define NAME "UPnP"
-#define AUTHOR "Joris Guisson"
-#define EMAIL "joris.guisson@gmail.com"
-
-
-
 K_EXPORT_COMPONENT_FACTORY(ktupnpplugin,KGenericFactory<kt::UPnPPlugin>("ktupnpplugin"))
 
 namespace kt
 {
 
-	UPnPPlugin::UPnPPlugin(QObject* parent, const QStringList& /*args*/)
-	: Plugin(parent,NAME,i18n("UPnP"),AUTHOR,EMAIL,i18n("Uses UPnP to automatically forward ports on your router"),"ktupnp")
+	UPnPPlugin::UPnPPlugin(QObject* parent, const QStringList& /*args*/) : Plugin(parent)
 	{
 		sock = 0;
 		pref = 0;

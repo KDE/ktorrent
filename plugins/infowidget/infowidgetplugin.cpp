@@ -38,10 +38,6 @@
 #include "webseedstab.h"
 
 
-#define NAME "Info Widget"
-#define AUTHOR "Joris Guisson"
-#define EMAIL "joris.guisson@gmail.com"
-
 
 K_EXPORT_COMPONENT_FACTORY(ktinfowidgetplugin,KGenericFactory<kt::InfoWidgetPlugin>("ktinfowidgetplugin"))
 		
@@ -51,10 +47,7 @@ namespace kt
 {
 	
 
-	InfoWidgetPlugin::InfoWidgetPlugin(QObject* parent,const QStringList& )
-	: Plugin(parent,NAME,i18n("Info Widget"),AUTHOR,EMAIL,
-			 i18n("Shows additional information about a download. Like which chunks have been downloaded, how many seeders and leechers ..."),
-			 "ktinfowidget")
+	InfoWidgetPlugin::InfoWidgetPlugin(QObject* parent,const QStringList& ) : Plugin(parent)
 	{
 		pref = 0;
 		peer_view = 0;

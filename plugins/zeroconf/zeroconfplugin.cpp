@@ -27,8 +27,6 @@
 
 		
 		
-#define NAME "Zeroconf"
-#define AUTHOR "Lesly Weyts, Kevin Andre and Joris Guisson"
 		
 K_EXPORT_COMPONENT_FACTORY(ktzeroconfplugin,KGenericFactory<kt::ZeroConfPlugin>("ktzeroconfplugin"))
 
@@ -37,10 +35,9 @@ using namespace bt;
 namespace kt
 {
 
-	ZeroConfPlugin::ZeroConfPlugin(QObject* parent,const QStringList& args)
-	: Plugin(parent,NAME,i18n("Zeroconf"),AUTHOR,QString::null,
-			i18n("Finds peers running ktorrent on the local network to share torrents with"),"ktplugins")
+	ZeroConfPlugin::ZeroConfPlugin(QObject* parent,const QStringList& args) : Plugin(parent)
 	{
+		Q_UNUSED(args);
 		services.setAutoDelete(true);
 	}
 

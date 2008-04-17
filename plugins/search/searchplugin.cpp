@@ -38,21 +38,14 @@
 #include "searchpluginsettings.h"
 #include "searchenginelist.h"
 
-
-#define NAME "Search"
-#define AUTHOR "Joris Guisson"
-#define EMAIL "joris.guisson@gmail.com"
-
-
-
 K_EXPORT_COMPONENT_FACTORY(ktsearchplugin,KGenericFactory<kt::SearchPlugin>("ktsearchplugin"))
 
 namespace kt
 {
 
-	SearchPlugin::SearchPlugin(QObject* parent, const QStringList& args)
-	: Plugin(parent,NAME,i18n("Search"),AUTHOR,EMAIL, i18n("Search for torrents on several popular torrent search engines"),"edit-find")
+	SearchPlugin::SearchPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
 	{
+		Q_UNUSED(args);
 		pref = 0;
 		toolbar = 0;
 		setXMLFile("ktsearchpluginui.rc");
