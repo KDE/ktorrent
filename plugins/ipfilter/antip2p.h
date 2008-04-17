@@ -50,8 +50,8 @@ namespace kt
 	class AntiP2P
 	{
 	public:
-    		AntiP2P();
-    		virtual ~AntiP2P();
+    	AntiP2P();
+    	virtual ~AntiP2P();
 			
 		/**
 		 * Checks if anti-p2p file is present. Used to check if we should use level1 list

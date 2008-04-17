@@ -22,6 +22,7 @@
 #define KTCONVERTTHREAD_H
 
 #include <QThread>
+#include "antip2p.h"
 
 class KJob;
 
@@ -50,6 +51,8 @@ namespace kt
 		void readInput();
 		void writeOutput();
 		void cleanUp(bool failed);
+		void sort();
+		void merge();
 		
 	private:
 		ConvertDialog* dlg;
@@ -57,7 +60,7 @@ namespace kt
 		QString txt_file;
 		QString dat_file;
 		QString tmp_file;
-		QStringList input;
+		QList<IPBlock> input;
 		QString failure_reason;
 	};
 
