@@ -55,7 +55,7 @@ namespace bt
 		virtual Uint32 failureCount() const {return failures;}
 		virtual void scrape();
 		
-		static void setProxy(const QString & proxy);
+		static void setProxy(const QString & proxy,const bt::Uint16 proxy_port);
 		static void setProxyEnabled(bool on);
 		
 	private slots:
@@ -78,6 +78,7 @@ namespace bt
 		
 		static bool proxy_on;
 		static QString proxy;
+		static Uint16 proxy_port;
 	};
 
 }

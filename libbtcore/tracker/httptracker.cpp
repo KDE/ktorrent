@@ -46,6 +46,7 @@ namespace bt
 {
 	bool HTTPTracker::proxy_on = false;
 	QString HTTPTracker::proxy = QString();
+	Uint16 HTTPTracker::proxy_port = 8080;
 
 	HTTPTracker::HTTPTracker(const KUrl & url,TorrentInterface* tor,const PeerID & id,int tier)
 		: Tracker(url,tor,id,tier)
@@ -457,12 +458,15 @@ namespace bt
 		md["accept"] = "text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2";
 		if (proxy_on)
 		{
+			QString p = QString("%1:%2").arg(proxy).arg(proxy_port);
 			// set the proxy if the doNotUseKDEProxy ix enabled (URL must be valid to)
-			KUrl url = KUrl(proxy);
-			if (url.isValid())
-				md["UseProxy"] = url.pathOrUrl();
+			KUrl url = KUrl(p);
+			if (url.isValid() && proxy.trimmed().length() >  0)
+				md["UseProxy"] = p;
 			else
 				md["UseProxy"] = QString();
+			
+			Out(SYS_TRK|LOG_DEBUG) << "Using proxy : " << md["UseProxy"] << endl;
 		}
 	}
 	
@@ -492,7 +496,15 @@ namespace bt
 		requestPending();
 	}
 	
-	void HTTPTracker::setProxy(const QString & p) {proxy = p;}
-	void HTTPTracker::setProxyEnabled(bool on) {proxy_on = on;}
+	void HTTPTracker::setProxy(const QString & p,const bt::Uint16 port) 
+	{
+		proxy = p;
+		proxy_port = port;
+	}
+	
+	void HTTPTracker::setProxyEnabled(bool on) 
+	{
+		proxy_on = on;
+	}
 }
 #include "httptracker.moc"
