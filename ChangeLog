@@ -14,6 +14,8 @@ Changes in 3.0.2 :
 - Show real IP address of peers when using socks proxies
 - Make sure that the current torrent changes when the group is changed of a view
 - Sort and merge block list before writing to level1.dat file
+- Clear time to next tracker update in tracker tab, when torrent is not
+running (160972)
 
 Changes in 3.0.1 :
 - Fix sessionTTL not being able to be bigger then 99

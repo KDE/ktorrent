@@ -168,6 +168,10 @@ namespace kt
 			t = t.addSecs(tc->getTimeToNextTrackerUpdate());
 			m_next_update->setText(t.toString("mm:ss"));
 		}
+		else
+		{
+			m_next_update->clear();
+		}
 		
 		//Update manual annunce button
 		m_update_tracker->setEnabled(s.running && tc->announceAllowed());
