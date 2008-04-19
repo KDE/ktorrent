@@ -88,6 +88,12 @@ void ViewManager::restoreViewState(KConfig* cfg,KTorrent* ktor)
 	}
 }
 
+void ViewManager::updateActions()
+{
+	if (current)
+		current->updateActions();
+}
+
 void ViewManager::addTorrent(kt::TorrentInterface* tc)
 {
 	for (ViewItr i = views.begin();i != views.end();i++)
@@ -186,7 +192,10 @@ void ViewManager::onCurrentTabChanged(QWidget* w)
 	if (!current)
 		current = old;
 	else
+	{
 		current->update();
+		current->updateActions();
+	}
 }
 
 bool ViewManager::closeAllowed(QWidget* )

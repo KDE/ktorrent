@@ -75,6 +75,7 @@ namespace dht
 		while (i != emap.end() && j < max_items)
 		{
 			PackBucketEntry(i->second,ba,j*26);
+			i++;
 			j++;
 			i++;
 		}

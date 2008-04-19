@@ -74,8 +74,8 @@ namespace kt
 	void TorrentGroup::save(bt::BEncoder* enc)
 	{
 		enc->beginDict();
-		enc->write("name"); enc->write(name);
-		enc->write("icon"); enc->write(icon_name);
+		enc->write("name"); enc->write(name.local8Bit());
+		enc->write("icon"); enc->write(icon_name.local8Bit());
 		enc->write("hashes"); enc->beginList();
 		std::set<TorrentInterface*>::iterator i = torrents.begin();
 		while (i != torrents.end())
@@ -102,13 +102,15 @@ namespace kt
 		if (!vn || vn->data().getType() != bt::Value::STRING)
 			throw bt::Error("invalid or missing name");
 		
-		name = vn->data().toString();
+		QByteArray tmp = vn->data().toByteArray();
+		name = QString::fromLocal8Bit(tmp.data(),tmp.size());
 		
 		vn = dn->getValue("icon");
 		if (!vn || vn->data().getType() != bt::Value::STRING)
 			throw bt::Error("invalid or missing icon");
 		
-		setIconByName(vn->data().toString());
+		tmp = vn->data().toByteArray();
+		setIconByName(QString::fromLocal8Bit(tmp.data(),tmp.size()));
 		
 		BListNode* ln = dn->getList("hashes");
 		if (!ln)

@@ -244,6 +244,8 @@ KTorrent::KTorrent()
 
 	MaximizeLimits();
 	connect(&m_status_msg_expire,SIGNAL(timeout()),this,SLOT(statusBarMsgExpired()));
+	
+	m_view_man->updateActions();
 }
 
 KTorrent::~KTorrent()
@@ -286,8 +288,8 @@ void KTorrent::openView(kt::Group* g)
 	connect(v,SIGNAL(needsDataCheck( kt::TorrentInterface* )),
 			m_core,SLOT(doDataCheck( kt::TorrentInterface* )));
 	
-	connect(v,SIGNAL(updateActions( bool, bool, bool, bool )),
-			this,SLOT(onUpdateActions( bool, bool, bool, bool )));
+	connect(v,SIGNAL(updateActions( int )),
+			this,SLOT(onUpdateActions( int )));
 	
 	//connect Core queue() with queue() from KTView.
 	connect(v, SIGNAL(queue( kt::TorrentInterface* )), 
@@ -476,13 +478,15 @@ void KTorrent::loadSilently(const KURL& url)
 	m_core->loadSilently(url);
 }
 
-void KTorrent::onUpdateActions(bool can_start,bool can_stop,bool can_remove,bool can_scan)
+void KTorrent::onUpdateActions(int flags)
 {
-	m_start->setEnabled(can_start);
-	m_stop->setEnabled(can_stop);
-	m_remove->setEnabled(can_remove);
-	m_queueaction->setEnabled(can_remove);
-	m_datacheck->setEnabled(can_scan);
+	m_start->setEnabled(flags & KTorrentView::START);
+	m_stop->setEnabled(flags & KTorrentView::STOP);
+	m_remove->setEnabled(flags & KTorrentView::REMOVE);
+	m_queueaction->setEnabled(flags & KTorrentView::REMOVE);
+	m_datacheck->setEnabled(flags & KTorrentView::SCAN);
+	m_startall->setEnabled(flags & KTorrentView::START_ALL);
+	m_stopall->setEnabled(flags & KTorrentView::STOP_ALL);
 }
 
 void KTorrent::currentTorrentChanged(kt::TorrentInterface* tc)
@@ -520,12 +524,16 @@ void KTorrent::setupActions()
 			actionCollection(), "Remove");
 	
 	m_startall = new KAction(
-			i18n("to start all", "Start All"), "ktstart_all",0,this, SLOT(startAllDownloads()),
+			i18n("to start all", "Start All"), "ktstart_all",0,this, SLOT(startAllDownloadsCurrentView()),
 			actionCollection(), "Start all");
 	
+	m_startall_systray = new KAction(i18n("to start all", "Start All"), "ktstart_all",0,this, SLOT(startAllDownloads()),actionCollection());
+	
 	m_stopall = new KAction(
-			i18n("to stop all", "Stop All"), "ktstop_all",0,this, SLOT(stopAllDownloads()),
+			i18n("to stop all", "Stop All"), "ktstop_all",0,this, SLOT(stopAllDownloadsCurrentView()),
 			actionCollection(), "Stop all");
+	
+	m_stopall_systray = new KAction(i18n("to stop all", "Stop All"), "ktstop_all",0,this, SLOT(stopAllDownloads()),actionCollection());
 	
 	m_pasteurl = new KAction(
 			i18n("to paste torrent URL", "Paste Torrent URL..."), "ktstart",0,this, SLOT(torrentPaste()),
@@ -553,8 +561,8 @@ void KTorrent::setupActions()
 	m_find = KStdAction::find(this,SLOT(find()),actionCollection());
 	
 	//Plug actions to systemtray context menu
-	m_startall->plug(m_systray_icon->contextMenu());
-	m_stopall->plug(m_systray_icon->contextMenu());
+	m_startall_systray->plug(m_systray_icon->contextMenu());
+	m_stopall_systray->plug(m_systray_icon->contextMenu());
 	m_systray_icon->contextMenu()->insertSeparator();
 	m_pasteurl->plug(m_systray_icon->contextMenu());
 	m_systray_icon->contextMenu()->insertSeparator();
@@ -641,9 +649,14 @@ void KTorrent::startDownload()
 	currentTorrentChanged(tc);
 }
 
-void KTorrent::startAllDownloads()
+void KTorrent::startAllDownloadsCurrentView()
 {
 	m_view_man->startAllDownloads();
+}
+
+void KTorrent::startAllDownloads()
+{
+	m_core->startAll(3);
 }
 
 void KTorrent::stopDownload()
@@ -654,6 +667,11 @@ void KTorrent::stopDownload()
 }
 
 void KTorrent::stopAllDownloads()
+{
+	m_core->stopAll(3);
+}
+
+void KTorrent::stopAllDownloadsCurrentView()
 {
 	m_view_man->stopAllDownloads();
 }
@@ -766,8 +784,8 @@ void KTorrent::urlDropped(QDropEvent* event,QListViewItem*)
 
 void KTorrent::updatedStats()
 {
-	m_startall->setEnabled(m_core->getNumTorrentsNotRunning() > 0);
-	m_stopall->setEnabled(m_core->getNumTorrentsRunning() > 0);
+	m_startall_systray->setEnabled(m_core->getNumTorrentsNotRunning() > 0);
+	m_stopall_systray->setEnabled(m_core->getNumTorrentsRunning() > 0);
 	
 	CurrentStats stats = this->m_core->getStats();
 	

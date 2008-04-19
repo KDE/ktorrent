@@ -287,20 +287,20 @@ namespace bt
 				emit seedingAutoStopped(this, overMaxRatio() ? kt::MAX_RATIO_REACHED : kt::MAX_SEED_TIME_REACHED);
             }
 			
+			//Update diskspace if needed (every 1 min)			
+			if(!stats.completed && stats.running && bt::GetCurrentTime() - last_diskspace_check >= 60 * 1000)
+			{
+				checkDiskSpace(true);
+			}
+			
 			//Move completed files if needed:
-			if(moveCompleted)
+			if (moveCompleted)
 			{
 				QString outdir = Settings::completedDir();
 				if(!outdir.endsWith(bt::DirSeparator()))
 					outdir += bt::DirSeparator();
 				
 				changeOutputDir(outdir);
-			}
-			
-			//Update diskspace if needed (every 1 min)			
-			if(!stats.completed && stats.running && bt::GetCurrentTime() - last_diskspace_check >= 60 * 1000)
-			{
-				checkDiskSpace(true);
 			}
 		}
 		catch (Error & e)
@@ -813,15 +813,17 @@ namespace bt
 	
 	bool TorrentControl::changeOutputDir(const QString & new_dir, bool moveFiles)
 	{
+		if (moving_files)
+			return false;
+		
 		Out(SYS_GEN|LOG_NOTICE) << "Moving data for torrent " << stats.torrent_name << " to " << new_dir << endl;
 		
-		bool start = false;
-		int old_prio = getPriority();
+		restart_torrent_after_move_data_files = false;
 		
 		//check if torrent is running and stop it before moving data
 		if(stats.running)
 		{
-			start = true;
+			restart_torrent_after_move_data_files = true;
 			this->stop(false);
 		}
 		
@@ -841,21 +843,25 @@ namespace bt
 			
 			if (stats.output_path != nd)
 			{
+				KIO::Job* j = 0;
 				if(moveFiles)
-				{
+				{	
 					if (stats.multi_file_torrent)
-						cman->moveDataFiles(nd);
+						j = cman->moveDataFiles(nd);
 					else
-						cman->moveDataFiles(new_dir);
-					// bt::Move(stats.output_path, new_dir);
+						j = cman->moveDataFiles(new_dir);
 				}
 				
-				cman->changeOutputPath(nd);
-				outputdir = stats.output_path = nd;
-				istats.custom_output_name = true;
-				
-				saveStats();
-				Out(SYS_GEN|LOG_NOTICE) << "Data directory changed for torrent " << "'" << stats.torrent_name << "' to: " << new_dir << endl;
+				move_data_files_destination_path = nd;
+				if (j)
+				{
+					connect(j,SIGNAL(result(KIO::Job*)),this,SLOT(moveDataFilesJobDone(KIO::Job*)));
+					return true;
+				}
+				else
+				{
+					moveDataFilesJobDone(0);
+				}
 			}
 			else
 			{
@@ -870,12 +876,38 @@ namespace bt
 		}
 		
 		moving_files = false;
-		if(start)
+		if (restart_torrent_after_move_data_files)
 		{
 			this->start();
 		}
 		
 		return true;
+	}
+	
+	void TorrentControl::moveDataFilesJobDone(KIO::Job* job)
+	{
+		if (job)
+			cman->moveDataFilesCompleted(job);
+		
+		if (!job || (job && !job->error()))
+		{
+			cman->changeOutputPath(move_data_files_destination_path);
+			outputdir = stats.output_path = move_data_files_destination_path;
+			istats.custom_output_name = true;
+				
+			saveStats();
+			Out(SYS_GEN|LOG_NOTICE) << "Data directory changed for torrent " << "'" << stats.torrent_name << "' to: " << move_data_files_destination_path << endl;
+		}
+		else if (job->error())
+		{
+			Out(SYS_GEN|LOG_IMPORTANT) << "Could not move " << stats.output_path << " to " << move_data_files_destination_path << endl;
+		}
+		
+		moving_files = false;
+		if (restart_torrent_after_move_data_files)
+		{
+			this->start();
+		}
 	}
 
 

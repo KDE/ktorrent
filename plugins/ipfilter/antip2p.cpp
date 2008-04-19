@@ -35,6 +35,17 @@ using namespace bt;
 
 namespace kt
 {	
+	
+	bool IPBlock::operator < (const IPBlock & b) const
+	{
+		if (ip2 < b.ip1) // a range is before b range
+			return true;
+		else if (b.ip2 < ip1) // b range is before a range 
+			return false;
+		else
+			return ip1 < b.ip1;// a and b intersect 
+	}
+	
 	Uint32 AntiP2P::toUint32(const QString& ip)
 	{
 		bool test;

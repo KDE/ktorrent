@@ -66,7 +66,10 @@ int KTorrentApp::newInstance()
 
 	for (int i = 0; i < args->count(); i++)
 	{
-		widget->load(args->url(i));
+		if (args->isSet("silent"))
+			widget->loadSilently(args->url(i));
+		else
+			widget->load(args->url(i)); 
 	}
 
 	args->clear();

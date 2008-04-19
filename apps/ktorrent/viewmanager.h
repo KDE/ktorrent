@@ -87,6 +87,9 @@ public:
 	/// A group has been removed, close any tab showing it (in case it is the last tab, switch to All Torrents)
 	void groupRemoved(kt::Group* g,KTabWidget* mtw,kt::GUIInterface* gui,kt::Group* all_group);
 	
+	/// Call updateActions on the current view
+	void updateActions();
+	
 public slots:
 	/// Add a torrent to all views
 	void addTorrent(kt::TorrentInterface* tc);

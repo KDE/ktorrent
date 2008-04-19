@@ -148,9 +148,14 @@ namespace bt
 		file_priority_file = data_dir + "file_priority";
 	}
 	
-	void ChunkManager::moveDataFiles(const QString & ndir)
+	KIO::Job* ChunkManager::moveDataFiles(const QString & ndir)
 	{
-		cache->moveDataFiles(ndir);
+		return cache->moveDataFiles(ndir);
+	}
+	
+	void ChunkManager::moveDataFilesCompleted(KIO::Job* job)
+	{
+		cache->moveDataFilesCompleted(job);
 	}
 	
 	void ChunkManager::changeOutputPath(const QString & output_path)
@@ -441,7 +446,7 @@ namespace bt
 	
 	bool ChunkManager::completed() const
 	{
-		return todo.numOnBits() == 0;
+		return todo.numOnBits() == 0 && bitset.numOnBits() > 0;
 	}
 	
 	Uint64 ChunkManager::bytesLeft() const

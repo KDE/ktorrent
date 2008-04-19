@@ -155,8 +155,10 @@ private slots:
 	void fileNew();
 	void torrentPaste();
 	void startDownload();
+	void startAllDownloadsCurrentView();
 	void startAllDownloads();
 	void stopDownload();
+	void stopAllDownloadsCurrentView();
 	void stopAllDownloads();
 	void showIPFilter();
 	void removeDownload();
@@ -172,7 +174,7 @@ private slots:
 	void currentTorrentChanged(kt::TorrentInterface* tc);
 	void updatedStats();
 	void urlDropped(QDropEvent*,QListViewItem*);
-	void onUpdateActions(bool can_start,bool can_stop,bool can_remove,bool can_scan);
+	void onUpdateActions(int flags);
 	void groupChanged(kt::Group* g);
 	void groupRenamed(kt::Group* g);
 	void groupRemoved(kt::Group* g);
@@ -220,7 +222,9 @@ private:
 	KAction* m_stop;
 	KAction* m_remove;
 	KAction* m_startall;
+	KAction* m_startall_systray;
 	KAction* m_stopall;
+	KAction* m_stopall_systray;
 	KAction* m_pasteurl;
 	KAction* m_queuemgr; 
 	KAction* m_queueaction;

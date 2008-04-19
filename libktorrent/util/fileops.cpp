@@ -61,9 +61,12 @@ typedef	int64_t		__s64;
 #define O_LARGEFILE 0
 #endif
 
-				 
+#if HAVE_STATVFS
 #include <sys/statvfs.h>
-
+#else
+#include <sys/param.h>
+#include <sys/mount.h>
+#endif
 
 namespace bt
 {
@@ -445,7 +448,19 @@ namespace bt
 			return false;
 		}
 #else
-		return false;
+		struct statfs stfs;
+		if (statfs(path.local8Bit(), &stfs) == 0)
+		{
+			bytes_free = ((Uint64)stfs.f_bavail) * ((Uint64)stfs.f_bsize);
+			return true;
+		}
+		else
+		{
+			Out(SYS_GEN|LOG_DEBUG) << "Error : statfs for " << path << " failed :  "
+						<< QString(strerror(errno)) << endl;
+
+			return false;
+		}
 #endif
 	}
 }

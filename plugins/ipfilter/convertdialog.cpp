@@ -43,16 +43,12 @@
 #include <qpushbutton.h>
 #include <qevent.h>
 #include <qurloperator.h>
+#include "antip2p.h"
 
 using namespace bt;
 
 namespace kt
 {
-	typedef struct
-	{
-		Uint32 ip1;
-		Uint32 ip2;
-	} ipblock;
 
 
 	Uint32 toUint32(QString& ip)
@@ -69,9 +65,9 @@ namespace kt
 		return ret;
 	}
 
-	ipblock toBlock(QString& range)
+	IPBlock RangeToBlock(const QString& range)
 	{
-		ipblock block;
+		IPBlock block;
 		QStringList ls = QStringList::split('-', range);
 		block.ip1 = toUint32(ls[0]);
 		block.ip2 = toUint32(ls[1]);
@@ -102,7 +98,7 @@ namespace kt
 		}
 
 		/*    READ INPUT FILE  */
-		QStringList list;
+		QValueList<IPBlock> list;
 		lbl_progress->setText( i18n( "Loading txt file..." ) );
 		label1->setText( i18n("Please wait...") );
 		ulong source_size = source.size();
@@ -138,7 +134,7 @@ namespace kt
 				else
 					++counter;
 
-				list += ip_part;
+				list += RangeToBlock(ip_part);
 			}
 			source.close();
 		}
@@ -155,6 +151,7 @@ namespace kt
 
 		if ( counter != 0 )
 		{
+			qHeapSort(list);
 			lbl_progress->setText( i18n( "Converting..." ) );
 			if ( m_plugin )
 				m_plugin->unloadAntiP2P();
@@ -175,12 +172,12 @@ namespace kt
 
 			Out(SYS_IPF|LOG_NOTICE) << "Loading finished. Starting conversion..." << endl;
 
-			QStringList::iterator iter;
+			QValueList<IPBlock>::iterator iter;
 			int i = 0;
 			for (iter = list.begin(); iter != list.end(); ++iter, ++i)
 			{
-				ipblock block = toBlock(*iter);
-				target.writeBlock( ( char* ) & block, sizeof( ipblock ) );
+				IPBlock & block = *iter;
+				target.writeBlock( ( char* ) & block, sizeof( IPBlock ) );
 				if ( i % 1000 == 0 )
 				{
 					kProgress1->setProgress( ( int ) 100 * i / blocks );

@@ -78,8 +78,8 @@ static const char description[] =
 
 bool GrabPIDLock()
 {
-	// open the PID file in the users ktorrent directory and attempt to lock it
-	QString pid_file = QDir::homeDirPath() + "/.ktorrent.lock";
+	// create a lock file in /tmp/ with the user id of the current user included in the name
+	QString pid_file = QString("/tmp/.ktorrent_%1.lock").arg(getuid());
 		
 	int fd = open(QFile::encodeName(pid_file),O_RDWR|O_CREAT,0640);
 	if (fd < 0)
@@ -106,6 +106,7 @@ bool GrabPIDLock()
 static KCmdLineOptions options[] =
 {
 	{ "debug", I18N_NOOP("Debug mode"), 0 },
+	{ "silent",  I18N_NOOP("Silently save torrent given on URL"), 0 },
 	{ "+[URL]", I18N_NOOP( "Document to open" ), 0 },
 	KCmdLineLastOption
 };
@@ -163,6 +164,7 @@ int main(int argc, char **argv)
 	about.addCredit("Jindrich Makovicka",I18N_NOOP("Non threaded fileview update patch"),"makovick@gmail.com");
 	about.addCredit("swolchok",I18N_NOOP("Optimization to SHA1 hash generation"),"evilsporkman@gmail.com");
 	about.addCredit("Markus Brueffer",I18N_NOOP("Patch to fix free diskspace calculation on FreeBSD"),"markus@brueffer.de");
+	about.addCredit("caruccio",I18N_NOOP("Patch to load torrents silently from the command line"),"mateus@caruccio.com");
 
 	KCmdLineArgs::init(argc, argv, &about);
 	KCmdLineArgs::addCmdLineOptions(options);

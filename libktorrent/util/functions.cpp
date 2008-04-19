@@ -178,7 +178,7 @@ namespace bt
 	{
 		struct timeval tv;
 		gettimeofday(&tv,0);
-		global_time_stamp = (Uint64)(tv.tv_sec * 1000 + tv.tv_usec * 0.001);
+		global_time_stamp = (Uint64)tv.tv_sec * 1000 + (Uint64)tv.tv_usec * 0.001;
 		return global_time_stamp;
 	}
 	

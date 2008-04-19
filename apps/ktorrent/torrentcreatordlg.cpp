@@ -82,7 +82,7 @@ void TorrentCreatorDlg::onCreate()
 
 	QString url = r->url();
 	int chunk_size = cb->currentText().toInt();
-	QString name = KURL(r->url()).fileName();
+	QString name = KURL::fromPathOrURL(r->url()).fileName();
 	
 	QStringList trackers; 
 	

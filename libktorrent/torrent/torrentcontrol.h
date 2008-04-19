@@ -34,6 +34,11 @@
 class QStringList;
 class QString;
 
+namespace KIO
+{
+	class Job;
+}
+
 
 namespace bt
 {
@@ -302,6 +307,7 @@ namespace bt
 		/// Update the stats of the torrent.
 		void updateStats();
 		void corrupted(Uint32 chunk);
+		void moveDataFilesJobDone(KIO::Job* job);
 		
 	private:	
 		void updateTracker(const QString & ev,bool last_succes = true);
@@ -344,6 +350,9 @@ namespace bt
 		QString old_datadir;
 		QString outputdir;
 		QString error_msg;
+		
+		QString move_data_files_destination_path;
+		bool restart_torrent_after_move_data_files;
 		
 		bool prealloc;
 		PreallocationThread* prealoc_thread;

@@ -43,7 +43,7 @@
                                 <cstring>textLabel1_5</cstring>
                             </property>
                             <property name="text">
-                                <string>ETA algorithm:</string>
+                                <string>Time left estimation algorithm:</string>
                             </property>
                             <property name="toolTip" stdset="0">
                                 <string>&lt;b&gt;KTorrent algorithm:&lt;/b&gt; Default algorithm using combination of other algorithms based on our tests.&lt;br&gt;
@@ -631,8 +631,6 @@
         </spacer>
     </vbox>
 </widget>
-<customwidgets>
-</customwidgets>
 <connections>
     <connection>
         <sender>full_prealloc</sender>

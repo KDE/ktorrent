@@ -37,11 +37,13 @@ namespace kt
 		bt::Uint32 nrEntries;
 	} HeaderBlock;
 	
-	typedef struct
+	struct IPBlock
 	{
 		bt::Uint32 ip1;
 		bt::Uint32 ip2;
-	} IPBlock;
+		
+		bool operator < (const IPBlock & b) const;
+	};
 	
 	/**
 	 * @author Ivan Vasic <ivasic@gmail.com>

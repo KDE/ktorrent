@@ -1,3 +1,9 @@
+Changes in 2.2.6 :
+- Some OpenBSD compile fixes
+- Fix lock file not working on NFS home directories by moving it to /tmp
+- Fix wrong name being in torrentcreator dialog when path contains #
+- Don't show progress info for each file we are moving in a MoveDataFilesJob
+
 Changes in 2.2.5 :
 - Fix moving of files slowing things down under certain circumstances 
 - Use avahi_qt_poll_get instead of the threaded stuff, should get rid of the zeroconf crashes

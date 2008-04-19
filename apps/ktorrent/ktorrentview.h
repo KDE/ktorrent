@@ -57,6 +57,9 @@ private:
 	KTorrentView* ktview;
 };
 
+
+	
+
 /**
  * List view which shows information about torrents.
  */
@@ -64,6 +67,16 @@ class KTorrentView : public QWidget
 {
 	Q_OBJECT
 public:
+	enum ActionEnableFlags
+	{
+		START = 1,
+		STOP = 2,
+		START_ALL = 4,
+		STOP_ALL = 8,
+		REMOVE = 16,
+		SCAN = 32
+	};
+	
 	/**
 	 * Default constructor
 	 */
@@ -76,6 +89,9 @@ public:
 	
 	/// Update the caption, so the correct number of running torrents is shown in the tab
 	void updateCaption();
+	
+	/// Trigger an updateActions signal
+	void updateActions() {onSelectionChanged();}
 	
 	/// Get the current group
 	const kt::Group* getCurrentGroup() const {return current_group;}
@@ -160,7 +176,12 @@ signals:
 	void wantToStop(kt::TorrentInterface* tc,bool user);
 	void wantToStart(kt::TorrentInterface* tc);
 	void viewChange(kt::TorrentInterface* tc);
-	void updateActions(bool can_start,bool can_stop,bool can_remove,bool can_scan);
+	
+	/**
+	 * Emit that actions need to be updated
+	 * @param flags OR of ActionEnableFlags
+	 */
+	void updateActions(int flags);
 	void queue(kt::TorrentInterface* tc);
 	void needsDataCheck(kt::TorrentInterface* tc);
 	void updateGroupsSubMenu(KPopupMenu* gsm);

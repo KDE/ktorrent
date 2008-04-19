@@ -77,7 +77,7 @@ namespace bt
 		}
 			
 		QMap<QString,QString>::iterator i = todo.begin();	
-		active_job = KIO::move(KURL::fromPathOrURL(i.key()),KURL::fromPathOrURL(i.data()));
+		active_job = KIO::move(KURL::fromPathOrURL(i.key()),KURL::fromPathOrURL(i.data()),false);
 		active_src = i.key();
 		active_dst = i.data();
 		Out(SYS_GEN|LOG_DEBUG) << "Moving " << active_src << " -> " << active_dst << endl;
@@ -94,7 +94,7 @@ namespace bt
 			return;
 		}
 		QMap<QString,QString>::iterator i = success.begin();	
-		active_job = KIO::move(KURL::fromPathOrURL(i.data()),KURL::fromPathOrURL(i.key()));
+		active_job = KIO::move(KURL::fromPathOrURL(i.data()),KURL::fromPathOrURL(i.key()),false);
 		connect(active_job,SIGNAL(result(KIO::Job*)),this,SLOT(onJobDone(KIO::Job*)));
 		connect(active_job,SIGNAL(canceled(KIO::Job*)),this,SLOT(onCanceled(KIO::Job*)));
 		success.erase(i);

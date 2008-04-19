@@ -202,6 +202,7 @@ void KTorrentView::setCurrentGroup(Group* group)
 	else
 		setCaption(i18n("All Torrents %1/%2").arg(running).arg(total));
 	
+	onSelectionChanged();
 	onExecuted(view->currentItem());
 }
 
@@ -369,7 +370,7 @@ void KTorrentView::removeDownloads()
 		{	
 			const TorrentStats & s = tc->getStats();
 			bool data_to = false;
-			if (s.bytes_left_to_download > 0)
+			if (!s.completed)
 			{
 				QString msg = i18n("The torrent %1 has not finished downloading, "
 						"do you want to delete the incomplete data, too?").arg(s.torrent_name);
@@ -548,6 +549,7 @@ void KTorrentView::update()
 			setCaption(QString("%1 %2/%3").arg(current_group->groupName()).arg(running).arg(total));
 		else
 			setCaption(i18n("All Torrents %1/%2").arg(running).arg(total));
+		onSelectionChanged();
 	}
 	
 	view->sort();
@@ -561,8 +563,8 @@ bool KTorrentView::acceptDrag(QDropEvent* event) const
 
 void KTorrentView::onSelectionChanged()
 {
-	bool en_start = false;
-	bool en_stop = false;
+	int flags = 0;
+	
 	QPtrList<QListViewItem> sel = view->selectedItems();
 	for (QPtrList<QListViewItem>::iterator itr = sel.begin(); itr != sel.end();itr++)
 	{
@@ -573,13 +575,28 @@ void KTorrentView::onSelectionChanged()
 		{
 			const TorrentStats & s = tc->getStats();
 			if (!s.running)
-				en_start = true;
+				flags |= START;
 			else
-				en_stop = true;
+				flags |= STOP;
+			
+			if (flags & (START|STOP))
+				break;
 		}
 	}
 	
-	updateActions(en_start,en_stop,sel.count() > 0,sel.count() == 1);
+	if (sel.count() > 0)
+		flags |= REMOVE;
+	
+	if (sel.count() == 1)
+		flags |= SCAN;
+	
+	if (running > 0)
+		flags |= STOP_ALL;
+	
+	if (running == 0 && total > 0)
+		flags |= START_ALL;
+	
+	updateActions(flags);
 }
 
 void KTorrentView::queueSlot()
@@ -731,7 +748,7 @@ void KTorrentView::setDownloadLocationSlot()
 		if (tc)
 		{
 			QString dn;
-			dn = KFileDialog::getExistingDirectory(QString::null, this, i18n("Choose download location for %1").arg(tc->getStats().torrent_name));
+			dn = KFileDialog::getExistingDirectory(tc->getStats().output_path, this, i18n("Choose download location for %1").arg(tc->getStats().torrent_name));
 								
 			if(dn.isNull() || dn.isEmpty())
 				continue;

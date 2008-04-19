@@ -96,6 +96,11 @@ void TrayIcon::updateStats(const CurrentStats stats, bool showBars,int downloadB
 	
 	if(showBars)
 		drawSpeedBar(stats.download_speed/1024,stats.upload_speed/1024, downloadBandwidth, uploadBandwidth);
+	else if (previousDownloadHeight > 0 || previousUploadHeight > 0)
+	{
+		repaint(); // clear the bars if they are disabled
+		previousDownloadHeight = previousUploadHeight = 0;
+	}
 }
 
 void TrayIcon::drawSpeedBar(int downloadSpeed, int uploadSpeed, int downloadBandwidth, int uploadBandwidth )

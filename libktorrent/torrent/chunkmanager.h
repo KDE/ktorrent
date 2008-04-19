@@ -30,6 +30,11 @@
 
 class QStringList;
 
+namespace KIO
+{
+	class Job;
+}
+
 namespace bt
 {
 	class Torrent;
@@ -101,8 +106,15 @@ namespace bt
 		/**
 		 * Move the data files of the torrent.
 		 * @param ndir The new directory
+		 * @return The job doing the move
 		 */
-		void moveDataFiles(const QString & ndir);
+		KIO::Job* moveDataFiles(const QString & ndir);
+		
+		/**
+		 * The move data files job has finished
+		 * @param job The move job
+		 */
+		void moveDataFilesCompleted(KIO::Job* job);
 		
 		/**
 		 * Loads the index file.

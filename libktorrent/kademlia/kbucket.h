@@ -68,6 +68,7 @@ namespace dht
 		Key node_id;
 		bt::TimeStamp last_responded;
 		Uint32 failed_queries;
+		Uint32 questionable_pings;
 	public:
 		/**
 		 * Constructor, sets everything to 0.
@@ -123,6 +124,9 @@ namespace dht
 		/// A request timed out
 		void requestTimeout() {failed_queries++;}
 		
+		/// The entry has been pinged because it is questionable
+		void onPingQuestionable() {questionable_pings++;}
+
 		/// The null entry
 		static KBucketEntry null; 
 	};

@@ -195,7 +195,7 @@ namespace bt
 		}
 	}
 	
-	void MultiFileCache::moveDataFiles(const QString & ndir)
+	KIO::Job* MultiFileCache::moveDataFiles(const QString & ndir)
 	{
 		if (!bt::Exists(ndir))
 			bt::MakeDir(ndir);
@@ -230,21 +230,25 @@ namespace bt
 			}
 			
 			mvd->startMoving();
-			if (KIO::NetAccess::synchronousRun(mvd,0))
-			{
-				for (Uint32 i = 0;i < tor.getNumFiles();i++)
-				{
-					TorrentFile & tf = tor.getFile(i);
-					// check for empty directories and delete them 
-					DeleteEmptyDirs(output_dir,tf.getPath());
-				}
-			}
-			else
-				throw bt::Error("Move failed");
+			return mvd;
 		}
 		catch (bt::Error & err)
 		{
 			throw; // rethrow error
+		}
+		return 0;
+	}
+	
+	void MultiFileCache::moveDataFilesCompleted(KIO::Job* job)
+	{
+		if (!job->error())
+		{
+			for (Uint32 i = 0;i < tor.getNumFiles();i++)
+			{
+				TorrentFile & tf = tor.getFile(i);
+					// check for empty directories and delete them 
+				DeleteEmptyDirs(output_dir,tf.getPath());
+			}
 		}
 	}
 

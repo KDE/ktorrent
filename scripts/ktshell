@@ -341,7 +341,23 @@ init () {
 				break
 			done
 		fi
-		dcop="dcop --user $usernm"
+		local IFS='
+		'
+		sessnms=( `dcop --user $usernm --list-sessions | tail -n +2 | head -n -1` )
+		unset IFS
+		if (( ${#sessnms[*]} == 0 )); then
+			echo "Found no session."
+			exit 1
+		fi
+		echo "Found a DCOP session."
+		sessnm=${sessnms[0]}
+		if (( ${#sessnms[*]} > 1 )); then
+			echo "Which session of the user's DCOP server do you wish to connect to?"
+			select sessnm in ${sessnms[*]}; do
+				break
+			done
+		fi
+		dcop="dcop --user $usernm --session $sessnm" 
 		ktorrents=( `$dcop 2>/dev/null` )
 		if (( $? != 0 )); then
 			echo "Cannot connect to the DCOP server."

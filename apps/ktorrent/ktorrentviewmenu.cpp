@@ -208,6 +208,8 @@ void KTorrentViewMenu::show(const QPoint & p)
 	
 	setItemEnabled(dirs_id, en_dirs);
 	setItemEnabled(traffic_lim_id,sel.count() == 1);
+	setItemEnabled(add_to_group_id,sel.count() > 0);
+	setItemEnabled(downloaddir_id,sel.count() > 0);
 	
 	popup(p);
 }
