@@ -2,7 +2,24 @@ Changes in 2.2.6 :
 - Some OpenBSD compile fixes
 - Fix lock file not working on NFS home directories by moving it to /tmp
 - Fix wrong name being in torrentcreator dialog when path contains #
-- Don't show progress info for each file we are moving in a MoveDataFilesJob
+- Don't show progress info for each file we are moving in a MoveDataFilesJob (160338)
+- Fix infinite loop in DHT code
+- Fix group name encoding in saving and loading
+- Fix problem with speedbars staying drawn when they were disabled
+- Ported DHT ping storm fix from KDE4 version
+- Added patch from carucciio to load torrents silently from the command line
+- Set output_path of torrent as default location when the users selects set download location in the viewmenu (157486)
+- Torrents with no file selected are now always shown as download
+- Ditch KIO::NetAccess when moving data files (157462)
+- Fix stop all and start all from system tray menu (it used to apply to the current view, now it applies to all torrents) (157991)
+- Make sure that set download location and add to group are disabled when no torrent is selected 
+- Fix ktshell when there are multiple dcop sessions  (158115)
+- ETA algorithm -> Time left estimation algorithm (158277)
+- Fix issue with time functions on openbsd (158945)
+- Put lock file in /tmp to make sure that KT works when the users home directory is on an NFS filesystem
+- Added small fix in css of default webgui
+- Added PeerID of KGet and BitsOnWheels
+- Sort list of blocks before saving them to file in ipfilter plugin
 
 Changes in 2.2.5 :
 - Fix moving of files slowing things down under certain circumstances 
