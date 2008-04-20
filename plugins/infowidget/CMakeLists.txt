@@ -4,6 +4,7 @@ option(WITH_SYSTEM_GEOIP
 	OFF)
 
 if (WITH_SYSTEM_GEOIP)
+	include(CheckIncludeFile)
 	check_include_file("GeoIP.h" have_geoip_include)
 	find_library(SYSTEM_GEOIP_LIBRARY "GeoIP")
 	check_library_exists("GeoIP" "GeoIP_open_type" ${SYSTEM_GEOIP_LIBRARY} have_geoip_library)
