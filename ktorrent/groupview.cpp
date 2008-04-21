@@ -203,6 +203,9 @@ namespace kt
 
 	GroupViewItem* GroupView::addGroup(Group* g,QTreeWidgetItem* parent)
 	{
+		if (!g)
+			return 0;
+
 		GroupViewItem* li = 0;
 		if (parent)
 		{

@@ -50,51 +50,37 @@ namespace kt
 	GroupManager::GroupManager()
 	{
 		setAutoDelete(true);
-		default_groups.setAutoDelete(true);
-		
-		Group* g = new AllGroup();
-		default_groups.insert(g->groupName(),g);
-		
-		g = new UploadGroup();
-		default_groups.insert(g->groupName(),g);
-		
-		g = new DownloadGroup();
-		default_groups.insert(g->groupName(),g);
-		
-		g = new QueuedDownloadsGroup();
-		default_groups.insert(g->groupName(),g);
-		
-		g = new QueuedUploadsGroup();
-		default_groups.insert(g->groupName(),g);
-		
-		g = new UserDownloadsGroup();
-		default_groups.insert(g->groupName(),g);
-		
-		g = new UserUploadsGroup();
-		default_groups.insert(g->groupName(),g);
-		
-		g = new ActiveGroup();
-		default_groups.insert(g->groupName(),g);
-		
-		g = new ActiveUploadsGroup();
-		default_groups.insert(g->groupName(),g);
-		
-		g = new ActiveDownloadsGroup();
-		default_groups.insert(g->groupName(),g);
-		
-		g = new InactiveGroup();
-		default_groups.insert(g->groupName(),g);
-		
-		g = new InactiveUploadsGroup();
-		default_groups.insert(g->groupName(),g);
-		
-		g = new InactiveDownloadsGroup();
-		default_groups.insert(g->groupName(),g);
+		all = new AllGroup();
+		upload = new UploadGroup();
+		download = new DownloadGroup();
+		queued_downloads = new QueuedDownloadsGroup();
+		queued_uploads = new QueuedUploadsGroup();
+		user_downloads = new UserDownloadsGroup();
+		user_uploads = new UserUploadsGroup();
+		active = new ActiveGroup();
+		active_uploads = new ActiveUploadsGroup();
+		active_downloads = new ActiveDownloadsGroup();
+		inactive = new InactiveGroup();
+		inactive_uploads = new InactiveUploadsGroup();
+		inactive_downloads = new InactiveDownloadsGroup();
 	}
 
 
 	GroupManager::~GroupManager()
 	{
+		delete all;
+		delete download;
+		delete upload;
+		delete queued_downloads;
+		delete queued_uploads;
+		delete user_downloads;
+		delete user_uploads;
+		delete inactive;
+		delete inactive_downloads;
+		delete inactive_uploads;
+		delete active;
+		delete active_downloads;
+		delete active_uploads;
 	}
 
 
@@ -110,9 +96,23 @@ namespace kt
 	
 	bool GroupManager::canRemove(const Group* g) const
 	{
-		return default_groups.find(g->groupName()) == 0;
+		return find(g->groupName()) != 0;
 	}
 	
+	Group* GroupManager::findDefault(const QString & name)
+	{
+		QList<Group*> def;
+		def << all << download << upload << queued_downloads << queued_uploads << user_downloads
+				<< user_uploads << inactive << inactive_downloads << inactive_uploads << active 
+				<< active_downloads << active_uploads;
+		
+		foreach (Group* g,def)
+		{
+			if (g->groupName() == name)
+				return g;
+		}
+		return 0;
+	}
 	
 	void GroupManager::saveGroups()
 	{
@@ -216,10 +216,5 @@ namespace kt
 		insert(new_name,g);
 		setAutoDelete(true);
 		saveGroups();
-	}
-	
-	Group* GroupManager::findDefault(const QString & name)
-	{
-		return default_groups.find(name);
 	}
 }

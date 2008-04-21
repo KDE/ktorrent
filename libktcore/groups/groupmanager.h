@@ -41,8 +41,19 @@ namespace kt
 	*/
 	class KTCORE_EXPORT GroupManager : public bt::PtrMap<QString,Group> 
 	{
-		bt::PtrMap<QString,Group> default_groups;
-		
+		Group* all;
+		Group* download;
+		Group* upload;
+		Group* queued_downloads;
+		Group* queued_uploads;
+		Group* user_downloads;
+		Group* user_uploads;
+		Group* inactive;
+		Group* inactive_downloads;
+		Group* inactive_uploads;
+		Group* active;
+		Group* active_downloads;
+		Group* active_uploads;
 	public:
 		GroupManager();
 		virtual ~GroupManager();
@@ -55,45 +66,45 @@ namespace kt
 		Group* newGroup(const QString & name);
 		
 		/// Get the group off all torrents
-		Group* allGroup() {return findDefault(i18n("All Torrents"));}
+		Group* allGroup() {return all;}
 		
 		/// Get the group of downloads
-		Group* downloadGroup() {return findDefault(i18n("Downloads"));}
+		Group* downloadGroup() {return download;}
 		
 		/// Get the group of seeds
-		Group* uploadGroup() {return findDefault(i18n("Uploads"));}
+		Group* uploadGroup() {return upload;}
 		
 		/// Get the group of queued downloads
-		Group* queuedDownloadsGroup() { return findDefault(i18n("Queued downloads")); }
+		Group* queuedDownloadsGroup() { return queued_downloads; }
 		
 		/// Get the group of queued seeds
-		Group* queuedUploadsGroup() { return findDefault(i18n("Queued uploads")); }
+		Group* queuedUploadsGroup() { return queued_uploads; }
 		
 		/// Get the group of user controlled downloads
-		Group* userDownloadsGroup() { return findDefault(i18n("User downloads")); }
+		Group* userDownloadsGroup() { return user_downloads; }
 		
 		/// Get the group of user controlled seeds
-		Group* userUploadsGroup() { return findDefault(i18n("User uploads")); }
+		Group* userUploadsGroup() { return user_uploads; }
 		
 		/// Get the group of inactive torrents
-		Group* inactiveGroup() { return findDefault(i18n("Inactive torrents")); }
+		Group* inactiveGroup() { return inactive; }
 		
 		/// Get the group of inactive downloads
-		Group* inactiveDownloadsGroup() { return findDefault(i18n("Inactive downloads")); }
+		Group* inactiveDownloadsGroup() { return inactive_downloads; }
 		
 		/// Get the group of inactive uploads
-		Group* inactiveUploadsGroup() { return findDefault(i18n("Inactive uploads")); }
+		Group* inactiveUploadsGroup() { return inactive_uploads; }
 		
 		/// Get the group of inactive torrents
-		Group* activeGroup() { return findDefault(i18n("Active torrents")); }
+		Group* activeGroup() { return active; }
 		
 		/// Get the group of inactive downloads
-		Group* activeDownloadsGroup() { return findDefault(i18n("Active downloads")); }
+		Group* activeDownloadsGroup() { return active_downloads; }
 		
 		/// Get the group of inactive uploads
-		Group* activeUploadsGroup() { return findDefault(i18n("Active uploads")); }
+		Group* activeUploadsGroup() { return active_uploads; }
 		
-		/// Find a default group by the given name
+		/// Find a default Group given a name
 		Group* findDefault(const QString & name);
 		
 		/**
