@@ -72,7 +72,7 @@ namespace bt
 	
 	void SynchronousWait(Uint32 millis)
 	{
-		Out() << "SynchronousWait" << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "SynchronousWait" << endl;
 		WaitJob* j = new WaitJob(millis);
 		KIO::NetAccess::synchronousRun(j,0);
 	}

@@ -72,8 +72,8 @@ namespace kt
 		if(arg & SYS_IPF)
 			return (arg & m_flags.SYSIPF) && ((arg & 0x0000000F) <= m_flags.SYSIPF);
 
-		if(arg & SYS_PFI)
-			return (arg & m_flags.SYSPFI) && ((arg & 0x0000000F) <= m_flags.SYSPFI);
+		if(arg & SYS_MPL)
+			return (arg & m_flags.SYSMPL) && ((arg & 0x0000000F) <= m_flags.SYSMPL);
 
 		if(arg & SYS_PNP)
 			return (arg & m_flags.SYSPNP) && ((arg & 0x0000000F) <= m_flags.SYSPNP);
@@ -117,7 +117,7 @@ namespace kt
 
 		m_flags.SYSINW = flags[LogViewerPluginSettings::sysINW()];
 		m_flags.SYSIPF = flags[LogViewerPluginSettings::sysIPF()];
-		m_flags.SYSPFI = flags[LogViewerPluginSettings::sysPFI()];
+		m_flags.SYSMPL = flags[LogViewerPluginSettings::sysMPL()];
 		m_flags.SYSPNP = flags[LogViewerPluginSettings::sysPNP()];
 		m_flags.SYSSCD = flags[LogViewerPluginSettings::sysSCD()];
 		m_flags.SYSSNF = flags[LogViewerPluginSettings::sysSNF()];

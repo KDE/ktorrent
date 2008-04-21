@@ -45,7 +45,7 @@
 #define SYS_PNP 0x4000  // UPnP plugin
 #define SYS_INW 0x8000  // InfoWidget
 #define SYS_SNF 0x10000 // ScanFolder plugin
-#define SYS_PFI 0x20000 // Part file import
+#define SYS_MPL 0x20000 // Media player plugin
 #define SYS_SCD 0x40000 // Scheduler plugin
 #define SYS_RSS 0x80000 // RSS plugin
 #define SYS_WEB 0x100000 // WebInterface plugin

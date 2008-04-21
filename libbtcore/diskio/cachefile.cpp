@@ -107,7 +107,7 @@ namespace bt
 		// reopen the file if necessary
 		if (fd == -1)
 		{
-		//	Out() << "Reopening " << path << endl;
+		//	Out(SYS_DIO|LOG_DEBUG) << "Reopening " << path << endl;
 			openFile(mode);
 		}
 		
@@ -118,8 +118,8 @@ namespace bt
 		
 		if (off + size > max_size)
 		{
-			Out() << "Warning : writing past the end of " << path << endl;
-			Out() << (off + size) << " " << max_size << endl;
+			Out(SYS_DIO|LOG_DEBUG) << "Warning : writing past the end of " << path << endl;
+			Out(SYS_DIO|LOG_DEBUG) << (off + size) << " " << max_size << endl;
 			return 0;
 		}
 		
@@ -140,7 +140,7 @@ namespace bt
 		if (off + size > file_size)
 		{
 			Uint64 to_write = (off + size) - file_size;
-		//	Out() << "Growing file with " << to_write << " bytes" << endl;
+		//	Out(SYS_DIO|LOG_DEBUG) << "Growing file with " << to_write << " bytes" << endl;
 			growFile(to_write);
 		}
 		
@@ -151,7 +151,7 @@ namespace bt
 			// so we play around a bit
 			Uint32 diff = (off % page_size);
 			Uint64 noff = off - diff;
-		//	Out() << "Offsetted mmap : " << diff << endl;
+		//	Out(SYS_DIO|LOG_DEBUG) << "Offsetted mmap : " << diff << endl;
 #ifdef HAVE_MMAP64
 			char* ptr = (char*)mmap64(0, size + diff, mmap_flag, MAP_SHARED, fd, noff);
 #else
@@ -159,7 +159,7 @@ namespace bt
 #endif
 			if (ptr == MAP_FAILED) 
 			{
-				Out() << "mmap failed : " << QString(strerror(errno)) << endl;
+				Out(SYS_DIO|LOG_DEBUG) << "mmap failed : " << QString(strerror(errno)) << endl;
 				return 0;
 			}
 			else
@@ -184,7 +184,7 @@ namespace bt
 #endif
 			if (ptr == MAP_FAILED) 
 			{
-				Out() << "mmap failed : " << QString(strerror(errno)) << endl;
+				Out(SYS_DIO|LOG_DEBUG) << "mmap failed : " << QString(strerror(errno)) << endl;
 				return 0;
 			}
 			else
@@ -207,7 +207,7 @@ namespace bt
 		// reopen the file if necessary
 		if (fd == -1)
 		{
-		//	Out() << "Reopening " << path << endl;
+		//	Out(SYS_DIO|LOG_DEBUG) << "Reopening " << path << endl;
 			openFile(RW);
 		}
 		
@@ -219,8 +219,8 @@ namespace bt
 		
 		if (file_size + to_write > max_size)
 		{
-			Out() << "Warning : writing past the end of " << path << endl;
-			Out() << (file_size + to_write) << " " << max_size << endl;
+			Out(SYS_DIO|LOG_DEBUG) << "Warning : writing past the end of " << path << endl;
+			Out(SYS_DIO|LOG_DEBUG) << (file_size + to_write) << " " << max_size << endl;
 		}
 		
 		Uint8 buf[1024];
@@ -334,7 +334,7 @@ namespace bt
 		// reopen the file if necessary
 		if (fd == -1)
 		{
-		//	Out() << "Reopening " << path << endl;
+		//	Out(SYS_DIO|LOG_DEBUG) << "Reopening " << path << endl;
 			openFile(READ);
 			close_again = true;
 		}
@@ -366,7 +366,7 @@ namespace bt
 		// reopen the file if necessary
 		if (fd == -1)
 		{
-		//	Out() << "Reopening " << path << endl;
+		//	Out(SYS_DIO|LOG_DEBUG) << "Reopening " << path << endl;
 			openFile(RW);
 			close_again = true;
 		}
@@ -376,13 +376,13 @@ namespace bt
 		
 		if (off + size > max_size)
 		{
-			Out() << "Warning : writing past the end of " << path << endl;
-			Out() << (off + size) << " " << max_size << endl;
+			Out(SYS_DIO|LOG_DEBUG) << "Warning : writing past the end of " << path << endl;
+			Out(SYS_DIO|LOG_DEBUG) << (off + size) << " " << max_size << endl;
 		}
 		
 		if (file_size < off)
 		{
-			//Out() << QString("Writing %1 bytes at %2").arg(size).arg(off) << endl;
+			//Out(SYS_DIO|LOG_DEBUG) << QString("Writing %1 bytes at %2").arg(size).arg(off) << endl;
 			growFile(off - file_size);
 		}
 		
@@ -396,7 +396,7 @@ namespace bt
 			throw Error(i18n("Error writing to %1 : %2",path,strerror(errno)));
 		else if ((Uint32)ret != size)
 		{
-			Out() << QString("Incomplete write of %1 bytes, should be %2").arg(ret).arg(size) << endl;
+			Out(SYS_DIO|LOG_DEBUG) << QString("Incomplete write of %1 bytes, should be %2").arg(ret).arg(size) << endl;
 			throw Error(i18n("Error writing to %1",path));
 		}
 		

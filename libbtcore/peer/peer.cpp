@@ -132,14 +132,14 @@ namespace bt
 		if (len == 0)
 			return;
 		const Uint8* tmp_buf = packet;
-		//Out() << "Got packet : " << len << " type = " << type <<  endl;
+		//Out(SYS_CON|LOG_DEBUG) << "Got packet : " << len << " type = " << type <<  endl;
 		Uint8 type = tmp_buf[0];
 		switch (type)
 		{
 			case CHOKE:
 				if (len != 1)
 				{
-					Out() << "len err CHOKE" << endl;
+					Out(SYS_CON|LOG_DEBUG) << "len err CHOKE" << endl;
 					kill();
 					return;
 				}
@@ -154,7 +154,7 @@ namespace bt
 			case UNCHOKE:
 				if (len != 1)
 				{
-					Out() << "len err UNCHOKE" << endl;
+					Out(SYS_CON|LOG_DEBUG) << "len err UNCHOKE" << endl;
 					kill();
 					return;
 				}
@@ -166,7 +166,7 @@ namespace bt
 			case INTERESTED:
 				if (len != 1)
 				{
-					Out() << "len err INTERESTED" << endl;
+					Out(SYS_CON|LOG_DEBUG) << "len err INTERESTED" << endl;
 					kill();
 					return;
 				}
@@ -179,7 +179,7 @@ namespace bt
 			case NOT_INTERESTED:
 				if (len != 1)
 				{
-					Out() << "len err NOT_INTERESTED" << endl;
+					Out(SYS_CON|LOG_DEBUG) << "len err NOT_INTERESTED" << endl;
 					kill();
 					return;
 				}
@@ -192,7 +192,7 @@ namespace bt
 			case HAVE:
 				if (len != 5)
 				{
-					Out() << "len err HAVE" << endl;
+					Out(SYS_CON|LOG_DEBUG) << "len err HAVE" << endl;
 					kill();
 				}
 				else
@@ -213,7 +213,7 @@ namespace bt
 			case BITFIELD:
 				if (len != 1 + pieces.getNumBytes())
 				{
-					Out() << "len err BITFIELD" << endl;
+					Out(SYS_CON|LOG_DEBUG) << "len err BITFIELD" << endl;
 					kill();
 					return;
 				}
@@ -224,7 +224,7 @@ namespace bt
 			case REQUEST:
 				if (len != 13)
 				{
-					Out() << "len err REQUEST" << endl;
+					Out(SYS_CON|LOG_DEBUG) << "len err REQUEST" << endl;
 					kill();
 					return;
 				}
@@ -240,13 +240,13 @@ namespace bt
 						uploader->addRequest(r);
 					else if (stats.fast_extensions)
 						pwriter->sendReject(r);
-				//	Out() << "REQUEST " << r.getIndex() << " " << r.getOffset() << endl;
+				//	Out(SYS_CON|LOG_DEBUG) << "REQUEST " << r.getIndex() << " " << r.getOffset() << endl;
 				}
 				break;
 			case PIECE:
 				if (len < 9)
 				{
-					Out() << "len err PIECE" << endl;
+					Out(SYS_CON|LOG_DEBUG) << "len err PIECE" << endl;
 					kill();
 					return;
 				}
@@ -267,7 +267,7 @@ namespace bt
 			case CANCEL:
 				if (len != 13)
 				{
-					Out() << "len err CANCEL" << endl;
+					Out(SYS_CON|LOG_DEBUG) << "len err CANCEL" << endl;
 					kill();
 					return;
 				}
@@ -283,7 +283,7 @@ namespace bt
 			case REJECT_REQUEST:
 				if (len != 13)
 				{
-					Out() << "len err REJECT_REQUEST" << endl;
+					Out(SYS_CON|LOG_DEBUG) << "len err REJECT_REQUEST" << endl;
 					kill();
 					return;
 				}
@@ -299,21 +299,21 @@ namespace bt
 			case PORT:
 				if (len != 3)
 				{
-					Out() << "len err PORT" << endl;
+					Out(SYS_CON|LOG_DEBUG) << "len err PORT" << endl;
 					kill();
 					return;
 				}
 				
 				{
 					Uint16 port = ReadUint16(tmp_buf,1);
-				//	Out() << "Got PORT packet : " << port << endl;
+				//	Out(SYS_CON|LOG_DEBUG) << "Got PORT packet : " << port << endl;
 					gotPortPacket(getIPAddresss(),port);
 				}
 				break;
 			case HAVE_ALL:
 				if (len != 1)
 				{
-					Out() << "len err HAVE_ALL" << endl;
+					Out(SYS_CON|LOG_DEBUG) << "len err HAVE_ALL" << endl;
 					kill();
 					return;
 				}
@@ -323,7 +323,7 @@ namespace bt
 			case HAVE_NONE:
 				if (len != 1)
 				{
-					Out() << "len err HAVE_NONE" << endl;
+					Out(SYS_CON|LOG_DEBUG) << "len err HAVE_NONE" << endl;
 					kill();
 					return;
 				}
@@ -427,7 +427,7 @@ namespace bt
 
 	void Peer::dataWritten(int )
 	{
-	//	Out() << "dataWritten " << bytes << endl;
+	//	Out(SYS_CON|LOG_DEBUG) << "dataWritten " << bytes << endl;
 		
 	}
 	

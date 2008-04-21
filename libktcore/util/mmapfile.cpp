@@ -165,7 +165,7 @@ namespace bt
 		if (ptr + buf_size > size)
 			throw Error(i18n("Cannot write beyond end of the mmap buffer!"));
 		
-		Out() << "MMapFile::write : " << (ptr + buf_size) << " " << file_size << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "MMapFile::write : " << (ptr + buf_size) << " " << file_size << endl;
 		// enlarge the file if necessary
 		if (ptr + buf_size > file_size)
 		{
@@ -185,7 +185,7 @@ namespace bt
 	
 	void MMapFile::growFile(Uint64 new_size)
 	{
-		Out() << "Growing file to " << new_size << " bytes " << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Growing file to " << new_size << " bytes " << endl;
 		Uint64 to_write = new_size - file_size;
 		ssize_t written;
 		// jump to the end of the file

@@ -113,14 +113,14 @@ namespace mse
 				}
 			}
 			if (ds != len)
-				Out() << "ds != len" << endl;
+				Out(SYS_CON|LOG_DEBUG) << "ds != len" << endl;
 			return ds;
 		}
 		else
 		{
 			Uint32 ret = sock->send(data,len);
 			if (ret != len)
-				Out() << "ret != len" << endl;
+				Out(SYS_CON|LOG_DEBUG) << "ret != len" << endl;
 			return ret;
 		}
 	}

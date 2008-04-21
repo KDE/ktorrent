@@ -53,6 +53,7 @@ namespace kt
 		
 		m_speed_limits_view->setModel(pm);
 		m_speed_limits_view->setItemDelegate(new SpinBoxDelegate(this));
+		m_speed_limits_view->setUniformRowHeights(true);
 		m_speed_limits_view->setSortingEnabled(true);
 		m_speed_limits_view->sortByColumn(0,Qt::AscendingOrder);
 		m_speed_limits_view->header()->setSortIndicatorShown(true);
@@ -112,6 +113,7 @@ namespace kt
 		KConfigGroup g = KGlobal::config()->group("SpeedLimitsDlg");
 		QByteArray s = m_speed_limits_view->header()->saveState();
 		g.writeEntry("view_state",s.toBase64());
+		g.writeEntry("size",size());
 	}
 	
 	void SpeedLimitsDlg::loadState()
@@ -124,6 +126,9 @@ namespace kt
 			m_speed_limits_view->header()->setSortIndicatorShown(true);
 			m_speed_limits_view->header()->setClickable(true);
 		}
+		
+		QSize ws = g.readEntry("size",size());
+		resize(ws);
 	}
 
 	void SpeedLimitsDlg::accept()

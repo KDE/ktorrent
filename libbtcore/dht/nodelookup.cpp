@@ -41,7 +41,7 @@ namespace dht
 
 	void NodeLookup::callFinished(RPCCall* ,MsgBase* rsp)
 	{
-	//	Out() << "NodeLookup::callFinished" << endl;
+	//	Out(SYS_DHT|LOG_DEBUG) << "NodeLookup::callFinished" << endl;
 		if (isFinished())
 			return;
 		
@@ -73,13 +73,13 @@ namespace dht
 	
 	void NodeLookup::callTimeout(RPCCall*)
 	{
-	//	Out() << "NodeLookup::callTimeout" << endl;
+	//	Out(SYS_DHT|LOG_DEBUG) << "NodeLookup::callTimeout" << endl;
 	}
 	
 	void NodeLookup::update()
 	{
-	//	Out() << "NodeLookup::update" << endl;
-	//	Out() << "todo = " << todo.count() << " ; visited = " << visited.count() << endl;
+	//	Out(SYS_DHT|LOG_DEBUG) << "NodeLookup::update" << endl;
+	//	Out(SYS_DHT|LOG_DEBUG) << "todo = " << todo.count() << " ; visited = " << visited.count() << endl;
 		// go over the todo list and send find node calls
 		// until we have nothing left
 		while (!todo.empty() && canDoRequest())

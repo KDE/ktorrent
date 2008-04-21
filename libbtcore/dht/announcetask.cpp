@@ -39,7 +39,7 @@ namespace dht
 
 	void AnnounceTask::callFinished(RPCCall* c, MsgBase* rsp)
 	{
-	//	Out() << "AnnounceTask::callFinished" << endl;
+	//	Out(SYS_DHT|LOG_DEBUG) << "AnnounceTask::callFinished" << endl;
 		// if we do not have a get peers response, return
 		// announce_peer's response are just empty anyway
 		if (c->getMsgMethod() != dht::GET_PEERS)
@@ -98,14 +98,14 @@ namespace dht
 
 	void AnnounceTask::callTimeout(RPCCall* )
 	{
-		//Out() << "AnnounceTask::callTimeout " << endl;
+		//Out(SYS_DHT|LOG_DEBUG) << "AnnounceTask::callTimeout " << endl;
 	}
 
 	void AnnounceTask::update()
 	{
-/*		Out() << "AnnounceTask::update " << endl;
-		Out() << "todo " << todo.count() << " ; answered " << answered.count() << endl;
-		Out() << "visited " << visited.count() << " ; answered_visited " << answered_visited.count() << endl;
+/*		Out(SYS_DHT|LOG_DEBUG) << "AnnounceTask::update " << endl;
+		Out(SYS_DHT|LOG_DEBUG) << "todo " << todo.count() << " ; answered " << answered.count() << endl;
+		Out(SYS_DHT|LOG_DEBUG) << "visited " << visited.count() << " ; answered_visited " << answered_visited.count() << endl;
 	*/
 		while (!answered.empty() && canDoRequest())
 		{

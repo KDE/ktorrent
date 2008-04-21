@@ -108,7 +108,7 @@ namespace bt
 
 	void PeerManager::killChokedPeers(Uint32 older_then)
 	{
-		Out() << "Getting rid of peers which have been choked for a long time" << endl;
+		Out(SYS_CON|LOG_DEBUG) << "Getting rid of peers which have been choked for a long time" << endl;
 		TimeStamp now = bt::GetCurrentTime();
 		QList<Peer*>::iterator i = peer_list.begin();
 		Uint32 num_killed = 0;

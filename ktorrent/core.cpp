@@ -667,7 +667,7 @@ namespace kt
 			if (!nd.endsWith(DirSeparator()))
 				nd += DirSeparator();
 
-			Out() << "Switching to datadir " << nd << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Switching to datadir " << nd << endl;
 			
 			qman->setPausedState(true);
 			
@@ -709,7 +709,7 @@ namespace kt
 
 	void Core::rollback(const QList<bt::TorrentInterface*> & succes)
 	{
-		Out() << "Error, rolling back" << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Error, rolling back" << endl;
 		update_timer.stop();
 		QList<bt::TorrentInterface*>::const_iterator i = succes.begin();
 		while (i != succes.end())

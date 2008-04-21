@@ -151,7 +151,7 @@ namespace bt
 	
 	void Torrent::loadFiles(BListNode* node)
 	{
-		Out() << "Multi file torrent" << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Multi file torrent" << endl;
 		if (!node)
 			throw Error(i18n("Corrupted torrent!"));
 		Uint32 idx = 0;	
@@ -303,7 +303,7 @@ namespace bt
 
 				KUrl url(vn->data().toString().trimmed());
 				tier->urls.append(url);
-				//Out() << "Added tracker " << url << endl;
+				//Out(SYS_GEN|LOG_DEBUG) << "Added tracker " << url << endl;
 			}
 			tier->next = new TrackerTier();
 			tier = tier->next;
@@ -355,33 +355,33 @@ namespace bt
 
 	void Torrent::debugPrintInfo()
 	{
-		Out() << "Name : " << name_suggestion << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Name : " << name_suggestion << endl;
 		
 //		for (KUrl::List::iterator i = tracker_urls.begin();i != tracker_urls.end();i++)
-//			Out() << "Tracker URL : " << *i << endl;
+//			Out(SYS_GEN|LOG_DEBUG) << "Tracker URL : " << *i << endl;
 		
-		Out() << "Piece Length : " << piece_length << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Piece Length : " << piece_length << endl;
 		if (this->isMultiFile())
 		{
-			Out() << "Files : " << endl;
-			Out() << "===================================" << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Files : " << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "===================================" << endl;
 			for (Uint32 i = 0;i < getNumFiles();i++)
 			{
 				TorrentFile & tf = getFile(i);
-				Out() << "Path : " << tf.getPath() << endl;
-				Out() << "Size : " << tf.getSize() << endl;
-				Out() << "First Chunk : " << tf.getFirstChunk() << endl;
-				Out() << "Last Chunk : " << tf.getLastChunk() << endl;
-				Out() << "First Chunk Off : " << tf.getFirstChunkOffset() << endl;
-				Out() << "Last Chunk Size : " << tf.getLastChunkSize() << endl;
-				Out() << "===================================" << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "Path : " << tf.getPath() << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "Size : " << tf.getSize() << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "First Chunk : " << tf.getFirstChunk() << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "Last Chunk : " << tf.getLastChunk() << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "First Chunk Off : " << tf.getFirstChunkOffset() << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "Last Chunk Size : " << tf.getLastChunkSize() << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "===================================" << endl;
 			}
 		}
 		else
 		{
-			Out() << "File Length : " << file_length << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "File Length : " << file_length << endl;
 		}
-		Out() << "Pieces : " << hash_pieces.size() << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Pieces : " << hash_pieces.size() << endl;
 	}
 	
 	bool Torrent::verifyHash(const SHA1Hash & h,Uint32 index)

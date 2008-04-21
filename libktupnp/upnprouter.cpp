@@ -178,7 +178,7 @@ namespace kt
 		for (QList<UPnPService>::iterator i = services.begin();i != services.end();i++)
 		{
 			UPnPService & s = *i;
-			Out() << "Service : " << endl;
+			Out(SYS_PNP|LOG_DEBUG) << "Service : " << endl;
 			s.debugPrintData();
 			Out(SYS_PNP|LOG_DEBUG) << "Done" << endl;
 		}

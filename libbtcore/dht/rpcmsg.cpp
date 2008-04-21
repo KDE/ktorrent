@@ -569,7 +569,7 @@ namespace dht
 	}
 	void GetPeersRsp::print()
 	{
-		Out() << QString("RSP: %1 %2 : get_peers(%3)")
+		Out(SYS_DHT|LOG_DEBUG) << QString("RSP: %1 %2 : get_peers(%3)")
 				.arg(mtid).arg(id.toString()).arg(nodes.size() > 0 ? "nodes" : "values") << endl;
 	}
 
@@ -636,7 +636,7 @@ namespace dht
 	
 	void AnnounceRsp::print()
 	{
-		Out() << QString("RSP: %1 %2 : announce_peer")
+		Out(SYS_DHT|LOG_DEBUG) << QString("RSP: %1 %2 : announce_peer")
 				.arg(mtid).arg(id.toString()) << endl;
 	}
 	

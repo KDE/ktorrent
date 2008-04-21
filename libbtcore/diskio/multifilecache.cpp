@@ -442,7 +442,7 @@ namespace bt
 					ret = dfd->readFirstChunk(data,read,c->getSize());
 				
 				if (ret > 0 && ret != to_read)
-					Out() << "Warning : MultiFileCache::load ret != to_read" << endl;
+					Out(SYS_DIO|LOG_DEBUG) << "Warning : MultiFileCache::load ret != to_read" << endl;
 			}
 			read += to_read;
 		}
@@ -456,7 +456,7 @@ namespace bt
 		QList<Uint32> tflist;
 		tor.calcChunkPos(c->getIndex(),tflist);
 		
-//		Out() << "Prep " << c->getIndex() << endl;
+//		Out(SYS_DIO|LOG_DEBUG) << "Prep " << c->getIndex() << endl;
 		if (tflist.count() == 1)
 		{
 			// in one so just mmap it
@@ -508,7 +508,7 @@ namespace bt
 			return;
 		}
 	
-	//	Out() << "Writing to " << tflist.count() << " files " << endl;
+	//	Out(SYS_DIO|LOG_DEBUG) << "Writing to " << tflist.count() << " files " << endl;
 		Uint64 written = 0; // number of bytes written
 		for (int i = 0;i < tflist.count();i++)
 		{
@@ -536,7 +536,7 @@ namespace bt
 			else
 				to_write = f.getSize();
 			
-		//	Out() << "to_write " << to_write << endl;
+		//	Out(SYS_DIO|LOG_DEBUG) << "to_write " << to_write << endl;
 			// write the data
 			if (fd)
 				fd->write(c->getData() + written,to_write,off);
@@ -620,7 +620,7 @@ namespace bt
 		{
 			delete fd;
 			delete dfd;
-			Out() << err.toString() << endl;
+			Out(SYS_DIO|LOG_DEBUG) << err.toString() << endl;
 		}
 	}
 	
@@ -741,7 +741,7 @@ namespace bt
 	
 	void MultiFileCache::preallocateDiskSpace(PreallocationThread* prealloc)
 	{
-		Out() << "MultiFileCache::preallocateDiskSpace" << endl;
+		Out(SYS_DIO|LOG_DEBUG) << "MultiFileCache::preallocateDiskSpace" << endl;
 		PtrMap<Uint32,CacheFile>::iterator i = files.begin();
 		while (i != files.end())
 		{

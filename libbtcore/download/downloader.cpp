@@ -569,8 +569,8 @@ namespace bt
 		hdr.num_chunks = current_chunks.count();
 		fptr.write(&hdr,sizeof(CurrentChunksHeader));
 
-//		Out() << "sizeof(CurrentChunksHeader)" << sizeof(CurrentChunksHeader) << endl;
-		Out() << "Saving " << current_chunks.count() << " chunk downloads" << endl;
+//		Out(SYS_GEN|LOG_DEBUG) << "sizeof(CurrentChunksHeader)" << sizeof(CurrentChunksHeader) << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Saving " << current_chunks.count() << " chunk downloads" << endl;
 		for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();++i)
 		{
 			ChunkDownload* cd = i->second;
@@ -596,26 +596,26 @@ namespace bt
 		fptr.read(&chdr,sizeof(CurrentChunksHeader));
 		if (chdr.magic != CURRENT_CHUNK_MAGIC)
 		{
-			Out() << "Warning : current_chunks file corrupted" << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Warning : current_chunks file corrupted" << endl;
 			return;
 		}
 
-		Out() << "Loading " << chdr.num_chunks  << " active chunk downloads" << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Loading " << chdr.num_chunks  << " active chunk downloads" << endl;
 		for (Uint32 i = 0;i < chdr.num_chunks;i++)
 		{
 			ChunkDownloadHeader hdr;
 			// first read header
 			fptr.read(&hdr,sizeof(ChunkDownloadHeader));
-			Out() << "Loading chunk " << hdr.index << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Loading chunk " << hdr.index << endl;
 			if (hdr.index >= tor.getNumChunks())
 			{
-				Out() << "Warning : current_chunks file corrupted, invalid index " << hdr.index << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "Warning : current_chunks file corrupted, invalid index " << hdr.index << endl;
 				return;
 			}
 			
 			if (!cman.getChunk(hdr.index) || current_chunks.contains(hdr.index))
 			{
-				Out() << "Illegal chunk " << hdr.index << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "Illegal chunk " << hdr.index << endl;
 				return;
 			}
 			Chunk* c = cman.getChunk(hdr.index);
@@ -663,7 +663,7 @@ namespace bt
 		fptr.read(&chdr,sizeof(CurrentChunksHeader));
 		if (chdr.magic != CURRENT_CHUNK_MAGIC)
 		{
-			Out() << "Warning : current_chunks file corrupted" << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Warning : current_chunks file corrupted" << endl;
 			return 0;
 		}
 		Uint32 num_bytes = 0;

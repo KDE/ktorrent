@@ -124,7 +124,7 @@ namespace kt
 		bt::File fptr;
 		if (!fptr.open(fn,"wb"))
 		{
-			bt::Out() << "Cannot open " << fn << " : " << fptr.errorString() << bt::endl;
+			bt::Out(SYS_GEN|LOG_DEBUG) << "Cannot open " << fn << " : " << fptr.errorString() << bt::endl;
 			return;
 		}
 		
@@ -141,7 +141,7 @@ namespace kt
 		}
 		catch (bt::Error & err)
 		{
-			bt::Out() << "Error : " << err.toString() << endl;
+			bt::Out(SYS_GEN|LOG_DEBUG) << "Error : " << err.toString() << endl;
 			return;
 		}
 	}
@@ -154,7 +154,7 @@ namespace kt
 		bt::File fptr;
 		if (!fptr.open(fn,"rb"))
 		{
-			bt::Out() << "Cannot open " << fn << " : " << fptr.errorString() << bt::endl;
+			bt::Out(SYS_GEN|LOG_DEBUG) << "Cannot open " << fn << " : " << fptr.errorString() << bt::endl;
 			return;
 		}	
 		try
@@ -195,7 +195,7 @@ namespace kt
 		}
 		catch (bt::Error & err)
 		{
-			bt::Out() << "Error : " << err.toString() << endl;
+			bt::Out(SYS_GEN|LOG_DEBUG) << "Error : " << err.toString() << endl;
 			return;
 		}
 	}

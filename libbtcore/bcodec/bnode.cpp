@@ -42,9 +42,9 @@ namespace bt
 	void BValueNode::printDebugInfo()
 	{
 		if (v.getType() == Value::INT)
-			Out() << "Value = " << v.toInt() << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Value = " << v.toInt() << endl;
 		else
-			Out() << "Value = " << v.toString() << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Value = " << v.toString() << endl;
 	}
 	
 	////////////////////////////////////////////////
@@ -118,16 +118,16 @@ namespace bt
 	
 	void BDictNode::printDebugInfo()
 	{
-		Out() << "DICT" << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "DICT" << endl;
 		QList<DictEntry>::iterator i = children.begin();
 		while (i != children.end())
 		{
 			DictEntry & e = *i;
-			Out() << QString(e.key) << ": " << endl;
+			Out(SYS_GEN|LOG_DEBUG) << QString(e.key) << ": " << endl;
 			e.node->printDebugInfo();
 			i++;
 		}
-		Out() << "END" << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "END" << endl;
 	}
 	
 	////////////////////////////////////////////////
@@ -169,13 +169,13 @@ namespace bt
 	
 	void BListNode::printDebugInfo()
 	{
-		Out() << "LIST " <<  children.count() << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "LIST " <<  children.count() << endl;
 		for (int i = 0;i < children.count();i++)
 		{
 			BNode* n = children.at(i);
 			n->printDebugInfo();
 		}
-		Out() << "END" << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "END" << endl;
 	}
 }
 

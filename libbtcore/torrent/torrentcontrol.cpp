@@ -702,7 +702,7 @@ namespace bt
 		catch (Error & e)
 		{
 			// print out warning in case of failure
-			Out() << "Warning : " << e.toString() << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Warning : " << e.toString() << endl;
 			istats.prev_bytes_dl = downloader->bytesDownloaded();
 		}
 		
@@ -715,7 +715,7 @@ namespace bt
 			cman->createFiles();
 			stats.output_path = cman->getOutputPath();
 		}*/
-		Out() << "OutputPath = " << stats.output_path << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "OutputPath = " << stats.output_path << endl;
 	}
 	
 
@@ -1325,7 +1325,7 @@ namespace bt
 			if (pos != - 1)
 			{
 				dd = dd.replace(pos,3,"migrate-failed-tor");
-				Out() << "Copying " << tordir << " to " << dd << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "Copying " << tordir << " to " << dd << endl;
 				bt::CopyDir(tordir,dd,true);
 			}
 				

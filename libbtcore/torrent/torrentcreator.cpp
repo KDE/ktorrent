@@ -61,7 +61,7 @@ namespace bt
 			if (tot_size % chunk_size > 0)
 				num_chunks++;
 			last_size = tot_size % chunk_size;
-			Out() << "Tot Size : " << tot_size << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Tot Size : " << tot_size << endl;
 		}
 		else
 		{
@@ -70,15 +70,15 @@ namespace bt
 			if (tot_size % chunk_size > 0)
 				num_chunks++;
 			last_size = tot_size % chunk_size;
-			Out() << "Tot Size : " << tot_size << endl;
+			Out(SYS_GEN|LOG_DEBUG) << "Tot Size : " << tot_size << endl;
 		}
 
 		if (last_size == 0)
 			last_size = chunk_size;
 
-		Out() << "Num Chunks : " << num_chunks << endl;
-		Out() << "Chunk Size : " << chunk_size << endl;
-		Out() << "Last Size : " << last_size << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Num Chunks : " << num_chunks << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Chunk Size : " << chunk_size << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Last Size : " << last_size << endl;
 	}
 
 
@@ -325,7 +325,7 @@ namespace bt
 		hashes.append(h);
 
 		cur_chunk++;
-	//	Out() << "=============================================" << endl;
+	//	Out(SYS_GEN|LOG_DEBUG) << "=============================================" << endl;
 		return cur_chunk >= num_chunks;
 	}
 	

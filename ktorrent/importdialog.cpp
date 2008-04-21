@@ -316,7 +316,7 @@ namespace kt
 		QFile fptr(stats_file);
 		if (!fptr.open(QIODevice::WriteOnly))
 		{
-			Out(SYS_PFI|LOG_IMPORTANT) << "Warning : can't create stats file" << endl;
+			Out(SYS_GEN|LOG_IMPORTANT) << "Warning : can't create stats file" << endl;
 			return;
 		}
 
@@ -360,7 +360,7 @@ namespace kt
 		File fptr;
 		if (!fptr.open(file_info_file,"wb"))
 		{
-			Out(SYS_PFI|LOG_IMPORTANT) << "Warning : Can't save chunk_info file : " << fptr.errorString() << endl;
+			Out(SYS_GEN|LOG_IMPORTANT) << "Warning : Can't save chunk_info file : " << fptr.errorString() << endl;
 			return;
 		}
 

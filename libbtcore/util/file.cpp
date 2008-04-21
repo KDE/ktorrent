@@ -78,7 +78,7 @@ namespace bt
 		if (ret != size)
 		{
 			if (errno == ENOSPC)
-				Out() << "Disk full !" << endl;
+				Out(SYS_DIO|LOG_IMPORTANT) << "Disk full !" << endl;
 			
 			throw Error(i18n("Cannot write to %1 : %2",file,strerror(errno)));
 		}

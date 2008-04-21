@@ -252,8 +252,8 @@ namespace bt
 	{
 //#define DEBUG_PRINT_RESPONSE
 #ifdef DEBUG_PRINT_RESPONSE
-		Out() << "Data : " << endl;
-		Out() << QString(data) << endl;
+		Out(SYS_TRK|LOG_DEBUG) << "Data : " << endl;
+		Out(SYS_TRK|LOG_DEBUG) << QString(data) << endl;
 #endif
 		// search for dictionary, there might be random garbage infront of the data
 		Uint32 i = 0;

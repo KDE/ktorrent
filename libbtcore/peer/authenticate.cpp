@@ -170,7 +170,7 @@ namespace bt
 		SHA1Hash rh(hs+28);
 		if (rh != info_hash)
 		{
-			Out() << "Wrong info_hash : " << rh.toString() << endl;
+			Out(SYS_CON|LOG_DEBUG) << "Wrong info_hash : " << rh.toString() << endl;
 			onFinish(false);
 			return;
 		}

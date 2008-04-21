@@ -73,7 +73,7 @@ namespace bt
 					,dir,strerror(errno)));
 			else
 			{
-				Out() << QString("Error : Cannot create directory %1 : %2").arg(dir).arg(strerror(errno))<< endl;
+				Out(SYS_DIO|LOG_NOTICE) << QString("Error : Cannot create directory %1 : %2").arg(dir).arg(strerror(errno))<< endl;
 			}
 		}
 	}
@@ -87,7 +87,7 @@ namespace bt
 					,link_url,link_to
 					,strerror(errno)));
 			else
-				Out() << QString("Error : Cannot symlink %1 to %2: %3")
+				Out(SYS_DIO|LOG_NOTICE) << QString("Error : Cannot symlink %1 to %2: %3")
 						.arg(link_url).arg(link_to)
 						.arg(strerror(errno)) << endl;
 		}
@@ -104,7 +104,7 @@ namespace bt
 					src,dst,
 						KIO::NetAccess::lastErrorString()));
 			else
-				Out() << QString("Error : Cannot move %1 to %2: %3")
+				Out(SYS_DIO|LOG_NOTICE) << QString("Error : Cannot move %1 to %2: %3")
 						.arg(src).arg(dst)
 						.arg(KIO::NetAccess::lastErrorString()) << endl;
 		
@@ -120,7 +120,7 @@ namespace bt
 						src,dst,
 						KIO::NetAccess::lastErrorString()));
 			else
-				Out() << QString("Error : Cannot copy %1 to %2: %3")
+				Out(SYS_DIO|LOG_NOTICE) << QString("Error : Cannot copy %1 to %2: %3")
 						.arg(src).arg(dst)
 						.arg(KIO::NetAccess::lastErrorString()) << endl;
 	
@@ -136,7 +136,7 @@ namespace bt
 						src,dst,
 						KIO::NetAccess::lastErrorString()));
 			else
-				Out() << QString("Error : Cannot copy %1 to %2: %3")
+				Out(SYS_DIO|LOG_NOTICE) << QString("Error : Cannot copy %1 to %2: %3")
 						.arg(src).arg(dst)
 						.arg(KIO::NetAccess::lastErrorString()) << endl;
 	
@@ -211,7 +211,7 @@ namespace bt
 			if (!nothrow)
 				throw Error(err);
 			else
-				Out() << "Error : " << err << endl;
+				Out(SYS_DIO|LOG_NOTICE) << "Error : " << err << endl;
 		}
 	}
 
@@ -226,7 +226,7 @@ namespace bt
 			if (!nothrow)
 				throw Error(i18n("Cannot create %1: %2",url,fptr.errorString()));
 			else
-				Out() << "Error : Cannot create " << url << " : "
+				Out(SYS_DIO|LOG_NOTICE) << "Error : Cannot create " << url << " : "
 						<< fptr.errorString() << endl;
 		
 		}
@@ -277,7 +277,7 @@ namespace bt
 		}
 		catch (bt::Error & e)
 		{
-			Out() << e.toString() << endl;
+			Out(SYS_DIO|LOG_NOTICE) << e.toString() << endl;
 			return false;
 		}
 		return true;

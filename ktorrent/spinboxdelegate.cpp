@@ -64,7 +64,16 @@ namespace kt
 	
 	void SpinBoxDelegate::updateEditorGeometry(QWidget *editor,const QStyleOptionViewItem &option, const QModelIndex &) const
 	{
-		editor->setGeometry(option.rect);
+		QRect r = option.rect;
+		if (option.rect.height() < editor->sizeHint().height())
+			r.setHeight(editor->sizeHint().height());
+		editor->setGeometry(r);
+	}
+	
+	QSize SpinBoxDelegate::sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const
+	{
+		QSpinBox tmp;
+		return tmp.sizeHint();
 	}
 }
 

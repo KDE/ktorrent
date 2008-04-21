@@ -112,7 +112,7 @@ namespace dht
 		
 		KDatagramPacket pck = sock->receive();
 		/*
-		Out() << "RPCServer::readPacket" << endl;
+		Out(SYS_DHT|LOG_DEBUG) << "RPCServer::readPacket" << endl;
 		PrintRawData(pck.data());
 		*/
 		BNode* n = 0;

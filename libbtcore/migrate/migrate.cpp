@@ -56,7 +56,7 @@ namespace bt
 			if (!IsPreMMap(tdir + "current_chunks"))
 			{
 				// it's not pre, so it must be post, so just return
-				Out() << "No migrate needed" << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "No migrate needed" << endl;
 				return;
 			}
 			

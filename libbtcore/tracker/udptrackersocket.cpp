@@ -52,7 +52,7 @@ namespace bt
 		bool bound = false;
 		while (!(bound = sock->bind(QString(),QString::number(port + i))) && i < 10)
 		{
-			Out() << "Failed to bind socket to port " << (port+i) << endl;
+			Out(SYS_TRK|LOG_DEBUG) << "Failed to bind socket to port " << (port+i) << endl;
 			i++;
 		}
 		

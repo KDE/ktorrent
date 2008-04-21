@@ -37,7 +37,7 @@ namespace kt
 		unsigned int SYSPNP;
 		unsigned int SYSINW;
 		unsigned int SYSSNF;
-		unsigned int SYSPFI;
+		unsigned int SYSMPL;
 		unsigned int SYSSCD;
 		unsigned int SYSRSS;
 		unsigned int SYSWEB;

@@ -61,7 +61,7 @@ namespace bt
 		Uint32 ch = 0;
 		old_cc.read(&ch,sizeof(Uint32));
 		
-		Out() << "Migrating chunk " << ch << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Migrating chunk " << ch << endl;
 		if (ch >= tor.getNumChunks())
 			return false;
 			
@@ -112,7 +112,7 @@ namespace bt
 
 	static void MigrateCC(const Torrent & tor,const QString & current_chunks)
 	{
-		Out() << "Migrating current_chunks file " << current_chunks << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Migrating current_chunks file " << current_chunks << endl;
 		// open the old current_chunks file
 		File old_cc;
 		if (!old_cc.open(current_chunks,"rb"))
@@ -127,7 +127,7 @@ namespace bt
 		// read the number of chunks
 		Uint32 num = 0;
 		old_cc.read(&num,sizeof(Uint32));
-		Out() << "Found " << num << " chunks" << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Found " << num << " chunks" << endl;
 		
 		// write the new current_chunks header
 		CurrentChunksHeader hdr;

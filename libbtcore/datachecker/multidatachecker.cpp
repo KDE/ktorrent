@@ -99,7 +99,7 @@ namespace bt
 			TimeStamp now = bt::GetCurrentTime();
 			if (now - last_update_time > 1000)
 			{
-				Out() << "Checked " << cur_chunk << " chunks" << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "Checked " << cur_chunk << " chunks" << endl;
 			//	KApplication::kApplication()->processEvents();
 				last_update_time = now;
 			}
@@ -115,7 +115,7 @@ namespace bt
 		File fptr;
 		if (!fptr.open(tf.getPathOnDisk(), "rb"))
 		{
-			Out() << QString("Warning : Cannot open %1 : %2").arg(tf.getPathOnDisk()).arg(fptr.errorString()) << endl;
+			Out(SYS_GEN|LOG_DEBUG) << QString("Warning : Cannot open %1 : %2").arg(tf.getPathOnDisk()).arg(fptr.errorString()) << endl;
 			return 0;
 		}
 		
@@ -177,7 +177,7 @@ namespace bt
 						ret = dfd.readFirstChunk(buf,read,cs);
 					
 					if (ret > 0 && ret != to_read)
-						Out() << "Warning : MultiDataChecker::load ret != to_read (dnd)" << endl;
+						Out(SYS_GEN|LOG_DEBUG) << "Warning : MultiDataChecker::load ret != to_read (dnd)" << endl;
 				}
 			}
 			else
@@ -188,14 +188,14 @@ namespace bt
 				File fptr;
 				if (!fptr.open(f.getPathOnDisk(), "rb"))
 				{
-					Out() << QString("Warning : Cannot open %1 : %2").arg(f.getPathOnDisk()).arg(fptr.errorString()) << endl;
+					Out(SYS_GEN|LOG_DEBUG) << QString("Warning : Cannot open %1 : %2").arg(f.getPathOnDisk()).arg(fptr.errorString()) << endl;
 					return false;
 				}
 				else
 				{
 					fptr.seek(File::BEGIN,off);
 					if (fptr.read(buf+read,to_read) != to_read)
-						Out() << "Warning : MultiDataChecker::load ret != to_read" << endl;
+						Out(SYS_GEN|LOG_DEBUG) << "Warning : MultiDataChecker::load ret != to_read" << endl;
 				}
 			}
 			read += to_read;

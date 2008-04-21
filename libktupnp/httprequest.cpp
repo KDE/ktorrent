@@ -109,7 +109,7 @@ namespace kt
 	
 	void HTTPRequest::onError(int)
 	{
-		Out() << "HTTPRequest error : " << sock->errorString() << endl;
+		Out(SYS_PNP|LOG_DEBUG) << "HTTPRequest error : " << sock->errorString() << endl;
 		error(this,false);
 		sock->close();
 		operationFinished(this);
@@ -117,7 +117,7 @@ namespace kt
 	
 	void HTTPRequest::onTimeout()
 	{
-		Out() << "HTTPRequest timeout" << endl;
+		Out(SYS_PNP|LOG_DEBUG) << "HTTPRequest timeout" << endl;
 		error(this,true);
 		sock->close();
 		operationFinished(this);

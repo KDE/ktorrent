@@ -58,6 +58,7 @@ namespace kt
 		}
 		else
 		{
+			Out(SYS_MPL|LOG_NOTICE) << "MediaPlayer: playing " << file << endl;
 			media->setCurrentSource(file);
 			media->play();
 			history.append(file);
@@ -84,7 +85,7 @@ namespace kt
 				QString file = history.back();
 				media->setCurrentSource(file);
 				media->play();
-				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: playing previous file " << file << endl;
+				Out(SYS_MPL|LOG_NOTICE) << "MediaPlayer: playing previous file " << file << endl;
 				return file;
 			}
 		}
@@ -93,7 +94,7 @@ namespace kt
 			QString file = history.back();
 			media->setCurrentSource(file);
 			media->play();
-			Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: playing previous file " << file << endl;
+			Out(SYS_MPL|LOG_NOTICE) << "MediaPlayer: playing previous file " << file << endl;
 			return file;
 		}
 		
@@ -106,10 +107,10 @@ namespace kt
 		switch (cur)
 		{
 			case Phonon::LoadingState:
-				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: loading" << endl;
+				Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: loading" << endl;
 				break;
 			case Phonon::StoppedState:
-				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: stopped" << endl;
+				Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: stopped" << endl;
 				flags = MEDIA_PLAY;
 				if (history.count() > 0)
 					flags |= MEDIA_PREV;
@@ -117,7 +118,7 @@ namespace kt
 				enableActions(flags);
 				break;
 			case Phonon::PlayingState:
-				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: playing" << endl;
+				Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: playing" << endl;
 				flags = MEDIA_PAUSE|MEDIA_STOP;
 				if (history.count() > 1)
 					flags |= MEDIA_PREV;
@@ -125,10 +126,10 @@ namespace kt
 				enableActions(flags);
 				break;
 			case Phonon::BufferingState:
-				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: buffering" << endl;
+				Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: buffering" << endl;
 				break; 
 			case Phonon::PausedState:
-				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: paused" << endl;
+				Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: paused" << endl;
 				flags = MEDIA_PLAY|MEDIA_STOP;
 				if (history.count() > 1)
 					flags |= MEDIA_PREV;
@@ -136,7 +137,7 @@ namespace kt
 				enableActions(flags);
 				break;
 			case Phonon::ErrorState:
-				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: error " << media->errorString() << endl;
+				Out(SYS_MPL|LOG_IMPORTANT) << "MediaPlayer: error " << media->errorString() << endl;
 				flags = MEDIA_PLAY;
 				if (history.count() > 0)
 					flags |= MEDIA_PREV;

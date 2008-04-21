@@ -46,7 +46,7 @@ namespace bt
 	
 	static void MigrateSingleCache(const Torrent & tor,const QString & cache,const QString & output_dir)
 	{
-		Out() << "Migrating single cache " << cache << " to " << output_dir << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Migrating single cache " << cache << " to " << output_dir << endl;
 		
 		bt::Move(cache,output_dir + tor.getNameSuggestion());
 		bt::SymLink(output_dir + tor.getNameSuggestion(),cache);
@@ -73,7 +73,7 @@ namespace bt
 	
 	static void MigrateMultiCache(const Torrent & tor,const QString & cache,const QString & output_dir)
 	{
-		Out() << "Migrating multi cache " << cache << " to " << output_dir << endl;
+		Out(SYS_GEN|LOG_DEBUG) << "Migrating multi cache " << cache << " to " << output_dir << endl;
 		// if the cache dir is a symlink, everything is OK
 		if (QFileInfo(cache).isSymLink())
 			return;

@@ -68,12 +68,12 @@ namespace bt
 		// we're now entering a dictionary
 		BDictNode* curr = new BDictNode(off);
 		pos++;
-		if (verbose) Out() << "DICT" << endl;
+		if (verbose) Out(SYS_GEN|LOG_DEBUG) << "DICT" << endl;
 		try
 		{
 			while (pos < (Uint32)data.size() && data[pos] != 'e')
 			{
-				if (verbose) Out() << "Key : " << endl;
+				if (verbose) Out(SYS_GEN|LOG_DEBUG) << "Key : " << endl;
 				BNode* kn = decode(); 
 				BValueNode* k = dynamic_cast<BValueNode*>(kn);
 				if (!k || k->data().getType() != Value::STRING)
@@ -95,7 +95,7 @@ namespace bt
 			delete curr;
 			throw;
 		}
-		if (verbose) Out() << "END" << endl;
+		if (verbose) Out(SYS_GEN|LOG_DEBUG) << "END" << endl;
 		curr->setLength(pos - off);
 		return curr;
 	}
@@ -103,7 +103,7 @@ namespace bt
 	BListNode* BDecoder::parseList()
 	{
 		Uint32 off = pos;
-		if (verbose) Out() << "LIST" << endl;
+		if (verbose) Out(SYS_GEN|LOG_DEBUG) << "LIST" << endl;
 		BListNode* curr = new BListNode(off);
 		pos++;
 		try
@@ -120,7 +120,7 @@ namespace bt
 			delete curr;
 			throw;
 		}
-		if (verbose) Out() << "END" << endl;
+		if (verbose) Out(SYS_GEN|LOG_DEBUG) << "END" << endl;
 		curr->setLength(pos - off);
 		return curr;
 	}
@@ -150,7 +150,7 @@ namespace bt
 		if (ok)
 		{
 			pos++;
-			if (verbose) Out() << "INT = " << val << endl;
+			if (verbose) Out(SYS_GEN|LOG_DEBUG) << "INT = " << val << endl;
 			BValueNode* vn = new BValueNode(Value(val),off);
 			vn->setLength(pos - off);
 			return vn;
@@ -163,7 +163,7 @@ namespace bt
 				throw Error(i18n("Cannot convert %1 to an int",n));
 
 			pos++;
-			if (verbose) Out() << "INT64 = " << n << endl;
+			if (verbose) Out(SYS_GEN|LOG_DEBUG) << "INT64 = " << n << endl;
 			BValueNode* vn = new BValueNode(Value(bi),off);
 			vn->setLength(pos - off);
 			return vn;
@@ -211,9 +211,9 @@ namespace bt
 		if (verbose)
 		{
 			if (arr.size() < 200)
-				Out() << "STRING " << QString(arr) << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "STRING " << QString(arr) << endl;
 			else
-				Out() << "STRING " << "really long string" << endl;
+				Out(SYS_GEN|LOG_DEBUG) << "STRING " << "really long string" << endl;
 		}
 		return vn;
 	}

@@ -178,7 +178,7 @@ namespace bt
 		DownloadStatus* ds = dstatus.find(r.getPieceDownloader());
 		if (ds)
 		{
-			//	Out() << "ds != 0"  << endl;
+			//	Out(SYS_DIO|LOG_DEBUG) << "ds != 0"  << endl;
 			Uint32 p  = r.getOffset() / MAX_PIECE_LEN;
 			ds->remove(p);
 		}
