@@ -199,13 +199,19 @@ namespace kt
 	{
 		Item* item = new Item(tc);
 		if (tc->getStats().multi_file_torrent && item->multimedia_files.count() > 0)
+		{
 			items.append(item);
+			insertRow(items.count());
+		}
 		else if (!tc->getStats().multi_file_torrent && tc->isMultimedia())
+		{
 			items.append(item);
+			insertRow(items.count());
+		}
 		else
+		{
 			delete item;
-		
-		insertRow(items.count());
+		}
 	}
 	
 	void MediaModel::onTorrentRemoved(bt::TorrentInterface* tc)
