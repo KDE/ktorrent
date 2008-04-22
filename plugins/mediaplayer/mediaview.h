@@ -21,6 +21,7 @@
 #ifndef KTMEDIAVIEW_H
 #define KTMEDIAVIEW_H
 
+#include <QLabel>
 #include <QTreeView>
 #include <QToolBar>
 #include <Phonon/SeekSlider>
@@ -49,6 +50,10 @@ namespace kt
 		/// Get the current selected item
 		QModelIndex selectedItem() const;
 		
+	public slots:
+		void playing(const QModelIndex & index);
+		void stopped();
+		
 	private slots:
 		void onSelectionChanged(const QItemSelection & s, const QItemSelection & d);
 		
@@ -58,10 +63,13 @@ namespace kt
 
 	private:
 		MediaPlayer* player;
+		MediaModel* model;
 		QToolBar* tool_bar;
 		QTreeView* media_tree;
 		Phonon::VolumeSlider* volume;
 		Phonon::SeekSlider* play_slider;
+		QLabel* info_label;
+		unsigned int cnt;
 	};
 
 }

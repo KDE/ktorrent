@@ -85,6 +85,11 @@ namespace kt
 		 * Emitted when the video widget needs to be closed.
 		 */
 		void closeVideo();
+		
+		/**
+		 * Emitted when we have finished playing something
+		 */
+		void stopped();
 
 	private:
 		Phonon::MediaObject* media;

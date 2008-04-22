@@ -21,6 +21,7 @@
 #include <QHeaderView>
 #include <QVBoxLayout>
 #include <ktoolbar.h>
+#include <klocale.h>
 #include "mediaview.h"
 #include "mediamodel.h"
 #include "mediaplayer.h"
@@ -29,7 +30,7 @@ namespace kt
 {
 
 	MediaView::MediaView(MediaPlayer* player,MediaModel* model,QWidget* parent)
-			: QWidget(parent)
+			: QWidget(parent),model(model),cnt(0)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
@@ -43,6 +44,15 @@ namespace kt
 		play_slider->setMediaObject(player->media0bject());
 		layout->addWidget(play_slider);
 		
+		info_label = new QLabel(this);
+		info_label->setMargin(5);
+		info_label->setFrameShadow(QFrame::Sunken);
+		info_label->setFrameShape(QFrame::StyledPanel);
+		info_label->setBackgroundRole(QPalette::Base);
+		info_label->setAutoFillBackground(true);
+		layout->addWidget(info_label);
+		info_label->setText(i18n("Ready to play"));
+		
 		media_tree = new QTreeView(this);
 		media_tree->setModel(model);
 		media_tree->header()->hide();
@@ -55,6 +65,7 @@ namespace kt
 		connect(media_tree->selectionModel(),SIGNAL(selectionChanged(const QItemSelection & , const QItemSelection & )),
 				this,SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection&)));
 		connect(media_tree,SIGNAL(doubleClicked(const QModelIndex &)),this,SIGNAL(doubleClicked(const QModelIndex&)));
+		connect(player,SIGNAL(stopped()),this,SLOT(stopped()));
 	}
 
 
@@ -81,5 +92,24 @@ namespace kt
 			return QModelIndex();
 	}
 
+	void MediaView::playing(const QModelIndex & index)
+	{
+		if (!index.isValid())
+			stopped();
+		else
+		{
+			cnt++;
+			info_label->setText(i18n("Playing: <b>%1</b>",model->data(index,Qt::DisplayRole).toString()));
+		}
+	}
+	
+	void MediaView::stopped()
+	{
+		if (cnt > 0)
+			cnt--;
+		
+		if (cnt == 0)
+			info_label->setText(i18n("Ready to play"));
+	}
 
 }

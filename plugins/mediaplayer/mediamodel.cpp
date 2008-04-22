@@ -20,8 +20,10 @@
  ***************************************************************************/
 #include <kicon.h>
 #include <kmimetype.h>
+#include <klocale.h>
 #include <util/log.h>
 #include <util/constants.h>
+#include <util/functions.h>
 #include <interfaces/coreinterface.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/torrentfileinterface.h>
@@ -104,9 +106,18 @@ namespace kt
 			else
 				return QVariant();
 			
-			const bt::TorrentStats & s = item->tc->getStats();
+			bt::TorrentInterface* tc = item->tc;
+			const bt::TorrentStats & s = tc->getStats();
 			switch (role)
 			{
+				case Qt::ToolTipRole:
+					if (!s.multi_file_torrent)
+					{
+						QString preview = tc->readyForPreview() ? i18n("Available") : i18n("Pending");
+						return i18n("<b>%1</b><br/>Preview: %2<br/>Downloaded: %3 %",
+								s.torrent_name,preview,bt::Percentage(s));
+					}
+					break;
 				case Qt::DisplayRole:
 					return s.torrent_name;
 				case Qt::DecorationRole:
@@ -121,9 +132,16 @@ namespace kt
 			if (idx < 0 || idx >= item->tc->getNumFiles())
 				return QVariant();
 			
-			QString path = item->tc->getTorrentFile(idx).getPath();
+			const bt::TorrentFileInterface & tfi = item->tc->getTorrentFile(idx);
+			QString path = tfi.getPath();
 			switch (role)
 			{
+				case Qt::ToolTipRole:
+				{
+					QString preview = tfi.isPreviewAvailable() ? i18n("Available") : i18n("Pending");
+					return i18n("<b>%1</b><br/>Preview: %2<br/>Downloaded: %3 %",
+								path,preview,tfi.getDownloadPercentage());
+				}
 				case Qt::DisplayRole:
 					return path;
 				case Qt::DecorationRole:

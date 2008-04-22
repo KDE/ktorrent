@@ -116,6 +116,7 @@ namespace kt
 					flags |= MEDIA_PREV;
 			
 				enableActions(flags);
+				stopped();
 				break;
 			case Phonon::PlayingState:
 				Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: playing" << endl;

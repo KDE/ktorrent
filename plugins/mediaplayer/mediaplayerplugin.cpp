@@ -189,6 +189,7 @@ namespace kt
 				media_player->play(path);
 				curr_item = idx;
 				next_action->setEnabled(media_model->next(curr_item).isValid());
+				media_view->playing(curr_item);
 			}
 		}
 	}
@@ -210,6 +211,7 @@ namespace kt
 			return;
 		
 		curr_item = media_model->indexForPath(s);
+		media_view->playing(curr_item);
 	}
 	
 	void MediaPlayerPlugin::next()
@@ -225,6 +227,7 @@ namespace kt
 			media_player->play(path);
 			curr_item = n;
 			next_action->setEnabled(media_model->next(curr_item).isValid());
+			media_view->playing(curr_item);
 		}
 	}
 	
