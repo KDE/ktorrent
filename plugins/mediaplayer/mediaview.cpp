@@ -22,15 +22,18 @@
 #include <QVBoxLayout>
 #include <ktoolbar.h>
 #include <klocale.h>
+#include <util/log.h>
 #include "mediaview.h"
 #include "mediamodel.h"
 #include "mediaplayer.h"
+
+using namespace bt;
 
 namespace kt
 {
 
 	MediaView::MediaView(MediaPlayer* player,MediaModel* model,QWidget* parent)
-			: QWidget(parent),model(model),cnt(0)
+			: QWidget(parent),player(player),model(model),cnt(0)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
@@ -50,6 +53,7 @@ namespace kt
 		info_label->setFrameShape(QFrame::StyledPanel);
 		info_label->setBackgroundRole(QPalette::Base);
 		info_label->setAutoFillBackground(true);
+		info_label->setWordWrap(true);
 		layout->addWidget(info_label);
 		info_label->setText(i18n("Ready to play"));
 		
@@ -66,6 +70,7 @@ namespace kt
 				this,SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection&)));
 		connect(media_tree,SIGNAL(doubleClicked(const QModelIndex &)),this,SIGNAL(doubleClicked(const QModelIndex&)));
 		connect(player,SIGNAL(stopped()),this,SLOT(stopped()));
+		connect(player->media0bject(),SIGNAL(metaDataChanged()),this,SLOT(metaDataChanged()));
 	}
 
 
@@ -99,7 +104,8 @@ namespace kt
 		else
 		{
 			cnt++;
-			info_label->setText(i18n("Playing: <b>%1</b>",model->data(index,Qt::DisplayRole).toString()));
+			current_file = model->data(index,Qt::DisplayRole).toString();
+			info_label->setText(i18n("Playing: <b>%1</b>",current_file));
 		}
 	}
 	
@@ -109,7 +115,42 @@ namespace kt
 			cnt--;
 		
 		if (cnt == 0)
+		{
 			info_label->setText(i18n("Ready to play"));
+			current_file = QString();
+		}
+	}
+	
+	void MediaView::metaDataChanged()
+	{
+		QString extra_data;
+		QStringList artist = player->media0bject()->metaData(Phonon::ArtistMetaData);
+		QStringList title = player->media0bject()->metaData(Phonon::TitleMetaData);
+		QStringList album = player->media0bject()->metaData(Phonon::AlbumMetaData);
+		
+		bool has_artist = artist.count() > 0 && artist[0].length() > 0;
+		bool has_title = title.count() > 0 && title[0].length() > 0;
+		bool has_album = album.count() > 0 && album[0].length() > 0;
+		
+		if (has_artist && has_title && has_album)
+		{
+			extra_data = i18n("Title: <b>%1</b><br/>Artist: <b>%2</b><br/>Album: <b>%3</b>",title[0],artist[0],album[0]);
+		}
+		else if (has_title && has_artist)
+		{
+			extra_data = i18n("Title: <b>%1</b><br/>Artist: <b>%2</b>",title[0],artist[0]);
+		}
+		else if (has_title)
+		{
+			extra_data = i18n("Title: <b>%1</b>",title[0]);
+		}
+		else
+			return;
+		
+		if (cnt > 0)
+		{
+			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file,extra_data));
+		}
 	}
 
 }

@@ -56,6 +56,7 @@ namespace kt
 		
 	private slots:
 		void onSelectionChanged(const QItemSelection & s, const QItemSelection & d);
+		void metaDataChanged();
 		
 	signals:
 		void selectionChanged(const QModelIndex & idx);
@@ -70,6 +71,7 @@ namespace kt
 		Phonon::SeekSlider* play_slider;
 		QLabel* info_label;
 		unsigned int cnt;
+		QString current_file;
 	};
 
 }
