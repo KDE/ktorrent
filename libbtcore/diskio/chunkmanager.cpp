@@ -1090,6 +1090,92 @@ namespace bt
 		return cache->hasExistingFiles();
 	}
 	
+	bool ChunkManager::allFilesExistOfChunk(Uint32 idx)
+	{
+		QList<Uint32> files;
+		tor.calcChunkPos(idx,files);
+		foreach (Uint32 fidx,files)
+		{
+			TorrentFile & tf = tor.getFile(fidx);
+			if (!tf.isPreExistingFile())
+				return false;
+		}
+		return true;
+	}
+	
+	void ChunkManager::markExistingFilesAsDownloaded()
+	{
+		if (tor.isMultiFile())
+		{
+			// loop over all files and mark all chunks of all existing files as
+			// downloaded
+			for (Uint32 i = 0;i < tor.getNumFiles();i++)
+			{
+				TorrentFile & tf = tor.getFile(i);
+				if (!tf.isPreExistingFile())
+					continue;
+				
+				// all the chunks in the middle of the file are OK
+				for (Uint32 j = tf.getFirstChunk() + 1;j < tf.getLastChunk();j++)
+				{
+					Chunk* c = chunks[j];
+					c->setStatus(Chunk::ON_DISK);
+					bitset.set(j,true);
+					todo.set(j,false);
+					tor.updateFilePercentage(j,*this); 
+				}
+				
+				// all files of the first chunk must be preexisting
+				if (allFilesExistOfChunk(tf.getFirstChunk()))
+				{
+					Uint32 idx = tf.getFirstChunk();
+					Chunk* c = chunks[idx];
+					c->setStatus(Chunk::ON_DISK);
+					bitset.set(idx,true);
+					todo.set(idx,false);
+					tor.updateFilePercentage(idx,*this); 
+				}
+				
+				// all files of the last chunk must be preexisting
+				if (allFilesExistOfChunk(tf.getLastChunk()))
+				{
+					Uint32 idx = tf.getLastChunk();
+					Chunk* c = chunks[idx];
+					c->setStatus(Chunk::ON_DISK);
+					bitset.set(idx,true);
+					todo.set(idx,false);
+					tor.updateFilePercentage(idx,*this); 
+				}
+			}
+		}
+		else if (cache->hasExistingFiles())
+		{
+			for (Uint32 i = 0;i < chunks.size();i++)
+			{
+				Chunk* c = chunks[i];
+				c->setStatus(Chunk::ON_DISK);
+				bitset.set(i,true);
+				todo.set(i,false);
+				tor.updateFilePercentage(i,*this); 
+			}
+		}
+		
+		recalc_chunks_left = true;
+		try
+		{
+			saveIndexFile();
+		}
+		catch (bt::Error & err)
+		{
+			Out(SYS_DIO|LOG_DEBUG) << "Failed to save index file : " << err.toString() << endl;
+		}
+		catch (...)
+		{
+			Out(SYS_DIO|LOG_DEBUG) << "Failed to save index file : unknown exception" << endl;
+		}
+		chunksLeft();
+		corrupted_count = 0;
+	}
 	
 	void ChunkManager::recreateMissingFiles()
 	{

@@ -73,11 +73,12 @@ namespace kt
 	FileSelectDlg::~FileSelectDlg()
 	{}
 
-	int FileSelectDlg::execute(bt::TorrentInterface* tc,bool* user, bool* start)
+	int FileSelectDlg::execute(bt::TorrentInterface* tc,bool* user, bool* start,bool* skip_check)
 	{
 		this->tc = tc;
 		this->user = user;
 		this->start = start;
+		this->skip_check = skip_check;
 		if (tc)
 		{
 			int idx = encodings.indexOf(tc->getTextCodec()->mibEnum());
@@ -187,6 +188,7 @@ namespace kt
 		//Make it user controlled if needed
 		*user = m_chkUserControlled->isChecked();
 		*start = m_chkUserControlled->isChecked() && m_chkStartTorrent->isChecked();
+		*skip_check = m_skip_data_check->isChecked();
 		
 		//Now add torrent to selected group
 		if (m_cmbGroups->currentIndex() > 0)

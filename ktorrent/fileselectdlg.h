@@ -48,13 +48,14 @@ namespace kt
 		kt::GroupManager* gman;
 		bool* user;
 		bool* start;
+		bool* skip_check;
 		QList<int> encodings;
 		kt::Group* initial_group;
 	public:
 		FileSelectDlg(kt::GroupManager* gman,const QString & group_hint,QWidget* parent);
 		virtual ~FileSelectDlg();
 		
-		int execute(bt::TorrentInterface* tc,bool* user, bool* start);
+		int execute(bt::TorrentInterface* tc,bool* user, bool* start,bool* skip_check);
 		
 	protected slots:
 		virtual void reject();

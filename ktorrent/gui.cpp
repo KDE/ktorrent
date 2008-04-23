@@ -211,11 +211,11 @@ namespace kt
 		core->startUpdateTimer(); // make sure update timer is running
 	}
 
-	bool GUI::selectFiles(bt::TorrentInterface* tc,bool* user,bool* start_torrent,const QString & group_hint)
+	bool GUI::selectFiles(bt::TorrentInterface* tc,bool* user,bool* start_torrent,const QString & group_hint,bool* skip_check)
 	{
 		FileSelectDlg dlg(core->getGroupManager(),group_hint,this);
 
-		return dlg.execute(tc,user,start_torrent) == QDialog::Accepted;
+		return dlg.execute(tc,user,start_torrent,skip_check) == QDialog::Accepted;
 	}
 
 	void GUI::errorMsg(const QString & err)

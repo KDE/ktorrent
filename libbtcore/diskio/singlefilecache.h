@@ -59,6 +59,7 @@ namespace bt
 		virtual Uint64 diskUsage();
 		virtual void loadFileMap();
 		virtual void saveFileMap();
+
 	};
 
 }

@@ -1553,6 +1553,15 @@ namespace bt
 		return false;
 	}
 	
+	void TorrentControl::markExistingFilesAsDownloaded()
+	{
+		cman->markExistingFilesAsDownloaded();
+		downloader->recalcDownloaded();
+		stats.imported_bytes = downloader->bytesDownloaded();
+		if (cman->haveAllChunks())
+			stats.completed = true;
+	}
+	
 	bool TorrentControl::hasExistingFiles() const
 	{
 		return cman->hasExistingFiles();

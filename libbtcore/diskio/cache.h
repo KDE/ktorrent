@@ -151,7 +151,6 @@ namespace bt
 		/// See if the download has existing files
 		bool hasExistingFiles() const {return preexisting_files;}
 		
-		
 		/**
 		 * Test all files and see if they are not missing.
 		 * If so put them in a list

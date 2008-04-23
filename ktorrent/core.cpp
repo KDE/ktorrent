@@ -165,12 +165,13 @@ namespace kt
 	{
 		bool user = false;
 		bool start_torrent = false;
+		bool skip_check = false;
 
 		connectSignals(tc);
 		qman->append(tc);
 		if (!silently)
 		{
-			if (!gui->selectFiles(tc,&user,&start_torrent,group))
+			if (!gui->selectFiles(tc,&user,&start_torrent,group,&skip_check))
 			{
 				remove(tc,false);
 				return false;
@@ -215,7 +216,10 @@ namespace kt
 			
 		if (tc->hasExistingFiles())
 		{
-			gui->dataScan(tc,true,true,QString::null);
+			if (!skip_check)
+				gui->dataScan(tc,true,true,QString::null);
+			else
+				tc->markExistingFilesAsDownloaded();
 		}
 			
 		tc->setPreallocateDiskSpace(true);

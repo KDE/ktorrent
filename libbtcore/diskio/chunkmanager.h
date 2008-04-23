@@ -314,6 +314,9 @@ namespace bt
 		/// Test if the torrent has existing files, only works the first time a torrent is loaded
 		bool hasExistingFiles() const;
 		
+		/// Mark all existing files as downloaded
+		void markExistingFilesAsDownloaded();
+		
 		/// Recreates missing files
 		void recreateMissingFiles();
 		
@@ -378,6 +381,7 @@ namespace bt
 		void savePriorityInfo();
 		void loadPriorityInfo();
 		void doPreviewPriority(TorrentFile & tf);
+		bool allFilesExistOfChunk(Uint32 idx);
 
 	private slots:
 		void downloadStatusChanged(TorrentFile* tf,bool download);

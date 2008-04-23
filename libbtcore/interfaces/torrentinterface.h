@@ -480,6 +480,9 @@ namespace bt
 		
 		/// Remove a webseed (only user created ones can be removed)
 		virtual bool removeWebSeed(const KUrl & url) = 0;
+		
+		/// Mark all existing files as downloaded (
+		virtual void markExistingFilesAsDownloaded() = 0;
 	signals:
 		/**
 		 * Emitted when we have finished downloading.

@@ -65,6 +65,7 @@ namespace bt
 		virtual Uint64 diskUsage();
 		virtual void loadFileMap();
 		virtual void saveFileMap();
+	
 	private:
 		void touch(TorrentFile & tf);
 		virtual void downloadStatusChanged(TorrentFile*, bool);
