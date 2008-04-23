@@ -282,6 +282,7 @@ namespace kt
 		kt::GroupManager* gman;
 		QMap<KJob*,KUrl> custom_save_locations; // map to store save locations
 		QMap<KJob*,QString> add_to_groups; // Map to keep track of which group to add a torrent to
+		int sleep_suppression_cookie;
 	};
 }
 

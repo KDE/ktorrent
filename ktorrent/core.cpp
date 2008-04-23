@@ -26,6 +26,7 @@
 #include <kapplication.h>
 #include <qprogressbar.h>
 #include <qdir.h>
+#include <solid/powermanagement.h>
 
 
 #include <util/log.h>
@@ -62,7 +63,7 @@ namespace kt
 {
 	const Uint32 CORE_UPDATE_INTERVAL = 250;
 
-	Core::Core(kt::GUI* gui) : gui(gui),keep_seeding(true)
+	Core::Core(kt::GUI* gui) : gui(gui),keep_seeding(true),sleep_suppression_cookie(-1)
 	{
 		UpdateCurrentTime();
 		qman = new QueueManager();
@@ -737,6 +738,18 @@ namespace kt
 		{
 			Out(SYS_GEN|LOG_DEBUG) << "Started update timer" << endl;
 			update_timer.start(CORE_UPDATE_INTERVAL);
+			if (Settings::suppressSleep() && sleep_suppression_cookie == -1)
+			{
+				sleep_suppression_cookie = Solid::PowerManagement::beginSuppressingSleep(i18n("KTorrent is running one or more torrents"));
+				if (sleep_suppression_cookie == -1)
+				{
+					Out(SYS_GEN|LOG_IMPORTANT) << "Failed to suppress sleeping" << endl;
+				}
+				else
+				{
+					Out(SYS_GEN|LOG_DEBUG) << "Suppressing sleep" << endl;
+				}
+			}
 		}
 	}
 
@@ -750,7 +763,6 @@ namespace kt
 		while (i != qman->end())
 		{
 			bt::TorrentInterface* tc = *i;
-			bool dummy = false;
 			if (tc->updateNeeded())
 			{
 				tc->update();
@@ -763,6 +775,12 @@ namespace kt
 		{
 			Out(SYS_GEN|LOG_DEBUG) << "Stopped update timer" << endl;
 			update_timer.stop(); // stop timer when not necessary
+			if (sleep_suppression_cookie != -1)
+			{
+				Solid::PowerManagement::stopSuppressingSleep(sleep_suppression_cookie);
+				Out(SYS_GEN|LOG_DEBUG) << "Stopped suppressing sleep" << endl;
+				sleep_suppression_cookie = -1;
+			}
 		}
 		else
 		{

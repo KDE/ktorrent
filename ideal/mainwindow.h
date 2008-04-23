@@ -80,7 +80,7 @@ namespace ideal
 		QWidget* currentTabPage();
 
 		/// The current tab page has changed
-		virtual void currentTabPageChanged(QWidget* page) {}
+		virtual void currentTabPageChanged(QWidget* ) {}
 		
 		/**
 		 * Create a XML GUI container (menu or toolbar)

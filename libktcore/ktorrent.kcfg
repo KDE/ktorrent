@@ -294,5 +294,8 @@
 			<min>16</min>
 			<default>2048</default>
 		</entry>
+		<entry name="suppressSleep" type="Bool">
+			<default>true</default>
+		</entry>
 	</group>
 </kcfg>
