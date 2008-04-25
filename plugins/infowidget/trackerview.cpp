@@ -33,21 +33,27 @@
 #include <torrent/globals.h>
 #include <util/log.h>
 
+#include "trackermodel.h"
+
 using namespace bt;
 
 namespace kt
 {
+	
+	
 	TrackerView::TrackerView(QWidget *parent)
 		: QWidget(parent), tc(0)
 	{
 		setupUi(this);
+		model = new TrackerModel(this);
+		m_tracker_list->setModel(model);
 		connect(m_add_tracker,SIGNAL(clicked()),this,SLOT(btnAddClicked()));
 		connect(m_remove_tracker,SIGNAL(clicked()),this,SLOT(btnRemoveClicked()));
 		connect(m_update_tracker,SIGNAL(clicked()),this,SLOT(btnUpdateClicked()));
 		connect(m_change_tracker,SIGNAL(clicked()),this,SLOT(btnChangeClicked()));
 		connect(m_restore_defaults,SIGNAL(clicked()),this,SLOT(btnRestoreClicked()));
-		connect(m_tracker_list,SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
-			this,SLOT(currentTrackerChanged(QListWidgetItem*,QListWidgetItem*)));
+		connect(m_tracker_list->selectionModel(),SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
+			this,SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
 
 		m_url->setTextFormat(Qt::RichText);
 		m_url->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
@@ -69,74 +75,65 @@ namespace kt
 
 	void TrackerView::btnAddClicked()
 	{
-		if(!tc || m_tracker_to_add->text().isEmpty())
+		if (!tc || m_tracker_to_add->text().trimmed().isEmpty())
 			return;
 		
-		if(tc->getStats().priv_torrent)
+		if (tc->getStats().priv_torrent)
 		{
 			KMessageBox::sorry(0, i18n("Cannot add a tracker to a private torrent."));
 			return;
 		}
 		
 		KUrl url(m_tracker_to_add->text());
-		if(!url.isValid())
+		if (!url.isValid())
 		{
 			KMessageBox::error(0, i18n("Malformed URL."));
 			return;
 		}
 			
 		// check for dupes
-		for (int i = 0;i < m_tracker_list->count();i++)
+		if (model->hasTracker(url))
 		{
-			if (m_tracker_list->item(i)->text() == m_tracker_to_add->text())
-			{
-				KMessageBox::sorry(0,i18n("There already is a tracker named <b>%1</b> !",m_tracker_to_add->text()));
-				return;
-			}
+			KMessageBox::sorry(0,i18n("There already is a tracker named <b>%1</b> !",m_tracker_to_add->text()));
+			return;
 		}
-		m_tracker_list->addItem(m_tracker_to_add->text());
+		
 		tc->getTrackersList()->addTracker(url,true);
+		model->insertRow(model->rowCount(QModelIndex()));
 		m_tracker_to_add->clear();
 	}
 
 	void TrackerView::btnRemoveClicked()
 	{
-		QListWidgetItem* current = m_tracker_list->currentItem();
-		if(!current)
+		QModelIndex current = m_tracker_list->selectionModel()->currentIndex();
+		if (!current.isValid())
 			return;
 		
-		KUrl url(current->text());
-		if(tc->getTrackersList()->removeTracker(url))
-			delete current;
+		if (tc->getTrackersList()->removeTracker(model->trackerUrl(current)))
+			model->removeRow(current.row());
 		else
 			KMessageBox::sorry(0, i18n("Cannot remove torrent default tracker."));
 	}
 
 	void TrackerView::btnChangeClicked()
 	{
-		QListWidgetItem* current = m_tracker_list->currentItem();
-		if(!current)
+		QModelIndex current = m_tracker_list->selectionModel()->currentIndex();
+		if (!current.isValid())
 			return;
 		
-		KUrl url(current->text());
-		tc->getTrackersList()->setTracker(url);
-		tc->updateTracker();
+		KUrl url = model->trackerUrl(current);
+		if (tc->getTrackersList()->isTrackerEnabled(url))
+		{
+			tc->getTrackersList()->setTracker(url);
+			tc->updateTracker();
+		}
 	}
 
 	void TrackerView::btnRestoreClicked()
 	{
 		tc->getTrackersList()->restoreDefault();
 		tc->updateTracker();
-		
-		// update the list of trackers
-		m_tracker_list->clear();
-		
-		const KUrl::List trackers = tc->getTrackersList()->getTrackerURLs();
-		if(trackers.empty())
-			return;
-		
-		foreach (KUrl u,trackers)
-			m_tracker_list->addItem(u.prettyUrl());
+		model->changeTC(tc); // trigger reset
 	}
 
 	void TrackerView::btnUpdateClicked()
@@ -145,14 +142,6 @@ namespace kt
 			return;
 		
 		tc->updateTracker();
-	}
-	
-	void TrackerView::currentTrackerChanged(QListWidgetItem* current,QListWidgetItem* /*prev*/)
-	{
-		if(!current)
-			m_tracker_to_add->clear();
-		else
-			m_tracker_to_add->setText(current->text());
 	}
 	
 	void TrackerView::changeTC(TorrentInterface* ti)
@@ -184,8 +173,6 @@ namespace kt
 		
 		//Update manual annunce button
 		m_update_tracker->setEnabled(s.running && tc->announceAllowed());
-		// only enable change when we can actually change and the torrent is running
-		m_change_tracker->setEnabled(s.running && m_tracker_list->count() > 1);
 
 		m_status->setText("<b>" + s.trackerstatus + "</b>");
 		if (tc->getTrackersList())
@@ -199,7 +186,6 @@ namespace kt
 	void TrackerView::torrentChanged(TorrentInterface* ti)
 	{
 		tc = ti;
-		m_tracker_list->clear();
 		if(!tc)
 		{
 			m_status->clear();
@@ -234,19 +220,24 @@ namespace kt
 			m_tracker_to_add->setEnabled(true);
 		}
 		
-		const KUrl::List trackers = tc->getTrackersList()->getTrackerURLs();
-		if(trackers.empty())
+		model->changeTC(tc);
+		m_update_tracker->setEnabled(s.running && tc->announceAllowed());
+		currentChanged(m_tracker_list->selectionModel()->currentIndex(),QModelIndex());
+	}
+	
+	void TrackerView::currentChanged(const QModelIndex & current,const QModelIndex & previous)
+	{
+		Q_UNUSED(previous);
+		if (!tc)
 		{
-			m_tracker_list->addItem(tc->getTrackersList()->getTrackerURL().prettyUrl());
-		}
-		else
-		{
-			foreach (KUrl u,trackers)
-				m_tracker_list->addItem(u.prettyUrl());
+			m_change_tracker->setEnabled(false);
+			return;
 		}
 		
-		m_update_tracker->setEnabled(s.running && tc->announceAllowed());
-		m_change_tracker->setEnabled(s.running && trackers.count() > 1);
+		const TorrentStats & s = tc->getStats();
+	
+		KUrl url = model->trackerUrl(current);
+		m_change_tracker->setEnabled(s.running && model->rowCount(QModelIndex()) > 1 && tc->getTrackersList()->isTrackerEnabled(url));
 	}
 }
 

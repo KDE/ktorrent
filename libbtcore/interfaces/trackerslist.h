@@ -75,6 +75,20 @@ namespace bt
 			virtual void restoreDefault() = 0;
 			
 			/**
+			 * Enable or disable a tracker
+			 * @param url The url 
+			 * @param enabled True to enable, false to disable
+			 */
+			virtual void setTrackerEnabled(const KUrl & url,bool enabled) = 0;
+			
+			/**
+			 * See if a tracker is enabled
+			 * @param url The tracker url
+			 * @return true if it is, false if it isn't
+			 */
+			virtual bool isTrackerEnabled(const KUrl & url) const = 0;
+			
+			/**
 			 * Merge an other tracker list.
 			 * @param first The first TrackerTier
 			 */

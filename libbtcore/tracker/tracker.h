@@ -92,6 +92,12 @@ namespace bt
 		
 		/// Get the custom ip to use, null if none is set
 		static QString getCustomIP();
+		
+		/// Enable or disable the tracker
+		void setEnabled(bool on) {enabled = on;}
+		
+		/// Is the tracker enabled
+		bool isEnabled() const {return enabled;}
 	signals:
 		/**
 		 * Emitted when an error happens.
@@ -126,6 +132,7 @@ namespace bt
 		TorrentInterface* tor;
 		Uint32 interval,seeders,leechers,key,total_downloaded;
 		bool started;
+		bool enabled;
 	};
 	
 }

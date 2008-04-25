@@ -1,8 +1,8 @@
 /***************************************************************************
- *   Copyright (C) 2006-2007 by Joris Guisson, Ivan Vasic                  *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
- *	 ivasic@gmail.com                                                  *
- *									   *
+ *   ivasic@gmail.com                                                      *
+ *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
  *   the Free Software Foundation; either version 2 of the License, or     *
@@ -18,48 +18,51 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef TRACKERVIEW_H
-#define TRACKERVIEW_H
+#ifndef KTTRACKERMODEL_H
+#define KTTRACKERMODEL_H
 
-#include "ui_trackerview.h"
+#include <KUrl>
+#include <QAbstractListModel>
 
 namespace bt
 {
 	class TorrentInterface;
-	class TorrentFileInterface;
 }
 
 namespace kt
 {
-	class TrackerModel;
 
 	/**
-	 * @author Ivan Vasic <ivan@ktorrent.org>
-	 */
-	class TrackerView: public QWidget, public Ui_TrackerView
+		@author
+	*/
+	class TrackerModel : public QAbstractListModel
 	{
 		Q_OBJECT
 	public:
-		TrackerView(QWidget *parent);			
-		virtual ~TrackerView();
-			
-		void update();
-		void changeTC(bt::TorrentInterface* ti);
-			
-	public slots:
-		virtual void btnUpdateClicked();
-		virtual void btnRestoreClicked();
-		virtual void btnChangeClicked();
-		virtual void btnRemoveClicked();
-		virtual void btnAddClicked();
-		void currentChanged(const QModelIndex & current,const QModelIndex & previous);
-			
-	private:
-		void torrentChanged(bt::TorrentInterface* ti);
-			
+		TrackerModel(QObject* parent);
+		virtual ~TrackerModel();
+		
+		void changeTC(bt::TorrentInterface* tc);
+
+		virtual int rowCount(const QModelIndex &parent) const;
+		virtual QVariant data(const QModelIndex &index, int role) const;
+		virtual bool setData(const QModelIndex & index,const QVariant & value,int role);
+		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
+		virtual bool insertRows(int row,int count,const QModelIndex & parent);
+		virtual bool removeRows(int row,int count,const QModelIndex & parent);
+		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
+		
+		/// Check if the model contains a tracker
+		bool hasTracker(const KUrl & url) const;
+		
+		/// Get a tracker url given a model index
+		KUrl trackerUrl(const QModelIndex & idx);
+		
 	private:
 		bt::TorrentInterface* tc;
-		TrackerModel* model;
+		KUrl::List trackers;
 	};
+
 }
+
 #endif

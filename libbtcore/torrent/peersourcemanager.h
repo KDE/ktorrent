@@ -121,6 +121,8 @@ namespace bt
 		virtual bool removeTracker(const KUrl &url);
 		virtual void setTracker(const KUrl &url);
 		virtual void restoreDefault();
+		virtual void setTrackerEnabled(const KUrl & url,bool enabled);
+		virtual bool isTrackerEnabled(const KUrl & url) const;
 		
 		/**
 		 * Get the time to the next tracker update.
@@ -177,6 +179,8 @@ namespace bt
 	private:
 		void saveCustomURLs();
 		void loadCustomURLs();
+		void saveTrackerStatus();
+		void loadTrackerStatus();
 		void addTracker(Tracker* trk);
 		void switchTracker(Tracker* trk);
 		Tracker* selectTracker();

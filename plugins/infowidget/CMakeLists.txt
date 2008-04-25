@@ -42,6 +42,7 @@ set(ktinfowidgetplugin_SRC
 	chunkdownloadview.cpp
 	chunkdownloadmodel.cpp
 	trackerview.cpp
+	trackermodel.cpp
 	${geoip_src}
 	flagdb.cpp
 	iwfiletreemodel.cpp

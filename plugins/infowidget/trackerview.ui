@@ -30,7 +30,7 @@
           </sizepolicy>
          </property>
          <property name="text" >
-          <string/>
+          <string>KSqueezedTextLabel</string>
          </property>
         </widget>
        </item>
@@ -70,7 +70,7 @@
           </sizepolicy>
          </property>
          <property name="text" >
-          <string/>
+          <string>KSqueezedTextLabel</string>
          </property>
         </widget>
        </item>
@@ -120,7 +120,11 @@
     </widget>
    </item>
    <item row="1" column="0" >
-    <widget class="QLineEdit" name="m_tracker_to_add" />
+    <widget class="KLineEdit" name="m_tracker_to_add" >
+     <property name="showClearButton" stdset="0" >
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item row="1" column="1" >
     <widget class="KPushButton" name="m_add_tracker" >
@@ -130,7 +134,7 @@
     </widget>
    </item>
    <item row="2" column="0" >
-    <widget class="QListWidget" name="m_tracker_list" />
+    <widget class="QListView" name="m_tracker_list" />
    </item>
    <item row="2" column="1" >
     <layout class="QVBoxLayout" >
@@ -174,14 +178,19 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
    <class>KPushButton</class>
    <extends>QPushButton</extends>
-   <header location="global" >kpushbutton.h</header>
+   <header>kpushbutton.h</header>
   </customwidget>
   <customwidget>
    <class>KSqueezedTextLabel</class>
    <extends>QLabel</extends>
-   <header location="global" >ksqueezedtextlabel.h</header>
+   <header>ksqueezedtextlabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

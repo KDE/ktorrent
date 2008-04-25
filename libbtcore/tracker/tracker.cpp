@@ -46,6 +46,7 @@ namespace bt
 		srand(time(0));
 		key = rand();
 		started = false;
+		enabled = true;
 	}
 	
 	Tracker::~Tracker()

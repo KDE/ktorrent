@@ -66,6 +66,8 @@ namespace bt
 		
 		//load custom trackers
 		loadCustomURLs();
+		// Load status of each tracker
+		loadTrackerStatus();
 		
 		connect(&timer,SIGNAL(timeout()),this,SLOT(updateCurrentManually()));
 		timer.setSingleShot(true);
@@ -75,6 +77,7 @@ namespace bt
 	PeerSourceManager::~PeerSourceManager()
 	{
 		saveCustomURLs();
+		saveTrackerStatus();
 		
 		QList<PeerSource*>::iterator itr = additional.begin();
 		while (itr != additional.end())
@@ -128,7 +131,8 @@ namespace bt
 			{
 				switchTracker(selectTracker());
 				tor->resetTrackerStats();
-				curr->start();
+				if (curr)
+					curr->start();
 			}
 		}
 		else
@@ -233,7 +237,10 @@ namespace bt
 		{
 			custom_trackers.append(url);
 			if (!no_save_custom_trackers)
+			{
 				saveCustomURLs();
+				saveTrackerStatus();
+			}
 		}
 	}
 	
@@ -258,7 +265,8 @@ namespace bt
 			{
 				switchTracker(selectTracker());
 				tor->resetTrackerStats();
-				curr->start();
+				if (curr)
+					curr->start();
 			}
 		}
 		else
@@ -323,6 +331,33 @@ namespace bt
 		saveCustomURLs();
 	}
 	
+	void PeerSourceManager::setTrackerEnabled(const KUrl & url,bool enabled)
+	{
+		Tracker* trk = trackers.find(url);
+		if (!trk)
+			return;
+		
+		trk->setEnabled(enabled);
+		if (!enabled && curr == trk) // if the current tracker is disabled, switch to another one
+		{
+			curr->stop();
+			switchTracker(selectTracker());
+			tor->resetTrackerStats();
+			if (curr)
+				curr->start();
+		}
+		saveTrackerStatus();
+	}
+	
+	bool PeerSourceManager::isTrackerEnabled(const KUrl & url) const
+	{
+		const Tracker* trk = trackers.find(url);
+		if (!trk)
+			return false;
+		else
+			return trk->isEnabled();
+	}
+	
 	void PeerSourceManager::saveCustomURLs()
 	{
 		QString trackers_file = tor->getTorDir() + "trackers"; 
@@ -352,6 +387,49 @@ namespace bt
 		no_save_custom_trackers = false;
 	}
 	
+	void PeerSourceManager::saveTrackerStatus()
+	{
+		QString status_file = tor->getTorDir() + "tracker_status"; 
+		QFile file(status_file);
+		if(!file.open(QIODevice::WriteOnly))
+			return;
+		
+		QTextStream stream(&file);
+		PtrMap<KUrl,Tracker>::iterator i = trackers.begin();
+		while (i != trackers.end())
+		{
+			KUrl url = i->first;
+			Tracker* trk = i->second;
+			
+			stream << (trk->isEnabled() ? "1:" : "0:") << url.prettyUrl() << ::endl;
+			i++;
+		}
+	}
+	
+	void PeerSourceManager::loadTrackerStatus()
+	{
+		QString status_file = tor->getTorDir() + "tracker_status"; 
+		QFile file(status_file);
+		if(!file.open( QIODevice::ReadOnly))
+			return;
+		
+		QTextStream stream(&file);
+		while (!stream.atEnd())
+		{
+			QString line = stream.readLine();
+			if (line.size() < 2)
+				continue;
+			
+			KUrl u = line.mid(2); // url starts at the second char
+			if (line[0] == '0')
+			{
+				Tracker* trk = trackers.find(u);
+				if (trk)
+					trk->setEnabled(false);
+			}
+		}
+	}
+	
 	Tracker* PeerSourceManager::selectTracker()
 	{
 		Tracker* n = 0;
@@ -359,12 +437,15 @@ namespace bt
 		while (i != trackers.end())
 		{
 			Tracker* t = i->second;
-			if (!n)
-				n = t;
-			else if (t->failureCount() < n->failureCount())
-				n = t;
-			else if (t->failureCount() == n->failureCount())
-				n = t->getTier() < n->getTier() ? t : n;
+			if (t->isEnabled())
+			{
+				if (!n)
+					n = t;
+				else if (t->failureCount() < n->failureCount())
+					n = t;
+				else if (t->failureCount() == n->failureCount())
+					n = t->getTier() < n->getTier() ? t : n;
+			}
 			i++;
 		}
 		
