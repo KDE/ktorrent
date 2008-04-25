@@ -166,12 +166,16 @@ namespace kt
 		{
 			QTime t;
 			t = t.addSecs(tc->getTimeToNextTrackerUpdate());
-			m_next_update->setText(t.toString("mm:ss"));
+			m_next_update->setText("<b>" + t.toString("mm:ss") + "</b>");
 		}
 		else
 		{
 			m_next_update->clear();
 		}
+		
+		m_leechers->setText(QString("<b>%1</b>").arg(s.leechers_total));
+		m_seeders->setText(QString("<b>%1</b>").arg(s.seeders_total));
+		m_times_downloaded->setText(QString("<b>%1</b>").arg(s.total_times_downloaded));
 		
 		//Update manual annunce button
 		m_update_tracker->setEnabled(s.running && tc->announceAllowed());
@@ -194,6 +198,9 @@ namespace kt
 			m_url->clear();
 			m_next_update->clear();
 			m_tracker_to_add->clear();
+			m_leechers->clear();
+			m_seeders->clear();
+			m_times_downloaded->clear();
 			
 			m_add_tracker->setEnabled(false);
 			m_remove_tracker->setEnabled(false);

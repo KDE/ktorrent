@@ -114,6 +114,8 @@ namespace bt
 		Uint32 leechers_total;
 		/// Num leechers connected to
 		Uint32 leechers_connected_to;
+		/// The number of times the torrent was downloaded
+		Uint32 total_times_downloaded;
 		/// Status of the download
 		TorrentStatus status;
 		/// The status of the tracker

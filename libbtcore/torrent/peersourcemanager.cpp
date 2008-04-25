@@ -611,6 +611,11 @@ namespace bt
 		return curr ? curr->getNumLeechers() : 0;
 	}
 	
+	Uint32 PeerSourceManager::getTotalTimesDownloaded() const
+	{
+		return curr ? curr->getTotalTimesDownloaded() : 0;
+	}
+	
 	void PeerSourceManager::addDHT()
 	{
 		if(m_dht)

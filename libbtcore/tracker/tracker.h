@@ -90,6 +90,9 @@ namespace bt
 		/// Get the number of leechers
 		Uint32 getNumLeechers() const {return leechers;}
 		
+		/// Get the number of times the torrent was downloaded
+		Uint32 getTotalTimesDownloaded() const {return total_downloaded;}
+		
 		/// Get the custom ip to use, null if none is set
 		static QString getCustomIP();
 		

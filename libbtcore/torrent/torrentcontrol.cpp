@@ -98,6 +98,7 @@ namespace bt
 		stats.priv_torrent = false;
 		stats.seeders_connected_to = stats.seeders_total = 0;
 		stats.leechers_connected_to = stats.leechers_total = 0;
+		stats.total_times_downloaded = 0;
 		stats.max_share_ratio = 0.00f;
 		stats.max_seed_time = 0;
 		stats.last_download_activity_time = stats.last_upload_activity_time = 0;
@@ -1233,6 +1234,7 @@ namespace bt
 		
 		getSeederInfo(stats.seeders_total,stats.seeders_connected_to);
 		getLeecherInfo(stats.leechers_total,stats.leechers_connected_to);
+		stats.total_times_downloaded = psman ? psman->getTotalTimesDownloaded() : 0;
 	}
 
 	void TorrentControl::trackerScrapeDone()

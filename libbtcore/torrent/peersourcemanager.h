@@ -136,6 +136,9 @@ namespace bt
 		/// Get the number of potential leechers
 		Uint32 getNumLeechers() const;
 		
+		/// Get the total time the torrent was downloaded according to the tracker
+		Uint32 getTotalTimesDownloaded() const;
+		
 		/// Get the number of failures
 		Uint32 getNumFailures() const {return failures;}
 		
