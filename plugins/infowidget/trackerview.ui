@@ -30,7 +30,7 @@
           </sizepolicy>
          </property>
          <property name="text" >
-          <string>KSqueezedTextLabel</string>
+          <string/>
          </property>
         </widget>
        </item>
@@ -70,7 +70,7 @@
           </sizepolicy>
          </property>
          <property name="text" >
-          <string>KSqueezedTextLabel</string>
+          <string/>
          </property>
         </widget>
        </item>

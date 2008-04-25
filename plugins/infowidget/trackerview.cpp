@@ -57,8 +57,10 @@ namespace kt
 
 		m_url->setTextFormat(Qt::RichText);
 		m_url->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
+		m_url->clear();
 		m_status->setTextFormat(Qt::RichText);
 		m_status->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
+		m_status->clear();
 		m_next_update->setTextFormat(Qt::RichText);
 		
 		m_update_tracker->setIcon(KIcon("system-software-update"));
