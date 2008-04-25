@@ -44,8 +44,8 @@ namespace ideal
 		{
 			QWidget* widget;
 			int id;
-			QString icon;
 			QString text;
+			QString icon;
 		};
 
 		typedef QList<Tab>::iterator TabItr;
