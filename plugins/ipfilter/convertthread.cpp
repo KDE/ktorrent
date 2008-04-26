@@ -205,7 +205,7 @@ namespace kt
 		
 		int i = 0;
 		int tot = input.count();
-		foreach (IPBlock block,input)
+		foreach (const IPBlock &block,input)
 		{
 			dlg->progress(i,tot);
 			

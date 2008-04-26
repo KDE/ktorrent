@@ -73,7 +73,7 @@ namespace kt
 		
 		m_folders->clear();
 		folders = ScanFolderPluginSettings::folders();
-		foreach (QString f,folders)
+		foreach (const QString &f,folders)
 		{
 			m_folders->addItem(new QListWidgetItem(KIcon("folder"),f));
 		}

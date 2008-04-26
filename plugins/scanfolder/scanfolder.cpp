@@ -82,7 +82,7 @@ namespace kt
 	void ScanFolder::onNewItems(const KFileItemList& items)
 	{
 		bool rec = ScanFolderPluginSettings::recursive();
-		foreach (KFileItem file, items)
+		foreach (const KFileItem &file, items)
 		{
 			QString name = file.name();
 			QString filename = file.url().path();

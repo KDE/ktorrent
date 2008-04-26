@@ -86,7 +86,7 @@ namespace kt
 		QStringList cv;
 		cv = g.readEntry("current_views",cv);
 
-		foreach (QString s,cv)
+		foreach (const QString &s,cv)
 			gui->openView(s);
 
 		if (views.count() == 0)

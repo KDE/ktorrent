@@ -139,7 +139,7 @@ namespace bt
 				enc.write("announce-list");
 				enc.beginList();
 				enc.beginList();
-				foreach (QString t,trackers)
+				foreach (const QString &t,trackers)
 					enc.write(t);
 				enc.end();
 				enc.end();
@@ -164,7 +164,7 @@ namespace bt
 			enc.write("nodes");
 			enc.beginList();
 			
-			foreach (QString t,trackers)
+			foreach (const QString &t,trackers)
 			{
 				enc.beginList();
 				enc.write(t.section(',',0,0));
@@ -183,7 +183,7 @@ namespace bt
 		{
 			enc.write("url-list");
 			enc.beginList();
-			foreach (KUrl u,webseeds)
+			foreach (const KUrl &u,webseeds)
 			{
 				enc.write(u.prettyUrl());
 			}
@@ -229,7 +229,7 @@ namespace bt
 		enc.write("path");
 		enc.beginList();
 		QStringList sl = file.getPath().split(bt::DirSeparator());
-		foreach (QString s,sl)
+		foreach (const QString &s,sl)
 			enc.write(s);
 		enc.end();
 		enc.end();

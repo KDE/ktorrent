@@ -422,7 +422,7 @@ namespace kt
 
 		QDataStream stream(&encoded_data, QIODevice::WriteOnly);
 
-		foreach (QModelIndex index, indexes) 
+		foreach (const QModelIndex &index, indexes) 
 		{
 			if (index.isValid()) 
 			{
@@ -437,7 +437,7 @@ namespace kt
 	
 	void ViewModel::torrentsFromIndexList(const QModelIndexList & idx,QList<bt::TorrentInterface*> & tlist)
 	{
-		foreach (QModelIndex i,idx)
+		foreach (const QModelIndex &i,idx)
 		{
 			if (i.isValid())
 			{

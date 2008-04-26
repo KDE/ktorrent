@@ -65,7 +65,7 @@ namespace bt
 		
 		active_webseed_downloads = 0;
 		const KUrl::List & urls = tor.getWebSeeds();
-		foreach (KUrl u,urls)
+		foreach (const KUrl &u,urls)
 		{
 			if (u.protocol() == "http")
 			{

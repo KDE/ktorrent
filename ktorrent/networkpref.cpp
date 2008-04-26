@@ -57,12 +57,12 @@ namespace kt
 		QList<Solid::Device> netlist = Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface);
 		
 		
-		foreach(QNetworkInterface iface,iface_list)
+		foreach(const QNetworkInterface &iface,iface_list)
 		{
 			KIcon icon("network-wired");
-			foreach (Solid::Device device,netlist)
+			foreach (const Solid::Device &device,netlist)
 			{
-				Solid::NetworkInterface* netdev = device.as<Solid::NetworkInterface>();
+				const Solid::NetworkInterface* netdev = device.as<Solid::NetworkInterface>();
 				if (netdev->ifaceName() == iface.name() && netdev->isWireless())
 				{
 					icon = KIcon("network-wireless");

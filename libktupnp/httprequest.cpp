@@ -64,7 +64,7 @@ namespace kt
 		{
 			Out(SYS_PNP|LOG_DEBUG) << "Sending " << endl;
 			QStringList lines = hdr.split("\r\n");
-			foreach (QString line,lines)
+			foreach (const QString &line,lines)
 				Out(SYS_PNP|LOG_DEBUG) << line << endl;
 			
 			Out(SYS_PNP|LOG_DEBUG) << payload << endl;
@@ -90,7 +90,7 @@ namespace kt
 		if (verbose)
 		{
 			Out(SYS_PNP|LOG_DEBUG) << "Got reply : " << endl;
-			foreach (QString line,sl)
+			foreach (const QString &line,sl)
 				Out(SYS_PNP|LOG_DEBUG) << line << endl;
 		}
 		

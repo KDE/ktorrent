@@ -186,7 +186,7 @@ namespace kt
 
 		dragged_items.clear();
 	
-		foreach (QModelIndex index, indexes) 
+		foreach (const QModelIndex &index, indexes) 
 		{
 			if (index.isValid() && !dragged_items.contains(index.row())) 
 				dragged_items.append(index.row());

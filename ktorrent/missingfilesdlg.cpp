@@ -44,7 +44,7 @@ namespace kt
 		m_quit->setGuiItem(KStandardGuiItem::quit());
 		m_cancel->setGuiItem(KStandardGuiItem::cancel());
 		
-		foreach (QString s,missing)
+		foreach (const QString &s,missing)
 		{
 			QListWidgetItem* lwi = new QListWidgetItem(m_file_list);
 			lwi->setText(s);

@@ -71,7 +71,7 @@ namespace net
 	{
 		if (res.count() > 0)
 		{
-			foreach (KNetwork::KResolverEntry e,res)
+			foreach (const KNetwork::KResolverEntry &e,res)
 			{
 				net::Address addr = net::Address(e.address().asInet());
 				if (addr.ipVersion() == 4)

@@ -260,7 +260,7 @@ namespace kt
 	
 	void TorrentFileListModel::changePriority(const QModelIndexList & indexes,bt::Priority newpriority)
 	{
-		foreach (QModelIndex idx,indexes)
+		foreach (const QModelIndex &idx,indexes)
 		{
 			setData(idx,newpriority,Qt::UserRole);
 		}

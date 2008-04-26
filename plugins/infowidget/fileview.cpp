@@ -269,7 +269,7 @@ namespace kt
 			if (dir.isNull())
 				return;
 			
-			foreach (QModelIndex idx,sel)
+			foreach (const QModelIndex &idx,sel)
 			{
 				bt::TorrentFileInterface* tfi = model->indexToFile(proxy_model->mapToSource(idx));
 				if (!tfi)

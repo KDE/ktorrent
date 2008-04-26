@@ -259,7 +259,7 @@ namespace kt
 		if (urls.count() == 0)
 			return;
 		
-		foreach (KUrl url,urls)
+		foreach (const KUrl &url,urls)
 		{
 			if (url.isValid())
 				core->loadSilently(url,QString());
@@ -282,7 +282,7 @@ namespace kt
 		else 
 		{
 			// load multiple torrents silently
-			foreach (KUrl url,urls)
+			foreach (const KUrl &url,urls)
 			{
 				if (url.isValid())
 				{
