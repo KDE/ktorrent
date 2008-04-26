@@ -146,19 +146,20 @@ namespace kt
 			return false;
 			
 		bool ok = false;
-		Uint32 up,down;
-		tc->getTrafficLimits(up,down);
-		if (index.column() == 1)
-			down = value.toInt(&ok) * 1024;
-		else
-			up = value.toInt(&ok) * 1024;
+		Limits & lim = limits[tc];
+		
+		switch (index.column())
+		{
+			case 1:
+				lim.down = value.toInt(&ok) * 1024;
+				break;
+			case 2:
+				lim.up = value.toInt(&ok) * 1024;
+				break;
+		}
 			
 		if (ok)
 		{
-			Limits & lim = limits[tc];
-			lim.up = up;
-			lim.down = down;
-			
 			emit dataChanged(index, index);
 			if (lim.up != lim.up_original || lim.down != lim.down_original)
 				enableApply(true);
