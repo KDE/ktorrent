@@ -164,34 +164,26 @@ namespace kt
 			return false;
 			
 		bool ok = false;
-		Uint32 up,down;
-		Uint32 aup,adown;
-		tc->getTrafficLimits(up,down);
-		tc->getAssuredSpeeds(aup,adown);
+		Limits & lim = limits[tc];
+		
 		switch (index.column())
 		{
 			case 1:
-				down = value.toInt(&ok) * 1024;
+				lim.down = value.toInt(&ok) * 1024;
 				break;
 			case 2:
-				up = value.toInt(&ok) * 1024;
+				lim.up = value.toInt(&ok) * 1024;
 				break;
 			case 3:
-				adown = value.toInt(&ok) * 1024;
+				lim.assured_down = value.toInt(&ok) * 1024;
 				break;
 			case 4:
-				aup = value.toInt(&ok) * 1024;
+				lim.assured_up = value.toInt(&ok) * 1024;
 				break;
 		}
 			
 		if (ok)
 		{
-			Limits & lim = limits[tc];
-			lim.up = up;
-			lim.down = down;
-			lim.assured_down = adown;
-			lim.assured_up = aup;
-			
 			emit dataChanged(index, index);
 			if (lim.up != lim.up_original || lim.down != lim.down_original || 
 				lim.assured_down != lim.assured_down_original || lim.up_original != lim.assured_up_original)
