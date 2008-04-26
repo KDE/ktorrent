@@ -1562,6 +1562,8 @@ namespace bt
 		stats.imported_bytes = downloader->bytesDownloaded();
 		if (cman->haveAllChunks())
 			stats.completed = true;
+		
+		updateStats();
 	}
 	
 	bool TorrentControl::hasExistingFiles() const
