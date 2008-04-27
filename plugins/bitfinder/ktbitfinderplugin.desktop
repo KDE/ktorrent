@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=BitFinderPlugin
+Comment=Plugin to automatically downloads torrents from various sources
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktbitfinderplugin
+X-KDE-PluginInfo-Author=Alan Jones
+X-KDE-PluginInfo-Email=skyphyr@gmail.com
+X-KDE-PluginInfo-Name=BitFinderPlugin
+X-KDE-PluginInfo-Website=http://ktorrent.org/
+X-KDE-PluginInfo-License=GPLv3
+X-KDE-PluginInfo-EnabledByDefault=false
+Icon=edit-find
