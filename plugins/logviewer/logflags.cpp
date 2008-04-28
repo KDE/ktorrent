@@ -87,8 +87,8 @@ namespace kt
 		if(arg & SYS_SRC)
 			return (arg & m_flags.SYSSRC) && ((arg & 0x0000000F) <= m_flags.SYSSRC);
 		
-		if(arg & SYS_RSS)
-			return (arg & m_flags.SYSRSS) && ((arg & 0x0000000F) <= m_flags.SYSRSS);
+		if(arg & SYS_BTF)
+			return (arg & m_flags.SYSBTF) && ((arg & 0x0000000F) <= m_flags.SYSBTF);
 		
 		if(arg & SYS_WEB)
 			return (arg & m_flags.SYSWEB) && ((arg & 0x0000000F) <= m_flags.SYSWEB);
@@ -122,7 +122,7 @@ namespace kt
 		m_flags.SYSSCD = flags[LogViewerPluginSettings::sysSCD()];
 		m_flags.SYSSNF = flags[LogViewerPluginSettings::sysSNF()];
 		m_flags.SYSSRC = flags[LogViewerPluginSettings::sysSRC()];
-		m_flags.SYSRSS = flags[LogViewerPluginSettings::sysRSS()];
+		m_flags.SYSBTF = flags[LogViewerPluginSettings::sysBTF()];
 		m_flags.SYSWEB = flags[LogViewerPluginSettings::sysWEB()];
 		m_flags.SYSZCO = flags[LogViewerPluginSettings::sysZCO()];
 		

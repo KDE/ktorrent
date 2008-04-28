@@ -47,7 +47,7 @@
 #define SYS_SNF 0x10000 // ScanFolder plugin
 #define SYS_MPL 0x20000 // Media player plugin
 #define SYS_SCD 0x40000 // Scheduler plugin
-#define SYS_RSS 0x80000 // RSS plugin
+#define SYS_BTF 0x80000 // BitFinder plugin
 #define SYS_WEB 0x100000 // WebInterface plugin
 #define SYS_ZCO 0x200000 // ZeroConf plugin
 

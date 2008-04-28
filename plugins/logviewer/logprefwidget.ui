@@ -285,14 +285,14 @@ p, li { white-space: pre-wrap; }
        </property>
        <layout class="QGridLayout" >
         <item row="0" column="0" >
-         <widget class="QLabel" name="label_7" >
+         <widget class="QLabel" name="label_12" >
           <property name="text" >
-           <string>Infowidget:</string>
+           <string>BitFinder:</string>
           </property>
          </widget>
         </item>
         <item row="0" column="1" >
-         <widget class="QComboBox" name="kcfg_sysINW" >
+         <widget class="QComboBox" name="kcfg_sysBTF" >
           <property name="toolTip" >
            <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
@@ -333,14 +333,14 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="1" column="0" >
-         <widget class="QLabel" name="label_6" >
+         <widget class="QLabel" name="label_7" >
           <property name="text" >
-           <string>IP Filter:</string>
+           <string>Infowidget:</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1" >
-         <widget class="QComboBox" name="kcfg_sysIPF" >
+         <widget class="QComboBox" name="kcfg_sysINW" >
           <property name="toolTip" >
            <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
@@ -381,14 +381,14 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="2" column="0" >
-         <widget class="QLabel" name="label_15" >
+         <widget class="QLabel" name="label_6" >
           <property name="text" >
-           <string>Mediaplayer:</string>
+           <string>IP Filter:</string>
           </property>
          </widget>
         </item>
         <item row="2" column="1" >
-         <widget class="QComboBox" name="kcfg_sysMPL" >
+         <widget class="QComboBox" name="kcfg_sysIPF" >
           <property name="toolTip" >
            <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
@@ -429,14 +429,14 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="3" column="0" >
-         <widget class="QLabel" name="label_12" >
+         <widget class="QLabel" name="label_15" >
           <property name="text" >
-           <string>RSS:</string>
+           <string>Mediaplayer:</string>
           </property>
          </widget>
         </item>
         <item row="3" column="1" >
-         <widget class="QComboBox" name="kcfg_sysRSS" >
+         <widget class="QComboBox" name="kcfg_sysMPL" >
           <property name="toolTip" >
            <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }

@@ -39,7 +39,7 @@ namespace kt
 		unsigned int SYSSNF;
 		unsigned int SYSMPL;
 		unsigned int SYSSCD;
-		unsigned int SYSRSS;
+		unsigned int SYSBTF;
 		unsigned int SYSWEB;
 		unsigned int SYSZCO;
 	};
