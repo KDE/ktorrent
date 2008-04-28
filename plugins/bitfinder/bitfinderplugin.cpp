@@ -21,8 +21,9 @@
 #include <kgenericfactory.h>
 #include <kicon.h>
 #include <klocale.h>
-#include <kaction.h>
 #include <kactioncollection.h>
+
+#include <util/log.h>
 
 #include "bitfinderplugin.h"
 
@@ -41,30 +42,56 @@ namespace kt
 
 	BitFinderPlugin::~BitFinderPlugin()
 		{
+		
+		}
 
+	void BitFinderPlugin::setupSourcesActions()
+		{
+		KActionCollection* ac = actionCollection();
+		
+		addSourceMenu = new KActionMenu(KIcon("list-add"),i18n("Add Source"),this);
+		
+		//add the RSS Source Action to the menu
+		addRssSource = new KAction(KIcon("application-rss+xml"), i18n("RSS Feed"), this);
+		addSourceMenu->addAction(addRssSource);
+		
+		ac->addAction("addRssSource",addRssSource);
+		
 		}
 
 	void BitFinderPlugin::load()
 		{
-
+		//Add the BF Sources Menu on the left dock
+		sourcesView = new SourcesView();
+		getGUI()->addToolWidget(sourcesView,"application-x-bittorrent",i18n("BF Sources"),GUIInterface::DOCK_LEFT);
+		
+		setupSourcesActions();
+		
+		QToolBar* tb = sourcesView->sourcesToolBar();
+		tb->addAction(addSourceMenu);
+		
+		//Add the BF Filters Menu on the left dock
+		
 		}
 
 	void BitFinderPlugin::unload()
 		{
-
+		getGUI()->removeToolWidget(sourcesView);
+		delete sourcesView;
+		sourcesView = 0;
 		}
 
 	bool BitFinderPlugin::versionCheck (const QString& version) const
 		{
-
+		return version == KT_VERSION_MACRO;
 		}
 
 	void BitFinderPlugin::tabCloseRequest (kt::GUIInterface* gui, QWidget* tab)
 		{
 		//Check through the list of Source tabs
-
+		
 		//Check through the list of Filter tabs
-
+		
 		}
 
 	}

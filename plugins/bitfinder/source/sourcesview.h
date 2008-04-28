@@ -17,47 +17,46 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTBITFINDERPLUGIN_H
-#define KTBITFINDERPLUGIN_H
 
-#include <kaction.h>
-#include <kactionmenu.h>
+#ifndef KTSOURCESVIEW_H
+#define KTSOURCESVIEW_H
 
-#include <interfaces/plugin.h>
-#include <interfaces/guiinterface.h>
-
-#include "source/sourcesview.h"
+#include <QListView>
+#include <QToolBar>
 
 namespace kt
 	{
 
-	class BitFinderPlugin : public Plugin, public CloseTabListener
+	class SourcesView : public QWidget
 		{
 			Q_OBJECT
-
 		public:
-			BitFinderPlugin (QObject* parent, const QStringList& args);
-			virtual ~BitFinderPlugin();
+			SourcesView (QWidget* parent = 0); //add in the model later
+			~SourcesView() { }
 
-			virtual void load();
-			virtual void unload();
-			virtual bool versionCheck (const QString& version) const;
+			/// Get the media tool bar
+			QToolBar* sourcesToolBar() {return toolBar;}
 
-		private:
- 			void setupSourcesActions();
-			virtual void tabCloseRequest (kt::GUIInterface* gui, QWidget* tab);
+			/// Get the current selected item
+			//QModelIndex selectedItem() const;
+
+		public slots:
 
 		private slots:
-// 			void onDoubleClicked(const QModelIndex & idx);
+//			void onSelectionChanged (const QItemSelection & s, const QItemSelection & d);
+
+		signals:
+//			void selectionChanged (const QModelIndex & idx);
+			void doubleClicked (const QModelIndex & idx);
 
 		private:
-			SourcesView * sourcesView;
- 			KActionMenu* addSourceMenu;
- 			KAction* addRssSource;
-
+			QToolBar* toolBar;
+			QListView* sourcesList;
 		};
+
 
 	}
 
 #endif
+
 
