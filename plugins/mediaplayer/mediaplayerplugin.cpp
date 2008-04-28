@@ -35,6 +35,7 @@
 #include "mediamodel.h"
 #include "mediaplayer.h"
 #include "videowidget.h"
+#include "mediaplayerpluginsettings.h"
 
 
 K_EXPORT_COMPONENT_FACTORY(ktmediaplayerplugin,KGenericFactory<kt::MediaPlayerPlugin>("ktmediaplayerplugin"))
@@ -109,8 +110,10 @@ namespace kt
 		connect(media_player,SIGNAL(enableActions(unsigned int)),this,SLOT(enableActions(unsigned int)));
 		connect(media_player,SIGNAL(openVideo()),this,SLOT(openVideo()));
 		connect(media_player,SIGNAL(closeVideo()),this,SLOT(closeVideo()));
+		connect(media_player,SIGNAL(aboutToFinish()),this,SLOT(aboutToFinishPlaying()));
 		connect(media_view,SIGNAL(selectionChanged(const QModelIndex &)),this,SLOT(onSelectionChanged(const QModelIndex&)));
 		connect(media_view,SIGNAL(doubleClicked(const QModelIndex&)),this,SLOT(onDoubleClicked(const QModelIndex&)));
+		connect(media_view,SIGNAL(randomModeActivated()),this,SLOT(randomPlayActivated()));
 	
 		setupActions();
 		setXMLFile("ktmediaplayerpluginui.rc");
@@ -175,7 +178,10 @@ namespace kt
 	
 	void MediaPlayerPlugin::play()
 	{
-		onDoubleClicked(media_view->selectedItem());
+		if (media_player->paused())
+			media_player->resume();
+		else
+			onDoubleClicked(media_view->selectedItem());
 	}
 	
 	void MediaPlayerPlugin::onDoubleClicked(const QModelIndex & idx)
@@ -188,7 +194,9 @@ namespace kt
 				Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: playing " << path << endl;
 				media_player->play(path);
 				curr_item = idx;
-				next_action->setEnabled(media_model->next(curr_item).isValid());
+				bool random = MediaPlayerPluginSettings::playMode() == 2;
+				QModelIndex next = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
+				next_action->setEnabled(next.isValid());
 				media_view->playing(curr_item);
 			}
 		}
@@ -216,17 +224,18 @@ namespace kt
 	
 	void MediaPlayerPlugin::next()
 	{
-		QModelIndex n = media_model->next(curr_item);
+		bool random = MediaPlayerPluginSettings::playMode() == 2;
+		QModelIndex n = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
 		if (!n.isValid())
 			return;
 		
 		QString path = media_model->pathForIndex(n);
 		if (bt::Exists(path))
 		{
-			Out(SYS_GEN|LOG_DEBUG) << "MediaPlayer: playing " << path << endl;
 			media_player->play(path);
 			curr_item = n;
-			next_action->setEnabled(media_model->next(curr_item).isValid());
+			n = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
+			next_action->setEnabled(n.isValid());
 			media_view->playing(curr_item);
 		}
 	}
@@ -267,6 +276,33 @@ namespace kt
 		}
 		else
 			play_action->setEnabled(action_flags & kt::MEDIA_PLAY);
+	}
+	
+	void MediaPlayerPlugin::randomPlayActivated()
+	{
+		QModelIndex next = media_model->next(curr_item,true,MediaPlayerPluginSettings::skipIncomplete());
+		next_action->setEnabled(next.isValid());
+	}
+	
+	void MediaPlayerPlugin::aboutToFinishPlaying()
+	{
+		if (MediaPlayerPluginSettings::playMode() == 0)
+			return;
+		
+		bool random = MediaPlayerPluginSettings::playMode() == 2;
+		QModelIndex n = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
+		if (!n.isValid())
+			return;
+		
+		QString path = media_model->pathForIndex(n);
+		if (bt::Exists(path))
+		{
+			media_player->queue(path);
+			curr_item = n;
+			n = media_model->next(curr_item,random,MediaPlayerPluginSettings::skipIncomplete());
+			next_action->setEnabled(n.isValid());
+			media_view->playing(curr_item);
+		}
 	}
 	
 	void MediaPlayerPlugin::tabCloseRequest(kt::GUIInterface* gui,QWidget* tab)

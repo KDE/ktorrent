@@ -37,18 +37,26 @@ namespace kt
 
 	MediaModel::MediaModel(CoreInterface* core,QObject* parent) : QAbstractItemModel(parent),core(core)
 	{
+		total_number_of_media_files = 0;
 		QueueManager* qman = core->getQueueManager();
 		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
 		{
 			bt::TorrentInterface* tc = *i;
 			Item* item = new Item(*i);
 			if (tc->getStats().multi_file_torrent && item->multimedia_files.count() > 0)
+			{
+				total_number_of_media_files += item->multimedia_files.count();
 				items.append(item);
+			}
 			else if (!tc->getStats().multi_file_torrent && tc->isMultimedia())
+			{
+				total_number_of_media_files++;
 				items.append(item);
+			}
 			else
 				delete item;
 		}
+		qsrand(bt::GetCurrentTime() / 1000); // initialize random number generator with the current time in seconds
 	}
 
 
@@ -122,6 +130,8 @@ namespace kt
 					return s.torrent_name;
 				case Qt::DecorationRole:
 					return (item->multimedia_files.count() > 0) ? KIcon("folder") :  KIcon(KMimeType::findByPath(s.torrent_name)->iconName());
+				case Qt::UserRole: // user role is for finding out if a torrent is complete
+					return s.completed;
 				default:
 					return QVariant();
 			}
@@ -146,6 +156,8 @@ namespace kt
 					return path;
 				case Qt::DecorationRole:
 					return KIcon(KMimeType::findByPath(path)->iconName());
+				case Qt::UserRole: // user role is for finding out if a torrent is complete
+					return (tfi.getDownloadPercentage() - 100.0f) >= -0.0001f;
 				default:
 					return QVariant();
 			}
@@ -218,11 +230,13 @@ namespace kt
 		Item* item = new Item(tc);
 		if (tc->getStats().multi_file_torrent && item->multimedia_files.count() > 0)
 		{
+			total_number_of_media_files += item->multimedia_files.count();
 			items.append(item);
 			insertRow(items.count());
 		}
 		else if (!tc->getStats().multi_file_torrent && tc->isMultimedia())
 		{
+			total_number_of_media_files++;
 			items.append(item);
 			insertRow(items.count());
 		}
@@ -239,6 +253,10 @@ namespace kt
 		{
 			if (i->tc == tc)
 			{
+				if (!i->tc->getStats().multi_file_torrent)
+					total_number_of_media_files--;
+				else
+					total_number_of_media_files -= i->multimedia_files.count();
 				removeRow(idx);
 				return;
 			}
@@ -298,30 +316,86 @@ namespace kt
 	
 	QModelIndex MediaModel::next(const QModelIndex & idx) const
 	{
-		if (!idx.isValid())
+		QModelIndex	n = idx.sibling(idx.row()+1,0); // take a look at the next sibling
+		if (!n.isValid())
 		{
-			if (items.count() == 0)
-				return QModelIndex();
-			
-			Item* f = items.at(0);
-			if (!f->tc->getStats().multi_file_torrent)
-				return index(0,0,QModelIndex());
-			else
-				return index(0,0,index(0,0,QModelIndex()));
+			n = parent(idx);
+			n = n.sibling(n.row()+1,0);
+			if (n.isValid() && n.child(0,0).isValid())
+				n = n.child(0,0);	
 		}
+		return n;
+	}
+	
+	QModelIndex MediaModel::randomNext(const QModelIndex & idx,bool complete_only) const
+	{
+		QModelIndexList possible;
+		
+		// find the start index
+		Item* f = items.at(0);
+		QModelIndex n;
+		if (!f->tc->getStats().multi_file_torrent)
+			n = index(0,0,QModelIndex());
 		else
+			n = index(0,0,index(0,0,QModelIndex()));
+		
+		// loop over all and assemble the list of possible candidates
+		while (n.isValid())
 		{
-			QModelIndex	n = idx.sibling(idx.row()+1,0); // take a look at the next sibling
-			if (!n.isValid())
+			if ((!complete_only || data(n,Qt::UserRole).toBool()) && idx != n)
+				possible.append(n);
+			n = next(n);
+		}
+		
+		if (possible.count() == 0)
+			return QModelIndex();
+		
+		return possible.at(qrand() % possible.count()); // select a random one
+	}
+	
+	QModelIndex MediaModel::next(const QModelIndex & idx,bool random,bool complete_only) const
+	{
+		if (items.count() == 0)
+			return QModelIndex();
+		
+		if (!idx.isValid())
+		{	
+			if (!random)
 			{
-				n = parent(idx);
-				n = n.sibling(n.row()+1,0);
-				if (n.isValid() && n.child(0,0).isValid())
-					n = n.child(0,0);
+				Item* f = items.at(0);
+				QModelIndex n;
+				if (!f->tc->getStats().multi_file_torrent)
+					n = index(0,0,QModelIndex());
+				else
+					n = index(0,0,index(0,0,QModelIndex()));
+				
+				if (complete_only)
+					return n;
+				
+				while (n.isValid() && !data(n,Qt::UserRole).toBool())
+					n = next(n);
+				
+				return n;
 			}
+			else
+			{
+				return randomNext(QModelIndex(),complete_only);
+			}
+		}
+		else if (!random)
+		{
+			if (!complete_only)
+				return next(idx);
+				
+			QModelIndex n = next(idx);
+			while (n.isValid() && !data(n,Qt::UserRole).toBool())
+				n = next(n);
 			
 			return n;
 		}
+		else
+		{
+			return randomNext(idx,complete_only);
+		}
 	}
-			
 }

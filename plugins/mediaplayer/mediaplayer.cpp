@@ -41,6 +41,7 @@ namespace kt
 		connect(media,SIGNAL(stateChanged(Phonon::State,Phonon::State)),
 				this,SLOT(onStateChanged(Phonon::State, Phonon::State)));
 		connect(media,SIGNAL(hasVideoChanged(bool)),this,SLOT(hasVideoChanged(bool)));
+		connect(media,SIGNAL(aboutToFinish()),this,SIGNAL(aboutToFinish()));
 		media->setTickInterval(1000);
 	}
 
@@ -49,6 +50,17 @@ namespace kt
 	{
 		media->stop();
 	}
+	
+	bool MediaPlayer::paused() const
+	{
+		return media->state() == Phonon::PausedState;
+	}
+
+	void MediaPlayer::resume()
+	{
+		if (paused())
+			media->play();
+	}	
 
 	void MediaPlayer::play(const QString & file)
 	{
@@ -63,6 +75,14 @@ namespace kt
 			media->play();
 			history.append(file);
 		}
+	}
+	
+	void MediaPlayer::queue(const QString & file)
+	{
+		Out(SYS_MPL|LOG_NOTICE) << "MediaPlayer: enqueue " << file << endl;
+		media->enqueue(file);
+		history.append(file);
+		onStateChanged(media->state(),Phonon::StoppedState);
 	}
 		
 	void MediaPlayer::pause()

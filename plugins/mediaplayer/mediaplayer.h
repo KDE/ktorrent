@@ -51,8 +51,17 @@ namespace kt
 		Phonon::AudioOutput* output() {return audio;}
 		Phonon::MediaObject* media0bject() {return media;}
 		
+		/// Are we paused
+		bool paused() const;
+		
+		/// Resume paused stuff
+		void resume(); 
+		
 		/// Play a file
 		void play(const QString & file);
+		
+		/// Queue a file
+		void queue(const QString & file);
 		
 		/// Pause playing
 		void pause();
@@ -90,6 +99,11 @@ namespace kt
 		 * Emitted when we have finished playing something
 		 */
 		void stopped();
+		
+		/**
+		 * Emitted when the player is about to finish
+		 */
+		void aboutToFinish();
 
 	private:
 		Phonon::MediaObject* media;

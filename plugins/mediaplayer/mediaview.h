@@ -24,6 +24,8 @@
 #include <QLabel>
 #include <QTreeView>
 #include <QToolBar>
+#include <QComboBox>
+#include <QCheckBox>
 #include <Phonon/SeekSlider>
 #include <Phonon/VolumeSlider>
 
@@ -57,10 +59,13 @@ namespace kt
 	private slots:
 		void onSelectionChanged(const QItemSelection & s, const QItemSelection & d);
 		void metaDataChanged();
+		void skipIncompleteChecked(bool on);
+		void modeActivated(int idx);
 		
 	signals:
 		void selectionChanged(const QModelIndex & idx);
 		void doubleClicked(const QModelIndex & idx);
+		void randomModeActivated();
 
 	private:
 		MediaPlayer* player;
@@ -69,6 +74,8 @@ namespace kt
 		QTreeView* media_tree;
 		Phonon::VolumeSlider* volume;
 		Phonon::SeekSlider* play_slider;
+		QComboBox* queue_mode;
+		QCheckBox* skip_incomplete;
 		QLabel* info_label;
 		unsigned int cnt;
 		QString current_file;

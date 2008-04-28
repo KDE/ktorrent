@@ -20,12 +20,14 @@
  ***************************************************************************/
 #include <QHeaderView>
 #include <QVBoxLayout>
+#include <QSpacerItem>
 #include <ktoolbar.h>
 #include <klocale.h>
 #include <util/log.h>
 #include "mediaview.h"
 #include "mediamodel.h"
 #include "mediaplayer.h"
+#include "mediaplayerpluginsettings.h"
 
 using namespace bt;
 
@@ -62,15 +64,38 @@ namespace kt
 		media_tree->header()->hide();
 		layout->addWidget(media_tree);
 		
+		QHBoxLayout* hlayout = new QHBoxLayout(0);
+		hlayout->addWidget(new QLabel(i18n("Mode:"),this));
+		
+		queue_mode = new QComboBox(this);
+		queue_mode->addItem(i18n("Single File"));
+		queue_mode->addItem(i18n("All Files"));
+		queue_mode->addItem(i18n("Random Files"));
+		queue_mode->setCurrentIndex(MediaPlayerPluginSettings::playMode());
+		hlayout->addWidget(queue_mode);
+		
+		QSpacerItem* s = new QSpacerItem(5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
+		hlayout->addItem(s);
+		
+		layout->addLayout(hlayout);
+		
+		skip_incomplete = new QCheckBox(i18n("Skip incomplete files"),this);
+		skip_incomplete->setChecked(MediaPlayerPluginSettings::skipIncomplete());
+		layout->addWidget(skip_incomplete);
+		
 		volume = new Phonon::VolumeSlider(this);
 		volume->setAudioOutput(player->output());
 		layout->addWidget(volume);
+		
+		
 		
 		connect(media_tree->selectionModel(),SIGNAL(selectionChanged(const QItemSelection & , const QItemSelection & )),
 				this,SLOT(onSelectionChanged(const QItemSelection&, const QItemSelection&)));
 		connect(media_tree,SIGNAL(doubleClicked(const QModelIndex &)),this,SIGNAL(doubleClicked(const QModelIndex&)));
 		connect(player,SIGNAL(stopped()),this,SLOT(stopped()));
 		connect(player->media0bject(),SIGNAL(metaDataChanged()),this,SLOT(metaDataChanged()));
+		connect(skip_incomplete,SIGNAL(toggled(bool)),this,SLOT(skipIncompleteChecked(bool)));
+		connect(queue_mode,SIGNAL(activated(int)),this,SLOT(modeActivated(int)));
 	}
 
 
@@ -144,13 +169,32 @@ namespace kt
 		{
 			extra_data = i18n("Title: <b>%1</b>",title[0]);
 		}
-		else
-			return;
 		
 		if (cnt > 0)
 		{
+		/*	Uint32 secs = player->media0bject()->totalTime() / 1000;
+			QString time;
+			if (secs < 3600)
+				time = QString("%1:%2").arg(secs / 60).arg(secs % 60);
+			else
+				time = QString("%1:%2:%3").arg(secs / 3600).arg((secs % 3600) / 60).arg(secs % 60);
+		*/	
 			info_label->setText(i18n("Playing: <b>%1</b><br/>\n%2",current_file,extra_data));
 		}
+	}
+	
+	void MediaView::skipIncompleteChecked(bool on)
+	{
+		MediaPlayerPluginSettings::setSkipIncomplete(on);
+		MediaPlayerPluginSettings::self()->writeConfig();
+	}
+	
+	void MediaView::modeActivated(int idx)
+	{
+		MediaPlayerPluginSettings::setPlayMode(idx);
+		MediaPlayerPluginSettings::self()->writeConfig();
+		if (idx == 2)
+			randomModeActivated();
 	}
 
 }

@@ -207,6 +207,7 @@ namespace kt
 			m_restore_defaults->setEnabled(false);
 			m_change_tracker->setEnabled(false);
 			m_update_tracker->setEnabled(false);
+			model->changeTC(0);
 			return;
 		}
 		
