@@ -27,7 +27,7 @@
 
 #include "bitfinderplugin.h"
 
-K_EXPORT_COMPONENT_FACTORY (ktmediaplayerplugin, KGenericFactory<kt::BitFinderPlugin> ("ktbitfinderplugin"))
+K_EXPORT_COMPONENT_FACTORY (ktbitfinderplugin, KGenericFactory<kt::BitFinderPlugin> ("ktbitfinderplugin"))
 
 using namespace bt;
 
