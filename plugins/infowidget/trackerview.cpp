@@ -66,6 +66,8 @@ namespace kt
 		m_update_tracker->setIcon(KIcon("system-software-update"));
 		m_add_tracker->setIcon(KIcon("list-add"));
 		m_remove_tracker->setIcon(KIcon("list-remove"));
+		m_restore_defaults->setIcon(KIcon("kt-restore-defaults"));
+		m_change_tracker->setIcon(KIcon("kt-change-tracker"));
 
 		setEnabled(false);
 		torrentChanged(0);

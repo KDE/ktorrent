@@ -10,4 +10,4 @@ X-KDE-PluginInfo-Name=BandwidthSchedulerPlugin
 X-KDE-PluginInfo-Website=http://ktorrent.org/
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=false
-Icon=clock
+Icon=kt-bandwidth-scheduler

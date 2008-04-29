@@ -87,7 +87,7 @@ namespace kt
 		qm = new QueueManagerWidget(core->getQueueManager(),this);
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),qm,SLOT(onTorrentAdded(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),qm,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
-		addToolWidget(qm,"ktqueuemanager",i18n("Queue Manager"),DOCK_BOTTOM);
+		addToolWidget(qm,"kt-queue-manager",i18n("Queue Manager"),DOCK_BOTTOM);
 		
 		createGUI("ktorrentui.rc");
 		
@@ -439,6 +439,7 @@ namespace kt
 				
 		KAction* quit_action = KStandardAction::quit(kapp, SLOT(quit()), ac);
 		show_status_bar_action = KStandardAction::showStatusbar(this, SLOT(showStatusBar()),ac);
+		show_status_bar_action->setIcon(KIcon("kt-show-statusbar"));
 		show_menu_bar_action = KStandardAction::showMenubar(this, SLOT(showMenuBar()),ac);
 		KAction* pref_action = KStandardAction::preferences(this, SLOT(showPrefDialog()),ac);
 		KStandardAction::keyBindings(this, SLOT(configureKeys()),ac);
@@ -446,30 +447,30 @@ namespace kt
 		KStandardAction::configureToolbars(this,SLOT(configureToolBars()),ac);
 		KStandardAction::configureNotifications(this,SLOT(configureNotifications()),ac);
 
-		start_action = new KAction(KIcon("ktstart"),i18n("Start"), this);
+		start_action = new KAction(KIcon("kt-start"),i18n("Start"), this);
 		connect(start_action,SIGNAL(triggered()),this,SLOT(startTorrent()));
 		ac->addAction("start",start_action);
 
-		stop_action = new KAction(KIcon("ktstop"),i18n("Stop"),this);
+		stop_action = new KAction(KIcon("kt-stop"),i18n("Stop"),this);
 		connect(stop_action,SIGNAL(triggered()),this,SLOT(stopTorrent()));
 		ac->addAction("stop",stop_action);
 
-		remove_action = new KAction(KIcon("ktremove"),i18n("Remove"),this);
+		remove_action = new KAction(KIcon("kt-remove"),i18n("Remove"),this);
 		connect(remove_action,SIGNAL(triggered()),this,SLOT(removeTorrent()));
 		ac->addAction("remove",remove_action);
 
-		start_all_cv_action = new KAction(KIcon("ktstart_all"),i18n("Start All"),this);
+		start_all_cv_action = new KAction(KIcon("kt-start-all"),i18n("Start All"),this);
 		connect(start_all_cv_action,SIGNAL(triggered()),this,SLOT(startAllTorrentsCV()));
 		ac->addAction("start_all",start_all_cv_action);
 		
-		start_all_action = new KAction(KIcon("ktstart_all"),i18n("Start All"),this);
+		start_all_action = new KAction(KIcon("kt-start-all"),i18n("Start All"),this);
 		connect(start_all_action,SIGNAL(triggered()),this,SLOT(startAllTorrents()));
 		
-		stop_all_cv_action = new KAction(KIcon("ktstop_all"),i18n("Stop All"),this);
+		stop_all_cv_action = new KAction(KIcon("kt-stop-all"),i18n("Stop All"),this);
 		connect(stop_all_cv_action,SIGNAL(triggered()),this,SLOT(stopAllTorrentsCV()));
 		ac->addAction("stop_all",stop_all_cv_action);
 		
-		stop_all_action = new KAction(KIcon("ktstop_all"),i18n("Stop All"),this);
+		stop_all_action = new KAction(KIcon("kt-stop-all"),i18n("Stop All"),this);
 		connect(stop_all_action,SIGNAL(triggered()),this,SLOT(stopAllTorrents()));
 		
 		paste_url_action = new KAction(KIcon(open_action->icon()),i18n("Open URL"),this);
@@ -480,7 +481,7 @@ namespace kt
 		connect(queue_action,SIGNAL(triggered()),this,SLOT(queueTorrent()));
 		ac->addAction("queue_action",queue_action);
 		
-		queue_pause_action = new KToggleAction(KIcon("media-playback-pause"),i18n("Pause"),this);
+		queue_pause_action = new KToggleAction(KIcon("kt-pause"),i18n("Pause"),this);
 		queue_pause_action->setToolTip(i18n("Pause all running torrents"));
 		connect(queue_pause_action,SIGNAL(toggled(bool)),this,SLOT(pauseQueue(bool)));
 		queue_pause_action->setCheckedState(KGuiItem(i18n("Resume"),"media-playback-start",i18n("Resume paused torrents")));
@@ -490,7 +491,7 @@ namespace kt
 		connect(ipfilter_action,SIGNAL(triggered()),this,SLOT(showIPFilter()));
 		ac->addAction("ipfilter_action",ipfilter_action);
 
-		data_check_action = new KAction(i18n("Check Data"),this);
+		data_check_action = new KAction(KIcon("kt-check-data"),i18n("Check Data"),this);
 		connect(data_check_action,SIGNAL(triggered()),this,SLOT(checkData()));
 		ac->addAction("check_data",data_check_action);
 		
@@ -498,12 +499,12 @@ namespace kt
 		connect(import_action,SIGNAL(triggered()),this,SLOT(import()));
 		ac->addAction("import",import_action);
 		
-		speed_limits_action = new KAction(i18n("Speed Limits"),this);
+		speed_limits_action = new KAction(KIcon("kt-speed-limits"),i18n("Speed Limits"),this);
 		connect(speed_limits_action,SIGNAL(triggered()),this,SLOT(speedLimits()));
 		speed_limits_action->setShortcut(KShortcut(Qt::CTRL + Qt::Key_L));
 		ac->addAction("speed_limits",speed_limits_action);
 		
-		show_kt_action = new KAction(i18n("Show/Hide KTorrent"),this);
+		show_kt_action = new KAction(KIcon("kt-show-hide"),i18n("Show/Hide KTorrent"),this);
 		connect(show_kt_action,SIGNAL(triggered()),this,SLOT(showOrHide()));
 		show_kt_action->setGlobalShortcut(KShortcut(Qt::ALT+ Qt::CTRL + Qt::Key_T), 
 										  KAction::ActiveShortcut | KAction::DefaultShortcut,KAction::Autoloading);

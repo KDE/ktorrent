@@ -37,7 +37,7 @@ namespace kt
 {
 
 	UPnPPrefPage::UPnPPrefPage(UPnPMCastSocket* sock,QWidget* parent)
-		: PrefPageInterface(UPnPPluginSettings::self(),i18n("UPnP"), "ktupnp",parent),sock(sock)
+		: PrefPageInterface(UPnPPluginSettings::self(),i18n("UPnP"), "kt-upnp",parent),sock(sock)
 	{
 		setupUi(this);
 		m_devices->setRootIsDecorated(false);

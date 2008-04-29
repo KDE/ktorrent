@@ -39,7 +39,7 @@ namespace kt
 	class QMPref : public PrefPageInterface,public Ui_QMPref
 	{
 	public:
-		QMPref(QWidget* parent) : PrefPageInterface(Settings::self(),i18n("Queue Manager"),"ktqueuemanager",parent)
+		QMPref(QWidget* parent) : PrefPageInterface(Settings::self(),i18n("Queue Manager"),"kt-queue-manager",parent)
 		{
 			setupUi(this);
 		}

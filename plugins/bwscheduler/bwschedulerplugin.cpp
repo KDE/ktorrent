@@ -76,7 +76,7 @@ namespace kt
 	{
 		m_schedule = new Schedule();
 		m_tool_bar = new KToolBar("scheduler",getGUI()->getMainWindow(),Qt::TopToolBarArea,false,true,true);
-		m_bws_action = new KToggleAction(KIcon("clock"),i18n("Bandwidth Scheduler"), this);
+		m_bws_action = new KToggleAction(KIcon("kt-bandwidth-scheduler"),i18n("Bandwidth Scheduler"), this);
 		connect(m_bws_action,SIGNAL(toggled(bool)),this,SLOT(onToggled(bool)));
 		m_tool_bar->addAction(m_bws_action);
 		
@@ -215,7 +215,7 @@ namespace kt
 				m_editor = new ScheduleEditor(0);
 				connect(m_editor,SIGNAL(loaded(Schedule*)),this,SLOT(onLoaded(Schedule*)));
 				connect(m_editor,SIGNAL(scheduleChanged()),this,SLOT(timerTriggered()));
-				getGUI()->addTabPage(m_editor,"clock",i18n("Bandwidth Schedule"),this);
+				getGUI()->addTabPage(m_editor,"kt-bandwidth-scheduler",i18n("Bandwidth Schedule"),this);
 				m_editor->setSchedule(m_schedule);
 				timerTriggered(); // trigger timer so that status text is updated
 			}

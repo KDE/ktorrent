@@ -35,7 +35,7 @@ using namespace bt;
 namespace kt
 {
 	PluginManagerPrefPage::PluginManagerPrefPage(PluginManager* pman) 
-		: PrefPageInterface(Settings::self(),i18n("Plugins"),"ktplugins",0),pman(pman)
+		: PrefPageInterface(Settings::self(),i18n("Plugins"),"kt-plugins",0),pman(pman)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		pmw = new KPluginSelector(this);

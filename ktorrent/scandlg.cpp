@@ -36,6 +36,7 @@ namespace kt
 	ScanDlg::ScanDlg(Core* core,bool auto_import,QWidget* parent) 
 		: KDialog(parent),bt::DataCheckerListener(auto_import),mutex(QMutex::Recursive),core(core)
 	{
+		setWindowIcon(KIcon("kt-check-data"));
 		setButtons(KDialog::None);
 		Ui::ScanDlgBase ui;
 		QWidget *widget = new QWidget(this);

@@ -296,6 +296,7 @@ namespace kt
 
 	SetMaxRate::SetMaxRate(Core* core, Type t, QWidget *parent) : KMenu(parent)
 	{
+		setIcon(t == UPLOAD ? KIcon("kt-set-max-upload-speed") : KIcon("kt-set-max-download-speed"));
 		m_core = core;
 		type=t;
 		makeMenu();

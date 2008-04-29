@@ -118,6 +118,7 @@ int main(int argc, char **argv)
 	about.addCredit(ki18n("Lukas Appelhans"),ki18n("Patch to fix a crash in ChunkDownloadView"),"l.appelhans@gmx.de");
 	about.addCredit(ki18n("Rickard Närström"),ki18n("A couple of bugfixes"),"rickard.narstrom@gmail.com");
 	about.addCredit(ki18n("caruccio"),ki18n("Patch to load torrents silently from the command line"),"mateus@caruccio.com");
+	about.addCredit(ki18n("Lee Olson"),ki18n("New set of icons"),"leetolson@gmail.com");
 	KCmdLineArgs::init(argc, argv, &about);
 
 	KCmdLineOptions options;

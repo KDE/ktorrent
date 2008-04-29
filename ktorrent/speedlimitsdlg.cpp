@@ -45,6 +45,7 @@ namespace kt
 			: QDialog(parent),core(core),current(current)
 	{
 		setupUi(this);
+		setWindowIcon(KIcon("kt-speed-limits"));
 		
 		model = new SpeedLimitsModel(core,this);
 		QSortFilterProxyModel* pm = new QSortFilterProxyModel(this);

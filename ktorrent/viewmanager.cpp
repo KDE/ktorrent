@@ -388,19 +388,19 @@ namespace kt
 	{
 		KActionCollection* ac = gui->actionCollection();
 		
-		start_torrent = new KAction(KIcon("ktstart"),i18n("Start"),this);
+		start_torrent = new KAction(KIcon("kt-start"),i18n("Start"),this);
 		connect(start_torrent,SIGNAL(triggered()),this,SLOT(startTorrents()));
 		ac->addAction("view_start",start_torrent);
 		
-		stop_torrent = new KAction(KIcon("ktstop"),i18n("Stop"),this);
+		stop_torrent = new KAction(KIcon("kt-stop"),i18n("Stop"),this);
 		connect(stop_torrent,SIGNAL(triggered()),this,SLOT(stopTorrents()));
 		ac->addAction("view_stop",stop_torrent);
 		
-		remove_torrent = new KAction(KIcon("ktremove"),i18n("Remove Torrent"),this);
+		remove_torrent = new KAction(KIcon("kt-remove"),i18n("Remove Torrent"),this);
 		connect(remove_torrent,SIGNAL(triggered()),this,SLOT(removeTorrents()));
 		ac->addAction("view_remove_torrent",remove_torrent);
 		
-		remove_torrent_and_data = new KAction(KIcon("ktremove"),i18n("Remove Torrent and Data"),this);
+		remove_torrent_and_data = new KAction(KIcon("kt-remove"),i18n("Remove Torrent and Data"),this);
 		connect(remove_torrent_and_data,SIGNAL(triggered()),this,SLOT(removeTorrentsAndData()));
 		ac->addAction("view_remove_torrent_and_data",remove_torrent_and_data);
 		
@@ -456,11 +456,11 @@ namespace kt
 		connect(add_to_new_group,SIGNAL(triggered()),this,SLOT(addToNewGroup()));
 		ac->addAction("view_add_to_new_group",add_to_new_group);
 		
-		check_data = new KAction(i18n("Check Data"),this);
+		check_data = new KAction(KIcon("kt-check-data"),i18n("Check Data"),this);
 		connect(check_data,SIGNAL(triggered()),this,SLOT(checkData()));
 		ac->addAction("view_check_data",check_data);
 		
-		speed_limits = new KAction(i18n("Speed Limits"),this);
+		speed_limits = new KAction(KIcon("kt-speed-limits"),i18n("Speed Limits"),this);
 		connect(speed_limits,SIGNAL(triggered()),this,SLOT(speedLimitsDlg()));
 		ac->addAction("view_speed_limits",speed_limits);
 		
