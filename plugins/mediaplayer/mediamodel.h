@@ -22,6 +22,7 @@
 #define KTMEDIAMODEL_H
 
 #include <QAbstractItemModel>
+#include <util/constants.h>
 
 namespace bt
 {
