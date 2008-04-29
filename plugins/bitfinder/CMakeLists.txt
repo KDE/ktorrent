@@ -1,4 +1,6 @@
-set(ktbitfinderplugin_SRC bitfinderplugin.cpp source/sourcesview.cpp)
+set(ktbitfinderplugin_SRC bitfinderplugin.cpp 
+				source/sourcesview.cpp
+				filter/filtersview.cpp)
 
 #kde4_add_ui_files(ktbitfinderplugin_SRC bitfinderpref.ui)
 kde4_add_plugin(ktbitfinderplugin ${ktbitfinderplugin_SRC})

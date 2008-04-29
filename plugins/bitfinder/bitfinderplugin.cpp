@@ -49,13 +49,34 @@ namespace kt
 		{
 		KActionCollection* ac = actionCollection();
 		
+		//create the Action for adding sources
 		addSourceMenu = new KActionMenu(KIcon("list-add"),i18n("Add Source"),this);
+		addSourceMenu->setDelayed(false);
+		
+		//create the Action for removing sources
+		removeSource = new KAction(KIcon("list-remove"), i18n("Remove Source"), this);
 		
 		//add the RSS Source Action to the menu
 		addRssSource = new KAction(KIcon("application-rss+xml"), i18n("RSS Feed"), this);
 		addSourceMenu->addAction(addRssSource);
 		
 		ac->addAction("addRssSource",addRssSource);
+		ac->addAction("removeSource",removeSource);
+		
+		}
+
+	void BitFinderPlugin::setupFiltersActions()
+		{
+		KActionCollection* ac = actionCollection();
+		
+		//create the Action for adding sources
+		addFilter = new KAction(KIcon("list-add"),i18n("Add Filter"),this);
+		
+		//create the Action for removing sources
+		removeFilter = new KAction(KIcon("list-remove"), i18n("Remove Filter"), this);
+		
+		ac->addAction("addFilter",addFilter);
+		ac->addAction("removeFilter",removeFilter);
 		
 		}
 
@@ -69,16 +90,31 @@ namespace kt
 		
 		QToolBar* tb = sourcesView->sourcesToolBar();
 		tb->addAction(addSourceMenu);
+		tb->addAction(removeSource);
 		
 		//Add the BF Filters Menu on the left dock
+		filtersView = new FiltersView();
+		getGUI()->addToolWidget(filtersView,"view-filter",i18n("BF Filters"),GUIInterface::DOCK_LEFT);
+		
+		setupFiltersActions();
+		
+		tb = filtersView->filtersToolBar();
+		tb->addAction(addFilter);
+		tb->addAction(removeFilter);
 		
 		}
 
 	void BitFinderPlugin::unload()
 		{
+		//remove the BF Sources Menu
 		getGUI()->removeToolWidget(sourcesView);
 		delete sourcesView;
 		sourcesView = 0;
+		
+		
+		getGUI()->removeToolWidget(filtersView);
+		delete filtersView;
+		filtersView = 0;
 		}
 
 	bool BitFinderPlugin::versionCheck (const QString& version) const

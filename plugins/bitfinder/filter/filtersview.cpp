@@ -17,58 +17,30 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTBITFINDERPLUGIN_H
-#define KTBITFINDERPLUGIN_H
+#include <ktoolbar.h>
 
-#include <kaction.h>
-#include <kactionmenu.h>
+#include <QVBoxLayout>
 
-#include <interfaces/plugin.h>
-#include <interfaces/guiinterface.h>
-
-#include "source/sourcesview.h"
-#include "filter/filtersview.h"
+#include "filtersview.h"
 
 namespace kt
 	{
-
-	class BitFinderPlugin : public Plugin, public CloseTabListener
+	
+	FiltersView::FiltersView(QWidget * parent) : QWidget(parent)
 		{
-			Q_OBJECT
-
-		public:
-			BitFinderPlugin (QObject* parent, const QStringList& args);
-			virtual ~BitFinderPlugin();
-
-			virtual void load();
-			virtual void unload();
-			virtual bool versionCheck (const QString& version) const;
-
-		private:
- 			void setupSourcesActions();
- 			void setupFiltersActions();
-			virtual void tabCloseRequest (kt::GUIInterface* gui, QWidget* tab);
-
-		private slots:
-// 			void onDoubleClicked(const QModelIndex & idx);
-
-		private:
-			//Sources Variables
-			SourcesView * sourcesView;
- 			KActionMenu * addSourceMenu;
- 			KAction * removeSource;
- 			
- 			//source types
- 			KAction* addRssSource;
- 			
- 			//Filters Variables
- 			FiltersView * filtersView;
- 			KAction * addFilter;
- 			KAction * removeFilter;
-
-		};
-
+		QVBoxLayout* layout = new QVBoxLayout(this);
+		layout->setSpacing(0);
+		layout->setMargin(0);
+		
+		toolBar = new KToolBar(this);
+ 		toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+		layout->addWidget(toolBar);
+		
+		filtersList = new QListView(this);
+		//filtersList->setModel(model);
+		layout->addWidget(filtersList);
+		
+		connect(filtersList,SIGNAL(doubleClicked(const QModelIndex &)),this,SIGNAL(doubleClicked(const QModelIndex&)));
+		}
+		
 	}
-
-#endif
-
