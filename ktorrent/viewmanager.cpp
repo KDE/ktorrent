@@ -491,7 +491,7 @@ namespace kt
 		{
 			if (j.value() == s)
 				g = j.key();
-			
+			j++;
 		}
 		
 		if (!g)
