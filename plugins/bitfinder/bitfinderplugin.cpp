@@ -106,6 +106,10 @@ namespace kt
 		tb->addAction(addFilter);
 		tb->addAction(removeFilter);
 		
+		//add a filter tab in during early testing
+		FilterDetails * testFilterTab = new FilterDetails();
+		getGUI()->addTabPage(testFilterTab,"video-x-generic","Test Filter Tab",this);
+		filterDetailsList.append(testFilterTab);
 		}
 
 	void BitFinderPlugin::unload()
@@ -131,6 +135,15 @@ namespace kt
 		//Check through the list of Source tabs
 		
 		//Check through the list of Filter tabs
+		foreach(FilterDetails * filterTab, filterDetailsList)
+			{
+			if (filterTab == tab)
+				{
+				getGUI()->removeTabPage(filterTab);
+				delete filterTab;
+				}
+			
+			}
 		
 		}
 

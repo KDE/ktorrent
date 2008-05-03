@@ -2,9 +2,13 @@ set(ktbitfinderplugin_SRC bitfinderplugin.cpp
 				source/sourcesview.cpp
 				filter/filter.cpp
 				filter/filterlistmodel.cpp
-				filter/filtersview.cpp)
+				filter/filtersview.cpp
+				filter/filterdetails.cpp
+				)
 
-#kde4_add_ui_files(ktbitfinderplugin_SRC bitfinderpref.ui)
+kde4_add_ui_files(ktbitfinderplugin_SRC
+			filter/filterdetails.ui)
+
 kde4_add_plugin(ktbitfinderplugin ${ktbitfinderplugin_SRC})
 
 target_link_libraries(ktbitfinderplugin ktcore)

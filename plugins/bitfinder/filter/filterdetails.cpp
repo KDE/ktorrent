@@ -17,63 +17,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTBITFINDERPLUGIN_H
-#define KTBITFINDERPLUGIN_H
 
-#include <kaction.h>
-#include <kactionmenu.h>
-
-#include <interfaces/plugin.h>
-#include <interfaces/guiinterface.h>
-
-#include "source/sourcesview.h"
-
-#include "filter/filterlistmodel.h"
-#include "filter/filtersview.h"
-#include "filter/filterdetails.h"
+#include "filterdetails.h"
 
 namespace kt
 	{
-
-	class BitFinderPlugin : public Plugin, public CloseTabListener
+	
+	FilterDetails::FilterDetails(QWidget * parent) : QDialog(parent)
 		{
-			Q_OBJECT
-
-		public:
-			BitFinderPlugin (QObject* parent, const QStringList& args);
-			virtual ~BitFinderPlugin();
-
-			virtual void load();
-			virtual void unload();
-			virtual bool versionCheck (const QString& version) const;
-
-		private:
- 			void setupSourcesActions();
- 			void setupFiltersActions();
-			virtual void tabCloseRequest (kt::GUIInterface* gui, QWidget* tab);
-
-		private slots:
-// 			void onDoubleClicked(const QModelIndex & idx);
-
-		private:
-			//Sources Variables
-			SourcesView * sourcesView;
- 			KActionMenu * addSourceMenu;
- 			KAction * removeSource;
- 			
- 			//source types
- 			KAction* addRssSource;
- 			
- 			//Filters Variables
- 			QList<FilterDetails*> filterDetailsList;
- 			FilterListModel * filterListModel;
- 			FiltersView * filtersView;
- 			KAction * addFilter;
- 			KAction * removeFilter;
-
-		};
-
+		setupUi(this);
+		
+		}
+	
 	}
-
-#endif
-
