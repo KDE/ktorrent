@@ -17,30 +17,27 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <ktoolbar.h>
 
-#include <QVBoxLayout>
 
-#include "filtersview.h"
+#include "filter.h"
 
 namespace kt
-	{
-	
-	FiltersView::FiltersView(FilterListModel* model, QWidget * parent) : QWidget(parent),filterListModel(model)
+{
+
+	Filter::Filter()
 		{
-		QVBoxLayout* layout = new QVBoxLayout(this);
-		layout->setSpacing(0);
-		layout->setMargin(0);
 		
-		toolBar = new KToolBar(this);
- 		toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-		layout->addWidget(toolBar);
-		
-		filtersList = new QListView(this);
-		filtersList->setModel(filterListModel);
-		layout->addWidget(filtersList);
-		
-		connect(filtersList,SIGNAL(doubleClicked(const QModelIndex &)),this,SIGNAL(doubleClicked(const QModelIndex&)));
 		}
 		
-	}
+	Filter::~Filter()
+		{
+		
+		}
+
+	QString Filter::getName()
+		{
+		QReadLocker readLock(&lock);
+		return name;
+		}
+
+}

@@ -24,6 +24,8 @@
 #include <QListView>
 #include <QToolBar>
 
+#include "filterlistmodel.h"
+
 namespace kt
 	{
 
@@ -31,7 +33,7 @@ namespace kt
 		{
 			Q_OBJECT
 		public:
-			FiltersView (QWidget* parent = 0); //add in the model later
+			FiltersView (FilterListModel * model, QWidget* parent = 0); //add in the model later
 			~FiltersView() { }
 
 			/// Get the media tool bar
@@ -52,6 +54,7 @@ namespace kt
 		private:
 			QToolBar* toolBar;
 			QListView* filtersList;
+			FilterListModel* filterListModel;
 		};
 
 

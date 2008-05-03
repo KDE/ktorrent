@@ -1,5 +1,7 @@
 set(ktbitfinderplugin_SRC bitfinderplugin.cpp 
 				source/sourcesview.cpp
+				filter/filter.cpp
+				filter/filterlistmodel.cpp
 				filter/filtersview.cpp)
 
 #kde4_add_ui_files(ktbitfinderplugin_SRC bitfinderpref.ui)

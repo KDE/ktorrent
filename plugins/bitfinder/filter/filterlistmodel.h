@@ -17,30 +17,44 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <ktoolbar.h>
 
-#include <QVBoxLayout>
+#ifndef KTFILTERLISTMODEL_H
+#define KTFILTERLISTMODEL_H
 
-#include "filtersview.h"
+#include <QAbstractItemModel>
+#include <util/constants.h>
+
+#include "filter.h"
 
 namespace kt
+{
+	class CoreInterface;
+
+	class FilterListModel : public QAbstractItemModel
 	{
-	
-	FiltersView::FiltersView(FilterListModel* model, QWidget * parent) : QWidget(parent),filterListModel(model)
-		{
-		QVBoxLayout* layout = new QVBoxLayout(this);
-		layout->setSpacing(0);
-		layout->setMargin(0);
+		Q_OBJECT
+	public:
+		FilterListModel(CoreInterface* core,QObject* parent);
+		virtual ~FilterListModel();
 		
-		toolBar = new KToolBar(this);
- 		toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-		layout->addWidget(toolBar);
+		virtual int rowCount(const QModelIndex & parent) const;
+		virtual int columnCount(const QModelIndex & parent) const;
+		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
+		virtual QVariant data(const QModelIndex & index, int role) const;
+		virtual bool removeRows(int row,int count,const QModelIndex & parent);
+		virtual bool insertRows(int row,int count,const QModelIndex & parent);
+		virtual QModelIndex index(int row,int column,const QModelIndex & parent) const;
+		virtual QModelIndex parent(const QModelIndex &child) const;
 		
-		filtersList = new QListView(this);
-		filtersList->setModel(filterListModel);
-		layout->addWidget(filtersList);
+ 		QModelIndex next(const QModelIndex & idx) const;
 		
-		connect(filtersList,SIGNAL(doubleClicked(const QModelIndex &)),this,SIGNAL(doubleClicked(const QModelIndex&)));
-		}
+	public slots:
 		
-	}
+	private:
+		CoreInterface* core;
+		QList<Filter*> filters;
+	};
+
+}
+
+#endif

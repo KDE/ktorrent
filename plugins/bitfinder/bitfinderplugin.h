@@ -27,6 +27,8 @@
 #include <interfaces/guiinterface.h>
 
 #include "source/sourcesview.h"
+
+#include "filter/filterlistmodel.h"
 #include "filter/filtersview.h"
 
 namespace kt
@@ -62,6 +64,7 @@ namespace kt
  			KAction* addRssSource;
  			
  			//Filters Variables
+ 			FilterListModel * filterListModel;
  			FiltersView * filtersView;
  			KAction * addFilter;
  			KAction * removeFilter;
