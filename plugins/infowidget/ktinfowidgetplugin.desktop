@@ -1,6 +1,8 @@
 [Desktop Entry]
 Name=InfoWidgetPlugin
+Name[nb]=Infomodul
 Comment=Plugin which displays general information about a torrent in several tabs
+Comment[nb]=Viser generell informasjon om en strøm i flere faner
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktinfowidgetplugin

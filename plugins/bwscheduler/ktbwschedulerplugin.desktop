@@ -1,6 +1,8 @@
 [Desktop Entry]
 Name=BandwidthSchedulerPlugin
+Name[nb]=Båndbreddeplanlegger
 Comment=Plugin to schedule upload and download limits over a period of a week
+Comment[nb]=Gjør det mulig å sette fartsgrenser for opplasting og nedlasting for ulike tider av uken
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktbwschedulerplugin

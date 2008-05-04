@@ -1,6 +1,8 @@
 [Desktop Entry]
 Name=BitFinderPlugin
+Name[nb]=Bitfinner
 Comment=Plugin to automatically downloads torrents from various sources
+Comment[nb]=Laster ned strømmer automatisk fra diverse kilder
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktbitfinderplugin

@@ -1,6 +1,8 @@
 [Desktop Entry]
 Name=MediaPlayerPlugin
+Name[nb]=Mediespiller
 Comment=Phonon based media player plugin for KTorrent
+Comment[nb]=Phonon-basert mediespiller for KTorrent
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktmediaplayerplugin
