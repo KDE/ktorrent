@@ -95,12 +95,19 @@ namespace kt
 		
 		Group* g = new TorrentGroup(name);
 		insert(name,g);
+		emit customGroupsChanged();
 		return g;
 	}
 	
 	bool GroupManager::canRemove(const Group* g) const
 	{
 		return find(g->groupName()) != 0;
+	}
+	
+	bool GroupManager::erase(const QString & key)
+	{
+		bt::PtrMap<QString,Group>::erase(key);
+		emit customGroupsChanged();
 	}
 	
 	Group* GroupManager::findDefault(const QString & name)
@@ -116,6 +123,20 @@ namespace kt
 				return g;
 		}
 		return 0;
+	}
+	
+	QStringList GroupManager::customGroupNames()
+	{
+		QStringList groupNames;
+		iterator it = begin();
+		
+		while(it != end())
+		{
+			groupNames << it->first;
+			++it;
+		}
+		
+		return groupNames;
 	}
 	
 	void GroupManager::saveGroups()
@@ -210,15 +231,18 @@ namespace kt
 	
 	void GroupManager::renameGroup(const QString & old_name,const QString & new_name)
 	{
+		QString oldName = old_name;
 		Group* g = find(old_name);
 		if (!g)
 			return;
 		
 		setAutoDelete(false);
-		erase(old_name);
+		bt::PtrMap<QString,Group>::erase(old_name);
 		g->rename(new_name);
 		insert(new_name,g);
 		setAutoDelete(true);
 		saveGroups();
+		
+		emit customGroupsChanged(oldName, new_name);
 	}
 }

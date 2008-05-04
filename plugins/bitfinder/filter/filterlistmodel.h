@@ -29,12 +29,13 @@
 namespace kt
 {
 	class CoreInterface;
+	class GUIInterface;
 
 	class FilterListModel : public QAbstractItemModel
 	{
 		Q_OBJECT
 	public:
-		FilterListModel(CoreInterface* core,QObject* parent);
+		FilterListModel(CoreInterface* core, GUIInterface* gui, QObject* parent);
 		virtual ~FilterListModel();
 		
 		virtual int rowCount(const QModelIndex & parent) const;
@@ -52,6 +53,7 @@ namespace kt
 		
 	private:
 		CoreInterface* core;
+		GUIInterface* gui;
 		QList<Filter*> filters;
 	};
 

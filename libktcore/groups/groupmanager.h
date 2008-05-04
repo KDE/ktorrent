@@ -39,8 +39,10 @@ namespace kt
 	 * 
 	 * Manages all user created groups and the standard groups.
 	*/
-	class KTCORE_EXPORT GroupManager : public bt::PtrMap<QString,Group> 
+	class KTCORE_EXPORT GroupManager : public QObject, public bt::PtrMap<QString,Group>
 	{
+		Q_OBJECT
+		
 		Group* all;
 		Group* download;
 		Group* upload;
@@ -111,6 +113,9 @@ namespace kt
 		/// Find a default Group given a name
 		Group* findDefault(const QString & name);
 		
+		/// Return the custom group names
+		QStringList customGroupNames();
+		
 		/**
 		 * Save the groups to a file.
 		 */
@@ -128,6 +133,8 @@ namespace kt
 		 */
 		bool canRemove(const Group* g) const;
 		
+		virtual bool erase(const QString & key);
+
 		/**
 		 * A torrent has been removed. This function checks all groups and
 		 * removes the torrent from it.
@@ -141,6 +148,10 @@ namespace kt
 		 * @param new_name The new name
 		 */
 		void renameGroup(const QString & old_name,const QString & new_name); 
+	
+	signals:
+		void customGroupsChanged(QString oldName=QString(), QString newName=QString());
+		
 
 	};
 

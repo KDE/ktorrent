@@ -80,6 +80,16 @@
         <widget class="QComboBox" name="type" />
        </item>
        <item row="0" column="4" >
+        <widget class="QLabel" name="groupLabel" >
+         <property name="text" >
+          <string>Group</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5" >
+        <widget class="QComboBox" name="group" />
+       </item>
+       <item row="0" column="6" >
         <widget class="QLabel" name="testStringLabel" >
          <property name="text" >
           <string>Test String</string>
@@ -89,7 +99,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="5" >
+       <item row="0" column="7" >
         <widget class="QLineEdit" name="testString" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
@@ -99,7 +109,7 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="6" >
+       <item row="1" column="0" colspan="8" >
         <widget class="KEditListBox" name="expressions" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
@@ -124,7 +134,7 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="6" >
+       <item row="2" column="0" colspan="8" >
         <widget class="QGroupBox" name="multiMatchBox" >
          <property name="title" >
           <string>MultiMatch</string>
@@ -227,7 +237,7 @@
          </layout>
         </widget>
        </item>
-       <item row="3" column="0" colspan="6" >
+       <item row="3" column="0" colspan="8" >
         <widget class="QGroupBox" name="sourceListBox" >
          <property name="title" >
           <string>Source List</string>

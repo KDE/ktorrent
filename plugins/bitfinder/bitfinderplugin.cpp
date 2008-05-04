@@ -82,10 +82,9 @@ namespace kt
 
 	void BitFinderPlugin::load()
 		{
-		
 		//Add the BF Sources Menu on the left dock
 		sourcesView = new SourcesView();
-		getGUI()->addToolWidget(sourcesView,"application-x-bittorrent",i18n("BF Sources"),GUIInterface::DOCK_LEFT);
+		getGUI()->addToolWidget(sourcesView,"ktorrent",i18n("BF Sources"),GUIInterface::DOCK_LEFT);
 		
 		setupSourcesActions();
 		
@@ -94,7 +93,7 @@ namespace kt
 		tb->addAction(removeSource);
 		
 		//Build the filter model
-		filterListModel = new FilterListModel(getCore(), this);
+		filterListModel = new FilterListModel(getCore(), getGUI(), this);
 		
 		//Add the BF Filters Menu on the left dock
 		filtersView = new FiltersView(filterListModel);
@@ -107,8 +106,8 @@ namespace kt
 		tb->addAction(removeFilter);
 		
 		//add a filter tab in during early testing
-		FilterDetails * testFilterTab = new FilterDetails();
-		getGUI()->addTabPage(testFilterTab,"video-x-generic","Test Filter Tab",this);
+		FilterDetails * testFilterTab = new FilterDetails(getCore());
+		getGUI()->addTabPage(testFilterTab,"news-subscribe","Test Filter Tab",this);
 		filterDetailsList.append(testFilterTab);
 		}
 

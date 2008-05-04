@@ -23,6 +23,8 @@
 
 #include "ui_filterdetails.h"
 
+#include <interfaces/coreinterface.h>
+
 namespace kt
 	{
 	
@@ -31,9 +33,14 @@ namespace kt
 			Q_OBJECT
 		
 		public:
-			FilterDetails(QWidget * parent = 0);
+			FilterDetails(CoreInterface* core, QWidget * parent = 0);
 			virtual ~FilterDetails() { }
+			
+		public slots:
+			void updateGroupList(QString oldName=QString(), QString newName=QString());
 		
+		private:
+			CoreInterface* core;
 		
 		};
 	

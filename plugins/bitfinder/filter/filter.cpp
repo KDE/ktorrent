@@ -39,5 +39,12 @@ namespace kt
 		QReadLocker readLock(&lock);
 		return name;
 		}
+	
+	QString Filter::getIconName()
+		{
+		QReadLocker readLock(&lock);
+		return type ? "news-unsubscribe" : "news-subscribe";
+		}
+		
 
 }

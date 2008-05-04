@@ -152,6 +152,7 @@ namespace kt
 		 * Called when the policy has been changed.
 		 */
 		virtual void policyChanged();
+		
 	protected:
 		QString name;
 		QIcon icon;

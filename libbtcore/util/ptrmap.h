@@ -164,7 +164,7 @@ namespace bt
 		* @param key The key
 		* @return true if an erase took place
 		*/
-		bool erase(const Key & key)
+		virtual bool erase(const Key & key)
 		{
 			iterator i = pmap.find(key);
 			if (i == pmap.end())

@@ -17,47 +17,34 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+ 
+#ifndef KTFILTERCONSTANTS_H
+#define KTFILTERCONSTANTS_H
 
-#ifndef KTFILTER_H
-#define KTFILTER_H
-
-#include <QThread>
-#include <QString>
-#include <QStringList>
-#include <QReadWriteLock>
-#include <util/constants.h>
-
-#include "filterconstants.h"
-
-namespace kt
-{
-	class Filter : public QThread
+enum FilterType
 	{
-		Q_OBJECT
-	public:
-		Filter();
-		~Filter();
-		
-		QString getName();
-		QString getIconName();
-		
-	public slots:
-		
-	private:
-		QReadWriteLock lock;
-		QString name;
-		int type;
-		QString group;
-		QStringList expressions;
-		int multiMatch;
-		int rerelease;
-		QStringList captureExpressions;
-		//add captureCheckList
-		int sourceListType;
-		QStringList sources;
-		
+	FT_REJECT,
+	FT_ACCEPT
 	};
 
-}
+enum MultiMatch
+	{
+	MM_ONCE_ONLY,
+	MM_ALWAYS_MATCH,
+	MM_CAPTURE_CHECKING
+	};
+
+enum Rerelease
+	{
+	RR_IGNORE,
+	RR_DOWNLOAD_ALL,
+	RR_DOWNLOAD_FIRST
+	};
+	
+enum SourceListType
+	{
+	SL_EXCLUSIVE,
+	SL_INCLUSIVE
+	};
 
 #endif

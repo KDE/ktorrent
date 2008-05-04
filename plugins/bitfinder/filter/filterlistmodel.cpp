@@ -25,7 +25,8 @@
 namespace kt
 {
 
-	FilterListModel::FilterListModel(CoreInterface* core,QObject* parent) : QAbstractItemModel(parent),core(core)
+	FilterListModel::FilterListModel(CoreInterface* core, GUIInterface* gui, QObject* parent) 
+			: QAbstractItemModel(parent),core(core),gui(gui)
 	{
 	}
 
@@ -73,7 +74,7 @@ namespace kt
 					return filter->getName();
 					break;
 				case Qt::DecorationRole:
-					return KIcon("view-filter");
+					return KIcon(filter->getIconName());
 				//case Qt::UserRole:
 				
 				default:
