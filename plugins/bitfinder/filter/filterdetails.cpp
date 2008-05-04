@@ -82,6 +82,8 @@ namespace kt
 		
 		//multiMatchToolbar - for adding loading (and maybe saving) presets
 		
+		//captureCheck
+		
 		//sourceListToolbar - for adding and removing sources
 		
 		//matchesToolbar - for deleting matches so they're redownloaded
