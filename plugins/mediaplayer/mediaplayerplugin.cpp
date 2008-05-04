@@ -23,6 +23,7 @@
 #include <kicon.h>
 #include <klocale.h>
 #include <kaction.h>
+#include <ktoggleaction.h>
 #include <kactioncollection.h>
 
 #include <util/log.h>
@@ -36,6 +37,7 @@
 #include "mediaplayer.h"
 #include "videowidget.h"
 #include "mediaplayerpluginsettings.h"
+
 
 K_EXPORT_COMPONENT_FACTORY(ktmediaplayerplugin,KGenericFactory<kt::MediaPlayerPlugin>("ktmediaplayerplugin"))
 		
@@ -87,12 +89,17 @@ namespace kt
 		connect(next_action,SIGNAL(triggered()),this,SLOT(next()));
 		ac->addAction("media_next",next_action);
 		
+		show_video_action = new KToggleAction(KIcon("video-x-generic"),i18n("Show Video"),this);
+		connect(show_video_action,SIGNAL(toggled(bool)),this,SLOT(showVideo(bool)));
+		ac->addAction("show_video",show_video_action);
+		
 		QToolBar* tb = media_view->mediaToolBar();
 		tb->addAction(play_action);
 		tb->addAction(pause_action);
 		tb->addAction(stop_action);
 		tb->addAction(prev_action);
 		tb->addAction(next_action);
+		tb->addAction(show_video_action);
 	}
 
 	void MediaPlayerPlugin::load()
@@ -164,6 +171,8 @@ namespace kt
 			getGUI()->addTabPage(video,"video-x-generic",path,this);
 		}
 		video_shown = true;
+		if (show_video_action->isChecked() != video_shown)
+			show_video_action->setChecked(video_shown);
 	}
 	
 	void MediaPlayerPlugin::closeVideo()
@@ -172,7 +181,17 @@ namespace kt
 		{
 			getGUI()->removeTabPage(video);
 			video_shown = false;
+			if (show_video_action->isChecked() != video_shown)
+				show_video_action->setChecked(video_shown);
 		}
+	}
+	
+	void MediaPlayerPlugin::showVideo(bool on)
+	{
+		if (on)
+			openVideo();
+		else
+			closeVideo();
 	}
 	
 	void MediaPlayerPlugin::play()
@@ -312,6 +331,8 @@ namespace kt
 		stop();
 		gui->removeTabPage(video);
 		video_shown = false;
+		if (show_video_action->isChecked() != video_shown)
+			show_video_action->setChecked(video_shown);
 	}
 	
 	void MediaPlayerPlugin::setVideoFullScreen(bool on)

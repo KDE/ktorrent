@@ -70,6 +70,7 @@ namespace kt
 		void onDoubleClicked(const QModelIndex & idx);
 		void randomPlayActivated();
 		void aboutToFinishPlaying();
+		void showVideo(bool on);
 		
 	private:
 		MediaView* media_view;
@@ -80,6 +81,7 @@ namespace kt
 		KAction* stop_action;
 		KAction* prev_action;
 		KAction* next_action;
+		KAction* show_video_action;
 		int action_flags;
 		VideoWidget* video;
 		bool video_shown;

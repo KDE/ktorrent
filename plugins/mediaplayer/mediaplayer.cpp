@@ -145,6 +145,7 @@ namespace kt
 					flags |= MEDIA_PREV;
 				
 				enableActions(flags);
+				hasVideoChanged(media->hasVideo());
 				break;
 			case Phonon::BufferingState:
 				Out(SYS_MPL|LOG_DEBUG) << "MediaPlayer: buffering" << endl;
