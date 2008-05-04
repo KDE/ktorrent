@@ -24,6 +24,7 @@
 #include <kactioncollection.h>
 
 #include <util/log.h>
+//Out(SYS_BTF|LOG_DEBUG) << "Debug messages look like this - Place them somewhere useful" << endl;
 
 #include "bitfinderplugin.h"
 

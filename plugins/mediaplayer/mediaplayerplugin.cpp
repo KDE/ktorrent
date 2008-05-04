@@ -37,8 +37,6 @@
 #include "videowidget.h"
 #include "mediaplayerpluginsettings.h"
 
-//Out(SYS_BTF|LOG_DEBUG) << "Debug messages look like this - Place them somewhere useful" << endl;
-
 K_EXPORT_COMPONENT_FACTORY(ktmediaplayerplugin,KGenericFactory<kt::MediaPlayerPlugin>("ktmediaplayerplugin"))
 		
 using namespace bt;
