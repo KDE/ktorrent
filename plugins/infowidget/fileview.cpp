@@ -155,8 +155,8 @@ namespace kt
 			return;
 		}
 	
-		QModelIndex item = sel.front();
-		bt::TorrentFileInterface* file = model->indexToFile(proxy_model->mapToSource(item));
+		QModelIndex item = proxy_model->mapToSource(sel.front());
+		bt::TorrentFileInterface* file = model->indexToFile(item);
 
 		download_first_action->setEnabled(false);
 		download_last_action->setEnabled(false);

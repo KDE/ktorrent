@@ -106,8 +106,12 @@ namespace kt
 	
 	bool GroupManager::erase(const QString & key)
 	{
-		bt::PtrMap<QString,Group>::erase(key);
-		emit customGroupsChanged();
+		if (bt::PtrMap<QString,Group>::erase(key))
+		{
+			emit customGroupsChanged();
+			return true;
+		}
+		return false;
 	}
 	
 	Group* GroupManager::findDefault(const QString & name)
