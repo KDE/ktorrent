@@ -157,6 +157,9 @@ namespace kt
 		if (idx >= 0)
 			path = path.mid(idx+1);
 		
+		if (path.isNull())
+			path = i18n("Media Player");
+		
 		if (video)
 		{
 			if (video_shown)
