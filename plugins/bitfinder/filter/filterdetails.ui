@@ -167,36 +167,12 @@
             <string>Source List</string>
            </property>
            <layout class="QVBoxLayout" >
-            <property name="spacing" >
-             <number>2</number>
-            </property>
-            <property name="leftMargin" >
-             <number>2</number>
-            </property>
-            <property name="topMargin" >
-             <number>2</number>
-            </property>
-            <property name="rightMargin" >
-             <number>2</number>
-            </property>
-            <property name="bottomMargin" >
-             <number>2</number>
-            </property>
             <item>
              <layout class="QHBoxLayout" >
               <item>
                <widget class="QLabel" name="sourceListTypeLabel" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Preferred" hsizetype="Fixed" >
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
                 <property name="text" >
                  <string>Source List Type</string>
-                </property>
-                <property name="alignment" >
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
               </item>
@@ -210,7 +186,7 @@
                 </property>
                 <property name="sizeHint" >
                  <size>
-                  <width>371</width>
+                  <width>4</width>
                   <height>20</height>
                  </size>
                 </property>

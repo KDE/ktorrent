@@ -30,53 +30,6 @@ using namespace bt;
 
 namespace kt
 	{
-	void FilterDetails::updateGroupList(QString oldName, QString newName)
-		{
-		QString curItem = group->currentText();
-		if (curItem == oldName)
-			{
-			if (!newName.isEmpty())
-				curItem = newName;
-			}
-		
-		group->clear();
-		group->addItem("Ungrouped");
-		group->addItems(core->getGroupManager()->customGroupNames());
-		int item=0;
-		for (int i=0; i<group->count(); i++)
-			{
-			if (group->itemText(i) == curItem)
-				{
-				item = i;
-				break;
-				}
-			}
-		group->setCurrentIndex(item);
-		}
-	
-	void FilterDetails::onMultiMatchChange(int curIndex)
-		{
-		captureChecker->setEnabled(multiMatch->itemData(curIndex) == MM_CAPTURE_CHECKING);
-		rerelease->setEnabled(multiMatch->itemData(curIndex) != MM_ALWAYS_MATCH);
-		}
-	
-	void FilterDetails::onTypeChange(int curIndex)
-		{
-		if (type->itemData(curIndex) == FT_REJECT)
-			{
-			if (multiMatch->itemData(0) == MM_ONCE_ONLY)
-				{
-				multiMatch->removeItem(0);
-				}
-			}
-		else
-			{
-			if (multiMatch->itemData(0) != MM_ONCE_ONLY)
-				{
-				multiMatch->insertItem(0, "Match once only", MM_ONCE_ONLY);
-				}
-			}
-		}
 	
 	FilterDetails::FilterDetails(CoreInterface* core, QWidget * parent) : QDialog(parent), core(core)
 		{
@@ -99,6 +52,9 @@ namespace kt
 		multiMatch->addItem("Match every time", MM_ALWAYS_MATCH);
 		multiMatch->addItem("Use Capture Checking", MM_CAPTURE_CHECKING);
 		connect(multiMatch, SIGNAL(currentIndexChanged( int )), this, SLOT(onMultiMatchChange(int)));
+		//make sure multimatch is correct for the torrent type setting
+		onTypeChange(type->currentIndex());
+		
 		//rerelease
 		rerelease->addItem("Ignore Rereleases", RR_IGNORE);
 		rerelease->addItem("Download All Rereleases", RR_DOWNLOAD_ALL);
@@ -124,6 +80,204 @@ namespace kt
 		
 		//matchesToolbar - for deleting matches so they're redownloaded
 		//		perhaps also add reprocessing button in here.
+		
+		//hook up signals to push out the relevant information
+		connect(name, SIGNAL(textChanged( const QString& )), this, SIGNAL(nameChanged(const QString&)));
+		connect(type, SIGNAL(currentIndexChanged( int )), this, SLOT(emitType()));
+		connect(group, SIGNAL(currentIndexChanged( const QString& )), this, SIGNAL(groupChanged(const QString&)));
+		connect(expressions, SIGNAL(changed()), this, SLOT(emitExpressions()));
+		connect(sourceListType, SIGNAL(currentIndexChanged( int )), this, SLOT(emitSourceListType()));
+		connect(sourceList, SIGNAL(itemChanged( QListWidgetItem* )), this, SLOT(emitSourceList()));
+		connect(multiMatch, SIGNAL(currentIndexChanged( int )), this, SLOT(emitMultiMatch()));
+		connect(rerelease, SIGNAL(currentIndexChanged( int )), this, SLOT(emitRerelease()));
+		
+		}
+	
+	void FilterDetails::updateGroupList(QString oldName, QString newName)
+		{
+		QString curItem = group->currentText();
+		if (curItem == oldName)
+			{
+			if (!newName.isEmpty())
+				curItem = newName;
+			}
+		
+		group->clear();
+		group->addItem("Ungrouped");
+		group->addItems(core->getGroupManager()->customGroupNames());
+		int item=0;
+		for (int i=0; i<group->count(); i++)
+			{
+			if (group->itemText(i) == curItem)
+				{
+				item = i;
+				break;
+				}
+			}
+		group->setCurrentIndex(item);
+		
+		}
+	
+	void FilterDetails::onMultiMatchChange(int curIndex)
+		{
+		captureChecker->setEnabled(multiMatch->itemData(curIndex) == MM_CAPTURE_CHECKING);
+		rerelease->setEnabled(multiMatch->itemData(curIndex) != MM_ALWAYS_MATCH);
+		captureChecker->resizeColumns();
+		}
+	
+	void FilterDetails::onTypeChange(int curIndex)
+		{
+		if (type->itemData(curIndex) == FT_REJECT)
+			{
+			if (multiMatch->itemData(0) == MM_ONCE_ONLY)
+				{
+				multiMatch->removeItem(0);
+				}
+			}
+		else
+			{
+			if (multiMatch->itemData(0) != MM_ONCE_ONLY)
+				{
+				multiMatch->insertItem(0, "Match once only", MM_ONCE_ONLY);
+				}
+			}
+		}
+	
+	void FilterDetails::refreshSizes()
+		{
+		captureChecker->resizeColumns();
+		}
+	
+	void FilterDetails::connectFilter(Filter * value)
+		{
+		//connect the signals
+		connect(this, SIGNAL(nameChanged(const QString&)), value, SLOT(setName(const QString&)));
+		connect(this, SIGNAL(typeChanged(int)), value, SLOT(setType(int)));
+		connect(this, SIGNAL(groupChanged(const QString&)), value, SLOT(setGroup(const QString&)));
+		connect(this, SIGNAL(expressionsChanged(QStringList)), value, SLOT(setExpressions(QStringList)));
+		connect(this, SIGNAL(sourceListTypeChanged(int)), value, SLOT(setSourceListType(int)));
+		connect(this, SIGNAL(sourceListChanged(QStringList)), value, SLOT(setSourceList(QStringList)));
+		connect(this, SIGNAL(multiMatchChanged(int)), value, SLOT(setMultiMatch(int)));
+		connect(this, SIGNAL(rereleaseChanged(int)), value, SLOT(setRerelease(int)));
+		
+		//set all the values
+		name->setText(value->getName());
+		setType(value->getType());
+		group->setCurrentIndex(group->findText(value->getGroup()));
+		expressions->clear();
+		expressions->insertStringList(value->getExpressions());
+		setSourceListType(value->getSourceListType());
+		sourceList->clear();
+		sourceList->addItems(value->getSourceList());
+		setMultiMatch(value->getMultiMatch());
+		setRerelease(value->getRerelease());
+		}
+		
+	void FilterDetails::setFilter(Filter * value)
+		{
+		if (value == filter)
+			return;
+		
+		//we only want to disconnect it if it's not null
+		if (filter)
+			disconnect(filter);
+		
+		//we don't want to connect it up and try call functions if the new one is null
+		if (value)
+			connectFilter(value);
+		
+		filter = value;
+		}
+	
+	void FilterDetails::emitType()
+		{
+		//it's the userdata our filter cares about and there's no signal for that
+		emit typeChanged(type->itemData(type->currentIndex()).toInt());
+		}
+	
+	void FilterDetails::emitExpressions()
+		{
+		//for taking changes to the expressions list and pushing them over to the filter
+		emit expressionsChanged(expressions->items());
+		}
+		
+	void FilterDetails::emitSourceListType()
+		{
+		//it's the userdata our filter cares about and there's no signal for that
+		emit sourceListTypeChanged(sourceListType->itemData(sourceListType->currentIndex()).toInt());
+		}
+	
+	void FilterDetails::emitSourceList()
+		{
+		//for taking changes to the sources list and pushing them over to the filter
+		QStringList values;
+		
+		for (int i=0; i<sourceList->count(); i++)
+			{
+			values << sourceList->item(i)->text();
+			}
+		
+		emit sourceListChanged(values);
+		}
+
+	void FilterDetails::emitMultiMatch()
+		{
+		//it's the userdata our filter cares about and there's no signal for that
+		emit multiMatchChanged(multiMatch->itemData(multiMatch->currentIndex()).toInt());
+		}
+	
+	void FilterDetails::emitRerelease()
+		{
+		//it's the userdata our filter cares about and there's no signal for that
+		emit rereleaseChanged(rerelease->itemData(rerelease->currentIndex()).toInt());
+		}
+	
+	void FilterDetails::setType(int value)
+		{
+		for (int i=0; i<type->count(); i++)
+			{
+			if (value == type->itemData(i))
+				{
+				type->setCurrentIndex(i);
+				return;
+				}
+			}
+		}
+	
+	void FilterDetails::setSourceListType(int value)
+		{
+		for (int i=0; i<sourceListType->count(); i++)
+			{
+			if (value == sourceListType->itemData(i))
+				{
+				sourceListType->setCurrentIndex(i);
+				return;
+				}
+			}
+		}
+	
+	void FilterDetails::setMultiMatch(int value)
+		{
+		for (int i=0; i<multiMatch->count(); i++)
+			{
+			if (value == multiMatch->itemData(i))
+				{
+				multiMatch->setCurrentIndex(i);
+				return;
+				}
+			}
+		}
+	
+	void FilterDetails::setRerelease(int value)
+		{
+		for (int i=0; i<rerelease->count(); i++)
+			{
+			if (value == rerelease->itemData(i))
+				{
+				rerelease->setCurrentIndex(i);
+				return;
+				}
+			}
 		}
 	
 	}

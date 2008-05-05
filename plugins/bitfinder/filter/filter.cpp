@@ -26,7 +26,20 @@ namespace kt
 
 	Filter::Filter()
 		{
+		connect(this, SIGNAL(nameChanged(const QString&)), this, SIGNAL(changed()));
+		connect(this, SIGNAL(typeChanged(int)), this, SIGNAL(changed()));
+		connect(this, SIGNAL(groupChanged(const QString&)), this, SIGNAL(changed()));
+		connect(this, SIGNAL(expressionsChanged(QStringList)), this, SIGNAL(changed()));
+		connect(this, SIGNAL(sourceListTypeChanged(int)), this, SIGNAL(changed()));
+		connect(this, SIGNAL(sourceListChanged(QStringList)), this, SIGNAL(changed()));
+		connect(this, SIGNAL(multiMatchChanged(int)), this, SIGNAL(changed()));
+		connect(this, SIGNAL(rereleaseChanged(int)), this, SIGNAL(changed()));
 		
+		type = FT_ACCEPT;
+		group = "Ungrouped";
+		multiMatch = MM_ALWAYS_MATCH;
+		rerelease = RR_DOWNLOAD_ALL;
+		sourceListType = SL_EXCLUSIVE;
 		}
 		
 	Filter::~Filter()
@@ -46,5 +59,147 @@ namespace kt
 		return type ? "news-unsubscribe" : "news-subscribe";
 		}
 		
-
+	int Filter::getType()
+		{
+		QReadLocker readLock(&lock);
+		return type;
+		}
+	
+	QString Filter::getGroup()
+		{
+		QReadLocker readLock(&lock);
+		return group;
+		}
+	
+	QStringList Filter::getExpressions()
+		{
+		QReadLocker readLock(&lock);
+		return expressions;
+		}
+	
+	int Filter::getSourceListType()
+		{
+		QReadLocker readLock(&lock);
+		return sourceListType;
+		}
+	
+	QStringList Filter::getSourceList()
+		{
+		QReadLocker readLock(&lock);
+		return sourceList;
+		}
+	
+	int Filter::getMultiMatch()
+		{
+		QReadLocker readLock(&lock);
+		return multiMatch;
+		}
+	
+	int Filter::getRerelease()
+		{
+		QReadLocker readLock(&lock);
+		return rerelease;
+		}
+	
+	void Filter::setName(const QString& value)
+		{
+		QWriteLocker writeLock(&lock);
+		
+		bool newValue = name != value;
+		
+		name = value;
+		
+		if (newValue)
+			emit nameChanged(name);
+		}
+		
+	void Filter::setType(int value)
+		{
+		QWriteLocker writeLock(&lock);
+		
+		bool newValue = type != value;
+		
+		type = value;
+		
+		if (newValue)
+			emit typeChanged(type);
+		}
+		
+	void Filter::setGroup(const QString& value)
+		{
+		QWriteLocker writeLock(&lock);
+		
+		bool newValue = group != value;
+		group = value;
+		
+		if (newValue)
+			emit groupChanged(group);
+		}
+	
+	void Filter::setExpressions(QStringList value)
+		{
+		QWriteLocker writeLock(&lock);
+		
+		bool newValue = expressions != value;
+		
+		expressions = value;
+		
+		if (newValue)
+			emit expressionsChanged(expressions);
+		}
+	
+	void Filter::setSourceListType(int value)
+		{
+		QWriteLocker writeLock(&lock);
+		
+		bool newValue = sourceListType != value;
+		
+		sourceListType = value;
+		
+		if (newValue)
+			emit sourceListTypeChanged(sourceListType);
+		}
+	
+	void Filter::setSourceList(QStringList value)
+		{
+		QWriteLocker writeLock(&lock);
+		
+		bool newValue = sourceList != value;
+		
+		sourceList = value;
+		
+		if (newValue)
+			emit sourceListChanged(sourceList);
+		}
+	
+	void Filter::setMultiMatch(int value)
+		{
+		QWriteLocker writeLock(&lock);
+		
+		bool newValue = multiMatch != value;
+		
+		multiMatch = value;
+		
+		if (newValue)
+			emit multiMatchChanged(multiMatch);
+		}
+		
+	void Filter::setRerelease(int value)
+		{
+		QWriteLocker writeLock(&lock);
+		
+		bool newValue = rerelease != value;
+		
+		rerelease = value;
+		
+		if (newValue)
+			emit rereleaseChanged(rerelease);
+		}
+		
+	
+	void Filter::run()
+		{
+		
+		}
+	
 }

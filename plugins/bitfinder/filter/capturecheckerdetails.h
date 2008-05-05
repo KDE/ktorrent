@@ -41,6 +41,8 @@ namespace kt
 			void setCaptureChecker(CaptureChecker * value);
 			void addNewCapture();
 			
+			void resizeColumns();
+			
 		private:
 			CaptureChecker* captureChecker;
 			

@@ -111,6 +111,8 @@ namespace kt
 		//add a filter tab in during early testing
 		FilterDetails * testFilterTab = new FilterDetails(getCore());
 		getGUI()->addTabPage(testFilterTab,"news-subscribe","Test Filter Tab",this);
+		testFilterTab->refreshSizes();
+		testFilterTab->setFilter(new Filter());
 		
 		filterDetailsList.append(testFilterTab);
 		}

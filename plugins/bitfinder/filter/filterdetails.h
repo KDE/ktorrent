@@ -24,6 +24,8 @@
 #include <kaction.h>
 #include <kactionmenu.h>
 
+#include "filter.h"
+
 #include "ui_filterdetails.h"
 
 #include <interfaces/coreinterface.h>
@@ -43,12 +45,46 @@ namespace kt
 			void updateGroupList(QString oldName=QString(), QString newName=QString());
 			void onMultiMatchChange(int curIndex);
 			void onTypeChange(int curIndex);
+			void refreshSizes();
+			
+			void connectFilter(Filter * value);
+			void setFilter(Filter * value);
+			
+			//functions to handle translation of data to format wanted for Filter connection
+			void emitType();
+			void emitExpressions();
+			void emitSourceListType();
+			void emitSourceList();
+			void emitMultiMatch();
+			void emitRerelease();
+			
+			//function to translate from Filter format for data
+			void setType(int value);
+			void setSourceListType(int value);
+			void setMultiMatch(int value);
+			void setRerelease(int value);
+			
+		
+		signals:
+			void nameChanged(const QString& name);
+			void typeChanged(int type);
+			void groupChanged(const QString& group);
+			void expressionsChanged(QStringList expressions);
+			void sourceListTypeChanged(int sourceListType);
+			void sourceListChanged(QStringList sourceList);
+			void multiMatchChanged(int multiMatch);
+			void rereleaseChanged(int rerelease);
+			
+			
 		
 		private:
 			CoreInterface* core;
 			
+			Filter * filter;
+			
 			KActionMenu* sourceAdd;
 			KAction* sourceRemove;
+			
 		
 		};
 	

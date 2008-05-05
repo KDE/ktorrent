@@ -28,6 +28,27 @@ using namespace bt;
 namespace kt
 	{
 	
+	void CaptureCheckerDetails::resizeColumns()
+		{
+		if (captures->columnWidth(1) != 65 && captures->width()!=100)
+			return;
+		
+		int captureWidth = captures->width();
+		captures->setColumnWidth(0, captureWidth * 0.35 - 5);
+		captures->setColumnWidth(1, captureWidth * 0.65);
+		
+		int variableWidth = variables->width();
+		variables->setColumnWidth(0, variableWidth * 0.5 - 5);
+		variables->setColumnWidth(1, variableWidth * 0.25);
+		variables->setColumnWidth(2, variableWidth * 0.25);
+		
+		int mappingWidth = mappings->width();
+		mappings->setColumnWidth(0, mappingWidth * 0.2);
+		mappings->setColumnWidth(1, mappingWidth * 0.2);
+		mappings->setColumnWidth(2, mappingWidth * 0.1);
+		mappings->setColumnWidth(3, mappingWidth * 0.5 - 5);
+		}
+	
 	CaptureCheckerDetails::CaptureCheckerDetails(QWidget * parent) 
 			: QWidget(parent)
 		{
@@ -56,6 +77,24 @@ namespace kt
 		variablesToolbar->addAction(variableRemove);
 		variablesToolbar->addAction(variableUp);
 		variablesToolbar->addAction(variableDown);
+		
+		//captures
+		captures->setColumnCount(2);
+		QStringList captureHeaders;
+		captureHeaders << "Name" << "Expression";
+		captures->setHorizontalHeaderLabels(captureHeaders);
+		
+		//variables
+		variables->setColumnCount(3);
+		QStringList variableHeaders;
+		variableHeaders << "Name" << "Min" << "Max";
+		variables->setHorizontalHeaderLabels(variableHeaders);
+		
+		//mappings
+		mappings->setColumnCount(4);
+		QStringList mappingHeaders;
+		mappingHeaders << "Capture Name" << "Variable" << "Index" << "Test Value";
+		mappings->setHorizontalHeaderLabels(mappingHeaders);
 		
 		}
 	

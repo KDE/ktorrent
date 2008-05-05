@@ -40,9 +40,38 @@ namespace kt
 		
 		QString getName();
 		QString getIconName();
+		int getType();
+		QString getGroup();
+		QStringList getExpressions();
+		int getSourceListType();
+		QStringList getSourceList();
+		int getMultiMatch();
+		int getRerelease();
 		
 	public slots:
+		void setName(const QString& value);
+		void setType(int value);
+		void setGroup(const QString& value);
+		void setExpressions(QStringList value);
+		void setSourceListType(int value);
+		void setSourceList(QStringList value);
+		void setMultiMatch(int value);
+		void setRerelease(int value);
+	
+	signals:
+		void changed();
+		void nameChanged(const QString& name);
+		void typeChanged(int type);
+		void groupChanged(const QString& group);
+		void expressionsChanged(QStringList expressions);
+		void sourceListTypeChanged(int sourceListType);
+		void sourceListChanged(QStringList expressions);
+		void multiMatchChanged(int multiMatch);
+		void rereleaseChanged(int rerelease);
 		
+	protected:
+		virtual void run();
+	
 	private:
 		QReadWriteLock lock;
 		QString name;
@@ -54,7 +83,7 @@ namespace kt
 		QStringList captureExpressions;
 		//add captureCheckList
 		int sourceListType;
-		QStringList sources;
+		QStringList sourceList;
 		
 	};
 

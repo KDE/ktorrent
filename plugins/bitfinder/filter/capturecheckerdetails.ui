@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>789</width>
-    <height>206</height>
+    <width>1142</width>
+    <height>280</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -30,6 +30,12 @@
    </property>
    <item>
     <widget class="QGroupBox" name="capturesBox" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+       <horstretch>2</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="title" >
       <string>Captures</string>
      </property>
@@ -49,6 +55,12 @@
    </item>
    <item>
     <widget class="QGroupBox" name="variablesBox" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+       <horstretch>2</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="title" >
       <string>Variables</string>
      </property>
@@ -68,6 +80,12 @@
    </item>
    <item>
     <widget class="QGroupBox" name="mappingsBox" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+       <horstretch>3</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="title" >
       <string>Mappings</string>
      </property>
