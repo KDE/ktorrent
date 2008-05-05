@@ -1,0 +1,97 @@
+<ui version="4.0" >
+ <class>CaptureCheckerDetailsWidget</class>
+ <widget class="QWidget" name="CaptureCheckerDetailsWidget" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>789</width>
+    <height>206</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" >
+   <property name="spacing" >
+    <number>2</number>
+   </property>
+   <property name="leftMargin" >
+    <number>2</number>
+   </property>
+   <property name="topMargin" >
+    <number>2</number>
+   </property>
+   <property name="rightMargin" >
+    <number>2</number>
+   </property>
+   <property name="bottomMargin" >
+    <number>2</number>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="capturesBox" >
+     <property name="title" >
+      <string>Captures</string>
+     </property>
+     <layout class="QHBoxLayout" >
+      <item>
+       <widget class="QTableWidget" name="captures" >
+        <property name="columnCount" >
+         <number>0</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="KToolBar" native="1" name="capturesToolbar" />
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="variablesBox" >
+     <property name="title" >
+      <string>Variables</string>
+     </property>
+     <layout class="QHBoxLayout" >
+      <item>
+       <widget class="QTableWidget" name="variables" >
+        <property name="columnCount" >
+         <number>0</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="KToolBar" native="1" name="variablesToolbar" />
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="mappingsBox" >
+     <property name="title" >
+      <string>Mappings</string>
+     </property>
+     <layout class="QHBoxLayout" >
+      <item>
+       <widget class="QTableWidget" name="mappings" >
+        <property name="columnCount" >
+         <number>0</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KToolBar</class>
+   <extends>QWidget</extends>
+   <header>ktoolbar.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>769</width>
-    <height>775</height>
+    <width>671</width>
+    <height>525</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -41,105 +41,245 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>755</width>
-        <height>705</height>
+        <width>657</width>
+        <height>455</height>
        </rect>
       </property>
       <attribute name="label" >
        <string>Settings</string>
       </attribute>
-      <layout class="QGridLayout" >
-       <item row="0" column="0" >
-        <widget class="QLabel" name="nameLabel" >
-         <property name="text" >
-          <string>Name</string>
-         </property>
-         <property name="alignment" >
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
+      <layout class="QVBoxLayout" >
+       <item>
+        <layout class="QHBoxLayout" >
+         <item>
+          <widget class="QLabel" name="nameLabel" >
+           <property name="text" >
+            <string>Name</string>
+           </property>
+           <property name="alignment" >
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="name" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="typeLabel" >
+           <property name="text" >
+            <string>Type</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="type" />
+         </item>
+         <item>
+          <widget class="QLabel" name="groupLabel" >
+           <property name="text" >
+            <string>Group</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="group" />
+         </item>
+         <item>
+          <widget class="QLabel" name="testStringLabel" >
+           <property name="text" >
+            <string>Test String</string>
+           </property>
+           <property name="alignment" >
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="testString" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+             <horstretch>4</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
-       <item row="0" column="1" >
-        <widget class="QLineEdit" name="name" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-           <horstretch>1</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+       <item>
+        <layout class="QHBoxLayout" >
+         <property name="spacing" >
+          <number>2</number>
          </property>
-        </widget>
+         <item>
+          <widget class="KEditListBox" name="expressions" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+             <horstretch>2</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize" >
+            <size>
+             <width>16777215</width>
+             <height>278</height>
+            </size>
+           </property>
+           <property name="title" >
+            <string>Expressions</string>
+           </property>
+           <property name="alignment" >
+            <set>Qt::AlignLeading</set>
+           </property>
+           <property name="flat" >
+            <bool>false</bool>
+           </property>
+           <property name="checkable" >
+            <bool>false</bool>
+           </property>
+           <property name="buttons" >
+            <set>KEditListBox::Add|KEditListBox::Remove</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="sourceListBox" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize" >
+            <size>
+             <width>16777215</width>
+             <height>278</height>
+            </size>
+           </property>
+           <property name="title" >
+            <string>Source List</string>
+           </property>
+           <layout class="QVBoxLayout" >
+            <property name="spacing" >
+             <number>2</number>
+            </property>
+            <property name="leftMargin" >
+             <number>2</number>
+            </property>
+            <property name="topMargin" >
+             <number>2</number>
+            </property>
+            <property name="rightMargin" >
+             <number>2</number>
+            </property>
+            <property name="bottomMargin" >
+             <number>2</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" >
+              <item>
+               <widget class="QLabel" name="sourceListTypeLabel" >
+                <property name="sizePolicy" >
+                 <sizepolicy vsizetype="Preferred" hsizetype="Fixed" >
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text" >
+                 <string>Source List Type</string>
+                </property>
+                <property name="alignment" >
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="sourceListType" />
+              </item>
+              <item>
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" >
+                 <size>
+                  <width>371</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" >
+              <property name="spacing" >
+               <number>2</number>
+              </property>
+              <property name="bottomMargin" >
+               <number>7</number>
+              </property>
+              <item>
+               <widget class="QListWidget" name="sourceList" >
+                <property name="sizePolicy" >
+                 <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="sortingEnabled" >
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="KToolBar" native="1" name="sourceListToolbar" >
+                <property name="sizePolicy" >
+                 <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
        </item>
-       <item row="0" column="2" >
-        <widget class="QLabel" name="typeLabel" >
-         <property name="text" >
-          <string>Type</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3" >
-        <widget class="QComboBox" name="type" />
-       </item>
-       <item row="0" column="4" >
-        <widget class="QLabel" name="groupLabel" >
-         <property name="text" >
-          <string>Group</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="5" >
-        <widget class="QComboBox" name="group" />
-       </item>
-       <item row="0" column="6" >
-        <widget class="QLabel" name="testStringLabel" >
-         <property name="text" >
-          <string>Test String</string>
-         </property>
-         <property name="alignment" >
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="7" >
-        <widget class="QLineEdit" name="testString" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-           <horstretch>4</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="8" >
-        <widget class="KEditListBox" name="expressions" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="title" >
-          <string>Expressions</string>
-         </property>
-         <property name="alignment" >
-          <set>Qt::AlignLeading</set>
-         </property>
-         <property name="flat" >
-          <bool>false</bool>
-         </property>
-         <property name="checkable" >
-          <bool>false</bool>
-         </property>
-         <property name="buttons" >
-          <set>KEditListBox::Add|KEditListBox::Remove</set>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0" colspan="8" >
+       <item>
         <widget class="QGroupBox" name="multiMatchBox" >
          <property name="title" >
           <string>MultiMatch</string>
          </property>
          <layout class="QGridLayout" >
+          <property name="leftMargin" >
+           <number>2</number>
+          </property>
+          <property name="topMargin" >
+           <number>2</number>
+          </property>
+          <property name="rightMargin" >
+           <number>2</number>
+          </property>
+          <property name="bottomMargin" >
+           <number>2</number>
+          </property>
+          <property name="horizontalSpacing" >
+           <number>2</number>
+          </property>
+          <property name="verticalSpacing" >
+           <number>2</number>
+          </property>
           <item row="0" column="0" >
            <widget class="QLabel" name="multiMatchLabel" >
             <property name="text" >
@@ -183,95 +323,9 @@
            <widget class="KToolBar" native="1" name="multiMatchToolbar" />
           </item>
           <item row="1" column="0" colspan="6" >
-           <widget class="QWidget" native="1" name="captureCheck" >
+           <widget class="kt::CaptureCheckerDetails" native="1" name="captureChecker" >
             <property name="sizePolicy" >
              <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="3" column="0" colspan="8" >
-        <widget class="QGroupBox" name="sourceListBox" >
-         <property name="title" >
-          <string>Source List</string>
-         </property>
-         <layout class="QGridLayout" >
-          <property name="leftMargin" >
-           <number>2</number>
-          </property>
-          <property name="topMargin" >
-           <number>2</number>
-          </property>
-          <property name="rightMargin" >
-           <number>2</number>
-          </property>
-          <property name="bottomMargin" >
-           <number>0</number>
-          </property>
-          <property name="horizontalSpacing" >
-           <number>2</number>
-          </property>
-          <property name="verticalSpacing" >
-           <number>2</number>
-          </property>
-          <item row="0" column="0" colspan="2" >
-           <layout class="QHBoxLayout" >
-            <item>
-             <widget class="QLabel" name="sourceListTypeLabel" >
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Preferred" hsizetype="Fixed" >
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text" >
-               <string>Source List Type</string>
-              </property>
-              <property name="alignment" >
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="sourceListType" />
-            </item>
-            <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>371</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item row="1" column="0" >
-           <widget class="QListWidget" name="sourceList" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-              <horstretch>1</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="sortingEnabled" >
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1" >
-           <widget class="KToolBar" native="1" name="sourceListToolbar" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -318,6 +372,12 @@
    <class>KToolBar</class>
    <extends>QWidget</extends>
    <header>ktoolbar.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>kt::CaptureCheckerDetails</class>
+   <extends>QWidget</extends>
+   <header>filter/capturecheckerdetails.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

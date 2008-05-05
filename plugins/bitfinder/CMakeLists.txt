@@ -1,5 +1,7 @@
 set(ktbitfinderplugin_SRC bitfinderplugin.cpp 
 				source/sourcesview.cpp
+				filter/capturechecker.cpp
+				filter/capturecheckerdetails.cpp
 				filter/filter.cpp
 				filter/filterlistmodel.cpp
 				filter/filtersview.cpp
@@ -7,6 +9,7 @@ set(ktbitfinderplugin_SRC bitfinderplugin.cpp
 				)
 
 kde4_add_ui_files(ktbitfinderplugin_SRC
+			filter/capturecheckerdetails.ui
 			filter/filterdetails.ui)
 
 kde4_add_plugin(ktbitfinderplugin ${ktbitfinderplugin_SRC})

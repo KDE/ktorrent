@@ -18,37 +18,39 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#ifndef KTFILTERDETAILS_H
-#define KTFILTERDETAILS_H
+#ifndef KTCAPTURECHECKERDETAILS_H
+#define KTCAPTURECHECKERDETAILS_H
 
 #include <kaction.h>
-#include <kactionmenu.h>
 
-#include "ui_filterdetails.h"
-
-#include <interfaces/coreinterface.h>
+#include "ui_capturecheckerdetails.h"
+#include "capturechecker.h"
 
 namespace kt
 	{
 	
-	class FilterDetails : public QDialog, private Ui::FilterDetailsWidget
+	class CaptureCheckerDetails : public QWidget, private Ui::CaptureCheckerDetailsWidget
 		{
 			Q_OBJECT
 		
 		public:
-			FilterDetails(CoreInterface* core, QWidget * parent = 0);
-			virtual ~FilterDetails() { }
+			CaptureCheckerDetails(QWidget * parent = 0);
+			virtual ~CaptureCheckerDetails() { }
 			
 		public slots:
-			void updateGroupList(QString oldName=QString(), QString newName=QString());
-			void onMultiMatchChange(int curIndex);
-			void onTypeChange(int curIndex);
-		
-		private:
-			CoreInterface* core;
+			void setCaptureChecker(CaptureChecker * value);
+			void addNewCapture();
 			
-			KActionMenu* sourceAdd;
-			KAction* sourceRemove;
+		private:
+			CaptureChecker* captureChecker;
+			
+			KAction* captureAdd;
+			KAction* captureRemove;
+			
+			KAction* variableAdd;
+			KAction* variableRemove;
+			KAction* variableUp;
+			KAction* variableDown;
 		
 		};
 	

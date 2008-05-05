@@ -28,6 +28,8 @@
 
 #include "bitfinderplugin.h"
 
+#include "filter/capturecheckerdetails.h"
+
 K_EXPORT_COMPONENT_FACTORY (ktbitfinderplugin, KGenericFactory<kt::BitFinderPlugin> ("ktbitfinderplugin"))
 
 using namespace bt;
@@ -109,6 +111,7 @@ namespace kt
 		//add a filter tab in during early testing
 		FilterDetails * testFilterTab = new FilterDetails(getCore());
 		getGUI()->addTabPage(testFilterTab,"news-subscribe","Test Filter Tab",this);
+		
 		filterDetailsList.append(testFilterTab);
 		}
 

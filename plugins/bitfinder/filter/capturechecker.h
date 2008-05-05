@@ -18,38 +18,44 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
-#ifndef KTFILTERDETAILS_H
-#define KTFILTERDETAILS_H
+#ifndef KTCAPTURECHECKER_H
+#define KTCAPTURECHECKER_H
 
-#include <kaction.h>
-#include <kactionmenu.h>
-
-#include "ui_filterdetails.h"
-
-#include <interfaces/coreinterface.h>
+#include <QHash>
+#include <QString>
 
 namespace kt
 	{
-	
-	class FilterDetails : public QDialog, private Ui::FilterDetailsWidget
+	struct Variable
 		{
-			Q_OBJECT
+		QString name;
+		QString min;
+		QString max;
+		};
+		
+	struct IndexPair
+		{
+		QString captureName;
+		QString variableName;
+		};
+	
+	class CaptureChecker : public QObject
+		{
+		Q_OBJECT
 		
 		public:
-			FilterDetails(CoreInterface* core, QWidget * parent = 0);
-			virtual ~FilterDetails() { }
-			
+			CaptureChecker(QObject * parent = 0);
+			~CaptureChecker() {}
+		
 		public slots:
-			void updateGroupList(QString oldName=QString(), QString newName=QString());
-			void onMultiMatchChange(int curIndex);
-			void onTypeChange(int curIndex);
-		
-		private:
-			CoreInterface* core;
+			bool addNewCapture(const QString& name);
+			bool setCaptureValue(const QString& name, const QString& value);
 			
-			KActionMenu* sourceAdd;
-			KAction* sourceRemove;
-		
+		private:
+			QHash<QString, QString> captures;
+			QList<Variable> variables;
+			QHash<IndexPair, int> indexMapping;
+			
 		};
 	
 	}

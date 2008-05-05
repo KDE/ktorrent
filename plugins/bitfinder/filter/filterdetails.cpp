@@ -22,6 +22,7 @@
 
 #include "filterdetails.h"
 #include "filterconstants.h"
+#include "capturecheckerdetails.h"
 
 #include <util/log.h>
 
@@ -53,6 +54,30 @@ namespace kt
 		group->setCurrentIndex(item);
 		}
 	
+	void FilterDetails::onMultiMatchChange(int curIndex)
+		{
+		captureChecker->setEnabled(multiMatch->itemData(curIndex) == MM_CAPTURE_CHECKING);
+		rerelease->setEnabled(multiMatch->itemData(curIndex) != MM_ALWAYS_MATCH);
+		}
+	
+	void FilterDetails::onTypeChange(int curIndex)
+		{
+		if (type->itemData(curIndex) == FT_REJECT)
+			{
+			if (multiMatch->itemData(0) == MM_ONCE_ONLY)
+				{
+				multiMatch->removeItem(0);
+				}
+			}
+		else
+			{
+			if (multiMatch->itemData(0) != MM_ONCE_ONLY)
+				{
+				multiMatch->insertItem(0, "Match once only", MM_ONCE_ONLY);
+				}
+			}
+		}
+	
 	FilterDetails::FilterDetails(CoreInterface* core, QWidget * parent) : QDialog(parent), core(core)
 		{
 		setupUi(this);
@@ -61,6 +86,7 @@ namespace kt
 		//type
 		type->addItem("Reject Torrents", FT_REJECT);
 		type->addItem("Accept Torrents", FT_ACCEPT);
+		connect(type, SIGNAL(currentIndexChanged( int )), this, SLOT(onTypeChange(int)));
 		//group
 		updateGroupList();
 		//I've hooked this up to the UI for now, but will probably want to have this connected
@@ -69,9 +95,10 @@ namespace kt
 		connect(core->getGroupManager(), SIGNAL(customGroupsChanged(QString, QString)), 
 					this, SLOT(updateGroupList(QString, QString)));
 		//multiMatch
-		multiMatch->addItem("Download only once", MM_ONCE_ONLY);
-		multiMatch->addItem("Download every time", MM_ALWAYS_MATCH);
+		multiMatch->addItem("Match only once", MM_ONCE_ONLY);
+		multiMatch->addItem("Match every time", MM_ALWAYS_MATCH);
 		multiMatch->addItem("Use Capture Checking", MM_CAPTURE_CHECKING);
+		connect(multiMatch, SIGNAL(currentIndexChanged( int )), this, SLOT(onMultiMatchChange(int)));
 		//rerelease
 		rerelease->addItem("Ignore Rereleases", RR_IGNORE);
 		rerelease->addItem("Download All Rereleases", RR_DOWNLOAD_ALL);
@@ -82,9 +109,18 @@ namespace kt
 		
 		//multiMatchToolbar - for adding loading (and maybe saving) presets
 		
-		//captureCheck
+		//captureCheck - get it's enabled state set correctly.
+		onMultiMatchChange(multiMatch->currentIndex());
 		
 		//sourceListToolbar - for adding and removing sources
+		sourceListToolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+		sourceListToolbar->setOrientation(Qt::Vertical);
+		sourceListToolbar->setIconDimensions(16);
+		sourceAdd = new KActionMenu(KIcon("list-add"),i18n("Add Source"),this);
+		sourceAdd->setDelayed(false);
+		sourceRemove = new KAction(KIcon("list-remove"),i18n("Remove Source"),this);
+		sourceListToolbar->addAction(sourceAdd);
+		sourceListToolbar->addAction(sourceRemove);
 		
 		//matchesToolbar - for deleting matches so they're redownloaded
 		//		perhaps also add reprocessing button in here.
