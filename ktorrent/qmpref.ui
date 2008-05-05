@@ -90,7 +90,7 @@
         <item row="3" column="0" >
          <widget class="QLabel" name="label_13" >
           <property name="text" >
-           <string>Stop torrents when free disk space is lower then:</string>
+           <string>Stop torrents when free disk space is lower than:</string>
           </property>
          </widget>
         </item>
@@ -121,12 +121,12 @@
          <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
 &lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">With this enabled, the queue manager will decrease the priority of a torrent which has been stalled for to long. &lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">With this enabled, the queue manager will decrease the priority of a torrent which has been stalled for too long. &lt;/p>
 &lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
 &lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">This will allow the queue manager to run other torrents, when a torrent is doing nothing.&lt;/p>&lt;/body>&lt;/html></string>
         </property>
         <property name="text" >
-         <string>Decrease priority of torrents which are stalled for to long</string>
+         <string>Decrease priority of torrents which are stalled for too long</string>
         </property>
        </widget>
       </item>
