@@ -107,17 +107,17 @@ namespace kt
 		if (!value)
 			return;
 		
-		connect(value, SIGNAL(capturesChanged(QHash< QString, QString >)), 
-				this, SLOT(setCaptures(QHash< QString, QString >)));
+		connect(value, SIGNAL(capturesChanged(QMap< QString, QString >)), 
+				this, SLOT(setCaptures(QMap< QString, QString >)));
 		
-		connect(this, SIGNAL(capturesChanged(QHash<QString, QString>)), 
-				value, SLOT(setCaptures(QHash<QString, QString>)));
+		connect(this, SIGNAL(capturesChanged(QMap<QString, QString>)), 
+				value, SLOT(setCaptures(QMap<QString, QString>)));
 		
 		connect(value, SIGNAL(variablesChanged(QList< Variable >)),
 				this, SLOT(setVariables(QList< Variable >)));
 				
-		connect(value, SIGNAL(mappingsChanged(QHash< QPair < QString , QString >, int >)),
-				this, SLOT(setMappings(QHash< QPair < QString , QString >, int >)));
+		connect(value, SIGNAL(mappingsChanged(QMap< QPair < QString , QString >, int >)),
+				this, SLOT(setMappings(QMap< QPair < QString , QString >, int >)));
 		}
 	
 	void CaptureCheckerDetails::setCaptureChecker(CaptureChecker* value)
@@ -165,7 +165,7 @@ namespace kt
 		captureChecker->setMappingValue(captureName, variableName, index);
 		}
 
-	void CaptureCheckerDetails::setCaptures(QHash<QString, QString> value)
+	void CaptureCheckerDetails::setCaptures(QMap<QString, QString> value)
 		{
 		disconnect(captures, SIGNAL(cellChanged(int, int)), this, SLOT(emitCaptures()));
 		//thar be bugs in these waters
@@ -174,7 +174,7 @@ namespace kt
 		
 		QTableWidgetItem *newItem;
 		
-		QHash<QString, QString>::const_iterator i = value.constBegin();
+		QMap<QString, QString>::const_iterator i = value.constBegin();
 		int curRow = 0;
 		
 		while ( i != value.constEnd() )
@@ -214,7 +214,7 @@ namespace kt
 		connect(variables, SIGNAL(cellChanged(int, int)), this, SLOT(emitVariables()));
 		}
 		
-	void CaptureCheckerDetails::setMappings(QHash<QPair<QString, QString>, int> value)
+	void CaptureCheckerDetails::setMappings(QMap<QPair<QString, QString>, int> value)
 		{
 		disconnect(mappings, SIGNAL(cellChanged(int, int)), this, SLOT(verifyMappingInput(int, int)));
 		mappings->clearContents();
@@ -222,7 +222,7 @@ namespace kt
 		
 		QTableWidgetItem *newItem;
 		
-		QHash<QPair<QString, QString>, int>::const_iterator i = value.constBegin();
+		QMap<QPair<QString, QString>, int>::const_iterator i = value.constBegin();
 		int curRow = 0;
 		
 		while ( i != value.constEnd() )
@@ -251,7 +251,7 @@ namespace kt
 	
 	void CaptureCheckerDetails::emitCaptures()
 		{
-		QHash<QString, QString> value;
+		QMap<QString, QString> value;
 		
 		for (int i=0; i<captures->rowCount(); i++)
 			{

@@ -29,7 +29,7 @@ namespace kt
 	CaptureChecker::CaptureChecker(QObject * parent) : QObject(parent)
 		{
 		connect(this, SIGNAL(variablesChanged(QList< Variable >)), this, SLOT(updateMappings()));
-		connect(this, SIGNAL(capturesChanged(QHash< QString, QString >)), this, SLOT(updateMappings()));
+		connect(this, SIGNAL(capturesChanged(QMap< QString, QString >)), this, SLOT(updateMappings()));
 		}
 	
 	bool CaptureChecker::addNewCapture(const QString& name)
@@ -95,11 +95,11 @@ namespace kt
 		{
 		QWriteLocker writeLock(&lock);
 		
-		QHash<QPair<QString, QString>, int> value;
+		QMap<QPair<QString, QString>, int> value;
 		
 		QPair<QString, QString> curPair;
 		
-		QHash<QString, QString>::const_iterator i = captures.constBegin();
+		QMap<QString, QString>::const_iterator i = captures.constBegin();
 		
 		while ( i != captures.constEnd() )
 			{
@@ -125,7 +125,7 @@ namespace kt
 		emit mappingsChanged(mappings);
 		}
 	
-	void CaptureChecker::setCaptures(QHash<QString, QString> value)
+	void CaptureChecker::setCaptures(QMap<QString, QString> value)
 		{
 		QWriteLocker writeLock(&lock);
 		

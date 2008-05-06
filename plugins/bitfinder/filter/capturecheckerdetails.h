@@ -24,7 +24,7 @@
 #include <kaction.h>
 
 #include <QString>
-#include <QHash>
+#include <QMap>
 
 #include "ui_capturecheckerdetails.h"
 #include "capturechecker.h"
@@ -51,16 +51,16 @@ namespace kt
 			
 			//slots to update the various capture settings in the gui
 			void verifyMappingInput(int row, int cell);
-			void setCaptures(QHash<QString, QString> value);
+			void setCaptures(QMap<QString, QString> value);
 			void setVariables(QList<Variable> value);
-			void setMappings(QHash<QPair<QString,QString>, int> value);
+			void setMappings(QMap<QPair<QString,QString>, int> value);
 			
 			//slot to emit changes back to the CaptureChecker
 			void emitCaptures();
 			void emitVariables();
 		
 		signals:
-			void capturesChanged(QHash<QString, QString> captures);
+			void capturesChanged(QMap<QString, QString> captures);
 			void variablesChanged(QList<Variable> variables);
 		
 		private:

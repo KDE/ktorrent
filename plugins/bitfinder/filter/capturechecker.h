@@ -22,8 +22,9 @@
 #define KTCAPTURECHECKER_H
 
 #include <QReadWriteLock>
-#include <QHash>
+#include <QMap>
 #include <QString>
+#include <QPair>
 
 namespace kt
 	{
@@ -81,19 +82,19 @@ namespace kt
 			void updateMappings();
 			
 			//write full set from scratch
-			void setCaptures(QHash<QString, QString> value);
+			void setCaptures(QMap<QString, QString> value);
 			void setVariables(QList<Variable> value);
 		
 		signals:
-			void capturesChanged(QHash<QString, QString> captures);
+			void capturesChanged(QMap<QString, QString> captures);
 			void variablesChanged(QList<Variable> variables);
-			void mappingsChanged(QHash<QPair<QString, QString>, int>);
+			void mappingsChanged(QMap<QPair<QString, QString>, int>);
 		
 		private:
 			QReadWriteLock lock;
-			QHash<QString, QString> captures;
+			QMap<QString, QString> captures;
 			QList<Variable> variables;
-			QHash<QPair<QString, QString>, int> mappings;
+			QMap<QPair<QString, QString>, int> mappings;
 			
 		};
 	
