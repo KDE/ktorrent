@@ -19,6 +19,8 @@
  ***************************************************************************/
 #include <kinputdialog.h>
 
+#include <QHeaderView>
+
 #include "capturecheckerdetails.h"
 
 #include <util/log.h>
@@ -43,6 +45,7 @@ namespace kt
 		capturesToolbar->addAction(captureAdd);
 		capturesToolbar->addAction(captureRemove);
 		connect(captureAdd, SIGNAL(triggered( bool )), this, SLOT(addNewCapture()));
+		connect(captureRemove, SIGNAL(triggered( bool )), this, SLOT(removeCapture()));
 
 		//variablesToolbar
 		variablesToolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
@@ -57,6 +60,7 @@ namespace kt
 		variablesToolbar->addAction(variableUp);
 		variablesToolbar->addAction(variableDown);
 		connect(variableAdd, SIGNAL(triggered( bool )), this, SLOT(addNewVariable()));
+		connect(variableRemove, SIGNAL(triggered( bool )), this, SLOT(removeVariable()));
 		
 		//captures
 		captures->setColumnCount(2);
@@ -64,6 +68,7 @@ namespace kt
 		captureHeaders << "Name" << "Expression";
 		captures->setHorizontalHeaderLabels(captureHeaders);
 		connect(captures, SIGNAL(cellChanged(int, int)), this, SLOT(emitCaptures()));
+		captures->verticalHeader()->hide();
 		
 		//variables
 		variables->setColumnCount(3);
@@ -71,6 +76,7 @@ namespace kt
 		variableHeaders << "Name" << "Min" << "Max";
 		variables->setHorizontalHeaderLabels(variableHeaders);
 		connect(variables, SIGNAL(cellChanged(int, int)), this, SLOT(emitVariables()));
+		variables->verticalHeader()->hide();
 		
 		//mappings
 		mappings->setColumnCount(4);
@@ -78,6 +84,7 @@ namespace kt
 		mappingHeaders << "Capture Name" << "Variable" << "Index" << "Test Value";
 		mappings->setHorizontalHeaderLabels(mappingHeaders);
 		connect(mappings, SIGNAL(cellChanged(int, int)), this, SLOT(verifyMappingInput(int, int)));
+		mappings->verticalHeader()->hide();
 		
 		}
 	
@@ -87,19 +94,19 @@ namespace kt
 			return;
 		
 		int captureWidth = captures->width();
-		captures->setColumnWidth(CAPTURE_NAME, captureWidth * 0.35 - 5);
-		captures->setColumnWidth(CAPTURE_VALUE, captureWidth * 0.65);
+		captures->setColumnWidth(CAPTURE_NAME, int(captureWidth * 0.35 - 5));
+		captures->setColumnWidth(CAPTURE_VALUE, int(captureWidth * 0.65));
 		
 		int variableWidth = variables->width();
-		variables->setColumnWidth(VARIABLE_NAME, variableWidth * 0.5 - 5);
-		variables->setColumnWidth(VARIABLE_MIN, variableWidth * 0.25);
-		variables->setColumnWidth(VARIABLE_MAX, variableWidth * 0.25);
+		variables->setColumnWidth(VARIABLE_NAME, int(variableWidth * 0.5 - 5));
+		variables->setColumnWidth(VARIABLE_MIN, int(variableWidth * 0.25));
+		variables->setColumnWidth(VARIABLE_MAX, int(variableWidth * 0.25));
 		
 		int mappingWidth = mappings->width();
-		mappings->setColumnWidth(MAP_CAPTURE, mappingWidth * 0.2);
-		mappings->setColumnWidth(MAP_VARIABLE, mappingWidth * 0.2);
-		mappings->setColumnWidth(MAP_INDEX, mappingWidth * 0.1);
-		mappings->setColumnWidth(MAP_TEST, mappingWidth * 0.5 - 5);
+		mappings->setColumnWidth(MAP_CAPTURE, int(mappingWidth * 0.2));
+		mappings->setColumnWidth(MAP_VARIABLE, int(mappingWidth * 0.2));
+		mappings->setColumnWidth(MAP_INDEX, int(mappingWidth * 0.1));
+		mappings->setColumnWidth(MAP_TEST, int(mappingWidth * 0.5 - 5));
 		}
 	
 	void CaptureCheckerDetails::connectCaptureChecker(CaptureChecker* value)
@@ -140,6 +147,18 @@ namespace kt
 			}
 		}
 	
+	void CaptureCheckerDetails::removeCapture()
+		{
+		disconnect(captureChecker);
+		
+		QList<QTableWidgetItem *> items = captures->selectedItems();
+		
+		captureChecker->removeCapture(captures->item(items.at(0)->row(), CAPTURE_NAME)->text());
+		
+		connectCaptureChecker(captureChecker);
+		setCaptures(captureChecker->getCaptures());
+		}
+	
 	void CaptureCheckerDetails::addNewVariable()
 		{
 		bool ok = false;
@@ -151,6 +170,18 @@ namespace kt
 			if (captureChecker)
 				captureChecker->addNewVariable(name);
 			}
+		}
+	
+	void CaptureCheckerDetails::removeVariable()
+		{
+		disconnect(captureChecker);
+		
+		QList<QTableWidgetItem *> items = variables->selectedItems();
+		
+		captureChecker->removeVariable(variables->item(items.at(0)->row(), VARIABLE_NAME)->text());
+		
+		connectCaptureChecker(captureChecker);
+		setVariables(captureChecker->getVariables());
 		}
 	
 	void CaptureCheckerDetails::verifyMappingInput(int row, int column)

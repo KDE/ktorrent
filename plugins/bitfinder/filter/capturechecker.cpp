@@ -32,6 +32,20 @@ namespace kt
 		connect(this, SIGNAL(capturesChanged(QMap< QString, QString >)), this, SLOT(updateMappings()));
 		}
 	
+	QMap<QString, QString> CaptureChecker::getCaptures()
+		{
+		QReadLocker readLock(&lock);
+		
+		return captures;
+		}
+	
+	QList<Variable> CaptureChecker::getVariables()
+		{
+		QReadLocker readLock(&lock);
+		
+		return variables;
+		}
+	
 	bool CaptureChecker::addNewCapture(const QString& name)
 		{
 		QWriteLocker writeLock(&lock);
@@ -56,6 +70,14 @@ namespace kt
 		return true;
 		}
 	
+	void CaptureChecker::removeCapture(const QString& name)
+		{
+		QWriteLocker writeLock(&lock);
+		
+		captures.remove(name);
+		emit capturesChanged(captures);
+		}
+	
 	bool CaptureChecker::addNewVariable(const QString& name)
 		{
 		QWriteLocker writeLock(&lock);
@@ -73,6 +95,19 @@ namespace kt
 		
 		emit variablesChanged(variables);
 		return true;
+		}
+	
+	void CaptureChecker::removeVariable(const QString& name)
+		{
+		QWriteLocker writeLock(&lock);
+		
+		for (int i=variables.count()-1; i>=0; i--)
+			{
+			if (variables.at(i).name == name)
+				variables.removeAt(i);
+			}
+		
+		emit variablesChanged(variables);
 		}
 	
 	void CaptureChecker::setMappingValue(const QString& captureName, const QString& variableName, int index)

@@ -47,7 +47,9 @@ namespace kt
 			void setCaptureChecker(CaptureChecker * value);
 			
 			void addNewCapture();
+			void removeCapture();
 			void addNewVariable();
+			void removeVariable();
 			
 			//slots to update the various capture settings in the gui
 			void verifyMappingInput(int row, int cell);

@@ -69,12 +69,17 @@ namespace kt
 		public:
 			CaptureChecker(QObject * parent = 0);
 			~CaptureChecker() {}
+			
+			QMap<QString, QString> getCaptures();
+			QList<Variable> getVariables();
 		
 		public slots:
 			bool addNewCapture(const QString& name);
 			bool setCaptureValue(const QString& name, const QString& value);
+			void removeCapture(const QString& name);
 			
 			bool addNewVariable(const QString& name);
+			void removeVariable(const QString& name);
 			
 			void setMappingValue(const QString& captureName, const QString& variableName, int index);
 			
