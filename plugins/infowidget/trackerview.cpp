@@ -188,7 +188,7 @@ namespace kt
 		else
 			m_url->clear();
 		
-		m_add_tracker->setEnabled(m_tracker_to_add->text() != QString() && !tc->getStats().priv_torrent);
+		m_add_tracker->setEnabled(!m_tracker_to_add->text().isEmpty() && !tc->getStats().priv_torrent);
 	}
 	
 	void TrackerView::torrentChanged(TorrentInterface* ti)
