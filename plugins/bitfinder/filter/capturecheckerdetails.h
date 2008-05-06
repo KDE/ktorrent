@@ -23,6 +23,9 @@
 
 #include <kaction.h>
 
+#include <QString>
+#include <QHash>
+
 #include "ui_capturecheckerdetails.h"
 #include "capturechecker.h"
 
@@ -38,11 +41,28 @@ namespace kt
 			virtual ~CaptureCheckerDetails() { }
 			
 		public slots:
-			void setCaptureChecker(CaptureChecker * value);
-			void addNewCapture();
-			
 			void resizeColumns();
 			
+			void connectCaptureChecker(CaptureChecker * value);
+			void setCaptureChecker(CaptureChecker * value);
+			
+			void addNewCapture();
+			void addNewVariable();
+			
+			//slots to update the various capture settings in the gui
+			void verifyMappingInput(int row, int cell);
+			void setCaptures(QHash<QString, QString> value);
+			void setVariables(QList<Variable> value);
+			void setMappings(QHash<QPair<QString,QString>, int> value);
+			
+			//slot to emit changes back to the CaptureChecker
+			void emitCaptures();
+			void emitVariables();
+		
+		signals:
+			void capturesChanged(QHash<QString, QString> captures);
+			void variablesChanged(QList<Variable> variables);
+		
 		private:
 			CaptureChecker* captureChecker;
 			

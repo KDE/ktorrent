@@ -63,8 +63,8 @@ namespace kt
 		addRssSource = new KAction(KIcon("application-rss+xml"), i18n("RSS Feed"), this);
 		addSourceMenu->addAction(addRssSource);
 		
-		ac->addAction("addRssSource",addRssSource);
-		ac->addAction("removeSource",removeSource);
+		ac->addAction("Add Rss Source",addRssSource);
+		ac->addAction("Remove Source",removeSource);
 		
 		}
 
@@ -78,8 +78,17 @@ namespace kt
 		//create the Action for removing sources
 		removeFilter = new KAction(KIcon("list-remove"), i18n("Remove Filter"), this);
 		
-		ac->addAction("addFilter",addFilter);
-		ac->addAction("removeFilter",removeFilter);
+		//create the Action for moving a filter up
+		filterUp = new KAction(KIcon("arrow-up"), i18n("Move Filter Up"), this);
+		
+		//create the Action for moving a filter up
+		filterDown = new KAction(KIcon("arrow-down"), i18n("Move Filter Down"), this);
+
+		//put the actions into the collection
+		ac->addAction("Add Filter",addFilter);
+		ac->addAction("Remove Filter",removeFilter);
+		ac->addAction("Move Filter Up",filterUp);
+		ac->addAction("Move Filter Down", filterDown);
 		
 		}
 
@@ -107,6 +116,8 @@ namespace kt
 		tb = filtersView->filtersToolBar();
 		tb->addAction(addFilter);
 		tb->addAction(removeFilter);
+		tb->addAction(filterUp);
+		tb->addAction(filterDown);
 		
 		//add a filter tab in during early testing
 		FilterDetails * testFilterTab = new FilterDetails(getCore());

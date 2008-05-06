@@ -171,6 +171,7 @@ namespace kt
 		sourceList->addItems(value->getSourceList());
 		setMultiMatch(value->getMultiMatch());
 		setRerelease(value->getRerelease());
+		captureChecker->setCaptureChecker(value->getCaptureChecker());
 		}
 		
 	void FilterDetails::setFilter(Filter * value)

@@ -26,6 +26,14 @@ namespace kt
 
 	Filter::Filter()
 		{
+		type = FT_ACCEPT;
+		group = "Ungrouped";
+		multiMatch = MM_ALWAYS_MATCH;
+		rerelease = RR_DOWNLOAD_ALL;
+		sourceListType = SL_EXCLUSIVE;
+		
+		captureChecker = new CaptureChecker(this);
+		
 		connect(this, SIGNAL(nameChanged(const QString&)), this, SIGNAL(changed()));
 		connect(this, SIGNAL(typeChanged(int)), this, SIGNAL(changed()));
 		connect(this, SIGNAL(groupChanged(const QString&)), this, SIGNAL(changed()));
@@ -35,11 +43,6 @@ namespace kt
 		connect(this, SIGNAL(multiMatchChanged(int)), this, SIGNAL(changed()));
 		connect(this, SIGNAL(rereleaseChanged(int)), this, SIGNAL(changed()));
 		
-		type = FT_ACCEPT;
-		group = "Ungrouped";
-		multiMatch = MM_ALWAYS_MATCH;
-		rerelease = RR_DOWNLOAD_ALL;
-		sourceListType = SL_EXCLUSIVE;
 		}
 		
 	Filter::~Filter()
@@ -99,6 +102,12 @@ namespace kt
 		{
 		QReadLocker readLock(&lock);
 		return rerelease;
+		}
+	
+	CaptureChecker* Filter::getCaptureChecker()
+		{
+		QReadLocker readLock(&lock);
+		return captureChecker;
 		}
 	
 	void Filter::setName(const QString& value)

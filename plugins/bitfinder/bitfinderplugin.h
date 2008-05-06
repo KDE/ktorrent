@@ -70,6 +70,8 @@ namespace kt
  			FiltersView * filtersView;
  			KAction * addFilter;
  			KAction * removeFilter;
+ 			KAction * filterUp;
+ 			KAction * filterDown;
 
 		};
 

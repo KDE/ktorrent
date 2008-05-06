@@ -28,6 +28,7 @@
 #include <util/constants.h>
 
 #include "filterconstants.h"
+#include "capturechecker.h"
 
 namespace kt
 {
@@ -47,6 +48,7 @@ namespace kt
 		QStringList getSourceList();
 		int getMultiMatch();
 		int getRerelease();
+		CaptureChecker* getCaptureChecker();
 		
 	public slots:
 		void setName(const QString& value);
@@ -81,7 +83,7 @@ namespace kt
 		int multiMatch;
 		int rerelease;
 		QStringList captureExpressions;
-		//add captureCheckList
+		CaptureChecker * captureChecker;
 		int sourceListType;
 		QStringList sourceList;
 		

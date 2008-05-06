@@ -42,6 +42,12 @@
      <layout class="QHBoxLayout" >
       <item>
        <widget class="QTableWidget" name="captures" >
+        <property name="selectionMode" >
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="selectionBehavior" >
+         <enum>QAbstractItemView::SelectItems</enum>
+        </property>
         <property name="columnCount" >
          <number>0</number>
         </property>
@@ -67,6 +73,12 @@
      <layout class="QHBoxLayout" >
       <item>
        <widget class="QTableWidget" name="variables" >
+        <property name="selectionMode" >
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="selectionBehavior" >
+         <enum>QAbstractItemView::SelectItems</enum>
+        </property>
         <property name="columnCount" >
          <number>0</number>
         </property>
@@ -92,6 +104,12 @@
      <layout class="QHBoxLayout" >
       <item>
        <widget class="QTableWidget" name="mappings" >
+        <property name="selectionMode" >
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="selectionBehavior" >
+         <enum>QAbstractItemView::SelectItems</enum>
+        </property>
         <property name="columnCount" >
          <number>0</number>
         </property>

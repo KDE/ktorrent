@@ -21,22 +21,44 @@
 #ifndef KTCAPTURECHECKER_H
 #define KTCAPTURECHECKER_H
 
+#include <QReadWriteLock>
 #include <QHash>
 #include <QString>
 
 namespace kt
 	{
+	
 	struct Variable
 		{
 		QString name;
 		QString min;
 		QString max;
+		
+		bool operator==(const Variable& other)
+			{
+			return name==other.name && min==other.min && max==other.max;
+			}
 		};
 		
-	struct IndexPair
+	enum captureColumns
 		{
-		QString captureName;
-		QString variableName;
+		CAPTURE_NAME,
+		CAPTURE_VALUE
+		};
+	
+	enum variableColumns
+		{
+		VARIABLE_NAME,
+		VARIABLE_MIN,
+		VARIABLE_MAX
+		};
+	
+	enum mappingColumns
+		{
+		MAP_CAPTURE,
+		MAP_VARIABLE,
+		MAP_INDEX,
+		MAP_TEST
 		};
 	
 	class CaptureChecker : public QObject
@@ -51,10 +73,27 @@ namespace kt
 			bool addNewCapture(const QString& name);
 			bool setCaptureValue(const QString& name, const QString& value);
 			
+			bool addNewVariable(const QString& name);
+			
+			void setMappingValue(const QString& captureName, const QString& variableName, int index);
+			
+			//mapping depends upon captures and variables
+			void updateMappings();
+			
+			//write full set from scratch
+			void setCaptures(QHash<QString, QString> value);
+			void setVariables(QList<Variable> value);
+		
+		signals:
+			void capturesChanged(QHash<QString, QString> captures);
+			void variablesChanged(QList<Variable> variables);
+			void mappingsChanged(QHash<QPair<QString, QString>, int>);
+		
 		private:
+			QReadWriteLock lock;
 			QHash<QString, QString> captures;
 			QList<Variable> variables;
-			QHash<IndexPair, int> indexMapping;
+			QHash<QPair<QString, QString>, int> mappings;
 			
 		};
 	
