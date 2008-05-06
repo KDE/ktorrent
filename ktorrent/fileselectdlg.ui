@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>491</width>
-    <height>525</height>
+    <height>572</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -84,6 +84,27 @@
        </property>
        <property name="checked" >
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="QLabel" name="label_2" >
+       <property name="text" >
+        <string>Toplevel directory:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="m_toplevel_directory" >
+       <property name="toolTip" >
+        <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Name of the toplevel directory for multifile torrents. By default the name in the torrent file will be used.&lt;/p>&lt;/body>&lt;/html></string>
        </property>
       </widget>
      </item>
@@ -241,44 +262,18 @@ p, li { white-space: pre-wrap; }
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" >
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="KPushButton" name="m_ok" >
-       <property name="text" >
-        <string>&amp;OK</string>
-       </property>
-       <property name="default" >
-        <bool>true</bool>
-       </property>
-       <property name="stdItem" stdset="0" >
-        <number>1</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="KPushButton" name="m_cancel" >
-       <property name="text" >
-        <string>&amp;Cancel</string>
-       </property>
-       <property name="stdItem" stdset="0" >
-        <number>2</number>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="Line" name="line" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="KDialogButtonBox" name="m_button_box" >
+     <property name="standardButtons" >
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::NoButton|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -302,8 +297,6 @@ p, li { white-space: pre-wrap; }
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>m_ok</tabstop>
-  <tabstop>m_cancel</tabstop>
   <tabstop>m_downloadLocation</tabstop>
   <tabstop>m_cmbGroups</tabstop>
   <tabstop>m_chkUserControlled</tabstop>
@@ -326,12 +319,44 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+     <x>288</x>
+     <y>62</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+     <x>407</x>
+     <y>62</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_button_box</sender>
+   <signal>accepted()</signal>
+   <receiver>FileSelectDlg</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>290</x>
+     <y>553</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>245</x>
+     <y>285</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_button_box</sender>
+   <signal>rejected()</signal>
+   <receiver>FileSelectDlg</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>290</x>
+     <y>553</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>245</x>
+     <y>285</y>
     </hint>
    </hints>
   </connection>

@@ -51,12 +51,6 @@ namespace kt
 		connect(m_select_all,SIGNAL(clicked()),this,SLOT(selectAll()));
 		connect(m_select_none,SIGNAL(clicked()),this,SLOT(selectNone()));
 		connect(m_invert_selection,SIGNAL(clicked()),this,SLOT(invertSelection()));
-		connect(m_ok,SIGNAL(clicked()),this,SLOT(accept()));
-		connect(m_cancel,SIGNAL(clicked()),this,SLOT(reject()));
-		
-
-		m_ok->setGuiItem(KStandardGuiItem::ok());
-		m_cancel->setGuiItem(KStandardGuiItem::cancel());
 		
 		m_downloadLocation->setMode(KFile::File|KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
 		
@@ -133,13 +127,17 @@ namespace kt
 		QString dn = m_downloadLocation->url().path();
 		if (!dn.endsWith(bt::DirSeparator()))
 			dn += bt::DirSeparator();
+		
+		QString tld = m_toplevel_directory->text().trimmed();
+		if (tld.isNull() || tld.length() == 0)
+			tld = tc->getStats().torrent_name;
 
 		for (Uint32 i = 0;i < tc->getNumFiles();i++)
 		{
 			bt::TorrentFileInterface & file = tc->getTorrentFile(i);
 
 			// check for preexisting files
-			QString path = dn + tc->getStats().torrent_name + bt::DirSeparator() + file.getPath();
+			QString path = dn + tld + bt::DirSeparator() + file.getPath();
 			if (bt::Exists(path))
 				file.setPreExisting(true);
 
@@ -182,7 +180,9 @@ namespace kt
 		if (!ddir.endsWith(bt::DirSeparator()))
 			ddir += bt::DirSeparator();
 
-		if (dn != ddir)
+		if (tc->getStats().multi_file_torrent && tld != tc->getStats().torrent_name)
+			tc->changeOutputDir(dn + tld,bt::TorrentInterface::FULL_PATH);
+		else if (dn != ddir)
 			tc->changeOutputDir(dn, 0);
 
 		//Make it user controlled if needed
@@ -234,6 +234,9 @@ namespace kt
 		}
 		
 		m_downloadLocation->setUrl(dir);
+		m_toplevel_directory->setEnabled(tc->getStats().multi_file_torrent);
+		if (tc->getStats().multi_file_torrent)
+			m_toplevel_directory->setText(tc->getStats().torrent_name);
 		loadGroups();
 	}
 
