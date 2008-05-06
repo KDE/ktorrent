@@ -18,12 +18,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "peerviewmodel.h"
 #include <klocale.h>
 #include <kicon.h>
 #include <kstandarddirs.h>
 #include <interfaces/torrentinterface.h>
 #include <util/functions.h>
-#include "peerviewmodel.h"
 #include "flagdb.h"
 
 #ifdef USE_SYSTEM_GEOIP

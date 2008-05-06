@@ -18,11 +18,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "webseedsmodel.h"
 #include <klocale.h>
 #include <interfaces/webseedinterface.h>
 #include <interfaces/torrentinterface.h>
 #include <util/functions.h>
-#include "webseedsmodel.h"
 
 using namespace bt;
 

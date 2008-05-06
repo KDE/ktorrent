@@ -18,11 +18,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "webseedstab.h"
 #include <QHeaderView>
 #include <kmessagebox.h>
 #include <interfaces/torrentinterface.h>
 #include <interfaces/webseedinterface.h>
-#include "webseedstab.h"
 #include "webseedsmodel.h"
 
 using namespace bt;
@@ -89,7 +89,7 @@ namespace kt
 			}
 			else
 			{
-				KMessageBox::error(this,i18n("Cannot add the webseed %1, it is already part of the list of webseeds."));
+				KMessageBox::error(this,i18n("Cannot add the webseed %1, it is already part of the list of webseeds.", url.prettyUrl()));
 			}
 		}
 	}
@@ -107,7 +107,7 @@ namespace kt
 			if (ws && ws->isUserCreated())
 			{
 				if (!curr_tc->removeWebSeed(ws->getUrl()))
-					KMessageBox::error(this,i18n("Cannot remove webseed %s, it is part of the torrent.",ws->getUrl().prettyUrl()));
+					KMessageBox::error(this,i18n("Cannot remove webseed %1, it is part of the torrent.", ws->getUrl().prettyUrl()));
 			}
 		}
 		
