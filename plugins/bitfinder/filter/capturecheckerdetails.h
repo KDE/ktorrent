@@ -50,6 +50,12 @@ namespace kt
 			void removeCapture();
 			void addNewVariable();
 			void removeVariable();
+			void moveVariableUp();
+			void moveVariableDown();
+			
+			//use these slots to update the availability of various actions
+			void captureSelectionChanged();
+			void variableSelectionChanged();
 			
 			//slots to update the various capture settings in the gui
 			void verifyMappingInput(int row, int cell);

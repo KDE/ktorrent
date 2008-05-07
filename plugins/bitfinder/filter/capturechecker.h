@@ -80,6 +80,8 @@ namespace kt
 			
 			bool addNewVariable(const QString& name);
 			void removeVariable(const QString& name);
+			void moveVariableUp(int pos);
+			void moveVariableDown(int pos);
 			
 			void setMappingValue(const QString& captureName, const QString& variableName, int index);
 			

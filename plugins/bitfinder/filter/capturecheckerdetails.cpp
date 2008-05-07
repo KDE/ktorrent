@@ -42,6 +42,7 @@ namespace kt
 		capturesToolbar->setIconDimensions(16);
 		captureAdd = new KAction(KIcon("list-add"),i18n("Add Capture"),this);
 		captureRemove = new KAction(KIcon("list-remove"),i18n("Remove Capture"),this);
+		captureRemove->setEnabled(false);
 		capturesToolbar->addAction(captureAdd);
 		capturesToolbar->addAction(captureRemove);
 		connect(captureAdd, SIGNAL(triggered( bool )), this, SLOT(addNewCapture()));
@@ -53,14 +54,19 @@ namespace kt
 		variablesToolbar->setIconDimensions(16);
 		variableAdd = new KAction(KIcon("list-add"),i18n("Add Variable"),this);
 		variableRemove = new KAction(KIcon("list-remove"),i18n("Remove Variable"),this);
+		variableRemove->setEnabled(false);
 		variableUp = new KAction(KIcon("arrow-up"), i18n("Move Variable Up"), this);
+		variableUp->setEnabled(false);
 		variableDown = new KAction(KIcon("arrow-down"), i18n("Move Variable Down"), this);
+		variableDown->setEnabled(false);
 		variablesToolbar->addAction(variableAdd);
 		variablesToolbar->addAction(variableRemove);
 		variablesToolbar->addAction(variableUp);
 		variablesToolbar->addAction(variableDown);
 		connect(variableAdd, SIGNAL(triggered( bool )), this, SLOT(addNewVariable()));
 		connect(variableRemove, SIGNAL(triggered( bool )), this, SLOT(removeVariable()));
+		connect(variableUp, SIGNAL(triggered( bool )), this, SLOT(moveVariableUp()));
+		connect(variableDown, SIGNAL(triggered( bool )), this, SLOT(moveVariableDown()));
 		
 		//captures
 		captures->setColumnCount(2);
@@ -69,6 +75,7 @@ namespace kt
 		captures->setHorizontalHeaderLabels(captureHeaders);
 		connect(captures, SIGNAL(cellChanged(int, int)), this, SLOT(emitCaptures()));
 		captures->verticalHeader()->hide();
+		connect(captures, SIGNAL(itemSelectionChanged()), this, SLOT(captureSelectionChanged()));
 		
 		//variables
 		variables->setColumnCount(3);
@@ -77,6 +84,7 @@ namespace kt
 		variables->setHorizontalHeaderLabels(variableHeaders);
 		connect(variables, SIGNAL(cellChanged(int, int)), this, SLOT(emitVariables()));
 		variables->verticalHeader()->hide();
+		connect(variables, SIGNAL(itemSelectionChanged()), this, SLOT(variableSelectionChanged()));
 		
 		//mappings
 		mappings->setColumnCount(4);
@@ -184,6 +192,60 @@ namespace kt
 		setVariables(captureChecker->getVariables());
 		}
 	
+	void CaptureCheckerDetails::moveVariableUp()
+		{
+		disconnect(captureChecker);
+		
+		QList<QTableWidgetItem *> items = variables->selectedItems();
+		
+		if (!items.count())
+			return;
+		
+		captureChecker->moveVariableUp(items.at(0)->row());
+		
+		connectCaptureChecker(captureChecker);
+		setVariables(captureChecker->getVariables());
+		}
+		
+	void CaptureCheckerDetails::moveVariableDown()
+		{
+		disconnect(captureChecker);
+		
+		QList<QTableWidgetItem *> items = variables->selectedItems();
+		
+		if (!items.count())
+			return;
+		
+		captureChecker->moveVariableDown(items.at(0)->row());
+		
+		connectCaptureChecker(captureChecker);
+		setVariables(captureChecker->getVariables());
+		}
+	
+	void CaptureCheckerDetails::captureSelectionChanged()
+		{
+		captureRemove->setEnabled(captures->selectedItems().count());
+		}
+		
+	void CaptureCheckerDetails::variableSelectionChanged()
+		{
+		bool varSel = variables->selectedItems().count();
+		variableRemove->setEnabled(varSel);
+		
+		if (!varSel)
+			{
+			variableUp->setEnabled(false);
+			variableDown->setEnabled(false);
+			return;
+			}
+		
+		//at the top it can't shift up at the bottom it can't shift down
+		variableUp->setEnabled(variables->selectedItems().at(0)->row() != 0);
+		variableDown->setEnabled(variables->selectedItems().at(0)->row() != variables->rowCount()-1);
+		
+		}
+	
+	
 	void CaptureCheckerDetails::verifyMappingInput(int row, int column)
 		{
 		if (column != MAP_INDEX)
@@ -226,6 +288,14 @@ namespace kt
 	void CaptureCheckerDetails::setVariables(QList<Variable> value)
 		{
 		disconnect(variables, SIGNAL(cellChanged(int, int)), this, SLOT(emitVariables()));
+		QString selectedVariable;
+		int selectRow = -1;
+		
+		if (variables->selectedItems().count())
+			{
+			selectedVariable = variables->item(variables->selectedItems().at(0)->row(), VARIABLE_NAME)->text();
+			}
+		
 		variables->clearContents();
 		variables->setRowCount(value.count());
 		
@@ -233,6 +303,11 @@ namespace kt
 		
 		for (int i=0; i<value.count(); i++)
 			{
+			if (value.at(i).name == selectedVariable)
+				{
+				selectRow = i;
+				}
+			
 			newItem = new QTableWidgetItem(value.at(i).name);
 			variables->setItem(i, VARIABLE_NAME, newItem);
 			
@@ -242,6 +317,12 @@ namespace kt
 			newItem = new QTableWidgetItem(value.at(i).max);
 			variables->setItem(i, VARIABLE_MAX, newItem);
 			}
+		
+		if (selectRow >=0)
+			{
+			variables->selectRow(selectRow);
+			}
+		
 		connect(variables, SIGNAL(cellChanged(int, int)), this, SLOT(emitVariables()));
 		}
 		

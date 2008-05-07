@@ -110,6 +110,32 @@ namespace kt
 		emit variablesChanged(variables);
 		}
 	
+	void CaptureChecker::moveVariableUp(int pos)
+		{
+		QWriteLocker writeLock(&lock);
+		
+		if (pos == 0)
+			return;
+		
+		Variable shiftMe = variables.takeAt(pos);
+		variables.insert(pos - 1, shiftMe);
+		
+		emit variablesChanged(variables);
+		}
+		
+	void CaptureChecker::moveVariableDown(int pos)
+		{
+		QWriteLocker writeLock(&lock);
+		
+		if (pos == variables.count()-1)
+			return;
+		
+		Variable shiftMe = variables.takeAt(pos);
+		variables.insert(pos + 1, shiftMe);
+		
+		emit variablesChanged(variables);
+		}
+	
 	void CaptureChecker::setMappingValue(const QString& captureName, const QString& variableName, int index)
 		{
 		QWriteLocker writeLock(&lock);
