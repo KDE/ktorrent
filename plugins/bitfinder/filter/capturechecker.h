@@ -70,8 +70,8 @@ namespace kt
 			CaptureChecker(QObject * parent = 0);
 			~CaptureChecker() {}
 			
-			QMap<QString, QString> getCaptures();
-			QList<Variable> getVariables();
+			QMap<QString, QString> getCaptures() const;
+			QList<Variable> getVariables() const;
 		
 		public slots:
 			bool addNewCapture(const QString& name);
@@ -98,7 +98,7 @@ namespace kt
 			void mappingsChanged(QMap<QPair<QString, QString>, int>);
 		
 		private:
-			QReadWriteLock lock;
+			mutable QReadWriteLock lock;
 			QMap<QString, QString> captures;
 			QList<Variable> variables;
 			QMap<QPair<QString, QString>, int> mappings;

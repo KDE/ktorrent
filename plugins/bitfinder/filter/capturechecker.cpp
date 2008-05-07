@@ -32,14 +32,14 @@ namespace kt
 		connect(this, SIGNAL(capturesChanged(QMap< QString, QString >)), this, SLOT(updateMappings()));
 		}
 	
-	QMap<QString, QString> CaptureChecker::getCaptures()
+	QMap<QString, QString> CaptureChecker::getCaptures() const
 		{
 		QReadLocker readLock(&lock);
 		
 		return captures;
 		}
 	
-	QList<Variable> CaptureChecker::getVariables()
+	QList<Variable> CaptureChecker::getVariables() const
 		{
 		QReadLocker readLock(&lock);
 		

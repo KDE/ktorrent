@@ -39,16 +39,16 @@ namespace kt
 		Filter();
 		~Filter();
 		
-		QString getName();
-		QString getIconName();
-		int getType();
-		QString getGroup();
-		QStringList getExpressions();
-		int getSourceListType();
-		QStringList getSourceList();
-		int getMultiMatch();
-		int getRerelease();
-		CaptureChecker* getCaptureChecker();
+		QString getName() const;
+		QString getIconName() const;
+		int getType() const;
+		QString getGroup() const;
+		QStringList getExpressions() const;
+		int getSourceListType() const;
+		QStringList getSourceList() const;
+		int getMultiMatch() const;
+		int getRerelease() const;
+		CaptureChecker* getCaptureChecker() const;
 		
 	public slots:
 		void setName(const QString& value);
@@ -75,7 +75,7 @@ namespace kt
 		virtual void run();
 	
 	private:
-		QReadWriteLock lock;
+		mutable QReadWriteLock lock;
 		QString name;
 		int type;
 		QString group;

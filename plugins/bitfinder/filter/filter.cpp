@@ -50,61 +50,61 @@ namespace kt
 		
 		}
 
-	QString Filter::getName()
+	QString Filter::getName() const
 		{
 		QReadLocker readLock(&lock);
 		return name;
 		}
 	
-	QString Filter::getIconName()
+	QString Filter::getIconName() const
 		{
 		QReadLocker readLock(&lock);
 		return type ? "news-unsubscribe" : "news-subscribe";
 		}
 		
-	int Filter::getType()
+	int Filter::getType() const
 		{
 		QReadLocker readLock(&lock);
 		return type;
 		}
 	
-	QString Filter::getGroup()
+	QString Filter::getGroup() const
 		{
 		QReadLocker readLock(&lock);
 		return group;
 		}
 	
-	QStringList Filter::getExpressions()
+	QStringList Filter::getExpressions() const
 		{
 		QReadLocker readLock(&lock);
 		return expressions;
 		}
 	
-	int Filter::getSourceListType()
+	int Filter::getSourceListType() const
 		{
 		QReadLocker readLock(&lock);
 		return sourceListType;
 		}
 	
-	QStringList Filter::getSourceList()
+	QStringList Filter::getSourceList() const
 		{
 		QReadLocker readLock(&lock);
 		return sourceList;
 		}
 	
-	int Filter::getMultiMatch()
+	int Filter::getMultiMatch() const
 		{
 		QReadLocker readLock(&lock);
 		return multiMatch;
 		}
 	
-	int Filter::getRerelease()
+	int Filter::getRerelease() const
 		{
 		QReadLocker readLock(&lock);
 		return rerelease;
 		}
 	
-	CaptureChecker* Filter::getCaptureChecker()
+	CaptureChecker* Filter::getCaptureChecker() const
 		{
 		QReadLocker readLock(&lock);
 		return captureChecker;
