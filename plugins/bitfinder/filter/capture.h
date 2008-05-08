@@ -36,6 +36,7 @@ namespace kt
 		public:
 			Capture(QObject * parent = 0);
 			Capture(const Capture& other);
+			Capture& operator=(const Capture& other);
 			~Capture() {}
 			
 			bool meetsMin(const Capture& min) const;

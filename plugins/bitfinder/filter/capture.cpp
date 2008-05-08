@@ -21,7 +21,11 @@
 #include <QReadLocker>
 #include <QWriteLocker>
 
+#include <util/log.h>
+
 #include "capture.h"
+
+using namespace bt;
 
 namespace kt
 	{
@@ -38,6 +42,14 @@ namespace kt
 		variables = other.getVariables();
 		}
 	
+	Capture& Capture::operator=(const Capture& other)
+		{
+		QWriteLocker writeLock(&lock);
+		
+		variables = other.getVariables();
+		
+		return *this;
+		}
 	
 	bool Capture::meetsMin(const Capture& min) const
 		{

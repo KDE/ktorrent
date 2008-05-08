@@ -51,6 +51,34 @@ namespace kt
 		return variables;
 		}
 	
+	Capture CaptureChecker::getMinCapture() const
+		{
+		QReadLocker readLock(&lock);
+		
+		Capture value;
+		
+		for (int i=0; i<variables.count(); i++)
+			{
+			value.addVariable(variables.at(i).name, variables.at(i).min);
+			}
+		
+		return value;
+		}
+		
+	Capture CaptureChecker::getMaxCapture() const
+		{
+		QReadLocker readLock(&lock);
+		
+		Capture value;
+		
+		for (int i=0; i<variables.count(); i++)
+			{
+			value.addVariable(variables.at(i).name, variables.at(i).max);
+			}
+		
+		return value;
+		}
+
 	Capture CaptureChecker::findCapture(QString sourceString, QString capture) const
 		{
 		QReadLocker readLock(&lock);
@@ -101,11 +129,17 @@ namespace kt
 				value.addVariable(curPair.second, curCap.cap(mappings.value(curPair)));
 				}
 			
-			return value;
+			if (value.meetsMin(getMinCapture()) && value.meetsMax(getMaxCapture()))
+				{
+				//we've got the values and met the limits
+				return value;
+				}
+			
+			i++;
 			}
 		
 		//we didn't get any matches if we made it this far - so here's an empty capture
-		return value;
+		return Capture();
 		}
 	
 	bool CaptureChecker::addNewCapture(const QString& name)

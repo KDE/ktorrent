@@ -37,6 +37,15 @@ namespace kt
 		QString min;
 		QString max;
 		
+		Variable& operator=(const Variable& other)
+			{
+			name = other.name;
+			min = other.min;
+			max = other.max;
+			
+			return *this;
+			}
+		
 		bool operator==(const Variable& other)
 			{
 			return name==other.name && min==other.min && max==other.max;
@@ -54,6 +63,8 @@ namespace kt
 			QMap<QString, QString> getCaptures() const;
 			QList<Variable> getVariables() const;
 			
+			Capture getMinCapture() const;
+			Capture getMaxCapture() const;
 			Capture findCapture(QString sourceString, QString capture = QString()) const;
 		
 		public slots:

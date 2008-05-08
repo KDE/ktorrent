@@ -131,6 +131,9 @@ namespace kt
 		connect(value, SIGNAL(variablesChanged(QList< Variable >)),
 				this, SLOT(setVariables(QList< Variable >)));
 				
+		connect(this, SIGNAL(variablesChanged(QList< Variable >)),
+				value, SLOT(setVariables(QList< Variable >)));
+				
 		connect(value, SIGNAL(mappingsChanged(QMap< QPair < QString , QString >, int >)),
 				this, SLOT(setMappings(QMap< QPair < QString , QString >, int >)));
 		}
@@ -364,18 +367,19 @@ namespace kt
 			i++;
 			}
 		
-		updateMappingTest();
-		
 		connect(mappings, SIGNAL(cellChanged(int, int)), this, SLOT(verifyMappingInput(int, int)));
+		
+		updateMappingTest();
 		}
 	
 	void CaptureCheckerDetails::updateMappingTest()
 		{
+		disconnect(mappings, SIGNAL(cellChanged(int, int)), this, SLOT(verifyMappingInput(int, int)));
+
 		//first clear the text on them all
-		
 		for (int i=0; i<mappings->rowCount(); i++)
 			{
-			mappings->item(i, MAP_TEST)->setText("No Capture");
+			mappings->item(i, MAP_TEST)->setText("");
 			}
 		
 		//if there's no test string we can skip doing anything
@@ -403,6 +407,7 @@ namespace kt
 			
 			}
 			
+		connect(mappings, SIGNAL(cellChanged(int, int)), this, SLOT(verifyMappingInput(int, int)));
 		}
 	
 	void CaptureCheckerDetails::emitCaptures()
@@ -422,11 +427,13 @@ namespace kt
 		QList<Variable> value;
 		
 		Variable curVar;
-		for (int i=0; i<captures->rowCount(); i++)
+		for (int i=0; i<variables->rowCount(); i++)
 			{
 			curVar.name = variables->item(i, VARIABLE_NAME)->text();
 			curVar.min = variables->item(i, VARIABLE_MIN)->text();
 			curVar.max = variables->item(i, VARIABLE_MAX)->text();
+			
+			value.append(curVar);
 			}
 		
 		emit variablesChanged(value);
