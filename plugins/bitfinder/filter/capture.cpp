@@ -31,6 +31,14 @@ namespace kt
 		
 		}
 	
+	Capture::Capture(const Capture& other)
+		{
+		QWriteLocker writeLock(&lock);
+		
+		variables = other.getVariables();
+		}
+	
+	
 	bool Capture::meetsMin(const Capture& min) const
 		{
 		QReadLocker readLock(&lock);
@@ -247,6 +255,13 @@ namespace kt
 		return true;
 		}
 	
+	bool Capture::isEmpty() const
+		{
+		QReadLocker readLock(&lock);
+		
+		return variables.isEmpty();
+		}
+	
 	QPair<QString,QString> Capture::getVariable(int index) const
 		{
 		QReadLocker readLock(&lock);
@@ -255,6 +270,26 @@ namespace kt
 			return QPair<QString,QString>();
 		
 		return variables.at(index);
+		}
+	
+	QString Capture::getValue(QString varName) const
+		{
+		QReadLocker readLock(&lock);
+		
+		for (int i=0; i<variables.count(); i++)
+			{
+			if (variables.at(i).first == varName)
+				return variables.at(i).second;
+			}
+		
+		return QString();
+		}
+	
+	QList< QPair<QString,QString> > Capture::getVariables() const
+		{
+		QReadLocker readLock(&lock);
+		
+		return variables;
 		}
 	
 	int Capture::varCount() const

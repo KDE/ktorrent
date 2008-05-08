@@ -20,8 +20,13 @@
 
 #include "capturechecker.h"
 
+#include <QRegExp>
 #include <QReadLocker>
 #include <QWriteLocker>
+#include <QStringList>
+
+#include <util/log.h>
+using namespace bt;
 
 namespace kt
 	{
@@ -46,40 +51,104 @@ namespace kt
 		return variables;
 		}
 	
+	Capture CaptureChecker::findCapture(QString sourceString, QString capture) const
+		{
+		QReadLocker readLock(&lock);
+		
+		Capture value;
+		QStringList captureList;
+		
+		if (capture.isEmpty())
+			{
+			captureList = captures.keys();
+			}
+		else
+			{
+			captureList.append(capture);
+			}
+		
+		//run through the list to find a capture
+		QMap<QString, QString>::const_iterator i = captures.constBegin();
+		QRegExp curCap;
+		curCap.setCaseSensitivity(Qt::CaseInsensitive);
+		QPair<QString, QString> curPair;
+		
+		while ( i != captures.constEnd() )
+			{
+			if (!captureList.contains(i.key()))
+				{
+				//this one isn't in the list - so ignore it.
+				i++;
+				continue;
+				}
+			
+			curCap.setPattern(i.value());
+			
+			if (curCap.indexIn(sourceString) == -1)
+				{
+				//no match on this capture so move onto the next capture
+				i++;
+				continue;
+				}
+			
+			for (int j=0; j<variables.count(); j++)
+				{
+				int curIndex = 0;
+				
+				curPair.first = i.key();
+				curPair.second = variables.at(j).name;
+				
+				value.addVariable(curPair.second, curCap.cap(mappings.value(curPair)));
+				}
+			
+			return value;
+			}
+		
+		//we didn't get any matches if we made it this far - so here's an empty capture
+		return value;
+		}
+	
 	bool CaptureChecker::addNewCapture(const QString& name)
 		{
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 
 		if (captures.contains(name))
 			return false;
 		
 		captures.insert(name, QString(""));
+		} //writeLock is out of scope - huzzah
 		emit capturesChanged(captures);
 		return true;
 		}
 	
 	bool CaptureChecker::setCaptureValue(const QString& name, const QString& value)
 		{
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 
 		if (!captures.contains(name))
 			return false;
 		
 		captures.insert(name, value);
+		} //writeLock is out of scope - huzzah
 		emit capturesChanged(captures);
 		return true;
 		}
 	
 	void CaptureChecker::removeCapture(const QString& name)
 		{
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 		
 		captures.remove(name);
+		} //writeLock is out of scope - huzzah
 		emit capturesChanged(captures);
 		}
 	
 	bool CaptureChecker::addNewVariable(const QString& name)
 		{
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 
 		for (int i=0; i<variables.count(); i++)
@@ -93,12 +162,14 @@ namespace kt
 		
 		variables.append(newVar);
 		
+		} //writeLock is out of scope - huzzah
 		emit variablesChanged(variables);
 		return true;
 		}
 	
 	void CaptureChecker::removeVariable(const QString& name)
 		{
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 		
 		for (int i=variables.count()-1; i>=0; i--)
@@ -106,12 +177,13 @@ namespace kt
 			if (variables.at(i).name == name)
 				variables.removeAt(i);
 			}
-		
+		}//writeLock is out of scope - huzzah
 		emit variablesChanged(variables);
 		}
 	
 	void CaptureChecker::moveVariableUp(int pos)
 		{
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 		
 		if (pos == 0)
@@ -120,11 +192,13 @@ namespace kt
 		Variable shiftMe = variables.takeAt(pos);
 		variables.insert(pos - 1, shiftMe);
 		
+		}//writeLock is out of scope - huzzah
 		emit variablesChanged(variables);
 		}
 		
 	void CaptureChecker::moveVariableDown(int pos)
 		{
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 		
 		if (pos == variables.count()-1)
@@ -133,11 +207,13 @@ namespace kt
 		Variable shiftMe = variables.takeAt(pos);
 		variables.insert(pos + 1, shiftMe);
 		
+		}//writeLock is out of scope - huzzah
 		emit variablesChanged(variables);
 		}
 	
 	void CaptureChecker::setMappingValue(const QString& captureName, const QString& variableName, int index)
 		{
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 		
 		QPair<QString, QString> curPair;
@@ -146,14 +222,19 @@ namespace kt
 		
 		if (!mappings.contains(curPair))
 			return;
-			
+		
+		if (mappings.value(curPair) == index)
+			return;
+		
 		mappings.insert(curPair, index);
 		
+		}//writeLock is out of scope - huzzah
 		emit mappingsChanged(mappings);
 		}
 	
 	void CaptureChecker::updateMappings()
 		{
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 		
 		QMap<QPair<QString, QString>, int> value;
@@ -183,11 +264,13 @@ namespace kt
 			}
 		
 		mappings = value;
+		}//writeLock is out of scope - huzzah
 		emit mappingsChanged(mappings);
 		}
 	
 	void CaptureChecker::setCaptures(QMap<QString, QString> value)
 		{
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 		
 		if (captures == value)
@@ -195,11 +278,13 @@ namespace kt
 		
 		captures=value;
 		
+		}//writeLock is out of scope - huzzah
 		emit capturesChanged(captures);
 		}
 	
 	void CaptureChecker::setVariables(QList<Variable> value)
 		{
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 		
 		if (variables == value)
@@ -207,6 +292,7 @@ namespace kt
 		
 		variables=value;
 		
+		}//writeLock is out of scope - huzzah
 		emit variablesChanged(variables);
 		}
 	

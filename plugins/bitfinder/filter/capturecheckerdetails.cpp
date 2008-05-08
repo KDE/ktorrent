@@ -245,6 +245,12 @@ namespace kt
 		
 		}
 	
+	void CaptureCheckerDetails::setTestString(const QString& value)
+		{
+		testString = value;
+		
+		updateMappingTest();
+		}
 	
 	void CaptureCheckerDetails::verifyMappingInput(int row, int column)
 		{
@@ -357,8 +363,46 @@ namespace kt
 			curRow++;
 			i++;
 			}
-			
+		
+		updateMappingTest();
+		
 		connect(mappings, SIGNAL(cellChanged(int, int)), this, SLOT(verifyMappingInput(int, int)));
+		}
+	
+	void CaptureCheckerDetails::updateMappingTest()
+		{
+		//first clear the text on them all
+		
+		for (int i=0; i<mappings->rowCount(); i++)
+			{
+			mappings->item(i, MAP_TEST)->setText("No Capture");
+			}
+		
+		//if there's no test string we can skip doing anything
+		if (testString.isEmpty())
+			return;
+		
+		QStringList captureList = captureChecker->getCaptures().keys();
+		for (int i=0; i<captureList.count(); i++)
+			{
+			//first run through each of the captures getting their variable values
+			Capture curCap = captureChecker->findCapture(testString, captureList.at(i));
+			
+			if (curCap.isEmpty())
+				continue;
+				
+			for (int j=0; j<mappings->rowCount(); j++)
+				{
+				//go through each row on the mapping
+				//if we're not looking at the current capture - skip it and move on to the next row
+				if (mappings->item(j, MAP_CAPTURE)->text() != captureList.at(i))
+					continue;
+				
+				mappings->item(j, MAP_TEST)->setText(curCap.getValue(mappings->item(j, MAP_VARIABLE)->text()));
+				}
+			
+			}
+			
 		}
 	
 	void CaptureCheckerDetails::emitCaptures()

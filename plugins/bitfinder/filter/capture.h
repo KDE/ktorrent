@@ -35,13 +35,17 @@ namespace kt
 		
 		public:
 			Capture(QObject * parent = 0);
+			Capture(const Capture& other);
 			~Capture() {}
 			
 			bool meetsMin(const Capture& min) const;
 			bool meetsMax(const Capture& max) const;
 			bool isEqual(const Capture& other) const;
+			bool isEmpty() const;
 			
 			QPair<QString,QString> getVariable(int index) const;
+			QString getValue(QString varName) const;
+			QList< QPair<QString,QString> > getVariables() const;
 			int varCount() const;
 		
 		public slots:

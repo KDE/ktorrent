@@ -32,6 +32,27 @@
 namespace kt
 	{
 	
+	enum captureColumns
+		{
+		CAPTURE_NAME,
+		CAPTURE_VALUE
+		};
+	
+	enum variableColumns
+		{
+		VARIABLE_NAME,
+		VARIABLE_MIN,
+		VARIABLE_MAX
+		};
+	
+	enum mappingColumns
+		{
+		MAP_CAPTURE,
+		MAP_VARIABLE,
+		MAP_INDEX,
+		MAP_TEST
+		};
+	
 	class CaptureCheckerDetails : public QWidget, private Ui::CaptureCheckerDetailsWidget
 		{
 			Q_OBJECT
@@ -57,11 +78,15 @@ namespace kt
 			void captureSelectionChanged();
 			void variableSelectionChanged();
 			
+			//slot to keep a local copy of the test String
+			void setTestString(const QString& value);
+			
 			//slots to update the various capture settings in the gui
 			void verifyMappingInput(int row, int cell);
 			void setCaptures(QMap<QString, QString> value);
 			void setVariables(QList<Variable> value);
 			void setMappings(QMap<QPair<QString,QString>, int> value);
+			void updateMappingTest();
 			
 			//slot to emit changes back to the CaptureChecker
 			void emitCaptures();
@@ -73,6 +98,7 @@ namespace kt
 		
 		private:
 			CaptureChecker* captureChecker;
+			QString testString;
 			
 			KAction* captureAdd;
 			KAction* captureRemove;

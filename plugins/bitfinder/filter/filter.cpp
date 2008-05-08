@@ -112,95 +112,123 @@ namespace kt
 	
 	void Filter::setName(const QString& value)
 		{
+		bool newValue;
+		
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 		
-		bool newValue = name != value;
+		newValue = name != value;
 		
 		name = value;
-		
+		}//writeLock is out of scope now :)
 		if (newValue)
 			emit nameChanged(name);
 		}
 		
 	void Filter::setType(int value)
 		{
+		bool newValue;
+		
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 		
-		bool newValue = type != value;
+		newValue = type != value;
 		
 		type = value;
 		
+		}//writeLock is out of scope now :)
 		if (newValue)
 			emit typeChanged(type);
 		}
 		
 	void Filter::setGroup(const QString& value)
 		{
+		bool newValue;
+		
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 		
-		bool newValue = group != value;
+		newValue = group != value;
 		group = value;
 		
+		}//writeLock is out of scope now :)
 		if (newValue)
 			emit groupChanged(group);
 		}
 	
 	void Filter::setExpressions(QStringList value)
 		{
+		bool newValue;
+		
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 		
-		bool newValue = expressions != value;
+		newValue = expressions != value;
 		
 		expressions = value;
 		
+		}//writeLock is out of scope now :)
 		if (newValue)
 			emit expressionsChanged(expressions);
 		}
 	
 	void Filter::setSourceListType(int value)
 		{
+		bool newValue;
+		
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 		
-		bool newValue = sourceListType != value;
+		newValue = sourceListType != value;
 		
 		sourceListType = value;
 		
+		}//writeLock is out of scope now :)
 		if (newValue)
 			emit sourceListTypeChanged(sourceListType);
 		}
 	
 	void Filter::setSourceList(QStringList value)
 		{
+		bool newValue;
+		
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 		
-		bool newValue = sourceList != value;
+		newValue = sourceList != value;
 		
 		sourceList = value;
 		
+		}//writeLock is out of scope now :)
 		if (newValue)
 			emit sourceListChanged(sourceList);
 		}
 	
 	void Filter::setMultiMatch(int value)
 		{
+		bool newValue;
+		
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
 		
-		bool newValue = multiMatch != value;
-		
+		newValue = multiMatch != value;
 		multiMatch = value;
 		
+		}//writeLock is out of scope now :)
 		if (newValue)
 			emit multiMatchChanged(multiMatch);
 		}
 		
 	void Filter::setRerelease(int value)
 		{
+		bool newValue;
+		
+		{//limit the scope of the writeLock
 		QWriteLocker writeLock(&lock);
-		
-		bool newValue = rerelease != value;
-		
+		newValue = rerelease != value;
 		rerelease = value;
 		
+		}//writeLock is out of scope now :)
 		if (newValue)
 			emit rereleaseChanged(rerelease);
 		}

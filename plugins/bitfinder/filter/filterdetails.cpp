@@ -172,6 +172,7 @@ namespace kt
 		setMultiMatch(value->getMultiMatch());
 		setRerelease(value->getRerelease());
 		captureChecker->setCaptureChecker(value->getCaptureChecker());
+		connect(testString, SIGNAL(textChanged( const QString& )), captureChecker, SLOT(setTestString(const QString&)));
 		}
 		
 	void FilterDetails::setFilter(Filter * value)

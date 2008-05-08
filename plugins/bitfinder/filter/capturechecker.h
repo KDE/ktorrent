@@ -26,6 +26,8 @@
 #include <QString>
 #include <QPair>
 
+#include "capture.h"
+
 namespace kt
 	{
 	
@@ -41,27 +43,6 @@ namespace kt
 			}
 		};
 		
-	enum captureColumns
-		{
-		CAPTURE_NAME,
-		CAPTURE_VALUE
-		};
-	
-	enum variableColumns
-		{
-		VARIABLE_NAME,
-		VARIABLE_MIN,
-		VARIABLE_MAX
-		};
-	
-	enum mappingColumns
-		{
-		MAP_CAPTURE,
-		MAP_VARIABLE,
-		MAP_INDEX,
-		MAP_TEST
-		};
-	
 	class CaptureChecker : public QObject
 		{
 		Q_OBJECT
@@ -72,6 +53,8 @@ namespace kt
 			
 			QMap<QString, QString> getCaptures() const;
 			QList<Variable> getVariables() const;
+			
+			Capture findCapture(QString sourceString, QString capture = QString()) const;
 		
 		public slots:
 			bool addNewCapture(const QString& name);
