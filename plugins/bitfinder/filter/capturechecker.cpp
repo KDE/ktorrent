@@ -83,7 +83,6 @@ namespace kt
 		{
 		QReadLocker readLock(&lock);
 		
-		Capture value;
 		QStringList captureList;
 		
 		if (capture.isEmpty())
@@ -119,10 +118,10 @@ namespace kt
 				continue;
 				}
 			
+			Capture value;
+			
 			for (int j=0; j<variables.count(); j++)
 				{
-				int curIndex = 0;
-				
 				curPair.first = i.key();
 				curPair.second = variables.at(j).name;
 				
