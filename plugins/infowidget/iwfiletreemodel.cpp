@@ -147,7 +147,7 @@ namespace kt
 				case 4: 
 				{
 					float percent = file->getDownloadPercentage();
-					return ki18n("%1 %").subs(percent, 0, 'g', 2).toString();
+					return ki18n("%1 %").subs(percent, 0, 'f', 2).toString();
 				}
 				default: return QVariant();
 			}	
@@ -170,7 +170,7 @@ namespace kt
 				case 4: 
 				{
 					double percent = bt::Percentage(tc->getStats());
-					return ki18n("%1 %").subs(percent, 0, 'g', 2).toString();
+					return ki18n("%1 %").subs(percent, 0, 'f', 2).toString();
 				}
 				default: return QVariant();
 			}
