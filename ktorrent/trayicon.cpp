@@ -67,6 +67,8 @@ namespace kt
 				this,SLOT(canNotStart(bt::TorrentInterface*, bt::TorrentStartResponse)));
 		connect(m_core, SIGNAL(lowDiskSpace(bt::TorrentInterface*, bool)),
 				this, SLOT(lowDiskSpace(bt::TorrentInterface*, bool)));
+		connect(m_core,SIGNAL(canNotLoadSilently(const QString&)),
+				this,SLOT(cannotLoadTorrentSilently(const QString&)));
 		
 		KMenu* m = new KMenu(0);
 		setContextMenu(m);
@@ -135,7 +137,14 @@ namespace kt
 		p->setPalette(QToolTip::palette());
 		p->setLineWidth(1);
 	}
-
+	
+	void TrayIcon::cannotLoadTorrentSilently(const QString & msg)
+	{
+		if (!Settings::showPopups())
+			return;
+		
+		KNotification::event("CannotLoadSilently",msg,QPixmap(),mwnd);
+	}
 
 	void TrayIcon::finished(bt::TorrentInterface* tc)
 	{

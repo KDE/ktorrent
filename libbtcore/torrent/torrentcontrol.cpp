@@ -525,8 +525,8 @@ namespace bt
 		{
 			delete tor;
 			tor = 0;
-			throw Error(i18n("An error occurred while loading the torrent."
-					" The torrent is probably corrupt or is not a torrent file.\n%1",torrent));
+			throw Error(i18n("An error occurred while loading the torrent <b>%1</b>.<br/>"
+					"The torrent is probably corrupt or is not a torrent file.",torrent));
 		}
 		
 		initInternal(qman,tmpdir,ddir,default_save_dir,torrent.startsWith(tmpdir));
@@ -554,8 +554,8 @@ namespace bt
 		{
 			delete tor;
 			tor = 0;
-			throw Error(i18n("An error occurred while loading the torrent."
-					" The torrent is probably corrupt or is not a torrent file."));
+			throw Error(i18n("An error occurred while loading the torrent.<br/>"
+					"The torrent is probably corrupt or is not a torrent file."));
 		}
 		
 		initInternal(qman,tmpdir,ddir,default_save_dir,true);

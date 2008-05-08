@@ -137,17 +137,17 @@ namespace net
 	
 	bool Socket::bind(const QString & ip,Uint16 port,bool also_listen)
 	{
+		int val = 1;
+		if (setsockopt(m_fd,SOL_SOCKET,SO_REUSEADDR,&val,sizeof(int)) < 0)
+		{
+			Out(SYS_CON|LOG_NOTICE) << QString("Failed to set the reuseaddr option : %1").arg(strerror(errno)) << endl;
+		}
+		
 		net::Address addr(ip,port);
 		if (::bind(m_fd,addr.address(),addr.length()) != 0)
 		{
 			Out(SYS_CON|LOG_IMPORTANT) << QString("Cannot bind to port %1:%2 : %3").arg(ip).arg(port).arg(strerror(errno)) << endl;
 			return false;
-		}
-
-		int val = 1;
-		if (setsockopt(m_fd,SOL_SOCKET,SO_REUSEADDR,&val,sizeof(int)) < 0)
-		{
-			Out(SYS_CON|LOG_NOTICE) << QString("Failed to set the reuseaddr option : %1").arg(strerror(errno)) << endl;
 		}
 
 		if (also_listen && listen(m_fd,5) < 0)

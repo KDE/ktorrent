@@ -252,6 +252,12 @@ namespace kt
 		 * @param tc The torrent in question.
 		 */
 		void lowDiskSpace(bt::TorrentInterface* tc, bool stopped);
+		
+		/**
+		 * Loading silently failed.
+		 * @param msg Error message
+		 */
+		void canNotLoadSilently(const QString & msg);
 
 	private:
 		void rollback(const QList<bt::TorrentInterface*> & success);

@@ -268,7 +268,13 @@ namespace kt
 		}
 		catch (bt::Error & err)
 		{
-			gui->errorMsg(err.toString());
+			if (!silently)
+				gui->errorMsg(err.toString());
+			else
+				canNotLoadSilently(err.toString());
+			
+			bt::Out(SYS_GEN|LOG_IMPORTANT) << err.toString() << endl;
+			
 			delete tc;
 			tc = 0;
 			// delete tdir if necesarry
@@ -298,7 +304,13 @@ namespace kt
 		}
 		catch (bt::Error & err)
 		{
-			gui->errorMsg(err.toString());
+			if (!silently)
+				gui->errorMsg(err.toString());
+			else
+				canNotLoadSilently(err.toString());
+			
+			bt::Out(SYS_GEN|LOG_IMPORTANT) << err.toString() << endl;
+			
 			delete tc;
 			tc = 0;
 			// delete tdir if necesarry

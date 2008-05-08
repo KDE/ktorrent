@@ -34,3 +34,7 @@ Action=Sound|Popup
 Name=Torrent cannot be started
 Action=Sound|Popup
 
+[Event/CannotLoadSilently]
+Name=Torrent cannot be loaded silently
+Action=Sound|Popup
+

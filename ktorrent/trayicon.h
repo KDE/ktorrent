@@ -111,6 +111,12 @@ namespace kt
 		///Shows passive popup message
 		void lowDiskSpace(bt::TorrentInterface* tc, bool stopped);
 		
+		/**
+		 * A torrent could not be loaded silently.
+		 * @param msg Message to show
+		 */
+		void cannotLoadTorrentSilently(const QString & msg);
+		
 	private:
 		Core* m_core;
 		int previousDownloadHeight;

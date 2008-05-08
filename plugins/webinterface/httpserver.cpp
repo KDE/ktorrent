@@ -53,7 +53,7 @@ using namespace bt;
 
 namespace kt
 {
-	
+	QString DataDir();
 	
 
 	HttpServer::HttpServer(CoreInterface *core, bt::Uint16 port) : sock(0),notifier(0),core(core),cache(10),port(port)
@@ -446,7 +446,7 @@ namespace kt
 		Uint32 len = data.size();
 		int pos = QString(data).indexOf("\r\n\r\n");
 		
-		if (pos == -1 || pos + 4 >= len || ptr[pos + 4] != 'd')
+		if (pos == -1 || pos + 4 >= len)
 		{
 			HttpResponseHeader rhdr(500);
 			setDefaultResponseHeaders(rhdr,"text/html",false);
@@ -455,9 +455,10 @@ namespace kt
 		}
 		
 		// save torrent to a temporary file
-		KTemporaryFile tmp_file;
+		QString save_file = kt::DataDir() + "webgui_load_torrent";
+		QFile tmp_file(save_file);
 		
-		if (!tmp_file.open())
+		if (!tmp_file.open(QIODevice::WriteOnly))
 		{
 			HttpResponseHeader rhdr(500);
 			setDefaultResponseHeaders(rhdr,"text/html",false);
@@ -467,12 +468,13 @@ namespace kt
 		
 		QDataStream out(&tmp_file);
 		out.writeRawData(ptr + (pos + 4),len - (pos + 4));
+		out << flush;
+		tmp_file.close();
 		
-		Out(SYS_WEB|LOG_NOTICE) << "Loading file " << tmp_file.fileName() << endl;
-		core->loadSilently(KUrl(tmp_file.fileName()),QString());
+		Out(SYS_WEB|LOG_NOTICE) << "Loading file " << save_file << endl;
+		core->loadSilently(KUrl(save_file),QString());
 		
 		handleGet(hdlr,hdr);
-		tmp_file.close();
 	}
 	
 	void HttpServer::handleUnsupportedMethod(HttpClientHandler* hdlr)
