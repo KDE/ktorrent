@@ -18,8 +18,14 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <QRegExp>
+
+#include <util/log.h>
 
 #include "filter.h"
+#include "capture.h"
+
+using namespace bt;
 
 namespace kt
 {
@@ -108,6 +114,77 @@ namespace kt
 		{
 		QReadLocker readLock(&lock);
 		return captureChecker;
+		}
+	
+	bool Filter::checkExpressionMatch(const QString& string) const
+		{
+		QReadLocker readLock(&lock);
+		
+		//if we have no expressions it should be considered a fail
+		if (expressions.isEmpty())
+			return false;
+		
+		QRegExp regEx;
+		regEx.setCaseSensitivity(Qt::CaseInsensitive);
+		QString curExp;
+		bool find;
+		bool found;
+		
+		//run through all the expressions checking if they match
+		for (int i=0; i<expressions.count(); i++)
+			{
+			find = true;
+			curExp = expressions.at(i);
+			if (curExp.startsWith("!"))
+				{
+				curExp.remove(0, 1);
+				find = false;
+				}
+			
+			regEx.setPattern(curExp);
+			
+			found = regEx.indexIn(string) != -1;
+			
+			//if we've not matched (or matched when we didn't want to) 
+			if (found != find)
+				return false;
+			}
+		
+		//if we make it this far we've got a match
+		return true;
+		}
+	
+	bool Filter::checkMatch(const QString& string) const
+		{
+		if (string.isEmpty())
+			return false;
+		
+		QReadLocker readLock(&lock);
+		
+		//check we're good for expressions
+		if (!checkExpressionMatch(string))
+			return false;
+		
+		if (multiMatch == MM_ONCE_ONLY)
+			{
+			//we'll need to add history checking when history is done
+			//for now just say it matches
+			return true;
+			}
+		else if (multiMatch == MM_ALWAYS_MATCH)
+			{
+			//no need to check captures as we always match the expression
+			return true;
+			}
+		
+		//if we've got here we're set to check captures - so let's find the capture
+		Capture curCap = captureChecker->findCapture(string);
+		
+		if (!curCap.isInRange(captureChecker->getMinCapture(), captureChecker->getMaxCapture()))
+			return false;
+		
+		//made it this far? it's a match :)
+		return true;
 		}
 	
 	void Filter::setName(const QString& value)

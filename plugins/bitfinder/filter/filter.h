@@ -50,6 +50,9 @@ namespace kt
 		int getRerelease() const;
 		CaptureChecker* getCaptureChecker() const;
 		
+		bool checkExpressionMatch(const QString& string) const;
+		bool checkMatch(const QString& string) const;
+		
 	public slots:
 		void setName(const QString& value);
 		void setType(int value);

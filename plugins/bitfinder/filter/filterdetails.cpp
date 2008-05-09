@@ -173,6 +173,14 @@ namespace kt
 		setRerelease(value->getRerelease());
 		captureChecker->setCaptureChecker(value->getCaptureChecker());
 		connect(testString, SIGNAL(textChanged( const QString& )), captureChecker, SLOT(setTestString(const QString&)));
+		connect(testString, SIGNAL(textChanged( const QString& )), this, SLOT(checkTestString()));
+		
+		connect(this, SIGNAL(multiMatchChanged(int)), this, SLOT(checkTestString()));
+		connect(this, SIGNAL(rereleaseChanged(int)), this, SLOT(checkTestString()));
+		connect(this, SIGNAL(expressionsChanged(QStringList)), this, SLOT(checkTestString()));
+		connect(captureChecker, SIGNAL(capturesChanged(QMap< QString, QString >)), this, SLOT(checkTestString()));
+		connect(captureChecker, SIGNAL(variablesChanged(QList< Variable >)), this, SLOT(checkTestString()));
+		connect(captureChecker, SIGNAL(mappingsChanged(QMap<QPair<QString, QString>, int>)), this, SLOT(checkTestString()));
 		}
 		
 	void FilterDetails::setFilter(Filter * value)
@@ -268,6 +276,8 @@ namespace kt
 				return;
 				}
 			}
+		
+		checkTestString();
 		}
 	
 	void FilterDetails::setRerelease(int value)
@@ -280,6 +290,36 @@ namespace kt
 				return;
 				}
 			}
+			
+		checkTestString();
+		}
+	
+	void FilterDetails::checkTestString()
+		{
+		if (!filter)
+			return;
+		
+		if (testString->text().isEmpty())
+			{
+			//it's empty so let's do no more and reset to default background colour
+			testString->setPalette(name->palette());
+			return;
+			}
+		
+		QPalette curPalette = testString->palette();
+		
+		if (filter->checkMatch(testString->text()))
+			{
+			//it's a match make it green
+			curPalette.setBrush(QPalette::Base, QBrush(QColor(0,255,0,128)));
+			}
+		else
+			{
+			//no match - make it red
+			curPalette.setBrush(QPalette::Base, QBrush(QColor(255,0,0,128)));
+			}
+		
+		testString->setPalette(curPalette);
 		}
 	
 	}

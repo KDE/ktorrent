@@ -64,7 +64,7 @@ namespace kt
 			void setMultiMatch(int value);
 			void setRerelease(int value);
 			
-		
+			void checkTestString();
 		signals:
 			void nameChanged(const QString& name);
 			void typeChanged(int type);
