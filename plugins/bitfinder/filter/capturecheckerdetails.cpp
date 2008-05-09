@@ -379,7 +379,9 @@ namespace kt
 		//first clear the text on them all
 		for (int i=0; i<mappings->rowCount(); i++)
 			{
-			mappings->item(i, MAP_TEST)->setText("");
+			mappings->item(i, MAP_TEST)->setText("No Capture");
+			//lazy way to get the default background hehe
+			mappings->item(i, MAP_TEST)->setBackground(mappings->item(i, MAP_CAPTURE)->background());
 			}
 		
 		//if there's no test string we can skip doing anything
@@ -402,7 +404,21 @@ namespace kt
 				if (mappings->item(j, MAP_CAPTURE)->text() != captureList.at(i))
 					continue;
 				
+				if (curCap.getValue(mappings->item(j, MAP_VARIABLE)->text()).isEmpty())
+					return;
+				
 				mappings->item(j, MAP_TEST)->setText(curCap.getValue(mappings->item(j, MAP_VARIABLE)->text()));
+				
+				if (curCap.isInRange(captureChecker->getMinCapture(), captureChecker->getMaxCapture()))
+					{
+					//this is an in range Match so colour the item green
+					mappings->item(j, MAP_TEST)->setBackground(QBrush(QColor(0,255,0,128)));
+					}
+				else
+					{
+					//this match is out of range so colour the item red
+					mappings->item(j, MAP_TEST)->setBackground(QBrush(QColor(255,0,0,128)));
+					}
 				}
 			
 			}

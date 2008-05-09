@@ -29,6 +29,13 @@
 namespace kt
 	{
 	
+	enum Match
+		{
+		MATCH_UNCHECKED = -1,
+		MATCH_FAILED = 0,
+		MATCH_SUCCESS = 1
+		};
+	
 	class Capture : public QObject
 		{
 		Q_OBJECT
@@ -39,8 +46,6 @@ namespace kt
 			Capture& operator=(const Capture& other);
 			~Capture() {}
 			
-			bool meetsMin(const Capture& min) const;
-			bool meetsMax(const Capture& max) const;
 			bool isEqual(const Capture& other) const;
 			bool isEmpty() const;
 			
@@ -48,11 +53,16 @@ namespace kt
 			QString getValue(QString varName) const;
 			QList< QPair<QString,QString> > getVariables() const;
 			int varCount() const;
+			
+			bool isInRange(const Capture& min, const Capture& max) const;
 		
 		public slots:
 			void addVariable(QString name, QString value);
 			
 		private:
+			bool meetsMin(const Capture& min) const;
+			bool meetsMax(const Capture& max) const;
+			
 			mutable QReadWriteLock lock;
 			QList< QPair<QString,QString> > variables;
 		};

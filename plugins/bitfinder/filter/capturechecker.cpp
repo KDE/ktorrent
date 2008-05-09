@@ -100,6 +100,8 @@ namespace kt
 		curCap.setCaseSensitivity(Qt::CaseInsensitive);
 		QPair<QString, QString> curPair;
 		
+		Capture bestMatch;
+		
 		while ( i != captures.constEnd() )
 			{
 			if (!captureList.contains(i.key()))
@@ -128,7 +130,9 @@ namespace kt
 				value.addVariable(curPair.second, curCap.cap(mappings.value(curPair)));
 				}
 			
-			if (value.meetsMin(getMinCapture()) && value.meetsMax(getMaxCapture()))
+			bestMatch = value;
+			
+			if (value.isInRange(getMinCapture(), getMaxCapture()))
 				{
 				//we've got the values and met the limits
 				return value;
@@ -137,8 +141,8 @@ namespace kt
 			i++;
 			}
 		
-		//we didn't get any matches if we made it this far - so here's an empty capture
-		return Capture();
+		//we didn't get any matches that are inRange so here's the closest
+		return bestMatch;
 		}
 	
 	bool CaptureChecker::addNewCapture(const QString& name)

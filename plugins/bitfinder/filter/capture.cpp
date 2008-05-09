@@ -311,6 +311,13 @@ namespace kt
 		return variables.count();
 		}
 	
+	bool Capture::isInRange(const Capture& min, const Capture& max) const
+		{
+		QReadLocker readLock(&lock);
+		
+		return meetsMin(min) && meetsMax(max);
+		}
+		
 	void Capture::addVariable(QString name, QString value)
 		{
 		QWriteLocker writeLock(&lock);
