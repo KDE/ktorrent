@@ -31,7 +31,7 @@ namespace kt
 	class CoreInterface;
 	class GUIInterface;
 
-	class FilterListModel : public QAbstractItemModel
+	class FilterListModel : public QAbstractListModel
 	{
 		Q_OBJECT
 	public:
@@ -39,13 +39,8 @@ namespace kt
 		virtual ~FilterListModel();
 		
 		virtual int rowCount(const QModelIndex & parent) const;
-		virtual int columnCount(const QModelIndex & parent) const;
 		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
 		virtual QVariant data(const QModelIndex & index, int role) const;
-		virtual bool removeRows(int row,int count,const QModelIndex & parent);
-		virtual bool insertRows(int row,int count,const QModelIndex & parent);
-		virtual QModelIndex index(int row,int column,const QModelIndex & parent) const;
-		virtual QModelIndex parent(const QModelIndex &child) const;
 		
  		QModelIndex next(const QModelIndex & idx) const;
 		

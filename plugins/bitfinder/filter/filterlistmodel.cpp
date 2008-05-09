@@ -26,7 +26,7 @@ namespace kt
 {
 
 	FilterListModel::FilterListModel(CoreInterface* core, GUIInterface* gui, QObject* parent) 
-			: QAbstractItemModel(parent),core(core),gui(gui)
+			: QAbstractListModel(parent),core(core),gui(gui)
 	{
 	}
 
@@ -42,12 +42,6 @@ namespace kt
 			return filters.count();
 		else
 			return 0;
-	}
-	
-	int FilterListModel::columnCount(const QModelIndex & parent) const
-	{
-		Q_UNUSED(parent);
-		return 1;
 	}
 	
 	QVariant FilterListModel::headerData(int section, Qt::Orientation orientation,int role) const
@@ -85,49 +79,6 @@ namespace kt
 		return QVariant();
 	}
 	
-	bool FilterListModel::removeRows(int row,int count,const QModelIndex & parent)
-	{
-		if (parent.isValid())
-			return false;
-		
-		beginRemoveRows(QModelIndex(),row,row + count - 1);
-		for (int i = 0;i < count;i++)
-		{
-			if (row >= 0 && row < filters.count())
-			{
-				Filter* filter = filters[row];
-				filters.removeAt(row);
-				delete filter;
-			}
-		}
-		endRemoveRows();
-		return true;
-	}
-	
-	bool FilterListModel::insertRows(int row,int count,const QModelIndex & parent)
-	{
-		if (parent.isValid())
-			return false;
-					
-		beginInsertRows(QModelIndex(),row,row + count - 1);
-		endInsertRows();
-		return true;
-	}
-	
-	QModelIndex FilterListModel::index(int row,int column,const QModelIndex & parent) const
-	{
-		if (column != 0)
-			return QModelIndex();
-		
-		if (!parent.isValid() && row >= 0 && row < filters.count())
-		{
-			Filter* filter = filters.at(row);
-			return createIndex(row,column,filter); // it's a torrent
-		}
-		
-		return QModelIndex();
-	}
-	
 	QModelIndex FilterListModel::next(const QModelIndex & idx) const
 	{
 		int nextRow = idx.row() + 1;
@@ -139,12 +90,5 @@ namespace kt
 		
 		return createIndex(nextRow, 0, filter);
 	}
-	
-	QModelIndex FilterListModel::parent(const QModelIndex &child) const
-		{
-		Q_UNUSED(child);
-		
-		return QModelIndex();
-		}
 	
 }

@@ -30,7 +30,7 @@ using namespace bt;
 namespace kt
 {
 
-	Filter::Filter()
+	Filter::Filter(const QString& name) : name(name)
 		{
 		type = FT_ACCEPT;
 		group = "Ungrouped";
