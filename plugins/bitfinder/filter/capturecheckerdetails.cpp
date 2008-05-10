@@ -73,7 +73,6 @@ namespace kt
 		QStringList captureHeaders;
 		captureHeaders << "Name" << "Expression";
 		captures->setHorizontalHeaderLabels(captureHeaders);
-		connect(captures, SIGNAL(cellChanged(int, int)), this, SLOT(emitCaptures()));
 		captures->verticalHeader()->hide();
 		connect(captures, SIGNAL(itemSelectionChanged()), this, SLOT(captureSelectionChanged()));
 		
@@ -82,7 +81,6 @@ namespace kt
 		QStringList variableHeaders;
 		variableHeaders << "Name" << "Min" << "Max";
 		variables->setHorizontalHeaderLabels(variableHeaders);
-		connect(variables, SIGNAL(cellChanged(int, int)), this, SLOT(emitVariables()));
 		variables->verticalHeader()->hide();
 		connect(variables, SIGNAL(itemSelectionChanged()), this, SLOT(variableSelectionChanged()));
 		
@@ -91,7 +89,6 @@ namespace kt
 		QStringList mappingHeaders;
 		mappingHeaders << "Capture Name" << "Variable" << "Index" << "Test Value";
 		mappings->setHorizontalHeaderLabels(mappingHeaders);
-		connect(mappings, SIGNAL(cellChanged(int, int)), this, SLOT(verifyMappingInput(int, int)));
 		mappings->verticalHeader()->hide();
 		
 		}
@@ -122,6 +119,10 @@ namespace kt
 		if (!value)
 			return;
 		
+		setCaptures(value->getCaptures());
+		setVariables(value->getVariables());
+		setMappings(value->getMappings());
+		
 		connect(value, SIGNAL(capturesChanged(QMap< QString, QString >)), 
 				this, SLOT(setCaptures(QMap< QString, QString >)));
 		
@@ -136,6 +137,12 @@ namespace kt
 				
 		connect(value, SIGNAL(mappingsChanged(QMap< QPair < QString , QString >, int >)),
 				this, SLOT(setMappings(QMap< QPair < QString , QString >, int >)));
+		
+		//not actually CaptureChecker signals, but should stop data from getting pushed out 
+		connect(captures, SIGNAL(cellChanged(int, int)), this, SLOT(emitCaptures()));
+		connect(variables, SIGNAL(cellChanged(int, int)), this, SLOT(emitVariables()));
+		connect(mappings, SIGNAL(cellChanged(int, int)), this, SLOT(verifyMappingInput(int, int)));
+
 		}
 	
 	void CaptureCheckerDetails::setCaptureChecker(CaptureChecker* value)

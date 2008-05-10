@@ -51,6 +51,13 @@ namespace kt
 		return variables;
 		}
 	
+	QMap<QPair<QString, QString>, int> CaptureChecker::getMappings() const
+		{
+		QReadLocker readLock(&lock);
+		
+		return mappings;
+		}
+	
 	Capture CaptureChecker::getMinCapture() const
 		{
 		QReadLocker readLock(&lock);

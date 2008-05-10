@@ -75,8 +75,6 @@ namespace kt
 			void sourceListChanged(QStringList sourceList);
 			void multiMatchChanged(int multiMatch);
 			void rereleaseChanged(int rerelease);
-			
-			
 		
 		private:
 			CoreInterface* core;

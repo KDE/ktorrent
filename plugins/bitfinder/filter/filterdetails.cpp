@@ -39,7 +39,6 @@ namespace kt
 		//type
 		type->addItem("Reject Torrents", FT_REJECT);
 		type->addItem("Accept Torrents", FT_ACCEPT);
-		connect(type, SIGNAL(currentIndexChanged( int )), this, SLOT(onTypeChange(int)));
 		//group
 		updateGroupList();
 		//I've hooked this up to the UI for now, but will probably want to have this connected
@@ -51,7 +50,6 @@ namespace kt
 		multiMatch->addItem("Match only once", MM_ONCE_ONLY);
 		multiMatch->addItem("Match every time", MM_ALWAYS_MATCH);
 		multiMatch->addItem("Use Capture Checking", MM_CAPTURE_CHECKING);
-		connect(multiMatch, SIGNAL(currentIndexChanged( int )), this, SLOT(onMultiMatchChange(int)));
 		//make sure multimatch is correct for the torrent type setting
 		onTypeChange(type->currentIndex());
 		
@@ -127,6 +125,8 @@ namespace kt
 	
 	void FilterDetails::onTypeChange(int curIndex)
 		{
+// 		int curMultiMatch = multiMatch->itemData(multiMatch->currentIndex()).toInt();
+// 		Out(SYS_BTF|LOG_DEBUG) << "current MultiMatch: " << curMultiMatch << endl;
 		if (type->itemData(curIndex) == FT_REJECT)
 			{
 			if (multiMatch->itemData(0) == MM_ONCE_ONLY)
@@ -141,6 +141,17 @@ namespace kt
 				multiMatch->insertItem(0, "Match once only", MM_ONCE_ONLY);
 				}
 			}
+		
+// 		for (int i=0; i<multiMatch->count(); i++)
+// 			{
+// 			if (multiMatch->itemData(i) == curMultiMatch)
+// 				{
+// 				multiMatch->setCurrentIndex(i);
+// 				return;
+// 				}
+// 			}
+// 		
+// 		Out(SYS_BTF|LOG_DEBUG) << "Post: " << multiMatch->itemData(multiMatch->currentIndex()).toInt() << endl;
 		}
 	
 	void FilterDetails::refreshSizes()
@@ -150,19 +161,10 @@ namespace kt
 	
 	void FilterDetails::connectFilter(Filter * value)
 		{
-		//connect the signals
-		connect(this, SIGNAL(nameChanged(const QString&)), value, SLOT(setName(const QString&)));
-		connect(this, SIGNAL(typeChanged(int)), value, SLOT(setType(int)));
-		connect(this, SIGNAL(groupChanged(const QString&)), value, SLOT(setGroup(const QString&)));
-		connect(this, SIGNAL(expressionsChanged(QStringList)), value, SLOT(setExpressions(QStringList)));
-		connect(this, SIGNAL(sourceListTypeChanged(int)), value, SLOT(setSourceListType(int)));
-		connect(this, SIGNAL(sourceListChanged(QStringList)), value, SLOT(setSourceList(QStringList)));
-		connect(this, SIGNAL(multiMatchChanged(int)), value, SLOT(setMultiMatch(int)));
-		connect(this, SIGNAL(rereleaseChanged(int)), value, SLOT(setRerelease(int)));
-		
 		//set all the values
 		name->setText(value->getName());
 		setType(value->getType());
+		onTypeChange(type->currentIndex());
 		group->setCurrentIndex(group->findText(value->getGroup()));
 		expressions->clear();
 		expressions->insertStringList(value->getExpressions());
@@ -170,8 +172,10 @@ namespace kt
 		sourceList->clear();
 		sourceList->addItems(value->getSourceList());
 		setMultiMatch(value->getMultiMatch());
+		onMultiMatchChange(multiMatch->currentIndex());
 		setRerelease(value->getRerelease());
 		captureChecker->setCaptureChecker(value->getCaptureChecker());
+		
 		connect(testString, SIGNAL(textChanged( const QString& )), captureChecker, SLOT(setTestString(const QString&)));
 		connect(testString, SIGNAL(textChanged( const QString& )), this, SLOT(checkTestString()));
 		
@@ -181,6 +185,21 @@ namespace kt
 		connect(captureChecker, SIGNAL(capturesChanged(QMap< QString, QString >)), this, SLOT(checkTestString()));
 		connect(captureChecker, SIGNAL(variablesChanged(QList< Variable >)), this, SLOT(checkTestString()));
 		connect(captureChecker, SIGNAL(mappingsChanged(QMap<QPair<QString, QString>, int>)), this, SLOT(checkTestString()));
+		
+		//not actually filter related, but let's us set data before things start updating
+		connect(type, SIGNAL(currentIndexChanged( int )), this, SLOT(onTypeChange(int)));
+		connect(multiMatch, SIGNAL(currentIndexChanged( int )), this, SLOT(onMultiMatchChange(int)));
+		
+		//connect the signals to push changes to the value
+		connect(this, SIGNAL(nameChanged(const QString&)), value, SLOT(setName(const QString&)));
+		connect(this, SIGNAL(typeChanged(int)), value, SLOT(setType(int)));
+		connect(this, SIGNAL(groupChanged(const QString&)), value, SLOT(setGroup(const QString&)));
+		connect(this, SIGNAL(expressionsChanged(QStringList)), value, SLOT(setExpressions(QStringList)));
+		connect(this, SIGNAL(sourceListTypeChanged(int)), value, SLOT(setSourceListType(int)));
+		connect(this, SIGNAL(sourceListChanged(QStringList)), value, SLOT(setSourceList(QStringList)));
+		connect(this, SIGNAL(multiMatchChanged(int)), value, SLOT(setMultiMatch(int)));
+		connect(this, SIGNAL(rereleaseChanged(int)), value, SLOT(setRerelease(int)));
+		
 		}
 		
 	void FilterDetails::setFilter(Filter * value)

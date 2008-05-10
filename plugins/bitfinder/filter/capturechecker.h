@@ -62,6 +62,7 @@ namespace kt
 			
 			QMap<QString, QString> getCaptures() const;
 			QList<Variable> getVariables() const;
+			QMap<QPair<QString, QString>, int> getMappings() const;
 			
 			Capture getMinCapture() const;
 			Capture getMaxCapture() const;
