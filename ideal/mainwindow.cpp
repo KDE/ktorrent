@@ -218,6 +218,15 @@ namespace ideal
 		tabs->setTabText(idx,text);
 	}
 	
+	void MainWindow::changeCurrentTab(QWidget* ti)
+	{
+		int idx = tabs->indexOf(ti);
+		if (idx == -1)
+			return;
+		
+		tabs->setCurrentIndex(idx);
+	}
+	
 	void MainWindow::loadSplitterState(KSharedConfigPtr cfg)
 	{
 		KConfigGroup g = cfg->group("Splitters");

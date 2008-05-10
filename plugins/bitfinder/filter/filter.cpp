@@ -65,7 +65,7 @@ namespace kt
 	QString Filter::getIconName() const
 		{
 		QReadLocker readLock(&lock);
-		return type ? "news-unsubscribe" : "news-subscribe";
+		return type ? "news-subscribe" : "news-unsubscribe";
 		}
 		
 	int Filter::getType() const

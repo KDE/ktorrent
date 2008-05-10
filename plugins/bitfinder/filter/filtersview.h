@@ -43,7 +43,8 @@ namespace kt
 			//QModelIndex selectedItem() const;
 
 		public slots:
-
+			void addNewFilter();
+			
 		private slots:
 //			void onSelectionChanged (const QItemSelection & s, const QItemSelection & d);
 

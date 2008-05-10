@@ -713,6 +713,11 @@ namespace kt
 	{
 		changeTabText(tab,text);
 	}
+	
+	void GUI::setTabCurrent(QWidget* tab)
+	{
+		changeCurrentTab(tab);
+	}
 }
 
 #include "gui.moc"

@@ -18,6 +18,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <ktoolbar.h>
+#include <kinputdialog.h>
+#include <klocale.h>
 
 #include <QVBoxLayout>
 
@@ -41,6 +43,20 @@ namespace kt
 		layout->addWidget(filtersList);
 		
 		connect(filtersList,SIGNAL(doubleClicked(const QModelIndex &)),this,SIGNAL(doubleClicked(const QModelIndex&)));
+		connect(filtersList,SIGNAL(doubleClicked(const QModelIndex &)),filterListModel, SLOT(openFilterTab(const QModelIndex&)));
 		}
+	
+	void FiltersView::addNewFilter()
+		{
+		bool ok = false;
+		QString name = KInputDialog::getText(i18n("Add New Filter"), 
+					i18n("Please enter the new filter name."),QString(),&ok,this);
 		
+		if (ok)
+			{
+			if (filterListModel)
+				filterListModel->addNewFilter(name);
+			}
+		}
+	
 	}

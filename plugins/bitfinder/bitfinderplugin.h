@@ -35,7 +35,7 @@
 namespace kt
 	{
 
-	class BitFinderPlugin : public Plugin, public CloseTabListener
+	class BitFinderPlugin : public Plugin
 		{
 			Q_OBJECT
 
@@ -50,7 +50,6 @@ namespace kt
 		private:
  			void setupSourcesActions();
  			void setupFiltersActions();
-			virtual void tabCloseRequest (kt::GUIInterface* gui, QWidget* tab);
 
 		private slots:
 // 			void onDoubleClicked(const QModelIndex & idx);
@@ -65,7 +64,6 @@ namespace kt
  			KAction* addRssSource;
  			
  			//Filters Variables
- 			QList<FilterDetails*> filterDetailsList;
  			FilterListModel * filterListModel;
  			FiltersView * filtersView;
  			KAction * addFilter;

@@ -90,6 +90,8 @@ namespace kt
 		ac->addAction("Move Filter Up",filterUp);
 		ac->addAction("Move Filter Down", filterDown);
 		
+		connect(addFilter, SIGNAL(triggered(bool)), filtersView, SLOT(addNewFilter()));
+		
 		}
 
 	void BitFinderPlugin::load()
@@ -119,13 +121,6 @@ namespace kt
 		tb->addAction(filterUp);
 		tb->addAction(filterDown);
 		
-		//add a filter tab in during early testing
-		FilterDetails * testFilterTab = new FilterDetails(getCore());
-		getGUI()->addTabPage(testFilterTab,"news-subscribe","Test Filter Tab",this);
-		testFilterTab->refreshSizes();
-		testFilterTab->setFilter(new Filter());
-		
-		filterDetailsList.append(testFilterTab);
 		}
 
 	void BitFinderPlugin::unload()
@@ -146,21 +141,5 @@ namespace kt
 		return version == KT_VERSION_MACRO;
 		}
 
-	void BitFinderPlugin::tabCloseRequest (kt::GUIInterface* gui, QWidget* tab)
-		{
-		//Check through the list of Source tabs
-		
-		//Check through the list of Filter tabs
-		foreach(FilterDetails * filterTab, filterDetailsList)
-			{
-			if (filterTab == tab)
-				{
-				getGUI()->removeTabPage(filterTab);
-				delete filterTab;
-				}
-			
-			}
-		
-		}
 
 	}

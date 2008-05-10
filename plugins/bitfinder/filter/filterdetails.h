@@ -49,6 +49,7 @@ namespace kt
 			
 			void connectFilter(Filter * value);
 			void setFilter(Filter * value);
+			Filter* getFilter();
 			
 			//functions to handle translation of data to format wanted for Filter connection
 			void emitType();

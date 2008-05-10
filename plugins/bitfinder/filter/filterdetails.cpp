@@ -199,6 +199,11 @@ namespace kt
 		filter = value;
 		}
 	
+	Filter* FilterDetails::getFilter()
+		{
+		return filter;
+		}
+	
 	void FilterDetails::emitType()
 		{
 		//it's the userdata our filter cares about and there's no signal for that

@@ -69,6 +69,9 @@ namespace ideal
 
 		/// Change the text of tab
 		void changeTabText(QWidget* ti,const QString & text);
+		
+		///Set the tab to be the current one
+		void changeCurrentTab(QWidget* ti);
 
 		/// Get the left corner button of the tabwidget (if it doesn't exist it will be created)
 		QToolButton* leftCornerButton();	

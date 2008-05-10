@@ -231,6 +231,8 @@ namespace kt
 		 * @param icon 
 		 */
 		virtual void setTabText(QWidget* tab,const QString & text) = 0;
+		
+		virtual void setTabCurrent(QWidget* tab) = 0;
 
 	protected:
 		/**

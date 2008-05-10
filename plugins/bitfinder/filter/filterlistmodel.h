@@ -21,9 +21,13 @@
 #ifndef KTFILTERLISTMODEL_H
 #define KTFILTERLISTMODEL_H
 
+#include <QList>
 #include <QAbstractItemModel>
 #include <util/constants.h>
 
+#include <interfaces/guiinterface.h>
+
+#include "filterdetails.h"
 #include "filter.h"
 
 namespace kt
@@ -31,7 +35,7 @@ namespace kt
 	class CoreInterface;
 	class GUIInterface;
 
-	class FilterListModel : public QAbstractListModel
+	class FilterListModel : public QAbstractListModel, public CloseTabListener
 	{
 		Q_OBJECT
 	public:
@@ -41,12 +45,23 @@ namespace kt
 		virtual int rowCount(const QModelIndex & parent) const;
 		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
 		virtual QVariant data(const QModelIndex & index, int role) const;
+		virtual QModelIndex index(int row,int column,const QModelIndex & parent) const;
 		
  		QModelIndex next(const QModelIndex & idx) const;
 		
 	public slots:
 		
+		void addNewFilter(const QString& name);
+		
+		void openFilterTab(const QModelIndex& idx);
+	
+	signals:
+		void newFilterAdded(const QModelIndex& idx);
+	
 	private:
+		virtual void tabCloseRequest (kt::GUIInterface* gui, QWidget* tab);
+		
+		QList<FilterDetails*> filterDetailsList;
 		CoreInterface* core;
 		GUIInterface* gui;
 		QList<Filter*> filters;
