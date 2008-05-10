@@ -68,32 +68,6 @@ namespace kt
 		
 		}
 
-	void BitFinderPlugin::setupFiltersActions()
-		{
-		KActionCollection* ac = actionCollection();
-		
-		//create the Action for adding sources
-		addFilter = new KAction(KIcon("list-add"),i18n("Add Filter"),this);
-		
-		//create the Action for removing sources
-		removeFilter = new KAction(KIcon("list-remove"), i18n("Remove Filter"), this);
-		
-		//create the Action for moving a filter up
-		filterUp = new KAction(KIcon("arrow-up"), i18n("Move Filter Up"), this);
-		
-		//create the Action for moving a filter up
-		filterDown = new KAction(KIcon("arrow-down"), i18n("Move Filter Down"), this);
-
-		//put the actions into the collection
-		ac->addAction("Add Filter",addFilter);
-		ac->addAction("Remove Filter",removeFilter);
-		ac->addAction("Move Filter Up",filterUp);
-		ac->addAction("Move Filter Down", filterDown);
-		
-		connect(addFilter, SIGNAL(triggered(bool)), filtersView, SLOT(addNewFilter()));
-		
-		}
-
 	void BitFinderPlugin::load()
 		{
 		//Add the BF Sources Menu on the left dock
@@ -112,14 +86,6 @@ namespace kt
 		//Add the BF Filters Menu on the left dock
 		filtersView = new FiltersView(filterListModel);
 		getGUI()->addToolWidget(filtersView,"view-filter",i18n("BF Filters"),GUIInterface::DOCK_LEFT);
-		
-		setupFiltersActions();
-		
-		tb = filtersView->filtersToolBar();
-		tb->addAction(addFilter);
-		tb->addAction(removeFilter);
-		tb->addAction(filterUp);
-		tb->addAction(filterDown);
 		
 		}
 

@@ -51,10 +51,16 @@ namespace kt
 		
 	public slots:
 		
-		void addNewFilter(const QString& name);
+		Filter* addNewFilter(const QString& name);
+		void removeFilter(const QModelIndex& idx);
 		
 		void openFilterTab(const QModelIndex& idx);
-	
+		
+		void setTabName(const QString& name);
+		void setTabIcon();
+		
+		void emitDataChanged();
+		
 	signals:
 		void newFilterAdded(const QModelIndex& idx);
 	

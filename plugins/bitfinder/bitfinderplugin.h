@@ -49,7 +49,6 @@ namespace kt
 
 		private:
  			void setupSourcesActions();
- 			void setupFiltersActions();
 
 		private slots:
 // 			void onDoubleClicked(const QModelIndex & idx);
@@ -66,10 +65,6 @@ namespace kt
  			//Filters Variables
  			FilterListModel * filterListModel;
  			FiltersView * filtersView;
- 			KAction * addFilter;
- 			KAction * removeFilter;
- 			KAction * filterUp;
- 			KAction * filterDown;
 
 		};
 

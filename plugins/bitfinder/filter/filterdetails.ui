@@ -105,7 +105,7 @@
           <widget class="QLineEdit" name="testString" >
            <property name="sizePolicy" >
             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-             <horstretch>4</horstretch>
+             <horstretch>3</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>

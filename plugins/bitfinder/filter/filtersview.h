@@ -21,6 +21,8 @@
 #ifndef KTFILTERSVIEW_H
 #define KTFILTERSVIEW_H
 
+#include <kaction.h>
+
 #include <QListView>
 #include <QToolBar>
 
@@ -44,6 +46,7 @@ namespace kt
 
 		public slots:
 			void addNewFilter();
+			void removeFilters();
 			
 		private slots:
 //			void onSelectionChanged (const QItemSelection & s, const QItemSelection & d);
@@ -53,9 +56,16 @@ namespace kt
 			void doubleClicked (const QModelIndex & idx);
 
 		private:
+			void setupFiltersActions();
+			
 			QToolBar* toolBar;
 			QListView* filtersList;
 			FilterListModel* filterListModel;
+		
+ 			KAction * addFilter;
+ 			KAction * removeFilter;
+ 			KAction * filterUp;
+ 			KAction * filterDown;
 		};
 
 

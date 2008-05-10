@@ -111,23 +111,52 @@ namespace kt
 		return createIndex ( nextRow, 0, filter );
 		}
 
-	void FilterListModel::addNewFilter ( const QString& name )
+	Filter* FilterListModel::addNewFilter ( const QString& name )
 		{
 		//seeing we're altering the data we need to let things know about it
 		beginInsertRows(QModelIndex(), filters.count(), filters.count());
 		
-		filters.append(new Filter(name));
+		Filter * curFilter = new Filter(name);
+		filters.append(curFilter);
 		
 		//and now we're done
 		endInsertRows();
 		
-		QString filterNameList;
-		for (int i=0; i<filters.count(); i++)
+		connect(curFilter, SIGNAL(nameChanged(const QString&)), this, SLOT(emitDataChanged()));
+		connect(curFilter, SIGNAL(typeChanged(int)), this, SLOT(emitDataChanged()));
+		
+		emit newFilterAdded(createIndex(filters.count()-1, 0, curFilter));
+		
+		return curFilter;
+		}
+	
+	void FilterListModel::removeFilter(const QModelIndex& idx)
+		{
+		//altering data we need to let things know
+		beginRemoveRows(QModelIndex(), idx.row(), idx.row());
+		
+		Filter* curFilter = (Filter*)idx.internalPointer();
+		
+		//check all the filterDetail tabs to see if this one is there
+		for (int i=0; i<filterDetailsList.count(); i++)
 			{
-			filterNameList += " " + filters.at(i)->getName();
+			if (filterDetailsList.at(i)->getFilter()==curFilter)
+				{
+				//this tab is for the filter we're removing
+				FilterDetails * filterTab = filterDetailsList.at(i);
+				filterDetailsList.removeAt(i);
+				gui->removeTabPage(filterTab);
+				delete filterTab;
+				}
 			}
 		
-		emit newFilterAdded(createIndex(filters.count()-1, 0, filters.count()-1));
+		//find the filter, remove it from the list and tell it to deleteLater
+		filters.removeAll(curFilter);
+		curFilter->deleteLater();
+		
+		//done altering data
+		endRemoveRows();
+		
 		}
 	
 	void FilterListModel::openFilterTab(const QModelIndex& idx)
@@ -147,7 +176,55 @@ namespace kt
 		gui->addTabPage(filterTab,curFilter->getIconName() ,curFilter->getName(),this);
 		filterTab->refreshSizes();
 		
+		connect(filterTab, SIGNAL(nameChanged(const QString&)), this, SLOT(setTabName(const QString&)));
+		connect(filterTab, SIGNAL(typeChanged(int)), this, SLOT(setTabIcon()));
+		
 		filterDetailsList.append(filterTab);
+		}
+	
+	void FilterListModel::setTabName(const QString& name)
+		{
+		QWidget * tab = qobject_cast<QWidget*>(sender());
+		
+		if (!tab)
+			{
+			return;
+			}
+		
+		gui->setTabText(tab, name);
+		}
+	
+	void FilterListModel::setTabIcon()
+		{
+		FilterDetails * tab = qobject_cast<FilterDetails*>(sender());
+		
+		if (!tab)
+			{
+			return;
+			}
+		
+		gui->setTabIcon(tab, tab->getFilter()->getIconName());
+		}
+	
+	void FilterListModel::emitDataChanged()
+		{
+		Filter * curFilter = qobject_cast<Filter*>(sender());
+		
+		if (!curFilter)
+			{
+			return;
+			}
+		
+		for (int i=0; i<filters.count(); i++)
+			{
+			if (filters.at(i) == curFilter)
+				{
+				//this is the filter which changed so let's emit dataChanged
+				QModelIndex curIndex = createIndex(i, 0, curFilter);
+				emit dataChanged(curIndex, curIndex);
+				return;
+				}
+			}
 		}
 	
 	void FilterListModel::tabCloseRequest (kt::GUIInterface* gui, QWidget* tab)

@@ -20,6 +20,7 @@
 #include <ktoolbar.h>
 #include <kinputdialog.h>
 #include <klocale.h>
+#include <kactioncollection.h>
 
 #include <QVBoxLayout>
 
@@ -44,6 +45,31 @@ namespace kt
 		
 		connect(filtersList,SIGNAL(doubleClicked(const QModelIndex &)),this,SIGNAL(doubleClicked(const QModelIndex&)));
 		connect(filtersList,SIGNAL(doubleClicked(const QModelIndex &)),filterListModel, SLOT(openFilterTab(const QModelIndex&)));
+		
+		setupFiltersActions();
+		}
+	
+	void FiltersView::setupFiltersActions()
+		{
+		//create the Action for adding sources
+		addFilter = new KAction(KIcon("list-add"),i18n("Add Filter"),this);
+		
+		//create the Action for removing sources
+		removeFilter = new KAction(KIcon("list-remove"), i18n("Remove Filter"), this);
+		
+		//create the Action for moving a filter up
+		filterUp = new KAction(KIcon("arrow-up"), i18n("Move Filter Up"), this);
+		
+		//create the Action for moving a filter up
+		filterDown = new KAction(KIcon("arrow-down"), i18n("Move Filter Down"), this);
+
+		connect(addFilter, SIGNAL(triggered(bool)), this, SLOT(addNewFilter()));
+		connect(removeFilter, SIGNAL(triggered(bool)), this, SLOT(removeFilters()));
+		
+		toolBar->addAction(addFilter);
+		toolBar->addAction(removeFilter);
+		toolBar->addAction(filterUp);
+		toolBar->addAction(filterDown);
 		}
 	
 	void FiltersView::addNewFilter()
@@ -56,6 +82,16 @@ namespace kt
 			{
 			if (filterListModel)
 				filterListModel->addNewFilter(name);
+			}
+		}
+	
+	void FiltersView::removeFilters()
+		{
+		QModelIndexList rows = filtersList->selectionModel()->selectedRows();
+		
+		for (int i=0; i < rows.count(); i++)
+			{
+			filterListModel->removeFilter(rows.at(i));
 			}
 		}
 	
