@@ -41,18 +41,16 @@ namespace kt
 			/// Get the media tool bar
 			QToolBar* filtersToolBar() {return toolBar;}
 
-			/// Get the current selected item
-			//QModelIndex selectedItem() const;
-
 		public slots:
 			void addNewFilter();
 			void removeFilters();
+			void moveFilterDown();
+			void moveFilterUp();
 			
 		private slots:
-//			void onSelectionChanged (const QItemSelection & s, const QItemSelection & d);
+			void onSelectionChanged();
 
 		signals:
-//			void selectionChanged (const QModelIndex & idx);
 			void doubleClicked (const QModelIndex & idx);
 
 		private:

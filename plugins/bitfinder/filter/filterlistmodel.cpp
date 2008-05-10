@@ -33,6 +33,7 @@ namespace kt
 	FilterListModel::FilterListModel ( CoreInterface* core, GUIInterface* gui, QObject* parent )
 			: QAbstractListModel ( parent ),core ( core ),gui ( gui )
 		{
+		connect(this, SIGNAL(newFilterAdded(const QModelIndex&)), this, SLOT(openFilterTab(const QModelIndex&)));
 		}
 
 
@@ -111,6 +112,18 @@ namespace kt
 		return createIndex ( nextRow, 0, filter );
 		}
 
+	QModelIndex FilterListModel::previous ( const QModelIndex & idx ) const
+		{
+		int prevRow = idx.row() - 1;
+
+		if ( prevRow < 0 )
+			return QModelIndex();
+
+		Filter* filter = filters.at ( prevRow );
+
+		return createIndex ( prevRow, 0, filter );
+		}
+
 	Filter* FilterListModel::addNewFilter ( const QString& name )
 		{
 		//seeing we're altering the data we need to let things know about it
@@ -128,6 +141,21 @@ namespace kt
 		emit newFilterAdded(createIndex(filters.count()-1, 0, curFilter));
 		
 		return curFilter;
+		}
+	
+	void FilterListModel::insertFilter(const QModelIndex& idx, Filter * filter)
+		{
+		//seeing we're altering the data we need to let things know about it
+		beginInsertRows(QModelIndex(), idx.row(), idx.row());
+		
+		filters.insert(idx.row(), filter);
+		
+		//and now we're done
+		endInsertRows();
+		
+		connect(filter, SIGNAL(nameChanged(const QString&)), this, SLOT(emitDataChanged()));
+		connect(filter, SIGNAL(typeChanged(int)), this, SLOT(emitDataChanged()));
+		
 		}
 	
 	void FilterListModel::removeFilter(const QModelIndex& idx)
@@ -157,6 +185,36 @@ namespace kt
 		//done altering data
 		endRemoveRows();
 		
+		}
+	
+	void FilterListModel::moveFilterDown(const QModelIndex& idx)
+		{
+		if (idx.row() == filters.count()-1)
+			return;
+		
+		int curRow = idx.row();
+		Filter * shiftMe = filters.takeAt(curRow+1);
+		filters.insert(curRow, shiftMe);
+		
+		QModelIndex from = createIndex(curRow, 0, filters.at(curRow));
+		QModelIndex to = createIndex(curRow+1, 0, filters.at(curRow+1));
+		
+		emit dataChanged(from, to);
+		}
+	
+	void FilterListModel::moveFilterUp(const QModelIndex& idx)
+		{
+		if (idx.row() == 0)
+			return;
+		
+		int curRow = idx.row();
+		Filter * shiftMe = filters.takeAt(curRow-1);
+		filters.insert(curRow, shiftMe);
+		
+		QModelIndex from = createIndex(curRow-1, 0, filters.at(curRow-1));
+		QModelIndex to = createIndex(curRow, 0, filters.at(curRow));
+		
+		emit dataChanged(from, to);
 		}
 	
 	void FilterListModel::openFilterTab(const QModelIndex& idx)

@@ -37,6 +37,7 @@ namespace kt
 		Q_OBJECT
 	public:
 		Filter(const QString& name = QString());
+		Filter& operator=(const Filter& other);
 		~Filter();
 		
 		QString getName() const;

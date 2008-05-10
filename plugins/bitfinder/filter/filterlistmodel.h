@@ -48,11 +48,15 @@ namespace kt
 		virtual QModelIndex index(int row,int column,const QModelIndex & parent) const;
 		
  		QModelIndex next(const QModelIndex & idx) const;
+ 		QModelIndex previous(const QModelIndex & idx) const;
 		
 	public slots:
 		
 		Filter* addNewFilter(const QString& name);
+		void insertFilter(const QModelIndex& idx, Filter * filter);
 		void removeFilter(const QModelIndex& idx);
+		void moveFilterDown(const QModelIndex& idx);
+		void moveFilterUp(const QModelIndex& idx);
 		
 		void openFilterTab(const QModelIndex& idx);
 		

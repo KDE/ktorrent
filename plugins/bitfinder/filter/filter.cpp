@@ -51,6 +51,21 @@ namespace kt
 		
 		}
 		
+	Filter& Filter::operator=(const Filter& other)
+		{
+		name = other.getName();
+		type = other.getType();
+		group = other.getGroup();
+		expressions = other.getExpressions();
+		sourceListType = other.getSourceListType();
+		sourceList = other.getSourceList();
+		multiMatch = other.getMultiMatch();
+		rerelease = other.getRerelease();
+		captureChecker = other.getCaptureChecker();
+		
+		return *this;
+		}
+	
 	Filter::~Filter()
 		{
 		

@@ -45,8 +45,12 @@ namespace kt
 		
 		connect(filtersList,SIGNAL(doubleClicked(const QModelIndex &)),this,SIGNAL(doubleClicked(const QModelIndex&)));
 		connect(filtersList,SIGNAL(doubleClicked(const QModelIndex &)),filterListModel, SLOT(openFilterTab(const QModelIndex&)));
+		connect(filtersList->selectionModel(),SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), 
+				this, SLOT(onSelectionChanged()));
+		connect(filterListModel, SIGNAL(newFilterAdded(const QModelIndex&)), this, SLOT(onSelectionChanged()));
 		
 		setupFiltersActions();
+		onSelectionChanged();
 		}
 	
 	void FiltersView::setupFiltersActions()
@@ -65,6 +69,8 @@ namespace kt
 
 		connect(addFilter, SIGNAL(triggered(bool)), this, SLOT(addNewFilter()));
 		connect(removeFilter, SIGNAL(triggered(bool)), this, SLOT(removeFilters()));
+		connect(filterUp, SIGNAL(triggered(bool)), this, SLOT(moveFilterUp()));
+		connect(filterDown, SIGNAL(triggered(bool)), this, SLOT(moveFilterDown()));
 		
 		toolBar->addAction(addFilter);
 		toolBar->addAction(removeFilter);
@@ -93,6 +99,66 @@ namespace kt
 			{
 			filterListModel->removeFilter(rows.at(i));
 			}
+		}
+	
+	void FiltersView::moveFilterDown()
+		{
+		QModelIndexList rows = filtersList->selectionModel()->selectedRows();
+		
+		if (!rows.count())
+			return;
+		
+		filterListModel->moveFilterDown(rows.at(0));
+		
+		filtersList->selectionModel()->select(filterListModel->next(rows.at(0)),QItemSelectionModel::ClearAndSelect);
+		
+		}
+	
+	void FiltersView::moveFilterUp()
+		{
+		QModelIndexList rows = filtersList->selectionModel()->selectedRows();
+		
+		if (!rows.count())
+			return;
+		
+		filterListModel->moveFilterUp(rows.at(0));
+		
+		filtersList->selectionModel()->select(filterListModel->previous(rows.at(0)),QItemSelectionModel::ClearAndSelect);
+		
+		}
+	
+	void FiltersView::onSelectionChanged()
+		{
+		QModelIndexList rows = filtersList->selectionModel()->selectedRows();
+		
+		if (!rows.count())
+			{
+			removeFilter->setEnabled(false);
+			filterUp->setEnabled(false);
+			filterDown->setEnabled(false);
+			return;
+			}
+		
+		removeFilter->setEnabled(true);
+		
+		if (rows.at(0).row() == 0)
+			{
+			filterUp->setEnabled(false);
+			}
+		else
+			{
+			filterUp->setEnabled(true);
+			}
+		
+		if (rows.at(0).row() == filterListModel->rowCount(QModelIndex())-1)
+			{
+			filterDown->setEnabled(false);
+			}
+		else
+			{
+			filterDown->setEnabled(true);
+			}
+		
 		}
 	
 	}
