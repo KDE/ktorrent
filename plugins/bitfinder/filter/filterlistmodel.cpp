@@ -265,6 +265,7 @@ namespace kt
 		//done altering data
 		endRemoveRows();
 		
+		resetChangeTimer();
 		}
 	
 	void FilterListModel::moveFilterDown(const QModelIndex& idx)
@@ -280,6 +281,8 @@ namespace kt
 		QModelIndex to = createIndex(curRow+1, 0, filters.at(curRow+1));
 		
 		emit dataChanged(from, to);
+		
+		resetChangeTimer();
 		}
 	
 	void FilterListModel::moveFilterUp(const QModelIndex& idx)
@@ -295,6 +298,8 @@ namespace kt
 		QModelIndex to = createIndex(curRow, 0, filters.at(curRow));
 		
 		emit dataChanged(from, to);
+		
+		resetChangeTimer();
 		}
 	
 	void FilterListModel::openFilterTab(const QModelIndex& idx)
