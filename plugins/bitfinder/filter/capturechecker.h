@@ -25,6 +25,7 @@
 #include <QMap>
 #include <QString>
 #include <QPair>
+#include <QDomElement>
 
 #include "capture.h"
 
@@ -67,6 +68,8 @@ namespace kt
 			Capture getMinCapture() const;
 			Capture getMaxCapture() const;
 			Capture findCapture(QString sourceString, QString capture = QString()) const;
+			
+			QDomElement getXmlElement() const;
 		
 		public slots:
 			bool addNewCapture(const QString& name);
@@ -91,6 +94,7 @@ namespace kt
 			void capturesChanged(QMap<QString, QString> captures);
 			void variablesChanged(QList<Variable> variables);
 			void mappingsChanged(QMap<QPair<QString, QString>, int>);
+			void changed();
 		
 		private:
 			mutable QReadWriteLock lock;

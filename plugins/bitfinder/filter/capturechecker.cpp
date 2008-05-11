@@ -35,6 +35,10 @@ namespace kt
 		{
 		connect(this, SIGNAL(variablesChanged(QList< Variable >)), this, SLOT(updateMappings()));
 		connect(this, SIGNAL(capturesChanged(QMap< QString, QString >)), this, SLOT(updateMappings()));
+		
+		connect(this, SIGNAL(capturesChanged(QMap< QString, QString >)), this, SIGNAL(changed()));
+		connect(this, SIGNAL(variablesChanged(QList< Variable >)), this, SIGNAL(changed()));
+		connect(this, SIGNAL(mappingsChanged(QMap< QPair < QString , QString >, int >)), this, SIGNAL(changed()));
 		}
 	
 	QMap<QString, QString> CaptureChecker::getCaptures() const
@@ -150,6 +154,48 @@ namespace kt
 		
 		//we didn't get any matches that are inRange so here's the closest
 		return bestMatch;
+		}
+	
+	QDomElement CaptureChecker::getXmlElement() const
+		{
+		QReadLocker readLock(&lock);
+		
+		QDomDocument doc;
+		QDomElement captureChecker = doc.createElement("CaptureChecker");
+		
+// 		QMap<QString, QString> captures;
+		QMap<QString, QString>::const_iterator cit = captures.constBegin();
+		while ( cit != captures.constEnd() )
+			{
+			QDomElement capture = doc.createElement("Capture");
+			capture.setAttribute("Name", cit.key());
+			capture.setAttribute("Value", cit.value());
+			captureChecker.appendChild(capture);
+			cit++;
+			}
+// 		QList<Variable> variables;
+		for (int i=0; i<variables.count(); i++)
+			{
+			QDomElement variable = doc.createElement("Variable");
+			variable.setAttribute("Name", variables.at(i).name);
+			variable.setAttribute("Min", variables.at(i).min);
+			variable.setAttribute("Max", variables.at(i).max);
+			captureChecker.appendChild(variable);
+			}
+// 		QMap<QPair<QString, QString>, int> mappings;
+		QMap<QPair<QString, QString>, int>::const_iterator mit = mappings.constBegin();
+		
+		while ( mit != mappings.constEnd() )
+			{
+			QDomElement mapping = doc.createElement("Mapping");
+			mapping.setAttribute("Capture", mit.key().first);
+			mapping.setAttribute("Variable", mit.key().second);
+			mapping.setAttribute("Index", QString::number(mit.value()));
+			captureChecker.appendChild(mapping);
+			mit++;
+			}
+		
+		return captureChecker;
 		}
 	
 	bool CaptureChecker::addNewCapture(const QString& name)

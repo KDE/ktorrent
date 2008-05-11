@@ -23,7 +23,12 @@
 #include <klocale.h>
 #include <kactioncollection.h>
 
+#include <QDir>
+#include <QFileInfo>
+#include <QFile>
+
 #include <util/log.h>
+#include <interfaces/functions.h>
 //Out(SYS_BTF|LOG_DEBUG) << "Debug messages look like this - Place them somewhere useful" << endl;
 
 #include "bitfinderplugin.h"
@@ -39,6 +44,7 @@ namespace kt
 
 	BitFinderPlugin::BitFinderPlugin (QObject* parent, const QStringList& args) : Plugin (parent)
 		{
+		configDirName = kt::DataDir() + "bitfinder/";
 		Q_UNUSED (args);
 		}
 
@@ -70,6 +76,28 @@ namespace kt
 
 	void BitFinderPlugin::load()
 		{
+		//let's verify the settings directory exists
+		QFileInfo configDir(configDirName);
+		if (configDir.exists())
+			{
+			if (!configDir.isDir())
+				{
+				//it's a file :O
+				//delete the file, then create the directory
+				QFile vigilantie(configDirName);
+				vigilantie.remove();
+				QDir mkConfigDir;
+				mkConfigDir.mkdir(configDirName);
+				}
+			}
+		else
+			{
+			//doesn't exist - let's create it
+			QDir mkConfigDir;
+			mkConfigDir.mkdir(configDirName);
+			}
+		
+		
 		//Add the BF Sources Menu on the left dock
 		sourcesView = new SourcesView();
 		getGUI()->addToolWidget(sourcesView,"ktorrent",i18n("BF Sources"),GUIInterface::DOCK_LEFT);
@@ -81,7 +109,7 @@ namespace kt
 		tb->addAction(removeSource);
 		
 		//Build the filter model
-		filterListModel = new FilterListModel(getCore(), getGUI(), this);
+		filterListModel = new FilterListModel(configDirName + "filters/", getCore(), getGUI(), this);
 		
 		//Add the BF Filters Menu on the left dock
 		filtersView = new FiltersView(filterListModel);
@@ -91,6 +119,9 @@ namespace kt
 
 	void BitFinderPlugin::unload()
 		{
+		//let the filterListModel know we're unloading so it can tidy up and save its config
+		filterListModel->unload();
+		
 		//remove the BF Sources Menu
 		getGUI()->removeToolWidget(sourcesView);
 		delete sourcesView;

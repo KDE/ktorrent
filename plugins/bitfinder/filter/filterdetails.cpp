@@ -184,7 +184,7 @@ namespace kt
 		connect(this, SIGNAL(expressionsChanged(QStringList)), this, SLOT(checkTestString()));
 		connect(captureChecker, SIGNAL(capturesChanged(QMap< QString, QString >)), this, SLOT(checkTestString()));
 		connect(captureChecker, SIGNAL(variablesChanged(QList< Variable >)), this, SLOT(checkTestString()));
-		connect(captureChecker, SIGNAL(mappingsChanged(QMap<QPair<QString, QString>, int>)), this, SLOT(checkTestString()));
+		connect(captureChecker, SIGNAL(mappingsChanged()), this, SLOT(checkTestString()));
 		
 		//not actually filter related, but let's us set data before things start updating
 		connect(type, SIGNAL(currentIndexChanged( int )), this, SLOT(onTypeChange(int)));

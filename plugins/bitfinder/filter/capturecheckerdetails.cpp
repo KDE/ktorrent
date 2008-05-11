@@ -266,7 +266,7 @@ namespace kt
 		{
 		if (column != MAP_INDEX)
 			return;
-			
+		
 		QString captureName = mappings->item(row, MAP_CAPTURE)->text();
 		QString variableName = mappings->item(row, MAP_VARIABLE)->text();
 		int index = mappings->item(row, MAP_INDEX)->text().toInt();
@@ -377,12 +377,11 @@ namespace kt
 		connect(mappings, SIGNAL(cellChanged(int, int)), this, SLOT(verifyMappingInput(int, int)));
 		
 		updateMappingTest();
+		emit mappingsChanged();
 		}
 	
 	void CaptureCheckerDetails::updateMappingTest()
 		{
-		disconnect(mappings, SIGNAL(cellChanged(int, int)), this, SLOT(verifyMappingInput(int, int)));
-
 		//first clear the text on them all
 		for (int i=0; i<mappings->rowCount(); i++)
 			{
@@ -429,8 +428,6 @@ namespace kt
 				}
 			
 			}
-			
-		connect(mappings, SIGNAL(cellChanged(int, int)), this, SLOT(verifyMappingInput(int, int)));
 		}
 	
 	void CaptureCheckerDetails::emitCaptures()

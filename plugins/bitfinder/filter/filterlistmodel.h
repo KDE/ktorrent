@@ -23,6 +23,7 @@
 
 #include <QList>
 #include <QAbstractItemModel>
+#include <QTimer>
 #include <util/constants.h>
 
 #include <interfaces/guiinterface.h>
@@ -39,7 +40,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		FilterListModel(CoreInterface* core, GUIInterface* gui, QObject* parent);
+		FilterListModel(QString configDirName, CoreInterface* core, GUIInterface* gui, QObject* parent);
 		virtual ~FilterListModel();
 		
 		virtual int rowCount(const QModelIndex & parent) const;
@@ -51,6 +52,10 @@ namespace kt
  		QModelIndex previous(const QModelIndex & idx) const;
 		
 	public slots:
+		void unload();
+		
+		void saveFilters();
+		void resetChangeTimer();
 		
 		Filter* addNewFilter(const QString& name);
 		void insertFilter(const QModelIndex& idx, Filter * filter);
@@ -71,6 +76,8 @@ namespace kt
 	private:
 		virtual void tabCloseRequest (kt::GUIInterface* gui, QWidget* tab);
 		
+		QString configDirName;
+		QTimer changeTimeout;
 		QList<FilterDetails*> filterDetailsList;
 		CoreInterface* core;
 		GUIInterface* gui;

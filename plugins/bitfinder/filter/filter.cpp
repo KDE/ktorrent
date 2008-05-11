@@ -19,6 +19,8 @@
  ***************************************************************************/
 
 #include <QRegExp>
+#include <QDomDocument>
+#include <QDomText>
 
 #include <util/log.h>
 
@@ -48,6 +50,7 @@ namespace kt
 		connect(this, SIGNAL(sourceListChanged(QStringList)), this, SIGNAL(changed()));
 		connect(this, SIGNAL(multiMatchChanged(int)), this, SIGNAL(changed()));
 		connect(this, SIGNAL(rereleaseChanged(int)), this, SIGNAL(changed()));
+		connect(captureChecker, SIGNAL(changed()), this, SIGNAL(changed()));
 		
 		}
 		
@@ -200,6 +203,47 @@ namespace kt
 		
 		//made it this far? it's a match :)
 		return true;
+		}
+	
+	QDomElement Filter::getXmlElement() const
+		{
+		QReadLocker readLock(&lock);
+		
+		QDomDocument doc;
+		QDomElement filter = doc.createElement("Filter");
+		
+// 		QString name;
+		filter.setAttribute("Name", name);
+// 		int type;
+		filter.setAttribute("Type", FilterTypeText.at(type));
+// 		QString group;
+		filter.setAttribute("Group", group);
+// 		int sourceListType;
+		filter.setAttribute("SourceListType", SourceListTypeText.at(sourceListType));
+// 		int multiMatch;
+		filter.setAttribute("MultiMatch", MultiMatchText.at(multiMatch));
+// 		int rerelease;
+		filter.setAttribute("Rerelease", RereleaseText.at(rerelease));
+// 		QStringList sourceList;
+		for (int i=0; i<sourceList.count(); i++)
+			{
+			QDomElement source = doc.createElement("Source");
+			QDomText sourceName = doc.createTextNode(sourceList.at(i));
+			source.appendChild(sourceName);
+			filter.appendChild(source);
+			}
+// 		QStringList expressions;
+		for (int i=0; i<expressions.count(); i++)
+			{
+			QDomElement expression = doc.createElement("Expression");
+			QDomText expressionText = doc.createTextNode(expressions.at(i));
+			expression.appendChild(expressionText);
+			filter.appendChild(expression);
+			}
+// 		CaptureChecker * captureChecker;
+		filter.appendChild(captureChecker->getXmlElement());
+		
+		return filter;
 		}
 	
 	void Filter::setName(const QString& value)

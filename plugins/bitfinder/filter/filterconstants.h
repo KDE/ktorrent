@@ -21,11 +21,15 @@
 #ifndef KTFILTERCONSTANTS_H
 #define KTFILTERCONSTANTS_H
 
+#include <QStringList>
+
 enum FilterType
 	{
 	FT_REJECT,
 	FT_ACCEPT
 	};
+
+const QStringList FilterTypeText = QStringList() << "Reject" << "Accept";
 
 enum MultiMatch
 	{
@@ -33,6 +37,8 @@ enum MultiMatch
 	MM_ALWAYS_MATCH,
 	MM_CAPTURE_CHECKING
 	};
+	
+const QStringList MultiMatchText = QStringList() << "Once" << "Always" << "CaptureCheck";
 
 enum Rerelease
 	{
@@ -41,10 +47,14 @@ enum Rerelease
 	RR_DOWNLOAD_FIRST
 	};
 	
+const QStringList RereleaseText = QStringList() << "Ignore" << "All" << "First";
+	
 enum SourceListType
 	{
 	SL_EXCLUSIVE,
 	SL_INCLUSIVE
 	};
+
+const QStringList SourceListTypeText = QStringList() << "Exclusive" << "Inclusive";
 
 #endif

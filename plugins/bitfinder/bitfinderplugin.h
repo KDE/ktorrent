@@ -54,6 +54,9 @@ namespace kt
 // 			void onDoubleClicked(const QModelIndex & idx);
 
 		private:
+			//the config directory name
+			QString configDirName ;
+			
 			//Sources Variables
 			SourcesView * sourcesView;
  			KActionMenu * addSourceMenu;

@@ -20,6 +20,11 @@
 
 #include <kicon.h>
 
+#include <QDir>
+#include <QFileInfo>
+#include <QFile>
+#include <QTextStream>
+
 #include <util/log.h>
 
 #include "filterdetails.h"
@@ -30,9 +35,32 @@ using namespace bt;
 namespace kt
 	{
 
-	FilterListModel::FilterListModel ( CoreInterface* core, GUIInterface* gui, QObject* parent )
-			: QAbstractListModel ( parent ),core ( core ),gui ( gui )
+	FilterListModel::FilterListModel ( QString configDirName, CoreInterface* core, GUIInterface* gui, QObject* parent )
+			: QAbstractListModel ( parent ),configDirName(configDirName), core ( core ),gui ( gui )
 		{
+		//let's verify the settings directory exists
+		QFileInfo configDir(configDirName);
+		if (configDir.exists())
+			{
+			if (!configDir.isDir())
+				{
+				//it's a file :O
+				//delete the file, then create the directory
+				QFile vigilantie(configDirName);
+				vigilantie.remove();
+				QDir mkConfigDir;
+				mkConfigDir.mkdir(configDirName);
+				}
+			}
+		else
+			{
+			//doesn't exist - let's create it
+			QDir mkConfigDir;
+			mkConfigDir.mkdir(configDirName);
+			}
+		
+		changeTimeout.setSingleShot(true);
+		connect(&changeTimeout, SIGNAL(timeout()), this, SLOT(saveFilters()));
 		connect(this, SIGNAL(newFilterAdded(const QModelIndex&)), this, SLOT(openFilterTab(const QModelIndex&)));
 		}
 
@@ -91,6 +119,8 @@ namespace kt
 	
 	QModelIndex FilterListModel::index(int row,int column,const QModelIndex & parent) const
 		{
+		Q_UNUSED(parent);
+		
 		if (column != 0)
 			return QModelIndex();
 		
@@ -124,6 +154,53 @@ namespace kt
 		return createIndex ( prevRow, 0, filter );
 		}
 
+	void FilterListModel::unload()
+		{
+		//check all the filterDetail tabs to see if this one is there
+		for (int i=0; i<filterDetailsList.count(); i++)
+			{
+			//close any tabs we have open
+			FilterDetails * filterTab = filterDetailsList.at(i);
+			filterDetailsList.removeAt(i);
+			gui->removeTabPage(filterTab);
+			delete filterTab;
+			}
+		
+		//if changes have been made, but not saved - save them now
+		if (changeTimeout.isActive())
+			saveFilters();
+		}
+
+	void FilterListModel::saveFilters()
+		{
+		QDomDocument filterXml("BitFinderFilters");
+		
+		//grab the xml element for each of the filters
+		for (int i=0; i<filters.count(); i++)
+			{
+			filterXml.appendChild(filters.at(i)->getXmlElement());
+			}
+			
+		//try to save the configuration off
+		QFile file(configDirName + "filters.xml");
+		if (!file.open(QFile::WriteOnly | QFile::Text)) {
+			//may want to fire off a warning here
+			Out(SYS_BTF|LOG_IMPORTANT) << "Failed to save filters config to " << configDirName << "filters.xml" << endl;
+			return;
+		}
+		
+		QTextStream out(&file);
+		filterXml.save(out, 4);
+		}
+	
+	void FilterListModel::resetChangeTimer()
+		{
+		//this will cause a save to be triggered after a change
+		//if multiple changes occur during that time it will reset
+		//Should it seem to save too often increase this number
+		changeTimeout.start(20000);
+		}
+
 	Filter* FilterListModel::addNewFilter ( const QString& name )
 		{
 		//seeing we're altering the data we need to let things know about it
@@ -137,6 +214,8 @@ namespace kt
 		
 		connect(curFilter, SIGNAL(nameChanged(const QString&)), this, SLOT(emitDataChanged()));
 		connect(curFilter, SIGNAL(typeChanged(int)), this, SLOT(emitDataChanged()));
+		
+		connect(curFilter, SIGNAL(changed()), this, SLOT(resetChangeTimer()));
 		
 		emit newFilterAdded(createIndex(filters.count()-1, 0, curFilter));
 		
@@ -156,6 +235,7 @@ namespace kt
 		connect(filter, SIGNAL(nameChanged(const QString&)), this, SLOT(emitDataChanged()));
 		connect(filter, SIGNAL(typeChanged(int)), this, SLOT(emitDataChanged()));
 		
+		connect(filter, SIGNAL(changed()), this, SLOT(resetChangeTimer()));
 		}
 	
 	void FilterListModel::removeFilter(const QModelIndex& idx)

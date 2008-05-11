@@ -45,6 +45,7 @@ namespace kt
 	Capture& Capture::operator=(const Capture& other)
 		{
 		QWriteLocker writeLock(&lock);
+		QObject();
 		
 		variables = other.getVariables();
 		

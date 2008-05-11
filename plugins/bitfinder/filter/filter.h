@@ -25,6 +25,8 @@
 #include <QString>
 #include <QStringList>
 #include <QReadWriteLock>
+#include <QDomElement>
+
 #include <util/constants.h>
 
 #include "filterconstants.h"
@@ -53,6 +55,8 @@ namespace kt
 		
 		bool checkExpressionMatch(const QString& string) const;
 		bool checkMatch(const QString& string) const;
+		
+		QDomElement getXmlElement() const;
 		
 	public slots:
 		void setName(const QString& value);
@@ -86,7 +90,6 @@ namespace kt
 		QStringList expressions;
 		int multiMatch;
 		int rerelease;
-		QStringList captureExpressions;
 		CaptureChecker * captureChecker;
 		int sourceListType;
 		QStringList sourceList;

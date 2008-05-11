@@ -95,6 +95,7 @@ namespace kt
 		signals:
 			void capturesChanged(QMap<QString, QString> captures);
 			void variablesChanged(QList<Variable> variables);
+			void mappingsChanged();
 		
 		private:
 			CaptureChecker* captureChecker;
