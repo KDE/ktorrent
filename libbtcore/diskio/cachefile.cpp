@@ -35,6 +35,7 @@
 #include <util/fileops.h>
 #include <util/log.h>
 #include <util/error.h>
+#include <util/functions.h>
 #include "preallocationthread.h"
 #include "cache.h"
 
@@ -484,14 +485,18 @@ namespace bt
 			openFile(READ);
 			close_again = true;
 		}
-
+#ifdef HAVE_FSTAT64
+		struct stat64 sb;
+		if (fstat64(fd,&sb) == 0)
+#else
 		struct stat sb;
 		if (fstat(fd,&sb) == 0)
+#endif
 		{
 			ret = (Uint64)sb.st_blocks * 512;
 		}
 		
-	//	Out(SYS_GEN|LOG_NOTICE) << "CF: " << path << " is taking up " << ret << " bytes" << endl;
+	//	Out(SYS_DIO|LOG_NOTICE) << "CF: " << path << " is taking up " << BytesToString(ret) << " bytes" << endl;
 		if (close_again)
 			closeTemporary();
 

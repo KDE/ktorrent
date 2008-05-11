@@ -162,7 +162,7 @@ namespace kt
 
 		if (start_tc)
 		{
-			startInternal(tc);
+			return startInternal(tc);
 		}
 		else
 		{

@@ -1746,11 +1746,13 @@ namespace bt
 		Uint64 bytes_free = 0;
 		if (FreeDiskSpace(getDataDir(),bytes_free))
 		{
+			Out(SYS_GEN|LOG_DEBUG) << "FreeBytes " << BytesToString(bytes_free) << endl;
 			Uint64 bytes_to_download = stats.total_bytes_to_download;
 			Uint64 downloaded = 0;
 			try
 			{
 				downloaded = cman->diskUsage();
+				Out(SYS_GEN|LOG_DEBUG) << "Downloaded " << BytesToString(downloaded) << endl;
 			}
 			catch (bt::Error & err)
 			{
@@ -1760,6 +1762,7 @@ namespace bt
 			if (downloaded <= bytes_to_download)
 				remaining = bytes_to_download - downloaded;
 
+			Out(SYS_GEN|LOG_DEBUG) << "Remaining " << BytesToString(remaining) << endl;
 			if (remaining > bytes_free)
 			{
 				bool toStop = bytes_free < (Uint64) min_diskspace * 1024 * 1024;						
