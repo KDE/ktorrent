@@ -60,6 +60,8 @@ namespace kt
 		QDomElement getXmlElement() const;
 		
 	public slots:
+		void removeExpression(const QString& value);
+	
 		void setName(const QString& value);
 		void setType(int value);
 		void setGroup(const QString& value);

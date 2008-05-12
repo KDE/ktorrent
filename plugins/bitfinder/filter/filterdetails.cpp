@@ -216,6 +216,8 @@ namespace kt
 		connect(this, SIGNAL(rereleaseChanged(int)), value, SLOT(setRerelease(int)));
 		connect(this, SIGNAL(rereleaseTermsChanged(const QString&)), value, SLOT(setRereleaseTerms(const QString&)));
 		
+		connect(value, SIGNAL(expressionsChanged(QStringList)), this, SLOT(setExpressions(QStringList)));
+		
 		}
 		
 	void FilterDetails::setFilter(Filter * value)
@@ -254,8 +256,6 @@ namespace kt
 			{
 			value << expressions->item(i)->text();
 			}
-		
-		Out(SYS_BTF|LOG_DEBUG) << "Emitting expressions changed to: " << value.join(" ") << endl;
 		
 		emit expressionsChanged(value);
 		}
@@ -317,6 +317,7 @@ namespace kt
 	
 	void FilterDetails::setExpressions(QStringList value)
 		{
+		Out(SYS_BTF|LOG_DEBUG) << "Updating expressions to: " << value.join (" ") << endl;
 		expressions->clear();
 		expressions->addItems(value);
 		
@@ -373,7 +374,7 @@ namespace kt
 	void FilterDetails::removeExpression()
 		{
 		if (expressions->selectedItems().count())
-			expressions->removeItemWidget(expressions->selectedItems().at(0));
+			filter->removeExpression(expressions->selectedItems().at(0)->text());
 		}
 	
 	void FilterDetails::onExpressionSelectionChange()

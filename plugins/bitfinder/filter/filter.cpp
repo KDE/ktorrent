@@ -255,6 +255,17 @@ namespace kt
 		return filter;
 		}
 	
+	void Filter::removeExpression(const QString& value)
+		{
+		{//limit the scope of the writeLock
+		QWriteLocker writeLock(&lock);
+		
+		expressions.removeAll(value);
+		}//writeLock is out of scope now :)
+		
+		emit expressionsChanged(expressions);
+		}
+	
 	void Filter::setName(const QString& value)
 		{
 		bool newValue;
