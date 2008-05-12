@@ -37,7 +37,7 @@ namespace kt
 		type = FT_ACCEPT;
 		group = "Ungrouped";
 		multiMatch = MM_ALWAYS_MATCH;
-		rerelease = RR_DOWNLOAD_ALL;
+		rerelease = RR_IGNORE;
 		sourceListType = SL_EXCLUSIVE;
 		
 		captureChecker = new CaptureChecker(this);
@@ -50,6 +50,7 @@ namespace kt
 		connect(this, SIGNAL(sourceListChanged(QStringList)), this, SIGNAL(changed()));
 		connect(this, SIGNAL(multiMatchChanged(int)), this, SIGNAL(changed()));
 		connect(this, SIGNAL(rereleaseChanged(int)), this, SIGNAL(changed()));
+		connect(this, SIGNAL(rereleaseTermsChanged(const QString&)), this, SIGNAL(changed()));
 		connect(captureChecker, SIGNAL(changed()), this, SIGNAL(changed()));
 		
 		}
@@ -128,6 +129,12 @@ namespace kt
 		return rerelease;
 		}
 	
+	QString Filter::getRereleaseTerms() const
+		{
+		QReadLocker readLock(&lock);
+		return rereleaseTerms;
+		}
+		
 	CaptureChecker* Filter::getCaptureChecker() const
 		{
 		QReadLocker readLock(&lock);
@@ -224,6 +231,8 @@ namespace kt
 		filter.setAttribute("MultiMatch", MultiMatchText.at(multiMatch));
 // 		int rerelease;
 		filter.setAttribute("Rerelease", RereleaseText.at(rerelease));
+//		//QString rereleaseTerms
+		filter.setAttribute("RereleaseTerms", rereleaseTerms);
 // 		QStringList sourceList;
 		for (int i=0; i<sourceList.count(); i++)
 			{
@@ -367,6 +376,21 @@ namespace kt
 		}//writeLock is out of scope now :)
 		if (newValue)
 			emit rereleaseChanged(rerelease);
+		}
+		
+	void Filter::setRereleaseTerms(const QString& value)
+		{
+		bool newValue;
+		
+		{//limit the scope of the writeLock
+		QWriteLocker writeLock(&lock);
+		
+		newValue = rereleaseTerms != value;
+		
+		rereleaseTerms = value;
+		}//writeLock is out of scope now :)
+		if (newValue)
+			emit rereleaseTermsChanged(rereleaseTerms);
 		}
 		
 	

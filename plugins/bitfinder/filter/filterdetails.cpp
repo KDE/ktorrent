@@ -18,6 +18,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <kinputdialog.h>
+
 #include <groups/groupmanager.h>
 
 #include "filterdetails.h"
@@ -53,18 +55,33 @@ namespace kt
 		//make sure multimatch is correct for the torrent type setting
 		onTypeChange(type->currentIndex());
 		
+		//captureCheck - get it's enabled state set correctly.
+		onMultiMatchChange(multiMatch->currentIndex());
+		
 		//rerelease
 		rerelease->addItem("Ignore Rereleases", RR_IGNORE);
 		rerelease->addItem("Download All Rereleases", RR_DOWNLOAD_ALL);
 		rerelease->addItem("Download First Rereleases", RR_DOWNLOAD_FIRST);
+		onRereleaseChange(rerelease->currentIndex());
+		
 		//sourceListType
 		sourceListType->addItem("Exclusive", SL_EXCLUSIVE);
 		sourceListType->addItem("Inclusive", SL_INCLUSIVE);
 		
 		//multiMatchToolbar - for adding loading (and maybe saving) presets
 		
-		//captureCheck - get it's enabled state set correctly.
-		onMultiMatchChange(multiMatch->currentIndex());
+		//expressionsToolbar - for adding and removing expressions
+		expressionsToolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+		expressionsToolbar->setOrientation(Qt::Vertical);
+		expressionsToolbar->setIconDimensions(16);
+		expressionAdd = new KAction(KIcon("list-add"),i18n("Add Expression"),this);
+		expressionRemove = new KAction(KIcon("list-remove"),i18n("Remove Expression"),this);
+		expressionsToolbar->addAction(expressionAdd);
+		expressionsToolbar->addAction(expressionRemove);
+		expressionRemove->setEnabled(false);
+		connect(expressionAdd, SIGNAL(triggered( bool )), this, SLOT(addExpression()));
+		connect(expressionRemove, SIGNAL(triggered( bool )), this, SLOT(removeExpression()));
+		connect(expressions, SIGNAL(itemSelectionChanged()), this, SLOT(onExpressionSelectionChange()));
 		
 		//sourceListToolbar - for adding and removing sources
 		sourceListToolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
@@ -73,6 +90,7 @@ namespace kt
 		sourceAdd = new KActionMenu(KIcon("list-add"),i18n("Add Source"),this);
 		sourceAdd->setDelayed(false);
 		sourceRemove = new KAction(KIcon("list-remove"),i18n("Remove Source"),this);
+		sourceRemove->setEnabled(false);
 		sourceListToolbar->addAction(sourceAdd);
 		sourceListToolbar->addAction(sourceRemove);
 		
@@ -83,11 +101,12 @@ namespace kt
 		connect(name, SIGNAL(textChanged( const QString& )), this, SIGNAL(nameChanged(const QString&)));
 		connect(type, SIGNAL(currentIndexChanged( int )), this, SLOT(emitType()));
 		connect(group, SIGNAL(currentIndexChanged( const QString& )), this, SIGNAL(groupChanged(const QString&)));
-		connect(expressions, SIGNAL(changed()), this, SLOT(emitExpressions()));
+		connect(expressions, SIGNAL(itemChanged( QListWidgetItem* )), this, SLOT(emitExpressions()));
 		connect(sourceListType, SIGNAL(currentIndexChanged( int )), this, SLOT(emitSourceListType()));
 		connect(sourceList, SIGNAL(itemChanged( QListWidgetItem* )), this, SLOT(emitSourceList()));
 		connect(multiMatch, SIGNAL(currentIndexChanged( int )), this, SLOT(emitMultiMatch()));
 		connect(rerelease, SIGNAL(currentIndexChanged( int )), this, SLOT(emitRerelease()));
+		connect(rereleaseTerms, SIGNAL(textChanged( const QString& )), this, SIGNAL(rereleaseTermsChanged(const QString&)));
 		
 		}
 	
@@ -120,13 +139,12 @@ namespace kt
 		{
 		captureChecker->setEnabled(multiMatch->itemData(curIndex) == MM_CAPTURE_CHECKING);
 		rerelease->setEnabled(multiMatch->itemData(curIndex) != MM_ALWAYS_MATCH);
+		onRereleaseChange(rerelease->currentIndex());
 		captureChecker->resizeColumns();
 		}
 	
 	void FilterDetails::onTypeChange(int curIndex)
 		{
-// 		int curMultiMatch = multiMatch->itemData(multiMatch->currentIndex()).toInt();
-// 		Out(SYS_BTF|LOG_DEBUG) << "current MultiMatch: " << curMultiMatch << endl;
 		if (type->itemData(curIndex) == FT_REJECT)
 			{
 			if (multiMatch->itemData(0) == MM_ONCE_ONLY)
@@ -141,19 +159,13 @@ namespace kt
 				multiMatch->insertItem(0, "Match once only", MM_ONCE_ONLY);
 				}
 			}
-		
-// 		for (int i=0; i<multiMatch->count(); i++)
-// 			{
-// 			if (multiMatch->itemData(i) == curMultiMatch)
-// 				{
-// 				multiMatch->setCurrentIndex(i);
-// 				return;
-// 				}
-// 			}
-// 		
-// 		Out(SYS_BTF|LOG_DEBUG) << "Post: " << multiMatch->itemData(multiMatch->currentIndex()).toInt() << endl;
 		}
 	
+	void FilterDetails::onRereleaseChange(int curIndex)
+		{
+		rereleaseTerms->setEnabled(rerelease->itemData(curIndex) != RR_IGNORE);
+		}
+		
 	void FilterDetails::refreshSizes()
 		{
 		captureChecker->resizeColumns();
@@ -167,13 +179,15 @@ namespace kt
 		onTypeChange(type->currentIndex());
 		group->setCurrentIndex(group->findText(value->getGroup()));
 		expressions->clear();
-		expressions->insertStringList(value->getExpressions());
+		expressions->addItems(value->getExpressions());
 		setSourceListType(value->getSourceListType());
 		sourceList->clear();
 		sourceList->addItems(value->getSourceList());
 		setMultiMatch(value->getMultiMatch());
 		onMultiMatchChange(multiMatch->currentIndex());
 		setRerelease(value->getRerelease());
+		onRereleaseChange(rerelease->currentIndex());
+		rereleaseTerms->setText(value->getRereleaseTerms());
 		captureChecker->setCaptureChecker(value->getCaptureChecker());
 		
 		connect(testString, SIGNAL(textChanged( const QString& )), captureChecker, SLOT(setTestString(const QString&)));
@@ -189,6 +203,7 @@ namespace kt
 		//not actually filter related, but let's us set data before things start updating
 		connect(type, SIGNAL(currentIndexChanged( int )), this, SLOT(onTypeChange(int)));
 		connect(multiMatch, SIGNAL(currentIndexChanged( int )), this, SLOT(onMultiMatchChange(int)));
+		connect(rerelease, SIGNAL(currentIndexChanged( int )), this, SLOT(onRereleaseChange(int)));
 		
 		//connect the signals to push changes to the value
 		connect(this, SIGNAL(nameChanged(const QString&)), value, SLOT(setName(const QString&)));
@@ -199,6 +214,7 @@ namespace kt
 		connect(this, SIGNAL(sourceListChanged(QStringList)), value, SLOT(setSourceList(QStringList)));
 		connect(this, SIGNAL(multiMatchChanged(int)), value, SLOT(setMultiMatch(int)));
 		connect(this, SIGNAL(rereleaseChanged(int)), value, SLOT(setRerelease(int)));
+		connect(this, SIGNAL(rereleaseTermsChanged(const QString&)), value, SLOT(setRereleaseTerms(const QString&)));
 		
 		}
 		
@@ -232,7 +248,16 @@ namespace kt
 	void FilterDetails::emitExpressions()
 		{
 		//for taking changes to the expressions list and pushing them over to the filter
-		emit expressionsChanged(expressions->items());
+		QStringList value;
+		
+		for (int i=0; i<expressions->count(); i++)
+			{
+			value << expressions->item(i)->text();
+			}
+		
+		Out(SYS_BTF|LOG_DEBUG) << "Emitting expressions changed to: " << value.join(" ") << endl;
+		
+		emit expressionsChanged(value);
 		}
 		
 	void FilterDetails::emitSourceListType()
@@ -290,6 +315,17 @@ namespace kt
 			}
 		}
 	
+	void FilterDetails::setExpressions(QStringList value)
+		{
+		expressions->clear();
+		expressions->addItems(value);
+		
+		for (int i=0; i<expressions->count(); i++)
+			{
+			expressions->item(i)->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEditable|Qt::ItemIsEnabled);
+			}
+		}
+		
 	void FilterDetails::setMultiMatch(int value)
 		{
 		for (int i=0; i<multiMatch->count(); i++)
@@ -316,6 +352,33 @@ namespace kt
 			}
 			
 		checkTestString();
+		}
+	
+	void FilterDetails::addExpression()
+		{
+		bool ok = false;
+		QString name = KInputDialog::getText(i18n("Add Expression"), 
+					i18n("Please enter the expression."),QString(),&ok,this);
+		
+		if (ok)
+			{
+			if (filter)
+				{
+				expressions->addItem(name);
+				expressions->item(expressions->count()-1)->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEditable|Qt::ItemIsEnabled);
+				}
+			}
+		}
+	
+	void FilterDetails::removeExpression()
+		{
+		if (expressions->selectedItems().count())
+			expressions->removeItemWidget(expressions->selectedItems().at(0));
+		}
+	
+	void FilterDetails::onExpressionSelectionChange()
+		{
+		expressionRemove->setEnabled(expressions->selectedItems().count());
 		}
 	
 	void FilterDetails::checkTestString()

@@ -45,6 +45,7 @@ namespace kt
 			void updateGroupList(QString oldName=QString(), QString newName=QString());
 			void onMultiMatchChange(int curIndex);
 			void onTypeChange(int curIndex);
+			void onRereleaseChange(int curIndex);
 			void refreshSizes();
 			
 			void connectFilter(Filter * value);
@@ -62,8 +63,12 @@ namespace kt
 			//function to translate from Filter format for data
 			void setType(int value);
 			void setSourceListType(int value);
+			void setExpressions(QStringList value);
 			void setMultiMatch(int value);
 			void setRerelease(int value);
+			void addExpression();
+			void removeExpression();
+			void onExpressionSelectionChange();
 			
 			void checkTestString();
 		signals:
@@ -75,11 +80,15 @@ namespace kt
 			void sourceListChanged(QStringList sourceList);
 			void multiMatchChanged(int multiMatch);
 			void rereleaseChanged(int rerelease);
+			void rereleaseTermsChanged(const QString& rereleaseTerms);
 		
 		private:
 			CoreInterface* core;
 			
 			Filter * filter;
+			
+			KAction* expressionAdd;
+			KAction* expressionRemove;
 			
 			KActionMenu* sourceAdd;
 			KAction* sourceRemove;

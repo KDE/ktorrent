@@ -51,6 +51,7 @@ namespace kt
 		QStringList getSourceList() const;
 		int getMultiMatch() const;
 		int getRerelease() const;
+		QString getRereleaseTerms() const;
 		CaptureChecker* getCaptureChecker() const;
 		
 		bool checkExpressionMatch(const QString& string) const;
@@ -67,6 +68,7 @@ namespace kt
 		void setSourceList(QStringList value);
 		void setMultiMatch(int value);
 		void setRerelease(int value);
+		void setRereleaseTerms(const QString& value);
 	
 	signals:
 		void changed();
@@ -78,6 +80,7 @@ namespace kt
 		void sourceListChanged(QStringList expressions);
 		void multiMatchChanged(int multiMatch);
 		void rereleaseChanged(int rerelease);
+		void rereleaseTermsChanged(const QString& name);
 		
 	protected:
 		virtual void run();
@@ -90,6 +93,7 @@ namespace kt
 		QStringList expressions;
 		int multiMatch;
 		int rerelease;
+		QString rereleaseTerms;
 		CaptureChecker * captureChecker;
 		int sourceListType;
 		QStringList sourceList;
