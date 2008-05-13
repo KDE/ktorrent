@@ -24,7 +24,7 @@
 #include <kdemacros.h>
 
 #ifndef BTCORE_EXPORT
-# if defined(MAKE_BTCORE_LIB)
+# if defined(MAKE_BTCORE_LIB) || defined(MAKE_KGET_BITTORRENTFACTORY_LIB)
    /* We are building this library */ 
 #  define BTCORE_EXPORT KDE_EXPORT
 # else

@@ -55,7 +55,7 @@ namespace bt
 			return s.download_rate;
 		}
 	}
-	Uint32 TimeEstimator::bytesLeft() const
+	Uint64 TimeEstimator::bytesLeft() const
 	{
 		const TorrentStats& s = m_tc->getStats();
 		if (s.completed)
@@ -276,7 +276,7 @@ namespace bt
 			return m_lastETA;
 		}
 
-		if (percentage >= 99 && m_samples->last() > 0 && bytesLeft() <= 10*1024*1024*1024) //1% of a very large torrent could be hundreds of MB so limit it to 10MB
+		if (percentage >= 99 && m_samples->last() > 0 && bytesLeft() <= 10*1024*1024*1024LL) //1% of a very large torrent could be hundreds of MB so limit it to 10MB
 		{
 
 			if (!m_samples->isFull())

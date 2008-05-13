@@ -104,7 +104,7 @@ namespace bt
 			int estimateKT();
 			
 			Uint32 sample() const;
-			Uint32 bytesLeft() const;
+			Uint64 bytesLeft() const;
 			
 			TorrentControl* m_tc;
 			SampleQueue* m_samples;

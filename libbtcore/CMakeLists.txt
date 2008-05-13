@@ -170,10 +170,10 @@ set(libbtcore_SRC
 	btversion.cpp
 )
 
-if(CMAKE_SYSTEM MATCHES "Windows")
+if(WIN32)
 # Compile MinGW stuff on windows
 set(libbtcore_SRC ${libbtcore_SRC} util/mingw.cpp)
-endif(CMAKE_SYSTEM MATCHES "Windows")
+endif(WIN32)
 
 
 # kde4_add_ui_files(libbtcore_SRC ${libbtcore_UI})
