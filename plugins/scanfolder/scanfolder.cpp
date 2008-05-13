@@ -45,7 +45,7 @@ using namespace bt;
 namespace kt
 {
 
-	ScanFolder::ScanFolder(CoreInterface* core, QString& dir, LoadedTorrentAction action)
+	ScanFolder::ScanFolder(CoreInterface* core, const QString& dir, LoadedTorrentAction action)
 			: m_core(core), m_dir(0), m_loadedAction(action)
 	{
 		bt::Out(SYS_SNF|LOG_NOTICE) << "ScanFolder : scanning " << dir << endl;

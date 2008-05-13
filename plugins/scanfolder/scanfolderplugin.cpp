@@ -109,7 +109,7 @@ namespace kt
 			}
 		}
 		
-		foreach (QString folder,folders)
+		foreach (const QString &folder,folders)
 		{
 			if (m_sf_map.find(folder))
 				continue;

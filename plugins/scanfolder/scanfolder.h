@@ -64,7 +64,7 @@ namespace kt
 			 * @param dir Full directory path
 			 * @param action Action to perform on loaded torrents.
 			 */
-			ScanFolder(CoreInterface* core, QString& dir, LoadedTorrentAction action = defaultAction);
+			ScanFolder(CoreInterface* core, const QString& dir, LoadedTorrentAction action = defaultAction);
 			~ScanFolder();
 
 
