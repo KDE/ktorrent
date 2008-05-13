@@ -232,13 +232,13 @@ namespace kt
 		{
 			total_number_of_media_files += item->multimedia_files.count();
 			items.append(item);
-			insertRow(items.count());
+			insertRow(items.count() - 1);
 		}
 		else if (!tc->getStats().multi_file_torrent && tc->isMultimedia())
 		{
 			total_number_of_media_files++;
 			items.append(item);
-			insertRow(items.count());
+			insertRow(items.count() - 1);
 		}
 		else
 		{
