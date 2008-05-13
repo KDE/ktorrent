@@ -23,6 +23,7 @@
 #include <qmap.h>
 #include <qmutex.h>
 #include <qstring.h>
+#include <QFile>
 #include <util/constants.h>
 
 namespace bt
@@ -50,8 +51,9 @@ namespace bt
 		
 		Used by Single and MultiFileCache to write to disk.
 	*/
-	class CacheFile
+	class CacheFile : public QObject
 	{
+		Q_OBJECT
 	public:
 		CacheFile();
 		virtual ~CacheFile();
@@ -125,9 +127,13 @@ namespace bt
 		void growFile(Uint64 to_write);
 		void closeTemporary();
 		void openFile(Mode mode);
+		void unmapAll();
+
+	private slots:
+		void aboutToClose();
 		
 	private:
-		int fd;
+		QFile* fptr;
 		bool read_only;
 		Uint64 max_size,file_size;
 		QString path;
@@ -142,6 +148,7 @@ namespace bt
 		};
 		QMap<void*,Entry> mappings; // mappings where offset wasn't a multiple of 4K
 		mutable QMutex mutex;
+		bool manual_close;
 	};
 
 }

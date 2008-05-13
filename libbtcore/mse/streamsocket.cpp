@@ -24,9 +24,14 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <QtGlobal>
+#ifndef Q_WS_WIN
 #include <netinet/in.h>
 #include <netinet/in_systm.h>
 #include <netinet/ip.h> 
+#else
+#define IPTOS_THROUGHPUT 0x08
+#endif
 #include <netinet/tcp.h>
 #include <net/socketmonitor.h>
 #include "rc4encryptor.h"

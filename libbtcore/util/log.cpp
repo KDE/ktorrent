@@ -31,8 +31,8 @@
 #include <qmutex.h> 
 #include "error.h"
 #include "autorotatelogjob.h"
+#include <kdebug.h>
 #include "compressfilejob.h"
-
 
 namespace bt
 {

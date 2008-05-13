@@ -49,6 +49,7 @@ namespace kt
 		pm = new QSortFilterProxyModel(this);
 		pm->setSourceModel(model);
 		pm->setSortRole(Qt::UserRole);
+	//	pm->setDynamicSortFilter(true);
 		setModel(pm);
 		
 		context_menu = new KMenu(this);
@@ -109,8 +110,10 @@ namespace kt
 
 	void PeerView::update()
 	{
-		 if (model->update())
-			 pm->invalidate();
+		if (model->update())
+		{
+			pm->invalidate();
+		}
 	}
 
 	void PeerView::removeAll()

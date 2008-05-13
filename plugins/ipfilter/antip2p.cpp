@@ -90,7 +90,7 @@ namespace kt
 	void AntiP2P::load()
 	{
 		file = new MMapFile();
-		if(! file->open(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat", MMapFile::READ) )
+		if(! file->open(KGlobal::dirs()->saveLocation("data","ktorrent") + "level1.dat", QIODevice::ReadOnly) )
 		{
 			Out(SYS_IPF|LOG_NOTICE) << "Anti-p2p file not loaded." << endl;
 			file = 0;

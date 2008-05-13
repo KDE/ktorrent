@@ -21,6 +21,7 @@
 
 #include <config-btcore.h>
 
+#include <kdebug.h>
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -55,15 +56,16 @@
 namespace bt
 {
 
-	CacheFile::CacheFile() : fd(-1),max_size(0),file_size(0),mutex(QMutex::Recursive)
+	CacheFile::CacheFile() : fptr(0),max_size(0),file_size(0),mutex(QMutex::Recursive)
 	{
 		read_only = false;
+		manual_close = false;
 	}
 
 
 	CacheFile::~CacheFile()
 	{
-		if (fd != -1)
+		if (fptr)
 			close();
 	}
 	
@@ -77,21 +79,24 @@ namespace bt
 		int flags = O_LARGEFILE;
 		
 		// by default always try read write
-		fd = ::open(QFile::encodeName(path),flags | O_RDWR);
-		if (fd < 0 && mode == READ)
+		fptr = new QFile(path);
+		connect(fptr,SIGNAL(aboutToClose()),this,SLOT(aboutToClose()));
+		bool ok = false;
+		if (!(ok = fptr->open(QIODevice::ReadWrite)))
 		{
 			// in case RDWR fails, try readonly if possible
-			fd = ::open(QFile::encodeName(path),flags | O_RDONLY);
-			if (fd >= 0)
+			if (mode == READ && (ok = fptr->open(QIODevice::ReadOnly)))
 				read_only = true;
 		}
 		
-		if (fd < 0)
+		if (!ok)
 		{
+			delete fptr;
+			fptr = 0;
 			throw Error(i18n("Cannot open %1 : %2",path,strerror(errno)));
 		}
 		
-		file_size = FileSize(fd);
+		file_size = fptr->size();
 	}
 	
 	void CacheFile::open(const QString & path,Uint64 size)
@@ -106,7 +111,7 @@ namespace bt
 	{
 		QMutexLocker lock(&mutex);
 		// reopen the file if necessary
-		if (fd == -1)
+		if (!fptr)
 		{
 		//	Out(SYS_DIO|LOG_DEBUG) << "Reopening " << path << endl;
 			openFile(mode);
@@ -145,6 +150,8 @@ namespace bt
 			growFile(to_write);
 		}
 		
+#ifndef Q_WS_WIN
+		int fd = fptr->handle();
 		Uint32 page_size = sysconf(_SC_PAGESIZE);
 		if (off % page_size > 0)
 		{
@@ -201,12 +208,34 @@ namespace bt
 				return ptr;
 			}
 		}
+#else // Q_WS_WIN
+		char* ptr = (char*)fptr->map(off,size);
+		
+		if (!ptr) 
+		{
+			Out(SYS_DIO|LOG_DEBUG) << "mmap failed3 : " << fptr->handle() << " " << QString(strerror(errno)) << endl;
+			Out(SYS_DIO|LOG_DEBUG) << off << " " << size << endl;
+			return 0;
+		}
+		else
+		{
+			CacheFile::Entry e;
+			e.thing = thing;
+			e.offset = off;
+			e.ptr = ptr;
+			e.diff = 0;
+			e.size = size;
+			e.mode = mode;
+			mappings.insert(ptr,e);
+			return ptr;
+		}
+#endif
 	}
 	
 	void CacheFile::growFile(Uint64 to_write)
 	{
 		// reopen the file if necessary
-		if (fd == -1)
+		if (!fptr)
 		{
 		//	Out(SYS_DIO|LOG_DEBUG) << "Reopening " << path << endl;
 			openFile(RW);
@@ -215,8 +244,6 @@ namespace bt
 		if (read_only)
 			throw Error(i18n("Cannot open %1 for writing : readonly filesystem",path));
 		
-		// jump to the end of the file
-		SeekFile(fd,0,SEEK_END);
 		
 		if (file_size + to_write > max_size)
 		{
@@ -224,36 +251,30 @@ namespace bt
 			Out(SYS_DIO|LOG_DEBUG) << (file_size + to_write) << " " << max_size << endl;
 		}
 		
-		Uint8 buf[1024];
-		memset(buf,0,1024);
-		Uint64 num = to_write;
-		// write data until to_write is 0
-		while (to_write > 0)
-		{
-			int nb = to_write > 1024 ? 1024 : to_write;
-			int ret = ::write(fd,buf,nb);
-			if (ret < 0)
-				throw Error(i18n("Cannot expand file %1 : %2",path,strerror(errno)));
-			else if (ret != nb)
-				throw Error(i18n("Cannot expand file %1 : incomplete write",path));
-			to_write -= nb;
-		}
-		file_size += num;
-
-		if (file_size != FileSize(fd))
-		{
-			fsync(fd);
-			if (file_size != FileSize(fd))
-			{
-				throw Error(i18n("Cannot expand file %1",path));
-			}
-		}
+		if (!fptr->resize(file_size + to_write))
+			throw Error(i18n("Cannot expand file %1 : %2",path,fptr->errorString()));
 	}
 		
 	void CacheFile::unmap(void* ptr,Uint32 size)
 	{
 		int ret = 0;
 		QMutexLocker lock(&mutex);
+#ifdef Q_OS_WIN
+		if (!fptr)
+			return;
+			
+		if (mappings.contains(ptr))
+		{
+			CacheFile::Entry & e = mappings[ptr];
+			if (!fptr->unmap((uchar*)e.ptr))
+				Out(SYS_DIO|LOG_IMPORTANT) << QString("Unmap failed : %1").arg(fptr->errorString()) << endl;
+			
+			mappings.remove(ptr);
+			// no mappings, close temporary
+			if (mappings.count() == 0)
+				closeTemporary();
+		}
+#else
 		// see if it wasn't an offsetted mapping
 		if (mappings.contains(ptr))
 		{
@@ -288,20 +309,36 @@ namespace bt
 		{
 			Out(SYS_DIO|LOG_IMPORTANT) << QString("Munmap failed with error %1 : %2").arg(errno).arg(strerror(errno)) << endl;
 		}
+#endif
 	}
-		
-	void CacheFile::close()
+
+	void CacheFile::aboutToClose()
 	{
 		QMutexLocker lock(&mutex);
-		
-		if (fd == -1)
+		if (!fptr)
 			return;
-		
+		Out(SYS_DIO|LOG_NOTICE) << "CacheFile " << path << " : about to be closed" << endl;
+		unmapAll();
+		if (!manual_close)
+		{
+			manual_close = true;
+			fptr->deleteLater();
+			fptr = 0;
+			manual_close = false;
+		}
+	}
+
+	void CacheFile::unmapAll()
+	{
+		int fd = fptr->handle();
 		QMap<void*,Entry>::iterator i = mappings.begin();
 		while (i != mappings.end())
 		{
 			int ret = 0;
 			CacheFile::Entry & e = i.value();
+#ifdef Q_OS_WIN
+			fptr->unmap((uchar*)e.ptr);
+#else
 #ifdef HAVE_MUNMAP64
 			if (e.diff > 0)
 				ret = munmap64((char*)e.ptr - e.diff,e.size);
@@ -312,7 +349,8 @@ namespace bt
 				ret = munmap((char*)e.ptr - e.diff,e.size);
 			else
 				ret = munmap(e.ptr,e.size);
-#endif
+#endif // HAVE_MUNMAP64
+#endif // Q_OS_WIN
 			e.thing->unmapped();
 			// if it will be reopenend, we will not remove all mappings
 			// so that they will be redone on reopening
@@ -322,9 +360,22 @@ namespace bt
 			{
 				Out(SYS_DIO|LOG_IMPORTANT) << QString("Munmap failed with error %1 : %2").arg(errno).arg(strerror(errno)) << endl;
 			}	
-		}
-		::close(fd);
-		fd = -1;
+		}	
+	}
+		
+	void CacheFile::close()
+	{
+		QMutexLocker lock(&mutex);
+		
+		if (!fptr)
+			return;
+
+		unmapAll();
+		manual_close = true;
+		fptr->close();
+		delete fptr;
+		fptr = 0;
+		manual_close = false;
 	}
 	
 	void CacheFile::read(Uint8* buf,Uint32 size,Uint64 off)
@@ -333,7 +384,7 @@ namespace bt
 		bool close_again = false;
 		
 		// reopen the file if necessary
-		if (fd == -1)
+		if (!fptr)
 		{
 		//	Out(SYS_DIO|LOG_DEBUG) << "Reopening " << path << endl;
 			openFile(READ);
@@ -346,8 +397,11 @@ namespace bt
 		}
 		
 		// jump to right position
-		SeekFile(fd,(Int64)off,SEEK_SET);
-		if ((Uint32)::read(fd,buf,size) != size)
+		if (!fptr->seek(off))
+			throw Error(i18n("Failed to seek file %1 : %2",path,fptr->errorString()));
+		
+		Uint32 sz = 0;
+		if ((sz = fptr->read((char*)buf,size)) != size)
 		{
 			if (close_again)
 				closeTemporary();
@@ -365,7 +419,7 @@ namespace bt
 		bool close_again = false;
 		
 		// reopen the file if necessary
-		if (fd == -1)
+		if (!fptr)
 		{
 		//	Out(SYS_DIO|LOG_DEBUG) << "Reopening " << path << endl;
 			openFile(RW);
@@ -387,31 +441,30 @@ namespace bt
 			growFile(off - file_size);
 		}
 		
-		// jump to right position
-		SeekFile(fd,(Int64)off,SEEK_SET);
-		int ret = ::write(fd,buf,size);
-		if (close_again)
-			closeTemporary();
 		
-		if (ret == -1)
-			throw Error(i18n("Error writing to %1 : %2",path,strerror(errno)));
-		else if ((Uint32)ret != size)
+		// jump to right position
+		if (!fptr->seek(off))
+			throw Error(i18n("Failed to seek file %1 : %2",path,fptr->errorString()));
+		
+		if (fptr->write((const char*)buf,size) != size)
 		{
-			Out(SYS_DIO|LOG_DEBUG) << QString("Incomplete write of %1 bytes, should be %2").arg(ret).arg(size) << endl;
-			throw Error(i18n("Error writing to %1",path));
+			throw Error(i18n("Failed to write to file %1 : %2",path,fptr->errorString()));
 		}
 		
+		if (close_again)
+			closeTemporary();
+	
 		if (off + size > file_size)
 			file_size = off + size;
 	}
 	
 	void CacheFile::closeTemporary()
 	{
-		if (fd == -1 || mappings.count() > 0)
+		if (!fptr || mappings.count() > 0)
 			return;
 			
-		::close(fd);
-		fd = -1;
+		delete fptr;
+		fptr = 0;
 	}
 	
 	
@@ -428,11 +481,13 @@ namespace bt
 
 		Out(SYS_GEN|LOG_NOTICE) << "Preallocating file " << path << " (" << max_size << " bytes)" << endl;
 		bool close_again = false;
-		if (fd == -1)
+		if (!fptr)
 		{
 			openFile(RW);
 			close_again = true;
 		}
+		
+		int fd = fptr->handle();
 		
 		if (read_only)
 		{
@@ -480,11 +535,14 @@ namespace bt
 	{
 		Uint64 ret = 0;
 		bool close_again = false;
-		if (fd == -1)
+		if (!fptr)
 		{
 			openFile(READ);
 			close_again = true;
 		}
+		
+		int fd = fptr->handle();
+#ifndef Q_WS_WIN
 #ifdef HAVE_FSTAT64
 		struct stat64 sb;
 		if (fstat64(fd,&sb) == 0)
@@ -495,7 +553,11 @@ namespace bt
 		{
 			ret = (Uint64)sb.st_blocks * 512;
 		}
-		
+#else
+		struct _BY_HANDLE_FILE_INFORMATION info;
+		GetFileInformationByHandle((void *)&fd,&info);
+		ret = (info.nFileSizeHigh * MAXDWORD) + info.nFileSizeLow;
+#endif
 	//	Out(SYS_DIO|LOG_NOTICE) << "CF: " << path << " is taking up " << BytesToString(ret) << " bytes" << endl;
 		if (close_again)
 			closeTemporary();

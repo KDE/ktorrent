@@ -85,7 +85,7 @@ char *_GeoIP_full_path_to(const char *file_name) {
 	char buf[MAX_PATH], *p, *q = NULL;
 	int len;
 	memset(buf, 0, sizeof(buf));
-	len = GetModuleFileName(GetModuleHandle(NULL), buf, sizeof(buf) - 1);
+	len = GetModuleFileName(GetModuleHandle(NULL), (LPWCH)buf, sizeof(buf) - 1);
 	for (p = buf + len; p > buf; p--)
 		if (*p == '\\')
 		{
@@ -369,7 +369,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 	if (WSAStartup(MAKEWORD(1, 1), &wsa) != 0)
 		return NULL;
 #endif
-
+{
 	GeoIP *gi = (GeoIP *)malloc(sizeof(GeoIP));
 	if (gi == NULL)
 		return NULL;
@@ -429,6 +429,7 @@ GeoIP* GeoIP_open (const char * filename, int flags) {
 		}
 		return gi;
 	}
+}
 }
 
 void GeoIP_delete (GeoIP *gi) {

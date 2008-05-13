@@ -34,7 +34,7 @@ namespace bt
 	* will be deleted.
 	*/
 	template <class Key,class Data>
-	class BTCORE_EXPORT PtrMap
+	class PtrMap
 	{
 		bool autodel;
 		std::map<Key,Data*> pmap;

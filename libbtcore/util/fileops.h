@@ -23,7 +23,9 @@
 #include <util/constants.h>
 #include <btcore_export.h>
 class QString;
-
+#ifdef CopyFile
+#undef CopyFile
+#endif
 namespace bt
 {
 

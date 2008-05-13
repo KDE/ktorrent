@@ -24,7 +24,7 @@
 #include <kdemacros.h>
 
 #ifndef KTUPNP_EXPORT
-# if defined(MAKE_KTORRENT_LIB)
+# if defined(MAKE_KTUPNP_LIB)
    /* We are building this library */ 
 #  define KTUPNP_EXPORT KDE_EXPORT
 # else

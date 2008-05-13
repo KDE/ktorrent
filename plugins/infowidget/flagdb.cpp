@@ -37,7 +37,7 @@ kt::FlagDBSource::FlagDBSource()
 {
 }
 
-QString kt::FlagDBSource::FlagDBSource::getPath(const QString& country) const
+QString kt::FlagDBSource::getPath(const QString& country) const
 {
 	if (type) {
 		return KStandardDirs::locate(type, pathPattern.arg(country));

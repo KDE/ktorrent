@@ -117,9 +117,12 @@ namespace bt
 #ifdef HAVE_FSEEKO64
 		fseeko64(fptr,num,p);
 		return ftello64(fptr);
-#else
+#elif HAVE_FSEEKO
 		fseeko(fptr,num,p);
 		return ftello(fptr);
+#else
+		fseek(fptr,num,p);
+		return ftell(fptr);
 #endif
 	}
 
@@ -135,8 +138,13 @@ namespace bt
 	{
 		if (!fptr)
 			return 0;
-		
+#ifdef HAVE_FTELLO64
+        return ftello64(fptr);
+#elif HAVE_FTELLO
 		return ftello(fptr);
+#else
+		return ftell(fptr);
+#endif
 	}
 
 	QString File::errorString() const

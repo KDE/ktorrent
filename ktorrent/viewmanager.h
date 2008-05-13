@@ -25,6 +25,7 @@
 #include <interfaces/guiinterface.h>
 #include <ksharedconfig.h>
 
+#include <torrent/queuemanager.h>
 
 class QWidget;
 

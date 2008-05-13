@@ -20,8 +20,8 @@
 #ifndef KTUPNPMCASTSOCKET_H
 #define KTUPNPMCASTSOCKET_H
 
+#include <QUdpSocket>
 #include <util/ptrmap.h>
-#include <k3datagramsocket.h>
 #include <util/constants.h>
 #include <ktupnp_export.h>
 #include "upnprouter.h"
@@ -38,9 +38,9 @@ namespace kt
 	 * Socket used to discover UPnP devices. This class will keep track
 	 * of all discovered devices. 
 	*/
-	class KTUPNP_EXPORT UPnPMCastSocket : public KNetwork::KDatagramSocket
+	class KTUPNP_EXPORT UPnPMCastSocket : public QUdpSocket
 	{
-	Q_OBJECT
+	    Q_OBJECT
 	public:
 		UPnPMCastSocket(bool verbose = false);
 		virtual ~UPnPMCastSocket();
@@ -66,7 +66,7 @@ namespace kt
 	
 	private slots:
 		void onReadyRead();
-		void onError(int);
+		void error(QAbstractSocket::SocketError err);
 		void onXmlFileDownloaded(UPnPRouter* r,bool success);
 		
 	signals:

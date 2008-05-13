@@ -99,7 +99,16 @@ namespace kt
 			
 		Plugin* p = service->createInstance<kt::Plugin>(); 
 		if (!p) 
-			return;
+        {
+            p = service->createInstance<kt::Plugin>();
+            if (!p)
+            {
+                Out(SYS_GEN|LOG_NOTICE) <<
+                        QString("Creating instance of plugin %1 failed !")
+                        .arg(service->library()) << endl;
+                return;
+            }
+        }
 			
 		if (!p->versionCheck(kt::VERSION_STRING))
 		{

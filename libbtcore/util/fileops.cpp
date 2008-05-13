@@ -59,14 +59,22 @@ typedef	int64_t		__s64;
 #define O_LARGEFILE 0
 #endif
 
+#ifndef Q_WS_WIN
 #include <sys/statvfs.h>
-
+#endif
+#ifdef CopyFile
+#undef CopyFile
+#endif
 
 namespace bt
 {
 	void MakeDir(const QString & dir,bool nothrow)
 	{
+#ifndef Q_WS_WIN        
 		if (mkdir(QFile::encodeName(dir),0777) < -1)
+#else
+		if (mkdir(QFile::encodeName(dir)) < -1)
+#endif
 		{
 			if (!nothrow)
 				throw Error(i18n("Cannot create directory %1: %2"
@@ -167,9 +175,8 @@ namespace bt
 		QStringList files = d.entryList(QDir::Files | QDir::System | QDir::Hidden);
 		for (QStringList::iterator i = files.begin(); i != files.end();i++)
 		{
-			QString entry = *i;
-
-			if (remove(QFile::encodeName(d.absoluteFilePath(entry))) < 0)
+			QString file = d.absoluteFilePath(*i);
+			if (!QFile::remove(file))
 				return false;	
 		}
 		
@@ -181,33 +188,20 @@ namespace bt
 
 	void Delete(const QString & url,bool nothrow)
 	{
-		QByteArray fn = QFile::encodeName(url);
-#ifdef HAVE_STAT64
-		struct stat64 statbuf;
-		if (lstat64(fn, &statbuf) < 0)
-			return;
-#else
-		struct stat statbuf;
-		if (lstat(fn, &statbuf) < 0)
-			return;
-#endif
-		
 		bool ok = true;
 		// first see if it is a directory
-		if (S_ISDIR(statbuf.st_mode)) 
+		if (QDir(url).exists())
 		{
 			ok = DelDir(url);
 		}
 		else
 		{
-			ok = remove(fn) >= 0;
+			ok = QFile::remove(url);
 		}
 		
 		if (!ok)
 		{
-			QString err = i18n("Cannot delete %1: %2",
-					url,
-				        strerror(errno));
+			QString err = i18n("Cannot delete %1: %2",url,strerror(errno));
 			if (!nothrow)
 				throw Error(err);
 			else
@@ -418,6 +412,17 @@ namespace bt
 			Out(SYS_GEN|LOG_DEBUG) << "Error : statvfs for " << path << " failed :  "
 						<< QString(strerror(errno)) << endl;
 
+			return false;
+		}
+#elif defined(Q_WS_WIN)
+#ifdef UNICODE
+		LPCWSTR tpath = (LPCWSTR)path.utf16();
+#else
+		const char *tpath = path.toLocal8Bit();
+#endif
+		if(GetDiskFreeSpaceEx(tpath, (PULARGE_INTEGER)&bytes_free, NULL, NULL)) {
+			return true;
+		} else {
 			return false;
 		}
 #else

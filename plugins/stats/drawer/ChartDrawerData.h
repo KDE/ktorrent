@@ -138,6 +138,8 @@ class ChartDrawerData
 		* - Second: Value's position in set
 		*/
 		std::pair<qreal, size_t>  FindMax() const ;
+        
+        bool operator=( const ChartDrawerData & rCdd ) { return true; };
 };
 
 } // NS end

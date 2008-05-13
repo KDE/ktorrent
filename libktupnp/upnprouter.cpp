@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <stdlib.h>
+#include <QDir>
 #include <klocale.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
@@ -113,7 +114,7 @@ namespace kt
 	UPnPRouter::UPnPRouter(const QString & server,const KUrl & location,bool verbose) : server(server),location(location),verbose(verbose)
 	{
 		// make the tmp_file unique, current time * a random number should be enough
-		tmp_file = QString("/tmp/ktorrent_upnp_description-%1.xml").arg(bt::GetCurrentTime() * rand());
+		tmp_file = QDir::tempPath() + bt::DirSeparator() + QString("ktorrent_upnp_description-%1.xml").arg(bt::GetCurrentTime() * rand());
 	}
 	
 	

@@ -20,11 +20,16 @@
 #include "authenticationmonitor.h"
 #include <math.h>
 #include <unistd.h>
+#ifndef Q_WS_WIN
 #include <sys/poll.h>
+#else
+#include <util/mingw.h>
+#endif
 #include <util/functions.h>
 #include <util/log.h>
 #include <mse/streamsocket.h>
 #include "authenticatebase.h"
+#include <kdebug.h>
 
 
 namespace bt
@@ -107,7 +112,11 @@ namespace bt
 			}
 		}
 		
+#ifndef Q_WS_WIN
 		if (poll(&fd_vec[0],i,1) > 0)
+#else
+        if (mingw_poll(&fd_vec[0],i,1) > 0)
+#endif
 		{
 			handleData();
 		}

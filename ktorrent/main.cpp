@@ -36,12 +36,14 @@
 #include "app.h"
 #include "btversion.h"
 #include "ktversion.h"
+#include <kdebug.h>
 
+#ifndef Q_WS_WIN
 bool GrabPIDLock()
 {
 	// open the PID file in the /tmp directory and attempt to lock it
-	QString pid_file = QString("/tmp/.ktorrent_kde4_%1.lock").arg(getuid());
-		
+	QString pid_file = QString(QDir::tempPath()+"/.ktorrent_kde4_%1.lock").arg(getuid());
+
 	int fd = open(QFile::encodeName(pid_file),O_RDWR|O_CREAT,0640);
 	if (fd < 0)
 	{
@@ -62,6 +64,7 @@ bool GrabPIDLock()
 	// leave file open, so nobody else can lock it until KT exists
 	return true;
 }
+#endif
 
 
 int main(int argc, char **argv)
@@ -132,14 +135,28 @@ int main(int argc, char **argv)
 		fprintf(stderr, "ktorrent is already running !\n");
 		return 0;
 	}
-	
+
+#ifndef Q_WS_WIN	
 	// need to grab lock after the fork call in start, otherwise this will not work properly
 	if (!GrabPIDLock())
 	{
 		fprintf(stderr, "ktorrent is already running !\n");
 		return 0;
+
 	}
-	
+#endif
+
+#ifdef Q_WS_WIN
+	WSADATA wsaData;
+	WORD wVersionRequested = MAKEWORD(2, 2);
+	int err = WSAStartup( wVersionRequested, &wsaData );
+	if (err != 0) 
+	{
+		kError()<< "Couldn't load winsock dll";
+		return 0;
+	}
+#endif
+
 	try
 	{
 		kt::App app;

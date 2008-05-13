@@ -26,6 +26,9 @@
 #include <interfaces/trackerslist.h>
 #include <kurl.h>
 
+#ifdef ERROR
+#undef ERROR
+#endif
 namespace bt
 {
 	class BitSet;

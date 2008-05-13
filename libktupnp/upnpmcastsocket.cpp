@@ -22,21 +22,21 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#ifndef Q_WS_WIN
 #include <netinet/in_systm.h>		
 #include <netinet/ip.h>
-#include <arpa/inet.h>
 #include <netinet/ip.h>
+#endif
+#include <arpa/inet.h>
+#ifndef Q_WS_WIN
+#include <netinet/ip.h>
+#endif
 #include <qstringlist.h>
-#include <k3socketdevice.h>
-#include <k3socketaddress.h>
 #include <util/log.h>
 #include <qfile.h>
 #include <qtextstream.h>
 #include "upnpmcastsocket.h"
 
-
-
-using namespace KNetwork;
 using namespace bt;
 
 namespace kt
@@ -46,18 +46,16 @@ namespace kt
 	{
 		routers.setAutoDelete(true);
 		QObject::connect(this,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-		QObject::connect(this,SIGNAL(gotError(int)),this,SLOT(onError(int)));
-		setAddressReuseable(true);
-		setFamily(KNetwork::KResolver::IPv4Family);
-		setBlocking(true);
+		QObject::connect(this,SIGNAL(error(QAbstractSocket::SocketError )),this,SLOT(error(QAbstractSocket::SocketError )));
+	
 		for (Uint32 i = 0;i < 10;i++)
 		{
-			if (!bind(QString::null,QString::number(1900 + i)))
-				Out(SYS_PNP|LOG_IMPORTANT) << "Cannot bind to UDP port 1900" << endl;
+			if (!bind(1900 + i))
+				Out(SYS_PNP|LOG_IMPORTANT) << "Cannot bind to UDP port 1900 : " << errorString() << endl;
 			else
 				break;
 		}	
-		setBlocking(false);
+		
 		joinUPnPMCastGroup();
 	}
 	
@@ -85,7 +83,7 @@ namespace kt
 			Out(SYS_PNP|LOG_NOTICE) << data << endl;
 		}
 		
-		KDatagramSocket::send(KNetwork::KDatagramPacket(data,strlen(data),KInetSocketAddress("239.255.255.250",1900)));
+		writeDatagram(data,strlen(data),QHostAddress("239.255.255.250"),1900);
 	}
 	
 	void UPnPMCastSocket::onXmlFileDownloaded(UPnPRouter* r,bool success)
@@ -113,29 +111,29 @@ namespace kt
 	
 	void UPnPMCastSocket::onReadyRead()
 	{
-		if (bytesAvailable() == 0)
+		if (pendingDatagramSize() == 0)
 		{
 			Out(SYS_PNP|LOG_NOTICE) << "0 byte UDP packet " << endl;
 			// KDatagramSocket wrongly handles UDP packets with no payload
 			// so we need to deal with it oursleves
-			int fd = socketDevice()->socket();
+			int fd = socketDescriptor();
 			char tmp;
 			::read(fd,&tmp,1);
 			return;
 		}
 		
-		KNetwork::KDatagramPacket p = KDatagramSocket::receive();
-		if (p.isNull())
-			return;
+		QByteArray data(pendingDatagramSize(),0);
+        if (readDatagram(data.data(),pendingDatagramSize()) == -1)
+            return;
 		
 		if (verbose)
 		{
 			Out(SYS_PNP|LOG_NOTICE) << "Received : " << endl;
-			Out(SYS_PNP|LOG_NOTICE) << QString(p.data()) << endl;
+			Out(SYS_PNP|LOG_NOTICE) << QString(data) << endl;
 		}
 		
 		// try to make a router of it
-		UPnPRouter* r = parseResponse(p.data());
+		UPnPRouter* r = parseResponse(data);
 		if (r)
 		{
 			QObject::connect(r,SIGNAL(xmlFileDownloaded( UPnPRouter*, bool )),
@@ -216,7 +214,7 @@ namespace kt
 		}
 	}
 	
-	void UPnPMCastSocket::onError(int)
+	void UPnPMCastSocket::error(QAbstractSocket::SocketError )
 	{
 		Out(SYS_PNP|LOG_IMPORTANT) << "UPnPMCastSocket Error : " << errorString() << endl;
 	}
@@ -273,7 +271,7 @@ namespace kt
 	
 	void UPnPMCastSocket::joinUPnPMCastGroup()
 	{
-		int fd = socketDevice()->socket();
+		int fd = socketDescriptor();
 		struct ip_mreq mreq;
 		
 		memset(&mreq,0,sizeof(struct ip_mreq));
@@ -281,7 +279,11 @@ namespace kt
 		inet_aton("239.255.255.250",&mreq.imr_multiaddr);
 		mreq.imr_interface.s_addr = htonl(INADDR_ANY);
 		
+#ifndef Q_WS_WIN
 		if (setsockopt(fd,IPPROTO_IP,IP_ADD_MEMBERSHIP,&mreq,sizeof(struct ip_mreq)) < 0)
+#else
+		if (setsockopt(fd,IPPROTO_IP,IP_ADD_MEMBERSHIP,(char *)&mreq,sizeof(struct ip_mreq)) < 0)
+#endif
 		{
 			Out(SYS_PNP|LOG_NOTICE) << "Failed to join multicast group 239.255.255.250" << endl; 
 		} 
@@ -289,7 +291,7 @@ namespace kt
 	
 	void UPnPMCastSocket::leaveUPnPMCastGroup()
 	{
-		int fd = socketDevice()->socket();
+		int fd = socketDescriptor();
 		struct ip_mreq mreq;
 		
 		memset(&mreq,0,sizeof(struct ip_mreq));
@@ -297,7 +299,11 @@ namespace kt
 		inet_aton("239.255.255.250",&mreq.imr_multiaddr);
 		mreq.imr_interface.s_addr = htonl(INADDR_ANY);
 		
+#ifndef Q_WS_WIN
 		if (setsockopt(fd,IPPROTO_IP,IP_DROP_MEMBERSHIP,&mreq,sizeof(struct ip_mreq)) < 0)
+#else
+		if (setsockopt(fd,IPPROTO_IP,IP_DROP_MEMBERSHIP,(char *)&mreq,sizeof(struct ip_mreq)) < 0)
+#endif
 		{
 			Out(SYS_PNP|LOG_NOTICE) << "Failed to leave multicast group 239.255.255.250" << endl; 
 		} 

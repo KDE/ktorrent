@@ -10,7 +10,9 @@ ENDIF(HAVE_XFS_XFS_H)
 # check for 64 bit file I/O functions
 check_function_exists(fopen64 HAVE_FOPEN64)
 check_function_exists(fseeko64 HAVE_FSEEKO64)
+check_function_exists(fseeko HAVE_FSEEKO)
 check_function_exists(ftello64 HAVE_FTELLO64)
+check_function_exists(ftello HAVE_FTELLO)
 check_function_exists(fstat64 HAVE_FSTAT64)
 check_function_exists(stat64 HAVE_STAT64)
 check_function_exists(ftruncate64 HAVE_FTRUNCATE64)
@@ -27,6 +29,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-btcore.h.cmake ${CMAKE_BINARY_
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${QCA2_INCLUDE_DIR})
+
 
 set(libbtcore_SRC 
 	util/bitset.cpp
@@ -167,12 +170,21 @@ set(libbtcore_SRC
 	btversion.cpp
 )
 
+if(CMAKE_SYSTEM MATCHES "Windows")
+# Compile MinGW stuff on windows
+set(libbtcore_SRC ${libbtcore_SRC} util/mingw.cpp)
+endif(CMAKE_SYSTEM MATCHES "Windows")
+
 
 # kde4_add_ui_files(libbtcore_SRC ${libbtcore_UI})
 # kde4_add_kcfg_files(libbtcore_SRC settings.kcfgc)
 kde4_add_library(btcore SHARED ${libbtcore_SRC})
 
+
 target_link_libraries(btcore ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${GMP_LIBRARIES} ${QCA2_LIBRARIES})
+if(WIN32)
+target_link_libraries(btcore ws2_32)
+endif(WIN32)
 set_target_properties(btcore PROPERTIES VERSION 4.0.0 SOVERSION 4 )
 install(TARGETS btcore  DESTINATION ${LIB_INSTALL_DIR} )
 
@@ -249,6 +261,7 @@ set (util_HDR
 	./util/sha1hash.h
 	./util/sha1hashgen.h
 	./util/error.h
+	./util/mingw.h
 )
 	
 set (download_HDR

@@ -27,7 +27,7 @@
 #include "kclosestnodessearch.h"
 #include "rpcserver.h"
 #include "node.h"
-
+#undef GetCurrentTime
 using namespace KNetwork;
 using namespace bt;
 

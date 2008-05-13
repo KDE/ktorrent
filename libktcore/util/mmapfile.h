@@ -22,6 +22,7 @@
 
 
 #include <qstring.h>
+#include <qfile.h>
 #include <util/constants.h>
 #include <ktcore_export.h>
 
@@ -41,10 +42,6 @@ namespace bt
 		MMapFile();
 		virtual ~MMapFile();
 
-		enum Mode
-		{
-			READ,WRITE, RW
-		};
 		/**
 		 * Open the file. If mode is write and the file doesn't exist, it will
 		 * be created.
@@ -52,17 +49,7 @@ namespace bt
 		 * @param mode Mode (READ, WRITE or RW)
 		 * @return true upon succes
 		 */
-		bool open(const QString & file,Mode mode);
-		
-		/**
-		 * Open the file. If mode is write and the file doesn't exist, it will
-		 * be created.
-		 * @param file Filename
-		 * @param mode Mode (READ, WRITE or RW)
-		 * @param size Size of the memory mapping (the file will be enlarged to this value)
-		 * @return true upon succes
-		 */
-		bool open(const QString & file,Mode mode,Uint64 size);
+		bool open(const QString & file,QIODevice::OpenModeFlag mode);
 		
 		/**
 		 * Close the file. Undoes the memory mapping.
@@ -131,13 +118,13 @@ namespace bt
 		void growFile(Uint64 new_size);
 
 	private:
-		int fd;
+		QFile* fptr;
 		Uint8* data;
 		Uint64 size;	// size of mmapping
 		Uint64 file_size; // size of file
 		Uint64 ptr; 
 		QString filename;
-		Mode mode;
+		QIODevice::OpenModeFlag mode;
 	};
 
 }

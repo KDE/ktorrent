@@ -36,7 +36,7 @@
 #include "dndfile.h"
 #include "preallocationthread.h"
 #include "movedatafilesjob.h"
-
+#include <kdebug.h>
 
 
 namespace bt

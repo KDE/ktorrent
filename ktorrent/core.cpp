@@ -29,11 +29,6 @@
 #include <solid/powermanagement.h>
 
 
-#include <util/log.h>
-#include <util/error.h>
-#include <util/fileops.h>
-#include <util/functions.h>
-#include <util/waitjob.h>
 
 #include <interfaces/guiinterface.h>
 #include <interfaces/functions.h>
@@ -43,6 +38,17 @@
 #include <torrent/torrentcreator.h>
 #include <torrent/server.h>
 #include <peer/authenticationmonitor.h>
+
+#ifdef GetCurrentTime
+#undef GetCurrentTime // on windows this is a define to GetTickCount
+#endif 
+
+#include <util/log.h>
+#include <util/error.h>
+#include <util/fileops.h>
+#include <util/functions.h>
+#include <util/waitjob.h>
+
 #include <groups/groupmanager.h>
 #include <groups/group.h>
 

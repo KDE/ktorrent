@@ -23,6 +23,9 @@
 #include <list>
 #include <vector>
 #include <btcore_export.h>
+#ifdef Q_WS_WIN
+#include <util/mingw.h>
+#endif
 
 struct pollfd;
 

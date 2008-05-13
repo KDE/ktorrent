@@ -381,12 +381,12 @@ namespace bt
 	
 	bool IPKey::operator ==(const IPKey& ip) const
 	{
-		return  (m_ip & m_mask) == m_mask & ip.m_ip;
+		return  (m_ip & m_mask) == (m_mask & ip.m_ip);
 	}
 
 	bool IPKey::operator !=(const IPKey& ip) const
 	{
-		return (m_ip & m_mask) != m_mask & ip.m_ip;
+		return (m_ip & m_mask) != (m_mask & ip.m_ip);
 	}
 
 	bool IPKey::operator < (const IPKey& ip) const

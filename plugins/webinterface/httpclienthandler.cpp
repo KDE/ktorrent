@@ -161,7 +161,7 @@ namespace kt
 		{
 			// not in cache so load it
 			c = new MMapFile();
-			if (!c->open(full_path,MMapFile::READ))
+			if (!c->open(full_path,QIODevice::ReadOnly))
 			{
 				delete c;
 				Out(SYS_WEB|LOG_DEBUG) << "Failed to open file " << full_path << endl;

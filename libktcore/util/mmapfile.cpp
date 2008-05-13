@@ -41,81 +41,56 @@
 namespace bt
 {
 
-	MMapFile::MMapFile() : fd(-1),data(0),size(0),file_size(0),ptr(0),mode(READ)
+	MMapFile::MMapFile() : fptr(0),data(0),size(0),file_size(0),ptr(0),mode(QIODevice::ReadOnly)
 	{}
 
 
 	MMapFile::~MMapFile()
 	{
-		if (fd > 0)
+		if (fptr)
 			close();
-	}
-
-	bool MMapFile::open(const QString & file,Mode mode)
-	{
-#ifdef HAVE_STAT64
-		struct stat64 sb;
-		stat64(QFile::encodeName(file),&sb);
-#else
-		struct stat sb;
-		stat(QFile::encodeName(file),&sb);
-#endif
-		
-		return open(file,mode,(Uint64)sb.st_size);
 	}
 	
-	bool MMapFile::open(const QString & file,Mode mode,Uint64 size)
+	bool MMapFile::open(const QString & file,QIODevice::OpenModeFlag mode)
 	{
 		// close already open file
-		if (fd > 0)
+		if (fptr && fptr->isOpen()) {
 			close();
+		}
 		
 		// setup flags
-		int flag = 0,mmap_flag = 0;
+		int mmap_flag = 0;
 		switch (mode)
 		{
-			case READ:
-				flag = O_RDONLY;
+			case QIODevice::ReadOnly:
 				mmap_flag = PROT_READ;
 				break;
-			case WRITE:
-				flag = O_WRONLY | O_CREAT;
+			case QIODevice::WriteOnly:
 				mmap_flag = PROT_WRITE;
 				break;
-			case RW:
-				flag = O_RDWR | O_CREAT;
+			case QIODevice::ReadWrite:
 				mmap_flag = PROT_READ|PROT_WRITE;
 				break;
 		}
-
-		// Not all systems have O_LARGEFILE as an explicit flag
-		// (for instance, FreeBSD. Solaris does, but only if
-		// _LARGEFILE_SOURCE is defined in the compile).
-		// So OR it in if it is defined.
-#ifdef O_LARGEFILE
-		flag |= O_LARGEFILE;
-#endif
-
+		
+		fptr = new QFile(file);
 		// open the file
-		fd = ::open(QFile::encodeName(file) , flag);//(int)flag);
-		if (fd == -1)
+		if(!(fptr->open(mode))) {
+			delete fptr;
+			fptr = 0;
 			return false;
+		}
 		
 		// read the file size
-		this->size = size;
+		this->size = fptr->size();
 		this->mode = mode;
 		
-#ifdef HAVE_STAT64
-		struct stat64 sb;
-		stat64(QFile::encodeName(file),&sb);
-#else
-		struct stat sb;
-		stat(QFile::encodeName(file),&sb);
-#endif
-		file_size = (Uint64)sb.st_size;
+		file_size = fptr->size();
 		filename = file;
 		
 		// mmap the file
+#ifndef Q_WS_WIN
+		int fd = fptr->handle();
 #ifdef HAVE_MMAP64
 		data = (Uint8*)mmap64(0, size, mmap_flag, MAP_SHARED, fd, 0);
 #else
@@ -131,34 +106,56 @@ namespace bt
 		}
 		ptr = 0;
 		return true;
+#else // Q_WS_WIN
+		data = (Uint8 *)fptr->map(0, size);
+		
+		if(!data)
+		{
+			fptr->close();
+			delete fptr;
+			fptr = 0;
+			return false;
+		}
+		ptr = 0;
+		return true;
+#endif
 	}
 		
 	void MMapFile::close()
 	{
-		if (fd > 0)
+		if (fptr)
 		{
+#ifndef Q_WS_WIN
 #ifdef HAVE_MUNMAP64
 			munmap64(data,size);
 #else
 			munmap(data,size);
 #endif
-			::close(fd);
+#else
+			fptr->unmap(data);
+#endif
+			fptr->close();
+			delete fptr;
+			fptr = 0;
 			ptr = size = 0;
 			data = 0;
-			fd = -1;
 			filename = QString::null;
 		}
 	}
 		
 	void MMapFile::flush()
 	{
-		if (fd > 0)
+		if (fptr)
+#ifndef Q_WS_WIN
 			msync(data,size,MS_SYNC);
+#else
+			FlushViewOfFile(data, size);
+#endif 
 	}
 		
 	Uint32 MMapFile::write(const void* buf,Uint32 buf_size)
 	{
-		if (fd == -1 || mode == READ)
+		if (!fptr || mode == QIODevice::ReadOnly)
 			return 0;
 		
 		// check if data fits in memory mapping
@@ -189,14 +186,14 @@ namespace bt
 		Uint64 to_write = new_size - file_size;
 		ssize_t written;
 		// jump to the end of the file
-		lseek(fd,0,SEEK_END);
+		fptr->seek(fptr->size());
 		
 		Uint8 buf[1024];
 		memset(buf,0,1024);
 		// write data until to_write is 0
 		while (to_write > 0)
 		{
-			ssize_t w = ::write(fd,buf, to_write > 1024 ? 1024 : to_write);
+			ssize_t w = fptr->write((const char*)buf, to_write > 1024 ? 1024 : to_write);
 			if (w > 0)
 			    to_write -= w;
 			else if (w < 0)
@@ -207,7 +204,7 @@ namespace bt
 		
 	Uint32 MMapFile::read(void* buf,Uint32 buf_size)
 	{
-		if (fd == -1 || mode == WRITE)
+		if (!fptr || mode == QIODevice::WriteOnly)
 			return 0;
 		
 		// check if we aren't going to read past the end of the file

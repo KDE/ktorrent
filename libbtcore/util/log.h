@@ -170,7 +170,7 @@ namespace bt
 		* @param lg The Log
 		* @return @a lg
 		*/
-		friend Log & endl(Log & lg);
+		BTCORE_EXPORT friend Log & endl(Log & lg);
 
 		/**
 		 * Write an URL to the file.

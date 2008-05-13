@@ -22,7 +22,6 @@
 
 #include <kurl.h>
 #include <qstringlist.h>
-#include <k3streamsocket.h>
 #include <net/portlist.h>
 #include <ktupnp_export.h>
 

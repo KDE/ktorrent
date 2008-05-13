@@ -26,6 +26,9 @@
 #include <util/constants.h>
 #include <btcore_export.h>
 
+#ifdef ERROR
+#undef ERROR
+#endif
 namespace KNetwork
 {
 	class KDatagramSocket;

@@ -53,7 +53,11 @@ namespace bt
 	
 	bool Cache::mappedModeAllowed()
 	{
+#ifndef Q_WS_WIN
 		return MaxOpenFiles() - bt::PeerManager::getTotalConnections() < 100;
+#else
+		return true; //there isn't a file handle limit on windows
+#endif
 	}
 	
 	KJob* Cache::moveDataFiles(const QMap<TorrentFileInterface*,QString> & files)

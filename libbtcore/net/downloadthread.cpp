@@ -19,7 +19,12 @@
  ***************************************************************************/
 #include "downloadthread.h"
 #include <math.h>
+#include <QtGlobal>
+#ifndef Q_WS_WIN
 #include <sys/poll.h>
+#else
+#include <util/mingw.h>
+#endif
 #include <util/functions.h>
 #include "socketgroup.h"
 #include "socketmonitor.h"
@@ -47,7 +52,11 @@ namespace net
 		sm->unlock();
 	
 		int timeout = 10;	
+#ifndef Q_WS_WIN
 		if (poll(&fd_vec[0],num,timeout) > 0)
+#else
+		if (mingw_poll(&fd_vec[0],num,timeout) > 0)
+#endif
 		{
 			sm->lock();
 			TimeStamp now = bt::Now();

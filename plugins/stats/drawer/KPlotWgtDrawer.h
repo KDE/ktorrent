@@ -114,7 +114,7 @@ class KPlotWgtDrawer : public KPlotWidget, public ChartDrawer
 		void SetLegend(const QString & rL);
 		QString MakeLegendStr();
 
-		void EnableAntiAlias (const bool aa);
+		void EnableAntiAlias (bool aa);
 		void EnableBgdGrid(bool bg);
 		
 		void ShowCtxMenu(const QPoint & rP);

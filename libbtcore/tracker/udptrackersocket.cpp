@@ -32,6 +32,9 @@
 #include <k3socketaddress.h>
 #include <torrent/globals.h>
 		
+#ifdef ERROR
+#undef ERROR
+#endif
 using namespace KNetwork;
 
 using namespace KNetwork;
