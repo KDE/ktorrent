@@ -1,4 +1,5 @@
 set(ktbitfinderplugin_SRC bitfinderplugin.cpp 
+				bfitem.cpp
 				source/sourcesview.cpp
 				filter/capture.cpp
 				filter/capturechecker.cpp

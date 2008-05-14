@@ -35,7 +35,7 @@ namespace kt
 		
 		}
 	
-	Capture::Capture(const Capture& other)
+	Capture::Capture(const Capture& other) : QObject()
 		{
 		QWriteLocker writeLock(&lock);
 		
