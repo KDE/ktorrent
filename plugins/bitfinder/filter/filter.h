@@ -58,6 +58,7 @@ namespace kt
 		bool checkMatch(const QString& string) const;
 		
 		QDomElement getXmlElement() const;
+		void loadXmlElement(const QDomElement& filter);
 		
 	public slots:
 		void removeExpression(const QString& value);

@@ -70,6 +70,7 @@ namespace kt
 			Capture findCapture(QString sourceString, QString capture = QString()) const;
 			
 			QDomElement getXmlElement() const;
+			void loadXmlElement(const QDomElement& captureChecker);
 		
 		public slots:
 			bool addNewCapture(const QString& name);

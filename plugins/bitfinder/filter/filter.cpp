@@ -255,6 +255,49 @@ namespace kt
 		return filter;
 		}
 	
+	void Filter::loadXmlElement(const QDomElement& filter)
+		{
+// 		QString name;
+		if (filter.hasAttribute("Name"))
+			name = filter.attribute("Name");
+// 		int type;
+		if (filter.hasAttribute("Type"))
+			type = FilterTypeText.indexOf(filter.attribute("Type"));
+// 		QString group;
+		if (filter.hasAttribute("Group"))
+			group = filter.attribute("Group");
+// 		int sourceListType;
+		if (filter.hasAttribute("SourceListType"))
+			sourceListType = SourceListTypeText.indexOf(filter.attribute("SourceListType"));
+// 		int multiMatch;
+		if (filter.hasAttribute("MultiMatch"))
+			multiMatch = MultiMatchText.indexOf(filter.attribute("MultiMatch"));
+// 		int rerelease;
+		if (filter.hasAttribute("Rerelease"))
+			rerelease = RereleaseText.indexOf(filter.attribute("Rerelease"));
+//		//QString rereleaseTerms
+		if (filter.hasAttribute("RereleaseTerms"))
+			rereleaseTerms = filter.attribute("RereleaseTerms");
+// 		QStringList sourceList;
+		QDomNodeList sourceNodes = filter.elementsByTagName("Source");
+		sourceList.clear();
+		for (int i=0; i<sourceNodes.count(); i++)
+			{
+			sourceList.append(sourceNodes.at(i).firstChild().toText().data());
+			}
+// 		QStringList expressions;
+		QDomNodeList expressionNodes = filter.elementsByTagName("Expression");
+		expressions.clear();
+		for (int i=0; i<expressionNodes.count(); i++)
+			{
+			expressions.append(expressionNodes.at(i).firstChild().toText().data());
+			}
+// 		CaptureChecker * captureChecker;
+		QDomNodeList captureCheckerNode = filter.elementsByTagName("CaptureChecker");
+		if (captureCheckerNode.count())
+			captureChecker->loadXmlElement(captureCheckerNode.at(0).toElement());
+		}
+	
 	void Filter::removeExpression(const QString& value)
 		{
 		{//limit the scope of the writeLock

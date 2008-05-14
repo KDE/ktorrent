@@ -54,6 +54,7 @@ namespace kt
 	public slots:
 		void unload();
 		
+		void loadFilters();
 		void saveFilters();
 		void resetChangeTimer();
 		

@@ -198,6 +198,56 @@ namespace kt
 		return captureChecker;
 		}
 	
+	void CaptureChecker::loadXmlElement(const QDomElement& captureChecker)
+		{
+// 		QMap<QString, QString> captures;
+		QDomNodeList captureNodes = captureChecker.elementsByTagName("Capture");
+		QDomElement curCap;
+		captures.clear();
+		for (int i=0; i<captureNodes.count(); i++)
+			{
+			curCap = captureNodes.at(i).toElement();
+			if (curCap.attribute("Name").isEmpty())
+				continue;
+			
+			captures.insert(curCap.attribute("Name"), curCap.attribute("Value"));
+			}
+// 		QList<Variable> variables;
+		QDomNodeList variableNodes = captureChecker.elementsByTagName("Variable");
+		QDomElement curVarNode;
+		Variable curVar;
+		variables.clear();
+		for (int i=0; i<variableNodes.count(); i++)
+			{
+			curVarNode = variableNodes.at(i).toElement();
+			if (curVarNode.attribute("Name").isEmpty())
+				continue;
+			
+			curVar.name = curVarNode.attribute("Name");
+			curVar.min = curVarNode.attribute("Min");
+			curVar.max = curVarNode.attribute("Max");
+			variables.append(curVar);
+			}
+// 		QMap<QPair<QString, QString>, int> mappings;
+		QDomNodeList mappingNodes = captureChecker.elementsByTagName("Mapping");
+		QDomElement curMap;
+		mappings.clear();
+		for (int i=0; i<mappingNodes.count(); i++)
+			{
+			curMap = mappingNodes.at(i).toElement();
+			if (curMap.attribute("Capture").isEmpty())
+				continue;
+			
+			if (curMap.attribute("Variable").isEmpty())
+				continue;
+			
+			mappings.insert(QPair<QString, QString>(curMap.attribute("Capture"), curMap.attribute("Variable")), 
+				curMap.attribute("Index").toInt());
+			}
+		//ok all the ones in XML are loaded up, let's just make sure it's complete
+		updateMappings();
+		}
+	
 	bool CaptureChecker::addNewCapture(const QString& name)
 		{
 		{//limit the scope of the writeLock

@@ -108,8 +108,9 @@ namespace kt
 		tb->addAction(addSourceMenu);
 		tb->addAction(removeSource);
 		
-		//Build the filter model
+		//Build the filter model and load the filters up
 		filterListModel = new FilterListModel(configDirName + "filters/", getCore(), getGUI(), this);
+		filterListModel->loadFilters();
 		
 		//Add the BF Filters Menu on the left dock
 		filtersView = new FiltersView(filterListModel);

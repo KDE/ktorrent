@@ -170,15 +170,68 @@ namespace kt
 		if (changeTimeout.isActive())
 			saveFilters();
 		}
-
+	
+	void FilterListModel::loadFilters()
+		{
+		if (filters.count())
+			{
+			Out(SYS_BTF|LOG_NOTICE) << "Filters should only be loaded when the filter list is empty" << endl;
+			return;
+			}
+		
+		QFile file(configDirName + "filters.xml");
+		QDomDocument filterXml("BitFinderFilters");
+		
+		if (!file.open(QIODevice::ReadOnly))
+			{
+			Out(SYS_BTF|LOG_NOTICE) << "Failed to open filter config file " << configDirName << "filters.xml" << endl;
+			return;
+			}
+		
+		if (!filterXml.setContent(&file))
+			{
+			Out(SYS_BTF|LOG_NOTICE) << "Failed to load XML from filter config file " << configDirName << "filters.xml" << endl;
+			file.close();
+			return;
+			}
+		
+		file.close();
+		
+		QDomNodeList filterNodes = filterXml.elementsByTagName("Filter");
+		
+		//no filter nodes? then we're done
+		if (!filterNodes.count())
+			return;
+		
+		//we're going to be adding a bunch of these now - so let's say we're changing the data
+		beginInsertRows(QModelIndex(), 0, filterNodes.count()-1);
+		
+		Filter * curFilter;
+		
+		for (int i=0; i<filterNodes.count(); i++)
+			{
+			curFilter = new Filter();
+			curFilter->loadXmlElement(filterNodes.at(i).toElement());
+			filters.append(curFilter);
+			connect(curFilter, SIGNAL(nameChanged(const QString&)), this, SLOT(emitDataChanged()));
+			connect(curFilter, SIGNAL(typeChanged(int)), this, SLOT(emitDataChanged()));
+			connect(curFilter, SIGNAL(changed()), this, SLOT(resetChangeTimer()));
+			}
+		
+		endInsertRows();
+		
+		}
+	
 	void FilterListModel::saveFilters()
 		{
 		QDomDocument filterXml("BitFinderFilters");
+		QDomElement root = filterXml.createElement("BitFinderFilters");
+		filterXml.appendChild(root);
 		
 		//grab the xml element for each of the filters
 		for (int i=0; i<filters.count(); i++)
 			{
-			filterXml.appendChild(filters.at(i)->getXmlElement());
+			root.appendChild(filters.at(i)->getXmlElement());
 			}
 			
 		//try to save the configuration off
