@@ -224,6 +224,7 @@ namespace kt
 			{
 			curFilter = new Filter();
 			curFilter->loadXmlElement(filterNodes.at(i).toElement());
+			curFilter->createMatches(configDirName);
 			filters.append(curFilter);
 			connect(curFilter, SIGNAL(nameChanged(const QString&)), this, SLOT(emitDataChanged()));
 			connect(curFilter, SIGNAL(typeChanged(int)), this, SLOT(emitDataChanged()));
@@ -272,7 +273,7 @@ namespace kt
 		//seeing we're altering the data we need to let things know about it
 		beginInsertRows(QModelIndex(), filters.count(), filters.count());
 		
-		Filter * curFilter = new Filter(name);
+		Filter * curFilter = new Filter(configDirName, name);
 		filters.append(curFilter);
 		
 		//and now we're done

@@ -32,8 +32,11 @@ using namespace bt;
 namespace kt
 {
 
-	Filter::Filter(const QString& name) : name(name)
+	Filter::Filter(const QString& baseDir, const QString& name) : name(name)
 		{
+		if (!baseDir.isEmpty() && !name.isEmpty())
+			createMatches(baseDir);
+		
 		type = FT_ACCEPT;
 		group = "Ungrouped";
 		multiMatch = MM_ALWAYS_MATCH;
@@ -81,6 +84,15 @@ namespace kt
 		QThread::start();
 		}
 	
+	void Filter::createMatches(const QString& baseDir)
+		{
+		if (matches)
+			matches->deleteLater();
+		
+		matches = new Matches(baseDir + name + "/");
+		
+		}
+
 	QString Filter::getName() const
 		{
 		QReadLocker readLock(&lock);
@@ -374,7 +386,7 @@ namespace kt
 			
 			//we've made it all the way here which means we're a match that's either not in the history
 			//or is a rerelease that we want to download so let's download
-			Capture * curCap;
+			Capture * curCap = 0;
 			if (multiMatch == MM_CAPTURE_CHECKING)
 				{
 				curCap = new Capture();

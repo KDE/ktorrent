@@ -18,17 +18,32 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <util/log.h>
+
 #include <QReadLocker>
+#include <QDir>
+#include <QFileInfo>
+#include <QFile>
+#include <QTextStream>
 
 #include "matches.h"
+
+using namespace bt;
 
 namespace kt
 	{
 	
-	Matches::Matches()
+	Matches::Matches(const QString& baseDir) : configDirName(baseDir), matchXml("BitFinderMatches")
 		{
 		//let's initialize the column list
 		columnNames << "Name";
+		
+		if (!loadMatches())
+			{
+			root = matchXml.createElement("BitFinderMatches");
+			matchXml.appendChild(root);
+			}
+		
 		}
 	
 	int Matches::rowCount(const QModelIndex & parent) const
@@ -84,8 +99,11 @@ namespace kt
 		for (int i=0; i<curMatch.elementsByTagName("Variable").count(); i++)
 			{
 			curVar = curMatch.elementsByTagName("Variable").at(i).toElement();
-			if (curVar.hasAttribute(columnNames.at(index.column())))
-				return curVar.attribute(columnNames.at(index.column()));
+			if (curVar.hasAttribute("Name"))
+				{
+				if (columnNames.at(index.column()) == curVar.attribute("Name"))
+					return curVar.attribute("Value");
+				}
 			}
 		
 		return QVariant();
@@ -101,6 +119,107 @@ namespace kt
 		{
 		Q_UNUSED(index);
 		return QModelIndex();
+		}
+	
+	void Matches::addColumn(const QString& name)
+		{
+		QWriteLocker writeLock(&lock);
+		
+		if (columnNames.contains(name))
+			return;
+		
+		beginInsertColumns(QModelIndex(), columnNames.count(), columnNames.count());
+		columnNames.append(name);
+		endInsertColumns();
+		}
+	
+	void Matches::addMatch(BFItem * item, Capture * capture)
+		{
+		//there may be new Columns in here
+		for (int i=0; i<capture->varCount(); i++)
+			{
+ 			addColumn(capture->getVariable(i).first);
+			}
+		
+		QWriteLocker writeLock(&lock);
+		
+		//this is a model so let's say we're adding the rows
+		beginInsertRows(QModelIndex(), rowCount(QModelIndex()), rowCount(QModelIndex()));
+		
+		QDomElement newMatch;
+		newMatch.setAttribute("Name", item->getName());
+		newMatch.setAttribute("Source", item->getSource());
+		newMatch.setAttribute("Link", item->getLink());
+		newMatch.setAttribute("Description", item->getDescription());
+		
+		for (int i=0; i<capture->varCount(); i++)
+			{
+			QDomElement curVar;
+ 			curVar.setAttribute("Name", capture->getVariable(i).first);
+ 			curVar.setAttribute("Value", capture->getVariable(i).second);
+			}
+		
+		root.appendChild(newMatch);
+		
+		if (!item->getLink().isEmpty())
+			{
+			//the link seems ok - so let's save off the torrent data
+			QFile torFile(configDirName + item->getLink() + ".torrent");
+			torFile.open(QFile::WriteOnly);
+			torFile.write(item->getTorrentData());
+			torFile.close();
+			}
+		
+		//and now we're adding the new Match
+		endInsertRows();
+		
+		}
+	
+	bool Matches::loadMatches()
+		{
+		//let's verify the settings directory exists
+		QFileInfo configDir(configDirName);
+		if (configDir.exists())
+			{
+			if (!configDir.isDir())
+				{
+				//it's a file :O
+				//delete the file, then create the directory
+				QFile vigilantie(configDirName);
+				vigilantie.remove();
+				QDir mkConfigDir;
+				mkConfigDir.mkdir(configDirName);
+				}
+			}
+		else
+			{
+			//doesn't exist - let's create it
+			QDir mkConfigDir;
+			mkConfigDir.mkdir(configDirName);
+			}
+		
+		QFile file(configDirName + "matches.xml");
+		
+		if (!file.open(QIODevice::ReadOnly))
+			{
+			Out(SYS_BTF|LOG_NOTICE) << "Failed to open match file " << configDirName << "matches.xml" << endl;
+			return false;
+			}
+		
+		if (!matchXml.setContent(&file))
+			{
+			Out(SYS_BTF|LOG_NOTICE) << "Failed to load XML from match file " << configDirName << "matches.xml" << endl;
+			file.close();
+			return false;
+			}
+		
+		file.close();
+		
+		if (!matchXml.elementsByTagName("BitFinderMatches").count())
+			return false;
+		
+		root = matchXml.elementsByTagName("BitFinderMatches").at(0).toElement();
+		return true;
 		}
 	
 	}

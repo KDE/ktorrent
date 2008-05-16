@@ -38,7 +38,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		Matches();
+		Matches(const QString& baseDir);
 		~Matches() {}
 		
 		virtual int rowCount(const QModelIndex & parent) const;
@@ -49,13 +49,18 @@ namespace kt
 		virtual QModelIndex parent(const QModelIndex & index) const;
 		
 	public slots:
-		
+		void addColumn(const QString& name);
+		void addMatch(BFItem * item, Capture * capture);
 		
 	signals:
 		
 		
 	private:
 		mutable QReadWriteLock lock;
+		
+		bool loadMatches();
+		
+		QString configDirName;
 		
 		QDomDocument matchXml;
 		QDomElement root;

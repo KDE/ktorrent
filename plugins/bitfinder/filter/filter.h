@@ -33,6 +33,7 @@
 #include "bfitem.h"
 #include "filterconstants.h"
 #include "capturechecker.h"
+#include "matches.h"
 
 namespace kt
 {
@@ -40,11 +41,13 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		Filter(const QString& name = QString());
+		Filter(const QString& baseDir = QString(), const QString& name = QString());
 		Filter& operator=(const Filter& other);
 		~Filter();
 		
 		void start();
+		
+		void createMatches(const QString& baseDir);
 		
 		QString getName() const;
 		QString getIconName() const;
@@ -114,6 +117,8 @@ namespace kt
 		CaptureChecker * captureChecker;
 		int sourceListType;
 		QStringList sourceList;
+		
+		Matches * matches;
 		
 	};
 
