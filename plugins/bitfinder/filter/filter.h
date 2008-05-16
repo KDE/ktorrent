@@ -83,7 +83,7 @@ namespace kt
 	signals:
 		void startProcessing();
 		void unmatched(BFItem * item);
-		void download(BFItem * item);
+		void download(BFItem * item, Capture * capture = 0);
 	
 		void changed();
 		void nameChanged(const QString& name);

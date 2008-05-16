@@ -374,7 +374,14 @@ namespace kt
 			
 			//we've made it all the way here which means we're a match that's either not in the history
 			//or is a rerelease that we want to download so let's download
-			emit download(curItem);
+			Capture * curCap;
+			if (multiMatch == MM_CAPTURE_CHECKING)
+				{
+				curCap = new Capture();
+				*curCap = captureChecker->findCapture(checkStrings.at(i));
+				}
+			
+			emit download(curItem, curCap);
 			emit startProcessing();
 			return;
 			}
