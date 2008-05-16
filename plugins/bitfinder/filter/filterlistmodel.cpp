@@ -170,9 +170,10 @@ namespace kt
 		if (changeTimeout.isActive())
 			saveFilters();
 		
-		//now let's stop all the filter's threads
+		//now let's stop all the filter's threads and make sure matches are saved
 		for (int i=0; i<filters.count(); i++)
 			{
+			filters.at(i)->getMatches()->unload();
 			filters.at(i)->quit();
 			}
 		

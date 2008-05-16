@@ -159,6 +159,12 @@ namespace kt
 		return captureChecker;
 		}
 	
+	Matches* Filter::getMatches() const
+		{
+		QReadLocker readLock(&lock);
+		return matches;
+		}
+	
 	bool Filter::checkExpressionMatch(const QString& string) const
 		{
 		QReadLocker readLock(&lock);

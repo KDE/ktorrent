@@ -35,6 +35,9 @@ namespace kt
 	
 	Matches::Matches(const QString& baseDir) : configDirName(baseDir), matchXml("BitFinderMatches")
 		{
+		changeTimeout.setSingleShot(true);
+		connect(&changeTimeout, SIGNAL(timeout()), this, SLOT(saveMatches()));
+		
 		//let's initialize the column list
 		columnNames << "Name";
 		
@@ -121,6 +124,35 @@ namespace kt
 		return QModelIndex();
 		}
 	
+	void Matches::unload()
+		{
+		//if changes have been made, but not saved - save them now
+		if (changeTimeout.isActive())
+			saveMatches();
+		}
+	
+	void Matches::resetChangeTimer()
+		{
+		//this will cause a save to be triggered after a change
+		//if multiple changes occur during that time it will reset
+		//Should it seem to save too often increase this number
+		changeTimeout.start(20000);
+		}
+	
+	void Matches::saveMatches()
+		{
+		//try to save the configuration off
+		QFile file(configDirName + "matches.xml");
+		if (!file.open(QFile::WriteOnly | QFile::Text)) {
+			//may want to fire off a warning here
+			Out(SYS_BTF|LOG_IMPORTANT) << "Failed to save matches to " << configDirName << "matches.xml" << endl;
+			return;
+		}
+		
+		QTextStream out(&file);
+		matchXml.save(out, 4);
+		}
+	
 	void Matches::addColumn(const QString& name)
 		{
 		QWriteLocker writeLock(&lock);
@@ -143,10 +175,11 @@ namespace kt
 		
 		QWriteLocker writeLock(&lock);
 		
+		int rows = root.elementsByTagName("Match").count();
 		//this is a model so let's say we're adding the rows
-		beginInsertRows(QModelIndex(), rowCount(QModelIndex()), rowCount(QModelIndex()));
+		beginInsertRows(QModelIndex(), rows, rows);
 		
-		QDomElement newMatch;
+		QDomElement newMatch = matchXml.createElement("Match");
 		newMatch.setAttribute("Name", item->getName());
 		newMatch.setAttribute("Source", item->getSource());
 		newMatch.setAttribute("Link", item->getLink());
@@ -154,9 +187,10 @@ namespace kt
 		
 		for (int i=0; i<capture->varCount(); i++)
 			{
-			QDomElement curVar;
+			QDomElement curVar = matchXml.createElement("Variable");
  			curVar.setAttribute("Name", capture->getVariable(i).first);
  			curVar.setAttribute("Value", capture->getVariable(i).second);
+ 			newMatch.appendChild(curVar);
 			}
 		
 		root.appendChild(newMatch);
@@ -173,6 +207,7 @@ namespace kt
 		//and now we're adding the new Match
 		endInsertRows();
 		
+		resetChangeTimer();
 		}
 	
 	bool Matches::loadMatches()

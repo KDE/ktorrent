@@ -26,6 +26,7 @@
 #include <QStringList>
 #include <QDomDocument>
 #include <QDomElement>
+#include <QTimer>
 
 #include <util/constants.h>
 
@@ -49,6 +50,10 @@ namespace kt
 		virtual QModelIndex parent(const QModelIndex & index) const;
 		
 	public slots:
+		void unload();
+		void resetChangeTimer();
+		void saveMatches();
+		
 		void addColumn(const QString& name);
 		void addMatch(BFItem * item, Capture * capture);
 		
@@ -57,6 +62,7 @@ namespace kt
 		
 	private:
 		mutable QReadWriteLock lock;
+		QTimer changeTimeout;
 		
 		bool loadMatches();
 		

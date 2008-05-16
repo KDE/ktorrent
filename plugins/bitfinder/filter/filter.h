@@ -60,6 +60,7 @@ namespace kt
 		int getRerelease() const;
 		QString getRereleaseTerms() const;
 		CaptureChecker* getCaptureChecker() const;
+		Matches* getMatches() const;
 		
 		bool checkExpressionMatch(const QString& string) const;
 		bool checkMatch(const QString& string) const;
