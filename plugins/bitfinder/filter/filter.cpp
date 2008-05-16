@@ -214,6 +214,10 @@ namespace kt
 		if (!curCap.isInRange(captureChecker->getMinCapture(), captureChecker->getMaxCapture()))
 			return false;
 		
+		//TODO: we should check the history - which isn't implemented yet
+		
+		//TODO: if we're already in the history we should check if it's a rerelease if that's enabled
+		
 		//made it this far? it's a match :)
 		return true;
 		}
@@ -335,7 +339,50 @@ namespace kt
 		}//writeLock is out of scope now :)
 		
 		//now let's check the item to see if it's a match
+		{//limiting the scope of the read lock
+		QReadLocker readLock(&lock);
 		
+		if (sourceListType == SL_INCLUSIVE)
+			{
+			//the source needs to be in this list or don't process
+			if (!sourceList.contains(curItem->getSource()))
+				{
+				emit unmatched(curItem);
+				emit startProcessing();
+				return;
+				}
+			}
+		else
+			{
+			//if the source is in this list don't process
+			if (sourceList.contains(curItem->getSource()))
+				{
+				emit unmatched(curItem);
+				emit startProcessing();
+				return;
+				}
+			}
+		
+		//put together a list of strings we wish to check for a match. A match on any one is sufficient
+		QStringList checkStrings = QStringList() << curItem->getName() << curItem->getLink() << curItem->getDescription() << curItem->getFilenames();
+		
+		for (int i=0; i<checkStrings.count(); i++)
+			{
+			//first check we've got a match - no match move on to the next
+			if (!checkMatch(checkStrings.at(i)))
+				continue;
+			
+			//we've made it all the way here which means we're a match that's either not in the history
+			//or is a rerelease that we want to download so let's download
+			emit download(curItem);
+			emit startProcessing();
+			return;
+			}
+		
+		}//readLock scope done
+		
+		//have check them all and still have no match
+		emit unmatched(curItem);
 		
 		//we're done so let's say process the next one
 		emit startProcessing();
@@ -494,7 +541,7 @@ namespace kt
 	void Filter::run()
 		{
 		//connect up what's required for all the processing to work
-		
+		connect(this, SIGNAL(startProcessing()), this, SLOT(processQueue()));
 		
 		//start the thread event loop
 		exec();

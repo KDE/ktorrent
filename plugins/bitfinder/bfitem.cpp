@@ -60,6 +60,33 @@ namespace kt
 		return torrentData;
 		}
 	
+	QStringList BFItem::getFilenames() const
+		{
+		QStringList filenames;
+		
+		Torrent curTorrent;
+		
+		try
+			{
+			curTorrent.load(torrentData, false);
+			
+			//we've loaded the torrentData and the torrent has no files
+			if (!curTorrent.getNumFiles())
+				return filenames;
+				
+			for (uint i=0; i<curTorrent.getNumFiles(); i++)
+				{
+				filenames << curTorrent.getFile(i).getPath();
+				}
+			}
+		catch (...)
+			{
+			
+			}
+		
+		return filenames;
+		}
+	
 	bool BFItem::isValid() const
 		{
 		Torrent curTorrent;

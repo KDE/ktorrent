@@ -23,6 +23,7 @@
 #include <QObject>
 #include <QByteArray>
 #include <QString>
+#include <QStringList>
 
 namespace kt
 	{
@@ -41,6 +42,8 @@ namespace kt
 			QString getLink() const;
 			QString getDescription() const;
 			QByteArray getTorrentData() const;
+			
+			QStringList getFilenames() const;
 			
 			bool isValid() const;
 		
