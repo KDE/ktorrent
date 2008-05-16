@@ -74,7 +74,13 @@ namespace kt
 		{
 		
 		}
-
+	
+	void Filter::start()
+		{
+		//start the thread going
+		QThread::start();
+		}
+	
 	QString Filter::getName() const
 		{
 		QReadLocker readLock(&lock);
@@ -298,6 +304,43 @@ namespace kt
 			captureChecker->loadXmlElement(captureCheckerNode.at(0).toElement());
 		}
 	
+	void Filter::enqueueItem(BFItem * item)
+		{
+		bool startQueue = false;
+		{//limit the scope of the writeLock
+		QWriteLocker writeLock(&lock);
+		
+		//if the queue is empty then we'll need to kick off processing
+		if (!itemQueue.count())
+			startQueue = true;
+		
+		itemQueue.enqueue(item);
+		}//writeLock is out of scope now :)
+		
+		if (startQueue)
+			emit startProcessing();
+		}
+	
+	void Filter::processQueue()
+		{
+		BFItem * curItem;
+		{//limit the scope of the writeLock
+		QWriteLocker writeLock(&lock);
+		
+		//if the queue is empty then we've got nothing to do
+		if (!itemQueue.count())
+			return;
+		
+		curItem = itemQueue.dequeue();
+		}//writeLock is out of scope now :)
+		
+		//now let's check the item to see if it's a match
+		
+		
+		//we're done so let's say process the next one
+		emit startProcessing();
+		}
+	
 	void Filter::removeExpression(const QString& value)
 		{
 		{//limit the scope of the writeLock
@@ -450,7 +493,11 @@ namespace kt
 	
 	void Filter::run()
 		{
+		//connect up what's required for all the processing to work
 		
+		
+		//start the thread event loop
+		exec();
 		}
 	
 }

@@ -24,6 +24,7 @@
 #include <QList>
 #include <QAbstractItemModel>
 #include <QTimer>
+
 #include <util/constants.h>
 
 #include <interfaces/guiinterface.h>

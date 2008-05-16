@@ -169,6 +169,18 @@ namespace kt
 		//if changes have been made, but not saved - save them now
 		if (changeTimeout.isActive())
 			saveFilters();
+		
+		//now let's stop all the filter's threads
+		for (int i=0; i<filters.count(); i++)
+			{
+			filters.at(i)->quit();
+			}
+		
+		//now wait to ensure they've quit
+		for (int i=0; i<filters.count(); i++)
+			{
+			filters.at(i)->wait();
+			}
 		}
 	
 	void FilterListModel::loadFilters()
@@ -216,6 +228,7 @@ namespace kt
 			connect(curFilter, SIGNAL(nameChanged(const QString&)), this, SLOT(emitDataChanged()));
 			connect(curFilter, SIGNAL(typeChanged(int)), this, SLOT(emitDataChanged()));
 			connect(curFilter, SIGNAL(changed()), this, SLOT(resetChangeTimer()));
+			curFilter->start();
 			}
 		
 		endInsertRows();
@@ -270,6 +283,8 @@ namespace kt
 		
 		connect(curFilter, SIGNAL(changed()), this, SLOT(resetChangeTimer()));
 		
+		curFilter->start();
+		
 		emit newFilterAdded(createIndex(filters.count()-1, 0, curFilter));
 		
 		return curFilter;
@@ -289,6 +304,8 @@ namespace kt
 		connect(filter, SIGNAL(typeChanged(int)), this, SLOT(emitDataChanged()));
 		
 		connect(filter, SIGNAL(changed()), this, SLOT(resetChangeTimer()));
+		
+		filter->start();
 		}
 	
 	void FilterListModel::removeFilter(const QModelIndex& idx)
@@ -313,6 +330,10 @@ namespace kt
 		
 		//find the filter, remove it from the list and tell it to deleteLater
 		filters.removeAll(curFilter);
+		//stop the filter's event loop
+		curFilter->quit();
+		//wait to ensure it's stopped
+		curFilter->wait();
 		curFilter->deleteLater();
 		
 		//done altering data

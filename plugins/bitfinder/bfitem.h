@@ -21,7 +21,6 @@
 #define KTBFITEM_H
 
 #include <QObject>
-#include <QReadWriteLock>
 #include <QByteArray>
 #include <QString>
 
@@ -50,12 +49,12 @@ namespace kt
 		signals:
 		
 		private:
-			mutable QReadWriteLock lock;
-			QString name;
-			QString source;
-			QString link;//this must be a string unique to this BFItem within the source it came from
-			QString description;
-			QByteArray torrentData;
+			//This class cannot be changed after creation. So we don't require any locks for thread safety
+			const QString name;
+			const QString source;
+			const QString link;//this must be a string unique to this BFItem within the source it came from
+			const QString description;
+			const QByteArray torrentData;
 		};
 	
 	}

@@ -18,7 +18,11 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include <torrent/torrent.h>
+
 #include "bfitem.h"
+
+using namespace bt;
 
 namespace kt
 	{
@@ -33,31 +37,45 @@ namespace kt
 	
 	QString BFItem::getName() const
 		{
-		
+		return name;
 		}
 		
 	QString BFItem::getSource() const
 		{
-		
+		return source;
 		}
 		
 	QString BFItem::getLink() const
 		{
-		
+		return link;
 		}
 		
 	QString BFItem::getDescription() const
 		{
-		
+		return description;
 		}
 		
 	QByteArray BFItem::getTorrentData() const
 		{
-		
+		return torrentData;
 		}
 	
 	bool BFItem::isValid() const
 		{
+		Torrent curTorrent;
+		
+		try
+			{
+			curTorrent.load(torrentData, false);
+			
+			//we've loaded the torrentData and the torrent has files
+			if (curTorrent.getNumFiles())
+				return true;
+			}
+		catch (...)
+			{
+			
+			}
 		
 		return false;
 		}

@@ -26,9 +26,11 @@
 #include <QStringList>
 #include <QReadWriteLock>
 #include <QDomElement>
+#include <QQueue>
 
 #include <util/constants.h>
 
+#include "bfitem.h"
 #include "filterconstants.h"
 #include "capturechecker.h"
 
@@ -41,6 +43,8 @@ namespace kt
 		Filter(const QString& name = QString());
 		Filter& operator=(const Filter& other);
 		~Filter();
+		
+		void start();
 		
 		QString getName() const;
 		QString getIconName() const;
@@ -61,6 +65,9 @@ namespace kt
 		void loadXmlElement(const QDomElement& filter);
 		
 	public slots:
+		void enqueueItem(BFItem * item);
+		void processQueue();
+		
 		void removeExpression(const QString& value);
 	
 		void setName(const QString& value);
@@ -74,6 +81,8 @@ namespace kt
 		void setRereleaseTerms(const QString& value);
 	
 	signals:
+		void startProcessing();
+	
 		void changed();
 		void nameChanged(const QString& name);
 		void typeChanged(int type);
@@ -90,6 +99,9 @@ namespace kt
 	
 	private:
 		mutable QReadWriteLock lock;
+		
+		QQueue<BFItem*> itemQueue;
+		
 		QString name;
 		int type;
 		QString group;
