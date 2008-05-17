@@ -28,6 +28,9 @@ namespace kt
 			: QDialog(parent),group(group)
 	{
 		setupUi(this);
+		buttonBox->clear();
+		buttonBox->addButton(KStandardGuiItem::ok(),QDialogButtonBox::AcceptRole);
+		buttonBox->addButton(KStandardGuiItem::cancel(),QDialogButtonBox::RejectRole);
 		setWindowTitle(i18n("Policy for the %1 group",group->groupName()));
 		
 		const Group::Policy & p = group->groupPolicy();

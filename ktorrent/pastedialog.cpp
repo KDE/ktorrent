@@ -34,6 +34,10 @@ namespace kt
 			:QDialog ( parent, fl )
 	{
 		setupUi ( this );
+		buttonBox->clear();
+		buttonBox->addButton(KStandardGuiItem::ok(),QDialogButtonBox::AcceptRole);
+		buttonBox->addButton(KStandardGuiItem::cancel(),QDialogButtonBox::RejectRole);
+		
 		m_core = core;
 		QClipboard *cb = QApplication::clipboard();
 		QString text = cb->text ( QClipboard::Clipboard );
