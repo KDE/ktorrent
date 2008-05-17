@@ -1,18 +1,30 @@
 <ui version="4.0" >
  <class>GroupPolicyDlg</class>
- <widget class="QDialog" name="GroupPolicyDlg" >
+ <widget class="QWidget" name="GroupPolicyDlg" >
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>271</height>
+    <height>240</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>Dialog</string>
   </property>
   <layout class="QVBoxLayout" >
+   <property name="leftMargin" >
+    <number>0</number>
+   </property>
+   <property name="topMargin" >
+    <number>0</number>
+   </property>
+   <property name="rightMargin" >
+    <number>0</number>
+   </property>
+   <property name="bottomMargin" >
+    <number>0</number>
+   </property>
    <item>
     <layout class="QHBoxLayout" >
      <item>
@@ -168,16 +180,6 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="KDialogButtonBox" name="buttonBox" >
-     <property name="orientation" >
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons" >
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::NoButton|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -189,38 +191,6 @@ p, li { white-space: pre-wrap; }
  </customwidgets>
  <resources/>
  <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>GroupPolicyDlg</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>222</x>
-     <y>225</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>157</x>
-     <y>241</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>GroupPolicyDlg</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>290</x>
-     <y>231</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>286</x>
-     <y>241</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>m_default_location_enabled</sender>
    <signal>toggled(bool)</signal>

@@ -1,12 +1,12 @@
 <ui version="4.0" >
  <class>PasteDlgBase</class>
- <widget class="QDialog" name="PasteDlgBase" >
+ <widget class="QWidget" name="PasteDlgBase" >
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
     <width>454</width>
-    <height>76</height>
+    <height>45</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -17,16 +17,16 @@
     <number>4</number>
    </property>
    <property name="leftMargin" >
-    <number>4</number>
+    <number>0</number>
    </property>
    <property name="topMargin" >
-    <number>4</number>
+    <number>0</number>
    </property>
    <property name="rightMargin" >
-    <number>4</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin" >
-    <number>4</number>
+    <number>0</number>
    </property>
    <item>
     <layout class="QHBoxLayout" >
@@ -65,13 +65,6 @@
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="KDialogButtonBox" name="buttonBox" >
-     <property name="standardButtons" >
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::NoButton|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -82,38 +75,5 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>PasteDlgBase</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>226</x>
-     <y>58</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>226</x>
-     <y>37</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>PasteDlgBase</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>226</x>
-     <y>58</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>226</x>
-     <y>37</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

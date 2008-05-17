@@ -33,12 +33,9 @@ using namespace bt;
 
 namespace kt
 {
-	TorrentCreatorDlg::TorrentCreatorDlg(Core* core,GUI* gui,QWidget* parent) : QDialog(parent),core(core),gui(gui)
+	TorrentCreatorDlg::TorrentCreatorDlg(Core* core,GUI* gui,QWidget* parent) : KDialog(parent),core(core),gui(gui)
 	{
-		setupUi(this);
-		buttonBox->clear();
-		buttonBox->addButton(KStandardGuiItem::ok(),QDialogButtonBox::AcceptRole);
-		buttonBox->addButton(KStandardGuiItem::cancel(),QDialogButtonBox::RejectRole);
+		setupUi(mainWidget());
 		adjustSize();
 		loadGroups();
 		

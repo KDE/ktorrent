@@ -31,12 +31,9 @@
 namespace kt
 {
 	PasteDialog::PasteDialog ( Core* core, QWidget* parent, Qt::WFlags fl )
-			:QDialog ( parent, fl )
+			:KDialog ( parent, fl )
 	{
-		setupUi ( this );
-		buttonBox->clear();
-		buttonBox->addButton(KStandardGuiItem::ok(),QDialogButtonBox::AcceptRole);
-		buttonBox->addButton(KStandardGuiItem::cancel(),QDialogButtonBox::RejectRole);
+		setupUi ( mainWidget() );
 		
 		m_core = core;
 		QClipboard *cb = QApplication::clipboard();

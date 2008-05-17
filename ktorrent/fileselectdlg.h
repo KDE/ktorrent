@@ -21,6 +21,7 @@
 #ifndef FILESELECTDLG_H
 #define FILESELECTDLG_H
 
+#include <KDialog>
 #include "ui_fileselectdlg.h"
 
 namespace bt
@@ -39,7 +40,7 @@ namespace kt
 	 *
 	 * Dialog to select which files to download from a multifile torrent.
 	 */
-	class FileSelectDlg : public QDialog,public Ui_FileSelectDlg
+	class FileSelectDlg : public KDialog,public Ui_FileSelectDlg
 	{
 		Q_OBJECT
 

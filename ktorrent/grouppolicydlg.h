@@ -21,7 +21,7 @@
 #ifndef KTGROUPPOLICYDLG_H
 #define KTGROUPPOLICYDLG_H
 
-#include <QDialog>
+#include <KDialog>
 #include "ui_grouppolicydlg.h"
 
 namespace kt
@@ -31,7 +31,7 @@ namespace kt
 	/**
 		@author
 	*/
-	class GroupPolicyDlg : public QDialog,public Ui_GroupPolicyDlg
+	class GroupPolicyDlg : public KDialog,public Ui_GroupPolicyDlg
 	{
 	public:
 		GroupPolicyDlg(Group* group,QWidget* parent);

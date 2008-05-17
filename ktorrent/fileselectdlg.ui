@@ -1,6 +1,6 @@
 <ui version="4.0" >
  <class>FileSelectDlg</class>
- <widget class="QDialog" name="FileSelectDlg" >
+ <widget class="QWidget" name="FileSelectDlg" >
   <property name="geometry" >
    <rect>
     <x>0</x>
@@ -13,6 +13,18 @@
    <string>Select Which Files You Want to Download</string>
   </property>
   <layout class="QVBoxLayout" >
+   <property name="leftMargin" >
+    <number>0</number>
+   </property>
+   <property name="topMargin" >
+    <number>0</number>
+   </property>
+   <property name="rightMargin" >
+    <number>0</number>
+   </property>
+   <property name="bottomMargin" >
+    <number>0</number>
+   </property>
    <item>
     <layout class="QHBoxLayout" >
      <item>
@@ -268,13 +280,6 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="KDialogButtonBox" name="m_button_box" >
-     <property name="standardButtons" >
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::NoButton|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11" />
@@ -325,38 +330,6 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel" >
      <x>407</x>
      <y>62</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>m_button_box</sender>
-   <signal>accepted()</signal>
-   <receiver>FileSelectDlg</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>290</x>
-     <y>553</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>245</x>
-     <y>285</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>m_button_box</sender>
-   <signal>rejected()</signal>
-   <receiver>FileSelectDlg</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>290</x>
-     <y>553</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>245</x>
-     <y>285</y>
     </hint>
    </hints>
   </connection>

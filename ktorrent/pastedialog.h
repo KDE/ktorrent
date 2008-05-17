@@ -21,7 +21,7 @@
 #ifndef PASTEDIALOG_H
 #define PASTEDIALOG_H
 
-#include <QDialog>
+#include <KDialog>
 #include "ui_pastedlgbase.h"
 
 
@@ -33,7 +33,7 @@ namespace kt
 	 * @author Ivan Vasic
 	 * @brief Torrent URL paste dialog
 	 **/
-	class PasteDialog: public QDialog, public Ui_PasteDlgBase
+	class PasteDialog: public KDialog, public Ui_PasteDlgBase
 	{
 			Q_OBJECT
 		public slots:

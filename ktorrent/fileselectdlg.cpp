@@ -43,13 +43,10 @@ using namespace bt;
 namespace kt
 {
 
-	FileSelectDlg::FileSelectDlg(kt::GroupManager* gman,const QString & group_hint,QWidget* parent) : QDialog(parent,Qt::Dialog),gman(gman),initial_group(0)
+	FileSelectDlg::FileSelectDlg(kt::GroupManager* gman,const QString & group_hint,QWidget* parent) : KDialog(parent),gman(gman),initial_group(0)
 	{
-		setupUi(this);
-		m_button_box->clear();
-		m_button_box->addButton(KStandardGuiItem::ok(),QDialogButtonBox::AcceptRole);
-		m_button_box->addButton(KStandardGuiItem::cancel(),QDialogButtonBox::RejectRole);
-		
+		setupUi(mainWidget());
+
 		model = 0;
 		//root = 0;
 		connect(m_select_all,SIGNAL(clicked()),this,SLOT(selectAll()));
