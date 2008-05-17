@@ -181,6 +181,7 @@ namespace kt
 		KAction* ipfilter_action;
 		KAction* data_check_action;
 		KAction* import_action;
+		KAction* import_kde3_torrents_action;
 		KAction* speed_limits_action;
 		KAction* show_kt_action;
 

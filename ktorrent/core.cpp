@@ -62,6 +62,7 @@
 #include "fileselectdlg.h"
 #include "missingfilesdlg.h"
 #include "gui.h"
+#include "torrentmigratordlg.h"
 
 using namespace bt;
 
@@ -132,6 +133,9 @@ namespace kt
 		gman->loadGroups();
 		connect(qman,SIGNAL(queueOrdered()),this,SLOT(startUpdateTimer()));
 		connect(qman,SIGNAL(pauseStateChanged(bool)),gui,SLOT(onPausedStateChanged(bool)));
+		
+		if (!Settings::oldTorrentsImported()) // check for old torrents if this hasn't happened yet
+			QTimer::singleShot(1000,this,SLOT(checkForKDE3Torrents()));
 	}
 	
 	Core::~Core()
@@ -1103,7 +1107,41 @@ namespace kt
 	{
 		pman->updateGuiPlugins();
 	}
+	
+	void Core::checkForKDE3Torrents()
+	{
+		Settings::setOldTorrentsImported(true);
+		Settings::self()->writeConfig();
+#ifndef Q_WS_WIN // this is only necessary on linux and other unix variants which support KDE3	
+		TorrentMigratorDlg mig(gui);
+		Uint32 num = mig.findTorrentsToBeMigrated();
+		if (num > 0)
+		{
+			if (KMessageBox::questionYesNo(gui,i18n("KTorrent has found %1 torrents from the KDE3 version of KTorrent, do you want to import them ?",num)) == KMessageBox::Yes)
+			{
+				mig.migrateFoundTorrents(qman);
+				foreach (const QString & s,mig.getSuccessFullImports())
+					loadExistingTorrent(s);
+			}
+		}
+#endif 
+	}
 
+	void Core::importKDE3Torrents()
+	{
+		TorrentMigratorDlg mig(gui);
+		Uint32 num = mig.findTorrentsToBeMigrated();
+		if (num > 0)
+		{
+			mig.migrateFoundTorrents(qman);
+			foreach (const QString & s,mig.getSuccessFullImports())
+				loadExistingTorrent(s);
+		}
+		else
+		{
+			KMessageBox::information(gui,i18n("No torrents from the KDE3 version were found !"));
+		}
+	}
 }
 
 #include "core.moc"

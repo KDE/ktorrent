@@ -499,6 +499,14 @@ namespace kt
 		connect(import_action,SIGNAL(triggered()),this,SLOT(import()));
 		ac->addAction("import",import_action);
 		
+#ifndef Q_WS_WIN
+		import_kde3_torrents_action = new KAction(KIcon("document-import"),i18n("Import KDE3 Torrents"),this);
+		connect(import_kde3_torrents_action,SIGNAL(triggered()),core,SLOT(importKDE3Torrents()));
+		ac->addAction("import_kde3_torrents",import_kde3_torrents_action);
+#else
+		import_kde3_torrents_action = 0; // this action is not needed in windows
+#endif
+		
 		speed_limits_action = new KAction(KIcon("kt-speed-limits"),i18n("Speed Limits"),this);
 		connect(speed_limits_action,SIGNAL(triggered()),this,SLOT(speedLimits()));
 		speed_limits_action->setShortcut(KShortcut(Qt::CTRL + Qt::Key_L));

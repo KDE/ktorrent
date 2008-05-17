@@ -207,6 +207,9 @@ namespace kt
 
 		/// Update the GUI plugins
 		void updateGuiPlugins();
+		
+		/// Import KDE3 torrents
+		void importKDE3Torrents();
 
 	signals:
 		/**
@@ -276,6 +279,7 @@ namespace kt
 		void downloadFinishedSilently(KJob *job);
 		void emitCorruptedData(bt::TorrentInterface* tc);
 		void autoCheckData(bt::TorrentInterface* tc);
+		void checkForKDE3Torrents();
 
 	private:
 		GUI* gui;

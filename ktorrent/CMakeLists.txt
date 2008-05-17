@@ -31,6 +31,7 @@ set(ktorrent_SRC
 	queuemanagerwidget.cpp
 	queuemanagermodel.cpp
 	grouppolicydlg.cpp
+	torrentmigratordlg.cpp
 )
 	
 
@@ -52,6 +53,7 @@ kde4_add_ui_files(ktorrent_SRC
 	addpeersdlg.ui
 	queuemanagerwidget.ui
 	grouppolicydlg.ui
+	torrentmigratordlg.ui
 )
 
 kde4_add_executable(ktorrent ${ktorrent_SRC})
