@@ -216,9 +216,60 @@ namespace kt
 		
 		if (multiMatch == MM_ONCE_ONLY)
 			{
-			//we'll need to add history checking when history is done
-			//for now just say it matches
-			return true;
+			if (!matches->rowCount(QModelIndex()))
+				{
+				//If history is empty we're fine
+				return true;
+				}
+			else
+				{
+				if (rerelease == RR_IGNORE)
+					{
+					//we're ignoring rereleases so this doesn't match
+					return false;
+					}
+				else
+					{
+					QStringList rrTerms = rereleaseTerms.split(" ");
+					bool hasTerm = false;
+					for (int i=0; i<rrTerms.count(); i++)
+						{
+						if (string.contains(rrTerms.at(i)))
+							{
+							hasTerm = true;
+							break;
+							}
+						}
+					
+					if (hasTerm)
+						{
+						if (rerelease == RR_DOWNLOAD_ALL)
+							{
+							//it's a rerelease and we're downloading all of them
+							return true;
+							}
+						else
+							{
+							//we're only downloading the first
+							if (matches->captureCount(0, rrTerms))
+								{
+								//have already got a rerelease - don't get this one
+								return false;
+								}
+							else
+								{
+								//it's the first rerelease - download away
+								return true;
+								}
+							}
+						}
+					else
+						{
+						//it's not a rerelease - so it's not a match
+						return false;
+						}
+					}
+				}
 			}
 		else if (multiMatch == MM_ALWAYS_MATCH)
 			{
@@ -232,9 +283,61 @@ namespace kt
 		if (!curCap.isInRange(captureChecker->getMinCapture(), captureChecker->getMaxCapture()))
 			return false;
 		
-		//TODO: we should check the history - which isn't implemented yet
+		//check the previous matches
+		int capCount = matches->captureCount(&curCap);
 		
-		//TODO: if we're already in the history we should check if it's a rerelease if that's enabled
+		//if there has been captures we only care if we're on an accept filter
+		//rejects don't care about previous matches or record them
+		if (capCount && type == FT_ACCEPT)
+			{
+			//this has matched before
+			if (rerelease == RR_IGNORE)
+				{
+				//we're ignoring rereleases so this doesn't match
+				return false;
+				}
+			else
+				{
+				QStringList rrTerms = rereleaseTerms.split(" ");
+				bool hasTerm = false;
+				for (int i=0; i<rrTerms.count(); i++)
+					{
+					if (string.contains(rrTerms.at(i)))
+						{
+						hasTerm = true;
+						break;
+						}
+					}
+				
+				if (hasTerm)
+					{
+					if (rerelease == RR_DOWNLOAD_ALL)
+						{
+						//it's a rerelease and we're downloading all of them
+						return true;
+						}
+					else
+						{
+						//we're only downloading the first
+						if (matches->captureCount(&curCap, rrTerms))
+							{
+							//have already got a rerelease - don't get this one
+							return false;
+							}
+						else
+							{
+							//it's the first rerelease - download away
+							return true;
+							}
+						}
+					}
+				else
+					{
+					//it's not a rerelease - so it's not a match
+					return false;
+					}
+				}
+			}
 		
 		//made it this far? it's a match :)
 		return true;
@@ -392,14 +495,18 @@ namespace kt
 			
 			//we've made it all the way here which means we're a match that's either not in the history
 			//or is a rerelease that we want to download so let's download
-			Capture * curCap = 0;
-			if (multiMatch == MM_CAPTURE_CHECKING)
+			//only accept filters download
+			if (type == FT_ACCEPT)
 				{
-				curCap = new Capture();
-				*curCap = captureChecker->findCapture(checkStrings.at(i));
+				Capture * curCap = 0;
+				if (multiMatch == MM_CAPTURE_CHECKING)
+					{
+					curCap = new Capture();
+					*curCap = captureChecker->findCapture(checkStrings.at(i));
+					}
+				
+				emit download(curItem, curCap);
 				}
-			
-			emit download(curItem, curCap);
 			emit startProcessing();
 			return;
 			}

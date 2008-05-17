@@ -124,6 +124,67 @@ namespace kt
 		return QModelIndex();
 		}
 	
+	int Matches::captureCount(Capture * capture, const QStringList& releaseTerms) const
+		{
+		int count = 0;
+		
+		if (!capture && !releaseTerms.count())
+			return 0;
+		
+		QReadLocker readLock(&lock);
+		
+		for (int i=0; i<root.elementsByTagName("Match").count(); i++)
+			{
+			QDomElement curMatch = root.elementsByTagName("Match").at(i).toElement();
+			QStringList checkStrings = QStringList() << curMatch.attribute("Name") << curMatch.attribute("Link") << curMatch.attribute("Description");
+			
+			for (int j=0; j<curMatch.elementsByTagName("File").count(); j++)
+				{
+				checkStrings << curMatch.elementsByTagName("File").at(j).toElement().attribute("Name");
+				}
+			
+			if (capture)
+				{
+				//we've been passed a capture so we need to check this matches
+				for (int j=0; j<curMatch.elementsByTagName("Variable").count(); j++)
+					{
+					if (capture->getVariable(j).first != curMatch.elementsByTagName("Variable").at(j).toElement().attribute("Name"))
+						continue;
+					
+					if (capture->getVariable(j).second != curMatch.elementsByTagName("Variable").at(j).toElement().attribute("Value"))
+						continue;
+					}
+				
+				//there's no release terms, but there is a capture so let's count all the captures that match
+				if (!releaseTerms.count())
+					{
+					count++;
+					continue;
+					}
+				}
+			
+			bool found = false;
+			
+			for (int j=0; j<releaseTerms.count(); j++)
+				{
+				for (int k=0; k<checkStrings.count(); k++)
+					{
+					if (checkStrings.at(k).contains(releaseTerms.at(j)))
+						{
+						count++;
+						found = true;
+						break;
+						}
+					}
+				if (found)
+					break;
+				}
+			}
+		
+		return count;
+		
+		}
+		
 	void Matches::unload()
 		{
 		//if changes have been made, but not saved - save them now
@@ -185,12 +246,21 @@ namespace kt
 		newMatch.setAttribute("Link", item->getLink());
 		newMatch.setAttribute("Description", item->getDescription());
 		
+		//add in all the variables
 		for (int i=0; i<capture->varCount(); i++)
 			{
 			QDomElement curVar = matchXml.createElement("Variable");
  			curVar.setAttribute("Name", capture->getVariable(i).first);
  			curVar.setAttribute("Value", capture->getVariable(i).second);
  			newMatch.appendChild(curVar);
+			}
+		
+		//add in all the filenames
+		for (int i=0; i<item->getFilenames().count(); i++)
+			{
+			QDomElement curFile = matchXml.createElement("File");
+			curFile.setAttribute("Name", item->getFilenames().at(i));
+			newMatch.appendChild(curFile);
 			}
 		
 		root.appendChild(newMatch);

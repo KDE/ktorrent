@@ -49,6 +49,8 @@ namespace kt
 		virtual QModelIndex index(int row,int column,const QModelIndex & parent) const;
 		virtual QModelIndex parent(const QModelIndex & index) const;
 		
+		int captureCount(Capture * capture, const QStringList& releaseTerms = QStringList()) const;
+		
 	public slots:
 		void unload();
 		void resetChangeTimer();
