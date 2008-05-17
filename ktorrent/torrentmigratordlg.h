@@ -36,7 +36,7 @@ namespace kt
 	/**
 		Class to find old torrents and migrate them to the KDE4 version.
 	*/
-	class KTCORE_EXPORT TorrentMigratorDlg : public QDialog,public Ui_TorrentMigratorDlg
+	class TorrentMigratorDlg : public QDialog,public Ui_TorrentMigratorDlg
 	{
 		Q_OBJECT
 	public:
