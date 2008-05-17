@@ -85,7 +85,7 @@ char *_GeoIP_full_path_to(const char *file_name) {
 	char buf[MAX_PATH], *p, *q = NULL;
 	int len;
 	memset(buf, 0, sizeof(buf));
-	len = GetModuleFileName(GetModuleHandle(NULL), (LPWCH)buf, sizeof(buf) - 1);
+	len = GetModuleFileNameA(GetModuleHandle(NULL), buf, sizeof(buf) - 1);
 	for (p = buf + len; p > buf; p--)
 		if (*p == '\\')
 		{
