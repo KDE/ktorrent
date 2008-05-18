@@ -1,4 +1,5 @@
 Changes in 3.1beta2 :
+- Ported changes from windows branch, so windows is now officially supported
 - Added new icons created by Lee Olson
 - Fix infinite loop when adding torrent to group in view menu
 - Manually save and restore window size and position to fix bug with window size when tray icon is enabled
