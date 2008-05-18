@@ -28,6 +28,8 @@
 
 #include <interfaces/prefpageinterface.h>
 
+#include <libktcore/settings.h>
+
 #include <PluginPage.h>
 #include <statspluginsettings.h>
 
@@ -52,6 +54,8 @@ class SettingsPage : public PrefPageInterface, public Ui_StatsSettingsWgt
 	
 	public slots:
 		void updateSettings();
+	private slots:
+		void UpdGuiUpdatesToMs(int);
 	
 	signals:
 		///Settings has been applied
