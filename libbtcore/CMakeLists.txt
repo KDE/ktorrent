@@ -185,7 +185,7 @@ target_link_libraries(btcore ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} ${GMP_LIBRARIES
 if(WIN32)
 target_link_libraries(btcore ws2_32)
 endif(WIN32)
-set_target_properties(btcore PROPERTIES VERSION 4.0.0 SOVERSION 4 )
+set_target_properties(btcore PROPERTIES VERSION 5.0.0 SOVERSION 5 )
 install(TARGETS btcore  DESTINATION ${LIB_INSTALL_DIR} )
 
 set(net_HDR  

@@ -1,5 +1,24 @@
-Changes in 3.1rc1 :
+Changes in 3.1beta2 :
 - Added new icons created by Lee Olson
+- Fix infinite loop when adding torrent to group in view menu
+- Manually save and restore window size and position to fix bug with window size when tray icon is enabled
+- Fix crash when trying to show context menu of a dir item in the fileview
+- Added toggle action to show or hide the video widget
+- Make sure that video widget is shown again when video playing is started and the video widget is hidden
+- Ported sparc SIGBUS crash from KDE3 version
+- Fix typos in settings page of QM (161664)
+- Updated geoip database to most recent one
+- Added option to choose the name of the toplevel directory of multifile torrents in the fileselect dialog
+- Fix bug when loading torrent via webgui
+- Make sure reuse address option is set before bind call in http server
+- Open silently no longer shows error messages, instead it uses a passive notification
+- Fix tooltip in network pref page
+- Use fstat64 if possible to calculate disk usage of CacheFile, should fix diskspace check for files larger then 4 GB (161804)
+- Fix bug in media model when torrents with media files get added
+- Added import dialog to import torrents from the KDE3 version into the KDE4 one
+- Use KDialog instead of QDialog in several dialogs
+- Fix bug causing connection stats to be wrong
+- Added patch from athantor showing the interval in ms between charts updates on plugin's settings page
 
 Changes in 3.1beta1 :
 - Added Location column (157463)
