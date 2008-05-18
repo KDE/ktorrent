@@ -233,12 +233,12 @@ void ConnsTabPage::GatherConnStats(Plugin * pPlug)
 	
 	for(QList< bt::TorrentInterface *>::iterator it = qm_iface -> begin(); it != qm_iface -> end(); it++)
 	{
-		const bt::TorrentStats tstat = (*it) -> getStats();
+		const bt::TorrentStats & tstat = (*it) -> getStats();
 		
-		lc = tstat.leechers_connected_to;
-		ls = tstat.leechers_total;
-		sc = tstat.seeders_connected_to;
-		ss = tstat.seeders_total;
+		lc += tstat.leechers_connected_to;
+		ls += tstat.leechers_total;
+		sc += tstat.seeders_connected_to;
+		ss += tstat.seeders_total;
 		
 		tc++;
 		if(tstat.running)

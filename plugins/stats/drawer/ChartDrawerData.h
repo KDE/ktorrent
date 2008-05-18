@@ -139,7 +139,7 @@ class ChartDrawerData
 		*/
 		std::pair<qreal, size_t>  FindMax() const ;
         
-        bool operator=( const ChartDrawerData & rCdd ) { return true; };
+       // bool operator=( const ChartDrawerData & rCdd ) { return true; };
 };
 
 } // NS end
