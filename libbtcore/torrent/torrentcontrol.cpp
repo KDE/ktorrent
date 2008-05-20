@@ -163,6 +163,8 @@ namespace bt
 			{
 				dcheck_thread->wait();
 				afterDataCheck();
+				if (!stats.running)
+					return;
 			}
 			else
 				return;
