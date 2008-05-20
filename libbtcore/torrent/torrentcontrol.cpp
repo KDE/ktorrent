@@ -474,13 +474,15 @@ namespace bt
 			}
 			
 			downloader->clearDownloads();
-			if (user)
-			{
-				//make this torrent user controlled
-				setPriority(0);
-				stats.autostart = false;
-			}
 		}
+		
+		if (user)
+		{
+				//make this torrent user controlled
+			setPriority(0);
+			stats.autostart = false;
+		}
+		
 		pman->savePeerList(tordir + "peer_list");
 		pman->stop();
 		pman->closeAllConnections();
