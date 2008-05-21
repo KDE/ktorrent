@@ -23,6 +23,7 @@
 #include <qfileinfo.h>
 #include <qstringlist.h> 
 #include <kio/copyjob.h>
+#include <kio/jobuidelegate.h>
 #include <util/fileops.h>
 #include <util/error.h>
 #include <util/functions.h>
@@ -94,12 +95,27 @@ namespace bt
 	
 	KJob* SingleFileCache::moveDataFiles(const QString & ndir)
 	{
-		return KIO::move(output_file,ndir);
+		QString dst = ndir;
+		if (!dst.endsWith(bt::DirSeparator()))
+			dst += bt::DirSeparator();
+		
+		dst += output_file.mid(output_file.lastIndexOf(bt::DirSeparator()) + 1);
+		move_data_files_dst = dst;
+		return KIO::move(output_file,dst);
 	}
 	
 	void SingleFileCache::moveDataFilesFinished(KJob* job)
 	{
-		Q_UNUSED(job);
+		if (job->error() == KIO::ERR_USER_CANCELED)
+		{
+			if (bt::Exists(move_data_files_dst))
+				bt::Delete(move_data_files_dst,true);
+		}
+		else if (job->error())
+		{
+			((KIO::Job*)job)->ui()->showErrorMessage();
+		}
+		move_data_files_dst = QString();
 	}
 	
 	bool SingleFileCache::prep(Chunk* c)

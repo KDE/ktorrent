@@ -19,12 +19,13 @@
  ***************************************************************************/
 #include "movedatafilesjob.h"
 #include <util/log.h>
+#include <util/fileops.h>
 #include <kio/jobuidelegate.h>
 
 namespace bt
 {
 
-	MoveDataFilesJob::MoveDataFilesJob() : err(false),active_job(0)
+	MoveDataFilesJob::MoveDataFilesJob() : err(false),active_job(0),running_recovery_jobs(0)
 	{}
 
 
@@ -49,7 +50,7 @@ namespace bt
 			
 			// shit happened cancel all previous moves
 			err = true;
-			recover();
+			recover(j->error() != KIO::ERR_FILE_ALREADY_EXIST);
 		}
 		else
 		{
@@ -65,7 +66,7 @@ namespace bt
 		setError(KIO::ERR_USER_CANCELED);
 		active_job = 0;
 		err = true;
-		recover();
+		recover(true);
 	}
 	
 	void MoveDataFilesJob::start()
@@ -91,18 +92,35 @@ namespace bt
 		todo.erase(i);
 	}
 	
-	void MoveDataFilesJob::recover()
+	void MoveDataFilesJob::recover(bool delete_active)
 	{
+		if (delete_active && bt::Exists(active_dst))
+			bt::Delete(active_dst,true);
+		
 		if (success.isEmpty())
 		{
 			emitResult();
 			return;
 		}
-		QMap<QString,QString>::iterator i = success.begin();	
-		active_job = KIO::file_move(KUrl(i.value()),KUrl(i.key()),-1,KIO::HideProgressInfo);
-		connect(active_job,SIGNAL(result(KJob*)),this,SLOT(onJobDone(KJob*)));
-		connect(active_job,SIGNAL(canceled(KJob*)),this,SLOT(onCanceled(KJob*)));
-		success.erase(i);
+		
+		running_recovery_jobs = 0;
+		QMap<QString,QString>::iterator i = success.begin();
+		while (i != success.end())
+		{	
+			KIO::Job* j = KIO::file_move(KUrl(i.value()),KUrl(i.key()),-1,KIO::HideProgressInfo);
+			connect(j,SIGNAL(result(KJob*)),this,SLOT(onRecoveryJobDone(KJob*)));
+			running_recovery_jobs++;
+			i++;
+		}
+		success.clear();
+	}
+	
+	void MoveDataFilesJob::onRecoveryJobDone(KJob* j)
+	{
+		Q_UNUSED(j);
+		running_recovery_jobs--;
+		if (running_recovery_jobs <= 0)
+			emitResult();
 	}
 }
 #include "movedatafilesjob.moc"

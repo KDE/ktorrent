@@ -37,6 +37,7 @@ namespace bt
 	{
 		QString cache_file;
 		QString output_file;
+		QString move_data_files_dst;
 		CacheFile* fd;
 	public:
 		SingleFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir);
@@ -59,7 +60,6 @@ namespace bt
 		virtual Uint64 diskUsage();
 		virtual void loadFileMap();
 		virtual void saveFileMap();
-
 	};
 
 }

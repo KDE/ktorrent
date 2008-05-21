@@ -53,16 +53,18 @@ namespace bt
 	private slots:
 		void onJobDone(KJob* j);
 		void onCanceled(KJob* j);
+		void onRecoveryJobDone(KJob* j);
 		
 	private:
-		void recover();
+		void recover(bool delete_active);
 
 	private:
 		bool err;
 		KIO::Job* active_job;
 		QString active_src,active_dst;
 		QMap<QString,QString> todo;
-		QMap<QString,QString> success;		
+		QMap<QString,QString> success;
+		int running_recovery_jobs;	
 	};
 
 }
