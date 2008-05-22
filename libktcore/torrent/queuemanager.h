@@ -259,6 +259,7 @@ namespace kt
 		bool paused_state;
 		bool keep_seeding;
 		bool exiting;
+		bool ordering;
 	};
 }
 #endif

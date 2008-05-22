@@ -50,6 +50,7 @@ namespace kt
 		keep_seeding = true; //test. Will be passed from Core
 		paused_state = false;
 		exiting = false;
+		ordering = false;
 	}
 
 
@@ -502,9 +503,10 @@ namespace kt
 	
 	void QueueManager::orderQueue()
 	{
-		if (!downloads.count() || paused_state || exiting)
+		if (ordering || !downloads.count() || paused_state || exiting)
 			return;
 		
+		ordering = true; // make sure that recursive entering of this function is not possible
 		
 		downloads.sort();
 	
@@ -580,6 +582,7 @@ namespace kt
 			}
 		}
 		
+		ordering = false;
 		emit queueOrdered();
 	}
 	
