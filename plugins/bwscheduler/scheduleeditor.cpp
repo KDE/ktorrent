@@ -66,8 +66,8 @@ namespace kt
 		
 		connect(view,SIGNAL(selectionChanged()),this,SLOT(onSelectionChanged()));
 		connect(view,SIGNAL(editItem(ScheduleItem*)),this,SLOT(editItem(ScheduleItem*)));
-		connect(view,SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&)),
-				this,SLOT(itemMoved(ScheduleItem*, const QTime&, const QTime&)));
+		connect(view,SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&,int)),
+				this,SLOT(itemMoved(ScheduleItem*, const QTime&, const QTime&,int)));
 	}
 
 	
@@ -195,9 +195,9 @@ namespace kt
 		view->updateStatusText(up,down,paused);
 	}
 	
-	void ScheduleEditor::itemMoved(ScheduleItem* item,const QTime & start,const QTime & end)
+	void ScheduleEditor::itemMoved(ScheduleItem* item,const QTime & start,const QTime & end,int day)
 	{
-		schedule->modify(item,start,end);
+		schedule->modify(item,start,end,day);
 		view->itemChanged(item);
 		scheduleChanged();
 	}

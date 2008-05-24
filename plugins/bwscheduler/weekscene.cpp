@@ -142,10 +142,10 @@ namespace kt
 		qreal ye = timeToY(item->end);
 		
 		QRectF rect(x,y,day_width,ye - y);
-		QRectF cst(x,yoff,day_width,24*hour_height); 
+		QRectF cst(xoff,yoff,7*day_width,24*hour_height); 
 		ScheduleGraphicsItem* gi = new ScheduleGraphicsItem(item,rect,cst,this);
 		addItem(gi);
-		gi->update(rect,cst);
+		gi->update(rect);
 		return gi;
 	}
 	
@@ -206,7 +206,7 @@ namespace kt
 		QTime end = start.addSecs(d);
 		end = end.addSecs(59 - end.second()); // make sure end seconds is 59
 		
-		itemMoved(item,start,end);
+		itemMoved(item,start,end,1 + floor((np.x() + day_width * 0.5 - xoff) / day_width));
 	}
 	
 	void WeekScene::itemChanged(ScheduleItem* item,QGraphicsItem* gi)
@@ -215,7 +215,7 @@ namespace kt
 		qreal x = xoff + (item->day - 1) * day_width;
 		qreal y = timeToY(item->start);
 		qreal ye = timeToY(item->end);
-		sgi->update(QRectF(x,y,day_width,ye - y),QRectF(x,yoff,day_width,24*hour_height));
+		sgi->update(QRectF(x,y,day_width,ye - y));
 	}
 }
 

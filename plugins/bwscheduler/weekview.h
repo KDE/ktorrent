@@ -89,7 +89,7 @@ namespace kt
 	signals:
 		void selectionChanged();
 		void editItem(ScheduleItem* item);
-		void itemMoved(ScheduleItem* item,const QTime & start,const QTime & end);
+		void itemMoved(ScheduleItem* item,const QTime & start,const QTime & end,int day);
 		
 	private slots:
 		void onSelectionChanged();

@@ -60,9 +60,8 @@ namespace kt
 	{
 	}
 	
-	void ScheduleGraphicsItem::update(const QRectF & r,const QRectF & cst)
+	void ScheduleGraphicsItem::update(const QRectF & r)
 	{
-		constraints = cst;
 		setRect(r);
 		setPos(QPointF(0,0));
 		QString text;
@@ -106,7 +105,12 @@ namespace kt
 			QPointF new_pos = value.toPointF();
 			if (!constraints.contains(new_pos))
 			{
-				new_pos.setX(constraints.x() - boundingRect().x());
+				qreal x = constraints.x() - boundingRect().x();
+				if (new_pos.x() < x)
+					new_pos.setX(x);
+				else if (new_pos.x() + rect().width() > x + constraints.width())
+					new_pos.setX(x + constraints.width() - rect().width());
+				
 				qreal y = constraints.y() - boundingRect().y();
 				if (new_pos.y() < y)
 					new_pos.setY(y);

@@ -42,9 +42,8 @@ namespace kt
 		/**
 		 * Update the item.
 		 * @param r The new rect
-		 * @param cst The new constraints
 		 */
-		void update(const QRectF & r,const QRectF & cst);
+		void update(const QRectF & r);
 		
 	private:
 		virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);

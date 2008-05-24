@@ -77,8 +77,9 @@ namespace kt
 		 * @param item The item
 		 * @param start The new start time
 		 * @param end The new end time
+		 * @param day The new day
 		 */
-		void itemMoved(ScheduleItem* item,const QTime & start,const QTime & end);
+		void itemMoved(ScheduleItem* item,const QTime & start,const QTime & end,int day);
 
 	private:
 		void addCalendar();

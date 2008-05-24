@@ -64,7 +64,7 @@ namespace kt
 		void editItem();
 		void onSelectionChanged();
 		void editItem(ScheduleItem* item);
-		void itemMoved(ScheduleItem* item,const QTime & start,const QTime & end);
+		void itemMoved(ScheduleItem* item,const QTime & start,const QTime & end,int day);
 		
 	signals:
 		/**

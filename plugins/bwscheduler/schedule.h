@@ -118,13 +118,14 @@ namespace kt
 		int getTimeToNextScheduleEvent(const QDateTime & now);
 		
 		/**
-		 * Try to modify start and stop time of an item.
+		 * Try to modify start, stop time and day of an item.
 		 * @param item The item
 		 * @param start The start time
 		 * @param end The stop time
+		 * @param day The day
 		 * @return true If this succeeds (i.e. no conflicts)
 		 */
-		bool modify(ScheduleItem* item,const QTime & start,const QTime & end);
+		bool modify(ScheduleItem* item,const QTime & start,const QTime & end,int day);
 		
 		/**
 		 * Check for conflicts with other schedule items.

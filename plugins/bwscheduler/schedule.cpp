@@ -277,18 +277,21 @@ namespace kt
 		return now.time().secsTo(end_of_day) + 1;
 	}
 	
-	bool Schedule::modify(ScheduleItem* item,const QTime & start,const QTime & end)
+	bool Schedule::modify(ScheduleItem* item,const QTime & start,const QTime & end,int day)
 	{
 		QTime old_start = item->start;
 		QTime old_end = item->end;
+		int old_day = item->day;
 			
 		item->start = start;
 		item->end = end;
+		item->day = day;
 		if (conflicts(item))
 		{
 			// restore old start and end time
 			item->start = old_start;
 			item->end = old_end;
+			item->day = old_day;
 			return false;
 		}
 	

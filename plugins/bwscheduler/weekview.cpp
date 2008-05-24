@@ -37,8 +37,8 @@ namespace kt
 		
 		connect(scene,SIGNAL(selectionChanged()),this,SLOT(onSelectionChanged()));
 		connect(scene,SIGNAL(itemDoubleClicked(QGraphicsItem*)),this,SLOT(onDoubleClicked(QGraphicsItem*)));
-		connect(scene,SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&)),
-				this,SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&)));
+		connect(scene,SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&,int)),
+				this,SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&,int)));
 		
 		menu = new KMenu(this);
 		setContextMenuPolicy(Qt::CustomContextMenu);
