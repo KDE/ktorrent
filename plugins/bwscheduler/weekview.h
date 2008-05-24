@@ -55,13 +55,13 @@ namespace kt
 		void clear();
 		
 		/// Get the selected items
-		QList<ScheduleItem> selectedItems() {return selection;}
+		QList<ScheduleItem*> selectedItems() {return selection;}
 		
 		/**
 		 * Add an item to the schedule.
 		 * @param item The item to add
 		 */
-		void addScheduleItem(const ScheduleItem & item);
+		void addScheduleItem(ScheduleItem* item);
 		
 		
 		/**
@@ -80,10 +80,16 @@ namespace kt
 		 */
 		void updateStatusText(int up,int down,bool paused);
 		
+		/**
+		 * Something has changed about an item
+		 * @param item 
+		 */
+		void itemChanged(ScheduleItem* item);
 		
 	signals:
 		void selectionChanged();
-		void editItem(const ScheduleItem & item);
+		void editItem(ScheduleItem* item);
+		void itemMoved(ScheduleItem* item,const QTime & start,const QTime & end);
 		
 	private slots:
 		void onSelectionChanged();
@@ -94,8 +100,8 @@ namespace kt
 		WeekScene* scene;
 		
 		Schedule* schedule;
-		QMap<QGraphicsItem*,ScheduleItem>  item_map;
-		QList<ScheduleItem> selection;
+		QMap<QGraphicsItem*,ScheduleItem*>  item_map;
+		QList<ScheduleItem*> selection;
 		KMenu* menu;
 	};
 

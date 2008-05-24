@@ -65,10 +65,12 @@ namespace kt
 		menu->addAction(clear_action);
 		
 		connect(view,SIGNAL(selectionChanged()),this,SLOT(onSelectionChanged()));
-		connect(view,SIGNAL(editItem(const ScheduleItem&)),this,SLOT(editItem(const ScheduleItem&)));
+		connect(view,SIGNAL(editItem(ScheduleItem*)),this,SLOT(editItem(ScheduleItem*)));
+		connect(view,SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&)),
+				this,SLOT(itemMoved(ScheduleItem*, const QTime&, const QTime&)));
 	}
 
-
+	
 	ScheduleEditor::~ScheduleEditor()
 	{}
 
@@ -128,13 +130,13 @@ namespace kt
 	
 	void ScheduleEditor::addItem()
 	{
-		ScheduleItem item;
-		item.start = QTime::currentTime();
-		item.end = item.start.addSecs(3600);
-		item.day = 1;
+		ScheduleItem* item = new ScheduleItem();
+		item->start = QTime::currentTime();
+		item->end = item->start.addSecs(3600);
+		item->day = QDate::currentDate().dayOfWeek();
 		
 		AddItemDlg dlg(AddItemDlg::NEW_ITEM,this);
-		if (dlg.execute(&item))
+		if (dlg.execute(item))
 		{
 			if (!schedule->addItem(item))
 				KMessageBox::error(this,i18n("This item conflicts with another item in the schedule, we cannot add it !"));
@@ -144,6 +146,8 @@ namespace kt
 			clear_action->setEnabled(true);
 			scheduleChanged();
 		}
+		else
+			delete item;
 	}
 
 	void ScheduleEditor::removeItem()
@@ -153,24 +157,21 @@ namespace kt
 		scheduleChanged();
 	}
 	
-	void ScheduleEditor::editItem(const ScheduleItem & item)
+	void ScheduleEditor::editItem(ScheduleItem* item)
 	{
-		ScheduleItem old_item = item;
-		ScheduleItem new_item = old_item;
+		ScheduleItem tmp = *item;
 		
 		AddItemDlg dlg(AddItemDlg::EDIT_ITEM,this);
-		if (dlg.execute(&new_item))
+		if (dlg.execute(item))
 		{
-			schedule->removeAll(old_item);
-			if (!schedule->addItem(new_item))
+			if (schedule->conflicts(item))
 			{
+				*item = tmp; // restore old values
 				KMessageBox::error(this,i18n("This item conflicts with another item in the schedule, we cannot change it !"));
-				schedule->addItem(old_item); // add the old one back again
 			}
 			else
 			{
-				view->clear();
-				view->setSchedule(schedule);
+				view->itemChanged(item);
 			}
 			clear_action->setEnabled(schedule->count() > 0);
 			scheduleChanged();
@@ -192,6 +193,13 @@ namespace kt
 	void ScheduleEditor::updateStatusText(int up,int down,bool paused)
 	{
 		view->updateStatusText(up,down,paused);
+	}
+	
+	void ScheduleEditor::itemMoved(ScheduleItem* item,const QTime & start,const QTime & end)
+	{
+		schedule->modify(item,start,end);
+		view->itemChanged(item);
+		scheduleChanged();
 	}
 }
 

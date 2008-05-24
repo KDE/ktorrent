@@ -37,6 +37,8 @@ namespace kt
 		
 		connect(scene,SIGNAL(selectionChanged()),this,SLOT(onSelectionChanged()));
 		connect(scene,SIGNAL(itemDoubleClicked(QGraphicsItem*)),this,SLOT(onDoubleClicked(QGraphicsItem*)));
+		connect(scene,SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&)),
+				this,SIGNAL(itemMoved(ScheduleItem*, const QTime&, const QTime&)));
 		
 		menu = new KMenu(this);
 		setContextMenuPolicy(Qt::CustomContextMenu);
@@ -61,7 +63,7 @@ namespace kt
 		QList<QGraphicsItem*> sel = scene->selectedItems();
 		foreach (QGraphicsItem* s,sel)
 		{
-			QMap<QGraphicsItem*,ScheduleItem>::iterator i = item_map.find(s);
+			QMap<QGraphicsItem*,ScheduleItem*>::iterator i = item_map.find(s);
 			if (i != item_map.end())
 				selection.append(i.value());
 		}
@@ -76,14 +78,14 @@ namespace kt
 		
 		if (schedule)
 		{
-			foreach (ScheduleItem i,*schedule)
-				addScheduleItem(i);
+			for (Schedule::iterator i = s->begin();i != s->end();i++)
+				addScheduleItem(*i);
 		}
 	}
 		
 	void WeekView::clear()
 	{
-		QMap<QGraphicsItem*,ScheduleItem>::iterator i = item_map.begin();
+		QMap<QGraphicsItem*,ScheduleItem*>::iterator i = item_map.begin();
 		while (i != item_map.end())
 		{
 			QGraphicsItem* item = i.key();
@@ -101,10 +103,10 @@ namespace kt
 		QList<QGraphicsItem*> sel = scene->selectedItems();
 		foreach (QGraphicsItem* s,sel)
 		{
-			QMap<QGraphicsItem*,ScheduleItem>::iterator i = item_map.find(s);
+			QMap<QGraphicsItem*,ScheduleItem*>::iterator i = item_map.find(s);
 			if (i != item_map.end())
 			{
-				const ScheduleItem & si = i.value();
+				ScheduleItem* si = i.value();
 				schedule->removeAll(si);
 				scene->removeItem(s);
 				item_map.erase(i);
@@ -113,7 +115,7 @@ namespace kt
 		}
 	}
 	
-	void WeekView::addScheduleItem(const ScheduleItem & item)
+	void WeekView::addScheduleItem(ScheduleItem* item)
 	{
 		QGraphicsItem* gi = scene->addScheduleItem(item);
 		
@@ -123,7 +125,7 @@ namespace kt
 	
 	void WeekView::onDoubleClicked(QGraphicsItem* i)
 	{
-		QMap<QGraphicsItem*,ScheduleItem>::iterator itr = item_map.find(i);
+		QMap<QGraphicsItem*,ScheduleItem*>::iterator itr = item_map.find(i);
 		if (itr != item_map.end())
 			editItem(itr.value());
 	}
@@ -131,6 +133,21 @@ namespace kt
 	void WeekView::showContextMenu(const QPoint& pos)
 	{
 		menu->popup(mapToGlobal(pos));
+	}
+	
+	void WeekView::itemChanged(ScheduleItem* item)
+	{
+		QMap<QGraphicsItem*,ScheduleItem*>::iterator i = item_map.begin();
+		while (i != item_map.end())
+		{
+			if (item == i.value())
+			{
+				QGraphicsItem* gi = i.key();
+				scene->itemChanged(item,gi);
+				break;
+			}
+			i++;
+		}
 	}
 }
 

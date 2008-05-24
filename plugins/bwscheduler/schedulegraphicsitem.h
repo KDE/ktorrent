@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
  *   ivasic@gmail.com                                                      *
  *                                                                         *
@@ -18,77 +18,45 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTSCHEDULEEDITOR_H
-#define KTSCHEDULEEDITOR_H
+#ifndef KTSCHEDULEGRAPHICSITEM_H
+#define KTSCHEDULEGRAPHICSITEM_H
 
-#include <QWidget>
-
-class KToolBar;
+#include <QGraphicsRectItem>
+#include "schedule.h"
 
 namespace kt
 {
-	class WeekView;
-	class Schedule;
-	struct ScheduleItem;
+	class WeekScene;
 
 	/**
-		@author
+		QGraphicsItem to display a ScheduleItem
 	*/
-	class ScheduleEditor : public QWidget
+	class ScheduleGraphicsItem : public QGraphicsRectItem
 	{
-		Q_OBJECT
 	public:
-		ScheduleEditor(QWidget* parent);
-		virtual ~ScheduleEditor();
+		ScheduleGraphicsItem(ScheduleItem* item,const QRectF & r,const QRectF & constraints,WeekScene* ws);
+		virtual ~ScheduleGraphicsItem();
+
+		virtual QVariant itemChange(GraphicsItemChange change, const QVariant & value);
 		
 		/**
-		 * Set the current Schedule
-		 * @param s The current schedule
+		 * Update the item.
+		 * @param r The new rect
+		 * @param cst The new constraints
 		 */
-		void setSchedule(Schedule* s);
-			
-		/**
-		 * Update the text of the status line
-		 * @param up Up speed
-		 * @param down Down speed
-		 * @param paused Paused or not
-		 */
-		void updateStatusText(int up,int down,bool paused);
+		void update(const QRectF & r,const QRectF & cst);
 		
-	private slots:
-		void clear();
-		void save();
-		void load();
-		void addItem();
-		void removeItem();
-		void editItem();
-		void onSelectionChanged();
-		void editItem(ScheduleItem* item);
-		void itemMoved(ScheduleItem* item,const QTime & start,const QTime & end);
-		
-	signals:
-		/**
-		 * Emitted when the user loads a new schedule.
-		 * @param ns The new schedule
-		 */
-		void loaded(Schedule* ns);
-		
-		/**
-		 * Emitted when something changes in the schedule.
-		 */
-		void scheduleChanged();
+	private:
+		virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+		virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
+		virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
 
 	private:
-		WeekView* view;
-		Schedule* schedule;
-		KToolBar* tool_bar;
-		
-		QAction* load_action;
-		QAction* save_action;
-		QAction* new_item_action;
-		QAction* remove_item_action;
-		QAction* edit_item_action;
-		QAction* clear_action;
+		ScheduleItem* item;
+		QRectF constraints;
+		WeekScene* ws;
+		QGraphicsTextItem* text_item;
+		QPointF original_pos;
 	};
 
 }

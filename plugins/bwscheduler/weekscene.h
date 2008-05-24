@@ -41,7 +41,7 @@ namespace kt
 		 * Add an item to the schedule.
 		 * @param item The item to add
 		 */
-		QGraphicsItem* addScheduleItem(const ScheduleItem & item);
+		QGraphicsItem* addScheduleItem(ScheduleItem* item);
 		
 		/**
 		 * Update the text of the status line
@@ -51,18 +51,42 @@ namespace kt
 		 */
 		void updateStatusText(int up,int down,bool paused);
 		
+		/**
+		 * A schedule item has been moved by the user. 
+		 * @param item The item
+		 * @param np New position
+		 */
+		void itemMoved(ScheduleItem* item,const QPointF & np);
+		
+		/**
+		 * An item has changed, update it.
+		 * @param item The item
+		 * @param gi The GraphicsItem
+		 */
+		void itemChanged(ScheduleItem* item,QGraphicsItem* gi);
+		
 	signals:
 		/**
 		 * Emitted when an item has been double clicked.
 		 * @param gi Item double clicked
 		 */
 		void itemDoubleClicked(QGraphicsItem* gi);
+		
+		/**
+		 * An item has been moved
+		 * @param item The item
+		 * @param start The new start time
+		 * @param end The new end time
+		 */
+		void itemMoved(ScheduleItem* item,const QTime & start,const QTime & end);
 
 	private:
 		void addCalendar();
 		virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* ev);
 	//	virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* ev);
 		virtual void mousePressEvent(QGraphicsSceneMouseEvent* ev);
+		qreal timeToY(const QTime & time);
+		QTime yToTime(qreal y);
 		
 	private:
 		qreal xoff;

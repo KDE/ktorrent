@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <math.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kcalendarsystem.h>
@@ -31,6 +32,7 @@
 #include <util/log.h>
 #include "weekscene.h"
 #include "schedule.h"
+#include "schedulegraphicsitem.h"
 
 using namespace bt;
 
@@ -125,50 +127,25 @@ namespace kt
 				t->setZValue(2);
 			}
 		}
+		
+		QRectF r = sceneRect();
+		r.setHeight(r.height() + 10);
+		setSceneRect(r);
 	}
 	
-	QGraphicsItem* WeekScene::addScheduleItem(const ScheduleItem & item)
+	QGraphicsItem* WeekScene::addScheduleItem(ScheduleItem* item)
 	{
 		QTime midnight(0,0,0,0);
-		qreal x = xoff + (item.day - 1) * day_width;
+		qreal x = xoff + (item->day - 1) * day_width;
 		qreal min_h = hour_height / 60.0;
-		qreal y = yoff + (midnight.secsTo(item.start) / 60.0) * min_h;
-		qreal ye = yoff + (midnight.secsTo(item.end) / 60.0) * min_h;
+		qreal y = timeToY(item->start);
+		qreal ye = timeToY(item->end);
 		
-		
-		QGraphicsRectItem* gi = addRect(x,y,day_width,ye - y);
-		gi->setPen(QPen(Qt::black));
-		gi->setZValue(3);
-		QString text;
-		if (item.paused)
-		{
-			gi->setBrush(QBrush(QColor(255,0,0,255)));
-			text = i18n("Paused");
-		}
-		else
-		{
-			gi->setBrush(QBrush(QColor(0,255,0,255)));
-			text = i18n("%1 Down\n%2 Up",
-						KBytesPerSecToString(item.download_limit),
-											 KBytesPerSecToString(item.upload_limit));
-		}
-		gi->setFlag(QGraphicsItem::ItemIsSelectable,true);
-		
-		
-		QGraphicsTextItem* t = addText(text);
-		QFontMetricsF fm(t->font());
-		
-		t->setPos(QPointF(x, y));
-		t->setZValue(4);
-		t->setTextWidth(day_width);
-		t->setParentItem(gi);
-		gi->setToolTip(text);
-		
-		if (t->boundingRect().height() > gi->rect().height())
-		{
-			// Text is to big for rect
-			delete t;
-		}
+		QRectF rect(x,y,day_width,ye - y);
+		QRectF cst(x,yoff,day_width,24*hour_height); 
+		ScheduleGraphicsItem* gi = new ScheduleGraphicsItem(item,rect,cst,this);
+		addItem(gi);
+		gi->update(rect,cst);
 		return gi;
 	}
 	
@@ -207,7 +184,39 @@ namespace kt
 		else
 			QGraphicsScene::mousePressEvent(ev);
 	}
-
+	
+	qreal WeekScene::timeToY(const QTime & time)
+	{
+		QTime midnight(0,0,0,0);
+		qreal min_h = hour_height / 60.0; 
+		return (midnight.secsTo(time) / 60.0) * min_h + yoff;
+	}
+	
+	QTime WeekScene::yToTime(qreal y)
+	{
+		y = y - yoff; // get rid of offset
+		qreal min_h = hour_height / 60.0; 
+		return QTime(0,0,0,0).addSecs((y / min_h) * 60);
+	}
+	
+	void WeekScene::itemMoved(ScheduleItem* item,const QPointF & np)
+	{
+		QTime start = yToTime(np.y());		
+		int d = item->start.secsTo(item->end); // duration in seconds
+		QTime end = start.addSecs(d);
+		end = end.addSecs(59 - end.second()); // make sure end seconds is 59
+		
+		itemMoved(item,start,end);
+	}
+	
+	void WeekScene::itemChanged(ScheduleItem* item,QGraphicsItem* gi)
+	{
+		ScheduleGraphicsItem* sgi = (ScheduleGraphicsItem*)gi;
+		qreal x = xoff + (item->day - 1) * day_width;
+		qreal y = timeToY(item->start);
+		qreal ye = timeToY(item->end);
+		sgi->update(QRectF(x,y,day_width,ye - y),QRectF(x,yoff,day_width,24*hour_height));
+	}
 }
 
 #include "weekscene.moc"

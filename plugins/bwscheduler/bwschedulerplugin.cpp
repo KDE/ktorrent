@@ -134,8 +134,8 @@ namespace kt
 	void BWSchedulerPlugin::timerTriggered()
 	{
 		QDateTime now = QDateTime::currentDateTime();
-		ScheduleItem item;
-		if (!m_schedule->getCurrentItem(now,item))
+		ScheduleItem* item = m_schedule->getCurrentItem(now);
+		if (!item)
 		{
 			Out(SYS_SCD|LOG_NOTICE) << QString("Changing schedule to normal values : %1 down, %2 up")
 					.arg(Settings::maxDownloadRate()).arg(Settings::maxUploadRate()) << endl;
@@ -149,7 +149,7 @@ namespace kt
 			PeerManager::setMaxConnections(Settings::maxConnections());
 			PeerManager::setMaxTotalConnections(Settings::maxTotalConnections());
 		}
-		else if (item.paused)
+		else if (item->paused)
 		{
 			Out(SYS_SCD|LOG_NOTICE) << QString("Changing schedule to : PAUSED") << endl;
 			if (!getCore()->getPausedState())
@@ -161,12 +161,12 @@ namespace kt
 					m_editor->updateStatusText(Settings::maxUploadRate(),Settings::maxDownloadRate(),true);
 			}
 			
-			if (item.set_conn_limits)
+			if (item->set_conn_limits)
 			{
 				Out(SYS_SCD|LOG_NOTICE) << QString("Setting connection limits to : %1 per torrent, %2 global")
-						.arg(item.torrent_conn_limit).arg(item.global_conn_limit) << endl;
-				PeerManager::setMaxConnections(item.torrent_conn_limit);
-				PeerManager::setMaxTotalConnections(item.global_conn_limit);
+						.arg(item->torrent_conn_limit).arg(item->global_conn_limit) << endl;
+				PeerManager::setMaxConnections(item->torrent_conn_limit);
+				PeerManager::setMaxTotalConnections(item->global_conn_limit);
 			}
 			else
 			{
@@ -177,19 +177,19 @@ namespace kt
 		else
 		{
 			Out(SYS_SCD|LOG_NOTICE) << QString("Changing schedule to : %1 down, %2 up")
-					.arg(item.download_limit).arg(item.upload_limit) << endl;
+					.arg(item->download_limit).arg(item->upload_limit) << endl;
 			getCore()->setPausedState(false);
-			net::SocketMonitor::setDownloadCap(1024 * item.download_limit);
-			net::SocketMonitor::setUploadCap(1024 * item.upload_limit);
+			net::SocketMonitor::setDownloadCap(1024 * item->download_limit);
+			net::SocketMonitor::setUploadCap(1024 * item->upload_limit);
 			if (m_editor)
-				m_editor->updateStatusText(item.upload_limit,item.download_limit,false);
+				m_editor->updateStatusText(item->upload_limit,item->download_limit,false);
 			
-			if (item.set_conn_limits)
+			if (item->set_conn_limits)
 			{
 				Out(SYS_SCD|LOG_NOTICE) << QString("Setting connection limits to : %1 per torrent, %2 global")
-						.arg(item.torrent_conn_limit).arg(item.global_conn_limit) << endl;
-				PeerManager::setMaxConnections(item.torrent_conn_limit);
-				PeerManager::setMaxTotalConnections(item.global_conn_limit);
+						.arg(item->torrent_conn_limit).arg(item->global_conn_limit) << endl;
+				PeerManager::setMaxConnections(item->torrent_conn_limit);
+				PeerManager::setMaxTotalConnections(item->global_conn_limit);
 			}
 			else
 			{

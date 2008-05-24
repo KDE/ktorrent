@@ -42,12 +42,7 @@ namespace kt
 	{
 		operator = (item);
 	}
-	
-	ScheduleItem::ScheduleItem(int day,const QTime & start,const QTime & end,bt::Uint32 upload_limit,bt::Uint32 download_limit,	bool paused,bool set_conn_limits,bt::Uint32 global_conn_limit, bt::Uint32 torrent_conn_limit)
-	: day(day),start(start),end(end),upload_limit(upload_limit),download_limit(download_limit),paused(paused),set_conn_limits(set_conn_limits),global_conn_limit(global_conn_limit),torrent_conn_limit(torrent_conn_limit)
-	{
-	}
-		
+
 	bool ScheduleItem::conflicts(const ScheduleItem & other) const
 	{
 		if (day != other.day)
@@ -103,7 +98,9 @@ namespace kt
 
 
 	Schedule::~Schedule()
-	{}
+	{
+		qDeleteAll(*this);
+	}
 
 	void Schedule::load(const QString & file)
 	{
@@ -144,9 +141,11 @@ namespace kt
 				if (!dict)
 					continue;
 				
-				ScheduleItem item;
-				if (parseItem(&item,dict))
+				ScheduleItem* item = new ScheduleItem();
+				if (parseItem(item,dict))
 					addItem(item);
+				else
+					delete item;
 			}
 		}
 		
@@ -200,21 +199,22 @@ namespace kt
 
 		BEncoder enc(&fptr);
 		enc.beginList();
-		foreach (ScheduleItem i,*this)
+		for (iterator itr = begin();itr != end();itr++)
 		{
+			ScheduleItem* i = *itr;
 			enc.beginDict();
-			enc.write("day"); enc.write((Uint32)i.day);
-			enc.write("start"); enc.write(i.start.toString());
-			enc.write("end"); enc.write(i.end.toString());
-			enc.write("upload_limit"); enc.write(i.upload_limit);
-			enc.write("download_limit"); enc.write(i.download_limit);
-			enc.write("paused"); enc.write((Uint32) (i.paused ? 1 : 0));
-			if (i.set_conn_limits)
+			enc.write("day"); enc.write((Uint32)i->day);
+			enc.write("start"); enc.write(i->start.toString());
+			enc.write("end"); enc.write(i->end.toString());
+			enc.write("upload_limit"); enc.write(i->upload_limit);
+			enc.write("download_limit"); enc.write(i->download_limit);
+			enc.write("paused"); enc.write((Uint32) (i->paused ? 1 : 0));
+			if (i->set_conn_limits)
 			{
 				enc.write("conn_limits"); 
 				enc.beginDict();
-				enc.write("global"); enc.write((Uint32)i.global_conn_limit);
-				enc.write("per_torrent"); enc.write((Uint32)i.torrent_conn_limit);
+				enc.write("global"); enc.write((Uint32)i->global_conn_limit);
+				enc.write("per_torrent"); enc.write((Uint32)i->torrent_conn_limit);
 				enc.end();
 			}
 			enc.end();
@@ -222,14 +222,15 @@ namespace kt
 		enc.end();
 	}
 	
-	bool Schedule::addItem(const ScheduleItem & item)
+	bool Schedule::addItem(ScheduleItem* item)
 	{
-		if (!item.isValid() || item.end <= item.start)
+		if (!item->isValid() || item->end <= item->start)
 			return false;
 		
-		foreach (const ScheduleItem & i,*this)
+		for (iterator itr = begin();itr != end();itr++)
 		{
-			if (item.conflicts(i))
+			ScheduleItem* i = *itr;
+			if (item->conflicts(*i))
 				return false;
 		}
 		
@@ -237,41 +238,71 @@ namespace kt
 		return true;
 	}
 	
-	bool Schedule::getCurrentItem(const QDateTime & now,ScheduleItem & item)
+	ScheduleItem* Schedule::getCurrentItem(const QDateTime & now)
 	{
-		foreach (ScheduleItem i,*this)
+		for (iterator itr = begin();itr != end();itr++)
 		{
-			if (i.contains(now))
+			ScheduleItem* i = *itr;
+			if (i->contains(now))
 			{
-				item = i;
-				return true;
+				return i;
 			}
 		}
-		return false;
+		return 0;
 	}
 	
 	int Schedule::getTimeToNextScheduleEvent(const QDateTime & now)
 	{
-		ScheduleItem item;
+		ScheduleItem* item = getCurrentItem(now);
 		// when we are in the middle of a ScheduleItem, we need to trigger again at the end of it
-		if (getCurrentItem(now,item)) 
-			return now.time().secsTo(item.end) + 1; // change the schedule one second after it expires
+		if (item) 
+			return now.time().secsTo(item->end) + 1; // change the schedule one second after it expires
 		
 		// lets look at all schedule items on the same day
 		// and find the next one
-		foreach (ScheduleItem i,*this)
+		for (iterator itr = begin();itr != end();itr++)
 		{
-			if (i.day == now.date().dayOfWeek())
+			ScheduleItem* i = *itr;
+			if (i->day == now.date().dayOfWeek())
 			{
-				if (!item.isValid() || (i.start < item.start && i.start > now.time()))
+				if (!item || (i->start < item->start && i->start > now.time()))
 					item = i;
 			}
 		}
 		
-		if (item.isValid())
-			return now.time().secsTo(item.start);
+		if (item)
+			return now.time().secsTo(item->start);
 		
 		QTime end_of_day(23,59,59);
 		return now.time().secsTo(end_of_day) + 1;
+	}
+	
+	bool Schedule::modify(ScheduleItem* item,const QTime & start,const QTime & end)
+	{
+		QTime old_start = item->start;
+		QTime old_end = item->end;
+			
+		item->start = start;
+		item->end = end;
+		if (conflicts(item))
+		{
+			// restore old start and end time
+			item->start = old_start;
+			item->end = old_end;
+			return false;
+		}
+	
+		return true;
+	}
+	
+	bool Schedule::conflicts(ScheduleItem* item)
+	{
+		for (iterator itr = begin();itr != end();itr++)
+		{
+			ScheduleItem* i = *itr;
+			if (i != item && (i->conflicts(*item) || item->conflicts(*i)))
+				return true;
+		}
+		return false;
 	}
 }

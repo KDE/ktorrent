@@ -46,9 +46,7 @@ namespace kt
 		
 		ScheduleItem();
 		ScheduleItem(const ScheduleItem & item);
-		ScheduleItem(int day,const QTime & start,const QTime & end,bt::Uint32 upload_limit,
-					 bt::Uint32 download_limit,bool paused,bool set_conn_limits,bt::Uint32 global_conn_limit,bt::Uint32 torrent_conn_limit);
-		
+
 		bool isValid() const {return day >= 1 && day <= 7;}
 		
 		/**
@@ -79,7 +77,7 @@ namespace kt
 	/**
 	 * Class which holds the schedule of one week.
 	*/
-	class Schedule : public QList<ScheduleItem>
+	class Schedule : public QList<ScheduleItem*>
 	{
 	public:
 		Schedule();
@@ -106,18 +104,33 @@ namespace kt
 		 * @param item The ScheduleItem
 		 * @return true upon succes, false otherwise (probably conflicts with other items)
 		 */
-		bool addItem(const ScheduleItem & item);
+		bool addItem(ScheduleItem* item);
 		
 		/**
 		 * Get the current schedule item we should be setting.
-		 * @return false If the current time doesn't fall into any item, true otherwise
+		 * @return 0 If the current time doesn't fall into any item, the item otherwise
 		 */
-		bool getCurrentItem(const QDateTime & now,ScheduleItem & item);
+		ScheduleItem* getCurrentItem(const QDateTime & now);
 		
 		/**
 		 * Get the time in seconds to the next time we need to update the schedule.
 		 */
 		int getTimeToNextScheduleEvent(const QDateTime & now);
+		
+		/**
+		 * Try to modify start and stop time of an item.
+		 * @param item The item
+		 * @param start The start time
+		 * @param end The stop time
+		 * @return true If this succeeds (i.e. no conflicts)
+		 */
+		bool modify(ScheduleItem* item,const QTime & start,const QTime & end);
+		
+		/**
+		 * Check for conflicts with other schedule items.
+		 * @param item The item 
+		 */
+		bool conflicts(ScheduleItem* item);
 	
 	private:
 		bool parseItem(ScheduleItem* item,bt::BDictNode* dict);
