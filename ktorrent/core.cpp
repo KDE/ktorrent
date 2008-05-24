@@ -156,9 +156,13 @@ namespace kt
 		ApplySettings();
 		setMaxDownloads(Settings::maxDownloads());
 		setMaxSeeds(Settings::maxSeeds());
-				setKeepSeeding(Settings::keepSeeding());
+		setKeepSeeding(Settings::keepSeeding());
 		
-		changeDataDir(Settings::tempDir().path());
+		QString tmp = Settings::tempDir().path();
+		if (tmp.isEmpty())
+			tmp = kt::DataDir();
+		
+		changeDataDir(tmp);
 		if (change_port)
 			changePort(Settings::port());
 		        
