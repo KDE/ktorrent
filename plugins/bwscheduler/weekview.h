@@ -86,6 +86,11 @@ namespace kt
 		 */
 		void itemChanged(ScheduleItem* item);
 		
+		/**
+		 * The color settings have changed.
+		 */
+		void colorsChanged();
+		
 	signals:
 		void selectionChanged();
 		void editItem(ScheduleItem* item);

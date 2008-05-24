@@ -1,0 +1,89 @@
+<ui version="4.0" >
+ <class>BWPrefPage</class>
+ <widget class="QWidget" name="BWPrefPage" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>186</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" >
+   <item>
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="title" >
+      <string>Colors</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout" >
+      <item row="0" column="0" >
+       <widget class="QLabel" name="label_2" >
+        <property name="text" >
+         <string>Schedule background color:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" >
+       <widget class="KColorButton" name="kcfg_scheduleBackgroundColor" />
+      </item>
+      <item row="1" column="0" >
+       <widget class="QLabel" name="label_3" >
+        <property name="text" >
+         <string>Schedule line color:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" >
+       <widget class="KColorButton" name="kcfg_scheduleLineColor" />
+      </item>
+      <item row="2" column="0" >
+       <widget class="QLabel" name="label_4" >
+        <property name="text" >
+         <string>Schedule Item color:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" >
+       <widget class="KColorButton" name="kcfg_itemColor" />
+      </item>
+      <item row="3" column="0" >
+       <widget class="QLabel" name="label_5" >
+        <property name="text" >
+         <string>Paused schedule item color:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1" >
+       <widget class="KColorButton" name="kcfg_pausedColor" />
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer" >
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>20</width>
+       <height>46</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KColorButton</class>
+   <extends>QPushButton</extends>
+   <header>kcolorbutton.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

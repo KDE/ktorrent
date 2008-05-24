@@ -6,13 +6,17 @@
 		
 	<kcfgfile name="ktbwschedulerpluginrc"/>
 	<group name="general">
-		<entry name="enableBWS" type="Bool">
-			<label>Enable bandwidth scheduler?</label>
-			<default>FALSE</default>
+		<entry name="itemColor" type="Color">
+			<default code="true">QColor(0,255,0,255)</default>
 		</entry>
-		<entry name="useColors" type="Bool">
-			<label>Use colors instead of pixmaps?</label>
-			<default>FALSE</default>
+		<entry name="pausedColor" type="Color">
+			<default code="true">QColor(255,0,0,255)</default>
+		</entry>
+		<entry name="scheduleBackgroundColor" type="Color">
+			<default code="true">QColor(Qt::yellow)</default>
+		</entry>
+		<entry name="scheduleLineColor" type="Color">
+			<default code="true">QColor(Qt::blue)</default>
 		</entry>
 	</group>
 </kcfg>

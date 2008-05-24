@@ -201,6 +201,11 @@ namespace kt
 		view->itemChanged(item);
 		scheduleChanged();
 	}
+	
+	void ScheduleEditor::colorsChanged()
+	{
+		view->colorsChanged();
+	}
 }
 
 #include "scheduleeditor.moc"

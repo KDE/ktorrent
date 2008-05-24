@@ -55,6 +55,11 @@ namespace kt
 		 */
 		void updateStatusText(int up,int down,bool paused);
 		
+		/**
+		 * The color settings have changed
+		 */
+		void colorsChanged();
+		
 	private slots:
 		void clear();
 		void save();

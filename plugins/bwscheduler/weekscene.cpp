@@ -33,6 +33,7 @@
 #include "weekscene.h"
 #include "schedule.h"
 #include "schedulegraphicsitem.h"
+#include "bwschedulerpluginsettings.h"
 
 using namespace bt;
 
@@ -97,9 +98,12 @@ namespace kt
 		status->setPos(QPointF(0,0));
 		status->setZValue(2);
 		
+		QPen pen(SchedulerPluginSettings::scheduleLineColor());
+		QBrush brush(SchedulerPluginSettings::scheduleBackgroundColor());
+		
 		for (int i = 0;i < 7;i++)
 		{
-			QGraphicsRectItem* item = addRect(xoff + day_width * i,yoff,day_width,24 * hour_height,QPen(Qt::blue),QBrush(Qt::yellow));
+			QGraphicsRectItem* item = addRect(xoff + day_width * i,yoff,day_width,24 * hour_height,pen,brush);
 			item->setZValue(1);
 			
 			QString day = cal->weekDayName(i+1);
@@ -112,12 +116,14 @@ namespace kt
 			QGraphicsTextItem* t = addText(day);
 			t->setPos(QPointF(start, fm.height() + 5));
 			t->setZValue(2);
+			
+			rects.append(item);
 		}
 		
 		// draw hour lines
 		for (int i = 0;i <= 24;i++)
 		{
-			QGraphicsLineItem* item = addLine(0, yoff + i*hour_height,xoff + 7*day_width, yoff + i*hour_height,QPen(Qt::blue));
+			QGraphicsLineItem* item = addLine(0, yoff + i*hour_height,xoff + 7*day_width, yoff + i*hour_height,pen);
 			item->setZValue(2);
 			
 			if (i < 24)
@@ -126,6 +132,7 @@ namespace kt
 				t->setPos(QPointF(0, yoff + i * hour_height));
 				t->setZValue(2);
 			}
+			lines.append(item);
 		}
 		
 		QRectF r = sceneRect();
@@ -216,6 +223,23 @@ namespace kt
 		qreal y = timeToY(item->start);
 		qreal ye = timeToY(item->end);
 		sgi->update(QRectF(x,y,day_width,ye - y));
+	}
+	
+	void WeekScene::colorsChanged()
+	{
+		QPen pen(SchedulerPluginSettings::scheduleLineColor());
+		QBrush brush(SchedulerPluginSettings::scheduleBackgroundColor());
+		
+		foreach (QGraphicsLineItem* line,lines)
+			line->setPen(pen);
+		
+		foreach (QGraphicsRectItem* rect,rects)
+		{
+			rect->setPen(pen);
+			rect->setBrush(brush);
+		}
+		
+		
 	}
 }
 

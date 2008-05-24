@@ -104,6 +104,10 @@ namespace kt
 
 		void loadDefaults()
 		{
+			Settings::setTempDir(kt::DataDir());
+			Settings::setSaveDir(QDir::homePath());
+			Settings::setCompletedDir(QDir::homePath());
+			Settings::setTorrentCopyDir(QDir::homePath());
 			loadSettings();
 		}
 	};

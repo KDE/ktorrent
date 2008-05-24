@@ -149,6 +149,11 @@ namespace kt
 			i++;
 		}
 	}
+	
+	void WeekView::colorsChanged()
+	{
+		scene->colorsChanged();
+	}
 }
 
 #include "weekview.moc"

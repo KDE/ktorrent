@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Ivan Vasić                                      *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
+ *   joris.guisson@gmail.com                                               *
  *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -15,59 +16,36 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.           *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTschedulerPLUGIN_H
-#define KTschedulerPLUGIN_H
-
-#include <QTimer>
-#include <KAction>
-#include <interfaces/plugin.h>
-#include <interfaces/guiinterface.h>
-
-class QString;
-class KToolBar;
-
+#include "bwprefpage.h"
+#include "bwschedulerpluginsettings.h"
 
 namespace kt
-{	
-	class ScheduleEditor;
-	class Schedule;
-	class BWPrefPage;
-	
-	/**
-	 * @author Ivan Vasic <ivasic@gmail.com>
-	 * @brief KTorrent scheduler plugin.
-	 *
-	 */
-	class BWSchedulerPlugin : public Plugin,public CloseTabListener
-	{
-		Q_OBJECT
-	public:
-		BWSchedulerPlugin(QObject* parent, const QStringList& args);
-		virtual ~BWSchedulerPlugin();
+{
 
-		virtual void load();
-		virtual void unload();
-		virtual bool versionCheck(const QString& version) const;
-		virtual void tabCloseRequest(kt::GUIInterface* gui,QWidget* tab);
-		
-		
-	public slots:
-		void timerTriggered();
-		void onLoaded(Schedule* ns);
-		void onToggled(bool on);
-		void colorsChanged();
-	
-	private:
-		QTimer m_timer;
-		KAction* m_bws_action;
-		KToolBar* m_tool_bar;
-		ScheduleEditor* m_editor;
-		Schedule* m_schedule;
-		BWPrefPage* m_pref;
-	};
+	BWPrefPage::BWPrefPage(QWidget* parent) : PrefPageInterface(SchedulerPluginSettings::self(),i18n("Bandwidth Scheduler"),"kt-bandwidth-scheduler",parent)
+	{
+		setupUi(this);
+	}
+
+
+	BWPrefPage::~BWPrefPage()
+	{
+	}
+
+
+	void BWPrefPage::loadDefaults()
+	{
+	}
+
+	void BWPrefPage::loadSettings()
+	{
+	}
+
+	void BWPrefPage::updateSettings()
+	{
+		colorsChanged();
+	}
 
 }
-
-#endif

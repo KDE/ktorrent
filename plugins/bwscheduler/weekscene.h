@@ -65,6 +65,11 @@ namespace kt
 		 */
 		void itemChanged(ScheduleItem* item,QGraphicsItem* gi);
 		
+		/**
+		 * The color settings have changed.
+		 */
+		void colorsChanged();
+		
 	signals:
 		/**
 		 * Emitted when an item has been double clicked.
@@ -95,6 +100,8 @@ namespace kt
 		qreal day_width;
 		qreal hour_height;
 		QGraphicsTextItem* status;
+		QList<QGraphicsLineItem*> lines;
+		QList<QGraphicsRectItem*> rects;
 	};
 
 }

@@ -30,6 +30,7 @@
 #include "schedulegraphicsitem.h"
 #include "schedule.h"
 #include "weekscene.h"
+#include "bwschedulerpluginsettings.h"
 
 using namespace bt;
 
@@ -44,11 +45,11 @@ namespace kt
 		
 		if (item->paused)
 		{
-			setBrush(QBrush(QColor(255,0,0,255)));
+			setBrush(QBrush(SchedulerPluginSettings::pausedColor()));
 		}
 		else
 		{
-			setBrush(QBrush(QColor(0,255,0,255)));
+			setBrush(QBrush(SchedulerPluginSettings::itemColor()));
 		}
 		setFlag(QGraphicsItem::ItemIsSelectable,true);
 		setFlag(QGraphicsItem::ItemIsMovable,true);
@@ -67,12 +68,12 @@ namespace kt
 		QString text;
 		if (item->paused)
 		{
-			setBrush(QBrush(QColor(255,0,0,255)));
+			setBrush(QBrush(SchedulerPluginSettings::pausedColor()));
 			text = i18n("Paused");
 		}
 		else
 		{
-			setBrush(QBrush(QColor(0,255,0,255)));
+			setBrush(QBrush(SchedulerPluginSettings::itemColor()));
 			text = i18n("%1 Down\n%2 Up",
 						KBytesPerSecToString(item->download_limit),
 											 KBytesPerSecToString(item->upload_limit));

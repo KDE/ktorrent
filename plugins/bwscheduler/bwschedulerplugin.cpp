@@ -46,6 +46,7 @@
 #include "scheduleeditor.h"
 #include "schedule.h"
 #include "bwschedulerplugin.h"
+#include "bwprefpage.h"
 
 
 #include <torrent/globals.h>
@@ -65,6 +66,7 @@ namespace kt
 		m_bws_action = 0;
 		connect(&m_timer, SIGNAL(timeout()), this, SLOT(timerTriggered()));
 		m_editor = 0;
+		m_pref = 0;
 	}
 
 
@@ -79,6 +81,10 @@ namespace kt
 		m_bws_action = new KToggleAction(KIcon("kt-bandwidth-scheduler"),i18n("Bandwidth Scheduler"), this);
 		connect(m_bws_action,SIGNAL(toggled(bool)),this,SLOT(onToggled(bool)));
 		m_tool_bar->addAction(m_bws_action);
+		
+		m_pref = new BWPrefPage(0);
+		connect(m_pref,SIGNAL(colorsChanged()),this,SLOT(colorsChanged()));
+		getGUI()->addPrefPage(m_pref);
 		
 		try
 		{
@@ -115,6 +121,9 @@ namespace kt
 			getGUI()->removeTabPage(m_editor);
 			m_editor = 0;
 		}
+		
+		getGUI()->removePrefPage(m_pref);
+		m_pref = 0;
 		
 		try
 		{
@@ -252,5 +261,14 @@ namespace kt
 	bool BWSchedulerPlugin::versionCheck(const QString & version) const
 	{
 		return version == KT_VERSION_MACRO;
+	}
+	
+	void BWSchedulerPlugin::colorsChanged()
+	{
+		if (m_editor)
+		{
+			m_editor->setSchedule(m_schedule);
+			m_editor->colorsChanged();
+		}
 	}
 }
