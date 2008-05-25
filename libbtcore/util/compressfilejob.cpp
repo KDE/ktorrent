@@ -62,6 +62,9 @@ namespace bt
 		while (!canceled && !in.atEnd())
 		{
 			int len = in.read(buf,4096);
+			if (len == 0)
+				break;
+			
 			dev->write(buf,len);
 		}
 		
