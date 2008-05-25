@@ -135,6 +135,9 @@ namespace kt
 		if (!resizing)
 		{
 			QGraphicsItem::mouseMoveEvent(event);
+			ws->setShowGuidanceLines(true);
+			QPointF sp = pos() + rect().topLeft();
+			ws->updateGuidanceLines(sp.y(),sp.y() + rect().height());
 			return;
 		}
 		
@@ -226,6 +229,7 @@ namespace kt
 					ws->itemMoved(item,sp);
 				}
 			}
+			ws->setShowGuidanceLines(false);
 		}
 	}
 	
