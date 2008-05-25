@@ -260,9 +260,9 @@ namespace kt
 	{
 		qreal y = rect().y();
 		qreal ye = y + rect().height();
-		if (qAbs(p.y() - y) < 5)
+		if (qAbs(p.y() - y) < 3)
 			return TopEdge;
-		else if (qAbs(p.y() - ye) < 5)
+		else if (qAbs(p.y() - ye) < 3)
 			return BottomEdge;
 		else
 			return NoEdge;
