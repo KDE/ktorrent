@@ -27,9 +27,9 @@
 namespace kt
 {
 
-	AddItemDlg::AddItemDlg(Mode mode,QWidget* parent) : QDialog(parent)
+	AddItemDlg::AddItemDlg(Mode mode,QWidget* parent) : KDialog(parent)
 	{
-		setupUi(this);
+		setupUi(mainWidget());
 		connect(m_paused,SIGNAL(toggled(bool)),m_upload_limit,SLOT(setDisabled(bool)));
 		connect(m_paused,SIGNAL(toggled(bool)),m_download_limit,SLOT(setDisabled(bool)));
 		
@@ -42,6 +42,8 @@ namespace kt
 		
 		if (mode == EDIT_ITEM)
 			setWindowTitle(i18n("Edit an item"));
+		else
+			setWindowTitle(i18n("Add an item"));
 	}
 
 

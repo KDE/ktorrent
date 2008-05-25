@@ -21,7 +21,7 @@
 #ifndef KTADDITEMDLG_H
 #define KTADDITEMDLG_H
 
-#include <qdialog.h>
+#include <KDialog>
 #include "ui_additemdlg.h"
 
 namespace kt
@@ -31,7 +31,7 @@ namespace kt
 	/**
 		@author
 	*/
-	class AddItemDlg : public QDialog, public Ui_AddItemDlg
+	class AddItemDlg : public KDialog, public Ui_AddItemDlg
 	{
 		Q_OBJECT
 	public:
