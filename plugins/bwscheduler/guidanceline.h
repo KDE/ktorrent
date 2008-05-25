@@ -18,56 +18,37 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTSCHEDULEGRAPHICSITEM_H
-#define KTSCHEDULEGRAPHICSITEM_H
+#ifndef KTGUIDANCELINE_H
+#define KTGUIDANCELINE_H
 
-#include <QGraphicsRectItem>
-#include "schedule.h"
+#include <QGraphicsLineItem>
+#include <QGraphicsTextItem>
 
 namespace kt
 {
-	class WeekScene;
 
 	/**
-		QGraphicsItem to display a ScheduleItem
+		Line displayed when the user is resizing or moving items
+		The line has a text item below it to the side
 	*/
-	class ScheduleGraphicsItem : public QGraphicsRectItem
+	class GuidanceLine : public QGraphicsLineItem
 	{
 	public:
-		ScheduleGraphicsItem(ScheduleItem* item,const QRectF & r,const QRectF & constraints,WeekScene* ws);
-		virtual ~ScheduleGraphicsItem();
+		GuidanceLine(qreal x,qreal y,qreal text_offset);
+		virtual ~GuidanceLine();
 
-		virtual QVariant itemChange(GraphicsItemChange change, const QVariant & value);
-		
 		/**
-		 * Update the item.
-		 * @param r The new rect
+		 * Update the guidance line
+		 * @param nx The nex x start
+		 * @param ny The new y start
+		 * @param text The text to display
 		 */
-		void update(const QRectF & r);
-		
-		enum Edge
-		{
-			NoEdge,TopEdge,BottomEdge
-		};
-		
+		void update(qreal nx,qreal ny,const QString & text);
 	private:
-		virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
-		virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
-		virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
-		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
-		virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
-		virtual void hoverMoveEvent(QGraphicsSceneHoverEvent* event);
-		Edge nearEdge(QPointF p);
-
-	private:
-		ScheduleItem* item;
-		QRectF constraints;
-		WeekScene* ws;
-		QGraphicsTextItem* text_item;
-		QPointF original_pos;
-		bool ready_to_resize;
-		bool resizing;
-		Edge resize_edge;
+		qreal x;
+		qreal y;
+		qreal text_offset;
+		QGraphicsTextItem* text;
 	};
 
 }

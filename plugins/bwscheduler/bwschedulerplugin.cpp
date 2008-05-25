@@ -86,6 +86,8 @@ namespace kt
 		connect(m_pref,SIGNAL(colorsChanged()),this,SLOT(colorsChanged()));
 		getGUI()->addPrefPage(m_pref);
 		
+		connect(getCore(),SIGNAL(settingsChanged()),this,SLOT(colorsChanged()));
+		
 		try
 		{
 			m_schedule->load(kt::DataDir() + "current.sched");

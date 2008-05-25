@@ -26,6 +26,7 @@
 namespace kt
 {
 	struct ScheduleItem;
+	class GuidanceLine;
 
 	/**
 		@author
@@ -59,6 +60,13 @@ namespace kt
 		void itemMoved(ScheduleItem* item,const QPointF & np);
 		
 		/**
+		 * An item has been resized by the user.
+		 * @param item The item
+		 * @param r It's new rectangle
+		 */
+		void itemResized(ScheduleItem* item,const QRectF & r);
+		
+		/**
 		 * An item has changed, update it.
 		 * @param item The item
 		 * @param gi The GraphicsItem
@@ -69,6 +77,19 @@ namespace kt
 		 * The color settings have changed.
 		 */
 		void colorsChanged();
+		
+		/**
+		 * Show or the guidance lines 
+		 * @param on 
+		 */
+		void setShowGuidanceLines(bool on);
+		
+		/**
+		 * Show the guidance lines
+		 * @param y1 Height of line 1
+		 * @param y2 Height of line 2
+		 */
+		void updateGuidanceLines(qreal y1,qreal y2);
 		
 	signals:
 		/**
@@ -102,6 +123,7 @@ namespace kt
 		QGraphicsTextItem* status;
 		QList<QGraphicsLineItem*> lines;
 		QList<QGraphicsRectItem*> rects;
+		GuidanceLine* gline[2]; // guidance lines
 	};
 
 }

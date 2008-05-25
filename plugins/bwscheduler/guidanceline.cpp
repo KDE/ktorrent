@@ -18,58 +18,44 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTSCHEDULEGRAPHICSITEM_H
-#define KTSCHEDULEGRAPHICSITEM_H
-
-#include <QGraphicsRectItem>
-#include "schedule.h"
+#include <QPen>
+#include <QFontMetricsF>
+#include "guidanceline.h"
+#include "bwschedulerpluginsettings.h"
 
 namespace kt
 {
-	class WeekScene;
 
-	/**
-		QGraphicsItem to display a ScheduleItem
-	*/
-	class ScheduleGraphicsItem : public QGraphicsRectItem
+	GuidanceLine::GuidanceLine(qreal x,qreal y,qreal text_offset)
+			: QGraphicsLineItem(),x(x),y(y),text_offset(text_offset)
 	{
-	public:
-		ScheduleGraphicsItem(ScheduleItem* item,const QRectF & r,const QRectF & constraints,WeekScene* ws);
-		virtual ~ScheduleGraphicsItem();
+		QPen pen(SchedulerPluginSettings::scheduleLineColor());
+		pen.setStyle(Qt::DashLine);
+		setPen(pen);
+		setZValue(5);
+		
+		text = new QGraphicsTextItem("00:00",this);
+		text->setPos(text_offset,y);
+		
+		QFontMetricsF fm(text->font());
+		qreal xe = text_offset + fm.width("00:00");
+		setLine(x,y,xe,y);
+	}
 
-		virtual QVariant itemChange(GraphicsItemChange change, const QVariant & value);
-		
-		/**
-		 * Update the item.
-		 * @param r The new rect
-		 */
-		void update(const QRectF & r);
-		
-		enum Edge
-		{
-			NoEdge,TopEdge,BottomEdge
-		};
-		
-	private:
-		virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
-		virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
-		virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
-		virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
-		virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
-		virtual void hoverMoveEvent(QGraphicsSceneHoverEvent* event);
-		Edge nearEdge(QPointF p);
 
-	private:
-		ScheduleItem* item;
-		QRectF constraints;
-		WeekScene* ws;
-		QGraphicsTextItem* text_item;
-		QPointF original_pos;
-		bool ready_to_resize;
-		bool resizing;
-		Edge resize_edge;
-	};
+	GuidanceLine::~GuidanceLine()
+	{
+	}
+
+	void GuidanceLine::update(qreal nx,qreal ny,const QString & txt)
+	{
+		x = nx;
+		y = ny;
+		text->setPlainText(txt);
+		text->setPos(text_offset,y);
+		QFontMetricsF fm(text->font());
+		qreal xe = text_offset + fm.width(txt);
+		setLine(x,y,xe,y);
+	}
 
 }
-
-#endif

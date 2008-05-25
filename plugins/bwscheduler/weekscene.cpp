@@ -34,6 +34,7 @@
 #include "schedule.h"
 #include "schedulegraphicsitem.h"
 #include "bwschedulerpluginsettings.h"
+#include "guidanceline.h"
 
 using namespace bt;
 
@@ -135,6 +136,14 @@ namespace kt
 			lines.append(item);
 		}
 		
+;
+		gline[0] = new GuidanceLine(xoff,yoff,xoff + 7*day_width + 10);
+		gline[0]->setVisible(false);
+		gline[1] = new GuidanceLine(xoff,yoff,xoff + 7*day_width + 10);
+		gline[1]->setVisible(false);
+		addItem(gline[0]);
+		addItem(gline[1]);
+		
 		QRectF r = sceneRect();
 		r.setHeight(r.height() + 10);
 		setSceneRect(r);
@@ -216,6 +225,13 @@ namespace kt
 		itemMoved(item,start,end,1 + floor((np.x() + day_width * 0.5 - xoff) / day_width));
 	}
 	
+	void WeekScene::itemResized(ScheduleItem* item,const QRectF & r)
+	{
+		QTime start = yToTime(r.y());
+		QTime end = yToTime(r.y() + r.height());
+		itemMoved(item,start,end,item->day);
+	}
+	
 	void WeekScene::itemChanged(ScheduleItem* item,QGraphicsItem* gi)
 	{
 		ScheduleGraphicsItem* sgi = (ScheduleGraphicsItem*)gi;
@@ -239,7 +255,21 @@ namespace kt
 			rect->setBrush(brush);
 		}
 		
+		pen.setStyle(Qt::DashLine);
+		gline[0]->setPen(pen);
+		gline[1]->setPen(pen);
+	}
+	
+	void WeekScene::setShowGuidanceLines(bool on)
+	{
+		gline[0]->setVisible(on);
+		gline[1]->setVisible(on);
+	}
 		
+	void WeekScene::updateGuidanceLines(qreal y1,qreal y2)
+	{
+		gline[0]->update(xoff,y1,yToTime(y1).toString("hh:mm"));
+		gline[1]->update(xoff,y2,yToTime(y2).toString("hh:mm"));
 	}
 }
 
