@@ -1,0 +1,22 @@
+[Desktop Entry]
+Name=RssFeedPlugin
+Name[bg]=Приставка за RssFeed
+Name[de]=RSS-Nachrichtenquellen-Modul
+Name[el]=Πρόσθετο ροών Rss
+Name[et]=RSS-kanali plugin
+Name[it]=Plugin Fonti notizie
+Name[nb]=RSS-modul
+Name[nds]=RSS-Moduul
+Name[pl]=Wtyczka kanały RSS
+Name[pt_BR]=Plugin de RssFeed
+Name[sk]=RssFeed Plugin
+Name[sr]=Прикључак Rss довода
+Name[sr@Latn]=Priključak Rss dovoda
+Name[sv]=RSS-kanalinsticksprogram
+Name[tr]=RSS Besleme Eklentisi
+Name[uk]=Втулок подач RSS
+Name[xx]=xxRssFeedPluginxx
+Name[zh_CN]=RSS 种子插件
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktrssfeedplugin

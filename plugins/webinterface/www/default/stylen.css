@@ -1,0 +1,164 @@
+/* styles for interface.php and details.php */
+
+html, body {
+	background-color: #a2d2b1;
+	font-family: sans-serif;
+	font-size: 12px;
+}
+html, body, h1, h2, h3, h4, form {
+	margin: 0;
+	padding: 0;
+}
+img {
+	border: 0;
+}
+h2 {
+	font-size: 12px;
+	min-height: 18px;
+	padding-top: 2px;
+	margin-bottom: 10px;
+	background-image: url(grad1.jpg);
+	font-weight: bold;
+	border-bottom: 1px solid #000;
+	text-align: center;
+}
+form {
+	text-align: right;
+}
+label {
+	display: block;
+	text-align: right;
+	margin: 4px 0 4px 0;
+}
+input {
+	margin: 0 5% 0 1%;
+	width: 30%;
+}
+label.wide {
+	text-align: left;
+	padding-left: 5%;
+}
+label.wide input {
+	margin: 0 0 0 0;
+	width: 95%;
+}
+input[type="submit"] {
+	width: auto;
+}
+th {
+	padding: 2px;
+	text-align: left;
+}
+a {
+	color: #0C45FF;
+	text-decoration: none;
+}
+a:visited {
+	color: #0C45FF;
+}
+a:hover {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+
+.actions img {
+	width: 16px;
+	height: 16px;
+	margin: 2px;
+}
+
+
+.box {
+	width: 254px;
+	margin: 0 auto;
+	border: 1px solid black;
+	background-color: #d5d5d5;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+
+#top_bar {
+	background-color: #b72916;
+	border: 1px solid #868686;
+	text-align: right;
+}
+
+
+#icon {
+	position: absolute;
+	left: 5px;
+	top: 2px;
+}
+
+
+#header {
+	background-color: #42ac64;
+	padding: 15px 0 5px 140px;
+	font-size: 45px;
+}
+#header strong {
+	text-shadow: 3px 3px 5px #bbb;
+}
+#header small {
+	font-size: 13px;
+}
+
+
+#menu {
+	list-style-type: none;
+	margin: 0;
+	padding: 0 0 0 140px;
+	background-image: url(menu_bg.png);
+	height: 24px;
+}
+#menu li {
+	display: inline;
+	margin-right: 10px;
+}
+#menu a {
+	color: #fff;
+	font-size: 16px;
+}
+#menu a:hover {
+	color: #000;
+	text-decoration: none;
+}
+#menu .shutdown {
+	margin-right: 290px;
+}
+
+
+#sidebar {
+	background: #42AC64;
+	float: right;
+	width: 280px;
+	border-left: 1px solid #000;
+	border-bottom: 1px solid #000;
+	padding: 10px 0 5px 0;
+}
+#sidebar a:hover {
+	color: #000;
+}
+
+
+#content {
+	background: #a2d2b1;
+	text-align: left;
+	margin-right: 280px;
+	padding: 10px;
+}
+#content img { opacity: 0.4; }
+#content a img { opacity: 1.0; }
+
+
+#footer {
+	clear: both;
+	background: #b72916;
+	min-height: 25px;
+	text-align: center;
+	font-size: 14px;
+	padding-top: 5px;
+}

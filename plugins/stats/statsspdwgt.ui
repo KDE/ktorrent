@@ -1,0 +1,56 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>StatsSpdWgt</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>StatsSpdWgt</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>600</width>
+            <height>480</height>
+        </rect>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget" row="0" column="0">
+            <property name="name">
+                <cstring>layout5</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QGroupBox">
+                    <property name="name">
+                        <cstring>DownSpeedGbw</cstring>
+                    </property>
+                    <property name="title">
+                        <string>Download</string>
+                    </property>
+                </widget>
+                <widget class="QGroupBox">
+                    <property name="name">
+                        <cstring>PeersSpdGbw</cstring>
+                    </property>
+                    <property name="title">
+                        <string>Peers</string>
+                    </property>
+                </widget>
+                <widget class="QGroupBox">
+                    <property name="name">
+                        <cstring>UpSpeedGbw</cstring>
+                    </property>
+                    <property name="title">
+                        <string>Upload</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </grid>
+</widget>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

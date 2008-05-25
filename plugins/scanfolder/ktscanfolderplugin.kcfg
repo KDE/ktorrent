@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+		http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+
+	<group name="general">
+		<entry name="useFolder1" type="Bool">
+			<label>Enable scanning of folder1?</label>
+			<default>FALSE</default>
+		</entry>
+
+		<entry name="useFolder2" type="Bool">
+			<label>Enable scanning of folder2?</label>
+			<default>FALSE</default>
+		</entry>
+
+		<entry name="useFolder3" type="Bool">
+			<label>Enable scanning of folder3?</label>
+			<default>FALSE</default>
+		</entry>
+
+		<entry name="folder1" type="String">
+			<label>Folder1 path</label>
+			<default></default>
+		</entry>
+
+		<entry name="folder2" type="String">
+			<label>Folder2 path</label>
+			<default></default>
+		</entry>
+
+		<entry name="folder3" type="String">
+			<label>Folder3 path</label>
+			<default></default>
+		</entry>
+
+		<entry name="openSilently" type="Bool">
+			<label>Whether to open torrent silently or not.</label>
+			<default>FALSE</default>
+		</entry>
+
+		<entry name="actionDelete" type="Bool">
+			<label>Delete action checked.</label>
+			<default>FALSE</default>
+		</entry>
+
+		<entry name="actionMove" type="Bool">
+			<label>Move action checked.</label>
+			<default>FALSE</default>
+		</entry>
+	</group>
+</kcfg>

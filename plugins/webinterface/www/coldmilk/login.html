@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <title>ktorrent - web interface</title>
+  <link rel="stylesheet" href="style.css" type="text/css" />
+  <meta name="GENERATOR" content="Quanta Plus" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <script type="text/javascript">
+  function focus_login() {
+	document.forms["login_form"].elements["username"].focus();
+  }
+  </script>
+</head>
+<body onload="focus_login();">
+
+
+
+<form action="interface.php" method="post" id="login_form">	
+<div class="simple_form">
+
+	<img src="icon.png" alt="logo" 
+		id="icon_right" />
+
+	<h2>Log in</h2>
+
+
+	<div class="item" style="margin-top : 0em;">
+		Username:
+		<div class="option">
+			<input type="text" name="username" />
+		</div>
+	</div>
+
+	<div class="item" style="min-height : 6em;">
+		Password:
+		<div class="option">
+			<div style="display : inline;">
+				<input type="password" name="password" />
+			</div>
+
+			<div style="margin-top : 1em;">
+				<input type="submit" name="Login" value="Sign in" />
+			</div>
+		</div>
+	</div>
+
+
+
+</div>
+</form>
+</body>
+</html>

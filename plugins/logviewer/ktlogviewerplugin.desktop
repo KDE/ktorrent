@@ -1,0 +1,26 @@
+[Desktop Entry]
+Name=LogViewerPlugin
+Name[bg]=Приставка за преглед на журнални файлове
+Name[de]=Modul zur Anzeige von Protokolldateien
+Name[el]=Πρόσθετο προβολής καταγραφής
+Name[es]=Visualizador del registro
+Name[et]=Loginäitaja plugin
+Name[it]=Plugin visore registro
+Name[nb]=Logvisningsmodul
+Name[nds]=Logbookkieker-Moduul
+Name[nl]=Logweergaveplugin
+Name[pl]=Wtyczka wyświetlania dziennika
+Name[pt]=Visualizador do Registo
+Name[pt_BR]=Plugin de Vizualização de Log
+Name[sk]=LogViewer Plugin
+Name[sr]=Прикључак приказа дневника
+Name[sr@Latn]=Priključak prikaza dnevnika
+Name[sv]=Loggvisningsinsticksprogram
+Name[tr]=Kayıt Görüntü Eklentisi
+Name[uk]=Втулок перегляду журналу
+Name[xx]=xxLogViewerPluginxx
+Name[zh_CN]=日志查看器插件
+Name[zh_TW]=紀錄檢視器外掛程式
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktlogviewerplugin

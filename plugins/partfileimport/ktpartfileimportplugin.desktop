@@ -1,0 +1,25 @@
+[Desktop Entry]
+Name=PartialFileImportPlugin
+Name[bg]=Приставка за частично импортиране на файлове
+Name[de]=Teildatei-Import-Modul
+Name[el]=Πρόσθετο εισαγωγής μερικής λήψης
+Name[es]=Importación de ficheros parciales
+Name[et]=Osalise faili impordi plugin
+Name[it]=Plugin importazione file parziali
+Name[nb]=Filimportmodul
+Name[nds]=Importmoduul för Deeldateien
+Name[nl]=Import gedeeltelijke bestanden
+Name[pl]=Wtyczka importu części plików
+Name[pt]=Importação de Ficheiros Parciais
+Name[pt_BR]=Plugin de Importação Parcial de Arquivo
+Name[sk]=PartialFileImport Plugin
+Name[sr]=Прикључак за увоз недовршених фајлова
+Name[sr@Latn]=Priključak za uvoz nedovršenih fajlova
+Name[sv]=Insticksprogram för partiell filimport
+Name[tr]=Tamamlanmamış Dosya Alma Eklentisi
+Name[xx]=xxPartialFileImportPluginxx
+Name[zh_CN]=部分文件导入插件
+Name[zh_TW]=PartialFileImport外掛程式
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktpartfileimportplugin

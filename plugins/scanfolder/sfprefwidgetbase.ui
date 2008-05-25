@@ -1,0 +1,272 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>SfPrefPageWidgetBase</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>SfPrefPageWidgetBase</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>546</width>
+            <height>480</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>ScanFolder Preferences</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget" row="0" column="0">
+            <property name="name">
+                <cstring>layout16</cstring>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>use1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Scan folder &amp;1</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+1</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>use2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Scan folder &amp;2</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+2</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>use3</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Scan folder &amp;3</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+3</string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QButtonGroup" row="3" column="0">
+            <property name="name">
+                <cstring>buttonGroup1</cstring>
+            </property>
+            <property name="title">
+                <string>Options</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="2" column="0">
+                    <property name="name">
+                        <cstring>moveCheck</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Move to "loaded" directory &amp;after loading</string>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Move torrent to "loaded" directory after loading it</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="0" column="0">
+                    <property name="name">
+                        <cstring>openSilently</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Open torrents silentl&amp;y</string>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Do not show 'Select files to download' dialog</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="1" column="0">
+                    <property name="name">
+                        <cstring>deleteCheck</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Delete after loadin&amp;g</string>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Deletes torrent after loading</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QGroupBox" row="2" column="0">
+            <property name="name">
+                <cstring>groupBox9</cstring>
+            </property>
+            <property name="title">
+                <string>Folders to scan</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KURLRequester" row="0" column="1">
+                    <property name="name">
+                        <cstring>url1</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                </widget>
+                <widget class="KURLRequester" row="1" column="1">
+                    <property name="name">
+                        <cstring>url2</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                </widget>
+                <widget class="KURLRequester" row="2" column="1">
+                    <property name="name">
+                        <cstring>url3</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Folder 1:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>kURLRequester1</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="1" column="0">
+                    <property name="name">
+                        <cstring>textLabel2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Folder 2:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>kURLRequester4</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="2" column="0">
+                    <property name="name">
+                        <cstring>textLabel3</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Folder 3:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>kURLRequester5</cstring>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <spacer row="1" column="0">
+            <property name="name">
+                <cstring>spacer6</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Fixed</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <spacer row="4" column="0">
+            <property name="name">
+                <cstring>spacer4</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>90</height>
+                </size>
+            </property>
+        </spacer>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>use1</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>url1</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>use2</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>url2</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>use3</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>url3</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>deleteCheck</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>moveCheck</receiver>
+        <slot>setDisabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>moveCheck</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>deleteCheck</receiver>
+        <slot>setDisabled(bool)</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>use1</tabstop>
+    <tabstop>use2</tabstop>
+    <tabstop>use3</tabstop>
+    <tabstop>url1</tabstop>
+    <tabstop>url2</tabstop>
+    <tabstop>url3</tabstop>
+    <tabstop>openSilently</tabstop>
+    <tabstop>deleteCheck</tabstop>
+    <tabstop>moveCheck</tabstop>
+</tabstops>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+</includehints>
+</UI>

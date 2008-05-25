@@ -1,0 +1,26 @@
+[Desktop Entry]
+Name=UPnPPlugin
+Name[bg]=Приставка UPnP
+Name[br]=Lugent UPnP
+Name[de]=UPnP-Modul
+Name[el]=Πρόσθετο UPnP
+Name[es]=Complemento UPnP
+Name[et]=UPnP plugin
+Name[it]=Plugin UPnP
+Name[nb]=UPnP-modul
+Name[nds]=UPnP-Moduul
+Name[nl]=UPnP-plugin
+Name[pl]=Wtyczka UPnP
+Name[pt]='Plugin' UPnP
+Name[pt_BR]=Plugin UPnP
+Name[sk]=UPnP Plugin
+Name[sr]=Прикључак за UPnP
+Name[sr@Latn]=Priključak za UPnP
+Name[sv]=UPnP-insticksprogram
+Name[tr]=UPnP Eklentisi
+Name[xx]=xxUPnPPluginxx
+Name[zh_CN]=UPnP 插件
+Name[zh_TW]=UPnP外掛程式
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktupnpplugin

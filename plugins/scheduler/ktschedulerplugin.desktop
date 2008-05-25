@@ -1,0 +1,26 @@
+[Desktop Entry]
+Name=SchedulerPlugin
+Name[bg]=Приставка за график
+Name[cs]=Modul plánování
+Name[da]=Skemalægger-Plugin
+Name[de]=Planer-Modul
+Name[el]=Πρόσθετο προγραμματισμού
+Name[et]=Ajastamisplugin
+Name[it]=Plugin pianificatore
+Name[nb]=Planleggermodul
+Name[nds]=Planer-Moduul
+Name[nl]=Plannerplugin
+Name[pl]=Wtyczka planowanie transferu
+Name[pt_BR]=Plugin de agendamento
+Name[sk]=Scheduler Plugin
+Name[sr]=Прикључак распоређивања
+Name[sr@Latn]=Priključak raspoređivanja
+Name[sv]=Insticksprogram för schemaläggning
+Name[tr]=Zamanlayıcı Eklentisi
+Name[uk]=Втулок розкладу
+Name[xx]=xxSchedulerPluginxx
+Name[zh_CN]=带宽规划器插件
+Name[zh_TW]=排程器外掛程式
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktschedulerplugin

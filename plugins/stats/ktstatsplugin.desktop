@@ -1,0 +1,24 @@
+[Desktop Entry]
+Type=Service
+Name=StatsPlugin
+Name[bg]=Приставка за статистика
+Name[de]=Statistik-Modul
+Name[es]=Complemento de estadísticas
+Name[et]=Statistikaplugin
+Name[it]=Plugin statistiche
+Name[nds]=Statistik-Moduul
+Name[nl]=Statistiekenplugin
+Name[pl]=Wtyczka statystyk
+Name[pt]='Plugin' de Estatísticas
+Name[pt_BR]=Plugin de Estatísticas
+Name[sr]=Прикључак за статистику
+Name[sr@Latn]=Priključak za statistiku
+Name[sv]=Statistikinsticksprogram
+Name[tr]=Arama Eklentisi
+Name[uk]=Втулок статистики
+Name[xx]=xxStatsPluginxx
+Name[zh_CN]=统计插件
+Comment=
+Comment[xx]=xxxx
+ServiceTypes=KTorrent/Plugin
+X-KDE-Library=ktstatsplugin

@@ -1,0 +1,11 @@
+TODO LIST :
+-----------
+
+If something is done put # in front of it.
+
+3.0 :
+-----
+1) Switch to KDE 4 and Qt 4
+2) Suggest name of torrent file when creating a torrent 
+3) Piece based management instead of chunk based
+4) ...

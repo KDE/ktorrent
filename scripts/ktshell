@@ -1,0 +1,400 @@
+#!/bin/bash
+
+declare -a filenames priorities torinfo filecounts ints info tors usernms ktorrents dcops
+
+filemenu () {
+	local IFS='
+'
+	filenames=( `$ktorrent getFileNames $tornum` )
+	unset IFS
+	while true; do
+	local IFS='
+'
+	priorities=( `$ktorrent getFilePriorities $tornum` )
+	unset IFS
+	clear
+	echo $torname;
+	for ((B=0; B < filecounts[$i]; B++)); do
+		echo -n "$B. ${filenames[$B]:0:60} - "
+		case "${priorities[$B]}" in
+		"0")
+			echo "Excluded"
+			;;
+		"1")
+			echo "Download Last"
+			;;
+		"3")
+			echo "Download First"
+			;;
+		"2")
+			echo "Download Normally"
+			;;
+		esac
+	done
+	echo
+	echo "Enter a list of file numbers you want to set to the same priority"
+	echo -n "separated by spaces, or enter to go back to this torrent's menu: "
+	read filenums
+	if [ "x$filenums" = "x" ]; then
+		break
+	fi
+	echo "0 = Do Not Download, 1 = Download Last, 2 = Download Normally, 3 = Download First"
+	echo -n "Enter the priority you want to set the files to: "
+	read priority
+	for A in $filenums; do
+		echo $A
+	done|$ktorrentp setFilePriority $tornum %1 $priority
+	done
+}
+
+tormenu () {
+	i=${tors[$tornum]}
+	torname=${torinfo[$i*10]}
+	while true; do
+		clear
+		echo $torname
+		select name in 'Stop Torrent' 'Start Torrent' 'Remove Torrent' \
+		'Manual Announce' 'File Names & Priorities' 'Back to Torrent List' \
+		'Back to Main Menu' 'Quit'; do
+			echo
+			case "$REPLY" in
+			"1")
+				$ktorrent stop $tornum 0
+				echo "Torrent Stopped"
+				;;
+			"2")
+				echo "Torrent Started"
+				$ktorrent start $tornum
+				;;
+			"3")
+				echo -n "Enter 1 to delete any incomplete data "
+				echo "or enter 0 to keep it: "
+				read deldata
+				$ktorrent remove $tornum $deldata
+				if (( $deldata == 1 )); then
+					echo "Torrent and Any Incomplete Data Removed"
+				else
+					echo "Torrent Removed"
+				fi
+				return
+				;;
+			"4")
+				$ktorrent announce $tornum
+				echo "Manual Announce Completed"
+				;;
+			"5")
+				if ((${filecounts[$i]} == 0)); then
+					echo "Single File Torrent"
+					continue
+				fi
+				filemenu
+				break
+				;;
+			"6")
+				return
+				;;
+			"7")
+				return 1
+				;;
+			"8")
+				exit 0
+				;;
+			esac
+		done
+	done
+}
+
+torlist () {
+	while true; do
+		local IFS='
+'
+		tornums=`$ktorrent getTorrentNumbers $1`
+		unset IFS
+		if [ "x$tornums" = "x" ]; then
+			echo "No Torrents of the Selected Type Are Loaded"
+			return 1
+		fi
+		clear
+		if (( $1 == 1 )); then
+			echo "Downloads:"
+		fi
+		if (( $1 == 2 )); then
+			echo "Seeds:"
+		fi
+		if (( $1 == 3 )); then
+			echo "All Torrents:"
+		fi
+		unset torns
+		for A in $tornums; do
+			torns="$torns
+$A"
+		done
+		local IFS='
+'
+		torinfo=( `for A in $torns; do
+		echo $A
+		done|$ktorrentp getTorrentInfo %1|sed s/^$/-/` )
+		filecounts=( `for A in $torns; do
+		echo $A
+		done|$ktorrentp getFileCount %1` )
+		unset IFS
+		i=0
+		for A in $tornums; do
+			let tors[$A]=$i/13
+			echo "$A. ${torinfo[$i]:0:40}  (${torinfo[$i+1]:0:32})"
+			echo -n "Size:${torinfo[$i+3]}  (Have ${torinfo[$i+9]})  "
+			echo -n "Time Left:${torinfo[$i+7]}  "
+			echo "Peers: ${torinfo[$i+8]}"
+			echo -n "Seeders: ${torinfo[$i+11]}  Leechers: ${torinfo[$i+12]}  "
+			echo "Share Ratio: ${torinfo[$i+10]}  "
+			echo -n "DL:${torinfo[$i+2]}  DL Rate:${torinfo[$i+5]}  "
+			echo "UL:${torinfo[$i+4]}  UL Rate:${torinfo[$i+6]}  "
+			echo
+			let i=$i+13
+		done
+		echo -n "Type a torrent's number or press enter to go back to the main menu:"
+		read -p " " command
+		unset tornum
+		if [ "x$command" = "x" ]; then
+			return
+		fi
+		for A in $tornums; do
+			if [ "x$command" = "x$A" ]; then
+				tornum=$A
+				break
+			fi
+		done
+		if [ "x$tornum" != "x" ]; then
+			tormenu
+			if [ "x$?" = "x1" ]; then
+				return
+			fi
+		fi
+	done
+}
+
+settings () {
+	while true; do
+	local IFS='
+'
+	ints=( `$ktorrent intSettings` );
+	ints[7]=`$ktorrent dataDir`
+	unset IFS
+	clear
+	echo "Current Settings: "
+	echo "Max Downloads: ${ints[0]}"
+	echo "Max Seeds: ${ints[1]}"
+	echo "Max Connections Per Download: ${ints[2]}"
+	echo "Max Upload Speed: ${ints[3]}"
+	echo "Max Download Speed: ${ints[4]}"
+	echo "Keep Seeding When Complete: ${ints[5]}"
+	echo "Show System Tray Icon: ${ints[6]}"
+	echo "Temporary Data Dir: ${ints[7]}"
+	echo
+	echo "Change Settings"
+	select name in 'Set Max Downloads' 'Set Max Seeds' \
+	'Set Keep Seeding When Complete' 'Set Max Upload Speed' 'Set Max Download Speed' \
+	'Set Max Connections Per Download' 'Set Show System Tray Icon' \
+	'Change Temporary Data Dir' 'Back to Main Menu' 'Quit'; do
+		case "$REPLY" in
+		"1")
+			read -p "How many downloads? " maxdown
+			$ktorrent setMaxDownloads $maxdown
+			break
+			;;
+		"2")
+			read -p "How many seeds? " maxseeds
+			$ktorrent setMaxSeeds $maxseeds
+			break
+			;;
+		"3")
+			read -p "Keep Seeding After downloading? 0 for no, 1 for yes: " ks
+			$ktorrent setKeepSeeding $ks
+			break
+			;;
+		"4")
+			read -p "Max Upload Speed in K/s: " ulspeed
+			$ktorrent setMaxUploadSpeed $ulspeed
+			break
+			;;
+		"5")
+			read -p "Max Download Speed in K/s: " dlspeed
+			$ktorrent setMaxDownloadSpeed $dlspeed
+			break
+			;;
+		"6")
+			read -p "Max Connections Per Download: " conn
+			$ktorrent setMaxConnectionsPerDownload $conn
+			break
+			;;
+		"7")
+			read -p "Show the System Tray Icon? 0 for no, 1 for yes: " st
+			$ktorrent setShowSysTray $st
+			break
+			;;
+		"8")
+			read -p "Enter full path to new temp data directory: " ddpath
+			$ktorrent changeDataDir "$ddpath"
+			break
+			;;
+		"9")
+			return
+			;;
+		"10")
+			exit 0
+			;;
+		esac
+	done
+	done
+}
+
+about () {
+	clear
+echo "This script uses KDE's DCOP interface to control a running instance of KTorrent."
+echo "It uses the console DCOP client, dcop, to connect. It organizes the features of and"
+echo "simplifies the use of this interface. It is intended to be used as a replacement for"
+echo "a true console BitTorrent client for KTorrent users. It was written by Adam Forsyth."
+echo
+echo "Hint: pressing enter at most menus will redisplay the menu choices."
+echo "Press enter to go back to the main menu."
+read
+}
+
+mainmenu () {
+	local IFS='
+'
+	info=( `$ktorrent getInfo` )
+	unset IFS
+	clear
+	echo "Totals:"
+	echo "${info[0]}"
+	echo "${info[1]}"
+	echo "${info[2]}"
+	select name in 'List All Torrents' 'List Seeds' 'List Downloads' 'Start All' 'Stop All' \
+	'Load a Torrent' 'Change Settings' 'Redisplay Totals & Menu' 'About this Script' 'Quit'; do
+		case "$REPLY" in
+		"1"|"2"|"3")
+			let A=4-$REPLY
+			torlist $A
+			if (( $? == 1 )); then
+				continue
+			fi
+			return
+			;;
+		"4")
+			echo "Enter 1 to start downloads, 2 to start seeds, 3 to start all: "
+			read starttype
+			$ktorrent startAll $starttype
+			echo "Torrents of type $starttype Started"
+			;;
+		"5")
+			echo "Enter 1 to stop downloads, 2 to stop seeds, 3 to stop all: "
+			read stoptype
+			$ktorrent stopAll $stoptype
+			echo "Torrents of type $stoptype Stopped"
+			;;
+		"6")
+			read -p "Enter full path to the torrent: " tpath
+			$ktorrent openTorrentSilently "$tpath"
+			echo "$tpath added"
+			;;
+		"7")
+			settings
+			return
+			;;
+		"8")
+			return
+			;;
+		"9")
+			about
+			return
+			;;
+		"10")
+			exit 0
+			;;
+		esac
+	done
+}
+
+init () {
+	if ! which dcop 2>/dev/null >/dev/null; then
+		echo "The dcop command line client cannot be found"
+		exit 1
+	fi
+	dcop="dcop"
+	ktorrents=( `$dcop 2>/dev/null` )
+	if (( $? != 0 )); then
+		echo "Looking for DCOP servers..."
+		local IFS='
+'
+		usernms=( `ps -C dcopserver --no-heading -o user` )
+		unset IFS
+		if (( ${#usernms[*]} == 0 )); then
+			echo "There is no DCOP server running."
+			exit 1
+		fi
+		echo "Found a DCOP server."
+		usernm=${usernms[0]}
+		if (( ${#usernms[*]} > 1 )); then
+			echo "Which user's DCOP server do you wish to connect to?"
+			select usernm in ${usernms[*]}; do
+				break
+			done
+		fi
+		local IFS='
+		'
+		sessnms=( `dcop --user $usernm --list-sessions | tail -n +2 | head -n -1` )
+		unset IFS
+		if (( ${#sessnms[*]} == 0 )); then
+			echo "Found no session."
+			exit 1
+		fi
+		echo "Found a DCOP session."
+		sessnm=${sessnms[0]}
+		if (( ${#sessnms[*]} > 1 )); then
+			echo "Which session of the user's DCOP server do you wish to connect to?"
+			select sessnm in ${sessnms[*]}; do
+				break
+			done
+		fi
+		dcop="dcop --user $usernm --session $sessnm" 
+		ktorrents=( `$dcop 2>/dev/null` )
+		if (( $? != 0 )); then
+			echo "Cannot connect to the DCOP server."
+			exit 1
+		fi
+	fi
+	echo "Connected to a DCOP server."
+	unset ktorrentid
+	for A in ${ktorrents[*]}; do
+		if [ "x${A:0:8}" = "xktorrent" ]; then
+			ktorrentid=$A
+			echo "Found KTorrent."
+			break
+		fi
+	done
+	if [ "x$ktorrentid" = "x" ]; then
+		echo "KTorrent is not running in the KDE session for this DCOP server."
+		echo "You can start KTorrent with something like \"ktorrent --display :0\""
+		echo "while logged in as a user who has KDE running."
+		exit 1
+	fi
+	dcops=( $dcop )
+	dcop=${dcops[0]}
+	for A in ${dcops[*]:1}; do
+		dcop="$dcop
+$A"
+	done
+	ktorrent="$dcop
+$ktorrentid
+KTorrent"
+	ktorrentp="$dcop
+--pipe
+$ktorrentid
+KTorrent"
+}
+
+init
+while true; do
+	mainmenu
+done

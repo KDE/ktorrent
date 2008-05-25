@@ -1,0 +1,368 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>BlacklistWidgetBase</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>BlacklistWidgetBase</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>490</width>
+            <height>437</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>KTorrent Blacklist</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="resizeMode">
+            <enum>Minimum</enum>
+        </property>
+        <widget class="QLabel" row="1" column="0">
+            <property name="name">
+                <cstring>textLabel2</cstring>
+            </property>
+            <property name="text">
+                <string>Note: Blacklist applies to current session only. Use save/open to save your entries or use IPFilter plugin (PeerGuardian).</string>
+            </property>
+            <property name="alignment">
+                <set>WordBreak|AlignVCenter</set>
+            </property>
+        </widget>
+        <widget class="QGroupBox" row="0" column="0">
+            <property name="name">
+                <cstring>groupBox1</cstring>
+            </property>
+            <property name="title">
+                <string>Banned Peers</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KListView" row="2" column="0">
+                    <column>
+                        <property name="text">
+                            <string>Peer IP address</string>
+                        </property>
+                        <property name="clickable">
+                            <bool>true</bool>
+                        </property>
+                        <property name="resizable">
+                            <bool>true</bool>
+                        </property>
+                    </column>
+                    <property name="name">
+                        <cstring>lstPeers</cstring>
+                    </property>
+                    <property name="fullWidth">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <spacer row="1" column="0">
+                    <property name="name">
+                        <cstring>spacer5_2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Fixed</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QLayoutWidget" row="0" column="0">
+                    <property name="name">
+                        <cstring>layout8</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Add peer:</string>
+                            </property>
+                            <property name="buddy" stdset="0">
+                                <cstring>kLineEdit1</cstring>
+                            </property>
+                        </widget>
+                        <widget class="KLineEdit">
+                            <property name="name">
+                                <cstring>peerIP</cstring>
+                            </property>
+                            <property name="text">
+                                <string>127.0.0.1</string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QLayoutWidget" row="0" column="1" rowspan="3" colspan="1">
+                    <property name="name">
+                        <cstring>layout7</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>btnAdd</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Add</string>
+                            </property>
+                            <property name="accel">
+                                <string></string>
+                            </property>
+                            <property name="stdItem" stdset="0">
+                                <number>27</number>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Adds a peer to blacklist</string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer5</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Fixed</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>btnRemove</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Remove</string>
+                            </property>
+                            <property name="accel">
+                                <string></string>
+                            </property>
+                            <property name="stdItem" stdset="0">
+                                <number>28</number>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Removes selected peer from blacklist</string>
+                            </property>
+                        </widget>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>btnClear</cstring>
+                            </property>
+                            <property name="text">
+                                <string>C&amp;lear</string>
+                            </property>
+                            <property name="stdItem" stdset="0">
+                                <number>10</number>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Clears this list</string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer4</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Fixed</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>16</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>btnOpen</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Open...</string>
+                            </property>
+                            <property name="stdItem" stdset="0">
+                                <number>18</number>
+                            </property>
+                        </widget>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>btnSave</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Save &amp;As...</string>
+                            </property>
+                            <property name="stdItem" stdset="0">
+                                <number>8</number>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Save this blacklist to use with KTorrent IPFilter plugin</string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>30</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>btnOk</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;OK</string>
+                            </property>
+                            <property name="stdItem" stdset="0">
+                                <number>1</number>
+                            </property>
+                        </widget>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>btnApply</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Apply</string>
+                            </property>
+                            <property name="stdItem" stdset="0">
+                                <number>9</number>
+                            </property>
+                        </widget>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>btnCancel</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Cancel</string>
+                            </property>
+                            <property name="stdItem" stdset="0">
+                                <number>2</number>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+            </grid>
+        </widget>
+    </grid>
+</widget>
+<customwidgets>
+</customwidgets>
+<connections>
+    <connection>
+        <sender>btnCancel</sender>
+        <signal>clicked()</signal>
+        <receiver>BlacklistWidgetBase</receiver>
+        <slot>reject()</slot>
+    </connection>
+    <connection>
+        <sender>btnAdd</sender>
+        <signal>clicked()</signal>
+        <receiver>BlacklistWidgetBase</receiver>
+        <slot>btnAdd_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnRemove</sender>
+        <signal>clicked()</signal>
+        <receiver>BlacklistWidgetBase</receiver>
+        <slot>btnRemove_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnClear</sender>
+        <signal>clicked()</signal>
+        <receiver>BlacklistWidgetBase</receiver>
+        <slot>btnClear_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnOpen</sender>
+        <signal>clicked()</signal>
+        <receiver>BlacklistWidgetBase</receiver>
+        <slot>btnOpen_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnSave</sender>
+        <signal>clicked()</signal>
+        <receiver>BlacklistWidgetBase</receiver>
+        <slot>btnSave_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnOk</sender>
+        <signal>clicked()</signal>
+        <receiver>BlacklistWidgetBase</receiver>
+        <slot>btnOk_clicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnApply</sender>
+        <signal>clicked()</signal>
+        <receiver>BlacklistWidgetBase</receiver>
+        <slot>btnApply_clicked()</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>btnOk</tabstop>
+    <tabstop>btnApply</tabstop>
+    <tabstop>btnCancel</tabstop>
+    <tabstop>lstPeers</tabstop>
+    <tabstop>btnRemove</tabstop>
+    <tabstop>btnClear</tabstop>
+    <tabstop>btnOpen</tabstop>
+    <tabstop>btnSave</tabstop>
+    <tabstop>peerIP</tabstop>
+    <tabstop>btnAdd</tabstop>
+</tabstops>
+<slots>
+    <slot>btnAdd_clicked()</slot>
+    <slot>btnRemove_clicked()</slot>
+    <slot>btnClear_clicked()</slot>
+    <slot>btnOpen_clicked()</slot>
+    <slot>btnSave_clicked()</slot>
+    <slot>btnOk_clicked()</slot>
+    <slot>btnApply_clicked()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>klistview.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+</includehints>
+</UI>

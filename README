@@ -1,0 +1,18 @@
+KTorrent - A KDE BitTorrent client
+-----------------------------------
+
+For installation follow the instructions from INSTALL file, but simple
+
+./configure --prefix=$KDEDIR
+make
+make install (as root)
+
+will install KTorrent hopefully without any problems.
+
+
+For more info please visit 
+
+http://www.ktorrent.org/
+
+
+KT Team

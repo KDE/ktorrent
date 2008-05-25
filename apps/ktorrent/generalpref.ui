@@ -1,0 +1,475 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>GeneralPref</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>GeneralPref</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>603</width>
+            <height>657</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>General Options</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <spacer row="5" column="0">
+            <property name="name">
+                <cstring>spacer2</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>50</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QGroupBox" row="4" column="0">
+            <property name="name">
+                <cstring>groupBox5</cstring>
+            </property>
+            <property name="title">
+                <string>Encryption</string>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string></string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>use_encryption</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use protocol encryption</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Protocol encryption is used to prevent ISP's from slowing down bittorrent connections.</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>allow_unencrypted</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Allow unencrypted connections</string>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>If unchecked, you'll be able to connect only to clients supporting encryption.</string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QGroupBox" row="3" column="0">
+            <property name="name">
+                <cstring>groupBox4</cstring>
+            </property>
+            <property name="title">
+                <string>DHT</string>
+            </property>
+            <property name="toolTip" stdset="0">
+                <string>&lt;b&gt;D&lt;/b&gt;istributed &lt;b&gt;H&lt;/b&gt;ash &lt;b&gt;T&lt;/b&gt;able protocol.&lt;br&gt;Decentralized peers exchange protocol. See manual for more info.</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>use_dht</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Use DHT to get additional peers</string>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout7</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>dht_port_label</cstring>
+                            </property>
+                            <property name="text">
+                                <string>UDP port for DHT communication:</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntSpinBox">
+                            <property name="name">
+                                <cstring>dht_port</cstring>
+                            </property>
+                            <property name="maxValue">
+                                <number>65535</number>
+                            </property>
+                            <property name="minValue">
+                                <number>1</number>
+                            </property>
+                            <property name="value">
+                                <number>6881</number>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer4</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QGroupBox" row="2" column="0">
+            <property name="name">
+                <cstring>groupBox3</cstring>
+            </property>
+            <property name="title">
+                <string>Custom IP</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>custom_ip_check</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Se&amp;nd the tracker a custom IP address or hostname</string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout3</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>custom_ip_label</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Custom IP address or hostname:</string>
+                            </property>
+                        </widget>
+                        <widget class="KLineEdit">
+                            <property name="name">
+                                <cstring>custom_ip</cstring>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QGroupBox" row="1" column="0">
+            <property name="name">
+                <cstring>groupBox3_2</cstring>
+            </property>
+            <property name="title">
+                <string>System Tray Icon</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="0" column="0">
+                    <property name="name">
+                        <cstring>show_systray_icon</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show s&amp;ystem tray icon</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="1" column="0">
+                    <property name="name">
+                        <cstring>show_speedbar</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show speed &amp;bar in tray icon</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>show_popups</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show system tray popup messages</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget" row="0" column="1" rowspan="2" colspan="1">
+                    <property name="name">
+                        <cstring>layout13</cstring>
+                    </property>
+                    <grid>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel" row="1" column="0">
+                            <property name="name">
+                                <cstring>textLabel1_3_2_2_2_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Upload bandwidth (in KB/sec):</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntSpinBox" row="1" column="1">
+                            <property name="name">
+                                <cstring>uploadBandwidth</cstring>
+                            </property>
+                            <property name="buttonSymbols">
+                                <enum>UpDownArrows</enum>
+                            </property>
+                            <property name="maxValue">
+                                <number>1000000</number>
+                            </property>
+                            <property name="minValue">
+                                <number>1</number>
+                            </property>
+                            <property name="value">
+                                <number>500</number>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="0" column="0">
+                            <property name="name">
+                                <cstring>textLabel1_3_2_2_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Download bandwidth (in KB/sec):</string>
+                            </property>
+                        </widget>
+                        <widget class="KIntSpinBox" row="0" column="1">
+                            <property name="name">
+                                <cstring>downloadBandwidth</cstring>
+                            </property>
+                            <property name="buttonSymbols">
+                                <enum>UpDownArrows</enum>
+                            </property>
+                            <property name="maxValue">
+                                <number>1000000</number>
+                            </property>
+                            <property name="minValue">
+                                <number>1</number>
+                            </property>
+                            <property name="value">
+                                <number>500</number>
+                            </property>
+                        </widget>
+                    </grid>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QGroupBox" row="0" column="0">
+            <property name="name">
+                <cstring>groupBox1</cstring>
+            </property>
+            <property name="title">
+                <string>Folders</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget" row="0" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>layout24</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Folder to store temporary files:</string>
+                            </property>
+                            <property name="buddy" stdset="0">
+                                <cstring>temp_dir</cstring>
+                            </property>
+                        </widget>
+                        <widget class="KURLRequester">
+                            <property name="name">
+                                <cstring>temp_dir</cstring>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QCheckBox" row="2" column="0">
+                    <property name="name">
+                        <cstring>checkCompletedDir</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Move completed downloads to:</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="1" column="0">
+                    <property name="name">
+                        <cstring>autosave_downloads_check</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Automatically save downloads to:</string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget" row="1" column="1" rowspan="3" colspan="1">
+                    <property name="name">
+                        <cstring>layout14</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="KURLRequester">
+                            <property name="name">
+                                <cstring>autosave_location</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                        </widget>
+                        <widget class="KURLRequester">
+                            <property name="name">
+                                <cstring>urlCompletedDir</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                        </widget>
+                        <widget class="KURLRequester">
+                            <property name="name">
+                                <cstring>urlTorrentDir</cstring>
+                            </property>
+                            <property name="enabled">
+                                <bool>false</bool>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+                <widget class="QCheckBox" row="3" column="0">
+                    <property name="name">
+                        <cstring>checkTorrentDir</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Copy .torrent files to:</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+    </grid>
+</widget>
+<customwidgets>
+</customwidgets>
+<connections>
+    <connection>
+        <sender>show_speedbar</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>textLabel1_3_2_2_2</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>show_speedbar</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>textLabel1_3_2_2_2_2</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>show_speedbar</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>downloadBandwidth</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>show_speedbar</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>uploadBandwidth</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>checkCompletedDir</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>urlCompletedDir</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>autosave_downloads_check</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>autosave_location</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>checkTorrentDir</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>urlTorrentDir</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>autosave_downloads_check</tabstop>
+    <tabstop>show_systray_icon</tabstop>
+</tabstops>
+<pixmapinproject/>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>knuminput.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+</includehints>
+</UI>
