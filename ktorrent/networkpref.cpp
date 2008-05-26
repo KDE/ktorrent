@@ -48,7 +48,7 @@ namespace kt
 		kcfg_maxUploadRate->setValue(Settings::maxUploadRate());
 		
 		
-
+		kcfg_networkInterface->clear();
 		kcfg_networkInterface->addItem(KIcon("network-wired"),i18n("All interfaces"));
 
 		// get all the network devices and add them to the combo box
