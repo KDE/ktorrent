@@ -18,45 +18,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTADDITEMDLG_H
-#define KTADDITEMDLG_H
+#ifndef KTEDITITEMDLG_H
+#define KTEDITITEMDLG_H
 
 #include <KDialog>
-#include "ui_additemdlg.h"
+#include "ui_edititemdlg.h"
 
 namespace kt
 {
 	struct ScheduleItem;
-	class WeekDayModel;
-	class Schedule;
-	
-
 
 	/**
 		@author
 	*/
-	class AddItemDlg : public KDialog, public Ui_AddItemDlg
+	class EditItemDlg : public KDialog, public Ui_EditItemDlg
 	{
 		Q_OBJECT
-	public:	
-		AddItemDlg(Schedule* schedule,QWidget* parent);
-		virtual ~AddItemDlg();
+	public:		
+		EditItemDlg(QWidget* parent);
+		virtual ~EditItemDlg();
 		
-		virtual void accept();
-		
-		QList<ScheduleItem*> getAddedItems() const {return added_items;}
+		/**
+		 * Execute the dialog
+		 * @param item The item to fill in if the user presses OK
+		 * @return true if OK was pressed
+		 */
+		bool execute(ScheduleItem* item);
 
 	private slots:
 		void fromChanged(const QTime & time);
 		void toChanged(const QTime & time);
-		void selectEntireWeek();
-		void selectWeekDays();
-		void selectWeekend();
-		
-	private:
-		WeekDayModel* model;
-		Schedule* schedule;
-		QList<ScheduleItem*> added_items;
 	};
 
 }

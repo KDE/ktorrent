@@ -30,6 +30,7 @@
 #include "weekview.h"
 #include "schedule.h"
 #include "additemdlg.h"
+#include "edititemdlg.h"
 
 namespace kt
 {
@@ -130,24 +131,15 @@ namespace kt
 	
 	void ScheduleEditor::addItem()
 	{
-		ScheduleItem* item = new ScheduleItem();
-		item->start = QTime::currentTime();
-		item->end = item->start.addSecs(3600);
-		item->day = QDate::currentDate().dayOfWeek();
-		
-		AddItemDlg dlg(AddItemDlg::NEW_ITEM,this);
-		if (dlg.execute(item))
+		AddItemDlg dlg(schedule,this);
+		if (dlg.exec() == QDialog::Accepted)
 		{
-			if (!schedule->addItem(item))
-				KMessageBox::error(this,i18n("This item conflicts with another item in the schedule, we cannot add it !"));
-			else
-				view->addScheduleItem(item); 
-			
 			clear_action->setEnabled(true);
+			QList<ScheduleItem*> added_items = dlg.getAddedItems();
+			foreach (ScheduleItem* item,added_items)
+				view->addScheduleItem(item);
 			scheduleChanged();
 		}
-		else
-			delete item;
 	}
 
 	void ScheduleEditor::removeItem()
@@ -161,7 +153,7 @@ namespace kt
 	{
 		ScheduleItem tmp = *item;
 		
-		AddItemDlg dlg(AddItemDlg::EDIT_ITEM,this);
+		EditItemDlg dlg(this);
 		if (dlg.execute(item))
 		{
 			if (schedule->conflicts(item))

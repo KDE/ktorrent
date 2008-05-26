@@ -1,6 +1,6 @@
-set(ktbwschedulerplugin_SRC bwschedulerplugin.cpp weekview.cpp weekscene.cpp schedule.cpp scheduleeditor.cpp additemdlg.cpp schedulegraphicsitem.cpp bwprefpage.cpp guidanceline.cpp)
+set(ktbwschedulerplugin_SRC bwschedulerplugin.cpp weekview.cpp weekscene.cpp schedule.cpp scheduleeditor.cpp additemdlg.cpp schedulegraphicsitem.cpp bwprefpage.cpp guidanceline.cpp edititemdlg.cpp weekdaymodel.cpp)
 
-kde4_add_ui_files(ktbwschedulerplugin_SRC additemdlg.ui bwprefpage.ui)
+kde4_add_ui_files(ktbwschedulerplugin_SRC additemdlg.ui edititemdlg.ui bwprefpage.ui)
 kde4_add_kcfg_files(ktbwschedulerplugin_SRC bwschedulerpluginsettings.kcfgc)
 kde4_add_plugin(ktbwschedulerplugin ${ktbwschedulerplugin_SRC})
 

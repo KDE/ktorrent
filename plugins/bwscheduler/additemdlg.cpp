@@ -20,35 +20,96 @@
  ***************************************************************************/
 #include <kglobal.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 #include <kcalendarsystem.h>
 #include "additemdlg.h"
 #include "schedule.h"
+#include "weekdaymodel.h"
 
 namespace kt
 {
+	
+	
 
-	AddItemDlg::AddItemDlg(Mode mode,QWidget* parent) : KDialog(parent)
+	AddItemDlg::AddItemDlg(Schedule* schedule,QWidget* parent) : KDialog(parent),schedule(schedule)
 	{
 		setupUi(mainWidget());
 		connect(m_paused,SIGNAL(toggled(bool)),m_upload_limit,SLOT(setDisabled(bool)));
 		connect(m_paused,SIGNAL(toggled(bool)),m_download_limit,SLOT(setDisabled(bool)));
-		
-		const KCalendarSystem* cal = KGlobal::locale()->calendar();
-		for (int i = 1;i <= 7;i++)
-			m_day->addItem(cal->weekDayName(i));
+		model = new WeekDayModel(this);
+		m_day_list->setModel(model);
 		
 		connect(m_from,SIGNAL(timeChanged(const QTime & )),this,SLOT(fromChanged(const QTime&)));
 		connect(m_to,SIGNAL(timeChanged(const QTime & )),this,SLOT(toChanged(const QTime&)));
+		connect(m_entire_week,SIGNAL(clicked()),this,SLOT(selectEntireWeek()));
+		connect(m_weekdays_only,SIGNAL(clicked()),this,SLOT(selectWeekDays()));
+		connect(m_weekend,SIGNAL(clicked()),this,SLOT(selectWeekend()));
 		
-		if (mode == EDIT_ITEM)
-			setWindowTitle(i18n("Edit an item"));
-		else
-			setWindowTitle(i18n("Add an item"));
+		setWindowTitle(i18n("Add an item"));
+		
+		m_from->setTime(QTime(10,0,0));
+		m_to->setTime(QTime(11,59,59));
+	
+		m_paused->setChecked(false);
+		m_upload_limit->setValue(0);
+		m_download_limit->setValue(0);
+		m_set_connection_limits->setChecked(false);
+		m_max_conn_per_torrent->setEnabled(false);
+		m_max_conn_per_torrent->setValue(0);
+		m_max_conn_global->setValue(0);
+		m_max_conn_global->setEnabled(false);
 	}
 
 
 	AddItemDlg::~AddItemDlg()
 	{}
+	
+	void AddItemDlg::accept()
+	{
+		QList<int> cd = model->checkedDays();
+		if (cd.count() == 0)
+		{
+			KMessageBox::error(this,i18n("No day has been selected !"));
+			return;
+		}
+		
+		int failures = 0;
+		foreach (int day,cd)
+		{
+			ScheduleItem* item = new ScheduleItem();
+			item->day = day;
+			item->start = m_from->time();
+			item->end = m_to->time().addSecs(59 - m_to->time().second());
+			item->upload_limit = m_upload_limit->value();
+			item->download_limit = m_download_limit->value();
+			item->paused = m_paused->isChecked();
+			item->global_conn_limit = m_max_conn_global->value();
+			item->torrent_conn_limit = m_max_conn_per_torrent->value();
+			item->set_conn_limits = m_set_connection_limits->isChecked();
+			if (!schedule->addItem(item))
+			{
+				failures++;
+				delete item;
+			}
+			else
+				added_items << item;
+		}
+		
+		if (failures == cd.count())
+		{
+			KMessageBox::error(this,i18n("Failed to add item, because it conflicts with another item on the schedule !"));	
+			QDialog::reject();
+		}
+		else if (failures > 0)
+		{
+			KMessageBox::sorry(this,i18n("This item could not be added to all selected days, because it conflicts with another item on the schedule !"));
+			QDialog::accept();
+		}
+		else
+		{
+			QDialog::accept();
+		}
+	}
 
 	void AddItemDlg::fromChanged(const QTime & time)
 	{
@@ -61,36 +122,33 @@ namespace kt
 		// ensure that from is always smaller then to
 		m_from->setMaximumTime(time.addSecs(-60));
 	}
-
-	bool AddItemDlg::execute(ScheduleItem* item)
+	
+	void AddItemDlg::selectEntireWeek()
 	{
-		m_from->setTime(item->start);
-		m_to->setTime(item->end);
-		m_day->setCurrentIndex(item->day - 1);
-		m_paused->setChecked(item->paused);
-		m_upload_limit->setValue(item->upload_limit);
-		m_download_limit->setValue(item->download_limit);
-		m_set_connection_limits->setChecked(item->set_conn_limits);
-		m_max_conn_per_torrent->setEnabled(item->set_conn_limits);
-		m_max_conn_per_torrent->setValue(item->torrent_conn_limit);
-		m_max_conn_global->setValue(item->global_conn_limit);
-		m_max_conn_global->setEnabled(item->set_conn_limits);
-		if (exec() == QDialog::Accepted)
+		for (int i = 0;i < 7;i++)
 		{
-			item->start = m_from->time();
-			item->start = item->start.addSecs(-item->start.second()); // seconds must be 0
-			item->end = m_to->time(); 
-			item->end = item->end.addSecs(59 - item->end.second()); // seconds must be 59
-			item->day = m_day->currentIndex() + 1;
-			item->upload_limit = m_upload_limit->value();
-			item->download_limit = m_download_limit->value();
-			item->paused = m_paused->isChecked();
-			item->global_conn_limit = m_max_conn_global->value();
-			item->torrent_conn_limit = m_max_conn_per_torrent->value();
-			item->set_conn_limits = m_set_connection_limits->isChecked();
-			return true;
+			model->setData(model->index(i,0),Qt::Checked,Qt::CheckStateRole);
 		}
-		return false;
+	}
+	
+	void AddItemDlg::selectWeekDays()
+	{
+		const KCalendarSystem* cal = KGlobal::locale()->calendar();
+		for (int i = 0;i < 5;i++)
+		{
+			int day = ((cal->weekStartDay() - 1) + i) % 7;
+			model->setData(model->index(day,0),Qt::Checked,Qt::CheckStateRole);
+		}
+	}
+	
+	void AddItemDlg::selectWeekend()
+	{
+		const KCalendarSystem* cal = KGlobal::locale()->calendar();
+		for (int i = 5;i < 7;i++)
+		{
+			int day = ((cal->weekStartDay() - 1) + i) % 7;
+			model->setData(model->index(day,0),Qt::Checked,Qt::CheckStateRole);
+		}
 	}
 }
 

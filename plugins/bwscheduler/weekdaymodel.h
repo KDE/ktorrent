@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
  *   ivasic@gmail.com                                                      *
  *                                                                         *
@@ -18,45 +18,34 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTADDITEMDLG_H
-#define KTADDITEMDLG_H
+#ifndef KTWEEKDAYMODEL_H
+#define KTWEEKDAYMODEL_H
 
-#include <KDialog>
-#include "ui_additemdlg.h"
+#include <QAbstractListModel>
 
 namespace kt
 {
-	struct ScheduleItem;
-	class WeekDayModel;
-	class Schedule;
-	
-
 
 	/**
+		Model to display the days of a week in a list view. The weekdays are checkable.
 		@author
 	*/
-	class AddItemDlg : public KDialog, public Ui_AddItemDlg
+	class WeekDayModel : public QAbstractListModel
 	{
 		Q_OBJECT
-	public:	
-		AddItemDlg(Schedule* schedule,QWidget* parent);
-		virtual ~AddItemDlg();
+	public:
+		WeekDayModel(QObject* parent);
+		virtual ~WeekDayModel();
+	
+		virtual int rowCount(const QModelIndex & parent) const;
+		virtual QVariant data(const QModelIndex & index, int role) const;
+		virtual bool setData(const QModelIndex & index,const QVariant & value,int role);
+		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
 		
-		virtual void accept();
-		
-		QList<ScheduleItem*> getAddedItems() const {return added_items;}
-
-	private slots:
-		void fromChanged(const QTime & time);
-		void toChanged(const QTime & time);
-		void selectEntireWeek();
-		void selectWeekDays();
-		void selectWeekend();
-		
+		/// Get all the days which have been checked
+		QList<int> checkedDays() const;
 	private:
-		WeekDayModel* model;
-		Schedule* schedule;
-		QList<ScheduleItem*> added_items;
+		bool checked[7];
 	};
 
 }
