@@ -59,7 +59,7 @@ kde4_add_ui_files(ktorrent_SRC
 kde4_add_executable(ktorrent ${ktorrent_SRC})
 
 target_link_libraries(ktorrent ktideal ktcore ${KDE4_KDEUI_LIBS} ${KDE4_KNOTIFYCONFIG_LIBS})
-install(TARGETS ktorrent DESTINATION ${BIN_INSTALL_DIR})
+install(TARGETS ktorrent ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES ktorrent.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 install(FILES ktorrentplugin.desktop  DESTINATION  ${SERVICETYPES_INSTALL_DIR} )
 install(FILES ktorrentui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
