@@ -39,6 +39,7 @@
 #include <kio/job.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
+#include <kactioncollection.h>
 #include <QProgressBar>
 #include <util/log.h>
 #include <torrent/globals.h>
@@ -55,32 +56,6 @@ using namespace bt;
 
 namespace kt
 {
-	SearchBar::SearchBar(HTMLPart* html_part,SearchWidget* parent) : KToolBar(parent)
-	{
-		m_back = KStandardAction::back(html_part,SLOT(back()),this);
-		m_back->setEnabled(false);
-		addAction(m_back);
-		m_reload = KStandardAction::redisplay(html_part,SLOT(reload()),this);
-		m_reload->setText(i18n("Reload"));
-		addAction(m_reload);
-		m_search_text = new KLineEdit(this);
-		addWidget(m_search_text);
-		m_search = KStandardAction::find(parent,SLOT(searchPressed()),this);
-		m_search->setText(i18n("Search"));
-		addAction(m_search);
-		addWidget(new QLabel(i18n(" Engine:")));
-		m_search_engine = new KComboBox(this);
-		addWidget(m_search_engine);
-		
-		connect(m_search_text,SIGNAL(returnPressed()),parent,SLOT(searchPressed()));
-		
-		//m_back->setIcon(KStandardGuiItem::back(KStandardGuiItem::UseRTL).icon());
-		//m_reload->setIcon(KIcon("view-refresh"));
-		//m_back->setGuiItem(KStandardGuiItem::back());
-	}
-
-	SearchBar::~SearchBar()
-	{}
 	
 	SearchWidget::SearchWidget(SearchPlugin* sp) : html_part(0),sp(sp)
 	{
@@ -88,7 +63,19 @@ namespace kt
 		layout->setSpacing(0);
 		layout->setMargin(0);
 		html_part = new HTMLPart(this);
-		sbar = new SearchBar(html_part,this);
+		
+		KActionCollection* ac = sp->actionCollection();
+		sbar = new KToolBar(this);
+		sbar->addAction(ac->action("search_tab_back"));
+		sbar->addAction(ac->action("search_tab_reload"));
+		search_text = new KLineEdit(sbar);
+		sbar->addWidget(search_text);
+		sbar->addAction(ac->action("search_tab_search"));
+		sbar->addWidget(new QLabel(i18n(" Engine:")));
+		search_engine = new KComboBox(sbar);
+		sbar->addWidget(search_engine);
+		
+		connect(search_text,SIGNAL(returnPressed()),this,SLOT(search()));;
 
 		layout->addWidget(sbar);
 		layout->addWidget(html_part->view());
@@ -96,11 +83,16 @@ namespace kt
 		html_part->view()->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
 		right_click_menu = new KMenu(this);
-		back_action = right_click_menu->addAction(KIcon("go-previous"),i18n("Back"),html_part,SLOT(back()));
-		right_click_menu->addAction(KIcon("view-refresh"),i18n("Reload"),html_part,SLOT(reload()));
-		back_action->setEnabled(false);
+		open_url_action = right_click_menu->addAction(KIcon("tab-new"),i18n("Open in New Tab"),this,SLOT(openNewTab()));
+		open_url_action->setEnabled(false);
+		right_click_menu->addSeparator();
+		right_click_menu->addAction(ac->action("search_tab_back"));
+		right_click_menu->addAction(ac->action("search_tab_reload"));
+		right_click_menu->addSeparator();
+		right_click_menu->addAction(ac->action("search_tab_copy"));
+		
 
-		sbar->m_search_text->setClearButtonShown(true);
+		search_text->setClearButtonShown(true);
 
 		connect(html_part,SIGNAL(backAvailable(bool )),
 				this,SLOT(onBackAvailable(bool )));
@@ -133,19 +125,18 @@ namespace kt
 	
 	void SearchWidget::updateSearchEngines(const SearchEngineList & sl)
 	{
-		int ci = sbar->m_search_engine->currentIndex(); 
-		sbar->m_search_engine->clear();
+		int ci = search_engine->currentIndex(); 
+		search_engine->clear();
 		for (Uint32 i = 0;i < sl.getNumEngines();i++)
 		{
-			sbar->m_search_engine->addItem(sl.getEngineName(i));
+			search_engine->addItem(sl.getEngineName(i));
 		}
-		sbar->m_search_engine->setCurrentIndex(ci);
+		search_engine->setCurrentIndex(ci);
 	}
 	
 	void SearchWidget::onBackAvailable(bool available)
 	{
-		sbar->m_back->setEnabled(available);
-		back_action->setEnabled(available);
+		enableBack(available);
 	}
 	
 	void SearchWidget::onFrameAdded(KParts::Part* p)
@@ -174,21 +165,24 @@ namespace kt
 	
 	QString SearchWidget::getSearchBarText() const
 	{
-		return sbar->m_search_text->text();
+		return search_text->text();
 	}
 	
 	int SearchWidget::getSearchBarEngine() const
 	{
-		return sbar->m_search_engine->currentIndex();
+		return search_engine->currentIndex();
 	}
 	
 	void SearchWidget::restore(const KUrl & url,const QString & text,const QString & sb_text,int engine)
 	{
 		if (html_part)
+		{
 			html_part->openUrl(url);
-		search_text = text;
-		sbar->m_search_text->setText(sb_text);
-		sbar->m_search_engine->setCurrentIndex(engine);
+			html_part->addToHistory(url);
+		}
+	
+		search_text->setText(sb_text);
+		search_engine->setCurrentIndex(engine);
 	}
 	
 	void SearchWidget::search(const QString & text,int engine)
@@ -196,18 +190,16 @@ namespace kt
 		if (!html_part)
 			return;
 		
-		search_text = text;
+		if (search_text->text() != text)
+			search_text->setText(text);
 		
-		if (sbar->m_search_text->text() != text)
-			sbar->m_search_text->setText(text);
-		
-		if (sbar->m_search_engine->currentIndex() != engine)
-			sbar->m_search_engine->setCurrentIndex(engine);
+		if (search_engine->currentIndex() != engine)
+			search_engine->setCurrentIndex(engine);
 	
 		const SearchEngineList & sl = sp->getSearchEngineList();
 		
 		if (engine < 0 || (Uint32)engine >= sl.getNumEngines())
-			engine = sbar->m_search_engine->currentIndex();
+			engine = search_engine->currentIndex();
 		
 		QString s_url = sl.getSearchURL(engine).prettyUrl();
 		s_url.replace("FOOBAR", QUrl::toPercentEncoding(text), Qt::CaseSensitive);
@@ -217,11 +209,6 @@ namespace kt
 		//html_part->openURL(url);
  		html_part->openUrlRequest(url,KParts::OpenUrlArguments(),KParts::BrowserArguments());
 	}	
-	
-	void SearchWidget::searchPressed()
-	{
-		search(sbar->m_search_text->text(),sbar->m_search_engine->currentIndex());
-	}
 	
 	void SearchWidget::onUrlHover(const QString & url)
 	{
@@ -248,9 +235,17 @@ namespace kt
 		}
 	}
 	
-	void SearchWidget::showPopupMenu(const QString & /*url*/,const QPoint & p)
+	void SearchWidget::showPopupMenu(const QString & url,const QPoint & p)
 	{
+		open_url_action->setEnabled(!url.isEmpty());
 		right_click_menu->popup(p);
+		if (!url.isEmpty())
+		{
+			if (!url.startsWith("/"))
+				url_to_open = KUrl(url);
+			else 
+				url_to_open = KUrl(html_part->baseURL().prettyUrl() + url);
+		}
 	}
 	
 	KMenu* SearchWidget::rightClickMenu()
@@ -296,6 +291,37 @@ namespace kt
 			}
 			statusBarMsg(i18n("Search finished"));
 		}
+	}
+	
+	void SearchWidget::find()
+	{
+		html_part->findText();
+	}
+	
+	
+	void SearchWidget::search()
+	{
+		search(search_text->text(),search_engine->currentIndex());
+	}
+	
+	void SearchWidget::back()
+	{
+		html_part->back();
+	}
+	
+	void SearchWidget::reload()
+	{
+		html_part->reload();
+	}
+	
+	void SearchWidget::openNewTab()
+	{
+		openNewTab(url_to_open);
+	}
+	
+	bool SearchWidget::backAvailable() const
+	{
+		return html_part->backAvailable();
 	}
 }
 

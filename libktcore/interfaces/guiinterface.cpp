@@ -33,14 +33,9 @@ namespace kt
 
 
 	void GUIInterface::notifyViewListeners(bt::TorrentInterface* tc)
-	{
-		QList<ViewListener*>::iterator i = listeners.begin();
-		while (i != listeners.end())
-		{
-			ViewListener* vl = *i;
+	{	
+		foreach (ViewListener* vl,listeners)
 			vl->currentTorrentChanged(tc);
-			i++;
-		}
 	}
 	
 	void GUIInterface::addViewListener(ViewListener* vl)
@@ -51,5 +46,21 @@ namespace kt
 	void GUIInterface::removeViewListener(ViewListener* vl)
 	{
 		listeners.removeAll(vl);
+	}
+	
+	void GUIInterface::addCurrentTabPageListener(CurrentTabPageListener* ctpl)
+	{
+		ctp_listeners.append(ctpl);
+	}
+
+	void GUIInterface::removeCurrentTabPageListener(CurrentTabPageListener* ctpl)
+	{
+		ctp_listeners.removeAll(ctpl);
+	}
+	
+	void GUIInterface::notifyCurrentTabPageListeners(QWidget* page)
+	{
+		foreach (CurrentTabPageListener* ctpl,ctp_listeners)
+			ctpl->currentTabPageChanged(page);
 	}
 }

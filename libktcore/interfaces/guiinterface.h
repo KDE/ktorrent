@@ -92,6 +92,18 @@ namespace kt
 		/// THe close button was pressed for this tab, please remove it from the GUI
 		virtual void tabCloseRequest(kt::GUIInterface* gui,QWidget* tab) = 0;
 	};
+	
+	/**
+	 * Plugins wanting to know when the current tab changes, should implement this interface.
+	 */
+	class KTCORE_EXPORT CurrentTabPageListener
+	{
+	public:
+		virtual ~CurrentTabPageListener() {}
+		
+		/// The current tab page has changed
+		virtual void currentTabPageChanged(QWidget* page) = 0;
+	};
 
 	/**
 	 * Base class for the status bar
@@ -121,6 +133,7 @@ namespace kt
 	class KTCORE_EXPORT GUIInterface
 	{
 		QList<ViewListener*> listeners;
+		QList<CurrentTabPageListener*> ctp_listeners;
 	public:
 		GUIInterface();
 		virtual ~GUIInterface();
@@ -133,6 +146,12 @@ namespace kt
 
 		/// Remove a view listener
 		void removeViewListener(ViewListener* vl);
+		
+		/// Add a current tab page listener
+		void addCurrentTabPageListener(CurrentTabPageListener* ctpl);
+		
+		/// Remove a current tab page listener
+		void removeCurrentTabPageListener(CurrentTabPageListener* ctpl);
 		
 		/**
 		 * Add a new tab page to the GUI
@@ -232,7 +251,17 @@ namespace kt
 		 */
 		virtual void setTabText(QWidget* tab,const QString & text) = 0;
 		
-		virtual void setTabCurrent(QWidget* tab) = 0;
+		/**
+		 * Set the current tab page.
+		 * @param tab 
+		 */
+		virtual void setCurrentTab(QWidget* tab) = 0;
+		
+		/**
+		 * Get the current tab page
+		 * @return The current tab page
+		 */
+		virtual QWidget* getCurrentTab() = 0;
 
 	protected:
 		/**
@@ -240,6 +269,12 @@ namespace kt
 		 * @param tc Pointer to current TorrentInterface
 		 */
 		void notifyViewListeners(bt::TorrentInterface* tc);
+		
+		/**
+		 * Notify current tab page listeners that the current tab page has changed
+		 * @param page The page
+		 */
+		void notifyCurrentTabPageListeners(QWidget* page);
 	};
 
 }

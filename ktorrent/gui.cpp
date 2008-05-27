@@ -609,6 +609,7 @@ namespace kt
 		rightCornerButton()->setEnabled(ctl != 0 && ctl->closeAllowed(page));
 
 		notifyViewListeners(view_man->getCurrentTorrent());
+		notifyCurrentTabPageListeners(page);
 	}
 	
 	void GUI::speedLimits()
@@ -722,9 +723,14 @@ namespace kt
 		changeTabText(tab,text);
 	}
 	
-	void GUI::setTabCurrent(QWidget* tab)
+	void GUI::setCurrentTab(QWidget* tab)
 	{
 		changeCurrentTab(tab);
+	}
+	
+	QWidget* GUI::getCurrentTab()
+	{
+		return currentTabPage();
 	}
 }
 

@@ -43,15 +43,18 @@ namespace kt
 	public:
 		HTMLPart(QWidget *parent = 0);
 		virtual ~HTMLPart();
+		
+		bool backAvailable() const {return history.count() > 1;}
+		
 	
 	public slots:
 		void back();
 		void reload();
 		void copy();
 		void openUrlRequest(const KUrl &url, const KParts::OpenUrlArguments & arg, const KParts::BrowserArguments & barg);
+		void addToHistory(const KUrl & url);
 	
 	private slots:
-		void addToHistory(const KUrl & url);
 		void dataReceived(KIO::Job* job,const QByteArray & data);
 		void mimetype(KIO::Job* job,const QString & mt);
 		void jobDone(KJob* job);

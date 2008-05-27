@@ -92,6 +92,11 @@ namespace kt
 	{
 	}
 	
+	int SearchToolBar::currentSearchEngine() const
+	{
+		return m_search_engine->currentIndex();
+	}
+	
 	void SearchToolBar::saveSettings()
 	{
 		SearchPluginSettings::setSearchEngine(m_search_engine->currentIndex());

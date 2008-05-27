@@ -48,6 +48,9 @@ namespace kt
 		
 		/// Save settings like current search engine
 		void saveSettings();
+		
+		/// Get the index of the current search engine
+		int currentSearchEngine() const;
 
 	public slots:
 		/// Clear the search history

@@ -23,10 +23,10 @@
 #include <qwidget.h>
 #include <kurl.h>
 #include <ktoolbar.h>
+#include <klineedit.h>
 
 class QProgressBar;
 class KMenu;
-class KLineEdit;
 class KComboBox;
 
 namespace KParts
@@ -40,20 +40,6 @@ namespace kt
 	class SearchWidget;
 	class SearchPlugin;
 	class SearchEngineList;
-
-	class SearchBar : public KToolBar
-	{
-		Q_OBJECT
-	public:
-		SearchBar(HTMLPart* html_part,SearchWidget* parent);
-		virtual ~SearchBar();
-		
-		KComboBox* m_search_engine;
-		KLineEdit* m_search_text;
-		QAction* m_back;
-		QAction* m_reload;
-		QAction* m_search;
-	};
 	
 	
 	/**
@@ -70,22 +56,30 @@ namespace kt
 	
 		KMenu* rightClickMenu();
 		
-		
 		void updateSearchEngines(const SearchEngineList & sl);
 		
-		QString getSearchText() const {return search_text;}
+		QString getSearchText() const {return search_text->text();}
 		KUrl getCurrentUrl() const;
 		QString getSearchBarText() const;
 		int getSearchBarEngine() const;
+		
+		bool backAvailable() const;
+		
+	signals:
+		void enableBack(bool on);
+		void openNewTab(const KUrl & url);
 	
 	public slots:
 		void search(const QString & text,int engine = 0);
 		void copy();
+		void find();
+		void search();
+		void back();
+		void reload();
 		void onShutDown();
 		void restore(const KUrl & url,const QString & text,const QString & sb_text,int engine);
 	
 	private slots:
-		void searchPressed();
 		void onUrlHover(const QString & url);
 		void onFinished();
 		void onOpenTorrent(const KUrl & url);
@@ -96,15 +90,20 @@ namespace kt
 		void statusBarMsg(const QString & url);
 		void openTorrent(const KUrl & url);
 		void loadingProgress(int perc);
+		void openNewTab();
+		
 		
 	private:
 		HTMLPart* html_part;
-		SearchBar* sbar;
+		KToolBar* sbar;
 		KMenu* right_click_menu;
-		QAction* back_action;
 		SearchPlugin* sp;
 		QProgressBar* prog;
-		QString search_text;
+		
+		KComboBox* search_engine;
+		KLineEdit* search_text;
+		QAction* open_url_action;
+		KUrl url_to_open;
 	};
 
 }

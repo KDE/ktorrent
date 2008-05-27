@@ -384,7 +384,7 @@ namespace kt
 			{
 			if (filterDetailsList.at(i)->getFilter() == (Filter*)idx.internalPointer())
 				{
-				gui->setTabCurrent(filterDetailsList.at(i));
+				gui->setCurrentTab(filterDetailsList.at(i));
 				return;
 				}
 			}

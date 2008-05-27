@@ -22,6 +22,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <kiconloader.h>
+#include <kactioncollection.h>
 #include <kstdaction.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
@@ -48,6 +49,7 @@ namespace kt
 		Q_UNUSED(args);
 		pref = 0;
 		toolbar = 0;
+		setupActions();
 		setXMLFile("ktsearchpluginui.rc");
 	}
 
@@ -58,6 +60,7 @@ namespace kt
 
 	void SearchPlugin::load()
 	{
+		getGUI()->addCurrentTabPageListener(this);
 		engines.load(kt::DataDir() + "search_engines");
 		toolbar = new SearchToolBar(this);
 		
@@ -75,6 +78,7 @@ namespace kt
 
 	void SearchPlugin::unload()
 	{
+		getGUI()->removeCurrentTabPageListener(this);
 		saveCurrentSearches();
 		toolbar->saveSettings();
 		toolbar->deleteLater();
@@ -118,9 +122,10 @@ namespace kt
 		SearchWidget* search = new SearchWidget(this);
 		getGUI()->addTabPage(search,"edit-find",text,this);
 		
-		KAction* copy_act = KStandardAction::copy(search,SLOT(copy()),this);
-		search->rightClickMenu()->addAction(copy_act);
+		connect(search,SIGNAL(enableBack(bool)),back_action,SLOT(setEnabled(bool)));
+		connect(search,SIGNAL(openNewTab(const KUrl&)),this,SLOT(openNewTab(const KUrl&)));
 		searches.append(search);
+		back_action->setEnabled(false);
 		
 		search->updateSearchEngines(engines);
 		search->search(text,engine);
@@ -208,12 +213,130 @@ namespace kt
 				SearchWidget* search = new SearchWidget(this);
 				getGUI()->addTabPage(search,"edit-find",text,this);
 		
-				KAction* copy_act = KStandardAction::copy(search,SLOT(copy()),this);
-				search->rightClickMenu()->addAction(copy_act);
+				connect(search,SIGNAL(enableBack(bool)),back_action,SLOT(setEnabled(bool)));
+				connect(search,SIGNAL(openNewTab(const KUrl&)),this,SLOT(openNewTab(const KUrl&)));
+				
 				searches.append(search);
 		
 				search->updateSearchEngines(engines);
 				search->restore(url,text,sbtext,engine);
+				back_action->setEnabled(false);
+			}
+		}
+	}
+	
+	void SearchPlugin::setupActions()
+	{
+		KActionCollection* ac = actionCollection();
+		back_action = KStandardAction::back(this,SLOT(back()),this);
+		ac->addAction("search_tab_back",back_action);
+		
+		reload_action = KStandardAction::redisplay(this,SLOT(reload()),this);
+		ac->addAction("search_tab_reload",reload_action);
+		
+		search_action = new KAction(KIcon("edit-find"),i18n("Search"),this);
+		connect(search_action,SIGNAL(triggered()),this,SLOT(search()));
+		ac->addAction("search_tab_search",search_action);
+		
+		find_action = KStandardAction::find(this,SLOT(find()),this);
+		ac->addAction("search_tab_find",find_action);
+		
+		copy_action = KStandardAction::copy(this,SLOT(copy()),this);
+		ac->addAction("search_tab_copy",copy_action);
+	}
+	
+	void SearchPlugin::find()
+	{
+		QWidget* w = getGUI()->getCurrentTab();
+		foreach (SearchWidget* s,searches)
+		{
+			if (w == s)
+			{
+				s->find();
+				break;
+			}
+		}
+	}
+	
+	void SearchPlugin::back()
+	{
+		QWidget* w = getGUI()->getCurrentTab();
+		foreach (SearchWidget* s,searches)
+		{
+			if (w == s)
+			{
+				s->back();
+				break;
+			}
+		}
+	}
+	
+	void SearchPlugin::reload()
+	{
+		QWidget* w = getGUI()->getCurrentTab();
+		foreach (SearchWidget* s,searches)
+		{
+			if (w == s)
+			{
+				s->reload();
+				break;
+			}
+		}
+	}
+	
+	void SearchPlugin::search()
+	{
+		QWidget* w = getGUI()->getCurrentTab();
+		foreach (SearchWidget* s,searches)
+		{
+			if (w == s)
+			{
+				s->search();
+				break;
+			}
+		}
+	}
+	
+	void SearchPlugin::copy()
+	{
+		QWidget* w = getGUI()->getCurrentTab();
+		foreach (SearchWidget* s,searches)
+		{
+			if (w == s)
+			{
+				s->copy();
+				break;
+			}
+		}
+	}
+	
+	void SearchPlugin::openNewTab(const KUrl & url)
+	{
+		SearchWidget* search = new SearchWidget(this);
+		QString text = url.host();
+		getGUI()->addTabPage(search,"edit-find",text,this);
+		
+		connect(search,SIGNAL(enableBack(bool)),back_action,SLOT(setEnabled(bool)));
+		connect(search,SIGNAL(openNewTab(const KUrl&)),this,SLOT(openNewTab(const KUrl&)));
+				
+		searches.append(search);
+		
+		search->updateSearchEngines(engines);
+		search->restore(url,text,QString(),toolbar->currentSearchEngine());
+		back_action->setEnabled(false);
+		getGUI()->setCurrentTab(search);
+	}
+	
+	void SearchPlugin::currentTabPageChanged(QWidget* page)
+	{
+		back_action->setEnabled(false);
+		QWidget* w = getGUI()->getCurrentTab();
+		foreach (SearchWidget* s,searches)
+		{
+			if (s == page)
+			{
+				back_action->setEnabled(s->backAvailable());
+				break;
 			}
 		}
 	}

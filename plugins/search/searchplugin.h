@@ -34,7 +34,7 @@ namespace kt
 	/**
 	@author Joris Guisson
 	*/
-	class SearchPlugin : public Plugin, public kt::CloseTabListener
+	class SearchPlugin : public Plugin, public kt::CloseTabListener,public kt::CurrentTabPageListener
 	{
 		Q_OBJECT
 	public:
@@ -44,6 +44,7 @@ namespace kt
 		virtual void load();
 		virtual void unload();
 		virtual bool versionCheck(const QString& version) const;
+		virtual void currentTabPageChanged(QWidget* page);
 				
 		const SearchEngineList & getSearchEngineList() const {return engines;}
 	private slots:
@@ -54,12 +55,26 @@ namespace kt
 		virtual void tabCloseRequest(kt::GUIInterface* gui,QWidget* tab);
 		void saveCurrentSearches();
 		void loadCurrentSearches();
+		void setupActions();
+		
+	private slots:
+		void find();
+		void back();
+		void reload();
+		void search();
+		void copy();
+		void openNewTab(const KUrl & url);
 		
 	private:
 		SearchPrefPage* pref;
 		SearchToolBar* toolbar;
 		SearchEngineList engines;
 		QList<SearchWidget*> searches;
+		KAction* find_action;
+		KAction* back_action;
+		KAction* reload_action;
+		KAction* search_action;
+		KAction* copy_action;
 	};
 
 }
