@@ -32,6 +32,7 @@ UPnPTestWidget::UPnPTestWidget(QWidget* parent) : QWidget(parent)
 	connect(m_find_routers,SIGNAL(clicked()),this,SLOT(findRouters()));
 	connect(m_forward,SIGNAL(clicked()),this,SLOT(doForward()));
 	connect(m_undo_forward,SIGNAL(clicked()),this,SLOT(undoForward()));
+	connect(m_verbose,SIGNAL(toggled(bool)),this,SLOT(verboseModeChecked(bool)));
 	mcast_socket = 0;
 	router = 0;
 
@@ -72,7 +73,7 @@ void UPnPTestWidget::findRouters()
 	Out(SYS_GEN|LOG_DEBUG) << "Searching for routers ..." << endl;
 	if (!mcast_socket)
 	{
-		mcast_socket = new UPnPMCastSocket();
+		mcast_socket = new UPnPMCastSocket(m_verbose->isChecked());
 		connect(mcast_socket,SIGNAL(discovered(kt::UPnPRouter*)),this,SLOT(discovered(kt::UPnPRouter*)));
 	}
 
@@ -93,6 +94,12 @@ void UPnPTestWidget::discovered(kt::UPnPRouter* r)
 void UPnPTestWidget::message(const QString & line, unsigned int arg)
 {
 	m_text_output->append(line);
+}
+
+void UPnPTestWidget::verboseModeChecked(bool on)
+{
+	if (mcast_socket)
+		mcast_socket->setVerbose(on);
 }
 
 #include "upnptestwidget.moc"

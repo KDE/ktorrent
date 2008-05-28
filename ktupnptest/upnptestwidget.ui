@@ -5,14 +5,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>526</width>
-    <height>351</height>
+    <width>684</width>
+    <height>418</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>UPnP Test Application</string>
   </property>
-  <layout class="QVBoxLayout" >
+  <layout class="QVBoxLayout" name="verticalLayout" >
    <item>
     <layout class="QHBoxLayout" >
      <item>
@@ -55,7 +55,7 @@
     <widget class="QTextBrowser" name="m_text_output" />
    </item>
    <item>
-    <layout class="QHBoxLayout" >
+    <layout class="QHBoxLayout" name="horizontalLayout" >
      <item>
       <layout class="QHBoxLayout" >
        <item>
@@ -106,6 +106,19 @@
       </layout>
      </item>
      <item>
+      <spacer name="horizontalSpacer" >
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0" >
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QPushButton" name="m_forward" >
        <property name="text" >
         <string>Forward</string>
@@ -119,9 +132,19 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QCheckBox" name="m_verbose" >
+       <property name="text" >
+        <string>Verbose mode</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
   </layout>
+  <zorder>m_text_output</zorder>
+  <zorder>horizontalSpacer</zorder>
+  <zorder>label_2</zorder>
  </widget>
  <resources/>
  <connections/>

@@ -45,6 +45,8 @@ private slots:
 	void undoForward();
 	void findRouters();
 	void discovered(kt::UPnPRouter* r);
+	void verboseModeChecked(bool on);
+
 private:
 	kt::UPnPMCastSocket* mcast_socket;
 	kt::UPnPRouter* router;

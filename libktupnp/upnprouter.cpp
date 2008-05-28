@@ -164,6 +164,7 @@ namespace kt
 	void UPnPRouter::downloadXMLFile()
 	{
 		// downlaod XML description into a temporary file in /tmp
+		Out(SYS_PNP|LOG_DEBUG) << "Downloading XML file " << location << endl;
 		KIO::Job* job = KIO::file_copy(location,tmp_file,-1, KIO::Overwrite | KIO::HideProgressInfo);
 		connect(job,SIGNAL(result(KJob *)),this,SLOT(downloadFinished( KJob* )));
 	}
@@ -249,6 +250,7 @@ namespace kt
 
 	void UPnPRouter::forward(const net::Port & port)
 	{
+		bool found = false;
 		Out(SYS_PNP|LOG_NOTICE) << "Forwarding port " << port.number << " (" << (port.proto == UDP ? "UDP" : "TCP") << ")" << endl;
 		// first find the right service
 		QList<UPnPService>::iterator i = services.begin();
@@ -259,10 +261,15 @@ namespace kt
 				s.servicetype.contains("WANPPPConnection"))
 			{
 				forward(&s,port);
+				found = true;
 			}
 			i++;
 		}
 		
+		if (!found)
+		{
+			Out(SYS_PNP|LOG_IMPORTANT) << "Forwarding failed, device does not have a WANIPConnection or WANPPPConnection !" << endl;
+		}
 	}
 	
 	void UPnPRouter::undoForward(UPnPService* srv,const net::Port & port,bt::WaitJob* waitjob)

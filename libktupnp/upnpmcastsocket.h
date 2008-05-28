@@ -56,6 +56,9 @@ namespace kt
 		
 		/// Load all routers from a file
 		void loadRouters(const QString & file);
+
+		/// Set verbose mode
+		void setVerbose(bool v) {verbose = v;}
 		
 	public slots:
 		/**
