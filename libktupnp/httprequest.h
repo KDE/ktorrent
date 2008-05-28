@@ -21,11 +21,10 @@
 #define KTHTTPREQUEST_H
 
 #include <kurl.h>
-#include <k3streamsocket.h>
+#include <QTcpSocket>
 #include <interfaces/exitoperation.h>
 #include <util/constants.h>
 
-using KNetwork::KResolverEntry;
 
 namespace kt
 {
@@ -82,14 +81,16 @@ namespace kt
 		
 	private slots:
 		void onReadyRead();
-		void onError(int);
+		void onError(QAbstractSocket::SocketError err);
 		void onTimeout();
-		void onConnect(const KNetwork::KResolverEntry&);
+		void onConnect();
 		
 	private:
-		KNetwork::KStreamSocket* sock;
+		QTcpSocket* sock;
 		QString hdr,payload;
 		bool verbose;
+		QString host;
+		bt::Uint16 port;
 	};
 
 }

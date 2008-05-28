@@ -17,7 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include <qstringlist.h>
+#include <QHostAddress>
+#include <QStringList>
 #include <util/log.h>
 #include "httprequest.h"
 
@@ -28,18 +29,12 @@ namespace kt
 {
 
 	HTTPRequest::HTTPRequest(const QString & hdr,const QString & payload,const QString & host,Uint16 port,bool verbose) 
-		: hdr(hdr),payload(payload),verbose(verbose)
+		: hdr(hdr),payload(payload),verbose(verbose),host(host),port(port)
 	{
-		sock = new KNetwork::KStreamSocket(host,QString::number(port),this);
-		sock->enableRead(true);
-		sock->enableWrite(true);
-		sock->setTimeout(30000);
-		sock->setBlocking(false);
+		sock = new QTcpSocket(this);
 		connect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-		connect(sock,SIGNAL(gotError(int)),this,SLOT(onError(int )));
-		connect(sock,SIGNAL(timedOut()),this,SLOT(onTimeout()));
-		connect(sock,SIGNAL(connected(const KNetwork::KResolverEntry&)),
-				this, SLOT(onConnect( const KNetwork::KResolverEntry& )));
+		connect(sock,SIGNAL(error(QAbstractSocket::SocketError)),this,SLOT(onError(QAbstractSocket::SocketError )));
+		connect(sock,SIGNAL(connected()),this, SLOT(onConnect()));
 	}
 	
 	
@@ -51,12 +46,12 @@ namespace kt
 	
 	void HTTPRequest::start()
 	{
-		sock->connect();
+		sock->connectToHost(host,port);
 	}
 	
-	void HTTPRequest::onConnect(const KResolverEntry&)
+	void HTTPRequest::onConnect()
 	{
-		payload = payload.replace("$LOCAL_IP",sock->localAddress().nodeName());
+		payload = payload.replace("$LOCAL_IP",sock->localAddress().toString());
 		hdr = hdr.replace("$CONTENT_LENGTH",QString::number(payload.length()));
 			
 		QString req = hdr + payload;
@@ -70,8 +65,7 @@ namespace kt
 			Out(SYS_PNP|LOG_DEBUG) << payload << endl;
 		}
 
-		QByteArray r = req.toAscii();
-		sock->write(r.data(),r.length());
+		sock->write(req.toAscii());
 	}
 	
 	void HTTPRequest::onReadyRead()
@@ -107,7 +101,7 @@ namespace kt
 		operationFinished(this);
 	}
 	
-	void HTTPRequest::onError(int)
+	void HTTPRequest::onError(QAbstractSocket::SocketError err)
 	{
 		Out(SYS_PNP|LOG_DEBUG) << "HTTPRequest error : " << sock->errorString() << endl;
 		error(this,false);
