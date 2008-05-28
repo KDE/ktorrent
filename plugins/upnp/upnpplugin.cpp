@@ -26,7 +26,7 @@
 #include <util/fileops.h>
 #include "upnpplugin.h"
 #include "upnpmcastsocket.h"
-#include "upnpprefpage.h"
+#include "upnpwidget.h"
 
 
 K_EXPORT_COMPONENT_FACTORY(ktupnpplugin,KGenericFactory<kt::UPnPPlugin>("ktupnpplugin"))
@@ -37,22 +37,20 @@ namespace kt
 	UPnPPlugin::UPnPPlugin(QObject* parent, const QStringList& /*args*/) : Plugin(parent)
 	{
 		sock = 0;
-		pref = 0;
+		upnp_tab = 0;
 	}
 
 
 	UPnPPlugin::~UPnPPlugin()
 	{
-		delete sock;
-		delete pref;
 	}
 
 
 	void UPnPPlugin::load()
 	{
 		sock = new UPnPMCastSocket();
-		pref = new UPnPPrefPage(sock,0);
-		this->getGUI()->addPrefPage(pref);
+		upnp_tab = new UPnPWidget(sock,0);
+		getGUI()->addToolWidget(upnp_tab,"kt-upnp",i18n("UPnP"),GUIInterface::DOCK_BOTTOM);
 		// load the routers list
 		QString routers_file = KGlobal::dirs()->saveLocation("data","ktorrent") + "routers";
 		if (bt::Exists(routers_file))
@@ -64,16 +62,17 @@ namespace kt
 	{
 		QString routers_file = KGlobal::dirs()->saveLocation("data","ktorrent") + "routers";
 		sock->saveRouters(routers_file);
-		this->getGUI()->removePrefPage(pref);
+		getGUI()->removeToolWidget(upnp_tab);
 		sock->close();
-		pref = 0;
+		delete upnp_tab;
+		upnp_tab = 0;
 		delete sock;
 		sock = 0;
 	}
 	
 	void UPnPPlugin::shutdown(bt::WaitJob* job)
 	{
-		pref->shutdown(job);
+		upnp_tab->shutdown(job);
 	}
 	
 	bool UPnPPlugin::versionCheck(const QString & version) const

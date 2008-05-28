@@ -186,6 +186,8 @@ namespace kt
 		
 		QList<Forwarding>::iterator beginPortMappings() {return fwds.begin();}
 		QList<Forwarding>::iterator endPortMappings() {return fwds.end();}
+		QList<Forwarding>::const_iterator beginPortMappings() const {return fwds.begin();}
+		QList<Forwarding>::const_iterator endPortMappings() const {return fwds.end();}
 		
 	private slots:
 		void onReplyOK(HTTPRequest* r,const QString &);

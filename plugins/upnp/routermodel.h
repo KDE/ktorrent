@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Joris Guisson                              *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,63 +18,48 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTUPNPPREFPAGE_H
-#define KTUPNPPREFPAGE_H
+#ifndef KTROUTERMODEL_H
+#define KTROUTERMODEL_H
 
+#include <QAbstractTableModel>
 
-#include <qmap.h>
-#include <interfaces/prefpageinterface.h>
-#include "ui_upnpwidget.h"
-#include "upnprouter.h"
-
-namespace bt
+namespace kt 
 {
-	class WaitJob;
-}
-
-namespace kt
-{
-	class UPnPMCastSocket;
-
+	class UPnPRouter;
+	
 	/**
-	 * @author Joris Guisson
-	 * 
-	 * Page in the preference dialog for the UPnP plugin.
-	 */
-	class UPnPPrefPage : public PrefPageInterface,public Ui_UPnPWidget,public net::PortListener
+		Model for all the detected UPnP routers.
+	*/
+	class RouterModel : public QAbstractTableModel
 	{
 		Q_OBJECT
-
-		UPnPMCastSocket* sock;
 	public:
-		UPnPPrefPage(UPnPMCastSocket* sock,QWidget* parent);
-		virtual ~UPnPPrefPage();
-
-		virtual void loadSettings();
-		virtual void loadDefaults();
-		void shutdown(bt::WaitJob* job);
-
-	public slots:
-		/**
-		 * Add a device to the list. 
-		 * @param r The device
-		 */
-		void addDevice(kt::UPnPRouter* r);
-	
-	protected slots:
-		void onForwardBtnClicked();
-		void onUndoForwardBtnClicked();
-		void onRescanClicked();
-		void updatePortMappings();
+		RouterModel(QObject* parent);	
+		virtual ~RouterModel();
+		
+		/// Add a router tot the model
+		void addRouter(UPnPRouter* r);
+		
+		/// Get a router given an index
+		UPnPRouter* routerForIndex(const QModelIndex & index);
+		
+		virtual int rowCount(const QModelIndex & parent) const;
+		virtual int columnCount(const QModelIndex & parent) const;
+		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
+		virtual QVariant data(const QModelIndex & index, int role) const;
+		virtual bool removeRows(int row,int count,const QModelIndex & parent);
+		virtual bool insertRows(int row,int count,const QModelIndex & parent);
+		
+		void emitReset();
 		
 	private:
-		virtual void portAdded(const net::Port & port);
-		virtual void portRemoved(const net::Port & port);
+		QString ports(const UPnPRouter* r) const;
+		QString connections(const UPnPRouter* r) const;
 		
 	private:
-		QMap<QTreeWidgetItem*,UPnPRouter*> itemmap;
-		UPnPRouter* def_router;
+		QList<UPnPRouter*> routers;
 	};
+
 }
 
 #endif

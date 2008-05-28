@@ -25,10 +25,11 @@
 #include <torrent/globals.h>
 #include <util/log.h>
 #include <util/error.h>
-#include "upnpprefpage.h"
+#include "upnpwidget.h"
 #include "upnprouter.h"
 #include "upnpmcastsocket.h"
 #include "upnppluginsettings.h"
+#include "routermodel.h"
 
 
 using namespace bt;
@@ -36,8 +37,9 @@ using namespace bt;
 namespace kt
 {
 
-	UPnPPrefPage::UPnPPrefPage(UPnPMCastSocket* sock,QWidget* parent)
-		: PrefPageInterface(UPnPPluginSettings::self(),i18n("UPnP"), "kt-upnp",parent),sock(sock)
+
+	UPnPWidget::UPnPWidget(UPnPMCastSocket* sock,QWidget* parent)
+		: QWidget(parent),sock(sock)
 	{
 		setupUi(this);
 		m_devices->setRootIsDecorated(false);
@@ -49,6 +51,9 @@ namespace kt
 
 		bt::Globals::instance().getPortList().setListener(this);
 
+		model = new RouterModel(this);
+		m_devices->setModel(model);
+		
 		// load the state of the devices treewidget
 		KConfigGroup g = KGlobal::config()->group("UPnPDevicesList");
 		QByteArray s = QByteArray::fromBase64(g.readEntry("state",QByteArray()));
@@ -57,19 +62,12 @@ namespace kt
 	}
 
 
-	UPnPPrefPage::~UPnPPrefPage()
+	UPnPWidget::~UPnPWidget()
 	{
 		bt::Globals::instance().getPortList().setListener(0);
 	}
 
-	void UPnPPrefPage::loadSettings()
-	{
-	}
-
-	void UPnPPrefPage::loadDefaults()
-	{}
-
-	void UPnPPrefPage::shutdown(bt::WaitJob* job)
+	void UPnPWidget::shutdown(bt::WaitJob* job)
 	{	
 		// save the state of the devices treewidget
 		KConfigGroup g = KGlobal::config()->group("UPnPDevicesList");
@@ -91,12 +89,10 @@ namespace kt
 		}
 	}
 
-	void UPnPPrefPage::addDevice(UPnPRouter* r)
+	void UPnPWidget::addDevice(UPnPRouter* r)
 	{
 		connect(r,SIGNAL(updateGUI()),this,SLOT(updatePortMappings()));
-		QTreeWidgetItem* item = new QTreeWidgetItem(m_devices);
-		item->setText(0,r->getDescription().friendlyName);
-		itemmap[item] = r;
+		model->addRouter(r);
 
 		// if we have discovered the default device or there is none
 		// forward it's ports
@@ -126,13 +122,9 @@ namespace kt
 		}
 	}
 	
-	void UPnPPrefPage::onForwardBtnClicked()
+	void UPnPWidget::onForwardBtnClicked()
 	{
-		QTreeWidgetItem* item = m_devices->currentItem();;
-		if (!item)
-			return;
-		
-		UPnPRouter* r = itemmap[item];
+		UPnPRouter* r = model->routerForIndex(m_devices->selectionModel()->currentIndex());
 		if (!r)
 			return;
 		
@@ -161,16 +153,12 @@ namespace kt
 		}
 	}
 
-	void UPnPPrefPage::onUndoForwardBtnClicked()
+	void UPnPWidget::onUndoForwardBtnClicked()
 	{
-		QTreeWidgetItem* item = m_devices->currentItem();;
-		if (!item)
-			return;
-		
-		UPnPRouter* r = itemmap[item];
+		UPnPRouter* r = model->routerForIndex(m_devices->selectionModel()->currentIndex());
 		if (!r)
 			return;
-
+		
 		try
 		{
 			net::PortList & pl = bt::Globals::instance().getPortList();
@@ -195,48 +183,18 @@ namespace kt
 		}
 	}
 
-	void UPnPPrefPage::onRescanClicked()
+	void UPnPWidget::onRescanClicked()
 	{
 		sock->discover();
 	}
 
-	void UPnPPrefPage::updatePortMappings()
+	void UPnPWidget::updatePortMappings()
 	{
 		// update all port mappings
-		QMap<QTreeWidgetItem*,UPnPRouter*>::iterator i = itemmap.begin();
-		while (i != itemmap.end())
-		{
-			UPnPRouter* r = i.value();
-			QTreeWidgetItem* item = i.key();
-			QString msg,services;
-			QList<UPnPRouter::Forwarding>::iterator j = r->beginPortMappings();
-			while (j != r->endPortMappings())
-			{
-				UPnPRouter::Forwarding & f = *j;
-				if (!f.pending_req)
-				{
-					msg += QString::number(f.port.number) + " (";
-					QString prot = (f.port.proto == net::UDP ? "UDP" : "TCP");
-					msg +=  prot + ")";
-					if (f.service->servicetype.contains("WANPPPConnection"))
-						services += "PPP";
-					else
-						services += "IP";
-				}
-				j++;
-				if (j != r->endPortMappings())
-				{
-					msg += "\n";
-					services += "\n";
-				}
-			}
-			item->setText(1,msg);
-			item->setText(2,services);
-			i++;
-		}
+		model->emitReset();
 	}
 		
-	void UPnPPrefPage::portAdded(const net::Port & port)
+	void UPnPWidget::portAdded(const net::Port & port)
 	{
 		try
 		{
@@ -249,7 +207,7 @@ namespace kt
 		}
 	}
 
-	void UPnPPrefPage::portRemoved(const net::Port & port)
+	void UPnPWidget::portRemoved(const net::Port & port)
 	{
 		try
 		{
@@ -264,4 +222,4 @@ namespace kt
 
 }
 
-#include "upnpprefpage.moc"
+#include "upnpwidget.moc"
