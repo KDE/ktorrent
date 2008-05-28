@@ -59,6 +59,11 @@ namespace kt
 		QByteArray s = QByteArray::fromBase64(g.readEntry("state",QByteArray()));
 		if (!s.isNull())
 			m_devices->header()->restoreState(s);
+		
+		m_forward->setEnabled(false);
+		m_undo_forward->setEnabled(false);
+		connect(m_devices->selectionModel(),SIGNAL(currentChanged(const QModelIndex & , const QModelIndex & )),
+				this,SLOT(onCurrentDeviceChanged(const QModelIndex&, const QModelIndex&)));
 	}
 
 
@@ -191,7 +196,8 @@ namespace kt
 	void UPnPWidget::updatePortMappings()
 	{
 		// update all port mappings
-		model->emitReset();
+		model->update();
+		onCurrentDeviceChanged(m_devices->selectionModel()->currentIndex(),QModelIndex());
 	}
 		
 	void UPnPWidget::portAdded(const net::Port & port)
@@ -218,6 +224,14 @@ namespace kt
 		{
 			Out(SYS_PNP|LOG_DEBUG) << "Error : " << e.toString() << endl;
 		}
+	}
+	
+	void UPnPWidget::onCurrentDeviceChanged(const QModelIndex & current,const QModelIndex & previous)
+	{
+		Q_UNUSED(previous);
+		UPnPRouter* r = model->routerForIndex(current);
+		m_forward->setEnabled(r != 0);
+		m_undo_forward->setEnabled(r != 0 && r->getNumForwardedPorts() > 0);
 	}
 
 }

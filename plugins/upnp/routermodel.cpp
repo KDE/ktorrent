@@ -173,8 +173,8 @@ namespace kt
 		return ret;
 	}
 
-	void RouterModel::emitReset()
+	void RouterModel::update()
 	{
-		reset();
+		emit dataChanged(index(0,0),index(rowCount(QModelIndex()) - 1,columnCount(QModelIndex()) - 1));
 	}
 }

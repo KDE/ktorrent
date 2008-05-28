@@ -64,6 +64,7 @@ namespace kt
 		void onUndoForwardBtnClicked();
 		void onRescanClicked();
 		void updatePortMappings();
+		void onCurrentDeviceChanged(const QModelIndex & current,const QModelIndex & previous);
 		
 	private:
 		virtual void portAdded(const net::Port & port);

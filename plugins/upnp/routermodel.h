@@ -50,7 +50,7 @@ namespace kt
 		virtual bool removeRows(int row,int count,const QModelIndex & parent);
 		virtual bool insertRows(int row,int count,const QModelIndex & parent);
 		
-		void emitReset();
+		void update();
 		
 	private:
 		QString ports(const UPnPRouter* r) const;
