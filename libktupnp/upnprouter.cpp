@@ -389,6 +389,9 @@ namespace kt
 		if (verbose)
 			Out(SYS_PNP|LOG_NOTICE) << "UPnPRouter : OK" << endl;
 		
+		if (!error.isEmpty())
+			error = QString();
+		
 		httpRequestDone(r,false);
 	}
 	
