@@ -119,6 +119,7 @@ namespace kt
 		QList<UPnPService> services;
 		QList<Forwarding> fwds;
 		QList<HTTPRequest*> active_reqs;
+		QString error;
 	public:
 		/**
 		 * Construct a router.
@@ -191,10 +192,13 @@ namespace kt
 		
 		bt::Uint32 getNumForwardedPorts() const {return fwds.count();}
 		
+		/// Get the current error (null string if there is none)
+		QString getError() const {return error;}
+		
 	private slots:
 		void onReplyOK(HTTPRequest* r,const QString &);
 		void onReplyError(HTTPRequest* r,const QString &);
-		void onError(HTTPRequest* r,bool);
+		void onError(HTTPRequest* r,const QString & msg);
 		void downloadFinished(KJob* j);
 		
 		

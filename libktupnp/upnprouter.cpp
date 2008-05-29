@@ -138,7 +138,8 @@ namespace kt
 	{
 		if (j->error())
 		{
-			Out(SYS_PNP|LOG_IMPORTANT) << "Failed to download " << location << " : " << j->errorString() << endl;
+			error = i18n("Failed to download %1 : %2",location.prettyUrl(),j->errorString());
+			Out(SYS_PNP|LOG_IMPORTANT) << error << endl;
 			return;
 		}
 		
@@ -148,7 +149,8 @@ namespace kt
 		bool ret = desc_parse.parse(target,this);
 		if (!ret)
 		{
-			Out(SYS_PNP|LOG_IMPORTANT) << "Error parsing router description !" << endl;
+			error = i18n("Error parsing router description !");
+			Out(SYS_PNP|LOG_IMPORTANT) << error << endl;
 			QString dest = KGlobal::dirs()->saveLocation("data","ktorrent") + "upnp_failure";
 			KIO::file_copy(target,dest,-1, KIO::Overwrite | KIO::HideProgressInfo);
 		}
@@ -163,6 +165,7 @@ namespace kt
 	
 	void UPnPRouter::downloadXMLFile()
 	{
+		error = QString();
 		// downlaod XML description into a temporary file in /tmp
 		Out(SYS_PNP|LOG_DEBUG) << "Downloading XML file " << location << endl;
 		KIO::Job* job = KIO::file_copy(location,tmp_file,-1, KIO::Overwrite | KIO::HideProgressInfo);
@@ -250,6 +253,12 @@ namespace kt
 
 	void UPnPRouter::forward(const net::Port & port)
 	{
+		if (!error.isEmpty())
+		{
+			error = QString();
+			updateGUI(); // Make sure GUI is updated when we were in error state
+		}
+		
 		bool found = false;
 		Out(SYS_PNP|LOG_NOTICE) << "Forwarding port " << port.number << " (" << (port.proto == UDP ? "UDP" : "TCP") << ")" << endl;
 		// first find the right service
@@ -268,7 +277,9 @@ namespace kt
 		
 		if (!found)
 		{
-			Out(SYS_PNP|LOG_IMPORTANT) << "Forwarding failed, device does not have a WANIPConnection or WANPPPConnection !" << endl;
+			error = i18n("Forwarding failed: \nDevice does not have a WANIPConnection or WANPPPConnection !");
+			Out(SYS_PNP|LOG_IMPORTANT) << error << endl;
+			updateGUI();
 		}
 	}
 	
@@ -344,8 +355,8 @@ namespace kt
 				this,SLOT(onReplyError(HTTPRequest* ,const QString& )));
 		connect(r,SIGNAL(replyOK(HTTPRequest* ,const QString& )),
 				this,SLOT(onReplyOK(HTTPRequest* ,const QString& )));
-		connect(r,SIGNAL(error(HTTPRequest*, bool )),
-				this,SLOT(onError(HTTPRequest*, bool )));
+		connect(r,SIGNAL(error(HTTPRequest*, const QString & )),
+				this,SLOT(onError(HTTPRequest*, const QString & )));
 		r->start();
 		if (!at_exit)
 			active_reqs.append(r);
@@ -390,9 +401,14 @@ namespace kt
 		
 	}
 	
-	void UPnPRouter::onError(HTTPRequest* r,bool)
+	void UPnPRouter::onError(HTTPRequest* r,const QString & err)
 	{
 		httpRequestDone(r,true);
+		if (fwds.count() == 0)
+		{
+			error = err;
+			updateGUI();
+		}
 	}
 	
 #if 0

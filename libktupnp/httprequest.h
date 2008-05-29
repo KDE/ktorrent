@@ -73,11 +73,11 @@ namespace kt
 		void replyError(HTTPRequest* r,const QString & data);
 		
 		/**
-		 * No reply was sent and an error or timeout occurred.
+		 * No reply was sent or an error occurred
 		 * @param r The sender of the request
-		 * @param timeout Whether or not a timeout occurred
+		 * @param msg The error message
 		 */
-		void error(HTTPRequest* r,bool timeout);
+		void error(HTTPRequest* r,const QString & msg);
 		
 	private slots:
 		void onReadyRead();
@@ -91,6 +91,7 @@ namespace kt
 		bool verbose;
 		QString host;
 		bt::Uint16 port;
+		bool finished;
 	};
 
 }

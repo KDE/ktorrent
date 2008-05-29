@@ -91,7 +91,10 @@ namespace kt
 			switch (index.column())
 			{
 				case 0: return r->getDescription().friendlyName;
-				case 1: return ports(r);
+				case 1: if (!r->getError().isEmpty())
+							return r->getError();
+						else
+							return ports(r);
 				case 2: return connections(r);
 			}
 		}
@@ -99,6 +102,8 @@ namespace kt
 		{
 			if (index.column() == 0)
 				return KIcon("modem");
+			else if (index.column() == 1 && !r->getError().isEmpty())
+				return KIcon("dialog-error");
 		}
 		else if (role == Qt::ToolTipRole)
 		{
@@ -107,10 +112,11 @@ namespace kt
 				const UPnPDeviceDescription & d = r->getDescription();
 				return i18n(
 					"Model Name: <b>%1</b><br/>"
-					"Model Number: <b>%2</b><br/>"
-					"Manufacturer: <b>%3</b><br/>"
-					"Model Description: <b>%4</b><br/>",d.modelName,d.modelNumber,d.manufacturer,d.modelDescription);
+					"Manufacturer: <b>%2</b><br/>"
+					"Model Description: <b>%3</b><br/>",d.modelName,d.manufacturer,d.modelDescription);
 			}
+			else if (index.column() == 1 && !r->getError().isEmpty())
+				return r->getError();
 		}
 		
 		return QVariant();

@@ -17,8 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <QTimer>
 #include <QHostAddress>
 #include <QStringList>
+#include <klocale.h>
 #include <util/log.h>
 #include "httprequest.h"
 
@@ -29,7 +31,7 @@ namespace kt
 {
 
 	HTTPRequest::HTTPRequest(const QString & hdr,const QString & payload,const QString & host,Uint16 port,bool verbose) 
-		: hdr(hdr),payload(payload),verbose(verbose),host(host),port(port)
+		: hdr(hdr),payload(payload),verbose(verbose),host(host),port(port),finished(false)
 	{
 		sock = new QTcpSocket(this);
 		connect(sock,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
@@ -47,6 +49,7 @@ namespace kt
 	void HTTPRequest::start()
 	{
 		sock->connectToHost(host,port);
+		QTimer::singleShot(30000,this,SLOT(onTimeout()));
 	}
 	
 	void HTTPRequest::onConnect()
@@ -73,7 +76,8 @@ namespace kt
 		Uint32 ba = sock->bytesAvailable();
 		if (ba == 0)
 		{
-			error(this,false);
+			if (!finished)
+				error(this,i18n("Connection closed unexpectedly !"));
 			sock->close();
 			return;
 		}
@@ -98,13 +102,14 @@ namespace kt
 			// emit reply error
 			replyError(this,sl.last());
 		}
+		finished = true;
 		operationFinished(this);
 	}
 	
 	void HTTPRequest::onError(QAbstractSocket::SocketError err)
 	{
 		Out(SYS_PNP|LOG_DEBUG) << "HTTPRequest error : " << sock->errorString() << endl;
-		error(this,false);
+		error(this,sock->errorString());
 		sock->close();
 		operationFinished(this);
 	}
@@ -112,7 +117,7 @@ namespace kt
 	void HTTPRequest::onTimeout()
 	{
 		Out(SYS_PNP|LOG_DEBUG) << "HTTPRequest timeout" << endl;
-		error(this,true);
+		error(this,i18n("Timeout occurred"));
 		sock->close();
 		operationFinished(this);
 	}
