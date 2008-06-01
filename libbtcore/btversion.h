@@ -62,9 +62,9 @@ namespace bt
 	/// Minor version number of the BTCore library
 	const Uint32 MINOR = 1;
 	/// Version type of the BTCore library
-	const VersionType VERSION_TYPE = DEVEL;
+	const VersionType VERSION_TYPE = RELEASE_CANDIDATE;
 	/// Release version number of the BTCore library
-	const Uint32 RELEASE = 0;
+	const Uint32 RELEASE = 1;
 }
 
 #endif
