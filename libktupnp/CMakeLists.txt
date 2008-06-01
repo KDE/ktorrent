@@ -6,6 +6,6 @@ set(libktupnp_SRC httprequest.cpp soap.cpp upnpdescriptionparser.cpp upnpmcastso
 kde4_add_library(ktupnp SHARED ${libktupnp_SRC})
 
 target_link_libraries(ktupnp ktcore)
-set_target_properties(ktupnp PROPERTIES VERSION 2.0.0 SOVERSION 2 )
+set_target_properties(ktupnp PROPERTIES VERSION 3.0.0 SOVERSION 3 )
 install(TARGETS ktupnp  ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
