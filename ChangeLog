@@ -1,3 +1,22 @@
+Changes in 3.1rc1 :
+- Make sure that when keep seeding is on and a torrent is stopped because it has finished downloading, the torrent is not restarted the next time you startup KT
+- Clean up stuff is move of data files is canceled (157657)
+- Fix recursive infinite loop in QM
+- Items on the bandwidth schedule can now be moved around using the mouse
+- Items on the bandwidth schedule can now be resized using the mouse
+- Show guidance lines when items on schedule are moved or resized
+- Colors of the bandwidth scheduler can now be configured
+- Added new dialog to add items to the schedule, you can now add the same item to multiple days.
+- Make sure that CompressFileJob cannot get stuck (162099)
+- Make sure interfaces are not added multiple times to interface combobox in network preferences
+- Make sure shortcuts work for back and reload in search plugin 
+- Add Open in New Tab entry to right click menu in search plugin
+- Revamped the UPnP plugin : the widget displaying the routers has been moved from the preferences dialog to the bottom tab bar
+- Use QTcpSocket in HttpRequest of UPnP library
+- Make sure undo forward and forward buttons on UPnP widget are disabled and enabled properly
+- Improved error handling and display in UPnP plugin
+- Added recommended settings dialog
+
 Changes in 3.1beta2 :
 - Ported changes from windows branch, so windows is now officially supported
 - Added new icons created by Lee Olson
