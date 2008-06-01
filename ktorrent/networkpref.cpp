@@ -35,6 +35,7 @@ namespace kt
 	: PrefPageInterface(Settings::self(),i18n("Network"),"preferences-system-network",parent)
 	{
 		setupUi(this);
+		connect(m_recommended_settings,SIGNAL(clicked()),this,SIGNAL(calculateRecommendedSettings()));
 	}
 
 
@@ -46,7 +47,8 @@ namespace kt
 	{
 		kcfg_maxDownloadRate->setValue(Settings::maxDownloadRate());
 		kcfg_maxUploadRate->setValue(Settings::maxUploadRate());
-		
+		kcfg_maxConnections->setValue(Settings::maxConnections());
+		kcfg_maxTotalConnections->setValue(Settings::maxTotalConnections());
 		
 		kcfg_networkInterface->clear();
 		kcfg_networkInterface->addItem(KIcon("network-wired"),i18n("All interfaces"));

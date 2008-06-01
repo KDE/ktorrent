@@ -28,6 +28,8 @@ namespace kt
 {
 	class Core;
 	class PrefPageInterface;
+	class NetworkPref;
+	class QMPref;
 
 	/**
 	 * KTorrent's preferences dialog, this uses the new KConfigDialog class which should make our live much easier.
@@ -63,9 +65,14 @@ namespace kt
 		virtual void updateWidgets();
 		virtual void updateWidgetsDefault();
 		virtual void updateSettings();
-
+	
+	private slots:
+		void calculateRecommendedSettings();
+		
 	private:
 		QMap<PrefPageInterface*,KPageWidgetItem*> pages;
+		NetworkPref* net_pref;
+		QMPref* qm_pref;
 	};
 }
 

@@ -33,6 +33,7 @@
 #include "advancedpref.h"
 #include "networkpref.h"
 #include "proxypref.h"
+#include "recommendedsettingsdlg.h"
 
 namespace kt
 {
@@ -142,11 +143,15 @@ namespace kt
 		setFaceType(KPageDialog::List);
 		connect(this,SIGNAL(settingsChanged(const QString &)),core,SLOT(applySettings()));
 		addPrefPage(new GeneralPref(this));
-		addPrefPage(new NetworkPref(this));
+		net_pref = new NetworkPref(this);
+		addPrefPage(net_pref);
 		addPrefPage(new ProxyPref(this));
 		addPrefPage(new BTPref(this));
-		addPrefPage(new QMPref(this));
+		qm_pref = new QMPref(this);
+		addPrefPage(qm_pref);
 		addPrefPage(new AdvancedPref(this));
+		
+		connect(net_pref,SIGNAL(calculateRecommendedSettings()),this,SLOT(calculateRecommendedSettings()));
 	}
 
 	PrefDialog::~PrefDialog()
@@ -193,6 +198,21 @@ namespace kt
 	{
 		foreach (PrefPageInterface* p,pages.keys())
 			p->updateSettings();
+	}
+	
+	void PrefDialog::calculateRecommendedSettings()
+	{
+		RecommendedSettingsDlg dlg(this);
+		if (dlg.exec() == QDialog::Accepted)
+		{
+			qm_pref->kcfg_maxSeeds->setValue(dlg.max_seeds);
+			qm_pref->kcfg_maxDownloads->setValue(dlg.max_downloads);
+			qm_pref->kcfg_numUploadSlots->setValue(dlg.max_slots);
+			net_pref->kcfg_maxDownloadRate->setValue(dlg.max_download_speed);
+			net_pref->kcfg_maxUploadRate->setValue(dlg.max_upload_speed);
+			net_pref->kcfg_maxConnections->setValue(dlg.max_conn_tor);
+			net_pref->kcfg_maxTotalConnections->setValue(dlg.max_conn_glob);
+		}
 	}
 
 }

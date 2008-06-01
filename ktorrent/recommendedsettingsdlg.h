@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
  *   ivasic@gmail.com                                                      *
  *                                                                         *
@@ -18,29 +18,46 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTNETWORKPREF_H
-#define KTNETWORKPREF_H
+#ifndef KTRECOMMENDEDSETTINGSDLG_H
+#define KTRECOMMENDEDSETTINGSDLG_H
 
-#include <interfaces/prefpageinterface.h>
-#include "ui_networkpref.h"
+#include <kdialog.h>
+#include "ui_recommendedsettingsdlg.h"
 
 namespace kt
 {
 
 	/**
-		Preference page for network settings.
+		Dialog to compute the best settings
 	*/
-	class NetworkPref : public PrefPageInterface,public Ui_NetworkPref
+	class RecommendedSettingsDlg : public KDialog,public Ui_RecommendedSettingsDlg
 	{
 		Q_OBJECT
 	public:
-		NetworkPref(QWidget* parent);
-		virtual ~NetworkPref();
+		RecommendedSettingsDlg(QWidget* parent);
+		virtual ~RecommendedSettingsDlg();
+	
+	private slots:
+		void calculate();
+		void apply();
+		void avgSpeedSlotToggled(bool on);
+		void simTorrentsToggled(bool on);
+		void slotsToggled(bool on);
+		void uploadBWChanged(int val);
+		void downloadBWChanged(int val);
 		
-		virtual void loadSettings();
-		virtual void loadDefaults();
-	signals:
-		void calculateRecommendedSettings();
+	private:
+		void saveState(KSharedConfigPtr cfg);
+		void loadState(KSharedConfigPtr cfg);
+		
+	public:
+		bt::Uint32 max_upload_speed;
+		bt::Uint32 max_download_speed;
+		bt::Uint32 max_conn_tor;
+		bt::Uint32 max_conn_glob;
+		bt::Uint32 max_downloads;
+		bt::Uint32 max_seeds;
+		bt::Uint32 max_slots;
 	};
 
 }
