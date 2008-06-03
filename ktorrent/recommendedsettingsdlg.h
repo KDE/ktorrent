@@ -22,6 +22,7 @@
 #define KTRECOMMENDEDSETTINGSDLG_H
 
 #include <kdialog.h>
+#include <util/constants.h>
 #include "ui_recommendedsettingsdlg.h"
 
 namespace kt
