@@ -317,7 +317,7 @@ namespace bt
 		QMutexLocker lock(&mutex);
 		if (!fptr)
 			return;
-		Out(SYS_DIO|LOG_NOTICE) << "CacheFile " << path << " : about to be closed" << endl;
+		//Out(SYS_DIO|LOG_NOTICE) << "CacheFile " << path << " : about to be closed" << endl;
 		unmapAll();
 		if (!manual_close)
 		{

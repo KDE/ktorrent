@@ -143,16 +143,13 @@ namespace kt
 			return;
 		}
 		
-		QString target = tmp_file;
+		KIO::StoredTransferJob* st = (KIO::StoredTransferJob*)j;
 		// load in the file (target is always local)
 		UPnPDescriptionParser desc_parse;
-		bool ret = desc_parse.parse(target,this);
+		bool ret = desc_parse.parse(st->data(),this);
 		if (!ret)
 		{
 			error = i18n("Error parsing router description !");
-			Out(SYS_PNP|LOG_IMPORTANT) << error << endl;
-			QString dest = KGlobal::dirs()->saveLocation("data","ktorrent") + "upnp_failure";
-			KIO::file_copy(target,dest,-1, KIO::Overwrite | KIO::HideProgressInfo);
 		}
 		else
 		{
@@ -160,7 +157,6 @@ namespace kt
 				debugPrintData();
 		}
 		xmlFileDownloaded(this,ret);
-		bt::Delete(target);
 	}
 	
 	void UPnPRouter::downloadXMLFile()
@@ -168,7 +164,7 @@ namespace kt
 		error = QString();
 		// downlaod XML description into a temporary file in /tmp
 		Out(SYS_PNP|LOG_DEBUG) << "Downloading XML file " << location << endl;
-		KIO::Job* job = KIO::file_copy(location,tmp_file,-1, KIO::Overwrite | KIO::HideProgressInfo);
+		KIO::Job* job = KIO::storedGet(location,KIO::NoReload, KIO::Overwrite | KIO::HideProgressInfo);
 		connect(job,SIGNAL(result(KJob *)),this,SLOT(downloadFinished( KJob* )));
 	}
 	
