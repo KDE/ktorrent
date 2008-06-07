@@ -50,7 +50,7 @@ namespace bt
 		QStringList sl = file.split(bt::DirSeparator());
 		QString ctmp;
 #ifndef Q_WS_WIN
-		tmp += bt::DirSeparator();
+		ctmp += bt::DirSeparator();
 #endif
 		
 		for (Uint32 i = 0;i < sl.count() - 1;i++)
