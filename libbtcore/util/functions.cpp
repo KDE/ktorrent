@@ -50,9 +50,9 @@ namespace bt
 	
 	QString DirSeparator()
 	{
-		QString tmp;
-		tmp.append(QDir::separator());
-		return tmp;
+		//QString tmp;
+		//tmp.append(QDir::separator());
+		return "/";
 	}
 
 	void WriteUint64(Uint8* buf,Uint32 off,Uint64 val)
