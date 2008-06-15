@@ -48,7 +48,10 @@ namespace bt
 	static void MakeFilePath(const QString & file)
 	{
 		QStringList sl = file.split(bt::DirSeparator());
-		QString ctmp = bt::DirSeparator();
+		QString ctmp;
+#ifndef Q_WS_WIN
+		ctmp += bt::DirSeparator();
+#endif
 		
 		for (Uint32 i = 0;i < sl.count() - 1;i++)
 		{

@@ -25,6 +25,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <klocale.h>
+#include <kio/job.h> 
 #include <kio/netaccess.h>
 #include <kio/copyjob.h> 
 #include <sys/stat.h>
@@ -70,19 +71,18 @@ namespace bt
 {
 	void MakeDir(const QString & dir,bool nothrow)
 	{
-#ifndef Q_WS_WIN        
-		if (mkdir(QFile::encodeName(dir),0777) < -1)
-#else
-		if (mkdir(QFile::encodeName(dir)) < -1)
-#endif
+		KIO::Job* j = KIO::mkdir(KUrl(dir));
+		if (!j->exec())
 		{
+			QString error = i18n("Cannot create directory %1: %2",dir,j->errorString());
+			Out(SYS_DIO|LOG_NOTICE) << error <<endl;
+			j->deleteLater();
 			if (!nothrow)
-				throw Error(i18n("Cannot create directory %1: %2"
-					,dir,strerror(errno)));
-			else
-			{
-				Out(SYS_DIO|LOG_NOTICE) << QString("Error : Cannot create directory %1 : %2").arg(dir).arg(strerror(errno))<< endl;
-			}
+				throw Error(error);
+		}
+		else
+		{
+			j->deleteLater();
 		}
 	}
 	

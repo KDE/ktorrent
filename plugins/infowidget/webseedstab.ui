@@ -9,12 +9,9 @@
     <height>300</height>
    </rect>
   </property>
-  <property name="windowTitle" >
-   <string>Form</string>
-  </property>
   <layout class="QGridLayout" >
    <item row="0" column="0" >
-    <widget class="QLineEdit" name="m_webseed" >
+    <widget class="KLineEdit" name="m_webseed" >
      <property name="toolTip" >
       <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }

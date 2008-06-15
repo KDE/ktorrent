@@ -270,6 +270,11 @@ namespace kt
 		if (item)
 		{
 			int r = idx.row();
+			
+			if (r < 0 || r >= item->multimedia_files.count())
+				return QString();
+			
+			r = item->multimedia_files.at(r);
 			if (r < 0 || r >= item->tc->getNumFiles())
 				return QString();
 			else
