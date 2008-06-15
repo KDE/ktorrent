@@ -1,3 +1,9 @@
+Changes in 3.1 :
+- Use KIO::storedGet to download XML description of UPnP router
+- Use KIO::mkdir in MakeDir function
+- Make sure that path creation on windows works when creating the necessary paths for a torrents' files
+- Fix bug in mediaplayer causing wrong file to be played in some case
+
 Changes in 3.1rc1 :
 - Make sure that when keep seeding is on and a torrent is stopped because it has finished downloading, the torrent is not restarted the next time you startup KT
 - Clean up stuff is move of data files is canceled (157657)
