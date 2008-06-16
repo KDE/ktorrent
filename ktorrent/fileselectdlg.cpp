@@ -30,6 +30,7 @@
 #include <util/functions.h>
 #include <util/fileops.h>
 #include <util/log.h>
+#include <util/error.h>
 #include <interfaces/functions.h>
 #include <groups/group.h>
 #include <groups/groupmanager.h>
@@ -128,6 +129,23 @@ namespace kt
 		QString dn = m_downloadLocation->url().path();
 		if (!dn.endsWith(bt::DirSeparator()))
 			dn += bt::DirSeparator();
+
+		if (!bt::Exists(dn))
+		{
+			try
+			{
+				if (KMessageBox::questionYesNo(this,i18n("The directory %1 does not exist, do you want to create it ?",dn)) == KMessageBox::Yes)
+					MakePath(dn);	
+				else
+					return;
+			}
+			catch (bt::Error & err)
+			{
+				KMessageBox::error(this,err.toString());
+				QDialog::reject();
+				return;
+			}
+		}
 		
 		QString tld = m_toplevel_directory->text().trimmed();
 		if (tld.isNull() || tld.length() == 0)

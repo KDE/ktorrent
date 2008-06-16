@@ -38,6 +38,7 @@
 #include "log.h"
 #include "file.h"
 #include "array.h"
+#include "functions.h"
 
 #ifdef HAVE_XFS_XFS_H
 
@@ -86,36 +87,65 @@ namespace bt
 		}
 	}
 	
+	void MakePath(const QString & dir,bool nothrow)
+	{
+		QStringList sl = dir.split(bt::DirSeparator(),QString::SkipEmptyParts);
+		QString ctmp;
+#ifndef Q_WS_WIN
+		ctmp += bt::DirSeparator();
+#endif
+
+		for (int i = 0;i < sl.count();i++)
+		{
+			ctmp += sl[i];
+			if (!bt::Exists(ctmp))
+			{
+				try
+				{
+					MakeDir(ctmp,false);
+				}
+				catch (...)
+				{
+					if (!nothrow)
+						throw;
+					return;
+				}
+			}
+
+			ctmp += bt::DirSeparator();
+		}
+	}
+
 	void SymLink(const QString & link_to,const QString & link_url,bool nothrow)
 	{
 		if (symlink(QFile::encodeName(link_to),QFile::encodeName(link_url)) != 0)
 		{
 			if (!nothrow)
 				throw Error(i18n("Cannot symlink %1 to %2: %3"
-					,link_url,link_to
-					,strerror(errno)));
+							,link_url,link_to
+							,strerror(errno)));
 			else
 				Out(SYS_DIO|LOG_NOTICE) << QString("Error : Cannot symlink %1 to %2: %3")
-						.arg(link_url).arg(link_to)
-						.arg(strerror(errno)) << endl;
+					.arg(link_url).arg(link_to)
+					.arg(strerror(errno)) << endl;
 		}
 	}
 
 	void Move(const QString & src,const QString & dst,bool nothrow)
 	{
-	//	Out() << "Moving " << src << " -> " << dst << endl;
+		//	Out() << "Moving " << src << " -> " << dst << endl;
 		KIO::CopyJob *mv = KIO::move(KUrl(src),KUrl(dst)); 
 		if (!KIO::NetAccess::synchronousRun(mv , 0)) 
 		{
 			if (!nothrow)
 				throw Error(i18n("Cannot move %1 to %2: %3",
-					src,dst,
-						KIO::NetAccess::lastErrorString()));
+							src,dst,
+							KIO::NetAccess::lastErrorString()));
 			else
 				Out(SYS_DIO|LOG_NOTICE) << QString("Error : Cannot move %1 to %2: %3")
-						.arg(src).arg(dst)
-						.arg(KIO::NetAccess::lastErrorString()) << endl;
-		
+					.arg(src).arg(dst)
+					.arg(KIO::NetAccess::lastErrorString()) << endl;
+
 		}
 	}
 
@@ -125,29 +155,29 @@ namespace bt
 		{
 			if (!nothrow)
 				throw Error(i18n("Cannot copy %1 to %2: %3",
-						src,dst,
-						KIO::NetAccess::lastErrorString()));
+							src,dst,
+							KIO::NetAccess::lastErrorString()));
 			else
 				Out(SYS_DIO|LOG_NOTICE) << QString("Error : Cannot copy %1 to %2: %3")
-						.arg(src).arg(dst)
-						.arg(KIO::NetAccess::lastErrorString()) << endl;
-	
+					.arg(src).arg(dst)
+					.arg(KIO::NetAccess::lastErrorString()) << endl;
+
 		}
 	}
-	
+
 	void CopyDir(const QString & src,const QString & dst,bool nothrow)
 	{
 		if (!KIO::NetAccess::dircopy(KUrl(src),KUrl(dst),0))
 		{
 			if (!nothrow)
 				throw Error(i18n("Cannot copy %1 to %2: %3",
-						src,dst,
-						KIO::NetAccess::lastErrorString()));
+							src,dst,
+							KIO::NetAccess::lastErrorString()));
 			else
 				Out(SYS_DIO|LOG_NOTICE) << QString("Error : Cannot copy %1 to %2: %3")
-						.arg(src).arg(dst)
-						.arg(KIO::NetAccess::lastErrorString()) << endl;
-	
+					.arg(src).arg(dst)
+					.arg(KIO::NetAccess::lastErrorString()) << endl;
+
 		}
 	}
 
@@ -155,23 +185,23 @@ namespace bt
 	{
 		return QFile::exists(url);
 	}
-	
+
 	static bool DelDir(const QString & fn)
 	{
 		QDir d(fn);
 		QStringList subdirs = d.entryList(QDir::Dirs);
-		
+
 		for (QStringList::iterator i = subdirs.begin(); i != subdirs.end();i++)
 		{
 			QString entry = *i;
 
 			if (entry == ".." || entry == ".")
 				continue;
-			
+
 			if (!DelDir(d.absoluteFilePath(entry)))
 				return false;	
 		}
-		
+
 		QStringList files = d.entryList(QDir::Files | QDir::System | QDir::Hidden);
 		for (QStringList::iterator i = files.begin(); i != files.end();i++)
 		{
@@ -179,10 +209,10 @@ namespace bt
 			if (!QFile::remove(file))
 				return false;	
 		}
-		
+
 		if (!d.rmdir(d.absolutePath()))
 			return false;
-		
+
 		return true;
 	}
 
@@ -198,7 +228,7 @@ namespace bt
 		{
 			ok = QFile::remove(url);
 		}
-		
+
 		if (!ok)
 		{
 			QString err = i18n("Cannot delete %1: %2",url,strerror(errno));
@@ -213,7 +243,7 @@ namespace bt
 	{
 		if (Exists(url))
 			return;
-		
+
 		File fptr;
 		if (!fptr.open(url,"wb"))
 		{
@@ -221,11 +251,11 @@ namespace bt
 				throw Error(i18n("Cannot create %1: %2",url,fptr.errorString()));
 			else
 				Out(SYS_DIO|LOG_NOTICE) << "Error : Cannot create " << url << " : "
-						<< fptr.errorString() << endl;
-		
+					<< fptr.errorString() << endl;
+
 		}
 	}
-	
+
 	Uint64 FileSize(const QString & url)
 	{
 		int ret = 0;
@@ -238,10 +268,10 @@ namespace bt
 #endif
 		if (ret < 0)
 			throw Error(i18n("Cannot calculate the filesize of %1: %2",url,strerror(errno)));
-		
+
 		return (Uint64)sb.st_size;
 	}
-	
+
 	Uint64 FileSize(int fd)
 	{
 		int ret = 0;
@@ -254,7 +284,7 @@ namespace bt
 #endif
 		if (ret < 0)
 			throw Error(i18n("Cannot calculate the filesize : %1",strerror(errno)));
-		
+
 		return (Uint64)sb.st_size;
 	}
 
@@ -266,7 +296,7 @@ namespace bt
 			char zero = 0;		
 			if (write(fd, &zero, 1) == -1)
 				return false;
-				
+
 			TruncateFile(fd,size,true);
 		}
 		catch (bt::Error & e)
@@ -276,42 +306,42 @@ namespace bt
 		}
 		return true;
 	}
-	
+
 	bool FatPreallocate(const QString & path,Uint64 size)
 	{
 		int fd = ::open(QFile::encodeName(path),O_RDWR | O_LARGEFILE);
 		if (fd < 0)
 			throw Error(i18n("Cannot open %1 : %2",path,strerror(errno)));
-		
+
 		bool ret = FatPreallocate(fd,size);
 		close(fd);
 		return ret;
 	}
 
 #ifdef HAVE_XFS_XFS_H
-	
+
 	bool XfsPreallocate(int fd, Uint64 size)
 	{
 		if( ! platform_test_xfs_fd(fd) )
 		{
 			return false;
 		}
-		
+
 		xfs_flock64_t allocopt;
 		allocopt.l_whence = 0;
 		allocopt.l_start = 0;
 		allocopt.l_len  = size;
-		
+
 		return (! static_cast<bool>(xfsctl(0, fd, XFS_IOC_RESVSP64, &allocopt)) );
-		
+
 	}
-	
+
 	bool XfsPreallocate(const QString & path, Uint64 size)
 	{
 		int fd = ::open(QFile::encodeName(path), O_RDWR | O_LARGEFILE);
 		if (fd < 0)
 			throw Error(i18n("Cannot open %1 : %2",path,strerror(errno)));
-		
+
 		bool ret = XfsPreallocate(fd,size);
 		close(fd);
 		return ret;
@@ -323,15 +353,15 @@ namespace bt
 	{
 		if (FileSize(fd) == size)
 			return;
-		
+
 		if (quick)
 		{
 #ifdef HAVE_FTRUNCATE64
 			if (ftruncate64(fd,size) == -1)
 #else
-			if (ftruncate(fd,size) == -1)
+				if (ftruncate(fd,size) == -1)
 #endif
-				throw Error(i18n("Cannot expand file : %1",strerror(errno)));
+					throw Error(i18n("Cannot expand file : %1",strerror(errno)));
 		}
 		else
 		{
@@ -345,14 +375,14 @@ namespace bt
 			SeekFile(fd,0,SEEK_SET);
 			bt::Array<Uint8> buf(4096);
 			buf.fill(0);
-	
+
 			Uint64 written = 0;
 			while (written < size)
 			{
 				int to_write = size - written;
 				if (to_write > 4096)
 					to_write = 4096;
-				
+
 				int ret = write(fd,buf,to_write);
 				if (ret < 0)
 					throw Error(i18n("Cannot expand file: %1",strerror(errno)));
@@ -364,13 +394,13 @@ namespace bt
 #endif
 		}
 	}
-	
+
 	void TruncateFile(const QString & path,Uint64 size)
 	{
 		int fd = ::open(QFile::encodeName(path),O_RDWR | O_LARGEFILE);
 		if (fd < 0)
 			throw Error(i18n("Cannot open %1 : %2",path,strerror(errno)));
-		
+
 		try
 		{
 			TruncateFile(fd,size,true);
@@ -382,17 +412,17 @@ namespace bt
 			throw;
 		}
 	}
-	
+
 	void SeekFile(int fd,Int64 off,int whence)
 	{
 #ifdef HAVE_LSEEK64
 		if (lseek64(fd,off,whence) == -1)
 #else
-		if (lseek(fd,off,whence) == -1)
+			if (lseek(fd,off,whence) == -1)
 #endif
-			throw Error(i18n("Cannot seek in file : %1",strerror(errno)));
+				throw Error(i18n("Cannot seek in file : %1",strerror(errno)));
 	}
-	
+
 	bool FreeDiskSpace(const QString & path,Uint64 & bytes_free)
 	{
 #ifdef HAVE_STATVFS
@@ -400,7 +430,7 @@ namespace bt
 		struct statvfs64 stfs;
 		if (statvfs64(QFile::encodeName(path), &stfs) == 0)
 #else
-		struct statvfs stfs;
+			struct statvfs stfs;
 		if (statvfs(QFile::encodeName(path), &stfs) == 0)
 #endif
 		{
@@ -410,7 +440,7 @@ namespace bt
 		else
 		{
 			Out(SYS_GEN|LOG_DEBUG) << "Error : statvfs for " << path << " failed :  "
-						<< QString(strerror(errno)) << endl;
+				<< QString(strerror(errno)) << endl;
 
 			return false;
 		}

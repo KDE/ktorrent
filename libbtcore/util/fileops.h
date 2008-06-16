@@ -30,13 +30,20 @@ namespace bt
 {
 
 	/**
-	 * Creates a directory. Convenience function around
-	 * KIO::NetAccess::mkdir .
+	 * Creates a directory.
 	 * @param dir The url of the dir
 	 * @param nothrow whether or not we shouldn't throw an Error upon failure
 	 * @throw Error upon error
 	 */
 	BTCORE_EXPORT void MakeDir(const QString & dir,bool nothrow = false);
+
+	/**
+	 * Creates a path. 
+	 * @param dir The url of the dir
+	 * @param nothrow whether or not we shouldn't throw an Error upon failure
+	 * @throw Error upon error
+	 */
+	BTCORE_EXPORT void MakePath(const QString & dir,bool nothrow = false);
 
 	/**
 	* Create a symbolic link @a link_url which links to @a link_to 
