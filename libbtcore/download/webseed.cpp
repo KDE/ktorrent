@@ -366,7 +366,7 @@ namespace bt
 
 	void WebSeed::onExcluded(Uint32 from,Uint32 to)
 	{
-		if (from <= first_chunk <= to && from <= last_chunk <= to)
+		if (from <= first_chunk && first_chunk <= to && from <= last_chunk && last_chunk <= to)
 			reset();
 	}
 }
