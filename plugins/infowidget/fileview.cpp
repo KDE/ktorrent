@@ -307,7 +307,7 @@ namespace kt
 			if (!file)
 			{
 				// directory
-				new KRun(KUrl(curr_tc->getDataDir() + model->dirPath(index)), 0, 0, true, true);
+				new KRun(KUrl(curr_tc->getDataDir() + model->dirPath(proxy_model->mapToSource(index))), 0, 0, true, true);
 			}
 			else
 			{
