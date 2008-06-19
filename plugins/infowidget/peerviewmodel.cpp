@@ -120,8 +120,16 @@ namespace kt
 			case 0: return stats.ip_address;
 			case 1: return country;
 			case 2: return stats.client;
-			case 3: return KBytesPerSecToString(stats.download_rate / 1024.0);
-			case 4: return KBytesPerSecToString(stats.upload_rate / 1024.0);
+			case 3: 
+				if (stats.download_rate >= 103)
+					return KBytesPerSecToString(stats.download_rate / 1024.0);
+				else
+					return QVariant();
+			case 4: 
+				if (stats.upload_rate >= 103)
+					return KBytesPerSecToString(stats.upload_rate / 1024.0);
+				else
+					return QVariant();
 			case 5: return stats.choked ? i18nc("Choked", "Yes") : i18nc("Not choked", "No");
 			case 6: return stats.snubbed ? i18nc("Snubbed", "Yes") : i18nc("Not snubbed", "No");
 			case 7: return QString("%1 %").arg(KGlobal::locale()->formatNumber(stats.perc_of_file,2));
@@ -165,7 +173,7 @@ namespace kt
 		{
 			case 0:
 				if (stats.encrypted)
-					return KIcon("ktencrypted");
+					return KIcon("kt-encrypted");
 				break;
 			case 1: return flag;
 			case 8: return stats.dht_support ? yes : no;
