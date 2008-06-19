@@ -385,7 +385,7 @@ namespace kt
 		//first clear the text on them all
 		for (int i=0; i<mappings->rowCount(); i++)
 			{
-			mappings->item(i, MAP_TEST)->setText("No Capture");
+			mappings->item(i, MAP_TEST)->setText(i18n("No Capture"));
 			//lazy way to get the default background hehe
 			mappings->item(i, MAP_TEST)->setBackground(mappings->item(i, MAP_CAPTURE)->background());
 			}
