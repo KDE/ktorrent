@@ -1,3 +1,8 @@
+Changes in 3.1.1 :
+- Fix wrong icon name in PeerView for encrypted peers 
+- If speed is very low, don't show speed in PeerView
+- Fix crash when double clicking on directories in fileview (164434)
+
 Changes in 3.1 :
 - Use KIO::storedGet to download XML description of UPnP router
 - Use KIO::mkdir in MakeDir function
