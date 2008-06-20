@@ -2,6 +2,9 @@ Changes in 3.1.1 :
 - Fix wrong icon name in PeerView for encrypted peers 
 - If speed is very low, don't show speed in PeerView
 - Fix crash when double clicking on directories in fileview (164434)
+- Added GroupFilterModel to filter out torrents, this avoids a bug in Qt which
+caused hidden torrents to be shown when a view was sorted by a column.
+(164113)
 
 Changes in 3.1 :
 - Use KIO::storedGet to download XML description of UPnP router

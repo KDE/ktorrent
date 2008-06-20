@@ -10,6 +10,7 @@ set(ktorrent_SRC
 	view.cpp 
 	viewmodel.cpp
 	viewmanager.cpp 
+	groupfiltermodel.cpp
 	prefdialog.cpp 
 	advancedpref.cpp
 	networkpref.cpp

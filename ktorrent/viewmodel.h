@@ -89,6 +89,13 @@ namespace kt
 		bt::TorrentInterface* torrentFromIndex(const QModelIndex & index);
 		
 		/**
+		 * Get a torrent from a row.
+		 * @param index The row index
+		 * @return The torrent if the index is valid and in the proper range, 0 otherwise
+		 */
+		bt::TorrentInterface* torrentFromRow(int index);
+		
+		/**
 		 * Get all torrents
 		 * @param tlist The list of torrents to fill
 		 */

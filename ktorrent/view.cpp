@@ -40,6 +40,7 @@
 #include "scandlg.h"
 #include "speedlimitsdlg.h"
 #include "addpeersdlg.h"
+#include "groupfiltermodel.h"
 
 using namespace bt;
 
@@ -83,8 +84,7 @@ namespace kt
 		
 		connect(header_menu,SIGNAL(triggered(QAction* )),this,SLOT(onHeaderMenuItemTriggered(QAction*)));
 		
-		proxy_model = new QSortFilterProxyModel(this);
-		proxy_model->setSourceModel(model);
+		proxy_model = new GroupFilterModel(model,this);
 		proxy_model->setSortRole(Qt::UserRole);
 		setModel(proxy_model);
 		//setModel(model);
@@ -101,6 +101,7 @@ namespace kt
 	void View::setGroup(Group* g)
 	{
 		group = g;
+		proxy_model->setGroup(group);
 		update();
 		selectionModel()->clear();
 	}
@@ -109,29 +110,17 @@ namespace kt
 	{
 		Uint32 torrents = 0;
 		Uint32 running = 0;
-		Uint32 idx = 0;
 		QList<bt::TorrentInterface*> all;
 		model->allTorrents(all);
 		
-		// update items which are part of the current group
-		// if they are not part of the current group, just hide them
 		foreach (bt::TorrentInterface* ti,all)
 		{
-			QModelIndex midx = model->index(idx,0,QModelIndex());
-			midx = proxy_model->mapFromSource(midx);
 			if (!group || (group && group->isMember(ti)))
 			{
-				if (isRowHidden(midx.row(),QModelIndex()))
-					setRowHidden(midx.row(),QModelIndex(),false);
-
 				torrents++;
 				if (ti->getStats().running)
 					running++;
 			}
-			else if (!isRowHidden(midx.row(),QModelIndex()))
-				setRowHidden(midx.row(),QModelIndex(),true);
-			
-			idx++;
 		}
 
 		int nflags = flags & (kt::START | kt::STOP | kt::REMOVE);
@@ -157,6 +146,7 @@ namespace kt
 		{
 			num_running = running;
 			num_torrents = torrents;
+			proxy_model->refilter();
 			return true;
 		}
 		
@@ -183,6 +173,7 @@ namespace kt
 		{
 			num_running = running;
 			num_torrents = torrents;
+			proxy_model->refilter();
 			return true;
 		}
 		

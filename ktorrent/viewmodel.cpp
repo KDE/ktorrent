@@ -462,6 +462,14 @@ namespace kt
 			return 0;
 	}
 	
+	bt::TorrentInterface* ViewModel::torrentFromRow(int index)
+	{
+		if (index < torrents.count() && index >= 0)
+			return torrents[index].tc;
+		else
+			return 0;
+	}
+	
 	void ViewModel::allTorrents(QList<bt::TorrentInterface*> & tlist) const
 	{
 		for (QList<Item>::const_iterator i = torrents.begin();i != torrents.end();i++)

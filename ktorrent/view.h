@@ -28,7 +28,6 @@
 #include <ksharedconfig.h>
 
 class KMenu;
-class QSortFilterProxyModel;
 
 namespace kt
 {
@@ -37,7 +36,7 @@ namespace kt
 	class ViewModel;
 	class Group;
 	class TorrentInterface;
-	
+	class GroupFilterModel;
 	
 	
 	class View : public QTreeView
@@ -138,7 +137,7 @@ namespace kt
 		bt::Uint32 num_torrents;
 		bt::Uint32 num_running;
 		ViewModel* model;
-		QSortFilterProxyModel* proxy_model;
+		GroupFilterModel* proxy_model;
 		int flags;
 	};
 }
