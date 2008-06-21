@@ -5,6 +5,7 @@ Changes in 3.1.1 :
 - Added GroupFilterModel to filter out torrents, this avoids a bug in Qt which
 caused hidden torrents to be shown when a view was sorted by a column.
 (164113)
+- Make sure port is 80 if it is not specified in device url in upnp library
 
 Changes in 3.1 :
 - Use KIO::storedGet to download XML description of UPnP router

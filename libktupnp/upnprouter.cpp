@@ -334,7 +334,7 @@ namespace kt
 	{
 		// if port is not set, 0 will be returned 
 		// thanks to Diego R. Brogna for spotting this bug
-		if (location.port()==0)
+		if (location.port()<=0)
 			location.setPort(80);
 		
 		QString http_hdr = QString(
@@ -345,7 +345,6 @@ namespace kt
 				"SOAPAction: \"%4\"\r\n"
 				"\r\n").arg(controlurl).arg(location.host()).arg(location.port()).arg(soapact);
 
-		
 		HTTPRequest* r = new HTTPRequest(http_hdr,query,location.host(),location.port(),verbose);
 		connect(r,SIGNAL(replyError(HTTPRequest* ,const QString& )),
 				this,SLOT(onReplyError(HTTPRequest* ,const QString& )));
