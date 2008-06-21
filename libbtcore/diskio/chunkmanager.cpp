@@ -339,6 +339,7 @@ namespace bt
 		}
 		
 		loaded.insert(i,bt::GetCurrentTime());
+		Out(SYS_DIO|LOG_DEBUG) << QString("Grab chunk %1 (%2 in memory)").arg(i).arg(loaded.count()) << endl;
 		return c;
 	}
 		
@@ -355,7 +356,10 @@ namespace bt
 			c->clear();
 			c->setStatus(Chunk::ON_DISK);
 			loaded.remove(i);
+			Out(SYS_DIO|LOG_DEBUG) << QString("Released and unloaded chunk %1 (%2 in memory)").arg(i).arg(loaded.count()) << endl;
 		}
+		else
+			Out(SYS_DIO|LOG_DEBUG) << QString("Released chunk %1 (%2 in memory)").arg(i).arg(loaded.count()) << endl;
 	}
 	
 	void ChunkManager::resetChunk(unsigned int i)
@@ -372,6 +376,7 @@ namespace bt
 		todo.set(i,!excluded_chunks.get(i) && !only_seed_chunks.get(i));
 		loaded.remove(i);
 		tor.updateFilePercentage(i,*this);
+		Out(SYS_DIO|LOG_DEBUG) << QString("Resetted chunk %1 (%2 in memory)").arg(i).arg(loaded.count()) << endl;
 	}
 	
 	void ChunkManager::checkMemoryUsage()
@@ -398,8 +403,8 @@ namespace bt
 				i++;
 			}
 		}
-	//	Uint32 num_in_mem = loaded.count();
-	//	Out() << QString("Cleaned %1 chunks, %2 still in memory").arg(num_removed).arg(num_in_mem) << endl;
+		Uint32 num_in_mem = loaded.count();
+		Out(SYS_DIO|LOG_DEBUG) << QString("Cleaned %1 chunks, %2 still in memory").arg(num_removed).arg(num_in_mem) << endl;
 	}
 	
 	void ChunkManager::saveChunk(unsigned int i,bool update_index)

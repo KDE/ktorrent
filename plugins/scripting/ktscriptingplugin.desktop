@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=ScriptingPlugin
+Comment=Kross scripting plugin for KTorrent
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktscriptingplugin
+X-KDE-PluginInfo-Author=Joris Guisson
+X-KDE-PluginInfo-Email=joris.guisson@gmail.com
+X-KDE-PluginInfo-Name=ScriptingPlugin
+X-KDE-PluginInfo-Website=http://ktorrent.org/
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
+Icon=text-x-script

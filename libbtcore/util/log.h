@@ -50,6 +50,7 @@
 #define SYS_BTF 0x80000 // BitFinder plugin
 #define SYS_WEB 0x100000 // WebInterface plugin
 #define SYS_ZCO 0x200000 // ZeroConf plugin
+#define SYS_SCR 0x400000 // Scripting plugin
 
 class KUrl;
 
