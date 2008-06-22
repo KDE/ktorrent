@@ -322,8 +322,7 @@ namespace kt
 		{
 			if (tc->readyForPreview() && !tc->getStats().multi_file_torrent)
 			{
-				QFileInfo fi(tc->getTorDir()+"cache");                          
-				new KRun(KUrl(fi.symLinkTarget()), 0, 0, true, true);
+				new KRun(KUrl(tc->getStats().output_path), 0, 0, true, true);
 			}
 		}
 	}
