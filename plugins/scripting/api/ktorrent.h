@@ -28,6 +28,11 @@ namespace kt
 	class CoreInterface;
 }
 
+namespace bt
+{
+	class TorrentInterface;
+}
+
 namespace ktapi
 {
 	class Torrent;
