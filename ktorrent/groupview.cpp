@@ -46,20 +46,43 @@ using namespace bt;
 namespace kt
 {
 
-	GroupViewItem::GroupViewItem(GroupView* parent,Group* g) : QTreeWidgetItem(parent),g(g)
+	GroupViewItem::GroupViewItem(GroupView* parent,Group* g,const QString & name) : QTreeWidgetItem(parent),g(g),path_name(name)
 	{
-		setText(0,g->groupName());
-		setIcon(0,g->groupIcon());
+		if (g)
+		{
+			setText(0,g->groupName());
+			setIcon(0,g->groupIcon());
+		}
+		else
+		{
+			setText(0,path_name);
+			setIcon(0,KIcon("folder"));
+		}
 	}
 	
-	GroupViewItem::GroupViewItem(QTreeWidgetItem* parent,Group* g) : QTreeWidgetItem(parent),g(g)
+	GroupViewItem::GroupViewItem(QTreeWidgetItem* parent,Group* g,const QString & name) : QTreeWidgetItem(parent),g(g),path_name(name)
 	{
-		setText(0,g->groupName());
-		setIcon(0,g->groupIcon());
+		if (g)
+		{
+			setText(0,g->groupName());
+			setIcon(0,g->groupIcon());
+		}
+		else
+		{
+			setText(0,path_name);
+			setIcon(0,KIcon("folder"));
+		}
 	}
 	
 	GroupViewItem::~GroupViewItem()
 	{
+	}
+	
+	void GroupViewItem::setGroup(Group* g)
+	{
+		this->g = g;
+		setText(0,g->groupName());
+		setIcon(0,g->groupIcon());
 	}
 	
 	/*
@@ -88,35 +111,29 @@ namespace kt
 		connect(this,SIGNAL(groupRenamed(kt::Group*)),view,SLOT(onGroupRenamed(kt::Group*)));
 		connect(this,SIGNAL(groupRemoved(kt::Group*)),view,SLOT(onGroupRemoved(kt::Group*)));
 		connect(this,SIGNAL(groupAdded(kt::Group*)),view,SLOT(onGroupAdded(kt::Group*)));
+		connect(gman,SIGNAL(defaultGroupRemoved(Group*)),this,SLOT(defaultGroupRemoved(Group*)));
+		connect(gman,SIGNAL(defaultGroupAdded(Group*)),this,SLOT(defaultGroupAdded(Group*)));
 
 		editing_item = false;
 		current_item = 0;
 		menu = 0;
 		setupActions(gui->actionCollection());
 		
-		GroupViewItem* all = addGroup(gman->allGroup(),0);
-		GroupViewItem* dwnld = addGroup(gman->downloadGroup(),all);
-		GroupViewItem* upld = addGroup(gman->uploadGroup(),all);
-		GroupViewItem* inactive = addGroup(gman->inactiveGroup(), all);
-		GroupViewItem* active = addGroup(gman->activeGroup(), all);
-		addGroup(gman->ungroupedGroup(),all);
-		addGroup(gman->queuedDownloadsGroup(), dwnld);
-		addGroup(gman->queuedUploadsGroup(), upld);
-		addGroup(gman->userDownloadsGroup(), dwnld);
-		addGroup(gman->userUploadsGroup(), upld);
-		addGroup(gman->inactiveDownloadsGroup(), inactive);
-		addGroup(gman->inactiveUploadsGroup(), inactive);
-		addGroup(gman->activeDownloadsGroup(), active);
-		addGroup(gman->activeUploadsGroup(), active);
 		
-		custom_root = new QTreeWidgetItem(all);
+		for (GroupManager::DefGroupItr i = gman->beginDefaults();i != gman->endDefaults();i++)
+		{
+			Group* g = *i;
+			add(0,g->groupPath(),g);
+		}
+		
+		custom_root = add(0,"/all/custom",0);
 		custom_root->setText(0,i18n("Custom Groups"));
 		custom_root->setIcon(0,SmallIcon("folder"));
 		custom_root->setExpanded(true);
 		
 		for (GroupManager::iterator i = gman->begin();i != gman->end();i++)
 		{
-			GroupViewItem* gvi = addGroup(i->second,custom_root);
+			GroupViewItem* gvi = addGroup(i->second,custom_root,i->second->groupName());
 			gvi->setFlags(gvi->flags() | Qt::ItemIsEditable | Qt::ItemIsDropEnabled);
 		}
 
@@ -153,6 +170,82 @@ namespace kt
 		col->addAction("edit_group_policy",edit_group_policy);
 	}
 	
+	GroupViewItem* GroupView::add(QTreeWidgetItem* parent,const QString & path,Group* g)
+	{
+		// if path looks like /foo we are at a leaf of the tree
+		if (path.count('/') == 1)
+		{
+			QString name = path.mid(1);
+			if (parent)
+			{
+				// see if we can find a GroupViewItem with the same name and which is a child of parent
+				for (int i = 0;i < parent->childCount();i++)
+				{
+					GroupViewItem* gvi = (GroupViewItem*)parent->child(i);
+					if (gvi->name() == name)
+					{
+						// there is one so just fill in the group
+						gvi->setGroup(g);
+						return gvi;
+					}
+				}
+			}
+			else
+			{
+				for (int i = 0;i < topLevelItemCount();i++)
+				{
+					GroupViewItem* gvi = (GroupViewItem*)topLevelItem(i);
+					if (gvi->name() == name)
+					{
+						// there is one so just fill in the group
+						gvi->setGroup(g);
+						return gvi;
+					}
+				}
+			}
+			
+			// no existing one found, so create a new one
+			return addGroup(g,parent,name);
+		}
+		else
+		{
+			QString p = path.mid(1); // get rid of first slash
+			int slash_pos = p.indexOf('/'); // find position of slash
+			QString name = p.mid(0,slash_pos); // get the name
+			p = p.mid(slash_pos); // p now becomes next part of path
+		
+			// see if we can find a GroupViewItem with the same name and which is a child of parent
+			if (parent)
+			{
+				for (int i = 0;i < parent->childCount();i++)
+				{
+					GroupViewItem* gvi = (GroupViewItem*)parent->child(i);
+					if (gvi->name() == name)
+					{
+						// there is one, go on recusively
+						return add(gvi,p,g);
+					}
+				}
+			}
+			else
+			{
+				for (int i = 0;i < topLevelItemCount();i++)
+				{
+					GroupViewItem* gvi = (GroupViewItem*)topLevelItem(i);
+					if (gvi->name() == name)
+					{
+						// there is one, go on recusively
+						return add(gvi,p,g);
+					}
+				}
+			}
+			
+			// create a new empty GroupViewItem and go on recursively
+			GroupViewItem* gvi = addGroup(0,parent,name);
+			return add(gvi,p,g);
+		}
+	}
+	
 	void GroupView::addGroup()
 	{
 		addNewGroup();
@@ -173,7 +266,7 @@ namespace kt
 		}
 		
 		Group* g = gman->newGroup(name);
-		GroupViewItem* gvi = addGroup(g,custom_root);
+		GroupViewItem* gvi = addGroup(g,custom_root,name);
 		gvi->setFlags(gvi->flags() | Qt::ItemIsEditable | Qt::ItemIsDropEnabled);
 		gman->saveGroups();
 		groupAdded(g);
@@ -211,21 +304,20 @@ namespace kt
 		editing_item = true;
 	}
 
-	GroupViewItem* GroupView::addGroup(Group* g,QTreeWidgetItem* parent)
+	GroupViewItem* GroupView::addGroup(Group* g,QTreeWidgetItem* parent,const QString & name)
 	{
-		if (!g)
-			return 0;
-
+		// Note: g can be 0
 		GroupViewItem* li = 0;
 		if (parent)
 		{
-			li = new GroupViewItem(parent,g);
+			li = new GroupViewItem(parent,g,name);
 			li->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		}
 		else
 		{
-			li = new GroupViewItem(this,g);
-			li->setText(1,g->groupName());
+			li = new GroupViewItem(this,g,name);
+			if (g)
+				li->setText(1,g->groupName());
 			li->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 			addTopLevelItem(li);
 		}
@@ -398,6 +490,87 @@ namespace kt
 				
 			++it;
 		}
+	}
+	
+	void GroupView::defaultGroupAdded(Group* g)
+	{
+		Out(SYS_GEN|LOG_DEBUG) << "GroupView::defaultGroupAdded " << g->groupName() << " " << g->groupPath() << endl;
+		add(0,g->groupPath(),g);
+	}
+	
+	void GroupView::remove(QTreeWidgetItem* parent,const QString & path,Group* g)
+	{
+		// if path looks like /foo we are at a leaf of the tree
+		if (path.count('/') == 1)
+		{
+			QString name = path.mid(1);
+			if (parent)
+			{
+				for (int i = 0;i < parent->childCount();i++)
+				{
+					GroupViewItem* gvi = (GroupViewItem*)parent->child(i);
+					if (gvi->group() == g)
+					{
+						// we have found it
+						delete gvi;
+						return;
+					}
+				}
+			}
+			else
+			{
+				for (int i = 0;i < topLevelItemCount();i++)
+				{
+					GroupViewItem* gvi = (GroupViewItem*)topLevelItem(i);
+					if (gvi->group() == g)
+					{
+						// we have found it
+						delete gvi;
+						return;
+					}
+				}
+			}
+		}
+		else
+		{
+			QString p = path.mid(1); // get rid of first slash
+			int slash_pos = p.indexOf('/'); // find position of slash
+			QString name = p.mid(0,slash_pos); // get the name
+			p = p.mid(slash_pos); // p now becomes next part of path
+			
+			// see if we can find a GroupViewItem with the same name and which is a child of parent
+			if (parent)
+			{
+				for (int i = 0;i < parent->childCount();i++)
+				{
+					GroupViewItem* gvi = (GroupViewItem*)parent->child(i);
+					if (gvi->name() == name)
+					{
+						// there is one, go on recusively
+						remove(gvi,p,g);
+						return;
+					}
+				}
+			}
+			else
+			{
+				for (int i = 0;i < topLevelItemCount();i++)
+				{
+					GroupViewItem* gvi = (GroupViewItem*)topLevelItem(i);
+					if (gvi->name() == name)
+					{
+						// there is one, go on recusively
+						remove(gvi,p,g);
+						return;
+					}
+				}
+			}
+		}
+	}
+	
+	void GroupView::defaultGroupRemoved(Group* g)
+	{
+		remove(0,g->groupPath(),g);
 	}
 
 }

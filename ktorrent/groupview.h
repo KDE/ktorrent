@@ -37,12 +37,17 @@ namespace kt
 	class GroupViewItem : public QTreeWidgetItem
 	{
 		Group* g;
-	public:
-		GroupViewItem(GroupView* parent,Group* g);
-		GroupViewItem(QTreeWidgetItem* parent,Group* g);
+		// this is not the group name, but the name of the group in the path (if the path is /all/foo/bar, this will be bar)
+		QString path_name;  
+	public: 
+		GroupViewItem(GroupView* parent,Group* g,const QString & name);
+		GroupViewItem(QTreeWidgetItem* parent,Group* g,const QString & name);
 		virtual ~GroupViewItem();
 		
+		QString name() const {return path_name;}
 		Group* group() {return g;}
+		
+		void setGroup(Group* g);
 	//	virtual int compare(QListViewItem* i,int col,bool ascending) const; 
 	};
 
@@ -77,6 +82,8 @@ namespace kt
 		void editGroupName();
 		void openView();
 		void editGroupPolicy();
+		void defaultGroupAdded(Group* g);
+		void defaultGroupRemoved(Group* g);
 		
 		
 	signals:
@@ -88,7 +95,9 @@ namespace kt
 		
 	private:
 		void setupActions(KActionCollection* col);
-		GroupViewItem* addGroup(Group* g,QTreeWidgetItem* parent);
+		GroupViewItem* addGroup(Group* g,QTreeWidgetItem* parent,const QString & name);
+		GroupViewItem* add(QTreeWidgetItem* parent,const QString & path,Group* g);
+		void remove(QTreeWidgetItem* parent,const QString & path,Group* g);
 		virtual bool dropMimeData(QTreeWidgetItem *parent, int index, 
 					  const QMimeData *data,Qt::DropAction action);    
 		virtual QStringList mimeTypes() const;
