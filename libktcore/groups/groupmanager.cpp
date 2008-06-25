@@ -53,38 +53,26 @@ namespace kt
 		setAutoDelete(true);
 		
 		all = new AllGroup();
-		upload = new UploadGroup();
-		download = new DownloadGroup();
-		queued_downloads = new QueuedDownloadsGroup();
-		queued_uploads = new QueuedUploadsGroup();
-		user_downloads = new UserDownloadsGroup();
-		user_uploads = new UserUploadsGroup();
-		active = new ActiveGroup();
-		active_uploads = new ActiveUploadsGroup();
-		active_downloads = new ActiveDownloadsGroup();
-		inactive = new InactiveGroup();
-		inactive_uploads = new InactiveUploadsGroup();
-		inactive_downloads = new InactiveDownloadsGroup();
-		ungrouped = new UngroupedGroup(this);
+		defaults << all;
+		defaults << new UploadGroup();
+		defaults << new DownloadGroup();
+		defaults << new QueuedDownloadsGroup();
+		defaults << new QueuedUploadsGroup();
+		defaults << new UserDownloadsGroup();
+		defaults << new UserUploadsGroup();
+		defaults << new ActiveGroup();
+		defaults << new ActiveUploadsGroup();
+		defaults << new ActiveDownloadsGroup();
+		defaults << new InactiveGroup();
+		defaults << new InactiveUploadsGroup();
+		defaults << new InactiveDownloadsGroup();
+		defaults << new UngroupedGroup(this);
 	}
 
 
 	GroupManager::~GroupManager()
 	{
-		delete all;
-		delete download;
-		delete upload;
-		delete queued_downloads;
-		delete queued_uploads;
-		delete user_downloads;
-		delete user_uploads;
-		delete inactive;
-		delete inactive_downloads;
-		delete inactive_uploads;
-		delete active;
-		delete active_downloads;
-		delete active_uploads;
-		delete ungrouped;
+		qDeleteAll(defaults);
 	}
 
 
@@ -115,13 +103,8 @@ namespace kt
 	}
 	
 	Group* GroupManager::findDefault(const QString & name)
-	{
-		QList<Group*> def;
-		def << all << download << upload << queued_downloads << queued_uploads << user_downloads
-				<< user_uploads << inactive << inactive_downloads << inactive_uploads << active 
-				<< active_downloads << active_uploads << ungrouped;
-		
-		foreach (Group* g,def)
+	{		
+		foreach (Group* g,defaults)
 		{
 			if (g->groupName() == name)
 				return g;
@@ -248,5 +231,18 @@ namespace kt
 		saveGroups();
 		
 		emit customGroupsChanged(oldName, new_name);
+	}
+	
+	void GroupManager::addDefaultGroup(Group* g)
+	{
+		defaults.append(g);
+		emit defaultGroupAdded(g);
+	}
+		
+	
+	void GroupManager::removeDefaultGroup(Group* g)
+	{
+		defaults.removeAll(g);
+		emit defaultGroupRemoved(g);
 	}
 }

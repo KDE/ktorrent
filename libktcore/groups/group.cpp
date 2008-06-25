@@ -30,7 +30,7 @@ namespace kt
 		only_apply_on_new_torrents = false;
 	}
 
-	Group::Group(const QString & name,int flags) : name(name),flags(flags)
+	Group::Group(const QString & name,int flags,const QString & path) : name(name),flags(flags),path(path)
 	{}
 
 

@@ -26,7 +26,7 @@ namespace kt
 {
 
 	QueuedUploadsGroup::QueuedUploadsGroup()
-			: Group(i18n("Queued uploads"),UPLOADS_ONLY_GROUP)
+	: Group(i18n("Queued uploads"),UPLOADS_ONLY_GROUP,"/all/uploads/queued")
 	{
 		setIconByName("kt-queue-manager");
 	}

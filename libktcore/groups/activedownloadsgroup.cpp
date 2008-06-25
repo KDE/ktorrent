@@ -25,7 +25,7 @@
 namespace kt
 {
 	ActiveDownloadsGroup::ActiveDownloadsGroup()
-			: Group(i18n("Active downloads"),DOWNLOADS_ONLY_GROUP)
+			: Group(i18n("Active downloads"),DOWNLOADS_ONLY_GROUP,"/all/active/downloads")
 	{
 		setIconByName("go-down");
 	}

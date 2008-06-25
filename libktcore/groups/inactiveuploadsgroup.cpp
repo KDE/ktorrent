@@ -26,7 +26,7 @@ namespace kt
 {
 
 	InactiveUploadsGroup::InactiveUploadsGroup()
-			: Group(i18n("Inactive uploads"), UPLOADS_ONLY_GROUP)
+			: Group(i18n("Inactive uploads"), UPLOADS_ONLY_GROUP,"/all/inactive/uploads")
 	{
 		setIconByName("go-up");
 	}

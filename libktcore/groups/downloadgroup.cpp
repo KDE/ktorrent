@@ -24,7 +24,7 @@
 namespace kt
 {
 
-	DownloadGroup::DownloadGroup() : Group(i18n("Downloads"),DOWNLOADS_ONLY_GROUP)
+	DownloadGroup::DownloadGroup() : Group(i18n("Downloads"),DOWNLOADS_ONLY_GROUP,"/all/downloads")
 	{
 		setIconByName("go-down");
 	}

@@ -24,13 +24,11 @@
 
 namespace kt
 {
-	class TorrentInterface;
 
 	/**
 	 * Group for active uploads.
 	 * @author Ivan Vasic <ivasic@gmail.com>
 	*/
-
 	class ActiveUploadsGroup : public Group
 	{
 
@@ -38,7 +36,7 @@ namespace kt
 			ActiveUploadsGroup();
 			virtual ~ActiveUploadsGroup();
 			
-			virtual bool isMember(TorrentInterface* tor);
+			virtual bool isMember(bt::TorrentInterface* tor);
 
 	};
 }

@@ -26,7 +26,7 @@ namespace kt
 {
 
 	UserUploadsGroup::UserUploadsGroup()
-			: Group(i18n("User uploads"),UPLOADS_ONLY_GROUP)
+			: Group(i18n("User uploads"),UPLOADS_ONLY_GROUP,"/all/uploads/user")
 	{
 		setIconByName("user-identity");
 	}

@@ -43,20 +43,9 @@ namespace kt
 	{
 		Q_OBJECT
 		
+		QList<Group*> defaults;
 		Group* all;
-		Group* download;
-		Group* upload;
-		Group* queued_downloads;
-		Group* queued_uploads;
-		Group* user_downloads;
-		Group* user_uploads;
-		Group* inactive;
-		Group* inactive_downloads;
-		Group* inactive_uploads;
-		Group* active;
-		Group* active_downloads;
-		Group* active_uploads;
-		Group* ungrouped;
+		
 	public:
 		GroupManager();
 		virtual ~GroupManager();
@@ -68,47 +57,26 @@ namespace kt
 		 */
 		Group* newGroup(const QString & name);
 		
+		/**
+		 * Add a new default group.
+		 * @param g The group
+		 */
+		void addDefaultGroup(Group* g);
+		
+		/**
+		 * Remove a default group.
+		 * @param g The group
+		 */
+		void removeDefaultGroup(Group* g);
+		
 		/// Get the group off all torrents
 		Group* allGroup() {return all;}
 		
-		/// Get the group of downloads
-		Group* downloadGroup() {return download;}
+		typedef QList<Group*>::iterator DefGroupItr;
 		
-		/// Get the group of seeds
-		Group* uploadGroup() {return upload;}
+		DefGroupItr beginDefaults() {return defaults.begin();}
+		DefGroupItr endDefaults() {return defaults.end();}
 		
-		/// Get the group of queued downloads
-		Group* queuedDownloadsGroup() { return queued_downloads; }
-		
-		/// Get the group of queued seeds
-		Group* queuedUploadsGroup() { return queued_uploads; }
-		
-		/// Get the group of user controlled downloads
-		Group* userDownloadsGroup() { return user_downloads; }
-		
-		/// Get the group of user controlled seeds
-		Group* userUploadsGroup() { return user_uploads; }
-		
-		/// Get the group of inactive torrents
-		Group* inactiveGroup() { return inactive; }
-		
-		/// Get the group of inactive downloads
-		Group* inactiveDownloadsGroup() { return inactive_downloads; }
-		
-		/// Get the group of inactive uploads
-		Group* inactiveUploadsGroup() { return inactive_uploads; }
-		
-		/// Get the group of inactive torrents
-		Group* activeGroup() { return active; }
-		
-		/// Get the group of inactive downloads
-		Group* activeDownloadsGroup() { return active_downloads; }
-		
-		/// Get the group of inactive uploads
-		Group* activeUploadsGroup() { return active_uploads; }
-		
-		/// Get the ungrouped Group
-		Group* ungroupedGroup() { return ungrouped;}
 		
 		/// Find a default Group given a name
 		Group* findDefault(const QString & name);
@@ -151,8 +119,8 @@ namespace kt
 	
 	signals:
 		void customGroupsChanged(QString oldName=QString(), QString newName=QString());
-		
-
+		void defaultGroupAdded(Group* g);
+		void defaultGroupRemoved(Group* g);
 	};
 
 }

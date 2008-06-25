@@ -24,7 +24,7 @@
 namespace kt
 {
 
-	UploadGroup::UploadGroup() : Group(i18n("Uploads"),UPLOADS_ONLY_GROUP)
+	UploadGroup::UploadGroup() : Group(i18n("Uploads"),UPLOADS_ONLY_GROUP,"/all/uploads")
 	{
 		setIconByName("go-up");
 	}

@@ -70,8 +70,9 @@ namespace kt
 		 * Create a new group.
 		 * @param name The name of the group
 		 * @param flags Properties of the group
+		 * @param path Path in the group tree (e.g /all/downloads/foo, last item in path should be the groups internal name)
 		 */
-		Group(const QString & name,int flags);
+		Group(const QString & name,int flags,const QString & path);
 		virtual ~Group();
 		
 		/// See if this is a standard group.
@@ -103,6 +104,9 @@ namespace kt
 		
 		/// Get the group policy
 		const Policy & groupPolicy() const {return policy;}
+		
+		/// Path in the group tree
+		const QString & groupPath() const {return path;}
 		
 		/// Set the group policy
 		void setGroupPolicy(const Policy & p);
@@ -159,6 +163,7 @@ namespace kt
 		QString icon_name;
 		int flags;
 		Policy policy;
+		QString path;
 	};
 
 }

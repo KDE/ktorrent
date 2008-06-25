@@ -23,7 +23,7 @@
 namespace kt
 {
 
-	AllGroup::AllGroup() : Group(i18n("All Torrents"),MIXED_GROUP)
+	AllGroup::AllGroup() : Group(i18n("All Torrents"),MIXED_GROUP,"/all")
 	{
 		setIconByName("folder");
 	}

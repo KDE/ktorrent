@@ -26,7 +26,7 @@ namespace kt
 {
 	
 ActiveGroup::ActiveGroup()
-		: Group(i18n("Active torrents"),MIXED_GROUP)
+		: Group(i18n("Active torrents"),MIXED_GROUP,"/all/active")
 {
 	setIconByName("network-connect");
 }

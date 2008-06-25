@@ -26,7 +26,7 @@ namespace kt
 {
 
 	QueuedDownloadsGroup::QueuedDownloadsGroup()
-			: Group(i18n("Queued downloads"),DOWNLOADS_ONLY_GROUP)
+			: Group(i18n("Queued downloads"),DOWNLOADS_ONLY_GROUP,"/all/downloads/queued")
 	{
 		setIconByName("kt-queue-manager");
 	}

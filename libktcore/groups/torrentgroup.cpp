@@ -30,7 +30,7 @@ using namespace bt;
 namespace kt
 {
 
-	TorrentGroup::TorrentGroup(const QString& name): Group(name,MIXED_GROUP|CUSTOM_GROUP)
+	TorrentGroup::TorrentGroup(const QString& name): Group(name,MIXED_GROUP|CUSTOM_GROUP,"/all/custom/" + name)
 	{
 		setIconByName("application-x-bittorrent");
 	}
