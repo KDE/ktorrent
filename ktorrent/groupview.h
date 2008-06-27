@@ -84,14 +84,14 @@ namespace kt
 		void editGroupPolicy();
 		void defaultGroupAdded(Group* g);
 		void defaultGroupRemoved(Group* g);
+		void customGroupAdded(Group* g);
+		void customGroupRemoved(Group* g);
 		
 		
 	signals:
 		void currentGroupChanged(kt::Group* g);
 		void groupRenamed(kt::Group* g);
 		void openNewTab(kt::Group* g);
-		void groupRemoved(kt::Group* g);
-		void groupAdded(kt::Group* g);
 		
 	private:
 		void setupActions(KActionCollection* col);

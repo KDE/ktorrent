@@ -109,8 +109,8 @@ namespace kt
 		connect(this,SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(onItemChanged(QTreeWidgetItem*,int)));
 		connect(this,SIGNAL(currentGroupChanged(kt::Group*)),view,SLOT(onCurrentGroupChanged(kt::Group*)));
 		connect(this,SIGNAL(groupRenamed(kt::Group*)),view,SLOT(onGroupRenamed(kt::Group*)));
-		connect(this,SIGNAL(groupRemoved(kt::Group*)),view,SLOT(onGroupRemoved(kt::Group*)));
-		connect(this,SIGNAL(groupAdded(kt::Group*)),view,SLOT(onGroupAdded(kt::Group*)));
+		connect(gman,SIGNAL(customGroupRemoved(Group*)),this,SLOT(customGroupRemoved(Group*)));
+		connect(gman,SIGNAL(customGroupAdded(Group*)),this,SLOT(customGroupAdded(Group*)));
 		connect(gman,SIGNAL(defaultGroupRemoved(Group*)),this,SLOT(defaultGroupRemoved(Group*)));
 		connect(gman,SIGNAL(defaultGroupAdded(Group*)),this,SLOT(defaultGroupAdded(Group*)));
 
@@ -246,6 +246,77 @@ namespace kt
 		}
 	}
 	
+	void GroupView::remove(QTreeWidgetItem* parent,const QString & path,Group* g)
+	{
+		// if path looks like /foo we are at a leaf of the tree
+		if (path.count('/') == 1)
+		{
+			QString name = path.mid(1);
+			if (parent)
+			{
+				for (int i = 0;i < parent->childCount();i++)
+				{
+					GroupViewItem* gvi = (GroupViewItem*)parent->child(i);
+					if (gvi->group() == g)
+					{
+						// we have found it
+						delete gvi;
+						return;
+					}
+				}
+			}
+			else
+			{
+				for (int i = 0;i < topLevelItemCount();i++)
+				{
+					GroupViewItem* gvi = (GroupViewItem*)topLevelItem(i);
+					if (gvi->group() == g)
+					{
+						// we have found it
+						delete gvi;
+						return;
+					}
+				}
+			}
+		}
+		else
+		{
+			QString p = path.mid(1); // get rid of first slash
+			int slash_pos = p.indexOf('/'); // find position of slash
+			QString name = p.mid(0,slash_pos); // get the name
+			p = p.mid(slash_pos); // p now becomes next part of path
+			
+			// see if we can find a GroupViewItem with the same name and which is a child of parent
+			if (parent)
+			{
+				for (int i = 0;i < parent->childCount();i++)
+				{
+					GroupViewItem* gvi = (GroupViewItem*)parent->child(i);
+					if (gvi->name() == name)
+					{
+						// there is one, go on recusively
+						remove(gvi,p,g);
+						return;
+					}
+				}
+			}
+			else
+			{
+				for (int i = 0;i < topLevelItemCount();i++)
+				{
+					GroupViewItem* gvi = (GroupViewItem*)topLevelItem(i);
+					if (gvi->name() == name)
+					{
+						// there is one, go on recusively
+						remove(gvi,p,g);
+						return;
+					}
+				}
+			}
+		}
+	}
+	
+	
 	void GroupView::addGroup()
 	{
 		addNewGroup();
@@ -266,10 +337,7 @@ namespace kt
 		}
 		
 		Group* g = gman->newGroup(name);
-		GroupViewItem* gvi = addGroup(g,custom_root,name);
-		gvi->setFlags(gvi->flags() | Qt::ItemIsEditable | Qt::ItemIsDropEnabled);
 		gman->saveGroups();
-		groupAdded(g);
 		return g;
 	}
 	
@@ -282,15 +350,7 @@ namespace kt
 		if (!g)
 			return;
 		
-		groupRemoved(g);
-		if (g == current)
-		{
-			current = gman->allGroup();
-			currentGroupChanged(current);
-		}
-		
-		gman->erase(g->groupName());
-		delete current_item;
+		gman->removeGroup(g);		
 		current_item = 0;
 		gman->saveGroups();
 	}
@@ -498,81 +558,30 @@ namespace kt
 		add(0,g->groupPath(),g);
 	}
 	
-	void GroupView::remove(QTreeWidgetItem* parent,const QString & path,Group* g)
-	{
-		// if path looks like /foo we are at a leaf of the tree
-		if (path.count('/') == 1)
-		{
-			QString name = path.mid(1);
-			if (parent)
-			{
-				for (int i = 0;i < parent->childCount();i++)
-				{
-					GroupViewItem* gvi = (GroupViewItem*)parent->child(i);
-					if (gvi->group() == g)
-					{
-						// we have found it
-						delete gvi;
-						return;
-					}
-				}
-			}
-			else
-			{
-				for (int i = 0;i < topLevelItemCount();i++)
-				{
-					GroupViewItem* gvi = (GroupViewItem*)topLevelItem(i);
-					if (gvi->group() == g)
-					{
-						// we have found it
-						delete gvi;
-						return;
-					}
-				}
-			}
-		}
-		else
-		{
-			QString p = path.mid(1); // get rid of first slash
-			int slash_pos = p.indexOf('/'); // find position of slash
-			QString name = p.mid(0,slash_pos); // get the name
-			p = p.mid(slash_pos); // p now becomes next part of path
-			
-			// see if we can find a GroupViewItem with the same name and which is a child of parent
-			if (parent)
-			{
-				for (int i = 0;i < parent->childCount();i++)
-				{
-					GroupViewItem* gvi = (GroupViewItem*)parent->child(i);
-					if (gvi->name() == name)
-					{
-						// there is one, go on recusively
-						remove(gvi,p,g);
-						return;
-					}
-				}
-			}
-			else
-			{
-				for (int i = 0;i < topLevelItemCount();i++)
-				{
-					GroupViewItem* gvi = (GroupViewItem*)topLevelItem(i);
-					if (gvi->name() == name)
-					{
-						// there is one, go on recusively
-						remove(gvi,p,g);
-						return;
-					}
-				}
-			}
-		}
-	}
+	
 	
 	void GroupView::defaultGroupRemoved(Group* g)
 	{
 		remove(0,g->groupPath(),g);
 	}
 
+	void GroupView::customGroupAdded(Group* g)
+	{
+		add(0,g->groupPath(),g);
+		view->onGroupAdded(g);
+	}
+	
+	void GroupView::customGroupRemoved(Group* g)
+	{
+		if (g == current)
+		{
+			current = gman->allGroup();
+			currentGroupChanged(current);
+		}
+		
+		view->onGroupRemoved(g);
+		remove(0,g->groupPath(),g);
+	}
 }
 
 #include "groupview.moc"

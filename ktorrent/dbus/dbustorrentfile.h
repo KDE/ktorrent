@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
  *   ivasic@gmail.com                                                      *
  *                                                                         *
@@ -18,65 +18,38 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KT_DBUS_HH
-#define KT_DBUS_HH
+#ifndef KTDBUSTORRENTFILE_H
+#define KTDBUSTORRENTFILE_H
 
 #include <QObject>
-#include <util/ptrmap.h>
+#include <interfaces/torrentfileinterface.h>
+
 
 namespace kt
 {
-	class GUI;
-	class Core;
-	class TorrentInterface;
 
 	/**
-	 * Class which handles DBus calls
-	 * */
-	class DBus : public QObject
+		@author
+	*/
+	class DBusTorrentFile : public QObject
 	{
 		Q_OBJECT
-		Q_CLASSINFO("D-Bus Interface", "org.ktorrent.KTorrent")
+		Q_CLASSINFO("D-Bus Interface", "org.ktorrent.torrentfile")
 	public:
-		DBus(GUI* gui,Core* core);
-		virtual ~DBus();
+		DBusTorrentFile(bt::TorrentFileInterface & file,QObject* parent);
+		virtual ~DBusTorrentFile();
 
 	public Q_SLOTS:
-		/// Get the names of all torrents
-		Q_SCRIPTABLE QStringList torrents();
-
-		/// Start a torrent
-		Q_SCRIPTABLE void start(const QString & torrent);
-
-		/// Stop a torrent
-		Q_SCRIPTABLE void stop(const QString & torrent);
-
-		/// Start all torrents
-		Q_SCRIPTABLE void startAll();
-
-		/// Stop all torrents
-		Q_SCRIPTABLE void stopAll();
-
-		/// Get the download speed of a torrent
-		Q_SCRIPTABLE int downloadSpeed(const QString & torrent);
-
-		/// Get the upload speed of a torrent
-		Q_SCRIPTABLE int uploadSpeed(const QString & torrent);
-
-		void torrentAdded(bt::TorrentInterface* tc);
-		void torrentRemoved(bt::TorrentInterface* tc);
-
-	 Q_SIGNALS: 
-		/// DBus signal emitted when a torrent has been added
-		Q_SCRIPTABLE void torrentAdded(const QString & tor);
-
-		/// DBus signal emitted when a torrent has been removed
-		Q_SCRIPTABLE void torrentRemoved(const QString & tor);
-
+		Q_SCRIPTABLE QString path() const;
+		Q_SCRIPTABLE QString pathOnDisk() const;
+		Q_SCRIPTABLE qulonglong size() const;
+		Q_SCRIPTABLE int priority() const;
+		Q_SCRIPTABLE int firstChunk() const;
+		Q_SCRIPTABLE int lastChunk() const;
+		Q_SCRIPTABLE double percentage() const;
+		
 	private:
-		GUI* gui;
-		Core* core;
-		bt::PtrMap<QString,bt::TorrentInterface> torrent_map;
+		bt::TorrentFileInterface & file;
 	};
 
 }

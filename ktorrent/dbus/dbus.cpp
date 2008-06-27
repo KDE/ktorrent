@@ -1,0 +1,179 @@
+/***************************************************************************
+ *   Copyright (C) 2007 by Joris Guisson and Ivan Vasic                    *
+ *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+ ***************************************************************************/
+#include <QDBusConnection>
+#include <kconfig.h>
+#include <interfaces/torrentinterface.h>
+#include <torrent/queuemanager.h>
+#include <util/log.h>
+#include <util/sha1hash.h>
+#include <groups/groupmanager.h>
+#include "dbus.h"
+#include "core.h"
+#include "gui.h"
+#include "dbustorrent.h"
+#include "dbusgroup.h"
+
+using namespace bt;
+
+namespace kt
+{
+	DBus::DBus(GUI* gui,Core* core) : QObject(gui),gui(gui),core(core),next_id(0)
+	{
+		torrent_map.setAutoDelete(true);
+		group_map.setAutoDelete(true);
+		
+		QDBusConnection::sessionBus().registerObject("/core", this,
+				QDBusConnection::ExportScriptableSlots|QDBusConnection::ExportScriptableSignals);
+
+		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),this,SLOT(torrentAdded(bt::TorrentInterface*)));
+		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(torrentRemoved(bt::TorrentInterface*)));
+		// fill the map with torrents
+		kt::QueueManager* qm = core->getQueueManager();
+		for (QList<bt::TorrentInterface *>::iterator i = qm->begin();i != qm->end();i++)
+		{
+			torrentAdded(*i);
+		}
+		
+		kt::GroupManager* gman = core->getGroupManager();
+		connect(gman,SIGNAL(customGroupAdded(Group*)),this,SLOT(groupAdded(Group*)));
+		connect(gman,SIGNAL(customGroupRemoved(Group*)),this,SLOT(groupRemoved(Group*)));
+		kt::GroupManager::const_iterator i = gman->begin();
+		while (i != gman->end())
+		{
+			groupAdded(i->second);
+			i++;
+		}
+	}
+
+	DBus::~DBus()
+	{
+	}
+
+	QStringList DBus::torrents()
+	{
+		QStringList tors;
+		DBusTorrentItr i = torrent_map.begin();
+		while (i != torrent_map.end())
+		{
+			tors.append(QString::number(i->second->id()));
+			i++;
+		}
+
+		return tors;
+	}
+	
+	void DBus::start(const QString & info_hash)
+	{
+		DBusTorrent* tc = torrent_map.find(info_hash);
+		if (!tc)
+			return;
+
+		core->getQueueManager()->start(tc->torrent(),true);
+	}
+
+	void DBus::stop(const QString & info_hash)
+	{
+		DBusTorrent* tc = torrent_map.find(info_hash);
+		if (!tc)
+			return;
+
+		core->getQueueManager()->stop(tc->torrent(),true);
+	}
+
+	void DBus::startAll()
+	{
+		core->startAll(3);
+	}
+
+	void DBus::stopAll()
+	{
+		core->stopAll(3);
+	}
+	
+	void DBus::torrentAdded(bt::TorrentInterface* tc)
+	{
+		DBusTorrent* db = new DBusTorrent(next_id++,tc,this);
+		torrent_map.insert(db->infoHash(),db);
+		torrentAdded(db->infoHash());
+	}
+
+	void DBus::torrentRemoved(bt::TorrentInterface* tc)
+	{
+		DBusTorrent* db = torrent_map.find(tc->getInfoHash().toString());
+		if (db)
+		{
+			QString ih = db->infoHash();
+			torrentRemoved(ih);
+			torrent_map.erase(ih);
+		}
+	}
+
+	void DBus::load(const QString & url,const QString & group)
+	{
+		core->load(KUrl(url),group);
+	}
+		
+	void DBus::loadSilently(const QString & url,const QString & group)
+	{
+		core->loadSilently(KUrl(url),group);
+	}
+	
+	QStringList DBus::groups() const
+	{
+		QStringList ret;
+		kt::GroupManager* gman = core->getGroupManager();
+		kt::GroupManager::const_iterator i = gman->begin();
+		while (i != gman->end())
+		{
+			ret << i->first;
+			i++;
+		}
+		return ret;
+	}
+		
+	bool DBus::addGroup(const QString & group)
+	{
+		kt::GroupManager* gman = core->getGroupManager();
+		return gman->newGroup(group) != 0;
+	}
+
+	bool DBus::removeGroup(const QString & group)
+	{
+		kt::GroupManager* gman = core->getGroupManager();
+		Group* g = gman->find(group);
+		if (!g)
+			return false;
+		
+		gman->removeGroup(g);
+		return true;
+	}
+	
+	void DBus::groupAdded(kt::Group* g)
+	{
+		group_map.insert(g,new DBusGroup(g,core->getGroupManager(),this));
+	}
+	
+	void DBus::groupRemoved(kt::Group* g)
+	{
+		group_map.erase(g);
+	}
+}
+

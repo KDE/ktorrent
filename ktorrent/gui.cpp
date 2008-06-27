@@ -60,7 +60,7 @@
 #include "groupview.h"
 #include "scandlg.h"
 #include "trayicon.h"
-#include "dbus.h"
+#include "dbus/dbus.h"
 #include "pastedialog.h"
 #include "ipfilterwidget.h"
 #include "torrentcreatordlg.h"

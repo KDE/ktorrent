@@ -20,7 +20,6 @@ set(ktorrent_SRC
 	scandlg.cpp
 	trayicon.cpp
 	pastedialog.cpp
-	dbus.cpp
 	ipfilterwidget.cpp
 	speedlimitsdlg.cpp
 	speedlimitsmodel.cpp
@@ -34,6 +33,11 @@ set(ktorrent_SRC
 	grouppolicydlg.cpp
 	torrentmigratordlg.cpp
 	recommendedsettingsdlg.cpp
+	
+	dbus/dbus.cpp
+	dbus/dbustorrent.cpp
+	dbus/dbustorrentfile.cpp
+	dbus/dbusgroup.cpp
 )
 	
 
