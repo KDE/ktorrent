@@ -367,7 +367,7 @@ namespace bt
 				// handshake packet, so just check if the peer supports ut_pex
 				dict = dict->getDict(QString("m"));
 				BValueNode* val = 0;
-				if (dict && (val = dict->getValue("ut_pex")))
+				if (dict && (val = dict->getValue("ut_pex")) && UTPex::isEnabled())
 				{
 					utorrent_pex_id = val->data().toInt();
 					if (ut_pex)
@@ -567,13 +567,13 @@ namespace bt
 		// send extension protocol handshake
 		bt::Uint16 port = Globals::instance().getServer().getPortInUse();
 		
-		if (ut_pex && !on)
+		if (ut_pex && (!on || !UTPex::isEnabled()))
 		{
 			delete ut_pex;
 			ut_pex = 0;
 			
 		}
-		else if (!ut_pex && on && utorrent_pex_id > 0)
+		else if (!ut_pex && on && utorrent_pex_id > 0 && UTPex::isEnabled())
 		{
 			// if the other side has enabled it to, create a new UTPex object
 			ut_pex = new UTPex(this,utorrent_pex_id);

@@ -4,6 +4,7 @@ find_package(KDE4Internal REQUIRED)
 find_package(GMP REQUIRED)
 find_package(QCA2 REQUIRED)
 find_package(Strigi REQUIRED)
+find_package(Plasma REQUIRED)
 
 # set some default settings
 include(KDE4Defaults)
@@ -52,4 +53,4 @@ add_subdirectory(plugins)
 add_subdirectory(ideal)
 add_subdirectory(ktorrent)
 add_subdirectory(ktupnptest)
-#add_subdirectory(test)
+#add_subdirectory(plasma)

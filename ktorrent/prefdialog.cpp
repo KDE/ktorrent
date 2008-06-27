@@ -129,7 +129,8 @@ namespace kt
 #ifdef ENABLE_DHT_SUPPORT
 			kcfg_dhtPort->setEnabled(Settings::dhtSupport());
 #else
-			dhtGroupBox->setShown(false);
+			kcfg_dhtPort->setEnabled(false);
+			kcfg_dhtSupport->setEnabled(false);
 #endif
 		}
 	};

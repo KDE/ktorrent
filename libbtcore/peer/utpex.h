@@ -21,6 +21,7 @@
 #define BTUTPEX_H
 		
 #include <map>
+#include <btcore_export.h>
 #include <net/address.h>
 #include <util/constants.h>
 
@@ -35,7 +36,7 @@ namespace bt
 	 * 
 	 * Class which handles µTorrent's peer exchange
 	*/
-	class UTPex
+	class BTCORE_EXPORT UTPex
 	{
 	public:
 		UTPex(Peer* peer,Uint32 id);
@@ -56,6 +57,12 @@ namespace bt
 		
 		/// Change the ID used in the extended packets
 		void changeID(Uint32 nid) {id = nid;}
+		
+		/// Globally disable or enabled PEX
+		static void setEnabled(bool on) {pex_enabled = on;}
+		
+		/// Is PEX enabled globally
+		static bool isEnabled() {return pex_enabled;}
 	private:
 		void encode(BEncoder & enc,const std::map<Uint32,net::Address> & ps);
 		
@@ -64,6 +71,7 @@ namespace bt
 		Uint32 id; 
 		std::map<Uint32,net::Address> peers; 
 		TimeStamp last_updated;
+		static bool pex_enabled;
 	};
 
 }

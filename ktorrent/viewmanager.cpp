@@ -34,6 +34,7 @@
 #include "viewmanager.h"
 #include "core.h"
 #include "groupview.h"
+#include "settings.h"
 
 using namespace bt;
 
@@ -633,6 +634,9 @@ namespace kt
 		gui->unplugActionList("view_columns_list");
 		gui->plugActionList("view_columns_list",v->columnActionList());
 
+		// disable DHT and PEX if they are globally disabled
+		dht_enabled->setEnabled(Settings::dhtSupport());
+		pex_enabled->setEnabled(Settings::pexEnabled());
 		view_menu->popup(pos);
 	}
 }

@@ -31,6 +31,8 @@
 
 namespace bt
 {
+	
+	bool UTPex::pex_enabled = true;
 
 	UTPex::UTPex(Peer* peer,Uint32 id) : peer(peer),id(id),last_updated(0)
 	{}

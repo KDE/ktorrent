@@ -30,6 +30,7 @@
 #include <torrent/choker.h>
 #include <peer/authenticationmonitor.h>
 #include <peer/peermanager.h>
+#include <peer/utpex.h>
 #include <net/socketmonitor.h>
 #include <net/socks.h>
 #include <dht/dhtbase.h>
@@ -96,6 +97,8 @@ namespace kt
 			ht.start(kt::DataDir() + "dht_table",kt::DataDir() + "dht_key",Settings::dhtPort());
 		}
 #endif
+		
+		UTPex::setEnabled(Settings::pexEnabled());
 		
 		if (Settings::useEncryption())
 		{

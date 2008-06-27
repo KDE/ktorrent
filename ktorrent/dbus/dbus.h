@@ -74,6 +74,7 @@ namespace kt
 		/// Remove a group
 		Q_SCRIPTABLE bool removeGroup(const QString & group);
 		
+	private Q_SLOTS:
 		void torrentAdded(bt::TorrentInterface* tc);
 		void torrentRemoved(bt::TorrentInterface* tc);
 		void groupAdded(Group* g);
