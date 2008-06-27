@@ -84,7 +84,14 @@ namespace kt
 		Group* g = new TorrentGroup(name);
 		insert(name,g);
 		emit customGroupsChanged();
+		emit customGroupAdded(g);
 		return g;
+	}
+	
+	void GroupManager::removeGroup(Group* g)
+	{
+		emit customGroupRemoved(g);
+		erase(g->groupName());
 	}
 	
 	bool GroupManager::canRemove(const Group* g) const

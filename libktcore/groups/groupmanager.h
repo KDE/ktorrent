@@ -58,6 +58,12 @@ namespace kt
 		Group* newGroup(const QString & name);
 		
 		/**
+		 * Remove a user crated group
+		 * @param g The group
+		 */
+		void removeGroup(Group* g);
+		
+		/**
 		 * Add a new default group.
 		 * @param g The group
 		 */
@@ -121,6 +127,8 @@ namespace kt
 		void customGroupsChanged(QString oldName=QString(), QString newName=QString());
 		void defaultGroupAdded(Group* g);
 		void defaultGroupRemoved(Group* g);
+		void customGroupAdded(Group* g);
+		void customGroupRemoved(Group* g);
 	};
 
 }
