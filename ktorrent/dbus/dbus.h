@@ -24,6 +24,11 @@
 #include <QObject>
 #include <util/ptrmap.h>
 
+namespace bt
+{
+	class TorrentInterface;
+}
+
 namespace kt
 {
 	class GUI;
