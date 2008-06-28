@@ -35,6 +35,7 @@ namespace kt
 	class Core;
 	class DBusTorrent;
 	class DBusGroup;
+	class Group;
 	
 
 	/**
