@@ -39,6 +39,7 @@ namespace ktplasma
 
 		void update();
 	private:
+		QString info_hash;
 		Engine* engine;
 		QDBusInterface* tor;
 	};

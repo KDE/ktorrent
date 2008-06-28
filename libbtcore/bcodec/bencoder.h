@@ -108,6 +108,25 @@ namespace bt
 		 */
 		void beginList();
 		
+		template <class T>
+		void write(const QString & key,T val)
+		{
+			write(key);
+			write(val);
+		}
+		
+		/**
+		 * Write a boolean (is encoded as an intà
+		 * @param val 
+		 */
+		void write(bool val);
+		
+		/**
+		 * Write a float 
+		 * @param val 
+		 */
+		void write(float val);
+		
 		/**
 		 * Write an int
 		 * @param val 

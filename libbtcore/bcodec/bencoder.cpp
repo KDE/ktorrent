@@ -84,6 +84,21 @@ namespace bt
 		out->write("l",1);
 	}
 	
+	void BEncoder::write(bool val)
+	{
+		if (!out) return;
+		
+		QByteArray s = QString("i%1e").arg(val ? 1 : 0).toUtf8();
+		out->write(s,s.length());
+	}
+	
+	void BEncoder::write(float val)
+	{
+		if (!out) return;
+		
+		write(QString::number(val,'f'));
+	}
+	
 	void BEncoder::write(Uint32 val)
 	{
 		if (!out) return;

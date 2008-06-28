@@ -64,6 +64,20 @@ namespace bt
 		}
 	}
 	
+	QStringList BDictNode::keys() const
+	{
+		QStringList ret;
+		QList<DictEntry>::const_iterator i = children.begin();
+		while (i != children.end())
+		{
+			const DictEntry & e = *i;
+			ret << QString(e.key);
+			i++;
+		}
+		
+		return ret;
+	}
+	
 	void BDictNode::insert(const QByteArray & key,BNode* node)
 	{
 		DictEntry entry;

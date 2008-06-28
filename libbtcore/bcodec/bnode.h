@@ -21,6 +21,7 @@
 #define BTBNODE_H
 
 #include <QList>
+#include <QStringList>
 #include <util/constants.h>
 #include <btcore_export.h>
 #include "value.h"
@@ -106,6 +107,9 @@ namespace bt
 	public:
 		BDictNode(Uint32 off);
 		virtual ~BDictNode();
+		
+		/// Get a list of keys
+		QStringList keys() const;
 		
 		/**
 		 * Insert a BNode in the dictionary.

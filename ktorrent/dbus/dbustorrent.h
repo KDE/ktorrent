@@ -33,6 +33,7 @@ namespace bt
 namespace kt
 {
 
+
 	/**
 		DBus object to access a torrent
 	*/
@@ -95,6 +96,9 @@ namespace kt
 		Q_SCRIPTABLE uint numFiles() const;
 		Q_SCRIPTABLE QString dataDir() const;
 		Q_SCRIPTABLE QString torDir() const;
+		
+		// Stats
+		Q_SCRIPTABLE QByteArray stats() const;
 		
 	private:
 		int dbus_id;

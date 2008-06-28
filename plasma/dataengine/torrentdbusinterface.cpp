@@ -18,14 +18,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <bcodec/bnode.h>
+#include <bcodec/bdecoder.h>
+#include <util/error.h>
 #include "torrentdbusinterface.h"
 #include "engine.h"
+
+using namespace bt;
 
 namespace ktplasma
 {
 
 	TorrentDBusInterface::TorrentDBusInterface(const QString & ih,Engine* engine)
-			: QObject(engine),engine(engine)
+	: QObject(engine),info_hash(ih),engine(engine)
 	{
 		tor = new QDBusInterface("org.ktorrent.ktorrent","/torrent/" + ih,"org.ktorrent.torrent",QDBusConnection::sessionBus(),this);
 		
@@ -44,6 +49,44 @@ namespace ktplasma
 
 	void TorrentDBusInterface::update()
 	{
-	
+		QDBusReply<QByteArray> r = tor->call("stats");
+		if (!r.isValid())
+			return;
+		
+		QByteArray v = r.value();
+		BDecoder dec(v,false,0);
+		BNode* node = 0;
+		try
+		{
+			node = dec.decode();
+			if (node->getType() != BNode::DICT)
+				throw bt::Error("Root not a dict !");
+			
+			BDictNode* dict = (BDictNode*)node;
+			QStringList keys = dict->keys();
+			foreach (QString key,keys)
+			{
+				BValueNode* vn = dict->getValue(key);
+				if (vn)
+				{
+					switch (vn->data().getType())
+					{
+						case bt::Value::STRING:
+							engine->setData(info_hash,key,vn->data().toString());
+							break;
+						case bt::Value::INT:
+							engine->setData(info_hash,key,vn->data().toInt());
+							break;
+						case bt::Value::INT64:
+							engine->setData(info_hash,key,vn->data().toInt64());
+							break;
+					}
+				}
+			}
+		}
+		catch (bt::Error & err)
+		{
+			engine->setData(info_hash,"update_error",err.toString());
+		}
 	}
 }

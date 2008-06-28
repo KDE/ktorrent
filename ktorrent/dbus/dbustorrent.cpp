@@ -24,6 +24,7 @@
 #include <interfaces/torrentinterface.h>
 #include <interfaces/trackerslist.h>
 #include <interfaces/webseedinterface.h>
+#include <bcodec/bencoder.h>
 #include "dbustorrent.h"
 #include "dbustorrentfile.h"
 
@@ -237,5 +238,52 @@ namespace kt
 	QString DBusTorrent::torDir() const
 	{
 		return ti->getTorDir();
+	}
+	
+	QByteArray DBusTorrent::stats() const
+	{
+		QByteArray ret;
+		BEncoder enc(new BEncoderBufferOutput(ret));
+		const TorrentStats & s = ti->getStats();
+		enc.beginDict();
+		enc.write("imported_bytes",s.imported_bytes);
+		enc.write("bytes_downloaded",s.bytes_downloaded);
+		enc.write("bytes_uploaded",s.bytes_uploaded);
+		enc.write("bytes_left",s.bytes_left);
+		enc.write("bytes_left_to_download",s.bytes_left_to_download);
+		enc.write("total_bytes",s.total_bytes);
+		enc.write("total_bytes_to_download",s.total_bytes_to_download);
+		enc.write("download_rate",s.download_rate);
+		enc.write("upload_rate",s.upload_rate);
+		enc.write("num_peers",s.num_peers);
+		enc.write("num_chunks_downloading",s.num_chunks_downloading);
+		enc.write("total_chunks",s.total_chunks);
+		enc.write("num_chunks_downloaded",s.num_chunks_downloaded);
+		enc.write("num_chunks_excluded",s.num_chunks_excluded);
+		enc.write("num_chunks_left",s.num_chunks_left);
+		enc.write("chunk_size",s.chunk_size);
+		enc.write("seeders_total",s.seeders_total);
+		enc.write("seeders_connected_to",s.seeders_connected_to);
+		enc.write("leechers_total",s.leechers_total);
+		enc.write("leechers_connected_to",s.leechers_connected_to);
+		enc.write("total_times_downloaded", s.total_times_downloaded);
+		enc.write("status",ti->statusToString());
+		enc.write("tracker_status", s.trackerstatus);
+		enc.write("session_bytes_downloaded", s.session_bytes_downloaded);
+		enc.write("session_bytes_uploaded", s.session_bytes_uploaded);
+		enc.write("trk_bytes_downloaded", s.trk_bytes_downloaded);
+		enc.write("trk_bytes_uploaded", s.trk_bytes_uploaded);
+		enc.write("output_path", s.output_path);
+		enc.write("running",s.running);
+		enc.write("started", s.started);
+		enc.write("multi_file_torrent", s.multi_file_torrent);
+		enc.write("stopped_by_error", s.stopped_by_error);
+		enc.write("completed", s.completed);
+		enc.write("user_controlled", s.user_controlled);
+		enc.write("max_share_ratio", s.max_share_ratio);
+		enc.write("max_seed_time", s.max_seed_time);
+		enc.write("num_corrupted_chunks", s.num_corrupted_chunks);
+		enc.end();
+		return ret;
 	}
 }
