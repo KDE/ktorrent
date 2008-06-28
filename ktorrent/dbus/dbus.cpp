@@ -35,7 +35,7 @@ using namespace bt;
 
 namespace kt
 {
-	DBus::DBus(GUI* gui,Core* core) : QObject(gui),gui(gui),core(core),next_id(0)
+	DBus::DBus(GUI* gui,Core* core) : QObject(gui),gui(gui),core(core)
 	{
 		torrent_map.setAutoDelete(true);
 		group_map.setAutoDelete(true);
@@ -73,7 +73,7 @@ namespace kt
 		DBusTorrentItr i = torrent_map.begin();
 		while (i != torrent_map.end())
 		{
-			tors.append(QString::number(i->second->id()));
+			tors.append(i->first);
 			i++;
 		}
 
@@ -110,7 +110,7 @@ namespace kt
 	
 	void DBus::torrentAdded(bt::TorrentInterface* tc)
 	{
-		DBusTorrent* db = new DBusTorrent(next_id++,tc,this);
+		DBusTorrent* db = new DBusTorrent(tc,this);
 		torrent_map.insert(db->infoHash(),db);
 		torrentAdded(db->infoHash());
 	}

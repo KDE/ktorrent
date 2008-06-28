@@ -32,11 +32,11 @@ using namespace bt;
 namespace kt
 {
 
-	DBusTorrent::DBusTorrent(int id,bt::TorrentInterface* ti,QObject* parent)
-			: QObject(parent),dbus_id(id),ti(ti)
+	DBusTorrent::DBusTorrent(bt::TorrentInterface* ti,QObject* parent)
+			: QObject(parent),ti(ti)
 	{
 		QDBusConnection sb = QDBusConnection::sessionBus();
-		QString path = QString("/torrent/%1").arg(id);
+		QString path = QString("/torrent/%1").arg(ti->getInfoHash().toString());
 		QFlags<QDBusConnection::RegisterOption> flags = QDBusConnection::ExportScriptableSlots|QDBusConnection::ExportScriptableSignals;
 		sb.registerObject(path, this,flags);
 		

@@ -93,7 +93,6 @@ namespace kt
 		Core* core;
 		bt::PtrMap<QString,DBusTorrent> torrent_map;
 		bt::PtrMap<Group*,DBusGroup> group_map;
-		int next_id;
 		
 		typedef bt::PtrMap<QString,DBusTorrent>::iterator DBusTorrentItr;
 		typedef bt::PtrMap<Group*,DBusGroup>::iterator DBusGroupItr;

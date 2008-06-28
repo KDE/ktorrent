@@ -41,11 +41,8 @@ namespace kt
 		Q_OBJECT
 		Q_CLASSINFO("D-Bus Interface", "org.ktorrent.torrent")
 	public:
-		DBusTorrent(int id,bt::TorrentInterface* ti,QObject* parent);
+		DBusTorrent(bt::TorrentInterface* ti,QObject* parent);
 		virtual ~DBusTorrent();
-		
-		/// Get the ID
-		int id() const {return dbus_id;}
 		
 		/// Get a pointer to the actual torrent
 		bt::TorrentInterface* torrent() {return ti;}
