@@ -35,7 +35,6 @@
 #include <util/error.h>
 #include <util/log.h>
 
-#include "api/ktorrent.h"
 #include "scriptingplugin.h"
 #include "scriptmanager.h"
 
