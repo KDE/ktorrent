@@ -26,8 +26,8 @@
 #include <util/sha1hash.h>
 #include <groups/groupmanager.h>
 #include "dbus.h"
-#include "core.h"
-#include "gui.h"
+#include <interfaces/coreinterface.h>
+#include <interfaces/guiinterface.h>
 #include "dbustorrent.h"
 #include "dbusgroup.h"
 
@@ -35,7 +35,7 @@ using namespace bt;
 
 namespace kt
 {
-	DBus::DBus(GUI* gui,Core* core) : QObject(gui),gui(gui),core(core)
+	DBus::DBus(GUIInterface* gui,CoreInterface* core,QObject* parent) : QObject(parent),gui(gui),core(core)
 	{
 		torrent_map.setAutoDelete(true);
 		group_map.setAutoDelete(true);
@@ -45,6 +45,10 @@ namespace kt
 
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),this,SLOT(torrentAdded(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(torrentRemoved(bt::TorrentInterface*)));
+		connect(core,SIGNAL(torrentStoppedByError(bt::TorrentInterface*, QString)),this,SLOT(torrentStoppedByError(bt::TorrentInterface*, QString)));
+		connect(core,SIGNAL(finished(bt::TorrentInterface*)),this,SLOT(finished(bt::TorrentInterface*)));
+		connect(core,SIGNAL(settingsChanged()),this,SIGNAL(settingsChanged()));
+		
 		// fill the map with torrents
 		kt::QueueManager* qm = core->getQueueManager();
 		for (QList<bt::TorrentInterface *>::iterator i = qm->begin();i != qm->end();i++)
@@ -125,6 +129,26 @@ namespace kt
 			torrent_map.erase(ih);
 		}
 	}
+	
+	void DBus::finished(bt::TorrentInterface* tc)
+	{
+		DBusTorrent* db = torrent_map.find(tc->getInfoHash().toString());
+		if (db)
+		{
+			QString ih = db->infoHash();
+			finished(ih);
+		}
+	}
+	
+	void DBus::torrentStoppedByError(bt::TorrentInterface* tc, QString msg)
+	{
+		DBusTorrent* db = torrent_map.find(tc->getInfoHash().toString());
+		if (db)
+		{
+			QString ih = db->infoHash();
+			torrentStoppedByError(ih,msg);
+		}
+	}
 
 	void DBus::load(const QString & url,const QString & group)
 	{
@@ -175,5 +199,67 @@ namespace kt
 	{
 		group_map.erase(g);
 	}
+	
+	QObject* DBus::torrent(const QString & info_hash)
+	{
+		return torrent_map.find(info_hash);
+	}
+		
+	QObject* DBus::group(const QString & name)
+	{
+		kt::GroupManager* gman = core->getGroupManager();
+		kt::GroupManager::const_iterator i = gman->begin();
+		while (i != gman->end())
+		{
+			if (i->first == name)
+				return group_map.find(i->second);
+			i++;
+		}
+		return 0;
+	}
+	
+	void DBus::log(const QString & line)
+	{
+		Out(SYS_GEN|LOG_NOTICE) << line << endl;
+	}
+	
+	void DBus::queue(const QString & info_hash)
+	{
+		DBusTorrent* tc = torrent_map.find(info_hash);
+		if (!tc)
+			return;
+
+		core->queue(tc->torrent());
+	}
+		
+	void DBus::remove(const QString & info_hash,bool data_to)
+	{
+		DBusTorrent* tc = torrent_map.find(info_hash);
+		if (!tc)
+			return;
+
+		core->remove(tc->torrent(),data_to);
+	}
+	
+	void DBus::setPaused(bool pause)
+	{
+		core->setPausedState(pause);
+	}
+		
+	bool DBus::paused()
+	{
+		return core->getPausedState();
+	}
+	
+	uint DBus::numTorrentsRunning() const
+	{
+		return core->getNumTorrentsRunning();
+	}
+
+	uint DBus::numTorrentsNotRunning() const
+	{
+		return core->getNumTorrentsNotRunning();
+	}
+	
 }
 

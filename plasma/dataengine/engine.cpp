@@ -19,21 +19,35 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QDBusInterface>
+#include <kglobal.h>
+#include <kstandarddirs.h>
+#include <util/log.h>
 #include "engine.h"
 #include "coredbusinterface.h"
 #include "torrentdbusinterface.h"
 
 K_EXPORT_PLASMA_DATAENGINE(ktorrent, ktplasma::Engine);
 
+using namespace bt;
+
 namespace ktplasma
 {
+	QString DataDir()
+	{
+		QString str = KGlobal::dirs()->saveLocation("data","ktorrent");
+		if (!str.endsWith('/'))
+			return str + '/';
+		else
+			return str;
+	}
 
 	Engine::Engine(QObject* parent, const QVariantList& args)
 			: Plasma::DataEngine(parent, args),core(0)
 	{
+		bt::InitLog(DataDir() + "dataengine.log",false);
 		dbus = QDBusConnection::sessionBus().interface();
-		connect(dbus,SIGNAL(serviceRegistered(const QString&)),this,SLOT(dbusServiceRegistered(const QString&)));
-		connect(dbus,SIGNAL(serviceUnregistered(const QString&)),this,SLOT(dbusServiceUnregistered(const QString&)));
+		connect(dbus,SIGNAL(serviceRegistered(QString)),this,SLOT(dbusServiceRegistered(const QString&)));
+		connect(dbus,SIGNAL(serviceUnregistered(QString)),this,SLOT(dbusServiceUnregistered(const QString&)));
 		
 		torrent_map.setAutoDelete(true);
 		setData("core","connected",false);
@@ -66,6 +80,7 @@ namespace ktplasma
 	
 	void Engine::dbusServiceRegistered(const QString & name)
 	{
+		bt::Out(SYS_GEN|LOG_DEBUG) << "Engine::dbusServiceRegistered " << name << endl;
 		if (name != "org.ktorrent.ktorrent")
 			return;
 		
@@ -78,6 +93,7 @@ namespace ktplasma
 	
 	void Engine::dbusServiceUnregistered(const QString & name)
 	{
+		bt::Out(SYS_GEN|LOG_DEBUG) << "Engine::dbusServiceUnregistered " << name << endl;
 		if (name != "org.ktorrent.ktorrent")
 			return;
 		

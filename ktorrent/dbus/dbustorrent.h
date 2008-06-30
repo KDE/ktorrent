@@ -32,6 +32,7 @@ namespace bt
 
 namespace kt
 {
+	class DBusTorrentFile;
 
 
 	/**
@@ -94,15 +95,17 @@ namespace kt
 		
 		// Files
 		Q_SCRIPTABLE uint numFiles() const;
+		Q_SCRIPTABLE QObject* file(uint idx);
 		Q_SCRIPTABLE QString dataDir() const;
 		Q_SCRIPTABLE QString torDir() const;
 		
 		// Stats
 		Q_SCRIPTABLE QByteArray stats() const;
 		
+		
 	private:
-		int dbus_id;
 		bt::TorrentInterface* ti;
+		QList<DBusTorrentFile*> files;
 	};
 
 }

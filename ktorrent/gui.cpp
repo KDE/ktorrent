@@ -119,7 +119,7 @@ namespace kt
 		else
 			tray_icon->hide();		
 
-		dbus_iface = new DBus(this,core);
+		dbus_iface = new DBus(this,core,this);
 		
 		core->loadPlugins();
 		loadState(KGlobal::config());

@@ -31,8 +31,8 @@ namespace bt
 
 namespace kt
 {
-	class GUI;
-	class Core;
+	class GUIInterface;
+	class CoreInterface;
 	class DBusTorrent;
 	class DBusGroup;
 	class Group;
@@ -46,7 +46,7 @@ namespace kt
 		Q_OBJECT
 		Q_CLASSINFO("D-Bus Interface", "org.ktorrent.core")
 	public:
-		DBus(GUI* gui,Core* core);
+		DBus(GUIInterface* gui,CoreInterface* core,QObject* parent);
 		virtual ~DBus();
 
 	public Q_SLOTS:
@@ -71,6 +71,18 @@ namespace kt
 		/// Load a torrent silently
 		Q_SCRIPTABLE void loadSilently(const QString & url,const QString & group);
 		
+		/// Enqueue or dequeue a torrent
+		Q_SCRIPTABLE void queue(const QString & info_hash);
+		
+		/// Remove a torrent
+		Q_SCRIPTABLE void remove(const QString & info_hash,bool data_to);
+		
+		/// Set the paused state
+		Q_SCRIPTABLE void setPaused(bool pause);
+		
+		/// Gets the globla paused state
+		Q_SCRIPTABLE bool paused();
+		
 		/// Get all the custom groups
 		Q_SCRIPTABLE QStringList groups() const;
 		
@@ -80,9 +92,26 @@ namespace kt
 		/// Remove a group
 		Q_SCRIPTABLE bool removeGroup(const QString & group);
 		
+		/// Get a torrent (this is for scripting)
+		Q_SCRIPTABLE QObject* torrent(const QString & info_hash);
+		
+		/// Get a group (this is for scripting)
+		Q_SCRIPTABLE QObject* group(const QString & name);
+		
+		/// Write something to the log
+		Q_SCRIPTABLE void log(const QString & line);
+		
+		///  Get the number of torrents running.
+		Q_SCRIPTABLE uint numTorrentsRunning() const;
+
+		///  Get the number of torrents not running.
+		Q_SCRIPTABLE uint numTorrentsNotRunning() const;
+		
 	private Q_SLOTS:
 		void torrentAdded(bt::TorrentInterface* tc);
 		void torrentRemoved(bt::TorrentInterface* tc);
+		void finished(bt::TorrentInterface* tc);
+		void torrentStoppedByError(bt::TorrentInterface* tc, QString msg);
 		void groupAdded(Group* g);
 		void groupRemoved(Group* g);
 
@@ -93,10 +122,19 @@ namespace kt
 		/// DBus signal emitted when a torrent has been removed
 		Q_SCRIPTABLE void torrentRemoved(const QString & tor);
 		
+		/// Emitted when torrent is finished
+		Q_SCRIPTABLE void finished(const QString & tor);
+
+		/// Emitted when a torrent is stopped by an error
+		Q_SCRIPTABLE void torrentStoppedByError(const QString & tor,const QString & msg);
+
+		/// Emitted when settings are changed in settings dialog
+		Q_SCRIPTABLE void settingsChanged();
+		
 
 	private:
-		GUI* gui;
-		Core* core;
+		GUIInterface* gui;
+		CoreInterface* core;
 		bt::PtrMap<QString,DBusTorrent> torrent_map;
 		bt::PtrMap<Group*,DBusGroup> group_map;
 		

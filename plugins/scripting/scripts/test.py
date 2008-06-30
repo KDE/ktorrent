@@ -2,17 +2,23 @@
 import KTorrent
 import Kross
 
-#def torrentAdded(torrent):
-#	KTorrent.log("torrentAdded=%s" % torrent.getStats.torrent_name)
+def torrentAdded(ih):
+	tor = KTorrent.torrent(ih)
+	KTorrent.log("torrentAdded=%s" % tor.name())
 
-#def torrentRemoved(torrent):
-#	KTorrent.log("torrentRemoved=%s" % torrent.getStats.torrent_name)
+def torrentRemoved(ih):
+	tor = KTorrent.torrent(ih)
+	KTorrent.log("torrentRemoved=%s" % tor.name())
 
  
-#KTCore.connect("torrentAdded(bt::TorrentInterface*)",torrentAdded)
-#KTCore.connect("torrentRemoved(bt::TorrentInterface*)",torrentRemoved)
-KTorrent.log("This is python code !!!!!!!!!!!!!!")
-KTorrent.log("Num torrents = %i" % KTorrent.numTorrents())
-for n in range(0,KTorrent.numTorrents()):
-	tor = KTorrent.torrent(n)
-	KTorrent.log("Torrent %i = %s" % (n, tor.torrentName()))
+KTorrent.connect("torrentAdded(const QString &)",torrentAdded)
+KTorrent.connect("torrentRemoved(const QString &)",torrentRemoved)
+
+tors = KTorrent.torrents()
+
+KTorrent.log("Num torrents : %i" % len(tors))
+for t in tors:
+	tor = KTorrent.torrent(t)
+	KTorrent.log("Torrent %s = %s" % (t, tor.name()))
+	for i in range(0,tor.numFiles()):
+		KTorrent.log("File %i = %s" % (i,tor.file(i).path()))

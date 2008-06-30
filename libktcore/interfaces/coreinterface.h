@@ -201,6 +201,9 @@ namespace kt
 		/// Get the GroupManager
 		virtual kt::GroupManager* getGroupManager() = 0;
 		
+		/// Get a pointer to the external interface object (for dbus and scripting)
+		virtual QObject* getExternalInterface() = 0;
+		
 	signals:
 		/**
 		 * Seeing that when load returns the loading process may not have finished yet,

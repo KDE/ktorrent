@@ -73,7 +73,7 @@ namespace kt
 	void ScriptingPlugin::load()
 	{
 		// add the KTorrent object
-		Kross::Manager::self().addObject(new ktapi::KTorrent(getCore(),this),"KTorrent",Kross::ChildrenInterface::AutoConnectSignals);
+		Kross::Manager::self().addObject(getCore()->getExternalInterface(),"KTorrent");
 		loadScripts();
 		
 		Out(SYS_SCR|LOG_DEBUG) << "Supported interpreters : " << endl;

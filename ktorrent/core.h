@@ -69,6 +69,7 @@ namespace kt
 		virtual void setPausedState(bool pause);
 		virtual bool getPausedState();
 		virtual float getGlobalMaxShareRatio() const;
+		virtual QObject* getExternalInterface();
 
 		/// Get the queue manager
 		kt::QueueManager* getQueueManager();

@@ -45,6 +45,7 @@ namespace kt
 		{
 			DBusTorrentFile* tf = new DBusTorrentFile(ti->getTorrentFile(i),this);
 			sb.registerObject(path + QString("/file/%1").arg(i),tf,flags);
+			files.append(tf);
 		}
 	}
 
@@ -228,6 +229,14 @@ namespace kt
 	uint DBusTorrent::numFiles() const
 	{
 		return ti->getNumFiles();
+	}
+	
+	QObject* DBusTorrent::file(uint idx)
+	{
+		if (idx >= files.count())
+			return 0;
+		else
+			return files.at(idx);
 	}
 	
 	QString DBusTorrent::dataDir() const

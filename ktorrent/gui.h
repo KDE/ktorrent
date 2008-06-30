@@ -53,6 +53,8 @@ namespace kt
 		GUI();
 		virtual ~GUI();
 
+		DBus* getDBusInterface() {return dbus_iface;}
+		
 		// Stuff implemented from GUIInterface
 		virtual KMainWindow* getMainWindow() {return this;}
 		virtual void addTabPage(QWidget* page,const QString & icon,const QString & caption,CloseTabListener* ctl);

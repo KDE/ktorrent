@@ -29,7 +29,7 @@
 #include <solid/powermanagement.h>
 
 
-
+#include <dbus/dbus.h>
 #include <interfaces/guiinterface.h>
 #include <interfaces/functions.h>
 #include <interfaces/torrentfileinterface.h>
@@ -1145,6 +1145,11 @@ namespace kt
 		{
 			KMessageBox::information(gui,i18n("No torrents from the KDE3 version were found !"));
 		}
+	}
+	
+	QObject* Core::getExternalInterface()
+	{
+		return gui->getDBusInterface();
 	}
 }
 
