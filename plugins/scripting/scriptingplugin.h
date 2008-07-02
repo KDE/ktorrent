@@ -28,6 +28,7 @@ class KJob;
 namespace kt
 {
 	class ScriptManager;
+	class ScriptModel;
 	
 	/**
 		@author
@@ -43,8 +44,7 @@ namespace kt
 		virtual void unload();
 		virtual bool versionCheck(const QString& version) const;
 	private:
-		void setupActions();
-		void loadScript(const QString & file);
+		void setupActions();;
 		void scriptDownloadFinished(KJob* job);
 		void loadScripts();
 		void saveScripts();
@@ -52,11 +52,18 @@ namespace kt
 	private slots:
 		void addScript();
 		void removeScript();
+		void runScript();
+		void stopScript();
+		void editScript();
 		
 	private:
 		ScriptManager* sman;
+		ScriptModel* model;
 		KAction* add_script;
 		KAction* remove_script;
+		KAction* run_script;
+		KAction* stop_script;
+		KAction* edit_script;
 	};
 
 }

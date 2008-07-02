@@ -18,56 +18,80 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTSCRIPTMANAGER_H
-#define KTSCRIPTMANAGER_H
-
-#include <QListView>
-
-class KToolBar;
-class KMenu;
-class KActionCollection;
-
-namespace Kross
-{
-	class Action;
-}
+#include <kmimetype.h>
+#include <kross/core/manager.h>
+#include <kross/core/actioncollection.h>
+#include <util/fileops.h>
+#include "script.h"
 
 namespace kt
 {
-	class ScriptModel;
 
-	/**
-		Widget to display all scripts.
-	*/
-	class ScriptManager : public QWidget
+	Script::Script(const QString & file,QObject* parent) : QObject(parent),file(file),action(0),executing(false)
 	{
-		Q_OBJECT
-	public:
-		ScriptManager(ScriptModel* model,KActionCollection* ac,QWidget* parent);
-		virtual ~ScriptManager();
-		
-		/// Get all selected scripts
-		QModelIndexList selectedScripts();
-		
-		/// Update all actions and make sure they are properly enabled or disabled
-		void updateActions(const QModelIndexList & selected);
-		
-	private slots:
-		void onSelectionChanged(const QItemSelection & selected,const QItemSelection & deselected);
-		void showContextMenu(const QPoint& p);
-		
-	signals:
-		void enableRemoveScript(bool on);
-		void enableRunScript(bool on);
-		void enableStopScript(bool on);
-		
-	private:
-		ScriptModel* model;
-		QListView* view;
-		KToolBar* toolbar;
-		KMenu* context_menu;
-	};
+	}
 
+
+	Script::~Script()
+	{
+		stop();
+	}
+
+	bool Script::execute()
+	{
+		if (!bt::Exists(file) || action)
+			return false;
+		
+		KMimeType::Ptr mt = KMimeType::findByPath(file);
+		QString name = QFileInfo(file).fileName();
+		action = new Kross::Action(this,name);
+		action->setText(name);
+		action->setDescription(name);
+		action->setFile(file);
+		action->setIconName(mt->iconName());
+		QString interpreter = Kross::Manager::self().interpreternameForFile(file);
+		if (interpreter.isNull())
+		{
+			delete action;
+			action = 0;
+			return false;
+		}
+		else
+		{
+			action->setInterpreter(interpreter);
+			Kross::Manager::self().actionCollection()->addAction(file,action);
+			action->trigger();
+			executing = true;
+			return true;
+		}
+	}
+		
+	void Script::stop()
+	{
+		if (!executing)
+			return;
+		
+		Kross::ActionCollection* col = Kross::Manager::self().actionCollection();
+		col->removeAction(action->file());
+		action->deleteLater();
+		action = 0;
+		executing = false;
+	}
+	
+	QString Script::name() const
+	{
+		if (action)
+			return action->name();
+		else
+			return QFileInfo(file).fileName();
+	}
+		
+	QString Script::iconName() const
+	{
+		if (action)
+			return action->iconName();
+		else
+			return KMimeType::findByPath(file)->iconName();
+	}
+	
 }
-
-#endif

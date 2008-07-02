@@ -20,14 +20,14 @@
  ***************************************************************************/
 #include <kicon.h>
 #include "scriptmodel.h"
+#include "script.h"
 
 namespace kt
 {
 
-	ScriptModel::ScriptModel(Kross::ActionCollection* col,QObject* parent)
-			: QAbstractListModel(parent),col(col)
+	ScriptModel::ScriptModel(QObject* parent)
+			: QAbstractListModel(parent)
 	{
-		connect(col,SIGNAL(updated()),this,SLOT(collectionUpdated()));
 	}
 
 
@@ -35,34 +35,32 @@ namespace kt
 	{
 	}
 	
-	void ScriptModel::collectionUpdated()
+	void ScriptModel::addScript(const QString & file)
 	{
-		reset();
+		Script* s = new Script(file,this);
+		scripts.append(s);
+		insertRow(scripts.count());
 	}
-		
+	
 	int ScriptModel::rowCount(const QModelIndex & parent) const
 	{
-		return parent.isValid() ? 0 : col->actions().count();
+		return parent.isValid() ? 0 : scripts.count();
 	}
 	
 	QVariant ScriptModel::data(const QModelIndex & index, int role) const
 	{
-		if (!index.isValid())
+		Script* s = scriptForIndex(index);
+		if (!s)
 			return QVariant();
 		
-		QList<Kross::Action*> act = col->actions();
-		if (index.row() < 0 || index.row() >= act.count())
-			return QVariant();
-			
-		Kross::Action* a = act[index.row()];
 		switch (role)
 		{
 			case Qt::DisplayRole:
-				return a->name();
+				return s->name();
 			case Qt::DecorationRole:
-				return KIcon(a->iconName());
+				return KIcon(s->iconName());
 			case Qt::CheckStateRole:
-				return a->isEnabled() ? Qt::Checked : Qt::Unchecked;
+				return s->running() ? Qt::Checked : Qt::Unchecked;
 			default:
 				return QVariant();
 		}
@@ -75,14 +73,15 @@ namespace kt
 		
 		if (role == Qt::CheckStateRole)
 		{
-			QList<Kross::Action*> act = col->actions();
-			if (index.row() < 0 || index.row() >= act.count())
+			Script* s = scriptForIndex(index);
+			if (!s)
 				return false;
 			
-			Kross::Action* a = act[index.row()];
-			a->setEnabled((Qt::CheckState)value.toUInt() == Qt::Checked);
 			if ((Qt::CheckState)value.toUInt() == Qt::Checked)
-				a->trigger(); 
+				s->execute();
+			else
+				s->stop();
+			 
 			dataChanged(index,index);
 			return true;
 		}
@@ -97,4 +96,53 @@ namespace kt
 			return QAbstractItemModel::flags(index) | Qt::ItemIsUserCheckable;
 	}
 
+	Script* ScriptModel::scriptForIndex(const QModelIndex & index) const
+	{
+		if (!index.isValid())
+			return 0;
+		
+		if (index.row() < 0 || index.row() >= scripts.count())
+			return 0;
+			
+		return scripts[index.row()];
+	}
+	
+	bool ScriptModel::removeRows(int row,int count,const QModelIndex & parent)
+	{
+		beginRemoveRows(QModelIndex(),row,row + count - 1);
+		endRemoveRows();
+		return true;
+	}
+	
+	bool ScriptModel::insertRows(int row,int count,const QModelIndex & parent)
+	{
+		beginInsertRows(QModelIndex(),row,row + count - 1);
+		endInsertRows();
+		return true;
+	}
+	
+	QStringList ScriptModel::scriptFiles() const
+	{
+		QStringList ret;
+		foreach (Script* s,scripts)
+			ret << s->scriptFile();
+		return ret;
+	}
+	
+	void ScriptModel::removeScripts(const QModelIndexList & indices)
+	{
+		QList<Script*> to_remove;
+		
+		foreach (const QModelIndex & idx,indices)
+			to_remove << scriptForIndex(idx);
+		
+		foreach (Script* s,to_remove)
+		{
+			scripts.removeAll(s);
+			s->stop();
+			s->deleteLater();
+		}
+		
+		reset();
+	}
 }

@@ -18,13 +18,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <QAction>
 #include <QVBoxLayout>
 #include <util/log.h>
+#include <kmenu.h>
 #include <ktoolbar.h>
 #include <kactioncollection.h>
 #include <kross/core/manager.h>
 #include "scriptmanager.h"
 #include "scriptmodel.h"
+#include "script.h"
 
 using namespace Kross;
 using namespace bt;
@@ -32,30 +35,60 @@ using namespace bt;
 namespace kt
 {
 
-	ScriptManager::ScriptManager(KActionCollection* ac,QWidget* parent)
-			: QWidget(parent)
+	ScriptManager::ScriptManager(ScriptModel* model,KActionCollection* ac,QWidget* parent)
+			: QWidget(parent),model(model)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
 		layout->setMargin(0);
 		
 		QAction* remove = ac->action("remove_script");
+		QAction* add = ac->action("add_script");
+		QAction* run = ac->action("run_script");
+		QAction* stop = ac->action("stop_script");
+		QAction* edit = ac->action("edit_script");
+		
 		toolbar = new KToolBar(this);
 		toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		layout->addWidget(toolbar);
-		toolbar->addAction(ac->action("add_script"));
+		toolbar->addAction(add);
 		toolbar->addAction(remove);
+		toolbar->addAction(run);
+		toolbar->addAction(stop);
 		connect(this,SIGNAL(enableRemoveScript(bool)),remove,SLOT(setEnabled(bool)));
+		connect(this,SIGNAL(enableRemoveScript(bool)),edit,SLOT(setEnabled(bool)));
+		connect(this,SIGNAL(enableStopScript(bool)),stop,SLOT(setEnabled(bool)));
+		connect(this,SIGNAL(enableRunScript(bool)),run,SLOT(setEnabled(bool)));
 		remove->setEnabled(false);
 		
 		view = new QListView(this);
 		layout->addWidget(view);
 	
-		model = new ScriptModel(Kross::Manager::self().actionCollection(),this);
  		view->setModel(model);
+		view->setContextMenuPolicy(Qt::CustomContextMenu);
+		view->setSelectionMode(QAbstractItemView::ExtendedSelection);
+		view->setSelectionBehavior(QAbstractItemView::SelectRows);
 		
 		connect(view->selectionModel(),SIGNAL(selectionChanged(const QItemSelection &,const QItemSelection)),
 				this,SLOT(onSelectionChanged(const QItemSelection &,const QItemSelection)));
+		
+		connect(view,SIGNAL(customContextMenuRequested(const QPoint & )),
+				this,SLOT(showContextMenu(const QPoint& )));
+		
+		context_menu = new KMenu(this);
+		context_menu->addAction(add);
+		context_menu->addAction(remove);
+		context_menu->addSeparator();
+		context_menu->addAction(run);
+		context_menu->addAction(stop);
+		context_menu->addSeparator();
+		context_menu->addAction(edit);
+		
+		add->setEnabled(true);
+		remove->setEnabled(false);
+		run->setEnabled(false);
+		stop->setEnabled(false);
+		edit->setEnabled(false);
 	}
 
 
@@ -66,7 +99,35 @@ namespace kt
 	void ScriptManager::onSelectionChanged(const QItemSelection & selected,const QItemSelection & deselected)
 	{
 		Q_UNUSED(deselected);
+		Q_UNUSED(selected);
+		updateActions(selectedScripts());
+	}
+	
+	void ScriptManager::updateActions(const QModelIndexList & selected)
+	{
 		enableRemoveScript(selected.count() > 0);
+		int num_running = 0;
+		int num_not_running = 0;
+		foreach (const QModelIndex & idx,selected)
+		{
+			Script* s = model->scriptForIndex(idx);
+			if (s && s->running())
+				num_running++;
+			else
+				num_not_running++;
+		}
+		
+		enableRunScript(selected.count() > 0 && num_not_running > 0);
+		enableStopScript(selected.count() > 0 && num_running > 0);
+	}
+	
+	QModelIndexList ScriptManager::selectedScripts()
+	{
+		return view->selectionModel()->selectedRows();
 	}
 
+	void ScriptManager::showContextMenu(const QPoint& p)
+	{
+		context_menu->popup(view->mapToGlobal(p));
+	}
 }

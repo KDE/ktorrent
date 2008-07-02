@@ -22,10 +22,11 @@
 #define KTSCRIPTMODEL_H
 
 #include <QAbstractListModel>
-#include <kross/core/actioncollection.h>
+
 
 namespace kt
 {
+	class Script;
 
 	/**
 		Model which keeps track of all scripts
@@ -34,18 +35,33 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		ScriptModel(Kross::ActionCollection* col,QObject* parent);
+		ScriptModel(QObject* parent);
 		virtual ~ScriptModel();
+		
+		/**
+		 * Add a script to the model
+		 * @param file 
+		 */
+		void addScript(const QString & file);
+		
+		/// Get a script given an index
+		Script* scriptForIndex(const QModelIndex & index) const;
+		
+		/// Get a list of all scripts
+		QStringList scriptFiles() const;
+		
+		/// Remove a bunch of scripts
+		void removeScripts(const QModelIndexList & indices);
 		
 		virtual int rowCount(const QModelIndex & parent) const;
 		virtual QVariant data(const QModelIndex & index, int role) const;
 		virtual bool setData(const QModelIndex & index,const QVariant & value,int role);
 		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
-	private slots:
-		void collectionUpdated();
+		virtual bool removeRows(int row,int count,const QModelIndex & parent);
+		virtual bool insertRows(int row,int count,const QModelIndex & parent);
 		
 	private:
-		Kross::ActionCollection* col;
+		QList<Script*> scripts;
 	};
 
 }

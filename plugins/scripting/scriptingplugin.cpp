@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <krun.h>
 #include <kgenericfactory.h>
 #include <kactioncollection.h>
 #include <kfiledialog.h>
@@ -37,6 +38,8 @@
 
 #include "scriptingplugin.h"
 #include "scriptmanager.h"
+#include "scriptmodel.h"
+#include "script.h"
 
 K_EXPORT_COMPONENT_FACTORY(ktscriptingplugin,KGenericFactory<kt::ScriptingPlugin>("ktscriptingplugin"))
 		
@@ -65,12 +68,25 @@ namespace kt
 		ac->addAction("add_script",add_script);
 		
 		remove_script = new KAction(KIcon("list-remove"),i18n("Remove Script"),this);
-		connect(add_script,SIGNAL(triggered()),this,SLOT(removeScript()));
+		connect(remove_script,SIGNAL(triggered()),this,SLOT(removeScript()));
 		ac->addAction("remove_script",remove_script);
+		
+		run_script = new KAction(KIcon("system-run"),i18n("Run Script"),this);
+		connect(run_script,SIGNAL(triggered()),this,SLOT(runScript()));
+		ac->addAction("run_script",run_script);
+		
+		stop_script = new KAction(KIcon("media-playback-stop"),i18n("Stop Script"),this);
+		connect(stop_script,SIGNAL(triggered()),this,SLOT(stopScript()));
+		ac->addAction("stop_script",stop_script);
+		
+		edit_script = new KAction(KIcon("document-open"),i18n("Edit Script"),this);
+		connect(edit_script,SIGNAL(triggered()),this,SLOT(editScript()));
+		ac->addAction("edit_script",edit_script);
 	}
 
 	void ScriptingPlugin::load()
 	{
+		model = new ScriptModel(this);
 		// add the KTorrent object
 		Kross::Manager::self().addObject(getCore()->getExternalInterface(),"KTorrent");
 		loadScripts();
@@ -81,7 +97,7 @@ namespace kt
 			Out(SYS_SCR|LOG_DEBUG) << s << endl;
 		
 		setupActions();
-		sman = new ScriptManager(actionCollection(),0);
+		sman = new ScriptManager(model,actionCollection(),0);
 		getGUI()->addToolWidget(sman,"text-x-script",i18n("Scripts"),GUIInterface::DOCK_LEFT);
 	}
 
@@ -92,6 +108,8 @@ namespace kt
 		getGUI()->removeToolWidget(sman);
 		delete sman;
 		sman = 0;
+		delete model;
+		model = 0;
 	}
 	
 	void ScriptingPlugin::loadScripts()
@@ -102,22 +120,15 @@ namespace kt
 		{
 			Out(SYS_SCR|LOG_DEBUG) << "Loading script " << s << endl;
 			if (bt::Exists(s))
-				loadScript(s);
+				model->addScript(s);
 		}
 	}
 	
 	void ScriptingPlugin::saveScripts()
 	{
-		QStringList scripts;
-		
-		QList<Kross::Action*> actions = Kross::Manager::self().actionCollection()->actions();
-		foreach (Kross::Action* a,actions)
-		{
-			scripts.append(a->file());
-		}
-		
 		KConfigGroup g = KGlobal::config()->group("Scripting");
-		g.writeEntry("scripts",scripts);
+		g.writeEntry("scripts",model->scriptFiles());
+		g.sync();
 	}
 	
 	void ScriptingPlugin::addScript()
@@ -129,7 +140,7 @@ namespace kt
 
 		if (url.isLocalFile())
 		{
-			loadScript(url.pathOrUrl());
+			model->addScript(url.pathOrUrl());
 		}
 		else
 		{
@@ -150,19 +161,6 @@ namespace kt
 		}
 	}
 	
-	void ScriptingPlugin::loadScript(const QString & file)
-	{
-		KMimeType::Ptr mt = KMimeType::findByPath(file);
-		QString name = QFileInfo(file).fileName();
-		Kross::Action* action = new Kross::Action(this,name);
-		action->setText(name);
-		action->setDescription(name);
-		action->setFile(file);
-		action->setIconName(mt->iconName());
-		action->setInterpreter(Kross::Manager::self().interpreternameForFile(file));
-		Kross::Manager::self().actionCollection()->addAction(file,action);
-	}
-	
 	void ScriptingPlugin::scriptDownloadFinished(KJob* job)
 	{
 		KIO::CopyJob* j = (KIO::CopyJob*)job;
@@ -173,12 +171,49 @@ namespace kt
 		else
 		{
 			QString script_dir = kt::DataDir() + "scripts" + bt::DirSeparator();
-			loadScript(script_dir + j->destUrl().fileName());
+			model->addScript(script_dir + j->destUrl().fileName());
 		}
 	}
 	
 	void ScriptingPlugin::removeScript()
 	{
+		model->removeScripts(sman->selectedScripts());
+		saveScripts();
+		sman->updateActions(sman->selectedScripts());
+	}
+	
+	void ScriptingPlugin::runScript()
+	{
+		QModelIndexList sel = sman->selectedScripts();
+		foreach (const QModelIndex & idx,sel)
+		{
+			if (!model->setData(idx,Qt::Checked,Qt::CheckStateRole))
+				Out(SYS_SCR|LOG_DEBUG) << "setData failed" << endl;
+		}
+		sman->updateActions(sel);
+	}
+	
+	void ScriptingPlugin::stopScript()
+	{
+		QModelIndexList sel = sman->selectedScripts();
+		foreach (const QModelIndex & idx,sel)
+		{
+			if (!model->setData(idx,Qt::Unchecked,Qt::CheckStateRole))
+				Out(SYS_SCR|LOG_DEBUG) << "setData failed" << endl;
+		}
+		sman->updateActions(sel);
+	}
+	
+	void ScriptingPlugin::editScript()
+	{
+		QModelIndexList sel = sman->selectedScripts();
+		foreach (const QModelIndex & idx,sel)
+		{
+			Script* s = model->scriptForIndex(idx);
+			if (s)
+				new KRun(KUrl(s->scriptFile()), 0, 0, true, true);
+		}
+		
 	}
 	
 	bool ScriptingPlugin::versionCheck(const QString & version) const

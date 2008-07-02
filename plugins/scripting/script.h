@@ -18,14 +18,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTSCRIPTMANAGER_H
-#define KTSCRIPTMANAGER_H
+#ifndef KTSCRIPT_H
+#define KTSCRIPT_H
 
-#include <QListView>
-
-class KToolBar;
-class KMenu;
-class KActionCollection;
+#include <QObject>
 
 namespace Kross
 {
@@ -34,38 +30,43 @@ namespace Kross
 
 namespace kt
 {
-	class ScriptModel;
 
 	/**
-		Widget to display all scripts.
+		Keeps track of a script
 	*/
-	class ScriptManager : public QWidget
+	class Script : public QObject
 	{
 		Q_OBJECT
 	public:
-		ScriptManager(ScriptModel* model,KActionCollection* ac,QWidget* parent);
-		virtual ~ScriptManager();
+		Script(const QString & file,QObject* parent);
+		virtual ~Script();
 		
-		/// Get all selected scripts
-		QModelIndexList selectedScripts();
+		/**
+		 * Load and execute the script
+		 * @return true upon success
+		 */
+		bool execute();
 		
-		/// Update all actions and make sure they are properly enabled or disabled
-		void updateActions(const QModelIndexList & selected);
+		/**
+		 * Stop the script
+		 */
+		void stop();
 		
-	private slots:
-		void onSelectionChanged(const QItemSelection & selected,const QItemSelection & deselected);
-		void showContextMenu(const QPoint& p);
+		/// Is the script running
+		bool running() const {return executing;}
 		
-	signals:
-		void enableRemoveScript(bool on);
-		void enableRunScript(bool on);
-		void enableStopScript(bool on);
+		/// Get the name of the script
+		QString name() const;
 		
+		/// Get the icon name of the script
+		QString iconName() const;
+		
+		/// Get the file
+		QString scriptFile() const {return file;}
 	private:
-		ScriptModel* model;
-		QListView* view;
-		KToolBar* toolbar;
-		KMenu* context_menu;
+		QString file;
+		Kross::Action* action;
+		bool executing;
 	};
 
 }

@@ -1,7 +1,8 @@
 set(ktscriptingplugin_SRC 
 	scriptingplugin.cpp 
 	scriptmanager.cpp 
-	scriptmodel.cpp)
+	scriptmodel.cpp
+	script.cpp)
 
 #kde4_add_ui_files(ktscriptingplugin_SRC scriptingpref.ui)
 #kde4_add_kcfg_files(ktscriptingplugin_SRC scriptingpluginsettings.kcfgc)
