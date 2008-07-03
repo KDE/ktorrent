@@ -7,6 +7,8 @@ caused hidden torrents to be shown when a view was sorted by a column.
 (164113)
 - Make sure port is 80 if it is not specified in device url in upnp library
 - Fix Preview in right click menu of View (164503)
+- Fix bug in network preferences causing the chosen network interface not to
+be selected
 
 Changes in 3.1 :
 - Use KIO::storedGet to download XML description of UPnP router
