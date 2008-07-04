@@ -88,6 +88,9 @@ namespace bt
 		recalc_chunks_left = true;
 		corrupted_count = recheck_counter = 0;
 
+		if (tor.isMultiFile())
+			createBorderChunkSet();
+
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
 			TorrentFile & tf = tor.getFile(i);
@@ -109,7 +112,6 @@ namespace bt
 					continue;
 				
 				doPreviewPriority(file);
-			
 			}
 		}
 		else if (tor.isMultimedia())
@@ -834,17 +836,11 @@ namespace bt
 		}
 		else
 		{
-		//	Out(SYS_DIO|LOG_DEBUG) << "Excluding chunks " << first << " to " << last << endl;
-			// first and last chunk may be part of multiple files
-			// so we can not just exclude them
-			QList<Uint32> files,last_files;
-
-			// get list of files where first chunk lies in
-			tor.calcChunkPos(first,files);
-			tor.calcChunkPos(last,last_files);
 			// check for exceptional case which causes very long loops
-			if (first == last && files.count() > 1)
+			if (first == last && !isBorderChunk(first))
 			{
+				resetChunk(first);
+				exclude(first,first);
 				cache->downloadStatusChanged(tf,download);
 				savePriorityInfo();
 				return;
@@ -856,86 +852,23 @@ namespace bt
 				resetChunk(i);
 			
 			// if the first chunk only lies in one file, reset it
-			if (files.count() == 1 && first != 0) 
-			{
-		//		Out(SYS_DIO|LOG_DEBUG) << "Resetting first " << first << endl;
+			if (!isBorderChunk(first)) 
 				resetChunk(first);
-			}
+			else if (!resetBorderChunk(first,tf))
+				// try to reset if it lies in multiple files
+				first++;
 			
-			// if the last chunk only lies in one file reset it
-			if (last != first && last_files.count() == 1)
+			if (last != first)
 			{
-		//		Out(SYS_DIO|LOG_DEBUG) << "Resetting last " << last << endl;
-				resetChunk(last);
+				// if the last chunk only lies in one file reset it
+				if (!isBorderChunk(last))
+					resetChunk(last);
+				else if (!resetBorderChunk(last,tf))
+					last--;
 			}
-			
-			Priority maxp = ONLY_SEED_PRIORITY;
-			bool reprioritise_border_chunk = false;
-			bool modified = false;
-			
-			// if one file in the list needs to be downloaded,increment first
-			for (QList<Uint32>::iterator i = files.begin();i != files.end();i++)
-			{
-				if (*i == tf->getIndex())
-					continue;
-				
-				const TorrentFile & other = tor.getFile(*i);
-				if (!other.doNotDownload())
-				{
-					if (first != last && !modified)
-					{
-						first++;
-						reprioritise_border_chunk = true;
-						modified = true;
-					}
-					
-					if (other.getPriority() > maxp)
-						maxp = other.getPriority();
-				}
-			}
-			
-			// in case we have incremented first, we better reprioritise the border chunk
-			if (reprioritise_border_chunk)
-				prioritise(first-1,first-1,maxp);
-			
-			maxp = ONLY_SEED_PRIORITY;
-			reprioritise_border_chunk = false;
-			modified = false;
-			
-			// if one file in the list needs to be downloaded,decrement last
-			for (QList<Uint32>::iterator i = last_files.begin();i != last_files.end();i++)
-			{
-				if (*i == tf->getIndex())
-					continue;
-				
-				const TorrentFile & other = tor.getFile(*i);
-				if (!other.doNotDownload())
-				{
-					if (first != last && last > 0 && !modified)
-					{
-						last--;
-						reprioritise_border_chunk = true;
-						modified = true;
-					}
-					
-					if (other.getPriority() > maxp)
-						maxp = other.getPriority();
-				}
-			}
-			
-			if (reprioritise_border_chunk)
-				prioritise(last+1,last+1,maxp);
-
-			// last smaller then first is not normal, so just return
-			if (last < first)
-			{
-				cache->downloadStatusChanged(tf,download);
-				savePriorityInfo();
-				return;
-			}
-			
-		//	Out(SYS_DIO|LOG_DEBUG) << "exclude " << first << " to " << last << endl;
-			exclude(first,last);
+		
+			if (first <= last)
+				exclude(first,last);
 		}
 		// alert the cache but first put things in critical operation mode
 		cache->downloadStatusChanged(tf,download);
@@ -947,12 +880,13 @@ namespace bt
 		if (newpriority == EXCLUDED)
 		{
 			downloadStatusChanged(tf, false);
+		//	dumpPriority(tf);
 			return;
 		}
+		
 		if (oldpriority == EXCLUDED)
 		{
 			downloadStatusChanged(tf, true);
-			return;
 		}
 
 		savePriorityInfo();
@@ -960,58 +894,102 @@ namespace bt
 		Uint32 first = tf->getFirstChunk();
 		Uint32 last = tf->getLastChunk();
 		
-		// first and last chunk may be part of multiple files
-		// so we can not just exclude them
+		if (first == last)
+		{
+			if (isBorderChunk(first))
+				setBorderChunkPriority(first,newpriority);
+			else
+				prioritise(first,first,newpriority);
+			
+			if (newpriority == ONLY_SEED_PRIORITY)
+				excluded(first,last);
+		}
+		else
+		{
+			// if the first one is a border chunk use setBorderChunkPriority and make the range smaller
+			if (isBorderChunk(first))
+			{
+				setBorderChunkPriority(first,newpriority);
+				first++;
+			}
+			
+			// if the last one is a border chunk use setBorderChunkPriority and make the range smaller
+			if (isBorderChunk(last))
+			{
+				setBorderChunkPriority(last,newpriority);
+				last--;
+			}
+			
+			// if we still have a valid range, prioritise it
+			if (first <= last)
+			{
+				prioritise(first,last,newpriority);
+				if (newpriority == ONLY_SEED_PRIORITY)
+					excluded(first,last);
+			}
+		}
+		
+		//dumpPriority(tf);
+	}
+	
+	bool ChunkManager::isBorderChunk(Uint32 idx) const
+	{
+		return border_chunks.contains(idx);
+	}
+	
+	void ChunkManager::setBorderChunkPriority(Uint32 idx,Priority prio)
+	{
 		QList<Uint32> files;
 
+		Priority highest = prio;
 		// get list of files where first chunk lies in
-		tor.calcChunkPos(first,files);
-		
-		Chunk* c = chunks[first];
-		// if one file in the list needs to be downloaded,increment first
-		for (QList<Uint32>::iterator i = files.begin();i != files.end();i++)
+		tor.calcChunkPos(idx,files);
+		foreach (Uint32 file,files)
 		{
-			Priority np = tor.getFile(*i).getPriority();
-			if (np > newpriority && *i != tf->getIndex())
+			Priority np = tor.getFile(file).getPriority();
+			if (np > highest)
+				highest = np;
+		}
+		prioritise(idx,idx,highest);
+		if (highest == ONLY_SEED_PRIORITY)
+			excluded(idx,idx);
+	}
+	
+	bool ChunkManager::resetBorderChunk(Uint32 idx,TorrentFile* tf)
+	{
+		QList<Uint32> files;
+		tor.calcChunkPos(idx,files);
+		foreach (Uint32 file,files)
+		{
+			const TorrentFile & other = tor.getFile(file);
+			if (file == tf->getIndex())
+				continue;
+			
+			// This file needs to be downloaded, so we can't reset the chunk
+			if (!other.doNotDownload())
 			{
-				// make sure we don't go past last
-				if (first == last)
-					return;
-					
-				first++;
-				break;
+				// Priority might need to be modified, so set it's priority 
+				// to the maximum of all the files who still need it
+				setBorderChunkPriority(idx,other.getPriority());
+				return false;
 			}
 		}
 		
-		files.clear();
-		// get list of files where last chunk lies in
-		tor.calcChunkPos(last,files);
-		c = chunks[last];
-		// if one file in the list needs to be downloaded,decrement last
-		for (QList<Uint32>::iterator i = files.begin();i != files.end();i++)
+		// we can reset safely
+		resetChunk(idx);
+		return true;
+	}
+	
+	void ChunkManager::createBorderChunkSet()
+	{
+		// figure out border chunks
+		for (Uint32 i = 0;i < tor.getNumFiles() - 1;i++)
 		{
-			Priority np = tor.getFile(*i).getPriority();
-			if (np > newpriority && *i != tf->getIndex())
-			{
-				// make sure we don't wrap around
-				if (last == 0 || last == first)
-					return;
-					
-				last--;
-				break;
-			}
+			TorrentFile & a = tor.getFile(i);
+			TorrentFile & b = tor.getFile(i+1);
+			if (a.getLastChunk() == b.getFirstChunk())
+				border_chunks.insert(a.getLastChunk());
 		}
-		
-		// last smaller then first is not normal, so just return
-		if (last < first)
-		{
-			return;
-		}
-		
-
-		prioritise(first,last,newpriority);
-		if (newpriority == ONLY_SEED_PRIORITY)
-			excluded(first,last);
 	}
 	
 	bool ChunkManager::prepareChunk(Chunk* c,bool always)
@@ -1299,6 +1277,28 @@ namespace bt
 	{
 		preview_size_audio = audio;
 		preview_size_video = video;
+	}
+	
+	void ChunkManager::dumpPriority(TorrentFile* tf)
+	{
+		Uint32 first = tf->getFirstChunk();
+		Uint32 last = tf->getLastChunk();
+		Out(SYS_DIO|LOG_DEBUG) << "DumpPriority : " << tf->getPath() << " " << first << " " << last << endl;
+		for (Uint32 i = first;i <= last;i++)
+		{
+			QString prio;
+			switch (chunks[i]->getPriority())
+			{
+				case FIRST_PRIORITY: prio = "First"; break;
+				case LAST_PRIORITY:	 prio = "Last"; break;
+				case ONLY_SEED_PRIORITY:  prio = "Only Seed"; break;
+				case EXCLUDED:  prio = "Excluded"; break;
+				case PREVIEW_PRIORITY:  prio = "Preview"; break;
+				default:  prio = "Normal"; break;
+					
+			}
+			Out(SYS_DIO|LOG_DEBUG) << i << " prio " << prio << endl;
+		}
 	}
 }
 
