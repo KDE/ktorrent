@@ -75,6 +75,8 @@ namespace kt
 			
 			kcfg_networkInterface->addItem(icon,iface.name());
 		}
+		
+		kcfg_networkInterface->setCurrentIndex(Settings::networkInterface());
 	}
 
 	void NetworkPref::loadDefaults()
