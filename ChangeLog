@@ -9,6 +9,7 @@ caused hidden torrents to be shown when a view was sorted by a column.
 - Fix Preview in right click menu of View (164503)
 - Fix bug in network preferences causing the chosen network interface not to
 be selected
+- Fix border chunk priority being set wrongly in some rare cases (165587)
 
 Changes in 3.1 :
 - Use KIO::storedGet to download XML description of UPnP router

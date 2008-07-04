@@ -20,9 +20,10 @@
 #ifndef BTCHUNKMANAGER_H
 #define BTCHUNKMANAGER_H
 
-#include <qmap.h>
-#include <qstring.h>
-#include <qobject.h>
+#include <QMap>
+#include <QSet>
+#include <QString>
+#include <QObject>
 #include <vector> 
 #include <util/bitset.h>
 #include <btcore_export.h>
@@ -74,6 +75,7 @@ namespace bt
 		Uint32 corrupted_count;
 		Uint32 recheck_counter;
 		bool during_load;	
+		QSet<Uint32> border_chunks;
 	public:
 		ChunkManager(Torrent & tor,
 					 const QString & tmpdir,
@@ -382,6 +384,11 @@ namespace bt
 		void loadPriorityInfo();
 		void doPreviewPriority(TorrentFile & tf);
 		bool allFilesExistOfChunk(Uint32 idx);
+		bool isBorderChunk(Uint32 idx) const;
+		void setBorderChunkPriority(Uint32 idx,Priority prio);
+		bool resetBorderChunk(Uint32 idx,TorrentFile* tf);
+		void createBorderChunkSet();
+		void dumpPriority(TorrentFile* tf);
 
 	private slots:
 		void downloadStatusChanged(TorrentFile* tf,bool download);
