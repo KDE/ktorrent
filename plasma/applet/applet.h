@@ -23,6 +23,7 @@
 
 #include <plasma/applet.h>
 #include <plasma/dataengine.h>
+#include "ui_appletconfig.h"
 
 class QGraphicsLinearLayout;
 
@@ -30,6 +31,7 @@ namespace Plasma
 {
 	class Icon;
 	class Meter;
+	class Label;
 }
 
 
@@ -51,15 +53,28 @@ namespace ktplasma
 		virtual void constraintsEvent(Plasma::Constraints constraints);
 		virtual void createConfigurationInterface(KConfigDialog *parent);
 
-	public slots:
-		void dataUpdated(const QString &name,
-						const Plasma::DataEngine::Data &data);
+	private slots:
+		void dataUpdated(const QString &name,const Plasma::DataEngine::Data &data);
+		void configUpdated();
+		void sourceAdded(const QString & s);
+		void sourceRemoved(const QString & s);
+		
+	private:
+		void updateTorrentCombo();
 
 	private:
 		Plasma::Icon* icon;
-		Plasma::Meter* upload_speed;
-		Plasma::Meter* download_speed;
-		QGraphicsLinearLayout* meter_layout;
+		Plasma::Label* title;
+		Plasma::Label* upload_speed;
+		Plasma::Meter* upload_speed_meter;
+		Plasma::Label* download_speed;
+		Plasma::Meter* download_speed_meter;
+		Plasma::Label* label;
+		Ui_AppletConfig ui;
+		Plasma::DataEngine* engine;
+		QString current_source;
+		int max_ds; // Max upload speed
+		int max_us;  // Max download speed
 	};
 
 }
