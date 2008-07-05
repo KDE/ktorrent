@@ -248,6 +248,8 @@ namespace bt
 			num_failures++;
 			if (num_failures < 3) // try again in 10 seconds
 				QTimer::singleShot(10*1000,this,SLOT(retry()));
+			else // try again but with a longer interval (2 minutes)
+				QTimer::singleShot(120*1000,this,SLOT(retry()));
 	
 			return 0;
 		}

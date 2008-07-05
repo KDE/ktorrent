@@ -10,6 +10,8 @@ caused hidden torrents to be shown when a view was sorted by a column.
 - Fix bug in network preferences causing the chosen network interface not to
 be selected
 - Fix border chunk priority being set wrongly in some rare cases (165587)
+- Don't stop connecting with webseed after 3 failed attempts but keep going on
+with a longer interval (2 minutes)
 
 Changes in 3.1 :
 - Use KIO::storedGet to download XML description of UPnP router
