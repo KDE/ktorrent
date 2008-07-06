@@ -54,6 +54,7 @@ namespace ktplasma
 
 	Applet::Applet(QObject *parent, const QVariantList &args) : Plasma::Applet(parent, args),icon(0)
 	{
+                KLocale::setMainCatalog("ktorrent");
 		setAspectRatioMode(Plasma::ConstrainedSquare);
 		int iconSize = IconSize(KIconLoader::Desktop);
 		resize(iconSize * 4, iconSize * 2);
