@@ -20,7 +20,7 @@
 #ifndef AVAILABILITYCHUNKBAR_H
 #define AVAILABILITYCHUNKBAR_H
 
-#include "chunkbar.h"
+#include <torrent/chunkbar.h>
 
 namespace kt
 {

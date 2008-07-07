@@ -24,6 +24,7 @@
 #include <qlabel.h>
 #include <util/bitset.h>
 #include <qpixmap.h>
+#include <ktcore_export.h>
 
 class QPainter;
 
@@ -44,7 +45,7 @@ namespace kt
 	* BitSets can represent which chunks are downloaded, which chunks are available
 	* and which chunks are excluded.
 	*/
-	class ChunkBar : public QFrame
+	class KTCORE_EXPORT ChunkBar : public QFrame
 	{
 		Q_OBJECT
 	public:

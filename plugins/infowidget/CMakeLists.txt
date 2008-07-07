@@ -32,7 +32,6 @@ set(ktinfowidgetplugin_SRC
 	infowidgetplugin.cpp 
 	iwprefpage.cpp 
 	monitor.cpp 
-	chunkbar.cpp 
 	availabilitychunkbar.cpp 
 	downloadedchunkbar.cpp 
 	statustab.cpp

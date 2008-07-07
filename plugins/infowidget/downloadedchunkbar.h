@@ -20,7 +20,7 @@
 #ifndef DOWNLOADEDCHUNKBAR_H
 #define DOWNLOADEDCHUNKBAR_H
 
-#include "chunkbar.h"
+#include <torrent/chunkbar.h>
 
 namespace kt
 {
