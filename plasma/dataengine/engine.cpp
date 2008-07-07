@@ -46,9 +46,11 @@ namespace ktplasma
 	{
 		bt::InitLog(DataDir() + "dataengine.log",false);
 		dbus = QDBusConnection::sessionBus().interface();
-		connect(dbus,SIGNAL(serviceRegistered(QString)),this,SLOT(dbusServiceRegistered(const QString&)));
-		connect(dbus,SIGNAL(serviceUnregistered(QString)),this,SLOT(dbusServiceUnregistered(const QString&)));
-		
+		connect(dbus,SIGNAL(serviceRegistered(const QString &)),this,SLOT(dbusServiceRegistered(const QString&)));
+		connect(dbus,SIGNAL(serviceUnregistered(const QString&)),this,SLOT(dbusServiceUnregistered(const QString&)));
+		connect(dbus, SIGNAL(serviceOwnerChanged(const QString&, const QString&, const QString&)),
+				this, SLOT(dbusServiceOwnerChanged(const QString&, const QString&, const QString&)));
+
 		torrent_map.setAutoDelete(true);
 		setData("core","connected",false);
 		setData("core","num_torrents",0);
@@ -107,6 +109,20 @@ namespace ktplasma
 			removeSource(i->first);
 		}
 		torrent_map.clear();
+	}
+	
+	void Engine::dbusServiceOwnerChanged(const QString & name,const QString & oldOwner, const QString & newOwner)
+	{
+		bt::Out(SYS_GEN|LOG_DEBUG) << "Engine::dbusServiceOwnerChanged " << name << " " << oldOwner << " " << newOwner << endl;
+		if (name != "org.ktorrent.ktorrent")
+			return;
+		
+		if (oldOwner.isEmpty() && !newOwner.isEmpty())
+			dbusServiceRegistered(name);
+		else if (!oldOwner.isEmpty() && newOwner.isEmpty())
+			dbusServiceUnregistered(name);
+		else if (!oldOwner.isEmpty() && !newOwner.isEmpty()) 
+			dbusServiceRegistered(name);
 	}
 	
 	void Engine::addTorrent(const QString & tor)

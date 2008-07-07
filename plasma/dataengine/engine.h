@@ -46,9 +46,10 @@ namespace ktplasma
 		void addTorrent(const QString & tor);
 		void removeTorrent(const QString & tor);
 	
-	private slots:
+	public Q_SLOTS:
 		void dbusServiceRegistered(const QString & name);
 		void dbusServiceUnregistered(const QString & name);
+		void dbusServiceOwnerChanged(const QString & name,const QString & oldOwner, const QString & newOwner);
 		
 	private:
 		QDBusConnectionInterface* dbus;

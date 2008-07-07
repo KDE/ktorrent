@@ -61,6 +61,9 @@ namespace ktplasma
 		
 	private:
 		void updateTorrentCombo();
+		void updateCurrent(const Plasma::DataEngine::Data &data);
+		QString selectTorrent();
+		void clearData();
 
 	private:
 		Plasma::Icon* icon;
@@ -75,6 +78,9 @@ namespace ktplasma
 		QString current_source;
 		int max_ds; // Max upload speed
 		int max_us;  // Max download speed
+		QGraphicsLinearLayout* root_layout;
+		bool connected_to_app;
+		bool config_dlg_created;
 	};
 
 }

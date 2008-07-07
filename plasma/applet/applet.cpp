@@ -28,28 +28,14 @@
 #include <plasma/widgets/icon.h>
 #include <plasma/widgets/meter.h>
 #include <plasma/widgets/label.h>
+#include <util/functions.h>
 #include "applet.h"
 
-
+using namespace bt;
 
 namespace ktplasma
 {
-	const double TO_KB = 1024.0;
-	const double TO_MEG = (1024.0 * 1024.0);
-	const double TO_GIG = (1024.0 * 1024.0 * 1024.0);
-	
-	QString BytesToString(unsigned long long bytes,int precision)
-	{
-		KLocale* loc = KGlobal::locale();
-		if (bytes >= 1024 * 1024 * 1024)
-			return i18n("%1 GB",loc->formatNumber(bytes / TO_GIG,precision < 0 ? 2 : precision));
-		else if (bytes >= 1024*1024)
-			return i18n("%1 MB",loc->formatNumber(bytes / TO_MEG,precision < 0 ? 1 : precision));
-		else if (bytes >= 1024)
-			return i18n("%1 KB",loc->formatNumber(bytes / TO_KB,precision < 0 ? 1 : precision));
-		else
-			return i18n("%1 B",bytes);
-	}
+
 	
 
 	Applet::Applet(QObject *parent, const QVariantList &args) : Plasma::Applet(parent, args),icon(0)
@@ -60,6 +46,8 @@ namespace ktplasma
 		resize(iconSize * 4, iconSize * 2);
 		engine = 0;
 		max_us = max_ds = 0;
+		root_layout = 0;
+		connected_to_app = config_dlg_created = false;
 	}
 
 
@@ -70,15 +58,16 @@ namespace ktplasma
 	void Applet::init()
 	{
 		engine = dataEngine("ktorrent");
+		
 		connect(engine,SIGNAL(sourceAdded(const QString &)),this,SLOT(sourceAdded(const QString&)));
 		connect(engine,SIGNAL(sourceRemoved(const QString &)),this,SLOT(sourceRemoved(const QString&)));
 
 		setHasConfigurationInterface(true);
 		
-		QGraphicsLinearLayout* layout = new QGraphicsLinearLayout(this);
-		layout->setContentsMargins(0, 0, 0, 0);
-		layout->setSpacing(0);
-		layout->setOrientation(Qt::Vertical);
+		root_layout = new QGraphicsLinearLayout(this);
+		root_layout->setContentsMargins(0, 0, 0, 0);
+		root_layout->setSpacing(0);
+		root_layout->setOrientation(Qt::Vertical);
 		
 		QGraphicsLinearLayout* line = new QGraphicsLinearLayout(0);
 		
@@ -93,7 +82,7 @@ namespace ktplasma
 		title->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 		line->addItem(icon);
 		line->addItem(title);
-		layout->addItem(line);
+		root_layout->addItem(line);
 		
 		QGraphicsGridLayout* grid = new QGraphicsGridLayout(0);
 		upload_speed_meter = new Plasma::Meter(this);
@@ -113,24 +102,46 @@ namespace ktplasma
 		download_speed = new Plasma::Label(this);
 		grid->addItem(download_speed_meter,1,0,Qt::AlignVCenter);
 		grid->addItem(download_speed,1,1,Qt::AlignVCenter);
-		layout->addItem(grid);
+		root_layout->addItem(grid);
 		
 		label = new Plasma::Label(this);
 
-		layout->addItem(label);
-		layout->setAlignment(label,Qt::AlignHCenter);
+		root_layout->addItem(label);
+		root_layout->setAlignment(label,Qt::AlignHCenter|Qt::AlignVCenter);
 		
 		KLocale* loc = KGlobal::locale();
-		upload_speed->setText(i18n("Up: %1 KB/s",loc->formatNumber(10000,2)));
-		download_speed->setText(i18n("Down: %1 KB/s",loc->formatNumber(10000,2)));
-		resize(icon_size * 8,layout->preferredHeight());
+		upload_speed->setText(i18n("Up: %1 KB/s",loc->formatNumber(0,2)));
+		download_speed->setText(i18n("Down: %1 KB/s",loc->formatNumber(0,2)));
 		
-		QStringList sources = engine->sources();
-		if (sources.count() > 0)
+		clearData();
+		
+		resize(icon_size * 8,root_layout->preferredHeight());
+		engine->connectSource("core",this);
+		
+		current_source = selectTorrent();
+		if (!current_source.isNull())
 		{
-			current_source = sources[0];
+			connected_to_app = true;
 			engine->connectSource(current_source,this,1000);
 		}
+		else
+		{
+			connected_to_app = engine->query("core").value("connected").toBool();
+			if (!connected_to_app)
+				title->setText(i18n("KTorrent is not running !"));
+			else
+				title->setText(i18n("No torrents loaded !"));
+		}
+	}
+	
+	QString Applet::selectTorrent()
+	{
+		QStringList sources = engine->sources();
+		foreach (const QString & s,sources)
+			if (s != "core")
+				return s;
+		
+		return QString();
 	}
 	
 	void Applet::constraintsEvent(Plasma::Constraints constraints)
@@ -139,7 +150,7 @@ namespace ktplasma
 		{
 			if (formFactor() == Plasma::Vertical) 
 			{
-			
+				
 			} 
 			else if (formFactor() == Plasma::Horizontal) 
 			{
@@ -160,11 +171,15 @@ namespace ktplasma
 		parent->addPage(widget, parent->windowTitle(), "ktorrent");
 		connect(parent, SIGNAL(applyClicked()), this, SLOT(configUpdated()));
 		connect(parent, SIGNAL(okClicked()), this, SLOT(configUpdated()));
+		config_dlg_created = true;
 		updateTorrentCombo();
 	}
 	
 	void Applet::updateTorrentCombo()
 	{
+		if (!config_dlg_created)
+			return;
+		
 		QStringList sources = engine->sources();
 		ui.torrent_to_display->clear();
 		ui.torrent_to_display->setEnabled(sources.count() > 0);
@@ -174,14 +189,18 @@ namespace ktplasma
 		QStringList names;
 		foreach (const QString & s,sources)
 		{
-			names << engine->query(s).value("name").toString();
+			if (s != "core")
+				names << engine->query(s).value("name").toString();
 		}
 		ui.torrent_to_display->addItems(names);
 		
 		if (current_source.isNull())
 		{
-			current_source = sources[0];
-			engine->connectSource(current_source,this,1000);
+			current_source = selectTorrent();
+			if (!current_source.isNull())
+				engine->connectSource(current_source,this,1000);
+			else
+				clearData();
 		}
 	}
 	
@@ -192,12 +211,13 @@ namespace ktplasma
 		{
 			engine->disconnectSource(current_source,this);
 			current_source = QString();
+			clearData();
 		}
 		
 		QStringList sources = engine->sources();
 		foreach (const QString & s,sources)
 		{
-			if (engine->query(s).value("name").toString() == name)
+			if (s != "core" && engine->query(s).value("name").toString() == name)
 			{
 				current_source = s;
 				engine->connectSource(current_source,this,1000);
@@ -208,9 +228,39 @@ namespace ktplasma
 
 	void Applet::dataUpdated(const QString &name,const Plasma::DataEngine::Data &data)
 	{
-		if (name != current_source)
-			return;
-		
+		if (name == "core")
+		{
+			if (!connected_to_app && data.value("connected").toBool())
+			{
+				connected_to_app = true;
+				updateTorrentCombo();
+				current_source = selectTorrent();
+				if (!current_source.isEmpty())
+				{
+					engine->connectSource(current_source,this,1000);
+				}
+				else
+				{
+					title->setText(i18n("No torrents loaded !"));
+					clearData();
+				}
+			}
+			else if (connected_to_app && !data.value("connected").toBool())
+			{
+				connected_to_app = false;
+				current_source = QString();
+				title->setText(i18n("KTorrent is not running !"));
+				clearData();
+			}
+		}
+		else if (name == current_source)
+		{
+			updateCurrent(data);
+		}
+	}
+	
+	void Applet::updateCurrent(const Plasma::DataEngine::Data &data)
+	{
 		int ds = data.value("download_rate").toInt();
 		int us = data.value("upload_rate").toInt();
 		if (ds > max_ds)
@@ -223,16 +273,27 @@ namespace ktplasma
 		download_speed->setText(i18n("Down: %1 KB/s",loc->formatNumber(ds / 1024.0,2)));
 		
 		if (max_us > 0)
-			upload_speed_meter->setValue((int)ceil((us / max_us) * 100));
+		{
+			int v = (int)ceil((us / max_us) * 100);
+			if (v > 100)
+				v = 100;
+			upload_speed_meter->setValue(v);
+		}
 		else
 			upload_speed_meter->setValue(0);
 		
 		if (max_ds > 0)
-			download_speed_meter->setValue((int)ceil((ds / max_ds) * 100));
+		{
+			int v = (int)ceil((ds / max_ds) * 100);
+			if (v > 100)
+				v = 100;
+			download_speed_meter->setValue(v);
+		}
 		else
 			download_speed_meter->setValue(0);
 		
-		title->setText(data.value("name").toString());
+		QString t = QString("<b>%1</b><br/>%2").arg(data.value("name").toString()).arg(data.value("status").toString());
+		title->setText(t);
 		
 		int uploaded = data.value("bytes_uploaded").toInt();
 		int downloaded = data.value("bytes_downloaded").toInt();
@@ -246,8 +307,11 @@ namespace ktplasma
 		updateTorrentCombo();
 		if (current_source.isNull())
 		{
-			current_source = s;
-			engine->connectSource(current_source,this,1000);
+			current_source = selectTorrent();
+			if (!current_source.isNull())
+				engine->connectSource(current_source,this,1000);
+			else
+				clearData();
 		}
 	}
 	
@@ -256,15 +320,23 @@ namespace ktplasma
 		updateTorrentCombo();
 		if (current_source == s)
 		{
-			QStringList sources = engine->sources();
-			if (sources.count() > 0)
-			{
-				current_source = sources[0];
+			current_source = selectTorrent();
+			if (!current_source.isNull())
 				engine->connectSource(current_source,this,1000);
-			}
+			else
+				clearData();
 		}
 	}
 
+	void Applet::clearData()
+	{
+		KLocale* loc = KGlobal::locale();
+		upload_speed->setText(i18n("Up: %1 KB/s",loc->formatNumber(0,2)));
+		upload_speed_meter->setValue(0);
+		download_speed->setText(i18n("Down: %1 KB/s",loc->formatNumber(0,2)));
+		download_speed_meter->setValue(0);
+		label->setText(QString());
+	}
 }
 
 K_EXPORT_PLASMA_APPLET(ktorrent, ktplasma::Applet);

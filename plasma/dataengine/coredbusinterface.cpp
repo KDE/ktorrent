@@ -27,12 +27,13 @@ namespace ktplasma
 	CoreDBusInterface::CoreDBusInterface(Engine* engine)
 			: QObject(engine),engine(engine)
 	{
-		core = new QDBusInterface("org.ktorrent.ktorrent","/core","org.ktorrent.core",QDBusConnection::sessionBus(),this);
+		QDBusConnection con = QDBusConnection::sessionBus();
+		core = new QDBusInterface("org.ktorrent.ktorrent","/core","org.ktorrent.core",con,this);
 		engine->setData("core","connected",true);
 		engine->setData("core","num_torrents",0);
 		
-		connect(core,SIGNAL(torrentAdded(const QString&)),this,SLOT(torrentAdded(const QString &)));
-		connect(core,SIGNAL(torrentRemoved(const QString&)),this,SLOT(torrentRemoved(const QString &)));
+		con.connect("org.ktorrent.ktorrent","/core","org.ktorrent.core","torrentAdded",this,SLOT(torrentAdded(const QString &)));
+		con.connect("org.ktorrent.ktorrent","/core","org.ktorrent.core","torrentRemoved",this,SLOT(torrentRemoved(const QString &)));
 	}
 
 
