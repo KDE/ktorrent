@@ -35,7 +35,13 @@ namespace kt
 		virtual ~DownloadedChunkBar();
 	
 		virtual const bt::BitSet & getBitSet() const;
-	
+		virtual void updateBar();
+		virtual void drawBarContents(QPainter *p);
+		
+		void setTC(bt::TorrentInterface* tc);
+	private:
+		bt::TorrentInterface* curr_tc;
+		bt::BitSet curr_ebs;
 	};
 }
 

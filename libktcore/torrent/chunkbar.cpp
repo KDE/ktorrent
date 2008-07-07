@@ -85,14 +85,12 @@ namespace kt
 	}
 	
 	ChunkBar::ChunkBar(QWidget *parent)
-		: QFrame(parent),curr_tc(0)
+		: QFrame(parent)
 	{
 		setFrameShape(StyledPanel);
 		setFrameShadow(Sunken);
 		setLineWidth(3);
 		setMidLineWidth(3);
-		
-		show_excluded = false;
 		
 		InitializeToolTipImages(this);
 		setToolTip(i18n("<img src=\"available_color\">&nbsp; - Downloaded Chunks<br>"
@@ -109,14 +107,7 @@ namespace kt
 		const BitSet & bs = getBitSet();
 		QSize s = contentsRect().size();
 		bool changed = !(curr == bs);
-		if (show_excluded && curr_tc)
-		{
-			BitSet ebs = curr_tc->excludedChunksBitSet();
-			ebs.orBitSet(curr_tc->onlySeedChunksBitSet()),
-			changed = changed || !(curr_ebs == ebs);
-			curr_ebs = ebs;
-		}
-		
+
 		if (changed || pixmap.isNull() || pixmap.width() != s.width())
 		{
 			pixmap = QPixmap(s);
@@ -148,45 +139,20 @@ namespace kt
 			p->drawPixmap(contentsRect(),pixmap);
 	}
 	
-	void ChunkBar::setTC(bt::TorrentInterface* tc)
-	{
-		curr_tc = tc;
-		QSize s = contentsRect().size();
-		//Out() << "Pixmap : " << s.width() << " " << s.height() << endl;
-		pixmap = QPixmap(s);
-		pixmap.fill(palette().color(QPalette::Active,QPalette::Base));
-		QPainter painter(&pixmap);
-		drawBarContents(&painter);
-		update();
-	}
+
 	
 	void ChunkBar::drawBarContents(QPainter *p)
 	{
-		if (curr_tc)
-		{
-			const TorrentStats & s = curr_tc->getStats();
-			Uint32 w = contentsRect().width();
-			const BitSet & bs = getBitSet();
-			curr = bs;
-			QColor highlight_color = palette().color(QPalette::Active,QPalette::Highlight);
-			if (bs.allOn())
-				drawAllOn(p,highlight_color);
-			else if (s.total_chunks > w)
-				drawMoreChunksThenPixels(p,bs,highlight_color);
-			else
-				drawEqual(p,bs,highlight_color);
-	
-			if (show_excluded && s.num_chunks_excluded > 0)
-			{
-				QColor c = palette().color(QPalette::Active,QPalette::Mid);
-				if (curr_ebs.allOn())
-					drawAllOn(p,c);
-				else if (s.total_chunks > w)
-					drawMoreChunksThenPixels(p,curr_ebs,c);
-				else
-					drawEqual(p,curr_ebs,c);
-			}
-		}
+		Uint32 w = contentsRect().width();
+		const BitSet & bs = getBitSet();
+		curr = bs;
+		QColor highlight_color = palette().color(QPalette::Active,QPalette::Highlight);
+		if (bs.allOn())
+			drawAllOn(p,highlight_color);
+		else if (curr.getNumBits() > w)
+			drawMoreChunksThenPixels(p,bs,highlight_color);
+		else
+			drawEqual(p,bs,highlight_color);
 	}
 	
 	void ChunkBar::drawEqual(QPainter *p,const BitSet & bs,const QColor & color)
@@ -196,8 +162,8 @@ namespace kt
 	
 		Uint32 w = contentsRect().width();
 		double scale = 1.0;
-		Uint32 total_chunks = curr_tc->getStats().total_chunks;
-		if (curr_tc->getStats().total_chunks != w)
+		Uint32 total_chunks = bs.getNumBits();
+		if (total_chunks != w)
 			scale = (double)w / total_chunks;
 		
 		p->setPen(QPen(c,1,Qt::SolidLine));

@@ -37,6 +37,9 @@ namespace kt
 	
 		virtual const bt::BitSet & getBitSet() const;
 	
+		void setTC(bt::TorrentInterface* tc);
+	private:
+		bt::TorrentInterface* curr_tc;
 	};
 }
 

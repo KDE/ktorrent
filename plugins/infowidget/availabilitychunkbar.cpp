@@ -17,7 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <qtooltip.h>
+#include <QToolTip>
+#include <QPainter>
 #include <klocale.h>
 
 #include <util/bitset.h>
@@ -27,7 +28,7 @@
 namespace kt
 {
 	
-	AvailabilityChunkBar::AvailabilityChunkBar(QWidget* parent) : ChunkBar(parent)					     
+	AvailabilityChunkBar::AvailabilityChunkBar(QWidget* parent) : ChunkBar(parent),curr_tc(0)					     
 	{
 		setToolTip(i18n("<img src=\"available_color\">&nbsp; - Available Chunks<br>"
 				"<img src=\"unavailable_color\">&nbsp; - Unavailable Chunks<br>"
@@ -46,6 +47,18 @@ namespace kt
 			return curr_tc->availableChunksBitSet();
 		else
 			return bt::BitSet::null;
+	}
+	
+	void AvailabilityChunkBar::setTC(bt::TorrentInterface* tc)
+	{
+		curr_tc = tc;
+		QSize s = contentsRect().size();
+		//Out() << "Pixmap : " << s.width() << " " << s.height() << endl;
+		pixmap = QPixmap(s);
+		pixmap.fill(palette().color(QPalette::Active,QPalette::Base));
+		QPainter painter(&pixmap);
+		drawBarContents(&painter);
+		update();
 	}
 }
 

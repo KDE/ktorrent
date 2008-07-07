@@ -52,23 +52,19 @@ namespace kt
 		ChunkBar(QWidget *parent);
 		virtual ~ChunkBar();
 	
-		void setTC(bt::TorrentInterface* tc);
-		
 		virtual const bt::BitSet & getBitSet() const = 0;
 		virtual void drawContents(QPainter *p);
 		virtual void updateBar();
 	
-	private:
+	protected:
 		void drawEqual(QPainter *p,const bt::BitSet & bs,const QColor & color);
 		void drawMoreChunksThenPixels(QPainter *p,const bt::BitSet & bs,const QColor & color);
 		void drawAllOn(QPainter *p,const QColor & color);
-		void drawBarContents(QPainter *p);
+		virtual void drawBarContents(QPainter *p);
 		virtual void paintEvent(QPaintEvent* ev);
 		
 	protected:
-		bt::TorrentInterface* curr_tc;
-		bool show_excluded;
-		bt::BitSet curr,curr_ebs;
+		bt::BitSet curr;
 		QPixmap pixmap;
 	};
 }
