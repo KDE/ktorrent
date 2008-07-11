@@ -21,6 +21,7 @@
 #include <math.h>
 #include <QGraphicsLinearLayout>
 #include <QGraphicsGridLayout>
+#include <QGraphicsProxyWidget>
 #include <kicon.h>
 #include <kiconloader.h>
 #include <kconfigdialog.h>
@@ -30,6 +31,7 @@
 #include <plasma/widgets/label.h>
 #include <util/functions.h>
 #include "applet.h"
+#include "chunkbar.h"
 
 using namespace bt;
 
@@ -40,7 +42,7 @@ namespace ktplasma
 
 	Applet::Applet(QObject *parent, const QVariantList &args) : Plasma::Applet(parent, args),icon(0)
 	{
-                KLocale::setMainCatalog("ktorrent");
+		KLocale::setMainCatalog("ktorrent");
 		setAspectRatioMode(Plasma::ConstrainedSquare);
 		int iconSize = IconSize(KIconLoader::Desktop);
 		resize(iconSize * 4, iconSize * 2);
@@ -83,6 +85,9 @@ namespace ktplasma
 		line->addItem(icon);
 		line->addItem(title);
 		root_layout->addItem(line);
+		
+		chunk_bar = new ChunkBar(this);
+		root_layout->addItem(chunk_bar);
 		
 		QGraphicsGridLayout* grid = new QGraphicsGridLayout(0);
 		upload_speed_meter = new Plasma::Meter(this);
@@ -300,10 +305,16 @@ namespace ktplasma
 		int size = data.value("total_bytes_to_download").toInt();
 		label->setText(i18n("Downloaded: %1 / %2 Uploaded: %3",
 					   BytesToString(downloaded,2),BytesToString(size,2),BytesToString(uploaded,2)));
+		
+		chunk_bar->updateBitSets(
+			data.value("total_chunks").toInt(),
+			data.value("downloaded_chunks").toByteArray(),
+			data.value("excluded_chunks").toByteArray());
 	}
 	
 	void Applet::sourceAdded(const QString & s)
 	{
+		Q_UNUSED(s);
 		updateTorrentCombo();
 		if (current_source.isNull())
 		{

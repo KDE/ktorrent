@@ -15,6 +15,7 @@ set(libktorrent_SRC
 	torrent/torrentfiletreemodel.cpp
 	torrent/torrentfilelistmodel.cpp
 	torrent/chunkbar.cpp 
+	torrent/chunkbarrenderer.cpp
 	
 	groups/group.cpp
 	groups/torrentgroup.cpp

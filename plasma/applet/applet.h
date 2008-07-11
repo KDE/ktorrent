@@ -37,6 +37,7 @@ namespace Plasma
 
 namespace ktplasma
 {
+	class ChunkBar;
 
 	/**
 		Plasma applet for ktorrent
@@ -81,6 +82,7 @@ namespace ktplasma
 		QGraphicsLinearLayout* root_layout;
 		bool connected_to_app;
 		bool config_dlg_created;
+		ChunkBar* chunk_bar;
 	};
 
 }

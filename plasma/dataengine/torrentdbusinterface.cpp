@@ -67,7 +67,14 @@ namespace ktplasma
 			foreach (QString key,keys)
 			{
 				BValueNode* vn = dict->getValue(key);
-				if (vn)
+				if (!vn)
+					continue;
+				
+				if (key == "downloaded_chunks" || key == "excluded_chunks")
+				{
+					engine->setData(info_hash,key,vn->data().toByteArray());
+				}
+				else
 				{
 					switch (vn->data().getType())
 					{

@@ -92,22 +92,22 @@ namespace kt
 		curr = bs;
 		QColor highlight_color = palette().color(QPalette::Active,QPalette::Highlight);
 		if (bs.allOn())
-			drawAllOn(p,highlight_color);
+			drawAllOn(p,highlight_color,contentsRect());
 		else if (curr.getNumBits() > w)
-			drawMoreChunksThenPixels(p,bs,highlight_color);
+			drawMoreChunksThenPixels(p,bs,highlight_color,contentsRect());
 		else
-			drawEqual(p,bs,highlight_color);
+			drawEqual(p,bs,highlight_color,contentsRect());
 		
 		const TorrentStats & s = curr_tc->getStats();
 		if (s.num_chunks_excluded > 0)
 		{
 			QColor c = palette().color(QPalette::Active,QPalette::Mid);
 			if (curr_ebs.allOn())
-				drawAllOn(p,c);
+				drawAllOn(p,c,contentsRect());
 			else if (s.total_chunks > w)
-				drawMoreChunksThenPixels(p,curr_ebs,c);
+				drawMoreChunksThenPixels(p,curr_ebs,c,contentsRect());
 			else
-				drawEqual(p,curr_ebs,c);
+				drawEqual(p,curr_ebs,c,contentsRect());
 		}
 	}
 }

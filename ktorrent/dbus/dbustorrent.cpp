@@ -292,6 +292,12 @@ namespace kt
 		enc.write("max_share_ratio", s.max_share_ratio);
 		enc.write("max_seed_time", s.max_seed_time);
 		enc.write("num_corrupted_chunks", s.num_corrupted_chunks);
+		const bt::BitSet & bs = ti->downloadedChunksBitSet();
+		enc.write("downloaded_chunks");
+		enc.write(bs.getData(),bs.getNumBytes());
+		const bt::BitSet & ebs = ti->excludedChunksBitSet();
+		enc.write("excluded_chunks");
+		enc.write(ebs.getData(),ebs.getNumBytes());
 		enc.end();
 		return ret;
 	}

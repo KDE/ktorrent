@@ -1,7 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005-2007 by                                            *
- *   Joris Guisson <joris.guisson@gmail.com>                               *
- *   Vincent Wagelaar <vincent@ricardis.tudelft.nl>                        *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
+ *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,56 +18,33 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef CHUNKBAR_H
-#define CHUNKBAR_H
+#ifndef KTCHUNKBARRENDERER_H
+#define KTCHUNKBARRENDERER_H
 
-#include <qlabel.h>
-#include <util/bitset.h>
-#include <qpixmap.h>
 #include <ktcore_export.h>
-#include "chunkbarrenderer.h"
-
-class QPainter;
-
 
 namespace bt
 {
 	class BitSet;
-	class TorrentInterface;
 }
 
 namespace kt
 {
 
-	
 	/**
-	* @author Joris Guisson, Vincent Wagelaar
-	*
-	* Bar which displays BitSets, subclasses need to fill the BitSet.
-	* BitSets can represent which chunks are downloaded, which chunks are available
-	* and which chunks are excluded.
+		Class which renders a chunkbar to a a QPainter
 	*/
-	class KTCORE_EXPORT ChunkBar : public QFrame,public ChunkBarRenderer
+	class KTCORE_EXPORT ChunkBarRenderer
 	{
-		Q_OBJECT
 	public:
-		ChunkBar(QWidget *parent);
-		virtual ~ChunkBar();
-	
-		virtual const bt::BitSet & getBitSet() const = 0;
-		virtual void drawContents(QPainter *p);
-		virtual void updateBar();
-	
-	protected:
-		
-		virtual void drawBarContents(QPainter *p);
-		virtual void paintEvent(QPaintEvent* ev);
-		
-	protected:
-		bt::BitSet curr;
-		QPixmap pixmap;
-		ChunkBarRenderer* cbr;
+		ChunkBarRenderer();
+		virtual ~ChunkBarRenderer();
+
+		void drawEqual(QPainter *p,const bt::BitSet & bs,const QColor & color,const QRect & contents_rect);
+		void drawMoreChunksThenPixels(QPainter *p,const bt::BitSet & bs,const QColor & color,const QRect & contents_rect);
+		void drawAllOn(QPainter *p,const QColor & color,const QRect & contents_rect);
 	};
+
 }
 
 #endif
