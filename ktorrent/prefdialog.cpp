@@ -132,6 +132,7 @@ namespace kt
 			kcfg_dhtPort->setEnabled(false);
 			kcfg_dhtSupport->setEnabled(false);
 #endif
+			kcfg_customIP->setEnabled(Settings::useCustomIP());
 		}
 	};
 

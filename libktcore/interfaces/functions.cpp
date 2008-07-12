@@ -109,8 +109,8 @@ namespace kt
 			Globals::instance().getServer().disableEncryption();
 		}
 	
-		if (Settings::useExternalIP())
-			Tracker::setCustomIP(Settings::externalIP());
+		if (Settings::useCustomIP())
+			Tracker::setCustomIP(Settings::customIP());
 		else
 			Tracker::setCustomIP(QString::null);
 		

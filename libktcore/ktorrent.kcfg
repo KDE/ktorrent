@@ -103,7 +103,7 @@
 		<entry name="torrentCopyDir" type="Url">
 			<label>Folder to copy .torrent files to</label>
 		</entry>
-		<entry name="useExternalIP" type="Bool">
+		<entry name="useCustomIP" type="Bool">
 			<label>Whether to use a custom IP to pass to the tracker</label>
 			<default>false</default>
 		</entry>
@@ -111,7 +111,7 @@
 			<label>Directory which was used as the last save directory</label>
 			<default code="true">QString::null</default>
 		</entry>
-		<entry name="externalIP" type="String">
+		<entry name="customIP" type="String">
 			<label>IP to pass to the tracker</label>
 			<default code="true">QString::null</default>
 		</entry>
