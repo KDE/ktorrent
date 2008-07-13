@@ -22,6 +22,7 @@
 #define KT_DBUS_HH
 
 #include <QObject>
+#include <QStringList>
 #include <util/ptrmap.h>
 
 namespace bt
