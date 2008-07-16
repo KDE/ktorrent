@@ -84,7 +84,7 @@ namespace kt
 		if (parent.isValid())
 			return 0;
 		else
-			return 3;
+			return 4;
 	}
 	
 	QVariant QueueManagerModel::headerData(int section, Qt::Orientation orientation,int role) const
@@ -94,10 +94,11 @@ namespace kt
 		 
 		switch (section)
 		{
-			case 0: return i18n("Name");
-			case 1: return i18n("Status");
-			case 2: return i18n("Time Stalled");
-			case 3: return i18n("Priority");
+			case 0: return i18n("Order");
+			case 1: return i18n("Name");
+			case 2: return i18n("Status");
+			case 3: return i18n("Time Stalled");
+			case 4: return i18n("Priority");
 			default: return QVariant();
 		}
 	}
@@ -110,7 +111,7 @@ namespace kt
 		if (role == Qt::ForegroundRole)
 		{
 			const bt::TorrentInterface* tc = qman->getTorrent(index.row());
-			if (index.column() == 1)
+			if (index.column() == 2)
 			{
 				if (tc->getPriority() == 0)
 					return QVariant();
@@ -126,8 +127,13 @@ namespace kt
 			const bt::TorrentInterface* tc = qman->getTorrent(index.row());
 			switch (index.column())
 			{
-				case 0: return tc->getStats().torrent_name;
-				case 1: 
+				case 0: 
+					if (tc->getPriority() == 0)
+						return QVariant();
+					else
+						return index.row() + 1;
+				case 1: return tc->getStats().torrent_name;
+				case 2: 
 					if (tc->getPriority() == 0)
 						return i18n("Not queued");
 					else if (tc->getStats().running)
@@ -135,7 +141,7 @@ namespace kt
 					else
 						return i18n("Queued");
 					break;
-				case 2: 
+				case 3: 
 					{
 						if (!tc->getStats().running)
 							return QVariant();
@@ -148,10 +154,15 @@ namespace kt
 							return QVariant();
 					}
 					break;
-				case 3:
+				case 4:
 					return tc->getPriority();
 				default: return QVariant();
 			}
+		}
+		else if (role == Qt::ToolTipRole && index.column() == 0)
+		{
+			return i18n("Order of a torrent in the queue.\n"
+					"Use drag and drop or the move up and down buttons on the left to change the order.");
 		}
 		
 		return QVariant();
@@ -198,6 +209,7 @@ namespace kt
 
 	bool QueueManagerModel::dropMimeData(const QMimeData *data,Qt::DropAction action, int row, int column, const QModelIndex &parent)		
 	{
+		Q_UNUSED(column);
 		if (action == Qt::IgnoreAction)
 			return true;
 
@@ -257,6 +269,7 @@ namespace kt
 
 	bool QueueManagerModel::removeRows(int row,int count,const QModelIndex & parent)
 	{
+		Q_UNUSED(parent);
 		beginInsertRows(QModelIndex(),row,row + count - 1);
 		endInsertRows();
 		return true;
@@ -264,6 +277,7 @@ namespace kt
 	
 	bool QueueManagerModel::insertRows(int row,int count,const QModelIndex & parent)
 	{
+		Q_UNUSED(parent);
 		beginInsertRows(QModelIndex(),row,row + count - 1);
 		endInsertRows();
 		return true;
@@ -368,7 +382,7 @@ namespace kt
 				if (stalled_times[tc] != -1)
 				{
 					stalled_times[tc] = -1;
-					emit dataChanged(createIndex(r,2),createIndex(r,2));
+					emit dataChanged(createIndex(r,3),createIndex(r,3));
 				}
 			}
 			else
@@ -382,7 +396,7 @@ namespace kt
 				if (stalled_times[tc] != stalled_time)
 				{
 					stalled_times[tc] = stalled_time;
-					emit dataChanged(createIndex(r,2),createIndex(r,2));
+					emit dataChanged(createIndex(r,3),createIndex(r,3));
 				}
 			}
 			r++;

@@ -38,7 +38,9 @@ namespace kt
 		
 		
 		m_move_up->setIcon(KIcon("go-up"));
+		m_move_up->setToolTip(i18n("Move a torrent up in the queue"));
 		m_move_down->setIcon(KIcon("go-down"));
+		m_move_down->setToolTip(i18n("Move a torrent down in the queue"));
 		m_queue->setIcon(KIcon("view-choose"));
 		m_queue->setToolTip(i18n("Enqueue or dequeue a torrent"));
 		
