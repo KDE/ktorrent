@@ -172,8 +172,8 @@ set(libbtcore_SRC
 )
 
 if(WIN32)
-# Compile MinGW stuff on windows
-set(libbtcore_SRC ${libbtcore_SRC} util/mingw.cpp)
+# Compile stuff for windows
+set(libbtcore_SRC ${libbtcore_SRC} util/win32.cpp)
 endif(WIN32)
 
 

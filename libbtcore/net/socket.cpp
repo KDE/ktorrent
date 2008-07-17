@@ -48,7 +48,7 @@
 #include <util/log.h>
 
 #ifdef Q_WS_WIN
-#include <util/mingw.h>
+#include <util/win32.h>
 #define SHUT_RDWR SD_BOTH
 #undef errno
 #define errno WSAGetLastError()

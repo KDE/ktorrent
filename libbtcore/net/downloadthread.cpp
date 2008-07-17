@@ -23,7 +23,7 @@
 #ifndef Q_WS_WIN
 #include <sys/poll.h>
 #else
-#include <util/mingw.h>
+#include <util/win32.h>
 #endif
 #include <util/functions.h>
 #include "socketgroup.h"
