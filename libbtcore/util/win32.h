@@ -59,10 +59,15 @@ THE SOFTWARE.
 // #define EINPROGRESS     WSAEINPROGRESS
 // #define EISCONN         WSAEISCONN
 
+#if ( ( defined(_WIN32_WINNT) && (_WIN32_WINNT < 0x0600) ) || ( defined(_MSC_VER) && (_MSC_VER < 1500 ) ) ) // If VC++ 8.0 or older OR Windows older than Vista
+
 /* winsock doesn't feature poll(), so there is a version implemented
- * in terms of select() in mingw.c. The following definitions
+ * in terms of select() in win32.cpp. The following definitions
  * are copied from linux man pages. A poll() macro is defined to
- * call the version in mingw.c.
+ * call the version in win32.cpp.
+ * pollfd is defined in Windows SDK 6.0A and newer if using 
+ * MSVC2008, in what seems to be a blatant bug (MSVC2008 reports
+ * Windows XP as 0x0600 instead of 0x501)
  */
 #define POLLIN      0x0001    /* There is data to read */
 #define POLLPRI     0x0002    /* There is urgent data to read */
@@ -77,6 +82,7 @@ struct BTCORE_EXPORT pollfd {
     short revents;    /* returned events */
 };
 // #define poll(x, y, z)        mingw_poll(x, y, z)
+#endif
 
 /* These wrappers do nothing special except set the global errno variable if
 * an error occurs (winsock doesn't do this by default). They set errno
