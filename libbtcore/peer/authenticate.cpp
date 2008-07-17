@@ -20,7 +20,7 @@
 #include "authenticate.h"
 #include <util/log.h>
 #include <mse/streamsocket.h>
-#include <torrent/ipblocklist.h>
+#include <peer/accessmanager.h>
 #include <net/socks.h>
 #include "peermanager.h"
 
@@ -130,6 +130,8 @@ namespace bt
 					if (sock->bytesAvailable() > 0)
 						AuthenticateBase::onReadyRead();
 					break;
+				default:
+					break;
 			}
 		}
 	}
@@ -158,11 +160,9 @@ namespace bt
 	void Authenticate::handshakeReceived(bool full)
 	{
 		const Uint8* hs = handshake;
-	//	Out() << "Authenticate::handshakeReceived" << endl;
-		IPBlocklist& ipfilter = IPBlocklist::instance();
-			//Out() << "Dodo " << pp.ip << endl;
-		if (ipfilter.isBlocked(host))
+		if (!AccessManager::instance().allowed(host))
 		{
+			Out(SYS_CON|LOG_DEBUG) << "The IP address " << host << " is blocked " << endl;
 			onFinish(false);
 			return;
 		}

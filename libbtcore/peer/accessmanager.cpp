@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Vasić   								   *
- *   ivasic@gmail.com   												   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
+ *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,45 +18,64 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef IPFILTERWIDGET_H
-#define IPFILTERWIDGET_H
+#include <net/address.h>
+#include <peer/badpeerslist.h>
+#include <interfaces/blocklistinterface.h>
+#include "accessmanager.h"
 
-#include "ui_ipfilterwidget.h"
-#include <KDialog>
-
-namespace kt
+namespace bt
 {
-	class IPFilterList;
-	
-	/**
-	* @author Ivan Vasic <ivasic@gmail.com>
-	* @brief Integrated IPFilter GUI class.
-	* Used to show, add and remove banned peers from blacklist.
-	*/
-	class IPFilterWidget: public KDialog, public Ui_IPFilterWidget
-	{
-		Q_OBJECT
-	public:
-		IPFilterWidget(QWidget* parent);
-		virtual ~IPFilterWidget();
-		
-		void saveFilter(const QString & fn);
-		void loadFilter(const QString & fn);
-		
-	
-	public slots:
-		virtual void save();
-		virtual void open();
-		virtual void clear();
-		virtual void remove();
-		virtual void add();
-		virtual void accept();
-	
-	private:
-		void setupConnections();
-		
-		static IPFilterList* filter_list;
-	};
-}
 
-#endif
+	AccessManager::AccessManager()
+	{
+		banned = new BadPeersList();
+		addBlockList(banned);
+	}
+
+
+	AccessManager::~AccessManager()
+	{
+		qDeleteAll(blocklists);
+	}
+	
+	AccessManager & AccessManager::instance()
+	{
+		static AccessManager inst;
+		return inst;
+	}
+		
+	void AccessManager::addBlockList(BlockListInterface* bl)
+	{
+		blocklists.append(bl);
+	}
+		
+	void AccessManager::removeBlockList(BlockListInterface* bl)
+	{
+		blocklists.removeAll(bl);
+	}
+
+	bool AccessManager::allowed(const net::Address & addr)
+	{
+		foreach (BlockListInterface* bl,blocklists)
+		{
+			if (bl->isBlockedIP(addr))
+				return false;
+		}
+		return true;
+	}
+
+	bool AccessManager::allowed(const QString & addr)
+	{
+		foreach (BlockListInterface* bl,blocklists)
+		{
+			if (bl->isBlockedIP(addr))
+				return false;
+		}
+		return true;
+	}
+	
+	void AccessManager::banPeer(const QString & addr)
+	{
+		banned->addBadPeer(addr);
+	}
+}

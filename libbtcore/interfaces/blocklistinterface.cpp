@@ -18,15 +18,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.           *
  ***************************************************************************/
-#include "ipblockinginterface.h"
+#include "blocklistinterface.h"
 
 namespace bt
 {
-	IPBlockingInterface::IPBlockingInterface()
+	BlockListInterface::BlockListInterface()
 	{}
 
 
-	IPBlockingInterface::~IPBlockingInterface()
+	BlockListInterface::~BlockListInterface()
 	{}
 }
 

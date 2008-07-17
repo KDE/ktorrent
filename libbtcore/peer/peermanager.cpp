@@ -31,7 +31,7 @@
 #include <mse/streamsocket.h> 
 #include <mse/encryptedauthenticate.h>
 #include <klocale.h>
-#include <torrent/ipblocklist.h>
+#include <peer/accessmanager.h>
 #include "chunkcounter.h"
 #include "authenticationmonitor.h"
 #include <qdatetime.h>
@@ -380,9 +380,9 @@ namespace bt
 			
 			PPItr itr = potential_peers.begin();
 			
-			IPBlocklist& ipfilter = IPBlocklist::instance();
+			AccessManager & aman = AccessManager::instance();
 			
-			if (!ipfilter.isBlocked(itr->first) && !connectedTo(itr->first,itr->second.port))
+			if (aman.allowed(itr->first) && !connectedTo(itr->first,itr->second.port))
 			{
 			//	Out() << "EncryptedAuthenticate : " << pp.ip << ":" << pp.port << endl;
 				Authenticate* auth = 0;

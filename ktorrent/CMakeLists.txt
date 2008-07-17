@@ -20,6 +20,7 @@ set(ktorrent_SRC
 	scandlg.cpp
 	trayicon.cpp
 	pastedialog.cpp
+	ipfilterlist.cpp
 	ipfilterwidget.cpp
 	speedlimitsdlg.cpp
 	speedlimitsmodel.cpp

@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Vasić   								   *
- *   ivasic@gmail.com   												   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
+ *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,45 +18,34 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef IPFILTERWIDGET_H
-#define IPFILTERWIDGET_H
+#ifndef BTBADPEERSLIST_H
+#define BTBADPEERSLIST_H
 
-#include "ui_ipfilterwidget.h"
-#include <KDialog>
+#include <QStringList>
+#include <interfaces/blocklistinterface.h>
 
-namespace kt
+namespace bt
 {
-	class IPFilterList;
-	
+
 	/**
-	* @author Ivan Vasic <ivasic@gmail.com>
-	* @brief Integrated IPFilter GUI class.
-	* Used to show, add and remove banned peers from blacklist.
+		Blocklist to keep track of bad peers.
 	*/
-	class IPFilterWidget: public KDialog, public Ui_IPFilterWidget
+	class BadPeersList : public BlockListInterface
 	{
-		Q_OBJECT
 	public:
-		IPFilterWidget(QWidget* parent);
-		virtual ~IPFilterWidget();
+		BadPeersList();
+		virtual ~BadPeersList();
+
+		virtual bool isBlockedIP(const net::Address & addr);
+		virtual bool isBlockedIP(const QString & addr);
 		
-		void saveFilter(const QString & fn);
-		void loadFilter(const QString & fn);
-		
-	
-	public slots:
-		virtual void save();
-		virtual void open();
-		virtual void clear();
-		virtual void remove();
-		virtual void add();
-		virtual void accept();
-	
+		/// Add a bad peer to the list
+		void addBadPeer(const QString & ip);
+
 	private:
-		void setupConnections();
-		
-		static IPFilterList* filter_list;
+		QStringList bad_peers;
 	};
+
 }
 
 #endif

@@ -29,11 +29,11 @@
 #include <peer/peermanager.h>
 #include <peer/serverauthenticate.h>
 #include <peer/authenticationmonitor.h>
-
+#include <peer/accessmanager.h>
 
 #include "globals.h"
 #include "torrent.h"
-#include "ipblocklist.h"
+
 
 
 namespace bt
@@ -121,10 +121,9 @@ namespace bt
 		}
 		else
 		{
-			IPBlocklist& ipfilter = IPBlocklist::instance();
-			QString IP(s->getRemoteIPAddress());
-			if (ipfilter.isBlocked( IP ))
+			if (!AccessManager::instance().allowed(s->getRemoteAddress()))
 			{
+				Out(SYS_CON|LOG_DEBUG) << "A client with a blocked IP address ("<< s->getRemoteIPAddress() << ") tried to connect !" << endl;
 				delete s;
 				return;
 			}

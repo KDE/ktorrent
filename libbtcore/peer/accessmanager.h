@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Vasić   								   *
- *   ivasic@gmail.com   												   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
+ *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,45 +18,53 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef IPFILTERWIDGET_H
-#define IPFILTERWIDGET_H
+#ifndef BTACCESSMANAGER_H
+#define BTACCESSMANAGER_H
 
-#include "ui_ipfilterwidget.h"
-#include <KDialog>
+#include <QList>
+#include <net/address.h>
+#include <btcore_export.h>
 
-namespace kt
+namespace bt
 {
-	class IPFilterList;
-	
+	class BlockListInterface;
+	class BadPeersList;
+
 	/**
-	* @author Ivan Vasic <ivasic@gmail.com>
-	* @brief Integrated IPFilter GUI class.
-	* Used to show, add and remove banned peers from blacklist.
+		@author Joris Guisson
+	
+		Class which determines wether or not we allow an IP to connect to us.
+		It uses blocklists to do this. Blocklists should register with this class.
+		By default it has one blocklist, the banned peers list.
 	*/
-	class IPFilterWidget: public KDialog, public Ui_IPFilterWidget
+	class BTCORE_EXPORT AccessManager
 	{
-		Q_OBJECT
+		AccessManager();
 	public:
-		IPFilterWidget(QWidget* parent);
-		virtual ~IPFilterWidget();
+		virtual ~AccessManager();
+
+		/// Get the singleton instance
+		static AccessManager & instance();
 		
-		void saveFilter(const QString & fn);
-		void loadFilter(const QString & fn);
+		/// Add a blocklist
+		void addBlockList(BlockListInterface* bl);
 		
-	
-	public slots:
-		virtual void save();
-		virtual void open();
-		virtual void clear();
-		virtual void remove();
-		virtual void add();
-		virtual void accept();
-	
+		/// Remove a blocklist
+		void removeBlockList(BlockListInterface* bl);
+		
+		/// Are we allowed to have a connection with a peer 
+		bool allowed(const net::Address & addr);
+			
+		/// Are we allowed to have a connection with a peer
+		bool allowed(const QString & addr);
+		
+		/// Ban a peer (i.e. add it to the banned list)
+		void banPeer(const QString & addr);
 	private:
-		void setupConnections();
-		
-		static IPFilterList* filter_list;
+		QList<BlockListInterface*> blocklists;
+		BadPeersList* banned;
 	};
+
 }
 
 #endif

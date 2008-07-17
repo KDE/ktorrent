@@ -85,6 +85,8 @@ set(libbtcore_SRC
 	peer/packetwriter.cpp
 	peer/packetreader.cpp
 	peer/utpex.cpp
+	peer/accessmanager.cpp
+	peer/badpeerslist.cpp
 
 	download/piece.cpp
 	download/request.cpp
@@ -102,7 +104,7 @@ set(libbtcore_SRC
 	interfaces/torrentfileinterface.cpp
 	interfaces/trackerslist.cpp
 	interfaces/logmonitorinterface.cpp
-	interfaces/ipblockinginterface.cpp
+	interfaces/blocklistinterface.cpp
 	interfaces/exitoperation.cpp
 	interfaces/chunkdownloadinterface.cpp
 	interfaces/monitorinterface.cpp
@@ -115,7 +117,6 @@ set(libbtcore_SRC
 	torrent/server.cpp
 	torrent/torrent.cpp
 	torrent/torrentfile.cpp
-	torrent/ipblocklist.cpp
 	torrent/peersourcemanager.cpp
 	torrent/uploader.cpp
 	torrent/timeestimator.cpp
@@ -221,7 +222,7 @@ set (interfaces_HDR
 	./interfaces/logmonitorinterface.h
 	./interfaces/piecedownloader.h
 	./interfaces/monitorinterface.h
-	./interfaces/ipblockinginterface.h
+	./interfaces/blocklistinterface.h
 	./interfaces/torrentfileinterface.h
 	./interfaces/peersource.h
 	./interfaces/chunkselectorinterface.h
@@ -243,6 +244,7 @@ set (peer_HDR
 	./peer/peerdownloader.h
 	./peer/chunkcounter.h
 	./peer/serverauthenticate.h
+	./peer/accessmanager.h
 )
 	
 set (util_HDR
@@ -302,7 +304,6 @@ set (torrent_HDR
 	./torrent/torrent.h
 	./torrent/advancedchokealgorithm.h
 	./torrent/peersourcemanager.h
-	./torrent/ipblocklist.h
 	./torrent/choker.h
 	./torrent/server.h
 	./torrent/torrentcontrol.h

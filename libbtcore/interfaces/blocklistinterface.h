@@ -24,28 +24,38 @@
 
 #include <btcore_export.h>
 
-class QString;
+namespace net
+{
+	class Address;
+}
 
 
 namespace bt
 {
 	/**
 	 * @author Ivan Vasic
-	 * @brief Interface for IPBlocklist to communicate with IPBlockingPlugin
+	 * @brief Base class for BlockLists
 	*/
-	class BTCORE_EXPORT IPBlockingInterface 
+	class BTCORE_EXPORT BlockListInterface 
 	{	
-		public:
-    		IPBlockingInterface();
-    		virtual ~IPBlockingInterface();
+	public:
+		BlockListInterface();
+		virtual ~BlockListInterface();
+		
+		/**
+		 * This function checks if IP is blocked
+		 * @return TRUE if IP should be blocked. FALSE otherwise
+		 * @arg addr Address of the peer
+		 */
+		virtual bool isBlockedIP(const net::Address & addr) = 0;
 			
-			/**
-			 * This function checks if IP is listed in antip2p filter list.
-			 * @return TRUE if IP should be blocked. FALSE otherwise
-			 * @arg ip String representation of IP address.
-			 */
-			virtual bool isBlockedIP(const QString& ip) = 0;
-			
+		
+		/**
+		 * Same as above, accept this takes a string as parameter
+		 * @param addr The IP address represented as a string
+		 * @return TRUE if IP should be blocked. FALSE otherwise
+		 */
+		virtual bool isBlockedIP(const QString & addr) = 0;
 	};
 }
 #endif

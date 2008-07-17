@@ -26,7 +26,7 @@
 #include "peermanager.h"
 #include "peerid.h"
 #include <torrent/torrent.h>
-#include <torrent/ipblocklist.h>
+#include <peer/accessmanager.h>
 
 
 namespace bt
@@ -64,12 +64,11 @@ namespace bt
 	void ServerAuthenticate::handshakeReceived(bool full)
 	{
 		Uint8* hs = handshake;
-		IPBlocklist& ipfilter = IPBlocklist::instance();
+		AccessManager & aman = AccessManager::instance();
 
-		QString IP = sock->getRemoteIPAddress();
-
-		if (ipfilter.isBlocked( IP ))
+		if (!aman.allowed(sock->getRemoteAddress()))
 		{
+			Out(SYS_GEN|LOG_DEBUG) << "The IP address " << sock->getRemoteIPAddress() << " is blocked" << endl;
 			onFinish(false);
 			return;
 		}

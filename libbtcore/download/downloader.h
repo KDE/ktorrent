@@ -43,6 +43,7 @@ namespace bt
 	class MonitorInterface;
 	class WebSeed;
 	class ChunkDownloadInterface;
+	class BadPeersList;
 
 	typedef PtrMap<Uint32,ChunkDownload>::iterator CurChunkItr;
 	typedef PtrMap<Uint32,ChunkDownload>::const_iterator CurChunkCItr;

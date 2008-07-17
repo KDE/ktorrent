@@ -1,180 +1,120 @@
 <ui version="4.0" >
- <class>IPFilterWidgetBase</class>
- <widget class="QDialog" name="IPFilterWidgetBase" >
+ <class>IPFilterWidget</class>
+ <widget class="QWidget" name="IPFilterWidget" >
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>476</width>
-    <height>449</height>
+    <width>632</width>
+    <height>219</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>KTorrent Blacklisted Peers</string>
   </property>
-  <layout class="QGridLayout" >
+  <layout class="QGridLayout" name="gridLayout" >
    <item row="0" column="0" >
-    <widget class="QGroupBox" name="groupBox" >
-     <property name="title" >
-      <string>Banned Peers</string>
+    <layout class="QHBoxLayout" name="horizontalLayout" >
+     <item>
+      <widget class="QLabel" name="label" >
+       <property name="text" >
+        <string>Add peer:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KLineEdit" name="m_ip_to_add" >
+       <property name="text" >
+        <string>127.0.0.1</string>
+       </property>
+       <property name="showClearButton" stdset="0" >
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="1" >
+    <widget class="KPushButton" name="m_add" >
+     <property name="text" >
+      <string>Add</string>
      </property>
-     <layout class="QGridLayout" >
-      <item row="0" column="0" >
-       <layout class="QHBoxLayout" >
-        <item>
-         <widget class="QLabel" name="label" >
-          <property name="text" >
-           <string>Add peer:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="peerIP" >
-          <property name="text" >
-           <string>127.0.0.1</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item rowspan="3" row="0" column="1" >
-       <layout class="QVBoxLayout" >
-        <item>
-         <widget class="KPushButton" name="btnAdd" >
-          <property name="text" >
-           <string>Add</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" >
-           <size>
-            <width>20</width>
-            <height>21</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="KPushButton" name="btnRemove" >
-          <property name="text" >
-           <string>Remove</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="KPushButton" name="btnClear" >
-          <property name="text" >
-           <string>Clear</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" >
-           <size>
-            <width>20</width>
-            <height>16</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="KPushButton" name="btnOpen" >
-          <property name="text" >
-           <string>Open...</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="KPushButton" name="btnSave" >
-          <property name="text" >
-           <string>Save As...</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" >
-           <size>
-            <width>20</width>
-            <height>16</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="KPushButton" name="btnOk" >
-          <property name="text" >
-           <string>Ok</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="KPushButton" name="btnApply" >
-          <property name="text" >
-           <string>Apply</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="KPushButton" name="btnCancel" >
-          <property name="text" >
-           <string>Cancel</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="1" column="0" >
-       <spacer>
-        <property name="orientation" >
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType" >
-         <enum>QSizePolicy::Maximum</enum>
-        </property>
-        <property name="sizeHint" >
-         <size>
-          <width>20</width>
-          <height>30</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="2" column="0" >
-       <widget class="QListWidget" name="lstPeers" />
-      </item>
-     </layout>
     </widget>
    </item>
    <item row="1" column="0" >
-    <widget class="QLabel" name="label_2" >
-     <property name="text" >
-      <string>Note: Blacklist applies to current session only. Use save/open to save your entries or use IPFilter plugin (PeerGuardian).</string>
-     </property>
-     <property name="wordWrap" >
+    <widget class="QListView" name="m_ip_list" >
+     <property name="alternatingRowColors" >
       <bool>true</bool>
      </property>
+     <property name="selectionMode" >
+      <enum>QAbstractItemView::ContiguousSelection</enum>
+     </property>
     </widget>
+   </item>
+   <item row="1" column="1" >
+    <layout class="QVBoxLayout" name="verticalLayout_2" >
+     <item>
+      <widget class="KPushButton" name="m_remove" >
+       <property name="text" >
+        <string>Remove</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KPushButton" name="m_clear" >
+       <property name="text" >
+        <string>Clear</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer" >
+       <property name="orientation" >
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0" >
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="KPushButton" name="m_open" >
+       <property name="text" >
+        <string>Open...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KPushButton" name="m_save_as" >
+       <property name="text" >
+        <string>Save As...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KPushButton" name="m_close" >
+       <property name="text" >
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
    <class>KPushButton</class>
    <extends>QPushButton</extends>
-   <header location="global" >kpushbutton.h</header>
+   <header>kpushbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

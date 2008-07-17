@@ -19,10 +19,12 @@
  ***************************************************************************/
 #include "ipfilterwidget.h"
 
-#include <torrent/ipblocklist.h>
+#include <peer/accessmanager.h>
 #include <torrent/globals.h>
 #include <util/log.h>
+#include <util/error.h>
 #include <util/constants.h>
+#include <interfaces/functions.h>
 
 #include <QtGui>
 #include <QtCore>
@@ -31,181 +33,186 @@
 #include <KFileDialog>
 #include <KUrl>
 
-/*#include <ksocketaddress.h>
-#include <kfiledialog.h>
-#include <klocale.h>
-#include <kmessagebox.h>*/
+#include "ipfilterlist.h"
 
 #define MAX_RANGES 500
 
 using namespace bt;
 
-IPFilterWidget::IPFilterWidget ( QWidget* parent, Qt::WFlags fl )
-		:QDialog ( parent, fl )
+namespace kt
 {
-	setupUi ( this );
-	btnAdd->setGuiItem(KStandardGuiItem::add());
-	btnOk->setGuiItem(KStandardGuiItem::ok());
-	btnApply->setGuiItem(KStandardGuiItem::apply());
-	btnClear->setGuiItem(KStandardGuiItem::clear());
-	btnSave->setGuiItem(KStandardGuiItem::saveAs());
-	btnOpen->setGuiItem(KStandardGuiItem::open());
-	btnRemove->setGuiItem(KStandardGuiItem::remove());
-	btnCancel->setGuiItem(KStandardGuiItem::close());
-
-	IPBlocklist& ipfilter = IPBlocklist::instance();
-	QStringList* blocklist = ipfilter.getBlocklist();
-
-	for ( QStringList::Iterator it = blocklist->begin(); it != blocklist->end(); ++it )
+	
+	IPFilterList* IPFilterWidget::filter_list = 0;
+	
+	
+	IPFilterWidget::IPFilterWidget(QWidget* parent)
+			: KDialog(parent)
 	{
-		( new QListWidgetItem ( lstPeers ) )->setText ( *it );
-	}
-
-	delete blocklist;
-
-	setupConnections();
-}
-
-void IPFilterWidget::setupConnections()
-{
-	connect(btnAdd, SIGNAL(clicked()), this, SLOT(btnAdd_clicked()));
-	connect(btnClear, SIGNAL(clicked()), this, SLOT(btnClear_clicked()));
-	connect(btnApply, SIGNAL(clicked()), this, SLOT(btnApply_clicked()));
-	connect(btnOk, SIGNAL(clicked()), this, SLOT(btnOk_clicked()));
-	connect(btnSave, SIGNAL(clicked()), this, SLOT(btnSave_clicked()));
-	connect(btnOpen, SIGNAL(clicked()), this, SLOT(btnOpen_clicked()));
-	connect(btnRemove, SIGNAL(clicked()), this, SLOT(btnRemove_clicked()));	
-	connect(btnCancel, SIGNAL(clicked()), this, SLOT(reject()));
-}
-
-void IPFilterWidget::btnAdd_clicked()
-{
-	int var=0;
-
-	QRegExp rx ( "([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3})" );
-	QRegExpValidator v ( rx,0 );
-
-	QString ip = peerIP->text();
-
-	if ( v.validate ( ip, var ) == QValidator::Acceptable )
-	{
-		if ( lstPeers->findItems ( ip, 0 ).empty() )
-			( new QListWidgetItem ( lstPeers ) )->setText ( ip );
-	}
-	else
-		KMessageBox::sorry ( 0, i18n ( "You must enter IP in format 'XXX.XXX.XXX.XXX'. You can also use wildcards for ranges like '127.0.0.*'." ) );
-}
-
-void IPFilterWidget::btnRemove_clicked()
-{
-	if ( lstPeers->currentItem() )
-		delete lstPeers->currentItem();
-}
-
-void IPFilterWidget::btnClear_clicked()
-{
-	lstPeers->clear();
-}
-
-void IPFilterWidget::btnOpen_clicked()
-{
-	QString lf = KFileDialog::getOpenFileName ( KUrl("kfiledialog:///openTorrent"), "*.txt|",this,i18n ( "Choose a file" ) );
-
-	if ( lf.isEmpty() )
-		return;
-
-	btnClear_clicked();
-
-	loadFilter ( lf );
-}
-
-void IPFilterWidget::btnSave_clicked()
-{
-	QString sf = KFileDialog::getSaveFileName ( KUrl("kfiledialog:///openTorrent"),"*.txt|",this,i18n ( "Choose a filename to save under" ) );
-
-	if ( sf.isEmpty() )
-		return;
-
-	saveFilter ( sf );
-}
-
-void IPFilterWidget::btnOk_clicked()
-{
-	btnApply_clicked();
-	this->accept();
-}
-
-void IPFilterWidget::btnApply_clicked()
-{
-	IPBlocklist& ipfilter = IPBlocklist::instance();
-
-	QStringList* peers = new QStringList();
-
-	for ( int i=0; i<lstPeers->count(); ++i )
-	{
-		*peers << lstPeers->item ( i )->text();
-	}
-
-	ipfilter.setBlocklist ( peers );
-
-	delete peers;
-
-	Out ( SYS_IPF|LOG_NOTICE ) << "Loaded " << lstPeers->count() << " blocked IP ranges." << endl;
-}
-
-void IPFilterWidget::saveFilter ( QString& fn )
-{
-	QFile fptr ( fn );
-
-	if ( !fptr.open ( QIODevice::WriteOnly ) )
-	{
-		Out ( SYS_GEN|LOG_NOTICE ) << QString ( "Could not open file %1 for writing." ).arg ( fn ) << endl;
-		return;
-	}
-
-	QTextStream out ( &fptr );
-
-	for ( int i=0; i<lstPeers->count(); ++i )
-	{
-		out << lstPeers->item ( i )->text() << ::endl;
-	}
-
-	fptr.close();
-}
-
-void IPFilterWidget::loadFilter ( QString& fn )
-{
-	QFile dat ( fn );
-	dat.open ( QIODevice::ReadOnly );
-
-	QTextStream stream ( &dat );
-	QString line;
-
-	QRegExp rx ( "([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3})" );
-	QRegExpValidator v ( rx,0 );
-
-
-	int i=0;
-	int var=0;
-	bool err = false;
-
-	while ( !stream.atEnd() && i < MAX_RANGES )
-	{
-		line = stream.readLine();
-		if ( v.validate ( line, var ) != QValidator::Acceptable )
+		setupUi(mainWidget());
+		setButtons(KDialog::None);
+		setCaption(i18n("IP Filter List"));
+		
+		m_add->setGuiItem(KStandardGuiItem::add());
+		m_clear->setGuiItem(KStandardGuiItem::clear());
+		m_save_as->setGuiItem(KStandardGuiItem::saveAs());
+		m_open->setGuiItem(KStandardGuiItem::open());
+		m_remove->setGuiItem(KStandardGuiItem::remove());
+		m_close->setGuiItem(KStandardGuiItem::close());
+	
+		if (!filter_list)
 		{
-			err = true;
-			continue;
+			filter_list = new IPFilterList();
+			AccessManager::instance().addBlockList(filter_list);
+			loadFilter(kt::DataDir() + "ip_filter");
 		}
-
-		( new QListWidgetItem ( lstPeers ) )->setText ( line );
-		++i;
+		
+		m_ip_list->setModel(filter_list);
+		m_ip_list->setSelectionMode(QAbstractItemView::ContiguousSelection);
+	
+		setupConnections();
 	}
-
-	if ( err )
-		Out ( SYS_IPF|LOG_NOTICE ) << "Some lines could not be loaded. Check your filter file..." << endl;
-
-	dat.close();
+	
+	IPFilterWidget::~IPFilterWidget()
+	{
+	}
+	
+	void IPFilterWidget::setupConnections()
+	{
+		connect(m_add, SIGNAL(clicked()), this, SLOT(add()));
+		connect(m_close, SIGNAL(clicked()), this, SLOT(accept()));
+		connect(m_clear, SIGNAL(clicked()), this, SLOT(clear()));
+		connect(m_save_as, SIGNAL(clicked()), this, SLOT(save()));
+		connect(m_open, SIGNAL(clicked()), this, SLOT(open()));
+		connect(m_remove, SIGNAL(clicked()), this, SLOT(remove()));	
+		connect(this, SIGNAL(closeClicked()), this, SLOT(reject()));
+	}
+	
+	void IPFilterWidget::add()
+	{
+		int var=0;
+	
+		QRegExp rx ( "([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3})" );
+		QRegExpValidator v ( rx,0 );
+	
+		QString ip = m_ip_to_add->text();
+	
+		if (v.validate(ip, var) != QValidator::Acceptable)
+		{
+			KMessageBox::sorry(this, i18n ("Invalid IP address %1. You must enter an IP address in the format 'XXX.XXX.XXX.XXX'."
+					" You can also use wildcards for ranges like '127.0.0.*'.",ip ) );
+			return;
+		}
+		
+		try
+		{
+			filter_list->add(ip);
+		}
+		catch (bt::Error & err)
+		{
+			KMessageBox::sorry(this,err.toString());
+		}
+	}
+	
+	void IPFilterWidget::remove()
+	{
+		QModelIndexList idx = m_ip_list->selectionModel()->selectedRows();
+		if (idx.count() == 0)
+			return;
+		
+		filter_list->remove(idx.at(0).row(),idx.count());
+	}
+	
+	void IPFilterWidget::clear()
+	{
+		filter_list->clear();
+	}
+	
+	void IPFilterWidget::open()
+	{
+		QString lf = KFileDialog::getOpenFileName ( KUrl("kfiledialog:///openTorrent"), "*.txt|",this,i18n ( "Choose a file" ) );
+	
+		if (lf.isEmpty())
+			return;
+	
+		clear();
+	
+		loadFilter(lf);
+	}
+	
+	void IPFilterWidget::save()
+	{
+		QString sf = KFileDialog::getSaveFileName ( KUrl("kfiledialog:///openTorrent"),"*.txt|",this,i18n ( "Choose a filename to save under" ) );
+	
+		if ( sf.isEmpty() )
+			return;
+	
+		saveFilter(sf);
+	}
+	
+	void IPFilterWidget::accept()
+	{
+		saveFilter(kt::DataDir() + "ip_filter");
+		KDialog::accept();
+	}
+	
+	void IPFilterWidget::saveFilter(const QString & fn)
+	{
+		QFile fptr ( fn );
+	
+		if ( !fptr.open ( QIODevice::WriteOnly ) )
+		{
+			Out ( SYS_GEN|LOG_NOTICE ) << QString ( "Could not open file %1 for writing." ).arg ( fn ) << endl;
+			return;
+		}
+	
+		QTextStream out(&fptr);
+	
+		for (int i = 0; i < filter_list->rowCount(); ++i)
+		{
+			out << filter_list->data(filter_list->index(i,0),Qt::DisplayRole).toString() << ::endl;
+		}
+	
+		fptr.close();
+	}
+	
+	void IPFilterWidget::loadFilter(const QString & fn)
+	{
+		QFile dat(fn);
+		dat.open(QIODevice::ReadOnly);
+	
+		QTextStream stream(&dat);
+		QString line;
+	
+		QRegExp rx("([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3}).([*]|[0-9]{1,3})");
+		QRegExpValidator v(rx,0);
+	
+		bool err = false;
+		int pos = 0;
+		
+		while (!stream.atEnd())
+		{
+			line = stream.readLine();
+			if (v.validate(line,pos) != QValidator::Acceptable)
+			{
+				err = true;
+			}
+			else
+			{
+				try 
+				{
+					filter_list->add(line);
+				}
+				catch (...)
+				{
+					err = true;
+				}
+			}
+		}
+	
+		if (err)
+			Out(SYS_IPF|LOG_NOTICE) << "Some lines could not be loaded. Check your filter file..." << endl;
+	
+		dat.close();
+	}
 }
-
 #include "ipfilterwidget.moc"

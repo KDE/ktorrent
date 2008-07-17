@@ -28,7 +28,7 @@
 #include <kstandarddirs.h>
 #include <kconfiggroup.h>
 #include <interfaces/peerinterface.h>
-#include <torrent/ipblocklist.h>
+#include <peer/accessmanager.h>
 #include <util/functions.h>
 #include "peerviewmodel.h"
 
@@ -73,7 +73,7 @@ namespace kt
 	
 	void PeerView::banPeer()
 	{
-		IPBlocklist& filter = IPBlocklist::instance();
+		AccessManager & aman = AccessManager::instance();
 		
 		QModelIndexList indices = selectionModel()->selectedRows();
 		foreach (const QModelIndex &idx,indices)
@@ -81,7 +81,7 @@ namespace kt
 			bt::PeerInterface* peer = model->indexToPeer(pm->mapToSource(idx));
 			if (peer)
 			{
-				filter.insert(peer->getStats().ip_address,3);
+				aman.banPeer(peer->getStats().ip_address);
 				peer->kill();
 			}
 		}

@@ -33,18 +33,18 @@
 #include <peer/peer.h>
 #include <download/piece.h>
 #include <peer/peerdownloader.h>
+#include <peer/badpeerslist.h>
 #include <util/functions.h>
 #include <interfaces/monitorinterface.h>
 #include <peer/packetwriter.h>
-#include <torrent/ipblocklist.h>
+#include <peer/accessmanager.h>
 #include "chunkselector.h"
 #include "btversion.h"
 #include "webseed.h"
 
+
 namespace bt
 {
-	
-	
 
 	Downloader::Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman,ChunkSelectorFactoryInterface* fac) 
 	: tor(tor),pman(pman),cman(cman),downloaded(0),tmon(0),chunk_selector(0)
@@ -494,10 +494,10 @@ namespace bt
 				Peer* p = pman.findPeer(only);
 				if (!p)
 					return false;
-				QString IP(p->getIPAddresss());
-				Out(SYS_GEN|LOG_NOTICE) << "Peer " << IP << " sent bad data" << endl;
-				IPBlocklist & ipfilter = IPBlocklist::instance();
-				ipfilter.insert( IP );
+				
+				QString ip = p->getIPAddresss();
+				Out(SYS_GEN|LOG_NOTICE) << "Peer " << ip << " sent bad data" << endl;
+				AccessManager::instance().banPeer(ip);
 				p->kill(); 
 			}
 			return false;
