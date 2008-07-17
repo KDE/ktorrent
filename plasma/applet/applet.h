@@ -77,8 +77,8 @@ namespace ktplasma
 		Ui_AppletConfig ui;
 		Plasma::DataEngine* engine;
 		QString current_source;
-		int max_ds; // Max upload speed
-		int max_us;  // Max download speed
+		double max_ds; // Max upload speed
+		double max_us;  // Max download speed
 		QGraphicsLinearLayout* root_layout;
 		bool connected_to_app;
 		bool config_dlg_created;

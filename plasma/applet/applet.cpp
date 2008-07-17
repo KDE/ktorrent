@@ -266,8 +266,8 @@ namespace ktplasma
 	
 	void Applet::updateCurrent(const Plasma::DataEngine::Data &data)
 	{
-		int ds = data.value("download_rate").toInt();
-		int us = data.value("upload_rate").toInt();
+		double ds = data.value("download_rate").toDouble();
+		double us = data.value("upload_rate").toDouble();
 		if (ds > max_ds)
 			max_ds = ds;
 		if (us > max_us)
