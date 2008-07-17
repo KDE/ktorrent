@@ -263,7 +263,7 @@ set (util_HDR
 	./util/sha1hash.h
 	./util/sha1hashgen.h
 	./util/error.h
-	./util/mingw.h
+	./util/win32.h
 )
 	
 set (download_HDR
