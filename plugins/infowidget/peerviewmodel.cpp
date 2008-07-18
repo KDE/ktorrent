@@ -25,6 +25,7 @@
 #include <interfaces/torrentinterface.h>
 #include <util/functions.h>
 #include "flagdb.h"
+#include <kdebug.h>
 
 #ifdef USE_SYSTEM_GEOIP
 #include <GeoIP.h>
@@ -85,6 +86,15 @@ namespace kt
 		if (geo_ip)
 		{
 			int country_id = GeoIP_id_by_name(geo_ip, stats.ip_address.toAscii());
+			// fixed case where the ip wasn't found in the database
+			// may be usefull for unix too 
+#ifdef Q_WS_WIN
+			if (country_id >= sizeof(GeoIP_country_name)/sizeof(char *))
+			{
+				kWarning() << "ip" << stats.ip_address << "not found in GeoIP database";
+				country_id = sizeof(GeoIP_country_name)/sizeof(char *)-1;	
+			}
+#endif
 			country = GeoIP_country_name[country_id];
 			flag = KIcon(flagDB.getFlag(GeoIP_country_code[country_id]));
 		}
