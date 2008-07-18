@@ -64,6 +64,8 @@ kde4_add_ui_files(ktorrent_SRC
 	recommendedsettingsdlg.ui
 )
 
+kde4_add_app_icon(ktorrent_SRC "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-app-ktorrent.png")
+
 kde4_add_executable(ktorrent ${ktorrent_SRC})
 
 target_link_libraries(ktorrent ktideal ktcore ${KDE4_KDEUI_LIBS} ${KDE4_KNOTIFYCONFIG_LIBS})
