@@ -20,8 +20,9 @@ include(CheckFunctionExists)
 include(CheckTypeSize) #XFS
 
 
-
-add_definitions(${KDE4_ENABLE_EXCEPTIONS} ${KDE4_DEFINITIONS} )
+# according to http://www.cmake.org/pipermail/cmake/2008-June/022381.html
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
+add_definitions( ${KDE4_DEFINITIONS} )
 
 option(ENABLE_DHT_SUPPORT "Whether to build KTorrent with DHT support or not" true)
 if (ENABLE_DHT_SUPPORT)
