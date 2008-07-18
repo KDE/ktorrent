@@ -100,7 +100,11 @@ namespace net
 		if (m_fd >= 0)
 		{
 			shutdown(m_fd, SHUT_RDWR);
+#ifdef Q_WS_WIN
+			::closesocket(m_fd);
+#else
 			::close(m_fd);
+#endif
 		}
 	}
 	
@@ -109,7 +113,11 @@ namespace net
 		if (m_fd >= 0)
 		{
 			shutdown(m_fd, SHUT_RDWR);
+#ifdef Q_WS_WIN
+			::closesocket(m_fd);
+#else
 			::close(m_fd);
+#endif
 			m_fd = -1;
 			m_state = CLOSED;
 		}

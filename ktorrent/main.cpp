@@ -69,10 +69,12 @@ bool GrabPIDLock()
 
 int main(int argc, char **argv)
 {
+#ifndef Q_WS_WIN
 	// ignore SIGPIPE and SIGXFSZ
 	signal(SIGPIPE,SIG_IGN);
 	signal(SIGXFSZ,SIG_IGN);
-	
+#endif
+
 	bt::SetClientInfo("KTorrent",kt::MAJOR,kt::MINOR,kt::RELEASE,bt::DEVEL,"KT");
 	
 	KAboutData about(
