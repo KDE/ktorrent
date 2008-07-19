@@ -1,4 +1,4 @@
-set(ktipfilterplugin_SRC antip2p.cpp ipblockingprefpage.cpp convertthread.cpp convertdialog.cpp ipfilterplugin.cpp)
+set(ktipfilterplugin_SRC antip2p.cpp ipblockingprefpage.cpp convertthread.cpp convertdialog.cpp ipfilterplugin.cpp downloadandconvertjob.cpp)
 
 kde4_add_ui_files(ktipfilterplugin_SRC ipblockingprefpage.ui convertdialog.ui)
 kde4_add_kcfg_files(ktipfilterplugin_SRC ipfilterpluginsettings.kcfgc)

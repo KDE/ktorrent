@@ -33,6 +33,7 @@ class KJob;
 namespace kt
 {
 	class IPFilterPlugin;
+	class DownloadAndConvertJob;
 	
 	/**
 	 * @author Ivan Vasic
@@ -42,33 +43,36 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		IPBlockingPrefPage(CoreInterface* core, IPFilterPlugin* p);
+		IPBlockingPrefPage(IPFilterPlugin* p);
 		virtual ~IPBlockingPrefPage();
 		
 	
 		virtual void loadSettings();
 		virtual void loadDefaults();
 		virtual void updateSettings();
+		
+		/// Do an auto update, return false if this is not possible
+		bool doAutoUpdate();
 			
 	private slots:
-		void btnDownloadClicked();
+		void downloadClicked();
 		void checkUseLevel1Toggled(bool);
-		void downloadFileFinished(KJob*);
-		void convert(KJob*);
-		void extract(KJob*);
-		void makeBackupFinished(KJob* );
-		void revertBackupFinished(KJob*);
-		
+		void restoreGUI();
+		void downloadAndConvertFinished(KJob* j);
+		void autoUpdateToggled(bool on);
+		void autoUpdateIntervalChanged(int val);
 		
 	private:
-		void convert();
-		void cleanUp(const QString & path);
-		void cleanUpFiles();
-		void restoreGUI();
+		void updateAutoUpdate();
+		
+	Q_SIGNALS:
+		void updateFinished();
 
 	private:
 		CoreInterface* m_core;
 		IPFilterPlugin* m_plugin;
+		DownloadAndConvertJob* m_job;
+		bool m_verbose;
 	};
 }
 #endif

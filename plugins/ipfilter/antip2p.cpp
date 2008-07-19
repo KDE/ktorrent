@@ -24,6 +24,7 @@
 #include <util/log.h>
 #include <util/constants.h>
 #include <util/mmapfile.h>
+#include <net/address.h>
 
 #include <kglobal.h>
 #include <kstandarddirs.h>
@@ -35,7 +36,7 @@ using namespace bt;
 
 namespace kt
 {	
-	Uint32 AntiP2P::toUint32(const QString& ip)
+	static Uint32 StringToUint32(const QString& ip)
 	{
 		bool test;
 		Uint32 ret = ip.section('.',0,0).toULongLong(&test);
@@ -49,28 +50,13 @@ namespace kt
 		return ret;
 	}
 	
-	QString fromUint32(Uint32 ip)
+	static QString StringFromUint32(Uint32 ip)
 	{
-		Uint32 tmp = ip;
-		QString out;
-	
-		tmp = ip;
-		tmp &= 0x000000FF;
-		out.prepend(QString("%1").arg(tmp));
-		ip >>= 8;
-		tmp = ip;
-		tmp &= 0x000000FF;
-		out.prepend(QString("%1.").arg(tmp));
-		ip >>= 8;
-		tmp = ip;
-		tmp &= 0x000000FF;
-		out.prepend(QString("%1.").arg(tmp));
-		ip >>= 8;
-		tmp = ip;
-		tmp &= 0x000000FF;
-		out.prepend(QString("%1.").arg(tmp));
-	
-		return out;
+		return QString("%1.%2.%3.%4")
+				.arg((ip & 0xFF000000) >> 24)
+				.arg((ip & 0x00FF0000) >> 16)
+				.arg((ip & 0x0000FF00) >> 8)
+				.arg((ip & 0x000000FF));
 	}
 	
 	AntiP2P::AntiP2P()
@@ -85,6 +71,46 @@ namespace kt
 			delete file;
 		
 		Out(SYS_IPF|LOG_ALL) << "Anti-P2P filter unloaded." << endl;
+	}
+	
+	bool AntiP2P::isBlockedIP(const net::Address & addr)
+	{
+		if (addr.ipVersion() != 4)
+			return false;
+		
+		return isBlockedIP(addr.ipAddress().IPv4Addr());
+	}
+	
+	bool AntiP2P::isBlockedIP(const QString & addr)
+	{
+		return isBlockedIP(StringToUint32(addr));
+	}
+	
+	bool AntiP2P::isBlockedIP(Uint32 ip)
+	{
+		if (!header_loaded)
+		{
+			Out(SYS_IPF|LOG_IMPORTANT) << "Tried to check if IP was blocked, but no AntiP2P header was loaded." << endl;
+			return false;
+		}
+
+		int in_header = searchHeader(ip, 0, blocks.count());
+		switch (in_header)
+		{
+			case -1:
+				return false; //ip is not blocked
+			case -2:
+				return true;  //ip is blocked (we're really lucky to find it in header already)
+			default:
+				//search mmapped file
+				HeaderBlock to_be_searched = blocks[in_header];
+				Uint8* fptr = (Uint8*) file->getDataPointer();
+				fptr += to_be_searched.offset;
+				IPBlock* file_blocks =  (IPBlock*) fptr;
+				return searchFile(file_blocks, ip, 0, to_be_searched.nrEntries);
+				break;
+		}
+		return false;
 	}
 	
 	void AntiP2P::load()
@@ -141,12 +167,6 @@ namespace kt
 		return file != 0;
 	}
 	
-	bool AntiP2P::isBlockedIP(const QString& ip )
-	{
-		Uint32 test = toUint32(ip);
-		return isBlockedIP(test);
-	}
-	
 	int AntiP2P::searchHeader(Uint32& ip, int start, int end)
 	{
 		if (end == 0)
@@ -174,32 +194,7 @@ namespace kt
 		}
 	}
 	
-	bool AntiP2P::isBlockedIP( Uint32& ip )
-	{
-		if (!header_loaded)
-		{
-			Out(SYS_IPF|LOG_IMPORTANT) << "Tried to check if IP was blocked, but no AntiP2P header was loaded." << endl;
-			return false;
-		}
-
-		int in_header = searchHeader(ip, 0, blocks.count());
-		switch (in_header)
-		{
-			case -1:
-				return false; //ip is not blocked
-			case -2:
-				return true;  //ip is blocked (we're really lucky to find it in header already)
-			default:
-				//search mmapped file
-				HeaderBlock to_be_searched = blocks[in_header];
-				Uint8* fptr = (Uint8*) file->getDataPointer();
-				fptr += to_be_searched.offset;
-				IPBlock* file_blocks =  (IPBlock*) fptr;
-				return searchFile(file_blocks, ip, 0, to_be_searched.nrEntries);
-				break;
-		}
-		return false;
-	}
+	
 	
 	bool AntiP2P::searchFile(IPBlock* file_blocks, Uint32& ip, int start, int end)
 	{
@@ -213,7 +208,6 @@ namespace kt
 			else
 				return false; //IP is not found.
 		}
-		
 		else
 		{
 			int i = start + end/2;

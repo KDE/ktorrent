@@ -26,6 +26,7 @@
 
 #include <qlist.h>
 #include <qstring.h>
+#include <interfaces/blocklistinterface.h>
 
 namespace kt
 {
@@ -47,11 +48,14 @@ namespace kt
 	 * @author Ivan Vasic <ivasic@gmail.com>
 	 * @brief This class is used to manage anti-p2p filter list, so called level1.
 	 */
-	class AntiP2P
+	class AntiP2P : public bt::BlockListInterface
 	{
 	public:
     	AntiP2P();
     	virtual ~AntiP2P();
+		
+		virtual bool isBlockedIP(const net::Address & addr);
+		virtual bool isBlockedIP(const QString & addr);
 			
 		/**
 		 * Checks if anti-p2p file is present. Used to check if we should use level1 list
@@ -63,29 +67,13 @@ namespace kt
 		 * Creates and loads the header from antip2p filter file.
 		 **/
 		void loadHeader();
-			
-			
-		/**
-		 * Checks if specified IP is listed in filter file.
-		 * @return TRUE if IP should be blocked, FALSE otherwise
-		 * @param ip QString representation of IP to be checked
-		 **/
-		bool isBlockedIP(const QString& ip);
-			
+				
 		/**
 		 * Overloaded function. Uses Uint32 IP to be checked
 		 **/
-		bool isBlockedIP(bt::Uint32& ip);
-			
-		/**
-		 * This function converts QString IP to Uint32 format.
-		 **/
-		static bt::Uint32 toUint32(const QString& ip);
+		bool isBlockedIP(bt::Uint32 ip);
 			
 	private:
-		bt::MMapFile* file;
-		QList<HeaderBlock> blocks;
-			
 		///Is AntiP2P header loaded
 		bool header_loaded;
 			
@@ -109,6 +97,10 @@ namespace kt
 		 * @returns TRUE if IP should be blocked FALSE otherwise
 		 **/
 		bool searchFile(IPBlock* file_blocks, bt::Uint32& ip, int start, int end);
+		
+	private:
+		bt::MMapFile* file;
+		QList<HeaderBlock> blocks;
 	};
 }
 #endif

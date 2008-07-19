@@ -19,11 +19,13 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <kgenericfactory.h>
+#include <QTimer>
 
 #include <interfaces/coreinterface.h>
 #include <interfaces/guiinterface.h>
 #include <util/constants.h>
-#include <torrent/ipblocklist.h>
+#include <util/log.h>
+#include <peer/accessmanager.h>
 
 #include <qstring.h>
 
@@ -43,39 +45,34 @@ namespace kt
 		Q_UNUSED(args);
 		// setXMLFile("ktpluginui.rc");
 		level1 = 0;
+		connect(&auto_update_timer,SIGNAL(timeout()),this,SLOT(checkAutoUpdate()));
+		auto_update_timer.setSingleShot(true);
 	}
 
 
 	IPFilterPlugin::~IPFilterPlugin()
 	{
-		//...just in case something goes wrong...
-		IPBlocklist& ipblist = IPBlocklist::instance();
-		ipblist.unsetPluginInterfacePtr();
 	}
 
 	void IPFilterPlugin::load()
 	{
-		pref = new IPBlockingPrefPage(getCore(), this);
+		pref = new IPBlockingPrefPage(this);
+		connect(pref,SIGNAL(updateFinished()),this,SLOT(checkAutoUpdate()));
 		getGUI()->addPrefPage(pref);
 		
-		if(IPBlockingPluginSettings::useLevel1())
+		if (IPBlockingPluginSettings::useLevel1())
 			loadAntiP2P();
 		
-		//now we need to set a pointer to the IPBlocklist
-		IPBlocklist& ipblist = IPBlocklist::instance();
-		ipblist.setPluginInterfacePtr(this);
+		checkAutoUpdate();
 	}
 
 	void IPFilterPlugin::unload()
-	{
-		//First unset pointer in IPBlocklist
-		IPBlocklist& ipblist = IPBlocklist::instance();
-		ipblist.unsetPluginInterfacePtr();
-		
+	{	
 		getGUI()->removePrefPage(pref);
 		pref = 0;
-		if(level1)
+		if (level1)
 		{
+			AccessManager::instance().removeBlockList(level1);
 			delete level1;
 			level1 = 0;
 		}
@@ -83,8 +80,9 @@ namespace kt
 	
 	bool IPFilterPlugin::loadAntiP2P()
 	{
-		if(level1 != 0)
+		if (level1 != 0)
 			return true;
+		
 		level1 = new AntiP2P();
 		if(!level1->exists())
 		{
@@ -93,19 +91,20 @@ namespace kt
 			return false;
 		}
 		level1->loadHeader();
+		AccessManager::instance().addBlockList(level1);
 		return true;
 	}
 	
 	bool IPFilterPlugin::unloadAntiP2P()
 	{
-		if(level1 != 0)
+		if (level1 != 0)
 		{
+			AccessManager::instance().removeBlockList(level1);
 			delete level1;
 			level1 = 0;
 			return true;
 		}
 		else
-			//anything else to check?
 			return true;
 	}
 	
@@ -113,17 +112,39 @@ namespace kt
 	{
 		return level1 != 0;
 	}
-	
-	bool IPFilterPlugin::isBlockedIP(const QString& ip)
-	{
-		if (level1 == 0)
-			return false;
-		
-		return level1->isBlockedIP(ip);
-	}
 
 	bool IPFilterPlugin::versionCheck(const QString & version) const
 	{
 		return version == KT_VERSION_MACRO;
+	}
+	
+	void IPFilterPlugin::checkAutoUpdate()
+	{
+		auto_update_timer.stop();
+		if (!loadedAndRunning() || !IPBlockingPluginSettings::autoUpdate())
+			return;
+		
+		KConfigGroup g = KGlobal::config()->group("IPFilterAutoUpdate");
+		QDate last_updated = g.readEntry("last_updated",QDate());
+		
+		QDateTime next_update;
+		QDateTime now = QDateTime::currentDateTime();
+		if (last_updated.isNull())
+			next_update = now.addDays(IPBlockingPluginSettings::autoUpdateInterval());
+		else
+			next_update = QDateTime(last_updated).addDays(IPBlockingPluginSettings::autoUpdateInterval());
+			
+		if (now >= next_update)
+		{
+			Out(SYS_IPF|LOG_NOTICE) << "Doing ipfilter auto update !" << endl;
+			if (!pref->doAutoUpdate()) // if we cannot do it now, try again in a minute
+				auto_update_timer.start(60*1000);
+		}
+		else
+		{
+			// schedule an auto update
+			auto_update_timer.start(1000 * (now.secsTo(next_update) + 5));
+			Out(SYS_IPF|LOG_NOTICE) << "Scheduling ipfilter auto update on " << next_update.toString() << endl;
+		}
 	}
 }

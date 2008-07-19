@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
  *   ivasic@gmail.com                                                      *
  *                                                                         *
@@ -16,58 +16,59 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTIPFILTERPLUGIN_H
-#define KTIPFILTERPLUGIN_H
+#ifndef KTDOWNLOADANDCONVERTJOB_H
+#define KTDOWNLOADANDCONVERTJOB_H
 
-#include <QTimer>
-#include <interfaces/plugin.h>
-#include "ipblockingprefpage.h"
-#include "antip2p.h"
-
-class QString;
+#include <kio/job.h>
 
 namespace kt
-{	
-	class IPBlockingPrefPage;
+{
+	class ConvertDialog;
 	
 	/**
-	 * @author Ivan Vasic <ivasic@gmail.com>
-	 * @brief IP filter plugin
-	 * 
-	 * This plugin will load IP ranges from specific files into KT IPBlocklist.
-	 */
-	class IPFilterPlugin : public Plugin
+		Job to download and convert a filter file
+	*/
+	class DownloadAndConvertJob : public KIO::Job
 	{
 		Q_OBJECT
 	public:
-		IPFilterPlugin(QObject* parent, const QStringList& args);
-		virtual ~IPFilterPlugin();
-
-		virtual void load();
-		virtual void unload();
-		virtual bool versionCheck(const QString & version) const;
+		enum Mode
+		{
+			Verbose,Quietly
+		};
+		DownloadAndConvertJob(const KUrl & url,Mode mode);
+		virtual ~DownloadAndConvertJob();
 		
-		///Loads the KT format list filter
-		void loadFilters();
+		enum ErrorCode
+		{
+			CANCELED = 100,DOWNLOAD_FAILED,UNZIP_FAILED,MOVE_FAILED,BACKUP_FAILED
+		};
 		
-		///Loads the anti-p2p filter list
-		bool loadAntiP2P();
+		virtual void kill(KJob::KillVerbosity v);
+		void start();
 		
-		///Unloads the anti-p2p filter list
-		bool unloadAntiP2P();
-		
-		/// Whether or not the IP filter is loaded and running
-		bool loadedAndRunning(); 
-	public slots:
-		void checkAutoUpdate();
-		
+	private slots:
+		void downloadFileFinished(KJob*);
+		void convert(KJob*);
+		void extract(KJob*);
+		void makeBackupFinished(KJob* );
+		void revertBackupFinished(KJob*);
+		void convertAccepted();
+		void convertRejected();
+			
+	private:
+		void convert();
+		void cleanUp(const QString & path);
+		void cleanUpFiles();
 		
 	private:
-		IPBlockingPrefPage* pref;
-		AntiP2P* level1;
-		QTimer auto_update_timer;
+		KUrl url;
+		KJob* active_job;
+		bool unzip;
+		ConvertDialog* convert_dlg;
+		Mode mode;
 	};
 
 }

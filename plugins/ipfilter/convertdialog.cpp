@@ -44,6 +44,7 @@ namespace kt
 	ConvertDialog::ConvertDialog(QWidget *parent) : QDialog(parent),convert_thread(0)
 	{
 		setupUi(this);
+		setModal(false);
 		adjustSize();
 		canceled = false;
 		connect(m_cancel,SIGNAL(clicked()),this,SLOT(btnCancelClicked()));
@@ -129,4 +130,3 @@ namespace kt
 
 }
 
-#include "convertdialog.moc"

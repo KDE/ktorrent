@@ -14,5 +14,13 @@
 			<label>Use level1 filter?</label>
 			<default>false</default>
 		</entry>
+		<entry name="autoUpdate" type="Bool">
+			<default>false</default>
+		</entry>
+		<entry name="autoUpdateInterval" type="Int">
+			<min>1</min>
+			<max>1000</max>
+			<default>7</default>
+		</entry>
 	</group>
 </kcfg>
