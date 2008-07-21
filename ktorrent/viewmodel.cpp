@@ -72,42 +72,36 @@ namespace kt
 		{
 			ret = true;
 			status = s.status;
-			mdl->emitDataChanged(row,1);
 		}
 			
 		if (bytes_downloaded != s.bytes_downloaded)
 		{
 			ret = true;
 			bytes_downloaded = s.bytes_downloaded;
-			mdl->emitDataChanged(row,2);
 		}
 		
 		if (total_bytes_to_download != s.total_bytes_to_download)
 		{
 			ret = true;
 			total_bytes_to_download = s.total_bytes_to_download;
-			mdl->emitDataChanged(row,3);
 		}
 		
 		if (bytes_uploaded != s.bytes_uploaded)
 		{
 			ret = true;
 			bytes_uploaded = s.bytes_uploaded;
-			mdl->emitDataChanged(row,4);
 		}
 		
 		if (download_rate != s.download_rate)
 		{
 			ret = true;
 			download_rate = s.download_rate;
-			mdl->emitDataChanged(row,5);
 		}
 		
 		if (upload_rate != s.upload_rate)
 		{
 			ret = true;
 			upload_rate = s.upload_rate;
-			mdl->emitDataChanged(row,6);
 		}
 		
 		int neta = ETA(s,tc);
@@ -115,7 +109,6 @@ namespace kt
 		{
 			ret = true;
 			eta = neta;
-			mdl->emitDataChanged(row,7);
 		}
 		
 		if (seeders_connected_to != s.seeders_connected_to || seeders_total != s.seeders_total)
@@ -123,7 +116,6 @@ namespace kt
 			ret = true;
 			seeders_connected_to = s.seeders_connected_to;
 			seeders_total = s.seeders_total;
-			mdl->emitDataChanged(row,8);
 		}
 		
 		if (leechers_total != s.leechers_total || leechers_connected_to != s.leechers_connected_to)
@@ -131,7 +123,6 @@ namespace kt
 			ret = true;
 			leechers_total = s.leechers_total;
 			leechers_connected_to = s.leechers_connected_to;
-			mdl->emitDataChanged(row,9);
 		}
 		
 		double perc = Percentage(s); 
@@ -139,7 +130,6 @@ namespace kt
 		{
 			ret = true;
 			percentage = perc;
-			mdl->emitDataChanged(row,10);
 		}
 		
 		float ratio = ShareRatio(s);
@@ -147,7 +137,6 @@ namespace kt
 		{
 			ret = true;
 			share_ratio = ratio;
-			mdl->emitDataChanged(row,11);
 		}
 		
 		Uint32 rdl = tc->getRunningTimeDL();
@@ -155,7 +144,6 @@ namespace kt
 		{
 			ret = true;
 			runtime_dl = rdl;
-			mdl->emitDataChanged(row,12);
 		}
 		
 		Uint32 rul = tc->getRunningTimeUL();
@@ -164,7 +152,6 @@ namespace kt
 		{
 			ret = true;
 			runtime_ul = rul;
-			mdl->emitDataChanged(row,13);
 		}
 		return ret;
 	}

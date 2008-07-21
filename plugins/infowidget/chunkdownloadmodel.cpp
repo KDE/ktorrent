@@ -157,10 +157,7 @@ namespace kt
 		foreach (const Item & i,items)
 		{
 			if (i.changed())
-			{
 				ret = true;
-				emit dataChanged(createIndex(idx,1),createIndex(idx,4));
-			}
 			idx++;
 		}
 		return ret;
