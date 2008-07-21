@@ -162,7 +162,7 @@ namespace kt
 		else if (role == Qt::ToolTipRole && index.column() == 0)
 		{
 			return i18n("Order of a torrent in the queue.\n"
-					"Use drag and drop or the move up and down buttons on the left to change the order.");
+					"Use drag and drop or the move up and down buttons on the right to change the order.");
 		}
 		
 		return QVariant();
