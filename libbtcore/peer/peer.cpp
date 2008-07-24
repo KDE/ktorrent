@@ -464,6 +464,7 @@ namespace bt
 			return;
 		}
 		
+		sock->updateSpeeds();
 		preader->update();
 		
 		Uint32 data_bytes = pwriter->getUploadedDataBytes();

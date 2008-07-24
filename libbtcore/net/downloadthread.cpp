@@ -35,7 +35,7 @@ using namespace bt;
 namespace net
 {
 	Uint32 DownloadThread::dcap = 0;
-	Uint32 DownloadThread::sleep_time = 3;
+	Uint32 DownloadThread::sleep_time = 50;
 
 	DownloadThread::DownloadThread(SocketMonitor* sm) : NetworkThread(sm)
 	{
@@ -48,53 +48,51 @@ namespace net
 	void DownloadThread::update()
 	{
 		sm->lock();
-		int num = fillPollVector();
-		sm->unlock();
-	
-		int timeout = 10;	
-#ifndef Q_WS_WIN
-		if (poll(&fd_vec[0],num,timeout) > 0)
-#else
-		if (mingw_poll(&fd_vec[0],num,timeout) > 0)
-#endif
+		TimeStamp now = bt::Now();
+		Uint32 num_ready = 0;
+		SocketMonitor::Itr itr = sm->begin();
+		while (itr != sm->end())
 		{
-			sm->lock();
-			TimeStamp now = bt::Now();
-			Uint32 num_ready = 0;
-			SocketMonitor::Itr itr = sm->begin();
-			while (itr != sm->end())
+			BufferedSocket* s = *itr;
+			if (s->ok() && s->bytesAvailable() > 0)
 			{
-				BufferedSocket* s = *itr;
-				int pi = s->getPollIndex();
-				if (pi >= 0 && s->ok() && fd_vec[pi].revents & POLLIN)
-				{
-					// add to the correct group
-					Uint32 gid = s->downloadGroupID();
-					SocketGroup* g = groups.find(gid);
-					if (!g)
-						g = groups.find(0);
+				// add to the correct group
+				Uint32 gid = s->downloadGroupID();
+				SocketGroup* g = groups.find(gid);
+				if (!g)
+					g = groups.find(0);
 					
-					g->add(s);
-					num_ready++;
-				}
-				itr++;
+				g->add(s);
+				num_ready++;
 			}
-		
-			if (num_ready > 0)
-				doGroups(num_ready,now,dcap);
-			prev_run_time = now;
-			sm->unlock();
+			itr++;
 		}
 		
-		if (dcap > 0 || groups.count() > 0)
+		if (num_ready > 0)
+			doGroups(num_ready,now,dcap);
+		prev_run_time = now;
+		sm->unlock();
+		
+		if (num_ready == 0)
+			waitForSocketReady();
+		else
 			msleep(sleep_time);
 	}
-
-	int DownloadThread::fillPollVector()
+	
+	void DownloadThread::setSleepTime(Uint32 stime)
 	{
-		TimeStamp ts = bt::Now();
+		sleep_time = stime;
+	}
+	
+	bool DownloadThread::doGroup(SocketGroup* g,Uint32 & allowance,bt::TimeStamp now)
+	{
+		return g->download(allowance,now);
+	}
+	
+	void DownloadThread::waitForSocketReady()
+	{
 		int i = 0;
-		
+		sm->lock();
 		// fill the poll vector with all sockets
 		SocketMonitor::Itr itr = sm->begin();
 		while (itr != sm->end())
@@ -121,7 +119,6 @@ namespace net
 				}
 				s->setPollIndex(i);
 				i++;
-				s->updateSpeeds(ts);
 			}
 			else
 			{
@@ -129,18 +126,13 @@ namespace net
 			}
 			itr++;
 		}
-		
-		return i;
-	}
+		sm->unlock();
 	
-	void DownloadThread::setSleepTime(Uint32 stime)
-	{
-		if (stime >= 1 && stime <= 10)
-			sleep_time = stime;
-	}
-	
-	bool DownloadThread::doGroup(SocketGroup* g,Uint32 & allowance,bt::TimeStamp now)
-	{
-		return g->download(allowance,now);
+		int timeout = 1000;	// one second for upper limit, so that new sockets do not have to wait for long
+#ifndef Q_WS_WIN
+		poll(&fd_vec[0],i,timeout);
+#else
+		mingw_poll(&fd_vec[0],i,timeout):
+#endif
 	}
 }

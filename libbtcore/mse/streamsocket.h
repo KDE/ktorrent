@@ -59,6 +59,9 @@ namespace mse
 		StreamSocket(int fd,int ip_version);
 		virtual ~StreamSocket();
 		
+		/// Recalculate upload and download speed
+		void updateSpeeds();
+		
 		/**
 		 * Send a chunk of data. (Does not encrypt the data)
 		 * @param data The data

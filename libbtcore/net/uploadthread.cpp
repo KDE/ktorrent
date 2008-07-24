@@ -29,7 +29,7 @@ using namespace bt;
 namespace net
 {
 	Uint32 UploadThread::ucap = 0;
-	Uint32 UploadThread::sleep_time = 3;
+	Uint32 UploadThread::sleep_time = 50;
 	
 	UploadThread::UploadThread(SocketMonitor* sm) : NetworkThread(sm)
 	{}
@@ -84,8 +84,7 @@ namespace net
 	
 	void UploadThread::setSleepTime(Uint32 stime)
 	{
-		if (stime >= 1 && stime <= 10)
-			sleep_time = stime;
+		sleep_time = stime;
 	}
 	
 	bool UploadThread::doGroup(SocketGroup* g,Uint32 & allowance,bt::TimeStamp now)
