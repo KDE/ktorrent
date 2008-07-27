@@ -100,7 +100,7 @@ namespace kt
 			return;
 		
 		QModelIndexList idx_list = m_webseed_list->selectionModel()->selectedRows();
-		foreach (QModelIndex idx,idx_list)
+		foreach (const QModelIndex &idx, idx_list)
 		{
 			idx = proxy_model->mapToSource(idx);
 			const WebSeedInterface* ws = curr_tc->getWebSeed(idx.row());
@@ -116,7 +116,7 @@ namespace kt
 	
 	void WebSeedsTab::selectionChanged(const QModelIndexList & indexes)
 	{
-		foreach (QModelIndex idx,indexes)
+		foreach (const QModelIndex &idx, indexes)
 		{
 			idx = proxy_model->mapToSource(idx);
 			const WebSeedInterface* ws = curr_tc->getWebSeed(idx.row());
