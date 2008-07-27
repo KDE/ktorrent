@@ -102,8 +102,7 @@ namespace kt
 		QModelIndexList idx_list = m_webseed_list->selectionModel()->selectedRows();
 		foreach (const QModelIndex &idx, idx_list)
 		{
-			idx = proxy_model->mapToSource(idx);
-			const WebSeedInterface* ws = curr_tc->getWebSeed(idx.row());
+			const WebSeedInterface* ws = curr_tc->getWebSeed(proxy_model->mapToSource(idx).row());
 			if (ws && ws->isUserCreated())
 			{
 				if (!curr_tc->removeWebSeed(ws->getUrl()))
@@ -118,8 +117,7 @@ namespace kt
 	{
 		foreach (const QModelIndex &idx, indexes)
 		{
-			idx = proxy_model->mapToSource(idx);
-			const WebSeedInterface* ws = curr_tc->getWebSeed(idx.row());
+			const WebSeedInterface* ws = curr_tc->getWebSeed(proxy_model->mapToSource(idx).row());
 			if (ws && ws->isUserCreated())
 			{
 				m_remove->setEnabled(true);
