@@ -143,7 +143,7 @@ namespace net
 #ifndef Q_WS_WIN
 		return poll(&fd_vec[0],i,timeout);
 #else
-		return mingw_poll(&fd_vec[0],i,timeout):
+		return mingw_poll(&fd_vec[0],i,timeout);
 #endif
 	}
 }
