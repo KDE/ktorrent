@@ -26,6 +26,7 @@
 #include <util/win32.h>
 #endif
 #include <util/functions.h>
+#include <util/log.h>
 #include "socketgroup.h"
 #include "socketmonitor.h"
 #include "bufferedsocket.h"
@@ -47,8 +48,9 @@ namespace net
 	
 	void DownloadThread::update()
 	{
-		if (waitForSocketReady(0) > 0)
+		if (waitForSocketReady(sleep_time) > 0)
 		{
+			bool group_limits = false;
 			sm->lock();
 			TimeStamp now = bt::Now();
 			Uint32 num_ready = 0;
@@ -73,6 +75,9 @@ namespace net
 				{
 					// add to the correct group
 					Uint32 gid = s->downloadGroupID();
+					if (gid > 0)
+						group_limits = true;
+					
 					SocketGroup* g = groups.find(gid);
 					if (!g)
 						g = groups.find(0);
@@ -85,11 +90,19 @@ namespace net
 			
 			if (num_ready > 0)
 				doGroups(num_ready,now,dcap);
-			prev_run_time = now;
 			sm->unlock();
+			
+			// to prevent huge CPU usage sleep a bit if we are limited (either by a global limit or a group limit)
+			if (dcap > 0 || group_limits)
+			{
+				TimeStamp diff = now - prev_run_time;
+				if (diff < sleep_time)
+					msleep(sleep_time - diff);
+			}
+			prev_run_time = now;
 		}
-		msleep(sleep_time);
 	}
+	
 	
 	void DownloadThread::setSleepTime(Uint32 stime)
 	{
