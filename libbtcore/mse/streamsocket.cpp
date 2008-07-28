@@ -34,6 +34,7 @@
 #endif
 #include <netinet/tcp.h>
 #include <net/socketmonitor.h>
+#include <util/functions.h>
 #include "rc4encryptor.h"
 
 using namespace bt;
@@ -330,6 +331,11 @@ namespace mse
 	void StreamSocket::setRemoteAddress(const net::Address & addr)
 	{
 		sock->setRemoteAddress(addr);
+	}
+	
+	void StreamSocket::updateSpeeds()
+	{
+		sock->updateSpeeds(bt::GetCurrentTime());
 	}
 }
 

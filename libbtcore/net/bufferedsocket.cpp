@@ -198,7 +198,9 @@ namespace net
 	
 	void BufferedSocket::updateSpeeds(bt::TimeStamp now)
 	{
+		mutex.lock();
 		up_speed->update(now);
 		down_speed->update(now);
+		mutex.unlock();
 	}
 }

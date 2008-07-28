@@ -37,26 +37,22 @@ namespace net
 	{
 		static bt::Uint32 dcap;
 		static bt::Uint32 sleep_time;
-		
 		std::vector<struct pollfd> fd_vec;
-	
 	public:
 		DownloadThread(SocketMonitor* sm);
 		virtual ~DownloadThread();
-						  
+		
 	
 		/// Set the download cap
 		static void setCap(bt::Uint32 cap) {dcap = cap;}
 		
 		/// Set the sleep time when using download caps
 		static void setSleepTime(bt::Uint32 stime);
-	private:
-		int fillPollVector();
-		
+	private:	
 		virtual void update();
 		virtual bool doGroup(SocketGroup* g,Uint32 & allowance,bt::TimeStamp now);
-
-//		void processIncomingData(bt::TimeStamp now);
+		
+		void waitForSocketReady();
 	};
 
 }
