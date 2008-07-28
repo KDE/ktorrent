@@ -52,7 +52,7 @@ namespace net
 		virtual void update();
 		virtual bool doGroup(SocketGroup* g,Uint32 & allowance,bt::TimeStamp now);
 		
-		void waitForSocketReady();
+		int waitForSocketReady(int timeout);
 	};
 
 }

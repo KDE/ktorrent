@@ -47,36 +47,48 @@ namespace net
 	
 	void DownloadThread::update()
 	{
-		sm->lock();
-		TimeStamp now = bt::Now();
-		Uint32 num_ready = 0;
-		SocketMonitor::Itr itr = sm->begin();
-		while (itr != sm->end())
+		if (waitForSocketReady(0) > 0)
 		{
-			BufferedSocket* s = *itr;
-			if (s->ok() && s->bytesAvailable() > 0)
+			sm->lock();
+			TimeStamp now = bt::Now();
+			Uint32 num_ready = 0;
+			SocketMonitor::Itr itr = sm->begin();
+			while (itr != sm->end())
 			{
-				// add to the correct group
-				Uint32 gid = s->downloadGroupID();
-				SocketGroup* g = groups.find(gid);
-				if (!g)
-					g = groups.find(0);
-					
-				g->add(s);
-				num_ready++;
+				BufferedSocket* s = *itr;
+				if (!s->ok())
+				{
+					itr++;
+					continue;
+				}
+				
+				int pi = s->getPollIndex();
+				bool ready = false;
+				if (pi >= 0)
+					ready = fd_vec[pi].revents & POLLIN;
+				else
+					ready = s->bytesAvailable() > 0;
+		
+				if (ready)
+				{
+					// add to the correct group
+					Uint32 gid = s->downloadGroupID();
+					SocketGroup* g = groups.find(gid);
+					if (!g)
+						g = groups.find(0);
+						
+					g->add(s);
+					num_ready++;
+				}
+				itr++;
 			}
-			itr++;
+			
+			if (num_ready > 0)
+				doGroups(num_ready,now,dcap);
+			prev_run_time = now;
+			sm->unlock();
 		}
-		
-		if (num_ready > 0)
-			doGroups(num_ready,now,dcap);
-		prev_run_time = now;
-		sm->unlock();
-		
-		if (num_ready == 0)
-			waitForSocketReady();
-		else
-			msleep(sleep_time);
+		msleep(sleep_time);
 	}
 	
 	void DownloadThread::setSleepTime(Uint32 stime)
@@ -89,7 +101,7 @@ namespace net
 		return g->download(allowance,now);
 	}
 	
-	void DownloadThread::waitForSocketReady()
+	int DownloadThread::waitForSocketReady(int timeout)
 	{
 		int i = 0;
 		sm->lock();
@@ -128,11 +140,10 @@ namespace net
 		}
 		sm->unlock();
 	
-		int timeout = 1000;	// one second for upper limit, so that new sockets do not have to wait for long
 #ifndef Q_WS_WIN
-		poll(&fd_vec[0],i,timeout);
+		return poll(&fd_vec[0],i,timeout);
 #else
-		mingw_poll(&fd_vec[0],i,timeout):
+		return mingw_poll(&fd_vec[0],i,timeout):
 #endif
 	}
 }
