@@ -1,6 +1,7 @@
 Changes in 3.1.2 :
 - Improved performance of GUI updates
 - Make sure app icon is set (mostly for windows)
+- Fix crash when clicking on clear search history button twice (167580)
 
 Changes in 3.1.1 :
 - Fix wrong icon name in PeerView for encrypted peers 

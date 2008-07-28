@@ -187,7 +187,7 @@ namespace kt
 	
 	void SearchToolBar::clearHistory()
 	{
-		bt::Delete(kt::DataDir() + "search_history");
+		bt::Delete(kt::DataDir() + "search_history",true);
 		KCompletion *comp = m_search_text->completionObject();
 		m_search_text->clear();
 		comp->clear();
