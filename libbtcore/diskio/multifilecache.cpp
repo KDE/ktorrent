@@ -84,18 +84,13 @@ namespace bt
 		QString file_map = tmpdir + "file_map";
 		if (!bt::Exists(file_map))
 		{
-			QFile fptr(file_map);
-			if (!fptr.open(QIODevice::WriteOnly))
-				throw Error(i18n("Failed to create %1 : %2",file_map,fptr.errorString()));
-			
-			QTextStream out(&fptr);
-			// file map doesn't exist, so create it based upon the output_dir
+			// file map doesn't exist, so just set the path on disk if it has not happened yet
 			Uint32 num = tor.getNumFiles();
 			for (Uint32 i = 0;i < num;i++)
 			{
 				TorrentFile & tf = tor.getFile(i);
-				tf.setPathOnDisk(output_dir + tf.getPath());
-				out << tf.getPathOnDisk() << ::endl;
+				if (tf.getPathOnDisk().isEmpty())
+					tf.setPathOnDisk(output_dir + tf.getUserModifiedPath());
 			}
 		}
 		else
@@ -109,6 +104,16 @@ namespace bt
 			{
 				QString path = QString::fromLocal8Bit(fptr.readLine().trimmed()); 
 				tor.getFile(idx).setPathOnDisk(path);
+				idx++;
+			}
+			
+			// now the user modified paths must come
+			idx = 0;
+			while (!fptr.atEnd() && idx < tor.getNumFiles())
+			{
+				QString path = QString::fromLocal8Bit(fptr.readLine().trimmed()); 
+				if (!path.isEmpty())
+					tor.getFile(idx).setUserModifiedPath(path);
 				idx++;
 			}
 		}
@@ -128,6 +133,13 @@ namespace bt
 		{
 			TorrentFile & tf = tor.getFile(i);
 			out << tf.getPathOnDisk() << ::endl;
+		}
+		
+		// After the actual paths on disk, save the user modified path names
+		for (Uint32 i = 0;i < num;i++)
+		{
+			TorrentFile & tf = tor.getFile(i);
+			out << tf.getUserModifiedPath() << ::endl;
 		}
 	}
 
@@ -167,7 +179,7 @@ namespace bt
 					if (dnd_files.contains(i))
 						dnd_files.erase(i);
 					
-					dfd = new DNDFile(dnd_dir + tf.getPath() + ".dnd");
+					dfd = new DNDFile(dnd_dir + tf.getUserModifiedPath() + ".dnd");
 					dfd->checkIntegrity();
 					dnd_files.insert(i,dfd);
 				}
@@ -197,7 +209,7 @@ namespace bt
 			{
 				DNDFile* dfd = dnd_files.find(i);
 				if (dfd)
-					dfd->changePath(dnd_dir + tf.getPath() + ".dnd");
+					dfd->changePath(dnd_dir + tf.getUserModifiedPath() + ".dnd");
 			}
 		}
 	}
@@ -214,7 +226,7 @@ namespace bt
 		for (Uint32 i = 0;i < num;i++)
 		{
 			TorrentFile & tf = tor.getFile(i);
-			tf.setPathOnDisk(output_dir + tf.getPath());
+			tf.setPathOnDisk(output_dir + tf.getUserModifiedPath());
 			CacheFile* cf = files.find(tf.getIndex());
 			if (cf)
 				cf->changePath(tf.getPathOnDisk());
@@ -243,9 +255,9 @@ namespace bt
 
 				// check if every directory along the path exists, and if it doesn't
 				// create it
-			MakeFilePath(nd + tf.getPath());
+			MakeFilePath(nd + tf.getUserModifiedPath());
 				
-			job->addMove(tf.getPathOnDisk(),nd + tf.getPath());
+			job->addMove(tf.getPathOnDisk(),nd + tf.getUserModifiedPath());
 		}
 
 		job->startMoving();
@@ -260,12 +272,12 @@ namespace bt
 		for ( Uint32 i = 0;i < tor.getNumFiles();i++ )
 		{
 			TorrentFile & tf = tor.getFile(i);
-			tf.setPathOnDisk(new_output_dir + tf.getPath());
+			tf.setPathOnDisk(new_output_dir + tf.getUserModifiedPath());
 			CacheFile* cf = files.find(tf.getIndex());
 			if (cf)
 				cf->changePath(tf.getPathOnDisk());
 			// check for empty directories and delete them
-			DeleteEmptyDirs(output_dir,tf.getPath());
+			DeleteEmptyDirs(output_dir,tf.getUserModifiedPath());
 		}
 	}
 	
@@ -282,7 +294,7 @@ namespace bt
 			QString dest = i.value();
 			if (QFileInfo(dest).isDir())
 			{
-				QString path = tf->getPath();
+				QString path = tf->getUserModifiedPath();
 				if (!dest.endsWith(bt::DirSeparator()))
 					dest += bt::DirSeparator();
 			
@@ -311,7 +323,7 @@ namespace bt
 			QString dest = i.value();
 			if (QFileInfo(dest).isDir())
 			{
-				QString path = tf->getPath();
+				QString path = tf->getUserModifiedPath();
 				if (!dest.endsWith(bt::DirSeparator()))
 					dest += bt::DirSeparator();
 			
@@ -348,7 +360,7 @@ namespace bt
 
 	void MultiFileCache::touch(TorrentFile & tf)
 	{
-		QString fpath = tf.getPath();
+		QString fpath = tf.getUserModifiedPath();
 		bool dnd = tf.doNotDownload();
 		// first split fpath by / separator 
 		QStringList sl = fpath.split(bt::DirSeparator());
@@ -566,7 +578,7 @@ namespace bt
 		bool dnd = !download;
 		QString dnd_dir = tmpdir + "dnd" + bt::DirSeparator();
 		// if it is dnd and it is already in the dnd tree do nothing
-		if (dnd && bt::Exists(dnd_dir + tf->getPath() + ".dnd"))
+		if (dnd && bt::Exists(dnd_dir + tf->getUserModifiedPath() + ".dnd"))
 			return;
 		
 		// if it is !dnd and it is already in the output_dir tree do nothing
@@ -579,23 +591,23 @@ namespace bt
 		try
 		{
 			
-			if (dnd && bt::Exists(dnd_dir + tf->getPath()))
+			if (dnd && bt::Exists(dnd_dir + tf->getUserModifiedPath()))
 			{
 				// old download, we need to convert it
 				// save first and last chunk of the file
-				saveFirstAndLastChunk(tf,dnd_dir + tf->getPath(),dnd_dir + tf->getPath() + ".dnd");
+				saveFirstAndLastChunk(tf,dnd_dir + tf->getUserModifiedPath(),dnd_dir + tf->getUserModifiedPath() + ".dnd");
 				// delete symlink
-				bt::Delete(cache_dir + tf->getPath(),true);
-				bt::Delete(dnd_dir + tf->getPath()); // delete old dnd file
+				bt::Delete(cache_dir + tf->getUserModifiedPath(),true);
+				bt::Delete(dnd_dir + tf->getUserModifiedPath()); // delete old dnd file
 				
 				files.erase(tf->getIndex());
-				dfd = new DNDFile(dnd_dir + tf->getPath() + ".dnd");
+				dfd = new DNDFile(dnd_dir + tf->getUserModifiedPath() + ".dnd");
 				dfd->checkIntegrity();
 				dnd_files.insert(tf->getIndex(),dfd);
 			}
 			else if (dnd)
 			{
-				QString dnd_file = dnd_dir + tf->getPath() + ".dnd";
+				QString dnd_file = dnd_dir + tf->getUserModifiedPath() + ".dnd";
 				// save first and last chunk of the file
 				if (bt::Exists(tf->getPathOnDisk()))
 					saveFirstAndLastChunk(tf,tf->getPathOnDisk(),dnd_file);
@@ -611,8 +623,8 @@ namespace bt
 			else
 			{
 				// recreate the file
-				recreateFile(tf,dnd_dir + tf->getPath() + ".dnd",tf->getPathOnDisk());
-				bt::Delete(dnd_dir + tf->getPath() + ".dnd");
+				recreateFile(tf,dnd_dir + tf->getUserModifiedPath() + ".dnd",tf->getPathOnDisk());
+				bt::Delete(dnd_dir + tf->getUserModifiedPath() + ".dnd");
 				dnd_files.erase(tf->getIndex());
 				fd = new CacheFile();
 				fd->open(tf->getPathOnDisk(),tf->getSize());
@@ -842,7 +854,7 @@ namespace bt
 			}
 			
 			// check for subdirectories
-			DeleteEmptyDirs(output_dir,tf.getPath());
+			DeleteEmptyDirs(output_dir,tf.getUserModifiedPath());
 		}
 	}
 	

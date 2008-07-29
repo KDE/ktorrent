@@ -265,6 +265,7 @@ namespace bt
 		virtual void setAssuredSpeeds(Uint32 up,Uint32 down);
 		virtual void getAssuredSpeeds(Uint32 & up,Uint32 & down);
 		virtual const SHA1Hash & getInfoHash() const;
+		virtual void setUserModifiedFileName(const QString & n);
 	
 		/// Get the PeerManager
 		const PeerManager * getPeerMgr() const;

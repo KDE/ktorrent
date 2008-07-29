@@ -488,6 +488,12 @@ namespace bt
 		
 		/// Mark all existing files as downloaded (
 		virtual void markExistingFilesAsDownloaded() = 0;
+		
+		/// Set the user modified file or toplevel directory name
+		virtual void setUserModifiedFileName(const QString & n) {user_modified_name = n;}
+		
+		/// Gets the user modified file or toplevel directory name
+		QString getUserModifiedFileName() const {return user_modified_name.isEmpty() ? stats.torrent_name : user_modified_name;}
 	signals:
 		/**
 		 * Emitted when we have finished downloading.
@@ -563,6 +569,7 @@ namespace bt
 		void statusChanged(bt::TorrentInterface* me);
 	protected:
 		TorrentStats stats;
+		QString user_modified_name;
 	};
 
 

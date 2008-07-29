@@ -1083,6 +1083,8 @@ namespace bt
 		st.write("ENCODING",QString(tor->getTextCodec()->name()));
 		st.write("ASSURED_UPLOAD_SPEED",QString::number(assured_upload_speed));
 		st.write("ASSURED_DOWNLOAD_SPEED",QString::number(assured_download_speed));
+		if (!user_modified_name.isEmpty())
+			st.write("USER_MODIFIED_NAME",user_modified_name);
 		st.writeSync();
 	}
 
@@ -1109,6 +1111,9 @@ namespace bt
 		{
 			istats.custom_output_name = true;
 		}
+		
+		if (st.hasKey("USER_MODIFIED_NAME"))
+			user_modified_name = st.readString("USER_MODIFIED_NAME");
 		
 		setPriority(st.readInt("PRIORITY"));
 		stats.user_controlled = istats.priority == 0 ? true : false;
@@ -1961,6 +1966,18 @@ namespace bt
 		if (ret)
 			downloader->saveWebSeeds(tordir + "webseeds");
 		return ret;
+	}
+	
+	void TorrentControl::setUserModifiedFileName(const QString & n)
+	{
+		TorrentInterface::setUserModifiedFileName(n);
+		QString path = getDataDir();
+		if (!path.endsWith(bt::DirSeparator()))
+			path += bt::DirSeparator();
+		
+		cman->changeOutputPath(path + n);
+		outputdir = stats.output_path = path + n;
+		istats.custom_output_name = true;
 	}
 }
 

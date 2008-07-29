@@ -26,7 +26,7 @@
 namespace kt
 {
 	TorrentFileModel::TorrentFileModel(bt::TorrentInterface* tc,DeselectMode mode,QObject* parent)
-		: QAbstractItemModel(parent),tc(tc),mode(mode)
+	: QAbstractItemModel(parent),tc(tc),mode(mode),file_names_editable(false)
 	{}
 
 	TorrentFileModel::~TorrentFileModel()
@@ -51,6 +51,21 @@ namespace kt
 	void TorrentFileModel::onCodecChange()
 	{
 		reset();
+	}
+	
+	Qt::ItemFlags TorrentFileModel::flags(const QModelIndex & index) const
+	{
+		if (!index.isValid())
+			return 0;
+		
+		Qt::ItemFlags flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+		if (tc->getStats().multi_file_torrent)
+			flags |= Qt::ItemIsUserCheckable;
+		
+		if (fileNamesEditable() && index.column() == 0)
+			flags |= Qt::ItemIsEditable;
+		
+		return flags;
 	}
 }
 

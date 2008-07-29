@@ -90,7 +90,11 @@ namespace kt
 		{
 			switch (index.column())
 			{
-				case 0: return multi ? tc->getTorrentFile(r).getPath() : s.torrent_name;
+				case 0: 
+					if (multi)
+						return tc->getTorrentFile(r).getUserModifiedPath();
+					else
+						return tc->getUserModifiedFileName();
 				case 1: 
 					if (multi)
 						return BytesToString(tc->getTorrentFile(r).getSize());
@@ -103,7 +107,11 @@ namespace kt
 		{
 			switch (index.column())
 			{
-				case 0: return multi ? tc->getTorrentFile(r).getPath() : s.torrent_name;
+				case 0: 
+					if (multi)
+						return tc->getTorrentFile(r).getUserModifiedPath();
+					else
+						return tc->getUserModifiedFileName();
 				case 1: 
 					if (multi)
 						return tc->getTorrentFile(r).getSize();
@@ -131,7 +139,7 @@ namespace kt
 	
 	QModelIndex TorrentFileListModel::parent(const QModelIndex & index) const
 	{
-                Q_UNUSED(index);
+		Q_UNUSED(index);
 		return QModelIndex();
 	}
 	
@@ -146,40 +154,55 @@ namespace kt
 		}
 	}
 	
-	Qt::ItemFlags TorrentFileListModel::flags(const QModelIndex & index) const
-	{
-		if (!index.isValid())
-			return 0;
-		else if (tc->getStats().multi_file_torrent)
-			return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable;
-		else
-			return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
-	}
-	
 	bool TorrentFileListModel::setData(const QModelIndex & index, const QVariant & value, int role) 
 	{
-		if (!index.isValid() || role != Qt::CheckStateRole)
+		if (!index.isValid())
 			return false;
 		
-		Qt::CheckState newState = static_cast<Qt::CheckState>(value.toInt());
-		bt::TorrentFileInterface & file = tc->getTorrentFile(index.row());
-		if (newState == Qt::Checked)
+		if (role == Qt::CheckStateRole)
 		{
-			if (file.getPriority() == ONLY_SEED_PRIORITY)
-				file.setPriority(NORMAL_PRIORITY);
+			Qt::CheckState newState = static_cast<Qt::CheckState>(value.toInt());
+			bt::TorrentFileInterface & file = tc->getTorrentFile(index.row());
+			if (newState == Qt::Checked)
+			{
+				if (file.getPriority() == ONLY_SEED_PRIORITY)
+					file.setPriority(NORMAL_PRIORITY);
+				else
+					file.setDoNotDownload(false);
+			}
 			else
-				file.setDoNotDownload(false);
+			{
+				if (mode == KEEP_FILES)
+					file.setPriority(ONLY_SEED_PRIORITY);
+				else
+					file.setDoNotDownload(true);
+			}
+			dataChanged(createIndex(index.row(),0),createIndex(index.row(),columnCount(index) - 1));
+			checkStateChanged();
+			return true;
 		}
-		else
+		else if (role == Qt::EditRole)
 		{
-			if (mode == KEEP_FILES)
-				file.setPriority(ONLY_SEED_PRIORITY);
+			QString path = value.toString();
+			if (path.isEmpty())
+				return false;
+			
+			if (tc->getStats().multi_file_torrent)
+			{
+				bt::TorrentFileInterface & file = tc->getTorrentFile(index.row());
+				// keep track of modified paths
+				file.setUserModifiedPath(path);	
+			}
 			else
-				file.setDoNotDownload(true);
+			{
+				// change the name of the file or toplevel directory
+				tc->setUserModifiedFileName(path);
+			}
+			dataChanged(createIndex(index.row(),0),createIndex(index.row(),columnCount(index) - 1));
+			return true;
 		}
-		dataChanged(createIndex(index.row(),0),createIndex(index.row(),columnCount(index) - 1));
-		checkStateChanged();
-		return true;
+		
+		return false;
 	}
 
 	void TorrentFileListModel::checkAll()

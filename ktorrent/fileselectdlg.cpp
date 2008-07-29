@@ -94,6 +94,8 @@ namespace kt
 			else
 				model = new TorrentFileTreeModel(tc,TorrentFileTreeModel::DELETE_FILES,this);
 			
+			model->setFileNamesEditable(true);
+			
 			connect(model,SIGNAL(checkStateChanged()),this,SLOT(updateSizeLabels()));
 			connect(m_downloadLocation, SIGNAL(textChanged (const QString &)), this, SLOT(updateSizeLabels()));
 			m_file_view->setModel(model);
@@ -147,23 +149,21 @@ namespace kt
 			}
 		}
 		
-		QString tld = m_toplevel_directory->text().trimmed();
-		if (tld.isNull() || tld.length() == 0)
-			tld = tc->getStats().torrent_name;
+		QString tld = tc->getUserModifiedFileName();
 
 		for (Uint32 i = 0;i < tc->getNumFiles();i++)
 		{
 			bt::TorrentFileInterface & file = tc->getTorrentFile(i);
 
 			// check for preexisting files
-			QString path = dn + tld + bt::DirSeparator() + file.getPath();
+			QString path = dn + tld + bt::DirSeparator() + file.getUserModifiedPath();
 			if (bt::Exists(path))
 				file.setPreExisting(true);
 
 			if (file.doNotDownload() && file.isPreExistingFile())
 			{
 				// we have excluded a preexsting file
-				pe_ex.append(file.getPath());
+				pe_ex.append(file.getUserModifiedPath());
 			}
 			file.setPathOnDisk(path);
 			file.setEmitDownloadStatusChanged(true);
@@ -253,9 +253,6 @@ namespace kt
 		}
 		
 		m_downloadLocation->setUrl(dir);
-		m_toplevel_directory->setEnabled(tc->getStats().multi_file_torrent);
-		if (tc->getStats().multi_file_torrent)
-			m_toplevel_directory->setText(tc->getStats().torrent_name);
 		loadGroups();
 	}
 

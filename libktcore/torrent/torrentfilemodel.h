@@ -118,6 +118,14 @@ namespace kt
 		 * Codec has changed, so update the model.
 		 */
 		virtual void onCodecChange();
+		
+		/// Set the file names editable
+		void setFileNamesEditable(bool on) {file_names_editable = on;}
+		
+		/// Are the file names editable
+		bool fileNamesEditable() const {return file_names_editable;}
+		
+		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
 signals:
 		/**
 		 * Emitted whenever one or more items changes check state
@@ -127,6 +135,7 @@ signals:
 	protected:
 		bt::TorrentInterface* tc;
 		DeselectMode mode;
+		bool file_names_editable;
 	};
 }
 

@@ -39,6 +39,29 @@ namespace kt
 	class KTCORE_EXPORT TorrentFileTreeModel : public TorrentFileModel
 	{
 		Q_OBJECT
+	protected:
+		struct KTCORE_EXPORT Node
+		{
+			Node* parent;
+			bt::TorrentFileInterface* file; // file (0 if this is a directory)
+			QString name; // name or directory
+			QList<Node*> children; // child dirs
+			bt::Uint64 size;
+		
+			Node(Node* parent,bt::TorrentFileInterface* file,const QString & name);
+			Node(Node* parent,const QString & name);
+			~Node();
+		
+			void insert(const QString & path,bt::TorrentFileInterface* file);
+			int row();
+			bt::Uint64 fileSize(const bt::TorrentInterface* tc);
+			bt::Uint64 bytesToDownload(const bt::TorrentInterface* tc);
+			Qt::CheckState checkState(const bt::TorrentInterface* tc) const;
+			QString path();
+		
+			void saveExpandedState(const QModelIndex & index,QTreeView* tv,bt::BEncoder* enc);
+			void loadExpandedState(const QModelIndex & index,QTreeView* tv,bt::BNode* node);
+		};
 	public:
 		TorrentFileTreeModel(bt::TorrentInterface* tc,DeselectMode mode,QObject* parent);
 		virtual ~TorrentFileTreeModel();
@@ -49,7 +72,6 @@ namespace kt
 		virtual QVariant data(const QModelIndex & index, int role) const;
 		virtual QModelIndex parent(const QModelIndex & index) const;
 		virtual QModelIndex index(int row,int column,const QModelIndex & parent) const;
-		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
 		virtual bool setData(const QModelIndex & index, const QVariant & value, int role);
 		virtual void checkAll();
 		virtual void uncheckAll();
@@ -64,30 +86,12 @@ namespace kt
 	private: 
 		void constructTree();
 		void invertCheck(const QModelIndex & idx);
+		bool setCheckState(const QModelIndex & index, Qt::CheckState state);
+		bool setName(const QModelIndex & index,const QString & name);
+		void modifyPathOfFiles(Node* n,const QString & path);
 
+	
 	protected:
-		struct KTCORE_EXPORT Node
-		{
-			Node* parent;
-			bt::TorrentFileInterface* file; // file (0 if this is a directory)
-			QString name; // name or directory
-			QList<Node*> children; // child dirs
-			bt::Uint64 size;
-			
-			Node(Node* parent,bt::TorrentFileInterface* file,const QString & name);
-			Node(Node* parent,const QString & name);
-			~Node();
-			
-			void insert(const QString & path,bt::TorrentFileInterface* file);
-			int row();
-			bt::Uint64 fileSize(const bt::TorrentInterface* tc);
-			bt::Uint64 bytesToDownload(const bt::TorrentInterface* tc);
-			Qt::CheckState checkState(const bt::TorrentInterface* tc) const;
-			
-			void saveExpandedState(const QModelIndex & index,QTreeView* tv,bt::BEncoder* enc);
-			void loadExpandedState(const QModelIndex & index,QTreeView* tv,bt::BNode* node);
-		};
-		
 		Node* root;
 		bool emit_check_state_change;
 	};

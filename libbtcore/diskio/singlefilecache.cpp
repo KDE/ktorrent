@@ -66,6 +66,7 @@ namespace bt
 			throw Error(i18n("Failed to open %1 : %2",file_map,fptr.errorString()));
 		
 		output_file = QString::fromLocal8Bit(fptr.readLine().trimmed());
+		
 	}
 
 	void SingleFileCache::saveFileMap()

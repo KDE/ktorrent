@@ -58,12 +58,17 @@ namespace bt
 		/// Get the path of a file on disk
 		QString getPathOnDisk() const {return path_on_disk;}
 		
-		
 		/**
 		 * Set the actual path of the file on disk. 
 		 * @param p The path
 		 */
 		void setPathOnDisk(const QString & p) {path_on_disk = p;}
+		
+		/// Get user modified path (if isn't changed, the normal path is returned)
+		QString getUserModifiedPath() const {return user_modified_path.isEmpty() ? path : user_modified_path;}
+		
+		/// Set the user modified path
+		void setUserModifiedPath(const QString & p) {user_modified_path = p;}
 
 		/// Get the size of the file
 		Uint64 getSize() const {return size;}
@@ -133,6 +138,7 @@ namespace bt
 		Uint32 index;
 		QString path;
 		QString path_on_disk;
+		QString user_modified_path;
 		Uint64 size;
 		Uint32 first_chunk;
 		Uint32 last_chunk;

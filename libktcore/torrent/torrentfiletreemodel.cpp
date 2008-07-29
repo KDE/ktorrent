@@ -197,6 +197,17 @@ namespace kt
 			idx++;
 		}
 	}
+	
+	QString TorrentFileTreeModel::Node::path()
+	{
+		if (!parent)
+			return QString(); // the root node must not be included in the path
+		
+		if (file)
+			return name;
+		else
+			return parent->path() + name + bt::DirSeparator();
+	}
 
 	TorrentFileTreeModel::TorrentFileTreeModel(bt::TorrentInterface* tc,DeselectMode mode,QObject* parent) 
 	: TorrentFileModel(tc,mode,parent),root(0),emit_check_state_change(true)
@@ -214,12 +225,12 @@ namespace kt
 	void TorrentFileTreeModel::constructTree()
 	{
 		if (!root)
-			root = new Node(0,tc->getStats().torrent_name);
+			root = new Node(0,tc->getUserModifiedFileName());
 		
 		for (int i = 0;i < tc->getNumFiles();i++)
 		{
 			bt::TorrentFileInterface & tf = tc->getTorrentFile(i);
-			root->insert(tf.getPath(),&tf);
+			root->insert(tf.getUserModifiedPath(),&tf);
 		}
 	}
 	
@@ -355,26 +366,12 @@ namespace kt
 		}
 	}
 	
-	Qt::ItemFlags TorrentFileTreeModel::flags(const QModelIndex & index) const
+	bool TorrentFileTreeModel::setCheckState(const QModelIndex & index, Qt::CheckState state)
 	{
-		if (!index.isValid())
-			return 0;
-		else if (tc->getStats().multi_file_torrent)
-			return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable;
-		else
-			return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
-	}
-	
-	bool TorrentFileTreeModel::setData(const QModelIndex & index, const QVariant & value, int role) 
-	{
-		if (!index.isValid() || role != Qt::CheckStateRole)
-			return false;
-		
 		Node* n = static_cast<Node*>(index.internalPointer());
 		if (!n)
 			return false;
 		
-		Qt::CheckState newState = static_cast<Qt::CheckState>(value.toInt());
 		if (!n->file)
 		{
 			bool reenable = false;
@@ -387,7 +384,7 @@ namespace kt
 			for (int i = 0;i < n->children.count();i++)
 			{
 				// recurse down the tree
-				setData(index.child(i,0),value,role);
+				setCheckState(index.child(i,0),state);
 			}
 			
 			if (reenable)
@@ -396,7 +393,7 @@ namespace kt
 		else
 		{
 			bt::TorrentFileInterface* file = n->file;
-			if (newState == Qt::Checked)
+			if (state == Qt::Checked)
 			{
 				if (file->getPriority() == ONLY_SEED_PRIORITY)
 					file->setPriority(NORMAL_PRIORITY);
@@ -420,6 +417,70 @@ namespace kt
 		if (emit_check_state_change)
 			checkStateChanged();
 		return true;
+	}
+	
+	void TorrentFileTreeModel::modifyPathOfFiles(Node* n,const QString & path)
+	{
+		for (int i = 0;i < n->children.count();i++)
+		{
+			Node* c = n->children.at(i);
+			if (!c->file) // another directory, continue recursively
+				modifyPathOfFiles(c, path + c->name + bt::DirSeparator());
+			else
+				c->file->setUserModifiedPath(path + c->name);
+		}
+	}
+	
+	bool TorrentFileTreeModel::setName(const QModelIndex & index,const QString & name)
+	{
+		Node* n = static_cast<Node*>(index.internalPointer());
+		if (!n || name.isEmpty() || name.contains(bt::DirSeparator()))
+			return false;
+		
+		if (!tc->getStats().multi_file_torrent)
+		{
+			// single file case so we only need to change the user modified name
+			tc->setUserModifiedFileName(name);
+			n->name = name;
+			dataChanged(index,index);
+			return true;
+		}
+		
+		if (!n->file)
+		{
+			// we are in a directory
+			n->name = name;
+			if (!n->parent)
+			{
+				// toplevel directory name has changed
+				tc->setUserModifiedFileName(name);
+			}
+			
+			dataChanged(index,index);
+			// modify the path of all files
+			modifyPathOfFiles(n,n->path());
+			return true;
+		}
+		else
+		{
+			n->name = name;
+			n->file->setUserModifiedPath(n->path());
+			dataChanged(index,index);
+			return true;
+		}
+	}
+	
+	bool TorrentFileTreeModel::setData(const QModelIndex & index, const QVariant & value, int role) 
+	{
+		if (!index.isValid())
+			return false;
+		
+		if (role == Qt::CheckStateRole)
+			return setCheckState(index, static_cast<Qt::CheckState>(value.toInt()));
+		else if (role == Qt::EditRole)
+			return setName(index,value.toString());
+		
+		return false;
 	}
 	
 	void TorrentFileTreeModel::checkAll()
