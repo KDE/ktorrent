@@ -532,6 +532,11 @@ namespace kt
 		if (!view_menu)
 		{
 			view_menu = (KMenu*)gui->container("ViewMenu");
+			if (!view_menu)
+			{
+				Out(SYS_GEN|LOG_NOTICE) << "Failed to create ViewMenu" << endl;
+				return;
+			}
 			gui->plugActionList("view_groups_list",group_actions.values());
 		}
 		
