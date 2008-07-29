@@ -32,6 +32,7 @@
 #include "chunk.h"
 #include "cachefile.h"
 #include "preallocationthread.h"
+#include "deletedatafilesjob.h"
 
 
 namespace bt
@@ -250,9 +251,12 @@ namespace bt
 		return false;
 	}
 
-	void SingleFileCache::deleteDataFiles()
+	KJob* SingleFileCache::deleteDataFiles()
 	{
-		bt::Delete(output_file);
+		DeleteDataFilesJob* job = new DeleteDataFilesJob();
+		job->addFile(output_file);
+		job->start();
+		return job;
 	}
 
 	Uint64 SingleFileCache::diskUsage()

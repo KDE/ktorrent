@@ -326,7 +326,7 @@ namespace bt
 		void dndMissingFiles();
 		
 		/// Delete all data files 
-		void deleteDataFiles();
+		KJob* deleteDataFiles();
 		
 		/// Are all not deselected chunks downloaded.
 		bool completed() const;

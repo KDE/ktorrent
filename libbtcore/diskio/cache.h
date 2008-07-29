@@ -160,8 +160,9 @@ namespace bt
 		/**
 		 * Delete all data files, in case of multi file torrents
 		 * empty directories should also be deleted.
+		 * @return The job doing the delete
 		 */
-		virtual void deleteDataFiles() = 0;
+		virtual KJob* deleteDataFiles() = 0;
 		
 		/**
 		 * Move some files to a new location

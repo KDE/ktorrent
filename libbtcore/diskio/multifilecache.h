@@ -61,7 +61,7 @@ namespace bt
 		virtual void changeOutputPath(const QString & outputpath);
 		virtual void preallocateDiskSpace(PreallocationThread* prealloc);
 		virtual bool hasMissingFiles(QStringList & sl);
-		virtual void deleteDataFiles();
+		virtual KJob* deleteDataFiles();
 		virtual Uint64 diskUsage();
 		virtual void loadFileMap();
 		virtual void saveFileMap();

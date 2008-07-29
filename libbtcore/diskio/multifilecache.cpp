@@ -36,6 +36,7 @@
 #include "dndfile.h"
 #include "preallocationthread.h"
 #include "movedatafilesjob.h"
+#include "deletedatafilesjob.h"
 #include <kdebug.h>
 
 
@@ -841,8 +842,9 @@ namespace bt
 		}
 	}
 	
-	void MultiFileCache::deleteDataFiles()
+	KJob* MultiFileCache::deleteDataFiles()
 	{
+		DeleteDataFilesJob* job = new DeleteDataFilesJob();
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
 			TorrentFile & tf = tor.getFile(i);
@@ -850,12 +852,15 @@ namespace bt
 			if (!tf.doNotDownload())
 			{
 				// first delete the file
-				bt::Delete(fpath);
+				job->addFile(fpath);
 			}
 			
 			// check for subdirectories
-			DeleteEmptyDirs(output_dir,tf.getUserModifiedPath());
+			job->addEmptyDirectoryCheck(output_dir,tf.getUserModifiedPath());
 		}
+		
+		job->start();
+		return job;
 	}
 	
 	Uint64 MultiFileCache::diskUsage()

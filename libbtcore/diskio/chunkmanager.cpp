@@ -1211,9 +1211,9 @@ namespace bt
 		chunksLeft();
 	}
 	
-	void ChunkManager::deleteDataFiles()
+	KJob* ChunkManager::deleteDataFiles()
 	{
-		cache->deleteDataFiles();
+		return cache->deleteDataFiles();
 	}
 
 	Uint64 ChunkManager::diskUsage()
