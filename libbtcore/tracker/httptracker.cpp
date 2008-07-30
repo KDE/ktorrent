@@ -453,7 +453,7 @@ namespace bt
 	{
 		md["UserAgent"] = bt::GetVersionString();
 		md["SendLanguageSettings"] = "false";
-		md["Cookies"] = "none";
+		md["cookies"] = "none";
 	//	md["accept"] = "text/plain";
 		md["accept"] = "text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2";
 		if (proxy_on)
