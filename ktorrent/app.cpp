@@ -34,7 +34,9 @@ namespace kt
 	GUI* App::main_widget = 0;
 	
 	App::App() : KUniqueApplication()
-	{}
+	{
+		setQuitOnLastWindowClosed(true);
+	}
 
 	App::~App()
 	{}
@@ -47,7 +49,6 @@ namespace kt
 		if (!main_widget)
 		{
 			bt::InitLog(kt::DataDir() + "log",true);
-			setQuitOnLastWindowClosed(false);
 			widget = new kt::GUI();
 			setTopWidget(widget);
 			main_widget = widget;
