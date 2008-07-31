@@ -4,6 +4,7 @@ Changes in 3.1.2 :
 - Fix crash when clicking on clear search history button twice (167580)
 - Backported some improvements to download thread 
 - Make sure cookies are not sent in http announces
+- Fix crash at startup which started happening since KDE 4.1
 
 Changes in 3.1.1 :
 - Fix wrong icon name in PeerView for encrypted peers 
