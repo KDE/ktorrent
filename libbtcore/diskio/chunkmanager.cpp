@@ -310,7 +310,7 @@ namespace bt
 		{
 			// load the chunk if it is on disk
 			cache->load(c);
-			loaded.insert(i,bt::GetCurrentTime());
+			loaded[i] = bt::GetCurrentTime();
 			bool check_allowed = do_data_check && (max_chunk_size_for_data_check == 0 || tor.getChunkSize() <= max_chunk_size_for_data_check);
 			
 			// when no corruptions have been found, only check once every 5 chunks
@@ -339,8 +339,12 @@ namespace bt
 				recheck_counter++;
 			}
 		}
+		else
+		{
+			// update timestamp 
+			loaded[i] = bt::GetCurrentTime();
+		}
 		
-		loaded.insert(i,bt::GetCurrentTime());
 		return c;
 	}
 		
@@ -390,9 +394,7 @@ namespace bt
 					cache->save(c);
 				c->clear();
 				c->setStatus(Chunk::ON_DISK);
-				QMap<Uint32,TimeStamp>::iterator j = i;
-				i++;
-				loaded.erase(j);
+				i = loaded.erase(i);
 				num_removed++;
 			}
 			else
