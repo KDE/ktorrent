@@ -405,6 +405,7 @@ namespace bt
 		Timer choker_update_timer;
 		Timer stats_save_timer;
 		Timer stalled_timer;
+		Timer wanted_update_timer;
 		
 		QString tordir;
 		QString old_tordir;

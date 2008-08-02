@@ -107,6 +107,8 @@ namespace bt
 		 */
 		Peer* findPeer(PieceDownloader* pd);
 		
+		void setWantedChunks(const BitSet & bs);
+
 		/**
 		 * Try to connect to some peers
 		 */
@@ -232,7 +234,7 @@ namespace bt
 
 	private slots:
 		void onHave(Peer* p,Uint32 index);
-		void onBitSetReceived(const BitSet & bs);
+		void onBitSetReceived(Peer* p,const BitSet & bs);
 		void onRerunChoker();
 		void pex(const QByteArray & arr);
 		void onResolverResults(KNetwork::KResolverResults res);
@@ -249,10 +251,11 @@ namespace bt
 		QList<Peer*> killed;
 		Torrent & tor;
 		bool started;
-		BitSet available_chunks;
+		BitSet available_chunks, wanted_chunks;
 		ChunkCounter* cnt;
 		Uint32 num_pending;
 		bool pex_on;
+		bool wanted_changed;
 		
 		static Uint32 max_connections;
 		static Uint32 max_total_connections;

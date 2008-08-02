@@ -240,6 +240,19 @@ namespace bt
 				istats.time_started_dl = QDateTime::currentDateTime();
 			}
 			updateStatusMsg();
+
+			if(wanted_update_timer.getElapsedSinceUpdate() >= 60*1000)
+			{
+				// Get a list of the chunks I have...
+				BitSet wanted_chunks = cman->getBitSet();
+				// or don't want...
+				wanted_chunks.orBitSet(cman->getExcludedBitSet());
+				wanted_chunks.orBitSet(cman->getOnlySeedBitSet());
+				// and inverted it get a list of the chunks I want
+				wanted_chunks.invert();
+				pman->setWantedChunks(wanted_chunks);
+				wanted_update_timer.update();
+			}
 			
 			// get rid of dead Peers
 			Uint32 num_cleared = pman->clearDeadPeers();
@@ -419,7 +432,7 @@ namespace bt
 		stats.last_download_activity_time = stats.last_upload_activity_time = GetCurrentTime();
 		choker_update_timer.update();
 		stats_save_timer.update();
-		
+		wanted_update_timer.update();
 		
 		stalled_timer.update();
 		psman->start();

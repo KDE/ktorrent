@@ -81,47 +81,44 @@ namespace bt
 
 	void PacketWriter::sendChoke()
 	{
-		if (peer->am_choked == true)
+		if (!peer->stats.has_upload_slot)
 			return;
 		
 		queuePacket(new Packet(CHOKE));
-		peer->am_choked = true;
 		peer->stats.has_upload_slot = false;
 	}
 	
 	void PacketWriter::sendUnchoke()
 	{
-		if (peer->am_choked == false)
+		if (peer->stats.has_upload_slot)
 			return;
 		
 		queuePacket(new Packet(UNCHOKE));
-		peer->am_choked = false;
 		peer->stats.has_upload_slot = true;
 	}
 	
 	void PacketWriter::sendEvilUnchoke()
 	{
 		queuePacket(new Packet(UNCHOKE));
-		peer->am_choked = true;
 		peer->stats.has_upload_slot = false;
 	}
 	
 	void PacketWriter::sendInterested()
 	{
-		if (peer->am_interested == true)
+		if (peer->stats.am_interested == true)
 			return;
 		
 		queuePacket(new Packet(INTERESTED));
-		peer->am_interested = true;
+		peer->stats.am_interested = true;
 	}
 	
 	void PacketWriter::sendNotInterested()
 	{
-		if (peer->am_interested == false)
+		if (peer->stats.am_interested == false)
 			return;
 		
 		queuePacket(new Packet(NOT_INTERESTED));
-		peer->am_interested = false;
+		peer->stats.am_interested = false;
 	}
 	
 	void PacketWriter::sendRequest(const Request & r)

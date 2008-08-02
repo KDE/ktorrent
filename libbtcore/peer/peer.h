@@ -104,16 +104,16 @@ namespace bt
 		PacketWriter & getPacketWriter() {return *pwriter;}
 		
 		/// Is the Peer choked
-		bool isChoked() const {return choked;}
+		bool isChoked() const {return stats.choked;}
 
 		/// Is the Peer interested
-		bool isInterested() const {return interested;}
+		bool isInterested() const {return stats.interested;}
 
 		/// Are we interested in the Peer
-		bool areWeInterested() const {return am_interested;}
+		bool areWeInterested() const {return stats.am_interested;}
 
 		/// Are we choked for the Peer
-		bool areWeChoked() const {return am_choked;}
+		bool areWeChoked() const {return !stats.has_upload_slot;}
 
 		/// Are we being snubbed by the Peer
 		bool isSnubbed() const;
@@ -266,7 +266,7 @@ namespace bt
 		 * Received a BitSet
 		 * @param bs The BitSet
 		 */
-		void bitSetReceived(const BitSet & bs);
+		void bitSetReceived(Peer* p,const BitSet & bs);
 
 		/**
 		 * Emitted when the peer is unchoked and interested changes value.
@@ -291,10 +291,6 @@ namespace bt
 
 	private:
 		mse::StreamSocket* sock;
-		bool choked;
-		bool interested;
-		bool am_choked;
-		bool am_interested;
 		bool killed;
 		TimeStamp time_choked;
 		TimeStamp time_unchoked;

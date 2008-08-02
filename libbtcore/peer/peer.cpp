@@ -56,8 +56,8 @@ namespace bt
 		
 		ut_pex = 0;
 		preader = new PacketReader(this);
-		choked = am_choked = true;
-		interested = am_interested = false;
+		stats.choked = true;
+		stats.interested = stats.am_interested = false;
 		killed = false;
 		downloader = new PeerDownloader(this,chunk_size);
 		uploader = new PeerUploader(this);
@@ -72,6 +72,8 @@ namespace bt
 		stats.client = peer_id.identifyClient();
 		stats.ip_address = getIPAddresss();
 		stats.choked = true;
+		stats.interested = false;
+		stats.am_interested = false;
 		stats.download_rate = 0;
 		stats.upload_rate = 0;
 		stats.perc_of_file = 0;
@@ -144,11 +146,11 @@ namespace bt
 					return;
 				}
 				
-				if (!choked)
+				if (!stats.choked)
 				{
 					time_choked = GetCurrentTime();
 				}
-				choked = true;
+				stats.choked = true;
 				downloader->choked();
 				break;
 			case UNCHOKE:
@@ -159,9 +161,9 @@ namespace bt
 					return;
 				}
 				
-				if (choked)
+				if (stats.choked)
 					time_unchoked = GetCurrentTime();
-				choked = false;
+				stats.choked = false;
 				break;
 			case INTERESTED:
 				if (len != 1)
@@ -170,9 +172,9 @@ namespace bt
 					kill();
 					return;
 				}
-				if (!interested)
+				if (!stats.interested)
 				{
-					interested = true;
+					stats.interested = true;
 					rerunChoker();
 				}
 				break;
@@ -183,9 +185,9 @@ namespace bt
 					kill();
 					return;
 				}
-				if (interested)
+				if (stats.interested)
 				{
-					interested = false;
+					stats.interested = false;
 					rerunChoker();
 				}
 				break;
@@ -219,7 +221,7 @@ namespace bt
 				}
 				
 				pieces = BitSet(tmp_buf+1,pieces.getNumBits());
-				bitSetReceived(pieces);
+				bitSetReceived(this,pieces);
 				break;
 			case REQUEST:
 				if (len != 13)
@@ -236,7 +238,7 @@ namespace bt
 							ReadUint32(tmp_buf,9),
 							downloader);
 					
-					if (!am_choked)
+					if (stats.has_upload_slot)
 						uploader->addRequest(r);
 					else if (stats.fast_extensions)
 						pwriter->sendReject(r);
@@ -318,7 +320,7 @@ namespace bt
 					return;
 				}
 				pieces.setAll(true);
-				bitSetReceived(pieces);
+				bitSetReceived(this,pieces);
 				break;
 			case HAVE_NONE:
 				if (len != 1)
@@ -328,7 +330,7 @@ namespace bt
 					return;
 				}
 				pieces.setAll(false);
-				bitSetReceived(pieces);
+				bitSetReceived(this,pieces);
 				break;
 			case SUGGEST_PIECE:
 				// ignore suggestions for the moment
@@ -526,7 +528,6 @@ namespace bt
 
 	const PeerInterface::Stats & Peer::getStats() const
 	{
-		stats.choked = this->isChoked();
 		stats.download_rate = this->getDownloadRate();
 		stats.upload_rate = this->getUploadRate();
 		stats.perc_of_file = this->percentAvailable();
@@ -543,7 +544,7 @@ namespace bt
 	
 	void Peer::choke()
 	{
-		if (am_choked)
+		if (!stats.has_upload_slot)
 			return;
 		
 		pwriter->sendChoke();

@@ -115,7 +115,9 @@ namespace kt
 			s.num_down_requests != stats.num_down_requests || 
 			s.num_up_requests != stats.num_up_requests || 
 			s.bytes_downloaded != stats.bytes_downloaded || 
-			s.bytes_uploaded != stats.bytes_uploaded)
+			s.bytes_uploaded != stats.bytes_uploaded ||
+			s.interested != stats.interested ||
+			s.am_interested != stats.am_interested)
 		{
 			stats = s;
 			return true;
@@ -149,6 +151,8 @@ namespace kt
 			case 11: return QString("%1 / %2").arg(stats.num_down_requests).arg(stats.num_up_requests);
 			case 12: return BytesToString(stats.bytes_downloaded);
 			case 13: return BytesToString(stats.bytes_uploaded);
+			case 14: return stats.interested ? i18nc("Interested", "Yes") : i18nc("Not Interested", "No");
+			case 15: return stats.am_interested ? i18nc("Interesting", "Yes") : i18nc("Not Interesting", "No");
 			default: return QVariant();
 		}
 		return QVariant();
@@ -172,6 +176,8 @@ namespace kt
 			case 11: return stats.num_down_requests + stats.num_up_requests;
 			case 12: return stats.bytes_downloaded;
 			case 13: return stats.bytes_uploaded;
+			case 14: return stats.interested;
+			case 15: return stats.am_interested;
 			default: return QVariant();
 		}
 		return QVariant();
@@ -259,7 +265,7 @@ namespace kt
 		if (parent.isValid())
 			return 0;
 		else
-			return 14;
+			return 16;
 	}
 	
 	QVariant PeerViewModel::headerData(int section, Qt::Orientation orientation,int role) const
@@ -283,6 +289,8 @@ namespace kt
 			case 11: return i18n("Requests");
 			case 12: return i18n("Downloaded");
 			case 13: return i18n("Uploaded");
+			case 14: return i18n("Interested");
+			case 15: return i18n("Interesting");
 			default: return QVariant();
 		}
 	}

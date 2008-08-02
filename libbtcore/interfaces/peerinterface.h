@@ -68,6 +68,10 @@ namespace bt
 			bool evil;
 			/// Flag to indicate if this peer has an upload slot
 			bool has_upload_slot;
+			/// Is the peer interested
+			bool interested;
+			/// Am I interested in the peer
+			bool am_interested;
 			/// Whether or not this connection is encrypted
 			bool encrypted;
 			/// Number of upload requests queued

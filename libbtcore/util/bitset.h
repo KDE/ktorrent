@@ -93,10 +93,21 @@ namespace bt
 		void clear();
 
 		/**
+		 * invert this BitSet
+		 */
+		void invert();
+		
+		/**
 		 * or this BitSet with another.
 		 * @param other The other BitSet
 		 */
 		void orBitSet(const BitSet & other);
+		
+		/**
+		 * see if this BitSet includes another.
+		 * @param other The other BitSet
+		 */
+		bool includesBitSet(const BitSet & other);
 		
 		/**
 		 * Assignment operator.
@@ -104,6 +115,20 @@ namespace bt
 		 * @return *this
 		 */
 		BitSet & operator = (const BitSet & bs);
+
+		/**
+		 * Subtraction assignment operator.
+		 * @param bs BitSet to copy and subtract from this one
+		 * @return *this
+		 */
+		BitSet & operator -= (const BitSet & bs);
+		
+		/**
+		 * Subtraction operator.
+		 * @param bs BitSet to subtract from this one
+		 * @return difference
+		 */
+		BitSet & operator - (const BitSet & bs);
 
 		/// Check if all bit are set to 1
 		bool allOn() const;

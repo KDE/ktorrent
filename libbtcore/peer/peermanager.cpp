@@ -32,6 +32,7 @@
 #include <mse/encryptedauthenticate.h>
 #include <klocale.h>
 #include <peer/accessmanager.h>
+#include "packetwriter.h"
 #include "chunkcounter.h"
 #include "authenticationmonitor.h"
 #include <qdatetime.h>
@@ -53,10 +54,11 @@ namespace bt
 	Uint32 PeerManager::total_connections = 0;
 
 	PeerManager::PeerManager(Torrent & tor)
-		: tor(tor),available_chunks(tor.getNumChunks())
+		: tor(tor),available_chunks(tor.getNumChunks()),wanted_chunks(tor.getNumChunks())
 	{
 		started = false;
-		
+		wanted_chunks.setAll(true);
+		wanted_changed = false;
 		cnt = new ChunkCounter(tor.getNumChunks());
 		num_pending = 0;
 		pex_on = !tor.isPrivate();
@@ -105,7 +107,33 @@ namespace bt
 				i++;
 			}
 		}
-		
+		if (wanted_changed)
+		{
+			i = peer_list.begin();
+			while (i != peer_list.end())
+			{
+				Peer* p = *i;
+				const BitSet & peer_bitset = p->getBitSet();
+				Uint32 index = 0;
+				Uint32 num_bits = peer_bitset.getNumBits();
+				bool interested = false;
+				while (index < num_bits)
+				{
+					if(wanted_chunks.get(index) && peer_bitset.get(index))
+					{
+						interested = true;
+						break;
+					}
+					index++;
+				}
+				if (interested)
+					p->getPacketWriter().sendInterested();
+				else
+					p->getPacketWriter().sendNotInterested();
+				i++;
+			}
+			wanted_changed = false;
+		}
 		// connect to some new peers
 		connectToPeers();
 	}
@@ -144,6 +172,12 @@ namespace bt
 		max_total_connections = max;
 		if (max == 0 || max_total_connections > sys_max)
 			max_total_connections = sys_max;
+	}
+	
+	void PeerManager::setWantedChunks(const BitSet & bs)
+	{
+		wanted_chunks = bs;
+		wanted_changed = true;
 	}
 	
 	void PeerManager::addPotentialPeer(const PotentialPeer & pp)
@@ -219,22 +253,29 @@ namespace bt
 		}
 	}
 
-	void PeerManager::onHave(Peer*,Uint32 index)
+	void PeerManager::onHave(Peer* p,Uint32 index)
 	{
+		if (wanted_chunks.get(index))
+			p->getPacketWriter().sendInterested();
 		available_chunks.set(index,true);
 		cnt->inc(index);
 	}
 
-	void PeerManager::onBitSetReceived(const BitSet & bs)
+	void PeerManager::onBitSetReceived(Peer* p, const BitSet & bs)
 	{
+		bool interested = false;
 		for (Uint32 i = 0;i < bs.getNumBits();i++)
 		{
 			if (bs.get(i))
 			{
+				if (wanted_chunks.get(i))
+					interested = true;
 				available_chunks.set(i,true);
 				cnt->inc(i);
 			}
 		}
+		if (interested)
+			p->getPacketWriter().sendInterested();
 	}
 	
 
@@ -300,8 +341,8 @@ namespace bt
 		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),tor.getChunkSize(),support,local);
 		
 		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
-		connect(peer,SIGNAL(bitSetReceived(const BitSet& )),
-				this,SLOT(onBitSetReceived(const BitSet& )));
+		connect(peer,SIGNAL(bitSetReceived(Peer*, const BitSet& )),
+				this,SLOT(onBitSetReceived(Peer*, const BitSet& )));
 		connect(peer,SIGNAL(rerunChoker()),this,SLOT(onRerunChoker()));
 		connect(peer,SIGNAL(pex( const QByteArray& )),this,SLOT(pex( const QByteArray& )));
 		

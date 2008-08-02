@@ -73,6 +73,33 @@ namespace bt
 		return *this;
 	}
 	
+	void BitSet::invert()
+	{
+		Uint32 i = 0;
+		while (i < num_bits)
+		{
+			set(i,!get(i));
+			i++;
+		}
+	}
+	
+	BitSet & BitSet::operator -= (const BitSet & bs)
+	{
+		Uint32 i = 0;
+		while (i < num_bits)
+		{
+			if (get(i) && bs.get(i))
+				set(i,false);
+			i++;
+		}
+		return *this;
+	}
+
+	BitSet & BitSet::operator - (const BitSet & bs)
+	{
+		return BitSet(*this) -= bs;
+	}
+	
 	void BitSet::setAll(bool on)
 	{
 		std::fill(data,data+num_bytes,on ? 0xFF : 0x00);
@@ -93,6 +120,18 @@ namespace bt
 			set(i,val);
 			i++;
 		}
+	}
+
+	bool BitSet::includesBitSet(const BitSet & other)
+	{
+		Uint32 i = 0;
+		while (i < num_bits)
+		{
+			if(other.get(i) && !get(i))
+				return false;
+			i++;
+		}
+		return true;
 	}
 
 	bool BitSet::allOn() const
