@@ -9,6 +9,7 @@ Changes in 3.1.2 :
 - Fix issue causing Timer class to stop working when day changes
 - Make sure toolbar settings are restored properly
 - Fix compile error on arm architecture
+- Fixed some bugs in file deselection code
 
 Changes in 3.1.1 :
 - Fix wrong icon name in PeerView for encrypted peers 
