@@ -845,10 +845,19 @@ namespace bt
 		else
 		{
 			// check for exceptional case which causes very long loops
-			if (first == last && !isBorderChunk(first))
+			// check for exceptional case which causes very long loops
+			if (first == last)
 			{
-				resetChunk(first);
-				exclude(first,first);
+				if (!isBorderChunk(first))
+				{
+					resetChunk(first);
+					exclude(first,first);
+				}
+				else
+				{
+					if (resetBorderChunk(last,tf)) // try resetting it
+						exclude(first,last);
+				}
 				cache->downloadStatusChanged(tf,download);
 				savePriorityInfo();
 				return;
