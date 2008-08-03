@@ -243,6 +243,7 @@ namespace bt
 
 		if (check_priority)
 		{
+			during_load = true; // for performance reasons
 			for (Uint32 i = 0;i < tor.getNumFiles();i++)
 			{
 				TorrentFile & tf = tor.getFile(i);
@@ -254,6 +255,8 @@ namespace bt
 					downloadPriorityChanged(&tf,tf.getPriority(),tf.getOldPriority());
 				}
 			}
+			during_load = false;
+			savePriorityInfo();
 		}
 	}
 	

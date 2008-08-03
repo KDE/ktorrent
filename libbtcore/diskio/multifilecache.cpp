@@ -356,11 +356,7 @@ namespace bt
 		MakeFilePath(dtmp + fpath); // make DND dir
 		
 		// then make the file
-		if (dnd)
-		{
-			bt::Touch(tmpdir + "dnd" + bt::DirSeparator() + fpath);
-		}
-		else
+		if (!dnd)
 		{
 			MakeFilePath(tf.getPathOnDisk());
 			if (!bt::Exists(tf.getPathOnDisk()))
