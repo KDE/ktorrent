@@ -54,6 +54,7 @@ namespace ideal
 
 	void MainWindow::loadState(KSharedConfigPtr cfg)
 	{
+		setAutoSaveSettings("MainWindow",false);
 		KConfigGroup config = cfg->group("WindowStatus");
 		QSize size = config.readEntry("size",QSize());
 		QPoint pos = config.readEntry("position",QPoint());
