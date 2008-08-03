@@ -19,13 +19,14 @@
  ***************************************************************************/
 
 #include "timer.h"
+#include "functions.h"
 
 namespace bt
 {
 
 	Timer::Timer() : elapsed(0)
 	{
-		last = QTime::currentTime();
+		last = GetCurrentTime();
 	}
 
 	Timer::Timer(const Timer & t) : last(t.last),elapsed(t.elapsed)
@@ -37,22 +38,16 @@ namespace bt
 
 	void Timer::update()
 	{
-		QTime now = QTime::currentTime();
-
-		int d = last.msecsTo(now);
-		if (d < 0)
-			d = 0;
+		TimeStamp now = GetCurrentTime();
+		TimeStamp d = (now > last) ? now - last : 0;
 		elapsed = d;
 		last = now;
 	}
 	
-	Uint32 Timer::getElapsedSinceUpdate() const
+	TimeStamp Timer::getElapsedSinceUpdate() const
 	{
-		QTime now = QTime::currentTime();
-		int d = last.msecsTo(now);
-		if (d < 0)
-			d = 0;
-		return d;
+		TimeStamp now = GetCurrentTime();
+		return (now > last) ? now - last : 0;
 	}
 	
 	Timer & Timer::operator = (const Timer & t)

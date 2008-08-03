@@ -20,7 +20,7 @@
 #ifndef BTTIMER_H
 #define BTTIMER_H
 
-#include <qdatetime.h>
+#include <util/constants.h>
 #include <btcore_export.h>
 #include "constants.h"
 
@@ -32,16 +32,16 @@ namespace bt
 	*/
 	class BTCORE_EXPORT Timer
 	{
-		QTime last;
-		Uint32 elapsed;
+		TimeStamp last;
+		TimeStamp elapsed;
 	public:
 		Timer();
 		Timer(const Timer & t);
 		virtual ~Timer();
 
 		void update();
-		Uint32 getElapsed() const {return elapsed;}
-		Uint32 getElapsedSinceUpdate() const;
+		TimeStamp getElapsed() const {return elapsed;}
+		TimeStamp getElapsedSinceUpdate() const;
 		Timer & operator = (const Timer & t);
 	};
 
