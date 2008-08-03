@@ -8,6 +8,7 @@ Changes in 3.1.2 :
 - Fix problem causing massive memory usage (148385)
 - Fix issue causing Timer class to stop working when day changes
 - Make sure toolbar settings are restored properly
+- Fix compile error on arm architecture
 
 Changes in 3.1.1 :
 - Fix wrong icon name in PeerView for encrypted peers 
