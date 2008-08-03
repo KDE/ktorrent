@@ -21,6 +21,7 @@
 #ifndef BTTORRENTCONTROL_H
 #define BTTORRENTCONTROL_H
 
+#include <qdatetime.h>
 #include <qobject.h>
 #include <qtimer.h>
 #include <kurl.h>

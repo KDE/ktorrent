@@ -6,6 +6,7 @@ Changes in 3.1.2 :
 - Make sure cookies are not sent in http announces
 - Fix crash at startup which started happening since KDE 4.1
 - Fix problem causing massive memory usage (148385)
+- Fix issue causing Timer class to stop working when day changes
 
 Changes in 3.1.1 :
 - Fix wrong icon name in PeerView for encrypted peers 
