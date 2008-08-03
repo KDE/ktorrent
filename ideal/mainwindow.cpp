@@ -80,6 +80,7 @@ namespace ideal
 
 	void MainWindow::saveState(KSharedConfigPtr cfg)
 	{
+		saveMainWindowSettings(cfg->group("MainWindow"));
 		KConfigGroup config = cfg->group("WindowStatus");
 		config.writeEntry("size",size());
 		config.writeEntry("position",pos());
