@@ -175,8 +175,13 @@ namespace kt
 	//	Out(SYS_WEB|LOG_DEBUG) << "HTTP header : " << endl;
 	//	Out(SYS_WEB|LOG_DEBUG) << hdr.toString() << endl;
 				
+		QByteArray data((const char*)c->getDataPointer(),c->getSize());
+		
 		output_buffer.append(hdr.toString().toUtf8());
-		output_buffer.append(QByteArray((const char*)c->getDataPointer(),c->getSize()));
+		if (full_path.endsWith("login.html"))
+			output_buffer.append(data.replace("$CHALLENGE",srv->challengeString().toUtf8()));
+		else
+			output_buffer.append(data);
 		sendOutputBuffer();
 	//	Out(SYS_WEB|LOG_DEBUG) << "Finished sending " << full_path << " (" << written << " bytes)" << endl;
 		return true;

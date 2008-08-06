@@ -47,7 +47,7 @@ namespace kt
 		QStringList skinList = d.entryList(QDir::Dirs);
 		foreach (QString skin,skinList)
 		{
-			if (skin =="." || skin == "..")
+			if (skin =="." || skin == ".." || skin == "common")
 				continue;
 			kcfg_skin->addItem(skin);
 		}

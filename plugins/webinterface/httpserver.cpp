@@ -40,6 +40,7 @@
 #include <util/fileops.h>
 #include <util/functions.h>
 #include <util/mmapfile.h>
+#include <util/sha1hash.h>
 #include "ktversion.h"
 #include "httpserver.h"
 #include "httpclienthandler.h"
@@ -58,6 +59,7 @@ namespace kt
 
 	HttpServer::HttpServer(CoreInterface *core, bt::Uint16 port) : sock(0),notifier(0),core(core),cache(10),port(port)
 	{
+		qsrand(time(0));
 		sock = new net::Socket(true,4);
 
 		php_cmd = new PhpCommandHandler(core);
@@ -77,6 +79,7 @@ namespace kt
 		}
 
 		skin_list = QDir(rootDir).entryList(QDir::Dirs);
+		skin_list.removeAll("common");
 		skin_list.removeAll(".");
 		skin_list.removeAll("..");
 	}
@@ -95,6 +98,11 @@ namespace kt
 		if (skin.length() == 0)
 			skin = "default";
 		return rootDir + bt::DirSeparator() + skin;
+	}
+	
+	QString HttpServer::commonDir() const
+	{
+		return rootDir + bt::DirSeparator() + "common";
 	}
 
 	void HttpServer::slotAccept(int )
@@ -130,47 +138,41 @@ namespace kt
 	bool HttpServer::checkLogin(const QHttpRequestHeader & hdr,const QByteArray & data)
 	{
 		if (hdr.contentType() != "application/x-www-form-urlencoded")
+		{
+			challenge = QString();
 			return false;
+		}
 		
 		QString username;
-		QString password;
+		QString challenge_hash;
 		QStringList params = QString(data).split("&");
 		for (QStringList::iterator i = params.begin();i != params.end();i++)
 		{
 			QString t = *i;
 			if (t.section("=",0,0) == "username")
 				username = t.section("=",1,1);
-			else if (t.section("=",0,0) == "password")
-				password = t.section("=",1,1);
-			
-			// check for passwords with url encoded stuff in them and decode them if necessary
-			int idx = 0;
-			while ((idx = password.indexOf('%',idx)) > 0)
-			{
-				if (idx + 2 < password.length())
-				{
-					idx = DecodeEscapedChar(password,idx);
-				}
-				else
-					break;
-			}
+			else if (t.section("=",0,0) == "challenge")
+				challenge_hash = t.section("=",1,1);
 		}
 
-		if (!username.isNull() && !password.isNull())
+		if (username.isNull() || challenge.isNull() || username != WebInterfacePluginSettings::username())
 		{
-		//	KMD5 context(password.toUtf8());
-
-			if (username == WebInterfacePluginSettings::username() && 
-				password == WebInterfacePluginSettings::password())
-			{
-				session.logged_in = true;
-				session.sessionId=rand();
-				session.last_access=QTime::currentTime();
-				Out(SYS_WEB|LOG_NOTICE) << "Webgui login succesfull !" << endl;
-				return true;
-			}
+			challenge = QString();
+			return false;
 		}
-
+		
+		QByteArray s = (challenge + WebInterfacePluginSettings::password()).toUtf8();
+		bt::SHA1Hash hash = bt::SHA1Hash::generate((const bt::Uint8*)s.data(),s.length());
+		if (hash.toString() == challenge_hash)
+		{
+			session.logged_in = true;
+			session.sessionId=rand();
+			session.last_access=QTime::currentTime();
+			Out(SYS_WEB|LOG_NOTICE) << "Webgui login succesfull !" << endl;
+			challenge = QString();
+			return true;
+		}
+		challenge = QString();
 		return false;
 	}
 	
@@ -294,8 +296,12 @@ namespace kt
 		KUrl url;
 		url.setEncodedPathAndQuery(file);
 		
-		QString path = skinDir() + url.path();
-		// first check if the file exists (if not send 404)
+		QString path = commonDir() + url.path();
+		// first try the common dir
+		if (!bt::Exists(path)) // doesn't exist so it must be in the skin dir
+			path = skinDir() + url.path();
+		
+		// check if the file exists (if not send 404)
 		if (!bt::Exists(path))
 		{
 			HttpResponseHeader rhdr(404);
@@ -561,7 +567,26 @@ namespace kt
 	{
 		cache.insert(name,file);
 	}
+	
+	static char RandomLetterOrNumber()
+	{
+		int i = qrand() % 62;
+		if (i < 26)
+			return 'a' + i;
+		else if (i < 52)
+			return 'A' + (i - 26);
+		else
+			return '0' + (i - 52);
+	}
 
+	QString HttpServer::challengeString()
+	{
+		// regenerate challenge string
+		challenge = QString();
+		for (int i = 0;i < 20;i++)
+			challenge.append(RandomLetterOrNumber());
+		return challenge;
+	}
 }
 
 #include "httpserver.moc"

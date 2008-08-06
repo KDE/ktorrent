@@ -78,6 +78,7 @@ namespace kt
 		void handleUnsupportedMethod(HttpClientHandler* hdlr);
 		bt::MMapFile* cacheLookup(const QString & name);
 		void insertIntoCache(const QString & name,bt::MMapFile* file);
+		QString challengeString();
 
 	protected slots:
 		void slotAccept(int fd);
@@ -91,6 +92,7 @@ namespace kt
 		QDateTime parseDate(const QString & str);
 		void redirectToLoginPage(HttpClientHandler* hdlr);
 		QString skinDir() const;
+		QString commonDir() const;
 		
 	private:
 		net::Socket* sock;
@@ -105,6 +107,7 @@ namespace kt
 		bool ok;
 		bt::Uint16 port;
 		QStringList skin_list;
+		QString challenge;
 	};
 
 	

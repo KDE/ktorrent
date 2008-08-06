@@ -1,24 +1,39 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
+<script type="text/javascript" src="sha1.js"></script>
+<script type="text/javascript">
+	function encryptPwd()
+	{
+		var usernameField = document.getElementById("username");
+		var pwdField = document.getElementById("password");
+		var challengeField = document.getElementById("challenge");
+		var sha = hex_sha1(challengeField.value + pwdField.value);
+		pwdField.value = '';
+		challengeField.value = sha;
+		return true;
+	}
+</script>
+
 <head>
   <title>KTorrent  WebInterface - Login</title>
   <meta name="GENERATOR" content="Quanta Plus">
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 <body>
-<TABLE align="center" >
-<tr><td><IMG src="ktorrentwebinterfacelogo.png" width="687" height="300" align="left" border="0"></td></tr>
-</TABLE>
-<TABLE align="center" >
-<FORM action="interface.php" method="POST">
+<table align="center" >
+<tr><td><img src="ktorrentwebinterfacelogo.png" width="687" height="300" align="left" border="0"/></td></tr>
+</table>
+<table align="center" >
+<form action="interface.php" method="POST" onsubmit="encryptPwd();">
  
-   <tr><td>Username</td><td><INPUT type="text" name="username"></td></tr>
-   <tr><td>Password</td><td><INPUT type="password" name="password"></td></tr>
-<tr><td></td><td><INPUT type="submit" name="Login"></td></tr>
+   <tr><td>Username</td><td><input type="text" name="username" id="username"></td></tr>
+   <tr><td>Password</td><td><input type="password" name="password" id="password"></td></tr>
+<tr><td></td><td><input type="submit" name="Login"></td></tr>
+		<input type="hidden" name="challenge" id="challenge" value="$CHALLENGE" />
    
-</FORM>
-</TABLE>
+</form>
+</table>
 
 </body>
 </html>
