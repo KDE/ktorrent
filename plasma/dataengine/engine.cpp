@@ -26,7 +26,7 @@
 #include "coredbusinterface.h"
 #include "torrentdbusinterface.h"
 
-K_EXPORT_PLASMA_DATAENGINE(ktorrent, ktplasma::Engine);
+K_EXPORT_PLASMA_DATAENGINE(ktorrent, ktplasma::Engine)
 
 using namespace bt;
 
