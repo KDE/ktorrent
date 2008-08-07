@@ -50,6 +50,8 @@
 #include "phpcodegenerator.h"
 #include "webinterfacepluginsettings.h"
 
+#include <time.h>
+
 using namespace bt;
 
 namespace kt
