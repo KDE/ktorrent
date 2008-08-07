@@ -27,6 +27,7 @@
 #include <ksharedconfig.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
+#include <kinputdialog.h>
 #include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>
 #include <util/functions.h>
@@ -418,6 +419,15 @@ namespace kt
 				tc->setFeatureEnabled(bt::UT_PEX_FEATURE,!on);
 			}
 		}
+	}
+
+	void View::renameTorrent()
+	{
+		QModelIndexList indices = selectionModel()->selectedRows();
+		if (indices.count() == 0)
+			return;
+		QModelIndex idx = indices.front();
+		edit(proxy_model->index(idx.row(),0));
 	}
 
 	void View::checkData()

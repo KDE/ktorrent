@@ -123,11 +123,11 @@ namespace kt
 					{
 						QString preview = tc->readyForPreview() ? i18n("Available") : i18n("Pending");
 						return i18n("<b>%1</b><br/>Preview: %2<br/>Downloaded: %3 %",
-								s.torrent_name,preview,bt::Percentage(s));
+								tc->getDisplayName(),preview,bt::Percentage(s));
 					}
 					break;
 				case Qt::DisplayRole:
-					return s.torrent_name;
+					return tc->getDisplayName();
 				case Qt::DecorationRole:
 					return (item->multimedia_files.count() > 0) ? KIcon("folder") :  KIcon(KMimeType::findByPath(s.torrent_name)->iconName());
 				case Qt::UserRole: // user role is for finding out if a torrent is complete

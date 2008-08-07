@@ -112,6 +112,8 @@ namespace kt
 			
 			tmp = stats.torrent_name;
 			out << QString("\"torrent_name\" => \"%1\",").arg(tmp.replace("\\", "\\\\").replace("\"", "\\\"").replace("$", "\\$"));
+			tmp = (*i)->getDisplayName();
+			out << QString("\"display_name\" => \"%1\",").arg(tmp.replace("\\", "\\\\").replace("\"", "\\\"").replace("$", "\\$"));
 			tmp = stats.output_path;
 			out << QString("\"output_path\" => \"%1\",").arg(tmp.replace("\\", "\\\\").replace("\"", "\\\"").replace("$", "\\$"));
 			out << QString("\"stopped_by_error\" => \"%1\",").arg(stats.stopped_by_error);

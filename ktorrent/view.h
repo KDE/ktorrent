@@ -114,6 +114,7 @@ namespace kt
 		void togglePEX();
 		void scrape();
 		void moveData();
+		void renameTorrent();
 		void showMenu(const QPoint & pos);
 		void showHeaderMenu(const QPoint& pos);
 		void onHeaderMenuItemTriggered(QAction* act);

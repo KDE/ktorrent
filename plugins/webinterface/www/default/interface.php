@@ -118,11 +118,11 @@ function generate_button_code($img, $alt, $href='')
 		foreach ($stats as $torrent) {
 			echo "\t\t".'<tr>'."\n\t\t\t";
 
-			$torrent_name = str_replace("'", "\'", $torrent['torrent_name']);
+			$torrent_name = str_replace("'", "\'", $torrent['display_name']);
 			if($torrent['total_bytes_to_download']!=0) $perc = round(100.0 - ($torrent['bytes_left_to_download'] / $torrent['total_bytes_to_download']) * 100.0, 2);
 			else $perc = 0;
-			if(strlen($torrent['torrent_name'])>30) $display_name=substr($torrent['torrent_name'], 0, 30)." ...";
-			else $display_name=$torrent['torrent_name'];
+			if(strlen($torrent['display_name'])>30) $display_name=substr($torrent['display_name'], 0, 30)." ...";
+			else $display_name=$torrent['display_name'];
 			if ($torrent['num_files']>1) $file_td_content = '<a href="details.php?torrent='.$a.'">'.$display_name.'</a>';
 			else $file_td_content = $display_name;
 
@@ -131,7 +131,7 @@ function generate_button_code($img, $alt, $href='')
 			echo generate_button_code('/start.png', 'start', ($torrent['running'])?'':'interface.php?start='.$a);
 			echo '<a href="interface.php?remove='.$a.'" onclick="return validate()"><img src="/remove.png" alt="remove" /></a>';
 			echo '</td>';
-			echo "<td style=\"text-align:left;\" onmouseover=\"this.T_TITLE='$torrent_name';return escape('Download speed:&lt;strong&gt;{$torrent['download_rate']}&lt;/strong&gt;&lt;br /&gt; Upload speed:&lt;strong&gt;{$torrent['upload_rate']}&lt;/strong&gt;&lt;/td&gt;')\">$file_td_content</td>";
+			echo "<td style=\"text-align:left;\" onmouseover=\"this.T_TITLE='$display_name';return escape('Download speed:&lt;strong&gt;{$torrent['download_rate']}&lt;/strong&gt;&lt;br /&gt; Upload speed:&lt;strong&gt;{$torrent['upload_rate']}&lt;/strong&gt;&lt;/td&gt;')\">$file_td_content</td>";
 			echo '<td>'.get_torrent_status_name($torrent['status']).'</td>';
 			echo '<td style="text-align:right;">'.$torrent['bytes_downloaded'].'</td>';
 			echo '<td style="text-align:right; padding-left:8px;">'.$torrent['total_bytes'].'</td>';

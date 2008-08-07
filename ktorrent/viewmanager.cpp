@@ -142,6 +142,13 @@ namespace kt
 			current->updateFlags();
 		}
 	}
+
+	void ViewManager::renameTorrent()
+	{
+		if (current)
+			current->renameTorrent();
+	}
+
 	void ViewManager::removeTorrentsAndData()
 	{
 		if (current)
@@ -405,6 +412,10 @@ namespace kt
 		connect(remove_torrent_and_data,SIGNAL(triggered()),this,SLOT(removeTorrentsAndData()));
 		ac->addAction("view_remove_torrent_and_data",remove_torrent_and_data);
 		
+		rename_torrent = new KAction(i18n("Rename Torrent"),this);
+		connect(rename_torrent,SIGNAL(triggered()),this,SLOT(renameTorrent()));
+		ac->addAction("view_rename_torrent",rename_torrent);
+		
 		queue_torrent = new KAction(KIcon("view-choose"),i18n("Enqueue/Dequeue"),this);
 		connect(queue_torrent,SIGNAL(triggered()),this,SLOT(queueTorrents()));
 		ac->addAction("view_queue",queue_torrent);
@@ -549,6 +560,7 @@ namespace kt
 		bool en_dirs = false;
 		bool en_peer_sources = false;
 		bool dummy = false;
+		bool en_rename = false;
 
 		QList<bt::TorrentInterface*> sel;
 		v->getSelection(sel);
@@ -606,6 +618,8 @@ namespace kt
 
 		if (sel.count() == 1)
 		{
+			en_rename = true;
+
 			//enable directories
 			en_dirs = true;
 			
@@ -630,6 +644,7 @@ namespace kt
 			pex_enabled->setEnabled(false);	
 		}
 		
+		rename_torrent->setEnabled(en_rename);
 		data_dir->setEnabled(en_dirs);
 		tor_dir->setEnabled(en_dirs);
 		open_dir_menu->setEnabled(en_dirs);

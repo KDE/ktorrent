@@ -146,6 +146,9 @@ namespace bt
 		 */
 		void rollback();
 	
+		/// Change the display name of the torrent
+		void setDisplayName(const QString & n);
+
 		/// Gets the TrackersList interface
 		TrackersList* getTrackersList();
 		

@@ -132,7 +132,7 @@ namespace kt
 						return QVariant();
 					else
 						return index.row() + 1;
-				case 1: return tc->getStats().torrent_name;
+				case 1: return tc->getDisplayName();
 				case 2: 
 					if (tc->getPriority() == 0)
 						return i18n("Not queued");

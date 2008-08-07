@@ -36,12 +36,7 @@ using namespace bt;
 
 namespace kt
 {
-	
 
-	static int ETA(const TorrentStats & s,bt::TorrentInterface* tc)
-	{
-		return tc->getETA();
-	}
 	
 	ViewModel::Item::Item(bt::TorrentInterface* tc) : tc(tc)
 	{
@@ -52,7 +47,7 @@ namespace kt
 		bytes_uploaded = s.bytes_uploaded;
 		download_rate = s.download_rate;
 		upload_rate = s.upload_rate;
-		eta = ETA(s,tc);
+		eta = tc->getETA();
 		seeders_connected_to = s.seeders_connected_to;
 		seeders_total = s.seeders_total;
 		leechers_total = s.leechers_total;
@@ -64,7 +59,7 @@ namespace kt
 	}
 			
 	
-	bool ViewModel::Item::update(int row,ViewModel* mdl)
+	bool ViewModel::Item::update()
 	{
 		bool ret = false;
 		const TorrentStats & s = tc->getStats();
@@ -104,7 +99,7 @@ namespace kt
 			upload_rate = s.upload_rate;
 		}
 		
-		int neta = ETA(s,tc);
+		int neta = tc->getETA();
 		if (eta != neta)
 		{
 			ret = true;
@@ -161,7 +156,7 @@ namespace kt
 		const TorrentStats & s = tc->getStats();
 		switch (col)
 		{
-			case 0: return tc->getStats().torrent_name;
+			case 0: return tc->getDisplayName();
 			case 1: return tc->statusToString();
 			case 2: return BytesToString(bytes_downloaded);
 			case 3: return BytesToString(total_bytes_to_download);
@@ -203,7 +198,7 @@ namespace kt
 		const TorrentStats & s = tc->getStats();
 		switch (col)
 		{
-			case 0: return tc->getStats().torrent_name;
+			case 0: return tc->getDisplayName();
 			case 1: return tc->statusToString();
 			case 2: return bytes_downloaded;
 			case 3: return total_bytes_to_download;
@@ -323,7 +318,7 @@ namespace kt
 		for (QList<Item>::iterator i = torrents.begin();i != torrents.end();i++)
 		{
 			Item & item = *i;
-			if (item.update(row,this))
+			if (item.update())
 				changed_values = true;
 			row++;
 		}
@@ -383,16 +378,35 @@ namespace kt
 			return torrents[index.row()].data(index.column());
 		else if (role == Qt::UserRole) // UserRole is for sorting
 			return torrents[index.row()].dataForSorting(index.column());
+		else if (role == Qt::EditRole && index.column() == 0)
+			return torrents[index.row()].tc->getDisplayName();
 		
 		return QVariant();
+	}
+	
+	bool ViewModel::setData(const QModelIndex & index,const QVariant & value,int role)
+	{
+		if (!index.isValid() || index.row() >= torrents.count() || index.row() < 0 || 
+			role != Qt::EditRole || index.column() != 0)
+			return false; 
+		
+		QString name = value.toString();
+		bt::TorrentInterface* tc = torrents[index.row()].tc;
+		tc->setDisplayName(name);
+		emit dataChanged(index,index);
+		return true;
 	}
 	
 	Qt::ItemFlags ViewModel::flags(const QModelIndex & index) const
 	{
 		if (!index.isValid() || index.row() >= torrents.count() || index.row() < 0)
 			return QAbstractTableModel::flags(index);
-		else
-			return QAbstractTableModel::flags(index) | Qt::ItemIsDragEnabled;
+		
+		Qt::ItemFlags flags = QAbstractTableModel::flags(index) | Qt::ItemIsDragEnabled;
+		if (index.column() == 0 )
+			flags |= Qt::ItemIsEditable;
+		
+		return flags;
 	}
 	
 	QStringList ViewModel::mimeTypes() const
@@ -468,6 +482,7 @@ namespace kt
 	
 	bool ViewModel::insertRows(int row,int count,const QModelIndex & parent)
 	{
+		Q_UNUSED(parent);
 		beginInsertRows(QModelIndex(),row,row + count - 1);
 		endInsertRows();
 		return true;
@@ -475,6 +490,7 @@ namespace kt
 	
 	bool ViewModel::removeRows(int row,int count,const QModelIndex & parent) 
 	{
+		Q_UNUSED(parent);
 		beginRemoveRows(QModelIndex(),row,row + count - 1);
 		endRemoveRows();
 		return true;

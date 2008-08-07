@@ -157,7 +157,7 @@ namespace kt
 
 		QString msg = i18n("<b>%1</b> has completed downloading."
 					"<br>Average speed: %2 DL / %3 UL.",
-					s.torrent_name,
+					tc->getDisplayName(),
 					KBytesPerSecToString(speed_down / tc->getRunningTimeDL()),
 					KBytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
@@ -175,7 +175,7 @@ namespace kt
 		
 		QString msg = i18n("<b>%1</b> has reached its maximum share ratio of %2 and has been stopped."
 				"<br>Uploaded %3 at an average speed of %4.",
-				s.torrent_name,
+				tc->getDisplayName(),
 				loc->formatNumber(s.max_share_ratio,2),
 				BytesToString(s.bytes_uploaded),
 				KBytesPerSecToString(speed_up / tc->getRunningTimeUL()));
@@ -194,7 +194,7 @@ namespace kt
 		
 		QString msg = i18n("<b>%1</b> has reached its maximum seed time of %2 hours and has been stopped."
 				"<br>Uploaded %3 at an average speed of %4.",
-				s.torrent_name,
+				tc->getDisplayName(),
 				loc->formatNumber(s.max_seed_time,2),
 				BytesToString(s.bytes_uploaded),
 				KBytesPerSecToString(speed_up / tc->getRunningTimeUL()));
@@ -209,7 +209,7 @@ namespace kt
 		
 		const TorrentStats & s = tc->getStats();
 		QString err_msg = i18n("<b>%1</b> has been stopped with the following error: <br>%2",
-					s.torrent_name,msg);
+					tc->getDisplayName(),msg);
 
 		KNotification::event("TorrentStoppedByError",err_msg,QPixmap(),mwnd);
 	}
@@ -219,9 +219,8 @@ namespace kt
 		if (!Settings::showPopups())
 			return;
 		
-		const TorrentStats & s = tc->getStats();
 		QString err_msg = i18n("Corrupted data has been found in the torrent <b>%1</b>"
-				"<br>It would be a good idea to do a data integrity check on the torrent.",s.torrent_name);
+				"<br>It would be a good idea to do a data integrity check on the torrent.",tc->getDisplayName());
 				
 		KNotification::event("CorruptedData",err_msg,QPixmap(),mwnd);
 	}
@@ -239,11 +238,11 @@ namespace kt
 		if (tc->overMaxRatio())
 			msg = i18n("<b>%1</b> has reached its maximum share ratio of %2 and cannot be enqueued. "
 				"Remove the limit manually if you want to continue seeding.",
-				s.torrent_name,loc->formatNumber(s.max_share_ratio,2));
+				tc->getDisplayName(),loc->formatNumber(s.max_share_ratio,2));
 		else
 			msg = i18n("<b>%1</b> has reached its maximum seed time of %2 hours and cannot be enqueued. "
 				"Remove the limit manually if you want to continue seeding.",
-				s.torrent_name,loc->formatNumber(s.max_seed_time,2));
+				tc->getDisplayName(),loc->formatNumber(s.max_seed_time,2));
 		
 		KNotification::event("QueueNotPossible",msg,QPixmap(),mwnd);
 	}
@@ -253,7 +252,7 @@ namespace kt
 		if (!Settings::showPopups())
 			return;
 		
-		QString msg = i18n("Cannot start <b>%1</b> : <br>",tc->getStats().torrent_name);
+		QString msg = i18n("Cannot start <b>%1</b> : <br>",tc->getDisplayName());
 		switch (reason)
 		{
 		case bt::QM_LIMITS_REACHED:
@@ -285,9 +284,7 @@ namespace kt
 		if (!Settings::showPopups())
 			return;
 		
-		const TorrentStats & s = tc->getStats();
-		
-		QString msg = i18n("Your disk is running out of space.<br /><b>%1</b> is being downloaded to '%2'.",s.torrent_name,tc->getDataDir());
+		QString msg = i18n("Your disk is running out of space.<br /><b>%1</b> is being downloaded to '%2'.",tc->getDisplayName(),tc->getDataDir());
 		
 		if(stopped)
 			msg.prepend(i18n("Torrent has been stopped.<br />"));

@@ -59,6 +59,7 @@ namespace kt
 		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
 		virtual QStringList mimeTypes() const;
 		virtual QMimeData* mimeData(const QModelIndexList &indexes) const;
+		virtual bool setData(const QModelIndex & index,const QVariant & value,int role);
 				
 		/**
 		 * Emit the data changed signal
@@ -128,7 +129,7 @@ namespace kt
 			
 			Item(bt::TorrentInterface* tc);
 
-			bool update(int idx,ViewModel* mdl);
+			bool update();
 			QVariant data(int col) const;
 			QVariant color(int col) const;
 			QVariant dataForSorting(int col) const;

@@ -494,6 +494,12 @@ namespace bt
 		
 		/// Gets the user modified file or toplevel directory name
 		QString getUserModifiedFileName() const {return user_modified_name.isEmpty() ? stats.torrent_name : user_modified_name;}
+
+		/// Set the displayed name
+		virtual void setDisplayName(const QString & n) = 0;
+		
+		/// Gets the displayed name
+		QString getDisplayName() const {return display_name.isEmpty() ? stats.torrent_name : display_name;}
 	signals:
 		/**
 		 * Emitted when we have finished downloading.
@@ -570,6 +576,7 @@ namespace bt
 	protected:
 		TorrentStats stats;
 		QString user_modified_name;
+		QString display_name;
 	};
 
 

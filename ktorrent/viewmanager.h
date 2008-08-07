@@ -105,6 +105,9 @@ namespace kt
 		/// Remove selected downloads in the current view
 		void removeTorrents();
 		
+		/// Remove selected torrent
+		void renameTorrent();
+		
 	private slots:
 		/// Remove selected downloads and data in the current view
 		void removeTorrentsAndData();
@@ -183,6 +186,7 @@ namespace kt
 		QAction* data_dir;
 		QAction* tor_dir;
 		QAction* move_data;
+		QAction* rename_torrent;
 		QAction* remove_from_group;
 		QMap<Group*,QAction*> group_actions;
 		QAction* add_to_new_group;

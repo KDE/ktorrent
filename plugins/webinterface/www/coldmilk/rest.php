@@ -110,7 +110,7 @@ class RestInterface {
 			$elements = array(
 		
 				$xml->new_element('name',
-					$this->_clean_name($torrent['torrent_name'])),
+					$this->_clean_name($torrent['display_name'])),
 
 				$xml->new_element('status',
 					$this->_torrent_status($status), array('id' => $status)),

@@ -129,7 +129,7 @@ namespace kt
 		
 		switch (index.column())
 		{
-			case 0: return tc->getStats().torrent_name;
+			case 0: return tc->getDisplayName();
 			case 1: 
 				if (role == Qt::EditRole || role == Qt::UserRole)
 					return lim.down / 1024;

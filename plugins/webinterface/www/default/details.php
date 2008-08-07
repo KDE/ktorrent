@@ -29,7 +29,7 @@ function generate_file_prior_button_code($img, $alt, $href='')
 	else return '<a href="'.htmlspecialchars($href).'">'.$img.'</a>';
 }
 
-$display_name=cut_name_if_long($stats[$num_torrent]['torrent_name']);
+$display_name=cut_name_if_long($stats[$num_torrent]['display_name']);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"

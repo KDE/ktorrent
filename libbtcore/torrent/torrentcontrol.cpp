@@ -736,7 +736,11 @@ namespace bt
 		Out(SYS_GEN|LOG_DEBUG) << "OutputPath = " << stats.output_path << endl;
 	}
 	
-
+	void TorrentControl::setDisplayName(const QString & n)
+	{
+		display_name = n;
+		saveStats();
+	}
 
 	bool TorrentControl::announceAllowed()
 	{
@@ -1098,6 +1102,7 @@ namespace bt
 		st.write("ASSURED_DOWNLOAD_SPEED",QString::number(assured_download_speed));
 		if (!user_modified_name.isEmpty())
 			st.write("USER_MODIFIED_NAME",user_modified_name);
+		st.write("DISPLAY_NAME",display_name);
 		st.writeSync();
 	}
 
@@ -1127,6 +1132,9 @@ namespace bt
 		
 		if (st.hasKey("USER_MODIFIED_NAME"))
 			user_modified_name = st.readString("USER_MODIFIED_NAME");
+		
+		if (st.hasKey("DISPLAY_NAME"))
+			display_name = st.readString("DISPLAY_NAME");
 		
 		setPriority(st.readInt("PRIORITY"));
 		stats.user_controlled = istats.priority == 0 ? true : false;

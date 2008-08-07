@@ -10,7 +10,7 @@
       <?php
       	$stats=downloadStatus();
       	$t=$stats[$_REQUEST['id']];
-      	echo "<td><strong>ktorrent-><a href=\"interface.php\">transfers</a></strong>->{$t['torrent_name']}</td>";
+      	echo "<td><strong>ktorrent-><a href=\"interface.php\">transfers</a></strong>->{$t['display_name']}</td>";
       	echo "<td><a href=\"torrent.php?id={$_REQUEST['id']}\" >refresh</a></td>";
       ?>
     </tr>

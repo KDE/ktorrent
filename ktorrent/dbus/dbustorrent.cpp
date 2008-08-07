@@ -62,7 +62,7 @@ namespace kt
 	
 	QString DBusTorrent::name() const
 	{
-		return ti->getStats().torrent_name;
+		return ti->getDisplayName();
 	}
 	
 	bool DBusTorrent::isPrivate() const
