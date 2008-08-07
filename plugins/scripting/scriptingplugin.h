@@ -44,7 +44,7 @@ namespace kt
 		virtual void unload();
 		virtual bool versionCheck(const QString& version) const;
 	private:
-		void setupActions();;
+		void setupActions();
 		void scriptDownloadFinished(KJob* job);
 		void loadScripts();
 		void saveScripts();

@@ -350,4 +350,4 @@ namespace ktplasma
 	}
 }
 
-K_EXPORT_PLASMA_APPLET(ktorrent, ktplasma::Applet);
+K_EXPORT_PLASMA_APPLET(ktorrent, ktplasma::Applet)
