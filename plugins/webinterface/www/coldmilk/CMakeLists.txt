@@ -1,6 +1,5 @@
 set(coldmilk_data 
 	edit_user.png        
-	favicon.ico      
 	folder1.png   
 	interface.php    
 	login.html      

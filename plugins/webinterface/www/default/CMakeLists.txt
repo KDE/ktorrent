@@ -1,17 +1,12 @@
 set(default_data 
-	favicon.ico  
 	grad2.jpg        
 	icon.png       
-	ktorrentwebinterfacelogo.png  
-	shutdown.php  
-	stop.png   
+	shutdown.php    
 	stylen.css
 	grad1.jpg    
 	header_tile.png  
 	interface.php  
 	login.html                    
-	remove.png   
-	start.png     
 	style.css  
 	wz_tooltip.js
 	details.php
