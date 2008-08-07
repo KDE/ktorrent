@@ -414,7 +414,8 @@ namespace kt
 		if (!menu)
 			menu = (KMenu*)gui->container("GroupsMenu");
 		
-		menu->popup(mapToGlobal(p));
+		if (menu)
+			menu->popup(mapToGlobal(p));
 	}
 	
 	void GroupView::onItemActivated(QTreeWidgetItem* item,int)
