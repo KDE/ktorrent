@@ -37,27 +37,28 @@ using namespace bt;
 namespace kt
 {
 	
-	TorrentFileTreeModel::Node::Node(Node* parent,bt::TorrentFileInterface* file,const QString & name) 
-		: parent(parent),file(file),name(name),size(0)
+	TorrentFileTreeModel::Node::Node(Node* parent,bt::TorrentFileInterface* file,
+ 		const QString & name, const bt::Uint32 total_chunks)
+		: parent(parent),file(file),name(name),size(0),chunks(total_chunks),chunks_set(false),percentage(0.0f)
 	{}
 			
-	TorrentFileTreeModel::Node::Node(Node* parent,const QString & name) 
-		: parent(parent),file(0),name(name),size(0)
-	{
-	}
+	TorrentFileTreeModel::Node::Node(Node* parent,const QString & name, const bt::Uint32 total_chunks)
+	: parent(parent),file(0),name(name),size(0),chunks(total_chunks),chunks_set(false),percentage(0.0f)
+	{}
 		
 	TorrentFileTreeModel::Node::~Node()
 	{
 		qDeleteAll(children);
 	}
 		
-	void TorrentFileTreeModel::Node::insert(const QString & path,bt::TorrentFileInterface* file)
+	void TorrentFileTreeModel::Node::insert(const QString & path,bt::TorrentFileInterface* file,
+		bt::Uint32 num_chunks)
 	{
 		int p = path.indexOf(bt::DirSeparator());
 		if (p == -1)
 		{
 				// the file is part of this directory
-			children.append(new Node(this,file,path));
+			children.append(new Node(this,file,path,num_chunks));
 		}
 		else
 		{
@@ -66,14 +67,14 @@ namespace kt
 			{
 				if (n->name == subdir)
 				{
-					n->insert(path.mid(p+1),file);
+					n->insert(path.mid(p+1),file, num_chunks);
 					return;
 				}
 			}
 						
-			Node* n = new Node(this,subdir);
+			Node* n = new Node(this,subdir,num_chunks);
 			children.append(n);
-			n->insert(path.mid(p+1),file);
+			n->insert(path.mid(p+1),file, num_chunks);
 		}
 	}
 		
@@ -102,7 +103,63 @@ namespace kt
 		}
 		return size;
 	}
+	
+	void TorrentFileTreeModel::Node::fillChunks()
+	{
+		if (chunks_set)
+			return;
 		
+		if (!file)
+		{
+			foreach(Node* n, children)
+			{
+				n->fillChunks();
+				chunks.orBitSet(n->chunks);
+			}
+		}
+		else
+		{
+			for (Uint32 i = file->getFirstChunk(); i <= file->getLastChunk(); i++)
+				chunks.set(i, true);
+		}
+		chunks_set = true;
+	}
+	
+	void TorrentFileTreeModel::Node::updatePercentage(const BitSet & havechunks)
+	{
+		if (file)
+		{
+			percentage = file->getDownloadPercentage();
+			if (parent)
+				parent->updatePercentage(havechunks); // update the percentage of the parent
+		}
+		else
+		{
+			if (!chunks_set)
+				fillChunks(); // make sure we know the chunks which are part of this node
+
+			if (havechunks.numOnBits() == 0 || chunks.numOnBits() == 0)
+			{
+				percentage = 0.0f;
+			}
+			else if (havechunks.allOn())
+			{
+				percentage = 100.0f;
+			}
+			else
+			{
+				// take the chunks of the node and
+				// logical and them with the chunks we have
+				BitSet tmp(chunks);
+				tmp.andBitSet(havechunks);
+	
+				percentage = 100.0f * (float)(tmp.numOnBits() / chunks.numOnBits());
+				if (parent)
+					parent->updatePercentage(havechunks); // update the percentage of the parent
+			}
+		}
+	}
+	
 	bt::Uint64 TorrentFileTreeModel::Node::bytesToDownload(const bt::TorrentInterface* tc)
 	{
 		bt::Uint64 s = 0;
@@ -215,7 +272,7 @@ namespace kt
 		if (tc->getStats().multi_file_torrent)
 			constructTree();
 		else
-			root = new Node(0,tc->getStats().torrent_name);
+			root = new Node(0,tc->getStats().torrent_name,tc->getStats().total_chunks);
 	}
 
 
@@ -224,13 +281,14 @@ namespace kt
 	
 	void TorrentFileTreeModel::constructTree()
 	{
+		bt::Uint32 num_chunks = tc->getStats().total_chunks;
 		if (!root)
-			root = new Node(0,tc->getUserModifiedFileName());
+			root = new Node(0,tc->getUserModifiedFileName(),num_chunks);
 		
 		for (int i = 0;i < tc->getNumFiles();i++)
 		{
 			bt::TorrentFileInterface & tf = tc->getTorrentFile(i);
-			root->insert(tf.getUserModifiedPath(),&tf);
+			root->insert(tf.getUserModifiedPath(),&tf,num_chunks);
 		}
 	}
 	

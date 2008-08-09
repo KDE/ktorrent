@@ -22,6 +22,7 @@
 #define KTTORRENTFILETREEMODEL_H
 
 #include "torrentfilemodel.h"
+#include <util/bitset.h>
 
 namespace bt
 {
@@ -47,17 +48,23 @@ namespace kt
 			QString name; // name or directory
 			QList<Node*> children; // child dirs
 			bt::Uint64 size;
+			bt::BitSet chunks;
+			bool chunks_set;
+			float percentage;
 		
-			Node(Node* parent,bt::TorrentFileInterface* file,const QString & name);
-			Node(Node* parent,const QString & name);
+			Node(Node* parent,bt::TorrentFileInterface* file,const QString & name,
+				bt::Uint32 total_chunks);
+			Node(Node* parent,const QString & name, bt::Uint32 total_chunks);
 			~Node();
 		
-			void insert(const QString & path,bt::TorrentFileInterface* file);
+			void insert(const QString & path,bt::TorrentFileInterface* file, bt::Uint32 num_chunks);
 			int row();
 			bt::Uint64 fileSize(const bt::TorrentInterface* tc);
 			bt::Uint64 bytesToDownload(const bt::TorrentInterface* tc);
 			Qt::CheckState checkState(const bt::TorrentInterface* tc) const;
 			QString path();
+			void fillChunks();
+			void updatePercentage(const bt::BitSet & havechunks);
 		
 			void saveExpandedState(const QModelIndex & index,QTreeView* tv,bt::BEncoder* enc);
 			void loadExpandedState(const QModelIndex & index,QTreeView* tv,bt::BNode* node);

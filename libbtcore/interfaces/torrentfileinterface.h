@@ -126,7 +126,7 @@ namespace bt
 		 * Emitted when the download percentage has been changed.
 		 * @param p The new percentage
 		 */
-		void downloadPercentageChanged(float p);
+		void downloadPercentageChanged();
 		
 		/**
 		 * Emitted when the preview becomes available or not.

@@ -43,7 +43,7 @@ namespace kt
 		for (Uint32 i = 0;i < tc->getNumFiles();i++)
 		{
 			bt::TorrentFileInterface & file = tc->getTorrentFile(i);
-			connect(&file,SIGNAL(downloadPercentageChanged( float )),this,SLOT(onPercentageUpdated( float )));
+			connect(&file,SIGNAL(downloadPercentageChanged()),this,SLOT(onPercentageUpdated()));
 			connect(&file,SIGNAL(previewAvailable( bool )),this,SLOT(onPreviewAvailable( bool )));
 		}
 	}
@@ -250,7 +250,7 @@ namespace kt
 		return true;
 	}
 
-	void IWFileListModel::onPercentageUpdated(float /*p*/)
+	void IWFileListModel::onPercentageUpdated()
 	{
 		bt::TorrentFileInterface* file = (bt::TorrentFileInterface*)sender();
 		QModelIndex idx = createIndex(file->getIndex(),4,file);

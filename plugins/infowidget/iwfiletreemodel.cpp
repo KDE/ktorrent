@@ -40,10 +40,11 @@ namespace kt
 		mmfile = IsMultimediaFile(tc->getStats().output_path);
 		preview = false;
 		percentage = 0;
+
 		for (Uint32 i = 0;i < tc->getNumFiles();i++)
 		{
 			bt::TorrentFileInterface & file = tc->getTorrentFile(i);
-			connect(&file,SIGNAL(downloadPercentageChanged( float )),this,SLOT(onPercentageUpdated( float )));
+			connect(&file,SIGNAL(downloadPercentageChanged()),this,SLOT(onPercentageUpdated()));
 			connect(&file,SIGNAL(previewAvailable( bool )),this,SLOT(onPreviewAvailable( bool )));
 		}
 	}
@@ -175,6 +176,15 @@ namespace kt
 				default: return QVariant();
 			}
 		}
+		else if (tc->getStats().multi_file_torrent && !n->file && index.column() == 4 && n != root)
+		{
+			return ki18n("%1 %").subs(percentage, 0, 'f', 2).toString();
+		}
+		else if (tc->getStats().multi_file_torrent && index.column() == 4 && n == root)
+		{
+			double percent = bt::Percentage(tc->getStats());
+			return ki18n("%1 %").subs(percent, 0, 'f', 2).toString();
+		}
 		return QVariant();
 	}
 	
@@ -219,6 +229,15 @@ namespace kt
 					return bt::Percentage(tc->getStats());
 			}
 		}
+		else if (tc->getStats().multi_file_torrent && !n->file && index.column() == 4 && n != root)
+		{
+			return n->percentage;
+		}
+		else if(tc->getStats().multi_file_torrent && index.column() == 4 && n == root)
+		{
+			return bt::Percentage(tc->getStats());
+		}
+		
 		return QVariant();
 	}
 	
@@ -264,7 +283,7 @@ namespace kt
 	
 	
 	
-	void IWFileTreeModel::onPercentageUpdated(float /*p*/)
+	void IWFileTreeModel::onPercentageUpdated()
 	{
 		bt::TorrentFileInterface* file = (bt::TorrentFileInterface*)sender();
 		update(index(0,0,QModelIndex()),file,4);
@@ -283,6 +302,23 @@ namespace kt
 		{
 			QModelIndex i = createIndex(idx.row(),col,n);
 			emit dataChanged(i,i);
+			if(col == 4)
+			{
+				// update percentages along the tree
+				// this will go back up the tree and update the percentage of 
+				// all directories involved
+				n->updatePercentage(tc->downloadedChunksBitSet());
+				
+				// emit necessary signals
+				QModelIndex parent = idx.parent();
+				while (parent.isValid())
+				{
+					Node* nd = (Node*)parent.internalPointer();
+					i = createIndex(parent.row(),4,nd);
+					emit dataChanged(i,i);
+					parent = parent.parent();
+				}
+			}
 		}
 		else
 		{
@@ -314,7 +350,7 @@ namespace kt
 			}
 			
 			if (changed)
-				dataChanged(createIndex(0,0),createIndex(0,4));
+				dataChanged(createIndex(0,2),createIndex(0,4));
 		}
 	}
 }

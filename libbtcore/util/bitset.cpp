@@ -121,6 +121,17 @@ namespace bt
 			i++;
 		}
 	}
+	
+	void BitSet::andBitSet(const BitSet & other)
+	{
+		Uint32 i = 0;
+		while (i < num_bits)
+		{
+			bool val = get(i) && other.get(i);
+			set(i,val);
+			i++;
+		}
+	}
 
 	bool BitSet::includesBitSet(const BitSet & other)
 	{

@@ -46,7 +46,7 @@ namespace kt
 		void update();
 		
 	private slots:
-		void onPercentageUpdated(float p);
+		void onPercentageUpdated();
 		void onPreviewAvailable(bool av);
 		
 	private:

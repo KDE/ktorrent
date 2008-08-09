@@ -104,6 +104,12 @@ namespace bt
 		void orBitSet(const BitSet & other);
 		
 		/**
+		 * and this BitSet with another.
+		 * @param other The other BitSet
+		 */
+		void andBitSet(const BitSet & other);
+		
+		/**
 		 * see if this BitSet includes another.
 		 * @param other The other BitSet
 		 */

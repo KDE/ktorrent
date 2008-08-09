@@ -173,7 +173,7 @@ namespace bt
 	void TorrentFile::updateNumDownloadedChunks(ChunkManager & cman)
 	{
 		const BitSet & bs = cman.getBitSet();
-		float p = getDownloadPercentage();
+		Uint32 old_chunk_count = num_chunks_downloaded;
 		num_chunks_downloaded = 0;
 		
 		Uint32 preview_range = cman.previewChunkRangeSize(*this);
@@ -192,9 +192,8 @@ namespace bt
 		}
 		preview = isMultimedia() && preview;
 		
-		float np = getDownloadPercentage();
-		if (fabs(np - p) >= 0.01f)
-			downloadPercentageChanged(np);
+		if(num_chunks_downloaded > old_chunk_count)
+			downloadPercentageChanged();
 		
 		if (prev != preview)
 			previewAvailable(preview);
