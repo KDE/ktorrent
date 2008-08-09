@@ -358,7 +358,7 @@ namespace kt
 		if (sel.count() == 0)
 			return;
 		
-		QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///openTorrent"),this,i18n("Select a directory to move the data to."));
+		QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///saveTorrentData"),this,i18n("Select a directory to move the data to."));
 		if (dir.isNull())
 			return;
 		

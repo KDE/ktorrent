@@ -264,7 +264,7 @@ namespace kt
 			QModelIndexList sel = selectionModel()->selectedRows();
 			QMap<bt::TorrentFileInterface*,QString> moves;
 			
-			QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///openTorrent"),
+			QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///saveTorrentData"),
 					this,i18n("Select a directory to move the data to."));
 			if (dir.isNull())
 				return;
@@ -285,7 +285,7 @@ namespace kt
 		}
 		else
 		{
-			QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///openTorrent"),
+			QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///saveTorrentData"),
 					this,i18n("Select a directory to move the data to."));
 			if (dir.isNull())
 				return;

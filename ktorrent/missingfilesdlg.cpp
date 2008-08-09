@@ -76,7 +76,7 @@ namespace kt
 	{
 		if (tc->getStats().multi_file_torrent)
 		{
-			QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///openTorrent"),
+			QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///saveTorrentData"),
 					this,i18n("Select the directory where the data now is."));
 			if (dir.isNull())
 				return;
@@ -101,7 +101,7 @@ namespace kt
 		}
 		else
 		{
-			QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///openTorrent"),
+			QString dir = KFileDialog::getExistingDirectory(KUrl("kfiledialog:///saveTorrentData"),
 					this,i18n("Select the directory where the data now is."));
 			if (dir.isNull())
 				return;
