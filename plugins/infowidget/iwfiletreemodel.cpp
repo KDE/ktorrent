@@ -47,6 +47,9 @@ namespace kt
 			connect(&file,SIGNAL(downloadPercentageChanged()),this,SLOT(onPercentageUpdated()));
 			connect(&file,SIGNAL(previewAvailable( bool )),this,SLOT(onPreviewAvailable( bool )));
 		}
+		
+		if (root)
+			root->initPercentage(tc,tc->downloadedChunksBitSet());
 	}
 
 
@@ -147,8 +150,7 @@ namespace kt
 						return i18nc("No preview available", "No");
 				case 4: 
 				{
-					float percent = file->getDownloadPercentage();
-					return ki18n("%1 %").subs(percent, 0, 'f', 2).toString();
+					return ki18n("%1 %").subs(n->percentage, 0, 'f', 2).toString();
 				}
 				default: return QVariant();
 			}	
@@ -169,22 +171,15 @@ namespace kt
 					else
 						return i18nc("No preview available", "No");
 				case 4: 
-				{
-					double percent = bt::Percentage(tc->getStats());
-					return ki18n("%1 %").subs(percent, 0, 'f', 2).toString();
-				}
+					return ki18n("%1 %").subs(bt::Percentage(tc->getStats()), 0, 'f', 2).toString();
 				default: return QVariant();
 			}
 		}
-		else if (tc->getStats().multi_file_torrent && !n->file && index.column() == 4 && n != root)
+		else if (tc->getStats().multi_file_torrent && index.column() == 4)
 		{
-			return ki18n("%1 %").subs(percentage, 0, 'f', 2).toString();
+			return ki18n("%1 %").subs(n->percentage, 0, 'f', 2).toString();
 		}
-		else if (tc->getStats().multi_file_torrent && index.column() == 4 && n == root)
-		{
-			double percent = bt::Percentage(tc->getStats());
-			return ki18n("%1 %").subs(percent, 0, 'f', 2).toString();
-		}
+		
 		return QVariant();
 	}
 	
@@ -207,7 +202,7 @@ namespace kt
 					else
 						return 1;
 				case 4: 
-					return file->getDownloadPercentage();
+					return n->percentage;
 			}	
 		}
 		else if (!tc->getStats().multi_file_torrent)
@@ -229,13 +224,9 @@ namespace kt
 					return bt::Percentage(tc->getStats());
 			}
 		}
-		else if (tc->getStats().multi_file_torrent && !n->file && index.column() == 4 && n != root)
+		else if (tc->getStats().multi_file_torrent && index.column() == 4)
 		{
 			return n->percentage;
-		}
-		else if(tc->getStats().multi_file_torrent && index.column() == 4 && n == root)
-		{
-			return bt::Percentage(tc->getStats());
 		}
 		
 		return QVariant();

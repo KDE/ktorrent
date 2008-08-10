@@ -65,6 +65,7 @@ namespace kt
 			QString path();
 			void fillChunks();
 			void updatePercentage(const bt::BitSet & havechunks);
+			void initPercentage(const bt::TorrentInterface* tc,const bt::BitSet & havechunks);
 		
 			void saveExpandedState(const QModelIndex & index,QTreeView* tv,bt::BEncoder* enc);
 			void loadExpandedState(const QModelIndex & index,QTreeView* tv,bt::BNode* node);

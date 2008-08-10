@@ -40,19 +40,22 @@ namespace kt
 	TorrentFileTreeModel::Node::Node(Node* parent,bt::TorrentFileInterface* file,
  		const QString & name, const bt::Uint32 total_chunks)
 		: parent(parent),file(file),name(name),size(0),chunks(total_chunks),chunks_set(false),percentage(0.0f)
-	{}
+	{
+		chunks.setAll(false);
+	}
 			
 	TorrentFileTreeModel::Node::Node(Node* parent,const QString & name, const bt::Uint32 total_chunks)
 	: parent(parent),file(0),name(name),size(0),chunks(total_chunks),chunks_set(false),percentage(0.0f)
-	{}
+	{
+		chunks.setAll(false);
+	}
 		
 	TorrentFileTreeModel::Node::~Node()
 	{
 		qDeleteAll(children);
 	}
 		
-	void TorrentFileTreeModel::Node::insert(const QString & path,bt::TorrentFileInterface* file,
-		bt::Uint32 num_chunks)
+	void TorrentFileTreeModel::Node::insert(const QString & path,bt::TorrentFileInterface* file,bt::Uint32 num_chunks)
 	{
 		int p = path.indexOf(bt::DirSeparator());
 		if (p == -1)
@@ -127,17 +130,15 @@ namespace kt
 	
 	void TorrentFileTreeModel::Node::updatePercentage(const BitSet & havechunks)
 	{
+		if (!chunks_set)
+			fillChunks(); // make sure we know the chunks which are part of this node
+
 		if (file)
 		{
 			percentage = file->getDownloadPercentage();
-			if (parent)
-				parent->updatePercentage(havechunks); // update the percentage of the parent
 		}
 		else
-		{
-			if (!chunks_set)
-				fillChunks(); // make sure we know the chunks which are part of this node
-
+		{			
 			if (havechunks.numOnBits() == 0 || chunks.numOnBits() == 0)
 			{
 				percentage = 0.0f;
@@ -153,10 +154,51 @@ namespace kt
 				BitSet tmp(chunks);
 				tmp.andBitSet(havechunks);
 	
-				percentage = 100.0f * (float)(tmp.numOnBits() / chunks.numOnBits());
-				if (parent)
-					parent->updatePercentage(havechunks); // update the percentage of the parent
+				percentage = 100.0f * ((float)tmp.numOnBits() / (float)chunks.numOnBits());
 			}
+		}
+		
+		if (parent)
+			parent->updatePercentage(havechunks); // update the percentage of the parent
+	}
+	
+	void TorrentFileTreeModel::Node::initPercentage(const bt::TorrentInterface* tc,const bt::BitSet & havechunks)
+	{
+		if (!chunks_set)
+			fillChunks();
+		
+		if (!tc->getStats().multi_file_torrent)
+		{
+			percentage = bt::Percentage(tc->getStats());
+			return;
+		}
+		
+		if (file)
+		{
+			percentage = file->getDownloadPercentage();
+		}
+		else
+		{			
+			if (havechunks.numOnBits() == 0 || chunks.numOnBits() == 0)
+			{
+				percentage = 0.0f;
+			}
+			else if (havechunks.allOn())
+			{
+				percentage = 100.0f;
+			}
+			else
+			{
+				// take the chunks of the node and
+				// logical and them with the chunks we have
+				BitSet tmp(chunks);
+				tmp.andBitSet(havechunks);
+	
+				percentage = 100.0f * ((float)tmp.numOnBits() / (float)chunks.numOnBits());
+			}
+			
+			foreach (Node* n,children)
+				n->initPercentage(tc,havechunks); // update the percentage of the children
 		}
 	}
 	
