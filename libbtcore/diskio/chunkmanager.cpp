@@ -650,6 +650,9 @@ namespace bt
 
 	void ChunkManager::saveFileInfo()
 	{
+		if (during_load)
+			return;
+		
 		// saves which TorrentFiles do not need to be downloaded
 		File fptr;
 		if (!fptr.open(file_info_file,"wb"))
@@ -682,9 +685,6 @@ namespace bt
 	
 	void ChunkManager::loadFileInfo()
 	{
-		if (during_load)
-			return;
-		
 		File fptr;
 		if (!fptr.open(file_info_file,"rb"))
 			return;
@@ -863,6 +863,7 @@ namespace bt
 				}
 				cache->downloadStatusChanged(tf,download);
 				savePriorityInfo();
+				tor.updateFilePercentage(*this);
 				return;
 			}
 			
@@ -893,6 +894,7 @@ namespace bt
 		// alert the cache but first put things in critical operation mode
 		cache->downloadStatusChanged(tf,download);
 		savePriorityInfo();
+		tor.updateFilePercentage(*this);
 	}
 
 	void ChunkManager::downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority)

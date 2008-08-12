@@ -192,7 +192,7 @@ namespace bt
 		}
 		preview = isMultimedia() && preview;
 		
-		if(num_chunks_downloaded > old_chunk_count)
+		if (num_chunks_downloaded != old_chunk_count)
 			downloadPercentageChanged();
 		
 		if (prev != preview)
