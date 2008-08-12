@@ -679,6 +679,7 @@ namespace kt
 		}
 		else
 		{
+			QTimer::singleShot(500,KApplication::kApplication(),SLOT(quit()));
 			return true;
 		}
 	}

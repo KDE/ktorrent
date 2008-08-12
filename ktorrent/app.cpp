@@ -35,7 +35,6 @@ namespace kt
 	
 	App::App() : KUniqueApplication()
 	{
-		setQuitOnLastWindowClosed(true);
 	}
 
 	App::~App()

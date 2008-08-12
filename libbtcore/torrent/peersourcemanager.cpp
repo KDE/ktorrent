@@ -213,7 +213,9 @@ namespace bt
 		const TrackerTier* t = tor->getTorrent().getTrackerList();
 		while (t)
 		{
-			urls += t->urls;
+			foreach (const KUrl & u,t->urls)
+				if (!urls.contains(u))
+					urls += u;
 			t = t->next;
 		}
 		

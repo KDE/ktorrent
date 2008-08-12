@@ -162,6 +162,7 @@ int main(int argc, char **argv)
 	try
 	{
 		kt::App app;
+		app.setQuitOnLastWindowClosed(false);
 		app.exec();
 	}
 	catch (...)
