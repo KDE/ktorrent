@@ -97,6 +97,9 @@ namespace bt
 		/// Get the address of the peer
 		net::Address getAddress() const;
 		
+		/// See if the peer is stalled.
+		bool isStalled() const;
+		
 		/// See if the peer has been killed.
 		bool isKilled() const {return killed;}
 
@@ -292,6 +295,7 @@ namespace bt
 	private:
 		mse::StreamSocket* sock;
 		bool killed;
+		Timer stalled_timer;
 		TimeStamp time_choked;
 		TimeStamp time_unchoked;
 		Uint32 id;

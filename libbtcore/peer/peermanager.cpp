@@ -90,6 +90,16 @@ namespace bt
 		while (i != peer_list.end())
 		{
 			Peer* p = *i;
+			if (!p->isKilled() && p->isStalled())
+			{
+				PotentialPeer pp;
+				pp.port = p->getPort();
+				pp.local = p->getStats().local;
+				pp.ip = p->getIPAddresss();
+				p->kill();
+				addPotentialPeer(pp);
+				Out(SYS_CON|LOG_NOTICE) << QString("Killed stalled peer %1").arg(pp.ip) << endl;
+			}
 			if (p->isKilled())
 			{
 				cnt->decBitSet(p->getBitSet());
@@ -134,8 +144,6 @@ namespace bt
 			}
 			wanted_changed = false;
 		}
-		// connect to some new peers
-		connectToPeers();
 	}
 
 	void PeerManager::killChokedPeers(Uint32 older_then)

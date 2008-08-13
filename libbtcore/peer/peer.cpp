@@ -63,6 +63,7 @@ namespace bt
 		uploader = new PeerUploader(this);
 		
 		
+		stalled_timer.update();
 		pwriter = new PacketWriter(this);
 		time_choked = GetCurrentTime();
 		time_unchoked = 0;
@@ -479,6 +480,17 @@ namespace bt
 		
 		if (ut_pex && ut_pex->needsUpdate())
 			ut_pex->update(pman);
+
+		// if no data is being sent or recieved, and there are pending requests
+		// increment the connection stalled timer
+		if (getUploadRate() > 100 || getDownloadRate() > 100 || 
+		   (uploader->getNumRequests() == 0 && downloader->getNumRequests() == 0) )
+			stalled_timer.update();
+	}
+	
+	bool Peer::isStalled() const
+	{
+		return stalled_timer.getElapsedSinceUpdate() >= 2*60*1000;
 	}
 	
 	bool Peer::isSnubbed() const

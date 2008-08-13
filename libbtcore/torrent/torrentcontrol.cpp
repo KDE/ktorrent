@@ -195,6 +195,12 @@ namespace bt
 			pman->update();
 			bool comp = stats.completed;
 
+			// get rid of dead Peers
+			Uint32 num_cleared = pman->clearDeadPeers();
+			
+			// connect to new peers
+			pman->connectToPeers();
+
 			// then the downloader and uploader
 			uploader->update(choke->getOptimisticlyUnchokedPeerID());			
 			downloader->update();
@@ -253,9 +259,6 @@ namespace bt
 				pman->setWantedChunks(wanted_chunks);
 				wanted_update_timer.update();
 			}
-			
-			// get rid of dead Peers
-			Uint32 num_cleared = pman->clearDeadPeers();
 			
 			// we may need to update the choker
 			if (choker_update_timer.getElapsedSinceUpdate() >= 10000 || num_cleared > 0)
