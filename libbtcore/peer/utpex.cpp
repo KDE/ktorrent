@@ -85,6 +85,7 @@ namespace bt
 		last_updated = bt::GetCurrentTime();
 		
 		std::map<Uint32,net::Address> added;
+		std::map<Uint32,Uint8> flags;
 		std::map<Uint32,net::Address> npeers;
 		
 		PeerManager::CItr itr = pman->beginPeerList();
@@ -98,6 +99,16 @@ namespace bt
 				{
 					// new one, add to added
 					added.insert(std::make_pair(p->getID(),p->getAddress()));
+					
+					if (p->getAddress().ipVersion() == 4)
+					{
+						Uint8 flag = 0;
+						if (p->isSeeder())
+							flag |= 0x02;
+						if (p->getStats().fast_extensions)
+							flag |= 0x01;
+						flags.insert(std::make_pair(p->getID(),flag));
+					}
 				}
 				else
 				{
@@ -116,8 +127,15 @@ namespace bt
 			enc.beginDict();
 			enc.write(QString("added"));
 			encode(enc,added);
-			enc.write(QString("added.f")); // no idea what this added.f thing means
-			enc.write(QString(""));
+			enc.write(QString("added.f")); 
+			if (added.size() == 0)
+			{
+				enc.write(QString(""));
+			}
+			else
+			{
+				encodeFlags(enc,flags);
+			}
 			enc.write(QString("dropped"));
 			encode(enc,peers);
 			enc.end();
@@ -147,12 +165,34 @@ namespace bt
 			{
 				WriteUint32(buf,size,addr.ipAddress().IPv4Addr());
 				WriteUint16(buf,size + 4,addr.port());
+				size += 6;
 			}
-			size += 6;
 			i++;
 		}
 		
 		enc.write(buf,size);
+		delete [] buf;
+	}
+	
+	void UTPex::encodeFlags(BEncoder & enc,const std::map<Uint32,Uint8> & flags)
+	{
+		if (flags.size() == 0)
+		{
+			enc.write(QString(""));
+			return;
+		}
+		
+		Uint8* buf = new Uint8[flags.size()];
+		Uint32 idx = 0;
+		
+		std::map<Uint32,Uint8>::const_iterator i = flags.begin();
+		while (i != flags.end())
+		{
+			buf[idx++] = i->second;
+			i++;
+		}
+		
+		enc.write(buf,flags.size());
 		delete [] buf;
 	}
 }
