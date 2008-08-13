@@ -1,0 +1,262 @@
+Changes in 3.1.3 :
+- Make login into webinterface secure
+- Check if menus are created properly before showing them
+- Stop KT from exiting when scanfolder loads a plugin silently and KT is hidden in
+systray.
+- Make sure duplicate URL's are not shown in trackerview
+- Fix problem causing file priorities not to be read at startup
+
+Changes in 3.1.2 :
+- Improved performance of GUI updates
+- Make sure app icon is set (mostly for windows)
+- Fix crash when clicking on clear search history button twice (167580)
+- Backported some improvements to download thread 
+- Make sure cookies are not sent in http announces
+- Fix crash at startup which started happening since KDE 4.1
+- Fix problem causing massive memory usage (148385)
+- Fix issue causing Timer class to stop working when day changes
+- Make sure toolbar settings are restored properly
+- Fix compile error on arm architecture
+- Fixed some bugs in file deselection code
+
+Changes in 3.1.1 :
+- Fix wrong icon name in PeerView for encrypted peers 
+- If speed is very low, don't show speed in PeerView
+- Fix crash when double clicking on directories in fileview (164434)
+- Added GroupFilterModel to filter out torrents, this avoids a bug in Qt which
+caused hidden torrents to be shown when a view was sorted by a column.
+(164113)
+- Make sure port is 80 if it is not specified in device url in upnp library
+- Fix Preview in right click menu of View (164503)
+- Fix bug in network preferences causing the chosen network interface not to
+be selected
+- Fix border chunk priority being set wrongly in some rare cases (165587)
+- Don't stop connecting with webseed after 3 failed attempts but keep going on
+with a longer interval (2 minutes)
+
+Changes in 3.1 :
+- Use KIO::storedGet to download XML description of UPnP router
+- Use KIO::mkdir in MakeDir function
+- Make sure that path creation on windows works when creating the necessary paths for a torrents' files
+- Fix bug in mediaplayer causing wrong file to be played in some case
+
+Changes in 3.1rc1 :
+- Make sure that when keep seeding is on and a torrent is stopped because it has finished downloading, the torrent is not restarted the next time you startup KT
+- Clean up stuff is move of data files is canceled (157657)
+- Fix recursive infinite loop in QM
+- Items on the bandwidth schedule can now be moved around using the mouse
+- Items on the bandwidth schedule can now be resized using the mouse
+- Show guidance lines when items on schedule are moved or resized
+- Colors of the bandwidth scheduler can now be configured
+- Added new dialog to add items to the schedule, you can now add the same item to multiple days.
+- Make sure that CompressFileJob cannot get stuck (162099)
+- Make sure interfaces are not added multiple times to interface combobox in network preferences
+- Make sure shortcuts work for back and reload in search plugin 
+- Add Open in New Tab entry to right click menu in search plugin
+- Revamped the UPnP plugin : the widget displaying the routers has been moved from the preferences dialog to the bottom tab bar
+- Use QTcpSocket in HttpRequest of UPnP library
+- Make sure undo forward and forward buttons on UPnP widget are disabled and enabled properly
+- Improved error handling and display in UPnP plugin
+- Added recommended settings dialog
+
+Changes in 3.1beta2 :
+- Ported changes from windows branch, so windows is now officially supported
+- Added new icons created by Lee Olson
+- Fix infinite loop when adding torrent to group in view menu
+- Manually save and restore window size and position to fix bug with window size when tray icon is enabled
+- Fix crash when trying to show context menu of a dir item in the fileview
+- Added toggle action to show or hide the video widget
+- Make sure that video widget is shown again when video playing is started and the video widget is hidden
+- Ported sparc SIGBUS crash from KDE3 version
+- Fix typos in settings page of QM (161664)
+- Updated geoip database to most recent one
+- Added option to choose the name of the toplevel directory of multifile torrents in the fileselect dialog
+- Fix bug when loading torrent via webgui
+- Make sure reuse address option is set before bind call in http server
+- Open silently no longer shows error messages, instead it uses a passive notification
+- Fix tooltip in network pref page
+- Use fstat64 if possible to calculate disk usage of CacheFile, should fix diskspace check for files larger then 4 GB (161804)
+- Fix bug in media model when torrents with media files get added
+- Added import dialog to import torrents from the KDE3 version into the KDE4 one
+- Use KDialog instead of QDialog in several dialogs
+- Fix bug causing connection stats to be wrong
+- Added patch from athantor showing the interval in ms between charts updates on plugin's settings page
+
+Changes in 3.1beta1 :
+- Added Location column (157463)
+- Added group for ungrouped torrents (156921)
+- Pasting urls to ktorrent will now result in KT opening them  (154317)
+- Use KNotify system for notifications instead of own hardcoded one with KPassivePopup. Also make this configurable using the standard configure notifications dialog (157513)
+- Expanded torrentcreator dialog to make it possible to create torrents with webseeds
+- Make sure dslforum urn's in UPNP servicetypes are also supported
+- Added support for http webseeding
+- Remove 1.02 multiplication factor in allowance calculation of speed limits
+- When multiple torrents are started, avoid asking the same questions for multiple torrents. (136381)
+- Use CTRL + L as shortcut for speedlimits dialog (144854)
+- Expanded bandwidth scheduler with option to set the connection limits (146432)
+- Fix bug in generating peer ID based upon version information
+- Move proxy settings to a separate page in the settings dialog
+- Added KIO::Job to gzip files, and use this job in the log rotation code, thereby removing the not so portable system() calls.
+- Use QToolButton instead of a KPushButton as corner widgets for the main tab widget
+- Added header menu to configure the columns of a view, to the right click menu of the view.
+- Show more detailed info in the scan dialog (160054)
+- Added color coded file priorities in the infowidget plugin (158280)
+- Make it possible to add newly created torrents to a group (159391)
+- Change default values of maxSeeds (5) and maxDownloads(3) (144754)
+- Added group policy feature. Each custom group can now have several default settings which will be applied to the torrents of that group.
+- The scanfolder plugin now has an option to add torrents to a group, when it loads a torrent.
+- Added column to the QueueManager showing the time a torrent is stalled.
+- Add feature to decrease torrent priority when the torrent is stalled for longer then a user specified amount of time.(156103)
+- Preview size for audio and video files is now configurable.
+- Fix some bugs in the queuemanager with the stalled torrent feature
+- Added assured speed feature which allows you to set a minimum download speed for each torrent. (151903)
+- Use XML GUI stuff for groupview menu
+- Menu of views now uses XML GUI stuff (Resulting in the removal of the ViewMenu class)
+- Add to group menu now has an entry to add torrents to a new group
+- Added PeerID of KGet and BitsOnWheels
+- Determining if a file has a preview available, now uses the sizes configured in the settings
+- Check for duplicate trackers when users adds a new one. (160678)
+- Added media player plugin to play audio and video files
+- Fix bug with empty proxy field (160918)
+- Expanded logviewer plugin to support media player plugin
+- Add sizeHint function to SpinBoxDelegate, so it has a proper size when you edit it
+- Make speed limits dialog remember it's size
+- Added feature to suppress sleep when torrents are running
+- Added feature to skip datacheck in fileselect dialog (and mark the files as fully downloaded)
+- Make it possible to disable or enable trackers using a checkbox in front of each tracker in the trackers tab
+- Fix saving of current tab in sidebar, we were using the icon name instead of the tab text.
+- Show total times a torrent was downloaded in the trackers tab
+- Show the number of seeders and leechers in the trackers tab
+- Redesigned trackers tab layout (for the above changes)
+- Fix editing of speedlimits model
+- Find -> Search in search tab to be more consistent
+- Added option to open multiple torrents silently or not (159811)
+- Paste torrent URL -> Open URL
+
+
+Changes in 3.0.2 :
+- Make sure seed time cannot wrap around (159756)
+- Fix broken convert of blocklists
+- Ported lock file fix for NFS home directories from KDE3 version
+- When recreating files, make sure directory they are in, exists
+- Fix remove from group not working (160499)
+- Fix crash in torrent creator when there are no trackers
+- Fix sorting in files tab
+- Fix crash when unloading plugins with Qt4.4 (160565)
+- Fix update search engines from internet
+- Remove torrentspy and update piratebay URL
+- Fix 4 GB limit in transfer of statusbar (160711)
+- Fix crash when removing 2 torrents at the same time
+- Show real IP address of peers when using socks proxies
+- Make sure that the current torrent changes when the group is changed of a view
+- Sort and merge block list before writing to level1.dat file
+- Clear time to next tracker update in tracker tab, when torrent is not
+running (160972)
+- Fix occasional crash at startup (160935) 
+
+
+Changes in 3.0.1 :
+- Fix sessionTTL not being able to be bigger then 99
+- Ported stop all and start all in system tray menu fix from KDE3 version
+- Fix bug which caused KT not to check preexisting single file torrents (158167)
+- Added PeerViewModel for PeerView, also fixes crash (158243)
+- Fix hidden_on_exit (158273)
+- Add pause resume option to system tray icon (158278)
+- Added XFS cmake checks for XFS delayed allocation
+- Fix zeroing average speeds on BOTH charts after choosing to reset ONLY one
+in stats plugin
+- Remove minimum vertical size of URL requester in torrent creation dialog,
+this makes sure that it is sized properly when you open the dialog
+- Fix changing text codec for multifile torrents (158775)
+- Fix crash in handling of KResolverResults (158940)
+- Fix bug causing KT to stop seeding after data was moved to the completed dir
+(158813)
+- Fix keep seeding (159040)
+- Make sure settings of logviewer plugin are applied at startup
+- Make sure that views stay sorted (158975)
+- Make sure speed settings are kept in sync between all the places where you
+can change them (159039)
+- Make sure that scheduler plugin does not set stuff in paused state twice (152445) 
+- Fix crash in ConvertDialog of ipfilter plugin
+- Fix adding torrent to group in fileselectdlg (159684)
+
+
+
+Changes in 3.O :
+- Fix sorting of upload and download rate (157939)
+- Fix infinite loop in DHT code
+- Fix socket descriptor leak (thanks to Richard Narstrom) (156163)
+- Patch from Richard Narstrom to fix a problem with character encodings causing KT not to find files anymore after a restart (156838)
+- Fix issue with encoding of group names when saving and loading them
+- Fix DHT ping storm bug
+- Ported open silently from commandline patch from KDE3 version
+- Reenabled log rotation
+- Added option to use system geoip 
+- Fix pastedialog (proper usage of KUrl)
+- Fix wrong display of percentages in file view
+- Fix broken start torrent checkbox in fileselectdlg
+- Fix broken import of multifile torrent (157582)
+- Make sure that KT is not closed when another window is closed and the main window is hidden (157656)
+- Ported behavioral change from KDE3 version: torrents with no selected files are downloads
+- Added sorting in speedlimits dialog
+- When the speed limits dialog is opened via the context menu of a torrent, select that torrent in the list and scroll to it. (157711)
+- Fix broken open data dir and open tor dir in viewmenu (wrong usage of KRun)
+- Fix enabling actions bug in view
+- Made file priorities more strict (153105)
+
+Changes in 3.0rc1 :
+- Fix typo in tooltip of network sleep interval (154481)
+- Fix KT closing when window is hidden and a torrent is opened via commandline (154488)
+- Added open silently action to file menu (154484)
+- Fix crash in ChunkDownloadView by using a model instead of an item based
+approach
+- Added action to pause and resume all torrents
+- Fix some problems with the update timer not getting started when the QM ran 
+- Estimate time left in seeding mode when there is a max share ratio
+- Disable system tray icon tooltips when show popups is disabled (BUG: 151019)
+- Added option to change text encoding of a torrent when opening it
+- Fix sorting in main view using a SortFilterProxyModel
+- Use XMLGUI stuff for SearchToolBar (BUG: 154838)
+- Make it possible to disable plugins at compile time (BUG: 154906)
+- Fix sorting in ChunkDownloadView 
+- Added action to pause and resume all torrents
+- Added time estimation algorithm selection
+- Fixed bug in KTorrent time estimation algorithm (150866)
+- Estimate time left when seeding when there is a max share ratio set (BUG: 142990)
+- Ported don't preallocate fix for readonly files
+- Make sure toplevel CMakeLists.txt check for KDE4Internal package 
+- Fix bug in PeerView which displayed the content of choked and snubbed in the wrong column
+- Made DHT IPv6 ready
+- Add support for peers6 field in tracker announce responses (so we are IPv6 ready there to)
+- Fix bug displaying the wrong number of leechers
+- Fix bdecoder bug causing an assert in Qt (BUG: 155712)
+- Properly fix add to group stuff (remove of ampersand is very hackish)
+- Drag drop of torrents upon custom groups now works perfectly
+- Fix problem with connections staying in close_wait state (BUG: 156163)
+- Save own DHT key in a file and reuse that
+- Fix DHT problem causing a DHT ping storm
+- Fix opening of directories 
+
+
+Changes in 3.0beta1 :
+- Added option to select the network interface to use
+- Added option to disable data checking during uploading
+- Added possibility to open multiple torrents in one go (they will be opened
+silently)
+- Added option to do a data check when a torrent is finished
+- Added new missing files dialog with quit button
+- Added support for hostnames in PeerManager::addPotentialPeer
+- Added IPv6 support
+- Remember current searches in searchplugin and restore them on restart
+- Make tracker url and status selectable in tracker tab
+- Switch to QCA2 for SHA1 hash generation (old code is still there in case QCA::isSupported("sha1") fails)
+- Shutdown update timer when not necessary
+- Stop using symlinks and use a file which contains the location of each file of a torrent
+- Use a toolbar in the search plugin instead of a widget
+- Added global shortcut to show or hide ktorrent
+- Show files which a chunk belongs to in chunks tab
+- Add alternative fileview mode (flat list)
+- After tree succesive mmap failures, switch to buffered mode permanently
+- Added SOCKSv4 and v5 support
+- Added feature to move inidividual files of a torrent
+- When files are missing allow user to select another location

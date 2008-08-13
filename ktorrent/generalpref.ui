@@ -1,0 +1,238 @@
+<ui version="4.0" >
+ <class>GeneralPref</class>
+ <widget class="QWidget" name="GeneralPref" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>409</width>
+    <height>423</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" >
+   <item>
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="title" >
+      <string>Folders</string>
+     </property>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" >
+       <widget class="QLabel" name="label" >
+        <property name="text" >
+         <string>Folder to store torrent information:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" >
+       <widget class="KUrlRequester" name="kcfg_tempDir" >
+        <property name="toolTip" >
+         <string>Directory to store information about all torrents currently opened in KTorrent.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" >
+       <widget class="QCheckBox" name="kcfg_useSaveDir" >
+        <property name="toolTip" >
+         <string>Directory to use as a default save location for all data.</string>
+        </property>
+        <property name="text" >
+         <string>Default save location:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" >
+       <widget class="KUrlRequester" name="kcfg_saveDir" >
+        <property name="toolTip" >
+         <string>Directory to use as a default save location for all data.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" >
+       <widget class="QCheckBox" name="kcfg_useCompletedDir" >
+        <property name="toolTip" >
+         <string>Directory to move data to when a torrent has finished downloading.</string>
+        </property>
+        <property name="text" >
+         <string>Move completed downloads to:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" >
+       <widget class="KUrlRequester" name="kcfg_completedDir" >
+        <property name="toolTip" >
+         <string>Directory to move data to when a torrent has finished downloading.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" >
+       <widget class="QCheckBox" name="kcfg_useTorrentCopyDir" >
+        <property name="toolTip" >
+         <string>Directory to copy all torrent files in, which are opened by KTorrent.</string>
+        </property>
+        <property name="text" >
+         <string>Copy torrent files to:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1" >
+       <widget class="KUrlRequester" name="kcfg_torrentCopyDir" >
+        <property name="toolTip" >
+         <string>Directory to copy all torrent files in, which are opened by KTorrent.</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2" >
+     <property name="title" >
+      <string>System Tray Icon</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <item>
+       <widget class="QCheckBox" name="kcfg_showSystemTrayIcon" >
+        <property name="toolTip" >
+         <string>Whether or not to show an icon in the system tray.</string>
+        </property>
+        <property name="text" >
+         <string>Show system tray icon</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_showPopups" >
+        <property name="toolTip" >
+         <string>Whether or not to show system tray popup messages.</string>
+        </property>
+        <property name="text" >
+         <string>Show system tray popup messages</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_3" >
+     <property name="title" >
+      <string>Miscellaneous</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <item>
+       <widget class="QCheckBox" name="kcfg_useFileList" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Instead of using a tree of files to display the contents of a torrent, use a flat list of files.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="text" >
+         <string>Use a list of files when displaying the files of a torrent</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_openMultipleTorrentsSilently" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">When you select multiple torrents to be opened at the same time, open them silently.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="text" >
+         <string>Open multiple torrents silently</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_suppressSleep" >
+        <property name="toolTip" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Prevent computer from going into a sleep state when torrents are running.&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="text" >
+         <string>Suppress sleep when torrents are running</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" >
+      <size>
+       <width>382</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KUrlRequester</class>
+   <extends>QFrame</extends>
+   <header>kurlrequester.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>kcfg_useCompletedDir</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_completedDir</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>160</x>
+     <y>100</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>318</x>
+     <y>100</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_useSaveDir</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_saveDir</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>160</x>
+     <y>72</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>318</x>
+     <y>72</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_useTorrentCopyDir</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_torrentCopyDir</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>160</x>
+     <y>128</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>318</x>
+     <y>128</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

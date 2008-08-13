@@ -1,0 +1,8 @@
+# Code generation options for kconfig_compiler
+File=ktorrent.kcfg
+ClassName=Settings
+Singleton=true
+Mutators=true
+Visibility=KTCORE_EXPORT
+IncludeFiles=ktcore_export.h
+# will create the necessary code for setting those variables

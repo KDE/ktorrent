@@ -1,0 +1,212 @@
+body {
+    font-family : sans-serif;
+	color : black;
+	background-color : white;
+  }
+
+A:link { color : blue; }
+A:visited { color : blue; }
+A:active { color : blue; }
+
+
+
+#header {
+    min-height : 130px;
+  }
+
+
+#header #logout {
+    position : absolute;
+    top : 1px;
+    right : 0.5em;
+  }
+
+
+#header #header_icon {
+    float : left;
+    margin-left : 1em;
+    border : 0px solid;
+ }
+
+#header ul {
+	display : inline;
+	font-size : large;
+	list-style-type : none;
+}
+
+
+#header li {
+    display : inline;
+	margin-right : 0.5em;
+  }
+
+
+#header #status_bar {
+    font-family : monospace;
+    font-size : small;
+    color : #636363;
+    border : 1px solid;
+    border-color : silver;
+	background-color : white;
+  }
+
+
+.list_table {
+    border-collapse : collapse;
+    width : 100%;
+  }
+
+
+.list_table th {
+    text-align : left;
+  }
+
+
+.list_table img {
+    border : 0px solid;
+    padding : 2px;
+  }
+
+
+.list_table .percent_bar {
+    background-color : #a5d3b4;
+    float : left;
+    position : relative;
+	color : inherit;
+}
+
+.list_table img {
+	opacity: 0.4;
+}
+
+.list_table a img {
+	opacity: 1.0;
+}
+
+#bottom-menu {
+    margin-top : 1em;
+  }
+
+
+#bottom-menu ul {
+    list-style-type : none;
+    padding : 0;
+    margin : 0;
+  }
+
+
+#bottom-menu li {
+    padding : 0.5em;
+    border : 1px solid;
+    border-color : silver;
+    display : inline;
+    position : relative;
+    background-color : #f5f5f5;
+    margin-right : 0.5em;
+	color : blue;
+}
+
+
+#bottom-menu img {
+    position : absolute;
+    top : 0.2em;
+    left : 0.5em;
+  }
+
+
+#bottom-menu span {
+    vertical-align : middle;
+    margin-left : 30px;
+  }
+
+
+.simple_form {
+    border : 1px solid;
+    border-color : silver;
+    width : 60%;
+    float : left;
+    padding : 1em;
+    background-color : #f5f5f5;
+    clear : left;
+	color : black;
+  }
+
+.simple_form h2, .simple_form h3 {
+	margin : 0 0 0.5em 0;
+	padding : 0;
+}
+
+
+.simple_form img {
+    float : right;
+    margin-right : 1em;
+    border : 0px solid;
+  }
+
+
+.simple_form .item {
+    position : relative;
+    margin-top : 0.5em;
+  }
+
+
+.simple_form .item .option {
+    position : absolute;
+    top : 0px;
+    left: 30%;
+  }
+
+
+.simple_form .item .option span {
+    font-size : small;
+    color : #333333;
+	background-color : inherit;
+  }
+
+.simple_form .hints {
+	font-size : small;
+	background-color : #FDFDFD;
+	color : inherit;
+}
+
+#action {
+	border : 1px solid;
+	border-color : silver;
+	clear : both;
+	width : 60%;
+	margin-left : 20%;
+	padding : 1em;
+	background-color : #f5f5f5;
+	color : inherit;
+}
+
+#action ul {
+	list-style-type : none;
+	margin : 0;
+	padding-left : 0;
+	padding-bottom : 1em;
+}
+
+#action li {
+	margin-top : 0.25em;
+	margin-bottom : 0.25em;
+	border : 1px solid; 
+	border-color : silver;
+	min-height : 48px;
+	padding : 0.5em;
+	background-color : #FDFDFD;
+	color : inherit;
+	
+}
+
+#action li span {
+	font-size : x-large;
+	vertical-align : middle;
+	padding-top : 20px;
+}
+
+#action img {
+	float : left;
+	clear : both;
+	border : 0px solid;
+}

@@ -1,0 +1,281 @@
+<ui version="4.0" >
+ <class>AddItemDlg</class>
+ <widget class="QWidget" name="AddItemDlg" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>601</width>
+    <height>256</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Add a new item to the schedule</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_4" >
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2" >
+     <item>
+      <widget class="QGroupBox" name="groupBox_2" >
+       <property name="title" >
+        <string>Time</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3" >
+        <item>
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLabel" name="label_3" >
+            <property name="text" >
+             <string>From:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTimeEdit" name="m_from" >
+            <property name="displayFormat" >
+             <string>hh:mm</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_4" >
+            <property name="text" >
+             <string>To:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTimeEdit" name="m_to" >
+            <property name="displayFormat" >
+             <string>hh:mm</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_5" >
+          <property name="text" >
+           <string>Days:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout" >
+          <item>
+           <widget class="QListView" name="m_day_list" />
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout" >
+            <item>
+             <widget class="QPushButton" name="m_entire_week" >
+              <property name="text" >
+               <string>Entire Week</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="m_weekdays_only" >
+              <property name="text" >
+               <string>Weekdays Only</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="m_weekend" >
+              <property name="text" >
+               <string>Weekend</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_2" >
+              <property name="orientation" >
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0" >
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox" >
+       <property name="title" >
+        <string>Limits</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2" >
+        <item>
+         <layout class="QGridLayout" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label" >
+            <property name="text" >
+             <string>Download limit:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QSpinBox" name="m_download_limit" >
+            <property name="specialValueText" >
+             <string>No limit</string>
+            </property>
+            <property name="suffix" >
+             <string> KB/s</string>
+            </property>
+            <property name="maximum" >
+             <number>10000000</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_2" >
+            <property name="text" >
+             <string>Upload limit:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QSpinBox" name="m_upload_limit" >
+            <property name="specialValueText" >
+             <string>No limit</string>
+            </property>
+            <property name="suffix" >
+             <string> KB/s</string>
+            </property>
+            <property name="maximum" >
+             <number>10000000</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="m_paused" >
+          <property name="text" >
+           <string>Stop all torrents</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="m_set_connection_limits" >
+          <property name="text" >
+           <string>Set connection limits</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QGridLayout" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label_7" >
+            <property name="text" >
+             <string>Maximum connections per torrent:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QSpinBox" name="m_max_conn_per_torrent" >
+            <property name="specialValueText" >
+             <string>No limit</string>
+            </property>
+            <property name="maximum" >
+             <number>99999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_6" >
+            <property name="text" >
+             <string>Global connection limit:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QSpinBox" name="m_max_conn_global" >
+            <property name="specialValueText" >
+             <string>No limit</string>
+            </property>
+            <property name="maximum" >
+             <number>99999</number>
+            </property>
+            <property name="value" >
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer" >
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0" >
+           <size>
+            <width>20</width>
+            <height>12</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>m_set_connection_limits</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>m_max_conn_per_torrent</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>134</x>
+     <y>242</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>235</x>
+     <y>277</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_set_connection_limits</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>m_max_conn_global</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>80</x>
+     <y>247</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>249</x>
+     <y>315</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Service
+Name=StatsPlugin
+Comment=Plugin which shows statistics about torrents in several graphs
+ServiceTypes=KTorrent/Plugin
+X-KDE-Library=ktstatsplugin
+X-KDE-PluginInfo-Author=Krzysztof Kundzicz
+X-KDE-PluginInfo-Email=athantor@gmail.com
+X-KDE-PluginInfo-Name=StatsPlugin
+X-KDE-PluginInfo-Website=http://ktorrent.org/
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=false
+Icon=view-statistics

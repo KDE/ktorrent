@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=InfoWidgetPlugin
+Comment=Plugin which displays general information about a torrent in several tabs
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktinfowidgetplugin
+X-KDE-PluginInfo-Author=Joris Guisson, Ivan Vasic
+X-KDE-PluginInfo-Email=joris.guisson@gmail.com, ivasic@gmail.com
+X-KDE-PluginInfo-Name=InfoWidgetPlugin
+X-KDE-PluginInfo-Website=http://ktorrent.org/
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
+Icon=kt-info-widget
