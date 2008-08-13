@@ -58,6 +58,7 @@ namespace bt
 		void changeID(Uint32 nid) {id = nid;}
 	private:
 		void encode(BEncoder & enc,const std::map<Uint32,net::Address> & ps);
+		void encodeFlags(BEncoder & enc,const std::map<Uint32,Uint8> & flags);
 		
 	private:
 		Peer* peer;
