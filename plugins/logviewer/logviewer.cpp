@@ -41,20 +41,18 @@ namespace kt
 		const QString & msg() const {return str;}
 	};
 
-	LogViewer::LogViewer(QWidget *parent) : Q3TextBrowser(parent)
+	LogViewer::LogViewer(LogFlags* flags,QWidget *parent) : Q3TextBrowser(parent),flags(flags)
 	{
 		/*
 		IMPORTANT: use LogText mode, so that setMaxLogLines will work, if not everything will be kept in memory.
 		*/
 		setTextFormat(Qt::LogText);
 		setMaxLogLines(200);
-		LogFlags::instance().setLog(this);
 	}
 
 
 	LogViewer::~LogViewer()
 	{
-		LogFlags::instance().setLog(0);
 	}
 
 
@@ -65,12 +63,12 @@ namespace kt
 			to add strings to it, this will ensure that strings will only be added in the main application
 			thread.
 		*/
-		if(arg==0x00 || LogFlags::instance().checkFlags(arg))
+		if(arg==0x00 || flags->checkFlags(arg))
 		{
 			if(m_useRichText)
 			{
 				QString tmp = line;
-				LogEvent* le = new LogEvent(LogFlags::instance().getFormattedMessage(arg, tmp));
+				LogEvent* le = new LogEvent(flags->getFormattedMessage(arg, tmp));
 				QApplication::postEvent(this,le);
 			}
 			else

@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include <kgenericfactory.h>
 #include <util/log.h>
+#include <util/logsystemmanager.h>
 #include <interfaces/coreinterface.h>
 #include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>
@@ -47,6 +48,7 @@ namespace kt
 	
 	void ZeroConfPlugin::load()
 	{
+		LogSystemManager::instance().registerSystem(i18n("ZeroConf"),SYS_ZCO);
 		CoreInterface* core = getCore();
 		connect(core,SIGNAL(torrentAdded( bt::TorrentInterface* )),
 				this,SLOT(torrentAdded( bt::TorrentInterface* )));
@@ -63,6 +65,7 @@ namespace kt
 	
 	void ZeroConfPlugin::unload()
 	{
+		LogSystemManager::instance().unregisterSystem(i18n("ZeroConf"));
 		CoreInterface* core = getCore();
 		disconnect(core,SIGNAL(torrentAdded( bt::TorrentInterface* )),
 				   this,SLOT(torrentAdded( bt::TorrentInterface* )));

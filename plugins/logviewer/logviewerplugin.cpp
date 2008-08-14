@@ -29,6 +29,7 @@
 #include "logviewer.h"
 #include "logprefpage.h"
 #include "logflags.h"
+#include "logviewerpluginsettings.h"
 
 
 using namespace bt;
@@ -41,6 +42,7 @@ namespace kt
 	LogViewerPlugin::LogViewerPlugin(QObject* parent,const QStringList & ) : Plugin(parent)
 	{
 		lv = 0;
+		flags = 0;
 	}
 
 
@@ -51,8 +53,9 @@ namespace kt
 	void LogViewerPlugin::load()
 	{
 		connect(getCore(),SIGNAL(settingsChanged()),this,SLOT(applySettings()));
-		lv = new LogViewer();
-		pref = new LogPrefPage(0);
+		flags = new LogFlags();
+		lv = new LogViewer(flags);
+		pref = new LogPrefPage(flags,0);
 		getGUI()->addToolWidget(lv,"utilities-log-viewer",i18n("Log Viewer"),GUIInterface::DOCK_BOTTOM);
 		getGUI()->addPrefPage(pref);
 		AddLogMonitor(lv);
@@ -60,19 +63,21 @@ namespace kt
 	}
 
 	void LogViewerPlugin::unload()
-	{
+	{	
+		pref->saveState();
 		disconnect(getCore(),SIGNAL(settingsChanged()),this,SLOT(applySettings()));
 		getGUI()->removeToolWidget(lv);
 		getGUI()->removePrefPage(pref);
 		RemoveLogMonitor(lv);
 		lv = 0;
 		pref = 0;
-		LogFlags::finalize();
+		delete flags;
+		flags = 0;
 	}
 	
 	void LogViewerPlugin::applySettings()
 	{
-		LogFlags::instance().updateFlags();
+		lv->setRichText(LogViewerPluginSettings::useRichText());
 	}
 
 	bool LogViewerPlugin::versionCheck(const QString & version) const

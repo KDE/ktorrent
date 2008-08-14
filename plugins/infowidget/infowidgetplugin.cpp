@@ -21,6 +21,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <util/log.h>
+#include <util/logsystemmanager.h>
 #include <interfaces/guiinterface.h>
 #include <interfaces/coreinterface.h>
 #include <interfaces/torrentinterface.h>
@@ -66,6 +67,7 @@ namespace kt
 
 	void InfoWidgetPlugin::load()
 	{
+		LogSystemManager::instance().registerSystem(i18n("Info Widget"),SYS_INW);
 		connect(getCore(),SIGNAL(settingsChanged()),this,SLOT(applySettings()));
 		
 		status_tab = new StatusTab(0);
@@ -86,6 +88,7 @@ namespace kt
 
 	void InfoWidgetPlugin::unload()
 	{
+		LogSystemManager::instance().unregisterSystem(i18n("Bandwidth Scheduler"));
 		disconnect(getCore(),SIGNAL(settingsChanged()),this,SLOT(applySettings()));
 		disconnect(getCore(),SIGNAL(torrentRemoved(bt::TorrentInterface*)),file_view,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
 		if (cd_view)

@@ -28,6 +28,7 @@
 #include <interfaces/guiinterface.h>
 #include <util/constants.h>
 #include <util/log.h>
+#include <util/logsystemmanager.h>
 #include <util/error.h>
 #include <net/socketmonitor.h>
 #include <interfaces/functions.h>
@@ -76,6 +77,7 @@ namespace kt
 
 	void BWSchedulerPlugin::load()
 	{
+		LogSystemManager::instance().registerSystem(i18n("Bandwidth Scheduler"),SYS_SCD);
 		m_schedule = new Schedule();
 		m_tool_bar = new KToolBar("scheduler",getGUI()->getMainWindow(),Qt::TopToolBarArea,false,true,true);
 		m_bws_action = new KToggleAction(KIcon("kt-bandwidth-scheduler"),i18n("Bandwidth Scheduler"), this);
@@ -110,6 +112,7 @@ namespace kt
 
 	void BWSchedulerPlugin::unload()
 	{
+		LogSystemManager::instance().unregisterSystem(i18n("Bandwidth Scheduler"));
 		KConfigGroup g = KGlobal::config()->group("BWScheduler");
 		g.writeEntry("show_scheduler",m_editor != 0);
 		KGlobal::config()->sync();

@@ -28,6 +28,7 @@ namespace kt
 {
 	class LogViewer;
 	class LogPrefPage;
+	class LogFlags;
 
 	/**
 	 * @author Joris Guisson
@@ -48,6 +49,7 @@ namespace kt
 	private:
 		LogViewer* lv;
 		LogPrefPage* pref;
+		LogFlags* flags;
 	};
 
 }

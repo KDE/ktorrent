@@ -17,160 +17,85 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <klocale.h>
+#include <kglobal.h>
+#include <ksharedconfig.h>
+#include <util/log.h>
+#include <util/logsystemmanager.h>
+#include <torrent/globals.h>
+#include <qstring.h>
+
 #include "logflags.h"
 #include "logviewer.h"
 #include "logviewerpluginsettings.h"
-
-#include <util/log.h>
-#include <torrent/globals.h>
-
-#include <qstring.h>
 
 using namespace bt;
 
 namespace kt
 {
 
-	LogFlags* LogFlags::self = 0;
-	LogViewer* LogFlags::m_log = 0;
-
 	LogFlags::LogFlags()
 	{
 		updateFlags();
+		LogSystemManager & lsman = LogSystemManager::instance();
+		connect(&lsman,SIGNAL(registered(const QString&)),this,SLOT(registered(const QString&)));
+		connect(&lsman,SIGNAL(unregisted(const QString&)),this,SLOT(unregistered(const QString&)));
 	}
 
 	LogFlags::~LogFlags()
 	{}
 
-	LogFlags& LogFlags::instance()
-	{
-		if (!self)
-			self = new LogFlags();
-		return *self;
-	}
-
 	bool LogFlags::checkFlags(unsigned int arg)
 	{
-		if(arg & SYS_GEN)
-			return m_flags.SYSGEN & arg;
-
-		if(arg & SYS_CON)
-			return (arg & m_flags.SYSCON) && ((arg & 0x0000000F) <= m_flags.SYSCON);
-
-		if(arg & SYS_DHT)
-			return (arg & m_flags.SYSDHT) && ((arg & 0x0000000F) <= m_flags.SYSDHT);
-
-		if(arg & SYS_TRK)
-			return (arg & m_flags.SYSTRK) && ((arg & 0x0000000F) <= m_flags.SYSTRK);
+		QList<LogFlag>::iterator i = log_flags.begin();
+		while (i != log_flags.end())
+		{
+			const LogFlag & f = *i;
+			if (f.id & arg)
+				return f.flag & arg;
+			i++;
+		}
 		
-		if(arg & SYS_DIO)
-			return (arg & m_flags.SYSDIO) && ((arg & 0x0000000F) <= m_flags.SYSDIO);
-
-		if(arg & SYS_INW)
-			return (arg & m_flags.SYSINW) && ((arg & 0x0000000F) <= m_flags.SYSINW);
-
-		if(arg & SYS_IPF)
-			return (arg & m_flags.SYSIPF) && ((arg & 0x0000000F) <= m_flags.SYSIPF);
-
-		if(arg & SYS_MPL)
-			return (arg & m_flags.SYSMPL) && ((arg & 0x0000000F) <= m_flags.SYSMPL);
-
-		if(arg & SYS_PNP)
-			return (arg & m_flags.SYSPNP) && ((arg & 0x0000000F) <= m_flags.SYSPNP);
-
-		if(arg & SYS_SCD)
-			return (arg & m_flags.SYSSCD) && ((arg & 0x0000000F) <= m_flags.SYSSCD);
-
-		if(arg & SYS_SNF)
-			return (arg & m_flags.SYSSNF) && ((arg & 0x0000000F) <= m_flags.SYSSNF);
-
-		if(arg & SYS_SRC)
-			return (arg & m_flags.SYSSRC) && ((arg & 0x0000000F) <= m_flags.SYSSRC);
-		
-		if(arg & SYS_BTF)
-			return (arg & m_flags.SYSBTF) && ((arg & 0x0000000F) <= m_flags.SYSBTF);
-		
-		if(arg & SYS_WEB)
-			return (arg & m_flags.SYSWEB) && ((arg & 0x0000000F) <= m_flags.SYSWEB);
-
-		if (arg & SYS_ZCO)
-			return (arg & m_flags.SYSZCO) && ((arg & 0x0000000F) <= m_flags.SYSZCO);
-
-		return true;
+		return false;
 	}
 
 	void LogFlags::updateFlags()
 	{
-		// Possible values in config : (due to how KConfigDialog works, so we need to convert this)
-		// 0 = All
-		// 1 = Debug
-		// 2 = Notice
-		// 3 = Important
-		// 4 = None
-		unsigned int flags[] = {LOG_ALL,LOG_DEBUG,LOG_NOTICE,LOG_IMPORTANT,LOG_NONE};
-
-		m_flags.SYSGEN = flags[LogViewerPluginSettings::sysGEN()];
-		m_flags.SYSCON = flags[LogViewerPluginSettings::sysCON()];
-		m_flags.SYSDHT = flags[LogViewerPluginSettings::sysDHT()];
-		m_flags.SYSTRK = flags[LogViewerPluginSettings::sysTRK()];
-		m_flags.SYSDIO = flags[LogViewerPluginSettings::sysDIO()];
-
-		m_flags.SYSINW = flags[LogViewerPluginSettings::sysINW()];
-		m_flags.SYSIPF = flags[LogViewerPluginSettings::sysIPF()];
-		m_flags.SYSMPL = flags[LogViewerPluginSettings::sysMPL()];
-		m_flags.SYSPNP = flags[LogViewerPluginSettings::sysPNP()];
-		m_flags.SYSSCD = flags[LogViewerPluginSettings::sysSCD()];
-		m_flags.SYSSNF = flags[LogViewerPluginSettings::sysSNF()];
-		m_flags.SYSSRC = flags[LogViewerPluginSettings::sysSRC()];
-		m_flags.SYSBTF = flags[LogViewerPluginSettings::sysBTF()];
-		m_flags.SYSWEB = flags[LogViewerPluginSettings::sysWEB()];
-		m_flags.SYSZCO = flags[LogViewerPluginSettings::sysZCO()];
-		
-		m_useRichText = LogViewerPluginSettings::useRichText();
-		
-		if(m_log)
-			m_log->setRichText(m_useRichText);
-	}
-	
-	void LogFlags::finalize()
-	{
-		delete self;
-		self = 0;
-		m_log = 0;
-	}
-	
-	bool LogFlags::useRichText()
-	{
-		return m_useRichText;
-	}
-	
-	void LogFlags::setLog(LogViewer* log)
-	{
-		m_log = log;
+		KConfigGroup cfg = KGlobal::config()->group("LogFlags");
+		log_flags.clear();
+		LogSystemManager & lsman = LogSystemManager::instance();
+		for (LogSystemManager::iterator i = lsman.begin();i != lsman.end();i++)
+		{
+			LogFlag f;
+			f.name = i.key();
+			f.id = i.value();
+			f.flag = cfg.readEntry(QString("sys_%1").arg(i.value()),LOG_ALL);
+			log_flags.append(f);
+		}
 	}
 	
 	QString& LogFlags::getFormattedMessage(unsigned int arg, QString& line)
 	{
-		if( (arg & LOG_ALL) == LOG_ALL)
+		if ( (arg & LOG_ALL) == LOG_ALL)
 		{
 			return line;
 		}
 		
-		if(arg & 0x04) // Debug
+		if (arg & LOG_DEBUG) // Debug
 		{
 			line.prepend("<font color=\"#646464\">");
 			line.append("</font>");
 			return line;
 		}
 		
-		if(arg & 0x02) // Notice 
+		if (arg & LOG_NOTICE) // Notice 
 		{
 			line.prepend("<font color=\"#000000\">");
 			line.append("</font>");
 			return line; 
 		}
 		
-		if(arg & 0x01) // Important
+		if (arg & LOG_IMPORTANT) // Important
 		{
 			line.prepend("<b>");
 			line.append("</b>");
@@ -178,5 +103,145 @@ namespace kt
 		}
 		
 		return line;
+	}
+	
+	int LogFlags::rowCount(const QModelIndex & parent) const
+	{
+		if (!parent.isValid())
+			return log_flags.count();
+		else
+			return 0;
+	}
+	
+	int LogFlags::columnCount(const QModelIndex & parent) const
+	{
+		if (!parent.isValid())
+			return 2;
+		else
+			return 0;
+	}
+	
+	QVariant LogFlags::headerData(int section, Qt::Orientation orientation,int role) const
+	{
+		if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
+			return QVariant();
+			
+		switch (section)
+		{
+			case 0: return i18n("System");
+			case 1: return i18n("Log Level");
+			default:
+				return QVariant();
+		}
+	}
+	
+	QVariant LogFlags::data(const QModelIndex & index, int role) const
+	{
+		if (!index.isValid())
+			return QVariant();
+		
+		if (role == Qt::DisplayRole)
+		{
+			const LogFlag & f = log_flags.at(index.row());
+			switch (index.column())
+			{
+				case 0: return f.name;
+				case 1: return flagToString(f.flag);
+				default: return QVariant();
+			}
+		}
+		else if (role == Qt::EditRole && index.column() == 1)
+		{
+			const LogFlag & f = log_flags.at(index.row());
+			return f.flag;
+		}
+		
+		return QVariant();
+	}
+	
+	bool LogFlags::setData(const QModelIndex & index,const QVariant & value,int role)
+	{
+		if (!index.isValid() || role != Qt::EditRole || index.column() != 1)
+			return false;
+		
+		bt::Uint32 flag = value.toUInt();
+		if (flag != LOG_ALL && flag != LOG_NONE && flag != LOG_DEBUG && flag != LOG_NOTICE && flag != LOG_IMPORTANT)
+			return false;
+		
+		LogFlag & f = log_flags[index.row()];
+		f.flag = flag;
+		
+		KConfigGroup cfg = KGlobal::config()->group("LogFlags");
+		cfg.writeEntry(QString("sys_%1").arg(f.id),flag);
+		cfg.sync();
+		
+		emit dataChanged(index,index);
+		return true;
+	}
+	
+	Qt::ItemFlags LogFlags::flags(const QModelIndex & index) const
+	{
+		if (!index.isValid())
+			return Qt::ItemIsEnabled;
+
+		if (index.column() == 1)
+			return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
+		else
+			return QAbstractItemModel::flags(index);
+	}
+	
+	bool LogFlags::removeRows(int row,int count,const QModelIndex & parent)
+	{
+		beginRemoveRows(QModelIndex(),row,row + count - 1);
+		endRemoveRows();
+		return true;
+	}
+	
+	bool LogFlags::insertRows(int row,int count,const QModelIndex & parent)
+	{
+		beginInsertRows(QModelIndex(),row,row + count - 1);
+		endInsertRows();
+		return true;
+	}
+	
+	QString LogFlags::flagToString(bt::Uint32 flag) const
+	{
+		switch (flag)
+		{
+			case LOG_DEBUG: return i18n("Debug");
+			case LOG_NOTICE: return i18n("Notice");
+			case LOG_IMPORTANT: return i18n("Important");
+			case LOG_ALL: return i18n("All");
+			case LOG_NONE: return i18n("None");
+			default: return QString();
+		}
+	}
+	
+	void LogFlags::registered(const QString & sys)
+	{
+		KConfigGroup cfg = KGlobal::config()->group("LogFlags");
+		
+		LogSystemManager & lsman = LogSystemManager::instance();
+		LogFlag f;
+		f.id = lsman.systemID(sys);
+		f.flag = cfg.readEntry(QString("sys_%1").arg(f.id),LOG_ALL);;
+		f.name = sys;
+		log_flags.append(f);
+		insertRow(log_flags.count() - 1);
+	}
+	
+	void LogFlags::unregistered(const QString & sys)
+	{
+		int idx = 0;
+		foreach (const LogFlag & f,log_flags)
+		{
+			if (sys == f.name)
+			{
+				removeRow(idx);
+				log_flags.removeAt(idx);
+				break;
+			}
+			idx++;
+		}
 	}
 }

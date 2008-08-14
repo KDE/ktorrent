@@ -25,6 +25,7 @@
 #include <util/constants.h>
 #include <util/functions.h>
 #include <util/log.h>
+#include <util/logsystemmanager.h>
 
 #include <qstring.h>
 #include <qfile.h>
@@ -58,6 +59,7 @@ namespace kt
 
 	void ScanFolderPlugin::load()
 	{
+		LogSystemManager::instance().registerSystem(i18n("Scan Folder"),SYS_SNF);
 		pref = new ScanFolderPrefPage(this,0);
 		getGUI()->addPrefPage(pref);
 		connect(getCore(),SIGNAL(settingsChanged()),this,SLOT(updateScanFolders()));
@@ -66,6 +68,7 @@ namespace kt
 
 	void ScanFolderPlugin::unload()
 	{
+		LogSystemManager::instance().unregisterSystem(i18n("Scan Folder"));
 		getGUI()->removePrefPage(pref);
 		pref = 0;
 		

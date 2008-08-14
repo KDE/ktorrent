@@ -35,6 +35,7 @@
 #include <util/fileops.h>
 #include <util/error.h>
 #include <util/log.h>
+#include <util/logsystemmanager.h>
 
 #include "scriptingplugin.h"
 #include "scriptmanager.h"
@@ -86,6 +87,7 @@ namespace kt
 
 	void ScriptingPlugin::load()
 	{
+		LogSystemManager::instance().registerSystem(i18n("Scripting"),SYS_SCR);
 		model = new ScriptModel(this);
 		// add the KTorrent object
 		Kross::Manager::self().addObject(getCore()->getExternalInterface(),"KTorrent");
@@ -103,6 +105,7 @@ namespace kt
 
 	void ScriptingPlugin::unload()
 	{
+		LogSystemManager::instance().unregisterSystem(i18n("Scripting"));
 		// save currently loaded scripts
 		saveScripts();
 		getGUI()->removeToolWidget(sman);

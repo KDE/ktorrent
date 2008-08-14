@@ -32,6 +32,8 @@
 #include <interfaces/guiinterface.h>
 #include <interfaces/coreinterface.h>
 #include <interfaces/functions.h>
+#include <util/log.h>
+#include <util/logsystemmanager.h>
 #include "searchplugin.h"
 #include "searchwidget.h"
 #include "searchprefpage.h"
@@ -40,6 +42,8 @@
 #include "searchenginelist.h"
 
 K_EXPORT_COMPONENT_FACTORY(ktsearchplugin,KGenericFactory<kt::SearchPlugin>("ktsearchplugin"))
+		
+using namespace bt;
 
 namespace kt
 {
@@ -60,6 +64,7 @@ namespace kt
 
 	void SearchPlugin::load()
 	{
+		LogSystemManager::instance().registerSystem(i18n("Search"),SYS_SRC);
 		getGUI()->addCurrentTabPageListener(this);
 		engines.load(kt::DataDir() + "search_engines");
 		toolbar = new SearchToolBar(this);
@@ -78,6 +83,7 @@ namespace kt
 
 	void SearchPlugin::unload()
 	{
+		LogSystemManager::instance().unregisterSystem(i18n("Search"));
 		getGUI()->removeCurrentTabPageListener(this);
 		saveCurrentSearches();
 		toolbar->saveSettings();

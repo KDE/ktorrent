@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson                                   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,65 +18,54 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <QHeaderView>
-#include <kglobal.h>
-#include <ksharedconfig.h>
-#include "logprefpage.h"
-#include "logviewerpluginsettings.h"
-#include "logflags.h"
-#include "logflagsdelegate.h"
+#ifndef BTLOGSYSTEMMANAGER_H
+#define BTLOGSYSTEMMANAGER_H
 
-namespace kt
+#include <QObject>
+#include <QMap>
+#include <util/constants.h>
+#include <btcore_export.h>
+
+namespace bt
 {
-	LogPrefPage::LogPrefPage(LogFlags* flags,QWidget* parent) : PrefPageInterface(LogViewerPluginSettings::self(),i18n("Log Viewer"),"utilities-log-viewer",parent)
-	{
-		setupUi(this);
-		m_logging_flags->setModel(flags);
-		m_logging_flags->setItemDelegate(new LogFlagsDelegate(this));
-		state_loaded = false;
-	}
 
-	LogPrefPage::~LogPrefPage()
+	/**
+		Keeps track of all logging system ID's
+	*/
+	class BTCORE_EXPORT LogSystemManager : public QObject
 	{
-	}
-	
-	void LogPrefPage::saveState()
-	{
-		KConfigGroup g = KGlobal::config()->group("LogFlags");
-		QByteArray s = m_logging_flags->header()->saveState();
-		g.writeEntry("logging_flags_view_state",s.toBase64());
-		g.sync();
-	}
-	
-	void LogPrefPage::loadState()
-	{
-		KConfigGroup g = KGlobal::config()->group("LogFlags");
-		QByteArray s = QByteArray::fromBase64(g.readEntry("logging_flags_view_state",QByteArray()));
-		if (!s.isNull())
-			m_logging_flags->header()->restoreState(s);
-	}
-	
-	void LogPrefPage::loadDefaults()
-	{
-		if (!state_loaded)
-		{
-			loadState();
-			state_loaded = true;
-		}
-	}
+		Q_OBJECT
+		
+		
+		LogSystemManager();
+	public:
+		virtual ~LogSystemManager();
 
-	void LogPrefPage::loadSettings()
-	{
-		if (!state_loaded)
-		{
-			loadState();
-			state_loaded = true;
-		}
-	}
+		/// Register a system
+		void registerSystem(const QString & name,Uint32 id);
+		
+		/// Unregister a system
+		void unregisterSystem(const QString & name);
+		
+		typedef QMap<QString,Uint32>::iterator iterator;
+		
+		iterator begin() {return systems.begin();}
+		iterator end() {return systems.end();}
+		
+		static LogSystemManager & instance() {return self;}
+		
+		/// Get the ID of a system
+		Uint32 systemID(const QString & name);
+		
+	Q_SIGNALS:
+		void registered(const QString & name);
+		void unregisted(const QString & name);
+		
+	private:
+		QMap<QString,Uint32> systems;
+		static LogSystemManager self;
+	};
 
-	void LogPrefPage::updateSettings()
-	{
-	}
 }
-#include "logprefpage.moc"
 
+#endif

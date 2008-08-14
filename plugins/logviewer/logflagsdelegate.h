@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson                                   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,65 +18,30 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <QHeaderView>
-#include <kglobal.h>
-#include <ksharedconfig.h>
-#include "logprefpage.h"
-#include "logviewerpluginsettings.h"
-#include "logflags.h"
-#include "logflagsdelegate.h"
+#ifndef KTLOGFLAGSDELEGATE_H
+#define KTLOGFLAGSDELEGATE_H
+
+#include <QItemDelegate>
 
 namespace kt
 {
-	LogPrefPage::LogPrefPage(LogFlags* flags,QWidget* parent) : PrefPageInterface(LogViewerPluginSettings::self(),i18n("Log Viewer"),"utilities-log-viewer",parent)
-	{
-		setupUi(this);
-		m_logging_flags->setModel(flags);
-		m_logging_flags->setItemDelegate(new LogFlagsDelegate(this));
-		state_loaded = false;
-	}
 
-	LogPrefPage::~LogPrefPage()
+	/**
+		@author
+	*/
+	class LogFlagsDelegate : public QItemDelegate
 	{
-	}
-	
-	void LogPrefPage::saveState()
-	{
-		KConfigGroup g = KGlobal::config()->group("LogFlags");
-		QByteArray s = m_logging_flags->header()->saveState();
-		g.writeEntry("logging_flags_view_state",s.toBase64());
-		g.sync();
-	}
-	
-	void LogPrefPage::loadState()
-	{
-		KConfigGroup g = KGlobal::config()->group("LogFlags");
-		QByteArray s = QByteArray::fromBase64(g.readEntry("logging_flags_view_state",QByteArray()));
-		if (!s.isNull())
-			m_logging_flags->header()->restoreState(s);
-	}
-	
-	void LogPrefPage::loadDefaults()
-	{
-		if (!state_loaded)
-		{
-			loadState();
-			state_loaded = true;
-		}
-	}
+		Q_OBJECT
+	public:
+		LogFlagsDelegate(QObject *parent);
+		virtual ~LogFlagsDelegate();
+		
+		virtual QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,const QModelIndex &index) const;
+		virtual void setEditorData(QWidget *editor, const QModelIndex &index) const;
+		virtual void setModelData(QWidget *editor, QAbstractItemModel *model,const QModelIndex &index) const;
+		virtual QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
+	};
 
-	void LogPrefPage::loadSettings()
-	{
-		if (!state_loaded)
-		{
-			loadState();
-			state_loaded = true;
-		}
-	}
-
-	void LogPrefPage::updateSettings()
-	{
-	}
 }
-#include "logprefpage.moc"
 
+#endif

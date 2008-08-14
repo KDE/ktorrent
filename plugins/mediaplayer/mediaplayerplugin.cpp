@@ -27,6 +27,7 @@
 #include <kactioncollection.h>
 
 #include <util/log.h>
+#include <util/logsystemmanager.h>
 #include <util/fileops.h>
 #include <util/functions.h>
 #include <interfaces/guiinterface.h>
@@ -104,6 +105,7 @@ namespace kt
 
 	void MediaPlayerPlugin::load()
 	{
+		LogSystemManager::instance().registerSystem(i18n("Media Player"),SYS_MPL);
 		CoreInterface* core = getCore();
 		media_model = new MediaModel(getCore(),this);
 		media_player = new MediaPlayer(this);
@@ -128,6 +130,7 @@ namespace kt
 	
 	void MediaPlayerPlugin::unload()
 	{
+		LogSystemManager::instance().unregisterSystem(i18n("Media Player"));
 		if (fullscreen_mode)
 			setVideoFullScreen(false);
 		

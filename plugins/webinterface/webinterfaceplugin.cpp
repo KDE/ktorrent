@@ -21,6 +21,7 @@
 #include <kglobal.h>
 
 #include <util/log.h>
+#include <util/logsystemmanager.h>
 #include <interfaces/coreinterface.h>
 #include <interfaces/guiinterface.h>
 #include <interfaces/torrentinterface.h>
@@ -51,6 +52,7 @@ namespace kt
 	
 	void WebInterfacePlugin::load()
 	{
+		LogSystemManager::instance().registerSystem(i18n("Web Interface"),SYS_WEB);
 		initServer();
 		
 		pref = new WebInterfacePrefWidget(0);
@@ -60,6 +62,7 @@ namespace kt
 
 	void WebInterfacePlugin::unload()
 	{
+		LogSystemManager::instance().unregisterSystem(i18n("Web Interface"));
 		if (http_server)
 		{
 			bt::Globals::instance().getPortList().removePort(http_server->getPort(),net::TCP);

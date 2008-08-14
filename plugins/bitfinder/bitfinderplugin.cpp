@@ -28,6 +28,7 @@
 #include <QFile>
 
 #include <util/log.h>
+#include <util/logsystemmanager.h>
 #include <interfaces/functions.h>
 //Out(SYS_BTF|LOG_DEBUG) << "Debug messages look like this - Place them somewhere useful" << endl;
 
@@ -76,6 +77,7 @@ namespace kt
 
 	void BitFinderPlugin::load()
 		{
+		LogSystemManager::instance().registerSystem(i18n("BitFinder"),SYS_BTF);
 		//let's verify the settings directory exists
 		QFileInfo configDir(configDirName);
 		if (configDir.exists())
@@ -120,6 +122,7 @@ namespace kt
 
 	void BitFinderPlugin::unload()
 		{
+		LogSystemManager::instance().unregisterSystem(i18n("BitFinder"));
 		//let the filterListModel know we're unloading so it can tidy up and save its config
 		filterListModel->unload();
 		

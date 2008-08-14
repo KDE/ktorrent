@@ -25,6 +25,7 @@
 #include <interfaces/guiinterface.h>
 #include <util/constants.h>
 #include <util/log.h>
+#include <util/logsystemmanager.h>
 #include <peer/accessmanager.h>
 
 #include <qstring.h>
@@ -56,6 +57,7 @@ namespace kt
 
 	void IPFilterPlugin::load()
 	{
+		LogSystemManager::instance().registerSystem(i18n("IP Filter"),SYS_IPF);
 		pref = new IPBlockingPrefPage(this);
 		connect(pref,SIGNAL(updateFinished()),this,SLOT(checkAutoUpdate()));
 		getGUI()->addPrefPage(pref);
@@ -68,6 +70,7 @@ namespace kt
 
 	void IPFilterPlugin::unload()
 	{	
+		LogSystemManager::instance().unregisterSystem(i18n("IP Filter"));
 		getGUI()->removePrefPage(pref);
 		pref = 0;
 		if (level1)

@@ -20,29 +20,14 @@
 #ifndef KTLOGFLAGS_H
 #define KTLOGFLAGS_H
 
+#include <QList>
+#include <QAbstractTableModel>
+#include <util/constants.h>
+
 class QString;
 
 namespace kt
 {
-	struct _logFlags
-	{
-		unsigned int SYSCON;
-		unsigned int SYSTRK;
-		unsigned int SYSDHT;
-		unsigned int SYSGEN;
-		unsigned int SYSDIO;
-
-		unsigned int SYSIPF;
-		unsigned int SYSSRC;
-		unsigned int SYSPNP;
-		unsigned int SYSINW;
-		unsigned int SYSSNF;
-		unsigned int SYSMPL;
-		unsigned int SYSSCD;
-		unsigned int SYSBTF;
-		unsigned int SYSWEB;
-		unsigned int SYSZCO;
-	};
 	
 	class LogViewer;
 
@@ -50,41 +35,49 @@ namespace kt
 	 * Class to read/save logging messages flags.
 	 * @author Ivan Vasic <ivasic@gmail.com>
 	*/
-	class LogFlags
+	class LogFlags : public QAbstractTableModel
 	{
-		public:
-			virtual ~LogFlags();
+		Q_OBJECT
+				
+	public:
+		LogFlags();
+		virtual ~LogFlags();
+		
+		static LogFlags& instance();
+		
+		///Checks current flags with arg. Return true if message should be shown
+		bool checkFlags(unsigned int arg);
+		
+		///Updates flags from Settings::
+		void updateFlags();
+		
+		///Makes line rich text according to arg level.
+		QString& getFormattedMessage(unsigned int arg, QString& line);
+		
+		virtual int rowCount(const QModelIndex & parent) const;
+		virtual int columnCount(const QModelIndex & parent) const;
+		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
+		virtual QVariant data(const QModelIndex & index, int role) const;
+		virtual bool setData(const QModelIndex & index,const QVariant & value,int role);
+		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
+		virtual bool removeRows(int row,int count,const QModelIndex & parent);
+		virtual bool insertRows(int row,int count,const QModelIndex & parent);
+		
+	private slots:
+		void registered(const QString & sys);
+		void unregistered(const QString & sys);
+		
+	private:
+		QString flagToString(bt::Uint32 flag) const;
 			
-			static LogFlags& instance();
-			
-			///Checks current flags with arg. Return true if message should be shown
-			bool checkFlags(unsigned int arg);
-			
-			///Updates flags from Settings::
-			void updateFlags();
-			
-			///Destroys this object
-			static void finalize();
-			
-			///Checks if LogViewer should print rich text format.
-			bool useRichText();
-			
-			///Sets a pointer to LogViewer
-			void setLog(LogViewer* log);
-			
-			///Makes line rich text according to arg level.
-			QString& getFormattedMessage(unsigned int arg, QString& line);
-			
-		private:
-			LogFlags();
-			
-			struct _logFlags m_flags;
-			
-			static LogFlags* self;
-			
-			static LogViewer* m_log;
-			
-			bool m_useRichText;
+	private:
+		struct LogFlag
+		{
+			QString name;
+			bt::Uint32 id;
+			bt::Uint32 flag;
+		};
+		QList<LogFlag> log_flags;
 	};
 
 }

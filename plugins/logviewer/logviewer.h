@@ -33,7 +33,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		LogViewer(QWidget *parent = 0);
+		LogViewer(LogFlags* flags,QWidget *parent = 0);
 		virtual ~LogViewer();
 
 		virtual void message(const QString& line, unsigned int arg);
@@ -43,6 +43,7 @@ namespace kt
 		
 	private:
 		bool m_useRichText;
+		LogFlags* flags;
 	};
 
 }

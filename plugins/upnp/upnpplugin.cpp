@@ -24,12 +24,16 @@
 #include <kstdaction.h>
 #include <interfaces/guiinterface.h>
 #include <util/fileops.h>
+#include <util/log.h>
+#include <util/logsystemmanager.h>
 #include "upnpplugin.h"
 #include "upnpmcastsocket.h"
 #include "upnpwidget.h"
 
 
 K_EXPORT_COMPONENT_FACTORY(ktupnpplugin,KGenericFactory<kt::UPnPPlugin>("ktupnpplugin"))
+
+using namespace bt;
 
 namespace kt
 {
@@ -48,6 +52,7 @@ namespace kt
 
 	void UPnPPlugin::load()
 	{
+		LogSystemManager::instance().registerSystem(i18n("UPnP"),SYS_PNP);
 		sock = new UPnPMCastSocket();
 		upnp_tab = new UPnPWidget(sock,0);
 		getGUI()->addToolWidget(upnp_tab,"kt-upnp",i18n("UPnP"),GUIInterface::DOCK_BOTTOM);
@@ -60,6 +65,7 @@ namespace kt
 
 	void UPnPPlugin::unload()
 	{
+		LogSystemManager::instance().unregisterSystem(i18n("UPnP"));
 		QString routers_file = KGlobal::dirs()->saveLocation("data","ktorrent") + "routers";
 		sock->saveRouters(routers_file);
 		getGUI()->removeToolWidget(upnp_tab);

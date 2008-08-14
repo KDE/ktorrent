@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson                                   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,65 +18,50 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <QHeaderView>
-#include <kglobal.h>
-#include <ksharedconfig.h>
-#include "logprefpage.h"
-#include "logviewerpluginsettings.h"
-#include "logflags.h"
-#include "logflagsdelegate.h"
+#include <klocale.h>
+#include "log.h"
+#include "logsystemmanager.h"
 
-namespace kt
+namespace bt
 {
-	LogPrefPage::LogPrefPage(LogFlags* flags,QWidget* parent) : PrefPageInterface(LogViewerPluginSettings::self(),i18n("Log Viewer"),"utilities-log-viewer",parent)
+	LogSystemManager LogSystemManager::self;
+
+	LogSystemManager::LogSystemManager()
+			: QObject()
 	{
-		setupUi(this);
-		m_logging_flags->setModel(flags);
-		m_logging_flags->setItemDelegate(new LogFlagsDelegate(this));
-		state_loaded = false;
+		// register default systems
+		registerSystem(i18n("General"),SYS_GEN);
+		registerSystem(i18n("Connections"),SYS_CON);
+		registerSystem(i18n("Tracker"),SYS_TRK);
+		registerSystem(i18n("DHT"),SYS_DHT);
+		registerSystem(i18n("Disk Input/Output"),SYS_DIO);
 	}
 
-	LogPrefPage::~LogPrefPage()
+
+	LogSystemManager::~LogSystemManager()
 	{
 	}
 	
-	void LogPrefPage::saveState()
+	void LogSystemManager::registerSystem(const QString & name,Uint32 id)
 	{
-		KConfigGroup g = KGlobal::config()->group("LogFlags");
-		QByteArray s = m_logging_flags->header()->saveState();
-		g.writeEntry("logging_flags_view_state",s.toBase64());
-		g.sync();
+		systems.insert(name,id);
+		registered(name);
+	}
+		
+	void LogSystemManager::unregisterSystem(const QString & name)
+	{
+		if (systems.remove(name))
+			unregisted(name);
 	}
 	
-	void LogPrefPage::loadState()
+	Uint32 LogSystemManager::systemID(const QString & name)
 	{
-		KConfigGroup g = KGlobal::config()->group("LogFlags");
-		QByteArray s = QByteArray::fromBase64(g.readEntry("logging_flags_view_state",QByteArray()));
-		if (!s.isNull())
-			m_logging_flags->header()->restoreState(s);
-	}
-	
-	void LogPrefPage::loadDefaults()
-	{
-		if (!state_loaded)
-		{
-			loadState();
-			state_loaded = true;
-		}
+		iterator i = systems.find(name);
+		if (i == systems.end())
+			return 0;
+		else
+			return i.value();
 	}
 
-	void LogPrefPage::loadSettings()
-	{
-		if (!state_loaded)
-		{
-			loadState();
-			state_loaded = true;
-		}
-	}
 
-	void LogPrefPage::updateSettings()
-	{
-	}
 }
-#include "logprefpage.moc"
-

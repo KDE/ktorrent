@@ -1,4 +1,4 @@
-set(ktlogviewerplugin_SRC logviewerplugin.cpp logflags.cpp logviewer.cpp logprefpage.cpp)
+set(ktlogviewerplugin_SRC logviewerplugin.cpp logflags.cpp logviewer.cpp logprefpage.cpp logflagsdelegate.cpp)
 
 kde4_add_ui_files(ktlogviewerplugin_SRC logprefwidget.ui)
 kde4_add_kcfg_files(ktlogviewerplugin_SRC logviewerpluginsettings.kcfgc)
