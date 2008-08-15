@@ -459,6 +459,8 @@ namespace bt
 		if (proxy_on)
 		{
 			QString p = QString("%1:%2").arg(proxy).arg(proxy_port);
+			if (!p.startsWith("http://"))
+				p = "http://" + p;
 			// set the proxy if the doNotUseKDEProxy ix enabled (URL must be valid to)
 			KUrl url = KUrl(p);
 			if (url.isValid() && proxy.trimmed().length() >  0)
