@@ -49,7 +49,11 @@ namespace kt
 		}
 		
 		if (root)
-			root->initPercentage(tc,tc->downloadedChunksBitSet());
+		{
+			BitSet d = tc->downloadedChunksBitSet();
+			d -= tc->onlySeedChunksBitSet();
+			root->initPercentage(tc,d);
+		}
 	}
 
 
@@ -149,9 +153,10 @@ namespace kt
 					else
 						return i18nc("No preview available", "No");
 				case 4: 
-				{
-					return ki18n("%1 %").subs(n->percentage, 0, 'f', 2).toString();
-				}
+					if (file->getPriority() == ONLY_SEED_PRIORITY || file->getPriority() == EXCLUDED)
+						return QVariant();
+					else
+						return ki18n("%1 %").subs(n->percentage, 0, 'f', 2).toString();
 				default: return QVariant();
 			}	
 		}
@@ -298,7 +303,9 @@ namespace kt
 				// update percentages along the tree
 				// this will go back up the tree and update the percentage of 
 				// all directories involved
-				n->updatePercentage(tc->downloadedChunksBitSet());
+				BitSet d = tc->downloadedChunksBitSet();
+				d -= tc->onlySeedChunksBitSet();
+				n->updatePercentage(d);
 				
 				// emit necessary signals
 				QModelIndex parent = idx.parent();

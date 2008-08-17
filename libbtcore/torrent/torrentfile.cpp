@@ -116,21 +116,27 @@ namespace bt
 
 	void TorrentFile::setPriority(Priority newpriority)
 	{
-		if(priority != newpriority)
+		if (priority != newpriority)
 		{
 			if (priority == EXCLUDED)
 			{
 				setDoNotDownload(false);
 			}
+			
 			if (newpriority == EXCLUDED)
 			{
 				setDoNotDownload(true);
+				downloadPercentageChanged();
 			}
 			else
 			{
 				old_priority = priority;
 				priority = newpriority;
 				emit downloadPriorityChanged(this,newpriority,old_priority);
+				
+				// make sure percentages are updated properly
+				if (old_priority == ONLY_SEED_PRIORITY || newpriority == ONLY_SEED_PRIORITY || old_priority == EXCLUDED)
+					downloadPercentageChanged();
 			}
 		}
 	}
