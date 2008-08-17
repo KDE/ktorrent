@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "udptracker.h"
 #include <stdlib.h>
+#include <klocale.h>
 #include <util/functions.h>
 #include <util/log.h>
 #include <k3socketaddress.h>
@@ -57,9 +58,8 @@ namespace bt
 				this,SLOT(connectReceived(Int32, Int64 )));
 		connect(socket,SIGNAL(error(Int32, const QString& )),
 				this,SLOT(onError(Int32, const QString& )));
-	
-		KResolver::resolveAsync(this,SLOT(onResolverResults(KNetwork::KResolverResults )),
- 						   url.host(),QString::number(url.port()));
+		
+		resolved = false;
 	}
 
 
@@ -179,7 +179,12 @@ namespace bt
 	bool UDPTracker::doRequest()
 	{
 		Out(SYS_TRK|LOG_NOTICE) << "Doing tracker request to url : " << url << endl;
-		if (connection_id == 0)
+		if (!resolved)
+		{
+			KResolver::resolveAsync(this,SLOT(onResolverResults(KNetwork::KResolverResults )),
+									url.host(),QString::number(url.port()));
+		}
+		else if (connection_id == 0)
 		{
 			n = 0;
 			sendConnect();
@@ -283,10 +288,20 @@ namespace bt
 	void UDPTracker::onResolverResults(KResolverResults res)
 	{
 		if (res.count() > 0)
+		{
 			address = res.front().address();
-		else
-			KResolver::resolveAsync(this,SLOT(onResolverResults(KNetwork::KResolverResults )),
-									url.host(),QString::number(url.port()));
+			resolved = true;
+			// continue doing request
+			if (connection_id == 0)
+			{
+				n = 0;
+				sendConnect();
+			}
+			else
+				sendAnnounce();
+		}
+		else 
+			requestFailed(i18n("Unable to resolve hostname %1",url.host()));
 	}
 	
 }

@@ -90,6 +90,7 @@ namespace bt
 		int n;
 		QTimer conn_timer;
 		Event event;
+		bool resolved;
 
 		static UDPTrackerSocket* socket;
 		static Uint32 num_instances;
