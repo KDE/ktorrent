@@ -6,7 +6,7 @@
 <table  width="100%">
   <tbody>
     <tr>
-      <td align="center"><IMG src="ktorrentwebinterfacelogo.png" width="340" height="150" align="top" border="0"></td>
+      <td align="center"><img src="ktorrentwebinterfacelogo.png" align="top" border="0"/></td>
       
       <td><strong>ktorrent</strong>->transfers</td>
       
@@ -99,15 +99,17 @@
 
   </tbody>
 </table>
-<FORM method="GET">
-<INPUT type="text" name="load_torrent">
-<INPUT type="submit" name="Load torrent" value="Load torrent"></tr>
-</FORM>
-<FORM method="post" enctype="multipart/form-data" action="interface.php">
-Local File:<INPUT type="file" name="load_torrent">
-<INPUT type="submit" name="Upload Torrent" value="Upload Torrent"></tr>
-</FORM>
-
+<form method="GET">
+<input type="text" name="load_torrent"/>
+<input type="submit" name="Load torrent" value="Load torrent"/></tr>
+</form>
+<form method="post" enctype="multipart/form-data" action="interface.php">
+Local File:<input type="file" name="load_torrent"/>
+<input type="submit" name="Upload Torrent" value="Upload Torrent" /></tr>
+</form>
+<p align="center">
+<a href="login.html" >logout</a>
+</p>
 </body>
 </html>
 

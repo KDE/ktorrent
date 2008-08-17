@@ -31,13 +31,25 @@
 </script>
 </head>
 <body onload="try_focus_form();">
-	<form id="loginForm" action="interface.php" method="post" onsubmit="encryptPwd();">
-		<table style="padding-left:100px; padding-top: 350px;">
-		<tr><td>Username:</td><td><input type="text" name="username" id="username" onfocus="was_focused = true;" /></td></tr>
-		<tr><td>Password:</td><td><input type="password" name="password" id="password" /></td></tr>
-		<tr><td></td><td><input type="submit" value="Login" /></td></tr>
-		</table>
-		<input type="hidden" name="challenge" id="challenge" value="$CHALLENGE" />
-	</form>
+	<div id="container">
+		<div id="header">
+			<div id="logoWrapper">
+				<div id="logo"><a href="/" title="Home"><img src="icon.png" alt="Home" /></a></div>
+				<div id="siteName"><a href="/" title="Home">KTorrent Web Interface</a></div>                  
+			</div>
+		</div>
+		
+		<div id="content">
+			<form id="loginForm" action="interface.php" method="post" onsubmit="encryptPwd();">
+				<table>
+				<tr><td>Username:</td><td><input type="text" name="username" id="username" onfocus="was_focused = true;" /></td></tr>
+				<tr><td>Password:</td><td><input type="password" name="password" id="password" /></td></tr>
+				<tr><td></td><td><input type="submit" value="Login" /></td></tr>
+				</table>
+				<input type="hidden" name="challenge" id="challenge" value="$CHALLENGE" />
+			</form>
+		</div>
+	</div>
+	<div id="footer">&#169; 2006-2008 KTorrent WebInterface Plugin</div>
 </body>
 </html>

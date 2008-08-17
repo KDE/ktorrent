@@ -1,7 +1,7 @@
 /* styles for interface.php and details.php */
 
 html, body {
-	background-color: #a2d2b1;
+	background-color: #edf5fa;
 	font-family: sans-serif;
 	font-size: 12px;
 }
@@ -81,7 +81,7 @@ a:hover {
 
 
 #top_bar {
-	background-color: #b72916;
+	background-color: #d2e6f3;
 	border: 1px solid #868686;
 	text-align: right;
 }
@@ -93,9 +93,9 @@ a:hover {
 	top: 2px;
 }
 
-
+/*#d2e6f3*/
 #header {
-	background-color: #42ac64;
+	background: #4E9DCE;
 	padding: 15px 0 5px 140px;
 	font-size: 45px;
 }
@@ -145,7 +145,6 @@ a:hover {
 
 
 #content {
-	background: #a2d2b1;
 	text-align: left;
 	margin-right: 280px;
 	padding: 10px;

@@ -1,13 +1,346 @@
-/* styles for login.html */
+/* $Id: style.css,v 1.1 2008/04/15 18:31:16 dm66 Exp $ */
+
+img {
+ border:0
+}
 
 body {
-	background: url(ktorrentwebinterfacelogo.png) no-repeat 120px 120px;
-	font-family: verdana, arial, sans-serif;
-	color: #000000;
-	font-size: 12px;
+  font: normal normal normal 13px/23px Verdana, sans-serif;
+  color:#444;
+  background: #fff url('header.jpg') repeat-x;
+  padding:0;
+  margin:0;
 }
 
-input, textarea {
-	border: 1px solid #000000;
-	width: 120px;
+
+h1, h2, h3, h4, h5 {
+  font-weight:500;
 }
+
+h1, h1 a:link, h1 a:visited {
+  font-size: 24px;
+  line-height: 28px;
+  color: #df0000;
+  margin:0.25em 0;
+}
+
+h2 {
+  font-size:20px;
+  margin:0.5em 0;
+}
+
+h3 {
+  font-size:18px;
+}
+
+h4 {
+  font-size:17px;
+}
+
+h5 {
+  font-size:16px;
+}
+
+h6 {
+  font-size:14px;
+}
+
+a:link,a:visited {
+  color:#2763A5;
+  font-weight:normal;
+  text-decoration:none;
+}
+
+a:hover {
+  color:#E90017;
+  text-decoration:underline;
+}
+
+
+
+#container {
+  width:95%;
+  margin:0 auto;
+  max-width:1270px;
+  min-width: 760px;
+}
+
+/*----------Header----------*/
+
+#header {
+  height:107px;
+}
+
+#logo {
+  float:left;
+  margin-top:7px;
+}
+
+#siteName {
+  color:#fff;
+  float:left;
+  font-size:350%;
+  margin:15px 0 0 15px;
+}
+
+#siteName a {
+  color:#fff;
+  text-decoration:none;
+}
+
+#siteName a:hover
+{
+color:#ddd;
+text-decoration:none;
+}
+
+#siteSlogan {
+  color:#eee;
+  float:left;
+  font-size:170%;
+  margin:25px 0 0 10px;
+  text-transform:lowercase;
+  white-space:nowrap;
+}
+
+#logo img {
+  border:0;
+  float:left;
+}
+
+#logoWrapper {
+  line-height:4em;
+  position:absolute;
+}
+
+/*----------nav styles -- primary links in header----------*/
+
+#nav {
+  list-style:none;
+  list-style-image:none;
+  top:79px;
+  position: absolute;
+}
+
+#nav a, #nav a:visited {
+  display:inline-block;
+  font-weight:bold;
+  line-height:27px;
+  text-decoration:none;
+  padding: 0 1em;
+  color: #000;
+}
+
+#nav a:hover, #nav a:active {
+color: #6e6e6e;
+}
+
+
+
+
+/*----------Content and siderar-----------*/
+#content {
+  float:left;
+  margin:1em 0;
+  overflow:hidden;
+  width:71%;
+}
+
+
+#sidebar {
+background: url('sidebar.gif') repeat-y left bottom;
+float:right;
+width:28%;
+padding:0 0 30px 0;
+}
+
+#sidebar .block  {
+margin:10px 0 0 27px;
+}
+
+#sidebar .title {
+color:#011CA1;
+margin:.5em 0;
+}
+
+#search {
+margin: -80px 0 0 18px;
+padding:0;
+position: absolute;
+}
+
+
+/*----------node styles----------*/
+.node {
+  margin:0 0 2em; /* 26px */
+}
+
+.content p {
+  margin:0 0 1em 0;
+}
+
+.submitted {
+  font-size:11px;
+  color:#a3a3a3;
+  width:100%;
+  clear:both;
+}
+
+.submitted ul.links {
+  padding:0 0 0 15px;
+  float:right;
+}
+
+.nodeLinks {
+  font-size:12px;
+  clear:both;
+}
+
+.picture {
+  float: left;
+  margin:5px 10px 0 0;
+}
+
+
+
+/*----------footer----------*/
+#footer {
+  clear:both;
+  background:#638EC6;
+  border-top:2px solid #556D8D;
+  border-bottom:1px solid #556D8D;
+  min-height:60px;
+}
+
+#footer .content {
+  max-width:1270px;
+  min-width:760px;
+  width:95%;
+  margin:0 auto;
+  color:#fff;
+  font-size:11px;
+}
+
+#footer a {
+  color:#E6E6FF;
+}
+
+/*----------list styles----------*/
+
+ul.menu, .item-list ul {
+  font-size:12px;
+  line-height: 17px;
+  margin: 0.5em 0 0 -0.5em; /* 6px */
+  padding:0;
+}
+
+ul.menu ul, .item-list ul ul {
+  margin-left: 0;
+}
+
+
+.content ol li, .content ul li, ul.menu li, .item-list ul li, li.leaf {
+  margin: .16em 0 .16em .5em; /* 1.92px and 6px */
+}
+
+ul.menu li, .item-list ul li, li.leaf {
+  padding: 0 0 .25em 1.5em; /* 3px and 18px */
+  list-style-type: none;
+  list-style-image: none;
+}
+
+.content ol li {
+  padding: 0 0 .3em;
+  margin-left: 2em;
+}
+
+.content ul li.leaf a, ul li.expanded a, ul li.collapsed a {
+  display: block;
+}
+
+ul.inline li {
+  background: none;
+  margin: 0;
+  padding: 0 1em 0 0;
+}
+
+fieldset ul.clear-block li {
+  margin: 0;
+  padding: 0;
+  background-image: none;
+}
+
+ul.links li {
+  background:none;
+  list-style:none;
+  padding:0 .5em;
+}
+
+.node .content ul li {
+  padding:0 0 0 20px;
+  line-height:26px;
+  list-style-type: none;
+  list-style-image: none;
+}
+
+/*---------------user-login-form---remove center alignment---------------*/
+#user-login-form {
+  margin:0;
+  padding:0 0 0 10px;
+  text-align:left;
+}
+
+.form-item {
+  text-align:left;
+  margin:0;
+  padding:0;
+}
+
+/*---------------table styles---------------*/
+
+table.loginForm {
+ margin:10px 0;
+}
+
+table {
+  margin:10px 0;
+  width:100%;
+}
+
+tr.even,tr.odd,tbody th {
+  border:solid #E1E1E1;
+  border-width:1px 0;
+}
+
+tr.even {
+  background-color:#fff;
+}
+
+tr.odd {
+  background-color:#F9FAFF;
+}
+
+td.region,td.module,td.container {
+  background-color:#638EC6;
+  border-bottom:1px solid #A4A7C0;
+  color:#000;
+  font-weight:bold;
+}
+
+td.container .name a  {
+  color:#fff;
+}
+
+tr:first-child td.region,tr:first-child td.module,tr:first-child td.container {
+  border-top-width:0;
+}
+
+td.menu-disabled,td.menu-disabled a {
+  background-color:#D5C2C2;
+  color:#000;
+}
+
+td.active {
+  background-color:#f7f7f7;
+}
+

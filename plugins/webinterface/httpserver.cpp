@@ -233,6 +233,8 @@ namespace kt
 			return "text/javascript";
 		else if (ext == "gif" || ext == "png" || ext == "ico")
 			return "image/" + ext;
+		else if (ext == "jpg" || ext == "jpeg")
+			return "image/jpeg";
 		else
 			return QString::null;
 	}

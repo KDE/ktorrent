@@ -14,6 +14,8 @@ set(default_data
 	high_priority.png
 	low_priority.png
 	only_seed.png
-	menu_bg.png)
+	menu_bg.png
+	sidebar.gif
+	header.jpg)
 
 install(FILES ${default_data} DESTINATION ${DATA_INSTALL_DIR}/ktorrent/www/default)

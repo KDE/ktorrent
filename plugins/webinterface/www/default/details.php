@@ -37,7 +37,7 @@ $display_name=cut_name_if_long($stats[$num_torrent]['display_name']);
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <style type="text/css" media="all">
-	@import "stylen.css";
+	@import "style.css";
 </style>
 <meta http-equiv="Content-Type" content="text/html" />
 <link rel="icon" href="favicon.ico" type="image/x-icon" />
@@ -45,18 +45,19 @@ $display_name=cut_name_if_long($stats[$num_torrent]['display_name']);
 <title><?php echo 'KTorrent: Details for '.$display_name; ?></title>
 </head>
 <body>
-	<div id="top_bar">WebInterface KTorrent plugin</div>
-	<div id="icon"><img src="icon.png" alt="" /></div>
-	<div id="header">
-		<strong>KTorrent WebInterface</strong>
-		<br />
-        	<small>BitTorrent client for KDE</small>
-	</div>
-	<ul id="menu">
-		<li><a href="interface.php" title="BACK">Back</a></li>
-		<li><a href="login.html" title="LOGOUT">Logout</a></li>
-	</ul>
-	<div id="content">
+	<div id="container">
+		<div id="header">
+			<div id="logoWrapper">
+				<div id="logo"><a href="/interface.php" title="Home"><img src="icon.png" alt="Home" /></a></div>
+				<div id="siteName"><a href="/interface.php" title="Home">KTorrent Web Interface</a></div>                  
+			</div>
+			<div id="nav">
+				<a href="interface.php" title="Back">Back</a>
+				<a href="login.html" title="Logout">Logout</a>
+			</div>
+		</div>
+	
+		<div id="content">
 		<table>
 		<tr>
 			<th>Actions</th>
@@ -83,7 +84,8 @@ $display_name=cut_name_if_long($stats[$num_torrent]['display_name']);
 		}
 		?>
 		</table>
+		</div>
 	</div>
-	<div id="footer">&#169; 2006 WebInterface KTorrent plugin</div>
+	<div id="footer">&#169; 2006-2008 KTorrent WebInterface Plugin</div>
 </body>
 </html>

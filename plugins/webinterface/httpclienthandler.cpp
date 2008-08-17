@@ -267,12 +267,13 @@ namespace kt
 	void HttpClientHandler::sendOutputBuffer(int )
 	{
 		int r = client->send((const Uint8*)output_buffer.data() + written,output_buffer.size() - written);
-		if (r == 0)
+		//Out(SYS_WEB|LOG_DEBUG) << "sendOutputBuffer : " << r << " " << written << " " << output_buffer.size() << endl;
+		if (r <= 0)
 		{
 			// error happened, close the connection
 			closed();
 		}
-		else
+		else 
 		{
 			written += r;
 			if (written == output_buffer.size())
