@@ -49,6 +49,8 @@ namespace kt
 		virtual void kill(KJob::KillVerbosity v);
 		void start();
 		
+		bool isAutoUpdate() const {return mode == Quietly;}
+		
 	private slots:
 		void downloadFileFinished(KJob*);
 		void convert(KJob*);

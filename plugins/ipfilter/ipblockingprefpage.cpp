@@ -128,7 +128,12 @@ namespace kt
 	bool IPBlockingPrefPage::doAutoUpdate()
 	{
 		if (m_job)
-			return false;
+		{
+			if (m_job->isAutoUpdate())
+				return true; // if we are already auto updating, lets not start it again
+			else
+				return false;
+		}
 		
 		m_verbose = false;
 		downloadClicked();
