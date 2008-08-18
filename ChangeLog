@@ -9,6 +9,7 @@ systray.
 added field of a PEX message (169014)
 - Make sure it is not required to put http:// for the proxy in the config
 dialog (169133)
+- Fix typo in advanced pref
 
 Changes in 3.1.2 :
 - Improved performance of GUI updates
