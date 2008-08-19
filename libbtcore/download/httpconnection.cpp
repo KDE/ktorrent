@@ -25,6 +25,7 @@
 #include <klocale.h>
 #include <net/socketmonitor.h>
 #include <util/log.h>
+#include <util/functions.h>
 
 #include "btversion.h"
 
@@ -276,7 +277,10 @@ namespace bt
 	{
 		QMutexLocker locker(&mutex);
 		if (sock)
+		{
+			sock->updateSpeeds(bt::GetCurrentTime());
 			return sock->getDownloadRate();
+		}
 		else
 			return 0;
 	}
