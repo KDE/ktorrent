@@ -65,6 +65,9 @@ namespace net
 		bool isIPv4() const {return m_ip_version == 4;}
 		bool isIPv6() const {return m_ip_version == 6;}
 		
+		/// reset the socket (i.e. close it and create a new one)
+		void reset(); 
+		
 		
 		Uint32 bytesAvailable() const;
 		

@@ -126,6 +126,29 @@ namespace bt
 		else
 			return 0;
 	}
+	
+	void WebSeed::connectToServer()
+	{
+		if (!proxy_enabled)
+		{
+			QString proxy = KProtocolManager::proxyForUrl(url); // Use KDE settings
+			if (proxy.isNull() || proxy == "DIRECT")
+				conn->connectTo(url); // direct connection 
+			else
+			{
+				KUrl proxy_url(proxy);
+				conn->connectToProxy(proxy_url.host(),proxy_url.port() <= 0 ? 80 : proxy_url.port());
+			}
+		}
+		else 
+		{
+			if (proxy_host.isNull())
+				conn->connectTo(url); // direct connection 
+			else
+				conn->connectToProxy(proxy_host,proxy_port); // via a proxy
+		}
+		status = conn->getStatusString();
+	}
 		
 	void WebSeed::download(Uint32 first,Uint32 last)
 	{
@@ -148,39 +171,22 @@ namespace bt
 		
 		if (!conn->connected())
 		{
-			if (!proxy_enabled)
-			{
-				QString proxy = KProtocolManager::proxyForUrl(url); // Use KDE settings
-				if (proxy.isNull() || proxy == "DIRECT")
-					conn->connectTo(url); // direct connection 
-				else
-				{
-					KUrl proxy_url(proxy);
-					conn->connectToProxy(proxy_url.host(),proxy_url.port() <= 0 ? 80 : proxy_url.port());
-				}
-			}
-			else 
-			{
-				if (proxy_host.isNull())
-					conn->connectTo(url); // direct connection 
-				else
-					conn->connectToProxy(proxy_host,proxy_port); // via a proxy
-			}
-			status = conn->getStatusString();
+			connectToServer();
 		}
 		
 		if (tor.isMultiFile())
 		{
 			// make the list of ranges to download
-			QList<Range> ranges;
-			for (Uint32 i = first_chunk;i != last_chunk;i++)
+			for (Uint32 i = first_chunk;i <= last_chunk;i++)
 			{
-				doChunk(i,ranges);
+				fillRangeList(i);
 			}
 			
-			// add a request for each range
-			foreach (const Range & r,ranges)
+			if (range_queue.count() > 0)
 			{
+				// send the first request
+				Range r = range_queue[0];
+				range_queue.pop_front();
 				const TorrentFile & tf = tor.getFile(r.file);
 				conn->get(url.host(),path + '/' + tf.getPath(),r.off,r.len);
 			}
@@ -282,6 +288,29 @@ namespace bt
 				num_failures = 0;
 				finished();
 			}
+			
+			if (range_queue.count() > 0 && conn->ready())
+			{
+				if (conn->closed())
+				{
+					// after a redirect it is possible that the connection is closed
+					// so we need to reconnect to the old url
+					delete conn;
+					conn = new HttpConnection();
+					conn->setGroupIDs(up_gid,down_gid);
+					connectToServer();
+				}
+				
+				QString path = url.path();
+				if (path.endsWith('/'))
+					path += tor.getNameSuggestion();
+				
+				// ask for the next range
+				Range r = range_queue[0];
+				range_queue.pop_front();
+				const TorrentFile & tf = tor.getFile(r.file);
+				conn->get(url.host(),path + '/' + tf.getPath(),r.off,r.len);
+			}
 			status = conn->getStatusString();
 		}
 		
@@ -326,7 +355,7 @@ namespace bt
 		}
 	}
 
-	void WebSeed::doChunk(Uint32 chunk,QList<Range> & ranges)
+	void WebSeed::fillRangeList(Uint32 chunk)
 	{
 		QList<Uint32> tflist;
 		tor.calcChunkPos(chunk,tflist);
@@ -350,15 +379,15 @@ namespace bt
 				r.len = tf.getSize();
 			
 			// add the range
-			if (ranges.count() == 0)
-				ranges.append(r);
-			else if (ranges.back().file != r.file)
-				ranges.append(r);
+			if (range_queue.count() == 0)
+				range_queue.append(r);
+			else if (range_queue.back().file != r.file)
+				range_queue.append(r);
 			else
 			{
 				// the last range and this one are in the same file
 				// so expand it
-				Range & l = ranges.back();
+				Range & l = range_queue.back();
 				l.len += r.len;
 			}
 			

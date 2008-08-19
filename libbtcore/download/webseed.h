@@ -138,10 +138,11 @@ namespace bt
 			Uint64 len;
 		};
 		
-		void doChunk(Uint32 chunk,QList<Range> & ranges);
+		void fillRangeList(Uint32 chunk);
 		void handleData(const QByteArray & data);
 		void chunkStarted(Uint32 chunk);
 		void chunkStopped();
+		void connectToServer();
 		
 	private:
 		const Torrent & tor;
@@ -156,6 +157,7 @@ namespace bt
 		Uint32 downloaded;
 		WebSeedChunkDownload* current;
 		Uint32 up_gid,down_gid;
+		QList<Range> range_queue;
 		
 		static QString proxy_host;
 		static Uint16 proxy_port;

@@ -33,7 +33,7 @@ namespace net
 {
 	SocketMonitor SocketMonitor::self;
 
-	SocketMonitor::SocketMonitor() : ut(0),dt(0),next_group_id(1)
+	SocketMonitor::SocketMonitor() : mutex(QMutex::Recursive),ut(0),dt(0),next_group_id(1)
 	{
 		dt = new DownloadThread(this);
 		ut = new UploadThread(this);

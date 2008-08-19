@@ -25,6 +25,7 @@
 #include <QTimer>
 #include <QHttpRequestHeader>
 #include <k3resolver.h>
+#include <kurl.h>
 #include <net/bufferedsocket.h>
 
 class KUrl;
@@ -49,6 +50,7 @@ namespace bt
 		
 		struct HttpGet
 		{
+			QString host;
 			QString path;
 			bt::Uint64 start;
 			bt::Uint64 len;
@@ -59,6 +61,9 @@ namespace bt
 			bool response_header_received;
 			bool request_sent;
 			QString failure_reason;
+			bool redirected;
+			KUrl redirected_to;
+			bt::Uint64 content_length;
 			
 			HttpGet(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len,bool using_proxy);
 			virtual ~HttpGet();
@@ -70,12 +75,13 @@ namespace bt
 		net::BufferedSocket* sock;
 		State state;
 		mutable QMutex mutex;
-		QList<HttpGet*> requests;
+		HttpGet* request;
 		bool using_proxy;
 		QString status;
 		QTimer connect_timer;
 		QTimer reply_timer;
 		Uint32 up_gid,down_gid;
+		bool close_when_finished;
 	public:
 		HttpConnection();
 		virtual ~HttpConnection();
@@ -109,6 +115,9 @@ namespace bt
 		/// Has the connection been closed
 		bool closed() const;
 		
+		/// Ready to do another request
+		bool ready() const;
+		
 		/**
 		 * Do a HTTP GET request
 		 * @param path The path of the file
@@ -138,6 +147,9 @@ namespace bt
 		void hostResolved(KNetwork::KResolverResults res);
 		void connectTimeout();
 		void replyTimeout();
+		
+	private:
+		void redirected(const KUrl & url);
 	};
 }
 

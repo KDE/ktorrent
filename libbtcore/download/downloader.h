@@ -92,7 +92,7 @@ namespace bt
 		Uint32 getNumWebSeeds() const {return webseeds.count();}
 		
 		/// Get a webseed
-		const WebSeed* getWebSeed(Uint32 i) const {return i < webseeds.count() ? webseeds[i] : 0;}
+		const WebSeed* getWebSeed(Uint32 i) const {return i < (Uint32)webseeds.count() ? webseeds[i] : 0;}
 		
 		/// Add a webseed
 		WebSeed* addWebSeed(const KUrl & url);

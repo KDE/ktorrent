@@ -115,7 +115,7 @@ namespace bt
 		 * overridden by subclasses.
 		 * @param idx The Chunk's index
 		 */
-		virtual bool hasChunk(bt::Uint32 idx) const {return true;}
+		virtual bool hasChunk(bt::Uint32 /*idx*/) const {return true;}
 		
 		/**
 		 * Check if requests have timedout

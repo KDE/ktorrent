@@ -25,18 +25,20 @@
 #include <klocale.h>
 #include <net/socketmonitor.h>
 #include <util/log.h>
+#include <util/functions.h>
 
 #include "btversion.h"
 
 namespace bt
 {
 
-	HttpConnection::HttpConnection() : sock(0),state(IDLE),mutex(QMutex::Recursive),using_proxy(false)
+	HttpConnection::HttpConnection() : sock(0),state(IDLE),mutex(QMutex::Recursive),request(0),using_proxy(false)
 	{
 		status = i18n("Not connected");
 		connect(&reply_timer,SIGNAL(timeout()),this,SLOT(replyTimeout()));
 		connect(&connect_timer,SIGNAL(timeout()),this,SLOT(connectTimeout()));
 		up_gid = down_gid = 0;
+		close_when_finished = false;
 	}
 
 
@@ -48,7 +50,8 @@ namespace bt
 			delete sock;
 		}
 		
-		qDeleteAll(requests);
+		if (request)
+			delete request;
 	}
 	
 	void HttpConnection::setGroupIDs(Uint32 up,Uint32 down)
@@ -86,6 +89,12 @@ namespace bt
 		return state == CLOSED || (sock && !sock->ok());
 	}
 	
+	bool HttpConnection::ready() const
+	{
+		QMutexLocker locker(&mutex);
+		return !request;
+	}
+	
 	void HttpConnection::connectToProxy(const QString & proxy,Uint16 proxy_port)
 	{
 		using_proxy = true;
@@ -108,7 +117,7 @@ namespace bt
 	{
 		QMutexLocker locker(&mutex);
 		
-		if (state != ERROR && requests.count() > 0)
+		if (state != ERROR && request)
 		{
 			if (size == 0)
 			{
@@ -118,13 +127,12 @@ namespace bt
 			}
 			else
 			{
-				HttpGet* g = requests.front();
-				if (!g->onDataReady(buf,size))
+				if (!request->onDataReady(buf,size))
 				{
 					state = ERROR;
-					status = i18n("Error: request failed: %1",g->failure_reason);
+					status = i18n("Error: request failed: %1",request->failure_reason);
 				}
-				else if (g->response_header_received)
+				else if (request->response_header_received)
 					reply_timer.stop();
 			}
 		}
@@ -151,7 +159,7 @@ namespace bt
 		}
 		else if (state == ACTIVE)
 		{
-			HttpGet* g = requests.front();
+			HttpGet* g = request;
 			if (g->request_sent)
 				return 0;
 			
@@ -180,11 +188,10 @@ namespace bt
 		if (state == CONNECTING)
 			return true;
 		
-		if (state == ERROR || requests.count() == 0)
+		if (state == ERROR || !request)
 			return false;
 		
-		HttpGet* g = requests.front();
-		return !g->request_sent;
+		return !request->request_sent;
 	}
 
 	void HttpConnection::hostResolved(KNetwork::KResolverResults res)
@@ -192,25 +199,27 @@ namespace bt
 		if (res.count() > 0)
 		{
 			KNetwork::KInetSocketAddress addr = res.front().address();
-			sock = new net::BufferedSocket(true,addr.ipVersion());
-			sock->setNonBlocking();
-			sock->setReader(this);
-			sock->setWriter(this);
-			sock->setGroupID(up_gid,true);
-			sock->setGroupID(down_gid,false);
+			if (!sock)
+			{
+				sock = new net::BufferedSocket(true,addr.ipVersion());
+				sock->setNonBlocking();
+				sock->setReader(this);
+				sock->setWriter(this);
+				sock->setGroupID(up_gid,true);
+				sock->setGroupID(down_gid,false);
+				net::SocketMonitor::instance().add(sock);
+			}
 			
 			if (sock->connectTo(addr))
 			{
 				status = i18n("Connected");
 				state = ACTIVE;
-				net::SocketMonitor::instance().add(sock);
 				net::SocketMonitor::instance().signalPacketReady();
 			}
 			else if (sock->state() == net::Socket::CONNECTING)
 			{
 				status = i18n("Connecting");
 				state = CONNECTING;
-				net::SocketMonitor::instance().add(sock);
 				net::SocketMonitor::instance().signalPacketReady();
 				// 60 second connect timeout
 				connect_timer.start(60000);
@@ -233,11 +242,10 @@ namespace bt
 	bool HttpConnection::get(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len)
 	{
 		QMutexLocker locker(&mutex);
-		if (state == ERROR)
+		if (state == ERROR || request)
 			return false;
 			
-		HttpGet* g = new HttpGet(host,path,start,len,using_proxy);
-		requests.append(g);
+		request = new HttpGet(host,path,start,len,using_proxy);
 		net::SocketMonitor::instance().signalPacketReady();
 		return true;
 	}
@@ -245,14 +253,27 @@ namespace bt
 	bool HttpConnection::getData(QByteArray & data)
 	{
 		QMutexLocker locker(&mutex);
-		if (requests.count() == 0)
+		if (!request)
 			return false;
 		
-		HttpGet* g = requests.front();
+		HttpGet* g = request;
+		if (g->redirected)
+		{
+			// wait until we have the entire content if we are redirected
+			if (g->data_received < g->content_length)
+				return false;
+			
+			// we have the content so we can redirect the connection
+			KUrl u = g->redirected_to;
+			redirected(u);
+			return false;
+		}
+		
 		if (g->piece_data.size() == 0)
 		{
 			if (!g->request_sent)
 				net::SocketMonitor::instance().signalPacketReady();
+				
 			return false;
 		}
 		
@@ -264,9 +285,14 @@ namespace bt
 		if (g->piece_data.size() == 0 && g->finished())
 		{
 			delete g;
-			requests.pop_front();
-			if (requests.size() > 0)
-				net::SocketMonitor::instance().signalPacketReady();
+			request = 0;
+			if (close_when_finished)
+			{
+				state = CLOSED;
+				Out(SYS_CON|LOG_DEBUG) << "HttpConnection: closing connection due to redirection" << endl;
+				// reset connection
+				sock->reset();
+			}
 		}
 		
 		return true;
@@ -276,7 +302,10 @@ namespace bt
 	{
 		QMutexLocker locker(&mutex);
 		if (sock)
+		{
+			sock->updateSpeeds(bt::GetCurrentTime());
 			return sock->getDownloadRate();
+		}
 		else
 			return 0;
 	}
@@ -300,9 +329,41 @@ namespace bt
 		reply_timer.stop();
 	}
 	
+	void HttpConnection::redirected(const KUrl & url)
+	{
+		// Note: mutex is locked in onDataReady
+		bt::Uint64 start = request->start;
+		bt::Uint64 len = request->len;
+		QString host = request->host;
+		
+		// if we are using a proxy or the host hasn't changed, just send another request with the new path
+		if (using_proxy || url.host() == host)
+		{
+			delete request;
+			request = new HttpGet(url.host(),url.path(),start,len,using_proxy);
+			net::SocketMonitor::instance().signalPacketReady();
+		}
+		else
+		{
+			 // reset socket for new connection 
+			sock->reset();
+			// delete request
+			delete request;
+			request = 0;
+			// reset state to IDLE
+			state = IDLE;
+			reply_timer.stop();
+			// connect new location
+			connectTo(url);
+			// do a new get
+			get(url.host(),url.path(),start,len);
+			close_when_finished = true; // we have been redirected to a new host, so close connectin when finished
+		}
+	}
+	
 	////////////////////////////////////////////
 	
-	HttpConnection::HttpGet::HttpGet(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len,bool using_proxy) : path(path),start(start),len(len),data_received(0),bytes_sent(0),response_header_received(false),request_sent(false)
+	HttpConnection::HttpGet::HttpGet(const QString & host,const QString & path,bt::Uint64 start,bt::Uint64 len,bool using_proxy) : host(host),path(path),start(start),len(len),data_received(0),bytes_sent(0),response_header_received(false),request_sent(false)
 	{
 		QHttpRequestHeader request("GET",!using_proxy ? path : QString("http://%1/%2").arg(host).arg(path));
 		request.setValue("Host",host);
@@ -319,6 +380,8 @@ namespace bt
 		else
 			request.setValue("Connection","Keep-Alive");
 		buffer = request.toString().toLocal8Bit();
+		redirected = false;
+		content_length = 0;
 	//	Out(SYS_CON|LOG_DEBUG) << "HttpConnection: sending http request:" << endl;
 	//	Out(SYS_CON|LOG_DEBUG) << request.toString() << endl;
 	}
@@ -340,9 +403,29 @@ namespace bt
 			response_header_received = true;
 			QHttpResponseHeader hdr(QString::fromLocal8Bit(buffer.mid(0,idx + 4)));
 			
+			if (hdr.hasKey("Content-Length"))
+				content_length = hdr.value("Content-Length").toInt();
+			else
+				content_length = 0;
+			
 		//	Out(SYS_CON|LOG_DEBUG) << "HttpConnection: http reply header received" << endl;
 		//	Out(SYS_CON|LOG_DEBUG) << hdr.toString() << endl;
-			if (! (hdr.statusCode() == 200 || hdr.statusCode() == 206))
+			if ((hdr.statusCode() >= 300 && hdr.statusCode() <= 303) || hdr.statusCode() == 307)
+			{
+				// we got redirected to somewhere else
+				if (!hdr.hasKey("Location"))
+				{
+					failure_reason = i18n("Redirected without a new location !");
+					return false;
+				}
+				else
+				{
+					Out(SYS_CON|LOG_DEBUG) << "Redirected to " << hdr.value("Location") << endl;
+					redirected = true;
+					redirected_to = KUrl(hdr.value("Location"));
+				}
+			}
+			else if (! (hdr.statusCode() == 200 || hdr.statusCode() == 206))
 			{
 				failure_reason = hdr.reasonPhrase();
 				return false;

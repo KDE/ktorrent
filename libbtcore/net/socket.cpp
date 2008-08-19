@@ -108,6 +108,24 @@ namespace net
 		}
 	}
 	
+	void Socket::reset()
+	{
+		close();
+		int fd = socket(m_ip_version == 4 ? PF_INET : PF_INET6,SOCK_STREAM,0);
+		if (fd < 0)
+			Out(SYS_GEN|LOG_IMPORTANT) << QString("Cannot create socket : %1").arg(strerror(errno)) << endl;
+		m_fd = fd;
+		
+#if defined(Q_OS_MACX) || defined(Q_OS_DARWIN) || (defined(Q_OS_FREEBSD) && __FreeBSD_version < 600020 && !defined(__DragonFly__))
+		int val = 1;
+		if (setsockopt(m_fd,SOL_SOCKET,SO_NOSIGPIPE,&val,sizeof(int)) < 0)
+		{
+			Out(SYS_CON|LOG_NOTICE) << QString("Failed to set the NOSIGPIPE option : %1").arg(strerror(errno)) << endl;
+		}
+#endif	
+		m_state = IDLE;
+	}
+	
 	void Socket::close()
 	{
 		if (m_fd >= 0)
