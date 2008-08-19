@@ -173,7 +173,7 @@ namespace bt
 		{
 			// make the list of ranges to download
 			QList<Range> ranges;
-			for (Uint32 i = first_chunk;i != last_chunk;i++)
+			for (Uint32 i = first_chunk;i <= last_chunk;i++)
 			{
 				doChunk(i,ranges);
 			}
