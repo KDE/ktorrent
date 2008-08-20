@@ -211,11 +211,11 @@ int mingw_poll(struct pollfd *fds, unsigned int nfds, int timo)
         timeout.tv_usec = (timo - timeout.tv_sec * 1000) * 1000;
     }
 
-    kWarning()<<QString("Entering select() sec=%1 usec=%2 ip=%3 op=%4").arg(timeout.tv_sec).arg(timeout.tv_usec).arg((long)ip).arg((long)op);
+    //kWarning()<<QString("Entering select() sec=%1 usec=%2 ip=%3 op=%4").arg(timeout.tv_sec).arg(timeout.tv_usec).arg((long)ip).arg((long)op);
 
     rc = select(0, ip, op, &efds, toptr);
 
-    kWarning()<<"Exiting select rc="<<rc;
+    //kWarning()<<"Exiting select rc="<<rc;
 
     if(rc <= 0)
         return rc;
@@ -230,7 +230,7 @@ int mingw_poll(struct pollfd *fds, unsigned int nfds, int timo)
             if(FD_ISSET(fd, &efds))
                 /* Some error was detected ... should be some way to know. */
                 fds[i].revents |= POLLHUP;
-            kWarning()<<QString("%1 %2 %3 revent = %4").arg(FD_ISSET(fd, &ifds)).arg(FD_ISSET(fd, &ofds)).arg(FD_ISSET(fd, &efds)).arg(fds[i].revents);
+            //kWarning()<<QString("%1 %2 %3 revent = %4").arg(FD_ISSET(fd, &ifds)).arg(FD_ISSET(fd, &ofds)).arg(FD_ISSET(fd, &efds)).arg(fds[i].revents);
         }
     }
     return rc;
