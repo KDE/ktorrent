@@ -23,6 +23,7 @@
 #include <kactioncollection.h>
 #include <kfiledialog.h>
 #include <kmainwindow.h>
+#include <kstandarddirs.h>
 #include <kio/copyjob.h>
 #include <kross/core/manager.h>
 #include <kross/core/interpreter.h>
@@ -41,6 +42,7 @@
 #include "scriptmanager.h"
 #include "scriptmodel.h"
 #include "script.h"
+#include "ui_scriptproperties.h"
 
 K_EXPORT_COMPONENT_FACTORY(ktscriptingplugin,KGenericFactory<kt::ScriptingPlugin>("ktscriptingplugin"))
 		
@@ -83,6 +85,10 @@ namespace kt
 		edit_script = new KAction(KIcon("document-open"),i18n("Edit Script"),this);
 		connect(edit_script,SIGNAL(triggered()),this,SLOT(editScript()));
 		ac->addAction("edit_script",edit_script);
+		
+		properties = new KAction(KIcon("dialog-information"),i18n("Properties"),this);
+		connect(properties,SIGNAL(triggered()),this,SLOT(showProperties()));
+		ac->addAction("script_properties",properties);
 	}
 
 	void ScriptingPlugin::load()
@@ -117,6 +123,17 @@ namespace kt
 	
 	void ScriptingPlugin::loadScripts()
 	{
+		QStringList dir_list = KGlobal::dirs()->findDirs("data", "ktorrent/scripts");
+		foreach (const QString & dir,dir_list)
+		{
+			QDir d(dir);
+			QStringList subdirs = d.entryList(QDir::Dirs);
+			foreach (const QString & sdir,subdirs)
+				if (sdir != ".." && sdir != ".")
+					loadScriptDir(d.absoluteFilePath(sdir));
+		}
+		
+		// 
 		KConfigGroup g = KGlobal::config()->group("Scripting");
 		QStringList scripts = g.readEntry("scripts",QStringList());
 		foreach (const QString & s,scripts)
@@ -124,6 +141,25 @@ namespace kt
 			Out(SYS_SCR|LOG_DEBUG) << "Loading script " << s << endl;
 			if (bt::Exists(s))
 				model->addScript(s);
+		}
+	}
+	
+	void ScriptingPlugin::loadScriptDir(const QString & dir)
+	{
+		QDir d(dir);
+		QStringList files = d.entryList(QDir::Files);
+		QString desktop_file;
+		QString dir_path = dir;
+		if (!dir_path.endsWith(bt::DirSeparator()))
+			dir_path.append(bt::DirSeparator());
+		
+		// look for desktop files
+		foreach (const QString & file,files)
+		{
+			if (file.endsWith(".desktop"))
+			{
+				model->addScriptFromDesktopFile(dir_path,file);
+			}
 		}
 	}
 	
@@ -217,6 +253,32 @@ namespace kt
 				new KRun(KUrl(s->scriptFile()), 0, 0, true, true);
 		}
 		
+	}
+	
+	void ScriptingPlugin::showProperties()
+	{
+		QModelIndexList sel = sman->selectedScripts();
+		if (sel.count() != 1)
+			return;
+		
+		Script* s = model->scriptForIndex(sel.front());
+		if (!s || !s->metaInfo().valid())
+			return;
+			
+		Ui_ScriptProperties prop;
+		KDialog* dialog = new KDialog(sman);
+		dialog->setButtons(KDialog::Ok);
+		dialog->setWindowTitle(i18n("Script Properties"));
+		prop.setupUi(dialog->mainWidget());
+		prop.m_icon->setPixmap(DesktopIcon(s->iconName()));
+		prop.m_name->setText(s->name());
+		prop.m_description->setText(s->metaInfo().comment);
+		prop.m_author->setText(s->metaInfo().author);
+		prop.m_license->setText(s->metaInfo().license);
+		prop.m_email->setText(s->metaInfo().email);
+		prop.m_website->setText(s->metaInfo().website);
+		dialog->exec();
+		delete dialog;
 	}
 	
 	bool ScriptingPlugin::versionCheck(const QString & version) const

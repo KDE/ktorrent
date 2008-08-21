@@ -38,8 +38,37 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
+		Script(QObject* parent);
 		Script(const QString & file,QObject* parent);
 		virtual ~Script();
+		
+		struct MetaInfo
+		{
+			QString name;
+			QString comment;
+			QString icon;
+			QString author;
+			QString email;
+			QString website;
+			QString license;
+			
+			bool valid() const 
+			{
+				return !name.isEmpty() && 
+						!comment.isEmpty() && 
+						!icon.isEmpty() && 
+						!author.isEmpty() && 
+						!license.isEmpty();
+			}
+		};
+		
+		/**
+		 * Load the script from a desktop file
+		 * @param dir THe directory the desktop file is in
+		 * @param desktop_file The desktop file itself (relative to dir)
+		 * @return true upon success
+		 */
+		bool loadFromDesktopFile(const QString & dir,const QString & desktop_file);
 		
 		/**
 		 * Load and execute the script
@@ -63,10 +92,15 @@ namespace kt
 		
 		/// Get the file
 		QString scriptFile() const {return file;}
+		
+		/// Get the meta info of the script
+		const MetaInfo & metaInfo() const {return info;}
+		
 	private:
 		QString file;
 		Kross::Action* action;
 		bool executing;
+		MetaInfo info;
 	};
 
 }

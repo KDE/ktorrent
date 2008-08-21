@@ -1,10 +1,12 @@
+add_subdirectory(scripts)
+
 set(ktscriptingplugin_SRC 
 	scriptingplugin.cpp 
 	scriptmanager.cpp 
 	scriptmodel.cpp
 	script.cpp)
 
-#kde4_add_ui_files(ktscriptingplugin_SRC scriptingpref.ui)
+kde4_add_ui_files(ktscriptingplugin_SRC scriptproperties.ui)
 #kde4_add_kcfg_files(ktscriptingplugin_SRC scriptingpluginsettings.kcfgc)
 kde4_add_plugin(ktscriptingplugin ${ktscriptingplugin_SRC})
 

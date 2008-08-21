@@ -19,6 +19,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <kmimetype.h>
+#include <kdesktopfile.h>
+#include <kconfiggroup.h>
 #include <kross/core/manager.h>
 #include <kross/core/actioncollection.h>
 #include <util/fileops.h>
@@ -26,7 +28,10 @@
 
 namespace kt
 {
-
+	Script::Script(QObject* parent) : QObject(parent),action(0),executing(false)
+	{
+	}
+	
 	Script::Script(const QString & file,QObject* parent) : QObject(parent),file(file),action(0),executing(false)
 	{
 	}
@@ -35,6 +40,30 @@ namespace kt
 	Script::~Script()
 	{
 		stop();
+	}
+	
+	bool Script::loadFromDesktopFile(const QString & dir,const QString & desktop_file)
+	{
+		KDesktopFile df(dir + desktop_file);
+		// check if everything is OK
+		if (df.readType() != "KTorrentScript")
+			return false;
+		
+		info.name = df.readName();
+		info.comment = df.readComment();
+		info.icon = df.readIcon();
+		
+		KConfigGroup g = df.group("Desktop Entry");
+		info.author = g.readEntry("X-KTorrent-Script-Author",QString());
+		info.email = g.readEntry("X-KTorrent-Script-Email",QString());
+		info.website = g.readEntry("X-KTorrent-Script-Website",QString());
+		info.license = g.readEntry("X-KTorrent-Script-License",QString());
+		file = g.readEntry("X-KTorrent-Script-File",QString());
+		if (file.isEmpty() || !bt::Exists(dir + file)) // the script file must exist
+			return false;
+		
+		file = dir + file;
+		return true;
 	}
 
 	bool Script::execute()
@@ -80,7 +109,9 @@ namespace kt
 	
 	QString Script::name() const
 	{
-		if (action)
+		if (!info.name.isEmpty())
+			return info.name;
+		else if (action)
 			return action->name();
 		else
 			return QFileInfo(file).fileName();
@@ -88,7 +119,9 @@ namespace kt
 		
 	QString Script::iconName() const
 	{
-		if (action)
+		if (!info.icon.isEmpty())
+			return info.icon;
+		else if (action)
 			return action->iconName();
 		else
 			return KMimeType::findByPath(file)->iconName();

@@ -47,6 +47,7 @@ namespace kt
 		QAction* run = ac->action("run_script");
 		QAction* stop = ac->action("stop_script");
 		QAction* edit = ac->action("edit_script");
+		QAction* properties = ac->action("script_properties");
 		
 		toolbar = new KToolBar(this);
 		toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
@@ -59,6 +60,7 @@ namespace kt
 		connect(this,SIGNAL(enableRemoveScript(bool)),edit,SLOT(setEnabled(bool)));
 		connect(this,SIGNAL(enableStopScript(bool)),stop,SLOT(setEnabled(bool)));
 		connect(this,SIGNAL(enableRunScript(bool)),run,SLOT(setEnabled(bool)));
+		connect(this,SIGNAL(enableProperties(bool)),properties,SLOT(setEnabled(bool)));
 		remove->setEnabled(false);
 		
 		view = new QListView(this);
@@ -83,12 +85,15 @@ namespace kt
 		context_menu->addAction(stop);
 		context_menu->addSeparator();
 		context_menu->addAction(edit);
+		context_menu->addSeparator();
+		context_menu->addAction(properties);
 		
 		add->setEnabled(true);
 		remove->setEnabled(false);
 		run->setEnabled(false);
 		stop->setEnabled(false);
 		edit->setEnabled(false);
+		properties->setEnabled(false);
 	}
 
 
@@ -119,6 +124,8 @@ namespace kt
 		
 		enableRunScript(selected.count() > 0 && num_not_running > 0);
 		enableStopScript(selected.count() > 0 && num_running > 0);
+		Script* s = model->scriptForIndex(selected.front());
+		enableProperties(selected.count() == 1 && s && s->metaInfo().valid());
 	}
 	
 	QModelIndexList ScriptManager::selectedScripts()

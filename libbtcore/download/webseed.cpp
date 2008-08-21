@@ -159,7 +159,7 @@ namespace bt
 		bytes_of_cur_chunk = 0;
 		
 		QString path = url.path();
-		if (path.endsWith('/'))
+		if (path.endsWith('/') && !isUserCreated())
 			path += tor.getNameSuggestion();
 		
 		// open connection and connect if needed

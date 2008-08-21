@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=DownloadOrderScript
+Comment=Script to download files in a user controlled order
+Type=KTorrentScript
+Icon=text-x-script
+X-KTorrent-Script-Author=Joris Guisson
+X-KTorrent-Script-Email=joris.guisson@gmail.com
+X-KTorrent-Script-Website=http://ktorrent.org/
+X-KTorrent-Script-License=GPL
+X-KTorrent-Script-File=downloadorder.py
+

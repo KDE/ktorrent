@@ -48,6 +48,7 @@ namespace kt
 		void scriptDownloadFinished(KJob* job);
 		void loadScripts();
 		void saveScripts();
+		void loadScriptDir(const QString & dir);
 		
 	private slots:
 		void addScript();
@@ -55,6 +56,7 @@ namespace kt
 		void runScript();
 		void stopScript();
 		void editScript();
+		void showProperties();
 		
 	private:
 		ScriptManager* sman;
@@ -64,6 +66,7 @@ namespace kt
 		KAction* run_script;
 		KAction* stop_script;
 		KAction* edit_script;
+		KAction* properties;
 	};
 
 }

@@ -37,7 +37,35 @@ namespace kt
 	
 	void ScriptModel::addScript(const QString & file)
 	{
+		// make sure we don't add dupes
+		foreach (Script* s,scripts)
+			if (s->scriptFile() == file)
+				return;
+		
 		Script* s = new Script(file,this);
+		scripts.append(s);
+		insertRow(scripts.count());
+	}
+	
+	void ScriptModel::addScriptFromDesktopFile(const QString & dir,const QString & desktop_file)
+	{
+		Script* s = new Script(this);
+		if (!s->loadFromDesktopFile(dir,desktop_file))
+		{
+			delete s;
+			return;
+		}
+		
+		// we don't want dupes
+		foreach (Script* os,scripts)
+		{
+			if (s->scriptFile() == os->scriptFile())
+			{
+				delete s;
+				return;
+			}
+		}
+		
 		scripts.append(s);
 		insertRow(scripts.count());
 	}
@@ -109,6 +137,7 @@ namespace kt
 	
 	bool ScriptModel::removeRows(int row,int count,const QModelIndex & parent)
 	{
+		Q_UNUSED(parent);
 		beginRemoveRows(QModelIndex(),row,row + count - 1);
 		endRemoveRows();
 		return true;
@@ -116,6 +145,7 @@ namespace kt
 	
 	bool ScriptModel::insertRows(int row,int count,const QModelIndex & parent)
 	{
+		Q_UNUSED(parent);
 		beginInsertRows(QModelIndex(),row,row + count - 1);
 		endInsertRows();
 		return true;

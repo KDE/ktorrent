@@ -60,6 +60,7 @@ namespace kt
 		void enableRemoveScript(bool on);
 		void enableRunScript(bool on);
 		void enableStopScript(bool on);
+		void enableProperties(bool on);
 		
 	private:
 		ScriptModel* model;

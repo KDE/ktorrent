@@ -44,6 +44,13 @@ namespace kt
 		 */
 		void addScript(const QString & file);
 		
+		/**
+		 * Add script which is described by a desktop file.
+		 * @param dir The directory the script is in
+		 * @param desktop The desktop file (relative to dir, not an absolute path)
+		 */
+		void addScriptFromDesktopFile(const QString & dir,const QString & desktop_file);
+		
 		/// Get a script given an index
 		Script* scriptForIndex(const QModelIndex & index) const;
 		
