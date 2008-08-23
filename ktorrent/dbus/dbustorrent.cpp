@@ -155,7 +155,7 @@ namespace kt
 		TrackersList* tlist = ti->getTrackersList();
 		KUrl::List urls = tlist->getTrackerURLs();
 		QStringList ret;
-		foreach (KUrl u,urls)
+		foreach (const KUrl& u,urls)
 			ret << u.prettyUrl();
 		return ret;
 	}

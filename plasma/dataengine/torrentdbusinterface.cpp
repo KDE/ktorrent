@@ -64,7 +64,7 @@ namespace ktplasma
 			
 			BDictNode* dict = (BDictNode*)node;
 			QStringList keys = dict->keys();
-			foreach (QString key,keys)
+			foreach (const QString& key,keys)
 			{
 				BValueNode* vn = dict->getValue(key);
 				if (!vn)

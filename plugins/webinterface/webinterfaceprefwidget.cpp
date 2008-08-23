@@ -45,7 +45,7 @@ namespace kt
 		QDir d(*(dirList.begin()));
 		
 		QStringList skinList = d.entryList(QDir::Dirs);
-		foreach (QString skin,skinList)
+		foreach (const QString& skin,skinList)
 		{
 			if (skin =="." || skin == ".." || skin == "common")
 				continue;

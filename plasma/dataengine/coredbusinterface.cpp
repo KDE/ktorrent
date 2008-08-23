@@ -48,7 +48,7 @@ namespace ktplasma
 		{
 			QStringList torrents = r.value();
 			engine->setData("core","num_torrents",torrents.count());
-			foreach (QString tor,torrents)
+			foreach (const QString& tor,torrents)
 			{
 				engine->addTorrent(tor);
 			}
