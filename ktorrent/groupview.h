@@ -110,8 +110,6 @@ namespace kt
 		KAction* open_in_new_tab;
 		KAction* edit_group_policy;
 		
-		bool editing_item;
-		
 		friend class GroupViewItem;
 	};
 
