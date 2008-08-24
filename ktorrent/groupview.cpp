@@ -114,7 +114,6 @@ namespace kt
 		connect(gman,SIGNAL(defaultGroupRemoved(Group*)),this,SLOT(defaultGroupRemoved(Group*)));
 		connect(gman,SIGNAL(defaultGroupAdded(Group*)),this,SLOT(defaultGroupAdded(Group*)));
 
-		editing_item = false;
 		current_item = 0;
 		menu = 0;
 		setupActions(gui->actionCollection());
@@ -361,7 +360,6 @@ namespace kt
 			return;
 		
 		editItem(current_item);
-		editing_item = true;
 	}
 
 	GroupViewItem* GroupView::addGroup(Group* g,QTreeWidgetItem* parent,const QString & name)
@@ -436,9 +434,8 @@ namespace kt
 
 	void GroupView::onItemChanged(QTreeWidgetItem* item,int )
 	{
-		if (!item || !editing_item) 
+		if (!item) 
 			return;
-		editing_item = false;
 
 		GroupViewItem* li = dynamic_cast<GroupViewItem*>(item);
 		if (!li)
@@ -465,7 +462,7 @@ namespace kt
 			else
 			{
 				gman->renameGroup(g->groupName(),name);
-				current_item->setText(0,name);
+				li->setText(0,name);
 				groupRenamed(g);
 				gman->saveGroups();
 			//	sort();

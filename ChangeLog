@@ -12,6 +12,8 @@ dialog (169133)
 - Fix typo in advanced pref
 - Fix bug causing webseed not to download last chunk of a request
 - Fix bug which resulted in speeds of webseed not getting calculated
+- Fix rename of groups when edit is not initialized via context menu
+
 
 Changes in 3.1.2 :
 - Improved performance of GUI updates
