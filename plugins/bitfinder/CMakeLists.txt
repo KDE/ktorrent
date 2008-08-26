@@ -20,7 +20,13 @@ kde4_add_plugin(ktbitfinderplugin ${ktbitfinderplugin_SRC})
 target_link_libraries(
     ktbitfinderplugin
     ktcore
+    btcore
+    ${KDE4_KDECORE_LIBS}
+    ${KDE4_KDEUI_LIBS}
+    ${KDE4_KPARTS_LIBS}
+    ${QT_QTCORE_LIBRARY}
     ${QT_QTGUI_LIBRARY}
+    ${QT_QTXML_LIBRARY}
     )
 install(TARGETS ktbitfinderplugin DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktbitfinderplugin.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
