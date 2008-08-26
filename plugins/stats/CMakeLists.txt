@@ -28,6 +28,11 @@ kde4_add_ui_files(ktstatsplugin_SRC Spd.ui Conns.ui Settings.ui DisplaySettings.
 kde4_add_kcfg_files(ktstatsplugin_SRC statspluginsettings.kcfgc)
 kde4_add_plugin(ktstatsplugin ${ktstatsplugin_SRC})
 
-target_link_libraries(ktstatsplugin ${KDE4_KPARTS_LIBS} ktcore )
+target_link_libraries(
+    ktstatsplugin
+    ktcore
+    btcore
+    ${KDE4_KPARTS_LIBS}
+    )
 install(TARGETS ktstatsplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktstatsplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )

@@ -17,6 +17,6 @@ kde4_add_ui_files(ktbitfinderplugin_SRC
 
 kde4_add_plugin(ktbitfinderplugin ${ktbitfinderplugin_SRC})
 
-target_link_libraries(ktbitfinderplugin ktcore)
+target_link_libraries(ktbitfinderplugin ktcore {QT_QTGUI_LIBRARY})
 install(TARGETS ktbitfinderplugin DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktbitfinderplugin.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
