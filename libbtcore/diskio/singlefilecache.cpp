@@ -100,6 +100,9 @@ namespace bt
 			dst += bt::DirSeparator();
 		
 		dst += output_file.mid(output_file.lastIndexOf(bt::DirSeparator()) + 1);
+		if (output_file == dst)
+			return 0;
+		
 		move_data_files_dst = dst;
 		return KIO::move(output_file,dst);
 	}

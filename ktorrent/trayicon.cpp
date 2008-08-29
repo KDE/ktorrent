@@ -238,11 +238,11 @@ namespace kt
 		 
 		if (tc->overMaxRatio())
 			msg = i18n("<b>%1</b> has reached its maximum share ratio of %2 and cannot be enqueued. "
-				"Remove the limit manually if you want to continue seeding.",
+					"<br>Remove the limit manually if you want to continue seeding.",
 				s.torrent_name,loc->formatNumber(s.max_share_ratio,2));
 		else
 			msg = i18n("<b>%1</b> has reached its maximum seed time of %2 hours and cannot be enqueued. "
-				"Remove the limit manually if you want to continue seeding.",
+					"<br>Remove the limit manually if you want to continue seeding.",
 				s.torrent_name,loc->formatNumber(s.max_seed_time,2));
 		
 		KNotification::event("QueueNotPossible",msg,QPixmap(),mwnd);
