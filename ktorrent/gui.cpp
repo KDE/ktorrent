@@ -519,6 +519,7 @@ namespace kt
 		show_kt_action->setShortcut(show_kt_action->globalShortcut());
 		ac->addAction("show_kt",show_kt_action);
 
+		setStandardToolBarMenuEnabled(true);
 				
 		QMenu* m = tray_icon->contextMenu();
 		m->addAction(start_all_action);
