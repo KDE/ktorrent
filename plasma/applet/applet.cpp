@@ -19,20 +19,24 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <math.h>
+#include <QFile>
 #include <QGraphicsLinearLayout>
 #include <QGraphicsGridLayout>
 #include <QGraphicsProxyWidget>
-#include <kicon.h>
-#include <kiconloader.h>
-#include <kconfigdialog.h>
-#include <klocale.h>
-#include <plasma/widgets/icon.h>
-#include <plasma/widgets/meter.h>
-#include <plasma/widgets/label.h>
+#include <KIcon>
+#include <KIconLoader>
+#include <KConfigDialog>
+#include <KLocale>
+#include <KRun>
+#include <KWindowSystem>
+#include <Plasma/Icon>
+#include <Plasma/Meter>
+#include <Plasma/Label>
+#include <taskmanager/taskmanager.h>
+#include <taskmanager/task.h>
 #include <util/functions.h>
 #include "applet.h"
 #include "chunkbar.h"
-
 using namespace bt;
 
 namespace ktplasma
@@ -50,6 +54,15 @@ namespace ktplasma
 		max_us = max_ds = 0;
 		root_layout = 0;
 		connected_to_app = config_dlg_created = false;
+
+		// drop data!
+		if (!args.isEmpty()) {
+			QFile f(args[0].toString());
+			if (f.open(QIODevice::ReadOnly)) {
+				QDataStream s(&f);
+				s >> current_source;
+			}
+		}
 	}
 
 
@@ -73,12 +86,12 @@ namespace ktplasma
 		
 		QGraphicsLinearLayout* line = new QGraphicsLinearLayout(0);
 		
-		//connect(icon, SIGNAL(clicked()), this, SLOT(pressed()));
 		icon = new Plasma::Icon(KIcon("ktorrent"),QString(),this);
 		int icon_size = IconSize(KIconLoader::Desktop);
 		icon->setMaximumSize(icon_size,icon_size);
 		icon->setMinimumSize(icon_size,icon_size);
 		icon->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+		connect(icon, SIGNAL(clicked()), this, SLOT(iconClicked()));
 		
 		title = new Plasma::Label(this);
 		title->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
@@ -110,7 +123,7 @@ namespace ktplasma
 		root_layout->addItem(grid);
 		
 		label = new Plasma::Label(this);
-
+		
 		root_layout->addItem(label);
 		root_layout->setAlignment(label,Qt::AlignHCenter|Qt::AlignVCenter);
 		
@@ -121,9 +134,27 @@ namespace ktplasma
 		clearData();
 		
 		resize(icon_size * 8,root_layout->preferredHeight());
-		engine->connectSource("core",this);
 		
-		current_source = selectTorrent();
+		if (current_source.isNull()) {
+			current_source = selectTorrent();
+		} else {
+			QStringList sources = engine->sources();
+			bool found = false;
+			foreach (const QString & s,sources)
+			{
+				QString name = engine->query(s).value("name").toString();
+				if (name == current_source) {
+					current_source = s;
+					found = true;
+					break;
+				}
+			}
+
+			if (!found) {
+			    current_source = selectTorrent();
+			}
+                }
+		
 		if (!current_source.isNull())
 		{
 			connected_to_app = true;
@@ -137,6 +168,8 @@ namespace ktplasma
 			else
 				title->setText(i18n("No torrents loaded !"));
 		}
+
+		engine->connectSource("core",this);
 	}
 	
 	QString Applet::selectTorrent()
@@ -337,6 +370,23 @@ namespace ktplasma
 			else
 				clearData();
 		}
+	}
+
+	void Applet::iconClicked()
+	{
+		TaskManager::TaskDict tasks = TaskManager::TaskManager::self()->tasks();
+		for (TaskManager::TaskDict::iterator i = tasks.begin();i != tasks.end();i ++)
+		{
+			if (i.value()->className() == "ktorrent")
+			{
+				KWindowSystem::activateWindow(i.key());
+				return;
+			}
+		}
+
+		// can't find the window, try launching it
+		KUrl::List empty;
+		KRun::run("ktorrent", empty, 0);
 	}
 
 	void Applet::clearData()

@@ -3,6 +3,7 @@ Encoding=UTF-8
 Name=KTorrent Plasma Applet
 Icon=ktorrent
 Type=Service
+X-Plasma-DropMimeTypes=application/x-ktorrent-drag-object
 X-KDE-ServiceTypes=Plasma/Applet
 X-KDE-Library=plasma_applet_ktorrent
 X-KDE-PluginInfo-Author=Joris Guisson

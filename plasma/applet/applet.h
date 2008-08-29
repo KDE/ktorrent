@@ -59,6 +59,7 @@ namespace ktplasma
 		void configUpdated();
 		void sourceAdded(const QString & s);
 		void sourceRemoved(const QString & s);
+		void iconClicked();
 		
 	private:
 		void updateTorrentCombo();
