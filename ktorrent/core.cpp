@@ -562,7 +562,7 @@ namespace kt
 				
 			qman->append(tc);
 			connectSignals(tc);
-			if (tc->getStats().autostart && tc->getStats().user_controlled)
+			if (tc->getStats().autostart && tc->getStats().user_controlled && !tc->overMaxRatio() && !tc->overMaxSeedTime())
 				start(tc);
 			torrentAdded(tc);
 		}

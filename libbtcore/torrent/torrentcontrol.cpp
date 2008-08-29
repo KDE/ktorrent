@@ -332,7 +332,7 @@ namespace bt
 			if(moveCompleted)
 			{
 				QString outdir = completed_dir.path();
-				if(!outdir.endsWith(bt::DirSeparator()))
+				if (!outdir.endsWith(bt::DirSeparator()))
 					outdir += bt::DirSeparator();
 				
 				changeOutputDir(outdir,bt::TorrentInterface::MOVE_FILES);

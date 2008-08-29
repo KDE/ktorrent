@@ -247,6 +247,7 @@ namespace bt
 		new_output_dir = nd;
 		
 		MoveDataFilesJob* job = new MoveDataFilesJob();
+		int nmoves = 0;
 		
 		for ( Uint32 i = 0;i < tor.getNumFiles();i++ )
 		{
@@ -258,11 +259,23 @@ namespace bt
 				// create it
 			MakeFilePath(nd + tf.getUserModifiedPath());
 				
-			job->addMove(tf.getPathOnDisk(),nd + tf.getUserModifiedPath());
+			if (tf.getPathOnDisk() != nd + tf.getUserModifiedPath())
+			{
+				job->addMove(tf.getPathOnDisk(),nd + tf.getUserModifiedPath());
+				nmoves++;
+			}
 		}
 
-		job->startMoving();
-		return job;
+		if (nmoves == 0)
+		{
+			delete job;
+			return 0;
+		}
+		else
+		{
+			job->startMoving();
+			return job;
+		}
 	}
 	
 	void MultiFileCache::moveDataFilesFinished(KJob* job)
@@ -288,6 +301,7 @@ namespace bt
 			return 0;
 		
 		MoveDataFilesJob* job = new MoveDataFilesJob();
+		int nmoves = 0;
 		QMap<TorrentFileInterface*,QString>::const_iterator i = files.begin();
 		while (i != files.end())
 		{
@@ -300,15 +314,31 @@ namespace bt
 					dest += bt::DirSeparator();
 			
 				int last = path.lastIndexOf(bt::DirSeparator());
-				job->addMove(tf->getPathOnDisk(),dest + path.mid(last+1));
+				QString dst = dest + path.mid(last+1);
+				if (tf->getPathOnDisk() != dst)
+				{
+					job->addMove(tf->getPathOnDisk(),dst);
+					nmoves++;
+				}
 			}
-			else
+			else if (tf->getPathOnDisk() != i.value())
+			{
 				job->addMove(tf->getPathOnDisk(),i.value());
+				nmoves++;
+			}
 			i++;
 		}
 		
-		job->startMoving();
-		return job;
+		if (nmoves)
+		{
+			job->startMoving();
+			return job;
+		}
+		else
+		{
+			delete job;
+			return 0;
+		}
 	}
 		
 	void MultiFileCache::moveDataFilesFinished(const QMap<TorrentFileInterface*,QString> & fmap,KJob* job)

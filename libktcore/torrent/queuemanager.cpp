@@ -84,7 +84,7 @@ namespace kt
 			SynchronousWait(1000);
 	}
 	
-	TorrentStartResponse QueueManager::startInternal(bt::TorrentInterface* tc)
+	TorrentStartResponse QueueManager::startInternal(bt::TorrentInterface* tc,bool user)
 	{
 		const TorrentStats & s = tc->getStats();
 		
@@ -114,13 +114,19 @@ namespace kt
 		bool max_seed_time_reached = tc->overMaxSeedTime();
 		if (s.completed && (max_ratio_reached || max_seed_time_reached))
 		{
+			if (!user)
+			{
+				tc->setPriority(0); // dequeue torrent
+				return QM_LIMITS_REACHED;
+			}
+			
 			QString msg; 
 			if (max_ratio_reached && max_seed_time_reached)
-				msg = msg = i18n("The torrent \"%1\" has reached it's maximum share ratio and it's maximum seed time. Ignore the limit and start seeding anyway?",s.torrent_name);
+				msg = i18n("The torrent \"%1\" has reached it's maximum share ratio and it's maximum seed time. Ignore the limit and start seeding anyway?",s.torrent_name);
 			else if (max_ratio_reached && !max_seed_time_reached)
 				msg = i18n("The torrent \"%1\" has reached it's maximum share ratio. Ignore the limit and start seeding anyway?",s.torrent_name);
 			else if (max_seed_time_reached && !max_ratio_reached)
-				msg = msg = i18n("The torrent \"%1\" has reached it's maximum seed time. Ignore the limit and start seeding anyway?",s.torrent_name);
+				msg = i18n("The torrent \"%1\" has reached it's maximum seed time. Ignore the limit and start seeding anyway?",s.torrent_name);
 				
 			if (KMessageBox::questionYesNo(0, msg, i18n("Maximum share ratio limit reached.")) == KMessageBox::Yes)
 			{
@@ -163,7 +169,7 @@ namespace kt
 
 		if (start_tc)
 		{
-			return startInternal(tc);
+			return startInternal(tc,user);
 		}
 		else
 		{
@@ -536,7 +542,7 @@ namespace kt
 				if (!s.running)
 				{
 					Out(SYS_GEN|LOG_DEBUG) << "QM Starting: " << s.torrent_name << endl;
-					if (startInternal(tc) == bt::START_OK)
+					if (startInternal(tc,false) == bt::START_OK)
 						num_running++;
 					else if (s.stopped_by_error)
 						tc->setPriority(0);
@@ -564,7 +570,7 @@ namespace kt
 				if (!s.running)
 				{
 					Out(SYS_GEN|LOG_DEBUG) << "QM Starting: " << s.torrent_name << endl;
-					if (startInternal(tc) == bt::START_OK)
+					if (startInternal(tc,false) == bt::START_OK)
 						num_running++;
 					else if (s.stopped_by_error)
 						tc->setPriority(0);

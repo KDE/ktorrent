@@ -249,7 +249,7 @@ namespace kt
 		void checkMaxSeedTime(QList<bt::TorrentInterface*> & todo);
 		void checkMaxRatio(QList<bt::TorrentInterface*> & todo);
 		void rearrangeQueue();
-		bt::TorrentStartResponse startInternal(bt::TorrentInterface* tc);
+		bt::TorrentStartResponse startInternal(bt::TorrentInterface* tc,bool user);
 
 	private:
 		QueuePtrList downloads;
