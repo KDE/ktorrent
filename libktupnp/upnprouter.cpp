@@ -120,8 +120,7 @@ namespace kt
 	
 	UPnPRouter::~UPnPRouter()
 	{
-		foreach (HTTPRequest* r,active_reqs)
-			r->deleteLater();
+		qDeleteAll(active_reqs);
 	}
 	
 	void UPnPRouter::addService(const UPnPService & s)
