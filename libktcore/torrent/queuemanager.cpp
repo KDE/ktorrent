@@ -354,6 +354,7 @@ namespace kt
 
 	void QueueManager::stopall(int type)
 	{
+		ordering = true;
 		QList<bt::TorrentInterface *>::iterator i = downloads.begin();
 		while (i != downloads.end())
 		{
@@ -381,6 +382,7 @@ namespace kt
 					tc->setPriority(0); 
 			i++;
 		}
+		ordering = false;
 	}
 	
 	void QueueManager::onExit(WaitJob* wjob)
