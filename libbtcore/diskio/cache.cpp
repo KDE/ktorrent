@@ -54,7 +54,7 @@ namespace bt
 	bool Cache::mappedModeAllowed()
 	{
 #ifndef Q_WS_WIN
-		return MaxOpenFiles() - bt::PeerManager::getTotalConnections() < 100;
+		return MaxOpenFiles() - bt::PeerManager::getTotalConnections() > 100;
 #else
 		return true; //there isn't a file handle limit on windows
 #endif
