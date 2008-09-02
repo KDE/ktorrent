@@ -59,7 +59,17 @@ namespace bt
 		delete [] data;
 	}
 
-	
+	void BitSet::updateNumOnBits()
+	{
+		num_on = 0;
+		Uint32 i = 0;
+		while (i < num_bits)
+		{
+			if (get(i))
+				num_on++;
+			i++;
+		}
+	}
 
 	BitSet & BitSet::operator = (const BitSet & bs)
 	{

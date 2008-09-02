@@ -148,13 +148,14 @@ set(libbtcore_SRC
 	diskio/chunk.cpp         
 	diskio/dndfile.cpp         
 	diskio/singlefilecache.cpp
-	diskio/cachefile.cpp  
-	diskio/chunkmanager.cpp  
 	diskio/multifilecache.cpp
 	diskio/preallocationthread.cpp
 	diskio/movedatafilesjob.cpp
 	diskio/deletedatafilesjob.cpp
-
+	diskio/piecedata.cpp
+	diskio/cachefile.cpp  
+	diskio/chunkmanager.cpp  
+	
 	tracker/httptracker.cpp  
 	tracker/tracker.cpp  
 	tracker/udptracker.cpp  
@@ -302,6 +303,7 @@ set (diskio_HDR
 	./diskio/dndfile.h
 	./diskio/chunk.h
 	./diskio/multifilecache.h
+	./diskio/piecedata.h
 )
 	
 set (torrent_HDR

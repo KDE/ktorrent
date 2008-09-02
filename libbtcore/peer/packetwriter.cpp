@@ -181,7 +181,7 @@ namespace bt
 			Out(SYS_CON|LOG_NOTICE) << "\tPiece : begin = " << begin << " len = " << len << endl;
 			return false;
 		}
-		else if (!ch || ch->getData() == 0)
+		else if (!ch)
 		{
 			Out(SYS_CON|LOG_NOTICE) << "Warning : attempted to upload an invalid chunk" << endl;
 			return false;

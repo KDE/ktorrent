@@ -65,7 +65,6 @@ namespace bt
 		QString index_file,file_info_file,file_priority_file;
 		std::vector<Chunk*> chunks;
 		Cache* cache;
-		QMap<Uint32,TimeStamp> loaded; // loaded chunks and when they were loaded
 		BitSet bitset;
 		BitSet excluded_chunks;
 		BitSet only_seed_chunks;
@@ -173,45 +172,16 @@ namespace bt
 		Chunk* getChunk(unsigned int i);
 		
 		/**
-		 * Get's the i'th Chunk. Makes sure that the Chunk's data
-		 * is in memory. If the Chunk hasn't been downloaded yet 0
-		 * is returned. Whenever the Chunk needs to be uploaded, call
-		 * this function. This changes the status to MMAPPED or BUFFERED.
-		 * @param i The Chunk's index
-		 * @return The Chunk, or 0 when i is out of bounds
-		 */
-		Chunk* grabChunk(unsigned int i);
-		
-		/**
-		 * Prepare a chunk for downloading
-		 * @param c The Chunk
-		 * @param always Always do this, even if the chunk is not NOT_DOWNLOADED
-		 * @return true if ok, false if the chunk is not NOT_DOWNLOADED
-		 */
-		bool prepareChunk(Chunk* c,bool always = false);
-		
-		/**
-		 * The upload is done, and the Chunk is no longer needed.
-		 * The Chunk's data might be cleared, if we are using up to much
-		 * memory.
-		 * @param i The Chunk's index
-		 */
-		void releaseChunk(unsigned int i);
-		
-		/**
 		 * Reset a chunk as if it were never downloaded.
 		 * @param i The chunk
 		 */
 		void resetChunk(unsigned int i);
 		
 		/**
-		 * Save the i'th Chunk to the cache_file.
-		 * Also changes the Chunk's status to ON_DISK.
-		 * The Chunk's data is immediately cleared.
+		 * Mark a chunk as downloaded.
 		 * @param i The Chunk's index
-		 * @param update_index Update the index or not
 		 */
-		void saveChunk(unsigned int i,bool update_index = true);
+		void chunkDownloaded(unsigned int i);
 		
 		/**
 		 * Calculates the number of bytes left for the tracker. Does include 

@@ -82,7 +82,7 @@ namespace bt
 		data = AllocPacket(size,PIECE);
 		WriteUint32(data,5,index);
 		WriteUint32(data,9,begin);
-		memcpy(data+13,ch->getData() + begin,len);
+		ch->readPiece(begin,len,data + 13);
 	}
 
 	Packet::Packet(Uint8 ext_id,const QByteArray & ext_data) : data(0),size(0),written(0)

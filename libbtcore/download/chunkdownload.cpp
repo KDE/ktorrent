@@ -24,6 +24,7 @@
 #include <util/log.h>
 #include <util/array.h>
 #include <diskio/chunk.h>
+#include <diskio/piecedata.h>
 #include <download/piece.h>
 #include <interfaces/piecedownloader.h>
 
@@ -65,7 +66,6 @@ namespace bt
 	ChunkDownload::ChunkDownload(Chunk* chunk) : chunk(chunk)
 	{
 		num = num_downloaded = 0;
-		
 		num = chunk->getSize() / MAX_PIECE_LEN;
 		
 		if (chunk->getSize() % MAX_PIECE_LEN != 0)
@@ -80,22 +80,23 @@ namespace bt
 		
 		pieces = BitSet(num);
 		pieces.clear();
+		piece_data = new PieceData* [num]; // array of pointers to the piece data
 		
 		for (Uint32 i = 0;i < num;i++)
+		{
+			piece_data[i] = 0;
 			piece_queue.append(i);
+		}
 		
 		dstatus.setAutoDelete(true);
-		chunk->ref();
 
 		num_pieces_in_hash = 0;
-		if (usingContinuousHashing())
-			hash_gen.start();
-
+		hash_gen.start();
 	}
 
 	ChunkDownload::~ChunkDownload()
 	{
-		chunk->unref();
+		delete [] piece_data;
 	}
 
 	bool ChunkDownload::piece(const Piece & p,bool & ok)
@@ -112,11 +113,13 @@ namespace bt
 		if (ds)
 			ds->remove(pp);
 		
-		Uint8* buf = chunk->getData();
+		PieceData* buf = chunk->getPiece(p.getOffset(),p.getLength(),false);
 		if (buf)
 		{
+			buf->ref(); 
+			piece_data[pp] = buf;
 			ok = true;
-			memcpy(buf + p.getOffset(),p.getData(),p.getLength());	
+			memcpy(buf->data(),p.getData(),p.getLength());	
 			pieces.set(pp,true);
 			piece_queue.removeAll(pp);
 			piece_providers.insert(p.getPieceDownloader());
@@ -126,15 +129,12 @@ namespace bt
 				endgameCancel(p);
 			}
 			
-			if (usingContinuousHashing())
-				updateHash();
+			updateHash();
 			
 			if (num_downloaded >= num)
 			{
 				// finalize hash
-				if (usingContinuousHashing())
-					hash_gen.end();
-
+				hash_gen.end();
 				releaseAllPDs();
 				return true;
 			}
@@ -174,6 +174,7 @@ namespace bt
 	
 	void ChunkDownload::notDownloaded(const Request & r,bool reject)
 	{
+		Q_UNUSED(reject);
 		// find the peer 
 		DownloadStatus* ds = dstatus.find(r.getPieceDownloader());
 		if (ds)
@@ -218,7 +219,7 @@ namespace bt
 		if (pd->isChoked())
 			return;
 			
-		Uint32 num_visited = 0;
+		int num_visited = 0;
 		while (num_visited < piece_queue.count() && pd->canAddRequest())
 		{
 			// get the first one in the queue
@@ -340,48 +341,113 @@ namespace bt
 		ChunkDownloadHeader hdr;
 		hdr.index = chunk->getIndex();
 		hdr.num_bits = pieces.getNumBits();
-		hdr.buffered = chunk->getStatus() == Chunk::BUFFERED ? 1 : 0;
+		hdr.buffered = true; // unused 
 		// save the chunk header
 		file.write(&hdr,sizeof(ChunkDownloadHeader));
 		// save the bitset
 		file.write(pieces.getData(),pieces.getNumBytes());
-		if (hdr.buffered)
+		
+		// save how many PieceHeader structs are to be written
+		Uint32 num_pieces_to_follow = 0;
+		for (Uint32 i = 0;i < hdr.num_bits;i++)
+			if (piece_data[i])
+				num_pieces_to_follow++;
+		
+		file.write(&num_pieces_to_follow,sizeof(Uint32));
+			
+		// save all buffered pieces
+		for (Uint32 i = 0;i < hdr.num_bits;i++)
 		{
-			// if it's a buffered chunk, save the contents to
-			file.write(chunk->getData(),chunk->getSize());
-			chunk->clear();
-			chunk->setStatus(Chunk::ON_DISK);
+			if (!piece_data[i])
+				continue;
+			
+			PieceData* pd = piece_data[i];
+			PieceHeader phdr;
+			phdr.piece = i;
+			phdr.size = pd->length();
+			phdr.mapped = pd->mapped() ? 1 : 0;
+			file.write(&phdr,sizeof(PieceHeader));
+			if (!pd->mapped()) // buffered pieces need to be saved
+			{
+				file.write(pd->data(),pd->length());
+			}
 		}
 	}
 		
-	bool ChunkDownload::load(File & file,ChunkDownloadHeader & hdr)
+	bool ChunkDownload::load(File & file,ChunkDownloadHeader & hdr,bool update_hash)
 	{
 		// read pieces
 		if (hdr.num_bits != num)
 			return false; 
 		
 		pieces = BitSet(hdr.num_bits);
-		Array<Uint8> data(pieces.getNumBytes());
-		file.read(data,pieces.getNumBytes());
-		pieces = BitSet(data,hdr.num_bits);
+		file.read(pieces.getData(),pieces.getNumBytes());
+		pieces.updateNumOnBits();
+		
 		num_downloaded = pieces.numOnBits();
-		if (hdr.buffered)
+		Uint32 num_pieces_to_follow = 0;
+		if (file.read(&num_pieces_to_follow,sizeof(Uint32)) != sizeof(Uint32) || num_pieces_to_follow > num)
+			return false;
+		
+		for (Uint32 i = 0;i < num_pieces_to_follow;i++)
 		{
-			// if it's a buffered chunk, load the data to
-			if (file.read(chunk->getData(),chunk->getSize()) != chunk->getSize())
+			PieceHeader phdr;
+			if (file.read(&phdr,sizeof(PieceHeader)) != sizeof(PieceHeader))
 				return false;
+			
+			if (phdr.piece >= num)
+				return false;
+			
+			PieceData* p = chunk->getPiece(phdr.piece * MAX_PIECE_LEN,phdr.size,false);
+			if (!p)
+				return false;
+			
+			p->ref();
+			if (!phdr.mapped)
+			{
+				if (file.read(p->data(),p->length()) != p->length())
+				{
+					p->unref();
+					return false;
+				}
+			}
+			piece_data[phdr.piece] = p;
 		}
 		
 		for (Uint32 i = 0;i < pieces.getNumBits();i++)
 			if (pieces.get(i))
 				piece_queue.removeAll(i);
 		
-		updateHash();
+		// initialize hash
+		if (update_hash)
+		{
+			Uint32 nn = 0;
+			while (pieces.get(nn) && nn < num)
+				nn++;
+			
+			for (Uint32 i = 0;i < nn;i++)
+			{
+				PieceData* piece = piece_data[i];
+				Uint32 len = i == num - 1 ? last_size : MAX_PIECE_LEN;
+				if (!piece)
+					piece = chunk->getPiece(i*MAX_PIECE_LEN,len,true);
+				
+				if (!piece)
+					return false;
+				
+				hash_gen.update(piece->data(),len);
+			}
+			
+			num_pieces_in_hash = nn;
+			
+			updateHash();
+		}
+		
 		// add a 0 downloader, so that pieces downloaded
 		// in a previous session cannot get a peer banned in this session
 		if (num_downloaded) 
 			piece_providers.insert(0);
-		
+
 		return true;
 	}
 
@@ -453,16 +519,16 @@ namespace bt
 		
 		for (Uint32 i = num_pieces_in_hash;i < nn;i++)
 		{
-			const Uint8* data = chunk->getData() + i * MAX_PIECE_LEN;
-			hash_gen.update(data,i == num - 1 ? last_size : MAX_PIECE_LEN);
+			PieceData* piece = piece_data[i];
+			Uint32 len = i == num - 1 ? last_size : MAX_PIECE_LEN;
+			hash_gen.update(piece->data(),len);
+			// save the piece and set it to 0, we no longer need it
+			piece->unref();
+			chunk->savePiece(piece);
+			piece_data[i] = 0;
 		}
 		num_pieces_in_hash = nn;
 	}
 	
-	bool ChunkDownload::usingContinuousHashing() const
-	{
-		// if the pieces are larger then 1 MB we will be using the continuous hashing feature
-		return pieces.getNumBits() > 64;
-	}
 }
 #include "chunkdownload.moc"

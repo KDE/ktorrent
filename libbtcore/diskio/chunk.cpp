@@ -17,64 +17,55 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
-#include "chunk.h"
-#include <util/sha1hash.h>
 
+#include <util/sha1hash.h>
+#include "chunk.h"
+#include "cache.h"
+#include "piecedata.h"
 
 namespace bt
 {
 
-	Chunk::Chunk(unsigned int index,Uint32 size)
-	: status(Chunk::NOT_DOWNLOADED),index(index),
-	data(0),size(size),ref_count(0),priority(NORMAL_PRIORITY)
+	Chunk::Chunk(Uint32 index,Uint32 size,Cache* cache)
+	: status(Chunk::NOT_DOWNLOADED),index(index),size(size),priority(NORMAL_PRIORITY),cache(cache)
 	{
 	}
 
 
 	Chunk::~Chunk()
 	{
-		clear();
 	}
-
-	void Chunk::setData(Uint8* d,Status nstatus)
+		
+	bool Chunk::readPiece(Uint32 off,Uint32 len,Uint8* data)
 	{
-		clear();
-		status = nstatus;
-		data = d;
-	}
-	
-	void Chunk::allocate()
-	{
-		clear();
-		status = BUFFERED;
-		data = new Uint8[size];
-	}
-
-	void Chunk::clear()
-	{
-		if (data)
-		{
-			if (status == BUFFERED)
-				delete [] data;
-			data = 0;
-		}
-	}
-	
-	void Chunk::unmapped()
-	{
-		setData(0,Chunk::ON_DISK);
+		PieceData* d = cache->loadPiece(this,off,len);
+		if (d)
+			memcpy(data,d->data(),len);
+		return d != 0;
 	}
 				
-	bool Chunk::checkHash(const SHA1Hash & h) const
+	bool Chunk::checkHash(const SHA1Hash & h)
 	{
-		if (status != BUFFERED && status != MMAPPED)
-		{
+		if (status == NOT_DOWNLOADED)
 			return false;
-		}
-		else
-		{
-			return SHA1Hash::generate(data,size) == h;
-		}
+		
+		PieceData* d = getPiece(0,size,true);
+		if (!d)
+			return false;
+		
+		return SHA1Hash::generate(d->data(),size) == h;
 	}
-						   
+	
+	PieceData* Chunk::getPiece(Uint32 off,Uint32 len,bool read_only)
+	{
+		if (read_only)
+			return cache->loadPiece(this,off,len);
+		else
+			return cache->preparePiece(this,off,len);
+	}
+	
+	void Chunk::savePiece(PieceData* piece)
+	{
+		cache->savePiece(piece);
+	}
 }

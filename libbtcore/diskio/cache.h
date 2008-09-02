@@ -25,6 +25,7 @@
 #include <torrent/torrent.h>
 #include <QString>
 #include <QMap>
+#include <QMultiMap>
 
 class QStringList;
 class KJob;
@@ -35,7 +36,7 @@ namespace bt
 	class Chunk;
 	class PreallocationThread;
 	class TorrentFileInterface;
-
+	class PieceData;
 
 	/**
 	 * @author Joris Guisson
@@ -52,6 +53,8 @@ namespace bt
 		QString datadir;
 		bool preexisting_files;
 		Uint32 mmap_failures;
+		
+		QMultiMap<Chunk*,PieceData*> piece_cache;
 	public:
 		Cache(Torrent & tor,const QString & tmpdir,const QString & datadir);
 		virtual ~Cache();
@@ -104,25 +107,30 @@ namespace bt
 		virtual void moveDataFilesFinished(KJob* job) = 0;
 		
 		/**
-		 * Load a chunk into memory. If something goes wrong,
+		 * Load a piece into memory. If something goes wrong,
 		 * an Error should be thrown.
 		 * @param c The Chunk
+		 * @param off The offset of the piece
+		 * @param length The length of the piece
+		 * @return Pointer to the data
 		 */
-		virtual void load(Chunk* c) = 0;
-
-		/**
-		 * Save a chunk to disk. If something goes wrong,
-		 * an Error should be thrown.
-		 * @param c The Chunk
-		 */
-		virtual void save(Chunk* c) = 0;
+		virtual PieceData* loadPiece(Chunk* c,Uint32 off,Uint32 length) = 0;
 		
 		/**
-		 * Prepare a chunk for downloading.
+		 * Prepare a piece for writing. If something goes wrong,
+		 * an Error should be thrown.
 		 * @param c The Chunk
-		 * @return true if ok, false otherwise
+		 * @param off The offset of the piece
+		 * @param length The length of the piece
+		 * @return Pointer to the data
 		 */
-		virtual bool prep(Chunk* c) = 0;
+		virtual PieceData* preparePiece(Chunk* c,Uint32 off,Uint32 length) = 0;
+		
+		/**
+		 * Save a piece to disk, it's reference counter must be zero, otherwise it will not work./
+		 * @param piece The piece
+		 */
+		virtual void savePiece(PieceData* piece) = 0;
 		
 		/**
 		 * Create all the data files to store the data.
@@ -224,10 +232,27 @@ namespace bt
 		 * @return true if it is
 		 */
 		static bool useFSSpecificPreallocMethod() {return preallocate_fs_specific;}
+		
+		/**
+		 * Check memory usage and free all PieceData objects which are no longer needed.
+		 */
+		void checkMemoryUsage();
+
+		/**
+		 * Clear all pieces of a chunk
+		 * @param c The chunk
+		 * */
+		void clearPieces(Chunk* c);
+	protected:
+		PieceData* findPiece(Chunk* c,Uint32 off,Uint32 len);
+		void insertPiece(Chunk* c,PieceData* p);
+		void clearPieceCache();
+		void clearPiece(PieceData* p);
+		
 	private:
 		static bool preallocate_files;
 		static bool preallocate_fully;
-		static bool preallocate_fs_specific;
+		static bool preallocate_fs_specific;	
 	};
 
 }

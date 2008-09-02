@@ -31,6 +31,7 @@
 #include <torrent/torrent.h>
 #include "chunk.h"
 #include "cachefile.h"
+#include "piecedata.h"
 #include "preallocationthread.h"
 #include "deletedatafilesjob.h"
 
@@ -123,76 +124,84 @@ namespace bt
 		move_data_files_dst = QString();
 	}
 	
-	bool SingleFileCache::prep(Chunk* c)
+	PieceData* SingleFileCache::createPiece(Chunk* c,Uint64 off,Uint32 length,bool read_only)
 	{
+		if (!fd)
+			open();
+			
+		Uint64 piece_off = c->getIndex() * tor.getChunkSize() + off;
+		Uint8* buf = 0;
 		if (mmap_failures >= 3)
-		{
-			// mmap continuously fails, so stop using it
-			c->allocate();
-			c->setStatus(Chunk::BUFFERED);
+		{	
+			buf = new Uint8[length];
+			PieceData* cp = new PieceData(c,off,length,buf,0);
+			insertPiece(c,cp);
+			return cp;
 		}
 		else
 		{
-			if (!fd)
-				open();
-			
-			Uint64 off = c->getIndex() * tor.getChunkSize();
-			Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::RW);
-			if (!buf)
+			PieceData* cp = new PieceData(c,off,length,0,fd);
+			buf = (Uint8*)fd->map(cp,piece_off,length,read_only ? CacheFile::READ : CacheFile::RW);
+			if (buf)
 			{
-				mmap_failures++;
-				// buffer it if mmapping fails
-				Out(SYS_GEN|LOG_IMPORTANT) << "Warning : mmap failure, falling back to buffered mode" << endl;
-				c->allocate();
-				c->setStatus(Chunk::BUFFERED);
+				cp->setData(buf);
 			}
 			else
 			{
-				c->setData(buf,Chunk::MMAPPED);
+				if (mmap_failures < 3)
+					mmap_failures++;
+				
+				delete cp;
+				buf = new Uint8[length];
+				cp = new PieceData(c,off,length,buf,0);
 			}
+			insertPiece(c,cp);
+			return cp;
 		}
-		return true;
 	}
-
-	void SingleFileCache::load(Chunk* c)
+	
+	PieceData* SingleFileCache::loadPiece(Chunk* c,Uint32 off,Uint32 length)
+	{
+		PieceData* cp = findPiece(c,off,length);
+		if (cp)
+			return cp;
+		
+		cp = createPiece(c,off,length,true);
+		if (cp && !cp->mapped())
+		{
+			// read data from file if piece isn't mapped
+			Uint64 piece_off = c->getIndex() * tor.getChunkSize() + off;
+			fd->read(cp->data(),length,piece_off);
+		}
+		
+		return cp;
+	}
+	
+	PieceData* SingleFileCache::preparePiece(Chunk* c,Uint32 off,Uint32 length)
+	{
+		PieceData* cp = findPiece(c,off,length);
+		if (cp)
+			return cp;
+		
+		return createPiece(c,off,length,false);
+	}
+	
+	void SingleFileCache::savePiece(PieceData* piece)
 	{
 		if (!fd)
 			open();
-		
-		Uint64 off = c->getIndex() * tor.getChunkSize();
-		Uint8* buf = 0;
-		if (mmap_failures >= 3 || !(buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::READ)))
-		{
-			c->allocate();
-			c->setStatus(Chunk::BUFFERED);
-			fd->read(c->getData(),c->getSize(),off);
-			if (mmap_failures < 3)
-				mmap_failures++;
-		}
-		else
-		{
-			c->setData(buf,Chunk::MMAPPED);
-		}
-	}
 
-	void SingleFileCache::save(Chunk* c)
-	{
-		if (!fd)
-			open();
-		
-		// unmap the chunk if it is mapped
-		if (c->getStatus() == Chunk::MMAPPED)
+		// mapped pieces will be unmapped when they are destroyed, buffered ones need to be written
+		if (!piece->mapped())
 		{
-			fd->unmap(c->getData(),c->getSize());
-			c->clear();
-			c->setStatus(Chunk::ON_DISK);
+			Uint64 off = piece->parentChunk()->getIndex() * tor.getChunkSize() + piece->offset();
+			fd->write(piece->data(),piece->length(),off);
 		}
-		else if (c->getStatus() == Chunk::BUFFERED)
+		
+		if (!piece->inUse()) // get rid of piece if we can
 		{
-			Uint64 off = c->getIndex() * tor.getChunkSize();
-			fd->write(c->getData(),c->getSize(),off);
-			c->clear();
-			c->setStatus(Chunk::ON_DISK);
+			piece->unload();
+			clearPiece(piece);
 		}
 	}
 
@@ -206,6 +215,7 @@ namespace bt
 	
 	void SingleFileCache::close()
 	{
+		clearPieceCache();
 		if (fd)
 		{
 			fd->close();

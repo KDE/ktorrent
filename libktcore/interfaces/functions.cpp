@@ -77,7 +77,6 @@ namespace kt
 			ChunkManager::setMaxChunkSizeForDataCheck(Settings::maxSizeForUploadDataCheck() * 1024);
 	
 		UDPTrackerSocket::setPort(Settings::udpTrackerPort());
-		Downloader::setMemoryUsage(Settings::memoryUsage());
 		Choker::setNumUploadSlots(Settings::numUploadSlots());
 
 #ifdef ENABLE_DHT_SUPPORT

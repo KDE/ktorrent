@@ -19,10 +19,12 @@
  ***************************************************************************/
 #include "dndfile.h"
 #include <klocale.h>
+#include <util/log.h>
 #include <util/file.h>
 #include <util/error.h>
 #include <util/fileops.h>
 #include <util/sha1hash.h>
+#include <torrent/torrentfile.h>
 
 namespace bt
 {
@@ -36,8 +38,11 @@ namespace bt
 		Uint8 data_sha1[20];
 	};
 
-	DNDFile::DNDFile(const QString & path) : path(path)
-	{}
+	DNDFile::DNDFile(const QString & path,const TorrentFile* tf,Uint32 chunk_size) : path(path)
+	{
+		last_size = tf->getLastChunkSize();
+		first_size = chunk_size - tf->getFirstChunkOffset();
+	}
 
 
 	DNDFile::~DNDFile()
@@ -64,43 +69,19 @@ namespace bt
 			return;
 		}
 		
-		if (hdr.magic != DND_FILE_HDR_MAGIC && bt::FileSize(path) != sizeof(DNDFileHeader) + hdr.first_size + hdr.last_size)
+		if (hdr.magic != DND_FILE_HDR_MAGIC)
 		{
 			create();
 			return;
 		}
-		
-#if 0
-		if (hdr.first_size > 0 || hdr.last_size > 0)
-		{
-			// check hash
-			Uint32 data_size = hdr.first_size + hdr.last_size;
-			Uint8* buf = new Uint8[data_size];
-			if (fptr.read(buf,data_size) != data_size)
-			{
-				delete [] buf;
-				create();
-				return;
-			}
-			
-			if (SHA1Hash::generate(buf,data_size) != SHA1Hash(hdr.data_sha1))
-			{
-				delete [] buf;
-				create();
-				return;
-			}
-			
-			delete [] buf;
-		}
-#endif
 	}
 	
 	void DNDFile::create()
 	{
 		DNDFileHeader hdr;
 		hdr.magic = DND_FILE_HDR_MAGIC;
-		hdr.first_size = 0;
-		hdr.last_size = 0;
+		hdr.first_size = first_size;
+		hdr.last_size = last_size;
 		memset(hdr.data_sha1,0,20);
 		
 		File fptr;
@@ -113,7 +94,7 @@ namespace bt
 	
 	
 	
-	Uint32 DNDFile::readFirstChunk(Uint8* buf,Uint32 off,Uint32 buf_size)
+	Uint32 DNDFile::readFirstChunk(Uint8* buf,Uint32 off,Uint32 size)
 	{
 		File fptr;
 		if (!fptr.open(path,"rb"))
@@ -122,23 +103,14 @@ namespace bt
 			return 0;
 		}
 		
-		DNDFileHeader hdr;
-		if (fptr.read(&hdr,sizeof(DNDFileHeader)) != sizeof(DNDFileHeader))
-		{
-			create();
-			return 0;
-		}
-		
-		if (hdr.first_size == 0)
+		Uint64 read_pos = sizeof(DNDFileHeader) + off;
+		if (fptr.seek(File::BEGIN,read_pos) != read_pos)
 			return 0;
 		
-		if (hdr.first_size + off > buf_size)
-			return 0;
-		
-		return fptr.read(buf + off,hdr.first_size);
+		return fptr.read(buf,size);
 	}
 	
-	Uint32 DNDFile::readLastChunk(Uint8* buf,Uint32 off,Uint32 buf_size)
+	Uint32 DNDFile::readLastChunk(Uint8* buf,Uint32 off,Uint32 size)
 	{	
 		File fptr;
 		if (!fptr.open(path,"rb"))
@@ -147,24 +119,14 @@ namespace bt
 			return 0;
 		}
 		
-		DNDFileHeader hdr;
-		if (fptr.read(&hdr,sizeof(DNDFileHeader)) != sizeof(DNDFileHeader))
-		{
-			create();
+		Uint64 read_pos = sizeof(DNDFileHeader) + first_size + off;
+		if (fptr.seek(File::BEGIN,read_pos) != read_pos)
 			return 0;
-		}
-		
-		if (hdr.last_size == 0)
-			return 0;
-		
-		if (hdr.last_size + off > buf_size)
-			return 0;
-		
-		fptr.seek(File::BEGIN,sizeof(DNDFileHeader) + hdr.first_size);
-		return fptr.read(buf + off,hdr.last_size);
+	
+		return fptr.read(buf,size);
 	}
 
-	void DNDFile::writeFirstChunk(const Uint8* buf,Uint32 fc_size)
+	void DNDFile::writeFirstChunk(const Uint8* buf,Uint32 off,Uint32 size)
 	{
 		File fptr;
 		if (!fptr.open(path,"r+b"))
@@ -176,53 +138,13 @@ namespace bt
 			}
 		}
 		
-		DNDFileHeader hdr;
-		fptr.read(&hdr,sizeof(DNDFileHeader));
-		if (hdr.last_size == 0)
-		{
-			hdr.first_size = fc_size;
-			fptr.seek(File::BEGIN,0);
-			// update hash first
-		//	SHA1Hash h = SHA1Hash::generate(buf,fc_size);
-		//	memcpy(hdr.data_sha1,h.getData(),20);
-			// write header
-			fptr.write(&hdr,sizeof(DNDFileHeader));
-			// write data
-			fptr.write(buf,fc_size);
-		}
-		else
-		{
-			hdr.first_size = fc_size;
-			Uint8* tmp = new Uint8[hdr.first_size + hdr.last_size];
-			try
-			{
-				
-				// put everything in tmp buf
-				memcpy(tmp,buf,hdr.first_size);
-				fptr.seek(File::BEGIN,sizeof(DNDFileHeader) + hdr.first_size);
-				fptr.read(tmp + hdr.first_size,hdr.last_size);
-				
-				// update the hash of the header
-		//		SHA1Hash h = SHA1Hash::generate(tmp,hdr.first_size + hdr.last_size);
-		//		memcpy(hdr.data_sha1,h.getData(),20);
-				
-				// write header + data
-				fptr.seek(File::BEGIN,0);
-				fptr.write(&hdr,sizeof(DNDFileHeader));
-				fptr.write(tmp,hdr.first_size + hdr.last_size);
-				delete [] tmp;
-				
-			}
-			catch (...)
-			{
-				delete [] tmp;
-				throw;
-			}
-		}
+		// write data
+		fptr.seek(File::BEGIN,sizeof(DNDFileHeader) + off);	
+		fptr.write(buf,size);
 	}
 		
 	
-	void DNDFile::writeLastChunk(const Uint8* buf,Uint32 lc_size)
+	void DNDFile::writeLastChunk(const Uint8* buf,Uint32 off,Uint32 size)
 	{
 		File fptr;
 		if (!fptr.open(path,"r+b"))
@@ -234,35 +156,8 @@ namespace bt
 			}
 		}
 		
-		DNDFileHeader hdr;
-		fptr.read(&hdr,sizeof(DNDFileHeader));
-		hdr.last_size = lc_size;
-		Uint8* tmp = new Uint8[hdr.first_size + hdr.last_size];
-		try
-		{	
-			// put everything in tmp buf
-			memcpy(tmp + hdr.first_size,buf,lc_size);
-			if (hdr.first_size > 0)
-			{
-				fptr.seek(File::BEGIN,sizeof(DNDFileHeader));
-				fptr.read(tmp,hdr.first_size);
-			}
-				
-			// update the hash of the header
-		//	SHA1Hash h = SHA1Hash::generate(tmp,hdr.first_size + hdr.last_size);
-		//	memcpy(hdr.data_sha1,h.getData(),20);
-				
-			// write header + data
-			fptr.seek(File::BEGIN,0);
-			fptr.write(&hdr,sizeof(DNDFileHeader));
-			fptr.write(tmp,hdr.first_size + hdr.last_size);
-			delete [] tmp;
-		}
-		catch (...)
-		{
-			delete [] tmp;
-			throw;
-		}
+		fptr.seek(File::BEGIN,sizeof(DNDFileHeader) + first_size + off);
+		fptr.write(buf,size);
 	}
 
 }

@@ -24,6 +24,7 @@
 #include <util/file.h>
 #include <util/log.h>
 #include <diskio/chunkmanager.h>
+#include <diskio/piecedata.h>
 #include <torrent/torrent.h>
 #include <peer/peermanager.h>
 #include <util/error.h>
@@ -111,14 +112,7 @@ namespace bt
 			return;
 		}
 		
-		// if the chunk is not in memory, reload it
-		if (cd->getChunk()->getStatus() == Chunk::ON_DISK)
-		{
-			cman.prepareChunk(cd->getChunk(),true);
-		}
-			
 		bool ok = false;
-		
 		if (cd->piece(p,ok))
 		{
 			if (tmon)
@@ -142,12 +136,6 @@ namespace bt
 		{
 			if (ok)
 				downloaded += p.getLength();
-			
-			// save to disk again, if it is idle
-			if (cd->isIdle() && cd->getChunk()->getStatus() == Chunk::MMAPPED)
-			{
-				cman.saveChunk(cd->getChunk()->getIndex(),false);
-			}
 		}
 			
 		if (!ok)
@@ -187,22 +175,13 @@ namespace bt
 		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
 		{
 			ChunkDownload* cd = j->second;
-			if (cd->isIdle()) // idle chunks do not need to be in memory
+			if (cd->isIdle())
 			{
-				Chunk* c = cd->getChunk();
-				if (c->getStatus() == Chunk::MMAPPED && !webseeds_chunks.find(c->getIndex()))
-				{
-					cman.saveChunk(c->getIndex(),false);
-				}
-			} 
+				continue;
+			}
 			else if (cd->isChoked())
 			{
 				cd->releaseAllPDs();
-				Chunk* c = cd->getChunk();
-				if (c->getStatus() == Chunk::MMAPPED && !webseeds_chunks.find(c->getIndex()))
-				{
-					cman.saveChunk(c->getIndex(),false);
-				}
 			}
 			else if (cd->needsToBeUpdated())
 			{
@@ -230,25 +209,6 @@ namespace bt
 		}
 	}
 
-	Uint32 Downloader::maxMemoryUsage()
-	{
-		Uint32 max = 1024 * 1024;
-		switch (mem_usage)
-		{	
-			case 1: // Medium
-				max *= 60; // 60 MB
-				break;
-			case 2: // High
-				max *= 80; // 90 MB
-				break;
-			case 0: // LOW
-			default:
-				max *= 40; // 30 MB
-				break;
-		}
-		return max;
-	}
-	
 	Uint32 Downloader::numNonIdle()
 	{
 		Uint32 num_non_idle = 0;
@@ -261,7 +221,7 @@ namespace bt
 		return num_non_idle;
 	}
 	
-	ChunkDownload* Downloader::selectCD(PieceDownloader* pd,Uint32 num)
+	ChunkDownload* Downloader::selectCD(PieceDownloader* pd,Uint32 n)
 	{
 		ChunkDownload* sel = 0;
 		Uint32 sel_left = 0xFFFFFFFF;
@@ -272,7 +232,7 @@ namespace bt
 			if (pd->isChoked() || !pd->hasChunk(cd->getChunk()->getIndex()))
 				continue;
 			
-			if (cd->getNumDownloaders() == num) 
+			if (cd->getNumDownloaders() == n) 
 			{
 				// lets favor the ones which are nearly finished
 				if (!sel || cd->getTotalPieces() - cd->getPiecesDownloaded() < sel_left)
@@ -304,10 +264,6 @@ namespace bt
 		
 		if (sel)
 		{
-			// if it is on disk, reload it
-			if (sel->getChunk()->getStatus() == Chunk::ON_DISK)
-				cman.prepareChunk(sel->getChunk(),true);
-			
 			sel->assign(pd);
 			return true;
 		}
@@ -336,9 +292,7 @@ namespace bt
 	}
 
 	void Downloader::downloadFrom(PieceDownloader* pd)
-	{
-		// calculate the max memory usage
-		Uint32 max = maxMemoryUsage();
+	{;
 		// calculate number of non idle chunks
 		Uint32 num_non_idle = numNonIdle();
 		
@@ -346,20 +300,15 @@ namespace bt
 		if (findDownloadForPD(pd,cman.getNumChunks() - cman.chunksLeft() <= 4))
 			return;
 		
-		bool limit_exceeded = num_non_idle * tor.getChunkSize() >= max;
-		
 		Uint32 chunk = 0;
-		if (!limit_exceeded && chunk_selector->select(pd,chunk))
+		if (chunk_selector->select(pd,chunk))
 		{
 			Chunk* c = cman.getChunk(chunk);
 			if (current_chunks.contains(chunk))
 			{
-				if (c->getStatus() == Chunk::ON_DISK)
-					cman.prepareChunk(c,true);
-			
 				current_chunks.find(chunk)->assign(pd);
 			}
-			else if (cman.prepareChunk(c))
+			else
 			{
 				ChunkDownload* cd = new ChunkDownload(c);
 				current_chunks.insert(chunk,cd);
@@ -375,12 +324,6 @@ namespace bt
 			
 			if (cdmin) 
 			{
-				// if it is on disk, reload it
-				if (cdmin->getChunk()->getStatus() == Chunk::ON_DISK)
-				{
-					cman.prepareChunk(cdmin->getChunk(),true);
-				}
-				
 				cdmin->assign(pd); 
 			}
 		} 
@@ -394,7 +337,6 @@ namespace bt
 		{
 			for (Uint32 i = first;i <= last;i++)
 			{
-				cman.prepareChunk(cman.getChunk(i),true);
 				webseeds_chunks.insert(i,ws);
 			}
 			ws->download(first,last);
@@ -450,18 +392,14 @@ namespace bt
 	{
 		Chunk* c = cd->getChunk();
 		// verify the data
-		SHA1Hash h;
-		if (cd->usingContinuousHashing())
-			h = cd->getHash();
-		else
-			h = SHA1Hash::generate(c->getData(),c->getSize());
-
+		SHA1Hash h = cd->getHash();
+		
 		if (tor.verifyHash(h,c->getIndex()))
 		{
 			// hash ok so save it
 			try
 			{
-				cman.saveChunk(c->getIndex());
+				cman.chunkDownloaded(c->getIndex());
 				Out(SYS_GEN|LOG_IMPORTANT) << "Chunk " << c->getIndex() << " downloaded " << endl;
 				// tell everybody we have the Chunk
 				for (Uint32 i = 0;i < pman.getNumConnectedPeers();i++)
@@ -507,15 +445,6 @@ namespace bt
 	
 	void Downloader::clearDownloads()
 	{
-		for (CurChunkItr i = current_chunks.begin();i != current_chunks.end();++i)
-		{
-			Uint32 ch = i->first;
-			Chunk* c = i->second->getChunk();
-			if (c->getStatus() == Chunk::MMAPPED)
-				cman.saveChunk(ch,false);
-			
-			c->setStatus(Chunk::NOT_DOWNLOADED);
-		}
 		current_chunks.clear();
 		piece_downloaders.clear();
 		
@@ -619,7 +548,7 @@ namespace bt
 				return;
 			}
 			Chunk* c = cman.getChunk(hdr.index);
-			if (!c->isExcluded() && cman.prepareChunk(c))
+			if (!c->isExcluded())
 			{
 				ChunkDownload* cd = new ChunkDownload(c);
 				bool ret = false;
@@ -632,7 +561,7 @@ namespace bt
 					ret = false;
 				}
 				
-				if (!ret)
+				if (!ret || c->getStatus() == Chunk::ON_DISK)
 				{
 					delete cd;
 				}
@@ -679,23 +608,11 @@ namespace bt
 			if (!c)
 				return num_bytes;
 			
-			Uint32 last_size = c->getSize() % MAX_PIECE_LEN;
-			if (last_size == 0)
-				last_size = MAX_PIECE_LEN;
+			ChunkDownload tmp(c);
+			if (!tmp.load(fptr,hdr,false))
+				return num_bytes;
 			
-			// create the bitset and read it 
-			BitSet bs(hdr.num_bits);
-			fptr.read(bs.getData(),bs.getNumBytes());
-			
-			for (Uint32 j = 0;j < hdr.num_bits;j++)
-			{
-				if (bs.get(j))
-					num_bytes += j == hdr.num_bits - 1 ? 
-							last_size : MAX_PIECE_LEN;
-			}
-			
-			if (hdr.buffered)
-				fptr.seek(File::CURRENT,c->getSize());
+			num_bytes += tmp.bytesDownloaded();
 		}
 		curr_chunks_downloaded = num_bytes;
 		return num_bytes;
@@ -739,13 +656,6 @@ namespace bt
 		chunk_selector->reinsert(chunk);
 	}
 	
-	Uint32 Downloader::mem_usage = 0;
-	
-	void Downloader::setMemoryUsage(Uint32 m)
-	{
-		mem_usage = m;
-	}
-	
 	void Downloader::dataChecked(const BitSet & ok_chunks)
 	{
 		for (Uint32 i = 0;i < ok_chunks.getNumBits();i++)
@@ -772,9 +682,21 @@ namespace bt
 	
 	void Downloader::onChunkReady(Chunk* c)
 	{
-		SHA1Hash h = SHA1Hash::generate(c->getData(),c->getSize());
-		webseeds_chunks.erase(c->getIndex());
+		PieceData* piece = c->getPiece(0,c->getSize(),false);
 		
+		webseeds_chunks.erase(c->getIndex());
+		if (!piece)
+		{
+			// reset chunk but only when no other peer is downloading it
+			if (!current_chunks.find(c->getIndex()))
+				cman.resetChunk(c->getIndex());
+			
+			chunk_selector->reinsert(c->getIndex());
+			return;
+		}
+		piece->unref();
+
+		SHA1Hash h = SHA1Hash::generate(piece->data(),c->getSize());
 		if (tor.verifyHash(h,c->getIndex()))
 		{
 			// hash ok so save it
@@ -788,7 +710,7 @@ namespace bt
 					current_chunks.erase(c->getIndex());
 				}
 				
-				cman.saveChunk(c->getIndex());
+				c->savePiece(piece);
 			
 				Out(SYS_GEN|LOG_IMPORTANT) << "Chunk " << c->getIndex() << " downloaded via webseed ! " << endl;
 				// tell everybody we have the Chunk

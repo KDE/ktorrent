@@ -109,8 +109,7 @@ namespace bt
 	static Uint32 ReadFullChunk(Uint32 chunk,Uint32 cs,
 								const TorrentFile & tf,
 								const Torrent & tor,
-								Uint8* buf,
-								const QString & cache)
+								Uint8* buf)
 	{
 		File fptr;
 		if (!fptr.open(tf.getPathOnDisk(), "rb"))
@@ -135,14 +134,14 @@ namespace bt
 			const TorrentFile & f = tor.getFile(tflist.first());
 			if (!f.doNotDownload())
 			{
-				ReadFullChunk(ci,cs,f,tor,buf,cache);
+				ReadFullChunk(ci,cs,f,tor,buf);
 				return true;
 			}
 			return false;
 		}
 		
 		Uint64 read = 0; // number of bytes read
-		for (Uint32 i = 0;i < tflist.count();i++)
+		for (int i = 0;i < tflist.count();i++)
 		{
 			const TorrentFile & f = tor.getFile(tflist[i]);
 				
@@ -168,13 +167,11 @@ namespace bt
 				if (!dnd_dir.isNull() && bt::Exists(dnd_dir + f.getPath() + ".dnd"))
 				{
 					Uint32 ret = 0;
-					DNDFile dfd(dnd_dir + f.getPath() + ".dnd");
+					DNDFile dfd(dnd_dir + f.getPath() + ".dnd",&f,tor.getChunkSize());
 					if (i == 0)
-						ret = dfd.readLastChunk(buf,read,cs);
-					else if (i == tflist.count() - 1)
-						ret = dfd.readFirstChunk(buf,read,cs);
+						ret = dfd.readLastChunk(buf + read,0,to_read);
 					else
-						ret = dfd.readFirstChunk(buf,read,cs);
+						ret = dfd.readFirstChunk(buf + read,0,to_read);
 					
 					if (ret > 0 && ret != to_read)
 						Out(SYS_GEN|LOG_DEBUG) << "Warning : MultiDataChecker::load ret != to_read (dnd)" << endl;

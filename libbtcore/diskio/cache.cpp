@@ -19,8 +19,11 @@
  ***************************************************************************/
 #include "cache.h"
 #include <util/functions.h>
+#include <util/log.h>
 #include <torrent/torrent.h>
 #include "chunk.h"
+#include "cachefile.h"
+#include "piecedata.h"
 #include <peer/peermanager.h>
 
 namespace bt
@@ -43,7 +46,9 @@ namespace bt
 
 
 	Cache::~Cache()
-	{}
+	{
+		clearPieceCache();
+	}
 
 
 	void Cache::changeTmpDir(const QString & ndir)
@@ -54,7 +59,7 @@ namespace bt
 	bool Cache::mappedModeAllowed()
 	{
 #ifndef Q_WS_WIN
-		return MaxOpenFiles() - bt::PeerManager::getTotalConnections() < 100;
+		return MaxOpenFiles() - bt::PeerManager::getTotalConnections() > 100;
 #else
 		return true; //there isn't a file handle limit on windows
 #endif
@@ -71,4 +76,88 @@ namespace bt
 		Q_UNUSED(files);
 		Q_UNUSED(job);
 	}
+	
+	PieceData* Cache::findPiece(Chunk* c,Uint32 off,Uint32 len)
+	{
+		QMultiMap<Chunk*,PieceData*>::iterator i = piece_cache.find(c);
+		while (i != piece_cache.end() && i.key() == c)
+		{
+			PieceData* cp = i.value();
+			if (cp->offset() == off && cp->length() == len)
+				return cp;
+			i++;
+		}
+		return 0;
+	}
+	
+	void Cache::insertPiece(Chunk* c,PieceData* p)
+	{
+		piece_cache.insert(c,p);
+	}
+	
+	void Cache::clearPieces(Chunk* c)
+	{
+		QMultiMap<Chunk*,PieceData*>::iterator i = piece_cache.find(c);
+		while (i != piece_cache.end() && i.key() == c)
+		{
+			PieceData* cp = i.value();
+			delete cp;
+			i = piece_cache.erase(i);
+		}
+	}
+	
+	void Cache::clearPieceCache()
+	{
+		QMultiMap<Chunk*,PieceData*>::iterator i = piece_cache.begin();
+		while (i != piece_cache.end())
+		{
+			PieceData* cp = i.value();
+			delete cp;
+			i++;
+		}
+		piece_cache.clear();
+	}
+
+	void Cache::clearPiece(PieceData* p)
+	{
+		Chunk* c = p->parentChunk();
+		QMultiMap<Chunk*,PieceData*>::iterator i = piece_cache.find(p->parentChunk());
+		while (i != piece_cache.end() && i.key() == c)
+		{
+			if (i.value() == p)
+			{
+				PieceData* cp = i.value();
+				delete cp;
+				piece_cache.erase(i);
+				break;
+			}
+			i++;
+		}
+	}
+	
+	void Cache::checkMemoryUsage()
+	{
+		Uint64 mem = 0;
+		Uint64 freed = 0;
+		QMultiMap<Chunk*,PieceData*>::iterator i = piece_cache.begin();
+		while (i != piece_cache.end())
+		{
+			PieceData* cp = i.value();
+			if (!cp->inUse())
+			{
+				freed += cp->length();
+				delete cp;
+				i = piece_cache.erase(i);
+			}
+			else
+			{
+				mem += cp->length();
+				i++;
+			}
+		}
+
+		if (mem || freed)
+			Out(SYS_DIO|LOG_DEBUG) << "Piece cache: memory in use " << BytesToString(mem) << ", memory freed " << BytesToString(freed) << endl;
+	}
+
 }

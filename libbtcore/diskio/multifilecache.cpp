@@ -37,7 +37,7 @@
 #include "preallocationthread.h"
 #include "movedatafilesjob.h"
 #include "deletedatafilesjob.h"
-#include <kdebug.h>
+#include "piecedata.h"
 
 
 namespace bt
@@ -54,7 +54,7 @@ namespace bt
 		ctmp += bt::DirSeparator();
 #endif
 		
-		for (Uint32 i = 0;i < sl.count() - 1;i++)
+		for (int i = 0;i < sl.count() - 1;i++)
 		{
 			ctmp += sl[i];
 			if (!bt::Exists(ctmp))
@@ -152,6 +152,7 @@ namespace bt
 
 	void MultiFileCache::close()
 	{
+		clearPieceCache();
 		files.clear();
 	}
 	
@@ -180,7 +181,7 @@ namespace bt
 					if (dnd_files.contains(i))
 						dnd_files.erase(i);
 					
-					dfd = new DNDFile(dnd_dir + tf.getUserModifiedPath() + ".dnd");
+					dfd = new DNDFile(dnd_dir + tf.getUserModifiedPath() + ".dnd",&tf,tor.getChunkSize());
 					dfd->checkIntegrity();
 					dnd_files.insert(i,dfd);
 				}
@@ -413,38 +414,119 @@ namespace bt
 			}
 		}
 	}
-
-	void MultiFileCache::load(Chunk* c)
+	
+	PieceData* MultiFileCache::createPiece(Chunk* c,Uint32 off,Uint32 length,bool read_only)
 	{
+		PieceData* piece = 0;
 		QList<Uint32> tflist;
 		tor.calcChunkPos(c->getIndex(),tflist);
 		
-		// one file is simple, just mmap it
+		// one file so try to map it
 		if (tflist.count() == 1)
 		{
 			const TorrentFile & f = tor.getFile(tflist.first());
 			CacheFile* fd = files.find(tflist.first());
 			if (!fd)
-				return;
+				return 0;
 			
 			if (Cache::mappedModeAllowed() && mmap_failures < 3)
 			{
-				Uint64 off = FileOffset(c,f,tor.getChunkSize());
-				Uint8* buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::READ);
+				Uint64 offset = FileOffset(c,f,tor.getChunkSize()) + off;
+				piece = new PieceData(c,off,length,0,fd);
+				Uint8* buf = (Uint8*)fd->map(piece,offset,length,read_only ? CacheFile::READ : CacheFile::RW);
 				if (buf)
 				{
-					c->setData(buf,Chunk::MMAPPED);
-					// only return when the mapping is OK
-					// if mmap fails we will just load it buffered
-					return;
+					piece->setData(buf);
+					insertPiece(c,piece);
+					return piece;
 				}
 				else
+				{
 					mmap_failures++;
+				}
+
+				delete piece;
+				piece = 0;
 			}
 		}
+			
+		// mmap failed or there are multiple files, so just do buffered
+		Uint8* buf = new Uint8[length];
+		piece = new PieceData(c,off,length,buf,0);
+		insertPiece(c,piece);
+		return piece;
+	}
+	
+	PieceData* MultiFileCache::preparePiece(Chunk* c,Uint32 off,Uint32 length)
+	{
+		PieceData* piece = findPiece(c,off,length);
+		if (piece)
+			return piece;
 		
-		Uint8* data = new Uint8[c->getSize()];
-		Uint64 read = 0; // number of bytes read
+		return createPiece(c,off,length,false);
+	}
+	
+	void MultiFileCache::calculateOffsetAndLength(
+			Uint32 piece_off,Uint32 piece_len,Uint64 file_off,
+			Uint32 chunk_off,Uint32 chunk_len,Uint64 & off,Uint32 & len)
+	{
+		// if the piece offset lies in the range of the current chunk, we need to read data
+		if (piece_off >= chunk_off && piece_off + piece_len <= chunk_off + chunk_len ) 
+		{
+			// The piece lies entirely in the current file
+			off = file_off + (piece_off - chunk_off);
+			len = piece_len;
+		}
+		else if (piece_off >= chunk_off && piece_len < chunk_off + chunk_len)
+		{
+			// The start of the piece lies partially in the current file
+			off = file_off + (piece_off - chunk_off);
+			len = chunk_len - (piece_off - chunk_off);
+		}
+		else if (piece_off < chunk_off && piece_off + piece_len > chunk_off && piece_off + piece_len <= chunk_off + chunk_len)
+		{
+			// The end of the piece lies in the file
+			off = file_off;
+			len = piece_len - (chunk_off - piece_off);
+		}
+		else if (chunk_off >= piece_off && chunk_off + chunk_len < piece_off + piece_len)
+		{
+			// the current file lies entirely in the piece
+			off = file_off;
+			len = chunk_len;
+		}
+	}
+
+	PieceData* MultiFileCache::loadPiece(Chunk* c,Uint32 off,Uint32 length)
+	{
+		PieceData* piece = findPiece(c,off,length);
+		if (piece)
+			return piece;
+
+		// create piece and return it if it is mapped or the create failed
+		piece = createPiece(c,off,length,true);
+		if (!piece || piece->mapped())
+			return piece;
+
+		// Now we need to load it
+		QList<Uint32> tflist;
+		tor.calcChunkPos(c->getIndex(),tflist);
+		
+		// The chunk lies in one file, so it is easy
+		if (tflist.count() == 1)
+		{
+			const TorrentFile & f = tor.getFile(tflist[0]);
+			CacheFile* fd = files.find(tflist[0]);
+			Uint64 piece_off = FileOffset(c,f,tor.getChunkSize()) + off;
+			
+			fd->read(piece->data(),length,piece_off);
+			return piece;
+		}
+
+		// multiple files
+		Uint8* data = piece->data();
+		Uint32 chunk_off = 0; // number of bytes passed of the chunk
+		Uint32 piece_off = 0; // how many bytes read to the piece
 		for (int i = 0;i < tflist.count();i++)
 		{
 			const TorrentFile & f = tor.getFile(tflist[i]);
@@ -454,150 +536,134 @@ namespace bt
 			// first calculate offset into file
 			// only the first file can have an offset
 			// the following files will start at the beginning
-			Uint64 off = 0;
+			Uint64 file_off = 0;
 			if (i == 0)
-				off = FileOffset(c,f,tor.getChunkSize());
+				file_off = FileOffset(c,f,tor.getChunkSize());
 			
-			Uint32 to_read = 0;
-			// then the amount of data we can read from this file
+			Uint32 cdata = 0;
+			// then the amount of data of the chunk which is located in this file 
 			if (tflist.count() == 1)
-				to_read = c->getSize();
+				cdata = c->getSize();
 			else if (i == 0)
-				to_read = f.getLastChunkSize();
+				cdata = f.getLastChunkSize();
 			else if (i == tflist.count() - 1)
-				to_read = c->getSize() - read;
+				cdata = c->getSize() - chunk_off;
 			else
-				to_read = f.getSize();
+				cdata = f.getSize();
 			
+			// if the piece does not lie in this part of the chunk, move on
+			if (off + length <= chunk_off || off >= chunk_off + cdata)
+			{
+				chunk_off += cdata;
+				continue;
+			}
 		
-			// read part of data
+			Uint64 read_offset = 0; // The read offset in the file
+			Uint32 read_length = 0; // how many bytes to read
+			calculateOffsetAndLength(off,length,file_off,chunk_off,cdata,read_offset,read_length);
+
+			Uint8* ptr = data + piece_off; // location to write to
+			piece_off += read_length; 
+			
 			if (fd)
-				fd->read(data + read,to_read,off);
+			{
+				fd->read(ptr,read_length,read_offset);
+			}
 			else if (dfd)
 			{
 				Uint32 ret = 0;
 				if (i == 0)
-					ret = dfd->readLastChunk(data,read,c->getSize());
-				else if (i == tflist.count() - 1)
-					ret = dfd->readFirstChunk(data,read,c->getSize());
+					ret = dfd->readLastChunk(ptr,read_offset - file_off,read_length);
 				else
-					ret = dfd->readFirstChunk(data,read,c->getSize());
+					ret = dfd->readFirstChunk(ptr,read_offset,read_length);
 				
-				if (ret > 0 && ret != to_read)
-					Out(SYS_DIO|LOG_DEBUG) << "Warning : MultiFileCache::load ret != to_read" << endl;
-			}
-			read += to_read;
-		}
-		c->setData(data,Chunk::BUFFERED);
-	}
-
-	
-	bool MultiFileCache::prep(Chunk* c)
-	{
-		// find out in which files a chunk lies
-		QList<Uint32> tflist;
-		tor.calcChunkPos(c->getIndex(),tflist);
-		
-//		Out(SYS_DIO|LOG_DEBUG) << "Prep " << c->getIndex() << endl;
-		if (tflist.count() == 1)
-		{
-			// in one so just mmap it
-			Uint64 off = FileOffset(c,tor.getFile(tflist.first()),tor.getChunkSize());
-			CacheFile* fd = files.find(tflist.first());
-			Uint8* buf = 0;
-			if (fd && Cache::mappedModeAllowed() && mmap_failures < 3)
-			{
-				buf = (Uint8*)fd->map(c,off,c->getSize(),CacheFile::RW);
-				if (!buf)
-					mmap_failures++;
+				if (ret > 0 && ret != read_length)
+					Out(SYS_DIO|LOG_DEBUG) << "Warning : MultiFileCache::loadPiece ret != to_read" << endl;
 			}
 			
-			if (!buf)
-			{
-				// if mmap fails or is not possible use buffered mode
-				c->allocate();
-				c->setStatus(Chunk::BUFFERED);
-			}
-			else
-			{
-				c->setData(buf,Chunk::MMAPPED);
-			}
+			chunk_off += cdata;
 		}
-		else
-		{
-			// just allocate it
-			c->allocate();
-			c->setStatus(Chunk::BUFFERED);
-		}
-		return true;
+
+		return piece;
 	}
 
-	void MultiFileCache::save(Chunk* c)
+	void MultiFileCache::savePiece(PieceData* piece)
 	{
-		QList<Uint32> tflist;
-		tor.calcChunkPos(c->getIndex(),tflist);
-		
-		if (c->getStatus() == Chunk::MMAPPED)
+		// in mapped mode unload the piece if not in use
+		if (piece->mapped())
 		{
-			// mapped chunks are easy
-			CacheFile* fd = files.find(tflist[0]);
-			if (!fd)
+			if (piece->inUse())
 				return;
 			
-			fd->unmap(c->getData(),c->getSize());
-			c->clear();
-			c->setStatus(Chunk::ON_DISK);
-			return;
+			piece->unload();
+			clearPiece(piece);
+			return; 
 		}
-	
-	//	Out(SYS_DIO|LOG_DEBUG) << "Writing to " << tflist.count() << " files " << endl;
-		Uint64 written = 0; // number of bytes written
+		
+		Uint8* data = piece->data();
+		Chunk* c = piece->parentChunk();
+		QList<Uint32> tflist;
+		tor.calcChunkPos(c->getIndex(),tflist);
+		Uint32 chunk_off = 0; // number of bytes passed of the chunk
+		Uint32 piece_off = 0; // how many bytes written from the piece
+		Uint32 off = piece->offset();
+		Uint32 length = piece->length();
+		
 		for (int i = 0;i < tflist.count();i++)
 		{
 			const TorrentFile & f = tor.getFile(tflist[i]);
 			CacheFile* fd = files.find(tflist[i]);
 			DNDFile* dfd = dnd_files.find(tflist[i]);
-
+				
 			// first calculate offset into file
 			// only the first file can have an offset
 			// the following files will start at the beginning
-			Uint64 off = 0;
-			Uint32 to_write = 0;
+			Uint64 file_off = 0;
 			if (i == 0)
-			{
-				off = FileOffset(c,f,tor.getChunkSize());
-			}
-
-			// the amount of data we can write to this file
-			if (tflist.count() == 1)
-				to_write = c->getSize();
-			else if (i == 0)
-				to_write = f.getLastChunkSize();
-			else if (i == tflist.count() - 1)
-				to_write = c->getSize() - written;
-			else
-				to_write = f.getSize();
+				file_off = FileOffset(c,f,tor.getChunkSize());
 			
-		//	Out(SYS_DIO|LOG_DEBUG) << "to_write " << to_write << endl;
-			// write the data
+			Uint32 cdata = 0;
+			// then the amount of data of the chunk which is located in this file 
+			if (tflist.count() == 1)
+				cdata = c->getSize();
+			else if (i == 0)
+				cdata = f.getLastChunkSize();
+			else if (i == tflist.count() - 1)
+				cdata = c->getSize() - chunk_off;
+			else
+				cdata = f.getSize();
+			
+			// if the piece does not lie in this part of the chunk, move on
+			if (off + length <= chunk_off || off >= chunk_off + cdata)
+			{
+				chunk_off += cdata;
+				continue;
+			}
+		
+			Uint64 write_offset = 0; // The write offset in the file
+			Uint32 write_length = 0; // how many bytes to write
+			calculateOffsetAndLength(off,length,file_off,chunk_off,cdata,write_offset,write_length);
+
+			Uint8* ptr = data + piece_off; // location to read from
+			piece_off += write_length; 
+			
 			if (fd)
-				fd->write(c->getData() + written,to_write,off);
+			{
+				fd->write(ptr,write_length,write_offset);
+			}
 			else if (dfd)
 			{
 				if (i == 0)
-					dfd->writeLastChunk(c->getData() + written,to_write);
-				else if (i == tflist.count() - 1)
-					dfd->writeFirstChunk(c->getData() + written,to_write);
+					dfd->writeLastChunk(ptr,write_offset - file_off,write_length);
 				else
-					dfd->writeFirstChunk(c->getData() + written,to_write);
+					dfd->writeFirstChunk(ptr,write_offset,write_length);
 			}
 			
-			written += to_write;
+			chunk_off += cdata;
 		}
 		
-		// set the chunk to on disk and clear it
-		c->clear();
-		c->setStatus(Chunk::ON_DISK);
+		if (!piece->inUse())
+			clearPiece(piece);
 	}
 	
 	void MultiFileCache::downloadStatusChanged(TorrentFile* tf, bool download)
@@ -628,7 +694,8 @@ namespace bt
 				bt::Delete(dnd_dir + tf->getUserModifiedPath()); // delete old dnd file
 				
 				files.erase(tf->getIndex());
-				dfd = new DNDFile(dnd_dir + tf->getUserModifiedPath() + ".dnd");
+			
+				dfd = new DNDFile(dnd_dir + tf->getUserModifiedPath() + ".dnd",tf,tor.getChunkSize());
 				dfd->checkIntegrity();
 				dnd_files.insert(tf->getIndex(),dfd);
 			}
@@ -643,7 +710,7 @@ namespace bt
 				bt::Delete(tf->getPathOnDisk(),true);
 				
 				files.erase(tf->getIndex());
-				dfd = new DNDFile(dnd_file);
+				dfd = new DNDFile(dnd_file,tf,tor.getChunkSize());
 				dfd->checkIntegrity();
 				dnd_files.insert(tf->getIndex(),dfd);
 			}
@@ -670,7 +737,7 @@ namespace bt
 	
 	void MultiFileCache::saveFirstAndLastChunk(TorrentFile* tf,const QString & src_file,const QString & dst_file)
 	{
-		DNDFile out(dst_file);
+		DNDFile out(dst_file,tf,tor.getChunkSize());
 		File fptr;
 		if (!fptr.open(src_file,"rb"))
 			throw Error(i18n("Cannot open file %1 : %2",src_file,fptr.errorString()));
@@ -689,14 +756,14 @@ namespace bt
 		try
 		{
 			fptr.read(tmp,cs - tf->getFirstChunkOffset());
-			out.writeFirstChunk(tmp,cs - tf->getFirstChunkOffset());
+			out.writeFirstChunk(tmp,0,cs - tf->getFirstChunkOffset());
 			
 			if (tf->getFirstChunk() != tf->getLastChunk())
 			{
 				Uint64 off = FileOffset(tf->getLastChunk(),*tf,tor.getChunkSize());
 				fptr.seek(File::BEGIN,off);
 				fptr.read(tmp,tf->getLastChunkSize());
-				out.writeLastChunk(tmp,tf->getLastChunkSize());
+				out.writeLastChunk(tmp,0,tf->getLastChunkSize());
 			}
 			delete [] tmp;
 		}
@@ -709,7 +776,7 @@ namespace bt
 	
 	void MultiFileCache::recreateFile(TorrentFile* tf,const QString & dnd_file,const QString & output_file)
 	{
-		DNDFile dnd(dnd_file);
+		DNDFile dnd(dnd_file,tf,tor.getChunkSize());
 		
 		// make sure path exists
 		MakeFilePath(output_file);

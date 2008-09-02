@@ -27,6 +27,7 @@
 #include <util/log.h>
 #include <torrent/torrent.h>
 #include <diskio/chunkmanager.h>
+#include <diskio/piecedata.h>
 #include <interfaces/chunkdownloadinterface.h>
 #include "httpconnection.h"
 
@@ -330,11 +331,13 @@ namespace bt
 			if (bl > tmp.size() - off)
 				bl = tmp.size() - off;
 					
-			if (c->getStatus() == Chunk::BUFFERED || c->getStatus() == Chunk::MMAPPED)
+			// ignore data if we already have it
+			if (c->getStatus() != Chunk::ON_DISK)
 			{
-				// only write when we have the chunk in memory
-				// if we already have the chunk we will then just ignore the data
-				memcpy(c->getData() + bytes_of_cur_chunk,tmp.data() + off,bl);
+				PieceData* p = c->getPiece(0,c->getSize(),false); 
+				if (p)
+					memcpy(p->data() + bytes_of_cur_chunk,tmp.data() + off,bl);
+
 				downloaded += bl;
 			}
 			off += bl;
@@ -345,12 +348,17 @@ namespace bt
 				// we have one ready
 				bytes_of_cur_chunk = 0;
 				cur_chunk++;
-				if (c->getStatus() == Chunk::BUFFERED || c->getStatus() == Chunk::MMAPPED)
+				if (c->getStatus() != Chunk::ON_DISK)
 					chunkReady(c);
 				
 				chunkStopped();
 				if (cur_chunk <= last_chunk)
+				{
+					PieceData* p = cman.getChunk(cur_chunk)->getPiece(0,c->getSize(),false);
+					if (p)
+						p->ref(); // reference will be released when chunk is ready
 					chunkStarted(cur_chunk);
+				}
 			}
 		}
 	}

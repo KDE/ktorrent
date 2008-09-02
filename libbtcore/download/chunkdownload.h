@@ -40,6 +40,7 @@ namespace bt
 	class Request;
 	class DownloadStatus;
 	class PieceDownloader;
+	class PieceData;
 	
 	struct ChunkDownloadHeader
 	{
@@ -48,6 +49,12 @@ namespace bt
 		Uint32 buffered;
 	};
 	
+	struct PieceHeader
+	{
+		Uint32 piece;
+		Uint32 size; 
+		Uint32 mapped;
+	};
 	
 	
 	
@@ -126,8 +133,10 @@ namespace bt
 		/**
 		 * Load from a File
 		 * @param file The File
+		 * @param hdr Header for the chunk
+		 * @param update_hash Wether or not to update the hash
 		 */
-		bool load(File & file,ChunkDownloadHeader & hdr);
+		bool load(File & file,ChunkDownloadHeader & hdr,bool update_hash = true);
 
 		/**
 		 * Cancel all requests.
@@ -159,9 +168,6 @@ namespace bt
 		/// Get the SHA1 hash of the downloaded chunk
 		SHA1Hash getHash() const {return hash_gen.get();}
 		
-		/// Are we using the continuous hashing feature for this chunk
-		bool usingContinuousHashing() const;
-		
 		/// Get the number of downloaders
 		Uint32 getNumDownloaders() const {return pdown.count();}
 
@@ -187,6 +193,7 @@ namespace bt
 		QList<PieceDownloader*> pdown;
 		PtrMap<PieceDownloader*,DownloadStatus> dstatus;
 		std::set<PieceDownloader*> piece_providers;
+		PieceData** piece_data;
 		
 
 		SHA1HashGen hash_gen;

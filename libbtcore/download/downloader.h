@@ -195,8 +195,6 @@ namespace bt
 		 */
 		void setMonitor(MonitorInterface* tmo);
 		
-		static void setMemoryUsage(Uint32 m);
-		
 		/**
 		 * Data has been checked, and these chunks are OK.
 		 * @param ok_chunks The ok_chunks
@@ -246,7 +244,6 @@ namespace bt
 		void downloadFrom(PieceDownloader* pd);
 		void downloadFrom(WebSeed* ws);
 		void normalUpdate();
-		Uint32 maxMemoryUsage();
 		Uint32 numNonIdle();
 		bool findDownloadForPD(PieceDownloader* pd,bool warmup);
 		ChunkDownload* selectCD(PieceDownloader* pd,Uint32 num);
@@ -266,8 +263,6 @@ namespace bt
 		QList<WebSeed*> webseeds;
 		PtrMap<Uint32,WebSeed> webseeds_chunks;
 		Uint32 active_webseed_downloads;
-		
-		static Uint32 mem_usage;
 	};
 	
 

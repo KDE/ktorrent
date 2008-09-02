@@ -43,9 +43,9 @@ namespace bt
 		SingleFileCache(Torrent& tor,const QString & tmpdir,const QString & datadir);
 		virtual ~SingleFileCache();
 
-		virtual bool prep(Chunk* c);
-		virtual void load(Chunk* c);
-		virtual void save(Chunk* c);
+		virtual PieceData* loadPiece(Chunk* c,Uint32 off,Uint32 length);
+		virtual PieceData* preparePiece(Chunk* c,Uint32 off,Uint32 length);
+		virtual void savePiece(PieceData* piece);
 		virtual void create();
 		virtual void close();
 		virtual void open();
@@ -60,6 +60,8 @@ namespace bt
 		virtual Uint64 diskUsage();
 		virtual void loadFileMap();
 		virtual void saveFileMap();
+	private:
+		PieceData* createPiece(Chunk* c,Uint64 off,Uint32 length,bool read_only);
 	};
 
 }

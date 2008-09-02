@@ -77,8 +77,8 @@ namespace bt
 		{	
 			Request r = requests.front();
 			
-			Chunk* c = cman.grabChunk(r.getIndex());	
-			if (c && c->getData())
+			Chunk* c = cman.getChunk(r.getIndex());	
+			if (c && c->getStatus() == Chunk::ON_DISK)
 			{
 				if (!pw.sendChunk(r.getIndex(),r.getOffset(),r.getLength(),c))
 				{

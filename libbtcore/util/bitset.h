@@ -150,6 +150,11 @@ namespace bt
 		 * Opposite of operator == 
 		 */
 		bool operator != (const BitSet & bs) {return ! operator == (bs);}
+		
+		/**
+		 * Update the number of on bits
+		 */
+		void updateNumOnBits();
 
 		static BitSet null;
 	};

@@ -66,7 +66,6 @@ namespace bt
 		}
 		
 		bool should_be_interested = false;
-		bool should_we_be_interested = false;
 		// before we start calculating first check if we have piece that the peer doesn't have
 		const BitSet & ours = cman.getBitSet();
 		const BitSet & theirs = p->getBitSet();
@@ -165,7 +164,7 @@ namespace bt
 		Uint32 num_slots = Choker::getNumUploadSlots();
 		// Do the choking and unchoking
 		Uint32 num_unchoked = 0;
-		for (Uint32 i = 0;i < ppl.count();i++)
+		for (Uint32 i = 0;i < (Uint32)ppl.count();i++)
 		{
 			Peer* p = ppl.at(i);
 			if (!poup && num_unchoked < num_slots)

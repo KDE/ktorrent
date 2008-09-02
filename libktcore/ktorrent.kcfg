@@ -115,10 +115,6 @@
 			<label>IP to pass to the tracker</label>
 			<default code="true">QString::null</default>
 		</entry>
-		<entry name="memoryUsage" type="Int">
-			<label>Memory usage</label>
-			<default>0</default>
-		</entry>
 		<entry name="guiUpdateInterval" type="Int">
 			<label>GUI update interval</label>
 			<min>500</min>

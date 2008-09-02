@@ -25,7 +25,7 @@
 
 namespace bt
 {
-	
+	class TorrentFile;
 
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
@@ -36,7 +36,7 @@ namespace bt
 	class DNDFile
 	{
 	public:
-		DNDFile(const QString & path);
+		DNDFile(const QString & path,const TorrentFile* tf,Uint32 chunk_size);
 		virtual ~DNDFile();
 		
 		/// Change the path of the file
@@ -50,38 +50,42 @@ namespace bt
 		/**
 		 * Read the (partial)first chunk into a buffer.
 		 * @param buf The buffer
-		 * @param off OFfset into the buffer
-		 * @param buf_size Size of the buffer
+		 * @param off Offset off chunk
+		 * @param size How many bytes to read of the first chunk
 		*/
-		Uint32 readFirstChunk(Uint8* buf,Uint32 off,Uint32 buf_size);
+		Uint32 readFirstChunk(Uint8* buf,Uint32 off,Uint32 size);
 		
 		/**
 		 * Read the (partial)last chunk into a buffer.
 		 * @param buf The buffer
-		 * @param off OFfset into the buffer
-		 * @param buf_size Size of the buffer
+		 * @param off Offset off chunk
+		 * @param size How many bytes to read of the last chunk
 		 */
-		Uint32 readLastChunk(Uint8* buf,Uint32 off,Uint32 buf_size);
+		Uint32 readLastChunk(Uint8* buf,Uint32 off,Uint32 size);
 		
 		/**
 		 * Write the partial first chunk.
 		 * @param buf The buffer
-		 * @param fc_size Size to write
+		 * @param off Offset into partial chunk
+ 		 * @param size Size to write
 		 */
-		void writeFirstChunk(const Uint8* buf,Uint32 fc_size);
+		void writeFirstChunk(const Uint8* buf,Uint32 off,Uint32 size);
 		
 		/**
 		 * Write the partial last chunk.
 		 * @param buf The buffer
-		 * @param lc_size Size to write
+		 * @param off Offset into partial chunk
+		 * @param size Size to write
 		 */
-		void writeLastChunk(const Uint8* buf,Uint32 lc_size);
+		void writeLastChunk(const Uint8* buf,Uint32 off,Uint32 size);
 		
 	private:
 		void create();
 
 	private:
 		QString path;
+		Uint32 first_size;
+		Uint32 last_size;
 	};
 
 }

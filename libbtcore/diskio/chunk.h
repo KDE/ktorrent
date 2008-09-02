@@ -21,13 +21,13 @@
 #define BTCHUNK_H
 
 #include <btcore_export.h>
-
 #include <util/constants.h>
-#include "cachefile.h"
 
 namespace bt
 {
 	class SHA1Hash;
+	class Cache;
+	class PieceData;
 
 	/**
 	 * @author Joris Guisson
@@ -41,127 +41,87 @@ namespace bt
 	 * - ON_DISK : On disk
 	 * - NOT_DOWNLOADED : It hasn't been dowloaded yet, and there is no buffer allocated
 	 */
-	class BTCORE_EXPORT Chunk : public MMappeable
+	class BTCORE_EXPORT Chunk
 	{
 	public:
-		Chunk(unsigned int index,Uint32 size);
+		Chunk(Uint32 index,Uint32 size,Cache* cache);
 		~Chunk();
 
 		enum Status
 		{
-			MMAPPED,
-			BUFFERED,
 			ON_DISK,
 			NOT_DOWNLOADED
 		};
+		
+		/**
+		 * Read a piece from the chunk
+		 * @param off The offset of the chunk	
+		 * @param len The length of the chunk
+		 * @param data The data, should be big enough to hold len bytes
+		 */
+		bool readPiece(Uint32 off,Uint32 len,Uint8* data);
+		
+		/**
+		 * Get a pointer to the data of a piece.
+		 * If it isn't loaded, it will be loaded.
+		 * @param off Offset of the piece
+		 * @param len Length of the piece
+		 * @param read_only Is this for reading the piece or for writing
+		 * @return Pointer to the PieceData
+		 */
+		PieceData* getPiece(Uint32 off,Uint32 len,bool read_only);
+		
+		/**
+		 * Save a piece
+		 * @param off Offset of the piece
+		 * @param len Length of the piece
+		 */
+		void savePiece(PieceData* piece);
 
 		/// Get the chunks status.
-		Status getStatus() const;
+		Status getStatus() const {return status;}
 
 		/**
 		 * Set the chunks status
 		 * @param s 
 		 */
-		void setStatus(Status s);
-
-		/// Get the data
-		const Uint8* getData() const;
-
-		/// Get the data
-		Uint8* getData();
-
-		/// Set the data and the new status
-		void setData(Uint8* d,Status nstatus);
-
-		/// Clear the chunk (delete data depending on the mode)
-		void clear();
+		void setStatus(Status s) {status = s;}
 
 		/// Get the chunk's index
-		Uint32 getIndex() const;
+		Uint32 getIndex() const {return index;}
 
 		/// Get the chunk's size
-		Uint32 getSize() const;
-
-		/// Add one to the reference counter
-		void ref();
-
-		/// --reference counter
-		void unref();
-
-		/// reference coun > 0
-		bool taken() const;
-
-		/// allocate data if not already done, sets the status to buffered
-		void allocate();
-
+		Uint32 getSize() const {return size;}
+		
 		/// get chunk priority
-		Priority getPriority() const;
+		Priority getPriority() const {return priority;}
 
 		/// set chunk priority
-		void setPriority(Priority newpriority = NORMAL_PRIORITY);
+		void setPriority(Priority newpriority = NORMAL_PRIORITY) {priority = newpriority;}
 
 		/// Is chunk excluded
-		bool isExcluded() const;
+		bool isExcluded() const {return priority == EXCLUDED;}
 		
 		/// Is this a seed only chunk
-		bool isExcludedForDownloading() const;
+		bool isExcludedForDownloading() const {return priority == ONLY_SEED_PRIORITY;}
 
 		/// In/Exclude chunk
-		void setExclude(bool yes);
+		void setExclude(bool yes) {priority = yes ? EXCLUDED : NORMAL_PRIORITY;}
 		
 		/**
 		 * Check wehter the chunk matches it's hash.
 		 * @param h The hash
 		 * @return true if the data matches the hash
 		 */
-		bool checkHash(const SHA1Hash & h) const;
-		
-	private:
-		virtual void unmapped();
+		bool checkHash(const SHA1Hash & h);
 		
 	private:
 		Status status;
 		Uint32 index;
-		Uint8* data;
 		Uint32 size;
-		int ref_count;
 		Priority priority;
+		Cache* cache;
 	};
-
-	inline Chunk::Status Chunk::getStatus() const
-	{
-		return status;
-	}
-
-	inline void Chunk::setStatus(Chunk::Status s)
-	{
-		status = s;
-	}
-
-	inline const Uint8* Chunk::getData() const {return data;}
-	inline Uint8* Chunk::getData() {return data;}
-
-	inline Uint32 Chunk::getIndex() const {return index;}
-	inline Uint32 Chunk::getSize() const {return size;}
-
-	inline void Chunk::ref() {ref_count++;}
-	inline void Chunk::unref() {ref_count--;}
-	inline bool Chunk::taken() const {return ref_count > 0;}
-
-	inline Priority Chunk::getPriority() const {return priority;}
-	inline void Chunk::setPriority(Priority newpriority) {priority = newpriority;}
-	inline bool Chunk::isExcluded() const 
-	{
-		return priority == EXCLUDED; 
-	}
-	
-	inline bool Chunk::isExcludedForDownloading() const
-	{
-		return priority == ONLY_SEED_PRIORITY;
-	}
-	
-	inline void Chunk::setExclude(bool yes)
-		{if(yes) priority = EXCLUDED; else priority = NORMAL_PRIORITY;}
 }
 
 #endif

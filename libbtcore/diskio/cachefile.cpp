@@ -76,8 +76,6 @@ namespace bt
 	
 	void CacheFile::openFile(Mode mode)
 	{
-		int flags = O_LARGEFILE;
-		
 		// by default always try read write
 		fptr = new QFile(path);
 		connect(fptr,SIGNAL(aboutToClose()),this,SLOT(aboutToClose()));
@@ -330,7 +328,6 @@ namespace bt
 
 	void CacheFile::unmapAll()
 	{
-		int fd = fptr->handle();
 		QMap<void*,Entry>::iterator i = mappings.begin();
 		while (i != mappings.end())
 		{
@@ -469,7 +466,7 @@ namespace bt
 	
 	
 		
-	void CacheFile::preallocate(PreallocationThread* prealloc)
+	void CacheFile::preallocate(PreallocationThread* /*prealloc*/)
 	{
 		QMutexLocker lock(&mutex);
 		

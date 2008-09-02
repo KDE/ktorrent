@@ -80,9 +80,9 @@ namespace bt
 		for (Uint32 i = 0;i < tor.getNumChunks();i++)
 		{
 			if (i + 1 < tor.getNumChunks())
-				chunks[i] = new Chunk(i,csize);
+				chunks[i] = new Chunk(i,csize,cache);
 			else
-				chunks[i] = new Chunk(i,lsize);
+				chunks[i] = new Chunk(i,lsize,cache);
 		}
 		chunks_left = 0;
 		recalc_chunks_left = true;
@@ -280,96 +280,7 @@ namespace bt
 		
 	void ChunkManager::stop()
 	{
-		// unmmap all chunks which can
-		for (Uint32 i = 0;i < bitset.getNumBits();i++)
-		{
-			Chunk* c = chunks[i];
-			if (c->getStatus() == Chunk::MMAPPED)
-			{
-				cache->save(c);
-				c->clear();
-				c->setStatus(Chunk::ON_DISK);
-			}
-			else if (c->getStatus() == Chunk::BUFFERED)
-			{
-				c->clear();
-				c->setStatus(Chunk::ON_DISK);
-			}
-		}
 		cache->close();
-	}
-	
-	Chunk* ChunkManager::grabChunk(unsigned int i)
-	{
-		if (i >= (Uint32)chunks.size())
-			return 0;
-		
-		Chunk* c = chunks[i];
-		if (c->getStatus() == Chunk::NOT_DOWNLOADED || c->isExcluded())
-		{
-			return 0;
-		}
-		else if (c->getStatus() == Chunk::ON_DISK)
-		{
-			// load the chunk if it is on disk
-			cache->load(c);
-			loaded[i] = bt::GetCurrentTime();
-			bool check_allowed = do_data_check && (max_chunk_size_for_data_check == 0 || tor.getChunkSize() <= max_chunk_size_for_data_check);
-			
-			// when no corruptions have been found, only check once every 5 chunks
-			if (check_allowed && recheck_counter < 5 && corrupted_count == 0)
-				check_allowed = false; 
-			 
-			if (c->getData() && check_allowed)
-			{
-				recheck_counter = 0;
-				if (!c->checkHash(tor.getHash(i)))
-				{
-					Out(SYS_DIO|LOG_IMPORTANT) << "Chunk " << i 
-							<< " has been found invalid, redownloading" << endl;
-				
-					resetChunk(i);
-					tor.updateFilePercentage(i,*this);
-					saveIndexFile();
-					recalc_chunks_left = true;
-					corrupted_count++;
-					corrupted(i);
-					return 0;
-				}
-			}
-			else
-			{
-				recheck_counter++;
-			}
-			
-			Out(SYS_DIO|LOG_DEBUG) << QString("Grab chunk %1 (%2 in memory)").arg(i).arg(loaded.count()) << endl;
-		}
-		else
-		{
-			// update timestamp 
-			loaded[i] = bt::GetCurrentTime();
-		}
-		
-		return c;
-	}
-		
-	void ChunkManager::releaseChunk(unsigned int i)
-	{
-		if (i >= (Uint32)chunks.size())
-			return;
-		
-		Chunk* c = chunks[i];
-		if (!c->taken())
-		{
-			if (c->getStatus() == Chunk::MMAPPED)
-				cache->save(c);
-			c->clear();
-			c->setStatus(Chunk::ON_DISK);
-			loaded.remove(i);
-			Out(SYS_DIO|LOG_DEBUG) << QString("Released and unloaded chunk %1 (%2 in memory)").arg(i).arg(loaded.count()) << endl;
-		}
-		else
-			Out(SYS_DIO|LOG_DEBUG) << QString("Released chunk %1 (%2 in memory)").arg(i).arg(loaded.count()) << endl;
 	}
 	
 	void ChunkManager::resetChunk(unsigned int i)
@@ -378,44 +289,20 @@ namespace bt
 			return;
 		
 		Chunk* c = chunks[i];
-		if (c->getStatus() == Chunk::MMAPPED)
-			cache->save(c);
-		c->clear();
+		cache->clearPieces(c);
 		c->setStatus(Chunk::NOT_DOWNLOADED);
 		bitset.set(i,false);
 		todo.set(i,!excluded_chunks.get(i) && !only_seed_chunks.get(i));
-		loaded.remove(i);
 		tor.updateFilePercentage(i,*this);
-		Out(SYS_DIO|LOG_DEBUG) << QString("Resetted chunk %1 (%2 in memory)").arg(i).arg(loaded.count()) << endl;
+		Out(SYS_DIO|LOG_DEBUG) << QString("Resetted chunk %1").arg(i) << endl;
 	}
 	
 	void ChunkManager::checkMemoryUsage()
 	{
-		Uint32 num_removed = 0;
-		QMap<Uint32,TimeStamp>::iterator i = loaded.begin();
-		while (i != loaded.end())
-		{
-			Chunk* c = chunks[i.key()];
-			// get rid of chunk if nobody asked for it in the last 5 seconds
-			if (!c->taken() && bt::GetCurrentTime() - i.value() > 5000)
-			{
-				if (c->getStatus() == Chunk::MMAPPED)
-					cache->save(c);
-				c->clear();
-				c->setStatus(Chunk::ON_DISK);
-				i = loaded.erase(i);
-				num_removed++;
-			}
-			else
-			{
-				i++;
-			}
-		}
-		Uint32 num_in_mem = loaded.count();
-		Out(SYS_DIO|LOG_DEBUG) << QString("Cleaned %1 chunks, %2 still in memory").arg(num_removed).arg(num_in_mem) << endl;
+		cache->checkMemoryUsage();
 	}
 	
-	void ChunkManager::saveChunk(unsigned int i,bool update_index)
+	void ChunkManager::chunkDownloaded(unsigned int i)
 	{
 		if (i >= (Uint32)chunks.size())
 			return;
@@ -423,22 +310,15 @@ namespace bt
 		Chunk* c = chunks[i];
 		if (!c->isExcluded())
 		{
-			cache->save(c);
-			
 			// update the index file
-			if (update_index)
-			{
-				bitset.set(i,true);
-				todo.set(i,false);
-				recalc_chunks_left = true;
-				writeIndexFileEntry(c);
-				tor.updateFilePercentage(i,*this);
-			}
+			bitset.set(i,true);
+			todo.set(i,false);
+			recalc_chunks_left = true;
+			writeIndexFileEntry(c);
+			tor.updateFilePercentage(i,*this);
 		}
 		else
 		{
-			c->clear();
-			c->setStatus(Chunk::NOT_DOWNLOADED);
 			Out(SYS_DIO|LOG_IMPORTANT) << "Warning: attempted to save a chunk which was excluded" << endl;
 		}
 	}
@@ -572,7 +452,7 @@ namespace bt
 	
 	void ChunkManager::debugPrintMemUsage()
 	{
-		Out(SYS_DIO|LOG_DEBUG) << "Active Chunks : " << loaded.count()<< endl;
+	//	Out(SYS_DIO|LOG_DEBUG) << "Active Chunks : " << loaded.count()<< endl;
 	}
 
 	void ChunkManager::prioritise(Uint32 from,Uint32 to,Priority priority)
@@ -1014,14 +894,6 @@ namespace bt
 		}
 	}
 	
-	bool ChunkManager::prepareChunk(Chunk* c,bool always)
-	{
-		if (!always && c->getStatus() != Chunk::NOT_DOWNLOADED)
-			return false;
-		
-		return cache->prep(c);
-	}
-	
 	QString ChunkManager::getOutputPath() const
 	{
 		return cache->getOutputPath();
@@ -1040,7 +912,7 @@ namespace bt
 			Chunk* c = chunks[i];
 			if (ok_chunks.get(i) && !bitset.get(i))
 			{
-				// We think we do not hae a chunk, but we do have it
+				// We think we do not have a chunk, but we do have it
 				bitset.set(i,true);
 				todo.set(i,false);
 				// the chunk must be on disk
@@ -1057,10 +929,6 @@ namespace bt
 				{
 					c->setStatus(Chunk::NOT_DOWNLOADED);
 					tor.updateFilePercentage(i,*this);
-				}
-				else if (c->getStatus() == Chunk::MMAPPED || c->getStatus() == Chunk::BUFFERED)
-				{
-					resetChunk(i);
 				}
 				else
 				{

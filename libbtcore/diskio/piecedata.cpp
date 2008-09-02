@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,51 +16,43 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include "ccmigrate.h"
-#include <klocale.h>
 #include <util/log.h>
-#include <util/file.h>
-#include <util/error.h>
-#include <util/array.h>
-#include <util/bitset.h>
-#include <util/fileops.h>
-#include <download/downloader.h>
-#include <torrent/torrent.h>
-#include <torrent/globals.h>
-#include <download/chunkdownload.h>
-#include "btversion.h"
+#include "piecedata.h"
+#include "cachefile.h"
+#include "chunk.h"
 
 namespace bt
 {
-	bool IsPreMMap(const QString & current_chunks)
-	{
-		File fptr;
-		if (!fptr.open(current_chunks,"rb"))
-			return false;
 
-		CurrentChunksHeader chdr;
-		fptr.read(&chdr,sizeof(CurrentChunksHeader));
-		if (chdr.magic != CURRENT_CHUNK_MAGIC)
-		{
-			// magic number not good, so pre
-			return true;
-		}
-		
-		if (chdr.major >= 2 || (chdr.major == 1 && chdr.minor >= 2))
-		{
-			// version number is 1.2 or greater
-			return false;
-		}
-		
-		return false;
-	}
-	
-	void MigrateCurrentChunks(const Torrent & tor,const QString & current_chunks)
+	PieceData::PieceData(Chunk* chunk,Uint32 off,Uint32 len,Uint8* ptr,CacheFile* file) 
+		: chunk(chunk),off(off),len(len),ptr(ptr),file(file),ref_count(0)
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "Migrating very old current chunks files is no longer supported" << endl;
-		bt::Delete(current_chunks,true);
 	}
 
+	PieceData::~PieceData()
+	{
+		ref_count = 0;
+		if (ptr)
+			unload();
+	}
+
+	void PieceData::unload()
+	{
+		if (ref_count > 0)
+			return;
+		
+		if (!file)
+			delete [] ptr;
+		else
+			file->unmap(ptr,len);
+		ptr = 0;
+	}
+
+	void PieceData::unmapped()
+	{
+		ptr = 0;
+		Out(SYS_DIO|LOG_DEBUG) << QString("Piece %1 %2 %3 unmapped").arg(chunk->getIndex()).arg(off).arg(len) << endl;
+	}
 }
