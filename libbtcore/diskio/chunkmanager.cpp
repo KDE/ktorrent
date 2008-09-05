@@ -315,6 +315,7 @@ namespace bt
 			todo.set(i,false);
 			recalc_chunks_left = true;
 			writeIndexFileEntry(c);
+			c->setStatus(Chunk::ON_DISK);
 			tor.updateFilePercentage(i,*this);
 		}
 		else
