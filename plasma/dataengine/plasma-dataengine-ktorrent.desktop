@@ -1,8 +1,17 @@
 [Desktop Entry]
-Name=KTorrent Data Engine
+Name=KTorrent
 Comment=KTorrent data engine, for getting information from ktorrent
 X-KDE-ServiceTypes=Plasma/DataEngine
 Type=Service
 Icon=ktorrent
 X-KDE-Library=plasma_engine_ktorrent
 X-Plasma-EngineName=ktorrent
+
+X-KDE-PluginInfo-Author=
+X-KDE-PluginInfo-Email=
+X-KDE-PluginInfo-Name=ktorrent
+X-KDE-PluginInfo-Version=
+X-KDE-PluginInfo-Website=
+X-KDE-PluginInfo-Category=
+X-KDE-PluginInfo-Depends=
+
