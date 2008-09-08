@@ -209,17 +209,6 @@ namespace bt
 		}
 	}
 
-	Uint32 Downloader::numNonIdle()
-	{
-		Uint32 num_non_idle = 0;
-		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
-		{
-			ChunkDownload* cd = j->second;
-			if (!cd->isIdle())
-				num_non_idle++;
-		}
-		return num_non_idle;
-	}
 	
 	ChunkDownload* Downloader::selectCD(PieceDownloader* pd,Uint32 n)
 	{
@@ -246,22 +235,12 @@ namespace bt
 	}
 	
 
-	bool Downloader::findDownloadForPD(PieceDownloader* pd,bool warmup)
+	bool Downloader::findDownloadForPD(PieceDownloader* pd)
 	{
 		ChunkDownload* sel = 0;
 		
-		// first see if there are ChunkDownload's which need a PieceDownloader
+		// See if there are ChunkDownload's which need a PieceDownloader
 		sel = selectCD(pd,0);
-		
-		if (!sel && warmup)
-		{
-			// if we couldn't find one, try to select another 
-			// which only has one downloader
-			// so that during warmup, there are at the most 2 downloaders 
-			// assigned to one peer	
-			sel = selectCD(pd,1);
-		}
-		
 		if (sel)
 		{
 			sel->assign(pd);
@@ -292,12 +271,9 @@ namespace bt
 	}
 
 	void Downloader::downloadFrom(PieceDownloader* pd)
-	{;
-		// calculate number of non idle chunks
-		Uint32 num_non_idle = numNonIdle();
-		
+	{	
 		// first see if we can use an existing dowload
-		if (findDownloadForPD(pd,cman.getNumChunks() - cman.chunksLeft() <= 4))
+		if (findDownloadForPD(pd))
 			return;
 		
 		Uint32 chunk = 0;

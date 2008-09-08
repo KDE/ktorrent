@@ -96,6 +96,17 @@ namespace bt
 
 	ChunkDownload::~ChunkDownload()
 	{
+		// make sure we do not keep pieces into memory unnecesary
+		for (Uint32 i = 0;i < num;i++)
+		{
+			PieceData* piece = piece_data[i];
+			if (piece)
+			{
+				piece->unref();
+				chunk->savePiece(piece);
+				piece_data[i] = 0;
+			}
+		}
 		delete [] piece_data;
 	}
 
@@ -514,17 +525,23 @@ namespace bt
 	{
 		// update the hash until where we can
 		Uint32 nn = num_pieces_in_hash;
-		while (pieces.get(nn) && nn < num)
+		while (nn < num && pieces.get(nn))
 			nn++;
 		
 		for (Uint32 i = num_pieces_in_hash;i < nn;i++)
 		{
 			PieceData* piece = piece_data[i];
 			Uint32 len = i == num - 1 ? last_size : MAX_PIECE_LEN;
-			hash_gen.update(piece->data(),len);
-			// save the piece and set it to 0, we no longer need it
-			piece->unref();
-			chunk->savePiece(piece);
+			if (!piece)
+				piece = chunk->getPiece(i*MAX_PIECE_LEN,len,true);
+			
+			if (piece)
+			{
+				hash_gen.update(piece->data(),len);
+				// save the piece and set it to 0, we no longer need it
+				piece->unref();
+				chunk->savePiece(piece);
+			}
 			piece_data[i] = 0;
 		}
 		num_pieces_in_hash = nn;

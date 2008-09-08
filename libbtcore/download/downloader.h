@@ -244,8 +244,7 @@ namespace bt
 		void downloadFrom(PieceDownloader* pd);
 		void downloadFrom(WebSeed* ws);
 		void normalUpdate();
-		Uint32 numNonIdle();
-		bool findDownloadForPD(PieceDownloader* pd,bool warmup);
+		bool findDownloadForPD(PieceDownloader* pd);
 		ChunkDownload* selectCD(PieceDownloader* pd,Uint32 num);
 		ChunkDownload* selectWorst(PieceDownloader* pd);
 		
