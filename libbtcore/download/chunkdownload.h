@@ -172,19 +172,20 @@ namespace bt
 		Uint32 getNumDownloaders() const {return pdown.count();}
 
 	private slots:
-		void sendRequests(PieceDownloader* pd);
-		void sendCancels(PieceDownloader* pd);
-		void endgameCancel(const Piece & p);
 		void onTimeout(const bt::Request & r);
 		void onRejected(const bt::Request & r);
 		
 	private:
 		void notDownloaded(const Request & r,bool reject);
 		void updateHash();
+		void sendRequests();
+		bool sendRequest(PieceDownloader* pd);
+		void sendCancels(PieceDownloader* pd);
+		void endgameCancel(const Piece & p);
+		Uint32 bestPiece(PieceDownloader* pd);
 		
 	private:		
 		BitSet pieces;
-		QList<Uint32> piece_queue;
 		Chunk* chunk;
 		Uint32 num;
 		Uint32 num_downloaded;
@@ -194,8 +195,6 @@ namespace bt
 		PtrMap<PieceDownloader*,DownloadStatus> dstatus;
 		std::set<PieceDownloader*> piece_providers;
 		PieceData** piece_data;
-		
-
 		SHA1HashGen hash_gen;
 		Uint32 num_pieces_in_hash;
 

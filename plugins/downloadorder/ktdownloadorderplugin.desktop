@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=DownloadOrderPlugin
+Comment=Plugin to specify the download order of a multifile torrent for KTorrent
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktdownloadorderplugin
+X-KDE-PluginInfo-Author=Joris Guisson
+X-KDE-PluginInfo-Email=joris.guisson@gmail.com
+X-KDE-PluginInfo-Name=DownloadOrderPlugin
+X-KDE-PluginInfo-Website=http://ktorrent.org/
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
+Icon=view-sort-ascending

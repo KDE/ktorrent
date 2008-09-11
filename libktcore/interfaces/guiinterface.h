@@ -218,6 +218,9 @@ namespace kt
 
 		/// Get the current torrent.
 		virtual const bt::TorrentInterface* getCurrentTorrent() const = 0;
+		
+		/// Get the current torrent 
+		virtual bt::TorrentInterface* getCurrentTorrent() = 0;
 	
 		/// Show a scan dialog, and start the data scan
 		virtual void dataScan(bt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption) = 0;

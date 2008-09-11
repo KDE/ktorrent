@@ -125,6 +125,14 @@ namespace bt
 		
 		CurChunkCItr beginDownloads() const {return current_chunks.begin();}
 		CurChunkCItr endDownloads() const {return current_chunks.end();}
+		
+		
+		/**
+		 * Get a download for a chunk
+		 * @param chunk The chunk
+		 * @return The ChunkDownload, or 0 if no download is found
+		 */
+		ChunkDownload* getDownload(Uint32 chunk);
 
 		/**
 		 * See if we are downloading a Chunk

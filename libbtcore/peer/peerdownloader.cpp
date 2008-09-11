@@ -141,8 +141,6 @@ namespace bt
 		if (!peer)
 			return;
 
-//		Out(SYS_CON|LOG_DEBUG) << "Rejected : " << req.getIndex() << " " 
-//				<< req.getOffset() << " " << req.getLength() << endl;
 		if (reqs.contains(req))
 		{
 			reqs.removeAll(req);
@@ -213,7 +211,6 @@ namespace bt
 		TimeStamp now = bt::GetCurrentTime(); 
 		// we use a 60 second interval
 		const Uint32 MAX_INTERVAL = 60 * 1000;
-		QList<TimeStampedRequest> retransmits;
 
 		QList<TimeStampedRequest>::iterator i = reqs.begin();
 		while (i != reqs.end())
@@ -221,18 +218,8 @@ namespace bt
 			TimeStampedRequest & tr = *i;
 			if (now - tr.time_stamp > MAX_INTERVAL)
 			{
-				// cancel it
-				TimeStampedRequest r = tr;
-				peer->getPacketWriter().sendCancel(r.req);
-				
-				// retransmit it
-				peer->getPacketWriter().sendRequest(r.req);
-				r.time_stamp = now;
-				
-				// reappend it at the end of the list
+				timedout(tr.req);
 				i = reqs.erase(i);
-				retransmits.append(r);
-				Out(SYS_CON|LOG_DEBUG) << "Retransmitting " << r.req.getIndex() << ":" << r.req.getOffset() << endl;
 			}
 			else
 			{ 
@@ -241,9 +228,6 @@ namespace bt
 				break;
 			}
 		}
-
-		if (retransmits.count() > 0)
-			reqs += retransmits;
 	}
 	
 	

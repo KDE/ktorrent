@@ -172,6 +172,7 @@ namespace bt
 	
 	void Downloader::normalUpdate()
 	{
+		bool endgame = current_chunks.count() >= cman.chunksLeft();
 		for (CurChunkItr j = current_chunks.begin();j != current_chunks.end();++j)
 		{
 			ChunkDownload* cd = j->second;
@@ -821,6 +822,11 @@ namespace bt
 		{
 			ws->setGroupIDs(up,down);
 		}
+	}
+	
+	ChunkDownload* Downloader::getDownload(Uint32 chunk)
+	{
+		return current_chunks.find(chunk);
 	}
 }
 

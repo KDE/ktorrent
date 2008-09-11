@@ -203,6 +203,11 @@ namespace kt
 		return view_man->getCurrentTorrent();
 	}
 	
+	bt::TorrentInterface* GUI::getCurrentTorrent()
+	{
+		return view_man->getCurrentTorrent();
+	}
+	
 	void GUI::dataScan(bt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption)
 	{
 		ScanDlg* dlg = new ScanDlg(core,auto_import,this);

@@ -20,4 +20,4 @@ macro_kt_plugin(ENABLE_BWSCHEDULER_PLUGIN bwscheduler bwscheduler)
 macro_kt_plugin(ENABLE_MEDIAPLAYER_PLUGIN mediaplayer mediaplayer)
 macro_kt_plugin(ENABLE_SCRIPTING_PLUGIN scripting scripting)
 macro_kt_plugin(ENABLE_BITFINDER_PLUGIN bitfinder bitfinder)
-
+macro_kt_plugin(ENABLE_DOWNLOADORDER_PLUGIN downloadorder downloadorder)

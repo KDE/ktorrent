@@ -66,6 +66,7 @@ namespace kt
 		virtual void addToolWidget(QWidget* w,const QString & icon,const QString & caption,ToolDock dock);
 		virtual void removeToolWidget(QWidget* w);
 		virtual const bt::TorrentInterface* getCurrentTorrent() const;
+		virtual bt::TorrentInterface* getCurrentTorrent();
 		virtual void dataScan(bt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption);
 		virtual bool selectFiles(bt::TorrentInterface* tc,bool* user,bool* start_torrent,const QString & group_hint,bool* skip_check);
 		virtual void errorMsg(const QString & err);

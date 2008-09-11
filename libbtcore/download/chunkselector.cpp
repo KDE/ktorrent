@@ -30,6 +30,7 @@
 #include <peer/peermanager.h>
 #include <torrent/torrent.h>
 #include "downloader.h"
+#include "chunkdownload.h"
 
 namespace bt
 {
@@ -88,7 +89,7 @@ namespace bt
 	ChunkSelector::~ChunkSelector()
 	{}
 	
-	Uint32 ChunkSelector::leastPeers(const std::list<Uint32> & lp)
+	Uint32 ChunkSelector::leastPeers(const std::list<Uint32> & lp,Uint32 alternative,Uint32 max_peers_per_chunk)
 	{
 		Uint32 sel = lp.front();
 		Uint32 cnt = downer.numDownloadersForChunk(sel);
@@ -101,6 +102,21 @@ namespace bt
 				cnt = cnt_i;
 			}
 		}
+		
+		if (downer.numDownloadersForChunk(sel) >= max_peers_per_chunk)
+		{
+			ChunkDownload* cd = downer.getDownload(sel);
+			if (!cd)
+				return alternative;
+			
+			// if download speed is very small, use sel
+			// even though the max_peers_per_chunk has been reached
+			if (cd->getDownloadSpeed() < 100)
+				return sel;
+			else
+				return alternative;
+		}
+		
 		return sel;
 	}
 
@@ -178,7 +194,7 @@ namespace bt
 			case FIRST_PRIORITY:
 				if (preview.size() > 0)
 				{
-					chunk = leastPeers(preview);
+					chunk = leastPeers(preview,sel,3);
 					return true;
 				}
 				else
@@ -190,12 +206,12 @@ namespace bt
 			case NORMAL_PRIORITY:
 				if (preview.size() > 0)
 				{
-					chunk = leastPeers(preview);
+					chunk = leastPeers(preview,sel,3);
 					return true;
 				}
 				else if (first.size() > 0)
 				{
-					chunk = leastPeers(first);
+					chunk = leastPeers(first,sel,2);
 					return true;
 				}
 				else
@@ -207,17 +223,17 @@ namespace bt
 			case LAST_PRIORITY:
 				if (preview.size() > 0)
 				{
-					chunk = leastPeers(preview);
+					chunk = leastPeers(preview,sel,3);
 					return true;
 				}
 				else if (first.size() > 0)
 				{
-					chunk = leastPeers(first);
+					chunk = leastPeers(first,sel,2);
 					return true;
 				}
 				else if (normal.size() > 0)
 				{
-					chunk = leastPeers(normal);
+					chunk = leastPeers(normal,sel,2);
 					return true;
 				}
 				else

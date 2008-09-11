@@ -832,6 +832,11 @@ namespace bt
 			}
 		}
 		
+		// if it is a multimedia file, make sure we haven't overridden preview priority
+		if (tf->isMultimedia())
+		{
+			doPreviewPriority(*tf);
+		}
 		//dumpPriority(tf);
 	}
 	
