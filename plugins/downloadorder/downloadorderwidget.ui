@@ -26,7 +26,7 @@
    <item>
     <widget class="QCheckBox" name="m_custom_order_enabled" >
      <property name="toolTip" >
-      <string>Wether or not to enable a custom download order.</string>
+      <string>Whether or not to enable a custom download order.</string>
      </property>
      <property name="text" >
       <string>Custom file download order enabled</string>
