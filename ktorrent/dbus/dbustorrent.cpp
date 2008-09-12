@@ -277,7 +277,7 @@ namespace kt
 		enc.write("leechers_connected_to",s.leechers_connected_to);
 		enc.write("total_times_downloaded", s.total_times_downloaded);
 		enc.write("status",ti->statusToString());
-		enc.write("tracker_status", s.trackerstatus);
+		enc.write("tracker_status", s.tracker_status_string);
 		enc.write("session_bytes_downloaded", s.session_bytes_downloaded);
 		enc.write("session_bytes_uploaded", s.session_bytes_uploaded);
 		enc.write("trk_bytes_downloaded", s.trk_bytes_downloaded);

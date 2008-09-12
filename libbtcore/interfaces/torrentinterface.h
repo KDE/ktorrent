@@ -74,6 +74,11 @@ namespace bt
 		MAX_RATIO_REACHED,
 		MAX_SEED_TIME_REACHED
 	};
+	
+	enum TrackerStatus
+	{
+		TRACKER_OK,TRACKER_ANNOUNCING,TRACKER_ERROR,TRACKER_STOPPED
+	};
 
 	struct TorrentStats
 	{
@@ -122,7 +127,9 @@ namespace bt
 		/// Status of the download
 		TorrentStatus status;
 		/// The status of the tracker
-		QString trackerstatus;
+		TrackerStatus tracker_status;
+		/// The status of the tracker
+		QString tracker_status_string;
 		/// The number of bytes downloaded in this session
 		Uint64 session_bytes_downloaded;
 		/// The number of bytes uploaded in this session

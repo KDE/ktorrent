@@ -314,9 +314,10 @@ namespace bt
 
 		/**
 		 * The tracker status has changed.
+		 * @param s The tracker status
 		 * @param ns New status
 		 */
-		void trackerStatusChanged(const QString & ns);
+		void trackerStatusChanged(TrackerStatus s,const QString & ns);
 
 		/**
 		 * A scrape has finished on the tracker.

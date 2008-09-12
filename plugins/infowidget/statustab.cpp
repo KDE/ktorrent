@@ -153,7 +153,7 @@ namespace kt
 			next_update_in->clear();
 		}
 		
-		tracker_status->setText(s.trackerstatus);
+		tracker_status->setText(s.tracker_status_string);
 		
 		seeders->setText(QString("%1 (%2)")
 				.arg(s.seeders_connected_to).arg(s.seeders_total));

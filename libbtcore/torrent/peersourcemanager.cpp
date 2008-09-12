@@ -159,7 +159,7 @@ namespace bt
 			curr->stop(wjob);
 		
 		timer.stop();
-		statusChanged(i18n("Stopped"));
+		statusChanged(TRACKER_STOPPED,i18n("Stopped"));
 	}
 		
 	void PeerSourceManager::completed()
@@ -465,7 +465,7 @@ namespace bt
 		failures++;
 		pending = false;
 		if (started)
-			statusChanged(err);
+			statusChanged(TRACKER_ERROR,err);
 		
 		if (!started)
 			return;
@@ -543,14 +543,14 @@ namespace bt
 		}
 		pending = false;
 		if (started)
-			statusChanged(i18n("OK"));
+			statusChanged(TRACKER_OK,i18n("OK"));
 		request_time = QDateTime::currentDateTime();
 	}
 		
 	void PeerSourceManager::onTrackerRequestPending()
 	{
 		if (started)
-			statusChanged(i18n("Announcing"));
+			statusChanged(TRACKER_ANNOUNCING,i18n("Announcing"));
 		pending = true;
 	}
 	

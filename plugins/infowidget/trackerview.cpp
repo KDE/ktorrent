@@ -182,7 +182,7 @@ namespace kt
 		//Update manual annunce button
 		m_update_tracker->setEnabled(s.running && tc->announceAllowed());
 
-		m_status->setText("<b>" + s.trackerstatus + "</b>");
+		m_status->setText("<b>" + s.tracker_status_string + "</b>");
 		if (tc->getTrackersList())
 			m_url->setText("<b>" + tc->getTrackersList()->getTrackerURL().prettyUrl() + "</b>");
 		else

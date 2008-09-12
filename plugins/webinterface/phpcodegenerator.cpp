@@ -103,7 +103,7 @@ namespace kt
 			out << QString("\"leechers_connected_to\" => %1,").arg(stats.leechers_connected_to);
 			out << QString("\"status\" => %1,").arg(stats.status);
 			out << QString("\"running\" => %1,").arg(stats.running);
-			QString tmp = stats.trackerstatus;
+			QString tmp = stats.tracker_status_string;
 			out << QString("\"trackerstatus\" => \"%1\",").arg(tmp.replace("\\", "\\\\").replace("\"", "\\\"").replace("$", "\\$"));
 			out << QString("\"session_bytes_downloaded\" => %1,").arg(stats.session_bytes_downloaded);
 			out << QString("\"session_bytes_uploaded\" => %1,").arg(stats.session_bytes_uploaded);

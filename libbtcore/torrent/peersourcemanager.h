@@ -27,6 +27,7 @@
 #include <util/constants.h>
 #include <util/waitjob.h>
 #include <interfaces/trackerslist.h>
+#include <interfaces/torrentinterface.h>
 
 
 
@@ -175,9 +176,10 @@ namespace bt
 	signals:
 		/**
 		 * Status has changed of the tracker.
-		 * @param ns The new status
+		 * @param status The tracker status
+		 * @param msg Message to show to user
 		 */
-		void statusChanged(const QString & ns);
+		void statusChanged(TrackerStatus status,const QString & msg);
 		
 	private:
 		void saveCustomURLs();

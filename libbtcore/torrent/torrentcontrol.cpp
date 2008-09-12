@@ -102,6 +102,7 @@ namespace bt
 		stats.max_share_ratio = 0.00f;
 		stats.max_seed_time = 0;
 		stats.last_download_activity_time = stats.last_upload_activity_time = 0;
+		stats.tracker_status = TRACKER_OK;
 		istats.running_time_dl = istats.running_time_ul = 0;
 		istats.prev_bytes_dl = 0;
 		istats.prev_bytes_ul = 0;
@@ -651,8 +652,8 @@ namespace bt
 		pman = new PeerManager(*tor);
 		//Out() << "Tracker url " << url << " " << url.protocol() << " " << url.prettyURL() << endl;
 		psman = new PeerSourceManager(this,pman);
-		connect(psman,SIGNAL(statusChanged( const QString& )),
-				this,SLOT(trackerStatusChanged( const QString& )));
+		connect(psman,SIGNAL(statusChanged(TrackerStatus , const QString& )),
+				this,SLOT(trackerStatusChanged(TrackerStatus , const QString& )));
 
 
 		// Create chunkmanager, load the index file if it exists
@@ -1673,9 +1674,10 @@ namespace bt
 		stats.trk_bytes_uploaded = 0;
 	}
 	
-	void TorrentControl::trackerStatusChanged(const QString & ns)
+	void TorrentControl::trackerStatusChanged(TrackerStatus s,const QString & ns)
 	{
-		stats.trackerstatus = ns;
+		stats.tracker_status = s;
+		stats.tracker_status_string = ns;
 	}
 	
 	void TorrentControl::addPeerSource(PeerSource* ps)

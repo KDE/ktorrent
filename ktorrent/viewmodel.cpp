@@ -25,6 +25,7 @@
 #include <QMimeData>
 #include <klocale.h>
 #include <kglobal.h>
+#include <kicon.h>
 #include <util/log.h>
 #include <util/functions.h>
 #include <interfaces/torrentinterface.h>
@@ -380,6 +381,18 @@ namespace kt
 			return torrents[index.row()].dataForSorting(index.column());
 		else if (role == Qt::EditRole && index.column() == 0)
 			return torrents[index.row()].tc->getDisplayName();
+		else if (role == Qt::DecorationRole && index.column() == 1)
+		{
+			bt::TorrentInterface* tc = torrents[index.row()].tc;
+			if (tc->getStats().tracker_status == bt::TRACKER_ERROR)
+				return KIcon("dialog-warning");
+		} 
+		else if (role == Qt::ToolTipRole && index.column() == 1)
+		{
+			bt::TorrentInterface* tc = torrents[index.row()].tc;
+			if (tc->getStats().tracker_status == bt::TRACKER_ERROR)
+				return i18n("There is a problem with the tracker: <br><b>%1</b>",tc->getStats().tracker_status_string);
+		}
 		
 		return QVariant();
 	}
