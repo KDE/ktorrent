@@ -68,8 +68,6 @@ namespace kt
 		
 		if( (m_loadedAction == moveAction) && !QDir(dir + i18n("loaded")).exists())
 			KIO::mkdir(dir + i18n("loaded"));
-		
-		m_dir->updateDirectory(KUrl(dir));
 	}
 
 
@@ -91,7 +89,6 @@ namespace kt
 			{
 				// watch subdirectories, but not the loaded directory
 				m_dir->openUrl(file.url(),KDirLister::Keep); 
-				m_dir->updateDirectory(file.url());
 				continue;
 			}
 
