@@ -98,12 +98,12 @@ namespace bt
 
 	bool PeerDownloader::canAddRequest() const
 	{
-		return wait_queue.count() < max_wait_queue_size;
+		return (Uint32)wait_queue.count() < max_wait_queue_size;
 	}
 	
 	bool PeerDownloader::canDownloadChunk() const
 	{
-		return !isNull() && (getNumGrabbed() < getMaxChunkDownloads() || isNearlyDone()) && canAddRequest();
+		return !isNull() && (getNumGrabbed() < (int)getMaxChunkDownloads() || isNearlyDone()) && canAddRequest();
 	}
 
 	Uint32 PeerDownloader::getNumRequests() const 
@@ -279,7 +279,7 @@ namespace bt
 		// modify the interval if necessary
 		double pieces_per_sec = (double)peer->getDownloadRate() / MAX_PIECE_LEN;
 		
-		Uint32 max_reqs = 1 + (Uint32)ceil(10*pieces_per_sec);
+		int max_reqs = 1 + (int)ceil(10*pieces_per_sec);
 		
 		while (wait_queue.count() > 0 && reqs.count() < max_reqs)
 		{

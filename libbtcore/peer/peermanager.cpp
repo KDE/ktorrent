@@ -70,7 +70,7 @@ namespace bt
 		delete cnt;
 		Globals::instance().getServer().removePeerManager(this);
 		
-		if (peer_list.count() <= total_connections)
+		if ((Uint32)peer_list.count() <= total_connections)
 			total_connections -= peer_list.count();
 		else
 			total_connections = 0;
@@ -366,7 +366,7 @@ namespace bt
 		if (!started)
 			return false;
 		
-		for (Uint32 j = 0;j < peer_list.count();j++)
+		for (int j = 0;j < peer_list.count();j++)
 		{
 			Peer* p = peer_list.at(j);
 			if (p->getPeerID() == peer_id)
@@ -470,7 +470,7 @@ namespace bt
 		qDeleteAll(killed);
 		killed.clear();
 	
-		if (peer_list.count() <= total_connections)
+		if ((Uint32)peer_list.count() <= total_connections)
 			total_connections -= peer_list.count();
 		else
 			total_connections = 0;
@@ -622,7 +622,7 @@ namespace bt
 			return;
 		
 		Out(SYS_CON|LOG_NOTICE) << "PEX: found " << (arr.size() / 6) << " peers"  << endl;
-		for (Uint32 i = 0;i+6 <= arr.size();i+=6)
+		for (int i = 0;i+6 <= arr.size();i+=6)
 		{
 			Uint8 tmp[6];
 			memcpy(tmp,arr.data() + i,6);

@@ -327,7 +327,7 @@ namespace kt
 		if (!root)
 			root = new Node(0,tc->getUserModifiedFileName(),num_chunks);
 		
-		for (int i = 0;i < tc->getNumFiles();i++)
+		for (Uint32 i = 0;i < tc->getNumFiles();i++)
 		{
 			bt::TorrentFileInterface & tf = tc->getTorrentFile(i);
 			root->insert(tf.getUserModifiedPath(),&tf,num_chunks);
@@ -611,7 +611,7 @@ namespace kt
 		
 		if (!n->file)
 		{
-			for (Uint32 i = 0;i < n->children.count();i++)
+			for (int i = 0;i < n->children.count();i++)
 			{
 				// recurse down the tree
 				invertCheck(idx.child(i,0));
