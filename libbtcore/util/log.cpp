@@ -128,7 +128,7 @@ namespace bt
 		{
 			// only add stuff when we are not rotating the logs
 			// this could result in the loss of some messages
-			if (!rotate_job)
+			if (!rotate_job && fptr != 0)
 			{
 				QString final = QDateTime::currentDateTime().toString() + ": " + tmp;
 				if (out)
