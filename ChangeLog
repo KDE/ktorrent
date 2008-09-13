@@ -13,6 +13,7 @@ Changes in 3.1.3 :
 - Make toolbars hideable
 - Make sure that files can not be moved to the location they are already in
 - Don't start torrents at startup when a torrent is user controlled and over limit
+- Fix crash in logging code due to 0 pointer
 
 
 Changes in 3.1.2 :
