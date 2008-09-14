@@ -212,22 +212,11 @@ namespace bt
 		// we use a 60 second interval
 		const Uint32 MAX_INTERVAL = 60 * 1000;
 
-		QList<TimeStampedRequest>::iterator i = reqs.begin();
-		while (i != reqs.end())
-		{
-			TimeStampedRequest & tr = *i;
-			if (now - tr.time_stamp > MAX_INTERVAL)
-			{
-				timedout(tr.req);
-				i = reqs.erase(i);
-			}
-			else
-			{ 
-				// new requests get appended so once we have found one
-				// which hasn't timed out all the following will also not have timed out
-				break;
-			}
-		}
+		// expire any timed-out requests: the list is sorted with the
+		// oldest requests at the front, so we simply pop off requests
+		// until we find one that shouldn't be expired
+		while (!reqs.isEmpty() && (now - reqs.first().time_stamp > MAX_INTERVAL))
+			timedout(reqs.takeFirst().req);
 	}
 	
 	
