@@ -8,7 +8,8 @@ target_link_libraries(
     ktdownloadorderplugin
     ktcore
     btcore
-    ${KDE4_UI_LIBS}
+    ${KDE4_KDEUI_LIBS}
+    ${KDE4_KPARTS_LIBS}
     )
 install(TARGETS ktdownloadorderplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktdownloadorderplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
