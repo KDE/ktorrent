@@ -53,6 +53,8 @@ namespace kt
 		connect(m_select_all,SIGNAL(clicked()),this,SLOT(selectAll()));
 		connect(m_select_none,SIGNAL(clicked()),this,SLOT(selectNone()));
 		connect(m_invert_selection,SIGNAL(clicked()),this,SLOT(invertSelection()));
+		connect(m_collapse_all,SIGNAL(clicked()),m_file_view,SLOT(collapseAll()));
+		connect(m_expand_all,SIGNAL(clicked()),m_file_view,SLOT(expandAll()));
 		
 		m_downloadLocation->setMode(KFile::File|KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
 		
@@ -108,6 +110,13 @@ namespace kt
 				m_select_all->setEnabled(false);
 				m_select_none->setEnabled(false);
 				m_invert_selection->setEnabled(false);
+				m_collapse_all->setEnabled(false);
+				m_expand_all->setEnabled(false);
+			}
+			else
+			{
+				m_collapse_all->setEnabled(!Settings::useFileList());
+				m_expand_all->setEnabled(!Settings::useFileList());
 			}
 
 			m_file_view->setAlternatingRowColors(false);

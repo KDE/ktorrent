@@ -61,6 +61,8 @@ namespace kt
 		
 	private:
 		void changePriority(bt::Priority newpriority);
+		void expandCollapseTree(const QModelIndex& idx, bool expand);
+		void expandCollapseSelected(bool expand);
 
 	private slots:
 		void open();
@@ -70,6 +72,8 @@ namespace kt
 		void doNotDownload();
 		void deleteFiles();
 		void moveFiles();
+		void collapseTree();
+		void expandTree();
 
 	private:
 		bt::TorrentInterface* curr_tc;
@@ -83,6 +87,8 @@ namespace kt
 		QAction* dnd_action;
 		QAction* delete_action;
 		QAction* move_files_action;
+		QAction* collapse_action;
+		QAction* expand_action;
 
 		QString preview_path;
 		bool show_list_of_files;

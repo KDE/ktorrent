@@ -125,6 +125,20 @@
         </widget>
        </item>
        <item>
+        <widget class="KPushButton" name="m_collapse_all" >
+         <property name="text" >
+          <string>Collapse All</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="KPushButton" name="m_expand_all" >
+         <property name="text" >
+          <string>Expand All</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer>
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
@@ -132,7 +146,7 @@
          <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
-           <height>40</height>
+           <height>10</height>
           </size>
          </property>
         </spacer>
