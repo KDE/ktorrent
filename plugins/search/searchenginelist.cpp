@@ -35,8 +35,7 @@ namespace kt
 		m_default_list.append(SearchEngine("mininova.org",KUrl("http://www.mininova.org/search.php?search=FOOBAR")));
 		m_default_list.append(SearchEngine("isohunt.com",KUrl("http://isohunt.com/torrents.php?ihq=FOOBAR&op=and")));
 		m_default_list.append(SearchEngine("thepiratebay.org",KUrl("http://thepiratebay.org/search/FOOBAR")));
-		m_default_list.append(SearchEngine("bitoogle.com",KUrl("http://bitoogle.com/search.php?q=FOOBAR")));
-		m_default_list.append(SearchEngine("bytenova.org",KUrl("http://www.bitenova.org/search.php?search=FOOBAR&start=0&start=0&ie=utf-8&oe=utf-8")));
+		m_default_list.append(SearchEngine("bitenova.org",KUrl("http://www.bitenova.org/search.php?search=FOOBAR&start=0&start=0&ie=utf-8&oe=utf-8")));
 		m_default_list.append(SearchEngine("torrentz.com",KUrl("http://www.torrentz.com/search_FOOBAR")));
 		m_default_list.append(SearchEngine("btjunkie.org",KUrl("http://btjunkie.org/search?q=FOOBAR")));
 	}
