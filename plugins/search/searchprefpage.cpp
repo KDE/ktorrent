@@ -60,7 +60,7 @@ namespace kt
 				" (capital letters) on the search engine you want to add. <br> "
 				"Then copy the URL in the addressbar after the search is finished, and paste it here.<br><br>Searching for %1"
 				" on Google for example, will result in http://www.google.com/search?q=FOOBAR&ie=UTF-8&oe=UTF-8. <br> "
-				"If you add this URL here, ktorrent can search using ,Google.",foobar);
+				"If you add this URL here, ktorrent can search using Google.",foobar);
 		QString info_short = i18n("Use your web browser to search for the string %1 (capital letters) "
 				"on the search engine you want to add. Use the resulting URL below.",foobar);
 		m_info_label->setText(info_short);

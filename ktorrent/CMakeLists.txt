@@ -34,7 +34,7 @@ set(ktorrent_SRC
 	grouppolicydlg.cpp
 	torrentmigratordlg.cpp
 	recommendedsettingsdlg.cpp
-	
+	bencodedfilecompleter.cpp
 	dbus/dbus.cpp
 	dbus/dbustorrent.cpp
 	dbus/dbustorrentfile.cpp
