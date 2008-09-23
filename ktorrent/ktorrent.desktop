@@ -80,4 +80,4 @@ Comment[x-test]=xxA BitTorrent program for KDExx
 Comment[zh_CN]=一个 KDE 的 BitTorrent 程序
 Comment[zh_TW]=KDE 的 BitTorrent 程式
 Terminal=false
-Categories=Qt;KDE;Network;FileTransfer;
+Categories=Qt;KDE;Network;FileTransfer;P2P;
