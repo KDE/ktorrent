@@ -51,12 +51,10 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		SearchWidget(SearchPlugin* sp);
+		SearchWidget(SearchPlugin* sp,SearchEngineList* sl);
 		virtual ~SearchWidget();
 	
 		KMenu* rightClickMenu();
-		
-		void updateSearchEngines(const SearchEngineList & sl);
 		
 		QString getSearchText() const {return search_text->text();}
 		KUrl getCurrentUrl() const;

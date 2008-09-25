@@ -32,6 +32,7 @@
 #include <kio/copyjob.h>
 #include <kio/jobuidelegate.h>
 #include <klineedit.h>
+#include <kinputdialog.h>
 
 #include <qlabel.h>
 #include <qcheckbox.h>
@@ -41,52 +42,54 @@
 #include <util/constants.h>
 #include <util/functions.h>
 #include <util/fileops.h>
+#include <util/error.h>
 #include <interfaces/functions.h>
 #include "searchprefpage.h"
 #include "searchplugin.h"
 #include "searchenginelist.h"
 #include "searchpluginsettings.h"
+#include "opensearchdownloadjob.h"
 
 using namespace bt;
 
 namespace kt
 {
-	SearchPrefPage::SearchPrefPage(SearchPlugin* plugin,QWidget* parent)
-		: PrefPageInterface(SearchPluginSettings::self(),i18n("Search"), "edit-find",parent), m_plugin(plugin)
+	SearchPrefPage::SearchPrefPage(SearchPlugin* plugin,SearchEngineList* sl,QWidget* parent)
+		: PrefPageInterface(SearchPluginSettings::self(),i18n("Search"), "edit-find",parent), plugin(plugin),engines(sl)
 	{
 		setupUi(this);
-		QString foobar = "FOOBAR";
-		QString info = i18n("Use your web browser to search for the string %1"
-				" (capital letters) on the search engine you want to add. <br> "
-				"Then copy the URL in the addressbar after the search is finished, and paste it here.<br><br>Searching for %1"
-				" on Google for example, will result in http://www.google.com/search?q=FOOBAR&ie=UTF-8&oe=UTF-8. <br> "
-				"If you add this URL here, ktorrent can search using Google.",foobar);
-		QString info_short = i18n("Use your web browser to search for the string %1 (capital letters) "
-				"on the search engine you want to add. Use the resulting URL below.",foobar);
-		m_info_label->setText(info_short);
-		m_info_label->setToolTip(info);
+		m_engines->setModel(sl);
 		
 		connect(m_add, SIGNAL(clicked()), this, SLOT(addClicked()));
 		connect(m_remove, SIGNAL(clicked()), this, SLOT(removeClicked()));
 		connect(m_add_default, SIGNAL(clicked()), this, SLOT(addDefaultClicked()));
 		connect(m_remove_all, SIGNAL(clicked()), this, SLOT(removeAllClicked()));
 		connect(m_clear_history,SIGNAL(clicked()),this,SLOT(clearHistory()));
-		connect(m_update,SIGNAL(clicked()),this,SLOT(updateClicked()));
+		connect(m_engines->selectionModel(),SIGNAL(selectionChanged(const QItemSelection & ,const QItemSelection & )),
+				this,SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
 		
 		connect(kcfg_useCustomBrowser, SIGNAL(toggled(bool)), this, SLOT(customToggled( bool )));
 		connect(kcfg_openInExternal,SIGNAL(toggled(bool)),this, SLOT(openInExternalToggled(bool)));
 		QButtonGroup* bg = new QButtonGroup(this);
 		bg->addButton(kcfg_useCustomBrowser);
 		bg->addButton(kcfg_useDefaultBrowser);
+		
+		m_remove_all->setEnabled(sl->rowCount(QModelIndex()) > 0);
+		m_remove->setEnabled(false);
 	}
 
 
 	SearchPrefPage::~SearchPrefPage()
 	{}
 	
+	void SearchPrefPage::selectionChanged(const QItemSelection & selected,const QItemSelection & deselected)
+	{
+		Q_UNUSED(deselected);
+		m_remove->setEnabled(selected.count() > 0);
+	}
+	
 	void SearchPrefPage::loadSettings()
 	{
-		updateSearchEngines(m_plugin->getSearchEngineList());
 		openInExternalToggled(SearchPluginSettings::openInExternal());
 	}
 
@@ -94,167 +97,98 @@ namespace kt
 	{
 		loadSettings();
 	}
-	
-	void SearchPrefPage::updateSearchEngines(const SearchEngineList & se)
-	{
-		m_engines->clear();
-		
-		for (Uint32 i = 0;i < se.getNumEngines();i++)
-			newItem(se.getEngineName(i),se.getSearchURL(i));
-	}
- 
-	void SearchPrefPage::saveSearchEngines()
-	{
-		QFile fptr(kt::DataDir() + "search_engines");
-		if (!fptr.open(QIODevice::WriteOnly))
-			return;
-		QTextStream out(&fptr);
-		out << "# PLEASE DO NOT MODIFY THIS FILE. Use KTorrent configuration dialog for adding new search engines." << ::endl;
-		out << "# SEARCH ENGINES list" << ::endl;
-     
-		QTreeWidgetItemIterator itr(m_engines);
-		while (*itr)
-		{
-			QTreeWidgetItem* item = *itr;
-			QString u = item->text(1);
-			QString name = item->text(0);
-			out << name.replace(" ","%20") << " " << u.replace(" ","%20") <<  endl;
-			itr++;
-		}
-		engineListUpdated();
-	}
- 
+  
 	void SearchPrefPage::addClicked()
 	{
-		if ( m_engine_url->text().isEmpty() || m_engine_name->text().isEmpty() )
+		bool ok = false;
+		QString name = KInputDialog::getText(i18n("Add a Search Engine"), 
+						i18n("Enter the hostname of the search engine (for example www.google.com) :"),QString(),&ok,this);
+		if (!ok || name.isEmpty())
+			return;
+		
+		if (!name.startsWith("http://") || !name.startsWith("https://"))
+			name = "http://" + name;
+		
+		KUrl url(name);
+		QString dir = kt::DataDir() + "searchengines/" + url.host();
+		int idx = 1;
+		while (bt::Exists(dir))
 		{
-			KMessageBox::error(this, i18n("You must enter the search engine's name and URL"));
+			dir += QString::number(idx++);
 		}
-		else if ( m_engine_url->text().contains("FOOBAR")  )
+		
+		dir += "/";
+		
+		try
 		{
-			KUrl url = KUrl(m_engine_url->text());
-			if ( !url.isValid() ) 
-			{ 
-				KMessageBox::error(this, i18n("Malformed URL.")); 
-				return; 
-			}
-			
-			if (m_engines->findItems(m_engine_name->text(),Qt::MatchExactly, 0).count() > 0) 
+			bt::MakeDir(dir,false);
+		}
+		catch (bt::Error & err)
+		{
+			KMessageBox::error(this,err.toString());
+			return;
+		}
+		
+		OpenSearchDownloadJob* j = new OpenSearchDownloadJob(url,dir);
+		connect(j,SIGNAL(result(KJob*)),this,SLOT(downloadJobFinished(KJob*)));
+		j->start();
+	}
+	
+	void SearchPrefPage::downloadJobFinished(KJob* j)
+	{
+		OpenSearchDownloadJob* osdj = (OpenSearchDownloadJob*)j;
+		if (osdj->error())
+		{
+			bool ok = false;
+			QString msg = i18n("Opensearch is not supported by %1, you will need to enter the search URL manually. "
+					"The URL should contain {searchTerms}, ktorrent will replace this by the thing you are searching for.",osdj->hostname());
+			QString url = KInputDialog::getText(i18n("Add a Search Engine"),msg,QString(),&ok,this);
+			if (ok && !url.isEmpty())
 			{
-				KMessageBox::error(this, i18n("A search engine with the same name already exists. Please use a different name.")); return; 
+				if (!url.contains("{searchTerms}"))
+				{
+					KMessageBox::error(this,i18n("The URL %s, does not contain {searchTerms} !",url));
+				}
+				else
+				{
+					try
+					{
+						engines->addEngine(osdj->directory(),url);
+					}
+					catch (bt::Error & err)
+					{
+						KMessageBox::error(this,err.toString());
+						bt::Delete(osdj->directory(),true);
+					}
+				}
 			}
-			
-
-			newItem(m_engine_name->text(),m_engine_url->text());
-			m_engine_url->clear();
-			m_engine_name->clear();
 		}
 		else
 		{
-			KMessageBox::error(this, i18n("Bad URL. You should search for FOOBAR with your Internet browser and copy/paste the exact URL here."));
+			engines->addEngine(osdj);
 		}
-		saveSearchEngines();
 	}
  
 	void SearchPrefPage::removeClicked()
 	{
-		QList<QTreeWidgetItem*> items = m_engines->selectedItems();
-		foreach (QTreeWidgetItem* item,items)
-		{
-			delete item;
-		}
-		saveSearchEngines();
+		QModelIndexList sel = m_engines->selectionModel()->selectedRows();
+		engines->removeEngines(sel);
+		m_remove_all->setEnabled(engines->rowCount(QModelIndex()) > 0);
+		m_remove->setEnabled(m_engines->selectionModel()->selectedRows().count() > 0);
 	}
  
-	QTreeWidgetItem* SearchPrefPage::newItem(const QString & name,const KUrl & url)
-	{
-		// lets not add duplicates
-		if (m_engines->findItems(name,Qt::MatchExactly,0).count() > 0)
-			return 0;
-
-		QTreeWidgetItem* i = new QTreeWidgetItem(m_engines);
-		i->setText(0,name);
-		i->setText(1,url.prettyUrl());
-		return i;
-	}
-
 	void SearchPrefPage::addDefaultClicked()
 	{
-		const SearchEngineList & se = m_plugin->getSearchEngineList();
-		foreach (const SearchEngine & e,se.defaultList())
-		{
-			newItem(e.name,e.url);
-		}
-
-		saveSearchEngines();
+		engines->addDefaults();
+		m_remove_all->setEnabled(engines->rowCount(QModelIndex()) > 0);
+		m_remove->setEnabled(m_engines->selectionModel()->selectedRows().count() > 0);
 	}
  
 	void SearchPrefPage::removeAllClicked()
 	{
-		m_engines->clear();
-		saveSearchEngines();
-	}
-	
-	void SearchPrefPage::engineDownloadJobDone(KJob* j)
-	{
-		if (j->error())
-		{
-			((KIO::Job*)j)->ui()->showErrorMessage();
-			return;
-		}
-		Out(SYS_SRC|LOG_DEBUG) << "Downloaded search_engines file" << endl;
-		QString fn = kt::DataDir() + "search_engines.tmp";
-		updateList(fn);
-		saveSearchEngines();
-		bt::Delete(fn);
-	}
-
-	
-	void SearchPrefPage::updateClicked()
-	{
-		QString fn = kt::DataDir() + "search_engines.tmp";
-		KIO::Job* j = KIO::copy(KUrl("http://www.ktorrent.org/downloads/search_engines"),KUrl(fn));
-		connect(j,SIGNAL(result(KJob*)),this,SLOT(engineDownloadJobDone(KJob*)));	
-	}
-	
-	void SearchPrefPage::updateList(QString& source)
-	{
-		QFile fptr(source);
-     
-		if (!fptr.open(QIODevice::ReadOnly))
-		{
-			Out(SYS_SRC|LOG_DEBUG) << "Failed to open " << source << endl;
-			return;
-		}
- 
-		QTextStream in(&fptr);
-		
-		QMap<QString,KUrl> engines;
-		
-		while (!in.atEnd())
-		{
-			QString line = in.readLine();
-
-			if(line.startsWith("#") || line.startsWith(" ") || line.isEmpty() )
-				continue;
-
-			QStringList tokens = line.split(" ");
-			QString name = tokens[0];
-			name = name.replace("%20"," ");
-			
-			KUrl url = KUrl(tokens[1]);
-			for(Uint32 i=2; i<tokens.count(); ++i)
-				url.addQueryItem(tokens[i].section("=",0,0), tokens[i].section("=", 1, 1));
-			
-			engines.insert(name,url);
-		}
-		
-		QMap<QString,KUrl>::iterator i = engines.begin();
-		while (i != engines.end())
-		{	
-			newItem(i.key(),i.value());
-			i++;
-		}
+		engines->removeAllEngines();	
+		m_remove_all->setEnabled(engines->rowCount(QModelIndex()) > 0);
+		m_remove->setEnabled(m_engines->selectionModel()->selectedRows().count() > 0);
 	}
 	
 	void SearchPrefPage::customToggled(bool toggled)

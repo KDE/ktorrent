@@ -48,7 +48,7 @@ using namespace bt;
 namespace kt
 {
 
-	SearchPlugin::SearchPlugin(QObject* parent, const QStringList& args) : Plugin(parent)
+	SearchPlugin::SearchPlugin(QObject* parent, const QStringList& args) : Plugin(parent),engines(0)
 	{
 		Q_UNUSED(args);
 		pref = 0;
@@ -65,19 +65,20 @@ namespace kt
 	void SearchPlugin::load()
 	{
 		LogSystemManager::instance().registerSystem(i18n("Search"),SYS_SRC);
+		engines = new SearchEngineList(kt::DataDir() + "searchengines/");
+		engines->loadEngines();
+		
 		getGUI()->addCurrentTabPageListener(this);
-		engines.load(kt::DataDir() + "search_engines");
-		toolbar = new SearchToolBar(this);
+	
+		toolbar = new SearchToolBar(this,engines);
 		
 		connect(toolbar,SIGNAL(search( const QString&, int, bool )),
 				this,SLOT(search( const QString&, int, bool )));
 		 
-		pref = new SearchPrefPage(this,0);
+		pref = new SearchPrefPage(this,engines,0);
 		getGUI()->addPrefPage(pref);
-		toolbar->updateSearchEngines(engines);
 		connect(getCore(),SIGNAL(settingsChanged()),this,SLOT(preferencesUpdated()));
 		connect(pref,SIGNAL(clearSearchHistory()),toolbar,SLOT(clearHistory()));
-		connect(pref,SIGNAL(engineListUpdated()),this,SLOT(preferencesUpdated()));
 		loadCurrentSearches();
 	}
 
@@ -100,51 +101,40 @@ namespace kt
 		pref = 0;
 		toolbar = 0;
 		disconnect(getCore(),SIGNAL(settingsChanged()),this,SLOT(preferencesUpdated()));
+		delete engines;
+		engines = 0;
 	}
 	
 	void SearchPlugin::search(const QString & text,int engine,bool external)
 	{	
-		if(external)
+		if (external)
 		{
-			const SearchEngineList& sl = getSearchEngineList();
-		
-			if (engine < 0 || engine >= sl.getNumEngines())
+			if (engine < 0 || engine >= (int)engines->getNumEngines())
 				engine = 0;
 		
-			QString s_url = sl.getSearchURL(engine).prettyUrl();
-			s_url.replace("FOOBAR",  QUrl::toPercentEncoding(text), Qt::CaseSensitive);
-			KUrl url = KUrl(s_url);
+			KUrl url = engines->search(engine,text);
 			
 			if(SearchPluginSettings::useDefaultBrowser())
 				KRun::runUrl(url,"text/html",0);
 			else
-				KRun::runCommand(QString("%1 %2")
-                                        .arg(SearchPluginSettings::customBrowser()).arg(KShell::quoteArg(url.url())),0);
+				KRun::runCommand(QString("%1 %2").arg(SearchPluginSettings::customBrowser()).arg(KShell::quoteArg(url.url())),0);
 			
 			return;
 		}
 		
 		
-		SearchWidget* search = new SearchWidget(this);
+		SearchWidget* search = new SearchWidget(this,engines);
 		getGUI()->addTabPage(search,"edit-find",text,this);
 		
 		connect(search,SIGNAL(enableBack(bool)),back_action,SLOT(setEnabled(bool)));
 		connect(search,SIGNAL(openNewTab(const KUrl&)),this,SLOT(openNewTab(const KUrl&)));
 		searches.append(search);
 		back_action->setEnabled(false);
-		
-		search->updateSearchEngines(engines);
 		search->search(text,engine);
 	}
 	
 	void SearchPlugin::preferencesUpdated()
-	{
-		engines.load(kt::DataDir() + "search_engines");
-		if (toolbar)
-			toolbar->updateSearchEngines(engines);
-		
-		foreach (SearchWidget* w,searches)
-			w->updateSearchEngines(engines);
+	{		
 	}
 	
 	void SearchPlugin::tabCloseRequest(kt::GUIInterface* gui,QWidget* tab)
@@ -216,15 +206,14 @@ namespace kt
 			
 			if (url.isValid() && ok)
 			{
-				SearchWidget* search = new SearchWidget(this);
+				SearchWidget* search = new SearchWidget(this,engines);
 				getGUI()->addTabPage(search,"edit-find",text,this);
 		
 				connect(search,SIGNAL(enableBack(bool)),back_action,SLOT(setEnabled(bool)));
 				connect(search,SIGNAL(openNewTab(const KUrl&)),this,SLOT(openNewTab(const KUrl&)));
 				
 				searches.append(search);
-		
-				search->updateSearchEngines(engines);
+	
 				search->restore(url,text,sbtext,engine);
 				back_action->setEnabled(false);
 			}
@@ -318,7 +307,7 @@ namespace kt
 	
 	void SearchPlugin::openNewTab(const KUrl & url)
 	{
-		SearchWidget* search = new SearchWidget(this);
+		SearchWidget* search = new SearchWidget(this,engines);
 		QString text = url.host();
 		getGUI()->addTabPage(search,"edit-find",text,this);
 		
@@ -326,8 +315,7 @@ namespace kt
 		connect(search,SIGNAL(openNewTab(const KUrl&)),this,SLOT(openNewTab(const KUrl&)));
 				
 		searches.append(search);
-		
-		search->updateSearchEngines(engines);
+
 		search->restore(url,text,QString(),toolbar->currentSearchEngine());
 		back_action->setEnabled(false);
 		getGUI()->setCurrentTab(search);
@@ -336,7 +324,6 @@ namespace kt
 	void SearchPlugin::currentTabPageChanged(QWidget* page)
 	{
 		back_action->setEnabled(false);
-		QWidget* w = getGUI()->getCurrentTab();
 		foreach (SearchWidget* s,searches)
 		{
 			if (s == page)

@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Joris Guisson                              *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,61 +18,75 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#ifndef KTSEARCHENGINE_H
+#define KTSEARCHENGINE_H
 
-#ifndef SEARCHTAB_H
-#define SEARCHTAB_H
+#include <QObject>
+#include <KUrl>
+#include <KIcon>
 
-#include <ktoolbar.h>
-		
-class KComboBox;
-class KPushButton;
-
+class KJob;
 
 namespace kt
 {
-	class SearchEngineList;
-	class SearchPlugin;
 
 	/**
-		Holds all widgets of the toolbar of the search plugin.
+		Keeps track of a search engine
 	*/
-	class SearchToolBar : public QObject
+	class SearchEngine : public QObject
 	{
 		Q_OBJECT
-	
 	public:
-		SearchToolBar(SearchPlugin* plugin,SearchEngineList* sl);
-		virtual ~SearchToolBar();
-		
-		/// Save settings like current search engine
-		void saveSettings();
-		
-		/// Get the index of the current search engine
-		int currentSearchEngine() const;
+		/**
+		 * Constructor, sets the data dir
+		 * @param data_dir Directory where all the information regarding the engine is stored
+		 */
+		SearchEngine(const QString & data_dir);
+		virtual ~SearchEngine();
 
-	public slots:
-		/// Clear the search history
-		void clearHistory();
-			
-	protected slots:
-		void searchNewTabPressed();
-		void searchBoxReturn();
-		void textChanged(const QString & str);
+		/**
+		 * Load the engine from an opensearch XML file
+		 * @param xml_file Local XML file
+		 * @return true upon success
+		 */
+		bool load(const QString & xml_file);
 		
-	signals:
-		/// Emitted when the user presses enter or clicks search
-		void search(const QString & text,int engine,bool external);
+		/**
+		 * Fill in search terms into the search url and create the KUrl to use
+		 * @param terms Tersm to search for
+		 * @return The url
+		 */
+		KUrl search(const QString & terms);
+		
+		/// Get the name of the engine
+		QString engineName() const {return name;}
+		
+		/// Get the icon
+		KIcon engineIcon() const {return icon;}
+		
+		/// Get the engine directory
+		QString engineDir() const {return data_dir;}
+		
+		/// Get the URL
+		QString engineUrl() const {return url;}
+		
+		/// Get the description
+		QString engineDescription() const {return description;}
+		
+	private slots:
+		void iconDownloadFinished(KJob* job);
 		
 	private:
-		void loadSearchHistory();
-		void saveSearchHistory();
-	
-	private:
-		KComboBox* m_search_text;
-		KComboBox* m_search_engine;
-		QAction* m_search_new_tab;
+		QString data_dir;
+		QString name;
+		QString description;
+		QString url;
+		QString icon_url;
+		KIcon icon;
+		
+		friend class OpenSearchHandler;
 	};
+
 }
 
 #endif
-

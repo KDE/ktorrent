@@ -57,7 +57,7 @@ using namespace bt;
 namespace kt
 {
 	
-	SearchWidget::SearchWidget(SearchPlugin* sp) : html_part(0),sp(sp)
+	SearchWidget::SearchWidget(SearchPlugin* sp,SearchEngineList* sl) : html_part(0),sp(sp)
 	{
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
@@ -73,6 +73,7 @@ namespace kt
 		sbar->addAction(ac->action("search_tab_search"));
 		sbar->addWidget(new QLabel(i18n(" Engine:")));
 		search_engine = new KComboBox(sbar);
+		search_engine->setModel(sl);
 		sbar->addWidget(search_engine);
 		
 		connect(search_text,SIGNAL(returnPressed()),this,SLOT(search()));;
@@ -121,17 +122,6 @@ namespace kt
 			sp->getGUI()->getStatusBar()->removeProgressBar(prog);
 			prog = 0;
 		}
-	}
-	
-	void SearchWidget::updateSearchEngines(const SearchEngineList & sl)
-	{
-		int ci = search_engine->currentIndex(); 
-		search_engine->clear();
-		for (Uint32 i = 0;i < sl.getNumEngines();i++)
-		{
-			search_engine->addItem(sl.getEngineName(i));
-		}
-		search_engine->setCurrentIndex(ci);
 	}
 	
 	void SearchWidget::onBackAvailable(bool available)
@@ -196,14 +186,8 @@ namespace kt
 		if (search_engine->currentIndex() != engine)
 			search_engine->setCurrentIndex(engine);
 	
-		const SearchEngineList & sl = sp->getSearchEngineList();
-		
-		if (engine < 0 || (Uint32)engine >= sl.getNumEngines())
-			engine = search_engine->currentIndex();
-		
-		QString s_url = sl.getSearchURL(engine).prettyUrl();
-		s_url.replace("FOOBAR", QUrl::toPercentEncoding(text), Qt::CaseSensitive);
-		KUrl url = KUrl(s_url);
+		SearchEngineList & sl = sp->getSearchEngineList();
+		KUrl url = sl.search(engine,text);
 	
 		statusBarMsg(i18n("Searching for %1...",text));
 		//html_part->openURL(url);

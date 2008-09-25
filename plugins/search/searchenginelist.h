@@ -20,43 +20,83 @@
 #ifndef KTSEARCHENGINELIST_H
 #define KTSEARCHENGINELIST_H
 
-#include <kurl.h>
+#include <KUrl>
 #include <QList>
+#include <QAbstractListModel>
 #include <util/constants.h>
+#include "searchengine.h"
 
 namespace kt
 {
-	struct SearchEngine
-	{
-		QString name;
-		KUrl url;
-		
-		SearchEngine() {}
-		SearchEngine(const QString & name,const KUrl & url) : name(name),url(url) {}
-	};
+	class OpenSearchDownloadJob;
 
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>
 	*/
-	class SearchEngineList
+	class SearchEngineList : public QAbstractListModel
 	{
-		QList<SearchEngine> m_search_engines;
-		QList<SearchEngine> m_default_list;
+		Q_OBJECT
+				
+		QList<SearchEngine*> engines;
+		KUrl::List default_opensearch_urls;
+		KUrl::List default_urls;
+		QString data_dir;
 	public:
-		SearchEngineList();
+		SearchEngineList(const QString & data_dir);
 		virtual ~SearchEngineList();
-		
-		const QList<SearchEngine> & defaultList() const {return m_default_list;}
 
-		void save(const QString& file);
-		void load(const QString& file);
-		void makeDefaultFile(const QString& file);
+		/// Load all engines
+		void loadEngines();
 		
-		KUrl getSearchURL(bt::Uint32 engine) const;
+		/// Search with an engine
+		KUrl search(bt::Uint32 engine,const QString & terms);
+		
+		/// Get the name of an engine
 		QString getEngineName(bt::Uint32 engine) const;
 		
 		/// Get the number of engines
-		bt::Uint32 getNumEngines() const {return m_search_engines.count();} 
+		bt::Uint32 getNumEngines() const {return engines.count();} 
+		
+		virtual int rowCount(const QModelIndex &parent) const;
+		virtual QVariant data(const QModelIndex &index, int role) const;
+		virtual bool insertRows(int row,int count,const QModelIndex & parent);
+		virtual bool removeRows(int row,int count,const QModelIndex & parent);
+		
+		/**
+		 * Remove all engines in a list
+		 * @param sel The list
+		 */
+		void removeEngines(const QModelIndexList & sel);
+		
+		/**
+		 * Remove all engines
+		 */
+		void removeAllEngines();
+		
+		/**
+		 * Add all defaults engines (if they are not added yet) 
+		 */
+		void addDefaults();
+		
+		/**
+		 * Add an engine from an OpenSearchDownloadJob
+		 * @param j The OpenSearchDownloadJob
+		 */
+		void addEngine(OpenSearchDownloadJob* j);
+		
+		
+		/**
+		 * Add an engine from a search URL
+		 * @param dir The directory to use
+		 * @param url The url
+		 */
+		void addEngine(const QString & dir,const QString & url);
+		
+	private:
+		void convertSearchEnginesFile();
+		
+	private slots:
+		void openSearchDownloadJobFinished(KJob* j);
 	};
 
 }

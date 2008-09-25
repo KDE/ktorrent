@@ -48,7 +48,7 @@ using namespace bt;
 namespace kt
 {
 
-	SearchToolBar::SearchToolBar(SearchPlugin* plugin) : QObject(plugin)
+	SearchToolBar::SearchToolBar(SearchPlugin* plugin,SearchEngineList* sl) : QObject(plugin)
 	{
 		KActionCollection* ac = plugin->actionCollection();
 		
@@ -85,6 +85,7 @@ namespace kt
 		ac->addAction("search_engine_label",search_engine_label_action);
 		
 		loadSearchHistory();
+		m_search_engine->setModel(sl);
 		m_search_engine->setCurrentIndex(SearchPluginSettings::searchEngine());
 	}
 
@@ -101,22 +102,6 @@ namespace kt
 	{
 		SearchPluginSettings::setSearchEngine(m_search_engine->currentIndex());
 		SearchPluginSettings::self()->writeConfig();
-	}
-	
-	void SearchToolBar::updateSearchEngines(const SearchEngineList & sl)
-	{
-		int ci = 0;
-		if (m_search_engine->count() == 0)
-			ci = SearchPluginSettings::searchEngine();
-		else
-			ci = m_search_engine->currentIndex(); 
-		
-		m_search_engine->clear();
-		for (Uint32 i = 0;i < sl.getNumEngines();i++)
-		{
-			m_search_engine->addItem(sl.getEngineName(i));
-		}
-		m_search_engine->setCurrentIndex(ci);
 	}
 	
 	void SearchToolBar::searchBoxReturn()

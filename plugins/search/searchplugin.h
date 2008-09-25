@@ -46,7 +46,8 @@ namespace kt
 		virtual bool versionCheck(const QString& version) const;
 		virtual void currentTabPageChanged(QWidget* page);
 				
-		const SearchEngineList & getSearchEngineList() const {return engines;}
+		const SearchEngineList & getSearchEngineList() const {return *engines;}
+		SearchEngineList & getSearchEngineList() {return *engines;}
 	private slots:
 		void search(const QString & text,int engine,bool external);
 		void preferencesUpdated();
@@ -68,7 +69,7 @@ namespace kt
 	private:
 		SearchPrefPage* pref;
 		SearchToolBar* toolbar;
-		SearchEngineList engines;
+		SearchEngineList* engines;
 		QList<SearchWidget*> searches;
 		KAction* find_action;
 		KAction* back_action;

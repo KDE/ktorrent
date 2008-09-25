@@ -1,0 +1,6 @@
+install(FILES bitenova/opensearch.xml DESTINATION ${DATA_INSTALL_DIR}/ktorrent/opensearch/bitenova )
+install(FILES bittorrent/opensearch.xml DESTINATION ${DATA_INSTALL_DIR}/ktorrent/opensearch/bittorrent )
+install(FILES btjunkie/opensearch.xml DESTINATION ${DATA_INSTALL_DIR}/ktorrent/opensearch/btjunkie )
+install(FILES ktorrents/opensearch.xml DESTINATION ${DATA_INSTALL_DIR}/ktorrent/opensearch/ktorrents )
+install(FILES mininova/opensearch.xml DESTINATION ${DATA_INSTALL_DIR}/ktorrent/opensearch/mininova )
+install(FILES thepiratebay/opensearch.xml DESTINATION ${DATA_INSTALL_DIR}/ktorrent/opensearch/thepiratebay )

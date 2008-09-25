@@ -39,18 +39,13 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		SearchPrefPage(SearchPlugin* plugin,QWidget* parent);
+		SearchPrefPage(SearchPlugin* plugin,SearchEngineList* sl,QWidget* parent);
 		virtual ~SearchPrefPage();
 		
 		virtual void loadSettings();
 		virtual void loadDefaults();
-
-		void saveSearchEngines();
-		void updateList(QString& source);
-		void updateSearchEngines(const SearchEngineList & se);
 		
 	public slots:
-		void updateClicked();
 		void customToggled(bool toggled);
 	
 	private slots:
@@ -58,19 +53,17 @@ namespace kt
 		void removeClicked();
 		void addDefaultClicked();
 		void removeAllClicked();
-		void engineDownloadJobDone(KJob* j);
 		void clearHistory();
 		void openInExternalToggled(bool on);
+		void selectionChanged(const QItemSelection & selected,const QItemSelection & deselected);
+		void downloadJobFinished(KJob* j);
 
 	signals:
 		void clearSearchHistory();
-		void engineListUpdated();
-
-	private:
-		QTreeWidgetItem* newItem(const QString & name,const KUrl & url);
 	
 	private:
-		SearchPlugin* m_plugin;
+		SearchPlugin* plugin;
+		SearchEngineList* engines;
 	};
 
 }

@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Joris Guisson                              *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,61 +18,48 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#ifndef KTOPENSEARCHDOWNLOADJOB_H
+#define KTOPENSEARCHDOWNLOADJOB_H
 
-#ifndef SEARCHTAB_H
-#define SEARCHTAB_H
-
-#include <ktoolbar.h>
-		
-class KComboBox;
-class KPushButton;
-
+#include <kio/job.h>
+#include <KUrl>
 
 namespace kt
 {
-	class SearchEngineList;
-	class SearchPlugin;
 
 	/**
-		Holds all widgets of the toolbar of the search plugin.
+		Job which tries to find an opensearch xml description on a website and 
+		download that to a directory.
 	*/
-	class SearchToolBar : public QObject
+	class OpenSearchDownloadJob : public KIO::Job
 	{
 		Q_OBJECT
-	
 	public:
-		SearchToolBar(SearchPlugin* plugin,SearchEngineList* sl);
-		virtual ~SearchToolBar();
-		
-		/// Save settings like current search engine
-		void saveSettings();
-		
-		/// Get the index of the current search engine
-		int currentSearchEngine() const;
+		OpenSearchDownloadJob(const KUrl & url,const QString & dir);
+		virtual ~OpenSearchDownloadJob();
 
-	public slots:
-		/// Clear the search history
-		void clearHistory();
-			
-	protected slots:
-		void searchNewTabPressed();
-		void searchBoxReturn();
-		void textChanged(const QString & str);
+		/// Start the job
+		void start();
 		
-	signals:
-		/// Emitted when the user presses enter or clicks search
-		void search(const QString & text,int engine,bool external);
+		/// Get the directory 
+		QString directory() const {return dir;}
+		
+		/// Get the hostname
+		QString hostname() const {return url.host();}
+		
+	private slots:
+		void getFinished(KJob* j);
+		void xmlFileDownloadFinished(KJob* j);
 		
 	private:
-		void loadSearchHistory();
-		void saveSearchHistory();
-	
+		bool checkLinkTagContent(const QString & content);
+		QString htmlParam(const QString & param,const QString & content);
+		
 	private:
-		KComboBox* m_search_text;
-		KComboBox* m_search_engine;
-		QAction* m_search_new_tab;
+		KUrl url;
+		QString dir;
 	};
+
 }
 
 #endif
-

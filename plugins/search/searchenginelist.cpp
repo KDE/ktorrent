@@ -17,65 +17,93 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <qfile.h>
-#include <qtextstream.h>
-#include <qstringlist.h>
+#include <QFile>
+#include <QTextStream>
+#include <QStringList>
+#include <QDir>
+#include <klocale.h>
+#include <kio/copyjob.h>
+#include <util/log.h>
+#include <util/error.h>
+#include <util/fileops.h>
+#include <kstandarddirs.h>
 #include "searchenginelist.h"
+#include "opensearchdownloadjob.h"
 
 using namespace bt;
 
 namespace kt
 { 
+	QString DataDir();
 
-
-	SearchEngineList::SearchEngineList()
+	SearchEngineList::SearchEngineList(const QString & data_dir) : data_dir(data_dir)
 	{
-		m_default_list.append(SearchEngine("KTorrents",KUrl("http://www.ktorrents.com/search.php?lg=0&sourceid=ktorrent&q=FOOBAR&f=0")));
-		m_default_list.append(SearchEngine("bittorrent.com",KUrl("http://www.bittorrent.com/search_result.myt?search=FOOBAR")));
-		m_default_list.append(SearchEngine("mininova.org",KUrl("http://www.mininova.org/search.php?search=FOOBAR")));
-		m_default_list.append(SearchEngine("isohunt.com",KUrl("http://isohunt.com/torrents.php?ihq=FOOBAR&op=and")));
-		m_default_list.append(SearchEngine("thepiratebay.org",KUrl("http://thepiratebay.org/search/FOOBAR")));
-		m_default_list.append(SearchEngine("bitenova.org",KUrl("http://www.bitenova.org/search.php?search=FOOBAR&start=0&start=0&ie=utf-8&oe=utf-8")));
-		m_default_list.append(SearchEngine("torrentz.com",KUrl("http://www.torrentz.com/search_FOOBAR")));
-		m_default_list.append(SearchEngine("btjunkie.org",KUrl("http://btjunkie.org/search?q=FOOBAR")));
+		default_opensearch_urls << KUrl("http://www.torrentz.com") << KUrl("http://isohunt.com");
+		default_urls << KUrl("http://www.ktorrents.com")
+				<< KUrl("http://www.bittorrent.com")
+				<< KUrl("http://www.mininova.org")
+				<< KUrl("http://thepiratebay.org")
+				<< KUrl("http://www.bitenova.org")
+				<< KUrl("http://btjunkie.org");
 	}
 
 
 	SearchEngineList::~SearchEngineList()
-	{}
-
-	void SearchEngineList::save(const QString& file)
 	{
-		QFile fptr(file);
-		if (!fptr.open(QIODevice::WriteOnly))
-			return;
-		
-		QTextStream out(&fptr);
-		out << "# PLEASE DO NOT MODIFY THIS FILE. Use KTorrent configuration dialog for adding new search engines." << ::endl;
-		out << "# SEARCH ENGINES list" << ::endl;
-     
-		foreach (const SearchEngine & e,m_search_engines)
+		qDeleteAll(engines);
+	}
+	
+	
+	void SearchEngineList::loadEngines()
+	{
+		if (!bt::Exists(data_dir))
 		{
-			// replace spaces by %20
-			QString name = e.name;
-			name = name.replace(" ","%20");
-			QString u = e.url.prettyUrl();
-			u = u.replace(" ","%20");
-			out << name << " " << u << ::endl;
+			if (bt::Exists(kt::DataDir() + "search_engines"))
+			{
+				try
+				{
+					if (!bt::Exists(data_dir))
+						bt::MakeDir(data_dir);
+				}
+				catch (...)
+				{
+					return;
+				}
+				
+				convertSearchEnginesFile();
+			}
+			else
+			{
+				Out(SYS_SRC|LOG_DEBUG) << "Setting up default engines" << endl;
+				addDefaults();
+			}
+		}
+		else
+		{
+			QStringList subdirs = QDir(data_dir).entryList(QDir::Dirs);
+			foreach (const QString & sd,subdirs)
+			{
+				if (sd != ".." && sd != "." && bt::Exists(data_dir + sd + "/opensearch.xml"))
+				{
+					Out(SYS_SRC|LOG_DEBUG) << "Loading " << sd << endl;
+					SearchEngine* se = new SearchEngine(data_dir + sd + "/");
+					if (!se->load(data_dir + sd + "/opensearch.xml"))
+						delete se;
+					else
+						engines.append(se);
+				}
+			}
 		}
 	}
 	
-	void SearchEngineList::load(const QString& file)
-	{
-		m_search_engines.clear();
-		
-		QFile fptr(file);
-		
-		if(!fptr.exists())
-			makeDefaultFile(file);
-		
+	void SearchEngineList::convertSearchEnginesFile()
+	{	
+		QFile fptr(kt::DataDir() + "search_engines");
 		if (!fptr.open(QIODevice::ReadOnly))
+		{
+			addDefaults();
 			return;
+		}
 		
 		QTextStream in(&fptr);
 		
@@ -86,59 +114,236 @@ namespace kt
 			if(line.startsWith("#") || line.startsWith(" ") || line.isEmpty() ) continue;
 		
 			QStringList tokens = line.split(" ");
-		
-			SearchEngine se;
-			se.name = tokens[0];
-			se.name = se.name.replace("%20"," ");
-			se.url = KUrl(tokens[1]);
+			QString name = tokens[0];
+			name = name.replace("%20"," ");
+			KUrl url = KUrl(tokens[1]);
 		
 			for (Uint32 i=2; i < (Uint32)tokens.count(); ++i)
-				se.url.addQueryItem(tokens[i].section("=",0,0), tokens[i].section("=", 1, 1));
+				url.addQueryItem(tokens[i].section("=",0,0), tokens[i].section("=", 1, 1));
 		
-			// check if we need to update the URL of a default item
-			foreach (const SearchEngine & e,m_default_list)
+			try
 			{
-				if (e.name == se.name)
-				{
-					if (e.url != se.url)
-						se.url = e.url;
-					break;
-				}
+				QString dir = data_dir + name;
+				if (!dir.endsWith("/"))
+					dir += "/";
+				
+				bt::MakeDir(dir);
+				addEngine(dir,url.prettyUrl().replace("FOOBAR","{searchTerms}"));
 			}
-			
-			m_search_engines.append(se);
-		}
-	}
-	
-	void SearchEngineList::makeDefaultFile(const QString& file)
-	{
-		QFile fptr(file);
-		if (!fptr.open(QIODevice::WriteOnly))
-			return;
-		
-		QTextStream out(&fptr);
-		out << "# PLEASE DO NOT MODIFY THIS FILE. Use KTorrent configuration dialog for adding new search engines." << ::endl;
-		out << "# SEARCH ENGINES list" << ::endl;
-		foreach (const SearchEngine & e,m_default_list)
-		{
-			out << e.name << " " << e.url.prettyUrl() << endl;
+			catch (bt::Error & err)
+			{
+				Out(SYS_SRC|LOG_NOTICE) << err.toString() << endl;
+			}
 		}
 	}
 		
-	KUrl SearchEngineList::getSearchURL(bt::Uint32 engine) const
+	KUrl SearchEngineList::search(bt::Uint32 engine,const QString & terms)
 	{
-		if (engine >= (Uint32)m_search_engines.count())
-			return KUrl();
-		else
-			return m_search_engines[engine].url;
+		KUrl u;
+		if (engine < (Uint32)engines.count())
+			u = engines[engine]->search(terms);
+		
+		Out(SYS_SRC|LOG_NOTICE) << "Searching " << u.prettyUrl() << endl;
+		return u;
 	}
 	
 	QString SearchEngineList::getEngineName(bt::Uint32 engine) const
 	{
-		if (engine >= (Uint32)m_search_engines.count())
+		if (engine >= (Uint32)engines.count())
 			return QString::null;
 		else
-			return m_search_engines[engine].name;
+			return engines[engine]->engineName();
 	}
 
+	void SearchEngineList::openSearchDownloadJobFinished(KJob* j)
+	{
+		OpenSearchDownloadJob* osdj = (OpenSearchDownloadJob*)j;
+		if (osdj->error())
+			bt::Delete(osdj->directory(),true);
+		
+		SearchEngine* se = new SearchEngine(osdj->directory());
+		if (!se->load(osdj->directory() + "opensearch.xml"))
+		{
+			delete se;
+			bt::Delete(osdj->directory(),true);
+		}
+		else
+			engines.append(se);
+		
+		insertRow(engines.count() - 1);
+	}
+	
+	void SearchEngineList::addEngine(OpenSearchDownloadJob* j)
+	{
+		openSearchDownloadJobFinished(j);
+	}
+	
+	void SearchEngineList::addEngine(const QString & dir,const QString & url)
+	{
+		QFile fptr(dir + "opensearch.xml");
+		if (!fptr.open(QIODevice::WriteOnly))
+			throw bt::Error(i18n("Cannot open %s : %s",dir + "opensearch.xml",fptr.errorString()));
+		
+		KUrl kurl(url);
+		QTextStream out(&fptr);
+		QString xml_template = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+				"<OpenSearchDescription xmlns=\"http://a9.com/-/spec/opensearch/1.1/\">\n"
+				"<ShortName>%1</ShortName>\n"
+				"<Url type=\"text/html\" template=\"%2\" />\n"
+				"<Image>%3/favicon.ico</Image>\n"
+				"</OpenSearchDescription>\n";
+		
+		QString base = kurl.protocol() + "://" + kurl.host();
+		if (kurl.port() > 0)
+			base += QString(":%1").arg(kurl.port());
+		
+		QString tmp = url;
+		tmp = tmp.replace("&","&amp;");
+		out << xml_template.arg(kurl.host()).arg(tmp).arg(base) << endl;
+		
+		SearchEngine* se = new SearchEngine(dir);
+		
+		if (!se->load(dir + "opensearch.xml"))
+		{
+			delete se;
+			throw bt::Error(i18n("Failed to parse %1",dir + "opensearch.xml"));
+		}
+		
+		engines.append(se);
+		insertRow(engines.count() - 1);
+	}
+	
+	void SearchEngineList::removeEngines(const QModelIndexList & sel)
+	{
+		QList<SearchEngine*> to_remove;
+		foreach (const QModelIndex & idx,sel)
+		{
+			if (idx.isValid() && idx.row() >= 0 && idx.row() < engines.count())
+				to_remove.append(engines.at(idx.row()));
+		}
+		
+		foreach (SearchEngine* se,to_remove)
+		{
+			bt::Delete(se->engineDir(),true);
+			engines.removeAll(se);
+		}
+		
+		reset();
+	}
+	
+	void SearchEngineList::removeAllEngines()
+	{
+		foreach (SearchEngine* se,engines)
+		{
+			bt::Delete(se->engineDir(),true);
+		}
+		engines.clear();
+		reset();
+	}
+		
+	void SearchEngineList::addDefaults()
+	{
+		// data dir does not exist yet so create it and add the default list
+		try
+		{
+			if (!bt::Exists(data_dir))
+				bt::MakeDir(data_dir);
+		}
+		catch (...)
+		{
+			return;
+		}
+	
+		foreach (const KUrl & u,default_opensearch_urls)
+		{
+			Out(SYS_SRC|LOG_DEBUG) << "Setting up default engine " << u.prettyUrl() << endl;
+			QString dir = data_dir + u.host() + "/"; 
+			if (!bt::Exists(dir))
+			{
+				OpenSearchDownloadJob* j = new OpenSearchDownloadJob(u,dir);
+				connect(j,SIGNAL(result(KJob*)),this,SLOT(openSearchDownloadJobFinished(KJob*)));
+				j->start();
+			}
+		}
+			
+			// also add the engines which don't have an opensearch description
+		QStringList dir_list = KGlobal::dirs()->findDirs("data", "ktorrent/opensearch");
+		foreach (const QString & dir,dir_list)
+		{
+			QStringList subdirs = QDir(dir).entryList(QDir::Dirs);
+			foreach (const QString & sd,subdirs)
+			{
+				if (sd != ".." && sd != "." && !bt::Exists(data_dir + sd + "/"))
+				{
+					Out(SYS_SRC|LOG_DEBUG) << "Copying " << sd << endl;
+					// copy directory into data_dir
+					KIO::Job* j = KIO::copy(KUrl(dir + "/" + sd),KUrl(data_dir),KIO::HideProgressInfo);
+					if (j->exec())
+					{
+						SearchEngine* se = new SearchEngine(data_dir + sd + "/");
+						if (!se->load(data_dir + sd + "/opensearch.xml"))
+							delete se;
+						else
+							engines.append(se);
+					}
+					delete j;
+				}
+			}
+		}
+	}
+	
+	int SearchEngineList::rowCount(const QModelIndex &parent) const
+	{
+		if (!parent.isValid())
+			return engines.count();
+		else
+			return 0;
+	}
+	
+	QVariant SearchEngineList::data(const QModelIndex &index, int role) const
+	{
+		if (!index.isValid())
+			return QVariant();
+		
+		SearchEngine* se = engines.at(index.row());
+		if (!se)
+			return QVariant();
+		
+		if (role == Qt::DisplayRole)
+		{
+			return se->engineName();
+		}
+		else if (role == Qt::DecorationRole)
+		{
+			return se->engineIcon();
+		}
+		else if (role == Qt::ToolTipRole) 
+		{
+			return i18n("Url: <b>%1</b>",se->engineUrl());
+		}
+		
+		return QVariant();
+	}
+	
+	bool SearchEngineList::insertRows(int row,int count,const QModelIndex & parent)
+	{
+		Q_UNUSED(parent);
+		beginInsertRows(QModelIndex(),row,row + count - 1);
+		endInsertRows();
+		return true;
+	}
+	
+	bool SearchEngineList::removeRows(int row,int count,const QModelIndex & parent)
+	{
+		Q_UNUSED(parent);
+		beginRemoveRows(QModelIndex(),row,row + count - 1);
+		for (int i = 0;i < count;i++)
+		{
+			SearchEngine* se = engines.takeAt(row);
+			bt::Delete(se->engineDir());
+			delete se;
+		}
+		endRemoveRows();
+		return true;
+	}
 }
