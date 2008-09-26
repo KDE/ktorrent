@@ -687,11 +687,16 @@ namespace kt
 		
 	bool GUI::queryExit()
 	{
-		timer.stop();
-		ideal::MainWindow::queryExit();
-		hide();
-		tray_icon->hide();
-		core->onExit();
+		static bool first_time = true;
+		if (first_time)
+		{
+			timer.stop();
+			ideal::MainWindow::queryExit();
+			hide();
+			tray_icon->hide();
+			core->onExit();
+			first_time = false;
+		}
 		return true;
 	}
 
