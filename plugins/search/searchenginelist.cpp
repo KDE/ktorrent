@@ -182,7 +182,7 @@ namespace kt
 	{
 		QFile fptr(dir + "opensearch.xml");
 		if (!fptr.open(QIODevice::WriteOnly))
-			throw bt::Error(i18n("Cannot open %s : %s",dir + "opensearch.xml",fptr.errorString()));
+			throw bt::Error(i18n("Cannot open %1 : %2",dir + "opensearch.xml",fptr.errorString()));
 		
 		KUrl kurl(url);
 		QTextStream out(&fptr);
