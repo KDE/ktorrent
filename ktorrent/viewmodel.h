@@ -50,6 +50,12 @@ namespace kt
 		/// Check if something has changed in the last update
 		bool updated() const {return changed_values;}
 		
+		/// Is a column a default column for an upload view
+		bool defaultColumnForUpload(int column);
+		
+		/// Is a column a default column for a download view
+		bool defaultColumnForDownload(int column);
+		
 		virtual int rowCount(const QModelIndex & parent) const;
 		virtual int columnCount(const QModelIndex & parent) const;
 		virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;

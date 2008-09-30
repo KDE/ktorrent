@@ -98,6 +98,23 @@ namespace kt
 	View::~View()
 	{
 	}
+	
+	void View::setupDefaultColumns()
+	{
+		int idx = 0;
+		foreach (QAction* act,column_action_list)
+		{
+			bool ret = false;
+			if (group->groupFlags() == Group::DOWNLOADS_ONLY_GROUP)
+				ret = model->defaultColumnForDownload(idx);
+			else if (group->groupFlags() == Group::UPLOADS_ONLY_GROUP)
+				ret = model->defaultColumnForUpload(idx); 
+			
+			header()->setSectionHidden(idx,!ret);
+			act->setChecked(ret);
+			idx++;
+		}
+	}
 
 	void View::setGroup(Group* g)
 	{

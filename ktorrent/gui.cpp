@@ -82,7 +82,7 @@ namespace kt
 		
 		group_view = new GroupView(core->getGroupManager(),view_man,this);
 		addToolWidget(group_view,"application-x-bittorrent",i18n("Groups"),DOCK_LEFT);
-		connect(group_view,SIGNAL(openNewTab(kt::Group*)),this,SLOT(openView(kt::Group*)));
+		connect(group_view,SIGNAL(openNewTab(kt::Group*)),this,SLOT(openNewView(kt::Group*)));
 
 		qm = new QueueManagerWidget(core->getQueueManager(),this);
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),qm,SLOT(onTorrentAdded(bt::TorrentInterface*)));
@@ -585,17 +585,25 @@ namespace kt
 
 	void GUI::newView()
 	{
-		openView(core->getGroupManager()->allGroup());
+		newView(core->getGroupManager()->allGroup());
 	}
 
-	void GUI::openView(kt::Group* g)
+	View* GUI::newView(kt::Group* g)
 	{
 		View* view = view_man->newView(core,this);
 		view->setGroup(g);
 		addTabPage(view,g->groupIconName(),view->caption(),view_man);
+		return view;
+	}
+			
+	void GUI::openNewView(kt::Group* g)
+	{
+		View* v = newView(g);
+		v->setupDefaultColumns();
 	}
 	
-	void GUI::openView(const QString & group_name)
+	
+	void GUI::openView(const QString & group_name,bool starting_up)
 	{
 		Group* g = core->getGroupManager()->find(group_name);
 		if (!g)
@@ -605,7 +613,9 @@ namespace kt
 				g = core->getGroupManager()->allGroup();
 		}
 
-		openView(g);
+		View* v = newView(g);
+		if (!starting_up) // if it is a new view, setup the default columns based upon the group
+			v->setupDefaultColumns();
 	}
 
 	void GUI::currentTabPageChanged(QWidget* page)

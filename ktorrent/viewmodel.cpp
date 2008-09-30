@@ -341,6 +341,16 @@ namespace kt
 			return 15;
 	}
 	
+	bool ViewModel::defaultColumnForUpload(int column)
+	{
+		return column != 2 && column != 5 && column != 10 && column != 12 && column != 14;
+	}
+	
+	bool ViewModel::defaultColumnForDownload(int column)
+	{
+		return column != 13 && column != 14;
+	}
+	
 	QVariant ViewModel::headerData(int section, Qt::Orientation orientation,int role) const
 	{
 		if (role != Qt::DisplayRole || orientation != Qt::Horizontal)

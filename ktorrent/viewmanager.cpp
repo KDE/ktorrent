@@ -88,10 +88,10 @@ namespace kt
 		cv = g.readEntry("current_views",cv);
 
 		foreach (const QString &s,cv)
-			gui->openView(s);
+			gui->openView(s,true);
 
 		if (views.count() == 0)
-			gui->openView(all_group);
+			gui->openNewView(all_group);
 
 		int idx = 0;
 		foreach (View* v,views)

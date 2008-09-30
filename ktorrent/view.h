@@ -89,6 +89,11 @@ namespace kt
 		/// Get a list of column actions to plugin in the right click menu of a view
 		QList<QAction*> columnActionList() const;
 		
+		/**
+		 * Setup the default columns of the view depending on the group it is showing.
+		 */
+		void setupDefaultColumns();
+		
 	public slots:
 		/**
 		 * Update all items in the view

@@ -88,8 +88,9 @@ namespace kt
 		/**
 		 * Open a view
 		 * @param group_name Name of group to show in view
+		 * @param starting_up Wether or not we are starting up (and thus are loading existing views)
 		 */
-		void openView(const QString & group_name);
+		void openView(const QString & group_name,bool starting_up);
 
 		/**
 		 * Called by the ViewManager when the current torrent has changed
@@ -104,7 +105,7 @@ namespace kt
 		 * Open a view
 		 * @param g The group to show in the view
 		 * */
-		void openView(kt::Group* g);
+		void openNewView(kt::Group* g);
 		
 		/**
 		 * Enable or disable some actions in the GUI
@@ -154,6 +155,7 @@ namespace kt
 		
 	private:
 		void setupActions();
+		View* newView(kt::Group* g);
 		virtual void loadState(KSharedConfigPtr cfg);
 		virtual void saveState(KSharedConfigPtr cfg);
 		virtual bool queryExit();
