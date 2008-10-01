@@ -41,6 +41,7 @@
 #include <util/functions.h>
 #include <util/mmapfile.h>
 #include <util/sha1hash.h>
+#include <time.h>
 #include "ktversion.h"
 #include "httpserver.h"
 #include "httpclienthandler.h"
