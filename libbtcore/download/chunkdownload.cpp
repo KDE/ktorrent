@@ -150,6 +150,7 @@ namespace bt
 	{
 		foreach (PieceDownloader* pd,pdown)
 		{
+			sendCancels(pd);
 			pd->release();
 			disconnect(pd,SIGNAL(timedout(const bt::Request& )),this,SLOT(onTimeout(const bt::Request& )));
 			disconnect(pd,SIGNAL(rejected( const bt::Request& )),this,SLOT(onRejected( const bt::Request& )));

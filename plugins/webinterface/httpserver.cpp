@@ -117,7 +117,7 @@ namespace kt
 		connect(handler,SIGNAL(closed()),this,SLOT(slotConnectionClosed()));
 		Out(SYS_WEB|LOG_NOTICE) << "connection from "<< addr.toString()  << endl;
 	}
-
+/*
 	static int DecodeEscapedChar(QString & password,int idx)
 	{
 		QChar a = password[idx + 1].toLower();
@@ -135,7 +135,7 @@ namespace kt
 		password.replace(idx,3,r);
 		return idx + 1;
 	}
-	
+	*/
 	bool HttpServer::checkLogin(const QHttpRequestHeader & hdr,const QByteArray & data)
 	{
 		if (hdr.contentType() != "application/x-www-form-urlencoded")
@@ -450,8 +450,16 @@ namespace kt
 	void HttpServer::handleTorrentPost(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QByteArray & data)
 	{
 		const char* ptr = data.data();
-		Uint32 len = data.size();
+		int len = data.size();
 		int pos = QString(data).indexOf("\r\n\r\n");
+		
+		if (!session.logged_in || !checkSession(hdr))
+		{
+			// You can't post torrents if you are not logged in
+			// or the session is not OK
+			redirectToLoginPage(hdlr);
+			return;
+		}
 		
 		if (pos == -1 || pos + 4 >= len)
 		{
