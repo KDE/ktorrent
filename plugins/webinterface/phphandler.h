@@ -44,6 +44,9 @@ namespace kt
 		void onFinished(int exitCode,QProcess::ExitStatus exitStatus);
 		void onReadyReadStdout();
 		
+	private:
+		bool containsDelimiters(const QString & str);
+		
 	signals:
 		void finished();
 		

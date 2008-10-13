@@ -88,7 +88,9 @@ namespace kt
 		QMap<QString,QString>::const_iterator it;	
 		for ( it = args.begin(); it != args.end(); ++it )
 		{
-			out << QString("$_REQUEST['%1']=\"%2\";\n").arg(it.key()).arg(it.value());
+			// Check for string delimiters, don't want PHP injection attacks
+			if (!containsDelimiters(it.key()) && !containsDelimiters(it.value()))
+				out << QString("$_REQUEST['%1']=\"%2\";\n").arg(it.key()).arg(it.value());
 		}
 			
 		out << php_s.mid(firstphptag + 6) << flush;
@@ -111,6 +113,10 @@ namespace kt
 		}
 	}
 
+	bool PhpHandler::containsDelimiters(const QString & str)
+	{
+		return str.contains("\"") || str.contains("'");
+	}
 }
 
 #include "phphandler.moc"
