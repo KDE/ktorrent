@@ -39,7 +39,7 @@ namespace bt
 	
 
 	UDPTracker::UDPTracker(const KUrl & url,TorrentInterface* tor,const PeerID & id,int tier) 
-	: Tracker(url,tor,id,tier)
+	: Tracker(url,tor,id,tier),num_resolve_failures(0)
 	{
 		num_instances++;
 		if (!socket)
@@ -59,7 +59,7 @@ namespace bt
 				this,SLOT(onError(Int32, const QString& )));
 	
 		KResolver::resolveAsync(this,SLOT(onResolverResults(KNetwork::KResolverResults )),
- 						   url.host(),QString::number(url.port()));
+ 						   url.host(),QString::number(url.port(80)));
 	}
 
 
@@ -284,9 +284,12 @@ namespace bt
 	{
 		if (res.count() > 0)
 			address = res.front().address();
-		else
+		else if (num_resolve_failures < 3)
+		{
+			num_resolve_failures++;
 			KResolver::resolveAsync(this,SLOT(onResolverResults(KNetwork::KResolverResults )),
-									url.host(),QString::number(url.port()));
+									url.host(),QString::number(url.port(80)));
+		}
 	}
 	
 }
