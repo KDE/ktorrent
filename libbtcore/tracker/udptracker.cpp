@@ -182,7 +182,7 @@ namespace bt
 		if (!resolved)
 		{
 			KResolver::resolveAsync(this,SLOT(onResolverResults(KNetwork::KResolverResults )),
-									url.host(),QString::number(url.port()));
+									url.host(),QString::number(url.port(80)));
 		}
 		else if (connection_id == 0)
 		{
