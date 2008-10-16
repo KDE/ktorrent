@@ -106,13 +106,6 @@ namespace bt
 		Uint32 pp = p.getOffset() / MAX_PIECE_LEN;
 		if (pieces.get(pp))
 			return false;
-
-		if (!p.getData() || p.getOffset() + p.getLength() > chunk->getSize())
-		{
-			Out(SYS_CON|LOG_DEBUG) << "There is something wrong with a received piece !" << endl;
-			Out(SYS_CON|LOG_DEBUG) << p.getOffset() << " " << p.getLength() << " " << chunk->getSize() << endl;
-			return false;
-		}
 	
 		DownloadStatus* ds = dstatus.find(p.getPieceDownloader());
 		if (ds)
