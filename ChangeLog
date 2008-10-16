@@ -1,7 +1,7 @@
 Changes in 3.1.4 :
 - Make sure user is properly logged in when handling a torrent post in the webgui
 - Prevent PHP injection attacks in webgui
-- Added safety check to fix potential crash
+- Update file size in CacheFile::growFile, this fixes a SIGBUS error (172814)
 - Fix bug causing infinite DNS lookups in UDP tracker when lookup fails
 
 Changes in 3.1.3 :

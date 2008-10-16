@@ -251,6 +251,8 @@ namespace bt
 		
 		if (!fptr->resize(file_size + to_write))
 			throw Error(i18n("Cannot expand file %1 : %2",path,fptr->errorString()));
+		
+		file_size = fptr->size();
 	}
 		
 	void CacheFile::unmap(void* ptr,Uint32 size)
