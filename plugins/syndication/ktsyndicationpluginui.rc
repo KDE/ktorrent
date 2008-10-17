@@ -1,0 +1,9 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<kpartgui library="libktsyndicationplugin" name="syndicationplugin" version="2">
+
+<ToolBar name="SyndicationToolBar"><text>Syndication Toolbar</text>
+	<Action name="add_feed"/>
+	<Action name="remove_feed"/>
+</ToolBar>
+
+</kpartgui>

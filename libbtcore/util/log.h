@@ -51,6 +51,7 @@
 #define SYS_WEB 0x100000 // WebInterface plugin
 #define SYS_ZCO 0x200000 // ZeroConf plugin
 #define SYS_SCR 0x400000 // Scripting plugin
+#define SYS_SYN 0x800000 // Syndication plugin
 
 class KUrl;
 

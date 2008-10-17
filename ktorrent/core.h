@@ -62,7 +62,9 @@ namespace kt
 		virtual bt::Uint32 getNumTorrentsRunning() const;
 		virtual bt::Uint32 getNumTorrentsNotRunning() const;
 		virtual void load(const KUrl& url,const QString & group);
+		virtual void load(const QByteArray & data,const KUrl& url,const QString & group);
 		virtual void loadSilently(const KUrl& url,const QString & group);
+		virtual void loadSilently(const QByteArray & data,const KUrl& url,const QString & group);
 		virtual void loadSilentlyDir(const KUrl& url,const KUrl & savedir);
 		virtual QString findNewTorrentDir() const;
 		virtual void loadExistingTorrent(const QString & tor_dir);

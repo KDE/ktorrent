@@ -55,8 +55,6 @@ namespace kt
 		/// Restore all views from configuration
 		void loadState(KSharedConfigPtr cfg);
 		
-		
-		
 		/// Update the current view
 		void update();
 		

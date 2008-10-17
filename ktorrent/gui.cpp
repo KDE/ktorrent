@@ -121,6 +121,7 @@ namespace kt
 
 		dbus_iface = new DBus(this,core,this);
 		
+		view_man->loadState(KGlobal::config());
 		core->loadPlugins();
 		loadState(KGlobal::config());
 		notifyViewListeners(view_man->getCurrentTorrent());
@@ -211,6 +212,7 @@ namespace kt
 	void GUI::dataScan(bt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption)
 	{
 		ScanDlg* dlg = new ScanDlg(core,auto_import,this);
+		dlg->setCaption(dlg_caption);
 		dlg->show();
 		dlg->execute(tc,silently);
 		core->startUpdateTimer(); // make sure update timer is running
@@ -550,7 +552,7 @@ namespace kt
 		status_bar->updateTransfer(stats.bytes_uploaded,stats.bytes_downloaded);
 		status_bar->updateDHTStatus(Globals::instance().getDHT().isRunning(),Globals::instance().getDHT().getStats());
 
-		tray_icon->updateStats(stats,Settings::showSpeedBarInTrayIcon(),Settings::downloadBandwidth(), Settings::uploadBandwidth());
+		tray_icon->updateStats(stats);
 		core->updateGuiPlugins();
 		
 		start_all_action->setEnabled(core->getNumTorrentsNotRunning() > 0);
@@ -636,7 +638,6 @@ namespace kt
 	
 	void GUI::loadState(KSharedConfigPtr cfg)
 	{
-		view_man->loadState(cfg);
 		group_view->loadState(cfg);
 		qm->loadState(cfg);
 		ideal::MainWindow::loadState(cfg);

@@ -546,7 +546,7 @@ namespace bt
 		{
 			delete tor;
 			tor = 0;
-			throw Error(i18n("An error occurred while loading the torrent <b>%1</b>.<br/>"
+			throw Error(i18n("An error occurred while loading the torrent <b>%1</b>\n"
 					"The torrent is probably corrupt or is not a torrent file.",torrent));
 		}
 		
@@ -575,7 +575,7 @@ namespace bt
 		{
 			delete tor;
 			tor = 0;
-			throw Error(i18n("An error occurred while loading the torrent.<br/>"
+			throw Error(i18n("An error occurred while loading the torrent.\n"
 					"The torrent is probably corrupt or is not a torrent file."));
 		}
 		

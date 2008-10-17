@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=SyndicationPlugin
+Comment=Syndication plugin for KTorrent, supporting RSS and Atom feeds
+ServiceTypes=KTorrent/Plugin
+Type=Service
+X-KDE-Library=ktsyndicationplugin
+X-KDE-PluginInfo-Author=Joris Guisson
+X-KDE-PluginInfo-Email=joris.guisson@gmail.com
+X-KDE-PluginInfo-Name=SyndicationPlugin
+X-KDE-PluginInfo-Website=http://ktorrent.org/
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=false
+Icon=application-rss+xml

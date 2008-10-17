@@ -84,7 +84,7 @@ namespace kt
 	TrayIcon::~TrayIcon()
 	{}
 
-	void TrayIcon::updateStats(const CurrentStats stats, bool showBars,int downloadBandwidth, int uploadBandwidth )
+	void TrayIcon::updateStats(const CurrentStats & stats)
 	{
 		if (!Settings::showPopups())
 		{
@@ -99,36 +99,7 @@ namespace kt
 				BytesToString(stats.bytes_uploaded));
 		
 			setToolTip(tip);
-		}	
-		if(showBars)
-			drawSpeedBar(stats.download_speed/1024,stats.upload_speed/1024, downloadBandwidth, uploadBandwidth);
-	}
-
-	void TrayIcon::drawSpeedBar(int downloadSpeed, int uploadSpeed, int downloadBandwidth, int uploadBandwidth )
-	{
-		/*
-		//check if need repaint
-		if (uploadBandwidth == 0)
-			 uploadBandwidth = 1;
-		if (downloadBandwidth == 0)
-			downloadBandwidth = 1;
-			
-		QRect r = geometry();
-		int DownloadHeight= (downloadSpeed * r.height()) / downloadBandwidth;
-		int UploadHeight= (uploadSpeed * r.height()) / uploadBandwidth;
-		if (previousDownloadHeight == DownloadHeight && previousUploadHeight == UploadHeight)
-			return;
-		
-		repaint ();
-
-		QBrush brushD(green);
-		QBrush brushU(red);
-		paint->fillRect(0,r.height(),2,-DownloadHeight,brushD);
-		paint->fillRect(r.width()-2,r.height(),2,-UploadHeight,brushU);
-
-		previousDownloadHeight=DownloadHeight;
-		previousUploadHeight=UploadHeight;	
-		*/
+		}
 	}
 
 	void TrayIcon::showPassivePopup(const QString & msg,const QString & title)
@@ -207,7 +178,6 @@ namespace kt
 		if (!Settings::showPopups())
 			return;
 		
-		const TorrentStats & s = tc->getStats();
 		QString err_msg = i18n("<b>%1</b> has been stopped with the following error: <br>%2",
 					tc->getDisplayName(),msg);
 

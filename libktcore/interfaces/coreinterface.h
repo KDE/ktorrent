@@ -165,6 +165,22 @@ namespace kt
 		virtual void loadSilentlyDir(const KUrl& url, const KUrl& savedir) = 0;
 		
 		/**
+		 * Load a torrent using a byte array
+		 * @param data Data of the torrent
+		 * @param url URL of the torrent
+		 * @param group Group to use
+		 */
+		virtual void load(const QByteArray & data,const KUrl& url,const QString & group) = 0;
+		
+		/**
+		 * Load a torrent using a byte array silently
+		 * @param data Data of the torrent
+		 * @param url URL of the torrent
+		 * @param group Group to use
+		 */
+		virtual void loadSilently(const QByteArray & data,const KUrl& url,const QString & group) = 0;
+		
+		/**
 		 * Remove a download.This will delete all temp
 		 * data from this TorrentControl And delete the
 		 * TorrentControl itself. It can also potentially

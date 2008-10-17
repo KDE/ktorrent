@@ -55,12 +55,11 @@ namespace kt
 		virtual ~TrayIcon();
 
 		/// Update stats for system tray icon
-		void updateStats(const CurrentStats stats, bool showBars=false, int downloadBandwidth=0, int uploadBandwidth=0);
+		void updateStats(const CurrentStats & stats);
 		
 		/// Update the max rate menus
 		void updateMaxRateMenus();
 	private:
-		void drawSpeedBar(int downloadSpeed, int uploadSpeed, int downloadBandwidth, int uploadBandwidth);
 		void showPassivePopup(const QString & msg,const QString & titile);
 
 	private slots:

@@ -140,7 +140,7 @@ class ChartDrawerData
 		std::pair<qreal, size_t>  FindMax() const ;
         
 		/// Dummy assignment operator for MSVC
-		bool operator=( const ChartDrawerData & rCdd ) { return true; };
+		bool operator=( const ChartDrawerData & /*rCdd*/ ) { return true; };
 };
 
 } // NS end

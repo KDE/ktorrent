@@ -472,6 +472,9 @@ namespace kt
 	
 	bool GroupView::dropMimeData(QTreeWidgetItem *parent, int index,const QMimeData *data,Qt::DropAction action)			  
 	{
+		Q_UNUSED(index);
+		Q_UNUSED(data);
+		Q_UNUSED(action);
 		GroupViewItem* li = dynamic_cast<GroupViewItem*>(parent);
 		if (!li)
 			return false;

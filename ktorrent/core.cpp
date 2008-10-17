@@ -468,6 +468,34 @@ namespace kt
 				add_to_groups.insert(j,group);
 		}
 	}
+	
+	void Core::load(const QByteArray & data,const KUrl& url,const QString & group)
+	{
+		QString dir = Settings::saveDir().path();
+		if (!Settings::useSaveDir()  || dir.isNull())
+			dir =  QDir::homePath();
+		
+		if (dir != QString::null && load(data,dir,group,false,url))
+			loadingFinished(url,true,false);
+		else
+			loadingFinished(url,false,true);
+	}
+	
+	void Core::loadSilently(const QByteArray & data,const KUrl& url,const QString & group)
+	{
+		QString dir = Settings::saveDir().path();
+		if (!Settings::useSaveDir())
+		{
+			Out(SYS_GEN|LOG_NOTICE) << "Cannot load " << url.prettyUrl() << " silently, default save location not set !" << endl;
+			Out(SYS_GEN|LOG_NOTICE) << "Using home directory instead !" << endl;
+			dir = QDir::homePath();
+		}
+		
+		if (dir != QString::null && load(data,dir,group,true,url))
+			loadingFinished(url,true,false);
+		else
+			loadingFinished(url,false,true);
+	}
 
 	void Core::loadSilentlyDir(const KUrl& url, const KUrl& savedir)
 	{
@@ -579,7 +607,7 @@ namespace kt
 		QStringList filters;
 		filters << "tor*";
 		QStringList sl = dir.entryList(filters,QDir::Dirs);
-		for (Uint32 i = 0;i < sl.count();i++)
+		for (int i = 0;i < sl.count();i++)
 		{
 			QString idir = data_dir + sl.at(i);
 			if (!idir.endsWith(DirSeparator()))
