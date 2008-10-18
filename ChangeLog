@@ -3,6 +3,7 @@ Changes in 3.1.4 :
 - Prevent PHP injection attacks in webgui
 - Update file size in CacheFile::growFile, this fixes a SIGBUS error (172814)
 - Fix bug causing infinite DNS lookups in UDP tracker when lookup fails
+- Remove default label text KSqueezedTextLabel in trackerview (173065)
 
 Changes in 3.1.3 :
 - Make login into webinterface secure
