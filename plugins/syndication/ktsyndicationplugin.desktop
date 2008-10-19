@@ -1,6 +1,13 @@
 [Desktop Entry]
 Name=SyndicationPlugin
+Name[pt]='Plugin' de Sindicância
+Name[pt_BR]='Plugin' de Sindicância
+Name[sv]=Syndikeringsinsticksprogram
 Comment=Syndication plugin for KTorrent, supporting RSS and Atom feeds
+Comment[pt]='Plugin' de sindicância do KTorrent, que suporta fontes RSS e Atom
+Comment[pt_BR]='Plugin' de sindicância do KTorrent, que suporta fontes RSS e Atom
+Comment[sv]=Syndikeringsinsticksprogram för Ktorrent, med stöd för RSS- och Atom-kanaler
+Comment[uk]=Додаток синдикації для KTorrent, з підтримкою подач RSS і Atom
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktsyndicationplugin
