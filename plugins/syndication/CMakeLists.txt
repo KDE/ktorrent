@@ -19,6 +19,7 @@ target_link_libraries(
     ktcore
     btcore
     ${KDE4_KIO_LIBS}
+    ${KDE4_KPARTS_LIBS}
 	${KDE4_SYNDICATION_LIBS}
 	${QT_QTWEBKIT_LIBRARY})
     
