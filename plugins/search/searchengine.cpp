@@ -18,7 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <kio/copyjob.h>
+#include <kio/job.h>
 #include <util/fileops.h>
 #include <util/log.h>
 #include <QXmlDefaultHandler>
@@ -111,7 +111,7 @@ namespace kt
 			QString icon_name = KUrl(icon_url).fileName();
 			if (!bt::Exists(data_dir + icon_name))
 			{
-				KJob* j = KIO::copy(KUrl(icon_url),KUrl(data_dir + icon_name),KIO::HideProgressInfo);
+				KJob* j = KIO::storedGet(KUrl(icon_url),KIO::Reload,KIO::HideProgressInfo);
 				connect(j,SIGNAL(result(KJob*)),this,SLOT(iconDownloadFinished(KJob*)));
 			}
 			else
@@ -136,6 +136,17 @@ namespace kt
 		if (!job->error())
 		{
 			QString icon_name = KUrl(icon_url).fileName();
+			KIO::StoredTransferJob* j = (KIO::StoredTransferJob*)job;
+			QFile fptr(data_dir + icon_name);
+			if (!fptr.open(QIODevice::WriteOnly))
+			{
+				Out(SYS_SRC|LOG_NOTICE) << "Failed to save icon: " << fptr.errorString() << endl;
+				return;
+			}
+			
+			fptr.write(j->data());
+			fptr.close();
+			
 			// load the icon
 			icon = KIcon(QIcon(data_dir + icon_name));
 		}
