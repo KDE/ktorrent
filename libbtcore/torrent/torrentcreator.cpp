@@ -89,7 +89,7 @@ namespace bt
 	{
 		QDir d(target + dir);
 		// first get all files (we ignore symlinks)
-		QStringList dfiles = d.entryList(QDir::Files|QDir::NoSymLinks);
+		QStringList dfiles = d.entryList(QDir::Files);
 		Uint32 cnt = 0; // counter to keep track of file index
 		for (QStringList::iterator i = dfiles.begin();i != dfiles.end();++i)
 		{
@@ -103,7 +103,7 @@ namespace bt
 		}
 
 		// now for each subdir do a buildFileList 
-		QStringList subdirs = d.entryList(QDir::Dirs|QDir::NoSymLinks);
+		QStringList subdirs = d.entryList(QDir::Dirs);
 		for (QStringList::iterator i = subdirs.begin();i != subdirs.end();++i)
 		{
 			if (*i == "." || *i == "..")
@@ -273,7 +273,7 @@ namespace bt
 		// first find the file(s) the chunk lies in
 		Array<Uint8> buf(s);
 		QList<TorrentFile> file_list;
-		Uint32 i = 0;
+		int i = 0;
 		while (i < files.size())
 		{
 			const TorrentFile & tf = files[i];
