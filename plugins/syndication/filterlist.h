@@ -18,68 +18,39 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTSYNDICATIONPLUGIN_H
-#define KTSYNDICATIONPLUGIN_H
+#ifndef KTFILTERLIST_H
+#define KTFILTERLIST_H
 
-#include <interfaces/plugin.h>
-#include <syndication/loader.h>
-#include <interfaces/guiinterface.h>
-
-class KAction;
+#include <QAbstractListModel>
 
 namespace kt
 {
-	class Feed;
-	class FeedList;
-	class SyndicationTab;
-	class FeedWidget;
 	class Filter;
-	class FilterList;
 
 	/**
-		@author
+		Model to keep track of all filters
 	*/
-	class SyndicationPlugin : public Plugin,public CloseTabListener
+	class FilterList : public QAbstractListModel
 	{
 		Q_OBJECT
 	public:
-		SyndicationPlugin(QObject* parent,const QStringList& args);
-		virtual ~SyndicationPlugin();
-
-		virtual bool versionCheck(const QString& version) const;
-		virtual void load();
-		virtual void unload();
+		FilterList(QObject* parent);
+		virtual ~FilterList();
 		
-	private slots:
-		void addFeed();
-		void removeFeed();
-		void loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
-		void activateFeedWidget(Feed* f);
-		void downloadLink(const KUrl & url);
-		void updateTabText(QWidget* w,const QString & text);
-		void showFeed();
-		void addFilter();
-		void removeFilter();
-		void editFilter();
-		void editFilter(Filter* f);
-						
-	private:
-		void setupActions();
-		void loadTabs();
-		virtual void tabCloseRequest(kt::GUIInterface* gui, QWidget* tab);
+		virtual int rowCount(const QModelIndex & parent) const;
+		virtual QVariant data(const QModelIndex & index, int role) const;
+		virtual bool removeRows(int row,int count,const QModelIndex & parent);
+		virtual bool insertRows(int row,int count,const QModelIndex & parent);
 		
+		void addFilter(Filter* f);
+		void removeFilter(Filter* f);
+		Filter* filterForIndex(const QModelIndex & idx);
+		
+		void saveFilters(const QString & file);
+		void loadFilters(const QString & file);
+		void filterEdited(Filter* filter);
 	private:
-		KAction* add_feed;
-		KAction* remove_feed;
-		KAction* show_feed;
-		KAction* add_filter;
-		KAction* remove_filter;
-		KAction* edit_filter;
-		FeedList* feed_list;
-		FilterList* filter_list;
-		SyndicationTab* tab;
-		QMap<Syndication::Loader*,KUrl> downloads;
-		QMap<Feed*,FeedWidget*> tabs;
+		QList<Filter*> filters;
 	};
 
 }

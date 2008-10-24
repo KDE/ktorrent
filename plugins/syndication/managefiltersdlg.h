@@ -18,68 +18,30 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTSYNDICATIONPLUGIN_H
-#define KTSYNDICATIONPLUGIN_H
+#ifndef KTMANAGEFILTERSDLG_H
+#define KTMANAGEFILTERSDLG_H
 
-#include <interfaces/plugin.h>
-#include <syndication/loader.h>
-#include <interfaces/guiinterface.h>
-
-class KAction;
+#include <kdialog.h>
+#include "ui_managefiltersdlg.h"
 
 namespace kt
 {
-	class Feed;
-	class FeedList;
-	class SyndicationTab;
-	class FeedWidget;
-	class Filter;
-	class FilterList;
 
 	/**
-		@author
+		Dialog to manage filters for a feed
 	*/
-	class SyndicationPlugin : public Plugin,public CloseTabListener
+	class ManageFiltersDlg : public KDialog,public Ui_ManageFiltersDlg
 	{
 		Q_OBJECT
 	public:
-		SyndicationPlugin(QObject* parent,const QStringList& args);
-		virtual ~SyndicationPlugin();
+		ManageFiltersDlg(QWidget* parent);
+		virtual ~ManageFiltersDlg();
 
-		virtual bool versionCheck(const QString& version) const;
-		virtual void load();
-		virtual void unload();
-		
 	private slots:
-		void addFeed();
-		void removeFeed();
-		void loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
-		void activateFeedWidget(Feed* f);
-		void downloadLink(const KUrl & url);
-		void updateTabText(QWidget* w,const QString & text);
-		void showFeed();
-		void addFilter();
-		void removeFilter();
-		void editFilter();
-		void editFilter(Filter* f);
-						
-	private:
-		void setupActions();
-		void loadTabs();
-		virtual void tabCloseRequest(kt::GUIInterface* gui, QWidget* tab);
-		
-	private:
-		KAction* add_feed;
-		KAction* remove_feed;
-		KAction* show_feed;
-		KAction* add_filter;
-		KAction* remove_filter;
-		KAction* edit_filter;
-		FeedList* feed_list;
-		FilterList* filter_list;
-		SyndicationTab* tab;
-		QMap<Syndication::Loader*,KUrl> downloads;
-		QMap<Feed*,FeedWidget*> tabs;
+		void add();
+		void remove();
+		void removeAll();
+		void newFilter();
 	};
 
 }

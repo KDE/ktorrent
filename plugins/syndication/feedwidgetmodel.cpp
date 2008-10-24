@@ -41,6 +41,18 @@ namespace kt
 	FeedWidgetModel::~FeedWidgetModel()
 	{
 	}
+	
+	void FeedWidgetModel::setCurrentFeed(Feed* f)
+	{
+		items.clear();
+		disconnect(feed,SIGNAL(updated()),this,SLOT(updated()));
+		feed = f;
+		Syndication::FeedPtr ptr = feed->feedData();
+		if (ptr)
+			items = ptr->items();
+		connect(feed,SIGNAL(updated()),this,SLOT(updated()));
+		reset();
+	}
 
 	int FeedWidgetModel::rowCount(const QModelIndex & parent) const
 	{

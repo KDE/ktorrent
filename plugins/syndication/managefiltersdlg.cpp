@@ -18,70 +18,40 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTSYNDICATIONPLUGIN_H
-#define KTSYNDICATIONPLUGIN_H
-
-#include <interfaces/plugin.h>
-#include <syndication/loader.h>
-#include <interfaces/guiinterface.h>
-
-class KAction;
+#include <klocale.h>
+#include "managefiltersdlg.h"
 
 namespace kt
 {
-	class Feed;
-	class FeedList;
-	class SyndicationTab;
-	class FeedWidget;
-	class Filter;
-	class FilterList;
 
-	/**
-		@author
-	*/
-	class SyndicationPlugin : public Plugin,public CloseTabListener
+	ManageFiltersDlg::ManageFiltersDlg(QWidget* parent) : KDialog(parent)
 	{
-		Q_OBJECT
-	public:
-		SyndicationPlugin(QObject* parent,const QStringList& args);
-		virtual ~SyndicationPlugin();
+		setWindowTitle(i18n("Manage Filters"));
+		setupUi(mainWidget());
+		m_add->setIcon(KIcon("go-previous"));
+		m_add->setText(QString());
+		m_remove->setIcon(KIcon("go-next"));
+		m_remove->setText(QString());
+		connect(m_add,SIGNAL(clicked()),this,SLOT(add()));
+		connect(m_remove,SIGNAL(clicked()),this,SLOT(remove()));
+		connect(m_remove_all,SIGNAL(clicked()),this,SLOT(removeAll()));
+		connect(m_new_filter,SIGNAL(clicked()),this,SLOT(newFilter()));
+	}
 
-		virtual bool versionCheck(const QString& version) const;
-		virtual void load();
-		virtual void unload();
-		
-	private slots:
-		void addFeed();
-		void removeFeed();
-		void loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
-		void activateFeedWidget(Feed* f);
-		void downloadLink(const KUrl & url);
-		void updateTabText(QWidget* w,const QString & text);
-		void showFeed();
-		void addFilter();
-		void removeFilter();
-		void editFilter();
-		void editFilter(Filter* f);
-						
-	private:
-		void setupActions();
-		void loadTabs();
-		virtual void tabCloseRequest(kt::GUIInterface* gui, QWidget* tab);
-		
-	private:
-		KAction* add_feed;
-		KAction* remove_feed;
-		KAction* show_feed;
-		KAction* add_filter;
-		KAction* remove_filter;
-		KAction* edit_filter;
-		FeedList* feed_list;
-		FilterList* filter_list;
-		SyndicationTab* tab;
-		QMap<Syndication::Loader*,KUrl> downloads;
-		QMap<Feed*,FeedWidget*> tabs;
-	};
 
+	ManageFiltersDlg::~ManageFiltersDlg()
+	{
+	}
+
+	void ManageFiltersDlg::add()
+	{}
+	
+	void ManageFiltersDlg::remove()
+	{}
+	
+	void ManageFiltersDlg::removeAll()
+	{}
+	
+	void ManageFiltersDlg::newFilter()
+	{}
 }
-
-#endif

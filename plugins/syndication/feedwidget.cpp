@@ -22,6 +22,7 @@
 #include "feed.h"
 #include "feedwidget.h"
 #include "feedwidgetmodel.h"
+#include "managefiltersdlg.h"
 
 namespace kt
 {
@@ -77,6 +78,8 @@ namespace kt
 	
 	void FeedWidget::filtersClicked()
 	{
+		ManageFiltersDlg dlg(this);
+		dlg.exec();
 	}
 	
 	void FeedWidget::selectionChanged(const QItemSelection& sel, const QItemSelection& prev)

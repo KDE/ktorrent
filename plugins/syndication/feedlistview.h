@@ -34,11 +34,11 @@ namespace kt
 	/**
 		View to show the list of feeds.
 	*/
-	class FeedListView : public QWidget
+	class FeedListView : public QListView
 	{
 		Q_OBJECT
 	public:
-		FeedListView(KActionCollection* ac,FeedList* feeds,QWidget* parent);
+		FeedListView(FeedList* feeds,QWidget* parent);
 		virtual ~FeedListView();
 		
 		/// Get all the selected feeds
@@ -54,8 +54,6 @@ namespace kt
 
 	private:
 		FeedList* feeds;
-		QListView* view;
-		KToolBar* tool_bar;
 	};
 
 }

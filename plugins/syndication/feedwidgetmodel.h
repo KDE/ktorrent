@@ -39,6 +39,9 @@ namespace kt
 	public:
 		FeedWidgetModel(Feed* feed,QObject* parent);
 		virtual ~FeedWidgetModel();
+		
+		Feed* currentFeed() {return feed;}
+		void setCurrentFeed(Feed* f);
 
 		virtual int rowCount(const QModelIndex & parent) const;
 		virtual int columnCount(const QModelIndex & parent) const;

@@ -33,11 +33,16 @@
 #include <interfaces/functions.h>
 #include <interfaces/guiinterface.h>
 #include "syndicationplugin.h"
+#include "syndicationtab.h"
 #include "feed.h"
 #include "feedlist.h"
 #include "feedlistview.h"
 #include "feedwidget.h"
 #include "linkdownloader.h"
+#include "filterlist.h"
+#include "filter.h"
+#include "filterlistview.h"
+#include "filtereditor.h"
 
 K_EXPORT_COMPONENT_FACTORY(ktsyndicationplugin,KGenericFactory<kt::SyndicationPlugin>("ktsyndicationplugin"))
 		
@@ -49,7 +54,7 @@ namespace kt
 	SyndicationPlugin::SyndicationPlugin(QObject* parent,const QStringList& args): Plugin(parent),add_feed(0)
 	{
 		Q_UNUSED(args);
-		feed_view = 0;
+		tab = 0;
 		feed_list = 0;
 		setupActions();
 	//	setXMLFile("ktsyndicationpluginui.rc");
@@ -75,12 +80,17 @@ namespace kt
 			bt::MakeDir(ddir,true);
 		
 		feed_list = new FeedList(ddir,this);
-		feed_view = new FeedListView(actionCollection(),feed_list,0);
-		connect(feed_view,SIGNAL(feedActivated(Feed*)),this,SLOT(activateFeedWidget(Feed*)));
-		connect(feed_view,SIGNAL(enableRemove(bool)),remove_feed,SLOT(setEnabled(bool)));
-		connect(feed_view,SIGNAL(enableRemove(bool)),show_feed,SLOT(setEnabled(bool)));
-		getGUI()->addToolWidget(feed_view,"application-rss+xml",i18n("Feeds"),GUIInterface::DOCK_LEFT);
+		filter_list = new FilterList(this);
+		tab = new SyndicationTab(actionCollection(),feed_list,filter_list,0);
+		connect(tab->feedView(),SIGNAL(feedActivated(Feed*)),this,SLOT(activateFeedWidget(Feed*)));
+		connect(tab->feedView(),SIGNAL(enableRemove(bool)),remove_feed,SLOT(setEnabled(bool)));
+		connect(tab->feedView(),SIGNAL(enableRemove(bool)),show_feed,SLOT(setEnabled(bool)));
+		connect(tab->filterView(),SIGNAL(filterActivated(Filter*)),this,SLOT(editFilter(Filter*)));
+		connect(tab->filterView(),SIGNAL(enableRemove(bool)),remove_filter,SLOT(setEnabled(bool)));
+		connect(tab->filterView(),SIGNAL(enableEdit(bool)),edit_filter,SLOT(setEnabled(bool)));
+		getGUI()->addToolWidget(tab,"application-rss+xml",i18n("Syndication"),GUIInterface::DOCK_LEFT);
 		feed_list->loadFeeds();
+		filter_list->loadFilters(kt::DataDir() + "syndication/filters");
 		loadTabs();
 	}
 	
@@ -115,11 +125,13 @@ namespace kt
 		g.writeEntry("tabs",active_tabs);
 		g.sync();
 		
-		getGUI()->removeToolWidget(feed_view);
-		delete feed_view;
+		getGUI()->removeToolWidget(tab);
+		delete tab;
 		delete feed_list;
-		feed_view = 0;
+		delete filter_list;
+		tab = 0;
 		feed_list = 0;
+		filter_list = 0;
 	}
 	
 	void SyndicationPlugin::addFeed()
@@ -141,7 +153,7 @@ namespace kt
 	{
 		if (status != Syndication::Success)
 		{
-			KMessageBox::error(feed_view,i18n("Failed to load feed %1 !",downloads[loader].prettyUrl()));
+			KMessageBox::error(tab,i18n("Failed to load feed %1 !",downloads[loader].prettyUrl()));
 			downloads.remove(loader);
 			return;
 		}
@@ -155,14 +167,14 @@ namespace kt
 		}
 		catch (bt::Error & err)
 		{
-			KMessageBox::error(feed_view,i18n("Failed to create directory for feed %1 : %2",downloads[loader].prettyUrl(),err.toString()));
+			KMessageBox::error(tab,i18n("Failed to create directory for feed %1 : %2",downloads[loader].prettyUrl(),err.toString()));
 		}
 		downloads.remove(loader);
 	}
 	
 	void SyndicationPlugin::removeFeed()
 	{
-		QModelIndexList idx = feed_view->selectedFeeds();
+		QModelIndexList idx = tab->feedView()->selectedFeeds();
 		foreach (const QModelIndex & i,idx)
 		{
 			Feed* f = feed_list->feedForIndex(i);
@@ -194,6 +206,20 @@ namespace kt
 		connect(show_feed,SIGNAL(triggered()),this,SLOT(showFeed()));
 		ac->addAction("show_feed",show_feed);
 		
+		add_filter = new KAction(KIcon("list-add"),i18n("Add Filter"),this);
+		connect(add_filter,SIGNAL(triggered()),this,SLOT(addFilter()));
+		ac->addAction("add_filter",add_filter);
+		
+		remove_filter = new KAction(KIcon("list-remove"),i18n("Remove Filter"),this);
+		connect(remove_filter,SIGNAL(triggered()),this,SLOT(removeFilter()));
+		ac->addAction("remove_filter",remove_filter);
+		
+		edit_filter = new KAction(KIcon("preferences-other"),i18n("Edit Filter"),this);
+		connect(edit_filter,SIGNAL(triggered()),this,SLOT(editFilter()));
+		ac->addAction("edit_filter",edit_filter);
+		
+		remove_filter->setEnabled(false);
+		edit_filter->setEnabled(false);
 		remove_feed->setEnabled(false);
 		show_feed->setEnabled(false);
 	}
@@ -205,7 +231,7 @@ namespace kt
 		{
 			if (i.value() == tab)
 			{
-				getGUI()->removeTabPage(i.value());
+				gui->removeTabPage(i.value());
 				i.value()->deleteLater();
 				tabs.erase(i);
 				break;
@@ -247,7 +273,7 @@ namespace kt
 	
 	void SyndicationPlugin::showFeed()
 	{
-		QModelIndexList idx = feed_view->selectedFeeds();
+		QModelIndexList idx = tab->feedView()->selectedFeeds();
 		foreach (const QModelIndex & i,idx)
 		{
 			Feed* f = feed_list->feedForIndex(i);
@@ -255,6 +281,46 @@ namespace kt
 			{
 				activateFeedWidget(f);
 			}
+		}
+	}
+	
+	void SyndicationPlugin::addFilter()
+	{
+		Filter* filter = new Filter(i18n("New Filter"));
+		FilterEditor dlg(filter,feed_list,getCore(),getGUI()->getMainWindow());
+		if (dlg.exec() == QDialog::Accepted)
+		{
+			filter_list->addFilter(filter);
+			filter_list->saveFilters(kt::DataDir() + "syndication/filters");
+		}
+		else
+		{
+			delete filter;
+		}
+	}
+	
+	void SyndicationPlugin::removeFilter()
+	{
+	}
+	
+	void SyndicationPlugin::editFilter()
+	{
+		QModelIndexList idx = tab->filterView()->selectedFilters();
+		if (idx.count() == 0)
+			return;
+		
+		Filter* f = filter_list->filterForIndex(idx.front());
+		if (f)
+			editFilter(f);
+	}
+	
+	void SyndicationPlugin::editFilter(Filter* f)
+	{
+		FilterEditor dlg(f,feed_list,getCore(),getGUI()->getMainWindow());
+		if (dlg.exec() == QDialog::Accepted)
+		{
+			filter_list->filterEdited(f);
+			filter_list->saveFilters(kt::DataDir() + "syndication/filters");
 		}
 	}
 }
