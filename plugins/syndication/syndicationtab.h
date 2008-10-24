@@ -25,6 +25,7 @@
 
 class QSplitter;
 class KToolBar;
+class KActionCollection;
 
 namespace kt
 {
