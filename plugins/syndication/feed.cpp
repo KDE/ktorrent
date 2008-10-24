@@ -26,6 +26,8 @@
 #include <bcodec/bencoder.h>
 #include <bcodec/bdecoder.h>
 #include "feed.h"
+#include "filter.h"
+#include "filterlist.h"
 
 using namespace bt;
 
@@ -67,10 +69,17 @@ namespace kt
 		enc.beginDict();
 		enc.write("url");
 		enc.write(url.prettyUrl());
+		enc.write("filters");
+		enc.beginList();
+		foreach (Filter* f,filters)
+		{
+			enc.write(f->filterName());
+		}
+		enc.end();
 		enc.end();
 	}
 	
-	void Feed::load()
+	void Feed::load(FilterList* filter_list)
 	{
 		QString file = dir + "info";
 		QFile fptr(file);
@@ -97,6 +106,21 @@ namespace kt
 		}
 		
 		url = KUrl(vn->data().toString());
+		
+		BListNode* fl = dict->getList("filters");
+		if (fl)
+		{
+			for (Uint32 i = 0;i < fl->getNumChildren();i++)
+			{
+				vn = fl->getValue(i);
+				if (!vn)
+					continue;
+					
+				Filter* f = filter_list->filterByName(vn->data().toString());
+				if (f)
+					filters.append(f);
+			}
+		}
 		Out(SYS_SYN|LOG_DEBUG) << "Loaded feed from " << file << " : " << endl;
 		status = OK;
 		delete n;
@@ -104,6 +128,8 @@ namespace kt
 
 	void Feed::loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status)
 	{
+		Q_UNUSED(loader);
+		
 		if (status != Syndication::Success)
 		{
 			Out(SYS_SYN|LOG_NOTICE) << "Failed to load feed " << url.prettyUrl() << endl;
@@ -149,5 +175,25 @@ namespace kt
 		
 		bt::MakeDir(dir);
 		return dir;
+	}
+	
+	void Feed::addFilter(Filter* f)
+	{
+		filters.append(f);
+	}
+		
+	void Feed::removeFilter(Filter* f)
+	{
+		filters.removeAll(f);
+	}
+		
+	void Feed::runFilters()
+	{
+		
+	}
+		
+	void Feed::clearFilters()
+	{
+		filters.clear();
 	}
 }

@@ -26,6 +26,8 @@
 
 namespace kt
 {
+	class Filter;
+	class FilterList;
 	class Feed;
 	class SyndicationPlugin;
 
@@ -45,10 +47,11 @@ namespace kt
 		virtual bool insertRows(int row,int count,const QModelIndex & parent);
 		
 		void addFeed(Feed* f);
-		void loadFeeds();
+		void loadFeeds(FilterList* filters);
 		Feed* feedForIndex(const QModelIndex & idx);
 		Feed* feedForDirectory(const QString & dir);
 		void removeFeeds(const QModelIndexList & idx);
+		void filterRemoved(Filter* f);
 	private slots:
 		void feedUpdated();
 		

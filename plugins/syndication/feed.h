@@ -28,6 +28,8 @@
 
 namespace kt
 {
+	class Filter;
+	class FilterList;
 
 	/**
 		Class to keep track of a feed.
@@ -59,7 +61,7 @@ namespace kt
 		void save();
 		
 		/// Load the feed from it's directory
-		void load();
+		void load(FilterList* filter_list);
 		
 		/// Get the feed's data directory
 		QString directory() const {return dir;}
@@ -72,6 +74,21 @@ namespace kt
 		
 		/// Create a new feed directory
 		static QString newFeedDir(const QString & base);
+		
+		/// Add a filter to the feed
+		void addFilter(Filter* f);
+		
+		/// Remove a filter from the feed
+		void removeFilter(Filter* f);
+		
+		/// Run filters on the feed
+		void runFilters();
+		
+		/// See if the feed is using a filter
+		bool usingFilter(Filter* f) const {return filters.contains(f);}
+		
+		/// Clear all filters
+		void clearFilters();
 		
 	public slots:
 		/// Update the feed
@@ -89,6 +106,7 @@ namespace kt
 		QString dir;
 		QTimer update_timer;
 		Status status;
+		QList<Filter*> filters;
 	};
 
 }

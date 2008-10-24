@@ -26,6 +26,9 @@
 
 namespace kt
 {
+	class Feed;
+	class FilterList;
+	class FilterListModel;
 
 	/**
 		Dialog to manage filters for a feed
@@ -34,7 +37,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		ManageFiltersDlg(QWidget* parent);
+		ManageFiltersDlg(Feed* feed,FilterList* filters,QWidget* parent);
 		virtual ~ManageFiltersDlg();
 
 	private slots:
@@ -42,6 +45,17 @@ namespace kt
 		void remove();
 		void removeAll();
 		void newFilter();
+		void activeSelectionChanged(const QItemSelection& sel,const QItemSelection& desel);
+		void availableSelectionChanged(const QItemSelection& sel,const QItemSelection& desel);
+		
+	private:
+		virtual void accept();
+		
+	private:
+		Feed* feed;
+		FilterList* filters;
+		FilterListModel* active;
+		FilterListModel* available;
 	};
 
 }

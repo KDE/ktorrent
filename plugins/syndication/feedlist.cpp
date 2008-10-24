@@ -28,6 +28,7 @@
 #include <util/functions.h>
 #include "feed.h"
 #include "feedlist.h"
+#include "filterlist.h"
 
 using namespace bt;
 
@@ -44,13 +45,13 @@ namespace kt
 		qDeleteAll(feeds);
 	}
 	
-	void FeedList::loadFeeds()
+	void FeedList::loadFeeds(FilterList* filter_list)
 	{
 		QDir dir(data_dir);
 		QStringList filters;
 		filters << "feed*";
 		QStringList sl = dir.entryList(filters,QDir::Dirs);
-		for (Uint32 i = 0;i < sl.count();i++)
+		for (int i = 0;i < sl.count();i++)
 		{
 			QString idir = data_dir + sl.at(i);
 			if (!idir.endsWith(DirSeparator()))
@@ -61,7 +62,7 @@ namespace kt
 			try
 			{
 				feed = new Feed(idir);
-				feed->load();
+				feed->load(filter_list);
 				feed->refresh();
 			}
 			catch (...)
@@ -167,5 +168,11 @@ namespace kt
 		int idx = feeds.indexOf(f);
 		if (idx >= 0)
 			emit dataChanged(index(idx,0),index(idx,0));
+	}
+	
+	void FeedList::filterRemoved(Filter* f)
+	{
+		foreach (Feed* feed,feeds)
+			feed->removeFilter(f);
 	}
 }

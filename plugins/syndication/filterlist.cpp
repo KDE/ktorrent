@@ -34,7 +34,7 @@ namespace kt
 {
 
 	FilterList::FilterList(QObject* parent)
-			: QAbstractListModel(parent)
+			: FilterListModel(parent)
 	{
 	}
 
@@ -42,22 +42,6 @@ namespace kt
 	FilterList::~FilterList()
 	{
 		qDeleteAll(filters);
-	}
-	
-	void FilterList::addFilter(Filter* f)
-	{
-		filters.append(f);
-		insertRow(filters.count() - 1);
-	}
-	
-	void FilterList::removeFilter(Filter* f)
-	{
-		int idx = filters.indexOf(f);
-		if (idx < 0)
-			return;
-		
-		filters.removeAll(f);
-		removeRow(idx);
 	}
 	
 	void FilterList::filterEdited(Filter* f)
@@ -126,57 +110,5 @@ namespace kt
 		}
 		
 		delete n;
-	}
-	
-	Filter* FilterList::filterForIndex(const QModelIndex & idx)
-	{
-		if (!idx.isValid())
-			return 0;
-		
-		return filters.at(idx.row());
-	}
-
-	int FilterList::rowCount(const QModelIndex & parent) const
-	{
-		if (parent.isValid())
-			return 0;
-		else
-			return filters.count();
-	}
-	
-	QVariant FilterList::data(const QModelIndex & index, int role) const
-	{
-		if (!index.isValid())
-			return QVariant();
-		
-		Filter* f = filters.at(index.row());
-		if (!f)
-			return QVariant();
-		
-		switch (role)
-		{
-			case Qt::DisplayRole:
-				return f->filterName();
-			case Qt::DecorationRole:
-				return KIcon("view-filter");
-		}
-			
-		return QVariant();
-	}
-	
-	bool FilterList::removeRows(int row,int count,const QModelIndex & parent)
-	{
-		Q_UNUSED(parent);
-		beginRemoveRows(QModelIndex(),row,row + count - 1);
-		endRemoveRows();
-		return true;
-	}
-	
-	bool FilterList::insertRows(int row,int count,const QModelIndex & parent)
-	{
-		Q_UNUSED(parent);
-		beginInsertRows(QModelIndex(),row,row + count - 1);
-		endInsertRows();
-		return true;
 	}
 }

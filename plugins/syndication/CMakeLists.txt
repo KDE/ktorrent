@@ -14,6 +14,7 @@ set(ktsyndicationplugin_SRC
 	filter.cpp
 	filterlist.cpp
 	filterlistview.cpp
+	filterlistmodel.cpp
 	filtereditor.cpp)
 
 kde4_add_ui_files(ktsyndicationplugin_SRC feedwidget.ui managefiltersdlg.ui filtereditor.ui)

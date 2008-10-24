@@ -28,6 +28,7 @@
 namespace kt
 {
 	class Filter;
+	class FilterList;
 	class CoreInterface;
 	class FeedList;
 	class FeedWidgetModel;
@@ -51,7 +52,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		FilterEditor(Filter* filter,FeedList* feeds,CoreInterface* core,QWidget* parent);
+		FilterEditor(Filter* filter,FilterList* filters,FeedList* feeds,CoreInterface* core,QWidget* parent);
 		virtual ~FilterEditor();
 		
 	private slots:
@@ -62,6 +63,7 @@ namespace kt
 	private:
 		bool okIsPossible();
 		void applyOnFilter(Filter* f);
+		virtual void slotButtonClicked(int button);
 
 	private:
 		Filter* filter;
@@ -70,6 +72,7 @@ namespace kt
 		FeedList* feeds;
 		FeedWidgetModel* test_model;
 		TestFilterModel* filter_model;
+		FilterList* filters;
 	};
 
 }

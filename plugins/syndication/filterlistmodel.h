@@ -18,27 +18,38 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTFILTERLIST_H
-#define KTFILTERLIST_H
+#ifndef KTFILTERLISTMODEL_H
+#define KTFILTERLISTMODEL_H
 
-#include "filterlistmodel.h"
+#include <QAbstractListModel>
 
-namespace kt
+namespace kt 
 {
+	class Filter;
 
 	/**
-		Model to keep track of all filters
+		Model to show a list of filters in a view.
 	*/
-	class FilterList : public FilterListModel
+	class FilterListModel : public QAbstractListModel
 	{
-		Q_OBJECT
 	public:
-		FilterList(QObject* parent);
-		virtual ~FilterList();
+		FilterListModel(QObject* parent);
+		virtual ~FilterListModel();
+			
+		virtual int rowCount(const QModelIndex & parent) const;
+		virtual QVariant data(const QModelIndex & index, int role) const;
+		virtual bool removeRows(int row,int count,const QModelIndex & parent);
+		virtual bool insertRows(int row,int count,const QModelIndex & parent);
+			
+		void addFilter(Filter* f);
+		void removeFilter(Filter* f);
+		Filter* filterForIndex(const QModelIndex & idx);
+		Filter* filterByName(const QString & name);
+		Filter* filterByRow(int row);
+		void clear();
 		
-		void saveFilters(const QString & file);
-		void loadFilters(const QString & file);
-		void filterEdited(Filter* filter);
+	protected:
+		QList<Filter*> filters;
 	};
 
 }

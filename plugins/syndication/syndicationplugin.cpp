@@ -89,8 +89,8 @@ namespace kt
 		connect(tab->filterView(),SIGNAL(enableRemove(bool)),remove_filter,SLOT(setEnabled(bool)));
 		connect(tab->filterView(),SIGNAL(enableEdit(bool)),edit_filter,SLOT(setEnabled(bool)));
 		getGUI()->addToolWidget(tab,"application-rss+xml",i18n("Syndication"),GUIInterface::DOCK_LEFT);
-		feed_list->loadFeeds();
 		filter_list->loadFilters(kt::DataDir() + "syndication/filters");
+		feed_list->loadFeeds(filter_list);
 		loadTabs();
 	}
 	
@@ -248,7 +248,7 @@ namespace kt
 		QMap<Feed*,FeedWidget*>::iterator i = tabs.find(f);
 		if (i == tabs.end())
 		{
-			FeedWidget* fw = new FeedWidget(f,0);
+			FeedWidget* fw = new FeedWidget(f,filter_list,0);
 			connect(fw,SIGNAL(downloadLink(const KUrl&)),this,SLOT(downloadLink(const KUrl&)));
 			connect(fw,SIGNAL(updateCaption(QWidget*, const QString&)),this,SLOT(updateTabText(QWidget*, const QString&)));
 			tabs.insert(f,fw);
@@ -287,7 +287,7 @@ namespace kt
 	void SyndicationPlugin::addFilter()
 	{
 		Filter* filter = new Filter(i18n("New Filter"));
-		FilterEditor dlg(filter,feed_list,getCore(),getGUI()->getMainWindow());
+		FilterEditor dlg(filter,filter_list,feed_list,getCore(),getGUI()->getMainWindow());
 		if (dlg.exec() == QDialog::Accepted)
 		{
 			filter_list->addFilter(filter);
@@ -301,6 +301,23 @@ namespace kt
 	
 	void SyndicationPlugin::removeFilter()
 	{
+		QModelIndexList indexes = tab->filterView()->selectedFilters();
+		QList<Filter*> to_remove;
+		foreach (const QModelIndex & idx,indexes)
+		{
+			Filter* f = filter_list->filterForIndex(idx);
+			if (f)
+				to_remove.append(f);
+		}
+		
+		foreach (Filter* f,to_remove)
+		{
+			feed_list->filterRemoved(f);
+			filter_list->removeFilter(f);
+			delete f;
+		}
+		
+		filter_list->saveFilters(kt::DataDir() + "syndication/filters");
 	}
 	
 	void SyndicationPlugin::editFilter()
@@ -316,7 +333,7 @@ namespace kt
 	
 	void SyndicationPlugin::editFilter(Filter* f)
 	{
-		FilterEditor dlg(f,feed_list,getCore(),getGUI()->getMainWindow());
+		FilterEditor dlg(f,filter_list,feed_list,getCore(),getGUI()->getMainWindow());
 		if (dlg.exec() == QDialog::Accepted)
 		{
 			filter_list->filterEdited(f);

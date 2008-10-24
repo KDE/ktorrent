@@ -23,12 +23,13 @@
 #include "feedwidget.h"
 #include "feedwidgetmodel.h"
 #include "managefiltersdlg.h"
+#include "filterlist.h"
 
 namespace kt
 {
 
-	FeedWidget::FeedWidget(Feed* feed,QWidget* parent)
-			: QWidget(parent),feed(feed)
+	FeedWidget::FeedWidget(Feed* feed,FilterList* filters,QWidget* parent)
+			: QWidget(parent),feed(feed),filters(filters)
 	{
 		setupUi(this);
 		connect(feed,SIGNAL(updated()),this,SLOT(updated()));
@@ -78,8 +79,12 @@ namespace kt
 	
 	void FeedWidget::filtersClicked()
 	{
-		ManageFiltersDlg dlg(this);
-		dlg.exec();
+		ManageFiltersDlg dlg(feed,filters,this);
+		if (dlg.exec() == QDialog::Accepted)
+		{
+			feed->save();
+			feed->runFilters();
+		}
 	}
 	
 	void FeedWidget::selectionChanged(const QItemSelection& sel, const QItemSelection& prev)

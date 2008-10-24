@@ -20,18 +20,20 @@
  ***************************************************************************/
 #include <QHeaderView>
 #include <kdialog.h>
+#include <kmessagebox.h>
 #include <interfaces/coreinterface.h>
 #include <groups/groupmanager.h>
 #include "filtereditor.h"
 #include "filter.h"
+#include "filterlist.h"
 #include "feedlist.h"
 #include "feedwidgetmodel.h"
 
 namespace kt
 {
 
-	FilterEditor::FilterEditor(Filter* filter,FeedList* feeds,CoreInterface* core,QWidget* parent)
-			: KDialog(parent),filter(filter),core(core),feeds(feeds)
+	FilterEditor::FilterEditor(Filter* filter,FilterList* filters,FeedList* feeds,CoreInterface* core,QWidget* parent)
+			: KDialog(parent),filter(filter),core(core),feeds(feeds),filters(filters)
 	{
 		setupUi(mainWidget());
 		setCaption(i18n("Edit Filter"));
@@ -184,8 +186,22 @@ namespace kt
 	
 	void FilterEditor::onOK()
 	{
+		Filter* tmp = filters->filterByName(m_name->text());
+		if (tmp && tmp != filter)
+		{
+			KMessageBox::error(this,i18n("There already is a filter named %1, filter names must be unique !",m_name->text()));
+			return;
+		}
 		applyOnFilter(filter);
 		QDialog::accept();
+	}
+	
+	void FilterEditor::slotButtonClicked(int button)
+	{
+		if (button == KDialog::Cancel)
+			QDialog::reject();
+		else if (button == KDialog::Ok)
+			onOK();
 	}
 	
 	////////////////////////////////////////
