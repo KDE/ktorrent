@@ -27,6 +27,7 @@ namespace kt
 	FilterListView::FilterListView(FilterList* filters,QWidget* parent)
 			: QListView(parent),filters(filters)
 	{
+		setContextMenuPolicy(Qt::CustomContextMenu);
 		setModel(filters);
 		connect(this,SIGNAL(doubleClicked(const QModelIndex &)),this,SLOT(itemActivated(const QModelIndex&)));
 		connect(this->selectionModel(),SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),

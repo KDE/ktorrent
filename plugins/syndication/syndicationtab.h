@@ -26,6 +26,7 @@
 class QSplitter;
 class KToolBar;
 class KActionCollection;
+class KMenu;
 
 namespace kt
 {
@@ -46,6 +47,11 @@ namespace kt
 
 		FeedListView* feedView() {return feed_view;}
 		FilterListView* filterView() {return filter_view;}
+		
+	private slots:
+		void showFeedViewMenu(const QPoint & pos);
+		void showFilterViewMenu(const QPoint & pos);
+		
 	private:
 		FeedList* feeds;
 		FeedListView* feed_view;
@@ -54,7 +60,8 @@ namespace kt
 		FilterList* filters;
 		FilterListView* filter_view;
 		KToolBar* filter_tool_bar;
-		
+		KMenu* feed_view_menu;
+		KMenu* filter_view_menu;
 	};
 
 }

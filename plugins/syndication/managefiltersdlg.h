@@ -29,6 +29,7 @@ namespace kt
 	class Feed;
 	class FilterList;
 	class FilterListModel;
+	class SyndicationPlugin;
 
 	/**
 		Dialog to manage filters for a feed
@@ -37,7 +38,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		ManageFiltersDlg(Feed* feed,FilterList* filters,QWidget* parent);
+		ManageFiltersDlg(Feed* feed,FilterList* filters,SyndicationPlugin* plugin,QWidget* parent);
 		virtual ~ManageFiltersDlg();
 
 	private slots:
@@ -56,6 +57,7 @@ namespace kt
 		FilterList* filters;
 		FilterListModel* active;
 		FilterListModel* available;
+		SyndicationPlugin* plugin;
 	};
 
 }

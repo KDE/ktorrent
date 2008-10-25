@@ -49,6 +49,7 @@ namespace kt
 		virtual bool versionCheck(const QString& version) const;
 		virtual void load();
 		virtual void unload();
+		Filter* addNewFilter();
 		
 	private slots:
 		void addFeed();
@@ -62,6 +63,7 @@ namespace kt
 		void removeFilter();
 		void editFilter();
 		void editFilter(Filter* f);
+		void manageFilters();
 						
 	private:
 		void setupActions();
@@ -75,6 +77,7 @@ namespace kt
 		KAction* add_filter;
 		KAction* remove_filter;
 		KAction* edit_filter;
+		KAction* manage_filters;
 		FeedList* feed_list;
 		FilterList* filter_list;
 		SyndicationTab* tab;

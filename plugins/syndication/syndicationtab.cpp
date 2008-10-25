@@ -21,6 +21,7 @@
 #include <QVBoxLayout>
 #include <QSplitter>
 #include <ktoolbar.h>
+#include <kmenu.h>
 #include <kactioncollection.h>
 #include "syndicationtab.h"
 #include "feedlistview.h"
@@ -49,6 +50,7 @@ namespace kt
 		feed_tool_bar->addAction(ac->action("remove_feed"));
 		feed_tool_bar->addSeparator();
 		feed_tool_bar->addAction(ac->action("show_feed"));
+		feed_tool_bar->addAction(ac->action("manage_filters"));
 		layout->addWidget(feed_tool_bar);
 		
 		feed_view = new FeedListView(feeds,widget);
@@ -71,6 +73,24 @@ namespace kt
 		filter_view = new FilterListView(filters,widget);
 		layout->addWidget(filter_view);
 		splitter->addWidget(widget);
+		
+		feed_view_menu = new KMenu(this);
+		feed_view_menu->addAction(ac->action("show_feed"));
+		feed_view_menu->addAction(ac->action("manage_filters"));
+		feed_view_menu->addSeparator();
+		feed_view_menu->addAction(ac->action("add_feed"));
+		feed_view_menu->addAction(ac->action("remove_feed"));
+		connect(feed_view,SIGNAL(customContextMenuRequested(const QPoint & )),
+				this,SLOT(showFeedViewMenu(const QPoint&)));
+		
+		
+		filter_view_menu = new KMenu(this);
+		filter_view_menu->addAction(ac->action("edit_filter"));
+		filter_view_menu->addSeparator();
+		filter_view_menu->addAction(ac->action("add_filter"));
+		filter_view_menu->addAction(ac->action("remove_filter"));
+		connect(filter_view,SIGNAL(customContextMenuRequested(const QPoint & )),
+				this,SLOT(showFilterViewMenu(const QPoint&)));
 	}
 
 
@@ -78,5 +98,14 @@ namespace kt
 	{
 	}
 
+	void SyndicationTab::showFeedViewMenu(const QPoint & pos)
+	{
+		feed_view_menu->popup(feed_view->mapToGlobal(pos));
+	}
+	
+	void SyndicationTab::showFilterViewMenu(const QPoint & pos)
+	{
+		filter_view_menu->popup(filter_view->mapToGlobal(pos));
+	}
 
 }

@@ -23,14 +23,16 @@
 #include "filterlistmodel.h"
 #include "filterlist.h"
 #include "feed.h"
+#include "syndicationplugin.h"
 
 namespace kt
 {
 
-	ManageFiltersDlg::ManageFiltersDlg(Feed* feed,FilterList* filters,QWidget* parent) : KDialog(parent),feed(feed),filters(filters)
+	ManageFiltersDlg::ManageFiltersDlg(Feed* feed,FilterList* filters,SyndicationPlugin* plugin,QWidget* parent) : KDialog(parent),feed(feed),filters(filters),plugin(plugin)
 	{
-		setWindowTitle(i18n("Manage Filters"));
+		setWindowTitle(i18n("Add/Remove Filters"));
 		setupUi(mainWidget());
+		m_feed_text->setText(i18n("Feed: <b>%1</b>",feed->title()));
 		m_add->setIcon(KIcon("go-previous"));
 		m_add->setText(QString());
 		m_remove->setIcon(KIcon("go-next"));
@@ -155,7 +157,13 @@ namespace kt
 	}
 	
 	void ManageFiltersDlg::newFilter()
-	{}
+	{
+		Filter* f = plugin->addNewFilter();
+		if (f)
+		{
+			available->addFilter(f);
+		}
+	}
 	
 	void ManageFiltersDlg::activeSelectionChanged(const QItemSelection& sel,const QItemSelection& desel)
 	{

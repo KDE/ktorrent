@@ -29,6 +29,7 @@ namespace kt
 	class Feed;
 	class FeedWidgetModel;
 	class FilterList;
+	class SyndicationPlugin;
 
 	/**
 		@author
@@ -37,7 +38,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		FeedWidget(Feed* feed,FilterList* filters,QWidget* parent);
+		FeedWidget(Feed* feed,FilterList* filters,SyndicationPlugin* plugin,QWidget* parent);
 		virtual ~FeedWidget();
 
 	private slots:
@@ -55,6 +56,7 @@ namespace kt
 		Feed* feed;
 		FeedWidgetModel* model;
 		FilterList* filters;
+		SyndicationPlugin* plugin;
 	};
 
 }

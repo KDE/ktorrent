@@ -43,6 +43,7 @@
 #include "filter.h"
 #include "filterlistview.h"
 #include "filtereditor.h"
+#include "managefiltersdlg.h"
 
 K_EXPORT_COMPONENT_FACTORY(ktsyndicationplugin,KGenericFactory<kt::SyndicationPlugin>("ktsyndicationplugin"))
 		
@@ -85,6 +86,7 @@ namespace kt
 		connect(tab->feedView(),SIGNAL(feedActivated(Feed*)),this,SLOT(activateFeedWidget(Feed*)));
 		connect(tab->feedView(),SIGNAL(enableRemove(bool)),remove_feed,SLOT(setEnabled(bool)));
 		connect(tab->feedView(),SIGNAL(enableRemove(bool)),show_feed,SLOT(setEnabled(bool)));
+		connect(tab->feedView(),SIGNAL(enableRemove(bool)),manage_filters,SLOT(setEnabled(bool)));
 		connect(tab->filterView(),SIGNAL(filterActivated(Filter*)),this,SLOT(editFilter(Filter*)));
 		connect(tab->filterView(),SIGNAL(enableRemove(bool)),remove_filter,SLOT(setEnabled(bool)));
 		connect(tab->filterView(),SIGNAL(enableEdit(bool)),edit_filter,SLOT(setEnabled(bool)));
@@ -206,6 +208,10 @@ namespace kt
 		connect(show_feed,SIGNAL(triggered()),this,SLOT(showFeed()));
 		ac->addAction("show_feed",show_feed);
 		
+		manage_filters = new KAction(KIcon("view-filter"),i18n("Add/Remove Filters"),this);
+		connect(manage_filters,SIGNAL(triggered()),this,SLOT(manageFilters()));
+		ac->addAction("manage_filters",manage_filters);
+		
 		add_filter = new KAction(KIcon("list-add"),i18n("Add Filter"),this);
 		connect(add_filter,SIGNAL(triggered()),this,SLOT(addFilter()));
 		ac->addAction("add_filter",add_filter);
@@ -222,6 +228,7 @@ namespace kt
 		edit_filter->setEnabled(false);
 		remove_feed->setEnabled(false);
 		show_feed->setEnabled(false);
+		manage_filters->setEnabled(false);
 	}
 	
 	void SyndicationPlugin::tabCloseRequest(kt::GUIInterface* gui, QWidget* tab)
@@ -248,7 +255,7 @@ namespace kt
 		QMap<Feed*,FeedWidget*>::iterator i = tabs.find(f);
 		if (i == tabs.end())
 		{
-			FeedWidget* fw = new FeedWidget(f,filter_list,0);
+			FeedWidget* fw = new FeedWidget(f,filter_list,this,0);
 			connect(fw,SIGNAL(downloadLink(const KUrl&)),this,SLOT(downloadLink(const KUrl&)));
 			connect(fw,SIGNAL(updateCaption(QWidget*, const QString&)),this,SLOT(updateTabText(QWidget*, const QString&)));
 			tabs.insert(f,fw);
@@ -284,7 +291,7 @@ namespace kt
 		}
 	}
 	
-	void SyndicationPlugin::addFilter()
+	Filter* SyndicationPlugin::addNewFilter()
 	{
 		Filter* filter = new Filter(i18n("New Filter"));
 		FilterEditor dlg(filter,filter_list,feed_list,getCore(),getGUI()->getMainWindow());
@@ -292,11 +299,18 @@ namespace kt
 		{
 			filter_list->addFilter(filter);
 			filter_list->saveFilters(kt::DataDir() + "syndication/filters");
+			return filter;
 		}
 		else
 		{
 			delete filter;
+			return 0;
 		}
+	}
+	
+	void SyndicationPlugin::addFilter()
+	{
+		addNewFilter();
 	}
 	
 	void SyndicationPlugin::removeFilter()
@@ -338,6 +352,24 @@ namespace kt
 		{
 			filter_list->filterEdited(f);
 			filter_list->saveFilters(kt::DataDir() + "syndication/filters");
+		}
+	}
+	
+	void SyndicationPlugin::manageFilters()
+	{
+		QModelIndexList idx = tab->feedView()->selectedFeeds();
+		if (idx.count() == 0)
+			return;
+		
+		Feed* f = feed_list->feedForIndex(idx.front());
+		if (!f)
+			return;
+		
+		ManageFiltersDlg dlg(f,filter_list,this,tab);
+		if (dlg.exec() == QDialog::Accepted)
+		{
+			f->save();
+			f->runFilters();
 		}
 	}
 }

@@ -29,6 +29,7 @@ namespace kt
 	FeedListView::FeedListView(FeedList* feeds,QWidget* parent)
 			: QListView(parent),feeds(feeds)
 	{
+		setContextMenuPolicy(Qt::CustomContextMenu);
 		setSelectionMode(QAbstractItemView::ContiguousSelection);
 		setModel(feeds);
 		connect(this,SIGNAL(doubleClicked(const QModelIndex &)),this,SLOT(itemActivated(const QModelIndex&)));

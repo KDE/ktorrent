@@ -24,12 +24,13 @@
 #include "feedwidgetmodel.h"
 #include "managefiltersdlg.h"
 #include "filterlist.h"
+#include "syndicationplugin.h"
 
 namespace kt
 {
 
-	FeedWidget::FeedWidget(Feed* feed,FilterList* filters,QWidget* parent)
-			: QWidget(parent),feed(feed),filters(filters)
+	FeedWidget::FeedWidget(Feed* feed,FilterList* filters,SyndicationPlugin* plugin,QWidget* parent)
+			: QWidget(parent),feed(feed),filters(filters),plugin(plugin)
 	{
 		setupUi(this);
 		connect(feed,SIGNAL(updated()),this,SLOT(updated()));
@@ -79,7 +80,7 @@ namespace kt
 	
 	void FeedWidget::filtersClicked()
 	{
-		ManageFiltersDlg dlg(feed,filters,this);
+		ManageFiltersDlg dlg(feed,filters,plugin,this);
 		if (dlg.exec() == QDialog::Accepted)
 		{
 			feed->save();
