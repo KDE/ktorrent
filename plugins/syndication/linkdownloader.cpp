@@ -35,8 +35,8 @@ using namespace bt;
 namespace kt
 {
 
-	LinkDownloader::LinkDownloader(const KUrl & url,CoreInterface* core,bool verbose)
-			: url(url),core(core),verbose(verbose)
+	LinkDownloader::LinkDownloader(const KUrl & url,CoreInterface* core,bool verbose,const QString & group,const QString & location)
+			: url(url),core(core),verbose(verbose),group(group),location(location)
 	{
 	}
 
@@ -62,9 +62,9 @@ namespace kt
 		if (isTorrent(job->data()))
 		{
 			if (verbose)
-				core->load(job->data(),url,QString());
+				core->load(job->data(),url,group,location);
 			else
-				core->loadSilently(job->data(),url,QString());
+				core->loadSilently(job->data(),url,group,location);
 			
 			finished(true);
 			deleteLater();
@@ -189,9 +189,9 @@ namespace kt
 		else if (isTorrent(job->data()))
 		{
 			if (verbose)
-				core->load(job->data(),link_url,QString());
+				core->load(job->data(),link_url,group,location);
 			else
-				core->loadSilently(job->data(),link_url,QString());
+				core->loadSilently(job->data(),link_url,group,location);
 				
 			finished(true);
 			deleteLater();

@@ -92,7 +92,7 @@ namespace kt
 		connect(tab->filterView(),SIGNAL(enableEdit(bool)),edit_filter,SLOT(setEnabled(bool)));
 		getGUI()->addToolWidget(tab,"application-rss+xml",i18n("Syndication"),GUIInterface::DOCK_LEFT);
 		filter_list->loadFilters(kt::DataDir() + "syndication/filters");
-		feed_list->loadFeeds(filter_list);
+		feed_list->loadFeeds(filter_list,this);
 		loadTabs();
 	}
 	
@@ -164,6 +164,8 @@ namespace kt
 		{
 			QString ddir = kt::DataDir() + "syndication/";
 			Feed* f = new Feed(downloads[loader],feed,Feed::newFeedDir(ddir));
+			connect(f,SIGNAL(downloadLink(const KUrl&, const QString&, const QString&, bool)),
+					this,SLOT(downloadLink(const KUrl&, const QString&, const QString&, bool)));
 			f->save();
 			feed_list->addFeed(f);
 		}
@@ -256,7 +258,6 @@ namespace kt
 		if (i == tabs.end())
 		{
 			FeedWidget* fw = new FeedWidget(f,filter_list,this,0);
-			connect(fw,SIGNAL(downloadLink(const KUrl&)),this,SLOT(downloadLink(const KUrl&)));
 			connect(fw,SIGNAL(updateCaption(QWidget*, const QString&)),this,SLOT(updateTabText(QWidget*, const QString&)));
 			tabs.insert(f,fw);
 			getGUI()->addTabPage(fw,"application-rss+xml",f->title(),this);
@@ -267,9 +268,9 @@ namespace kt
 		}
 	}
 
-	void SyndicationPlugin::downloadLink(const KUrl & url)
+	void SyndicationPlugin::downloadLink(const KUrl & url,const QString & group,const QString & location,bool silently)
 	{
-		LinkDownloader* dlr = new LinkDownloader(url,getCore(),true);
+		LinkDownloader* dlr = new LinkDownloader(url,getCore(),!silently,group,location);
 		dlr->start();
 	}
 	
@@ -352,6 +353,7 @@ namespace kt
 		{
 			filter_list->filterEdited(f);
 			filter_list->saveFilters(kt::DataDir() + "syndication/filters");
+			feed_list->filterEdited(f);
 		}
 	}
 	

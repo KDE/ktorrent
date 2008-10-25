@@ -90,6 +90,16 @@ namespace kt
 		/// Clear all filters
 		void clearFilters();
 		
+		/// Download an item from the feed
+		void downloadItem(Syndication::ItemPtr item,const QString & group,const QString & location,bool silently);
+		
+		/// Check if an item is downloaded
+		bool downloaded(Syndication::ItemPtr item) const; 
+		
+	signals:
+		/// Emitted when a link must de downloaded
+		void downloadLink(const KUrl & link,const QString & group,const QString & location,bool silently);
+		
 	public slots:
 		/// Update the feed
 		void refresh();
@@ -99,6 +109,10 @@ namespace kt
 		
 	signals:
 		void updated();
+		
+	private:
+		bool needToDownload(Syndication::ItemPtr item,Filter* filter);
+		void checkLoaded();
 
 	private:
 		KUrl url;
@@ -107,6 +121,7 @@ namespace kt
 		QTimer update_timer;
 		Status status;
 		QList<Filter*> filters;
+		QStringList loaded;
 	};
 
 }

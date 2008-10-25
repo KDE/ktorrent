@@ -19,6 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <util/log.h>
+#include <util/sha1hash.h>
 #include <bcodec/bencoder.h>
 #include <bcodec/bnode.h>
 #include "filter.h"
@@ -27,8 +28,18 @@ using namespace bt;
 
 namespace kt
 {
+	static QString RandomID()
+	{
+		Uint8 data[20];
+		qsrand(time(0));
+		for (int i = 0;i < 20;i++)
+			data[i] = qrand();
+		return QString("filter:%1").arg(SHA1Hash::generate(data,20).toString());
+	}
+	
 	Filter::Filter()
 	{
+		id = RandomID();
 		use_season_and_episode_matching = false;
 		download_matching = true;
 		download_non_matching = false;
@@ -39,6 +50,7 @@ namespace kt
 
 	Filter::Filter(const QString & name) : name(name)
 	{
+		id = RandomID();
 		use_season_and_episode_matching = false;
 		download_matching = true;
 		download_non_matching = false;
@@ -245,6 +257,7 @@ namespace kt
 	void Filter::save(bt::BEncoder & enc)
 	{
 		enc.beginDict();
+		enc.write("id",id);
 		enc.write("name",name);
 		enc.write("case_sensitive",case_sensitive);
 		enc.write("all_word_matches_must_match",all_word_matches_must_match);
@@ -273,6 +286,10 @@ namespace kt
 			return false;
 		
 		name = vn->data().toString();
+		
+		vn = dict->getValue("id");
+		if (vn)
+			id = vn->data().toString();
 		
 		vn = dict->getValue("case_sensitive");
 		if (!vn)

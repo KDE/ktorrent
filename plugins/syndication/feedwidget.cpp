@@ -62,14 +62,8 @@ namespace kt
 		foreach (const QModelIndex & idx,sel)
 		{
 			Syndication::ItemPtr ptr = model->itemForIndex(idx);
-			if (ptr.get())
-			{
-				QString url = TorrentUrlFromItem(ptr);
-				if (!url.isEmpty())
-					downloadLink(KUrl(url));
-				else
-					downloadLink(KUrl(ptr->link()));
-			}
+			if (ptr)
+				feed->downloadItem(ptr,QString(),QString(),false);
 		}
 	}
 	

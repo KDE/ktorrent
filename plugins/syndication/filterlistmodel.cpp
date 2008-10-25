@@ -68,6 +68,15 @@ namespace kt
 		return 0;
 	}
 	
+	Filter* FilterListModel::filterByID(const QString & id)
+	{
+		foreach (Filter* f,filters)
+			if (f->filterID() == id)
+				return f;
+		
+		return 0;
+	}
+	
 	Filter* FilterListModel::filterByRow(int row)
 	{
 		if (row < 0 || row >= filters.count())

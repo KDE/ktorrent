@@ -46,6 +46,7 @@ namespace kt
 		Filter* filterForIndex(const QModelIndex & idx);
 		Filter* filterByName(const QString & name);
 		Filter* filterByRow(int row);
+		Filter* filterByID(const QString & id);
 		void clear();
 		
 	protected:

@@ -68,6 +68,7 @@ namespace kt
 		m_custom_download_location->setEnabled(!dl.isEmpty());
 		if (!dl.isEmpty())
 			m_custom_download_location->setUrl(KUrl(dl));
+		m_custom_download_location->setMode(KFile::Directory);
 		
 		m_silently->setChecked(filter->openSilently());
 		

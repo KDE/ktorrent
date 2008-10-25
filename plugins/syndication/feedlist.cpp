@@ -29,6 +29,7 @@
 #include "feed.h"
 #include "feedlist.h"
 #include "filterlist.h"
+#include "syndicationplugin.h"
 
 using namespace bt;
 
@@ -45,7 +46,7 @@ namespace kt
 		qDeleteAll(feeds);
 	}
 	
-	void FeedList::loadFeeds(FilterList* filter_list)
+	void FeedList::loadFeeds(FilterList* filter_list,SyndicationPlugin* plugin)
 	{
 		QDir dir(data_dir);
 		QStringList filters;
@@ -62,6 +63,8 @@ namespace kt
 			try
 			{
 				feed = new Feed(idir);
+				connect(feed,SIGNAL(downloadLink(const KUrl&, const QString&, const QString&, bool)),
+						plugin,SLOT(downloadLink(const KUrl&, const QString&, const QString&, bool)));
 				feed->load(filter_list);
 				feed->refresh();
 			}
@@ -174,5 +177,14 @@ namespace kt
 	{
 		foreach (Feed* feed,feeds)
 			feed->removeFilter(f);
+	}
+	
+	void FeedList::filterEdited(Filter* f)
+	{
+		foreach (Feed* feed,feeds)
+		{
+			if (feed->usingFilter(f))
+				feed->runFilters();
+		}
 	}
 }

@@ -49,6 +49,9 @@ namespace kt
 		/// Get the name of the filter
 		const QString & filterName() const {return name;}
 		
+		/// Get the filter ID
+		const QString & filterID() const {return id;}
+		
 		/// Set the name of the filter
 		void setFilterName(const QString & n) {name = n;}
 		
@@ -161,7 +164,7 @@ namespace kt
 		bool getSeasonAndEpisode(const QString & title,int & season,int & episode);
 		
 	private:
-		
+		QString id;
 		QString name;
 		QList<QRegExp> word_matches;
 		bool use_season_and_episode_matching;

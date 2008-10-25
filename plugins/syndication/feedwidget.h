@@ -49,7 +49,6 @@ namespace kt
 		void updated();
 		
 	signals:
-		void downloadLink(const KUrl & link);
 		void updateCaption(QWidget* w,const QString & text);
 		
 	private:

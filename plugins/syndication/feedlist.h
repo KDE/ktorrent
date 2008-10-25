@@ -47,11 +47,12 @@ namespace kt
 		virtual bool insertRows(int row,int count,const QModelIndex & parent);
 		
 		void addFeed(Feed* f);
-		void loadFeeds(FilterList* filters);
+		void loadFeeds(FilterList* filters,SyndicationPlugin* plugin);
 		Feed* feedForIndex(const QModelIndex & idx);
 		Feed* feedForDirectory(const QString & dir);
 		void removeFeeds(const QModelIndexList & idx);
 		void filterRemoved(Filter* f);
+		void filterEdited(Filter* f);
 	private slots:
 		void feedUpdated();
 		

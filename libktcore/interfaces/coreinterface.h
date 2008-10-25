@@ -159,26 +159,24 @@ namespace kt
 		 */
 		virtual void loadSilently(const KUrl& url,const QString & group) = 0;
 
-		/**
-		 * Same as loadSilently but also set a destination directory
-		 * */
-		virtual void loadSilentlyDir(const KUrl& url, const KUrl& savedir) = 0;
 		
 		/**
 		 * Load a torrent using a byte array
 		 * @param data Data of the torrent
 		 * @param url URL of the torrent
 		 * @param group Group to use
+		 * @param savedir Directory to save to
 		 */
-		virtual void load(const QByteArray & data,const KUrl& url,const QString & group) = 0;
+		virtual void load(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir) = 0;
 		
 		/**
 		 * Load a torrent using a byte array silently
 		 * @param data Data of the torrent
 		 * @param url URL of the torrent
 		 * @param group Group to use
+		 * @param savedir Directory to save to
 		 */
-		virtual void loadSilently(const QByteArray & data,const KUrl& url,const QString & group) = 0;
+		virtual void loadSilently(const QByteArray & data,const KUrl& url,const QString & group,const QString & savedir) = 0;
 		
 		/**
 		 * Remove a download.This will delete all temp

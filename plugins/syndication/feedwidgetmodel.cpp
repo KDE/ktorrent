@@ -19,6 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QDateTime>
+#include <kicon.h>
 #include <klocale.h>
 #include <syndication/item.h>
 #include <syndication/enclosure.h>
@@ -105,6 +106,8 @@ namespace kt
 					return QVariant();
 			}
 		}
+		else if (role == Qt::DecorationRole && index.column() == 0 && feed->downloaded(item))
+			return KIcon("go-down");
 		
 		return QVariant();
 	}

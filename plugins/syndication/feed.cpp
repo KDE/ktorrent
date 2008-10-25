@@ -72,9 +72,12 @@ namespace kt
 		enc.write("filters");
 		enc.beginList();
 		foreach (Filter* f,filters)
-		{
-			enc.write(f->filterName());
-		}
+			enc.write(f->filterID());
+		enc.end();
+		enc.write("loaded");
+		enc.beginList();
+		foreach (const QString & id,loaded)
+			enc.write(id);
 		enc.end();
 		enc.end();
 	}
@@ -89,7 +92,8 @@ namespace kt
 			return;
 		}
 		
-		BDecoder dec(fptr.readAll(),false);
+		QByteArray data = fptr.readAll();
+		BDecoder dec(data,false);
 		BNode* n = dec.decode();
 		if (!n || n->getType() != BNode::DICT)
 		{
@@ -116,9 +120,22 @@ namespace kt
 				if (!vn)
 					continue;
 					
-				Filter* f = filter_list->filterByName(vn->data().toString());
+				Filter* f = filter_list->filterByID(vn->data().toString());
 				if (f)
 					filters.append(f);
+			}
+		}
+		
+		BListNode* ll = dict->getList("loaded");
+		if (ll)
+		{
+			for (Uint32 i = 0;i < ll->getNumChildren();i++)
+			{
+				vn = ll->getValue(i);
+				if (!vn)
+					continue;
+					
+				loaded.append(vn->data().toString());
 			}
 		}
 		Out(SYS_SYN|LOG_DEBUG) << "Loaded feed from " << file << " : " << endl;
@@ -143,6 +160,8 @@ namespace kt
 		this->feed = feed;
 		update_timer.start(3600 * 1000);
 		this->status = OK;
+		checkLoaded();
+		runFilters();
 		updated();
 	}
 	
@@ -186,14 +205,92 @@ namespace kt
 	{
 		filters.removeAll(f);
 	}
+	
+	bool Feed::needToDownload(Syndication::ItemPtr item,Filter* filter)
+	{
+		bool m = filter->match(item);
+		if ((m && filter->downloadMatching()) || (!m && filter->downloadNonMatching()))
+			return true;
+		else
+			return false;
+	}
 		
 	void Feed::runFilters()
 	{
+		if (!feed)
+			return;
 		
+		Out(SYS_SYN|LOG_NOTICE) << "Running filters on " << feed->title() << endl;
+		QList<Syndication::ItemPtr> items = feed->items();
+		foreach (Syndication::ItemPtr item,items)
+		{
+			// Skip already loaded items
+			if (loaded.contains(item->id()))
+				continue;
+			
+			foreach (Filter* f,filters)
+			{
+				if (needToDownload(item,f))
+				{
+					Out(SYS_SYN|LOG_NOTICE) << "Downloading item " << item->title() << " (filter: " << f->filterName() << ")" << endl;
+					downloadItem(item,f->group(),f->downloadLocation(),f->openSilently());
+					break;
+				}
+			}
+		}
+	}
+	
+	QString TorrentUrlFromItem(Syndication::ItemPtr item);
+	
+	void Feed::downloadItem(Syndication::ItemPtr item,const QString & group,const QString & location,bool silently)
+	{
+		loaded.append(item->id());
+		QString url = TorrentUrlFromItem(item);
+		if (!url.isEmpty())
+			downloadLink(KUrl(url),group,location,silently);
+		else
+			downloadLink(KUrl(item->link()),group,location,silently);
+		save();
 	}
 		
 	void Feed::clearFilters()
 	{
 		filters.clear();
+	}
+	
+	void Feed::checkLoaded()
+	{
+		// remove all id's which are in loaded but no longer in 
+		// the item list
+		bool need_to_save = false;
+		QList<Syndication::ItemPtr> items = feed->items();
+		for (QStringList::iterator i = loaded.begin();i != loaded.end();)
+		{
+			bool found = false;
+			foreach (Syndication::ItemPtr item,items)
+			{
+				if (item->id() == *i)
+				{
+					found = true;
+					break;
+				}
+			}
+			
+			if (!found)
+			{
+				need_to_save = true;
+				i = loaded.erase(i);
+			}
+			else
+				i++;
+		}
+		
+		if (need_to_save)
+			save();
+	}
+	
+	bool  Feed::downloaded(Syndication::ItemPtr item) const
+	{
+		return loaded.contains(item->id());
 	}
 }
