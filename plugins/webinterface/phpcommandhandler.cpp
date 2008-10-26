@@ -135,7 +135,7 @@ namespace kt
 				core->loadSilently(QUrl::fromPercentEncoding(it.value().toLocal8Bit()),QString());
 				ret = true;
 			}
-			if(it.key()=="maximum_downloads")
+			else if(it.key()=="maximum_downloads")
 			{
 				int max = it.value().toInt();
 				core->getQueueManager()->setMaxDownloads(max);
