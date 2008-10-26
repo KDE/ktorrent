@@ -118,8 +118,8 @@ namespace kt
 					ret = true;
 			}
 			else
-#endif
-                             if(it.key()=="encription")
+#endif            
+			if(it.key()=="encription")
 			{
 				if (encryption_cmd(it.value()))
 					ret = true;
@@ -132,10 +132,12 @@ namespace kt
 			}
 			else if(it.key()=="load_torrent" && it.value().length() > 0)
 			{
-				core->loadSilently(QUrl::fromPercentEncoding(it.value().toLocal8Bit()),QString());
+				KUrl url = QUrl::fromPercentEncoding(it.value().toLocal8Bit());
+				Out(SYS_WEB| LOG_DEBUG) << "Loading torrent URL from webgui " << url.prettyUrl() << endl;
+				core->loadSilently(url,QString());
 				ret = true;
 			}
-			if(it.key()=="maximum_downloads")
+			else if(it.key()=="maximum_downloads")
 			{
 				int max = it.value().toInt();
 				core->getQueueManager()->setMaxDownloads(max);
