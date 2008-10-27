@@ -32,3 +32,4 @@ install(TARGETS ktsyndicationplugin  DESTINATION ${PLUGIN_INSTALL_DIR} )
 install(FILES ktsyndicationplugin.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 install(FILES ktsyndicationpluginui.rc DESTINATION ${DATA_INSTALL_DIR}/ktorrent )
 
+add_subdirectory(icons)

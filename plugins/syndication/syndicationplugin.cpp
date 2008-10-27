@@ -198,11 +198,11 @@ namespace kt
 	{
 		KActionCollection* ac = actionCollection();
 		
-		add_feed = new KAction(KIcon("list-add"),i18n("Add Feed"),this);
+		add_feed = new KAction(KIcon("kt-add-feeds"),i18n("Add Feed"),this);
 		connect(add_feed,SIGNAL(triggered()),this,SLOT(addFeed()));
 		ac->addAction("add_feed",add_feed);
 		
-		remove_feed = new KAction(KIcon("list-remove"),i18n("Remove Feed"),this);
+		remove_feed = new KAction(KIcon("kt-remove-feeds"),i18n("Remove Feed"),this);
 		connect(remove_feed,SIGNAL(triggered()),this,SLOT(removeFeed()));
 		ac->addAction("remove_feed",remove_feed);
 		
@@ -214,11 +214,11 @@ namespace kt
 		connect(manage_filters,SIGNAL(triggered()),this,SLOT(manageFilters()));
 		ac->addAction("manage_filters",manage_filters);
 		
-		add_filter = new KAction(KIcon("list-add"),i18n("Add Filter"),this);
+		add_filter = new KAction(KIcon("kt-add-filters"),i18n("Add Filter"),this);
 		connect(add_filter,SIGNAL(triggered()),this,SLOT(addFilter()));
 		ac->addAction("add_filter",add_filter);
 		
-		remove_filter = new KAction(KIcon("list-remove"),i18n("Remove Filter"),this);
+		remove_filter = new KAction(KIcon("kt-remove-filters"),i18n("Remove Filter"),this);
 		connect(remove_filter,SIGNAL(triggered()),this,SLOT(removeFilter()));
 		ac->addAction("remove_filter",remove_filter);
 		
