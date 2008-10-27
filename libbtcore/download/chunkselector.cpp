@@ -91,6 +91,8 @@ namespace bt
 	
 	Uint32 ChunkSelector::leastPeers(const std::list<Uint32> & lp,Uint32 alternative,Uint32 max_peers_per_chunk)
 	{
+		bool endgame = downer.endgameMode();
+		
 		Uint32 sel = lp.front();
 		Uint32 cnt = downer.numDownloadersForChunk(sel);
 		for (std::list<Uint32>::const_iterator i = lp.begin();i != lp.end();i++)
@@ -103,7 +105,7 @@ namespace bt
 			}
 		}
 		
-		if (downer.numDownloadersForChunk(sel) >= max_peers_per_chunk)
+		if (!endgame && downer.numDownloadersForChunk(sel) >= max_peers_per_chunk)
 		{
 			ChunkDownload* cd = downer.getDownload(sel);
 			if (!cd)

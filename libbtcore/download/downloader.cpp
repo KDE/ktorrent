@@ -146,6 +146,11 @@ namespace bt
 		}
 	}
 	
+	bool Downloader::endgameMode() const
+	{
+		return current_chunks.count() >= cman.chunksLeft();
+	}
+	
 	void Downloader::update()
 	{
 		if (cman.completed())

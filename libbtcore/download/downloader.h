@@ -155,6 +155,9 @@ namespace bt
 		 */
 		Uint32 numDownloadersForChunk(Uint32 chunk) const;
 		
+		/// Are we in endgame mode
+		bool endgameMode() const;
+		
 		/**
 		 * Save the current downloads.
 		 * @param file The file to save to
