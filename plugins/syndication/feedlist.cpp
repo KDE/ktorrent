@@ -66,7 +66,6 @@ namespace kt
 				connect(feed,SIGNAL(downloadLink(const KUrl&, const QString&, const QString&, bool)),
 						plugin,SLOT(downloadLink(const KUrl&, const QString&, const QString&, bool)));
 				feed->load(filter_list);
-				feed->refresh();
 			}
 			catch (...)
 			{

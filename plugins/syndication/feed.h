@@ -106,6 +106,7 @@ namespace kt
 		
 	private slots:
 		void loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
+		void loadingFromDiskComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status);
 		
 	signals:
 		void updated();
@@ -113,6 +114,7 @@ namespace kt
 	private:
 		bool needToDownload(Syndication::ItemPtr item,Filter* filter);
 		void checkLoaded();
+		void loadFromDisk();
 
 	private:
 		KUrl url;

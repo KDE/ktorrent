@@ -28,6 +28,7 @@
 #include "feed.h"
 #include "filter.h"
 #include "filterlist.h"
+#include "feedretriever.h"
 
 using namespace bt;
 
@@ -141,6 +142,11 @@ namespace kt
 		Out(SYS_SYN|LOG_DEBUG) << "Loaded feed from " << file << " : " << endl;
 		status = OK;
 		delete n;
+		
+		if (bt::Exists(dir + "feed.xml"))
+			loadFromDisk();
+		else
+			refresh();
 	}
 
 	void Feed::loadingComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status)
@@ -170,7 +176,22 @@ namespace kt
 		status = DOWNLOADING;
 		update_timer.stop();
 		Syndication::Loader *loader = Syndication::Loader::create(this,SLOT(loadingComplete(Syndication::Loader*, Syndication::FeedPtr, Syndication::ErrorCode)));
-		loader->loadFrom(url);
+		loader->loadFrom(url,new FeedRetriever(dir + "feed.xml"));
+		updated();
+	}
+	
+	void Feed::loadingFromDiskComplete(Syndication::Loader* loader, Syndication::FeedPtr feed, Syndication::ErrorCode status)
+	{
+		loadingComplete(loader,feed,status);
+		refresh();
+	}
+	
+	void Feed::loadFromDisk()
+	{
+		status = DOWNLOADING;
+		update_timer.stop();
+		Syndication::Loader *loader = Syndication::Loader::create(this,SLOT(loadingFromDiskComplete(Syndication::Loader*, Syndication::FeedPtr, Syndication::ErrorCode)));
+		loader->loadFrom(KUrl(dir + "feed.xml"));
 		updated();
 	}
 	

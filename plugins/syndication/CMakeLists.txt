@@ -9,6 +9,7 @@ set(ktsyndicationplugin_SRC
 	feed.cpp 
 	feedwidget.cpp 
 	feedwidgetmodel.cpp
+	feedretriever.cpp
 	linkdownloader.cpp
 	managefiltersdlg.cpp
 	filter.cpp
