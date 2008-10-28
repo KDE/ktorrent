@@ -35,6 +35,7 @@ namespace kt
 {
 	TorrentCreatorDlg::TorrentCreatorDlg(Core* core,GUI* gui,QWidget* parent) : KDialog(parent),core(core),gui(gui)
 	{
+		setWindowTitle(i18n("Create A Torrent"));
 		setupUi(mainWidget());
 		adjustSize();
 		loadGroups();
@@ -314,6 +315,7 @@ namespace kt
 			s += ".torrent";
 
 		KProgressDialog* dlg = new KProgressDialog(this,0);
+		dlg->setWindowTitle(i18n("Creating Torrent"));
 		dlg->setLabelText(i18n("Creating %1...",s));
 		dlg->setModal(true);
 		dlg->setAllowCancel(false);
