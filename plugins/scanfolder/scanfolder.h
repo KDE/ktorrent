@@ -89,16 +89,13 @@ namespace kt
 			bool incomplete(const KUrl & src);
 
 		private:
+			QString m_root_dir;
 			CoreInterface* m_core;
-			
 			bool m_valid;
 			KDirLister* m_dir;
-
 			LoadedTorrentAction m_loadedAction;
-			
 			QList<KUrl> m_pendingURLs;
 			QList<KUrl> m_incompleteURLs;
-
 			QTimer m_incomplePollingTimer;
 	};
 }
