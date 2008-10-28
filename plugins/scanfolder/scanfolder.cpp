@@ -46,12 +46,15 @@ namespace kt
 {
 
 	ScanFolder::ScanFolder(CoreInterface* core, const QString& dir, LoadedTorrentAction action)
-			: m_core(core), m_dir(0), m_loadedAction(action)
+		: m_root_dir(dir),m_core(core), m_dir(0), m_loadedAction(action)
 	{
 		bt::Out(SYS_SNF|LOG_NOTICE) << "ScanFolder : scanning " << dir << endl;
 		m_dir = new KDirLister();
+		
+		if (!m_root_dir.endsWith(bt::DirSeparator()))
+			m_root_dir += bt::DirSeparator();
 
-		if(!m_dir->openUrl(dir,KDirLister::Keep)) 
+		if (!m_dir->openUrl(dir,KDirLister::Keep)) 
 		{
 			m_valid = false;
 			bt::Out(SYS_SNF|LOG_NOTICE) << "ScanFolder : m_dir->openUrl failed " << endl;
@@ -80,15 +83,23 @@ namespace kt
 	void ScanFolder::onNewItems(const KFileItemList& items)
 	{
 		bool rec = ScanFolderPluginSettings::recursive();
+	
 		foreach (const KFileItem &file, items)
 		{
 			QString name = file.name();
 			QString filename = file.url().path();
 			
-			if (file.isDir() && name != i18n("loaded"))
+			if (file.isDir() && name != i18n("loaded") && rec)
 			{
-				// watch subdirectories, but not the loaded directory
-				m_dir->openUrl(file.url(),KDirLister::Keep); 
+				if (!filename.endsWith(bt::DirSeparator()))
+					filename += bt::DirSeparator();
+				
+				// make sure we don't go into a recursive infinite loop
+				if (filename != m_root_dir)
+				{
+					// watch subdirectories, but not the loaded directory
+					m_dir->openUrl(file.url(),KDirLister::Keep); 
+				}
 				continue;
 			}
 
@@ -99,11 +110,7 @@ namespace kt
 			if (!dirname.endsWith(bt::DirSeparator()))
 				dirname += bt::DirSeparator();
 			
-			QString root_dir = m_dir->url().path();
-			if (!root_dir.endsWith(bt::DirSeparator()))
-				root_dir += bt::DirSeparator();
-			
-			if (!rec && root_dir != dirname) // if recusive is disabled root_dir must be equal to dirnam
+			if (!rec && m_root_dir != dirname) // if recusive is disabled root_dir must be equal to dirnam
 				continue;
 
 			if (name.startsWith("."))
@@ -171,10 +178,7 @@ namespace kt
 		
 		QString filename = dirname + name;
 		
-		QString root_dir = m_dir->url().path();
-		if (!root_dir.endsWith(bt::DirSeparator()))
-			root_dir += bt::DirSeparator();
-		KUrl destination(root_dir + i18n("loaded") + bt::DirSeparator() + name);
+		KUrl destination(m_root_dir + i18n("loaded") + bt::DirSeparator() + name);
 		
 		switch(m_loadedAction) 
 		{
