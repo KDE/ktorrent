@@ -80,6 +80,7 @@ namespace kt
 		}
 		
 		m_word_matches->setItems(items);
+		m_reg_exp_syntax->setChecked(filter->useRegularExpressions());
 		
 		connect(m_name,SIGNAL(textChanged(const QString & )),this,SLOT(checkOKButton()));
 		connect(m_seasons,SIGNAL(textChanged(const QString & )),this,SLOT(checkOKButton()));
@@ -183,6 +184,7 @@ namespace kt
 			QString p = m_word_matches->text(i);
 			f->addWordMatch(QRegExp(p,filter->caseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive));
 		}
+		f->setUseRegularExpressions(m_reg_exp_syntax->isChecked());
 	}
 	
 	void FilterEditor::onOK()

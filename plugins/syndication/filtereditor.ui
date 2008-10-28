@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>699</width>
-    <height>472</height>
+    <height>499</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -36,11 +36,52 @@
       <layout class="QVBoxLayout" name="verticalLayout_2" >
        <item>
         <widget class="KEditListBox" name="m_word_matches" >
+         <property name="toolTip" >
+          <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">The string to find in the title of an item. Simple wildcard syntax is supported :&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
+&lt;table border="0" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;" align="center" cellspacing="1" cellpadding="2">
+&lt;tr>
+&lt;td style=" vertical-align:top;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;">&lt;span style=" font-weight:600;">c&lt;/span>&lt;/p>&lt;/td>
+&lt;td style=" vertical-align:top;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Any character represents itself apart from those mentioned below. Thus &lt;span style=" font-weight:600;">c&lt;/span> matches the character &lt;span style=" font-style:italic;">c&lt;/span>.&lt;/p>&lt;/td>&lt;/tr>
+&lt;tr>
+&lt;td style=" vertical-align:top;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;">&lt;span style=" font-weight:600;">?&lt;/span>&lt;/p>&lt;/td>
+&lt;td style=" vertical-align:top;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;">Matches any single character. &lt;/p>&lt;/td>&lt;/tr>
+&lt;tr>
+&lt;td style=" vertical-align:top;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;">&lt;span style=" font-weight:600;">*&lt;/span>&lt;/p>&lt;/td>
+&lt;td style=" vertical-align:top;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;">Matches zero or more of any characters.&lt;/p>&lt;/td>&lt;/tr>
+&lt;tr>
+&lt;td style=" vertical-align:top;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;">&lt;span style=" font-weight:600;">[...]&lt;/span>&lt;/p>&lt;/td>
+&lt;td style=" vertical-align:top;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;">Sets of characters can be represented in square brackets. Within the character class, like outside, backslash has no special meaning.&lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+&lt;p style=" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;">For example the *.torrent will match any item which ends in .torrent. &lt;/p>&lt;/body>&lt;/html></string>
+         </property>
          <property name="title" >
           <string>String Matching</string>
          </property>
          <property name="buttons" >
           <set>KEditListBox::Add|KEditListBox::Remove</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="m_reg_exp_syntax" >
+         <property name="toolTip" >
+          <string>By default strings will use wildcard matching. If you want to use regular expressions, this needs to be enabled.</string>
+         </property>
+         <property name="text" >
+          <string>Strings are regular expressions</string>
          </property>
         </widget>
        </item>

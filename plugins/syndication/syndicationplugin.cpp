@@ -296,6 +296,7 @@ namespace kt
 	{
 		Filter* filter = new Filter(i18n("New Filter"));
 		FilterEditor dlg(filter,filter_list,feed_list,getCore(),getGUI()->getMainWindow());
+		dlg.setWindowTitle(i18n("Add New Filter"));
 		if (dlg.exec() == QDialog::Accepted)
 		{
 			filter_list->addFilter(filter);

@@ -148,6 +148,12 @@ namespace kt
 		/// Load the filter
 		bool load(bt::BDictNode* dict);
 		
+		/// Wether or not the string matches are regular expressions
+		bool useRegularExpressions() const {return use_regular_expressions;}
+		
+		/// Enable or disable regular expressions
+		void setUseRegularExpressions(bool on) {use_regular_expressions = on;}
+		
 		/// Is a string a valid seasons or episode string
 		static bool validSeasonOrEpisodeString(const QString & s);
 	private:
@@ -179,6 +185,7 @@ namespace kt
 		bool silent;
 		bool case_sensitive;
 		bool all_word_matches_must_match;
+		bool use_regular_expressions;
 	};
 
 }

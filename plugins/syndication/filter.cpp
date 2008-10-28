@@ -46,6 +46,7 @@ namespace kt
 		silent = true;
 		case_sensitive = false;
 		all_word_matches_must_match = false;
+		use_regular_expressions = false;
 	}
 
 	Filter::Filter(const QString & name) : name(name)
@@ -57,6 +58,7 @@ namespace kt
 		silent = true;
 		case_sensitive = false;
 		all_word_matches_must_match = false;
+		use_regular_expressions = false;
 	}
 
 
@@ -109,6 +111,7 @@ namespace kt
 		{
 			QRegExp tmp = exp;
 			tmp.setCaseSensitivity(case_sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
+			tmp.setPatternSyntax(use_regular_expressions ? QRegExp::RegExp : QRegExp::Wildcard);
 			if (all_word_matches_must_match)
 			{
 				if (!match(item->title(),tmp))
@@ -276,6 +279,7 @@ namespace kt
 		if (!download_location.isEmpty())
 			enc.write("download_location",download_location);
 		enc.write("silently",silent);
+		enc.write("use_regular_expressions",use_regular_expressions);
 		enc.end();
 	}
 	
@@ -357,6 +361,10 @@ namespace kt
 			return false;
 		
 		silent = vn->data().toInt() == 1;
+		
+		vn = dict->getValue("use_regular_expressions");
+		if (vn)
+			use_regular_expressions = vn->data().toInt() == 1;
 		
 		return true;
 	}

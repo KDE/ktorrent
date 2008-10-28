@@ -131,7 +131,7 @@ namespace kt
 	
 	void FilterListModel::clear()
 	{
-		filters;clear();
+		filters.clear();
 		reset();
 	}
 }
