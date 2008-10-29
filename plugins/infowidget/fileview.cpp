@@ -430,6 +430,12 @@ namespace kt
 		collapse_action->setEnabled(!show_list_of_files);
 		expand_action->setEnabled(!show_list_of_files);
 	}
+	
+	bool FileView::viewportEvent(QEvent *event)
+	{
+		executeDelayedItemsLayout();
+		return QTreeView::viewportEvent(event);
+	}
 }
 
 #include "fileview.moc"

@@ -63,6 +63,7 @@ namespace kt
 		void changePriority(bt::Priority newpriority);
 		void expandCollapseTree(const QModelIndex& idx, bool expand);
 		void expandCollapseSelected(bool expand);
+		virtual bool viewportEvent(QEvent *event);
 
 	private slots:
 		void open();

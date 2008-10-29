@@ -133,6 +133,9 @@ namespace kt
 		void currentTorrentChanged(View* v,bt::TorrentInterface* tc);
 		void enableActions(View* v,ActionEnableFlags flags);
 		void showMenu(View* v,const QPoint & pos);
+		
+	private:
+		virtual bool viewportEvent(QEvent *event);
 
 	private:
 		Core* core;

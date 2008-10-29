@@ -578,6 +578,13 @@ namespace kt
 	{
 		return column_action_list;
 	}
+	
+	bool View::viewportEvent(QEvent *event)
+	{
+		executeDelayedItemsLayout();
+		return QTreeView::viewportEvent(event);
+	}
+
 }
 
 #include "view.moc"
