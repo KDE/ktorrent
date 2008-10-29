@@ -22,6 +22,7 @@
 #define KTFEED_H
 
 #include <QTimer>
+#include <QStringList>
 #include <kurl.h>
 #include <syndication/feed.h>
 #include <syndication/loader.h>
