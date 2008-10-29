@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson                                   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,60 +18,23 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KT_PEERVIEW_HH
-#define KT_PEERVIEW_HH
+#include "chunkdownloadtreeview.h"
 
-
-#include <QTreeWidget>
-#include <util/ptrmap.h>
-#include <interfaces/peerinterface.h>
-#include <ksharedconfig.h>
-
-class KMenu;
-class QSortFilterProxyModel;
-
-namespace kt
+namespace kt 
 {
-	class PeerViewModel;
-	
-	/**
-	 * View which shows a list of peers, of a torrent.
-	 * */
-	class PeerView : public QTreeView
+
+	ChunkDownloadTreeView::ChunkDownloadTreeView(QWidget* parent) : QTreeView(parent)
 	{
-		Q_OBJECT
-	public:
-		PeerView(QWidget* parent);
-		virtual ~PeerView();
+	}
+	
+	
+	ChunkDownloadTreeView::~ChunkDownloadTreeView()
+	{
+	}
 
-		/// A peer has been added
-		void peerAdded(bt::PeerInterface* peer);
-
-		/// A peer has been removed
-		void peerRemoved(bt::PeerInterface* peer);
-
-		/// Check to see if the GUI needs to be updated
-		void update();
-
-		/// Remove all items
-		void removeAll();
-		
-		void saveState(KSharedConfigPtr cfg);
-		void loadState(KSharedConfigPtr cfg);
-		
-	private slots: 
-		void showContextMenu(const QPoint& pos);
-		void banPeer();
-		void kickPeer();
-		
-	private:
-		virtual bool viewportEvent(QEvent *event);
-				
-	private:
-		KMenu* context_menu;
-		PeerViewModel* model;
-		QSortFilterProxyModel* pm;
-	};
+	bool ChunkDownloadTreeView::viewportEvent(QEvent *event)
+	{
+		executeDelayedItemsLayout();
+		return QTreeView::viewportEvent(event);
+	}
 }
-
-#endif

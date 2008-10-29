@@ -139,6 +139,12 @@ namespace kt
 			sortByColumn(v->sortIndicatorSection(),v->sortIndicatorOrder());
 		}
 	}
+	
+	bool PeerView::viewportEvent(QEvent *event)
+	{
+		executeDelayedItemsLayout();
+		return QTreeView::viewportEvent(event);
+	}
 }
 
 #include "peerview.moc"

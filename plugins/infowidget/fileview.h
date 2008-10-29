@@ -61,6 +61,7 @@ namespace kt
 		
 	private:
 		void changePriority(bt::Priority newpriority);
+		virtual bool viewportEvent(QEvent *event);
 
 	private slots:
 		void open();

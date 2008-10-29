@@ -384,6 +384,12 @@ namespace kt
 		else
 			expandAll();
 	}
+	
+	bool FileView::viewportEvent(QEvent *event)
+	{
+		executeDelayedItemsLayout();
+		return QTreeView::viewportEvent(event);
+	}
 }
 
 #include "fileview.moc"

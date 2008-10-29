@@ -40,6 +40,7 @@ set(ktinfowidgetplugin_SRC
 	peerview.cpp
 	peerviewmodel.cpp
 	chunkdownloadview.cpp
+	chunkdownloadtreeview.cpp
 	chunkdownloadmodel.cpp
 	trackerview.cpp
 	trackermodel.cpp
