@@ -2,6 +2,7 @@
 Name=SyndicationPlugin
 Name[el]=Πρόσθετο Syndication
 Name[es]=Complemento de redifusión
+Name[nds]=Strööm-Moduul
 Name[pt]='Plugin' de Sindicância
 Name[pt_BR]='Plugin' de Sindicância
 Name[sv]=Syndikeringsinsticksprogram
@@ -10,6 +11,7 @@ Comment=Syndication plugin for KTorrent, supporting RSS and Atom feeds
 Comment[el]=Πρόσθετο Syndication για το KTorrent, με υποστήριξη ροών RSS και Atom
 Comment[es]=Complemento de redifusión para KTorrent, que admite fuentes RSS y Atom
 Comment[gl]=Extensión de sindicación para KTorrent, con soporte para fontes RSS e Atom
+Comment[nds]=Ströömmoduul för KTorrent, ünnerstütt RSS- un Atom-Strööm
 Comment[nl]=Syndication-plugin voor KTorrent, ondersteunt RSS en Atom-feeds
 Comment[pt]='Plugin' de sindicância do KTorrent, que suporta fontes RSS e Atom
 Comment[pt_BR]='Plugin' de sindicância do KTorrent, que suporta fontes RSS e Atom
