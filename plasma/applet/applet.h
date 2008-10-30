@@ -29,7 +29,7 @@ class QGraphicsLinearLayout;
 
 namespace Plasma
 {
-	class Icon;
+	class IconWidget;
 	class Meter;
 	class Label;
 }
@@ -68,7 +68,7 @@ namespace ktplasma
 		void clearData();
 
 	private:
-		Plasma::Icon* icon;
+		Plasma::IconWidget* icon;
 		Plasma::Label* title;
 		Plasma::Label* upload_speed;
 		Plasma::Meter* upload_speed_meter;

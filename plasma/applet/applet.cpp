@@ -29,7 +29,7 @@
 #include <KLocale>
 #include <KRun>
 #include <KWindowSystem>
-#include <Plasma/Icon>
+#include <Plasma/IconWidget>
 #include <Plasma/Meter>
 #include <Plasma/Label>
 #include <taskmanager/taskmanager.h>
@@ -86,7 +86,7 @@ namespace ktplasma
 		
 		QGraphicsLinearLayout* line = new QGraphicsLinearLayout(0);
 		
-		icon = new Plasma::Icon(KIcon("ktorrent"),QString(),this);
+		icon = new Plasma::IconWidget(KIcon("ktorrent"),QString(),this);
 		int icon_size = IconSize(KIconLoader::Desktop);
 		icon->setMaximumSize(icon_size,icon_size);
 		icon->setMinimumSize(icon_size,icon_size);
