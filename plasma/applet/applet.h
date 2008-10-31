@@ -21,6 +21,7 @@
 #ifndef KTPLASMAAPPLET_H
 #define KTPLASMAAPPLET_H
 
+#include <plasma/version.h>
 #include <plasma/applet.h>
 #include <plasma/dataengine.h>
 #include "ui_appletconfig.h"
@@ -29,7 +30,11 @@ class QGraphicsLinearLayout;
 
 namespace Plasma
 {
+#if (PLASMA_VERSION_MAJOR < 3)
 	class Icon;
+#else 
+	class IconWidget;
+#endif
 	class Meter;
 	class Label;
 }
@@ -68,7 +73,11 @@ namespace ktplasma
 		void clearData();
 
 	private:
+#if (PLASMA_VERSION_MAJOR < 3)
 		Plasma::Icon* icon;
+#else 
+		Plasma::IconWidget* icon;
+#endif
 		Plasma::Label* title;
 		Plasma::Label* upload_speed;
 		Plasma::Meter* upload_speed_meter;

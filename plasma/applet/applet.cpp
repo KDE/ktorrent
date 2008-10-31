@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include "applet.h"
 #include <math.h>
 #include <QFile>
 #include <QGraphicsLinearLayout>
@@ -29,13 +30,16 @@
 #include <KLocale>
 #include <KRun>
 #include <KWindowSystem>
+#if (PLASMA_VERSION_MAJOR < 3)
 #include <Plasma/Icon>
+#else
+#include <Plasma/IconWidget>
+#endif
 #include <Plasma/Meter>
 #include <Plasma/Label>
 #include <taskmanager/taskmanager.h>
 #include <taskmanager/task.h>
 #include <util/functions.h>
-#include "applet.h"
 #include "chunkbar.h"
 using namespace bt;
 
@@ -86,7 +90,11 @@ namespace ktplasma
 		
 		QGraphicsLinearLayout* line = new QGraphicsLinearLayout(0);
 		
+#if (PLASMA_VERSION_MAJOR < 3)
 		icon = new Plasma::Icon(KIcon("ktorrent"),QString(),this);
+#else
+		icon = new Plasma::IconWidget(KIcon("ktorrent"),QString(),this);
+#endif
 		int icon_size = IconSize(KIconLoader::Desktop);
 		icon->setMaximumSize(icon_size,icon_size);
 		icon->setMinimumSize(icon_size,icon_size);
