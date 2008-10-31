@@ -43,6 +43,7 @@
 #include "scriptmodel.h"
 #include "script.h"
 #include "ui_scriptproperties.h"
+#include "api/scriptingmodule.h"
 
 K_EXPORT_COMPONENT_FACTORY(ktscriptingplugin,KGenericFactory<kt::ScriptingPlugin>("ktscriptingplugin"))
 		
@@ -89,6 +90,10 @@ namespace kt
 		properties = new KAction(KIcon("dialog-information"),i18n("Properties"),this);
 		connect(properties,SIGNAL(triggered()),this,SLOT(showProperties()));
 		ac->addAction("script_properties",properties);
+		
+		configure_script = new KAction(KIcon("preferences-other"),i18n("Configure"),this);
+		connect(configure_script,SIGNAL(triggered()),this,SLOT(configureScript()));
+		ac->addAction("configure_script",configure_script);
 	}
 
 	void ScriptingPlugin::load()
@@ -97,6 +102,7 @@ namespace kt
 		model = new ScriptModel(this);
 		// add the KTorrent object
 		Kross::Manager::self().addObject(getCore()->getExternalInterface(),"KTorrent");
+		Kross::Manager::self().addObject(new ScriptingModule(this),"KTScriptingPlugin");
 		loadScripts();
 		
 		Out(SYS_SCR|LOG_DEBUG) << "Supported interpreters : " << endl;
@@ -279,6 +285,19 @@ namespace kt
 		prop.m_website->setText(s->metaInfo().website);
 		dialog->exec();
 		delete dialog;
+	}
+	
+	void ScriptingPlugin::configureScript()
+	{
+		QModelIndexList sel = sman->selectedScripts();
+		if (sel.count() != 1)
+			return;
+		
+		Script* s = model->scriptForIndex(sel.front());
+		if (!s || !s->metaInfo().valid() || !s->hasConfigure())
+			return;
+		
+		s->configure();
 	}
 	
 	bool ScriptingPlugin::versionCheck(const QString & version) const

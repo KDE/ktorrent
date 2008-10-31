@@ -57,6 +57,7 @@ namespace kt
 		void stopScript();
 		void editScript();
 		void showProperties();
+		void configureScript();
 		
 	private:
 		ScriptManager* sman;
@@ -67,6 +68,7 @@ namespace kt
 		KAction* stop_script;
 		KAction* edit_script;
 		KAction* properties;
+		KAction* configure_script;
 	};
 
 }

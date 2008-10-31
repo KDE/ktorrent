@@ -48,6 +48,7 @@ namespace kt
 		QAction* stop = ac->action("stop_script");
 		QAction* edit = ac->action("edit_script");
 		QAction* properties = ac->action("script_properties");
+		QAction* configure = ac->action("configure_script");
 		
 		toolbar = new KToolBar(this);
 		toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
@@ -61,6 +62,7 @@ namespace kt
 		connect(this,SIGNAL(enableStopScript(bool)),stop,SLOT(setEnabled(bool)));
 		connect(this,SIGNAL(enableRunScript(bool)),run,SLOT(setEnabled(bool)));
 		connect(this,SIGNAL(enableProperties(bool)),properties,SLOT(setEnabled(bool)));
+		connect(this,SIGNAL(enableConfigure(bool)),configure,SLOT(setEnabled(bool)));
 		remove->setEnabled(false);
 		
 		view = new QListView(this);
@@ -77,6 +79,9 @@ namespace kt
 		connect(view,SIGNAL(customContextMenuRequested(const QPoint & )),
 				this,SLOT(showContextMenu(const QPoint& )));
 		
+		connect(model,SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
+				this,SLOT(dataChanged(const QModelIndex&, const QModelIndex&)));
+		
 		context_menu = new KMenu(this);
 		context_menu->addAction(add);
 		context_menu->addAction(remove);
@@ -87,6 +92,7 @@ namespace kt
 		context_menu->addAction(edit);
 		context_menu->addSeparator();
 		context_menu->addAction(properties);
+		context_menu->addAction(configure);
 		
 		add->setEnabled(true);
 		remove->setEnabled(false);
@@ -94,6 +100,7 @@ namespace kt
 		stop->setEnabled(false);
 		edit->setEnabled(false);
 		properties->setEnabled(false);
+		configure->setEnabled(false);
 	}
 
 
@@ -126,6 +133,7 @@ namespace kt
 		enableStopScript(selected.count() > 0 && num_running > 0);
 		Script* s = model->scriptForIndex(selected.front());
 		enableProperties(selected.count() == 1 && s && s->metaInfo().valid());
+		enableConfigure(selected.count() == 1 && s && s->hasConfigure());
 	}
 	
 	QModelIndexList ScriptManager::selectedScripts()
@@ -136,5 +144,12 @@ namespace kt
 	void ScriptManager::showContextMenu(const QPoint& p)
 	{
 		context_menu->popup(view->mapToGlobal(p));
+	}
+	
+	void ScriptManager::dataChanged(const QModelIndex & from,const QModelIndex & to)
+	{
+		Q_UNUSED(from);
+		Q_UNUSED(to);
+		updateActions(selectedScripts());
 	}
 }

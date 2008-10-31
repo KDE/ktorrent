@@ -55,12 +55,14 @@ namespace kt
 	private slots:
 		void onSelectionChanged(const QItemSelection & selected,const QItemSelection & deselected);
 		void showContextMenu(const QPoint& p);
+		void dataChanged(const QModelIndex & f,const QModelIndex & to);
 		
 	signals:
 		void enableRemoveScript(bool on);
 		void enableRunScript(bool on);
 		void enableStopScript(bool on);
 		void enableProperties(bool on);
+		void enableConfigure(bool on);
 		
 	private:
 		ScriptModel* model;

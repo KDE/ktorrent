@@ -19,6 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QDBusConnection>
+#include <klocale.h>
 #include <util/sha1hash.h>
 #include <util/bitset.h>
 #include <interfaces/torrentinterface.h>
@@ -47,6 +48,14 @@ namespace kt
 			sb.registerObject(path + QString("/file/%1").arg(i),tf,flags);
 			files.append(tf);
 		}
+		
+		connect(ti,SIGNAL(finished(bt::TorrentInterface*)),this,SLOT(finished(bt::TorrentInterface*)));
+		connect(ti,SIGNAL(stoppedByError(bt::TorrentInterface*, QString)),
+				this,SLOT(stoppedByError(bt::TorrentInterface*, const QString&)));
+		connect(ti,SIGNAL(seedingAutoStopped(bt::TorrentInterface*, bt::AutoStopReason)),
+				this,SLOT(seedingAutoStopped(bt::TorrentInterface*, bt::AutoStopReason)));
+		connect(ti,SIGNAL(corruptedDataFound(bt::TorrentInterface*)),this,SLOT(corruptedDataFound(bt::TorrentInterface*)));
+		connect(ti,SIGNAL(torrentStopped(bt::TorrentInterface*)),this,SLOT(torrentStopped(bt::TorrentInterface*)));
 	}
 
 
@@ -233,7 +242,7 @@ namespace kt
 	
 	QObject* DBusTorrent::file(uint idx)
 	{
-		if (idx >= files.count())
+		if (idx >= (uint)files.count())
 			return 0;
 		else
 			return files.at(idx);
@@ -300,5 +309,44 @@ namespace kt
 		enc.write(ebs.getData(),ebs.getNumBytes());
 		enc.end();
 		return ret;
+	}
+	
+	void DBusTorrent::finished(bt::TorrentInterface* tor)
+	{
+		Q_UNUSED(tor);
+		finished(this);
+	}
+	
+	void DBusTorrent::stoppedByError(bt::TorrentInterface* tor,const QString & err)
+	{
+		Q_UNUSED(tor);
+		stoppedByError(this,err);
+	}
+	
+	void DBusTorrent::seedingAutoStopped(bt::TorrentInterface* tor,bt::AutoStopReason reason)
+	{
+		Q_UNUSED(tor);
+		QString msg;
+		switch (reason)
+		{
+			case bt::MAX_RATIO_REACHED:
+				msg = i18n("Maximum share ratio reached !");
+				break;
+			case bt::MAX_SEED_TIME_REACHED:
+				msg = i18n("Maximum seed time reached !");
+				break;
+		}
+		stoppedByError(this,msg);
+	}
+	
+	void DBusTorrent::corruptedDataFound(bt::TorrentInterface* tor)
+	{
+		Q_UNUSED(tor);
+		corruptedDataFound(this);
+	}
+	
+	void DBusTorrent::torrentStopped(bt::TorrentInterface* tor)
+	{
+		Q_UNUSED(tor);
 	}
 }

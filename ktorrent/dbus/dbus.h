@@ -108,6 +108,9 @@ namespace kt
 		///  Get the number of torrents not running.
 		Q_SCRIPTABLE uint numTorrentsNotRunning() const;
 		
+		///  Get the number of torrents not running.
+		Q_SCRIPTABLE QString dataDir() const;
+		
 	private Q_SLOTS:
 		void torrentAdded(bt::TorrentInterface* tc);
 		void torrentRemoved(bt::TorrentInterface* tc);

@@ -24,11 +24,8 @@
 #include <QObject>
 #include <QStringList>
 #include <util/constants.h>
+#include <interfaces/torrentinterface.h>
 
-namespace bt
-{
-	class TorrentInterface;
-}
 
 namespace kt
 {
@@ -102,6 +99,19 @@ namespace kt
 		// Stats
 		Q_SCRIPTABLE QByteArray stats() const;
 		
+	signals:
+		void finished(DBusTorrent* tor);
+		void stoppedByError(DBusTorrent* tor,const QString & msg);
+		void seedingAutoStopped(DBusTorrent* tor,const QString & reason);
+		void corruptedDataFound(DBusTorrent* tor);
+		void torrentStopped(DBusTorrent* tor);
+		
+	private slots:
+		void finished(bt::TorrentInterface* tor);
+		void stoppedByError(bt::TorrentInterface* tor,const QString & err);
+		void seedingAutoStopped(bt::TorrentInterface* tor,bt::AutoStopReason reason);
+		void corruptedDataFound(bt::TorrentInterface* tor);
+		void torrentStopped(bt::TorrentInterface* tor);
 		
 	private:
 		bt::TorrentInterface* ti;

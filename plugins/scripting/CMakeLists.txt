@@ -1,6 +1,7 @@
 add_subdirectory(scripts)
 
 set(ktscriptingplugin_SRC 
+	api/scriptingmodule.cpp
 	scriptingplugin.cpp 
 	scriptmanager.cpp 
 	scriptmodel.cpp

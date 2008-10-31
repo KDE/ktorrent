@@ -18,95 +18,42 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTSCRIPT_H
-#define KTSCRIPT_H
+#ifndef KTSCRIPTINGMODULE_H
+#define KTSCRIPTINGMODULE_H
 
 #include <QObject>
-
-namespace Kross
-{
-	class Action;
-}
 
 namespace kt
 {
 
 	/**
-		Keeps track of a script
+		Additional functions to be used in scripts
 	*/
-	class Script : public QObject
+	class ScriptingModule : public QObject
 	{
 		Q_OBJECT
 	public:
-		Script(QObject* parent);
-		Script(const QString & file,QObject* parent);
-		virtual ~Script();
+		ScriptingModule(QObject* parent);
+		virtual ~ScriptingModule();
+
+	public slots:
+		/// Get the scripts directory
+		QString scriptsDir() const;
 		
-		struct MetaInfo
-		{
-			QString name;
-			QString comment;
-			QString icon;
-			QString author;
-			QString email;
-			QString website;
-			QString license;
-			
-			bool valid() const 
-			{
-				return !name.isEmpty() && 
-						!comment.isEmpty() && 
-						!icon.isEmpty() && 
-						!author.isEmpty() && 
-						!license.isEmpty();
-			}
-		};
+		/// Read a config entry
+		QString readConfigEntry(const QString & group,const QString & name,const QString & default_value);
+		int readConfigEntryInt(const QString & group,const QString & name,int default_value);
+		float readConfigEntryFloat(const QString & group,const QString & name,float default_value);
+		bool readConfigEntryBool(const QString & group,const QString & name,bool default_value);
 		
-		/**
-		 * Load the script from a desktop file
-		 * @param dir THe directory the desktop file is in
-		 * @param desktop_file The desktop file itself (relative to dir)
-		 * @return true upon success
-		 */
-		bool loadFromDesktopFile(const QString & dir,const QString & desktop_file);
+		/// Write a config entry
+		void writeConfigEntry(const QString & group,const QString & name,const QString & value);
+		void writeConfigEntryInt(const QString & group,const QString & name,int value);
+		void writeConfigEntryFloat(const QString & group,const QString & name,float value);
+		void writeConfigEntryBool(const QString & group,const QString & name,bool value);
 		
-		/**
-		 * Load and execute the script
-		 * @return true upon success
-		 */
-		bool execute();
-		
-		/**
-		 * Stop the script
-		 */
-		void stop();
-		
-		/// Is the script running
-		bool running() const {return executing;}
-		
-		/// Get the name of the script
-		QString name() const;
-		
-		/// Get the icon name of the script
-		QString iconName() const;
-		
-		/// Get the file
-		QString scriptFile() const {return file;}
-		
-		/// Get the meta info of the script
-		const MetaInfo & metaInfo() const {return info;}
-		
-		/// Does the script has a configure function
-		bool hasConfigure() const;
-		
-		/// Call the configure function of the script
-		void configure();
-		
-	private:
-		QString file;
-		Kross::Action* action;
-		bool executing;
-		MetaInfo info;
+		/// Sync a group
+		void syncConfig(const QString & group);
 	};
 
 }

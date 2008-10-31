@@ -35,6 +35,8 @@ using namespace bt;
 
 namespace kt
 {
+	QString DataDir();
+	
 	DBus::DBus(GUIInterface* gui,CoreInterface* core,QObject* parent) : QObject(parent),gui(gui),core(core)
 	{
 		torrent_map.setAutoDelete(true);
@@ -259,6 +261,11 @@ namespace kt
 	uint DBus::numTorrentsNotRunning() const
 	{
 		return core->getNumTorrentsNotRunning();
+	}
+	
+	QString DBus::dataDir() const
+	{
+		return kt::DataDir();
 	}
 	
 }

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=E-Mail Notifications
+Comment=Script to notify you of events via e-mail
+Type=KTorrentScript
+Icon=mail-send
+X-KTorrent-Script-Author=Joris Guisson
+X-KTorrent-Script-Email=joris.guisson@gmail.com
+X-KTorrent-Script-Website=http://ktorrent.org/
+X-KTorrent-Script-License=GPL
+X-KTorrent-Script-File=email_notifications.py
+

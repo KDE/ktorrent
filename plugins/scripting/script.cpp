@@ -127,4 +127,22 @@ namespace kt
 			return KMimeType::findByPath(file)->iconName();
 	}
 	
+	bool Script::hasConfigure() const
+	{
+		if (!action)
+			return false;
+		
+		QStringList functions = action->functionNames();
+		return functions.contains("configure");
+	}
+		
+	void Script::configure()
+	{
+		if (!action)
+			return;
+		
+		QVariantList args;
+		action->callFunction("configure",args);
+	}
+	
 }
