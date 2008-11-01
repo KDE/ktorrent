@@ -1,3 +1,11 @@
+Changes in 2.2.8 :
+- Backported some security fixes for the webinterface from KDE4 version
+
+Changes in 2.2.7 :
+- Fix crash when loading articles in RSS plugin fails (161475)
+- Fix SIGBUS caused crash on sparc
+- Backported fix from KDE4 version for an infinite recursive loop in the QM
+
 Changes in 2.2.6 :
 - Some OpenBSD compile fixes
 - Fix lock file not working on NFS home directories by moving it to /tmp

@@ -82,7 +82,9 @@ namespace kt
 			
 		for ( it = args.begin(); it != args.end(); ++it )
 		{
-			ts << QString("$_REQUEST['%1']=\"%2\";\n").arg(it.key()).arg(it.data());
+			// Check for string delimiters, don't want PHP injection attacks
+			if (!containsDelimiters(it.key()) && !containsDelimiters(it.data()))
+				ts << QString("$_REQUEST['%1']=\"%2\";\n").arg(it.key()).arg(it.data());
 		}
 		ts.writeRawBytes(php_s.data() + off,php_s.size() - off); // the rest of the script
 		ts << flush;
@@ -97,6 +99,11 @@ namespace kt
 		}
 #endif
 		return launch(data);
+	}
+
+	bool PhpHandler::containsDelimiters(const QString & str)
+	{
+		return str.contains("\"") || str.contains("'");
 	}
 	
 	void PhpHandler::onExited()

@@ -139,12 +139,11 @@ namespace bt
 		{
 			if (i < 16)
 			{
-				w[i] = ntohl(*(const Uint32*)(chunk + (4*i)));
-			/*	w[i] = (chunk[4*i] << 24) | 
+			//	w[i] = ntohl(*(const Uint32*)(chunk + (4*i))); <- crashes on sparc
+				w[i] = (chunk[4*i] << 24) | 
 						(chunk[4*i + 1] << 16) | 
 						(chunk[4*i + 2] << 8) | 
 						chunk[4*i + 3];
-				*/
 			}
 			else
 			{

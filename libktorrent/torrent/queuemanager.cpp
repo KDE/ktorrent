@@ -49,6 +49,7 @@ namespace bt
 
 		keep_seeding = true; //test. Will be passed from Core
 		paused_state = false;
+		ordering = false;
 	}
 
 
@@ -439,11 +440,13 @@ namespace bt
 
 	void QueueManager::orderQueue()
 	{
-		if (!downloads.count())
+		if (!downloads.count() || ordering)
 			return;
 
 		if (paused_state || exiting)
 			return;
+		
+		ordering = true;
 
 		downloads.sort();
 
@@ -584,7 +587,7 @@ namespace bt
 				}
 			}
 		}
-
+		ordering = false;
 	}
 
 	void QueueManager::torrentFinished(kt::TorrentInterface* tc)

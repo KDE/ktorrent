@@ -1,6 +1,6 @@
 #MIN_CONFIG(3.3)
 
-AM_INIT_AUTOMAKE(ktorrent,2.2.6)
+AM_INIT_AUTOMAKE(ktorrent,2.2.8)
 
 dnl #### Check for FSEEK variants
 AC_SYS_LARGEFILE

@@ -433,6 +433,14 @@ namespace kt
 		const char* ptr = data.data();
 		Uint32 len = data.size();
 		int pos = QString(data).find("\r\n\r\n");
+
+		if (!session.logged_in || !checkSession(hdr))
+		{
+			// You can't post torrents if you are not logged in
+			// or the session is not OK
+			redirectToLoginPage(hdlr);
+			return;
+		}
 		
 		if (pos == -1 || pos + 4 >= len || ptr[pos + 4] != 'd')
 		{
