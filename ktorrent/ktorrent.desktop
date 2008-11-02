@@ -29,6 +29,7 @@ Type=Application
 DocPath=ktorrent/index.html
 MimeType=application/x-bittorrent;application/x-torrent;
 X-DBUS-StartupType=Unique
+X-DBUS-ServiceName=org.ktorrent.ktorrent
 Comment=A BitTorrent program for KDE
 Comment[ca]=Un programa de BitTorrent per al KDE
 Comment[da]=Et BitTorrent-program til KDE
