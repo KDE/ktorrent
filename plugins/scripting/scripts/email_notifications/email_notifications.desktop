@@ -1,6 +1,10 @@
 [Desktop Entry]
 Name=E-Mail Notifications
+Name[sv]=Underrättelser med e-post
+Name[uk]=Сповіщення електронною поштою
 Comment=Script to notify you of events via e-mail
+Comment[sv]=Skript för att underrätta dig om händelser via e-post
+Comment[uk]=Скрипт для вашого сповіщення про події електронною поштою
 Type=KTorrentScript
 Icon=mail-send
 X-KTorrent-Script-Author=Joris Guisson
