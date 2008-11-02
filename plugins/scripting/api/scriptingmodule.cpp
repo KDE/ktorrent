@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <QTimer>
 #include <kglobal.h>
 #include <kconfiggroup.h>
 #include <ksharedconfig.h>
@@ -103,5 +104,12 @@ namespace kt
 	{
 		KConfigGroup g = KGlobal::config()->group(group);
 		g.sync();
+	}
+	
+	QObject* ScriptingModule::createTimer(bool single_shot)
+	{
+		QTimer* t = new QTimer(this);
+		t->setSingleShot(single_shot);
+		return t;
 	}
 }

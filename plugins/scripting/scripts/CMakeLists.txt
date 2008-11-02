@@ -1,2 +1,3 @@
 add_subdirectory(downloadorder)
 add_subdirectory(email_notifications)
+add_subdirectory(auto_resume)

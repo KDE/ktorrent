@@ -135,6 +135,9 @@ namespace kt
 		/// Emitted when settings are changed in settings dialog
 		Q_SCRIPTABLE void settingsChanged();
 		
+		/// Emitted when paused state changes
+		Q_SCRIPTABLE void pauseStateChanged(bool paused);
+		
 
 	private:
 		GUIInterface* gui;

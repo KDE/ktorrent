@@ -54,6 +54,9 @@ namespace kt
 		
 		/// Sync a group
 		void syncConfig(const QString & group);
+		
+		/// Create a timer
+		QObject* createTimer(bool single_shot);
 	};
 
 }

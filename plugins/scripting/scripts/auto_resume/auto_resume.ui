@@ -1,0 +1,123 @@
+<ui version="4.0" >
+ <class>AutoResumeConfig</class>
+ <widget class="QWidget" name="AutoResumeConfig" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>366</width>
+    <height>64</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Auto Resume Settings</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" >
+   <item>
+    <widget class="QCheckBox" name="auto_resume" >
+     <property name="text" >
+      <string>Auto resume after:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout" >
+     <item>
+      <spacer name="horizontalSpacer" >
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0" >
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="hours" >
+       <property name="suffix" >
+        <string> hours</string>
+       </property>
+       <property name="maximum" >
+        <number>1000</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="minutes" >
+       <property name="suffix" >
+        <string> minutes</string>
+       </property>
+       <property name="maximum" >
+        <number>59</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="seconds" >
+       <property name="suffix" >
+        <string> seconds</string>
+       </property>
+       <property name="maximum" >
+        <number>59</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>auto_resume</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>hours</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>70</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>78</x>
+     <y>40</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>auto_resume</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>minutes</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>167</x>
+     <y>14</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>172</x>
+     <y>40</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>auto_resume</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>seconds</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>261</x>
+     <y>14</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>275</x>
+     <y>57</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

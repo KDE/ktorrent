@@ -58,6 +58,8 @@ namespace kt
 			torrentAdded(*i);
 		}
 		
+		connect(qm,SIGNAL(pauseStateChanged(bool)),this,SIGNAL(pauseStateChanged(bool)));
+		
 		kt::GroupManager* gman = core->getGroupManager();
 		connect(gman,SIGNAL(customGroupAdded(Group*)),this,SLOT(groupAdded(Group*)));
 		connect(gman,SIGNAL(customGroupRemoved(Group*)),this,SLOT(groupRemoved(Group*)));
