@@ -20,6 +20,7 @@
  ***************************************************************************/
 #include <QDBusConnection>
 #include <klocale.h>
+#include <util/log.h>
 #include <util/sha1hash.h>
 #include <util/bitset.h>
 #include <interfaces/torrentinterface.h>
@@ -326,6 +327,7 @@ namespace kt
 	void DBusTorrent::seedingAutoStopped(bt::TorrentInterface* tor,bt::AutoStopReason reason)
 	{
 		Q_UNUSED(tor);
+		Out(SYS_GEN|LOG_DEBUG) << "DBusTorrent::seedingAutoStopped" << endl;
 		QString msg;
 		switch (reason)
 		{
@@ -336,7 +338,7 @@ namespace kt
 				msg = i18n("Maximum seed time reached !");
 				break;
 		}
-		stoppedByError(this,msg);
+		seedingAutoStopped(this,msg);
 	}
 	
 	void DBusTorrent::corruptedDataFound(bt::TorrentInterface* tor)
@@ -348,5 +350,6 @@ namespace kt
 	void DBusTorrent::torrentStopped(bt::TorrentInterface* tor)
 	{
 		Q_UNUSED(tor);
+		torrentStopped(this);
 	}
 }

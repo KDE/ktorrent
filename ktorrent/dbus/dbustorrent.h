@@ -99,12 +99,12 @@ namespace kt
 		// Stats
 		Q_SCRIPTABLE QByteArray stats() const;
 		
-	signals:
-		void finished(DBusTorrent* tor);
-		void stoppedByError(DBusTorrent* tor,const QString & msg);
-		void seedingAutoStopped(DBusTorrent* tor,const QString & reason);
-		void corruptedDataFound(DBusTorrent* tor);
-		void torrentStopped(DBusTorrent* tor);
+	Q_SIGNALS:
+		Q_SCRIPTABLE void finished(QObject* tor);
+		Q_SCRIPTABLE void stoppedByError(QObject* tor,const QString & msg);
+		Q_SCRIPTABLE void seedingAutoStopped(QObject* tor,const QString & reason);
+		Q_SCRIPTABLE void corruptedDataFound(QObject* tor);
+		Q_SCRIPTABLE void torrentStopped(QObject* tor);
 		
 	private slots:
 		void finished(bt::TorrentInterface* tor);
