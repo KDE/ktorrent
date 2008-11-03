@@ -131,7 +131,9 @@ namespace kt
 		
 		enableRunScript(selected.count() > 0 && num_not_running > 0);
 		enableStopScript(selected.count() > 0 && num_running > 0);
-		Script* s = model->scriptForIndex(selected.front());
+		Script* s = 0;
+		if (selected.count() > 0)
+			s = model->scriptForIndex(selected.front());
 		enableProperties(selected.count() == 1 && s && s->metaInfo().valid());
 		enableConfigure(selected.count() == 1 && s && s->hasConfigure());
 	}
