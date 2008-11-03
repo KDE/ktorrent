@@ -160,6 +160,26 @@ namespace kt
 		return ret;
 	}
 	
+	QStringList ScriptModel::runningScriptFiles() const
+	{
+		QStringList ret;
+		foreach (Script* s,scripts)
+		{
+			if (s->running())
+				ret << s->scriptFile();
+		}
+		return ret;
+	}
+	
+	void ScriptModel::runScripts(const QStringList & r)
+	{
+		foreach (Script* s,scripts)
+		{
+			if (r.contains(s->scriptFile()) && !s->running())
+				s->execute();
+		}
+	}
+	
 	void ScriptModel::removeScripts(const QModelIndexList & indices)
 	{
 		QList<Script*> to_remove;

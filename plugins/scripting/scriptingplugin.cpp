@@ -154,6 +154,11 @@ namespace kt
 			if (bt::Exists(s))
 				model->addScript(s);
 		}
+		
+		// Start scripts which where running the previous time
+		QStringList running = g.readEntry("running",QStringList());
+		if (running.count())
+			model->runScripts(running);
 	}
 	
 	Script* ScriptingPlugin::loadScriptDir(const QString & dir)
@@ -181,6 +186,7 @@ namespace kt
 	{
 		KConfigGroup g = KGlobal::config()->group("Scripting");
 		g.writeEntry("scripts",model->scriptFiles());
+		g.writeEntry("running",model->runningScriptFiles());
 		g.sync();
 	}
 	

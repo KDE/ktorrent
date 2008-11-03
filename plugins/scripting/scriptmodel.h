@@ -58,8 +58,14 @@ namespace kt
 		/// Get a list of all scripts
 		QStringList scriptFiles() const;
 		
+		/// Get a list of all running scripts
+		QStringList runningScriptFiles() const;
+		
 		/// Remove a bunch of scripts
 		void removeScripts(const QModelIndexList & indices);
+		
+		/// Run all the scripts in the string list
+		void runScripts(const QStringList & r);
 		
 		virtual int rowCount(const QModelIndex & parent) const;
 		virtual QVariant data(const QModelIndex & index, int role) const;
