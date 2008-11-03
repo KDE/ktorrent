@@ -47,13 +47,13 @@ namespace kt
 		insertRow(scripts.count());
 	}
 	
-	void ScriptModel::addScriptFromDesktopFile(const QString & dir,const QString & desktop_file)
+	Script* ScriptModel::addScriptFromDesktopFile(const QString & dir,const QString & desktop_file)
 	{
 		Script* s = new Script(this);
 		if (!s->loadFromDesktopFile(dir,desktop_file))
 		{
 			delete s;
-			return;
+			return 0;
 		}
 		
 		// we don't want dupes
@@ -62,12 +62,13 @@ namespace kt
 			if (s->scriptFile() == os->scriptFile())
 			{
 				delete s;
-				return;
+				return 0;
 			}
 		}
 		
 		scripts.append(s);
 		insertRow(scripts.count());
+		return s;
 	}
 	
 	int ScriptModel::rowCount(const QModelIndex & parent) const
@@ -164,7 +165,11 @@ namespace kt
 		QList<Script*> to_remove;
 		
 		foreach (const QModelIndex & idx,indices)
-			to_remove << scriptForIndex(idx);
+		{
+			Script* s = scriptForIndex(idx);
+			if (s && s->removeable())
+				to_remove << s;
+		}
 		
 		foreach (Script* s,to_remove)
 		{

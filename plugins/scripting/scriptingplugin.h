@@ -27,6 +27,7 @@ class KJob;
 
 namespace kt
 {
+	class Script;
 	class ScriptManager;
 	class ScriptModel;
 	
@@ -48,7 +49,7 @@ namespace kt
 		void scriptDownloadFinished(KJob* job);
 		void loadScripts();
 		void saveScripts();
-		void loadScriptDir(const QString & dir);
+		Script* loadScriptDir(const QString & dir);
 		
 	private slots:
 		void addScript();

@@ -57,6 +57,7 @@ namespace kt
 		toolbar->addAction(remove);
 		toolbar->addAction(run);
 		toolbar->addAction(stop);
+		toolbar->addAction(configure);
 		connect(this,SIGNAL(enableRemoveScript(bool)),remove,SLOT(setEnabled(bool)));
 		connect(this,SIGNAL(enableRemoveScript(bool)),edit,SLOT(setEnabled(bool)));
 		connect(this,SIGNAL(enableStopScript(bool)),stop,SLOT(setEnabled(bool)));
@@ -117,17 +118,26 @@ namespace kt
 	
 	void ScriptManager::updateActions(const QModelIndexList & selected)
 	{
-		enableRemoveScript(selected.count() > 0);
+		int num_removeable = 0;
 		int num_running = 0;
 		int num_not_running = 0;
 		foreach (const QModelIndex & idx,selected)
 		{
 			Script* s = model->scriptForIndex(idx);
-			if (s && s->running())
-				num_running++;
+			if (s)
+			{
+				if (s->running())
+					num_running++;
+				else
+					num_not_running++;
+				if (s->removeable())
+					num_removeable++;
+			}
 			else
 				num_not_running++;
 		}
+		
+		enableRemoveScript(num_removeable > 0);
 		
 		enableRunScript(selected.count() > 0 && num_not_running > 0);
 		enableStopScript(selected.count() > 0 && num_running > 0);

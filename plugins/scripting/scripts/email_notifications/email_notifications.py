@@ -13,7 +13,6 @@ import socket
 
 class EMailNotifier:
 	def __init__(self):
-		KTorrent.log("EMailNotifications: __init__")
 		self.mail_user = "your_email@gmail.com"
 		self.mail_pwd = "your_password"
 		self.mail_server = "smtp.gmail.com"
@@ -31,7 +30,6 @@ class EMailNotifier:
 			self.torrentAdded(t)
 
 	def mail(self,subject, text):
-		KTorrent.log("EMailNotifications: " + subject + " : " + text)
 		msg = MIMEMultipart()
 		
 		msg['From'] = self.mail_user
@@ -151,7 +149,6 @@ class EMailNotifier:
 	
 	def torrentAdded(self,ih):
 		tor = KTorrent.torrent(ih)
-		KTorrent.log("EMailNotifications: torrentAdded " + tor.name())
 		self.connectSignals(tor)
  
  # load settings

@@ -102,11 +102,18 @@ namespace kt
 		/// Call the configure function of the script
 		void configure();
 		
+		/// Wether or not the script can be removed
+		bool removeable() const {return can_be_removed;}
+		
+		/// Set the script to be removeable or not
+		void setRemoveable(bool on) {can_be_removed = on;}
+		
 	private:
 		QString file;
 		Kross::Action* action;
 		bool executing;
 		MetaInfo info;
+		bool can_be_removed;
 	};
 
 }

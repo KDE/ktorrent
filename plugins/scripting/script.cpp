@@ -28,11 +28,11 @@
 
 namespace kt
 {
-	Script::Script(QObject* parent) : QObject(parent),action(0),executing(false)
+	Script::Script(QObject* parent) : QObject(parent),action(0),executing(false),can_be_removed(true)
 	{
 	}
 	
-	Script::Script(const QString & file,QObject* parent) : QObject(parent),file(file),action(0),executing(false)
+	Script::Script(const QString & file,QObject* parent) : QObject(parent),file(file),action(0),executing(false),can_be_removed(true)
 	{
 	}
 

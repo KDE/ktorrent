@@ -135,8 +135,14 @@ namespace kt
 			QDir d(dir);
 			QStringList subdirs = d.entryList(QDir::Dirs);
 			foreach (const QString & sdir,subdirs)
+			{
 				if (sdir != ".." && sdir != ".")
-					loadScriptDir(d.absoluteFilePath(sdir));
+				{
+					Script* s = loadScriptDir(d.absoluteFilePath(sdir));
+					if (s)
+						s->setRemoveable(false);
+				}
+			}
 		}
 		
 		// 
@@ -150,7 +156,7 @@ namespace kt
 		}
 	}
 	
-	void ScriptingPlugin::loadScriptDir(const QString & dir)
+	Script* ScriptingPlugin::loadScriptDir(const QString & dir)
 	{
 		QDir d(dir);
 		QStringList files = d.entryList(QDir::Files);
@@ -164,9 +170,11 @@ namespace kt
 		{
 			if (file.endsWith(".desktop"))
 			{
-				model->addScriptFromDesktopFile(dir_path,file);
+				return model->addScriptFromDesktopFile(dir_path,file);
 			}
 		}
+		
+		return 0;
 	}
 	
 	void ScriptingPlugin::saveScripts()
