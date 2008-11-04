@@ -543,7 +543,6 @@ namespace bt
 							  const QString & default_save_dir)
 	{
 		// first load the torrent file
-		Marker mark("TorrentControl::init");
 		tor = new Torrent();
 		try
 		{
@@ -557,10 +556,7 @@ namespace bt
 					"The torrent is probably corrupt or is not a torrent file.",torrent));
 		}
 		
-		mark.update();
 		initInternal(qman,tmpdir,ddir,default_save_dir,torrent.startsWith(tmpdir));
-		mark.update();
-		
 		
 		// copy torrent in tor dir
 		QString tor_copy = tordir + "torrent";
@@ -568,7 +564,6 @@ namespace bt
 		{
 			bt::CopyFile(torrent,tor_copy);
 		}
-		
 	}
 	
 	
@@ -658,38 +653,29 @@ namespace bt
 	
 	void TorrentControl::setupData(const QString & ddir)
 	{
-		Marker mark("TorrentControl::setupData");
 		// create PeerManager and Tracker
 		pman = new PeerManager(*tor);
-		mark.update();
 		//Out() << "Tracker url " << url << " " << url.protocol() << " " << url.prettyURL() << endl;
 		psman = new PeerSourceManager(this,pman);
 		connect(psman,SIGNAL(statusChanged(TrackerStatus , const QString& )),
 				this,SLOT(trackerStatusChanged(TrackerStatus , const QString& )));
-		mark.update();
 
 		// Create chunkmanager, load the index file if it exists
 		// else create all the necesarry files
 		cman = new ChunkManager(*tor,tordir,outputdir,istats.custom_output_name,cache_factory);
-		mark.update();
 		connect(cman,SIGNAL(updateStats()),this,SLOT(updateStats()));
 		if (bt::Exists(tordir + "index"))
 			cman->loadIndexFile();
 
 		stats.completed = cman->completed();
-		mark.update();
 
 		// create downloader,uploader and choker
 		downloader = new Downloader(*tor,*pman,*cman,custom_selector_factory);
 		downloader->loadWebSeeds(tordir + "webseeds");
-		mark.update();
 		connect(downloader,SIGNAL(ioError(const QString& )),
 				this,SLOT(onIOError(const QString& )));
 		uploader = new Uploader(*cman,*pman);
-		mark.update();
 		choke = new Choker(*pman,*cman);
-		mark.update();
-
 
 		connect(pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
 		connect(pman,SIGNAL(peerKilled(Peer* )),this,SLOT(onPeerRemoved(Peer* )));
