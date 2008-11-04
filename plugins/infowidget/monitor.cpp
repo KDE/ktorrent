@@ -21,17 +21,19 @@
 
 #include <interfaces/peerinterface.h>
 #include <interfaces/torrentinterface.h>
+#include <interfaces/torrentfileinterface.h>
 #include <interfaces/chunkdownloadinterface.h>
 #include "peerview.h"
 #include "chunkdownloadview.h"
+#include "fileview.h"
 
 using namespace bt;
 
 namespace kt
 {
 	
-	Monitor::Monitor(bt::TorrentInterface* tc,PeerView* pv,ChunkDownloadView* cdv) 
-		: tc(tc),pv(pv),cdv(cdv)
+	Monitor::Monitor(bt::TorrentInterface* tc,PeerView* pv,ChunkDownloadView* cdv,FileView* fv) 
+		: tc(tc),pv(pv),cdv(cdv),fv(fv)
 	{
 		if (tc)
 			tc->setMonitor(this);
@@ -84,5 +86,17 @@ namespace kt
 		if (cdv)
 			cdv->removeAll();
 		tc = 0;
+	}
+	
+	void Monitor::filePercentageChanged(bt::TorrentFileInterface* file,float percentage)
+	{
+		if (fv)
+			fv->filePercentageChanged(file,percentage);
+	}
+	
+	void Monitor::filePreviewChanged(bt::TorrentFileInterface* file,bool preview)
+	{
+		if (fv)
+			fv->filePreviewChanged(file,preview);
 	}
 }

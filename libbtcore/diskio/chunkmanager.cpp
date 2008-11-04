@@ -33,7 +33,7 @@
 #include <util/log.h>
 #include <util/functions.h>
 #include <interfaces/cachefactory.h>
-
+#include <util/timer.h>
 #include <klocale.h>
 
 namespace bt
@@ -69,7 +69,6 @@ namespace bt
 			cache = fac->create(tor,tmpdir,datadir);
 		
 		cache->loadFileMap();
-		
 		index_file = tmpdir + "index";
 		file_info_file = tmpdir + "file_info";
 		file_priority_file = tmpdir + "file_priority";
@@ -84,14 +83,16 @@ namespace bt
 			else
 				chunks[i] = new Chunk(i,lsize,cache);
 		}
+		
 		chunks_left = 0;
 		recalc_chunks_left = true;
 		corrupted_count = recheck_counter = 0;
 
 		if (tor.isMultiFile())
 			createBorderChunkSet();
-
-		for (Uint32 i = 0;i < tor.getNumFiles();i++)
+		
+		Uint32 num_files = tor.getNumFiles();
+		for (Uint32 i = 0;i < num_files;i++)
 		{
 			TorrentFile & tf = tor.getFile(i);
 			connect(&tf,SIGNAL(downloadPriorityChanged(TorrentFile*, Priority, Priority )),
@@ -102,10 +103,10 @@ namespace bt
 				downloadPriorityChanged(&tf,tf.getPriority(),tf.getOldPriority());
 			}
 		}
-	
+		
 		if (tor.isMultiFile())
 		{
-			for(Uint32 i=0; i<tor.getNumFiles(); ++i)
+			for(Uint32 i=0;i < num_files; ++i)
 			{
 				bt::TorrentFile & file = tor.getFile(i);
 				if (!file.isMultimedia() || file.getPriority() == bt::ONLY_SEED_PRIORITY) 

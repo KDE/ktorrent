@@ -70,6 +70,8 @@
 namespace bt
 {
 
+	
+
 	KUrl TorrentControl::completed_dir;
 	bool TorrentControl::completed_datacheck = false;
 	Uint32 TorrentControl::min_diskspace = 100;
@@ -527,7 +529,11 @@ namespace bt
 			for (Uint32 i = 0;i < pman->getNumConnectedPeers();i++)
 				tmon->peerAdded(pman->getPeer(i));
 		}
+		
+		for (Uint32 i = 0;i < tor->getNumFiles();i++)
+			tor->getFile(i).setMonitor(tmon);
 	}
+	
 	
 	
 	void TorrentControl::init(QueueManagerInterface* qman,
@@ -537,6 +543,7 @@ namespace bt
 							  const QString & default_save_dir)
 	{
 		// first load the torrent file
+		Marker mark("TorrentControl::init");
 		tor = new Torrent();
 		try
 		{
@@ -550,7 +557,10 @@ namespace bt
 					"The torrent is probably corrupt or is not a torrent file.",torrent));
 		}
 		
+		mark.update();
 		initInternal(qman,tmpdir,ddir,default_save_dir,torrent.startsWith(tmpdir));
+		mark.update();
+		
 		
 		// copy torrent in tor dir
 		QString tor_copy = tordir + "torrent";
@@ -648,31 +658,37 @@ namespace bt
 	
 	void TorrentControl::setupData(const QString & ddir)
 	{
+		Marker mark("TorrentControl::setupData");
 		// create PeerManager and Tracker
 		pman = new PeerManager(*tor);
+		mark.update();
 		//Out() << "Tracker url " << url << " " << url.protocol() << " " << url.prettyURL() << endl;
 		psman = new PeerSourceManager(this,pman);
 		connect(psman,SIGNAL(statusChanged(TrackerStatus , const QString& )),
 				this,SLOT(trackerStatusChanged(TrackerStatus , const QString& )));
-
+		mark.update();
 
 		// Create chunkmanager, load the index file if it exists
 		// else create all the necesarry files
 		cman = new ChunkManager(*tor,tordir,outputdir,istats.custom_output_name,cache_factory);
-		
+		mark.update();
 		connect(cman,SIGNAL(updateStats()),this,SLOT(updateStats()));
 		if (bt::Exists(tordir + "index"))
 			cman->loadIndexFile();
 
 		stats.completed = cman->completed();
+		mark.update();
 
 		// create downloader,uploader and choker
 		downloader = new Downloader(*tor,*pman,*cman,custom_selector_factory);
 		downloader->loadWebSeeds(tordir + "webseeds");
+		mark.update();
 		connect(downloader,SIGNAL(ioError(const QString& )),
 				this,SLOT(onIOError(const QString& )));
 		uploader = new Uploader(*cman,*pman);
+		mark.update();
 		choke = new Choker(*pman,*cman);
+		mark.update();
 
 
 		connect(pman,SIGNAL(newPeer(Peer* )),this,SLOT(onNewPeer(Peer* )));
@@ -706,8 +722,8 @@ namespace bt
 				throw Error(i18n("Cannot migrate %1 : %2",tor->getNameSuggestion(),err.toString()));
 			}
 		}
-		setupData(ddir);
 
+		setupData(ddir);
 		updateStatusMsg();
 
 		// to get rid of phantom bytes we need to take into account
@@ -727,17 +743,11 @@ namespace bt
 			Out(SYS_GEN|LOG_DEBUG) << "Warning : " << e.toString() << endl;
 			istats.prev_bytes_dl = downloader->bytesDownloaded();
 		}
-		
+
 		loadStats();
 		updateStats();
 		saveStats();
 		stats.output_path = cman->getOutputPath();
-	/*	if (stats.output_path.isNull())
-		{
-			cman->createFiles();
-			stats.output_path = cman->getOutputPath();
-		}*/
-		Out(SYS_GEN|LOG_DEBUG) << "OutputPath = " << stats.output_path << endl;
 	}
 	
 	void TorrentControl::setDisplayName(const QString & n)

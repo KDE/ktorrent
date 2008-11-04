@@ -30,6 +30,7 @@ class QSortFilterProxyModel;
 namespace bt
 {
 	class TorrentInterface;
+	class TorrentFileInterface;
 }
 
 namespace kt
@@ -51,6 +52,9 @@ namespace kt
 		void saveState(KSharedConfigPtr cfg);
 		void loadState(KSharedConfigPtr cfg);
 		void update();
+		void filePercentageChanged(bt::TorrentFileInterface* file,float percentage);
+		void filePreviewChanged(bt::TorrentFileInterface* file,bool preview);
+		
 	public slots:
 		void onTorrentRemoved(bt::TorrentInterface* tc);
 

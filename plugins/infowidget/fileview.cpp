@@ -40,6 +40,7 @@
 #include <interfaces/torrentfileinterface.h>
 #include <qfileinfo.h>
 #include <util/log.h>
+#include <util/timer.h>
 #include "iwfiletreemodel.h"
 #include "iwfilelistmodel.h"
 	
@@ -435,6 +436,18 @@ namespace kt
 	{
 		executeDelayedItemsLayout();
 		return QTreeView::viewportEvent(event);
+	}
+	
+	void FileView::filePercentageChanged(bt::TorrentFileInterface* file,float percentage)
+	{
+		if (model)
+			model->filePercentageChanged(file,percentage);
+	}
+	
+	void FileView::filePreviewChanged(bt::TorrentFileInterface* file,bool preview)
+	{
+		if (model)
+			model->filePreviewChanged(file,preview);
 	}
 }
 

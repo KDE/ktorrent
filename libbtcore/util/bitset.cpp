@@ -24,6 +24,28 @@
 namespace bt
 {
 	BitSet BitSet::null;
+	
+	// Fast lookup table to see how many bits are there in a byte
+	static const Uint8 BitCount[] = 
+	{
+		0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 
+		1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 
+		1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 
+		2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+		1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 
+		2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+		2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+		3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 
+		1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 
+		2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+		2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+		3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 
+		2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 
+		3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 
+		3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 
+		4, 5, 5, 6, 5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8
+	};
+
 
 	BitSet::BitSet(Uint32 num_bits) : num_bits(num_bits),data(0)
 	{
@@ -63,10 +85,9 @@ namespace bt
 	{
 		num_on = 0;
 		Uint32 i = 0;
-		while (i < num_bits)
+		while (i < num_bytes)
 		{
-			if (get(i))
-				num_on++;
+			num_on += BitCount[data[i]];
 			i++;
 		}
 	}
@@ -122,12 +143,16 @@ namespace bt
 	}
 
 	void BitSet::orBitSet(const BitSet & other)
-	{
+	{		
 		Uint32 i = 0;
-		while (i < num_bits)
+		num_on = 0;
+		while (i < num_bytes)
 		{
-			bool val = get(i) || other.get(i);
-			set(i,val);
+			Uint8 od = 0;
+			if (i < other.num_bytes)
+				od = other.data[i];
+			data[i] |= od;
+			num_on += BitCount[data[i]];
 			i++;
 		}
 	}
@@ -135,10 +160,14 @@ namespace bt
 	void BitSet::andBitSet(const BitSet & other)
 	{
 		Uint32 i = 0;
-		while (i < num_bits)
+		num_on = 0;
+		while (i < num_bytes)
 		{
-			bool val = get(i) && other.get(i);
-			set(i,val);
+			Uint8 od = 0;
+			if (i < other.num_bytes)
+				od = other.data[i];
+			data[i] &= od;
+			num_on += BitCount[data[i]];
 			i++;
 		}
 	}
@@ -148,7 +177,7 @@ namespace bt
 		Uint32 i = 0;
 		while (i < num_bits)
 		{
-			if(other.get(i) && !get(i))
+			if (other.get(i) && !get(i))
 				return false;
 			i++;
 		}

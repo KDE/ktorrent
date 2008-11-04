@@ -26,6 +26,7 @@ namespace bt
 {
 	class ChunkDownloadInterface;
 	class PeerInterface;
+	class TorrentFileInterface;
 
 	/**
 	 * @author Joris Guisson
@@ -73,6 +74,20 @@ namespace bt
 		 * The download has been deleted.
 		 */
 		virtual void destroyed() = 0;
+		
+		/**
+		 * The download percentage of a file has changed. 
+		 * @param file The file
+		 * @param percentage The percentage
+		 */
+		virtual void filePercentageChanged(TorrentFileInterface* file,float percentage) = 0;
+		
+		/**
+		 * Preview status of a file has changed.
+		 * @param file The file
+		 * @param preview Wether or not it is available
+		 */
+		virtual void filePreviewChanged(TorrentFileInterface* file,bool preview) = 0;
 	};
 
 }

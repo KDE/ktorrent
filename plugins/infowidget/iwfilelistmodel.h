@@ -45,9 +45,8 @@ namespace kt
 		virtual bool setData(const QModelIndex & index, const QVariant & value, int role); 
 		void update();
 		
-	private slots:
-		void onPercentageUpdated();
-		void onPreviewAvailable(bool av);
+		void filePercentageChanged(bt::TorrentFileInterface* file,float percentage);
+		void filePreviewChanged(bt::TorrentFileInterface* file,bool preview);
 		
 	private:
 		QVariant displayData(const QModelIndex & index) const;

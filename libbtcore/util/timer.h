@@ -20,6 +20,7 @@
 #ifndef BTTIMER_H
 #define BTTIMER_H
 
+#include <util/log.h>
 #include <util/constants.h>
 #include <btcore_export.h>
 #include "constants.h"
@@ -44,7 +45,24 @@ namespace bt
 		TimeStamp getElapsedSinceUpdate() const;
 		Timer & operator = (const Timer & t);
 	};
-
+#if 0
+	class Marker
+	{
+		QString name;
+		Timer timer;
+		public:
+			Marker(const QString & name) : name(name) 
+			{
+				timer.update();
+			}
+		
+			void update()
+			{
+				timer.update();
+				Out(SYS_GEN|LOG_DEBUG) << "Mark: " << name << " : " << timer.getElapsed() << " ms" << endl;
+			}
+	};
+#endif
 }
 
 #endif

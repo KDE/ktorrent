@@ -41,13 +41,6 @@ namespace kt
 		preview = false;
 		percentage = 0;
 
-		for (Uint32 i = 0;i < tc->getNumFiles();i++)
-		{
-			bt::TorrentFileInterface & file = tc->getTorrentFile(i);
-			connect(&file,SIGNAL(downloadPercentageChanged()),this,SLOT(onPercentageUpdated()));
-			connect(&file,SIGNAL(previewAvailable( bool )),this,SLOT(onPreviewAvailable( bool )));
-		}
-		
 		if (root)
 		{
 			BitSet d = tc->downloadedChunksBitSet();
@@ -277,17 +270,15 @@ namespace kt
 		return true;
 	}
 	
-	
-	
-	void IWFileTreeModel::onPercentageUpdated()
+	void IWFileTreeModel::filePercentageChanged(bt::TorrentFileInterface* file,float percentage)
 	{
-		bt::TorrentFileInterface* file = (bt::TorrentFileInterface*)sender();
+		Q_UNUSED(percentage);
 		update(index(0,0,QModelIndex()),file,4);
 	}
 	
-	void IWFileTreeModel::onPreviewAvailable(bool /*av*/)
+	void IWFileTreeModel::filePreviewChanged(bt::TorrentFileInterface* file,bool preview)
 	{
-		bt::TorrentFileInterface* file = (bt::TorrentFileInterface*)sender();
+		Q_UNUSED(preview);
 		update(index(0,0,QModelIndex()),file,3);
 	}
 	

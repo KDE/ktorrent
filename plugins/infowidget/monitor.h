@@ -31,6 +31,7 @@ namespace kt
 {
 	class PeerView;
 	class ChunkDownloadView;
+	class FileView;
 	
 	/**
 	@author Joris Guisson
@@ -40,8 +41,9 @@ namespace kt
 		bt::TorrentInterface* tc;
 		PeerView* pv;
 		ChunkDownloadView* cdv;
+		FileView* fv;
 	public:
-		Monitor(bt::TorrentInterface* tc,PeerView* pv ,ChunkDownloadView* cdv);
+		Monitor(bt::TorrentInterface* tc,PeerView* pv ,ChunkDownloadView* cdv,FileView* fv);
 		virtual ~Monitor();
 	
 		virtual void downloadRemoved(bt::ChunkDownloadInterface* cd);
@@ -50,6 +52,8 @@ namespace kt
 		virtual void peerRemoved(bt::PeerInterface* peer);
 		virtual void stopped();
 		virtual void destroyed();
+		virtual void filePercentageChanged(bt::TorrentFileInterface* file,float percentage);
+		virtual void filePreviewChanged(bt::TorrentFileInterface* file,bool preview);
 	};
 }
 

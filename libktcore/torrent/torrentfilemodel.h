@@ -126,6 +126,9 @@ namespace kt
 		bool fileNamesEditable() const {return file_names_editable;}
 		
 		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
+		
+		virtual void filePercentageChanged(bt::TorrentFileInterface* file,float percentage);
+		virtual void filePreviewChanged(bt::TorrentFileInterface* file,bool preview);
 signals:
 		/**
 		 * Emitted whenever one or more items changes check state

@@ -26,7 +26,7 @@ namespace bt
 
 	Timer::Timer() : elapsed(0)
 	{
-		last = GetCurrentTime();
+		last = Now();
 	}
 
 	Timer::Timer(const Timer & t) : last(t.last),elapsed(t.elapsed)
@@ -38,7 +38,7 @@ namespace bt
 
 	void Timer::update()
 	{
-		TimeStamp now = GetCurrentTime();
+		TimeStamp now = Now();
 		TimeStamp d = (now > last) ? now - last : 0;
 		elapsed = d;
 		last = now;
@@ -46,7 +46,7 @@ namespace bt
 	
 	TimeStamp Timer::getElapsedSinceUpdate() const
 	{
-		TimeStamp now = GetCurrentTime();
+		TimeStamp now = Now();
 		return (now > last) ? now - last : 0;
 	}
 	

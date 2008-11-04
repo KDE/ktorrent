@@ -40,12 +40,6 @@ namespace kt
 		mmfile = IsMultimediaFile(tc->getStats().output_path);
 		preview = false;
 		percentage = 0;
-		for (Uint32 i = 0;i < tc->getNumFiles();i++)
-		{
-			bt::TorrentFileInterface & file = tc->getTorrentFile(i);
-			connect(&file,SIGNAL(downloadPercentageChanged()),this,SLOT(onPercentageUpdated()));
-			connect(&file,SIGNAL(previewAvailable( bool )),this,SLOT(onPreviewAvailable( bool )));
-		}
 	}
 
 
@@ -250,16 +244,16 @@ namespace kt
 		return true;
 	}
 
-	void IWFileListModel::onPercentageUpdated()
+	void IWFileListModel::filePercentageChanged(bt::TorrentFileInterface* file,float percentage)
 	{
-		bt::TorrentFileInterface* file = (bt::TorrentFileInterface*)sender();
+		Q_UNUSED(percentage);
 		QModelIndex idx = createIndex(file->getIndex(),4,file);
 		emit dataChanged(idx,idx);
 	}
 
-	void IWFileListModel::onPreviewAvailable(bool /*av*/)
+	void IWFileListModel::filePreviewChanged(bt::TorrentFileInterface* file,bool preview)
 	{
-		bt::TorrentFileInterface* file = (bt::TorrentFileInterface*)sender();
+		Q_UNUSED(preview);
 		QModelIndex idx = createIndex(file->getIndex(),3,file);
 		emit dataChanged(idx,idx);
 	}

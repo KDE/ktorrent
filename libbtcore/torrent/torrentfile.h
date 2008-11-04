@@ -29,6 +29,7 @@ namespace bt
 {
 	class BitSet;
 	class ChunkManager;
+	class MonitorInterface;
 
 	/**
 	 * @author Joris Guisson

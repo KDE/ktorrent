@@ -67,6 +67,18 @@ namespace kt
 		
 		return flags;
 	}
+	
+	void TorrentFileModel::filePercentageChanged(bt::TorrentFileInterface* file,float percentage)
+	{
+		Q_UNUSED(file);
+		Q_UNUSED(percentage);
+	}
+	
+	void TorrentFileModel::filePreviewChanged(bt::TorrentFileInterface* file,bool preview)
+	{
+		Q_UNUSED(file);
+		Q_UNUSED(preview);
+	}
 }
 
 #include "torrentfilemodel.moc"
