@@ -138,10 +138,12 @@ namespace bt
 			{
 				enc.write("announce-list");
 				enc.beginList();
-				enc.beginList();
 				foreach (const QString &t,trackers)
+				{
+					enc.beginList();
 					enc.write(t);
-				enc.end();
+					enc.end();
+				}
 				enc.end();
 			
 			}
