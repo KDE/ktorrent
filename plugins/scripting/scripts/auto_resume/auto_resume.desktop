@@ -1,6 +1,17 @@
 [Desktop Entry]
 Name=AutoResumeScript
+Name[nds]=Auto-Wiedermaak-Skript
+Name[pt]=Programa de Continuação Automática
+Name[pt_BR]=Programa de Continuação Automática
+Name[ru]=Автовозобновление
+Name[sv]=Skript för automatisk återupptagning
 Comment=Script to automatically resume after some time, when the paused state is enabled
+Comment[nds]=Dat Skript maakt automaatsch na en wiss Tiet wieder, wenn de Anhollen-Status anmaakt is
+Comment[pt]=Um programa para prosseguir automaticamente, ao fim de algum tempo, quando for activado o estado de pausa
+Comment[pt_BR]=Um programa para prosseguir automaticamente, ao fim de algum tempo, quando for activado o estado de pausa
+Comment[ru]=Сценарий для втоматического возобновления работы после некоторого времени, если она была приостановлена
+Comment[sv]=Skript för att automatiskt fortsätta efter en viss tid, när paustillståndet aktiveras
+Comment[uk]=Скрипт для автоматичного поновлення через певний проміжок часу, якщо увімкнено стан призупинки.
 Type=KTorrentScript
 Icon=kt-bandwidth-scheduler
 X-KTorrent-Script-Author=Joris Guisson

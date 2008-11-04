@@ -1,15 +1,19 @@
 [Desktop Entry]
 Name=E-Mail Notifications
+Name[el]=Ειδοποιήσεις E-Mail
 Name[nds]=Nettpost-Narichten
 Name[pt]=Notificações por E-Mail
 Name[pt_BR]=Notificações por E-Mail
+Name[ru]=Уведомления E-Mail
 Name[sv]=Underrättelser med e-post
 Name[uk]=Сповіщення електронною поштою
 Name[zh_TW]=電子郵件通知
 Comment=Script to notify you of events via e-mail
+Comment[el]=Σενάριο για την ειδοποίηση γεγονότων μέσω e-mail
 Comment[nds]=Skript, dat Di en Nettbreef över Begeefnissen tostüert
 Comment[pt]=Um programa para o notificar sobre eventos por e-mail
 Comment[pt_BR]=Um programa para o notificar sobre eventos por e-mail
+Comment[ru]=Сценарий для отправки по электронной почте уведомлений о событиях
 Comment[sv]=Skript för att underrätta dig om händelser via e-post
 Comment[uk]=Скрипт для вашого сповіщення про події електронною поштою
 Comment[zh_TW]=透過電子郵件通知您事件的文稿
