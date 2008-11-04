@@ -73,6 +73,7 @@ namespace kt
 
 	int FileSelectDlg::execute(bt::TorrentInterface* tc,bool* user, bool* start,bool* skip_check)
 	{
+		setWindowTitle(i18n("Opening %1",tc->getDisplayName()));
 		this->tc = tc;
 		this->user = user;
 		this->start = start;
