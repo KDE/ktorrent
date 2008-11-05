@@ -663,10 +663,11 @@ namespace bt
 		// Create chunkmanager, load the index file if it exists
 		// else create all the necesarry files
 		cman = new ChunkManager(*tor,tordir,outputdir,istats.custom_output_name,cache_factory);
-		connect(cman,SIGNAL(updateStats()),this,SLOT(updateStats()));
 		if (bt::Exists(tordir + "index"))
 			cman->loadIndexFile();
-
+		
+		connect(cman,SIGNAL(updateStats()),this,SLOT(updateStats()));
+		updateStats();
 		stats.completed = cman->completed();
 
 		// create downloader,uploader and choker

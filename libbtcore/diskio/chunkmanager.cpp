@@ -745,7 +745,8 @@ namespace bt
 				}
 				cache->downloadStatusChanged(tf,download);
 				savePriorityInfo();
-				tor.updateFilePercentage(*this);
+				if (!during_load)
+					tor.updateFilePercentage(*this);
 				return;
 			}
 			
@@ -776,7 +777,8 @@ namespace bt
 		// alert the cache but first put things in critical operation mode
 		cache->downloadStatusChanged(tf,download);
 		savePriorityInfo();
-		tor.updateFilePercentage(*this);
+		if (!during_load)
+			tor.updateFilePercentage(*this);
 	}
 
 	void ChunkManager::downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority)
