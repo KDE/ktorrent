@@ -21,4 +21,4 @@ for t in tors:
 	tor = KTorrent.torrent(t)
 	KTorrent.log("Torrent %s = %s" % (t, tor.name()))
 	for i in range(0,tor.numFiles()):
-		KTorrent.log("File %i = %s" % (i,tor.file(i).path()))
+		KTorrent.log("File %i = %s" % (i,tor.filePath(i)))

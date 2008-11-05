@@ -29,13 +29,14 @@
 
 namespace bt
 {
+	TorrentFile TorrentFile::null(0);
 
-	TorrentFile::TorrentFile() : TorrentFileInterface(0,QString(),0),missing(false),filetype(UNKNOWN)
+	TorrentFile::TorrentFile(Torrent* tor) : TorrentFileInterface(0,QString(),0),tor(tor),missing(false),filetype(UNKNOWN)
 	{}
 
-	TorrentFile::TorrentFile(Uint32 index,const QString & path,
+	TorrentFile::TorrentFile(Torrent* tor,Uint32 index,const QString & path,
 							 Uint64 off,Uint64 size,Uint64 chunk_size)
-	: TorrentFileInterface(index,path,size),cache_offset(off),missing(false),filetype(UNKNOWN)
+	: TorrentFileInterface(index,path,size),tor(tor),cache_offset(off),missing(false),filetype(UNKNOWN)
 	{
 		first_chunk = off / chunk_size;
 		first_chunk_off = off % chunk_size;
@@ -61,6 +62,7 @@ namespace bt
 		last_chunk_size = tf.getLastChunkSize();
 		old_priority = priority = tf.getPriority();
 		missing = tf.isMissing();
+		tor = tf.tor;
 		filetype = UNKNOWN;
 	}
 
@@ -71,23 +73,23 @@ namespace bt
 	{
 		if (priority != EXCLUDED && dnd)
 		{
-			if(m_emitDlStatusChanged)
+			if (m_emitDlStatusChanged)
 				old_priority = priority;
 			
 			priority = EXCLUDED;
 			
 			if(m_emitDlStatusChanged)
-				emit downloadPriorityChanged(this,priority,old_priority);	
+				tor->downloadPriorityChanged(this,priority,old_priority);	
 		}
 		if (priority == EXCLUDED && (!dnd))
 		{
-			if(m_emitDlStatusChanged)
+			if (m_emitDlStatusChanged)
 				old_priority = priority;
 			
 			priority = NORMAL_PRIORITY;
 			
 			if(m_emitDlStatusChanged)
-				emit downloadPriorityChanged(this,priority,old_priority);
+				tor->downloadPriorityChanged(this,priority,old_priority);
 		}
 	}
 	
@@ -95,7 +97,7 @@ namespace bt
 	{
 		// only emit when old_priority is not equal to the new priority
 		if (priority != old_priority)
-			emit downloadPriorityChanged(this,priority,old_priority);
+			tor->downloadPriorityChanged(this,priority,old_priority);
 	}
 
 
@@ -134,7 +136,7 @@ namespace bt
 			{
 				old_priority = priority;
 				priority = newpriority;
-				emit downloadPriorityChanged(this,newpriority,old_priority);
+				tor->downloadPriorityChanged(this,newpriority,old_priority);
 				
 				// make sure percentages are updated properly
 				if (old_priority == ONLY_SEED_PRIORITY || newpriority == ONLY_SEED_PRIORITY || old_priority == EXCLUDED)
@@ -158,11 +160,9 @@ namespace bt
 		last_chunk_size = tf.getLastChunkSize();
 		priority = tf.getPriority();
 		missing = tf.isMissing();
+		tor = tf.tor;
 		return *this;
 	}
-
-	TorrentFile TorrentFile::null;
-
 	
 	Uint64 TorrentFile::fileOffset(Uint32 cindex,Uint64 chunk_size) const
 	{

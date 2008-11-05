@@ -92,12 +92,22 @@ namespace kt
 		
 		// Files
 		Q_SCRIPTABLE uint numFiles() const;
-		Q_SCRIPTABLE QObject* file(uint idx);
 		Q_SCRIPTABLE QString dataDir() const;
 		Q_SCRIPTABLE QString torDir() const;
+		Q_SCRIPTABLE QString filePath(uint file_index) const;
+		Q_SCRIPTABLE QString filePathOnDisk(uint file_index) const;
+		Q_SCRIPTABLE qulonglong fileSize(uint file_index) const;
+		Q_SCRIPTABLE int filePriority(uint file_index) const;
+		Q_SCRIPTABLE void setFilePriority(uint file_index,int prio);
+		Q_SCRIPTABLE int firstChunkOfFile(uint file_index) const;
+		Q_SCRIPTABLE int lastChunkOfFile(uint file_index) const;
+		Q_SCRIPTABLE double filePercentage(uint file_index) const;
+		Q_SCRIPTABLE bool isMultiMediaFile(uint file_index) const;
+		Q_SCRIPTABLE void setDoNotDownload(uint file_index,bool dnd);
 		
 		// Stats
 		Q_SCRIPTABLE QByteArray stats() const;
+		
 		
 	Q_SIGNALS:
 		Q_SCRIPTABLE void finished(QObject* tor);
@@ -115,7 +125,6 @@ namespace kt
 		
 	private:
 		bt::TorrentInterface* ti;
-		QList<DBusTorrentFile*> files;
 	};
 
 }

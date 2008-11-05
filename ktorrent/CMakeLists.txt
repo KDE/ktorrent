@@ -37,7 +37,6 @@ set(ktorrent_SRC
 
 	dbus/dbus.cpp
 	dbus/dbustorrent.cpp
-	dbus/dbustorrentfile.cpp
 	dbus/dbusgroup.cpp
 )
 	

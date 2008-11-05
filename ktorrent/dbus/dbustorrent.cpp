@@ -19,21 +19,23 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QDBusConnection>
+#include <QThread>
 #include <klocale.h>
 #include <util/log.h>
 #include <util/sha1hash.h>
 #include <util/bitset.h>
 #include <interfaces/torrentinterface.h>
+#include <interfaces/torrentfileinterface.h>
 #include <interfaces/trackerslist.h>
 #include <interfaces/webseedinterface.h>
 #include <bcodec/bencoder.h>
 #include "dbustorrent.h"
-#include "dbustorrentfile.h"
 
 using namespace bt;
 
 namespace kt
 {
+	
 
 	DBusTorrent::DBusTorrent(bt::TorrentInterface* ti,QObject* parent)
 			: QObject(parent),ti(ti)
@@ -42,13 +44,6 @@ namespace kt
 		QString path = QString("/torrent/%1").arg(ti->getInfoHash().toString());
 		QFlags<QDBusConnection::RegisterOption> flags = QDBusConnection::ExportScriptableSlots|QDBusConnection::ExportScriptableSignals;
 		sb.registerObject(path, this,flags);
-		
-		for (uint i = 0;i < ti->getNumFiles();i++)
-		{
-			DBusTorrentFile* tf = new DBusTorrentFile(ti->getTorrentFile(i),this);
-			sb.registerObject(path + QString("/file/%1").arg(i),tf,flags);
-			files.append(tf);
-		}
 		
 		connect(ti,SIGNAL(finished(bt::TorrentInterface*)),this,SLOT(finished(bt::TorrentInterface*)));
 		connect(ti,SIGNAL(stoppedByError(bt::TorrentInterface*, QString)),
@@ -241,14 +236,6 @@ namespace kt
 		return ti->getNumFiles();
 	}
 	
-	QObject* DBusTorrent::file(uint idx)
-	{
-		if (idx >= (uint)files.count())
-			return 0;
-		else
-			return files.at(idx);
-	}
-	
 	QString DBusTorrent::dataDir() const
 	{
 		return ti->getDataDir();
@@ -352,4 +339,91 @@ namespace kt
 		Q_UNUSED(tor);
 		torrentStopped(this);
 	}
+	
+	QString DBusTorrent::filePath(uint file_index) const
+	{
+		if (file_index >= ti->getNumFiles())
+			return QString();
+		else
+			return ti->getTorrentFile(file_index).getPath();
+	}
+	
+	QString DBusTorrent::filePathOnDisk(uint file_index) const
+	{
+		if (file_index >= ti->getNumFiles())
+			return QString();
+		else
+			return ti->getTorrentFile(file_index).getPathOnDisk();
+	}
+	
+	qulonglong DBusTorrent::fileSize(uint file_index) const
+	{
+		if (file_index >= ti->getNumFiles())
+			return 0;
+		else
+			return ti->getTorrentFile(file_index).getSize();
+	}
+	
+	int DBusTorrent::filePriority(uint file_index) const
+	{
+		if (file_index >= ti->getNumFiles())
+			return 0;
+		else
+			return ti->getTorrentFile(file_index).getPriority();
+	}
+	
+	void DBusTorrent::setFilePriority(uint file_index,int prio)
+	{
+		if (file_index >= ti->getNumFiles())
+			return;
+		
+		if (prio > 60 || prio < 10)
+			return;
+		
+		if (prio % 10 != 0)
+			return;
+		
+		ti->getTorrentFile(file_index).setPriority((bt::Priority)prio);
+	}
+	
+	int DBusTorrent::firstChunkOfFile(uint file_index) const
+	{
+		if (file_index >= ti->getNumFiles())
+			return 0;
+		else
+			return ti->getTorrentFile(file_index).getFirstChunk();
+	}
+	
+	int DBusTorrent::lastChunkOfFile(uint file_index) const
+	{
+		if (file_index >= ti->getNumFiles())
+			return 0;
+		else
+			return ti->getTorrentFile(file_index).getLastChunk();
+	}
+	
+	double DBusTorrent::filePercentage(uint file_index) const
+	{
+		if (file_index >= ti->getNumFiles())
+			return 0;
+		else
+			return ti->getTorrentFile(file_index).getDownloadPercentage();
+	}
+	
+	bool DBusTorrent::isMultiMediaFile(uint file_index) const
+	{
+		if (file_index >= ti->getNumFiles())
+			return false;
+		else
+			return ti->getTorrentFile(file_index).isMultimedia();
+	}
+	
+	void DBusTorrent::setDoNotDownload(uint file_index,bool dnd)
+	{
+		if (file_index >= ti->getNumFiles())
+			return;
+		
+		ti->getTorrentFile(file_index).setDoNotDownload(dnd);
+	}
 }
+

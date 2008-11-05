@@ -54,6 +54,7 @@ namespace bt
 	: tor(tor),chunks(tor.getNumChunks()),
 	bitset(tor.getNumChunks()),excluded_chunks(tor.getNumChunks()),only_seed_chunks(tor.getNumChunks()),todo(tor.getNumChunks())
 	{
+		tor.setFilePriorityListener(this);
 		during_load = false;
 		only_seed_chunks.setAll(false);
 		todo.setAll(true);
@@ -91,28 +92,14 @@ namespace bt
 		if (tor.isMultiFile())
 			createBorderChunkSet();
 		
-		Uint32 num_files = tor.getNumFiles();
-		for (Uint32 i = 0;i < num_files;i++)
-		{
-			TorrentFile & tf = tor.getFile(i);
-			connect(&tf,SIGNAL(downloadPriorityChanged(TorrentFile*, Priority, Priority )),
-					 this,SLOT(downloadPriorityChanged(TorrentFile*, Priority, Priority )));
-			
-			if (tf.getPriority() != NORMAL_PRIORITY)
-			{
-				downloadPriorityChanged(&tf,tf.getPriority(),tf.getOldPriority());
-			}
-		}
-		
 		if (tor.isMultiFile())
 		{
-			for(Uint32 i=0;i < num_files; ++i)
+			Uint32 nfiles = tor.getNumFiles();
+			for (Uint32 i = 0;i < nfiles;i++)
 			{
-				bt::TorrentFile & file = tor.getFile(i);
-				if (!file.isMultimedia() || file.getPriority() == bt::ONLY_SEED_PRIORITY) 
-					continue;
-				
-				doPreviewPriority(file);
+				TorrentFile & tf = tor.getFile(i);
+				if (tf.isMultimedia())
+					doPreviewPriority(tf);
 			}
 		}
 		else if (tor.isMultimedia())
@@ -130,6 +117,7 @@ namespace bt
 
 	ChunkManager::~ChunkManager()
 	{
+		tor.setFilePriorityListener(0);
 		for (Uint32 i = 0;i < (Uint32)chunks.size();i++)
 		{
 			Chunk* c = chunks[i];
@@ -247,10 +235,7 @@ namespace bt
 			during_load = true; // for performance reasons
 			for (Uint32 i = 0;i < tor.getNumFiles();i++)
 			{
-				TorrentFile & tf = tor.getFile(i);
-				connect(&tf,SIGNAL(downloadPriorityChanged(TorrentFile*, Priority, Priority )),
-						 this,SLOT(downloadPriorityChanged(TorrentFile*, Priority, Priority )));
-				
+				TorrentFile & tf = tor.getFile(i);				
 				if (tf.getPriority() != NORMAL_PRIORITY)
 				{
 					downloadPriorityChanged(&tf,tf.getPriority(),tf.getOldPriority());
@@ -693,7 +678,8 @@ namespace bt
 					break;
 				case NORMAL_PRIORITY:
 				case 2:
-					tf.setPriority(NORMAL_PRIORITY);
+					// By default priority is set to normal, so do nothing
+					//tf.setPriority(NORMAL_PRIORITY);
 					break;
 				case EXCLUDED:
 				case 0:

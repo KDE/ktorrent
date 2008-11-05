@@ -41,6 +41,7 @@ namespace bt
 	{
 		text_codec = QTextCodec::codecForName("utf-8");
 		trackers = 0;
+		file_prio_listener = 0;
 	}
 
 
@@ -195,7 +196,7 @@ namespace bt
 			if (v->data().getType() == Value::INT || v->data().getType() == Value::INT64)
 			{
 				Uint64 s = v->data().toInt64();
-				TorrentFile file(idx,path,file_length,s,piece_length);
+				TorrentFile file(this,idx,path,file_length,s,piece_length);
 				file.setUnencodedPath(unencoded_path);
 
 				// update file_length
@@ -428,6 +429,8 @@ namespace bt
 		}
 		return count;
 	}
+	
+	
 
 	void Torrent::calcChunkPos(Uint32 chunk,QList<Uint32> & file_list) const
 	{
@@ -439,7 +442,11 @@ namespace bt
 		{
 			const TorrentFile & f = files[i];
 			if (chunk >= f.getFirstChunk() && chunk <= f.getLastChunk() && f.getSize() != 0)
+			{
 				file_list.append(f.getIndex());
+			}
+			else if (chunk > f.getLastChunk())
+				break; 
 		}
 	}
 
@@ -490,5 +497,11 @@ namespace bt
 			f.changeTextCodec(codec);
 		}
 		name_suggestion = text_codec->toUnicode(unencoded_name);
+	}
+	
+	void Torrent::downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority)
+	{
+		if (file_prio_listener)
+			file_prio_listener->downloadPriorityChanged(tf,newpriority,oldpriority);
 	}
 }

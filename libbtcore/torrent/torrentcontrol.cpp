@@ -709,10 +709,9 @@ namespace bt
 				throw Error(i18n("Cannot migrate %1 : %2",tor->getNameSuggestion(),err.toString()));
 			}
 		}
-
 		setupData(ddir);
 		updateStatusMsg();
-
+		
 		// to get rid of phantom bytes we need to take into account
 		// the data from downloads already in progress
 		try
@@ -730,7 +729,7 @@ namespace bt
 			Out(SYS_GEN|LOG_DEBUG) << "Warning : " << e.toString() << endl;
 			istats.prev_bytes_dl = downloader->bytesDownloaded();
 		}
-
+		
 		loadStats();
 		updateStats();
 		saveStats();

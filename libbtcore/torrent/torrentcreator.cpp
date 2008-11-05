@@ -95,7 +95,7 @@ namespace bt
 		{
 			// add a TorrentFile to the list
 			Uint64 fs = bt::FileSize(target + dir + *i);
-			TorrentFile f(cnt,dir + *i,tot_size,fs,chunk_size);
+			TorrentFile f(0,cnt,dir + *i,tot_size,fs,chunk_size);
 			files.append(f);
 			// update total size
 			tot_size += fs;

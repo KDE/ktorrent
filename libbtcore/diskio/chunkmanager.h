@@ -26,15 +26,16 @@
 #include <QObject>
 #include <vector> 
 #include <util/bitset.h>
+#include <torrent/torrent.h>
 #include <btcore_export.h>
 #include "chunk.h"
+
 
 class KJob;
 class QStringList;
 
 namespace bt
 {
-	class Torrent;
 	class Cache;
 	class TorrentFile;
 	class PreallocationThread;
@@ -57,7 +58,7 @@ namespace bt
 	 * The chunks are stored in the cache file in the correct order. Eliminating
 	 * the need for a file reconstruction algorithm for single files.
 	 */
-	class BTCORE_EXPORT ChunkManager : public QObject
+	class BTCORE_EXPORT ChunkManager : public QObject,public FilePriorityListener
 	{
 		Q_OBJECT
 				
@@ -359,10 +360,8 @@ namespace bt
 		bool resetBorderChunk(Uint32 idx,TorrentFile* tf);
 		void createBorderChunkSet();
 		void dumpPriority(TorrentFile* tf);
-
-	private slots:
 		void downloadStatusChanged(TorrentFile* tf,bool download);
-		void downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority);
+		virtual void downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority);
 		
 	private:
 		static bool do_data_check;

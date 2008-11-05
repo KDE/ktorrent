@@ -56,6 +56,19 @@ namespace bt
 		}
 	};
 	
+	/**
+	 * @author Joris Guisson
+	 *
+	 * Listener base class, to get notified when the priority of a file changes.
+	 */
+	class BTCORE_EXPORT FilePriorityListener 
+	{
+	public:
+		virtual ~FilePriorityListener() {}
+	
+		virtual void downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority) = 0;
+	};
+	
 	
 	/**
 	 * @author Joris Guisson
@@ -69,6 +82,20 @@ namespace bt
 	public:
 		Torrent();
 		virtual ~Torrent();
+		
+		/**
+		 * Set the FilePriorityListener
+		 * @param l THe listener
+		 */
+		void setFilePriorityListener(FilePriorityListener* l) {file_prio_listener = l;}
+		
+		/**
+		 * Called by TorrentFile when the priority changes
+		 * @param tf The file
+		 * @param newpriority The old priority 
+		 * @param oldpriority The new priority
+		 */
+		void downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority);
 
 		/**
 		 * Load a .torrent file.
@@ -211,7 +238,6 @@ namespace bt
 		void loadAnnounceList(BNode* node);
 		void loadWebSeeds(BListNode* node);
 		void loadWebSeed(BValueNode* node);
-
 		bool checkPathForDirectoryTraversal(const QString & p);
 		
 	private:
@@ -228,6 +254,7 @@ namespace bt
 		QTextCodec* text_codec;
 		bool priv_torrent;
 		KUrl::List web_seeds;
+		FilePriorityListener* file_prio_listener;
 	};
 
 }

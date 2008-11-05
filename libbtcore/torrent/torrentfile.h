@@ -30,6 +30,9 @@ namespace bt
 	class BitSet;
 	class ChunkManager;
 	class MonitorInterface;
+	class Torrent;
+	
+	
 
 	/**
 	 * @author Joris Guisson
@@ -41,6 +44,7 @@ namespace bt
 	{
 		Q_OBJECT
 
+		Torrent* tor;
 		Uint64 cache_offset;
 		Uint64 first_chunk_off;
 		Uint64 last_chunk_size;
@@ -59,7 +63,7 @@ namespace bt
 		/**
 		 * Default constructor. Creates a null TorrentFile.
 		 */
-		TorrentFile();
+		TorrentFile(Torrent* tor = 0);
 		
 		/**
 		 * Constructor.
@@ -70,7 +74,7 @@ namespace bt
 		 * @param size Size of the file
 		 * @param chunk_size Size of each chunk 
 		 */
-		TorrentFile(Uint32 index,const QString & path,Uint64 off,Uint64 size,Uint64 chunk_size);
+		TorrentFile(Torrent* tor,Uint32 index,const QString & path,Uint64 off,Uint64 size,Uint64 chunk_size);
 		
 		/**
 		 * Copy constructor.
@@ -89,8 +93,7 @@ namespace bt
 		Uint64 getLastChunkSize() const {return last_chunk_size;}
 
 		/// Check if this file doesn't have to be downloaded
-		bool doNotDownload() const 
-			{if(priority == EXCLUDED) return true; else return false;}
+		bool doNotDownload() const 	{return (priority == EXCLUDED);}
 
 		/// Set whether we have to not download this file
 		void setDoNotDownload(bool dnd);
@@ -146,16 +149,6 @@ namespace bt
 		 * @param cman The ChunkManager
 		 */
 		void updateNumDownloadedChunks(ChunkManager & cman);
-		
-	signals:
-		/**
-		 * Signal emitted when the Priority variable changes.
-		 * @param tf The TorrentFile which emitted the signal
-		 * @param newpriority THe new priority of the file
-		 * @param oldpriority Previous priority
-		 */
-		void downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority);
-	
 	};
 
 }

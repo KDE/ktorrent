@@ -67,6 +67,7 @@
 #include "importdialog.h"
 #include "speedlimitsdlg.h"
 #include "queuemanagerwidget.h"
+#include <util/timer.h>
 
 
 namespace kt
@@ -108,7 +109,6 @@ namespace kt
 
 		applySettings();
 		connect(core,SIGNAL(settingsChanged()),this,SLOT(applySettings()));
-
 		currentTabPageChanged(currentTabPage());
 
 		if (Settings::showSystemTrayIcon())
@@ -120,7 +120,6 @@ namespace kt
 			tray_icon->hide();		
 
 		dbus_iface = new DBus(this,core,this);
-		
 		view_man->loadState(KGlobal::config());
 		core->loadPlugins();
 		loadState(KGlobal::config());

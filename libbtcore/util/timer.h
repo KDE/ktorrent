@@ -45,7 +45,7 @@ namespace bt
 		TimeStamp getElapsedSinceUpdate() const;
 		Timer & operator = (const Timer & t);
 	};
-#if 0
+#if 1
 	class Marker
 	{
 		QString name;
