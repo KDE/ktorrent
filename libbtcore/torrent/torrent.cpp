@@ -37,7 +37,7 @@
 namespace bt
 {
 
-	Torrent::Torrent() : piece_length(0),file_length(0),priv_torrent(false)
+	Torrent::Torrent() : piece_length(0),file_length(0),priv_torrent(false),pos_cache_chunk(0),pos_cache_file(0)
 	{
 		text_codec = QTextCodec::codecForName("utf-8");
 		trackers = 0;
@@ -434,11 +434,13 @@ namespace bt
 
 	void Torrent::calcChunkPos(Uint32 chunk,QList<Uint32> & file_list) const
 	{
+		//Out(SYS_GEN|LOG_DEBUG) << "Torrent::calcChunkPos " << chunk << endl;
 		file_list.clear();
 		if (chunk >= (Uint32)hash_pieces.size() || files.empty())
 			return;
-
-		for (int i = 0;i < files.count();i++)
+		
+		int i = (chunk >= this->pos_cache_chunk) ? this->pos_cache_file : 0;
+		for (;i < files.count();i++)
 		{
 			const TorrentFile & f = files[i];
 			if (chunk >= f.getFirstChunk() && chunk <= f.getLastChunk() && f.getSize() != 0)
@@ -448,6 +450,9 @@ namespace bt
 			else if (chunk < f.getFirstChunk())
 				break; 
 		}
+		
+		pos_cache_chunk = chunk;
+		pos_cache_file = file_list.at(0);
 	}
 
 	bool Torrent::isMultimedia() const

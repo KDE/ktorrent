@@ -255,6 +255,8 @@ namespace bt
 		bool priv_torrent;
 		KUrl::List web_seeds;
 		FilePriorityListener* file_prio_listener;
+		mutable Uint32 pos_cache_chunk;
+		mutable Uint32 pos_cache_file;
 	};
 
 }
