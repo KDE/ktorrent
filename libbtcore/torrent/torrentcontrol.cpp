@@ -530,8 +530,7 @@ namespace bt
 				tmon->peerAdded(pman->getPeer(i));
 		}
 		
-		for (Uint32 i = 0;i < tor->getNumFiles();i++)
-			tor->getFile(i).setMonitor(tmon);
+		tor->setMonitor(tmon);
 	}
 	
 	
@@ -673,8 +672,8 @@ namespace bt
 		// create downloader,uploader and choker
 		downloader = new Downloader(*tor,*pman,*cman,custom_selector_factory);
 		downloader->loadWebSeeds(tordir + "webseeds");
-		connect(downloader,SIGNAL(ioError(const QString& )),
-				this,SLOT(onIOError(const QString& )));
+		connect(downloader,SIGNAL(ioError(const QString& )),this,SLOT(onIOError(const QString& )));
+		connect(downloader,SIGNAL(chunkDownloaded(Uint32)),this,SLOT(downloaded(Uint32)));
 		uploader = new Uploader(*cman,*pman);
 		choke = new Choker(*pman,*cman);
 
@@ -2000,6 +1999,11 @@ namespace bt
 		cman->changeOutputPath(path + n);
 		outputdir = stats.output_path = path + n;
 		istats.custom_output_name = true;
+	}
+	
+	void TorrentControl::downloaded(Uint32 chunk)
+	{
+		chunkDownloaded(this,chunk);
 	}
 }
 

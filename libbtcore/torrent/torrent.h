@@ -96,6 +96,20 @@ namespace bt
 		 * @param oldpriority The new priority
 		 */
 		void downloadPriorityChanged(TorrentFile* tf,Priority newpriority,Priority oldpriority);
+		
+		/**
+		 * Called by TorrentFile when the percentage changes
+		 * @param tf The file
+		 * @param perc The percentage
+		 */
+		void filePercentageChanged(TorrentFile* tf,float perc);
+		
+		/**
+		 * Called by TorrentFile when the preview state changes
+		 * @param tf The file
+		 * @param preview Whether preview is possible or not
+		 */
+		void filePreviewChanged(TorrentFile* tf,bool preview);
 
 		/**
 		 * Load a .torrent file.
@@ -225,6 +239,9 @@ namespace bt
 		
 		/// Get the text codec
 		const QTextCodec* getTextCodec() {return text_codec;}
+		
+		/// Set the monitor
+		void setMonitor(MonitorInterface* m) {tmon = m;}
 
 	private:
 		void loadInfo(BDictNode* node);
@@ -257,6 +274,7 @@ namespace bt
 		FilePriorityListener* file_prio_listener;
 		mutable Uint32 pos_cache_chunk;
 		mutable Uint32 pos_cache_file;
+		MonitorInterface* tmon;
 	};
 
 }

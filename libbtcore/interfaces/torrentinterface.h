@@ -580,6 +580,13 @@ namespace bt
 		 * @param me the torrent
 		 */
 		void statusChanged(bt::TorrentInterface* me);
+		
+		/**
+		 * Emitted when a chunk is downloaded.
+		 * @param me The torrent
+		 * @param chunk The chunk
+		 */
+		void chunkDownloaded(bt::TorrentInterface* me,bt::Uint32 chunk);
 	protected:
 		TorrentStats stats;
 		QString user_modified_name;

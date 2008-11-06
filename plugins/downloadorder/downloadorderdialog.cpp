@@ -76,7 +76,11 @@ namespace kt
 		{
 			DownloadOrderManager* dom = plugin->manager(tor);
 			if (!dom)
+			{
 				dom = plugin->createManager(tor);
+				connect(tor,SIGNAL(chunkDownloaded(bt::TorrentInterface*, bt::Uint32)),
+						dom,SLOT(chunkDownloaded(bt::TorrentInterface*, bt::Uint32)));
+			}
 			
 			dom->setDownloadOrder(model->downloadOrder());
 			dom->save();

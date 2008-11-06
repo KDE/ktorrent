@@ -124,11 +124,8 @@ namespace kt
 			DownloadOrderManager* m = createManager(tc);
 			m->load();
 			m->update();
-			for (Uint32 i = 0;i < tc->getNumFiles();i++)
-			{
-				TorrentFileInterface & tf = tc->getTorrentFile(i);
-				connect(&tf,SIGNAL(downloadPercentageChanged()),m,SLOT(update()));
-			}
+			connect(tc,SIGNAL(chunkDownloaded(bt::TorrentInterface*, bt::Uint32)),
+					m,SLOT(chunkDownloaded(bt::TorrentInterface*, bt::Uint32)));
 		}
 	}
 	

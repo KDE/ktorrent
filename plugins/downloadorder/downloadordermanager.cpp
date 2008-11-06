@@ -103,6 +103,21 @@ namespace kt
 		}
 		return tor->getNumFiles(); 
 	}
+	
+	void DownloadOrderManager::chunkDownloaded(bt::TorrentInterface* me,Uint32 chunk)
+	{
+		if (!enabled() || tor->getStats().completed || tor != me)
+			return;
+		
+		bt::TorrentFileInterface & file = tor->getTorrentFile(current_high_priority_file);
+		if (chunk >= file.getFirstChunk() && chunk <= file.getLastChunk())
+		{
+			// If the chunk is part of the current high priority file
+			// check if it is completed, if it is do an update
+			if (qAbs(100.0f - file.getDownloadPercentage()) < 0.01)
+				update();
+		}
+	}
 		
 	void DownloadOrderManager::update()
 	{

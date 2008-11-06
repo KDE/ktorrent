@@ -72,6 +72,11 @@ namespace kt
 		 */
 		void update();
 		
+		/**
+		 * Change file priorities if needed
+		 */
+		void chunkDownloaded(bt::TorrentInterface* me,bt::Uint32 chunk);
+		
 	private:
 		bt::Uint32 nextIncompleteFile();
 

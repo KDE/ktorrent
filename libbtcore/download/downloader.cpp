@@ -388,6 +388,8 @@ namespace bt
 				{
 					pman.getPeer(i)->getPacketWriter().sendHave(c->getIndex());
 				}
+				
+				emit chunkDownloaded(c->getIndex());
 			}
 			catch (Error & e)
 			{

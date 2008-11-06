@@ -31,13 +31,14 @@
 #include <stdlib.h>
 #include <bcodec/bdecoder.h>
 #include <bcodec/bnode.h>
+#include <interfaces/monitorinterface.h>
 
 #include <klocale.h>
 
 namespace bt
 {
 
-	Torrent::Torrent() : piece_length(0),file_length(0),priv_torrent(false),pos_cache_chunk(0),pos_cache_file(0)
+	Torrent::Torrent() : piece_length(0),file_length(0),priv_torrent(false),pos_cache_chunk(0),pos_cache_file(0),tmon(0)
 	{
 		text_codec = QTextCodec::codecForName("utf-8");
 		trackers = 0;
@@ -508,5 +509,17 @@ namespace bt
 	{
 		if (file_prio_listener)
 			file_prio_listener->downloadPriorityChanged(tf,newpriority,oldpriority);
+	}
+	
+	void Torrent::filePercentageChanged(TorrentFile* tf,float perc)
+	{
+		if (tmon)
+			tmon->filePercentageChanged(tf,perc);
+	}
+	
+	void Torrent::filePreviewChanged(TorrentFile* tf,bool preview)
+	{
+		if (tmon)
+			tmon->filePreviewChanged(tf,preview);
 	}
 }

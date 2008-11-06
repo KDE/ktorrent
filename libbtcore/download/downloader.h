@@ -251,6 +251,12 @@ namespace bt
 		 */
 		void ioError(const QString & msg);
 		
+		/**
+		 * Emitted when a chunk has been downloaded.
+		 * @param chunk The chunk
+		 */
+		void chunkDownloaded(Uint32 chunk);
+		
 	private:
 		void downloadFrom(PieceDownloader* pd);
 		void downloadFrom(WebSeed* ws);

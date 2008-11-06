@@ -25,7 +25,7 @@
 #include <util/bitset.h>
 #include <util/functions.h>
 #include <diskio/chunkmanager.h>
-#include <interfaces/monitorinterface.h>
+
 
 namespace bt
 {
@@ -129,8 +129,7 @@ namespace bt
 			if (newpriority == EXCLUDED)
 			{
 				setDoNotDownload(true);
-				if (tmon)
-					tmon->filePercentageChanged(this,getDownloadPercentage());
+				tor->filePercentageChanged(this,getDownloadPercentage());
 			}
 			else
 			{
@@ -141,8 +140,7 @@ namespace bt
 				// make sure percentages are updated properly
 				if (old_priority == ONLY_SEED_PRIORITY || newpriority == ONLY_SEED_PRIORITY || old_priority == EXCLUDED)
 				{
-					if (tmon)
-						tmon->filePercentageChanged(this,getDownloadPercentage());
+					tor->filePercentageChanged(this,getDownloadPercentage());
 				}
 			}
 		}
@@ -203,11 +201,11 @@ namespace bt
 		}
 		preview = isMultimedia() && preview;
 		
-		if (num_chunks_downloaded != old_chunk_count && tmon)
-			tmon->filePercentageChanged(this,getDownloadPercentage());
+		if (num_chunks_downloaded != old_chunk_count)
+			tor->filePercentageChanged(this,getDownloadPercentage());
 		
-		if (prev != preview && tmon)
-			tmon->filePreviewChanged(this,preview);
+		if (prev != preview)
+			tor->filePreviewChanged(this,preview);
 	}
 	
 }

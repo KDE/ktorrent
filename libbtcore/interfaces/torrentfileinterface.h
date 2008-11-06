@@ -29,7 +29,6 @@ class QTextCodec;
 
 namespace bt
 {
-	class MonitorInterface;
 
 	/**
 	 * @author Joris Guisson
@@ -49,9 +48,6 @@ namespace bt
 		 */
 		TorrentFileInterface(Uint32 index,const QString & path,Uint64 size);
 		virtual ~TorrentFileInterface();
-		
-		/// Set the monitor
-		void setMonitor(MonitorInterface* m) {tmon = m;}
 
 		/// Get the index of the file
 		Uint32 getIndex() const {return index;}
@@ -139,7 +135,6 @@ namespace bt
 		bool m_emitDlStatusChanged;
 		bool preview;
 		QList<QByteArray> unencoded_path;
-		MonitorInterface* tmon;
 	};
 
 }

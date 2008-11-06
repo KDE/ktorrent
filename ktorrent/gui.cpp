@@ -74,6 +74,7 @@ namespace kt
 {
 	GUI::GUI() : core(0),pref_dlg(0)
 	{
+		//Marker markk("GUI::GUI()");
 		core = new Core(this);
 		tray_icon = new TrayIcon(core,this);
 		setupActions();
@@ -95,7 +96,9 @@ namespace kt
 		status_bar = new kt::StatusBar(this);
 		setStatusBar(status_bar);
 
+		//Marker mark("core->loadTorrents()");
 		core->loadTorrents();
+		//mark.update();
 		connect(&timer,SIGNAL(timeout()),this,SLOT(update()));
 		timer.start(Settings::guiUpdateInterval());
 		
@@ -124,6 +127,7 @@ namespace kt
 		core->loadPlugins();
 		loadState(KGlobal::config());
 		notifyViewListeners(view_man->getCurrentTorrent());
+		//markk.update();
 	}
 
 	GUI:: ~GUI()

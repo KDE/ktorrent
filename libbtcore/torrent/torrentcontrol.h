@@ -364,6 +364,7 @@ namespace bt
 		void updateStats();
 		void corrupted(Uint32 chunk);
 		void moveDataFilesFinished(KJob* j);
+		void downloaded(Uint32 chunk);
 		
 	private:	
 		void updateTracker(const QString & ev,bool last_succes = true);
