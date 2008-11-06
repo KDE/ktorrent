@@ -445,7 +445,7 @@ namespace bt
 			{
 				file_list.append(f.getIndex());
 			}
-			else if (chunk > f.getLastChunk())
+			else if (chunk < f.getFirstChunk())
 				break; 
 		}
 	}
