@@ -5,6 +5,7 @@ Changes in 3.1.5 :
 - Fix crash in treeviews caused by Qt bug (172198)
 - Prevent error messages when KT is started up via desktop file
 - Use multiple tiers when creating torrents with multiple trackers (174207)
+- Make sure stalled time is updated properly before resuming queue (174373)
 
 Changes in 3.1.4 :
 - Make sure user is properly logged in when handling a torrent post in the webgui

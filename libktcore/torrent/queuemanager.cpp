@@ -28,6 +28,7 @@
 #include <util/sha1hash.h>
 #include <util/waitjob.h>
 #include <util/fileops.h>
+#include <util/functions.h>
 #include <torrent/globals.h>
 #include <torrent/torrent.h>
 #include <torrent/torrentcontrol.h>
@@ -642,6 +643,7 @@ namespace kt
 		paused_state = pause;	
 		if(!pause)
 		{
+			UpdateCurrentTime();
 			std::set<bt::TorrentInterface*>::iterator it = paused_torrents.begin();
 			while (it != paused_torrents.end())
 			{
