@@ -270,29 +270,57 @@ namespace kt
 	
 	QVariant PeerViewModel::headerData(int section, Qt::Orientation orientation,int role) const
 	{
-		if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
+		if (orientation != Qt::Horizontal)
 			return QVariant();
 		 
-		switch (section)
+		if (role == Qt::DisplayRole)
 		{
-			case 0: return i18n("IP Address");
-			case 1: return i18n("Country");
-			case 2: return i18n("Client");
-			case 3: return i18n("Down Speed");
-			case 4: return i18n("Up Speed");
-			case 5: return i18n("Choked");
-			case 6: return i18n("Snubbed");
-			case 7: return i18n("Availability");
-			case 8: return i18n("DHT");
-			case 9: return i18n("Score");
-			case 10: return i18n("Upload Slot");
-			case 11: return i18n("Requests");
-			case 12: return i18n("Downloaded");
-			case 13: return i18n("Uploaded");
-			case 14: return i18n("Interested");
-			case 15: return i18n("Interesting");
-			default: return QVariant();
+			switch (section)
+			{
+				case 0: return i18n("IP Address");
+				case 1: return i18n("Country");
+				case 2: return i18n("Client");
+				case 3: return i18n("Down Speed");
+				case 4: return i18n("Up Speed");
+				case 5: return i18n("Choked");
+				case 6: return i18n("Snubbed");
+				case 7: return i18n("Availability");
+				case 8: return i18n("DHT");
+				case 9: return i18n("Score");
+				case 10: return i18n("Upload Slot");
+				case 11: return i18n("Requests");
+				case 12: return i18n("Downloaded");
+				case 13: return i18n("Uploaded");
+				case 14: return i18n("Interested");
+				case 15: return i18n("Interesting");
+				default: return QVariant();
+			}
 		}
+		else if (role == Qt::ToolTipRole)
+		{
+			switch (section)
+			{
+				case 0: return i18n("IP address of the peer");
+				case 1: return i18n("Country the peer is in");
+				case 2: return i18n("Which client the peer is using");
+				case 3: return i18n("Download speed");
+				case 4: return i18n("Upload speed");
+				case 5: return i18n("Whether or not the peer has choked us, when we are choked the peer will not send any data to us");
+				case 6: return i18n("Snubbed means the peer hasn't sent us any data in the last 2 minutes");
+				case 7: return i18n("How much data the peer has of the torrent");
+				case 8: return i18n("Whether or not the peer has DHT enabled");
+				case 9: return i18n("The score of the peer, KTorrent uses this to determine who to upload to");
+				case 10: return i18n("Only peers which have an upload slot will get data from us");
+				case 11: return i18n("The number of download and upload requests");
+				case 12: return i18n("How much data we downloaded from this peer");
+				case 13: return i18n("How much data we uploaded to this peer");
+				case 14: return i18n("Whether the peer is interested in downloading data from us");
+				case 15: return i18n("Whether we are interested in downloading from this peer");
+				default: return QVariant();
+			}
+		}
+		
+		return QVariant();
 	}
 	
 	QVariant PeerViewModel::data(const QModelIndex & index,int role) const

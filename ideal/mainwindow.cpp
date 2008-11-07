@@ -164,7 +164,7 @@ namespace ideal
 		return t;
 	}
 
-	void MainWindow::addTab(QWidget* widget,const QString & text,const QString & icon,TabPosition pos)
+	void MainWindow::addTab(QWidget* widget,const QString & text,const QString & icon,TabPosition pos,const QString & tooltip)
 	{
 		if (pos == CENTER)
 		{
@@ -175,12 +175,13 @@ namespace ideal
 			else
 				t->addTab(widget,text);
 			t->setCurrentWidget(widget);
+			t->setTabToolTip(t->count() - 1,tooltip);
 		}
 		else
 		{
 			SideBar* b = getTabBar(pos,true);
 			if (b)
-				b->addTab(widget,text,icon);	
+				b->addTab(widget,text,icon,tooltip);	
 		}
 	}
 

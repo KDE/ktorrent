@@ -158,9 +158,10 @@ namespace kt
 		 * @param page The widget
 		 * @param icon Icon for the tab
 		 * @param caption Text on the tab
+		 * @param tooltip Tooltip for the tab
 		 * @param ctl For closeable tabs this pointer should be set
 		 */
-		virtual void addTabPage(QWidget* page,const QString & icon,const QString & caption,CloseTabListener* ctl = 0) = 0;
+		virtual void addTabPage(QWidget* page,const QString & icon,const QString & caption,const QString & tooltip,CloseTabListener* ctl = 0) = 0;
 
 		/**
 		 * Remove a tab page, does nothing if the page
@@ -206,9 +207,10 @@ namespace kt
 		 * @param w The widget
 		 * @param icon Name of icon to use
 		 * @param caption The caption to use
+		 * @param tooltip Tooltip for the tool widget
 		 * @param dock Where to dock the widget
 		 */
-		virtual void addToolWidget(QWidget* w,const QString & icon,const QString & caption,ToolDock dock) = 0;
+		virtual void addToolWidget(QWidget* w,const QString & icon,const QString & caption,const QString & tooltip,ToolDock dock) = 0;
 		
 		/**
 		 * Remove a tool widget.

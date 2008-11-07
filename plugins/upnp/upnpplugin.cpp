@@ -55,7 +55,8 @@ namespace kt
 		LogSystemManager::instance().registerSystem(i18n("UPnP"),SYS_PNP);
 		sock = new UPnPMCastSocket();
 		upnp_tab = new UPnPWidget(sock,0);
-		getGUI()->addToolWidget(upnp_tab,"kt-upnp",i18n("UPnP"),GUIInterface::DOCK_BOTTOM);
+		getGUI()->addToolWidget(upnp_tab,"kt-upnp",i18n("UPnP"),
+			   i18n("Shows the status of the UPnP plugin"),GUIInterface::DOCK_BOTTOM);
 		// load the routers list
 		QString routers_file = KGlobal::dirs()->saveLocation("data","ktorrent") + "routers";
 		if (bt::Exists(routers_file))

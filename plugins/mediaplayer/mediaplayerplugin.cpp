@@ -111,7 +111,7 @@ namespace kt
 		media_player = new MediaPlayer(this);
 		media_view = new MediaView(media_player,media_model,0);
 	
-		getGUI()->addToolWidget(media_view,"applications-multimedia",i18n("Media Player"),GUIInterface::DOCK_LEFT);
+		getGUI()->addToolWidget(media_view,"applications-multimedia",i18n("Media Player"),i18n("The media player allows you to play music and movies inside KTorrent"),GUIInterface::DOCK_LEFT);
 		
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),media_model,SLOT(onTorrentAdded(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),media_model,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
@@ -168,13 +168,13 @@ namespace kt
 			if (video_shown)
 				getGUI()->setTabText(video,path);
 			else
-				getGUI()->addTabPage(video,"video-x-generic",path,this);
+				getGUI()->addTabPage(video,"video-x-generic",path,i18n("Movie player"),this);
 		}
 		else
 		{
 			video = new VideoWidget(media_player,0);
 			connect(video,SIGNAL(toggleFullScreen(bool)),this,SLOT(setVideoFullScreen(bool)));
-			getGUI()->addTabPage(video,"video-x-generic",path,this);
+			getGUI()->addTabPage(video,"video-x-generic",path,i18n("Movie player"),this);
 		}
 		video_shown = true;
 		if (show_video_action->isChecked() != video_shown)
@@ -364,7 +364,7 @@ namespace kt
 			if (idx >= 0)
 				path = path.mid(idx+1);
 			
-			getGUI()->addTabPage(video,"video-x-generic",path,this);
+			getGUI()->addTabPage(video,"video-x-generic",path,i18n("Movie player"),this);
 			fullscreen_mode = false;
 		}
 	}

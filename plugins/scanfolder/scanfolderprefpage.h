@@ -46,6 +46,7 @@ namespace kt
 	private slots:
 		void addPressed();
 		void removePressed();
+		void selectionChanged();
 		
 	private:
 		ScanFolderPlugin* m_plugin;

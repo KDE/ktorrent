@@ -54,7 +54,7 @@ namespace ideal
 		virtual ~SideBar();
 
 		/// Add a tab to the SideBar
-		void addTab(QWidget* w,const QString & text,const QString & icon);
+		void addTab(QWidget* w,const QString & text,const QString & icon,const QString & tooltip);
 
 		/// Remove a tab from the SideBar
 		void removeTab(QWidget* w);

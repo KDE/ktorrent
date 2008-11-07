@@ -112,7 +112,8 @@ namespace kt
 		
 		setupActions();
 		sman = new ScriptManager(model,actionCollection(),0);
-		getGUI()->addToolWidget(sman,"text-x-script",i18n("Scripts"),GUIInterface::DOCK_LEFT);
+		getGUI()->addToolWidget(sman,"text-x-script",i18n("Scripts"),
+			   i18n("Widget to start,stop and manage scripts"),GUIInterface::DOCK_LEFT);
 	}
 
 	void ScriptingPlugin::unload()

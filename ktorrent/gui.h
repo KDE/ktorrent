@@ -57,13 +57,13 @@ namespace kt
 		
 		// Stuff implemented from GUIInterface
 		virtual KMainWindow* getMainWindow() {return this;}
-		virtual void addTabPage(QWidget* page,const QString & icon,const QString & caption,CloseTabListener* ctl);
+		virtual void addTabPage(QWidget* page,const QString & icon,const QString & caption,const QString & tooltip,CloseTabListener* ctl);
 		virtual void removeTabPage(QWidget* page);
 		virtual void addPrefPage(PrefPageInterface* page);
 		virtual void removePrefPage(PrefPageInterface* page);
 		virtual void mergePluginGui(Plugin* p);
 		virtual void removePluginGui(Plugin* p);
-		virtual void addToolWidget(QWidget* w,const QString & icon,const QString & caption,ToolDock dock);
+		virtual void addToolWidget(QWidget* w,const QString & icon,const QString & caption,const QString & tooltip,ToolDock dock);
 		virtual void removeToolWidget(QWidget* w);
 		virtual const bt::TorrentInterface* getCurrentTorrent() const;
 		virtual bt::TorrentInterface* getCurrentTorrent();

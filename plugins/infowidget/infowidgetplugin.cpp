@@ -77,8 +77,10 @@ namespace kt
 
 		pref = new IWPrefPage(0);
 		getGUI()->addViewListener(this);
-		getGUI()->addToolWidget(status_tab,"dialog-information",i18n("Status"),GUIInterface::DOCK_BOTTOM);
-		getGUI()->addToolWidget(file_view,"folder",i18n("Files"),GUIInterface::DOCK_BOTTOM);
+		getGUI()->addToolWidget(status_tab,"dialog-information",i18n("Status"),
+			   i18n("Displays status information about a torrent"),GUIInterface::DOCK_BOTTOM);
+		getGUI()->addToolWidget(file_view,"folder",i18n("Files"),
+			   i18n("Shows all the files in a torrent"),GUIInterface::DOCK_BOTTOM);
 	
 		applySettings();
 				
@@ -215,7 +217,8 @@ namespace kt
 		if (show && !peer_view)
 		{
 			peer_view = new PeerView(0);
-			getGUI()->addToolWidget(peer_view,"system-users",i18n("Peers"),GUIInterface::DOCK_BOTTOM);
+			getGUI()->addToolWidget(peer_view,"system-users",i18n("Peers"),
+				   i18n("Displays all the peers you are connected to for a torrent"),GUIInterface::DOCK_BOTTOM);
 			peer_view->loadState(KGlobal::config());
 			createMonitor(tc);
 		}
@@ -235,7 +238,8 @@ namespace kt
 		if (show && !cd_view)
 		{
 			cd_view = new ChunkDownloadView(0);
-			getGUI()->addToolWidget(cd_view,"kt-chunks",i18n("Chunks"),GUIInterface::DOCK_BOTTOM);
+			getGUI()->addToolWidget(cd_view,"kt-chunks",i18n("Chunks"),
+				   i18n("Displays all the chunks you are downloading, of a torrent"),GUIInterface::DOCK_BOTTOM);
 			
 			cd_view->loadState(KGlobal::config());
 			cd_view->changeTC(tc);
@@ -256,7 +260,7 @@ namespace kt
 		{
 			tracker_view = new TrackerView(0);
 			getGUI()->addToolWidget(tracker_view,"network-server",i18n("Trackers"),
-					GUIInterface::DOCK_BOTTOM);
+					i18n("Displays information about all the trackers of a torrent"),GUIInterface::DOCK_BOTTOM);
 			tracker_view->changeTC(const_cast<bt::TorrentInterface*>(getGUI()->getCurrentTorrent()));
 		}
 		else if (!show && tracker_view)
@@ -271,7 +275,8 @@ namespace kt
 		if (show && !webseeds_tab)
 		{
 			webseeds_tab = new WebSeedsTab(0);
-			getGUI()->addToolWidget(webseeds_tab,"network-server",i18n("Webseeds"),GUIInterface::DOCK_BOTTOM);
+			getGUI()->addToolWidget(webseeds_tab,"network-server",i18n("Webseeds"),
+				   i18n("Displays all the webseeds of a torrent"),GUIInterface::DOCK_BOTTOM);
 			webseeds_tab->loadState(KGlobal::config());
 			webseeds_tab->changeTC(const_cast<bt::TorrentInterface*>(getGUI()->getCurrentTorrent()));
 		}

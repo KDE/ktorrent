@@ -43,7 +43,6 @@ namespace kt
 
 		if (s.pieces_downloaded != stats.pieces_downloaded || 
 			s.download_speed != stats.download_speed || 
-			s.num_downloaders != stats.num_downloaders || 
 			s.current_peer_id != stats.current_peer_id)
 		{
 			stats = s;
@@ -60,8 +59,7 @@ namespace kt
 			case 1: return QString("%1 / %2").arg(stats.pieces_downloaded).arg(stats.total_pieces);
 			case 2: return stats.current_peer_id;
 			case 3: return KBytesPerSecToString(stats.download_speed / 1024.0);
-			case 4: return stats.num_downloaders;
-			case 5: return files;
+			case 4: return files;
 		}
 		return QVariant();
 	}
@@ -74,8 +72,7 @@ namespace kt
 			case 1: return stats.pieces_downloaded;
 			case 2: return stats.current_peer_id;
 			case 3: return stats.download_speed;
-			case 4: return stats.num_downloaders;
-			case 5: return files;
+			case 4: return files;
 		}
 		return QVariant();
 	}
@@ -114,6 +111,8 @@ namespace kt
 					files += tf.getPath();
 					n++;
 				}
+				else if (stats.chunk_index < tf.getFirstChunk())
+					break;
 			}
 		}
 		
@@ -176,24 +175,40 @@ namespace kt
 		if (parent.isValid())
 			return 0;
 		else
-			return 6;
+			return 5;
 	}
 	
 	QVariant ChunkDownloadModel::headerData ( int section, Qt::Orientation orientation,int role ) const
 	{
-		if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
+		if (orientation != Qt::Horizontal)
 			return QVariant();
 		 
-		switch (section)
+		if (role == Qt::DisplayRole)
 		{
-			case 0: return i18n("Chunk");
-			case 1: return i18n("Progress");
-			case 2: return i18n("Peer");
-			case 3: return i18n("Down Speed");
-			case 4: return i18n("Assigned Peers");
-			case 5: return i18n("Files");
-			default: return QVariant();
+			switch (section)
+			{
+				case 0: return i18n("Chunk");
+				case 1: return i18n("Progress");
+				case 2: return i18n("Peer");
+				case 3: return i18n("Down Speed");
+				case 4: return i18n("Files");
+				default: return QVariant();
+			}
 		}
+		else if (role == Qt::ToolTipRole)
+		{
+			switch (section)
+			{
+				case 0: return i18n("Number of the chunk");
+				case 1: return i18n("Download progress of the chunk");
+				case 2: return i18n("Which peer we are downloading it from");
+				case 3: return i18n("Download speed of the chunk");
+				case 4: return i18n("Which files the chunk is located in");
+				default: return QVariant();
+			}
+		}
+		
+		return QVariant();
 	}
 	
 	QVariant ChunkDownloadModel::data ( const QModelIndex & index,int role ) const

@@ -40,6 +40,7 @@ namespace kt
 		connect(kcfg_actionDelete,SIGNAL(toggled(bool)),kcfg_actionMove,SLOT(setDisabled(bool)));
 		connect(m_add,SIGNAL(clicked()),this,SLOT(addPressed()));
 		connect(m_remove,SIGNAL(clicked()),this,SLOT(removePressed()));
+		connect(m_folders,SIGNAL(itemSelectionChanged()),this,SLOT(selectionChanged()));
 	}
 
 
@@ -49,7 +50,7 @@ namespace kt
 	void ScanFolderPrefPage::loadSettings()
 	{
 		kcfg_actionMove->setEnabled(!ScanFolderPluginSettings::actionDelete());
-		
+	
 		m_group->clear();
 		
 		GroupManager* gman = m_plugin->getCore()->getGroupManager();
@@ -77,6 +78,7 @@ namespace kt
 		{
 			m_folders->addItem(new QListWidgetItem(KIcon("folder"),f));
 		}
+		selectionChanged();
 	}
 	
 	void ScanFolderPrefPage::loadDefaults()
@@ -120,6 +122,11 @@ namespace kt
 			folders.removeAll(i->text());
 			delete i;
 		}
+	}
+	
+	void ScanFolderPrefPage::selectionChanged()
+	{
+		m_remove->setEnabled(m_folders->selectedItems().count() > 0);
 	}
 
 }

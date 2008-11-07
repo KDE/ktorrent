@@ -80,7 +80,7 @@ namespace ideal
 	}
 	
 
-	void SideBar::addTab(QWidget* ti,const QString & text,const QString & icon)
+	void SideBar::addTab(QWidget* ti,const QString & text,const QString & icon,const QString & tooltip)
 	{
 		// get the next ID number
 		int id = next_id++;
@@ -96,6 +96,7 @@ namespace ideal
 		
 		this->setTab(id,false);
 		show();
+		tab(id)->setToolTip(tooltip);
 	}
 
 	

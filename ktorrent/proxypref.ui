@@ -19,10 +19,11 @@
       <item>
        <widget class="QCheckBox" name="kcfg_useKDEProxySettings" >
         <property name="toolTip" >
-         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+         <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">Use the HTTP proxy settings configured in the settings of KDE.&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-size:8pt;">Use the HTTP proxy settings configured in the settings of KDE.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
         </property>
         <property name="text" >
          <string>Use KDE proxy settings</string>
@@ -41,10 +42,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QLineEdit" name="kcfg_httpProxy" >
           <property name="toolTip" >
-           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">IP address or hostname of the HTTP proxy to use.&lt;/p>&lt;/body>&lt;/html></string>
+           <string>IP address or hostname of the HTTP proxy to use. </string>
           </property>
          </widget>
         </item>
@@ -58,10 +56,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QSpinBox" name="kcfg_httpProxyPort" >
           <property name="toolTip" >
-           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Port of the HTTP proxy.&lt;/p>&lt;/body>&lt;/html></string>
+           <string>Port of the HTTP proxy.</string>
           </property>
           <property name="minimum" >
            <number>1</number>
@@ -79,10 +74,7 @@ p, li { white-space: pre-wrap; }
       <item>
        <widget class="QCheckBox" name="kcfg_useProxyForWebSeeds" >
         <property name="toolTip" >
-         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Whether or not to use the HTTP proxy for webseed connections.&lt;/p>&lt;/body>&lt;/html></string>
+         <string>Whether or not to use the HTTP proxy for webseed connections.</string>
         </property>
         <property name="text" >
          <string>Use proxy for webseed connections</string>
@@ -94,7 +86,7 @@ p, li { white-space: pre-wrap; }
         <property name="toolTip" >
          <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
 &lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Whether or not to use the HTTP proxy for tracker connections.&lt;/p>&lt;/body>&lt;/html></string>
         </property>
         <property name="text" >
@@ -114,12 +106,13 @@ p, li { white-space: pre-wrap; }
       <item>
        <widget class="QCheckBox" name="kcfg_socksEnabled" >
         <property name="toolTip" >
-         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+         <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Use a SOCKS proxy server for bittorrent connections.&lt;/p>
+&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-size:8pt;">Use a SOCKS proxy server for bittorrent connections.&lt;/span>&lt;/p>
 &lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Note: &lt;/span>This is not used for tracker connections&lt;/p>&lt;/body>&lt;/html></string>
+&lt;p style=" font-family:'OpenSymbol'; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Note: &lt;/span>This is not used for tracker connections&lt;/p>&lt;/body>&lt;/html></string>
         </property>
         <property name="text" >
          <string>Use a SOCKS proxy server:</string>
@@ -138,10 +131,11 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QLineEdit" name="kcfg_socksProxy" >
           <property name="toolTip" >
-           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+           <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">IP address or hostname of the SOCKS server&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-size:8pt;">IP address or hostname of the SOCKS server&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
           </property>
          </widget>
         </item>
@@ -155,10 +149,11 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QSpinBox" name="kcfg_socksPort" >
           <property name="toolTip" >
-           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+           <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Port used by the SOCKS server&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-size:8pt;">Port used by the SOCKS server&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
           </property>
          </widget>
         </item>
@@ -177,10 +172,7 @@ p, li { white-space: pre-wrap; }
       <item>
        <widget class="QCheckBox" name="kcfg_socksUsePassword" >
         <property name="toolTip" >
-         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">If the SOCKS server requires authentication via a username and a password, enable this box.&lt;/p>&lt;/body>&lt;/html></string>
+         <string>If the SOCKS server requires authentication via a username and a password, enable this box.</string>
         </property>
         <property name="text" >
          <string>Username and password required</string>
@@ -201,10 +193,11 @@ p, li { white-space: pre-wrap; }
           <item row="0" column="1" >
            <widget class="QLineEdit" name="kcfg_socksUsername" >
             <property name="toolTip" >
-             <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+             <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Username for the SOCKS proxy server.&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;">&lt;span style=" font-size:8pt;">Username for the SOCKS proxy server.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
             </property>
            </widget>
           </item>
@@ -218,10 +211,11 @@ p, li { white-space: pre-wrap; }
           <item row="1" column="1" >
            <widget class="KLineEdit" name="kcfg_socksPassword" >
             <property name="toolTip" >
-             <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+             <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Password for the SOCKS proxy server.&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;">&lt;span style=" font-size:8pt;">Password for the SOCKS proxy server.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
             </property>
             <property name="passwordMode" >
              <bool>true</bool>
@@ -235,7 +229,7 @@ p, li { white-space: pre-wrap; }
           <property name="orientation" >
            <enum>Qt::Horizontal</enum>
           </property>
-          <property name="sizeHint" >
+          <property name="sizeHint" stdset="0" >
            <size>
             <width>40</width>
             <height>20</height>
@@ -253,7 +247,7 @@ p, li { white-space: pre-wrap; }
      <property name="orientation" >
       <enum>Qt::Vertical</enum>
      </property>
-     <property name="sizeHint" >
+     <property name="sizeHint" stdset="0" >
       <size>
        <width>409</width>
        <height>21</height>

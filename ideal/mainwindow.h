@@ -53,7 +53,7 @@ namespace ideal
 		};
 		
 		/// Add a widget in a new tab
-		void addTab(QWidget* widget,const QString & text,const QString & icon,TabPosition pos = CENTER);
+		void addTab(QWidget* widget,const QString & text,const QString & icon,TabPosition pos,const QString & tooltip);
 
 		/// Remove a tab
 		void removeTab(QWidget* w,TabPosition pos = CENTER);

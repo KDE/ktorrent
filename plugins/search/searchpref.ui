@@ -29,6 +29,9 @@
     <layout class="QHBoxLayout" >
      <item>
       <widget class="QPushButton" name="m_clear_history" >
+       <property name="toolTip" >
+        <string>Clear the search history combo boxes.</string>
+       </property>
        <property name="text" >
         <string>Clear Search History</string>
        </property>
@@ -51,6 +54,9 @@
    </item>
    <item>
     <widget class="QCheckBox" name="kcfg_openInExternal" >
+     <property name="toolTip" >
+      <string>Whether or not to open searches in an external browser.</string>
+     </property>
      <property name="text" >
       <string>Open searches in external browser</string>
      </property>
@@ -58,6 +64,9 @@
    </item>
    <item>
     <widget class="QRadioButton" name="kcfg_useDefaultBrowser" >
+     <property name="toolTip" >
+      <string>Use the default browser configured in the system settings.</string>
+     </property>
      <property name="text" >
       <string>Use default browser</string>
      </property>
@@ -70,6 +79,9 @@
     <layout class="QHBoxLayout" >
      <item>
       <widget class="QRadioButton" name="kcfg_useCustomBrowser" >
+       <property name="toolTip" >
+        <string>Use a custom browser.</string>
+       </property>
        <property name="text" >
         <string>Custom browser path:</string>
        </property>
@@ -79,7 +91,11 @@
       </widget>
      </item>
      <item>
-      <widget class="KLineEdit" name="kcfg_customBrowser" />
+      <widget class="KLineEdit" name="kcfg_customBrowser" >
+       <property name="toolTip" >
+        <string>Path of the custom browser.</string>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer>
@@ -116,6 +132,9 @@
        <layout class="QVBoxLayout" name="verticalLayout" >
         <item>
          <widget class="QPushButton" name="m_add" >
+          <property name="toolTip" >
+           <string>Add a new search engine.</string>
+          </property>
           <property name="text" >
            <string>Add</string>
           </property>
@@ -123,6 +142,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="m_remove" >
+          <property name="toolTip" >
+           <string>Remove all selected search engines.</string>
+          </property>
           <property name="text" >
            <string>&amp;Remove</string>
           </property>
@@ -130,6 +152,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="m_remove_all" >
+          <property name="toolTip" >
+           <string>Remove all search engines.</string>
+          </property>
           <property name="text" >
            <string>R&amp;emove All</string>
           </property>
@@ -150,6 +175,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="m_add_default" >
+          <property name="toolTip" >
+           <string>Add all default search engines.</string>
+          </property>
           <property name="text" >
            <string>Add Defau&amp;lt</string>
           </property>

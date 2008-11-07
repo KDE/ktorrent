@@ -229,7 +229,8 @@ namespace kt
 				m_editor = new ScheduleEditor(0);
 				connect(m_editor,SIGNAL(loaded(Schedule*)),this,SLOT(onLoaded(Schedule*)));
 				connect(m_editor,SIGNAL(scheduleChanged()),this,SLOT(timerTriggered()));
-				getGUI()->addTabPage(m_editor,"kt-bandwidth-scheduler",i18n("Bandwidth Schedule"),this);
+				getGUI()->addTabPage(m_editor,"kt-bandwidth-scheduler",i18n("Bandwidth Schedule"),
+					   i18n("Tab to edit the bandwidth schedule"),this);
 				m_editor->setSchedule(m_schedule);
 				timerTriggered(); // trigger timer so that status text is updated
 			}

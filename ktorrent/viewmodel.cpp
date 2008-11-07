@@ -353,29 +353,55 @@ namespace kt
 	
 	QVariant ViewModel::headerData(int section, Qt::Orientation orientation,int role) const
 	{
-		if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
+		if (orientation != Qt::Horizontal)
 			return QVariant();
 		 
-		switch (section)
+		if (role == Qt::DisplayRole)
 		{
-			case 0: return i18n("Name");
-			case 1: return i18n("Status");
-			case 2: return i18n("Downloaded");
-			case 3: return i18n("Size");
-			case 4: return i18n("Uploaded");
-			case 5: return i18n("Down Speed");
-			case 6: return i18n("Up Speed");
-			case 7: return i18n("Time Left");
-			case 8: return i18n("Seeders");
-			case 9: return i18n("Leechers");
-			// xgettext: no-c-format
-			case 10: return i18n("% Complete");
-			case 11: return i18n("Share Ratio");
-			case 12: return i18n("Time Downloaded");
-			case 13: return i18n("Time Seeded");
-			case 14: return i18n("Location");
-			default: return QVariant();
+			switch (section)
+			{
+				case 0: return i18n("Name");
+				case 1: return i18n("Status");
+				case 2: return i18n("Downloaded");
+				case 3: return i18n("Size");
+				case 4: return i18n("Uploaded");
+				case 5: return i18n("Down Speed");
+				case 6: return i18n("Up Speed");
+				case 7: return i18n("Time Left");
+				case 8: return i18n("Seeders");
+				case 9: return i18n("Leechers");
+				// xgettext: no-c-format
+				case 10: return i18n("% Complete");
+				case 11: return i18n("Share Ratio");
+				case 12: return i18n("Time Downloaded");
+				case 13: return i18n("Time Seeded");
+				case 14: return i18n("Location");
+				default: return QVariant();
+			}
 		}
+		else if (role == Qt::ToolTipRole)
+		{
+			switch (section)
+			{
+				case 2: return i18n("How much data we have downloaded of the torrent");
+				case 3: return i18n("Total size of the torrent, excluded files are not included");
+				case 4: return i18n("How much data we have uploaded");
+				case 5: return i18n("Current download speed");
+				case 6: return i18n("Current upload speed");
+				case 7: return i18n("How much time is left before the torrent is finished");
+				case 8: return i18n("How many seeders we are connected to (How many seeders there are according to the tracker)");
+				case 9: return i18n("How many leechers we are connected to (How many leechers there are according to the tracker)");
+				// xgettext: no-c-format
+				case 10: return i18n("The percentage of data we have of the whole torrent, not including excluded files");
+				case 11: return i18n("Share ratio is the number of bytes uploaded divided by the number of bytes downloaded");
+				case 12: return i18n("How long we have been downloading the torrent");
+				case 13: return i18n("How long we have been seeding the torrent");
+				case 14: return i18n("The location of the torrent's data on disk");
+				default: return QVariant();
+			}
+		}
+		
+		return QVariant();
 	}
 	
 	QVariant ViewModel::data(const QModelIndex & index, int role) const

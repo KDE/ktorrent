@@ -83,13 +83,13 @@ namespace kt
 		connect(view_man,SIGNAL(enableActions(ActionEnableFlags)),this,SLOT(setActionsEnabled(ActionEnableFlags)));
 		
 		group_view = new GroupView(core->getGroupManager(),view_man,this);
-		addToolWidget(group_view,"application-x-bittorrent",i18n("Groups"),DOCK_LEFT);
+		addToolWidget(group_view,"application-x-bittorrent",i18n("Groups"),i18n("Widget to manage torrent groups"),DOCK_LEFT);
 		connect(group_view,SIGNAL(openNewTab(kt::Group*)),this,SLOT(openNewView(kt::Group*)));
 
 		qm = new QueueManagerWidget(core->getQueueManager(),this);
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),qm,SLOT(onTorrentAdded(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),qm,SLOT(onTorrentRemoved(bt::TorrentInterface*)));
-		addToolWidget(qm,"kt-queue-manager",i18n("Queue Manager"),DOCK_BOTTOM);
+		addToolWidget(qm,"kt-queue-manager",i18n("Queue Manager"),i18n("Widget to manage the torrent queue"),DOCK_BOTTOM);
 		
 		createGUI("ktorrentui.rc");
 		
@@ -134,9 +134,9 @@ namespace kt
 	{
 	}
 
-	void GUI::addTabPage(QWidget* page,const QString & icon,const QString & caption,CloseTabListener* ctl)
+	void GUI::addTabPage(QWidget* page,const QString & icon,const QString & caption,const QString & tooltip,CloseTabListener* ctl)
 	{
-		addTab(page,caption,icon);
+		addTab(page,caption,icon,CENTER,tooltip);
 		close_tab_map[page] = ctl;	
 		currentTabPageChanged(currentTabPage());
 	}
@@ -177,7 +177,7 @@ namespace kt
 		guiFactory()->removeClient(p);
 	}
 
-	void GUI::addToolWidget(QWidget* w,const QString & icon,const QString & caption,ToolDock dock)
+	void GUI::addToolWidget(QWidget* w,const QString & icon,const QString & caption,const QString & tooltip,ToolDock dock)
 	{
 		ideal::MainWindow::TabPosition pos = LEFT;
 		switch (dock)
@@ -192,7 +192,7 @@ namespace kt
 				pos = RIGHT;
 				break;
 		}
-		addTab(w,caption,icon,pos);
+		addTab(w,caption,icon,pos,tooltip);
 	}
 	
 	void GUI::removeToolWidget(QWidget* w)
@@ -440,10 +440,13 @@ namespace kt
 	{
 		KActionCollection* ac = actionCollection();
 		KAction* new_action = KStandardAction::openNew(this,SLOT(createTorrent()),ac);
+		new_action->setToolTip(i18n("Create a new torrent"));
 		KAction* open_action = KStandardAction::open(this, SLOT(openTorrent()),ac);
+		open_action->setToolTip(i18n("Open a torrent"));
 		KStandardAction::paste(this,SLOT(paste()),ac);
 		
 		open_silently_action = new KAction(KIcon(open_action->icon()),i18n("Open Silently"),this);
+		open_silently_action->setToolTip(i18n("Open a torrent without asking any questions"));
 		connect(open_silently_action,SIGNAL(triggered()),this,SLOT(openTorrentSilently()));
 		ac->addAction("file_open_silently",open_silently_action);
 				
@@ -458,36 +461,45 @@ namespace kt
 		KStandardAction::configureNotifications(this,SLOT(configureNotifications()),ac);
 
 		start_action = new KAction(KIcon("kt-start"),i18n("Start"), this);
+		start_action->setToolTip(i18n("Start all selected torrents in the current tab"));
 		connect(start_action,SIGNAL(triggered()),this,SLOT(startTorrent()));
 		ac->addAction("start",start_action);
 
 		stop_action = new KAction(KIcon("kt-stop"),i18n("Stop"),this);
+		stop_action->setToolTip(i18n("Stop all selected torrents in the current tab"));
 		connect(stop_action,SIGNAL(triggered()),this,SLOT(stopTorrent()));
 		ac->addAction("stop",stop_action);
 
 		remove_action = new KAction(KIcon("kt-remove"),i18n("Remove"),this);
+		remove_action->setToolTip(i18n("Remove all selected torrents in the current tab"));
 		connect(remove_action,SIGNAL(triggered()),this,SLOT(removeTorrent()));
 		ac->addAction("remove",remove_action);
 
 		start_all_cv_action = new KAction(KIcon("kt-start-all"),i18n("Start All"),this);
+		start_all_cv_action->setToolTip(i18n("Start all torrents in the current tab"));
 		connect(start_all_cv_action,SIGNAL(triggered()),this,SLOT(startAllTorrentsCV()));
 		ac->addAction("start_all",start_all_cv_action);
 		
 		start_all_action = new KAction(KIcon("kt-start-all"),i18n("Start All"),this);
+		start_all_action->setToolTip(i18n("Start all torrents"));
 		connect(start_all_action,SIGNAL(triggered()),this,SLOT(startAllTorrents()));
 		
 		stop_all_cv_action = new KAction(KIcon("kt-stop-all"),i18n("Stop All"),this);
+		stop_all_cv_action->setToolTip(i18n("Stop all torrents in the current tab"));
 		connect(stop_all_cv_action,SIGNAL(triggered()),this,SLOT(stopAllTorrentsCV()));
 		ac->addAction("stop_all",stop_all_cv_action);
 		
 		stop_all_action = new KAction(KIcon("kt-stop-all"),i18n("Stop All"),this);
+		stop_all_action->setToolTip(i18n("Stop all torrents"));
 		connect(stop_all_action,SIGNAL(triggered()),this,SLOT(stopAllTorrents()));
 		
 		paste_url_action = new KAction(KIcon(open_action->icon()),i18n("Open URL"),this);
+		paste_url_action->setToolTip(i18n("Open an URL which points to a torrent"));
 		connect(paste_url_action,SIGNAL(triggered()),this,SLOT(pasteURL()));
 		ac->addAction("paste_url",paste_url_action);
 
 		queue_action = new KAction(KIcon("view-choose"),i18n("Enqueue/Dequeue"),this);
+		queue_action->setToolTip(i18n("Enqueue or dequeue all selected torrents in the current tab"));
 		connect(queue_action,SIGNAL(triggered()),this,SLOT(queueTorrent()));
 		ac->addAction("queue_action",queue_action);
 		
@@ -498,19 +510,23 @@ namespace kt
 		ac->addAction("queue_pause",queue_pause_action);
 
 		ipfilter_action = new KAction(KIcon("view-filter"),i18n("IP Filter"),this);
+		ipfilter_action->setToolTip(i18n("Show the list of blocked IP addresses"));
 		connect(ipfilter_action,SIGNAL(triggered()),this,SLOT(showIPFilter()));
 		ac->addAction("ipfilter_action",ipfilter_action);
 
 		data_check_action = new KAction(KIcon("kt-check-data"),i18n("Check Data"),this);
+		data_check_action->setToolTip(i18n("Check all the data of a torrent"));
 		connect(data_check_action,SIGNAL(triggered()),this,SLOT(checkData()));
 		ac->addAction("check_data",data_check_action);
 		
 		import_action = new KAction(KIcon("document-import"),i18n("Import Torrent"),this);
+		import_action->setToolTip(i18n("Import a torrent"));
 		connect(import_action,SIGNAL(triggered()),this,SLOT(import()));
 		ac->addAction("import",import_action);
 		
 #ifndef Q_WS_WIN
 		import_kde3_torrents_action = new KAction(KIcon("document-import"),i18n("Import KDE3 Torrents"),this);
+		import_kde3_torrents_action->setToolTip(i18n("Import all torrents from the KDE3 version of KTorrent"));
 		connect(import_kde3_torrents_action,SIGNAL(triggered()),core,SLOT(importKDE3Torrents()));
 		ac->addAction("import_kde3_torrents",import_kde3_torrents_action);
 #else
@@ -518,6 +534,7 @@ namespace kt
 #endif
 		
 		speed_limits_action = new KAction(KIcon("kt-speed-limits"),i18n("Speed Limits"),this);
+		speed_limits_action->setToolTip(i18n("Set the speed limits of individual torrents"));
 		connect(speed_limits_action,SIGNAL(triggered()),this,SLOT(speedLimits()));
 		speed_limits_action->setShortcut(KShortcut(Qt::CTRL + Qt::Key_L));
 		ac->addAction("speed_limits",speed_limits_action);
@@ -597,7 +614,7 @@ namespace kt
 	{
 		View* view = view_man->newView(core,this);
 		view->setGroup(g);
-		addTabPage(view,g->groupIconName(),view->caption(),view_man);
+		addTabPage(view,g->groupIconName(),view->caption(),QString(),view_man);
 		return view;
 	}
 			

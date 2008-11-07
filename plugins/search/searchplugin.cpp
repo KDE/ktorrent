@@ -124,7 +124,7 @@ namespace kt
 		
 		
 		SearchWidget* search = new SearchWidget(this,engines);
-		getGUI()->addTabPage(search,"edit-find",text,this);
+		getGUI()->addTabPage(search,"edit-find",text,i18n("Search for %1",text),this);
 		
 		connect(search,SIGNAL(enableBack(bool)),back_action,SLOT(setEnabled(bool)));
 		connect(search,SIGNAL(openNewTab(const KUrl&)),this,SLOT(openNewTab(const KUrl&)));
@@ -207,7 +207,7 @@ namespace kt
 			if (url.isValid() && ok)
 			{
 				SearchWidget* search = new SearchWidget(this,engines);
-				getGUI()->addTabPage(search,"edit-find",text,this);
+				getGUI()->addTabPage(search,"edit-find",text,i18n("Search for %1",text),this);
 		
 				connect(search,SIGNAL(enableBack(bool)),back_action,SLOT(setEnabled(bool)));
 				connect(search,SIGNAL(openNewTab(const KUrl&)),this,SLOT(openNewTab(const KUrl&)));
@@ -309,7 +309,7 @@ namespace kt
 	{
 		SearchWidget* search = new SearchWidget(this,engines);
 		QString text = url.host();
-		getGUI()->addTabPage(search,"edit-find",text,this);
+		getGUI()->addTabPage(search,"edit-find",text,i18n("Search for %1",text),this);
 		
 		connect(search,SIGNAL(enableBack(bool)),back_action,SLOT(setEnabled(bool)));
 		connect(search,SIGNAL(openNewTab(const KUrl&)),this,SLOT(openNewTab(const KUrl&)));

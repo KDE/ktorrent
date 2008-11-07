@@ -46,8 +46,8 @@ void StatsPlugin::load()
 	pmDispSett = new DisplaySettingsPage(0);
 	pmTmr.reset(new QTimer(this));
 	
-	getGUI() -> addToolWidget(pmUiSpd.get(), "view-statistics", i18n("Speed charts"), GUIInterface::DOCK_BOTTOM);
-	getGUI() -> addToolWidget(pmUiConns.get(), "view-statistics", i18n("Connections charts"), GUIInterface::DOCK_BOTTOM);
+	getGUI() -> addToolWidget(pmUiSpd.get(), "view-statistics", i18n("Speed charts"), i18n("Displays charts about download and upload speed"),GUIInterface::DOCK_BOTTOM);
+	getGUI() -> addToolWidget(pmUiConns.get(), "view-statistics", i18n("Connections charts"), i18n("Displays charts about connections"), GUIInterface::DOCK_BOTTOM);
 	
 	getGUI() -> addPrefPage(pmUiSett);
 	getGUI() -> addPrefPage(pmDispSett);

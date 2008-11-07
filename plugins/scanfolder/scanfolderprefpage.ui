@@ -20,12 +20,19 @@
    <item>
     <layout class="QHBoxLayout" >
      <item>
-      <widget class="KListWidget" name="m_folders" />
+      <widget class="KListWidget" name="m_folders" >
+       <property name="toolTip" >
+        <string>List of folders which will be scanned for torrents by this plugin.</string>
+       </property>
+      </widget>
      </item>
      <item>
       <layout class="QVBoxLayout" >
        <item>
         <widget class="QPushButton" name="m_add" >
+         <property name="toolTip" >
+          <string>Add a new folder to be scanned.</string>
+         </property>
          <property name="text" >
           <string>Add Folder</string>
          </property>
@@ -33,6 +40,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="m_remove" >
+         <property name="toolTip" >
+          <string>Remove a folder from the list.</string>
+         </property>
          <property name="text" >
           <string>Remove Folder</string>
          </property>
@@ -43,7 +53,7 @@
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
            <height>221</height>
@@ -74,12 +84,13 @@
       <item>
        <widget class="QCheckBox" name="kcfg_recursive" >
         <property name="toolTip" >
-         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+         <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
 &lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Scan the folder recursively for torrents.&lt;/p>
 &lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Note:&lt;/span> This will not be done for any folder named loaded.&lt;/p>&lt;/body>&lt;/html></string>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;">Note: &lt;span style=" font-weight:400;">This will not be done for any folder named loaded.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
         </property>
         <property name="text" >
          <string>Scan subfolders</string>
@@ -89,12 +100,13 @@ p, li { white-space: pre-wrap; }
       <item>
        <widget class="QCheckBox" name="kcfg_actionDelete" >
         <property name="toolTip" >
-         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+         <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
 &lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">When a torrent file has been found and loaded, delete it.&lt;/p>
 &lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Warning:&lt;/span> you will permanently lose this file.&lt;/p>&lt;/body>&lt;/html></string>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;">Warning:&lt;span style=" font-weight:400;"> you will permanently lose this file.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
         </property>
         <property name="text" >
          <string>Remove torrent file after loading</string>
@@ -116,10 +128,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QCheckBox" name="kcfg_addToGroup" >
           <property name="toolTip" >
-           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Add torrents opened with this plugin to a group.&lt;/p>&lt;/body>&lt;/html></string>
+           <string>Add torrents opened with this plugin to a group.</string>
           </property>
           <property name="text" >
            <string>Add torrent to group:</string>
@@ -129,10 +138,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QComboBox" name="m_group" >
           <property name="toolTip" >
-           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Vera Sans'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Group to add torrents to.&lt;/p>&lt;/body>&lt;/html></string>
+           <string>Group to add torrents to.</string>
           </property>
          </widget>
         </item>

@@ -24,6 +24,9 @@
      <layout class="QVBoxLayout" name="verticalLayout_3" >
       <item>
        <widget class="QCheckBox" name="kcfg_useLevel1" >
+        <property name="toolTip" >
+         <string>Enable this if you want the IP filter plugin to work.</string>
+        </property>
         <property name="text" >
          <string>Use PeerGuardian filter</string>
         </property>
@@ -45,7 +48,11 @@
          </widget>
         </item>
         <item>
-         <widget class="KUrlRequester" name="kcfg_filterURL" />
+         <widget class="KUrlRequester" name="kcfg_filterURL" >
+          <property name="toolTip" >
+           <string>Filter file to use, this can be a local file or a remote file.</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -69,6 +76,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="m_download" >
+          <property name="toolTip" >
+           <string>Download and convert the IP filter file.</string>
+          </property>
           <property name="text" >
            <string>Dow&amp;nload/Convert</string>
           </property>
@@ -110,6 +120,9 @@ NOTE: ZIP file from bluetack.co.uk is supported.</string>
        <layout class="QHBoxLayout" name="horizontalLayout" >
         <item>
          <widget class="QCheckBox" name="kcfg_autoUpdate" >
+          <property name="toolTip" >
+           <string>Enable this if you want to automatically update the filter file.</string>
+          </property>
           <property name="text" >
            <string>Update file every:</string>
           </property>
@@ -122,6 +135,9 @@ NOTE: ZIP file from bluetack.co.uk is supported.</string>
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="toolTip" >
+           <string>Update interval in days.</string>
           </property>
           <property name="suffix" >
            <string> days</string>
