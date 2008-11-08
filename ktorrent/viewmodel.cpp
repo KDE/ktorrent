@@ -388,7 +388,7 @@ namespace kt
 				case 4: return i18n("How much data we have uploaded");
 				case 5: return i18n("Current download speed");
 				case 6: return i18n("Current upload speed");
-				case 7: return i18n("How much time is left before the torrent is finished");
+				case 7: return i18n("How much time is left before the torrent is finished or before the maximum share ratio is reached, if that is enabled");
 				case 8: return i18n("How many seeders we are connected to (How many seeders there are according to the tracker)");
 				case 9: return i18n("How many leechers we are connected to (How many leechers there are according to the tracker)");
 				// xgettext: no-c-format
