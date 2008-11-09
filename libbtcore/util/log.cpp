@@ -155,7 +155,7 @@ namespace bt
 		void endline()
 		{
 			finishLine();
-			if (fptr->size() > MAX_LOG_FILE_SIZE && !rotate_job)
+			if (fptr && fptr->size() > MAX_LOG_FILE_SIZE && !rotate_job)
 			{
 				tmp = "Log larger then 10 MB, rotating";
 				finishLine();
