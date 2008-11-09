@@ -1102,6 +1102,7 @@ namespace bt
 		if (!user_modified_name.isEmpty())
 			st.write("USER_MODIFIED_NAME",user_modified_name);
 		st.write("DISPLAY_NAME",display_name);
+		st.write("URL",url.prettyUrl());
 		st.writeSync();
 	}
 
@@ -1174,6 +1175,9 @@ namespace bt
 		setDownloadProps(down,adown);
 		setUploadProps(up,aup);
 		pman->setGroupIDs(upload_gid,download_gid);
+		
+		if (!url.isValid())
+			url = KUrl(st.readString("URL"));
 	}
 
 	void TorrentControl::loadOutputDir()

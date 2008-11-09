@@ -423,11 +423,22 @@ namespace kt
 			if (tc->getStats().tracker_status == bt::TRACKER_ERROR)
 				return KIcon("dialog-warning");
 		} 
-		else if (role == Qt::ToolTipRole && index.column() == 1)
+		else if (role == Qt::ToolTipRole)
 		{
-			bt::TorrentInterface* tc = torrents[index.row()].tc;
-			if (tc->getStats().tracker_status == bt::TRACKER_ERROR)
-				return i18n("There is a problem with the tracker: <br><b>%1</b>",tc->getStats().tracker_status_string);
+			if (index.column() == 1)
+			{
+				bt::TorrentInterface* tc = torrents[index.row()].tc;
+				if (tc->getStats().tracker_status == bt::TRACKER_ERROR)
+					return i18n("There is a problem with the tracker: <br><b>%1</b>",tc->getStats().tracker_status_string);
+			}
+			else if (index.column() == 0)
+			{
+				bt::TorrentInterface* tc = torrents[index.row()].tc;
+				if (tc->loadUrl().isValid())
+					return i18n("%1<br>Url: <b>%2</b>",tc->getDisplayName(),tc->loadUrl().prettyUrl());
+				else
+					return tc->getDisplayName();
+			}
 		}
 		
 		return QVariant();

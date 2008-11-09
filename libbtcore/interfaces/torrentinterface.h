@@ -198,7 +198,12 @@ namespace bt
 		TorrentInterface();
 		virtual ~TorrentInterface();
 
-	
+		/// Set the URL which the torrent was loaded from
+		void setLoadUrl(const KUrl& u) {url = u;}
+		
+		/// Get the URL which the torrent was loaded from
+		KUrl loadUrl() const {return url;}
+		
 		/**
 		 * Update the object, should be called periodically.
 		 */
@@ -591,6 +596,7 @@ namespace bt
 		TorrentStats stats;
 		QString user_modified_name;
 		QString display_name;
+		KUrl url;
 	};
 
 

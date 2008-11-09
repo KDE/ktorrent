@@ -152,6 +152,9 @@ namespace kt
 		/// Show the view menu
 		void showViewMenu(View* v,const QPoint & pos);
 		
+		/// Copy the torrent URL to the clipboard
+		void copyTorrentURL();
+		
 	private:
 		virtual bool closeAllowed(QWidget* w);
 		virtual void tabCloseRequest(kt::GUIInterface* gui,QWidget* tab);
@@ -192,6 +195,7 @@ namespace kt
 		QAction* speed_limits;
 		QAction* open_dir_menu;
 		QAction* groups_menu;
+		QAction* copy_url;
 		QList<QAction*> configure_columns_list;
 	};
 }

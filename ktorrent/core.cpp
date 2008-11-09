@@ -271,6 +271,7 @@ namespace kt
 			tc = new TorrentControl();
 			tc->init(qman, data, tdir, dir, 
 					 Settings::useSaveDir() ? Settings::saveDir().path() : QString());
+			tc->setLoadUrl(url);
 			
 			if(!init(tc,group,silently))
 				loadingFinished(url, false, true);
@@ -311,6 +312,7 @@ namespace kt
 			tc = new TorrentControl();
 			tc->init(qman, target, tdir, dir, 
 				 Settings::useSaveDir() ? Settings::saveDir().path() : QString());
+			tc->setLoadUrl(KUrl(target));
 			
 			init(tc,group,silently);
 			startUpdateTimer();

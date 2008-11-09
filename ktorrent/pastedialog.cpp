@@ -34,6 +34,7 @@ namespace kt
 			:KDialog ( parent, fl )
 	{
 		setupUi ( mainWidget() );
+		setWindowTitle(i18n("Open an URL"));
 		
 		m_core = core;
 		QClipboard *cb = QApplication::clipboard();

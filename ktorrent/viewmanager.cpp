@@ -19,6 +19,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QWidget>
+#include <QClipboard>
+#include <QApplication>
 #include <ksharedconfig.h>
 #include <kconfiggroup.h>
 #include <kaction.h>
@@ -489,6 +491,10 @@ namespace kt
 		
 		groups_menu = new KAction(KIcon("application-x-bittorrent"),i18n("Add to Group"),this);
 		ac->addAction("GroupsSubMenu",groups_menu);
+		
+		copy_url = new KAction(KIcon("edit-copy"),i18n("Copy Torrent URL"),this);
+		connect(copy_url,SIGNAL(triggered()),this,SLOT(copyTorrentURL()));
+		ac->addAction("view_copy_url",copy_url);
 	}
 	
 	void ViewManager::addToGroupItemTriggered()
@@ -533,6 +539,24 @@ namespace kt
 			}
 			core->getGroupManager()->saveGroups();
 		}
+	}
+	
+	void ViewManager::copyTorrentURL()
+	{
+		if (!current)
+			return;
+		
+		QList<bt::TorrentInterface*> sel;
+		current->getSelection(sel);
+		if (sel.count() == 0)
+			return;
+		
+		bt::TorrentInterface* tc = sel.front();
+		if (!tc->loadUrl().isValid())
+			return;
+		
+		QClipboard* cb = QApplication::clipboard();
+		cb->setText(tc->loadUrl().prettyUrl());
 	}
 	
 	void ViewManager::showViewMenu(View* v,const QPoint & pos)
@@ -657,6 +681,7 @@ namespace kt
 		// disable DHT and PEX if they are globally disabled
 		dht_enabled->setEnabled(Settings::dhtSupport());
 		pex_enabled->setEnabled(Settings::pexEnabled());
+		copy_url->setEnabled(sel.count() == 1 && sel.front()->loadUrl().isValid());
 		view_menu->popup(pos);
 	}
 }
