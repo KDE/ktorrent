@@ -41,6 +41,7 @@ class EMailNotifier:
 			msg['BCC'] = self.mail_bcc
 		
 		msg.attach(MIMEText(text))
+		KTorrent.log("Sending mail : " + subject)
 		
 		try:
 			mailServer = smtplib.SMTP(self.mail_server, self.mail_port)
@@ -142,6 +143,7 @@ class EMailNotifier:
 	
 
 	def connectSignals(self,tor):
+		KTorrent.log("connectSignals " + tor.name())
 		tor.connect("finished(QObject* )",self.torrentFinished)
 		tor.connect("stoppedByError(QObject* ,const QString & )",self.torrentStoppedByError)
 		tor.connect("seedingAutoStopped(QObject* ,const QString & )",self.seedingAutoStopped)

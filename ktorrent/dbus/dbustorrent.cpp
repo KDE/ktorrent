@@ -45,13 +45,13 @@ namespace kt
 		QFlags<QDBusConnection::RegisterOption> flags = QDBusConnection::ExportScriptableSlots|QDBusConnection::ExportScriptableSignals;
 		sb.registerObject(path, this,flags);
 		
-		connect(ti,SIGNAL(finished(bt::TorrentInterface*)),this,SLOT(finished(bt::TorrentInterface*)));
+		connect(ti,SIGNAL(finished(bt::TorrentInterface*)),this,SLOT(onFinished(bt::TorrentInterface*)));
 		connect(ti,SIGNAL(stoppedByError(bt::TorrentInterface*, QString)),
-				this,SLOT(stoppedByError(bt::TorrentInterface*, const QString&)));
+				this,SLOT(onStoppedByError(bt::TorrentInterface*, const QString&)));
 		connect(ti,SIGNAL(seedingAutoStopped(bt::TorrentInterface*, bt::AutoStopReason)),
-				this,SLOT(seedingAutoStopped(bt::TorrentInterface*, bt::AutoStopReason)));
-		connect(ti,SIGNAL(corruptedDataFound(bt::TorrentInterface*)),this,SLOT(corruptedDataFound(bt::TorrentInterface*)));
-		connect(ti,SIGNAL(torrentStopped(bt::TorrentInterface*)),this,SLOT(torrentStopped(bt::TorrentInterface*)));
+				this,SLOT(onSeedingAutoStopped(bt::TorrentInterface*, bt::AutoStopReason)));
+		connect(ti,SIGNAL(corruptedDataFound(bt::TorrentInterface*)),this,SLOT(onCorruptedDataFound(bt::TorrentInterface*)));
+		connect(ti,SIGNAL(torrentStopped(bt::TorrentInterface*)),this,SLOT(onTorrentStopped(bt::TorrentInterface*)));
 	}
 
 
@@ -299,22 +299,21 @@ namespace kt
 		return ret;
 	}
 	
-	void DBusTorrent::finished(bt::TorrentInterface* tor)
+	void DBusTorrent::onFinished(bt::TorrentInterface* tor)
 	{
 		Q_UNUSED(tor);
-		finished(this);
+		emit finished(this);
 	}
 	
-	void DBusTorrent::stoppedByError(bt::TorrentInterface* tor,const QString & err)
+	void DBusTorrent::onStoppedByError(bt::TorrentInterface* tor,const QString & err)
 	{
 		Q_UNUSED(tor);
-		stoppedByError(this,err);
+		emit stoppedByError(this,err);
 	}
 	
-	void DBusTorrent::seedingAutoStopped(bt::TorrentInterface* tor,bt::AutoStopReason reason)
+	void DBusTorrent::onSeedingAutoStopped(bt::TorrentInterface* tor,bt::AutoStopReason reason)
 	{
 		Q_UNUSED(tor);
-		Out(SYS_GEN|LOG_DEBUG) << "DBusTorrent::seedingAutoStopped" << endl;
 		QString msg;
 		switch (reason)
 		{
@@ -325,19 +324,19 @@ namespace kt
 				msg = i18n("Maximum seed time reached !");
 				break;
 		}
-		seedingAutoStopped(this,msg);
+		emit seedingAutoStopped(this,msg);
 	}
 	
-	void DBusTorrent::corruptedDataFound(bt::TorrentInterface* tor)
+	void DBusTorrent::onCorruptedDataFound(bt::TorrentInterface* tor)
 	{
 		Q_UNUSED(tor);
-		corruptedDataFound(this);
+		emit corruptedDataFound(this);
 	}
 	
-	void DBusTorrent::torrentStopped(bt::TorrentInterface* tor)
+	void DBusTorrent::onTorrentStopped(bt::TorrentInterface* tor)
 	{
 		Q_UNUSED(tor);
-		torrentStopped(this);
+		emit torrentStopped(this);
 	}
 	
 	QString DBusTorrent::filePath(uint file_index) const

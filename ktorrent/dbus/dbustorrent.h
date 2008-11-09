@@ -117,11 +117,11 @@ namespace kt
 		Q_SCRIPTABLE void torrentStopped(QObject* tor);
 		
 	private slots:
-		void finished(bt::TorrentInterface* tor);
-		void stoppedByError(bt::TorrentInterface* tor,const QString & err);
-		void seedingAutoStopped(bt::TorrentInterface* tor,bt::AutoStopReason reason);
-		void corruptedDataFound(bt::TorrentInterface* tor);
-		void torrentStopped(bt::TorrentInterface* tor);
+		void onFinished(bt::TorrentInterface* tor);
+		void onStoppedByError(bt::TorrentInterface* tor,const QString & err);
+		void onSeedingAutoStopped(bt::TorrentInterface* tor,bt::AutoStopReason reason);
+		void onCorruptedDataFound(bt::TorrentInterface* tor);
+		void onTorrentStopped(bt::TorrentInterface* tor);
 		
 	private:
 		bt::TorrentInterface* ti;
