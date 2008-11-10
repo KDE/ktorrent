@@ -435,13 +435,51 @@ namespace bt
 
 	void Torrent::calcChunkPos(Uint32 chunk,QList<Uint32> & file_list) const
 	{
-		//Out(SYS_GEN|LOG_DEBUG) << "Torrent::calcChunkPos " << chunk << endl;
 		file_list.clear();
 		if (chunk >= (Uint32)hash_pieces.size() || files.empty())
 			return;
 		
-		int i = (chunk >= this->pos_cache_chunk) ? this->pos_cache_file : 0;
-		for (;i < files.count();i++)
+		int start = (chunk >= this->pos_cache_chunk) ? this->pos_cache_file : 0;
+		int end = (files.count() - 1);
+		int mid = start + (end - start) / 2;
+		while (start != mid && mid != end)
+		{
+			//printf("start = %i ; end = %i ; mid = %i\n",start,end,mid);
+			const TorrentFile & f = files[mid];
+			if (chunk >= f.getFirstChunk() && chunk <= f.getLastChunk())
+			{
+				int i = mid;
+				while (i > 0)
+				{
+					i--;
+					const TorrentFile & tf = files[i];
+					if (!(chunk >= tf.getFirstChunk() && chunk <= tf.getLastChunk()))
+					{
+						i++;
+						break;
+					}
+				}
+				mid = i;
+				break;
+			}
+			else
+			{
+				if (chunk > f.getLastChunk())
+				{
+					// chunk comes after file
+					start = mid + 1;
+					mid = start + (end - start) / 2;
+				}
+				else
+				{
+					// chunk comes before file
+					end = mid - 1;
+					mid = start + (end - start) / 2;
+				}
+			}
+		}
+		
+		for (int i = mid;i < files.count();i++)
 		{
 			const TorrentFile & f = files[i];
 			if (chunk >= f.getFirstChunk() && chunk <= f.getLastChunk() && f.getSize() != 0)
