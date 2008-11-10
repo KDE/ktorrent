@@ -79,6 +79,18 @@ namespace kt
 		void queue(int row);
 		
 		/**
+		 * Move an item to the top
+		 * @param row The row of the item
+		 */
+		void moveTop(int row);
+		
+		/**
+		 * Move an item to the bottom
+		 * @param row The row of the item
+		 */
+		void moveBottom(int row);
+		
+		/**
 		 * Update the model
 		 */
 		void update();

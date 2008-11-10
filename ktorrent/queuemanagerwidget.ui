@@ -19,6 +19,13 @@
    <item>
     <layout class="QVBoxLayout" >
      <item>
+      <widget class="KPushButton" name="m_move_top" >
+       <property name="text" >
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="KPushButton" name="m_move_up" >
        <property name="text" >
         <string/>
@@ -33,11 +40,18 @@
       </widget>
      </item>
      <item>
+      <widget class="KPushButton" name="m_move_bottom" >
+       <property name="text" >
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer>
        <property name="orientation" >
         <enum>Qt::Vertical</enum>
        </property>
-       <property name="sizeHint" >
+       <property name="sizeHint" stdset="0" >
         <size>
          <width>20</width>
          <height>40</height>
@@ -46,7 +60,11 @@
       </spacer>
      </item>
      <item>
-      <widget class="KPushButton" name="m_queue" />
+      <widget class="KPushButton" name="m_queue" >
+       <property name="text" >
+        <string/>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

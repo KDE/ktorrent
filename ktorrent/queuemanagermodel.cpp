@@ -370,6 +370,42 @@ namespace kt
 		qman->orderQueue();
 	}
 	
+	void QueueManagerModel::moveTop(int row)
+	{
+		if (row < 0 || row >= qman->count())
+			return;
+		
+		bt::TorrentInterface* tc = qman->getTorrent(row);
+		tc->setPriority(qman->count() + 1);
+		// reorder the queue
+		qman->orderQueue();
+	}
+	
+	void QueueManagerModel::moveBottom(int row)
+	{
+		if (row < 0 || row >= qman->count())
+			return;
+		
+		int r = 0;
+		// set everybody's priority one higher and set row's to 1
+		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
+		{
+			bt::TorrentInterface* curr = *i;
+			
+			if (r == row)
+			{
+				curr->setPriority(1);
+			}
+			else if (curr->getPriority() > 0)
+			{
+				curr->setPriority(curr->getPriority() + 1);
+			}
+			r++;
+		}
+		// reorder the queue
+		qman->orderQueue();
+	}
+	
 	void QueueManagerModel::update()
 	{
 		TimeStamp now = bt::GetCurrentTime();

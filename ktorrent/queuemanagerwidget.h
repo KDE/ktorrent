@@ -61,6 +61,8 @@ namespace kt
 	private slots:
 		void moveUpClicked();
 		void moveDownClicked();
+		void moveTopClicked();
+		void moveBottomClicked();
 		void queueClicked();
 
 	private:

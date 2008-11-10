@@ -34,6 +34,8 @@ namespace kt
 		
 		connect(m_move_up,SIGNAL(clicked()),this,SLOT(moveUpClicked()));
 		connect(m_move_down,SIGNAL(clicked()),this,SLOT(moveDownClicked()));
+		connect(m_move_top,SIGNAL(clicked()),this,SLOT(moveTopClicked()));
+		connect(m_move_bottom,SIGNAL(clicked()),this,SLOT(moveBottomClicked()));
 		connect(m_queue,SIGNAL(clicked()),this,SLOT(queueClicked()));
 		
 		
@@ -43,6 +45,10 @@ namespace kt
 		m_move_down->setToolTip(i18n("Move a torrent down in the queue"));
 		m_queue->setIcon(KIcon("view-choose"));
 		m_queue->setToolTip(i18n("Enqueue or dequeue a torrent"));
+		m_move_top->setIcon(KIcon("go-top"));
+		m_move_top->setToolTip(i18n("Move a torrent to the top of the queue"));
+		m_move_bottom->setIcon(KIcon("go-bottom"));
+		m_move_bottom->setToolTip(i18n("Move a torrent to the bottom of the queue"));
 		
 		model = new QueueManagerModel(qman,this);
 		m_torrents->setModel(model);
@@ -92,6 +98,29 @@ namespace kt
 			model->moveDown(r);
 			if (r < model->rowCount(QModelIndex()) - 1)
 				r++;
+			m_torrents->selectionModel()->setCurrentIndex(model->index(r,0),QItemSelectionModel::Select|QItemSelectionModel::Rows);
+		}
+	}
+	
+	void QueueManagerWidget::moveTopClicked()
+	{
+		QModelIndex cur = m_torrents->selectionModel()->currentIndex();
+		if (cur.isValid())
+		{
+			int r = cur.row();
+			model->moveTop(r);
+			m_torrents->selectionModel()->setCurrentIndex(model->index(0,0),QItemSelectionModel::Select|QItemSelectionModel::Rows);
+		}
+	}
+	
+	void QueueManagerWidget::moveBottomClicked()
+	{
+		QModelIndex cur = m_torrents->selectionModel()->currentIndex();
+		if (cur.isValid())
+		{
+			int r = cur.row();
+			model->moveBottom(r);
+			r = model->rowCount(QModelIndex()) - 1;
 			m_torrents->selectionModel()->setCurrentIndex(model->index(r,0),QItemSelectionModel::Select|QItemSelectionModel::Rows);
 		}
 	}
