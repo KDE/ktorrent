@@ -731,6 +731,8 @@ namespace kt
 		remove_action->setEnabled(flags & REMOVE);
 		start_all_cv_action->setEnabled(flags & START_ALL);
 		stop_all_cv_action->setEnabled(flags & STOP_ALL);
+		queue_action->setEnabled(flags & REMOVE);
+		data_check_action->setEnabled(flags & REMOVE);
 		queue_pause_action->setEnabled(core->getPausedState() || flags & STOP_ALL);
 	}
 	

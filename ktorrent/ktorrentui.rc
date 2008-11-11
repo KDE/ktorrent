@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="ktorrent" version="11">
+<kpartgui name="ktorrent" version="12">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
 	  <Action name="file_new"/>
@@ -73,7 +73,7 @@
 		<Action name="view_add_to_new_group" />
 	</Menu>
 	<Separator/>
-	<Action name="view_check_data" />
+	<Action name="check_data" />
 	<Action name="speed_limits" />
 	<Action name="view_copy_url" />
 	<Separator/>
