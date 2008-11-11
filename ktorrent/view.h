@@ -114,7 +114,6 @@ namespace kt
 		void openDataDir();
 		void openTorDir();
 		void removeFromGroup();
-		void speedLimitsDlg();
 		void toggleDHT();
 		void togglePEX();
 		void scrape();

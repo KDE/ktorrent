@@ -77,9 +77,10 @@ namespace kt
 		//Marker markk("GUI::GUI()");
 		core = new Core(this);
 		tray_icon = new TrayIcon(core,this);
-		setupActions();
-		setActionsEnabled((ActionEnableFlags)0);
 		view_man = new ViewManager(core->getGroupManager()->allGroup(),this,core);
+		setupActions();
+		view_man->setupActions();
+		setActionsEnabled((ActionEnableFlags)0);
 		connect(view_man,SIGNAL(enableActions(ActionEnableFlags)),this,SLOT(setActionsEnabled(ActionEnableFlags)));
 		
 		group_view = new GroupView(core->getGroupManager(),view_man,this);
@@ -304,30 +305,9 @@ namespace kt
 			}
 		}
 	}
-
-	void GUI::startTorrent()
-	{
-		view_man->startTorrents();
-	}
-
-	void GUI::stopTorrent()
-	{
-		view_man->stopTorrents();
-	}
-
-	void GUI::removeTorrent()
-	{
-		view_man->removeTorrents();
-	}
-
-	void GUI::queueTorrent()
-	{
-		view_man->queueTorrents();
-	}
 	
 	void GUI::pauseQueue(bool pause)
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "pauseQUeue " << pause << endl;
 		core->setPausedState(pause);
 	}
 	
@@ -354,11 +334,6 @@ namespace kt
 	void GUI::stopAllTorrents()
 	{
 		core->stopAll(3);
-	}
-
-	void GUI::checkData()
-	{
-		view_man->checkData();
 	}
 
 	void GUI::pasteURL()
@@ -462,21 +437,25 @@ namespace kt
 
 		start_action = new KAction(KIcon("kt-start"),i18n("Start"), this);
 		start_action->setToolTip(i18n("Start all selected torrents in the current tab"));
-		connect(start_action,SIGNAL(triggered()),this,SLOT(startTorrent()));
+		start_action->setShortcut(KShortcut(Qt::CTRL + Qt::Key_S));
+		connect(start_action,SIGNAL(triggered()),view_man,SLOT(startTorrents()));
 		ac->addAction("start",start_action);
 
 		stop_action = new KAction(KIcon("kt-stop"),i18n("Stop"),this);
 		stop_action->setToolTip(i18n("Stop all selected torrents in the current tab"));
-		connect(stop_action,SIGNAL(triggered()),this,SLOT(stopTorrent()));
+		stop_action->setShortcut(KShortcut(Qt::CTRL + Qt::Key_H));
+		connect(stop_action,SIGNAL(triggered()),view_man,SLOT(stopTorrents()));
 		ac->addAction("stop",stop_action);
 
 		remove_action = new KAction(KIcon("kt-remove"),i18n("Remove"),this);
 		remove_action->setToolTip(i18n("Remove all selected torrents in the current tab"));
-		connect(remove_action,SIGNAL(triggered()),this,SLOT(removeTorrent()));
+		remove_action->setShortcut(KShortcut(Qt::Key_Delete));
+		connect(remove_action,SIGNAL(triggered()),view_man,SLOT(removeTorrents()));
 		ac->addAction("remove",remove_action);
 
 		start_all_cv_action = new KAction(KIcon("kt-start-all"),i18n("Start All"),this);
 		start_all_cv_action->setToolTip(i18n("Start all torrents in the current tab"));
+		start_all_cv_action->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_S));
 		connect(start_all_cv_action,SIGNAL(triggered()),this,SLOT(startAllTorrentsCV()));
 		ac->addAction("start_all",start_all_cv_action);
 		
@@ -486,6 +465,7 @@ namespace kt
 		
 		stop_all_cv_action = new KAction(KIcon("kt-stop-all"),i18n("Stop All"),this);
 		stop_all_cv_action->setToolTip(i18n("Stop all torrents in the current tab"));
+		stop_all_cv_action->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_H));
 		connect(stop_all_cv_action,SIGNAL(triggered()),this,SLOT(stopAllTorrentsCV()));
 		ac->addAction("stop_all",stop_all_cv_action);
 		
@@ -495,32 +475,38 @@ namespace kt
 		
 		paste_url_action = new KAction(KIcon(open_action->icon()),i18n("Open URL"),this);
 		paste_url_action->setToolTip(i18n("Open an URL which points to a torrent"));
+		paste_url_action->setShortcut(KShortcut(Qt::CTRL + Qt::Key_P));
 		connect(paste_url_action,SIGNAL(triggered()),this,SLOT(pasteURL()));
 		ac->addAction("paste_url",paste_url_action);
 
 		queue_action = new KAction(KIcon("view-choose"),i18n("Enqueue/Dequeue"),this);
 		queue_action->setToolTip(i18n("Enqueue or dequeue all selected torrents in the current tab"));
-		connect(queue_action,SIGNAL(triggered()),this,SLOT(queueTorrent()));
+		queue_action->setShortcut(KShortcut(Qt::CTRL + Qt::Key_D));
+		connect(queue_action,SIGNAL(triggered()),view_man,SLOT(queueTorrents()));
 		ac->addAction("queue_action",queue_action);
 		
 		queue_pause_action = new KToggleAction(KIcon("kt-pause"),i18n("Pause"),this);
 		queue_pause_action->setToolTip(i18n("Pause all running torrents"));
+		queue_pause_action->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_P));
 		connect(queue_pause_action,SIGNAL(toggled(bool)),this,SLOT(pauseQueue(bool)));
 		queue_pause_action->setCheckedState(KGuiItem(i18n("Resume"),"media-playback-start",i18n("Resume paused torrents")));
 		ac->addAction("queue_pause",queue_pause_action);
 
 		ipfilter_action = new KAction(KIcon("view-filter"),i18n("IP Filter"),this);
 		ipfilter_action->setToolTip(i18n("Show the list of blocked IP addresses"));
+		ipfilter_action->setShortcut(KShortcut(Qt::CTRL + Qt::Key_I));
 		connect(ipfilter_action,SIGNAL(triggered()),this,SLOT(showIPFilter()));
 		ac->addAction("ipfilter_action",ipfilter_action);
 
 		data_check_action = new KAction(KIcon("kt-check-data"),i18n("Check Data"),this);
 		data_check_action->setToolTip(i18n("Check all the data of a torrent"));
-		connect(data_check_action,SIGNAL(triggered()),this,SLOT(checkData()));
+		data_check_action->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_C));
+		connect(data_check_action,SIGNAL(triggered()),view_man,SLOT(checkData()));
 		ac->addAction("check_data",data_check_action);
 		
 		import_action = new KAction(KIcon("document-import"),i18n("Import Torrent"),this);
 		import_action->setToolTip(i18n("Import a torrent"));
+		import_action->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_I));
 		connect(import_action,SIGNAL(triggered()),this,SLOT(import()));
 		ac->addAction("import",import_action);
 		
@@ -652,7 +638,9 @@ namespace kt
 	
 	void GUI::speedLimits()
 	{
-		SpeedLimitsDlg dlg(0,core,this);
+		QList<bt::TorrentInterface*> sel;
+		view_man->getSelection(sel);
+		SpeedLimitsDlg dlg(sel.count() > 0 ? sel.front() : 0,core,this);
 		dlg.exec();
 	}
 	

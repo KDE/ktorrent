@@ -399,14 +399,6 @@ namespace kt
 		num_running++; // set these wrong so that the caption is updated on the next update
 		num_torrents++;
 	}
-	
-	void View::speedLimitsDlg()
-	{
-		QList<bt::TorrentInterface*> sel;
-		getSelection(sel);
-		SpeedLimitsDlg dlg(sel.count() > 0 ? sel.front() : 0,core,this);
-		dlg.exec();
-	}
 
 	void View::toggleDHT()
 	{

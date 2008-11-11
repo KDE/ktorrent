@@ -27,6 +27,7 @@
 #include <kactioncollection.h>
 #include <klocale.h>
 #include <kmenu.h>
+#include <kshortcut.h>
 #include <groups/group.h>
 #include <util/log.h>
 #include <groups/groupmanager.h>
@@ -46,7 +47,6 @@ namespace kt
 	{
 		view_menu = 0;
 		model = new ViewModel(core,this);
-		setupActions();
 	}
 
 	ViewManager::~ViewManager()
@@ -226,12 +226,6 @@ namespace kt
 			current->checkData();
 	}
 		
-	void ViewManager::speedLimitsDlg()
-	{
-		if (current)
-			current->speedLimitsDlg();
-	}
-		
 
 	void ViewManager::queueTorrents()
 	{
@@ -398,19 +392,12 @@ namespace kt
 	{
 		KActionCollection* ac = gui->actionCollection();
 		
-		start_torrent = new KAction(KIcon("kt-start"),i18n("Start"),this);
-		connect(start_torrent,SIGNAL(triggered()),this,SLOT(startTorrents()));
-		ac->addAction("view_start",start_torrent);
-		
-		stop_torrent = new KAction(KIcon("kt-stop"),i18n("Stop"),this);
-		connect(stop_torrent,SIGNAL(triggered()),this,SLOT(stopTorrents()));
-		ac->addAction("view_stop",stop_torrent);
-		
-		remove_torrent = new KAction(KIcon("kt-remove"),i18n("Remove Torrent"),this);
-		connect(remove_torrent,SIGNAL(triggered()),this,SLOT(removeTorrents()));
-		ac->addAction("view_remove_torrent",remove_torrent);
+		start_torrent = ac->action("start");
+		stop_torrent = ac->action("stop");
+		remove_torrent = ac->action("remove");
 		
 		remove_torrent_and_data = new KAction(KIcon("kt-remove"),i18n("Remove Torrent and Data"),this);
+		remove_torrent_and_data->setShortcut(KShortcut(Qt::CTRL + Qt::Key_Delete));
 		connect(remove_torrent_and_data,SIGNAL(triggered()),this,SLOT(removeTorrentsAndData()));
 		ac->addAction("view_remove_torrent_and_data",remove_torrent_and_data);
 		
@@ -418,9 +405,7 @@ namespace kt
 		connect(rename_torrent,SIGNAL(triggered()),this,SLOT(renameTorrent()));
 		ac->addAction("view_rename_torrent",rename_torrent);
 		
-		queue_torrent = new KAction(KIcon("view-choose"),i18n("Enqueue/Dequeue"),this);
-		connect(queue_torrent,SIGNAL(triggered()),this,SLOT(queueTorrents()));
-		ac->addAction("view_queue",queue_torrent);
+		queue_torrent = ac->action("queue_action");
 		
 		add_peers = new KAction(KIcon("list-add"),i18n("Add Peers"),this);
 		connect(add_peers,SIGNAL(triggered()),this,SLOT(addPeers()));
@@ -438,6 +423,7 @@ namespace kt
 		ac->addAction("view_pex_enabled",pex_enabled);
 	
 		manual_announce = new KAction(i18n("Manual Announce"),this);
+		manual_announce->setShortcut(KShortcut(Qt::CTRL + Qt::Key_A));
 		connect(manual_announce,SIGNAL(triggered()),this,SLOT(manualAnnounce()));
 		ac->addAction("view_announce",manual_announce);
 		
@@ -470,13 +456,9 @@ namespace kt
 		connect(add_to_new_group,SIGNAL(triggered()),this,SLOT(addToNewGroup()));
 		ac->addAction("view_add_to_new_group",add_to_new_group);
 		
-		check_data = new KAction(KIcon("kt-check-data"),i18n("Check Data"),this);
-		connect(check_data,SIGNAL(triggered()),this,SLOT(checkData()));
-		ac->addAction("view_check_data",check_data);
+		check_data = ac->action("check_data");
 		
-		speed_limits = new KAction(KIcon("kt-speed-limits"),i18n("Speed Limits"),this);
-		connect(speed_limits,SIGNAL(triggered()),this,SLOT(speedLimitsDlg()));
-		ac->addAction("view_speed_limits",speed_limits);
+		speed_limits =  ac->action("speed_limits");
 		
 		GroupManager* gman = core->getGroupManager();
 		for (GroupManager::iterator i = gman->begin();i != gman->end();i++)

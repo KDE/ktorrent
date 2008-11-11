@@ -123,10 +123,6 @@ namespace kt
 		void createTorrent();
 		void openTorrent();
 		void openTorrentSilently();
-		void startTorrent();
-		void stopTorrent();
-		void removeTorrent();
-		void queueTorrent();
 		void pauseQueue(bool pause);
 		void startAllTorrents();
 		void startAllTorrentsCV();
@@ -134,7 +130,6 @@ namespace kt
 		void stopAllTorrentsCV();
 		void pasteURL();
 		void paste();
-		void checkData();
 		void showPrefDialog();
 		void showStatusBar();
 		void showMenuBar();

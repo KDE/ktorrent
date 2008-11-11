@@ -72,6 +72,9 @@ namespace kt
 		
 		/// Get the current torrent (non const version)
 		bt::TorrentInterface* getCurrentTorrent();
+		
+		/// Setup the actions of the view manager
+		void setupActions();
 
 	public slots:
 		void onCurrentTabChanged(QWidget* tab);
@@ -140,9 +143,6 @@ namespace kt
 		/// Remove the selected torrent from the current group
 		void removeFromGroup();
 		
-		/// Show the speed limits dialog
-		void speedLimitsDlg();
-		
 		/// An item in the groups menu was triggered
 		void addToGroupItemTriggered();
 		
@@ -158,7 +158,6 @@ namespace kt
 	private:
 		virtual bool closeAllowed(QWidget* w);
 		virtual void tabCloseRequest(kt::GUIInterface* gui,QWidget* tab);
-		void setupActions();
 		
 	signals:
 		void enableActions(ActionEnableFlags flags);
@@ -176,12 +175,12 @@ namespace kt
 		QAction* start_torrent;
 		QAction* stop_torrent;
 		QAction* remove_torrent;
-		QAction* remove_torrent_and_data;
+		KAction* remove_torrent_and_data;
 		QAction* queue_torrent;
 		QAction* add_peers;
 		QAction* dht_enabled;
 		QAction* pex_enabled;
-		QAction* manual_announce;
+		KAction* manual_announce;
 		QAction* do_scrape;
 		QAction* preview;
 		QAction* data_dir;
