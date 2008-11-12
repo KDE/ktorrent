@@ -6,6 +6,7 @@ set(ktsyndicationplugin_SRC
 	syndicationtab.cpp
 	feedlistview.cpp 
 	feedlist.cpp 
+	feedlistdelegate.cpp
 	feed.cpp 
 	feedwidget.cpp 
 	feedwidgetmodel.cpp

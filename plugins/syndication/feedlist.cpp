@@ -100,6 +100,19 @@ namespace kt
 					return f->feedData()->title();
 				else
 					return f->feedUrl().prettyUrl();
+			case Qt::UserRole:
+			{
+				QString title;
+				if (f->ok())
+					title = f->feedData()->title();
+				else
+					title = f->feedUrl().prettyUrl();
+				
+				if (f->numFilters() == 1)
+					return i18n("<b>%1</b><br/>1 active filter",title);
+				else
+					return i18n("<b>%1</b><br/>%2 active filters",title,f->numFilters());
+			}
 			case Qt::DecorationRole:
 				return KIcon("application-rss+xml");
 			case Qt::ToolTipRole:

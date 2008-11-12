@@ -97,6 +97,9 @@ namespace kt
 		/// Check if an item is downloaded
 		bool downloaded(Syndication::ItemPtr item) const; 
 		
+		/// Get the number of filters
+		int numFilters() const {return filters.count();}
+		
 	signals:
 		/// Emitted when a link must de downloaded
 		void downloadLink(const KUrl & link,const QString & group,const QString & location,bool silently);

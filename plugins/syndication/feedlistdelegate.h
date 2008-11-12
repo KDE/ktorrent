@@ -18,46 +18,27 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#ifndef KTFEEDLISTDELEGATE_H
+#define KTFEEDLISTDELEGATE_H
 
+#include <QItemDelegate>
 
-#include "feedlistview.h"
-#include "feedlist.h"
-#include "feedlistdelegate.h"
-
-namespace kt
+namespace kt 
 {
 
-	FeedListView::FeedListView(FeedList* feeds,QWidget* parent)
-			: QListView(parent),feeds(feeds)
+	/**
+		@author 
+	*/
+	class FeedListDelegate : public QItemDelegate
 	{
-		setContextMenuPolicy(Qt::CustomContextMenu);
-		setSelectionMode(QAbstractItemView::ContiguousSelection);
-		setModel(feeds);
-		setItemDelegate(new FeedListDelegate(this));
-		connect(this,SIGNAL(doubleClicked(const QModelIndex &)),this,SLOT(itemActivated(const QModelIndex&)));
-		connect(this->selectionModel(),SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
-				this,SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
-	}
-
-
-	FeedListView::~FeedListView()
-	{
-	}
-
-	void FeedListView::itemActivated(const QModelIndex & idx)
-	{
-		feedActivated(feeds->feedForIndex(idx));
-	}
-
-	void FeedListView::selectionChanged(const QItemSelection& sel, const QItemSelection& desel)
-	{
-		Q_UNUSED(desel);
-		Q_UNUSED(sel);
-		enableRemove(selectionModel()->selectedRows().count() > 0);
-	}
+	public:
+		FeedListDelegate(QObject* parent);	
+		virtual ~FeedListDelegate();
 	
-	QModelIndexList FeedListView::selectedFeeds()
-	{
-		return selectionModel()->selectedRows();
-	}
+		virtual QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
+		virtual void paint(QPainter * painter,const QStyleOptionViewItem & option,const QModelIndex & index) const;
+	};
+
 }
+
+#endif
