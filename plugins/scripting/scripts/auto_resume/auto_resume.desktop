@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=AutoResumeScript
+Name[de]=Auto-Fortsetzen-Skript
 Name[el]=Σενάρια αυτόματης συνέχισης
 Name[es]=Script de reanudación automática
 Name[nds]=Auto-Wiedermaak-Skript
@@ -9,6 +10,7 @@ Name[ru]=Автовозобновление
 Name[sv]=Skript för automatisk återupptagning
 Name[zh_TW]=自動回復文稿
 Comment=Script to automatically resume after some time, when the paused state is enabled
+Comment[de]=Skript zum automatischen Fortsetzen von pausierten Torrents nach Ablauf einer festgelegten Zeit
 Comment[el]=Σενάριο για την αυτόματη συνέχιση λήψενω μετά από κάποιο χρονικό διάστημα, όταν η κατάσταση  παύσης είναι ενεργοποιημένη
 Comment[es]=Script para reanudar automáticamente tras cierto tiempo, cuando está habilitado el estado de pausa
 Comment[nds]=Dat Skript maakt automaatsch na en wiss Tiet wieder, wenn de Anhollen-Status anmaakt is

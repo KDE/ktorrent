@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=SyndicationPlugin
+Name[de]=Syndizierungsmodul
 Name[el]=Πρόσθετο Syndication
 Name[es]=Complemento de redifusión
 Name[nds]=Strööm-Moduul
@@ -9,6 +10,7 @@ Name[ru]=Ленты новостей
 Name[sv]=Syndikeringsinsticksprogram
 Name[zh_TW]=Syndication 外掛程式
 Comment=Syndication plugin for KTorrent, supporting RSS and Atom feeds
+Comment[de]=Syndizierungsmodul für KTorrent mit Unterstützung für RSS- und Atom-Nachrichtenquellen
 Comment[el]=Πρόσθετο Syndication για το KTorrent, με υποστήριξη ροών RSS και Atom
 Comment[es]=Complemento de redifusión para KTorrent, que admite fuentes RSS y Atom
 Comment[gl]=Extensión de sindicación para KTorrent, con soporte para fontes RSS e Atom
