@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=WebInterface
+Name[cs]=Webové rozhraní
 Name[de]=Web-Schnittstelle
 Name[es]=Interfaz web
 Name[et]=Veebiliides
@@ -23,6 +24,7 @@ Name[zh_TW]=網路介面
 Comment=Plugin to control KTorrent via a webinterface
 Comment[bg]=Приставка за контролиране на KTorrent през уеб-интерфейс
 Comment[ca]=Connector per a controlar el KTorrent via una interfície web
+Comment[cs]=Modul pro ovládání ktorrentu přes webové rozhraní
 Comment[da]=Plugin til at styre KTorrent via en webgrænseflade
 Comment[de]=Modul zur Kontrolle von KTorrent über eine Web-Schnittstelle
 Comment[el]=Πρόσθετο που επιτρέπει τον έλεγχο του KTorrent μέσω ιστοσελίδας

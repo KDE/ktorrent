@@ -4,6 +4,7 @@ X-KDE-ServiceType=KTorrent/Plugin
 Name=KTorrent Plugin
 Name[be]=Утулка KTorrent
 Name[ca]=Connector del KTorrent
+Name[cs]=KTorrent modul
 Name[da]=KTorrent-plugin
 Name[de]=KTorrent-Modul
 Name[el]=Πρόσθετο KTorrent

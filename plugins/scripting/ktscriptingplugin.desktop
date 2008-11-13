@@ -16,6 +16,7 @@ Name[zh_CN]=脚本插件
 Name[zh_TW]=文稿外掛程式
 Comment=Kross scripting plugin for KTorrent
 Comment[ca]=Connector d'script Kross per al KTorrent
+Comment[cs]=Skriptovací modul Kross pro Ktorrent
 Comment[da]=Kross scripting-plugin til KTorrent
 Comment[de]=Kross-Skript-Modul für KTorrent
 Comment[el]=Πρόσθετο σεναρίων Kross για το KTorrent

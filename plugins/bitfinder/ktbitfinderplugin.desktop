@@ -19,6 +19,7 @@ Name[zh_CN]=节点查询插件
 Name[zh_TW]=自動下載 torrent 外掛程式 
 Comment=Plugin to automatically downloads torrents from various sources
 Comment[ca]=Connector que baixa automàticament els torrents des de vàries fonts
+Comment[cs]=Modul pro automatické stahování torrentů z různých zdrojů
 Comment[da]=Plugin til automatisk at downloade torrents fra diverse kilder
 Comment[de]=Modul zum automatischen Download von Torrents aus verschiedenen Quellen
 Comment[el]=Πρόσθετο αυτόματης λήψης torrent από διάφορες πηγές

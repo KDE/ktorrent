@@ -9,6 +9,7 @@ Comment[x-test]=xxKTorrentxx
 [Event/TorrentStoppedByError]
 Name=Torrent stopped by error
 Name[ca]=El torrent s'ha aturat per un error
+Name[cs]=Torrent zastavil kvůli chybě
 Name[da]=Torrent stoppet af fejl
 Name[de]=Torrent aufgrund eines Fehlers gestoppt
 Name[el]=Το torrent σταμάτησε με σφάλμα
@@ -41,6 +42,7 @@ Action=Sound|Popup
 [Event/TorrentFinished]
 Name=Torrent has finished downloading
 Name[ca]=El torrent ha finalitzat la baixada
+Name[cs]=Torrent dokončil stahování
 Name[da]=Torrent er færdig med at downloade
 Name[de]=Download eines Torrents abgeschlossen
 Name[el]=Η λήψη του torrent ολοκληρώθηκε
@@ -73,6 +75,7 @@ Action=Sound|Popup
 [Event/MaxShareRatioReached]
 Name=Maximum share ratio reached
 Name[ca]=S'ha arribat a la velocitat màxima de compartició
+Name[cs]=Bylo dosaženo maximálního sdílecího poměru
 Name[da]=Maksimalt delingsforhold nået
 Name[de]=Maximales Verteilungsverhältnis erreicht
 Name[el]=Όριο της μέγιστης κοινόχρηστης αναλογίας
@@ -105,6 +108,7 @@ Action=Sound|Popup
 [Event/MaxSeedTimeReached]
 Name=Maximum seed time reached
 Name[ca]=S'ha arribat al temps màxim de sembrat
+Name[cs]=Bylo dosaženo maximální doby sdílení
 Name[da]=Maksimal seed-tid nået
 Name[de]=Maximale Verteilungszeit erreicht
 Name[el]=Όριο του μέγιστου χρόνου προσφοράς γόνου
@@ -137,6 +141,7 @@ Action=Sound|Popup
 [Event/LowDiskSpace]
 Name=Disk space is running low
 Name[ca]=Queda poc espai en disc
+Name[cs]=Dochází místo na disku
 Name[da]=Diskplads er ved at løbe tør
 Name[de]=Nur noch wenig Speicherplatz verfügbar 
 Name[el]=Ο χώρος στο δίσκο τελειώνει
@@ -169,6 +174,7 @@ Action=Sound|Popup
 [Event/CorruptedData]
 Name=Corrupted data has been found
 Name[ca]=S'han trobat dades corruptes
+Name[cs]=Byla nalezena vadná data
 Name[da]=Defekt data er blevet fundet
 Name[de]=Fehlerhafte Daten gefunden
 Name[el]=Βρέθηκαν κατεστραμμένα δεδομένα
@@ -201,6 +207,7 @@ Action=Sound|Popup
 [Event/QueueNotPossible]
 Name=Torrent cannot be enqueued
 Name[ca]=No es pot encuar el torrent
+Name[cs]=Torrent nelze zařadit do fronty
 Name[da]=Torrent kan ikke sættes i kø
 Name[de]=Torrent kann nicht in die Warteschlange eingereiht werden
 Name[el]=Το torrent δεν μπορεί να μπει σε αναμονή
@@ -233,6 +240,7 @@ Action=Sound|Popup
 [Event/CannotStart]
 Name=Torrent cannot be started
 Name[ca]=No es pot engegar el torrent
+Name[cs]=Torrent nemůže být spuštěn
 Name[da]=Torrent kan ikke startes
 Name[de]=Torrent kann nicht gestartet werden
 Name[el]=Το torrent δεν μπορεί να εκκινήσει
@@ -265,6 +273,7 @@ Action=Sound|Popup
 [Event/CannotLoadSilently]
 Name=Torrent cannot be loaded silently
 Name[ca]=No s'ha pogut carregar silenciosament el torrent
+Name[cs]=Torrent nemůže být tiše spuštěn
 Name[da]=Torrent kan ikke indlæses tavst
 Name[de]=Torrent kann nicht ohne Nachfrage geladen werden
 Name[el]=Το Torrent δεν μπορεί να φορτωθεί σιωπηλά

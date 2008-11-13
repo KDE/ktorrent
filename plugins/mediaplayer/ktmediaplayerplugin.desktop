@@ -21,6 +21,7 @@ Name[zh_CN]=媒体播放器插件
 Name[zh_TW]=媒體播放器外掛程式
 Comment=Phonon based media player plugin for KTorrent
 Comment[ca]=Connector del KTorrent basat en el reproductor de suports Phonon
+Comment[cs]=Modul přehrávání médií pro Ktorrent založený na Phononu
 Comment[da]=Phonon-baseret medieafspiller-plugin til KTorrent
 Comment[de]=Phonon-basiertes Mediaplayer-Modul für KTorrent
 Comment[el]=Πρόσθετο αναπαραγωγής πολυμέσων με βάση το Phonon για το KTorrent
