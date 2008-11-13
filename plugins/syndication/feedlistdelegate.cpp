@@ -19,13 +19,13 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <QPainter>
-#include <QTextDocument>
+#include <QApplication>
 #include "feedlistdelegate.h"
 
 namespace kt 
 {
 
-	FeedListDelegate::FeedListDelegate(QObject* parent) : QItemDelegate(parent)
+	FeedListDelegate::FeedListDelegate(QObject* parent) : QStyledItemDelegate(parent)
 	{
 	}
 	
@@ -34,47 +34,35 @@ namespace kt
 	{
 	}
 	
-	QSize FeedListDelegate::sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const
+	QSize FeedListDelegate::sizeHint(const QStyleOptionViewItem &option,const QModelIndex &index) const
 	{
-		QString text = index.data(Qt::UserRole).toString();
-		QTextDocument doc;
-		doc.setHtml(text);
-		QSizeF s = doc.size();
-		int h = (int)s.height();
-		if (option.decorationSize.height() > h)
-			h = option.decorationSize.height();
-		return QSize((int)s.width() + option.decorationSize.width(),h);
+		QVariant value = index.data(Qt::SizeHintRole);
+		if (value.isValid())
+			return qvariant_cast<QSize>(value);
+
+		QStyleOptionViewItemV4 opt = option;
+		initStyleOption(&opt, index);
+		opt.text = displayText(index.data(Qt::UserRole).toString(), opt.locale);
+		
+		const QWidget *widget = 0;
+		if (const QStyleOptionViewItemV3 *v3 = qstyleoption_cast<const QStyleOptionViewItemV3 *>(&option))
+			widget = v3->widget;
+		QStyle *style = widget ? widget->style() : QApplication::style();
+		return style->sizeFromContents(QStyle::CT_ItemViewItem, &opt, QSize(), widget);
 	}
+
 	
 	void FeedListDelegate::paint(QPainter * painter,const QStyleOptionViewItem & option,const QModelIndex & index) const
 	{
-		QString text = index.data(Qt::UserRole).toString();
-		
-		// If selected fill the rect with the highlight color
-		if (option.state & QStyle::State_Selected)
-			painter->fillRect(option.rect, option.palette.highlight());
-		
-		painter->setBrush(option.palette.foreground());
+		QStyleOptionViewItemV4 opt = option;
+		initStyleOption(&opt, index);
+		opt.text = displayText(index.data(Qt::UserRole).toString(), opt.locale);
 
-		// Draw the text
-		painter->save();
-		QTextDocument doc;
-		doc.setHtml(text);
-		doc.setPageSize(option.rect.size());
-		painter->translate(option.rect.x() + option.decorationSize.width(), option.rect.y());
-		doc.drawContents(painter);
-		painter->restore();
-		
-		// Draw the decoration
-		QIcon icon = index.data(Qt::DecorationRole).value<QIcon>();
-		QPixmap pixmap = icon.pixmap(option.decorationSize);
-		QRect source_rect(0,0,option.decorationSize.width(),option.decorationSize.height());
-		QRect dest_rect = source_rect;
-		int y = (option.rect.height() - source_rect.height()) / 2;
-		dest_rect.setY(y);
-		dest_rect.setHeight(dest_rect.height() + y);
-		painter->save();
-		painter->drawPixmap(dest_rect,pixmap,source_rect);
-		painter->restore();
+		const QWidget *widget = 0;
+		if (const QStyleOptionViewItemV3 *v3 = qstyleoption_cast<const QStyleOptionViewItemV3 *>(&option))
+			widget = v3->widget;
+
+		QStyle *style = widget ? widget->style() : QApplication::style();
+		style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
 	}
 }

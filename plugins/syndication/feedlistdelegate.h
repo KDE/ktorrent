@@ -21,7 +21,7 @@
 #ifndef KTFEEDLISTDELEGATE_H
 #define KTFEEDLISTDELEGATE_H
 
-#include <QItemDelegate>
+#include <QStyledItemDelegate>
 
 namespace kt 
 {
@@ -29,13 +29,13 @@ namespace kt
 	/**
 		@author 
 	*/
-	class FeedListDelegate : public QItemDelegate
+	class FeedListDelegate : public QStyledItemDelegate
 	{
 	public:
 		FeedListDelegate(QObject* parent);	
 		virtual ~FeedListDelegate();
 	
-		virtual QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
+		virtual QSize sizeHint(const QStyleOptionViewItem &option,const QModelIndex &index) const;
 		virtual void paint(QPainter * painter,const QStyleOptionViewItem & option,const QModelIndex & index) const;
 	};
 
