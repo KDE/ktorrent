@@ -19,6 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 #include <kicon.h>
+#include <klocale.h>
 #include "scriptmodel.h"
 #include "script.h"
 
@@ -90,6 +91,8 @@ namespace kt
 				return KIcon(s->iconName());
 			case Qt::CheckStateRole:
 				return s->running() ? Qt::Checked : Qt::Unchecked;
+			case Qt::ToolTipRole:
+				return i18n("<b>%1</b><br/><br/>%2",s->name(),s->metaInfo().comment);
 			default:
 				return QVariant();
 		}

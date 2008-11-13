@@ -24,13 +24,16 @@
 #include <ksharedconfig.h>
 #include <kstandarddirs.h>
 #include <util/functions.h>
+#include <groups/groupmanager.h>
+#include <interfaces/coreinterface.h>
 #include "scriptingmodule.h"
+#include "scriptablegroup.h"
 
 namespace kt
 {
 
-	ScriptingModule::ScriptingModule(QObject* parent)
-			: QObject(parent)
+	ScriptingModule::ScriptingModule(GUIInterface* gui,CoreInterface* core,QObject* parent)
+			: QObject(parent),gui(gui),core(core)
 	{
 	}
 
@@ -111,5 +114,26 @@ namespace kt
 		QTimer* t = new QTimer(this);
 		t->setSingleShot(single_shot);
 		return t;
+	}
+	
+	bool ScriptingModule::addGroup(const QString & name,const QString & icon,const QString & path,Kross::Object::Ptr obj)
+	{
+		ScriptableGroup* g = new ScriptableGroup(name,icon,path,obj,core->getExternalInterface());
+		kt::GroupManager* gman = core->getGroupManager();
+		gman->addDefaultGroup(g);
+		sgroups.insert(name,g);
+		return true;
+	}
+	
+	void ScriptingModule::removeGroup(const QString & name)
+	{
+		if (!sgroups.contains(name))
+			return;
+		
+		kt::GroupManager* gman = core->getGroupManager();
+		ScriptableGroup* g = sgroups[name];
+		gman->removeDefaultGroup(g);
+		sgroups.remove(name);
+		delete g;
 	}
 }

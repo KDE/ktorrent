@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include <QStringList>
+#include <ktcore_export.h>
 #include <util/ptrmap.h>
 
 namespace bt
@@ -42,13 +43,14 @@ namespace kt
 	/**
 	 * Class which handles DBus calls
 	 * */
-	class DBus : public QObject
+	class KTCORE_EXPORT DBus : public QObject
 	{
 		Q_OBJECT
 		Q_CLASSINFO("D-Bus Interface", "org.ktorrent.core")
 	public:
 		DBus(GUIInterface* gui,CoreInterface* core,QObject* parent);
 		virtual ~DBus();
+		
 
 	public Q_SLOTS:
 		/// Get the names of all torrents
@@ -83,6 +85,9 @@ namespace kt
 		
 		/// Gets the globla paused state
 		Q_SCRIPTABLE bool paused();
+		
+		/// Order the Queue
+		Q_SCRIPTABLE void orderQueue();
 		
 		/// Get all the custom groups
 		Q_SCRIPTABLE QStringList groups() const;

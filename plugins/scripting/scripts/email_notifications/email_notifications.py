@@ -161,3 +161,6 @@ def configure():
 	global notifier
 	notifier.configure()
 
+def unload():
+	global notifier
+	del notifier

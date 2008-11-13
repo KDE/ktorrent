@@ -37,6 +37,7 @@
 #include <util/error.h>
 #include <util/log.h>
 #include <util/logsystemmanager.h>
+#include <dbus/dbus.h>
 
 #include "scriptingplugin.h"
 #include "scriptmanager.h"
@@ -102,7 +103,7 @@ namespace kt
 		model = new ScriptModel(this);
 		// add the KTorrent object
 		Kross::Manager::self().addObject(getCore()->getExternalInterface(),"KTorrent");
-		Kross::Manager::self().addObject(new ScriptingModule(this),"KTScriptingPlugin");
+		Kross::Manager::self().addObject(new ScriptingModule(getGUI(),getCore(),this),"KTScriptingPlugin");
 		loadScripts();
 		
 		Out(SYS_SCR|LOG_DEBUG) << "Supported interpreters : " << endl;

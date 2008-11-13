@@ -43,6 +43,7 @@ namespace kt
 	
 	class QueueManager;
 	class GroupManager;
+	class DBus;
 	
 
 	/**
@@ -216,7 +217,7 @@ namespace kt
 		virtual kt::GroupManager* getGroupManager() = 0;
 		
 		/// Get a pointer to the external interface object (for dbus and scripting)
-		virtual QObject* getExternalInterface() = 0;
+		virtual DBus* getExternalInterface() = 0;
 		
 	signals:
 		/**

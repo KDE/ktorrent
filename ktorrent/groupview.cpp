@@ -295,6 +295,10 @@ namespace kt
 					{
 						// there is one, go on recusively
 						remove(gvi,p,g);
+						// remove empty maps, if they are not the custom map
+						if (gvi->childCount() == 0 && gvi != custom_root)
+							delete gvi;
+						
 						return;
 					}
 				}
@@ -563,6 +567,7 @@ namespace kt
 	
 	void GroupView::defaultGroupRemoved(Group* g)
 	{
+		Out(SYS_GEN|LOG_DEBUG) << "GroupView::defaultGroupRemoved " << g->groupName() << " " << g->groupPath() << endl;
 		remove(0,g->groupPath(),g);
 	}
 

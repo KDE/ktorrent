@@ -424,5 +424,15 @@ namespace kt
 		
 		ti->getTorrentFile(file_index).setDoNotDownload(dnd);
 	}
+	
+	int DBusTorrent::priority() const
+	{
+		return ti->getPriority();
+	}
+	
+	void DBusTorrent::setPriority(int p)
+	{
+		ti->setPriority(p);
+	}
 }
 

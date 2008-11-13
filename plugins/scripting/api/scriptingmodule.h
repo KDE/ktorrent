@@ -22,9 +22,14 @@
 #define KTSCRIPTINGMODULE_H
 
 #include <QObject>
+#include <kross/core/object.h>
+#include "scriptablegroup.h"
 
 namespace kt
 {
+	class DBus;
+	class GUIInterface;
+	class CoreInterface;
 
 	/**
 		Additional functions to be used in scripts
@@ -33,7 +38,7 @@ namespace kt
 	{
 		Q_OBJECT
 	public:
-		ScriptingModule(QObject* parent);
+		ScriptingModule(GUIInterface* gui,CoreInterface* core,QObject* parent);
 		virtual ~ScriptingModule();
 
 	public slots:
@@ -57,6 +62,17 @@ namespace kt
 		
 		/// Create a timer
 		QObject* createTimer(bool single_shot);
+		
+		/// Add a new scriptable group
+		bool addGroup(const QString & name,const QString & icon,const QString & path,Kross::Object::Ptr obj);
+		
+		/// Remove a previously added group 
+		void removeGroup(const QString & name);
+		
+	private:
+		GUIInterface* gui;
+		CoreInterface* core;
+		QMap<QString,ScriptableGroup*> sgroups;
 	};
 
 }

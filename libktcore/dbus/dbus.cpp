@@ -270,5 +270,10 @@ namespace kt
 		return kt::DataDir();
 	}
 	
+	void DBus::orderQueue()
+	{
+		core->getQueueManager()->orderQueue();
+	}
+	
 }
 

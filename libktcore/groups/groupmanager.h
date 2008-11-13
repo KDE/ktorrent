@@ -83,7 +83,6 @@ namespace kt
 		DefGroupItr beginDefaults() {return defaults.begin();}
 		DefGroupItr endDefaults() {return defaults.end();}
 		
-		
 		/// Find a default Group given a name
 		Group* findDefault(const QString & name);
 		

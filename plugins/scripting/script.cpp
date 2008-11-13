@@ -100,6 +100,13 @@ namespace kt
 		if (!executing)
 			return;
 		
+		// Call unload function if the script has one
+		if (action->functionNames().contains("unload"))
+		{
+			QVariantList args;
+			action->callFunction("unload",args);
+		}
+		
 		Kross::ActionCollection* col = Kross::Manager::self().actionCollection();
 		col->removeAction(action->file());
 		action->deleteLater();

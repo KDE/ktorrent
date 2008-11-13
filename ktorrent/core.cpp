@@ -1191,7 +1191,7 @@ namespace kt
 		}
 	}
 	
-	QObject* Core::getExternalInterface()
+	DBus* Core::getExternalInterface()
 	{
 		return gui->getDBusInterface();
 	}

@@ -34,6 +34,10 @@ set(libktorrent_SRC
 	groups/useruploadsgroup.cpp
 	groups/ungroupedgroup.cpp
 	groups/groupmanager.cpp
+	
+	dbus/dbus.cpp
+	dbus/dbustorrent.cpp
+	dbus/dbusgroup.cpp
 
 	ktorrent.kcfg
 	pluginmanager.cpp

@@ -76,4 +76,6 @@ def configure():
 	global ar
 	ar.configure()
 
-
+def unload():
+	global ar
+	del ar
