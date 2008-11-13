@@ -285,12 +285,6 @@ namespace ktplasma
 	{
 		double ds = data.value("download_rate").toDouble();
 		double us = data.value("upload_rate").toDouble();
-		
-		KLocale* loc = KGlobal::locale();
-		
-		QString t = QString("<b>%1</b><br/>%2").arg(data.value("name").toString()).arg(data.value("status").toString());
-		title->setText(t);
-		
 		int uploaded = data.value("bytes_uploaded").toInt();
 		int downloaded = data.value("bytes_downloaded").toInt();
 		int size = data.value("total_bytes_to_download").toInt();		
@@ -298,6 +292,8 @@ namespace ktplasma
 		int sc = data.value("seeders_connected_to").toInt();
 		int ct = data.value("leechers_total").toInt();
 		int cc = data.value("leechers_connected_to").toInt();
+		KLocale* loc = KGlobal::locale();
+		float share_ratio = (downloaded == 0) ? 0 : (float)uploaded/downloaded;
 		misc->setText(
 			i18n(
 				 "<table>\
@@ -307,6 +303,16 @@ namespace ktplasma
 				</table>",
 	 			sc,st,cc,ct,loc->formatNumber(ds / 1024.0,2),loc->formatNumber(us / 1024.0,2),
 				BytesToString(downloaded,2),BytesToString(size,2),BytesToString(uploaded,2)));
+		
+		
+		
+		QString t = i18n("<b>%1</b><br/>%2 (Share Ratio: <font color=\"%4\">%3</font>)",
+						data.value("name").toString(),
+						data.value("status").toString(),
+						loc->formatNumber(share_ratio,2),
+						share_ratio <= 0.8 ? "#ff0000" : "#1c9a1c");
+		
+		title->setText(t);
 		
 		chunk_bar->updateBitSets(
 			data.value("total_chunks").toInt(),
