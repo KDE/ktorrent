@@ -55,14 +55,15 @@ namespace ktplasma
 		int iconSize = IconSize(KIconLoader::Desktop);
 		resize(iconSize * 4, iconSize * 2);
 		engine = 0;
-		max_us = max_ds = 0;
 		root_layout = 0;
 		connected_to_app = config_dlg_created = false;
 
 		// drop data!
-		if (!args.isEmpty()) {
+		if (!args.isEmpty()) 
+		{
 			QFile f(args[0].toString());
-			if (f.open(QIODevice::ReadOnly)) {
+			if (f.open(QIODevice::ReadOnly)) 
+			{
 				QDataStream s(&f);
 				s >> current_source;
 			}
@@ -109,43 +110,19 @@ namespace ktplasma
 		
 		chunk_bar = new ChunkBar(this);
 		root_layout->addItem(chunk_bar);
-		
-		QGraphicsGridLayout* grid = new QGraphicsGridLayout(0);
-		upload_speed_meter = new Plasma::Meter(this);
-		upload_speed_meter->setMeterType(Plasma::Meter::BarMeterHorizontal);
-		upload_speed_meter->setMinimum(0);
-		upload_speed_meter->setMaximum(100);
-		upload_speed_meter->setValue(50);
-		upload_speed = new Plasma::Label(this);
-		grid->addItem(upload_speed_meter,0,0,Qt::AlignVCenter);
-		grid->addItem(upload_speed,0,1,Qt::AlignVCenter);
 
-		download_speed_meter = new Plasma::Meter(this);
-		download_speed_meter->setMeterType(Plasma::Meter::BarMeterHorizontal);
-		download_speed_meter->setMinimum(0);
-		download_speed_meter->setMaximum(100);
-		download_speed_meter->setValue(50);
-		download_speed = new Plasma::Label(this);
-		grid->addItem(download_speed_meter,1,0,Qt::AlignVCenter);
-		grid->addItem(download_speed,1,1,Qt::AlignVCenter);
-		root_layout->addItem(grid);
-		
-		label = new Plasma::Label(this);
-		
-		root_layout->addItem(label);
-		root_layout->setAlignment(label,Qt::AlignHCenter|Qt::AlignVCenter);
-		
-		KLocale* loc = KGlobal::locale();
-		upload_speed->setText(i18n("Up: %1 KB/s",loc->formatNumber(0,2)));
-		download_speed->setText(i18n("Down: %1 KB/s",loc->formatNumber(0,2)));
+		misc = new Plasma::Label(this);
+		root_layout->addItem(misc);
 		
 		clearData();
-		
 		resize(icon_size * 8,root_layout->preferredHeight());
 		
-		if (current_source.isNull()) {
+		if (current_source.isNull()) 
+		{
 			current_source = selectTorrent();
-		} else {
+		} 
+		else 
+		{
 			QStringList sources = engine->sources();
 			bool found = false;
 			foreach (const QString & s,sources)
@@ -158,10 +135,9 @@ namespace ktplasma
 				}
 			}
 
-			if (!found) {
+			if (!found)
 			    current_source = selectTorrent();
-			}
-                }
+		}
 		
 		if (!current_source.isNull())
 		{
@@ -309,43 +285,28 @@ namespace ktplasma
 	{
 		double ds = data.value("download_rate").toDouble();
 		double us = data.value("upload_rate").toDouble();
-		if (ds > max_ds)
-			max_ds = ds;
-		if (us > max_us)
-			max_us = us;
 		
 		KLocale* loc = KGlobal::locale();
-		upload_speed->setText(i18n("Up: %1 KB/s",loc->formatNumber(us / 1024.0,2)));
-		download_speed->setText(i18n("Down: %1 KB/s",loc->formatNumber(ds / 1024.0,2)));
-		
-		if (max_us > 0)
-		{
-			int v = (int)ceil((us / max_us) * 100);
-			if (v > 100)
-				v = 100;
-			upload_speed_meter->setValue(v);
-		}
-		else
-			upload_speed_meter->setValue(0);
-		
-		if (max_ds > 0)
-		{
-			int v = (int)ceil((ds / max_ds) * 100);
-			if (v > 100)
-				v = 100;
-			download_speed_meter->setValue(v);
-		}
-		else
-			download_speed_meter->setValue(0);
 		
 		QString t = QString("<b>%1</b><br/>%2").arg(data.value("name").toString()).arg(data.value("status").toString());
 		title->setText(t);
 		
 		int uploaded = data.value("bytes_uploaded").toInt();
 		int downloaded = data.value("bytes_downloaded").toInt();
-		int size = data.value("total_bytes_to_download").toInt();
-		label->setText(i18n("Downloaded: %1 / %2 Uploaded: %3",
-					   BytesToString(downloaded,2),BytesToString(size,2),BytesToString(uploaded,2)));
+		int size = data.value("total_bytes_to_download").toInt();		
+		int st = data.value("seeders_total").toInt();
+		int sc = data.value("seeders_connected_to").toInt();
+		int ct = data.value("leechers_total").toInt();
+		int cc = data.value("leechers_connected_to").toInt();
+		misc->setText(
+			i18n(
+				 "<table>\
+				<tr><td>Download Speed:</td><td>%5 KB/s </td><td>Seeders: </td><td>%1 (%2)</td></tr>\
+				<tr><td>Upload Speed:</td><td>%6 KB/s </td><td>Leechers: </td><td>%3 (%4)</td></tr>\
+				<tr><td>Downloaded:</td><td>%7 / %8 </td><td>Uploaded: </td><td>%9</td></tr>\
+				</table>",
+	 			sc,st,cc,ct,loc->formatNumber(ds / 1024.0,2),loc->formatNumber(us / 1024.0,2),
+				BytesToString(downloaded,2),BytesToString(size,2),BytesToString(uploaded,2)));
 		
 		chunk_bar->updateBitSets(
 			data.value("total_chunks").toInt(),
@@ -399,12 +360,16 @@ namespace ktplasma
 
 	void Applet::clearData()
 	{
-		KLocale* loc = KGlobal::locale();
-		upload_speed->setText(i18n("Up: %1 KB/s",loc->formatNumber(0,2)));
-		upload_speed_meter->setValue(0);
-		download_speed->setText(i18n("Down: %1 KB/s",loc->formatNumber(0,2)));
-		download_speed_meter->setValue(0);
-		label->setText(QString());
+		KLocale* loc = KGlobal::locale();		
+		misc->setText(
+			i18n(
+				"<table>\
+				<tr><td>Download Speed:</td><td>%5 KB/s </td><td>Seeders: </td><td>%1 (%2)</td></tr>\
+				<tr><td>Upload Speed:</td><td>%6 KB/s </td><td>Leechers: </td><td>%3 (%4)</td></tr>\
+				<tr><td>Downloaded:</td><td>%7 / %8 </td><td>Uploaded: </td><td>%9</td></tr>\
+				</table>",
+				0,0,0,0,loc->formatNumber(0,2),loc->formatNumber(0,2),
+				BytesToString(0,2),BytesToString(0,2),BytesToString(0,2)));
 	}
 }
 

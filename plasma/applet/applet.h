@@ -79,16 +79,10 @@ namespace ktplasma
 		Plasma::IconWidget* icon;
 #endif
 		Plasma::Label* title;
-		Plasma::Label* upload_speed;
-		Plasma::Meter* upload_speed_meter;
-		Plasma::Label* download_speed;
-		Plasma::Meter* download_speed_meter;
-		Plasma::Label* label;
+		Plasma::Label* misc;
 		Ui_AppletConfig ui;
 		Plasma::DataEngine* engine;
 		QString current_source;
-		double max_ds; // Max upload speed
-		double max_us;  // Max download speed
 		QGraphicsLinearLayout* root_layout;
 		bool connected_to_app;
 		bool config_dlg_created;
