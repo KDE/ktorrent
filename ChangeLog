@@ -6,6 +6,7 @@ Changes in 3.1.5 :
 - Prevent error messages when KT is started up via desktop file
 - Use multiple tiers when creating torrents with multiple trackers (174207)
 - Make sure stalled time is updated properly before resuming queue (174373)
+- Prevent QM from starting torrents which are being removed (175081)
 
 Changes in 3.1.4 :
 - Make sure user is properly logged in when handling a torrent post in the webgui

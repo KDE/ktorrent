@@ -642,7 +642,7 @@ namespace kt
 			const bt::TorrentStats & s = tc->getStats();
 			removed_bytes_up += s.session_bytes_uploaded;
 			removed_bytes_down += s.session_bytes_downloaded;
-			stop(tc);
+			stop(tc,true);
 
 			QString dir = tc->getTorDir();
 			
