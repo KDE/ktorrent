@@ -108,10 +108,7 @@ namespace kt
 				else
 					title = f->feedUrl().prettyUrl();
 				
-				if (f->numFilters() == 1)
-					return i18n("%1\n1 active filter",title);
-				else
-					return i18n("%1\n%2 active filters",title,f->numFilters());
+				return i18np("%2\n1 active filter", "%2\n%1 active filters", f->numFilters(), title);
 			}
 			case Qt::DecorationRole:
 				return KIcon("application-rss+xml");
