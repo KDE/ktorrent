@@ -238,8 +238,10 @@ namespace kt
 			
 		tc->setPreallocateDiskSpace(true);
 
-		if(Settings::maxRatio()>0)
-			tc->setMaxShareRatio(Settings::maxRatio()); 
+		if (Settings::maxRatio() > 0)
+			tc->setMaxShareRatio(Settings::maxRatio());
+		if (Settings::maxSeedTime() > 0)
+			tc->setMaxSeedTime(Settings::maxSeedTime());
 		
 		torrentAdded(tc);
 		qman->torrentAdded(tc,user,start_torrent);
