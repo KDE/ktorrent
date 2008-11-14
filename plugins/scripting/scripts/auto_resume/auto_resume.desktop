@@ -1,18 +1,10 @@
 [Desktop Entry]
 Name=Automatic Resume
-Name[de]=Auto-Fortsetzen-Skript
-Name[el]=Σενάρια αυτόματης συνέχισης
-Name[es]=Script de reanudación automática
-Name[nds]=Auto-Wiedermaak-Skript
-Name[pt]=Programa de Continuação Automática
-Name[pt_BR]=Programa de Continuação Automática
-Name[ru]=Автовозобновление
-Name[sv]=Skript för automatisk återupptagning
-Name[zh_TW]=自動回復文稿
 Comment=Script to automatically resume after some time, when the paused state is enabled
 Comment[de]=Skript zum automatischen Fortsetzen von pausierten Torrents nach Ablauf einer festgelegten Zeit
 Comment[el]=Σενάριο για την αυτόματη συνέχιση λήψενω μετά από κάποιο χρονικό διάστημα, όταν η κατάσταση  παύσης είναι ενεργοποιημένη
 Comment[es]=Script para reanudar automáticamente tras cierto tiempo, cuando está habilitado el estado de pausa
+Comment[lv]=Skripts, kas automātiski atsāk pauzētus torrentus pēc noteikta laika
 Comment[nds]=Dat Skript maakt automaatsch na en wiss Tiet wieder, wenn de Anhollen-Status anmaakt is
 Comment[pt]=Um programa para prosseguir automaticamente, ao fim de algum tempo, quando for activado o estado de pausa
 Comment[pt_BR]=Um programa para prosseguir automaticamente, ao fim de algum tempo, quando for activado o estado de pausa
