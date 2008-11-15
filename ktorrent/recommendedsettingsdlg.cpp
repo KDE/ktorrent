@@ -34,6 +34,7 @@ namespace kt
 	RecommendedSettingsDlg::RecommendedSettingsDlg(QWidget* parent)
 			: KDialog(parent)
 	{
+		setWindowTitle(i18n("Calculate Recommended Settings"));
 		setupUi(mainWidget());
 		setButtons(KDialog::Apply|KDialog::Cancel);
 		connect(m_calculate,SIGNAL(clicked()),this,SLOT(calculate()));

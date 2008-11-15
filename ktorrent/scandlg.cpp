@@ -37,6 +37,7 @@ namespace kt
 		: KDialog(parent),bt::DataCheckerListener(auto_import),mutex(QMutex::Recursive),core(core)
 	{
 		setWindowIcon(KIcon("kt-check-data"));
+		setWindowTitle(i18n("Checking Data ..."));
 		setButtons(KDialog::None);
 		Ui::ScanDlgBase ui;
 		QWidget *widget = new QWidget(this);
