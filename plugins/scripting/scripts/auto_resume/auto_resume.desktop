@@ -1,5 +1,11 @@
 [Desktop Entry]
 Name=Automatic Resume
+Name[de]=Automatisch Fortsetzen
+Name[nds]=Automaatsch Wiedermaken
+Name[pt]=Continuação Automática
+Name[pt_BR]=Continuação Automática
+Name[sv]=Automatisk återupptagning
+Name[uk]=Автоматичне відновлення
 Comment=Script to automatically resume after some time, when the paused state is enabled
 Comment[de]=Skript zum automatischen Fortsetzen von pausierten Torrents nach Ablauf einer festgelegten Zeit
 Comment[el]=Σενάριο για την αυτόματη συνέχιση λήψενω μετά από κάποιο χρονικό διάστημα, όταν η κατάσταση  παύσης είναι ενεργοποιημένη

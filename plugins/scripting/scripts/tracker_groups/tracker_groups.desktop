@@ -1,6 +1,18 @@
 [Desktop Entry]
 Name=Tracker Grouping
+Name[de]=Tracker-Gruppierung
+Name[nds]=Tracker-Koppeln
+Name[pt]=Agrupamento de Localizadores
+Name[pt_BR]=Agrupamento de Localizadores
+Name[sv]=Gruppering av spårare
+Name[uk]=Групування координаторів
 Comment=Script to create automatic groups based upon tracker URL's
+Comment[de]=Skript zum automatischen Gruppieren anhand der Tracker-Adressen
+Comment[nds]=Skript, dat ut de Tracker-URLs automaatsch Koppeln opstellt
+Comment[pt]=Um programa para criar grupos automáticos com base nos URL's do localizador
+Comment[pt_BR]=Um programa para criar grupos automáticos com base nos URL's do localizador
+Comment[sv]=Skript för att skapa automatiska grupper baserat på spårarnas webbadresser
+Comment[uk]=Скрипт для створення автоматичних груп за адресами координаторів
 Type=KTorrentScript
 Icon=network-server
 X-KTorrent-Script-Author=Joris Guisson
