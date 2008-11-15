@@ -8,6 +8,8 @@ Changes in 3.1.5 :
 - Make sure stalled time is updated properly before resuming queue (174373)
 - Prevent QM from starting torrents which are being removed (175081)
 - Fix bug preventing max seed time to be set on newly opened torrents
+- Fix bug causing torrent to be started when user chooses not to start the
+torrent in the fileselectdlg
 
 Changes in 3.1.4 :
 - Make sure user is properly logged in when handling a torrent post in the webgui
