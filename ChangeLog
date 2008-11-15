@@ -1,3 +1,59 @@
+Changes in 3.2beta1 :
+- Ask to create directory in fileselectdlg, if it does not exist (163965)
+- Added scripting plugin
+- Use paths to indicate where a group should go in the GroupView tree
+- Expand dbus interface significantly (154483)
+- Added feature to disable PEX globally
+- Make sure that DHT and PEX checkboxes in view menu are disabled if the feature is disabled globally
+- Added plasma applet and dataengine
+- Make custom IP to sent to tracker configurable again (166314)
+- Add column in QM to show the order of a torrent in the queue
+- IP filter revamped, and auto update added (155648)
+- Improve performance iby removing unnecessary dataChanged signals
+- Improved networking code, which should lead to more stable download speeds
+- Fix bug causing closed connections not to be detected
+- Make it possible to rename files and folders in fileselectdlg (152813 and 134098)
+- Deleting data files is now done in a background job
+- Added patch from Adam Forsyth which keeps track of wether we are interested in a peer or not (167938)
+- Added patch from Adam Forsyth with some modifications, which allows you to rename torrents in the main torrent list.(168459 and 157544)
+- Revamped webinterface
+- Patch from Adam Forsyth which adds a second kfiledialog:// keyword openTorrentData (168693)
+- Added modified patch from Adam Forsyth showing the directory percentages in the file tree (168062)
+- Added patch from Adam Forsyth, which kills stalled peers (168397)
+- Plugins with a separate logging id, now need to register and unregister their id with LogSystemManager
+- Revamped settings page of logviewer plugin now using a QTreeView and the new LogSystemManager
+- Take only seed chunks into account for file percentages (168062)
+- Make sure IP filter auto update timer doesn't fire again when auto update is in progress
+- Fix bug causing logging output not to be colored properly
+- Handle HTTP redirects properly when webseeding (165740)
+- Added download order plugin
+- Added patch from Aaron Seigo which adds drag and drop support to plasma applet (will only work on KDE 4.2)
+- Fix crash at exit in UPnPRouter (170073)
+- Make sure order queue cannot be called when all torrents are being stopped
+- Revamped chunk memory management completely, reducing memory usage considerably
+- Fix crash in ChunkDownload::updateHash
+- Remove warmup mode
+- Show warning icon in status column when there is something wrong with the tracker, also show tooltip with error message from tracker 
+- Added patch which adds collapse all and expand all actions to the fileselection dialog and the fileview
+- Added category P2P as seen in other p2p applications (e.g. transmission)
+- Search plugin is now based upon Opensearch XML descriptions
+- Make sure that stuff at exit is done only once
+- Make sure cancels get sent when a PeerDownloader is released, so that the wait queue does not fill up
+- Don't show all columns when a new upload or download view is created (171770)
+- Fix bug causing all columns to be hidden when new views are created which show both uploads and downloads
+- Added syndication plugin to handle RSS and Atom torrent feeds
+- Added e-mail notification script 
+- Added script to resume paused torrents after a configurable amount of time (158386)
+- Some GUI fixups (tooltips being more uniform, more tooltips, window titles for a lot of dialogs ...)
+- By default now use multiple tiers when creating a torrent with multiple torrents (174207)
+- Optimize handling of torrents with a lot of files
+- Keep track of URL torrent was loaded from and add action to copy it to clipboard (169540 and 173085)
+- Optimize chunk position calculation significantly
+- Added shortcuts for a lot of actions
+- Get rid of duplicate actions (174860)
+- Make sure check data and queue actions are enabled when remove is enabled (174869)
+- Add script to create automatic tracker based groups script (174871)
+
 Changes in 3.1.5 :
 - Make sure symlinks work when we create multifile torrents
 - Fix redirect loop when torrent is loaded via url in webgui (173513)
