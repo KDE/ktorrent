@@ -231,7 +231,7 @@ namespace kt
 		if (tc->hasExistingFiles())
 		{
 			if (!skip_check)
-				gui->dataScan(tc,true,true,QString::null);
+				gui->dataScan(tc,false,true,QString::null);
 			else
 				tc->markExistingFilesAsDownloaded();
 		}
