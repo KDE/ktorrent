@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 	signal(SIGXFSZ,SIG_IGN);
 #endif
 
-	bt::SetClientInfo("KTorrent",kt::MAJOR,kt::MINOR,kt::RELEASE,bt::DEVEL,"KT");
+	bt::SetClientInfo("KTorrent",kt::MAJOR,kt::MINOR,kt::RELEASE,bt::BETA,"KT");
 	
 	KAboutData about(
 		"ktorrent", 0, ki18n("KTorrent"),
