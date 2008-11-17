@@ -7,6 +7,7 @@ Name[pt]=Continuação Automática
 Name[pt_BR]=Continuação Automática
 Name[sv]=Automatisk återupptagning
 Name[uk]=Автоматичне відновлення
+Name[x-test]=xxAutomatic Resumexx
 Comment=Script to automatically resume after some time, when the paused state is enabled
 Comment[de]=Skript zum automatischen Fortsetzen von pausierten Torrents nach Ablauf einer festgelegten Zeit
 Comment[el]=Σενάριο για την αυτόματη συνέχιση λήψενω μετά από κάποιο χρονικό διάστημα, όταν η κατάσταση  παύσης είναι ενεργοποιημένη
@@ -17,6 +18,7 @@ Comment[pt_BR]=Um programa para prosseguir automaticamente, ao fim de algum temp
 Comment[ru]=Сценарий для втоматического возобновления работы после некоторого времени, если она была приостановлена
 Comment[sv]=Skript för att automatiskt fortsätta efter en viss tid, när paustillståndet aktiveras
 Comment[uk]=Скрипт для автоматичного поновлення через певний проміжок часу, якщо увімкнено стан призупинки.
+Comment[x-test]=xxScript to automatically resume after some time, when the paused state is enabledxx
 Comment[zh_TW]=在暫停一段時間後自動回復的文稿
 Type=KTorrentScript
 Icon=kt-bandwidth-scheduler
