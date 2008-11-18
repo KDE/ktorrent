@@ -41,6 +41,8 @@
 #include <taskmanager/task.h>
 #include <util/functions.h>
 #include "chunkbar.h"
+
+
 using namespace bt;
 
 namespace ktplasma
