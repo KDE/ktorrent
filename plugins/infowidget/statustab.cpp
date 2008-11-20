@@ -24,6 +24,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <util/functions.h>
+#include <util/log.h>
 #include <interfaces/torrentinterface.h>
 
 #include "downloadedchunkbar.h"
@@ -46,6 +47,7 @@ namespace kt
 		ratio_limit->setMinimum(0.0f);
 		ratio_limit->setMaximum(100.0f);
 		ratio_limit->setSingleStep(0.1f);
+		ratio_limit->setKeyboardTracking(false);
 		connect(ratio_limit, SIGNAL(valueChanged(double)), this, SLOT(maxRatioChanged(double)));
 		connect(use_ratio_limit, SIGNAL(toggled(bool)), this, SLOT( useRatioLimitToggled(bool)));
 		
@@ -53,6 +55,7 @@ namespace kt
 		time_limit->setMaximum(10000000.0f);
 		time_limit->setSingleStep(0.05f);
 		time_limit->setSpecialValueText(i18n("No limit"));
+		time_limit->setKeyboardTracking(false);
 		connect(use_time_limit,SIGNAL(toggled(bool)), this,SLOT(useTimeLimitToggled(bool)));
 		connect(time_limit,SIGNAL(valueChanged(double)), this, SLOT(maxTimeChanged(double)));
 		
