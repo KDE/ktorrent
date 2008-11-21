@@ -84,7 +84,7 @@ namespace kt
 		show();
 		m_close_button->setEnabled(false);
 		
-		m_text_output->append(i18n("Importing %1 torrents ...",todo.count()));
+		m_text_output->append(i18np("Importing 1 torrent ...","Importing %1 torrents ...",todo.count()));
 	
 		m_progress_bar->setRange(0,todo.count());
 		m_progress_bar->setValue(0);
