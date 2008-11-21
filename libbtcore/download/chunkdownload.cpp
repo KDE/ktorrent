@@ -381,7 +381,7 @@ namespace bt
 		}
 		else
 		{
-			return i18n("%1 peers",pdown.count());
+			return i18np("1 peer","%1 peers",pdown.count());
 		}
 	}
 
