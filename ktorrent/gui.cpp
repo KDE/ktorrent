@@ -419,6 +419,7 @@ namespace kt
 		KAction* open_action = KStandardAction::open(this, SLOT(openTorrent()),ac);
 		open_action->setToolTip(i18n("Open a torrent"));
 		KStandardAction::paste(this,SLOT(paste()),ac);
+		KStandardAction::selectAll(view_man,SLOT(selectAll()),ac);
 		
 		open_silently_action = new KAction(KIcon(open_action->icon()),i18n("Open Silently"),this);
 		open_silently_action->setToolTip(i18n("Open a torrent without asking any questions"));

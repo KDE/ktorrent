@@ -423,7 +423,7 @@ namespace kt
 		ac->addAction("view_pex_enabled",pex_enabled);
 	
 		manual_announce = new KAction(i18n("Manual Announce"),this);
-		manual_announce->setShortcut(KShortcut(Qt::CTRL + Qt::Key_A));
+		manual_announce->setShortcut(KShortcut(Qt::SHIFT + Qt::Key_A));
 		connect(manual_announce,SIGNAL(triggered()),this,SLOT(manualAnnounce()));
 		ac->addAction("view_announce",manual_announce);
 		
@@ -539,6 +539,12 @@ namespace kt
 		
 		QClipboard* cb = QApplication::clipboard();
 		cb->setText(tc->loadUrl().prettyUrl());
+	}
+	
+	void ViewManager::selectAll()
+	{
+		if (current)
+			current->selectAll();
 	}
 	
 	void ViewManager::showViewMenu(View* v,const QPoint & pos)

@@ -109,6 +109,9 @@ namespace kt
 		/// Remove selected torrent
 		void renameTorrent();
 		
+		/// Select all torrents in the current view
+		void selectAll();
+		
 	private slots:
 		/// Remove selected downloads and data in the current view
 		void removeTorrentsAndData();
