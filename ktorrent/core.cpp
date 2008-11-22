@@ -223,7 +223,9 @@ namespace kt
 		}
 		catch (bt::Error & err)
 		{
-			gui->errorMsg(err.toString());
+			if (!silently)
+				gui->errorMsg(err.toString());
+			Out(SYS_GEN|LOG_IMPORTANT) << err.toString() << endl;
 			remove(tc,false);
 			return false;
 		}

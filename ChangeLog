@@ -2,6 +2,7 @@ Changes in 3.2rc1 :
 - Fix bug in webgui causing wrong content-length to be returned in some cases
 - Add cmake check for libtaskmanager which is needed by the plasma applet
 - Make sure ratio limit and seed time limit spinboxes in statustab only emit the valueChanged signal when the user is done editing the spinbox (175625)
+- Don't show error message when torrent is loaded silently and the files can't be created (ported from stable)
 
 Changes in 3.2beta1 :
 - Ask to create directory in fileselectdlg, if it does not exist (163965)
@@ -58,6 +59,9 @@ Changes in 3.2beta1 :
 - Get rid of duplicate actions (174860)
 - Make sure check data and queue actions are enabled when remove is enabled (174869)
 - Add script to create automatic tracker based groups script (174871)
+
+Changes in 3.1.6 : 
+- Don't show error message when torrent is loaded silently and the files can't be created
 
 Changes in 3.1.5 :
 - Make sure symlinks work when we create multifile torrents
