@@ -2,6 +2,7 @@
 Name=Automatic Resume
 Name[de]=Automatisch Fortsetzen
 Name[el]=Αυτόματη συνέχιση
+Name[ja]=自動再開
 Name[nds]=Automaatsch Wiedermaken
 Name[pt]=Continuação Automática
 Name[pt_BR]=Continuação Automática
@@ -13,6 +14,7 @@ Comment=Script to automatically resume after some time, when the paused state is
 Comment[de]=Skript zum automatischen Fortsetzen von pausierten Torrents nach Ablauf einer festgelegten Zeit
 Comment[el]=Σενάριο για την αυτόματη συνέχιση λήψενω μετά από κάποιο χρονικό διάστημα, όταν η κατάσταση  παύσης είναι ενεργοποιημένη
 Comment[es]=Script para reanudar automáticamente tras cierto tiempo, cuando está habilitado el estado de pausa
+Comment[ja]=一時停止中の torrent を一定時間後に自動的に再開するスクリプト
 Comment[nds]=Dat Skript maakt automaatsch na en wiss Tiet wieder, wenn de Anhollen-Status anmaakt is
 Comment[pl]=Skrypt do automatycznego wznawiania po ustalonym czasie, po włączeniu pauzy
 Comment[pt]=Um programa para prosseguir automaticamente, ao fim de algum tempo, quando for activado o estado de pausa
