@@ -3,6 +3,7 @@ Changes in 3.2rc1 :
 - Add cmake check for libtaskmanager which is needed by the plasma applet
 - Make sure ratio limit and seed time limit spinboxes in statustab only emit the valueChanged signal when the user is done editing the spinbox (175625)
 - Don't show error message when torrent is loaded silently and the files can't be created (ported from stable)
+- Fix crash in plasma applet
 
 Changes in 3.2beta1 :
 - Ask to create directory in fileselectdlg, if it does not exist (163965)

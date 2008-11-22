@@ -58,7 +58,7 @@ namespace ktplasma
 		resize(iconSize * 4, iconSize * 2);
 		engine = 0;
 		root_layout = 0;
-		connected_to_app = config_dlg_created = false;
+		connected_to_app = false;
 
 		// drop data!
 		if (!args.isEmpty()) 
@@ -195,15 +195,11 @@ namespace ktplasma
 		parent->addPage(widget, parent->windowTitle(), "ktorrent");
 		connect(parent, SIGNAL(applyClicked()), this, SLOT(configUpdated()));
 		connect(parent, SIGNAL(okClicked()), this, SLOT(configUpdated()));
-		config_dlg_created = true;
 		updateTorrentCombo();
 	}
 	
 	void Applet::updateTorrentCombo()
-	{
-		if (!config_dlg_created)
-			return;
-		
+	{	
 		QStringList sources = engine->sources();
 		ui.torrent_to_display->clear();
 		ui.torrent_to_display->setEnabled(sources.count() > 0);
@@ -257,7 +253,6 @@ namespace ktplasma
 			if (!connected_to_app && data.value("connected").toBool())
 			{
 				connected_to_app = true;
-				updateTorrentCombo();
 				current_source = selectTorrent();
 				if (!current_source.isEmpty())
 				{
@@ -325,7 +320,6 @@ namespace ktplasma
 	void Applet::sourceAdded(const QString & s)
 	{
 		Q_UNUSED(s);
-		updateTorrentCombo();
 		if (current_source.isNull())
 		{
 			current_source = selectTorrent();
@@ -338,7 +332,6 @@ namespace ktplasma
 	
 	void Applet::sourceRemoved(const QString & s)
 	{
-		updateTorrentCombo();
 		if (current_source == s)
 		{
 			current_source = selectTorrent();

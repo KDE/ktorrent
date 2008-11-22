@@ -85,7 +85,6 @@ namespace ktplasma
 		QString current_source;
 		QGraphicsLinearLayout* root_layout;
 		bool connected_to_app;
-		bool config_dlg_created;
 		ChunkBar* chunk_bar;
 	};
 
