@@ -192,7 +192,7 @@ namespace kt
 		else
 		{
 			double r = 0;
-			if (s.imported_bytes > s.bytes_downloaded)
+			if (s.imported_bytes <= s.bytes_downloaded)
 				r = (double)(s.bytes_downloaded - s.imported_bytes)/ 1024.0;
 			else
 				r = (double)s.bytes_downloaded / 1024.0;
