@@ -87,9 +87,9 @@ namespace kt
 			if (tc->hasMissingFiles(dummy))
 			{
 				if (dummy.count() == tc->getNumFiles())
-					KMessageBox::error(this,i18n("The data files are not present in the location you selected !"));
+					KMessageBox::error(this,i18n("The data files are not present in the location you selected!"));
 				else
-					KMessageBox::error(this,i18n("Not all files where found in the new location, some are still missing !"));
+					KMessageBox::error(this,i18n("Not all files were found in the new location; some are still missing!"));
 				
 				tc->changeOutputDir(old,bt::TorrentInterface::FULL_PATH);
 			}
@@ -111,7 +111,7 @@ namespace kt
 			QStringList dummy;
 			if (tc->hasMissingFiles(dummy))
 			{
-				KMessageBox::error(this,i18n("The data file is not present in the location you selected !"));
+				KMessageBox::error(this,i18n("The data file is not present in the location you selected!"));
 				tc->changeOutputDir(old,0);
 			}
 			else
