@@ -310,6 +310,11 @@ namespace kt
 	{
 		Out(SYS_GEN|LOG_NOTICE) << "Setting paused state to " << pause << endl;
 		core->setPausedState(pause);
+		updateActions();
+	}
+	
+	void GUI::updateActions()
+	{
 		View* v = view_man->getCurrentView();
 		if (v)
 			v->updateFlags();

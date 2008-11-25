@@ -212,6 +212,9 @@ namespace kt
 		
 		/// Import KDE3 torrents
 		void importKDE3Torrents();
+		
+		/// Handle status changes
+		void onStatusChanged(bt::TorrentInterface* tc);
 
 	signals:
 		/**

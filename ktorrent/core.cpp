@@ -1121,6 +1121,8 @@ namespace kt
 				this, SLOT(onLowDiskSpace(bt::TorrentInterface*, bool)));
 		connect(tc, SIGNAL(needDataCheck(bt::TorrentInterface*)),
 				this, SLOT(autoCheckData(bt::TorrentInterface*)));
+		connect(tc,SIGNAL(statusChanged(bt::TorrentInterface*)),
+				this,SLOT(onStatusChanged(bt::TorrentInterface*)));
 	}
 
 	float Core::getGlobalMaxShareRatio() const
@@ -1198,6 +1200,12 @@ namespace kt
 	DBus* Core::getExternalInterface()
 	{
 		return gui->getDBusInterface();
+	}
+	
+	void Core::onStatusChanged(bt::TorrentInterface* tc)
+	{
+		Q_UNUSED(tc);
+		gui->updateActions();
 	}
 }
 

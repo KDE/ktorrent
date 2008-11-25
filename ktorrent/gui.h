@@ -118,6 +118,9 @@ namespace kt
 		 * @param paused 
 		 */
 		void onPausedStateChanged(bool paused);
+		
+		/// Update start, stop ... actions
+		void updateActions();
 
 	private slots:
 		void createTorrent();

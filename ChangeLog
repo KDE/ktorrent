@@ -6,6 +6,7 @@ Changes in 3.2rc1 :
 - Fix crash in plasma applet
 - Added select all action, manual announce now gets SHIFT + A as shortcut to not conflict with select all 
 - Make sure average download speed calculation doesn't wrap around (175747)
+- Update buttons when torrent changes status (174815)
 
 Changes in 3.2beta1 :
 - Ask to create directory in fileselectdlg, if it does not exist (163965)
