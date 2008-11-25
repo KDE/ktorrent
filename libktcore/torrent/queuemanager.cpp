@@ -419,8 +419,8 @@ namespace kt
 	int QueueManager::getNumRunning(Flags flags)
 	{
 		int nr = 0;
-		QList<TorrentInterface*>::const_iterator i = downloads.begin();
-		while (i != downloads.end())
+		QList<TorrentInterface*>::const_iterator i = downloads.constBegin();
+		while (i != downloads.constEnd())
 		{
 			const TorrentInterface* tc = *i;
 			const TorrentStats & s = tc->getStats();
