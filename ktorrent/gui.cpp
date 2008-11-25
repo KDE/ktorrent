@@ -317,8 +317,11 @@ namespace kt
 	
 	void GUI::pauseQueue(bool pause)
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "pauseQUeue " << pause << endl;
+		Out(SYS_GEN|LOG_NOTICE) << "Setting paused state to " << pause << endl;
 		core->setPausedState(pause);
+		View* v = view_man->getCurrentView();
+		if (v)
+			v->updateFlags();
 	}
 	
 	void GUI::onPausedStateChanged(bool paused)
