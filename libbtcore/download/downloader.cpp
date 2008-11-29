@@ -136,7 +136,6 @@ namespace bt
 					downloaded -= cd->getChunk()->getSize();
 			}
 			current_chunks.erase(p.getIndex());
-			update(); // run an update to assign new pieces
 		}
 		else
 		{
@@ -892,7 +891,7 @@ namespace bt
 	}
 	
 	void Downloader::loadWebSeeds(const QString & file)
-	{
+	{		
 		QFile fptr(file);
 		if (!fptr.open(QIODevice::ReadOnly))
 		{
