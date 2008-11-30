@@ -710,7 +710,7 @@ namespace kt
 		remove_action->setEnabled(flags & REMOVE);
 		start_all_cv_action->setEnabled(flags & START_ALL);
 		stop_all_cv_action->setEnabled(flags & STOP_ALL);
-		queue_pause_action->setEnabled(core->getPausedState() || flags & STOP_ALL);
+		queue_pause_action->setEnabled(core->getPausedState() || core->getNumTorrentsRunning() > 0);
 	}
 	
 	void GUI::showOrHide()
