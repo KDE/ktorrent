@@ -26,6 +26,7 @@
 #include <btcore_export.h>
 #include <util/constants.h>
 #include <interfaces/webseedinterface.h>
+#include <interfaces/chunkdownloadinterface.h>
 
 
 namespace bt
@@ -34,8 +35,8 @@ namespace bt
 	class HttpConnection;
 	class ChunkManager;
 	class Chunk;
-	class ChunkDownloadInterface;
 	class WebSeedChunkDownload;
+	
 
 	/**
 		@author Joris Guisson
@@ -50,6 +51,9 @@ namespace bt
 		
 		/// Is this webseed busy ?
 		bool busy() const;
+		
+		/// Check if a chunk lies in the current range we are downloading
+		bool inCurrentRange(Uint32 chunk) const {return chunk >= first_chunk && chunk <= last_chunk;}
 		
 		/**
 		 * Download a range of chunks
@@ -71,6 +75,12 @@ namespace bt
 		 * @return The number of bytes downloaded
 		 */
 		Uint32 update();
+		
+		/**
+		 * A chunk has been downloaded.
+		 * @param chunk The chunk
+		 */
+		void chunkDownloaded(Uint32 chunk);
 		
 		/**
 		 * Reset the webseed (kills the connection)
@@ -103,6 +113,9 @@ namespace bt
 		 */
 		static void setProxyEnabled(bool on);
 		
+		/// Get the current webseed download
+		WebSeedChunkDownload* currentChunkDownload() {return current;}
+		
 	signals:
 		/**
 		 * Emitted when a chunk is downloaded
@@ -118,14 +131,16 @@ namespace bt
 		/**
 		 * A ChunkDownload was started
 		 * @param cd The ChunkDownloadInterface
+		 * @param chunk The chunk which is being started
 		 */
-		void chunkDownloadStarted(ChunkDownloadInterface* cd);
+		void chunkDownloadStarted(WebSeedChunkDownload* cd,Uint32 chunk);
 		
 		/**
 		 * A ChunkDownload was finished
 		 * @param cd The ChunkDownloadInterface
+		 * @param chunk The chunk which is being stopped
 		 */
-		void chunkDownloadFinished(ChunkDownloadInterface* cd);
+		void chunkDownloadFinished(WebSeedChunkDownload* cd,Uint32 chunk);
 		
 	private slots:
 		void retry();
@@ -162,6 +177,21 @@ namespace bt
 		static QString proxy_host;
 		static Uint16 proxy_port;
 		static bool proxy_enabled;
+	};
+	
+	class WebSeedChunkDownload : public ChunkDownloadInterface
+	{
+	public:
+		WebSeedChunkDownload(WebSeed* ws,const QString & url,Uint32 index,Uint32 total);
+		virtual ~WebSeedChunkDownload();
+	
+		virtual void getStats(Stats & s);
+	
+		WebSeed* ws;
+		QString url;
+		Uint32 chunk;
+		Uint32 total_pieces;
+		Uint32 pieces_downloaded;
 	};
 
 }

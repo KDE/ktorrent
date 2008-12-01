@@ -8,6 +8,7 @@ Changes in 3.2rc1 :
 - Make sure average download speed calculation doesn't wrap around (175747)
 - Update buttons when torrent changes status (174815)
 - Fix pause button getting disabled when current view doesn't have any torrents (176442)
+- Fix bug causing webseeds to prevent chunks from getting downloaded
 
 Changes in 3.2beta1 :
 - Ask to create directory in fileselectdlg, if it does not exist (163965)
@@ -70,6 +71,7 @@ Changes in 3.1.6 :
 - Make sure buttons get updated when paused state is toggled 
 - Fix deadlock in Downloader when webseeds are active
 - Backport pause button fix from trunk
+- Backport webseed fix from trunk
 
 Changes in 3.1.5 :
 - Make sure symlinks work when we create multifile torrents

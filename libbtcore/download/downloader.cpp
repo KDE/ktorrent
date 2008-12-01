@@ -73,10 +73,10 @@ namespace bt
 				WebSeed* ws = new WebSeed(u,false,tor,cman);
 				webseeds.append(ws);
 				connect(ws,SIGNAL(chunkReady(Chunk*)),this,SLOT(onChunkReady(Chunk*)));
-				connect(ws,SIGNAL(chunkDownloadStarted(ChunkDownloadInterface*)),
-						this,SLOT(chunkDownloadStarted(ChunkDownloadInterface*)));
-				connect(ws,SIGNAL(chunkDownloadFinished(ChunkDownloadInterface*)),
-						this,SLOT(chunkDownloadFinished(ChunkDownloadInterface*)));
+				connect(ws,SIGNAL(chunkDownloadStarted(WebSeedChunkDownload*,Uint32)),
+						this,SLOT(chunkDownloadStarted(WebSeedChunkDownload*,Uint32)));
+				connect(ws,SIGNAL(chunkDownloadFinished(WebSeedChunkDownload*,Uint32)),
+						this,SLOT(chunkDownloadFinished(WebSeedChunkDownload*,Uint32)));
 			}
 		}
 	}
@@ -128,8 +128,17 @@ namespace bt
 					downloaded = 0;
 				else
 					downloaded -= cd->getChunk()->getSize();
+				current_chunks.erase(p.getIndex());
 			}
-			current_chunks.erase(p.getIndex());
+			else
+			{
+				current_chunks.erase(p.getIndex());
+				foreach (WebSeed* ws,webseeds)
+				{
+					if (ws->inCurrentRange(p.getIndex()))
+						ws->chunkDownloaded(p.getIndex());
+				}
+			}
 		}
 		else
 		{
@@ -316,10 +325,6 @@ namespace bt
 		Uint32 last = 0;
 		if (chunk_selector->selectRange(first,last))
 		{
-			for (Uint32 i = first;i <= last;i++)
-			{
-				webseeds_chunks.insert(i,ws);
-			}
 			ws->download(first,last);
 		}
 	}
@@ -463,6 +468,14 @@ namespace bt
 			ChunkDownload* cd = i->second;
 			tmon->downloadStarted(cd);
 		}
+		
+		foreach (WebSeed* ws,webseeds)
+		{
+			WebSeedChunkDownload* cd = ws->currentChunkDownload();
+			if (cd)
+				tmon->downloadStarted(cd);
+		}
+		
 	}
 	
 
@@ -722,15 +735,17 @@ namespace bt
 		}
 	}
 	
-	void Downloader::chunkDownloadStarted(ChunkDownloadInterface* cd)
+	void Downloader::chunkDownloadStarted(WebSeedChunkDownload* cd,Uint32 chunk)
 	{
+		webseeds_chunks.insert(chunk,cd->ws);
 		active_webseed_downloads++;
 		if (tmon)
 			tmon->downloadStarted(cd);
 	}
 	
-	void Downloader::chunkDownloadFinished(ChunkDownloadInterface* cd)
+	void Downloader::chunkDownloadFinished(WebSeedChunkDownload* cd,Uint32 chunk)
 	{
+		webseeds_chunks.erase(chunk);
 		if (active_webseed_downloads > 0)
 			active_webseed_downloads--;
 		
@@ -750,10 +765,10 @@ namespace bt
 		WebSeed* ws = new WebSeed(url,true,tor,cman);
 		webseeds.append(ws);
 		connect(ws,SIGNAL(chunkReady(Chunk*)),this,SLOT(onChunkReady(Chunk*)));
-		connect(ws,SIGNAL(chunkDownloadStarted(ChunkDownloadInterface*)),
-				this,SLOT(chunkDownloadStarted(ChunkDownloadInterface*)));
-		connect(ws,SIGNAL(chunkDownloadFinished(ChunkDownloadInterface*)),
-				this,SLOT(chunkDownloadFinished(ChunkDownloadInterface*)));
+		connect(ws,SIGNAL(chunkDownloadStarted(WebSeedChunkDownload*,Uint32)),
+				this,SLOT(chunkDownloadStarted(WebSeedChunkDownload*,Uint32)));
+		connect(ws,SIGNAL(chunkDownloadFinished(WebSeedChunkDownload*,Uint32)),
+				this,SLOT(chunkDownloadFinished(WebSeedChunkDownload*,Uint32)));
 		return ws;
 	}
 		
@@ -814,10 +829,10 @@ namespace bt
 				WebSeed* ws = new WebSeed(url,true,tor,cman);
 				webseeds.append(ws);
 				connect(ws,SIGNAL(chunkReady(Chunk*)),this,SLOT(onChunkReady(Chunk*)));
-				connect(ws,SIGNAL(chunkDownloadStarted(ChunkDownloadInterface*)),
-						this,SLOT(chunkDownloadStarted(ChunkDownloadInterface*)));
-				connect(ws,SIGNAL(chunkDownloadFinished(ChunkDownloadInterface*)),
-						this,SLOT(chunkDownloadFinished(ChunkDownloadInterface*)));
+				connect(ws,SIGNAL(chunkDownloadStarted(WebSeedChunkDownload*,Uint32)),
+						this,SLOT(chunkDownloadStarted(WebSeedChunkDownload*,Uint32)));
+				connect(ws,SIGNAL(chunkDownloadFinished(WebSeedChunkDownload*,Uint32)),
+						this,SLOT(chunkDownloadFinished(WebSeedChunkDownload*,Uint32)));
 			}
 		}
 	}

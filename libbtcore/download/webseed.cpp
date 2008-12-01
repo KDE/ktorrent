@@ -28,39 +28,12 @@
 #include <torrent/torrent.h>
 #include <diskio/chunkmanager.h>
 #include <diskio/piecedata.h>
-#include <interfaces/chunkdownloadinterface.h>
 #include "httpconnection.h"
 
 namespace bt
 {
-	class WebSeedChunkDownload : public ChunkDownloadInterface
-	{
-	public:
-		WebSeedChunkDownload(WebSeed* ws,const QString & url,Uint32 index,Uint32 total) 
-			: ws(ws),url(url),chunk(index),total_pieces(total),pieces_downloaded(0)
-		{}
-		 
-		virtual ~WebSeedChunkDownload()
-		{
-		}
-		
-		void getStats(Stats & s)
-		{
-			s.current_peer_id = url;
-			s.chunk_index = chunk;
-			s.num_downloaders = 1;
-			s.download_speed = ws->getDownloadRate();
-			s.pieces_downloaded = pieces_downloaded;
-			s.total_pieces = total_pieces;
-		}
-		
-		WebSeed* ws;
-		QString url;
-		Uint32 chunk;
-		Uint32 total_pieces;
-		Uint32 pieces_downloaded;
-	};
 	
+			
 	QString WebSeed::proxy_host;
 	Uint16 WebSeed::proxy_port = 8080;
 	bool WebSeed::proxy_enabled = false;
@@ -104,9 +77,12 @@ namespace bt
 	
 	void WebSeed::reset()
 	{
+		if (current)
+			chunkStopped();
+		
 		if (conn)
 		{
-			delete conn;
+			conn->deleteLater();
 			conn = 0;
 		}
 		
@@ -203,8 +179,6 @@ namespace bt
 			
 			conn->get(url.host(),path,first_chunk * tor.getChunkSize(),len);
 		}
-		
-		chunkStarted(cur_chunk);
 	}
 	
 	void WebSeed::chunkStarted(Uint32 chunk)
@@ -213,15 +187,25 @@ namespace bt
 		Uint32 pieces_count = csize / MAX_PIECE_LEN;
 		if (csize % MAX_PIECE_LEN > 0)
 			pieces_count++;
-		current = new WebSeedChunkDownload(this,url.prettyUrl(),chunk,pieces_count);
-		chunkDownloadStarted(current);
+	
+		if (!current)
+		{
+			current = new WebSeedChunkDownload(this,url.prettyUrl(),chunk,pieces_count);
+			chunkDownloadStarted(current,chunk);
+		}
+		else if (current->chunk != chunk)
+		{
+			chunkStopped();
+			current = new WebSeedChunkDownload(this,url.prettyUrl(),chunk,pieces_count);
+			chunkDownloadStarted(current,chunk);
+		}
 	}
 	
 	void WebSeed::chunkStopped()
 	{
 		if (current)
 		{
-			chunkDownloadFinished(current);
+			chunkDownloadFinished(current,current->chunk);
 			delete current;
 			current = 0;
 		}
@@ -248,8 +232,6 @@ namespace bt
 			status = conn->getStatusString();
 			delete conn;
 			conn = 0;
-			
-			
 			chunkStopped();
 			
 			num_failures++;
@@ -278,6 +260,8 @@ namespace bt
 			while (conn->getData(tmp) && cur_chunk <= last_chunk)
 			{
 				//Out(SYS_CON|LOG_DEBUG) << "WebSeed: handleData " << tmp.size() << endl;
+				if (!current)
+					chunkStarted(cur_chunk);
 				handleData(tmp);
 				tmp.clear();
 			}
@@ -296,7 +280,7 @@ namespace bt
 				{
 					// after a redirect it is possible that the connection is closed
 					// so we need to reconnect to the old url
-					delete conn;
+					conn->deleteLater();
 					conn = new HttpConnection();
 					conn->setGroupIDs(up_gid,down_gid);
 					connectToServer();
@@ -408,5 +392,32 @@ namespace bt
 		if (from <= first_chunk && first_chunk <= to && from <= last_chunk && last_chunk <= to)
 			reset();
 	}
+	
+	void WebSeed::chunkDownloaded(Uint32 chunk)
+	{
+		// reset if chunk downloaded is in the range we are currently downloading
+		if (chunk >= cur_chunk) 
+			reset();
+	}
+	
+	WebSeedChunkDownload::WebSeedChunkDownload(WebSeed* ws,const QString & url,Uint32 index,Uint32 total) 
+	: ws(ws),url(url),chunk(index),total_pieces(total),pieces_downloaded(0)
+	{}
+		 
+	WebSeedChunkDownload::~WebSeedChunkDownload()
+	{
+	}
+		
+	void WebSeedChunkDownload::getStats(Stats & s)
+	{
+		s.current_peer_id = url;
+		s.chunk_index = chunk;
+		s.num_downloaders = 1;
+		s.download_speed = ws->getDownloadRate();
+		s.pieces_downloaded = pieces_downloaded;
+		s.total_pieces = total_pieces;
+	}
+		
+
 }
 #include "webseed.moc"

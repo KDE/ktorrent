@@ -44,6 +44,7 @@ namespace bt
 	class WebSeed;
 	class ChunkDownloadInterface;
 	class BadPeersList;
+	class WebSeedChunkDownload;
 
 	typedef PtrMap<Uint32,ChunkDownload>::iterator CurChunkItr;
 	typedef PtrMap<Uint32,ChunkDownload>::const_iterator CurChunkCItr;
@@ -241,8 +242,8 @@ namespace bt
 		 */
 		void onChunkReady(Chunk* c);
 		
-		void chunkDownloadStarted(ChunkDownloadInterface* cd);
-		void chunkDownloadFinished(ChunkDownloadInterface* cd);
+		void chunkDownloadStarted(WebSeedChunkDownload* cd,Uint32 chunk);
+		void chunkDownloadFinished(WebSeedChunkDownload* cd,Uint32 chunk);
 		
 	signals:
 		/**
