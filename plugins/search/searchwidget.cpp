@@ -228,7 +228,12 @@ namespace kt
 			if (!url.startsWith("/"))
 				url_to_open = KUrl(url);
 			else 
-				url_to_open = KUrl(html_part->baseURL().prettyUrl() + url);
+			{
+				KUrl u = html_part->baseURL();
+				QString base = u.scheme() + "://" + u.authority();
+				url_to_open = KUrl(base);
+				url_to_open.setPath(url);
+			}
 		}
 	}
 	

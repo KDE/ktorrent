@@ -67,6 +67,8 @@ namespace kt
 	
 	void HTMLPart::openUrlRequest(const KUrl &u, const KParts::OpenUrlArguments & arg, const KParts::BrowserArguments & barg)
 	{
+		Q_UNUSED(arg);
+		Q_UNUSED(barg);
 		if (active_job)
 		{
 			active_job->kill();
@@ -127,7 +129,7 @@ namespace kt
 		
 		Uint32 off = curr_data.size();
 		curr_data.resize(curr_data.size() + data.size());
-		for (Uint32 i = 0;i < data.size();i++)
+		for (int i = 0;i < data.size();i++)
 		{
 			curr_data[i + off] = data[i];
 		}
