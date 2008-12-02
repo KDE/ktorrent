@@ -365,6 +365,8 @@ namespace bt
 		void corrupted(Uint32 chunk);
 		void moveDataFilesFinished(KJob* j);
 		void downloaded(Uint32 chunk);
+		void afterDataCheck();
+		void preallocThreadDone();
 		
 	private:	
 		void updateTracker(const QString & ev,bool last_succes = true);
@@ -385,8 +387,6 @@ namespace bt
 		void setupDirs(const QString & tmpdir,const QString & ddir);
 		void setupStats();
 		void setupData(const QString & ddir);
-		void afterDataCheck();
-		void preallocThreadDone();
 		virtual bool isCheckingData(bool & finished) const;
 		
 		void setUploadProps(Uint32 limit,Uint32 rate);

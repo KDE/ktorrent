@@ -157,38 +157,14 @@ namespace bt
 	void TorrentControl::update()
 	{
 		UpdateCurrentTime();
-		if (moving_files)
+		if (moving_files || dcheck_thread || prealloc_thread)
 			return;
-
-		if (dcheck_thread)
-		{
-			if (!dcheck_thread->isRunning())
-			{
-				dcheck_thread->wait();
-				afterDataCheck();
-				if (!stats.running)
-					return;
-			}
-			else
-				return;
-		}
 		
 		if (istats.io_error)
 		{
 			stop(false);
 			emit stoppedByError(this, error_msg);
 			return;
-		}
-		
-		if (prealloc_thread)
-		{
-			if (prealloc_thread->isDone())
-			{
-				prealloc_thread->wait();
-				preallocThreadDone();
-			}
-			else
-				return; // preallocation still going on, so just return
 		}
 		
 
@@ -400,6 +376,7 @@ namespace bt
 			{
 				Out(SYS_GEN|LOG_NOTICE) << "Pre-allocating diskspace" << endl;
 				prealloc_thread = new PreallocationThread(cman);
+				connect(prealloc_thread,SIGNAL(finished()),this,SLOT(preallocThreadDone()),Qt::QueuedConnection);
 				stats.running = true;
 				stats.status = ALLOCATING_DISKSPACE;
 				prealloc_thread->start();
@@ -460,20 +437,8 @@ namespace bt
 		{
 			prealloc_thread->stop();
 			prealloc_thread->wait();
-			
 			if (prealloc_thread->errorHappened() || prealloc_thread->isNotFinished())
-			{
-				delete prealloc_thread;
-				prealloc_thread = 0;
-				prealloc = true;
 				saveStats(); // save stats, so that we will start preallocating the next time
-			}
-			else
-			{
-				delete prealloc_thread;
-				prealloc_thread = 0;
-				prealloc = false;
-			}
 		}
 	
 		if (stats.running)
@@ -1524,6 +1489,7 @@ namespace bt
 		dc->setListener(lst);
 		
 		dcheck_thread = new DataCheckerThread(dc,cman->getBitSet(),stats.output_path,*tor,tordir + "dnd" + bt::DirSeparator());
+		connect(dcheck_thread,SIGNAL(finished()),this,SLOT(afterDataCheck()),Qt::QueuedConnection);
 		
 		// dc->check(stats.output_path,*tor,tordir + "dnd" + bt::DirSeparator());
 		dcheck_thread->start();
@@ -1574,7 +1540,7 @@ namespace bt
 		updateStats();
 		if (lst)
 			lst->finished();
-		delete dcheck_thread;
+		dcheck_thread->deleteLater();
 		dcheck_thread = 0;
 	}
 	
@@ -1920,14 +1886,14 @@ namespace bt
 		{
 			// upon error just call onIOError and return
 			onIOError(prealloc_thread->errorMessage());
-			delete prealloc_thread;
+			prealloc_thread->deleteLater();
 			prealloc_thread = 0;
 			prealloc = true; // still need to do preallocation
 		}
 		else
 		{
 			// continue the startup of the torrent
-			delete prealloc_thread;
+			prealloc_thread->deleteLater();
 			prealloc_thread = 0;
 			prealloc = false;
 			stats.status = NOT_STARTED;
