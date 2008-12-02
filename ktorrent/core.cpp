@@ -74,8 +74,13 @@ namespace kt
 	{
 		UpdateCurrentTime();
 		qman = new QueueManager();
-		connect(qman, SIGNAL(lowDiskSpace(bt::TorrentInterface*,bool)), this, SLOT(onLowDiskSpace(bt::TorrentInterface*,bool)));
-
+		connect(qman, SIGNAL(lowDiskSpace(bt::TorrentInterface*,bool)), 
+				this, SLOT(onLowDiskSpace(bt::TorrentInterface*,bool)));
+		connect(qman, SIGNAL(queuingNotPossible( bt::TorrentInterface* )),
+				this, SLOT(enqueueTorrentOverMaxRatio( bt::TorrentInterface* )));
+		connect(qman, SIGNAL(lowDiskSpace(bt::TorrentInterface*, bool)),
+				this, SLOT(onLowDiskSpace(bt::TorrentInterface*, bool)));
+		
 		data_dir = Settings::tempDir().path();
 		bool dd_not_exist = !bt::Exists(data_dir);
 		if (data_dir == QString::null || dd_not_exist)
@@ -1114,11 +1119,7 @@ namespace kt
 		connect(tc,SIGNAL(aboutToBeStarted( bt::TorrentInterface*,bool & )),
 				this, SLOT(aboutToBeStarted( bt::TorrentInterface*,bool & )));
 		connect(tc,SIGNAL(corruptedDataFound( bt::TorrentInterface* )),
-				this, SLOT(emitCorruptedData( bt::TorrentInterface* )));
-		connect(qman, SIGNAL(queuingNotPossible( bt::TorrentInterface* )),
-				this, SLOT(enqueueTorrentOverMaxRatio( bt::TorrentInterface* )));
-		connect(qman, SIGNAL(lowDiskSpace(bt::TorrentInterface*, bool)),
-				this, SLOT(onLowDiskSpace(bt::TorrentInterface*, bool)));
+				this, SLOT(emitCorruptedData( bt::TorrentInterface* )));	
 		connect(tc, SIGNAL(needDataCheck(bt::TorrentInterface*)),
 				this, SLOT(autoCheckData(bt::TorrentInterface*)));
 		connect(tc,SIGNAL(statusChanged(bt::TorrentInterface*)),
