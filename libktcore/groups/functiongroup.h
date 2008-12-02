@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson                                   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,24 +18,38 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTDOWNLOADGROUP_H
-#define KTDOWNLOADGROUP_H
+#ifndef KTFUNCTIONGROUP_H
+#define KTFUNCTIONGROUP_H
 
-#include <groups/group.h>
+#include "group.h"
 
-namespace kt
+namespace kt 
 {
+	
+	typedef bool (*IsMemberFunction)(TorrentInterface* tor);
 
 	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
+		Group which calls a function pointer to test for membership
 	*/
-	class DownloadGroup : public Group
+	template <IsMemberFunction fn>
+	class FunctionGroup : public Group
 	{
 	public:
-		DownloadGroup();
-		virtual ~DownloadGroup();
-
-		virtual bool isMember(TorrentInterface* tor);
+		FunctionGroup(const QString& name,const QString & icon,int flags, const QString& path)
+			: Group(name, flags, path)
+		{
+			setIconByName(icon);
+		}
+		
+		virtual ~FunctionGroup() {}
+	
+		virtual bool isMember(TorrentInterface* tor)
+		{
+			if (!tor)
+				return false;
+			else
+				return fn(tor);
+		}
 
 	};
 

@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson                                   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,27 +18,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTUPLOADGROUP_H
-#define KTUPLOADGROUP_H
+#include "functiongroup.h"
 
-#include <groups/group.h>
-
-namespace kt
+namespace kt 
 {
 
-	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	*/
-	class UploadGroup : public Group
-	{
-	public:
-		UploadGroup();
-		virtual ~UploadGroup();
 
-		virtual bool isMember(TorrentInterface* tor);
-
-	};
 
 }
-
-#endif

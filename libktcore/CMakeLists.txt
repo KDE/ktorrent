@@ -20,16 +20,9 @@ set(libktorrent_SRC
 	groups/group.cpp
 	groups/torrentgroup.cpp
 	groups/allgroup.cpp
-	groups/downloadgroup.cpp
-	groups/uploadgroup.cpp
-	groups/activegroup.cpp  
-	groups/inactivegroup.cpp  
-	groups/queueddownloadsgroup.cpp  
-	groups/queueduploadsgroup.cpp  
-	groups/userdownloadsgroup.cpp  
-	groups/useruploadsgroup.cpp
 	groups/ungroupedgroup.cpp
 	groups/groupmanager.cpp
+	groups/functiongroup.cpp
 	
 	dbus/dbus.cpp
 	dbus/dbustorrent.cpp

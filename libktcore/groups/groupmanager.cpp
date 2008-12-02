@@ -25,24 +25,55 @@
 #include <bcodec/bdecoder.h>
 #include <bcodec/bencoder.h>
 #include <interfaces/functions.h>
+#include <interfaces/torrentinterface.h>
 #include "groupmanager.h"
 #include "torrentgroup.h"
 #include "allgroup.h"
-#include "downloadgroup.h"
-#include "uploadgroup.h"
 #include "torrentgroup.h"
-#include "queueddownloadsgroup.h"
-#include "queueduploadsgroup.h"
-#include "userdownloadsgroup.h"
-#include "useruploadsgroup.h"
-#include "inactivegroup.h"
-#include "activegroup.h"
 #include "ungroupedgroup.h"
+#include "functiongroup.h"
 
 using namespace bt;
 
 namespace kt
 {
+	
+	bool upload(TorrentInterface* tor)
+	{
+		return tor->getStats().completed;
+	}
+	
+	bool download(TorrentInterface* tor)
+	{
+		return !tor->getStats().completed;
+	}
+	
+	bool queued(TorrentInterface* tor)
+	{
+		return !tor->getStats().user_controlled;
+	}
+	
+	bool user(TorrentInterface* tor)
+	{
+		return tor->getStats().user_controlled;
+	}
+	
+	bool active(TorrentInterface* tor)
+	{
+		const bt::TorrentStats& s = tor->getStats();
+		return (s.upload_rate >= 100 || s.download_rate >= 100);
+	}
+	
+	bool passive(TorrentInterface* tor)
+	{
+		return !active(tor);
+	}
+	
+	template <IsMemberFunction A,IsMemberFunction B>
+	bool member(TorrentInterface* tor)
+	{
+		return A(tor) && B(tor);
+	}
 
 	GroupManager::GroupManager()
 	{
@@ -50,18 +81,26 @@ namespace kt
 		
 		all = new AllGroup();
 		defaults << all;
-		defaults << new UploadGroup();
-		defaults << new DownloadGroup();
-		defaults << new QueuedDownloadsGroup();
-		defaults << new QueuedUploadsGroup();
-		defaults << new UserDownloadsGroup();
-		defaults << new UserUploadsGroup();
-		defaults << new ActiveGroup();
-		defaults << new ActiveUploadsGroup();
-		defaults << new ActiveDownloadsGroup();
-		defaults << new InactiveGroup();
-		defaults << new InactiveUploadsGroup();
-		defaults << new InactiveDownloadsGroup();
+		defaults << new FunctionGroup<upload>(i18n("Uploads"),"go-up",Group::UPLOADS_ONLY_GROUP,"/all/uploads");
+		defaults << new FunctionGroup<download>(i18n("Downloads"),"go-down",Group::DOWNLOADS_ONLY_GROUP,"/all/downloads");
+		defaults << new FunctionGroup<member<queued,download> >(
+				i18n("Queued downloads"),"kt-queue-manager",Group::DOWNLOADS_ONLY_GROUP,"/all/downloads/queued");
+		defaults << new FunctionGroup<member<queued,upload> >(
+				i18n("Queued downloads"),"kt-queue-manager",Group::UPLOADS_ONLY_GROUP,"/all/uploads/queued");
+		defaults << new FunctionGroup<member<user,download> >(
+				i18n("User downloads"),"user-identity",Group::DOWNLOADS_ONLY_GROUP,"/all/downloads/user");
+		defaults << new FunctionGroup<member<user,upload> >(
+				i18n("User uploads"),"user-identity",Group::UPLOADS_ONLY_GROUP,"/all/uploads/user");
+		defaults << new FunctionGroup<active>(i18n("Active torrents"),"network-connect",Group::MIXED_GROUP,"/all/active");
+		defaults << new FunctionGroup<member<active,upload> >(
+				i18n("Active uploads"),"go-up",Group::UPLOADS_ONLY_GROUP,"/all/active/uploads");
+		defaults << new FunctionGroup<member<active,download> >(
+				i18n("Active downloads"),"go-down",Group::DOWNLOADS_ONLY_GROUP,"/all/active/downloads");
+		defaults << new FunctionGroup<passive>(i18n("Passive torrents"),"network-disconnect",Group::MIXED_GROUP,"/all/passive");
+		defaults << new FunctionGroup<member<passive,upload> >(
+				i18n("Passive uploads"),"go-up",Group::UPLOADS_ONLY_GROUP,"/all/passive/uploads");
+		defaults << new FunctionGroup<member<passive,download> >(
+				i18n("Passive downloads"),"go-down",Group::DOWNLOADS_ONLY_GROUP,"/all/passive/downloads");
 		defaults << new UngroupedGroup(this);
 	}
 
