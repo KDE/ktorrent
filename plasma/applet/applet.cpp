@@ -55,7 +55,7 @@ namespace ktplasma
 		KLocale::setMainCatalog("ktorrent");
 		setAspectRatioMode(Plasma::ConstrainedSquare);
 		int iconSize = IconSize(KIconLoader::Desktop);
-		resize(iconSize * 4, iconSize * 2);
+		resize(iconSize * 6, iconSize * 3);
 		engine = 0;
 		root_layout = 0;
 		connected_to_app = false;
@@ -117,8 +117,8 @@ namespace ktplasma
 		root_layout->addItem(misc);
 		
 		clearData();
-		resize(icon_size * 8,root_layout->preferredHeight());
 		
+		current_source = config().readEntry("current_source",QString());
 		if (current_source.isNull()) 
 		{
 			current_source = selectTorrent();
@@ -166,6 +166,10 @@ namespace ktplasma
 				return s;
 		
 		return QString();
+	}
+	
+	void Applet::saveState(KConfigGroup & config) const
+	{
 	}
 	
 	void Applet::constraintsEvent(Plasma::Constraints constraints)
@@ -241,6 +245,8 @@ namespace ktplasma
 			{
 				current_source = s;
 				engine->connectSource(current_source,this,1000);
+				config().writeEntry("current_source",current_source);
+				config().sync();
 				break;
 			}
 		}
@@ -253,7 +259,10 @@ namespace ktplasma
 			if (!connected_to_app && data.value("connected").toBool())
 			{
 				connected_to_app = true;
-				current_source = selectTorrent();
+				current_source = config().readEntry("current_source",QString());
+				if (current_source.isEmpty())
+					current_source = selectTorrent();
+				
 				if (!current_source.isEmpty())
 				{
 					engine->connectSource(current_source,this,1000);

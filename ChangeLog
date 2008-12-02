@@ -9,6 +9,7 @@ Changes in 3.2rc1 :
 - Update buttons when torrent changes status (174815)
 - Fix pause button getting disabled when current view doesn't have any torrents (176442)
 - Fix bug causing webseeds to prevent chunks from getting downloaded
+- Make sure plasma applet restores it's geometry properly and remembers the current torrent
 
 Changes in 3.2beta1 :
 - Ask to create directory in fileselectdlg, if it does not exist (163965)

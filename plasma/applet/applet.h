@@ -58,6 +58,7 @@ namespace ktplasma
 		virtual void init();
 		virtual void constraintsEvent(Plasma::Constraints constraints);
 		virtual void createConfigurationInterface(KConfigDialog *parent);
+		virtual void saveState(KConfigGroup & config) const;
 
 	private slots:
 		void dataUpdated(const QString &name,const Plasma::DataEngine::Data &data);
