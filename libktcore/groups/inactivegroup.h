@@ -33,13 +33,39 @@ namespace kt
 
 	class InactiveGroup : public Group
 	{
+	public:
+		InactiveGroup();
+		virtual ~InactiveGroup();
+		
+		virtual bool isMember(TorrentInterface* tor);
+	};
+	
+	/**
+	 * Group for inactive uploads.
+	 * @author Ivan Vasic <ivasic@gmail.com>
+	 */
+	class InactiveUploadsGroup : public Group
+	{
+	public:
+		InactiveUploadsGroup();
+		virtual ~InactiveUploadsGroup();
+		
+		virtual bool isMember(TorrentInterface* tor);
+	};
+	
+	
 
-		public:
-			InactiveGroup();
-			virtual ~InactiveGroup();
-			
-			virtual bool isMember(TorrentInterface* tor);
-
+	/**
+	 * Group for inactive downloads.
+	 * @author Ivan Vasic <ivasic@gmail.com>
+	 */
+	class InactiveDownloadsGroup : public Group
+	{
+	public:
+		InactiveDownloadsGroup();
+		virtual ~InactiveDownloadsGroup();
+		
+		virtual bool isMember(TorrentInterface* tor);
 	};
 }
 #endif

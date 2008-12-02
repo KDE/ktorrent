@@ -25,25 +25,65 @@
 namespace kt
 {
 	
-InactiveGroup::InactiveGroup()
-		: Group(i18n("Inactive torrents"),MIXED_GROUP,"/all/inactive")
-{
-	setIconByName("network-disconnect");
-}
-
-
-InactiveGroup::~InactiveGroup()
-{}
-
-}
-
-bool kt::InactiveGroup::isMember(TorrentInterface * tor)
-{
-	if(!tor)
-		return false;
+	InactiveGroup::InactiveGroup()
+			: Group(i18n("Passive torrents"),MIXED_GROUP,"/all/passive")
+	{
+		setIconByName("network-disconnect");
+	}
 	
-	const bt::TorrentStats& s = tor->getStats();
-	return !s.running;
+	
+	InactiveGroup::~InactiveGroup()
+	{}
+	
+	bool InactiveGroup::isMember(TorrentInterface * tor)
+	{
+		if(!tor)
+			return false;
+		
+		const bt::TorrentStats& s = tor->getStats();
+		return s.upload_rate < 100 && s.download_rate < 100;
+	}
+
+	InactiveDownloadsGroup::InactiveDownloadsGroup()
+	: Group(i18n("Passive downloads"), DOWNLOADS_ONLY_GROUP,"/all/passive/downloads")
+	{
+		setIconByName("go-down");
+	}
+
+
+	InactiveDownloadsGroup::~InactiveDownloadsGroup()
+	{}
+
+	bool InactiveDownloadsGroup::isMember(TorrentInterface * tor)
+	{
+		if (!tor)
+			return false;
+	
+		const bt::TorrentStats& s = tor->getStats();
+	
+		return (s.upload_rate < 100 && s.download_rate < 100) && !s.completed;
+	}
+	
+	InactiveUploadsGroup::InactiveUploadsGroup()
+	: Group(i18n("Passive uploads"), UPLOADS_ONLY_GROUP,"/all/passive/uploads")
+	{
+		setIconByName("go-up");
+	}
+
+
+	InactiveUploadsGroup::~InactiveUploadsGroup()
+	{}
+
+	
+	bool InactiveUploadsGroup::isMember(TorrentInterface * tor)
+	{
+		if (!tor)
+			return false;
+	
+		const bt::TorrentStats& s = tor->getStats();
+	
+		return (s.upload_rate < 100 && s.download_rate < 100) && s.completed;
+	}
+
+
 }
-
-

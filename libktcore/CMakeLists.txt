@@ -22,12 +22,8 @@ set(libktorrent_SRC
 	groups/allgroup.cpp
 	groups/downloadgroup.cpp
 	groups/uploadgroup.cpp
-	groups/activedownloadsgroup.cpp  
 	groups/activegroup.cpp  
-	groups/activeuploadsgroup.cpp
-	groups/inactivedownloadsgroup.cpp  
 	groups/inactivegroup.cpp  
-	groups/inactiveuploadsgroup.cpp
 	groups/queueddownloadsgroup.cpp  
 	groups/queueduploadsgroup.cpp  
 	groups/userdownloadsgroup.cpp  

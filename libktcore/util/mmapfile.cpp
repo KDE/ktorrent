@@ -68,6 +68,7 @@ namespace bt
 			case QIODevice::WriteOnly:
 				mmap_flag = PROT_WRITE;
 				break;
+			default:
 			case QIODevice::ReadWrite:
 				mmap_flag = PROT_READ|PROT_WRITE;
 				break;
@@ -184,7 +185,6 @@ namespace bt
 	{
 		Out(SYS_GEN|LOG_DEBUG) << "Growing file to " << new_size << " bytes " << endl;
 		Uint64 to_write = new_size - file_size;
-		ssize_t written;
 		// jump to the end of the file
 		fptr->seek(fptr->size());
 		

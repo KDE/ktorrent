@@ -36,11 +36,7 @@
 #include "userdownloadsgroup.h"
 #include "useruploadsgroup.h"
 #include "inactivegroup.h"
-#include "inactivedownloadsgroup.h"
-#include "inactiveuploadsgroup.h"
 #include "activegroup.h"
-#include "activedownloadsgroup.h"
-#include "activeuploadsgroup.h"
 #include "ungroupedgroup.h"
 
 using namespace bt;

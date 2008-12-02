@@ -33,13 +33,37 @@ namespace kt
 
 	class ActiveGroup : public Group
 	{
-
-		public:
-			ActiveGroup();
-			virtual ~ActiveGroup();
-			
-			virtual bool isMember(TorrentInterface* tor);
-
+	public:
+		ActiveGroup();
+		virtual ~ActiveGroup();
+		
+		virtual bool isMember(TorrentInterface* tor);
+	};
+	
+	/**
+	 * Group for active downloads.
+	 * @author Ivan Vasic <ivasic@gmail.com>
+	 */
+	class ActiveDownloadsGroup : public Group
+	{
+	public:
+		ActiveDownloadsGroup();
+		virtual ~ActiveDownloadsGroup();
+		
+		virtual bool isMember(TorrentInterface* tor);
+	};
+	
+	/**
+	 * Group for active uploads.
+	 * @author Ivan Vasic <ivasic@gmail.com>
+	 */
+	class ActiveUploadsGroup : public Group
+	{
+	public:
+		ActiveUploadsGroup();
+		virtual ~ActiveUploadsGroup();
+		
+		virtual bool isMember(bt::TorrentInterface* tor);
 	};
 }
 #endif

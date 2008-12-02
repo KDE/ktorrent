@@ -25,25 +25,64 @@
 namespace kt
 {
 	
-ActiveGroup::ActiveGroup()
-		: Group(i18n("Active torrents"),MIXED_GROUP,"/all/active")
-{
-	setIconByName("network-connect");
-}
-
-
-ActiveGroup::~ActiveGroup()
-{}
-
-}
-
-bool kt::ActiveGroup::isMember(TorrentInterface * tor)
-{
-	if(!tor)
-		return false;
+	ActiveGroup::ActiveGroup()
+			: Group(i18n("Active torrents"),MIXED_GROUP,"/all/active")
+	{
+		setIconByName("network-connect");
+	}
 	
-	const bt::TorrentStats& s = tor->getStats();
-	return s.running;
+	
+	ActiveGroup::~ActiveGroup()
+	{}
+	
+	bool ActiveGroup::isMember(TorrentInterface * tor)
+	{
+		if(!tor)
+			return false;
+		
+		const bt::TorrentStats& s = tor->getStats();
+		return s.upload_rate >= 100 || s.download_rate >= 100;
+	}
+
+
+	ActiveUploadsGroup::ActiveUploadsGroup()
+	: Group(i18n("Active uploads"), UPLOADS_ONLY_GROUP,"/all/active/uploads")
+	{
+		setIconByName("go-up");
+	}
+
+
+	ActiveUploadsGroup::~ActiveUploadsGroup()
+	{}
+
+	bool ActiveUploadsGroup::isMember(TorrentInterface * tor)
+	{
+		if (!tor)
+			return false;
+	
+		const bt::TorrentStats& s = tor->getStats();
+	
+		return (s.upload_rate >= 100 || s.download_rate >= 100) && s.completed;
+	}
+
+	
+	ActiveDownloadsGroup::ActiveDownloadsGroup()
+	: Group(i18n("Active downloads"),DOWNLOADS_ONLY_GROUP,"/all/active/downloads")
+	{
+		setIconByName("go-down");
+	}
+
+
+	ActiveDownloadsGroup::~ActiveDownloadsGroup()
+	{}
+
+	bool ActiveDownloadsGroup::isMember(TorrentInterface * tor)
+	{
+		if (!tor)
+			return false;
+
+		const bt::TorrentStats& s = tor->getStats();
+
+		return (s.upload_rate >= 100 || s.download_rate >= 100) && !s.completed;
+	}
 }
-
-
