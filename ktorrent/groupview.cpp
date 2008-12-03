@@ -491,7 +491,7 @@ namespace kt
 		view->getSelection(sel);
 		foreach (TorrentInterface* ti,sel)
 		{
-			g->add(ti);
+			g->addTorrent(ti,false);
 		}
 		gman->saveGroups();
 		return true;
