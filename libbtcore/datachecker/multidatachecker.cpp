@@ -164,10 +164,15 @@ namespace bt
 			// read part of data
 			if (f.doNotDownload())
 			{
-				if (!dnd_dir.isNull() && bt::Exists(dnd_dir + f.getPath() + ".dnd"))
+				QString dnd_path = QString("file%1.dnd").arg(f.getIndex());
+				QString dnd_file = dnd_dir + dnd_path;
+				if (!bt::Exists(dnd_file)) // could be an old style dnd dir
+					dnd_file = dnd_dir + f.getUserModifiedPath() + ".dnd";
+				
+				if (bt::Exists(dnd_file))
 				{
 					Uint32 ret = 0;
-					DNDFile dfd(dnd_dir + f.getPath() + ".dnd",&f,tor.getChunkSize());
+					DNDFile dfd(dnd_file,&f,tor.getChunkSize());
 					if (i == 0)
 						ret = dfd.readLastChunk(buf + read,0,to_read);
 					else

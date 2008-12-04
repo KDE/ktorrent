@@ -28,15 +28,18 @@
 
 namespace bt
 {
+	
+	
 
-	DeleteDataFilesJob::DeleteDataFilesJob()
-			: KIO::Job()
+	DeleteDataFilesJob::DeleteDataFilesJob(const QString & base)
+			: base(base),directory_tree(0)
 	{
 	}
 
 
 	DeleteDataFilesJob::~DeleteDataFilesJob()
 	{
+		delete directory_tree;
 	}
 	
 	void DeleteDataFilesJob::addFile(const QString & file)
@@ -44,9 +47,12 @@ namespace bt
 		files.append(KUrl(file));
 	}
 
-	void DeleteDataFilesJob::addEmptyDirectoryCheck(const QString & base,const QString & fpath)
+	void DeleteDataFilesJob::addEmptyDirectoryCheck(const QString & fpath)
 	{
-		directory_checks.append(qMakePair(base,fpath));
+		if (!directory_tree)
+			directory_tree = new DirTree(base);
+		
+		directory_tree->insert(fpath);
 	}
 	
 	void DeleteDataFilesJob::start()
@@ -64,68 +70,57 @@ namespace bt
 			active_job->ui()->showErrorMessage();
 		active_job = 0;
 		
-		QList<QPair<QString,QString> >::iterator i = directory_checks.begin();
-		while (i != directory_checks.end())
-		{
-			deleteEmptyDirs(i->first,i->second);
-			i++;
-		}
+		if (directory_tree)
+			directory_tree->doDeleteOnEmpty(base);
 		
 		setError(0);
 		emitResult();
 	}
 	
-	void DeleteDataFilesJob::deleteEmptyDirs(const QString & base,const QString & fpath)
+	DeleteDataFilesJob::DirTree::DirTree(const QString & name) : name(name)
 	{
-		QStringList sl = fpath.split(bt::DirSeparator());
-		// remove the last, which is just the filename
-		sl.pop_back();
+		subdirs.setAutoDelete(true);
+	}
+	
+	DeleteDataFilesJob::DirTree::~DirTree()
+	{
+	}
+	
+	void DeleteDataFilesJob::DirTree::insert(const QString & fpath)
+	{
+		int i = fpath.indexOf(bt::DirSeparator());
+		if (i == -1) // last part of fpath is a file, so we need to ignore that
+			return;
 		
-		while (sl.count() > 0)
+		QString dn = fpath.left(i);
+		DirTree* d = subdirs.find(dn);
+		if (!d)
 		{
-			QString path = base;
-			// reassemble the full directory path
-			for (QStringList::iterator itr = sl.begin(); itr != sl.end();itr++)
-				path += *itr + bt::DirSeparator();
-			
-			QDir dir(path);
-			if (!dir.exists())
-			{
-				sl.pop_back(); // remove the last so we can go one higher
-				continue;
-			}
-				
-			QStringList el = dir.entryList(QDir::AllEntries|QDir::System|QDir::Hidden);
-			el.removeAll(".");
-			el.removeAll("..");
-			if (el.count() == 0)
-			{
-				// no childern so delete the directory
-				Out(SYS_DIO|LOG_DEBUG) << "Deleting empty directory : " << path << endl;
-				bt::Delete(path,true);
-				sl.pop_back(); // remove the last so we can go one higher
-			}
-			else
-			{
-				
-				// children, so we cannot delete any more directories higher up
-				return;
-			}
+			d = new DirTree(dn);
+			subdirs.insert(dn,d);
 		}
 		
-		// now the output_dir itself
-		QDir dir(base);
-		if (dir.exists())
-		{
-			QStringList el = dir.entryList(QDir::AllEntries|QDir::System|QDir::Hidden);
-			el.removeAll(".");
-			el.removeAll("..");
-			if (el.count() == 0)
-			{
-				Out(SYS_DIO|LOG_DEBUG) << "Deleting empty directory : " << base << endl;
-				bt::Delete(base,true);
-			}
-		}
+		d->insert(fpath.mid(i+1));
 	}
 
+	void DeleteDataFilesJob::DirTree::doDeleteOnEmpty(const QString & base)
+	{
+		bt::PtrMap<QString,DirTree>::iterator i = subdirs.begin();
+		while (i != subdirs.end())
+		{
+			i->second->doDeleteOnEmpty(base + i->first + bt::DirSeparator());
+			i++;
+		}
+		
+		QDir dir(base);	
+		QStringList el = dir.entryList(QDir::AllEntries|QDir::System|QDir::Hidden);
+		el.removeAll(".");
+		el.removeAll("..");
+		if (el.count() == 0)
+		{
+				// no childern so delete the directory
+			Out(SYS_DIO|LOG_DEBUG) << "Deleting empty directory : " << base << endl;
+			bt::Delete(base,true);
+		}
+	}
 }

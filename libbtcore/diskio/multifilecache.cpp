@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+#include <QSet>
 #include "multifilecache.h"
 #include <errno.h>
 #include <qdir.h>
@@ -181,7 +182,15 @@ namespace bt
 					if (dnd_files.contains(i))
 						dnd_files.erase(i);
 					
-					dfd = new DNDFile(dnd_dir + tf.getUserModifiedPath() + ".dnd",&tf,tor.getChunkSize());
+					QString dnd_path = QString("file%1.dnd").arg(tf.getIndex());
+					QString dnd_file = dnd_dir + dnd_path;
+					if (bt::Exists(dnd_dir + tf.getUserModifiedPath() + ".dnd"))
+					{
+						// old style dnd dir, move the file so that we can keep working 
+						// with the old file
+						bt::Move(dnd_dir + tf.getUserModifiedPath() + ".dnd",dnd_file,true);
+					}
+					dfd = new DNDFile(dnd_file,&tf,tor.getChunkSize());
 					dfd->checkIntegrity();
 					dnd_files.insert(i,dfd);
 				}
@@ -211,7 +220,10 @@ namespace bt
 			{
 				DNDFile* dfd = dnd_files.find(i);
 				if (dfd)
-					dfd->changePath(dnd_dir + tf.getUserModifiedPath() + ".dnd");
+				{
+					QString dnd_path = QString("file%1.dnd").arg(tf.getIndex());
+					dfd->changePath(dnd_dir + dnd_path);
+				}
 			}
 		}
 	}
@@ -380,10 +392,32 @@ namespace bt
 		if (!bt::Exists(tmpdir + "dnd"))
 			bt::MakeDir(tmpdir + "dnd");
 
+		QSet<QString> shortened_names;
+		int lim = NAME_MAX > PATH_MAX ? PATH_MAX : NAME_MAX;
+		
 		// update symlinks
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{			
 			TorrentFile & tf = tor.getFile(i);
+			
+			// check if the filename is to long
+			QByteArray path = QFile::encodeName(tf.getPathOnDisk());
+			if (path.length() > lim)
+			{
+				QString s = ShortenFileName(tf.getPathOnDisk(),lim);
+				Out(SYS_DIO|LOG_DEBUG) << "Path to long " << tf.getPathOnDisk() << endl;
+				// make sure there are no dupes
+				int cnt = 1;
+				while (shortened_names.contains(s))
+				{
+					s = ShortenFileName(tf.getPathOnDisk(),lim,cnt++);
+				}
+				Out(SYS_DIO|LOG_DEBUG) << "Shortened to " << s << endl;
+				
+				tf.setPathOnDisk(s);
+				shortened_names.insert(s);
+			}
+			
 			touch(tf);
 		}
 	}
@@ -396,8 +430,6 @@ namespace bt
 		bool dnd = tf.doNotDownload();
 		// first split fpath by / separator 
 		QStringList sl = fpath.split(bt::DirSeparator());
-		QString dtmp = tmpdir + "dnd" + bt::DirSeparator();
-		MakeFilePath(dtmp + fpath); // make DND dir
 		
 		// then make the file
 		if (!dnd)
@@ -670,9 +702,18 @@ namespace bt
 	{	
 		bool dnd = !download;
 		QString dnd_dir = tmpdir + "dnd" + bt::DirSeparator();
+		QString dnd_path = QString("file%1.dnd").arg(tf->getIndex());
+		QString dnd_file = dnd_dir + dnd_path;
 		// if it is dnd and it is already in the dnd tree do nothing
-		if (dnd && bt::Exists(dnd_dir + tf->getUserModifiedPath() + ".dnd"))
+		if (dnd && bt::Exists(dnd_dir + dnd_path))
 			return;
+		else if (dnd && bt::Exists(dnd_dir + tf->getUserModifiedPath() + ".dnd"))
+		{
+			// old style dnd dir, move the file so that we can keep working 
+			// with the old file
+			bt::Move(dnd_dir + tf->getUserModifiedPath() + ".dnd",dnd_file,true);
+			return;
+		}
 		
 		// if it is !dnd and it is already in the output_dir tree do nothing
 		if (!dnd && bt::Exists(tf->getPathOnDisk()))
@@ -683,25 +724,8 @@ namespace bt
 		CacheFile* fd = 0;
 		try
 		{
-			
-			if (dnd && bt::Exists(dnd_dir + tf->getUserModifiedPath()))
+			if (dnd)
 			{
-				// old download, we need to convert it
-				// save first and last chunk of the file
-				saveFirstAndLastChunk(tf,dnd_dir + tf->getUserModifiedPath(),dnd_dir + tf->getUserModifiedPath() + ".dnd");
-				// delete symlink
-				bt::Delete(cache_dir + tf->getUserModifiedPath(),true);
-				bt::Delete(dnd_dir + tf->getUserModifiedPath()); // delete old dnd file
-				
-				files.erase(tf->getIndex());
-			
-				dfd = new DNDFile(dnd_dir + tf->getUserModifiedPath() + ".dnd",tf,tor.getChunkSize());
-				dfd->checkIntegrity();
-				dnd_files.insert(tf->getIndex(),dfd);
-			}
-			else if (dnd)
-			{
-				QString dnd_file = dnd_dir + tf->getUserModifiedPath() + ".dnd";
 				// save first and last chunk of the file
 				if (bt::Exists(tf->getPathOnDisk()))
 					saveFirstAndLastChunk(tf,tf->getPathOnDisk(),dnd_file);
@@ -717,8 +741,8 @@ namespace bt
 			else
 			{
 				// recreate the file
-				recreateFile(tf,dnd_dir + tf->getUserModifiedPath() + ".dnd",tf->getPathOnDisk());
-				bt::Delete(dnd_dir + tf->getUserModifiedPath() + ".dnd");
+				recreateFile(tf,dnd_dir + dnd_path,tf->getPathOnDisk());
+				bt::Delete(dnd_dir + dnd_path);
 				dnd_files.erase(tf->getIndex());
 				fd = new CacheFile();
 				fd->open(tf->getPathOnDisk(),tf->getSize());
@@ -937,7 +961,7 @@ namespace bt
 	
 	KJob* MultiFileCache::deleteDataFiles()
 	{
-		DeleteDataFilesJob* job = new DeleteDataFilesJob();
+		DeleteDataFilesJob* job = new DeleteDataFilesJob(output_dir);
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{
 			TorrentFile & tf = tor.getFile(i);
@@ -949,7 +973,7 @@ namespace bt
 			}
 			
 			// check for subdirectories
-			job->addEmptyDirectoryCheck(output_dir,tf.getUserModifiedPath());
+			job->addEmptyDirectoryCheck(tf.getUserModifiedPath());
 		}
 		
 		job->start();

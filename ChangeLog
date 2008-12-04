@@ -17,6 +17,7 @@ Changes in 3.2rc1 :
 - Fix bug causing queueingNotPossible message to be shown multiple times (176732)
 - Make sure group policy is applied when drag and drop is used to add torrents to a group (176723)
 - Make sure preview priority is not set on excluded or only seed files (176487)
+- Make sure to long filenames are handled properly (175793)
 
 Changes in 3.2beta1 :
 - Ask to create directory in fileselectdlg, if it does not exist (163965)

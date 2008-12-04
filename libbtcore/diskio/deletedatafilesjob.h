@@ -21,8 +21,8 @@
 #ifndef BTDELETEDATAFILESJOB_H
 #define BTDELETEDATAFILESJOB_H
 
-#include <QPair>
-#include <QStringList>
+#include <util/ptrmap.h>
+#include <QString>
 #include <kio/job.h>
 #include <kurl.h>
 
@@ -37,7 +37,10 @@ namespace bt
 	{
 		Q_OBJECT
 	public:
-		DeleteDataFilesJob();
+		/**
+		 * @param base Base directory, the data files are in
+		 */
+		DeleteDataFilesJob(const QString & base);
 		virtual ~DeleteDataFilesJob();
 		
 		/**
@@ -48,11 +51,10 @@ namespace bt
 		
 		/**
 		 * Check all directories in fpath and delete them if they are empty.
-		 * Base is the base path, and will be prepended to fpath.
-		 * @param base The base directory
+		 * The base path passed in the constructor, will be prepended to fpath.
 		 * @param fpath The file path
 		 */
-		void addEmptyDirectoryCheck(const QString & base,const QString & fpath);
+		void addEmptyDirectoryCheck(const QString & fpath);
 		
 		/// Start the job
 		virtual void start();
@@ -61,11 +63,22 @@ namespace bt
 		void onDeleteJobDone(KJob* j);
 		
 	private:
-		void deleteEmptyDirs(const QString & base,const QString & fpath);
+		struct DirTree
+		{
+			QString name;
+			bt::PtrMap<QString,DirTree> subdirs;
+			
+			DirTree(const QString & name);
+			~DirTree();
+			
+			void insert(const QString & fpath);
+			void doDeleteOnEmpty(const QString & base);
+		};
 
 	private:
 		KUrl::List files;
-		QList<QPair<QString,QString> > directory_checks;
+		QString base;
+		DirTree* directory_tree;
 		KIO::Job* active_job;
 	};
 
