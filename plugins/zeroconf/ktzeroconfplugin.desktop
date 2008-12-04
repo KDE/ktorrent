@@ -45,6 +45,7 @@ Comment[pt_BR]=Extensão para descobrir vizinhos na rede local usando o protocol
 Comment[ru]=Обнаружение участников в локальной сети по протоколу ZeroConf
 Comment[sl]=Vstavek za odkrivanje vrstnikov v krajevnem omrežju s pomočjo protokola ZeroConf
 Comment[sv]=Insticksprogram för att upptäcka deltagare i det lokala nätverket med protokollet Zeroconf
+Comment[tr]=Zeroconf protokolünü kullanarak yerel ağdaki paylaşımcıları bulan bir eklenti
 Comment[uk]=Втулок для виявлення вузлів у локальній мережі за допомогою протоколу zeroconf
 Comment[x-test]=xxPlugin to discover peers on the local network using the zeroconf protocolxx
 Comment[zh_CN]=通过 zeroconf 协议在本地网络探索对等点的插件

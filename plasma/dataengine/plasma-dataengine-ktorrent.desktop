@@ -25,6 +25,7 @@ Comment[pt_BR]=Motor de dados do KTorrent, para obter informações do KTorrent
 Comment[ru]=Модуль KTorrent для обработки данных, получаемых от ktorrent
 Comment[sl]=Podatkovni vir za pridobivanje podatkov od KTorrenta
 Comment[sv]=Ktorrent-datagränssnitt, för att hämta information från Ktorrent
+Comment[tr]=KTorrent'ten bilgi almaya yarayan veri motoru
 Comment[uk]=Рушій даних KTorrent, для отримання відомостей від ktorrent
 Comment[x-test]=xxKTorrent data engine, for getting information from ktorrentxx
 Comment[zh_CN]=KTorrent 数据引擎，用于从 ktorrent 获取信息
