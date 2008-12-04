@@ -624,8 +624,7 @@ namespace bt
 		for (Uint32 i = from;i <= to;i++)
 		{
 			ChunkDownload* cd = current_chunks.find(i);
-			// finish only seed chunks
-			if (!cd || cman.getChunk(i)->getPriority() == bt::ONLY_SEED_PRIORITY)
+			if (!cd)
 				continue;
 			
 			cd->cancelAll();

@@ -1140,6 +1140,9 @@ namespace bt
 	
 	void ChunkManager::doPreviewPriority(TorrentFile & file)
 	{
+		if (file.getPriority() == EXCLUDED || file.getPriority() == ONLY_SEED_PRIORITY)
+			return;
+		
 		if (file.getFirstChunk() == file.getLastChunk())
 		{
 			// prioritise whole file 
