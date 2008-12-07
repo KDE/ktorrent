@@ -52,32 +52,19 @@ namespace kt
 
 	void AdvancedPref::onUploadDataCheckToggled(bool on)
 	{
-		if (!on)
-		{
-			kcfg_useMaxSizeForUploadDataCheck->setEnabled(false);
-			kcfg_maxSizeForUploadDataCheck->setEnabled(false);
-		}
-		else
-		{
-			kcfg_useMaxSizeForUploadDataCheck->setEnabled(true);
-			kcfg_maxSizeForUploadDataCheck->setEnabled(kcfg_useMaxSizeForUploadDataCheck->isChecked());
-		}
+		kcfg_useMaxSizeForUploadDataCheck->setEnabled(on);
+		kcfg_maxSizeForUploadDataCheck->setEnabled(on&&kcfg_useMaxSizeForUploadDataCheck->isChecked());
 	}
 	
 	void AdvancedPref::onDiskPreallocToggled(bool on)
 	{
-		if (!on)
-		{
-			kcfg_fullDiskPreallocMethod->setEnabled(false);
-			kcfg_fullDiskPrealloc->setEnabled(false);
-		}
-		else
-		{
-			kcfg_fullDiskPreallocMethod->setEnabled(kcfg_fullDiskPrealloc->isChecked());
-			kcfg_fullDiskPrealloc->setEnabled(true);
-		}
+		kcfg_fullDiskPreallocMethod->setEnabled(on&&kcfg_fullDiskPrealloc->isChecked());
+		kcfg_fullDiskPrealloc->setEnabled(on);
+
 	}
 
 }
 
 #include "advancedpref.moc"
+
+// kate: space-indent on; replace-tabs off; mixed-indent off;

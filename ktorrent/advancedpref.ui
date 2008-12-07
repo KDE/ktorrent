@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>583</width>
-    <height>562</height>
+    <height>538</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" >
@@ -17,85 +17,113 @@
      </property>
      <layout class="QVBoxLayout" >
       <item>
-       <widget class="QCheckBox" name="kcfg_doUploadDataCheck" >
-        <property name="toolTip" >
-         <string>During uploading when a chunk is loaded into memory automatically recheck this chunk, to see if it still is OK.</string>
-        </property>
-        <property name="text" >
-         <string>Recheck chunks during uploading</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" >
+       <layout class="QHBoxLayout" name="horizontalLayout" >
         <item>
-         <widget class="QCheckBox" name="kcfg_useMaxSizeForUploadDataCheck" >
-          <property name="toolTip" >
-           <string>Because rechecking big chunks can take a lot of time, the recheck can be disabled when the chunks are bigger then a certain size.</string>
+         <layout class="QFormLayout" name="formLayout" >
+          <property name="fieldGrowthPolicy" >
+           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
           </property>
-          <property name="text" >
-           <string>Don't recheck when chunks are bigger than</string>
+          <property name="labelAlignment" >
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
-         </widget>
+          <item row="0" column="0" >
+           <widget class="QCheckBox" name="kcfg_doUploadDataCheck" >
+            <property name="toolTip" >
+             <string>During uploading when a chunk is loaded into memory automatically recheck this chunk, to see if it still is OK.</string>
+            </property>
+            <property name="text" >
+             <string>Recheck chunks during uploading</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QCheckBox" name="kcfg_useMaxSizeForUploadDataCheck" >
+            <property name="toolTip" >
+             <string>Because rechecking big chunks can take a lot of time, the recheck can be disabled when the chunks are bigger then a certain size.</string>
+            </property>
+            <property name="text" >
+             <string>Don't recheck when chunks are bigger than</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QSpinBox" name="kcfg_maxSizeForUploadDataCheck" >
+            <property name="toolTip" >
+             <string>The maximum size a chunk can be for rechecking during uploading.</string>
+            </property>
+            <property name="suffix" >
+             <string> KB</string>
+            </property>
+            <property name="minimum" >
+             <number>16</number>
+            </property>
+            <property name="maximum" >
+             <number>8192</number>
+            </property>
+            <property name="value" >
+             <number>512</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" >
+           <widget class="QCheckBox" name="kcfg_autoRecheck" >
+            <property name="toolTip" >
+             <string>Automatically do a full data check when we find to many corrupted chunks.</string>
+            </property>
+            <property name="text" >
+             <string>Do a full data check after </string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" >
+           <widget class="QSpinBox" name="kcfg_maxCorruptedBeforeRecheck" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize" >
+             <size>
+              <width>175</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="toolTip" >
+             <string>The number of corrupted chunks before a full data check is done</string>
+            </property>
+            <property name="suffix" >
+             <string> corrupted chunks</string>
+            </property>
+            <property name="minimum" >
+             <number>1</number>
+            </property>
+            <property name="maximum" >
+             <number>10000000</number>
+            </property>
+            <property name="value" >
+             <number>3</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" >
+           <widget class="QCheckBox" name="kcfg_checkWhenFinished" >
+            <property name="toolTip" >
+             <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-size:8pt;">When a torrent has finished downloading, do a full data check on the torrent.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+            </property>
+            <property name="text" >
+             <string>Check data when download is finished</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QSpinBox" name="kcfg_maxSizeForUploadDataCheck" >
-          <property name="toolTip" >
-           <string>The maximum size a chunk can be for rechecking during uploading.</string>
-          </property>
-          <property name="suffix" >
-           <string> KB</string>
-          </property>
-          <property name="minimum" >
-           <number>16</number>
-          </property>
-          <property name="maximum" >
-           <number>8192</number>
-          </property>
-          <property name="value" >
-           <number>512</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" >
-        <item>
-         <widget class="QCheckBox" name="kcfg_autoRecheck" >
-          <property name="toolTip" >
-           <string>Automatically do a full data check when we find to many corrupted chunks.</string>
-          </property>
-          <property name="text" >
-           <string>Do a full data check after </string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="kcfg_maxCorruptedBeforeRecheck" >
-          <property name="toolTip" >
-           <string>The number of corrupted chunks before a full data check is done</string>
-          </property>
-          <property name="minimum" >
-           <number>1</number>
-          </property>
-          <property name="maximum" >
-           <number>10000000</number>
-          </property>
-          <property name="value" >
-           <number>3</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_4" >
-          <property name="text" >
-           <string>corrupted chunks</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer>
+         <spacer name="horizontalSpacer" >
           <property name="orientation" >
            <enum>Qt::Horizontal</enum>
           </property>
@@ -110,18 +138,10 @@
        </layout>
       </item>
       <item>
-       <widget class="QCheckBox" name="kcfg_checkWhenFinished" >
-        <property name="toolTip" >
-         <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-size:8pt;">When a torrent has finished downloading, do a full data check on the torrent.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
-        </property>
-        <property name="text" >
-         <string>Check data when download is finished</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" />
+      </item>
+      <item>
+       <layout class="QHBoxLayout" />
       </item>
      </layout>
     </widget>
@@ -225,21 +245,20 @@ p, li { white-space: pre-wrap; }
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_4" >
+    <widget class="QGroupBox" name="kcfg_diskPrealloc" >
+     <property name="toolTip" >
+      <string>Whether or not diskspace should be reserved before starting to download a torrent.</string>
+     </property>
      <property name="title" >
-      <string>Disk Space</string>
+      <string>Reserve disk space before starting a torrent</string>
+     </property>
+     <property name="checkable" >
+      <bool>true</bool>
+     </property>
+     <property name="checked" >
+      <bool>false</bool>
      </property>
      <layout class="QVBoxLayout" >
-      <item>
-       <widget class="QCheckBox" name="kcfg_diskPrealloc" >
-        <property name="toolTip" >
-         <string>Whether or not diskspace should be reserved before starting to download a torrent.</string>
-        </property>
-        <property name="text" >
-         <string>Reserve disk space before starting a torrent</string>
-        </property>
-       </widget>
-      </item>
       <item>
        <widget class="QCheckBox" name="kcfg_fullDiskPrealloc" >
         <property name="toolTip" >
