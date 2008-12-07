@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <kurl.h>
 #include <klocale.h>
+#include <kio/copyjob.h>
 #include <QTextStream>
 #include <qfile.h>
 #include <qlist.h>
