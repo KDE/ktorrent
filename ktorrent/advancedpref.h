@@ -23,6 +23,7 @@
 
 #include <interfaces/prefpageinterface.h>
 #include "ui_advancedpref.h"
+#include "ui_btpref.h"
 
 namespace kt
 {
@@ -31,16 +32,29 @@ namespace kt
 		Q_OBJECT
 	public:
 		AdvancedPref(QWidget* parent);
-		virtual ~AdvancedPref();
+		/*virtual */~AdvancedPref();
 
 		void loadSettings();
 		void loadDefaults();
 
 	public slots:
-		void onUploadDataCheckToggled(bool on);
 		void onDiskPreallocToggled(bool on);
 	};
+        
+	class BTPref: public PrefPageInterface,public Ui_BTPref
+	{
+		Q_OBJECT
+	public:
+		BTPref(QWidget* parent);
+		/*virtual */~BTPref(){}
+		void loadSettings();
+	public Q_SLOTS:
+		void onUploadDataCheckToggled(bool on);
+	};
+
+
 }
 
-
 #endif
+
+// kate: space-indent on; indent-width 8; replace-tabs off; mixed-indent off;

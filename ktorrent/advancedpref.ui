@@ -11,119 +11,70 @@
   </property>
   <layout class="QVBoxLayout" >
    <item>
-    <widget class="QGroupBox" name="groupBox_2" >
+    <widget class="QGroupBox" name="kcfg_diskPrealloc" >
+     <property name="toolTip" >
+      <string>Whether or not diskspace should be reserved before starting to download a torrent.</string>
+     </property>
      <property name="title" >
-      <string>Data Checking</string>
+      <string>Reserve disk space before starting a torrent</string>
+     </property>
+     <property name="checkable" >
+      <bool>true</bool>
+     </property>
+     <property name="checked" >
+      <bool>false</bool>
      </property>
      <layout class="QVBoxLayout" >
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout" >
+       <widget class="QCheckBox" name="kcfg_fullDiskPrealloc" >
+        <property name="toolTip" >
+         <string>Instead of doing a quick reservation, do a full reservation. This is slower then the quick way, but avoids fragmentation on the disk.</string>
+        </property>
+        <property name="text" >
+         <string>Fully reserve disk space (avoids fragmentation)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
         <item>
-         <layout class="QFormLayout" name="formLayout" >
-          <property name="fieldGrowthPolicy" >
-           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+         <widget class="QLabel" name="label_7" >
+          <property name="text" >
+           <string>Disk space reservation method:</string>
           </property>
-          <property name="labelAlignment" >
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-          <item row="0" column="0" >
-           <widget class="QCheckBox" name="kcfg_doUploadDataCheck" >
-            <property name="toolTip" >
-             <string>During uploading when a chunk is loaded into memory automatically recheck this chunk, to see if it still is OK.</string>
-            </property>
-            <property name="text" >
-             <string>Recheck chunks during uploading</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" >
-           <widget class="QCheckBox" name="kcfg_useMaxSizeForUploadDataCheck" >
-            <property name="toolTip" >
-             <string>Because rechecking big chunks can take a lot of time, the recheck can be disabled when the chunks are bigger then a certain size.</string>
-            </property>
-            <property name="text" >
-             <string>Don't recheck when chunks are bigger than</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1" >
-           <widget class="QSpinBox" name="kcfg_maxSizeForUploadDataCheck" >
-            <property name="toolTip" >
-             <string>The maximum size a chunk can be for rechecking during uploading.</string>
-            </property>
-            <property name="suffix" >
-             <string> KB</string>
-            </property>
-            <property name="minimum" >
-             <number>16</number>
-            </property>
-            <property name="maximum" >
-             <number>8192</number>
-            </property>
-            <property name="value" >
-             <number>512</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" >
-           <widget class="QCheckBox" name="kcfg_autoRecheck" >
-            <property name="toolTip" >
-             <string>Automatically do a full data check when we find to many corrupted chunks.</string>
-            </property>
-            <property name="text" >
-             <string>Do a full data check after </string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1" >
-           <widget class="QSpinBox" name="kcfg_maxCorruptedBeforeRecheck" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize" >
-             <size>
-              <width>175</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="toolTip" >
-             <string>The number of corrupted chunks before a full data check is done</string>
-            </property>
-            <property name="suffix" >
-             <string> corrupted chunks</string>
-            </property>
-            <property name="minimum" >
-             <number>1</number>
-            </property>
-            <property name="maximum" >
-             <number>10000000</number>
-            </property>
-            <property name="value" >
-             <number>3</number>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" >
-           <widget class="QCheckBox" name="kcfg_checkWhenFinished" >
-            <property name="toolTip" >
-             <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-size:8pt;">When a torrent has finished downloading, do a full data check on the torrent.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
-            </property>
-            <property name="text" >
-             <string>Check data when download is finished</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer" >
+         <widget class="QComboBox" name="kcfg_fullDiskPreallocMethod" >
+          <property name="minimumSize" >
+           <size>
+            <width>150</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="toolTip" >
+           <string>&lt;html>Which method to use for reserving diskspace.
+&lt;ul>&lt;li>
+&lt;b>Basic:&lt;/b> Will work on all filesystems, but is slow.
+&lt;/li>&lt;li>
+&lt;b>Filesystem Specific:&lt;/b> Will use special methods provided by some filesystems, which are faster then the basic method.
+&lt;/li>&lt;/ul>
+&lt;/html></string>
+          </property>
+          <item>
+           <property name="text" >
+            <string>Basic</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Filesystem Specific</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <spacer>
           <property name="orientation" >
            <enum>Qt::Horizontal</enum>
           </property>
@@ -136,12 +87,6 @@ p, li { white-space: pre-wrap; }
          </spacer>
         </item>
        </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" />
-      </item>
-      <item>
-       <layout class="QHBoxLayout" />
       </item>
      </layout>
     </widget>
@@ -240,89 +185,6 @@ p, li { white-space: pre-wrap; }
          </size>
         </property>
        </spacer>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="kcfg_diskPrealloc" >
-     <property name="toolTip" >
-      <string>Whether or not diskspace should be reserved before starting to download a torrent.</string>
-     </property>
-     <property name="title" >
-      <string>Reserve disk space before starting a torrent</string>
-     </property>
-     <property name="checkable" >
-      <bool>true</bool>
-     </property>
-     <property name="checked" >
-      <bool>false</bool>
-     </property>
-     <layout class="QVBoxLayout" >
-      <item>
-       <widget class="QCheckBox" name="kcfg_fullDiskPrealloc" >
-        <property name="toolTip" >
-         <string>Instead of doing a quick reservation, do a full reservation. This is slower then the quick way, but avoids fragmentation on the disk.</string>
-        </property>
-        <property name="text" >
-         <string>Fully reserve disk space (avoids fragmentation)</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" >
-        <item>
-         <widget class="QLabel" name="label_7" >
-          <property name="text" >
-           <string>Disk space reservation method:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="kcfg_fullDiskPreallocMethod" >
-          <property name="minimumSize" >
-           <size>
-            <width>150</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="toolTip" >
-           <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'OpenSymbol'; font-size:8pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-size:8pt;">Which method to use for reserving diskspace.&lt;/span>&lt;/p>
-&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Basic: &lt;/span>Will work on all filesystems, but is slow.&lt;/p>
-&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Filesystem Specific: &lt;/span>Will use special methods provided by some filesystems, which are faster then the basic method.&lt;/p>&lt;/body>&lt;/html></string>
-          </property>
-          <item>
-           <property name="text" >
-            <string>Basic</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Filesystem Specific</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item>
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0" >
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
       </item>
      </layout>
     </widget>
@@ -471,38 +333,6 @@ p, li { white-space: pre-wrap; }
  </widget>
  <resources/>
  <connections>
-  <connection>
-   <sender>kcfg_autoRecheck</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>kcfg_maxCorruptedBeforeRecheck</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>113</x>
-     <y>267</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>256</x>
-     <y>268</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>kcfg_useMaxSizeForUploadDataCheck</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>kcfg_maxSizeForUploadDataCheck</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>169</x>
-     <y>236</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>443</x>
-     <y>237</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>kcfg_fullDiskPrealloc</sender>
    <signal>toggled(bool)</signal>

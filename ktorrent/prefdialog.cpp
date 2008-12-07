@@ -29,7 +29,6 @@
 #include "core.h"
 #include "ui_qmpref.h"
 #include "ui_generalpref.h"
-#include "ui_btpref.h"
 #include "advancedpref.h"
 #include "networkpref.h"
 #include "proxypref.h"
@@ -113,32 +112,6 @@ namespace kt
 		}
 	};
 	
-	class BTPref : public PrefPageInterface,public Ui_BTPref
-	{
-	public:
-		BTPref(QWidget* parent) : PrefPageInterface(Settings::self(),i18n("BitTorrent"),"application-x-bittorrent",parent)
-		{
-			setupUi(this);
-		}
-		
-		virtual ~BTPref() {}
-		
-		void loadSettings()
-		{
-			kcfg_allowUnencryptedConnections->setEnabled(Settings::useEncryption());
-#ifdef ENABLE_DHT_SUPPORT
-			kcfg_dhtPort->setEnabled(Settings::dhtSupport());
-#else
-			kcfg_dhtPort->setEnabled(false);
-			kcfg_dhtSupport->setEnabled(false);
-#endif
-			kcfg_customIP->setEnabled(Settings::useCustomIP());
-		}
-	};
-
-	
-
-
 	PrefDialog::PrefDialog(QWidget* parent,Core* core) : KConfigDialog(parent,"settings",Settings::self())
 	{
 		KConfigDialogManager::propertyMap()->insert("KUrlRequester","url");
@@ -220,3 +193,5 @@ namespace kt
 }
 
 #include "prefdialog.moc"
+
+// kate: space-indent on; indent-width 8; replace-tabs off; mixed-indent off;
