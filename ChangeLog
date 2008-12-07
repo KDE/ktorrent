@@ -7,6 +7,8 @@ Changes in 3.1.6 :
 - Backport log rotate fix from trunk
 - Backport fix for queueingNotPossible multiple message error
 - Backport fix for group policy not being applied when using drag and drop
+- Backport initial logrotate showing progress info fix
+- Backport files get created in diskspace check fix
 
 Changes in 3.1.5 :
 - Make sure symlinks work when we create multifile torrents

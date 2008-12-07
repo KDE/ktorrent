@@ -889,7 +889,7 @@ namespace bt
 				{
 					sum += cf->diskUsage();
 				}
-				else
+				else if (bt::Exists(tf.getPathOnDisk()))
 				{
 					// doesn't exist yet, must be before open is called
 					// so create one and delete it right after

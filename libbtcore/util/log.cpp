@@ -91,11 +91,17 @@ namespace bt
 				QString prev = QString("%1-%2.gz").arg(file).arg(i - 1);
 				QString curr = QString("%1-%2.gz").arg(file).arg(i);
 				if (bt::Exists(prev))
-					bt::Move(prev,curr,true);
+				{
+					KIO::CopyJob *mv = KIO::move(KUrl(prev),KUrl(curr),KIO::HideProgressInfo|KIO::Overwrite); 
+					mv->exec();
+					delete mv;
+				}
 			}
 			
 			// move current log to 1 and zip it
-			bt::Move(file,file + "-1",true);
+			KIO::CopyJob *mv = KIO::move(KUrl(file),KUrl(file + "-1"), KIO::HideProgressInfo|KIO::Overwrite);
+			mv->exec();
+			delete mv; 
 			CompressFileJob* gzip = new CompressFileJob(file + "-1");
 			gzip->exec();
 			delete gzip;
