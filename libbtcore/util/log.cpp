@@ -100,7 +100,9 @@ namespace bt
 			}
 			
 			// move current log to 1 and zip it
-			bt::Move(file,file + "-1",true);
+			KIO::CopyJob *mv = KIO::move(KUrl(file),KUrl(file + "-1"), KIO::HideProgressInfo|KIO::Overwrite);
+			mv->exec();
+			delete mv; 
 			CompressFileJob* gzip = new CompressFileJob(file + "-1");
 			gzip->exec();
 			delete gzip;
