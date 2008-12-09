@@ -94,6 +94,7 @@ namespace bt
 				if (tf.getPathOnDisk().isEmpty())
 					tf.setPathOnDisk(output_dir + tf.getUserModifiedPath());
 			}
+			saveFileMap();
 		}
 		else
 		{
@@ -420,6 +421,7 @@ namespace bt
 			
 			touch(tf);
 		}
+		saveFileMap();
 	}
 	
 	

@@ -658,6 +658,7 @@ namespace bt
 		checkExisting(qman);
 		setupDirs(tmpdir,ddir);
 		setupStats();
+		loadEncoding();
 
 		if (!first_time)
 		{
@@ -1155,6 +1156,21 @@ namespace bt
 		if (st.hasKey("CUSTOM_OUTPUT_NAME") && st.readULong("CUSTOM_OUTPUT_NAME") == 1)
 		{
 			istats.custom_output_name = true;
+		}
+	}
+	
+	void TorrentControl::loadEncoding()
+	{
+		StatsFile st(tordir + "stats");
+		if (!st.hasKey("ENCODING"))
+			return;
+		
+		QString codec = st.readString("ENCODING");
+		if (codec.length() > 0)
+		{
+			QTextCodec* cod = QTextCodec::codecForName(codec.toLocal8Bit());
+			if (cod)
+				changeTextCodec(cod);
 		}
 	}
 
