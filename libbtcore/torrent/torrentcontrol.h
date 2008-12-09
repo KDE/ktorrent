@@ -366,6 +366,7 @@ namespace bt
 		void saveStats();
 		void loadStats();
 		void loadOutputDir();
+		void loadEncoding();
 		void getSeederInfo(Uint32 & total,Uint32 & connected_to) const;
 		void getLeecherInfo(Uint32 & total,Uint32 & connected_to) const;
 		void migrateTorrent(const QString & default_save_dir);

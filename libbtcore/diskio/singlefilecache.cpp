@@ -200,6 +200,7 @@ namespace bt
 			bt::Touch(output_file);
 		else
 			preexisting_files = true;
+		saveFileMap();
 	}
 	
 	void SingleFileCache::close()

@@ -97,6 +97,7 @@ namespace bt
 				tf.setPathOnDisk(output_dir + tf.getPath());
 				out << tf.getPathOnDisk() << ::endl;
 			}
+			saveFileMap();
 		}
 		else
 		{
@@ -372,6 +373,7 @@ namespace bt
 			TorrentFile & tf = tor.getFile(i);
 			touch(tf);
 		}
+		saveFileMap();
 	}
 	
 	
