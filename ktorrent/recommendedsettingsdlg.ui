@@ -211,7 +211,7 @@
         <item row="0" column="1" >
          <widget class="QLabel" name="m_max_upload" >
           <property name="text" >
-           <string>TextLabel</string>
+           <string comment="KDE::DoNotExtract" >TextLabel</string>
           </property>
          </widget>
         </item>
@@ -225,7 +225,7 @@
         <item row="1" column="1" >
          <widget class="QLabel" name="m_max_download" >
           <property name="text" >
-           <string>TextLabel</string>
+           <string comment="KDE::DoNotExtract" >TextLabel</string>
           </property>
          </widget>
         </item>
@@ -239,7 +239,7 @@
         <item row="2" column="1" >
          <widget class="QLabel" name="m_max_conn_per_torrent" >
           <property name="text" >
-           <string>TextLabel</string>
+           <string comment="KDE::DoNotExtract" >TextLabel</string>
           </property>
          </widget>
         </item>
@@ -253,7 +253,7 @@
         <item row="3" column="1" >
          <widget class="QLabel" name="m_max_conn_global" >
           <property name="text" >
-           <string>TextLabel</string>
+           <string comment="KDE::DoNotExtract" >TextLabel</string>
           </property>
          </widget>
         </item>
@@ -278,7 +278,7 @@
           <item row="0" column="1" >
            <widget class="QLabel" name="m_upload_slots" >
             <property name="text" >
-             <string>TextLabel</string>
+             <string comment="KDE::DoNotExtract" >TextLabel</string>
             </property>
            </widget>
           </item>
@@ -292,7 +292,7 @@
           <item row="1" column="1" >
            <widget class="QLabel" name="m_max_downloads" >
             <property name="text" >
-             <string>TextLabel</string>
+             <string comment="KDE::DoNotExtract" >TextLabel</string>
             </property>
            </widget>
           </item>
@@ -306,7 +306,7 @@
           <item row="2" column="1" >
            <widget class="QLabel" name="m_max_seeds" >
             <property name="text" >
-             <string>TextLabel</string>
+             <string comment="KDE::DoNotExtract" >TextLabel</string>
             </property>
            </widget>
           </item>

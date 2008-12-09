@@ -173,7 +173,7 @@ NOTE: ZIP file from bluetack.co.uk is supported.</string>
            </sizepolicy>
           </property>
           <property name="text" >
-           <string>TextLabel</string>
+           <string comment="KDE::DoNotExtract" >TextLabel</string>
           </property>
          </widget>
         </item>
@@ -193,7 +193,7 @@ NOTE: ZIP file from bluetack.co.uk is supported.</string>
            </sizepolicy>
           </property>
           <property name="text" >
-           <string>TextLabel</string>
+           <string comment="KDE::DoNotExtract" >TextLabel</string>
           </property>
          </widget>
         </item>
