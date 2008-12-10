@@ -20,6 +20,7 @@ Changes in 3.2rc1 :
 - Make sure to long filenames are handled properly (175793)
 - Fix bug causing files to be created in diskspace check 
 - Fix problem with restoring file encoding (177179)
+- Make sure window size is restored properly
 
 Changes in 3.2beta1 :
 - Ask to create directory in fileselectdlg, if it does not exist (163965)

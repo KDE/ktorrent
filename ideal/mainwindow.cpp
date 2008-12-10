@@ -54,15 +54,7 @@ namespace ideal
 
 	void MainWindow::loadState(KSharedConfigPtr cfg)
 	{
-		setAutoSaveSettings("MainWindow",false);
-		KConfigGroup config = cfg->group("WindowStatus");
-		QSize size = config.readEntry("size",QSize());
-		QPoint pos = config.readEntry("position",QPoint());
-		if (size.isValid())
-		{
-			resize( size );
-			move( pos );
-		}
+		setAutoSaveSettings("MainWindow",true);
 		
 		if (left)
 			left->loadState(cfg);
@@ -81,9 +73,6 @@ namespace ideal
 	void MainWindow::saveState(KSharedConfigPtr cfg)
 	{
 		saveMainWindowSettings(cfg->group("MainWindow"));
-		KConfigGroup config = cfg->group("WindowStatus");
-		config.writeEntry("size",size());
-		config.writeEntry("position",pos());
 		
 		if (left)
 			left->saveState(cfg);
