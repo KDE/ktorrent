@@ -55,7 +55,15 @@ namespace ideal
 	void MainWindow::loadState(KSharedConfigPtr cfg)
 	{
 		setAutoSaveSettings("MainWindow",true);
-		
+		KConfigGroup config = cfg->group("WindowStatus");
+		QSize size = config.readEntry("size",QSize());
+		QPoint pos = config.readEntry("position",QPoint());
+		if (size.isValid())
+		{
+			resize( size );
+			move( pos );
+		}
+
 		if (left)
 			left->loadState(cfg);
 		if (right)
@@ -63,7 +71,7 @@ namespace ideal
 		if (bottom)
 			bottom->loadState(cfg);
 		loadSplitterState(cfg);
-		
+
 		KConfigGroup g = cfg->group("MainTabWidget");
 		int ct = g.readEntry("current_tab",0);
 		if (ct >= 0 && ct < tabs->count())
@@ -73,14 +81,17 @@ namespace ideal
 	void MainWindow::saveState(KSharedConfigPtr cfg)
 	{
 		saveMainWindowSettings(cfg->group("MainWindow"));
-		
+		KConfigGroup config = cfg->group("WindowStatus");
+		config.writeEntry("size",size());
+		config.writeEntry("position",pos());
+
 		if (left)
 			left->saveState(cfg);
 		if (right)
 			right->saveState(cfg);
 		if (bottom)
 			bottom->saveState(cfg);
-		
+
 		saveSplitterState(cfg);
 		// save the current tab
 		KConfigGroup g = cfg->group("MainTabWidget");
@@ -104,7 +115,7 @@ namespace ideal
 		hsplit = new QSplitter(Qt::Horizontal,this);
 		hsplit->addWidget(tabs);
 		hbox->addWidget(hsplit);
-		
+
 		vsplit->setChildrenCollapsible(false);
 		hsplit->setChildrenCollapsible(false);
 		tabs->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
@@ -132,23 +143,23 @@ namespace ideal
 		SideBar* t = 0;
 		switch (pos)
 		{
-		case LEFT: 
-			if (!left && create)
-				createDockArea(LEFT);
-			t = left; 
-			break;
-		case RIGHT: 
-			if (!right && create)
-				createDockArea(RIGHT);
-			t = right; 
-			break;
-		case BOTTOM: 
-			if (!bottom && create)
-				createDockArea(BOTTOM);
-			t = bottom; 
-			break;
-		default: 
-			break;
+			case LEFT: 
+				if (!left && create)
+					createDockArea(LEFT);
+				t = left; 
+				break;
+			case RIGHT: 
+				if (!right && create)
+					createDockArea(RIGHT);
+				t = right; 
+				break;
+			case BOTTOM: 
+				if (!bottom && create)
+					createDockArea(BOTTOM);
+				t = bottom; 
+				break;
+			default: 
+				break;
 		}
 		return t;
 	}
@@ -158,7 +169,7 @@ namespace ideal
 		if (pos == CENTER)
 		{
 			KTabWidget* t = tabs;
-			
+
 			if (icon != QString::null)
 				t->addTab(widget,KIcon(icon),text);
 			else
@@ -180,7 +191,7 @@ namespace ideal
 			int idx = tabs->indexOf(ti);
 			if (idx == -1)
 				return;
-				
+
 			tabs->removeTab(idx);
 		}
 		else
@@ -190,7 +201,7 @@ namespace ideal
 				b->removeTab(ti);	
 		}
 	}
-	
+
 	void MainWindow::changeTabIcon(QWidget* ti,const QString & icon)
 	{
 		int idx = tabs->indexOf(ti);
@@ -199,7 +210,7 @@ namespace ideal
 
 		tabs->setTabIcon(idx,KIcon(icon));
 	}
-	
+
 	void MainWindow::changeTabText(QWidget* ti,const QString & text)
 	{
 		int idx = tabs->indexOf(ti);
@@ -208,16 +219,16 @@ namespace ideal
 
 		tabs->setTabText(idx,text);
 	}
-	
+
 	void MainWindow::changeCurrentTab(QWidget* ti)
 	{
 		int idx = tabs->indexOf(ti);
 		if (idx == -1)
 			return;
-		
+
 		tabs->setCurrentIndex(idx);
 	}
-	
+
 	void MainWindow::loadSplitterState(KSharedConfigPtr cfg)
 	{
 		KConfigGroup g = cfg->group("Splitters");
@@ -235,7 +246,7 @@ namespace ideal
 			hsplit->restoreState(data);
 		}
 	}
-	
+
 	void MainWindow::saveSplitterState(KSharedConfigPtr cfg)
 	{
 		KConfigGroup g = cfg->group("Splitters");
@@ -279,18 +290,18 @@ namespace ideal
 		}
 		return right_corner;
 	}
-	
+
 	QWidget* MainWindow::currentTabPage()
 	{
 		return tabs->currentWidget();
 	}
-	
+
 	void MainWindow::onCurrentTabChanged(int idx)
 	{
 		QWidget* page = tabs->widget(idx);
 		currentTabPageChanged(page);
 	}
-	
+
 	QWidget* MainWindow::container(const QString & name)
 	{
 		return guiFactory()->container(name, this);
