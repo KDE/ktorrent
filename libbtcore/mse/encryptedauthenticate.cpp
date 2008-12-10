@@ -264,6 +264,7 @@ namespace mse
 					if (sock->bytesAvailable() > 0)
 						onReadyRead();
 					break;
+				default: break;
 			}
 			return;
 		}
@@ -312,6 +313,8 @@ namespace mse
 		case NORMAL_HANDSHAKE:
 			// let AuthenticateBase deal with the data
 			AuthenticateBase::onReadyRead();
+			break;
+		default:
 			break;
 		};
 	}

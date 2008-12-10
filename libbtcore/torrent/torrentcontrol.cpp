@@ -615,7 +615,7 @@ namespace bt
 			loadOutputDir();
 	}
 	
-	void TorrentControl::setupData(const QString & ddir)
+	void TorrentControl::setupData()
 	{
 		// create PeerManager and Tracker
 		pman = new PeerManager(*tor);
@@ -674,7 +674,7 @@ namespace bt
 				throw Error(i18n("Cannot migrate %1 : %2",tor->getNameSuggestion(),err.toString()));
 			}
 		}
-		setupData(ddir);
+		setupData();
 		updateStatusMsg();
 		
 		// to get rid of phantom bytes we need to take into account

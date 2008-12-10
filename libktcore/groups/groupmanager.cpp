@@ -50,12 +50,37 @@ namespace kt
 	
 	bool queued(TorrentInterface* tor)
 	{
-		return !tor->getStats().user_controlled;
+		return tor->getStats().status == bt::QUEUED;
 	}
 	
-	bool user(TorrentInterface* tor)
+	bool stalled(TorrentInterface* tor)
+	{
+		return tor->getStats().status == bt::STALLED;
+	}
+	
+	bool error(TorrentInterface* tor)
+	{
+		return tor->getStats().status == bt::ERROR;
+	}
+	
+	bool not_running(TorrentInterface* tor)
+	{
+		return tor->getStats().running == false;
+	}
+	
+	bool running(TorrentInterface* tor)
+	{
+		return tor->getStats().running == true;
+	}
+	
+	bool user_controlled(TorrentInterface* tor)
 	{
 		return tor->getStats().user_controlled;
+	}
+	
+	bool qm_controlled(TorrentInterface* tor)
+	{
+		return !tor->getStats().user_controlled;
 	}
 	
 	bool active(TorrentInterface* tor)
@@ -81,26 +106,49 @@ namespace kt
 		
 		all = new AllGroup();
 		defaults << all;
+		// uploads tree
 		defaults << new FunctionGroup<upload>(i18n("Uploads"),"go-up",Group::UPLOADS_ONLY_GROUP,"/all/uploads");
+		defaults << new FunctionGroup<member<running,upload> >(
+				i18n("Running Uploads"),"kt-start",Group::UPLOADS_ONLY_GROUP,"/all/uploads/running");
+		defaults << new FunctionGroup<member<not_running,upload> >(
+				i18n("Not Running Uploads"),"kt-stop",Group::UPLOADS_ONLY_GROUP,"/all/uploads/not_running");	
+					
+				
+		// downloads tree
 		defaults << new FunctionGroup<download>(i18n("Downloads"),"go-down",Group::DOWNLOADS_ONLY_GROUP,"/all/downloads");
-		defaults << new FunctionGroup<member<queued,download> >(
-				i18n("Queued downloads"),"kt-queue-manager",Group::DOWNLOADS_ONLY_GROUP,"/all/downloads/queued");
-		defaults << new FunctionGroup<member<queued,upload> >(
-				i18n("Queued downloads"),"kt-queue-manager",Group::UPLOADS_ONLY_GROUP,"/all/uploads/queued");
-		defaults << new FunctionGroup<member<user,download> >(
-				i18n("User downloads"),"user-identity",Group::DOWNLOADS_ONLY_GROUP,"/all/downloads/user");
-		defaults << new FunctionGroup<member<user,upload> >(
-				i18n("User uploads"),"user-identity",Group::UPLOADS_ONLY_GROUP,"/all/uploads/user");
-		defaults << new FunctionGroup<active>(i18n("Active torrents"),"network-connect",Group::MIXED_GROUP,"/all/active");
-		defaults << new FunctionGroup<member<active,upload> >(
-				i18n("Active uploads"),"go-up",Group::UPLOADS_ONLY_GROUP,"/all/active/uploads");
+		defaults << new FunctionGroup<member<running,download> >(
+				i18n("Running Downloads"),"kt-start",Group::DOWNLOADS_ONLY_GROUP,"/all/downloads/running");
+		defaults << new FunctionGroup<member<not_running,download> >(
+				i18n("Not Running Downloads"),"kt-stop",Group::DOWNLOADS_ONLY_GROUP,"/all/downloads/not_running");
+				
+		// user tree
+		defaults << new FunctionGroup<user_controlled>(
+				i18n("User Controlled"),"user-identity",Group::MIXED_GROUP,"/all/user");
+		defaults << new FunctionGroup<member<user_controlled,upload> >(
+				i18n("User Controlled Uploads"),"go-up",Group::UPLOADS_ONLY_GROUP,"/all/user/uploads");
+		defaults << new FunctionGroup<member<user_controlled,download> >(
+				i18n("User Controlled Downloads"),"go-down",Group::DOWNLOADS_ONLY_GROUP,"/all/user/downloads");
+				
+		// qm_controlled tree
+		defaults << new FunctionGroup<qm_controlled>(
+				i18n("Queue Manager Controlled"),"kt-queue-manager",Group::MIXED_GROUP,"/all/qm");
+		defaults << new FunctionGroup<member<qm_controlled,upload> >(
+				i18n("Queue Manager Controlled Uploads"),"go-up",Group::UPLOADS_ONLY_GROUP,"/all/qm/uploads");
+		defaults << new FunctionGroup<member<qm_controlled,download> >(
+				i18n("Queue Manager Controlled Downloads"),"go-down",Group::DOWNLOADS_ONLY_GROUP,"/all/qm/downloads");
+		
+		defaults << new FunctionGroup<active>(
+				i18n("Active Torrents"),"network-connect",Group::MIXED_GROUP,"/all/active");
 		defaults << new FunctionGroup<member<active,download> >(
-				i18n("Active downloads"),"go-down",Group::DOWNLOADS_ONLY_GROUP,"/all/active/downloads");
-		defaults << new FunctionGroup<passive>(i18n("Passive torrents"),"network-disconnect",Group::MIXED_GROUP,"/all/passive");
-		defaults << new FunctionGroup<member<passive,upload> >(
-				i18n("Passive uploads"),"go-up",Group::UPLOADS_ONLY_GROUP,"/all/passive/uploads");
+				i18n("Active Downloads"),"go-down",Group::DOWNLOADS_ONLY_GROUP,"/all/active/downloads");
+		defaults << new FunctionGroup<member<active,upload> >(
+				i18n("Active Uploads"),"go-up",Group::UPLOADS_ONLY_GROUP,"/all/active/uploads");
+				
+		defaults << new FunctionGroup<passive>(i18n("Passive Torrents"),"network-disconnect",Group::MIXED_GROUP,"/all/passive");
 		defaults << new FunctionGroup<member<passive,download> >(
-				i18n("Passive downloads"),"go-down",Group::DOWNLOADS_ONLY_GROUP,"/all/passive/downloads");
+				i18n("Passive Downloads"),"go-down",Group::DOWNLOADS_ONLY_GROUP,"/all/passive/downloads");
+		defaults << new FunctionGroup<member<passive,upload> >(
+				i18n("Passive Uploads"),"go-up",Group::UPLOADS_ONLY_GROUP,"/all/passive/uploads");
 		defaults << new UngroupedGroup(this);
 	}
 

@@ -387,7 +387,7 @@ namespace bt
 		void checkExisting(QueueManagerInterface* qman);
 		void setupDirs(const QString & tmpdir,const QString & ddir);
 		void setupStats();
-		void setupData(const QString & ddir);
+		void setupData();
 		virtual bool isCheckingData(bool & finished) const;
 		
 		void setUploadProps(Uint32 limit,Uint32 rate);

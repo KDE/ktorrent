@@ -144,8 +144,6 @@ namespace bt
 
 	int TimeEstimator::estimateWINX()
 	{
-		const TorrentStats& s = m_tc->getStats();
-
 		if (m_samples->sum() > 0 && m_samples->count() > 0)
 			return (Uint32) floor((double) bytesLeft() / ((double) m_samples->sum() / (double) m_samples->count()));
 
@@ -154,8 +152,6 @@ namespace bt
 
 	int TimeEstimator::estimateMAVG()
 	{
-		const TorrentStats& s = m_tc->getStats();
-
 		if (m_samples->count() > 0)
 		{
 			double lavg;
