@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include <QDir>
+#include <QRegExp>
 #include <QSocketNotifier>
 #include <qtimer.h>
 #include <qdatetime.h>
@@ -45,10 +46,17 @@
 #include "httpserver.h"
 #include "httpclienthandler.h"
 #include "httpresponseheader.h"
-#include "phphandler.h"
-#include "phpcommandhandler.h"
-#include "phpcodegenerator.h"
 #include "webinterfacepluginsettings.h"
+#include "torrentlistgenerator.h"
+#include "challengegenerator.h"
+#include "loginhandler.h"
+#include "logouthandler.h"
+#include "actionhandler.h"
+#include "iconhandler.h"
+#include "torrentposthandler.h"
+#include "torrentfilesgenerator.h"
+#include "globaldatagenerator.h"
+#include "settingsgenerator.h"
 
 #include <time.h>
 
@@ -63,11 +71,17 @@ namespace kt
 	{
 		qsrand(time(0));
 		sock = new net::Socket(true,4);
+		addContentGenerator(new TorrentListGenerator(core,this));
+		addContentGenerator(new ChallengeGenerator(this));
+		addContentGenerator(new LoginHandler(this));
+		addContentGenerator(new LogoutHandler(this));
+		addContentGenerator(new ActionHandler(core,this));
+		addContentGenerator(new TorrentPostHandler(core,this));
+		addContentGenerator(new TorrentFilesGenerator(core,this));
+		addContentGenerator(new IconHandler(this));
+		addContentGenerator(new GlobalDataGenerator(core,this));
+		addContentGenerator(new SettingsGenerator(core,this));
 
-		php_cmd = new PhpCommandHandler(core);
-		php_gen = new PhpCodeGenerator(core);
-
-		
 		QStringList dirList = KGlobal::dirs()->findDirs("data", "ktorrent/www");
 		rootDir = dirList.front();
 		Out(SYS_WEB|LOG_DEBUG) << "WWW Root Directory "<< rootDir <<endl;
@@ -84,21 +98,34 @@ namespace kt
 		skin_list.removeAll("common");
 		skin_list.removeAll(".");
 		skin_list.removeAll("..");
+		foreach (QString s,skin_list)
+			Out(SYS_WEB|LOG_DEBUG) << "skin: " << s << endl;
 	}
 	
 	HttpServer::~HttpServer()
 	{
 		sock->close();
 		delete sock;
-		delete php_cmd;
-		delete php_gen;
 	}
 
 	QString HttpServer::skinDir() const
 	{
-		QString skin = skin_list[WebInterfacePluginSettings::skin()];
-		if (skin.length() == 0)
+		QString skin;
+		if (skin_list.count() == 0)
+		{
 			skin = "default";
+		}
+		else
+		{
+			int s = WebInterfacePluginSettings::skin();
+			if (s < 0 || s >= skin_list.count())
+				s = 0;
+		
+			skin = skin_list.at(s);
+			if (skin.length() == 0)
+				skin = "default";
+		}
+			
 		return rootDir + bt::DirSeparator() + skin;
 	}
 	
@@ -118,29 +145,12 @@ namespace kt
 		connect(handler,SIGNAL(closed()),this,SLOT(slotConnectionClosed()));
 		Out(SYS_WEB|LOG_NOTICE) << "connection from "<< addr.toString()  << endl;
 	}
-/*
-	static int DecodeEscapedChar(QString & password,int idx)
-	{
-		QChar a = password[idx + 1].toLower();
-		QChar b = password[idx + 2].toLower();
-		if (!a.isNumber() && !(a.toLatin1() >= 'a' && a.toLatin1() <= 'f'))
-			return idx + 2; // not a valid hex digit
-		
-		if (!b.isNumber() && !(b.toLatin1() >= 'a' && b.toLatin1() <= 'f'))
-			return idx + 2; // not a valid hex digit
-		
-		// calculate high and low nibble
-		Uint8 h = (a.toLatin1() - (a.isNumber() ? '0' : 'a')) << 4;
-		Uint8 l = (b.toLatin1() - (b.isNumber() ? '0' : 'a'));
-		char r = (char) h | l; // combine them and cast to a char
-		password.replace(idx,3,r);
-		return idx + 1;
-	}
-	*/
+
 	bool HttpServer::checkLogin(const QHttpRequestHeader & hdr,const QByteArray & data)
 	{
 		if (hdr.contentType() != "application/x-www-form-urlencoded")
 		{
+			Out(SYS_WEB|LOG_NOTICE) << "Webgui login failed ! 1" << endl;
 			challenge = QString();
 			return false;
 		}
@@ -159,6 +169,7 @@ namespace kt
 
 		if (username.isNull() || challenge.isNull() || username != WebInterfacePluginSettings::username())
 		{
+			Out(SYS_WEB|LOG_NOTICE) << "Webgui login failed ! 2" << endl;
 			challenge = QString();
 			return false;
 		}
@@ -175,7 +186,17 @@ namespace kt
 			return true;
 		}
 		challenge = QString();
+		Out(SYS_WEB|LOG_NOTICE) << "Webgui login failed ! 3" << endl;
 		return false;
+	}
+	
+	
+	void HttpServer::logout()
+	{
+		session.logged_in = false;
+		session.sessionId = 0;
+		challenge = QString();
+		Out(SYS_WEB|LOG_NOTICE) << "Webgui logout" << endl;
 	}
 	
 	bool HttpServer::checkSession(const QHttpRequestHeader & hdr)
@@ -185,23 +206,16 @@ namespace kt
 		if (hdr.hasKey("Cookie"))
 		{
 			QString cookie = hdr.value("Cookie");
-			int idx = cookie.indexOf("KT_SESSID=");
-			if (idx == -1)
-				return false;
+			QRegExp rx("KT_SESSID=(\\d+)",Qt::CaseInsensitive);
+			int pos = 0;
 			
-			QString number;
-			idx += QString("KT_SESSID=").length();
-			while (idx < cookie.length())
+			while ((pos = rx.indexIn(cookie, pos)) != -1) 
 			{
-				if (cookie[idx] >= '0' && cookie[idx] <= '9')
-					number += cookie[idx];
-				else
+				session_id = rx.cap(1).toInt();
+				if (session_id == session.sessionId)
 					break;
-				
-				idx++;
+				pos += rx.matchedLength();
 			}
-					
-			session_id = number.toInt();
 		}
 		
 	
@@ -289,22 +303,44 @@ namespace kt
 		Out(SYS_WEB|LOG_NOTICE) << "Redirecting to /login.html" << endl;
 	}
 	
-	void HttpServer::handleGet(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,bool do_not_check_session)
+	
+	
+	void HttpServer::handleGet(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr)
 	{
 		QString file = hdr.path();
 		if (file == "/")
 			file = "/login.html";
-		
-		//Out(SYS_WEB|LOG_DEBUG) << "GET " << hdr.path() << endl;
-		
+			
 		KUrl url;
 		url.setEncodedPathAndQuery(file);
 		
-		QString path = commonDir() + url.path();
-		// first try the common dir
-		if (!bt::Exists(path)) // doesn't exist so it must be in the skin dir
-			path = skinDir() + url.path();
-		
+		Out(SYS_WEB|LOG_DEBUG) << "GET " << hdr.path() << endl;
+		WebContentGenerator* gen = content_generators.find(url.path());
+		if (gen)
+		{
+			if (gen->getPermissions() == WebContentGenerator::LOGIN_REQUIRED && (!session.logged_in || !checkSession(hdr)))
+			{
+				// redirect to login page
+				redirectToLoginPage(hdlr);
+			}
+			else
+			{
+				gen->get(hdlr,hdr);
+			}
+		}
+		else
+		{
+			QString path = commonDir() + url.path();
+			// first try the common dir
+			if (!bt::Exists(path)) // doesn't exist so it must be in the skin dir
+				path = skinDir() + url.path();
+			
+			handleFile(hdlr,hdr,path);
+		}
+	}
+	
+	void HttpServer::handleFile(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QString & path)
+	{
 		// check if the file exists (if not send 404)
 		if (!bt::Exists(path))
 		{
@@ -314,36 +350,23 @@ namespace kt
 			return;
 		}
 		
-		QFileInfo fi(path);
-		QString ext = fi.suffix();
+		QString file = hdr.path();
+		if (file == "/")
+			file = "/login.html";
 		
-		// if it is the login page send that
-		if (file == "/login.html" || file == "/")
+		QFileInfo fi(path);
+		QString ext = fi.suffix();;
+
+		if (ext == "html")
 		{
-			session.logged_in = false;
-			ext = "html";
-			path = skinDir() + "/login.html"; 
-		}
-		else if (!session.logged_in && (ext == "html" || ext == "php"))
-		{
-			// for any html or php page, a login is necessary
-			redirectToLoginPage(hdlr);
-			return;
-		}
-		else if (session.logged_in && !do_not_check_session && (ext == "html" || ext == "php"))
-		{
-			// if we are logged in and it's a html or php page, check the session id
-			if (!checkSession(hdr))
+			// html pages require a login unless it is the login.html page
+			if (file != "/login.html" && (!session.logged_in || !checkSession(hdr)))
 			{
-				session.logged_in = false;
 				// redirect to login page
 				redirectToLoginPage(hdlr);
 				return;
 			}
-		}
-		
-		if (ext == "html")
-		{
+			
 			HttpResponseHeader rhdr(200);
 			setDefaultResponseHeaders(rhdr,"text/html",true);
 			if (path.endsWith("login.html"))
@@ -363,136 +386,78 @@ namespace kt
 		}
 		else if (ext == "css" || ext == "js" || ext == "png" || ext == "ico" || ext == "gif" || ext == "jpg")
 		{
-			if (hdr.hasKey("If-Modified-Since"))
-			{
-				QDateTime dt = parseDate(hdr.value("If-Modified-Since"));
-				if (dt.isValid() && dt < fi.lastModified())
-				{	
-					HttpResponseHeader rhdr(304);
-					setDefaultResponseHeaders(rhdr,"text/html",true);
-					rhdr.setValue("Cache-Control","max-age=0");
-					rhdr.setValue("Last-Modified",DateTimeToString(fi.lastModified(),false));
-					rhdr.setValue("Expires",DateTimeToString(QDateTime::currentDateTime().toUTC().addSecs(3600),false));
-					hdlr->sendResponse(rhdr);
-					return;
-				}
-			}
-			
-			
-			HttpResponseHeader rhdr(200);
-			setDefaultResponseHeaders(rhdr,ExtensionToContentType(ext),true);
-			rhdr.setValue("Last-Modified",DateTimeToString(fi.lastModified(),false));
-			rhdr.setValue("Expires",DateTimeToString(QDateTime::currentDateTime().toUTC().addSecs(3600),false));
-			rhdr.setValue("Cache-Control","private");
-			if (!hdlr->sendFile(rhdr,path))
-			{
-				HttpResponseHeader nhdr(404);
-				setDefaultResponseHeaders(nhdr,"text/html",false);
-				hdlr->send404(nhdr,path);
-			}
-		}
-		else if (ext == "php")
-		{
-			QMap<QString,QString> args = url.queryItems();
-			bool redirect = false;
-			bool shutdown = false;
-			if (args.count() > 0 && session.logged_in)
-				redirect = php_cmd->exec(url,shutdown);
-			
-			if (shutdown)
-			{
-				// first send back login page
-				redirectToLoginPage(hdlr);
-				QTimer::singleShot(1000,kapp,SLOT(quit()));
-			}
-			else if (redirect)
-			{
-				HttpResponseHeader rhdr(301);
-				setDefaultResponseHeaders(rhdr,"text/html",true);
-				rhdr.setValue("Location",url.encodedPathAndQuery());
-				
-				hdlr->executePHPScript(php_gen,rhdr,WebInterfacePluginSettings::phpExecutablePath().path(),
-									   path,url.queryItems());
-			}
-			else
-			{
-				HttpResponseHeader rhdr(200);
-				setDefaultResponseHeaders(rhdr,"text/html",true);
-			
-				hdlr->executePHPScript(php_gen,rhdr,WebInterfacePluginSettings::phpExecutablePath().path(),
-								   path,url.queryItems());
-			}
+			handleNormalFile(hdlr,hdr,path);
 		}
 		else
 		{
 			HttpResponseHeader rhdr(404);
 			setDefaultResponseHeaders(rhdr,"text/html",false);
-			hdlr->send404(rhdr,path);
+			hdlr->send404(rhdr,file);
+		}
+	}
+	
+	void HttpServer::handleNormalFile(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QString & path)
+	{
+		QFileInfo fi(path);
+		QString ext = fi.suffix();
+		
+		if (hdr.hasKey("If-Modified-Since"))
+		{
+			QDateTime dt = parseDate(hdr.value("If-Modified-Since"));
+			if (dt.isValid() && dt < fi.lastModified())
+			{	
+				HttpResponseHeader rhdr(304);
+				setDefaultResponseHeaders(rhdr,"text/html",true);
+				rhdr.setValue("Cache-Control","max-age=0");
+				rhdr.setValue("Last-Modified",DateTimeToString(fi.lastModified(),false));
+				rhdr.setValue("Expires",DateTimeToString(QDateTime::currentDateTime().toUTC().addSecs(3600),false));
+				hdlr->sendResponse(rhdr);
+				return;
+			}
+		}
+			
+		HttpResponseHeader rhdr(200);
+		setDefaultResponseHeaders(rhdr,ExtensionToContentType(ext),true);
+		rhdr.setValue("Last-Modified",DateTimeToString(fi.lastModified(),false));
+		rhdr.setValue("Expires",DateTimeToString(QDateTime::currentDateTime().toUTC().addSecs(3600),false));
+		rhdr.setValue("Cache-Control","private");
+		if (!hdlr->sendFile(rhdr,path))
+		{
+			HttpResponseHeader nhdr(404);
+			setDefaultResponseHeaders(nhdr,"text/html",false);
+			hdlr->send404(nhdr,path);
 		}
 	}
 	
 	void HttpServer::handlePost(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QByteArray & data)
 	{
-		// this is either a file or a login
-		if (hdr.value("Content-Type").startsWith("multipart/form-data"))
+		Out(SYS_WEB|LOG_DEBUG) << "POST " << hdr.path() << endl;
+		KUrl url;
+		url.setEncodedPathAndQuery(hdr.path());
+		WebContentGenerator* gen = content_generators.find(url.path());
+		if (gen)
 		{
-			handleTorrentPost(hdlr,hdr,data);
-		}
-		else if (!checkLogin(hdr,data))
-		{
-			QHttpRequestHeader tmp = hdr;
-			tmp.setRequest("GET","/login.html",1,1);
-			handleGet(hdlr,tmp);
+			if (gen->getPermissions() == WebContentGenerator::LOGIN_REQUIRED && (!session.logged_in || !checkSession(hdr)))
+			{
+				// redirect to login page
+				redirectToLoginPage(hdlr);
+			}
+			else
+			{
+				gen->post(hdlr,hdr,data);
+			}
 		}
 		else
 		{
-			handleGet(hdlr,hdr,true);
+			KUrl url;
+			url.setEncodedPathAndQuery(hdr.path());
+			QString path = commonDir() + url.path();
+			// first try the common dir
+			if (!bt::Exists(path)) // doesn't exist so it must be in the skin dir
+				path = skinDir() + url.path();
+			
+			handleFile(hdlr,hdr,path);
 		}
-	}
-	
-	void HttpServer::handleTorrentPost(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QByteArray & data)
-	{
-		const char* ptr = data.data();
-		int len = data.size();
-		int pos = QString(data).indexOf("\r\n\r\n");
-		
-		if (!session.logged_in || !checkSession(hdr))
-		{
-			// You can't post torrents if you are not logged in
-			// or the session is not OK
-			redirectToLoginPage(hdlr);
-			return;
-		}
-		
-		if (pos == -1 || pos + 4 >= len)
-		{
-			HttpResponseHeader rhdr(500);
-			setDefaultResponseHeaders(rhdr,"text/html",false);
-			hdlr->send500(rhdr);
-			return;
-		}
-		
-		// save torrent to a temporary file
-		QString save_file = kt::DataDir() + "webgui_load_torrent";
-		QFile tmp_file(save_file);
-		
-		if (!tmp_file.open(QIODevice::WriteOnly))
-		{
-			HttpResponseHeader rhdr(500);
-			setDefaultResponseHeaders(rhdr,"text/html",false);
-			hdlr->send500(rhdr);
-			return;
-		}
-		
-		QDataStream out(&tmp_file);
-		out.writeRawData(ptr + (pos + 4),len - (pos + 4));
-		out << flush;
-		tmp_file.close();
-		
-		Out(SYS_WEB|LOG_NOTICE) << "Loading file " << save_file << endl;
-		core->loadSilently(KUrl(save_file),QString());
-		
-		handleGet(hdlr,hdr);
 	}
 	
 	void HttpServer::handleUnsupportedMethod(HttpClientHandler* hdlr)
@@ -599,6 +564,12 @@ namespace kt
 			challenge.append(RandomLetterOrNumber());
 		return challenge;
 	}
+	
+	void HttpServer::addContentGenerator(WebContentGenerator* g)
+	{
+		content_generators.insert(g->getPath(),g);
+	}
+	
 }
 
 #include "httpserver.moc"

@@ -25,6 +25,7 @@
 #include <qdatetime.h>
 #include <net/socket.h>
 #include <util/ptrmap.h>
+#include "webcontentgenerator.h"
 
 class QSocketNotifier;
 
@@ -55,9 +56,6 @@ namespace kt
 		bool ifModifiedSince;
 	};
 		
-	class PhpHandler;
-	class PhpCommandHandler;
-	class PhpCodeGenerator;
 	class HttpClientHandler;
 	class HttpResponseHeader;
 	
@@ -73,12 +71,18 @@ namespace kt
 		bool isOK() const {return ok;}
 		bt::Uint16 getPort() const {return port;}
 
-		void handleGet(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,bool do_not_check_session = false);
+		void handleGet(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr);
 		void handlePost(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QByteArray & data);
 		void handleUnsupportedMethod(HttpClientHandler* hdlr);
 		bt::MMapFile* cacheLookup(const QString & name);
 		void insertIntoCache(const QString & name,bt::MMapFile* file);
 		QString challengeString();
+		void addContentGenerator(WebContentGenerator* g);
+		void setDefaultResponseHeaders(HttpResponseHeader & hdr,const QString & content_type,bool with_session_info);
+		bool checkLogin(const QHttpRequestHeader & hdr,const QByteArray & data);
+		void redirectToLoginPage(HttpClientHandler* hdlr);
+		void logout();
+		void handleNormalFile(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QString & path);
 
 	protected slots:
 		void slotAccept(int fd);
@@ -86,21 +90,16 @@ namespace kt
 		
 	private:
 		bool checkSession(const QHttpRequestHeader & hdr);
-		bool checkLogin(const QHttpRequestHeader & hdr,const QByteArray & data);
-		void setDefaultResponseHeaders(HttpResponseHeader & hdr,const QString & content_type,bool with_session_info);
-		void handleTorrentPost(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QByteArray & data);
 		QDateTime parseDate(const QString & str);
-		void redirectToLoginPage(HttpClientHandler* hdlr);
 		QString skinDir() const;
 		QString commonDir() const;
+		void handleFile(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QString & path);
 		
 	private:
 		net::Socket* sock;
 		QSocketNotifier* notifier;
 		QString rootDir;
 		int sessionTTL;
-		PhpCommandHandler* php_cmd;
-		PhpCodeGenerator* php_gen;
 		Session session;
 		CoreInterface *core;
 		QCache<QString,bt::MMapFile> cache;
@@ -108,6 +107,7 @@ namespace kt
 		bt::Uint16 port;
 		QStringList skin_list;
 		QString challenge;
+		bt::PtrMap<QString,WebContentGenerator> content_generators;
 	};
 
 	

@@ -24,8 +24,6 @@
 #include "httpserver.h"
 #include "httpclienthandler.h"
 #include "httpresponseheader.h"
-#include "phphandler.h"
-#include "phpcodegenerator.h"
 		
 using namespace bt;
 
@@ -43,7 +41,6 @@ namespace kt
 		write_notifier->setEnabled(false);
 		state = WAITING_FOR_REQUEST;
 		bytes_read = 0;
-		php = 0;
 		data.reserve(1024);
 		output_buffer.reserve(4096);
 		written = 0;
@@ -53,7 +50,6 @@ namespace kt
 	HttpClientHandler::~HttpClientHandler()
 	{
 		delete client;
-		delete php;
 	}
 
 	void HttpClientHandler::readyToRead(int )
@@ -173,10 +169,7 @@ namespace kt
 	//	Out(SYS_WEB|LOG_DEBUG) << "HTTP header : " << endl;
 	//	Out(SYS_WEB|LOG_DEBUG) << hdr.toString() << endl;
 				
-		QByteArray data((const char*)c->getDataPointer(),c->getSize());
-		if (full_path.endsWith("login.html"))
-			data = data.replace("$CHALLENGE",srv->challengeString().toUtf8());
-		
+		QByteArray data((const char*)c->getDataPointer(),c->getSize());	
 		hdr.setValue("Content-Length",QString::number(data.size()));
 		output_buffer.append(hdr.toString().toUtf8());
 		output_buffer.append(data);
@@ -186,14 +179,14 @@ namespace kt
 		return true;
 	}
 	
-#define HTTP_404_ERROR "<html><head><title>404 Not Found</title></head><body>The requested file was not found !</body></html>"
+#define HTTP_404_ERROR "<html><head><title>404 Not Found</title></head><body>The requested file %1 was not found !</body></html>"
 #define HTTP_500_ERROR "<html><head><title>HTTP/1.1 500 Internal Server Error</title></head><body>HTTP/1.1 Internal Server Error<br>%1</body></html>"
 
 	
 	void HttpClientHandler::send404(HttpResponseHeader & hdr,const QString & path)
 	{
 	//	Out(SYS_WEB|LOG_DEBUG) << "Sending 404 " << path << endl;
-		QString data = HTTP_404_ERROR;
+		QString data = QString(HTTP_404_ERROR).arg(path);
 		hdr.setValue("Content-Length",QString::number(data.length()));
 
 		output_buffer.append(hdr.toString().toUtf8());
@@ -218,48 +211,12 @@ namespace kt
 		output_buffer.append(hdr.toString().toUtf8());
 		sendOutputBuffer();
 	}
-
-	void HttpClientHandler::executePHPScript(
-			PhpCodeGenerator* php_gen,
-			HttpResponseHeader & hdr,
-			const QString & php_exe,
-			const QString & php_file,
-			const QMap<QString,QString> & args)
-	{
-	//	Out(SYS_WEB|LOG_DEBUG) << "Launching PHP script " << php_file << endl;
-		php = new PhpHandler(php_exe,php_gen);
-		if (!php->executeScript(php_file,args))
-		{
-			QByteArray data = QString(HTTP_500_ERROR).arg("Failed to launch PHP executable !").toUtf8();
-			hdr.setResponseCode(500);
-			
-			hdr.setValue("Content-Length",QString::number(data.length()));
-			
-			output_buffer.append(hdr.toString().toUtf8());
-			output_buffer.append(data);
-			sendOutputBuffer();
-			state = WAITING_FOR_REQUEST;
-		}
-		else
-		{
-			php_response_hdr = hdr;
-			connect(php,SIGNAL(finished()),this,SLOT(onPHPFinished()));
-			state = PROCESSING_PHP;
-			read_notifier->setEnabled(false); // disable read notifier while we are executing PHP
-		}
-	}
 	
-	void HttpClientHandler::onPHPFinished()
+	void HttpClientHandler::send(HttpResponseHeader & hdr,const QByteArray & data)
 	{
-		const QByteArray & output = php->getOutput();
-		php_response_hdr.setValue("Content-Length",QString::number(output.length()));
-		
-		output_buffer.append(php_response_hdr.toString().toUtf8());
-		output_buffer.append(output);
-		php->deleteLater();
-		php = 0;
-		state = WAITING_FOR_REQUEST;
-		read_notifier->setEnabled(true);
+		hdr.setValue("Content-Length",QString::number(data.length()));
+		output_buffer.append(hdr.toString().toUtf8());
+		output_buffer.append(data);
 		sendOutputBuffer();
 	}
 	
@@ -275,7 +232,7 @@ namespace kt
 		else 
 		{
 			written += r;
-			if (written == output_buffer.size())
+			if (written == (Uint32)output_buffer.size())
 			{
 				// everything sent
 				output_buffer.resize(0);

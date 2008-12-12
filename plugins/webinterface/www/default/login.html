@@ -7,30 +7,21 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 
 <script type="text/javascript" src="sha1.js"></script>
+<script type="text/javascript" src="login.js"></script>
+<script type="text/javascript" src="fetch_xml.js"></script>
 <script type="text/javascript">
 	var was_focused = false;
-	function try_focus_form()
+	function focus_login()
 	{
 		if (!was_focused)
 		{
-		document.forms["loginForm"].elements["username"].focus();
-		was_focused = true;
+			document.forms["loginForm"].elements["username"].focus();
+			was_focused = true;
 		}
-	}
-	
-	function encryptPwd()
-	{
-		var usernameField = document.getElementById("username");
-		var pwdField = document.getElementById("password");
-		var challengeField = document.getElementById("challenge");
-		var sha = hex_sha1(challengeField.value + pwdField.value);
-		pwdField.value = '';
-		challengeField.value = sha;
-		return true;
 	}
 </script>
 </head>
-<body onload="try_focus_form();">
+<body onload="focus_login(); get_challenge();">
 	<div id="container">
 		<div id="header">
 			<div id="logoWrapper">
@@ -39,14 +30,27 @@
 			</div>
 		</div>
 		
-		<div id="content">
-			<form id="loginForm" action="interface.php" method="post" onsubmit="encryptPwd();">
-				<table>
-				<tr><td>Username:</td><td><input type="text" name="username" id="username" onfocus="was_focused = true;" /></td></tr>
-				<tr><td>Password:</td><td><input type="password" name="password" id="password" /></td></tr>
-				<tr><td></td><td><input type="submit" value="Login" /></td></tr>
-				</table>
-				<input type="hidden" name="challenge" id="challenge" value="$CHALLENGE" />
+		<div id="user-login-form" class="block">
+			<form action="/login?page=interface.html" method="post" id="loginForm" onsubmit="encrypt_pwd();">	
+			<h3 class="title">Log in</h3>
+			<div class="item" style="margin-top : 0em;">
+				Username:
+				<div class="option">
+					<input type="text" name="username" id="username"/>
+				</div>
+			</div>
+			<div class="item" style="min-height : 6em;">
+				Password:
+				<div class="option">
+					<div style="display : inline;">
+						<input type="password" name="password" id="password"/>
+					</div>
+					<div style="margin-top : 1em;">
+						<input type="submit" name="Login" value="Sign in" />
+					</div>
+				</div>
+			</div>
+			<input type="hidden" name="challenge" id="challenge" value="" />
 			</form>
 		</div>
 	</div>

@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Diego R. Brogna                                 *
- *   dierbro@gmail.com                                               	   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
+ *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,47 +18,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <Qt>
+#include "webcontentgenerator.h"
 
-#include <klocale.h>
-#include <kglobal.h>
-#include <kiconloader.h>
-#include <kstandarddirs.h>
-
-#include <net/portlist.h>
-#include <torrent/globals.h>
-
-#include "webinterfaceprefwidget.h"
-#include "webinterfacepluginsettings.h"
-
-
-using namespace bt;
-
-namespace kt
+namespace kt 
 {
 
-	WebInterfacePrefWidget::WebInterfacePrefWidget(QWidget *parent) 
-		: PrefPageInterface(WebInterfacePluginSettings::self(),i18n("Web Interface"),"network-server",parent)
+	WebContentGenerator::WebContentGenerator(HttpServer* server,const QString & path,Permissions per) : server(server),path(path),permissions(per)
 	{
-		setupUi(this);
-	
-		QStringList dirList =KGlobal::dirs()->findDirs("data", "ktorrent/www");
-		QDir d(*(dirList.begin()));
-		
-		QStringList skinList = d.entryList(QDir::Dirs);
-		foreach (const QString& skin,skinList)
-		{
-			if (skin =="." || skin == ".." || skin == "common")
-				continue;
-			kcfg_skin->addItem(skin);
-		}
 	}
 	
-	WebInterfacePrefWidget::~WebInterfacePrefWidget()
-	{}
-
 	
-}
+	WebContentGenerator::~WebContentGenerator()
+	{
+	}
 
-#include "webinterfaceprefwidget.moc"
-			 
+
+}

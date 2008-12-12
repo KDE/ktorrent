@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Diego R. Brogna                                 *
- *   dierbro@gmail.com                                               	   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
+ *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,47 +18,35 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <Qt>
+#ifndef KTACTIONHANDLER_H
+#define KTACTIONHANDLER_H
 
-#include <klocale.h>
-#include <kglobal.h>
-#include <kiconloader.h>
-#include <kstandarddirs.h>
+#include <webcontentgenerator.h>
 
-#include <net/portlist.h>
-#include <torrent/globals.h>
-
-#include "webinterfaceprefwidget.h"
-#include "webinterfacepluginsettings.h"
-
-
-using namespace bt;
-
-namespace kt
+namespace kt 
 {
 
-	WebInterfacePrefWidget::WebInterfacePrefWidget(QWidget *parent) 
-		: PrefPageInterface(WebInterfacePluginSettings::self(),i18n("Web Interface"),"network-server",parent)
+	/**
+		Handles actions comming from the client
+	*/
+	class ActionHandler : public WebContentGenerator
 	{
-		setupUi(this);
+	public:
+		ActionHandler(CoreInterface* core,HttpServer* server);
+		virtual ~ActionHandler();
 	
-		QStringList dirList =KGlobal::dirs()->findDirs("data", "ktorrent/www");
-		QDir d(*(dirList.begin()));
+		virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
+		virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
+	private:
+		bool doCommand(const QString & cmd,const QString & arg);
+		bool dht(const QString & arg);
+		bool encryption(const QString & arg);
+		bool file(const QString & cmd,const QString & arg);
 		
-		QStringList skinList = d.entryList(QDir::Dirs);
-		foreach (const QString& skin,skinList)
-		{
-			if (skin =="." || skin == ".." || skin == "common")
-				continue;
-			kcfg_skin->addItem(skin);
-		}
-	}
-	
-	WebInterfacePrefWidget::~WebInterfacePrefWidget()
-	{}
+	private:
+		CoreInterface* core;
+	};
 
-	
 }
 
-#include "webinterfaceprefwidget.moc"
-			 
+#endif

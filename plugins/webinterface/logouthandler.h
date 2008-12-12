@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Joris Guisson                                   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,36 +18,28 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KT_PHPCOMMANDHANDLER_HH
-#define KT_PHPCOMMANDHANDLER_HH
+#ifndef KTLOGOUTHANDLER_H
+#define KTLOGOUTHANDLER_H
 
-#include <QMap>
-#include <QString>
+#include <webcontentgenerator.h>
 
-namespace kt
+namespace kt 
 {
-	class CoreInterface;
-	class PhpCommand;
-	
-	
+
 	/**
-	 * Class which handles PHP commands provided by the URL arguments
-	 */
-	class PhpCommandHandler
+		Handles logout
+	*/
+	class LogoutHandler : public WebContentGenerator
 	{
 	public:
-		PhpCommandHandler(CoreInterface *c);
-		virtual ~PhpCommandHandler();
-		
-		/**
-		 * Execute the URL arguments provided to the PHP script
-		 * @param url The request url, used keys are erased from it
-		 * @param shutdown Set to true if we need to shutdown KT
-		 */
-		bool exec(KUrl & url,bool & shutdown);
-	private:
-		CoreInterface* core;
+		LogoutHandler(HttpServer* server);
+		virtual ~LogoutHandler();
+	
+		virtual void get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr);
+		virtual void post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data);
+	
 	};
+
 }
 
 #endif

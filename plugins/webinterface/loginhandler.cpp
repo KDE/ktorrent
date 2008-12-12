@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Joris Guisson                              *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,69 +18,58 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTHTTPCLIENTHANDLER_H
-#define KTHTTPCLIENTHANDLER_H
-		
-
-#include <qhttp.h>
-#include <net/socket.h>
-#include <util/constants.h>
+#include <kurl.h>
+#include "loginhandler.h"
+#include "httpserver.h"
 #include "httpresponseheader.h"
-		
-class QSocketNotifier;
+#include "httpclienthandler.h"
 
-namespace kt
+namespace kt 
 {
-	class HttpServer;
-	
-	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
-	*/
-	class HttpClientHandler : public QObject
+
+	LoginHandler::LoginHandler(HttpServer* server): WebContentGenerator(server,"/login", PUBLIC)
 	{
-		Q_OBJECT
-		enum State
+	}
+	
+	
+	LoginHandler::~LoginHandler()
+	{
+	}
+	
+	
+	void LoginHandler::get(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr)
+	{
+		Q_UNUSED(hdr);
+		// we shouldn't get a get request, so redirect to login page
+		server->redirectToLoginPage(hdlr);
+	}
+	
+	void LoginHandler::post(HttpClientHandler* hdlr, const QHttpRequestHeader& hdr, const QByteArray& data)
+	{
+		KUrl url;
+		url.setEncodedPathAndQuery(hdr.path());
+
+		QString page = url.queryItem("page");
+		// there needs to be a page to send back
+		if (page.isEmpty())
 		{
-			WAITING_FOR_REQUEST,
-			WAITING_FOR_CONTENT,
-			PROCESSING_PHP
-		};
-	public:
-		HttpClientHandler(HttpServer* srv,int sock);
-		virtual ~HttpClientHandler();
+			server->redirectToLoginPage(hdlr);
+			return;
+		}
 		
-		
-		bool sendFile(HttpResponseHeader & hdr,const QString & full_path);
-		void sendResponse(const HttpResponseHeader & hdr);
-		void send404(HttpResponseHeader & hdr,const QString & path);
-		void send500(HttpResponseHeader & hdr);
-		void send(HttpResponseHeader & hdr,const QByteArray & data);
-		
-	private:
-		void handleRequest(int header_len);
-			
-
-	private slots:
-		void readyToRead(int);
-		void sendOutputBuffer(int fd = 0);
-
-	signals:
-		void closed();
-		
-	private:
-		HttpServer* srv;
-		net::Socket* client;
-		QSocketNotifier* read_notifier;
-		QSocketNotifier* write_notifier;
-		State state;
-		QHttpRequestHeader header;
-		QByteArray data;
-		bt::Uint32 bytes_read;
-		HttpResponseHeader php_response_hdr;
-		QByteArray output_buffer;
-		bt::Uint32 written;
-	};
+		if (server->checkLogin(hdr,data))
+		{
+			// login is OK, so redirect to page
+			HttpResponseHeader rhdr(301);
+			server->setDefaultResponseHeaders(rhdr,"text/html",true);
+			rhdr.setValue("Location","/" + page);
+			hdlr->send(rhdr,QByteArray());
+		}
+		else
+		{
+			// login failed
+			server->redirectToLoginPage(hdlr);
+		}
+	}
 
 }
-
-#endif

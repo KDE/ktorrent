@@ -1,12 +1,20 @@
 set(ktwebinterfaceplugin_SRC 
 	httpresponseheader.cpp 
-	phpcodegenerator.cpp 
-	phphandler.cpp 
-	phpcommandhandler.cpp 
 	httpclienthandler.cpp 
 	httpserver.cpp
 	webinterfaceprefwidget.cpp
-	webinterfaceplugin.cpp)
+	webinterfaceplugin.cpp
+	webcontentgenerator.cpp
+	globaldatagenerator.cpp
+	torrentlistgenerator.cpp
+	torrentfilesgenerator.cpp
+	challengegenerator.cpp
+	settingsgenerator.cpp
+	loginhandler.cpp
+	logouthandler.cpp
+	actionhandler.cpp
+	iconhandler.cpp
+	torrentposthandler.cpp)
 
 kde4_add_ui_files(ktwebinterfaceplugin_SRC webinterfaceprefwidget.ui)
 kde4_add_kcfg_files(ktwebinterfaceplugin_SRC webinterfacepluginsettings.kcfgc)

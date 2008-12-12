@@ -1,7 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Diego R. Brogna and Joris Guisson               *
- *   dierbro@gmail.com                                               	   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,31 +18,28 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KT_PHPCODEGENERATOR_HH
-#define KT_PHPCODEGENERATOR_HH
+#ifndef KTICONHANDLER_H
+#define KTICONHANDLER_H
 
-#include <QString>
-
-class QTextStream;
+#include "webcontentgenerator.h"
 
 namespace kt
 {
-	class CoreInterface;
-	
+
 	/**
-	 * Class to generate PHP code containing all information about the current torrents
-	 */
-	class PhpCodeGenerator
+		@author
+	*/
+	class IconHandler : public WebContentGenerator
 	{
 	public:
-		PhpCodeGenerator(CoreInterface *c);
-		virtual ~PhpCodeGenerator();
-		
-		void downloadStatus(QTextStream & out);
-		void globalInfo(QTextStream & out);
-	private:
-		CoreInterface *core;
+		IconHandler(HttpServer* server);
+		~IconHandler();
+
+		virtual void get(HttpClientHandler* hdlr,const QHttpRequestHeader& hdr);
+		virtual void post(HttpClientHandler* hdlr,const QHttpRequestHeader& hdr,const QByteArray& data);
+
 	};
+
 }
 
 #endif

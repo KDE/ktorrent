@@ -61,8 +61,6 @@ a:hover {
 #container {
   width:95%;
   margin:0 auto;
-  max-width:1270px;
-  min-width: 760px;
 }
 
 /*----------Header----------*/
@@ -135,38 +133,58 @@ text-decoration:none;
 color: #6e6e6e;
 }
 
+/* Torrent list block */
 
+.action_bar {
+	float:left;
+	font-size : large;
+}
 
+.action_bar_item
+{
+	background-color: #dce4f9;
+	border: 1px solid black;
+	display: inline;
+	margin-left: 2px;
+	padding: 5px 5px 5px 5px;
+}
 
-/*----------Content and siderar-----------*/
-#content {
-  float:left;
-  margin:1em 0;
-  overflow:hidden;
-  width:71%;
+#torrent_list_table {
+	clear:right;
+}
+
+#torrent_details_table {
+	clear:both;
+}
+
+#status_bar 
+{
+	margin-bottom:10px;
+	margin-left: auto; 
+	margin-right: auto;
+	text-align: center;
+}
+
+.status_bar_item
+{
+	background-color: #dce4f9;
+	border: 1px solid black;
+	display: inline;
+	margin-left: 2px;
+	padding: 2px 2px 2px 2px;
 }
 
 
-#sidebar {
-background: url('sidebar.gif') repeat-y left bottom;
-float:right;
-width:28%;
-padding:0 0 30px 0;
+/*----------block and title-----------*/
+
+.block  {
+margin:10px 0 10px 0;
+width:100%;
 }
 
-#sidebar .block  {
-margin:10px 0 0 27px;
-}
-
-#sidebar .title {
+.title {
 color:#011CA1;
 margin:.5em 0;
-}
-
-#search {
-margin: -80px 0 0 18px;
-padding:0;
-position: absolute;
 }
 
 
@@ -225,75 +243,39 @@ position: absolute;
   color:#E6E6FF;
 }
 
-/*----------list styles----------*/
+/* login form */
 
-ul.menu, .item-list ul {
-  font-size:12px;
-  line-height: 17px;
-  margin: 0.5em 0 0 -0.5em; /* 6px */
-  padding:0;
-}
-
-ul.menu ul, .item-list ul ul {
-  margin-left: 0;
-}
-
-
-.content ol li, .content ul li, ul.menu li, .item-list ul li, li.leaf {
-  margin: .16em 0 .16em .5em; /* 1.92px and 6px */
-}
-
-ul.menu li, .item-list ul li, li.leaf {
-  padding: 0 0 .25em 1.5em; /* 3px and 18px */
-  list-style-type: none;
-  list-style-image: none;
-}
-
-.content ol li {
-  padding: 0 0 .3em;
-  margin-left: 2em;
-}
-
-.content ul li.leaf a, ul li.expanded a, ul li.collapsed a {
-  display: block;
-}
-
-ul.inline li {
-  background: none;
-  margin: 0;
-  padding: 0 1em 0 0;
-}
-
-fieldset ul.clear-block li {
-  margin: 0;
-  padding: 0;
-  background-image: none;
-}
-
-ul.links li {
-  background:none;
-  list-style:none;
-  padding:0 .5em;
-}
-
-.node .content ul li {
-  padding:0 0 0 20px;
-  line-height:26px;
-  list-style-type: none;
-  list-style-image: none;
-}
-
-/*---------------user-login-form---remove center alignment---------------*/
-#user-login-form {
-  margin:0;
-  padding:0 0 0 10px;
-  text-align:left;
+#user-login-form 
+{
+	padding:0 0 0 10px;
+	text-align:left;
+	margin-left: auto; 
+	margin-right: auto;
+	width: 50%;
+	text-align: center;
 }
 
 .form-item {
   text-align:left;
-  margin:0;
+  margin
+	:0;
   padding:0;
+}
+
+/* settings page */
+.settings_group 
+{
+	max-width: 50%;
+	margin: 2px;
+	background-color: white;
+	width: 50%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#settings_buttons
+{
+	margin-top: 3px;
 }
 
 /*---------------table styles---------------*/

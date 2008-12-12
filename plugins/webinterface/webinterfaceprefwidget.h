@@ -35,9 +35,6 @@ namespace kt
 		WebInterfacePrefWidget(QWidget *parent = 0);
 		virtual ~WebInterfacePrefWidget();
 		
-		
-	public slots:
-		void textChanged(const QString & path);
 	};
 
 }

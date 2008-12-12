@@ -26,10 +26,6 @@
 			<label>interface skin</label>
 			<default>1</default>
 		</entry>
-		<entry name="phpExecutablePath" type ="Url">
-			<label>php executable path</label>
-			<default>KUrl("/usr/bin/php")</default>
-		</entry>
 
 		<entry name="username" type ="String">
 			<label>username</label>

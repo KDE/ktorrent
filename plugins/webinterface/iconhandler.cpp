@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2006 by Diego R. Brogna                                 *
- *   dierbro@gmail.com                                               	   *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
+ *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,47 +18,45 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <Qt>
-
-#include <klocale.h>
+#include <kurl.h>
 #include <kglobal.h>
 #include <kiconloader.h>
-#include <kstandarddirs.h>
-
-#include <net/portlist.h>
-#include <torrent/globals.h>
-
-#include "webinterfaceprefwidget.h"
-#include "webinterfacepluginsettings.h"
-
-
-using namespace bt;
+#include "iconhandler.h"
+#include "httpclienthandler.h"
+#include "httpserver.h"
 
 namespace kt
 {
 
-	WebInterfacePrefWidget::WebInterfacePrefWidget(QWidget *parent) 
-		: PrefPageInterface(WebInterfacePluginSettings::self(),i18n("Web Interface"),"network-server",parent)
+	IconHandler::IconHandler(HttpServer* server) : WebContentGenerator(server,"/icon",PUBLIC)
 	{
-		setupUi(this);
-	
-		QStringList dirList =KGlobal::dirs()->findDirs("data", "ktorrent/www");
-		QDir d(*(dirList.begin()));
-		
-		QStringList skinList = d.entryList(QDir::Dirs);
-		foreach (const QString& skin,skinList)
-		{
-			if (skin =="." || skin == ".." || skin == "common")
-				continue;
-			kcfg_skin->addItem(skin);
-		}
 	}
-	
-	WebInterfacePrefWidget::~WebInterfacePrefWidget()
-	{}
 
-	
+
+	IconHandler::~IconHandler()
+	{
+	}
+
+
+	void IconHandler::get(HttpClientHandler* hdlr,const QHttpRequestHeader& hdr)
+	{
+		KUrl url;
+		url.setEncodedPathAndQuery(hdr.path());
+		QString name = url.queryItem("name");
+		
+		int size = url.queryItem("size").toInt();
+		if (size < KIconLoader::NoGroup)
+			size = KIconLoader::NoGroup;
+		else if (size > KIconLoader::User)
+			size = KIconLoader::User;
+
+		server->handleNormalFile(hdlr,hdr,KIconLoader::global()->iconPath(name,size));
+	}
+
+	void IconHandler::post(HttpClientHandler* hdlr,const QHttpRequestHeader& hdr,const QByteArray& data)
+	{
+		Q_UNUSED(data);
+		get(hdlr,hdr);
+	}
+
 }
-
-#include "webinterfaceprefwidget.moc"
-			 

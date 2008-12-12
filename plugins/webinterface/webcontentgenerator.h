@@ -1,6 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2005-2007 by Joris Guisson                              *
+ *   Copyright (C) 2008 by Joris Guisson and Ivan Vasic                    *
  *   joris.guisson@gmail.com                                               *
+ *   ivasic@gmail.com                                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,67 +18,61 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef KTHTTPCLIENTHANDLER_H
-#define KTHTTPCLIENTHANDLER_H
-		
+#ifndef KTWEBCONTENTGENERATOR_H
+#define KTWEBCONTENTGENERATOR_H
 
-#include <qhttp.h>
-#include <net/socket.h>
-#include <util/constants.h>
-#include "httpresponseheader.h"
-		
-class QSocketNotifier;
+#include <QString>
+#include <QHttpRequestHeader>
 
-namespace kt
+
+namespace kt 
 {
 	class HttpServer;
-	
+	class HttpClientHandler;
+
 	/**
-		@author Joris Guisson <joris.guisson@gmail.com>
+		Base class for special pages which generate content or HTML
 	*/
-	class HttpClientHandler : public QObject
+	class WebContentGenerator
 	{
-		Q_OBJECT
-		enum State
-		{
-			WAITING_FOR_REQUEST,
-			WAITING_FOR_CONTENT,
-			PROCESSING_PHP
-		};
 	public:
-		HttpClientHandler(HttpServer* srv,int sock);
-		virtual ~HttpClientHandler();
+		enum Permissions
+		{
+			PUBLIC,
+			LOGIN_REQUIRED
+		};
 		
+		/**
+		 * Constructor
+		 * @param path Path of the content e.g. /actions/foobar
+		 */
+		WebContentGenerator(HttpServer* server,const QString & path,Permissions per);
+		virtual ~WebContentGenerator();
 		
-		bool sendFile(HttpResponseHeader & hdr,const QString & full_path);
-		void sendResponse(const HttpResponseHeader & hdr);
-		void send404(HttpResponseHeader & hdr,const QString & path);
-		void send500(HttpResponseHeader & hdr);
-		void send(HttpResponseHeader & hdr,const QByteArray & data);
+		/// Get the path
+		QString getPath() const {return path;}
 		
-	private:
-		void handleRequest(int header_len);
-			
-
-	private slots:
-		void readyToRead(int);
-		void sendOutputBuffer(int fd = 0);
-
-	signals:
-		void closed();
+		/// Get the permissions (i.e. login required or not)
+		Permissions getPermissions() const {return permissions;}
 		
-	private:
-		HttpServer* srv;
-		net::Socket* client;
-		QSocketNotifier* read_notifier;
-		QSocketNotifier* write_notifier;
-		State state;
-		QHttpRequestHeader header;
-		QByteArray data;
-		bt::Uint32 bytes_read;
-		HttpResponseHeader php_response_hdr;
-		QByteArray output_buffer;
-		bt::Uint32 written;
+		/**
+		 * Generate HTML or XML on HTTP a get request
+		 * @param hdlr Client handler
+		 * @param hdr HTTP Header of request
+		 */
+		virtual void get(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr) = 0;
+		
+		/**
+		 * Generate HTML or XML on HTTP a get request
+		 * @param hdlr Client handler
+		 * @param hdr HTTP Header of request
+		 * @param data Data of request
+		 */
+		virtual void post(HttpClientHandler* hdlr,const QHttpRequestHeader & hdr,const QByteArray & data) = 0;
+	protected:
+		HttpServer* server;
+		QString path;
+		Permissions permissions;
 	};
 
 }

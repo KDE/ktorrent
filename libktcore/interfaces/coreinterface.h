@@ -219,6 +219,9 @@ namespace kt
 		/// Get a pointer to the external interface object (for dbus and scripting)
 		virtual DBus* getExternalInterface() = 0;
 		
+		/// Apply all settings
+		virtual void applySettings() = 0;
+		
 	signals:
 		/**
 		 * Seeing that when load returns the loading process may not have finished yet,

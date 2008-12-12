@@ -22,6 +22,7 @@ Changes in 3.2rc1 :
 - Fix problem with restoring file encoding (177179)
 - Make sure window size is restored properly
 - Queued -> Queue Manager Controlled in group tree (176726)
+- Webgui revamped, PHP is ditched in favor of a HTML + AJAX approach
 
 Changes in 3.2beta1 :
 - Ask to create directory in fileselectdlg, if it does not exist (163965)

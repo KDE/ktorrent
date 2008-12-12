@@ -1,19 +1,13 @@
 set(default_data 
 	grad2.jpg        
-	icon.png       
-	shutdown.php    
-	stylen.css
+	icon.png        
 	grad1.jpg    
 	header_tile.png  
-	interface.php  
+	interface.html  
 	login.html                    
 	style.css  
 	wz_tooltip.js
-	details.php
-	normal_priority.png
-	high_priority.png
-	low_priority.png
-	only_seed.png
+	interface.js
 	menu_bg.png
 	sidebar.gif
 	header.jpg)
