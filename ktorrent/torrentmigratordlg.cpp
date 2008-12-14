@@ -53,9 +53,19 @@ namespace kt
 	bt::Uint32 TorrentMigratorDlg::findTorrentsToBeMigrated()
 	{
 		QDir h = QDir::home();
-		if (!h.cd(".kde/share/apps/ktorrent"))
+		if (!h.cd(".kde/share/apps/ktorrent/"))
 		{
 			Out(SYS_GEN|LOG_NOTICE) << "No torrents to migrate found" << endl;
+			return 0;
+		}
+		
+		QString path = h.absolutePath();
+		if (!path.endsWith("/"))
+			path += "/";
+		
+		if (kt::DataDir() == path)
+		{
+			Out(SYS_GEN|LOG_NOTICE) << "No torrents to migrate found " << endl;
 			return 0;
 		}
 		
