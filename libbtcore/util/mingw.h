@@ -59,10 +59,11 @@ THE SOFTWARE.
 // #define EINPROGRESS     WSAEINPROGRESS
 // #define EISCONN         WSAEISCONN
 
-/* winsock doesn't feature poll(), so there is a version implemented
- * in terms of select() in mingw.c. The following definitions
- * are copied from linux man pages. A poll() macro is defined to
- * call the version in mingw.c.
+#if !defined(_MSC_VER) || (_WIN32_WINNT < 0x0600)
+/* winsock2 features poll() only since Windows Vista / Server 2008 (i. e. 
+ * Windows SDK 6.0A or newer), so there is a version implemented in terms 
+ * of select() in mingw.cpp. The following definitions are copied from linux 
+ * man pages. A poll() macro is defined to call the version in mingw.c.
  */
 #define POLLIN      0x0001    /* There is data to read */
 #define POLLPRI     0x0002    /* There is urgent data to read */
@@ -76,6 +77,8 @@ struct BTCORE_EXPORT pollfd {
     short events;     /* requested events */
     short revents;    /* returned events */
 };
+#endif
+
 // #define poll(x, y, z)        mingw_poll(x, y, z)
 
 /* These wrappers do nothing special except set the global errno variable if
