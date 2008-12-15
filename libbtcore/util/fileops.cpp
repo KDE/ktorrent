@@ -133,10 +133,10 @@ namespace bt
 		}
 	}
 
-	void Move(const QString & src,const QString & dst,bool nothrow)
+	void Move(const QString & src,const QString & dst,bool nothrow,bool silent)
 	{
 		//	Out() << "Moving " << src << " -> " << dst << endl;
-		KIO::CopyJob *mv = KIO::move(KUrl(src),KUrl(dst)); 
+		KIO::CopyJob *mv = KIO::move(KUrl(src),KUrl(dst),silent ? KIO::HideProgressInfo|KIO::Overwrite : KIO::DefaultFlags); 
 		if (!KIO::NetAccess::synchronousRun(mv , 0)) 
 		{
 			if (!nothrow)

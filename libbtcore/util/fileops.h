@@ -58,8 +58,9 @@ namespace bt
 	 * @param src The source file
 	 * @param dst The destination file / directory
 	 * @param nothrow whether or not we shouldn't throw an Error upon failure
+	 * @param silent Wehter or not to hide progress info
 	 */
-	BTCORE_EXPORT void Move(const QString & src,const QString & dst,bool nothrow = false);
+	BTCORE_EXPORT void Move(const QString & src,const QString & dst,bool nothrow = false,bool silent = false);
 
 	/**
 	 * Copy a file.

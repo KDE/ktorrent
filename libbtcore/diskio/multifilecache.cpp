@@ -189,7 +189,7 @@ namespace bt
 					{
 						// old style dnd dir, move the file so that we can keep working 
 						// with the old file
-						bt::Move(dnd_dir + tf.getUserModifiedPath() + ".dnd",dnd_file,true);
+						bt::Move(dnd_dir + tf.getUserModifiedPath() + ".dnd",dnd_file,true,true);
 					}
 					dfd = new DNDFile(dnd_file,&tf,tor.getChunkSize());
 					dfd->checkIntegrity();
@@ -713,7 +713,7 @@ namespace bt
 		{
 			// old style dnd dir, move the file so that we can keep working 
 			// with the old file
-			bt::Move(dnd_dir + tf->getUserModifiedPath() + ".dnd",dnd_file,true);
+			bt::Move(dnd_dir + tf->getUserModifiedPath() + ".dnd",dnd_file,true,true);
 			return;
 		}
 		
