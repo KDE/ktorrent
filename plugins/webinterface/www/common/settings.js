@@ -1,12 +1,10 @@
-function update_settings()
+function update_settings(err_function)
 {
-	fetch_xml("/data/settings.xml",update_settings_div,show_error);
+	fetch_xml("/data/settings.xml",update_settings_div,err_function);
 }
 
 function update_settings_div(xmldoc)
 {
-	clear_error();
-	
 	var node = document.getElementById("settings_form");
 	var inputs = node.getElementsByTagName("input");
 
@@ -36,7 +34,7 @@ function get_settings_element(settings,name)
 	return false;
 }
 
-function submit_settings()
+function submit_settings(err_function)
 {
 	var node = document.getElementById("settings_form");
 	var inputs = node.getElementsByTagName("input");
@@ -54,5 +52,5 @@ function submit_settings()
 			post_data += input.name + "=" + encodeURI(input.value);
 	}
 	
-	fetch_xml_post("/data/settings.xml",post_data,update_settings_div);
+	fetch_xml_post("/data/settings.xml",post_data,update_settings_div,err_function);
 }

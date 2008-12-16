@@ -1,5 +1,6 @@
 function refresh()
 {
+	clear_error(); 
 	update_torrents();
 }
 
@@ -26,8 +27,7 @@ function redirect_to_login()
 
 function clear_error()
 {
-	var p = document.getElementById('error_text');
-	p.innerHTML = "";
+	var p = document.getElementById('error');
 	p.style.display = "none";
 }
 
@@ -36,17 +36,19 @@ function show_error(msg)
 {
 	var p = document.getElementById('error_text');
 	p.innerHTML = "Error: " + msg;
-	p.style.display = "";
+	
+	var d = document.getElementById('error');
+	d.style.display = "block";
 }
 
 function update_torrents()
 {
+	clear_error();
 	fetch_xml("/data/torrents.xml",update_torrent_list,show_error);
 }
 
 function update_torrent_list(xmldoc)
 {
-	clear_error();
 	var newtable = document.createElement('table');
 	newtable.setAttribute('id', 'torrent_list_table');
 	

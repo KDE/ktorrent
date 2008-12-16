@@ -13,7 +13,7 @@
 	<script type="text/javascript" src="mobile.js"></script>
 	<script type="text/javascript" src="torrent_details.js"></script>
 </head>
-<body onload="javascript:update_settings(); update_torrents();">
+<body onload="javascript:update_settings(show_error); update_torrents();">
 <div id="container" class="block">
 	<div id="logo" align="center">
 		<img src="ktorrentwebinterfacelogo.png" border="0" alt="ktorrent"/>
@@ -77,7 +77,7 @@
 	
 	<div id="settings" style="display:none;">
 		<h3 class="title" style="clear:both;">Settings</h3>	
-		<form id="settings_form" action="javascript:submit_settings();">
+		<form id="settings_form" action="javascript:clear_error(); submit_settings(show_error);">
 		<div id="settings_net" class="settings_group">
 			<table>
 			<tr><td>Maximum upload speed:</td><td><input type="text" name="maxUploadRate" size="20"/> KB/s</td></tr>
@@ -98,7 +98,7 @@
 		
 		<div id="settings_buttons">
 			<input type="submit" name="Submit Settings" value="Submit Settings" />
-			<form action="javascript:update_settings();">
+			<form action="javascript:clear_error(); update_settings(show_error);">
 			<input type="button" name="Refresh" value="Refresh" />
 			</form>
 		</div>
@@ -108,7 +108,7 @@
 	<div id="torrent_details" style="display:none;">
 		<div class="action_bar">
 			<a href="javascript:show_div('content');">Back</a>
-			<a href="javascript:update_torrent_details(current_torrent);">Refresh</a>
+			<a href="javascript:clear_error(); update_torrent_details(current_torrent);">Refresh</a>
 		</div>
 		<table id="torrent_details_table"></table>
 	</div>

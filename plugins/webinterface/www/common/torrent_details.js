@@ -46,14 +46,20 @@ function file_row(element,table,i)
 	
 	row.setAttribute('class',(i % 2 == 0) ? 'even' : 'odd');
 	
-	actions.appendChild(
-		create_priority_button("Only Seed","/only_seed.png","file_stop=" + current_torrent + "-" +i));
-	actions.appendChild(
- 		create_priority_button("Low Priority","/low_priority.png","file_lp=" + current_torrent + "-" +i));
-	actions.appendChild(
-		create_priority_button("Normal Priority","/normal_priority.png","file_np=" + current_torrent + "-" +i));
-	actions.appendChild(
-		create_priority_button("High Priority","/high_priority.png","file_hp=" + current_torrent + "-" +i));
+	var file_status = element.getElementsByTagName('priority')[0].firstChild.data;
+	var command = '';
+	command = (file_status==20 || file_status==10) ? '' : "file_stop=" + current_torrent + "-" +i;
+	actions.appendChild(create_priority_button("Only Seed","/only_seed.png",command));
+	
+	command = (file_status==30) ? '' : "file_lp=" + current_torrent + "-" +i;
+	actions.appendChild(create_priority_button("Low Priority","/low_priority.png",command));
+	
+	command = (file_status==40) ? '' : "file_np=" + current_torrent + "-" +i;
+	actions.appendChild(create_priority_button("Normal Priority","/normal_priority.png",command));
+	
+	command = (file_status==50) ? '' : "file_hp=" + current_torrent + "-" +i;
+	actions.appendChild(create_priority_button("High Priority","/high_priority.png",command));
+	
 	actions.setAttribute("align","center");
 	file.appendChild(get_text(element,"path"));
 	size.appendChild(get_text(element,"size"));

@@ -1,3 +1,10 @@
+function refresh()
+{
+	clear_error();
+	update_torrents(); 
+	update_status_bar();
+}
+
 function redirect_to_login(msg)
 {
 	window.location = "/login.html";
@@ -21,8 +28,7 @@ function show_div(div)
 
 function clear_error()
 {
-	var p = document.getElementById('error_text');
-	p.innerHTML = "";
+	var p = document.getElementById('error');
 	p.style.display = "none";
 }
 
@@ -31,11 +37,14 @@ function show_error(msg)
 {
 	var p = document.getElementById('error_text');
 	p.innerHTML = "Error: " + msg;
-	p.style.display = "";
+	
+	var d = document.getElementById('error');
+	d.style.display = "block";
 }
 
 function update_status_bar()
 {
+	clear_error();
 	fetch_xml("/data/global.xml",update_status_bar_table,show_error);
 }
 

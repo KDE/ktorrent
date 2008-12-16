@@ -27,7 +27,7 @@
 	}
 </script>
 </head>
-<body onload="javascript:update_torrents(); update_status_bar(); update_settings();">	
+<body onload="javascript:update_torrents(); update_status_bar(); update_settings(show_error);">	
 <div id="container">
 	<div id="header">
 		<div id="logoWrapper">
@@ -51,19 +51,19 @@
 		<div class="action_bar">
 			<div class="action_bar_item">
 				<img src="/icon?name=view-refresh&size=1" alt="Refresh"/>
-				<a href="javascript:update_torrents(); update_status_bar();" title="Refresh">Refresh</a>
+				<a href="javascript:refresh();" title="Refresh">Refresh</a>
 			</div>
 			<div class="action_bar_item">
 				<img src="/icon?name=kt-start-all&size=1" alt="Start All"/>
-				<a href="javascript:do_action('startall=true')">Start All</a>
+				<a href="javascript:do_action('startall=true'); refresh();">Start All</a>
 			</div>
 			<div class="action_bar_item">				
 				<img src="/icon?name=kt-stop-all&size=1" alt="Stop All" />
-				<a href="javascript:do_action('stopall=true')">Stop All</a>
+				<a href="javascript:do_action('stopall=true'); refresh();">Stop All</a>
 			</div>
 		</div>
 		
-		<table id="torrent_list_table"></table>
+		<table id="torrent_list_table" class="list_table"></table>
 		
 		<div id="status_bar">
 		<div id="dht" class="status_bar_item"></div>
@@ -81,10 +81,10 @@
 			</div>
 			<div class="action_bar_item">
 				<img src="/icon?name=view-refresh&size=1" alt="Refresh"/>
-				<a href="javascript:update_torrent_details(current_torrent);" title="Refresh">Refresh</a>
+				<a href="javascript:clear_error(); update_torrent_details(current_torrent);" title="Refresh">Refresh</a>
 			</div>	
 		</div>
-		<table id="torrent_details_table"></table>
+		<table id="torrent_details_table" class="list_table"></table>
 	</div>
 	
 	<div id="torrent_load" style="display:none;" class="block">
@@ -147,11 +147,11 @@
 		<div class="action_bar" id="settings_buttons">
 			<div class="action_bar_item">
 				<img src="/icon?name=dialog-ok-apply&size=1" alt="Submit"/>
-				<a href="javascript:submit_settings();" title="Submit">Submit Settings</a>
+				<a href="javascript:clear_error(); submit_settings(show_error);" title="Submit">Submit Settings</a>
 			</div>
 			<div class="action_bar_item">
 				<img src="/icon?name=view-refresh&size=1" alt="Refresh"/>
-				<a href="javascript:update_settings();" title="Refresh">Refresh</a>
+				<a href="javascript:clear_error();  update_settings(show_error);" title="Refresh">Refresh</a>
 			</div>
 		</div>
 		</form>

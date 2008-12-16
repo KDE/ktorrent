@@ -109,3 +109,9 @@ img
 	display: inline;
 	margin: 5px;
 }
+
+#error_text
+{
+	color: red;
+	font-size : large;
+}

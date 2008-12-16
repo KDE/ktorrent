@@ -1,6 +1,3 @@
-<?php
-        $refresh_rate = 5;
-?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -10,39 +7,40 @@
 	<meta name="GENERATOR" content="Quanta Plus" />
 	<meta http-equiv="Content-Type" content="text/html"/>
 	<script type="text/javascript" src="page_update.js"></script>
-	<script type="text/javascript" src="interface.js"></script>
-
+	<script type="text/javascript" src="coldmilk.js"></script>
+	<script type="text/javascript" src="action.js"></script>
+	<script type="text/javascript" src="settings.js"></script>
+	<script type="text/javascript" src="fetch_xml.js"></script>
 </head>
-<body onload="update_interval(<?php echo $refresh_rate; ?>);">
+<body onload="update_interval(5);">
 
 
 <div id="header">
 	<div id="logout">
-		<img src="edit_user.png" alt="logout" /> <a href="login.html">Sign out</a>
+		<img src="/icon?name=system-log-out&size=1" alt="logout" /> <a href="/logout">Sign out</a>
 	</div>
 
-	<a href="interface.php">
-		<img src="icon.png" alt="reload" title="reload"
-			id="header_icon" />
+	<a href="coldmilk.html">
+		<img src="icon.png" alt="reload" title="reload" id="header_icon" />
 	</a>
 
 	<ul>
 		<li>
-			<img src="folder1.png" alt="icon" /> 
+			<img src="/icon?name=folder&size=1" alt="icon" /> 
 			<a href="javascript:show('torrent_list');">Torrents</a>
 		</li>
 		<li>
-			<img src="configure.png" alt="icon" /> 
+			<img src="/icon?name=preferences-other&size=1" alt="icon" /> 
 			<a href="javascript:show('preferences');">Preferences</a>
 		</li>
 		
 		<li>
-			<img src="fileopen.png" alt="icon" /> 
+			<img src="/icon?name=document-open&size=1" alt="icon" /> 
 			<a href="javascript:show('torrent_add');">Add torrent</a>
 		</li>
 		<li>
-			<img src="extender_opened.png" alt="exit" />
-			<a href="javascript:show('action');">Action</a>
+			<img src="/icon?name=system-shutdown&size=1" alt="exit" />
+			<a href="javascript:show('action');">Leave</a>
 		</li>
 	</ul>
 
@@ -61,15 +59,15 @@
 	<div id="bottom-menu">
 	<ul>
 		<li>
-			<img src="ktstart_all.png" alt="" />
+			<img src="/icon?name=kt-start-all&size=1" alt="" />
 			<span>
-				<a href="interface.php?startall=true">Start all</a>
+				<a href="javascript:do_action('startall=true')">Start All</a>
 			</span> 
 		</li>
 		<li>
-			<img src="ktstop_all.png" alt="" />
+			<img src="/icon?name=kt-stop-all&size=1" alt="" />
 			<span>
-				<a href="interface.php?stopall=true">Stop all</a>
+				<a href="javascript:do_action('stopall=true')">Stop All</a>
 			</span> 
 		</li>
 	</ul>
@@ -92,34 +90,30 @@
 <!-- Preferences -->
 <div id="preferences" style="display : none;">
 	<h2>Preferences</h2>
-	<form action="interface.php" method="get">
 	<div class="simple_form">
-		<img src="down.png" alt="" />
+	<form method="get" action="javascript:submit_settings(redirect_to_login); update_settings(redirect_to_login);" id="settings_form">
+		<img src="/icon?name=preferences-other&size=5" alt="" />
 
 		<h2>Downloads</h2>
 
-		<?php $globalinfo = globalinfo() ?>
 		<div class="item" style="margin-top : 0em;">
 		Upload speed:
 		<div class="option">
-			<input type="text" name="maximum_upload_rate" 
-				value="<?php echo $globalinfo['max_upload_speed']; ?>" />
+			<input type="text" name="maxUploadRate" size="20"/> KB/s
 		</div>
 		</div>
 
 		<div class="item">
 		Download speed:
 		<div class="option">
-			<input type="text" name="maximum_download_rate" 
-				value="<?php echo $globalinfo['max_download_speed']; ?>" />
+			<input type="text" name="maxDownloadRate" size="20"/> KB/s
 		</div>
 		</div>
 
 		<div class="item">
 		Max downloads:
 		<div class="option">
-			<input type="text" name="maximum_downloads" 
-				value="<?php echo $globalinfo['max_downloads']; ?>" />
+			<input type="text" name="maxDownloads" size="20"/>
 		</div>
 		</div>
 
@@ -127,53 +121,37 @@
 		Max seeds
 		<div class="option">
 			<div style="display : inline;">
-				<input type="text" name="maximum_seeds" 
-					value="<?php echo $globalinfo['max_seeds']; ?>" />
+				<input type="text" name="maxSeeds" size="20"/>
 			</div>
 		</div>
 		</div>
-	</div>
-
-	<div class="simple_form" style="margin-top : 1em;" >
-		<img src="looknfeel.png" alt="" />
-
-		<h2>Web interface</h2>
-
-		<div class="hints">
-			Note: Disabled for now. If you insist, change $refresh_rate in the file interface.php
+		
+		<h2 style="margin-top: 1em;">Features</h2>
+		
+		<div class ="item">
+			<input type="checkbox" name="useEncryption"/> Use encryption
 		</div>
-
-		<div class="item">
-		<?php
-		$refresh_options = array(
-			'2'   => '2 seconds',
-			'3'   => '3 seconds',
-			'5'   => '5 seconds',
-			'10'  => '10 seconds',
-			'30'  => '30 seconds',
-			'0'   => 'never'
-		);
-		echo 'Update rate:';
-		echo '<div class="option">';
-		echo '<select name="refresh_rate" disabled="disabled">';
-		foreach(array_keys($refresh_options) as $value) {
-			echo '<option value="'.$value.'"';
-				if ($refresh_rate == $value) {
-					echo ' selected="selected"';
-				}
-				echo '>'.$refresh_options[$value].'</option>';
-		}
-		echo '</select>';
-		echo '</div>';
-		?>
+		
+		<div class ="item">
+			<input type="checkbox" name="allowUnencryptedConnections"/> Allow unencrypted connections
 		</div>
-
-	</div>
+		
+		<div class ="item">
+			<input type="checkbox" name="dhtSupport"/> Use DHT
+		</div>
+		
+		<div class ="item">
+			<input type="checkbox" name="pexEnabled"> Use peer exchange
+		</div>
 	
-	<div style="margin-top : 1em; float : left; clear : both;">
-		<input type="submit" value="Submit preferences" class="buttons"/>
-	</div>
+		<div style="margin-top : 1em; float : left; clear : both;">
+			<input type="submit" name="Submit Settings" value="Submit Settings" class="buttons"/>
+			<form action="javascript:update_settings(redirect_to_login);">
+				<input type="button" name="Refresh" value="Refresh" class="buttons"/>
+			</form>
+		</div>
 	</form>
+	</div>
 </div>
 <!-- end preferences -->
 
@@ -183,14 +161,14 @@
 	<h2>Add a torrent</h2>
 
 	<div class="simple_form">
-		<img src="folder1_man.png" alt="" />
+		<img src="/icon?name=document-open&size=5" alt="" />
 		<h3>Load a torrent</h3>
 
-		<form action="interface.php" method="get">
+		<form action="javascript:load_url(); update_all(); show('torrent_list');" method="get">
 		<div class="item">
 			URL:
 			<div class="option">
-			<input type="text" name="load_torrent" style="width : 240px;" />
+			<input type="text" name="load_torrent" style="width : 240px;" id="torrent_url" />
 			<br /><span>Example: http://ktorrent.org/down/latest.torrent</span>
 			
 			<div style="margin-top : 1em;">
@@ -202,7 +180,7 @@
 
 		<h3 style="margin-top : 6em;">Upload a torrent</h3>
 
-		<form action="interface.php" method="post" enctype="multipart/form-data">
+		<form action="/torrent/load?page=coldmilk.html" method="post" enctype="multipart/form-data">
 		<div class="item" style="min-height : 5em;">
 			File path:
 			<div class="option">
@@ -223,20 +201,18 @@
 
 <!-- Action -->
 <div id="action" style="display : none;">
-	<h2 style="margin-top : 0; padding-top : 0;">Actions</h2>
+	<h2 style="margin-top : 0; padding-top : 0;">Leave</h2>
 	<ul>
 		<li>
-			<img src="switchuser.png" alt="sign out" />
+			<img src="/icon?name=system-log-out&size=5" alt="sign out" />
 			<span style="margin-left : 52px;">
 			<a href="login.html">Sign out</a></span>
-
-	
 		</li>
 
 		<li>
-			<img src="exit.png" alt="quit" />
+			<img src="/icon?name=application-exit&size=5" alt="quit" />
 			<span style="margin-left : 52px;">
-				<a href="shutdown.php?quit=quit" onclick="return validate('quit_program')">
+				<a href="javascript:shutdown();" onclick="return validate('quit_program')">
 					Quit program
 				</a></span>
 		</li>

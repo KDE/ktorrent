@@ -3,19 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <script type="text/javascript" src="sha1.js"></script>
-<script type="text/javascript">
-	function encryptPwd()
-	{
-		var usernameField = document.getElementById("username");
-		var pwdField = document.getElementById("password");
-		var challengeField = document.getElementById("challenge");
-		var sha = hex_sha1(challengeField.value + pwdField.value);
-		pwdField.value = '';
-		challengeField.value = sha;
-		return true;
-	}
-</script>
-
+<script type="text/javascript" src="login.js"></script>
+<script type="text/javascript" src="fetch_xml.js"></script>
 <head>
   <title>ktorrent - web interface</title>
   <link rel="stylesheet" href="style.css" type="text/css" />
@@ -28,11 +17,11 @@
   }
   </script>
 </head>
-<body onload="focus_login();">
+<body onload="focus_login(); get_challenge();">
 
 
 
-<form action="interface.php" method="post" id="login_form" onsubmit="encryptPwd();">	
+<form action="/login?page=coldmilk.html" method="post" id="login_form" onsubmit="encrypt_pwd();">	
 <div class="simple_form">
 
 	<img src="icon.png" alt="logo" 
@@ -64,7 +53,7 @@
 
 
 </div>
-<input type="hidden" name="challenge" id="challenge" value="$CHALLENGE" />
+<input type="hidden" name="challenge" id="challenge" value="dummy" />
 </form>
 </body>
 </html>

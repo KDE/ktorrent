@@ -133,6 +133,12 @@ text-decoration:none;
 color: #6e6e6e;
 }
 
+#error_text
+{
+	color: red;
+	font-size : large;
+}
+
 /* Torrent list block */
 
 .action_bar {
@@ -328,10 +334,18 @@ td.active {
 
 #torrent_details tr.even 
 {
-	background-color: #dce4f9;"#ffffff" : ""
+	background-color: #dce4f9;
 }
 
 #torrent_details tr.odd
 {
 	background-color: white;
+}
+
+.list_table img {
+	opacity: 0.4;
+}
+
+.list_table a img {
+	opacity: 1.0;
 }
