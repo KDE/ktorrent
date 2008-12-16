@@ -1,6 +1,5 @@
 set(default_data 
 	grad2.jpg        
-	icon.png        
 	grad1.jpg    
 	header_tile.png  
 	interface.html  

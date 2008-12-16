@@ -8,6 +8,7 @@ set(common_data sha1.js
 	high_priority.png
 	low_priority.png
 	only_seed.png
+	icon.png        
 	login.js 
 	fetch_xml.js 
 	torrent_details.js

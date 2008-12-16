@@ -44,8 +44,7 @@ function file_row(element,table,i)
 	var size = row.insertCell(3);
 	var perc = row.insertCell(4);
 	
-	var row_color = (i % 2) ? "#ffffff" : "#dce4f9";
-	row.setAttribute("style", "background-color : " + row_color);
+	row.setAttribute('class',(i % 2 == 0) ? 'even' : 'odd');
 	
 	actions.appendChild(
 		create_priority_button("Only Seed","/only_seed.png","file_stop=" + current_torrent + "-" +i));

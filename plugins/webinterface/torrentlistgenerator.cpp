@@ -73,6 +73,10 @@ namespace kt
 			writeElement(out,"download_rate",KBytesPerSecToString(s.download_rate / 1024.0));
 			writeElement(out,"upload_rate",KBytesPerSecToString(s.upload_rate / 1024.0));
 			writeElement(out,"num_peers",QString::number(s.num_peers));
+			writeElement(out,"seeders",QString::number(s.seeders_connected_to));
+			writeElement(out,"seeders_total",QString::number(s.seeders_total));
+			writeElement(out,"leechers",QString::number(s.leechers_connected_to));
+			writeElement(out,"leechers_total",QString::number(s.leechers_total));
 			writeElement(out,"running",s.running ? "1" : "0");
 			writeElement(out,"percentage",QString::number(Percentage(s),'f',2));
 			writeElement(out,"num_files",QString::number(ti->getNumFiles()));

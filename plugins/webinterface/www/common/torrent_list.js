@@ -105,7 +105,13 @@ function torrent_table_row(torrent, table, i)
 	//peers
 	{
 		var cell = row.insertCell(6);
-		cell.appendChild(get_text(torrent, 'num_peers'));
+		var seeders = get_text(torrent, 'seeders');
+		var leechers = get_text(torrent, 'leechers');
+		seeders.appendData(" seeders");
+		leechers.appendData(" leechers");
+		cell.appendChild(seeders);
+		cell.appendChild(document.createElement('br'));
+		cell.appendChild(leechers);
 	}
 	
 	// percentage

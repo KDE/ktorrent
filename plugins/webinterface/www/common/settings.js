@@ -5,6 +5,8 @@ function update_settings()
 
 function update_settings_div(xmldoc)
 {
+	clear_error();
+	
 	var node = document.getElementById("settings_form");
 	var inputs = node.getElementsByTagName("input");
 

@@ -326,3 +326,12 @@ td.active {
   background-color:#f7f7f7;
 }
 
+#torrent_details tr.even 
+{
+	background-color: #dce4f9;"#ffffff" : ""
+}
+
+#torrent_details tr.odd
+{
+	background-color: white;
+}

@@ -36,7 +36,7 @@ function show_error(msg)
 
 function update_status_bar()
 {
-	fetch_xml("/data/global.xml",update_status_bar_table,redirect_to_login);
+	fetch_xml("/data/global.xml",update_status_bar_table,show_error);
 }
 
 function redirect_to_login()
