@@ -25,6 +25,7 @@ Changes in 3.2rc1 :
 - Webgui revamped, PHP is ditched in favor of a HTML + AJAX approach
 - Revamp enabling and disabling of actions (175951)
 - Make sure speed limits action is always enabled (177695)
+- Pause -> Pause KTorrent, Resume -> Resume KTorrent (177402)
 
 
 Changes in 3.2beta1 :
