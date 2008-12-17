@@ -49,7 +49,7 @@ namespace kt
 {
 	
 	View::View(ViewModel* model,Core* core,QWidget* parent) 
-		: QTreeView(parent),core(core),group(0),num_torrents(0),num_running(0),model(model),flags(0)
+		: QTreeView(parent),core(core),group(0),num_torrents(0),num_running(0),model(model)
 	{
 		setContextMenuPolicy(Qt::CustomContextMenu);
 		setRootIsDecorated(false);
@@ -141,21 +141,6 @@ namespace kt
 			}
 		}
 
-		int nflags = flags & (kt::START | kt::STOP | kt::REMOVE);
-		if (running == torrents && torrents > 0)
-			nflags |= kt::STOP_ALL;
-		else if (running == 0 && torrents > 0)
-			nflags |= kt::START_ALL;
-		else if (torrents > 0)
-			nflags |= kt::START_ALL | kt::STOP_ALL;
-			
-		if (flags != nflags)
-		{
-			flags = nflags;
-			enableActions(this,(ActionEnableFlags)flags);
-		}
-		
-		
 		if (model->updated())
 			proxy_model->invalidate();
 		
@@ -522,49 +507,9 @@ namespace kt
 	
 	void View::onSelectionChanged(const QItemSelection & /*selected*/,const QItemSelection & /*deselected*/)
 	{
-		int nflags = flags & (kt::START_ALL | kt::STOP_ALL);
-		QList<bt::TorrentInterface*> sel;
-		getSelection(sel);
-		
-		foreach (bt::TorrentInterface* tc,sel)
-		{
-			if (!tc->getStats().running)
-				nflags |= kt::START | kt::START_ALL;
-			else
-				nflags |= kt::STOP | kt::STOP_ALL;
-		}
-		
-		if (sel.count() > 0)
-			nflags |= kt::REMOVE;
-		
-		if (flags != nflags)
-		{
-			flags = nflags;
-			enableActions(this,(kt::ActionEnableFlags)flags);
-		}
+		torrentSelectionChanged(this);
 	}
 	
-	void View::updateFlags()
-	{
-		int nflags = flags & (kt::START_ALL | kt::STOP_ALL);
-		QList<bt::TorrentInterface*> sel;
-		getSelection(sel);
-		
-		foreach (bt::TorrentInterface* tc,sel)
-		{
-			if (!tc->getStats().running)
-				nflags |= kt::START | kt::START_ALL;
-			else
-				nflags |= kt::STOP | kt::STOP_ALL;
-		}
-		
-		if (sel.count() > 0)
-			nflags |= kt::REMOVE;
-		
-		
-		flags = nflags;
-		enableActions(this,(kt::ActionEnableFlags)flags);
-	}
 	
 	QList<QAction*> View::columnActionList() const
 	{

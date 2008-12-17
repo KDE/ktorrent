@@ -100,6 +100,8 @@ namespace kt
 		
 		/// Get the group view
 		GroupView* getGroupView() {return group_view;}
+		
+		
 	public slots:
 		/**
 		 * Open a view
@@ -108,18 +110,12 @@ namespace kt
 		void openNewView(kt::Group* g);
 		
 		/**
-		 * Enable or disable some actions in the GUI
-		 * @param flags Which actions to enable and disable
-		 */
-		void setActionsEnabled(ActionEnableFlags flags);
-		
-		/**
 		 * The paused state has changed
 		 * @param paused 
 		 */
 		void onPausedStateChanged(bool paused);
 		
-		/// Update start, stop ... actions
+		/// Update all actions
 		void updateActions();
 
 	private slots:

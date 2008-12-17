@@ -80,8 +80,6 @@ namespace kt
 		view_man = new ViewManager(core->getGroupManager()->allGroup(),this,core);
 		setupActions();
 		view_man->setupActions();
-		setActionsEnabled((ActionEnableFlags)0);
-		connect(view_man,SIGNAL(enableActions(ActionEnableFlags)),this,SLOT(setActionsEnabled(ActionEnableFlags)));
 		
 		group_view = new GroupView(core->getGroupManager(),view_man,this);
 		addToolWidget(group_view,"application-x-bittorrent",i18n("Groups"),i18n("Widget to manage torrent groups"),DOCK_LEFT);
@@ -129,6 +127,7 @@ namespace kt
 		loadState(KGlobal::config());
 		notifyViewListeners(view_man->getCurrentTorrent());
 		//markk.update();
+		updateActions();
 	}
 
 	GUI:: ~GUI()
@@ -310,14 +309,7 @@ namespace kt
 	{
 		Out(SYS_GEN|LOG_NOTICE) << "Setting paused state to " << pause << endl;
 		core->setPausedState(pause);
-		updateActions();
-	}
-	
-	void GUI::updateActions()
-	{
-		View* v = view_man->getCurrentView();
-		if (v)
-			v->updateFlags();
+		view_man->updateActions();
 	}
 	
 	void GUI::onPausedStateChanged(bool paused)
@@ -571,8 +563,6 @@ namespace kt
 		tray_icon->updateStats(stats);
 		core->updateGuiPlugins();
 		
-		start_all_action->setEnabled(core->getNumTorrentsNotRunning() > 0);
-		stop_all_action->setEnabled(core->getNumTorrentsRunning() > 0);
 		if (qm->isVisible())
 			qm->update();
 	}
@@ -733,17 +723,14 @@ namespace kt
 		}
 		return true;
 	}
-
-	void GUI::setActionsEnabled(ActionEnableFlags flags)
+	
+	void GUI::updateActions()
 	{
-		start_action->setEnabled(flags & START);
-		stop_action->setEnabled(flags & STOP);
-		remove_action->setEnabled(flags & REMOVE);
-		start_all_cv_action->setEnabled(flags & START_ALL);
-		stop_all_cv_action->setEnabled(flags & STOP_ALL);
-		queue_action->setEnabled(flags & REMOVE);
-		data_check_action->setEnabled(flags & REMOVE);
-		queue_pause_action->setEnabled(core->getPausedState() || core->getNumTorrentsRunning() > 0);
+		view_man->updateActions();
+		Uint32 nr = core->getNumTorrentsRunning();
+		queue_pause_action->setEnabled(core->getPausedState() || nr > 0);
+		start_all_action->setEnabled(core->getNumTorrentsNotRunning() > 0);
+		stop_all_action->setEnabled(nr > 0);
 	}
 	
 	void GUI::showOrHide()

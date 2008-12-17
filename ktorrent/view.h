@@ -75,16 +75,6 @@ namespace kt
 
 		/// Check if we need to update the caption
 		bool needToUpdateCaption();
-
-		/**
-		 * Update the ActionFlags
-		 */
-		void updateFlags();
-		
-		/**
-		 * Get the flags indicating which actions can be enabled.
-		 */
-		int actionFlags() const {return flags;}
 		
 		/// Get a list of column actions to plugin in the right click menu of a view
 		QList<QAction*> columnActionList() const;
@@ -93,6 +83,12 @@ namespace kt
 		 * Setup the default columns of the view depending on the group it is showing.
 		 */
 		void setupDefaultColumns();
+		
+		/// Get the number of torrents
+		bt::Uint32 numTorrents() const {return num_torrents;};
+		
+		/// Get the number of running torrents
+		bt::Uint32 numRunningTorrents() const {return num_running;}
 		
 	public slots:
 		/**
@@ -130,7 +126,7 @@ namespace kt
 		void wantToStop(bt::TorrentInterface* tc,bool user);
 		void wantToStart(QList<bt::TorrentInterface*> & todo);
 		void currentTorrentChanged(View* v,bt::TorrentInterface* tc);
-		void enableActions(View* v,ActionEnableFlags flags);
+		void torrentSelectionChanged(View* v);
 		void showMenu(View* v,const QPoint & pos);
 		
 	private:
@@ -146,7 +142,6 @@ namespace kt
 		bt::Uint32 num_running;
 		ViewModel* model;
 		GroupFilterModel* proxy_model;
-		int flags;
 	};
 }
 

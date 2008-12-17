@@ -37,7 +37,6 @@ namespace kt
 	class Core;
 	class GUI;
 	class Group;
-	enum ActionEnableFlags;
 
 	class ViewManager : public QObject,public CloseTabListener
 	{
@@ -75,6 +74,9 @@ namespace kt
 		
 		/// Setup the actions of the view manager
 		void setupActions();
+		
+		/// Update enabled or disabled state of all actions
+		void updateActions();
 
 	public slots:
 		void onCurrentTabChanged(QWidget* tab);
@@ -83,7 +85,7 @@ namespace kt
 		void onGroupRemoved(kt::Group* g);
 		void onGroupAdded(kt::Group* g);
 		void onCurrentTorrentChanged(View* v,bt::TorrentInterface* tc);
-		void onEnableActions(View* v,ActionEnableFlags flags);
+		void onSelectionChaged(View* v);
 		
 		/// Start all selected downloads in the current view
 		void startTorrents();
@@ -161,9 +163,6 @@ namespace kt
 	private:
 		virtual bool closeAllowed(QWidget* w);
 		virtual void tabCloseRequest(kt::GUIInterface* gui,QWidget* tab);
-		
-	signals:
-		void enableActions(ActionEnableFlags flags);
 
 	private:
 		GUI* gui;
@@ -176,7 +175,9 @@ namespace kt
 		
 		// actions for the view menu 
 		QAction* start_torrent;
+		QAction* start_all;
 		QAction* stop_torrent;
+		QAction* stop_all;
 		QAction* remove_torrent;
 		KAction* remove_torrent_and_data;
 		QAction* queue_torrent;
@@ -194,7 +195,6 @@ namespace kt
 		QMap<Group*,QAction*> group_actions;
 		QAction* add_to_new_group;
 		QAction* check_data;
-		QAction* speed_limits;
 		QAction* open_dir_menu;
 		QAction* groups_menu;
 		QAction* copy_url;
