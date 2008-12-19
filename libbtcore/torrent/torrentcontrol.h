@@ -367,6 +367,7 @@ namespace bt
 		void downloaded(Uint32 chunk);
 		void afterDataCheck();
 		void preallocThreadDone();
+		void moveToCompletedDir();
 		
 	private:	
 		void updateTracker(const QString & ev,bool last_succes = true);
@@ -392,6 +393,9 @@ namespace bt
 		
 		void setUploadProps(Uint32 limit,Uint32 rate);
 		void setDownloadProps(Uint32 limit,Uint32 rate);
+		
+	signals:
+		void dataCheckFinished();
 		
 	private:
 		Torrent* tor;
