@@ -313,13 +313,17 @@ namespace bt
 				needDataCheck(this);
 			
 			//Move completed files if needed:
-			if(moveCompleted)
+			if (moveCompleted)
 			{
-				QString outdir = completed_dir.path();
-				if (!outdir.endsWith(bt::DirSeparator()))
-					outdir += bt::DirSeparator();
-				
-				changeOutputDir(outdir,bt::TorrentInterface::MOVE_FILES);
+				if (stats.status == CHECKING_DATA)
+				{
+					// wait for dcheck_thread to finish before moving the files
+					connect(this,SIGNAL(dataCheckFinished()),this,SLOT(moveToCompletedDir()));
+				}
+				else
+				{
+					moveToCompletedDir();
+				}
 			}
 		}
 		catch (Error & e)
@@ -1563,6 +1567,8 @@ namespace bt
 			lst->finished();
 		delete dcheck_thread;
 		dcheck_thread = 0;
+		Out(SYS_GEN|LOG_NOTICE) << "Data check finished" << endl;
+		dataCheckFinished();
 	}
 	
 	bool TorrentControl::isCheckingData(bool & finished) const
@@ -1977,6 +1983,20 @@ namespace bt
 		if (ret)
 			downloader->saveWebSeeds(tordir + "webseeds");
 		return ret;
+	}
+	
+	void TorrentControl::moveToCompletedDir()
+	{
+		// it is possible that the user might have disabled moving to the completed dir during the data check
+		// so double check before we start the move
+		if (completed_dir.path().isNull())
+			return;
+			
+		QString outdir = completed_dir.path();
+		if (!outdir.endsWith(bt::DirSeparator()))
+			outdir += bt::DirSeparator();
+					
+		changeOutputDir(outdir,bt::TorrentInterface::MOVE_FILES);
 	}
 }
 
