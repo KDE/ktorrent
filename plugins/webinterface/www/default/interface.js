@@ -1,3 +1,9 @@
+function start_update_timer(time)
+{
+	var seconds = time * 1000;
+	window.setInterval(refresh, seconds);
+}
+
 function refresh()
 {
 	clear_error();
