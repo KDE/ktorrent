@@ -299,6 +299,7 @@ namespace kt
 			{
 				torrents.erase(i);
 				removeRow(idx);
+				reset();
 				break;
 			}
 			idx++;

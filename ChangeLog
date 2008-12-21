@@ -27,6 +27,7 @@ Changes in 3.2rc1 :
 - Make sure speed limits action is always enabled (177695)
 - Pause -> Pause KTorrent, Resume -> Resume KTorrent (177402)
 - Make sure that moving files when the torrents is complete, happens after the data check when the torrent is complete (177963)
+- Fix crash when removing torrent (178175)
 
 
 Changes in 3.2beta1 :
