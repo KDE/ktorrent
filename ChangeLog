@@ -28,6 +28,7 @@ Changes in 3.2rc1 :
 - Pause -> Pause KTorrent, Resume -> Resume KTorrent (177402)
 - Make sure that moving files when the torrents is complete, happens after the data check when the torrent is complete (177963)
 - Fix crash when removing torrent (178175)
+- Fix saving and restoring of expanded state of FileView (178022)
 
 
 Changes in 3.2beta1 :

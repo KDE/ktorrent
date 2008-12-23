@@ -24,6 +24,7 @@
 #include <kicon.h>
 #include <kmimetype.h>
 #include <QTreeView>
+#include <QSortFilterProxyModel>
 #include <bcodec/bdecoder.h>
 #include <bcodec/bencoder.h>
 #include <bcodec/bnode.h>
@@ -249,13 +250,13 @@ namespace kt
 		}
 	}
 	
-	void TorrentFileTreeModel::Node::saveExpandedState(const QModelIndex & index,QTreeView* tv,BEncoder* enc)
+	void TorrentFileTreeModel::Node::saveExpandedState(const QModelIndex & index,QSortFilterProxyModel* pm,QTreeView* tv,BEncoder* enc)
 	{
 		if (file)
 			return;
 		
 		enc->write("expanded");
-		enc->write((Uint32)(tv->isExpanded(index) ? 1 : 0));
+		enc->write((Uint32)(tv->isExpanded(pm->mapFromSource(index)) ? 1 : 0));
 		
 		int idx = 0;
 		foreach (Node* n,children)
@@ -264,14 +265,14 @@ namespace kt
 			{
 				enc->write(n->name);
 				enc->beginDict();
-				n->saveExpandedState(index.child(idx,0),tv,enc);
+				n->saveExpandedState(index.child(idx,0),pm,tv,enc);
 				enc->end();
 			}
 			idx++;
 		}
 	}
 	
-	void TorrentFileTreeModel::Node::loadExpandedState(const QModelIndex & index,QTreeView* tv,BNode* n)
+	void TorrentFileTreeModel::Node::loadExpandedState(const QModelIndex & index,QSortFilterProxyModel* pm,QTreeView* tv,BNode* n)
 	{
 		if (file)
 			return;
@@ -282,7 +283,7 @@ namespace kt
 		
 		BValueNode* v = dict->getValue("expanded");
 		if (v)
-			tv->setExpanded(index,v->data().toInt() == 1);
+			tv->setExpanded(pm->mapFromSource(index),v->data().toInt() == 1);
 		
 		int idx = 0;
 		foreach (Node* n,children)
@@ -291,7 +292,7 @@ namespace kt
 			{
 				BDictNode* d = dict->getDict(n->name);
 				if (d)
-					n->loadExpandedState(index.child(idx,0),tv,d);
+					n->loadExpandedState(index.child(idx,0),pm,tv,d);
 			}
 			idx++;
 		}
@@ -634,7 +635,7 @@ namespace kt
 			return tc->getStats().total_bytes;
 	}
 	
-	QByteArray TorrentFileTreeModel::saveExpandedState(QTreeView* tv)
+	QByteArray TorrentFileTreeModel::saveExpandedState(QSortFilterProxyModel* pm,QTreeView* tv)
 	{
 		if (!tc->getStats().multi_file_torrent)
 			return QByteArray();
@@ -642,13 +643,13 @@ namespace kt
 		QByteArray data;
 		BEncoder enc(new BEncoderBufferOutput(data));
 		enc.beginDict();
-		root->saveExpandedState(index(0,0,QModelIndex()),tv,&enc);
+		root->saveExpandedState(index(0,0,QModelIndex()),pm,tv,&enc);
 		enc.end();
 		return data;
 	}
 		
 		
-	void TorrentFileTreeModel::loadExpandedState(QTreeView* tv,const QByteArray & state)
+	void TorrentFileTreeModel::loadExpandedState(QSortFilterProxyModel* pm,QTreeView* tv,const QByteArray & state)
 	{
 		if (!tc->getStats().multi_file_torrent)
 			return;
@@ -657,7 +658,7 @@ namespace kt
 		BNode* n = dec.decode();
 		if (n && n->getType() == BNode::DICT)
 		{
-			root->loadExpandedState(index(0,0,QModelIndex()),tv,n);
+			root->loadExpandedState(index(0,0,QModelIndex()),pm,tv,n);
 		}
 		delete n;
 	}

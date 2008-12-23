@@ -32,12 +32,12 @@ namespace kt
 	TorrentFileModel::~TorrentFileModel()
 	{}
 	
-	QByteArray TorrentFileModel::saveExpandedState(QTreeView* )
+	QByteArray TorrentFileModel::saveExpandedState(QSortFilterProxyModel*, QTreeView* )
 	{
 		return QByteArray();
 	}
 		
-	void TorrentFileModel::loadExpandedState(QTreeView* ,const QByteArray &)
+	void TorrentFileModel::loadExpandedState(QSortFilterProxyModel* ,QTreeView* ,const QByteArray &)
 	{}
 
 	void TorrentFileModel::missingFilesMarkedDND()

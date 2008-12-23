@@ -27,6 +27,7 @@
 #include <ktcore_export.h>
 
 class QTreeView;
+class QSortFilterProxyModel;
 
 namespace bt
 {
@@ -71,17 +72,19 @@ namespace kt
 		
 		/**
 		 * Save which items are expanded.
+		 * @param pm Proxy model of the view
 		 * @param tv The QTreeView
 		 * @return The expanded state encoded in a byte array
 		 */
-		virtual QByteArray saveExpandedState(QTreeView* tv);
+		virtual QByteArray saveExpandedState(QSortFilterProxyModel* pm,QTreeView* tv);
 		
 		/**
 		 * Retore the expanded state of the tree.in a QTreeView
+		 * @param pm Proxy model of the view
 		 * @param tv The QTreeView
 		 * @param state The encoded expanded state
 		 */
-		virtual void loadExpandedState(QTreeView* tv,const QByteArray & state);
+		virtual void loadExpandedState(QSortFilterProxyModel* pm,QTreeView* tv,const QByteArray & state);
 
 		/**
 		 * Convert a model index to a file.

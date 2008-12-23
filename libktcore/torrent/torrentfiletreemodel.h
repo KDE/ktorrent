@@ -24,6 +24,8 @@
 #include "torrentfilemodel.h"
 #include <util/bitset.h>
 
+class QSortFilterProxyModel;
+
 namespace bt
 {
 	class BEncoder;
@@ -67,8 +69,8 @@ namespace kt
 			void updatePercentage(const bt::BitSet & havechunks);
 			void initPercentage(const bt::TorrentInterface* tc,const bt::BitSet & havechunks);
 		
-			void saveExpandedState(const QModelIndex & index,QTreeView* tv,bt::BEncoder* enc);
-			void loadExpandedState(const QModelIndex & index,QTreeView* tv,bt::BNode* node);
+			void saveExpandedState(const QModelIndex & index,QSortFilterProxyModel* pm,QTreeView* tv,bt::BEncoder* enc);
+			void loadExpandedState(const QModelIndex & index,QSortFilterProxyModel* pm,QTreeView* tv,bt::BNode* node);
 		};
 	public:
 		TorrentFileTreeModel(bt::TorrentInterface* tc,DeselectMode mode,QObject* parent);
@@ -85,8 +87,8 @@ namespace kt
 		virtual void uncheckAll();
 		virtual void invertCheck();
 		virtual bt::Uint64 bytesToDownload();
-		virtual QByteArray saveExpandedState(QTreeView* tv);
-		virtual void loadExpandedState(QTreeView* tv,const QByteArray & state);
+		virtual QByteArray saveExpandedState(QSortFilterProxyModel* pm,QTreeView* tv);
+		virtual void loadExpandedState(QSortFilterProxyModel* pm,QTreeView* tv,const QByteArray & state);
 		virtual bt::TorrentFileInterface* indexToFile(const QModelIndex & idx);
 		virtual QString dirPath(const QModelIndex & idx);
 		virtual void changePriority(const QModelIndexList & indexes,bt::Priority newpriority);

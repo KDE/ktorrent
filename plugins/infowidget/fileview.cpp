@@ -99,7 +99,7 @@ namespace kt
 		{
 			saveState(cfg);
 			if (curr_tc)
-				expanded_state_map[curr_tc] = model->saveExpandedState(this);
+				expanded_state_map[curr_tc] = model->saveExpandedState(proxy_model,this);
 		}
 		proxy_model->setSourceModel(0);
 		delete model;
@@ -121,7 +121,7 @@ namespace kt
 			loadState(cfg);
 			QMap<bt::TorrentInterface*,QByteArray>::iterator i = expanded_state_map.find(tc);
 			if (i != expanded_state_map.end())
-				model->loadExpandedState(this,i.value());
+				model->loadExpandedState(proxy_model,this,i.value());
 			else
 				expandAll();
 		}
@@ -408,7 +408,7 @@ namespace kt
 			return;
 		
 		saveState(cfg);
-		expanded_state_map[curr_tc] = model->saveExpandedState(this);
+		expanded_state_map[curr_tc] = model->saveExpandedState(proxy_model,this);
 		
 		proxy_model->setSourceModel(0);
 		delete model;
@@ -424,7 +424,7 @@ namespace kt
 		loadState(cfg);
 		QMap<bt::TorrentInterface*,QByteArray>::iterator i = expanded_state_map.find(curr_tc);
 		if (i != expanded_state_map.end())
-			model->loadExpandedState(this,i.value());
+			model->loadExpandedState(proxy_model,this,i.value());
 		else
 			expandAll();
 
