@@ -544,7 +544,6 @@ namespace kt
 		m->addSeparator();
 		m->addAction(paste_url_action);
 		m->addAction(open_action);
-		m->addAction(new_action);
 		m->addSeparator();
 		m->addAction(pref_action);
 		m->addAction(show_kt_action);

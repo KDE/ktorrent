@@ -29,6 +29,7 @@ Changes in 3.2rc1 :
 - Make sure that moving files when the torrents is complete, happens after the data check when the torrent is complete (177963)
 - Fix crash when removing torrent (178175)
 - Fix saving and restoring of expanded state of FileView (178022)
+- Remove new from system tray menu (177404)
 
 
 Changes in 3.2beta1 :
