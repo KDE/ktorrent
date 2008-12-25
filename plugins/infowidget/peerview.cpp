@@ -21,7 +21,6 @@
 #include "peerview.h"
 
 #include <QHeaderView>
-#include <QSortFilterProxyModel>
 #include <klocale.h>
 #include <kicon.h>
 #include <kmenu.h>
@@ -46,11 +45,8 @@ namespace kt
 		setAlternatingRowColors(true);
 		
 		model = new PeerViewModel(this);
-		pm = new QSortFilterProxyModel(this);
-		pm->setSourceModel(model);
-		pm->setSortRole(Qt::UserRole);
-	//	pm->setDynamicSortFilter(true);
-		setModel(pm);
+		connect(header(),SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),model,SLOT(sort(int, Qt::SortOrder)));
+		setModel(model);
 		
 		context_menu = new KMenu(this);
 		context_menu->addAction(KIcon("list-remove-user"),i18n("Kick Peer"),this,SLOT(kickPeer()));
@@ -78,7 +74,7 @@ namespace kt
 		QModelIndexList indices = selectionModel()->selectedRows();
 		foreach (const QModelIndex &idx,indices)
 		{
-			bt::PeerInterface* peer = model->indexToPeer(pm->mapToSource(idx));
+			bt::PeerInterface* peer = model->indexToPeer(idx);
 			if (peer)
 			{
 				aman.banPeer(peer->getStats().ip_address);
@@ -92,7 +88,7 @@ namespace kt
 		QModelIndexList indices = selectionModel()->selectedRows();
 		foreach (const QModelIndex &idx,indices)
 		{
-			bt::PeerInterface* peer = model->indexToPeer(pm->mapToSource(idx));
+			bt::PeerInterface* peer = model->indexToPeer(idx);
 			if (peer)
 				peer->kill();
 		}
@@ -110,10 +106,7 @@ namespace kt
 
 	void PeerView::update()
 	{
-		if (model->update())
-		{
-			pm->invalidate();
-		}
+		model->update();
 	}
 
 	void PeerView::removeAll()
@@ -137,13 +130,8 @@ namespace kt
 			QHeaderView* v = header();
 			v->restoreState(s);
 			sortByColumn(v->sortIndicatorSection(),v->sortIndicatorOrder());
+			model->sort(v->sortIndicatorSection(),v->sortIndicatorOrder());
 		}
-	}
-	
-	bool PeerView::viewportEvent(QEvent *event)
-	{
-		executeDelayedItemsLayout();
-		return QTreeView::viewportEvent(event);
 	}
 }
 

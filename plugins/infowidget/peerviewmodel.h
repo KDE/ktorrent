@@ -22,6 +22,7 @@
 #define KTPEERVIEWMODEL_H
 
 #include <kicon.h>
+#include <QList>
 #include <QAbstractTableModel>
 #include <interfaces/peerinterface.h>
 
@@ -47,9 +48,8 @@ namespace kt
 		
 		/**
 		 * Update the model
-		 * @return true if the view needs to be sorted again
 		 */
-		bool update();
+		void update();
 		
 		void clear();
 
@@ -61,8 +61,12 @@ namespace kt
 		virtual bool insertRows(int row,int count,const QModelIndex & parent);
 		
 		bt::PeerInterface* indexToPeer(const QModelIndex & idx);
-	private:
 		
+	public slots:
+		void sort(int col, Qt::SortOrder order);
+		
+	
+	public:	
 		struct Item
 		{
 			bt::PeerInterface* peer;
@@ -72,13 +76,15 @@ namespace kt
 			
 			Item(bt::PeerInterface* peer);
 			
-			bool changed() const;
+			bool changed(int col,bool & modified) const;
 			QVariant data(int col) const;
 			QVariant decoration(int col) const;
-			QVariant dataForSorting(int col) const;
+			bool lessThan(int col,const Item* other) const;
 		};
-		
-		QList<Item> items;
+	private:
+		QList<Item*> items;
+		int sort_column;
+		Qt::SortOrder sort_order;
 	};
 
 }

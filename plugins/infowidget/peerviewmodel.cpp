@@ -99,7 +99,7 @@ namespace kt
 			flag = KIcon(flagDB.getFlag(GeoIP_country_code[country_id]));
 		}
 	}
-			
+		/*	
 	bool PeerViewModel::Item::changed() const
 	{
 		const PeerInterface::Stats & s = peer->getStats();
@@ -123,6 +123,71 @@ namespace kt
 			return true;
 		}
 		return false;
+	}
+	*/
+	bool PeerViewModel::Item::changed(int col,bool & modified) const
+	{
+		const PeerInterface::Stats & s = peer->getStats();
+		bool ret = false;
+		
+		switch (col)
+		{
+			case 3: 
+				ret = s.download_rate != stats.download_rate;
+				break;
+			case 4: 
+				ret = s.upload_rate != stats.upload_rate;
+				break;
+			case 5: 
+				ret = s.choked != stats.choked;
+				break;
+			case 6: 
+				ret = s.snubbed != stats.snubbed;
+				break;
+			case 7: 
+				ret = s.perc_of_file != stats.perc_of_file;
+				break;
+			case 9: 
+				ret = s.aca_score != stats.aca_score;
+				break;
+			case 10: 
+				ret = s.has_upload_slot != stats.has_upload_slot;
+				break;
+			case 11:
+				ret = (s.num_down_requests != stats.num_down_requests || s.num_up_requests != stats.num_up_requests);
+				break;
+			case 12: 
+				ret = s.bytes_downloaded != stats.bytes_downloaded;
+				break;
+			case 13: 
+				ret = s.bytes_uploaded != stats.bytes_uploaded;
+				break;
+			case 14: 
+				ret = s.interested != stats.interested;
+				break;
+			case 15:
+				ret = s.am_interested != stats.am_interested;
+				break;
+			default: 
+				ret = false;
+				break;
+		}
+
+		modified = s.download_rate != stats.download_rate || 
+				s.upload_rate != stats.upload_rate || 
+				s.choked != stats.choked || 
+				s.snubbed != stats.snubbed || 
+				s.perc_of_file != stats.perc_of_file || 
+				s.aca_score != stats.aca_score || 
+				s.has_upload_slot != stats.has_upload_slot || 
+				s.num_down_requests != stats.num_down_requests || 
+				s.num_up_requests != stats.num_up_requests || 
+				s.bytes_downloaded != stats.bytes_downloaded || 
+				s.bytes_uploaded != stats.bytes_uploaded ||
+				s.interested != stats.interested ||
+				s.am_interested != stats.am_interested;
+		stats = s;
+		return ret;
 	}
 	
 	QVariant PeerViewModel::Item::data(int col) const
@@ -158,29 +223,30 @@ namespace kt
 		return QVariant();
 	}
 	
-	QVariant PeerViewModel::Item::dataForSorting(int col) const
+	bool PeerViewModel::Item::lessThan(int col,const Item* other) const
 	{
 		switch (col)
 		{
-			case 0: return stats.ip_address;
-			case 1: return country;
-			case 2: return stats.client;
-			case 3: return stats.download_rate;
-			case 4: return stats.upload_rate;
-			case 5: return stats.choked;
-			case 6: return stats.snubbed;
-			case 7: return stats.perc_of_file;
-			case 8: return stats.dht_support;
-			case 9: return stats.aca_score;
-			case 10: return stats.has_upload_slot;
-			case 11: return stats.num_down_requests + stats.num_up_requests;
-			case 12: return stats.bytes_downloaded;
-			case 13: return stats.bytes_uploaded;
-			case 14: return stats.interested;
-			case 15: return stats.am_interested;
-			default: return QVariant();
+			case 0: return stats.ip_address < other->stats.ip_address;
+			case 1: return country < other->country;
+			case 2: return stats.client < other->stats.client;
+			case 3: return stats.download_rate < other->stats.download_rate;
+			case 4: return stats.upload_rate < other->stats.upload_rate;
+			case 5: return stats.choked < other->stats.choked;
+			case 6: return stats.snubbed < other->stats.snubbed;
+			case 7: return stats.perc_of_file < other->stats.perc_of_file;
+			case 8: return stats.dht_support < other->stats.dht_support;
+			case 9: return stats.aca_score < other->stats.aca_score;
+			case 10: return stats.has_upload_slot < other->stats.has_upload_slot;
+			case 11: return stats.num_down_requests + stats.num_up_requests < 
+							other->stats.num_down_requests + other->stats.num_up_requests;
+			case 12: return stats.bytes_downloaded < other->stats.bytes_downloaded;
+			case 13: return stats.bytes_uploaded < other->stats.bytes_uploaded;
+			case 14: return stats.interested < other->stats.interested;
+			case 15: return stats.am_interested < other->stats.am_interested;
+			default: return false;
 		}
-		return QVariant();
+		return false;
 	}
 	
 	QVariant PeerViewModel::Item::decoration(int col) const
@@ -204,28 +270,32 @@ namespace kt
 	PeerViewModel::PeerViewModel ( QObject* parent )
 	: QAbstractTableModel(parent)
 	{
+		sort_column = 0;
+		sort_order = Qt::AscendingOrder;
 	}
 
 
 	PeerViewModel::~PeerViewModel()
 	{
+		qDeleteAll(items);
 	}
 	
 	void PeerViewModel::peerAdded(bt::PeerInterface* peer)
 	{
-		items.append(Item(peer));
+		items.append(new Item(peer));
 		insertRow(items.count() - 1);
 	}
 	
 	void PeerViewModel::peerRemoved(bt::PeerInterface* peer)
 	{
 		int idx = 0;
-		for (QList<Item>::iterator i = items.begin();i != items.end();i++)
+		for (QList<Item*>::iterator i = items.begin();i != items.end();i++)
 		{
-			const Item & item = *i;
-			if (item.peer == peer)
+			Item* item = *i;
+			if (item->peer == peer)
 			{
 				items.erase(i);
+				delete item;
 				removeRow(idx);
 				break;
 			}
@@ -235,21 +305,28 @@ namespace kt
 	
 	void PeerViewModel::clear()
 	{
+		qDeleteAll(items);
 		items.clear();
 		reset();
 	}
 	
-	bool PeerViewModel::update()
+	void PeerViewModel::update()
 	{
-		bool ret = false;
+		bool resort = false;
 		Uint32 idx=0;
-		foreach (const Item & i,items)
+		foreach (Item* i,items)
 		{
-			if (i.changed())
-				ret = true;
+			bool modified = false;
+			if (i->changed(sort_column,modified))
+				resort = true;
+			
+			if (modified && !resort)
+				emit dataChanged(index(idx,3),index(idx,15));
 			idx++;
 		}
-		return ret;
+	
+		if (resort)
+			sort(sort_column,sort_order);
 	}
 
 	int PeerViewModel::rowCount( const QModelIndex & parent) const
@@ -329,11 +406,9 @@ namespace kt
 			return QVariant(); 
 		
 		if (role == Qt::DisplayRole)
-			return items[index.row()].data(index.column());
-		else if (role == Qt::UserRole) // UserRole is for sorting
-			return items[index.row()].dataForSorting(index.column());
+			return items[index.row()]->data(index.column());
 		else if (role == Qt::DecorationRole)
-			return items[index.row()].decoration(index.column());
+			return items[index.row()]->decoration(index.column());
 		
 		return QVariant();
 	}
@@ -357,7 +432,33 @@ namespace kt
 		if (!index.isValid() || index.row() >= items.count() || index.row() < 0)
 			return 0; 
 		else
-			return items[index.row()].peer;
+			return items[index.row()]->peer;
 	}
+	
+	class ItemCmp
+	{
+	public:
+		ItemCmp(int col,Qt::SortOrder order) : col(col),order(order)
+		{}
+		
+		bool operator()(PeerViewModel::Item* a,PeerViewModel::Item* b)
+		{
+			if (order == Qt::AscendingOrder)
+				return a->lessThan(col,b);
+			else
+				return !a->lessThan(col,b);
+		}
+		
+		int col;
+		Qt::SortOrder order;
+	};
 
+	void PeerViewModel::sort(int col, Qt::SortOrder order)
+	{
+		sort_column = col;
+		sort_order = order;
+		emit layoutAboutToBeChanged();
+		qStableSort(items.begin(),items.end(),ItemCmp(col,order));
+		emit layoutChanged();
+	}
 }

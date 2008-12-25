@@ -27,7 +27,6 @@
 #include <ksharedconfig.h>
 
 class KMenu;
-class QSortFilterProxyModel;
 
 namespace kt
 {
@@ -62,14 +61,10 @@ namespace kt
 		void showContextMenu(const QPoint& pos);
 		void banPeer();
 		void kickPeer();
-		
-	private:
-		virtual bool viewportEvent(QEvent *event);
 				
 	private:
 		KMenu* context_menu;
 		PeerViewModel* model;
-		QSortFilterProxyModel* pm;
 	};
 }
 

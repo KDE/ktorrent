@@ -301,7 +301,7 @@ namespace kt
 		if (cd_view)
 			cd_view->removeAll();
 			
-		if (tc && peer_view || cd_view)
+		if (tc && (peer_view || cd_view))
 			monitor = new Monitor(tc,peer_view,cd_view,file_view);
 	}
 }
