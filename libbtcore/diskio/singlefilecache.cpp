@@ -28,6 +28,9 @@
 #include <util/error.h>
 #include <util/functions.h>
 #include <util/log.h>
+#ifdef Q_WS_WIN
+#include <util/win32.h>
+#endif
 #include <torrent/torrent.h>
 #include "chunk.h"
 #include "cachefile.h"

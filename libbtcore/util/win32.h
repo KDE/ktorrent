@@ -84,6 +84,9 @@ struct BTCORE_EXPORT pollfd {
 // #define poll(x, y, z)        mingw_poll(x, y, z)
 #endif
 
+#ifdef Q_CC_MINGW
+#define NAME_MAX            255
+#endif
 /* These wrappers do nothing special except set the global errno variable if
 * an error occurs (winsock doesn't do this by default). They set errno
 * to unix-like values (i.e. WSAEWOULDBLOCK is mapped to EAGAIN), so code
