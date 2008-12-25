@@ -435,10 +435,10 @@ namespace kt
 			return items[index.row()]->peer;
 	}
 	
-	class ItemCmp
+	class PeerViewModelItemCmp
 	{
 	public:
-		ItemCmp(int col,Qt::SortOrder order) : col(col),order(order)
+		PeerViewModelItemCmp(int col,Qt::SortOrder order) : col(col),order(order)
 		{}
 		
 		bool operator()(PeerViewModel::Item* a,PeerViewModel::Item* b)
@@ -458,7 +458,7 @@ namespace kt
 		sort_column = col;
 		sort_order = order;
 		emit layoutAboutToBeChanged();
-		qStableSort(items.begin(),items.end(),ItemCmp(col,order));
+		qStableSort(items.begin(),items.end(),PeerViewModelItemCmp(col,order));
 		emit layoutChanged();
 	}
 }
