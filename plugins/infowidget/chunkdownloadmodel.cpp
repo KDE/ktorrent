@@ -125,8 +125,10 @@ namespace kt
 			}
 		}
 		
-		items.append(new Item(cd,files));
-		insertRow(items.count() - 1);
+		Item* nitem = new Item(cd,files);
+		items.append(nitem);
+		insertRow(items.count() - 1);	
+		sort(sort_column,sort_order);
 	}
 	
 	void ChunkDownloadModel::downloadRemoved(bt::ChunkDownloadInterface* cd)

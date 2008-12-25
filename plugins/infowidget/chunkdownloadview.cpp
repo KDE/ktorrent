@@ -111,6 +111,7 @@ namespace kt
 			QHeaderView* v = m_chunk_view->header();
 			v->restoreState(s);
 			m_chunk_view->sortByColumn(v->sortIndicatorSection(),v->sortIndicatorOrder());
+			model->sort(v->sortIndicatorSection(),v->sortIndicatorOrder());
 		}
 	}
 }

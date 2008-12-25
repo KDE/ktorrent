@@ -284,6 +284,7 @@ namespace kt
 	{
 		items.append(new Item(peer));
 		insertRow(items.count() - 1);
+		sort(sort_column,sort_order);
 	}
 	
 	void PeerViewModel::peerRemoved(bt::PeerInterface* peer)
