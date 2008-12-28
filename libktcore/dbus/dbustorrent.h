@@ -29,8 +29,7 @@
 
 namespace kt
 {
-	class DBusTorrentFile;
-
+	
 
 	/**
 		DBus object to access a torrent

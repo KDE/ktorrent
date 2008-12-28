@@ -27,10 +27,6 @@
 
 class KAction;
 
-namespace Phonon
-{
-	class MediaObject;
-}
 
 namespace kt
 {

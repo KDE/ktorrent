@@ -27,8 +27,7 @@
 
 namespace kt
 {
-	class DBus;
-	class GUIInterface;
+		class GUIInterface;
 	class CoreInterface;
 
 	/**

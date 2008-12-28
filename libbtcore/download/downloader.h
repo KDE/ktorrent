@@ -42,9 +42,7 @@ namespace bt
 	class PieceDownloader;
 	class MonitorInterface;
 	class WebSeed;
-	class ChunkDownloadInterface;
-	class BadPeersList;
-	class WebSeedChunkDownload;
+			class WebSeedChunkDownload;
 
 	typedef PtrMap<Uint32,ChunkDownload>::iterator CurChunkItr;
 	typedef PtrMap<Uint32,ChunkDownload>::const_iterator CurChunkCItr;

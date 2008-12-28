@@ -27,7 +27,6 @@
 #include "ui_ipblockingprefpage.h"
 #include "ipfilterplugin.h"
 
-class KProgress;
 class KJob;
 
 namespace kt

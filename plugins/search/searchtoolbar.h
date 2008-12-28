@@ -24,7 +24,6 @@
 #include <ktoolbar.h>
 		
 class KComboBox;
-class KPushButton;
 
 
 namespace kt

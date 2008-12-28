@@ -35,7 +35,6 @@ namespace Plasma
 #else 
 	class IconWidget;
 #endif
-	class Meter;
 	class Label;
 }
 

@@ -23,8 +23,6 @@
 
 #include <QListView>
 
-class KToolBar;
-class KActionCollection;
 
 namespace kt
 {

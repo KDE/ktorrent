@@ -32,7 +32,6 @@ class KMenu;
 namespace kt
 {
 	class Core;
-	class ViewMenu;
 	class ViewModel;
 	class Group;
 	class TorrentInterface;

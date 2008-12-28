@@ -31,7 +31,6 @@ namespace bt
 
 namespace kt
 {
-	class FileTreeDirItem;
 	class GroupManager;
 	class TorrentFileModel;
 

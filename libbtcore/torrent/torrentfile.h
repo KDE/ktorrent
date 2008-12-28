@@ -27,9 +27,7 @@
 
 namespace bt
 {
-	class BitSet;
 	class ChunkManager;
-	class MonitorInterface;
 	class Torrent;
 	
 	

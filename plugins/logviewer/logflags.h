@@ -29,8 +29,7 @@ class QString;
 namespace kt
 {
 	
-	class LogViewer;
-
+	
 	/**
 	 * Class to read/save logging messages flags.
 	 * @author Ivan Vasic <ivasic@gmail.com>

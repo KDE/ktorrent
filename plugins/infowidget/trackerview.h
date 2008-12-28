@@ -26,7 +26,6 @@
 namespace bt
 {
 	class TorrentInterface;
-	class TorrentFileInterface;
 }
 
 namespace kt

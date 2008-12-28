@@ -24,7 +24,6 @@
 #include <QThread>
 #include "antip2p.h"
 
-class KJob;
 
 namespace kt
 {
