@@ -4,6 +4,7 @@ Comment=KTorrent
 Comment[hi]=केटोरेंट
 Comment[pt_BR]=KTorrent 
 Comment[sv]=Ktorrent
+Comment[th]=โปรแกรม KTorrent
 Comment[x-test]=xxKTorrentxx
 
 [Event/TorrentStoppedByError]
