@@ -228,8 +228,8 @@ namespace kt
 		switch (col)
 		{
 			case 0: return stats.ip_address < other->stats.ip_address;
-			case 1: return country < other->country;
-			case 2: return stats.client < other->stats.client;
+			case 1: return QString::localeAwareCompare(country,other->country) < 0;
+			case 2: return QString::localeAwareCompare(stats.client,other->stats.client) < 0;
 			case 3: return stats.download_rate < other->stats.download_rate;
 			case 4: return stats.upload_rate < other->stats.upload_rate;
 			case 5: return stats.choked < other->stats.choked;

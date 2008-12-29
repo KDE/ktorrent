@@ -41,16 +41,19 @@
 #include "scandlg.h"
 #include "speedlimitsdlg.h"
 #include "addpeersdlg.h"
-#include "groupfiltermodel.h"
+
 
 using namespace bt;
 
 namespace kt
 {
 	
-	View::View(ViewModel* model,Core* core,QWidget* parent) 
-		: QTreeView(parent),core(core),group(0),num_torrents(0),num_running(0),model(model)
+	View::View(Core* core,QWidget* parent) 
+		: QTreeView(parent),core(core),group(0),num_torrents(0),num_running(0),model(0)
 	{
+		model = new ViewModel(core,this);
+		//connect(header(),SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),model,SLOT(sort(int, Qt::SortOrder)));
+		
 		setContextMenuPolicy(Qt::CustomContextMenu);
 		setRootIsDecorated(false);
 		setSortingEnabled(true);
@@ -85,10 +88,7 @@ namespace kt
 		
 		connect(header_menu,SIGNAL(triggered(QAction* )),this,SLOT(onHeaderMenuItemTriggered(QAction*)));
 		
-		proxy_model = new GroupFilterModel(model,this);
-		proxy_model->setSortRole(Qt::UserRole);
-		setModel(proxy_model);
-		//setModel(model);
+		setModel(model);
 		connect(selectionModel(),SIGNAL(currentChanged(const QModelIndex &,const QModelIndex &)),
 				this,SLOT(onCurrentItemChanged(const QModelIndex&, const QModelIndex&)));
 		connect(selectionModel(),SIGNAL(selectionChanged(const QItemSelection &,const QItemSelection)),
@@ -119,41 +119,15 @@ namespace kt
 	void View::setGroup(Group* g)
 	{
 		group = g;
-		proxy_model->setGroup(group);
+		model->setGroup(group);
 		update();
+		needToUpdateCaption();
 		selectionModel()->clear();
 	}
 
-	bool View::update()
+	void View::update()
 	{
-		Uint32 torrents = 0;
-		Uint32 running = 0;
-		QList<bt::TorrentInterface*> all;
-		model->allTorrents(all);
-		
-		foreach (bt::TorrentInterface* ti,all)
-		{
-			if (!group || (group && group->isMember(ti)))
-			{
-				torrents++;
-				if (ti->getStats().running)
-					running++;
-			}
-		}
-
-		if (model->updated())
-			proxy_model->invalidate();
-		
-		// update the caption
-		if (num_running != running || num_torrents != torrents)
-		{
-			num_running = running;
-			num_torrents = torrents;
-			proxy_model->refilter();
-			return true;
-		}
-		
-		return false;
+		model->update();
 	}
 
 	bool View::needToUpdateCaption()
@@ -176,7 +150,6 @@ namespace kt
 		{
 			num_running = running;
 			num_torrents = torrents;
-			proxy_model->refilter();
 			return true;
 		}
 		
@@ -421,7 +394,7 @@ namespace kt
 		if (indices.count() == 0)
 			return;
 		QModelIndex idx = indices.front();
-		edit(proxy_model->index(idx.row(),0));
+		edit(model->index(idx.row(),0));
 	}
 
 	void View::checkData()
@@ -450,9 +423,6 @@ namespace kt
 	void View::getSelection(QList<bt::TorrentInterface*> & sel)
 	{
 		QModelIndexList indices = selectionModel()->selectedRows();
-		for (QModelIndexList::iterator i = indices.begin();i != indices.end();i++)
-			*i = proxy_model->mapToSource(*i);
-			
 		model->torrentsFromIndexList(indices,sel);
 	}
 
@@ -473,6 +443,7 @@ namespace kt
 			QHeaderView* v = header();
 			v->restoreState(s);
 			sortByColumn(v->sortIndicatorSection(),v->sortIndicatorOrder());
+			model->sort(v->sortIndicatorSection(),v->sortIndicatorOrder());
 		}
 		
 		QMap<QAction*,int>::iterator i = column_idx_map.begin();
@@ -486,13 +457,13 @@ namespace kt
 
 	bt::TorrentInterface* View::getCurrentTorrent()
 	{
-		return model->torrentFromIndex(proxy_model->mapToSource(selectionModel()->currentIndex()));
+		return model->torrentFromIndex(selectionModel()->currentIndex());
 	}
 
 	void View::onCurrentItemChanged(const QModelIndex & current,const QModelIndex & /*previous*/)
 	{
 		//Out(SYS_GEN|LOG_DEBUG) << "onCurrentItemChanged " << current.row() << endl;
-		bt::TorrentInterface* tc = model->torrentFromIndex(proxy_model->mapToSource(current));
+		bt::TorrentInterface* tc = model->torrentFromIndex(current);
 		currentTorrentChanged(this,tc);
 	}
 
@@ -514,12 +485,6 @@ namespace kt
 	QList<QAction*> View::columnActionList() const
 	{
 		return column_action_list;
-	}
-	
-	bool View::viewportEvent(QEvent *event)
-	{
-		executeDelayedItemsLayout();
-		return QTreeView::viewportEvent(event);
 	}
 
 }

@@ -33,7 +33,6 @@ class QWidget;
 namespace kt
 {
 	class View;
-	class ViewModel;
 	class Core;
 	class GUI;
 	class Group;
@@ -170,7 +169,6 @@ namespace kt
 		View* current;
 		QList<View*> views;
 		Group* all_group; 
-		ViewModel* model;
 		KMenu* view_menu;
 		
 		// actions for the view menu 

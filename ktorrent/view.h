@@ -34,15 +34,13 @@ namespace kt
 	class Core;
 	class ViewModel;
 	class Group;
-	class TorrentInterface;
-	class GroupFilterModel;
-	
+	class TorrentInterface;	
 	
 	class View : public QTreeView
 	{
 		Q_OBJECT
 	public:
-		View(ViewModel* model,Core* core,QWidget* parent);
+		View(Core* core,QWidget* parent);
 		virtual ~View();
 
 		/**
@@ -92,9 +90,8 @@ namespace kt
 	public slots:
 		/**
 		 * Update all items in the view
-		 * @return true If the view caption nees to be updated
 		 * */
-		bool update();
+		void update();
 		void startTorrents();
 		void stopTorrents();
 		void removeTorrents();
@@ -126,10 +123,7 @@ namespace kt
 		void wantToStart(QList<bt::TorrentInterface*> & todo);
 		void currentTorrentChanged(View* v,bt::TorrentInterface* tc);
 		void torrentSelectionChanged(View* v);
-		void showMenu(View* v,const QPoint & pos);
-		
-	private:
-		virtual bool viewportEvent(QEvent *event);
+		void showMenu(View* v,const QPoint & pos);;
 
 	private:
 		Core* core;
@@ -140,7 +134,6 @@ namespace kt
 		bt::Uint32 num_torrents;
 		bt::Uint32 num_running;
 		ViewModel* model;
-		GroupFilterModel* proxy_model;
 	};
 }
 

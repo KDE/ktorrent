@@ -45,7 +45,6 @@ namespace kt
 		setAlternatingRowColors(true);
 		
 		model = new PeerViewModel(this);
-		connect(header(),SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),model,SLOT(sort(int, Qt::SortOrder)));
 		setModel(model);
 		
 		context_menu = new KMenu(this);

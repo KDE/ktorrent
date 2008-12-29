@@ -33,7 +33,6 @@
 #include <groups/groupmanager.h>
 #include "gui.h"
 #include "view.h"
-#include "viewmodel.h"
 #include "viewmanager.h"
 #include "core.h"
 #include "groupview.h"
@@ -46,7 +45,6 @@ namespace kt
 	ViewManager::ViewManager(Group* all_group,GUI* gui,Core* core) : QObject(gui),gui(gui),core(core),current(0),all_group(all_group)
 	{
 		view_menu = 0;
-		model = new ViewModel(core,this);
 	}
 
 	ViewManager::~ViewManager()
@@ -56,7 +54,7 @@ namespace kt
 	/// Create a new view
 	View* ViewManager::newView(Core* core,QWidget* parent)
 	{
-		View* v = new View(model,core,parent);
+		View* v = new View(core,parent);
 		views.append(v);
 		connect(v,SIGNAL(currentTorrentChanged(View* ,bt::TorrentInterface* )),
 			this,SLOT(onCurrentTorrentChanged(View* ,bt::TorrentInterface* )));
@@ -217,9 +215,8 @@ namespace kt
 
 	void ViewManager::update()
 	{
-		model->update();
-		if (current && current->update())
-			gui->setTabText(current,current->caption());
+		if (current)
+			current->update();
 	}
 	
 	const bt::TorrentInterface* ViewManager::getCurrentTorrent() const

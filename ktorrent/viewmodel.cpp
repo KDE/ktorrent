@@ -30,6 +30,7 @@
 #include <util/functions.h>
 #include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>
+#include <groups/group.h>
 #include "viewmodel.h"
 #include "core.h"
 
@@ -57,97 +58,124 @@ namespace kt
 		share_ratio = ShareRatio(s);
 		runtime_dl = tc->getRunningTimeDL();
 		runtime_ul = tc->getRunningTimeUL() - tc->getRunningTimeDL();
+		hidden = false;
 	}
 			
 	
-	bool ViewModel::Item::update()
+	bool ViewModel::Item::update(int col,bool & modified)
 	{
 		bool ret = false;
 		const TorrentStats & s = tc->getStats();
 		if (status != s.status)
 		{
-			ret = true;
+			modified = true;
 			status = s.status;
+			if (col == STATUS)
+				ret = true;
 		}
 			
 		if (bytes_downloaded != s.bytes_downloaded)
 		{
-			ret = true;
+			modified = true;
 			bytes_downloaded = s.bytes_downloaded;
+			if (col == BYTES_DOWNLOADED)
+				ret = true;
 		}
 		
 		if (total_bytes_to_download != s.total_bytes_to_download)
 		{
-			ret = true;
+			modified = true;
 			total_bytes_to_download = s.total_bytes_to_download;
+			if (col == TOTAL_BYTES_TO_DOWNLOAD)
+				ret = true;
 		}
 		
 		if (bytes_uploaded != s.bytes_uploaded)
 		{
-			ret = true;
+			modified = true;
 			bytes_uploaded = s.bytes_uploaded;
+			if (col == BYTES_UPLOADED)
+				ret = true;
 		}
 		
 		if (download_rate != s.download_rate)
 		{
-			ret = true;
+			modified = true;
 			download_rate = s.download_rate;
+			if (col == DOWNLOAD_RATE)
+				ret = true;
 		}
 		
 		if (upload_rate != s.upload_rate)
 		{
-			ret = true;
+			modified = true;
 			upload_rate = s.upload_rate;
+			if (col == UPLOAD_RATE)
+				ret = true;
 		}
 		
 		int neta = tc->getETA();
 		if (eta != neta)
 		{
-			ret = true;
+			modified = true;
 			eta = neta;
+			if (col == ETA)
+				ret = true;
 		}
 		
 		if (seeders_connected_to != s.seeders_connected_to || seeders_total != s.seeders_total)
 		{
-			ret = true;
+			modified = true;
 			seeders_connected_to = s.seeders_connected_to;
 			seeders_total = s.seeders_total;
+			if (col == SEEDERS)
+				ret = true;
 		}
 		
 		if (leechers_total != s.leechers_total || leechers_connected_to != s.leechers_connected_to)
 		{
-			ret = true;
+			modified = true;
 			leechers_total = s.leechers_total;
 			leechers_connected_to = s.leechers_connected_to;
+			if (col == LEECHERS)
+				ret = true;
 		}
 		
 		double perc = Percentage(s); 
 		if (fabs(percentage - perc) > 0.01)
 		{
-			ret = true;
+			modified = true;
 			percentage = perc;
+			if (col == PERCENTAGE)
+				ret = true;
 		}
 		
 		float ratio = ShareRatio(s);
 		if (fabsf(share_ratio - ratio) > 0.01)
 		{
-			ret = true;
+			modified = true;
 			share_ratio = ratio;
+			if (col == SHARE_RATIO)
+				ret = true;
 		}
 		
 		Uint32 rdl = tc->getRunningTimeDL();
 		if (runtime_dl != rdl)
 		{
-			ret = true;
+			modified = true;
 			runtime_dl = rdl;
+			if (col == DOWNLOAD_TIME)
+				ret = true;
 		}
 		
 		Uint32 rul = tc->getRunningTimeUL();
 		rul = rul >= rdl ? rul - rdl : 0; // make sure rul cannot go negative
 		if (runtime_ul != rul)
 		{
-			ret = true;
+			modified = true;
 			runtime_ul = rul;
+			if (col == SEED_TIME)
+				ret = true;
 		}
 		return ret;
 	}
@@ -194,38 +222,26 @@ namespace kt
 		}
 	}
 	
-	QVariant ViewModel::Item::dataForSorting(int col) const
+	bool ViewModel::Item::lessThan(int col,const Item* other) const
 	{
-		const TorrentStats & s = tc->getStats();
 		switch (col)
 		{
-			case 0: return tc->getDisplayName();
-			case 1: return tc->statusToString();
-			case 2: return bytes_downloaded;
-			case 3: return total_bytes_to_download;
-			case 4: return bytes_uploaded;
-			case 5: 
-				if (download_rate >= 103 && s.bytes_left_to_download > 0) // lowest "visible" speed, all below will be 0,0 Kb/s
-					return download_rate;
-				else
-					return 0;
-				break;
-			case 6: 
-				if (upload_rate >= 103) // lowest "visible" speed, all below will be 0,0 Kb/s
-					return upload_rate;
-				else
-					return 0;
-				break;
-			case 7: return eta;	
-			case 8: return seeders_connected_to;
-			case 9: return leechers_connected_to;
-			// xgettext: no-c-format
-			case 10: return percentage;
-			case 11: return share_ratio;
-			case 12: return runtime_dl;
-			case 13: return runtime_ul;
-			case 14: return tc->getStats().output_path;
-			default: return QVariant();
+			case 0: return QString::localeAwareCompare(tc->getDisplayName(),other->tc->getDisplayName()) < 0;
+			case 1: return tc->statusToString() < other->tc->statusToString();
+			case 2: return bytes_downloaded < other->bytes_downloaded;
+			case 3: return total_bytes_to_download < other->total_bytes_to_download;
+			case 4: return bytes_uploaded < other->bytes_uploaded;
+			case 5: return (download_rate < 102 ? 0 : download_rate) < (other->download_rate < 102 ? 0 : other->download_rate);
+			case 6: return (upload_rate < 102 ? 0 : upload_rate) < (other->upload_rate < 102 ? 0 : other->upload_rate);
+			case 7: return eta < other->eta;	
+			case 8: return seeders_connected_to < other->seeders_connected_to;
+			case 9: return leechers_connected_to < other->leechers_connected_to;
+			case 10: return percentage < other->percentage;
+			case 11: return share_ratio < other->share_ratio;
+			case 12: return runtime_dl < other->runtime_dl;
+			case 13: return runtime_ul < other->runtime_ul;
+			case 14: return tc->getStats().output_path < other->tc->getStats().output_path;
+			default: return false;
 		}
 	}
 	
@@ -264,42 +280,62 @@ namespace kt
 		else
 			return QVariant();
 	}
+	
+	bool ViewModel::Item::member(Group* group) const
+	{
+		if (!group)
+			return true;
+		else
+			return group->isMember(tc);
+	}
 
-	ViewModel::ViewModel(Core* core,QObject* parent) : QAbstractTableModel(parent),core(core),changed_values(false)
+	ViewModel::ViewModel(Core* core,QObject* parent) : QAbstractTableModel(parent),core(core)
 	{
 		connect(core,SIGNAL(torrentAdded(bt::TorrentInterface*)),this,SLOT(addTorrent(bt::TorrentInterface*)));
 		connect(core,SIGNAL(torrentRemoved(bt::TorrentInterface*)),this,SLOT(removeTorrent(bt::TorrentInterface*)));
+		sort_column = 0;
+		sort_order = Qt::AscendingOrder;
+		group = 0;
+		num_visible = 0;
 		
 		kt::QueueManager* qman = core->getQueueManager();
 		for (QList<bt::TorrentInterface*>::iterator i = qman->begin();i != qman->end();i++)
 		{
-			Item item(*i);
-			torrents.append(item);
+			torrents.append(new Item(*i));
+			num_visible++;
 		}
 	}
 
 
 	ViewModel::~ViewModel()
-	{}
+	{
+		qDeleteAll(torrents);
+	}
+	
+	void ViewModel::setGroup(Group* g)
+	{
+		group = g;
+		update();
+	}
 	
 	void ViewModel::addTorrent(bt::TorrentInterface* ti)
 	{
-		Item i(ti);
-		torrents.append(i);
-		insertRow(torrents.count() - 1);
+		torrents.append(new Item(ti));
+		update(true);
 	}
 	
 	void ViewModel::removeTorrent(bt::TorrentInterface* ti)
 	{
 		int idx = 0;
-		for (QList<Item>::iterator i = torrents.begin();i != torrents.end();i++)
+		for (QList<Item*>::iterator i = torrents.begin();i != torrents.end();i++)
 		{
-			const Item & item = *i;
-			if (item.tc == ti)
+			Item* item = *i;
+			if (item->tc == ti)
 			{
 				torrents.erase(i);
+				delete item;
 				removeRow(idx);
-				reset();
+				update(true);
 				break;
 			}
 			idx++;
@@ -313,16 +349,35 @@ namespace kt
 		//emit dataChanged(createIndex(row,0),createIndex(row,14));
 	}
 
-	void ViewModel::update()
+	void ViewModel::update(bool force_resort)
 	{
-		changed_values = false;
-		int row = 0;
-		for (QList<Item>::iterator i = torrents.begin();i != torrents.end();i++)
+		bool resort = force_resort;
+		Uint32 idx=0;
+		num_visible = 0;
+		foreach (Item* i,torrents)
 		{
-			Item & item = *i;
-			if (item.update())
-				changed_values = true;
-			row++;
+			bool modified = false;
+			if (i->update(sort_column,modified))
+				resort = true;
+			
+			bool hidden = !i->member(group);
+			if (hidden != i->hidden)
+			{
+				i->hidden = hidden;
+				resort = true;
+			}
+			
+			if (!i->hidden)
+				num_visible++;
+			
+			if (modified && !resort)
+				emit dataChanged(index(idx,0),index(idx,14));
+			idx++;
+		}
+	
+		if (resort)
+		{
+			sort(sort_column,sort_order);
 		}
 	}
 	
@@ -331,7 +386,7 @@ namespace kt
 		if (parent.isValid())
 			return 0;
 		else
-			return torrents.count();
+			return num_visible;
 	}
 	
 	int ViewModel::columnCount(const QModelIndex & parent) const
@@ -411,16 +466,14 @@ namespace kt
 			return QVariant(); 
 		
 		if (role == Qt::ForegroundRole)
-			return torrents[index.row()].color(index.column());
+			return torrents[index.row()]->color(index.column());
 		else if (role == Qt::DisplayRole)
-			return torrents[index.row()].data(index.column());
-		else if (role == Qt::UserRole) // UserRole is for sorting
-			return torrents[index.row()].dataForSorting(index.column());
+			return torrents[index.row()]->data(index.column());
 		else if (role == Qt::EditRole && index.column() == 0)
-			return torrents[index.row()].tc->getDisplayName();
+			return torrents[index.row()]->tc->getDisplayName();
 		else if (role == Qt::DecorationRole && index.column() == 1)
 		{
-			bt::TorrentInterface* tc = torrents[index.row()].tc;
+			bt::TorrentInterface* tc = torrents[index.row()]->tc;
 			if (tc->getStats().tracker_status == bt::TRACKER_ERROR)
 				return KIcon("dialog-warning");
 		} 
@@ -428,13 +481,13 @@ namespace kt
 		{
 			if (index.column() == 1)
 			{
-				bt::TorrentInterface* tc = torrents[index.row()].tc;
+				bt::TorrentInterface* tc = torrents[index.row()]->tc;
 				if (tc->getStats().tracker_status == bt::TRACKER_ERROR)
 					return i18n("There is a problem with the tracker: <br /><strong>%1</strong>",tc->getStats().tracker_status_string);
 			}
 			else if (index.column() == 0)
 			{
-				bt::TorrentInterface* tc = torrents[index.row()].tc;
+				bt::TorrentInterface* tc = torrents[index.row()]->tc;
 				if (tc->loadUrl().isValid())
 					return i18n("%1<br>Url: <b>%2</b>",tc->getDisplayName(),tc->loadUrl().prettyUrl());
 				else
@@ -452,7 +505,7 @@ namespace kt
 			return false; 
 		
 		QString name = value.toString();
-		bt::TorrentInterface* tc = torrents[index.row()].tc;
+		bt::TorrentInterface* tc = torrents[index.row()]->tc;
 		tc->setDisplayName(name);
 		emit dataChanged(index,index);
 		return true;
@@ -503,7 +556,7 @@ namespace kt
 		{
 			if (i.isValid())
 			{
-				tlist.append(torrents[i.row()].tc);
+				tlist.append(torrents[i.row()]->tc);
 			}
 		}
 	}
@@ -511,7 +564,7 @@ namespace kt
 	const bt::TorrentInterface* ViewModel::torrentFromIndex(const QModelIndex & index) const
 	{
 		if (index.isValid() && index.row() < torrents.count() && index.row() >= 0)
-			return torrents[index.row()].tc;
+			return torrents[index.row()]->tc;
 		else
 			return 0;
 	}
@@ -519,7 +572,7 @@ namespace kt
 	bt::TorrentInterface* ViewModel::torrentFromIndex(const QModelIndex & index)
 	{
 		if (index.isValid() && index.row() < torrents.count() && index.row() >= 0)
-			return torrents[index.row()].tc;
+			return torrents[index.row()]->tc;
 		else
 			return 0;
 	}
@@ -527,17 +580,17 @@ namespace kt
 	bt::TorrentInterface* ViewModel::torrentFromRow(int index)
 	{
 		if (index < torrents.count() && index >= 0)
-			return torrents[index].tc;
+			return torrents[index]->tc;
 		else
 			return 0;
 	}
 	
 	void ViewModel::allTorrents(QList<bt::TorrentInterface*> & tlist) const
 	{
-		for (QList<Item>::const_iterator i = torrents.begin();i != torrents.end();i++)
+		for (QList<Item*>::const_iterator i = torrents.begin();i != torrents.end();i++)
 		{
-			const Item & item = *i;
-			tlist.append(item.tc);
+			Item* item = *i;
+			tlist.append(item->tc);
 		}
 	}
 	
@@ -555,6 +608,41 @@ namespace kt
 		beginRemoveRows(QModelIndex(),row,row + count - 1);
 		endRemoveRows();
 		return true;
+	}
+	
+	class ViewModelItemCmp
+	{
+	public:
+		ViewModelItemCmp(int col,Qt::SortOrder order) : col(col),order(order)
+		{}
+	
+		bool operator()(ViewModel::Item* a,ViewModel::Item* b)
+		{
+			if (a->hidden)
+				return false;
+			else if (b->hidden)
+				return true;
+			else if (order == Qt::AscendingOrder)
+				return a->lessThan(col,b);
+			else
+				return !a->lessThan(col,b);
+		}
+	
+		int col;
+		Qt::SortOrder order;
+	};
+	
+	void ViewModel::sort(int col, Qt::SortOrder order)
+	{
+		sort_column = col;
+		sort_order = order;
+		emit layoutAboutToBeChanged();
+		qStableSort(torrents.begin(),torrents.end(),ViewModelItemCmp(col,order));
+	/*	Out(SYS_GEN|LOG_DEBUG) << "Sort results:" << endl;
+		foreach (Item* i,torrents)
+			Out(SYS_GEN|LOG_DEBUG) << "Item: " << i->hidden << " " << i->tc->getDisplayName() << endl;
+		*/
+		emit layoutChanged();
 	}
 }
 

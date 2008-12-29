@@ -28,6 +28,7 @@
 namespace kt
 {
 	class Core;
+	class Group;
 	
 	/**
 	 * @author Joris Guisson
@@ -41,14 +42,17 @@ namespace kt
 		ViewModel(Core* core,QObject* parent);
 		virtual ~ViewModel();
 		
+		/**
+		 * Set the Group to filter
+		 * @param g The group
+		 */
+		void setGroup(Group* g);
 		
 		/**
 		 * Update the model, checks if data has changed.
+		 * @param force_resort Force a resort
 		 */
-		void update();
-		
-		/// Check if something has changed in the last update
-		bool updated() const {return changed_values;}
+		void update(bool force_resort = false);
 		
 		/// Is a column a default column for an upload view
 		bool defaultColumnForUpload(int column);
@@ -111,8 +115,28 @@ namespace kt
 	public slots:
 		void addTorrent(bt::TorrentInterface* ti);
 		void removeTorrent(bt::TorrentInterface* ti);
+		void sort(int col, Qt::SortOrder order);
 		
-	private:
+	public:
+		enum Column
+		{
+			NAME = 0,
+			STATUS,
+			BYTES_DOWNLOADED,
+			TOTAL_BYTES_TO_DOWNLOAD,
+			BYTES_UPLOADED,
+			DOWNLOAD_RATE,
+			UPLOAD_RATE,
+			ETA,
+			SEEDERS,
+			LEECHERS,
+			PERCENTAGE,
+			SHARE_RATIO,
+			DOWNLOAD_TIME,
+			SEED_TIME,
+			DOWNLOAD_LOCATION	
+		};
+		
 		struct Item
 		{
 			bt::TorrentInterface* tc;
@@ -132,18 +156,24 @@ namespace kt
 			bt::Uint32 runtime_dl;
 			bt::Uint32 runtime_ul;
 			int eta;
+			bool hidden;
 			
 			Item(bt::TorrentInterface* tc);
 
-			bool update();
+			bool update(int col,bool & modified);
 			QVariant data(int col) const;
 			QVariant color(int col) const;
-			QVariant dataForSorting(int col) const;
+			bool lessThan(int col,const Item* other) const;
+			bool member(Group* group) const;
 		};
-		
+			
+	private:
 		Core* core;
-		QList<Item> torrents;
-		bool changed_values;
+		QList<Item*> torrents;
+		int sort_column;
+		Qt::SortOrder sort_order;
+		Group* group;
+		int num_visible;
 	};
 
 }
