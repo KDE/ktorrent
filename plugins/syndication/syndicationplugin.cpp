@@ -94,6 +94,7 @@ namespace kt
 			   i18n("Widget to manage RSS and Atom feeds"),GUIInterface::DOCK_LEFT);
 		filter_list->loadFilters(kt::DataDir() + "syndication/filters");
 		feed_list->loadFeeds(filter_list,this);
+		feed_list->importOldFeeds();
 		loadTabs();
 	}
 	

@@ -53,6 +53,8 @@ namespace kt
 		void removeFeeds(const QModelIndexList & idx);
 		void filterRemoved(Filter* f);
 		void filterEdited(Filter* f);
+		void importOldFeeds();
+		
 	private slots:
 		void feedUpdated();
 		

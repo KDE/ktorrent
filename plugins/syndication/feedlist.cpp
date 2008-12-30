@@ -20,12 +20,14 @@
  ***************************************************************************/
 #include <QFile>
 #include <QDir>
+#include <QTime>
 #include <QTextStream>
 #include <kicon.h>
 #include <klocale.h>
 #include <util/log.h>
 #include <util/fileops.h>
 #include <util/functions.h>
+#include <interfaces/functions.h>
 #include "feed.h"
 #include "feedlist.h"
 #include "filterlist.h"
@@ -73,6 +75,73 @@ namespace kt
 			}
 			addFeed(feed);
 		}
+	}
+	
+	void FeedList::importOldFeeds()
+	{
+		QFile fptr(kt::DataDir() + "rssfeeds.ktr");
+		if (!fptr.open(QIODevice::ReadOnly))
+			return;
+		
+		QDataStream in(&fptr);	
+		int num_feeds;
+		in >> num_feeds;
+		for (int i = 0;i < num_feeds;i++)
+		{
+			KUrl feed_url;
+			QString title;
+			int active;
+			int article_age;
+			int ignore_ttl;
+			QTime auto_refresh;
+			QString protocol;
+			QString user;
+			QString pass;
+			QString host;
+			QString path;
+			QString path_encoded;
+			QString query;
+			QString ref_encoded;
+			unsigned char malf;
+			unsigned short port;
+			
+			in >> protocol >> user >> pass >> host
+				>> path >> path_encoded >> query >>  ref_encoded
+				>> malf >> port;
+			feed_url.setProtocol(protocol);
+			feed_url.setUser(user);
+			feed_url.setPassword(pass);
+			feed_url.setHost(host);
+			feed_url.setPath(path);
+			feed_url.setQuery(query);
+			feed_url.setRef(ref_encoded);
+			feed_url.setPort(port == 0 ? -1 : port);
+			
+			in >> title >> active >> article_age >> ignore_ttl >> auto_refresh;
+			Out(SYS_GEN|LOG_DEBUG) << "Importing " << feed_url.prettyUrl() << " ..." << endl;
+			
+			// check for duplicate URL's
+			bool found = false;
+			foreach (Feed* f,feeds)
+			{
+				if (f->feedUrl() == feed_url)
+				{
+					found = true;
+					break;
+				}
+			}
+			
+			if (!found)
+			{
+				Feed* f = new Feed(feed_url,Feed::newFeedDir(data_dir));
+				addFeed(f);
+			}
+		}
+		
+		fptr.close();
+		// move the rssfeeds.ktr file to a backup location
+		// so that it doesn't get immorted twice
+		bt::Move(kt::DataDir() + "rssfeeds.ktr",kt::DataDir() + "imported-rssfeeds.ktr",true,true);
 	}
 	
 	void FeedList::addFeed(Feed* f)
