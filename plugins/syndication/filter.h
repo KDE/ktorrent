@@ -46,6 +46,12 @@ namespace kt
 		Filter(const QString & name);
 		virtual ~Filter();
 		
+		/**
+		 * Start matching items, must be called before the first call to match, when matching
+		 * a list of Syndication::Item's.
+		 */
+		void startMatching();
+		
 		/// Get the name of the filter
 		const QString & filterName() const {return name;}
 		
@@ -79,6 +85,12 @@ namespace kt
 		
 		/// Enable or disable season and episode matching
 		void setSeasonAndEpisodeMatching(bool on) {use_season_and_episode_matching = on;}
+		
+		/// Do not download duplicate season and episode matches
+		bool noDuplicateSeasonAndEpisodeMatches() const {return no_duplicate_se_matches;}
+		
+		/// Set whether or not to download duplicate season and episode matches
+		void setNoDuplicateSeasonAndEpisodeMatches(bool on) {no_duplicate_se_matches = on;}
 		
 		/// Get the seasons to download represented in a string
 		QString seasonsToString() const {return seasons_string;}
@@ -163,6 +175,17 @@ namespace kt
 			int end;
 		};
 		
+		struct MatchedSeasonAndEpisode
+		{
+			int season;
+			int episode;
+			
+			bool operator == (const MatchedSeasonAndEpisode & se) const
+			{
+				return season == se.season && episode == se.episode;
+			}
+		};
+		
 		static bool parseNumbersString(const QString & s,QList<Range> & numbers);
 		static bool stringToRange(const QString & s,Range & r);
 		
@@ -174,6 +197,7 @@ namespace kt
 		QString name;
 		QList<QRegExp> word_matches;
 		bool use_season_and_episode_matching;
+		bool no_duplicate_se_matches;
 		QList<Range> seasons;
 		QString seasons_string;
 		QList<Range> episodes;
@@ -186,6 +210,8 @@ namespace kt
 		bool case_sensitive;
 		bool all_word_matches_must_match;
 		bool use_regular_expressions;
+		
+		QList<MatchedSeasonAndEpisode> se_matches;
 	};
 
 }

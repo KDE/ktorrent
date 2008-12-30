@@ -50,6 +50,8 @@ namespace kt
 		m_episodes->setText(filter->episodesToString());
 		m_download_matches->setChecked(filter->downloadMatching());
 		m_download_non_matches->setChecked(filter->downloadNonMatching());
+		m_se_no_duplicates->setEnabled(filter->useSeasonAndEpisodeMatching());
+		m_se_no_duplicates->setChecked(filter->noDuplicateSeasonAndEpisodeMatches());
 		
 		QString group = filter->group();
 		GroupManager* gman = core->getGroupManager();
@@ -126,6 +128,7 @@ namespace kt
 			if (test_model->currentFeed() != f)
 				test_model->setCurrentFeed(f);
 			
+			test_filter->startMatching();
 			filter_model->invalidate();
 		}
 	}
@@ -165,6 +168,7 @@ namespace kt
 		
 		f->setDownloadMatching(m_download_matches->isChecked());
 		f->setDownloadNonMatching(m_download_non_matches->isChecked());
+		f->setNoDuplicateSeasonAndEpisodeMatches(m_se_no_duplicates->isChecked());
 		
 		if (m_add_to_group->isChecked())
 			f->setGroup(m_group->currentText());

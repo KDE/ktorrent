@@ -242,15 +242,16 @@ namespace kt
 			return;
 		
 		Out(SYS_SYN|LOG_NOTICE) << "Running filters on " << feed->title() << endl;
-		QList<Syndication::ItemPtr> items = feed->items();
-		foreach (Syndication::ItemPtr item,items)
+		foreach (Filter* f,filters)
 		{
-			// Skip already loaded items
-			if (loaded.contains(item->id()))
-				continue;
-			
-			foreach (Filter* f,filters)
+			f->startMatching();
+			QList<Syndication::ItemPtr> items = feed->items();
+			foreach (Syndication::ItemPtr item,items)
 			{
+				// Skip already loaded items
+				if (loaded.contains(item->id()))
+					continue;
+				
 				if (needToDownload(item,f))
 				{
 					Out(SYS_SYN|LOG_NOTICE) << "Downloading item " << item->title() << " (filter: " << f->filterName() << ")" << endl;

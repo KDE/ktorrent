@@ -31,6 +31,7 @@ Changes in 3.2rc1 :
 - Fix saving and restoring of expanded state of FileView (178022)
 - Remove new from system tray menu (177404)
 - Ditch QSortFilterProxyModel when possible
+- Add option to not download duplicate season and episode matches
 
 
 Changes in 3.2beta1 :

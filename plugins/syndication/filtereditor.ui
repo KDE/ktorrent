@@ -5,11 +5,11 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>699</width>
-    <height>499</height>
+    <width>617</width>
+    <height>419</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_5" >
+  <layout class="QVBoxLayout" name="verticalLayout_4" >
    <property name="margin" >
     <number>0</number>
    </property>
@@ -28,8 +28,14 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4" >
-     <item>
+    <widget class="QTabWidget" name="tabWidget" >
+     <property name="currentIndex" >
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="tab" >
+      <attribute name="title" >
+       <string>String Matching</string>
+      </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2" >
        <item>
         <widget class="KEditListBox" name="m_word_matches" >
@@ -65,7 +71,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#000000;">For example the *.torrent will match any item which ends in .torrent. &lt;/p>&lt;/body>&lt;/html></string>
          </property>
          <property name="title" >
-          <string>String Matching</string>
+          <string/>
          </property>
          <property name="buttons" >
           <set>KEditListBox::Add|KEditListBox::Remove</set>
@@ -97,191 +103,230 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
       </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_4" >
+     </widget>
+     <widget class="QWidget" name="tab_2" >
+      <attribute name="title" >
+       <string>Seasons &amp;&amp; Episodes</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout" >
        <item>
-        <widget class="QGroupBox" name="groupBox" >
-         <property name="title" >
-          <string>Seasons &amp;&amp; Episodes</string>
+        <widget class="QCheckBox" name="m_use_se_matching" >
+         <property name="text" >
+          <string>Use season and episode matching</string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3" >
-          <item>
-           <widget class="QCheckBox" name="m_use_se_matching" >
-            <property name="text" >
-             <string>Use season and episode matching</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QGridLayout" name="gridLayout_2" >
-            <item row="0" column="0" >
-             <widget class="QLabel" name="label_3" >
-              <property name="text" >
-               <string>Seasons: </string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1" >
-             <widget class="QLineEdit" name="m_seasons" >
-              <property name="toolTip" >
-               <string>Specify the seasons to download, multiple seasons can be separated by a , and you can also use ranges by using a -
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_2" >
+         <item row="0" column="0" >
+          <widget class="QLabel" name="label_3" >
+           <property name="text" >
+            <string>Seasons: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" >
+          <widget class="QLineEdit" name="m_seasons" >
+           <property name="toolTip" >
+            <string>Specify the seasons to download, multiple seasons can be separated by a , and you can also use ranges by using a -
 
 For example: 1, 3-6, 9
 
 Will download seasons 1, 3, 4, 5, 6 and 9</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0" >
-             <widget class="QLabel" name="label_4" >
-              <property name="text" >
-               <string>Episodes:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1" >
-             <widget class="QLineEdit" name="m_episodes" >
-              <property name="toolTip" >
-               <string>Specify the episodes to download, multiple episodes can be separated by a , and you can also use ranges by using a -
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" >
+          <widget class="QLabel" name="label_4" >
+           <property name="text" >
+            <string>Episodes:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" >
+          <widget class="QLineEdit" name="m_episodes" >
+           <property name="toolTip" >
+            <string>Specify the episodes to download, multiple episodes can be separated by a , and you can also use ranges by using a -
 
 For example: 1, 3-6, 9
 
 Will download episodes 1, 3, 4, 5, 6 and 9</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="m_se_no_duplicates" >
+         <property name="text" >
+          <string>Do not download multiple items with the same season and episode</string>
+         </property>
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_2" >
-         <property name="title" >
-          <string>Options</string>
+        <spacer name="verticalSpacer" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout" >
-          <item>
-           <widget class="QCheckBox" name="m_download_matches" >
-            <property name="text" >
-             <string>Download torrents of matching items</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="m_download_non_matches" >
-            <property name="text" >
-             <string>Download torrents of non matching items</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2" >
-            <item>
-             <widget class="QCheckBox" name="m_add_to_group" >
-              <property name="text" >
-               <string>Add to group:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="m_group" />
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3" >
-            <item>
-             <widget class="QCheckBox" name="m_use_custom_download_location" >
-              <property name="text" >
-               <string>Download to:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="KUrlRequester" name="m_custom_download_location" />
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="m_silently" >
-            <property name="text" >
-             <string>Open torrents silently</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer" >
-            <property name="orientation" >
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0" >
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_3" >
+      <attribute name="title" >
+       <string>Options</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3" >
+       <item>
+        <widget class="QCheckBox" name="m_download_matches" >
+         <property name="text" >
+          <string>Download torrents of matching items</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="m_download_non_matches" >
+         <property name="text" >
+          <string>Download torrents of non matching items</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2" >
+         <item>
+          <widget class="QCheckBox" name="m_add_to_group" >
+           <property name="text" >
+            <string>Add to group:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="m_group" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3" >
+         <item>
+          <widget class="QCheckBox" name="m_use_custom_download_location" >
+           <property name="text" >
+            <string>Download to:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KUrlRequester" name="m_custom_download_location" />
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="m_silently" >
+         <property name="text" >
+          <string>Open torrents silently</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>174</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_4" >
+      <attribute name="title" >
+       <string>Test</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5" >
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5" >
+         <item>
+          <widget class="QPushButton" name="m_test" >
+           <property name="text" >
+            <string>Test</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2" >
+           <property name="text" >
+            <string>filter on feed:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="m_feed" />
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTreeView" name="m_test_results" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize" >
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="rootIsDecorated" >
+          <bool>false</bool>
+         </property>
         </widget>
        </item>
       </layout>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5" >
-     <item>
-      <widget class="QPushButton" name="m_test" >
-       <property name="text" >
-        <string>Test</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_2" >
-       <property name="text" >
-        <string>filter on feed:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="m_feed" />
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2" >
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0" >
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="QTreeView" name="m_test_results" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximumSize" >
-      <size>
-       <width>16777215</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="rootIsDecorated" >
-      <bool>false</bool>
-     </property>
+     </widget>
     </widget>
    </item>
    <item>
@@ -368,6 +413,22 @@ Will download episodes 1, 3, 4, 5, 6 and 9</string>
     <hint type="destinationlabel" >
      <x>150</x>
      <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_use_se_matching</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>m_se_no_duplicates</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>73</x>
+     <y>92</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>51</x>
+     <y>183</y>
     </hint>
    </hints>
   </connection>

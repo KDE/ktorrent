@@ -47,6 +47,7 @@ namespace kt
 		case_sensitive = false;
 		all_word_matches_must_match = false;
 		use_regular_expressions = false;
+		no_duplicate_se_matches = true;
 	}
 
 	Filter::Filter(const QString & name) : name(name)
@@ -59,6 +60,7 @@ namespace kt
 		case_sensitive = false;
 		all_word_matches_must_match = false;
 		use_regular_expressions = false;
+		no_duplicate_se_matches = true;
 	}
 
 
@@ -161,6 +163,15 @@ namespace kt
 			
 			if (!found)
 				return false;
+			
+			if (no_duplicate_se_matches)
+			{
+				MatchedSeasonAndEpisode se = {season,episode};
+				if (se_matches.contains(se))
+					return false;
+				
+				se_matches.append(se);
+			}
 		}
 		
 		return true;
@@ -270,6 +281,7 @@ namespace kt
 			enc.write(exp.pattern());
 		enc.end();
 		enc.write("use_season_and_episode_matching",use_season_and_episode_matching);
+		enc.write("no_duplicate_se_matches",no_duplicate_se_matches);
 		enc.write("seasons",seasons_string);
 		enc.write("episodes",episodes_string);
 		enc.write("download_matching",download_matching);
@@ -324,6 +336,12 @@ namespace kt
 		
 		use_season_and_episode_matching = vn->data().toInt() == 1;
 		
+		vn = dict->getValue("no_duplicate_se_matches");
+		if (vn)
+			no_duplicate_se_matches = vn->data().toInt() == 1;
+		else
+			no_duplicate_se_matches = true;
+		
 		vn = dict->getValue("seasons");
 		if (!vn)
 			return false;
@@ -367,5 +385,10 @@ namespace kt
 			use_regular_expressions = vn->data().toInt() == 1;
 		
 		return true;
+	}
+	
+	void Filter::startMatching()
+	{
+		se_matches.clear();
 	}
 }

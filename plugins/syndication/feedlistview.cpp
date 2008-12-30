@@ -34,6 +34,7 @@ namespace kt
 		setSelectionMode(QAbstractItemView::ContiguousSelection);
 		setModel(feeds);
 		setItemDelegate(new FeedListDelegate(this));
+		setAlternatingRowColors(true);
 		connect(this,SIGNAL(doubleClicked(const QModelIndex &)),this,SLOT(itemActivated(const QModelIndex&)));
 		connect(this->selectionModel(),SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
 				this,SLOT(selectionChanged(const QItemSelection&, const QItemSelection&)));
