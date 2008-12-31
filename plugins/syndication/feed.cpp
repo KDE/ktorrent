@@ -43,6 +43,7 @@ namespace kt
 	{
 		connect(&update_timer,SIGNAL(timeout()),this,SLOT(refresh()));
 		refresh();
+		save();
 	}
 	
 	Feed::Feed(const KUrl & url,Syndication::FeedPtr feed,const QString & dir) : url(url),feed(feed),dir(dir),status(OK)
