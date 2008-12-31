@@ -3,6 +3,7 @@ Name=Automatic Resume
 Name[de]=Automatisch Fortsetzen
 Name[el]=Αυτόματη συνέχιση
 Name[es]=Reanudación automática
+Name[et]=Automaatne taasalustamine
 Name[gl]=Continuar automaticamente
 Name[ja]=自動再開
 Name[km]=បន្ត​ដោយ​ស្វ័យ​ប្រវត្តិ
@@ -23,6 +24,7 @@ Comment=Script to automatically resume after some time, when the paused state is
 Comment[de]=Skript zum automatischen Fortsetzen von pausierten Torrents nach Ablauf einer festgelegten Zeit
 Comment[el]=Σενάριο για την αυτόματη συνέχιση λήψενω μετά από κάποιο χρονικό διάστημα, όταν η κατάσταση  παύσης είναι ενεργοποιημένη
 Comment[es]=Script para reanudar automáticamente tras cierto tiempo, cuando está habilitado el estado de pausa
+Comment[et]=Skript automaatseks taasalustamiseks mõne aja pärast, kui sisse on lülitatud paus
 Comment[gl]=Un script para continuar automaticamente despois dalgúnt tempo, cando se activa o estado de pausa
 Comment[ja]=一時停止中の torrent を一定時間後に自動的に再開するスクリプト
 Comment[km]=ស្គ្រីប​ដើម្បី​បន្ត​ដោយ​ស្វ័យ​ប្រវត្តិ បន្ទាប់​ពី​ពេល​មួយ នៅពេល​បានផ្អាក ស្ថានភាព​ត្រូវ​បានបើក
