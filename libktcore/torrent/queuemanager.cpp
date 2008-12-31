@@ -95,12 +95,12 @@ namespace kt
 			switch (Settings::startDownloadsOnLowDiskSpace())
 			{
 			case 0: //don't start!
-				tc->setPriority(0);
+				tc->setUserControlled(true);
 				return bt::NOT_ENOUGH_DISKSPACE;
 			case 1: //ask user
 				if (KMessageBox::questionYesNo(0, i18n("You don't have enough disk space to download this torrent. Are you sure you want to continue?"), i18n("Insufficient disk space for %1",s.torrent_name)) == KMessageBox::No)
 				{
-					tc->setPriority(0);
+					tc->setUserControlled(true);
 					return bt::USER_CANCELED;
 				}
 				else
@@ -117,7 +117,7 @@ namespace kt
 		{
 			if (!user)
 			{
-				tc->setPriority(0); // dequeue torrent
+				tc->setUserControlled(true); // dequeue torrent
 				return QM_LIMITS_REACHED;
 			}
 			
@@ -165,7 +165,7 @@ namespace kt
 		else
 		{
 			//User started this torrent so make it user controlled
-			tc->setPriority(0);
+			tc->setUserControlled(true);
 		}
 
 		if (start_tc)
@@ -193,7 +193,7 @@ namespace kt
 		}
 		
 		if (user) //dequeue it
-			tc->setPriority(0);
+			tc->setUserControlled(true);
 	}
 	
 	void QueueManager::checkDiskSpace(QList<bt::TorrentInterface*> & todo)
@@ -325,7 +325,7 @@ namespace kt
 			if (tc->isCheckingData(check_done) && !check_done)
 				continue;
 			
-			tc->setPriority(0);
+			tc->setUserControlled(true);
 			startSafely(tc);
 		}
 	}
@@ -378,9 +378,9 @@ namespace kt
 					KMessageBox::error(0,msg,i18n("Error"));
 				}
 			}
-			else //if torrent is not running but it is queued we need to make it user controlled
-				if( (s.completed && type == 2) || (!s.completed && type == 1) || (type == 3) )
-					tc->setPriority(0); 
+			//if torrent is not running but it is queued we need to make it user controlled
+			else if( (s.completed && type == 2) || (!s.completed && type == 1) || (type == 3) )
+					tc->setUserControlled(true);
 			i++;
 		}
 		ordering = false;
@@ -548,7 +548,7 @@ namespace kt
 					if (startInternal(tc,false) == bt::START_OK)
 						num_running++;
 					else if (s.stopped_by_error)
-						tc->setPriority(0);
+						tc->setUserControlled(true);
 				}
 				else
 					num_running++;
@@ -560,6 +560,8 @@ namespace kt
 					Out(SYS_GEN|LOG_DEBUG) << "QM Stopping: " << s.torrent_name << endl;
 					stop(tc);
 				}
+				else
+					tc->updateStatus();
 			}
 		}
 		
@@ -576,7 +578,7 @@ namespace kt
 					if (startInternal(tc,false) == bt::START_OK)
 						num_running++;
 					else if (s.stopped_by_error)
-						tc->setPriority(0);
+						tc->setUserControlled(true);
 				}
 				else
 					num_running++;
@@ -588,6 +590,8 @@ namespace kt
 					Out(SYS_GEN|LOG_DEBUG) << "QM Stopping: " << s.torrent_name << endl;
 					stop(tc);
 				}
+				else
+					tc->updateStatus();
 			}
 		}
 		
@@ -597,15 +601,7 @@ namespace kt
 	
 	void QueueManager::torrentFinished(bt::TorrentInterface* tc)
 	{
-		//dequeue this tc
-		tc->setPriority(0);
-		//make sure the max_seeds is not reached
-// 		if(max_seeds !=0 && max_seeds < getNumRunning(false,true))
-// 			tc->stop(true);
-		
-		if (keep_seeding)
-			torrentAdded(tc,false,false);
-		else
+		if (!keep_seeding)
 			stopSafely(tc,true);
 		
 		orderQueue();
@@ -615,20 +611,21 @@ namespace kt
 	{
 		if (!user)
 		{
+			// new torrents have the lowest priority
+			// so everybody else gets a higher priority
 			foreach (TorrentInterface * otc,downloads)
 			{
 				int p = otc->getPriority();
-				if (p > 0)
-					otc->setPriority(p+1);
+				otc->setPriority(p+1);
 			}
-			tc->setPriority(1);
+			tc->setPriority(0);
 			rearrangeQueue();
 			orderQueue();
 		}
 		else
 		{
-			 tc->setPriority(0);
-			 if(start_torrent)
+			 tc->setUserControlled(true);
+			 if (start_torrent)
 				 start(tc, true);
 		}	
 	}
@@ -679,8 +676,7 @@ namespace kt
 		// make sure everybody has an unique priority
 		foreach (bt::TorrentInterface* tc,downloads)
 		{
-			if (tc->getPriority() > 0)
-				tc->setPriority(prio--);
+			tc->setPriority(prio--);
 		}
 	}
 	
@@ -694,19 +690,19 @@ namespace kt
 			return;
 		}
 		
-		torrentAdded(tc,false,false);
+		tc->setUserControlled(false);
+		orderQueue();
 	}
 	
 	void QueueManager::dequeue(bt::TorrentInterface* tc)
 	{
-		tc->setPriority(0);
-		rearrangeQueue();
+		tc->setUserControlled(true);
 		orderQueue();
 	}
 	
 	void QueueManager::queue(bt::TorrentInterface* tc)
 	{
-		if(tc->getPriority() == 0)
+		if (tc->isUserControlled())
 			enqueue(tc);
 		else
 			dequeue(tc);
@@ -762,34 +758,46 @@ namespace kt
 	
 	void QueueManager::checkStalledTorrents(bt::TimeStamp now,bt::Uint32 min_stall_time)
 	{
-		const int MAX_PRIO = INT_MAX;
-		bool found_stalled = false;
-		// set the priority of all stalled ones to -1
+		QueuePtrList newlist;
+		QueuePtrList stalled;
+		bool can_decrease = false;
+		
+		// find all stalled ones
 		foreach (bt::TorrentInterface* tc,downloads)
 		{
-			if (tc->getPriority() > 1 && IsStalled(tc,now,min_stall_time))
+			if (!tc->isUserControlled())
 			{
-				tc->setPriority(MAX_PRIO);
-				found_stalled = true;
-				Out(SYS_GEN | LOG_NOTICE) << "The torrent " << tc->getStats().torrent_name << " has stalled longer then " << min_stall_time << " minutes, decreasing it's priority" << endl;
+				if (IsStalled(tc,now,min_stall_time))
+				{
+					stalled.append(tc);
+				}
+				else
+				{
+					// decreasing makes only sense if there are QM torrents after the stalled ones
+					can_decrease = stalled.count() > 0;
+					newlist.append(tc);
+				}
 			}
+			else 
+				newlist.append(tc);
 		}
+		
+		if (stalled.count() == 0 || stalled.count() == downloads.count() || !can_decrease)
+			return;
+		
+		foreach (bt::TorrentInterface* tc,stalled)
+			Out(SYS_GEN | LOG_NOTICE) << "The torrent " << tc->getStats().torrent_name << " has stalled longer then " << min_stall_time << " minutes, decreasing it's priority" << endl;
 	
-		if (found_stalled)
+		downloads.clear();
+		downloads += newlist;
+		downloads += stalled;
+		// redo priorities and then order the queue
+		int prio = downloads.count();
+		foreach (bt::TorrentInterface* tc,downloads)
 		{
-			// redo the priority, stalled ones now get 1, 
-			// the other ones get an increase if they are not user controlled
-			foreach (bt::TorrentInterface* tc,downloads)
-			{
-				int prio = tc->getPriority();
-				if (prio == MAX_PRIO)
-					tc->setPriority(1);
-				else if (prio > 1 || (prio == 1 && !IsStalled(tc,now,min_stall_time)))
-					tc->setPriority(prio + 1);
-			}
-			
-			orderQueue();
+			tc->setPriority(prio--);
 		}
+		orderQueue();
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////////
 

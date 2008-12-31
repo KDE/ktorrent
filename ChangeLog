@@ -34,6 +34,7 @@ Changes in 3.2rc1 :
 - Add option to not download duplicate season and episode matches
 - Add feature to import old feeds from RSS plugin of KT 2.2
 - Make sure ViewModel::allTorrents only returns torrents which are shown in the view (179180)
+- Improved usability of QM gui by decoupling user controlled property from priority 
 
 Changes in 3.2beta1 :
 - Ask to create directory in fileselectdlg, if it does not exist (163965)

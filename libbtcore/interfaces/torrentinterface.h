@@ -359,6 +359,12 @@ namespace bt
 		///Set the torrent queue number.
 		virtual void setPriority(int p) = 0;
 		
+		/// Is the torrent user controlled ?
+		virtual bool isUserControlled() const = 0;
+		
+		/// Make the torrent user controlled or not
+		virtual void setUserControlled(bool uc) = 0;
+		
 		/// Set the max share ratio
 		virtual void setMaxShareRatio(float ratio) = 0;
 		
@@ -373,6 +379,9 @@ namespace bt
 
 		/// Make a string of the current status
 		virtual QString statusToString() const = 0;
+		
+		/// Update the status
+		virtual void updateStatus() = 0;
 		
 		///Is manual announce allowed?
 		virtual bool announceAllowed() = 0;

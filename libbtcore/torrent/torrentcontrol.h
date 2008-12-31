@@ -202,14 +202,13 @@ namespace bt
 		virtual bool readyForPreview() const;
 		virtual bool isMultimedia() const;
 		virtual void markExistingFilesAsDownloaded();
-		
-		int getPriority() const { return istats.priority; }
-		void setPriority(int p);
-
+		virtual int getPriority() const { return istats.priority; }
+		virtual void setPriority(int p);
+		virtual bool isUserControlled() const {return stats.user_controlled;}
+		virtual void setUserControlled(bool uc);
 		virtual bool overMaxRatio();		
 		virtual void setMaxShareRatio(float ratio);
 		virtual float getMaxShareRatio() const { return stats.max_share_ratio; }
- 		
 		virtual bool overMaxSeedTime();
 		virtual void setMaxSeedTime(float hours);
 		virtual float getMaxSeedTime() const {return stats.max_seed_time;}
@@ -371,7 +370,7 @@ namespace bt
 		
 	private:	
 		void updateTracker(const QString & ev,bool last_succes = true);
-		void updateStatusMsg();
+		void updateStatus();
 		void saveStats();
 		void loadStats();
 		void loadOutputDir();

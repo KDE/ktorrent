@@ -434,5 +434,15 @@ namespace kt
 	{
 		ti->setPriority(p);
 	}
+	
+	bool DBusTorrent::isUserControlled() const
+	{
+		return ti->isUserControlled();
+	}
+	
+	void DBusTorrent::setUserControlled(bool uc)
+	{
+		ti->setUserControlled(uc);
+	}
 }
 

@@ -194,7 +194,7 @@ namespace bt
 				pman->killSeeders();
 				QDateTime now = QDateTime::currentDateTime();
 				istats.running_time_dl += istats.time_started_dl.secsTo(now);
-				updateStatusMsg();
+				updateStatus();
 				updateStats();
 				
 				// download has just been completed
@@ -224,7 +224,7 @@ namespace bt
 				istats.last_announce = bt::GetCurrentTime();
 				istats.time_started_dl = QDateTime::currentDateTime();
 			}
-			updateStatusMsg();
+			updateStatus();
 
 			if(wanted_update_timer.getElapsedSinceUpdate() >= 60*1000)
 			{
@@ -287,10 +287,9 @@ namespace bt
 			
 			if (overMaxRatio() || overMaxSeedTime()) 
 			{ 
-				if(istats.priority!=0) //if it's queued make sure to dequeue it 
+				if (!stats.user_controlled) //if it's queued make sure to dequeue it 
 				{
-					setPriority(0);
-					stats.user_controlled = true;
+					setUserControlled(true);
 				}
                  
 				stop(true); 
@@ -468,8 +467,8 @@ namespace bt
 		
 		if (user)
 		{
-				//make this torrent user controlled
-			setPriority(0);
+			//make this torrent user controlled
+			setUserControlled(true);
 			stats.autostart = false;
 		}
 		
@@ -481,7 +480,7 @@ namespace bt
 		
 		stats.running = false;
 		saveStats();
-		updateStatusMsg();
+		updateStatus();
 		updateStats();
 		stats.trk_bytes_downloaded = 0;
 		stats.trk_bytes_uploaded = 0;
@@ -679,7 +678,7 @@ namespace bt
 			}
 		}
 		setupData();
-		updateStatusMsg();
+		updateStatus();
 		
 		// to get rid of phantom bytes we need to take into account
 		// the data from downloads already in progress
@@ -703,6 +702,7 @@ namespace bt
 		updateStats();
 		saveStats();
 		stats.output_path = cman->getOutputPath();
+		updateStatus();
 	}
 	
 	void TorrentControl::setDisplayName(const QString & n)
@@ -968,14 +968,14 @@ namespace bt
 		}
 	}
 
-	void TorrentControl::updateStatusMsg()
+	void TorrentControl::updateStatus()
 	{
 		TorrentStatus old = stats.status;
 		if (stats.stopped_by_error)
 			stats.status = ERROR;
-		else if (!stats.started)
+		else if (!stats.started && stats.user_controlled)
 			stats.status = NOT_STARTED;
-		else if(!stats.running && !stats.user_controlled)
+		else if (!stats.running && !stats.user_controlled)
 			stats.status = QUEUED;
 		else if (!stats.running && stats.completed && (overMaxRatio() || overMaxSeedTime()))
 			stats.status = SEEDING_COMPLETE;
@@ -1050,6 +1050,7 @@ namespace bt
 		}
 		
 		st.write("PRIORITY", QString("%1").arg(istats.priority));
+		st.write("USER_CONTROLLED",stats.user_controlled ? "1" : "0");
 		st.write("AUTOSTART", QString("%1").arg(stats.autostart));
 		st.write("IMPORTED", QString("%1").arg(stats.imported_bytes));
 		st.write("CUSTOM_OUTPUT_NAME",istats.custom_output_name ? "1" : "0");
@@ -1107,7 +1108,11 @@ namespace bt
 			display_name = st.readString("DISPLAY_NAME");
 		
 		setPriority(st.readInt("PRIORITY"));
-		stats.user_controlled = istats.priority == 0 ? true : false;
+		// before USER_CONTROLLED was added, priority == 0 meant user controlled
+		if (st.hasKey("USER_CONTROLLED"))
+			setUserControlled(st.readBoolean("USER_CONTROLLED"));
+		else
+			setUserControlled(getPriority() == 0); 
 		stats.autostart = st.readBoolean("AUTOSTART");
 		
 		stats.imported_bytes = st.readUint64("IMPORTED");
@@ -1385,16 +1390,15 @@ namespace bt
 	void TorrentControl::setPriority(int p)
 	{
 		istats.priority = p;
-		stats.user_controlled = p == 0 ? true : false;
-		if(p)
-		{
-			stats.status = QUEUED;
-			statusChanged(this);
-		}
-		else
-			updateStatusMsg();
-	
 		saveStats();
+		updateStatus();
+	}
+	
+	void TorrentControl::setUserControlled(bool uc)
+	{
+		stats.user_controlled = uc;
+		saveStats();
+		updateStatus();
 	}
 	
 	void TorrentControl::setMaxShareRatio(float ratio)
@@ -1408,7 +1412,7 @@ namespace bt
 			stats.max_share_ratio = ratio;
 		
 		if(stats.completed && !stats.running && !stats.user_controlled && (ShareRatio(stats) >= stats.max_share_ratio))
-			setPriority(0); //dequeue it
+			setUserControlled(true); //dequeue it
 		
 		saveStats();
 		emit maxRatioChanged(this);
@@ -1556,7 +1560,7 @@ namespace bt
 			
 		stats.status = NOT_STARTED;
 		// update the status
-		updateStatusMsg();
+		updateStatus();
 		updateStats();
 		if (lst)
 			lst->finished();

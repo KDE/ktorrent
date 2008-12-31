@@ -113,7 +113,7 @@ namespace kt
 			const bt::TorrentInterface* tc = qman->getTorrent(index.row());
 			if (index.column() == 2)
 			{
-				if (tc->getPriority() == 0)
+				if (tc->isUserControlled())
 					return QVariant();
 				else if (tc->getStats().running)
 					return QColor(40,205,40); // green
@@ -127,14 +127,10 @@ namespace kt
 			const bt::TorrentInterface* tc = qman->getTorrent(index.row());
 			switch (index.column())
 			{
-				case 0: 
-					if (tc->getPriority() == 0)
-						return QVariant();
-					else
-						return index.row() + 1;
+				case 0: return index.row() + 1;
 				case 1: return tc->getDisplayName();
 				case 2: 
-					if (tc->getPriority() == 0)
+					if (tc->isUserControlled())
 						return i18n("Not queued");
 					else if (tc->getStats().running)
 						return i18n("Running");
@@ -240,9 +236,6 @@ namespace kt
 				tcs.append(tc);
 				if (r < begin_row) // begin row will decrease when we remove this one in the next loop
 					begin_row--;
-				
-				if (tc->getPriority() == 0) // once you drag items they become QM controlled
-					tc->setPriority(1);
 			}
 		}
 		
@@ -258,8 +251,7 @@ namespace kt
 		// redo the priorities
 		foreach (bt::TorrentInterface* t,torrents)
 		{
-			if (t->getPriority() > 0)
-				t->setPriority(prio);
+			t->setPriority(prio);
 			prio--;
 		}
 		
@@ -287,33 +279,18 @@ namespace kt
 	{
 		if (row <= 0 || row > qman->count())
 			return;
-		
-		int r = 0;
-		int prio = qman->count();
-		bt::TorrentInterface* prev = 0;
+			
+		QList<bt::TorrentInterface*> torrents;
 		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
+			torrents.append(*i);
+		
+		torrents.swap(row,row - 1);
+			
+		int prio = torrents.count();
+		//redo priorites
+		foreach (bt::TorrentInterface* tc,torrents)
 		{
-			bt::TorrentInterface* curr = *i;
-			if (r == row)
-			{
-				if (!prev || prev->getPriority() == 0)
-				{
-					curr->setPriority(prio);
-				}
-				else
-				{
-					// switch prio with previous one
-					curr->setPriority(prio + 1);
-					prev->setPriority(prio);
-				}
-			}
-			else if (curr->getPriority() > 0)
-			{
-				curr->setPriority(prio);
-			}
-			prio--;
-			prev = *i;
-			r++;
+			tc->setPriority(prio--);
 		}
 		
 		// reorder the queue
@@ -325,37 +302,19 @@ namespace kt
 		if (row < 0 || row >= qman->count() - 1)
 			return;
 		
-		int r = 0;
-		int prio = qman->count();
+		QList<bt::TorrentInterface*> torrents;
 		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
+			torrents.append(*i);
+		
+		torrents.swap(row,row + 1);
+			
+		int prio = torrents.count();
+		//redo priorites
+		foreach (bt::TorrentInterface* tc,torrents)
 		{
-			bt::TorrentInterface* curr = *i;
-			bt::TorrentInterface* next = 0;
-			QueueManager::iterator j = i;
-			j++;
-			if (j != qman->end())
-				next = *j;
-
-			if (r == row)
-			{
-				if (!next || next->getPriority() == 0)
-				{
-					curr->setPriority(0);
-				}
-				else
-				{
-					// switch prio with next one
-					curr->setPriority(prio - 1);
-					next->setPriority(prio);
-				}
-			}
-			else if (curr->getPriority() > 0 && r != row + 1)
-			{
-				curr->setPriority(prio);
-			}
-			prio--;
-			r++;
+			tc->setPriority(prio--);
 		}
+		
 		// reorder the queue
 		qman->orderQueue();
 	}
@@ -375,8 +334,18 @@ namespace kt
 		if (row < 0 || row >= qman->count())
 			return;
 		
-		bt::TorrentInterface* tc = qman->getTorrent(row);
-		tc->setPriority(qman->count() + 1);
+		QList<bt::TorrentInterface*> torrents;
+		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
+			torrents.append(*i);
+		
+		torrents.prepend(torrents.takeAt(row));
+			
+		int prio = torrents.count();
+		//redo priorites
+		foreach (bt::TorrentInterface* tc,torrents)
+		{
+			tc->setPriority(prio--);
+		}
 		// reorder the queue
 		qman->orderQueue();
 	}
@@ -386,21 +355,17 @@ namespace kt
 		if (row < 0 || row >= qman->count())
 			return;
 		
-		int r = 0;
-		// set everybody's priority one higher and set row's to 1
+		QList<bt::TorrentInterface*> torrents;
 		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
-		{
-			bt::TorrentInterface* curr = *i;
+			torrents.append(*i);
+		
+		torrents.append(torrents.takeAt(row));
 			
-			if (r == row)
-			{
-				curr->setPriority(1);
-			}
-			else if (curr->getPriority() > 0)
-			{
-				curr->setPriority(curr->getPriority() + 1);
-			}
-			r++;
+		int prio = torrents.count();
+		//redo priorites
+		foreach (bt::TorrentInterface* tc,torrents)
+		{
+			tc->setPriority(prio--);
 		}
 		// reorder the queue
 		qman->orderQueue();
