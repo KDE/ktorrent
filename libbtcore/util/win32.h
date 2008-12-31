@@ -84,7 +84,7 @@ struct BTCORE_EXPORT pollfd {
 // #define poll(x, y, z)        mingw_poll(x, y, z)
 #endif
 
-#ifdef Q_CC_MINGW
+#ifndef NAME_MAX
 #define NAME_MAX            255
 #endif
 /* These wrappers do nothing special except set the global errno variable if
