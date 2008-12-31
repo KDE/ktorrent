@@ -460,20 +460,32 @@ namespace kt
 		return QVariant();
 	}
 	
+	QModelIndex ViewModel::index(int row,int column,const QModelIndex & parent) const
+	{
+		if (parent.isValid())
+			return QModelIndex();
+		
+		if (!hasIndex(row,column,parent))
+			return QModelIndex();
+		else
+			return createIndex(row,column,torrents[row]);
+	}
+	
 	QVariant ViewModel::data(const QModelIndex & index, int role) const
 	{
 		if (!index.isValid() || index.row() >= torrents.count() || index.row() < 0)
 			return QVariant(); 
 		
+		Item* item = (Item*)index.internalPointer();
 		if (role == Qt::ForegroundRole)
-			return torrents[index.row()]->color(index.column());
+			return item->color(index.column());
 		else if (role == Qt::DisplayRole)
-			return torrents[index.row()]->data(index.column());
+			return item->data(index.column());
 		else if (role == Qt::EditRole && index.column() == 0)
-			return torrents[index.row()]->tc->getDisplayName();
+			return item->tc->getDisplayName();
 		else if (role == Qt::DecorationRole && index.column() == 1)
 		{
-			bt::TorrentInterface* tc = torrents[index.row()]->tc;
+			bt::TorrentInterface* tc = item->tc;
 			if (tc->getStats().tracker_status == bt::TRACKER_ERROR)
 				return KIcon("dialog-warning");
 		} 
@@ -481,13 +493,13 @@ namespace kt
 		{
 			if (index.column() == 1)
 			{
-				bt::TorrentInterface* tc = torrents[index.row()]->tc;
+				bt::TorrentInterface* tc = item->tc;
 				if (tc->getStats().tracker_status == bt::TRACKER_ERROR)
 					return i18n("There is a problem with the tracker: <br /><strong>%1</strong>",tc->getStats().tracker_status_string);
 			}
 			else if (index.column() == 0)
 			{
-				bt::TorrentInterface* tc = torrents[index.row()]->tc;
+				bt::TorrentInterface* tc = item->tc;
 				if (tc->loadUrl().isValid())
 					return i18n("%1<br>Url: <b>%2</b>",tc->getDisplayName(),tc->loadUrl().prettyUrl());
 				else
@@ -505,7 +517,7 @@ namespace kt
 			return false; 
 		
 		QString name = value.toString();
-		bt::TorrentInterface* tc = torrents[index.row()]->tc;
+		bt::TorrentInterface* tc = ((Item*)index.internalPointer())->tc;
 		tc->setDisplayName(name);
 		emit dataChanged(index,index);
 		return true;
@@ -556,7 +568,8 @@ namespace kt
 		{
 			if (i.isValid())
 			{
-				tlist.append(torrents[i.row()]->tc);
+				Item* item = (Item*)i.internalPointer();
+				tlist.append(item->tc);
 			}
 		}
 	}
@@ -564,7 +577,7 @@ namespace kt
 	const bt::TorrentInterface* ViewModel::torrentFromIndex(const QModelIndex & index) const
 	{
 		if (index.isValid() && index.row() < torrents.count() && index.row() >= 0)
-			return torrents[index.row()]->tc;
+			return ((Item*)index.internalPointer())->tc;
 		else
 			return 0;
 	}
@@ -572,7 +585,7 @@ namespace kt
 	bt::TorrentInterface* ViewModel::torrentFromIndex(const QModelIndex & index)
 	{
 		if (index.isValid() && index.row() < torrents.count() && index.row() >= 0)
-			return torrents[index.row()]->tc;
+			return ((Item*)index.internalPointer())->tc;
 		else
 			return 0;
 	}

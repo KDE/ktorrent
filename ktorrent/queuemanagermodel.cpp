@@ -349,7 +349,7 @@ namespace kt
 					next->setPriority(prio);
 				}
 			}
-			else if (curr->getPriority() > 0)
+			else if (curr->getPriority() > 0 && r != row + 1)
 			{
 				curr->setPriority(prio);
 			}

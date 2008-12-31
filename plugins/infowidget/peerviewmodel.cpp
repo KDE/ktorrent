@@ -329,6 +329,14 @@ namespace kt
 		if (resort)
 			sort(sort_column,sort_order);
 	}
+	
+	QModelIndex PeerViewModel::index(int row,int column,const QModelIndex & parent) const
+	{
+		if (!hasIndex(row,column,parent) || parent.isValid())
+			return QModelIndex();
+		else
+			return createIndex(row,column,items[row]);
+	}
 
 	int PeerViewModel::rowCount( const QModelIndex & parent) const
 	{
@@ -406,10 +414,11 @@ namespace kt
 		if (!index.isValid() || index.row() >= items.count() || index.row() < 0)
 			return QVariant(); 
 		
+		Item* item = (Item*)index.internalPointer();
 		if (role == Qt::DisplayRole)
-			return items[index.row()]->data(index.column());
+			return item->data(index.column());
 		else if (role == Qt::DecorationRole)
-			return items[index.row()]->decoration(index.column());
+			return item->decoration(index.column());
 		
 		return QVariant();
 	}
@@ -433,7 +442,7 @@ namespace kt
 		if (!index.isValid() || index.row() >= items.count() || index.row() < 0)
 			return 0; 
 		else
-			return items[index.row()]->peer;
+			return ((Item*)index.internalPointer())->peer;
 	}
 	
 	class PeerViewModelItemCmp

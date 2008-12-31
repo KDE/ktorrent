@@ -59,6 +59,7 @@ namespace kt
 		virtual QVariant data(const QModelIndex & index,int role) const;
 		virtual bool removeRows(int row,int count,const QModelIndex & parent);
 		virtual bool insertRows(int row,int count,const QModelIndex & parent);
+		virtual QModelIndex index(int row,int column,const QModelIndex & parent = QModelIndex()) const;
 		
 		bt::PeerInterface* indexToPeer(const QModelIndex & idx);
 		

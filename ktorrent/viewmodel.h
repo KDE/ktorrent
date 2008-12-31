@@ -70,6 +70,7 @@ namespace kt
 		virtual QStringList mimeTypes() const;
 		virtual QMimeData* mimeData(const QModelIndexList &indexes) const;
 		virtual bool setData(const QModelIndex & index,const QVariant & value,int role);
+		virtual QModelIndex index(int row,int column,const QModelIndex & parent = QModelIndex()) const;
 				
 		/**
 		 * Emit the data changed signal

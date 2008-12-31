@@ -54,7 +54,7 @@ namespace kt
 			s.current_peer_id != stats.current_peer_id;
 		
 		stats = s;
-		return false;
+		return ret;
 	}
 	
 	QVariant ChunkDownloadModel::Item::data(int col) const
@@ -229,6 +229,14 @@ namespace kt
 		}
 		
 		return QVariant();
+	}
+	
+	QModelIndex ChunkDownloadModel::index(int row,int column,const QModelIndex & parent) const
+	{
+		if (!hasIndex(row,column,parent) || parent.isValid())
+			return QModelIndex();
+		else
+			return createIndex(row,column,items[row]);
 	}
 	
 	QVariant ChunkDownloadModel::data(const QModelIndex & index,int role) const
