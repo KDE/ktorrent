@@ -590,7 +590,8 @@ namespace kt
 		for (QList<Item*>::const_iterator i = torrents.begin();i != torrents.end();i++)
 		{
 			Item* item = *i;
-			tlist.append(item->tc);
+			if (item->member(group))
+				tlist.append(item->tc);
 		}
 	}
 	
