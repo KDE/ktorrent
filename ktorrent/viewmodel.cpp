@@ -495,7 +495,7 @@ namespace kt
 			{
 				bt::TorrentInterface* tc = item->tc;
 				if (tc->getStats().tracker_status == bt::TRACKER_ERROR)
-					return i18n("There is a problem with the tracker: <br /><strong>%1</strong>",tc->getStats().tracker_status_string);
+					return i18n("There is a problem with the tracker: <br ><b>%1</b>",tc->getStats().tracker_status_string);
 			}
 			else if (index.column() == 0)
 			{
