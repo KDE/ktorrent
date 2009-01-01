@@ -33,6 +33,7 @@
 #include "error.h"
 #include "autorotatelogjob.h"
 #include <kdebug.h>
+#include <kio/copyjob.h>
 #include "compressfilejob.h"
 
 namespace bt
@@ -162,7 +163,7 @@ namespace bt
 		void endline()
 		{
 			finishLine();
-			if (fptr->size() > MAX_LOG_FILE_SIZE && !rotate_job)
+			if (fptr && fptr->size() > MAX_LOG_FILE_SIZE && !rotate_job)
 			{
 				tmp = "Log larger then 10 MB, rotating";
 				finishLine();
