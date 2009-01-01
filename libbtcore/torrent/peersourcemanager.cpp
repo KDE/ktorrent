@@ -634,11 +634,8 @@ namespace bt
 
 	void PeerSourceManager::removeDHT()
 	{
-		if(m_dht == 0)
-		{
-			removePeerSource(m_dht);
+		if (!m_dht)
 			return;
-		}
 		
 		removePeerSource(m_dht);
 		delete m_dht;

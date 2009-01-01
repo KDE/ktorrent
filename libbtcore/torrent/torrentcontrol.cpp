@@ -1079,6 +1079,9 @@ namespace bt
 
 	void TorrentControl::loadStats()
 	{
+		if (!bt::Exists(tordir + "stats"))
+			return;
+		
 		StatsFile st(tordir + "stats");
 		
 		Uint64 val = st.readUint64("UPLOADED");

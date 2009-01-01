@@ -332,9 +332,9 @@ namespace kt
 			Item* item = *i;
 			if (item->tc == ti)
 			{
+				removeRow(idx);
 				torrents.erase(i);
 				delete item;
-				removeRow(idx);
 				update(true);
 				break;
 			}
@@ -465,7 +465,7 @@ namespace kt
 		if (parent.isValid())
 			return QModelIndex();
 		
-		if (!hasIndex(row,column,parent))
+		if (row < 0 || row >= torrents.count())
 			return QModelIndex();
 		else
 			return createIndex(row,column,torrents[row]);
