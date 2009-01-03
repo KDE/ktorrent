@@ -32,6 +32,7 @@
 #include <util/functions.h>
 #include <util/fileops.h>
 #include <util/waitjob.h>
+#include <btversion.h>
 #include "upnprouter.h"
 #include "upnpdescriptionparser.h"
 #include "soap.h"
@@ -338,11 +339,12 @@ namespace kt
 		
 		QString http_hdr = QString(
 				"POST %1 HTTP/1.1\r\n"
-				"HOST: %2:%3\r\n"
+				"Host: %2:%3\r\n"
+				"User-Agent: %5\r\n"
 				"Content-length: $CONTENT_LENGTH\r\n"
 				"Content-Type: text/xml\r\n"
 				"SOAPAction: \"%4\"\r\n"
-				"\r\n").arg(controlurl).arg(location.host()).arg(location.port()).arg(soapact);
+				"\r\n").arg(controlurl).arg(location.host()).arg(location.port()).arg(soapact).arg(bt::GetVersionString());
 
 		HTTPRequest* r = new HTTPRequest(http_hdr,query,location.host(),location.port(),verbose);
 		connect(r,SIGNAL(replyError(HTTPRequest* ,const QString& )),
