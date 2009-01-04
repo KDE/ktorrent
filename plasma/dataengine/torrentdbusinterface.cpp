@@ -63,7 +63,7 @@ namespace ktplasma
 				throw bt::Error("Root not a dict !");
 			
 			BDictNode* dict = (BDictNode*)node;
-			QStringList keys = dict->keys();
+			const QStringList keys = dict->keys();
 			foreach (const QString& key,keys)
 			{
 				BValueNode* vn = dict->getValue(key);
