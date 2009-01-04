@@ -50,7 +50,7 @@ namespace kt
 	
 		for (Uint32 i = 0;i < 10;i++)
 		{
-			if (!bind(1900 + i))
+			if (!bind(1900 + i,QUdpSocket::ShareAddress))
 				Out(SYS_PNP|LOG_IMPORTANT) << "Cannot bind to UDP port 1900 : " << errorString() << endl;
 			else
 				break;
