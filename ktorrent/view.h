@@ -123,7 +123,7 @@ namespace kt
 		void wantToStart(QList<bt::TorrentInterface*> & todo);
 		void currentTorrentChanged(View* v,bt::TorrentInterface* tc);
 		void torrentSelectionChanged(View* v);
-		void showMenu(View* v,const QPoint & pos);;
+		void showMenu(View* v,const QPoint & pos);
 
 	private:
 		Core* core;
