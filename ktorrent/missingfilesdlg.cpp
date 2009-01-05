@@ -53,7 +53,7 @@ namespace kt
 		
 		m_dnd->setEnabled(tc->getStats().multi_file_torrent);
 		// select new is only possible if all files are missing 
-		m_select_new->setEnabled(!tc->getStats().multi_file_torrent || missing.count() == tc->getNumFiles());
+		m_select_new->setEnabled(!tc->getStats().multi_file_torrent || (bt::Uint32)missing.count() == tc->getNumFiles());
 	}
 
 
@@ -86,12 +86,20 @@ namespace kt
 			QStringList dummy;
 			if (tc->hasMissingFiles(dummy))
 			{
-				if (dummy.count() == tc->getNumFiles())
-					KMessageBox::error(this,i18n("The data files are not present in the location you selected!"));
+				int ans = KMessageBox::No;
+				if ((bt::Uint32)dummy.count() == tc->getNumFiles())
+					ans = KMessageBox::questionYesNo(this,i18n("The data files are not present in the location you selected! Do you want to create all the files in the selected directory ?"));
 				else
-					KMessageBox::error(this,i18n("Not all files were found in the new location; some are still missing!"));
+					ans = KMessageBox::questionYesNo(this,i18n("Not all files were found in the new location; some are still missing! Do you want to create the missing files in the selected directory ?"));
 				
-				tc->changeOutputDir(old,bt::TorrentInterface::FULL_PATH);
+				if (ans == KMessageBox::Yes)
+				{
+					tc->recreateMissingFiles();
+					ret = NEW_LOCATION_SELECTED;
+					accept();
+				}
+				else
+					tc->changeOutputDir(old,bt::TorrentInterface::FULL_PATH);
 			}
 			else
 			{
@@ -111,8 +119,14 @@ namespace kt
 			QStringList dummy;
 			if (tc->hasMissingFiles(dummy))
 			{
-				KMessageBox::error(this,i18n("The data file is not present in the location you selected!"));
-				tc->changeOutputDir(old,0);
+				if (KMessageBox::questionYesNo(this,i18n("The data file is not present in the location you selected! Do you want to create the file in the selected directory ?")) == KMessageBox::Yes)
+				{
+					tc->recreateMissingFiles();
+					ret = NEW_LOCATION_SELECTED;
+					accept();
+				}
+				else
+					tc->changeOutputDir(old,0);
 			}
 			else
 			{
