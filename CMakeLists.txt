@@ -4,8 +4,6 @@ find_package(KDE4Internal REQUIRED)
 find_package(GMP REQUIRED)
 find_package(QCA2 REQUIRED)
 find_package(Strigi REQUIRED)
-macro_optional_find_package(Plasma)
-macro_log_feature(PLASMA_FOUND "Plasma" "Plasma libraries and header files" "http://plasma.kde.org/" FALSE "" "Plasma is needed for KTorrent Plasmoid")
 
 # set some default settings
 include(KDE4Defaults)
@@ -55,9 +53,7 @@ add_subdirectory(plugins)
 add_subdirectory(ideal)
 add_subdirectory(ktorrent)
 add_subdirectory(ktupnptest)
-if( PLASMA_FOUND )
-    add_subdirectory(plasma)
-endif(PLASMA_FOUND)
+add_subdirectory(plasma)
 
 # --- show log ---
 macro_display_feature_log()
