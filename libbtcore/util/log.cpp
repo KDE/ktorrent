@@ -63,17 +63,11 @@ namespace bt
 
 		void cleanup()
 		{
-			if (out)
-			{
-				delete out;
-				out = 0;
-			}
+			delete out;
+			out = 0;
 
-			if (fptr)
-			{
-				delete fptr;
-				fptr = 0;
-			}
+			delete fptr;
+			fptr = 0;
 		}
 		
 		void setFilter(unsigned int filter)

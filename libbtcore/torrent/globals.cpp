@@ -58,11 +58,8 @@ namespace bt
 
 	void Globals::initServer(Uint16 port)
 	{
-		if (server)
-		{
-			delete server;
-			server = 0;
-		}
+		delete server;
+		server = 0;
 		
 		server = new Server(port);
 	}

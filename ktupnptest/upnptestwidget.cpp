@@ -46,8 +46,7 @@ UPnPTestWidget::UPnPTestWidget(QWidget* parent) : QWidget(parent)
 
 UPnPTestWidget::~UPnPTestWidget()
 {
-	if (mcast_socket)
-		delete mcast_socket;
+	delete mcast_socket;
 }
 
 void UPnPTestWidget::doForward()

@@ -321,8 +321,7 @@ namespace kt
 
 	TorrentFileTreeModel::~TorrentFileTreeModel()
 	{
-		if (root)
-			delete root;
+		delete root;
 	}
 	
 	void TorrentFileTreeModel::constructTree()

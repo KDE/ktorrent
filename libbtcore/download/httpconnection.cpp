@@ -50,8 +50,7 @@ namespace bt
 			delete sock;
 		}
 		
-		if (request)
-			delete request;
+		delete request;
 	}
 	
 	void HttpConnection::setGroupIDs(Uint32 up,Uint32 down)

@@ -94,8 +94,7 @@ namespace bt
 
 	BitSet & BitSet::operator = (const BitSet & bs)
 	{
-		if (data)
-			delete [] data;
+		delete [] data;
 		num_bytes = bs.num_bytes;
 		num_bits = bs.num_bits;
 		data = new Uint8[num_bytes];

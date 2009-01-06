@@ -210,8 +210,7 @@ namespace mse
 			
 	void StreamSocket::initCrypt(const bt::SHA1Hash & dkey,const bt::SHA1Hash & ekey)
 	{
-		if (enc)
-			delete enc;
+		delete enc;
 		
 		enc = new RC4Encryptor(dkey,ekey);
 	}
@@ -244,8 +243,7 @@ namespace mse
 	
 	void StreamSocket::setRC4Encryptor(RC4Encryptor* e)
 	{
-		if (enc)
-			delete enc;
+		delete enc;
 		
 		enc = e;
 	}

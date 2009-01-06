@@ -45,11 +45,8 @@ namespace bt
 	
 	void HttpDownloader::cancelAll()
 	{
-		if (conn)
-		{
-			delete conn;
-			conn = 0;
-		}
+		delete conn;
+		conn = 0;
 	}
 	
 	QString HttpDownloader::getName() const

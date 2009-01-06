@@ -67,8 +67,7 @@ namespace kt
 
   	AntiP2P::~AntiP2P()
   	{
-		if(file)
-			delete file;
+		delete file;
 		
 		Out(SYS_IPF|LOG_ALL) << "Anti-P2P filter unloaded." << endl;
 	}
