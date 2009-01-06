@@ -1519,7 +1519,7 @@ namespace bt
 		connect(dcheck_thread,SIGNAL(finished()),this,SLOT(afterDataCheck()),Qt::QueuedConnection);
 		
 		// dc->check(stats.output_path,*tor,tordir + "dnd" + bt::DirSeparator());
-		dcheck_thread->start();
+		dcheck_thread->start(QThread::IdlePriority);
 		statusChanged(this);
 	}
 	
