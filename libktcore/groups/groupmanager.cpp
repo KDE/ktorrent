@@ -255,6 +255,8 @@ namespace kt
 			bt::Out(SYS_GEN|LOG_DEBUG) << "Cannot open " << fn << " : " << fptr.errorString() << bt::endl;
 			return;
 		}	
+		
+		bt::BNode* n = 0;
 		try
 		{
 			Uint32 fs = bt::FileSize(fn);
@@ -262,7 +264,7 @@ namespace kt
 			fptr.read(data.data(),fs);
 			
 			BDecoder dec(data,false);
-			bt::BNode* n = dec.decode();
+			n = dec.decode();
 			if (!n || n->getType() != bt::BNode::LIST)
 				throw bt::Error("groups file corrupt");
 			
@@ -290,10 +292,13 @@ namespace kt
 				else
 					delete g;
 			}
+			
+			delete n;
 		}
 		catch (bt::Error & err)
 		{
 			bt::Out(SYS_GEN|LOG_DEBUG) << "Error : " << err.toString() << endl;
+			delete n;
 			return;
 		}
 	}
