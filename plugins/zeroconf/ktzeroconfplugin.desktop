@@ -62,4 +62,4 @@ X-KDE-PluginInfo-Name=WebInterfacePlugin
 X-KDE-PluginInfo-Website=http://ktorrent.org/
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=false
-Icon=ktplugins
+Icon=preferences-plugin
