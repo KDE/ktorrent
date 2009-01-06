@@ -1517,7 +1517,7 @@ namespace bt
 		dcheck_thread = new DataCheckerThread(dc,cman->getBitSet(),stats.output_path,*tor,tordir + "dnd" + bt::DirSeparator());
 		
 		// dc->check(stats.output_path,*tor,tordir + "dnd" + bt::DirSeparator());
-		dcheck_thread->start();
+		dcheck_thread->start(QThread::IdlePriority);
 		statusChanged(this);
 	}
 	
