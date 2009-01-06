@@ -20,6 +20,7 @@
 #ifndef KTUPNPMCASTSOCKET_H
 #define KTUPNPMCASTSOCKET_H
 
+#include <QSet>
 #include <QUdpSocket>
 #include <util/ptrmap.h>
 #include <util/constants.h>
@@ -88,6 +89,7 @@ namespace kt
 	
 	private:	
 		bt::PtrMap<QString,UPnPRouter> routers;
+		QSet<UPnPRouter*> pending_routers; // routers which we are downloading the XML file from
 		bool verbose;
 	};
 }

@@ -70,7 +70,7 @@ namespace kt
 		connect(m_core,SIGNAL(canNotLoadSilently(const QString&)),
 				this,SLOT(cannotLoadTorrentSilently(const QString&)));
 		
-		KMenu* m = new KMenu(0);
+		KMenu* m = new KMenu(parent);
 		setContextMenu(m);
 		max_upload_rate = new SetMaxRate(core,SetMaxRate::UPLOAD,m);
 		max_upload_rate->setTitle(i18n("Set max upload speed"));

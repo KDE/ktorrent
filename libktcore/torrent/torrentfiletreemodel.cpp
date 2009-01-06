@@ -209,7 +209,10 @@ namespace kt
 
 
 	TorrentFileTreeModel::~TorrentFileTreeModel()
-	{}
+	{
+		if (root)
+			delete root;
+	}
 	
 	void TorrentFileTreeModel::constructTree()
 	{

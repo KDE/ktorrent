@@ -62,6 +62,7 @@ namespace kt
 	
 	UPnPMCastSocket::~UPnPMCastSocket()
 	{
+		qDeleteAll(pending_routers);
 		leaveUPnPMCastGroup();
 	}
 	
@@ -88,6 +89,7 @@ namespace kt
 	
 	void UPnPMCastSocket::onXmlFileDownloaded(UPnPRouter* r,bool success)
 	{
+		pending_routers.remove(r);
 		if (!success)
 		{
 			// we couldn't download and parse the XML file so 
@@ -141,6 +143,7 @@ namespace kt
 			
 			// download it's xml file
 			r->downloadXMLFile();
+			pending_routers.insert(r);
 		}
 	}
 	
@@ -265,6 +268,7 @@ namespace kt
 				// download it's xml file
 				QObject::connect(r,SIGNAL(xmlFileDownloaded( UPnPRouter*, bool )),this,SLOT(onXmlFileDownloaded( UPnPRouter*, bool )));
 				r->downloadXMLFile();
+				pending_routers.insert(r);
 			}
 		}
 	}

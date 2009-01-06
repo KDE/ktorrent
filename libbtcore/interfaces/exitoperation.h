@@ -59,7 +59,7 @@ namespace bt
 		ExitJobOperation(KJob* j);
 		virtual ~ExitJobOperation();
 		
-		virtual bool deleteAllowed() const {return false;}
+		virtual bool deleteAllowed() const {return true;}
 	private slots:
 		virtual void onResult(KJob* j);
 	};
