@@ -1571,6 +1571,7 @@ namespace bt
 		dcheck_thread = 0;
 		Out(SYS_GEN|LOG_NOTICE) << "Data check finished" << endl;
 		dataCheckFinished();
+		statusChanged(this);
 	}
 	
 	bool TorrentControl::isCheckingData(bool & finished) const

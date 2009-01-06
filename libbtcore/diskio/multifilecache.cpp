@@ -275,8 +275,8 @@ namespace bt
 				// check if every directory along the path exists, and if it doesn't
 				// create it
 			MakeFilePath(nd + tf.getUserModifiedPath());
-				
-			if (tf.getPathOnDisk() != nd + tf.getUserModifiedPath())
+			
+			if (QFileInfo(tf.getPathOnDisk()).canonicalPath() != QFileInfo(nd + tf.getUserModifiedPath()).canonicalPath())
 			{
 				job->addMove(tf.getPathOnDisk(),nd + tf.getUserModifiedPath());
 				nmoves++;
@@ -332,13 +332,13 @@ namespace bt
 			
 				int last = path.lastIndexOf(bt::DirSeparator());
 				QString dst = dest + path.mid(last+1);
-				if (tf->getPathOnDisk() != dst)
+				if (QFileInfo(tf->getPathOnDisk()).canonicalPath() != QFileInfo(dst).canonicalPath())
 				{
 					job->addMove(tf->getPathOnDisk(),dst);
 					nmoves++;
 				}
 			}
-			else if (tf->getPathOnDisk() != i.value())
+			else if (QFileInfo(tf->getPathOnDisk()).canonicalPath() != QFileInfo(i.value()).canonicalPath())
 			{
 				job->addMove(tf->getPathOnDisk(),i.value());
 				nmoves++;

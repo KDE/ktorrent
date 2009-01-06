@@ -47,10 +47,10 @@ namespace bt
 			active_job = 0;
 			if (j->error())
 				((KIO::Job*)j)->ui()->showErrorMessage();
-			
+	
 			// shit happened cancel all previous moves
 			err = true;
-			recover(j->error() != KIO::ERR_FILE_ALREADY_EXIST);
+			recover(j->error() != KIO::ERR_FILE_ALREADY_EXIST && j->error() != KIO::ERR_IDENTICAL_FILES);
 		}
 		else
 		{
@@ -63,6 +63,7 @@ namespace bt
 	
 	void MoveDataFilesJob::onCanceled(KJob* j)
 	{
+		Q_UNUSED(j);
 		setError(KIO::ERR_USER_CANCELED);
 		active_job = 0;
 		err = true;
