@@ -345,6 +345,9 @@ namespace kt
 	
 	void GUI::paste()
 	{
+		if (!paste_action->isEnabled())
+			return;
+		
 		QClipboard *cb = QApplication::clipboard();
 		QString text = cb->text(QClipboard::Clipboard);
 		if (text.length() == 0)
@@ -419,7 +422,7 @@ namespace kt
 		new_action->setToolTip(i18n("Create a new torrent"));
 		KAction* open_action = KStandardAction::open(this, SLOT(openTorrent()),ac);
 		open_action->setToolTip(i18n("Open a torrent"));
-		KStandardAction::paste(this,SLOT(paste()),ac);
+		paste_action = KStandardAction::paste(this,SLOT(paste()),ac);
 		KStandardAction::selectAll(view_man,SLOT(selectAll()),ac);
 		
 		open_silently_action = new KAction(KIcon(open_action->icon()),i18n("Open Silently"),this);
@@ -601,6 +604,7 @@ namespace kt
 		View* view = view_man->newView(core,this);
 		view->setGroup(g);
 		addTabPage(view,g->groupIconName(),view->caption(),QString(),view_man);
+		connect(view,SIGNAL(editingItem(bool)),this,SLOT(setPasteDisabled(bool)));
 		return view;
 	}
 			
@@ -761,6 +765,11 @@ namespace kt
 	QWidget* GUI::getCurrentTab()
 	{
 		return currentTabPage();
+	}
+	
+	void GUI::setPasteDisabled(bool on)
+	{
+		paste_action->setEnabled(!on);
 	}
 }
 

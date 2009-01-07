@@ -117,6 +117,12 @@ namespace kt
 		
 		/// Update all actions
 		void updateActions();
+		
+		/**
+		 * Enable or disable the paste action
+		 * @param on Set on
+		 */
+		void setPasteDisabled(bool on);
 
 	private slots:
 		void createTorrent();
@@ -184,6 +190,7 @@ namespace kt
 		KAction* import_kde3_torrents_action;
 		KAction* speed_limits_action;
 		KAction* show_kt_action;
+		KAction* paste_action;
 
 		PrefDialog* pref_dlg;
 		QMap<QWidget*,CloseTabListener*> close_tab_map;

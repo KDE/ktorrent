@@ -52,7 +52,6 @@ namespace kt
 		: QTreeView(parent),core(core),group(0),num_torrents(0),num_running(0),model(0)
 	{
 		model = new ViewModel(core,this);
-		//connect(header(),SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),model,SLOT(sort(int, Qt::SortOrder)));
 		
 		setContextMenuPolicy(Qt::CustomContextMenu);
 		setRootIsDecorated(false);
@@ -393,10 +392,12 @@ namespace kt
 		QModelIndexList indices = selectionModel()->selectedRows();
 		if (indices.count() == 0)
 			return;
+		
 		QModelIndex idx = indices.front();
-		edit(model->index(idx.row(),0));
+		QTreeView::edit(model->index(idx.row(),0));
+		editingItem(true);
 	}
-
+	
 	void View::checkData()
 	{
 		QList<bt::TorrentInterface*> sel;
@@ -487,6 +488,20 @@ namespace kt
 		return column_action_list;
 	}
 
+	void View::closeEditor(QWidget* editor,QAbstractItemDelegate::EndEditHint hint)
+	{
+		QTreeView::closeEditor(editor,hint);
+		editingItem(false);
+	}
+	
+	bool View::edit(const QModelIndex & index,EditTrigger trigger,QEvent* event)
+	{
+		bool ret = QTreeView::edit(index,trigger,event);
+		if (ret)
+			editingItem(true);
+		
+		return ret;
+	}
 }
 
 #include "view.moc"

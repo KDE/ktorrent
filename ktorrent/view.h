@@ -87,6 +87,8 @@ namespace kt
 		/// Get the number of running torrents
 		bt::Uint32 numRunningTorrents() const {return num_running;}
 		
+		virtual void closeEditor(QWidget* editor,QAbstractItemDelegate::EndEditHint hint);
+		virtual bool edit(const QModelIndex & index,EditTrigger trigger,QEvent* event);
 	public slots:
 		/**
 		 * Update all items in the view
@@ -124,7 +126,8 @@ namespace kt
 		void currentTorrentChanged(View* v,bt::TorrentInterface* tc);
 		void torrentSelectionChanged(View* v);
 		void showMenu(View* v,const QPoint & pos);
-
+		void editingItem(bool on);
+		
 	private:
 		Core* core;
 		Group* group;
