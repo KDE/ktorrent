@@ -70,8 +70,8 @@ namespace kt
 			writeElement(out,"bytes_uploaded",BytesToString(s.bytes_uploaded));
 			writeElement(out,"total_bytes",BytesToString(s.total_bytes));
 			writeElement(out,"total_bytes_to_download",BytesToString(s.total_bytes_to_download));
-			writeElement(out,"download_rate",KBytesPerSecToString(s.download_rate / 1024.0));
-			writeElement(out,"upload_rate",KBytesPerSecToString(s.upload_rate / 1024.0));
+			writeElement(out,"download_rate",BytesPerSecToString(s.download_rate));
+			writeElement(out,"upload_rate",BytesPerSecToString(s.upload_rate));
 			writeElement(out,"num_peers",QString::number(s.num_peers));
 			writeElement(out,"seeders",QString::number(s.seeders_connected_to));
 			writeElement(out,"seeders_total",QString::number(s.seeders_total));

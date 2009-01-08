@@ -80,8 +80,8 @@ namespace kt
 		{
 			setBrush(QBrush(SchedulerPluginSettings::itemColor()));
 			text = i18n("%1 Down\n%2 Up",
-						KBytesPerSecToString(item->download_limit),
-											 KBytesPerSecToString(item->upload_limit));
+						BytesPerSecToString(item->download_limit * 1024),
+						BytesPerSecToString(item->upload_limit * 1024));
 		}
 		
 		if (text_item == 0)

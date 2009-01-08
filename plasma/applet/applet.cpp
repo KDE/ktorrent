@@ -170,6 +170,7 @@ namespace ktplasma
 	
 	void Applet::saveState(KConfigGroup & config) const
 	{
+		Q_UNUSED(config);
 	}
 	
 	void Applet::constraintsEvent(Plasma::Constraints constraints)
@@ -303,12 +304,12 @@ namespace ktplasma
 		misc->setText(
 			i18n(
 				 "<table>\
-				<tr><td>Download Speed:</td><td>%5 KB/s </td><td>Seeders: </td><td>%1 (%2)</td></tr>\
-				<tr><td>Upload Speed:</td><td>%6 KB/s </td><td>Leechers: </td><td>%3 (%4)</td></tr>\
+				<tr><td>Download Speed:</td><td>%5 </td><td>Seeders: </td><td>%1 (%2)</td></tr>\
+				<tr><td>Upload Speed:</td><td>%6 </td><td>Leechers: </td><td>%3 (%4)</td></tr>\
 				<tr><td>Downloaded:</td><td>%7 / %8 </td><td>Uploaded: </td><td>%9</td></tr>\
 				</table>",
-	 			sc,st,cc,ct,loc->formatNumber(ds / 1024.0,2),loc->formatNumber(us / 1024.0,2),
-				BytesToString(downloaded,2),BytesToString(size,2),BytesToString(uploaded,2)));
+	 			sc,st,cc,ct,BytesPerSecToString(ds),BytesPerSecToString(us),
+				BytesToString(downloaded),BytesToString(size),BytesToString(uploaded)));
 		
 		
 		
@@ -369,17 +370,16 @@ namespace ktplasma
 	}
 
 	void Applet::clearData()
-	{
-		KLocale* loc = KGlobal::locale();		
+	{		
 		misc->setText(
 			i18n(
 				"<table>\
-				<tr><td>Download Speed:</td><td>%5 KB/s </td><td>Seeders: </td><td>%1 (%2)</td></tr>\
-				<tr><td>Upload Speed:</td><td>%6 KB/s </td><td>Leechers: </td><td>%3 (%4)</td></tr>\
+				<tr><td>Download Speed:</td><td>%5 </td><td>Seeders: </td><td>%1 (%2)</td></tr>\
+				<tr><td>Upload Speed:</td><td>%6 </td><td>Leechers: </td><td>%3 (%4)</td></tr>\
 				<tr><td>Downloaded:</td><td>%7 / %8 </td><td>Uploaded: </td><td>%9</td></tr>\
 				</table>",
-				0,0,0,0,loc->formatNumber(0,2),loc->formatNumber(0,2),
-				BytesToString(0,2),BytesToString(0,2),BytesToString(0,2)));
+				0,0,0,0,BytesPerSecToString(0),BytesPerSecToString(0),
+				BytesToString(0),BytesToString(0),BytesToString(0)));
 	}
 }
 

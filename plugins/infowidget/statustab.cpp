@@ -176,28 +176,28 @@ namespace kt
 		Uint32 secs = curr_tc->getRunningTimeUL(); 
 		if (secs == 0)
 		{
-			avg_up_speed->setText(KBytesPerSecToString(0));
+			avg_up_speed->setText(BytesPerSecToString(0));
 		}
 		else
 		{
-			double r = (double)s.bytes_uploaded / 1024.0;
-			avg_up_speed->setText(KBytesPerSecToString(r / secs));
+			double r = (double)s.bytes_uploaded;
+			avg_up_speed->setText(BytesPerSecToString(r / secs));
 		}
 		
 		secs = curr_tc->getRunningTimeDL();
 		if (secs == 0)
 		{
-			avg_down_speed->setText(KBytesPerSecToString(0));
+			avg_down_speed->setText(BytesPerSecToString(0));
 		}
 		else
 		{
 			double r = 0;
 			if (s.imported_bytes <= s.bytes_downloaded)
-				r = (double)(s.bytes_downloaded - s.imported_bytes)/ 1024.0;
+				r = (double)(s.bytes_downloaded - s.imported_bytes);
 			else
-				r = (double)s.bytes_downloaded / 1024.0;
+				r = (double)s.bytes_downloaded;
 			
-			avg_down_speed->setText(KBytesPerSecToString(r / secs));
+			avg_down_speed->setText(BytesPerSecToString(r / secs));
 		}
 	}
 	

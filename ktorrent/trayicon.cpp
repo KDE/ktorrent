@@ -93,8 +93,8 @@ namespace kt
 		else
 		{
 			QString tip = i18n("<table cellpadding='2' cellspacing='2' align='center'><tr><td><b>Speed:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%1</font></td><td>Upload: <font color='#990000'>%2</font></td></tr><tr><td><b>Transfer:</b></td><td></td></tr><tr><td>Download: <font color='#1c9a1c'>%3</font></td><td>Upload: <font color='#990000'>%4</font></td></tr></table>",
-				KBytesPerSecToString((double)stats.download_speed/1024.0),
-				KBytesPerSecToString((double)stats.upload_speed/1024.0),
+				BytesPerSecToString((double)stats.download_speed),
+				BytesPerSecToString((double)stats.upload_speed),
 				BytesToString(stats.bytes_downloaded),
 				BytesToString(stats.bytes_uploaded));
 		
@@ -123,14 +123,14 @@ namespace kt
 			return;
 		
 		const TorrentStats & s = tc->getStats();
-		double speed_up = (double)s.bytes_uploaded / 1024.0;
-		double speed_down = (double)(s.bytes_downloaded - s.imported_bytes)/ 1024.0;
+		double speed_up = (double)s.bytes_uploaded;
+		double speed_down = (double)(s.bytes_downloaded - s.imported_bytes);
 
 		QString msg = i18n("<b>%1</b> has completed downloading."
 					"<br>Average speed: %2 DL / %3 UL.",
 					tc->getDisplayName(),
-					KBytesPerSecToString(speed_down / tc->getRunningTimeDL()),
-					KBytesPerSecToString(speed_up / tc->getRunningTimeUL()));
+					BytesPerSecToString(speed_down / tc->getRunningTimeDL()),
+					BytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
 		KNotification::event("TorrentFinished",msg,QPixmap(),mwnd);
 	}
@@ -142,14 +142,14 @@ namespace kt
 		
 		const TorrentStats & s = tc->getStats();
 		KLocale* loc = KGlobal::locale();
-		double speed_up = (double)s.bytes_uploaded / 1024.0;
+		double speed_up = (double)s.bytes_uploaded;
 		
 		QString msg = i18n("<b>%1</b> has reached its maximum share ratio of %2 and has been stopped."
 				"<br>Uploaded %3 at an average speed of %4.",
 				tc->getDisplayName(),
 				loc->formatNumber(s.max_share_ratio,2),
 				BytesToString(s.bytes_uploaded),
-				KBytesPerSecToString(speed_up / tc->getRunningTimeUL()));
+				BytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
 		KNotification::event("MaxShareRatioReached",msg,QPixmap(),mwnd);
 	}
@@ -161,14 +161,14 @@ namespace kt
 		
 		const TorrentStats & s = tc->getStats();
 		KLocale* loc = KGlobal::locale();
-		double speed_up = (double)s.bytes_uploaded / 1024.0;
+		double speed_up = (double)s.bytes_uploaded;
 		
 		QString msg = i18n("<b>%1</b> has reached its maximum seed time of %2 hours and has been stopped."
 				"<br>Uploaded %3 at an average speed of %4.",
 				tc->getDisplayName(),
 				loc->formatNumber(s.max_seed_time,2),
 				BytesToString(s.bytes_uploaded),
-				KBytesPerSecToString(speed_up / tc->getRunningTimeUL()));
+				BytesPerSecToString(speed_up / tc->getRunningTimeUL()));
 
 		KNotification::event("MaxSeedTimeReached",msg,QPixmap(),mwnd);
 	}

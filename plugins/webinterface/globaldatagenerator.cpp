@@ -58,8 +58,8 @@ namespace kt
 		out.writeStartElement("global_data");
 		writeElement(out,"transferred_down",BytesToString(s.bytes_downloaded));
 		writeElement(out,"transferred_up",BytesToString(s.bytes_uploaded));
-		writeElement(out,"speed_down",KBytesPerSecToString(s.download_speed / 1024.0));
-		writeElement(out,"speed_up",KBytesPerSecToString(s.upload_speed / 1024.0));
+		writeElement(out,"speed_down",BytesPerSecToString(s.download_speed));
+		writeElement(out,"speed_up",BytesPerSecToString(s.upload_speed));
 #ifdef ENABLE_DHT_SUPPORT
 		writeElement(out,"dht",Settings::dhtSupport() ? "1" : "0");
 #else

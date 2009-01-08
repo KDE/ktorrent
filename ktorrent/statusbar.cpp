@@ -35,7 +35,7 @@ namespace kt
 		transfer(0),up_transfer(0),down_transfer(0),
 		dht_status(0),dht_peers(0),dht_tasks(0),dht_on(false)
 	{
-		QString s = i18n("Speed down: %1 / up: %2",KBytesPerSecToString((double)down_speed/1024.0),KBytesPerSecToString((double)up_speed/1024.0));
+		QString s = i18n("Speed down: %1 / up: %2",BytesPerSecToString((double)down_speed),BytesPerSecToString((double)up_speed));
 		QString t = i18n("Transferred down: %1 / up: %2",BytesToString(down_transfer),BytesToString(up_transfer));
 		
 		dht_status = new QLabel(i18n("DHT: off"),this);
@@ -65,7 +65,7 @@ namespace kt
 		
 		up_speed = up;
 		down_speed = down;
-		QString s = i18n("Speed down: %1 / up: %2",KBytesPerSecToString((double)down_speed/1024.0),KBytesPerSecToString((double)up_speed/1024.0));
+		QString s = i18n("Speed down: %1 / up: %2",BytesPerSecToString((double)down_speed),BytesPerSecToString((double)up_speed));
 		speed->setText(s);
 	}
 

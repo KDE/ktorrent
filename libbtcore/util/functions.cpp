@@ -251,9 +251,11 @@ namespace bt
 	}	
 
 		
-	QString BytesToString(Uint64 bytes,int precision)
+	QString BytesToString(Uint64 bytes)
 	{
 		KLocale* loc = KGlobal::locale();
+		return loc->formatByteSize(bytes);
+		/*
 		if (bytes >= 1024 * 1024 * 1024)
 			return i18n("%1 GB",loc->formatNumber(bytes / TO_GIG,precision < 0 ? 2 : precision));
 		else if (bytes >= 1024*1024)
@@ -262,12 +264,13 @@ namespace bt
 			return i18n("%1 KB",loc->formatNumber(bytes / TO_KB,precision < 0 ? 1 : precision));
 		else
 			return i18n("%1 B",bytes);
+		*/
 	}
 
-	QString KBytesPerSecToString(double speed,int precision)
+	QString BytesPerSecToString(double speed)
 	{
 		KLocale* loc = KGlobal::locale();
-		return i18n("%1 KB/s",loc->formatNumber(speed,precision));
+		return i18n("%1/s",loc->formatByteSize(speed));
 	}
 
 	QString DurationToString(Uint32 nsecs)

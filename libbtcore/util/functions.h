@@ -81,8 +81,8 @@ namespace bt
 	const double TO_MEG = (1024.0 * 1024.0);
 	const double TO_GIG = (1024.0 * 1024.0 * 1024.0);
 	
-	BTCORE_EXPORT QString BytesToString(bt::Uint64 bytes,int precision = -1);
-	BTCORE_EXPORT QString KBytesPerSecToString(double speed,int precision = 1);
+	BTCORE_EXPORT QString BytesToString(bt::Uint64 bytes);
+	BTCORE_EXPORT QString BytesPerSecToString(double speed);
 	BTCORE_EXPORT QString DurationToString(bt::Uint32 nsecs);
 	
 	template<class T> int CompareVal(T a,T b)

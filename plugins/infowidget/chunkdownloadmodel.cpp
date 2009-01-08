@@ -64,7 +64,7 @@ namespace kt
 			case 0: return stats.chunk_index;
 			case 1: return QString("%1 / %2").arg(stats.pieces_downloaded).arg(stats.total_pieces);
 			case 2: return stats.current_peer_id;
-			case 3: return KBytesPerSecToString(stats.download_speed / 1024.0);
+			case 3: return BytesPerSecToString(stats.download_speed);
 			case 4: return files;
 		}
 		return QVariant();

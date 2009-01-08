@@ -143,7 +143,7 @@ namespace kt
 			switch (index.column())
 			{
 				case 0: return ws->getUrl().prettyUrl();
-				case 1: return bt::KBytesPerSecToString(ws->getDownloadRate() / 1024.0);
+				case 1: return bt::BytesPerSecToString(ws->getDownloadRate());
 				case 2: return bt::BytesToString(ws->getTotalDownloaded());
 				case 3: return ws->getStatus();
 			}

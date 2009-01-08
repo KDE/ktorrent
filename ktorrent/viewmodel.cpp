@@ -192,13 +192,13 @@ namespace kt
 			case 4: return BytesToString(bytes_uploaded);
 			case 5: 
 				if (download_rate >= 103 && s.bytes_left_to_download > 0) // lowest "visible" speed, all below will be 0,0 Kb/s
-					return KBytesPerSecToString(download_rate / 1024.0);
+					return BytesPerSecToString(download_rate);
 				else
 					return QVariant();
 				break;
 			case 6: 
 				if (upload_rate >= 103) // lowest "visible" speed, all below will be 0,0 Kb/s
-					return KBytesPerSecToString(upload_rate / 1024.0);
+					return BytesPerSecToString(upload_rate);
 				else
 					return QVariant();
 				break;

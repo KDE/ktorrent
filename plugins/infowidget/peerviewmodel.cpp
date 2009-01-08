@@ -199,12 +199,12 @@ namespace kt
 			case 2: return stats.client;
 			case 3: 
 				if (stats.download_rate >= 103)
-					return KBytesPerSecToString(stats.download_rate / 1024.0);
+					return BytesPerSecToString(stats.download_rate);
 				else
 					return QVariant();
 			case 4: 
 				if (stats.upload_rate >= 103)
-					return KBytesPerSecToString(stats.upload_rate / 1024.0);
+					return BytesPerSecToString(stats.upload_rate);
 				else
 					return QVariant();
 			case 5: return stats.choked ? i18nc("Choked", "Yes") : i18nc("Not choked", "No");
