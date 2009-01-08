@@ -389,7 +389,7 @@ namespace kt
 		if (!n)
 			return QVariant();
 			
-		if (role == Qt::DisplayRole)
+		if (role == Qt::DisplayRole || role == Qt::EditRole)
 		{
 			switch (index.column())
 			{

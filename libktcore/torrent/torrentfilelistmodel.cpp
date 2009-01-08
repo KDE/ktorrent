@@ -86,7 +86,7 @@ namespace kt
 			return QVariant();
 
 		const TorrentStats & s = tc->getStats();
-		if (role == Qt::DisplayRole)
+		if (role == Qt::DisplayRole || role == Qt::EditRole)
 		{
 			switch (index.column())
 			{
