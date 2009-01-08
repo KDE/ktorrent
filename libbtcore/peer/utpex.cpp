@@ -161,7 +161,9 @@ namespace bt
 			const net::Address & addr = i->second;
 			if (addr.ipVersion() == 4)
 			{
-				WriteUint32(buf,size,addr.ipAddress().IPv4Addr());
+				// IPv4 addr is already in network byte order
+				quint32 ip = addr.ipAddress().IPv4Addr();
+				memcpy(buf + size,&ip,4);
 				WriteUint16(buf,size + 4,addr.port());
 				size += 6;
 			}
