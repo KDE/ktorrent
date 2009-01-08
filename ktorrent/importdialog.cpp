@@ -299,7 +299,7 @@ namespace kt
 			otmp += bt::DirSeparator();
 
 		QString dtmp = dnd_dir;
-		for (Uint32 i = 0;i < sl.count() - 1;i++)
+		for (int i = 0;i < sl.count() - 1;i++)
 		{
 			otmp += sl[i];
 			dtmp += sl[i];
@@ -371,7 +371,7 @@ namespace kt
 		Uint32 tmp = dnd.count();
 		fptr.write(&tmp,sizeof(Uint32));
 		// then all the excluded ones
-		for (Uint32 i = 0;i < dnd.count();i++)
+		for (int i = 0;i < dnd.count();i++)
 		{
 			tmp = dnd[i];
 			fptr.write(&tmp,sizeof(Uint32));

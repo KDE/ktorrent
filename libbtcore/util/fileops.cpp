@@ -461,41 +461,116 @@ namespace bt
 #endif
 	}
 	
-	QString ShortenFileName(const QString & path,int max_len,int extra_number)
+	bool FileNameToLong(const QString & path)
 	{
-		QByteArray encoded = QFile::encodeName(path);
-		if (encoded.length() < max_len)
-			return path;
+		int length = 0;
+		QStringList names = path.split("/");
+		foreach (const QString & s, names)
+		{
+			QByteArray encoded = QFile::encodeName(s);
+			if (encoded.length() >= NAME_MAX)
+				return true;
+			length += encoded.length();
+		}
 		
-		QFileInfo fi(path);
+		length += path.count("/");
+		return length >= PATH_MAX;
+	}
+	
+	static QString ShortenName(const QString & name,int extra_number)
+	{
+		QFileInfo fi(name);
 		QString ext = fi.suffix();
-		QString name = fi.completeBaseName();
-		QString fpath = fi.path() + "/";
+		QString base = fi.completeBaseName();
 		
 		// calculate the fixed length, 1 is for the . between filename and extension
-		int fixed_len = QFile::encodeName(fpath).length();
+		int fixed_len = 0;
 		if (ext.length() > 0)
 			fixed_len += QFile::encodeName(ext).length() + 1;
 		if (extra_number > 0)
 			fixed_len += QFile::encodeName(QString::number(extra_number)).length();
 		
 		// if we can't shorten it, give up
+		if (fixed_len > NAME_MAX - 4)
+			return name;
+		
+		do
+		{
+			base = base.left(base.length() - 1);
+		}while (fixed_len + QFile::encodeName(base).length() > NAME_MAX - 4 && base.length() != 0);
+		
+		base += "... "; // add ... so that the user knows the name is shortened
+		
+		QString ret = base;
+		if (extra_number > 0)
+			ret += QString::number(extra_number);
+		if (ext.length() > 0)
+			ret += "." + ext;
+		return ret;
+	}
+	
+	static QString ShortenPath(const QString & path,int extra_number)
+	{
+		int max_len = PATH_MAX;
+		QByteArray encoded = QFile::encodeName(path);
+		if (encoded.length() < max_len)
+			return path;
+
+		QFileInfo fi(path);
+		QString ext = fi.suffix();
+		QString name = fi.completeBaseName();
+		QString fpath = fi.path() + "/";
+
+                // calculate the fixed length, 1 is for the . between filename and extension
+		int fixed_len = QFile::encodeName(fpath).length();
+		if (ext.length() > 0)
+			fixed_len += QFile::encodeName(ext).length() + 1;
+		if (extra_number > 0)
+			fixed_len += QFile::encodeName(QString::number(extra_number)).length();
+
+                // if we can't shorten it, give up
 		if (fixed_len > max_len - 4)
 			return path;
-		
+
 		do
 		{
 			name = name.left(name.length() - 1);
 		}while (fixed_len + QFile::encodeName(name).length() > max_len - 4 && name.length() != 0);
-		
+
 		name += "... "; // add ... so that the user knows the name is shortened
-		
+
 		QString ret = fpath + name;
 		if (extra_number > 0)
 			ret += QString::number(extra_number);
 		if (ext.length() > 0)
 			ret += "." + ext;
-		
+
 		return ret;
+	}
+	
+	QString ShortenFileName(const QString & path,int extra_number)
+	{
+		QString assembled = "/";
+		QStringList names = path.split("/",QString::SkipEmptyParts);
+		int cnt = 0;
+		for (QStringList::iterator i = names.begin();i != names.end();i++)
+		{
+			QByteArray encoded = QFile::encodeName(*i);
+			if (encoded.length() >= NAME_MAX)
+				*i = ShortenName(*i,extra_number);
+			
+			assembled += *i;
+			if (cnt < names.count() - 1)
+				assembled += '/';
+			cnt++;
+		}
+		
+		if (QFile::encodeName(assembled).length() >= PATH_MAX)
+		{
+			// still to long, then the Shorten the filename
+			assembled = ShortenPath(assembled,extra_number);
+		}
+		
+		return assembled;
 	}
 }

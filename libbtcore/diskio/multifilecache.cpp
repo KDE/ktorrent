@@ -397,33 +397,30 @@ namespace bt
 			bt::MakeDir(tmpdir + "dnd");
 
 		QSet<QString> shortened_names;
-		int lim = NAME_MAX > PATH_MAX ? PATH_MAX : NAME_MAX;
-		
-		// update symlinks
 		for (Uint32 i = 0;i < tor.getNumFiles();i++)
 		{			
 			TorrentFile & tf = tor.getFile(i);
-			
+#ifndef Q_WS_WIN			
 			// check if the filename is to long
-			QByteArray path = QFile::encodeName(tf.getPathOnDisk());
-			if (path.length() > lim)
+			if (FileNameToLong(tf.getPathOnDisk()))
 			{
-				QString s = ShortenFileName(tf.getPathOnDisk(),lim);
+				QString s = ShortenFileName(tf.getPathOnDisk());
 				Out(SYS_DIO|LOG_DEBUG) << "Path to long " << tf.getPathOnDisk() << endl;
 				// make sure there are no dupes
 				int cnt = 1;
 				while (shortened_names.contains(s))
 				{
-					s = ShortenFileName(tf.getPathOnDisk(),lim,cnt++);
+					s = ShortenFileName(tf.getPathOnDisk(),cnt++);
 				}
 				Out(SYS_DIO|LOG_DEBUG) << "Shortened to " << s << endl;
 				
 				tf.setPathOnDisk(s);
 				shortened_names.insert(s);
 			}
-			
+#endif			
 			touch(tf);
 		}
+
 		saveFileMap();
 	}
 	

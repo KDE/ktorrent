@@ -168,14 +168,16 @@ namespace bt
 	/// Calculate the number of bytes free on the filesystem path is located
 	BTCORE_EXPORT bool FreeDiskSpace(const QString & path,Uint64 & bytes_free);
 	
+	/// Check if a filename is to long
+	BTCORE_EXPORT bool FileNameToLong(const QString & path);
+	
 	/**
 	 * Shorten a filename
 	 * @param path Path of the file
-	 * @param max_len Max length it is supposed to be
 	 * @param extra_number Append this number before the extension (if negative or 0, nothing will be appended) This is to handle duplicate shortened names
 	 * @return The shortened path
 	 */
-	BTCORE_EXPORT QString ShortenFileName(const QString & path,int max_len,int extra_number = -1);
+	BTCORE_EXPORT QString ShortenFileName(const QString & path,int extra_number = -1);
 }
 
 #endif
