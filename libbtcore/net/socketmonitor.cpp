@@ -57,6 +57,7 @@ namespace net
 		if (dt && dt->isRunning())
 		{
 			dt->stop();
+			dt->wakeUp(); // wake it up if necessary
 			if (!dt->wait(250))
 			{
 				dt->terminate();
@@ -110,6 +111,8 @@ namespace net
 			if (!ut->isRunning())
 				ut->start(QThread::IdlePriority);
 		}
+		// wake up download thread so that it can start polling the new socket
+		dt->wakeUp();
 	}
 	
 	void SocketMonitor::remove(BufferedSocket* sock)

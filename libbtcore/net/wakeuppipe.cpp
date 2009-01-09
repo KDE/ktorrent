@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2009 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,50 +17,40 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef NETDOWNLOADTHREAD_H
-#define NETDOWNLOADTHREAD_H
-
-#include <vector>
-#include "networkthread.h"
-
-struct pollfd;
+#include "net/wakeuppipe.h"
 
 namespace net
 {
-	class WakeUpPipe;
 
-	/**
-	 * @author Joris Guisson <joris.guisson@gmail.com>
-	 * 
-	 * Thread which processes incoming data
-	 */
-	class DownloadThread : public NetworkThread
+	WakeUpPipe::WakeUpPipe()
 	{
-		static bt::Uint32 dcap;
-		static bt::Uint32 sleep_time;
-		std::vector<struct pollfd> fd_vec;
-	public:
-		DownloadThread(SocketMonitor* sm);
-		virtual ~DownloadThread();
+		reader = new net::Socket(false,4);
+		bt::Uint16 port = 50000;
+		while (!reader->bind("127.0.0.1",port,false) && port - 50000 <= 10000)
+		{
+			port++;
+		}
 		
-		/// Wake up the download thread
-		void wakeUp();
-	
-		/// Set the download cap
-		static void setCap(bt::Uint32 cap) {dcap = cap;}
-		
-		/// Set the sleep time when using download caps
-		static void setSleepTime(bt::Uint32 stime);
-	private:	
-		virtual void update();
-		virtual bool doGroup(SocketGroup* g,Uint32 & allowance,bt::TimeStamp now);
-		
-		int waitForSocketReady(int timeout);
-		
-	private:
-		WakeUpPipe* wake_up;
-	};
+		writer = new net::Socket(false,4);
+		writer->connectTo(net::Address("127.0.0.1",port));
+	}
 
+
+	WakeUpPipe::~WakeUpPipe()
+	{
+		delete reader;
+		delete writer;
+	}
+
+	void WakeUpPipe::wakeUp()
+	{
+		char dummy[] = "dummy";
+		writer->send((bt::Uint8*)dummy,5);
+	}
+		
+	void WakeUpPipe::handleData()
+	{
+		bt::Uint8 buf[20];
+		reader->recv(buf,20);
+	}
 }
-
-#endif

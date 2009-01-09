@@ -143,6 +143,12 @@ namespace bt
 		virtual QString getName() const;
 		virtual Uint32 getDownloadRate() const;
 		
+		/**
+		 * Called when a piece has arrived.
+		 * @param p The Piece
+		 */
+		void piece(const Piece & p);
+		
 	public slots:
 		/**
 		 * Send a Request. Note that the DownloadCap
@@ -170,7 +176,6 @@ namespace bt
 		void onRejected(const Request & req);
 		
 	private slots:
-		void piece(const Piece & p);
 		void peerDestroyed();
 		void update();
 		

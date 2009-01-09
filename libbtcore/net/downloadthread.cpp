@@ -30,6 +30,7 @@
 #include "socketgroup.h"
 #include "socketmonitor.h"
 #include "bufferedsocket.h"
+#include "wakeuppipe.h"
 		
 using namespace bt;
 
@@ -40,11 +41,14 @@ namespace net
 
 	DownloadThread::DownloadThread(SocketMonitor* sm) : NetworkThread(sm)
 	{
+		wake_up = 0;
 	}
 
 
 	DownloadThread::~DownloadThread()
-	{}
+	{
+		delete wake_up;
+	}
 	
 	void DownloadThread::update()
 	{
@@ -52,6 +56,12 @@ namespace net
 		{
 			bool group_limits = false;
 			sm->lock();
+			if (fd_vec[0].revents & POLLIN)
+			{
+				// wake up was triggered
+				wake_up->handleData();
+			}
+			
 			TimeStamp now = bt::Now();
 			Uint32 num_ready = 0;
 			SocketMonitor::Itr itr = sm->begin();
@@ -116,8 +126,29 @@ namespace net
 	
 	int DownloadThread::waitForSocketReady(int timeout)
 	{
-		int i = 0;
+		int i = 1;
 		sm->lock();
+		
+		if (!wake_up)
+			wake_up = new WakeUpPipe();
+		
+		// Add the wake up pipe
+		if (fd_vec.size() >= 1)
+		{
+			struct pollfd & wfd = fd_vec[0];
+			wfd.fd = wake_up->readerSocket()->fd();
+			wfd.revents = 0;
+			wfd.events = POLLIN;
+		}
+		else
+		{
+			struct pollfd wfd;
+			wfd.fd = wake_up->readerSocket()->fd();
+			wfd.revents = 0;
+			wfd.events = POLLIN;
+			fd_vec.push_back(wfd);
+		}
+		
 		// fill the poll vector with all sockets
 		SocketMonitor::Itr itr = sm->begin();
 		while (itr != sm->end())
@@ -154,9 +185,15 @@ namespace net
 		sm->unlock();
 	
 #ifndef Q_WS_WIN
-		return poll(&fd_vec[0],i,timeout);
+		return poll(&fd_vec[0],i,-1);
 #else
-		return mingw_poll(&fd_vec[0],i,timeout);
+		return mingw_poll(&fd_vec[0],i,-1);
 #endif
+	}
+	
+	void DownloadThread::wakeUp()
+	{
+		if (wake_up)
+			wake_up->wakeUp();
 	}
 }

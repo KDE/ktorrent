@@ -219,6 +219,18 @@ namespace bt
 		/// Set the group IDs of each peer
 		void setGroupIDs(Uint32 up,Uint32 down);
 		
+		/// Have message received by a peer
+		void have(Peer* p,Uint32 index);
+		
+		/// Bitset received by a peer
+		void bitSetReceived(Peer* p,const BitSet & bs);
+		
+		/// Rerun the choker
+		void rerunChoker();
+		
+		/// A PEX message was received
+		void pex(const QByteArray & arr);
+		
 	public slots:
 		/**
 		 * A PeerSource, has new potential peers.
@@ -233,12 +245,7 @@ namespace bt
 		bool connectedTo(const QString & ip,Uint16 port) const;
 
 	private slots:
-		void onHave(Peer* p,Uint32 index);
-		void onBitSetReceived(Peer* p,const BitSet & bs);
-		void onRerunChoker();
-		void pex(const QByteArray & arr);
 		void onResolverResults(KNetwork::KResolverResults res);
-		
 		
 	signals:
 		void newPeer(Peer* p);

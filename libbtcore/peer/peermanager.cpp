@@ -113,7 +113,7 @@ namespace bt
 			}
 			else
 			{
-				p->update(this);
+				p->update();
 				i++;
 			}
 		}
@@ -261,7 +261,7 @@ namespace bt
 		}
 	}
 
-	void PeerManager::onHave(Peer* p,Uint32 index)
+	void PeerManager::have(Peer* p,Uint32 index)
 	{
 		if (wanted_chunks.get(index))
 			p->getPacketWriter().sendInterested();
@@ -269,7 +269,7 @@ namespace bt
 		cnt->inc(index);
 	}
 
-	void PeerManager::onBitSetReceived(Peer* p, const BitSet & bs)
+	void PeerManager::bitSetReceived(Peer* p, const BitSet & bs)
 	{
 		bool interested = false;
 		for (Uint32 i = 0;i < bs.getNumBits();i++)
@@ -346,14 +346,7 @@ namespace bt
 	
 	void PeerManager::createPeer(mse::StreamSocket* sock,const PeerID & peer_id,Uint32 support,bool local)
 	{
-		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),tor.getChunkSize(),support,local);
-		
-		connect(peer,SIGNAL(haveChunk(Peer*, Uint32 )),this,SLOT(onHave(Peer*, Uint32 )));
-		connect(peer,SIGNAL(bitSetReceived(Peer*, const BitSet& )),
-				this,SLOT(onBitSetReceived(Peer*, const BitSet& )));
-		connect(peer,SIGNAL(rerunChoker()),this,SLOT(onRerunChoker()));
-		connect(peer,SIGNAL(pex( const QByteArray& )),this,SLOT(pex( const QByteArray& )));
-		
+		Peer* peer = new Peer(sock,peer_id,tor.getNumChunks(),tor.getChunkSize(),support,local,this);
 		peer_list.append(peer);
 		peer_map.insert(peer->getID(),peer);
 		total_connections++;
@@ -578,7 +571,7 @@ namespace bt
 		return 0;
 	}
 	
-	void PeerManager::onRerunChoker()
+	void PeerManager::rerunChoker()
 	{
 		// append a 0 ptr to killed
 		// so that the next update in TorrentControl

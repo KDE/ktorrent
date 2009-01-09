@@ -65,6 +65,7 @@ set(libbtcore_SRC
 	net/networkthread.cpp
 	net/socketgroup.cpp
 	net/socks.cpp
+	net/wakeuppipe.cpp
 	
 	mse/bigint.cpp  
 	mse/functions.cpp  

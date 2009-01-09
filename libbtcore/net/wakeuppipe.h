@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Joris Guisson                                   *
+ *   Copyright (C) 2009 by Joris Guisson                                   *
  *   joris.guisson@gmail.com                                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,48 +17,37 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#ifndef NETDOWNLOADTHREAD_H
-#define NETDOWNLOADTHREAD_H
+#ifndef KTWAKEUPPIPE_H
+#define KTWAKEUPPIPE_H
 
-#include <vector>
-#include "networkthread.h"
-
-struct pollfd;
+#include <net/socket.h>
 
 namespace net
 {
-	class WakeUpPipe;
 
 	/**
-	 * @author Joris Guisson <joris.guisson@gmail.com>
-	 * 
-	 * Thread which processes incoming data
-	 */
-	class DownloadThread : public NetworkThread
+		A WakeUpPipe's purpose is to wakeup a select or poll call.
+		It works by using two connected sockets, on the localhost on a randome port.
+		One socket needs to be part of the poll or select, and the other socket will send dummy data to it.
+		Waking up the select or poll call.
+	*/
+	class WakeUpPipe
 	{
-		static bt::Uint32 dcap;
-		static bt::Uint32 sleep_time;
-		std::vector<struct pollfd> fd_vec;
 	public:
-		DownloadThread(SocketMonitor* sm);
-		virtual ~DownloadThread();
+		WakeUpPipe();
+		virtual ~WakeUpPipe();
 		
-		/// Wake up the download thread
+		/// Wake up the other socket
 		void wakeUp();
-	
-		/// Set the download cap
-		static void setCap(bt::Uint32 cap) {dcap = cap;}
 		
-		/// Set the sleep time when using download caps
-		static void setSleepTime(bt::Uint32 stime);
-	private:	
-		virtual void update();
-		virtual bool doGroup(SocketGroup* g,Uint32 & allowance,bt::TimeStamp now);
+		/// Get the reader socket
+		Socket* readerSocket() const {return reader;}
 		
-		int waitForSocketReady(int timeout);
-		
+		/// Read all the dummy data
+		void handleData();
 	private:
-		WakeUpPipe* wake_up;
+		Socket* writer;
+		Socket* reader;
 	};
 
 }

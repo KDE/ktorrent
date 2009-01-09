@@ -36,6 +36,7 @@
 #include "peerdownloader.h"
 #include "peeruploader.h"
 #include "utpex.h"
+#include "peermanager.h"
 
 using namespace net;
 
@@ -48,8 +49,8 @@ namespace bt
 	
 	
 	Peer::Peer(mse::StreamSocket* sock,const PeerID & peer_id,
-			   Uint32 num_chunks,Uint32 chunk_size,Uint32 support,bool local)
-	: sock(sock),pieces(num_chunks),peer_id(peer_id)
+			   Uint32 num_chunks,Uint32 chunk_size,Uint32 support,bool local,PeerManager* pman)
+	: sock(sock),pieces(num_chunks),peer_id(peer_id),pman(pman)
 	{
 		id = peer_id_counter;
 		peer_id_counter++;
@@ -176,7 +177,7 @@ namespace bt
 				if (!stats.interested)
 				{
 					stats.interested = true;
-					rerunChoker();
+					pman->rerunChoker();
 				}
 				break;
 			case NOT_INTERESTED:
@@ -189,7 +190,7 @@ namespace bt
 				if (stats.interested)
 				{
 					stats.interested = false;
-					rerunChoker();
+					pman->rerunChoker();
 				}
 				break;
 			case HAVE:
@@ -203,7 +204,7 @@ namespace bt
 					Uint32 ch = ReadUint32(tmp_buf,1);
 					if (ch < pieces.getNumBits())
 					{
-						haveChunk(this,ch);
+						pman->have(this,ch);
 						pieces.set(ch,true);
 					}
 					else
@@ -222,7 +223,7 @@ namespace bt
 				}
 				
 				pieces = BitSet(tmp_buf+1,pieces.getNumBits());
-				bitSetReceived(this,pieces);
+				pman->bitSetReceived(this,pieces);
 				break;
 			case REQUEST:
 				if (len != 13)
@@ -264,7 +265,7 @@ namespace bt
 					Piece p(ReadUint32(tmp_buf,1),
 							ReadUint32(tmp_buf,5),
 							len - 9,downloader,tmp_buf+9);
-					piece(p);
+					downloader->piece(p);
 				}
 				break;
 			case CANCEL:
@@ -321,7 +322,7 @@ namespace bt
 					return;
 				}
 				pieces.setAll(true);
-				bitSetReceived(this,pieces);
+				pman->bitSetReceived(this,pieces);
 				break;
 			case HAVE_NONE:
 				if (len != 1)
@@ -331,7 +332,7 @@ namespace bt
 					return;
 				}
 				pieces.setAll(false);
-				bitSetReceived(this,pieces);
+				pman->bitSetReceived(this,pieces);
 				break;
 			case SUGGEST_PIECE:
 				// ignore suggestions for the moment
@@ -455,7 +456,7 @@ namespace bt
 		return true;
 	}
 	
-	void Peer::update(PeerManager* pman)
+	void Peer::update()
 	{
 		if (killed)
 			return;
@@ -570,7 +571,7 @@ namespace bt
 	
 	void Peer::emitPex(const QByteArray & data)
 	{
-		pex(data);
+		pman->pex(data);
 	}
 	
 	void Peer::setPexEnabled(bool on)

@@ -73,7 +73,6 @@ namespace bt
 
 	PeerDownloader::PeerDownloader(Peer* peer,Uint32 chunk_size) : peer(peer),chunk_size(chunk_size / MAX_PIECE_LEN)
 	{
-		connect(peer,SIGNAL(piece(const Piece& )),this,SLOT(piece(const Piece& )));
 		connect(peer,SIGNAL(destroyed()),this,SLOT(peerDestroyed()));
 		max_wait_queue_size = 25;
 	}

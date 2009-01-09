@@ -81,7 +81,8 @@ namespace bt
 			 Uint32 num_chunks,
 			 Uint32 chunk_size,
 			 Uint32 support,
-			 bool local);
+			 bool local,
+			 PeerManager* pman);
 		
 		virtual ~Peer();
 
@@ -134,7 +135,7 @@ namespace bt
 		const PeerID & getPeerID() const {return peer_id;}
 
 		/// Update the up- and down- speed and handle incoming packets
-		void update(PeerManager* pman);
+		void update();
 
 		/// Get the PeerDownloader.
 		PeerDownloader* getPeerDownloader() {return downloader;}
@@ -239,54 +240,13 @@ namespace bt
 	private slots:
 		void dataWritten(int bytes);
 
-	signals:
-		/**
-		 * The Peer has a Chunk.
-		 * @param p The Peer
-		 * @param index Index of Chunk
-		 */
-		void haveChunk(Peer* p,Uint32 index);
-		
-		/**
-		 * The Peer sent a request.
-		 * @param req The Request
-		 */
-		void request(const Request & req);
-		
-		/**
-		 * The Peer sent a cancel.
-		 * @param req The Request
-		 */
-		void canceled(const Request & req);
-		
-		/**
-		 * The Peer sent a piece of a Chunk.
-		 * @param p The Piece
-		 */
-		void piece(const Piece & p);
-
-		/**
-		 * Received a BitSet
-		 * @param bs The BitSet
-		 */
-		void bitSetReceived(Peer* p,const BitSet & bs);
-
-		/**
-		 * Emitted when the peer is unchoked and interested changes value.
-		 */
-		void rerunChoker();
-		
+	signals:		
 		/**
 		 * Got a port packet from this peer.
 		 * @param ip The IP
 		 * @param port The port
 		 */
 		void gotPortPacket(const QString & ip,Uint16 port);
-		
-		/**
-		 * A Peer Exchange has been received, the QByteArray contains the data.
-		 */
-		void pex(const QByteArray & data);
 		
 	private:
 		void packetReady(const Uint8* packet,Uint32 size);
@@ -311,6 +271,7 @@ namespace bt
 		UTPex* ut_pex;
 		bool pex_allowed;
 		Uint32 utorrent_pex_id;
+		PeerManager* pman;
 
 		friend class PacketWriter;
 		friend class PacketReader;
