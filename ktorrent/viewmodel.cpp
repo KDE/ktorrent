@@ -477,6 +477,9 @@ namespace kt
 			return QVariant(); 
 		
 		Item* item = (Item*)index.internalPointer();
+		if (!item)
+			return QVariant(); 
+		
 		if (role == Qt::ForegroundRole)
 			return item->color(index.column());
 		else if (role == Qt::DisplayRole)
@@ -517,7 +520,11 @@ namespace kt
 			return false; 
 		
 		QString name = value.toString();
-		bt::TorrentInterface* tc = ((Item*)index.internalPointer())->tc;
+		Item* item = (Item*)index.internalPointer();
+		if (!item)
+			return false;
+		
+		bt::TorrentInterface* tc = item->tc;
 		tc->setDisplayName(name);
 		emit dataChanged(index,index);
 		return true;
@@ -569,14 +576,15 @@ namespace kt
 			if (i.isValid())
 			{
 				Item* item = (Item*)i.internalPointer();
-				tlist.append(item->tc);
+				if (item)
+					tlist.append(item->tc);
 			}
 		}
 	}
 	
 	const bt::TorrentInterface* ViewModel::torrentFromIndex(const QModelIndex & index) const
 	{
-		if (index.isValid() && index.row() < torrents.count() && index.row() >= 0)
+		if (index.isValid() && index.row() < torrents.count() && index.row() >= 0 && index.internalPointer())
 			return ((Item*)index.internalPointer())->tc;
 		else
 			return 0;
@@ -584,7 +592,7 @@ namespace kt
 	
 	bt::TorrentInterface* ViewModel::torrentFromIndex(const QModelIndex & index)
 	{
-		if (index.isValid() && index.row() < torrents.count() && index.row() >= 0)
+		if (index.isValid() && index.row() < torrents.count() && index.row() >= 0 && index.internalPointer())
 			return ((Item*)index.internalPointer())->tc;
 		else
 			return 0;
