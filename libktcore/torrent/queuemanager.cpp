@@ -639,6 +639,9 @@ namespace kt
 	
 	void QueueManager::setPausedState(bool pause)
 	{
+		if (paused_state == pause)
+			return;
+		
 		paused_state = pause;	
 		if(!pause)
 		{
