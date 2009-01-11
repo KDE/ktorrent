@@ -15,6 +15,7 @@ Changes in 3.1.6 :
 - Backport fix for several memory leaks
 - Backport idle priority for datachecker thread
 - Backport byteorder bugfix
+- Backport bugfix for 180230 
 
 Changes in 3.1.5 :
 - Make sure symlinks work when we create multifile torrents

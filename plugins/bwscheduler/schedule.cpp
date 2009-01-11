@@ -263,9 +263,9 @@ namespace kt
 		for (iterator itr = begin();itr != end();itr++)
 		{
 			ScheduleItem* i = *itr;
-			if (i->day == now.date().dayOfWeek())
+			if (i->day == now.date().dayOfWeek() && i->start > now.time())
 			{
-				if (!item || (i->start < item->start && i->start > now.time()))
+				if (!item || i->start < item->start)
 					item = i;
 			}
 		}
