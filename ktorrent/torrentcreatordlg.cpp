@@ -41,7 +41,6 @@ namespace kt
 		loadGroups();
 		
 		m_url->setMode(KFile::File | KFile::ExistingOnly | KFile::LocalOnly | KFile::Directory);
-		m_url->fileDialog()->setStartDir( KUrl("kfiledialog:///openTorrentData") );
 		m_dht_tab->setEnabled(false);
 		
 		connect(m_dht,SIGNAL(toggled(bool)),this,SLOT(dhtToggled(bool)));
