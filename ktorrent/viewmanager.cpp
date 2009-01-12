@@ -432,8 +432,8 @@ namespace kt
 		if (sel.count() == 1)
 		{
 			//enable additional peer sources if torrent is not private
-			dht_enabled->setEnabled(en_peer_sources);
-			pex_enabled->setEnabled(en_peer_sources);
+			dht_enabled->setEnabled(en_peer_sources && Settings::dhtSupport());
+			pex_enabled->setEnabled(en_peer_sources && Settings::pexEnabled());
 			
 			TorrentInterface* tc = sel.front();
 			// no data check when we are preallocating diskspace
@@ -651,8 +651,11 @@ namespace kt
 		gui->plugActionList("view_columns_list",v->columnActionList());
 
 		// disable DHT and PEX if they are globally disabled
-		dht_enabled->setEnabled(Settings::dhtSupport());
-		pex_enabled->setEnabled(Settings::pexEnabled());
+		if (!Settings::dhtSupport())
+			dht_enabled->setEnabled(false);
+		
+		if (!Settings::pexEnabled())
+			pex_enabled->setEnabled(false);
 		
 		view_menu->popup(pos);
 	}
