@@ -257,7 +257,6 @@ namespace kt
 				{
 					Out(SYS_SYN|LOG_NOTICE) << "Downloading item " << item->title() << " (filter: " << f->filterName() << ")" << endl;
 					downloadItem(item,f->group(),f->downloadLocation(),f->openSilently());
-					break;
 				}
 			}
 		}
