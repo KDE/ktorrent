@@ -16,6 +16,7 @@ Name[tr]=Dayanışma Eklentisi
 Name[x-test]=xxSyndicationPluginxx
 Name[zh_TW]=Syndication 外掛程式
 Comment=Syndication plugin for KTorrent, supporting RSS and Atom feeds
+Comment[ca]=Connector de sindicació per al KTorrent, que permet canals RSS i Atom
 Comment[de]=Syndizierungsmodul für KTorrent mit Unterstützung für RSS- und Atom-Nachrichtenquellen
 Comment[el]=Πρόσθετο Syndication για το KTorrent, με υποστήριξη ροών RSS και Atom
 Comment[es]=Complemento de redifusión para KTorrent, que admite fuentes RSS y Atom

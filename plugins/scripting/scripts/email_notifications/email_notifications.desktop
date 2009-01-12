@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=E-Mail Notifications
+Name[ca]=Notificacions de correu electrònic
 Name[cs]=Upozornění e-mailem
 Name[de]=E-Mail-Benachrichtigungen
 Name[el]=Ειδοποιήσεις E-Mail
@@ -22,6 +23,7 @@ Name[uk]=Сповіщення електронною поштою
 Name[x-test]=xxE-Mail Notificationsxx
 Name[zh_TW]=電子郵件通知
 Comment=Script to notify you of events via e-mail
+Comment[ca]=Script per a notificar d'esdeveniments via correu electrònic
 Comment[cs]=Skript informující o událostech přes e-mail
 Comment[de]=Skript zur Benachrichtigung über Ereignisse per E-Mail
 Comment[el]=Σενάριο για την ειδοποίηση γεγονότων μέσω e-mail

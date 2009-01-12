@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Tracker Grouping
+Name[ca]=Agrupació de seguidors
 Name[de]=Tracker-Gruppierung
 Name[el]=Ομαδοποίηση ανιχνευτών
 Name[es]=Agrupación de localizadores
@@ -21,6 +22,7 @@ Name[uk]=Групування координаторів
 Name[x-test]=xxTracker Groupingxx
 Name[zh_TW]=追蹤器分組
 Comment=Script to create automatic groups based upon tracker URL's
+Comment[ca]=Script per a crear grups automàtics basats en els URL dels seguidors
 Comment[de]=Skript zum automatischen Gruppieren anhand der Tracker-Adressen
 Comment[el]=Σενάριο αυτόματης ομαδοποίησης ανιχνευτών με βάση το URL τους
 Comment[es]=Guion para crear grupos automáticos basándose en los URL de los localizadores
