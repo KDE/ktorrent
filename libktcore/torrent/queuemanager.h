@@ -201,6 +201,7 @@ namespace kt
 		/// Get the paused state
 		bool getPausedState() const {return paused_state;}
 		
+	public slots:
 		/**
 		 * Places all torrents from downloads in the right order in queue.
 		 * Use this when torrent priorities get changed

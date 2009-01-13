@@ -151,7 +151,7 @@ namespace bt
 	
 	bool TorrentControl::updateNeeded() const
 	{
-		return stats.running || moving_files || prealloc_thread || dcheck_thread;
+		return stats.running || moving_files || prealloc_thread || dcheck_thread || stats.completed != cman->completed();
 	}
 
 	void TorrentControl::update()
@@ -223,6 +223,9 @@ namespace bt
 					psman->manualUpdate();
 				istats.last_announce = bt::GetCurrentTime();
 				istats.time_started_dl = QDateTime::currentDateTime();
+				// Tell QM to redo queue
+				if (!isUserControlled())
+					updateQueue();
 			}
 			updateStatus();
 

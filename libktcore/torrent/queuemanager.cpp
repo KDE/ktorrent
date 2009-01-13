@@ -64,6 +64,7 @@ namespace kt
 		downloads.sort();
 		connect(tc, SIGNAL(diskSpaceLow(bt::TorrentInterface*, bool)), this, SLOT(onLowDiskSpace(bt::TorrentInterface*, bool)));	
 		connect(tc, SIGNAL(torrentStopped(bt::TorrentInterface*)), this, SLOT(torrentStopped(bt::TorrentInterface*)));
+		connect(tc,SIGNAL(updateQueue()),this,SLOT(orderQueue()));
 	}
 
 	void QueueManager::remove(bt::TorrentInterface* tc)

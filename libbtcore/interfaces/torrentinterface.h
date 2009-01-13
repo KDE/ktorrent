@@ -601,6 +601,11 @@ namespace bt
 		 * @param chunk The chunk
 		 */
 		void chunkDownloaded(bt::TorrentInterface* me,bt::Uint32 chunk);
+		
+		/**
+		 * Emitted when the torrent thinks the QM should update the queue
+		 */
+		void updateQueue();
 	protected:
 		TorrentStats stats;
 		QString user_modified_name;
