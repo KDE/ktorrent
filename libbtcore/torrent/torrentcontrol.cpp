@@ -2013,7 +2013,7 @@ namespace bt
 	{
 		// it is possible that the user might have disabled moving to the completed dir during the data check
 		// so double check before we start the move
-		if (completed_dir.path().isNull())
+		if (completed_dir.path().isNull() || !stats.completed)
 			return;
 			
 		QString outdir = completed_dir.path();
