@@ -371,7 +371,7 @@ namespace kt
 				num_visible++;
 			
 			if (modified && !resort)
-				emit dataChanged(index(idx,0),index(idx,14));
+				emit dataChanged(index(idx,1),index(idx,14));
 			idx++;
 		}
 	
