@@ -43,9 +43,6 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="text" >
-            <string/>
-           </property>
           </widget>
          </item>
         </layout>
@@ -66,9 +63,6 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-           <property name="text" >
-            <string/>
            </property>
           </widget>
          </item>
@@ -190,9 +184,16 @@
        <item>
         <layout class="QHBoxLayout" >
          <item>
-          <widget class="KPushButton" name="m_update_tracker" >
+          <widget class="KPushButton" name="m_announce" >
            <property name="text" >
-            <string>Update Tracker</string>
+            <string>Manual Announce</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="m_scrape" >
+           <property name="text" >
+            <string>Scrape</string>
            </property>
           </widget>
          </item>

@@ -46,11 +46,12 @@ namespace kt
 		void changeTC(bt::TorrentInterface* ti);
 			
 	public slots:
-		virtual void btnUpdateClicked();
-		virtual void btnRestoreClicked();
-		virtual void btnChangeClicked();
-		virtual void btnRemoveClicked();
-		virtual void btnAddClicked();
+		virtual void updateClicked();
+		virtual void restoreClicked();
+		virtual void changeClicked();
+		virtual void removeClicked();
+		virtual void addClicked();
+		virtual void scrapeClicked();
 		void currentChanged(const QModelIndex & current,const QModelIndex & previous);
 			
 	private:

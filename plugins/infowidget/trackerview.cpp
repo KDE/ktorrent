@@ -47,11 +47,12 @@ namespace kt
 		setupUi(this);
 		model = new TrackerModel(this);
 		m_tracker_list->setModel(model);
-		connect(m_add_tracker,SIGNAL(clicked()),this,SLOT(btnAddClicked()));
-		connect(m_remove_tracker,SIGNAL(clicked()),this,SLOT(btnRemoveClicked()));
-		connect(m_update_tracker,SIGNAL(clicked()),this,SLOT(btnUpdateClicked()));
-		connect(m_change_tracker,SIGNAL(clicked()),this,SLOT(btnChangeClicked()));
-		connect(m_restore_defaults,SIGNAL(clicked()),this,SLOT(btnRestoreClicked()));
+		connect(m_add_tracker,SIGNAL(clicked()),this,SLOT(addClicked()));
+		connect(m_remove_tracker,SIGNAL(clicked()),this,SLOT(removeClicked()));
+		connect(m_announce,SIGNAL(clicked()),this,SLOT(updateClicked()));
+		connect(m_scrape,SIGNAL(clicked()),this,SLOT(scrapeClicked()));
+		connect(m_change_tracker,SIGNAL(clicked()),this,SLOT(changeClicked()));
+		connect(m_restore_defaults,SIGNAL(clicked()),this,SLOT(restoreClicked()));
 		connect(m_tracker_list->selectionModel(),SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
 			this,SLOT(currentChanged(const QModelIndex&, const QModelIndex&)));
 
@@ -63,7 +64,6 @@ namespace kt
 		m_status->clear();
 		m_next_update->setTextFormat(Qt::RichText);
 		
-		m_update_tracker->setIcon(KIcon("system-software-update"));
 		m_add_tracker->setIcon(KIcon("list-add"));
 		m_remove_tracker->setIcon(KIcon("list-remove"));
 		m_restore_defaults->setIcon(KIcon("kt-restore-defaults"));
@@ -77,7 +77,7 @@ namespace kt
 	{
 	}
 
-	void TrackerView::btnAddClicked()
+	void TrackerView::addClicked()
 	{
 		if (!tc || m_tracker_to_add->text().trimmed().isEmpty())
 			return;
@@ -107,7 +107,7 @@ namespace kt
 		m_tracker_to_add->clear();
 	}
 
-	void TrackerView::btnRemoveClicked()
+	void TrackerView::removeClicked()
 	{
 		QModelIndex current = m_tracker_list->selectionModel()->currentIndex();
 		if (!current.isValid())
@@ -119,7 +119,7 @@ namespace kt
 			KMessageBox::sorry(0, i18n("Cannot remove torrent default tracker."));
 	}
 
-	void TrackerView::btnChangeClicked()
+	void TrackerView::changeClicked()
 	{
 		QModelIndex current = m_tracker_list->selectionModel()->currentIndex();
 		if (!current.isValid())
@@ -133,19 +133,27 @@ namespace kt
 		}
 	}
 
-	void TrackerView::btnRestoreClicked()
+	void TrackerView::restoreClicked()
 	{
 		tc->getTrackersList()->restoreDefault();
 		tc->updateTracker();
 		model->changeTC(tc); // trigger reset
 	}
 
-	void TrackerView::btnUpdateClicked()
+	void TrackerView::updateClicked()
 	{
 		if(!tc)
 			return;
 		
 		tc->updateTracker();
+	}
+	
+	void TrackerView::scrapeClicked()
+	{
+		if(!tc)
+			return;
+		
+		tc->scrapeTracker();
 	}
 	
 	void TrackerView::changeTC(TorrentInterface* ti)
@@ -180,7 +188,7 @@ namespace kt
 		m_times_downloaded->setText(QString("<b>%1</b>").arg(s.total_times_downloaded));
 		
 		//Update manual annunce button
-		m_update_tracker->setEnabled(s.running && tc->announceAllowed());
+		m_announce->setEnabled(s.running && tc->announceAllowed());
 
 		m_status->setText("<b>" + s.tracker_status_string + "</b>");
 		if (tc->getTrackersList())
@@ -208,7 +216,7 @@ namespace kt
 			m_remove_tracker->setEnabled(false);
 			m_restore_defaults->setEnabled(false);
 			m_change_tracker->setEnabled(false);
-			m_update_tracker->setEnabled(false);
+			m_announce->setEnabled(false);
 			model->changeTC(0);
 			return;
 		}
@@ -233,7 +241,7 @@ namespace kt
 		}
 		
 		model->changeTC(tc);
-		m_update_tracker->setEnabled(s.running && tc->announceAllowed());
+		m_announce->setEnabled(s.running && tc->announceAllowed());
 		currentChanged(m_tracker_list->selectionModel()->currentIndex(),QModelIndex());
 	}
 	
