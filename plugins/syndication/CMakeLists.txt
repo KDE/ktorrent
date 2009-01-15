@@ -2,6 +2,7 @@ find_package(KdepimLibs REQUIRED)
 find_package(Boost REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIR})
+include_directories(${KDEPIMLIBS_INCLUDE_DIR})
 
 set(ktsyndicationplugin_SRC 
 	syndicationplugin.cpp 
