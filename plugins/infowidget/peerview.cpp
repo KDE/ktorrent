@@ -44,6 +44,7 @@ namespace kt
 		setRootIsDecorated(false);
 		setSortingEnabled(true);
 		setAlternatingRowColors(true);
+		setUniformRowHeights(true);
 		
 		model = new PeerViewModel(this);
 		pm = new QSortFilterProxyModel(this);

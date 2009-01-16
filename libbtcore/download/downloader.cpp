@@ -211,12 +211,14 @@ namespace bt
 		
 		foreach (PieceDownloader* pd,piece_downloaders)
 		{
-			if (pd->canDownloadChunk())
+			if (!pd->isChoked())
 			{
-				if (!pd->isChoked())
-					downloadFrom(pd);
-				
-				pd->setNearlyDone(false);
+				while (pd->canDownloadChunk())
+				{
+					if (!downloadFrom(pd))
+						break;
+					pd->setNearlyDone(false);
+				}
 			}
 		}
 		
@@ -334,7 +336,7 @@ namespace bt
 		return cdmin;
 	}
 
-	void Downloader::downloadFrom(PieceDownloader* pd)
+	bool Downloader::downloadFrom(PieceDownloader* pd)
 	{
 		// calculate the max memory usage
 		Uint32 max = maxMemoryUsage();
@@ -343,7 +345,7 @@ namespace bt
 		
 		// first see if we can use an existing dowload
 		if (findDownloadForPD(pd,cman.getNumChunks() - cman.chunksLeft() <= 4))
-			return;
+			return true;
 		
 		bool limit_exceeded = num_non_idle * tor.getChunkSize() >= max;
 		
@@ -356,7 +358,7 @@ namespace bt
 				if (c->getStatus() == Chunk::ON_DISK)
 					cman.prepareChunk(c,true);
 			
-				current_chunks.find(chunk)->assign(pd);
+				return current_chunks.find(chunk)->assign(pd);
 			}
 			else if (cman.prepareChunk(c))
 			{
@@ -365,6 +367,7 @@ namespace bt
 				cd->assign(pd);
 				if (tmon)
 					tmon->downloadStarted(cd);
+				return true;
 			}
 		}
 		else if (pd->getNumGrabbed() == 0)
@@ -380,9 +383,11 @@ namespace bt
 					cman.prepareChunk(cdmin->getChunk(),true);
 				}
 				
-				cdmin->assign(pd); 
+				return cdmin->assign(pd); 
 			}
 		} 
+		
+		return false;
 	}
 	
 	void Downloader::downloadFrom(WebSeed* ws)

@@ -242,7 +242,7 @@ namespace bt
 		void ioError(const QString & msg);
 		
 	private:
-		void downloadFrom(PieceDownloader* pd);
+		bool downloadFrom(PieceDownloader* pd);
 		void downloadFrom(WebSeed* ws);
 		void normalUpdate();
 		Uint32 maxMemoryUsage();

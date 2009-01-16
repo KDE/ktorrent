@@ -62,6 +62,7 @@ namespace kt
 	private:
 		void changePriority(bt::Priority newpriority);
 		virtual bool viewportEvent(QEvent *event);
+		virtual void dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);
 
 	private slots:
 		void open();
@@ -73,6 +74,7 @@ namespace kt
 		void moveFiles();
 
 	private:
+		bool redraw;
 		bt::TorrentInterface* curr_tc;
 		TorrentFileModel* model;
 

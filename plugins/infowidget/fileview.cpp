@@ -56,6 +56,7 @@ namespace kt
 		setAlternatingRowColors(true);
 		setSelectionMode(QAbstractItemView::ExtendedSelection);
 		setSelectionBehavior(QAbstractItemView::SelectRows);
+		setUniformRowHeights(true);
 		
 		proxy_model = new QSortFilterProxyModel(this);
 		proxy_model->setSortRole(Qt::UserRole);
@@ -80,6 +81,7 @@ namespace kt
 		
 		setEnabled(false);
 		show_list_of_files = false;
+		redraw = false;
 	}
 
 
@@ -347,6 +349,12 @@ namespace kt
 	{
 		if (model)
 			model->update();
+		
+		if (redraw)
+		{
+			scheduleDelayedItemsLayout();
+			redraw = false;
+		}
 	}
 	
 	void FileView::onTorrentRemoved(bt::TorrentInterface* tc)
@@ -389,6 +397,13 @@ namespace kt
 	{
 		executeDelayedItemsLayout();
 		return QTreeView::viewportEvent(event);
+	}
+	
+	void FileView::dataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight)
+	{
+		Q_UNUSED(topLeft);
+		Q_UNUSED(bottomRight);
+		redraw = true;
 	}
 }
 

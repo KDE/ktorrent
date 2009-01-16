@@ -16,6 +16,8 @@ Changes in 3.1.6 :
 - Backport idle priority for datachecker thread
 - Backport byteorder bugfix
 - Backport bugfix for 180230 
+- Backport fix for not optimum speed for small chunk sizes
+- Backport some optimizations from trunk
 
 Changes in 3.1.5 :
 - Make sure symlinks work when we create multifile torrents
