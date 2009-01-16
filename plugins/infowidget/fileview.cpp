@@ -84,6 +84,7 @@ namespace kt
 		
 		setEnabled(false);
 		show_list_of_files = false;
+		redraw = false;
 	}
 
 
@@ -391,6 +392,12 @@ namespace kt
 	{
 		if (model)
 			model->update();
+		
+		if (redraw)
+		{
+			scheduleDelayedItemsLayout();
+			redraw = false;
+		}
 	}
 	
 	void FileView::onTorrentRemoved(bt::TorrentInterface* tc)
@@ -448,6 +455,13 @@ namespace kt
 	{
 		if (model)
 			model->filePreviewChanged(file,preview);
+	}
+	
+	void FileView::dataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight)
+	{
+		Q_UNUSED(topLeft);
+		Q_UNUSED(bottomRight);
+		redraw = true;
 	}
 }
 
