@@ -28,7 +28,7 @@
       <item>
        <widget class="QCheckBox" name="kcfg_fullDiskPrealloc" >
         <property name="toolTip" >
-         <string>Instead of doing a quick reservation, do a full reservation. This is slower then the quick way, but avoids fragmentation on the disk.</string>
+         <string>Instead of doing a quick reservation, do a full reservation. This is slower than the quick way, but avoids fragmentation on the disk.</string>
         </property>
         <property name="text" >
          <string>Fully reserve disk space (avoids fragmentation)</string>
@@ -57,7 +57,7 @@
 &lt;ul>&lt;li>
 &lt;b>Basic:&lt;/b> Will work on all filesystems, but is slow.
 &lt;/li>&lt;li>
-&lt;b>Filesystem Specific:&lt;/b> Will use special methods provided by some filesystems, which are faster then the basic method.
+&lt;b>Filesystem Specific:&lt;/b> Will use special methods provided by some filesystems, which are faster than the basic method.
 &lt;/li>&lt;/ul>
 &lt;/html></string>
           </property>
