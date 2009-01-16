@@ -24,6 +24,7 @@
 #include <util/ptrmap.h>
 #include <util/constants.h>
 #include <btcore_export.h>
+#include "peer/peermanager.h"
 
 class KUrl;
 
@@ -64,7 +65,7 @@ namespace bt
 	 * This class manages the downloading of the file. It should
 	 * regurarly be updated.
 	*/
-	class BTCORE_EXPORT Downloader : public QObject
+	class BTCORE_EXPORT Downloader : public QObject,public PieceHandler
 	{
 		Q_OBJECT
 		
@@ -217,7 +218,7 @@ namespace bt
 		void recalcDownloaded();
 		
 	private slots:
-		void pieceReceived(const bt::Piece & p);
+		virtual void pieceReceived(const bt::Piece & p);
 		bool finished(ChunkDownload* c);
 		
 		/**

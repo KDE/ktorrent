@@ -122,13 +122,7 @@ namespace bt
 		 */
 		virtual void checkTimeouts() = 0;
 		
-	signals:
-		/**
-		 * Emitted when a Piece has been downloaded.
-		 * @param p The Piece
-		 */
-		void downloaded(const bt::Piece & p);
-	
+	signals:	
 		/**
 		 * Emitted when a request takes longer then 60 seconds to download.
 		 * The sender of the request will have to request it again. This does not apply for

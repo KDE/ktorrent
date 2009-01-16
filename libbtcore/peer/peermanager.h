@@ -43,6 +43,7 @@ namespace KNetwork
 
 namespace bt
 {
+	class Piece;
 	class Peer;
 	class Torrent;
 	class Authenticate;
@@ -54,6 +55,15 @@ namespace bt
 
 	
 	const Uint32 MAX_SIMULTANIOUS_AUTHS = 20;
+	
+	/// Base class for handling pieces
+	class BTCORE_EXPORT PieceHandler
+	{
+	public:
+		virtual ~PieceHandler() {}
+		
+		virtual void pieceReceived(const Piece & p) = 0;
+	};
 
 	/**
 	 * @author Joris Guisson
@@ -231,6 +241,11 @@ namespace bt
 		/// A PEX message was received
 		void pex(const QByteArray & arr);
 		
+		/// A Piece was received
+		void pieceReceived(const Piece & p);
+		
+		/// Set the piece handler
+		void setPieceHandler(PieceHandler* ph);
 	public slots:
 		/**
 		 * A PeerSource, has new potential peers.
@@ -263,6 +278,7 @@ namespace bt
 		Uint32 num_pending;
 		bool pex_on;
 		bool wanted_changed;
+		PieceHandler* piece_handler;
 		
 		static Uint32 max_connections;
 		static Uint32 max_total_connections;

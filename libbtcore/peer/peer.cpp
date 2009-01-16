@@ -266,6 +266,8 @@ namespace bt
 							ReadUint32(tmp_buf,5),
 							len - 9,downloader,tmp_buf+9);
 					downloader->piece(p);
+					pman->pieceReceived(p);
+					downloader->update();
 				}
 				break;
 			case CANCEL:

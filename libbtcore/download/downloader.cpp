@@ -50,6 +50,8 @@ namespace bt
 	Downloader::Downloader(Torrent & tor,PeerManager & pman,ChunkManager & cman,ChunkSelectorFactoryInterface* fac) 
 	: tor(tor),pman(pman),cman(cman),downloaded(0),tmon(0),chunk_selector(0)
 	{
+		pman.setPieceHandler(this);
+		
 		if (!fac) // check if a custom one was provided, if not create a default one
 			chunk_selector = new ChunkSelector(cman,*this,pman);
 		else
@@ -354,8 +356,6 @@ namespace bt
 	void Downloader::onNewPeer(Peer* peer)
 	{		
 		PieceDownloader* pd = peer->getPeerDownloader();
-		connect(pd,SIGNAL(downloaded(const bt::Piece& )),
-				this,SLOT(pieceReceived(const bt::Piece& )));
 		piece_downloaders.append(pd);
 	}
 

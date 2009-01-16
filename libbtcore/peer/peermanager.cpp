@@ -62,6 +62,7 @@ namespace bt
 		cnt = new ChunkCounter(tor.getNumChunks());
 		num_pending = 0;
 		pex_on = !tor.isPrivate();
+		piece_handler = 0;
 	}
 
 
@@ -660,6 +661,17 @@ namespace bt
 			Peer* p = i->second;
 			p->setGroupIDs(up,down);
 		}
+	}
+	
+	void PeerManager::pieceReceived(const Piece & p)
+	{
+		if (piece_handler)
+			piece_handler->pieceReceived(p);
+	}
+		
+	void PeerManager::setPieceHandler(PieceHandler* ph)
+	{
+		piece_handler = ph;
 	}
 }
 

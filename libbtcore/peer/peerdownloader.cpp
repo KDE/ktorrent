@@ -171,9 +171,6 @@ namespace bt
 			wait_queue.removeAll(r);
 		else if (reqs.contains(r))
 			reqs.removeAll(r);
-			
-		downloaded(p);
-		update();
 	}
 	
 	void PeerDownloader::peerDestroyed()

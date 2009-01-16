@@ -175,9 +175,14 @@ namespace bt
 		 */
 		void onRejected(const Request & req);
 		
+		/**
+		 * Send requests and manage wait queue
+		 */
+		void update();
+		
 	private slots:
 		void peerDestroyed();
-		void update();
+		
 		
 	private:
 		Peer* peer;
