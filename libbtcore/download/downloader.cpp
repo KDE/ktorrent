@@ -206,12 +206,14 @@ namespace bt
 		
 		foreach (PieceDownloader* pd,piece_downloaders)
 		{
-			if (pd->canDownloadChunk())
+			if (!pd->isChoked())
 			{
-				if (!pd->isChoked())
-					downloadFrom(pd);
-				
-				pd->setNearlyDone(false);
+				while (pd->canDownloadChunk())
+				{
+					if (!downloadFrom(pd))
+						break;
+					pd->setNearlyDone(false);
+				}
 			}
 		}
 		
@@ -285,11 +287,11 @@ namespace bt
 		return cdmin;
 	}
 
-	void Downloader::downloadFrom(PieceDownloader* pd)
+	bool Downloader::downloadFrom(PieceDownloader* pd)
 	{	
 		// first see if we can use an existing dowload
 		if (findDownloadForPD(pd))
-			return;
+			return true;
 		
 		Uint32 chunk = 0;
 		if (chunk_selector->select(pd,chunk))
@@ -297,7 +299,7 @@ namespace bt
 			Chunk* c = cman.getChunk(chunk);
 			if (current_chunks.contains(chunk))
 			{
-				current_chunks.find(chunk)->assign(pd);
+				return current_chunks.find(chunk)->assign(pd);
 			}
 			else
 			{
@@ -306,6 +308,7 @@ namespace bt
 				cd->assign(pd);
 				if (tmon)
 					tmon->downloadStarted(cd);
+				return true;
 			}
 		}
 		else if (pd->getNumGrabbed() == 0)
@@ -315,9 +318,11 @@ namespace bt
 			
 			if (cdmin) 
 			{
-				cdmin->assign(pd); 
+				return cdmin->assign(pd); 
 			}
 		} 
+		
+		return false;
 	}
 	
 	void Downloader::downloadFrom(WebSeed* ws)

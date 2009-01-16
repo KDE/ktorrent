@@ -60,6 +60,7 @@ namespace kt
 		setDragEnabled(true);
 		setSelectionMode(QAbstractItemView::ExtendedSelection);
 		setSelectionBehavior(QAbstractItemView::SelectRows);
+		setUniformRowHeights(true);
 		
 		connect(this,SIGNAL(wantToRemove(bt::TorrentInterface*,bool )),core,SLOT(remove(bt::TorrentInterface*,bool )));
 		connect(this,SIGNAL(wantToStart( QList<bt::TorrentInterface*> & )),core,SLOT(start( QList<bt::TorrentInterface*> & )));

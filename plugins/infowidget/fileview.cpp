@@ -57,6 +57,7 @@ namespace kt
 		setAlternatingRowColors(true);
 		setSelectionMode(QAbstractItemView::ExtendedSelection);
 		setSelectionBehavior(QAbstractItemView::SelectRows);
+		setUniformRowHeights(true);
 		
 		proxy_model = new QSortFilterProxyModel(this);
 		proxy_model->setSortRole(Qt::UserRole);

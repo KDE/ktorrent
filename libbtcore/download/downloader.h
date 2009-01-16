@@ -258,7 +258,7 @@ namespace bt
 		void chunkDownloaded(Uint32 chunk);
 		
 	private:
-		void downloadFrom(PieceDownloader* pd);
+		bool downloadFrom(PieceDownloader* pd);
 		void downloadFrom(WebSeed* ws);
 		void normalUpdate();
 		bool findDownloadForPD(PieceDownloader* pd);

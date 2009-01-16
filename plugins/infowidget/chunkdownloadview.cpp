@@ -44,6 +44,7 @@ namespace kt
 		m_chunk_view->setRootIsDecorated(false);
 		m_chunk_view->setSortingEnabled(true);
 		m_chunk_view->setAlternatingRowColors(true);
+		m_chunk_view->setUniformRowHeights(true);
 	}
 
 	ChunkDownloadView::~ChunkDownloadView()
