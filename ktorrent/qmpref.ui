@@ -100,7 +100,7 @@
            <string>When the free diskspace drops below this value, stop all torrents downloading.</string>
           </property>
           <property name="suffix" >
-           <string> MB</string>
+           <string> MiB</string>
           </property>
           <property name="minimum" >
            <number>1</number>
