@@ -290,7 +290,7 @@ namespace kt
 		int delta = 0;
 		int maxBandwidthRounded;
 
-		addTitle(i18n("Speed limit in KB/s"));
+		addTitle(i18n("Speed limit in KiB/s"));
 
 		unlimited = addAction(i18n("Unlimited"));
 		unlimited->setCheckable(true);

@@ -255,16 +255,6 @@ namespace bt
 	{
 		KLocale* loc = KGlobal::locale();
 		return loc->formatByteSize(bytes);
-		/*
-		if (bytes >= 1024 * 1024 * 1024)
-			return i18n("%1 GB",loc->formatNumber(bytes / TO_GIG,precision < 0 ? 2 : precision));
-		else if (bytes >= 1024*1024)
-			return i18n("%1 MB",loc->formatNumber(bytes / TO_MEG,precision < 0 ? 1 : precision));
-		else if (bytes >= 1024)
-			return i18n("%1 KB",loc->formatNumber(bytes / TO_KB,precision < 0 ? 1 : precision));
-		else
-			return i18n("%1 B",bytes);
-		*/
 	}
 
 	QString BytesPerSecToString(double speed)

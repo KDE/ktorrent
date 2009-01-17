@@ -21,6 +21,7 @@
 #include <klocale.h>
 #include <interfaces/torrentinterface.h>
 #include <torrent/queuemanager.h>
+#include <util/functions.h>
 #include "core.h"
 #include "speedlimitsmodel.h"
 
@@ -134,22 +135,22 @@ namespace kt
 				if (role == Qt::EditRole || role == Qt::UserRole)
 					return lim.down / 1024;
 				else
-					return lim.down == 0 ? i18n("No limit") : i18n("%1 KB/s",lim.down / 1024);
+					return lim.down == 0 ? i18n("No limit") : BytesPerSecToString(lim.down);
 			case 2: 
 				if (role == Qt::EditRole || role == Qt::UserRole)
 					return lim.up / 1024;
 				else 
-					return lim.up == 0 ? i18n("No limit") : i18n("%1 KB/s",lim.up / 1024);
+					return lim.up == 0 ? i18n("No limit") : BytesPerSecToString(lim.up);
 			case 3:
 				if (role == Qt::EditRole || role == Qt::UserRole)
 					return lim.assured_down / 1024;
 				else
-					return lim.assured_down == 0 ? i18n("No assured speed") : i18n("%1 KB/s",lim.assured_down / 1024);
+					return lim.assured_down == 0 ? i18n("No assured speed") : BytesPerSecToString(lim.assured_down);
 			case 4:
 				if (role == Qt::EditRole || role == Qt::UserRole)
 					return lim.assured_up / 1024;
 				else 
-					return lim.assured_up == 0 ? i18n("No assured speed") : i18n("%1 KB/s",lim.assured_up / 1024);
+					return lim.assured_up == 0 ? i18n("No assured speed") : BytesPerSecToString(lim.assured_up);
 			default: return QVariant();
 		}
 	}

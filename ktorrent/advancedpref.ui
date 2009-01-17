@@ -155,7 +155,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
 &lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Note:&lt;/span> The lower this is the more CPU is used. Setting it high can lead to lower speeds in high bandwith situations. &lt;/p>
 &lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">For example on an 100 Mbit LAN, if you set a limit of 3000 KB/s, you might not actually reach this speed when this value is too high. Without a limit you can easily get above 3000 KB/s on a LAN.&lt;/p>&lt;/body>&lt;/html></string>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">For example on an 100 Mbit LAN, if you set a limit of 3000 KiB/s, you might not actually reach this speed when this value is too high. Without a limit you can easily get above 3000 KiB/s on a LAN.&lt;/p>&lt;/body>&lt;/html></string>
           </property>
           <property name="suffix" >
            <string> ms</string>
@@ -262,7 +262,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">The amount of data at the beginning and end of an audio file, which will be prioritized for previewing.&lt;/p>&lt;/body>&lt;/html></string>
           </property>
           <property name="suffix" >
-           <string> KB</string>
+           <string> KiB</string>
           </property>
           <property name="minimum" >
            <number>16</number>
@@ -288,7 +288,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">The amount of data at the beginning and end of a video file, which will be prioritized for previewing.&lt;/p>&lt;/body>&lt;/html></string>
           </property>
           <property name="suffix" >
-           <string> KB</string>
+           <string> KiB</string>
           </property>
           <property name="minimum" >
            <number>16</number>

@@ -70,47 +70,47 @@
           </property>
           <item>
            <property name="text" >
-            <string>32 KB</string>
+            <string>32 KiB</string>
            </property>
           </item>
           <item>
            <property name="text" >
-            <string>64 KB</string>
+            <string>64 KiB</string>
            </property>
           </item>
           <item>
            <property name="text" >
-            <string>128 KB</string>
+            <string>128 KiB</string>
            </property>
           </item>
           <item>
            <property name="text" >
-            <string>256 KB</string>
+            <string>256 KiB</string>
            </property>
           </item>
           <item>
            <property name="text" >
-            <string>512 KB</string>
+            <string>512 KiB</string>
            </property>
           </item>
           <item>
            <property name="text" >
-            <string>1 MB</string>
+            <string>1 MiB</string>
            </property>
           </item>
           <item>
            <property name="text" >
-            <string>2 MB</string>
+            <string>2 MiB</string>
            </property>
           </item>
           <item>
            <property name="text" >
-            <string>4 MB</string>
+            <string>4 MiB</string>
            </property>
           </item>
           <item>
            <property name="text" >
-            <string>8 MB</string>
+            <string>8 MiB</string>
            </property>
           </item>
          </widget>

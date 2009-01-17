@@ -124,13 +124,13 @@ p, li { white-space: pre-wrap; }
       <item row="4" column="1" >
        <widget class="QSpinBox" name="kcfg_maxDownloadRate" >
         <property name="toolTip" >
-         <string>The maximum download speed in KB/s.</string>
+         <string>The maximum download speed in KiB/s.</string>
         </property>
         <property name="specialValueText" >
          <string>No limit</string>
         </property>
         <property name="suffix" >
-         <string> KB/s</string>
+         <string> KiB/s</string>
         </property>
         <property name="maximum" >
          <number>6500000</number>
@@ -147,13 +147,13 @@ p, li { white-space: pre-wrap; }
       <item row="5" column="1" >
        <widget class="QSpinBox" name="kcfg_maxUploadRate" >
         <property name="toolTip" >
-         <string>The maximum upload speed in KB/s</string>
+         <string>The maximum upload speed in KiB/s</string>
         </property>
         <property name="specialValueText" >
          <string>No limit</string>
         </property>
         <property name="suffix" >
-         <string> KB/s</string>
+         <string> KiB/s</string>
         </property>
         <property name="maximum" >
          <number>6500000</number>

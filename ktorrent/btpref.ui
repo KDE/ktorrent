@@ -191,7 +191,7 @@ p, li { white-space: pre-wrap; }
              <string>The maximum size a chunk can be for rechecking during uploading.</string>
             </property>
             <property name="suffix" >
-             <string> KB</string>
+             <string> KiB</string>
             </property>
             <property name="minimum" >
              <number>16</number>

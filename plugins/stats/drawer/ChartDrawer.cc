@@ -23,7 +23,7 @@
 namespace kt {
 
 ChartDrawer::ChartDrawer () :		pmVals(new val_t), 
-					pmUnitName(new QString(i18n("KB/s") ) ), 
+					pmUnitName(new QString(i18n("KiB/s") ) ), 
 					mCurrMaxMode(MM_Exact), 
 					mXMax(16), 
 					mYMax(1),

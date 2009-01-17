@@ -238,11 +238,13 @@ namespace kt
 	
 	void RecommendedSettingsDlg::uploadBWChanged(int val)
 	{
-		m_upload_bw_display->setText(i18n("(= %1 KB/s)",val * 0.125));
+		KLocale* loc = KGlobal::locale();
+		m_upload_bw_display->setText(i18n("(= %1/s)",loc->formatByteSize(val * 0.125)));
 	}
 	
 	void RecommendedSettingsDlg::downloadBWChanged(int val)
 	{
-		m_download_bw_display->setText(i18n("(= %1 KB/s)",val * 0.125));
+		KLocale* loc = KGlobal::locale();
+		m_download_bw_display->setText(i18n("(= %1/s)",loc->formatByteSize(val * 0.125)));
 	}
 }

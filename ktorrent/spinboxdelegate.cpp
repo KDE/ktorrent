@@ -36,7 +36,7 @@ namespace kt
 	QWidget *SpinBoxDelegate::createEditor(QWidget *parent,const QStyleOptionViewItem &, const QModelIndex & index) const
 	{
 		QSpinBox *editor = new QSpinBox(parent);
-		editor->setSuffix(i18n(" KB/s"));
+		editor->setSuffix(i18n(" KiB/s"));
 		if (index.column() < 3)
 			editor->setSpecialValueText(i18n("No limit"));
 		else

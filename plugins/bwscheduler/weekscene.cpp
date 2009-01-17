@@ -70,11 +70,11 @@ namespace kt
 		if (paused)
 			status->setPlainText(i18n("Current schedule: paused"));
 		else if (up > 0 && down > 0)
-			status->setPlainText(i18n("Current schedule: %1 KB/s download, %2 KB/s upload",down,up));
+			status->setPlainText(i18n("Current schedule: %1 KiB/s download, %2 KiB/s upload",down,up));
 		else if (up > 0)
-			status->setPlainText(i18n("Current schedule: unlimited download, %1 KB/s upload",up));
+			status->setPlainText(i18n("Current schedule: unlimited download, %1 KiB/s upload",up));
 		else if (down > 0)
-			status->setPlainText(i18n("Current schedule: %1 KB/s download, unlimited upload",down));
+			status->setPlainText(i18n("Current schedule: %1 KiB/s download, unlimited upload",down));
 		else
 			status->setPlainText(i18n("Current schedule: unlimited upload and download"));
 	}

@@ -75,14 +75,14 @@
        <item row="0" column="2" >
         <widget class="QLabel" name="m_upload_bw_display" >
          <property name="text" >
-          <string>(= 32 KB/s)</string>
+          <string>(= 32 KiB/s)</string>
          </property>
         </widget>
        </item>
        <item row="1" column="2" >
         <widget class="QLabel" name="m_download_bw_display" >
          <property name="text" >
-          <string>(= 500 KB/s)</string>
+          <string>(= 500 KiB/s)</string>
          </property>
         </widget>
        </item>
@@ -130,7 +130,7 @@
       <item row="0" column="1" >
        <widget class="QSpinBox" name="m_avg_speed_slot" >
         <property name="suffix" >
-         <string> KB/s</string>
+         <string> KiB/s</string>
         </property>
         <property name="minimum" >
          <number>1</number>
