@@ -526,12 +526,12 @@ namespace kt
 		foreach (TorrentInterface* tc,downloads)
 		{
 			const TorrentStats & s = tc->getStats();
-			
-			if (!s.user_controlled && !tc->isMovingFiles() && !s.stopped_by_error)
+			bool dummy;
+			if (!s.user_controlled && !tc->isMovingFiles() && !s.stopped_by_error && !tc->isCheckingData(dummy))
 			{
 				if (s.completed)
 					seed_queue.append(tc);
-				else		
+				else
 					download_queue.append(tc);
 			}
 		}

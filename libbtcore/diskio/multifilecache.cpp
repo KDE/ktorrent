@@ -876,7 +876,6 @@ namespace bt
 	
 	void MultiFileCache::preallocateDiskSpace(PreallocationThread* prealloc)
 	{
-		Out(SYS_DIO|LOG_DEBUG) << "MultiFileCache::preallocateDiskSpace" << endl;
 		PtrMap<Uint32,CacheFile>::iterator i = files.begin();
 		while (i != files.end())
 		{

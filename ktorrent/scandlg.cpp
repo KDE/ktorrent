@@ -143,12 +143,10 @@ namespace kt
 				if (!qm_controlled)
 					tc->start();
 				else
-				{
-					tc->setPriority(qm_priority);
-					core->getQueueManager()->orderQueue();
-				}
+					tc->setUserControlled(false);
 			}
 			
+			core->getQueueManager()->orderQueue();
 			if (silently)
 				accept();
 			else
@@ -166,13 +164,11 @@ namespace kt
 				if (!qm_controlled)
 					tc->start();
 				else
-				{
-					tc->setPriority(qm_priority);
-					core->getQueueManager()->orderQueue();
-				}
+					tc->setUserControlled(false);
 			}
 			
-			QDialog::reject();
+			core->getQueueManager()->orderQueue();
+			reject();
 		}
 	}
 		 

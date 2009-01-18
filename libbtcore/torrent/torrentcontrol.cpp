@@ -976,6 +976,8 @@ namespace bt
 		TorrentStatus old = stats.status;
 		if (stats.stopped_by_error)
 			stats.status = ERROR;
+		else if (dcheck_thread)
+			stats.status = CHECKING_DATA;
 		else if (!stats.started && stats.user_controlled)
 			stats.status = NOT_STARTED;
 		else if (!stats.running && !stats.user_controlled)
@@ -1507,7 +1509,6 @@ namespace bt
 		if (stats.status == ALLOCATING_DISKSPACE)
 			return;
 		
-		
 		DataChecker* dc = 0;
 		stats.status = CHECKING_DATA;
 		stats.num_corrupted_chunks = 0; // reset the number of corrupted chunks found
@@ -1564,17 +1565,15 @@ namespace bt
 			}
 		}
 			
-		stats.status = NOT_STARTED;
-		// update the status
-		updateStatus();
 		updateStats();
-		if (lst)
-			lst->finished();
 		dcheck_thread->deleteLater();
 		dcheck_thread = 0;
 		Out(SYS_GEN|LOG_NOTICE) << "Data check finished" << endl;
 		dataCheckFinished();
-		statusChanged(this);
+		resetTrackerStats();
+		updateStatus();
+		if (lst)
+			lst->finished();
 	}
 	
 	bool TorrentControl::isCheckingData(bool & finished) const
