@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include "pack.h"
+#include <arpa/inet.h>
 #include <util/error.h>
 #include <util/functions.h>
 
@@ -41,7 +42,7 @@ namespace dht
 			
 			// copy ID, IP address and port into the buffer
 			memcpy(ptr,e.getID().getData(),20);
-			bt::WriteUint32(ptr,20,addr.ipAddress().IPv4Addr());
+			bt::WriteUint32(ptr,20,ntohl(addr.ipAddress().IPv4Addr()));
 			bt::WriteUint16(ptr,24,addr.port());
 		}
 		else
