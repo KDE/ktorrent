@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include "database.h"
+#include <arpa/inet.h>
 #include <k3socketaddress.h>
 #include <util/functions.h>
 #include <util/log.h>
@@ -148,7 +149,7 @@ namespace dht
 			TimeStamp now = bt::GetCurrentTime();
 			// generate a hash of the ip port and the current time
 			// should prevent anybody from crapping things up
-			bt::WriteUint32(tdata,0,addr.ipAddress().IPv4Addr());
+			bt::WriteUint32(tdata,0,ntohl(addr.ipAddress().IPv4Addr()));
 			bt::WriteUint16(tdata,4,addr.port());
 			bt::WriteUint64(tdata,6,now);
 				
@@ -190,7 +191,7 @@ namespace dht
 		if (addr.ipVersion() == 4)
 		{
 			Uint8 tdata[14];
-			bt::WriteUint32(tdata,0,addr.ipAddress().IPv4Addr());
+			bt::WriteUint32(tdata,0,ntohl(addr.ipAddress().IPv4Addr()));
 			bt::WriteUint16(tdata,4,addr.port());
 			bt::WriteUint64(tdata,6,ts);
 			dht::Key ct = SHA1Hash::generate(tdata,14);

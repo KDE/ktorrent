@@ -19,7 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
 #include "antip2p.h"
-
+#include <arpa/inet.h>
 #include <torrent/globals.h>
 #include <util/log.h>
 #include <util/constants.h>
@@ -77,7 +77,7 @@ namespace kt
 		if (addr.ipVersion() != 4)
 			return false;
 		
-		return isBlockedIP(addr.ipAddress().IPv4Addr());
+		return isBlockedIP(ntohl(addr.ipAddress().IPv4Addr()));
 	}
 	
 	bool AntiP2P::isBlockedIP(const QString & addr)

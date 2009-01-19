@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "udptracker.h"
 #include <stdlib.h>
+#include <arpa/inet.h>
 #include <klocale.h>
 #include <util/functions.h>
 #include <util/log.h>
@@ -256,7 +257,7 @@ namespace bt
 		else
 		{
 			KNetwork::KIpAddress addr(cip);
-			WriteUint32(buf,84,addr.IPv4Addr(true));
+			WriteUint32(buf,84,ntohl(addr.IPv4Addr(true)));
 		}
 		WriteUint32(buf,88,key);
 		if (ev != STOPPED)

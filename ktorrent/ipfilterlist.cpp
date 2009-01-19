@@ -18,6 +18,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <arpa/inet.h>
 #include <QStringList>
 #include <klocale.h>
 #include <net/address.h>
@@ -45,7 +46,7 @@ namespace kt
 		if (addr.ipVersion() != 4)
 			return false;
 		
-		bt::Uint32 ip = addr.ipAddress().IPv4Addr();
+		bt::Uint32 ip = ntohl(addr.ipAddress().IPv4Addr());
 		foreach (const Entry & e,ip_list)
 		{
 			if ((e.ip | e.mask) == (ip | e.mask))
