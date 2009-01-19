@@ -1085,7 +1085,11 @@ namespace bt
 	void TorrentControl::loadStats()
 	{
 		if (!bt::Exists(tordir + "stats"))
+		{
+			setFeatureEnabled(DHT_FEATURE,true);
+			setFeatureEnabled(UT_PEX_FEATURE,true);
 			return;
+		}
 		
 		StatsFile st(tordir + "stats");
 		
