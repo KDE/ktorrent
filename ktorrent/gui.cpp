@@ -215,7 +215,8 @@ namespace kt
 	void GUI::dataScan(bt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption)
 	{
 		ScanDlg* dlg = new ScanDlg(core,auto_import,this);
-		dlg->setCaption(dlg_caption);
+		if (!dlg_caption.isEmpty())
+			dlg->setWindowTitle(dlg_caption);
 		dlg->show();
 		dlg->execute(tc,silently);
 		core->startUpdateTimer(); // make sure update timer is running
