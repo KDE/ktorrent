@@ -33,6 +33,7 @@ namespace kt
 {
 	class Core;
 	class ViewModel;
+	class ViewSelectionModel;
 	class Group;
 	class TorrentInterface;	
 	
@@ -137,6 +138,7 @@ namespace kt
 		bt::Uint32 num_torrents;
 		bt::Uint32 num_running;
 		ViewModel* model;
+		ViewSelectionModel* selection_model;
 	};
 }
 

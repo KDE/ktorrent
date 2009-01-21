@@ -10,6 +10,7 @@ set(ktorrent_SRC
 	view.cpp 
 	viewmodel.cpp
 	viewmanager.cpp 
+	viewselectionmodel.cpp
 	groupfiltermodel.cpp
 	prefdialog.cpp 
 	advancedpref.cpp

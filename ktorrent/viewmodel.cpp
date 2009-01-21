@@ -349,7 +349,7 @@ namespace kt
 		//emit dataChanged(createIndex(row,0),createIndex(row,14));
 	}
 
-	void ViewModel::update(bool force_resort)
+	bool ViewModel::update(bool force_resort)
 	{
 		bool resort = force_resort;
 		Uint32 idx=0;
@@ -378,7 +378,10 @@ namespace kt
 		if (resort)
 		{
 			sort(sort_column,sort_order);
+			return true;
 		}
+		
+		return false;
 	}
 	
 	int ViewModel::rowCount(const QModelIndex & parent) const

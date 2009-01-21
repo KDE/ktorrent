@@ -41,6 +41,7 @@
 #include "scandlg.h"
 #include "speedlimitsdlg.h"
 #include "addpeersdlg.h"
+#include "viewselectionmodel.h"
 
 
 using namespace bt;
@@ -52,6 +53,7 @@ namespace kt
 		: QTreeView(parent),core(core),group(0),num_torrents(0),num_running(0),model(0)
 	{
 		model = new ViewModel(core,this);
+		selection_model = new ViewSelectionModel(model,this);
 		
 		setContextMenuPolicy(Qt::CustomContextMenu);
 		setRootIsDecorated(false);
@@ -89,6 +91,7 @@ namespace kt
 		connect(header_menu,SIGNAL(triggered(QAction* )),this,SLOT(onHeaderMenuItemTriggered(QAction*)));
 		
 		setModel(model);
+		setSelectionModel(selection_model);
 		connect(selectionModel(),SIGNAL(currentChanged(const QModelIndex &,const QModelIndex &)),
 				this,SLOT(onCurrentItemChanged(const QModelIndex&, const QModelIndex&)));
 		connect(selectionModel(),SIGNAL(selectionChanged(const QItemSelection &,const QItemSelection)),
@@ -127,7 +130,10 @@ namespace kt
 
 	void View::update()
 	{
-		model->update();
+		if (model->update())
+		{
+			selection_model->sorted();
+		}
 	}
 
 	bool View::needToUpdateCaption()
