@@ -39,6 +39,8 @@ namespace bt
 {
 	const Uint32 MAX_LOG_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 	
+	static void QtMessageOutput(QtMsgType type, const char *msg);
+	
 	class Log::Private
 	{
 	public:
@@ -179,6 +181,7 @@ namespace bt
 	Log::Log() 
 	{
 		priv = new Private(this);
+		qInstallMsgHandler(QtMessageOutput);
 	}
 	
 	
@@ -282,5 +285,25 @@ namespace bt
 	void RemoveLogMonitor(LogMonitorInterface* m)
 	{
 		global_log.removeMonitor(m);
+	}
+	
+	static void QtMessageOutput(QtMsgType type, const char *msg)
+	{
+		switch (type) 
+		{
+			case QtDebugMsg:
+				Out(SYS_GEN|LOG_DEBUG) << "Qt Debug: " << msg << endl;
+				break;
+			case QtWarningMsg:
+				Out(SYS_GEN|LOG_NOTICE) << "Qt Warning: " << msg << endl;
+				break;
+			case QtCriticalMsg:
+				Out(SYS_GEN|LOG_IMPORTANT) << "Qt Critical: " << msg << endl;
+				break;
+			case QtFatalMsg:
+				Out(SYS_GEN|LOG_IMPORTANT) << "Qt Fatal: " << msg << endl;;
+				abort();
+				break;
+		}
 	}
 }

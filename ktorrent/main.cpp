@@ -66,31 +66,11 @@ bool GrabPIDLock()
 }
 #endif
 
-#if 0
-void QtMessageOutput(QtMsgType type, const char *msg)
-{
-	switch (type) {
-		case QtDebugMsg:
-			fprintf(stderr, "Debug: %s\n", msg);
-			break;
-		case QtWarningMsg:
-			fprintf(stderr, "Warning: %s\n", msg);
-			break;
-		case QtCriticalMsg:
-			fprintf(stderr, "Critical: %s\n", msg);
-			break;
-		case QtFatalMsg:
-			fprintf(stderr, "Fatal: %s\n", msg);
-			abort();
-	}
-}
-#endif
+
 
 
 int main(int argc, char **argv)
-{
-//	qInstallMsgHandler(QtMessageOutput);
-	
+{	
 #ifndef Q_WS_WIN
 	// ignore SIGPIPE and SIGXFSZ
 	signal(SIGPIPE,SIG_IGN);
