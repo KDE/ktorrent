@@ -99,6 +99,7 @@ namespace kt
 	: QTreeWidget(gui),gui(gui),view(view),custom_root(0),gman(gman)
 	{
 		setColumnCount(1);
+		setRootIsDecorated(false);
 		setContextMenuPolicy(Qt::CustomContextMenu);
 		headerItem()->setHidden(true);
 	
@@ -550,7 +551,9 @@ namespace kt
 		QTreeWidgetItemIterator it(this);
 		while (*it) 
 		{
-			if ((*it)->childCount() > 0)
+			if (!(*it)->parent())
+				(*it)->setExpanded(true);
+			else if ((*it)->childCount() > 0)
 				(*it)->setExpanded(g.readEntry((*it)->text(0),true));
 				
 			++it;
