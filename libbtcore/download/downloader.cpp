@@ -309,8 +309,7 @@ namespace bt
 			if (sel->getChunk()->getStatus() == Chunk::ON_DISK)
 				cman.prepareChunk(sel->getChunk(),true);
 			
-			sel->assign(pd);
-			return true;
+			return sel->assign(pd);
 		}
 		
 		return false;
