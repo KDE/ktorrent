@@ -260,8 +260,7 @@ namespace bt
 		sel = selectCD(pd,0);
 		if (sel)
 		{
-			sel->assign(pd);
-			return true;
+			return sel->assign(pd);
 		}
 		
 		return false;
