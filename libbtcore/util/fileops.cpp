@@ -39,6 +39,9 @@
 #include "file.h"
 #include "array.h"
 #include "functions.h"
+#ifdef Q_WS_WIN
+#include "win32.h"
+#endif
 
 #include "limits.h"
 
