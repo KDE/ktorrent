@@ -56,7 +56,9 @@ namespace kt
 
 
 	QueueManager::~QueueManager()
-	{}
+	{
+		qDeleteAll(downloads);
+	}
 
 	void QueueManager::append(bt::TorrentInterface* tc)
 	{
@@ -78,12 +80,14 @@ namespace kt
 	void QueueManager::clear()
 	{
 		Uint32 nd = downloads.count();
-		downloads.clear();
 		paused_torrents.clear();
 		
 		// wait for a second to allow all http jobs to send the stopped event
 		if (nd > 0)
 			SynchronousWait(1000);
+		
+		qDeleteAll(downloads);
+		downloads.clear();
 	}
 	
 	TorrentStartResponse QueueManager::startInternal(bt::TorrentInterface* tc,bool user)

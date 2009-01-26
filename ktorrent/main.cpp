@@ -37,6 +37,7 @@
 #include "btversion.h"
 #include "ktversion.h"
 #include <kdebug.h>
+#include <torrent/globals.h>
 
 #ifndef Q_WS_WIN
 bool GrabPIDLock()
@@ -172,6 +173,7 @@ int main(int argc, char **argv)
 	{
 	//	fprintf(stderr, "Aborted by error : %s\n",e.toString().ascii());
 	}
+	bt::Globals::cleanup();
 	return 0;
 }
 

@@ -38,7 +38,8 @@ namespace kt
 	}
 
 	App::~App()
-	{}
+	{
+	}
 	
 
 	int App::newInstance()

@@ -132,6 +132,7 @@ namespace kt
 
 	GUI:: ~GUI()
 	{
+		delete core;
 	}
 
 	void GUI::addTabPage(QWidget* page,const QString & icon,const QString & caption,const QString & tooltip,CloseTabListener* ctl)
