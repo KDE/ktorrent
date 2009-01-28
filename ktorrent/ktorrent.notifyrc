@@ -2,7 +2,6 @@
 IconName=ktorrent
 Comment=KTorrent
 Comment[hi]=केटोरेंट
-Comment[pt_BR]=KTorrent 
 Comment[sv]=Ktorrent
 Comment[th]=โปรแกรม KTorrent
 Comment[x-test]=xxKTorrentxx
@@ -300,7 +299,7 @@ Name[nds]=Torrent lett sik nich still laden
 Name[nl]=Torrent kan niet stil worden geladen
 Name[pl]=Nie można wczytać torrenta bez potwierdzenia
 Name[pt]=A torrente não pode ser carregada silenciosamente
-Name[pt_BR]=O torrent não pode ser carregado
+Name[pt_BR]=O torrent não pode ser iniciado
 Name[ro]=Torentul nu poate fi încărcat silențios
 Name[ru]=Торент не может быть загужен без выдачи сообщений
 Name[sl]=Torrenta ni moč naložiti potiho
