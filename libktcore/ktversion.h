@@ -20,17 +20,18 @@
 #ifndef KTVERSION_HH
 #define KTVERSION_HH
 
-
+#include <btversion.h>
 #include "util/constants.h"
 
 namespace kt
 {
 	const bt::Uint32 MAJOR = 3;
 	const bt::Uint32 MINOR = 2;
-	const bt::Uint32 RELEASE = 0;
-	const char VERSION_STRING[] = "3.2dev";
+	const bt::Uint32 RELEASE = 1;
+	const bt::VersionType VERSION_TYPE = bt::RELEASE_CANDIDATE;
+	const char VERSION_STRING[] = "3.2rc1";
 }
 
-#define KT_VERSION_MACRO "3.2dev"
+#define KT_VERSION_MACRO "3.2rc1"
 
 #endif
