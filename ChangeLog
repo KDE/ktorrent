@@ -1,6 +1,7 @@
 Changes in 3.2 :
 - Use QDir to create directories, avoids nested event loops, which seems to be buggy in some situations (182327)
 - Make sure strings tab is shown first in filter editor dialog
+- Fix bug causing torrent to get stalled at startup in some rare situations
 
 Changes in 3.2rc1 :
 - Fix bug in webgui causing wrong content-length to be returned in some cases

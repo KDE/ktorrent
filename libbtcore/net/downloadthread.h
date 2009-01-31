@@ -22,12 +22,12 @@
 
 #include <vector>
 #include "networkthread.h"
+#include "wakeuppipe.h"
 
 struct pollfd;
 
 namespace net
 {
-	class WakeUpPipe;
 
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
@@ -58,7 +58,7 @@ namespace net
 		int waitForSocketReady(int timeout);
 		
 	private:
-		WakeUpPipe* wake_up;
+		WakeUpPipe wake_up;
 	};
 
 }

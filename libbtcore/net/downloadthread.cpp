@@ -41,13 +41,11 @@ namespace net
 
 	DownloadThread::DownloadThread(SocketMonitor* sm) : NetworkThread(sm)
 	{
-		wake_up = 0;
 	}
 
 
 	DownloadThread::~DownloadThread()
 	{
-		delete wake_up;
 	}
 	
 	void DownloadThread::update()
@@ -59,7 +57,7 @@ namespace net
 			if (fd_vec[0].revents & POLLIN)
 			{
 				// wake up was triggered
-				wake_up->handleData();
+				wake_up.handleData();
 			}
 			
 			TimeStamp now = bt::Now();
@@ -129,21 +127,18 @@ namespace net
 		int i = 1;
 		sm->lock();
 		
-		if (!wake_up)
-			wake_up = new WakeUpPipe();
-		
 		// Add the wake up pipe
 		if (fd_vec.size() >= 1)
 		{
 			struct pollfd & wfd = fd_vec[0];
-			wfd.fd = wake_up->readerSocket()->fd();
+			wfd.fd = wake_up.readerSocket()->fd();
 			wfd.revents = 0;
 			wfd.events = POLLIN;
 		}
 		else
 		{
 			struct pollfd wfd;
-			wfd.fd = wake_up->readerSocket()->fd();
+			wfd.fd = wake_up.readerSocket()->fd();
 			wfd.revents = 0;
 			wfd.events = POLLIN;
 			fd_vec.push_back(wfd);
@@ -193,7 +188,6 @@ namespace net
 	
 	void DownloadThread::wakeUp()
 	{
-		if (wake_up)
-			wake_up->wakeUp();
+		wake_up.wakeUp();
 	}
 }
