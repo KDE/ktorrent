@@ -1,5 +1,6 @@
 Changes in 3.2 :
-- Use QDir to create directories, avoids nexted event loops, which seems to be buggy in some situations (182327)
+- Use QDir to create directories, avoids nested event loops, which seems to be buggy in some situations (182327)
+- Make sure strings tab is shown first in filter editor dialog
 
 Changes in 3.2rc1 :
 - Fix bug in webgui causing wrong content-length to be returned in some cases
@@ -46,7 +47,7 @@ Changes in 3.2rc1 :
 - Fix bug with moving files when source and destination are the same, but this is not clear due to symlinks
 - Make sure paste is disabled when editing the name of a torrent
 - Fix bug with wrong byteorder of PEX messages
-- Use KLocale::formatBytes so that KTorrent behaves the same as the rest of KDE when displaying sizes and speeds in bytesµ
+- Use KLocale::formatBytes so that KTorrent behaves the same as the rest of KDE when displaying sizes and speeds in bytes
 - Improve performance of downlod thread by using a socket to wake up the poll call, instead of a regular poll every second
 - Fix bug in bandwidth scheduler causing bandwidth schedule to be set continously 
 - Make sure that setPausedState doesn't do anyting if the paused state doesn't change (180230)
