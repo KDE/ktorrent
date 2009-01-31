@@ -77,18 +77,18 @@ namespace bt
 {
 	void MakeDir(const QString & dir,bool nothrow)
 	{
-		KIO::Job* j = KIO::mkdir(KUrl(dir));
-		if (!j->exec())
+		QDir d(dir);
+		if (d.exists())
+			return;
+		
+		
+		QString n = d.dirName();
+		if (!d.cdUp() || !d.mkdir(n))
 		{
-			QString error = i18n("Cannot create directory %1: %2",dir,j->errorString());
-			Out(SYS_DIO|LOG_NOTICE) << error <<endl;
-			j->deleteLater();
+			QString error = i18n("Cannot create directory %1",dir);
+			Out(SYS_DIO|LOG_NOTICE) << error << endl;
 			if (!nothrow)
 				throw Error(error);
-		}
-		else
-		{
-			j->deleteLater();
 		}
 	}
 	
