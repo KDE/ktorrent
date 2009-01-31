@@ -725,8 +725,8 @@ namespace kt
 		else
 			delete job;
 		
-		qman->clear();
 		pman->unloadAll();
+		qman->clear();
 	}
 
 	bool Core::changeDataDir(const QString & new_dir)
