@@ -2,6 +2,7 @@
 Name=E-Mail Notifications
 Name[ca]=Notificacions de correu electrònic
 Name[cs]=Upozornění e-mailem
+Name[da]=E-mail-bekendtgørelser
 Name[de]=E-Mail-Benachrichtigungen
 Name[el]=Ειδοποιήσεις E-Mail
 Name[es]=Notificaciones por correo electrónico
@@ -25,6 +26,7 @@ Name[zh_TW]=電子郵件通知
 Comment=Script to notify you of events via e-mail
 Comment[ca]=Script per a notificar d'esdeveniments via correu electrònic
 Comment[cs]=Skript informující o událostech přes e-mail
+Comment[da]=Script til at give besked om hændelser via e-mail
 Comment[de]=Skript zur Benachrichtigung über Ereignisse per E-Mail
 Comment[el]=Σενάριο για την ειδοποίηση γεγονότων μέσω e-mail
 Comment[es]=Script para notificarle de sucesos por medio del correo electrónico

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Automatic Resume
 Name[ca]=Represa automàtica
+Name[da]=Genoptag automatisk
 Name[de]=Automatisch Fortsetzen
 Name[el]=Αυτόματη συνέχιση
 Name[es]=Reanudación automática
@@ -23,6 +24,7 @@ Name[x-test]=xxAutomatic Resumexx
 Name[zh_TW]=自動回復
 Comment=Script to automatically resume after some time, when the paused state is enabled
 Comment[ca]=Script per a reprendre automàticament després d'un temps, quan està activat l'estat de pausa
+Comment[da]=Script til at genoptage automatisk efter et stykke tid, når pausetilstand er aktiveret
 Comment[de]=Skript zum automatischen Fortsetzen von pausierten Torrents nach Ablauf einer festgelegten Zeit
 Comment[el]=Σενάριο για την αυτόματη συνέχιση λήψενω μετά από κάποιο χρονικό διάστημα, όταν η κατάσταση  παύσης είναι ενεργοποιημένη
 Comment[es]=Script para reanudar automáticamente tras cierto tiempo, cuando está habilitado el estado de pausa
