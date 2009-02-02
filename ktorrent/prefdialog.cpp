@@ -20,98 +20,21 @@
  ***************************************************************************/
 #include <klocale.h>
 #include <kconfigdialogmanager.h>
-
-#include <interfaces/functions.h>
-#include <interfaces/prefpageinterface.h>
-
 #include "settings.h"
 #include "prefdialog.h"
 #include "core.h"
-#include "ui_qmpref.h"
-#include "ui_generalpref.h"
+#include "generalpref.h"
 #include "advancedpref.h"
 #include "networkpref.h"
 #include "proxypref.h"
+#include "qmpref.h"
 #include "recommendedsettingsdlg.h"
 
 namespace kt
 {
-	class QMPref : public PrefPageInterface,public Ui_QMPref
-	{
-	public:
-		QMPref(QWidget* parent) : PrefPageInterface(Settings::self(),i18n("Queue Manager"),"kt-queue-manager",parent)
-		{
-			setupUi(this);
-		}
+	
 
-		virtual ~QMPref() {}
-		
-		void loadSettings()
-		{
-			kcfg_stallTimer->setEnabled(Settings::decreasePriorityOfStalledTorrents());
-            m_qm_group_box->setDisabled(Settings::manuallyControlTorrents());
-		}
-		
-		void loadDefaults()
-		{
-			loadSettings();
-		}
-	};
-
-	class GeneralPref : public PrefPageInterface,public Ui_GeneralPref
-	{
-	public:
-		GeneralPref(QWidget* parent) : PrefPageInterface(Settings::self(),i18n("Application"),"ktorrent",parent)
-		{
-			setupUi(this);
-			kcfg_tempDir->setMode(KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
-			kcfg_saveDir->setMode(KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
-			kcfg_torrentCopyDir->setMode(KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
-			kcfg_completedDir->setMode(KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly);
-		}
-
-		virtual ~GeneralPref()
-		{
-		}
-
-		void loadSettings()
-		{
-			if (Settings::tempDir().path().length() == 0)
-				kcfg_tempDir->setUrl(kt::DataDir());
-			else
-				kcfg_tempDir->setUrl(Settings::tempDir());
-
-			kcfg_saveDir->setEnabled(Settings::useSaveDir());
-			if (Settings::saveDir().path().length() == 0)
-				kcfg_saveDir->setUrl(QDir::homePath());
-			else
-				kcfg_saveDir->setUrl(Settings::saveDir());
-
-			kcfg_torrentCopyDir->setEnabled(Settings::useTorrentCopyDir());
-			if (Settings::torrentCopyDir().path().length() == 0)
-				kcfg_torrentCopyDir->setUrl(QDir::homePath());
-			else
-				kcfg_torrentCopyDir->setUrl(Settings::torrentCopyDir());
-
-			kcfg_completedDir->setEnabled(Settings::useCompletedDir());
-			if (Settings::completedDir().path().length() == 0)
-				kcfg_completedDir->setUrl(QDir::homePath());
-			else
-				kcfg_completedDir->setUrl(Settings::completedDir());
-
-//			kcfg_downloadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());
-//			kcfg_uploadBandwidth->setEnabled(Settings::showSpeedBarInTrayIcon());	
-		}
-
-		void loadDefaults()
-		{
-			Settings::setTempDir(kt::DataDir());
-			Settings::setSaveDir(QDir::homePath());
-			Settings::setCompletedDir(QDir::homePath());
-			Settings::setTorrentCopyDir(QDir::homePath());
-			loadSettings();
-		}
-	};
+	
 	
 	PrefDialog::PrefDialog(QWidget* parent,Core* core) : KConfigDialog(parent,"settings",Settings::self())
 	{

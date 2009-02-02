@@ -16,6 +16,8 @@ set(ktorrent_SRC
 	advancedpref.cpp
 	networkpref.cpp
 	proxypref.cpp
+	qmpref.cpp
+	generalpref.cpp
 	statusbar.cpp 
 	groupview.cpp
 	scandlg.cpp

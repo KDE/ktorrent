@@ -12,6 +12,9 @@
   <layout class="QVBoxLayout" >
    <item>
     <widget class="QCheckBox" name="kcfg_manuallyControlTorrents" >
+     <property name="toolTip" >
+      <string>When enabled, the queue manager will be totally disabled, allowing you to fully control all torrents manually.</string>
+     </property>
      <property name="text" >
       <string>Control torrents manually</string>
      </property>
@@ -317,16 +320,48 @@ p, li { white-space: pre-wrap; }
   <connection>
    <sender>kcfg_manuallyControlTorrents</sender>
    <signal>toggled(bool)</signal>
-   <receiver>m_qm_group_box</receiver>
+   <receiver>kcfg_maxDownloads</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>124</x>
+     <x>128</x>
      <y>12</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>144</x>
-     <y>59</y>
+     <x>369</x>
+     <y>90</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_manuallyControlTorrents</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_maxSeeds</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>253</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>349</x>
+     <y>112</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_manuallyControlTorrents</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_decreasePriorityOfStalledTorrents</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>207</x>
+     <y>9</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>167</x>
+     <y>216</y>
     </hint>
    </hints>
   </connection>
