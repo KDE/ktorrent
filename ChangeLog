@@ -2,6 +2,7 @@ Changes in 3.3 :
 - Cleanup plugin list (180402)
 - If QM enabled, torrents are always managed by the QM, unless user stops them
 - QM can now be disabled to allow full manual control of torrents
+- Check completed dir for torrent files when opening a torrent (164165)
 
 Changes in 3.2 :
 - Use QDir to create directories, avoids nested event loops, which seems to be buggy in some situations (182327)
