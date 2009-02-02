@@ -3,7 +3,6 @@ IconName=ktorrent
 Comment=KTorrent
 Comment[hi]=केटोरेंट
 Comment[sv]=Ktorrent
-Comment[th]=โปรแกรม KTorrent
 Comment[x-test]=xxKTorrentxx
 
 [Event/TorrentStoppedByError]

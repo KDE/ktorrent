@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Automatic Resume
 Name[ca]=Represa automàtica
+Name[da]=Genoptag automatisk
 Name[de]=Automatisch Fortsetzen
 Name[el]=Αυτόματη συνέχιση
 Name[es]=Reanudación automática
@@ -19,10 +20,10 @@ Name[ru]=Автовозобновление
 Name[sv]=Automatisk återupptagning
 Name[tr]=Otomatik Devam Et
 Name[uk]=Автоматичне відновлення
-Name[x-test]=xxAutomatic Resumexx
 Name[zh_TW]=自動回復
 Comment=Script to automatically resume after some time, when the paused state is enabled
 Comment[ca]=Script per a reprendre automàticament després d'un temps, quan està activat l'estat de pausa
+Comment[da]=Script til at genoptage automatisk efter et stykke tid, når pausetilstand er aktiveret
 Comment[de]=Skript zum automatischen Fortsetzen von pausierten Torrents nach Ablauf einer festgelegten Zeit
 Comment[el]=Σενάριο για την αυτόματη συνέχιση λήψενω μετά από κάποιο χρονικό διάστημα, όταν η κατάσταση  παύσης είναι ενεργοποιημένη
 Comment[es]=Script para reanudar automáticamente tras cierto tiempo, cuando está habilitado el estado de pausa
@@ -41,7 +42,6 @@ Comment[ru]=Сценарий для втоматического возобно�
 Comment[sv]=Skript för att automatiskt fortsätta efter en viss tid, när paustillståndet aktiveras
 Comment[tr]=Duraklatılmış bir torrenti bir süre sonra otomatik olarak başlatmaya yarayan bir betik
 Comment[uk]=Скрипт для автоматичного поновлення через певний проміжок часу, якщо увімкнено стан призупинки.
-Comment[x-test]=xxScript to automatically resume after some time, when the paused state is enabledxx
 Comment[zh_TW]=在暫停一段時間後自動回復的文稿
 Type=KTorrentScript
 Icon=kt-bandwidth-scheduler

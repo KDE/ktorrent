@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Tracker Grouping
 Name[ca]=Agrupació de seguidors
+Name[da]=Tracker-gruppering
 Name[de]=Tracker-Gruppierung
 Name[el]=Ομαδοποίηση ανιχνευτών
 Name[es]=Agrupación de localizadores
@@ -19,10 +20,10 @@ Name[ru]=Группирование трекеров
 Name[sv]=Gruppering av spårare
 Name[tr]=İzleyici Gruplandırması
 Name[uk]=Групування координаторів
-Name[x-test]=xxTracker Groupingxx
 Name[zh_TW]=追蹤器分組
 Comment=Script to create automatic groups based upon tracker URL's
 Comment[ca]=Script per a crear grups automàtics basats en els URL dels seguidors
+Comment[da]=Script til at oprette grupper automatisk baseret på tracker-URL'er
 Comment[de]=Skript zum automatischen Gruppieren anhand der Tracker-Adressen
 Comment[el]=Σενάριο αυτόματης ομαδοποίησης ανιχνευτών με βάση το URL τους
 Comment[es]=Guion para crear grupos automáticos basándose en los URL de los localizadores
@@ -41,7 +42,6 @@ Comment[ru]=Сценарий для автоматического созлда�
 Comment[sv]=Skript för att skapa automatiska grupper baserat på spårarnas webbadresser
 Comment[tr]=İzleyici adreslerini temel alarak otomatik gruplar oluşturan bir betik
 Comment[uk]=Скрипт для створення автоматичних груп за адресами координаторів
-Comment[x-test]=xxScript to create automatic groups based upon tracker URL'sxx
 Comment[zh_TW]=依追蹤器的網址自動建立群組的文稿
 Type=KTorrentScript
 Icon=network-server
