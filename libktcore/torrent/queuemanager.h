@@ -79,39 +79,39 @@ namespace kt
 		/**
 		 * Start a torrent
 		 * @param tc The torrent
-		 * @param user Whether or not the user does this
 		 * @return What happened
 		 */
-		bt::TorrentStartResponse start(bt::TorrentInterface* tc, bool user = true);
+		bt::TorrentStartResponse start(bt::TorrentInterface* tc);
 		
 		/**
 		 * Stop a torrent
 		 * @param tc The torrent
-		 * @param user Whether or not the user does this
 		 */
-		void stop(bt::TorrentInterface* tc, bool user = false);
+		void stop(bt::TorrentInterface* tc);
 		
 		/**
-		 * Start a list of torrents. The torrents will become user controlled.
+		 * Start a list of torrents.
 		 * @param todo The list of torrents 
 		 */
 		void start(QList<bt::TorrentInterface*> & todo);
-
-		void stopall(int type);
-		void startall(int type);
+		
+		/**
+		 * Stop a list of torrents
+		 * @param todo The list of torrents
+		 */
+		void stop(QList<bt::TorrentInterface*> & todo);
+		
+		/// Stop all torrents
+		void stopAll();
+		
+		/// Start all torrents
+		void startAll();
 			
 		/**
 		 * Stop all running torrents
 		 * @param wjob WaitJob which waits for stopped events to reach the tracker
 		 */
 		void onExit(bt::WaitJob* wjob);
-
-		/**
-		 * Enqueue/Dequeue function. Places a torrent in queue. 
-		 * If the torrent is already in queue this will remove it from queue.
-		 * @param tc TorrentControl pointer.
-		 */
-		void queue(bt::TorrentInterface* tc);
 
 		/// Get the number of torrents	
 		int count() { return downloads.count(); }
@@ -236,21 +236,19 @@ namespace kt
 
 	public slots:
 		void torrentFinished(bt::TorrentInterface* tc);
-		void torrentAdded(bt::TorrentInterface* tc,bool user, bool start_torrent);
+		void torrentAdded(bt::TorrentInterface* tc,bool start_torrent);
 		void torrentRemoved(bt::TorrentInterface* tc);
 		void torrentStopped(bt::TorrentInterface* tc);
 		void onLowDiskSpace(bt::TorrentInterface* tc, bool toStop);
 
 	private:
-		void enqueue(bt::TorrentInterface* tc);
-		void dequeue(bt::TorrentInterface* tc);
 		void startSafely(bt::TorrentInterface* tc);
-		void stopSafely(bt::TorrentInterface* tc,bool user,bt::WaitJob* wjob = 0);
+		void stopSafely(bt::TorrentInterface* tc,bt::WaitJob* wjob = 0);
 		void checkDiskSpace(QList<bt::TorrentInterface*> & todo);
 		void checkMaxSeedTime(QList<bt::TorrentInterface*> & todo);
 		void checkMaxRatio(QList<bt::TorrentInterface*> & todo);
 		void rearrangeQueue();
-		bt::TorrentStartResponse startInternal(bt::TorrentInterface* tc,bool user);
+		bt::TorrentStartResponse startInternal(bt::TorrentInterface* tc);
 
 	private:
 		QueuePtrList downloads;

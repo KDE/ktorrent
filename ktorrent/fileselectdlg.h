@@ -46,7 +46,6 @@ namespace kt
 		bt::TorrentInterface* tc;
 		TorrentFileModel* model;
 		kt::GroupManager* gman;
-		bool* user;
 		bool* start;
 		bool* skip_check;
 		QList<int> encodings;
@@ -55,7 +54,7 @@ namespace kt
 		FileSelectDlg(kt::GroupManager* gman,const QString & group_hint,QWidget* parent);
 		virtual ~FileSelectDlg();
 		
-		int execute(bt::TorrentInterface* tc,bool* user, bool* start,bool* skip_check);
+		int execute(bt::TorrentInterface* tc, bool* start,bool* skip_check);
 		
 	protected slots:
 		virtual void reject();

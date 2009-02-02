@@ -71,11 +71,10 @@ namespace kt
 	FileSelectDlg::~FileSelectDlg()
 	{}
 
-	int FileSelectDlg::execute(bt::TorrentInterface* tc,bool* user, bool* start,bool* skip_check)
+	int FileSelectDlg::execute(bt::TorrentInterface* tc,bool* start,bool* skip_check)
 	{
 		setWindowTitle(i18n("Opening %1",tc->getDisplayName()));
 		this->tc = tc;
-		this->user = user;
 		this->start = start;
 		this->skip_check = skip_check;
 		if (tc)
@@ -215,8 +214,7 @@ namespace kt
 			tc->changeOutputDir(dn, 0);
 
 		//Make it user controlled if needed
-		*user = m_chkUserControlled->isChecked();
-		*start = m_chkUserControlled->isChecked() && m_chkStartTorrent->isChecked();
+		*start = m_chkStartTorrent->isChecked();
 		*skip_check = m_skip_data_check->isChecked();
 		
 		//Now add torrent to selected group

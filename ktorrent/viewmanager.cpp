@@ -33,6 +33,7 @@
 #include <groups/groupmanager.h>
 #include "gui.h"
 #include "view.h"
+#include "viewmodel.h"
 #include "viewmanager.h"
 #include "core.h"
 #include "groupview.h"
@@ -205,13 +206,6 @@ namespace kt
 		if (current)
 			current->checkData();
 	}
-		
-
-	void ViewManager::queueTorrents()
-	{
-		if (current)
-			current->queueTorrents();
-	}
 
 	void ViewManager::update()
 	{
@@ -369,6 +363,7 @@ namespace kt
 		QList<bt::TorrentInterface*> sel;
 		current->getSelection(sel);		
 		
+		bool qm_enabled = !Settings::manuallyControlTorrents();
 		bool en_start = false;
 		bool en_stop = false;
 		bool en_remove = false;
@@ -385,27 +380,33 @@ namespace kt
 			if (tc->readyForPreview() && !s.multi_file_torrent)
 				en_prev = true;
 			
-			if (!tc->isCheckingData(dummy))
-				en_remove = true;
+			if (tc->isCheckingData(dummy))
+				continue;
 			
+			en_remove = true;
 			if (!s.running)
-			{
-				if (!tc->isCheckingData(dummy))
+			{	
+				if (qm_enabled)
+				{
+					// Queued torrents can be stopped, and not started
+					if (tc->isAllowedToStart() && !tc->overMaxRatio() && !tc->overMaxSeedTime())
+						en_stop = true;
+					else
+						en_start = true;
+				}
+				else
 				{
 					en_start = true;
 				}
 			}
 			else
 			{
-				if (!tc->isCheckingData(dummy))
-				{
-					en_stop = true;
-					if (tc->announceAllowed())
-						en_announce = true;
-				}
+				en_stop = true;
+				if (tc->announceAllowed())
+					en_announce = true;
 			}
 			
-			if (!s.priv_torrent && !tc->isCheckingData(dummy))
+			if (!s.priv_torrent)
 			{
 				en_add_peer = true;
 				en_peer_sources = true;
@@ -423,7 +424,6 @@ namespace kt
 		manual_announce->setEnabled(en_announce);
 		do_scrape->setEnabled(sel.count() > 0);
 		move_data->setEnabled(sel.count() > 0);
-		queue_torrent->setEnabled(en_remove);
 
 		const kt::Group* current_group = current->getGroup();
 		remove_from_group->setEnabled(current_group && !current_group->isStandardGroup());
@@ -459,8 +459,32 @@ namespace kt
 		add_to_new_group->setEnabled(sel.count() > 0);
 		copy_url->setEnabled(sel.count() == 1 && sel.front()->loadUrl().isValid());
 		
-		start_all->setEnabled(current->numRunningTorrents() < current->numTorrents());
-		stop_all->setEnabled(current->numRunningTorrents() > 0);
+		if (qm_enabled)
+		{
+			QList<bt::TorrentInterface*> all;
+			current->viewModel()->allTorrents(all);
+			start_all->setEnabled(false);
+			stop_all->setEnabled(false);
+			foreach (bt::TorrentInterface* tc,all)
+			{
+				if (tc->isCheckingData(dummy))
+					continue;
+				
+				const TorrentStats & s = tc->getStats();
+				if (s.running || (tc->isAllowedToStart() && !tc->overMaxRatio() && !tc->overMaxSeedTime()))
+					stop_all->setEnabled(true);
+				else
+					start_all->setEnabled(true);
+				
+				if (stop_all->isEnabled() && start_all->isEnabled())
+					break;
+			}
+		}
+		else
+		{
+			start_all->setEnabled(current->numRunningTorrents() < current->numTorrents());
+			stop_all->setEnabled(current->numRunningTorrents() > 0);
+		}
 		
 		// check for all views if the caption needs to be updated
 		foreach (View* v,views)
@@ -488,8 +512,6 @@ namespace kt
 		rename_torrent = new KAction(i18n("Rename Torrent"),this);
 		connect(rename_torrent,SIGNAL(triggered()),this,SLOT(renameTorrent()));
 		ac->addAction("view_rename_torrent",rename_torrent);
-		
-		queue_torrent = ac->action("queue_action");
 		
 		add_peers = new KAction(KIcon("list-add"),i18n("Add Peers"),this);
 		connect(add_peers,SIGNAL(triggered()),this,SLOT(addPeers()));

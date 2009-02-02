@@ -223,11 +223,11 @@ namespace kt
 		core->startUpdateTimer(); // make sure update timer is running
 	}
 
-	bool GUI::selectFiles(bt::TorrentInterface* tc,bool* user,bool* start_torrent,const QString & group_hint,bool* skip_check)
+	bool GUI::selectFiles(bt::TorrentInterface* tc,bool* start_torrent,const QString & group_hint,bool* skip_check)
 	{
 		FileSelectDlg dlg(core->getGroupManager(),group_hint,this);
 
-		return dlg.execute(tc,user,start_torrent,skip_check) == QDialog::Accepted;
+		return dlg.execute(tc,start_torrent,skip_check) == QDialog::Accepted;
 	}
 
 	void GUI::errorMsg(const QString & err)
@@ -331,12 +331,12 @@ namespace kt
 	
 	void GUI::startAllTorrents()
 	{
-		core->startAll(3);
+		core->startAll();
 	}
 
 	void GUI::stopAllTorrents()
 	{
-		core->stopAll(3);
+		core->stopAll();
 	}
 
 	void GUI::pasteURL()
@@ -485,12 +485,6 @@ namespace kt
 		paste_url_action->setShortcut(KShortcut(Qt::CTRL + Qt::Key_P));
 		connect(paste_url_action,SIGNAL(triggered()),this,SLOT(pasteURL()));
 		ac->addAction("paste_url",paste_url_action);
-
-		queue_action = new KAction(KIcon("view-choose"),i18n("Enqueue/Dequeue"),this);
-		queue_action->setToolTip(i18n("Enqueue or dequeue all selected torrents in the current tab"));
-		queue_action->setShortcut(KShortcut(Qt::CTRL + Qt::Key_D));
-		connect(queue_action,SIGNAL(triggered()),view_man,SLOT(queueTorrents()));
-		ac->addAction("queue_action",queue_action);
 		
 		queue_pause_action = new KToggleAction(KIcon("kt-pause"),i18n("Pause KTorrent"),this);
 		queue_pause_action->setToolTip(i18n("Pause all running torrents"));

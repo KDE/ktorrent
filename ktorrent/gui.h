@@ -68,7 +68,7 @@ namespace kt
 		virtual const bt::TorrentInterface* getCurrentTorrent() const;
 		virtual bt::TorrentInterface* getCurrentTorrent();
 		virtual void dataScan(bt::TorrentInterface* tc,bool auto_import,bool silently,const QString & dlg_caption);
-		virtual bool selectFiles(bt::TorrentInterface* tc,bool* user,bool* start_torrent,const QString & group_hint,bool* skip_check);
+		virtual bool selectFiles(bt::TorrentInterface* tc,bool* start_torrent,const QString & group_hint,bool* skip_check);
 		virtual void errorMsg(const QString & err);
 		virtual void errorMsg(KIO::Job* j);
 		virtual void infoMsg(const QString & info);
@@ -182,7 +182,6 @@ namespace kt
 		KAction* stop_all_action;
 		KAction* stop_all_cv_action;
 		KAction* paste_url_action;
-		KAction* queue_action;
 		KToggleAction* queue_pause_action;
 		KAction* ipfilter_action;
 		KAction* data_check_action;

@@ -65,8 +65,6 @@ namespace kt
 		// Priority
 		Q_SCRIPTABLE int priority() const;
 		Q_SCRIPTABLE void setPriority(int p);
-		Q_SCRIPTABLE bool isUserControlled() const;
-		Q_SCRIPTABLE void setUserControlled(bool uc);
 		
 		// Chunks
 		Q_SCRIPTABLE uint chunks() const;

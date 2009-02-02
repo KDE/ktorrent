@@ -63,7 +63,6 @@ namespace kt
 		void moveDownClicked();
 		void moveTopClicked();
 		void moveBottomClicked();
-		void queueClicked();
 
 	private:
 		QueueManagerModel* model;

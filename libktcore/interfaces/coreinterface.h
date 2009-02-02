@@ -80,15 +80,13 @@ namespace kt
 
 		/**
 		 * Start all, takes into account the maximum number of downloads.
-		 * @param type - Weather to start downloads, seeds or both. 1=Downloads, 2=Seeds, 3=All
 		 */
-		virtual void startAll(int type) = 0;
+		virtual void startAll() = 0;
 
 		/**
 		 * Stop all torrents.
-		 * @param type - Weather to start downloads, seeds or both. 1=Downloads, 2=Seeds, 3=All
 		 */
-		virtual void stopAll(int type) = 0;
+		virtual void stopAll() = 0;
 
 		/**
 		 * Start a torrent, takes into account the maximum number of downloads.
@@ -107,14 +105,13 @@ namespace kt
 		 * @param tc The TorrentControl
 		 * @param user true if user stopped the torrent, false otherwise
 		 */
-		virtual void stop(bt::TorrentInterface* tc, bool user = false) = 0;
+		virtual void stop(bt::TorrentInterface* tc) = 0;
 		
 		/**
-		 * Enqueue/Dequeue function. Places a torrent in queue. 
-		 * If the torrent is already in queue this will remove it from queue.
-		 * @param tc TorrentControl pointer.
+		 * Stop a list of torrents.
+		 * @param todo The list of torrents
 		 */
-		virtual void queue(bt::TorrentInterface* tc) = 0;
+		virtual void stop(QList<bt::TorrentInterface*> & todo) = 0;
 
 		/// Get CurrentStats structure
 		virtual CurrentStats getStats() = 0;

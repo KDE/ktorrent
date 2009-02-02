@@ -49,6 +49,7 @@ namespace kt
 		void loadSettings()
 		{
 			kcfg_stallTimer->setEnabled(Settings::decreasePriorityOfStalledTorrents());
+            m_qm_group_box->setDisabled(Settings::manuallyControlTorrents());
 		}
 		
 		void loadDefaults()

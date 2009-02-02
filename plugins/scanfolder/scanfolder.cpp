@@ -160,9 +160,9 @@ namespace kt
 	
 	void ScanFolder::onLoadingFinished(const KUrl & url, bool success, bool canceled)
 	{
+		Q_UNUSED(canceled);
 		if(m_pendingURLs.empty() || !success)
 			return;
-		
 		
 		// if no entry is found than this torrent was not started by this plugin so - quit
 		if (!m_pendingURLs.contains(url))

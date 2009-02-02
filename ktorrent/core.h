@@ -55,8 +55,8 @@ namespace kt
 		// implemented from CoreInterface
 		virtual void setKeepSeeding(bool ks);
 		virtual bool changeDataDir(const QString & new_dir);
-		virtual void startAll(int type);
-		virtual void stopAll(int type);
+		virtual void startAll();
+		virtual void stopAll();
 		virtual CurrentStats getStats();
 		virtual bool changePort(bt::Uint16 port);
 		virtual bt::Uint32 getNumTorrentsRunning() const;
@@ -144,44 +144,15 @@ namespace kt
 		bool load(const QByteArray & data,const QString & dir,const QString & group,bool silently, const KUrl& url);
 		
 		/**
-		 * Remove a download.This will delete all temp
-		 * data from this TorrentInterface And delete the
-		 * TorrentInterface itself. It can also potentially
-		 * start a new download (when one is waiting to be downloaded).
-		 * @param tc
-		 * @param data_to 
-		 */
-		virtual void remove(bt::TorrentInterface* tc,bool data_to);
-
-		/**
 		 * Update all torrents.
 		 */
 		void update();
 		
-		/**
-		 * Start a torrent, takes into account the maximum number of downloads.
-		 * @param tc The TorrentInterface
-		 */
 		virtual void start(bt::TorrentInterface* tc);
-
-		/**
-		 * Start a list of torrents
-		 * @param todo The list of torrents
-		 */
 		virtual void start(QList<bt::TorrentInterface*> & todo);
-		
-		/**
-		 * Stop a torrent, may start another download if it hasn't been started.
-		 * @param tc The TorrentInterface
-		 */
-		virtual void stop(bt::TorrentInterface* tc, bool user = false);
-		
-		/**
-		 * Enqueue/Dequeue function. Places a torrent in queue. 
-		 * If the torrent is already in queue this will remove it from queue.
-		 * @param tc TorrentControl pointer.
-		 */
-		virtual void queue(bt::TorrentInterface* tc);
+		virtual void stop(bt::TorrentInterface* tc);
+		virtual void stop(QList<bt::TorrentInterface*> & todo);
+		virtual void remove(bt::TorrentInterface* tc,bool data_to);
 		
 		/**
 		 * A torrent is about to be started. We will do some file checks upon this signal.

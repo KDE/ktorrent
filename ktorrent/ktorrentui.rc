@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="ktorrent" version="13">
+<kpartgui name="ktorrent" version="14">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
 	  <Action name="file_new"/>
@@ -23,7 +23,6 @@
 	<Separator/>
 	<Action name="check_data"/>
 	<Separator/>
-	<Action name="queue_action"/>
 	<Action name="queue_pause" />
 	<Separator/>
 	<Action name="speed_limits"/>
@@ -47,7 +46,6 @@
 	<Action name="stop" />
 	<Action name="remove" />
 	<Action name="view_remove_torrent_and_data" />
-	<Action name="queue_action" />
 	<Separator/>
 	<Action name="view_add_peers" />
 	<Menu name="PeerSourcesMenu"><text>Additional Peer Sources</text>
@@ -96,7 +94,6 @@
 	<Action name="start_all"/>
 	<Action name="stop_all"/>
 	<Separator/>
-	<Action name="queue_action"/>
 	<Action name="queue_pause" />
 </ToolBar>
 </kpartgui>

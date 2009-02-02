@@ -73,16 +73,6 @@ namespace kt
 		return tor->getStats().running == true;
 	}
 	
-	bool user_controlled(TorrentInterface* tor)
-	{
-		return tor->getStats().user_controlled;
-	}
-	
-	bool qm_controlled(TorrentInterface* tor)
-	{
-		return !tor->getStats().user_controlled;
-	}
-	
 	bool active(TorrentInterface* tor)
 	{
 		const bt::TorrentStats& s = tor->getStats();
@@ -121,21 +111,6 @@ namespace kt
 		defaults << new FunctionGroup<member<not_running,download> >(
 				i18n("Not Running Downloads"),"kt-stop",Group::DOWNLOADS_ONLY_GROUP,"/all/downloads/not_running");
 				
-		// user tree
-		defaults << new FunctionGroup<user_controlled>(
-				i18n("User Controlled"),"user-identity",Group::MIXED_GROUP,"/all/user");
-		defaults << new FunctionGroup<member<user_controlled,upload> >(
-				i18n("User Controlled Uploads"),"go-up",Group::UPLOADS_ONLY_GROUP,"/all/user/uploads");
-		defaults << new FunctionGroup<member<user_controlled,download> >(
-				i18n("User Controlled Downloads"),"go-down",Group::DOWNLOADS_ONLY_GROUP,"/all/user/downloads");
-				
-		// qm_controlled tree
-		defaults << new FunctionGroup<qm_controlled>(
-				i18n("Queue Manager Controlled"),"kt-queue-manager",Group::MIXED_GROUP,"/all/qm");
-		defaults << new FunctionGroup<member<qm_controlled,upload> >(
-				i18n("Queue Manager Controlled Uploads"),"go-up",Group::UPLOADS_ONLY_GROUP,"/all/qm/uploads");
-		defaults << new FunctionGroup<member<qm_controlled,download> >(
-				i18n("Queue Manager Controlled Downloads"),"go-down",Group::DOWNLOADS_ONLY_GROUP,"/all/qm/downloads");
 		
 		defaults << new FunctionGroup<active>(
 				i18n("Active Torrents"),"network-connect",Group::MIXED_GROUP,"/all/active");

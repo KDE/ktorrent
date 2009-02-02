@@ -284,8 +284,6 @@ namespace kt
 		enc.write("started", s.started);
 		enc.write("multi_file_torrent", s.multi_file_torrent);
 		enc.write("stopped_by_error", s.stopped_by_error);
-		enc.write("completed", s.completed);
-		enc.write("user_controlled", s.user_controlled);
 		enc.write("max_share_ratio", s.max_share_ratio);
 		enc.write("max_seed_time", s.max_seed_time);
 		enc.write("num_corrupted_chunks", s.num_corrupted_chunks);
@@ -433,16 +431,6 @@ namespace kt
 	void DBusTorrent::setPriority(int p)
 	{
 		ti->setPriority(p);
-	}
-	
-	bool DBusTorrent::isUserControlled() const
-	{
-		return ti->isUserControlled();
-	}
-	
-	void DBusTorrent::setUserControlled(bool uc)
-	{
-		ti->setUserControlled(uc);
 	}
 }
 

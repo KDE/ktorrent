@@ -59,22 +59,9 @@
       </layout>
      </item>
      <item>
-      <widget class="QCheckBox" name="m_chkUserControlled" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Maximum" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text" >
-        <string>&amp;User controlled</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QCheckBox" name="m_chkStartTorrent" >
        <property name="enabled" >
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="sizePolicy" >
         <sizepolicy vsizetype="Fixed" hsizetype="Maximum" >
@@ -292,7 +279,6 @@ p, li { white-space: pre-wrap; }
  <tabstops>
   <tabstop>m_downloadLocation</tabstop>
   <tabstop>m_cmbGroups</tabstop>
-  <tabstop>m_chkUserControlled</tabstop>
   <tabstop>m_chkStartTorrent</tabstop>
   <tabstop>m_select_all</tabstop>
   <tabstop>m_select_none</tabstop>
@@ -304,22 +290,5 @@ p, li { white-space: pre-wrap; }
   <include location="global" >kpushbutton.h</include>
  </includes>
  <resources/>
- <connections>
-  <connection>
-   <sender>m_chkUserControlled</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>m_chkStartTorrent</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>288</x>
-     <y>62</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>407</x>
-     <y>62</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

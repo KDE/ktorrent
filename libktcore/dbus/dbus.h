@@ -74,9 +74,6 @@ namespace kt
 		/// Load a torrent silently
 		Q_SCRIPTABLE void loadSilently(const QString & url,const QString & group);
 		
-		/// Enqueue or dequeue a torrent
-		Q_SCRIPTABLE void queue(const QString & info_hash);
-		
 		/// Remove a torrent
 		Q_SCRIPTABLE void remove(const QString & info_hash,bool data_to);
 		

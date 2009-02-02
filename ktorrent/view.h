@@ -45,6 +45,12 @@ namespace kt
 		virtual ~View();
 
 		/**
+		 * Get the view model
+		 * @return The ViewModel of this View
+		 */
+		ViewModel* viewModel() {return model;}
+		
+		/**
 		 * Set the group to show in this view
 		 * @param g The Group
 		 * */
@@ -101,7 +107,6 @@ namespace kt
 		void removeTorrentsAndData();
 		void startAllTorrents();
 		void stopAllTorrents();
-		void queueTorrents();
 		void checkData();
 		void addPeers();
 		void manualAnnounce();
@@ -121,9 +126,6 @@ namespace kt
 		void onSelectionChanged(const QItemSelection & selected,const QItemSelection & deselected);
 
 	signals:
-		void wantToRemove(bt::TorrentInterface* tc,bool data_to);
-		void wantToStop(bt::TorrentInterface* tc,bool user);
-		void wantToStart(QList<bt::TorrentInterface*> & todo);
 		void currentTorrentChanged(View* v,bt::TorrentInterface* tc);
 		void torrentSelectionChanged(View* v);
 		void showMenu(View* v,const QPoint & pos);

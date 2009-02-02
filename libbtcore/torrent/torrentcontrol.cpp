@@ -96,7 +96,6 @@ namespace bt
 		old_tordir = QString();
 		stats.status = NOT_STARTED;
 		stats.autostart = true;
-		stats.user_controlled = false;
 		stats.priv_torrent = false;
 		stats.seeders_connected_to = stats.seeders_total = 0;
 		stats.leechers_connected_to = stats.leechers_total = 0;
@@ -224,8 +223,7 @@ namespace bt
 				istats.last_announce = bt::GetCurrentTime();
 				istats.time_started_dl = QDateTime::currentDateTime();
 				// Tell QM to redo queue
-				if (!isUserControlled())
-					updateQueue();
+				updateQueue();
 			}
 			updateStatus();
 
@@ -289,18 +287,14 @@ namespace bt
 			}
 			
 			if (overMaxRatio() || overMaxSeedTime()) 
-			{ 
-				if (!stats.user_controlled) //if it's queued make sure to dequeue it 
-				{
-					setUserControlled(true);
-				}
-                 
-				stop(true); 
+			{
+				setAllowedToStart(false);
+				stop(); 
 				emit seedingAutoStopped(this, overMaxRatio() ? MAX_RATIO_REACHED : MAX_SEED_TIME_REACHED);
-			} 			
+			}
 
 			//Update diskspace if needed (every 1 min)			
-			if(!stats.completed && stats.running && bt::GetCurrentTime() - last_diskspace_check >= 60 * 1000)
+			if (!stats.completed && stats.running && bt::GetCurrentTime() - last_diskspace_check >= 60 * 1000)
 			{
 				checkDiskSpace(true);
 			}
@@ -430,7 +424,7 @@ namespace bt
 	}
 		
 
-	void TorrentControl::stop(bool user,WaitJob* wjob)
+	void TorrentControl::stop(WaitJob* wjob)
 	{
 		QDateTime now = QDateTime::currentDateTime();
 		if(!stats.completed)
@@ -467,13 +461,7 @@ namespace bt
 			
 			downloader->clearDownloads();
 		}
-		
-		if (user)
-		{
-			//make this torrent user controlled
-			setUserControlled(true);
-			stats.autostart = false;
-		}
+	
 		
 		pman->savePeerList(tordir + "peer_list");
 		pman->stop();
@@ -978,9 +966,9 @@ namespace bt
 			stats.status = ERROR;
 		else if (dcheck_thread)
 			stats.status = CHECKING_DATA;
-		else if (!stats.started && stats.user_controlled)
+		else if (!stats.started && (!QueueManagerInterface::enabled() || !isAllowedToStart()))
 			stats.status = NOT_STARTED;
-		else if (!stats.running && !stats.user_controlled)
+		else if (!stats.running && QueueManagerInterface::enabled() && isAllowedToStart())
 			stats.status = QUEUED;
 		else if (!stats.running && stats.completed && (overMaxRatio() || overMaxSeedTime()))
 			stats.status = SEEDING_COMPLETE;
@@ -992,8 +980,7 @@ namespace bt
 			stats.status = SEEDING;
 		else if (stats.running) 
 			// protocol messages are also included in speed calculation, so lets not compare with 0
-			stats.status = downloader->downloadRate() > 100 ?
-					DOWNLOADING : STALLED;
+			stats.status = downloader->downloadRate() > 100 ? DOWNLOADING : STALLED;
 		
 		if (old != stats.status)
 			statusChanged(this);
@@ -1054,8 +1041,8 @@ namespace bt
 			st.write("RUNNING_TIME_UL", QString("%1").arg(istats.running_time_ul));
 		}
 		
+		st.write("QM_CAN_START",stats.qm_can_start ? "1" : "0");
 		st.write("PRIORITY", QString("%1").arg(istats.priority));
-		st.write("USER_CONTROLLED",stats.user_controlled ? "1" : "0");
 		st.write("AUTOSTART", QString("%1").arg(stats.autostart));
 		st.write("IMPORTED", QString("%1").arg(stats.imported_bytes));
 		st.write("CUSTOM_OUTPUT_NAME",istats.custom_output_name ? "1" : "0");
@@ -1120,17 +1107,11 @@ namespace bt
 			display_name = st.readString("DISPLAY_NAME");
 		
 		setPriority(st.readInt("PRIORITY"));
-		// before USER_CONTROLLED was added, priority == 0 meant user controlled
-		if (st.hasKey("USER_CONTROLLED"))
-			setUserControlled(st.readBoolean("USER_CONTROLLED"));
-		else
-			setUserControlled(getPriority() == 0); 
 		stats.autostart = st.readBoolean("AUTOSTART");
-		
 		stats.imported_bytes = st.readUint64("IMPORTED");
 		stats.max_share_ratio = st.readFloat("MAX_RATIO");
 		stats.max_seed_time = st.readFloat("MAX_SEED_TIME");
-
+		stats.qm_can_start = st.readBoolean("QM_CAN_START");
 
 		if (st.hasKey("RESTART_DISK_PREALLOCATION"))
 			prealloc = st.readString("RESTART_DISK_PREALLOCATION") == "1";
@@ -1406,25 +1387,15 @@ namespace bt
 		updateStatus();
 	}
 	
-	void TorrentControl::setUserControlled(bool uc)
-	{
-		stats.user_controlled = uc;
-		saveStats();
-		updateStatus();
-	}
-	
 	void TorrentControl::setMaxShareRatio(float ratio)
 	{
-		if(ratio == 1.00f)
+		if (ratio == 1.00f)
 		{
-			if(stats.max_share_ratio != ratio)
+			if (stats.max_share_ratio != ratio)
 				stats.max_share_ratio = ratio;
 		}
 		else
 			stats.max_share_ratio = ratio;
-		
-		if(stats.completed && !stats.running && !stats.user_controlled && (ShareRatio(stats) >= stats.max_share_ratio))
-			setUserControlled(true); //dequeue it
 		
 		saveStats();
 		emit maxRatioChanged(this);
@@ -2024,6 +1995,12 @@ namespace bt
 			outdir += bt::DirSeparator();
 					
 		changeOutputDir(outdir,bt::TorrentInterface::MOVE_FILES);
+	}
+	
+	void TorrentControl::setAllowedToStart(bool on)
+	{
+		stats.qm_can_start = on;
+		saveStats();
 	}
 }
 

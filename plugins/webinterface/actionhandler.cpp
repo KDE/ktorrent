@@ -170,12 +170,12 @@ namespace kt
 		}
 		else if(cmd=="stopall" && !arg.isEmpty())
 		{
-			core->stopAll(3);
+			core->stopAll();
 			return true;
 		}
 		else if(cmd=="startall" && !arg.isEmpty())
 		{
-			core->startAll(3);
+			core->startAll();
 			return true;
 		}
 		else if(cmd=="stop")
@@ -185,7 +185,7 @@ namespace kt
 			{
 				if(arg.toInt()==k)
 				{
-					core->stop(*i,true);
+					core->stop(*i);
 					return true;
 				}
 			}

@@ -154,8 +154,6 @@ namespace bt
 		bool stopped_by_error;
 		/// See if the download is completed
 		bool completed;
-		/// See if this torrent is controlled by user
-		bool user_controlled;
 		/// Maximum share ratio
 		float max_share_ratio;
 		/// Maximum seed time in hours
@@ -168,6 +166,8 @@ namespace bt
 		TimeStamp last_download_activity_time;
 		/// TimeStamp when we last saw upload activity
 		TimeStamp last_upload_activity_time;
+		/// Whether or not the QM can start this torrent
+		bool qm_can_start;
 	};
 	
 		
@@ -216,11 +216,10 @@ namespace bt
 		
 		/**
 		 * Stop the download, closes all connections.
-		 * @param user whether or not the user did this explicitly
 		 * @param wjob WaitJob, used when KT is shutting down, 
 		 * 	so that we can wait for all stopped events to reach the tracker
 		 */
-		virtual void stop(bool user,bt::WaitJob* wjob = 0) = 0;
+		virtual void stop(bt::WaitJob* wjob = 0) = 0;
 		
 		/**
 		 * Update the tracker, this should normally handled internally.
@@ -358,12 +357,6 @@ namespace bt
 		
 		///Set the torrent queue number.
 		virtual void setPriority(int p) = 0;
-		
-		/// Is the torrent user controlled ?
-		virtual bool isUserControlled() const = 0;
-		
-		/// Make the torrent user controlled or not
-		virtual void setUserControlled(bool uc) = 0;
 		
 		/// Set the max share ratio
 		virtual void setMaxShareRatio(float ratio) = 0;
@@ -521,6 +514,15 @@ namespace bt
 		
 		/// Gets the displayed name
 		QString getDisplayName() const {return display_name.isEmpty() ? stats.torrent_name : display_name;}
+		
+		/// Set whether the QM can start a torrent.
+		virtual void setAllowedToStart(bool on) = 0;
+		
+		/**
+		 * Can the torrent be started by the QM.
+		 * @return True if it can, false otherwise
+		 */
+		bool isAllowedToStart() const {return stats.qm_can_start;}
 	signals:
 		/**
 		 * Emitted when we have finished downloading.

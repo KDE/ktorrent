@@ -139,7 +139,7 @@ namespace kt
 		else if (index.row() >= 0 && index.row() < item->multimedia_files.count())
 		{
 			int idx = item->multimedia_files.at(index.row());
-			if (idx < 0 || idx >= item->tc->getNumFiles())
+			if (idx < 0 || idx >= (int)item->tc->getNumFiles())
 				return QVariant();
 			
 			const bt::TorrentFileInterface & tfi = item->tc->getTorrentFile(idx);
@@ -275,7 +275,7 @@ namespace kt
 				return QString();
 			
 			r = item->multimedia_files.at(r);
-			if (r < 0 || r >= item->tc->getNumFiles())
+			if (r < 0 || r >= (int)item->tc->getNumFiles())
 				return QString();
 			else
 				return item->tc->getTorrentFile(r).getPathOnDisk();

@@ -182,7 +182,6 @@ namespace kt
 
 	bool Core::init(TorrentControl* tc,const QString & group,bool silently)
 	{
-		bool user = false;
 		bool start_torrent = false;
 		bool skip_check = false;
 
@@ -190,7 +189,7 @@ namespace kt
 		qman->append(tc);
 		if (!silently)
 		{
-			if (!gui->selectFiles(tc,&user,&start_torrent,group,&skip_check))
+			if (!gui->selectFiles(tc,&start_torrent,group,&skip_check))
 			{
 				remove(tc,false);
 				return false;
@@ -251,7 +250,7 @@ namespace kt
 			tc->setMaxSeedTime(Settings::maxSeedTime());
 		
 		torrentAdded(tc);
-		qman->torrentAdded(tc,user,start_torrent);
+		qman->torrentAdded(tc,start_torrent);
 		//now copy torrent file to user specified dir if needed
 		if(Settings::useTorrentCopyDir())
 		{
@@ -575,9 +574,14 @@ namespace kt
 		}
 	}
 
-	void Core::stop(bt::TorrentInterface* tc, bool user)
+	void Core::stop(bt::TorrentInterface* tc)
 	{
-		qman->stop(tc, user);
+		qman->stop(tc);
+	}
+	
+	void Core::stop(QList<bt::TorrentInterface*> & todo)
+	{
+		qman->stop(todo);
 	}
 
 	QString Core::findNewTorrentDir() const
@@ -615,7 +619,7 @@ namespace kt
 				
 			qman->append(tc);
 			connectSignals(tc);
-			if (tc->getStats().autostart && tc->getStats().user_controlled && !tc->overMaxRatio() && !tc->overMaxSeedTime())
+			if (tc->getStats().autostart && !bt::QueueManagerInterface::enabled() && !tc->overMaxRatio() && !tc->overMaxSeedTime())
 				start(tc);
 			torrentAdded(tc);
 		}
@@ -651,7 +655,7 @@ namespace kt
 			const bt::TorrentStats & s = tc->getStats();
 			removed_bytes_up += s.session_bytes_uploaded;
 			removed_bytes_down += s.session_bytes_downloaded;
-			stop(tc,true);
+			stop(tc);
 
 			QString dir = tc->getTorDir();
 			
@@ -804,15 +808,15 @@ namespace kt
 		update_timer.start(CORE_UPDATE_INTERVAL);
 	}
 
-	void Core::startAll(int type)
+	void Core::startAll()
 	{
-		qman->startall(type);
+		qman->startAll();
 		startUpdateTimer();
 	}
 
-	void Core::stopAll(int type)
+	void Core::stopAll()
 	{
-		qman->stopall(type);
+		qman->stopAll();
 	}
 	
 	void Core::startUpdateTimer()
@@ -997,11 +1001,6 @@ namespace kt
 	bool Core::getPausedState()
 	{
 		return qman->getPausedState();
-	}
-
-	void Core::queue(bt::TorrentInterface* tc)
-	{
-		qman->queue(tc);
 	}
 
 	void Core::aboutToBeStarted(bt::TorrentInterface* tc,bool & ret)

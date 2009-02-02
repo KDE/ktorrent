@@ -73,7 +73,7 @@ namespace kt
 	{
 		paused_torrents.erase(tc);
 		int index = downloads.indexOf(tc);
-		if(index != -1)
+		if (index != -1)
 			delete downloads.takeAt(index);
 	}
 
@@ -90,7 +90,7 @@ namespace kt
 		downloads.clear();
 	}
 	
-	TorrentStartResponse QueueManager::startInternal(bt::TorrentInterface* tc,bool user)
+	TorrentStartResponse QueueManager::startInternal(bt::TorrentInterface* tc)
 	{
 		const TorrentStats & s = tc->getStats();
 		
@@ -100,14 +100,10 @@ namespace kt
 			switch (Settings::startDownloadsOnLowDiskSpace())
 			{
 			case 0: //don't start!
-				tc->setUserControlled(true);
 				return bt::NOT_ENOUGH_DISKSPACE;
 			case 1: //ask user
 				if (KMessageBox::questionYesNo(0, i18n("You don't have enough disk space to download this torrent. Are you sure you want to continue?"), i18n("Insufficient disk space for %1",s.torrent_name)) == KMessageBox::No)
-				{
-					tc->setUserControlled(true);
 					return bt::USER_CANCELED;
-				}
 				else
 					break;
 			case 2: //force start
@@ -120,11 +116,8 @@ namespace kt
 		bool max_seed_time_reached = tc->overMaxSeedTime();
 		if (s.completed && (max_ratio_reached || max_seed_time_reached))
 		{
-			if (!user)
-			{
-				tc->setUserControlled(true); // dequeue torrent
+			if (!enabled())
 				return QM_LIMITS_REACHED;
-			}
 			
 			QString msg; 
 			if (max_ratio_reached && max_seed_time_reached)
@@ -151,54 +144,78 @@ namespace kt
 		return START_OK;
 	}
 
-	TorrentStartResponse QueueManager::start(bt::TorrentInterface* tc, bool user)
+	TorrentStartResponse QueueManager::start(bt::TorrentInterface* tc)
 	{
-		const TorrentStats & s = tc->getStats();
-		bool start_tc = user;
-		bool check_done = false;
-
-		if (tc->isCheckingData(check_done) && !check_done)
-			return BUSY_WITH_DATA_CHECK;
-
-		if (!user)
+		if (!enabled)
 		{
+			return startInternal(tc);
+		}
+		else
+		{
+			tc->setAllowedToStart(true);
+			bool start_tc = false;
+			bool check_done = false;
+			if (tc->isCheckingData(check_done) && !check_done)
+				return BUSY_WITH_DATA_CHECK;
+			
+			const TorrentStats & s = tc->getStats();
+			if (!s.completed && !tc->checkDiskSpace(false)) //no need to check diskspace for seeding torrents
+			{
+				//we're short!
+				switch (Settings::startDownloadsOnLowDiskSpace())
+				{
+					case 0: //don't start!
+						return bt::NOT_ENOUGH_DISKSPACE;
+					case 1: //ask user
+						if (KMessageBox::questionYesNo(0, i18n("You don't have enough disk space to download this torrent. Are you sure you want to continue?"), i18n("Insufficient disk space for %1",s.torrent_name)) == KMessageBox::No)
+							return bt::USER_CANCELED;
+						else
+							break;
+					case 2: //force start
+						break;
+				}
+			}
+			
 			if (s.completed)
 				start_tc = (max_seeds == 0 || getNumRunning(SEEDS) < max_seeds);
 			else
 				start_tc = (max_downloads == 0 || getNumRunning(DOWNLOADS) < max_downloads);
-		}
-		else
-		{
-			//User started this torrent so make it user controlled
-			tc->setUserControlled(true);
-		}
 
-		if (start_tc)
-		{
-			return startInternal(tc,user);
+			if (start_tc)
+				orderQueue();
+			else
+				return QM_LIMITS_REACHED;
+			
+			return START_OK;
 		}
-		else
-		{
-			return QM_LIMITS_REACHED;
-		}
-		
-		return START_OK;
 	}
 
-	void QueueManager::stop(bt::TorrentInterface* tc, bool user)
+	void QueueManager::stop(bt::TorrentInterface* tc)
 	{
 		bool check_done = false;
 		if (tc->isCheckingData(check_done) && !check_done)
 			return;
 		
 		const TorrentStats & s = tc->getStats();
-		if (s.running)
-		{
-			stopSafely(tc,user);
-		}
+		if (enabled())
+			tc->setAllowedToStart(false);
 		
-		if (user) //dequeue it
-			tc->setUserControlled(true);
+		if (s.running)
+			stopSafely(tc);
+		else
+			tc->updateStatus();
+	}
+	
+	void QueueManager::stop(QList<bt::TorrentInterface*> & todo)
+	{
+		ordering = true;
+		foreach (bt::TorrentInterface* tc,todo)
+		{
+			stop(tc);
+		}
+		ordering = false;
+		if (enabled())
+			orderQueue();
 	}
 	
 	void QueueManager::checkDiskSpace(QList<bt::TorrentInterface*> & todo)
@@ -330,65 +347,49 @@ namespace kt
 			if (tc->isCheckingData(check_done) && !check_done)
 				continue;
 			
-			tc->setUserControlled(true);
-			startSafely(tc);
-		}
-	}
-	
-	void QueueManager::startall(int type)
-	{
-		// first get the list of torrents which need to be started
-		QList<bt::TorrentInterface*> todo;
-		foreach (bt::TorrentInterface* tc,downloads)
-		{
-			const TorrentStats & s = tc->getStats();
-			if (s.running)
-				continue;
-			
-			bool check_done = false;
-			if (tc->isCheckingData(check_done) && !check_done)
-				continue;
-			
-			if ((s.completed && type == 2) || (!s.completed && type == 1) || (type == 3))
-			{
-				todo.append(tc);
-			}
+			if (enabled())
+				tc->setAllowedToStart(true);
+			else
+				startSafely(tc);
 		}
 		
-		start(todo);
+		if (enabled())
+			orderQueue();
+	}
+	
+	void QueueManager::startAll()
+	{
+		if (enabled())
+		{
+			foreach (bt::TorrentInterface* tc,downloads)
+				tc->setAllowedToStart(true);
+			
+			orderQueue();
+		}
+		else
+		{
+			// first get the list of torrents which need to be started
+			QList<bt::TorrentInterface*> todo;
+			foreach (bt::TorrentInterface* tc,downloads)
+			{
+				const TorrentStats & s = tc->getStats();
+				if (s.running)
+					continue;
+				
+				bool check_done = false;
+				if (tc->isCheckingData(check_done) && !check_done)
+					continue;
+				
+				todo.append(tc);
+			}
+			
+			start(todo);
+		}
 	}
 
-	void QueueManager::stopall(int type)
+	void QueueManager::stopAll()
 	{
-		ordering = true;
-		QList<bt::TorrentInterface *>::iterator i = downloads.begin();
-		while (i != downloads.end())
-		{
-			bt::TorrentInterface* tc = *i;
-			const TorrentStats & s = tc->getStats();
-			if (tc->getStats().running)
-			{
-				try
-				{
-					if(type >= 3)
-						stopSafely(tc,true);
-					else if( (s.completed && type == 2) || (!s.completed && type == 1) )
-						stopSafely(tc,true);
-				}
-				catch (bt::Error & err)
-				{
-					QString msg =
-							i18n("Error stopping torrent %1 : %2",
-							s.torrent_name,err.toString());
-					KMessageBox::error(0,msg,i18n("Error"));
-				}
-			}
-			//if torrent is not running but it is queued we need to make it user controlled
-			else if( (s.completed && type == 2) || (!s.completed && type == 1) || (type == 3) )
-					tc->setUserControlled(true);
-			i++;
-		}
-		ordering = false;
+		stop(downloads);
 	}
 	
 	void QueueManager::onExit(WaitJob* wjob)
@@ -400,7 +401,7 @@ namespace kt
 			bt::TorrentInterface* tc = *i;
 			if (tc->getStats().running)
 			{
-				stopSafely(tc,false,wjob);
+				stopSafely(tc,wjob);
 			}
 			i++;
 		}
@@ -473,9 +474,14 @@ namespace kt
 	
 	void QueueManager::onLowDiskSpace(bt::TorrentInterface* tc, bool toStop)
 	{
-		if(toStop)
+		if (toStop)
 		{
-			stop(tc, false);
+			stopSafely(tc);
+			if (enabled())
+			{
+				tc->setAllowedToStart(false);
+				orderQueue();
+			}
 		}
 		
 		//then emit the signal to inform trayicon to show passive popup
@@ -517,6 +523,9 @@ namespace kt
 	
 	void QueueManager::orderQueue()
 	{
+		if (Settings::manuallyControlTorrents())
+			return;
+		
 		if (ordering || !downloads.count() || paused_state || exiting)
 			return;
 		
@@ -531,7 +540,7 @@ namespace kt
 		{
 			const TorrentStats & s = tc->getStats();
 			bool dummy;
-			if (!s.user_controlled && !tc->isMovingFiles() && !s.stopped_by_error && !tc->isCheckingData(dummy))
+			if (tc->isAllowedToStart() && !tc->isMovingFiles() && !s.stopped_by_error && !tc->isCheckingData(dummy))
 			{
 				if (s.completed)
 					seed_queue.append(tc);
@@ -550,10 +559,8 @@ namespace kt
 				if (!s.running)
 				{
 					Out(SYS_GEN|LOG_DEBUG) << "QM Starting: " << s.torrent_name << endl;
-					if (startInternal(tc,false) == bt::START_OK)
+					if (startInternal(tc) == bt::START_OK)
 						num_running++;
-					else if (s.stopped_by_error)
-						tc->setUserControlled(true);
 				}
 				else
 					num_running++;
@@ -563,7 +570,7 @@ namespace kt
 				if (s.running)
 				{
 					Out(SYS_GEN|LOG_DEBUG) << "QM Stopping: " << s.torrent_name << endl;
-					stop(tc);
+					stopSafely(tc);
 				}
 				else
 					tc->updateStatus();
@@ -580,10 +587,8 @@ namespace kt
 				if (!s.running)
 				{
 					Out(SYS_GEN|LOG_DEBUG) << "QM Starting: " << s.torrent_name << endl;
-					if (startInternal(tc,false) == bt::START_OK)
+					if (startInternal(tc) == bt::START_OK)
 						num_running++;
-					else if (s.stopped_by_error)
-						tc->setUserControlled(true);
 				}
 				else
 					num_running++;
@@ -593,7 +598,7 @@ namespace kt
 				if (s.running)
 				{
 					Out(SYS_GEN|LOG_DEBUG) << "QM Stopping: " << s.torrent_name << endl;
-					stop(tc);
+					stopSafely(tc);
 				}
 				else
 					tc->updateStatus();
@@ -607,14 +612,19 @@ namespace kt
 	void QueueManager::torrentFinished(bt::TorrentInterface* tc)
 	{
 		if (!keep_seeding)
-			stopSafely(tc,true);
+		{
+			if (enabled())
+				tc->setAllowedToStart(false);
+			
+			stopSafely(tc);
+		}
 		
 		orderQueue();
 	}
 	
-	void QueueManager::torrentAdded(bt::TorrentInterface* tc,bool user, bool start_torrent)
+	void QueueManager::torrentAdded(bt::TorrentInterface* tc,bool start_torrent)
 	{
-		if (!user)
+		if (enabled())
 		{
 			// new torrents have the lowest priority
 			// so everybody else gets a higher priority
@@ -623,15 +633,15 @@ namespace kt
 				int p = otc->getPriority();
 				otc->setPriority(p+1);
 			}
+			tc->setAllowedToStart(start_torrent);
 			tc->setPriority(0);
 			rearrangeQueue();
 			orderQueue();
 		}
 		else
 		{
-			 tc->setUserControlled(true);
 			 if (start_torrent)
-				 start(tc, true);
+				 start(tc);
 		}	
 	}
 	
@@ -666,8 +676,8 @@ namespace kt
 		{
 			foreach (TorrentInterface* tc,downloads)
 			{
-				const TorrentStats & s = tc->getStats();         
-				if(s.running)
+				const TorrentStats & s = tc->getStats();
+				if (s.running)
 				{
 					paused_torrents.insert(tc);
 					stopSafely(tc,false);
@@ -688,34 +698,6 @@ namespace kt
 		}
 	}
 	
-	void QueueManager::enqueue(bt::TorrentInterface* tc)
-	{
-		//if a seeding torrent reached its maximum share ratio or maximum seed time don't enqueue it...
-		if (tc->getStats().completed && (tc->overMaxRatio() || tc->overMaxSeedTime()))
-		{
-			Out(SYS_GEN | LOG_IMPORTANT) << "Torrent has reached max share ratio or max seed time and cannot be started automatically." << endl;
-			emit queuingNotPossible(tc);
-			return;
-		}
-		
-		tc->setUserControlled(false);
-		orderQueue();
-	}
-	
-	void QueueManager::dequeue(bt::TorrentInterface* tc)
-	{
-		tc->setUserControlled(true);
-		orderQueue();
-	}
-	
-	void QueueManager::queue(bt::TorrentInterface* tc)
-	{
-		if (tc->isUserControlled())
-			enqueue(tc);
-		else
-			dequeue(tc);
-	}
-	
 	void QueueManager::startSafely(bt::TorrentInterface* tc)
 	{
 		try
@@ -732,11 +714,11 @@ namespace kt
 		}
 	}
 	
-	void QueueManager::stopSafely(bt::TorrentInterface* tc,bool user,WaitJob* wjob)
+	void QueueManager::stopSafely(bt::TorrentInterface* tc,WaitJob* wjob)
 	{
 		try
 		{
-			tc->stop(user,wjob);
+			tc->stop(wjob);
 		}
 		catch (bt::Error & err)
 		{
@@ -766,6 +748,9 @@ namespace kt
 	
 	void QueueManager::checkStalledTorrents(bt::TimeStamp now,bt::Uint32 min_stall_time)
 	{
+		if (!enabled())
+			return;
+		
 		QueuePtrList newlist;
 		QueuePtrList stalled;
 		bool can_decrease = false;
@@ -773,21 +758,16 @@ namespace kt
 		// find all stalled ones
 		foreach (bt::TorrentInterface* tc,downloads)
 		{
-			if (!tc->isUserControlled())
+			if (IsStalled(tc,now,min_stall_time))
 			{
-				if (IsStalled(tc,now,min_stall_time))
-				{
-					stalled.append(tc);
-				}
-				else
-				{
-					// decreasing makes only sense if there are QM torrents after the stalled ones
-					can_decrease = stalled.count() > 0;
-					newlist.append(tc);
-				}
+				stalled.append(tc);
 			}
-			else 
+			else
+			{
+				// decreasing makes only sense if there are QM torrents after the stalled ones
+				can_decrease = stalled.count() > 0;
 				newlist.append(tc);
+			}
 		}
 		
 		if (stalled.count() == 0 || stalled.count() == downloads.count() || !can_decrease)

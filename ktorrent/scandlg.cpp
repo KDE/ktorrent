@@ -56,7 +56,6 @@ namespace kt
 		tc = 0;
 		silently = false;
 		restart = false;
-		qm_controlled = false;
 		scanning = false;
 		num_chunks = 0;
 		total_chunks = 0;
@@ -98,17 +97,9 @@ namespace kt
 		num_failed = 0;
 		if (auto_import || tc->getStats().running)
 			restart = true;
-		
-		qm_controlled = !tc->getStats().user_controlled;
-		qm_priority = tc->getPriority();
-
+	
 		if (tc->getStats().running)
-		{
-			if (qm_controlled)
-				core->getQueueManager()->stop(tc,true);
-			else
-				tc->stop(true);
-		}
+			core->getQueueManager()->stop(tc);
 		
 		scan();
 	}
@@ -139,14 +130,10 @@ namespace kt
 		if (!isStopped())
 		{
 			if (restart)
-			{
-				if (!qm_controlled)
-					tc->start();
-				else
-					tc->setUserControlled(false);
-			}
+				core->getQueueManager()->start(tc);
+			else
+				core->getQueueManager()->orderQueue();
 			
-			core->getQueueManager()->orderQueue();
 			if (silently)
 				accept();
 			else
@@ -160,12 +147,9 @@ namespace kt
 		else
 		{
 			if (restart)
-			{
-				if (!qm_controlled)
-					tc->start();
-				else
-					tc->setUserControlled(false);
-			}
+				core->getQueueManager()->start(tc);
+			else
+				core->getQueueManager()->orderQueue();
 			
 			core->getQueueManager()->orderQueue();
 			reject();

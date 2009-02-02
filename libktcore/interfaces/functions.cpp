@@ -43,6 +43,7 @@
 #include <util/log.h>
 #include <torrent/server.h>
 #include <torrent/timeestimator.h>
+#include <interfaces/queuemanagerinterface.h>
 #include "settings.h"
 #include "functions.h"
 
@@ -160,6 +161,7 @@ namespace kt
 		bt::TimeEstimator::setAlgorithm((bt::TimeEstimator::ETAlgorithm)Settings::eta());
 		
 		bt::ChunkManager::setPreviewSizes(Settings::previewSizeAudio() * 1024,Settings::previewSizeVideo() * 1024);
+		bt::QueueManagerInterface::setQueueManagerEnabled(!Settings::manuallyControlTorrents());
 	}
 
 

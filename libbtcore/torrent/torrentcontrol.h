@@ -204,14 +204,13 @@ namespace bt
 		virtual void markExistingFilesAsDownloaded();
 		virtual int getPriority() const { return istats.priority; }
 		virtual void setPriority(int p);
-		virtual bool isUserControlled() const {return stats.user_controlled;}
-		virtual void setUserControlled(bool uc);
 		virtual bool overMaxRatio();		
 		virtual void setMaxShareRatio(float ratio);
 		virtual float getMaxShareRatio() const { return stats.max_share_ratio; }
 		virtual bool overMaxSeedTime();
 		virtual void setMaxSeedTime(float hours);
 		virtual float getMaxSeedTime() const {return stats.max_seed_time;}
+		virtual void setAllowedToStart(bool on);
 	
 		/// Tell the TorrentControl obj to preallocate diskspace in the next update
 		void setPreallocateDiskSpace(bool pa) {prealloc = pa;}
@@ -295,10 +294,9 @@ namespace bt
 		
 		/**
 		 * Stop the download, closes all connections.
-		 * @param user whether or not the user did this explicitly
 		 * @param wjob WaitJob to wait at exit for the completion of stopped requests
 		 */
-		void stop(bool user,WaitJob* wjob = 0);
+		void stop(WaitJob* wjob = 0);
 			
 		/**
 		 * Update the tracker, this should normally handled internally.

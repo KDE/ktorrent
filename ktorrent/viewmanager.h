@@ -97,9 +97,6 @@ namespace kt
 		
 		/// Stop all downloads in the current view
 		void stopAllTorrents();
-		
-		/// Enqueue or dequeue torrents
-		void queueTorrents();
 
 		/// Check the data of the selected torrent
 		void checkData();
@@ -178,7 +175,6 @@ namespace kt
 		QAction* stop_all;
 		QAction* remove_torrent;
 		KAction* remove_torrent_and_data;
-		QAction* queue_torrent;
 		QAction* add_peers;
 		QAction* dht_enabled;
 		QAction* pex_enabled;
