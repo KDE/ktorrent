@@ -470,6 +470,7 @@ namespace bt
 		cman->stop();
 		
 		stats.running = false;
+		stats.autostart = false;
 		saveStats();
 		updateStatus();
 		updateStats();

@@ -146,7 +146,7 @@ namespace kt
 
 	TorrentStartResponse QueueManager::start(bt::TorrentInterface* tc)
 	{
-		if (!enabled)
+		if (!enabled())
 		{
 			return startInternal(tc);
 		}
