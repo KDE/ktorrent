@@ -40,8 +40,6 @@ namespace kt
 	{
 		prefpage = 0;
 		loaded.setAutoDelete(true);
-//		pltoload.append("infowidgetplugin");
-//		pltoload.append("searchplugin");
 	}
 
 	PluginManager::~PluginManager()
@@ -55,9 +53,9 @@ namespace kt
 		plugins = KPluginInfo::fromServices(offers);
 
 		for (KPluginInfo::List::iterator i = plugins.begin();i != plugins.end();i++)
-		{
+		{	
 			KPluginInfo & pi = *i;
-			pi.setConfig(KGlobal::config()->group(pi.name()));
+			pi.setConfig(KGlobal::config()->group(pi.pluginName()));
 			pi.load();
 		}
 		
@@ -100,14 +98,14 @@ namespace kt
 		Plugin* p = service->createInstance<kt::Plugin>(); 
 		if (!p) 
         {
-            p = service->createInstance<kt::Plugin>();
-            if (!p)
-            {
-                Out(SYS_GEN|LOG_NOTICE) <<
-                        QString("Creating instance of plugin %1 failed !")
-                        .arg(service->library()) << endl;
-                return;
-            }
+			p = service->createInstance<kt::Plugin>();
+			if (!p)
+			{
+				Out(SYS_GEN|LOG_NOTICE) <<
+						QString("Creating instance of plugin %1 failed !")
+						.arg(service->library()) << endl;
+				return;
+			}
         }
 			
 		if (!p->versionCheck(kt::VERSION_STRING))

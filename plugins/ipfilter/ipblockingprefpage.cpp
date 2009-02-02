@@ -115,7 +115,7 @@ namespace kt
 	
 		// block GUI so you cannot do stuff during conversion
 		m_download->setEnabled(false);
-		m_status->setText(i18n("Status: Downloading and converting new block list ..."));
+		m_status->setText(i18n("Status: Downloading and converting new block list..."));
 		kcfg_useLevel1->setEnabled(false);
 		kcfg_filterURL->setEnabled(false);
 		
@@ -190,11 +190,11 @@ namespace kt
 		QDate last_updated = g.readEntry("last_updated",QDate());
 		
 		if (last_updated.isNull())
-			m_last_updated->setText(i18n("No update done yet !"));
+			m_last_updated->setText(i18n("No update done yet!"));
 		else if (ok)
 			m_last_updated->setText(last_updated.toString());
 		else
-			m_last_updated->setText(i18n("%1 (Last update attempt failed !)",last_updated.toString()));
+			m_last_updated->setText(i18n("%1 (Last update attempt failed!)",last_updated.toString()));
 		
 		if (kcfg_autoUpdate->isChecked())
 		{
