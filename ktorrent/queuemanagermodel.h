@@ -93,6 +93,7 @@ namespace kt
 		void onTorrentAdded(bt::TorrentInterface* tc);
 		void onTorrentRemoved(bt::TorrentInterface* tc);
 		void onQueueOrdered();
+		void onTorrentStatusChanged(bt::TorrentInterface* tc);
 
 	private:
 		QueueManager* qman;

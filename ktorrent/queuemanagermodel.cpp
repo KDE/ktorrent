@@ -38,6 +38,13 @@ namespace kt
 			: QAbstractTableModel(parent),qman(qman)
 	{
 		connect(qman,SIGNAL(queueOrdered()),this,SLOT(onQueueOrdered()));
+		// use a copy of the list of torrents to redo the priorities
+		QueuePtrList torrents;
+		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
+		{
+			bt::TorrentInterface* tc = *i;
+			connect(tc,SIGNAL(statusChanged(bt::TorrentInterface*)),this,SLOT(onTorrentStatusChanged(bt::TorrentInterface*)));
+		}
 	}
 
 
@@ -53,11 +60,13 @@ namespace kt
 	{
 		insertRow(qman->count() - 1);
 		stalled_times.insert(tc,0);
+		connect(tc,SIGNAL(statusChanged(bt::TorrentInterface*)),this,SLOT(onTorrentStatusChanged(bt::TorrentInterface*)));
 		reset();
 	}
 	
 	void QueueManagerModel::onTorrentRemoved(bt::TorrentInterface* tc)
 	{
+		disconnect(tc,SIGNAL(statusChanged(bt::TorrentInterface*)),this,SLOT(onTorrentStatusChanged(bt::TorrentInterface*)));
 		int r = 0;
 		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
 		{
@@ -65,6 +74,22 @@ namespace kt
 			{
 				stalled_times.remove(tc);
 				removeRow(r);
+				break;
+			}
+			r++;
+		}
+	}
+	
+	void QueueManagerModel::onTorrentStatusChanged(bt::TorrentInterface* tc)
+	{
+		reset();
+		int r = 0;
+		for (QueueManager::iterator i = qman->begin();i != qman->end();i++)
+		{
+			if (tc == *i)
+			{
+				QModelIndex idx = index(r,2);
+				emit dataChanged(idx,idx);
 				break;
 			}
 			r++;
