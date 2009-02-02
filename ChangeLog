@@ -1,3 +1,6 @@
+Changes in 3.3 :
+- Cleanup plugin list (180402)
+
 Changes in 3.2 :
 - Use QDir to create directories, avoids nested event loops, which seems to be buggy in some situations (182327)
 - Make sure strings tab is shown first in filter editor dialog
