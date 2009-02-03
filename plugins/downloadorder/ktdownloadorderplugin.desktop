@@ -35,6 +35,7 @@ Comment[pt]=Um 'plugin' para indicar a ordem de transferência de uma torrente m
 Comment[pt_BR]=Extensão para especificar a ordem de download de um torrent com múltiplos arquivos
 Comment[ro]=Modul pentru specificarea ordinii de descărcare a unui torent multifișier pentru KTorrent
 Comment[ru]=Модуль для определения порядка загрузки, если торрент содержит несколько файлов.
+Comment[sl]=Vstavek za določanje vrstnega reda prenosov za torrente z več datotekami
 Comment[sv]=Insticksprogram för Ktorrent som anger nerladdningsordningen för ett dataflöde med flera filer
 Comment[tr]=KTorrent için birden fazla dosyadan oluşan torrenlerde indirme sıralamasını belirlemeyi sağlayan bir eklenti
 Comment[uk]=Додаток для визначення порядку звантаження багатофайлового торента для KTorrent
