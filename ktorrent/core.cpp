@@ -185,13 +185,15 @@ namespace kt
 		bool start_torrent = false;
 		bool skip_check = false;
 
-		connectSignals(tc);
-		qman->append(tc);
 		if (!silently)
 		{
 			if (!gui->selectFiles(tc,&start_torrent,group,&skip_check))
 			{
-				remove(tc,false);
+				// Cleanup tor dir
+				QString dir = tc->getTorDir();
+				if (bt::Exists(dir))
+					bt::Delete(dir,true);
+				delete tc;	
 				return false;
 			}
 		}
@@ -220,6 +222,9 @@ namespace kt
 				}
 			}
 		}
+		
+		connectSignals(tc);
+		qman->append(tc);
 	
 		try
 		{
