@@ -1,6 +1,15 @@
 [Desktop Entry]
 Name=Scripting
+Name[ga]=Scriptiú
+Name[nds]=Skripten
+Name[pt]=Programação
+Name[pt_BR]=Programação
+Name[uk]=Запис сценаріїв
 Comment=Enables Kross scripting support
+Comment[ga]=Breiseán a chumasaíonn scriptiú Kross
+Comment[nds]=Ünnerstütten för Kross-Skripten
+Comment[nl]=Schakelt ondersteuning voor Kross-scripting in
+Comment[uk]=Уможливлює підткримку Kross
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktscriptingplugin

@@ -1,6 +1,14 @@
 [Desktop Entry]
 Name=Web Interface
+Name[ga]=Comhéadan Gréasáin
+Name[nds]=Nett-Koppelsteed
+Name[nl]=Webinterface
+Name[uk]=Веб-інтерфейс
 Comment=Allows control of KTorrent via a web interface
+Comment[ga]=Breiseán lenar féidir KTorrent a rialú trí chomhéadan Gréasáin
+Comment[nds]=KTorrent över en Nettkieker stüern
+Comment[nl]=Staat het bedienen van KTorrent toe via een webinterface
+Comment[uk]=Керування KTorrent за допомогою мережевого інтерфейсу
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktwebinterfaceplugin

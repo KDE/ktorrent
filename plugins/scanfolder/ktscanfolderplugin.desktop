@@ -1,6 +1,13 @@
 [Desktop Entry]
 Name=Scan Folder
+Name[ga]=Scan Fillteán
+Name[nds]=Ornern dörkieken
+Name[nl]=Map doorzoeken
+Name[uk]=Сканувати теку
 Comment=Scan folders for torrent files and load them
+Comment[nds]=Ornern op Torrent-Dateien dörkieken un de denn laden
+Comment[nl]=Doorzoek mappen op torrent-bestanden en laad deze
+Comment[uk]=Знайти у теках файли торентів і завантажити їх
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktscanfolderplugin

@@ -1,7 +1,17 @@
 [Desktop Entry]
 Type=Service
 Name=Statistics
+Name[ga]=Staitisticí
+Name[nds]=Statistik
+Name[nl]=Statistieken
+Name[pt]=Estatísticas
+Name[pt_BR]=Estatísticas
+Name[uk]=Статистика
 Comment=Shows statistics about torrents in several graphs
+Comment[ga]=Breiseán a thaispeánann staitisticí maidir le torrents i ngraif
+Comment[nds]=Statistiken över Torrents binnen Diagrammen wiesen
+Comment[nl]=Geef statistieken weer over torrents, verdeeld over verschillende grafieken
+Comment[uk]=Показує статистику торентів за допомогою декількох графіків
 ServiceTypes=KTorrent/Plugin
 X-KDE-Library=ktstatsplugin
 X-KDE-PluginInfo-Author=Krzysztof Kundzicz

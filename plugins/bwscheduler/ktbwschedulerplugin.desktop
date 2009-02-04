@@ -1,6 +1,14 @@
 [Desktop Entry]
 Name=Bandwidth Scheduler
+Name[ga]=Sceidealóir Bandaleithid
+Name[nds]=Bandbreedplaner
+Name[nl]=Bandbreedteplanner
+Name[uk]=Планування пропускної здатності
 Comment=Schedule upload and download limits over a period of a week
+Comment[ga]=Sceideal teorainneacha uasluchtaithe/íosluchtaithe le linn tréimhse seachtaine
+Comment[nds]=Grenzen för't Hooch- un Daalladen över en Week planen
+Comment[nl]=Plannen van upload- en downloadlimieten over een periode van een week
+Comment[uk]=Додаток для складання розкладу обмежень на завантаження на тиждень
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktbwschedulerplugin

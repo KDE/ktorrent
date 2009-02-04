@@ -1,6 +1,13 @@
 [Desktop Entry]
 Name=Information Widget
+Name[nds]=Informatschonen-Element
+Name[nl]=Informatie-widget
+Name[uk]=Інформаційний віджет
 Comment=Displays general information about a torrent in several tabs
+Comment[ga]=Breiseán a thaispeánann eolas ginearálta maidir le torrent i gcluaisíní éagsúla
+Comment[nds]=Wiest Informatschonen över en Torrent binnen en Reeg Paneels
+Comment[nl]=Geef informatie over een torrent weer, verdeeld over meerdere tabbladen
+Comment[uk]=Показ загальної інформації про торент у декількох вкладках
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktinfowidgetplugin

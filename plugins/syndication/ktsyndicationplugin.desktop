@@ -1,5 +1,9 @@
 [Desktop Entry]
 Name=Syndication
+Name[ga]=Sindeacáitiú
+Name[nds]=Strööm
+Name[nl]=Syndicatie
+Name[uk]=Синдикація
 Comment=Syndication plugin for KTorrent, supporting RSS and Atom feeds
 Comment[ca]=Connector de sindicació per al KTorrent, que permet canals RSS i Atom
 Comment[da]=Syndikeringsplugin til KTorrent, understøtter RSS- og Atom-feeds

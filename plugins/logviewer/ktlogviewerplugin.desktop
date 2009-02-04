@@ -1,6 +1,13 @@
 [Desktop Entry]
 Name=Log Viewer
+Name[ga]=Amharcán Logchomhad
+Name[nds]=Logbookkieker
+Name[nl]=Logweergave
+Name[uk]=Переглядач журналу
 Comment=Displays the logging output
+Comment[nds]=Wiest de Logbook-Utgaven
+Comment[nl]=Toont de loguitvoer
+Comment[uk]=Показати відомості з журналу
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktlogviewerplugin

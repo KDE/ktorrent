@@ -1,6 +1,10 @@
 [Desktop Entry]
 Name=Zeroconf
 Comment=Discover peers on the local network using the Zeroconf protocol
+Comment[ga]=Breiseán a aimsíonn comhghleacaithe ar an líonra logánta tríd an bprótacal zeroconf
+Comment[nds]=Partners in't lokale Nett över't zeroconf-Protokoll opdecken
+Comment[nl]=Ontdek peers op een lokaal netwerk met behulp van het zeroconf-protocol
+Comment[uk]=Виявляє вузли у локальній мережі за допомогою протоколу Zeroconf
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktzeroconfplugin

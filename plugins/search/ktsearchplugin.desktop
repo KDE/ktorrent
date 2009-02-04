@@ -1,6 +1,14 @@
 [Desktop Entry]
 Name=Search
+Name[ga]=Cuardaigh
+Name[nds]=Söken
+Name[nl]=Zoeken
+Name[uk]=Пошук
 Comment=Search for torrents
+Comment[ga]=Lorg torrents
+Comment[nds]=Na Torrents söken
+Comment[nl]=Zoeken naar torrents
+Comment[uk]=Пошук торентів
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktsearchplugin
