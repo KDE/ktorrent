@@ -89,6 +89,7 @@ namespace bt
 		stats.trk_bytes_uploaded = 0;
 		stats.running = false;
 		stats.started = false;
+		stats.queued = false;
 		stats.stopped_by_error = false;
 		stats.session_bytes_downloaded = 0;
 		stats.session_bytes_uploaded = 0;
