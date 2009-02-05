@@ -203,7 +203,7 @@ namespace kt
 		if (s.running)
 			stopSafely(tc);
 		else
-			tc->updateStatus();
+			tc->setQueued(false);
 	}
 	
 	void QueueManager::stop(QList<bt::TorrentInterface*> & todo)
@@ -267,7 +267,7 @@ namespace kt
 		foreach (bt::TorrentInterface* tc,todo)
 		{
 			const TorrentStats & s = tc->getStats();
-			if (tc->overMaxSeedTime())
+			if (s.completed && tc->overMaxSeedTime())
 			{
 				names.append(s.torrent_name);
 				tmp.append(tc);
@@ -296,7 +296,7 @@ namespace kt
 		foreach (bt::TorrentInterface* tc,todo)
 		{
 			const TorrentStats & s = tc->getStats();
-			if (tc->overMaxRatio())
+			if (s.completed && tc->overMaxRatio())
 			{
 				names.append(s.torrent_name);
 				tmp.append(tc);
@@ -543,7 +543,10 @@ namespace kt
 			if (tc->isAllowedToStart() && !tc->isMovingFiles() && !s.stopped_by_error && !tc->isCheckingData(dummy))
 			{
 				if (s.completed)
-					seed_queue.append(tc);
+				{
+					if (!tc->overMaxRatio() && !tc->overMaxSeedTime())
+						seed_queue.append(tc);
+				}
 				else
 					download_queue.append(tc);
 			}
@@ -572,8 +575,7 @@ namespace kt
 					Out(SYS_GEN|LOG_DEBUG) << "QM Stopping: " << s.torrent_name << endl;
 					stopSafely(tc);
 				}
-				else
-					tc->updateStatus();
+				tc->setQueued(true);
 			}
 		}
 		
@@ -581,7 +583,6 @@ namespace kt
 		foreach (bt::TorrentInterface* tc,seed_queue)
 		{
 			const TorrentStats & s = tc->getStats();
-
 			if (num_running < max_seeds || max_seeds == 0)
 			{
 				if (!s.running)
@@ -600,8 +601,7 @@ namespace kt
 					Out(SYS_GEN|LOG_DEBUG) << "QM Stopping: " << s.torrent_name << endl;
 					stopSafely(tc);
 				}
-				else
-					tc->updateStatus();
+				tc->setQueued(true);
 			}
 		}
 		

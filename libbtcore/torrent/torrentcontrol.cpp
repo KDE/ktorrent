@@ -286,9 +286,8 @@ namespace bt
 				stalled_timer.update();
 			}
 			
-			if (overMaxRatio() || overMaxSeedTime()) 
+			if (stats.completed && (overMaxRatio() || overMaxSeedTime()))
 			{
-				setAllowedToStart(false);
 				stop(); 
 				emit seedingAutoStopped(this, overMaxRatio() ? MAX_RATIO_REACHED : MAX_SEED_TIME_REACHED);
 			}
@@ -412,6 +411,7 @@ namespace bt
 		stats.running = true;
 		stats.started = true;
 		stats.autostart = true;
+		stats.queued = false;
 		stats.last_download_activity_time = stats.last_upload_activity_time = GetCurrentTime();
 		choker_update_timer.update();
 		stats_save_timer.update();
@@ -471,6 +471,7 @@ namespace bt
 		
 		stats.running = false;
 		stats.autostart = false;
+		stats.queued = false;
 		saveStats();
 		updateStatus();
 		updateStats();
@@ -967,14 +968,14 @@ namespace bt
 			stats.status = ERROR;
 		else if (dcheck_thread)
 			stats.status = CHECKING_DATA;
-		else if (!stats.started && (!QueueManagerInterface::enabled() || !isAllowedToStart()))
-			stats.status = NOT_STARTED;
-		else if (!stats.running && QueueManagerInterface::enabled() && isAllowedToStart())
+		else if (stats.queued)
 			stats.status = QUEUED;
-		else if (!stats.running && stats.completed && (overMaxRatio() || overMaxSeedTime()))
+		else if (stats.completed && (overMaxRatio() || overMaxSeedTime()))
 			stats.status = SEEDING_COMPLETE;
 		else if (!stats.running && stats.completed)
 			stats.status = DOWNLOAD_COMPLETE;
+		else if (!stats.started)
+			stats.status = NOT_STARTED;
 		else if (!stats.running)
 			stats.status = STOPPED;
 		else if (stats.running && stats.completed)
@@ -2003,6 +2004,13 @@ namespace bt
 		stats.qm_can_start = on;
 		saveStats();
 	}
+	
+	void TorrentControl::setQueued(bool queued) 
+	{
+		stats.queued = queued;
+		updateStatus();
+	}
+
 }
 
 #include "torrentcontrol.moc"

@@ -146,6 +146,8 @@ namespace bt
 		bool running;
 		/// See if the torrent has been started
 		bool started;
+		/// Whether or not the torrent is queued
+		bool queued;
 		/// See if we are allowed to startup this torrent automatically.
 		bool autostart;
 		/// See if we have a multi file torrent
@@ -523,6 +525,11 @@ namespace bt
 		 * @return True if it can, false otherwise
 		 */
 		bool isAllowedToStart() const {return stats.qm_can_start;}
+		
+		/**
+		 * Set whether the torrent is queued or not
+		 */
+		virtual void setQueued(bool queued) = 0;
 	signals:
 		/**
 		 * Emitted when we have finished downloading.
