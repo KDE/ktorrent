@@ -20,7 +20,7 @@
 #ifndef KTLOGVIEWER_H
 #define KTLOGVIEWER_H
 
-#include <Q3TextBrowser>
+#include <QTextBrowser>
 #include <interfaces/logmonitorinterface.h>
 #include "logflags.h"
 
@@ -29,7 +29,7 @@ namespace kt
 	/**
 	 * @author Joris Guisson
 	*/
-	class LogViewer : public Q3TextBrowser, public bt::LogMonitorInterface
+	class LogViewer : public QTextBrowser, public bt::LogMonitorInterface
 	{
 		Q_OBJECT
 	public:

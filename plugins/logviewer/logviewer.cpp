@@ -41,13 +41,9 @@ namespace kt
 		const QString & msg() const {return str;}
 	};
 
-	LogViewer::LogViewer(LogFlags* flags,QWidget *parent) : Q3TextBrowser(parent),flags(flags)
+	LogViewer::LogViewer(LogFlags* flags,QWidget *parent) : QTextBrowser(parent),flags(flags)
 	{
-		/*
-		IMPORTANT: use LogText mode, so that setMaxLogLines will work, if not everything will be kept in memory.
-		*/
-		setTextFormat(Qt::LogText);
-		setMaxLogLines(200);
+		document()->setMaximumBlockCount(100);
 	}
 
 
