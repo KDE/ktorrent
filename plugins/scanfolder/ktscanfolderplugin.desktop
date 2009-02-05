@@ -1,13 +1,22 @@
 [Desktop Entry]
 Name=Scan Folder
+Name[cs]=Procházení složek
+Name[de]=Ordner durchsuchen
 Name[ga]=Scan Fillteán
 Name[nds]=Ornern dörkieken
 Name[nl]=Map doorzoeken
+Name[pt]=Sondagem de Pastas
+Name[pt_BR]=Sondagem de Pastas
 Name[uk]=Сканувати теку
+Name[x-test]=xxScan Folderxx
 Comment=Scan folders for torrent files and load them
+Comment[de]=Ordner nach Torrent-Dateien durchsuchen und diese laden
 Comment[nds]=Ornern op Torrent-Dateien dörkieken un de denn laden
 Comment[nl]=Doorzoek mappen op torrent-bestanden en laad deze
+Comment[pt]=Pesquisar as pastas por ficheiros de torrentes e carregá-los
+Comment[pt_BR]=Pesquisar as pastas por ficheiros de torrentes e carregá-los
 Comment[uk]=Знайти у теках файли торентів і завантажити їх
+Comment[x-test]=xxScan folders for torrent files and load themxx
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktscanfolderplugin

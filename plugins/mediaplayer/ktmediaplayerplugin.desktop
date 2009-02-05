@@ -1,16 +1,23 @@
 [Desktop Entry]
 Name=Media Player
+Name[cs]=Přehrávač médií
+Name[de]=Mediaplayer
 Name[ga]=Seinnteoir Meán
 Name[nds]=Afspeler
 Name[nl]=Mediaspeler
 Name[pt]=Reprodutor Multimédia
 Name[pt_BR]=Reprodutor Multimédia
 Name[uk]=Медіапрогравач
+Name[x-test]=xxMedia Playerxx
 Comment=Phonon-based media player
+Comment[de]=Phonon-basierter Mediaplayer für KTorrent
 Comment[ga]=Seinnteoir meán bunaithe ar Phonon
 Comment[nds]=Op Phonon opbuut Afspeler
 Comment[nl]=Phonon-gebaseerde mediaspeler
+Comment[pt]=Leitor multimédia baseado no Phonon
+Comment[pt_BR]=Leitor multimédia baseado no Phonon
 Comment[uk]=Заснований на Phonon додаток програвача для KTorrent
+Comment[x-test]=xxPhonon-based media playerxx
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktmediaplayerplugin

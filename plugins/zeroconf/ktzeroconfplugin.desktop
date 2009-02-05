@@ -1,10 +1,18 @@
 [Desktop Entry]
 Name=Zeroconf
+Name[de]=ZeroConf
+Name[pt]=ZeroConf
+Name[pt_BR]=ZeroConf
+Name[x-test]=xxZeroconfxx
 Comment=Discover peers on the local network using the Zeroconf protocol
+Comment[de]=Gegenstellen im lokalen Netzwerk unter Verwendung des Zeroconf-Protokolls auffinden
 Comment[ga]=Breiseán a aimsíonn comhghleacaithe ar an líonra logánta tríd an bprótacal zeroconf
 Comment[nds]=Partners in't lokale Nett över't zeroconf-Protokoll opdecken
 Comment[nl]=Ontdek peers op een lokaal netwerk met behulp van het zeroconf-protocol
+Comment[pt]=Descobrir pontos na rede local com o protocolo Zeroconf
+Comment[pt_BR]=Descobrir pontos na rede local com o protocolo Zeroconf
 Comment[uk]=Виявляє вузли у локальній мережі за допомогою протоколу Zeroconf
+Comment[x-test]=xxDiscover peers on the local network using the Zeroconf protocolxx
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktzeroconfplugin

@@ -1,10 +1,15 @@
 [Desktop Entry]
 Name=UPnP
+Name[x-test]=xxUPnPxx
 Comment=Forward ports using UPnP
+Comment[de]=Port-Weiterleitung unter Verwendung von UPnP
 Comment[ga]=Breiseán a chuireann poirt ar aghaidh le UPnP
 Comment[nds]=Porten över UPnP wiederledden
 Comment[nl]=Forwarden van poorten met behulp van UPnP
+Comment[pt]=Um 'plugin' de encaminhamento de portos com o UPnP
+Comment[pt_BR]=Um 'plugin' de encaminhamento de portos com o UPnP
 Comment[uk]=Переспрямування портів за допомогою UPnP
+Comment[x-test]=xxForward ports using UPnPxx
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktupnpplugin

@@ -1,13 +1,22 @@
 [Desktop Entry]
 Name=IP Filter
+Name[cs]=IP Filtr
+Name[de]=IP-Filter
 Name[ga]=Scagaire IP
 Name[nds]=IP-Filter
 Name[nl]=IP-filter
+Name[pt]=Filtro de IPs
+Name[pt_BR]=Filtro de IPs
 Name[uk]=Фільтр IP
+Name[x-test]=xxIP Filterxx
 Comment=Filter IP addresses through a blocklist
+Comment[de]=IP-Adressen mit einer Blockliste filtern
 Comment[nds]=IP-Adressen över en Blockeerlist filtern
 Comment[nl]=Filter IP-adressen met behulp van een zwarte lijst
+Comment[pt]=Filtra os endereços IP através de uma lista de bloqueios
+Comment[pt_BR]=Filtra os endereços IP através de uma lista de bloqueios
 Comment[uk]=Фільтрувати IP-адреси за списком блокування
+Comment[x-test]=xxFilter IP addresses through a blocklistxx
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktipfilterplugin
