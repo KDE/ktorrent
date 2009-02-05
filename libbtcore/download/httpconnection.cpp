@@ -168,7 +168,7 @@ namespace bt
 			
 			memcpy(data,g->buffer.data() + g->bytes_sent,len);
 			g->bytes_sent += len;
-			if (len == g->buffer.size())
+			if ((int) len == g->buffer.size())
 			{
 				g->buffer.clear();
 				g->request_sent = true;

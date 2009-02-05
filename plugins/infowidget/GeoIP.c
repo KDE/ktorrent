@@ -768,7 +768,7 @@ char *_get_name (GeoIP* gi, unsigned long ipnum) {
 	}
 
 	seek_org = _GeoIP_seek_record(gi, ipnum);
-	if (seek_org == gi->databaseSegments[0])		
+	if (seek_org == (int) gi->databaseSegments[0])		
 		return NULL;
 
 	record_pointer = seek_org + (2 * gi->record_length - 1) * gi->databaseSegments[0];
@@ -779,7 +779,7 @@ char *_get_name (GeoIP* gi, unsigned long ipnum) {
 		org_buf = malloc(sizeof(char) * (strlen(buf)+1));
 		strcpy(org_buf, buf);
 	} else {
-		buf_pointer = gi->cache + (long)record_pointer;
+		buf_pointer = (char *)gi->cache + (long)record_pointer;
 		org_buf = malloc(sizeof(char) * (strlen(buf_pointer)+1));
 		strcpy(org_buf, buf_pointer);
 	}

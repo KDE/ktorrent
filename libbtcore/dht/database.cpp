@@ -103,7 +103,7 @@ namespace dht
 		if (!dbl)
 			return;
 		
-		if (dbl->count() < max_entries)
+		if (dbl->count() < (int) max_entries)
 		{
 			DBItemList::iterator i = dbl->begin();
 			while (i != dbl->end())

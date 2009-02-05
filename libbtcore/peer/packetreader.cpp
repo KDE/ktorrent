@@ -147,7 +147,7 @@ namespace bt
 		Uint32 am_of_len_read = 0;
 		if (len_received > 0)
 		{
-			if (size < 4 - len_received)
+			if ((int) size < 4 - len_received)
 			{
 				memcpy(len + len_received,buf,size);
 				len_received += size;

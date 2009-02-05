@@ -54,8 +54,7 @@ namespace net
 	private:	
 		virtual void update();
 		virtual bool doGroup(SocketGroup* g,Uint32 & allowance,bt::TimeStamp now);
-		
-		int waitForSocketReady(int timeout);
+		int waitForSocketReady();
 		
 	private:
 		WakeUpPipe wake_up;

@@ -37,7 +37,7 @@ namespace dht
 		if (addr.ipVersion() == 4)
 		{
 			// first check size
-			if (off + 26 > ba.size())
+			if ((int) off + 26 > ba.size())
 				throw bt::Error("Not enough room in buffer");
 			
 			// copy ID, IP address and port into the buffer
@@ -48,7 +48,7 @@ namespace dht
 		else
 		{
 			// first check size
-			if (off + 38 > ba.size())
+			if ((int) off + 38 > ba.size())
 				throw bt::Error("Not enough room in buffer");
 			
 			// copy ID, IP address and port into the buffer
@@ -62,7 +62,7 @@ namespace dht
 	{
 		if (ip_version == 4)
 		{
-			if (off + 26 > ba.size())
+			if ((int) off + 26 > ba.size())
 				throw bt::Error("Not enough room in buffer");
 			
 			const Uint8* data = (Uint8*)ba.data();
@@ -77,7 +77,7 @@ namespace dht
 		}
 		else
 		{
-			if (off + 38 > ba.size())
+			if ((int) off + 38 > ba.size())
 				throw bt::Error("Not enough room in buffer");
 			
 			const Uint8* data = (Uint8*)ba.data();

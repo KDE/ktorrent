@@ -134,7 +134,7 @@ namespace kt
 		if (!curr_tc)
 			return QVariant();
 		
-		if (!index.isValid() || index.row() >= curr_tc->getNumWebSeeds() || index.row() < 0)
+		if (!index.isValid() || index.row() >= (int) curr_tc->getNumWebSeeds() || index.row() < 0)
 			return QVariant(); 
 		
 		if (role == Qt::DisplayRole)

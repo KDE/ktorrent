@@ -139,7 +139,7 @@ namespace bt
 
 		Uint32 nip = leechers + seeders;
 		Uint32 j = 0;
-		for (Uint32 i = 20;i < b.size() && j < nip;i+=6,j++)
+		for (int i = 20;i < b.size() && j < nip;i+=6,j++)
 		{
 			Uint32 ip = ReadUint32(buf,i);
 			QString ip_str = QString("%1.%2.%3.%4")

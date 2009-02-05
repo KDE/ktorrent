@@ -40,7 +40,7 @@ namespace dht
 	
 	Key::Key(const QByteArray & ba)
 	{
-		for (Uint32 i = 0;i < 20 && i < ba.size();i++)
+		for (int i = 0;i < 20 && i < ba.size();i++)
 			hash[i] = ba[i];
 	}
 

@@ -172,7 +172,7 @@ namespace kt
 		
 		// quick check that the response being parsed is valid 
 		bool validDevice = false; 
-		for (Uint32 idx = 0;idx < lines.count() && !validDevice; idx++) 
+		for (int idx = 0;idx < lines.count() && !validDevice; idx++) 
 		{ 
 			line = lines[idx]; 
 			if ((line.contains("ST:") || line.contains("NT:")) && line.contains("InternetGatewayDevice")) 
@@ -187,7 +187,7 @@ namespace kt
 		}
 		
 		// read all lines and try to find the server and location fields
-		for (Uint32 i = 1;i < lines.count();i++)
+		for (int i = 1;i < lines.count();i++)
 		{
 			line = lines[i];
 			if (line.startsWith("Location") || line.startsWith("LOCATION") || line.startsWith("location"))

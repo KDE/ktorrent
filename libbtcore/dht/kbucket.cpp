@@ -134,7 +134,7 @@ namespace dht
 		}
 		
 		// insert if not already in the list and we still have room
-		if (i == entries.end() && entries.count() < dht::K)
+		if (i == entries.end() && entries.count() < (int) dht::K)
 		{
 			entries.append(entry);
 			last_modified = bt::GetCurrentTime();
@@ -148,6 +148,7 @@ namespace dht
 	
 	void KBucket::onResponse(RPCCall* c,MsgBase* rsp)
 	{
+		Q_UNUSED(rsp);
 		last_modified = bt::GetCurrentTime();
 		
 		if (!pending_entries_busy_pinging.contains(c))

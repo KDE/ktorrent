@@ -59,7 +59,7 @@ namespace bt
 		// create all necessary subdirs
 		QString ctmp = startdir;
 		
-		for (Uint32 i = 0;i < sl.count() - 1;i++)
+		for (int i = 0;i < sl.count() - 1;i++)
 		{
 			ctmp += sl[i];
 			// we need to make the same directory structure in the cache

@@ -73,7 +73,7 @@ namespace bt
 		if (auths.size() == 0)
 			return;
 		
-		int i = 0;
+		unsigned int i = 0;
 		
 		std::list<AuthenticateBase*>::iterator itr = auths.begin();
 		while (itr != auths.end())

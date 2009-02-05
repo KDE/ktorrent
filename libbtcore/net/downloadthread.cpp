@@ -50,7 +50,7 @@ namespace net
 	
 	void DownloadThread::update()
 	{
-		if (waitForSocketReady(sleep_time) > 0)
+		if (waitForSocketReady() > 0)
 		{
 			bool group_limits = false;
 			sm->lock();
@@ -122,9 +122,9 @@ namespace net
 		return g->download(allowance,now);
 	}
 	
-	int DownloadThread::waitForSocketReady(int timeout)
+	int DownloadThread::waitForSocketReady()
 	{
-		int i = 1;
+		unsigned int i = 1;
 		sm->lock();
 		
 		// Add the wake up pipe

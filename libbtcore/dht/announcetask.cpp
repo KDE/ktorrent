@@ -143,7 +143,7 @@ namespace dht
 			Out(SYS_DHT|LOG_NOTICE) << "DHT: AnnounceTask done" << endl;
 			done();
 		}
-		else if (answered_visited.count() >= dht::K)
+		else if (answered_visited.count() >= (int) dht::K)
 		{
 			// if K announces have occurred stop
 			Out(SYS_DHT|LOG_NOTICE) << "DHT: AnnounceTask done" << endl;

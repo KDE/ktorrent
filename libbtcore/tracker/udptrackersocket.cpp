@@ -161,7 +161,7 @@ namespace bt
 		// extract error message
 		transactions.erase(it);
 		QString msg;
-		for (Uint32 i = 8;i < buf.size();i++)
+		for (int i = 8;i < buf.size();i++)
 			msg += (char)buf[i];
 
 		// emit signal

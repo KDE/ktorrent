@@ -256,7 +256,7 @@ namespace bt
 		Out(SYS_TRK|LOG_DEBUG) << QString(data) << endl;
 #endif
 		// search for dictionary, there might be random garbage infront of the data
-		Uint32 i = 0;
+		int i = 0;
 		while (i < data.size())
 		{
 			if (data[i] == 'd')
@@ -332,7 +332,7 @@ namespace bt
 			}
 
 			QByteArray arr = vn->data().toByteArray();
-			for (Uint32 i = 0;i < arr.size();i+=6)
+			for (int i = 0;i < arr.size();i+=6)
 			{
 				Uint8 buf[6];
 				for (int j = 0;j < 6;j++)
@@ -372,7 +372,7 @@ namespace bt
 		if (vn && vn->data().getType() == Value::STRING)
 		{
 			QByteArray arr = vn->data().toByteArray();
-			for (Uint32 i = 0;i < arr.size();i+=18)
+			for (int i = 0;i < arr.size();i+=18)
 			{
 				Uint8 buf[18];
 				for (int j = 0;j < 18;j++)
