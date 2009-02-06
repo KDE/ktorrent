@@ -298,7 +298,9 @@ namespace kt
 						remove(gvi,p,g);
 						// remove empty maps, if they are not the custom map
 						if (gvi->childCount() == 0 && gvi != custom_root)
+						{
 							delete gvi;
+						}
 						
 						return;
 					}
@@ -562,7 +564,6 @@ namespace kt
 	
 	void GroupView::defaultGroupAdded(Group* g)
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "GroupView::defaultGroupAdded " << g->groupName() << " " << g->groupPath() << endl;
 		add(0,g->groupPath(),g);
 	}
 	
@@ -570,7 +571,6 @@ namespace kt
 	
 	void GroupView::defaultGroupRemoved(Group* g)
 	{
-		Out(SYS_GEN|LOG_DEBUG) << "GroupView::defaultGroupRemoved " << g->groupName() << " " << g->groupPath() << endl;
 		remove(0,g->groupPath(),g);
 	}
 

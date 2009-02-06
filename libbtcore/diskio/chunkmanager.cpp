@@ -271,7 +271,7 @@ namespace bt
 	
 	void ChunkManager::resetChunk(unsigned int i)
 	{
-		if (i >= (Uint32)chunks.size())
+		if (i >= (Uint32)chunks.size() || during_load)
 			return;
 		
 		Chunk* c = chunks[i];
@@ -666,7 +666,6 @@ namespace bt
 			}
 
 			bt::TorrentFile & tf = tor.getFile(idx);
-			
 			if (!tf.isNull())
 			{
 				// numbers are to be compatible with old chunk info files
