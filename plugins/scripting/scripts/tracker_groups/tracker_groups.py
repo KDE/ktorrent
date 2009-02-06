@@ -1,4 +1,5 @@
 #!/usr/bin/env kross
+# -*- coding: utf-8 -*-
 import KTorrent
 import KTScriptingPlugin
 import Kross
@@ -68,7 +69,10 @@ class TrackerGroupsScript:
 	def unload(self):
 		trackers = self.tracker_map.keys()
 		for tracker in trackers:
-			self.removeTracker(tracker)
+			g = self.tracker_map[tracker]
+			KTorrent.log("Removing group for tracker " + tracker)
+			KTScriptingPlugin.removeGroup(g.url)
+			del self.tracker_map[tracker]
 
 s = TrackerGroupsScript()
 
