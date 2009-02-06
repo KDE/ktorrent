@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=UPnPPlugin
-Name[de]=UPnP-Modul
+Name[de]=UPnP
 Name[el]=Πρόσθετο UPnP
 Name[es]=Complemento UPnP
 Name[et]=UPnP plugin
@@ -28,7 +28,7 @@ Comment[bg]=Приставка за пренасочване на портове
 Comment[ca]=Connector per a redireccionar ports usant UPnP
 Comment[cs]=Modul pro předávání portů pomocí UPnP
 Comment[da]=Plugin til åbning af porte ved brug af UPnP
-Comment[de]=Modul zur Weiterleitung von Ports unter Verwendung von UPnP
+Comment[de]=Port-Weiterleitung unter Verwendung von UPnP
 Comment[el]=Πρόσθετο για την προώθηση θυρών με χρήση του UPnP
 Comment[es]=Un complemento para reenviar puertos usando UPnP
 Comment[et]=Plugin portide edasisuunamiseks UPnP abil

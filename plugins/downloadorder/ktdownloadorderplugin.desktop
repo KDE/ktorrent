@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=DownloadOrderPlugin
-Name[de]=Download-Reihenfolgen-Modul
+Name[de]=Download-Reihenfolgen
 Name[el]=Πρόσθετο σειράς λήψης
 Name[es]=Complemento de orden de descarga
 Name[et]=Allalaadimise järjekorra plugin
@@ -20,7 +20,7 @@ Name[zh_TW]=下載順序外掛程式
 Comment=Plugin to specify the download order of a multifile torrent for KTorrent
 Comment[ca]=Connector del KTorrent per a indicar l'ordre de baixada d'un torrent multifitxer
 Comment[da]=Plugin til KTorrent til at angive downloadrækkefølgen for en torrent med flere filer
-Comment[de]=Modul zur Festlegung der Download-Reihenfolge bei Torrents, die aus mehreren Dateien bestehen 
+Comment[de]=Download-Reihenfolge bei Torrents, die aus mehreren Dateien bestehen, festlegen
 Comment[el]=Πρόσθετο για τον καθορισμό της σειράς λήψης ενός πολλαπλού αρχείου torrent για το KTorrent
 Comment[es]=Complemento de KTorrent para indicar el orden de descarga de un torrent de varios archivos
 Comment[et]=Plugin mitmest failist koosneva torrenti failide allalaadimiseks kasutaja määratud järjekorras

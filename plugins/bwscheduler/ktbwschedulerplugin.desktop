@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=BandwidthSchedulerPlugin
 Name[cs]=Modul plánování šířky pásma
-Name[de]=Bandbreitenplaner-Modul
+Name[de]=Bandbreitenplaner
 Name[el]=Πρόσθετο προγραμματισμού εύρους δικτύου
 Name[es]=Complemento de planificación del ancho de banda
 Name[et]=Ribalaiuse ajastamise plugin
@@ -27,7 +27,7 @@ Comment[bg]=Приставка за разчет на качването у св
 Comment[ca]=Connector per a planificar els límits de pujada i baixada durant un període setmanal
 Comment[cs]=Modul pro naplánování odesílacích a stahovacích limitů během týdne
 Comment[da]=Plugin til at skemalægge upload- og downloadgrænser over en periode på en uge
-Comment[de]=Modul zum Planen von Verteilungs- und Downloadbegrenzungen über den Zeitraum von einer Woche
+Comment[de]=Upload- und Downloadbegrenzungen über den Zeitraum von einer Woche planen
 Comment[el]=Πρόσθετο για τον προγραμματισμό των ορίων αποστολής και λήψης για περίοδο μιας εβδομάδας
 Comment[es]=Complemento para planificar los límites de envío y descarga durante un periodo de una semana
 Comment[et]=Plugin üles- ja allalaadimise piirangute ajastamiseks terve nädala peale

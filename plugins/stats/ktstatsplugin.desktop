@@ -2,7 +2,7 @@
 Type=Service
 Name=StatsPlugin
 Name[be]=Утулка статыстыкі
-Name[de]=Statistik-Modul
+Name[de]=Statistiken
 Name[el]=Πρόσθετο αναζήτησης
 Name[es]=Complemento de estadísticas
 Name[et]=Statistikaplugin
@@ -29,7 +29,7 @@ Comment[bg]=Приставка за статистика относно торе
 Comment[ca]=Connector que mostra les estadístiques sobre els torrents en vàries gràfiques
 Comment[cs]=Modul zobrazující statistiky o torrentech v několika grafech
 Comment[da]=Plugin som viser statistik om torrent i flere grafer
-Comment[de]=Modul zur Anzeige von Statistiken über Torrents in mehreren Diagrammen
+Comment[de]=Zeigt Statistiken über Torrents in mehreren Diagrammen
 Comment[el]=Πρόσθετο που εμφανίζει στατιστικά στοιχείο των torrent σε διάφορα γραφήματα
 Comment[es]=Un complemento que muestra estadísticas sobre torrents en varias gráficas
 Comment[et]=Plugin torrentite statistika kuvamiseks mitme graafikuna

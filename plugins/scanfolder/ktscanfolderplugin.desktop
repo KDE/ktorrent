@@ -2,7 +2,7 @@
 Name=ScanFolderPlugin
 Name[be]=Утулка cканавання тэчак
 Name[cs]=Modul prohledávání složek
-Name[de]=Ordner-Durchsuchen-Modul
+Name[de]=Ordner durchsuchen
 Name[el]=Πρόσθετο σάρωσης φακέλων
 Name[es]=Complemento de búsqueda de carpetas
 Name[et]=Kataloogi uurimise plugin
@@ -28,7 +28,7 @@ Comment=Plugin to scan directories for torrent files, when files are found, they
 Comment[bg]=Приставка за сканиране на директории за торент файлове. Ако има такива, те ще бъдат заредени.
 Comment[ca]=Connector per a explorar fitxers torrent en directoris, quan es troben, es carreguen 
 Comment[da]=Plugin til at skanne mapper for torrent-filer, når filer findes indlæses de
-Comment[de]=Modul zum Durchsuchen von Ordnern nach Torrentdateien. Werden entsprechende Dateien gefunden, werden diese geladen.
+Comment[de]=Ordner nach Torrent-Dateien durchsuchen und diese laden
 Comment[el]=Πρόσθετο για σάρωση φακέλων για αρχεία torrent. Αν βρεθούν φορτώνονται στο KTorrent
 Comment[es]=Un complemento para buscar archivos torrent en directorios; cuando se encuentran, se cargan
 Comment[et]=Plugin torrent-failide kataloogide uurimiseks ja leidmisel laadimiseks

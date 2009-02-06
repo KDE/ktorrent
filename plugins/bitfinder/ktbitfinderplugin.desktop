@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=BitFinderPlugin
-Name[de]=BitFinder-Modul
+Name[de]=BitFinder
 Name[el]=Πρόσθετο BitFinder
 Name[es]=Complemento BitFinder
 Name[et]=BitFinderi plugin
@@ -22,7 +22,7 @@ Comment=Plugin to automatically downloads torrents from various sources
 Comment[ca]=Connector que baixa automàticament els torrents des de vàries fonts
 Comment[cs]=Modul pro automatické stahování torrentů z různých zdrojů
 Comment[da]=Plugin til automatisk at downloade torrents fra diverse kilder
-Comment[de]=Modul zum automatischen Download von Torrents aus verschiedenen Quellen
+Comment[de]=Torrents aus verschiedenen Quellen automatisch herunterladen
 Comment[el]=Πρόσθετο αυτόματης λήψης torrent από διάφορες πηγές
 Comment[es]=Complemento para descargar automáticamente torrents de varias fuentes
 Comment[et]=Plugin torrentite automaatseks allalaadimiseks erinevatest allikatest

@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=InfoWidgetPlugin
-Name[de]=Informations-Modul
+Name[de]=Informationen
 Name[el]=Πρόσθετο πληροφοριών
 Name[es]=Complemento informativo
 Name[et]=Infovidina plugin
@@ -26,7 +26,7 @@ Comment=Plugin which displays general information about a torrent in several tab
 Comment[bg]=Приставка за различна информация относно торентите
 Comment[ca]=Connector que mostra informació general quant a un torrent en vàries pestanyes
 Comment[da]=Plugin som viser generel information om en torrent i adskillige faneblade
-Comment[de]=Modul zur Anzeige von allgemeinen Informationen über einen Torrent in mehreren Unterfenstern
+Comment[de]=Anzeige von allgemeinen Informationen über einen Torrent in mehreren Unterfenstern
 Comment[el]=Πρόσθετο που εμφανίζει πληροφορίες για ένα torrent σε διάφορες καρτέλες
 Comment[es]=Un complemento que muestra información general sobre un torrent en varias solapas
 Comment[et]=Plugin torrenti üldise teabe kuvamiseks mitmel kaardil

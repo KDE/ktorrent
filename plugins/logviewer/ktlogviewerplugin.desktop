@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=LogViewerPlugin
 Name[be]=Утулка прагляду часопісу
-Name[de]=Protokollbetrachter-Modul
+Name[de]=Protokollbetrachter
 Name[el]=Πρόσθετο προβολής καταγραφής
 Name[es]=Complemento de visualización del registro
 Name[et]=Loginäitaja plugin
@@ -29,7 +29,7 @@ Comment[bg]=Приставка за показване на журналните
 Comment[ca]=Connector que mostra la sortida del registre generat pel KTorrent
 Comment[cs]=Modiul zobrazující záznamy generované Ktorrentem
 Comment[da]=Plugin som viser logoutputtet som KTorrent genererer
-Comment[de]=Modul zur Anzeige der von KTorrent erstellten Protokolle
+Comment[de]=Zeigt die Protokollausgaben
 Comment[el]=Πρόσθετο που εμφανίζει την έξοδο καταγραφής του KTorrent
 Comment[es]=Un complemento que muestra la salida de registro generada por KTorrent
 Comment[et]=Plugin KTorrenti logiväljundi kuvamiseks

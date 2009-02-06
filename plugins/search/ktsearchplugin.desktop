@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=SearchPlugin
 Name[be]=Утулка пошуку
-Name[de]=Suche-Modul
+Name[de]=Suche
 Name[el]=Πρόσθετο αναζήτησης
 Name[es]=Complemento de búsqueda
 Name[et]=Otsimisplugin
@@ -31,7 +31,7 @@ Comment[bg]=Приставка за търсене - KTorrent
 Comment[ca]=Connector de cerca per al KTorrent
 Comment[cs]=Vyhledávací modul pro KTorrent
 Comment[da]=Søge-plugin til KTorrent
-Comment[de]=Suche-Modul für KTorrent
+Comment[de]=Nach Torrents suchen
 Comment[el]=Πρόσθετο αναζήτησης για το KTorrent
 Comment[es]=Complemento de búsqueda para KTorrent
 Comment[et]=KTorrenti otsimisplugin

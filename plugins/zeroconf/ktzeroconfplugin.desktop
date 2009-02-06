@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=ZeroConfPlugin
-Name[de]=ZeroConf-Modul
+Name[de]=ZeroConf
 Name[es]=Complemento de ZeroConf
 Name[et]=ZeroConfi plugin
 Name[fr]=Module externe ZeroConf
@@ -25,7 +25,7 @@ Comment=Plugin to discover peers on the local network using the zeroconf protoco
 Comment[bg]=Откриване на потребители в локалната мрежа чрез протокола "zeroconf"
 Comment[ca]=Connector per a descobrir parells a la xarxa local usant el protocol zeroconf
 Comment[da]=Plugin til at finde peers på lokalnetværket ved brug af zeroconf-protokollen
-Comment[de]=Modul zum Auffinden von Gegenstellen im lokalen Netzwerk unter Verwendung des Zeroconf-Protokolls
+Comment[de]=Gegenstellen im lokalen Netzwerk unter Verwendung des Zeroconf-Protokolls auffinden
 Comment[el]=Πρόσθετο για τον εντοπισμό υπολογιστών στο τοπικό δίκτυο με χρήση του πρωτοκόλλου zeroconf
 Comment[es]=Un complemento para descubrir compañeros en la red local usando el protocolo Zeroconf
 Comment[et]=Plugin masinate tuvastamiseks kohtvõrgus Zeroconfi protokolli abil

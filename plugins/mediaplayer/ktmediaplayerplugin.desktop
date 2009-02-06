@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=MediaPlayerPlugin
-Name[de]=Mediaplayer-Modul
+Name[de]=Mediaplayer
 Name[el]=Πρόσθετο αναπαραγωγής πολυμέσων
 Name[es]=Complemento de reproductor multimedia
 Name[et]=Meediamängija plugin
@@ -26,7 +26,7 @@ Comment=Phonon based media player plugin for KTorrent
 Comment[ca]=Connector del KTorrent basat en el reproductor de suports Phonon
 Comment[cs]=Modul přehrávání médií pro Ktorrent založený na Phononu
 Comment[da]=Phonon-baseret medieafspiller-plugin til KTorrent
-Comment[de]=Phonon-basiertes Mediaplayer-Modul für KTorrent
+Comment[de]=Phonon-basierter Mediaplayer für KTorrent
 Comment[el]=Πρόσθετο αναπαραγωγής πολυμέσων με βάση το Phonon για το KTorrent
 Comment[es]=Un complemento de reproductor multimedia para KTorrent basado en Phonon
 Comment[et]=KTorrenti Phononil põhinev meediamängija plugin
