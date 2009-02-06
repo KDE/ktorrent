@@ -4,7 +4,7 @@ Changes in 3.2 :
 - Fix bug causing torrent to get stalled at startup in some rare situations
 - Fix crash at exit
 - Fix bug causing problems when multiple fileselect dialogs were shown at the same time (183078)
-- Fix bug causing not all tracker groups not to get removed when tracker_groups.py is unloaded
+- Fix bug causing not all tracker groups to get removed when tracker_groups.py is unloaded
 
 Changes in 3.2rc1 :
 - Fix bug in webgui causing wrong content-length to be returned in some cases
