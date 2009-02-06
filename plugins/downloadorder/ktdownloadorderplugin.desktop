@@ -11,6 +11,7 @@ Name[uk]=Порядок звантаження
 Name[x-test]=xxDownload Orderxx
 Comment=Specify the download order of a multi-file torrent
 Comment[de]=Download-Reihenfolge bei Torrents, die aus mehreren Dateien bestehen, festlegen
+Comment[ga]=Sonraigh ord íosluchtaithe do thorrent il-chomhad
 Comment[nds]=Daallaadreeg bi en Mehrdateien-Torrent fastleggen
 Comment[nl]=Geef een voorkeur op in welke volgorde de bestanden in een multi-bestands-torrent gedownload dienen te worden
 Comment[pt]=Um 'plugin' para indicar a ordem de transferência de uma torrente multi-ficheiros para o KTorrent

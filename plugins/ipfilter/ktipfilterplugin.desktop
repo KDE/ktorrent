@@ -11,6 +11,7 @@ Name[uk]=Фільтр IP
 Name[x-test]=xxIP Filterxx
 Comment=Filter IP addresses through a blocklist
 Comment[de]=IP-Adressen mit einer Blockliste filtern
+Comment[ga]=Scag seoltaí IP trí liosta dubh
 Comment[nds]=IP-Adressen över en Blockeerlist filtern
 Comment[nl]=Filter IP-adressen met behulp van een zwarte lijst
 Comment[pt]=Filtra os endereços IP através de uma lista de bloqueios
