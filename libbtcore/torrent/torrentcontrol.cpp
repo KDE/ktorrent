@@ -137,6 +137,8 @@ namespace bt
 		
 		if (tmon)
 			tmon->destroyed();
+		
+		downloader->saveWebSeeds(tordir + "webseeds");
 		delete choke;
 		delete downloader;
 		delete uploader;
@@ -1946,6 +1948,11 @@ namespace bt
 	}
 	
 	const WebSeedInterface* TorrentControl::getWebSeed(Uint32 i) const
+	{
+		return downloader->getWebSeed(i);
+	}
+	
+	WebSeedInterface* TorrentControl::getWebSeed(Uint32 i)
 	{
 		return downloader->getWebSeed(i);
 	}

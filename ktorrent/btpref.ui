@@ -5,15 +5,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>607</width>
-    <height>571</height>
+    <width>628</width>
+    <height>477</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2" >
    <item>
     <widget class="QGroupBox" name="dhtGroupBox" >
      <property name="title" >
-      <string>Additional Peer Sources</string>
+      <string>Features</string>
      </property>
      <layout class="QVBoxLayout" >
       <item>
@@ -66,6 +66,16 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="text" >
          <string>Use peer exchange</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_webseedsEnabled" >
+        <property name="toolTip" >
+         <string>Enable or disable the use of webseeds when they are present in a torrent.</string>
+        </property>
+        <property name="text" >
+         <string>Use webseeds</string>
         </property>
        </widget>
       </item>
@@ -142,9 +152,6 @@ p, li { white-space: pre-wrap; }
          </layout>
         </item>
        </layout>
-       <zorder>kcfg_useCustomIP</zorder>
-       <zorder>groupBox_4</zorder>
-       <zorder>kcfg_useEncryption</zorder>
       </widget>
      </item>
     </layout>
@@ -154,129 +161,119 @@ p, li { white-space: pre-wrap; }
      <property name="title" >
       <string>Data Checking</string>
      </property>
-     <layout class="QVBoxLayout" name="_2" >
+     <layout class="QHBoxLayout" name="horizontalLayout_2" >
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2" >
-        <item>
-         <layout class="QFormLayout" name="formLayout" >
-          <property name="fieldGrowthPolicy" >
-           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+       <layout class="QFormLayout" name="formLayout" >
+        <property name="fieldGrowthPolicy" >
+         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+        </property>
+        <property name="labelAlignment" >
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+        <item row="0" column="0" >
+         <widget class="QCheckBox" name="kcfg_doUploadDataCheck" >
+          <property name="toolTip" >
+           <string>During uploading when a chunk is loaded into memory automatically recheck this chunk, to see if it still is OK.</string>
           </property>
-          <property name="labelAlignment" >
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          <property name="text" >
+           <string>Recheck chunks during uploading</string>
           </property>
-          <item row="0" column="0" >
-           <widget class="QCheckBox" name="kcfg_doUploadDataCheck" >
-            <property name="toolTip" >
-             <string>During uploading when a chunk is loaded into memory automatically recheck this chunk, to see if it still is OK.</string>
-            </property>
-            <property name="text" >
-             <string>Recheck chunks during uploading</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" >
-           <widget class="QCheckBox" name="kcfg_useMaxSizeForUploadDataCheck" >
-            <property name="toolTip" >
-             <string>Because rechecking big chunks can take a lot of time, the recheck can be disabled when the chunks are bigger then a certain size.</string>
-            </property>
-            <property name="text" >
-             <string>Don't recheck when chunks are bigger than</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1" >
-           <widget class="QSpinBox" name="kcfg_maxSizeForUploadDataCheck" >
-            <property name="toolTip" >
-             <string>The maximum size a chunk can be for rechecking during uploading.</string>
-            </property>
-            <property name="suffix" >
-             <string> KiB</string>
-            </property>
-            <property name="minimum" >
-             <number>16</number>
-            </property>
-            <property name="maximum" >
-             <number>8192</number>
-            </property>
-            <property name="value" >
-             <number>512</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" >
-           <widget class="QCheckBox" name="kcfg_autoRecheck" >
-            <property name="toolTip" >
-             <string>Automatically do a full data check when we find to many corrupted chunks.</string>
-            </property>
-            <property name="text" >
-             <string>Do a full data check after </string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1" >
-           <widget class="QSpinBox" name="kcfg_maxCorruptedBeforeRecheck" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize" >
-             <size>
-              <width>175</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="toolTip" >
-             <string>The number of corrupted chunks before a full data check is done</string>
-            </property>
-            <property name="suffix" >
-             <string> corrupted chunks</string>
-            </property>
-            <property name="minimum" >
-             <number>1</number>
-            </property>
-            <property name="maximum" >
-             <number>10000000</number>
-            </property>
-            <property name="value" >
-             <number>3</number>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" >
-           <widget class="QCheckBox" name="kcfg_checkWhenFinished" >
-            <property name="toolTip" >
-             <string>When a torrent has finished downloading, do a full data check on the torrent.</string>
-            </property>
-            <property name="text" >
-             <string>Check data when download is finished</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         </widget>
         </item>
-        <item>
-         <spacer name="horizontalSpacer" >
-          <property name="orientation" >
-           <enum>Qt::Horizontal</enum>
+        <item row="1" column="0" >
+         <widget class="QCheckBox" name="kcfg_useMaxSizeForUploadDataCheck" >
+          <property name="toolTip" >
+           <string>Because rechecking big chunks can take a lot of time, the recheck can be disabled when the chunks are bigger then a certain size.</string>
           </property>
-          <property name="sizeHint" stdset="0" >
+          <property name="text" >
+           <string>Don't recheck when chunks are bigger than</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="QSpinBox" name="kcfg_maxSizeForUploadDataCheck" >
+          <property name="toolTip" >
+           <string>The maximum size a chunk can be for rechecking during uploading.</string>
+          </property>
+          <property name="suffix" >
+           <string> KiB</string>
+          </property>
+          <property name="minimum" >
+           <number>16</number>
+          </property>
+          <property name="maximum" >
+           <number>8192</number>
+          </property>
+          <property name="value" >
+           <number>512</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" >
+         <widget class="QCheckBox" name="kcfg_autoRecheck" >
+          <property name="toolTip" >
+           <string>Automatically do a full data check when we find to many corrupted chunks.</string>
+          </property>
+          <property name="text" >
+           <string>Do a full data check after </string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1" >
+         <widget class="QSpinBox" name="kcfg_maxCorruptedBeforeRecheck" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize" >
            <size>
-            <width>40</width>
-            <height>20</height>
+            <width>175</width>
+            <height>0</height>
            </size>
           </property>
-         </spacer>
+          <property name="toolTip" >
+           <string>The number of corrupted chunks before a full data check is done</string>
+          </property>
+          <property name="suffix" >
+           <string> corrupted chunks</string>
+          </property>
+          <property name="minimum" >
+           <number>1</number>
+          </property>
+          <property name="maximum" >
+           <number>10000000</number>
+          </property>
+          <property name="value" >
+           <number>3</number>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" >
+         <widget class="QCheckBox" name="kcfg_checkWhenFinished" >
+          <property name="toolTip" >
+           <string>When a torrent has finished downloading, do a full data check on the torrent.</string>
+          </property>
+          <property name="text" >
+           <string>Check data when download is finished</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="_3" />
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="_4" />
+       <spacer name="horizontalSpacer" >
+        <property name="orientation" >
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0" >
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </widget>

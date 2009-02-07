@@ -496,6 +496,9 @@ namespace bt
 		/// Get a webseed (returns 0 if index is invalid)
 		virtual const WebSeedInterface* getWebSeed(Uint32 i) const = 0; 
 		
+		/// Get a webseed (returns 0 if index is invalid)
+		virtual WebSeedInterface* getWebSeed(Uint32 i) = 0; 
+		
 		/// Add a webseed (return false, if there is already a webseed with the same url)
 		virtual bool addWebSeed(const KUrl & url) = 0;
 		

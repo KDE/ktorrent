@@ -36,6 +36,8 @@ namespace kt
 		setupUi(this);
 		connect(m_add,SIGNAL(clicked()),this,SLOT(addWebSeed()));
 		connect(m_remove,SIGNAL(clicked()),this,SLOT(removeWebSeed()));
+		connect(m_disable_all,SIGNAL(clicked()),this,SLOT(disableAll()));
+		connect(m_enable_all,SIGNAL(clicked()),this,SLOT(enableAll()));
 		m_add->setIcon(KIcon("list-add"));
 		m_remove->setIcon(KIcon("list-remove"));
 		m_add->setEnabled(false);
@@ -115,7 +117,7 @@ namespace kt
 	
 	void WebSeedsTab::selectionChanged(const QModelIndexList & indexes)
 	{
-		foreach (const QModelIndex &idx, indexes)
+		foreach (const QModelIndex & idx, indexes)
 		{
 			const WebSeedInterface* ws = curr_tc->getWebSeed(proxy_model->mapToSource(idx).row());
 			if (ws && ws->isUserCreated())
@@ -163,4 +165,21 @@ namespace kt
 		if (!s.isNull())
 			m_webseed_list->header()->restoreState(s);
 	}
+	
+	void WebSeedsTab::disableAll() 
+	{
+		for (int i = 0;i < model->rowCount();i++)
+		{
+			model->setData(model->index(i,0),Qt::Unchecked,Qt::CheckStateRole);
+		}
+	}
+	
+	void WebSeedsTab::enableAll() 
+	{
+		for (int i = 0;i < model->rowCount();i++)
+		{
+			model->setData(model->index(i,0),Qt::Checked,Qt::CheckStateRole);
+		}
+	}
+
 }

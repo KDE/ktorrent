@@ -37,6 +37,12 @@ namespace bt
 		WebSeedInterface(const KUrl & url,bool user);
 		virtual ~WebSeedInterface();
 		
+		/// Disable or enable the webseed
+		virtual void setEnabled(bool on);
+		
+		/// Wether or not the webseed is enabled
+		bool isEnabled() const {return enabled;}
+		
 		/// Get the URL of the webseed
 		const KUrl & getUrl() const {return url;}
 		
@@ -57,6 +63,7 @@ namespace bt
 		Uint64 total_downloaded;
 		QString status;
 		bool user;
+		bool enabled;
 	};
 
 }

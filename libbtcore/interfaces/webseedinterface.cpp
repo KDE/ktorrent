@@ -23,7 +23,7 @@
 namespace bt
 {
 
-	WebSeedInterface::WebSeedInterface(const KUrl & url,bool user) : url(url),total_downloaded(0),user(user)
+	WebSeedInterface::WebSeedInterface(const KUrl & url,bool user) : url(url),total_downloaded(0),user(user),enabled(true)
 	{
 	}
 
@@ -32,5 +32,9 @@ namespace bt
 	{
 	}
 
+	void WebSeedInterface::setEnabled(bool on)
+	{
+		enabled = on;
+	}
 
 }

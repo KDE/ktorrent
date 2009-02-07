@@ -129,6 +129,9 @@ namespace bt
 		
 	void WebSeed::download(Uint32 first,Uint32 last)
 	{
+		if (!enabled)
+			return;
+		
 		Out(SYS_CON|LOG_DEBUG) << "WebSeed::download " << first << "-" << last << endl;
 		first_chunk = first;
 		last_chunk = last;
@@ -397,6 +400,13 @@ namespace bt
 	{
 		// reset if chunk downloaded is in the range we are currently downloading
 		if (chunk >= cur_chunk) 
+			reset();
+	}
+	
+	void WebSeed::setEnabled(bool on)
+	{
+		WebSeedInterface::setEnabled(on);
+		if (!on)
 			reset();
 	}
 	

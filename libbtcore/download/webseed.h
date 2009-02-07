@@ -116,6 +116,8 @@ namespace bt
 		/// Get the current webseed download
 		WebSeedChunkDownload* currentChunkDownload() {return current;}
 		
+		virtual void setEnabled(bool on);
+		
 	signals:
 		/**
 		 * Emitted when a chunk is downloaded

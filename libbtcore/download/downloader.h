@@ -94,6 +94,9 @@ namespace bt
 		/// Get a webseed
 		const WebSeed* getWebSeed(Uint32 i) const {return i < (Uint32)webseeds.count() ? webseeds[i] : 0;}
 		
+		/// Get a webseed
+		WebSeed* getWebSeed(Uint32 i) {return i < (Uint32)webseeds.count() ? webseeds[i] : 0;}
+		
 		/// Add a webseed
 		WebSeed* addWebSeed(const KUrl & url);
 		
@@ -182,6 +185,9 @@ namespace bt
 		 * @param chunk The chunk
 		 */
 		void corrupted(Uint32 chunk);
+		
+		/// Enable or disable the use of webseeds
+		static void setUseWebSeeds(bool on);
 	public slots:
 		/**
 		 * Update the downloader.
@@ -279,6 +285,9 @@ namespace bt
 		QList<WebSeed*> webseeds;
 		PtrMap<Uint32,WebSeed> webseeds_chunks;
 		Uint32 active_webseed_downloads;
+		bool webseeds_on;
+		
+		static bool use_webseeds;
 	};
 	
 
