@@ -2,6 +2,7 @@
 Type=Service
 Name=Statistics
 Name[de]=Statistiken
+Name[es]=Estadísticas
 Name[ga]=Staitisticí
 Name[nds]=Statistik
 Name[nl]=Statistieken
@@ -11,6 +12,7 @@ Name[uk]=Статистика
 Name[x-test]=xxStatisticsxx
 Comment=Shows statistics about torrents in several graphs
 Comment[de]=Zeigt Statistiken über Torrents in mehreren Diagrammen
+Comment[es]=Muestra estadísticas sobre torrents en varias gráficas
 Comment[ga]=Breiseán a thaispeánann staitisticí maidir le torrents i ngraif
 Comment[nds]=Statistiken över Torrents binnen Diagrammen wiesen
 Comment[nl]=Geef statistieken weer over torrents, verdeeld over verschillende grafieken

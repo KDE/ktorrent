@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Web Interface
 Name[de]=Web-Schnittstelle
+Name[es]=Interfaz web
 Name[ga]=Comhéadan Gréasáin
 Name[nds]=Nett-Koppelsteed
 Name[nl]=Webinterface
@@ -10,6 +11,7 @@ Name[uk]=Веб-інтерфейс
 Name[x-test]=xxWeb Interfacexx
 Comment=Allows control of KTorrent via a web interface
 Comment[de]=Ermöglicht die Kontrolle von KTorrent über eine Web-Schnittstelle
+Comment[es]=Permite controlar KTorrent por medio de una interfaz web
 Comment[ga]=Breiseán lenar féidir KTorrent a rialú trí chomhéadan Gréasáin
 Comment[nds]=KTorrent över en Nettkieker stüern
 Comment[nl]=Staat het bedienen van KTorrent toe via een webinterface

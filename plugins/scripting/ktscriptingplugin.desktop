@@ -2,6 +2,7 @@
 Name=Scripting
 Name[cs]=Skriptování
 Name[de]=Skripte
+Name[es]=Programación
 Name[ga]=Scriptiú
 Name[nds]=Skripten
 Name[pt]=Programação
@@ -10,6 +11,7 @@ Name[uk]=Запис сценаріїв
 Name[x-test]=xxScriptingxx
 Comment=Enables Kross scripting support
 Comment[de]=Aktiviert die Unterstützung für Kross-Skripte
+Comment[es]=Habilita la programación con Kross
 Comment[ga]=Breiseán a chumasaíonn scriptiú Kross
 Comment[nds]=Ünnerstütten för Kross-Skripten
 Comment[nl]=Schakelt ondersteuning voor Kross-scripting in

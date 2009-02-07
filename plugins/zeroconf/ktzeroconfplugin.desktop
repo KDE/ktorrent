@@ -6,6 +6,7 @@ Name[pt_BR]=ZeroConf
 Name[x-test]=xxZeroconfxx
 Comment=Discover peers on the local network using the Zeroconf protocol
 Comment[de]=Gegenstellen im lokalen Netzwerk unter Verwendung des Zeroconf-Protokolls auffinden
+Comment[es]=Descubre compañeros en la red local usando el protocolo Zeroconf
 Comment[ga]=Breiseán a aimsíonn comhghleacaithe ar an líonra logánta tríd an bprótacal zeroconf
 Comment[nds]=Partners in't lokale Nett över't zeroconf-Protokoll opdecken
 Comment[nl]=Ontdek peers op een lokaal netwerk met behulp van het zeroconf-protocol

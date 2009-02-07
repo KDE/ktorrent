@@ -2,6 +2,7 @@
 Name=Log Viewer
 Name[cs]=Prohlížeč záznamů
 Name[de]=Protokollbetrachter
+Name[es]=Visor del registro
 Name[ga]=Amharcán Logchomhad
 Name[nds]=Logbookkieker
 Name[nl]=Logweergave
@@ -11,6 +12,7 @@ Name[uk]=Переглядач журналу
 Name[x-test]=xxLog Viewerxx
 Comment=Displays the logging output
 Comment[de]=Zeigt die Protokollausgaben
+Comment[es]=Muestra la salida del registro
 Comment[ga]=Taispeáin an t-aschur logála
 Comment[nds]=Wiest de Logbook-Utgaven
 Comment[nl]=Toont de loguitvoer

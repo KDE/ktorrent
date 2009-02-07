@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Information Widget
 Name[de]=Informationen
+Name[es]=Elemento de información
 Name[ga]=Giuirléid Eolais
 Name[nds]=Informatschonen-Element
 Name[nl]=Informatie-widget
@@ -10,6 +11,7 @@ Name[uk]=Інформаційний віджет
 Name[x-test]=xxInformation Widgetxx
 Comment=Displays general information about a torrent in several tabs
 Comment[de]=Anzeige von allgemeinen Informationen über einen Torrent in mehreren Unterfenstern
+Comment[es]=Muestra información general sobre un torrent en varias solapas
 Comment[ga]=Breiseán a thaispeánann eolas ginearálta maidir le torrent i gcluaisíní éagsúla
 Comment[nds]=Wiest Informatschonen över en Torrent binnen en Reeg Paneels
 Comment[nl]=Geef informatie over een torrent weer, verdeeld over meerdere tabbladen

@@ -2,6 +2,7 @@
 Name=IP Filter
 Name[cs]=IP Filtr
 Name[de]=IP-Filter
+Name[es]=Filtro de IP
 Name[ga]=Scagaire IP
 Name[nds]=IP-Filter
 Name[nl]=IP-filter
@@ -11,6 +12,7 @@ Name[uk]=Фільтр IP
 Name[x-test]=xxIP Filterxx
 Comment=Filter IP addresses through a blocklist
 Comment[de]=IP-Adressen mit einer Blockliste filtern
+Comment[es]=Filtre direcciones IP por medio de una lista de bloqueo
 Comment[ga]=Scag seoltaí IP trí liosta dubh
 Comment[nds]=IP-Adressen över en Blockeerlist filtern
 Comment[nl]=Filter IP-adressen met behulp van een zwarte lijst

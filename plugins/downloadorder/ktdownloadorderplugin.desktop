@@ -2,6 +2,7 @@
 Name=Download Order
 Name[cs]=Pořadí stahování
 Name[de]=Download-Reihenfolge
+Name[es]=Orden de descarga
 Name[ga]=Ord Íosluchtaithe
 Name[nds]=Daallaadreeg
 Name[nl]=Bestandsdownload-volgorde
@@ -11,6 +12,7 @@ Name[uk]=Порядок звантаження
 Name[x-test]=xxDownload Orderxx
 Comment=Specify the download order of a multi-file torrent
 Comment[de]=Download-Reihenfolge bei Torrents, die aus mehreren Dateien bestehen, festlegen
+Comment[es]=Indique el orden de descarga de un torrent de varios archivos
 Comment[ga]=Sonraigh ord íosluchtaithe do thorrent il-chomhad
 Comment[nds]=Daallaadreeg bi en Mehrdateien-Torrent fastleggen
 Comment[nl]=Geef een voorkeur op in welke volgorde de bestanden in een multi-bestands-torrent gedownload dienen te worden

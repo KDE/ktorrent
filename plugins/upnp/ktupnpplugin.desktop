@@ -3,6 +3,7 @@ Name=UPnP
 Name[x-test]=xxUPnPxx
 Comment=Forward ports using UPnP
 Comment[de]=Port-Weiterleitung unter Verwendung von UPnP
+Comment[es]=Reenvío de puertos usando UPnP
 Comment[ga]=Breiseán a chuireann poirt ar aghaidh le UPnP
 Comment[nds]=Porten över UPnP wiederledden
 Comment[nl]=Forwarden van poorten met behulp van UPnP

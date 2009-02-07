@@ -2,6 +2,7 @@
 Name=Scan Folder
 Name[cs]=Procházení složek
 Name[de]=Ordner durchsuchen
+Name[es]=Búsqueda de carpetas
 Name[ga]=Scan Fillteán
 Name[nds]=Ornern dörkieken
 Name[nl]=Map doorzoeken
@@ -11,6 +12,7 @@ Name[uk]=Сканувати теку
 Name[x-test]=xxScan Folderxx
 Comment=Scan folders for torrent files and load them
 Comment[de]=Ordner nach Torrent-Dateien durchsuchen und diese laden
+Comment[es]=Busca archivos torrent en carpetas y los carga
 Comment[ga]=Lorg comhaid torrent i bhfillteáin agus luchtaigh iad
 Comment[nds]=Ornern op Torrent-Dateien dörkieken un de denn laden
 Comment[nl]=Doorzoek mappen op torrent-bestanden en laad deze

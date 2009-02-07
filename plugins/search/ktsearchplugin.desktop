@@ -2,6 +2,7 @@
 Name=Search
 Name[cs]=Hledat
 Name[de]=Suche
+Name[es]=Búsqueda
 Name[ga]=Cuardaigh
 Name[nds]=Söken
 Name[nl]=Zoeken
@@ -12,6 +13,7 @@ Name[x-test]=xxSearchxx
 Comment=Search for torrents
 Comment[cs]=Hledat torrenty
 Comment[de]=Nach Torrents suchen
+Comment[es]=Buscar torrents
 Comment[ga]=Lorg torrents
 Comment[nds]=Na Torrents söken
 Comment[nl]=Zoeken naar torrents
