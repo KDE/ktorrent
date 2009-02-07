@@ -571,6 +571,13 @@ namespace kt
 	
 	void GroupView::defaultGroupRemoved(Group* g)
 	{
+		if (g == current)
+		{
+			current = gman->allGroup();
+			currentGroupChanged(current);
+		}
+		
+		view->onGroupRemoved(g);
 		remove(0,g->groupPath(),g);
 	}
 

@@ -671,8 +671,8 @@ namespace kt
 			}
 			
 			torrentRemoved(tc);
-			qman->torrentRemoved(tc);
 			gman->torrentRemoved(tc);
+			qman->torrentRemoved(tc);
 			gui->updateActions();
 			bt::Delete(dir,false);
 		}
