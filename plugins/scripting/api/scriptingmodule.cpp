@@ -132,8 +132,8 @@ namespace kt
 		
 		kt::GroupManager* gman = core->getGroupManager();
 		ScriptableGroup* g = sgroups[name];
-		gman->removeDefaultGroup(g);
 		sgroups.remove(name);
+		gman->removeDefaultGroup(g);
 		delete g;
 	}
 }

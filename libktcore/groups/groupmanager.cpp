@@ -312,7 +312,7 @@ namespace kt
 	
 	void GroupManager::removeDefaultGroup(Group* g)
 	{
-		defaults.removeAll(g);
 		emit defaultGroupRemoved(g);
+		defaults.removeAll(g);
 	}
 }

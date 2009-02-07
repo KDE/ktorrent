@@ -333,8 +333,6 @@ namespace kt
 			if (item->tc == ti)
 			{
 				removeRow(idx);
-				torrents.erase(i);
-				delete item;
 				update(true);
 				break;
 			}
@@ -576,12 +574,9 @@ namespace kt
 	{
 		foreach (const QModelIndex &i,idx)
 		{
-			if (i.isValid())
-			{
-				Item* item = (Item*)i.internalPointer();
-				if (item)
-					tlist.append(item->tc);
-			}
+			bt::TorrentInterface* tc = torrentFromIndex(i);
+			if (tc)
+				tlist.append(tc);
 		}
 	}
 	
@@ -631,6 +626,11 @@ namespace kt
 	{
 		Q_UNUSED(parent);
 		beginRemoveRows(QModelIndex(),row,row + count - 1);
+		for (int i = 0;i < count;i++)
+		{
+			Item* item = torrents.takeAt(row);
+			delete item;
+		}
 		endRemoveRows();
 		return true;
 	}
