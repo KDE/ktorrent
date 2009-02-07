@@ -4,6 +4,8 @@ import KTorrent
 import KTScriptingPlugin
 import Kross
 
+t = Kross.module("kdetranslation")
+
 class TrackerGroup:
 	def __init__(self,url):
 		self.url = url
@@ -39,7 +41,7 @@ class TrackerGroupsScript:
 		g.ref()
 		self.tracker_map[tracker] = g
 		KTorrent.log("Adding group for tracker " + tracker)
-		KTScriptingPlugin.addGroup(tracker,"network-server","/all/trackers/" + str(self.id),g)
+		KTScriptingPlugin.addGroup(tracker,"network-server","/all/" + t.i18n("Trackers") + "/" + str(self.id),g)
 		self.id += 1
 		
 	def removeTracker(self,tracker):

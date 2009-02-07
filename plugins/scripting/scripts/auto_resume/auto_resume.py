@@ -1,9 +1,11 @@
 #!/usr/bin/env kross
+# -*- coding: utf-8 -*-
 import KTorrent
 import KTScriptingPlugin
 import Kross
 #from PyQt4 import QtCore
 
+t = Kross.module("kdetranslation")
 
 class AutoResume:
 	def __init__(self):
@@ -48,9 +50,9 @@ class AutoResume:
 			
 	def configure(self):
 		forms = Kross.module("forms")
-		dialog = forms.createDialog("Auto Resume Settings")
+		dialog = forms.createDialog(t.i18n("Auto Resume Settings"))
 		dialog.setButtons("Ok|Cancel")
-		page = dialog.addPage("Auto Resume","Auto Resume","kt-bandwidth-scheduler")
+		page = dialog.addPage(t.i18n("Auto Resume"),t.i18n("Auto Resume"),"kt-bandwidth-scheduler")
 		widget = forms.createWidgetFromUIFile(page,KTScriptingPlugin.scriptsDir() + "auto_resume/auto_resume.ui")
 		widget["auto_resume"].checked = self.auto_resume
 		widget["hours"].value = self.hours
