@@ -1,14 +1,19 @@
 [Desktop Entry]
 Name=UPnP
+Name[sr]=УПнП
 Name[x-test]=xxUPnPxx
 Comment=Forward ports using UPnP
 Comment[de]=Port-Weiterleitung unter Verwendung von UPnP
 Comment[es]=Reenvío de puertos usando UPnP
 Comment[ga]=Breiseán a chuireann poirt ar aghaidh le UPnP
+Comment[ja]=UPnP を使ってポートをフォワードします
 Comment[nds]=Porten över UPnP wiederledden
 Comment[nl]=Forwarden van poorten met behulp van UPnP
 Comment[pt]=Um 'plugin' de encaminhamento de portos com o UPnP
 Comment[pt_BR]=Um 'plugin' de encaminhamento de portos com o UPnP
+Comment[sr]=Прослеђујте портове УПнП‑ом
+Comment[sr@latin]=Prosleđujte portove UPnP‑om
+Comment[sv]=Vidarebefordra portar genom att använda UPnP
 Comment[uk]=Переспрямування портів за допомогою UPnP
 Comment[x-test]=xxForward ports using UPnPxx
 ServiceTypes=KTorrent/Plugin
