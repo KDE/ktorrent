@@ -131,14 +131,14 @@ namespace net
 		if (fd_vec.size() >= 1)
 		{
 			struct pollfd & wfd = fd_vec[0];
-			wfd.fd = wake_up.readerSocket()->fd();
+			wfd.fd = wake_up.readerSocket();
 			wfd.revents = 0;
 			wfd.events = POLLIN;
 		}
 		else
 		{
 			struct pollfd wfd;
-			wfd.fd = wake_up.readerSocket()->fd();
+			wfd.fd = wake_up.readerSocket();
 			wfd.revents = 0;
 			wfd.events = POLLIN;
 			fd_vec.push_back(wfd);
