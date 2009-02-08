@@ -17,40 +17,46 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+#include <unistd.h>
+#include <sys/types.h> 
+#include <sys/socket.h>
+#include <util/log.h>
 #include "net/wakeuppipe.h"
+
+using namespace bt;
 
 namespace net
 {
 
-	WakeUpPipe::WakeUpPipe()
+	WakeUpPipe::WakeUpPipe() : reader(-1),writer(-1)
 	{
-		reader = new net::Socket(false,4);
-		bt::Uint16 port = 50000;
-		while (!reader->bind("127.0.0.1",port,false) && port - 50000 <= 10000)
+		int sockets[2];
+		if (socketpair(AF_UNIX,SOCK_STREAM,0,sockets) == 0)
 		{
-			port++;
+			reader = sockets[1];
+			writer = sockets[0];
 		}
-		
-		writer = new net::Socket(false,4);
-		writer->connectTo(net::Address("127.0.0.1",port));
 	}
 
 
 	WakeUpPipe::~WakeUpPipe()
 	{
-		delete reader;
-		delete writer;
+		::close(reader);
+		::close(writer);
 	}
 
 	void WakeUpPipe::wakeUp()
 	{
 		char dummy[] = "dummy";
-		writer->send((bt::Uint8*)dummy,5);
+		int ret = write(writer,dummy,5);
+		if (ret != 5)
+			Out(SYS_GEN|LOG_DEBUG) << "WakeUpPipe: wake up failed " << ret << endl;
 	}
 		
 	void WakeUpPipe::handleData()
 	{
 		bt::Uint8 buf[20];
-		reader->recv(buf,20);
+		if (read(reader,buf,20) < 0)
+			Out(SYS_GEN|LOG_DEBUG) << "WakeUpPipe: read failed" << endl;
 	}
 }

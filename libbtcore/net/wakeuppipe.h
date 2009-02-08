@@ -20,15 +20,15 @@
 #ifndef KTWAKEUPPIPE_H
 #define KTWAKEUPPIPE_H
 
-#include <net/socket.h>
+
 
 namespace net
 {
 
 	/**
 		A WakeUpPipe's purpose is to wakeup a select or poll call.
-		It works by using two connected sockets, on the localhost on a randome port.
-		One socket needs to be part of the poll or select, and the other socket will send dummy data to it.
+		It works by using a pipe
+		One end needs to be part of the poll or select, and the other end will send dummy data to it.
 		Waking up the select or poll call.
 	*/
 	class WakeUpPipe
@@ -41,13 +41,13 @@ namespace net
 		void wakeUp();
 		
 		/// Get the reader socket
-		Socket* readerSocket() const {return reader;}
+		int readerSocket() const {return reader;}
 		
 		/// Read all the dummy data
 		void handleData();
 	private:
-		Socket* writer;
-		Socket* reader;
+		int reader;
+		int writer;
 	};
 
 }
