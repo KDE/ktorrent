@@ -69,6 +69,8 @@ namespace kt
 		m_remove->setEnabled(curr_tc != 0);
 		m_webseed_list->setEnabled(curr_tc != 0);
 		m_webseed->setEnabled(curr_tc != 0);
+		m_enable_all->setEnabled(curr_tc != 0);
+		m_disable_all->setEnabled(curr_tc != 0);
 		onWebSeedTextChanged(m_webseed->text());
 		
 		// see if we need to enable or disable the remove button
