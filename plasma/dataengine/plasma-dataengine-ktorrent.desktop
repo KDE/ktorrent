@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=KTorrent
 Name[hi]=केटोरेंट
+Name[sr]=К‑торент
 Name[sv]=Ktorrent
 Name[x-test]=xxKTorrentxx
 Comment=KTorrent data engine, for getting information from ktorrent
@@ -24,6 +25,8 @@ Comment[pt_BR]=Motor de dados do Ktorrent, para adquirir informações deste
 Comment[ro]=Motor de date KTorrent, pentru obținerea informațiilor de la KTorrent
 Comment[ru]=Модуль KTorrent для обработки данных, получаемых от ktorrent
 Comment[sl]=Podatkovni pogon za pridobivanje podatkov od KTorrenta
+Comment[sr]=К‑торентов датомотор, за добијање података од К‑торента
+Comment[sr@latin]=KTorrentov datomotor, za dobijanje podataka od KTorrenta
 Comment[sv]=Ktorrent-datagränssnitt, för att hämta information från Ktorrent
 Comment[tr]=KTorrent'ten bilgi almaya yarayan veri motoru
 Comment[uk]=Рушій даних KTorrent, для отримання відомостей від ktorrent

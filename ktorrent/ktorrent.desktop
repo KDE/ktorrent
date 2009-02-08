@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=KTorrent
 Name[hi]=केटोरेंट
+Name[sr]=К‑торент
 Name[sv]=Ktorrent
 Name[x-test]=xxKTorrentxx
 GenericName=BitTorrent Client
@@ -33,6 +34,8 @@ GenericName[ro]=Client BitTorrent
 GenericName[ru]=Клиент BitTorrent
 GenericName[sk]=BitTorrent Klient
 GenericName[sl]=Odjemalec za BitTorrent
+GenericName[sr]=Битторент клијент
+GenericName[sr@latin]=Bittorrent klijent
 GenericName[sv]=BitTorrent-klient
 GenericName[tr]=BitTorrent İstemcisi
 GenericName[uk]=Клієнт BitTorrent
@@ -75,6 +78,8 @@ Comment[ro]=Un program BitTorrent pentru KDE
 Comment[ru]=Клиент BitTorrent для KDE
 Comment[sk]=BitTorrent klient pre KDE
 Comment[sl]=KDE-jev program za BitTorrent
+Comment[sr]=Битторент програм за КДЕ
+Comment[sr@latin]=Bittorrent program za KDE
 Comment[sv]=Ett BitTorrent-program för KDE
 Comment[tr]=KDE için BitTorrent uygulaması
 Comment[uk]=Програма BitTorrent для KDE
