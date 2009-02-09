@@ -144,7 +144,6 @@ namespace bt
 		{
 			if (sock->connectSuccesFull())
 			{
-				//Out(SYS_CON|LOG_DEBUG) << "HttpConnection: connected "  << endl;
 				state = ACTIVE;
 				status = i18n("Connected");
 			}
@@ -206,19 +205,20 @@ namespace bt
 				sock->setWriter(this);
 				sock->setGroupID(up_gid,true);
 				sock->setGroupID(down_gid,false);
-				net::SocketMonitor::instance().add(sock);
 			}
 			
 			if (sock->connectTo(addr))
 			{
 				status = i18n("Connected");
 				state = ACTIVE;
+				net::SocketMonitor::instance().add(sock);
 				net::SocketMonitor::instance().signalPacketReady();
 			}
 			else if (sock->state() == net::Socket::CONNECTING)
 			{
 				status = i18n("Connecting");
 				state = CONNECTING;
+				net::SocketMonitor::instance().add(sock);
 				net::SocketMonitor::instance().signalPacketReady();
 				// 60 second connect timeout
 				connect_timer.start(60000);
@@ -407,8 +407,8 @@ namespace bt
 			else
 				content_length = 0;
 			
-		//	Out(SYS_CON|LOG_DEBUG) << "HttpConnection: http reply header received" << endl;
-		//	Out(SYS_CON|LOG_DEBUG) << hdr.toString() << endl;
+//			Out(SYS_CON|LOG_DEBUG) << "HttpConnection: http reply header received" << endl;
+//			Out(SYS_CON|LOG_DEBUG) << hdr.toString() << endl;
 			if ((hdr.statusCode() >= 300 && hdr.statusCode() <= 303) || hdr.statusCode() == 307)
 			{
 				// we got redirected to somewhere else

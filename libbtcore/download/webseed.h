@@ -158,6 +158,8 @@ namespace bt
 		void chunkStarted(Uint32 chunk);
 		void chunkStopped();
 		void connectToServer();
+		void continueCurChunk();
+		void readData();
 		
 	private:
 		const Torrent & tor;
