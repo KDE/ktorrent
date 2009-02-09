@@ -69,7 +69,7 @@ namespace kt
 		bt::TorrentInterface* getCurrentTorrent();
 
 		/// Get the view's caption
-		QString caption() const;
+		QString caption(bool full) const;
 
 		/// Check if we need to update the caption
 		bool needToUpdateCaption();

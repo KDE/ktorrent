@@ -221,6 +221,15 @@ namespace ideal
 		tabs->setTabText(idx,text);
 	}
 	
+	void MainWindow::changeTabToolTip(QWidget* ti,const QString & text)
+	{
+		int idx = tabs->indexOf(ti);
+		if (idx == -1)
+			return;
+
+		tabs->setTabToolTip(idx,text);
+	}
+	
 	void MainWindow::changeCurrentTab(QWidget* ti)
 	{
 		int idx = tabs->indexOf(ti);
