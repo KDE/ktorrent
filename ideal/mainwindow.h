@@ -70,6 +70,9 @@ namespace ideal
 		/// Change the text of tab
 		void changeTabText(QWidget* ti,const QString & text);
 		
+		/// Change the tooltip of the tab
+		void changeTabToolTip(QWidget* ti,const QString & text);
+		
 		///Set the tab to be the current one
 		void changeCurrentTab(QWidget* ti);
 

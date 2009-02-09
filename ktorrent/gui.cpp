@@ -599,7 +599,8 @@ namespace kt
 	{
 		View* view = view_man->newView(core,this);
 		view->setGroup(g);
-		addTabPage(view,g->groupIconName(),view->caption(),QString(),view_man);
+		addTabPage(view,g->groupIconName(),view->caption(false),QString(),view_man);
+		changeTabToolTip(view,view->caption(true));
 		connect(view,SIGNAL(editingItem(bool)),this,SLOT(setPasteDisabled(bool)));
 		return view;
 	}

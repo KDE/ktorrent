@@ -272,7 +272,8 @@ namespace kt
 		{
 			current->setGroup(g);
 			gui->changeTabIcon(current,g->groupIconName());
-			gui->changeTabText(current,current->caption());
+			gui->changeTabText(current,current->caption(false));
+			gui->changeTabToolTip(current,current->caption(true));
 		}
 	}
 
@@ -283,7 +284,8 @@ namespace kt
 			if (v->getGroup() == g)
 			{
 				gui->changeTabIcon(v,g->groupIconName());
-				gui->changeTabText(v,v->caption());
+				gui->changeTabText(v,v->caption(false));
+				gui->changeTabToolTip(v,v->caption(true));
 			}
 		}
 		
@@ -314,7 +316,8 @@ namespace kt
 					// change the current view to the all group
 					v->setGroup(all_group);
 					gui->changeTabIcon(v,all_group->groupIconName());
-					gui->changeTabText(v,v->caption());
+					gui->changeTabText(v,v->caption(false));
+					gui->changeTabToolTip(v,v->caption(true));
 					i++;
 				}
 			}
@@ -490,7 +493,10 @@ namespace kt
 		foreach (View* v,views)
 		{
 			if (v->needToUpdateCaption())
-				gui->changeTabText(v,v->caption());
+			{
+				gui->changeTabText(v,v->caption(false));
+				gui->changeTabToolTip(v,v->caption(true));
+			}
 		}
 	}
 	

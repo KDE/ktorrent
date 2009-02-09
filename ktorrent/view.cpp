@@ -159,9 +159,15 @@ namespace kt
 		return false;
 	}
 	
-	QString View::caption() const
+	QString View::caption(bool full) const
 	{
-		return QString("%1 %2/%3").arg(group->groupName()).arg(num_running).arg(num_torrents);
+		QString name = group->groupName();
+		if (full)
+			return QString("%1 %2/%3").arg(name).arg(num_running).arg(num_torrents);
+		
+		if (name.count() > 35)
+			name = name.left(32) + "...";
+		return QString("%1 %2/%3").arg(name).arg(num_running).arg(num_torrents);
 	}
 
 	void View::startTorrents()

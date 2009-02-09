@@ -18,6 +18,7 @@ Changes in 3.2 :
 - Make sure that when a chunk is downloaded via a webseed the chunkmanager is updated
 - Don't throw away data when webseed connection closes
 - Make sure plasma dataengine interprets strings passed via the stats dbus call, properly (183695)
+- Limit group names in tabs to 35 characters, if longer use ... (183689)
 
 Changes in 3.2rc1 :
 - Fix bug in webgui causing wrong content-length to be returned in some cases
