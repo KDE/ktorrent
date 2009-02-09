@@ -8,6 +8,7 @@ Changes in 3.2 :
 - Fix crash when removing the only torrent of a tracker based group (183413)
 - Make sure that when a chunk is downloaded via a webseed the chunkmanager is updated
 - Don't throw away data when webseed connection closes
+- Make sure plasma dataengine interprets strings passed via the stats dbus call, properly (183695)
 
 Changes in 3.2rc1 :
 - Fix bug in webgui causing wrong content-length to be returned in some cases

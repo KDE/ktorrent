@@ -79,7 +79,7 @@ namespace ktplasma
 					switch (vn->data().getType())
 					{
 						case bt::Value::STRING:
-							engine->setData(info_hash,key,vn->data().toString());
+							engine->setData(info_hash,key,QString::fromUtf8(vn->data().toByteArray()));
 							break;
 						case bt::Value::INT:
 							engine->setData(info_hash,key,vn->data().toInt());
