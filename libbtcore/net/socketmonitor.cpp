@@ -122,17 +122,6 @@ namespace net
 			return;
 		
 		smap.remove(sock);
-		if (smap.size() == 0)
-		{
-			Out(SYS_CON|LOG_DEBUG) << "Stopping socketmonitor threads" << endl;
-			if (dt && dt->isRunning())
-				dt->stop();
-			if (ut && ut->isRunning())
-			{
-				ut->stop();
-				ut->signalDataReady();
-			}
-		}
 	}
 	
 	void SocketMonitor::signalPacketReady()

@@ -28,6 +28,7 @@
 #include <torrent/torrent.h>
 #include <diskio/chunkmanager.h>
 #include <diskio/piecedata.h>
+#include <net/socketmonitor.h>
 #include "httpconnection.h"
 
 namespace bt
@@ -133,15 +134,6 @@ namespace bt
 			return;
 		
 		Out(SYS_CON|LOG_DEBUG) << "WebSeed::download " << first << "-" << last << endl;
-		first_chunk = first;
-		last_chunk = last;
-		cur_chunk = first;
-		bytes_of_cur_chunk = 0;
-		
-		QString path = url.path();
-		if (path.endsWith('/') && !isUserCreated())
-			path += tor.getNameSuggestion();
-		
 		// open connection and connect if needed
 		if (!conn)
 		{
@@ -154,8 +146,25 @@ namespace bt
 			connectToServer();
 		}
 		
+		if (first == cur_chunk && last == last_chunk && bytes_of_cur_chunk > 0)
+		{
+			// we already have some of the data, so reuse it
+			continueCurChunk();
+			return;
+		}
+		
+		first_chunk = first;
+		last_chunk = last;
+		cur_chunk = first;
+		bytes_of_cur_chunk = 0;
+		
+		QString path = url.path();
+		if (path.endsWith('/') && !isUserCreated())
+			path += tor.getNameSuggestion();
+		
 		if (tor.isMultiFile())
 		{
+			range_queue.clear();
 			// make the list of ranges to download
 			for (Uint32 i = first_chunk;i <= last_chunk;i++)
 			{
@@ -182,6 +191,52 @@ namespace bt
 			
 			conn->get(url.host(),path,first_chunk * tor.getChunkSize(),len);
 		}
+	}
+	
+	void WebSeed::continueCurChunk()
+	{
+		QString path = url.path();
+		if (path.endsWith('/') && !isUserCreated())
+			path += tor.getNameSuggestion();
+		
+		Out(SYS_GEN|LOG_DEBUG) << "WebSeed: continuing current chunk " << cur_chunk << " " << bytes_of_cur_chunk << endl;
+		first_chunk = cur_chunk;
+		if (tor.isMultiFile())
+		{
+			range_queue.clear();
+			// make the list of ranges to download
+			for (Uint32 i = first_chunk;i <= last_chunk;i++)
+			{
+				fillRangeList(i);
+			}
+			
+			bt::Uint32 length = 0;
+			while (range_queue.count() > 0)
+			{
+				// send the first request, but skip the data we already have
+				Range r = range_queue[0];
+				range_queue.pop_front();
+				if (length >= bytes_of_cur_chunk)
+				{
+					const TorrentFile & tf = tor.getFile(r.file);
+					conn->get(url.host(),path + '/' + tf.getPath(),r.off,r.len);
+					break;
+				}
+				length += r.len;
+			}
+		}
+		else
+		{
+			Uint64 len = (last_chunk - first_chunk) * tor.getChunkSize();
+			// last chunk can have a different size
+			if (last_chunk == tor.getNumChunks() - 1 && tor.getFileLength() % tor.getChunkSize() > 0)
+				len += tor.getFileLength() % tor.getChunkSize();
+			else
+				len += tor.getChunkSize(); 
+			
+			conn->get(url.host(),path,first_chunk * tor.getChunkSize() + bytes_of_cur_chunk,len - bytes_of_cur_chunk);
+		}
+		chunkStarted(cur_chunk);
 	}
 	
 	void WebSeed::chunkStarted(Uint32 chunk)
@@ -230,6 +285,7 @@ namespace bt
 		
 		if (!conn->ok())
 		{
+			readData();
 			Out(SYS_CON|LOG_DEBUG) << "WebSeed: connection not OK" << endl;
 			// shit happened delete connection
 			status = conn->getStatusString();
@@ -247,6 +303,9 @@ namespace bt
 		}
 		else if (conn->closed())
 		{
+			// Make sure we handle all data
+			readData();
+			
 			Out(SYS_CON|LOG_DEBUG) << "WebSeed: connection closed" << endl;
 			delete conn;
 			conn = 0;
@@ -259,24 +318,7 @@ namespace bt
 		}
 		else
 		{
-			QByteArray tmp;
-			while (conn->getData(tmp) && cur_chunk <= last_chunk)
-			{
-				//Out(SYS_CON|LOG_DEBUG) << "WebSeed: handleData " << tmp.size() << endl;
-				if (!current)
-					chunkStarted(cur_chunk);
-				handleData(tmp);
-				tmp.clear();
-			}
-			
-			if (cur_chunk > last_chunk)
-			{
-				// if the current chunk moves past the last chunk, we are done
-				first_chunk = last_chunk = tor.getNumChunks() + 1;
-				num_failures = 0;
-				finished();
-			}
-			
+			readData();
 			if (range_queue.count() > 0 && conn->ready())
 			{
 				if (conn->closed())
@@ -308,8 +350,30 @@ namespace bt
 		return ret;
 	}
 	
+	void WebSeed::readData()
+	{
+		QByteArray tmp;
+		while (conn->getData(tmp) && cur_chunk <= last_chunk)
+		{
+			//Out(SYS_CON|LOG_DEBUG) << "WebSeed: handleData " << tmp.size() << endl;
+			if (!current)
+				chunkStarted(cur_chunk);
+			handleData(tmp);
+			tmp.clear();
+		}
+		
+		if (cur_chunk > last_chunk)
+		{
+			// if the current chunk moves past the last chunk, we are done
+			first_chunk = last_chunk = tor.getNumChunks() + 1;
+			num_failures = 0;
+			finished();
+		}
+	}
+	
 	void WebSeed::handleData(const QByteArray & tmp)
 	{
+//		Out(SYS_GEN|LOG_DEBUG) << "Handling data: " << tmp.length() << " bytes" << endl;
 		Uint32 off = 0;
 		while (off < (Uint32)tmp.size() && cur_chunk <= last_chunk)
 		{
@@ -330,6 +394,7 @@ namespace bt
 			off += bl;
 			bytes_of_cur_chunk += bl;
 			current->pieces_downloaded = bytes_of_cur_chunk / MAX_PIECE_LEN;
+			
 			if (bytes_of_cur_chunk == c->getSize())
 			{
 				// we have one ready

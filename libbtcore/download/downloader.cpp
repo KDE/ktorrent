@@ -729,6 +729,7 @@ namespace bt
 				}
 				
 				c->savePiece(piece);
+				cman.chunkDownloaded(c->getIndex());
 			
 				Out(SYS_GEN|LOG_IMPORTANT) << "Chunk " << c->getIndex() << " downloaded via webseed ! " << endl;
 				// tell everybody we have the Chunk
