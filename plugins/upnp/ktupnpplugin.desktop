@@ -16,6 +16,7 @@ Comment[sr@latin]=Prosleđujte portove UPnP‑om
 Comment[sv]=Vidarebefordra portar genom att använda UPnP
 Comment[uk]=Переспрямування портів за допомогою UPnP
 Comment[x-test]=xxForward ports using UPnPxx
+Comment[zh_CN]=使用 UPnP 自动转发端口
 ServiceTypes=KTorrent/Plugin
 Type=Service
 X-KDE-Library=ktupnpplugin
