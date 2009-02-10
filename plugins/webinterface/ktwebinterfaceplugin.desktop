@@ -1,7 +1,9 @@
 [Desktop Entry]
 Name=Web Interface
 Name[de]=Web-Schnittstelle
+Name[el]=Περιβάλλον ιστού
 Name[es]=Interfaz web
+Name[et]=Veebiliides
 Name[ga]=Comhéadan Gréasáin
 Name[ja]=ウェブインターフェース
 Name[nds]=Nett-Koppelsteed
@@ -16,7 +18,9 @@ Name[x-test]=xxWeb Interfacexx
 Name[zh_CN]=Web 界面
 Comment=Allows control of KTorrent via a web interface
 Comment[de]=Ermöglicht die Kontrolle von KTorrent über eine Web-Schnittstelle
+Comment[el]=Επιτρέπει τον έλεγχο του KTorrent μέσω μιας ιστοσελίδας
 Comment[es]=Permite controlar KTorrent por medio de una interfaz web
+Comment[et]=KTorrenti juhtimine veebiliidese kaudu
 Comment[ga]=Breiseán lenar féidir KTorrent a rialú trí chomhéadan Gréasáin
 Comment[ja]=KTorrent をウェブインターフェースから制御できるようにします
 Comment[nds]=KTorrent över en Nettkieker stüern
