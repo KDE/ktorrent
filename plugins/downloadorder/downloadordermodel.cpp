@@ -183,7 +183,7 @@ namespace kt
 			return;
 		
 		int r = index.row();
-		if (r == tor->getNumFiles() - 1)
+		if (r == (int) tor->getNumFiles() - 1)
 			return;
 		
 		order.swap(r,r+1);
