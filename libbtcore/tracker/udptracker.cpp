@@ -302,7 +302,10 @@ namespace bt
 				sendAnnounce();
 		}
 		else 
+		{
+			n++;
 			requestFailed(i18n("Unable to resolve hostname %1",url.host()));
+		}
 	}
 	
 }
