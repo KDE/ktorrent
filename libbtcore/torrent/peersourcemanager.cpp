@@ -473,7 +473,7 @@ namespace bt
 		// select an other tracker
 		Tracker* trk = selectTracker();
 		
-		if (!trk)
+		if (!trk || trk == curr)
 		{
 			if (curr->failureCount() > 5)
 			{
