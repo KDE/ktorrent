@@ -21,6 +21,7 @@
 #ifndef KTFEED_H
 #define KTFEED_H
 
+#include <QMap>
 #include <QTimer>
 #include <QStringList>
 #include <kurl.h>
@@ -31,6 +32,19 @@ namespace kt
 {
 	class Filter;
 	class FilterList;
+	
+	struct SeasonEpisodeItem
+	{
+		int season;
+		int episode;
+		
+		SeasonEpisodeItem();
+		SeasonEpisodeItem(int s,int e);
+		SeasonEpisodeItem(const SeasonEpisodeItem & item);
+		
+		bool operator == (const SeasonEpisodeItem & item) const;
+		SeasonEpisodeItem & operator = (const SeasonEpisodeItem & item);
+	};
 
 	/**
 		Class to keep track of a feed.
@@ -128,6 +142,7 @@ namespace kt
 		Status status;
 		QList<Filter*> filters;
 		QStringList loaded;
+		QMap<Filter*,QList<SeasonEpisodeItem> > downloaded_se_items;
 	};
 
 }
