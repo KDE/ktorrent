@@ -20,6 +20,7 @@ Changes in 3.2 :
 - Make sure plasma dataengine interprets strings passed via the stats dbus call, properly (183695)
 - Limit group names in tabs to 35 characters, if longer use ... (183689)
 - Fix bug causing trackers to be retried continuously when hostname can not be resolved because the network isn't up yet (183697, 183699)
+- Fix bug with downloading the same episode twice or more in the syndication plugin
 
 Changes in 3.2rc1 :
 - Fix bug in webgui causing wrong content-length to be returned in some cases

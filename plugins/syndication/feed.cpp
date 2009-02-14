@@ -81,6 +81,24 @@ namespace kt
 		foreach (const QString & id,loaded)
 			enc.write(id);
 		enc.end();
+		enc.write("downloaded_se_items");
+		enc.beginList();
+		QMap<Filter*,QList<SeasonEpisodeItem> >::iterator i = downloaded_se_items.begin();
+		while (i != downloaded_se_items.end())
+		{
+			Filter* f = i.key();
+			QList<SeasonEpisodeItem> & se = i.value();
+			enc.write(f->filterID());
+			enc.beginList();
+			foreach (const SeasonEpisodeItem & item,se)
+			{
+				enc.write((bt::Uint32)item.season);
+				enc.write((bt::Uint32)item.episode);
+			}
+			enc.end();
+			i++;
+		}
+		enc.end();
 		enc.end();
 	}
 	
@@ -140,6 +158,37 @@ namespace kt
 				loaded.append(vn->data().toString());
 			}
 		}
+		
+		BListNode* se_list = dict->getList("downloaded_se_items");
+		if (se_list)
+		{
+			for (int i = 0;i < se_list->getNumChildren();i+=2)
+			{
+				BValueNode* filter_name = se_list->getValue(i);
+				BListNode* se = se_list->getList(i+1);
+				if (!filter_name || !se || filter_name->data().getType() != bt::Value::STRING)
+					continue;
+				
+				Filter* f = filter_list->filterByID(filter_name->data().toString());
+				if (!f)
+					continue;
+				
+				QList<SeasonEpisodeItem> & sel = downloaded_se_items[f];
+				for (int j = 0;j < se->getNumChildren();j+=2)
+				{
+					BValueNode* season = se->getValue(j);
+					BValueNode* episode = se->getValue(j+1);
+					if (season && episode && season->data().getType() == bt::Value::INT && episode->data().getType() == bt::Value::INT)
+					{
+						SeasonEpisodeItem item;
+						item.episode = episode->data().toInt();
+						item.season = season->data().toInt();
+						sel.append(item);
+					}
+				}
+			}
+		}
+		
 		Out(SYS_SYN|LOG_DEBUG) << "Loaded feed from " << file << " : " << endl;
 		status = OK;
 		delete n;
@@ -232,9 +281,32 @@ namespace kt
 	{
 		bool m = filter->match(item);
 		if ((m && filter->downloadMatching()) || (!m && filter->downloadNonMatching()))
+		{
+			if (filter->useSeasonAndEpisodeMatching() && filter->noDuplicateSeasonAndEpisodeMatches())
+			{
+				int s = 0;
+				int e = 0;
+				Filter::getSeasonAndEpisode(item->title(),s,e);
+				if (!downloaded_se_items.contains(filter))
+				{
+					downloaded_se_items[filter].append(SeasonEpisodeItem(s,e));
+				}
+				else
+				{
+					// If we have already downloaded this season and episode, return
+					QList<SeasonEpisodeItem> & ses = downloaded_se_items[filter];
+					SeasonEpisodeItem se(s,e);
+					if (ses.contains(se))
+						return false;
+					
+					ses.append(se);
+				}
+			}
+			
 			return true;
-		else
-			return false;
+		}
+		
+		return false;
 	}
 		
 	void Feed::runFilters()
@@ -314,5 +386,27 @@ namespace kt
 	bool  Feed::downloaded(Syndication::ItemPtr item) const
 	{
 		return loaded.contains(item->id());
+	}
+	
+	//////////////////////////////////
+	SeasonEpisodeItem::SeasonEpisodeItem() : season(-1),episode(-1)
+	{}
+	
+	SeasonEpisodeItem::SeasonEpisodeItem(int s,int e) : season(s),episode(e)
+	{}
+	
+	SeasonEpisodeItem::SeasonEpisodeItem(const SeasonEpisodeItem & item) : season(item.season),episode(item.episode)
+	{}
+	
+	bool SeasonEpisodeItem::operator == (const SeasonEpisodeItem & item) const
+	{
+		return season == item.season && episode == item.episode;
+	}
+	
+	SeasonEpisodeItem & SeasonEpisodeItem::operator = (const SeasonEpisodeItem & item)
+	{
+		season = item.season;
+		episode = item.episode;
+		return *this;
 	}
 }

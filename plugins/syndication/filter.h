@@ -168,6 +168,9 @@ namespace kt
 		
 		/// Is a string a valid seasons or episode string
 		static bool validSeasonOrEpisodeString(const QString & s);
+		
+		/// Get the season and episode of an item
+		static bool getSeasonAndEpisode(const QString & title,int & season,int & episode);
 	private:
 		struct Range
 		{
@@ -190,7 +193,6 @@ namespace kt
 		static bool stringToRange(const QString & s,Range & r);
 		
 		bool match(const QString & title,QRegExp & exp);
-		bool getSeasonAndEpisode(const QString & title,int & season,int & episode);
 		
 	private:
 		QString id;
