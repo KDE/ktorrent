@@ -13,6 +13,7 @@ Comment[de]=Gegenstellen im lokalen Netzwerk unter Verwendung des Zeroconf-Proto
 Comment[el]=Εντοπισμός υπολογιστών στο τοπικό δίκτυο με χρήση του πρωτοκόλλου Zeroconf
 Comment[es]=Descubre compañeros en la red local usando el protocolo Zeroconf
 Comment[et]=Masinate tuvastamine kohtvõrgus Zeroconfi protokolli abil
+Comment[fr]=Module externe pour découvrir les pairs sur le réseau local à l'aide du protocole zeroconf
 Comment[ga]=Breiseán a aimsíonn comhghleacaithe ar an líonra logánta tríd an bprótacal zeroconf
 Comment[ja]=Zeroconf プロトコルを使ってローカルネットワークでピアを見つけます
 Comment[nds]=Partners in't lokale Nett över't zeroconf-Protokoll opdecken
