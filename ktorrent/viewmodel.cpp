@@ -582,16 +582,16 @@ namespace kt
 	
 	const bt::TorrentInterface* ViewModel::torrentFromIndex(const QModelIndex & index) const
 	{
-		if (index.isValid() && index.row() < torrents.count() && index.row() >= 0 && index.internalPointer())
-			return ((Item*)index.internalPointer())->tc;
+		if (index.isValid() && index.row() < torrents.count() && index.row() >= 0)
+			return torrents[index.row()]->tc;
 		else
 			return 0;
 	}
 	
 	bt::TorrentInterface* ViewModel::torrentFromIndex(const QModelIndex & index)
 	{
-		if (index.isValid() && index.row() < torrents.count() && index.row() >= 0 && index.internalPointer())
-			return ((Item*)index.internalPointer())->tc;
+		if (index.isValid() && index.row() < torrents.count() && index.row() >= 0)
+			return torrents[index.row()]->tc;
 		else
 			return 0;
 	}
