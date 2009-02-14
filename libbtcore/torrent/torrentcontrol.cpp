@@ -138,7 +138,9 @@ namespace bt
 		if (tmon)
 			tmon->destroyed();
 		
-		downloader->saveWebSeeds(tordir + "webseeds");
+		if (downloader)
+			downloader->saveWebSeeds(tordir + "webseeds");
+		
 		delete choke;
 		delete downloader;
 		delete uploader;
