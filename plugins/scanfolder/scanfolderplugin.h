@@ -22,13 +22,13 @@
 
 #include <util/ptrmap.h>
 #include <interfaces/plugin.h>
+#include "scanfolder.h"
 
 class QString;
 
 
 namespace kt
 {	
-	class ScanFolder;
 	class ScanFolderPrefPage;
 	
 	/**

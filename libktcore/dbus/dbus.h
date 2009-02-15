@@ -25,6 +25,9 @@
 #include <QStringList>
 #include <ktcore_export.h>
 #include <util/ptrmap.h>
+#include <dbus/dbusgroup.h>
+#include <dbus/dbustorrent.h>
+
 
 namespace bt
 {
@@ -35,8 +38,6 @@ namespace kt
 {
 	class GUIInterface;
 	class CoreInterface;
-	class DBusTorrent;
-	class DBusGroup;
 	class Group;
 	
 

@@ -24,10 +24,10 @@
 #include <util/ptrmap.h>
 #include <QDBusConnectionInterface>
 #include <plasma/dataengine.h>
+#include "torrentdbusinterface.h"
 
 namespace ktplasma
 {
-	class TorrentDBusInterface;
 	class CoreDBusInterface;
 	
 	/**

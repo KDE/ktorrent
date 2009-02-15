@@ -31,34 +31,29 @@
 #include "downloader.h"
 
 namespace bt
-{	
+{
+	DownloadStatus::DownloadStatus() : timeouts(0)
+	{}
 
-	class DownloadStatus : public std::set<Uint32>
+	DownloadStatus::~DownloadStatus()
+	{}
+
+	void DownloadStatus::add(Uint32 p)
 	{
-	public:		
-		DownloadStatus() : timeouts(0)
-		{}
+		insert(p);
+	}
+		
+	void DownloadStatus::remove(Uint32 p)
+	{
+		erase(p);
+	}
+		
+	bool DownloadStatus::contains(Uint32 p)
+	{
+		return count(p) > 0;
+	}
 
-		~DownloadStatus()
-		{}
-
-		void add(Uint32 p)
-		{
-			insert(p);
-		}
-		
-		void remove(Uint32 p)
-		{
-			erase(p);
-		}
-		
-		bool contains(Uint32 p)
-		{
-			return count(p) > 0;
-		}
-		
-		Uint32 timeouts;
-	};
+	////////////////////////////////////////////////////
 	
 	ChunkDownload::ChunkDownload(Chunk* chunk) : chunk(chunk)
 	{

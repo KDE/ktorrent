@@ -24,6 +24,8 @@
 #include <util/ptrmap.h>
 #include <util/constants.h>
 #include <btcore_export.h>
+#include "download/webseed.h"
+#include "download/chunkdownload.h"
 #include "peer/peermanager.h"
 
 class KUrl;
@@ -36,14 +38,12 @@ namespace bt
 	class PeerManager;
 	class Peer;
 	class Chunk;
-	class ChunkDownload;
 	class Piece;
 	class ChunkSelectorInterface;
 	class ChunkSelectorFactoryInterface;
 	class PieceDownloader;
 	class MonitorInterface;
-	class WebSeed;
-			class WebSeedChunkDownload;
+	class WebSeedChunkDownload;
 
 	typedef PtrMap<Uint32,ChunkDownload>::iterator CurChunkItr;
 	typedef PtrMap<Uint32,ChunkDownload>::const_iterator CurChunkCItr;

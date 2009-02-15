@@ -23,12 +23,12 @@
 
 #include <util/ptrmap.h>
 #include "cache.h"
+#include "cachefile.h"
+#include "dndfile.h"
 
 namespace bt
 {
-	class DNDFile;
-	class CacheFile;
-
+	
 	/**
 	 * @author Joris Guisson
 	 * @brief Cache for multi file torrents
