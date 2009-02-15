@@ -23,13 +23,13 @@
 #include <qthread.h>
 #include <util/constants.h>
 #include <util/ptrmap.h>
+#include <net/socketgroup.h>
 		
 using bt::Uint32;
 
 namespace net
 {
 	class SocketMonitor;
-	class SocketGroup;
 	
 	/**
 		@author Joris Guisson <joris.guisson@gmail.com>

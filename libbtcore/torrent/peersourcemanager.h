@@ -26,6 +26,7 @@
 #include <util/ptrmap.h>
 #include <util/constants.h>
 #include <util/waitjob.h>
+#include <tracker/tracker.h>
 #include <interfaces/trackerslist.h>
 #include <interfaces/torrentinterface.h>
 
@@ -38,7 +39,6 @@ namespace dht
 
 namespace bt
 {
-	class Tracker;
 	class PeerManager;
 	class Torrent;
 	class TorrentControl;

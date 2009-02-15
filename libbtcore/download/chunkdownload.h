@@ -38,7 +38,6 @@ namespace bt
 	class Piece;
 	class Peer;
 	class Request;
-	class DownloadStatus;
 	class PieceDownloader;
 	class PieceData;
 	
@@ -54,6 +53,19 @@ namespace bt
 		Uint32 piece;
 		Uint32 size; 
 		Uint32 mapped;
+	};
+
+	class DownloadStatus : public std::set<Uint32>
+	{
+	public:		
+		DownloadStatus();
+		~DownloadStatus();
+
+		void add(Uint32 p);
+		void remove(Uint32 p);
+		bool contains(Uint32 p);
+		
+		Uint32 timeouts;
 	};
 	
 	

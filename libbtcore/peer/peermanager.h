@@ -24,6 +24,7 @@
 #include <qobject.h>
 #include <qlist.h>
 #include <util/ptrmap.h>
+#include <peer/peer.h>
 #include <peer/peerid.h>
 #include <util/bitset.h>
 #include <interfaces/peersource.h>
@@ -44,7 +45,6 @@ namespace KNetwork
 namespace bt
 {
 	class Piece;
-	class Peer;
 	class Torrent;
 	class Authenticate;
 	class ChunkCounter;

@@ -24,6 +24,7 @@
 #include <klocale.h>
 #include <util/ptrmap.h>
 #include <ktcore_export.h>
+#include <groups/group.h>
 
 namespace bt
 {
@@ -32,7 +33,6 @@ namespace bt
 
 namespace kt
 {
-	class Group;
 
 	/**
 	 * @author Joris Guisson <joris.guisson@gmail.com>
