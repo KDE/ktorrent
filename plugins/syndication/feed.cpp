@@ -122,71 +122,59 @@ namespace kt
 		}
 		
 		BDictNode* dict = (BDictNode*)n;
-		BValueNode* vn = dict->getValue("url");
-		if (!vn)
-		{
-			delete n;
-			return;
-		}
 		
-		url = KUrl(vn->data().toString());
-		
-		BListNode* fl = dict->getList("filters");
-		if (fl)
+		try
 		{
-			for (Uint32 i = 0;i < fl->getNumChildren();i++)
+			url = KUrl(dict->getString("url",0));
+			
+			BListNode* fl = dict->getList("filters");
+			if (fl)
 			{
-				vn = fl->getValue(i);
-				if (!vn)
-					continue;
-					
-				Filter* f = filter_list->filterByID(vn->data().toString());
-				if (f)
-					filters.append(f);
-			}
-		}
-		
-		BListNode* ll = dict->getList("loaded");
-		if (ll)
-		{
-			for (Uint32 i = 0;i < ll->getNumChildren();i++)
-			{
-				vn = ll->getValue(i);
-				if (!vn)
-					continue;
-					
-				loaded.append(vn->data().toString());
-			}
-		}
-		
-		BListNode* se_list = dict->getList("downloaded_se_items");
-		if (se_list)
-		{
-			for (int i = 0;i < se_list->getNumChildren();i+=2)
-			{
-				BValueNode* filter_name = se_list->getValue(i);
-				BListNode* se = se_list->getList(i+1);
-				if (!filter_name || !se || filter_name->data().getType() != bt::Value::STRING)
-					continue;
-				
-				Filter* f = filter_list->filterByID(filter_name->data().toString());
-				if (!f)
-					continue;
-				
-				QList<SeasonEpisodeItem> & sel = downloaded_se_items[f];
-				for (int j = 0;j < se->getNumChildren();j+=2)
+				for (Uint32 i = 0;i < fl->getNumChildren();i++)
 				{
-					BValueNode* season = se->getValue(j);
-					BValueNode* episode = se->getValue(j+1);
-					if (season && episode && season->data().getType() == bt::Value::INT && episode->data().getType() == bt::Value::INT)
+					Filter* f = filter_list->filterByID(fl->getString(i,0));
+					if (f)
+						filters.append(f);
+				}
+			}
+			
+			BListNode* ll = dict->getList("loaded");
+			if (ll)
+			{
+				for (Uint32 i = 0;i < ll->getNumChildren();i++)
+				{
+					loaded.append(ll->getString(i,0));
+				}
+			}
+			
+			BListNode* se_list = dict->getList("downloaded_se_items");
+			if (se_list)
+			{
+				for (Uint32 i = 0;i < se_list->getNumChildren();i+=2)
+				{
+					BListNode* se = se_list->getList(i+1);
+					if (!se)
+						continue;
+					
+					Filter* f = filter_list->filterByID(se_list->getString(i,0));
+					if (!f)
+						continue;
+					
+					QList<SeasonEpisodeItem> & sel = downloaded_se_items[f];
+					for (Uint32 j = 0;j < se->getNumChildren();j+=2)
 					{
 						SeasonEpisodeItem item;
-						item.episode = episode->data().toInt();
-						item.season = season->data().toInt();
+						item.episode = se->getInt(j);
+						item.season = se->getInt(j+1);
 						sel.append(item);
 					}
 				}
 			}
+		}
+		catch (...)
+		{
+			delete n;
+			throw;
 		}
 		
 		Out(SYS_SYN|LOG_DEBUG) << "Loaded feed from " << file << " : " << endl;

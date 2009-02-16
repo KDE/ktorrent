@@ -123,11 +123,7 @@ namespace dht
 					if (l)
 					{
 						for (Uint32 i = 0;i < l->getNumChildren();i++)
-						{
-							v = l->getValue(i);
-							if (v && v->data().getType() == Value::STRING)
-								rsp->addNode(v->data().toByteArray());
-						}
+							rsp->addNode(l->getByteArray(i));
 					}
 					return rsp;
 				}
@@ -142,11 +138,7 @@ namespace dht
 					{
 						for (Uint32 i = 0;i < vals->getNumChildren();i++)
 						{
-							BValueNode* vn = dynamic_cast<BValueNode*>(vals->getChild(i));
-							if (!vn)
-								continue;
-							
-							QByteArray d = vn->data().toByteArray();
+							QByteArray d = vals->getByteArray(i);
 							if (d.length() == 6) // IPv4
 							{
 								Uint16 port = bt::ReadUint16((const Uint8*)d.data(),4);
@@ -165,7 +157,7 @@ namespace dht
 					else if (args->getValue("nodes") || args->getList("nodes2"))
 					{
 						BValueNode* v = args->getValue("nodes");
-						if (v && v->data().getType() == Value::STRING)
+						if (v)
 							data = v->data().toByteArray();
 						
 						GetPeersRsp* rsp = new GetPeersRsp(mtid,id,token);
@@ -174,11 +166,7 @@ namespace dht
 						if (l)
 						{
 							for (Uint32 i = 0;i < l->getNumChildren();i++)
-							{
-								v = l->getValue(i);
-								if (v && v->data().getType() == Value::STRING)
-									rsp->addNode(v->data().toByteArray());
-							}
+								rsp->addNode(l->getByteArray(i));
 						}
 						
 						return rsp;

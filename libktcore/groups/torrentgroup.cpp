@@ -107,29 +107,15 @@ namespace kt
 	
 	void TorrentGroup::load(bt::BDictNode* dn)
 	{
-		BValueNode* vn = dn->getValue("name");
-		if (!vn || vn->data().getType() != bt::Value::STRING)
-			throw bt::Error("invalid or missing name");
-		
-		name = QString::fromLocal8Bit(vn->data().toByteArray());
-		
-		vn = dn->getValue("icon");
-		if (!vn || vn->data().getType() != bt::Value::STRING)
-			throw bt::Error("invalid or missing icon");
-		
-		//setIconByName(QString::fromLocal8Bit(vn->data().toByteArray()));
-		
+		name = QString::fromLocal8Bit(dn->getByteArray("name"));
+		setIconByName(QString::fromLocal8Bit(dn->getByteArray("icon")));
 		BListNode* ln = dn->getList("hashes");
 		if (!ln)
 			return;
 		
 		for (Uint32 i = 0;i < ln->getNumChildren();i++)
 		{
-			vn = ln->getValue(i);
-			if (!vn || vn->data().getType() != bt::Value::STRING)
-				continue;
-			
-			QByteArray ba = vn->data().toByteArray();
+			QByteArray ba = ln->getByteArray(i);
 			if (ba.size() != 20)
 				continue;
 			
@@ -140,33 +126,27 @@ namespace kt
 		if (gp)
 		{
 			// load the group policy
-			vn = gp->getValue("default_save_location");
-			if (vn && vn->data().getType() == bt::Value::STRING)
+			if (gp->getValue("default_save_location"))
 			{
-				policy.default_save_location = vn->data().toString();
+				policy.default_save_location = gp->getString("default_save_location",0);
 				if (policy.default_save_location.length() == 0)
 					policy.default_save_location = QString(); // make sure that 0 length strings are loaded as null strings
 			}
 			
-			vn = gp->getValue("max_share_ratio");
-			if (vn && vn->data().getType() == bt::Value::STRING)
-				policy.max_share_ratio = vn->data().toString().toFloat();
+			if (gp->getValue("max_share_ratio"))
+				policy.max_share_ratio = gp->getString("max_share_ratio",0).toFloat();
 			
-			vn = gp->getValue("max_seed_time");
-			if (vn && vn->data().getType() == bt::Value::STRING)
-				policy.max_seed_time = vn->data().toString().toFloat();
+			if (gp->getValue("max_seed_time"))
+				policy.max_seed_time = gp->getString("max_seed_time",0).toFloat();
 			
-			vn = gp->getValue("max_upload_rate");
-			if (vn && vn->data().getType() == bt::Value::INT)
-				policy.max_upload_rate = vn->data().toInt();
+			if (gp->getValue("max_upload_rate"))
+				policy.max_upload_rate = gp->getInt("max_upload_rate");
 			
-			vn = gp->getValue("max_download_rate");
-			if (vn && vn->data().getType() == bt::Value::INT)
-				policy.max_download_rate = vn->data().toInt();
+			if (gp->getValue("max_download_rate"))
+				policy.max_download_rate = gp->getInt("max_download_rate");
 			
-			vn = gp->getValue("only_apply_on_new_torrents");
-			if (vn && vn->data().getType() == bt::Value::INT)
-				policy.only_apply_on_new_torrents = vn->data().toInt();
+			if (gp->getValue("only_apply_on_new_torrents"))
+				policy.only_apply_on_new_torrents = gp->getInt("only_apply_on_new_torrents");
 		}
 	}
 	

@@ -161,27 +161,16 @@ namespace bt
 				d = d->getDict(tor->getInfoHash().toByteArray());
 				if (d)
 				{
-					BValueNode* vn = d->getValue("complete");
-					if (vn && vn->data().getType() == Value::INT)
+					try
 					{
-						seeders = vn->data().toInt();
-					} 
-						
-					
-					vn = d->getValue("incomplete");
-					if (vn && vn->data().getType() == Value::INT)
-					{
-						leechers = vn->data().toInt();
-					}
-					
-					vn = d->getValue("downloaded");
-					if (vn && vn->data().getType() == Value::INT)
-					{
-						total_downloaded = vn->data().toInt();
-					}
-					
-					Out(SYS_TRK|LOG_DEBUG) << "Scrape : leechers = " << leechers 
+						seeders = d->getInt("complete");
+						leechers = d->getInt("incomplete");
+						total_downloaded = d->getInt("downloaded");
+						Out(SYS_TRK|LOG_DEBUG) << "Scrape : leechers = " << leechers 
 							<< ", seeders = " << seeders << ", downloaded = " << total_downloaded << endl;
+					}
+					catch (...)
+					{}
 					scrapeDone();
 				}
 			}
@@ -379,7 +368,6 @@ namespace bt
 					buf[j] = arr[i + j];
 
 				KNetwork::KIpAddress ip(buf,6);
-
 				addPeer(ip.toString(),ReadUint16(buf,16));
 			}
 		}

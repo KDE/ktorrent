@@ -19,6 +19,8 @@
  ***************************************************************************/
 #include "bnode.h"
 #include <util/log.h>
+#include <util/error.h>
+#include <qtextcodec.h>
 
 namespace bt
 {
@@ -33,7 +35,7 @@ namespace bt
 
 	////////////////////////////////////////////////
 
-	BValueNode::BValueNode(const Value & v,Uint32 off) : BNode(VALUE,off),v(v)
+	BValueNode::BValueNode(const Value & v,Uint32 off) : BNode(VALUE,off),value(v)
 	{}
 	
 	BValueNode::~BValueNode()
@@ -41,10 +43,12 @@ namespace bt
 	
 	void BValueNode::printDebugInfo()
 	{
-		if (v.getType() == Value::INT)
-			Out(SYS_GEN|LOG_DEBUG) << "Value = " << v.toInt() << endl;
-		else
-			Out(SYS_GEN|LOG_DEBUG) << "Value = " << v.toString() << endl;
+		if (value.getType() == Value::STRING)
+			Out(SYS_GEN|LOG_DEBUG) << "Value = " << value.toString() << endl;
+		else if (value.getType() == Value::INT)
+			Out(SYS_GEN|LOG_DEBUG) << "Value = " << value.toInt() << endl;
+		else if (value.getType() == Value::INT64)                    
+			Out(SYS_GEN|LOG_DEBUG) << "Value = " << value.toInt64() << endl;
 	}
 	
 	////////////////////////////////////////////////
@@ -130,6 +134,57 @@ namespace bt
 		return dynamic_cast<BValueNode*>(n);
 	}
 	
+	int BDictNode::getInt(const QString & key)
+	{
+		BValueNode* v = getValue(key);
+		if (!v)
+			throw bt::Error("Key not found in dict");
+		
+		if (v->data().getType() != bt::Value::INT)
+			throw bt::Error("Incompatible type");
+		
+		return v->data().toInt();
+	}
+	
+	qint64 BDictNode::getInt64(const QString & key)
+	{
+		BValueNode* v = getValue(key);
+		if (!v)
+			throw bt::Error("Key not found in dict");
+		
+		if (v->data().getType() != bt::Value::INT64 && v->data().getType() != bt::Value::INT)
+			throw bt::Error("Incompatible type");
+		
+		return v->data().toInt64();
+	}
+	
+	QString BDictNode::getString(const QString & key,QTextCodec* tc)
+	{
+		BValueNode* v = getValue(key);
+		if (!v)
+			throw bt::Error("Key not found in dict");
+		
+		if (v->data().getType() != bt::Value::STRING)
+			throw bt::Error("Incompatible type");
+		
+		if (!tc)
+			return v->data().toString();
+		else
+			return v->data().toString(tc);
+	}
+	
+	QByteArray BDictNode::getByteArray(const QString & key)
+	{
+		BValueNode* v = getValue(key);
+		if (!v)
+			throw bt::Error("Key not found in dict");
+		
+		if (v->data().getType() != bt::Value::STRING)
+			throw bt::Error("Incompatible type");
+		
+		return v->data().toByteArray();
+	}
+	
 	void BDictNode::printDebugInfo()
 	{
 		Out(SYS_GEN|LOG_DEBUG) << "DICT" << endl;
@@ -179,6 +234,57 @@ namespace bt
 	BValueNode* BListNode::getValue(Uint32 idx)
 	{
 		return dynamic_cast<BValueNode*>(getChild(idx));
+	}
+	
+	int BListNode::getInt(Uint32 idx)
+	{
+		BValueNode* v = getValue(idx);
+		if (!v)
+			throw bt::Error("Key not found in dict");
+		
+		if (v->data().getType() != bt::Value::INT)
+			throw bt::Error("Incompatible type");
+		
+		return v->data().toInt();
+	}
+	
+	qint64 BListNode::getInt64(Uint32 idx)
+	{
+		BValueNode* v = getValue(idx);
+		if (!v)
+			throw bt::Error("Key not found in dict");
+		
+		if (v->data().getType() != bt::Value::INT64 && v->data().getType() != bt::Value::INT)
+			throw bt::Error("Incompatible type");
+		
+		return v->data().toInt64();
+	}
+	
+	QString BListNode::getString(Uint32 idx,QTextCodec* tc)
+	{
+		BValueNode* v = getValue(idx);
+		if (!v)
+			throw bt::Error("Key not found in dict");
+		
+		if (v->data().getType() != bt::Value::STRING)
+			throw bt::Error("Incompatible type");
+		
+		if (!tc)
+			return v->data().toString();
+		else
+			return v->data().toString(tc);
+	}
+	
+	QByteArray BListNode::getByteArray(Uint32 idx)
+	{
+		BValueNode* v = getValue(idx);
+		if (!v)
+			throw bt::Error("Key not found in dict");
+		
+		if (v->data().getType() != bt::Value::STRING)
+			throw bt::Error("Incompatible type");
+		
+		return v->data().toByteArray();
 	}
 	
 	void BListNode::printDebugInfo()

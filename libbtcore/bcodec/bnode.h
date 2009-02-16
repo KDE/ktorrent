@@ -21,6 +21,7 @@
 #define BTBNODE_H
 
 #include <QList>
+#include <QVariant>
 #include <QStringList>
 #include <util/constants.h>
 #include <btcore_export.h>
@@ -82,12 +83,12 @@ namespace bt
 	 */
 	class BTCORE_EXPORT BValueNode : public BNode
 	{
-		Value v;
+		Value value;
 	public:
 		BValueNode(const Value & v,Uint32 off);
 		virtual ~BValueNode();
 		
-		const Value & data() const {return v;}
+		const Value & data() const {return value;}
 		void printDebugInfo();
 	};
 
@@ -153,6 +154,18 @@ namespace bt
 		 */
 		BValueNode* getValue(const QString & key);
 		
+		/// Same as getValue, except directly returns an int, if something goes wrong, an error will be thrown
+		int getInt(const QString & key);
+		
+		/// Same as getValue, except directly returns a qint64, if something goes wrong, an error will be thrown
+		qint64 getInt64(const QString & key);
+		
+		/// Same as getValue, except directly returns a QString, if something goes wrong, an error will be thrown
+		QString getString(const QString & key,QTextCodec* tc);
+		
+		/// Same as getValue, except directly returns an QByteArray, if something goes wrong, an error will be thrown
+		QByteArray getByteArray(const QString & key);
+		
 		void printDebugInfo();
 	};
 
@@ -208,6 +221,18 @@ namespace bt
 		 * 	at postion @a idx isn't a BValueNode.
 		 */
 		BValueNode* getValue(Uint32 idx);
+		
+		/// Same as getValue, except directly returns an int, if something goes wrong, an error will be thrown
+		int getInt(Uint32 idx);
+		
+		/// Same as getValue, except directly returns a qint64, if something goes wrong, an error will be thrown
+		qint64 getInt64(Uint32 idx);
+		
+		/// Same as getValue, except directly returns a QString, if something goes wrong, an error will be thrown
+		QString getString(Uint32 idx,QTextCodec* tc);
+		
+		/// Same as getValue, except directly returns an QByteArray, if something goes wrong, an error will be thrown
+		QByteArray getByteArray(Uint32 idx);
 	};
 }
 

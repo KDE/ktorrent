@@ -245,16 +245,12 @@ namespace bt
 
 	private:
 		void loadInfo(BDictNode* node);
-		void loadTrackerURL(BValueNode* node);
-		void loadPieceLength(BValueNode* node);
-		void loadFileLength(BValueNode* node);
-		void loadHash(BValueNode* node);
-		void loadName(BValueNode* node);
+		void loadTrackerURL(const QString & s);
+		void loadHash(BDictNode* dict);
 		void loadFiles(BListNode* node);
 		void loadNodes(BListNode* node);
 		void loadAnnounceList(BNode* node);
 		void loadWebSeeds(BListNode* node);
-		void loadWebSeed(BValueNode* node);
 		bool checkPathForDirectoryTraversal(const QString & p);
 		
 	private:
