@@ -199,6 +199,7 @@ namespace kt
 		}
 		else
 		{
+			start_torrent = true;
 			// add torrent to group if necessary
 			Group* g = gman->find(group);
 			if (g)
