@@ -7,6 +7,9 @@ Changes in 3.3 :
 - Trackers folder becomes Trackers in tracker_groups.py (183416)
 - WebSeeds can now be disabled and enabled individually and globally
 
+Changes in 3.2.1 :
+- Resort torrents if display name is changed
+
 Changes in 3.2 :
 - Use QDir to create directories, avoids nested event loops, which seems to be buggy in some situations (182327)
 - Make sure strings tab is shown first in filter editor dialog

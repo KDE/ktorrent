@@ -528,6 +528,8 @@ namespace kt
 		bt::TorrentInterface* tc = item->tc;
 		tc->setDisplayName(name);
 		emit dataChanged(index,index);
+		if (sort_column == NAME)
+			sort(sort_column,sort_order);
 		return true;
 	}
 	
