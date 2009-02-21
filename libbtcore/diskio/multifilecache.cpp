@@ -933,7 +933,7 @@ namespace bt
 			QStringList el = dir.entryList(QDir::AllEntries|QDir::System|QDir::Hidden);
 			el.removeAll(".");
 			el.removeAll("..");
-			if (el.count() == 0)
+			if (el.count() == 0 && dir.exists())
 			{
 				// no childern so delete the directory
 				Out(SYS_GEN|LOG_DEBUG) << "Deleting empty directory : " << path << endl;
@@ -953,7 +953,7 @@ namespace bt
 		QStringList el = dir.entryList(QDir::AllEntries|QDir::System|QDir::Hidden);
 		el.removeAll(".");
 		el.removeAll("..");
-		if (el.count() == 0)
+		if (el.count() == 0 && dir.exists())
 		{
 			Out(SYS_GEN|LOG_DEBUG) << "Deleting empty directory : " << output_dir << endl;
 			bt::Delete(output_dir,true);

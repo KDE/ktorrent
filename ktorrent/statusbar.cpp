@@ -23,6 +23,7 @@
 #include <klocale.h>
 #include <util/functions.h>
 #include <dht/dhtbase.h>
+#include <kstatusbarofflineindicator.h>
 #include "statusbar.h"
 
 using namespace bt;
@@ -51,7 +52,9 @@ namespace kt
 		transfer = new QLabel(t,this);
 		transfer->setFrameShape(QFrame::Box);
 		transfer->setFrameShadow(QFrame::Sunken);
-		addPermanentWidget(transfer);		
+		addPermanentWidget(transfer);
+		
+		addPermanentWidget(new KStatusBarOfflineIndicator(this));
 	}
 
 	StatusBar::~StatusBar()
