@@ -297,7 +297,7 @@ namespace bt
                  
 				stop(true); 
 				emit seedingAutoStopped(this, overMaxRatio() ? MAX_RATIO_REACHED : MAX_SEED_TIME_REACHED);
-			} 			
+			}
 
 			//Update diskspace if needed (every 1 min)			
 			if(!stats.completed && stats.running && bt::GetCurrentTime() - last_diskspace_check >= 60 * 1000)
@@ -1573,11 +1573,12 @@ namespace bt
 		dcheck_thread->deleteLater();
 		dcheck_thread = 0;
 		Out(SYS_GEN|LOG_NOTICE) << "Data check finished" << endl;
-		dataCheckFinished();
 		resetTrackerStats();
 		updateStatus();
 		if (lst)
 			lst->finished();
+		
+		dataCheckFinished();
 	}
 	
 	bool TorrentControl::isCheckingData(bool & finished) const
@@ -1738,7 +1739,7 @@ namespace bt
 		case DHT_FEATURE:
 			if (on)
 			{
-				if(!stats.priv_torrent)
+				if (!stats.priv_torrent)
 				{
 					psman->addDHT();
 					istats.dht_on = psman->dhtStarted();
@@ -2014,6 +2015,8 @@ namespace bt
 	
 	void TorrentControl::moveToCompletedDir()
 	{
+		disconnect(this,SIGNAL(dataCheckFinished()),this,SLOT(moveToCompletedDir()));
+		
 		// it is possible that the user might have disabled moving to the completed dir during the data check
 		// so double check before we start the move
 		if (completed_dir.path().isNull() || !stats.completed)
