@@ -517,13 +517,12 @@ namespace kt
 	
 	void QueueManager::orderQueue()
 	{
+		downloads.sort(); // sort downloads, even when paused so that the QM widget is updated
 		if (ordering || !downloads.count() || paused_state || exiting)
 			return;
 		
 		ordering = true; // make sure that recursive entering of this function is not possible
 		
-		downloads.sort();
-	
 		QueuePtrList download_queue;
 		QueuePtrList seed_queue;
 		

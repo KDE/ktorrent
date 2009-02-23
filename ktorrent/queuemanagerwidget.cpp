@@ -85,7 +85,7 @@ namespace kt
 			model->moveUp(r);
 			if (r > 0)
 				r--;
-			m_torrents->selectionModel()->setCurrentIndex(model->index(r,0),QItemSelectionModel::Select|QItemSelectionModel::Rows);
+			m_torrents->selectionModel()->setCurrentIndex(model->index(r,0),QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
 		}
 	}
 	
@@ -98,7 +98,7 @@ namespace kt
 			model->moveDown(r);
 			if (r < model->rowCount(QModelIndex()) - 1)
 				r++;
-			m_torrents->selectionModel()->setCurrentIndex(model->index(r,0),QItemSelectionModel::Select|QItemSelectionModel::Rows);
+			m_torrents->selectionModel()->setCurrentIndex(model->index(r,0),QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
 		}
 	}
 	
@@ -109,7 +109,7 @@ namespace kt
 		{
 			int r = cur.row();
 			model->moveTop(r);
-			m_torrents->selectionModel()->setCurrentIndex(model->index(0,0),QItemSelectionModel::Select|QItemSelectionModel::Rows);
+			m_torrents->selectionModel()->setCurrentIndex(model->index(0,0),QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
 		}
 	}
 	
@@ -121,7 +121,7 @@ namespace kt
 			int r = cur.row();
 			model->moveBottom(r);
 			r = model->rowCount(QModelIndex()) - 1;
-			m_torrents->selectionModel()->setCurrentIndex(model->index(r,0),QItemSelectionModel::Select|QItemSelectionModel::Rows);
+			m_torrents->selectionModel()->setCurrentIndex(model->index(r,0),QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
 		}
 	}
 	
@@ -131,7 +131,7 @@ namespace kt
 		if (cur.isValid())
 		{
 			model->queue(cur.row());
-			m_torrents->selectionModel()->setCurrentIndex(cur,QItemSelectionModel::Select|QItemSelectionModel::Rows);
+			m_torrents->selectionModel()->setCurrentIndex(cur,QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
 		}
 	}
 	
