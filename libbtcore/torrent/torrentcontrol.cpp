@@ -96,7 +96,7 @@ namespace bt
 		istats.session_bytes_uploaded = 0;
 		old_tordir = QString();
 		stats.status = NOT_STARTED;
-		stats.autostart = true;
+		stats.autostart = false;
 		stats.priv_torrent = false;
 		stats.seeders_connected_to = stats.seeders_total = 0;
 		stats.leechers_connected_to = stats.leechers_total = 0;
