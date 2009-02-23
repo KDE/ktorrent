@@ -241,11 +241,11 @@ namespace bt
 	{
 		QNetworkInterface ni = QNetworkInterface::interfaceFromName(iface);
 		if (!ni.isValid())
-			return QString();
+			return QString("::");
 
 		QList<QNetworkAddressEntry> addr_list = ni.addressEntries();
 		if (addr_list.count() == 0)
-			return QString();
+			return QString("::");
 		else
 			return addr_list.front().ip().toString();
 	}	
