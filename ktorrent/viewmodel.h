@@ -119,6 +119,9 @@ namespace kt
 		void removeTorrent(bt::TorrentInterface* ti);
 		void sort(int col, Qt::SortOrder order);
 		
+	signals:
+		void sorted();
+		
 	public:
 		enum Column
 		{
