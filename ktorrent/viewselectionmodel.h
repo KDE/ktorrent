@@ -37,6 +37,7 @@ namespace kt
 	*/
 	class ViewSelectionModel : public QItemSelectionModel
 	{
+		Q_OBJECT
 	public:
 		ViewSelectionModel(ViewModel* vm,QObject* parent);
 		virtual ~ViewSelectionModel();
@@ -46,8 +47,10 @@ namespace kt
 		virtual void clear();
 		virtual void reset();
 		
+	public slots:
 		/// Called by view whenever the model is sorted
 		void sorted();
+		
 	private:
 		ViewModel* vm;
 		QSet<bt::TorrentInterface*> selection;

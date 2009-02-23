@@ -676,6 +676,7 @@ namespace kt
 			Out(SYS_GEN|LOG_DEBUG) << "Item: " << i->hidden << " " << i->tc->getDisplayName() << endl;
 		*/
 		emit layoutChanged();
+		emit sorted();
 	}
 }
 

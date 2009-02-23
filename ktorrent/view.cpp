@@ -96,6 +96,7 @@ namespace kt
 				this,SLOT(onCurrentItemChanged(const QModelIndex&, const QModelIndex&)));
 		connect(selectionModel(),SIGNAL(selectionChanged(const QItemSelection &,const QItemSelection)),
 				this,SLOT(onSelectionChanged(const QItemSelection &,const QItemSelection)));
+		connect(model,SIGNAL(sorted()),selection_model,SLOT(sorted()));
 	}
 
 	View::~View()
@@ -130,10 +131,7 @@ namespace kt
 
 	void View::update()
 	{
-		if (model->update())
-		{
-			selection_model->sorted();
-		}
+		model->update();
 	}
 
 	bool View::needToUpdateCaption()
