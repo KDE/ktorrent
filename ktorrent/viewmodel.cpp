@@ -233,7 +233,13 @@ namespace kt
 			case 4: return bytes_uploaded < other->bytes_uploaded;
 			case 5: return (download_rate < 102 ? 0 : download_rate) < (other->download_rate < 102 ? 0 : other->download_rate);
 			case 6: return (upload_rate < 102 ? 0 : upload_rate) < (other->upload_rate < 102 ? 0 : other->upload_rate);
-			case 7: return eta < other->eta;	
+			case 7: 
+				if (eta == 0 && other->eta > 0)
+					return false;
+				else if (other->eta == 0 && eta > 0)
+					return true;
+				else
+					return eta < other->eta;
 			case 8: return seeders_connected_to < other->seeders_connected_to;
 			case 9: return leechers_connected_to < other->leechers_connected_to;
 			case 10: return percentage < other->percentage;
