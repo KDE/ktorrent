@@ -4,6 +4,7 @@ Changes in 3.2.1 :
 - Fix sorting of time left column (185284)
 - Make sure selection in view is updated when the view is sorted again
 - Prevent torrent from start when torrent is opened user controlled and not started and ktorrent is restarted
+- Use IPv6 :: (all interfaces) address to bind to when interface is not specified
 
 Changes in 3.2 :
 - Use QDir to create directories, avoids nested event loops, which seems to be buggy in some situations (182327)

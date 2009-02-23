@@ -375,7 +375,13 @@ namespace net
 		socklen_t sslen = sizeof(ss);
 		
 		if (getpeername(m_fd,(struct sockaddr*)&ss,&sslen) == 0)
-			addr = KNetwork::KInetSocketAddress((struct sockaddr*)&ss,sslen);
+		{
+			// If it is a IPv6 mapped address convert to IPv4
+			KNetwork::KInetSocketAddress tmp((struct sockaddr*)&ss,sslen);
+			if (tmp.ipVersion() == 6 && tmp.ipAddress().isV4Mapped())
+				tmp.setHost(KNetwork::KIpAddress(tmp.ipAddress().IPv4Addr(true)));
+			addr = tmp;
+		}
 	}
 
 }
