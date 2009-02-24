@@ -38,6 +38,14 @@ namespace kt
 		ScriptModel(QObject* parent);
 		virtual ~ScriptModel();
 		
+		enum Role
+		{
+			CommentRole = Qt::UserRole,
+			ConfigurableRole,
+			ConfigureRole,
+			AboutRole
+		};
+		
 		/**
 		 * Add a script to the model
 		 * @param file 
@@ -73,6 +81,9 @@ namespace kt
 		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
 		virtual bool removeRows(int row,int count,const QModelIndex & parent);
 		virtual bool insertRows(int row,int count,const QModelIndex & parent);
+		
+	signals:
+		void showPropertiesDialog(Script* s);
 		
 	private:
 		QList<Script*> scripts;

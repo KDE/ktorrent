@@ -1,11 +1,12 @@
 add_subdirectory(scripts)
 
-set(ktscriptingplugin_SRC 
+set(ktscriptingplugin_SRC
 	api/scriptingmodule.cpp
 	api/scriptablegroup.cpp
 	scriptingplugin.cpp 
 	scriptmanager.cpp 
 	scriptmodel.cpp
+	scriptdelegate.cpp 
 	script.cpp)
 
 kde4_add_ui_files(ktscriptingplugin_SRC scriptproperties.ui)

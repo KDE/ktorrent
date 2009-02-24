@@ -58,6 +58,7 @@ namespace kt
 		void stopScript();
 		void editScript();
 		void showProperties();
+		void showProperties(Script* script);
 		void configureScript();
 		
 	private:

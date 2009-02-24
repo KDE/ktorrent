@@ -207,7 +207,9 @@ namespace kt
 			connect(fw,SIGNAL(updateCaption(QWidget*, const QString&)),this,SLOT(updateTabText(QWidget*, const QString&)));
 			tabs->addTab(fw,KIcon("application-rss+xml"),f->title());
 			if (tabs->count() == 1)
+			{
 				tabs->show();
+			}
 			tabs->setCurrentWidget(fw);
 		}
 		else
@@ -225,7 +227,9 @@ namespace kt
 			tabs->removeTab(idx);
 			delete w;
 			if (tabs->count() == 0)
+			{
 				tabs->hide();
+			}
 		}
 	}
 	

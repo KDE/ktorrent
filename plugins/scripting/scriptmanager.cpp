@@ -21,6 +21,7 @@
 #include <QAction>
 #include <QVBoxLayout>
 #include <util/log.h>
+#include <klocale.h>
 #include <kmenu.h>
 #include <ktoolbar.h>
 #include <kactioncollection.h>
@@ -28,6 +29,7 @@
 #include "scriptmanager.h"
 #include "scriptmodel.h"
 #include "script.h"
+#include "scriptdelegate.h"
 
 using namespace Kross;
 using namespace bt;
@@ -36,8 +38,9 @@ namespace kt
 {
 
 	ScriptManager::ScriptManager(ScriptModel* model,KActionCollection* ac,QWidget* parent)
-			: QWidget(parent),model(model)
+	: Activity(i18n("Scripting"),"text-x-script",parent),model(model)
 	{
+		setToolTip(i18n("Widget to start, stop and manage scripts"));
 		QVBoxLayout* layout = new QVBoxLayout(this);
 		layout->setSpacing(0);
 		layout->setMargin(0);
@@ -67,6 +70,8 @@ namespace kt
 		remove->setEnabled(false);
 		
 		view = new QListView(this);
+		view->setItemDelegate(new ScriptDelegate(view));
+		view->setAlternatingRowColors(true);
 		layout->addWidget(view);
 	
  		view->setModel(model);

@@ -101,6 +101,7 @@ namespace kt
 	{
 		LogSystemManager::instance().registerSystem(i18n("Scripting"),SYS_SCR);
 		model = new ScriptModel(this);
+		connect(model,SIGNAL(showPropertiesDialog(Script*)),this,SLOT(showProperties(Script*)));
 		// add the KTorrent object
 		Kross::Manager::self().addObject(getCore()->getExternalInterface(),"KTorrent");
 		Kross::Manager::self().addObject(new ScriptingModule(getGUI(),getCore(),this),"KTScriptingPlugin");
@@ -113,8 +114,7 @@ namespace kt
 		
 		setupActions();
 		sman = new ScriptManager(model,actionCollection(),0);
-		getGUI()->addToolWidget(sman,"text-x-script",i18n("Scripts"),
-			   i18n("Widget to start, stop and manage scripts"),GUIInterface::DOCK_LEFT);
+		getGUI()->addActivity(sman);
 	}
 
 	void ScriptingPlugin::unload()
@@ -122,7 +122,7 @@ namespace kt
 		LogSystemManager::instance().unregisterSystem(i18n("Scripting"));
 		// save currently loaded scripts
 		saveScripts();
-		getGUI()->removeToolWidget(sman);
+		getGUI()->removeActivity(sman);
 		delete sman;
 		sman = 0;
 		delete model;
@@ -287,6 +287,11 @@ namespace kt
 		if (!s || !s->metaInfo().valid())
 			return;
 			
+		showProperties(s);
+	}
+	
+	void ScriptingPlugin::showProperties(kt::Script* s) 
+	{
 		Ui_ScriptProperties prop;
 		KDialog* dialog = new KDialog(sman);
 		dialog->setButtons(KDialog::Ok);
@@ -302,6 +307,7 @@ namespace kt
 		dialog->exec();
 		delete dialog;
 	}
+
 	
 	void ScriptingPlugin::configureScript()
 	{

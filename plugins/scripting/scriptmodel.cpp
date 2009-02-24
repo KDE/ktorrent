@@ -88,11 +88,15 @@ namespace kt
 			case Qt::DisplayRole:
 				return s->name();
 			case Qt::DecorationRole:
-				return KIcon(s->iconName());
+				return s->iconName();
 			case Qt::CheckStateRole:
-				return s->running() ? Qt::Checked : Qt::Unchecked;
+				return s->running();
 			case Qt::ToolTipRole:
 				return i18n("<b>%1</b><br/><br/>%2",s->name(),s->metaInfo().comment);
+			case CommentRole:
+				return s->metaInfo().comment;
+			case ConfigurableRole:
+				return s->running() && s->hasConfigure();
 			default:
 				return QVariant();
 		}
@@ -103,18 +107,28 @@ namespace kt
 		if (!index.isValid())
 			return false;
 		
+		Script* s = scriptForIndex(index);
+		if (!s)
+			return false;
+		
 		if (role == Qt::CheckStateRole)
 		{
-			Script* s = scriptForIndex(index);
-			if (!s)
-				return false;
-			
-			if ((Qt::CheckState)value.toUInt() == Qt::Checked)
+			if (value.toBool())
 				s->execute();
 			else
 				s->stop();
 			 
 			dataChanged(index,index);
+			return true;
+		}
+		else if (role == ConfigureRole)
+		{
+			s->configure();
+			return true;
+		}
+		else if (role == AboutRole)
+		{
+			showPropertiesDialog(s);
 			return true;
 		}
 		return false;
@@ -176,10 +190,16 @@ namespace kt
 	
 	void ScriptModel::runScripts(const QStringList & r)
 	{
+		int idx = 0;
 		foreach (Script* s,scripts)
 		{
 			if (r.contains(s->scriptFile()) && !s->running())
+			{
 				s->execute();
+				QModelIndex i = index(idx,0);
+				emit dataChanged(i,i);
+			}
+			idx++;
 		}
 	}
 	

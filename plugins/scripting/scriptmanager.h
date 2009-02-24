@@ -22,6 +22,7 @@
 #define KTSCRIPTMANAGER_H
 
 #include <QListView>
+#include <interfaces/activity.h>
 
 class KToolBar;
 class KMenu;
@@ -39,7 +40,7 @@ namespace kt
 	/**
 		Widget to display all scripts.
 	*/
-	class ScriptManager : public QWidget
+	class ScriptManager : public Activity
 	{
 		Q_OBJECT
 	public:
