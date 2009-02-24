@@ -9,6 +9,7 @@ set(libktorrent_SRC
 	interfaces/guiinterface.cpp
 	interfaces/coreinterface.cpp
 	interfaces/prefpageinterface.cpp
+	interfaces/activity.cpp
 	
 	torrent/queuemanager.cpp
 	torrent/torrentfilemodel.cpp
@@ -27,6 +28,9 @@ set(libktorrent_SRC
 	dbus/dbus.cpp
 	dbus/dbustorrent.cpp
 	dbus/dbusgroup.cpp
+	
+	gui/activitybar.cpp
+	gui/activitylistwidget.cpp
 
 	ktorrent.kcfg
 	pluginmanager.cpp
